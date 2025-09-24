@@ -151,6 +151,8 @@
 \declaretheorem[style=garamonddef, name=Conjecture, sibling=theorem]{conjecture}
 \declaretheorem[style=garamonddef, name=Notation, sibling=theorem]{notation}
 \declaretheorem[style=garamonddef, name=Convention, sibling=theorem]{convention}
+\declaretheorem[style=garamonddef, name=Spectral Sequence, sibling=theorem]{spectralsequence}
+
 
  
 % Essential operators and symbols
@@ -184,7 +186,7 @@
 \newcommand{\Conf}[1]{\overline{C}_{#1}}     % compactified configuration space
 \newcommand{\OPE}[2]{\phi_{#1}(z)\phi_{#2}(w)} % operator product
 \newcommand{\MC}{\text{MC}}                   % Maurer-Cartan
-\newcommand{\ChirAlg}{\text{ChirAlg}}        % category of chiral algebras
+        % category of chiral algebras
 
 % ==========================================
 % TYPOGRAPHY SETTINGS FOR OPTIMAL READABILITY
@@ -224,15 +226,116 @@ Geometric Realization via Configuration Spaces}}
 \date{September 21, 2025}
  
 \begin{document}
+
+% ==========================================
+% NOTATION CONSISTENCY DECLARATIONS
+% ==========================================
+\newcommand{\barBgeom}{\bar{B}_{\text{geom}}}  % Use consistently
+\newcommand{\barBch}{\bar{B}^{\text{ch}}}       % Alternative notation
+\newcommand{\Omegach}{\Omega^{\text{ch}}}       % Cobar notation
+\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)}  % Configuration space
+\newcommand{\LogForm}[2]{\eta_{#1#2}}           % Logarithmic forms
+\newcommand{\OPEcoeff}[4]{C_{#1#2}^{#3,#4}}    % OPE coefficients
+\newcommand{\ChirAlg}{\mathsf{ChirAlg}}         % Category of chiral algebras
+\newcommand{\dgCoalg}{\mathsf{dgCoalg}}         % Category of dg coalgebras
+
+% From this point forward:
+% - Always use \barBgeom for the geometric bar complex
+% - Always use \ConfigSpace{n} for configuration spaces
+% - Always use \LogForm{i}{j} for logarithmic forms
+
+
+
+\maketitle
+ 
+\begin{abstract}
+{\itshape
+\noindent % Better alignment for abstract in Garamond
+% Optional: Use slightly smaller size for abstract
+% \small
+% Add subtle spacing
+\setstretch{1.05}
+\noindent
+Starting from the operadic formalism of two-dimensional conformally invariant quantum field theory and its generalizations, as developed in the notion of a Chiral Algebra by Beilinson-Drinfeld \cite{BD}, we develop a comprehensive geometric framework for bar-cobar duality of chiral algebras via configuration space integrals and logarithmic differential forms. We construct an explicit geometric realization of the bar complex
+for chiral algebras, establishing functoriality, uniqueness up to canonical isomorphism,  and essential surjectivity onto the category of conilpotent chiral coalgebras. The dual cobar construction for chiral coalgebras is in parallel realized through Čech-type complexes on configuration spaces. We demonstrate that the corresponding (co)differential given by residues along boundary divisors satisfies $d^2 = 0$, and realize Bar-Cobar duality as a direct manifestation of Poincare-Verdier duality over the global configuration space. 
+
+\medskip
+\noindent
+The constructions naturally encode canonical $A_\infty$ structures, with higher homotopies determined by Arnold-Orlik-Solomon relations among logarithmic (distributional) forms on boundary strata. These geometric dualities vastly extend the notion of Koszul duality for chiral algebras to a more general theory of \textbf{Koszul dual pairs}, servicing a range of applications from deformation theory, bulk-boundary correspondences in supersymmetric gauge and field theory, to modern approaches to quantum gravity via twisted holography.
+
+\medskip
+\noindent
+In service of these applications we treat Koszul duality computationally via the \textbf{The Prism Principle:} Just as a physical prism decomposes white light into its spectrum, our geometric bar complex acts as a mathematical prism for chiral algebras. The logarithmic forms $d\log(z_i - z_j)$ on configuration spaces $\overline{C}_n(X)$ separate the global chiral structure into its constituent OPE coefficients through residue calculus. Each collision divisor $D_{ij}$ corresponds to a specific "spectral line" --- an operator product channel --- with residues extracting the corresponding structure constants. This geometric spectroscopy provides both conceptual clarity and computational power, transforming abstract algebraic structures into concrete geometric data.
+}
+\end{abstract}
+\tableofcontents
+
+\medskip
+\noindent
+
+\begin{remark}[Notation Convention]
+Throughout this manuscript:
+\begin{itemize}
+\item $\barBgeom(\mathcal{A})$ denotes the geometric bar complex
+\item $\barBch(\mathcal{A})$ denotes the abstract chiral bar complex (when distinction needed)
+\item $\ConfigSpace{n} = \overline{C}_n(X)$ is the compactified configuration space
+\item $\LogForm{i}{j} = d\log(z_i - z_j)$ are the logarithmic 1-forms
+\end{itemize}
+\end{remark}
+
+% ==========================================
+% PART I: FOUNDATIONS AND MOTIVATION
+% ==========================================
+\part{Foundations and Motivation}
+
 \include{"part1.tex"}
+
+% ==========================================
+% PART II: CONFIGURATION SPACES AND GEOMETRY
+% ==========================================
+\part{Configuration Spaces and Geometry}
+
 \include{"part2.tex"}
+
+% ==========================================
+% PART III: BAR AND COBAR CONSTRUCTIONS
+% ==========================================
+\part{Bar and Cobar Constructions}
+
 \include{"part3.tex"}
+
 \include{"part4.tex"}
+
+% ==========================================
+% PART IV: KOSZUL DUALITY AND EXAMPLES
+% ==========================================
+\part{Koszul Duality and Applications}
+
+
 \include{"part5.tex"}
 
-% Appendices
+
+% ==========================================
+% PART V: PHYSICAL APPLICATIONS AND HOLOGRAPHY
+% ==========================================
+\part{Physical Applications and Holography}
+\include{"part6.tex"}
+
+% ==========================================
+% PART VII: COMPUTATIONAL METHODS AND ALGORITHMS
+% ==========================================
+\part{Computational Methods and Algorithms}
+
+% This part will contain computational details and algorithms
+% extracted from various sections
+
+% ==========================================
+% APPENDICES
+% ==========================================
 \appendix
+
 \input{appendix_theta}
 \input{appendix_spectral}
 \input{appendix_koszul}
+
 \end{document}
