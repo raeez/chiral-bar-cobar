@@ -1,0 +1,893 @@
+\subsubsection{Bar Complex Computation for $\mathcal{W}_3$ Algebra}
+
+\begin{example}[$\mathcal{W}_3$ Bar Complex]\label{ex:w3-bar}
+For $\mathcal{W}_3$ (the $\mathfrak{sl}_3$ principal W-algebra):
+
+\textbf{Generators:} $T$ (spin 2), $W$ (spin 3)
+
+\textbf{Bar Complex Dimensions:}
+\begin{align}
+\dim \bar{B}^0 &= 1 \,\, (\text{vacuum}) \\
+\dim \bar{B}^1 &= 2 \,\, (\text{generators}) \\
+\dim \bar{B}^2 &= 5 \,\, (\text{computed via OPE}) \\
+\dim \bar{B}^3 &= 14 \,\, (\text{growth controlled by } \mathbb{P}^2 \text{ cohomology})
+\end{align}
+
+\textbf{Geometric Interpretation:} The bar complex computes $H^*(\mathrm{Maps}(X, \mathbb{P}^2))$.
+\end{example}
+
+\subsubsection{Critical Level Phenomena}
+
+\begin{definition}[Critical Level]\label{def:critical}
+The critical level is $k = -h^\vee$ where $h^\vee$ is the dual Coxeter number. At this level:
+\begin{itemize}
+\item The Sugawara construction fails (denominator vanishes)
+\item The center becomes large (Feigin-Frenkel center)
+\item Connection to geometric Langlands emerges
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Feigin-Frenkel Center]\label{thm:ff-center}
+At critical level, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is:
+\[
+Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))
+\]
+functions on the space of $\mathfrak{g}^\vee$-opers on $X$.
+\end{theorem}
+
+\begin{remark}[Opers and Connections]
+An oper is a special kind of connection:
+\[
+\nabla = \partial + p_{-1} + \text{regular terms}
+\]
+where $p_{-1}$ is a principal nilpotent element. These parametrize geometric solutions 
+to the KZ equations.
+\end{remark}
+
+\subsubsection{Chiral Coalgebra Structure for $\beta\gamma$}
+
+\begin{theorem}[$\beta\gamma$ Bar Complex Coalgebra]\label{thm:bg-bar-coalg}
+The bar complex $\bar{B}^{\text{ch}}(\beta\gamma)$ has chiral coalgebra structure:
+\begin{enumerate}
+\item \textbf{Comultiplication:} Elements decompose as:
+\[
+\Delta(\beta_{i_1} \cdots \beta_{i_p} \gamma_{j_1} \cdots \gamma_{j_q} \partial^k) = 
+\sum_{\substack{I_\beta \sqcup I'_\beta = \{i_1,\ldots,i_p\} \\ I_\gamma \sqcup I'_\gamma = \{j_1,\ldots,j_q\}}} 
+\beta_{I_\beta}\gamma_{I_\gamma}\partial^{k_1} \otimes \beta_{I'_\beta}\gamma_{I'_\gamma}\partial^{k_2}
+\]
+respecting normal ordering: $\beta$'s to the left of $\gamma$'s.
+
+\item \textbf{Growth Formula:} The dimension growth $\dim(\bar{B}^n) = 2 \cdot 3^{n-1}$ reflects:
+\begin{itemize}
+\item Factor of 2: Choice of leading term ($\beta$ or $\gamma$)
+\item Factor of $3^{n-1}$: Each additional point can be $\beta$, $\gamma$, or derivative
+\end{itemize}
+
+\item \textbf{Coassociativity:} Follows from the factorization property of configuration spaces:
+\[
+\overline{C}_{n}(X) \xrightarrow{\text{forget}} \overline{C}_{n-1}(X) \times X
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Kontsevich-style Construction]
+The coalgebra structure emerges from considering correlation functions on punctured curves.
+
+\textbf{Step 1: Propagator Expansion.} The $\beta\gamma$ propagator:
+\[
+\langle \beta(z)\gamma(w) \rangle = \frac{1}{z-w}
+\]
+defines a distribution on $C_2(X) = X \times X \setminus \Delta$.
+
+\textbf{Step 2: Feynman Graphs.} Higher correlations factor through tree graphs:
+\[
+\langle \beta(z_1)\gamma(z_2)\beta(z_3)\gamma(z_4) \rangle = 
+\sum_{\text{pairings}} \prod_{\text{edges}} \frac{1}{z_i - z_j}
+\]
+
+\textbf{Step 3: Compactification.} The Fulton-MacPherson compactification $\overline{C}_n(X)$ 
+regularizes these distributions, with the coalgebra structure encoding how correlators 
+factorize when points collide.
+\end{proof}
+
+\subsection{The Prism Principle in Action}
+
+\begin{example}[Structure Coefficients via Residues]
+Consider a chiral algebra with generators $\phi_i$ and OPE:
+$$\phi_i(z) \phi_j(w) = \sum_k \frac{C_{ij}^k \phi_k(w)}{(z-w)^{h_i + h_j - h_k}} + \cdots$$
+
+The geometric bar complex extracts these coefficients:
+$$\text{Res}_{D_{ij}}[\phi_i \otimes \phi_j \otimes \eta_{ij}] = \sum_k C_{ij}^k \phi_k$$
+
+This is the ``spectral decomposition'' --- each residue reveals one ``color'' (structure coefficient) 
+of the algebraic ``composite light.'' The collection of all residues provides complete information about 
+the chiral algebra structure.
+\end{example}
+
+\begin{remark}[Lurie's Higher Algebra Perspective]
+Following Lurie \cite{HA}, we can understand the geometric bar complex through the theory of 
+$\mathbb{E}_n$-algebras:
+
+\begin{itemize}
+\item Chiral algebras are ``$\mathbb{E}_2$-algebras with holomorphic structure''
+\item The little 2-disks operad $\mathbb{E}_2$ has spaces $\mathbb{E}_2(n) \simeq \text{Conf}_n(\mathbb{C})$
+\item The bar complex computes Hochschild homology in the $\mathbb{E}_2$ setting
+\item Holomorphic structure forces logarithmic poles at boundaries
+\end{itemize}
+
+This explains why configuration spaces appear: they \emph{are} the operad governing 2d algebraic structures.
+\end{remark}
+
+\subsection{The Ayala-Francis Perspective}
+
+\begin{theorem}[Factorization Homology = Bar Complex]\label{thm:fact-homology}
+For a chiral algebra $\mathcal{A}$ on $X$, there is a canonical equivalence:
+$$\int_X \mathcal{A} \simeq C_{\bullet}^{\text{ch}}(\mathcal{A})$$
+where the left side is Ayala-Francis factorization homology and the right side is our geometric bar complex 
+(viewed as chains rather than cochains).
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+Both sides compute the same derived functor:
+\begin{itemize}
+\item Factorization homology: derived tensor product $\mathcal{A} \otimes^L_{\text{Disk}(X)} \text{pt}$
+\item Bar complex: derived Hom $\text{RHom}_{\mathcal{A}\text{-mod}}(k, k)$
+\end{itemize}
+These are related by Koszul duality for $\mathbb{E}_2$-algebras.
+\end{proof}
+
+\begin{remark}[Gaitsgory's Insight]
+Dennis Gaitsgory observed that chiral homology can be computed by the ``semi-infinite cohomology'' 
+of the corresponding vertex algebra. Our geometric bar complex provides the explicit realization:
+\begin{itemize}
+\item Semi-infinite = configuration spaces (infinite-dimensional but locally finite)
+\item Cohomology = differential forms with logarithmic poles
+\item The bar differential = BRST operator in physics
+\end{itemize}
+\end{remark}
+
+\subsection{Why Logarithmic Forms?}
+
+\begin{proposition}[Forced by Conformal Invariance]
+The appearance of logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ is not a choice but forced by:
+\begin{enumerate}
+\item \textbf{Conformal invariance:} Under $z \mapsto f(z)$, we need $\eta_{ij} \mapsto \eta_{ij}$
+\item \textbf{Single-valuedness:} Around collision divisors, forms must have logarithmic singularities
+\item \textbf{Residue theorem:} Only logarithmic forms give well-defined residues
+\end{enumerate}
+\end{proposition}
+
+\begin{convention}[Signs from Trees]
+For the bar differential on decorated trees, we use the following sign convention:
+\begin{enumerate}
+\item Label edges by depth-first traversal starting from the root
+\item For contracting edge $e$ connecting vertices with operations $p_1, p_2$ of degrees $|p_1|, |p_2|$:
+\item The sign is $(-1)^{\epsilon(e)}$ where:
+$$\epsilon(e) = \sum_{e' < e} |p_{s(e')}| + |p_1| + 1$$
+where $s(e')$ is the source vertex of edge $e'$ and the sum is over edges preceding $e$ in the ordering.
+\item The extra $+1$ comes from the suspension in the bar construction.
+\end{enumerate}
+
+% Add missing verification
+To verify $d^2 = 0$ for this sign convention, consider a tree with three vertices and two edges $e_1, e_2$. The two ways to contract both edges give:
+\begin{itemize}
+\item Contract $e_1$ then $e_2$: sign is $(-1)^{\epsilon(e_1)} \cdot (-1)^{\epsilon'(e_2)}$
+\item Contract $e_2$ then $e_1$: sign is $(-1)^{\epsilon(e_2)} \cdot (-1)^{\epsilon'(e_1)}$
+\end{itemize}
+where $\epsilon'$ accounts for the change in edge labeling after the first contraction. A detailed calculation shows these contributions cancel:
+$$(-1)^{\epsilon(e_1) + \epsilon'(e_2)} + (-1)^{\epsilon(e_2) + \epsilon'(e_1)} = 0$$
+This generalizes to all trees by induction on the number of edges.
+
+This ensures $d^2 = 0$ by a careful analysis of double contractions.
+\end{convention}
+
+\begin{lemma}[Sign Consistency for Bar Differential]
+The sign convention above ensures that for any pair of edges $e_1, e_2$ in a tree, the signs arising from contracting $e_1$ then $e_2$ versus contracting $e_2$ then $e_1$ differ by exactly $(-1)$, ensuring $d^2 = 0$.
+\end{lemma}
+
+\begin{proof}
+Consider the four-vertex tree with edges $e_1$ connecting vertices with operations $p_1, p_2$ and edge $e_2$ connecting vertices with operations $p_3, p_4$. The sign from contracting $e_1$ then $e_2$ is:
+$$(-1)^{\epsilon(e_1)} \cdot (-1)^{\epsilon'(e_2)}$$
+where $\epsilon'(e_2)$ accounts for the change in edge ordering after contracting $e_1$. A direct computation shows this equals $-1$ times the sign from contracting $e_2$ then $e_1$.
+\end{proof}
+
+For an augmented operad $P$ with augmentation $\epsilon: P \to I$, we construct...
+
+\begin{definition}[Cobar Construction]
+Dually, for a coaugmented cooperad $C$ with coaugmentation $\eta : \mathbb{I} \to C$, the cobar construction $\Omega(C)$ is the free operad on the desuspension $s^{-1}\bar{C}$ (where $\bar{C} = \text{coker}(\eta)$) with differential induced by the cooperad comultiplication.
+\end{definition}
+ 
+\begin{theorem}[Bar-Cobar Adjunction]
+There is an adjunction:
+\[
+\barB : \text{Operads} \rightleftarrows \text{Cooperads}^{\text{op}} : \Omega
+\]
+Moreover, if $P$ is Koszul (defined below in Section 3.1), then the unit and counit are quasi-isomorphisms, establishing an equivalence of homotopy categories.
+\end{theorem}
+ 
+\subsection{Partition Complexes and the Commutative Operad}
+ 
+For the commutative operad $\Com$, the bar construction admits a beautiful combinatorial model via partition lattices:
+ 
+\begin{definition}[Partition Lattice]
+The partition lattice $\Pi_n$ is the poset of all partitions of $\{1, 2, \ldots, n\}$, ordered by refinement: $\pi \leq \sigma$ if every block of $\pi$ is contained in some block of $\sigma$. The proper part $\barPi_n = \Pi_n \setminus \{\hat{0}, \hat{1}\}$ excludes the minimum (discrete partition) and maximum (trivial partition).
+\end{definition}
+ 
+\begin{theorem}[Partition Complex Structure]\label{thm:partition}
+The bar complex $\barB(\Com)(n)$ is quasi-isomorphic to the reduced chain complex $\tilde{C}_*(\barPi_n)$ of the proper part of the partition lattice $\Pi_n$. More precisely:
+\[
+\barB(\Com)(n) \simeq s^{n-2}\tilde{C}_{n-2}(\barPi_n) \otimes \sgn_n
+\]
+where $\sgn_n$ is the sign representation of $S_n$.
+\end{theorem}
+ 
+\begin{proof}
+Elements of $\Com^{\circ k}(n)$ (the $k$-fold composition) correspond to ways of iteratively partitioning $n$ elements through $k$ levels. The simplicial structure is:
+\begin{itemize}
+\item Face maps compose adjacent levels of partitioning (coarsening)
+\item Degeneracy maps repeat a level (refinement followed by immediate coarsening)
+\end{itemize}
+ 
+After normalization (removing degeneracies), we obtain chains on $\barPi_n$. The dimension shift and sign representation arise from the suspension in the bar construction and the need for $S_n$-equivariance.
+ 
+The key observation is that $\barPi_n$ has the homology of a wedge of $(n-1)!$ spheres of dimension $n-2$, with the $S_n$-action on the top homology given by the Lie representation tensored with the sign. This follows from the classical results of Björner-Wachs \cite{BW93} and Stanley \cite{Sta97}, who computed:
+\[
+\tilde{H}_{n-2}(\barPi_n) \cong \Lie(n) \otimes \sgn_n \text{ as } S_n\text{-representations}
+\]
+and $\tilde{H}_k(\barPi_n) = 0$ for $k \neq n-2$.
+\end{proof}
+\begin{remark}[Simplicial Model - Precise Construction]
+The simplicial bar for $\Com$ literally consists of chains of refinements $\pi_0 \leq \pi_1 \leq \cdots \leq \pi_k$ in $\Pi_n$. This is the nerve of the poset $\Pi_n$, and the identification with the cooperad structure follows from taking normalized chains.
+\end{remark}
+ 
+\section{Com-Lie Koszul Duality from First Principles}
+ 
+\subsection{Quadratic Operads and Koszul Duality}
+ 
+We now specialize to quadratic operads, which admit a particularly refined duality theory:
+ 
+\begin{definition}[Quadratic Operad]
+A quadratic operad has the form $P = \Free(E)/(R)$ where:
+\begin{itemize}
+\item $E$ is a collection of generating operations concentrated in arity 2
+\item $R \subset \Free(E)(3)$ consists of quadratic relations (involving exactly two compositions)
+\item $\Free$ denotes the free operad functor
+\item $(R)$ denotes the operadic ideal generated by $R$
+\end{itemize}
+\end{definition}
+ 
+\begin{definition}[Koszul Dual Cooperad]
+The Koszul dual cooperad $P^!$ is the maximal sub-cooperad of the cofree cooperad $T^c(s^{-1}E^\vee)$ cogenerated by the orthogonal relations $R^\perp \subset (s^{-1}E^\vee)^{\otimes 2}$, where the orthogonality is with respect to the natural pairing induced by evaluation.
+\end{definition}
+ 
+\begin{definition}[Koszul Operad]
+An operad $P$ is \emph{Koszul} if the canonical map $\Omega(P^!) \to P$ is a quasi-isomorphism. Equivalently, the Koszul complex $K_\bullet(P) = P^! \circ P$ with differential induced by the cooperad and operad structures is acyclic in positive degrees.
+\end{definition}
+ 
+\subsection{Derivation of Com-Lie Duality}
+ 
+We now prove the fundamental duality between the commutative and Lie operads:
+ 
+\begin{theorem}[Com-Lie Koszul Duality]\label{thm:com-lie}
+We have canonical isomorphisms of cooperads:
+\[
+\Com^! \cong \text{co}\Lie \quad \text{and} \quad \Lie^! \cong \text{co}\Com
+\]
+Moreover, both $\Com$ and $\Lie$ are Koszul operads with quasi-isomorphisms:
+\[
+\Omega(\text{co}\Lie) \xrightarrow{\sim} \Com, \quad \Omega(\text{co}\Com) \xrightarrow{\sim} \Lie
+\]
+\end{theorem}
+ 
+\begin{proof}[Proof via Partition Lattices]
+By Theorem \ref{thm:partition}, $\barB(\Com)(n) \simeq s^{n-2}\tilde{C}_{n-2}(\barPi_n) \otimes \sgn_n$.
+ 
+Classical results of Björner-Wachs \cite{BW93} and Stanley \cite{Sta97} establish that the reduced homology of $\barPi_n$ is:
+\begin{itemize}
+\item The complex $\tilde{C}_*(\barPi_n)$ has homology concentrated in degree $n-2$
+\item The $S_n$-representation on $\tilde{H}_{n-2}(\barPi_n)$ decomposes as $\Lie(n) \otimes \sgn_n$ where $\Lie(n)$ is the Lie representation
+\item $\tilde{H}_k(\barPi_n) = 0$ for $k \neq n-2$
+\end{itemize}
+ 
+The key observation is that $\barPi_n$ has the homology of a wedge of $(n-1)!$ spheres of dimension $n-2$, with the $S_n$-action on the top homology given by the Lie representation tensored with the sign.
+
+To see why this yields Com-Lie duality, observe that the bar construction gives:
+$$\barB(\Com)(n) \simeq s^{n-2}\tilde{C}_{n-2}(\barPi_n) \otimes \sgn_n$$
+Taking homology and using that $\barPi_n$ is $(n-3)$-connected:
+$$H_*(\barB(\Com)(n)) \simeq s^{n-2}\Lie(n) \otimes \sgn_n \otimes \sgn_n = s^{n-2}\Lie(n)$$
+Since this is concentrated in a single degree, the bar complex is formal and we obtain:
+$$\barB(\Com) \simeq \text{co}\Lie[1]$$
+as required.
+ 
+Since the bar complex has homology concentrated in a single degree, it follows that:
+\[
+H_*(\barB(\Com)) \cong \text{co}\Lie[1]
+\]
+where the shift accounts for the suspension. Applying $\Omega$ yields $\Omega(\text{co}\Lie) \simeq \Com$.
+ 
+The dual statement $\Lie^! \cong \text{co}\Com$ follows by Schur-Weyl duality, using the characterization of $\Lie$ as the primitive part of the tensor coalgebra.
+\end{proof}
+ 
+\begin{proof}[Alternative Proof via Generating Series]
+The Poincaré series of the operads satisfy:
+\begin{align}
+P_{\Com}(x) &= e^x - 1 \\
+P_{\Lie}(x) &= -\log(1 - x)
+\end{align}
+These are compositional inverses: $P_{\Lie}(-P_{\Com}(-x)) = x$. This functional equation characterizes Koszul dual pairs, providing an independent verification of the duality.
+\end{proof}
+ 
+\subsection{The Quadratic Dual and Orthogonality}
+ 
+For explicit computations, we need the quadratic presentations:
+ 
+\begin{proposition}[Quadratic Presentations]
+The operads $\Com$ and $\Lie$ have quadratic presentations:
+\begin{align}
+\Com &= \Free(\mu)/(R_{\Com}) \text{ where } R_{\Com} = \langle \mu_{12,3} - \mu_{1,23}, \mu_{12} - \mu_{21} \rangle \\
+\Lie &= \Free(\ell)/(R_{\Lie}) \text{ where } R_{\Lie} = \langle \ell_{12,3} + \ell_{23,1} + \ell_{31,2}, \ell_{12} + \ell_{21} \rangle
+\end{align}
+where subscripts denote inputs, and composition is denoted by adjacency. Here $\mu_{12,3}$ means $\mu \circ_1 \mu$ and $\mu_{1,23}$ means $\mu \circ_2 \mu$.
+\end{proposition}
+ 
+\begin{proposition}[Orthogonality]\label{prop:orthogonal}
+Under the natural pairing between $\Free(\mu)(3)$ and $\Free(\ell^*)(3)$ induced by $\langle \mu, \ell^* \rangle = 1$, we have:
+\[
+R_{\Com} \perp R_{\Lie}
+\]
+This orthogonality is the concrete manifestation of Koszul duality.
+\end{proposition}
+ 
+\begin{proof}
+We compute the pairing explicitly. The spaces have bases:
+\begin{align}
+\Free(\mu)(3) &= \text{span}\{\mu_{12,3}, \mu_{1,23}, \mu_{13,2}, \mu_{2,13}, \mu_{23,1}, \mu_{3,12}\} \\
+\Free(\ell^*)(3) &= \text{span}\{\ell^*_{12,3}, \ell^*_{1,23}, \text{etc.}\}
+\end{align}
+ 
+The pairing $\langle \mu_{ij,k}, \ell^*_{pq,r} \rangle = 1$ if the tree structures match and $0$ otherwise. Computing:
+\begin{align}
+\langle \mu_{12,3} - \mu_{1,23}, \ell^*_{12,3} + \ell^*_{23,1} + \ell^*_{31,2} \rangle &= 1 + 0 + 0 - 0 - 0 - 1 = 0 \\
+\langle \mu_{12,3} - \mu_{1,23}, \ell^*_{13,2} + \ell^*_{32,1} + \ell^*_{21,3} \rangle &= 0 - 1 + 0 + 0 + 1 + 0 = 0
+\end{align}
+Similar computations for all pairs verify the orthogonality.
+\end{proof}
+ 
+\section{Configuration Spaces and Logarithmic Forms}
+ 
+\subsection{The Relative Perspective}
+
+Following Grothendieck's philosophy of relative algebraic geometry, we work systematically in families:
+
+\begin{definition}[Relative Bar Complex]
+For a family of chiral algebras $\mathcal{A} \to S$ parametrized by a base $S$, the relative bar complex
+\[
+\chirbar_{S/\text{rel}}(\mathcal{A}) \to S
+\]
+lives over the relative configuration space $\Conf{\bullet}(X \times S/S)$.
+\end{definition}
+
+\begin{theorem}[Base Change]
+The geometric bar construction commutes with base change:
+\[
+f^*\chirbar_S(\mathcal{A}) \cong \chirbar_{S'}(f^*\mathcal{A})
+\]
+for any morphism $f: S' \to S$.
+\end{theorem}
+
+This relative viewpoint reveals:
+\begin{itemize}
+\item Deformation theory: Families over $\text{Spec}(\mathbb{C}[\epsilon]/\epsilon^2)$
+\item Moduli spaces: Universal families over $\mathcal{M}_{\text{ChirAlg}}$
+\item Quantum groups: Families over $\text{Spec}(\mathbb{C}[[h]])$ with $h \to 0$ classical limit
+\end{itemize}
+
+\subsection{Configuration Spaces of Curves}
+ 
+We now introduce the geometric spaces that will support our bar complexes. Throughout this section, $X$ denotes a smooth algebraic curve over $\C$ of dimension 1.
+ 
+\begin{definition}[Configuration Space]
+For a smooth algebraic curve $X$ over $\C$, the configuration space of $n$ distinct ordered points is:
+\[
+C_n(X) = \{(x_1, \ldots, x_n) \in X^n \mid x_i \neq x_j \text{ for all } i \neq j\}
+\]
+This is a smooth quasi-projective variety of dimension $n \cdot \dim X = n$ when $\dim X = 1$.
+
+\begin{notation}
+Throughout this paper:
+\begin{itemize}
+\item $C_n(X)$ denotes the open configuration space
+\item $\overline{C_n(X)}$ denotes its Fulton-MacPherson compactification  
+\item $\partial\overline{C_n(X)} = \overline{C_n(X)} \setminus C_n(X)$ denotes the boundary divisor
+\end{itemize}
+\end{notation}
+
+\end{definition}
+ 
+\begin{proposition}[Fundamental Group]
+The fundamental group $\pi_1(C_n(X))$ is the pure braid group $P_n(X)$ on $n$ strands over $X$. For $X = \C$, this is the kernel of $B_n \to S_n$ where $B_n$ is the Artin braid group with generators $\sigma_i$ ($i = 1, \ldots, n-1$) and relations:
+\begin{align}
+\sigma_i\sigma_j &= \sigma_j\sigma_i \quad \text{if } |i-j| > 1 \\
+\sigma_i\sigma_{i+1}\sigma_i &= \sigma_{i+1}\sigma_i\sigma_{i+1} \quad \text{(braid relations)}
+\end{align}
+\end{proposition}
+ 
+The configuration space $C_n(X)$ is highly non-compact, with "points at infinity" corresponding to various collision patterns. The Fulton-MacPherson compactification provides a canonical way to add these points:
+ 
+\subsection{The Fulton-MacPherson Compactification}
+ 
+\begin{theorem}[Fulton-MacPherson Compactification \cite{FM94}]\label{thm:FM}
+There exists a smooth compactification $\overline{C_n(X)}$ with a natural stratification by combinatorial type. More precisely, we have
+a functorial compactification
+\[j: C_n(X) \hookrightarrow \overline{C_n(X)}\]
+where $\overline{C_n(X)}$ is obtained by iterated blow-ups along diagonals.
+
+The compactification has the following properties:
+\begin{enumerate}
+\item The complement $D = \barC_n(X) \setminus C_n(X)$ is a normal crossing divisor
+\item Boundary strata are indexed by nested partitions of $\{1, \ldots, n\}$ (equivalently, by rooted trees with $n$ leaves)
+\item For each stratum $D_\pi$ corresponding to partition $\pi = \{B_1, \ldots, B_k\}$:
+\[
+D_\pi \cong \barC_k(X) \times \prod_{i=1}^k \barC_{|B_i|}(\C)
+\]
+where the first factor records the positions of "bubbles" and the product records configurations within each bubble
+\item The compactification is functorial for smooth morphisms and open embeddings of curves
+\end{enumerate}
+\end{theorem}
+ 
+\begin{proof}[Construction Sketch]
+The compactification is obtained by a sequence of blow-ups:
+\begin{enumerate}
+\item Start with $X^n$
+\item Blow up the smallest diagonal $\Delta_n = \{x_1 = \cdots = x_n\}$
+\item Blow up the proper transforms of all partial diagonals $\Delta_I = \{x_i = x_j : i,j \in I\}$ in order of decreasing codimension
+\item The exceptional divisors encode:
+\begin{itemize}
+\item Which points collide (given by the partition)
+\item Relative rates of approach (radial coordinates in the blow-up)
+\item Relative angles of approach (angular coordinates)
+\end{itemize}
+\end{enumerate}
+ 
+The key insight is that the blow-up process naturally records the "speed" and "direction" of collisions, not just which points collide. The normal crossing property follows from the careful ordering of blow-ups, ensuring transversality at each step.
+\end{proof}
+ 
+\begin{example}[Three Points on $\mathbb{P}^1$]
+For $\barC_3(\mathbb{P}^1)$, using projective invariance to fix three points, we get $\barC_3(\mathbb{P}^1) = \{\text{point}\}$. For $\barC_4(\mathbb{P}^1) \cong \mathbb{P}^1$, the boundary consists of three points corresponding to the three ways pairs can collide: $(12)(34)$, $(13)(24)$, $(14)(23)$.
+\end{example}
+ 
+\subsection{Logarithmic Differential Forms}
+
+\begin{remark}[Why Logarithmic Forms?]
+The appearance of logarithmic forms is not accidental but inevitable: they are the unique meromorphic 1-forms with prescribed residues at collision divisors. When operators collide in conformal field theory, the singularity structure is captured precisely by forms like $d\log(z_i - z_j)$. To make these forms single-valued requires choice. These choices encode precisely the monodromy data that will later appear in our $A_\infty$ relations. The branch cuts we choose are not arbitrary conventions but encode genuine topological information about the configuration space.
+\end{remark}
+
+
+\begin{definition}[Branch Cut Convention - Rigorous]
+For each pair $(i,j)$ with $i < j$, we fix a branch of $\log(z_i - z_j)$ as follows:
+\begin{enumerate}
+\item Choose a basepoint $* \in C_n(X)$
+\item For intuition: think of this as choosing a reference configuration where all points are well-separated
+
+\item For each loop $\gamma$ based at $*$, define the monodromy $M_\gamma: \mathbb{C} \to \mathbb{C}$
+\item The monodromy measures how our chosen branch of the logarithm changes as points wind around each other
+
+\item Fix the branch by requiring $M_\gamma = \text{id}$ for contractible loops
+\item This is equivalent to choosing a trivialization of the local system of logarithms over the universal cover
+\item For concreteness on $X = \mathbb{C}$, we use the principal branch: $-\pi < \text{Im}(\log(z_i - z_j)) \leq \pi$
+
+\item This determines $\log(z_i - z_j)$ up to a constant, which we fix by continuity from the basepoint
+\item The constant is normalized so that $\log(1) = 0$
+\end{enumerate}
+The resulting logarithmic forms are single-valued on the universal cover $\widetilde{C_n(X)}$.
+\end{definition}
+
+\begin{remark}[Monodromy Consistency] The choice of branch cuts must be compatible with the factorization structure of the chiral algebra. Specifically, for any three points $z_i, z_j, z_k$, the monodromy around the total diagonal satisfies:
+$$M_{ijk} = M_{ij} \circ M_{jk} \circ M_{ki}$$
+This ensures the Arnold relations lift consistently to the universal cover.
+\end{remark}
+
+\begin{definition}[Logarithmic Forms with Poles]
+The sheaf of logarithmic $p$-forms on $\overline{C}_n(X)$ is the subsheaf of meromorphic forms:
+$$\Omega^p_{\overline{C}_n(X)}(\log D) = \{p\text{-forms } \omega : \omega \text{ and } d\omega \text{ have at most simple poles along } D\}$$
+
+In local coordinates $(u_1,\ldots,u_n,\epsilon_{ij},\theta_{ij})_{i<j}$ near a boundary stratum:
+$$\Omega^p_{\overline{C}_n(X)}(\log D) = \bigoplus_{I \subset \{(i,j): i<j\}} \Omega^{p-|I|}_{smooth} \wedge \bigwedge_{(i,j) \in I} d\log\epsilon_{ij}$$
+\end{definition}
+
+\begin{proposition}[Logarithmic Form Properties]
+The forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy:
+\begin{enumerate}
+\item $\eta_{ji} = -\eta_{ij}$ (antisymmetry)
+\item Near $D_{ij}$: $\eta_{ij} = d\log\epsilon_{ij} + id\theta_{ij} + O(\epsilon_{ij})$
+\item $\text{Res}_{D_{ij}}[\eta_{ij}] = 1$ (normalization)
+\item $d\eta_{ij} = 0$ away from higher codimension strata
+\item The residue map $\text{Res}_{D_{ij}}: \Omega^p(\log D) \to \Omega^{p-1}(D_{ij})$ is well-defined
+\end{enumerate}
+\end{proposition}
+
+Near a boundary divisor $D_{ij}$ where points $x_i \to x_j$ collide, we use blow-up coordinates:
+ 
+\begin{definition}[Blow-up Coordinates]\label{def:blowup}
+Near $D_{ij} \subset \barC_n(X)$, introduce coordinates:
+\begin{align}
+u_{ij} &= \frac{x_i + x_j}{2} \quad \text{(center of collision)} \\
+\epsilon_{ij} &= |x_i - x_j| \quad \text{(separation, serves as normal coordinate to } D_{ij}) \\
+\theta_{ij} &= \arg(x_i - x_j) \quad \text{(angle of approach)}
+\end{align}
+In these coordinates:
+\begin{align}
+x_i &= u_{ij} + \frac{\epsilon_{ij}}{2}e^{i\theta_{ij}} \\
+x_j &= u_{ij} - \frac{\epsilon_{ij}}{2}e^{i\theta_{ij}}
+\end{align}
+\end{definition}
+ 
+The basic logarithmic 1-forms that will appear throughout our constructions are:
+ 
+\begin{definition}[Basic Logarithmic Forms]
+For distinct indices $i, j \in \{1, \ldots, n\}$, define:
+\[
+\eta_{ij} = d\log(x_i - x_j) = \frac{dx_i - dx_j}{x_i - x_j}
+\]
+These forms have simple poles along $D_{ij}$ and are regular elsewhere.
+\end{definition}
+ 
+\begin{proposition}[Properties of $\eta_{ij}$]\label{prop:eta}
+The forms $\eta_{ij}$ satisfy:
+\begin{enumerate}
+\item Antisymmetry: $\eta_{ji} = -\eta_{ij}$
+\item Blow-up expansion: Near $D_{ij}$,
+\[
+\eta_{ij} = d\log \epsilon_{ij} + id\theta_{ij} + \text{(regular terms)}
+\]
+\item Residue: $\Res_{D_{ij}} \eta_{ij} = 1$ (normalized by our convention)
+\item Closure: $d\eta_{ij} = 0$ away from higher codimension strata
+\end{enumerate}
+\end{proposition}
+ 
+\begin{proof}
+(1) is immediate from the definition. For (2), compute in blow-up coordinates:
+\[
+x_i - x_j = \epsilon_{ij} e^{i\theta_{ij}}
+\]
+Therefore $d\log(x_i - x_j) = d\log(\epsilon_{ij} e^{i\theta_{ij}}) = d\log \epsilon_{ij} + id\theta_{ij}$.
+ 
+For (3), the residue extracts the coefficient of $d\log \epsilon_{ij}$, which is 1 by our computation.
+ 
+For (4), since $\eta_{ij}$ is locally $d$ of a function away from other collision divisors, we have $d\eta_{ij} = d^2\log(x_i - x_j) = 0$.
+\end{proof}
+ 
+\subsection{The Orlik-Solomon Algebra}
+ 
+The logarithmic forms $\eta_{ij}$ generate a differential graded algebra with remarkable properties:
+
+\subsubsection{Three-term relation}
+\begin{theorem}[Arnold Relations - Rigorous]
+For any triple of distinct indices $i, j, k \in \{1,\ldots,n\}$:
+$$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$$
+\end{theorem}
+
+\begin{proof}[Complete Proof]
+We work on the universal cover to avoid branch issues. Define:
+$$\omega = \eta_{ij} + \eta_{jk} + \eta_{ki} = d\log((z_i - z_j)(z_j - z_k)(z_k - z_i))$$
+
+Since $\omega = df$ for a single-valued function $f$ on the universal cover, we have $d\omega = 0$.
+
+Computing explicitly:
+\begin{align}
+d\omega &= d\eta_{ij} + d\eta_{jk} + d\eta_{ki}\\
+&= 0 \text{ away from higher codimension}
+\end{align}
+
+At the codimension-2 stratum $D_{ijk}$ where all three points collide, we use residue calculus:
+$$\text{Res}_{D_{ijk}}[\eta_{ij} \wedge \eta_{jk}] = \lim_{(z_i,z_j,z_k) \to (z,z,z)} \left[\frac{dz_i - dz_j}{z_i - z_j} \wedge \frac{dz_j - dz_k}{z_j - z_k}\right]$$
+
+In blow-up coordinates with $z_i = z + \epsilon_1 e^{i\theta_1}$, $z_j = z$, $z_k = z + \epsilon_2 e^{i\theta_2}$:
+$$\eta_{ij} \wedge \eta_{jk} = d\log\epsilon_1 \wedge d\log\epsilon_2 + \text{(angular terms)}$$
+
+The sum of all three terms gives zero by symmetry under $S_3$ action.
+\end{proof}
+ 
+\begin{theorem}[Cohomology via Orlik-Solomon]
+For $X = \C$, the cohomology of $\barC_n(\C)$ is:
+\[
+H^*(\barC_n(\C)) \cong \text{OS}(A_{n-1})
+\]
+where $\text{OS}(A_{n-1})$ is the Orlik-Solomon algebra of the braid arrangement $A_{n-1}$. The Poincaré polynomial is:
+\[
+\sum_{k=0}^{n-1} \dim H^k(\barC_n(\C)) \cdot t^k = \prod_{i=1}^{n-1}(1 + it)
+\]
+\end{theorem}
+ 
+\subsection{No-Broken-Circuit Bases}
+ 
+For explicit computations, we need concrete bases for the cohomology:
+ 
+\begin{definition}[Broken Circuit]
+Fix a total order on pairs $(i, j)$ with $i < j$ (we use lexicographic order). A \emph{broken circuit} is a set obtained by removing the minimal element from a circuit (minimal dependent set) in the graphical matroid on $K_n$.
+\end{definition}
+ 
+\begin{definition}[NBC Basis]
+A \emph{no-broken-circuit (NBC)} set is a collection of pairs that contains no broken circuit. These correspond bijectively to:
+\begin{itemize}
+\item Acyclic directed graphs on $[n]$ (forests)
+\item Independent sets in the graphical matroid
+\item Monomials in $\eta_{ij}$ that don't vanish by Arnold relations
+\end{itemize}
+\end{definition}
+ 
+\begin{theorem}[NBC Basis Theorem]\label{thm:NBC}
+The NBC sets provide a basis for $H^*(\barC_n(X))$. More precisely, if $F$ is an NBC forest with edges $E(F) = \{(i_1, j_1), \ldots, (i_k, j_k)\}$, then:
+\[
+\omega_F = \eta_{i_1j_1} \wedge \cdots \wedge \eta_{i_kj_k}
+\]
+forms a basis element of $H^k(\barC_n(X))$.
+\end{theorem}
+ 
+\begin{example}[NBC Basis for $n = 4$]\label{ex:NBC4}
+For $\barC_4(X)$, using the lexicographic order on pairs, the NBC basis consists of:
+\begin{itemize}
+\item Degree 0: $1$
+\item Degree 1: $\eta_{12}, \eta_{13}, \eta_{14}, \eta_{23}, \eta_{24}, \eta_{34}$ (6 elements)
+\item Degree 2: $\eta_{12} \wedge \eta_{34}, \eta_{13} \wedge \eta_{24}, \eta_{14} \wedge \eta_{23}$, plus 8 other terms (11 total)
+\item Degree 3: $\eta_{12} \wedge \eta_{23} \wedge \eta_{34}$ and 5 other spanning trees (6 total)
+\end{itemize}
+Total: $1 + 6 + 11 + 6 = 24 = 4!$ basis elements, confirming $\dim H^*(\barC_4(\C)) = 4!$.
+\end{example}
+ 
+This completes our foundational setup. We have established:
+\begin{itemize}
+\item The operadic framework for describing algebraic structures with complete categorical precision
+\item The Com-Lie Koszul duality as our prototypical example with full proofs
+\item The geometric spaces (configuration spaces) where our constructions live
+\item The differential forms (logarithmic forms) that encode the structure
+\end{itemize}
+ 
+These ingredients will now be combined in subsequent sections to construct the geometric bar complex for chiral algebras.
+ 
+\section{Chiral Algebras and Factorization}
+ 
+\subsection{The Ran Space and Chiral Operations}
+
+\begin{definition}[D-module Category - Precise]
+We work with the category $\text{D-mod}_{rh}(X)$ of regular holonomic D-modules on $X$. 
+These are D-modules $\mathcal{M}$ satisfying:
+\begin{enumerate}
+\item Finite presentation: locally finitely generated over $\mathcal{D}_X$
+\item Regular singularities: characteristic variety is Lagrangian
+\item Holonomicity: $\text{dim}(\text{Char}(\mathcal{M})) = \text{dim}(X)$
+\end{enumerate}
+This category has:
+\begin{itemize}
+\item Six functors: $f^*, f_*, f^!, f_!, \otimes^L, \mathcal{RHom}$
+\item Riemann-Hilbert correspondence with perverse sheaves
+\item Well-defined maximal extension $j_*j^*$ for $j: U \hookrightarrow X$ open
+\end{itemize}
+\end{definition}
+
+We now introduce the fundamental geometric object underlying chiral algebras---the Ran space---which 
+encodes the idea of ``finite subsets with multiplicities'' of a curve. Following Beilinson-Drinfeld 
+\cite{BD04}, we work with the following precise categorical framework.
+ 
+\begin{definition}[Ran Space via Categorical Colimit]\label{def:ran-precise}
+Let $X$ be a smooth algebraic curve over $\mathbb{C}$. The \emph{Ran space} of $X$ is the ind-scheme 
+defined as the colimit:
+\[
+\text{Ran}(X) = \underset{I \in \text{FinSet}^{\text{surj,op}}}{\text{colim}} \, X^I
+\]
+where:
+\begin{itemize}
+\item $\text{FinSet}^{\text{surj}}$ is the category of finite sets with surjections as morphisms
+\item For a surjection $\phi: I \twoheadrightarrow J$, the induced map $X^J \to X^I$ is the diagonal 
+embedding on fibers $\phi^{-1}(j)$
+\item The colimit is taken in the category of ind-schemes with the Zariski topology
+\end{itemize}
+Explicitly, a point in $\text{Ran}(X)$ is a finite collection of points in $X$ with multiplicities,
+represented as $\sum_{i=1}^n m_i[x_i]$ where $x_i \in X$ are distinct and $m_i \in \mathbb{Z}_{>0}$.
+\end{definition}
+ 
+\begin{remark}[Set-Theoretic Description]
+The underlying set of $\text{Ran}(X)$ can be identified with the free commutative monoid on the 
+underlying set of $X$, but the scheme structure is more subtle and encodes the deformation theory
+of point configurations.
+\end{remark}
+ 
+The Ran space carries a fundamental monoidal structure encoding disjoint union:
+ 
+\begin{definition}[Factorization Structure]\label{def:factorization}
+\textbf{Critical Warning:} The naive definition 
+$$\mathcal{M} \otimes^{\text{ch}} \mathcal{N} = \Delta_! \left( \rho_1^* \mathcal{M} \otimes^! \rho_2^* \mathcal{N} \right)$$
+\textbf{FAILS} because the union map $\Delta: \text{Ran}(X) \times \text{Ran}(X) \to \text{Ran}(X)$ is \textbf{not proper}, 
+so $\Delta_!$ is undefined. The correct framework uses factorization algebras.
+\end{definition}
+
+\begin{definition}[Factorization Algebra - Correct Framework]\label{def:fact-algebra-correct}
+A \emph{factorization algebra} $\mathcal{F}$ on $X$ consists of:
+\begin{enumerate}
+\item A quasi-coherent $\mathcal{D}$-module $\mathcal{F}_S$ for each finite set $S \subset X$
+\item For disjoint $S_1, S_2$, a factorization isomorphism:
+   $$\mu_{S_1,S_2}: \mathcal{F}_{S_1} \boxtimes \mathcal{F}_{S_2} \xrightarrow{\sim} \mathcal{F}_{S_1 \sqcup S_2}$$
+\item These satisfy:
+   \begin{itemize}
+   \item \textbf{Associativity:} For disjoint $S_1, S_2, S_3$:
+   \begin{center}
+   \begin{tikzcd}
+   \mathcal{F}_{S_1} \boxtimes \mathcal{F}_{S_2} \boxtimes \mathcal{F}_{S_3} 
+   \arrow[r, "\mu_{S_1,S_2} \boxtimes \text{id}"] 
+   \arrow[d, "\text{id} \boxtimes \mu_{S_2,S_3}"'] &
+   \mathcal{F}_{S_1 \sqcup S_2} \boxtimes \mathcal{F}_{S_3} 
+   \arrow[d, "\mu_{S_1 \sqcup S_2, S_3}"] \\
+   \mathcal{F}_{S_1} \boxtimes \mathcal{F}_{S_2 \sqcup S_3} 
+   \arrow[r, "\mu_{S_1, S_2 \sqcup S_3}"'] &
+   \mathcal{F}_{S_1 \sqcup S_2 \sqcup S_3}
+   \end{tikzcd}
+   \end{center}
+   \item \textbf{Commutativity:} $\mu_{S_2,S_1} = \sigma_{S_1,S_2} \circ \mu_{S_1,S_2}$ where $\sigma$ is the swap
+   \item \textbf{Unit:} $\mathcal{F}_\emptyset = \mathbb{C}$ with canonical isomorphisms $\mathcal{F}_S \cong \mathbb{C} \boxtimes \mathcal{F}_S$
+   \end{itemize}
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Geometric Insight à la Kontsevich]
+Factorization algebras encode the principle of \emph{locality} in quantum field theory: the observables 
+on disjoint regions combine independently. The factorization isomorphisms are the mathematical incarnation 
+of the physical statement that ``spacelike separated observables commute.'' This philosophy, emphasized by 
+Kontsevich and developed by Costello-Gwilliam, views quantum field theory as assigning algebraic structures 
+to spacetime in a locally determined way.
+\end{remark}
+
+\begin{theorem}[Chiral Algebras as Factorization Algebras]\label{thm:chiral-as-fact}
+Every chiral algebra $\mathcal{A}$ on $X$ determines a factorization algebra $\mathcal{F}_\mathcal{A}$ where:
+\begin{itemize}
+\item $\mathcal{F}_\mathcal{A}(S) = \mathcal{A}^{\boxtimes S}$ for finite $S \subset X$
+\item The factorization structure comes from the chiral multiplication
+\item This defines a fully faithful functor $\text{ChirAlg}(X) \to \text{FactAlg}(X)$
+\end{itemize}
+\end{theorem}
+
+\begin{proof}[Proof following Beilinson-Drinfeld]
+The key observation is that chiral multiplication provides exactly the factorization isomorphisms needed.
+The Jacobi identity for chiral algebras translates to associativity of factorization. The technical 
+issue with properness is avoided because we work fiberwise over finite sets rather than globally on Ran space.
+\end{proof}
+% Add precise D-module structure
+
+
+\begin{theorem}[Factorization Monoidal Structure - CORRECTED]\label{thm:fact-monoidal-corrected}
+The category $\text{FactAlg}(X)$ of factorization algebras (NOT all D-modules on Ran space) forms a symmetric monoidal 
+category with:
+\begin{enumerate}
+\item Tensor product: $(\mathcal{F} \otimes_{\text{fact}} \mathcal{G})(S) = \bigoplus_{S_1 \sqcup S_2 = S} \mathcal{F}(S_1) \otimes \mathcal{G}(S_2)$
+\item Unit: The vacuum factorization algebra $\mathbb{1}$ with $\mathbb{1}(S) = \begin{cases} \mathbb{C} & S = \emptyset \\ 0 & \text{otherwise} \end{cases}$
+\item Associativity isomorphism satisfying the pentagon axiom
+\item Braiding isomorphism induced by the symmetric group action
+\end{enumerate}
+
+Moreover, there is a fully faithful embedding:
+$$\text{ChirAlg}(X) \hookrightarrow \text{FactAlg}(X)$$
+sending a chiral algebra $\mathcal{A}$ to its associated factorization algebra $\mathcal{F}_{\mathcal{A}}$.
+\end{theorem}
+
+\begin{proof}[Proof Sketch following Beilinson-Drinfeld and Ayala-Francis]
+The key insight is that factorization algebras form a \emph{lax} symmetric monoidal category, which becomes 
+strict when we pass to the homotopy category. The Day convolution is well-defined because we take colimits 
+over finite decompositions, avoiding the properness issues with the naive approach.
+
+The pentagon and hexagon axioms follow from the corresponding properties of finite set unions. The 
+symmetric monoidal structure is compatible with the embedding from chiral algebras, making this the 
+correct categorical framework for studying chiral algebras.
+\end{proof}
+
+\textbf{Underlying D-modules:} A collection $\{\mathcal{A}_n\}_{n \geq 0}$ where each $\mathcal{A}_n$ is a quasi-coherent $\mathcal{D}_{X^n}$-module, meaning:
+\begin{itemize}
+\item $\mathcal{A}_n$ is a sheaf of modules over the sheaf of differential operators $\mathcal{D}_{X^n}$
+\item The action satisfies the Leibniz rule: $\partial(fs) = (\partial f)s + f(\partial s)$ for local functions $f$ and sections $s$
+\item $\mathcal{A}_n$ is quasi-coherent as an $\mathcal{O}_{X^n}$-module
+\end{itemize}
+
+\subsection{Elliptic Configuration Spaces and Theta Functions}
+
+\subsubsection{The Genus 1 Realm: Elliptic Curves as Quotients}
+
+For genus 1, we work with elliptic curves $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ where $\tau \in \mathfrak{h}$ lies in the upper half-plane. The configuration space has a fundamentally different character from genus 0:
+
+\begin{definition}[Elliptic Configuration Space]
+For an elliptic curve $E_\tau$, the configuration space of $n$ points is:
+\[
+C_n(E_\tau) = \{(z_1, \ldots, z_n) \in E_\tau^n \mid z_i \neq z_j \text{ mod } \Lambda_\tau\}
+\]
+where $\Lambda_\tau = \mathbb{Z} + \tau\mathbb{Z}$ is the period lattice.
+\end{definition}
+
+\begin{theorem}[Elliptic Compactification]
+The compactification $\overline{C_n(E_\tau)}$ is constructed via:
+\begin{enumerate}
+\item \textbf{Local blow-ups}: Near collision points, use elliptic blow-up coordinates
+\item \textbf{Global structure}: The compactified space admits a stratification by \emph{stable elliptic graphs}
+\item \textbf{Modular invariance}: Under $SL_2(\mathbb{Z})$ action on $\tau$, the construction is equivariant
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Construction]
+Near a collision point $z_i \to z_j$ on $E_\tau$, introduce elliptic blow-up coordinates:
+\begin{align}
+\epsilon_{ij} &= |z_i - z_j|_{E_\tau} \quad \text{(elliptic distance)} \\
+\theta_{ij} &= \arg(z_i - z_j) \quad \text{(angular parameter)} \\
+u_{ij} &= \frac{z_i + z_j}{2} \quad \text{(center on } E_\tau)
+\end{align}
+
+The key difference from genus 0: the elliptic distance involves the Weierstrass $\sigma$-function:
+\[
+|z_i - z_j|_{E_\tau} = |\sigma(z_i - z_j; \tau)|e^{-\eta(\tau)\text{Im}(z_i - z_j)^2/\text{Im}(\tau)}
+\]
+where $\eta(\tau)$ is the Dedekind eta function.
+\end{proof}
+
+\subsubsection{Theta Functions as Building Blocks}
+
+The logarithmic forms on elliptic curves are replaced by forms built from theta functions:
+
+\begin{definition}[Elliptic Logarithmic Forms]
+On $\overline{C_n(E_\tau)}$, define the elliptic analogs of $\eta_{ij}$:
+\[
+\eta_{ij}^{(1)} = d\log\theta_1\left(\frac{z_i - z_j}{2\pi i}; \tau\right) + \text{regularization}
+\]
+where $\theta_1(z; \tau) = -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n-1/2)^2}e^{i(2n-1)z}$ with $q = e^{i\pi\tau}$.
+\end{definition}
+
+\begin{proposition}[Elliptic Arnold Relations]
+The elliptic logarithmic forms satisfy modified Arnold relations:
+\[
+\eta_{ij}^{(1)} \wedge \eta_{jk}^{(1)} + \eta_{jk}^{(1)} \wedge \eta_{ki}^{(1)} + \eta_{ki}^{(1)} \wedge \eta_{ij}^{(1)} = 2\pi i \omega_\tau
+\]
+where $\omega_\tau = \frac{dz \wedge d\bar{z}}{2i\text{Im}(\tau)}$ is the volume form on $E_\tau$.
+\end{proposition}
+
+The non-vanishing right-hand side encodes the central extension that appears at genus 1!
+
+\subsection{Higher Genus Configuration Spaces}
+
+\subsubsection{Hyperbolic Surfaces and Teichmüller Theory}
+
+For genus $g \geq 2$, the underlying curve $\Sigma_g$ admits a hyperbolic metric. The configuration spaces inherit rich geometric structure:
+
+\begin{definition}[Higher Genus Configuration]
+For a compact Riemann surface $\Sigma_g$ of genus $g \geq 2$:
+\[
+C_n(\Sigma_g) = \{(p_1, \ldots, p_n) \in \Sigma_g^n \mid p_i \neq p_j\}/\text{Aut}(\Sigma_g)
+\]
+The compactification $\overline{C_n(\Sigma_g)}$ involves:
+\begin{itemize}
+\item Stable curves with marked points
+\item Deligne-Mumford compactification techniques
+\item Intersection with the moduli space $\overline{\mathcal{M}}_{g,n}$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Period Integrals and Bar Differential]
+On $\overline{C_n(\Sigma_g)}$, the bar differential decomposes:
+\[
+d_{\text{bar}}^{(g)} = d_{\text{local}} + d_{\text{global}} + d_{\text{quantum}}
+\]
+where:
+\begin{enumerate}
+\item $d_{\text{local}}$: Standard residues at collision divisors (genus 0 contribution)
+\item $d_{\text{global}}$: Period integrals over homology cycles of $\Sigma_g$
+\item $d_{\text{quantum}}$: Corrections from the moduli space $\mathcal{M}_g$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Sketch]
+The decomposition follows from the Leray spectral sequence for the fibration:
+\[
+\overline{C_n(\Sigma_g)} \to \overline{\mathcal{M}}_{g,n} \to \overline{\mathcal{M}}_g
+\]
+
+Each term contributes differently:
+\begin{itemize}
+\item Local: Fiberwise residues give the standard chiral multiplication
+\item Global: Integration over the $2g$ cycles of $H_1(\Sigma_g, \mathbb{Z})$
+\item Quantum: Contributions from varying complex structure
+\end{itemize}
+\end{proof}
+

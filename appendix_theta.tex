@@ -1,0 +1,63 @@
+\appendix
+\section{Theta Functions and Modular Forms}
+
+\subsection{Classical Theta Functions}
+
+The four Jacobi theta functions form the basis for all elliptic constructions:
+
+\begin{definition}[Jacobi Theta Functions]
+\begin{align}
+\vartheta_{00}(z|\tau) &\equiv \vartheta_3(z|\tau) = \sum_{n \in \mathbb{Z}} q^{n^2} e^{2\pi inz} \\
+\vartheta_{01}(z|\tau) &\equiv \vartheta_4(z|\tau) = \sum_{n \in \mathbb{Z}}(-1)^n q^{n^2} e^{2\pi inz} \\
+\vartheta_{10}(z|\tau) &\equiv \vartheta_2(z|\tau) = \sum_{n \in \mathbb{Z}} q^{(n+1/2)^2} e^{2\pi i(n+1/2)z} \\
+\vartheta_{11}(z|\tau) &\equiv \vartheta_1(z|\tau) = -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n+1/2)^2} e^{2\pi i(n+1/2)z}
+\end{align}
+where $q = e^{2\pi i\tau}$ is the nome.
+\end{definition}
+
+\subsection{Modular Transformation Laws}
+
+Under the generators of $SL_2(\mathbb{Z})$:
+$$T: \tau \mapsto \tau + 1, \quad S: \tau \mapsto -1/\tau$$
+
+The theta functions transform as:
+\begin{align}
+\vartheta_{ab}(z|\tau+1) &= e^{-\pi ia/2} \vartheta_{a,b+a}(z|\tau) \\
+\vartheta_{ab}(z/\tau|-1/\tau) &= (-i\tau)^{1/2} e^{\pi iz^2/\tau} \sum_{cd} K_{ab,cd} \vartheta_{cd}(z|\tau)
+\end{align}
+where $K$ is the kernel matrix encoding the modular transformation.
+
+\subsection{Higher Genus Theta Functions}
+
+For genus $g$, theta functions depend on $g \times g$ period matrices $\Omega$:
+$$\Theta[\epsilon](z|\Omega) = \sum_{n \in \mathbb{Z}^g} \exp\left[\pi i(n+\epsilon')^t\Omega(n+\epsilon') + 2\pi i(n+\epsilon')^t(z+\epsilon'')\right]$$
+where $\epsilon = (\epsilon', \epsilon'') \in (\mathbb{Z}_2)^{2g}$ is the characteristic.
+
+\subsection{Elliptic and Siegel Modular Forms}
+
+\begin{definition}[Weight $k$ Modular Form]
+A holomorphic function $f: \mathfrak{h} \to \mathbb{C}$ is a modular form of weight $k$ if:
+$$f\left(\frac{a\tau+b}{c\tau+d}\right) = (c\tau+d)^k f(\tau)$$
+for all $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \in SL_2(\mathbb{Z})$.
+\end{definition}
+
+Key examples:
+\begin{itemize}
+\item Eisenstein series: $E_{2k}(\tau) = 1 - \frac{4k}{B_{2k}}\sum_{n=1}^\infty \sigma_{2k-1}(n)q^n$
+\item Dedekind eta: $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$
+\item Discriminant: $\Delta(\tau) = \eta(\tau)^{24} = q\prod_{n=1}^\infty(1-q^n)^{24}$
+\end{itemize}
+
+For genus $g$, Siegel modular forms are functions on the Siegel upper half-space $\mathfrak{h}_g$ transforming under $Sp_{2g}(\mathbb{Z})$.
+
+\subsection{Elliptic Polylogarithms}
+
+The elliptic polylogarithms generalize classical polylogarithms:
+\[
+\text{Li}_n^{(g)}(z;\tau) = \sum_{k=1}^\infty \frac{q^k}{k^n}\frac{1}{1-zq^k}
+\]
+
+These appear in the genus $g$ bar differentials as:
+\[
+d^{(g)}_{\text{ell}} = \sum_{n=2}^{2g} \text{Li}_n^{(g)}(e^{2\pi iz};\tau) \cdot \eta^{\otimes n}
+\]
