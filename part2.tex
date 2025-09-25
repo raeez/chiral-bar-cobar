@@ -1,106 +1,111 @@
 
 \section{Configuration Spaces and Logarithmic Forms}
 
-% \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Section Overview]
-% \textbf{Key Questions:}
-% \begin{itemize}
-% \item How do we compactify configuration spaces to capture collision data?
-% \item What are logarithmic forms and why do they appear?
-% \item How do Arnold relations encode higher operadic structure?
-% \end{itemize}
 
-% \textbf{Main Results:}
-% \begin{itemize}
-% \item Theorem \ref{thm:FM-compactification}: Fulton-MacPherson compactification
-% \item Proposition \ref{prop:log-forms}: Logarithmic forms and residues
-% \item Example \ref{ex:config-P1}: Explicit computation for $\mathbb{P}^1$
-% \end{itemize}
-% \end{tcolorbox}
- 
-\subsection{The Relative Perspective}
-
-Following Grothendieck's philosophy of relative algebraic geometry, we work systematically in families:
-
-\begin{definition}[Relative Bar Complex]
-For a family of chiral algebras $\mathcal{A} \to S$ parametrized by a base $S$, the relative bar complex
-\[
-\chirbar_{S/\text{rel}}(\mathcal{A}) \to S
-\]
-lives over the relative configuration space $\Conf{\bullet}(X \times S/S)$.
-\end{definition}
-
-\begin{theorem}[Base Change]
-The geometric bar construction commutes with base change:
-\[
-f^*\chirbar_S(\mathcal{A}) \cong \chirbar_{S'}(f^*\mathcal{A})
-\]
-for any morphism $f: S' \to S$.
-\end{theorem}
-
-This relative viewpoint reveals:
+For a Riemann surface $\Sigma_g$ of genus $g$, the configuration space of $n$ points:
+$$C_n(\Sigma_g) = \Sigma_g^n \setminus \Delta$$
+has fundamental group $\pi_1(C_n(\Sigma_g))$ encoding both:
 \begin{itemize}
-\item Deformation theory: Families over $\text{Spec}(\mathbb{C}[\epsilon]/\epsilon^2)$
-\item Moduli spaces: Universal families over $\mathcal{M}_{\text{ChirAlg}}$
-\item Quantum groups: Families over $\text{Spec}(\mathbb{C}[[h]])$ with $h \to 0$ classical limit
+\item The braid group (genus 0 contribution)
+\item The surface mapping class group (higher genus contribution)
 \end{itemize}
 
-\subsection{Configuration Spaces of Curves}
+The Fulton-MacPherson compactification $\overline{C}_n(\Sigma_g)$ stratifies as:
+$$\overline{C}_n(\Sigma_g) = \coprod_{\Gamma \in \mathcal{G}_{g,n}} C_{\Gamma}$$
+where $\mathcal{G}_{g,n}$ are stable graphs of genus $g$ with $n$ marked points.
+
+\section{Period Coordinates at Higher Genus}
+
+At genus $g$, we have additional coordinates from:
+\begin{itemize}
+\item Period matrix $\Omega \in \mathcal{H}_g$ (Siegel upper half-space)
+\item Marking of homology basis $\{a_i, b_i\}_{i=1}^g$
+\item Choice of spin structure (quadratic refinement)
+\end{itemize}
+
+These appear in correlation functions through:
+$$\langle \prod_i \phi_i(z_i) \rangle_g = \sum_{\text{spin}} \int_{\mathcal{F}_g} d\mu(\Omega) \, F(\Omega, z_i, \phi_i)$$
+where $\mathcal{F}_g$ is a fundamental domain for $\text{Sp}(2g, \mathbb{Z})$.
+
+\section{The Genus-Stratified Bar Construction}
+
+The total bar complex becomes:
+$$\text{Bar}(\mathcal{A}) = \bigoplus_{g=0}^{\infty} \bigoplus_{n=0}^{\infty} \text{Bar}^{(g),n}(\mathcal{A})$$
+with the genus grading preserved by the differential:
+$$d: \text{Bar}^{(g),n} \to \text{Bar}^{(g),n-1} \oplus \text{Bar}^{(g-1),n+1}$$
+
+The second term corresponds to degeneration of the surface:
+\begin{itemize}
+\item Separating node: $\Sigma_g \to \Sigma_{g_1} \cup \Sigma_{g_2}$, $g_1 + g_2 = g$
+\item Non-separating node: $\Sigma_g \to \Sigma_{g-1}$ with two marked points
+\end{itemize}
+
+\subsection{Configuration Spaces of Curves Across Genera}
  
-We now introduce the geometric spaces that will support our bar complexes. Throughout this section, $X$ denotes a smooth algebraic curve over $\C$ of dimension 1.
+We now introduce the geometric spaces that will support our genus-graded bar complexes. Throughout this section, $\Sigma_g$ denotes a Riemann surface of genus $g$.
  
-\begin{definition}[Configuration Space]
-For a smooth algebraic curve $X$ over $\C$, the configuration space of $n$ distinct ordered points is:
+\begin{definition}[Configuration Space at Genus $g$]
+For a Riemann surface $\Sigma_g$ of genus $g$, the configuration space of $n$ distinct ordered points is:
 \[
-C_n(X) = \{(x_1, \ldots, x_n) \in X^n \mid x_i \neq x_j \text{ for all } i \neq j\}
+C_n(\Sigma_g) = \{(x_1, \ldots, x_n) \in \Sigma_g^n \mid x_i \neq x_j \text{ for all } i \neq j\}
 \]
-This is a smooth quasi-projective variety of dimension $n \cdot \dim X = n$ when $\dim X = 1$.
+This is a smooth complex manifold of dimension $n$ with additional structure from the genus.
 
 \begin{notation}
 Throughout this paper:
 \begin{itemize}
-\item $C_n(X)$ denotes the open configuration space
-\item $\overline{C_n(X)}$ denotes its Fulton-MacPherson compactification  
-\item $\partial\overline{C_n(X)} = \overline{C_n(X)} \setminus C_n(X)$ denotes the boundary divisor
+\item $C_n^{(g)}(\Sigma_g)$ denotes the open configuration space at genus $g$
+\item $\overline{C}_n^{(g)}(\Sigma_g)$ denotes its Fulton-MacPherson compactification  
+\item $\partial\overline{C}_n^{(g)}(\Sigma_g) = \overline{C}_n^{(g)}(\Sigma_g) \setminus C_n^{(g)}(\Sigma_g)$ denotes the boundary divisor
+\item When genus is clear, we write $C_n^{(g)}$ or $C_n$ for simplicity
 \end{itemize}
 \end{notation}
 
 \end{definition}
  
-\begin{proposition}[Fundamental Group]
-The fundamental group $\pi_1(C_n(X))$ is the pure braid group $P_n(X)$ on $n$ strands over $X$. For $X = \C$, this is the kernel of $B_n \to S_n$ where $B_n$ is the Artin braid group with generators $\sigma_i$ ($i = 1, \ldots, n-1$) and relations:
+\begin{proposition}[Fundamental Group Across Genera]
+The fundamental group $\pi_1(C_n(\Sigma_g))$ depends on the genus:
+\begin{itemize}
+\item \textbf{Genus 0:} Pure braid group $P_n$ on $n$ strands (Artin braid group modulo center)
+\item \textbf{Genus 1:} Extension of $P_n$ by elliptic braid group with modular structure
+\item \textbf{Genus $g \geq 2$:} Extension by surface braid group with mapping class group action
+\end{itemize}
+
+For genus 0 ($X = \mathbb{C}$), this is the kernel of $B_n \to S_n$ where $B_n$ is the Artin braid group with generators $\sigma_i$ ($i = 1, \ldots, n-1$) and relations:
 \begin{align}
 \sigma_i\sigma_j &= \sigma_j\sigma_i \quad \text{if } |i-j| > 1 \\
 \sigma_i\sigma_{i+1}\sigma_i &= \sigma_{i+1}\sigma_i\sigma_{i+1} \quad \text{(braid relations)}
 \end{align}
 \end{proposition}
  
-The configuration space $C_n(X)$ is highly non-compact, with "points at infinity" corresponding to various collision patterns. The Fulton-MacPherson compactification provides a canonical way to add these points:
+The configuration space $C_n(\Sigma_g)$ is highly non-compact, with "points at infinity" corresponding to various collision patterns. The Fulton-MacPherson compactification provides a canonical way to add these points, with additional structure from the genus:
  
-\subsection{The Fulton-MacPherson Compactification}
+\subsection{The Fulton-MacPherson Compactification Across Genera}
  
-\begin{theorem}[Fulton-MacPherson Compactification \cite{FM94}]\label{thm:FM}
-There exists a smooth compactification $\overline{C_n(X)}$ with a natural stratification by combinatorial type. More precisely, we have
+\begin{theorem}[Fulton-MacPherson Compactification at Genus $g$ \cite{FM94}]\label{thm:FM}
+There exists a smooth compactification $\overline{C}_n(\Sigma_g)$ with a natural stratification by combinatorial type and genus. More precisely, we have
 a functorial compactification
-\[j: C_n(X) \hookrightarrow \overline{C_n(X)}\]
-where $\overline{C_n(X)}$ is obtained by iterated blow-ups along diagonals.
+\[j: C_n(\Sigma_g) \hookrightarrow \overline{C}_n(\Sigma_g)\]
+where $\overline{C}_n(\Sigma_g)$ is obtained by iterated blow-ups along diagonals.
 
 The compactification has the following properties:
 \begin{enumerate}
-\item The complement $D = \barC_n(X) \setminus C_n(X)$ is a normal crossing divisor
-\item Boundary strata are indexed by nested partitions of $\{1, \ldots, n\}$ (equivalently, by rooted trees with $n$ leaves)
-\item For each stratum $D_\pi$ corresponding to partition $\pi = \{B_1, \ldots, B_k\}$:
+\item The complement $D = \overline{C}_n(\Sigma_g) \setminus C_n(\Sigma_g)$ is a normal crossing divisor
+\item Boundary strata are indexed by stable graphs $\Gamma \in \mathcal{G}_{g,n}$ with genus $g$ and $n$ marked points
+\item For each stratum $D_\Gamma$ corresponding to stable graph $\Gamma$:
 \[
-D_\pi \cong \barC_k(X) \times \prod_{i=1}^k \barC_{|B_i|}(\C)
+D_\Gamma \cong \prod_{v \in V(\Gamma)} \overline{C}_{n(v)}(\Sigma_{g(v)})
 \]
-where the first factor records the positions of "bubbles" and the product records configurations within each bubble
-\item The compactification is functorial for smooth morphisms and open embeddings of curves
+where $g(v)$ is the genus of vertex $v$ and $n(v)$ is the number of marked points
+\item The compactification is functorial for smooth morphisms and includes period matrix coordinates
+\item At genus $g \geq 1$, additional boundary strata correspond to degenerating cycles
 \end{enumerate}
 \end{theorem}
  
-\begin{proof}[Construction Sketch]
-The compactification is obtained by a sequence of blow-ups:
+\begin{proof}[Construction Sketch Across Genera]
+The compactification is obtained by a sequence of blow-ups that depends on the genus:
 \begin{enumerate}
-\item Start with $X^n$
+\item Start with $\Sigma_g^n$
 \item Blow up the smallest diagonal $\Delta_n = \{x_1 = \cdots = x_n\}$
 \item Blow up the proper transforms of all partial diagonals $\Delta_I = \{x_i = x_j : i,j \in I\}$ in order of decreasing codimension
 \item The exceptional divisors encode:
@@ -108,14 +113,15 @@ The compactification is obtained by a sequence of blow-ups:
 \item Which points collide (given by the partition)
 \item Relative rates of approach (radial coordinates in the blow-up)
 \item Relative angles of approach (angular coordinates)
+\item At genus $g \geq 1$: Period matrix coordinates and spin structures
 \end{itemize}
 \end{enumerate}
  
-The key insight is that the blow-up process naturally records the "speed" and "direction" of collisions, not just which points collide. The normal crossing property follows from the careful ordering of blow-ups, ensuring transversality at each step.
+The key insight is that the blow-up process naturally records the "speed" and "direction" of collisions, not just which points collide. At higher genus, it also records the topological structure through period matrices. The normal crossing property follows from the careful ordering of blow-ups, ensuring transversality at each step.
 \end{proof}
  
-\begin{example}[Configuration Space of $\mathbb{P}^1$]\label{ex:config-P1}
-For $X = \mathbb{P}^1$, we compute $\overline{C}_3(\mathbb{P}^1)$ explicitly:
+\begin{example}[Configuration Spaces Across Genera]\label{ex:config-genera}
+\textbf{Genus 0 ($\mathbb{P}^1$):} We compute $\overline{C}_3(\mathbb{P}^1)$ explicitly:
 \begin{enumerate}
 \item The open configuration space: $C_3(\mathbb{P}^1) = \{(z_1, z_2, z_3) \in (\mathbb{P}^1)^3 : z_i \neq z_j\}$
 
@@ -129,18 +135,42 @@ For $X = \mathbb{P}^1$, we compute $\overline{C}_3(\mathbb{P}^1)$ explicitly:
    \end{itemize}
 
 \item Result: $\overline{C}_3(\mathbb{P}^1) \cong \mathbb{P}^1$ with three marked points
-
-\item The logarithmic forms:
-   $$\eta_{12} = d\log\lambda, \quad \eta_{23} = d\log(1-\lambda), \quad \eta_{13} = -d\log\lambda$$
-   
-\item Key relation (Arnold relation):
-   $$\eta_{12} + \eta_{23} + \eta_{13} = d\log\lambda + d\log(1-\lambda) - d\log\lambda = d\log(1-\lambda) \neq 0$$
-   
-   But when pulled back to any 2-dimensional stratum:
-   $$\eta_{12} + \eta_{23} + \eta_{13}|_{\text{boundary}} = 0$$
 \end{enumerate}
 
-This exemplifies how configuration spaces encode both local (OPE) and global (monodromy) data.
+\textbf{Genus 1 (Torus):} For $\Sigma_1 = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$:
+\begin{enumerate}
+\item The configuration space includes modular parameter $\tau \in \mathcal{H}$
+\item Boundary divisors include collisions AND degenerating cycles
+\item Additional coordinates from period integrals
+\end{enumerate}
+
+\textbf{Genus $g \geq 2$:} For $\Sigma_g$:
+\begin{enumerate}
+\item Configuration space includes period matrix $\Omega \in \mathcal{H}_g$
+\item Boundary stratification includes stable graphs
+\item Spin structures and theta characteristics appear
+\end{enumerate}
+
+The logarithmic forms at each genus:
+\begin{itemize}
+\item \textbf{Genus 0:} Standard forms $\eta_{ij} = d\log(z_i - z_j)$
+\item \textbf{Genus 1:} Elliptic forms $\eta_{ij}^{(1)} = d\log\vartheta_1(z_i - z_j|\tau)$ with modular parameter
+\item \textbf{Genus $g \geq 2$:} Siegel forms $\eta_{ij}^{(g)} = d\log\Theta[\delta](z_i - z_j|\Omega)$ with period matrix
+\end{itemize}
+
+Key relations (Arnold relations extended):
+\begin{itemize}
+\item \textbf{Genus 0:} $\eta_{12} + \eta_{23} + \eta_{13} = d\log(1-\lambda) \neq 0$ (exact form)
+\item \textbf{Genus 1:} Elliptic corrections from modular transformations
+\item \textbf{Genus $g \geq 2$:} Siegel modular corrections from period integrals
+\end{itemize}
+
+But when pulled back to any 2-dimensional stratum:
+$$\eta_{12} + \eta_{23} + \eta_{13}|_{\text{boundary}} = 0$$
+
+This vanishing on boundary strata is crucial for the bar differential to satisfy $d^2 = 0$.
+
+This exemplifies how configuration spaces encode both local (OPE) and global (monodromy) data across all genera.
 \end{example}
  
 \subsection{Logarithmic Differential Forms}

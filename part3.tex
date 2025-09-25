@@ -1,105 +1,164 @@
+\chapter{Explicit Genus Expansions}
+
+\section{Free Boson at All Genera}
+
+The free boson with $c=1$ has partition function:
+$$Z_g^{\text{boson}} = \left[\det'(\Delta_g)\right]^{-1/2}$$
+
+Explicit formulas by genus:
+\begin{itemize}
+\item $g=0$: $Z_0 = 1$ (trivial)
+\item $g=1$: $Z_1(\tau) = |\eta(\tau)|^{-2}$ where $\eta$ is Dedekind eta
+\item $g=2$: $Z_2(\Omega) = |\Psi_{10}(\Omega)|^{-1/2}$ where $\Psi_{10}$ is the weight-10 cusp form
+\item General $g$: $Z_g = \exp\left(-\frac{1}{2}\zeta'(-1) \chi(\Sigma_g)\right)$
+\end{itemize}
+
+\section{The $\beta\gamma$ System Across Genera}
+
+For weight $\lambda$, the correlation functions are:
+$$\beta(z)\gamma(w) \sim \frac{1}{z-w}$$
+
+At genus $g$:
+$$\langle \prod_i \beta(z_i) \prod_j \gamma(w_j) \rangle_g = \frac{\det G_{ij}^{(g)}}{\left[\det(\text{Im}\Omega)\right]^{\lambda}}$$
+where $G_{ij}^{(g)}$ is the period-normalized Green's function.
+
+The genus expansion of the partition function:
+$$Z_g^{\beta\gamma}(\lambda) = \left[\det(\text{Im}\Omega)\right]^{(1-g)(1-2\lambda)} \prod_{n=1}^{\infty} |1-q^n|^{-2(1-2\lambda)(1-g)}$$
+
+\section{Lattice VOAs: From Torus to Higher Genus}
+
+For a lattice $\Lambda$ of rank $d$:
+
+\begin{itemize}
+\item Genus 1: $Z_1 = \frac{\Theta_\Lambda(\tau)}{[\eta(\tau)]^d}$
+\item Genus 2: Involves Riemann theta functions $\Theta[\delta](\Omega)$
+\item General genus: Siegel theta series
+\end{itemize}
+
+The modular transformations become:
+$$\Theta_\Lambda(\gamma \cdot \Omega) = \det(C\Omega + D)^{d/2} e^{i\pi \text{Tr}(C(C\Omega+D)^{-1}\Lambda)} \Theta_\Lambda(\Omega)$$
+for $\gamma = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \in \text{Sp}(2g, \mathbb{Z})$.
+
+\section{W-Algebras and Higgs Bundles}
+
+For $W^k(\mathfrak{g})$ at genus $g$:
+$$Z_g^W = \int_{\mathcal{M}_{\text{Higgs}}^g(\mathfrak{g})} \exp\left(k \, \omega_{\text{Hitchin}}\right)$$
+
+This connects to:
+\begin{itemize}
+\item Hitchin integrable system at genus $g$
+\item Geometric Langlands correspondence
+\item Quantum geometric Langlands at higher genera
+\end{itemize}
+
 \section{The Geometric Bar Complex}
 
-% \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Section Overview]
-% \textbf{Key Questions:}
-% \begin{itemize}
-% \item How do we geometrically realize the abstract bar construction?
-% \item Why does the differential square to zero?
-% \item How do residues extract algebraic structure?
-% \end{itemize}
+For a chiral algebra $\mathcal{A}$ on a Riemann surface $\Sigma_g$ of genus $g$, the geometric bar complex extends naturally across all genera:
 
-% \textbf{Main Results:}
-% \begin{itemize}
-% \item Theorem \ref{thm:geometric-bar}: Geometric bar complex construction
-% \item Theorem \ref{thm:d-squared-zero}: $d^2 = 0$ via Stokes and Jacobi
-% \item Theorem \ref{thm:bar-uniqueness}: Uniqueness and functoriality
-% \end{itemize}
-% \end{tcolorbox}
- 
-\subsection{Definition and Components}
+\begin{definition}[Genus-Graded Geometric Bar Complex]
+The bar complex at genus $g$ is:
+$$\bar{B}^{(g),n}(\mathcal{A}) = \Gamma\left(\overline{C}_{n+1}^{(g)}(\Sigma_g), j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n(\log D^{(g)})\right)$$
 
-\begin{definition}[Orientation Bundle - Explicit Construction]
-For the configuration space $C_{p+1}(X)$, the orientation bundle $\text{or}_{p+1}$ is the determinant line bundle of the tangent bundle, twisted by the sign representation. Explicitly:
+where:
+\begin{itemize}
+\item $\overline{C}_{n+1}^{(g)}(\Sigma_g)$ is the Fulton-MacPherson compactification at genus $g$
+\item $D^{(g)}$ is the boundary divisor with genus-dependent stratification
+\item $\Omega^n(\log D^{(g)})$ includes period integrals and modular forms
+\end{itemize}
 
-$$\text{or}_{p+1} = \det(TC_{p+1}(X)) \otimes \text{sgn}_{p+1}$$
+The total bar complex becomes:
+$$\bar{B}(\mathcal{A}) = \bigoplus_{g=0}^{\infty} \bar{B}^{(g)}(\mathcal{A})$$
+\end{definition}
+
+\begin{definition}[Orientation Bundle Across Genera]
+For the configuration space $C_{p+1}^{(g)}(\Sigma_g)$, the orientation bundle includes genus-dependent factors:
+
+$$\text{or}_{p+1}^{(g)} = \det(TC_{p+1}^{(g)}(\Sigma_g)) \otimes \text{sgn}_{p+1} \otimes \mathcal{L}_g$$
 
 where:
 \begin{enumerate}
-\item $\det(TC_{p+1}(X))$ is the top exterior power of the tangent bundle
+\item $\det(TC_{p+1}^{(g)}(\Sigma_g))$ is the top exterior power of the tangent bundle
 \item $\text{sgn}_{p+1}$ is the sign representation of $S_{p+1}$
-\item The tensor product ensures that exchanging two points introduces a sign
+\item $\mathcal{L}_g$ encodes the genus-dependent orientation from the period matrix
 \end{enumerate}
 
 This construction ensures:
 \begin{enumerate}
 \item The differential squares to zero by ensuring consistent signs across all face maps
 \item Compatibility with the symmetric group action on configuration spaces
-\item The correct signs in the $A_\infty$ relations
+\item The correct signs in the genus-graded $A_\infty$ relations
+\item Modular covariance under $\text{Sp}(2g, \mathbb{Z})$ transformations
 \end{enumerate}
 \end{definition}
 
-\begin{remark}[Orientation Convention]
-For computational purposes, we fix an orientation by choosing:
+\begin{remark}[Orientation Convention Across Genera]
+For computational purposes, we fix an orientation at each genus by choosing:
 \begin{enumerate}
-\item Start with the orientation sheaf of the real blow-up $\widetilde{C}_{p+1}(\mathbb{R})$
-\item Complexify to get an orientation of $\overline{C}_{p+1}(\mathbb{C})$ 
+\item Start with the orientation sheaf of the real blow-up $\widetilde{C}_{p+1}^{(g)}(\mathbb{R})$
+\item Complexify to get an orientation of $\overline{C}_{p+1}^{(g)}(\mathbb{C})$ 
 \item Tensor with $\text{sgn}_{p+1}$ (sign representation of $S_{p+1}$) to ensure:
-   $$\sigma^* \text{or}_{p+1} = \text{sign}(\sigma) \cdot \text{or}_{p+1}$$
+   $$\sigma^* \text{or}_{p+1}^{(g)} = \text{sign}(\sigma) \cdot \text{or}_{p+1}^{(g)}$$
    for $\sigma \in S_{p+1}$
-\item The resulting line bundle satisfies: sections change sign when two points are exchanged
+\item At genus $g \geq 1$, include period matrix orientation $\mathcal{L}_g$
+\item The resulting line bundle satisfies: sections change sign when two points are exchanged and are modular covariant
 \end{enumerate}
 This construction ensures the bar differential squares to zero.
 \end{remark}
 
 We now construct the geometric bar complex, making all components mathematically precise:
  
-\begin{remark}[Intuition à la Witten]
-To understand why configuration spaces appear naturally, consider the path integral formulation. In 2d CFT, correlation functions of chiral operators $\phi_1(z_1), \ldots, \phi_n(z_n)$ are computed by:
+\begin{remark}[Intuition à la Witten Across Genera]
+To understand why configuration spaces appear naturally across all genera, consider the path integral formulation. In 2d CFT, correlation functions of chiral operators $\phi_1(z_1), \ldots, \phi_n(z_n)$ are computed by the genus expansion:
 \[
-\langle \phi_1(z_1) \cdots \phi_n(z_n) \rangle = \int_{\text{field space}} \mathcal{D}\phi \, e^{-S[\phi]} \phi_1(z_1) \cdots \phi_n(z_n)
+\langle \phi_1(z_1) \cdots \phi_n(z_n) \rangle = \sum_{g=0}^{\infty} \lambda^{2g-2} \int_{\text{field space}} \mathcal{D}\phi \, e^{-S[\phi]} \phi_1(z_1) \cdots \phi_n(z_n)
 \]
-The singularities as $z_i \to z_j$ encode the operator algebra structure. Mathematically:
+The singularities as $z_i \to z_j$ encode the operator algebra structure at each genus. Mathematically:
 \begin{itemize}
-\item Configuration space $C_n(X) = X^n \setminus \{\text{diagonals}\}$ parametrizes non-colliding points
-\item Compactification $\overline{C}_n(X)$ adds "points at infinity" representing collisions
-\item Logarithmic forms $d\log(z_i - z_j)$ have poles precisely capturing OPE singularities
-\item The bar differential computes quantum corrections via residues
+\item Configuration space $C_n(\Sigma_g) = \Sigma_g^n \setminus \{\text{diagonals}\}$ parametrizes non-colliding points on genus $g$ surface
+\item Compactification $\overline{C}_n(\Sigma_g)$ adds "points at infinity" representing collisions AND degenerating cycles
+\item Logarithmic forms $d\log(z_i - z_j)$ have poles capturing OPE singularities with genus corrections
+\item The bar differential computes quantum corrections via residues and period integrals
+\item Each genus contributes specific modular forms and period integrals
 \end{itemize}
-This transforms the abstract algebraic problem into geometric integration --- the hallmark of physical mathematics.
+This transforms the abstract algebraic problem into geometric integration across all genera --- the complete quantum description.
 \end{remark}
 
-\begin{definition}[Orientation Line Bundle]\label{def:orientation}
-The \emph{orientation line bundle} $\text{or}_{p+1}$ on $\overline{C}_{p+1}(X)$ is defined as:
+\begin{definition}[Orientation Line Bundle Across Genera]\label{def:orientation}
+The \emph{orientation line bundle} $\text{or}_{p+1}^{(g)}$ on $\overline{C}_{p+1}(\Sigma_g)$ is defined as:
 \[
-\text{or}_{p+1} = \det(T\overline{C}_{p+1}(X)) \otimes \text{sgn}_{p+1}
+\text{or}_{p+1}^{(g)} = \det(T\overline{C}_{p+1}(\Sigma_g)) \otimes \text{sgn}_{p+1} \otimes \mathcal{L}_g
 \]
 where:
 \begin{itemize}
-\item $\det(T\overline{C}_{p+1}(X))$ is the top exterior power of the tangent bundle
+\item $\det(T\overline{C}_{p+1}(\Sigma_g))$ is the top exterior power of the tangent bundle
 \item $\text{sgn}_{p+1}$ is the sign representation of $\mathfrak{S}_{p+1}$
-\item The tensor product ensures that exchanging two points introduces a sign
+\item $\mathcal{L}_g$ is the genus-dependent orientation bundle from period matrix
+\item The tensor product ensures that exchanging two points introduces a sign and modular covariance
 \end{itemize}
-This construction ensures the bar differential squares to zero by maintaining consistent signs across all face maps.
+This construction ensures the bar differential squares to zero by maintaining consistent signs across all face maps and genus levels.
 \end{definition}
 
-\begin{definition}[Geometric Bar Complex]\label{def:geom-bar}
-For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, the \emph{geometric bar complex} is the bigraded complex:
+\begin{definition}[Genus-Graded Geometric Bar Complex]\label{def:geom-bar}
+For a chiral algebra $\mathcal{A}$ on a Riemann surface $\Sigma_g$ of genus $g$, the \emph{genus-graded geometric bar complex} is the bigraded complex:
 \[
-\bar{B}^{\text{ch}}_{p,q}(\mathcal{A}) = \Gamma\left(\overline{C}_{p+1}(X), j_*j^*\mathcal{A}^{\boxtimes(p+1)} \otimes \Omega^q_{\overline{C}_{p+1}(X)}(\log D) \otimes \text{or}_{p+1}\right)
+\bar{B}^{(g)}_{p,q}(\mathcal{A}) = \Gamma\left(\overline{C}_{p+1}(\Sigma_g), j_*j^*\mathcal{A}^{\boxtimes(p+1)} \otimes \Omega^q_{\overline{C}_{p+1}(\Sigma_g)}(\log D^{(g)}) \otimes \text{or}_{p+1}^{(g)}\right)
 \]
 where:
 \begin{itemize}
-\item $\overline{C}_{p+1}(X)$ is the Fulton-MacPherson compactification of the configuration space
-\item $D = \overline{C}_{p+1}(X) \setminus C_{p+1}(X)$ is the boundary divisor with normal crossings
-\item $j: C_{p+1}(X) \hookrightarrow \overline{C}_{p+1}(X)$ is the open inclusion
-\item $\Omega^q_{\overline{C}_{p+1}(X)}(\log D)$ is the sheaf of logarithmic $q$-forms
-\item $\text{or}_{p+1}$ is the orientation bundle correcting signs for odd $p$
+\item $\overline{C}_{p+1}(\Sigma_g)$ is the Fulton-MacPherson compactification at genus $g$
+\item $D^{(g)} = \overline{C}_{p+1}(\Sigma_g) \setminus C_{p+1}(\Sigma_g)$ is the boundary divisor with genus-dependent stratification
+\item $j: C_{p+1}(\Sigma_g) \hookrightarrow \overline{C}_{p+1}(\Sigma_g)$ is the open inclusion
+\item $\Omega^q_{\overline{C}_{p+1}(\Sigma_g)}(\log D^{(g)})$ includes logarithmic forms and period integrals
+\item $\text{or}_{p+1}^{(g)}$ is the genus-graded orientation bundle
 \end{itemize}
+
+The total bar complex is:
+$$\bar{B}(\mathcal{A}) = \bigoplus_{g=0}^{\infty} \bar{B}^{(g)}(\mathcal{A})$$
 \end{definition}
  
-\begin{remark}[Orientation Bundle]
-The orientation bundle $\text{or}_{p+1}$ is necessary because configuration spaces are not naturally 
-oriented. It is the determinant line of $T_{C_{p+1}(X)}$, ensuring that our differential squares to zero.
+\begin{remark}[Orientation Bundle Across Genera]
+The orientation bundle $\text{or}_{p+1}^{(g)}$ is necessary because configuration spaces are not naturally 
+oriented at each genus. It is the determinant line of $T_{C_{p+1}(\Sigma_g)}$ with genus-dependent corrections, ensuring that our differential squares to zero across all genera and maintains modular covariance.
 \end{remark}
  
 \subsection{The Differential - Rigorous Construction}

@@ -1,82 +1,95 @@
 \appendix
-\section{Mathematical Foundations of Koszul Duality}
+\chapter{Koszul Duality Across Genera}
 
-\subsection{Definition and Basic Properties}
+\section{Genus-Graded Koszul Duality}
 
-\begin{definition}[Koszul Algebra]
-An associative algebra $A$ is \emph{Koszul} if:
-$$\text{Ext}_A^{i,j}(\mathbb{k}, \mathbb{k}) = 0 \text{ for } i \neq j$$
-where the bigrading is by homological degree and internal degree.
-\end{definition}
-
-\begin{theorem}[Koszul Duality Theorem]
-If $A$ is Koszul, then:
-$$A^! := \text{Ext}_A^*(\mathbb{k}, \mathbb{k})$$
-is also Koszul, and $(A^!)^! \cong A$.
+\begin{theorem}[Extended Koszul Duality]
+If $(\mathcal{A}, \mathcal{A}^!)$ form a genus-0 Koszul dual pair, then:
+$$\left(\bigoplus_{g \geq 0} \mathcal{A}^{(g)}, \bigoplus_{g \geq 0} (\mathcal{A}^!)^{(g)}\right)$$
+form a multi-genus Koszul dual pair with pairing:
+$$\langle -, - \rangle: \mathcal{A}^{(g)} \otimes (\mathcal{A}^!)^{(g)} \to \mathbb{C}[\![\hbar]\!]$$
+where $\hbar$ tracks the genus.
 \end{theorem}
 
-\subsection{Chiral Koszul Duality}
+\section{Definition and Basic Properties}
 
-For chiral algebras, we need a modified definition:
-
-\begin{definition}[Chiral Koszul Duality]
-Chiral algebras $\mathcal{A}$ and $\mathcal{B}$ are Koszul dual if:
-$$\text{RHom}_{\mathcal{A} \otimes \mathcal{B}}(\mathbb{C}, \mathbb{C}) \simeq \mathbb{C}$$
-in the derived category of chiral modules.
+\begin{definition}[Genus-Graded Koszul Algebra]
+A genus-graded associative algebra $\mathcal{A} = \bigoplus_{g \geq 0} \mathcal{A}^{(g)}$ is \emph{Koszul} if:
+$$\text{Ext}_{\mathcal{A}^{(g)}}^{i,j}(\mathbb{k}, \mathbb{k}) = 0 \text{ for } i \neq j$$
+where the bigrading is by homological degree and internal degree, and the Koszul property holds at each genus.
 \end{definition}
 
-\subsection{Curved and Filtered Generalizations}
+\begin{theorem}[Genus-Graded Koszul Duality Theorem]
+If $\mathcal{A}$ is genus-graded Koszul, then:
+$$\mathcal{A}^! := \bigoplus_{g \geq 0} \text{Ext}_{\mathcal{A}^{(g)}}^*(\mathbb{k}, \mathbb{k})$$
+is also genus-graded Koszul, and $(\mathcal{A}^!)^! \cong \mathcal{A}$.
+\end{theorem}
 
-\begin{definition}[Curved Koszul Duality]
-A curved algebra $(A, d, m_0)$ with $d^2 = m_0 \cdot \text{id}$ has curved dual:
-$$(A^!, d^!, m_0^!)$$
-where $m_0^! = -m_0$ under the pairing.
+\subsection{Genus-Graded Chiral Koszul Duality}
+
+For chiral algebras across all genera, we need a modified definition:
+
+\begin{definition}[Genus-Graded Chiral Koszul Duality]
+Genus-graded chiral algebras $\mathcal{A} = \bigoplus_{g \geq 0} \mathcal{A}^{(g)}$ and $\mathcal{B} = \bigoplus_{g \geq 0} \mathcal{B}^{(g)}$ are Koszul dual if:
+$$\text{RHom}_{\mathcal{A}^{(g)} \otimes \mathcal{B}^{(g)}}(\mathbb{C}, \mathbb{C}) \simeq \mathbb{C}$$
+in the derived category of chiral modules at each genus $g$, with modular covariance under $\text{Sp}(2g, \mathbb{Z})$ transformations.
 \end{definition}
 
-\subsection{Computational Tools}
+\subsection{Curved and Filtered Generalizations Across Genera}
 
-\begin{lemma}[Koszul Complex Resolution]
-For Koszul $A$, the minimal resolution of $\mathbb{k}$ is:
-$$\cdots \to A \otimes A^!_{(2)} \to A \otimes A^!_{(1)} \to A \to \mathbb{k}$$
-where $A^!_{(n)}$ is the degree $n$ part of $A^!$.
+\begin{definition}[Genus-Graded Curved Koszul Duality]
+A genus-graded curved algebra $(\mathcal{A}^{(g)}, d^{(g)}, m_0^{(g)})$ with $(d^{(g)})^2 = m_0^{(g)} \cdot \text{id}$ has curved dual:
+$$((\mathcal{A}^{(g)})^!, d^{!(g)}, m_0^{!(g)})$$
+where $m_0^{!(g)} = -m_0^{(g)}$ under the genus-graded pairing, with modular corrections from period integrals.
+\end{definition}
+
+\subsection{Computational Tools Across Genera}
+
+\begin{lemma}[Genus-Graded Koszul Complex Resolution]
+For genus-graded Koszul $\mathcal{A}$, the minimal resolution of $\mathbb{k}$ at genus $g$ is:
+$$\cdots \to \mathcal{A}^{(g)} \otimes (\mathcal{A}^!)_{(2)}^{(g)} \to \mathcal{A}^{(g)} \otimes (\mathcal{A}^!)_{(1)}^{(g)} \to \mathcal{A}^{(g)} \to \mathbb{k}$$
+where $(\mathcal{A}^!)_{(n)}^{(g)}$ is the degree $n$ part of $\mathcal{A}^!$ at genus $g$, with modular corrections from period integrals.
 \end{lemma}
 
-\subsection{Physical Interpretation}
+\subsection{Physical Interpretation Across Genera}
 
-In physics, Koszul duality appears as:
+In physics, genus-graded Koszul duality appears as:
 \begin{itemize}
-\item Electric-magnetic duality (abelian case)
-\item Open-closed string duality (topological strings)  
-\item Holographic duality (AdS/CFT)
-\item Mirror symmetry (A-model/B-model)
+\item Electric-magnetic duality with genus corrections (abelian case)
+\item Open-closed string duality with modular forms (topological strings)  
+\item Holographic duality with genus expansion (AdS/CFT)
+\item Mirror symmetry with period integrals (A-model/B-model)
+\item String amplitudes with genus-graded corrections
 \end{itemize}
 
-\subsection{Maurer-Cartan Elements and Twisting}
+\subsection{Genus-Graded Maurer-Cartan Elements and Twisting}
 
-\begin{theorem}[MC Elements Parametrize Deformations]
-For a chiral algebra $\mathcal{A}$ and its bar complex $\bar{B}^{\text{ch}}(\mathcal{A})$:
+\begin{theorem}[Genus-Graded MC Elements Parametrize Deformations]
+For a genus-graded chiral algebra $\mathcal{A} = \bigoplus_{g \geq 0} \mathcal{A}^{(g)}$ and its bar complex $\bar{B}(\mathcal{A})$:
 
-\textbf{1. Maurer-Cartan Equation:}
-$$\alpha \in \bar{B}^1_{\text{geom}}(\mathcal{A}), \quad d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$$
+\textbf{1. Genus-Graded Maurer-Cartan Equation:}
+$$\alpha^{(g)} \in \bar{B}^1_{\text{geom}}^{(g)}(\mathcal{A}), \quad d^{(g)}\alpha^{(g)} + \frac{1}{2}[\alpha^{(g)}, \alpha^{(g)}] = 0$$
+with modular corrections from period integrals.
 
-\textbf{2. Twisting:}
-Each MC element $\alpha$ yields a twisted differential:
-$$d_{\alpha} = d + [\alpha, -]$$
-with $(d_{\alpha})^2 = 0$.
+\textbf{2. Genus-Graded Twisting:}
+Each MC element $\alpha^{(g)}$ yields a twisted differential:
+$$d_{\alpha^{(g)}}^{(g)} = d^{(g)} + [\alpha^{(g)}, -]$$
+with $(d_{\alpha^{(g)}}^{(g)})^2 = 0$ and modular covariance.
 
-\textbf{3. Deformation:}
-MC elements correspond to first-order deformations of $\mathcal{A}$:
-$$\mu_{\alpha}(a \otimes b) = \mu(a \otimes b) + \langle \alpha, a \otimes b \rangle$$
+\textbf{3. Genus-Graded Deformation:}
+MC elements correspond to first-order deformations of $\mathcal{A}^{(g)}$:
+$$\mu_{\alpha^{(g)}}^{(g)}(a \otimes b) = \mu^{(g)}(a \otimes b) + \langle \alpha^{(g)}, a \otimes b \rangle$$
+with genus corrections.
 
-\textbf{4. Geometric Interpretation:}
+\textbf{4. Geometric Interpretation Across Genera:}
 On configuration spaces, MC elements are:
 \begin{itemize}
-\item Closed 1-forms on $\overline{C}_2(X)$ with prescribed residues
-\item Flat connections on the punctured configuration space
-\item Solutions to the classical Yang-Baxter equation
+\item Closed 1-forms on $\overline{C}_2^{(g)}(\Sigma_g)$ with prescribed residues and period integrals
+\item Flat connections on the punctured configuration space with modular structure
+\item Solutions to the classical Yang-Baxter equation with genus corrections
 \end{itemize}
 
-\textbf{5. Moduli Space:}
-$$\mathcal{M}_{\text{MC}}(\mathcal{A}) = \{\text{MC elements}\}/\text{gauge equivalence}$$
-parametrizes deformations of the chiral algebra structure.
+\textbf{5. Genus-Graded Moduli Space:}
+$$\mathcal{M}_{\text{MC}}^{(g)}(\mathcal{A}) = \{\text{MC elements at genus } g\}/\text{gauge equivalence}$$
+parametrizes deformations of the chiral algebra structure at each genus.
 \end{theorem}

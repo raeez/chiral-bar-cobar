@@ -1,33 +1,72 @@
-\section{Extended Koszul Duality for Chiral Algebras}
- 
-\subsection{Classical Koszul Pairs}
+\chapter{Spectral Sequences and Computational Tools}
 
-\begin{definition}[Koszul Pair]
-Chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ form a Koszul pair if:
+\section{Genus Filtration Spectral Sequence}
+
+The genus filtration induces a spectral sequence:
+$$E_1^{p,q} = H^q(\text{Bar}^{(p)}(\mathcal{A})) \Rightarrow H^{p+q}(\text{Bar}(\mathcal{A}))$$
+
+The differentials encode:
+\begin{itemize}
+\item $d_1$: Degeneration of curves (nodes forming)
+\item $d_2$: Bubble corrections (genus reduction)
+\item $d_r$: Higher quantum corrections
+\end{itemize}
+
+\section{Feynman Rules for Higher Genus}
+
+The contribution from a stable graph $\Gamma$:
+$$A_{\Gamma} = \frac{1}{|\text{Aut}(\Gamma)|} \prod_{v \in V} C_v \prod_{e \in E} P_e$$
+where:
+\begin{itemize}
+\item Vertices $v$: Correlation functions on $\Sigma_{g(v)}$
+\item Edges $e$: Propagators (Green's functions)
+\item Loops: Integration over moduli
+\end{itemize}
+
+\section{Resurgence and Non-Perturbative Effects}
+
+The genus expansion exhibits resurgent structure:
+$$Z = \sum_{g=0}^{\infty} \lambda^{2g-2} Z_g + \sum_{\text{instantons}} e^{-S_{\text{inst}}/\lambda} Z_{\text{inst}}$$
+
+Trans-series sectors correspond to:
+\begin{itemize}
+\item D-branes wrapping cycles
+\item Worldsheet instantons
+\item Non-perturbative condensates
+\end{itemize}
+
+\section{Extended Koszul Duality Across Genera}
+ 
+\subsection{Genus-Graded Koszul Pairs}
+
+\begin{definition}[Genus-Graded Koszul Pair]
+Chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ form a genus-graded Koszul pair if:
 \begin{enumerate}
-\item There exist quasi-coherent chiral coalgebras $\mathcal{C}_1, \mathcal{C}_2$ with:
-   $$\mathcal{A}_1 \xrightarrow{\sim} \Omega^{ch}(\mathcal{C}_2), \quad \mathcal{A}_2 \xrightarrow{\sim} \Omega^{ch}(\mathcal{C}_1)$$
-\item The coalgebras are computed by bar construction:
-   $$\mathcal{C}_1 \simeq \bar{B}^{ch}(\mathcal{A}_1), \quad \mathcal{C}_2 \simeq \bar{B}^{ch}(\mathcal{A}_2)$$
-\item The Koszul complex $K_*(\mathcal{A}_1, \mathcal{A}_2) = \bar{B}^{ch}(\mathcal{A}_1) \otimes_{\mathcal{A}_1} \mathcal{A}_2$
+\item There exist quasi-coherent chiral coalgebras $\mathcal{C}_1^{(g)}, \mathcal{C}_2^{(g)}$ for each genus $g$ with:
+   $$\mathcal{A}_1^{(g)} \xrightarrow{\sim} \Omega^{ch}(\mathcal{C}_2^{(g)}), \quad \mathcal{A}_2^{(g)} \xrightarrow{\sim} \Omega^{ch}(\mathcal{C}_1^{(g)})$$
+\item The coalgebras are computed by genus-graded bar construction:
+   $$\mathcal{C}_1^{(g)} \simeq \bar{B}^{(g)}(\mathcal{A}_1), \quad \mathcal{C}_2^{(g)} \simeq \bar{B}^{(g)}(\mathcal{A}_2)$$
+\item The genus-graded Koszul complex $K_*^{(g)}(\mathcal{A}_1, \mathcal{A}_2) = \bar{B}^{(g)}(\mathcal{A}_1) \otimes_{\mathcal{A}_1} \mathcal{A}_2$
    has cohomology only in degree 0
-\item For quadratic algebras, orthogonality $R_1 \perp R_2$ under residue pairing
+\item For quadratic algebras, orthogonality $R_1^{(g)} \perp R_2^{(g)}$ under genus-graded residue pairing
+\item Modular covariance: The duality respects $\text{Sp}(2g, \mathbb{Z})$ transformations
 \end{enumerate}
 \end{definition}
  
-\begin{theorem}[Koszul Duality Theorem]\label{thm:koszul-main}
-If $(\mathcal{A}_1, \mathcal{A}_2)$ form a Koszul pair, then:
+\begin{theorem}[Genus-Graded Koszul Duality Theorem]\label{thm:koszul-main}
+If $(\mathcal{A}_1, \mathcal{A}_2)$ form a genus-graded Koszul pair, then:
 \begin{enumerate}
-\item The categories of modules are equivalent:
+\item The categories of modules are equivalent at each genus:
 \[
-D(\mathcal{A}_1\text{-mod}) \simeq D(\mathcal{A}_2\text{-mod})^{\text{op}}
+D(\mathcal{A}_1^{(g)}\text{-mod}) \simeq D(\mathcal{A}_2^{(g)}\text{-mod})^{\text{op}}
 \]
-\item The bar-cobar compositions are quasi-isomorphisms:
+\item The genus-graded bar-cobar compositions are quasi-isomorphisms:
 \[
-\mathcal{A}_1 \xrightarrow{\sim} \Omega^{\text{ch}}\bar{B}^{\text{ch}}(\mathcal{A}_1), \quad
-\mathcal{A}_2 \xrightarrow{\sim} \Omega^{\text{ch}}\bar{B}^{\text{ch}}(\mathcal{A}_2)
+\mathcal{A}_1^{(g)} \xrightarrow{\sim} \Omega^{\text{ch}}\bar{B}^{(g)}(\mathcal{A}_1), \quad
+\mathcal{A}_2^{(g)} \xrightarrow{\sim} \Omega^{\text{ch}}\bar{B}^{(g)}(\mathcal{A}_2)
 \]
-\item The duality exchanges the roles of generators and relations
+\item The duality exchanges the roles of generators and relations at each genus
+\item Modular covariance: The duality respects $\text{Sp}(2g, \mathbb{Z})$ transformations
 \end{enumerate}
 \end{theorem}
  
@@ -1357,13 +1396,6 @@ This is a curved Koszul duality with the BRST operator playing the role of curve
 
 \subsection{W-algebras and Physical Applications}
 
-% \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Section Overview]
-% \textbf{Key Questions:}
-% \begin{itemize}
-% \item How do W-algebras arise from BRST reduction?
-% \item What is the bar complex for W-algebras?
-% \item How does this connect to integrable systems and holography?
-% \end{itemize}
 
 \textbf{Main Results:}
 \begin{itemize}
