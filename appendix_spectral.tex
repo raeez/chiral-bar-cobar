@@ -48,3 +48,54 @@ The differentials can be computed via:
 \item \textbf{Combinatorial models:} Jenkins-Strebel differentials
 \item \textbf{Topological recursion:} Eynard-Orantin formalism
 \end{enumerate}
+
+\subsection{Spectral Sequence for Bar Complex}
+
+\begin{theorem}[Bar Spectral Sequence]
+The filtration by configuration degree yields a spectral sequence:
+$$E_1^{p,q} = H^q(\overline{C}_{p+1}(X), j_*j^*\mathcal{A}^{\boxtimes(p+1)}) \Rightarrow H^{p+q}(\bar{B}^{\text{ch}}(\mathcal{A}))$$
+
+\textbf{Key Properties:}
+\begin{enumerate}
+\item $E_2$ page: Computed by residues at boundary divisors
+\item Convergence: Always for finite-type chiral algebras
+\item Degeneration: At $E_2$ for Koszul algebras (quadratic with no higher relations)
+\item Differential $d_r$: Encodes $(r+1)$-fold collisions
+\end{enumerate}
+
+\textbf{Application to Free Fermions:}
+\begin{itemize}
+\item $E_1^{p,0} = \wedge^p(\mathcal{F} \otimes H^0(X, \omega_X))$ 
+\item $d_1 = 0$ (no relations beyond anticommutativity)
+\item Collapses at $E_1 = E_{\infty}$
+\item Recovers $\bar{B}^{\text{ch}}(\mathcal{F}) = \wedge^{\bullet}(\mathcal{F}[1])$
+\end{itemize}
+
+\textbf{Application to W-algebras:}
+For $\mathcal{W}_k(\mathfrak{g}, f)$ at admissible level:
+\begin{itemize}
+\item $E_1$: Free generators from W-currents
+\item $E_2$: Normal ordered products and null fields
+\item $E_3$: Quantum corrections from BRST cohomology
+\item Convergence requires careful analysis of Virasoro representations
+\end{itemize}
+\end{theorem}
+
+\begin{example}[Computing $E_2$ Page]
+For a chiral algebra with generators $\phi_i$ of conformal weight $h_i$:
+
+$$E_2^{p,q} = \frac{\text{Ker}(d_1: E_1^{p,q} \to E_1^{p+1,q})}{\text{Im}(d_1: E_1^{p-1,q} \to E_1^{p,q})}$$
+
+where $d_1$ is computed from OPE residues:
+$$d_1(\phi_{i_1} \otimes \cdots \otimes \phi_{i_p}) = \sum_{j<k} \sum_\ell C_{i_j i_k}^\ell \phi_{i_1} \otimes \cdots \widehat{i_j} \cdots \widehat{i_k} \cdots \otimes \phi_\ell$$
+\end{example}
+
+\begin{remark}[Physical Interpretation]
+In string theory:
+\begin{itemize}
+\item $E_1$: Off-shell string states
+\item $d_1$: BRST operator
+\item $E_2$: Physical (on-shell) states
+\item Higher pages: Quantum corrections and anomalies
+\end{itemize}
+\end{remark}

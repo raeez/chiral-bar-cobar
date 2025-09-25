@@ -2,7 +2,7 @@
  
 \subsection{Classical Koszul Pairs}
 
-\begin{definition}[Koszul Pair - Rigorous]
+\begin{definition}[Koszul Pair]
 Chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ form a Koszul pair if:
 \begin{enumerate}
 \item There exist quasi-coherent chiral coalgebras $\mathcal{C}_1, \mathcal{C}_2$ with:
@@ -1354,6 +1354,76 @@ This is a curved Koszul duality with the BRST operator playing the role of curve
 \end{theorem}
  
 \section{Examples IV: W-algebras and Wakimoto Modules}
+
+\subsection{W-algebras and Physical Applications}
+
+% \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Section Overview]
+% \textbf{Key Questions:}
+% \begin{itemize}
+% \item How do W-algebras arise from BRST reduction?
+% \item What is the bar complex for W-algebras?
+% \item How does this connect to integrable systems and holography?
+% \end{itemize}
+
+\textbf{Main Results:}
+\begin{itemize}
+\item Theorem \ref{thm:w-algebras}: W-algebras via Drinfeld-Sokolov reduction
+\item Theorem \ref{thm:w-bar-complex}: Bar complex of W-algebras
+\item Conjecture \ref{conj:holographic-koszul}: Holographic Koszul duality
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{W-algebras and Their Bar Complexes}
+
+Following Arakawa \cite{Arakawa-lectures}, we construct W-algebras geometrically:
+
+\begin{theorem}[W-algebras via Drinfeld-Sokolov Reduction]\label{thm:w-algebras}
+Following Arakawa \cite{Arakawa-lectures}, the W-algebra $\mathcal{W}_k(\mathfrak{g}, f)$ is constructed via:
+
+\textbf{1. BRST Complex:}
+$$\mathcal{W}_k(\mathfrak{g}, f) = H^{\bullet}_{\text{BRST}}(V^k(\mathfrak{g}) \otimes \mathcal{F})$$
+where:
+\begin{itemize}
+\item $V^k(\mathfrak{g})$: Universal affine vertex algebra at level $k$
+\item $\mathcal{F}$: Fermionic ghosts for $\mathfrak{n}_+ \subset \mathfrak{g}$
+\item BRST charge: $Q = \oint (J^a b_a + \frac{1}{2}f^{abc}b_a b_b c_c) dz$
+\end{itemize}
+
+\textbf{2. Associated Variety (Arakawa-Moreau):}
+$$\mathcal{X}_{\mathcal{W}_k(\mathfrak{g}, f)} = \overline{\mathbb{S}_f} \subset \mathfrak{g}^*$$
+where $\mathbb{S}_f$ is the Slodowy slice through $f$.
+
+\textbf{3. Representation Theory:}
+\begin{itemize}
+\item Admissible level: $k = -h^{\vee} + \frac{p}{q}$ with $(p,q) = 1$, $p,q > h^{\vee}$
+\item Category $\mathcal{O}$: Highest weight modules with finite-dimensional weight spaces
+\item Rationality: $\mathcal{W}_k(\mathfrak{g}, f)$ is rational $\Leftrightarrow$ $f$ principal and $k$ admissible
+\end{itemize}
+\end{theorem}
+
+\begin{example}[Principal W-algebra for $\mathfrak{sl}_3$]\label{ex:w-sl3}
+For $\mathfrak{g} = \mathfrak{sl}_3$ with principal $f = e_{\alpha_1} + e_{\alpha_2}$:
+
+\textbf{Generators:} $W^{(2)}$ (Virasoro), $W^{(3)}$ (spin-3 current)
+
+\textbf{OPE Structure:}
+\begin{align}
+W^{(2)}(z)W^{(2)}(w) &\sim \frac{c/2}{(z-w)^4} + \frac{2W^{(2)}(w)}{(z-w)^2} + \frac{\partial W^{(2)}(w)}{z-w} \\
+W^{(2)}(z)W^{(3)}(w) &\sim \frac{3W^{(3)}(w)}{(z-w)^2} + \frac{\partial W^{(3)}(w)}{z-w} \\
+W^{(3)}(z)W^{(3)}(w) &\sim \frac{c/3}{(z-w)^6} + \frac{2W^{(2)}W^{(2)}}{(z-w)^2} + \text{derivatives}
+\end{align}
+where $c = \frac{50 - 24(k+3)^2}{k+3}$ is the central charge.
+
+\textbf{Bar Complex Structure:}
+The geometric bar complex decomposes these OPEs via residues:
+\begin{align}
+\text{Res}_{D_{ij}}[W^{(2)}_i \otimes W^{(3)}_j \otimes \eta_{ij}] &= 3W^{(3)} \\
+\text{Res}_{D_{ij}}[W^{(3)}_i \otimes W^{(3)}_j \otimes \eta_{ij}^3] &= 2W^{(2)} \otimes W^{(2)}
+\end{align}
+
+This reveals the $\mathfrak{sl}_3$ Toda field theory structure hidden in the W-algebra.
+\end{example}
+
  
 \subsection{The Poset of W-algebras from Slodowy Slices}
  
@@ -2042,452 +2112,4 @@ The classification follows from the representation theory of $SL_2(\mathbb{Z})$:
 
 
 
-\section{Chain-Level Constructions and Simplicial Models}
- 
-\subsection{NBC Bases and Computational Optimality}
- 
-The no-broken-circuit (NBC) basis provides the computationally optimal choice for the Orlik-Solomon algebra.
- 
-\begin{definition}[NBC Basis]
-For the configuration space $C_n(X)$, an NBC basis element corresponds to a forest $F$ on vertices $\{1,\ldots,n\}$ with edges $(i,j)$ where $i < j$, such that $F$ contains no broken circuit.
-\end{definition}
- 
-\begin{theorem}[NBC Basis Optimality]
-The NBC basis satisfies:
-\begin{enumerate}
-\item Each basis element is $\eta_F = \bigwedge_{(i,j) \in F} \eta_{ij}$
-\item The differential has matrix entries in $\{0, \pm 1\}$ only
-\item No cancellations occur in computing $d^2 = 0$
-\item $|\text{NBC forests on $n$ vertices}| = \dim H^*(C_n(\mathbb{C}))$
-\end{enumerate}
-\end{theorem}
 
-\begin{proof}
-We proceed by induction on $n$. For $n = 2$, the single NBC element is $\eta_{12}$ with $d\eta_{12} = 0$.
- 
-For the inductive step, consider the fibration
-\[
-C_n(\mathbb{C}) \to C_{n-1}(\mathbb{C}) \times \mathbb{C}
-\]
-given by forgetting the $n$-th point. The NBC basis respects this fibration:
-\begin{itemize}
-\item NBC forests on $n$ vertices without edge to vertex $n$ pull back from $C_{n-1}(\mathbb{C})$
-\item NBC forests with edges to vertex $n$ correspond to adding non-circuit-completing edges
-\end{itemize}
- 
-The differential preserves the NBC property because contracting an edge in an NBC forest cannot create a circuit. Matrix entries are $\pm 1$ from the Koszul sign rule. The count follows from the recurrence
-\[
-f(n) = n \cdot f(n-1)
-\]
-which yields the explicit formula:
-\[
-|\text{NBC}(n)| = n! = \dim H^*(\overline{C}_n(\mathbb{C}))
-\]
-
-matching the Poincaré polynomial of $C_n(\mathbb{C})$.
-\end{proof}
-
-\begin{proposition}[NBC Sparsity Analysis]\label{prop:nbc-sparsity}
-For the geometric bar complex, the differential has at most $O(n^3)$ non-zero entries due to weight constraints.
-\end{proposition}
-
-\begin{proof}
-Consider NBC forests $F_1, F_2$ on $n$ vertices. A non-zero differential $\langle dF_1, F_2 \rangle$ requires:
-\begin{enumerate}
-\item $F_2$ obtained from $F_1$ by contracting one edge $(i,j)$
-\item The weight condition $h_{\phi_i} + h_{\phi_j} = h_{\phi_k} + 1$ for some resulting field $\phi_k$
-\end{enumerate}
-
-For a chiral algebra with $r$ generators of weights $\{h_1, \ldots, h_r\}$:
-- Each vertex can be labeled by one of $r$ generators
-- Weight-preserving collisions form a sparse $r \times r$ matrix $M_{ij}$
-- $M_{ij} \neq 0$ only if $h_i + h_j \in \{h_k + 1 : k = 1, \ldots, r\}$
-
-The sparsity factor is:
-$\rho = \frac{|\{(i,j,k) : h_i + h_j = h_k + 1\}|}{r^3} \leq \frac{r^2}{r^3} = \frac{1}{r}$
-
-Total non-zero entries: $\leq n \cdot \binom{n-1}{2} \cdot \rho \cdot |\text{NBC}(n)| = O(n^3)$ after sparsity.
-\end{proof}
-
-\begin{theorem}[Presentation Independence - REFINED]\label{thm:presentation-independence}
-   The geometric bar complex satisfies:
-   \begin{enumerate}
-   \item \textbf{Functoriality:} A morphism $\phi: \mathcal{A}_1 \to \mathcal{A}_2$ induces 
-   $\bar{B}^{\text{ch}}(\phi): \bar{B}^{\text{ch}}(\mathcal{A}_1) \to \bar{B}^{\text{ch}}(\mathcal{A}_2)$
-   
-   \item \textbf{Quasi-isomorphism invariance:} If $\phi$ is a quasi-isomorphism, so is $\bar{B}^{\text{ch}}(\phi)$
-   
-   \item \textbf{Presentation independence within equivalence class:} Two presentations 
-   $\mathcal{A} = \text{Free}^{\text{ch}}(V_1)/R_1 = \text{Free}^{\text{ch}}(V_2)/R_2$ 
-   yield quasi-isomorphic bar complexes if and only if:
-      \begin{itemize}
-      \item Conformal weights are preserved modulo integers
-      \item Relations differ only by Jacobi identity consequences
-      \item Only tautological generators/relations are added/removed
-      \end{itemize}
-      
-   \item \textbf{Criticality obstruction:} Different weight assignments satisfying different criticality 
-   conditions yield non-quasi-isomorphic complexes
-   \end{enumerate}
-   \end{theorem}
-   
-   \begin{proof}[Proof via Universal Property]
-   Rather than comparing specific presentations, we characterize when presentations yield isomorphic 
-   objects in the derived category.
-   
-   \textbf{Key observation:} The geometric bar complex depends on:
-   \begin{enumerate}
-   \item The conformal weights of generators (determines residue contributions)
-   \item The OPE structure (determines factorization differential)  
-   \item The relations modulo Jacobi identity (determines boundaries)
-   \end{enumerate}
-   
-   Two presentations yield the same complex if and only if these three data match.
-   \end{proof}
-   
-   \begin{remark}[The Prism Reveals Non-Invariance]
-   The criticality obstruction shows that our ``prism'' is sensitive to the ``wavelength'' of generators:
-   \begin{itemize}
-   \item Different conformal weights = different wavelengths
-   \item The residue pairing acts as a ``filter'' selecting compatible wavelengths
-   \item Only when $h_i + h_j = h_k + 1$ does the ``light'' pass through
-   \item Different presentations with different weights yield different ``spectra''
-   \end{itemize}
-   
-   This is not a bug but a feature: the geometric bar complex detects the conformal dimension, which is 
-   essential data in CFT that purely algebraic constructions might miss.
-   \end{remark}
-   
-\begin{lemma}[Arnold Relations on Boundary]\label{lem:arnold-boundary}
-The Arnold relations extend continuously to $\partial \overline{C}_n(X)$.
-\end{lemma}
-
-\begin{proof}
-Near a boundary stratum $D_I$ where points in $I \subset \{1,\ldots,n\}$ collide, use coordinates:
-- $u = \frac{1}{|I|}\sum_{i \in I} z_i$ (center of mass)
-- $\epsilon_{ij} = |z_i - z_j|$ for $i,j \in I$
-- $\theta_{ij} = \arg(z_i - z_j)$
-
-The logarithmic forms become:
-$\eta_{ij} = d\log \epsilon_{ij} + id\theta_{ij} + O(\epsilon_{ij})$
-
-For any triple $i,j,k \in I$:
-$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = d\log \epsilon_{ij} \wedge d\log \epsilon_{jk} + \text{cyclic} + O(\epsilon)$
-
-The leading term vanishes by the classical Arnold relation for the configuration space of the bubble. The $O(\epsilon)$ terms vanish in the limit $\epsilon \to 0$, establishing continuity.
-\end{proof}
-
-\subsection{Permutohedral Tiling and Cell Complex}
- 
-\begin{theorem}[Permutohedral Cell Complex]
-The real configuration space $C_n(\mathbb{R})$ admits a CW decomposition where:
-\begin{enumerate}
-\item Cells $C_\pi$ correspond to ordered partitions $\pi = B_1 < B_2 < \cdots < B_k$ of $[n]$
-\item $\dim C_\pi = n - k$
-\item $\partial C_\pi = \bigcup_{i} C_{\pi_i}$ where $\pi_i$ merges blocks $B_i$ and $B_{i+1}$
-\item The cellular cochain complex computes $H^*(C_n(\mathbb{R}))$
-\end{enumerate}
-\end{theorem} 
-\begin{proof}
-We construct the cell decomposition explicitly. Points in $C_\pi$ have configuration type
-\[
-x_{B_1} < x_{B_2} < \cdots < x_{B_k}
-\]
-where $x_{B_i}$ denotes the common position of points in block $B_i$. The dimension formula follows from counting degrees of freedom: $k$ positions minus 1 for translation invariance gives $k-1$, but we need $n-1$ total dimensions, so the cell has dimension $n-k$.
- 
-The boundary formula follows from approaching configurations where adjacent blocks merge. The cellular differential
-\[
-\delta: C^{n-k}(\pi) \to \bigoplus_{\pi \to \pi'} C^{n-k+1}(\pi')
-\]
-corresponds exactly to the operadic differential in the bar complex of the commutative operad.
-\end{proof}
- 
-\section{Computational Complexity and Algorithms}
- 
-\subsection{Complexity Analysis}
-
-\begin{remark}[Practical Implementation]
-While the theoretical bounds appear daunting,
-the actual computation benefits from massive sparsity. In practice, most residues vanish
-by weight or dimension considerations, reducing the effective complexity by several orders
-of magnitude. For $n \leq 10$, computations are feasible on standard hardware.
-\end{remark}
-
-\begin{theorem}[Complexity Bounds - Rigorous]
-For the geometric bar complex in dimension $n$:
-\begin{enumerate}
-\item NBC basis size: $B(n) = n! \cdot \text{Cat}(n-1) = O((4n)^n/n^{3/2})$
-\item Differential computation: $O(n^3)$ operations
-\item Storage: $O(n \cdot B(n))$ sparse representation
-\item Verification of $d^2=0$: $O(n^5)$ operations
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}[Derivation]
-\textbf{NBC count:} Satisfies recurrence $B(n) = \sum_{k=1}^{n-1} \binom{n-1}{k-1} B(k)B(n-k)$.
-This generates shifted Catalan numbers: $B(n) = n! \cdot \text{Cat}(n-1)$.
-Using $\text{Cat}(m) \sim \frac{4^m}{m^{3/2}\sqrt{\pi}}$ gives the bound.
-
-\textbf{Differential:} Each NBC forest has $\leq n-1$ edges. 
-Computing residue per edge: $O(n)$ for weight matching.
-Total per basis element: $O(n^2)$.
-With $B(n)$ elements: seemingly $O(n^2 \cdot B(n))$, but sparsity reduces to $O(n^3)$ nonzero entries.
-
-\textbf{Verification:} Compose differential twice on $O(B(n))$ elements, each taking $O(n^3)$ operations.
-\end{proof}
-
-\begin{theorem}[Spectral Sequence Convergence]\label{thm:spectral-convergence}
-For curved Koszul pairs $(\mathcal{A}_1, \mathcal{A}_2)$ with filtrations $F_\bullet$, the spectral sequence:
-$E_1^{p,q} = H^{p+q}(\text{gr}_p \bar{B}^{\text{ch}}(\mathcal{A}_1)) \Rightarrow H^{p+q}(\bar{B}^{\text{ch}}(\mathcal{A}_1))$
-converges strongly.
-\end{theorem}
-
-\begin{proof}
-Strong convergence requires:
-\begin{enumerate}
-\item \textbf{Boundedness}: For each total degree $n$, only finitely many $(p,q)$ with $p+q=n$ contribute.
-
-This follows from the filtration $F_p\bar{B}^{\text{ch}}$ having $F_p = 0$ for $p < 0$ and $F_p\bar{B}^n = \bar{B}^n$ for $p \gg n$.
-
-\item \textbf{Completeness}: $\bar{B}^{\text{ch}} = \lim_{\leftarrow} \bar{B}^{\text{ch}}/F_p$.
-
-The geometric bar complex consists of sections over $\overline{C}_{n+1}(X)$ with logarithmic poles. The filtration by pole order along collision divisors is complete in the $\mathcal{D}$-module category.
-
-\item \textbf{Hausdorff property}: $\bigcap_p F_p = 0$.
-
-Elements in all $F_p$ would have poles of arbitrary order, impossible for meromorphic sections.
-\end{enumerate}
-
-The differentials $d_r: E_r^{p,q} \to E_r^{p+r,q-r+1}$ are induced by higher residues at deeper collision strata, converging by dimensional reasons.
-\end{proof}
-
-\subsubsection{Efficient Residue Computation}
- 
-\begin{algorithm}
-\caption{Optimized Residue Evaluation}
-\label{alg:residue-evaluation}
-\begin{algorithmic}[1]
-\Require Fields $\phi_i(z)$ with weights $h_i$
-\Ensure Sum of residue contributions
-\State \textbf{Input:} $\phi_1(z_1) \otimes \cdots \otimes \phi_n(z_n) \otimes \omega$
-\For{each collision divisor $D_{ij}$}
-    \State Check weight condition: $h_i + h_j - h_k = 1$ for some $k$
-    \If{condition satisfied}
-        \State Extract OPE coefficient $C^k_{ij}$
-        \State Replace $\phi_i \otimes \phi_j$ with $\phi_k$
-        \State Remove factor $\eta_{ij}$ from $\omega$
-        \State Add sign from Koszul rule
-    \EndIf
-\EndFor
-\State \textbf{Output:} Sum of residue contributions
-\end{algorithmic}
-\end{algorithm}
-
- 
-\begin{proposition}[Algorithm Correctness]
-The above algorithm computes residues with complexity $O(n^2 \cdot T_{\text{OPE}})$ where $T_{\text{OPE}}$ is the time to look up an OPE coefficient.
-\end{proposition}
- 
-\begin{proof}
-Correctness follows from the residue formula in Theorem 6.4. We only get nonzero contributions when the weight condition is satisfied, corresponding to simple poles. The algorithm checks all $\binom{n}{2}$ pairs, each in time $T_{\text{OPE}}$.
-\end{proof}
- 
-\section{Conclusions and Future Directions}
- 
-This work establishes a complete geometric framework for bar-cobar duality of chiral algebras, providing:
-
-\begin{enumerate}
-\item \textbf{Complete bar-cobar theory:} Both bar construction for chiral algebras and cobar construction for chiral coalgebras
-\item \textbf{Geometric realization:} Explicit construction via configuration spaces for both bar and cobar
-\item \textbf{Duality theorem:} Rigorous proof of bar-cobar duality in the chiral setting
-\item \textbf{Prism principle:} Conceptual framework for understanding spectral decomposition
-\item \textbf{Extensions:} Treatment of curved and filtered cases
-\item \textbf{Complete proofs:} Rigorous verification of all claims
-\item \textbf{Computational tools:} Practical implementation strategies
-\item \textbf{Unification:} Connection to factorization homology and higher categories
-\end{enumerate}
-
-Future directions include:
-\begin{itemize}
-\item Extension to higher dimensions (factorization algebras on $n$-manifolds)
-\item Applications to quantum field theory and string theory
-\item Connections to derived algebraic geometry
-\item Development of efficient algorithms for computing bar and cobar complexes
-\item Applications to topological string theory and mirror symmetry
-\item Development of computational algorithms for explicit calculations
-\end{itemize}
- 
-\subsection{Key Insights}
- 
-The geometric approach reveals:
-\begin{itemize}
-\item Configuration spaces are intrinsic to chiral operadic structure
-\item Logarithmic forms encode the complete A$_\infty$ structure
-\item Koszul duality = orthogonality under residue pairing
-\item Fulton-MacPherson compactification provides the correct framework
-\end{itemize}
- 
-\subsection{Future Directions}
- 
-\subsubsection{Higher Genus}
-Extending to genus $g > 0$ curves requires understanding:
-\begin{itemize}
-\item Stratification of $\overline{\mathcal{M}}_{g,n}$
-\item Period integrals and modular forms
-\item Sewing constraints from handle attachments
-\end{itemize}
- 
-\subsubsection{Categorification}
-The bar complex should lift to:
-\begin{itemize}
-\item DG-category of D-modules on $\overline{C}_n(X)$
-\item A$_\infty$-category with morphism spaces
-\item Categorified Koszul duality
-\end{itemize}
- 
-\subsubsection{Quantum Groups}
-$q$-deformation where:
-\begin{itemize}
-\item Configuration spaces $\to$ $q$-analogs
-\item Logarithmic forms $\to$ $q$-difference forms
-\item Residue pairing $\to$ Jackson integrals
-\end{itemize}
- 
-\subsubsection{Applications to Physics}
-\begin{itemize}
-\item Holographic dualities: bulk/boundary Koszul pairs
-\item Integrable systems: Yangian as bar complex
-\item Topological field theories in dimensions $> 2$
-\end{itemize}
- 
-\subsection{Final Remarks}
- 
-The marriage of operadic algebra, configuration space geometry, and conformal field theory reveals deep unity in mathematical physics. That abstract homological constructions acquire concrete geometric meaning through configuration spaces and logarithmic forms points to fundamental structures yet to be fully understood.
- 
-The explicit computability every differential calculated, every homotopy identified brings these abstract concepts within reach of practical application while maintaining complete mathematical rigor.
- 
-\appendix
-\section{Geometric Dictionary}
-
-\textbf{Reading Guide:} This dictionary should be read as a Rosetta Stone between three languages:
-\begin{itemize}
-\item \textbf{Physical:} The language of conformal field theory and operator products
-\item \textbf{Algebraic:} The language of operads and homological algebra  
-\item \textbf{Geometric:} The language of configuration spaces and residues
-\end{itemize}
-Each entry represents a precise mathematical correspondence, not merely an analogy.
-
-
-This dictionary translates between algebraic structures in chiral algebras and geometric features of configuration spaces:
-
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Algebraic Structure} & \textbf{Geometric Realization} \\
-\hline
-Chiral multiplication & Residues at collision divisors \\
-Central extensions & Curved $A_\infty$ structures \\
-Conformal weights & Pole orders in residue extraction \\
-Normal ordering & NBC basis choice \\
-BRST cohomology & Spectral sequence pages \\
-Operator product expansion & Logarithmic form singularities \\
-Jacobi identity & Arnold-Orlik-Solomon relations \\
-Module categories & D-module pushforward \\
-Koszul duality & Orthogonality under residue pairing \\
-Vertex operators & Sections over configuration spaces \\
-Screening charges & Exact forms modulo boundaries \\
-Conformal blocks & Flat sections of connections \\
-\hline
-\end{tabular}
-\end{center}
-
-\begin{remark}[Reading the Dictionary]
-This correspondence is not merely a formal analogy but reflects deep mathematical structure. Each entry represents a precise functor or natural transformation between categories. For instance, the correspondence "Chiral multiplication $\leftrightarrow$ Residues at collision divisors" is the content of Theorem \ref{thm:residue-formula}, establishing that the multiplication map factors through the residue homomorphism. Similarly, "Central extensions $\leftrightarrow$ Curved $A_\infty$ structures" reflects Theorem \ref{thm:heisenberg-bar}, showing how the failure of strict associativity due to central charges is precisely captured by the curvature term $m_0$.
-\end{remark}
-
-
- 
-\section{Sign Conventions}
- 
-We collect our sign conventions for reference:
-\begin{itemize}
-\item Logarithmic forms: $\eta_{ij} = d\log(z_i - z_j) = \frac{dz_i - dz_j}{z_i - z_j}$
-\item Transposition: $\eta_{ji} = -\eta_{ij}$
-\item Residues: $\text{Res}_{z_i=z_j}[\eta_{ij}] = 1$
-\item Fermionic permutation: $\psi_i\psi_j = -\psi_j\psi_i$
-\item Koszul sign rule: Moving degree $p$ past degree $q$ introduces $(-1)^{pq}$
-\item Differential grading: $\deg(d) = 1$, $\deg(\eta_{ij}) = 1$
-\item Suspension: $s$ has degree $1$, desuspension $s^{-1}$ has degree $-1$
-\end{itemize}
- 
-\section{Complete OPE Tables}
- 
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-Field 1 & Field 2 & OPE \\
-\hline
-$\psi(z)$ & $\psi(w)$ & $(z-w)^{-1}$ \\
-$J(z)$ & $J(w)$ & $k(z-w)^{-2}$ \\
-$\beta(z)$ & $\gamma(w)$ & $(z-w)^{-1}$ \\
-$\gamma(z)$ & $\beta(w)$ & $-(z-w)^{-1}$ \\
-$b(z)$ & $c(w)$ & $(z-w)^{-1}$ \\
-$T(z)$ & $T(w)$ & $\frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}$ \\
-$W^{(s)}(z)$ & $W^{(t)}(w)$ & $\sum_u \frac{C^u_{st} W^{(u)}(w)}{(z-w)^{s+t-u}}$ \\
-$e^\alpha(z)$ & $e^\beta(w)$ & $(z-w)^{(\alpha,\beta)} e^{\alpha+\beta}(w)$ \\
-\hline
-\end{tabular}
-\end{center}
- 
-\section{Arnold Relations for Small $n$}
- 
-Complete list of Arnold relations for logarithmic forms:
- 
-\textbf{$n = 3$:}
-\[
-\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0
-\]
- 
-\textbf{$n = 4$ (4-term relation):}
-\[
-\eta_{12} \wedge \eta_{34} - \eta_{13} \wedge \eta_{24} + \eta_{14} \wedge \eta_{23} = 0
-\]
- 
-\textbf{$n = 5$ (10 independent relations):}
-\begin{align}
-&\eta_{12} \wedge \eta_{23} \wedge \eta_{45} + \text{cyclic} = 0 \\
-&\eta_{12} \wedge \eta_{34} \wedge \eta_{35} - \eta_{13} \wedge \eta_{24} \wedge \eta_{35} + \cdots = 0
-\end{align}
- 
-\textbf{General $n$:} The relations form the kernel of
-\[
-\bigwedge^k \mathbb{C}^{\binom{n}{2}} \to H^k(C_n(\mathbb{C}))
-\]
-with dimension $\binom{n}{2} - \prod_{i=1}^{n-1}(1 + i)$ for the kernel. 
-
-
-\begin{thebibliography}{99}
-
-\bibitem{arnold}
-V. I. Arnold, \emph{The cohomology ring of the colored braid group}, 
-Mat. Zametki \textbf{5} (1969), 227--231.
-
-\bibitem{BD04} A. Beilinson and V. Drinfeld, \emph{Chiral Algebras}, American Mathematical Society Colloquium Publications, vol. 51, American Mathematical Society, Providence, RI, 2004.
- 
-\bibitem{BW93} A. Björner and M. L. Wachs, On lexicographically shellable posets, \emph{Trans. Amer. Math. Soc.} \textbf{277} (1983), no. 1, 323--331.
- 
-\bibitem{FBZ04} E. Frenkel and D. Ben-Zvi, \emph{Vertex Algebras and Algebraic Curves}, Mathematical Surveys and Monographs, vol. 88, American Mathematical Society, Providence, RI, 2004.
- 
-\bibitem{FM94} W. Fulton and R. MacPherson, A compactification of configuration spaces, \emph{Ann. of Math.} (2) \textbf{139} (1994), no. 1, 183--225.
- 
-\bibitem{GLZ21} B. Gui, S. Li, and J. Zeng, Quadratic duality for chiral algebras, arXiv:2104.06521 [math.QA], 2021.
- 
-\bibitem{OS80} P. Orlik and L. Solomon, Combinatorics and topology of complements of hyperplanes, \emph{Invent. Math.} \textbf{56} (1980), no. 2, 167--189.
- 
-\bibitem{Sta97} R. P. Stanley, \emph{Enumerative Combinatorics}, vol. 1, Cambridge Studies in Advanced Mathematics, vol. 49, Cambridge University Press, Cambridge, 1997.
-
-\bibitem{LV} J.-L. Loday and B. Vallette, \emph{Algebraic Operads}, Grundlehren der mathematischen Wissenschaften, vol. 346, Springer, 2012.
-
-\bibitem{GJ} E. Getzler and J.D.S. Jones, \emph{Operads, homotopy algebra and iterated integrals for double loop spaces}, arXiv:hep-th/9403055, 1994.
- 
-\end{thebibliography}
