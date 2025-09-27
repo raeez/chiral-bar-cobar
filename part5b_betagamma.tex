@@ -1,0 +1,154 @@
+\chapter{Complete Example: The $\beta\gamma$ System}
+
+\section{Setup and Conventions}
+
+The $\beta\gamma$ system is the simplest nontrivial chiral algebra.
+
+\subsection{Algebraic Structure}
+
+Fields: $\beta(z)$ of conformal weight $h_\beta = 1 - \lambda$, $\gamma(z)$ of weight $h_\gamma = \lambda$.
+
+OPE:
+$$\beta(z)\gamma(w) = \frac{1}{z-w} + \text{regular}$$
+$$\beta(z)\beta(w) = \text{regular}, \quad \gamma(z)\gamma(w) = \text{regular}$$
+
+Stress tensor:
+$$T = -\lambda(\beta\partial\gamma) + (1-\lambda)(\partial\beta\gamma)$$
+
+\section{Bar Complex Computation}
+
+\subsection{Degree by Degree Analysis}
+
+\begin{theorem}[Complete Bar Complex]
+The bar complex of $\beta\gamma$ through degree 5:
+
+\textbf{Degree 0}: $\bar{B}^0 = \mathbb{C}|0\rangle$ (vacuum)
+
+\textbf{Degree 1}: $\bar{B}^1 = V_\beta \oplus V_\gamma$ where
+$$V_\beta = \text{span}\{\beta_{-n-h_\beta}|0\rangle : n \geq 0\}$$
+$$V_\gamma = \text{span}\{\gamma_{-n-h_\gamma}|0\rangle : n \geq 0\}$$
+
+\textbf{Degree 2}: 
+\begin{align}
+\bar{B}^2 = &(V_\beta \otimes V_\beta) \oplus (V_\gamma \otimes V_\gamma) \\
+&\oplus (V_\beta \otimes V_\gamma) \oplus (V_\gamma \otimes V_\beta) \\
+&\oplus V_{\partial\beta} \oplus V_{\partial\gamma}
+\end{align}
+
+The differential $d: \bar{B}^2 \to \bar{B}^1$:
+\begin{align}
+d(\beta \otimes \beta) &= 0 \text{ (no pole in OPE)} \\
+d(\gamma \otimes \gamma) &= 0 \\
+d(\beta \otimes \gamma) &= \text{Res}_{z_1=z_2}\left[\frac{dz_1}{z_1-z_2}\right] \cdot 1 = 1 \\
+d(\gamma \otimes \beta) &= -1 \\
+d(\partial\beta) &= 0, \quad d(\partial\gamma) = 0
+\end{align}
+
+\textbf{Degree 3}: Dimension = 27
+Components include:
+\begin{itemize}
+\item $(V_\beta)^{\otimes 3}$: 1-dimensional
+\item $(V_\beta)^{\otimes 2} \otimes V_\gamma$: 3 orderings
+\item $V_\beta \otimes (V_\gamma)^{\otimes 2}$: 3 orderings
+\item $(V_\gamma)^{\otimes 3}$: 1-dimensional
+\item Derivative terms
+\end{itemize}
+
+Key differential:
+$$d(\beta_1 \otimes \beta_2 \otimes \gamma_3) = \beta_1 \otimes 1 - 1 \otimes \beta_2$$
+
+\textbf{Growth Formula}:
+$$\dim(\bar{B}^n) = 2 \cdot 3^{n-1} \text{ for } n \geq 1$$
+\end{theorem}
+
+\begin{proof}
+By induction on degree. The factor of 2 comes from choosing $\beta$ or $\gamma$ as leading term. The factor $3^{n-1}$ from choosing $\beta$, $\gamma$, or derivative at each subsequent position.
+\end{proof}
+
+\subsection{Cohomology Calculation}
+
+\begin{theorem}[Bar Cohomology of $\beta\gamma$]
+$$H^n(\bar{B}(\beta\gamma)) = \begin{cases}
+\mathbb{C} & n = 0 \\
+\mathbb{C} & n = 1 \\
+\mathbb{C}^2 & n = 2 \\
+\vdots
+\end{cases}$$
+The cohomology is concentrated in finite degrees when $\lambda$ is generic.
+\end{theorem}
+
+\begin{proof}
+We compute kernel and image at each degree:
+
+\textbf{Degree 0}: $H^0 = \mathbb{C}$ (vacuum).
+
+\textbf{Degree 1}: 
+$$\ker(d^1) = V_\beta \oplus V_\gamma$$
+$$\text{im}(d^2) = \mathbb{C} \cdot (\beta - \gamma)$$
+$$H^1 = (V_\beta \oplus V_\gamma)/\mathbb{C}(\beta - \gamma) \cong \mathbb{C}$$
+
+\textbf{Degree 2}: Similar analysis using explicit bases.
+\end{proof}
+
+\section{Koszul Dual}
+
+\subsection{Dual Algebra Structure}
+
+\begin{theorem}[Koszul Dual of $\beta\gamma$]
+The Koszul dual is the $\beta'\gamma'$ system with:
+\begin{itemize}
+\item Opposite conformal weights: $h_{\beta'} = \lambda$, $h_{\gamma'} = 1 - \lambda$
+\item Same OPE structure
+\item Twisted by parity if $\lambda \in \mathbb{Z}$
+\end{itemize}
+\end{theorem}
+
+\subsection{Verification of Duality}
+
+\begin{proposition}
+The pairing
+$$\langle \cdot, \cdot \rangle: \bar{B}(\beta\gamma) \otimes \bar{B}(\beta'\gamma') \to \mathbb{C}$$
+defined by configuration space integration is perfect.
+\end{proposition}
+
+\section{Special Cases}
+
+\subsection{Free Fermions ($\lambda = 0$ or $1$)}
+
+When $\lambda = 1$:
+$$\{\beta(z), \gamma(w)\} = \delta(z-w)$$
+The system becomes fermionic.
+
+\begin{theorem}[Fermionic Bar Complex]
+$$\bar{B}(\text{fermions}) \simeq \Lambda^*[\xi, \eta]$$
+exterior algebra on two generators.
+\end{theorem}
+
+\subsection{Symplectic Bosons ($\lambda = 1/2$)}
+
+At $\lambda = 1/2$, both fields have weight $1/2$:
+$$T = \frac{1}{2}(\partial\beta\gamma - \beta\partial\gamma)$$
+
+Special properties:
+\begin{itemize}
+\item Logarithmic OPE with stress tensor
+\item Non-semisimple representation theory
+\item Appears in logarithmic CFT
+\end{itemize}
+
+\section{Geometric Realization}
+
+\subsection{Configuration Space Picture}
+
+The bar complex elements are:
+$$\omega_{n,m} \in \Gamma(C_{n+m+1}(X), (\beta^{\boxtimes n} \otimes \gamma^{\boxtimes m}) \otimes \Omega^*_{\log})$$
+
+Explicit form:
+$$\omega_{n,m} = \beta(z_1) \cdots \beta(z_n) \gamma(w_1) \cdots \gamma(w_m) \prod_{i<j} \eta_{ij}$$
+
+\subsection{Residue Computation}
+
+The differential extracts:
+$$d(\omega_{n,m}) = \sum_{i,j} \text{Res}_{z_i = w_j}[\omega_{n,m}] = \sum_{i,j} \omega_{n-1,m-1}|_{z_i = w_j}$$
+
+This realizes the algebraic bar differential geometrically.

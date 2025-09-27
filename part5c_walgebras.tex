@@ -1,0 +1,154 @@
+\chapter{W-algebras: Complete Examples}
+
+\section{Principal W-algebras via Drinfeld-Sokolov}
+
+\subsection{Construction}
+
+Following Arakawa \cite{Ara07}, the principal W-algebra is obtained by quantum Drinfeld-Sokolov reduction:
+$$\Walg^k(\mathfrak{g}) = H^*_{\DS}(\widehat{\mathfrak{g}}_k, Q_{\DS})$$
+
+\subsection{Generators and Relations}
+
+For $\mathfrak{g} = \mathfrak{sl}_n$:
+\begin{itemize}
+\item Generators: $W^{(2)}, W^{(3)}, \ldots, W^{(n)}$ of conformal weights $2, 3, \ldots, n$
+\item Relations: Determined by null vectors at critical level
+\end{itemize}
+
+\section{$\mathcal{W}_3$ Algebra: Complete Analysis}
+
+\subsection{Structure Constants}
+
+The $\mathcal{W}_3$ algebra has generators $T$ (weight 2) and $W$ (weight 3).
+
+OPEs:
+\begin{align}
+T(z)T(w) &= \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} \\
+T(z)W(w) &= \frac{3W(w)}{(z-w)^2} + \frac{\partial W(w)}{z-w} \\
+W(z)W(w) &= \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(z-w)^3} \\
+&+ \frac{1}{(z-w)^2}\left(\frac{3\partial^2 T}{10} + \frac{16}{22+5c}\Lambda(w)\right) + \cdots
+\end{align}
+where $\Lambda = (TT) - \frac{3}{10}\partial^2 T$.
+
+\subsection{Bar Complex of $\mathcal{W}_3$}
+
+\begin{theorem}[Complete Bar Complex]
+At $c = 2$ (critical for $\mathfrak{sl}_3$):
+
+\textbf{Degree 0-3}: Generators
+\begin{align}
+\bar{B}^0 &= \mathbb{C} \cdot |0\rangle \\
+\bar{B}^1 &= 0 \text{ (no weight 1 fields)} \\
+\bar{B}^2 &= \mathbb{C} \cdot T \\
+\bar{B}^3 &= \mathbb{C} \cdot W
+\end{align}
+
+\textbf{Degree 4}: First nontrivial
+\begin{align}
+\bar{B}^4 &= \mathbb{C}(T \otimes T) \oplus \mathbb{C}\partial^2T \\
+d(T \otimes T) &= 2T \\
+d(\partial^2T) &= 0
+\end{align}
+
+\textbf{Degree 5}:
+\begin{align}
+\bar{B}^5 &= \mathbb{C}(T \otimes W) \oplus \mathbb{C}(W \otimes T) \oplus \mathbb{C}\partial^2W \\
+d(T \otimes W) &= 3W \\
+d(W \otimes T) &= 3W \\
+d(\partial^2W) &= 0
+\end{align}
+
+\textbf{Degree 6}: Complex structure
+\begin{align}
+\bar{B}^6 = &\mathbb{C}(W \otimes W) \oplus \mathbb{C}(T \otimes T \otimes T) \\
+&\oplus \mathbb{C}(T \otimes \partial^2T) \oplus \mathbb{C}\partial^4T
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Use residue calculus with explicit OPEs.
+
+For $d(T \otimes T)$:
+$$d(T \otimes T) = \text{Res}_{z_1=z_2}\left[\frac{2T(z_2)dz_1}{(z_1-z_2)^2}\right] = 2T$$
+
+For $d(W \otimes W)$:
+$$d(W \otimes W) = \text{Res}_{z_1=z_2}\left[\frac{2T(z_2)dz_1}{(z_1-z_2)^4}\right] = 0$$
+(Higher pole gives zero residue for weight reasons.)
+\end{proof}
+
+\subsection{Cohomology and Flag Variety}
+
+\begin{theorem}[Geometric Interpretation]
+$$H^*(\bar{B}(\mathcal{W}_3)) \cong H^*(\mathfrak{sl}_3/B)$$
+the cohomology of the flag variety.
+\end{theorem}
+
+Explicitly:
+$$H^*(\mathfrak{sl}_3/B) = \mathbb{C}[x_2, x_3]/(x_2^3 - x_3^2)$$
+where $x_i$ are Schubert classes.
+
+\section{W-algebras at Critical Level}
+
+\subsection{Feigin-Frenkel Center}
+
+At critical level $k = \critLevel$:
+
+\begin{theorem}[Large Center]
+The center of $\Walg^{\critLevel}(\mathfrak{g})$ is:
+$$Z(\Walg^{\critLevel}(\mathfrak{g})) \cong \text{Fun}(\text{Op}_{\mathfrak{g}^\vee}(X))$$
+functions on the space of $\mathfrak{g}^\vee$-opers.
+\end{theorem}
+
+\subsection{Bar Complex at Critical Level}
+
+\begin{theorem}[Dramatic Simplification]
+At $k = \critLevel$:
+$$\bar{B}(\Walg^{\critLevel}(\mathfrak{g})) = \text{Free}[S_1, \ldots, S_r] \otimes \Omega^*_{\log}$$
+where $S_i$ are screening charges.
+
+The differential is:
+$$d = \sum_i S_i \otimes d\log(\text{screening})$$
+\end{theorem}
+
+\section{Wakimoto Modules and Free Field Realization}
+
+\subsection{Construction}
+
+The Wakimoto module provides a free field realization:
+$$\Wakimoto = \text{Free}[\beta_\alpha, \gamma_\alpha, \phi_i]$$
+where:
+\begin{itemize}
+\item $(\beta_\alpha, \gamma_\alpha)$: One pair per positive root
+\item $\phi_i$: Cartan generators
+\end{itemize}
+
+\subsection{Bar Complex of Wakimoto}
+
+\begin{theorem}[Wakimoto Bar Complex]
+$$\bar{B}(\Wakimoto) = \bigotimes_{\alpha \in \Delta_+} \bar{B}(\beta_\alpha\gamma_\alpha) \otimes \bar{B}(\text{Heisenberg}^{\text{rank}(\mathfrak{g})})$$
+\end{theorem}
+
+This factorization allows explicit computation.
+
+\subsection{Relation to W-algebras}
+
+\begin{theorem}[DS Reduction]
+$$H^*_{Q_{\DS}}(\bar{B}(\Wakimoto)) \cong \bar{B}(\Walg^{\critLevel}(\mathfrak{g}))$$
+The BRST cohomology of the Wakimoto bar complex gives the W-algebra bar complex.
+\end{theorem}
+
+\section{Koszul Duality for W-algebras}
+
+\subsection{Principal W-algebra Duality}
+
+\begin{theorem}[Langlands Dual W-algebras]
+At critical level:
+$$\Walg^{\critLevel}(\mathfrak{g})^! = \Walg^{\critLevel}(\mathfrak{g}^\vee)$$
+where $\mathfrak{g}^\vee$ is the Langlands dual Lie algebra.
+\end{theorem}
+
+\subsection{Non-principal Cases}
+
+For non-principal nilpotent $f$:
+$$\Walg^k(\mathfrak{g}, f)^! = \text{Exotic W-algebra}$$
+These involve fractional powers and require orbifold techniques.

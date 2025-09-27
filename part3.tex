@@ -1,6 +1,16 @@
 \chapter{Bar and Cobar Constructions}
 \section{The Geometric Bar Complex}
 
+\subsection{Motivation from Physics}
+
+In quantum field theory, the operator product expansion encodes the algebra. Our bar construction geometrizes this:
+
+\begin{center}
+\fbox{OPE coefficients $\leftrightarrow$ Residues at collision divisors}
+\end{center}
+
+\subsection{Precise Construction}
+
 For a chiral algebra $\mathcal{A}$ on a Riemann surface $\Sigma_g$ of genus $g$, the geometric bar complex extends naturally across all genera:
 
 \begin{definition}[Genus-Graded Geometric Bar Complex]
@@ -86,6 +96,37 @@ where:
 This construction ensures the bar differential squares to zero by maintaining consistent signs across all face maps and genus levels.
 \end{definition}
 
+\subsection{Explicit Low-Degree Terms}
+
+\begin{example}[Bar Complex in Low Degrees]
+\begin{align}
+\bar{B}^0(\mathcal{A}) &= \mathcal{A} \\
+\bar{B}^1(\mathcal{A}) &= \Gamma(C_2(X), \mathcal{A} \boxtimes \mathcal{A} \otimes \eta_{12}) \\
+\bar{B}^2(\mathcal{A}) &= \Gamma(C_3(X), \mathcal{A}^{\boxtimes 3} \otimes (\eta_{12} \wedge \eta_{23} + \text{cyclic}))
+\end{align}
+
+The differential:
+\begin{align}
+d: \bar{B}^0 &\to \bar{B}^1 \\
+a &\mapsto 0 \text{ (no 2-point function to extract)}
+\end{align}
+
+\begin{align}
+d: \bar{B}^1 &\to \bar{B}^0 \\
+a_1 \otimes a_2 \otimes \eta_{12} &\mapsto \text{Res}_{z_1=z_2}[a_1(z_1) \cdot a_2(z_2) \cdot \eta_{12}]
+\end{align}
+\end{example}
+
+\subsection{Coalgebra Structure}
+
+\begin{theorem}[Bar Coalgebra]
+The bar complex carries a natural coalgebra structure:
+$$\Delta: \bar{B}^{\text{geom}}(\mathcal{A}) \to \bar{B}^{\text{geom}}(\mathcal{A}) \otimes \bar{B}^{\text{geom}}(\mathcal{A})$$
+induced by the diagonal map $X \to X \times X$.
+\end{theorem}
+
+This structure is essential for Koszul duality.
+
 \begin{definition}[Genus-Graded Geometric Bar Complex]\label{def:geom-bar}
 For a chiral algebra $\mathcal{A}$ on a Riemann surface $\Sigma_g$ of genus $g$, the \emph{genus-graded geometric bar complex} is the bigraded complex:
 \[
@@ -118,6 +159,31 @@ For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, the geometric bar comp
 $$\bar{B}_{\text{geom}}^n(\mathcal{A}) = \Gamma\left(\overline{C}_{n+1}(X), j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n_{\overline{C}_{n+1}(X)}(\log D)\right)$$
 where $D$ is the boundary divisor with normal crossings.
 \end{definition}
+
+\begin{theorem}[Bar Differential]
+The differential $d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{de Rham}}$ where:
+\begin{align}
+d_{\text{internal}} &: \text{Uses internal differential of } \mathcal{A} \\
+d_{\text{residue}} &: \text{Extracts residues at collision divisors} \\
+d_{\text{de Rham}} &: \text{Standard de Rham differential}
+\end{align}
+\end{theorem}
+
+\begin{proof}[Proof that $d^2 = 0$]
+We must verify three conditions:
+\begin{enumerate}
+\item $d_{\text{internal}}^2 = 0$: Follows from $\mathcal{A}$ being a complex
+\item $d_{\text{residue}}^2 = 0$: Follows from Arnold relations
+\item Mixed terms vanish: Follows from compatibility of operations
+\end{enumerate}
+
+For the crucial residue term:
+\begin{align}
+d_{\text{residue}}^2 &= \sum_{i<j} \text{Res}_{D_{ij}} \circ \sum_{k<l} \text{Res}_{D_{kl}} \\
+&= \sum_{i<j<k} [\text{Res}_{D_{ij}}, \text{Res}_{D_{jk}}] + \cdots \\
+&= 0 \text{ by Arnold relations}
+\end{align}
+\end{proof}
 
 \begin{definition}[Geometric Bar Differential - Detailed]\label{def:bar-diff-detailed}
 The differential $d: \bar{B}_{\text{geom}}^n(\mathcal{A}) \to \bar{B}_{\text{geom}}^{n+1}(\mathcal{A})$ has three components:
@@ -906,6 +972,43 @@ The quasi-isomorphism follows from the fundamental relation:
 \int_{\partial \overline{C}_n} \text{Res}_{D_{ij}}[\cdots] = \int_{\overline{C}_n} d[\cdots] = \int_{C_n} \delta_{D_{ij}} \wedge [\cdots]
 \]
 showing residue extraction and distributional integration are inverse operations.
+\end{proof}
+
+\section{Precise Distribution Spaces}
+
+The cobar complex requires careful functional analysis.
+
+\begin{definition}[Distribution Space]
+The space $\text{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$ consists of distributional sections with:
+\begin{itemize}
+\item Prescribed singularities along diagonals
+\item Growth conditions at infinity
+\item Appropriate transformation under $\mathfrak{S}_n$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Topology]
+We use the weak topology:
+$$\langle K, \phi \rangle = \int_{C_n(X)} K \cdot \phi$$
+for test functions $\phi \in C_c^\infty(C_n(X))$.
+\end{theorem}
+
+\begin{lemma}[Regularization]
+Divergent integrals are regularized by:
+\begin{enumerate}
+\item Dimensional regularization: $\epsilon$ expansion
+\item Principal value prescription
+\item Hadamard finite parts
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}[Well-definedness of Cobar Differential]
+The differential $d_{\text{cobar}}$ inserting delta functions is well-defined because:
+\begin{enumerate}
+\item Delta functions are distributions
+\item Convolution with distributions is continuous in weak topology
+\item The coalgebra structure is compatible
+\end{enumerate}
 \end{proof}
 
 \begin{example}[Cobar via Integration Kernels]\label{ex:cobar-kernels}

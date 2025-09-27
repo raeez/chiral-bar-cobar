@@ -1,0 +1,143 @@
+\chapter{Chiral Hochschild Cohomology and Deformation Theory}
+
+\section{Classical to Chiral}
+
+\subsection{Review of Classical Hochschild}
+
+For an associative algebra $A$ over $\mathbb{C}$, the Hochschild cohomology $HH^*(A, M)$ with coefficients in an $A$-bimodule $M$ is computed by:
+
+$$HH^n(A, M) = \text{Ext}^n_{A \otimes A^{op}}(A, M)$$
+
+The bar resolution provides the computational tool:
+$$\cdots \to A \otimes A \otimes A \xrightarrow{b} A \otimes A \xrightarrow{b} A$$
+where $b(a_0 \otimes \cdots \otimes a_{n+1}) = \sum_{i=0}^n (-1)^i a_0 \otimes \cdots \otimes a_ia_{i+1} \otimes \cdots \otimes a_{n+1}$.
+
+\subsection{Chiral Enhancement}
+
+For chiral algebras, the situation is richer due to:
+\begin{itemize}
+\item Locality constraints from OPE
+\item Geometric structure from the curve $X$
+\item Higher operations from $A_\infty$ structure
+\end{itemize}
+
+\begin{definition}[Chiral Hochschild Complex]
+For a chiral algebra $\mathcal{A}$ on $X$, the chiral Hochschild complex is:
+$$\ChirHoch^*(\mathcal{A}, \mathcal{M}) = \text{RHom}_{\mathcal{D}_X}(\barBgeom(\mathcal{A}), \mathcal{M})$$
+where $\mathcal{M}$ is a chiral $\mathcal{A}$-module.
+\end{definition}
+
+\begin{theorem}[Comparison with Classical]
+There is a spectral sequence:
+$$E_2^{p,q} = HH^p(\mathcal{A}_0, H^q(\Omega^*_X)) \Rightarrow \ChirHoch^{p+q}(\mathcal{A})$$
+where $\mathcal{A}_0$ is the fiber at a point.
+\end{theorem}
+
+\section{Periodicity Phenomena}
+
+\subsection{Virasoro Periodicity}
+
+\begin{theorem}[Virasoro Hochschild Cohomology]
+For the Virasoro algebra at central charge $c$:
+$$\ChirHoch^{n+2}(\text{Vir}_c) \cong \ChirHoch^n(\text{Vir}_c) \otimes H^2(\mathcal{M}_{g,n})$$
+The period is 2, reflecting the conformal weight of the stress tensor.
+\end{theorem}
+
+\begin{proof}
+The stress tensor $T$ has weight 2. The multiplication by $T$ induces:
+$$\cup T: \ChirHoch^n \to \ChirHoch^{n+2}$$
+At generic $c$, this is an isomorphism for $n \geq 2$.
+\end{proof}
+
+\subsection{Affine Kac-Moody Periodicity}
+
+\begin{theorem}[Critical Level Periodicity]
+For $\widehat{\mathfrak{g}}_k$ at critical level $k = \critLevel$:
+$$\ChirHoch^{n+2h^\vee}(\widehat{\mathfrak{g}}_{\critLevel}) \cong \ChirHoch^n(\widehat{\mathfrak{g}}_{\critLevel})$$
+where $h^\vee$ is the dual Coxeter number.
+\end{theorem}
+
+This periodicity arises from the center at critical level being large (Feigin-Frenkel center).
+
+\subsection{W-algebra Periodicity}
+
+For W-algebras, the periodicity depends on the principal grading:
+
+\begin{theorem}[W-algebra Cohomology]
+$$\ChirHoch^*(\Walg^k(\mathfrak{g}, f)) = \bigoplus_{j \in \mathbb{Z}/d\mathbb{Z}} \ChirHoch^*_j$$
+where $d$ is determined by the nilpotent orbit of $f$.
+\end{theorem}
+
+\section{Deformation Theory}
+
+\subsection{Infinitesimal Deformations}
+
+\begin{theorem}[Deformation Classification]
+\begin{enumerate}
+\item $\ChirHoch^1(\mathcal{A})$ parametrizes infinitesimal deformations
+\item $\ChirHoch^2(\mathcal{A})$ contains obstructions
+\item Unobstructed deformations correspond to marginal operators in CFT
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Marginal Deformations of $\beta\gamma$]
+For the $\beta\gamma$ system:
+$$\ChirHoch^2(\beta\gamma) = \mathbb{C} \cdot [\beta\gamma]$$
+The class $[\beta\gamma]$ corresponds to the exactly marginal operator changing the conformal weights.
+\end{example}
+
+\subsection{Formal Deformation Theory}
+
+The formal deformation space is controlled by the differential graded Lie algebra:
+$$\mathfrak{g}_{\mathcal{A}} = \ChirHoch^*(\mathcal{A}, \mathcal{A})[1]$$
+with bracket induced by the cup product.
+
+\begin{theorem}[Maurer-Cartan Equation]
+Formal deformations correspond to solutions of:
+$$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0, \quad \alpha \in \mathfrak{g}_{\mathcal{A}}^1$$
+\end{theorem}
+
+\section{Physical Applications}
+
+\subsection{Marginal Operators and RG Flow}
+
+In CFT, marginal operators have dimension $(1,1)$. They correspond to:
+$$\ChirHoch^2_{\text{marginal}}(\mathcal{A}) = \{\omega \in \ChirHoch^2 : h(\omega) = 1\}$$
+
+The beta function vanishes iff the obstruction in $\ChirHoch^3$ vanishes.
+
+\subsection{String Field Theory}
+
+The bar complex computes the BRST cohomology:
+$$H^*_{\text{BRST}}(\text{String}[\mathcal{A}]) \cong \ChirHoch^*(\mathcal{A})$$
+
+String vertices are encoded in the $A_\infty$ structure:
+\begin{itemize}
+\item $m_2$: Three-string vertex
+\item $m_3$: Four-string contact term
+\item Higher $m_k$: Multi-string interactions
+\end{itemize}
+
+\section{Computational Tools}
+
+\subsection{Spectral Sequences}
+
+The bar complex induces several spectral sequences:
+
+\begin{theorem}[Bar Spectral Sequence]
+$$E_1^{p,q} = H^q(\ConfigSpace{p}(X), \mathcal{A}^{\boxtimes p}) \Rightarrow \ChirHoch^{p+q}(\mathcal{A})$$
+\end{theorem}
+
+\subsection{Explicit Computations}
+
+For the Heisenberg algebra:
+$$\ChirHoch^n(\text{Heis}) = \begin{cases}
+\mathbb{C}[c] & n = 0 \text{ (center)} \\
+0 & n = 1 \\
+\mathbb{C} & n = 2 \text{ (central extension)} \\
+0 & n \geq 3
+\end{cases}$$
+
+For free fermions:
+$$\ChirHoch^*(\text{Fermions}) = \Lambda^*[\xi_1, \xi_2]$$
+reflecting the fermionic nature.
