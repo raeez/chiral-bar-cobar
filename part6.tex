@@ -125,25 +125,26 @@ $$C_{12}^3 = \int_{\text{bulk}} \langle \mathcal{O}_1 \mathcal{O}_2 \mathcal{O}_
 where $\mathcal{O}_3^!$ is the Koszul dual operator.
 \end{technique}
 
-\begin{algorithm}[Computing Koszul Dual OPEs]\label{alg:koszul-ope}
-\begin{algorithmic}
-\STATE \textbf{Input:} Chiral algebra $\mathcal{A}$, operators $\mathcal{O}_1, \mathcal{O}_2$
-\STATE \textbf{Output:} OPE in Koszul dual $\mathcal{A}^!$
-
-\STATE \textbf{Step 1:} Compute bar complex elements
-\STATE $\bar{\mathcal{O}}_i \gets \bar{B}(\mathcal{O}_i) \in \bar{B}(\mathcal{A})$
-
-\STATE \textbf{Step 2:} Apply cobar construction
-\STATE $\mathcal{O}_i^! \gets \Omega(\bar{\mathcal{O}}_i) \in \mathcal{A}^!$
-
-\STATE \textbf{Step 3:} Compute pairing
-\STATE $\langle \mathcal{O}_1^! \mathcal{O}_2^! \rangle \gets \text{Res}_{D_{12}}[\mu_{12} \otimes \eta_{12}]$
-
-\STATE \textbf{Step 4:} Extract OPE
-\STATE $\mathcal{O}_1^!(z) \mathcal{O}_2^!(w) \sim \sum_n \frac{C_n}{(z-w)^n}$
-\STATE where $C_n$ from residue calculation
-
-\RETURN OPE coefficients $\{C_n\}$
+\begin{algorithm}[htbp]
+\caption{Computing Koszul Dual OPEs]\label{alg:koszul-ope}}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Chiral algebra $\mathcal{A}$, operators $\mathcal{O}_1, \mathcal{O}_2$
+\State \textbf{Output:} OPE in Koszul dual $\mathcal{A}^!$
+\State
+\State \textbf{Step 1:} Compute bar complex elements
+\State $\bar{\mathcal{O}}_i \gets \bar{B}(\mathcal{O}_i)$ in $\bar{B}(\mathcal{A})$
+\State
+\State \textbf{Step 2:} Apply cobar construction
+\State $\mathcal{O}_i^! \gets \Omega(\bar{\mathcal{O}}_i)$ in $\mathcal{A}^!$
+\State
+\State \textbf{Step 3:} Compute pairing
+\State $\langle \mathcal{O}_1^!, \mathcal{O}_2^! \rangle \gets \text{Res}_{D_{12}}[\mu_{12} \otimes \eta_{12}]$
+\State
+\State \textbf{Step 4:} Extract OPE
+\State $\mathcal{O}_1^!(z) \mathcal{O}_2^!(w) \sim \sum_n \frac{C_n}{(z-w)^n}$
+\State where $C_n$ from residue calculation
+\State
+\State \Return OPE coefficients $\{C_n\}$
 \end{algorithmic}
 \end{algorithm}
 
@@ -189,7 +190,7 @@ where $\langle \cdot, \cdot \rangle_n$ includes $n$-loop gravitational correctio
 
 \subsection{Physical Interpretation: Defects and Open-Closed Duality}
 
-\begin{interpretation}[Open-Closed String Duality]
+\begin{remark}[Open-Closed String Duality]
 The Koszul duality in holography realizes open-closed string duality:
 
 \begin{center}
@@ -219,7 +220,7 @@ The Koszul duality in holography realizes open-closed string duality:
 \item Closed string field theory in bulk $\to$ Koszul dual $\mathcal{A}^!$
 \item Disk amplitude with boundary $\mathcal{A}$ $=$ Sphere amplitude in $\mathcal{A}^!$
 \end{itemize}
-\end{interpretation}
+\end{remark}
 
 \begin{theorem}[Universal Defect Construction]\label{thm:universal-defect-construction}
 For any chiral algebra $\mathcal{A}$, the universal defect $\mathcal{D}(\mathcal{A})$ is constructed as:
@@ -344,12 +345,12 @@ The critical level is $k = -h^\vee$ where $h^\vee$ is the dual Coxeter number. A
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[Feigin-Frenkel Center]\label{thm:ff-center}
+\begin{theorem}[Feigin-Frenkel Center]\label{t hm:ff-center}
 At critical level, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is:
 \[
 Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))
 \]
-functions on the space of $\mathfrak{g}^\vee$-opers on $X$.
+functions on the space of $\mathfrak{g}^\vee$\nobreakdash-opers on $X$.
 \end{theorem}
 
 \begin{remark}[Opers and Connections]
@@ -366,7 +367,7 @@ to the KZ equations.
 \begin{theorem}[$\beta\gamma$ Bar Complex Coalgebra]\label{thm:bg-bar-coalg}
 The bar complex $\bar{B}^{\text{ch}}(\beta\gamma)$ has chiral coalgebra structure:
 \begin{enumerate}
-\item \textbf{Comultiplication:} Elements decompose as:
+\item \textbf{Comultiplication}: Elements decompose as:
 \[
 \Delta(\beta_{i_1} \cdots \beta_{i_p} \gamma_{j_1} \cdots \gamma_{j_q} \partial^k) = 
 \sum_{\substack{I_\beta \sqcup I'_\beta = \{i_1,\ldots,i_p\} \\ I_\gamma \sqcup I'_\gamma = \{j_1,\ldots,j_q\}}} 

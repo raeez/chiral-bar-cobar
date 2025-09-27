@@ -2,7 +2,7 @@
 % Option 1: For XeLaTeX/LuaLaTeX with true Adobe Garamond Pro (commercial font)
 % \documentclass[11pt]{article}
 % Option 2: For pdfLaTeX with EB Garamond (excellent free alternative)
-\documentclass[11pt]{article}
+\documentclass[11pt]{memoir}
 
 % ==========================================
 % OPTION 1: XeLaTeX/LuaLaTeX with Adobe Garamond Pro
@@ -40,6 +40,10 @@
 % OPTION 2: pdfLaTeX with EB Garamond (recommended free alternative)
 % This provides excellent quality and works with standard pdfLaTeX
 % ==========================================
+%\usepackage{titlesec}
+\setcounter{secnumdepth}{4}  % Numbers down to subsubsubsection
+\setcounter{tocdepth}{4}     % TOC includes subsubsubsections
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
@@ -47,7 +51,8 @@
 \usepackage[
   cmintegrals,
   cmbraces,
-  ebgaramond
+  ebgaramond,
+  noamssymbols    % This prevents conflicts
 ]{newtxmath}
 \usepackage{ebgaramond}
 
@@ -76,10 +81,11 @@
 \usepackage{mleftright}
 \mleftright
 % Add necessary packages for rigorous mathematics
+
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{tikz-cd}
 \usepackage{hyperref}
-\usepackage{amsfonts}
+%\usepackage{amsfonts}
 \usepackage{tikz}
 \usepackage[margin=1in]{geometry}
 \usepackage{algorithm}
@@ -91,6 +97,9 @@
 % ==========================================
 
 % Better spacing in math mode
+%\let\Bbbk\undefined
+%\let\openbox\undefined
+
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs,showmanualtags}
 
@@ -144,6 +153,16 @@
   name=Corollary,
   sibling=theorem
 ]{corollary}
+\declaretheorem[
+  style=garamondthm,
+  name=Verification,
+  sibling=theorem
+]{verification}
+\declaretheorem[
+  style=garamondthm,
+  name=Computation,
+  sibling=theorem
+]{computation}
 
 
 \declaretheorem[style=garamonddef, name=Definition, sibling=theorem]{definition}
@@ -153,6 +172,11 @@
 \declaretheorem[style=garamonddef, name=Notation, sibling=theorem]{notation}
 \declaretheorem[style=garamonddef, name=Convention, sibling=theorem]{convention}
 \declaretheorem[style=garamonddef, name=Spectral Sequence, sibling=theorem]{spectralsequence}
+\declaretheorem[style=garamonddef, name=Calculation, sibling=theorem]{calculation}
+\declaretheorem[style=garamonddef, name=Technique, sibling=theorem]{technique}
+\declaretheorem[style=garamonddef, name=Applications, sibling=theorem]{applications}
+\declaretheorem[style=garamonddef, name=Principle, sibling=theorem]{principle}
+
 
 
  
@@ -195,7 +219,7 @@
 
 % Line spacing optimized for Garamond
 \usepackage{setspace}
-\setstretch{1.08} % Slightly increased for Garamond's proportions
+%\setstretch{1.08} % Slightly increased for Garamond's proportions
 
 % Page layout adjusted for Garamond's characteristics
 \usepackage{geometry}[
@@ -221,7 +245,7 @@
 
 % ==========================================
 
-\title{\it{Chiral Duality in the presence of Quantum Corrections: Geometric Realizations via Configuration Spaces}}
+\title{\textit{Chiral Duality in the presence of Quantum Corrections: Geometric Realizations via Configuration Spaces}}
 \author{Raeez Lorgat}
 \date{September 21, 2025}
  
@@ -230,7 +254,7 @@
 % ==========================================
 % NOTATION CONSISTENCY DECLARATIONS
 % ==========================================
-\newcommand{\barBgeom}{\bar{B}_{\text{geom}}}  % Use consistently
+\newcommand{\barBgeom}{\bar{\mathbf{B}}}
 \newcommand{\barBch}{\bar{B}^{\text{ch}}}       % Alternative notation
 \newcommand{\Omegach}{\Omega^{\text{ch}}}       % Cobar notation
 \newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)}  % Configuration space
@@ -276,26 +300,6 @@ Applications include geometric characterizations of Maurer-Cartan elements for c
 }
 \end{abstract}
 
-% Add executive summary for experts
-% \begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=For the Expert]
-% This work provides the first complete geometric realization of bar-cobar duality for chiral algebras via:
-% \begin{itemize}
-% \item Configuration space integrals with logarithmic forms (generalizing Kontsevich)
-% \item Explicit residue formulas for all structure coefficients (new)
-% \item Extension to curved/filtered cases (beyond classical Koszul theory)
-% \item Applications to W-algebras and holography (physics connections)
-% \end{itemize}
-% The key innovation: treating the bar complex as a mathematical prism that decomposes 
-% chiral algebras into their operadic spectrum.
-% \end{tcolorbox}
-
-% \begin{remark}[Reading Guide]
-% \begin{itemize}
-% \item \textbf{For algebraists:} Focus on Parts 3-4 for the bar-cobar machinery
-% \item \textbf{For geometers:} Part 2 on configuration spaces is self-contained
-% \item \textbf{For physicists:} Parts 5-6 connect to CFT and holography
-% \end{itemize}
-% \end{remark}
 \tableofcontents
 
 \medskip
@@ -316,39 +320,40 @@ Throughout this manuscript:
 % ==========================================
 \part{Foundations}
 
-\include{"intro.tex"}
-\include{"part1.tex"}
+\include{intro.tex}
+\include{part1.tex}
 
 % ==========================================
 % PART II: CONFIGURATION SPACES AND GEOMETRY
 % ==========================================
-\part{Configuration Spaces and Geometry}
+%\part{Configuration Spaces and Geometry}
 
-\include{"part2.tex"}
+\include{part2.tex}
 
 % ==========================================
 % PART III: BAR AND COBAR CONSTRUCTIONS
 % ==========================================
-\part{Bar and Cobar Constructions}
+%\part{Bar and Cobar Constructions}
 
-\include{"part3.tex"}
-\include{"part4.tex"}
+\include{part3.tex}
+\include{part4.tex}
 
 % ==========================================
 % PART IV: KOSZUL DUALITY AND EXAMPLES
 % ==========================================
 \part{Koszul Duality, Examples and Physical Applications}
 
-\include{"part5.tex"}
-\include{"part6.tex"}
-\include{"part7.tex"}
+\include{part5.tex}
+\include{part5a.tex}
+\include{part7.tex}
+\include{part6.tex}
 
-\include{"bib.tex"}
+\include{bib.tex}
 % ==========================================
 % APPENDICES
 % ==========================================
 \appendix
-
+\input{appendix_general}
 \input{appendix_theta}
 \input{appendix_spectral}
 \input{appendix_koszul}
