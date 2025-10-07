@@ -1,8 +1,7 @@
-\chapter{Overview}
+\chapter{Introduction}
 
-\section{Introduction}
 
-\subsection{The Central Mystery}
+\section{The Central Mystery}
 
 In two-dimensional conformal field theory, the most fundamental observables are correlation functions of local operators. When two chiral operators $\phi_1(z_1)$ and $\phi_2(z_2)$ approach each other on a Riemann surface, their correlation functions develop singularities controlled by the operator product expansion (OPE):
 
@@ -10,36 +9,25 @@ $$\phi_1(z_1) \phi_2(z_2) \sim \sum_k \frac{C^k_{12}}{(z_1 - z_2)^{h_k}} \phi_k(
 
 The structure constants $C^k_{12}$ encode the complete algebraic structure of the chiral algebra. This local singularity data—purely algebraic in nature—turns out to have a natural geometric interpretation that forms the foundation of our work.
 
-\subsection{The Key Observation}
+\section{The Key Observation}
 
 The key observation is elementary yet profound: the logarithmic differential form $d\log(z_1 - z_2) = \frac{dz_1 - dz_2}{z_1 - z_2}$ has a simple pole precisely when $z_1 = z_2$. When we compute the residue
 $$\text{Res}_{z_1=z_2} d\log(z_1 - z_2) \cdot \phi_1(z_1)\phi_2(z_2) = C^k_{12} \phi_k(z_2)$$
 we extract exactly the structure constant from the OPE. This simple fact—that algebraic structure constants become geometric residues—motivates our entire construction.
 
-\subsection{Why Configuration Spaces?}
+\section{Why Configuration Spaces?}
 
-But why should we expect such a geometric interpretation to exist? The answer lies in a fundamental principle of quantum field theory: locality. The requirement that operators commute at spacelike separation forces the algebraic structure to be encoded in the singularities as operators approach each other. These singularities naturally live on configuration spaces—the spaces parametrizing positions of operators on the curve. The compactification of these spaces, which adds boundary divisors corresponding to collision patterns, provides the geometric arena where algebra becomes geometry.
+But why should we expect such a geometric interpretation to exist? The answer lies in a fundamental principle of quantum field theory: locality. The requirement that operators commute at spacelike separation forces the algebraic structure to be encoded in the singularities as operators approach each other. These singularities naturally live on configuration spaces—the spaces parametrizing positions of operators on the curve. The compactification of these spaces, which adds boundary divisors corresponding to collision patterns, provides the geometric arena where quantum algebra becomes algebraic geometry.
 
-\subsection{Relationship to Foundational Work}
+\section{Relationship to Foundational Work}
 
-\subsubsection{Beilinson-Drinfeld Framework}
+Beilinson and Drinfeld \cite{BD04} axiomatized 2d quantum field theory as factorization algebras on curves with presentations as $\mathcal{D}$-modules with chiral operations. This paper develops a systematic geometric realization of bar-cobar duality for chiral algebras through configuration space integrals, extending across all genera to incorporate the full spectrum of quantum corrections to all loop orders. The construction naturally produces a theory of chiral koszul dual pairs, vastly extending the classic quadratic koszul duality.
 
-Beilinson-Drinfeld \cite{BD04} axiomatized chiral algebras as:
-\begin{itemize}
-\item Factorization algebras on curves
-\item $\mathcal{D}$-modules with chiral operations
-\item Mathematical formalization of CFT operator algebras
-\end{itemize}
+Our perspective draws from three mathematical perspectives: the algebraic approach to chiral algebras via $\mathcal{D}$-modules developed by Beilinson-Drinfeld \cite{BD04}, the geometric configuration space methods pioneered by Kontsevich \cite{Kon94, Kon99}, and the higher categorical framework of factorization homology introduced by Ayala-Francis \cite{AF15}.
 
-Our contribution: \textbf{Explicit geometric realization making everything computable}.
+\section{Main Results and Organization}
 
-But why should we expect such a geometric interpretation to exist? The answer lies in a fundamental principle of quantum field theory: locality. The requirement that operators commute at spacelike separation forces the algebraic structure to be encoded in the singularities as operators approach each other. These singularities naturally live on configuration spaces—the spaces parametrizing positions of operators on the curve. The compactification of these spaces, which adds boundary divisors corresponding to collision patterns, provides the geometric arena where algebra becomes geometry.
-
-This paper develops a systematic geometric realization of bar-cobar duality for chiral algebras through configuration space integrals, extending across all genera to incorporate the full spectrum of quantum corrections. The construction unifies three mathematical perspectives: the algebraic approach to chiral algebras via $\mathcal{D}$-modules developed by Beilinson-Drinfeld \cite{BD04}, the geometric configuration space methods pioneered by Kontsevich \cite{Kon94, Kon99}, and the higher categorical framework of factorization homology introduced by Ayala-Francis \cite{AF15}.
-
-\subsection{Main Results and Organization}
-
-Our first main result establishes the geometric bar construction for chiral algebras through configuration space integrals. This construction is elementary at its core: we take tensor products of the chiral algebra and integrate logarithmic forms over configuration spaces. The residues at collision divisors extract the algebraic operations:
+Our first result establishes the geometric bar construction for chiral algebras through configuration space integrals. This construction is elementary at its core: we take tensor products of the chiral algebra and integrate logarithmic forms over configuration spaces. The residues at collision divisors extract the algebraic operations:
 
 \begin{theorem}[Geometric Bar Construction, Theorem 3.2]
 For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, we construct a geometric bar complex at the chain level:
@@ -51,19 +39,19 @@ $$d_{\text{residue}}(a_1 \otimes \cdots \otimes a_n \otimes \omega) = \sum_{i<j}
 The condition $d^2 = 0$ follows from the Arnold-Orlik-Solomon relations among logarithmic forms.
 \end{theorem}
 
-Our second main result provides the dual construction—the geometric cobar complex—which has been missing from previous treatments. This construction is equally elementary: we work with distributions (integration kernels) on open configuration spaces:
+We follow with the dual construction—the geometric cobar complex. This construction is equally elementary: we work with distributions (integration kernels) on open configuration spaces:
 
 \begin{theorem}[Geometric Cobar Construction, Theorem 3.5]
 For a chiral coalgebra $\mathcal{C}$ on a smooth curve $X$, we construct a geometric cobar complex at the cochain level:
 $$\Omega^{\text{geom}}(\mathcal{C})_n = \text{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$$
-consisting of distributional subsections (integration kernels) on open configuration spaces with prescribed singularities along diagonals. Concretely, elements are expressions like:
+consisting of distributional sections (integration kernels) on open configuration spaces with prescribed singularities along diagonals. Concretely, elements are expressions like:
 $$K(z_1, \ldots, z_n) = \sum_{\text{poles}} \frac{c_{i_1 \cdots i_k}}{(z_{i_1} - z_{i_2})^{h_1} \cdots (z_{i_{k-1}} - z_{i_k})^{h_{k-1}}}$$
 The cobar differential
 $$d_{\text{cobar}}(K) = \sum_{i<j} \Delta_{ij}(K) \cdot \delta(z_i - z_j)$$
 inserts Dirac distributions that "pull apart" colliding points, implementing the coproduct $\Delta: \mathcal{C} \to \mathcal{C} \otimes \mathcal{C}$.
 \end{theorem}
 
-Our third main result extends the construction across all genera, incorporating quantum corrections that appear as loop integrals in physics:
+We proced to extend the construction across all genera, incorporating quantum corrections that appear as loop integrals in physics:
 
 \begin{theorem}[Full Genus Bar Complex, Theorem 5.1]
 The geometric bar complex extends to all genera $g \geq 0$ as
@@ -81,9 +69,9 @@ where each $\bar{B}^g(\mathcal{A})$ incorporates genus-specific geometry:
 The master differential $d^{\text{full}} = \sum_{g} \lambda^{2g-2} d^g$ satisfies $(d^{\text{full}})^2 = 0$, encoding quantum associativity to all loop orders.
 \end{theorem}
 
-\subsection{The Arnold Relations: Foundation of Consistency}
+\section{The Arnold Relations: Foundation of Consistency}
 
-\subsubsection{Discovery and Significance}
+\subsection{Discovery and Significance}
 
 This principle, discovered by V.I. Arnold in studying braid groups, is the cornerstone ensuring $d^2 = 0$ for the bar differential. We provide complete proofs in multiple ways—combinatorial, topological, and operadic—establishing this fundamental identity rigorously. Each approach illuminates different aspects of the underlying geometry.
 
@@ -95,7 +83,7 @@ $$\sum_{k \in S} (-1)^{|k|} \eta_{ik} \wedge \eta_{kj} \wedge \bigwedge_{l \in S
 where $|k|$ denotes the position of $k$ in the ordering of $S$.
 \end{theorem}
 
-\subsubsection{Why These Relations Matter}
+\subsection{Why These Relations Matter}
 
 The Arnold relations are not merely a technical tool—they encode the fundamental consistency of local operator algebras in quantum field theory:
 
@@ -106,7 +94,7 @@ The Arnold relations are not merely a technical tool—they encode the fundament
 \item \textbf{Physical Consistency}: They encode the associativity of the operator product expansion
 \end{enumerate}
 
-\subsubsection{Three Perspectives on the Proof}
+\subsection{Three Perspectives on the Proof}
 
 We establish these relations through three independent proofs, each revealing different aspects:
 
@@ -123,9 +111,9 @@ The configuration space naturally forms an operad with composition given by inse
 
 Complete detailed proofs are provided in Appendix A, with computational examples for small values of $|S|$.
 
-\subsection{Chiral Hochschild Cohomology and Deformation Theory}
+\section{Chiral Hochschild Cohomology and Deformation Theory}
 
-\subsubsection{From Classical to Chiral}
+\subsection{From Classical to Chiral}
 
 In classical algebra, Hochschild cohomology controls deformations. For chiral algebras, we have an enriched theory:
 
@@ -148,7 +136,7 @@ The chiral Hochschild cohomology controls:
 \end{enumerate}
 \end{theorem}
 
-\subsubsection{Periodicity Phenomena}
+\subsection{Periodicity Phenomena}
 
 A remarkable feature of chiral algebras is the appearance of periodicity:
 
@@ -163,7 +151,7 @@ For certain chiral algebras, the Hochschild cohomology exhibits periodicity:
 
 This periodicity reflects deep structure—the cohomology classes correspond to modular forms of specific weights, with periodicity arising from representation theory of $\text{SL}_2(\mathbb{Z})$.
 
-\subsection{Criteria for Existence of Koszul Duals}
+\section{Criteria for Existence of Koszul Duals}
 
 Not every chiral algebra admits a Koszul dual. We establish precise criteria:
 
@@ -189,10 +177,10 @@ $$\mathcal{W}^{-h^\vee}(\mathfrak{g}, f) \text{ is Koszul dual to } \mathcal{W}^
 where $\mathfrak{g}^\vee$ is the Langlands dual Lie algebra and $f^\vee$ is the dual nilpotent element.
 \end{theorem}
 
-The relationship between bar and cobar constructions forms our fourth main result:
+The relationship between bar and cobar constructions forms one of the main results of this work:
 
 \begin{theorem}[Extended Koszul Duality, Theorem 4.3]
-We establish a comprehensive theory of Koszul dual pairs $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras where:
+We establish a computable theory of Koszul dual pairs $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras where:
 \begin{enumerate}
 \item The bar and cobar constructions are quasi-inverse functors at the chain/cochain level:
    $$\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}, \quad \bar{B}^{\text{ch}}(\Omega^{\text{ch}}(\mathcal{A}^!)) \xrightarrow{\sim} \mathcal{A}^!$$
@@ -204,7 +192,19 @@ We establish a comprehensive theory of Koszul dual pairs $(\mathcal{A}, \mathcal
 \end{enumerate}
 \end{theorem}
 
-\subsection{Concrete Computational Power}
+
+We further establish a fundamental relationship between Koszul duality and quantum corrections:
+
+\begin{theorem}[Koszul Complementarity, Theorem 6.5.1]
+For a Koszul dual pair $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras on a genus $g$ surface, the spaces of quantum corrections to the Arnold relations satisfy:
+$$\mathcal{Q}_g(\mathcal{A}) \oplus \mathcal{Q}_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_{g,n}, \mathbb{C})$$
+\end{theorem}
+
+This reveals that Koszul dual chiral algebras have complementary quantum corrections—what one algebra sees as a deformation, its dual sees as an obstruction, and vice versa. This provides a complete classification of quantum corrections through Koszul duality and explains the deep relationship between bosonic and fermionic theories in physics.
+
+
+
+\section{Concrete Computational Power}
 
 Throughout the paper we utilize the principle that chiral algebraic structures naturally live on configuration spaces, with the bar-cobar construction providing the dictionary between algebraic and geometric perspectives. This geometric realization transforms abstract algebraic computations into concrete integrations that can be explicitly performed. 
 
@@ -219,23 +219,10 @@ We compute concrete examples that demonstrate the full power of our approach:
 
 Each example is worked out completely, with all differentials computed explicitly and cohomology determined.
 
-\subsection{From Local Physics to Global Geometry}
+\section{From Local Physics to Global Geometry}
 
-\subsubsection{The Physics of Operator Collisions}
 
-To understand why configuration spaces inevitably appear in the study of chiral algebras, we begin with the physics. In 1984, Belavin, Polyakov and Zamolodchikov \cite{BPZ84} were studying two-dimensional conformal field theories to understand critical phenomena in statistical mechanics.
-
-They discovered that correlation functions of local operators—the fundamental observables—are completely determined by their singularity structure. For chiral operators $\phi_1(z_1), \ldots, \phi_n(z_n)$ at distinct points on a Riemann surface, the correlation function
-$$\langle \phi_1(z_1) \cdots \phi_n(z_n) \rangle$$
-is a meromorphic function with prescribed singularities as points collide. The nature of these singularities is controlled by the operator product expansion, which tells us how to express the product of nearby operators as a sum over single operators.
-
-Here's the crucial observation: these correlation functions naturally live as sections of bundles over configuration spaces. The space 
-$$C_n(X) = \{(z_1, \ldots, z_n) \in X^n : z_i \neq z_j \text{ for } i \neq j\}$$
-parametrizes possible positions of $n$ distinct operators. The correlation function defines a section of an appropriate bundle over this space, with singularities along the diagonals $\{z_i = z_j\}$ where points collide.
-
-To extract the algebraic structure from these singularities, we need to compactify the configuration space in a controlled manner. The Fulton-MacPherson compactification $\overline{C}_n(X)$ adds boundary divisors $D_{ij}$ corresponding to all possible collision patterns, with normal crossing singularities that enable systematic residue calculus.
-
-\subsubsection{Why Configuration Spaces: The Factorization Perspective}
+\subsection{Why Configuration Spaces: The Factorization Perspective}
 
 A deeper reason for the appearance of configuration spaces comes from understanding chiral algebras as factorization algebras—a perspective developed by Ayala-Francis \cite{AF15} building on ideas of Lurie \cite{HA} and Costello-Gwilliam \cite{CG17}. 
 
@@ -248,7 +235,11 @@ In this view, a chiral algebra assigns:
 
 The configuration spaces encode all possible ways points can be distributed in open sets, making them the natural domain for understanding factorization structures.
 
-\subsection{Structure of This Paper}
+
+
+
+
+\section{Structure of This Paper}
 
 \textbf{Part I: Foundations and Mathematical Framework}
 \begin{itemize}
@@ -287,6 +278,7 @@ The configuration spaces encode all possible ways points can be distributed in o
 \item Appendix D: Consistency checks and cross-validation
 \end{itemize}
 
+\chapter{Alternate Introduction}
 The unifying principle throughout: \emph{chiral algebraic structures naturally live on configuration spaces, with the bar-cobar construction providing the precise dictionary between abstract algebra and concrete geometry}. This perspective transforms seemingly intractable algebraic computations into explicit geometric calculations that can be carried out systematically.
 
 To extract the algebraic structure from these singularities, we need to compactify the configuration space in a controlled manner. The Fulton-MacPherson compactification $\overline{C}_n(X)$ adds boundary divisors $D_{ij}$ corresponding to all possible collision patterns, with normal crossing singularities that enable systematic residue calculus. When operators $i$ and $j$ collide, we blow up the diagonal, introducing a new coordinate $\epsilon_{ij} = z_i - z_j$ and angular coordinate $\theta_{ij}$. The divisor $D_{ij} = \{\epsilon_{ij} = 0\}$ is where the collision occurs.
@@ -295,9 +287,9 @@ This is where geometry enters: the abstract algebraic operations of the chiral a
 $$\text{Res}_{D_{ij}}[\eta_{ij} \cdot \phi_i \otimes \phi_j] = C^k_{ij} \phi_k$$
 extracts precisely the OPE coefficient, transforming algebra into geometry through the residue theorem.
 
-\subsubsection{Why Configuration Spaces? The Factorization Perspective}
+\subsection{The Factorization Perspective}
 
-A deeper reason for the appearance of configuration spaces comes from understanding chiral algebras as factorization algebras—a perspective developed by Ayala-Francis \cite{AF15} building on ideas of Lurie \cite{HA} and Costello-Gwilliam \cite{CG17}. This viewpoint explains not just how but why configuration spaces appear.
+A deep reason for the appearance of configuration spaces comes from understanding chiral algebras as factorization algebras—a perspective developed by Costello-Gwilliam \cite{CG17}. This viewpoint explains not just how but why configuration spaces appear.
 
 In the 1960s, mathematicians studying algebraic topology wanted to understand how local algebraic structures (like multiplication) extend to global ones. The key insight was that "locality" means assigning algebraic data to open sets with compatibility conditions. For an algebraic structure to be "local" on a curve $X$, we need:
 
@@ -308,11 +300,11 @@ In the 1960s, mathematicians studying algebraic topology wanted to understand ho
 
 This factorization property—that disjoint regions contribute independently—forces us to consider all possible configurations of points. The factorization homology
 $$\int_X \mathcal{A} = \text{colim}_n \left[ \mathcal{A}^{\otimes n} \otimes_{(\mathcal{D}_X)^{\otimes n}} \mathcal{D}_{C_n(X)} \right]$$
-computes global subsections by integrating over configuration spaces.
+computes global sections by integrating over configuration spaces.
 
 The bar construction emerges as the dual perspective: instead of building up from local to global via factorization, we resolve the global structure into its local constituents via the bar resolution.
 
-\subsubsection{The Prism Principle: Decomposing Structure Through Geometry}
+\subsection{The Prism Principle: Decomposing Structure Through Geometry}
 
 We introduce a guiding principle that illuminates our construction and recurs throughout the paper:
 
@@ -327,9 +319,9 @@ $$\mathcal{A} = \bigoplus_{\text{strata}} \text{Res}_{\text{stratum}}[\bar{B}^{\
 
 This geometric spectroscopy transforms abstract algebraic structures into explicit geometric data, providing both conceptual clarity and computational power. Every algebraic relation in the chiral algebra corresponds to a geometric relation among residues (the Arnold-Orlik-Solomon relations), and every deformation of the algebraic structure corresponds to a deformation of the differential forms on configuration spaces.
 
-\subsection{Historical Development and Mathematical Framework}
+\section{Historical Development and Mathematical Framework}
 
-\subsubsection{The Evolution of Operadic Theory: Classical Operads, Loop Spaces and Algebraic Structures}
+\subsection{The Evolution of Operadic Theory: Classical Operads, Loop Spaces and Algebraic Structures}
 
 To understand how our geometric construction fits into the broader mathematical landscape, we trace the historical development of the key ideas, showing how each construction arose from concrete problems.
 
@@ -347,7 +339,7 @@ The fundamental examples encode familiar algebraic structures:
 
 Boardman and Vogt \cite{BV73} simultaneously developed a similar theory, showing these structures control homotopy-coherent algebras. The bar construction for operads, $B_{\mathcal{P}}(A)$, computes derived functors and provides resolutions.
 
-\subsubsection{Koszul Duality: The Hidden Symmetry}
+\subsection{Koszul Duality: The Hidden Symmetry}
 
 In 1994, Victor Ginzburg and Mikhail Kapranov \cite{GK94} made a remarkable discovery while studying quadratic algebras. They found that certain pairs of operads are "dual" in a precise homological sense. For a quadratic operad $\mathcal{P} = \text{Free}(E)/(R)$ with generators $E$ and relations $R$, they defined the dual operad
 $$\mathcal{P}^! = \text{Free}(s^{-1}E^*)/(R^\perp)$$
@@ -363,7 +355,7 @@ The paradigmatic example is Com-Lie duality:
 
 This duality would later connect to physics through the state-operator correspondence in CFT.
 
-\subsubsection{Configuration Spaces: Where Algebra Meets Topology}
+\subsection{Configuration Spaces: Where Algebra Meets Topology}
 
 The connection to geometry emerged through May's little disks operads $\mathcal{D}_n$. The space $\mathcal{D}_n(k)$ consists of $k$ disjoint embedded $n$-dimensional disks in the unit $n$-disk. These spaces naturally parametrize ways to combine operations geometrically.
 
@@ -375,11 +367,11 @@ The homology of little disks equals the homology of configuration spaces! This r
 - Algebraic operations correspond to geometric strata
 - The combinatorics of operations matches the topology of point configurations
 
-The Fulton-MacPherson compactification $\overline{C}_n(X)$, originally developed for intersubsection theory, provided the right framework. It adds boundary divisors for all collision patterns with normal crossings, enabling systematic residue calculus.
+The Fulton-MacPherson compactification $\overline{C}_n(X)$, originally developed for intersection theory, provided the right framework. It adds boundary divisors for all collision patterns with normal crossings, enabling systematic residue calculus.
 
-\subsubsection{Chiral Algebras: The Geometric Revolution}
+\subsection{Chiral Algebras: The Geometric Revolution}
 
-\subsubsection{Beilinson-Drinfeld: From Vertex Algebras to Geometry}
+\subsection{Beilinson-Drinfeld: From Vertex Algebras to Geometry}
 
 In the 1980s, physicists had developed vertex algebras to axiomatize 2D conformal field theory. These were algebraic structures with a formal variable $z$ and complicated identities. The theory was powerful but coordinate-dependent and hard to globalize.
 
@@ -400,7 +392,7 @@ The chiral operad has operations
 $$\mathcal{P}^{\text{ch}}_X(n) = H^0(\overline{C}_n(X), \omega_{\overline{C}_n(X)}^{\text{log}})$$
 —logarithmic forms on compactified configuration spaces!
 
-\subsubsection{Factorization Algebras: The Higher Categorical View}
+\subsection{Factorization Algebras: The Higher Categorical View}
 
 The modern perspective emerged from Jacob Lurie's higher algebra \cite{HA}, developed around 2009. Lurie showed that factorization algebras encode local-to-global principles in a precise $\infty$-categorical framework.
 
@@ -411,9 +403,9 @@ David Ayala and John Francis \cite{AF15} formulated a theory of factorization al
 
 Kevin Costello and Owen Gwilliam \cite{CG17} developed perturbative quantum field theory using factorization algebras, showing this isn't just abstract mathematics but the natural language for quantum fields.
 
-\subsubsection{The Bar-Cobar Construction: From Abstract to Geometric}
+\subsection{The Bar-Cobar Construction: From Abstract to Geometric}
 
-\subsubsection{Abstract Bar-Cobar Duality}
+\subsection{Abstract Bar-Cobar Duality}
 
 The bar construction transforms algebras into coalgebras and vice versa for the cobar construction. For an augmented operad $\mathcal{P}$:
 $$\text{Bar}(\mathcal{P}) = T^c(s\bar{\mathcal{P}})$$
@@ -428,7 +420,7 @@ $$\text{Bar}: \text{Operads} \rightleftarrows \text{Cooperads}^{\text{op}} : \Om
 
 When $\mathcal{P}$ is Koszul, this becomes an equivalence of derived categories—bar and cobar are quasi-inverse.
 
-\subsubsection{Geometric Realization for Chiral Algebras}
+\subsection{Geometric Realization for Chiral Algebras}
 
 Our key contribution is showing this abstract duality has a natural geometric realization through configuration spaces.
 
@@ -452,7 +444,7 @@ $$K(z_1, \ldots, z_n) = \frac{c(z_1, \ldots, z_n)}{(z_1-z_2)^{h_1} \cdots (z_{n-
 The cobar differential inserts delta functions:
 $$d_{\text{cobar}}(K) = \sum_{i<j} \Delta_{ij}(K) \cdot \delta(z_i - z_j)$$
 
-\subsubsection{Chain/Cochain Level Precision}
+\subsection{Chain/Cochain Level Precision}
 
 Our constructions work at the chain/cochain level, not just homology:
 - Bar complex: actual chains on configuration spaces  
@@ -461,9 +453,9 @@ Our constructions work at the chain/cochain level, not just homology:
 
 This precision enables concrete calculations impossible at the homology level.
 
-\subsection{Quantum Corrections and Higher Genus}
+\section{Quantum Corrections and Higher Genus}
 
-\subsubsection{Why Higher Genus Matters: From Trees to Loops}
+\subsection{Why Higher Genus Matters: From Trees to Loops}
 
 In quantum field theory, Feynman diagrams organize perturbation theory. Tree diagrams give classical physics; loops give quantum corrections. In our geometric framework:
 - **Genus 0** (sphere): Tree-level, classical, rational functions
@@ -472,7 +464,7 @@ In quantum field theory, Feynman diagrams organize perturbation theory. Tree dia
 
 Each genus contributes fundamentally new structures that don't exist at lower genus.
 
-\subsubsection{Genus Zero: The Classical World}
+\subsection{Genus Zero: The Classical World}
 
 On the sphere $\mathbb{P}^1$, everything is rational. The logarithmic forms
 $$\eta_{ij} = d\log(z_i - z_j) = \frac{dz_i - dz_j}{z_i - z_j}$$
@@ -483,7 +475,7 @@ $$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \et
 
 This relation is exact at genus zero—no quantum corrections yet.
 
-\subsubsection{Genus One: Enter the Quantum}
+\subsection{Genus One: Enter the Quantum}
 
 On a torus $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with modular parameter $\tau \in \mathbb{H}$ (upper half-plane), rational functions become elliptic functions.
 
@@ -503,11 +495,11 @@ The right side is the volume form on the torus! This non-zero correction encodes
 
 \textbf{Concrete Example}: For the Heisenberg algebra with generators $a_n$ and OPE $[a_m, a_n] = m\delta_{m+n,0} \cdot c$, the central charge $c$ appears precisely from this genus-one correction.
 
-\subsubsection{Higher Genus: The Full Quantum Theory}
+\subsection{Higher Genus: The Full Quantum Theory}
 
 For genus $g \geq 2$, surfaces have hyperbolic metrics. New structures appear:
 
-**Period Matrices**: Choose canonical cycles $\{A_\alpha, B_\beta\}_{\alpha,\beta=1}^g$ with intersubsection
+**Period Matrices**: Choose canonical cycles $\{A_\alpha, B_\beta\}_{\alpha,\beta=1}^g$ with intersection
 $$A_\alpha \cap B_\beta = \delta_{\alpha\beta}, \quad A_\alpha \cap A_\beta = B_\alpha \cap B_\beta = 0$$
 
 The period matrix
@@ -521,7 +513,7 @@ $$\eta_{ij}^{(g)} = d\log E(z_i, z_j) + \sum_{\alpha,\beta=1}^g \left(\oint_{A_\
 
 The second term involves period integrals around cycles—a genuinely new quantum phenomenon!
 
-\subsubsection{The Master Differential and Quantum Associativity}
+\subsection{The Master Differential and Quantum Associativity}
 
 The full genus bar complex assembles all contributions:
 $$\bar{B}^{\text{full}}(\mathcal{A}) = \bigoplus_{g \geq 0} \lambda^{2g-2} \bar{B}^g(\mathcal{A})$$
@@ -543,9 +535,9 @@ Expanding in $\lambda$:
 
 The geometry of moduli spaces ensures these relations automatically.
 
-\subsection{Koszul Duality and Its Generalizations}
+\section{Extended Koszul Duality and the theory of Chiral Koszul Pairs}
 
-\subsubsection{Classical Koszul Duality: The Algebraic Foundation}
+\subsection{Classical Koszul Duality: The Algebraic Foundation}
 
 In 1970, Stewart Priddy was studying the homology of symmetric groups. He discovered that certain pairs of algebras are "dual" in a remarkable way. For a quadratic algebra
 $$A = T(V)/(R), \quad R \subset V^{\otimes 2}$$
@@ -570,11 +562,11 @@ This duality interchanges fundamental structures:
    - Universal enveloping: encodes Lie bracket
    - Chevalley-Eilenberg: computes Lie algebra cohomology
 
-\subsubsection{Com-Lie Duality: The Geometric Bridge}
+\subsection{Com-Lie Duality: The Geometric Bridge}
 
 The most important example connects commutative and Lie structures.
 
-\subsubsection{The Commutative Side}
+\subsection{The Commutative Side}
 
 The bar complex of the commutative operad:
 $$\text{Bar}(\text{Com})(n) = \bigoplus_{\text{trees } T} \mathbb{k}[T]$$
@@ -586,14 +578,14 @@ where $\Pi_n$ = partitions of $\{1, \ldots, n\}$ ordered by refinement.
 
 The crucial fact: boundary strata of $\overline{C}_n(\mathbb{P}^1)$ correspond to partitions! A partition $\pi$ corresponds to the stratum where points collide according to blocks of $\pi$.
 
-\subsubsection{The Lie Side}
+\subsection{The Lie Side}
 
 The homology computes:
 $$H_{n-2}(\bar{\Pi}_n) \cong \text{Lie}(n) \otimes \text{sgn}_n$$
 
 Bracket operations emerge from cycles in the partition complex!
 
-\subsubsection{Our Geometric Enhancement}
+\subsection{Our Geometric Enhancement}
 
 In the chiral setting, Com-Lie duality becomes:
 - **Commutative chiral**: Free commutative chiral algebra
@@ -612,7 +604,7 @@ This enrichment captures:
 - Quantum groups from higher genus
 - Modular transformations from $\text{SL}_2(\mathbb{Z})$ action
 
-\subsubsection{Chiral Quadratic Algebras}
+\subsection{Chiral Quadratic Algebras}
 
 For chiral algebras, "quadratic" requires locality. Following Beilinson-Drinfeld and recent work by Gui-Li-Zeng \cite{GL22}:
 
@@ -630,11 +622,11 @@ $$\langle n_1 \otimes n_2, m_1 \otimes m_2 \rangle = \text{Res}_{z_1 = z_2} \lan
 
 This residue pairing geometrically realizes the algebraic duality.
 
-\subsubsection{Beyond Quadratic: Curved and Filtered Extensions}
+\subsection{Beyond Quadratic: Curved and Filtered Extensions}
 
 Many important examples aren't quadratic. We extend Koszul duality to:
 
-\subsubsection{Curved Algebras}
+\subsection{Curved Algebras}
 
 A curved chiral algebra has curvature $\kappa \in \mathcal{A}^{\otimes 2}[2]$ with
 $$d\kappa + \frac{1}{2}[\kappa, \kappa] = 0$$
@@ -647,7 +639,7 @@ $$d_{\text{curved}} = d + m_0(\kappa)$$
 $$\kappa = \int \beta\gamma$$
 encodes the non-zero vacuum expectation value.
 
-\subsubsection{Filtered Algebras}  
+\subsection{Filtered Algebras}  
 
 W-algebras have natural filtrations by conformal weight:
 $$F_0 \mathcal{W} \subset F_1 \mathcal{W} \subset F_2 \mathcal{W} \subset \cdots$$
@@ -657,7 +649,7 @@ $$F_p\bar{B}(\mathcal{W}) = \bigoplus_{i_1 + \cdots + i_n \leq p} \bar{B}(F_{i_1
 
 A spectral sequence computes corrections order by order.
 
-\subsubsection{Poincaré-Verdier Duality: The Geometric Heart}
+\subsection{Poincaré-Verdier Duality: The Geometric Heart}
 
 The bar-cobar duality realizes as Poincaré-Verdier duality:
 $$\bar{B}^{\text{ch}}(\mathcal{A}) \cong \mathbb{D}(\Omega^{\text{ch}}(\mathcal{A}^!))$$
@@ -673,9 +665,9 @@ This exchanges:
 
 The duality is computed by explicit integration—completely constructive!
 
-\subsection{Concrete Examples and Applications}
+\section{Concrete Examples and Applications}
 
-\subsubsection{The Heisenberg Vertex Algebra}
+\subsection{The Heisenberg Vertex Algebra}
 
 The Heisenberg algebra is generated by $a_n$ ($n \in \mathbb{Z}$) with
 $$[a_m, a_n] = m\delta_{m+n,0} \cdot c$$
@@ -689,7 +681,7 @@ The bar complex:
 $$\bar{B}^0(\text{Heis}) = \text{Polynomial differential forms on } \overline{C}_n(\mathbb{P}^1)$$
 $$\bar{B}^1(\text{Heis}) = \text{Elliptic forms with modular weight}$$
 
-\subsubsection{Free Fermions and Boson-Fermion Correspondence}
+\subsection{Free Fermions and Boson-Fermion Correspondence}
 
 Free fermions: $\psi(z)\psi(w) \sim (z-w)^{-1}$
 
@@ -701,7 +693,7 @@ $$\Omega(\bar{B}(\text{Fermion})) \simeq \text{Heisenberg}$$
 
 This geometrically realizes bosonization!
 
-\subsubsection{W-Algebras at Critical Level}
+\subsection{W-Algebras at Critical Level}
 
 For $\mathcal{W}^k(\mathfrak{g}, f)$ at critical level $k = -h^\vee$:
 
@@ -709,24 +701,7 @@ $$\bar{B}(\mathcal{W}^{-h^\vee}) = \text{Screening charges} \otimes \Omega^*_{\t
 
 The differential is entirely screening operators—dramatic simplification!
 
-\subsection{Structure of This Paper}
-
-\textbf{Part II: Configuration Spaces and Geometry} (Chapters 2-3)
-- Chapter 2: Fulton-MacPherson compactification, explicit coordinates
-- Chapter 3: Logarithmic forms, Arnold relations across genera
-
-\textbf{Part III: Bar and Cobar Constructions} (Chapters 4-5)
-- Chapter 4: Geometric bar complex, proof of $d^2 = 0$
-- Chapter 5: Geometric cobar, distributions, $A_\infty$ structures
-
-\textbf{Part IV: Koszul Duality and Applications} (Chapters 6-8)
-- Chapter 6: Extended Koszul duality, curved and filtered cases
-- Chapter 7: W-algebras, screening charges, representation theory
-- Chapter 8: Holographic duality, AdS/CFT as Koszul duality
-
-The unifying principle: chiral algebraic structures naturally live on configuration spaces, with bar-cobar constructions providing the dictionary between algebra and geometry. Our chain-level geometric realization makes everything computable through explicit integration.
-
-\subsection{Chiral Hochschild Cohomology}
+\section{Chiral Hochschild Cohomology}
 
 The bar complex computes a chiral version of Hochschild cohomology:
 
@@ -748,7 +723,7 @@ Physical interpretation:
 \item $\ChirHoch^3$: Obstructions
 \end{itemize}
 
-\subsection{Criteria for Koszul Pairs}
+\section{Criteria for Koszul Pairs}
 
 Not every chiral algebra admits a Koszul dual. We establish:
 
@@ -771,3 +746,22 @@ where $\mathfrak{g}^\vee$ is the Langlands dual.
 \end{theorem}
 
 Complete proofs with explicit examples follow in the main text.
+
+
+\section{Structure of This Paper}
+
+\textbf{Part II: Configuration Spaces and Geometry} (Chapters 2-3)
+- Chapter 2: Fulton-MacPherson compactification, explicit coordinates
+- Chapter 3: Logarithmic forms, Arnold relations across genera
+
+\textbf{Part III: Bar and Cobar Constructions} (Chapters 4-5)
+- Chapter 4: Geometric bar complex, proof of $d^2 = 0$
+- Chapter 5: Geometric cobar, distributions, $A_\infty$ structures
+
+\textbf{Part IV: Koszul Duality and Applications} (Chapters 6-8)
+- Chapter 6: Extended Koszul duality, curved and filtered cases
+- Chapter 7: W-algebras, screening charges, representation theory
+- Chapter 8: Holographic duality, AdS/CFT as Koszul duality
+
+The unifying principle: chiral algebraic structures naturally live on configuration spaces, with bar-cobar constructions providing the dictionary between algebra and geometry. Our chain-level geometric realization makes everything computable through explicit integration.
+
