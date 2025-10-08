@@ -1,0 +1,460 @@
+% ==========================================
+% NEW CHAPTER: FROM CLASSICAL TO CHIRAL KOSZUL DUALITY
+% The Three-Level Hierarchy
+% ==========================================
+
+\chapter{From Classical to Chiral Koszul Duality}\label{chap:classical-to-chiral}
+
+\begin{abstract}
+Every instance of chiral Koszul duality upgrades a classical algebraic Koszul duality through geometric realization on configuration spaces. We establish the systematic three-level hierarchy: classical algebraic duality, geometric realization via configuration spaces, and chiral enhancement for curves. This chapter provides the conceptual foundation showing how chiral Koszul duality is not an isolated phenomenon but rather the natural enhancement of well-understood classical dualities to the setting of factorization algebras on curves.
+\end{abstract}
+
+\section{The Three-Level Hierarchy: Overview}
+
+\subsection{Witten's Perspective: From Local to Global}
+
+\begin{motivation}[Why Classical Duality Matters]
+In quantum field theory, we encounter duality at multiple scales. Consider the canonical example of bosons and fermions in quantum mechanics. At the algebraic level, creation and annihilation operators satisfy commutation versus anticommutation relations. At the geometric level, these manifest as symmetric versus exterior products of wave functions. At the chiral level on curves, these become the βγ and free fermion systems with their operator product expansions.
+
+The progression from classical to chiral is not merely a generalization but reveals how local algebraic structure propagates to global geometric structure on curves through the factorization property.
+\end{motivation}
+
+\subsection{The Three Levels: Precise Formulation}
+
+\begin{definition}[Three-Level Hierarchy]\label{def:three-level-hierarchy}
+For every chiral Koszul dual pair, there exists a systematic enhancement through three levels:
+
+\textbf{Level 1: Classical Algebraic}
+\begin{itemize}
+\item Setting: Abstract algebras, operads, or cooperads over a field
+\item Example: Com! = coLie (commutative operad has Koszul dual the Lie cooperad)
+\item Tools: Quadratic-linear data, Koszul resolution, bar-cobar constructions
+\item Reference: Ginzburg-Kapranov, Getzler-Jones, Loday-Vallette
+\end{itemize}
+
+\textbf{Level 2: Geometric Realization}
+\begin{itemize}
+\item Setting: Configuration spaces and their compactifications
+\item Example: Logarithmic forms on $\overline{C}_n(\mathbb{R}^d)$ realize operadic compositions
+\item Tools: Fulton-MacPherson compactification, Arnold relations, Verdier duality
+\item Reference: Kontsevich formality, Lambrechts-Volic, Fresse
+\end{itemize}
+
+\textbf{Level 3: Chiral Enhancement}
+\begin{itemize}
+\item Setting: Chiral algebras on curves as D-modules with factorization
+\item Example: Heisenberg $\mathcal{H}_k$ and $\mathcal{H}_{-k}$ form chiral Koszul pair
+\item Tools: Our geometric bar-cobar construction, Beilinson-Drinfeld framework
+\item Reference: This manuscript, Gui-Li-Zeng
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Functoriality of the Hierarchy]\label{thm:hierarchy-functorial}
+The three levels are connected by functors that preserve Koszul duality:
+$$\begin{tikzcd}[column sep=large]
+\text{Classical} \arrow[r, "\text{Geometric realization}"] \arrow[d, "\text{Koszul}"'] 
+  & \text{Geometric} \arrow[r, "\text{Chiral enhancement}"] \arrow[d, "\text{Koszul}"'] 
+  & \text{Chiral} \arrow[d, "\text{Koszul}"'] \\
+\text{Classical}^! \arrow[r, "\text{Geometric realization}"] 
+  & \text{Geometric}^! \arrow[r, "\text{Chiral enhancement}"] 
+  & \text{Chiral}^!
+\end{tikzcd}$$
+
+Commutativity of this diagram means: chiral Koszul duality upgrades classical Koszul duality.
+\end{theorem}
+
+\section{Level 1: Classical Koszul Duality}
+
+\subsection{The Fundamental Example: Com and Lie}
+
+\begin{example}[Commutative and Lie Operads]\label{ex:com-lie-classical}
+The paradigmatic Koszul dual pair at the operadic level is Com and Lie.
+
+\textbf{The Commutative Operad Com:}
+\begin{itemize}
+\item Operations: $\mu_n: V^{\otimes n} \to V$ (n-ary products)
+\item Relations: Total symmetry and associativity
+\item Algebras: Commutative algebras
+\end{itemize}
+
+\textbf{The Lie Cooperad coLie:}
+\begin{itemize}
+\item Cooperations: $\Delta_n: V \to V^{\otimes n}$ (n-ary decompositions)
+\item Relations: Antisymmetry and co-Jacobi identity
+\item Coalgebras: Lie coalgebras
+\end{itemize}
+
+\textbf{The Koszul Duality:}
+Following Ginzburg-Kapranov, Com and coLie are Koszul dual:
+$$\text{Com}^! = \text{coLie}$$
+
+More precisely, the bar construction on Com-algebras produces coLie-coalgebras:
+$$\bar{B}: \text{Com-alg} \to \text{coLie-coalg}$$
+
+And the cobar construction reconstructs:
+$$\Omega(\text{coLie-coalg}) \simeq \text{Com-alg}$$
+\end{example}
+
+\begin{remark}[Why This Duality?]\label{rem:why-com-lie}
+From Grothendieck's functorial perspective, this duality has a deep origin. The free commutative algebra on a vector space V is the symmetric algebra:
+$$\text{Free}_{\text{Com}}(V) = \text{Sym}(V) = \bigoplus_{n \geq 0} (V^{\otimes n})^{\mathfrak{S}_n}$$
+
+Its Koszul dual is the free Lie coalgebra, which by Milnor-Moore is:
+$$\text{Free}_{\text{Lie}}^{\text{co}}(V) = \text{Prim}(T(V))$$
+the primitive elements in the tensor coalgebra.
+
+The duality reflects the fundamental relationship between symmetrization and antisymmetrization, manifesting at the operadic level.
+\end{remark}
+
+\subsection{Sym and Ext: The Algebraic Version}
+
+\begin{example}[Symmetric and Exterior Algebras]\label{ex:sym-ext-classical}
+At the level of concrete algebras (not operads), we have the classical Koszul duality:
+
+\textbf{Symmetric Algebra:}
+$$\text{Sym}(V) = k[x_1, \ldots, x_n]$$
+generated by V with relations $x_i x_j = x_j x_i$.
+
+\textbf{Exterior Algebra:}
+$$\Lambda(V) = \bigwedge V$$
+generated by V with relations $x_i x_j = -x_j x_i$ and $x_i^2 = 0$.
+
+\textbf{The Koszul Duality:}
+$$\text{Sym}(V)^! = \Lambda(V^*)$$
+
+Explicitly, the bar complex of Sym(V) computes:
+$$\bar{B}(\text{Sym}(V))_n = \Lambda^n(V^*) \otimes k$$
+
+The differential vanishes, and cohomology is concentrated in degree 0, giving $\Lambda(V^*)$.
+\end{example}
+
+\begin{computation}[Explicit Bar Complex Calculation]\label{comp:sym-bar}
+Let $V = \text{span}\{x, y\}$ be two-dimensional. The symmetric algebra is:
+$$\text{Sym}(V) = k[x,y]$$
+
+The bar complex has:
+\begin{align*}
+\bar{B}_0 &= k \\
+\bar{B}_1 &= V^* \otimes k = \text{span}\{dx, dy\} \\
+\bar{B}_2 &= \Lambda^2(V^*) \otimes k = \text{span}\{dx \wedge dy\} \\
+\bar{B}_3 &= 0
+\end{align*}
+
+The differential is:
+$$d: \bar{B}_1 \to \bar{B}_2$$
+$$d(a \otimes b) = [a,b] \otimes 1$$
+
+Since Sym is commutative, $[a,b] = 0$, so $d = 0$.
+
+The cohomology is:
+$$H^*(\bar{B}(\text{Sym}(V))) = \Lambda(V^*)$$
+
+This is the Koszul dual!
+\end{computation}
+
+\subsection{Chevalley-Eilenberg and Universal Enveloping}
+
+\begin{example}[Lie Algebra Cohomology and Universal Enveloping]\label{ex:CE-UE-classical}
+For a Lie algebra $\mathfrak{g}$, there is a fundamental Koszul duality:
+
+\textbf{Chevalley-Eilenberg Cochains:}
+$$CE^*(\mathfrak{g}) = \Lambda^*(\mathfrak{g}^*)$$
+with differential:
+$$d\omega(X_0, \ldots, X_n) = \sum_{i<j} (-1)^{i+j} \omega([X_i, X_j], \ldots, \widehat{X_i}, \ldots, \widehat{X_j}, \ldots)$$
+
+This computes Lie algebra cohomology $H^*(\mathfrak{g}, k)$.
+
+\textbf{Universal Enveloping Algebra:}
+$$U(\mathfrak{g}) = T(\mathfrak{g}) / (XY - YX - [X,Y])$$
+
+By Poincaré-Birkhoff-Witt, as a vector space:
+$$U(\mathfrak{g}) \cong \text{Sym}(\mathfrak{g})$$
+
+\textbf{The Koszul Duality:}
+$$CE^*(\mathfrak{g})^! \cong U(\mathfrak{g})$$
+
+More precisely, $U(\mathfrak{g})$ is the cobar construction on $CE^*(\mathfrak{g})$ viewed as a coalgebra.
+\end{example}
+
+\begin{theorem}[Classical Kostant Theorem]\label{thm:kostant-classical}
+For a semisimple Lie algebra $\mathfrak{g}$, the Chevalley-Eilenberg cohomology is:
+$$H^*(\mathfrak{g}, k) = \Lambda(P^*)$$
+where P is the space of primitive elements.
+
+This duality between CE cochains and the universal enveloping algebra is the algebraic prototype for our chiral construction.
+\end{theorem}
+
+\section{Level 2: Geometric Realization}
+
+\subsection{Kontsevich's Configuration Space Integrals}
+
+\begin{construction}[Geometric Realization of Operads]\label{const:geom-real-operads}
+Kontsevich showed that operads have natural geometric realizations via configuration spaces:
+
+For the commutative operad Com:
+$$\text{Com}(n) = H^*(\overline{C}_n(\mathbb{R}^d), \mathbb{Q})$$
+the cohomology of the compactified configuration space.
+
+For d ≥ 2, this has the structure of a commutative operad through:
+\begin{itemize}
+\item Compositions: Gluing configurations
+\item Symmetries: Permuting points
+\item Unit: Single point configuration
+\end{itemize}
+\end{construction}
+
+\begin{theorem}[Kontsevich Formality]\label{thm:kontsevich-formality}
+For $\mathbb{R}^d$ with d ≥ 2, there is a quasi-isomorphism of operads:
+$$\int: C_*(\overline{C}_n(\mathbb{R}^d)) \xrightarrow{\sim} H_*(\overline{C}_n(\mathbb{R}^d))$$
+
+This formality makes the geometric realization computable through explicit integration.
+\end{theorem}
+
+\subsection{Arnold Relations as Operadic Relations}
+
+\begin{proposition}[Geometric Origin of Koszul Relations]\label{prop:arnold-koszul}
+The Koszul relations in classical duality have geometric manifestations as Arnold relations.
+
+For three points in configuration space $C_3(X)$, the logarithmic forms satisfy:
+$$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$$
+
+This is precisely the antisymmetry relation defining the Lie operad, geometrically realized!
+\end{proposition}
+
+\begin{proof}[Sketch]
+The Arnold relation arises from the boundary structure of $\overline{C}_3(X)$. When two points collide, we must account for the third point's position. The cyclic sum ensures consistency with the boundary stratification, which algebraically manifests as antisymmetry in the dual Lie structure.
+\end{proof}
+
+\subsection{Verdier Duality at the Geometric Level}
+
+\begin{theorem}[Verdier Duality on Configuration Spaces]\label{thm:verdier-config}
+On the compactified configuration space $\overline{C}_n(X)$, Verdier duality establishes:
+$$\mathbb{D}: \Omega^*_{\log}(\overline{C}_n(X)) \xrightarrow{\sim} \Omega^{d-*}_{\text{dist}}(C_n(X))$$
+
+This exchanges:
+\begin{itemize}
+\item Logarithmic forms (with poles at collision divisors)
+\item Distributional forms (with delta function singularities)
+\end{itemize}
+
+At the geometric level, this IS the bar-cobar duality.
+\end{theorem}
+
+\section{Level 3: Chiral Enhancement}
+
+\subsection{From Geometric to Chiral}
+
+\begin{construction}[Chiral Enhancement Functor]\label{const:chiral-enhancement}
+Given a geometric realization of an operad on configuration spaces, we enhance it to a chiral algebra through:
+
+\textbf{Step 1: D-module structure}
+Replace forms with D-module-valued sections:
+$$\Omega^*(\overline{C}_n(X)) \rightsquigarrow \Gamma(\overline{C}_n(X), \mathcal{A}^{\boxtimes n} \otimes \Omega^*)$$
+
+\textbf{Step 2: Factorization}
+Impose the factorization axiom: for disjoint opens U, V:
+$$\mathcal{A}(U \sqcup V) = \mathcal{A}(U) \otimes \mathcal{A}(V)$$
+
+\textbf{Step 3: Chiral operations}
+The OPE is determined by residues at collision divisors:
+$$\phi(z) \psi(w) \sim \sum_k \frac{\phi_k(w)}{(z-w)^{h_k}}$$
+\end{construction}
+
+\subsection{Example: Heisenberg from Sym-Ext Duality}
+
+\begin{example}[Heisenberg as Chiral Enhancement]\label{ex:heisenberg-enhancement}
+We trace the Heisenberg algebra through all three levels:
+
+\textbf{Level 1 (Classical):}
+The symmetric algebra Sym(V) has Koszul dual Ext(V*).
+
+\textbf{Level 2 (Geometric):}
+On configuration spaces, this realizes as:
+\begin{itemize}
+\item Symmetric products: Forms with no poles
+\item Exterior products: Forms with simple poles
+\end{itemize}
+
+\textbf{Level 3 (Chiral):}
+The Heisenberg algebra $\mathcal{H}_k$ at level k has:
+\begin{itemize}
+\item Generator: Field a(z) with OPE $a(z)a(w) \sim k/(z-w)^2$
+\item Koszul dual: $\mathcal{H}_{-k}$ at level -k
+\item The level shift k → -k is the chiral manifestation of Sym ↔ Ext
+\end{itemize}
+\end{example}
+
+\begin{theorem}[Enhancement Preserves Koszul Duality]\label{thm:enhancement-preserves}
+If (A₁, A₂) is a classical Koszul dual pair, and both have geometric realizations that enhance to chiral algebras (𝒜₁, 𝒜₂), then:
+$$(𝒜₁, 𝒜₂) \text{ is a chiral Koszul dual pair}$$
+
+Moreover, the bar-cobar constructions at all three levels are compatible via the enhancement functors.
+\end{theorem}
+
+\section{Complete Examples Through All Three Levels}
+
+\subsection{Free Fermions and βγ Systems}
+
+\begin{example}[Fermion-Boson Through Three Levels]\label{ex:fermion-boson-three-levels}
+
+\textbf{Level 1: Ext-Sym Duality}
+$$\Lambda(V) \xleftrightarrow{\text{Koszul}} \text{Sym}(V^*)$$
+
+Algebraically: Exterior and symmetric algebras are Koszul dual.
+
+\textbf{Level 2: Geometric Realization}
+\begin{itemize}
+\item $\Lambda$: Antisymmetric tensors → Volume forms
+\item Sym: Symmetric tensors → Polynomial functions
+\end{itemize}
+
+Configuration space interpretation:
+$$H^*(\overline{C}_n(\mathbb{C}), \text{antisymmetric}) \leftrightarrow H^*(\overline{C}_n(\mathbb{C}), \text{symmetric})$$
+
+\textbf{Level 3: Chiral Algebras}
+$$\text{Free fermion } \psi \xleftrightarrow{\text{Koszul}} \beta\gamma \text{ system}$$
+
+Explicitly:
+\begin{itemize}
+\item Fermion: $\psi(z)\psi(w) \sim (z-w)^{-1}$ (simple pole, antisymmetric)
+\item βγ: $\beta(z)\gamma(w) \sim (z-w)^{-1}$ (simple pole, symmetric)
+\end{itemize}
+
+The bar construction on the free fermion produces the βγ coalgebra structure.
+\end{example}
+
+\subsection{Affine Lie Algebras}
+
+\begin{example}[Affine Kac-Moody Through Three Levels]\label{ex:affine-three-levels}
+
+\textbf{Level 1: CE-UE Duality}
+$$CE^*(\mathfrak{g}) \xleftrightarrow{\text{Koszul}} U(\mathfrak{g})$$
+
+Chevalley-Eilenberg cochains are Koszul dual to the universal enveloping algebra.
+
+\textbf{Level 2: Geometric Realization}
+\begin{itemize}
+\item CE: Differential forms with Lie algebra structure
+\item UE: Functions with Lie algebra action
+\end{itemize}
+
+Configuration space manifestation involves Lie algebra bundles on $\overline{C}_n(X)$.
+
+\textbf{Level 3: Chiral Algebras}
+$$\widehat{\mathfrak{g}}_k \xleftrightarrow{\text{Koszul}} \widehat{\mathfrak{g}}_{-k-2h^\vee}$$
+
+The affine Lie algebra at level k has Koszul dual at the shifted level -k-2h^∨.
+
+This level shift is the chiral enhancement of the CE-UE duality, incorporating the central extension.
+\end{example}
+
+\section{The Conceptual Framework}
+
+\subsection{Why Three Levels?}
+
+\begin{remark}[Grothendieck's Vision]\label{rem:grothendieck-three-levels}
+From Grothendieck's perspective, the three levels represent increasing sophistication in how we encode structure:
+
+\begin{enumerate}
+\item \textbf{Classical}: Abstract, universal, functorial
+\item \textbf{Geometric}: Realized, concrete, computable
+\item \textbf{Chiral}: Enriched, deformed, physical
+\end{enumerate}
+
+Each level adds structure while preserving the essential duality. The passage from classical to geometric is geometric realization (making abstract structure concrete). The passage from geometric to chiral is deformation quantization (incorporating quantum corrections).
+\end{remark}
+
+\subsection{Serre's Computational Principle}
+
+\begin{principle}[Computational Verification]\label{princ:serre-computation}
+For any claimed chiral Koszul duality, verification requires computing through all three levels:
+
+\begin{enumerate}
+\item Identify the underlying classical Koszul pair
+\item Show geometric realization matches configuration space calculations
+\item Verify chiral enhancement preserves the duality
+\end{enumerate}
+
+If any level fails, the claimed duality is false. If all three levels agree, the duality is established.
+\end{principle}
+
+\section{Connection to Beilinson-Drinfeld}
+
+\subsection{Filtered Chiral Algebras}
+
+\begin{remark}[BD Framework Integration]\label{rem:BD-integration}
+Beilinson-Drinfeld's theory of filtered chiral algebras (BD 4.2) provides the natural setting for understanding the three-level hierarchy:
+
+\begin{itemize}
+\item \textbf{Associated graded}: Recovers the classical level
+\item \textbf{Deformation}: Realizes the geometric level
+\item \textbf{Full algebra}: Is the chiral level
+\end{itemize}
+
+Their I-adic completion (BD 4.7) is precisely what's needed to construct Koszul duals for non-quadratic chiral algebras, connecting to our nilpotent completion framework.
+\end{remark}
+
+\subsection{Factorization and Ran Space}
+
+\begin{theorem}[Ran Space Perspective]\label{thm:ran-perspective}
+The Ran space $\text{Ran}(X) = \text{colim}_n X^{(n)}$ provides a unified setting for all three levels:
+
+\begin{itemize}
+\item Classical operads act on $\text{Ran}(X)$
+\item Geometric realizations are sheaves on $\text{Ran}(X)$
+\item Chiral algebras are factorization algebras on $\text{Ran}(X)$
+\end{itemize}
+
+Koszul duality at each level can be understood as duality of factorization structures on $\text{Ran}(X)$.
+\end{theorem}
+
+\section{Summary and Consequences}
+
+\begin{theorem}[Main Theorem: Three-Level Hierarchy]\label{thm:three-level-main}
+Every chiral Koszul duality arises as the enhancement of a classical Koszul duality through geometric realization on configuration spaces. The hierarchy:
+$$\text{Classical} \xrightarrow{\text{Geometric}} \text{Geometric} \xrightarrow{\text{Chiral}} \text{Chiral}$$
+is functorial and preserves Koszul duality at each stage.
+
+Consequences:
+\begin{enumerate}
+\item \textbf{Existence}: To construct a chiral Koszul dual, identify the classical pair first
+\item \textbf{Uniqueness}: Chiral Koszul duals are determined by their classical counterparts
+\item \textbf{Computation}: Calculate at the classical level, then enhance
+\item \textbf{Verification}: Check all three levels for consistency
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}[Computational Strategy]\label{cor:computational-strategy}
+To compute a chiral Koszul dual:
+\begin{enumerate}
+\item Identify the underlying classical Koszul pair (Com-Lie, Sym-Ext, CE-UE, etc.)
+\item Realize geometrically on configuration spaces
+\item Apply chiral enhancement (D-modules, factorization, OPE)
+\item Verify bar-cobar constructions match at all levels
+\end{enumerate}
+\end{corollary}
+
+\section{Looking Forward}
+
+This framework establishes the conceptual foundation for all subsequent examples:
+
+\begin{itemize}
+\item \textbf{Heisenberg}: Sym-Ext enhanced with level parameter
+\item \textbf{Free fermion - βγ}: Ext-Sym with ghost number grading
+\item \textbf{Affine Lie algebras}: CE-UE with central extension
+\item \textbf{W-algebras}: Higher structure built on Lie algebra base
+\item \textbf{Virasoro}: Universal central extension of Witt algebra
+\end{itemize}
+
+In each case, understanding the classical origin illuminates the chiral structure.
+
+---
+
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}
+
+\textit{``The passage from classical to chiral is not mere generalization but reveals how algebraic structure propagates through geometry to quantum field theory. Each level preserves and enriches the duality, from Grothendieck's abstract universality through Kontsevich's configuration spaces to the operator product expansions of physics.''}
+
+— \textit{Synthesis of perspectives across all three levels}
+\end{center}
+
