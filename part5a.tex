@@ -204,6 +204,54 @@ where:
 \end{itemize}
 \end{definition}
 
+\begin{remark}[What This Definition Actually Says]\label{rem:koszul-dual-meaning}
+The Koszul dual $\mathcal{A}^!$ defined above is \emph{precisely the coalgebra} that bar constructs from $\mathcal{A}$. More precisely:
+
+\begin{enumerate}
+\item \textbf{Generator duality}: The generators of $\mathcal{A}^!$ are the duals of the generators of $\mathcal{A}$:
+   $$\mathcal{V}^* = \mathcal{H}om_{\mathcal{O}_X}(\mathcal{V}, \omega_X)$$
+   This means: if $\mathcal{A}$ has generators $\phi_1, \ldots, \phi_n$, then $\mathcal{A}^!$ has dual generators $\phi_1^*, \ldots, \phi_n^*$
+
+\item \textbf{Relation orthogonality}: The relations $R^{\perp}$ in $\mathcal{A}^!$ are orthogonal to the relations $R$ in $\mathcal{A}$ under the residue pairing:
+   $$\langle r, r^* \rangle = \int_{X^2 \setminus \Delta} r \wedge r^* = 0 \quad \text{for all } r \in R, r^* \in R^{\perp}$$
+   This means: what is a relation in $\mathcal{A}$ becomes "freedom" in $\mathcal{A}^!$, and vice versa
+
+\item \textbf{Bar computes this dual}: The bar construction $\bar{B}^{\text{ch}}(\mathcal{A})$ naturally produces a coalgebra whose generators are $\mathcal{V}^*$ and whose coproduct encodes the relations $R^{\perp}$
+\end{enumerate}
+
+Therefore, saying $\bar{B}^{\text{ch}}(\mathcal{A}) \simeq \mathcal{A}^!$ is not a new condition but rather a \emph{verification} that the bar construction does what we expect: it produces the Koszul dual coalgebra.
+\end{remark}
+
+\begin{example}[Explicit Correspondence for Heisenberg]
+For the Heisenberg chiral algebra $\mathcal{H}$ with generator $\alpha(z)$ and OPE:
+$$\alpha(z)\alpha(w) \sim \frac{1}{(z-w)^2}$$
+
+The Koszul dual $\mathcal{H}^!$ has:
+\begin{itemize}
+\item \textbf{Dual generator}: $\alpha^*(z)$ with $\langle \alpha, \alpha^* \rangle = 1$ under residue pairing
+\item \textbf{Coproduct}: 
+   $$\Delta(\alpha^*) = \alpha^* \otimes 1 + 1 \otimes \alpha^* + \text{(higher order terms)}$$
+   encoding the dual of the commutative algebra structure
+\item \textbf{Bar construction}: $\bar{B}^{\text{ch}}(\mathcal{H})$ consists of forms like:
+   $$\alpha(z_1) \otimes \cdots \otimes \alpha(z_n) \otimes \eta_{12} \wedge \eta_{23} \wedge \cdots$$
+   whose residues extract the coproduct coefficients
+\end{itemize}
+
+The cobar $\Omega^{\text{ch}}(\mathcal{H}^!)$ reconstructs a commutative chiral algebra from this coalgebraic data.
+\end{example}
+
+\begin{remark}[Why "Koszul Dual" vs "Dual"?]
+The term "Koszul dual" (rather than just "dual") emphasizes that:
+\begin{enumerate}
+\item This is a derived/homotopical notion (quasi-isomorphisms, not isomorphisms)
+\item It involves a specific homological construction (bar-cobar)
+\item It generalizes the classical Koszul duality for quadratic algebras
+\item The duality is self-inverse: $(\mathcal{A}^!)^! \simeq \mathcal{A}$
+\end{enumerate}
+
+When $\mathcal{A}$ is quadratic, $\mathcal{A}^!$ recovers the classical quadratic dual. For non-quadratic chiral algebras, $\mathcal{A}^!$ is defined by the bar construction but maintains all the essential dualities.
+\end{remark}
+
 \subsection{The Universal Twisting Morphism}
 
 The relationship between a chiral algebra and its Koszul dual is mediated by:
@@ -224,6 +272,46 @@ For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there exists a unique universa
 \end{align}
 where the subscript denotes twisting by $\tau$.
 \end{theorem}
+
+\begin{remark}[What the Twisting Morphism Does]\label{rem:twisting-morphism-meaning}
+The twisting morphism $\tau$ is the \textbf{explicit map implementing the bar-cobar isomorphism}. Concretely:
+
+\begin{enumerate}
+\item \textbf{Direction}: $\tau: \mathcal{A}^! \to \mathcal{A}$ is a map from the dual coalgebra to the original algebra
+
+\item \textbf{Maurer-Cartan equation}: The condition $\partial \tau + \tau \star \tau = 0$ ensures that $\tau$ intertwines the coalgebra differential on $\mathcal{A}^!$ with the algebra differential on $\mathcal{A}$
+
+\item \textbf{Twisted structures}: 
+   \begin{itemize}
+   \item $\mathcal{A}^!_{\tau}$ is $\mathcal{A}^!$ with differential twisted by $\tau$
+   \item $\mathcal{A}_{\tau}$ is $\mathcal{A}$ with structure twisted by $\tau$
+   \item The theorem says these twisted structures are quasi-isomorphic to bar and cobar
+   \end{itemize}
+
+\item \textbf{Universality}: $\tau$ is universal in that any other twisting factors through it
+\end{enumerate}
+
+Geometrically, $\tau$ is realized by:
+$$\tau(c) = \int_{C_2(X)} \text{ev}^* c \wedge K_{\text{twist}}$$
+where $K_{\text{twist}}$ is a universal integration kernel on the configuration space.
+\end{remark}
+
+\begin{example}[Twisting for Fermion-Boson Duality]
+For the Koszul pair (free fermions $\mathcal{F}$, $\beta\gamma$ system $\mathcal{BG}$):
+
+The twisting morphism $\tau: \mathcal{F}^! \to \mathcal{F}$ is given by:
+$$\tau(\psi^*)(z) = \int_{\mathbb{C}} \psi(w) \cdot \frac{dw}{(z-w)}$$
+
+This map:
+\begin{itemize}
+\item Takes the dual generator $\psi^*$ of $\mathcal{F}^!$
+\item Integrates it against the fermion field $\psi$ with the basic kernel $\frac{1}{z-w}$
+\item Produces a twisted field that satisfies bosonic commutation relations
+\item Implements the fermion-boson correspondence at the level of Maurer-Cartan elements
+\end{itemize}
+
+The Maurer-Cartan equation $\partial \tau + \tau \star \tau = 0$ becomes the statement that this construction is consistent with the OPE structures on both sides.
+\end{example}
 
 \subsection{Main Duality Theorem}
 

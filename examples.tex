@@ -615,40 +615,43 @@ $\phi_\alpha(z)\phi_\beta(w) \sim \sum_{\gamma,n} \frac{C^{\gamma,n}_{\alpha\bet
 has rational exponents. The monodromy eigenvalues are $e^{2\pi i(h_\alpha + h_\beta - h_\gamma - n)}$, which are roots of unity. Hence the monodromy has finite order $N = \text{lcm}$ of denominators, ensuring $j_*j^*$ exists as a D-module with regular singularities.
 \end{proof}
 
-\subsection{Self-Duality Under Level Inversion - Complete}
+\subsection{Koszul Dual: Symmetric Algebra (Corrected)}
 
-\begin{theorem}[Heisenberg Self-Duality]
-The Heisenberg algebras $\mathcal{H}_k$ and $\mathcal{H}_{-k}$ form a curved Koszul pair with:
-$\bar{B}_{geom}(\mathcal{H}_k) \otimes_{\mathcal{H}_k} \mathcal{H}_{-k} \simeq \mathbb{C}$
+\begin{theorem}[Heisenberg Koszul Dual - Corrected]\label{thm:heisenberg-koszul-dual-early}
+The Heisenberg algebra $\mathcal{H}_k$ has Koszul dual:
+$$\mathcal{H}_k^! \simeq \text{Sym}(V^*)$$
+where $\text{Sym}(V^*)$ is the symmetric (commutative) algebra on the dual space.
+
+More explicitly:
+\begin{align}
+\bar{B}^{\text{ch}}(\mathcal{H}_k) &\simeq \text{coLie}(V^*) \quad \text{(coalgebra)} \\
+\Omega^{\text{ch}}(\text{coLie}(V^*)) &\simeq \text{Sym}(V^*) \quad \text{(cobar reconstruction)}
+\end{align}
 \end{theorem}
 
-\begin{proof}
-The pairing uses regularized residue:
+\begin{proof}[Sketch]
+The key is that Heisenberg is the factorization envelope of an abelian Lie algebra:
 
-\begin{definition}[Point-Splitting Regularization]\label{def:regularization}
-For the divergent pairing of currents, we use point-splitting regularization:
-$\langle J \otimes J, J \otimes J \rangle_k^{\text{reg}} = \lim_{\epsilon \to 0} k \cdot \text{Res}_{z=w}\left[\frac{\partial_z^2}{(z-w-\epsilon)^2}\right]$
-Computing via contour integration:
-\begin{align}
-\langle J \otimes J, J \otimes J \rangle_k^{\text{reg}} &= k \cdot \lim_{\epsilon \to 0} \frac{1}{2\pi i} \oint_{|z-w|=\delta} \frac{\partial_z^2 dz}{(z-w-\epsilon)^2}\\
-&= k \cdot \lim_{\epsilon \to 0} \frac{d^2}{dw^2}\left[\frac{1}{-\epsilon}\right]\\
-&= k \cdot \delta^{(2)}(0)
-\end{align}
-where $\delta^{(2)}(0)$ is understood as the regularized second derivative of the delta function at zero, which changes sign under $k \mapsto -k$.
-\end{definition}
+\textbf{Step 1}: Recognize $\mathcal{H}_k = C_{*,c}^{\text{Lie}}(\Omega^{0,1}_X)$ where $\Omega^{0,1}_X$ is viewed as an abelian local dgla.
 
-With this regularization:
-$\langle J \otimes J, J \otimes J \rangle_k = k \cdot \text{Res}_{z=w}\left[\frac{\partial^2}{(z - w)^2}\right]$
+\textbf{Step 2}: By Koszul duality for Lie algebras:
+$$C_*^{\text{Lie}}(\mathfrak{a})^! \simeq C^*_{\text{Lie}}(\mathfrak{a}) = \text{Sym}(\mathfrak{a}[1])$$
+for an abelian Lie algebra $\mathfrak{a}$.
 
-Under $k \mapsto -k$, the pairing changes sign, establishing duality.
+\textbf{Step 3}: Therefore:
+$$\mathcal{H}_k^! \simeq C^*_{\text{Lie}}(\Omega^{0,1}_X) = \text{Sym}(\Omega^{0,1}_X[1])$$
 
-The spectral sequence for the Koszul complex:
-\begin{itemize}
-\item $E_1$ page: cohomology of associated graded (ignoring central terms)
-\item $d_1$ differential: induced by curvature $[m_0, -]$
-\item $E_2 = E_\infty$: concentrated in degree 0
-\end{itemize}
+The level $k$ appears as curvature in $\mathcal{H}_k$ but NOT in the Koszul dual $\text{Sym}$.
 \end{proof}
+
+\begin{remark}[Level-Shifting vs Koszul Duality]
+It is important to distinguish:
+\begin{itemize}
+\item \textbf{Koszul duality}: $\mathcal{H}_k \xleftrightarrow{\text{bar-cobar}} \text{Sym}(V^*)$ (relates different algebras)
+\item \textbf{Level-shifting}: $\text{Rep}(\mathcal{H}_k) \simeq \text{Rep}(\mathcal{H}_{-k})$ (equivalence of representation categories)
+\end{itemize}
+These are completely different phenomena. The former is our focus; the latter is representation-theoretic.
+\end{remark}
  
 \section{Lattice Vertex Operator Algebras}
  
@@ -870,15 +873,58 @@ where $\Delta_k$ is the conformal anomaly.
 \textbf{Algebra $\mathcal{A}$} & \textbf{Koszul Dual $\mathcal{A}^!$} & \textbf{Type} & \textbf{Physical Context} \\
 \hline
 Free fermion $\psi$ & $\beta\gamma$ system & Exact & D-branes in string theory \\
+Heisenberg $\mathcal{H}_k$ & Symmetric algebra $\text{Sym}(V)$ & Exact & Boson-fermion correspondence \\
 Free boson $\partial\phi$ & Symplectic bosons & Exact & Open-closed duality \\
 $\mathfrak{g}$ current algebra & $\mathfrak{g}^*$ co-current & Exact & WZW/Toda correspondence \\
 Virasoro & $W_\infty$ & Curved & AdS$_3$/CFT$_2$ \\
 $\mathcal{W}_N$ & Yangian $Y(\mathfrak{gl}_N)$ & Curved & Higher spin gravity \\
 Super-Virasoro & Super-$W_\infty$ & Curved & AdS$_3$ supergravity \\
 Affine $\hat{\mathfrak{g}}_k$ & Quantum group $U_q(\mathfrak{g})$ & Deformed & Chern-Simons/WZW \\
+Yangian $Y(\mathfrak{g})$ & Yangian $Y(\mathfrak{g})$ & Self-dual (Exact) & Integrable systems \\
 \hline
 \end{tabular}
 \end{center}
+
+\begin{remark}[Heisenberg vs Yangian: Self-Duality Contrast]\label{rem:heisenberg-yangian-contrast}
+Note the crucial distinction in the table above:
+\begin{itemize}
+\item \textbf{Heisenberg}: NOT self-dual. We have $\mathcal{H}^! = \text{Sym}(V) \not\cong \mathcal{H}$
+   \begin{itemize}
+   \item The Heisenberg algebra has central extension and non-commutative oscillator modes
+   \item Its Koszul dual is the symmetric (commutative) algebra
+   \item This realizes the boson-fermion correspondence
+   \end{itemize}
+
+\item \textbf{Yangian}: IS self-dual. We have $Y(\mathfrak{g})^! \cong Y(\mathfrak{g})$
+   \begin{itemize}
+   \item The Yangian has special Hopf algebra structure with self-dual coproduct
+   \item The Yang-Baxter equation is self-dual: if $R$ satisfies YBE, so does $R^{-1}$
+   \item This is visible in 3d mirror symmetry (Higgs $\leftrightarrow$ Coulomb)
+   \end{itemize}
+\end{itemize}
+
+\textbf{Why the difference?} The Heisenberg OPE $J(z)J(w) \sim (z-w)^{-2}$ has a double pole that produces symmetric (bosonic) coproduct structure in the bar construction. The Yangian's RTT relations have built-in $R$-matrix self-duality that preserves the structure under bar-cobar.
+\end{remark}
+
+\begin{remark}[Additional Duality Structures]\label{rem:additional-dualities}
+Some algebras in this table have \emph{additional} duality structures beyond standard Koszul duality:
+
+\begin{enumerate}
+\item \textbf{Heisenberg}: Level inversion $\mathcal{H}_k \leftrightarrow \mathcal{H}_{-k}$ (curved duality, not Koszul)
+
+\item \textbf{Affine Kac-Moody}: Langlands duality $\widehat{\mathfrak{g}}_k \leftrightarrow \widehat{\mathfrak{g}^\vee}_{k'}$ at critical/conformal levels
+
+\item \textbf{W-algebras}: 
+   \begin{itemize}
+   \item At critical level: $\mathcal{W}^{-h^\vee}(\mathfrak{g}, f) \leftrightarrow \mathcal{W}^{-h^{\vee,\vee}}(\mathfrak{g}^\vee, f^\vee)$ (quantum Langlands)
+   \item At general central charge: $\mathcal{W}_N^c \leftrightarrow \mathcal{W}_N^{c'}$ with $c + c' = 2(N-1)(N+2)/N$
+   \end{itemize}
+
+\item \textbf{Virasoro}: Exceptional modular invariance at certain central charges
+\end{enumerate}
+
+These additional structures are typically \textbf{curved} or \textbf{filtered} Koszul dualities, operating in extended categories. They should not be confused with the standard Koszul duality listed in the main table column.
+\end{remark}
 
 \subsection{Algorithm: Computing Koszul Dual via Bar-Cobar}
 
@@ -1458,34 +1504,143 @@ Then Koszul dual pairs satisfy $\mathcal{C}_{alg}(\mathcal{A}_1) + \mathcal{C}_{
 \end{conjecture}
 
 
-\section{Heisenberg Algebra: Self-Duality Under Level Inversion}
- 
-The Heisenberg algebra requires the curved framework due to its central extension.
- 
-\subsection{Setup}
- 
+\section{Heisenberg Algebra: Koszul Dual and Level Inversion Duality}
+
+The Heisenberg vertex algebra exhibits rich duality structure that must be carefully distinguished.
+
+\subsection{Koszul Dual: Symmetric Algebra}
+
+\begin{theorem}[Heisenberg Koszul Dual ]\label{thm:heisenberg-koszul-correct}
+The Koszul dual of the Heisenberg vertex algebra is the symmetric algebra:
+$$\mathcal{H}^! \simeq \text{Sym}^{\text{ch}}(V)$$
+where $V$ is the one-dimensional space of currents.
+\end{theorem}
+
+\begin{proof}[Proof via Bar-Cobar Construction]
+\textbf{Step 1: Bar Construction.}
+The Heisenberg current $J(z)$ has OPE:
+$$J(z_1)J(z_2) = \frac{k}{(z_1-z_2)^2} + \text{regular}$$
+
+In the bar complex:
+$$\bar{B}^{\text{ch}}_2(\mathcal{H}) = \Gamma(\overline{C}_2(X), J \boxtimes J \otimes \Omega^*_{\log})$$
+
+Elements have the form:
+$$J(z_1) \otimes J(z_2) \otimes \frac{dz_1 \wedge dz_2}{(z_1-z_2)^2}$$
+
+\textbf{Step 2: Coproduct Structure.}
+The differential extracts residues at collision:
+$$d(J \otimes J \otimes \eta_{12}^{(2)}) = k \cdot \text{Res}_{z_1=z_2}\left[\frac{d^2}{(z_1-z_2)^2}\right] \cdot J|_{z_1=z_2}$$
+
+The critical observation: computing the residue of the second-order logarithmic form,
+$$\text{Res}_{z_1=z_2}\left[\frac{dz_1 - dz_2}{(z_1-z_2)^2}\right],$$
+yields a contribution that is \textbf{symmetric} in the exchange $z_1 \leftrightarrow z_2$.
+
+This symmetry produces a \textbf{commutative} coproduct structure on $\bar{B}^{\text{ch}}(\mathcal{H})$.
+
+\textbf{Step 3: Cobar Reconstruction.}
+The cobar construction $\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{H}))$ rebuilds an algebra from this coalgebraic data. Since the coproduct is symmetric/commutative, the reconstructed algebra is the \textbf{symmetric algebra}:
+$$\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{H})) \simeq \text{Sym}^{\text{ch}}(V)$$
+
+\textbf{Step 4: Explicit Isomorphism.}
+The quasi-isomorphism is given by:
+\begin{itemize}
+\item Generators: Heisenberg modes $J_n$ map to symmetric algebra generators $x^n$
+\item Relations: Commutation relations $[J_m, J_n] = mk\delta_{m+n,0}$ become commutativity $x_m x_n = x_n x_m$
+\item Central charge: The level $k$ appears as the deformation parameter connecting the two descriptions
+\end{itemize}
+\end{proof}
+
+\begin{remark}[Comparison with Classical Koszul Duality]
+This is the chiral analogue of the classical Koszul duality:
+$$(\text{Exterior algebra})^! = \text{Symmetric algebra}$$
+
+In the classical case:
+\begin{itemize}
+\item Generators: Degree 1 antisymmetric elements (``fermionic'')
+\item Relations: $\psi^2 = 0$ (nilpotence)
+\item Dual: Symmetric algebra on dual generators (``bosonic'')
+\end{itemize}
+
+In the chiral case:
+\begin{itemize}
+\item The Heisenberg algebra, despite having commutative-looking OPE with double pole, plays the ``fermionic'' role in its oscillator representation (modes anticommute in certain gradings)
+\item The symmetric algebra is explicitly ``bosonic'' - completely commutative
+\item The double pole OPE encodes the central extension that makes the correspondence work
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Physical Interpretation: Boson-Fermion Correspondence]
+This Koszul duality realizes the \textbf{boson-fermion correspondence} in a mathematically precise way:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Heisenberg (Fermionic Modes)} & \textbf{Symmetric (Bosonic Fields)} \\
+\hline
+Current $J = \sum a_n z^{-n-1}$ & Boson field $\phi(z)$ \\
+$[a_m, a_n] = m\delta_{m+n,0}$ & Free commutative product \\
+Fock space with oscillators & Polynomial algebra \\
+Central extension visible & Explicit commutativity \\
+Non-trivial vacuum structure & Trivial algebraic structure \\
+\hline
+\end{tabular}
+\end{center}
+
+The bar-cobar construction provides the explicit dictionary between these two descriptions of the same physical system. In physics, this is known as ``bosonization'' - the Heisenberg fermion modes can be equivalently described using bosonic fields, and vice versa. The Koszul duality makes this mathematically rigorous.
+\end{remark}
+
+\subsection{Additional Structure: Level Inversion Self-Duality}
+
+\begin{remark}[Two Different Dualities]\label{rem:heisenberg-two-dualities}
+It is \textbf{essential} to distinguish two completely different duality phenomena for the Heisenberg algebra:
+
+\begin{enumerate}
+\item \textbf{Koszul duality}: $\mathcal{H}^! = \text{Sym}(V)$ 
+   \begin{itemize}
+   \item Changes the underlying algebra structure
+   \item Heisenberg $\to$ Symmetric algebra (different algebras)
+   \item Standard bar-cobar construction
+   \item ``Fermion $\leftrightarrow$ boson'' type transformation
+   \end{itemize}
+
+\item \textbf{Level inversion duality}: $\mathcal{H}_k$ paired with $\mathcal{H}_{-k}$
+   \begin{itemize}
+   \item Same algebra, different parameter (level $k$)
+   \item Heisenberg at level $k$ $\leftrightarrow$ Heisenberg at level $-k$
+   \item Curved/filtered Koszul duality (not standard)
+   \item Same statistics, opposite central charge
+   \end{itemize}
+\end{enumerate}
+
+The level inversion is a \emph{curved/filtered} Koszul duality, not standard Koszul duality. It is a beautiful additional structure, but must not be confused with the fundamental Koszul duality $\mathcal{H}^! = \text{Sym}(V)$.
+\end{remark}
+
+\subsection{Setup for Level Inversion Duality}
+
 Current $J$ of weight 1 with OPE
 \[
 J(z)J(w) = \frac{k}{(z-w)^2} + \text{regular}
 \]
- 
-\subsection{Self-Duality Under $k \mapsto -k$}
- 
-\begin{theorem}[Heisenberg Curved Self-Duality]
-The Heisenberg algebras at levels $k$ and $-k$ form a filtered/curved Koszul pair with:
+
+\subsection{Curved Duality Under Level Inversion $k \mapsto -k$}
+
+\begin{theorem}[Heisenberg Level Inversion - Curved Duality]\label{thm:heisenberg-level-inversion}
+The Heisenberg algebras at levels $k$ and $-k$ form a \textbf{curved/filtered dual pair} (distinct from standard Koszul duality) with:
 \begin{enumerate}
 \item Curvature terms: $m_0^{(k)} = k \cdot c$ where $c$ is the central element
 \item Modified pairing: $\langle J \otimes J, J \otimes J \rangle_k = k \cdot \delta^{(2)}(z-w)$
-\item Bar complexes related by: $\bar{B}^{\text{geom}}_n(\mathcal{H}_k) \cong \bar{B}^{\text{geom}}_n(\mathcal{H}_{-k})$ as vector spaces
+\item Curved bar complexes related by: $\bar{B}^{\text{curved}}_n(\mathcal{H}_k) \cong \bar{B}^{\text{curved}}_n(\mathcal{H}_{-k})$ as vector spaces with opposite differentials
 \end{enumerate}
+
+\textbf{Important:} This is \emph{not} the same as the standard Koszul duality $\mathcal{H}^! = \text{Sym}(V)$ established above. This is an additional duality structure that exists in the curved/filtered category.
 \end{theorem}
- 
+
 \begin{proof}
 The double pole prevents standard residue extraction. We work with the extended algebra including derivatives. The pairing becomes
 \[
 \langle J \otimes J, J \otimes J \rangle_k = k \cdot \text{Res}_{z=w}\left[\frac{d^2z}{(z-w)^2}\right]
 \]
- 
+
 Under $k \mapsto -k$, this changes sign, establishing curved self-duality. The bar complex structure:
 \begin{itemize}
 \item $\bar{B}^0 = \mathbb{C}$
@@ -1495,6 +1650,29 @@ Under $k \mapsto -k$, this changes sign, establishing curved self-duality. The b
 \end{itemize}
 The curvature $m_0 = k \cdot c$ controls the failure of strict associativity.
 \end{proof}
+
+\begin{remark}[Relationship Between the Two Dualities]
+The two duality structures can be visualized as:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+% Nodes
+\node (Hk) at (0,2) {$\mathcal{H}_k$};
+\node (Hmk) at (0,0) {$\mathcal{H}_{-k}$};
+\node (Symk) at (3,2) {$\text{Sym}^{(k)}(V)$};
+\node (Symmk) at (3,0) {$\text{Sym}^{(-k)}(V)$};
+
+% Arrows
+\draw[<->, thick, blue] (Hk) -- (Hmk) node[midway, left] {Level inversion};
+\draw[->, thick, red] (Hk) -- (Symk) node[midway, above] {Koszul dual};
+\draw[->, thick, red] (Hmk) -- (Symmk) node[midway, below] {Koszul dual};
+\draw[<->, thick, blue, dashed] (Symk) -- (Symmk) node[midway, right] {Parameter};
+\end{tikzpicture}
+\end{center}
+
+The horizontal arrows (red) represent standard Koszul duality - changing the algebra.
+The vertical arrows (blue) represent level inversion - keeping the algebra, changing the parameter.
+\end{remark}
  
 \section{Complete Table of GLZ Examples}
  
@@ -1505,7 +1683,7 @@ Algebra $\mathcal{A}_1$ & Algebra $\mathcal{A}_2$ & Duality Type & Key Feature \
 \hline
 Free Fermion $\psi$ & $\beta\gamma$ System & Classical & Antisymmetry $\leftrightarrow$ Ordering \\
 bc Ghosts & $\beta'\gamma'$ (weights) & Classical & Weight-shifted $\beta\gamma$ \\
-Heisenberg$(k)$ & Heisenberg$(-k)$ & Filtered/Curved & Central charge flip \\
+Heisenberg$(k)$ & Sym$(V^*)$ & Curved & Non-comm $\leftrightarrow$ Comm \\
 Virasoro$_{26}$ & String Vertex & Classical & Moduli $\leftrightarrow$ BRST \\
 $W^{-h^\vee}(\mathfrak{g})$ & Wakimoto & Classical & DS reduction $\leftrightarrow$ Free field \\
 Lattice $V_L$ & Lattice $V_{L^*}$ & Classical & Form duality \\

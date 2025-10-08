@@ -213,6 +213,15 @@
 \newcommand{\MC}{\text{MC}}                   % Maurer-Cartan
         % category of chiral algebras
 
+% Phase 3 additions - Kontsevich formality and W-algebra notation
+\newcommand{\StarProd}[1]{\star_{\hbar}^{#1}}  % star product with parameter
+\newcommand{\ChiralStar}{\star_{\text{ch}}}     % chiral star product
+\newcommand{\ConfigInt}[2]{\int_{\overline{C}_{#1}(X)} #2}  % configuration space integral
+\newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})}  % W-algebra notation
+\newcommand{\SugawaraT}{T^{\text{Sug}}}         % Sugawara stress tensor
+\newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}}  % affine Kac-Moody
+\newcommand{\MCeq}{\text{MC}}                   % Maurer-Cartan equation space
+
 % ==========================================
 % TYPOGRAPHY SETTINGS FOR OPTIMAL READABILITY
 % ==========================================
@@ -282,34 +291,51 @@
 
 \maketitle
  
+% ============================================================================
+% IMPROVED ABSTRACT - Replace the current \begin{abstract}...\end{abstract}
+% ============================================================================
+
 \begin{abstract}
-{\itshape
-\noindent We study a geometric realization of bar-cobar duality for chiral algebras incorporating the full spectrum of quantum corrections across all genera. Our approach recognizes two-dimensional quantum field theory within the algebraic geometry of configuration spaces on Riemann surfaces: abstract operadic operations become geometric residue computations, operator products channels map to the partially ordered set of boundary divisors, and quantum corrections arise as obstructions to integrability of logarithmic differential forms. Building upon and extending the foundational framework of Beilinson-Drinfeld, we provide explicit chain-level constructions making computations tractable, with complete examples worked out including the $\beta\gamma$ system, W-algebras, and their Koszul duals.
+\itshape
+\noindent
+We construct a geometric realization of the bar construction $\bar{B}_{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ for chiral algebras on an algebraic curve $X$. This construction extends the genus-zero framework of Beilinson-Drinfeld to incorporate: (i) one-loop quantum corrections via elliptic chiral homology on the formal torus $\hat{E}_\tau$, (ii) higher-genus contributions through the universal chiral homology over the moduli stack $\overline{\mathcal{M}}_{g,n}$, and (iii) quantum deformation parameters $t_g \in H^1(\mathcal{M}_g)$ controlling genus-$g$ amplitudes. The bar construction is realized through residue calculus on the Fulton-MacPherson compactification $\mathrm{Conf}_n[X]$ of configuration spaces, with the differential $d_{\text{geom}} = \sum_{D \in \partial \mathrm{Conf}_n[X]} (-1)^{|D|} \mathrm{Res}_D$ summing residues over boundary divisors. The nilpotence $d_{\text{geom}}^2 = 0$ follows from the Arnold-Orlik-Solomon relations in $H^*(\mathrm{Conf}_n[X])$, providing a geometric incarnation of the associativity of chiral operations.
 
 \medskip
 \noindent
-Our main theorem establishes that the bar construction defines a functor $\bar{B}^{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ that is (i) functorial with respect to chiral algebra morphisms, (ii) unique up to canonical isomorphism among geometric realizations, and (iii) essentially surjective onto conilpotent chiral coalgebras. The differential is realized through residue calculus along boundary divisors, with $d^2 = 0$ following from the Arnold-Orlik-Solomon relations among logarithmic forms. At higher genus, quantum corrections to these relations encode central extensions, anomalies, and the full tower of deformations---linking integrability conditions with the structure of chiral operator algebras.
+We establish that for a chiral Koszul pair $(A, A^!)$, quantum corrections decompose complementarily: $Q_g(A) \oplus Q_g(A^!) \simeq H^1(\mathcal{M}_g, Z(A))$ at each genus $g$, where $Q_g(A)$ denotes genus-$g$ loop corrections and $Z(A)$ is the center. This quantum complementarity extends classical Koszul duality to all genera, realizing the physical principle that "what one theory sees as deformation, the dual theory sees as obstruction."
 
 \medskip
 \noindent
-The construction naturally encodes canonical $A_\infty$ and $L_\infty$ structures determined by configuration space stratifications. This enriched structure allows us to prove a fundamental Koszul complementarity theorem: for any (not-necessarily quadratic) chiral Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras, the quantum deformation spaces at genus $g$ satisfy $\mathcal{Q}_g(\mathcal{A}) \oplus \mathcal{Q}_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_{g})$. It follows that chiral Koszul duality governs: (i) complementarity of quantum corrections across all genera---what one algebra sees as deformation, its dual sees as obstruction; (ii) equivalences of module categories through twisted bar-cobar resolutions; (iii) twisting homomorphisms that interpolate between dual theories; and (iv) derived Chern-Simons action functionals that generate non-quadratic chiral structures through quantum corrections. The chiral Hochschild cohomology $HH^*_{\text{chiral}}(\mathcal{A})$ satisfies $HH^n(\mathcal{A}) \cong HH^{2-n}(\mathcal{A}^!)^{\vee}$, exhibiting three periodicities---modular, quantum, and geometric---whose interplay is essential in describing conformal field theory at critical level.
+The manuscript includes three comprehensive computational chapters: (I) a complete development of chiral deformation quantization adapting Kontsevich's formality theorem to the chiral setting with explicit formulas for all genera, (II) excruciating computational detail for Koszul duals of affine Kac-Moody algebras including complete structure constants for $\widehat{\mathfrak{sl}}_2$, $\widehat{\mathfrak{sl}}_3$, $\widehat{\mathfrak{sl}}_n$, and $\widehat{E}_8$, and (III) explicit chain-level Koszul dual constructions for $W_3$ and $W_4$ algebras with full operator product expansions.
 
 \medskip
 \noindent
-A recurring tool is the \textbf{Prism Principle}: the geometric bar complex acts as a mathematical prism decomposing chiral algebras into their operadic spectrum. Logarithmic forms $d\log(z_i - z_j)$ separate global structure into operator product channels at collision divisors $D_{ij}$, with residues extracting structure constants $C_{ij}^k$. This geometric spectroscopy transforms abstract algebra into explicit geometry, providing both conceptual clarity and computational power.
+Two-dimensional conformally invariant quantum field theory on Riemann surfaces encodes operator product expansions through geometric collision of marked points, with structure constants emerging as residues of meromorphic forms.
 
 \medskip
 \noindent
-Applications include geometric characterization of marginal deformations, string 
-field theory vertices via Feynman diagram formalism, bulk-boundary correspondences 
-in AdS$_3$/CFT$_2$ via Costello-Li holographic Koszul duality, BV-BRST quantization 
-of holomorphic-topological field theories, and Maurer-Cartan deformations extending 
-Kontsevich's program to the chiral setting. The holomorphic-topological boundary 
-conditions for 4d $\mathcal{N}=4$ SYM under A-twist naturally realize chiral 
-operads, with their bar-cobar duality encoding the open-closed correspondence. The framework bridges vertex algebra theory with modern developments in derived algebraic geometry, quantum field theory, and twisted holography, while maintaining explicit computability through configuration space integrals.
-}
+\textbf{The Prism Principle.} Our central observation is that configuration spaces act as mathematical prisms decomposing chiral algebras into their operadic spectrum. Logarithmic differential forms $d\log(z_i - z_j)$ on the Fulton--MacPherson compactification $\mathrm{Conf}_n[X]$ separate global algebraic structure into local operator product channels at collision divisors $D_{ij} \subset \partial\mathrm{Conf}_n[X]$. Residue maps $\mathrm{Res}_{D_{ij}}$ extract structure constants $C_{ij}^k$ from chiral products, while the Arnold--Orlik--Solomon relations among logarithmic forms encode associativity through $d^2 = 0$. This geometric spectroscopy transforms abstract chiral algebra operations into explicit computations on stratified spaces, providing both conceptual clarity and computational power.
+
+\medskip
+\noindent
+\textbf{Main Results.} Building upon and substantially extending the foundational framework of Beilinson--Drinfeld, we construct a geometric bar functor $\bar{B}_{\mathrm{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ via residue calculus. Our main theorem establishes that this construction is \emph{(i)} functorial with respect to chiral algebra morphisms, \emph{(ii)} canonical up to unique isomorphism among geometric realizations satisfying naturality conditions, and \emph{(iii)} essentially surjective onto conilpotent chiral coalgebras through the cobar construction $\Omega$. The differential arises purely from geometry: $d_{\mathrm{geom}} = \sum_{D \in \mathrm{Bdry}} (-1)^{|D|} \mathrm{Res}_D$, with $d_{\mathrm{geom}}^2 = 0$ following from Arnold relations rather than abstract algebra.
+
+\medskip
+\noindent
+\textbf{Quantum Corrections and Higher Genus.} At genus zero, the construction recovers classical bar-cobar duality. At genus $g \geq 1$, quantum corrections enter through period integrals of logarithmic forms on moduli spaces $\mathcal{M}_g$. These corrections encode central extensions, anomalies, and the full tower of deformations---directly linking integrability obstructions with chiral operator algebra structure. Concretely, at genus $g$ the differential satisfies $d_g^2 = \sum_k t_{g,k} \cdot \mathrm{obs}_k$ where $t_{g,k} \in H^1(\mathcal{M}_g)$ are modular parameters and $\mathrm{obs}_k \in Z(\mathcal{A})$ are central obstructions. The construction naturally encodes canonical $A_\infty$ and $L_\infty$ structures determined by configuration space stratifications, enabling systematic treatment of non-quadratic chiral algebras.
+
+\medskip
+\noindent
+\textbf{Koszul Duality and Complementarity.} For chiral Koszul pairs $(\mathcal{A}, \mathcal{A}^!)$ (not necessarily quadratic), we establish fundamental complementarity: quantum deformation spaces at genus $g$ satisfy $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \simeq H^*(\mathcal{M}_g, Z(\mathcal{A}))$. This reveals that what one chiral algebra sees as deformation, its dual sees as obstruction. Chiral Hochschild cohomology exhibits Poincar\'e duality $HH^n_{\mathrm{chiral}}(\mathcal{A}) \simeq HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^\vee$, manifesting three intertwined periodicities---modular, quantum, and geometric---whose interplay is essential for conformal field theory at critical level. Module categories satisfy derived equivalences through twisted bar-cobar resolutions, while twisting homomorphisms interpolate between dual theories via Maurer--Cartan deformations.
+
+\medskip
+\noindent  
+\textbf{Explicit Computations.} We develop chain-level algorithms making all constructions explicitly computable. Complete worked examples include the $\beta$-$\gamma$ system (symplectic bosons with self-Koszul duality), affine Kac--Moody algebras at shifted levels $k \leftrightarrow -k - 2h^\vee$, and $W$-algebras with their non-quadratic Koszul duals computed through curved $A_\infty$ structures. For each example, we provide explicit formulas for structure constants via multi-residue calculus, verify Arnold relations through degree five, and compute quantum corrections at low genus.
+
+\medskip
+\noindent
+\textbf{Applications.} The framework enables geometric characterization of marginal deformations, construction of string field theory vertices via Feynman diagram formalism, and rigorous treatment of bulk-boundary correspondences in AdS$_3$/CFT$_2$ through Costello--Li holographic Koszul duality. The BV-BRST quantization of holomorphic-topological field theories emerges naturally, with holomorphic-topological boundary conditions for 4d $\mathcal{N}=4$ SYM under $A$-twist realizing chiral operads whose bar-cobar duality encodes open-closed correspondence. Maurer--Cartan deformations extend Kontsevich's deformation quantization program to the chiral setting, providing explicit formulas for quantizing chiral Poisson structures via configuration space integrals. The work bridges vertex algebra theory with derived algebraic geometry, quantum field theory, and twisted holography while maintaining computational tractability through geometric methods.
 \end{abstract}
-
 
 
 
@@ -359,19 +385,48 @@ Throughout this manuscript:
 \part{Koszul Duality, Examples and Applications}
 
 \include{part5.tex}
+
+% NEW CHAPTERS - Complete mathematical treatments
+\include{part_deformation_quantization.tex}
+\include{part_kac_moody_explicit.tex}
+\include{part_w_algebras_explicit.tex}
+% ==========================================
+% PART V: COMPLETE COMPUTATIONAL CHAPTERS
+% ==========================================
+
+
+% Chapter X: Chiral Deformation Quantization - Full Kontsevich Theory
+\include{part_X_deformation_quantization_complete.tex}
+
+% Chapter XI: Kac-Moody Koszul Duals - Excruciating Detail
+\include{part_XI_kac_moody_complete.tex}
+
+% Chapter XII: W-Algebra Koszul Duals - Complete Computations  
+\include{part_XII_w_algebras_complete.tex}
+
 \include{chiralkoszulpairs.tex}
 \include{chiralmodules.tex}
 \include{examples.tex}
 \include{part5a.tex}
+\include{part5a_koszul_hochschild.tex}
 \include{part5b_betagamma.tex}
 \include{part5c_walgebras.tex}
 \include{part6.tex}
 \include{part6_quantum_corrections.tex}
 \include{part7.tex}
-\include{part6.tex}
 \include{part7_feynman.tex}
 \include{part17_bv_brst.tex}
 \include{part18_holomorphic_topological.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HIGHER GENUS BAR-COBAR INTEGRATION (NEW SECTIONS)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Integration of expanded Heisenberg example with genus 1 details
+\input{Section_11_12_2_Heisenberg_Higher_Genus_EXPANDED.tex}
+
+% Physical interpretation and Feynman diagram connections
+\input{Section_11_12_2_PART_B_Feynman_Connection.tex}
 
 \include{bib.tex}
 % ==========================================
@@ -383,6 +438,7 @@ Throughout this manuscript:
 \input{appendix_theta}
 \input{appendix_spectral}
 \input{appendix_koszul}
+\input{appendix_computational_tables}
 
 
 \end{document}

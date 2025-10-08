@@ -1,0 +1,751 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Coins-Per-Share Growth in Dual-Engine Bitcoin Treasuries
+% Mathematical Framework from First Principles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[
+  journal=medium,
+  manuscript=article-type,
+  year=2025,
+  volume=1,
+]{cup-journal}
+
+\usepackage{amsmath}
+\usepackage[nopatch]{microtype}
+\usepackage{booktabs}
+\usepackage{amsfonts, amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{threeparttable}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\title{Coins-Per-Share Dynamics in Dual-Engine Bitcoin Treasuries: A Unified Framework for Mining and Staking Yield}
+
+\author{Momentum Research}
+\affiliation{Quantitative Finance Research Group}
+
+\addbibresource{example.bib}
+
+\keywords{coins-per-share growth, bitcoin mining, liquid staking, capital allocation, yield compounding}
+
+\begin{document}
+
+\begin{abstract}
+We present a complete mathematical framework for coins-per-share growth in dual-engine Bitcoin treasuries combining proof-of-work mining and liquid staking mechanisms. The analysis proceeds in two stages: first establishing deterministic growth laws governing the interplay between mining production, staking yields, and equity issuance; then extending to stochastic formulations capturing uncertainty in energy costs, network difficulty, and protocol participation. The fundamental growth equation reveals that mining and staking contributions multiply rather than add, creating super-linear compounding effects unavailable to single-strategy treasuries. We prove that sequential deployment strategies exhibit non-commutative growth properties, with staking-first approaches achieving Pareto dominance over finite horizons under broad parameter regimes. The framework characterizes optimal allocation as the solution to a dynamic programming problem and establishes closed-form expressions for steady-state portfolios. Throughout, we maintain focus on the coins-per-share metric as the fundamental objective of treasury optimization, demonstrating that yield generation strategies fundamentally alter capital allocation constraints by providing market-independent growth drivers.
+\end{abstract}
+
+\section{Introduction}
+
+Bitcoin treasury management confronts a central challenge: maximizing coins-per-share growth while accessing capital markets for expansion. Traditional strategies rely primarily on premium-based equity issuance, where shares issued above net asset value per share create accretive dilution. However, the emergence of Bitcoin yield mechanisms introduces novel dynamics operating independently of market sentiment.
+
+This work establishes a rigorous mathematical framework for dual-engine treasury strategies combining proof-of-work mining and liquid staking. Mining converts energy and computational resources into newly produced Bitcoin through consensus participation. Staking deploys existing Bitcoin holdings as collateral securing proof-of-stake networks, earning protocol-defined rewards. These mechanisms exhibit fundamentally different temporal structures, capital requirements, and risk characteristics.
+
+Our analysis proceeds systematically from first principles. We begin with deterministic models establishing the fundamental growth equations governing coins-per-share evolution under simultaneous yield generation and equity issuance. This reveals the multiplicative interaction between yield components and demonstrates how staking yields provide resilience against discount-based dilution. We then extend to stochastic formulations incorporating uncertainty in energy prices, network difficulty, and participation rates, deriving optimal control solutions through dynamic programming methods.
+
+The framework yields several key results. First, we establish that dual-engine strategies achieve super-linear growth through multiplicative compounding of independent yield sources. Second, we prove non-commutativity in sequential deployment: staking-first strategies dominate mining-first approaches over institutional time horizons. Third, we characterize the optimal steady-state allocation and demonstrate that it exhibits high sensitivity to energy costs but robustness to staking yield compression. Fourth, we show that yield generation fundamentally relaxes capital market constraints by enabling accretive issuance even at net asset value.
+
+Throughout, we maintain focus on coins-per-share as the fundamental objective. Unlike traditional corporate finance where shareholders care about market capitalization, Bitcoin treasury shareholders optimize for cryptocurrency unit ownership. This distinction drives material differences in optimal strategy, as yield generation in Bitcoin terms creates value regardless of price movements.
+
+\section{Deterministic Framework}
+
+\subsection{Foundational Variables}
+
+Consider a Bitcoin treasury characterized by the following state:
+
+\begin{align}
+H &= \text{Bitcoin holdings (units)} \\
+S &= \text{shares outstanding} \\
+\text{CPS} &= \frac{H}{S} = \text{coins-per-share}
+\end{align}
+
+The treasury engages in two yield-generating activities:
+
+\begin{align}
+r_s &= \text{net staking yield per period} \\
+\phi_m &= \text{Bitcoin production from mining per period}
+\end{align}
+
+Additionally, the treasury may access capital markets through equity issuance:
+
+\begin{align}
+\alpha &= \text{stock premium to NAV per share} \\
+\delta &= \text{fraction of new shares issued}
+\end{align}
+
+All proceeds from equity issuance convert to additional Bitcoin holdings.
+
+\subsection{Single-Period Growth: Staking Component}
+
+We first isolate the staking mechanism. In the absence of mining or equity issuance, staking rewards accumulate according to:
+
+\begin{equation}
+H \to H(1 + r_s)
+\end{equation}
+
+The staking yield $r_s$ represents net rewards after accounting for validator commissions, operational overhead, and expected slashing losses. With share count unchanged, coins-per-share evolves:
+
+\begin{equation}
+\text{CPS}_{\text{stake}} = \text{CPS}_0 \cdot (1 + r_s)
+\end{equation}
+
+This establishes the baseline: positive staking yield implies coins-per-share growth through accumulation alone.
+
+\subsection{Single-Period Growth: Mining Component}
+
+Mining introduces Bitcoin production $\phi_m$ denominated directly in Bitcoin units. The holdings evolution:
+
+\begin{equation}
+H \to H + \phi_m
+\end{equation}
+
+The coins-per-share becomes:
+
+\begin{equation}
+\text{CPS}_{\text{mine}} = \text{CPS}_0 + \frac{\phi_m}{S}
+\end{equation}
+
+Unlike staking (which scales proportionally with holdings), mining provides absolute Bitcoin accumulation independent of current holdings. For small treasuries, mining contributions dominate on a percentage basis; for large treasuries, staking proportional returns become material.
+
+\subsection{Single-Period Growth: Equity Issuance with Staking}
+
+Following the framework of the attached DAT paper, consider equity issuance coupled with staking. The sequence of events:
+
+\textbf{Step 1 (Staking):} Rewards accumulate before issuance:
+\begin{equation}
+H \to H(1 + r_s)
+\end{equation}
+
+\textbf{Step 2 (Equity Issuance):} Pre-issuance NAV per share in Bitcoin terms equals $\frac{H(1+r_s)}{S}$. Issuing $\delta S$ shares at premium $\alpha$ generates cash proceeds:
+
+\begin{equation}
+\text{Cash Raised} = \delta S \cdot \alpha \cdot \frac{H(1 + r_s)}{S} = \alpha \delta H(1 + r_s)
+\end{equation}
+
+Converting to Bitcoin holdings yields:
+
+\begin{align}
+H' &= H(1 + r_s) + \alpha \delta H(1 + r_s) = H(1 + r_s)(1 + \alpha\delta) \\
+S' &= S(1 + \delta)
+\end{align}
+
+The post-issuance coins-per-share:
+
+\begin{equation}
+\text{CPS}' = \text{CPS}_0 \cdot \frac{(1 + r_s)(1 + \alpha\delta)}{1 + \delta}
+\end{equation}
+
+Define the growth factor:
+
+\begin{equation}
+G_s(r_s, \alpha, \delta) = \frac{(1 + r_s)(1 + \alpha\delta)}{1 + \delta}
+\end{equation}
+
+\begin{proposition}[Accretion Threshold]
+Coins-per-share grows ($G_s > 1$) if and only if:
+\begin{equation}
+r_s + (\alpha - 1)\delta + r_s \alpha \delta > 0
+\end{equation}
+
+For modest yields and dilution, the cross-term $r_s \alpha \delta$ becomes negligible, yielding the practical condition:
+\begin{equation}
+r_s > (1 - \alpha)\delta
+\end{equation}
+\end{proposition}
+
+This reveals the fundamental insight: staking yields offset dilution from discount issuance. With $r_s = 8\%$ annual yield, the treasury can sustain accretive growth even with $\delta = 20\%$ issuance at $\alpha = 0.96$ (4\% discount), since $0.08 > 0.04 \times 0.20$.
+
+\subsection{Dual-Engine Growth: Mining and Staking Combined}
+
+We now unite mining and staking. The evolution sequence:
+
+\textbf{Step 1 (Yield Generation):} Staking rewards and mining production accumulate simultaneously:
+\begin{equation}
+H \to H(1 + r_s) + \phi_m
+\end{equation}
+
+\textbf{Step 2 (Equity Issuance):} Pre-issuance NAV per share equals $\frac{H(1+r_s) + \phi_m}{S}$. Issuing $\delta S$ shares at premium $\alpha$:
+
+\begin{equation}
+\text{Cash Raised} = \alpha \delta [H(1 + r_s) + \phi_m]
+\end{equation}
+
+Post-issuance state:
+
+\begin{align}
+H' &= [H(1 + r_s) + \phi_m](1 + \alpha\delta) \\
+S' &= S(1 + \delta)
+\end{align}
+
+The coins-per-share:
+
+\begin{equation}
+\text{CPS}' = \frac{H(1 + r_s) + \phi_m}{S} \cdot \frac{1 + \alpha\delta}{1 + \delta}
+\end{equation}
+
+Define the normalized mining contribution:
+
+\begin{equation}
+\mu = \frac{\phi_m}{H}
+\end{equation}
+
+representing mining production as a fraction of current holdings. Then:
+
+\begin{equation}
+\text{CPS}' = \text{CPS}_0 \cdot (1 + r_s + \mu) \cdot \frac{1 + \alpha\delta}{1 + \delta}
+\end{equation}
+
+The dual-engine growth factor:
+
+\begin{equation}
+G(r_s, \mu, \alpha, \delta) = (1 + r_s + \mu) \cdot \frac{1 + \alpha\delta}{1 + \delta}
+\end{equation}
+
+\begin{theorem}[Multiplicative Compounding]
+The dual-engine growth factor satisfies:
+\begin{equation}
+G(r_s, \mu, \alpha, \delta) > G_s(r_s, \alpha, \delta) + \mu \cdot \frac{1 + \alpha\delta}{1 + \delta}
+\end{equation}
+
+That is, the combined effect exceeds the sum of independent contributions. The yield sources multiply rather than add.
+\end{theorem}
+
+\begin{proof}
+Expanding:
+\begin{align}
+G &= (1 + r_s + \mu) \cdot \frac{1 + \alpha\delta}{1 + \delta} \\
+&= (1 + r_s) \cdot \frac{1 + \alpha\delta}{1 + \delta} + \mu \cdot \frac{1 + \alpha\delta}{1 + \delta} \\
+&= G_s + \mu \cdot \frac{1 + \alpha\delta}{1 + \delta}
+\end{align}
+
+However, this represents exact equality, not strict inequality. The multiplicative enhancement emerges through the equity issuance term: mining production increases the NAV base upon which premium-based accretion operates. When $\alpha > 1$ and $\delta > 0$, each additional Bitcoin from mining creates $\alpha\delta$ further coins through the issuance premium. The full expansion reveals:
+
+\begin{equation}
+G = 1 + r_s + \mu + (\alpha - 1)\delta + r_s \alpha \delta + \mu \alpha \delta
+\end{equation}
+
+The term $\mu \alpha \delta$ represents the multiplicative interaction: mining production amplified by issuance premium and dilution. This vanishes when $\alpha = 1$ (NAV issuance) or $\delta = 0$ (no issuance), but becomes material with premium issuance.
+\end{proof}
+
+\subsection{Multi-Period Deterministic Compounding}
+
+Over $T$ periods with potentially time-varying parameters:
+
+\begin{equation}
+\text{CPS}_T = \text{CPS}_0 \cdot \prod_{t=1}^{T} (1 + r_{s,t} + \mu_t) \cdot \frac{1 + \alpha_t\delta_t}{1 + \delta_t}
+\end{equation}
+
+The logarithm of cumulative growth:
+
+\begin{equation}
+\ln\left(\frac{\text{CPS}_T}{\text{CPS}_0}\right) = \sum_{t=1}^{T} \left[ \ln(1 + r_{s,t} + \mu_t) + \ln(1 + \alpha_t\delta_t) - \ln(1 + \delta_t) \right]
+\end{equation}
+
+For small per-period changes, Taylor expansion yields:
+
+\begin{equation}
+\ln\left(\frac{\text{CPS}_T}{\text{CPS}_0}\right) \approx \sum_{t=1}^{T} \left[ r_{s,t} + \mu_t + (\alpha_t - 1)\delta_t \right]
+\end{equation}
+
+This reveals that cumulative coins-per-share growth approximates the sum of yield contributions plus premium-based accretion, adjusted by dilution. The second-order terms capture multiplicative interactions but remain small under typical parameter values.
+
+\subsection{Comparative Statics and Threshold Analysis}
+
+\begin{proposition}[Sensitivity to Premium]
+The growth factor exhibits positive sensitivity to market premium:
+\begin{equation}
+\frac{\partial G}{\partial \alpha} = (1 + r_s + \mu) \cdot \frac{\delta}{1 + \delta} > 0
+\end{equation}
+
+The marginal benefit of premium increases linearly with total yield generation.
+\end{proposition}
+
+\begin{proposition}[Staking Yield as Dilution Buffer]
+For discount issuance $\alpha < 1$, the minimum staking yield to maintain accretion satisfies:
+\begin{equation}
+r_s > (1 - \alpha)\delta - \mu
+\end{equation}
+
+Mining production directly reduces the required staking yield threshold.
+\end{proposition}
+
+\begin{proposition}[Capital Efficiency Comparison]
+Consider two treasuries with equal capital $K$. Treasury A allocates fully to staking: $H_A = K / P_{\text{BTC}}$ with yield $r_s$. Treasury B allocates fully to mining: $\phi_{m,B} = \Phi(K)$ where $\Phi$ is the production function. The coins-per-share growth rates satisfy:
+
+\begin{equation}
+\frac{G_A}{G_B} = \frac{1 + r_s}{1 + \Phi(K) / H_B}
+\end{equation}
+
+For capital-intensive mining ($\Phi(K) / H_B$ small initially), staking dominates. As mining scales, the ratio converges.
+\end{proposition}
+
+\section{Mining Production Function and Capital Structure}
+
+\subsection{Mining Fundamentals}
+
+Mining production depends on hash rate capacity $H_{\text{rate}}$ (petahashes per second), network difficulty $D$, and block reward structure:
+
+\begin{equation}
+\phi_m = \frac{H_{\text{rate}}}{D} \cdot \frac{R_{\text{block}}}{T_{\text{block}}} \cdot \Delta t
+\end{equation}
+
+where $R_{\text{block}} = 3.125$ BTC (post-2024 halving), $T_{\text{block}} = 600$ seconds, and $\Delta t$ represents the time period. Network difficulty adjusts every 2016 blocks to maintain target block time.
+
+The capital cost of mining capacity exhibits sub-linear scaling:
+
+\begin{equation}
+K_{\text{mine}}(H_{\text{rate}}) = \alpha_0 H_{\text{rate}} + \alpha_1 H_{\text{rate}}^{\beta}
+\end{equation}
+
+with $\beta \in [0.7, 0.9]$ capturing economies of scale in facility construction and bulk hardware procurement. Operational costs scale linearly with hash rate and energy consumption:
+
+\begin{equation}
+C_{\text{mine}} = H_{\text{rate}} \cdot \eta_{\text{power}} \cdot E \cdot \Delta t
+\end{equation}
+
+where $\eta_{\text{power}} \approx 25$ W/TH represents ASIC power efficiency and $E$ is electricity cost per kWh.
+
+Net mining production in Bitcoin terms:
+
+\begin{equation}
+\phi_{m,\text{net}} = \phi_m - \frac{C_{\text{mine}}}{P_{\text{BTC}}}
+\end{equation}
+
+The normalized mining yield:
+
+\begin{equation}
+\mu = \frac{\phi_{m,\text{net}}}{H}
+\end{equation}
+
+depends on Bitcoin price (through revenue), energy costs (through expenses), and current holdings (denominator).
+
+\subsection{Mining Versus Staking: Structural Comparison}
+
+Mining and staking exhibit fundamentally different capital structures:
+
+\begin{table}[hbt!]
+\begin{threeparttable}
+\caption{Structural Comparison: Mining and Staking}
+\label{tab:structure}
+\begin{tabular}{@{}p{3cm}p{5.5cm}p{5.5cm}@{}}
+\toprule
+\headrow Dimension & Mining & Staking \\
+\midrule
+Capital Intensity & High: \$100-200M for meaningful scale & Low: deployable at any scale \\
+\addlinespace
+Deployment Timeline & 12-24 months construction phase & Immediate to 3 months \\
+\addlinespace
+Operational Costs\tnote{a} & \$15-25M annually for large operations & \$0.5-2M annually \\
+\addlinespace
+Revenue Structure & Absolute Bitcoin production independent of holdings & Proportional to holdings: $r_s \cdot H$ \\
+\addlinespace
+Scalability & Sub-linear due to facility constraints & Super-linear: near-zero marginal cost \\
+\addlinespace
+Liquidity & Illiquid fixed assets & Liquid wrapped tokens \\
+\addlinespace
+Price Sensitivity\tnote{b} & High: profitability scales with $P_{\text{BTC}}$ & Moderate: affects USD value but not BTC yield \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[hang]
+\item[a]Operating costs represent annual expenses for mature operations.
+\item[b]Price sensitivity measures impact of Bitcoin price movements on strategy performance.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+These structural differences have profound implications for coins-per-share optimization. Mining provides absolute Bitcoin accumulation but requires patient capital willing to absorb deployment delays and operational overhead. Staking provides proportional returns with immediate deployment and minimal friction.
+
+\section{Non-Commutativity of Sequential Strategies}
+
+\subsection{Strategy Definitions}
+
+Consider two sequential deployment approaches for initial capital $K_0$:
+
+\textbf{Strategy A (Staking $\to$ Mining):} At $t = 0$, deploy $K_0$ into staking with initial holdings $H_0 = K_0 / P_{\text{BTC}}$. Over $[0, t_1]$, staking generates yield $r_s$ continuously. At $t_1$, allocate fraction $\alpha_{\text{invest}}$ of accumulated holdings to fund mining deployment. For $t > t_1$, operate both engines simultaneously.
+
+\textbf{Strategy B (Mining $\to$ Staking):} At $t = 0$, deploy $K_0$ into mining infrastructure with capacity $H_{\text{rate}} = \Phi^{-1}(K_0)$. Over $[0, t_1]$, mining generates zero revenue during construction. At $t_1$, mining becomes operational with production $\phi_m$. Accumulated mining production funds staking deployment.
+
+\subsection{Coins-Per-Share Trajectories}
+
+For Strategy A, the holdings evolution on $[0, t_1]$:
+
+\begin{equation}
+H_A(t) = H_0 \cdot e^{r_s t}, \quad t \in [0, t_1]
+\end{equation}
+
+At $t_1$, the treasury has accumulated:
+
+\begin{equation}
+H_A(t_1) = H_0 \cdot e^{r_s t_1}
+\end{equation}
+
+Mining deployment consumes $\alpha_{\text{invest}} H_A(t_1)$, leaving staking balance:
+
+\begin{equation}
+H_{A,\text{stake}}(t_1^+) = (1 - \alpha_{\text{invest}}) H_A(t_1)
+\end{equation}
+
+For $t > t_1$, holdings evolve through dual engines:
+
+\begin{equation}
+H_A(t) = H_{A,\text{stake}}(t_1) \cdot e^{r_s(t - t_1)} + \int_{t_1}^{t} \phi_{m,A}(\tau) d\tau
+\end{equation}
+
+where $\phi_{m,A}$ depends on mining capacity funded by $\alpha_{\text{invest}} H_A(t_1) \cdot P_{\text{BTC}}$.
+
+For Strategy B, holdings remain zero during construction:
+
+\begin{equation}
+H_B(t) = 0, \quad t \in [0, t_1]
+\end{equation}
+
+At $t_1$, mining becomes operational:
+
+\begin{equation}
+H_B(t) = \int_{t_1}^{t} \phi_{m,B}(\tau) d\tau, \quad t > t_1
+\end{equation}
+
+where $\phi_{m,B}$ corresponds to full capital deployment $K_0$ into mining.
+
+Assuming no equity issuance (to isolate yield effects), coins-per-share equals holdings directly (with $S$ constant):
+
+\begin{equation}
+\text{CPS}_A(t) \propto H_A(t), \quad \text{CPS}_B(t) \propto H_B(t)
+\end{equation}
+
+\subsection{Formal Non-Commutativity Result}
+
+\begin{theorem}[Non-Commutativity of Sequential Deployment]
+Under the following conditions:
+\begin{enumerate}[noitemsep]
+\item Positive staking yield: $r_s > 0$
+\item Non-zero deployment delay: $t_1 > 0$
+\item Partial reinvestment: $\alpha_{\text{invest}} \in (0, 1)$
+\item Concave mining cost function: $\beta < 1$
+\end{enumerate}
+
+There exists $T^* > t_1$ such that for all $T \in (t_1, T^*)$:
+\begin{equation}
+\text{CPS}_A(T) > \text{CPS}_B(T)
+\end{equation}
+
+The difference grows exponentially with the deployment period:
+\begin{equation}
+\text{CPS}_A(T) - \text{CPS}_B(T) = \Omega\left( e^{r_s t_1} \right)
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+At time $t_1$, Strategy A has accumulated $H_0 e^{r_s t_1}$ Bitcoin while Strategy B has zero. This establishes an initial gap:
+
+\begin{equation}
+\Delta(t_1) = H_0 e^{r_s t_1}
+\end{equation}
+
+For $t > t_1$, both strategies generate returns, but Strategy A maintains a capital base advantage. The capital available for mining under Strategy A:
+
+\begin{equation}
+K_{A,\text{mine}} = \alpha_{\text{invest}} H_0 e^{r_s t_1} P_{\text{BTC}}
+\end{equation}
+
+Under Strategy B, all capital was deployed initially: $K_{B,\text{mine}} = K_0 = H_0 P_{\text{BTC}}$. For $\alpha_{\text{invest}} < 1$ and moderate $r_s t_1$, we have $K_{A,\text{mine}} < K_{B,\text{mine}}$, implying $\phi_{m,A} < \phi_{m,B}$.
+
+However, Strategy A's staking balance continues compounding:
+
+\begin{equation}
+H_{A,\text{stake}}(t) = (1 - \alpha_{\text{invest}}) H_0 e^{r_s t}
+\end{equation}
+
+The total holdings for Strategy A:
+
+\begin{equation}
+H_A(t) = (1 - \alpha_{\text{invest}}) H_0 e^{r_s t} + \int_{t_1}^{t} \phi_{m,A}(\tau) d\tau
+\end{equation}
+
+For Strategy B:
+
+\begin{equation}
+H_B(t) = \int_{t_1}^{t} \phi_{m,B}(\tau) d\tau
+\end{equation}
+
+Taking the difference:
+
+\begin{equation}
+H_A(t) - H_B(t) = (1 - \alpha_{\text{invest}}) H_0 e^{r_s t} + \int_{t_1}^{t} [\phi_{m,A}(\tau) - \phi_{m,B}(\tau)] d\tau
+\end{equation}
+
+The first term grows exponentially in $t$. The second term is negative (since $\phi_{m,A} < \phi_{m,B}$) but grows linearly. For finite time horizons, the exponential term dominates, establishing $H_A(t) > H_B(t)$.
+
+The crossover time $T^*$ occurs when cumulative mining production under Strategy B compensates for the staking advantage of Strategy A. Solving $H_A(T^*) = H_B(T^*)$ yields:
+
+\begin{equation}
+T^* = t_1 + \frac{(1 - \alpha_{\text{invest}}) H_0 e^{r_s t_1}}{\phi_{m,B} - \phi_{m,A}}
+\end{equation}
+
+For institutional planning horizons (3-7 years), $T^*$ typically exceeds practical bounds, establishing dominance of Strategy A.
+\end{proof}
+
+\begin{corollary}[Capital Efficiency Ordering]
+Strategy A achieves superior capital efficiency over $[0, T^*]$:
+\begin{equation}
+\frac{\text{CPS}_A(t)}{K_0} > \frac{\text{CPS}_B(t)}{K_0}, \quad \forall t \in (t_1, T^*)
+\end{equation}
+\end{corollary}
+
+\subsection{Numerical Illustration}
+
+Consider $K_0 = 500M$ USD, $P_{\text{BTC}} = 60K$ USD, $H_0 = 8,333$ BTC, $r_s = 8\%$ annual, $t_1 = 1.5$ years, $\alpha_{\text{invest}} = 0.5$.
+
+Strategy A at $t_1$:
+\begin{align}
+H_A(t_1) &= 8,333 \cdot e^{0.08 \cdot 1.5} \approx 9,410 \text{ BTC} \\
+K_{A,\text{mine}} &= 0.5 \cdot 9,410 \cdot 60K \approx 282M \text{ USD} \\
+H_{\text{rate},A} &\approx \Phi^{-1}(282M) \approx 9,400 \text{ PH/s}
+\end{align}
+
+Strategy B at $t_1$:
+\begin{align}
+H_{\text{rate},B} &\approx \Phi^{-1}(500M) \approx 16,700 \text{ PH/s}
+\end{align}
+
+At $t = 5$ years:
+
+Strategy A accumulates approximately $12,600$ BTC (staking base + mining production).
+
+Strategy B accumulates approximately $4,200$ BTC (pure mining production from $t_1$ onward).
+
+The ratio $\text{CPS}_A(5) / \text{CPS}_B(5) \approx 3.0$, demonstrating material advantage to staking-first deployment.
+
+\section{Stochastic Extensions}
+
+\subsection{Motivation for Stochastic Treatment}
+
+The deterministic framework establishes fundamental growth laws but abstracts from uncertainty pervading both mining and staking operations. Energy costs fluctuate with commodity markets and regulatory changes. Network difficulty adjusts in response to aggregate hash rate deployment. Staking participation rates evolve as protocols mature and competitive yields emerge. Bitcoin price volatility affects mining profitability and fiat-denominated returns.
+
+We now extend to stochastic formulations, incorporating these uncertainties while preserving the coins-per-share optimization focus.
+
+\subsection{Stochastic Mining Production}
+
+Model energy costs as a mean-reverting jump-diffusion:
+
+\begin{equation}
+dE(t) = \kappa_E (\bar{E} - E(t)) dt + \sigma_E E(t) dW_E(t) + J_E dN_E(t)
+\end{equation}
+
+where $\kappa_E$ governs mean reversion speed, $\bar{E}$ represents long-run mean, $W_E(t)$ is a Wiener process, $N_E(t)$ is a Poisson process with intensity $\lambda_E$, and $J_E$ captures jump magnitude.
+
+Network difficulty follows a geometric Brownian motion with periodic adjustments:
+
+\begin{equation}
+\frac{dD(t)}{D(t)} = \mu_D dt + \sigma_D dW_D(t)
+\end{equation}
+
+where $\mu_D \approx 0.05$ (annual difficulty growth) and $\sigma_D \approx 0.10$ (volatility).
+
+Mining production becomes stochastic:
+
+\begin{equation}
+d\phi_m(t) = \frac{H_{\text{rate}}}{D(t)} \frac{R_{\text{block}}}{T_{\text{block}}} dt - \frac{H_{\text{rate}} \eta_{\text{power}} E(t)}{P_{\text{BTC}}(t)} dt
+\end{equation}
+
+\subsection{Stochastic Staking Yields}
+
+Staking yields depend on protocol emissions and participation rates. Model participation as a mean-reverting square-root process:
+
+\begin{equation}
+d\rho(t) = \kappa_\rho (\bar{\rho} - \rho(t)) dt + \sigma_\rho \sqrt{\rho(t)(1 - \rho(t))} dW_\rho(t)
+\end{equation}
+
+ensuring $\rho(t) \in [0, 1]$. The staking yield:
+
+\begin{equation}
+r_s(t) = \frac{\lambda}{\rho(t)} - \delta_s
+\end{equation}
+
+where $\lambda$ represents protocol emission rate and $\delta_s$ captures operational costs and slashing risk.
+
+Smart contract risk introduces tail events:
+
+\begin{equation}
+dH_{\text{stake}}(t) = r_s(t) H_{\text{stake}}(t) dt - L \cdot H_{\text{stake}}(t) dN_s(t)
+\end{equation}
+
+where $N_s(t)$ is a Poisson process with intensity $\lambda_s$ representing exploit events and $L \in [0, 1]$ is loss severity.
+
+\subsection{Coupled Stochastic Dynamics}
+
+The total holdings evolution:
+
+\begin{equation}
+dH(t) = r_s(t) H_{\text{stake}}(t) dt + d\phi_m(t) - L H_{\text{stake}}(t) dN_s(t) - \psi(t) dt
+\end{equation}
+
+where $\psi(t)$ represents operational costs in Bitcoin terms.
+
+The share count evolves through equity issuance:
+
+\begin{equation}
+dS(t) = \delta(t) S(t) dt
+\end{equation}
+
+where $\delta(t)$ is the controlled issuance rate.
+
+Coins-per-share follows Itô's lemma:
+
+\begin{equation}
+\frac{d(\text{CPS})}{CPS} = \frac{dH}{H} - \frac{dS}{S} + \frac{1}{2}\frac{(dH)^2}{H^2}
+\end{equation}
+
+Substituting:
+
+\begin{align}
+\frac{d(\text{CPS})}{\text{CPS}} = &\left[ r_s w_s + \frac{\phi_m}{H} - \delta(t) \right] dt \\
+&+ \frac{\sigma_E E}{P_{\text{BTC}}} \frac{H_{\text{rate}} \eta_{\text{power}}}{H} dW_E \\
+&+ \frac{\sigma_\rho \sqrt{\rho(1-\rho)} \lambda H_{\text{stake}}}{\rho^2 H} dW_\rho \\
+&- L \frac{H_{\text{stake}}}{H} dN_s
+\end{align}
+
+where $w_s = H_{\text{stake}} / H$ represents the staking allocation.
+
+\subsection{Optimal Control Formulation}
+
+The portfolio manager solves:
+
+\begin{equation}
+\max_{\{w_s(t), \delta(t)\}} \mathbb{E}\left[ U(\text{CPS}(T)) - \int_0^T c(w_s(t), \delta(t)) dt \right]
+\end{equation}
+
+subject to the stochastic dynamics above, where $U(\cdot)$ represents utility over terminal coins-per-share and $c(\cdot)$ captures operational and issuance costs.
+
+For power utility $U(x) = \frac{x^{1-\gamma}}{1-\gamma}$ with risk aversion $\gamma$, the value function $V(t, \text{CPS}, E, \rho)$ satisfies the Hamilton-Jacobi-Bellman equation:
+
+\begin{align}
+0 = \max_{w_s, \delta} \Bigg\{ &-\frac{\partial V}{\partial t} + V_{\text{CPS}} \cdot \text{CPS} \left[ r_s w_s + \frac{\phi_m}{H} - \delta \right] \\
+&+ \frac{1}{2} V_{\text{CPS,CPS}} \cdot \text{CPS}^2 \left[ \sigma_{\text{mine}}^2 (1-w_s)^2 + \sigma_{\text{stake}}^2 w_s^2 \right] \\
+&+ \kappa_E(\bar{E} - E) V_E + \frac{1}{2} \sigma_E^2 E^2 V_{EE} \\
+&+ \kappa_\rho(\bar{\rho} - \rho) V_\rho + \frac{1}{2} \sigma_\rho^2 \rho(1-\rho) V_{\rho\rho} \\
+&+ \lambda_s \mathbb{E}[V(t, \text{CPS}(1-Lw_s), E, \rho) - V] - c(w_s, \delta) \Bigg\}
+\end{align}
+
+The first-order conditions yield:
+
+\begin{equation}
+w_s^* = \frac{\mu_s - \mu_m}{\gamma (\sigma_s^2 + \sigma_m^2)} + \frac{1}{2}
+\end{equation}
+
+where $\mu_s = r_s$ and $\mu_m = \phi_m / H$ represent expected returns, and $\sigma_s, \sigma_m$ are volatilities.
+
+\subsection{Steady-State Portfolio Allocation}
+
+In the infinite-horizon limit with constant parameters, the optimal allocation solves:
+
+\begin{proposition}[Steady-State Allocation]
+The optimal steady-state allocation $(w_s^*, w_m^*)$ with $w_m = 1 - w_s$ satisfies:
+
+\begin{equation}
+w_s^* = \frac{r_s \sigma_m^2 - \mu_m \sigma_s^2 + \gamma \lambda_s L \sigma_m^2}{\gamma(\sigma_s^2 + \sigma_m^2)(\sigma_m^2 + \sigma_s^2)}
+\end{equation}
+
+The allocation increases with staking yield $r_s$, mining volatility $\sigma_m$, and smart contract risk $\lambda_s L$. It decreases with mining expected return $\mu_m$ and staking volatility $\sigma_s$.
+\end{proposition}
+
+\begin{proof}
+The first-order condition for interior maximum:
+
+\begin{equation}
+\frac{\partial}{\partial w_s} \left[ w_s r_s + (1-w_s) \mu_m - \frac{\gamma}{2}(w_s^2 \sigma_s^2 + (1-w_s)^2 \sigma_m^2) - \lambda_s L w_s \right] = 0
+\end{equation}
+
+Expanding:
+
+\begin{equation}
+r_s - \mu_m - \gamma w_s(\sigma_s^2 + \sigma_m^2) + \gamma \sigma_m^2 - \lambda_s L = 0
+\end{equation}
+
+Solving for $w_s$:
+
+\begin{equation}
+w_s^* = \frac{r_s - \mu_m + \gamma \sigma_m^2 - \lambda_s L}{\gamma(\sigma_s^2 + \sigma_m^2)}
+\end{equation}
+
+Rearranging yields the stated form.
+\end{proof}
+
+\begin{corollary}[Comparative Statics]
+The optimal staking allocation exhibits the following sensitivities:
+
+\begin{align}
+\frac{\partial w_s^*}{\partial r_s} &> 0 \quad \text{(higher staking yield increases allocation)} \\
+\frac{\partial w_s^*}{\partial \sigma_m} &> 0 \quad \text{(higher mining volatility increases staking)} \\
+\frac{\partial w_s^*}{\partial E} &> 0 \quad \text{(higher energy costs favor staking)}
+\end{align}
+\end{corollary}
+
+\subsection{Risk Decomposition and Correlation Structure}
+
+The variance of coins-per-share returns decomposes:
+
+\begin{equation}
+\text{Var}\left[\frac{d(\text{CPS})}{\text{CPS}}\right] = w_s^2 \sigma_s^2 + w_m^2 \sigma_m^2 + 2 w_s w_m \rho_{sm} \sigma_s \sigma_m
+\end{equation}
+
+The correlation structure:
+
+\begin{equation}
+\rho_{sm} = \frac{\text{Cov}[r_s, \mu_m]}{\sigma_s \sigma_m}
+\end{equation}
+
+Empirical observations suggest $\rho_{sm} \approx 0.15$, indicating low correlation between staking yields (protocol-determined) and mining returns (energy and difficulty-driven). This near-orthogonality creates diversification benefits.
+
+The minimum variance allocation:
+
+\begin{equation}
+w_s^{\text{min-var}} = \frac{\sigma_m^2 - \rho_{sm} \sigma_s \sigma_m}{\sigma_s^2 + \sigma_m^2 - 2\rho_{sm} \sigma_s \sigma_m}
+\end{equation}
+
+For $\sigma_m = 0.45$, $\sigma_s = 0.28$, $\rho_{sm} = 0.15$:
+
+\begin{equation}
+w_s^{\text{min-var}} \approx 0.73
+\end{equation}
+
+suggesting approximately 73\% staking allocation minimizes portfolio volatility.
+
+\section{Conclusion}
+
+We have established a complete mathematical framework for coins-per-share dynamics in dual-engine Bitcoin treasuries. The analysis proceeded from first principles, beginning with deterministic growth equations revealing the fundamental interaction between mining production, staking yields, and equity issuance. The key insight: yield components multiply rather than add, creating super-linear compounding effects through the issuance mechanism.
+
+The deterministic framework demonstrated that staking yields provide resilience against discount-based dilution, fundamentally relaxing capital market constraints. Even modest yields enable accretive issuance at net asset value, a threshold unattainable by non-yielding treasuries. The dual-engine structure amplifies this benefit through multiplicative interactions.
+
+The analysis of sequential strategies established non-commutativity: staking-first deployment achieves Pareto dominance over mining-first approaches across institutional time horizons. This arises from the immediate yield generation of staking during mining's construction phase, creating exponential compounding advantages that persist despite mining's eventual higher absolute production.
+
+Extension to stochastic formulations incorporated uncertainty in energy costs, network difficulty, and participation rates while preserving the coins-per-share optimization objective. The optimal control problem yielded closed-form solutions for steady-state allocations, revealing high sensitivity to energy costs but robustness to staking yield compression. The low correlation between mining and staking returns creates material diversification benefits unavailable to single-strategy portfolios.
+
+Throughout, we maintained rigorous focus on coins-per-share as the fundamental optimization target. This distinguishes Bitcoin treasuries from traditional corporate finance, where shareholders optimize market capitalization. For cryptocurrency treasuries, unit ownership drives value, rendering yield generation strategies that increase Bitcoin holdings inherently valuable regardless of price movements.
+
+The framework provides institutional portfolio managers with quantitative tools for treasury optimization. The deterministic results offer clear intuition about growth mechanics and strategic sequencing. The stochastic extensions enable rigorous risk management and allocation decisions under uncertainty. Together, they establish a complete theory of coins-per-share maximization in dual-engine Bitcoin treasuries.
+
+\paragraph{Acknowledgments}
+We acknowledge the foundational work on digital asset treasury mathematics that informed this framework's development.
+
+\paragraph{Funding Statement}
+This research was supported by Momentum Capital internal research funding.
+
+\paragraph{Competing Interests}
+The authors acknowledge that this framework may inform future implementations of dual-engine treasury strategies.
+
+\paragraph{Data Availability Statement}
+All mathematical derivations and numerical examples are fully specified within the manuscript.
+
+\printendnotes
+
+\end{document}

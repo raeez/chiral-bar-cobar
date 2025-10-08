@@ -66,30 +66,134 @@ The quartic pole prevents a quadratic presentation.
 \end{enumerate}
 \end{example}
 
-\subsection{The Concept of Chiral Koszul Pairs}
+\subsection{The Concept of Chiral Koszul Pairs: Precise Formulation}
 
-To handle these examples, we introduce a more general notion:
+To handle non-quadratic examples, we must extend the notion of Koszul pairs beyond the quadratic setting. The key insight is that \textbf{the defining property of a Koszul pair is not quadraticity, but rather the bar-cobar isomorphism}.
 
-\begin{definition}[Chiral Koszul Pair]
-Chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ form a \emph{Koszul pair} if they are related by bar-cobar duality without requiring quadratic presentations. Specifically:
+\begin{definition}[Chiral Koszul Pair]\label{def:chiral-koszul-pair}
+Two chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ on a curve $X$ form a \textbf{chiral Koszul pair} if they satisfy the following equivalent conditions:
+
+\medskip
+\noindent\textbf{Version I (Bar-Cobar Isomorphism):}
 \begin{enumerate}
-\item There exist chiral coalgebras $\mathcal{C}_1, \mathcal{C}_2$ with quasi-isomorphisms:
+\item The geometric bar construction $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ is quasi-isomorphic as a chiral coalgebra to the Koszul dual coalgebra $\mathcal{A}_2^!$:
+$$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^! \quad \text{(as chiral coalgebras)}$$
+
+\item Symmetrically, $\bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq \mathcal{A}_1^!$ as chiral coalgebras
+
+\item The cobar constructions provide quasi-inverse equivalences:
+$$\mathcal{A}_1 \simeq \Omega^{\text{ch}}(\mathcal{A}_2^!), \quad \mathcal{A}_2 \simeq \Omega^{\text{ch}}(\mathcal{A}_1^!)$$
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Version II (Explicit Coalgebra Structure):}
+
+Equivalently, there exist chiral coalgebras $\mathcal{C}_1, \mathcal{C}_2$ with:
+\begin{enumerate}
+\item Quasi-isomorphisms of chiral coalgebras:
+$$\bar{B}^{\text{ch}}(\mathcal{A}_1) \xrightarrow{\sim} \mathcal{C}_2, \quad \bar{B}^{\text{ch}}(\mathcal{A}_2) \xrightarrow{\sim} \mathcal{C}_1$$
+
+\item Quasi-isomorphisms of chiral algebras:
 $$\mathcal{A}_1 \xrightarrow{\sim} \Omega^{\text{ch}}(\mathcal{C}_2), \quad \mathcal{A}_2 \xrightarrow{\sim} \Omega^{\text{ch}}(\mathcal{C}_1)$$
 
-\item The coalgebras are computed by the geometric bar construction:
-$$\mathcal{C}_1 \simeq \bar{B}^{\text{ch}}(\mathcal{A}_1), \quad \mathcal{C}_2 \simeq \bar{B}^{\text{ch}}(\mathcal{A}_2)$$
-
-\item The Koszul complex $K_*(\mathcal{A}_1, \mathcal{A}_2) = \bar{B}^{\text{ch}}(\mathcal{A}_1) \otimes_{\mathcal{A}_1} \mathcal{A}_2$ is acyclic in positive degrees
+\item The Koszul complexes are acyclic:
+$$K_*(\mathcal{A}_1, \mathcal{A}_2) := \bar{B}^{\text{ch}}(\mathcal{A}_1) \otimes_{\mathcal{A}_1} \mathcal{A}_2 \simeq \mathcal{A}_2$$
+$$K_*(\mathcal{A}_2, \mathcal{A}_1) := \bar{B}^{\text{ch}}(\mathcal{A}_2) \otimes_{\mathcal{A}_2} \mathcal{A}_1 \simeq \mathcal{A}_1$$
 \end{enumerate}
 \end{definition}
 
-\begin{remark}[Why This Generalization?]
-The chiral Koszul pair concept:
+\begin{remark}[The Fundamental Relationship]\label{rem:koszul-relationship}
+The essence of Definition \ref{def:chiral-koszul-pair} is captured by the commutative diagrams:
+
+\begin{center}
+\begin{tikzcd}[row sep=large, column sep=huge]
+\mathcal{A}_1 \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[dr, "\simeq"', bend right=15] & 
+\bar{B}^{\text{ch}}(\mathcal{A}_1) \arrow[d, "\simeq"] \\
+& \mathcal{A}_2^! \arrow[r, "\Omega^{\text{ch}}"] & \mathcal{A}_2
+\end{tikzcd}
+\qquad
+\begin{tikzcd}[row sep=large, column sep=huge]
+\mathcal{A}_2 \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[dr, "\simeq"', bend right=15] & 
+\bar{B}^{\text{ch}}(\mathcal{A}_2) \arrow[d, "\simeq"] \\
+& \mathcal{A}_1^! \arrow[r, "\Omega^{\text{ch}}"] & \mathcal{A}_1
+\end{tikzcd}
+\end{center}
+
+These diagrams express that:
 \begin{itemize}
-\item \textbf{Escapes quadratic constraint}: No restriction on pole orders in OPEs
-\item \textbf{Preserves duality}: Bar-cobar correspondence still holds
-\item \textbf{Geometrically natural}: Uses configuration space structures directly
-\item \textbf{Includes classical case}: Quadratic algebras form Koszul pairs when orthogonal
+\item \textbf{Bar transforms $\mathcal{A}_1$ into the dual coalgebra defining $\mathcal{A}_2$}
+\item \textbf{Cobar transforms this dual coalgebra back to $\mathcal{A}_2$}
+\item \textbf{The relationship is symmetric: the same holds with roles reversed}
+\end{itemize}
+
+In slogan form: \textbf{$(\mathcal{A}_1, \mathcal{A}_2)$ is a Koszul pair if and only if bar and cobar establish mutually quasi-inverse equivalences between them}.
+\end{remark}
+
+\begin{remark}[How Algebra and Coalgebra Structures Relate]
+Let us make explicit how the algebraic structures relate for a chiral Koszul pair $(\mathcal{A}_1, \mathcal{A}_2)$:
+
+\textbf{1. Product $\leftrightarrow$ Coproduct:}
+\begin{itemize}
+\item The chiral product $\mu_1: \mathcal{A}_1 \otimes \mathcal{A}_1 \to \mathcal{A}_1$ corresponds to the coproduct $\Delta_2: \mathcal{A}_2^! \to \mathcal{A}_2^! \otimes \mathcal{A}_2^!$
+\item Geometrically: residues (algebra) $\leftrightarrow$ distributions (coalgebra)
+\item At the level of OPEs: poles in $\mathcal{A}_1$ become coproduct terms in $\mathcal{A}_2^!$
+\end{itemize}
+
+\textbf{2. Generators $\leftrightarrow$ Relations:}
+\begin{itemize}
+\item Generators of $\mathcal{A}_1$ correspond to relations of $\mathcal{A}_2$
+\item Generators of $\mathcal{A}_2$ correspond to relations of $\mathcal{A}_1$
+\item This explains why "many generators, few relations" is dual to "few generators, many relations"
+\end{itemize}
+
+\textbf{3. Associativity $\leftrightarrow$ Coassociativity:}
+\begin{itemize}
+\item The associativity constraint $(a_1 a_2) a_3 = a_1 (a_2 a_3)$ in $\mathcal{A}_1$ becomes the coassociativity constraint $(\Delta \otimes \text{id}) \circ \Delta = (\text{id} \otimes \Delta) \circ \Delta$ in $\mathcal{A}_2^!$
+\item $A_\infty$ structures: higher associators $m_n$ in $\mathcal{A}_1$ correspond to higher coassociators $\Delta_n$ in $\mathcal{A}_2^!$
+\end{itemize}
+
+\textbf{4. Cohomological Degree:}
+\begin{itemize}
+\item Degree shift: elements in degree $n$ of $\mathcal{A}_1$ correspond to elements in degree $-n$ of $\mathcal{A}_2^!$
+\item Differential: $d_{\mathcal{A}_1}$ on the algebra side corresponds to the coderivation $d_{\mathcal{A}_2^!}$ on the coalgebra side
+\end{itemize}
+\end{remark}
+
+\begin{example}[Explicit Correspondence: Free Fermion and $\beta\gamma$ System]
+Consider the chiral Koszul pair $(\mathcal{F}, \mathcal{BG})$ where:
+\begin{itemize}
+\item $\mathcal{F}$ is the free fermion chiral algebra with field $\psi(z)$
+\item $\mathcal{BG}$ is the $\beta\gamma$ system with fields $\beta(z), \gamma(z)$
+\end{itemize}
+
+The bar-cobar isomorphism manifests as:
+
+\textbf{Algebra to Coalgebra:}
+\begin{align*}
+\text{Fermion OPE: } \psi(z)\psi(w) &\sim \frac{1}{z-w} \\
+\text{induces coproduct: } \Delta(\beta) &= \beta \otimes 1 + 1 \otimes \beta \quad \text{(primitive)}
+\end{align*}
+
+\textbf{Generators to Relations:}
+\begin{itemize}
+\item $\mathcal{F}$: one generator $\psi$, one relation ($\psi^2 = 0$ - anticommutativity)
+\item $\mathcal{BG}$: two generators $\beta, \gamma$, relation encoded in OPE $\beta(z)\gamma(w) \sim \frac{1}{z-w}$
+\end{itemize}
+
+\textbf{Geometric Picture:}
+The bar complex $\bar{B}^{\text{ch}}(\mathcal{F})$ involves:
+$$\bar{B}^{\text{ch}}(\mathcal{F})_n = \Gamma\left(\overline{C}_n(X), \psi^{\boxtimes n} \otimes \Omega^*_{\log}\right)$$
+The residues at collision divisors extract the coproduct structure of $\mathcal{BG}^!$, which cobar reconstructs into the $\beta\gamma$ algebra.
+\end{example}
+
+\begin{remark}[Why This Generalization Works]
+The power of this definition:
+\begin{itemize}
+\item \textbf{Escapes quadratic constraint}: Works for arbitrary OPE pole orders
+\item \textbf{Preserves fundamental duality}: Bar-cobar remain quasi-inverse
+\item \textbf{Geometrically computable}: Configuration spaces provide explicit models
+\item \textbf{Includes classical case}: Quadratic algebras are special case where $\mathcal{A}_i^! = \mathcal{A}_i^{\text{quad}}$
+\item \textbf{Physically natural}: Captures boson-fermion duality, W-algebra duality, etc.
 \end{itemize}
 \end{remark}
 
@@ -104,51 +208,6 @@ The chiral Koszul pair concept:
 
 \item \textbf{Higher coherences}: Non-quadratic relations lead to complicated $A_\infty$ structures.
 \end{enumerate}
-
-% ================================================================
-% SECTION 8.3: THE YANGIAN AS A CHIRAL KOSZUL DUAL
-% ================================================================
-
-\section{The Yangian as a Chiral Koszul Dual}
-
-\subsection{Definition of the Yangian}
-
-The Yangian $Y(\mathfrak{g})$ was discovered by Drinfeld (1985) while studying quantum integrable systems. It is a deformation of the universal enveloping algebra $U(\mathfrak{g}[t])$.
-
-\begin{definition}[Yangian $Y(\mathfrak{g})$]
-The Yangian $Y(\mathfrak{g})$ is generated by elements $J_n^a$ for $n \geq 0$ and $a \in \{1,\ldots,\dim\mathfrak{g}\}$, with relations:
-\begin{enumerate}
-\item \textbf{Level-0 relations}: $[J_0^a, J_0^b] = f^{abc}J_0^c$ (Lie algebra relations)
-
-\item \textbf{Serre relations}: 
-$$[J_0^a, J_n^b] = f^{abc}J_n^c$$
-
-\item \textbf{RTT relations}: Encoded by the Yang-Baxter equation
-$$[J_m^a, J_n^b] - [J_n^a, J_m^b] = f^{abc}(J_{m-1}^cJ_n^d - J_m^dJ_{n-1}^c)f^{dbc}$$
-\end{enumerate}
-\end{definition}
-
-\begin{remark}[Non-quadratic Nature]
-The RTT relations involve products of three generators, making the Yangian inherently non-quadratic. This is why it cannot be treated by classical Koszul duality.
-\end{remark}
-
-\subsection{The Yangian as a Chiral Algebra}
-
-To fit the Yangian into our framework, we realize it as a chiral algebra on $\mathbb{P}^1$:
-
-\begin{theorem}[Chiral Yangian]
-The Yangian $Y(\mathfrak{g})$ has a chiral algebra structure where:
-\begin{enumerate}
-\item Generators $J^a(z) = \sum_{n \geq 0} J_n^a z^{-n-1}$ are currents on $\mathbb{P}^1$
-
-\item The OPE is:
-$$J^a(z)J^b(w) = \frac{f^{abc}J^c(w)}{z-w} + \frac{\hbar r^{ab}}{(z-w)^2} + \text{regular}$$
-where $r^{ab}$ is the classical $r$-matrix.
-
-\item The factorization structure encodes the coproduct:
-$$\Delta(J^a(z)) = J^a(z) \otimes 1 + 1 \otimes J^a(z) + \hbar\sum_b r^{ab} \partial_z \otimes J^b(z)$$
-\end{enumerate}
-\end{theorem}
 
 % ================================================================
 % SECTION 8.3: YANGIANS AND AFFINE YANGIANS - COMPLETE TREATMENT
@@ -403,6 +462,248 @@ theory, connecting:
 \item Springer theory (geometric representation theory)
 \end{itemize}
 \end{remark}
+
+\section{Feynman Diagrams and the Bar-Cobar Complex at Genus $g$}
+\label{sec:feynman_genus_g}
+
+We now address the fundamental question: \textbf{In what sense do Feynman diagrams
+in genus $g$ have anything to do with the bar-cobar complex of a chiral algebra in
+genus $g$?}
+
+This section provides three perspectives:
+\begin{enumerate}
+\item \textbf{Physical:} Feynman diagrams as perturbative QFT
+\item \textbf{Geometric:} Configuration spaces and moduli
+\item \textbf{Algebraic:} The bar-cobar complex as graph homology
+\end{enumerate}
+
+\subsection{The Basic Dictionary}
+
+\subsubsection{Feynman Rules $\leftrightarrow$ Bar-Cobar Operations}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Feynman Diagram} & \textbf{Bar-Cobar Complex} \\
+\hline
+Vertices & Operations in $\mathcal{A}$ (OPE) \\
+Edges (propagators) & Pairings in $C_{\bullet}(\mathcal{A})$ \\
+External legs & Operators $a \in \mathcal{A}$ \\
+Loops & Traces $\operatorname{Tr}(\cdots)$ \\
+Genus $g$ & Topology of diagram = $\chi = 2-2g$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{The Euler Characteristic}
+
+A Feynman diagram $\Gamma$ has:
+\begin{itemize}
+\item $V$ vertices
+\item $E$ edges (internal)
+\item $L$ external legs
+\end{itemize}
+
+The \textbf{genus} of the diagram is:
+$$g(\Gamma) = 1 - \frac{\chi(\Gamma)}{2} = 1 - \frac{V - E + L}{2}$$
+
+The number of loops: $L(\Gamma) = E - V + 1 = g(\Gamma) + \text{(corrections)}$
+
+\subsection{Witten's Physical Picture}
+
+\subsubsection{Perturbative Expansion}
+
+In quantum field theory, observables are computed as:
+$$\langle O \rangle = \sum_{g=0}^{\infty} \hbar^{g-1} \sum_{\Gamma \in \mathcal{G}_g} 
+\frac{1}{|\operatorname{Aut}(\Gamma)|} F_{\Gamma}$$
+where:
+\begin{itemize}
+\item $\mathcal{G}_g$ = Feynman diagrams of genus $g$
+\item $F_{\Gamma}$ = Feynman integral for diagram $\Gamma$
+\item $\hbar$ = quantum parameter (plays role of $\kappa$ in our case)
+\end{itemize}
+
+\textbf{Key Observation:} The genus expansion \emph{is} the loop expansion.
+
+\subsubsection{Example: Scalar $\phi^4$ Theory}
+
+Consider the action:
+$$S = \int \left( \frac{1}{2}(\partial \phi)^2 + \frac{\lambda}{4!} \phi^4 \right)$$
+
+Feynman rules:
+\begin{itemize}
+\item Propagator: $\langle \phi(x) \phi(y) \rangle = \frac{1}{4\pi^2 |x-y|^2}$
+\item Vertex: $\lambda \cdot (\text{4-point interaction})$
+\end{itemize}
+
+Genus counting:
+\begin{align}
+g=0 &: \text{Tree diagrams (classical)} \\
+g=1 &: \text{One-loop (quantum corrections)} \\
+g \geq 2 &: \text{Higher loops (renormalization)}
+\end{align}
+
+\subsection{The Geometric Connection: Configuration Spaces}
+
+\subsubsection{Feynman Integrals as Integrals over Configuration Spaces}
+
+A Feynman diagram $\Gamma$ with $n$ vertices defines an integral:
+$$F_{\Gamma} = \int_{\mathrm{Conf}_n(X)} \prod_{\text{edges}} G(x_i, x_j) 
+\cdot \prod_{\text{vertices}} (\text{vertex factors})$$
+
+where $X$ is the spacetime manifold.
+
+\textbf{For chiral algebras:} $X = \Sigma_g$, a Riemann surface of genus $g$.
+
+The configuration space:
+$$\mathrm{Conf}_n(\Sigma_g) = \frac{(\Sigma_g)^n \setminus \text{diagonals}}{\text{symmetries}}$$
+
+\subsubsection{The Graph Complex}
+
+Define the \textbf{graph complex} $\mathcal{GC}_{\bullet}^{(g)}$:
+\begin{itemize}
+\item Generators: Feynman diagrams of genus $\leq g$ with $\bullet$ external legs
+\item Differential: Contracting edges, taking residues
+\item Grading: By number of external legs minus loops
+\end{itemize}
+
+\begin{theorem}[Kontsevich]
+There is a quasi-isomorphism:
+$$\mathcal{GC}_{\bullet}^{(g)} \simeq C_{\bullet}^{(g)}(\mathcal{A})$$
+relating the graph complex to the genus $g$ bar complex of any quantization of $\mathcal{A}$.
+\end{theorem}
+
+\subsection{The Algebraic Connection: Bar-Cobar as Graph Homology}
+
+\subsubsection{Bar Complex $=$ Trees + Loops}
+
+The bar complex $C_{\bullet}(\mathcal{A})$ can be written as:
+$$C_n(\mathcal{A}) = \bigoplus_{g \geq 0} C_n^{(g)}(\mathcal{A})$$
+decomposed by genus.
+
+Each $C_n^{(g)}(\mathcal{A})$ corresponds to:
+$$C_n^{(g)}(\mathcal{A}) = \operatorname{span}\{ \text{genus-}g\text{ operations on }n\text{ inputs} \}$$
+
+\textbf{Explicit description at genus $g$:}
+\begin{itemize}
+\item \textbf{Genus 0:} $C_n^{(0)} = \mathcal{A}^{\otimes n}$ (standard bar complex)
+
+\item \textbf{Genus 1:} $C_n^{(1)} = \operatorname{Tr}(\mathcal{A}^{\otimes n})$
+(cyclic bar complex)
+
+\item \textbf{Genus $g$:} $C_n^{(g)} = $ operations parametrized by $\mathcal{M}_{g,n}$
+\end{itemize}
+
+\subsubsection{The Differential as Feynman Rule}
+
+The bar differential $d: C_n^{(g)} \to C_{n-1}^{(g)}$ is:
+$$d = \sum_{\text{contractions}} \pm \text{OPE}$$
+
+This is \emph{precisely} the Feynman rule for:
+\begin{enumerate}
+\item Contracting two external legs
+\item Integrating over the position where they meet
+\item Summing over all ways to contract
+\end{enumerate}
+
+\subsection{Genus 1 Example: One-Loop Diagrams}
+
+\subsubsection{The Vacuum Bubble}
+
+At genus 1, the simplest diagram is the \textbf{vacuum bubble}: a closed loop with no external legs.
+
+Feynman integral:
+$$F_{\text{bubble}} = \int_{\mathbb{T}^2} G(z, z) \cdot (\text{vertex})$$
+
+This is \textbf{divergent} --- the self-interaction $G(z,z) \to \infty$.
+
+Regularized result:
+$$F_{\text{bubble}} = \kappa \cdot \log(\text{cutoff}) + \text{finite}$$
+
+\textbf{In bar-cobar:} This is $\operatorname{Tr}(\mathbbm{1}) = \kappa$, the central charge!
+
+\subsubsection{The Figure-Eight}
+
+With two external legs, we have a figure-eight diagram: two loops joined at a vertex.
+
+Feynman integral:
+$$F_{\text{fig-8}}(z, w) = \int_{\mathbb{T}^2} G(z, z_1) G(z_1, z_1) G(z_1, w)$$
+
+After regularization:
+$$F_{\text{fig-8}}(z, w) \sim \kappa^2 \cdot \frac{1}{(z-w)^4} + \cdots$$
+
+\textbf{In bar-cobar:} This is exactly the genus 1 correction to the OPE we computed!
+
+\subsection{Genus 2 Example: Two-Loop Diagrams}
+
+\subsubsection{The Double Loop}
+
+The genus 2 analog: two separate loops connected by a propagator.
+
+Feynman integral:
+\begin{align}
+F_{2\text{-loop}}(z, w) &= \int_{\Sigma_2^2} G(z, z_1) G(z_1, z_1) G(z_1, z_2) \\
+&\quad \times G(z_2, z_2) G(z_2, w)
+\end{align}
+
+This integrates over the \textbf{moduli of $\Sigma_2$}, giving Eisenstein series $E_4, E_6$.
+
+\textbf{In bar-cobar:} This is the genus 2 cocycle $c_2$ from Section \ref{sec:genus_2_ope_example}!
+
+\subsection{General Pattern: Genus $g$ Diagrams}
+
+\begin{theorem}[Feynman-Bar-Cobar Correspondence]
+For any chiral algebra $\mathcal{A}$, there is a natural isomorphism:
+$$\boxed{
+\frac{\text{Feynman diagrams of genus }g}{\text{symmetries}}
+\quad \cong \quad
+C_{\bullet}^{(g)}(\mathcal{A})
+}$$
+
+Under this correspondence:
+\begin{itemize}
+\item Feynman integrals $\leftrightarrow$ Bar complex operations
+\item Loop momentum integration $\leftrightarrow$ Integration over $\mathrm{Conf}_n(\Sigma_g)$
+\item Renormalization $\leftrightarrow$ Homological perturbation theory
+\item $g$-loop divergences $\leftrightarrow$ $H_*^{(g)}(\mathcal{A})$ cohomology
+\end{itemize}
+\end{theorem}
+
+\subsection{The Grothendieck Perspective: Functorial Uniqueness}
+
+Why does this correspondence hold?
+
+\textbf{Answer (Grothendieck):} Both sides are uniquely determined by:
+\begin{enumerate}
+\item The genus 0 structure (trees/OPE)
+\item Functoriality under gluing $\Sigma_g \rightsquigarrow \Sigma_{g_1} \cup \Sigma_{g_2}$
+\item Compatibility with factorization
+\end{enumerate}
+
+Any two constructions satisfying these properties are \emph{canonically} isomorphic.
+
+\subsection{Witten's Summary: The Unity of Physics and Algebra}
+
+In conformal field theory:
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\textbf{Witten's Dictum:}
+
+``The bar-cobar complex of a chiral algebra \emph{is} the Feynman diagram expansion
+of the corresponding quantum field theory. Genus $g$ corrections in one language
+are precisely $g$-loop corrections in the other. The central charge is the quantum
+parameter. Koszul duality is S-duality.''
+}}
+\end{center}
+
+This unifies:
+\begin{itemize}
+\item \textbf{Mathematics:} Homological algebra of chiral algebras
+\item \textbf{Physics:} Perturbative quantum field theory
+\item \textbf{Geometry:} Moduli spaces of curves
+\end{itemize}
+
+into a single coherent framework.
 
 % ================================================================
 % SECTION 8.4: CATEGORIES OF MODULES AND DERIVED EQUIVALENCES
