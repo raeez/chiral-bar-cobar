@@ -39,6 +39,41 @@ For special values of central charge:
 \end{itemize}
 \end{theorem}
 
+\subsection{Connection to Genus Expansion and Feynman Diagrams}
+
+\begin{theorem}[Spectral Sequence = Genus Expansion]\label{thm:ss-genus}
+The spectral sequence computing $H^*(\bar{B}(\mathcal{A}))$ has pages corresponding to genus contributions:
+
+\textbf{Page $E_r$}: Contributions from graphs/diagrams with up to $(r-1)$ loops.
+
+More precisely:
+\begin{itemize}
+\item $E_1^{p,q}$: Tree-level (genus 0), no loops
+\item $E_2^{p,q}$: One-loop corrections (genus 1)  
+\item $E_3^{p,q}$: Two-loop corrections (genus 2)
+\item $E_\infty^{p,q}$: Sum over all genera
+\end{itemize}
+
+\textbf{Physical interpretation}:
+$$E_r \approx \text{Feynman graphs with } \leq (r-1) \text{ loops}$$
+
+The differentials $d_r$ implement quantum corrections by integrating over moduli spaces of curves:
+$$d_r: E_r^{p,q} \to E_r^{p+r,q-r+1}$$
+corresponds to
+$$\int_{\overline{\mathcal{M}}_{g,n}} \omega_{\text{correlator}}$$
+where $g = r-1$ is the genus.
+\end{theorem}
+
+\begin{proof}[Sketch]
+The filtration on $\bar{B}(\mathcal{A})$ by pole order along collision divisors corresponds to the loop expansion:
+
+- Order-0 pole: tree diagram (no internal lines)
+- Order-1 pole: one internal loop  
+- Order-$n$ pole: $n$ internal loops
+
+The $E_r$ page consists of equivalence classes of diagrams modulo those with $<r$ loops.
+\end{proof}
+
 \subsection{Computational Tools}
 
 The differentials can be computed via:
