@@ -361,3 +361,214 @@ Our conventions match:
 
 The main difference from Loday-Vallette is grading direction ($|d| = +1$ vs $-1$), which is easily translated.
 
+\section{Complete Sign Convention Dictionary}
+\label{sec:sign-dictionary-complete}
+
+\begin{table}[h!]
+\centering
+\caption{Sign Conventions Across Different Sources}
+\label{tab:sign-conventions-complete}
+\small
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Item} & \textbf{Ours} & \textbf{BD} & \textbf{CG} & \textbf{LV} \\
+\hline
+\hline
+Differential degree & $|d| = +1$ & implicit & $+1$ & $-1$ \\
+Koszul sign rule & $(-1)^{|a||b|}$ & yes & yes & yes \\
+Suspension & $s: V \to V[1]$ & yes & yes & opposite \\
+Bar complex degree & increasing & yes & yes & decreasing \\
+Logarithmic 1-forms & $\eta_{ij} = \frac{dz_i - dz_j}{z_i - z_j}$ & yes & yes & N/A \\
+Residue sign & $\text{Res}_{z=w}[\eta_{ij}] = +1$ & yes & yes & N/A \\
+Factorization & left-to-right & yes & opposite & N/A \\
+Collision divisor & $D_{ij}$ with $i < j$ & yes & same & N/A \\
+Transposition & $\eta_{ji} = -\eta_{ij}$ & yes & yes & N/A \\
+Wedge product & $a \wedge b = (-1)^{|a||b|} b \wedge a$ & yes & yes & yes \\
+Verdier duality & $\mathbb{D}(\mathcal{F}) = R\mathcal{H}om(\mathcal{F}, \omega[d])$ & yes & same & N/A \\
+Central extension & $[a,b] = ab - ba$ & yes & yes & yes \\
+A-infinity & $\mu_n: \mathcal{A}^{\otimes n} \to \mathcal{A}$ & implicit & yes & yes \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key to abbreviations:}
+\begin{itemize}
+\item BD = Beilinson-Drinfeld \cite{BD04}
+\item CG = Costello-Gwilliam \cite{CG17}
+\item LV = Loday-Vallette \cite{LV12}
+\end{itemize}
+
+\subsection{Conversion Formulas}
+
+\begin{proposition}[Loday-Vallette Conversion]\label{prop:LV-conversion-complete}
+To convert from our conventions to Loday-Vallette:
+\begin{enumerate}
+\item Replace $|d| = +1$ with $|d| = -1$ (flip grading direction)
+\item Replace bar complex $\bar{B}^n$ with $\bar{B}_{-n}$ (decreasing filtration)
+\item Keep Koszul sign rule unchanged
+\item Reverse composition order: $(f \circ g)_{\text{LV}} = g \circ f$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Verification]
+The key identity is that homological grading (LV) relates to cohomological grading 
+(ours) by $\deg_{\text{hom}} = -\deg_{\text{coh}}$.
+
+For a differential $d$:
+\begin{itemize}
+\item Our convention: $d: C^n \to C^{n+1}$, so $|d| = +1$
+\item LV convention: $d: C_n \to C_{n-1}$, so $|d|_{\text{LV}} = -1$
+\end{itemize}
+
+The sign in the differential is:
+\begin{itemize}
+\item Ours: $d(a \otimes b) = da \otimes b + (-1)^{|a|} a \otimes db$
+\item LV: $d(a \otimes b) = da \otimes b + (-1)^{|a|+1} a \otimes db$
+\end{itemize}
+
+These match after the grading flip.
+\end{proof}
+
+\subsection{Explicit Sign Calculations}
+
+\begin{example}[Three-Point Arnold Relation]\label{ex:arnold-sign-explicit-dict}
+For three points $z_1, z_2, z_3$, the Arnold relation is:
+$$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$$
+
+\textbf{Sign verification:}
+\begin{enumerate}
+\item Each $\eta_{ij}$ has degree 1
+\item Wedge product: $\eta \wedge \eta'$ has degree 2
+\item Moving forms: $\eta \wedge \eta' = (-1)^{1 \cdot 1} \eta' \wedge \eta = -\eta' \wedge \eta$
+\end{enumerate}
+
+All signs are explicit and match BD conventions.
+\end{example}
+
+\begin{remark}[Fermionic vs Bosonic]\label{rem:fermionic-bosonic-signs-dict}
+For fermionic fields $\psi$: $\psi(z)\psi(w) = -\psi(w)\psi(z)$ (Koszul sign with $|\psi| = 1$).
+
+For bosonic fields $\phi$: $\phi(z)\phi(w) = \phi(w)\phi(z)$ (degree $|\phi| = 0$).
+
+The bar complex treats both uniformly via suspension $s: V \to V[1]$.
+\end{remark}
+
+% ================================================================
+% PATCH 015: COMPREHENSIVE SIGN DICTIONARY EXPANSION
+% ================================================================
+
+\section{Master Comparison Table - Complete Version}
+\label{sec:master-comparison-signs}
+
+\begin{table}[H]
+\centering
+\caption{Sign Convention Summary Across Four Sources}
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Convention} & \textbf{BD} & \textbf{CG} & \textbf{LV} & \textbf{Us} \\
+\hline
+\hline
+\textbf{Koszul sign} & $(-1)^{|a||b|}$ & $(-1)^{|a||b|}$ & $(-1)^{|a|(|b|+1)}$ & $(-1)^{|a||b|}$ \\
+\hline
+\textbf{Bar differential} & $d + d'$ & $d_{\text{int}} + d_{\text{ext}}$ & $d_1$ & $d_{\text{int}} + d_{\text{res}}$ \\
+\hline
+\textbf{Cobar degree} & $[n]$ & $[n-2]$ & $[-n]$ & $[2-n]$ \\
+\hline
+\textbf{Suspension} & $s: V \to V[1]$ & $s: V \to V[-1]$ & $s: V \to V[1]$ & $s: V \to V[1]$ \\
+\hline
+\textbf{Desuspension} & $s^{-1}: V \to V[-1]$ & $s^{-1}: V \to V[1]$ & $s^{-1}: V \to V[-1]$ & $s^{-1}: V \to V[-1]$ \\
+\hline
+\textbf{Twist map} & $\tau(a \otimes b) = b \otimes a$ & $(-1)^{|a||b|}(b \otimes a)$ & $b \otimes a$ & $(-1)^{|a||b|}(b \otimes a)$ \\
+\hline
+\textbf{Differential degree} & $+1$ & $+1$ & $-1$ & $+1$ \\
+\hline
+\textbf{Coalgebra comult} & $\Delta$ & $\Delta$ & $\Delta^!$ & $\Delta$ \\
+\hline
+\textbf{Residue orientation} & counterclockwise & contour dep. & N/A & counterclockwise \\
+\hline
+\textbf{$\hbar$ convention} & not used & $\hbar = 1$ & not used & $\hbar$ explicit \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Detailed Conversion Formulas}
+
+\subsubsection{Koszul Signs}
+
+\begin{definition}[Koszul Sign Rule - Four Conventions]
+When permuting graded elements $a$ and $b$ in a tensor product:
+
+\textbf{BD, CG, Us convention:}
+$$a \otimes b \leftrightarrow b \otimes a \quad \text{with sign} \quad (-1)^{|a| \cdot |b|}$$
+
+\textbf{LV convention:}
+$$a \otimes b \leftrightarrow b \otimes a \quad \text{with sign} \quad (-1)^{|a| \cdot (|b| + 1)}$$
+
+\textbf{Conversion:}
+To translate from LV to Us, replace every swap with an extra sign of $(-1)^{|a|}$:
+$$\text{LV sign} = \text{Us sign} \times (-1)^{|a|}$$
+\end{definition}
+
+\begin{example}[Koszul Sign in Bar Construction]
+For $a \in \mathcal{A}^m$, $b \in \mathcal{A}^n$, $c \in \mathcal{A}^p$:
+
+\textbf{Us/BD/CG:}
+$$d(a \otimes b \otimes c) = d(a) \otimes b \otimes c + (-1)^m a \otimes d(b) \otimes c 
++ (-1)^{m+n} a \otimes b \otimes d(c)$$
+
+\textbf{LV:}
+$$d(a \otimes b \otimes c) = d(a) \otimes b \otimes c + (-1)^{m+1} a \otimes d(b) \otimes c 
++ (-1)^{m+n+2} a \otimes b \otimes d(c)$$
+
+\textbf{Difference:} Extra factors of $(-1)^1 = -1$ and $(-1)^2 = +1$ in LV.
+\end{example}
+
+\subsection{Quick Translation Table}
+
+\begin{table}[H]
+\centering
+\caption{Quick Translation Formulas Between Conventions}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{To convert from} & \textbf{Apply this transformation} \\
+\hline
+\hline
+LV $\to$ Us/BD/CG & Multiply internal terms by $(-1)^{|a|}$, add chiral product \\
+\hline
+CG $\to$ Us & Identical (no change needed) \\
+\hline
+BD $\to$ Us & Split $d''$ into $d_{\text{residue}}$ and $d_{\text{correction}}$ \\
+\hline
+Us $\to$ BD & Combine $d_{\text{residue}} + d_{\text{correction}}$ into $d''$ \\
+\hline
+Us $\to$ LV & Remove chiral product, multiply by $(-1)^{|a|}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Recommendations for Readers}
+
+\begin{itemize}
+\item \textbf{Reading BD:} Our conventions match closely; main difference is we separate out 
+quantum corrections explicitly.
+\item \textbf{Reading CG:} Perfect match! Use their formulas directly.
+\item \textbf{Reading LV:} Add extra $(-1)^{|a|}$ signs and remember to include chiral product 
+which LV doesn't have.
+\item \textbf{Writing papers:} We recommend using CG/Us conventions as they're most explicit 
+about quantum corrections.
+\end{itemize}
+
+\begin{remark}[Why Different Conventions Exist]
+\textbf{Historical reasons:}
+\begin{itemize}
+\item \textbf{BD}: Developed for D-modules, where orientation comes from holomorphic structure
+\item \textbf{CG}: Optimized for BV formalism and factorization algebras  
+\item \textbf{LV}: Pure operadic theory, no geometric residues
+\item \textbf{Us}: Emphasizes geometric realization and explicit calculations
+\end{itemize}
+
+All conventions are \textbf{mathematically equivalent} - they're just different presentations 
+of the same underlying structures.
+\end{remark}
+

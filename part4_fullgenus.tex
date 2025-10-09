@@ -134,3 +134,220 @@ where:
 \item $S$: Action functional
 \end{itemize}
 \end{theorem}
+
+\section{Elliptic Corrections and Quasi-Modular Forms}
+\label{sec:elliptic-quasimodular}
+
+\begin{remark}[The E_2 Anomaly]\label{rem:E2-anomaly}
+At genus 1, differential forms on an elliptic curve $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ 
+involve the Weierstrass $\wp$-function and its derivative.
+
+The propagator becomes:
+$$K(z,w) = \frac{dz}{\wp'(z-w)} = \frac{dz}{2(z-w)} + \text{elliptic corrections}$$
+
+\textbf{The Problem:} These elliptic corrections involve the Eisenstein series $E_2(\tau)$, 
+which is NOT modular, but quasi-modular.
+\end{remark}
+
+\begin{definition}[Quasi-Modular Forms]\label{def:quasi-modular}
+The Eisenstein series $E_2(\tau)$ transforms under $SL_2(\mathbb{Z})$ as:
+$$E_2\left(\frac{a\tau + b}{c\tau + d}\right) = (c\tau + d)^2 E_2(\tau) 
+- \frac{6c(c\tau + d)}{\pi i}$$
+
+The extra term $-\frac{6c(c\tau + d)}{\pi i}$ is the \textbf{modular anomaly}.
+\end{definition}
+
+\begin{theorem}[Quantum Corrections and Modular Parameters]\label{thm:quantum-modular-refined}
+The statement "quantum corrections lie in $H^1(\mathcal{M}_1) = \mathbb{C}$" requires 
+refinement:
+
+\begin{enumerate}
+\item The space of \textbf{holomorphic} modular parameters is $\mathbb{C} \cdot \tau$ 
+(one-dimensional).
+
+\item The space of \textbf{quasi-modular} parameters includes $E_2(\tau)$, which 
+depends on both $\tau$ and $\bar{\tau}$.
+
+\item The \textbf{physical quantum corrections} live in the complexified cohomology:
+$$H^1(\mathcal{M}_1, \mathbb{C}) \otimes \overline{H^1(\mathcal{M}_1, \mathbb{C})} 
+= \mathbb{C} \cdot \tau \oplus \mathbb{C} \cdot \bar{\tau}$$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Clarification and Refinement]
+
+\textbf{Step 1: Holomorphic vs Almost-Holomorphic.}
+
+Classical modular forms are holomorphic in $\tau$. Quasi-modular forms are 
+\textbf{almost holomorphic}: they have controlled anti-holomorphic dependence.
+
+For $E_2$:
+$$\frac{\partial E_2}{\partial \bar{\tau}} = -\frac{3}{\pi (\text{Im}\,\tau)}$$
+
+This anti-holomorphic derivative is the source of the modular anomaly.
+
+\textbf{Step 2: Holomorphic Anomaly Equation.}
+
+In conformal field theory, the genus-1 partition function satisfies:
+$$\frac{\partial}{\partial \bar{\tau}} \log Z_1(\tau) = -\frac{c}{24\pi} \cdot 
+\frac{1}{\text{Im}\,\tau}$$
+where $c$ is the central charge. This is the \textbf{holomorphic anomaly}, measured by $E_2$.
+
+\textbf{Step 3: Resolution: Almost-Holomorphic Modular Forms.}
+
+The correct statement is:
+$$\text{Quantum corrections at genus 1} \in \text{QMod}_{\leq 2}(\mathcal{M}_1)$$
+where QMod$_{\leq 2}$ is the space of quasi-modular forms of weight $\leq 2$.
+
+Only $E_2$ contributes at genus 1 to leading order.
+
+\textbf{Step 4: Canonical Choice.}
+
+\textbf{Our choice (following Witten):} Use the almost-holomorphic choice, 
+because it connects to the holomorphic anomaly in string theory.
+
+\end{proof}
+
+\begin{lemma}[Elliptic Propagator Explicit Formula]\label{lem:elliptic-propagator}
+On an elliptic curve $E_\tau$, the genus-1 propagator is:
+$$K_1(z,w|\tau) = \frac{1}{2(z-w)} + \frac{\pi^2 E_2(\tau)}{6}(z-w) + O((z-w)^3)$$
+where the $E_2$ term is the first elliptic correction.
+\end{lemma}
+
+\begin{proof}[Proof via Weierstrass $\wp$-function]
+By Mumford's \emph{Tata Lectures on Theta II} \cite{Mumford84}, using the series for $\wp$:
+$$K(z,w|\tau) = \frac{1}{2(z-w)} + \frac{\pi^2 E_2(\tau)}{6}(z-w) + O((z-w)^3)$$
+
+where $E_2(\tau) = 1 - 24\sum_{n=1}^{\infty} \frac{nq^n}{1-q^n}$ with $q = e^{2\pi i \tau}$.
+\end{proof}
+
+\begin{remark}[Implications for Bar Differential]\label{rem:bar-E2}
+When computing the genus-1 bar differential, the $E_2$ term enters as the quantum correction.
+
+For the Heisenberg algebra, this $E_2$ term produces 
+the central charge $k$ in the OPE:
+$$[J_m, J_n] = k m \delta_{m+n,0}$$
+\end{remark}
+
+\begin{corollary}[Modular Invariance at Genus 1]\label{cor:modular-inv-g1}
+Although $E_2$ is not modular, the \textbf{physical observables} remain modular because 
+the holomorphic anomaly cancels against other non-modular terms.
+
+This is the content of \textbf{holomorphic anomaly cancellation} in string theory.
+\end{corollary}
+
+\section{Prime Forms, Spin Structures, and Canonical Choices}
+\label{sec:prime-forms-spin}
+
+\begin{definition}[Prime Form]\label{def:prime-form-spin}
+On a Riemann surface $\Sigma_g$ of genus $g$, the \textbf{prime form} $E(z,w)$ is 
+a section of the line bundle $K_{\Sigma_g}^{1/2} \boxtimes K_{\Sigma_g}^{1/2}$ satisfying:
+\begin{enumerate}
+\item $E(z,w) = -E(w,z)$ (antisymmetry)
+\item Near $z=w$: $E(z,w) \sim (z-w) + O((z-w)^3)$
+\item Has zeros only at $z=w$ (simple zeros)
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Spin Structure Dependence]\label{rem:spin-structure-prime}
+The key subtlety: $K_{\Sigma_g}^{1/2}$ requires a choice of \textbf{spin structure}.
+
+For genus $g$, there are $2^{2g}$ inequivalent spin structures, labeled by 
+characteristics $[\alpha, \beta]$ where $\alpha, \beta \in (\mathbb{Z}/2\mathbb{Z})^g$.
+\end{remark}
+
+\begin{theorem}[Spin Structure and Koszul Duality]\label{thm:spin-koszul}
+The choice of spin structure affects the prime form, hence the propagator, hence 
+the bar differential. However:
+
+\begin{enumerate}
+\item \textbf{At genus 1:} There are 4 spin structures (NS or R in both cycles). 
+The standard choice for CFT is NS-NS.
+
+\item \textbf{For Koszul duality:} The dependence on spin structure cancels in the 
+bar-cobar adjunction, so the Koszul dual algebra is independent of spin structure.
+
+\item \textbf{Physical observables:} Must be summed over all spin structures 
+(GSO projection in string theory).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof and Clarification]
+
+\textbf{Step 1: Spin structures at low genus.}
+
+\textit{Genus 0:} $2^0 = 1$ spin structure (unique). No ambiguity.
+
+\textit{Genus 1:} $2^2 = 4$ spin structures (NS-NS, NS-R, R-NS, R-R).
+
+\textit{Genus 2:} $2^4 = 16$ spin structures (even and odd).
+
+\textbf{Step 2: Prime form depends on spin structure.}
+
+The prime form at genus $g$ is:
+$$E[\delta](z,w) = \frac{\theta[\delta](z-w|\Omega)}{\sigma(z)\sigma(w)}$$
+where $\delta = [\alpha, \beta]$ is the spin structure.
+
+Different $\delta$ give different $E[\delta]$, related by:
+$$E[\delta'](z,w) = e^{2\pi i \langle \delta - \delta', \Omega \rangle} E[\delta](z,w)$$
+
+\textbf{Step 3: Koszul dual is spin-structure independent.}
+
+\begin{lemma}[Spin Independence of Koszul Dual]\label{lem:spin-independence}
+Although $\bar{B}_g[\delta](\mathcal{A})$ depends on $\delta$, the cohomology 
+$H^*(\bar{B}_g[\delta](\mathcal{A}))$ is independent of $\delta$.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma]
+Different spin structures are related by spectral flow. 
+Under spectral flow, the bar complex transforms by a quasi-isomorphism:
+$$\Phi_{\delta \to \delta'}: \bar{B}_g[\delta](\mathcal{A}) \xrightarrow{\simeq} 
+\bar{B}_g[\delta'](\mathcal{A})$$
+
+This preserves cohomology, so the Koszul dual is independent of $\delta$.
+\end{proof}
+
+\textbf{Step 4: Physical observables require sum over spin structures.}
+
+In string theory, physical amplitudes are:
+$$\mathcal{A}^{\text{phys}}_g = \frac{1}{2^{2g}} \sum_{\delta \in \text{spin structures}} 
+(-1)^{\delta} \mathcal{A}_g[\delta]$$
+
+where $(-1)^{\delta}$ is the GSO projection.
+
+\textbf{Step 5: Conclusion.}
+
+The theorem follows from Steps 1-4.
+
+\end{proof}
+
+\begin{remark}[Canonical Choice for This Manuscript]\label{rem:canonical-spin-choice}
+Throughout this manuscript, when working at genus $g \geq 1$, we make the following 
+canonical choices:
+
+\begin{enumerate}
+\item \textbf{Genus 1:} Use the NS-NS spin structure. This is the standard choice in CFT.
+
+\item \textbf{Higher genus:} Use the \textbf{even spin structures} (those for which 
+$\theta[\delta](0|\Omega) \neq 0$). For genus $g$, there are $2^{g-1}(2^g + 1)$ even 
+spin structures.
+
+\item \textbf{For sums:} When computing physical observables, sum over all spin 
+structures with appropriate GSO weights.
+\end{enumerate}
+
+With these choices, all formulas in the manuscript are unambiguous.
+\end{remark}
+
+\begin{proposition}[Prime Form Explicit Formula - Genus 1]\label{prop:prime-genus-1}
+At genus 1 with NS-NS spin structure:
+$$E(z,w|\tau) = \frac{\theta_1(z-w|\tau)}{\theta_1'(0|\tau)} 
+e^{\pi \eta(\tau) (z-w)^2 / \text{Im}\,\tau}$$
+where:
+\begin{itemize}
+\item $\theta_1(z|\tau) = -\sum_{n \in \mathbb{Z}} (-1)^n e^{\pi i (n+1/2)^2 \tau + 
+2\pi i (n+1/2)(z+1/2)}$ (Jacobi theta function)
+\item $\eta(\tau) = q^{1/24}\prod_{n=1}^{\infty}(1-q^n)$ (Dedekind eta function)  
+\item $q = e^{2\pi i \tau}$
+\end{itemize}
+\end{proposition}

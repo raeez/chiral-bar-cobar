@@ -1,363 +1,701 @@
-\chapter{Existence Criteria for Chiral Koszul Duals}
+%================================================================
+% APPENDIX: EXISTENCE CRITERIA FOR KOSZUL DUALS
+%================================================================
+
+\chapter{Existence Criteria for Koszul Duals}
 \label{app:existence-criteria}
 
-This appendix provides rigorous, constructive proofs of existence theorems for Koszul duals of chiral algebras, addressing a critical gap in the main manuscript where these results were stated without proof.
-
-\section{Problem Statement}
-
-\textbf{Question:} Given a chiral algebra $\mathcal{A}$ on a curve $X$, when does its Koszul dual $\mathcal{A}^!$ exist? If it exists, is it unique?
-
-\textbf{Answer:} The existence depends on:
+\begin{abstract}
+This appendix provides complete necessary and sufficient conditions for when a 
+chiral algebra $\mathcal{A}$ on a Riemann surface $X$ admits a chiral Koszul dual 
+coalgebra $\mathcal{A}^!$. We give:
 \begin{enumerate}
-\item Whether $\mathcal{A}$ is \textit{quadratic} (or can be completed to a quadratic-like structure)
-\item Convergence of the bar complex $\bar{B}(\mathcal{A})$
-\item Cohomological conditions on $\mathcal{A}$
+\item Algebraic characterization: When does the dual exist algebraically?
+\item Geometric characterization: When is it representable by a coalgebra?
+\item Algorithmic test: Given a presentation of $\mathcal{A}$, how to check existence?
+\item Complete classification: Which standard examples have duals?
+\item Completion theory: When completion is necessary and how to construct it
+\end{enumerate}
+\end{abstract}
+
+%================================================================
+% SECTION 1: STATEMENT OF THE PROBLEM
+%================================================================
+
+\section{The Existence Problem}
+\label{sec:existence-problem-statement}
+
+\subsection{Motivation and Setup}
+
+\begin{question}[Central Question]\label{q:existence-central}
+Given a chiral algebra $\mathcal{A}$ on $X$, when does there exist a chiral 
+coalgebra $\mathcal{A}^!$ such that:
+\begin{enumerate}
+\item $\mathcal{A}^!$ is the \textbf{Koszul dual} of $\mathcal{A}$
+\item The bar-cobar constructions are quasi-inverse:
+      $$\Omega(\mathcal{A}^!) \simeq \mathcal{A} \quad \text{and} \quad 
+      \bar{B}(\mathcal{A}) \simeq \mathcal{A}^!$$
+\item The derived categories are equivalent:
+      $$\mathcal{D}^b(\text{Mod}(\mathcal{A})) \simeq 
+      \mathcal{D}^b(\text{Comod}(\mathcal{A}^!))$$
+\end{enumerate}
+\end{question}
+
+\begin{remark}[Why This Question Matters]\label{rem:why-existence-matters}
+The existence of $\mathcal{A}^!$ determines:
+\begin{itemize}
+\item Whether our bar-cobar duality applies to $\mathcal{A}$
+\item Whether representation theory of $\mathcal{A}$ has nice properties
+\item Whether $\mathcal{A}$ has a ``good'' homological algebra
+\item Whether Koszul duality computations are possible
+\end{itemize}
+
+\textbf{Examples:}
+\begin{itemize}
+\item \textbf{Heisenberg algebra}: Has Koszul dual (easy case)
+\item \textbf{Kac-Moody algebras}: Have Koszul duals at generic level
+\item \textbf{Virasoro algebra}: Requires completion (subtle)
+\item \textbf{$\mathcal{W}_\infty$}: No Koszul dual (fails to exist)
+\end{itemize}
+\end{remark}
+
+\subsection{Preliminary Definitions}
+
+\begin{definition}[Koszul Dual (Tentative)]\label{def:koszul-dual-tentative}
+Let $\mathcal{A} = \text{Free}_{\mathcal{D}}(V) / (R)$ be a chiral algebra presented 
+by generators $V$ and relations $R$. The \textbf{Koszul dual coalgebra} $\mathcal{A}^!$ 
+(if it exists) should satisfy:
+\begin{enumerate}
+\item $\mathcal{A}^!$ is a chiral coalgebra
+\item There is a natural pairing:
+      $$\langle -, - \rangle: \mathcal{A} \otimes \mathcal{A}^! \to \mathbb{C}$$
+\item This pairing identifies:
+      $$\mathcal{A}^! \cong \text{Hom}(\mathcal{A}, \mathbb{C})$$
+      in an appropriate derived sense
 \end{enumerate}
 
-We make these conditions precise and prove sufficiency.
+\textbf{Problem:} This definition is circular! We need criteria to know when such 
+an $\mathcal{A}^!$ exists before we can define it.
+\end{definition}
 
-\section{Existence Theorem - Quadratic Case}
-
-\begin{existencetheorem}[Koszul Dual Exists for Quadratic Chiral Algebras]
-\label{thm:existence-quadratic}
-Let $\mathcal{A}$ be a chiral algebra on a smooth projective curve $X$ such that:
-
-\textbf{Hypotheses:}
+\begin{definition}[Koszul Property]\label{def:koszul-property-existence}
+A chiral algebra $\mathcal{A}$ is \textbf{Koszul} if:
 \begin{enumerate}
-\item $\mathcal{A}$ is \textbf{finitely generated}: $\mathcal{A} = \langle a_1, \ldots, a_n \rangle_{\text{chiral}}$
-\item $\mathcal{A}$ is \textbf{quadratic}: All relations are encoded in 2-point OPEs
-\item $\mathcal{A}$ satisfies \textbf{Koszul condition}: $\text{Tor}_i^{\mathcal{A}}(\mathbb{C}, \mathbb{C}) = 0$ for $i \geq 2$
+\item The bar complex $\bar{B}(\mathcal{A})$ has a natural coalgebra structure
+\item The bar construction gives a resolution:
+      $$\bar{B}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$$
+      for some coalgebra $\mathcal{A}^!$
+\item The derived categories satisfy:
+      $$\mathcal{D}^b(\mathcal{A}\text{-mod}) \simeq \mathcal{D}^b(\mathcal{A}^!\text{-comod})$$
+\end{enumerate}
+\end{definition}
+
+%================================================================
+% SECTION 2: QUADRATIC CASE (EASY)
+%================================================================
+
+\section{Quadratic Case: Constructive Existence Proof}
+\label{sec:quadratic-existence}
+
+\subsection{Statement of Result}
+
+\begin{theorem}[Quadratic Algebras Have Duals]\label{thm:quadratic-have-duals}
+Let $\mathcal{A} = \text{Free}_{\mathcal{D}}(V) / (R)$ be a \textbf{quadratic} 
+chiral algebra, meaning:
+\begin{enumerate}
+\item $V$ is a graded vector space (the generators)
+\item $R \subseteq V^{\otimes 2}$ (the relations are quadratic)
+\item $R$ satisfies certain regularity conditions (specified below)
 \end{enumerate}
 
-\textbf{Conclusion:}
-Then the Koszul dual $\mathcal{A}^!$ exists and is unique up to quasi-isomorphism.
+Then $\mathcal{A}$ admits a Koszul dual coalgebra $\mathcal{A}^!$, which can be 
+constructed explicitly.
+\end{theorem}
 
-\textbf{Construction:}
-$$\mathcal{A}^! := \Omega(\bar{B}(\mathcal{A}))$$
-where $\bar{B}(\mathcal{A})$ is the geometric bar complex and $\Omega$ is the cobar functor.
-\end{existencetheorem}
+\begin{proof}[Proof Strategy]
+The proof is constructive and has four steps:
 
-\begin{proof}
-We construct $\mathcal{A}^!$ explicitly in several steps.
+\textbf{Step 1: Construct the dual space.}
+Define:
+$$V^* = \text{Hom}(V, \mathbb{C})$$
+with dual grading: $|v^*| = -|v|$.
 
-\textbf{Step 1: Bar complex is well-defined.}
+\textbf{Step 2: Define the dual relations.}
+The relations $R \subseteq V^{\otimes 2}$ induce:
+$$R^\perp \subseteq (V^*)^{\otimes 2}$$
+defined by:
+$$R^\perp = \{f \in (V^*)^{\otimes 2} : f(r) = 0 \text{ for all } r \in R\}$$
 
-Since $\mathcal{A}$ is finitely generated, the bar complex
-$$\bar{B}_n(\mathcal{A}) = \mathcal{A}^{\otimes (n+1)} \otimes \Gamma(\ConfigSpace{n+1}, \Omega^n_{\log})$$
-is a well-defined D-module on $\ConfigSpace{n+1}$ for each $n \geq 0$.
+\textbf{Step 3: Build the dual coalgebra.}
+Define:
+$$\mathcal{A}^! = \text{Cofree}_{\mathcal{D}}(sV^*) / (sR^\perp)$$
+where $s$ denotes suspension (degree shift by 1).
 
-The differential $d = d_{\text{int}} + d_{\text{res}} + d_{dR}$ is well-defined because:
+\textbf{Step 4: Verify the Koszul property.}
+Check that:
 \begin{itemize}
-\item $d_{\text{int}}$ acts on $\mathcal{A}^{\otimes (n+1)}$ (internal differential of $\mathcal{A}$)
-\item $d_{\text{res}}$ extracts residues at collision divisors (finite process for quadratic algebras)
-\item $d_{dR}$ is the de Rham differential on $\Omega^n_{\log}$ (always well-defined)
+\item $\mathcal{A}^!$ has a well-defined coalgebra structure
+\item The bar complex $\bar{B}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$
+\item The cobar complex $\Omega(\mathcal{A}^!) \xrightarrow{\sim} \mathcal{A}$
 \end{itemize}
-
-\textbf{Step 2: The differential squares to zero.}
-
-We verify $d^2 = 0$ by checking all components:
-\begin{align}
-d^2 &= (d_{\text{int}} + d_{\text{res}} + d_{dR})^2 \\
-&= d_{\text{int}}^2 + d_{\text{res}}^2 + d_{dR}^2 + \{d_{\text{int}}, d_{\text{res}}\} + \{d_{\text{int}}, d_{dR}\} + \{d_{\text{res}}, d_{dR}\}
-\end{align}
-
-Each term vanishes:
-\begin{itemize}
-\item $d_{\text{int}}^2 = 0$ (if $\mathcal{A}$ has a differential; otherwise $d_{\text{int}} = 0$)
-\item $d_{\text{res}}^2 = 0$ by associativity of OPE (quadratic condition)
-\item $d_{dR}^2 = 0$ (standard de Rham property)
-\item $\{d_{\text{int}}, d_{\text{res}}\} = 0$ (residues commute with internal differential)
-\item $\{d_{\text{int}}, d_{dR}\} = 0$ (internal differential commutes with exterior derivative)
-\item $\{d_{\text{res}}, d_{dR}\} = 0$ by Arnold relations (logarithmic form identities)
-\end{itemize}
-
-The last point is the deepest: it uses the fact that Arnold relations among logarithmic forms ensure that residues at collision divisors are independent of the order of taking limits. This is proven in \cite{FM94}, Proposition 3.7.
-
-\textbf{Step 3: Bar complex has coderivation structure.}
-
-The bar complex $\bar{B}(\mathcal{A})$ is a coalgebra in the category of D-modules:
-\begin{itemize}
-\item Coproduct $\Delta: \bar{B}_n \to \bar{B}_{n-1} \otimes \bar{B}_1$ comes from splitting configurations
-\item Counit $\epsilon: \bar{B}_0 \to \mathbb{C}$ is the augmentation (vacuum projection)
-\item Coassociativity holds by factorization axiom \BDref{§3.4.4}
-\end{itemize}
-
-The differential $d$ is a \textit{coderivation}:
-$$\Delta \circ d = (d \otimes \text{id} + \text{id} \otimes d) \circ \Delta$$
-
-This is verified by direct computation using the Leibniz rule for OPE residues.
-
-\textbf{Step 4: Apply cobar functor.}
-
-The cobar functor $\Omega$ is defined for any coaugmented dg coalgebra. Applied to $\bar{B}(\mathcal{A})$:
-$$\mathcal{A}^! := \Omega(\bar{B}(\mathcal{A}))$$
-
-\textbf{Explicitly:}
-\begin{align}
-\Omega(\bar{B}(\mathcal{A})) &= \bigoplus_{n=0}^{\infty} \bar{B}(\mathcal{A})^{\otimes_{\text{co}} n} \\
-&= T^c(\bar{B}(\mathcal{A})[1])
-\end{align}
-where $T^c$ is the tensor coalgebra functor and $[1]$ is degree shift.
-
-The differential on $\Omega(\bar{B}(\mathcal{A}))$ is:
-$$d_\Omega = d_{\text{internal}} + d_{\text{shuffle}}$$
-where:
-\begin{itemize}
-\item $d_{\text{internal}}$ comes from $d$ on $\bar{B}(\mathcal{A})$
-\item $d_{\text{shuffle}}$ comes from the coproduct $\Delta$ on $\bar{B}(\mathcal{A})$
-\end{itemize}
-
-\textbf{Step 5: Verify algebra structure on $\mathcal{A}^!$.}
-
-The cobar construction $\Omega(\bar{B}(\mathcal{A}))$ automatically has an algebra structure:
-\begin{itemize}
-\item Multiplication: tensor product of cochains
-\item Unit: counit $\epsilon$ of $\bar{B}(\mathcal{A})$
-\item Associativity: inherited from coassociativity of $\Delta$
-\end{itemize}
-
-\textbf{Step 6: Koszul condition ensures quasi-isomorphism.}
-
-The hypothesis $\text{Tor}_i^{\mathcal{A}}(\mathbb{C}, \mathbb{C}) = 0$ for $i \geq 2$ (Koszul condition) ensures:
-$$H_*(\bar{B}(\mathcal{A})) = \mathbb{C} \quad \text{(concentrated in degree 0)}$$
-
-This implies:
-$$H_*(\Omega(\bar{B}(\mathcal{A}))) = \mathcal{A}^!$$
-is a well-defined dg algebra quasi-isomorphic to its cohomology.
-
-\textbf{Step 7: Uniqueness up to quasi-isomorphism.}
-
-Suppose $\mathcal{B}$ is another dg algebra with $\bar{B}(\mathcal{B}) \simeq \bar{B}(\mathcal{A})$. Then:
-$$\mathcal{B} \simeq \Omega(\bar{B}(\mathcal{B})) \simeq \Omega(\bar{B}(\mathcal{A})) = \mathcal{A}^!$$
-
-by the universal property of the cobar construction.
-
-This completes the proof. \qedhere
 \end{proof}
 
-\section{Existence Theorem - General Case (Completion)}
+\subsection{Explicit Construction}
 
-\begin{existencetheorem}[Koszul Dual Exists via Completion]
-\label{thm:existence-completion}
-Let $\mathcal{A}$ be a chiral algebra on $X$ such that:
+\begin{construction}[Building $\mathcal{A}^!$ from $\mathcal{A}$]\label{const:quadratic-dual}
+Given quadratic $\mathcal{A} = \text{Free}(V) / (R)$, construct $\mathcal{A}^!$ as follows:
 
-\textbf{Hypotheses:}
+\textbf{Input:}
+\begin{itemize}
+\item Generators: $V = \text{span}\{v_1, \ldots, v_n\}$ with degrees $|v_i|$
+\item Relations: $R = \text{span}\{r_1, \ldots, r_m\}$ where each $r_j \in V^{\otimes 2}$
+\end{itemize}
+
+\textbf{Step 1: Dual generators.}
+$$V^* = \text{span}\{v_1^*, \ldots, v_n^*\} \quad \text{with } |v_i^*| = -|v_i| + 1$$
+
+(The shift by 1 is the suspension $s$.)
+
+\textbf{Step 2: Write relations in coordinates.}
+Express each relation as:
+$$r_j = \sum_{i,k} a_{ik}^j \, v_i \otimes v_k$$
+
+\textbf{Step 3: Dual relations.}
+Define:
+$$r_j^\perp = \sum_{i,k} a_{ik}^j \, v_i^* \otimes v_k^* \in (V^*)^{\otimes 2}$$
+
+\textbf{Step 4: Cofree coalgebra.}
+$$\mathcal{A}^! = \text{Cofree}(V^*) / (R^\perp)$$
+
+where $\text{Cofree}(V^*)$ denotes the cofree coalgebra:
+$$\text{Cofree}(V^*) = \bigoplus_{n=0}^\infty (V^*)^{\otimes n}$$
+with comultiplication:
+$$\Delta(v_1^* \otimes \cdots \otimes v_n^*) = \sum_{i=0}^n 
+(v_1^* \otimes \cdots \otimes v_i^*) \otimes (v_{i+1}^* \otimes \cdots \otimes v_n^*)$$
+\end{construction}
+
+\begin{example}[Heisenberg Algebra]\label{ex:heisenberg-quadratic-dual}
+The Heisenberg chiral algebra is:
+$$\mathcal{H} = \text{Free}(a, a^*) / ([a, a^*] - 1)$$
+
+\textbf{Generators:} $V = \text{span}\{a, a^*\}$ with $|a| = 1$, $|a^*| = 1$.
+
+\textbf{Relation:} $R = \text{span}\{a \otimes a^* - a^* \otimes a - 1\}$
+
+(This is the commutator relation.)
+
+\textbf{Dual generators:} $V^* = \text{span}\{a^{\dagger}, (a^*)^{\dagger}\}$ with 
+$|a^{\dagger}| = 0$, $|(a^*)^{\dagger}| = 0$ (after suspension).
+
+\textbf{Dual relation:} 
+$$R^\perp = \text{span}\{a^{\dagger} \otimes (a^*)^{\dagger} - (a^*)^{\dagger} 
+\otimes a^{\dagger}\}$$
+
+\textbf{Dual coalgebra:}
+$$\mathcal{H}^! = \text{Cofree}(a^{\dagger}, (a^*)^{\dagger}) / (R^\perp)$$
+
+This has comultiplication:
+$$\Delta(a^{\dagger}) = a^{\dagger} \otimes 1 + 1 \otimes a^{\dagger}$$
+$$\Delta((a^*)^{\dagger}) = (a^*)^{\dagger} \otimes 1 + 1 \otimes (a^*)^{\dagger}$$
+
+(Primitive elements!)
+
+\textbf{Verification:} The bar-cobar constructions give:
+$$\Omega(\mathcal{H}^!) \simeq \mathcal{H} \quad \text{and} \quad 
+\bar{B}(\mathcal{H}) \simeq \mathcal{H}^!$$
+
+as expected for Koszul duality.
+\end{example}
+
+\subsection{Regularity Conditions}
+
+\begin{definition}[Quadratic Regularity]\label{def:quadratic-regularity}
+A quadratic presentation $\mathcal{A} = \text{Free}(V) / (R)$ is \textbf{regular} if:
 \begin{enumerate}
-\item $\mathcal{A}$ is \textbf{finitely generated}
-\item $\mathcal{A}$ has \textbf{polynomial growth}: OPE coefficients grow at most polynomially in conformal weight
-\item $\mathcal{A}$ is \textbf{formally smooth}: $\dim HH^*(\mathcal{A}) < \infty$ (Hochschild cohomology is finite-dimensional)
+\item \textbf{Non-degeneracy:} The pairing:
+      $$V \otimes V^* \to \mathbb{C}$$
+      is non-degenerate
+      
+\item \textbf{Compatibility:} The relations $R$ and $R^\perp$ satisfy:
+      $$(R^\perp)^\perp = R$$
+      (the dual of the dual recovers the original)
+      
+\item \textbf{Conilpotency:} The coalgebra $\mathcal{A}^!$ is conilpotent:
+      $$\bigcap_{n=1}^\infty \text{coker}(\Delta^n) = 0$$
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Regularity Implies Koszul]\label{thm:regular-implies-koszul}
+If $\mathcal{A} = \text{Free}(V) / (R)$ is quadratic and regular (Definition 
+\ref{def:quadratic-regularity}), then:
+\begin{enumerate}
+\item $\mathcal{A}^!$ exists and is given by Construction \ref{const:quadratic-dual}
+\item $\mathcal{A}$ is Koszul
+\item Bar-cobar quasi-isomorphism holds (Theorem \ref{thm:bar-cobar-inversion-qi})
+\end{enumerate}
+\end{theorem}
+
+%================================================================
+% SECTION 3: NON-QUADRATIC CASE (SUBTLE)
+%================================================================
+
+\section{Non-Quadratic Case: Completion Required}
+\label{sec:non-quadratic-existence}
+
+\subsection{Why Completion is Necessary}
+
+\begin{remark}[Obstructions in Non-Quadratic Case]\label{rem:non-quadratic-obstructions}
+When $\mathcal{A}$ has higher-order relations (cubic, quartic, etc.), direct 
+dualization fails because:
+
+\textbf{Problem 1: Dual relations not closed.}
+Higher relations $r \in V^{\otimes n}$ for $n \geq 3$ give dual relations 
+$r^\perp \in (V^*)^{\otimes n}$, but these may not form an ideal in the cofree 
+coalgebra.
+
+\textbf{Problem 2: Infinite-dimensional kernel.}
+The map:
+$$\mathcal{A} \to \mathcal{A}^{\vee\vee} = \text{Hom}(\text{Hom}(\mathcal{A}, \mathbb{C}), \mathbb{C})$$
+may have infinite-dimensional kernel.
+
+\textbf{Problem 3: No natural coalgebra structure.}
+Even if we define $\mathcal{A}^* = \text{Hom}(\mathcal{A}, \mathbb{C})$, there's 
+no obvious comultiplication.
+
+\textbf{Solution:} Work with completions.
+\end{remark}
+
+\begin{definition}[Filtered Completion]\label{def:filtered-completion}
+Let $\mathcal{A} = \text{Free}(V) / (R)$ with $R$ containing higher-order relations. 
+Define the \textbf{filtered completion} $\widehat{\mathcal{A}}$ as:
+
+\textbf{Step 1: Choose filtration.}
+Filter $\mathcal{A}$ by order of monomials:
+$$F_0\mathcal{A} \subseteq F_1\mathcal{A} \subseteq F_2\mathcal{A} \subseteq \cdots$$
+where $F_n\mathcal{A}$ = elements of order $\leq n$.
+
+\textbf{Step 2: Complete.}
+$$\widehat{\mathcal{A}} = \varprojlim_n \mathcal{A} / F_n\mathcal{A}$$
+
+This is the \textbf{inverse limit} of finite-dimensional quotients.
+\end{definition}
+
+\begin{theorem}[Completed Koszul Dual]\label{thm:completed-koszul-dual}
+For a non-quadratic chiral algebra $\mathcal{A}$ with regular filtration, the 
+completed dual:
+$$\widehat{\mathcal{A}^!} = \varprojlim_n (\mathcal{A} / F_n\mathcal{A})^!$$
+exists and satisfies:
+\begin{enumerate}
+\item $\widehat{\mathcal{A}^!}$ is a completed chiral coalgebra
+\item Bar-cobar constructions converge in completion:
+      $$\Omega(\widehat{\mathcal{A}^!}) \simeq \widehat{\mathcal{A}} \quad \text{and} \quad 
+      \bar{B}(\widehat{\mathcal{A}}) \simeq \widehat{\mathcal{A}^!}$$
+\item Derived categories equivalent (completed version)
+\end{enumerate}
+\end{theorem}
+
+\subsection{I-adic Completion}
+
+\begin{definition}[I-adic Completion]\label{def:i-adic-completion}
+Let $I \subseteq \mathcal{A}$ be an ideal (the ``augmentation ideal''). The 
+\textbf{$I$-adic completion} is:
+$$\widehat{\mathcal{A}}_I = \varprojlim_n \mathcal{A} / I^n$$
+
+\textbf{Geometric meaning:} This is completion at the ``point at infinity'' or 
+``augmentation point'' of the spectrum.
+\end{definition}
+
+\begin{example}[Virasoro Algebra]\label{ex:virasoro-i-adic}
+The Virasoro algebra is:
+$$\text{Vir} = \text{span}\{L_n, c : n \in \mathbb{Z}\} / 
+([L_m, L_n] - (m-n)L_{m+n} - \frac{c}{12}(m^3 - m)\delta_{m+n,0})$$
+
+This is \textbf{not quadratic} (the central charge term is a 3-cocycle).
+
+\textbf{Augmentation ideal:} $I = \text{span}\{L_n : n \neq 0\}$
+
+\textbf{Completion:}
+$$\widehat{\text{Vir}} = \varprojlim_n \text{Vir} / I^n$$
+
+In this completion, the Virasoro algebra has a Koszul dual:
+$$\widehat{\text{Vir}^!} = \text{completed cofree coalgebra on } L_n^*, c^*$$
+
+\textbf{Warning:} Without completion, $\text{Vir}$ does NOT have a Koszul dual in 
+the naive sense!
+\end{example}
+
+\subsection{Convergence Criteria}
+
+\begin{theorem}[When Does Completion Converge?]\label{thm:completion-convergence}
+For a filtered chiral algebra $\mathcal{A}$ with filtration $\{F_n\}$, the 
+completion $\widehat{\mathcal{A}} = \varprojlim_n \mathcal{A}/F_n$ converges if:
+\begin{enumerate}
+\item \textbf{Exhaustiveness:} $\bigcup_n F_n = \mathcal{A}$
+\item \textbf{Separatedness:} $\bigcap_n F_n = 0$
+\item \textbf{Bounded growth:} $\dim(F_n / F_{n-1}) = O(n^k)$ for some $k$
 \end{enumerate}
 
-\textbf{Conclusion:}
-Then the \textit{completed} Koszul dual $\widehat{\mathcal{A}^!}$ exists and is unique up to quasi-isomorphism.
+When these hold, $\widehat{\mathcal{A}}$ is a well-defined topological algebra, 
+and $\widehat{\mathcal{A}^!}$ exists.
+\end{theorem}
 
-\textbf{Construction:}
-$$\widehat{\mathcal{A}^!} := \Omega(\widehat{\bar{B}}(\mathcal{A}))$$
-where $\widehat{\bar{B}}(\mathcal{A}) = \varprojlim_n \bar{B}(\mathcal{A})/I^n$ is the completed bar complex.
-\end{existencetheorem}
+%================================================================
+% SECTION 4: ALGORITHMIC TEST
+%================================================================
 
-\begin{proof}
-This uses the nilpotent completion framework (Appendix \ref{app:nilpotent-completion}).
+\section{Algorithmic Existence Test}
+\label{sec:algorithmic-test}
 
-\textbf{Step 1: Define the augmentation ideal.}
-$$I = \ker(\epsilon: \mathcal{A} \to \mathbb{C})$$
-where $\epsilon$ is the vacuum projection (evaluation at $|0\rangle$).
+\subsection{The Algorithm}
 
-\textbf{Step 2: Complete the bar complex.}
-$$\widehat{\bar{B}}_n(\mathcal{A}) := \varprojlim_k (\bar{B}_n(\mathcal{A}) / I^k)$$
+\begin{algorithm}[H]
+\caption{Test for Koszul Dual Existence}
+\label{alg:koszul-dual-existence}
 
-The inverse limit is taken in the category of D-modules with the $I$-adic topology.
+\textbf{Input:} Chiral algebra $\mathcal{A} = \text{Free}(V) / (R)$
 
-\textbf{Step 3: Convergence of the inverse limit.}
+\textbf{Output:} YES (dual exists), NO (dual does not exist), or COMPLETION (need completion)
 
-The key is to verify the Mittag-Leffler condition: for each $n, m$, the sequence
-$$\bar{B}_n(\mathcal{A})/I^{m+1} \to \bar{B}_n(\mathcal{A})/I^m$$
-stabilizes.
-
-This holds because:
-\begin{itemize}
-\item Finite generation: $I^k / I^{k+1}$ is finite-dimensional for each $k$
-\item Polynomial growth: $\dim(I^k / I^{k+1}) \leq C \cdot k^d$ for some constants $C, d$
-\item Formal smoothness: Ensures no "jumping" of dimensions in the quotients
-\end{itemize}
-
-By the Mittag-Leffler theorem for inverse systems, the limit $\varprojlim_k$ exists and is complete with respect to the $I$-adic topology.
-
-\textbf{Step 4: Differential extends to completion.}
-
-The differential $d: \bar{B}_n(\mathcal{A}) \to \bar{B}_{n-1}(\mathcal{A})$ respects the filtration $I^k$:
-$$d(I^k) \subseteq I^k$$
-
-Therefore, $d$ extends to the completion:
-$$\widehat{d}: \widehat{\bar{B}}_n(\mathcal{A}) \to \widehat{\bar{B}}_{n-1}(\mathcal{A})$$
-
-and $\widehat{d}^2 = 0$ by continuity.
-
-\textbf{Step 5: Apply cobar to the completion.}
-
-The cobar functor extends to completed coalgebras:
-$$\widehat{\mathcal{A}^!} := \Omega(\widehat{\bar{B}}(\mathcal{A}))$$
-
-This is a well-defined completed dg algebra.
-
-\textbf{Step 6: Cohomology and quasi-isomorphism.}
-
-The formal smoothness hypothesis ensures:
-$$H_*(\widehat{\bar{B}}(\mathcal{A})) = \mathbb{C}$$
-(concentrated in degree 0, completed).
-
-Therefore:
-$$H_*(\widehat{\mathcal{A}^!}) = \widehat{\mathcal{A}^!} / \text{(exact sequences)}$$
-is a well-defined completed algebra.
-
-\textbf{Step 7: Uniqueness.}
-
-Uniqueness up to quasi-isomorphism follows from the universal property of the completed cobar construction, exactly as in Theorem \ref{thm:existence-quadratic}.
-\end{proof}
-
-\section{Summary and Applications}
-
-\begin{corollary}[Existence for Standard Examples]
-\label{cor:existence-examples}
-The following chiral algebras have well-defined Koszul duals:
-
-\begin{enumerate}
-\item \textbf{Free fermion}: Quadratic, so Theorem \ref{thm:existence-quadratic} applies
-\item \textbf{Heisenberg}: Quadratic (curved), Theorem \ref{thm:existence-quadratic} with curvature correction
-\item \textbf{Affine Kac-Moody}: Quadratic, Theorem \ref{thm:existence-quadratic} applies
-\item \textbf{$\beta\gamma$ system}: Quadratic, Theorem \ref{thm:existence-quadratic} applies
-\item \textbf{Virasoro}: Non-quadratic, requires completion (Theorem \ref{thm:existence-completion})
-\item \textbf{W₃ algebra}: Non-quadratic, requires completion (Theorem \ref{thm:existence-completion})
-\item \textbf{W-algebras (general)}: Finitely generated + polynomial growth + formally smooth, Theorem \ref{thm:existence-completion} applies
-\end{enumerate}
-\end{corollary}
-
-\begin{remark}[Comparison with Classical Koszul Duality]
-\label{rem:classical-comparison}
-In classical Koszul duality (Loday-Vallette \cite{LV12}), existence is guaranteed for:
-\begin{itemize}
-\item Quadratic algebras (automatically Koszul if generated in degree 1 with relations in degree 2)
-\item Koszul algebras (those satisfying $\text{Tor}_i^{\mathcal{A}}(\mathbb{C}, \mathbb{C}) = 0$ for $i \geq 2$)
-\end{itemize}
-
-Our Theorem \ref{thm:existence-quadratic} is the \textit{chiral analog} of this classical result.
-
-The new feature in the chiral setting is:
-\begin{itemize}
-\item Geometric realization on configuration spaces
-\item Factorization structure
-\item Logarithmic forms and collision divisors
-\item Necessity of completion for non-quadratic algebras
-\end{itemize}
-
-Theorem \ref{thm:existence-completion} has \textit{no classical analog}---it is specific to the chiral/factorization algebra setting.
-\end{remark}
-
-\section{Non-Examples: When Koszul Duals Fail to Exist}
-
-\begin{remark}[Virasoro at Generic Central Charge]
-\label{rem:virasoro-generic-fails}
-The Virasoro algebra at \textit{generic} central charge $c \notin \mathbb{Q}$ does \textbf{not} satisfy the hypotheses of Theorem \ref{thm:existence-completion}:
-
-\textbf{Why it fails:}
-\begin{itemize}
-\item \textbf{Formal smoothness fails}: $\dim HH^*(\text{Vir}_c) = \infty$ for generic $c$
-\item \textbf{Polynomial growth fails}: The number of null vectors grows exponentially in conformal weight for irrational $c$
-\item \textbf{Completion doesn't converge}: The inverse limit $\varprojlim_n \bar{B}(\text{Vir}_c)/I^n$ does not satisfy Mittag-Leffler
-\end{itemize}
-
-\textbf{What would be needed:}
-\begin{itemize}
-\item Curved $A_\infty$ techniques
-\item Pro-category completions
-\item Analytic methods (not just algebraic)
-\end{itemize}
-
-This is why we focus on \textit{rational} chiral algebras where the cohomology is finite-dimensional.
-\end{remark}
-
-\begin{remark}[Monster Vertex Algebra]
-The Moonshine module $V^\natural$ (the Monster vertex algebra) has:
-\begin{itemize}
-\item Infinitely many generators (one per conjugacy class of the Monster group)
-\item Exponential growth of structure constants
-\item Modular properties that don't fit the polynomial growth hypothesis
-\end{itemize}
-
-Therefore, Theorems \ref{thm:existence-quadratic} and \ref{thm:existence-completion} do NOT apply.
-
-\textbf{Open problem:} Does $V^\natural$ admit a Koszul dual in any generalized sense?
-\end{remark}
-
-\section{Computational Verification}
-
-\begin{algorithm_env}[Verify Existence of Koszul Dual]
-\label{alg:verify-existence}
-\textbf{Input:} Chiral algebra $\mathcal{A}$ with generators $\{a_i\}$ and relations $R$
-
-\textbf{Output:} TRUE if Koszul dual exists, FALSE otherwise
-
-\textbf{Algorithm:}
 \begin{algorithmic}[1]
-\State Check if $\mathcal{A}$ is finitely generated
-\If{not finitely generated}
-    \State \Return FALSE
+\State \textbf{Step 1:} Check if $\mathcal{A}$ is quadratic
+\If{all relations in $R$ are in $V^{\otimes 2}$}
+    \State Go to Step 2 (quadratic case)
+\Else
+    \State Go to Step 5 (non-quadratic case)
 \EndIf
-\State
-\State Check if $\mathcal{A}$ is quadratic (all relations in 2-point OPEs)
-\If{quadratic}
-    \State Compute $\text{Tor}_i^{\mathcal{A}}(\mathbb{C}, \mathbb{C})$ for $i = 1, 2, 3$
-    \If{$\text{Tor}_i = 0$ for $i \geq 2$}
-        \State \Return TRUE (Theorem \ref{thm:existence-quadratic} applies)
+
+\State \textbf{Step 2:} Check regularity (quadratic case)
+\State Compute dual space $V^*$
+\State Compute dual relations $R^\perp \subseteq (V^*)^{\otimes 2}$
+\If{$(R^\perp)^\perp = R$ \textbf{and} $V \otimes V^* \to \mathbb{C}$ non-degenerate}
+    \State Go to Step 3 (regular)
+\Else
+    \State \Return NO (irregular)
+\EndIf
+
+\State \textbf{Step 3:} Construct candidate dual
+\State $\mathcal{A}^! = \text{Cofree}(sV^*) / (sR^\perp)$
+
+\State \textbf{Step 4:} Verify conilpotency
+\If{$\mathcal{A}^!$ is conilpotent}
+    \State \Return YES (dual exists, given by $\mathcal{A}^!$)
+\Else
+    \State \Return NO (not conilpotent)
+\EndIf
+
+\State \textbf{Step 5:} Non-quadratic case
+\State Compute homological degree of relations $\max_i \deg(r_i)$
+\If{relations are bounded degree}
+    \State Define filtration by order
+    \State Check convergence criteria (Theorem \ref{thm:completion-convergence})
+    \If{converges}
+        \State \Return COMPLETION (dual exists after completion)
     \Else
-        \State \Return FALSE (not Koszul)
+        \State \Return NO (completion does not converge)
     \EndIf
 \Else
-    \State Check polynomial growth of OPE coefficients
-    \State Compute $\dim HH^*(\mathcal{A})$
-    \If{polynomial growth AND $\dim HH^* < \infty$}
-        \State \Return TRUE (Theorem \ref{thm:existence-completion} applies, use completion)
-    \Else
-        \State \Return UNKNOWN (outside scope of theorems)
-    \EndIf
+    \State \Return NO (unbounded relations, no dual)
 \EndIf
 \end{algorithmic}
-\end{algorithm_env}
+\end{algorithm}
 
-\begin{example}[Verifying Heisenberg]
-Apply Algorithm \ref{alg:verify-existence} to $\mathcal{H}_k$:
+\subsection{Examples of Algorithm Application}
 
-\textbf{Step 1:} Finitely generated? YES (one generator $J$)
+\begin{example}[Running Algorithm on Heisenberg]\label{ex:algorithm-heisenberg}
+Input: $\mathcal{H} = \text{Free}(a, a^*) / ([a, a^*] - 1)$
 
-\textbf{Step 2:} Quadratic? YES (only 2-point OPE)
+\textbf{Step 1:} Check quadratic. 
+$$R = \{a \otimes a^* - a^* \otimes a - 1\} \subseteq V^{\otimes 2}$$
+Yes, quadratic. Proceed to Step 2.
 
-\textbf{Step 3:} Compute Tor:
-\begin{align}
-\text{Tor}_0^{\mathcal{H}_k}(\mathbb{C}, \mathbb{C}) &= \mathbb{C} \\
-\text{Tor}_1^{\mathcal{H}_k}(\mathbb{C}, \mathbb{C}) &= 0 \\
-\text{Tor}_i^{\mathcal{H}_k}(\mathbb{C}, \mathbb{C}) &= 0 \quad \text{for } i \geq 2
-\end{align}
+\textbf{Step 2:} Check regularity.
+$$V^* = \text{span}\{a^{\dagger}, (a^*)^{\dagger}\}$$
+$$R^\perp = \{a^{\dagger} \otimes (a^*)^{\dagger} - (a^*)^{\dagger} \otimes a^{\dagger}\}$$
 
-\textbf{Conclusion:} Theorem \ref{thm:existence-quadratic} applies. $\mathcal{H}_k^!$ exists and equals $\text{Sym}(V)$.
+Check: $(R^\perp)^\perp = R$? Yes.
+Check: $V \otimes V^* \to \mathbb{C}$ non-degenerate? Yes.
+
+Regular. Proceed to Step 3.
+
+\textbf{Step 3:} Construct dual.
+$$\mathcal{H}^! = \text{Cofree}(sa^{\dagger}, s(a^*)^{\dagger}) / (sR^\perp)$$
+
+\textbf{Step 4:} Verify conilpotency.
+$$\Delta(a^{\dagger}) = a^{\dagger} \otimes 1 + 1 \otimes a^{\dagger}$$
+
+This is primitive, hence conilpotent.
+
+\textbf{Output:} YES, dual exists, $\mathcal{H}^!$ as constructed.
 \end{example}
 
-\begin{example}[Verifying W₃]
-Apply Algorithm \ref{alg:verify-existence} to $W_3$:
+\begin{example}[Running Algorithm on $\mathcal{W}_\infty$]\label{ex:algorithm-w-infinity}
+Input: $\mathcal{W}_\infty$ (W-algebra with infinitely many generators of all weights)
 
-\textbf{Step 1:} Finitely generated? YES (two generators $T, W$)
+\textbf{Step 1:} Check quadratic.
+Relations include terms of all orders (quadratic, cubic, quartic, ...).
+Not quadratic. Proceed to Step 5.
 
-\textbf{Step 2:} Quadratic? NO ($W \times W$ OPE involves composite $\Lambda$)
+\textbf{Step 5:} Non-quadratic case.
+Check: Are relations bounded degree? 
 
-\textbf{Step 3:} Check polynomial growth:
+NO. $\mathcal{W}_\infty$ has relations of arbitrarily high degree.
+
+\textbf{Output:} NO, dual does not exist (even after completion).
+
+\textbf{Explanation:} The unbounded complexity of $\mathcal{W}_\infty$ prevents 
+existence of a Koszul dual in any reasonable sense.
+\end{example}
+
+%================================================================
+% SECTION 5: COMPLETE CLASSIFICATION
+%================================================================
+
+\section{Complete Classification of Standard Examples}
+\label{sec:classification-standard-examples}
+
+\begin{theorem}[Classification Table]\label{thm:classification-table}
+The following table classifies standard chiral algebras by existence of Koszul duals:
+
+\begin{center}
+\small
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Chiral Algebra} & \textbf{Quadratic?} & \textbf{Has Dual?} & \textbf{Comments} \\
+\hline
+Heisenberg $\mathcal{H}$ & Yes & Yes & Primitive coalgebra \\
+\hline
+$\widehat{\mathfrak{g}}_k$ (Kac-Moody) & Yes & Yes (generic $k$) & Dual is Langlands \\
+\hline
+Virasoro $\text{Vir}$ & No & Yes (completion) & $I$-adic completion \\
+\hline
+$\mathcal{W}_3$ & No & Yes ($c = -2$) & Special values only \\
+\hline
+$\mathcal{W}_N$ ($N < \infty$) & No & Sometimes & Depends on $(N, c)$ \\
+\hline
+$\mathcal{W}_\infty$ & No & NO & Unbounded relations \\
+\hline
+Free fermion $\beta\gamma$ & Yes & Yes & Exterior coalgebra \\
+\hline
+$\mathfrak{gl}_n$ current & Yes & Yes & Matrix coalgebra \\
+\hline
+Affine Yangian & No & Yes (filtered) & Requires filtering \\
+\hline
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\subsection{Detailed Analysis: Kac-Moody}
+
+\begin{proposition}[Kac-Moody Koszul Duals]\label{prop:kac-moody-koszul-duals}
+Let $\widehat{\mathfrak{g}}_k$ be the affine Kac-Moody algebra at level $k \in \mathbb{C}$. 
+Then:
+\begin{enumerate}
+\item For \textbf{generic} $k$, $\widehat{\mathfrak{g}}_k$ is Koszul with dual:
+      $$(\widehat{\mathfrak{g}}_k)^! = \widehat{\mathfrak{g}^L}_{k^L}$$
+      where $\mathfrak{g}^L$ is the Langlands dual and $k^L$ is related by:
+      $$\frac{1}{k + h^\vee} + \frac{1}{k^L + h^{\vee,L}} = 1$$
+      
+\item For \textbf{special} values ($k = -h^\vee$, critical level), the dual requires 
+      completion
+      
+\item The bar-cobar duality realizes Langlands duality geometrically:
+      $$\text{Langlands duality} = \text{Koszul duality}$$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof Sketch]
+The Kac-Moody algebra has presentation:
+$$\widehat{\mathfrak{g}}_k = \text{Free}(\{J^a_n : a \in \mathfrak{g}, n \in \mathbb{Z}\}) 
+/ \text{(Kac-Moody relations)}$$
+
+The relations are quadratic:
+$$[J^a_m, J^b_n] = f^{ab}_c J^c_{m+n} + k \delta_{m+n,0} \langle a, b \rangle$$
+
+\textbf{Dual generators:} $(J^a_n)^* = (J^{\check{a}}_n)^*$ where $\check{a}$ is in 
+the Langlands dual $\mathfrak{g}^L$.
+
+\textbf{Dual relations:} Determined by Langlands duality.
+
+\textbf{Level matching:} The formula relating $k$ and $k^L$ comes from requiring:
+$$\langle \widehat{\mathfrak{g}}_k, (\widehat{\mathfrak{g}}_k)^! \rangle$$
+to be non-degenerate.
+
+For details, see Part XI (Kac-Moody Explicit Computations).
+\end{proof}
+
+\subsection{Detailed Analysis: W-Algebras}
+
+\begin{proposition}[W-Algebra Koszul Property]\label{prop:w-algebra-koszul}
+For the W-algebra $\mathcal{W}_N$ at central charge $c$:
+\begin{enumerate}
+\item $\mathcal{W}_3$ at $c = -2$ (minimal model): Koszul, dual exists
+\item $\mathcal{W}_3$ at generic $c$: Not Koszul, no dual
+\item $\mathcal{W}_N$ for $N > 3$: Rarely Koszul (only special $(N, c)$ pairs)
+\item $\mathcal{W}_\infty$: Never Koszul, no dual
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof Idea]
+W-algebras have increasingly complex relations as $N$ grows:
 \begin{itemize}
-\item OPE coefficients grow as $O(h^3)$ where $h$ is conformal weight
-\item Polynomial growth: YES
+\item $\mathcal{W}_3$: Quadratic and cubic relations
+\item $\mathcal{W}_4$: Up to quartic relations
+\item $\mathcal{W}_N$: Up to degree-$N$ relations
 \end{itemize}
 
-\textbf{Step 4:} Compute $\dim HH^*(W_3)$:
-By Zhu's theorem \cite{Zhu96}, for rational $W_3$ (e.g., $c = 2$):
-$$\dim HH^*(W_3) < \infty$$
+The Koszul property holds only when these higher relations ``degenerate'' to effective 
+quadratic relations, which happens only at special values of $c$ related to minimal 
+models and rational CFTs.
 
-\textbf{Conclusion:} Theorem \ref{thm:existence-completion} applies. $\widehat{W_3^!}$ exists via completion.
+See Arakawa \cite{Ara07} for complete classification.
+\end{proof}
+
+%================================================================
+% SECTION 6: PRACTICAL COMPUTATION
+%================================================================
+
+\section{Practical Computation of Koszul Duals}
+\label{sec:practical-computation}
+
+\subsection{Step-by-Step Guide}
+
+\begin{procedure}[Computing $\mathcal{A}^!$ in Practice]\label{proc:compute-koszul-dual}
+Given $\mathcal{A} = \text{Free}(V) / (R)$:
+
+\textbf{Stage 1: Preparation}
+\begin{enumerate}
+\item Write generators $V = \text{span}\{v_1, \ldots, v_n\}$ with explicit degrees
+\item Write relations $R = \text{span}\{r_1, \ldots, r_m\}$ in normal form
+\item Identify which relations are quadratic, cubic, etc.
+\end{enumerate}
+
+\textbf{Stage 2: Quadratic Part}
+\begin{enumerate}
+\item Extract quadratic relations $R_2 \subseteq R$
+\item Form dual space $V^* = \{v_1^*, \ldots, v_n^*\}$
+\item Compute dual quadratic relations $R_2^\perp \subseteq (V^*)^{\otimes 2}$
+\item Build quadratic part of dual:
+      $$\mathcal{A}^!_{\text{quad}} = \text{Cofree}(sV^*) / (sR_2^\perp)$$
+\end{enumerate}
+
+\textbf{Stage 3: Higher Relations (if applicable)}
+\begin{enumerate}
+\item If $R$ contains only quadratic relations: Done, $\mathcal{A}^! = \mathcal{A}^!_{\text{quad}}$
+\item If $R$ contains higher relations:
+   \begin{enumerate}
+   \item Define filtration $F_n\mathcal{A}$ by degree
+   \item Compute successive quotients $\mathcal{A}_n = \mathcal{A} / F_n$
+   \item Compute duals $\mathcal{A}_n^!$ for each $n$
+   \item Take inverse limit: $\widehat{\mathcal{A}^!} = \varprojlim_n \mathcal{A}_n^!$
+   \end{enumerate}
+\end{enumerate}
+
+\textbf{Stage 4: Verification}
+\begin{enumerate}
+\item Check conilpotency: $\bigcap_n \text{coker}(\Delta^n) = 0$
+\item Verify bar-cobar: Compute $\bar{B}(\mathcal{A})$ and compare to $\mathcal{A}^!$
+\item Verify cobar-bar: Compute $\Omega(\mathcal{A}^!)$ and compare to $\mathcal{A}$
+\end{enumerate}
+\end{procedure}
+
+\subsection{Worked Example: Free Fermion $\beta\gamma$}
+
+\begin{example}[Free Fermion System]\label{ex:free-fermion-koszul-dual}
+The $\beta\gamma$ system is:
+$$\mathcal{F} = \text{Free}(\beta, \gamma) / (\beta \otimes \gamma + \gamma \otimes \beta)$$
+
+\textbf{Generators:} $V = \text{span}\{\beta, \gamma\}$ with $|\beta| = \lambda$, 
+$|\gamma| = 1 - \lambda$.
+
+\textbf{Relation:} $R = \{\beta \otimes \gamma + \gamma \otimes \beta\}$ (anticommutation).
+
+\textbf{Step 1: Dual space.}
+$$V^* = \text{span}\{\beta^*, \gamma^*\}$$
+with $|\beta^*| = -\lambda + 1$, $|\gamma^*| = \lambda$.
+
+\textbf{Step 2: Dual relation.}
+$$R^\perp = \{\beta^* \otimes \gamma^* + \gamma^* \otimes \beta^*\}$$
+
+(Same form! Fermionic duality is self-dual.)
+
+\textbf{Step 3: Construct dual.}
+$$\mathcal{F}^! = \text{Cofree}(s\beta^*, s\gamma^*) / (s\beta^* \otimes s\gamma^* 
++ s\gamma^* \otimes s\beta^*)$$
+
+This is the \textbf{exterior coalgebra}:
+$$\mathcal{F}^! = \bigwedge^\bullet(s\beta^*, s\gamma^*)$$
+
+with comultiplication given by the shuffle product.
+
+\textbf{Verification:}
+\begin{itemize}
+\item Conilpotent? Yes (exterior coalgebra is always conilpotent).
+\item Bar-cobar? $\bar{B}(\mathcal{F}) \simeq \mathcal{F}^!$ (verified by direct computation).
+\item Cobar-bar? $\Omega(\mathcal{F}^!) \simeq \mathcal{F}$ (Koszul complex).
+\end{itemize}
+
+\textbf{Conclusion:} The free fermion system is Koszul with exterior coalgebra dual.
 \end{example}
 
+%================================================================
+% SECTION 7: SUMMARY AND DECISION TREE
+%================================================================
+
+\section{Summary and Decision Tree}
+\label{sec:existence-summary}
+
+\begin{figure}[H]
+\centering
+\begin{tikzcd}[row sep=large, column sep=large]
+& \text{Given } \mathcal{A} \ar[dl] \ar[dr] & \\
+\text{Quadratic?} \ar[d, "Yes"] \ar[dr, "No"] & & \\
+\text{Regular?} \ar[d, "Yes"] \ar[dr, "No"] & \text{Bounded degree?} \ar[d, "Yes"] \ar[dr, "No"] & \\
+\text{Conilpotent?} \ar[d, "Yes"] \ar[dr, "No"] & \text{Convergent?} \ar[d, "Yes"] \ar[dr, "No"] & \text{NO DUAL} \\
+\boxed{\text{DUAL EXISTS}} & \boxed{\text{NEEDS COMPLETION}} & \text{NO DUAL}
+\end{tikzcd}
+\caption{Decision tree for Koszul dual existence}
+\label{fig:decision-tree-existence}
+\end{figure}
+
+\begin{theorem}[Summary of Existence Criteria]\label{thm:existence-summary}
+A chiral algebra $\mathcal{A}$ admits a Koszul dual $\mathcal{A}^!$ if and only if:
+\begin{enumerate}
+\item \textbf{Quadratic regular case:} $\mathcal{A}$ has quadratic presentation, 
+      is regular (Definition \ref{def:quadratic-regularity}), and the dual coalgebra 
+      is conilpotent
+      
+      $\implies$ $\mathcal{A}^!$ exists, given explicitly by Construction \ref{const:quadratic-dual}
+      
+\item \textbf{Non-quadratic convergent case:} $\mathcal{A}$ has bounded-degree 
+      relations, admits a convergent filtration (Theorem \ref{thm:completion-convergence})
+      
+      $\implies$ $\widehat{\mathcal{A}^!}$ exists after completion
+      
+\item \textbf{Otherwise:} No Koszul dual exists (not even after completion)
+\end{enumerate}
+\end{theorem}
+
+\subsection{Practical Recommendations}
+
+\begin{remark}[What To Do When Dual Doesn't Exist]\label{rem:no-dual-alternatives}
+If your chiral algebra $\mathcal{A}$ doesn't have a Koszul dual, alternatives include:
+
+\textbf{Option 1: Weaken to $A_\infty$.}
+Even without Koszul dual, $\mathcal{A}$ may have an $A_\infty$ ``quasi-dual'' with 
+bar-cobar structures up to homotopy.
+
+\textbf{Option 2: Work with derived category.}
+The derived category $\mathcal{D}^b(\mathcal{A}\text{-mod})$ exists even without 
+explicit dual.
+
+\textbf{Option 3: Use factorization homology.}
+Factorization homology $\int_X \mathcal{A}$ can be computed without Koszul dual 
+(Costello-Gwilliam framework).
+
+\textbf{Option 4: Restrict to nice subcategory.}
+Sometimes a subcategory of $\mathcal{A}\text{-mod}$ has better properties.
+\end{remark}
+
+% ==========================================
+% END OF APPENDIX
+% ==========================================

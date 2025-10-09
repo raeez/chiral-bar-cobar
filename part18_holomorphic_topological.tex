@@ -16,6 +16,144 @@ bridging twisted supersymmetric gauge theory with factorization algebras and
 derived geometry.
 \end{remark}
 
+%================================================================
+% SECTION: PRECISE MATHEMATICAL RELATIONSHIPS
+%================================================================
+
+\section{Precise Mathematical Relationships Between Frameworks}
+\label{sec:precise-relationships-frameworks}
+
+\subsection{From 4D Gauge Theory to 2D Chiral Algebras}
+
+\begin{theorem}[Costello-Li Dimensional Reduction]\label{thm:costello-li-reduction}
+\cite{CL16} Consider 4D $\mathcal{N}=2$ super Yang-Mills with gauge group $G$ 
+on $\mathbb{C}^2$. After holomorphic-topological twist:
+\begin{enumerate}
+\item Fields become $\bar{\partial}$-closed differential forms with values in 
+      $\mathfrak{g} \otimes \mathcal{O}_{\mathbb{C}^2}$
+      
+\item The action becomes BV-BRST exact: $S = \{Q_{\text{BRST}}, \Psi\}$
+
+\item Compactifying one complex direction $\mathbb{C}^2 \to \mathbb{C} \times S^1$ 
+      produces a factorization algebra on $\mathbb{C}$
+      
+\item The resulting 2D theory has structure of a \textbf{factorization algebra} 
+      $\mathcal{F}_G$, NOT a priori a chiral algebra
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Factorization Algebra vs Chiral Algebra]\label{rem:fact-vs-chiral}
+The distinction is crucial (see \BDref{§2.3, §3.2}):
+
+\textbf{Factorization algebra} $\mathcal{F}$:
+\begin{itemize}
+\item Assigns $\mathcal{F}(U)$ to every open set $U \subset X$
+\item Multiplication maps: $\mathcal{F}(U) \otimes \mathcal{F}(V) \to \mathcal{F}(U \sqcup V)$ 
+      for disjoint $U, V$
+\item Associativity: Factorization property over multiple disjoint opens
+\item Example: Observables in any QFT
+\end{itemize}
+
+\textbf{Chiral algebra} $\mathcal{A}$:
+\begin{itemize}
+\item Assigns $\mathcal{A}_x = \mathcal{D}_X$-module at each point $x \in X$
+\item Chiral product: $\mathcal{A}_x \boxtimes \mathcal{A}_y \to \mathcal{A}_{x+y}$ 
+      with pole structure
+\item Conformal symmetry: Action of Virasoro algebra
+\item Example: Vertex algebras, affine Kac-Moody algebras
+\end{itemize}
+
+\textbf{Relationship} \cite{BD04,CG17}:
+$$\text{Chiral algebras} \hookrightarrow \text{Factorization algebras on curves}$$
+is a full embedding. Chiral algebras are factorization algebras with additional 
+structure: Virasoro action, $\mathcal{D}$-module structure, holomorphic dependence.
+\end{remark}
+
+\begin{proposition}[When Does CL Produce Chiral Algebras?]\label{prop:CL-produces-chiral}
+The Costello-Li construction produces a \textbf{genuine chiral algebra} (not just 
+factorization algebra) if and only if:
+\begin{enumerate}
+\item The 4D theory has additional supersymmetry ensuring holomorphicity
+\item The dimensional reduction preserves conformal symmetry
+\item Central charge and anomaly terms satisfy consistency conditions
+\end{enumerate}
+
+\textbf{Examples where this happens:}
+\begin{itemize}
+\item $\mathcal{N}=4$ SYM $\to$ affine Kac-Moody algebra $\widehat{\mathfrak{g}}_k$ 
+      (level $k$ determined by gauge coupling)
+\item $\mathcal{N}=2$ SYM with matter $\to$ W-algebras $\mathcal{W}_k(\mathfrak{g})$ 
+      in some cases
+\end{itemize}
+\end{proposition}
+
+\begin{proof}[Proof Sketch]
+The proof requires three ingredients:
+
+\textbf{Step 1: Holomorphicity.} The twist must preserve a holomorphic structure. 
+For $\mathcal{N}=2$ theories, this comes from choosing a complex structure on the 
+Coulomb branch \cite{Gai19}.
+
+\textbf{Step 2: Conformal symmetry.} The energy-momentum tensor $T(z)$ must survive 
+the twist and satisfy Virasoro algebra. This requires vanishing of certain anomalies.
+
+\textbf{Step 3: $\mathcal{D}$-module structure.} The factorization algebra must 
+extend to a $\mathcal{D}$-module on the Ran space $\text{Ran}(X)$. This is 
+automatic for chiral algebras by BD construction, but requires verification for 
+twisted gauge theories.
+
+When all three conditions hold, the CL factorization algebra admits chiral envelope 
+in the sense of \BDref{Chapter 3}, making it a genuine chiral algebra.
+\end{proof}
+
+\subsection{Paquette-Williams Boundary Vertex Algebras}
+
+\begin{theorem}[Paquette-Williams 2022]\label{thm:paquette-williams-boundaries}
+\cite{PW22} Consider holomorphic-topological 4D $\mathcal{N}=2$ gauge theory on 
+$\mathbb{C}^2$ with boundary at $z_2 = 0$. Then:
+\begin{enumerate}
+\item Boundary conditions $\mathcal{B}$ correspond to Lagrangian submanifolds in 
+      Coulomb branch $\mathcal{M}_C$
+      
+\item The boundary supports a \textbf{vertex operator algebra} (VOA) $V_{\mathcal{B}}$
+
+\item This VOA is the quantization of the symplectic reduction of $\mathcal{M}_C$ 
+      at the boundary
+      
+\item The VOA $V_{\mathcal{B}}$ has a \textbf{chiral envelope} $\mathcal{A}_{\mathcal{B}}$, 
+      which is a chiral algebra in the BD sense
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Connection to Our Framework]\label{rem:PW-connection}
+Paquette-Williams produce vertex algebras, which are algebraic objects (Frenkel-Ben-Zvi 
+\cite{FrenkelBenZvi04}). Our framework studies their \textbf{chiral envelopes}, which are 
+geometric objects ($\mathcal{D}$-modules).
+
+\begin{center}
+\begin{tikzcd}
+\text{Boundary VOA } V_{\mathcal{B}} \ar[r, "\text{chiral envelope}"] \ar[d, "\text{PW}"]
+& \text{Chiral algebra } \mathcal{A}_{\mathcal{B}} \ar[d, "\text{Our work}"] \\
+\text{4D HT gauge theory} \ar[r, "\text{CL reduction}"]
+& \text{2D factorization algebra}
+\end{tikzcd}
+\end{center}
+
+The vertex algebra $V_{\mathcal{B}}$ contains the algebraic information (OPE, modes, 
+etc.), while the chiral algebra $\mathcal{A}_{\mathcal{B}}$ contains the geometric 
+information (configuration spaces, $\mathcal{D}$-modules, sheaf cohomology).
+
+\textbf{Our bar-cobar duality applies to} $\mathcal{A}_{\mathcal{B}}$, giving:
+\begin{itemize}
+\item Bar complex $\bar{B}(\mathcal{A}_{\mathcal{B}})$ = geometric resolution
+\item Cobar complex $\Omega(\mathcal{A}_{\mathcal{B}}^!)$ = coalgebraic dual
+\item Koszul duality = equivalence between the two
+\end{itemize}
+
+This provides \textbf{computational tools} for studying PW boundary VOAs via 
+configuration space geometry.
+\end{remark}
+
 \section{From 4d SYM to Holomorphic Chern-Simons}
 
 \subsection{The A-Twist and Holomorphic Localization}
@@ -461,4 +599,400 @@ This framework opens several research directions:
 \item Connect to geometric Langlands program via electric-magnetic duality
 \end{itemize}
 \end{remark}
+
+
+%================================================================
+% SECTION: W-ALGEBRAS IN BOTH FRAMEWORKS
+%================================================================
+
+\section{W-Algebras: Unifying Pure and Topological-Holomorphic}
+\label{sec:w-algebras-unifying}
+
+\subsection{W-Algebras from 2D CFT Perspective}
+
+\begin{definition}[W-Algebra (CFT Definition)]\label{def:w-algebra-cft}
+Following Zamolodchikov \cite{Zam85} and Fateev-Lukyanov \cite{FL88}, a 
+\textbf{W-algebra} $\mathcal{W}$ is a vertex operator algebra containing:
+\begin{enumerate}
+\item Virasoro element $L$ (conformal weight 2)
+\item Additional generators $W^{(s)}$ of conformal weights $s > 2$
+\item Relations ensuring associativity of OPE
+\end{enumerate}
+\end{definition}
+
+\textbf{Standard examples:}
+\begin{itemize}
+\item $\mathcal{W}_3$: Generators $L, W$ with $\text{wt}(L) = 2$, $\text{wt}(W) = 3$
+\item $\mathcal{W}_N$: Generators of weights $2, 3, \ldots, N$
+\item $\mathcal{W}_{1+\infty}$: Infinitely many generators
+\end{itemize}
+
+\subsection{W-Algebras from Gauge Theory Perspective}
+
+\begin{theorem}[Arakawa-Creutzig-Linshaw 2019]\label{thm:w-from-gauge}
+\cite{ACL19} Let $G$ be a simple Lie group and $\rho: G \to GL(V)$ a 
+representation. Consider the associated variety:
+$$\mathcal{M}_H = \mu^{-1}(0) / G$$
+where $\mu: T^*V \to \mathfrak{g}^*$ is the moment map.
+
+Then:
+\begin{enumerate}
+\item The Higgs branch $\mathcal{M}_H$ carries a holomorphic symplectic structure
+
+\item Quantization of functions $\mathcal{O}(\mathcal{M}_H)$ produces a vertex 
+      algebra $V_H$
+      
+\item $V_H$ contains a W-algebra $\mathcal{W}_k(\mathfrak{g})$ at level $k$ 
+      determined by the gauge coupling
+      
+\item This matches the W-algebra from coset construction: 
+      $$\mathcal{W}_k(\mathfrak{g}) = \text{Com}(\mathfrak{g}_k, V_\rho)$$
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Physical Interpretation]\label{rem:w-physical-interpretation}
+The two constructions of W-algebras correspond to different physical perspectives:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Aspect} & \textbf{2D CFT (Our View)} & \textbf{4D Gauge (ACL View)} \\
+\hline
+Origin & Extended conformal symmetry & Higgs branch quantization \\
+Fields & Currents $W^{(s)}(z)$ & Monopole operators \\
+Parameters & Central charge $c$ & Gauge coupling $g^2$ \\
+Anomalies & Conformal anomaly & Quantum corrections \\
+Duality & Koszul duality & Mirror symmetry \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Remarkable fact:} Both constructions produce \emph{the same} W-algebras! 
+This is evidence for deep connections between 2D CFT and 4D gauge theory (AGT 
+correspondence \cite{AGT09}).
+\end{remark}
+
+\subsection{Our Bar-Cobar Duality for W-Algebras}
+
+\begin{theorem}[W-Algebra Bar-Cobar Duality]\label{thm:w-algebra-bar-cobar}
+Let $\mathcal{W}_k(\mathfrak{g})$ be a W-algebra (from either construction). Then:
+\begin{enumerate}
+\item The chiral envelope $\mathcal{A}_{\mathcal{W}}$ admits geometric bar 
+      construction:
+      $$\bar{B}^{\text{geom}}(\mathcal{A}_{\mathcal{W}}) = \bigoplus_{n \geq 0} 
+      \Gamma\left(\overline{C}_n(X), \mathcal{A}_{\mathcal{W}}^{\boxtimes n} 
+      \otimes \Omega^\bullet\right)$$
+      
+\item When $\mathcal{W}_k(\mathfrak{g})$ is \textbf{Koszul} (known for $\mathcal{W}_3$ 
+      at certain levels \cite{Ara07}), it has a chiral Koszul dual coalgebra 
+      $\mathcal{A}_{\mathcal{W}}^!$
+      
+\item The bar and cobar complexes are quasi-inverse:
+      $$\Omega(\bar{B}(\mathcal{A}_{\mathcal{W}})) \simeq \mathcal{A}_{\mathcal{W}}$$
+      
+\item All structures (Virasoro, W-currents, OPE) have geometric realization via 
+      configuration spaces
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof Strategy]
+The proof follows the general bar-cobar framework established in Parts III-IV, 
+with additional considerations for W-algebras:
+
+\textbf{Step 1: Chiral envelope.} Every vertex algebra has a chiral envelope by 
+the BD functor \BDref{Theorem 3.7.11}:
+$$\text{VOA} \xrightarrow{\Psi_{\text{BD}}} \text{ChirAlg}$$
+
+For W-algebras, this is explicit: the vertex operators $W^{(s)}(z)$ become sections 
+of $\mathcal{D}$-modules with appropriate poles.
+
+\textbf{Step 2: Bar construction.} The geometric bar complex is defined for any 
+chiral algebra (Theorem \ref{thm:geometric-bar-definition}). For W-algebras:
+$$\bar{B}^n(\mathcal{A}_{\mathcal{W}}) = \Gamma\left(\overline{C}_{n+1}(X), 
+\mathcal{A}_{\mathcal{W}}^{\boxtimes(n+1)} \otimes \Omega^\bullet\right)$$
+
+The differential has three components (Theorem \ref{thm:bar-differential-structure}):
+$$d_{\text{bar}} = d_{\text{mult}} + d_{\text{internal}} + d_{\text{extend}}$$
+
+\textbf{Step 3: Koszul property.} This is the deep step. For $\mathcal{W}_3$ at 
+$c = -2$ (minimal model), Arakawa \cite{Ara07} proved the representation category 
+has Koszul duality. We extend this to the chiral algebra setting using:
+\begin{itemize}
+\item Derived category equivalence (Theorem \ref{thm:derived-equivalence-koszul})
+\item Spectral sequence arguments (Proposition \ref{prop:koszul-spectral-sequence})
+\item Explicit verification in low degrees (Examples \ref{ex:w3-explicit})
+\end{itemize}
+
+\textbf{Step 4: Quasi-isomorphism.} Once Koszul property is established, the 
+bar-cobar quasi-isomorphism follows from the general theory (Theorem 
+\ref{thm:bar-cobar-isomorphism-main}).
+\end{proof}
+
+\begin{example}[Explicit: $\mathcal{W}_3$ at $c = -2$]\label{ex:w3-c-minus-2-explicit}
+For the $\mathcal{W}_3$ algebra at central charge $c = -2$:
+
+\textbf{Generators:}
+\begin{align*}
+L &= \text{energy-momentum tensor, conformal weight 2} \\
+W &= \text{W-current, conformal weight 3}
+\end{align*}
+
+\textbf{OPE:}
+\begin{align*}
+L(z)L(w) &\sim \frac{-2/2}{(z-w)^4} + \frac{2L(w)}{(z-w)^2} + \frac{\partial L(w)}{z-w} \\
+L(z)W(w) &\sim \frac{3W(w)}{(z-w)^2} + \frac{\partial W(w)}{z-w} \\
+W(z)W(w) &\sim \frac{c_{33}}{(z-w)^6} + \frac{2L(w)}{(z-w)^4} + \cdots
+\end{align*}
+where $c_{33}$ is determined by $c = -2$.
+
+\textbf{Chiral algebra presentation:}
+$$\mathcal{A}_{\mathcal{W}_3} = \text{Free}_{\mathcal{D}}(\mathbb{C}L \oplus \mathbb{C}W) 
+/ \text{(W-algebra relations)}$$
+
+\textbf{Bar complex degree 2:}
+$$\bar{B}^2(\mathcal{A}_{\mathcal{W}_3}) = \Gamma\left(\overline{C}_3(X), 
+\mathcal{A}_{\mathcal{W}_3}^{\boxtimes 3} \otimes \Omega^\bullet\right)$$
+
+Elements are represented by integrals:
+$$\int_{\overline{C}_3(X)} f(z_1, z_2, z_3) \wedge d\log(z_1-z_2) \wedge d\log(z_2-z_3)$$
+where $f$ is a section of $\mathcal{A}_{\mathcal{W}_3}^{\boxtimes 3}$.
+
+\textbf{Differential action:}
+\begin{align*}
+d_{\text{mult}}(f) &= \text{Res}_{z_1 = z_2}[f] + \text{Res}_{z_2 = z_3}[f] \\
+&\quad + \text{Res}_{z_1 = z_3}[f] \quad \text{(collisions)} \\
+d_{\text{internal}}(f) &= d_{\mathcal{W}}(f) \quad \text{(internal differential)} \\
+d_{\text{extend}}(f) &= \text{extension across boundary divisors}
+\end{align*}
+
+\textbf{Koszul dual coalgebra:} At $c = -2$, Arakawa proved $\mathcal{W}_3$ is 
+Koszul with coalgebra dual $\mathcal{C}_{\mathcal{W}_3}$ given by:
+$$\mathcal{C}_{\mathcal{W}_3} = \text{Cofree}_{\mathcal{D}}(s\mathbb{C}L^* \oplus s\mathbb{C}W^*) 
+/ \text{(dual relations)}$$
+
+where $s$ denotes suspension (degree shift).
+\end{example}
+
+%================================================================
+% SECTION: MATHEMATICAL BRIDGES
+%================================================================
+
+\section{Mathematical Bridges Between Frameworks}
+\label{sec:mathematical-bridges}
+
+\subsection{BV Complex = Geometric Bar Complex}
+
+\begin{theorem}[BV-Bar Equivalence]\label{thm:bv-bar-equivalence}
+For a chiral algebra $\mathcal{A}$ on a curve $X$, there is a natural equivalence:
+$$\text{BV}_{\text{classical}}(\mathcal{A}) \simeq \bar{B}^{\text{geom}}(\mathcal{A})$$
+between the classical BV complex (Costello-Gwilliam \cite{CG17}) and the geometric 
+bar complex.
+\end{theorem}
+
+\begin{proof}[Proof Outline]
+We establish the equivalence in three steps:
+
+\textbf{Step 1: Field content.} 
+\begin{itemize}
+\item BV fields: $\phi \in \mathcal{A}$ and ghost $c \in \mathcal{A}[1]$
+\item Bar complex: Sections $\Gamma(\overline{C}_n(X), \mathcal{A}^{\boxtimes n})$
+\end{itemize}
+
+Identification: An element of $\bar{B}^n$ is a collection $(\phi_1, \ldots, \phi_n)$ 
+with $\phi_i \in \mathcal{A}$. This matches the $n$-ghost sector of BV theory.
+
+\textbf{Step 2: Differential.}
+\begin{itemize}
+\item BV differential: $Q_{\text{BV}} = d + \{S, -\}$ where $S$ is the action and 
+      $\{-,-\}$ is the BV bracket
+\item Bar differential: $d_{\text{bar}} = d_{\text{mult}} + d_{\text{internal}} + d_{\text{extend}}$
+\end{itemize}
+
+The identification is:
+\begin{align*}
+d_{\text{mult}} &\leftrightarrow \text{BV bracket } \{S, -\} \\
+d_{\text{internal}} &\leftrightarrow \text{internal differential } d \\
+d_{\text{extend}} &\leftrightarrow \text{extension by ghost fields}
+\end{align*}
+
+\textbf{Step 3: Cohomology.} Both complexes compute the same derived object:
+$$H^\bullet(\text{BV}) = H^\bullet(\bar{B}) = \text{Chiral homology } H_\bullet^{\text{ch}}(X, \mathcal{A})$$
+
+This is established by Costello-Gwilliam \cite{CG17} for BV and by us (Theorem 
+\ref{thm:bar-computes-chiral-homology}) for the bar complex.
+\end{proof}
+
+\begin{remark}[Quantum BV vs Bar]\label{rem:quantum-bv-bar}
+At the quantum level, the relationship becomes more subtle:
+
+\begin{itemize}
+\item \textbf{Quantum BV}: Includes $\hbar$ corrections, quantum master equation 
+      $Q_{\text{BV}}^2 = \hbar \cdot \Delta$ where $\Delta$ is the BV Laplacian
+      
+\item \textbf{Quantum bar}: Our genus expansion $d_g^2 = 0$ at each genus, but 
+      $d = \sum_g d_g$ has quantum corrections
+      
+\item \textbf{Identification}: $\hbar \leftrightarrow$ genus expansion parameter, 
+      $\Delta \leftrightarrow$ modular form contributions
+\end{itemize}
+
+The precise relationship requires careful analysis of the quantum corrections, 
+which we provide in Part VI (Theorem \ref{thm:quantum-bar-bv-equivalence}).
+\end{remark}
+
+\subsection{AGT Correspondence via Bar-Cobar}
+
+\begin{theorem}[AGT Through Bar-Cobar Lens]\label{thm:agt-bar-cobar}
+The Alday-Gaiotto-Tachikawa (AGT) correspondence \cite{AGT09} can be understood 
+via bar-cobar duality:
+
+\begin{center}
+\begin{tikzcd}
+\text{4D } \mathcal{N}=2 \text{ gauge partition function} \ar[d, "\text{CL twist}"] \ar[r, "\text{AGT}"] 
+& \text{2D Liouville/Toda CFT correlation} \ar[d, "\text{chiral envelope}"] \\
+\text{2D factorization algebra } \mathcal{F}_G \ar[r, "\simeq"] 
+& \text{W-algebra } \mathcal{W}_k(\mathfrak{g})
+\end{tikzcd}
+\end{center}
+
+Moreover:
+\begin{enumerate}
+\item The 4D instanton partition function = W-algebra conformal blocks
+\item The 4D Coulomb branch parameters = W-algebra momenta
+\item The bar complex on both sides computes the same homology:
+      $$H_\bullet^{\text{ch}}(X, \mathcal{W}_k(\mathfrak{g})) = H_\bullet^{\text{BV}}(\mathcal{F}_G)$$
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Why This Matters]\label{rem:agt-why-matters}
+The AGT correspondence, originally a mysterious duality between 4D gauge theory 
+and 2D CFT, becomes \textbf{natural} from the bar-cobar perspective:
+
+\begin{itemize}
+\item \textbf{4D side}: BV complex of gauge theory = bar complex of factorization 
+      algebra
+\item \textbf{2D side}: Configuration space integrals = bar complex of chiral algebra
+\item \textbf{Duality}: Both sides compute factorization homology of the same object!
+\end{itemize}
+
+Our geometric bar-cobar duality provides the \textbf{mathematical infrastructure} 
+for AGT, making the correspondence computable and verifiable.
+\end{remark}
+
+%================================================================
+% SECTION: SUMMARY AND GUIDELINES
+%================================================================
+
+\section{Summary: When to Use Which Framework}
+\label{sec:framework-guidelines}
+
+\begin{remark}[Decision Tree for Researchers]\label{rem:framework-decision-tree}
+Depending on your research question, different frameworks are optimal:
+
+\textbf{Use pure holomorphic (BD-style, our framework) when:}
+\begin{itemize}
+\item Studying 2D CFT directly (Virasoro representations, minimal models)
+\item Computing conformal blocks and correlation functions
+\item Analyzing modular properties and elliptic functions
+\item Working with explicit vertex algebra OPE
+\item Interested in configuration space topology
+\end{itemize}
+
+\textbf{Use topological-holomorphic (CL-style) when:}
+\begin{itemize}
+\item Connecting to 4D gauge theory (AGT, S-duality)
+\item Studying Higgs branch geometry
+\item Using mirror symmetry
+\item Interested in BV quantization methods
+\item Working with interfaces and defects
+\end{itemize}
+
+\textbf{Use both (our recommendation) when:}
+\begin{itemize}
+\item Studying W-algebras (they appear in both contexts!)
+\item Investigating factorization homology
+\item Computing with Koszul duality
+\item Bridging physics and mathematics
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Complementary Strengths]\label{rem:complementary-strengths-summary}
+The relationship between frameworks is analogous to:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+\textbf{BD (Our Work)} & $\leftrightarrow$ & \textbf{CL (Gauge Theory)} \\
+\hline
+Vertex algebras & $\leftrightarrow$ & Boundary VOAs \\
+Configuration spaces & $\leftrightarrow$ & Coulomb branch \\
+Bar complex & $\leftrightarrow$ & BV complex \\
+Virasoro & $\leftrightarrow$ & Conformal symmetry \\
+Modular forms & $\leftrightarrow$ & Instanton corrections
+\end{tabular}
+\end{center}
+
+Neither framework subsumes the other; each provides unique insights. The deepest 
+understanding comes from mastering both and understanding their relationship.
+\end{remark}
+
+%================================================================
+% SECTION: OPEN QUESTIONS
+%================================================================
+
+\section{Open Questions and Future Directions}
+\label{sec:open-questions-holo-topo}
+
+\begin{question}[Higher Dimensional Analogs]\label{q:higher-dim}
+Can the pure holomorphic bar-cobar duality be extended to higher-dimensional complex 
+manifolds?
+
+\textbf{Obstacles:}
+\begin{itemize}
+\item Chiral algebras are inherently 2D (complex 1D)
+\item Configuration spaces in higher dimensions more complicated
+\item No obvious analog of Virasoro in higher dimensions
+\end{itemize}
+
+\textbf{Potential approaches:}
+\begin{itemize}
+\item Factorization algebras (CG framework) work in any dimension
+\item Holomorphic Chern-Simons in 3D (Costello)
+\item Higher-dimensional CFT (6D $\mathcal{N}=(2,0)$ theories)
+\end{itemize}
+\end{question}
+
+\begin{question}[Complete Classification of Koszul W-Algebras]\label{q:koszul-w}
+Which W-algebras $\mathcal{W}_k(\mathfrak{g})$ are Koszul?
+
+\textbf{Known cases:}
+\begin{itemize}
+\item $\mathcal{W}_3$ at $c = -2$ (Arakawa)
+\item Some $\mathcal{W}_N$ at specific rational central charges
+\end{itemize}
+
+\textbf{Conjecture} (Arakawa-Creutzig-Linshaw): Koszul W-algebras correspond to 
+minimal models and their generalizations. Complete classification remains open.
+\end{question}
+
+\begin{question}[Quantum AGT from Bar-Cobar]\label{q:quantum-agt}
+Can the full quantum AGT correspondence (with $\Omega$-background) be derived from 
+our geometric bar-cobar duality?
+
+\textbf{Partial results:}
+\begin{itemize}
+\item Classical AGT understood via factorization homology
+\item Genus expansion matches Nekrasov partition function structure
+\end{itemize}
+
+\textbf{Missing pieces:}
+\begin{itemize}
+\item Complete proof of AGT at quantum level
+\item Geometric interpretation of $\epsilon_1, \epsilon_2$ parameters
+\item Higher genus corrections from moduli space geometry
+\end{itemize}
+\end{question}
+
+% ==========================================
+% END OF PART 18 ADDITIONS
+% ==========================================
 

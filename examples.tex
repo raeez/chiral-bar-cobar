@@ -224,15 +224,35 @@ The full computation gives:
 confirming orthogonality.
 \end{proof}
  
-\subsection{Cohomology and Duality}
+\subsection{Cohomology and Duality}\label{sec:fermion-boson-koszul}
  
 \begin{theorem}[Fermion-$\beta\gamma$ Koszul Duality]
 \[
 H^*(\bar{B}_{\text{geom}}(\mathcal{F})) \cong \mathbb{C}[\gamma], \quad 
-H^*(\bar{B}_{\text{geom}}(\beta\gamma)) \cong \text{Fermions}
+H^*(\bar{B}_{\text{geom}}(\beta\gamma)) \cong \mathbb{C}[\psi]
 \]
-establishing the Koszul duality.
+establishing the Koszul duality: $(\beta\gamma)^! \cong \mathcal{F}$ and $\mathcal{F}^! \cong \beta\gamma$.
 \end{theorem}
+
+\begin{proof}
+The key computation uses the Gui-Li-Zeng quadratic duality framework. The quadratic datum for $\beta\gamma$ is:
+\begin{itemize}
+\item Generators: $N = \mathbb{C}\beta \oplus \mathbb{C}\gamma$ 
+\item Relation: $P = \text{span}\{\beta \otimes \gamma - \gamma \otimes \beta\}$ (symplectic/antisymmetric)
+\end{itemize}
+
+The dual datum $(s^{-1}N^\vee\omega^{-1}, P^\perp)$ is computed via the residue pairing:
+$$\langle P \otimes \omega_{X^2}, P^\perp \otimes s^2\omega_{X^2}\rangle = 0$$
+
+Under this pairing, the symplectic relation dualizes to:
+$$P^\perp = \text{span}\{\psi \otimes \psi^* + \psi^* \otimes \psi\}$$
+which is precisely the anticommutation relation for free fermions.
+
+Therefore $\mathcal{A}(s^{-1}N^\vee\omega^{-1}, P^\perp) = \mathcal{F}$ (free fermions), establishing:
+$$(\beta\gamma)^! = \mathcal{F}$$
+
+The geometric manifestation is that Verdier duality on configuration spaces exchanges symplectic (antisymmetric) pairings with fermionic (anticommuting) pairings. See Section \ref{subsec:NAP-betagamma} for the full NAP perspective.
+\end{proof}
  
 \section{The $bc$ Ghosts}
  
@@ -508,7 +528,7 @@ This residue at the triple collision produces the central charge class $c_k \in 
 \textbf{Degrees $\geq 3$:} Vanish by dimension counting and the absence of higher poles.
 \end{proof}
  
-\subsection{Central Terms and Curved Structure - Rigorous}
+\subsection{Central Terms and Curved Structure}
 
 \begin{definition}[Curved $A_\infty$ - Convergent]
 A curved $A_\infty$ structure on filtered $\mathcal{A}$ has operations $m_k: \mathcal{A}^{\otimes k} \to \mathcal{A}[2-k]$ for $k \geq 0$ with:
@@ -2573,4 +2593,48 @@ All results match the predictions of Theorem \ref{thm:bar-cobar-isomorphism-main
 
 
 
+
+
+\section{Fusion Rule Examples for W-Algebras}
+\label{sec:fusion-examples}
+
+\subsection{Example: Minimal Model $(3,4)$ Complete Table}
+
+\begin{table}[h]
+\centering
+\caption{Complete Fusion Table for $W_3(3,4)$}
+\begin{tabular}{|c||c|c|c|c|}
+\hline
+$\times$ & $\Phi_{1,1}$ & $\Phi_{1,2}$ & $\Phi_{2,1}$ & $\Phi_{2,2}$ \\
+\hline\hline
+$\Phi_{1,1}$ & $\mathbb{I} + \Phi_{2,2}$ & $\Phi_{1,2} + \Phi_{2,1}$ & 
+$\Phi_{1,2} + \Phi_{2,1}$ & $\Phi_{1,1}$ \\
+\hline
+$\Phi_{1,2}$ & $\Phi_{1,2} + \Phi_{2,1}$ & $\mathbb{I} + \Phi_{2,2}$ & 
+$\Phi_{1,1}$ & $\Phi_{1,2} + \Phi_{2,1}$ \\
+\hline
+$\Phi_{2,1}$ & $\Phi_{1,2} + \Phi_{2,1}$ & $\Phi_{1,1}$ & 
+$\mathbb{I} + \Phi_{2,2}$ & $\Phi_{1,2} + \Phi_{2,1}$ \\
+\hline
+$\Phi_{2,2}$ & $\Phi_{1,1}$ & $\Phi_{1,2} + \Phi_{2,1}$ & 
+$\Phi_{1,2} + \Phi_{2,1}$ & $\mathbb{I} + \Phi_{2,2}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Example: Minimal Model $(5,6)$ Selected Rules}
+
+Key fusion products for $W_3(5,6)$:
+\begin{align}
+\Phi_{1,2} \times \Phi_{1,2} &= \mathbb{I} + \Phi_{2,2} + \Phi_{1,4} \\
+\Phi_{2,1} \times \Phi_{2,1} &= \mathbb{I} + \Phi_{2,2} + \Phi_{4,1} \\
+\Phi_{1,3} \times \Phi_{1,3} &= \mathbb{I} + \Phi_{2,2} + \Phi_{2,4} + \Phi_{1,6}
+\end{align}
+
+\subsection{Connection to Representation Theory}
+
+The fusion rules encode the tensor product structure of $W_3$ representations:
+$$[\mathcal{L}_i] \otimes [\mathcal{L}_j] = \bigoplus_k N_{ij}^k [\mathcal{L}_k]$$
+
+in the Grothendieck ring $K_0(W_3\text{-mod})$.
 

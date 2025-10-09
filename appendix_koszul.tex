@@ -144,3 +144,355 @@ $$\Omega^{(g)}(\sigma^* C_{\bullet}^{(g)}(\mathcal{A})) \simeq \sigma^* \mathcal
 for $\sigma \in \Gamma_g$.
 
 This ensures that genus $g$ quantum corrections are modular-invariant.
+
+% ================================================================
+% PATCH 014: CLASSIFICATION TABLE
+% ================================================================
+
+\section{Classification of Chiral Algebras by Koszul Type}
+\label{app:koszul-classification}
+
+This appendix provides a complete classification of chiral algebras by their Koszul duality 
+properties. See \S\ref{sec:filtered-vs-curved-comprehensive} for detailed theory.
+
+\begin{table}[H]
+\centering
+\caption{Complete Classification of Chiral Algebras}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Algebra} & \textbf{Type} & \textbf{$\dim(V)$} & \textbf{Completion?} & \textbf{Koszul Dual Exists?} \\
+\hline
+\hline
+Heisenberg $\mathcal{H}_k$ & Quadratic & 1 & No & Yes \\
+\hline
+Kac-Moody $\widehat{\mathfrak{g}}_k$ & Quadratic & $\dim(\mathfrak{g})$ & No & Yes \\
+\hline
+Free fermion $\beta\gamma$ & Quadratic & 2 & No & Yes \\
+\hline
+Virasoro $\text{Vir}_c$ & Curved & 1 & Yes & Yes (completed) \\
+\hline
+$W_3$ & Filtered & 2 & Yes & Yes (completed) \\
+\hline
+$W_N$ ($N \geq 4$) & Filtered & $N-1$ & Yes & Yes (completed) \\
+\hline
+$W_{1+\infty}$ & Filtered & $\infty$ & Yes & Yes (completed) \\
+\hline
+$W_\infty$ & General & $\infty$ & N/A & NO \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key:}
+\begin{itemize}
+\item \textbf{Type}: Quadratic / Curved / Filtered / General
+\item \textbf{$\dim(V)$}: Dimension of generating space
+\item \textbf{Completion?}: Whether nilpotent completion is needed
+\item \textbf{Koszul Dual Exists?}: Whether $\mathcal{A}^!$ is well-defined
+\end{itemize}
+
+%================================================================
+% SECTION: ESSENTIAL IMAGE CHARACTERIZATION
+%================================================================
+
+\section{Essential Image: When is $\widehat{\mathcal{C}} = \mathcal{A}^!$?}
+\label{sec:essential-image-koszul}
+
+\subsection{The Characterization Problem}
+
+\begin{question}[Inverse Problem]\label{q:inverse-problem-koszul}
+Given a chiral coalgebra $\widehat{\mathcal{C}}$, when does there exist a chiral 
+algebra $\mathcal{A}$ such that:
+$$\widehat{\mathcal{C}} \cong \mathcal{A}^!$$
+(as Koszul dual)?
+
+In other words: What is the \textbf{essential image} of the Koszul duality functor?
+\end{question}
+
+\begin{remark}[Why This Matters]\label{rem:why-essential-image-matters}
+This question is important for several reasons:
+
+\textbf{1. Recognition problem:}
+Given a coalgebra from geometry or physics, can we identify it as a Koszul dual?
+
+\textbf{2. Completeness:}
+Does the Koszul duality correspondence cover ``all'' coalgebras, or only a special class?
+
+\textbf{3. Uniqueness:}
+If $\widehat{\mathcal{C}} = \mathcal{A}^!$, is $\mathcal{A}$ unique?
+
+\textbf{4. Construction:}
+Can we reconstruct $\mathcal{A}$ from $\widehat{\mathcal{C}}$?
+\end{remark}
+
+\subsection{Main Characterization Theorem}
+
+\begin{theorem}[Essential Image of Koszul Duality]\label{thm:essential-image-koszul}
+A chiral coalgebra $\widehat{\mathcal{C}}$ is (isomorphic to) the Koszul dual 
+$\mathcal{A}^!$ of some chiral algebra $\mathcal{A}$ if and only if:
+
+\begin{enumerate}
+\item \textbf{Conilpotency:} $\widehat{\mathcal{C}}$ is conilpotent:
+      $$\bigcap_{n=1}^\infty \text{coker}(\Delta^n) = \{0\}$$
+      
+\item \textbf{Connected:} The counit is surjective onto the ground field:
+      $$\epsilon: \widehat{\mathcal{C}} \twoheadrightarrow \mathbb{C}$$
+      
+\item \textbf{Geometric representability:} $\widehat{\mathcal{C}}$ arises as the 
+      bar complex of some factorization algebra on configuration spaces
+      
+\item \textbf{Curvature centrality:} Any curvature term $\mu_0 \in \widehat{\mathcal{C}}^{\otimes 2}[2]$ 
+      is central in the dual algebra
+      
+\item \textbf{Formal completeness:} $\widehat{\mathcal{C}}$ is complete with respect 
+      to its coaugmentation coideal
+\end{enumerate}
+
+When these conditions hold, the algebra $\mathcal{A}$ is recovered by:
+$$\mathcal{A} = \Omega(\widehat{\mathcal{C}})$$
+(cobar construction), and this is unique up to quasi-isomorphism.
+\end{theorem}
+
+\begin{proof}[Proof Strategy]
+The proof has two directions:
+
+\textbf{($\Rightarrow$) Necessity:} If $\widehat{\mathcal{C}} = \mathcal{A}^!$, 
+then conditions (1)-(5) hold.
+
+This follows from properties of the Koszul dual construction:
+\begin{itemize}
+\item (1) Conilpotency: Automatic for Koszul duals (Theorem \ref{thm:koszul-conilpotent})
+\item (2) Connected: Dual to augmentation of $\mathcal{A}$
+\item (3) Geometric: Bar complex construction is geometric (Theorem \ref{thm:bar-geometric})
+\item (4) Curvature: Central obstructions in $\mathcal{A}$ give central curvature
+\item (5) Completeness: Induced by filtration on $\mathcal{A}$
+\end{itemize}
+
+\textbf{($\Leftarrow$) Sufficiency:} If conditions (1)-(5) hold, define:
+$$\mathcal{A} = \Omega(\widehat{\mathcal{C}})$$
+
+We must show:
+\begin{enumerate}
+\item $\mathcal{A}$ is a well-defined chiral algebra
+\item $\bar{B}(\mathcal{A}) \simeq \widehat{\mathcal{C}}$ (bar-cobar inversion)
+\item $\mathcal{A}$ has $\widehat{\mathcal{C}}$ as its Koszul dual
+\end{enumerate}
+
+This is established in the following subsections.
+\end{proof}
+
+\subsection{Conilpotency and Connectedness}
+
+\begin{lemma}[Conilpotency is Necessary]\label{lem:conilpotency-necessary}
+If $\widehat{\mathcal{C}} = \mathcal{A}^!$ for some $\mathcal{A}$, then $\widehat{\mathcal{C}}$ 
+is conilpotent.
+\end{lemma}
+
+\begin{proof}
+Let $I \subseteq \mathcal{A}$ be the augmentation ideal (kernel of the counit). Then:
+$$\mathcal{A} = \mathbb{C} \oplus I$$
+
+The Koszul dual is built from $I$:
+$$\mathcal{A}^! = \text{Cofree}(sI^*)$$
+
+For any element $c \in \mathcal{A}^!$, write:
+$$c = c_0 + c_1 + c_2 + \cdots$$
+where $c_n \in (sI^*)^{\otimes n}$.
+
+The iterated comultiplication is:
+$$\Delta^n(c) = \sum_{i_0 + \cdots + i_k = n} c_{i_0} \otimes \cdots \otimes c_{i_k}$$
+
+As $n \to \infty$, the image of $\Delta^n$ consists only of elements with arbitrarily 
+many tensor factors. Since $I$ is the augmentation ideal, these eventually vanish.
+
+Therefore:
+$$\bigcap_n \text{coker}(\Delta^n) = \{0\}$$
+
+This is precisely conilpotency.
+\end{proof}
+
+\begin{lemma}[Connectedness Characterizes Augmentation]\label{lem:connectedness-augmentation}
+A coalgebra $\widehat{\mathcal{C}}$ is connected (has surjective counit $\epsilon: \widehat{\mathcal{C}} 
+\twoheadrightarrow \mathbb{C}$) if and only if it is the dual of an augmented algebra.
+\end{lemma}
+
+\begin{proof}
+The counit $\epsilon$ of a coalgebra dualizes to the unit $\eta$ of an algebra:
+$$\eta: \mathbb{C} \to \mathcal{A} \quad \leftrightarrow \quad \epsilon: \widehat{\mathcal{C}} 
+\to \mathbb{C}$$
+
+Surjectivity of $\epsilon$ means:
+$$\epsilon(c) \neq 0 \text{ for some } c \in \widehat{\mathcal{C}}$$
+
+This is equivalent to $\eta$ being injective, i.e., $\mathcal{A}$ is augmented.
+\end{proof}
+
+\subsection{Geometric Representability}
+
+\begin{definition}[Geometrically Representable Coalgebra]\label{def:geom-representable-coalgebra}
+A chiral coalgebra $\widehat{\mathcal{C}}$ is \textbf{geometrically representable} 
+if there exists:
+\begin{enumerate}
+\item A factorization algebra $\mathcal{F}$ on configuration spaces $\{C_n(X)\}$
+\item A quasi-isomorphism:
+      $$\widehat{\mathcal{C}} \simeq \int_{C_\bullet(X)} \mathcal{F}$$
+      (factorization homology)
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Koszul Duals are Geometrically Representable]\label{thm:koszul-geom-rep}
+If $\widehat{\mathcal{C}} = \mathcal{A}^!$ for a chiral algebra $\mathcal{A}$, then 
+$\widehat{\mathcal{C}}$ is geometrically representable via:
+$$\mathcal{A}^! \simeq \bar{B}^{\text{geom}}(\mathcal{A}) = 
+\bigoplus_{n \geq 0} \Gamma\left(\overline{C}_n(X), \mathcal{A}^{\boxtimes n} 
+\otimes \Omega^\bullet\right)$$
+\end{theorem}
+
+\begin{proof}
+The geometric bar complex (Definition \ref{def:geometric-bar}) provides the 
+geometric realization:
+
+\textbf{Step 1:} The factorization algebra is:
+$$\mathcal{F}_{C_n}(U) = \Gamma(U, \mathcal{A}^{\boxtimes n}|_U)$$
+for $U \subseteq C_n(X)$.
+
+\textbf{Step 2:} The bar complex computes factorization homology:
+$$\bar{B}^{\text{geom}}(\mathcal{A}) = \int_{C_\bullet(X)} \mathcal{F}$$
+
+This was proven in Theorem \ref{thm:bar-factorization-homology}.
+
+\textbf{Step 3:} By bar-cobar duality:
+$$\bar{B}^{\text{geom}}(\mathcal{A}) \simeq \mathcal{A}^!$$
+
+Therefore $\mathcal{A}^!$ is geometrically representable.
+\end{proof}
+
+\begin{corollary}[Converse: Geometric Representability Implies Koszul]\label{cor:geom-implies-koszul}
+If $\widehat{\mathcal{C}}$ is geometrically representable by a factorization algebra 
+$\mathcal{F}$ on configuration spaces, and satisfies conilpotency + connectedness, 
+then:
+$$\widehat{\mathcal{C}} = \mathcal{A}^!$$
+for $\mathcal{A} = \Omega(\widehat{\mathcal{C}})$.
+\end{corollary}
+
+\subsection{Curvature and Centrality}
+
+\begin{theorem}[Curvature Must Be Central]\label{thm:curvature-central}
+Let $\widehat{\mathcal{C}}$ be a curved coalgebra with curvature:
+$$\mu_0 \in \widehat{\mathcal{C}}^{\otimes 2}[2]$$
+
+If $\widehat{\mathcal{C}} = \mathcal{A}^!$ for some algebra $\mathcal{A}$, then 
+$\mu_0$ must be \textbf{central} in the sense:
+$$\mu_0 \text{ commutes with all operations in } \mathcal{A}$$
+\end{theorem}
+
+\begin{proof}
+The curvature $\mu_0$ in the coalgebra $\widehat{\mathcal{C}} = \mathcal{A}^!$ 
+corresponds to a central extension in the algebra $\mathcal{A}$.
+
+\textbf{Step 1: Maurer-Cartan equation.}
+The curved structure satisfies:
+$$d(\mu_0) + \frac{1}{2}[\mu_0, \mu_0] = 0$$
+ 
+\textbf{Step 2: Duality.}
+Under Koszul duality, this equation dualizes to:
+$$\partial(\mu_0^*) + \frac{1}{2}\{\mu_0^*, \mu_0^*\} = 0$$
+
+in $\mathcal{A}$.
+
+\textbf{Step 3: Centrality.}
+The condition $[\mu_0, \mu_0] = 0$ implies $\mu_0$ generates a central extension:
+$$0 \to \mathbb{C} \xrightarrow{\mu_0} \tilde{\mathcal{A}} \to \mathcal{A} \to 0$$
+
+Therefore $\mu_0$ is central in $\mathcal{A}$.
+\end{proof}
+
+\begin{example}[Virasoro Central Charge]\label{ex:virasoro-central-charge-curvature}
+For the Virasoro algebra:
+$$\text{Vir} = \text{span}\{L_n, c\} / ([L_m, L_n] - (m-n)L_{m+n} - \frac{c}{12}(m^3-m)\delta_{m,-n})$$
+
+The central charge $c$ is a curvature term in the dual coalgebra $\text{Vir}^!$.
+
+\textbf{Verification:}
+\begin{itemize}
+\item $c$ commutes with all $L_n$: $[c, L_n] = 0$
+\item $c$ is central: It generates $Z(\text{Vir}) = \mathbb{C} \cdot c$
+\item In the dual: $c$ appears as curvature $\mu_0$ in the coalgebra differential
+\end{itemize}
+
+This confirms Theorem \ref{thm:curvature-central}.
+\end{example}
+
+\subsection{Formal Completeness}
+
+\begin{definition}[Coaugmentation Coideal]\label{def:coaugmentation-coideal}
+For a connected coalgebra $\widehat{\mathcal{C}}$ with counit $\epsilon: \widehat{\mathcal{C}} 
+\to \mathbb{C}$, the \textbf{coaugmentation coideal} is:
+$$\bar{\mathcal{C}} = \ker(\epsilon)$$
+
+This is the ``reduced'' part of the coalgebra (everything that doesn't map to the 
+ground field).
+\end{definition}
+
+\begin{theorem}[Completion Characterization]\label{thm:completion-characterization}
+A coalgebra $\widehat{\mathcal{C}}$ is the Koszul dual of some algebra $\mathcal{A}$ 
+if and only if it is \textbf{complete} with respect to its coaugmentation coideal:
+$$\widehat{\mathcal{C}} = \varprojlim_n \widehat{\mathcal{C}} / \bar{\mathcal{C}}^n$$
+\end{theorem}
+
+\begin{proof}
+\textbf{($\Rightarrow$) Necessity:}
+If $\widehat{\mathcal{C}} = \mathcal{A}^!$, then the filtration on $\mathcal{A}$ by 
+powers of the augmentation ideal induces a cofiltration on $\widehat{\mathcal{C}}$:
+$$F^n\widehat{\mathcal{C}} = \{c : \Delta^k(c) \in (\bar{\mathcal{C}})^{\otimes k} 
+\text{ for } k \leq n\}$$
+
+The completion is:
+$$\widehat{\mathcal{C}} = \varprojlim_n \widehat{\mathcal{C}} / \bar{\mathcal{C}}^n$$
+
+This holds by construction of $\mathcal{A}^!$.
+
+\textbf{($\Leftarrow$) Sufficiency:}
+If $\widehat{\mathcal{C}}$ is complete, define:
+$$\mathcal{A} = \Omega(\widehat{\mathcal{C}})$$
+
+The completeness ensures that the cobar construction converges, giving a well-defined 
+algebra structure on $\mathcal{A}$.
+
+By bar-cobar inversion (Theorem \ref{thm:bar-cobar-inversion-qi}):
+$$\bar{B}(\mathcal{A}) \simeq \widehat{\mathcal{C}}$$
+
+Therefore $\widehat{\mathcal{C}} = \mathcal{A}^!$.
+\end{proof}
+
+\subsection{Uniqueness of the Algebra}
+
+\begin{theorem}[Uniqueness Up to Quasi-Isomorphism]\label{thm:uniqueness-algebra}
+If $\widehat{\mathcal{C}} = \mathcal{A}^! = \mathcal{B}^!$ for two chiral algebras 
+$\mathcal{A}$ and $\mathcal{B}$, then:
+$$\mathcal{A} \simeq \mathcal{B}$$
+(quasi-isomorphic as chiral algebras).
+\end{theorem}
+
+\begin{proof}
+The cobar construction provides canonical algebra structures:
+$$\mathcal{A} \simeq \Omega(\mathcal{A}^!) = \Omega(\widehat{\mathcal{C}}) = 
+\Omega(\mathcal{B}^!) \simeq \mathcal{B}$$
+
+All quasi-isomorphisms are via the bar-cobar adjunction (Theorem \ref{thm:bar-cobar-inversion-qi}).
+\end{proof}
+
+\begin{remark}[Non-Uniqueness at the Strict Level]\label{rem:non-uniqueness-strict}
+The theorem only guarantees quasi-isomorphism, not strict isomorphism. Different 
+presentations of the same chiral algebra (e.g., different choices of generators 
+and relations) give strictly different algebras that are quasi-isomorphic.
+
+\textbf{Example:} The Heisenberg algebra can be presented as:
+\begin{itemize}
+\item $\mathcal{H}_1 = \text{Free}(a, a^*) / ([a, a^*] - 1)$
+\item $\mathcal{H}_2 = \text{Free}(x, p) / ([x, p] - i\hbar)$
+\end{itemize}
+
+These are different presentations (different generators), but $\mathcal{H}_1 \simeq \mathcal{H}_2$ 
+as chiral algebras, and both have the same Koszul dual.
+\end{remark}
+

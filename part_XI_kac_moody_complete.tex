@@ -840,3 +840,69 @@ The Kac-Moody case studied here provides the foundation, but W-algebras reveal t
 
 — \textit{Synthesis of Witten's insight, Kontsevich's geometry, \\Serre's calculations, and Grothendieck's functoriality}
 \end{center}
+
+%===================================================================================
+% PATCH 040: PARTITION FUNCTIONS AND MODULAR PROPERTIES
+%===================================================================================
+
+\section{Partition Functions and Modular Properties}
+\label{sec:partition-functions-modular}
+
+\subsection{Physical Motivation}
+
+\begin{motivation}[Partition Function as Path Integral]
+In quantum field theory, the partition function on a torus $E_\tau$ is:
+$$Z_{E_\tau} = \text{Tr}\left[q^{L_0 - c/24} \bar{q}^{\bar{L}_0 - \bar{c}/24}\right]$$
+where $q = e^{2\pi i\tau}$ with $\tau \in \mathfrak{H}$ (upper half-plane).
+
+\textbf{Modular invariance:} Physical equivalence of different torus parametrizations 
+requires $Z_{E_\tau}$ to be invariant under modular transformations $\text{SL}_2(\mathbb{Z})$.
+\end{motivation}
+
+\subsection{Characters and Theta Functions}
+
+\begin{definition}[Character of Integrable Highest Weight Module]
+\label{def:character-affine}
+For integrable highest weight module $L(\Lambda)$ of $\widehat{\mathfrak{g}}_k$ with highest 
+weight $\Lambda$, the \textbf{character} is:
+$$\chi_\Lambda(\tau) = \text{Tr}_{L(\Lambda)}\left[q^{L_0 - c/24}\right] = \sum_{n=0}^\infty d_{\Lambda,n} q^{h_\Lambda + n}$$
+
+where:
+\begin{itemize}
+\item $h_\Lambda = \frac{\langle\Lambda + 2\rho, \Lambda\rangle}{2(k+h^\vee)}$ is the conformal dimension
+\item $d_{\Lambda,n}$ is the dimension of the level-$n$ weight space
+\item $c = \frac{k\dim(\mathfrak{g})}{k+h^\vee}$ is the central charge
+\end{itemize}
+\end{definition}
+
+\subsection{Modular Transformations}
+
+\begin{theorem}[Modular Transformation of Characters]
+\label{thm:modular-transform-characters}
+Characters transform under $\text{SL}_2(\mathbb{Z})$ as:
+\begin{align}
+\chi_\lambda(\tau + 1) &= e^{2\pi i(h_\lambda - c/24)}\chi_\lambda(\tau) \\
+\chi_\lambda(-1/\tau) &= \sum_{\mu} S_{\lambda\mu} \chi_\mu(\tau)
+\end{align}
+
+The matrices $T$ and $S$ satisfy: $S^2 = (ST)^3 = \mathbb{1}$ (up to signs).
+\end{theorem}
+
+\subsection{Verlinde Formula}
+
+\begin{theorem}[Verlinde Formula]
+\label{thm:verlinde-formula}
+The fusion coefficients are determined by the S-matrix:
+$$N_{\lambda\mu}^\nu = \sum_{\rho} \frac{S_{\lambda\rho}S_{\mu\rho}S_{\nu\rho}^*}{S_{0\rho}}$$
+
+This remarkable formula computes fusion rules (algebraic data) from modular transformations 
+(geometric data)!
+\end{theorem}
+
+\begin{remark}[Connection to Bar-Cobar]
+The modular properties of characters reflect the geometric structure of our bar-cobar 
+construction: modular transformations correspond to different choices of homology basis 
+on the configuration spaces, and the Verlinde formula emerges from the bar complex 
+structure.
+\end{remark}
+

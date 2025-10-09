@@ -1,0 +1,84 @@
+
+%================================================================
+% HIGHER GENUS QUASI-ISOMORPHISM
+%================================================================
+
+\section{Bar-Cobar Quasi-Isomorphism at Higher Genus}
+\label{sec:bar-cobar-qi-higher-genus}
+
+\begin{theorem}[Higher Genus Inversion]\label{thm:higher-genus-inversion}
+The bar-cobar inversion quasi-isomorphism from Theorem \ref{thm:bar-cobar-inversion-qi} 
+holds at each genus $g$:
+$$\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}_g$$
+
+where $\mathcal{A}_g$ denotes the genus-$g$ component of $\mathcal{A}$ (contributions 
+from curves of genus $g$).
+\end{theorem}
+
+\begin{proof}
+The proof extends the genus-zero result of Beilinson-Drinfeld to all genera.
+
+\textbf{Step 1: Moduli space stratification.}
+
+The moduli space $\overline{\mathcal{M}}_g$ has a natural stratification by stable 
+graphs:
+$$\overline{\mathcal{M}}_g = \bigcup_{\Gamma} \mathcal{M}_\Gamma$$
+
+Each stratum $\mathcal{M}_\Gamma$ corresponds to curves with a specific degeneracy 
+pattern encoded by graph $\Gamma$.
+
+\textbf{Step 2: Induction on strata.}
+
+We prove $\psi_g$ is a quasi-isomorphism by induction on strata (increasing 
+complexity of degeneracy):
+
+\textbf{Base case:} The open stratum $\mathcal{M}_g^{\text{smooth}} \subset \overline{\mathcal{M}}_g$ 
+(smooth curves). Here:
+$$\bar{B}_g^n(\mathcal{A})|_{\mathcal{M}_g^{\text{smooth}}} = 
+\int_{\mathcal{M}_g^{\text{smooth}}} \omega_g \wedge \text{(correlation functions)}$$
+
+where $\omega_g$ are the holomorphic $g$-forms from Section \ref{sec:holomorphic-forms-genus-g}.
+
+On smooth curves, the bar-cobar inversion reduces to:
+\begin{itemize}
+\item Bar = residues at collision divisors
+\item Cobar = distributions on diagonals
+\item Pairing = residue-distribution duality
+\end{itemize}
+
+This is a quasi-isomorphism by Verdier duality (Theorem \ref{thm:verdier-bar-cobar}).
+
+\textbf{Inductive step:} Consider a boundary stratum $\mathcal{M}_\Gamma$ of 
+codimension $k$. By inductive hypothesis, $\psi_g$ is a quasi-isomorphism on all 
+strata of codimension $< k$.
+
+The restriction to $\mathcal{M}_\Gamma$ factors as:
+$$\psi_g|_{\mathcal{M}_\Gamma}: \Omega_g(\bar{B}_g(\mathcal{A}))|_{\mathcal{M}_\Gamma} 
+\to \mathcal{A}_g|_{\mathcal{M}_\Gamma}$$
+
+\textbf{Key lemma:} Gluing formulas (Theorem \ref{thm:gluing-formulas-higher-genus}) 
+ensure that $\psi_g$ extends across $\mathcal{M}_\Gamma$ as a quasi-isomorphism.
+
+\begin{lemma}[Extension Across Boundary]\label{lem:extension-across-boundary-qi}
+If $\psi$ is a quasi-isomorphism on $U$ open, and extends continuously to $\bar{U}$, 
+and the gluing formula holds at $\partial U$, then $\psi$ is a quasi-isomorphism 
+on $\bar{U}$.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma]
+Use the long exact sequence in cohomology:
+$$\cdots \to H^i(\bar{U}, \mathcal{F}) \to H^i(U, \mathcal{F}) \to 
+H^{i+1}_{\partial U}(\bar{U}, \mathcal{F}) \to \cdots$$
+
+If $\psi$ induces isomorphism on $H^i(U)$ and $H^{i+1}_{\partial U}$ (by gluing), 
+then by five-lemma, it induces isomorphism on $H^i(\bar{U})$.
+\end{proof}
+
+Applying this lemma at each boundary stratum completes the induction.
+
+\textbf{Step 3: Completeness.}
+
+Since $\overline{\mathcal{M}}_g$ is a finite union of strata, and $\psi_g$ is a 
+quasi-isomorphism on each stratum, it is a quasi-isomorphism on all of $\overline{\mathcal{M}}_g$.
+\end{proof}
+
