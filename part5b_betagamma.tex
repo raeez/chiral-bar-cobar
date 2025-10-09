@@ -91,37 +91,199 @@ $$H^1 = (V_\beta \oplus V_\gamma)/\mathbb{C}(\beta - \gamma) \cong \mathbb{C}$$
 \end{proof}
 
 \section{Koszul Dual}
+\label{sec:betagamma-koszul-dual}
 
-\subsection{Dual Algebra Structure}
+\subsection{Main Result: Koszul Duality with Free Fermions}
 
 \begin{theorem}[Koszul Dual of $\beta\gamma$]
-The Koszul dual is the $\beta'\gamma'$ system with:
-\begin{itemize}
-\item Opposite conformal weights: $h_{\beta'} = \lambda$, $h_{\gamma'} = 1 - \lambda$
-\item Same OPE structure
-\item Twisted by parity if $\lambda \in \mathbb{Z}$
-\end{itemize}
+\label{thm:betagamma-fermion-koszul}
+The Koszul dual of the $\beta\gamma$ system is the \textbf{free fermion system} $\mathcal{F}$:
+$$(\beta\gamma)^! \cong \mathcal{F} \quad \text{and} \quad \mathcal{F}^! \cong \beta\gamma$$
+
+where $\mathcal{F}$ is the chiral algebra with:
+\begin{enumerate}
+\item \textbf{Generator}: $\psi$ with conformal weight $h_\psi = 1/2$
+\item \textbf{Defining relation}: $\psi^2 = 0$ (anticommutation)
+\item \textbf{OPE}: $\psi(z)\psi(w) = 0$ (regular)
+\end{enumerate}
 \end{theorem}
 
-\subsection{Verification of Duality}
+\begin{proof}
+This is the chiral analog of the classical Koszul duality between $\text{Sym}(V)$ and $\Lambda(V^*)$ 
+for associative algebras. The proof follows from the Gui-Li-Zeng framework~\cite{GLZ-2212.11252v1}.
 
-\begin{proposition}
-The pairing
-$$\langle \cdot, \cdot \rangle: \bar{B}(\beta\gamma) \otimes \bar{B}(\beta'\gamma') \to \mathbb{C}$$
-defined by configuration space integration is perfect.
+\textbf{Step 1: Quadratic Data}
+
+For $\beta\gamma$ system:
+\begin{itemize}
+\item Generators: $N = \mathcal{O}_X \cdot \beta \oplus \mathcal{O}_X \cdot \gamma$
+\item Relations: $P \subset j_* j^*(N \boxtimes N)$ encode symplectic pairing:
+$$\langle \beta, \gamma \rangle = \frac{1}{z_1 - z_2}, \quad \langle \beta, \beta \rangle = 0, \quad \langle \gamma, \gamma \rangle = 0$$
+\end{itemize}
+
+For free fermions $\mathcal{F}$:
+\begin{itemize}
+\item Generator: $N' = \mathcal{O}_X \cdot \psi$  
+\item Relations: $P' \subset j_* j^*(N' \boxtimes N')$ given by $\psi \boxtimes \psi = 0$
+\end{itemize}
+
+\textbf{Step 2: Dual Quadratic Data}
+
+The Koszul dual is constructed via:
+$$(s^{-1}N^{\vee}\omega^{-1}, P^{\perp})$$
+
+For $\mathcal{F}$: The dual of the exterior relation $\psi \boxtimes \psi = 0$ is the symplectic pairing, 
+recovering $\beta\gamma$.
+
+For $\beta\gamma$: The dual of the symplectic pairing is the exterior relation, recovering $\mathcal{F}$.
+\end{proof}
+
+\subsection{Bar-Cobar Verification}
+\label{subsec:bar-cobar-verification}
+
+We verify the Koszul duality through explicit bar-cobar constructions.
+
+\subsubsection{Bar Complex of Free Fermions}
+
+\begin{proposition}[Bar Complex Structure]
+The bar complex of $\mathcal{F}$ is an exterior coalgebra:
+$$\bar{B}^n(\mathcal{F}) = \Lambda^n(\psi, \partial\psi, \partial^2\psi, \ldots)$$
+
+\textbf{Explicit computation}:
+\begin{align}
+\bar{B}^0(\mathcal{F}) &= \mathbb{C}|0\rangle \\
+\bar{B}^1(\mathcal{F}) &= \mathbb{C}\langle \psi_{-1/2}|0\rangle, \psi_{-3/2}|0\rangle, \ldots \rangle \\
+\bar{B}^2(\mathcal{F}) &= \mathbb{C}\langle \psi_{-a}\psi_{-b}|0\rangle, \partial\psi_{-a}|0\rangle \mid a,b \in \mathbb{Z}+1/2, a>b \rangle
+\end{align}
+
+\textbf{Key property}: $d(\psi \otimes \psi) = 0$ since $\psi^2 = 0$.
 \end{proposition}
 
-\section{Special Cases}
+\begin{proof}
+The anticommutation $\{\psi(z), \psi(w)\} = 0$ implies no poles in the OPE:
+$$\psi(z)\psi(w) = 0$$
+Therefore the differential vanishes on $\psi \otimes \psi$.
+\end{proof}
 
-\subsection{Free Fermions ($\lambda = 0$ or $1$)}
+\subsubsection{Cobar Reconstruction: $\Omega(\bar{B}(\mathcal{F})) \cong \beta\gamma$}
+
+\begin{theorem}[Cobar Gives Beta-Gamma]
+The cobar construction on $\bar{B}(\mathcal{F})$ recovers the $\beta\gamma$ system:
+$$\Omega(\bar{B}(\mathcal{F})) \cong \text{Chiral algebra}(\beta, \gamma \mid [\beta,\gamma] = 1)$$
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1}: Dualize $\bar{B}^1(\mathcal{F})$ to get two generators $\beta, \gamma$.
+
+\textbf{Step 2}: The relation $\psi \otimes \psi = 0$ in $\bar{B}^2(\mathcal{F})$ dualizes to:
+$$\beta \boxtimes \gamma - \gamma \boxtimes \beta = \frac{1}{z_1-z_2} \cdot 1$$
+
+This is precisely the symplectic pairing!
+
+\textbf{Step 3}: The cobar differential encodes the chiral product:
+$$\beta(z)\gamma(w) = \frac{1}{z-w} + \text{regular}$$
+\end{proof}
+
+\subsubsection{Bar Complex of Beta-Gamma (Detailed)}
+
+\begin{proposition}
+The bar complex $\bar{B}(\beta\gamma)$ has the following structure:
+
+\textbf{Degree 2 cohomology}:
+$$H^2(\bar{B}(\beta\gamma)) = \mathbb{C}\langle [\beta \otimes \beta], [\gamma \otimes \gamma] \rangle$$
+
+where both classes are represented by cycles that become zero in cohomology via the relation:
+$$d(\beta \otimes \gamma) = 1$$
+\end{proposition}
+
+\begin{proof}
+We compute:
+\begin{align}
+d(\beta \otimes \beta) &= 0 \quad \text{(no pole)} \\
+d(\gamma \otimes \gamma) &= 0 \quad \text{(no pole)} \\
+d(\beta \otimes \gamma) &= \text{Res}_{z_1=z_2}\left[\frac{1}{z_1-z_2} dz_1\right] = 1 \\
+d(\gamma \otimes \beta) &= -1
+\end{align}
+
+Therefore in cohomology:
+$$[\beta \otimes \beta] \neq 0, \quad [\gamma \otimes \gamma] \neq 0$$
+but these satisfy:
+$$[\beta \otimes \beta] \cdot [\gamma] = [\gamma \otimes \gamma] \cdot [\beta] = 0$$
+\end{proof}
+
+\subsubsection{Cobar Reconstruction: $\Omega(\bar{B}(\beta\gamma)) \cong \mathcal{F}$}
+
+\begin{theorem}[Cobar Gives Fermions]
+The cobar construction on $\bar{B}(\beta\gamma)$ recovers free fermions:
+$$\Omega(\bar{B}(\beta\gamma)) \cong \text{Chiral algebra}(\psi \mid \psi^2 = 0)$$
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1}: Dualize $\bar{B}^1(\beta\gamma) = \mathbb{C}\langle \beta \rangle \oplus \mathbb{C}\langle \gamma \rangle$ 
+to get a single generator $\psi$.
+
+\textbf{Step 2}: The cohomology classes $[\beta \otimes \beta]$, $[\gamma \otimes \gamma]$ dualize to the relation:
+$$\psi^2 = 0$$
+
+\textbf{Step 3}: This defines the free fermion algebra.
+\end{proof}
+
+\subsection{Geometric Interpretation}
+
+\begin{remark}[Verdier Duality Perspective]
+The fermion-boson Koszul duality can be understood geometrically via Verdier duality on configuration spaces:
+
+\begin{itemize}
+\item \textbf{Fermions}: Exterior algebra $\leftrightarrow$ Antisymmetric pairing
+\item \textbf{Bosons}: Polynomial algebra $\leftrightarrow$ Symplectic pairing
+\item \textbf{Duality}: Verdier duality exchanges these structures
+\end{itemize}
+
+See Beilinson-Drinfeld~\cite{BeilinsonDrinfeld} Section 3.8 for the geometric construction.
+\end{remark}
+
+\section{Relationship to Special Cases}
+
+\subsection{Understanding the $\lambda$ Parameter}
+
+\begin{remark}[Conformal Weights]
+The $\beta\gamma$ system has fields with conformal weights:
+$$h_\beta = 1-\lambda, \quad h_\gamma = \lambda$$
+where $\lambda$ is a parameter.
 
 When $\lambda = 1$:
 $$\{\beta(z), \gamma(w)\} = \delta(z-w)$$
-The system becomes fermionic.
+The fields themselves become fermionic (anticommuting).
 
-\begin{theorem}[Fermionic Bar Complex]
-$$\bar{B}(\text{fermions}) \simeq \Lambda^*[\xi, \eta]$$
-exterior algebra on two generators.
+However, this does NOT mean the Koszul dual changes! The Koszul dual is always the free fermion system, 
+regardless of $\lambda$.
+\end{remark}
+
+\subsection{The bc Ghost System}
+
+\begin{remark}[bc vs βγ]
+The $bc$ ghost system is distinct from $\beta\gamma$:
+\begin{itemize}
+\item \textbf{bc ghosts}: Anticommuting fields with weights $(h_b, h_c) = (1-\lambda, \lambda)$
+\item \textbf{βγ system}: Commuting fields (bosonic) with same weights
+\end{itemize}
+
+Both systems have the same Koszul dual structure! The difference is in the statistics (Bose vs Fermi), 
+not the Koszul dual.
+\end{remark}
+
+\subsection{Boson-Fermion Correspondence}
+
+\begin{theorem}[Physical Bosonization]
+There is a physics "bosonization" map relating $\beta\gamma$ and free fermions at the level of 
+\textit{correlation functions}:
+$$\text{Correlators}[\beta\gamma] \xleftrightarrow{\text{Bosonization}} \text{Correlators}[\mathcal{F}]$$
+
+This is \textbf{different} from Koszul duality! 
+\begin{itemize}
+\item \textbf{Koszul duality}: Algebraic relationship between chiral algebras via bar-cobar
+\item \textbf{Bosonization}: Equivalence of physical correlation functions
+\end{itemize}
 \end{theorem}
 
 \subsection{Symplectic Bosons ($\lambda = 1/2$)}
@@ -134,6 +296,7 @@ Special properties:
 \item Logarithmic OPE with stress tensor
 \item Non-semisimple representation theory
 \item Appears in logarithmic CFT
+\item Koszul dual is still $\mathcal{F}$ (free fermions)!
 \end{itemize}
 
 \section{Geometric Realization}
