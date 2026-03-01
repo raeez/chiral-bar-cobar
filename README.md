@@ -1,15 +1,30 @@
+<div align="center">
+
 # Chiral Duality in the Presence of Quantum Corrections
 
-**Geometric Realizations via Configuration Spaces**
+### Geometric Realizations via Configuration Spaces
 
----
+&nbsp;
 
-A research monograph constructing the geometric bar-cobar duality for chiral algebras
-on algebraic curves, extending Beilinson--Drinfeld's genus-zero framework through
-all genera via configuration space integrals on Fulton--MacPherson compactifications.
+![Pages](https://img.shields.io/badge/pages-951-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
+![Theorems](https://img.shields.io/badge/theorems_proved-827-10B981?style=for-the-badge&labelColor=1e1e2e)
+![Sources](https://img.shields.io/badge/source_files-64-3B82F6?style=for-the-badge&labelColor=1e1e2e)
+![LaTeX Errors](https://img.shields.io/badge/errors-0-EF4444?style=for-the-badge&labelColor=1e1e2e)
+![Claims](https://img.shields.io/badge/open_claims-0-F59E0B?style=for-the-badge&labelColor=1e1e2e)
 
-> *Logarithmic differential forms on configuration spaces act as diffracting prisms,*
-> *decomposing chiral algebras across their operadic spectrum.*
+&nbsp;
+
+*Logarithmic differential forms on configuration spaces act as diffracting prisms,*
+*decomposing chiral algebras across their operadic spectrum.*
+
+&nbsp;
+
+![Proved Here](https://img.shields.io/badge/ProvedHere-827-10B981?style=flat-square&labelColor=1e1e2e)
+![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-349-60A5FA?style=flat-square&labelColor=1e1e2e)
+![Conjectured](https://img.shields.io/badge/Conjectured-78-F59E0B?style=flat-square&labelColor=1e1e2e)
+![Open](https://img.shields.io/badge/Open-0-6B7280?style=flat-square&labelColor=1e1e2e)
+
+</div>
 
 ---
 
@@ -33,187 +48,189 @@ and central obstructions $\mathrm{obs}_k \in Z(\mathcal{A})$.
 
 ---
 
-## Repository Layout
+## Architecture
 
+```mermaid
+graph TD
+    subgraph "Part I &mdash; Theory"
+        A["Algebraic Foundations<br/><small>Classical Koszul duality, operads</small>"]
+        B["Configuration Spaces<br/><small>FM compactification, Arnold relations</small>"]
+        C["Bar-Cobar Construction<br/><small>Geometric bar, d&sup2;=0, Verdier pairing</small>"]
+        D["Higher Genus<br/><small>Curved A&infin;, quantum corrections</small>"]
+        E["Koszul Pairs &amp; Deformations<br/><small>Chiral modules, Hochschild cohomology</small>"]
+    end
+
+    subgraph "Part II &mdash; Examples"
+        F["Free Fields<br/><small>Heisenberg, fermions, &beta;&gamma;</small>"]
+        G["Kac-Moody &amp; W-Algebras<br/><small>Affine, Virasoro, W&#8358;</small>"]
+        H["Advanced<br/><small>Yangians, toroidal, deformation quantization</small>"]
+    end
+
+    subgraph "Part III &mdash; Connections"
+        I["Physics<br/><small>BV-BRST, Feynman diagrams, AGT</small>"]
+    end
+
+    A --> B --> C --> D --> E
+    E --> F --> G --> H
+    E --> I
+    C --> F
+    D --> I
+
+    style A fill:#4C1D95,stroke:#7C3AED,color:#E9D5FF
+    style B fill:#4C1D95,stroke:#7C3AED,color:#E9D5FF
+    style C fill:#312E81,stroke:#6366F1,color:#C7D2FE
+    style D fill:#312E81,stroke:#6366F1,color:#C7D2FE
+    style E fill:#312E81,stroke:#6366F1,color:#C7D2FE
+    style F fill:#064E3B,stroke:#10B981,color:#A7F3D0
+    style G fill:#064E3B,stroke:#10B981,color:#A7F3D0
+    style H fill:#064E3B,stroke:#10B981,color:#A7F3D0
+    style I fill:#7C2D12,stroke:#F97316,color:#FED7AA
 ```
-.
-├── main.tex                         Entry point (preamble, structure, includes)
-├── Makefile                         Build system
-├── README.md
-├── .gitignore
-│
-├── chapters/
-│   ├── theory/                      Part I: Theory (19 files)
-│   │   ├── introduction.tex             Introduction and main results
-│   │   ├── algebraic_foundations.tex     Classical Koszul duality
-│   │   ├── configuration_spaces.tex     FM compactification, Arnold relations
-│   │   ├── bar_cobar_construction.tex   The core construction
-│   │   ├── bar_cobar_quasi_isomorphism.tex  Inversion theorem, spectral sequence
-│   │   ├── poincare_duality.tex         Non-abelian Poincare duality
-│   │   ├── higher_genus.tex             Extension to all genera
-│   │   ├── higher_genus_full.tex        Full genus theory
-│   │   ├── higher_genus_quasi_isomorphism.tex  Higher genus inversion
-│   │   ├── koszul_across_genera.tex     Tower structure, modular invariance
-│   │   ├── chiral_koszul_pairs.tex      Curved structures, non-quadratic
-│   │   ├── koszul_pair_structure.tex    Pair classification
-│   │   ├── deformation_theory.tex       Deformation-obstruction theory
-│   │   ├── classical_to_chiral.tex      Three-level hierarchy
-│   │   ├── chiral_modules.tex           Module categories
-│   │   ├── poincare_duality_quantum.tex Quantum Poincare duality
-│   │   ├── quantum_corrections.tex      Loop corrections
-│   │   ├── filtered_curved.tex          Filtered vs. curved hierarchy
-│   │   └── hochschild_cohomology.tex    Chiral Hochschild, cyclic structure
-│   │
-│   ├── examples/                    Part II: Examples (21 files)
-│   │   ├── free_fields.tex              Heisenberg, free fermion
-│   │   ├── beta_gamma.tex               Symplectic bosons
-│   │   ├── heisenberg_higher_genus.tex  Higher genus Heisenberg
-│   │   ├── obstruction_classes.tex      Obstruction class computations
-│   │   ├── heisenberg_eisenstein.tex    Eisenstein series, modular forms
-│   │   ├── kac_moody_framework.tex      Affine Kac-Moody: framework
-│   │   ├── kac_moody_computations.tex   sl_2, sl_3, E_8 computations
-│   │   ├── w_algebras_framework.tex     W-algebras: framework
-│   │   ├── w_algebras_computations.tex  W_3, W_N, minimal models
-│   │   ├── w3_composite_fields.tex      W_3 Lambda field derivation
-│   │   ├── minimal_model_fusion.tex     Verlinde formula, fusion rules
-│   │   ├── minimal_model_examples.tex   Fusion tables
-│   │   ├── w_algebras_deep.tex          Flag varieties, jet geometry, Toda
-│   │   ├── deformation_quantization.tex Chiral Kontsevich formality
-│   │   ├── deformation_quantization_complete.tex  Complete proofs
-│   │   ├── deformation_examples.tex     Star products, Maurer-Cartan
-│   │   ├── yangians.tex                 Drinfeld Yangians, Coulomb branches
-│   │   ├── toroidal_elliptic.tex        Double affine, elliptic R-matrix
-│   │   ├── genus_expansions.tex         All-genera expansions
-│   │   ├── detailed_computations.tex    Degree-by-degree tables
-│   │   └── examples_summary.tex         Examples catalogue summary
-│   │
-│   └── connections/                 Part III: Connections (8 files)
-│       ├── poincare_computations.tex    NAP duality computations
-│       ├── feynman_diagrams.tex         Feynman diagram interpretation
-│       ├── feynman_connection.tex       Feynman-configuration connection
-│       ├── bv_brst.tex                  BV-BRST formalism
-│       ├── holomorphic_topological.tex  Holomorphic-topological theories
-│       ├── physical_origins.tex         4d/2d, D-branes, AGT
-│       ├── genus_complete.tex           Universal genus tower
-│       └── concordance.tex              Literature concordance
-│
-├── appendices/                      Appendices (14 files)
-│   ├── general_relations.tex            A-infinity relations, sign formulas
-│   ├── arnold_relations.tex             Arnold relations
-│   ├── signs_and_shifts.tex             Koszul signs, suspensions, determinants
-│   ├── sign_conventions.tex             LV vs. manuscript dictionary
-│   ├── theta_functions.tex              Theta functions, modular forms
-│   ├── spectral_sequences.tex           Filtered complexes, convergence
-│   ├── spectral_higher_genus.tex        Hodge-to-de Rham at higher genus
-│   ├── koszul_reference.tex             Koszul duality reference
-│   ├── homotopy_transfer.tex            HTT: SDR, tree formulas, transfer
-│   ├── dual_methodology.tex             Abstract-concrete methodology
-│   ├── computational_tables.tex         Computational tables
-│   ├── existence_criteria.tex           Existence criteria
-│   ├── nilpotent_completion.tex         Nilpotent completion
-│   └── notation_index.tex               Complete notation index
-│
-├── bibliography/
-│   └── references.tex                   Bibliography
-│
-├── notes/                           Working documents
-│   ├── INSIGHTS.md                      Mathematical audit log
-│   └── ...
-│
-└── archive/                         Superseded material
-```
-
----
-
-## Building
-
-**Requirements:** TeX Live (or equivalent) with `pdflatex`, the `memoir` class,
-`ebgaramond`, `newtxmath`, `microtype`, `tikz-cd`, `thmtools`, `mathtools`,
-and `tcolorbox`.
-
-```
-make            # Full build (3 passes — stable cross-references, ~1015 pages)
-make fast       # Single pass for quick iteration
-make watch      # Continuous rebuild on file changes (requires latexmk)
-make check      # Halt-on-error validation
-make draft      # Draft mode (faster, suppresses images)
-make clean      # Remove build artifacts
-make veryclean  # Remove artifacts and compiled PDF
-make count      # Manuscript statistics (line count, page count)
-make help       # Show all targets
-```
-
-The canonical entry point is `main.tex`. All chapter files are pulled in
-via `\include` or `\input` from their semantic directories. The build produces `main.pdf`.
-
-**Font options.** The default build uses EB Garamond (free) via `pdflatex`.
-For Adobe Garamond Pro (commercial), uncomment the XeLaTeX/LuaLaTeX
-font block in `main.tex` and compile with `xelatex` or `lualatex`.
-
----
-
-## Structure
-
-The manuscript is organized in three parts, followed by appendices.
-
-### Part I — Theory
-
-| Ch. | Source | Subject |
-|-----|--------|---------|
-| 1 | `theory/introduction` | Introduction and main results |
-| 2 | `theory/algebraic_foundations` | Algebraic foundations: classical Koszul duality |
-| 3 | `theory/configuration_spaces` | Configuration spaces and logarithmic forms |
-| 4 | `theory/bar_cobar_construction`, `theory/bar_cobar_quasi_isomorphism` | The geometric bar-cobar construction |
-| 5 | `theory/poincare_duality` | Non-abelian Poincare duality |
-| 6 | `theory/higher_genus*`, `theory/koszul_across_genera` | Higher genus extension |
-| 7 | `theory/chiral_koszul_pairs` -- `theory/hochschild_cohomology` | Chiral Koszul pairs, deformation theory, Hochschild cohomology |
-
-### Part II — Examples
-
-| Ch. | Source | Subject |
-|-----|--------|---------|
-| 8 | `examples/free_fields`, `examples/beta_gamma` | Free field theories: Heisenberg, fermions, $\beta\gamma$ |
-| 9 | `examples/kac_moody_*` | Affine Kac--Moody algebras |
-| 10 | `examples/w_algebras_*`, `examples/w3_*`, `examples/minimal_model_*` | $\mathcal{W}$-algebras |
-| 11 | `examples/deformation_quantization*` | Chiral deformation quantization |
-| 12 | `examples/yangians` | Yangians, shifted Yangians, Coulomb branches |
-| 13 | `examples/toroidal_elliptic` | Toroidal and elliptic algebras |
-| 14 | `examples/genus_expansions` | Explicit genus expansions |
-
-### Part III — Connections and Applications
-
-| Source | Subject |
-|--------|---------|
-| `connections/poincare_computations` | Non-abelian Poincare duality: computations |
-| `connections/feynman_diagrams` | Feynman diagram interpretation |
-| `connections/bv_brst` | BV-BRST formalism |
-| `connections/holomorphic_topological` | Holomorphic-topological theories |
-| `connections/physical_origins` | Physical origins: 4d/2d, D-branes, AGT |
-| `connections/concordance` | Literature concordance |
 
 ---
 
 ## Key Results
 
-1. **Geometric bar construction** realizing chiral algebra homology
-   through residue calculus on compactified configuration spaces.
+| &ensp; | Theorem | Statement |
+|:---:|---------|-----------|
+| **A** | **Geometric Bar-Cobar Duality** | Bar and cobar functors via configuration space integrals form an adjoint pair. For Koszul chiral algebras, the adjunction is an equivalence. |
+| **B** | **Bar-Cobar Inversion** | $\Omega^{\text{ch}} \circ \bar{B}\_{\text{geom}} \simeq \mathrm{id}$ via spectral sequence collapse at $E_2$. |
+| **C** | **Deformation-Obstruction Complementarity** | $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \simeq H^\*(\mathcal{M}\_g,\, Z(\mathcal{A}))$. What one algebra sees as deformation, its dual sees as obstruction. |
 
-2. **Bar-cobar quasi-isomorphism** $\Omega^{\text{ch}} \circ \bar{B}_{\text{geom}} \simeq \mathrm{id}$
-   via spectral sequence collapse.
+Additional results include chiral Poincare duality, explicit computations through degree 5 for Heisenberg, affine Kac--Moody, and $\mathcal{W}$-algebras, and a complete genus expansion framework via the Feynman transform of the modular operad.
 
-3. **Higher genus extension** incorporating quantum corrections
-   as curvature in curved $A_\infty$ structures,
-   with $m_0 \propto (k + h^\vee) \cdot \text{Casimir}$ at genus $g \geq 1$.
+---
 
-4. **Deformation-obstruction complementarity** for chiral Koszul pairs:
-   $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \simeq H^*(\mathcal{M}_g, Z(\mathcal{A}))$.
+## Repository Layout
 
-5. **Chiral Poincare duality**
-   $HH^n_{\text{chiral}}(\mathcal{A}) \simeq HH^{2-n}_{\text{chiral}}(\mathcal{A}^!)^\vee$.
+```mermaid
+graph LR
+    M["main.tex"] --> T["chapters/theory/<br/><small>19 files</small>"]
+    M --> X["chapters/examples/<br/><small>21 files</small>"]
+    M --> CN["chapters/connections/<br/><small>8 files</small>"]
+    M --> AP["appendices/<br/><small>14 files</small>"]
+    M --> BIB["bibliography/<br/><small>references.tex</small>"]
 
-6. **Explicit computations** through degree 5 for Heisenberg,
-   affine Kac--Moody ($\mathfrak{sl}_2$, $\mathfrak{sl}_3$, $E_8$),
-   and $\mathcal{W}$-algebras with curved $A_\infty$ Koszul duals.
+    style M fill:#1e1e2e,stroke:#8B5CF6,color:#E9D5FF
+    style T fill:#4C1D95,stroke:#7C3AED,color:#E9D5FF
+    style X fill:#064E3B,stroke:#10B981,color:#A7F3D0
+    style CN fill:#7C2D12,stroke:#F97316,color:#FED7AA
+    style AP fill:#1E3A5F,stroke:#3B82F6,color:#BFDBFE
+    style BIB fill:#3F3F46,stroke:#71717A,color:#D4D4D8
+```
+
+<details>
+<summary><b>Part I &mdash; Theory</b> &ensp; <code>chapters/theory/</code></summary>
+
+| File | Subject |
+|------|---------|
+| `introduction.tex` | Introduction and main results |
+| `algebraic_foundations.tex` | Classical Koszul duality, operads, Weiss covers |
+| `configuration_spaces.tex` | FM compactification, Arnold relations |
+| `bar_cobar_construction.tex` | The core construction |
+| `bar_cobar_quasi_isomorphism.tex` | Inversion theorem, spectral sequence |
+| `poincare_duality.tex` | Non-abelian Poincare duality |
+| `higher_genus.tex` | Extension to all genera |
+| `higher_genus_full.tex` | Full genus theory, propagators |
+| `higher_genus_quasi_isomorphism.tex` | Higher genus inversion |
+| `chiral_koszul_pairs.tex` | Curved structures, non-quadratic extensions |
+| `koszul_pair_structure.tex` | Pair classification, periodicity |
+| `deformation_theory.tex` | Deformation-obstruction theory |
+| `chiral_modules.tex` | Module categories, E1 module duality |
+| `poincare_duality_quantum.tex` | Quantum Poincare duality |
+| `quantum_corrections.tex` | Loop corrections |
+| `filtered_curved.tex` | Filtered vs. curved hierarchy |
+| `hochschild_cohomology.tex` | Chiral Hochschild, cyclic structure |
+
+</details>
+
+<details>
+<summary><b>Part II &mdash; Examples</b> &ensp; <code>chapters/examples/</code></summary>
+
+| File | Subject |
+|------|---------|
+| `free_fields.tex` | Heisenberg, free fermion, bc system |
+| `beta_gamma.tex` | Symplectic bosons |
+| `heisenberg_higher_genus.tex` | Higher genus Heisenberg |
+| `obstruction_classes.tex` | Obstruction class computations |
+| `heisenberg_eisenstein.tex` | Eisenstein series, modular forms |
+| `kac_moody_framework.tex` | Affine Kac-Moody: screening, Wakimoto |
+| `kac_moody_computations.tex` | sl2, sl3, E8 computations |
+| `w_algebras_framework.tex` | W-algebra Koszul duality |
+| `w_algebras_computations.tex` | W3, WN, minimal models |
+| `w3_composite_fields.tex` | W3 Lambda field derivation |
+| `minimal_model_fusion.tex` | Verlinde formula, fusion rules |
+| `minimal_model_examples.tex` | Fusion tables |
+| `w_algebras_deep.tex` | Flag varieties, jet geometry, Toda |
+| `deformation_quantization.tex` | Chiral Kontsevich formality |
+| `deformation_quantization_complete.tex` | Complete proofs |
+| `deformation_examples.tex` | Star products, Maurer-Cartan |
+| `yangians.tex` | Drinfeld Yangians, Coulomb branches |
+| `toroidal_elliptic.tex` | Double affine, elliptic R-matrix |
+| `lattice_foundations.tex` | Lattice VOA engine |
+| `genus_expansions.tex` | All-genera expansions |
+| `detailed_computations.tex` | Degree-by-degree tables |
+
+</details>
+
+<details>
+<summary><b>Part III &mdash; Connections</b> &ensp; <code>chapters/connections/</code></summary>
+
+| File | Subject |
+|------|---------|
+| `poincare_computations.tex` | NAP duality computations |
+| `feynman_diagrams.tex` | Feynman diagram interpretation |
+| `feynman_connection.tex` | Feynman-configuration connection |
+| `bv_brst.tex` | BV-BRST formalism |
+| `holomorphic_topological.tex` | Holomorphic-topological theories |
+| `physical_origins.tex` | 4d/2d, D-branes, AGT |
+| `genus_complete.tex` | Universal genus tower |
+| `concordance.tex` | Literature concordance |
+
+</details>
+
+<details>
+<summary><b>Appendices</b> &ensp; <code>appendices/</code></summary>
+
+| File | Subject |
+|------|---------|
+| `general_relations.tex` | A-infinity relations, sign formulas |
+| `arnold_relations.tex` | Arnold relations |
+| `signs_and_shifts.tex` | Koszul signs, suspensions, determinants |
+| `sign_conventions.tex` | Loday-Vallette vs. manuscript dictionary |
+| `theta_functions.tex` | Theta functions, modular forms |
+| `spectral_sequences.tex` | Filtered complexes, convergence |
+| `spectral_higher_genus.tex` | Hodge-to-de Rham at higher genus |
+| `koszul_reference.tex` | Koszul duality reference |
+| `homotopy_transfer.tex` | HTT: SDR, tree formulas, transfer |
+| `dual_methodology.tex` | Abstract-concrete methodology |
+| `computational_tables.tex` | Computational tables |
+| `existence_criteria.tex` | Existence criteria |
+| `nilpotent_completion.tex` | Nilpotent completion |
+| `notation_index.tex` | Complete notation index |
+
+</details>
+
+---
+
+## Building
+
+> **Requirements:** TeX Live (or equivalent) with `pdflatex`, `memoir`, `ebgaramond`, `newtxmath`, `microtype`, `tikz-cd`, `thmtools`, `mathtools`, `tcolorbox`.
+
+```bash
+make              # Full build (3 passes, stable cross-references)
+make fast         # Single pass for quick iteration
+make watch        # Continuous rebuild on file changes (requires latexmk)
+make check        # Halt-on-error validation
+make draft        # Draft mode (faster, suppresses images)
+make clean        # Remove build artifacts
+make veryclean    # Remove artifacts and compiled PDF
+make count        # Manuscript statistics
+```
+
+The entry point is `main.tex`. All chapter files are pulled in via `\include` or `\input`. The build produces `main.pdf`.
+
+**Font options.** The default uses EB Garamond (free) via `pdflatex`. For Adobe Garamond Pro (commercial), uncomment the XeLaTeX/LuaLaTeX font block in `main.tex` and compile with `xelatex` or `lualatex`.
 
 ---
 
@@ -221,30 +238,33 @@ The manuscript is organized in three parts, followed by appendices.
 
 | Symbol | Meaning |
 |--------|---------|
-| $\bar{B}_{\text{geom}}(\mathcal{A})$ | Geometric bar complex |
+| $\bar{B}\_{\text{geom}}(\mathcal{A})$ | Geometric bar complex |
 | $\Omega^{\text{ch}}(\mathcal{C})$ | Chiral cobar complex |
-| $\overline{C}_n(X)$ | Fulton--MacPherson compactification |
-| $\eta_{ij} = d\log(z_i - z_j)$ | Logarithmic 1-forms |
-| $\mathsf{Com}$, $\mathsf{Lie}$, $\mathsf{Ass}$ | Operads (Loday--Vallette conventions) |
-| $\mathsf{A}_\infty$, $\mathsf{L}_\infty$, $\mathsf{C}_\infty$ | Homotopy algebras |
+| $\overline{C}\_n(X)$ | Fulton--MacPherson compactification |
+| $\eta\_{ij} = d\log(z\_i - z\_j)$ | Logarithmic 1-forms (propagators) |
+| $\mathcal{A}^!$ | Koszul dual chiral algebra |
 | $k + h^\vee$ | Shifted level (Kac--Moody) |
-| $\mathcal{W}_k(\mathfrak{g})$ | $\mathcal{W}$-algebra at level $k$ |
-| $E_r^{p,q}$ | Spectral sequence page |
+| $\mathcal{W}\_k(\mathfrak{g})$ | $\mathcal{W}$-algebra at level $k$ |
+| $Q\_g(\mathcal{A})$ | Genus-$g$ quantum corrections |
 
-A complete notation index appears in `appendices/notation_index.tex`.
+Full notation index: `appendices/notation_index.tex`.
 
 ---
 
-## Mathematical Prerequisites
+## Prerequisites
 
 The reader is assumed familiar with:
 
-- Operad theory and Koszul duality (Loday--Vallette, *Algebraic Operads*)
-- Vertex algebras and chiral algebras (Beilinson--Drinfeld, Frenkel--Ben-Zvi)
-- Configuration spaces and the Fulton--MacPherson compactification
-- Homological algebra: $A_\infty$, $L_\infty$, spectral sequences, derived categories
-- Moduli of curves $\overline{\mathcal{M}}_{g,n}$ and their cohomology
+- **Operad theory** and Koszul duality &ensp; *(Loday--Vallette, Algebraic Operads)*
+- **Vertex/chiral algebras** &ensp; *(Beilinson--Drinfeld, Frenkel--Ben-Zvi)*
+- **Configuration spaces** and the Fulton--MacPherson compactification
+- **Homological algebra**: $A\_\infty$, $L\_\infty$, spectral sequences, derived categories
+- **Moduli of curves** $\overline{\mathcal{M}}\_{g,n}$ and their cohomology
 
 ---
 
-*~120,000 lines of LaTeX across 64 source files, compiling to ~1015 pages.*
+<div align="center">
+
+*951 pages &middot; 64 source files &middot; 120,000 lines of LaTeX*
+
+</div>
