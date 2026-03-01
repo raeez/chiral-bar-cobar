@@ -32,33 +32,49 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 
 ---
 
-## Current State (Mar 1, 2026)
+## Current State (Mar 1, 2026 — Post Session 40)
 
-### Census
+### Census (verified fresh via grep -rF on .tex files)
 | Category | Count |
 |----------|-------|
-| ProvedHere | 457 |
-| ProvedElsewhere | 256 |
-| Conjectured | 79 |
+| ProvedHere | **460** |
+| ProvedElsewhere | **258** |
+| Conjectured | **75** (59 distinct claims) |
 | Open | **0** |
 
 ### Compilation
-- 945 pages, zero LaTeX errors, zero undefined references, zero undefined citations
-- ~53K lines across 64 active .tex files (+ 892-line main.tex preamble)
+- **945 pages**, zero LaTeX errors, zero undefined references, zero undefined citations
+- 16 cosmetic hyperref warnings ("Token not allowed in PDF string")
+- ~51K lines across 55 active .tex files (+ main.tex preamble)
 - Bibliography complete (all citations resolved)
 
-### Phases Complete (39 sessions, ~1440 fixes)
+### Phases Complete (40 sessions, ~1440 fixes)
 - Phase 0-4: Content extraction, notation, de-duplication, math fixes, compilation
 - Phase 5-6: Comprehensive mathematical audits
 - Sessions 16-18: Open -> ProvedHere campaign (40 -> 0)
 - Sessions 19-23: Five Transformative Moves (all executed), structural reorganization
-- Sessions 24-39: Deep audit marathon, conjecture reduction (97 -> 79), bibliography completion
+- Sessions 24-39: Deep audit marathon, conjecture reduction (97 -> 75), bibliography completion
+- Session 40: Comprehensive assessment, documentation overhaul, conjecture attack
 
-### What Remains
-79 Conjectured items remain. All have scope remarks. They break into:
-- **Theory conjectures (~30)**: Periodicity theorems, deformation-obstruction in physics settings, curved structures. Most require new mathematical input (not just assembly of existing tools).
-- **Physics-dependent (~30)**: Holomorphic-topological, BV-BRST, physical origins. Require physics reasoning beyond pure mathematics.
-- **Examples (~19)**: Specific computations (toroidal, elliptic, higher genus expansions) that need case-by-case work.
+### What Remains — The 59 Distinct Conjectured Claims
+
+75 uses of \ClaimStatusConjectured in .tex files correspond to 59 distinct mathematical claims (some tags appear in scope remarks). All have scope remarks. Classification:
+
+| Category | Count | Action |
+|----------|-------|--------|
+| **PHYSICS** | 28 | Correctly scoped — outside pure math |
+| **PROVABLE** | 21 | Can be proved with existing infrastructure |
+| **GENUINELY OPEN** | 7 | Actual open mathematical problems |
+| **COMPUTATIONAL** | 3 | Explicit calculations not yet carried out |
+
+**Provable conjectures by priority** (see notes/CONJECTURE_REGISTRY.md for full details):
+- Tier 1 (high impact): Periodicity cluster (5 in deformation_theory.tex), chiral Kontsevich, P-infinity formality, deformation acyclicity
+- Tier 2 (moderate): EO recursion, Virasoro Hochschild, QME = bar-cobar, bar = BRST, general m_k, spectral sequence genus, master identity, elliptic vs rational
+- Tier 3 (partial): W-algebra bar-cobar items, affine periodicity at critical level, BV on chiral Hochschild
+
+**Physics conjectures (28)**: Concentrated in holomorphic_topological.tex (10), bv_brst.tex (6), free_fields.tex (8), physical_origins.tex (3), koszul_pair_structure.tex (3). All appropriately labeled with scope remarks.
+
+**Genuinely open (7)**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), obs_g^2=0 for g>=3, derived bc-betagamma.
 
 ---
 
@@ -169,7 +185,7 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 | koszul_pair_structure.tex | 1300 | 11 | 11 | 8 | Periodicity, affine/Virasoro structure |
 | chiral_modules.tex | 717 | 14 | 1 | 1 | Module categories, E_1 module Koszul duality |
 | deformation_theory.tex | 1330 | 10 | 3 | 8 | Deformation-obstruction, curved A-infinity |
-| hochschild_cohomology.tex | 644 | 5 | 16 | 0 | Hochschild-cyclic spectral sequence |
+| hochschild_cohomology.tex | 644 | 5 | 16 | 1 | Hochschild-cyclic spectral sequence |
 | quantum_corrections.tex | 381 | 1 | 0 | 0 | Quantum correction formulas |
 | filtered_curved.tex | 314 | 1 | 1 | 0 | Filtered-curved hierarchy |
 | koszul_across_genera.tex | 362 | 4 | 0 | 0 | Genus-graded Koszul duality (absorbed into higher_genus) |
@@ -181,7 +197,7 @@ Stubs (content merged elsewhere): bar_cobar_quasi_isomorphism, higher_genus_full
 | File | Lines | PH | PE | C | Notes |
 |------|------:|---:|---:|--:|-------|
 | lattice_foundations.tex | 1261 | 16 | 3 | 0 | Lattice VOA engine |
-| free_fields.tex | 2790 | 39 | 12 | 13 | Heisenberg, fermion, beta-gamma, bc |
+| free_fields.tex | 2790 | 39 | 12 | 14 | Heisenberg, fermion, beta-gamma, bc |
 | beta_gamma.tex | 515 | 9 | 4 | 0 | beta-gamma system detail |
 | heisenberg_eisenstein.tex | 530 | 5 | 2 | 1 | Heisenberg genus expansion, Eisenstein |
 | kac_moody_framework.tex | 942 | 13 | 6 | 1 | Affine KM: screening, Wakimoto, A-infinity |
@@ -189,7 +205,7 @@ Stubs (content merged elsewhere): bar_cobar_quasi_isomorphism, higher_genus_full
 | w3_composite_fields.tex | 421 | 4 | 1 | 0 | W_3 composite Lambda |
 | w_algebras_deep.tex | 170 | 1 | 4 | 0 | Flag varieties, jet geometry |
 | minimal_model_fusion.tex | 350 | 2 | 5 | 0 | Verlinde formula, fusion tables |
-| deformation_quantization.tex | 828 | 3 | 10 | 3 | Chiral Kontsevich, formality |
+| deformation_quantization.tex | 828 | 3 | 10 | 4 | Chiral Kontsevich, formality |
 | deformation_examples.tex | 178 | 0 | 4 | 1 | Coisson, star product |
 | yangians.tex | 290 | 3 | 1 | 1 | RTT, E_1 Yangian, Coulomb branch |
 | toroidal_elliptic.tex | 271 | 1 | 2 | 2 | Double affine, elliptic R-matrix |
