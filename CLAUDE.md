@@ -32,49 +32,48 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 
 ---
 
-## Current State (Mar 1, 2026 — Post Session 40)
+## Current State (Mar 1, 2026 — Post Session 42)
 
-### Census (verified fresh via grep -rF on .tex files)
+### Census
 | Category | Count |
 |----------|-------|
-| ProvedHere | **460** |
-| ProvedElsewhere | **258** |
-| Conjectured | **75** (59 distinct claims) |
+| ProvedHere | **472** |
+| ProvedElsewhere | **264** |
+| Conjectured | **70** |
 | Open | **0** |
 
 ### Compilation
-- **945 pages**, zero LaTeX errors, zero undefined references, zero undefined citations
-- 16 cosmetic hyperref warnings ("Token not allowed in PDF string")
-- ~51K lines across 55 active .tex files (+ main.tex preamble)
+- **951 pages**, zero LaTeX errors, zero undefined references, zero undefined citations, zero warnings
+- 55 active .tex files (+ main.tex preamble)
 - Bibliography complete (all citations resolved)
 
-### Phases Complete (40 sessions, ~1440 fixes)
+### Phases Complete (42 sessions, ~1460 fixes)
 - Phase 0-4: Content extraction, notation, de-duplication, math fixes, compilation
 - Phase 5-6: Comprehensive mathematical audits
 - Sessions 16-18: Open -> ProvedHere campaign (40 -> 0)
 - Sessions 19-23: Five Transformative Moves (all executed), structural reorganization
 - Sessions 24-39: Deep audit marathon, conjecture reduction (97 -> 75), bibliography completion
-- Session 40: Comprehensive assessment, documentation overhaul, conjecture attack
+- Sessions 40-42: Documentation overhaul, systematic conjecture attack, corrections campaign
 
-### What Remains — The 59 Distinct Conjectured Claims
+### What Remains — 70 Conjectured Claims
 
-75 uses of \ClaimStatusConjectured in .tex files correspond to 59 distinct mathematical claims (some tags appear in scope remarks). All have scope remarks. Classification:
+All have scope remarks. Classification (verified session 42):
 
 | Category | Count | Action |
 |----------|-------|--------|
-| **PHYSICS** | 28 | Correctly scoped — outside pure math |
-| **PROVABLE** | 21 | Can be proved with existing infrastructure |
-| **GENUINELY OPEN** | 7 | Actual open mathematical problems |
-| **COMPUTATIONAL** | 3 | Explicit calculations not yet carried out |
+| **PHYSICS** | ~28 | Correctly scoped — outside pure math |
+| **BORDERLINE PROVABLE** | ~4 | Provable in principle; substantial new work |
+| **GENUINELY OPEN** | ~5 | Actual open mathematical problems |
+| **COMPUTATIONAL** | ~3 | Explicit calculations not yet carried out |
+| **SCOPE-REMARK REFS** | ~30 | Re-references of above in scope remarks |
 
-**Provable conjectures by priority** (see notes/CONJECTURE_REGISTRY.md for full details):
-- Tier 1 (high impact): Periodicity cluster (5 in deformation_theory.tex), chiral Kontsevich, P-infinity formality, deformation acyclicity
-- Tier 2 (moderate): EO recursion, Virasoro Hochschild, QME = bar-cobar, bar = BRST, general m_k, spectral sequence genus, master identity, elliptic vs rational
-- Tier 3 (partial): W-algebra bar-cobar items, affine periodicity at critical level, BV on chiral Hochschild
+**Borderline provable**: chiral Kontsevich (all-orders Stokes), EO recursion (axiom verification), general m_k (all-genus propagator), affine periodicity at critical level
 
-**Physics conjectures (28)**: Concentrated in holomorphic_topological.tex (10), bv_brst.tex (6), free_fields.tex (8), physical_origins.tex (3), koszul_pair_structure.tex (3). All appropriately labeled with scope remarks.
+**Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), obs_g^2=0 for g>=3, derived bc-betagamma
 
-**Genuinely open (7)**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), obs_g^2=0 for g>=3, derived bc-betagamma.
+**Physics conjectures (~28)**: holomorphic_topological.tex (10), bv_brst.tex (6), free_fields.tex (8), physical_origins.tex (3), koszul_pair_structure.tex (3). All with scope remarks.
+
+**WARNING**: Always verify against fresh `grep -c ClaimStatusConjectured` before acting. Earlier session counts were wrong due to silent upgrades.
 
 ---
 
@@ -144,6 +143,7 @@ These errors have been made and corrected. DO NOT reintroduce them.
 - Virasoro DS: c = 1 - 6(k+1)^2/(k+2); W_3 DS: c = 2 - 24(k+2)^2/(k+3)
 - DS formula != minimal model formula (different parametrizations)
 - KM periodicity: 2h (Coxeter), NOT 2h-dual (dual Coxeter) — differ for non-simply-laced
+- KM periodicity rank>1: "period 2h for all g" is WRONG — sl_2 is 4-periodic but sl_3 is NOT 6-periodic (dim CH^12 != dim CH^6). Rank-1 periodicity + higher-rank polynomial-exterior structure.
 - h-dual(g-dual) = h-dual(g) ONLY for simply-laced; B_n: h-dual=2n-1, C_n: h-dual=n+1
 
 ### Curved and A-infinity
