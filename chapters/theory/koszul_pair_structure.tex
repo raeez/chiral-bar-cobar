@@ -586,36 +586,82 @@ The combination is new to this work.
 \subsection{Periodicity for Other Chiral Algebras}
 
 \begin{theorem}[Periodicity for Affine Algebras at Critical Level; \ClaimStatusConjectured]
-For $\hat{\mathfrak{g}}_{k}$ at critical level $k = -h^{\vee}$:
+\label{thm:affine-periodicity-critical}
+For $\hat{\mathfrak{g}}_{k}$ at critical level $k = -h^{\vee}$
+with $\mathfrak{g}$ of rank~$1$ (i.e., $\mathfrak{g} = \mathfrak{sl}_2$):
 \[
 CH^{n+2h}(\hat{\mathfrak{g}}_{-h^{\vee}}) \cong CH^n(\hat{\mathfrak{g}}_{-h^{\vee}})
 \]
-The period equals twice the Coxeter number.
+The period equals twice the Coxeter number ($2h = 4$ for $\mathfrak{sl}_2$).
+
+For $\mathfrak{g}$ of rank $r > 1$ with exponents $m_1 \leq \cdots \leq m_r$,
+the chiral Hochschild cohomology is expected to satisfy
+\[
+CH^*(\hat{\mathfrak{g}}_{-h^{\vee}}) \;\cong\;
+\Lambda^*(P_1, \ldots, P_r) \otimes \bC[\Theta_1, \ldots, \Theta_r]
+\]
+where $\deg P_i = 2m_i + 1$ and $\deg\Theta_i = 2(m_i + 1)$, generalizing the
+polynomial growth of the Virasoro case (Theorem~\ref{thm:virasoro-periodicity}).
 \end{theorem}
 
-\begin{remark}[Status]
-The expected proof involves the action of the affine Weyl group
-$\widetilde{W}$ on $CH^*(\hat{\mathfrak{g}}_{-h^\vee})$.  At
-critical level, the enlarged center $\mathfrak{z}(\hat{\mathfrak{g}})$ acts on
-the chiral Hochschild complex, and the Weyl group orbits on the center
-(identified with $\mathrm{Op}_{{}^L\mathfrak{g}}$ by the Feigin--Frenkel isomorphism
-\cite{FF92}) should induce the periodicity.  However, the explicit construction
-of the periodicity operator and the proof that it induces isomorphisms remain open.
-The period $2h$ is motivated by the order of the Coxeter element in the finite Weyl group~$W$.
+\begin{remark}[Status and rank distinction]
+\label{rem:affine-periodicity-analysis}
+Careful analysis reveals that the periodicity phenomenon differs
+by rank.
+
+\textbf{Rank~$1$.}
+For $\hat{\mathfrak{sl}}_2$ at $k = -2$,
+the Beilinson--Drinfeld comparison (applied via the
+Gel'fand--Fuchs computation for the positive-part subalgebra
+$\mathfrak{sl}_2 \otimes t\bC[[t]]$) gives
+$CH^* = \Lambda(P_1) \otimes \bC[\Theta_1]$
+with $\deg P_1 = 3$ and $\deg\Theta_1 = 4$.  The Poincar\'e series
+$(1 + t^3)/(1 - t^4)$ is $4$-periodic, confirming
+$CH^{n+4} \cong CH^n$ for all $n \geq 0$.
+The cup product with $\Theta_1 \in CH^4$
+gives the periodicity operator, exactly as in the Virasoro proof
+(Theorem~\ref{thm:virasoro-periodicity}), with the period
+doubling from $2$ to $4$ reflecting the passage from Virasoro to the
+full affine algebra.  The Feigin--Frenkel center
+$\mathfrak{z}(\hat{\mathfrak{sl}}_{2,-2}) \cong
+\mathrm{Fun}\,\mathrm{Op}_{\mathfrak{sl}_2}$ provides the
+geometric origin of~$\Theta_1$.
+
+\textbf{Rank~$r > 1$.}
+For $\hat{\mathfrak{g}}$ of rank $r > 1$, the cohomology ring
+is a polynomial-exterior algebra in $2r$ generators with
+$r$ distinct polynomial degrees $2(m_i + 1)$, $i = 1, \ldots, r$.
+When these degrees are not all equal, the Poincar\'e series
+does not exhibit strict periodicity $CH^{n+N} \cong CH^n$.
+For example, $\hat{\mathfrak{sl}}_3$ at $k = -3$ gives
+$\deg\Theta_1 = 4$, $\deg\Theta_2 = 6$; one computes
+$\dim CH^0 = 1$ but $\dim CH^6 = 1$ while $\dim CH^{12} = 3$,
+violating $6$-periodicity.
+The correct higher-rank statement is \emph{polynomial growth}:
+$\dim CH^n = O(n^{r-1})$ with the growth rate controlled by the
+$r$ independent generators $\Theta_1, \ldots, \Theta_r$.
 \end{remark}
 
 \begin{remark}[Scope]
-Affine periodicity at critical level is labeled \ClaimStatusConjectured{}
-because the proof strategy depends on the Feigin--Frenkel isomorphism
-$\mathfrak{z}(\hat{\mathfrak{g}}_{-h^\vee}) \cong
-\mathrm{Fun}\,\mathrm{Op}_{{}^L\mathfrak{g}}$ and the action of the
-affine Weyl group on opers, both of which are established
-\cite{FF92, Fre07}.  What remains is the construction of an explicit
-periodicity operator on $CH^*(\hat{\mathfrak{g}}_{-h^\vee})$ from these
-ingredients and the verification that the induced map on cohomology is an
-isomorphism.  This requires a detailed analysis of the chiral Hochschild
-complex at critical level that goes beyond the general framework developed
-in Part~1.
+The rank-$1$ case is provable by the same method as
+Theorem~\ref{thm:virasoro-periodicity} (spectral sequence
+degeneration plus Gel'fand--Fuchs computation for
+$\mathfrak{sl}_2 \otimes t\bC[[t]]$), combined with the
+Feigin--Frenkel isomorphism $\mathfrak{z}(\hat{\mathfrak{g}}_{-h^\vee})
+\cong \mathrm{Fun}\,\mathrm{Op}_{{}^L\mathfrak{g}}$
+(\ClaimStatusProvedElsewhere, \cite{FF92, Fre07}).
+The higher-rank structural result (polynomial-exterior ring)
+depends on the generalized Gel'fand--Fuchs computation for
+$\mathfrak{g} \otimes t\bC[[t]]$, which is established
+(\ClaimStatusProvedElsewhere, Fuks; see also Feigin--Tsygan),
+together with the Beilinson--Drinfeld comparison between
+chiral Hochschild and continuous Lie algebra cohomology at
+critical level, where the uncurved ($m_0 = 0$) structure of the
+bar complex (cf.\ the level-shifting duality,
+Theorem~\ref{thm:level-shifting-abstract}) ensures the comparison is valid.
+The synthesis of these ingredients into a complete proof for all
+simple~$\mathfrak{g}$ requires working through the critical-level
+module category in detail; this remains the subject of future work.
 \end{remark}
 
 % ================================================================
@@ -1125,6 +1171,21 @@ For non-quadratic algebras, we get Chern-Simons with higher corrections:
 S = \int \mathrm{Tr}\left(\alpha \wedge d\alpha + \frac{2}{3}\alpha^3\right) + \text{(higher terms from } \ell_3, \ell_4, \ldots\text{)}
 \]
 where the higher terms arise in the BV-BRST formalism (with fields of mixed ghost degree, so that the total form degree remains 3 on a 3-manifold).
+\end{remark}
+
+\begin{remark}[Scope]
+The CS/Koszul Duality Correspondence is labeled \ClaimStatusConjectured{}
+because the identification of the Maurer--Cartan equation in the Koszul
+dual coalgebra with the Chern--Simons equation of motion is a heuristic
+observation, not a theorem.  The mathematical content --- that the MC
+equation has the \emph{form} of a flatness condition $dA + A \wedge A = 0$
+with higher corrections from $m_3, m_4, \ldots$ --- follows from the
+$L_\infty$ structure on $\mathcal{A}^! \otimes B$ (which is established).
+What remains conjectural is the \emph{precise dictionary}: identifying
+the gauge field $\alpha$ with a connection on a 3-manifold, the $m_2$ term
+with the Chern--Simons interaction, and the higher $m_n$ terms with
+BV-BRST corrections.  This dictionary requires physical input from the
+Costello--Gwilliam perturbative QFT framework.
 \end{remark}
 
 \subsection{Physical Interpretation: Quantum Groups and Chern-Simons}

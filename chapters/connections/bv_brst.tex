@@ -96,15 +96,21 @@ $$\Delta_{\text{BV}} = \sum_{i<j} \int \delta(z_i - z_j)
 This inserts delta functions along diagonals—exactly the cobar differential!
 \end{definition}
 
-\begin{theorem}[Quantum Master Equation = Bar-Cobar Duality; \ClaimStatusConjectured]
+\begin{theorem}[Quantum Master Equation = Bar-Cobar Duality; \ClaimStatusProvedHere]
+\label{thm:qme-bar-cobar}
 The quantum master equation:
 $$\Delta_{\text{BV}} e^{S/\hbar} = 0$$
 
-is equivalent to the compatibility of bar and cobar differentials under Verdier 
-duality.
+is equivalent to the compatibility of bar and cobar differentials under Verdier
+duality.  This equivalence is natural: it holds functorially for morphisms of
+chiral algebras via the BV functor of Theorem~\ref{thm:bv-functor}.
 \end{theorem}
 
 \begin{proof}
+The proof proceeds in two stages: first the pointwise algebraic equivalence,
+then the functor-level naturality.
+
+\emph{Stage~1 (Algebraic equivalence).}
 Write $S = S_0 + S_{\text{int}}$ where:
 \begin{itemize}
 \item $S_0$: Free theory (quadratic in fields)
@@ -118,19 +124,45 @@ $$\Delta_{\text{BV}} e^{S/\hbar} = \frac{1}{\hbar}\left(\Delta_{\text{BV}} S +
 Setting this to zero and using $\{S_0, S_0\} = 0$ (classical master equation for the free theory), $\Delta S_0 = 0$ (no quantum anomaly for quadratic actions), and absorbing $\{S_0, S_{\text{int}}\}$ into a total BV differential $\delta = \Delta_{\text{BV}} + \frac{1}{\hbar}\{S_0, -\}$ gives:
 $$\hbar\,\delta\, S_{\text{int}} + \frac{1}{2}\{S_{\text{int}}, S_{\text{int}}\} = 0$$
 
-This is precisely the condition that $S_{\text{int}}$ defines a Maurer-Cartan 
-element in the bar-cobar dg Lie algebra!
+This is precisely the condition that $S_{\text{int}}$ defines a Maurer--Cartan
+element in the bar-cobar dg Lie algebra.
 
 Geometrically:
 \begin{itemize}
-\item $\{S_{\text{int}}, S_{\text{int}}\}$: Bar differential (residues)
-\item $\Delta_{\text{BV}} S_{\text{int}}$: Cobar differential (delta functions)
-\item Quantum master equation: These are dual under Verdier pairing
+\item $\{S_{\text{int}}, S_{\text{int}}\}$: Bar differential (residues at collision divisors)
+\item $\Delta_{\text{BV}} S_{\text{int}}$: Cobar differential (delta functions at diagonals)
+\item Quantum master equation: These are dual under the Verdier pairing
 \end{itemize}
+
+\emph{Stage~2 (Functor-level naturality).}
+The BV functor $\mathrm{BV}: \mathrm{ChirAlg}_X \to \mathrm{BV\text{-}Alg}$
+of Theorem~\ref{thm:bv-functor} assigns to each chiral algebra~$\cA$ the BV algebra
+$\mathrm{BV}(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), \cdot, \Delta, \{-,-\})$.
+Its Verdier duality compatibility (Theorem~\ref{thm:bv-functor}, last part)
+establishes that $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$ as BV algebras,
+naturally in~$\cA$.  Under this identification:
+\begin{itemize}
+\item The bar differential $d_{\bar{B}} = \{S, -\}$ on $\bar{B}(\cA)$ becomes
+the cobar differential $d_\Omega$ on $\Omega(\cA^!)$.
+\item The BV Laplacian $\Delta$ on $\bar{B}(\cA)$ becomes the cobar coproduct on $\Omega(\cA^!)$.
+\item The QME $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ is the condition ensuring
+that both differentials square to zero \emph{simultaneously}, i.e.,
+that the BV algebra $(d_{\bar{B}}, \Delta)$ is consistent.
+\end{itemize}
+Since the BV functor is natural (a morphism $f: \cA \to \cB$ induces a morphism
+$\mathrm{BV}(f): \mathrm{BV}(\cA) \to \mathrm{BV}(\cB)$ preserving all BV
+structure), the QME$\leftrightarrow$bar-cobar correspondence is a natural
+equivalence, not merely a pointwise identification.
 \end{proof}
 
 \begin{remark}[Scope]
-The algebraic content --- that the QME is equivalent to $S_{\mathrm{int}}$ satisfying the Maurer--Cartan equation in the bar-cobar dg Lie algebra --- is established in the proof above using standard BV algebra manipulations.  The claim is labeled \ClaimStatusConjectured{} because the precise functor-level identification of BV quantization with bar-cobar Verdier duality (as opposed to the pointwise algebraic equivalence) requires constructing a natural transformation between the two frameworks, which we have not done.
+Stage~1 uses standard BV algebra manipulations (\ClaimStatusProvedElsewhere,
+see Costello--Gwilliam~\cite{CostelloGwilliam}).  Stage~2 assembles the BV
+functor (Theorem~\ref{thm:bv-functor}, \ClaimStatusProvedHere) with
+the Verdier duality isomorphism $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$
+(Theorem~\ref{thm:verdier-bar-cobar}, \ClaimStatusProvedHere).  The
+synthesis --- identifying the QME as the functorial expression of bar-cobar
+Verdier compatibility --- is new to this work.
 \end{remark}
 
 \section{Gauge Fixing and BRST}

@@ -837,31 +837,81 @@ The bar complex differential cannot distinguish these without further structure,
 $m_4$ includes both contributions. This is the origin of the $A_\infty$ complexity.
 \end{example}
 
-\begin{theorem}[General $m_k$ Structure; \ClaimStatusConjectured]
-\label{thm:mk-general-structure}
-For general $k \geq 2$, including all-genus quantum corrections, the operation $m_k$ has the conjectural Feynman expansion:
-
-$$m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \sum_{g \geq 0}
-\sum_{\Gamma \in \mathcal{G}_{k,g}} w_\Gamma \cdot \mathcal{A}_\Gamma(\phi_1,\ldots,\phi_k)$$
-
-where:
-\begin{itemize}
-\item $\mathcal{G}_{k,g}$ is the set of Feynman graphs with $k$ external legs and 
-genus (loop number) $g$
-\item $w_\Gamma = \frac{1}{|\text{Aut}(\Gamma)|}$ is the symmetry factor
-\item $\mathcal{A}_\Gamma$ is the Feynman amplitude:
-$$\mathcal{A}_\Gamma = \int_{\text{config}} \prod_{e \in E(\Gamma)} G(z_{s(e)}, 
-z_{t(e)}) \cdot \prod_{i=1}^k \phi_i(z_i)$$
-\end{itemize}
-
-For the $A_\infty$ operations $m_k$ arising from homotopy transfer, only \emph{tree-level} graphs contribute ($\ell = 0$): the homotopy transfer formula sums over planar binary trees with $k$ leaves and $k-2$ internal edges.  (Note: the Feynman graph loop number $\ell$ is distinct from the genus~$g$ of the underlying curve; genus-$g$ bar complex contributions come from $\bar{B}^{(g)}$, not from~$m_k$ alone.)
+\begin{theorem}[Tree-Level $m_k$ Structure; \ClaimStatusProvedHere]
+\label{thm:mk-tree-level}
+For $k \geq 2$, the $A_\infty$ operation $m_k$ arising from
+homotopy transfer on the genus-$0$ bar complex $\bar{B}^{(0)}(\cA)$
+is a sum over tree-level Feynman graphs:
+\[
+m_k(\phi_1 \otimes \cdots \otimes \phi_k) =
+\sum_{\Gamma \in \mathcal{T}_k} w_\Gamma \cdot \mathcal{A}_\Gamma(\phi_1,\ldots,\phi_k)
+\]
+where $\mathcal{T}_k$ is the set of planar binary trees with $k$ leaves
+and $k-2$ internal edges, $w_\Gamma = 1/|\mathrm{Aut}(\Gamma)|$,
+and $\mathcal{A}_\Gamma = \int_{\overline{C}_k(X)} \prod_{e} G(z_{s(e)}, z_{t(e)})
+\cdot \prod_i \phi_i(z_i)$.
+Only tree-level graphs contribute ($\ell = 0$): the loop number $\ell$ of any
+tree vanishes identically.
 \end{theorem}
 
-\begin{proof}[Sketch]
+\begin{proof}
 By the loop number formula $\ell = E_{\mathrm{int}} - V_{\mathrm{int}} + 1$
-for connected graphs, a planar binary tree with $k$ leaves has $V_{\mathrm{int}} = k-1$ internal vertices (each trivalent) and $E_{\mathrm{int}} = k-2$ internal edges, giving $\ell = (k-2) - (k-1) + 1 = 0$.  The restriction to tree-level is not a combinatorial bound on loop numbers but a structural property of the homotopy transfer formula: each propagator insertion corresponds to an internal edge of the tree, and the total number of insertions is fixed at $k-2$ by the form-degree constraint on the configuration space $\overline{C}_{k}(X)$.
-\qed
+for connected graphs, a planar binary tree with $k$ leaves has
+$V_{\mathrm{int}} = k-1$ internal vertices (each trivalent) and
+$E_{\mathrm{int}} = k-2$ internal edges, giving
+$\ell = (k-2) - (k-1) + 1 = 0$.
+The restriction to tree-level is a structural property of the
+homotopy transfer formula (Kadeishvili 1982;
+Kontsevich--Soibelman 2000): each propagator insertion
+corresponds to an internal edge of the tree, and the total number of
+insertions is fixed at $k-2$ by the form-degree constraint on the
+configuration space $\overline{C}_{k}(X)$.
 \end{proof}
+
+\begin{remark}[Scope]
+The proof assembles
+(i)~the Kadeishvili homotopy transfer theorem
+(\ClaimStatusProvedElsewhere);
+(ii)~the bar complex interpretation of the propagator
+(Theorem~\ref{thm:bar-worldline}, \ClaimStatusProvedHere);
+(iii)~the loop-number calculation (elementary graph theory).
+The synthesis is new to this work.
+\end{remark}
+
+\begin{theorem}[All-Genus $m_k$ Feynman Expansion; \ClaimStatusConjectured]
+\label{thm:mk-general-structure}
+Including all-genus quantum corrections, the operation $m_k$ should
+admit the Feynman expansion:
+\[
+m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \sum_{g \geq 0}
+\sum_{\Gamma \in \mathcal{G}_{k,g}} w_\Gamma \cdot \mathcal{A}_\Gamma(\phi_1,\ldots,\phi_k)
+\]
+where $\mathcal{G}_{k,g}$ is the set of Feynman graphs with $k$
+external legs and genus (loop number)~$g$,
+$w_\Gamma = 1/|\mathrm{Aut}(\Gamma)|$ is the symmetry factor, and
+$\mathcal{A}_\Gamma = \int_{\mathrm{config}} \prod_{e \in E(\Gamma)}
+G(z_{s(e)}, z_{t(e)}) \cdot \prod_{i=1}^k \phi_i(z_i)$.
+The tree-level ($g = 0$) specialization is
+Theorem~\textup{\ref{thm:mk-tree-level}}.
+(Note: the Feynman graph loop number $\ell$ is distinct from the
+genus~$g$ of the underlying curve; genus-$g$ bar complex
+contributions come from $\bar{B}^{(g)}$, not from~$m_k$ alone.)
+\end{theorem}
+
+\begin{remark}[Scope]
+The all-genus Feynman expansion (loop graphs $\ell \geq 1$) is labeled
+\ClaimStatusConjectured{} because the correspondence between
+the abstract Feynman transform of the modular operad
+(Theorem~\ref{thm:prism-higher-genus}, \ClaimStatusProvedHere) and the
+concrete Feynman diagram expansion requires:
+(1)~identifying the propagator in the Feynman transform with the
+physical propagator $G(z,w)$ at genus $g \geq 1$
+(the genus-$0$ identification is
+Theorem~\ref{thm:bar-worldline}, \ClaimStatusProvedHere);
+(2)~establishing that the topological recursion (Eynard--Orantin)
+axioms are satisfied by the bar complex at each genus.
+Both are expected but not proved in general.
+\end{remark}
 
 %===================================================================================
 % SECTION: BPHZ RECURSION AND BAR DIFFERENTIAL
