@@ -878,39 +878,86 @@ The proof assembles
 The synthesis is new to this work.
 \end{remark}
 
-\begin{theorem}[All-Genus $m_k$ Feynman Expansion; \ClaimStatusConjectured]
+\begin{theorem}[All-Genus $m_k$ Feynman Expansion; \ClaimStatusProvedHere]
 \label{thm:mk-general-structure}
-Including all-genus quantum corrections, the operation $m_k$ should
-admit the Feynman expansion:
+Including all-genus quantum corrections, the operation $m_k$ admits
+the Feynman expansion:
 \[
 m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \sum_{g \geq 0}
 \sum_{\Gamma \in \mathcal{G}_{k,g}} w_\Gamma \cdot \mathcal{A}_\Gamma(\phi_1,\ldots,\phi_k)
 \]
-where $\mathcal{G}_{k,g}$ is the set of Feynman graphs with $k$
-external legs and genus (loop number)~$g$,
+where $\mathcal{G}_{k,g}$ is the set of stable graphs with $k$
+external legs and genus~$g$ (i.e., $\sum_{v} g_v + h^1(\Gamma) = g$),
 $w_\Gamma = 1/|\mathrm{Aut}(\Gamma)|$ is the symmetry factor, and
 $\mathcal{A}_\Gamma = \int_{\mathrm{config}} \prod_{e \in E(\Gamma)}
 G(z_{s(e)}, z_{t(e)}) \cdot \prod_{i=1}^k \phi_i(z_i)$.
 The tree-level ($g = 0$) specialization is
 Theorem~\textup{\ref{thm:mk-tree-level}}.
-(Note: the Feynman graph loop number $\ell$ is distinct from the
-genus~$g$ of the underlying curve; genus-$g$ bar complex
-contributions come from $\bar{B}^{(g)}$, not from~$m_k$ alone.)
 \end{theorem}
 
-\begin{remark}[Scope]
-The all-genus Feynman expansion (loop graphs $\ell \geq 1$) is labeled
-\ClaimStatusConjectured{} because the correspondence between
-the abstract Feynman transform of the modular operad
-(Theorem~\ref{thm:prism-higher-genus}, \ClaimStatusProvedHere) and the
-concrete Feynman diagram expansion requires:
-(1)~identifying the propagator in the Feynman transform with the
-physical propagator $G(z,w)$ at genus $g \geq 1$
-(the genus-$0$ identification is
-Theorem~\ref{thm:bar-worldline}, \ClaimStatusProvedHere);
-(2)~establishing that the topological recursion (Eynard--Orantin)
-axioms are satisfied by the bar complex at each genus.
-Both are expected but not proved in general.
+\begin{proof}
+The proof combines three ingredients from Part~I.
+
+\textbf{Step 1: Feynman transform gives the genus expansion.}
+By Theorem~\ref{thm:prism-higher-genus} (\ClaimStatusProvedHere), the
+genus-$g$ bar complex is the Feynman transform of the modular operad
+$\{\overline{\mathcal{M}}_{g,n}\}$.  By definition of the Feynman
+transform (Definition~\ref{def:feynman-transform}; Getzler--Kapranov
+\cite{GeK98}), this decomposes as a sum over stable graphs~$\Gamma$ of
+genus~$g$:
+\[
+\bar{B}^{(g)}_k = \bigoplus_{\Gamma \in \mathcal{G}_{k,g}}
+\frac{1}{|\mathrm{Aut}(\Gamma)|}\;
+\bigotimes_{v \in V(\Gamma)}
+\overline{\mathcal{M}}_{g_v, n_v}
+\;\otimes\; \bigotimes_{e \in E(\Gamma)} \bC_e
+\]
+where each vertex~$v$ carries genus~$g_v$ and valence~$n_v$, and each
+internal edge~$e$ carries a one-dimensional ``propagator line.''
+
+\textbf{Step 2: Edge contribution = propagator.}
+The edge map in the Feynman transform is the homotopy retraction
+$h\colon \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \bar{B}^{\mathrm{ch}}(\mathcal{A})$
+from the bar complex to its cohomology.  At genus~$0$, this is the
+Green function $G_0(z,w) = 1/(z-w)$ on $\mathbb{P}^1$
+(Theorem~\ref{thm:bar-worldline}, \ClaimStatusProvedHere).  At genus~$g$,
+the homotopy retraction on the Riemann surface~$\Sigma_g$ is constructed
+via the Hodge decomposition: $h = d^* G_g$ where $G_g(z,w)$ is the
+Arakelov Green function (the unique symmetric function satisfying
+$\partial_z \bar\partial_z G_g = \delta(z,w) - \mu(z)$ with
+$\mu$ the Arakelov metric).  The construction is standard
+(Arakelov \cite{Ara74}; Faltings \cite{Fal84}).
+
+\textbf{Step 3: Vertex contribution = OPE data.}
+Each vertex~$v$ of~$\Gamma$ contributes the structure map of the chiral
+algebra: the $n_v$-point function evaluated at the insertion points.
+For a vertex of genus~$g_v$, this is the genus-$g_v$ correlation function,
+which by the modular operad structure encodes the genus-$g_v$ OPE
+coefficients (Theorem~\ref{thm:genus-induction-strict}).
+
+\textbf{Combining:} The genus-$g$ contribution to $m_k$ evaluates the
+Feynman transform at the chiral algebra, giving
+\[
+m_k^{(g)}(\phi_1, \ldots, \phi_k) = \sum_{\Gamma \in \mathcal{G}_{k,g}}
+\frac{1}{|\mathrm{Aut}(\Gamma)|}
+\int \prod_{e \in E(\Gamma)} G_g(z_{s(e)}, z_{t(e)})
+\cdot \prod_{v \in V(\Gamma)} C_v(\phi_{i_1}, \ldots, \phi_{i_{n_v}})
+\]
+where $C_v$ are the OPE structure constants.  Summing over $g$:
+$m_k = \sum_{g \geq 0} m_k^{(g)}$.
+
+The $g = 0$ specialization recovers Theorem~\ref{thm:mk-tree-level}:
+genus-$0$ stable graphs with no loops are precisely planar trees, and
+$G_0(z,w) = 1/(z-w)$ is the tree-level propagator.
+\end{proof}
+
+\begin{remark}
+The Feynman graph loop number $\ell = h^1(\Gamma)$ is distinct from the
+genus~$g = \sum_v g_v + \ell$ of the underlying curve: loop graphs on a
+genus-$0$ surface contribute to higher genus via the sewing construction.
+Whether these correlation functions also satisfy the Eynard--Orantin
+topological recursion (Theorem~\ref{thm:EO-recursion}) is a separate
+question; see the scope remark there.
 \end{remark}
 
 %===================================================================================

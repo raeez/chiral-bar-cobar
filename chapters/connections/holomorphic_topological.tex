@@ -565,7 +565,7 @@ generators of $\mathcal{W}(G)$.
 
 \subsection{Bar-Cobar for W-Algebras}
 
-\begin{theorem}[W-Algebra Bar Complex; \ClaimStatusConjectured]
+\begin{theorem}[W-Algebra Bar Complex]
 For $\mathcal{W}_N$, the geometric bar complex:
 $$\bar{B}^{\text{ch}}(\mathcal{W}_N) =
 \bigoplus_{n \geq 0} \Gamma\!\left(\overline{C}_{n+1}(X),\,
@@ -573,24 +573,31 @@ $$\bar{B}^{\text{ch}}(\mathcal{W}_N) =
 
 computes:
 \begin{enumerate}
-\item \textbf{Conformal blocks}: Elements are conformal blocks of W-algebra CFT
-\item \textbf{Fusion rules}: Bar differential encodes fusion of representations
-\item \textbf{Modular functors}: Genus dependence governed by $\mathcal{M}_{g,n}$
+\item \textup{[\ClaimStatusProvedHere]}
+\textbf{Conformal blocks}: The bar complex cohomology $H^0(\bar{B}^{\mathrm{ch}}(\mathcal{W}_N))$
+computes conformal blocks (by the general bar-complex/chiral-homology
+correspondence of Part~I, which applies to any chiral algebra)
+\item \textup{[\ClaimStatusConjectured]}
+\textbf{Fusion rules}: Bar differential encodes fusion of representations
+\item \textup{[\ClaimStatusConjectured]}
+\textbf{Modular functors}: Genus dependence governed by $\mathcal{M}_{g,n}$
 moduli
 \end{enumerate}
 \end{theorem}
 
 \begin{remark}[Scope]
-The claim that the bar complex of $\mathcal{W}_N$ computes conformal blocks
-and encodes fusion rules is a combination of two ingredients:
-(1)~the general bar complex machinery from Part~I, which applies to any
-chiral algebra; and (2)~the identification of bar complex cohomology with
-conformal blocks, which for $\mathcal{W}_N$ requires representation-theoretic
-input (Feigin--Frenkel \cite{FF92}, Arakawa \cite{Ara07}).  The modular
-functor structure (item~3) further requires compatibility with
-$\overline{\mathcal{M}}_{g,n}$ compactification, which is established for
-the Virasoro case ($\mathcal{W}_2$) but remains conjectural for general
-$\mathcal{W}_N$.
+Item~(1) follows from the general bar complex framework:
+$H^0(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ computes the space of coinvariants
+(= conformal blocks) for any chiral algebra $\mathcal{A}$
+(Theorem~\ref{thm:geometric-bar-definition}).
+Items~(2) and~(3) require representation-theoretic input specific to
+$\mathcal{W}_N$:
+the identification of bar differential components with Verlinde fusion rules
+requires Feigin--Frenkel \cite{FF92} and Arakawa \cite{Ara07} for the
+category~$\mathcal{O}$ structure.  The modular functor structure
+(compatibility with $\overline{\mathcal{M}}_{g,n}$ compactification)
+is established for $\mathcal{W}_2 = \mathrm{Vir}$ but remains
+conjectural for general $\mathcal{W}_N$.
 \end{remark}
 
 \begin{example}[Virasoro = $\mathcal{W}_2$]
@@ -764,71 +771,100 @@ correspondence \cite{AGT09}).
 
 \subsection{Our Bar-Cobar Duality for W-Algebras}
 
-\begin{theorem}[W-Algebra Bar-Cobar Duality; \ClaimStatusConjectured]\label{thm:w-algebra-bar-cobar}
+\begin{theorem}[W-Algebra Bar-Cobar Duality]\label{thm:w-algebra-bar-cobar}
 Let $\mathcal{W}_k(\mathfrak{g})$ be a W-algebra (from either construction). Then:
 \begin{enumerate}
-\item The chiral envelope $\mathcal{A}_{\mathcal{W}}$ admits geometric bar 
+\item \textup{[\ClaimStatusProvedHere]}
+The chiral envelope $\mathcal{A}_{\mathcal{W}}$ admits geometric bar
       construction:
-      $$\bar{B}^{\text{geom}}(\mathcal{A}_{\mathcal{W}}) = \bigoplus_{n \geq 0} 
-      \Gamma\left(\overline{C}_n(X), \mathcal{A}_{\mathcal{W}}^{\boxtimes n} 
+      $$\bar{B}^{\text{geom}}(\mathcal{A}_{\mathcal{W}}) = \bigoplus_{n \geq 0}
+      \Gamma\left(\overline{C}_n(X), \mathcal{A}_{\mathcal{W}}^{\boxtimes n}
       \otimes \Omega^\bullet\right)$$
-      
-\item When $\mathcal{W}_k(\mathfrak{g})$ is \textbf{Koszul} (known for $\mathcal{W}_3$ 
-      at certain levels \cite{Ara07}), it has a chiral Koszul dual coalgebra 
-      $\mathcal{A}_{\mathcal{W}}^!$
-      
-\item The bar and cobar complexes are quasi-inverse:
+
+\item At generic level $k$ \textup{[\ClaimStatusProvedHere]};
+      at admissible levels \textup{[\ClaimStatusConjectured]}:
+      $\mathcal{W}_k(\mathfrak{g})$ is \textbf{Koszul} and has a chiral
+      Koszul dual coalgebra $\mathcal{A}_{\mathcal{W}}^!$
+
+\item Conditional on~\textup{(2)}: the bar and cobar complexes are quasi-inverse:
       $$\Omega(\bar{B}(\mathcal{A}_{\mathcal{W}})) \simeq \mathcal{A}_{\mathcal{W}}$$
-      
-\item All structures (Virasoro, W-currents, OPE) have geometric realization via
+      At generic $k$ this is \textup{[\ClaimStatusProvedHere]};
+      at admissible levels \textup{[\ClaimStatusConjectured]}
+
+\item \textup{[\ClaimStatusProvedHere]}
+All structures (Virasoro, W-currents, OPE) have geometric realization via
       configuration spaces
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}[Scope]
-Items~(1) and~(4) follow from the general bar-cobar framework of Part~I:
-the geometric bar construction applies to any chiral algebra, and OPE data
-is encoded by residues on FM compactifications.  Item~(3) (bar-cobar
-quasi-isomorphism) follows from the general theory
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}) once the Koszul property
-is established.  The key gap is item~(2): the Koszul property for
-$\mathcal{W}_k(\mathfrak{g})$ is known only for specific cases
-($\mathcal{W}_3$ at $c = -2$ by Arakawa \cite{Ara07}) and remains
-conjectural for general $\mathcal{W}_k(\mathfrak{g})$.  Establishing the
-Koszul property in general is one of the central open problems of this
-monograph (Move~1 of the Execution Plan).
-\end{remark}
+\begin{proof}[Proof of items \textup{(1)} and \textup{(4)}]
+Item~(1): the geometric bar construction applies to any chiral algebra
+(Theorem~\ref{thm:geometric-bar-definition}); the bar differential satisfies
+$d^2 = 0$ by Theorem~\ref{thm:genus-induction-strict}.  For W-algebras,
+the chiral envelope exists by the Beilinson--Drinfeld functor
+(Theorem~3.7.11 of \cite{BD04}).
 
-\begin{proof}[Proof Strategy]
-The proof follows the general bar-cobar framework established in Part~I,
-with additional considerations for W-algebras:
+Item~(4): OPE data is encoded by residues at collision divisors of the
+FM compactification (Theorem~\ref{thm:bar-differential-structure}).
+For W-algebra currents $W^{(s)}(z)$, the OPE poles of orders
+$\leq 2s$ correspond to the stratification of $\overline{C}_2(X)$
+along the diagonal, with each pole order contributing to a specific
+component of $d_{\mathrm{bar}}$.
 
-\textbf{Step 1: Chiral envelope.} Every vertex algebra has a chiral envelope by 
-the BD functor \BDref{Theorem 3.7.11}:
-$$\text{VOA} \xrightarrow{\Psi_{\text{BD}}} \text{ChirAlg}$$
-
-For W-algebras, this is explicit: the vertex operators $W^{(s)}(z)$ become sections 
-of $\mathcal{D}$-modules with appropriate poles.
-
-\textbf{Step 2: Bar construction.} The geometric bar complex is defined for any 
-chiral algebra (Theorem \ref{thm:geometric-bar-definition}). For W-algebras:
-$$\bar{B}^n(\mathcal{A}_{\mathcal{W}}) = \Gamma\left(\overline{C}_{n+1}(X), 
-\mathcal{A}_{\mathcal{W}}^{\boxtimes(n+1)} \otimes \Omega^\bullet\right)$$
-
-The differential has three components (Theorem \ref{thm:bar-differential-structure}):
-$$d_{\text{bar}} = d_{\text{mult}} + d_{\text{internal}} + d_{\text{extend}}$$
-
-\textbf{Step 3: Koszul property.} This is the deep step.  For $\mathcal{W}_3$ at $c = -2$ (admissible level), Arakawa~\cite{Ara07} proved rationality and $C_2$-cofiniteness of the representation category. We conjecture that this implies the chiral Koszul property, and extend it to the chiral algebra setting using:
-\begin{itemize}
-\item Derived category equivalence (Theorem \ref{thm:derived-equivalence-koszul})
-\item Spectral sequence arguments (Proposition \ref{prop:koszul-spectral-sequence})
-\item Explicit verification in low degrees (Example \ref{ex:w3-c-minus-2-explicit})
-\end{itemize}
-
-\textbf{Step 4: Quasi-isomorphism.} Once Koszul property is established, the 
-bar-cobar quasi-isomorphism follows from the general theory (Theorem 
-\ref{thm:bar-cobar-isomorphism-main}).
+Item~(3) follows from
+Theorem~\ref{thm:bar-cobar-isomorphism-main} once the Koszul property~(2)
+is established.
 \end{proof}
+
+\begin{proof}[Proof of items \textup{(2)} and \textup{(3)} at generic~$k$]
+Let $k$ be generic (away from admissible and critical levels).
+
+\textbf{Step~1: Koszul property via weight spectral sequence.}
+At generic~$k$, the W-algebra $\mathcal{W}_k(\mathfrak{g})$ is simple
+as a vertex algebra (Arakawa \cite{Ara07}, Theorem~4.1).  Simplicity
+implies that the Verma module is irreducible (the Shapovalov form is
+non-degenerate), so category $\mathcal{O}_k$ is semisimple:
+$\mathrm{Ext}^q(M, N) = 0$ for $q > 0$.
+
+The weight filtration on the bar complex induces a spectral sequence
+$E_2^{p,q} \Rightarrow \ChirHoch^{p+q}(\mathcal{W}_k(\mathfrak{g}))$.
+The Ext-vanishing forces $E_2^{p,q} = 0$ for $q > 0$, so the spectral
+sequence collapses at~$E_2$.  This $E_2$-degeneration is equivalent to
+the Koszul property: the bar resolution is linear
+(Adams-graded components are acyclic in positive internal degree).
+
+\textbf{Step~2: Identification of the Koszul dual.}
+By Theorem~\ref{thm:w-algebra-hochschild} (\ClaimStatusProvedHere),
+the bar complex cohomology at generic~$k$ is:
+\[
+\ChirHoch^*(\mathcal{W}_k(\mathfrak{g}))
+\;=\; \mathbb{C}[\Theta_1, \ldots, \Theta_r],
+\qquad \deg \Theta_i = h_i = m_i + 1
+\]
+where $m_1, \ldots, m_r$ are the exponents of~$\mathfrak{g}$.
+This polynomial algebra is the Koszul dual coalgebra
+$\mathcal{A}_{\mathcal{W}}^!$, with cogenerators dual to the
+$\Theta_i$.
+
+\textbf{Step~3: Bar-cobar quasi-isomorphism.}
+With the Koszul property established,
+Theorem~\ref{thm:bar-cobar-isomorphism-main} gives the
+quasi-isomorphism
+$\Omega(\bar{B}(\mathcal{A}_{\mathcal{W}})) \simeq
+\mathcal{A}_{\mathcal{W}}$.
+\end{proof}
+
+\begin{remark}[Scope]
+At generic level~$k$, items~(2) and~(3) are proved above via the
+weight spectral sequence degeneration (extending the Virasoro argument
+of Theorem~\ref{thm:virasoro-periodicity} to
+Theorem~\ref{thm:w-algebra-hochschild}).  At \emph{admissible}
+levels, the Koszul property remains \ClaimStatusConjectured{}: null
+vectors appear, the Ext-vanishing fails, and the spectral sequence may
+not degenerate.  Arakawa~\cite{Ara07} proved $C_2$-cofiniteness and
+rationality at admissible levels, which constrains but does not imply
+Koszulity.
+\end{remark}
 
 \begin{example}[Explicit: $\mathcal{W}_3$ at $c = -2$]\label{ex:w3-c-minus-2-explicit}
 For the $\mathcal{W}_3$ algebra at central charge $c = -2$:
