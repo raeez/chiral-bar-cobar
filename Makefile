@@ -102,6 +102,7 @@ clean:
 	@find chapters appendices bibliography -name '*.aux' -delete 2>/dev/null || true
 	@rm -f texput.log
 	@rm -f $(MAIN).pdf
+	@touch $(MAIN).aux
 	@echo "  ✓  Clean."
 
 ## veryclean: Alias for clean (kept for backward compatibility).
