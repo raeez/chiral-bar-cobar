@@ -1,0 +1,186 @@
+\chapter{Computational Tables and Reference Data}
+\label{app:computational-tables}
+
+\section{Configuration Space Weight Tables}
+
+\subsection{Low-Degree Kontsevich Weights}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Graph Type & Vertices & Edges & Weight $w_\Gamma$ \\
+\hline
+Single point & 1 & 0 & 1 \\
+\hline
+Binary tree & 2 & 1 & 1 \\
+\hline
+Wheel & 2 & 2 & $\frac{1}{12}$ \\
+\hline
+Chain & 3 & 2 & $\frac{1}{24}$ \\
+\hline
+Complete & 3 & 3 & $\frac{\zeta(3)}{(2\pi)^2}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Affine Kac-Moody Data}
+
+\subsection{Classical Simple Lie Algebras}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Type & $\mathfrak{g}$ & $\dim \mathfrak{g}$ & $h^\vee$ & Level shift $k'$ \\
+\hline
+$A_n$ & $\mathfrak{sl}_{n+1}$ & $n(n+2)$ & $n+1$ & $-k - 2(n+1)$ \\
+\hline
+$B_n$ & $\mathfrak{so}_{2n+1}$ & $n(2n+1)$ & $2n-1$ & $-k - 2(2n-1)$ \\
+\hline
+$C_n$ & $\mathfrak{sp}_{2n}$ & $n(2n+1)$ & $n+1$ & $-k - 2(n+1)$ \\
+\hline
+$D_n$ & $\mathfrak{so}_{2n}$ & $n(2n-1)$ & $2n-2$ & $-k - 2(2n-2)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Exceptional Lie Algebras}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Type & $\dim$ & $h^\vee$ & Level shift \\
+\hline
+$G_2$ & 14 & 4 & $-k-8$ \\
+\hline
+$F_4$ & 52 & 9 & $-k-18$ \\
+\hline
+$E_6$ & 78 & 12 & $-k-24$ \\
+\hline
+$E_7$ & 133 & 18 & $-k-36$ \\
+\hline
+$E_8$ & 248 & 30 & $-k-60$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{W-Algebra Structure Constants}
+
+\subsection{\texorpdfstring{$W_3$ Commutators (Explicit)}{W 3 Commutators (Explicit)}}
+
+For the $W_3$ algebra with generators $\{L_n\}_{n \in \mathbb{Z}}$ (Virasoro) and $\{W_n\}_{n \in \mathbb{Z}}$ (weight-3 field):
+
+\begin{align}
+[L_m, L_n] &= (m-n)L_{m+n} + \frac{c}{12}m(m^2-1)\delta_{m+n,0} \\
+[L_m, W_n] &= (2m-n)W_{m+n} \\
+[W_m, W_n] &= \frac{c}{360}m(m^2-1)(m^2-4)\delta_{m+n,0} \\
+&\quad + \frac{16(m-n)}{22+5c}\Lambda_{m+n} \\
+&\quad + (m-n)\frac{2m^2 - mn + 2n^2 - 8}{30}L_{m+n}
+\end{align}
+
+\subsection{OPE Residue Formulas}
+
+For primary fields $\phi_i$ of weight $h_i$, the residue at collision divisor $D_{ij}$ is:
+$$\text{Res}_{D_{ij}}[\phi_i(z) \otimes \phi_j(w) \otimes \eta_{ij}] = C^k_{ij} \phi_k(w)$$
+where $C^k_{ij}$ is the OPE coefficient at the simple pole.  The residue extracts the $(z-w)^{-1}$ term of the OPE, which contributes when:
+$$h_i + h_j - h_k = 1$$
+(simple pole condition).  Higher-order poles ($h_i + h_j - h_k > 1$) contribute to higher-order terms in the bar differential.
+
+\section{Arnold Relation Expansions}
+
+\subsection{Three-Point Relations}
+
+$$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$$
+
+\subsection{Four-Point Relations}
+
+For $n = 4$, there are four Arnold relations, one for each $3$-element subset of
+$\{1,2,3,4\}$:
+\begin{align}
+\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} &= 0 \\
+\eta_{12} \wedge \eta_{24} + \eta_{24} \wedge \eta_{41} + \eta_{41} \wedge \eta_{12} &= 0 \\
+\eta_{13} \wedge \eta_{34} + \eta_{34} \wedge \eta_{41} + \eta_{41} \wedge \eta_{13} &= 0 \\
+\eta_{23} \wedge \eta_{34} + \eta_{34} \wedge \eta_{42} + \eta_{42} \wedge \eta_{23} &= 0
+\end{align}
+These are all instances of the three-point pattern applied to subsets.
+Products of \emph{disjoint} pairs $\eta_{ij} \wedge \eta_{kl}$ with
+$\{i,j\} \cap \{k,l\} = \emptyset$ are \emph{not} constrained by Arnold relations
+and represent independent classes in $H^2(C_4(\mathbb{C}))$
+
+\subsection{\texorpdfstring{General $n$-Point Relations}{General n-Point Relations}}
+
+For any three distinct indices $i, j, k$, the fundamental Arnold relation is:
+$$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$$
+More generally, the Orlik--Solomon relations state: for each circuit (minimal dependent set) $\{h_0, \ldots, h_p\}$ in the arrangement, one has $\sum_{r=0}^{p} (-1)^r \, e_{h_0} \wedge \cdots \wedge \widehat{e_{h_r}} \wedge \cdots \wedge e_{h_p} = 0$.
+
+\section{Modular Forms at Higher Genus}
+
+\subsection{Genus 1: Eisenstein Series}
+
+$$E_2(\tau) = 1 - 24\sum_{n=1}^\infty \frac{nq^n}{1-q^n}, \quad q = e^{2\pi i \tau}$$
+$$E_4(\tau) = 1 + 240\sum_{n=1}^\infty \frac{n^3q^n}{1-q^n}$$
+$$E_6(\tau) = 1 - 504\sum_{n=1}^\infty \frac{n^5q^n}{1-q^n}$$
+
+\subsection{Genus 2: Siegel Modular Forms}
+
+For period matrix $\Omega \in \mathbb{H}_2$:
+$$\Theta_{[\delta]}(\Omega) = \sum_{n \in \mathbb{Z}^2} \exp(i\pi n^T \Omega n + 2\pi i \delta^T n)$$
+
+\textit{Note: This appendix is a placeholder for comprehensive computational reference tables. Full tables to be developed as the computational chapters (XI and XII) are completed.}
+
+\section{\texorpdfstring{$W_3$ Algebra Coefficients}{W-3 Algebra Coefficients}}
+\label{app:w3-coefficients}
+\label{app:w3-jacobi-full}
+
+\subsection{\texorpdfstring{Composite Field $\Lambda$ Formula}{Composite Field Formula}}
+
+\begin{equation}
+\Lambda(w) = {:}T(w)T(w){:}
+\end{equation}
+the normal-ordered product.  The quasi-primary composite appearing in the OPE (cf.\ Example~\ref{ex:w3-completion-full}) is $\Lambda_{\mathrm{qp}} = {:}TT{:} - \tfrac{3}{10}\partial^2 T$; in the mode commutator below we use $\Lambda_n = \sum_m {:}L_m L_{n-m}{:}$ without derivative correction.
+
+\subsection{Coefficient Values for Standard Central Charges}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$c$ & $\alpha(c) = \frac{16}{22+5c}$ & $\beta(c) = \frac{3}{10}$ & 
+$\alpha$ (fraction) & $\alpha$ (decimal) \\
+\hline
+$-2$ & $\frac{16}{12}$ & $\frac{3}{10}$ & $\frac{4}{3}$ & $1.333$ \\
+\hline
+$-1$ & $\frac{16}{17}$ & $\frac{3}{10}$ & $\frac{16}{17}$ & $0.941$ \\
+\hline
+$0$ & $\frac{16}{22}$ & $\frac{3}{10}$ & $\frac{8}{11}$ & $0.727$ \\
+\hline
+$1$ & $\frac{16}{27}$ & $\frac{3}{10}$ & $\frac{16}{27}$ & $0.593$ \\
+\hline
+$2$ & $\frac{16}{32}$ & $\frac{3}{10}$ & $\frac{1}{2}$ & $0.500$ \\
+\hline
+$5$ & $\frac{16}{47}$ & $\frac{3}{10}$ & $\frac{16}{47}$ & $0.340$ \\
+\hline
+$10$ & $\frac{16}{72}$ & $\frac{3}{10}$ & $\frac{2}{9}$ & $0.222$ \\
+\hline
+$50$ & $\frac{16}{272}$ & $\frac{3}{10}$ & $\frac{1}{17}$ & $0.059$ \\
+\hline
+$100$ & $\frac{16}{522}$ & $\frac{3}{10}$ & $\frac{8}{261}$ & $0.031$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Mode Expansion Formulas}
+
+The normal-ordered composite $\Lambda$ has mode expansion:
+$$\Lambda_n = \sum_{m \in \mathbb{Z}} :L_m L_{n-m}:$$
+
+\textbf{Low mode examples:}
+\begin{align}
+\Lambda_0 &= L_0^2 + 2\sum_{k>0} L_{-k}L_k \\
+\Lambda_1 &= 2L_0 L_1 + 2\sum_{k>0} L_{-k}L_{k+1} \\
+\Lambda_{-1} &= 2L_0 L_{-1} + 2\sum_{k>0} L_k L_{-k-1}
+\end{align}
+
+\subsection{Comparison with Literature}
+
+\textbf{Convention note.}  Much of the literature (Zamolodchikov 1985, Bouwknegt--Schoutens 1993, Arakawa 2017) defines a ``full composite'' $\widetilde{\Lambda} = \frac{16}{22+5c}\bigl({:}TT{:} - \frac{3}{10}\partial^2 T\bigr)$, absorbing the coefficient $\alpha = 16/(22+5c)$ into the quasi-primary field.  With that convention the commutator reads $(m-n)\widetilde{\Lambda}_{m+n}$ (no extra factor of $\alpha$).  We use $\Lambda = {:}TT{:}$ as above, so our commutator carries the explicit factor $\frac{16(m-n)}{22+5c}\Lambda_{m+n}$.  Both conventions yield the same mode algebra; the quasi-primary version $\Lambda_{\mathrm{qp}} = {:}TT{:} - \frac{3}{10}\partial^2 T$ (cf.\ Example~\ref{ex:w3-completion-full}) is the field-theoretic standard for the OPE.
+
+\textbf{Conclusion:} All sources agree after accounting for normalization differences!

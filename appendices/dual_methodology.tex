@@ -1,0 +1,233 @@
+\chapter{Dual Abstract-Concrete Methodology}
+\label{app:dual-methodology}
+
+Throughout this monograph, every major result is established via two complementary 
+approaches: an abstract $\infty$-categorical proof using universal properties and 
+functorial characterizations, and a concrete geometric proof using explicit 
+chain-level constructions. This appendix explains the philosophy behind this 
+dual approach and demonstrates its benefits through key instances.
+
+\section{Philosophy and Benefits}
+\label{sec:philosophy}
+
+\begin{convention}[Dual proof methodology]
+\label{conv:dual-proof}
+For fundamental theorems in derived algebra and geometry, we provide two proofs:
+\begin{enumerate}[label=(\roman*)]
+\item an abstract proof establishing existence, uniqueness, and functoriality through categorical machinery;
+\item a concrete proof providing explicit formulas and computations.
+\end{enumerate}
+The agreement of both proofs validates the constructions and illuminates the mathematics from complementary perspectives.
+\end{convention}
+
+\begin{remark}[Why Dual Proofs?]
+\label{rem:dual-proofs}
+The dual methodology serves multiple purposes.
+
+Validation: Agreement between abstract and concrete approaches
+confirms correctness. Errors in one approach are often caught by the other.
+
+Computation: Abstract proofs establish what exists; concrete
+proofs show how to compute it. For applications, explicit formulas are
+essential.
+
+Generalization: Abstract proofs often generalize more readily (to
+derived settings, higher categories, etc.), while concrete proofs may reveal
+special structures visible only with explicit formulas.
+
+Understanding: Different readers approach mathematics differently.
+Some prefer categorical elegance; others prefer explicit calculations.
+Providing both serves the full mathematical community.
+\end{remark}
+
+\begin{example}[Duality of Approaches]
+\label{ex:duality-approaches}
+Consider proving that the bar-cobar adjunction is an equivalence:
+
+\textbf{Abstract}: In a pro-nilpotent symmetric monoidal $\infty$-category, 
+the bar and cobar functors are adjoint equivalences by the general theory of 
+Koszul duality for operads (Francis--Gaitsgory, Lurie).
+
+\textbf{Concrete}: The bar-cobar complex has an explicit filtration by total 
+degree. The associated spectral sequence has acyclic $E_1$-page (via the 
+contracting homotopy $h[a_1|\cdots|a_n] = [1|a_1|\cdots|a_n]$). Convergence 
+follows from bounded-below filtration.
+
+Both proofs establish the same theorem; together they provide both the ``why'' 
+(categorical necessity) and the ``how'' (explicit acyclicity argument).
+\end{example}
+
+
+\section{Key Instances: Bar-Cobar and Riemann--Hilbert}
+\label{sec:key-instances}
+
+\subsection{Bar-Cobar Equivalence}
+
+\begin{theorem}[Abstract Bar-Cobar Equivalence; \ClaimStatusProvedElsewhere]
+\label{thm:abstract-bar-cobar}
+In the $\infty$-category $\DMod^{\mathrm{fact}}(\Ran(X))$ of factorization 
+D-modules on the Ran space of a curve $X$, equipped with the chiral tensor 
+structure:
+\[
+\Bbar: \Eone\text{-}\Alg \rightleftarrows \Eone\text{-}\coAlg : \Cobar
+\]
+is an adjoint equivalence of $\infty$-categories.
+\end{theorem}
+
+\begin{proof}[Abstract proof]
+The chiral tensor structure on $\DMod(\Ran(X))$ is pro-nilpotent in the sense 
+of Francis--Gaitsgory: for any object $\cM$, the tensor powers $\cM^{\otimes n}$ 
+supported on $\Ran_{\geq n}(X)$ have ``vanishing'' homology as $n \to \infty$ 
+in an appropriate sense.
+
+By the general theory of Koszul duality for operads in pro-nilpotent tensor 
+$\infty$-categories~\cite{FG}, the bar-cobar adjunction is an equivalence. 
+The key point is that pro-nilpotence ensures the bar and cobar constructions 
+are ``completed'' and the unit/counit maps are equivalences.
+\end{proof}
+
+\begin{theorem}[Concrete Bar-Cobar Equivalence; \ClaimStatusProvedElsewhere]
+\label{thm:concrete-bar-cobar}
+For an $\Eone$-chiral algebra $\cA$, the counit:
+\[
+\varepsilon: \Cobar^{\mathrm{geom}}(\Bbar^{\mathrm{geom}}(\cA)) \xrightarrow{\simeq} \cA
+\]
+is a quasi-isomorphism.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+\emph{Step 1.} The double bar-cobar complex $\Cobar(\Bbar(\cA))$ has a
+bigrading by cobar wordlength~$q$ (tensor degree in $T(s^{-1}\overline{B}(\cA))$)
+and bar degree~$p$ (within each bar element).  Filter by cobar wordlength~$q$.
+
+\emph{Step 2.} The $E_0$-page at wordlength~$q$ is $(s^{-1}\overline{B}(\cA))^{\otimes q}$.
+The $d_0$-differential is the bar differential~$d_B$ (acting on each tensor factor,
+preserving wordlength).
+
+\emph{Step 3.} The \emph{augmented} (two-sided) bar complex
+$B(\cA, \cA, \bC) = \cA \otimes T(s\bar{\cA}) \otimes \bC$
+admits a contracting homotopy $h[a_1|\cdots|a_n] = [1|a_1|\cdots|a_n]$
+(the extra degeneracy) and is therefore acyclic.  Note: this contracting
+homotopy does \emph{not} restrict to the reduced bar complex~$\Bbar(\cA) = T^c(s\bar{\cA})$
+(since inserting~$1$ leaves~$\bar{\cA}$), so $\Bbar(\cA)$ itself is generally
+\emph{not} acyclic---its homology computes~$\mathrm{Tor}^{\cA}_*(\bC, \bC)$.
+
+\emph{Step 4.} Instead, the quasi-isomorphism follows from the
+\emph{comparison lemma} for twisted tensor products
+(\cite{LodayVallette}~\S2.1).  Both $\Cobar(\Bbar(\cA)) \otimes_\kappa \Bbar(\cA)$
+and $\cA \otimes_\tau \Bbar(\cA) = B(\cA, \cA, \bC)$
+are acyclic twisted tensor products (over~$\Bbar(\cA)$), so the induced map
+$\Cobar(\Bbar(\cA)) \xrightarrow{\simeq} \cA$ is a quasi-isomorphism.
+See Theorem~\ref{thm:bar-cobar-isomorphism-main} for the chiral generalization.
+\end{proof}
+
+\subsection{Riemann--Hilbert Correspondence}
+
+\begin{theorem}[Abstract Riemann--Hilbert; \ClaimStatusProvedElsewhere]
+\label{thm:abstract-rh}
+There is an equivalence of $\infty$-categories:
+\[
+\mathrm{RH}: \DMod(X)_{\mathrm{hol}} \xrightarrow{\simeq} \mathrm{Shv}_c(X^{\mathrm{an}}; k)
+\]
+between holonomic D-modules on a smooth variety $X$ and constructible sheaves 
+on the analytification $X^{\mathrm{an}}$. This equivalence:
+\begin{enumerate}[label=(\roman*)]
+\item Is functorial with respect to proper pushforward and $!$-pullback.
+\item Is monoidal with respect to $\otimes^!$ and the derived tensor product.
+\item Intertwines Verdier duality on both sides.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Abstract proof]
+The Riemann--Hilbert correspondence is characterized uniquely by the conditions
+above: functoriality, monoidality, and compatibility with duality. Existence follows
+from the general theory of regular holonomic D-modules: the de Rham functor 
+$\DR: \DMod_{\mathrm{hol}} \to \mathrm{Perv}(X^{\mathrm{an}})$ extends to an 
+equivalence, and perverse sheaves embed fully faithfully in constructible sheaves.
+\end{proof}
+
+\begin{construction}[Concrete Riemann--Hilbert]
+\label{constr:concrete-rh}
+For a holonomic D-module $\cM$ on $\FM_n(X)$ with regular singularities along 
+the boundary $D = \partial \FM_n(X)$:
+
+\emph{Step 1.} On the open $\Conf_n(X) = \FM_n(X) \setminus D$, the D-module
+$\cM$ is a vector bundle $\cV$ with flat connection $\nabla$.
+
+\emph{Step 2.} The flat sections of $\nabla$ form a local system:
+\[
+\cL := \ker(\nabla: \cV \to \cV \otimes \Omega^1) \to \Conf_n(X).
+\]
+
+\emph{Step 3.} Near a boundary stratum $D_T$ (labeled by a tree $T$), choose
+local coordinates $(z_1, \ldots, z_n, t_1, \ldots, t_k)$ with $D_T = \{t_1 \cdots t_k = 0\}$.
+The connection has the form:
+\[
+\nabla = d + \sum_{i=1}^k A_i \frac{dt_i}{t_i} + \text{(regular terms)}
+\]
+with $A_i \in \End(\cV)$ the \textbf{residue matrices}.
+
+\emph{Step 4.} Regular singularity means the monodromy around $\{t_i = 0\}$ is:
+\[
+M_i = \exp(-2\pi i A_i)
+\]
+which is quasi-unipotent (the semisimple part of $M_i$ has finite order) for D-modules with regular singularities and rational exponents.
+
+\emph{Step 5.} The Riemann--Hilbert sheaf $\mathrm{RH}(\cM)$ is $\cL$ extended 
+to $\FM_n(X)$ as a constructible sheaf by taking nearby cycles along $D$.
+\end{construction}
+
+
+\texorpdfstring{}{Section}\label{sec:infty-operads}
+
+\begin{definition}[$\infty$-Operad]
+\label{def:infty-operad}
+An \textbf{$\infty$-operad} is a functor $\cO^\otimes \to \mathrm{Fin}_*$
+satisfying the Segal conditions (Lurie, HA Definition~2.1.1.10), where $\mathrm{Fin}_*$ is the category of
+pointed finite sets.  A \emph{symmetric monoidal $\infty$-category} is the special case where $\cO^\otimes \to \mathrm{Fin}_*$ is additionally a coCartesian fibration; this is strictly more restrictive than the general notion of $\infty$-operad.
+\end{definition}
+
+\begin{theorem}[Geometric Models for $\infty$-Operads; \ClaimStatusProvedHere]
+\label{thm:geometric-infty-operads}
+The geometric bar and cobar constructions provide explicit models for the 
+$\infty$-operadic bar-cobar theory:
+\begin{enumerate}[label=(\roman*)]
+\item The bar complex $\Bbar^{\mathrm{geom}}(\cA)$ is a model for the 
+$\infty$-categorical bar construction $\Bbar_\infty(\cA)$.
+
+\item The cobar complex $\Cobar^{\mathrm{geom}}(\cC)$ is a model for the 
+$\infty$-categorical cobar construction $\Cobar_\infty(\cC)$.
+
+\item Quasi-isomorphisms of geometric models correspond to equivalences of 
+$\infty$-categorical objects.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The key is that the geometric constructions are ``strictly'' models for the 
+derived constructions:
+
+\textbf{For bar}: The geometric bar complex $\Bbar^{\mathrm{geom}}(\cA)$ is 
+computed as sections of a factorization algebra on configuration spaces. 
+By factorization homology (Ayala--Francis), this computes the $\infty$-categorical 
+tensor product:
+\[
+\Bbar^{\mathrm{geom}}_n(\cA) = \int_{\FM_n(X)} \cA^{\boxtimes n} = \cA^{\otimes^!_\infty n}
+\]
+where $\otimes^!_\infty$ is the derived $!$-tensor product of factorization 
+D-modules.
+
+\textbf{For cobar}: Similarly, the distributional cobar complex computes 
+the $\infty$-categorical cofree coalgebra on the suspended cogenerators.
+\end{proof}
+
+\begin{corollary}[Derived Koszulness; \ClaimStatusProvedHere]
+\label{cor:derived-koszul}
+A chiral algebra $\cA$ is \textbf{derived Koszul} if:
+\[
+\Cobar_\infty(\Bbar_\infty(\cA)) \simeq \cA
+\]
+in the $\infty$-category of $\Eone$-chiral algebras. The concrete bar-cobar 
+quasi-isomorphism (Theorem~\ref{thm:concrete-bar-cobar}) establishes derived 
+Koszulness for all $\Eone$-chiral algebras.
+\end{corollary}

@@ -1,0 +1,170 @@
+\subsubsection{Affine Flag Varieties and Jet Geometry}
+
+\begin{definition}[Affine Flag Variety]\label{def:aff-flag}
+The affine flag variety is:
+\[
+\mathrm{Fl}_{\mathrm{aff}} = G(\mathbb{C}((t)))/I
+\]
+where $G(\mathbb{C}((t)))$ is the loop group and
+$I = \{g \in G(\mathbb{C}[[t]]) : g \bmod t \in B(\mathbb{C})\}$ is the Iwahori subgroup
+(the preimage of $B$ under evaluation at $t = 0$; strictly larger than $B(\mathbb{C}[[t]])$).
+\end{definition}
+
+\begin{theorem}[Jet Bundle Realization; \ClaimStatusProvedElsewhere]\label{thm:jet-flag}
+There is a natural isomorphism:
+\[
+J^{\infty}(G/B) \cong \mathrm{Fl}_{\mathrm{aff}}^{\mathrm{thick}}
+\]
+where the right side is the "thick" flag variety with formal neighborhood structure.
+
+This identifies:
+\begin{itemize}
+\item Points in $G/B$: Finite-dimensional flags
+\item Jets at a point: Formal deformations of flags
+\item W-algebra generators: Functions on jet space
+\end{itemize}
+\end{theorem}
+
+\begin{proof}[Construction via Loop Spaces]
+\emph{Step 1: Loop Space Interpretation.} The affine Grassmannian parametrizes lattices in the loop space:
+\[
+\mathrm{Gr}_G = G(\mathbb{C}((t)))/G(\mathbb{C}[[t]]) = \{\text{lattices } L \subset \mathbb{C}((t))^n : t^N \cdot L_{\mathrm{std}} \subset L \subset t^{-N} \cdot L_{\mathrm{std}} \text{ for some } N\}
+\]
+The affine flag variety $\mathrm{Fl}_{\mathrm{aff}} = G(\mathbb{C}((t)))/I$ (where $I$ is an Iwahori subgroup) parametrizes complete \emph{chains} of lattices, not individual lattices.
+
+\emph{Step 2: Jet Interpretation.} A jet of a flag at a point corresponds to:
+\begin{itemize}
+\item Order 0: The flag itself
+\item Order 1: Infinitesimal deformation
+\item Order $k$: $k$-th order Taylor expansion
+\end{itemize}
+
+\emph{Step 3: Dictionary.} Under the isomorphism:
+\begin{align}
+\text{W-algebra generator } W^{(s)} &\leftrightarrow \text{Function on jets of order } s-1 \\
+\text{OPE singularity} &\leftrightarrow \text{Poisson bracket on jet bundle} \\
+\text{Normal ordering} &\leftrightarrow \text{Weyl quantization}
+\end{align}
+\end{proof}
+
+\subsubsection{Chiral de Rham Complex and Resolution}
+
+\begin{theorem}[W-algebras as Chiral de Rham; \ClaimStatusProvedElsewhere]\label{thm:w-cdr}
+At critical level $k = -h^\vee$, the W-algebra admits a resolution:
+\[
+\mathcal{W}^{-h^\vee}(\mathfrak{g}, e) \cong H^*_{\mathrm{DS}}(\Omega^{\mathrm{ch}}_{G/P_e})
+\]
+where:
+\begin{itemize}
+\item $\Omega^{\mathrm{ch}}_{G/P_e}$ is the chiral de Rham complex of the partial flag variety
+\item $H^*_{\mathrm{DS}}$ is Drinfeld-Sokolov cohomology
+\item $P_e$ is the parabolic determined by $e$
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: Factorization algebra model.} The chiral de Rham complex defines a factorization algebra $U \mapsto \Omega^{\mathrm{ch}}(U \times_{X} G/P_e)$ for open $U \subset X$.
+
+\emph{Step 2: Drinfeld--Sokolov reduction.} The DS reduction is implemented by the BRST differential $Q_{\mathrm{DS}} = \{Q_{\mathrm{BRST}}, -\}$, with screening charges given by integrals of nilpotent currents associated to simple roots. The W-algebra generators emerge as $Q_{\mathrm{DS}}$-closed elements not in the image of $Q_{\mathrm{DS}}$.
+
+\emph{Step 3: Bar complex identification.} By the factorization algebra
+formulation, the bar complex computes
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{W}^{-h^\vee}(\mathfrak{g}, e))
+\cong \mathrm{C}_*(\mathrm{Maps}(X, G/P_e)).
+\]
+This identifies the bar differential with the geometric boundary operator on
+the mapping-space chain model for holomorphic maps into $G/P_e$.
+\end{proof}
+
+\subsubsection{Explicit Bar Complex Coalgebra for W-algebras}
+
+\begin{theorem}[W-algebra Bar Coalgebra; \ClaimStatusProvedHere]\label{thm:w-bar-coalg}
+For $\mathcal{W}^k(\mathfrak{g}, e)$, the bar complex carries:
+\begin{enumerate}
+\item \textbf{Comultiplication:} For generators $W^{(s_i)}$ at points $z_i$:
+\[
+\Delta(W^{(s_1)}_{z_1} \otimes \cdots \otimes W^{(s_n)}_{z_n}) = 
+\sum_{\text{partitions}} \mathrm{Fusion}_I \otimes \mathrm{Fusion}_J
+\]
+where fusion uses the W-algebra OPE algebra.
+
+\item \textbf{Intersection Pairing:} The coalgebra structure is dual to:
+\[
+\langle \alpha, \beta \rangle = \int_{G/P_e} \alpha \wedge \beta
+\]
+the intersection pairing on the flag variety cohomology.
+
+\item \textbf{Quantum Corrections:} At non-critical level, the comultiplication acquires quantum corrections:
+\[
+\Delta_{\hbar}(W) = \Delta_0(W) + \hbar \Delta_1(W) + \hbar^2 \Delta_2(W) + \cdots
+\]
+where $\hbar = 1/(k + h^\vee)$ is the quantum parameter.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{(1) Comultiplication.}  The chiral bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{W}^k)$ is a coalgebra with factorization coproduct.  For generators $W^{(s_i)}$ placed at points $z_i \in C_n(X)$, the coproduct decomposes the configuration into two sub-configurations:
+\[
+\Delta\bigl(W^{(s_1)}_{z_1} \otimes \cdots \otimes W^{(s_n)}_{z_n}\bigr) = \sum_{I \sqcup J = \{1,\ldots,n\}} \pm\, \bigl(W^{(s_i)}_{z_i}\bigr)_{i \in I} \otimes \bigl(W^{(s_j)}_{z_j}\bigr)_{j \in J}
+\]
+where the sum is over all partitions of the point set into two disjoint subsets (reflecting the factorization structure on configuration spaces, \emph{not} the deconcatenation coproduct of the algebraic bar complex, which would sum only over consecutive splittings).  Signs are determined by Koszul conventions.
+
+\textbf{(2) Intersection pairing.}  At critical level $k = -h^\vee$, the bar complex computes chains on maps into $G/P_e$ (Theorem~\ref{thm:w-cdr}).  The coalgebra structure is Poincar\'e dual to the intersection product on $H^*(G/P_e)$: for $\alpha, \beta \in H^*(G/P_e)$, $\langle \alpha, \beta \rangle = \int_{G/P_e} \alpha \wedge \beta$.
+
+\textbf{(3) Quantum corrections.}  At general level, the coproduct acquires corrections from the curvature.  Setting $\hbar = 1/(k + h^\vee)$, the corrected coproduct $\Delta_\hbar = \Delta_0 + \hbar \Delta_1 + \cdots$ satisfies the co-$A_\infty$ relations dual to those of Theorem~\ref{thm:w-ainfty-ops}.  Each $\Delta_n$ is determined by integrating over the codimension-$n$ strata of $\overline{C}_*(X)$.
+\end{proof}
+
+\begin{example}[Virasoro Bar Complex Coproduct]
+The bar complex $\bar{B}(\mathrm{Vir}_c)$ carries the partition coproduct (sum over all set-partitions $I \sqcup J$, not merely consecutive splittings). On generators $[L_n] \in \bar{B}^1$:
+\begin{align}
+\Delta([L_n]) &= [L_n] \otimes 1 + 1 \otimes [L_n] \quad \text{(primitive)}\\
+\Delta(c) &= c \otimes 1 + 1 \otimes c \quad \text{(primitive)}
+\end{align}
+The non-trivial coalgebra structure appears in higher bar degrees, where $\Delta([L_m | L_{n-m}]) = [L_m] \otimes [L_{n-m}] + \cdots$ encodes the OPE data.
+\end{example}
+
+\subsubsection{W-algebras at General Levels and Screening Operators}
+
+\begin{definition}[Screening Operators]\label{def:screening}
+For $\mathcal{W}^k(\mathfrak{g}, e)$, screening operators are:
+\[
+S_{\alpha} = \oint_{\gamma_\alpha} V_\alpha(z) \, dz
+\]
+where:
+\begin{itemize}
+\item $V_\alpha$ are vertex operators of specific weights
+\item $\gamma_\alpha$ are cycles in $H_1(X \setminus \{\text{poles}\})$
+\item $[Q_{\mathrm{BRST}}, S_\alpha] = 0$ (screening condition)
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Screening Resolution; \ClaimStatusProvedElsewhere]\label{thm:screen-res}
+The W-algebra admits a free field resolution:
+\[
+\mathcal{W}^k(\mathfrak{g}, e) = \mathrm{Ker}(S_1, \ldots, S_r : \mathcal{FF} \to \mathcal{FF}')
+\]
+where $\mathcal{FF}$ is a free field algebra (Wakimoto module).
+\end{theorem}
+
+\subsubsection{Connection to Integrable Systems}
+
+\begin{theorem}[W-algebras and Toda Systems; \ClaimStatusProvedElsewhere]\label{thm:w-toda}
+The W-algebra $\mathcal{W}^k(\mathfrak{g}, e_{\mathrm{prin}})$ at the principal nilpotent is equivalent to:
+\[
+\mathcal{W}^k(\mathfrak{g}, e_{\mathrm{prin}}) \cong \text{Quantization of Toda system for } \mathfrak{g}
+\]
+where the Toda system is the integrable system with Lax operator:
+\[
+L = \partial + f_{\mathrm{prin}} + \sum_{i} \phi_i h_i
+\]
+\end{theorem}
+
+\begin{proof}[Idea of Proof]
+The correspondence arises through:
+\begin{itemize}
+\item Classical limit: $k \to \infty$ gives Poisson algebra of Toda
+\item Miura transform: Changes variables from currents to Toda fields
+\item Integrals of motion: W-algebra generators $\leftrightarrow$ Toda Hamiltonians
+\end{itemize}
+\end{proof}

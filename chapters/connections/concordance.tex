@@ -1,0 +1,112 @@
+\chapter{Concordance with Primary Literature}
+\label{chap:concordance}
+
+This chapter establishes precise relationships between our constructions and the foundational references.
+
+\section{Relationship to Beilinson-Drinfeld}
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}}
+\textbf{Our Terminology} & \textbf{BD Terminology} \\
+\hline
+Chiral algebra & Chiral algebra (same) \\
+$\Einf$-chiral algebra & Vertex algebra / Chiral algebra \\
+$\Eone$-chiral algebra & No direct analog (generalization) \\
+Chiral bracket $\mu$ & Chiral operation $\mu: j_* j^*(A \boxtimes A) \to \Delta_! A$ \\
+Bar complex $\B(\cA)$ & Chiral chain complex (cf.\ Chevalley-Eilenberg for Lie case) \\
+Factorization structure & Factorization algebra structure \\
+Ran space $\Ran(X)$ & $\mathfrak{R}(X)$ in BD notation \\
+\end{tabular}
+
+\begin{remark}[Key Extension]
+Our $\Eone$-chiral algebras extend BD's chiral algebras by dropping skew-symmetry. BD's chiral algebras are our $\Einf$-chiral algebras.
+\end{remark}
+
+\section{Relationship to Francis-Gaitsgory}
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}}
+\textbf{Our Terminology} & \textbf{FG Terminology} \\
+\hline
+Chiral Koszul duality & Chiral Koszul duality (same) \\
+$\chirCom$-$\chirLie$ duality & Main theorem of FG \\
+$\chirAss$-$\chirAss$ duality & Not explicitly treated (implicit) \\
+Pro-nilpotence & Pro-nilpotent tensor $\infty$-category \\
+Bar-cobar equivalence & Koszul duality equivalence \\
+\end{tabular}
+
+\begin{remark}[Key Extension]
+FG establish $\chirCom$-$\chirLie$ duality. We show this is derived from the more fundamental $\chirAss$-$\chirAss$ self-duality via the deformation Pois → Ass.
+\end{remark}
+
+\section{Relationship to Gui-Li-Zeng}
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}}
+\textbf{Our Terminology} & \textbf{GLZ Terminology} \\
+\hline
+Quadratic chiral algebra & Quadratic chiral algebra (same) \\
+Koszul dual $\cA^!$ & Quadratic dual $A^!$ \\
+Bar complex & Not used (direct quadratic dual) \\
+Non-quadratic duality & Not treated \\
+$\Eone$-chiral algebras & Not treated \\
+\end{tabular}
+
+\begin{proposition}[GLZ as Special Case; \ClaimStatusProvedHere]\label{prop:glz-special-case}
+The Gui-Li-Zeng quadratic duality is a special case of our framework:
+\[
+\text{GLZ duality} = \text{Our } \chirAss\text{-duality} |_{\Einf\text{-chiral}} |_{\text{quadratic}}
+\]
+Restricting to $\Einf$-chiral algebras with quadratic presentations recovers their theory.
+\end{proposition}
+
+\begin{proof}
+An $\Einf$-chiral algebra $\cA$ with quadratic presentation has a quadratic relation ideal $R \subset j_*j^*(\cA^{\boxtimes 2})$.  Its $\chirAss$ Koszul dual is determined by bar degrees $\leq 2$: the generators $V^*$ in $\bar{B}^1$ and the orthogonal complement of relations $R^\perp$ in $\bar{B}^2$ (the higher bar degrees, while nonzero, contribute no independent data for quadratic algebras).  The Koszul dual $\cA^! = \Omega(\bar{B}(\cA))$ is then determined by $R^\perp$ under the chiral pairing $j_*j^*(\cA^{\boxtimes 2}) \otimes j_*j^*((\cA^!)^{\boxtimes 2}) \to \omega_X$.  This is precisely the quadratic dual construction of GLZ.
+
+For the $\Einf$ restriction: our $\chirAss$ bar complex uses the full associative chiral product $\mu\colon j_*j^*(\cA \boxtimes \cA) \to \Delta_!\cA$.  When $\cA$ is $\Einf$-chiral (i.e., the chiral bracket is skew-symmetric), the bar complex acquires a commutative coalgebra structure, and the Koszul dual is a Lie chiral algebra.  This recovers the FG framework as a special case (see Theorem~\ref{thm:fg-from-assch}).
+\end{proof}
+
+\begin{theorem}[FG Duality from $\chirAss$ Self-Duality; \ClaimStatusProvedHere]\label{thm:fg-from-assch}
+The Francis--Gaitsgory $\chirCom$-$\chirLie$ duality is the associated graded of the $\chirAss$ self-duality under the PBW filtration.  Precisely: for a quadratic $\Einf$-chiral algebra $\cA$, the $\chirAss$ bar complex $\bar{B}_{\chirAss}(\cA)$ carries a filtration $F_\bullet$ (induced by the symmetrization degree of the $\Sigma$-action on $C_n(X)$) such that:
+\begin{equation}\label{eq:fg-from-assch}
+\mathrm{gr}^F \bar{B}_{\chirAss}(\cA) \;\cong\; \bar{B}_{\chirCom}(\mathrm{Sym}^{\mathrm{ch}}(\cA)) \;\cong\; \mathrm{CE}^{\chirLie}(\cA)
+\end{equation}
+and the associated spectral sequence degenerates at $E_1$ for Koszul algebras.
+\end{theorem}
+
+\begin{proof}
+\textbf{Step 1: PBW filtration.}
+The chiral bar complex $\bar{B}^n_{\chirAss}(\cA)$ consists of sections on $\overline{C}_{n+1}(X)$ with coefficients in $\cA^{\boxtimes(n+1)} \otimes \Omega^n_{\log}$.  Define $F_p \bar{B}^n$ as the span of elements symmetric under at least $(n-p)$ transpositions of configuration space points.  This is the chiral analogue of the arity filtration on the classical associative bar complex (Loday--Vallette \cite{LV12}, \S9.3.2).
+
+\textbf{Step 2: Associated graded identification.}
+On $\overline{C}_n(X)$, the $\Sigma_n$-representation decomposes as $j_*j^*(\cA^{\boxtimes n}) = \mathrm{Sym}^n_{\mathrm{ch}}(\cA) \oplus \bigwedge^2_{\mathrm{ch}}(\cA) \otimes \cdots$.  The PBW filtration separates these: $F_0/F_1 = \mathrm{Sym}^n_{\mathrm{ch}}(\cA)$ (the fully symmetric part) is the commutative chiral bar complex, and $F_1/F_2$ involves the Lie bracket (the antisymmetric part).  The associated graded $\mathrm{gr}^F \bar{B}_{\chirAss}$ is thus the Chevalley--Eilenberg complex for the Lie chiral algebra structure, which is $\bar{B}_{\chirCom}(\mathrm{Sym}^{\mathrm{ch}}(\cA))$ by the classical identification of the commutative bar complex with Chevalley--Eilenberg chains.
+
+\textbf{Step 3: Spectral sequence degeneration.}
+For Koszul $\cA$, the spectral sequence $E_1^{p,q} = H^{p+q}(\mathrm{gr}^F_p \bar{B})$ degenerates at $E_1$.  To see this, note that the associated graded $\mathrm{gr}^F \bar{B}_{\chirAss}(\cA)$ is the Chevalley--Eilenberg complex (Step~2), and the Koszul property of $\cA$ as a chiral algebra implies that this commutative bar complex has cohomology concentrated on the diagonal $p + q = 0$ (i.e., $E_1^{p,q} = 0$ for $p + q \neq 0$).  Since $d_1\colon E_1^{p,q} \to E_1^{p+1,q}$ shifts the total degree $p+q$ by~$1$, it maps from the surviving diagonal to the zero region, hence $d_1 = 0$ and $E_2 = E_1$.  All higher differentials vanish for the same degree reason.  Therefore $H^*(\bar{B}_{\chirAss}(\cA)) \cong H^*(\mathrm{gr}^F \bar{B}_{\chirAss}(\cA))$, and the FG duality is recovered as the associated graded of our $\chirAss$ duality.
+
+\textbf{Step 4: Comparison with FG.}
+The FG theorem states: for an $\Einf$-chiral algebra $\cA$, the chiral Koszul dual is a Lie chiral algebra $\cA^{!,\chirLie}$.  In our framework: $\cA^{!,\chirAss} = \Omega(\bar{B}_{\chirAss}(\cA))$ is an $\Eone$-chiral algebra, and its associated graded under PBW is $\cA^{!,\chirLie} = \Omega(\bar{B}_{\chirCom}(\cA))$.  The FG duality is recovered.
+\end{proof}
+
+\begin{remark}[Costello--Gwilliam comparison]
+The Costello--Gwilliam factorization algebra framework relates to ours via the identification of factorization algebras on $X$ with chiral algebras on $X$ (Beilinson--Drinfeld, Chapter~3).  Their factorization homology $\int_X \cA$ computes \emph{chains} on configuration spaces, which is linearly dual to our bar complex (cochains): $\int_X \cA \simeq (\bar{B}(\cA))^\vee$.  The CG Koszul duality for factorization algebras, when specialized to holomorphic factorization algebras on curves, recovers our chiral Koszul duality.
+\end{remark}
+
+\section{Relationship to Loday-Vallette}
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}}
+\textbf{Our Terminology} & \textbf{LV Terminology} \\
+\hline
+Operad & Operad (same) \\
+Koszul operad & Koszul operad (same) \\
+Bar construction $\B$ & Bar construction $\B$ (same) \\
+Cobar construction $\Omega$ & Cobar construction $\Omega$ (same) \\
+Twisting morphism & Twisting morphism (same) \\
+Maurer-Cartan equation & Maurer-Cartan equation (same) \\
+$\Ass^! \cong \Ass$ & $\Ass^! \cong \Ass \otimes \mathrm{sgn}$ (Thm 7.1.1) \\
+$\Com^! \cong \Lie$ & $\Com^! \cong \Lie\{1\}$ (Thm 7.2.1) \\
+\end{tabular}
+\begin{remark}[Convention for Koszul dual isomorphisms]
+In Loday--Vallette \cite{LV12}, \S7.1--7.2, the Koszul dual includes the sign representation: $\Ass^! = \Ass \otimes \mathrm{sgn}$ and $\Com^! = \Lie\{1\}$ (with operadic suspension). In this manuscript, we absorb the sign twist into the bar desuspension: our bar construction uses the shifted generators $s^{-1}\mathcal{A}$ whose sign already accounts for the $\mathrm{sgn}$-twist. Concretely, our convention $\Ass^! \cong \Ass$ means that the dual cooperad is isomorphic to $\Ass$ as a \emph{graded} cooperad after this shift. All bar-cobar computations in the text use the desuspended convention consistently, so no sign errors propagate. See Appendix~\ref{app:signs} for the explicit translation between conventions.
+\end{remark}
+
+\begin{remark}[Chiral Enhancement]
+We lift the entire LV framework to the chiral setting, replacing vector spaces with D-modules and tensor products with chiral tensor products.
+\end{remark}

@@ -1,0 +1,226 @@
+\chapter{Explicit Genus Expansions}
+
+\section{Free Boson at All Genera}
+
+The free boson with $c=1$ has partition function:
+$$Z_g^{\text{boson}} = \left[\det'(\Delta_g)\right]^{-1/2}$$
+where $\det'$ denotes the zeta-regularized determinant with zero modes removed.
+
+Explicit formulas by genus:
+\begin{itemize}
+\item $g=0$: $Z_0 = 1$ (trivial; the sphere admits no nontrivial conformal moduli)
+\item $g=1$: $Z_1(\tau) = (\mathrm{Im}\,\tau)^{-1/2}|\eta(\tau)|^{-2}$ where $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$ is the Dedekind eta function, $q = e^{2\pi i\tau}$.  Here $|\eta|^{-2}$ comes from $[\det'(\Delta_1)]^{-1/2}$ (oscillator modes) and $(\mathrm{Im}\,\tau)^{-1/2}$ from the zero-mode integral $\int d^2p \, e^{-\pi \mathrm{Im}\,\tau\,|p|^2}$ (for a non-compact boson; for a compact boson on a circle of radius $R$, the zero-mode sum replaces this by a lattice theta function)
+\item $g=2$: $Z_2(\Omega) = [\det(\mathrm{Im}\,\Omega)]^{-1/2} \cdot |\mathcal{F}_2(\Omega)|^{-1}$ where $\mathcal{F}_2$ is expressible in terms of Riemann theta functions on the Siegel upper half-space $\mathcal{H}_2$. The Igusa cusp form $\Psi_{10}$ enters the \emph{bosonic string measure} (all 26 bosons) via the Belavin--Knizhnik theorem, not the single-boson partition function.
+\item General $g$: the partition function depends on the full period matrix $\Omega \in \mathcal{H}_g$. The \emph{universal factor} from the conformal anomaly is $\exp(-\frac{1}{2}\zeta(-1) \chi(\Sigma_g))$ where $\chi(\Sigma_g) = 2-2g$ and $\zeta(-1) = -\frac{1}{12}$ (the Riemann zeta function at $s=-1$, not to be confused with $\zeta'(-1) = \frac{1}{12} - \ln A$ where $A$ is the Glaisher-Kinkelin constant), but this is only the moduli-independent prefactor.
+\end{itemize}
+
+For weight $\lambda$, the correlation functions are:
+$$\beta(z)\gamma(w) \sim \frac{1}{z-w}$$
+
+At genus $g$:
+$$\langle \prod_i \beta(z_i) \prod_j \gamma(w_j) \rangle_g = \frac{\det G_{ij}^{(g)}}{\left[\det(\text{Im}\,\Omega)\right]^{(2\lambda-1)(g-1)/2}}$$
+where $G_{ij}^{(g)}$ is the period-normalized Green's function and the exponent
+matches the partition function normalization from \S\ref{subsec:heisenberg-dictionary-complete} at $g \geq 2$.
+
+At genus 1, the partition function is (for the untwisted $\beta\gamma$ system on the torus, where the canonical bundle $\omega_{E_\tau}$ is trivial):
+$$Z_1^{\beta\gamma} = |\eta(\tau)|^{-2}$$
+independent of $\lambda$.  The conformal weight assignment $(\lambda, 1-\lambda)$ does not affect the genus-1 partition function because $\omega_{E_\tau} \cong \mathcal{O}_{E_\tau}$, so sections of $\omega^{\otimes \lambda}$ are ordinary functions regardless of $\lambda$.  The $\lambda$-dependence enters at genus $g \geq 2$, where $\omega_{\Sigma_g}$ is nontrivial and the index of $\bar{\partial}_\lambda$ depends on $\lambda$ via Riemann--Roch: $\chi(\omega^{\otimes \lambda}) = (2\lambda-1)(g-1)$.
+
+At genus $g \geq 2$, the partition function depends on the full period matrix $\Omega \in \mathcal{H}_g$:
+$$Z_g^{\beta\gamma}(\lambda) = \left[\det(\text{Im}\,\Omega)\right]^{(1-2\lambda)(1-g)/2} \cdot \left[\det'(\bar{\partial}_\lambda)\right]^{-1}$$
+where $\bar{\partial}_\lambda$ is the $\bar{\partial}$-operator on sections of $\omega_X^{\otimes \lambda}$ and the determinant is zeta-regularized. The infinite product formula above is specific to genus~1, where $q = e^{2\pi i\tau}$ parametrizes the moduli.
+
+\section{Lattice VOAs: From Torus to Higher Genus}
+
+For a lattice $\Lambda$ of rank $d$:
+
+\begin{itemize}
+\item Genus 1: $Z_1 = \frac{\Theta_\Lambda(\tau)}{[\eta(\tau)]^d}$
+\item Genus 2: Involves Riemann theta functions $\Theta[\delta](\Omega)$
+\item General genus: Siegel theta series
+\end{itemize}
+
+For a unimodular even lattice $\Lambda$ (i.e., $\Lambda = \Lambda^*$ and $\langle v, v \rangle \in 2\mathbb{Z}$ for all $v \in \Lambda$), the Siegel theta series transforms as:
+$$\Theta_\Lambda(\gamma \cdot \Omega) = \det(C\Omega + D)^{d/2} \, \Theta_\Lambda(\Omega)$$
+for $\gamma = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \in \mathrm{Sp}(2g, \mathbb{Z})$. For non-unimodular lattices, an additional phase factor (a root of unity depending on $\gamma$ and the discriminant form $\Lambda^*/\Lambda$) appears; the precise formula involves the Weil representation of $\mathrm{Sp}(2g, \mathbb{Z})$ on $\mathbb{C}[\Lambda^*/\Lambda]$.
+
+\section{W-Algebras and Higgs Bundles}
+
+The W-algebra $\mathcal{W}^k(\mathfrak{g})$ at genus $g$ is related to the geometry of Higgs bundles through multiple distinct connections:
+
+\begin{enumerate}
+\item \textbf{Classical limit}: The Poisson algebra underlying $\mathcal{W}^k(\mathfrak{g})$ is the algebra of functions on the Hitchin base $\mathcal{B}_g(\mathfrak{g}) = \bigoplus_{i=1}^r H^0(\Sigma_g, \omega_{\Sigma_g}^{\otimes d_i})$, where $d_i$ are the degrees of the fundamental invariants of $\mathfrak{g}$ (i.e., the exponents plus one: for $\mathfrak{sl}_n$, the degrees are $2, 3, \ldots, n$).
+
+\item \textbf{Symplectic volume}: The integral $\int_{\mathcal{M}_{\mathrm{Higgs}}^g(\mathfrak{g})} \exp(k\,\omega_{\mathrm{Hitchin}})$ computes the symplectic volume of the Hitchin moduli space, which by the Verlinde formula equals the dimension of the space of conformal blocks at level $k$.
+
+\item \textbf{AGT correspondence}: The genus-$g$ partition function of $\mathcal{W}^k(\mathfrak{g})$ equals the Nekrasov partition function of the corresponding 4d $\mathcal{N}=2$ theory on $\Sigma_g$; this is \emph{not} the symplectic volume but rather involves the full quantum structure.
+\end{enumerate}
+
+The relationship to geometric Langlands:
+\begin{itemize}
+\item At critical level $k = -h^\vee$: $\mathcal{D}$-modules on $\mathrm{Bun}_G(\Sigma_g) \leftrightarrow$ quasi-coherent sheaves on $\mathrm{Loc}_{G^\vee}(\Sigma_g)$
+\item At general level: quantum geometric Langlands (Gaitsgory--Lurie)
+\end{itemize}
+
+\chapter{Modular Forms and Higher Genus Phenomena}
+
+\section{Eisenstein Series and Genus One}
+
+At genus one, the universal chiral algebra contribution is:
+$$\omega_{1,0}^{\text{univ}}(\tau) = -\frac{c}{24} \frac{E_2(\tau)}{2\pi i} dz$$
+where $E_2(\tau) = 1 - 24\sum_{n=1}^{\infty} \sigma_1(n)q^n$ is the weight-2 Eisenstein series.
+
+This generates all genus-one corrections through:
+$$\langle T \rangle_{\tau} = -\frac{c}{24} (2\pi i)^2 E_2(\tau)$$
+where $E_2$ is the quasi-modular Eisenstein series. (The one-point function is $z$-independent by translation invariance of the torus; the Weierstrass $\wp$-function appears in the \emph{two}-point function $\langle T(z)T(0)\rangle_\tau$.)
+
+\section{Siegel Modular Forms at Higher Genus}
+
+At genus $g \geq 2$, correlation functions involve Siegel modular forms on $\mathcal{H}_g$:
+$$F^{(g)}(\Omega) = \sum_{T \geq 0} a(T) \exp(2\pi i \operatorname{tr}(T\Omega))$$
+where $T$ ranges over symmetric half-integral positive semi-definite $g \times g$ matrices.
+
+Key examples:
+\begin{itemize}
+\item Genus 2: Igusa invariants $\psi_4, \psi_6, \chi_{10}, \chi_{12}$
+\item Genus 3: Schottky form vanishes on Jacobian locus
+\item General $g$: Theta constants $\theta[\delta](\Omega)$ for characteristics $\delta$
+\end{itemize}
+
+\section{Bosonization at All Genera}
+
+The bosonization formula extends to:
+$$Z_g^{\text{fermion}} = \sum_{\delta} (-1)^{\mathrm{Arf}(\delta)} \, Z_g^{\text{boson}}[\delta]$$
+where the sum is over spin structures $\delta$ and $\mathrm{Arf}(\delta) \in \{0, 1\}$ is the Arf invariant of the quadratic form associated to $\delta$. Even spin structures have $\mathrm{Arf}(\delta) = 0$; odd spin structures have $\mathrm{Arf}(\delta) = 1$.
+
+At genus $g$:
+\begin{itemize}
+\item Number of spin structures: $2^{2g}$
+\item Even (periodic) spin structures: $2^{g-1}(2^g + 1)$
+\item Odd (antiperiodic) spin structures: $2^{g-1}(2^g - 1)$
+\end{itemize}
+
+\section{Mumford Forms and Belavin-Knizhnik Measure}
+
+For a CFT of central charge $c$, the Polyakov measure on $\mathcal{M}_g$ (for $g \geq 2$) takes the form:
+$$d\mu_g^{\text{Pol}} = \frac{|\det(\text{CKV})|^2}{|\det'(\Delta_g)|^{c/2}} \prod_{k=1}^{3g-3} d^2\tau_k$$
+where $\tau_k$ are Beltrami coordinates on $\mathcal{M}_g$. The Belavin--Knizhnik theorem expresses this in terms of the period matrix $\Omega$. For the \emph{bosonic string} ($c = 26$):
+$$d\mu_g^{\text{bosonic}} = \prod_{k=1}^{3g-3} d^2\tau_k \left[\det(\mathrm{Im}\,\Omega)\right]^{-13}$$
+
+The exponent $-13$ arises as follows:
+\begin{itemize}
+\item Each free boson contributes $[\det(\mathrm{Im}\,\Omega)]^{-1/2}$ to the partition function (from the zero-mode integration over the Jacobian torus).
+\item For $c = 26$ free bosons: the matter contribution is $[\det(\mathrm{Im}\,\Omega)]^{-26/2} = [\det(\mathrm{Im}\,\Omega)]^{-13}$.
+\item The $bc$ ghost system contributes a \emph{holomorphic} section of a line bundle on $\mathcal{M}_g$ (the Mumford form), which does not affect the $\det(\mathrm{Im}\,\Omega)$ exponent.
+\item The Weyl anomaly cancels when $c + c_{\text{gh}} = 26 - 26 = 0$.
+\end{itemize}
+
+\section{The Genus-Graded Chiral Operad}
+
+The chiral operad extends to:
+$$\mathcal{P} = \bigoplus_{g \geq 0} \mathcal{P}^{(g)}$$
+with composition:
+$$\circ: \mathcal{P}^{(g_1)}(m) \otimes \mathcal{P}^{(g_2)}(n) \to \mathcal{P}^{(g_1+g_2)}(m+n-2)$$
+
+This encodes:
+\begin{itemize}
+\item Gluing of surfaces along boundaries
+\item Factorization at nodes
+\item Modular operad structure
+\end{itemize}
+
+\section{Swiss-Cheese Structure}
+
+At higher genus, we get a Swiss-cheese operad:
+\begin{itemize}
+\item Closed sector: Full genus-$g$ surfaces
+\item Open sector: Surfaces with boundaries
+\item Mixed compositions: Open-closed duality
+\end{itemize}
+
+This relates to:
+\begin{itemize}
+\item D-branes in string theory
+\item Boundary CFT
+\item Kapustin-Witten equations
+\end{itemize}
+
+\section{String Amplitudes}
+
+The genus-$g$ string amplitude:
+$$A_g = \int_{\mathcal{M}_g} \langle \prod_i V_i \rangle_g \, d\mu_g^{\text{Pol}}$$
+
+For critical strings ($c=26$ bosonic, $c=15$ superstring):
+\begin{itemize}
+\item Tree level: Classical scattering
+\item One loop: Quantum corrections
+\item Higher loops: Quantum gravity
+\end{itemize}
+
+\section{Mirror Symmetry}
+
+The genus-$g$ Gromov-Witten invariants:
+$$F_g^{\text{GW}} = \sum_{d} N_{g,d} \, Q^d$$
+relate to B-model periods:
+$$F_g^{\text{B-model}} = \int_{\Gamma_g} \Omega_g$$
+
+The bar-cobar duality provides the mathematical framework:
+\begin{itemize}
+\item A-model: Holomorphic maps (bar complex)
+\item B-model: Period integrals (cobar complex)
+\item Mirror map: Bar-cobar duality
+\end{itemize}
+
+\section{AGT Correspondence}
+
+The Alday-Gaiotto-Tachikawa correspondence relates:
+\begin{itemize}
+\item 4d $\mathcal{N}=2$ gauge theory of class $\mathcal{S}$ on $\mathbb{R}^4$, obtained by compactifying the 6d $(2,0)$ theory on $\Sigma_g$
+\item 2d Toda CFT (with $\mathcal{W}_N$-algebra symmetry) on $\Sigma_g$
+\end{itemize}
+
+More precisely, the Nekrasov partition function of the 4d theory in the $\Omega$-background $(\epsilon_1, \epsilon_2)$ equals the conformal block of the W-algebra $\mathcal{W}^k(\mathfrak{g})$ on $\Sigma_g$, with level $k$ determined by $\epsilon_1/\epsilon_2$.
+
+The bar-cobar perspective: the genus-$g$ conformal block can be expressed as a correlation function in the chiral bar complex:
+$$\mathcal{Z}_{\text{Nek}}^{(g)} = \int_{\overline{\mathcal{M}}_{g,n}} \langle V_1 \cdots V_n \rangle_{\mathcal{W}^k(\mathfrak{g})}$$
+where $V_i$ are vertex operators for punctures on $\Sigma_g$.
+
+% NOTE: The "Operadic Structure at All Genera" chapter (genus-graded chiral operad,
+% Swiss-cheese structure) appeared verbatim above in lines 104--132 and is not repeated.
+
+\chapter{Spectral Sequences and Computational Tools}
+
+\section{Genus Filtration Spectral Sequence}
+
+The genus filtration induces a spectral sequence:
+$$E_1^{p,q} = H^q(\text{Bar}^{(p)}(\mathcal{A})) \Rightarrow H^{p+q}(\text{Bar}(\mathcal{A}))$$
+
+The differentials encode:
+\begin{itemize}
+\item $d_1$: Degeneration of curves (nodes forming)
+\item $d_2$: Bubble corrections (genus reduction)
+\item $d_r$: Higher quantum corrections
+\end{itemize}
+
+\section{Feynman Rules for Higher Genus}
+
+The contribution from a stable graph $\Gamma$:
+$$A_{\Gamma} = \frac{1}{|\text{Aut}(\Gamma)|} \prod_{v \in V} C_v \prod_{e \in E} P_e$$
+where:
+\begin{itemize}
+\item Vertices $v$: Correlation functions on $\Sigma_{g(v)}$
+\item Edges $e$: Propagators (Green's functions)
+\item Loops: Integration over moduli
+\end{itemize}
+
+\section{Resurgence and Non-Perturbative Effects}
+
+The genus expansion exhibits resurgent structure:
+$$Z = \sum_{g=0}^{\infty} \lambda^{2g-2} Z_g + \sum_{\text{instantons}} e^{-S_{\text{inst}}/\lambda} Z_{\text{inst}}$$
+
+Trans-series sectors correspond to:
+\begin{itemize}
+\item D-branes wrapping cycles
+\item Worldsheet instantons
+\item Non-perturbative condensates
+\end{itemize}

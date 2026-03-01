@@ -1,0 +1,1059 @@
+\section{Koszul Duality and Universal Chiral Defects}\label{sec:koszul-defects}
+
+\subsection{Holographic Paradigm: Genus-Graded Koszul Duality}
+
+\begin{remark}[Costello-Li Holographic Conjecture Across Genera]\label{principle:costello-li}
+\textbf{The AdS/CFT correspondence, when appropriately twisted, is governed by genus-graded Koszul duality.}
+
+More precisely: Consider a stack of $N$ D-branes in string/M-theory. Then:
+\begin{enumerate}
+\item The genus-graded algebra of operators on the branes (boundary) at $N \to \infty$
+\item The genus-graded algebra of operators in twisted supergravity (bulk) at the defect location
+\end{enumerate}
+are related by (a deformation of) genus-graded Koszul duality, with each genus contributing specific modular forms and period integrals.
+\end{remark}
+
+\begin{remark}[Why Genus-Graded Koszul Duality?]
+Following Witten's insight that holography exchanges strong and weak coupling, genus-graded Koszul duality provides the precise algebraic mechanism: it exchanges:
+\begin{itemize}
+\item Generators $\leftrightarrow$ Relations at each genus level
+\item Commutative $\leftrightarrow$ Lie algebra structures with modular corrections
+\item Classical limits $\leftrightarrow$ Quantum deformations across all genera
+\item Tree-level $\leftrightarrow$ Loop corrections via genus expansion
+\end{itemize}
+This is exactly what holography does across all genera! The bulk gravitational theory (weakly coupled, many generators, genus expansion) is dual to the boundary gauge theory (strongly coupled, many constraints, modular forms).
+\end{remark}
+
+\subsection{Universal Chiral Defects and Bar-Cobar Duality}
+
+\begin{definition}[Universal Chiral Defect]\label{def:universal-defect}
+For a chiral algebra $\mathcal{A}$, the \emph{universal chiral defect} $\mathcal{D}(\mathcal{A})$ is the chiral algebra satisfying:
+\begin{enumerate}
+\item \textbf{Universality:} Any defect coupling to $\mathcal{A}$ factors through $\mathcal{D}(\mathcal{A})$
+\item \textbf{Koszul property:} $\mathcal{D}(\mathcal{A})$ is (quasi-)Koszul dual to $\mathcal{A}$
+\item \textbf{Geometric realization:} $\mathcal{D}(\mathcal{A}) \cong \Omega(\bar{B}(\mathcal{A}))$ (cobar of bar)
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Universal Defect = Koszul Dual; \ClaimStatusProvedElsewhere]\label{thm:defect-koszul}
+The universal chiral defect $\mathcal{D}(\mathcal{A})$ is characterized as the Koszul dual:
+$$\mathcal{D}(\mathcal{A}) = \mathcal{A}^! := \text{RHom}_{\mathcal{A}\text{-mod}}(\mathbb{C}, \mathbb{C})$$
+where the RHom is computed in the derived category of $\mathcal{A}$-modules.
+
+Explicitly, this is computed by the cobar construction:
+$$\mathcal{D}(\mathcal{A}) = \Omega(\bar{B}(\mathcal{A}))$$
+with differential encoding the failure of strict Koszul duality.
+\end{theorem}
+
+\begin{remark}[Heuristic motivation (not a formal proof)]
+Consider a D-brane coupling to the chiral algebra $\mathcal{A}$. The BRST invariance condition requires:
+$$Q_{\text{BRST}}(\text{bulk-boundary coupling}) = 0$$
+
+This is precisely the Maurer-Cartan equation in the tensor product:
+$$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0 \quad \text{in } \mathcal{A} \otimes \mathcal{D}$$
+
+The universal solution is given by the Koszul dual, which encodes all possible consistent couplings. The bar-cobar duality ensures:
+$$\text{MC}(\mathcal{A} \otimes \mathcal{D}(\mathcal{A})) \cong \text{Hom}(\mathcal{A}, \mathcal{A})$$
+establishing universality.
+\end{remark}
+
+\begin{remark}[Imported-proof provenance and dependency closure]
+\textbf{Dependency tags.}
+\begin{enumerate}[label=(D\arabic*)]
+\item Universal-defect setup is Definition~\ref{def:universal-defect}.
+\item Internal computational realization is Theorem~\ref{thm:bar-cobar-inversion-qi}.
+\item External proof source for the RHom/Koszul-dual identification:
+Loday--Vallette \cite[Chs.~10--11]{LV} and
+Positselski \cite[Chs.~6--7]{Positselski}.
+\end{enumerate}
+\textbf{Status note.}
+This theorem is tagged \ClaimStatusProvedElsewhere; only the geometric/chiral
+specialization is developed internally.
+\end{remark}
+
+\subsection{The M2 Brane Example: Quantum Yangian as Koszul Dual}
+
+\begin{example}[M2 Branes at $A_{N-1}$ Singularity]\label{ex:M2-brane}
+Following Costello \cite{Costello2017}, consider $K$ M2 branes at an $A_{N-1}$ singularity in M-theory.
+
+\textbf{Boundary (M2 brane theory):}
+The twisted ABJM theory gives a 3d gauge theory with gauge group $U(K)^N$ in an $\Omega$-background. As $K \to \infty$:
+$$\mathcal{A}_{\text{M2}} = \text{Yangian of } \mathfrak{gl}_N$$
+
+\textbf{Bulk (11d supergravity):}
+The twisted supergravity on $\mathbb{R}^3 \times \mathbb{C}^4/\mathbb{Z}_N$ gives:
+$$\mathcal{A}_{\text{bulk}} = U_{\hbar,c}(\text{Diff}(\mathbb{C}) \otimes \mathfrak{gl}_N)$$
+a quantum deformation of differential operators.
+
+\textbf{Koszul Duality:}
+$$\text{Yangian}(\mathfrak{gl}_N) \cong \text{Koszul dual of } U_{\hbar,c}(\text{Diff}(\mathbb{C}) \otimes \mathfrak{gl}_N)$$
+
+This is a \emph{curved} Koszul duality with deformation parameter $c$ encoding backreaction.
+\end{example}
+
+\begin{theorem}[Curved Koszul Duality (algebraic form); \ClaimStatusProvedElsewhere]\label{thm:curved-koszul}
+Let $\mathcal{A}$ be a complete filtered chiral algebra satisfying the finite-type
+filtered-to-curved hypotheses used in
+Theorem~\ref{thm:filtered-to-curved} and the convergence hypotheses of
+Theorem~\ref{thm:bar-convergence}. Then:
+\begin{enumerate}
+\item $\mathcal{A}$ admits a curved $A_\infty$ model with curvature $m_0$ and
+\[
+m_1^2(x)=m_2(m_0,x)-m_2(x,m_0)=[m_0,x];
+\]
+\item the completed bar/cobar constructions define a curved Koszul dual object
+$\mathcal{A}_{\mathrm{curv}}^!$;
+\item the completed bar-cobar adjunction gives the corresponding derived
+equivalence in the curved setting.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Imported-proof provenance and conjectural physics bridge]
+\textbf{Dependency tags.}
+\begin{enumerate}[label=(D\arabic*)]
+\item Curved DG/$A_\infty$ Koszul-duality framework:
+Positselski \cite[Chs.~6--7]{Positselski}.
+\item Chiral/filtered quadratic-duality realization:
+Gui--Li--Zeng \cite[Thm.~5.3 and Sec.~6]{GLZ22}.
+\item Internal specialization inputs:
+Theorem~\ref{thm:filtered-to-curved} and
+Theorem~\ref{thm:bar-convergence}.
+\end{enumerate}
+\textbf{Status note.}
+This theorem is tagged \ClaimStatusProvedElsewhere (algebraic statement). The
+additional identification of $m_0$ with gravitational backreaction remains
+conjectural and is isolated in Theorem~\ref{thm:backreaction}.
+\end{remark}
+
+\subsection{Computational Techniques: Feynman Diagrams for Koszul Duality}
+
+\begin{technique}[Diagrammatic OPE Computation]\label{tech:diagrams}
+OPEs in the Koszul dual algebra can be computed using Feynman diagrams:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+% Bulk point
+\node[circle,fill=blue,inner sep=2pt] (bulk) at (0,2) {};
+\node[above] at (bulk) {Bulk};
+
+% Boundary line
+\draw[thick] (-3,0) -- (3,0);
+\node[below] at (0,-0.2) {Boundary};
+
+% Propagators
+\draw[blue,thick] (bulk) -- (-1.5,0);
+\draw[blue,thick] (bulk) -- (1.5,0);
+\draw[blue,thick] (bulk) -- (0,0);
+
+% Boundary operators
+\node[circle,fill=red,inner sep=2pt] at (-1.5,0) {};
+\node[circle,fill=red,inner sep=2pt] at (1.5,0) {};
+\node[circle,fill=red,inner sep=2pt] at (0,0) {};
+
+\node[below] at (-1.5,-0.5) {$\mathcal{O}_1$};
+\node[below] at (1.5,-0.5) {$\mathcal{O}_2$};
+\node[below] at (0,-0.5) {$\mathcal{O}_3$};
+\end{tikzpicture}
+\end{center}
+
+The OPE coefficient is:
+$$C_{12}^3 = \int_{\text{bulk}} \langle \mathcal{O}_1 \mathcal{O}_2 \mathcal{O}_3^! \rangle_{\text{Witten diagram}}$$
+where $\mathcal{O}_3^!$ is the Koszul dual operator.
+\end{technique}
+
+\begin{algorithm}[htbp]
+\caption{Computing Koszul Dual OPEs}\label{alg:koszul-ope}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Chiral algebra $\mathcal{A}$, operators $\mathcal{O}_1, \mathcal{O}_2$
+\State \textbf{Output:} OPE in Koszul dual $\mathcal{A}^!$
+\State
+\State \textbf{Step 1:} Compute bar complex elements
+\State $\bar{\mathcal{O}}_i \gets \bar{B}(\mathcal{O}_i)$ in $\bar{B}(\mathcal{A})$
+\State
+\State \textbf{Step 2:} Apply cobar construction
+\State $\mathcal{O}_i^! \gets \Omega(\bar{\mathcal{O}}_i)$ in $\mathcal{A}^!$
+\State
+\State \textbf{Step 3:} Compute pairing
+\State $\langle \mathcal{O}_1^!, \mathcal{O}_2^! \rangle \gets \text{Res}_{D_{12}}[\mu_{12} \otimes \eta_{12}]$
+\State
+\State \textbf{Step 4:} Extract OPE
+\State $\mathcal{O}_1^!(z) \mathcal{O}_2^!(w) \sim \sum_n \frac{C_n}{(z-w)^n}$
+\State where $C_n$ from residue calculation
+\State
+\State \Return OPE coefficients $\{C_n\}$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{\texorpdfstring{The AdS$_3$/CFT$_2$ Example: Twisted Supergravity}{The AdS 3/CFT 2 Example: Twisted Supergravity}}
+
+\begin{example}[AdS$_3 \times S^3 \times T^4$ Holography]\label{ex:AdS3}
+Following Costello-Paquette \cite{CP2020}, consider type IIB on AdS$_3 \times S^3 \times T^4$.
+
+\textbf{Boundary:} The symmetric orbifold $\text{Sym}^N(T^4)$ as $N \to \infty$
+
+\textbf{Bulk:} Twisted supergravity = Kodaira-Spencer theory
+
+After twisting by a nilpotent supercharge $Q$ with $Q^2 = 0$:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Boundary} & $\leftrightarrow$ & \textbf{Bulk} \\
+\hline
+$Q$-cohomology of $\text{Sym}^N(T^4)$ & Koszul & Kodaira-Spencer on AdS$_3$ \\
+Single-trace operators & duality & Gravitational modes \\
+$W_{1+\infty}$ algebra & $\cong$ & Deformed $\text{Vir} \ltimes \text{Diff}(S^3)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The Koszul duality becomes:
+$$W_{1+\infty} \text{ at } c = 6N \quad \xleftrightarrow{\text{Koszul}} \quad \text{KS gravity on AdS}_3$$
+\end{example}
+
+\begin{theorem}[Gravitational Backreaction and Deformation; \ClaimStatusConjectured]\label{thm:backreaction}
+The gravitational backreaction deforms the Koszul duality by:
+\begin{enumerate}
+\item Shifting generators by $\mathcal{O}(1/N)$ corrections
+\item Modifying the differential: $d \to d + \delta d$ where $\delta d \sim g_s$
+\item Curving the $A_\infty$ structure with $m_0 = \frac{1}{N}\text{Tr}(T^2)$
+\end{enumerate}
+
+The deformed pairing becomes:
+$$\langle \mathcal{A}, \mathcal{B} \rangle_{\text{deformed}} = \langle \mathcal{A}, \mathcal{B} \rangle_0 + \sum_{n=1}^\infty \frac{1}{N^n} \langle \mathcal{A}, \mathcal{B} \rangle_n$$
+where $\langle \cdot, \cdot \rangle_n$ includes $n$-loop gravitational corrections.
+\end{theorem}
+
+\begin{remark}[Theorem-sketch downgrade with dependency tags]
+\textbf{Dependency tags.}
+\begin{enumerate}[label=(D\arabic*)]
+\item The holographic setup used for this statement is Example~\ref{ex:AdS3}.
+\item The curved-duality algebraic framework is Theorem~\ref{thm:curved-koszul}.
+\item External physics input for the twisted AdS$_3$/CFT$_2$ deformation picture
+is \cite{CP2020}.
+\end{enumerate}
+\textbf{Status note.}
+This theorem is tagged \ClaimStatusConjectured: the $1/N$ expansion of
+the Koszul duality pairing via gravitational loop corrections is a
+physical prediction from the twisted AdS$_3$/CFT$_2$ correspondence
+\cite{CP2020}; a rigorous derivation within the chiral bar-cobar
+formalism remains open.
+\end{remark}
+
+\begin{remark}[Scope]
+Theorem~\ref{thm:backreaction} is tagged \ClaimStatusConjectured{} because
+its content is intrinsically physical: the $1/N$ expansion of the Koszul
+pairing, the identification $\delta d \sim g_s$, and the specific curving
+$m_0 = \frac{1}{N}\mathrm{Tr}(T^2)$ all originate from the twisted
+AdS$_3$/CFT$_2$ correspondence \cite{CP2020}, not from the algebraic
+bar-cobar formalism developed in this monograph.  A rigorous proof would
+require (i) a mathematically precise definition of gravitational loop
+corrections in the twisted setting, and (ii) a demonstration that these
+corrections are captured by curving the $A_\infty$ structure on the bar
+complex.  Neither ingredient is available at present; the statement records
+the structural prediction from physics.
+\end{remark}
+
+\subsection{Physical Interpretation: Defects and Open-Closed Duality}
+
+\begin{remark}[Open-Closed String Duality]
+The Koszul duality in holography realizes open-closed string duality:
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+% Left side - Open strings
+\node at (-3,2) {\textbf{Open Strings}};
+\draw[thick] (-4,0) -- (-2,0);
+\node at (-3,0) {$\bullet$};
+\draw[red,thick,->] (-3,0) -- (-3,1);
+\node[right] at (-3,0.5) {$\mathcal{A}$};
+\node at (-3,-0.5) {D-brane};
+
+% Arrow
+\draw[<->,thick] (-1,0) -- (1,0);
+\node[above] at (0,0) {Koszul};
+
+% Right side - Closed strings
+\node at (3,2) {\textbf{Closed Strings}};
+\draw[blue,thick] (3,0) circle (0.5);
+\node at (3,0) {$\mathcal{A}^!$};
+\node at (3,-0.5) {Bulk};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Open string field theory on branes $\to$ Chiral algebra $\mathcal{A}$
+\item Closed string field theory in bulk $\to$ Koszul dual $\mathcal{A}^!$
+\item Disk amplitude with boundary $\mathcal{A}$ $=$ Sphere amplitude in $\mathcal{A}^!$
+\end{itemize}
+\end{remark}
+
+\begin{theorem}[Universal Defect Construction; \ClaimStatusProvedElsewhere]\label{thm:universal-defect-construction}
+For any chiral algebra $\mathcal{A}$, the universal defect $\mathcal{D}(\mathcal{A})$ is constructed as:
+
+$$\mathcal{D}(\mathcal{A}) = \bigoplus_{n=0}^\infty \text{Ext}^n_{\mathcal{A}}(\mathbb{C}, \mathbb{C})$$
+
+with multiplication given by Yoneda product. This satisfies:
+\begin{enumerate}
+\item \textbf{Functoriality:} $\mathcal{A} \to \mathcal{B}$ induces $\mathcal{D}(\mathcal{B}) \to \mathcal{D}(\mathcal{A})$
+\item \textbf{Universality:} Any defect factors through $\mathcal{D}(\mathcal{A})$
+\item \textbf{Duality:} $\mathcal{D}(\mathcal{D}(\mathcal{A})) \simeq \mathcal{A}$ (under mild conditions)
+\end{enumerate}
+\end{theorem}
+
+\subsection{Complete Examples and Computations}
+
+\subsubsection{Example: Free Fermion and its Koszul Dual}
+
+\begin{example}[$bc$ Ghost System $\leftrightarrow$ $\beta\gamma$ System]
+The $bc$ ghost system (two fermionic generators $b, c$ with OPE $b(z)c(w) \sim (z-w)^{-1}$) is Koszul dual to the bosonic $\beta\gamma$ system:
+
+$$bc \text{ ghosts} \quad \xleftrightarrow{\text{Koszul}} \quad \beta\gamma \text{ system}$$
+
+Both systems have two generators; the duality exchanges the exterior (fermionic) structure with the symmetric (bosonic) structure, generalising the classical $\Lambda(V) \leftrightarrow \mathrm{Sym}(V^*)$ Koszul duality.
+
+\textbf{Bar complex of $bc$:}
+\begin{align}
+\bar{B}^0(bc) &= \mathbb{C} \\
+\bar{B}^1(bc) &= \text{span}\{b \otimes c \otimes \eta_{12},\; c \otimes b \otimes \eta_{12}\} \\
+\bar{B}^2(bc) &= 0 \text{ (the relation $b^2 = c^2 = 0$ truncates the bar complex)}
+\end{align}
+
+\textbf{Koszul dual is $\beta\gamma$:}
+The linear dual of the bar complex yields the $\beta\gamma$ system:
+\begin{align}
+(bc)^{!,0} &= \mathbb{C} \\
+(bc)^{!,1} &= \text{span}\{\beta, \gamma\} \\
+\beta(z)\gamma(w) &\sim \frac{1}{z-w}
+\end{align}
+
+The pairing:
+$$\langle b \otimes c + c \otimes b,\; \beta \otimes \gamma - \gamma \otimes \beta \rangle = 0$$
+encodes the Koszul duality: the Clifford (symmetric) relation $R_{bc}$ of the fermionic algebra is orthogonal to the Weyl (antisymmetric) relation $R_{\beta\gamma}$ of the bosonic algebra.
+\end{example}
+
+\subsubsection{Example: Heisenberg and W-algebras}
+
+\begin{example}[Affine $\leftrightarrow$ Affine Duality]
+The affine Kac-Moody algebra $\widehat{\mathfrak{g}}_k$ at level $k$ is related to its Feigin-Frenkel dual by curved Koszul duality:
+
+$$\widehat{\mathfrak{g}}_k \xleftrightarrow{\text{curved Koszul}} \widehat{\mathfrak{g}}_{-k-2h^\vee}$$
+
+where $h^\vee$ is the dual Coxeter number. For the Heisenberg subalgebra alone ($h^\vee = 0$), the Koszul dual is $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$ (Theorem~\ref{thm:heisenberg-koszul-dual-early}).  The bar complex $\bar{B}(\mathcal{H}_\kappa)$ is the Chevalley--Eilenberg complex $\mathrm{CE}(\hat{\mathfrak{h}}_\kappa)$, but this is the \emph{bar construction}, not the Koszul dual itself.
+
+The curvature element $m_0 = \kappa \cdot \omega_X$ (where $\omega_X$ is the canonical class) satisfies $m_1^2 = [m_0, -]$ on the $A_\infty$ structure; the bar differential itself always satisfies $d_B^2 = 0$ (cf.\ Theorem~\ref{thm:heisenberg-bar}).
+\end{example}
+
+\subsubsection{Complete Calculation: Yangian from M2 Branes}
+
+\begin{calculation}[Yangian Structure Constants; \ClaimStatusProvedElsewhere]
+For M2 branes, the Yangian generators $\{E_{ij}^{(r)}\}$ satisfy:
+
+In the Drinfeld ``new'' presentation, the Yangian $Y_\hbar(\mathfrak{gl}_N)$ has generators $\{T_{ij}^{(r)}\}_{1 \leq i,j \leq N,\, r \geq 0}$ with $T_{ij}^{(0)} = \delta_{ij}$ and the \textbf{RTT relation}:
+$$[T_{ij}^{(r+1)}, T_{kl}^{(s)}] - [T_{ij}^{(r)}, T_{kl}^{(s+1)}] = \hbar\left(T_{kj}^{(r)} T_{il}^{(s)} - T_{kj}^{(s)} T_{il}^{(r)}\right)$$
+
+Setting $E_{ij}^{(r)} = T_{ij}^{(r+1)}$ for the shifted generators, the first few relations are:
+\begin{align}
+[E_{ij}^{(0)}, E_{jk}^{(0)}] &= E_{ik}^{(0)} \quad \text{($\mathfrak{gl}_N$ at level 0)}\\
+[E_{ij}^{(0)}, E_{jk}^{(1)}] &= E_{ik}^{(1)} \quad \text{($\mathfrak{gl}_N$-equivariance)}\\
+[E_{ij}^{(1)}, E_{jk}^{(1)}] - [E_{ij}^{(0)}, E_{jk}^{(2)}] &= \hbar\left(E_{jj}^{(0)} E_{ik}^{(1)} - E_{jj}^{(1)} E_{ik}^{(0)}\right) \quad \text{(quantum correction)}
+\end{align}
+\end{calculation}
+
+\subsection{Applications and Future Directions}
+
+\begin{applications}
+\textbf{1. Holographic Correlators:}
+$$\langle \mathcal{O}_1 \cdots \mathcal{O}_n \rangle_{\text{CFT}} = \int_{\text{AdS}} \mathcal{O}_1^! \cdots \mathcal{O}_n^! \cdot e^{-S_{\text{gravity}}}$$
+
+\textbf{2. Quantum Groups from Gravity:}
+Every AdS gravity theory yields a quantum group via Koszul duality
+
+\textbf{3. Categorification:}
+$$\text{D}^b(\mathcal{A}\text{-mod}) \simeq \text{D}^b(\mathcal{A}^!\text{-mod})^{\text{op}}$$
+
+\textbf{4. Higher Spin Gravity:}
+Vasiliev theory = Koszul dual of higher spin algebra
+\end{applications}
+
+\subsubsection{\texorpdfstring{Bar Complex Computation for $\mathcal{W}_3$ Algebra}{Bar Complex Computation for W 3 Algebra}}
+
+\begin{example}[$\mathcal{W}_3$ Bar Complex]\label{ex:w3-bar}
+For $\mathcal{W}_3$ (the $\mathfrak{sl}_3$ principal W-algebra):
+
+\textbf{Generators:} $T$ (spin 2), $W$ (spin 3)
+
+\textbf{Bar Complex:}
+The bar complex is bigraded by bar degree $n$ and conformal weight $h$. At the level of generators (ignoring descendants):
+\begin{align}
+\dim \bar{B}^0 &= 1 \,\, (\text{vacuum}) \\
+\dim \bar{B}^1 &= 2 \,\, (\text{generators: } T, W)
+\end{align}
+Higher bar degrees involve the $\mathcal{W}_3$ OPE relations.  For a \emph{single-generator} operad, the dimensions would follow the Catalan sequence $1, 1, 2, 5, 14, \ldots$; for a two-generator algebra like $\mathcal{W}_3$, the dimensions of $\bar{B}^n_{\leq h}$ (truncated to conformal weight $\leq h$) depend on the specific $\mathcal{W}_3$ OPE relations and require case-by-case computation.
+\end{example}
+
+\subsubsection{Critical Level Phenomena}
+
+\begin{definition}[Critical Level]\label{def:critical}
+The critical level is $k = -h^\vee$ where $h^\vee$ is the dual Coxeter number. At this level:
+\begin{itemize}
+\item The Sugawara construction fails (denominator vanishes)
+\item The center becomes large (Feigin-Frenkel center)
+\item Connection to geometric Langlands emerges
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Feigin-Frenkel Center; \ClaimStatusProvedElsewhere]\label{thm:ff-center}
+At critical level, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is:
+\[
+Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{{}^L\mathfrak{g}}(D^\times))
+\]
+functions on the space of ${}^L\mathfrak{g}$-opers on the punctured formal disk~$D^\times$.  The global version on a curve~$X$ follows from Beilinson--Drinfeld's chiral algebra formalism~\cite{BD04}.
+\end{theorem}
+
+\begin{remark}[Opers and Connections]
+An oper is a special kind of connection:
+\[
+\nabla = \partial + p_{-1} + \text{regular terms}
+\]
+where $p_{-1}$ is a principal nilpotent element.  Opers are related to solutions of the KZ equations through the theory of conformal blocks.
+\end{remark}
+
+\subsubsection{\texorpdfstring{Chiral Coalgebra Structure for $\beta\gamma$}{Chiral Coalgebra Structure for}}
+
+\begin{theorem}[$\beta\gamma$ Bar Complex Coalgebra; \ClaimStatusProvedHere]\label{thm:bg-bar-coalg}
+The bar complex $\bar{B}^{\text{ch}}(\beta\gamma)$ has chiral coalgebra structure:
+\begin{enumerate}
+\item \textbf{Comultiplication}: Elements decompose as:
+\[
+\Delta(\beta_{i_1} \cdots \beta_{i_p} \gamma_{j_1} \cdots \gamma_{j_q} \partial^k) = 
+\sum_{\substack{I_\beta \sqcup I'_\beta = \{i_1,\ldots,i_p\} \\ I_\gamma \sqcup I'_\gamma = \{j_1,\ldots,j_q\}}} 
+\beta_{I_\beta}\gamma_{I_\gamma}\partial^{k_1} \otimes \beta_{I'_\beta}\gamma_{I'_\gamma}\partial^{k_2}
+\]
+respecting normal ordering: $\beta$'s to the left of $\gamma$'s.
+
+\item \textbf{Growth:} The bar complex is bigraded by bar degree $n$ and conformal weight $h$.  At each conformal weight, $\bar{B}^n_h$ is finite-dimensional with generating function
+$$\sum_{n,h} \dim(\bar{B}^n_h)\, q^h t^n = \prod_{m \geq 0} \frac{1}{(1-q^{m+\lambda}t)(1-q^{m+1-\lambda}t)}$$
+reflecting the two families of generators $\beta_{-m-\lambda}$ and $\gamma_{-m-1+\lambda}$ in the augmentation ideal.  Without a conformal weight bound, $\dim(\bar{B}^n) = \infty$ for each $n \geq 1$.
+
+\item \textbf{Coassociativity:} Follows from the factorization property of the FM operad.  The boundary divisors $D_S \subset \overline{C}_{n}(X)$ parametrizing collision of a subset $S$ of points induce maps
+\[
+\overline{C}_{n}(X) \supset D_S \;\cong\; \overline{C}_{|S|}(X) \times \overline{C}_{n-|S|+1}(X)
+\]
+and these compose associatively by the operad axioms.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Kontsevich-style Construction]
+The coalgebra structure emerges from considering correlation functions on punctured curves.
+
+\textbf{Step 1: Propagator Expansion.} The $\beta\gamma$ propagator:
+\[
+\langle \beta(z)\gamma(w) \rangle = \frac{1}{z-w}
+\]
+defines a distribution on $C_2(X) = X \times X \setminus \Delta$.
+
+\textbf{Step 2: Feynman Graphs.} Higher correlations factor through tree graphs:
+\[
+\langle \beta(z_1)\gamma(z_2)\beta(z_3)\gamma(z_4) \rangle = 
+\sum_{\text{pairings}} \prod_{\text{edges}} \frac{1}{z_i - z_j}
+\]
+
+\textbf{Step 3: Compactification.} The Fulton-MacPherson compactification $\overline{C}_n(X)$ 
+regularizes these distributions, with the coalgebra structure encoding how correlators 
+factorize when points collide.
+\end{proof}
+
+\subsection{The Prism Principle in Action}
+
+\begin{example}[Structure Coefficients via Residues]
+Consider a chiral algebra with generators $\phi_i$ and OPE:
+$$\phi_i(z) \phi_j(w) = \sum_k \frac{C_{ij}^k \phi_k(w)}{(z-w)^{h_i + h_j - h_k}} + \cdots$$
+
+The geometric bar complex extracts these coefficients:
+$$\text{Res}_{D_{ij}}[\phi_i \otimes \phi_j \otimes \eta_{ij}] = \sum_k C_{ij}^k \phi_k$$
+
+This is the ``spectral decomposition'' --- each residue reveals one ``color'' (structure coefficient) 
+of the algebraic ``composite light.'' The collection of all residues provides complete information about 
+the chiral algebra structure.
+\end{example}
+
+\begin{remark}[Lurie's Higher Algebra Perspective]
+Following Lurie \cite{HA}, we can understand the geometric bar complex through the theory of 
+$\mathbb{E}_n$-algebras:
+
+\begin{itemize}
+\item Chiral algebras are ``$\mathbb{E}_2$-algebras with holomorphic structure''
+\item The little 2-disks operad $\mathbb{E}_2$ has spaces $\mathbb{E}_2(n) \simeq \text{Conf}_n(\mathbb{C})$
+\item The bar complex computes factorization homology ($\mathbb{E}_2$-homology, the $\mathbb{E}_2$-analog of Hochschild homology)
+\item Holomorphic structure forces logarithmic poles at boundaries
+\end{itemize}
+
+This explains why configuration spaces appear: they \emph{are} the operad governing 2d algebraic structures.
+\end{remark}
+
+\subsection{The Ayala-Francis Perspective}
+
+\begin{theorem}[Factorization Homology and the Bar Complex; \ClaimStatusProvedElsewhere]\label{thm:fact-homology-quantum}
+For a chiral algebra $\mathcal{A}$ on $X$, the Ayala-Francis factorization homology and the geometric bar complex are related by Koszul duality:
+$$\int_X \mathcal{A} \simeq \mathcal{A} \otimes^{\mathbb{L}}_{\mathrm{Disk}(X)} \mathrm{pt} \qquad \text{(chains)}, \qquad \bar{B}^{\mathrm{ch}}(\mathcal{A}) \simeq \mathrm{RHom}_{\mathcal{A}\text{-mod}}(k, k) \qquad \text{(cochains)}$$
+These are \emph{dual} constructions: factorization homology computes the derived tensor product (the \emph{homological} side), while the bar complex computes the derived Hom (the \emph{cohomological} side). They are related by $\mathbb{E}_2$-Koszul duality as developed by Francis \cite{Francis2013}.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+Both constructions are derived functors of the forgetful functor from $\mathcal{A}$-modules to chain complexes, evaluated on the trivial module. The tensor product and Hom versions are related by the universal coefficient theorem and, more fundamentally, by the self-duality of the $\mathbb{E}_2$-operad.
+\end{proof}
+
+\begin{remark}[Gaitsgory's Insight]
+Dennis Gaitsgory observed that chiral homology can be computed by the ``semi-infinite cohomology'' 
+of the corresponding vertex algebra. Our geometric bar complex provides the explicit realization:
+\begin{itemize}
+\item Semi-infinite = configuration spaces (infinite-dimensional but locally finite)
+\item Cohomology = differential forms with logarithmic poles
+\item The bar differential = BRST operator in physics
+\end{itemize}
+\end{remark}
+
+
+\subsection{The Prism Principle: Operadic Identification}%
+\label{subsec:prism-operadic}
+
+We now give the formal operadic content of the Prism Principle: the
+geometric bar-cobar duality of chiral algebras is an instance of
+\emph{operadic Koszul duality} in the sense of Ginzburg--Kapranov
+\cite{GK94} and Getzler \cite{Get95}.
+
+\subsubsection{The Chiral Operad}
+
+\begin{definition}[Chiral Operad]\label{def:chiral-operad}
+The \emph{chiral operad} $\mathcal{P}_{\mathrm{ch}}$ is the topological
+operad with:
+\[
+\mathcal{P}_{\mathrm{ch}}(n)
+= \Omega^*_{\log}\!\bigl(\overline{C}_{n+1}(X)\bigr),
+\qquad n \geq 1,
+\]
+the complex of logarithmic differential forms on the Fulton--MacPherson
+compactification of $n+1$ points on the curve $X$.  The operad
+composition maps:
+\[
+\circ_i \colon \mathcal{P}_{\mathrm{ch}}(m) \otimes
+\mathcal{P}_{\mathrm{ch}}(n) \to \mathcal{P}_{\mathrm{ch}}(m+n-1)
+\]
+are induced by the gluing maps
+$\overline{C}_{m+1}(X) \times \overline{C}_{n+1}(X) \to
+\overline{C}_{m+n}(X)$ that identify the $i$-th point of the first
+configuration with the distinguished point of the second.
+
+The symmetric group $\mathfrak{S}_n$ acts by permuting the
+non-distinguished points, and the unit is the identity form in
+$\Omega^0(\overline{C}_2(X)) = \mathbb{C}$.
+\end{definition}
+
+\begin{proposition}[Genus-Zero Identification; \ClaimStatusProvedHere]%
+\label{prop:chiral-operad-genus0}
+At genus $0$ (i.e., $X = \mathbb{P}^1$), the chiral operad is
+quasi-isomorphic to the hypercommutative operad:
+\[
+\mathcal{P}_{\mathrm{ch}}|_{g=0} \;\simeq\; \mathrm{HyCom}.
+\]
+Explicitly, $\overline{C}_{n+1}(\mathbb{P}^1) \cong
+\overline{\mathcal{M}}_{0,n+2}$ (the Deligne--Mumford compactification
+of the moduli space of rational curves with $n+2$ marked points), and
+the cohomology operad
+$\{H^*(\overline{\mathcal{M}}_{0,n+2})\}_{n \geq 1}$ is the
+hypercommutative operad $\mathrm{HyCom}$ of Getzler \cite{Get95}.
+\end{proposition}
+
+\begin{proof}
+The identification
+$\overline{C}_{n+1}(\mathbb{P}^1) \cong \overline{\mathcal{M}}_{0,n+2}$
+is classical: the Fulton--MacPherson compactification of $n+1$ points on
+$\mathbb{P}^1$ with one point fixed at $\infty$ is isomorphic to the
+Deligne--Mumford moduli space of stable rational curves with $n+2$
+punctures \cite{FM94}.  Under this identification, the operad composition
+maps of $\mathcal{P}_{\mathrm{ch}}$ correspond to the clutching maps
+\[
+\overline{\mathcal{M}}_{0,m+1} \times
+\overline{\mathcal{M}}_{0,n+1} \to
+\overline{\mathcal{M}}_{0,m+n}
+\]
+that glue two rational curves at marked points.  The cohomology operad
+of $\{\overline{\mathcal{M}}_{0,n+2}\}$ is the hypercommutative operad
+by Getzler's theorem \cite[Theorem~1.5]{Get95}: the fundamental classes
+of the boundary strata satisfy exactly the relations defining
+$\mathrm{HyCom}$.
+
+The quasi-isomorphism follows because
+$\overline{\mathcal{M}}_{0,n+2}$ is a smooth projective variety
+with pure Hodge structure, hence formal as a dga by
+Deligne--Griffiths--Morgan--Sullivan~\cite{DGMS75}.  Thus
+$\Omega^*(\overline{\mathcal{M}}_{0,n+2})$ is quasi-isomorphic
+to $H^*(\overline{\mathcal{M}}_{0,n+2})$ as an operad.
+\end{proof}
+
+\subsubsection{Operadic Koszul Duality and the Prism}
+
+\begin{theorem}[Prism Principle --- Operadic Identification;
+\ClaimStatusProvedHere]\label{thm:prism-operadic}
+The geometric bar-cobar duality of chiral algebras
+(Definition~\ref{def:geometric-bar},
+Definition~\ref{def:geom-cobar-intrinsic}) is an instance of operadic
+Koszul duality.  Precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Genus~$0$:} The chiral operad
+  $\mathcal{P}_{\mathrm{ch}}|_{g=0} \simeq \mathrm{HyCom}$ is Koszul,
+  with Koszul dual cooperad:
+  \[
+  \mathcal{P}_{\mathrm{ch}}^{\text{\textexclamdown}}|_{g=0}
+  \;\simeq\; \mathrm{Grav}^c,
+  \]
+  the gravity cooperad.  Here $\mathrm{Grav}(n) =
+  H_{n-2}(\mathcal{M}_{0,n+2})$ is the gravity operad
+  of Getzler \cite{Get95} (note: the \emph{open} moduli space
+  $\mathcal{M}_{0,n+2}$, not the compactification $\overline{\mathcal{M}}_{0,n+2}$), and $\mathrm{Grav}^c$ is its cooperad
+  incarnation.
+
+\item \textbf{Bar as operadic bar:} For a chiral algebra $\mathcal{A}$
+  that is an algebra over $\mathcal{P}_{\mathrm{ch}}$, the geometric
+  bar complex is the operadic bar construction:
+  \[
+  \bar{B}^{\mathrm{ch}}(\mathcal{A})
+  \;\simeq\;
+  B_{\mathcal{P}_{\mathrm{ch}}}(\mathcal{A})
+  := \mathcal{P}_{\mathrm{ch}}^{\text{\textexclamdown}}
+  \circ_{\mathcal{P}_{\mathrm{ch}}} \mathcal{A}.
+  \]
+  The bar differential $d_{\mathrm{bar}} = d_{\mathrm{int}} +
+  d_{\mathrm{res}} + d_{\mathrm{config}}$ corresponds to the
+  standard operadic bar differential: $d_{\mathrm{res}}$ is the
+  twisting cochain component and $d_{\mathrm{config}}$ is the
+  cooperad cocomposition component.
+
+\item \textbf{Cobar as operadic cobar:} Dually, the geometric cobar
+  complex is the operadic cobar construction:
+  \[
+  \Omega^{\mathrm{ch}}(\mathcal{C})
+  \;\simeq\;
+  \Omega_{\mathcal{P}_{\mathrm{ch}}^{\text{\textexclamdown}}}(\mathcal{C})
+  := \mathcal{P}_{\mathrm{ch}}
+  \circ_{\mathcal{P}_{\mathrm{ch}}^{\text{\textexclamdown}}} \mathcal{C}.
+  \]
+  Under Verdier duality
+  (Definition~\ref{def:geom-cobar-intrinsic}), the gravity cooperad
+  $\mathrm{Grav}^c$ controlling the bar maps to the hypercommutative
+  operad $\mathrm{HyCom}$ controlling the cobar.
+
+\item \textbf{Bar-cobar resolution:} For a Koszul chiral algebra
+  $\mathcal{A}$ (Definition~\ref{def:chiral-koszul-pair}), the
+  canonical map
+  $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
+  \to \mathcal{A}$
+  is a quasi-isomorphism.  This is an instance of the general operadic
+  bar-cobar resolution for Koszul operads \cite[Theorem~11.3.3]{LV}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{Part (i): HyCom--Grav Koszul duality.}
+This is Getzler's theorem \cite[Theorem~2.3]{Get95}.  The
+hypercommutative operad $\mathrm{HyCom}$ is defined by the
+presentation: generators are the fundamental classes
+$[\overline{\mathcal{M}}_{0,n+2}] \in H^{2(n-1)}(
+\overline{\mathcal{M}}_{0,n+2})$ with the WDVV (associativity)
+relations arising from boundary divisors.  The Koszul dual cooperad
+has components $\mathrm{Grav}^c(n) = H_{n-2}(
+\mathcal{M}_{0,n+2})^{\vee}$, which identifies with the gravity
+cooperad (the linear dual of Getzler's gravity operad
+$\mathrm{Grav}(n) = H_{n-2}(\mathcal{M}_{0,n+2})$, defined using
+the \emph{open} moduli space).  The Koszulity of $\mathrm{HyCom}$ is
+established in \cite[Theorem~2.3]{Get95} via the purity of the Hodge
+structure on $H^*(\overline{\mathcal{M}}_{0,n})$.
+
+\textbf{Part (ii): Identification of the bar complex.}
+The geometric bar complex (Definition~\ref{def:geometric-bar}) at
+genus~$0$ is:
+\[
+\bar{B}^{\mathrm{ch}}_n(\mathcal{A}) = \Gamma\!\left(
+  \overline{C}_{n+1}(\mathbb{P}^1),\,
+  j_*j^*\mathcal{A}^{\boxtimes(n+1)}
+  \otimes \Omega^n_{\log}
+\right).
+\]
+The logarithmic forms $\Omega^*_{\log}(\overline{C}_{n+1}(\mathbb{P}^1))$
+compute the cohomology of the \emph{open} moduli space
+$\mathcal{M}_{0,n+2}$ by the logarithmic comparison theorem (Deligne),
+providing the propagators for the bar differential.  The bar complex
+is controlled by the cohomology operad of
+$\overline{\mathcal{M}}_{0,n+2}$, i.e., $\mathrm{HyCom}$.
+
+The standard operadic bar construction
+$B_{\mathrm{HyCom}}(\mathcal{A}) = \mathrm{Grav}^c \circ_{\mathrm{HyCom}}
+\mathcal{A}$ is a two-sided composition product.  Concretely, its $n$-th
+component is:
+\[
+B_{\mathrm{HyCom}}(\mathcal{A})_n
+= \bigoplus_{\text{trees } T} \bigotimes_{v \in V(T)}
+  \mathrm{Grav}^c(|v|) \otimes_{\mathfrak{S}_{|v|}} \mathcal{A}^{\otimes |v|}
+\]
+summed over planar trees $T$ with $n$ leaves.  The three components of
+the bar differential correspond to:
+\begin{itemize}
+\item $d_{\mathrm{res}}$: the twisting cochain
+  $\kappa\colon \mathrm{Grav}^c \to \mathrm{HyCom}$
+  (Ginzburg--Kapranov \cite[§2.1]{GK94}), which maps
+  the gravity cooperad to the hypercommutative operad.  Geometrically,
+  this is the residue map: extracting the leading OPE coefficient at
+  a collision divisor.
+\item $d_{\mathrm{config}}$: the cooperad cocomposition
+  $\Delta\colon \mathrm{Grav}^c \to \mathrm{Grav}^c \circ
+  \mathrm{Grav}^c$, which geometrically corresponds to the de Rham
+  differential on configuration forms and the
+  boundary stratification of $\overline{\mathcal{M}}_{0,n}$.
+\item $d_{\mathrm{int}}$: the internal differential of $\mathcal{A}$.
+\end{itemize}
+
+\textbf{Part (iii): Cobar via Verdier duality.}
+By the intrinsic cobar definition
+(Definition~\ref{def:geom-cobar-intrinsic}), $\Omega^{\mathrm{ch}}$
+is the Verdier dual of the bar.  Since Verdier duality on
+$\overline{\mathcal{M}}_{0,n+2}$ exchanges $\mathrm{Grav}^c$ and
+$\mathrm{HyCom}$ (this is the geometric content of Koszul duality:
+the Koszul dual operad is the Poincaré dual of the Koszul dual
+cooperad), the operadic cobar construction
+$\Omega_{\mathrm{Grav}^c}(\mathcal{C}) = \mathrm{HyCom}
+\circ_{\mathrm{Grav}^c} \mathcal{C}$ agrees with the
+geometric cobar $\Omega^{\mathrm{ch}}(\mathcal{C})$.
+
+\textbf{Part (iv): Bar-cobar resolution.}
+For a Koszul operad $\mathcal{P}$, the canonical map
+$\Omega(B_{\mathcal{P}}(\mathcal{A})) \to \mathcal{A}$ is a
+quasi-isomorphism for any $\mathcal{P}$-algebra $\mathcal{A}$ (this
+is the fundamental theorem of operadic Koszul duality
+\cite[Theorem~11.3.3]{LV}).  Since $\mathrm{HyCom}$ is Koszul
+by Part~(i), and the geometric bar-cobar agree with the operadic
+bar-cobar by Parts~(ii)--(iii), the result follows.
+\end{proof}
+
+\begin{definition}[Modular Operad]\label{def:modular-operad}
+A \textbf{modular operad} (Getzler--Kapranov \cite[\S5]{GeK98})
+in a symmetric monoidal category $\mathcal{V}$ consists of:
+\begin{enumerate}[label=(\roman*)]
+\item A collection of objects
+   $\{\mathcal{M}(g,n)\}_{2g-2+n>0}$ in $\mathcal{V}$,
+   each equipped with a $\Sigma_n$-action (the stability condition
+   $2g-2+n > 0$ excludes $(g,n) = (0,0), (0,1), (0,2)$).
+\item \textbf{Separating gluing maps}: for each partition
+   $\{1, \ldots, n\} = S_1 \sqcup S_2$ and $g = g_1 + g_2$,
+   \[
+   \xi_{S_1, S_2}\colon \mathcal{M}(g_1, |S_1|+1)
+   \otimes \mathcal{M}(g_2, |S_2|+1)
+   \;\longrightarrow\; \mathcal{M}(g, n),
+   \]
+   corresponding to gluing two curves at marked points.
+\item \textbf{Non-separating gluing maps}: for each pair of
+   distinguished marked points,
+   \[
+   \xi_{\mathrm{ns}}\colon \mathcal{M}(g, n+2)
+   \;\longrightarrow\; \mathcal{M}(g+1, n),
+   \]
+   corresponding to self-gluing (identifying two marked points
+   on the same curve).
+\end{enumerate}
+These maps satisfy:
+\begin{itemize}
+\item \textbf{Equivariance}: compatibility with the $\Sigma_n$-actions;
+\item \textbf{Associativity}: iterated gluings are independent of
+   the order in which they are performed;
+\item \textbf{Commutativity}: separating gluing is symmetric in
+   the two factors.
+\end{itemize}
+The canonical example is the collection of Deligne--Mumford moduli
+spaces $\{\overline{\mathcal{M}}_{g,n}\}_{2g-2+n>0}$ with clutching
+maps at the boundary strata.
+\end{definition}
+
+\begin{definition}[Feynman Transform]\label{def:feynman-transform}
+Let $\mathcal{M}od$ be a modular operad and $\mathcal{A}$ an algebra
+over $\mathcal{M}od$.  The \textbf{Feynman transform}
+$\mathrm{FT}_{\mathcal{M}od}(\mathcal{A})$
+\cite[Definition~4.1]{GeK98} is the chain complex
+\[
+\mathrm{FT}_{\mathcal{M}od}(\mathcal{A})
+\;=\;
+\bigoplus_{\substack{g,n \\ 2g-2+n>0}}
+\;\bigoplus_{\Gamma \in \mathcal{G}_{g,n}}
+\bigotimes_{v \in V(\Gamma)} \mathcal{A}(\mathrm{val}(v))
+\;\otimes\;
+\bigotimes_{e \in E(\Gamma)} \det(e),
+\]
+summed over \emph{stable graphs} $\Gamma$ of type $(g,n)$
+(connected graphs with genus decoration $g_v$ at each vertex $v$
+satisfying $\sum_v g_v + b_1(\Gamma) = g$ and
+$\sum_v \mathrm{val}(v) = n + 2|E(\Gamma)|$, where $b_1$ is the
+first Betti number and $\mathrm{val}(v)$ counts half-edges at~$v$).
+The differential sums over edge contractions and vertex splittings,
+and satisfies $d^2 = 0$ by the modular operad axioms.
+\end{definition}
+
+\begin{theorem}[Prism Principle --- Higher-Genus Extension;
+\ClaimStatusProvedHere]\label{thm:prism-higher-genus}
+The operadic identification extends to all genera via the
+modular operad structure on $\{\overline{\mathcal{M}}_{g,n}\}$
+(Definition~\ref{def:modular-operad}).
+Precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The collection $\mathcal{M}od = \{\overline{\mathcal{M}}_{g,n}
+  \}_{2g-2+n>0}$ forms a modular operad in the sense of
+  Getzler--Kapranov \cite{GeK98}, with composition maps given by
+  clutching at marked points.
+\item The full genus-graded bar complex
+  $\bar{B}^{\mathrm{full}}(\mathcal{A}) = \bigoplus_{g \geq 0}
+  \bar{B}^{(g)}(\mathcal{A})$ is the \emph{Feynman transform}
+  of $\mathcal{A}$ with respect to the modular operad
+  $\mathcal{M}od$:
+  \[
+  \bar{B}^{\mathrm{full}}(\mathcal{A}) \simeq
+  \mathrm{FT}_{\mathcal{M}od}(\mathcal{A}).
+  \]
+\item The nilpotence $d_{\mathrm{bar}}^2 = 0$ at all genera
+  (Theorem~\ref{thm:genus-induction-strict}) is a consequence of the
+  modular operad boundary relation $\partial^2 = 0$ on the
+  stratification of $\overline{\mathcal{M}}_{g,n}$, combined with the
+  centrality of the curvature $\mu_0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{Part (i)} is the foundational result of
+Getzler--Kapranov \cite[§5]{GeK98}: the boundary stratification of
+$\overline{\mathcal{M}}_{g,n}$ gives gluing maps
+\[
+\xi_{g_1,g_2}\colon \overline{\mathcal{M}}_{g_1,n_1+1} \times
+\overline{\mathcal{M}}_{g_2,n_2+1} \to
+\overline{\mathcal{M}}_{g_1+g_2,n_1+n_2}
+\quad (\text{separating})
+\]
+and self-gluing maps
+$\xi_g\colon \overline{\mathcal{M}}_{g,n+2} \to
+\overline{\mathcal{M}}_{g+1,n}$
+(non-separating).  These satisfy the axioms of a modular operad.
+
+\textbf{Part (ii):}
+The Feynman transform (Definition~\ref{def:feynman-transform})
+applied to the modular operad
+$\mathcal{M}od = \{\overline{\mathcal{M}}_{g,n}\}$ yields a sum
+controlled by the
+boundary strata of $\overline{\mathcal{M}}_{g,n}$, which are
+indexed by stable graphs.  The genus-$g$ bar complex
+$\bar{B}^{(g)}(\mathcal{A})$ integrates
+$\mathcal{A}^{\boxtimes n}$ against logarithmic forms on
+$\overline{\mathcal{M}}_{g,n}$, which is precisely what
+the Feynman transform produces: each stable graph $\Gamma$
+contributes an integral over the corresponding boundary stratum,
+with the logarithmic propagator $\eta_{ij}$ along each edge.
+
+\textbf{Part (iii):}
+The Feynman transform differential squares to zero by the
+modular operad axioms: the modular operad boundary relation states
+that the composition $\partial \circ \partial$ on the
+stratification of $\overline{\mathcal{M}}_{g,n}$ vanishes (each
+codimension-2 stratum is reached from exactly two codimension-1
+strata with opposite orientations).  This is exactly the mechanism
+proved in Theorem~\ref{thm:genus-induction-strict}: the Arnold
+relations at genus~$0$, the centrality of the curvature $\mu_0$
+for cross-genus terms, and the modular operad boundary relation
+for pure higher-genus terms combine to give
+$d_{\mathrm{bar}}^2 = 0$.
+\end{proof}
+
+\begin{corollary}[The Prism Principle; \ClaimStatusProvedHere]\label{cor:prism-principle}
+The geometric bar complex acts as a mathematical prism decomposing a
+chiral algebra $\mathcal{A}$ into its \emph{operadic spectrum}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Genus-$0$ spectrum:} The bar complex extracts the
+  $\mathrm{Grav}^c$-coalgebra structure on $\bar{B}^{\mathrm{ch}}(
+  \mathcal{A})$---the ``colors'' are indexed by the gravity cooperad,
+  with OPE structure constants appearing as residues at boundary
+  divisors of $\overline{\mathcal{M}}_{0,n}$.
+\item \textbf{Higher-genus harmonics:} At genus $g \geq 1$, the
+  Feynman transform adds ``higher harmonics'' controlled by the
+  cohomology of $\overline{\mathcal{M}}_{g,n}$: central extensions
+  at genus~$1$, Siegel modular corrections at genus~$2$, and
+  so forth.
+\item \textbf{Reconstruction:} The cobar construction
+  $\Omega^{\mathrm{ch}}$ acts as the inverse prism, reconstructing
+  $\mathcal{A}$ from its operadic spectrum.  For Koszul chiral
+  algebras, this reconstruction is exact:
+  $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
+  \xrightarrow{\sim} \mathcal{A}$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Part (i) is the content of Theorem~\ref{thm:prism-operadic}(ii):
+the bar complex is the operadic bar for the Koszul operad
+$\mathrm{HyCom}$, so it produces a $\mathrm{Grav}^c$-coalgebra.
+The residue map $d_{\mathrm{res}}$ extracts OPE coefficients, which
+are the components of the twisting cochain
+$\kappa\colon \mathrm{Grav}^c \to \mathrm{HyCom}$.
+
+Part (ii) follows from Theorem~\ref{thm:prism-higher-genus}(ii):
+the Feynman transform includes contributions from all genera.
+
+Part (iii) combines
+Theorem~\ref{thm:prism-operadic}(iv)
+with Corollary~\ref{cor:bar-cobar-inverse}.
+\end{proof}
+
+
+\subsection{Why Logarithmic Forms?}
+
+\begin{proposition}[Forced by Conformal Invariance; \ClaimStatusProvedElsewhere]
+The appearance of logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ is not a choice but forced by:
+\begin{enumerate}
+\item \textbf{Translation and scale invariance:} Under $z \mapsto az + b$, $\eta_{ij} \mapsto \eta_{ij}$
+\item \textbf{Single-valuedness:} Around collision divisors, forms must have logarithmic singularities
+\item \textbf{Residue theorem:} Only logarithmic forms give well-defined residues
+\end{enumerate}
+\end{proposition}
+
+\begin{convention}[Signs from Trees]
+For the bar differential on decorated trees, we use the following sign convention:
+\begin{enumerate}
+\item Label edges by depth-first traversal starting from the root
+\item For contracting edge $e$ connecting vertices with operations $p_1, p_2$ of degrees $|p_1|, |p_2|$:
+\item The sign is $(-1)^{\epsilon(e)}$ where:
+$$\epsilon(e) = \sum_{e' < e} |p_{s(e')}| + |p_1| + 1$$
+where $s(e')$ is the source vertex of edge $e'$ and the sum is over edges preceding $e$ in the ordering.
+\item The extra $+1$ comes from the suspension in the bar construction.
+\end{enumerate}
+
+% Add missing verification
+To verify $d^2 = 0$ for this sign convention, consider a tree with three vertices and two edges $e_1, e_2$. The two ways to contract both edges give:
+\begin{itemize}
+\item Contract $e_1$ then $e_2$: sign is $(-1)^{\epsilon(e_1)} \cdot (-1)^{\epsilon'(e_2)}$
+\item Contract $e_2$ then $e_1$: sign is $(-1)^{\epsilon(e_2)} \cdot (-1)^{\epsilon'(e_1)}$
+\end{itemize}
+where $\epsilon'$ accounts for the change in edge labeling after the first contraction. A detailed calculation shows these contributions cancel:
+$$(-1)^{\epsilon(e_1) + \epsilon'(e_2)} + (-1)^{\epsilon(e_2) + \epsilon'(e_1)} = 0$$
+This generalizes to all trees by induction on the number of edges.
+
+This ensures $d^2 = 0$ by a careful analysis of double contractions.
+\end{convention}
+
+\begin{lemma}[Sign Consistency for Bar Differential; \ClaimStatusProvedElsewhere]
+The sign convention above ensures that for any pair of edges $e_1, e_2$ in a tree, the signs arising from contracting $e_1$ then $e_2$ versus contracting $e_2$ then $e_1$ differ by exactly $(-1)$, ensuring $d^2 = 0$.
+\end{lemma}
+
+\begin{proof}
+This is a standard result in operad theory; see Loday--Vallette \cite{LodayVallette}, Proposition~6.3.2.  The key mechanism: label the edges $1, \ldots, E$.  Contracting edge $i$ produces a tree with $E-1$ edges, relabeled $1, \ldots, E-1$.  If $i < j$, then contracting $i$ first shifts edge $j$ to position $j-1$.  The sign for contracting edge at position $k$ in a tree $T$ is $\epsilon(k,T) = k - 1 + \sum_{\ell < k} |v_\ell|$ where $|v_\ell|$ is the degree of the operation at the vertex below edge $\ell$.  One checks:
+$$\epsilon(i, T) + \epsilon(j-1, T/e_i) = \epsilon(j, T) + \epsilon(i, T/e_j) + 1$$
+so that contracting in opposite order introduces a sign of $(-1)^1 = -1$, giving $d^2 = 0$.
+\end{proof}
+
+For an augmented operad $P$ with augmentation $\epsilon: P \to I$, we construct...
+
+\begin{definition}[Cobar Construction]
+Dually, for a coaugmented cooperad $C$ with coaugmentation $\eta : \mathbb{I} \to C$, the cobar construction $\Omega(C)$ is the free operad on the desuspension $s^{-1}\bar{C}$ (where $\bar{C} = \text{coker}(\eta)$) with differential induced by the cooperad comultiplication.
+\end{definition}
+ 
+\begin{theorem}[Bar-Cobar Adjunction; \ClaimStatusProvedElsewhere]
+There is an adjunction:
+\[
+\barB : \text{Operads} \rightleftarrows \text{Cooperads}^{\text{op}} : \Omega
+\]
+Moreover, if $P$ is Koszul (defined below in Section 3.1), then the unit and counit are quasi-isomorphisms, establishing an equivalence of homotopy categories.
+\end{theorem}
+ 
+\subsection{Partition Complexes and the Commutative Operad}
+ 
+For the commutative operad $\Com$, the bar construction admits a beautiful combinatorial model via partition lattices:
+ 
+\begin{definition}[Partition Lattice]
+The partition lattice $\Pi_n$ is the poset of all partitions of $\{1, 2, \ldots, n\}$, ordered by refinement: $\pi \leq \sigma$ if every block of $\pi$ is contained in some block of $\sigma$. The proper part $\barPi_n = \Pi_n \setminus \{\hat{0}, \hat{1}\}$ excludes the minimum (discrete partition) and maximum (trivial partition).
+\end{definition}
+ 
+\begin{theorem}[Partition Complex Structure; \ClaimStatusProvedHere]\label{thm:partition}
+The bar complex $\barB(\Com)(n)$ is quasi-isomorphic to the reduced chain complex $\tilde{C}_*(\barPi_n)$ of the proper part of the partition lattice $\Pi_n$. More precisely:
+\[
+\barB(\Com)(n) \simeq s^{n-2}\tilde{C}_{n-2}(\barPi_n) \otimes \sgn_n
+\]
+where $\sgn_n$ is the sign representation of $S_n$.
+\end{theorem}
+ 
+\begin{proof}
+Elements of $\Com^{\circ k}(n)$ (the $k$-fold composition) correspond to ways of iteratively partitioning $n$ elements through $k$ levels. The simplicial structure is:
+\begin{itemize}
+\item Face maps compose adjacent levels of partitioning (coarsening)
+\item Degeneracy maps repeat a level (refinement followed by immediate coarsening)
+\end{itemize}
+ 
+After normalization (removing degeneracies), we obtain chains on $\barPi_n$. The dimension shift and sign representation arise from the suspension in the bar construction and the need for $S_n$-equivariance.
+ 
+The key observation is that $\barPi_n$ has the homology of a wedge of $(n-1)!$ spheres of dimension $n-2$, with the $S_n$-action on the top homology given by the Lie representation tensored with the sign. This follows from the classical results of Björner-Wachs \cite{BW93} and Stanley \cite{Sta97}, who computed:
+\[
+\tilde{H}_{n-2}(\barPi_n) \cong \Lie(n) \otimes \sgn_n \text{ as } S_n\text{-representations}
+\]
+and $\tilde{H}_k(\barPi_n) = 0$ for $k \neq n-2$.
+\end{proof}
+\begin{remark}[Simplicial Model - Precise Construction]
+The simplicial bar for $\Com$ literally consists of chains of refinements $\pi_0 \leq \pi_1 \leq \cdots \leq \pi_k$ in $\Pi_n$. This is the nerve of the poset $\Pi_n$, and the identification with the cooperad structure follows from taking normalized chains.
+\end{remark}
+ 
+\subsection{Holographic Interpretation}
+
+\begin{conjecture}[Holographic Koszul Duality; \ClaimStatusConjectured]\label{conj:holographic-koszul}
+\leavevmode\\
+For appropriate chiral algebra pairs
+$(\mathcal{A}_{\mathrm{bdy}}, \mathcal{A}_{\mathrm{bulk}})$,
+we expect the following dictionary:
+boundary observables and bulk amplitudes are related by the square below.
+
+\begin{center}
+\begin{tikzcd}
+\text{Boundary CFT } \mathcal{A}_{\text{boundary}} \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[d, "\text{correlators}"] & 
+\text{Bulk Gravity } \mathcal{A}_{\text{bulk}} \arrow[d, "\text{Witten diagrams}"] \\
+\text{Boundary observables} \arrow[r, "\text{AdS/CFT}"] & \text{Bulk amplitudes}
+\end{tikzcd}
+\end{center}
+
+Specifically:
+\begin{enumerate}
+\item The bar construction maps boundary operators to bulk fields
+\item Residues at collision divisors encode bulk interactions
+\item The cobar construction reconstructs boundary correlators from bulk data
+\item Koszul duality = holographic duality at the algebraic level
+\end{enumerate}
+
+\textbf{Example:} For $\mathcal{A}_{\text{boundary}} = \mathcal{W}_{\infty}[\lambda]$ at $c = N$:
+\begin{itemize}
+\item Bulk theory: Vasiliev higher-spin gravity in AdS$_3$
+\item Bar complex: Computes higher-spin interactions via:
+  $$\bar{B}^{\text{ch}}(\mathcal{W}_{\infty}) \simeq \text{hs}[\lambda] \otimes \mathcal{C}^{\bullet}(\text{AdS}_3)$$
+\item Cobar complex: Reconstructs $\mathcal{W}_{\infty}$ from bulk Vasiliev theory
+\item The parameter $\lambda$ controls both:
+  - W-algebra structure constants
+  - Bulk higher-spin coupling constants
+\end{itemize}
+\end{conjecture}
+
+\begin{remark}[Physical Evidence and Scope]
+This conjecture is supported by matching of partition functions, three-point functions, and conformal blocks between boundary W-algebras and bulk Vasiliev theory \cite{Gaberdiel-Gopakumar}. It is labeled \ClaimStatusConjectured{} because the holographic identification of the bar construction with bulk field content, and of the cobar construction with boundary reconstruction, requires physical input from the AdS$_3$/CFT$_2$ correspondence that lies outside the algebraic framework of this monograph.  The mathematical content is the structural parallel between the bar-cobar adjunction and the holographic dictionary.
+\end{remark}
+
+\begin{remark}[Scope]
+Conjecture~\ref{conj:holographic-koszul} is tagged \ClaimStatusConjectured{}
+because the claimed dictionary between the bar-cobar adjunction and the
+AdS/CFT correspondence requires physics input at two levels:
+(i)~the identification of bar complex generators with bulk higher-spin
+fields relies on the Gaberdiel--Gopakumar duality, which is itself a
+physics conjecture supported by numerical evidence (partition function
+matching, three-point function agreement) but without a mathematical proof;
+(ii)~the cobar reconstruction of boundary correlators from bulk Witten
+diagrams presupposes the AdS$_3$/CFT$_2$ correspondence, which is not a
+theorem.  Within the algebraic framework of this monograph, one can prove
+that the bar-cobar adjunction has the same formal structure as the
+holographic dictionary, but the identification of the two requires external
+physical input that we do not attempt to supply.
+\end{remark}

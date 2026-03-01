@@ -1,0 +1,198 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 68: DEFORMATION QUANTIZATION EXAMPLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Deformation Quantization Examples}
+\label{chap:deformation-examples}
+
+
+\section{\texorpdfstring{$\Pinf$ Structures}{Pinf Structures}}
+\label{sec:pinf-structures}
+\begin{definition}[$\Pinf$-Chiral Algebra]\label{def:pinf-chiral-detailed}
+A \textbf{$\Pinf$-chiral algebra} is a chiral algebra $\mathcal{A}$ equipped with:
+\begin{enumerate}[label=(\roman*)]
+\item An $\Einf$-chiral algebra structure (commutative OPE).
+\item A compatible $\Linf$-chiral Lie structure $\{-, -\}$ (Poisson bracket).
+\item The Leibniz rule: $\{a, b \cdot c\} = \{a, b\} \cdot c + b \cdot \{a, c\}$.
+\end{enumerate}
+Equivalently, $\mathcal{A}$ is an algebra over the chiral Poisson operad $\chirPois$.
+\end{definition}
+
+\begin{example}[Classical Affine Poisson]\label{ex:classical-affine}
+Let $\mathfrak{g}^*$ be the dual of a Lie algebra with Kirillov--Kostant Poisson structure:
+\[
+\{f, g\}(x) = x([df_x, dg_x])
+\]
+The loop algebra version $L\mathfrak{g}^* = \mathfrak{g}^* \otimes \bC[t, t^{-1}]$ has a
+$\Pinf$-chiral structure:
+\[
+\{J^a(z), J^b(w)\} = f^{ab}_c J^c(w) \delta(z - w)
+\]
+This is the classical limit ($k \to \infty$) of the Kac--Moody OPE.
+\end{example}
+
+
+\subsection{Coisson Algebras}
+
+\begin{definition}[Coisson Algebra]\label{def:coisson}
+A \textbf{coisson algebra} is a commutative chiral algebra $\mathcal{A}$ with a 
+compatible chiral Lie cobracket:
+\[
+\delta: \mathcal{A} \to \mathcal{A} \chirtensor \mathcal{A}
+\]
+satisfying the co-Leibniz rule.
+\end{definition}
+
+\begin{theorem}[Coisson = $(\chirPois)^c$-Coalgebra; \ClaimStatusProvedElsewhere]\label{thm:coisson-coalgebra}
+Coisson algebras are exactly coalgebras over the Koszul dual cooperad $(\chirPois)^c$.
+\end{theorem}
+
+
+\section{Quantization Formulas}
+\label{sec:quantization-formulas}
+
+\subsection{Deformation Quantization Setup}
+
+\begin{construction}[Quantization Map]\label{constr:quantization}
+A \textbf{deformation quantization} of a $\Pinf$-chiral algebra $(\mathcal{A}_0, \cdot, \{-,-\})$ 
+is an $\Eone$-chiral algebra $(\mathcal{A}_\hbar, \star)$ such that:
+\begin{enumerate}[label=(\roman*)]
+\item $\mathcal{A}_\hbar = \mathcal{A}_0[[\hbar]]$ as a vector space.
+\item $a \star b = a \cdot b + \hbar B_1(a, b) + \hbar^2 B_2(a, b) + \cdots$.
+\item $a \star b - b \star a = \hbar \{a, b\} + O(\hbar^2)$.
+\end{enumerate}
+\end{construction}
+
+\begin{theorem}[Formality for $\Pinf$-Chiral; \ClaimStatusProvedElsewhere]\label{thm:pinf-formality}
+Every $\Pinf$-chiral algebra admits a deformation quantization to an $\Eone$-chiral
+algebra. The quantization is unique up to gauge equivalence.
+\end{theorem}
+
+\begin{proof}
+The result follows from the formality of the $E_2$-operad (Kontsevich 1999,
+Tamarkin 2003) via the factorization algebra formalism.  Specifically:
+
+\textbf{Step 1: Formality.}
+The Francis--Gaitsgory formality theorem
+(Theorem~\ref{thm:chiral-formality}, \ClaimStatusProvedElsewhere)
+establishes an $L_\infty$ quasi-isomorphism between chiral polyvector
+fields and chiral Hochschild cochains.  This guarantees that the
+deformation problem is unobstructed: the obstruction class in
+$H^3_{\chirPois}(\mathcal{A}_0; \mathcal{A}_0)$ vanishes by formality.
+
+\textbf{Step 2: Existence.}
+By formality, a Poisson structure $\pi \in H^2_{\chirPois}$ lifts to a
+Maurer--Cartan element $\alpha = \hbar\pi + O(\hbar^2)$ in the
+Hochschild cochain complex.  The resulting star product is:
+\[
+a \star b = \sum_{n \geq 0} \hbar^n \sum_{\Gamma \in G_{n,2}} w_\Gamma B_\Gamma(a, b)
+\]
+where $G_{n,2}$ are admissible graphs, $w_\Gamma$ are Kontsevich weights
+(integrals over $\FM_n(\mathbb{C})$), and $B_\Gamma$ are bidifferential
+operators.  Associativity follows from Stokes' theorem on the boundary
+strata of $\FM_n(\mathbb{C})$.
+
+\textbf{Step 3: Uniqueness.}
+Two quantizations correspond to gauge-equivalent Maurer--Cartan elements
+in the deformation complex (Theorem~\ref{thm:mc-quantization}).  The
+gauge group acts transitively on the fiber over a fixed first-order
+deformation by standard obstruction theory: $H^1$ controls the
+infinitesimal gauge transformations, and the formality quasi-isomorphism
+ensures no higher obstructions to gauge equivalence.
+\end{proof}
+
+
+\subsection{Explicit Star Product}
+
+\begin{computation}[Star Product through Order $\hbar^2$]\label{comp:star-order-2}
+For a $\Pinf$-chiral algebra with Poisson bracket $\{a, b\}$:
+
+\textbf{Order $\hbar^0$:} $B_0(a, b) = a \cdot b$.
+
+\textbf{Order $\hbar^1$:} $B_1(a, b) = \frac{1}{2}\{a, b\}$.
+
+\textbf{Order $\hbar^2$:}  In local coordinates with Poisson bivector $\pi^{ij}$:
+\[
+B_2(a, b) = \frac{1}{8}\pi^{ij}\pi^{kl}\partial_i\partial_k a \cdot \partial_j\partial_l b + \frac{1}{12}\pi^{ij}(\partial_j\pi^{kl})(\partial_i\partial_k a \cdot \partial_l b - \partial_k a \cdot \partial_i\partial_l b)
+\]
+The first term corresponds to the ``double Poisson'' Kontsevich graph (both internal vertices connecting directly to the two external vertices); the second involves $\partial\pi$ and vanishes for constant Poisson structures.
+\end{computation}
+
+
+\section{Obstructions and Anomalies in Examples}
+\label{sec:obstructions}
+
+\subsection{Obstruction Theory}
+
+\begin{theorem}[Obstruction Classes; \ClaimStatusProvedElsewhere]\label{thm:obstructions}
+The obstruction to quantizing a $\Pinf$-chiral algebra lies in:
+\[
+\mathrm{Obs} \in H^3_{\chirPois}(\mathcal{A}_0; \mathcal{A}_0)
+\]
+the third chiral Poisson cohomology.  The obstruction must vanish at
+\emph{each order} in $\hbar$ for quantization to exist to all orders; alternatively,
+a formality theorem (as in Theorem~\ref{thm:chiral-kontsevich} below) bypasses the
+order-by-order obstruction analysis entirely.
+\end{theorem}
+
+\begin{example}[No Obstruction: Affine]\label{ex:no-obs-affine}
+For the classical affine Poisson algebra (Example~\ref{ex:classical-affine}):
+\[
+H^3_{\chirPois}(L\mathfrak{g}^*) = 0
+\]
+so quantization to $\hat{\mathfrak{g}}_k$ exists for all $k$.
+\end{example}
+
+\begin{example}[Obstruction: Anomalous Theories]\label{ex:anomaly}
+Certain physical theories have obstructions:
+\begin{enumerate}[label=(\roman*)]
+\item Chiral WZW model with ``wrong'' level has $\mathrm{Obs} \neq 0$.
+\item The obstruction is the \textbf{level quantization condition}: the
+      Wess--Zumino class $[H] \in H^3(G, \mathbb{Z})$ requires $k \in \mathbb{Z}$
+      for the path integral to be well-defined (arising from $\pi_3(G) \cong \mathbb{Z}$).
+\end{enumerate}
+\end{example}
+
+
+\subsection{Anomaly Cancellation}
+
+\begin{theorem}[Green--Schwarz Mechanism; \ClaimStatusProvedElsewhere]\label{thm:green-schwarz}
+In string theory, anomalies cancel by introducing a two-form $B$ with modified 
+transformation law:
+\[
+\delta B = \omega_{CS}(\delta A)
+\]
+where $\omega_{CS}$ is the Chern--Simons form.
+
+At the level of chiral algebras, this modifies the OPE to restore consistency.
+\end{theorem}
+
+
+\subsection{Maurer--Cartan Elements and Deformations}
+
+\begin{definition}[Maurer--Cartan Element]\label{def:mc-element}
+For a $\Pinf$-chiral algebra $\mathcal{A}$, a \textbf{Maurer--Cartan element} is 
+$\alpha \in \mathcal{A}^1$ (degree 1) satisfying:
+\[
+d\alpha + \frac{1}{2}\{\alpha, \alpha\} = 0
+\]
+the Maurer--Cartan equation.
+\end{definition}
+
+\begin{theorem}[MC Elements and Quantization; \ClaimStatusProvedElsewhere]\label{thm:mc-quantization}
+Quantizations of $\mathcal{A}_0$ correspond to Maurer--Cartan elements in the 
+deformation complex:
+\[
+\mathrm{Def}(\mathcal{A}_0) = (\mathcal{A}_0[[\hbar]] \otimes \mathfrak{g}_{\chirPois}, d + \hbar\{\alpha, -\})
+\]
+Two quantizations are gauge-equivalent iff their MC elements are related by the 
+gauge action.
+\end{theorem}
+
+\begin{computation}[MC Equation in Coordinates]\label{comp:mc-coords}
+For the classical Heisenberg Poisson algebra with $\{p, q\} = 1$:
+
+The Poisson bivector $\pi = \partial_p \wedge \partial_q$ is the leading-order MC element.  The Kontsevich star product $f \star g = fg + \frac{\hbar}{2}\{f,g\} + O(\hbar^2)$ arises from the formal MC element $\alpha = \hbar\pi + O(\hbar^2)$ in the Hochschild cochain complex.
+
+The MC equation $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$ at order $\hbar^2$ requires $\frac{1}{2}[\pi, \pi] = 0$, which is the Jacobi identity for the Poisson bracket. Since $\{p,q\} = 1$ is constant, $[\pi,\pi] = 0$ trivially, and $\alpha = \hbar\pi$ is an exact MC element giving the Weyl (Moyal) quantization.
+\end{computation}

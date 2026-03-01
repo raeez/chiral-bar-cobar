@@ -1,0 +1,711 @@
+\chapter{Sign Conventions and Shifts}
+\label{app:signs}
+
+Signs constitute the most treacherous aspect of homological algebra. A single 
+misplaced sign can invalidate an entire construction, yet the underlying 
+principles are elegant once systematically understood. This appendix establishes 
+the conventions used throughout this monograph, chosen for compatibility with 
+the standard references: Loday--Vallette~\cite{LV} for operadic structures, 
+Beilinson--Drinfeld~\cite{BD} for chiral algebras, and Lurie~\cite{HA} for 
+$\infty$-categorical foundations.
+
+\section{The Koszul Sign Rule}
+\label{sec:koszul-sign-rule}
+
+\begin{convention}[Koszul sign rule]
+\label{conv:koszul}
+Let $\cC$ be a graded category (chain complexes, differential graded algebras, 
+graded vector spaces, etc.). When two homogeneous elements $a$ and $b$ of 
+degrees $|a|$ and $|b|$ respectively are interchanged in any formula, a sign 
+$(-1)^{|a| \cdot |b|}$ must be introduced:
+\[
+a \otimes b \longmapsto (-1)^{|a| \cdot |b|} \, b \otimes a.
+\]
+This rule applies universally: to tensor products, compositions, evaluations, 
+and any operation where the order of graded objects matters.
+\end{convention}
+
+The Koszul sign rule is not merely a convention but a consequence of the 
+symmetric monoidal structure on graded objects. In the $\infty$-categorical 
+framework, this corresponds to the canonical symmetric monoidal structure on 
+the stable $\infty$-category of chain complexes.
+
+\begin{definition}[Graded Commutator]
+\label{def:graded-commutator}
+For homogeneous elements $a, b$ in a graded algebra $A$, the 
+\textbf{graded commutator} is:
+\[
+[a, b] := a \cdot b - (-1)^{|a| \cdot |b|} b \cdot a.
+\]
+An algebra is \textbf{graded commutative} if $[a, b] = 0$ for all homogeneous 
+$a, b$, which is equivalent to $a \cdot b = (-1)^{|a| \cdot |b|} b \cdot a$.
+\end{definition}
+
+\begin{proposition}[Graded Jacobi Identity; \ClaimStatusProvedHere]
+\label{prop:graded-jacobi}
+For any graded Lie algebra $(L, [-,-])$, the bracket satisfies the 
+\textbf{graded Jacobi identity}:
+\[
+(-1)^{|a| \cdot |c|} [a, [b, c]] + (-1)^{|b| \cdot |a|} [b, [c, a]] 
++ (-1)^{|c| \cdot |b|} [c, [a, b]] = 0.
+\]
+This is equivalent to requiring that the adjoint action $\ad_a = [a, -]$ 
+is a derivation of the bracket:
+\[
+[a, [b, c]] = [[a, b], c] + (-1)^{|a| \cdot |b|} [b, [a, c]].
+\]
+\end{proposition}
+
+\begin{proof}
+The equivalence follows from expanding the graded Jacobi identity and 
+applying graded antisymmetry $[b, c] = -(-1)^{|b| \cdot |c|} [c, b]$. 
+The cyclic sum becomes:
+\begin{align*}
+0 &= (-1)^{|a| \cdot |c|} [a, [b, c]] + (-1)^{|b| \cdot |a|} [b, [c, a]] 
+    + (-1)^{|c| \cdot |b|} [c, [a, b]] \\
+  &= (-1)^{|a| \cdot |c|} [a, [b, c]] 
+    - (-1)^{|b| \cdot |a|} (-1)^{|a| \cdot |c|} [b, [a, c]] 
+    + (-1)^{|c| \cdot |b|} [c, [a, b]] \\
+  &= (-1)^{|a| \cdot |c|} \bigl( [a, [b, c]] - (-1)^{|a| \cdot |b|} [b, [a, c]] 
+    - [[a, b], c] \bigr),
+\end{align*}
+using $[[a,b],c] = -(-1)^{(|a|+|b|)|c|}[c,[a,b]]$ and simplifying exponents.
+\end{proof}
+
+\begin{convention}[Sign in Differential Graded Structures]
+\label{conv:dg-signs}
+In a differential graded algebra $(A, d, \cdot)$:
+\begin{enumerate}[label=(\roman*)]
+\item The differential has degree $|d| = +1$ (cohomological convention) 
+or $|d| = -1$ (homological convention).
+\item The Leibniz rule incorporates the Koszul sign:
+\[
+d(a \cdot b) = (da) \cdot b + (-1)^{|a|} a \cdot (db).
+\]
+\item For a differential graded Lie algebra, the bracket-differential 
+compatibility is:
+\[
+d[a, b] = [da, b] + (-1)^{|a|} [a, db].
+\]
+\end{enumerate}
+Throughout this monograph, we use the \textbf{cohomological convention} 
+$|d| = +1$ unless explicitly stated otherwise.
+\end{convention}
+
+\begin{lemma}[Sign Rule for Compositions; \ClaimStatusProvedElsewhere]
+\label{lem:composition-signs}
+Let $f: V \to W$ and $g: W \to X$ be graded linear maps of degrees $|f|$ 
+and $|g|$ respectively. The composition $g \circ f: V \to X$ has degree 
+$|g \circ f| = |f| + |g|$. For evaluation on $v \in V$:
+\[
+(g \circ f)(v) = g(f(v)) \quad \text{(no sign)}.
+\]
+However, when expressing $g \circ f$ in terms of tensor factors, the 
+Koszul rule applies:
+\[
+(f \otimes g) \circ \tau_{V,W} = (-1)^{|f| \cdot |g|} \tau_{V,X} \circ (g \otimes f)
+\]
+where $\tau$ denotes the graded twist map.
+\end{lemma}
+
+\begin{definition}[Graded Hom Complex]
+\label{def:graded-hom}
+For chain complexes $(V, d_V)$ and $(W, d_W)$, the \textbf{internal Hom complex} 
+$\underline{\Hom}(V, W)$ has:
+\begin{enumerate}[label=(\roman*)]
+\item Degree $n$ component: $\underline{\Hom}(V, W)^n = \prod_{k \in \bZ} 
+\Hom_k(V^k, W^{k+n})$, i.e., degree-$n$ maps.
+\item Differential: For $f \in \underline{\Hom}(V, W)^n$,
+\[
+(d_{\underline{\Hom}} f)(v) := d_W(f(v)) - (-1)^{|f|} f(d_V(v)).
+\]
+\end{enumerate}
+The sign $(-1)^{|f|}$ ensures $d_{\underline{\Hom}}^2 = 0$.
+\end{definition}
+
+\begin{verification}[$d_{\underline{\Hom}}^2 = 0$]
+\label{ver:d-hom-squared}
+For $f$ of degree $|f|$:
+\begin{align*}
+(d^2 f)(v) &= d\bigl( d_W(f(v)) - (-1)^{|f|} f(d_V v) \bigr) 
+             - (-1)^{|f|+1} \bigl( d_W(f(v)) - (-1)^{|f|} f(d_V v) \bigr)|_{v \mapsto d_V v} \\
+&= d_W^2(f(v)) - (-1)^{|f|} d_W(f(d_V v)) 
+   - (-1)^{|f|+1} d_W(f(d_V v)) + (-1)^{2|f|+1} f(d_V^2 v) \\
+&= 0 - (-1)^{|f|} d_W(f(d_V v)) + (-1)^{|f|} d_W(f(d_V v)) + 0 = 0.
+\end{align*}
+The cancellation depends crucially on the sign convention.
+\end{verification}
+
+
+\section{Cohomological versus Homological Grading}
+\label{sec:cohom-vs-homol}
+
+The choice between cohomological and homological grading conventions affects 
+the direction of differentials, the sign of shifts, and the formulation of 
+duality statements. Both conventions appear in the literature, and translating 
+between them requires care.
+
+\begin{definition}[Grading Conventions]
+\label{def:grading-conventions}
+Let $(C, d)$ be a differential graded object.
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Homological grading}: $C = \bigoplus_{n \in \bZ} C_n$ with 
+$d: C_n \to C_{n-1}$. The differential \emph{lowers} degree by 1.
+\item \textbf{Cohomological grading}: $C = \bigoplus_{n \in \bZ} C^n$ with 
+$d: C^n \to C^{n+1}$. The differential \emph{raises} degree by 1.
+\end{enumerate}
+The translation is $C^n = C_{-n}$, which exchanges upper and lower indices.
+\end{definition}
+
+\begin{convention}[Standard Conventions by Context]
+\label{conv:standard-by-context}
+In this monograph:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Chain complexes of modules}: Homological convention $(C_\bullet, \partial)$.
+\item \textbf{Cochain complexes (de Rham, singular cochains)}: 
+Cohomological convention $(C^\bullet, d)$.
+\item \textbf{Operadic bar/cobar}: Homological convention following 
+Loday--Vallette~\cite{LV}.
+\item \textbf{Hochschild (co)homology}: Homological for homology $HH_*$, 
+cohomological for cohomology $HH^*$.
+\item \textbf{D-modules}: Cohomological convention, with de Rham complex 
+$\DR(\cM)$ in non-negative degrees.
+\item \textbf{$\infty$-categories}: Cohomological convention following 
+Lurie~\cite{HTT, HA}.
+\end{enumerate}
+\end{convention}
+
+\begin{proposition}[Duality and Grading Reversal; \ClaimStatusProvedHere]
+\label{prop:duality-grading}
+For a finite-dimensional chain complex $(C_\bullet, \partial)$, the dual 
+complex $C^* = \Hom(C, k)$ naturally carries a cohomological grading:
+\[
+(C^*)^n := \Hom_k(C_n, k) = (C_n)^*.
+\]
+The dual differential $\partial^*: (C^*)^n \to (C^*)^{n+1}$ is defined by:
+\[
+\langle \partial^* \phi, c \rangle := (-1)^{|\phi|+1} \langle \phi, \partial c \rangle
+\]
+for $\phi \in (C^*)^n$ and $c \in C_{n+1}$.
+\end{proposition}
+
+\begin{proof}
+The sign ensures $(\partial^*)^2 = 0$. Indeed:
+\begin{align*}
+\langle (\partial^*)^2 \phi, c \rangle 
+&= (-1)^{|\phi|+2} \langle \partial^* \phi, \partial c \rangle 
+= (-1)^{|\phi|+2} (-1)^{|\phi|+1+1} \langle \phi, \partial^2 c \rangle = 0.
+\end{align*}
+The sign $(-1)^{|\phi|+1}$ arises from the convention that $\partial^*$ should 
+make $(C, C^*)$ into a duality pairing of chain complexes.
+\end{proof}
+
+\begin{definition}[Connective and Coconnective]
+\label{def:connective}
+A chain complex $C$ (in homological grading) is:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Connective} if $C_n = 0$ for $n < 0$ (concentrated in non-negative degrees).
+\item \textbf{Coconnective} if $C_n = 0$ for $n > 0$ (concentrated in non-positive degrees).
+\item \textbf{Bounded} if both conditions hold with finitely many nonzero terms.
+\end{enumerate}
+In cohomological grading, connective means $C^n = 0$ for $n > 0$, and 
+coconnective means $C^n = 0$ for $n < 0$.
+\end{definition}
+
+\begin{remark}[Filtrations and Spectral Sequences]
+\label{rem:filt-ss-grading}
+The grading convention affects the indexing of spectral sequences. For a 
+filtered complex with cohomological grading and increasing filtration 
+$F^p C \subseteq F^{p+1} C$, the spectral sequence has:
+\[
+E_r^{p,q} \Rightarrow H^{p+q}(C).
+\]
+For homological grading with decreasing filtration $F_p C \supseteq F_{p+1} C$:
+\[
+E^r_{p,q} \Rightarrow H_{p+q}(C).
+\]
+The bidegree conventions $(p, q)$ versus $(p, n-p)$ also vary by author.
+\end{remark}
+
+
+\section{Suspensions and Desuspensions}
+\label{sec:susp-desusp}
+
+Suspension (degree shift) is fundamental to operadic constructions, where the 
+bar complex involves suspended cogenerators and the cobar complex involves 
+desuspended generators.
+
+\begin{definition}[Suspension and Desuspension]
+\label{def:suspension}
+For a graded object $V = \bigoplus_n V^n$:
+\begin{enumerate}[label=(\roman*)]
+\item The \textbf{suspension} $sV$ (also denoted $V[-1]$ in the cohomological convention or $V[1]$ in the homological convention; see Remark~\ref{rem:shift-notation}) is
+defined by:
+\[
+(sV)^n := V^{n-1}.
+\]
+An element $v \in V^{n-1}$ corresponds to $sv \in (sV)^n$ with $|sv| = |v| + 1$.
+
+\item The \textbf{desuspension} $s^{-1}V$ (also denoted $V[1]$ in the cohomological convention or $V[-1]$ in the homological convention) is defined by:
+\[
+(s^{-1}V)^n := V^{n+1}.
+\]
+An element $v \in V^{n+1}$ corresponds to $s^{-1}v \in (s^{-1}V)^n$ with 
+$|s^{-1}v| = |v| - 1$.
+\end{enumerate}
+These are inverse operations: $s \circ s^{-1} = s^{-1} \circ s = \id$.
+\end{definition}
+
+\begin{remark}[Shift notation ambiguity]
+\label{rem:shift-notation}
+The notation $V[n]$ is used with two incompatible conventions in the literature:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Homological convention}: $(V[n])_k = V_{k-n}$, so $V[1]$ shifts 
+\emph{up} (increases indices).
+\item \textbf{Cohomological convention}: $(V[n])^k = V^{k+n}$, so $V[1]$ shifts 
+\emph{down} (decreases indices in the sense that degree-$k$ elements come from 
+degree-$(k+1)$ elements of $V$).
+\end{enumerate}
+We follow the cohomological convention: $V[n]^k = V^{k+n}$. Under this convention,
+$sV = V[-1]$ (since $(V[-1])^k = V^{k-1} = (sV)^k$) and
+$s^{-1}V = V[1]$ (since $(V[1])^k = V^{k+1} = (s^{-1}V)^k$).
+
+\textbf{Warning:} Many references in algebraic topology use the opposite convention where $sV = V[1]$; this corresponds to $(V[n])^k = V^{k-n}$ (the homological convention). When importing results from such references, all shift indices must be negated.
+\end{remark}
+
+\begin{proposition}[Suspension and Differentials; \ClaimStatusProvedHere]
+\label{prop:susp-diff}
+If $(V, d)$ is a chain complex with $d: V^n \to V^{n+1}$, then $sV = V[-1]$
+carries the \textbf{suspended differential}:
+\[
+d_{sV}: (sV)^n \to (sV)^{n+1}, \quad d_{sV}(sv) := -s(dv).
+\]
+The sign is necessary for $d_{sV}^2 = 0$ and ensures the suspension is a 
+functor on chain complexes.
+\end{proposition}
+
+\begin{proof}
+Without the sign, we would have $d_{sV}(sv) = s(dv)$, and then:
+\[
+d_{sV}^2(sv) = d_{sV}(s(dv)) = s(d(dv)) = s(d^2 v) = 0.
+\]
+This appears to work, but the sign is required for compatibility with tensor 
+products. Consider $V \otimes W$ with differential:
+\[
+d_{V \otimes W}(v \otimes w) = dv \otimes w + (-1)^{|v|} v \otimes dw.
+\]
+For the suspended tensor product $(sV) \otimes W$ to have consistent differential:
+\[
+d((sv) \otimes w) = d_{sV}(sv) \otimes w + (-1)^{|sv|} sv \otimes dw 
+= -s(dv) \otimes w + (-1)^{|v|+1} sv \otimes dw.
+\]
+This matches $s(d(v \otimes w))$ only with the sign convention $d_{sV}(sv) = -s(dv)$.
+\end{proof}
+
+\begin{corollary}[Iterated Suspension; \ClaimStatusProvedElsewhere]
+\label{cor:iterated-susp}
+For $n$-fold suspension $s^n V = V[-n]$:
+\[
+d_{s^n V}(s^n v) = (-1)^n s^n(dv).
+\]
+The suspended element $s^n v$ has degree $|s^n v| = |v| + n$.
+\end{corollary}
+
+\begin{definition}[Suspension in Operadic Context]
+\label{def:susp-operadic}
+For an operad $\cP$, the \textbf{operadic suspension} $\fS \cP$ is the operad with:
+\[
+(\fS \cP)(n) := \sgn_n \otimes \cP(n)[n-1]
+\]
+where $\sgn_n$ is the sign representation of $\Sigma_n$. The operadic composition 
+involves signs from both the degree shift and the sign representation.
+
+Explicitly, if $\gamma \in \cP(k)$ and $\mu_1, \ldots, \mu_k \in \cP(n_1), \ldots, \cP(n_k)$:
+\[
+s^{k-1}\gamma \circ (s^{n_1-1}\mu_1, \ldots, s^{n_k-1}\mu_k) 
+= \epsilon \cdot s^{n-1}(\gamma \circ (\mu_1, \ldots, \mu_k))
+\]
+where $n = n_1 + \cdots + n_k$ and $\epsilon$ is a sign depending on degrees 
+and positions.
+\end{definition}
+
+\begin{proposition}[Suspension and Koszul Duality; \ClaimStatusProvedElsewhere]
+\label{prop:susp-koszul}
+For a Koszul operad $\cP$, the Koszul dual cooperad is:
+\[
+\cP^{\scriptstyle \text{\textexclamdown}} = (\fS^{-1} \cP^!)^\vee
+\]
+where $\cP^!$ is the linear dual operad and $\fS^{-1}$ is operadic desuspension. 
+Explicitly:
+\[
+\cP^{\scriptstyle \text{\textexclamdown}}(n) = \cP^!(n)^* \otimes \sgn_n[1-n].
+\]
+This formula explains the appearance of signs and shifts in bar-cobar duality.
+\end{proposition}
+
+
+\section{Determinant Lines}
+\label{sec:det-lines}
+
+Determinant lines encode orientation data and appear throughout the theory of 
+configuration spaces, Koszul duality, and the geometric bar construction. They 
+provide a coordinate-free way to track signs arising from orderings.
+
+\begin{definition}[Determinant of a Vector Space]
+\label{def:det-vect}
+For a finite-dimensional vector space $V$ of dimension $n$, the 
+\textbf{determinant line} is:
+\[
+\Det(V) := \bigwedge^n V = \bigwedge^{\dim V} V.
+\]
+This is a 1-dimensional vector space. An element $\omega \in \Det(V) \setminus \{0\}$ 
+is called an \textbf{orientation} of $V$.
+\end{definition}
+
+\begin{proposition}[Properties of Determinant Lines; \ClaimStatusProvedElsewhere]
+\label{prop:det-properties}
+The determinant construction satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Short exact sequences}: For $0 \to U \to V \to W \to 0$ exact,
+\[
+\Det(V) \cong \Det(U) \otimes \Det(W).
+\]
+\item \textbf{Direct sums}: $\Det(V \oplus W) \cong \Det(V) \otimes \Det(W)$.
+\item \textbf{Duality}: $\Det(V^*) \cong \Det(V)^* = \Det(V)^{-1}$.
+\item \textbf{Zero space}: $\Det(0) = k$ (the ground field, concentrated in degree 0).
+\item \textbf{Functoriality}: An isomorphism $f: V \xrightarrow{\sim} W$ induces 
+$\Det(f): \Det(V) \xrightarrow{\sim} \Det(W)$ with $\Det(f)(v_1 \wedge \cdots \wedge v_n) 
+= f(v_1) \wedge \cdots \wedge f(v_n)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Determinant of a Finite Set]
+\label{def:det-set}
+For a finite set $I$, define:
+\[
+\Det(I) := \Det(k^I)
+\]
+where $k^I$ is the vector space with basis indexed by $I$. Concretely, if 
+$I = \{i_1, \ldots, i_n\}$:
+\[
+\Det(I) = k \cdot (e_{i_1} \wedge \cdots \wedge e_{i_n})
+\]
+is 1-dimensional, and permuting the order of $I$ introduces signs according to 
+the permutation's signature.
+\end{definition}
+
+\begin{lemma}[Determinant and Ordering; \ClaimStatusProvedElsewhere]
+\label{lem:det-ordering}
+For a finite set $I$ with total orderings $<$ and $<'$, let $\sigma \in \Sigma_I$ 
+be the permutation taking the $<$-ordering to the $<'$-ordering. Then:
+\[
+e_{i_1} \wedge \cdots \wedge e_{i_n} = \sgn(\sigma) \cdot e_{i_{\sigma(1)}} \wedge \cdots \wedge e_{i_{\sigma(n)}}.
+\]
+The determinant line $\Det(I)$ is canonically independent of ordering, but a 
+choice of generator (i.e., orientation) depends on ordering.
+\end{lemma}
+
+\begin{definition}[Orientation Line of a Manifold]
+\label{def:orientation-line}
+For a smooth manifold $M$ of dimension $d$, the \textbf{orientation line} at 
+$p \in M$ is:
+\[
+\orline{M,p} := \Det(T_p M) = \bigwedge^d T_p M.
+\]
+The \textbf{orientation sheaf} $\orline{M}$ is the local system with fiber 
+$\orline{M,p}$ at $p$. An orientation of $M$ is a global section 
+$\sigma: M \to \orline{M}$ that is nowhere vanishing.
+\end{definition}
+
+\begin{proposition}[Determinant Lines on Configuration Spaces; \ClaimStatusProvedElsewhere]
+\label{prop:det-config}
+For the configuration space $\Conf_n(X)$ of a curve $X$:
+\begin{enumerate}[label=(\roman*)]
+\item The tangent space at $(z_1, \ldots, z_n) \in \Conf_n(X)$ is:
+\[
+T_{(z_1, \ldots, z_n)} \Conf_n(X) = \bigoplus_{i=1}^n T_{z_i} X.
+\]
+\item The determinant line is:
+\[
+\Det(T\Conf_n(X)) = \bigotimes_{i=1}^n \Det(T_{z_i} X) = \bigotimes_{i=1}^n \omega_{X,z_i}^{-1}
+\]
+where $\omega_X = \Det(T^*X)$ is the canonical bundle.
+\item For the Fulton--MacPherson compactification $\FM_n(X)$:
+\[
+\Det(T\FM_n(X)) \cong \Det(T\Conf_n(X)) \otimes \Det(N_{D/\FM_n})
+\]
+where $N_{D/\FM_n}$ is the normal bundle to the boundary divisor.
+\end{enumerate}
+\end{proposition}
+
+\begin{construction}[Determinant Line in Bar Complex]
+\label{constr:det-bar}
+In the geometric bar complex, the determinant line appears through the 
+identification:
+\[
+\Bbar^{\mathrm{geom}}_n(\cA) = \Gamma(\FM_n(X), \cA^{\boxtimes n} \otimes \Omega^{n-1}_{\log}(\FM_n, D))
+\]
+The logarithmic $(n-1)$-forms can be written as:
+\[
+\Omega^{n-1}_{\log}(\FM_n, D) \cong \omega_{\FM_n} \otimes \Det(N_D)^{-1}[1-n]
+\]
+tracking the relationship between the canonical bundle and boundary geometry.
+
+Explicitly, for $n = 2$ on $X = \bP^1$:
+\[
+\Omega^1_{\log}(\FM_2(\bP^1), D_{12}) = \cO \cdot \dlog(z_1 - z_2) = \cO \cdot \frac{d(z_1 - z_2)}{z_1 - z_2}
+\]
+which has a simple pole along $D_{12} = \{z_1 = z_2\}$ and generates the 
+log de Rham complex.
+\end{construction}
+
+\begin{proposition}[Determinant and Residues; \ClaimStatusProvedElsewhere]
+\label{prop:det-residue}
+The residue map along a divisor $D \subset Y$ is:
+\[
+\Res_D: \Omega^k_{\log}(Y, D) \to \Omega^{k-1}(D)
+\]
+This map respects determinant lines in the following sense: if $D$ is smooth 
+of codimension 1, then:
+\[
+\Res_D: \omega_Y \otimes \cO_Y(D)|_D \to \omega_D
+\]
+is the adjunction isomorphism, and the signs in the bar differential arise 
+from tracking this isomorphism across multiple boundary strata.
+\end{proposition}
+
+\begin{theorem}[Determinant Conventions and Bar-Cobar Signs; \ClaimStatusProvedHere]
+\label{thm:det-bar-cobar-signs}
+The signs in the bar-cobar adjunction can be uniformly expressed using 
+determinant lines. For an $\Eone$-chiral algebra $\cA$:
+\begin{enumerate}[label=(\roman*)]
+\item The bar complex element $[a_1 | \cdots | a_n] \in \Bbar_n(\cA)$ corresponds to:
+\[
+a_1 \otimes \cdots \otimes a_n \otimes \omega_{[n]} \in \cA^{\otimes n} \otimes \Det([n])
+\]
+where $[n] = \{1, \ldots, n\}$ and $\omega_{[n]}$ is the standard generator of 
+$\Det([n])$ determined by the ordering $1 < 2 < \cdots < n$.
+
+\item The bar differential is:
+\[
+d[a_1 | \cdots | a_n] = \sum_{i=1}^{n-1} (-1)^{\epsilon_i} [a_1 | \cdots | a_i a_{i+1} | \cdots | a_n]
+\]
+where $\epsilon_i = |a_1| + \cdots + |a_i| + i - 1$ tracks both internal degrees 
+and position.
+
+\item These signs arise canonically from the face maps of the simplicial 
+structure on $\Delta^\bullet$ and the determinant line conventions.
+\end{enumerate}
+\end{theorem}
+
+
+\section{Detailed Sign Computations in Bar-Cobar Duality}
+\label{sec:detailed-signs}
+
+The signs in bar-cobar duality are notoriously subtle. We provide complete 
+computations through degree 5 to serve as a reference for explicit calculations.
+
+\begin{computation}[Bar Differential Signs: Degree 2 to 1]
+\label{comp:bar-signs-2-1}
+For elements $[a|b] \in \Bbar_2(A)$ where $A$ is a dg-algebra:
+\[
+d_{\mathrm{bar}}[a|b] = [ab] - (-1)^{|a|} a \cdot [b] - [a] \cdot b
+\]
+Here:
+\begin{enumerate}[label=(\roman*)]
+\item The term $[ab]$ comes from the multiplication $\mu: A \otimes A \to A$.
+\item The term $(-1)^{|a|} a \cdot [b]$ is the left action of $A$ on $\Bbar_1(A) = A$.
+\item The term $[a] \cdot b$ is the right action.
+\end{enumerate}
+
+For the \textbf{reduced} bar complex $\overline{\Bbar}(A) = \Bbar(A, A, k)$:
+\[
+d_{\mathrm{bar}}[a|b] = [ab]
+\]
+with augmentation eliminating the action terms.
+\end{computation}
+
+\begin{computation}[Bar Differential Signs: Degree 3 to 2]
+\label{comp:bar-signs-3-2}
+For $[a|b|c] \in \Bbar_3(A)$:
+\begin{align*}
+d_{\mathrm{bar}}[a|b|c] &= [ab|c] - (-1)^{|a|}[a|bc] \\
+&\quad + (-1)^{|a|} a \cdot [b|c] + (-1)^{|a|+|b|} [a|b] \cdot c \\
+&\quad + (-1)^{|a|} [da|b|c] + (-1)^{|a|+|b|+1} [a|db|c] + (-1)^{|a|+|b|+|c|} [a|b|dc]
+\end{align*}
+
+The signs arise systematically:
+\begin{enumerate}[label=(\roman*)]
+\item $[ab|c]$: Multiply positions 1,2; no sign (conventions place multiplication first).
+\item $(-1)^{|a|}[a|bc]$: Multiply positions 2,3; sign from passing $a$ over boundary.
+\item Action terms: Signs from Koszul rule and boundary conventions.
+\item Differential terms: Signs from position in the bar expression.
+\end{enumerate}
+\end{computation}
+
+\begin{computation}[Cobar Differential Signs: Degree 1 to 2]
+\label{comp:cobar-signs-1-2}
+For a coassociative coalgebra $C$ with coproduct $\Delta$, the cobar construction 
+$\Omega(C) = T(s^{-1}\overline{C})$ has differential on generators:
+\[
+d_\Omega(s^{-1}c) = -s^{-1}(dc) + \sum_{(c)} (-1)^{|c'|} (s^{-1}c') \otimes (s^{-1}c'')
+\]
+where $\Delta(c) = \sum_{(c)} c' \otimes c''$ (Sweedler notation) and the desuspended element $s^{-1}c'$ has degree $|s^{-1}c'| = |c'| - 1$.
+
+\textbf{Sign verification}: The term $(-1)^{|c'|}$ arises from:
+\[
+d_\Omega(s^{-1}c) \propto (s^{-1} \otimes s^{-1}) \circ \Delta(c) = \sum (-1)^{|s^{-1}| \cdot |c'|} s^{-1}c' \otimes s^{-1}c''
+\]
+Since $|s^{-1}| = -1$, we get $(-1)^{-|c'|} = (-1)^{|c'|}$ (as $(-1)^{-n} = (-1)^n$).
+\end{computation}
+
+\begin{computation}[Cobar Differential Signs: Degree 2 to 3]
+\label{comp:cobar-signs-2-3}
+For a tensor $s^{-1}c_1 \otimes s^{-1}c_2 \in \Omega_2(C)$:
+\begin{align*}
+d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= d_\Omega(s^{-1}c_1) \otimes s^{-1}c_2 
+    + (-1)^{|s^{-1}c_1|} s^{-1}c_1 \otimes d_\Omega(s^{-1}c_2) \\
+&= \Bigl( -s^{-1}(dc_1) + \sum (-1)^{|c_1'|} s^{-1}c_1' \otimes s^{-1}c_1'' \Bigr) \otimes s^{-1}c_2 \\
+&\quad + (-1)^{|c_1|-1} s^{-1}c_1 \otimes \Bigl( -s^{-1}(dc_2) + \sum (-1)^{|c_2'|} s^{-1}c_2' \otimes s^{-1}c_2'' \Bigr)
+\end{align*}
+
+Expanding:
+\begin{align*}
+d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= -s^{-1}(dc_1) \otimes s^{-1}c_2 \\
+&\quad + \sum (-1)^{|c_1'|} s^{-1}c_1' \otimes s^{-1}c_1'' \otimes s^{-1}c_2 \\
+&\quad + (-1)^{|c_1|} s^{-1}c_1 \otimes s^{-1}(dc_2) \\
+&\quad + (-1)^{|c_1|-1} \sum (-1)^{|c_2'|} s^{-1}c_1 \otimes s^{-1}c_2' \otimes s^{-1}c_2''
+\end{align*}
+\end{computation}
+
+\begin{proposition}[Master Sign Formula; \ClaimStatusProvedElsewhere]
+\label{prop:master-sign}
+For the bar complex of an $\Ainf$-algebra $(A, \{m_n\})$, the full differential 
+on $[a_1|\cdots|a_n]$ is:
+\[
+d_{\mathrm{bar}}[a_1|\cdots|a_n] = \sum_{i=1}^{n} \sum_{k=1}^{n-i+1} 
+(-1)^{\epsilon_{i,k}} [a_1|\cdots|a_{i-1}|m_k(a_i, \ldots, a_{i+k-1})|a_{i+k}|\cdots|a_n]
+\]
+where the sign is:
+\[
+\epsilon_{i,k} = \sum_{j=1}^{i-1} (|a_j| - 1) + \sum_{j=i}^{i+k-2} |a_j|
+\]
+where the first sum is the \emph{coderivation sign} (from commuting past
+$s^{-1}a_1, \ldots, s^{-1}a_{i-1}$) and the second is the \emph{desuspension sign}
+from $b_k(s^{-1}a_i, \ldots, s^{-1}a_{i+k-1})$.
+
+\begin{remark}[Sign convention comparison]
+Some references (e.g., Loday--Vallette \cite{LodayVallette}) define the bar differential
+on $sa_1 \otimes \cdots \otimes sa_n$ with a sign
+$\epsilon'_{i,k} = \sum_{j=1}^{i-1}|sa_j|$ arising from commuting the coderivation past
+suspended elements.  For a strict algebra ($m_k = 0$ for $k \neq 2$), the two conventions
+are related by a global sign on each summand and yield the same $d^2 = 0$ complex.
+The explicit computations in \S\ref{comp:bar-signs-2-1}--\ref{comp:bar-signs-3-2}
+use the desuspended convention, matching
+$d[a|b] = (-1)^{|a|}[ab]$ and $d[a|b|c] = (-1)^{|a|}[ab|c] - (-1)^{|a|+|b|}[a|bc]$.
+\end{remark}
+\end{proposition}
+
+\begin{verification}[$d^2 = 0$ Check at Degree 3]
+\label{ver:d2-degree3}
+We verify $d_{\mathrm{bar}}^2[a|b|c] = 0$ for a graded associative algebra
+(where $m_2 = \mu$ and $m_k = 0$ for $k \neq 2$).
+
+The desuspended multiplication on $s^{-1}A$ carries a Koszul sign:
+$b_2(s^{-1}a, s^{-1}b) = (-1)^{|a|} s^{-1}(ab)$.  The coderivation extension
+to $T^c(s^{-1}\bar{A})$ gives:
+\begin{align*}
+d_{\mathrm{bar}}[a|b] &= (-1)^{|a|}[ab], \\
+d_{\mathrm{bar}}[a|b|c] &= (-1)^{|a|}[ab|c] - (-1)^{|a|+|b|}[a|bc].
+\end{align*}
+(The sign at position $i$ is $(-1)^{\sum_{j<i}(|a_j|-1) + |a_i|}$.)
+
+Applying $d_{\mathrm{bar}}$ again:
+\begin{align*}
+d_{\mathrm{bar}}^2[a|b|c] &= (-1)^{|a|} d_{\mathrm{bar}}[ab|c]
+    - (-1)^{|a|+|b|} d_{\mathrm{bar}}[a|bc] \\
+&= (-1)^{|a|} \cdot (-1)^{|a|+|b|} [(ab)c]
+    - (-1)^{|a|+|b|} \cdot (-1)^{|a|} [a(bc)] \\
+&= (-1)^{|b|}\bigl[(ab)c - a(bc)\bigr] = 0
+\end{align*}
+by associativity.
+
+\begin{remark}
+For generators concentrated in degree~0 (the ungraded case), all signs are
+trivial and the formulas simplify to $d[a|b] = [ab]$ and
+$d[a|b|c] = [ab|c] - [a|bc]$, recovering the expressions in
+Computations~\ref{comp:bar-signs-2-1}--\ref{comp:bar-signs-3-2}.
+\end{remark}
+\end{verification}
+
+
+\section{Determinant Lines and Stratifications}
+\label{sec:det-strat}
+
+We develop the determinant line formalism for stratified spaces, essential for 
+understanding signs in the geometric bar complex.
+
+\begin{definition}[Orientation System]
+\label{def:orientation-system}
+An \textbf{orientation system} on a stratified space $Y = \bigsqcup_\alpha Y_\alpha$ 
+is a collection of line bundles $\orline{Y_\alpha}$ on each stratum together with 
+\textbf{gluing isomorphisms}: for each pair $Y_\alpha \subseteq \overline{Y_\beta}$ 
+(closure relation), an isomorphism:
+\[
+\phi_{\alpha\beta}: \orline{Y_\alpha}|_{\partial_\alpha Y_\beta} \xrightarrow{\sim} 
+\orline{Y_\beta}|_{\partial_\alpha Y_\beta} \otimes N_{\alpha\beta}
+\]
+where $N_{\alpha\beta}$ is the normal bundle factor and $\partial_\alpha Y_\beta$ 
+is the boundary of $Y_\beta$ meeting $Y_\alpha$.
+\end{definition}
+
+\begin{proposition}[Orientation System on FM Compactification; \ClaimStatusProvedElsewhere]
+\label{prop:orient-fm}
+The FM compactification $\FM_n(X)$ carries a canonical orientation system 
+determined by:
+\begin{enumerate}[label=(\roman*)]
+\item On the open stratum $\Conf_n(X)$: $\orline{\Conf_n(X)} = \bigotimes_{i=1}^n \orline{X}$.
+\item On boundary stratum $D_T$ (labeled by tree $T$): 
+$\orline{D_T} = \bigotimes_{v \in V(T)} \orline{X}$ times exceptional fiber orientations.
+\item Gluing isomorphisms: Given by the blowup construction, with signs determined 
+by the ordering on vertices of $T$.
+\end{enumerate}
+\end{proposition}
+
+\begin{construction}[Sign from Blowup]
+\label{constr:sign-blowup}
+When blowing up the diagonal $\Delta_{ij} \subset X^n$, the orientation 
+transformation is:
+\[
+\orline{X^n} = \orline{\Bl_{\Delta_{ij}}(X^n)} \otimes \orline{E_{ij}}^{-1}
+\]
+where $E_{ij} \cong \bP(N_{\Delta_{ij}/X^n})$ is the exceptional divisor.
+
+For $X$ a curve (dimension 1), the normal bundle $N_{\Delta/X^2} \cong T_X$ 
+along the diagonal, so:
+\[
+\orline{E_{ij}} = \orline{\bP^0} = k
+\]
+is canonically trivial, and no orientation sign arises from the blowup in this case.
+\end{construction}
+
+\begin{lemma}[Residue and Orientation; \ClaimStatusProvedElsewhere]
+\label{lem:residue-orient}
+The residue map $\Res_{D_{ij}}: \Omega^k_{\log}(\FM_n, D) \to \Omega^{k-1}(D_{ij})$ 
+is compatible with orientations:
+\[
+\Res_{D_{ij}}(\omega \wedge \dlog(z_i - z_j)) = \omega|_{D_{ij}}
+\]
+with sign conventions:
+\begin{enumerate}[label=(\roman*)]
+\item If $\omega = f(z_1, \ldots, z_n) \, dz_1 \wedge \cdots \wedge \widehat{dz_i} \wedge \cdots \wedge dz_n$ 
+(omitting $dz_i$), then:
+\[
+\Res_{D_{ij}}(\omega \wedge \dlog(z_i - z_j)) = (-1)^{i-1} f|_{z_i = z_j} \, 
+dz_1 \wedge \cdots \wedge \widehat{dz_i} \wedge \cdots \wedge dz_n|_{D_{ij}}.
+\]
+\item The sign $(-1)^{i-1}$ accounts for moving $\dlog(z_i - z_j)$ to the position 
+where $dz_i$ would appear.
+\end{enumerate}
+\end{lemma}
+
