@@ -223,8 +223,8 @@ make fast         # Single pass for quick iteration
 make watch        # Continuous rebuild on file changes (requires latexmk)
 make check        # Halt-on-error validation
 make draft        # Draft mode (faster, suppresses images)
-make clean        # Remove build artifacts
-make veryclean    # Remove artifacts and compiled PDF
+make clean        # Remove build artifacts and compiled PDF
+make veryclean    # Alias for clean
 make count        # Manuscript statistics
 ```
 

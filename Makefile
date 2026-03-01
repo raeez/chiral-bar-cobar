@@ -93,7 +93,7 @@ draft:
 	@echo "  ── Draft build ──"
 	$(TEX) $(TEXFLAGS) "\PassOptionsToClass{draft}{memoir}\input{$(MAIN)}"
 
-## clean: Remove all LaTeX intermediate files, keep PDFs.
+## clean: Remove all build artifacts and compiled PDF.
 clean:
 	@echo "  Cleaning build artifacts..."
 	@for ext in $(AUX_EXTS); do \
@@ -101,12 +101,11 @@ clean:
 	done
 	@find chapters appendices bibliography -name '*.aux' -delete 2>/dev/null || true
 	@rm -f texput.log
+	@rm -f $(MAIN).pdf
 	@echo "  ✓  Clean."
 
-## veryclean: Remove everything including compiled PDFs.
+## veryclean: Alias for clean (kept for backward compatibility).
 veryclean: clean
-	@rm -f $(MAIN).pdf
-	@echo "  ✓  All outputs removed."
 
 ## count: Manuscript statistics.
 count:
@@ -137,8 +136,8 @@ help:
 	@echo "  make integrity  Strict CI-style integrity gate"
 	@echo "  make phase0-index  Regenerate theorem dependency index"
 	@echo "  make draft      Draft mode (faster, no images)"
-	@echo "  make clean      Remove build artifacts"
-	@echo "  make veryclean  Remove artifacts and PDFs"
+	@echo "  make clean      Remove build artifacts and compiled PDF"
+	@echo "  make veryclean  Alias for clean"
 	@echo "  make count      Manuscript statistics"
 	@echo "  make help       This message"
 	@echo ""
