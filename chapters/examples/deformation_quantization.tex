@@ -1,6 +1,7 @@
 \chapter{Chiral Deformation Quantization: From Kontsevich to Chiral Algebras}
 \label{ch:chiral-deformation}
 \label{chap:chiral-deformation}
+\index{deformation quantization!chiral|textbf}
 
 \begin{remark}[Epigraph]
 \textit{``Deformation quantization is the shadow cast by configuration spaces onto the wall of algebra.''} 
@@ -17,7 +18,7 @@ Begin with the simplest question: how do we quantize?
 Classically, observables form a commutative algebra $C^\infty(M)$ on phase space $M$. A Poisson structure $\{\cdot,\cdot\}$ makes this into a Poisson algebra. Quantum mechanics demands replacing commutative multiplication with a noncommutative product:
 $$f \star g = fg + \frac{\hbar}{2}\{f,g\} + \text{higher corrections}$$
 
-The miracle: this deformation exists and is controlled by geometry.
+The key fact is that this deformation exists and is controlled by geometry.
 
 \begin{theorem}[Kontsevich 1997; \ClaimStatusProvedElsewhere]
 Let $(M, \pi)$ be a Poisson manifold with Poisson bivector $\pi \in \Gamma(\wedge^2 TM)$. There exists a star product $\star: C^\infty(M)[[\hbar]] \otimes C^\infty(M)[[\hbar]] \to C^\infty(M)[[\hbar]]$ such that:
@@ -102,7 +103,7 @@ This is the \emph{classical limit} of the affine Kac-Moody algebra $\widehat{\ma
 The OPE of a chiral algebra is precisely a star product:
 $$a(z) \cdot b(w) = \sum_{k=0}^\infty \frac{(a *_k b)(w)}{(z-w)^k}$$
 
-Key observation: This has the same structure as Kontsevich's formula!
+Key observation: This has the same structure as Kontsevich's formula.
 \begin{itemize}
 \item Classical: $a(z)b(w)$ (commutative product)
 \item First quantum: $\frac{\{a, b\}(w)}{z-w}$ (Poisson bracket)
@@ -161,6 +162,7 @@ $$\eta_{ij} = d\log(z_i - z_j) = \frac{dz_i - dz_j}{z_i - z_j}$$
 
 \begin{theorem}[Chiral Kontsevich Formula; \ClaimStatusProvedHere]
 \label{thm:chiral-kontsevich}
+\index{star product}
 Let $\mathcal{A}_{\text{cl}}$ be a chiral Poisson algebra on $X$. Its quantization $\mathcal{A}_\hbar$ has structure constants:
 $$(a \star b)(w) = \sum_{\Gamma \in \mathcal{G}_n} \frac{\hbar^{n}}{|\text{Aut}(\Gamma)|} \int_{\overline{C}_n^{\text{ch}}(X)} B_\Gamma(a,b) \wedge \omega_\Gamma$$
 where:
@@ -300,7 +302,7 @@ Weight: $w_{\Gamma_2} = \frac{1}{12}$
 
 $$B_{\Gamma_3}(a,b) = \pi^{ij} (\partial_j\pi^{kl})\, \partial_k a \cdot \partial_i\partial_l b$$
 
-Weight: $w_{\Gamma_3} = -\frac{1}{12}$ (by the orientation reversal under $a \leftrightarrow b$)
+Weight: $w_{\Gamma_3} = \frac{1}{12}$ (the configuration space integral is orientation-preserving; the sign change between $B_{\Gamma_2}$ and $B_{\Gamma_3}$ arises from the bidifferential operator, not the weight)
 
 \textbf{Total at $\hbar^2$:}
 $$a \star_2 b = \frac{1}{8}B_{\Gamma_1}(a,b) + \frac{1}{12}\bigl(B_{\Gamma_2} - B_{\Gamma_3}\bigr)(a,b)$$
@@ -358,7 +360,7 @@ At $\hbar^4$, there are 105 graphs. They encode:
 
 Key computation:
 $$w_{\text{complete}} = \int_{\overline{C}_4(X)} \omega_{\text{complete}} = \frac{\zeta(3)}{(2\pi i)^3}$$
-This involves the Riemann zeta function!
+This involves the Riemann zeta function.
 
 \subsubsection{\texorpdfstring{Five Loops ($\hbar^5$)}{Five Loops (5)}}
 
@@ -418,7 +420,7 @@ $$\mathcal{Q}(\mathcal{A}_{\text{cl}}) = \text{MC}(\bar{B}^1(\mathcal{A}_{\text{
 Geometrically:
 $$\mathcal{Q}(\mathcal{A}_{\text{cl}}) \cong \prod_{n=2}^\infty H^0(\overline{C}_n^{\text{ch}}(X), \Omega^{\dim C_n}_{\text{closed}})/\text{exact}$$
 
-Each configuration space $\overline{C}_n^{\text{ch}}(X)$ contributes deformation parameters at order $\hbar^n$!
+Each configuration space $\overline{C}_n^{\text{ch}}(X)$ contributes deformation parameters at order $\hbar^n$.
 
 \section{Examples: Quantizing Concrete Chiral Algebras}
 
@@ -441,7 +443,7 @@ $$\kappa = \hbar \int_{\overline{C}_2(X)} \eta_{12}$$
 
 For $X = \mathbb{C}$: $\kappa = \hbar$ (the propagator integral evaluates to $1$)
 
-For $X = E$ (elliptic curve): The deformation quantization on $E$ exists but the level $\kappa$ depends on the choice of propagator (Green's function on $E$).  The Euler characteristic $\chi(E) = 0$ constrains the anomaly but does not force $\kappa = 0$; rather, the star product on $E$ is governed by the elliptic propagator $\partial_z G(z,w)$
+For $X = E$ (elliptic curve): The deformation quantization on $E$ exists but the level $\kappa$ depends on the choice of propagator (Green's function on $E$).  The Euler characteristic $\chi(E) = 0$ constrains the anomaly but does not force $\kappa = 0$; rather, the star product on $E$ is governed by the elliptic propagator $\partial_z G(z,w)$.
 
 \subsection{\texorpdfstring{Example 2: Current Algebra $\mathfrak{g}[z]$}{Example 2: Current Algebra g[z]}}
 
@@ -522,12 +524,12 @@ Kontsevich's formula is genus zero. For chiral algebras on higher genus curves, 
 
 \begin{theorem}[Genus Expansion; \ClaimStatusProvedHere]\label{thm:deformation-genus-expansion}
 The star product admits a genus expansion:
-$$a \star b = \sum_{g=0}^\infty \hbar^{2g} \star^{(g)}(a,b)$$
-where $\star^{(g)}$ involves integration over $\overline{\mathcal{M}}_{g,2}$ (genus-$g$ surfaces with two marked points for the insertions $a$ and $b$).
+$$a \star b = \sum_{g=0}^\infty \hbar^g \star^{(g)}(a,b)$$
+where $\star^{(g)}$ involves integration over $\overline{\mathcal{M}}_{g,2}$ (genus-$g$ surfaces with two marked points for the insertions $a$ and $b$).  At genus~0, $\star^{(0)} = a \cdot b$ is the classical product, $\star^{(1)} = \{a, b\}$ is the Poisson bracket, and higher genera contribute higher-order corrections.
 \end{theorem}
 
 \begin{proof}
-By the modular operad decomposition (Theorem~\ref{thm:prism-higher-genus}), the bar complex of the quantized chiral algebra decomposes by genus: $\B(\cA_\hbar) = \bigoplus_{g \geq 0} \B^{(g)}(\cA_\hbar)$.  The star product $a \star b$ is computed by the bar-cobar formalism applied to two insertions, and the genus-$g$ contribution is $\star^{(g)}(a,b) = \int_{\overline{\mathcal{M}}_{g,2}} \mathrm{ev}^*(\B^{(g)}_2(a \otimes b))$.  The power $\hbar^{2g}$ arises because each handle of the genus-$g$ surface contributes $\hbar^2$ from the propagator (the Planck constant enters the chiral bracket at order~$\hbar$, and a genus-$g$ surface has $g$ handles, each contributing two propagator insertions).
+By the modular operad decomposition (Theorem~\ref{thm:prism-higher-genus}), the bar complex of the quantized chiral algebra decomposes by genus: $\B(\cA_\hbar) = \bigoplus_{g \geq 0} \B^{(g)}(\cA_\hbar)$.  The star product $a \star b$ is computed by the bar-cobar formalism applied to two insertions, and the genus-$g$ contribution is $\star^{(g)}(a,b) = \int_{\overline{\mathcal{M}}_{g,2}} \mathrm{ev}^*(\B^{(g)}_2(a \otimes b))$.  The power $\hbar^g$ arises because the genus-$g$ contribution involves $g$ additional propagator insertions (each carrying a factor of~$\hbar$) beyond the tree-level term.  At genus~0, $\star^{(0)}$ is the pointwise product; at genus~1, the single propagator on the torus gives the Poisson bracket at order~$\hbar$.
 \end{proof}
 
 \subsubsection{Genus 1: Elliptic Corrections}
@@ -565,6 +567,8 @@ The appearance of modular forms is \emph{not accidental}—it reflects the modul
 \subsection{\texorpdfstring{$L_\infty$ Formality}{L- Formality}}
 
 \begin{theorem}[Chiral Formality; \ClaimStatusProvedElsewhere]\label{thm:chiral-formality}
+\index{Kontsevich formality|textbf}
+\index{formality!chiral}
 There exists an $L_\infty$ quasi-isomorphism:
 $$\mathcal{F}: \mathcal{T}_{\text{poly}}^{\text{ch}}(X) \xrightarrow{\simeq} C^*_{\text{ch}}(\mathcal{T}_X)$$
 where:
@@ -628,7 +632,7 @@ geometric realization: the bar complex $\barBgeom(\mathcal{A}_{\mathrm{cl}})$
 computes $HH^*_{\mathrm{ch}}$ via configuration space integrals.
 \end{remark}
 
-This explains why the bar-cobar construction controls quantization!
+This explains why the bar-cobar construction controls quantization.
 
 \section{\texorpdfstring{Twisted Deformation and Curved $A_\infty$}{Twisted Deformation and Curved A-}}
 
@@ -663,7 +667,7 @@ $$m_2 = \text{OPE} + \text{curvature corrections}$$
 Curvature arises from:
 $$\theta = \lim_{z_1, \ldots, z_k \to \infty} \int_{\overline{C}_k(X) \setminus C_k(X)} \omega_{\text{boundary}}$$
 
-This is integration over the \emph{boundary} of configuration space—capturing \emph{infrared divergences}!
+This is integration over the \emph{boundary} of configuration space—capturing \emph{infrared divergences}.
 
 \section{Relation to Physics}
 
@@ -686,7 +690,7 @@ Each graph $\Gamma$ in Kontsevich's formula is a Feynman diagram:
 \item Weight $w_\Gamma$ = Feynman integral
 \end{itemize}
 
-The miracle: Kontsevich's formality is \emph{the path integral}!
+The key point is that Kontsevich's formality is \emph{the path integral}.
 
 \subsection{AdS/CFT and Holography}
 
@@ -697,7 +701,7 @@ $$\text{Bulk theory on } AdS_3 \longleftrightarrow \text{Boundary chiral algebra
 
 The quantization of the boundary theory controls the bulk theory:
 $$Z_{\text{bulk}}[AdS_3] = \exp\left(\sum_{g=0}^\infty \hbar^{2g-2} F_g\right)$$
-where $F_g$ are free energies computed via configuration space integrals!
+where $F_g$ are free energies computed via configuration space integrals.
 \end{theorem}
 
 \begin{remark}[Scope]
@@ -777,7 +781,7 @@ Ayala-Francis \cite{AF15} develop factorization homology. Our perspective:
 
 $$\int_X \mathcal{A} = \text{Kontsevich quantization of } \mathcal{A}_{\text{cl}}$$
 
-Factorization homology \emph{is} deformation quantization!
+Factorization homology \emph{is} deformation quantization.
 
 \section{Summary and Perspectives}
 
@@ -853,4 +857,4 @@ Next chapters will explore:
 \item Concrete calculations in conformal field theory
 \end{itemize}
 
-The journey from Kontsevich to chiral algebras reveals a profound unity: \emph{quantum field theory is geometry}, and \emph{configuration spaces are the stage on which physics unfolds}.
+The passage from Kontsevich to chiral algebras exhibits a deep unity: \emph{quantum field theory is geometry}, and \emph{configuration spaces provide the natural framework}.

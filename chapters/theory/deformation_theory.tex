@@ -1,4 +1,6 @@
 \chapter{Chiral Hochschild Cohomology and Koszul Duality}
+\index{deformation theory!chiral|textbf}
+\index{Hochschild cohomology!chiral|textbf}
 
 \section{Motivation: The Deformation Problem for Chiral Algebras}
 
@@ -16,6 +18,7 @@ must hold to first order in $t$. Expanding, we find $\phi$ must satisfy
 \]
 which in terms of elements reads $a\phi(b,c) - \phi(ab,c) + \phi(a,bc) - \phi(a,b)c = 0$.
 This is precisely the Hochschild 2-cocycle condition $\delta^2\phi = 0$. The obstruction to extending to second order lives in $HH^3(A,A)$.
+\index{obstruction theory|textbf}
 
 For chiral algebras, the situation is far richer. A deformation must preserve:
 \begin{enumerate}
@@ -318,11 +321,12 @@ The Maurer-Cartan equation $\partial \tau + \tau \star \tau = 0$ becomes the sta
 
 \begin{theorem}[Koszul Duality for Hochschild Cohomology; \ClaimStatusProvedHere]
 \label{thm:main-koszul-hoch}
+\index{Hochschild cohomology!Koszul duality|textbf}
 For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras on a smooth projective curve $X$:
 \[
 HH^n_{\mathrm{chiral}}(\mathcal{A}) \cong HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X
 \]
-The shift by~$2$ arises from Serre duality on the curve $X$ (of dimension~$1$, giving shift $2 \cdot 1 = 2$), and the $\omega_X$ twist encodes the dualizing sheaf.
+The shift by~$2$ arises from two sources: Serre duality on $X$ contributes a shift of~$1$ (as $\dim_\mathbb{C} X = 1$), and the Koszul duality between $\mathcal{A}$ and $\mathcal{A}^!$ contributes an additional shift of~$1$ (from the bar complex desuspension $s^{-1}$).  The $\omega_X$ twist encodes the dualizing sheaf.
 \end{theorem}
 
 \begin{proof}
@@ -582,6 +586,7 @@ These three sources interact through the bar-cobar duality to produce complex pe
 When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
 \begin{theorem}[Modular Periodicity; \ClaimStatusProvedHere]
+\index{periodicity!modular|textbf}
 Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$. Then there exists $N | \mathrm{lcm}(p,q,24)$ such that
 \[
 HH^{n+N}_{\text{chiral}}(\mathcal{A}) \cong HH^n_{\text{chiral}}(\mathcal{A}) \otimes M_N
@@ -634,6 +639,7 @@ At $k=2$: $c = 3/2$, period 48
 \subsubsection{Koszul Dual Behavior}
 
 \begin{conjecture}[Reflected Modular Periodicity; \ClaimStatusConjectured]\label{conj:reflected-modular-periodicity}
+\index{reflected modular periodicity}
 If $\mathcal{A}$ has rational central charge $c = p/q$ and modular period $N$, and its Koszul dual $\mathcal{A}^!$ has central charge $c'$ (determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula) and modular period $N'$, then $N$ and $N'$ are related by the arithmetic of $c$ and $c'$.
 
 For the specific case where $c + c' = 26$ (bosonic string critical dimension) and $\gcd(p, 24) = 1$, the formula $\frac{1}{N} + \frac{1}{N'} = \frac{1}{12}$ holds. In general, the relationship depends on the prime factorization of $p$ relative to $24$.
@@ -672,6 +678,7 @@ for arbitrary Koszul duals.
 For affine Lie algebras at special levels, quantum groups at roots of unity emerge.
 
 \begin{theorem}[Quantum Periodicity; \ClaimStatusProvedHere]
+\index{periodicity!quantum|textbf}
 Let $\mathcal{W}^k(\mathfrak{g})$ be the W-algebra at admissible level $k = -h^{\vee} + p/q$ where $h^{\vee}$ is the dual Coxeter number, $p \geq h^\vee$, $q \geq h^\vee$, $\gcd(p,q) = 1$. Then:
 \[
 HH^{n+M}_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g})) \cong HH^n_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g}))
@@ -680,7 +687,7 @@ where $M = 2h^{\vee}pq/\gcd(p,q,h^{\vee})$.
 \end{theorem}
 
 \begin{proof}
-At admissible level $k = -h^\vee + p/q$, the quantum parameter is $q = \exp(2\pi i \cdot p/q)$, a root of unity of order dividing $2pq$.
+At admissible level $k = -h^\vee + p/q$, we write $q_{\mathrm{KL}} = \exp(\pi i/(k + h^\vee)) = \exp(\pi i \cdot q/p)$ for the Kazhdan-Lusztig quantum parameter.  Since $\gcd(p,q) = 1$, this $q_{\mathrm{KL}}$ is a root of unity of order dividing $2p$.
 
 \textbf{Step 1: Semisimplicity.}
 By Arakawa's theorem \cite{Ara07}, the category $\mathcal{O}_k(\mathcal{W}^k(\mathfrak{g}))$ at admissible level is semisimple with finitely many simple objects, indexed by the admissible weights.
@@ -689,7 +696,7 @@ By Arakawa's theorem \cite{Ara07}, the category $\mathcal{O}_k(\mathcal{W}^k(\ma
 The Kazhdan--Lusztig equivalence \cite{KL93} provides a tensor equivalence $\mathcal{O}_k(\widehat{\mathfrak{g}}) \simeq \mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ (at the level of abelian categories, with quantum parameter $q = \exp(\pi i/(k + h^\vee))$).  Under this equivalence, the bar complex of $\mathcal{W}^k(\mathfrak{g})$ corresponds to the bar complex of the quantum group.
 
 \textbf{Step 3: Quantum integer periodicity.}
-The quantum integers $[n]_q = (q^n - q^{-n})/(q - q^{-1})$ satisfy $[n + 2\ell]_q = [n]_q$ where $\ell$ is the order of~$q^2$.  Since $q = \exp(\pi i \cdot p/(pq)) = \exp(\pi i / q)$, the order of $q^2$ divides~$pq$.  The quantum dimensions of simple modules are products of quantum integers (Weyl character formula), so they are periodic with period $M = 2h^\vee pq / \gcd(p,q,h^\vee)$.
+The quantum integers $[n]_{q_{\mathrm{KL}}} = (q_{\mathrm{KL}}^n - q_{\mathrm{KL}}^{-n})/(q_{\mathrm{KL}} - q_{\mathrm{KL}}^{-1})$ satisfy $[n + 2\ell]_{q_{\mathrm{KL}}} = [n]_{q_{\mathrm{KL}}}$ where $\ell$ is the order of $q_{\mathrm{KL}}^2 = \exp(2\pi i \cdot q/p)$, which divides~$p$.  The quantum dimensions of simple modules are products of quantum integers (Weyl character formula), so they are periodic.  The period $M = 2h^\vee pq / \gcd(p,q,h^\vee)$ accounts for: (i)~the quantum integer periodicity ($\ell | p$), (ii)~the Weyl denominator involving $h^\vee$ factors, and (iii)~the $q$-dependence of the admissible weight set.
 
 \textbf{Step 4: Bar complex periodicity.}
 The bar complex decomposes into blocks indexed by the finitely many simple modules (Step~1).  Within each block, the differential is determined by the fusion coefficients $N_{ij}^k$, which depend on the quantum dimensions (Verlinde formula).  The periodicity of quantum dimensions (Step~3) gives periodicity of the fusion coefficients, hence periodicity of the bar complex differentials.  Since each block is finite-dimensional (semisimplicity), the homology inherits the periodicity: $H^n(\bar{B}_{[h+M]}) \cong H^n(\bar{B}_{[h]})$ for all~$h$.
@@ -711,6 +718,7 @@ In CFT, this periodicity corresponds to:
 On a genus $g > 0$ curve, new sources of periodicity arise:
 
 \begin{theorem}[Geometric Periodicity; \ClaimStatusProvedHere]
+\index{periodicity!geometric|textbf}
 For a chiral algebra $\mathcal{A}$ on a genus $g$ curve $X$, the geometric contribution to periodicity satisfies:
 \[
 \text{Period}_{\text{geom}} \mid 12(2g-2)
@@ -794,6 +802,7 @@ The three constraints combine to give $\text{Period} \mid \gcd(N_{\text{mod}}, N
 \subsection{Koszul Duality and Periodicity Interaction}
 
 \begin{theorem}[Periodicity Exchange under Koszul Duality; \ClaimStatusProvedHere]
+\index{periodicity!exchange under duality}
 \label{thm:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
 \begin{enumerate}
@@ -976,7 +985,6 @@ right side is just $\mathcal{A}$ itself in degree 0.
 
 \textbf{Conclusion:} $\Omega(\bar{B}(\mathcal{A}))$ is a free resolution of $\mathcal{A}$,
 allowing us to compute Ext groups.
-\qed
 \end{proof}
 
 \begin{remark}[Why This Works]
@@ -1054,7 +1062,6 @@ Geometrically, each term corresponds to:
 \end{itemize}
 
 Combined with the de Rham differential on forms, we get $d_{\text{Hoch}}$ as described.
-\qed
 \end{proof}
 
 \begin{remark}[Three Components Explained]
@@ -1092,19 +1099,11 @@ $$HH^0(\mathcal{B}) = \mathbb{C}.$$
 \subsubsection{\texorpdfstring{Degree 1: $HH^1(\mathcal{B})$}{Degree 1: HH 1(B)}}
 
 $$HH^1 = \text{Der}(\mathcal{B})/\text{Inn}(\mathcal{B})$$
-where $\text{Der}(\mathcal{B})$ is the space of derivations and $\text{Inn}(\mathcal{B})$ the inner derivations.  We show $\text{Der}(\mathcal{B}) = 0$ (hence a fortiori $HH^1 = 0$).
+where $\text{Der}(\mathcal{B})$ is the space of derivations and $\text{Inn}(\mathcal{B})$ the inner derivations.  We show $HH^1 = 0$ by proving every derivation is inner.
 
-A derivation satisfies:
-$$D(\alpha(z_1)\alpha(z_2)) = D(\alpha(z_1))\alpha(z_2) + \alpha(z_1)D(\alpha(z_2))$$
+A derivation $D$ is determined by $D(\alpha) = f(z)$, a field in~$\mathcal{B}$.  The derivation property applied to the singular part of the OPE gives $D(k/(z_1-z_2)^2) = 0$ (the left side is a $c$-number), which forces $D(\alpha)$ to have trivially regular OPE with $\alpha$.  For the rank-1 Heisenberg, the only such fields are multiples of the identity~$\mathbf{1}$, so $D(\alpha) = c \cdot \mathbf{1}$ for some $c \in \mathbb{C}$.  But $D(\alpha) = c \cdot \mathbf{1}$ is precisely the inner derivation $[\int c\, \alpha(w) dw, -]$ (the zero-mode $\alpha_0$ acts by $[\alpha_0, \alpha(z)] = k \cdot \mathbf{1}$, giving $D = (c/k)\, \text{ad}_{\alpha_0}$ when $k \neq 0$).
 
-Using the OPE $\alpha \times \alpha \sim k/(z_1-z_2)^2$:
-$$D\left(\frac{k}{(z_1-z_2)^2}\right) = \frac{D(\alpha)(z_1) \alpha(z_2) + \alpha(z_1)D(\alpha)(z_2)}{(z_1-z_2)^2}$$
-
-The left side is a $c$-number (no field dependence), while the right side has field
-dependence unless $D(\alpha) = 0$.
-
-Therefore: $D = 0$.
-
+Therefore every derivation is inner, and:
 $$HH^1(\mathcal{B}) = 0.$$
 
 \subsubsection{\texorpdfstring{Degree 2: $HH^2(\mathcal{B})$}{Degree 2: HH 2(B)}}
@@ -1240,6 +1239,7 @@ $$HH^n_{\text{chiral}}(\mathcal{A})|_{\text{constant}} \cong HH^n_{\text{classic
 \subsection{The Gerstenhaber Bracket from Configuration Spaces}
 
 \begin{theorem}[Gerstenhaber Structure on HH*; \ClaimStatusProvedElsewhere]\label{thm:gerstenhaber-structure}
+\index{Gerstenhaber bracket|textbf}
 Hochschild cohomology carries a \textbf{Gerstenhaber bracket}:
 $$[\cdot, \cdot]: HH^p(\mathcal{A}) \otimes HH^q(\mathcal{A}) \to HH^{p+q-1}(\mathcal{A})$$
 
@@ -1247,7 +1247,7 @@ making $HH^*(\mathcal{A})$ into a graded Lie algebra (with appropriate degree sh
 \end{theorem}
 
 \begin{construction}[Geometric Realization of Bracket]\label{const:gerstenhaber-bracket}
-The Gerstenhaber bracket has a beautiful geometric interpretation via configuration spaces.
+The Gerstenhaber bracket has a natural geometric interpretation via configuration spaces.
 
 For $f \in HH^p$ and $g \in HH^q$, represented as:
 \begin{align*}

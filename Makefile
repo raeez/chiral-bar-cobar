@@ -57,7 +57,12 @@ $(PDF): $(SOURCES)
 	@for i in $$(seq 1 $(PASSES)); do \
 		echo ""; \
 		echo "  ── Pass $$i / $(PASSES) ──────────────────────────────────"; \
-		$(TEX) $(TEXFLAGS) $(MAIN).tex || exit 1; \
+		if [ $$i -eq $(PASSES) ]; then \
+			$(TEX) $(TEXFLAGS) $(MAIN).tex || exit 1; \
+		else \
+			$(TEX) $(TEXFLAGS) $(MAIN).tex || true; \
+		fi; \
+		if [ -f $(MAIN).idx ]; then makeindex -q $(MAIN).idx 2>/dev/null || true; fi; \
 	done
 	@echo ""
 	@echo "  ✓  $(PDF) built successfully."

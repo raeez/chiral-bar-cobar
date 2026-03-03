@@ -11,6 +11,7 @@ modular transformation properties manifest and connects to the physics literatur
 \label{subsec:eisenstein-recollection}
 
 \begin{definition}[Eisenstein Series]\label{def:eisenstein-series}
+\index{Eisenstein series|textbf}
 For $k \geq 2$ even, the weight-$k$ Eisenstein series is:
 \begin{equation}
 E_k(\tau) = 1 - \frac{2k}{B_k} \sum_{n=1}^{\infty} \sigma_{k-1}(n) q^n
@@ -53,6 +54,7 @@ The extra term for $E_2$ is the \textbf{holomorphic anomaly}.
 \end{proposition}
 
 \begin{definition}[Dedekind Eta Function]\label{def:eta-function}
+\index{Dedekind eta function|textbf}
 The Dedekind eta function is:
 \begin{equation}
 \eta(\tau) = q^{1/24} \prod_{n=1}^{\infty} (1 - q^n) 
@@ -123,7 +125,7 @@ where:
 
 On the torus $E_\tau$, we need a function with a simple pole at the origin. By Liouville's theorem, no meromorphic function on a compact Riemann surface can have a single simple pole and be doubly periodic. The Weierstrass $\zeta$-function provides the unique regularization of the lattice sum:
 $$\zeta_\tau(z) = \frac{1}{z} + \sum_{(m,n) \neq (0,0)} \left[\frac{1}{z - m - n\tau} + \frac{1}{m+n\tau} + \frac{z}{(m+n\tau)^2}\right]$$
-This is absolutely convergent and has quasiperiodicity $\zeta(z+1) = \zeta(z) + 2\eta_1$, $\zeta(z+\tau) = \zeta(z) + 2\eta_2$, where $\eta_1 = \pi^2 E_2(\tau)/3$ is the quasi-period.
+This is absolutely convergent and has quasiperiodicity $\zeta(z+1) = \zeta(z) + 2\eta_1$, $\zeta(z+\tau) = \zeta(z) + 2\eta_2$, where $\eta_1 = \pi^2 E_2(\tau)/6$ is the quasi-period (so that $2\eta_1 = \pi^2 E_2(\tau)/3$).
 
 \textbf{Step 2: The $E_2$ correction.}
 
@@ -147,6 +149,7 @@ This is the first appearance of Eisenstein series in the genus expansion.
 \end{proof}
 
 \begin{remark}[Holomorphic Anomaly]\label{rem:E2-holomorphic-anomaly}
+\index{holomorphic anomaly!E2 in Heisenberg genus expansion@$E_2$ in Heisenberg genus expansion}
 The appearance of $E_2$ introduces a \textbf{holomorphic anomaly}: under modular 
 transformations, the two-point function transforms as:
 \begin{equation}
@@ -158,7 +161,7 @@ transformations, the two-point function transforms as:
 The anomaly term is:
 $$\text{anomaly} = -\frac{6c\kappa}{\pi i} \cdot z_{12}$$
 
-This is precisely the obstruction class computed in Theorem \ref{thm:heisenberg-obs}!
+This is precisely the obstruction class computed in Theorem \ref{thm:heisenberg-obs}.
 \end{remark}
 
 \begin{computation}[Partition Function at Genus 1]\label{comp:heisenberg-partition-g1}
@@ -396,6 +399,8 @@ genus-$1$ surfaces.
 \label{subsec:physics-comparison}
 
 \begin{theorem}[Agreement with Dijkgraaf-Moore-Verlinde-Verlinde; \ClaimStatusProvedHere]\label{thm:dmvv-agreement}
+\index{Mumford formula}
+\index{free energy!genus expansion}
 Our formulas match the results of Dijkgraaf et al. \cite{DMVV} for topological 
 field theory partition functions.
 
@@ -409,19 +414,16 @@ where $\psi_1$ is the cotangent line class at the marked point and $\lambda_g = 
 
 \begin{proof}[Verification]
 
-\textbf{Step 1: DMVV formula.}
+\textbf{Step 1: DMVV formula as Hodge integral.}
 
-Dijkgraaf et al. compute:
-$$F_g = \log Z_g = \int_{\overline{\mathcal{M}}_g} \omega_g$$
+Dijkgraaf et al.\ compute the free boson free energy as an integral over $\overline{\mathcal{M}}_{g,1}$ (the marked point records the vertex operator insertion):
+$$F_g = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g$$
+where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle and $\psi_1$ is the cotangent line class at the marked point.  The integrand has degree $(2g-2) + g = 3g-2 = \dim \overline{\mathcal{M}}_{g,1}$, confirming dimensional consistency.
 
-For the free boson:
-$$\omega_g = \lambda_g$$
-where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle (not to be confused with $c_1(\mathbb{E})^g$, which is a different class for $g \geq 2$).
+\textbf{Step 2: Hodge integral evaluation.}
 
-\textbf{Step 2: Mumford's formula.}
-
-Mumford's formula (Theorem \ref{thm:mumford-formula}) gives:
-$$\int_{\overline{\mathcal{M}}_g} \lambda_g = \frac{|B_{2g}|}{2g(2g-2)!}$$
+The $\lambda_g$-formula (Faber--Pandharipande \cite{FP00}) evaluates this Hodge integral:
+$$\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{|B_{2g}|}{2g(2g-2)!}$$
 
 \textbf{Step 3: Explicit values.}
 
@@ -434,7 +436,7 @@ g=3: \quad F_3 &= \frac{|B_6|}{2 \cdot 3 \cdot 4!}
 = \frac{1/42}{144} = \frac{1}{6048} \quad \checkmark
 \end{align}
 
-These match the DMVV results exactly!
+These match the DMVV results exactly.
 \end{proof}
 
 \begin{remark}[Witten's Perspective]\label{rem:witten-perspective}
@@ -445,8 +447,8 @@ Witten interprets these formulas as:
 \item Bernoulli numbers = Measure of ``quantum chaos'' in the partition function
 \end{itemize}
 
-The appearance of Bernoulli numbers in both number theory and quantum gravity is 
-one of the deepest mysteries of mathematics!
+The appearance of Bernoulli numbers in both number theory and quantum gravity is
+a notable connection between number theory and mathematical physics.
 \end{remark}
 
 \subsection{Summary: Complete Dictionary}
@@ -482,7 +484,7 @@ modularity. The eta function regularizes the determinants, the theta functions e
 the spin structures, and the Bernoulli numbers measure the quantum volume. This is 
 the complete picture of the Heisenberg vertex algebra at all genera.''}
 
--- \textit{Synthesis of Ramanujan's modular forms, Witten's partition functions, \\
+--- \textit{Synthesis of Ramanujan's modular forms, Witten's partition functions, \\
 Kontsevich's moduli integrals, Mumford's algebraic geometry, and Zagier's arithmetic}
 \end{center}
 
@@ -541,5 +543,5 @@ $g$ & $F_g$ (exact) & $F_g$ (decimal) \\
 \end{tabular}
 \end{table}
 
-These tables provide concrete numerical values for all computations!
+These tables provide concrete numerical values for all computations.
 
