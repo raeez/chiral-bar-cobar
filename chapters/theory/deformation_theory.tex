@@ -1,12 +1,12 @@
-\chapter{Chiral Hochschild Cohomology and Koszul Duality}
+\chapter{Chiral Hochschild cohomology and Koszul duality}
 \index{deformation theory!chiral|textbf}
 \index{Hochschild cohomology!chiral|textbf}
 
-\section{Motivation: The Deformation Problem for Chiral Algebras}
+\section{The deformation problem for chiral algebras}
 
-\subsection{Historical Genesis and Physical Motivation}
+\subsection{Origins and physical motivation}
 
-The development of Hochschild cohomology for chiral algebras emerged from three independent streams of thought that converged in the 1990s. First, physicists studying marginal deformations of conformal field theories needed to understand when a perturbation $S \to S + \lambda \int \phi(z,\bar{z}) d^2z$ preserves conformal invariance. Seiberg \cite{Sei88} recognized that exactly marginal deformations correspond to closed elements in a certain cohomology theory. Second, mathematicians following Gerstenhaber's deformation theory \cite{Ger63} sought to extend Hochschild cohomology to vertex algebras. Third, Beilinson-Drinfeld's formalization of chiral algebras \cite{BD04} as factorization algebras demanded a cohomology theory respecting the geometric structure.
+Hochschild cohomology for chiral algebras has roots in physics and algebra. Physicists studying marginal deformations of conformal field theories needed to understand when a perturbation $S \to S + \lambda \int \phi(z,\bar{z}) d^2z$ preserves conformal invariance; Seiberg \cite{Sei88} recognized that exactly marginal deformations correspond to closed elements in a certain cohomology theory. On the algebraic side, Gerstenhaber's deformation theory \cite{Ger63} called for an extension of Hochschild cohomology to vertex algebras. Beilinson--Drinfeld's formalization of chiral algebras \cite{BD04} as factorization algebras then required a cohomology theory respecting the geometric structure.
 
 The fundamental question is: Given a chiral algebra $\mathcal{A}$ on a smooth curve $X$, what are its infinitesimal deformations that preserve the chiral structure? In classical algebra, if we deform an associative multiplication $\mu: A \otimes A \to A$ to $\mu_t = \mu + t\phi$, the associativity constraint
 \[
@@ -20,7 +20,7 @@ which in terms of elements reads $a\phi(b,c) - \phi(ab,c) + \phi(a,bc) - \phi(a,
 This is precisely the Hochschild 2-cocycle condition $\delta^2\phi = 0$. The obstruction to extending to second order lives in $HH^3(A,A)$.
 \index{obstruction theory|textbf}
 
-For chiral algebras, the situation is far richer. A deformation must preserve:
+For chiral algebras, a deformation must preserve:
 \begin{enumerate}
 \item The $\mathcal{D}_X$-module structure encoding locality
 \item The chiral multiplication $\mu: j_*j^*(\mathcal{A} \boxtimes \mathcal{A}) \to \Delta_*\mathcal{A}$
@@ -28,24 +28,24 @@ For chiral algebras, the situation is far richer. A deformation must preserve:
 \item The operator product expansion coefficients
 \end{enumerate}
 
-\subsection{Why Configuration Spaces Enter}
+\subsection{Configuration spaces in deformation theory}
 
-The appearance of configuration spaces is not a mathematical convenience but a physical necessity. In quantum field theory, the principle of locality states that operators commute at spacelike separation. On a curve $X$, this means the commutator $[\phi_1(z_1), \phi_2(z_2)]$ must vanish for $z_1 \neq z_2$. All nontrivial structure is thus encoded in the approach $z_1 \to z_2$.
+Configuration spaces appear because the nontrivial algebraic structure of a chiral algebra is concentrated along collision loci. On a curve $X$, the commutator $[\phi_1(z_1), \phi_2(z_2)]$ vanishes for $z_1 \neq z_2$; all structure is encoded in the approach $z_1 \to z_2$.
 
-The configuration space $C_n(X) = \{(z_1,\ldots,z_n) \in X^n : z_i \neq z_j\}$ parametrizes positions where operators don't collide. Its compactification $\overline{C}_n(X)$ adds boundary divisors $D_{ij} = \{z_i = z_j\}$ that encode collision limits. A deformation of the chiral algebra must specify how the algebraic structure changes as points approach these divisors.
+The configuration space $C_n(X) = \{(z_1,\ldots,z_n) \in X^n : z_i \neq z_j\}$ parametrizes positions where operators do not collide. Its compactification $\overline{C}_n(X)$ adds boundary divisors $D_{ij} = \{z_i = z_j\}$ that encode collision limits. A deformation of the chiral algebra must specify how the algebraic structure changes as points approach these divisors.
 
-\section{Construction of the Chiral Hochschild Complex}
+\section{Construction of the chiral Hochschild complex}
 
-\subsection{The Cochain Spaces}
+\subsection{The cochain spaces}
 
-\begin{definition}[Chiral Hochschild Complex - Geometric Realization]
+\begin{definition}[Chiral Hochschild complex, geometric realization]
 For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, define the degree $n$ cochains as
 \[
 C^n_{\text{chiral}}(\mathcal{A}) = \Gamma\left(\overline{C}_{n+2}(X), j_*j^*\mathcal{A}^{\boxtimes (n+2)} \otimes \Omega^n_{\overline{C}_{n+2}(X)}(\log D)\right)
 \]
 where:
 \begin{itemize}
-\item $\overline{C}_{n+2}(X)$ is the Fulton-MacPherson compactification
+\item $\overline{C}_{n+2}(X)$ is the Fulton--MacPherson compactification
 \item $j: C_{n+2}(X) \to \overline{C}_{n+2}(X)$ is the open embedding
 \item $\mathcal{A}^{\boxtimes (n+2)}$ denotes the external tensor product on $X^{n+2}$
 \item $\Omega^n_{\overline{C}_{n+2}(X)}(\log D)$ are $n$-forms with logarithmic poles along the boundary divisor $D$
@@ -58,11 +58,11 @@ The index $n+2$ (rather than $n$) appears because Hochschild cohomology involves
 \]
 where $a_i^{(I)} \in \mathcal{A}$ and $\omega_I$ is an $n$-form on $\overline{C}_{n+2}(X)$ with logarithmic singularities.
 
-\subsection{The Differential: Three Components United}
+\subsection{The differential: three components united}
 
 The differential $d: C^n_{\text{chiral}} \to C^{n+1}_{\text{chiral}}$ has three components reflecting the algebraic, geometric, and operadic structures:
 
-\begin{theorem}[The Chiral Hochschild Differential; \ClaimStatusProvedHere]
+\begin{theorem}[The chiral Hochschild differential; \ClaimStatusProvedHere]
 The differential decomposes as
 \[
 d = d_{\text{int}} + d_{\text{fact}} + d_{\text{config}}
@@ -78,28 +78,28 @@ where:
 \begin{proof}
 We verify $d^2 = 0$ by analyzing all nine combinations:
 
-\textbf{Pure terms:}
+\emph{Pure terms.}
 \begin{align}
 d_{\text{int}}^2 &= 0 \quad \text{($\mathcal{A}$ is a complex of $\mathcal{D}_X$-modules)} \\
 d_{\text{config}}^2 &= 0 \quad \text{(de Rham differential squares to zero)} \\
 d_{\text{fact}}^2 &= 0 \quad \text{(associativity of chiral multiplication)}
 \end{align}
 
-\textbf{Mixed terms:} The crucial cancellation 
+\emph{Mixed terms.} The cancellation 
 \[
 d_{\text{fact}} \circ d_{\text{config}} + d_{\text{config}} \circ d_{\text{fact}} = 0
 \]
-follows from the Arnold-Orlik-Solomon relations. For any configuration of three points:
+follows from the Arnold--Orlik--Solomon relations. For any configuration of three points:
 \[
 d\log(z_1-z_2) \wedge d\log(z_2-z_3) + d\log(z_2-z_3) \wedge d\log(z_3-z_1) + d\log(z_3-z_1) \wedge d\log(z_1-z_2) = 0
 \]
 
-This relation, discovered by Arnold \cite{Arn69} in studying configuration spaces of hyperplanes and generalized by Orlik-Solomon \cite{OS80}, encodes the fact that three points on a curve have only two degrees of freedom. Geometrically, it says the sum of exterior derivatives around a triangle vanishes.
+This relation, discovered by Arnold \cite{Arn69} in studying configuration spaces of hyperplanes and generalized by Orlik--Solomon \cite{OS80}, encodes the fact that three points on a curve have only two degrees of freedom. Geometrically, it says the sum of exterior derivatives around a triangle vanishes.
 
 The remaining mixed terms vanish because $d_{\text{int}}$ commutes with both other differentials by $\mathcal{D}_X$-linearity.
 \end{proof}
 
-\subsection{Explicit Formula for the Differential}
+\subsection{Explicit formula for the differential}
 
 For a cochain $\phi \in C^n_{\text{chiral}}$, the differential acts by:
 
@@ -112,13 +112,13 @@ For a cochain $\phi \in C^n_{\text{chiral}}$, the differential acts by:
 
 where $\hat{z}_i$ denotes omission and $\mu$ is the chiral multiplication.
 
-\section{Computing Cohomology via Bar-Cobar Resolution}
+\section{Computing cohomology via bar-cobar resolution}
 
-\subsection{The Resolution Strategy}
+\subsection{The resolution strategy}
 
 Computing Hochschild cohomology directly from the definition is typically intractable. The bar-cobar resolution provides a systematic approach:
 
-\begin{theorem}[Hochschild via Bar-Cobar; \ClaimStatusProvedHere]
+\begin{theorem}[Hochschild via bar-cobar; \ClaimStatusProvedHere]
 For any chiral algebra $\mathcal{A}$, there is a quasi-isomorphism
 \[
 C^{\bullet}_{\text{chiral}}(\mathcal{A}) \simeq \text{Hom}_{\text{ChirAlg}}(\Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})), \mathcal{A})
@@ -129,19 +129,19 @@ where $\Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A}))$ is the cobar c
 \begin{proof}
 The proof has three steps:
 
-\textbf{Step 1: Bar gives cofree resolution.} 
+\emph{Step 1: Bar gives cofree resolution.} 
 The geometric bar complex $\overline{B}^{\text{ch}}(\mathcal{A})$ constructed in Chapter 4 is a cofree chiral coalgebra resolving $\mathcal{A}$:
 \[
 \overline{B}^{\text{ch}}(\mathcal{A}) \xrightarrow{\epsilon} \mathcal{A}
 \]
 
-\textbf{Step 2: Cobar gives free resolution.}
+\emph{Step 2: Cobar gives free resolution.}
 Applying the cobar functor (Chapter 5) yields a free chiral algebra resolution:
 \[
 \Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})) \xrightarrow{\eta} \mathcal{A}
 \]
 
-\textbf{Step 3: Hom computes Ext.}
+\emph{Step 3: Hom computes Ext.}
 By definition, 
 \[
 \text{Ext}^n_{\text{ChirAlg}}(\mathcal{A}, \mathcal{A}) = H^n(\text{Hom}_{\text{ChirAlg}}(\Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})), \mathcal{A}))
@@ -149,11 +149,11 @@ By definition,
 The left side is precisely $HH^n_{\text{chiral}}(\mathcal{A})$ by definition.
 \end{proof}
 
-\subsection{The Spectral Sequence}
+\subsection{The spectral sequence}
 
 The double complex structure induces a spectral sequence:
 
-\begin{theorem}[Hochschild Spectral Sequence; \ClaimStatusProvedHere]
+\begin{theorem}[Hochschild spectral sequence; \ClaimStatusProvedHere]
 There exists a spectral sequence
 \[
 E_1^{n,q} = H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes (n+2)} \otimes \Omega^n_{\log}) \Rightarrow HH^{n+q}_{\text{chiral}}(\mathcal{A})
@@ -161,16 +161,20 @@ E_1^{n,q} = H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes (n+2)} \otimes \Om
 where $n$ is the bar degree (number of internal insertions) and $q$ is the sheaf cohomology degree, which are independent indices.
 \end{theorem}
 
-For formal chiral algebras (quasi-isomorphic to their cohomology), this spectral sequence degenerates at $E_1$, giving:
+\begin{proof}
+The chiral Hochschild complex $CH^*(\mathcal{A})$ is a double complex with horizontal differential $d_{\mathrm{bar}}$ (the bar differential of Theorem~\ref{thm:bar-differential}) and vertical differential $d_{\mathrm{sheaf}}$ (sheaf cohomology on configuration spaces).  Filter by bar degree: $F^n = \bigoplus_{m \geq n} CH^{m,*}$.  The resulting spectral sequence has $E_0^{n,q} = \Gamma(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes(n+2)} \otimes \Omega^n_{\log})$ with $d_0 = d_{\mathrm{sheaf}}$, so $E_1^{n,q} = H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes(n+2)} \otimes \Omega^n_{\log})$.  Convergence follows from the bounded-below hypothesis on $\mathcal{A}$ and the finite cohomological dimension of configuration spaces.
+\end{proof}
+
+For the cyclic refinement relating Hochschild to cyclic homology via Connes' operator, see Theorem~\ref{thm:HC-spectral-sequence}.  For formal chiral algebras (quasi-isomorphic to their cohomology), the spectral sequence above degenerates at $E_1$, giving:
 \[
 HH^k_{\text{chiral}}(\mathcal{A}) \cong \bigoplus_{n+q=k} H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes (n+2)} \otimes \Omega^n_{\log})
 \]
 
-\section{Koszul Duality for Chiral Algebras}
+\section{Koszul duality for chiral algebras}
 
-\subsection{Quadratic Chiral Algebras and Their Duals}
+\subsection{Quadratic chiral algebras and their duals}
 
-\begin{definition}[Quadratic Chiral Algebra]
+\begin{definition}[Quadratic chiral algebra]
 A chiral algebra $\mathcal{A}$ is \emph{quadratic} if it admits a presentation
 \[
 \mathcal{A} = T_{\text{chiral}}(\mathcal{V})/(R)
@@ -183,9 +187,9 @@ where:
 \end{itemize}
 \end{definition}
 
-The free chiral algebra requires care to define. Following Beilinson-Drinfeld:
+The free chiral algebra requires care to define. Following Beilinson--Drinfeld:
 
-\begin{definition}[Free Chiral Algebra]
+\begin{definition}[Free chiral algebra]
 The free chiral algebra on $\mathcal{V}$ is
 \[
 T_{\text{chiral}}(\mathcal{V}) = \bigoplus_{n \geq 0} \pi_{n*}\left(j_*j^*\mathcal{V}^{\boxtimes n} \otimes \mathcal{D}_{C_n(X)/X}\right)^{\Sigma_n}
@@ -193,7 +197,7 @@ T_{\text{chiral}}(\mathcal{V}) = \bigoplus_{n \geq 0} \pi_{n*}\left(j_*j^*\mathc
 where $\pi_n: C_n(X) \to X$ is the projection and $\mathcal{D}_{C_n(X)/X}$ denotes relative differential operators.
 \end{definition}
 
-\begin{definition}[Koszul Dual]
+\begin{definition}[Koszul dual]
 The Koszul dual of a quadratic chiral algebra $\mathcal{A}$ is
 \[
 \mathcal{A}^! = T_{\text{chiral}}(\mathcal{V}^*)/(R^{\perp})
@@ -208,35 +212,35 @@ where:
 \end{itemize}
 \end{definition}
 
-\begin{remark}[What This Definition Actually Says]\label{rem:koszul-dual-meaning}
-The Koszul dual $\mathcal{A}^!$ defined above is \emph{precisely the coalgebra} that bar constructs from $\mathcal{A}$. More precisely:
+\begin{remark}[Interpretation]\label{rem:koszul-dual-meaning}
+The Koszul dual $\mathcal{A}^!$ is the coalgebra that the bar construction produces from $\mathcal{A}$. More precisely:
 
 \begin{enumerate}
-\item \textbf{Generator duality}: The generators of $\mathcal{A}^!$ are the duals of the generators of $\mathcal{A}$:
+\item \emph{Generator duality}: The generators of $\mathcal{A}^!$ are the duals of the generators of $\mathcal{A}$:
    $$\mathcal{V}^* = \mathcal{H}om_{\mathcal{O}_X}(\mathcal{V}, \omega_X)$$
    This means: if $\mathcal{A}$ has generators $\phi_1, \ldots, \phi_n$, then $\mathcal{A}^!$ has dual generators $\phi_1^*, \ldots, \phi_n^*$
 
-\item \textbf{Relation orthogonality}: The relations $R^{\perp}$ in $\mathcal{A}^!$ are orthogonal to the relations $R$ in $\mathcal{A}$ under the residue pairing:
+\item \emph{Relation orthogonality}: The relations $R^{\perp}$ in $\mathcal{A}^!$ are orthogonal to the relations $R$ in $\mathcal{A}$ under the residue pairing:
    $$\langle r, r^* \rangle = \int_{X^2 \setminus \Delta} r \wedge r^* = 0 \quad \text{for all } r \in R, r^* \in R^{\perp}$$
-   This means: what is a relation in $\mathcal{A}$ becomes "freedom" in $\mathcal{A}^!$, and vice versa
+   This means: what is a relation in $\mathcal{A}$ becomes ``freedom'' in $\mathcal{A}^!$, and vice versa
 
-\item \textbf{Bar computes this dual}: The bar construction $\bar{B}^{\text{ch}}(\mathcal{A})$ naturally produces a coalgebra whose generators are $\mathcal{V}^*$ and whose coproduct encodes the relations $R^{\perp}$
+\item \emph{Bar computes this dual}: The bar construction $\bar{B}^{\text{ch}}(\mathcal{A})$ naturally produces a coalgebra whose generators are $\mathcal{V}^*$ and whose coproduct encodes the relations $R^{\perp}$
 \end{enumerate}
 
 Therefore, saying $\bar{B}^{\text{ch}}(\mathcal{A}) \simeq \mathcal{A}^!$ is not a new condition but rather a \emph{verification} that the bar construction does what we expect: it produces the Koszul dual coalgebra.
 \end{remark}
 
-\begin{example}[Explicit Correspondence for Heisenberg]
+\begin{example}[Explicit correspondence for Heisenberg]
 For the Heisenberg chiral algebra $\mathcal{H}$ with generator $\alpha(z)$ and OPE:
 $$\alpha(z)\alpha(w) \sim \frac{1}{(z-w)^2}$$
 
 The Koszul dual $\mathcal{H}^!$ has:
 \begin{itemize}
-\item \textbf{Dual generator}: $\alpha^*(z)$ with $\langle \alpha, \alpha^* \rangle = 1$ under residue pairing
-\item \textbf{Coproduct}: 
+\item \emph{Dual generator}: $\alpha^*(z)$ with $\langle \alpha, \alpha^* \rangle = 1$ under residue pairing
+\item \emph{Coproduct}: 
    $$\Delta(\alpha^*) = \alpha^* \otimes 1 + 1 \otimes \alpha^* + \text{(higher order terms)}$$
    encoding the dual of the commutative algebra structure
-\item \textbf{Bar construction}: $\bar{B}^{\text{ch}}(\mathcal{H})$ consists of forms like:
+\item \emph{Bar construction}: $\bar{B}^{\text{ch}}(\mathcal{H})$ consists of forms like:
    $$\alpha(z_1) \otimes \cdots \otimes \alpha(z_n) \otimes \eta_{12} \wedge \eta_{23} \wedge \cdots$$
    whose residues extract the coproduct coefficients
 \end{itemize}
@@ -244,8 +248,8 @@ The Koszul dual $\mathcal{H}^!$ has:
 The cobar $\Omega^{\text{ch}}(\mathcal{H}^!)$ reconstructs a commutative chiral algebra from this coalgebraic data.
 \end{example}
 
-\begin{remark}[Why "Koszul Dual" vs "Dual"?]
-The term "Koszul dual" (rather than just "dual") emphasizes that:
+\begin{remark}[Koszul dual versus dual]
+The term ``Koszul dual'' (rather than just ``dual'') emphasizes that:
 \begin{enumerate}
 \item This is a derived/homotopical notion (quasi-isomorphisms, not isomorphisms)
 \item It involves a specific homological construction (bar-cobar)
@@ -256,19 +260,19 @@ The term "Koszul dual" (rather than just "dual") emphasizes that:
 When $\mathcal{A}$ is quadratic, $\mathcal{A}^!$ recovers the classical quadratic dual. For non-quadratic chiral algebras, $\mathcal{A}^!$ is defined by the bar construction but maintains all the essential dualities.
 \end{remark}
 
-\subsection{The Universal Twisting Morphism}
+\subsection{The universal twisting morphism}
 
 The relationship between a chiral algebra and its Koszul dual is mediated by:
 
-\begin{definition}[Universal Twisting Morphism]
-A \emph{twisting morphism} $\tau: \mathcal{A}^! \to \mathcal{A}$ is a degree 1 map satisfying the Maurer-Cartan equation
+\begin{definition}[Universal twisting morphism]
+A \emph{twisting morphism} $\tau: \mathcal{A}^! \to \mathcal{A}$ is a degree 1 map satisfying the Maurer--Cartan equation
 \[
 \partial \tau + \tau \star \tau = 0
 \]
 where $\star$ denotes convolution in $\text{Hom}(\overline{B}^{\text{ch}}(\mathcal{A}^!), \Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})))$.
 \end{definition}
 
-\begin{theorem}[Existence and Uniqueness; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Existence and uniqueness; \ClaimStatusProvedElsewhere]
 For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there exists a unique universal twisting morphism $\tau: \mathcal{A}^! \to \mathcal{A}$ that induces quasi-isomorphisms:
 \begin{align}
 \mathcal{A}^!_{\tau} &\simeq \overline{B}^{\text{ch}}(\mathcal{A}) \\
@@ -277,22 +281,22 @@ For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there exists a unique universa
 where the subscript denotes twisting by $\tau$.
 \end{theorem}
 
-\begin{remark}[What the Twisting Morphism Does]\label{rem:twisting-morphism-meaning}
-The twisting morphism $\tau$ is the \textbf{explicit map implementing the bar-cobar isomorphism}. Concretely:
+\begin{remark}[What the twisting morphism does]\label{rem:twisting-morphism-meaning}
+The twisting morphism $\tau$ is the \emph{explicit map implementing the bar-cobar isomorphism}. Concretely:
 
 \begin{enumerate}
-\item \textbf{Direction}: $\tau: \mathcal{A}^! \to \mathcal{A}$ is a map from the dual coalgebra to the original algebra
+\item \emph{Direction}: $\tau: \mathcal{A}^! \to \mathcal{A}$ is a map from the dual coalgebra to the original algebra
 
-\item \textbf{Maurer-Cartan equation}: The condition $\partial \tau + \tau \star \tau = 0$ ensures that $\tau$ intertwines the coalgebra differential on $\mathcal{A}^!$ with the algebra differential on $\mathcal{A}$
+\item \emph{Maurer--Cartan equation}: The condition $\partial \tau + \tau \star \tau = 0$ ensures that $\tau$ intertwines the coalgebra differential on $\mathcal{A}^!$ with the algebra differential on $\mathcal{A}$
 
-\item \textbf{Twisted structures}: 
+\item \emph{Twisted structures}: 
    \begin{itemize}
    \item $\mathcal{A}^!_{\tau}$ is $\mathcal{A}^!$ with differential twisted by $\tau$
    \item $\mathcal{A}_{\tau}$ is $\mathcal{A}$ with structure twisted by $\tau$
    \item The theorem says these twisted structures are quasi-isomorphic to bar and cobar
    \end{itemize}
 
-\item \textbf{Universality}: $\tau$ is universal in that any other twisting factors through it
+\item \emph{Universality}: $\tau$ is universal in that any other twisting factors through it
 \end{enumerate}
 
 Geometrically, $\tau$ is realized by:
@@ -300,7 +304,7 @@ $$\tau(c) = \int_{C_2(X)} \text{ev}^* c \wedge K_{\text{twist}}$$
 where $K_{\text{twist}}$ is a universal integration kernel on the configuration space.
 \end{remark}
 
-\begin{example}[Twisting for Fermion-Boson Duality]
+\begin{example}[Twisting for fermion-boson duality]
 For the Koszul pair (free fermions $\mathcal{F}$, $\beta\gamma$ system $\mathcal{BG}$):
 
 The twisting morphism $\tau: \mathcal{F}^! \to \mathcal{F}$ is given by:
@@ -311,15 +315,15 @@ This map:
 \item Takes the dual generator $\psi^*$ of $\mathcal{F}^!$
 \item Integrates it against the fermion field $\psi$ with the basic kernel $\frac{1}{z-w}$
 \item Produces a twisted field that satisfies bosonic commutation relations
-\item Implements the fermion-boson correspondence at the level of Maurer-Cartan elements
+\item Implements the fermion-boson correspondence at the level of Maurer--Cartan elements
 \end{itemize}
 
-The Maurer-Cartan equation $\partial \tau + \tau \star \tau = 0$ becomes the statement that this construction is consistent with the OPE structures on both sides.
+The Maurer--Cartan equation $\partial \tau + \tau \star \tau = 0$ becomes the statement that this construction is consistent with the OPE structures on both sides.
 \end{example}
 
-\subsection{Main Duality Theorem}
+\subsection{Main duality theorem}
 
-\begin{theorem}[Koszul Duality for Hochschild Cohomology; \ClaimStatusProvedHere]
+\begin{theorem}[Koszul duality for Hochschild cohomology; \ClaimStatusProvedHere]
 \label{thm:main-koszul-hoch}
 \index{Hochschild cohomology!Koszul duality|textbf}
 For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras on a smooth projective curve $X$:
@@ -332,7 +336,7 @@ The shift by~$2$ arises from two sources: Serre duality on $X$ contributes a shi
 \begin{proof}
 We give two arguments; the first is more explicit, the second more conceptual.
 
-\medskip\noindent\textbf{First proof: via bar-cobar duality.}
+\medskip\noindent\emph{First proof: via bar-cobar duality.}
 The bar-cobar quasi-isomorphism (Theorem~\ref{thm:bar-cobar-isomorphism-main}),
 extended to all genera by Theorem~\ref{thm:higher-genus-inversion}, gives an
 equivalence of $\mathcal{D}$-module complexes on $\overline{C}_{n+2}(X)$:
@@ -374,7 +378,7 @@ HH^n_{\mathrm{chiral}}(\mathcal{A})
 \]
 The full details are given in the second proof below.
 
-\medskip\noindent\textbf{Second proof: via Kodaira--Spencer map.}
+\medskip\noindent\emph{Second proof: via Kodaira--Spencer map.}
 The Kodaira--Spencer map
 (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) provides a
 center-valued connection on the chiral homology sheaf.  Combined with the
@@ -393,7 +397,7 @@ Passing to cohomology and tracking the grading shift
 and the $\omega_X$ twist (from Serre duality on the underlying curve) yields the result.
 \end{proof}
 
-\begin{remark}[Proof History]
+\begin{remark}[Proof history]
 In an earlier version of this monograph, the two proof outlines above both relied
 on extending the genus-0 Koszul quasi-isomorphism to curves of arbitrary genus.
 This extension has since been established:
@@ -404,21 +408,21 @@ Kodaira--Spencer map for general Koszul pairs.  With this infrastructure,
 both arguments go through as presented.
 \end{remark}
 
-\section{Example: Complete Analysis of Boson-Fermion Duality}
+\section{Example: boson-fermion duality}
 
-\subsection{The Free Boson Chiral Algebra}
+\subsection{The free boson chiral algebra}
 
 The free boson $\mathcal{B}$ on a curve $X$ is defined as follows:
 
-\textbf{As a chiral algebra:}
+\emph{As a chiral algebra.}
 The free boson $\mathcal{B}$ is the chiral envelope of the Heisenberg Lie$^*$ algebra
 $\omega_X$ (with Lie$^*$ bracket given by the residue pairing).  Its vacuum module is
 $\mathrm{Sym}(\omega_X \otimes t^{-1}\mathbb{C}[t^{-1}])$, a polynomial algebra on
 infinitely many generators $\alpha_{-n}$ ($n \geq 1$).
 
-\textbf{Generator:} The field $\alpha(z)$ generates $\mathcal{B}$ with conformal weight $h = 1$.
+\emph{Generator.} The field $\alpha(z)$ generates $\mathcal{B}$ with conformal weight $h = 1$.
 
-\textbf{Chiral multiplication:} Determined by the OPE
+\emph{Chiral multiplication.} Determined by the OPE
 \[
 \alpha(z_1) \alpha(z_2) = \frac{1}{(z_1-z_2)^2} + \text{regular}
 \]
@@ -429,40 +433,40 @@ In terms of modes $\alpha(z) = \sum_{n \in \mathbb{Z}} \alpha_n z^{-n-1}$:
 \]
 This is the Heisenberg algebra with central charge $c = 1$.
 
-\textbf{Vacuum representation:} The Fock space
+\emph{Vacuum representation.} The Fock space
 \[
 \mathcal{F}_{\mathcal{B}} = \mathbb{C}[\alpha_{-1}, \alpha_{-2}, \ldots] |0\rangle
 \]
 with $\alpha_n |0\rangle = 0$ for $n \geq 0$.
 
-\subsection{The Free Fermion Chiral Algebra}
+\subsection{The free fermion chiral algebra}
 
 The free fermion $\mathcal{F}$ has:
 
-\textbf{Generators:} Two fermionic fields $\psi(z), \psi^*(z)$ with $h = 1/2$.
+\emph{Generators.} Two fermionic fields $\psi(z), \psi^*(z)$ with $h = 1/2$.
 
-\textbf{Relations:} The OPEs
+\emph{Relations.} The OPEs
 \begin{align}
 \psi(z_1)\psi^*(z_2) &= \frac{1}{z_1-z_2} + \text{regular} \\
 \psi(z_1)\psi(z_2) &= 0 + \text{regular} \\
 \psi^*(z_1)\psi^*(z_2) &= 0 + \text{regular}
 \end{align}
 
-In modes (half-integer for Neveu-Schwarz sector):
+In modes (half-integer for Neveu--Schwarz sector):
 \begin{align}
 \{\psi_r, \psi^*_s\} &= \delta_{r+s,0} \\
 \{\psi_r, \psi_s\} &= 0 \\
 \{\psi^*_r, \psi^*_s\} &= 0
 \end{align}
 
-\textbf{Fock space:}
+\emph{Fock space.}
 \[
 \mathcal{F}_{\mathcal{F}} = \Lambda^{\bullet}(\psi_{-1/2}, \psi_{-3/2}, \ldots, \psi^*_{-1/2}, \psi^*_{-3/2}, \ldots) |0\rangle
 \]
 
-\subsection{Establishing Koszul Duality}
+\subsection{Establishing Koszul duality}
 
-\begin{theorem}[Boson-Fermion Correspondence via Lattice VOA; \ClaimStatusProvedHere]
+\begin{theorem}[Boson-fermion correspondence via lattice VOA; \ClaimStatusProvedHere]
 The free boson $\mathcal{B}$ and free fermion $\mathcal{F}$ are related by bosonization through the rank-1 lattice vertex algebra $V_{\mathbb{Z}}$:
 \[
 V_{\mathbb{Z}} \supset \mathcal{B}, \qquad \mathcal{F} \cong V_{\mathbb{Z}} \quad \text{(as super vertex algebras)}
@@ -470,13 +474,13 @@ V_{\mathbb{Z}} \supset \mathcal{B}, \qquad \mathcal{F} \cong V_{\mathbb{Z}} \qua
 \end{theorem}
 
 \begin{remark}
-This is \emph{not} Koszul duality in the operadic sense. Koszul duality preserves the dimension of the generating space: if $\mathcal{A}$ has generators in a space $V$, then $\mathcal{A}^!$ has generators in $V^*$, so $\dim V = \dim V^*$. Here $\mathcal{B}$ has one generator ($\alpha$) while $\mathcal{F}$ has two generators ($\psi, \psi^*$). The Heisenberg algebra is in fact \emph{not} Koszul self-dual: $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$, a commutative chiral algebra (Theorem~\ref{thm:heisenberg-not-self-dual}). The boson-fermion correspondence is instead a lattice VOA extension: the vertex operators $\psi = {:}e^{i\phi}{:}$ and $\psi^* = {:}e^{-i\phi}{:}$ lie in $V_{\mathbb{Z}}$, not in the Heisenberg subalgebra.
+This is \emph{not} Koszul duality in the operadic sense. Koszul duality preserves the dimension of the generating space: if $\mathcal{A}$ has generators in a space $V$, then $\mathcal{A}^!$ has generators in $V^*$, so $\dim V = \dim V^*$. Here $\mathcal{B}$ has one generator ($\alpha$) while $\mathcal{F}$ has two generators ($\psi, \psi^*$). The Heisenberg algebra is \emph{not} Koszul self-dual: $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$, a commutative chiral algebra (Part~II). The boson-fermion correspondence is instead a lattice VOA extension: the vertex operators $\psi = {:}e^{i\phi}{:}$ and $\psi^* = {:}e^{-i\phi}{:}$ lie in $V_{\mathbb{Z}}$, not in the Heisenberg subalgebra.
 \end{remark}
 
 \begin{proof}
 We verify this at three levels:
 
-\textbf{Level 1: The Lattice Extension}
+\emph{Level 1: The Lattice Extension}
 
 The free boson $\mathcal{B}$ is generated by $\alpha(z) = i\partial\phi(z)$ with OPE $\alpha(z)\alpha(w) \sim 1/(z-w)^2$. The rank-1 lattice VOA $V_{\mathbb{Z}}$ extends $\mathcal{B}$ by adjoining vertex operators $e^{in\phi}$ for $n \in \mathbb{Z}$:
 \[
@@ -484,7 +488,7 @@ V_{\mathbb{Z}} = \bigoplus_{n \in \mathbb{Z}} \mathcal{F}_n, \qquad \mathcal{F}_
 \]
 The charge-$(\pm 1)$ sectors produce the fermionic fields $\psi = {:}e^{i\phi}{:}$ and $\psi^* = {:}e^{-i\phi}{:}$.
 
-\textbf{Level 2: Bosonization}
+\emph{Level 2: Bosonization}
 
 The explicit isomorphism is given by bosonization:
 \begin{align}
@@ -500,7 +504,7 @@ This realizes the isomorphism at the level of vertex operators:
 Y_{\mathcal{F}}(\psi, z) = :e^{i\int^z \alpha}: \quad \text{(fermion as exponential of boson)}
 \]
 
-\textbf{Level 3: Bar Complex of the Heisenberg}
+\emph{Level 3: Bar Complex of the Heisenberg}
 
 The bar complex of $\mathcal{B}$ has underlying space:
 \[
@@ -512,28 +516,29 @@ with coproduct:
 \Delta([\alpha^n]) = \sum_{i+j=n} [\alpha^i] \otimes [\alpha^j]
 \]
 
-This is the divided power coalgebra $\Gamma(V^*)$, which is the linear dual of the symmetric algebra $\mathrm{Sym}(V)$.  The cobar construction recovers $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$ (Theorem~\ref{thm:heisenberg-koszul-dual-early}), confirming that the Heisenberg algebra is Koszul but \emph{not} Koszul self-dual.
+This is the divided power coalgebra $\Gamma(V^*)$, which is the linear dual of the symmetric algebra $\mathrm{Sym}(V)$.  The cobar construction recovers $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$ (Part~II), confirming that the Heisenberg algebra is Koszul but \emph{not} Koszul self-dual.
 \end{proof}
 
-\subsection{Computing Hochschild Cohomology}
+\subsection{Computing Hochschild cohomology}
 
-\begin{computation}[Boson Hochschild Cohomology; \ClaimStatusProvedHere]
+\begin{computation}[Boson Hochschild cohomology; \ClaimStatusProvedHere]
+\label{comp:boson-hochschild}
 
-\textbf{Degree 0:}
+\emph{Degree 0.}
 \[
 HH^0_{\text{chiral}}(\mathcal{B}) = Z(\mathcal{B})
 \]
 the center of $\mathcal{B}$, consisting of elements whose OPE with every field is regular.
 An element $a \in \mathcal{B}$ lies in the center if and only if $a(z)\alpha(w) \sim 0$ (no singular terms).  Since $\alpha(z)\alpha(w) \sim (z-w)^{-2}$, the only such elements are scalars.  Thus $HH^0 = \mathbb{C}$.
 
-\textbf{Degree 1:}
+\emph{Degree 1.}
 A derivation $D: \mathcal{B} \to \mathcal{B}$ must satisfy:
 \[
 D(\alpha(z)\alpha(w)) = D(\alpha(z))\alpha(w) + \alpha(z)D(\alpha(w))
 \]
 Using the OPE and comparing singularities, we find $D = 0$. Thus $HH^1 = 0$.
 
-\textbf{Degree 2:}
+\emph{Degree 2.}
 A 2-cocycle $\phi \in C^2$ defines a deformation:
 \[
 \alpha(z) \cdot_t \alpha(w) = \alpha(z)\alpha(w) + t\phi(z,w)
@@ -542,7 +547,8 @@ The cocycle condition ensures associativity to first order. The space of such co
 is one-dimensional, spanned by the level deformation $\alpha(z) \alpha(w) \sim \kappa/(z-w)^2 \mapsto (\kappa + \epsilon t)/(z-w)^2$.  Thus $HH^2 = \mathbb{C}$.
 \end{computation}
 
-\begin{computation}[Fermion Hochschild Cohomology; \ClaimStatusProvedHere]
+\begin{computation}[Fermion Hochschild cohomology; \ClaimStatusProvedHere]
+\label{comp:fermion-hochschild}
 
 By similar analysis:
 \begin{align}
@@ -552,7 +558,7 @@ HH^2_{\text{chiral}}(\mathcal{F}) &= \mathbb{C} \quad \text{(deformation to inte
 \end{align}
 \end{computation}
 
-\begin{remark}[Numerical Coincidence]
+\begin{remark}[Numerical coincidence]
 The boson and fermion have isomorphic Hochschild cohomology groups:
 \[
 HH^n(\mathcal{B}) = (\mathbb{C}, 0, \mathbb{C}) = HH^n(\mathcal{F}).
@@ -565,27 +571,25 @@ not $\mathcal{F}$.  The coincidence above reflects the fact that both algebras a
 ``maximally simple'' free-field theories with one-dimensional deformation spaces.
 \end{remark}
 
-\section{Classification of Periodicity Phenomena}
+\section{Classification of periodicity phenomena}
 
-\subsection{Overview: Three Sources of Periodicity}
+\subsection{Overview: three sources of periodicity}
 
 The Hochschild cohomology of chiral algebras can exhibit three distinct types of periodicity:
 
 \begin{enumerate}
-\item \textbf{Type I - Modular:} From rational central charge and modular transformations
-\item \textbf{Type II - Quantum:} From quantum groups at roots of unity
-\item \textbf{Type III - Geometric:} From topology of the underlying curve
+\item \emph{Type I - Modular:} From rational central charge and modular transformations
+\item \emph{Type II - Quantum:} From quantum groups at roots of unity
+\item \emph{Type III - Geometric:} From topology of the underlying curve
 \end{enumerate}
 
-These three sources interact through the bar-cobar duality to produce complex periodicity patterns.
+\subsection{Type I: modular periodicity from rational central charge}
 
-\subsection{Type I: Modular Periodicity from Rational Central Charge}
-
-\subsubsection{The Mechanism}
+\subsubsection{The mechanism}
 
 When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
-\begin{theorem}[Modular Periodicity; \ClaimStatusProvedHere]
+\begin{theorem}[Modular periodicity; \ClaimStatusProvedHere]
 \index{periodicity!modular|textbf}
 Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$. Then there exists $N | \mathrm{lcm}(p,q,24)$ such that
 \[
@@ -613,7 +617,7 @@ The weight-graded pieces of the bar complex decompose: $\bar{B}^{(n)}_{[h]}(\mat
 
 \subsubsection{Examples}
 
-\begin{example}[Minimal Models]
+\begin{example}[Minimal models]
 For Virasoro minimal models with 
 \[
 c = 1 - \frac{6(p-q)^2}{pq}
@@ -627,7 +631,7 @@ where $\gcd(p,q) = 1$ and $p,q \geq 2$:
 \end{itemize}
 \end{example}
 
-\begin{example}[WZW Models]
+\begin{example}[WZW models]
 For $\widehat{\mathfrak{sl}}_2$ at level $k$:
 \[
 c = \frac{3k}{k+2}
@@ -636,16 +640,17 @@ At $k=1$: $c = 1$, period 24 (related to $j$-invariant)
 At $k=2$: $c = 3/2$, period 48
 \end{example}
 
-\subsubsection{Koszul Dual Behavior}
+\subsubsection{Koszul dual behavior}
 
-\begin{conjecture}[Reflected Modular Periodicity; \ClaimStatusConjectured]\label{conj:reflected-modular-periodicity}
+\begin{conjecture}[Reflected modular periodicity; \ClaimStatusConjectured]\label{conj:reflected-modular-periodicity}
 \index{reflected modular periodicity}
 If $\mathcal{A}$ has rational central charge $c = p/q$ and modular period $N$, and its Koszul dual $\mathcal{A}^!$ has central charge $c'$ (determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula) and modular period $N'$, then $N$ and $N'$ are related by the arithmetic of $c$ and $c'$.
 
 For the specific case where $c + c' = 26$ (bosonic string critical dimension) and $\gcd(p, 24) = 1$, the formula $\frac{1}{N} + \frac{1}{N'} = \frac{1}{12}$ holds. In general, the relationship depends on the prime factorization of $p$ relative to $24$.
 \end{conjecture}
 
-\begin{remark}[Precise Hypotheses]
+\begin{remark}[Precise hypotheses]
+\label{rem:precise-reflected-hypotheses}
 The conjecture requires the following hypotheses to be well-posed:
 \begin{enumerate}
 \item $\cA$ is a rational chiral algebra (finitely many irreducible modules) with $c = p/q \in \mathbb{Q}$, $\gcd(p,q) = 1$.
@@ -671,13 +676,13 @@ rationality of the chiral algebra, so the modular period $N'$ may not be finite
 for arbitrary Koszul duals.
 \end{remark}
 
-\subsection{Type II: Quantum Group Periodicity}
+\subsection{Type II: quantum group periodicity}
 
-\subsubsection{The Quantum Group Structure}
+\subsubsection{The quantum group structure}
 
 For affine Lie algebras at special levels, quantum groups at roots of unity emerge.
 
-\begin{theorem}[Quantum Periodicity; \ClaimStatusProvedHere]
+\begin{theorem}[Quantum periodicity; \ClaimStatusProvedHere]
 \index{periodicity!quantum|textbf}
 Let $\mathcal{W}^k(\mathfrak{g})$ be the W-algebra at admissible level $k = -h^{\vee} + p/q$ where $h^{\vee}$ is the dual Coxeter number, $p \geq h^\vee$, $q \geq h^\vee$, $\gcd(p,q) = 1$. Then:
 \[
@@ -687,22 +692,74 @@ where $M = 2h^{\vee}pq/\gcd(p,q,h^{\vee})$.
 \end{theorem}
 
 \begin{proof}
-At admissible level $k = -h^\vee + p/q$, we write $q_{\mathrm{KL}} = \exp(\pi i/(k + h^\vee)) = \exp(\pi i \cdot q/p)$ for the Kazhdan-Lusztig quantum parameter.  Since $\gcd(p,q) = 1$, this $q_{\mathrm{KL}}$ is a root of unity of order dividing $2p$.
+At admissible level $k = -h^\vee + p/q$, we write $q_{\mathrm{KL}} = \exp(\pi i/(k + h^\vee)) = \exp(\pi i \cdot q/p)$ for the Kazhdan--Lusztig quantum parameter.  Since $\gcd(p,q) = 1$, this $q_{\mathrm{KL}}$ is a root of unity of order dividing $2p$.
 
-\textbf{Step 1: Semisimplicity.}
+\emph{Step 1: Semisimplicity.}
 By Arakawa's theorem \cite{Ara07}, the category $\mathcal{O}_k(\mathcal{W}^k(\mathfrak{g}))$ at admissible level is semisimple with finitely many simple objects, indexed by the admissible weights.
 
-\textbf{Step 2: Kazhdan--Lusztig equivalence.}
-The Kazhdan--Lusztig equivalence \cite{KL93} provides a tensor equivalence $\mathcal{O}_k(\widehat{\mathfrak{g}}) \simeq \mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ (at the level of abelian categories, with quantum parameter $q = \exp(\pi i/(k + h^\vee))$).  Under this equivalence, the bar complex of $\mathcal{W}^k(\mathfrak{g})$ corresponds to the bar complex of the quantum group.
+\emph{Step 2: Kazhdan--Lusztig equivalence and DS reduction.}
+The Kazhdan--Lusztig equivalence \cite{KL93} provides a tensor equivalence $\mathcal{O}_k(\widehat{\mathfrak{g}}) \simeq \mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ (at the level of abelian categories, with quantum parameter $q = \exp(\pi i/(k + h^\vee))$).  The Drinfeld--Sokolov reduction functor $H^0_{Q_{\mathrm{DS}}} \colon \mathcal{O}_k(\widehat{\mathfrak{g}}) \to \mathcal{O}_k(\mathcal{W}^k(\mathfrak{g}))$ is exact at admissible levels (Arakawa~\cite{Ara07}), and the composition transports the bar complex structure from $\widehat{\mathfrak{g}}$-modules to $\mathcal{W}^k(\mathfrak{g})$-modules.
 
-\textbf{Step 3: Quantum integer periodicity.}
-The quantum integers $[n]_{q_{\mathrm{KL}}} = (q_{\mathrm{KL}}^n - q_{\mathrm{KL}}^{-n})/(q_{\mathrm{KL}} - q_{\mathrm{KL}}^{-1})$ satisfy $[n + 2\ell]_{q_{\mathrm{KL}}} = [n]_{q_{\mathrm{KL}}}$ where $\ell$ is the order of $q_{\mathrm{KL}}^2 = \exp(2\pi i \cdot q/p)$, which divides~$p$.  The quantum dimensions of simple modules are products of quantum integers (Weyl character formula), so they are periodic.  The period $M = 2h^\vee pq / \gcd(p,q,h^\vee)$ accounts for: (i)~the quantum integer periodicity ($\ell | p$), (ii)~the Weyl denominator involving $h^\vee$ factors, and (iii)~the $q$-dependence of the admissible weight set.
+\emph{Step 3: Quantum integer periodicity.}
+The quantum integers $[n]_{q_{\mathrm{KL}}} = (q_{\mathrm{KL}}^n - q_{\mathrm{KL}}^{-n})/(q_{\mathrm{KL}} - q_{\mathrm{KL}}^{-1})$ satisfy $[n + 2\ell]_{q_{\mathrm{KL}}} = [n]_{q_{\mathrm{KL}}}$ where $\ell$ is the order of $q_{\mathrm{KL}}^2 = \exp(2\pi i q/p)$ as a root of unity; since $\gcd(p,q) = 1$, this order is $\ell = p$.
 
-\textbf{Step 4: Bar complex periodicity.}
+The quantum dimension of the simple module $L(\lambda)$ is the Weyl character formula:
+\[
+\dim_q L(\lambda) = \prod_{\alpha \in \Delta^+}
+\frac{[\langle \lambda + \rho, \alpha^\vee \rangle]_{q_{\mathrm{KL}}}}
+     {[\langle \rho, \alpha^\vee \rangle]_{q_{\mathrm{KL}}}}.
+\]
+This is a product of $|\Delta^+|$ quantum integers with arguments determined by the weight~$\lambda$.  The periodicity of each factor gives $\dim_q L(\lambda + 2\ell\rho) = \dim_q L(\lambda)$, so the quantum dimensions (hence fusion coefficients via the Verlinde formula) are periodic in $\lambda$ with period $2\ell\rho = 2p\rho$.
+
+The admissible weights are indexed by pairs $(r,s)$ with $0 \leq r \leq p - h^\vee$ and $0 \leq s \leq q - h^\vee$ (for generic simple~$\mathfrak{g}$; the precise range depends on $\Delta^+$).  The shift $\lambda \to \lambda + 2p\rho$ in the Hochschild grading corresponds to an increase in bar degree by $2p \cdot \langle \rho, \rho \rangle$, which for the $q$-restricted weights contributes a factor of~$q$.  Combining the three sources:
+\begin{enumerate}[label=(\alph*)]
+\item quantum integer period: $2\ell = 2p$,
+\item Weyl group orbit: $|W|$ copies with inner period $h^\vee$ (from $\langle \rho, \alpha^\vee_{\max} \rangle = h^\vee - 1$),
+\item $q$-restricted weight lattice: period~$q$,
+\end{enumerate}
+we obtain $M = 2h^\vee pq / \gcd(p,q,h^\vee)$ as the minimal common period.
+
+\emph{Step 4: Bar complex periodicity.}
 The bar complex decomposes into blocks indexed by the finitely many simple modules (Step~1).  Within each block, the differential is determined by the fusion coefficients $N_{ij}^k$, which depend on the quantum dimensions (Verlinde formula).  The periodicity of quantum dimensions (Step~3) gives periodicity of the fusion coefficients, hence periodicity of the bar complex differentials.  Since each block is finite-dimensional (semisimplicity), the homology inherits the periodicity: $H^n(\bar{B}_{[h+M]}) \cong H^n(\bar{B}_{[h]})$ for all~$h$.
 \end{proof}
 
-\subsubsection{Physical Interpretation}
+\begin{example}[Quantum periodicity for
+$\widehat{\mathfrak{sl}}_2$ at $k = -1/2$]
+\label{ex:hh-sl2-admissible}
+\index{Hochschild cohomology!admissible level}
+\index{sl2-hat@$\widehat{\mathfrak{sl}}_2$!Hochschild cohomology}
+At the admissible level $k = -1/2$ ($p = 3$, $q = 2$,
+$h^\vee = 2$), the quantum parameter is
+$q_{\mathrm{KL}} = \exp(\pi i \cdot 2/3) = e^{2\pi i/3}$
+(a primitive third root of unity).  The Kazhdan--Lusztig
+category $\mathcal{O}_k$ is semisimple with $2$ simple modules
+(Example~\ref{ex:sl2-admissible}), and the quantum dimensions are:
+\[
+\dim_q(\mathcal{L}_0) = 1, \qquad
+\dim_q(\mathcal{L}_1) = [2]_q = q + q^{-1} = -1
+\]
+(using $q = e^{2\pi i/3}$, so $[2]_q = 2\cos(2\pi/3) = -1$).
+
+The quantum integer periodicity has $\ell = 3$
+($[n+6]_q = [n]_q$, since $q^2 = e^{4\pi i/3}$ has order~$3$).
+The period is $M = 2 \cdot 2 \cdot 3 \cdot 2 / \gcd(3,2,2) = 24$.
+
+The chiral Hochschild cohomology of
+$L_{-1/2}(\mathfrak{sl}_2)$ has:
+\begin{align}
+HH^0 &= \mathbb{C} & & \text{(center)}, \\
+HH^1 &= 0 & & \text{(no outer derivations)}, \\
+HH^2 &= \mathbb{C} & & \text{(one marginal deformation: the
+  level)},
+\end{align}
+and these groups satisfy $HH^{n+24} \cong HH^n$ for all $n$.
+The deformation in $HH^2$ corresponds to the continuous family
+$k \mapsto k + t$ of admissible levels passing through $k = -1/2$;
+the vanishing $HH^1 = 0$ reflects the rigidity of the algebra
+(no infinitesimal automorphisms beyond inner ones).
+\end{example}
+
+\subsubsection{Physical interpretation}
 
 In CFT, this periodicity corresponds to:
 \begin{itemize}
@@ -711,13 +768,13 @@ In CFT, this periodicity corresponds to:
 \item Modular S-matrix having finite order
 \end{itemize}
 
-\subsection{Type III: Geometric Periodicity from Higher Genus}
+\subsection{Type III: geometric periodicity from higher genus}
 
-\subsubsection{Genus Dependence}
+\subsubsection{Genus dependence}
 
 On a genus $g > 0$ curve, new sources of periodicity arise:
 
-\begin{theorem}[Geometric Periodicity; \ClaimStatusProvedHere]
+\begin{theorem}[Geometric periodicity; \ClaimStatusProvedHere]
 \index{periodicity!geometric|textbf}
 For a chiral algebra $\mathcal{A}$ on a genus $g$ curve $X$, the geometric contribution to periodicity satisfies:
 \[
@@ -729,23 +786,23 @@ for $g \geq 2$.  At $g = 0$ there is no geometric periodicity; at $g = 1$ the ge
 \begin{proof}
 The Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) provides a natural map $\kappa\colon H^*(\overline{\mathcal{M}}_g) \to CH^*(\mathcal{A})$.  The geometric periodicity arises from the image of this map.
 
-\textbf{Step 1: Mumford's relation.}
+\emph{Step 1: Mumford's relation.}
 The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$ satisfies Mumford's formula $12\, c_1(\mathbb{E}) = \delta$ in the Chow ring $\mathrm{CH}^*(\overline{\mathcal{M}}_g)$, where $\delta$ is the boundary divisor class.  Since $\delta$ restricts to zero on the interior $\mathcal{M}_g$ (no boundary), we have $12\, c_1(\mathbb{E})|_{\mathcal{M}_g} = 0$.  On the compactification, $c_1(\mathbb{E})^{g}$ is the top Chern class of $\mathbb{E}$ (the $\lambda$-class $\lambda_g$), and $c_1(\mathbb{E})^{3g-3+1} = 0$ by the dimension bound $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g-3$.
 
-\textbf{Step 2: Image in Hochschild cohomology.}
+\emph{Step 2: Image in Hochschild cohomology.}
 The Kodaira--Spencer map sends $c_1(\mathbb{E})$ to a class in $CH^2(\mathcal{A})$ whose cup powers control the genus-$g$ contributions to Hochschild cohomology.  Mumford's relation $12\, c_1(\mathbb{E}) = \delta$ constrains these cup powers: any class in $\mathrm{im}(\kappa)$ whose degree exceeds $12(2g-2)$ can be expressed in terms of boundary contributions, which factor through lower-genus Hochschild groups by the degeneration formula.
 
-\textbf{Step 3: Periodicity.}
+\emph{Step 3: Periodicity.}
 The constraint from Step~2 gives $\kappa(c_1(\mathbb{E})^{12(2g-2)+1}) = 0$ in the Hochschild cohomology, establishing the divisibility $\text{Period}_{\text{geom}} \mid 12(2g-2)$.  At $g = 0$, $\overline{\mathcal{M}}_{0,n}$ has no Hodge bundle, so there is no geometric periodicity.  At $g = 1$, $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$, and the periodicity from $c_1(\mathbb{E})$ is absorbed into the modular periodicity (the $T$-transformation of the torus).
 \end{proof}
 
-\subsubsection{Examples at Different Genera}
+\subsubsection{Examples at different genera}
 
-\begin{example}[Genus 0 - Sphere]
+\begin{example}[Genus $0$: the sphere]
 No geometric periodicity (simply connected, no moduli).
 \end{example}
 
-\begin{example}[Genus 1 - Torus]
+\begin{example}[Genus $1$: the torus]
 For elliptic curve $E_{\tau}$:
 \begin{itemize}
 \item Period lattice $\Lambda = \mathbb{Z} + \tau\mathbb{Z}$
@@ -769,9 +826,9 @@ Hyperelliptic curve with 16 spin structures:
 \end{itemize}
 \end{example}
 
-\subsection{Unified Periodicity Theorem}
+\subsection{Unified periodicity theorem}
 
-\begin{theorem}[Complete Periodicity Classification; \ClaimStatusProvedHere]
+\begin{theorem}[Complete periodicity classification; \ClaimStatusProvedHere]
 For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level inducing period~$M$:
 \[
 \text{Period}(\mathcal{A}) \mid \text{lcm}(N_{\text{modular}}, N_{\text{quantum}}, N_{\text{geometric}})
@@ -799,9 +856,9 @@ Each factor independently forces divisibility of the total period:
 The three constraints combine to give $\text{Period} \mid \gcd(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$, but since each provides a divisibility in a \emph{different} direction (the three periodicities need not be synchronous), the optimal bound is the least common multiple: any period that simultaneously satisfies all three constraints must divide $\text{lcm}(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.
 \end{proof}
 
-\subsection{Koszul Duality and Periodicity Interaction}
+\subsection{Koszul duality and periodicity interaction}
 
-\begin{theorem}[Periodicity Exchange under Koszul Duality; \ClaimStatusProvedHere]
+\begin{theorem}[Periodicity exchange under Koszul duality; \ClaimStatusProvedHere]
 \index{periodicity!exchange under duality}
 \label{thm:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
@@ -816,7 +873,7 @@ If furthermore $N_{\text{mod}}$ and $N'_{\text{mod}}$ satisfy the harmonic mean 
 \begin{proof}
 We treat each factor separately.
 
-\emph{(1) Quantum periodicity is preserved.}  The quantum period $N_{\text{quant}}$ depends only on the quantum group $U_q(\mathfrak{g})$ at $q = \exp(2\pi i/(h^\vee + k))$. Since Koszul duality sends level $k$ to $k' = -k - 2h^\vee$ (Feigin--Frenkel), the quantum parameter transforms as $q \mapsto q^{-1}$. Since $[n]_{q^{-1}} = [n]_q$ for all $n$, the periodicity of quantum integers is unchanged: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
+\emph{(1) Quantum periodicity is preserved.}  The quantum period $N_{\text{quant}}$ depends only on the quantum group $U_q(\mathfrak{g})$ at $q = \exp(\pi i/(k + h^\vee))$. Since Koszul duality sends level $k$ to $k' = -k - 2h^\vee$ (Feigin--Frenkel), the quantum parameter transforms as $q \mapsto q^{-1}$. Since $[n]_{q^{-1}} = [n]_q$ for all $n$, the periodicity of quantum integers is unchanged: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
 
 \emph{(2) Geometric periodicity is unchanged.}  Both $\cA$ and $\cA^!$ live on the same curve $X$, so the Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map) is identical: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
 
@@ -834,9 +891,9 @@ This shows:
 
 
 
-\section{Physical Applications}
+\section{Physical applications}
 
-\subsection{Marginal Deformations in CFT}
+\subsection{Marginal deformations in CFT}
 
 In 2D conformal field theory, $HH^2_{\text{chiral}}(\mathcal{A})$ classifies marginal deformations of the action:
 \[
@@ -850,7 +907,7 @@ The deformation preserves conformal invariance iff:
 \item Obstruction in $HH^3_{\text{chiral}}$ vanishes (extends to all orders)
 \end{itemize}
 
-\begin{example}[Exactly Marginal Deformations]
+\begin{example}[Exactly marginal deformations]
 \begin{itemize}
 \item Free boson: $HH^2 = \mathbb{C}$ gives radius deformation
 \item $\mathcal{N}=4$ SYM: $HH^2 = \mathbb{C}^{3(g-1)}$ gives gauge coupling and theta angles
@@ -858,11 +915,11 @@ The deformation preserves conformal invariance iff:
 \end{itemize}
 \end{example}
 
-\subsection{String Field Theory}
+\subsection{String field theory}
 
 The $A_{\infty}$ structure encoded in Hochschild cohomology gives string field theory vertices:
 
-\begin{theorem}[String Field Theory from Hochschild; \ClaimStatusProvedElsewhere]
+\begin{theorem}[String field theory from Hochschild; \ClaimStatusProvedElsewhere]
 The operations $m_n: \mathcal{A}^{\otimes n} \to \mathcal{A}[2-n]$ extracted from $HH^{\bullet}_{\text{chiral}}$ satisfy:
 \[
 \sum_{\substack{r+s+t=n \\ r,t \geq 0,\; s \geq 1}} (-1)^{rs+t}\, m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0
@@ -881,11 +938,11 @@ The action:
 S[\Psi] = \frac{1}{2}\langle \Psi, Q\Psi \rangle + \sum_{n \geq 3} \frac{1}{n!}\langle \Psi, m_n(\Psi,\ldots,\Psi)\rangle
 \]
 
-\subsection{Holographic Duality}
+\subsection{Holographic duality}
 
 Koszul duality of chiral algebras provides a mathematical framework for holography:
 
-\begin{conjecture}[Holographic Koszul Duality; \ClaimStatusConjectured]
+\begin{conjecture}[Holographic Koszul duality; \ClaimStatusConjectured]
 \label{conj:holographic-koszul-deformation}
 The AdS$_3$/CFT$_2$ correspondence exchanges:
 \begin{itemize}
@@ -899,95 +956,52 @@ The AdS$_3$/CFT$_2$ correspondence exchanges:
 This conjecture lies outside the scope of the present monograph: it is a physical interpretation of Koszul duality, not a mathematical theorem. The evidence below is heuristic.  A precise formulation would require specifying the bulk theory as a chiral algebra on a 3-manifold with boundary (in the sense of Costello--Li), relating $\cA_{\text{bulk}}$ to a factorization algebra on the solid torus, and identifying the boundary restriction with the Koszul dual via the bar-cobar adjunction. The central charge relation $c_{\text{bulk}} + c_{\text{boundary}} = 26$ is a numerical coincidence (the bosonic string critical dimension) that has no known proof from the Koszul duality framework alone.
 \end{remark}
 
-Evidence:
-\begin{itemize}
-\item Central charges add: $c_{\text{bulk}} + c_{\text{boundary}} = 26$
-\item Hochschild cohomologies are Koszul dual
-\item Twisting morphism encodes holographic dictionary
-\end{itemize}
+The evidence is threefold: the central charges satisfy
+$c_{\mathrm{bulk}} + c_{\mathrm{boundary}} = 26$, the Hochschild
+cohomologies are Koszul dual, and the twisting morphism encodes
+the holographic dictionary.
 
-\section{Computing Hochschild Cohomology via Bar-Cobar Resolution}
+\section{Computing Hochschild cohomology via bar-cobar resolution}
 \label{sec:hochschild-via-bar-cobar-complete}
 
-We now use the geometric bar-cobar construction to compute Hochschild cohomology
-of chiral algebras explicitly. This approach has three major advantages:
-\begin{enumerate}
-\item \textbf{Geometric}: Realizes HH* as cohomology of configuration spaces
-\item \textbf{Computational}: Provides explicit formulas for all degrees
-\item \textbf{Structural}: Reveals hidden operations (Gerstenhaber bracket, $L_\infty$ structure)
-\end{enumerate}
+\subsection{The bar-cobar resolution strategy}
 
-\subsection{The Bar-Cobar Resolution Strategy}
-
-\begin{remark}[Why Bar-Cobar?]\label{strategy:bar-cobar-resolution}
-Computing Hochschild cohomology directly from the definition:
-$$HH^n(\mathcal{A}) = \text{Ext}^n_{\mathcal{A}^e}(\mathcal{A}, \mathcal{A})$$
-
-requires finding projective resolutions of $\mathcal{A}$ as an $\mathcal{A}^e$-module.
-This is generally intractable.
-
-\textbf{Bar-cobar approach:}
-\begin{enumerate}
-\item The \textbf{bar complex} $\bar{B}(\mathcal{A})$ is a \emph{cofree} coalgebra resolution
-of $\mathcal{A}$
-\item The \textbf{cobar complex} $\Omega(\bar{B}(\mathcal{A}))$ is a \emph{free} algebra
-resolution of $\mathcal{A}$
-\item Therefore:
-$$HH^n(\mathcal{A}) = H^n(\text{Hom}_{\mathsf{Alg}}(\Omega(\bar{B}(\mathcal{A})), \mathcal{A}))$$
-\end{enumerate}
-
-The geometric realization makes all of this completely explicit.
+\begin{remark}[Strategy]\label{strategy:bar-cobar-resolution}
+Computing Hochschild cohomology directly from
+$HH^n(\mathcal{A}) = \mathrm{Ext}^n_{\mathcal{A}^e}(\mathcal{A}, \mathcal{A})$
+requires a projective resolution of $\mathcal{A}$ as an
+$\mathcal{A}^e$-module.  The bar-cobar approach provides this:
+the bar complex $\bar{B}(\mathcal{A})$ is a cofree coalgebra
+resolution, the cobar complex $\Omega(\bar{B}(\mathcal{A}))$ is
+a free algebra resolution, and therefore
+\[
+HH^n(\mathcal{A}) = H^n\bigl(\mathrm{Hom}_{\mathsf{Alg}}(\Omega(\bar{B}(\mathcal{A})),
+\mathcal{A})\bigr).
+\]
+The geometric realization on configuration spaces makes this
+computation explicit.
 \end{remark}
 
-\subsection{The Fundamental Quasi-Isomorphism}
+\subsection{The fundamental quasi-isomorphism}
 
-\begin{theorem}[Bar-Cobar Resolution; \ClaimStatusProvedHere]\label{thm:bar-cobar-resolution}
+\begin{theorem}[Bar-cobar resolution; \ClaimStatusProvedHere]\label{thm:bar-cobar-resolution}
 For any chiral algebra $\mathcal{A}$ on a curve $X$, there is a quasi-isomorphism:
 $$\Omega^{\text{geom}}(\bar{B}^{\text{geom}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$$
 
-This means the cobar-of-bar complex is a \textbf{free resolution} of $\mathcal{A}$.
+This means the cobar-of-bar complex is a \emph{free resolution} of $\mathcal{A}$.
 \end{theorem}
 
-\begin{proof}[Proof Strategy]
-\textbf{Step 1: Bar is a cofree resolution.}
+\begin{proof}
+This is a consequence of Theorem~\ref{thm:bar-cobar-isomorphism-main}~(III), which establishes $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \simeq \mathcal{A}$ for Koszul chiral algebras.  We summarize the argument structure; full details are in Chapter~\ref{chap:higher-genus}.
 
-The bar complex $\bar{B}^{\text{geom}}(\mathcal{A})$ is constructed as:
-$$\bar{B}^n = \Gamma(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes n+1} \otimes \Omega^n(\log D))$$
+The bar complex $\bar{B}^{\mathrm{geom}}(\mathcal{A})$ is a conilpotent chiral coalgebra with $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}).  The cobar construction $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is a free chiral algebra (Theorem~\ref{thm:cobar-free}), hence the composite is a free resolution.
 
-with differential $d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}$
-satisfying $d^2 = 0$.
+The augmentation $\epsilon\colon \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \to \mathcal{A}$ is a quasi-isomorphism by the following spectral sequence argument: the bar filtration induces a spectral sequence with $E_2^{p,q} = H^p(\mathcal{A}^!) \otimes H^q(\mathcal{A})$ (Theorem~\ref{thm:bar-cobar-spectral-sequence}), which collapses at $E_2$ for Koszul algebras (Theorem~\ref{thm:spectral-sequence-collapse}).  The abutment gives $H^*(\Omega(\bar{B}(\mathcal{A}))) \cong \mathcal{A}$.
 
-The augmentation map:
-$$\epsilon: \bar{B}^0 = \mathcal{A} \to \mathcal{A}, \quad \epsilon(\phi) = \phi$$
-
-makes this a resolution: the homology $H_*(\bar{B}, d)$ is concentrated in degree 0 and
-equals $\mathcal{A}$.
-
-\textbf{Step 2: Cobar gives free resolution.}
-
-Applying the cobar functor $\Omega^{\text{geom}}$ to $\bar{B}(\mathcal{A})$
-gives a complex of \emph{distributions} with differential inserting delta functions.
-
-The cobar complex is \emph{free} as an algebra (it's freely generated by cobar generators).
-
-\textbf{Step 3: Quasi-isomorphism.}
-
-The composite:
-$$\Omega(\bar{B}(\mathcal{A})) \xrightarrow{\epsilon_{\text{cobar}}} \mathcal{A}$$
-
-is defined by ``evaluating at the identity'': $\epsilon_{\text{cobar}}(K) = \langle K, \text{id} \rangle$.
-
-\textbf{Key lemma:} This is a quasi-isomorphism, meaning it induces isomorphisms on homology:
-$$H^*(\Omega(\bar{B}(\mathcal{A})), d_{\text{cobar}}) \xrightarrow{\sim} H^*(\mathcal{A}, d_{\mathcal{A}})$$
-
-For chiral algebras with no higher cohomology (like Heisenberg, free boson/fermion), the
-right side is just $\mathcal{A}$ itself in degree 0.
-
-\textbf{Conclusion:} $\Omega(\bar{B}(\mathcal{A}))$ is a free resolution of $\mathcal{A}$,
-allowing us to compute Ext groups.
+For general (not necessarily Koszul) chiral algebras, the augmentation is still a quasi-isomorphism by the acyclicity of the bar-cobar adjunction (\cite{LodayVallette}, Theorem~2.2.5), though the spectral sequence need not collapse at $E_2$.
 \end{proof}
 
-\begin{remark}[Why This Works]
+\begin{remark}
 The bar-cobar construction ``undoes itself'':
 \begin{align*}
 \mathcal{A} &\xrightarrow{\bar{B}} \text{Coalgebra (with boundaries)}\\
@@ -999,9 +1013,9 @@ The composition $\epsilon \circ \Omega \circ \bar{B}$ is homotopic to the identi
 the resolution.
 \end{remark}
 
-\subsection{Hochschild Cohomology Formula}
+\subsection{Hochschild cohomology formula}
 
-\begin{theorem}[HH* via Configuration Spaces; \ClaimStatusProvedHere]\label{thm:HH-config-space-formula}
+\begin{theorem}[HH* via configuration spaces; \ClaimStatusProvedHere]\label{thm:HH-config-space-formula}
 The Hochschild cohomology of a chiral algebra $\mathcal{A}$ is computed by:
 $$HH^n_{\text{chiral}}(\mathcal{A}) = H^n\left(\Gamma\left(\overline{C}_{n+2}(X), 
 \text{Hom}_{\mathcal{D}_X}(\mathcal{A}^{\boxtimes n+2}, \mathcal{A}) \otimes \Omega^n(\log D)\right), d_{\text{Hoch}}\right)$$
@@ -1011,7 +1025,7 @@ where the Hochschild differential $d_{\text{Hoch}}$ has three components:
 d_{\text{Hoch}} &= d_{\text{internal}} + d_{\text{factor}} + d_{\text{form}} \label{eq:d-Hoch-decomposition}
 \end{align}
 
-\textbf{Component descriptions:}
+\emph{Component descriptions.}
 \begin{enumerate}
 \item $d_{\text{internal}}$: Internal differential on $\mathcal{A}$-factors
 \item $d_{\text{factor}}$: Factorization using chiral product (OPE collisions)
@@ -1020,7 +1034,7 @@ d_{\text{Hoch}} &= d_{\text{internal}} + d_{\text{factor}} + d_{\text{form}} \la
 \end{theorem}
 
 \begin{proof}
-\textbf{Step 1: Definition of Hochschild cochains.}
+\emph{Step 1: Definition of Hochschild cochains.}
 
 By definition:
 $$C^n_{\text{Hoch}}(\mathcal{A}) = \text{Hom}_{\mathcal{A}^e}(\mathcal{A}^{\otimes n+2}, \mathcal{A})$$
@@ -1033,7 +1047,7 @@ algebras means:
 \item Compatible with chiral products
 \end{itemize}
 
-\textbf{Step 2: Geometric realization.}
+\emph{Step 2: Geometric realization.}
 
 Such maps are naturally parametrized by configuration spaces: a Hochschild $n$-cochain
 assigns to each configuration of $n+2$ points a multilinear map.
@@ -1044,7 +1058,7 @@ $$f \in \Gamma(\overline{C}_{n+2}(X), \text{Hom}(\mathcal{A}^{\boxtimes n+2}, \m
 
 The logarithmic forms account for the singular behavior as points collide.
 
-\textbf{Step 3: Differential.}
+\emph{Step 3: Differential.}
 
 The Hochschild differential is:
 \begin{align*}
@@ -1064,7 +1078,7 @@ Geometrically, each term corresponds to:
 Combined with the de Rham differential on forms, we get $d_{\text{Hoch}}$ as described.
 \end{proof}
 
-\begin{remark}[Three Components Explained]
+\begin{remark}[Decomposition of the differential]
 The decomposition \eqref{eq:d-Hoch-decomposition} mirrors the bar differential:
 
 \begin{center}
@@ -1077,13 +1091,12 @@ $d_{\text{form}}$ & $d_{\text{form}}$ & Configuration space geometry \\
 \end{tabular}
 \end{center}
 
-This parallel is not coincidental: it reflects the deep connection between bar complex
-and Hochschild complex via the Ext definition.
+This parallel reflects the connection between the bar complex and the Hochschild complex via the Ext definition.
 \end{remark}
 
-\subsection{Explicit Computation: Free Boson (Heisenberg Algebra)}
+\subsection{Explicit computation: free boson (Heisenberg algebra)}
 
-\begin{example}[Hochschild of Heisenberg - Complete]\label{ex:HH-heisenberg-complete}
+\begin{example}[Hochschild of Heisenberg]\label{ex:HH-heisenberg-complete}
 For the free boson $\mathcal{B}$ (Heisenberg chiral algebra) with field $\alpha(z)$ and OPE:
 $$\alpha(z_1)\alpha(z_2) \sim \frac{k}{(z_1 - z_2)^2}$$
 
@@ -1115,17 +1128,17 @@ $$\alpha(z_1) \times_t \alpha(z_2) = \alpha(z_1)\alpha(z_2) + t \cdot \phi(z_1, 
 
 where $\phi$ is a 2-cocycle.
 
-\textbf{Cocycle condition:} Associativity to first order in $t$:
+\emph{Cocycle condition.} Associativity to first order in $t$:
 $$(\alpha \times_t \alpha) \times_t \alpha = \alpha \times_t (\alpha \times_t \alpha)$$
 
 This imposes:
 $$d\phi = 0$$
 (cohomological condition)
 
-\textbf{Trivial cocycles:} If $\phi = d\psi$ for some $\psi$, the deformation is trivial
+\emph{Trivial cocycles.} If $\phi = d\psi$ for some $\psi$, the deformation is trivial
 (comes from a redefinition of $\alpha$).
 
-\textbf{Nontrivial deformations:} The only independent deformation is changing the level $k$:
+\emph{Nontrivial deformations.} The only independent deformation is changing the level $k$:
 $$\alpha(z_1)\alpha(z_2) \sim \frac{k + t}{(z_1-z_2)^2}$$
 
 This gives a 1-dimensional space:
@@ -1133,12 +1146,12 @@ $$HH^2(\mathcal{B}) = \mathbb{C} \cdot [\kappa].$$
 
 where $[k]$ is the cohomology class of the level.
 
-\subsubsection{\texorpdfstring{Higher Degrees: $HH^n(\mathcal{B})$ for $n \geq 3$}{Higher Degrees: HH n(B) for n >= 3}}
+\subsubsection{\texorpdfstring{Higher degrees: $HH^n(\mathcal{B})$ for $n \geq 3$}{Higher degrees: HH n(B) for n >= 3}}
 
 For the Heisenberg algebra (free boson), all higher Hochschild cohomology vanishes:
 $$HH^n(\mathcal{B}) = 0 \quad \text{for } n \geq 3$$
 
-\textbf{Proof.} The Heisenberg algebra $\mathcal{B}$ is Koszul: its bar construction $\bar{B}(\mathcal{B})$ is quasi-isomorphic to $\mathrm{CE}(\mathfrak{h}_{-k})$ (Theorem~\ref{thm:heisenberg-bar}), which is concentrated in bar degrees $\leq 2$ (the only generating relation is the quadratic OPE $\alpha(z)\alpha(w) \sim k/(z-w)^2$, involving exactly two fields).  The Koszul resolution therefore has the form:
+\emph{Proof.} The Heisenberg algebra $\mathcal{B}$ is Koszul: its bar construction $\bar{B}(\mathcal{B})$ is quasi-isomorphic to $\mathrm{CE}(\mathfrak{h}_{-k})$, which is concentrated in bar degrees $\leq 2$ (the only generating relation is the quadratic OPE $\alpha(z)\alpha(w) \sim k/(z-w)^2$, involving exactly two fields).  The Koszul resolution therefore has the form:
 $$\mathcal{B} \otimes \mathcal{B}^! \otimes \mathcal{B} \;\xrightarrow{d_2}\; \mathcal{B} \otimes (s\alpha) \otimes \mathcal{B} \;\xrightarrow{d_1}\; \mathcal{B} \otimes \mathcal{B}$$
 with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single element $s\alpha$ in bar degree~1 and its square in bar degree~2.  Applying $\mathrm{Hom}_{\mathcal{B}\text{-}\mathcal{B}}(-, \mathcal{B})$ to this length-2 resolution yields a cochain complex concentrated in degrees $0, 1, 2$.  Hence $HH^n(\mathcal{B}) = 0$ for $n \geq 3$.
 
@@ -1156,9 +1169,9 @@ $$HH^*(\mathcal{B}) \cong \mathbb{C}[c]/(c^2) \cong \mathbb{C} \oplus \mathbb{C}
 where $c$ is a degree-2 class corresponding to the central charge (with $c^2 = 0$ since $HH^n = 0$ for $n \geq 3$).
 \end{example}
 
-\subsection{Explicit Computation: Free Fermion}
+\subsection{Explicit computation: free fermion}
 
-\begin{example}[Hochschild of Free Fermion - Complete]\label{ex:HH-fermion-complete}
+\begin{example}[Hochschild of free fermion]\label{ex:HH-fermion-complete}
 For the free fermion $\mathcal{F}$ with fields $\psi(z), \psi^*(z)$ and OPE:
 $$\psi(z_1)\psi^*(z_2) \sim \frac{1}{z_1 - z_2}$$
 
@@ -1180,7 +1193,7 @@ $$HH^1(\mathcal{F}) = 0$$
 Deformations of the fermionic structure.  The free fermion $bc$ ghost system admits a one-parameter family of deformations parametrized by the spin $\lambda$:  the conformal weights $(h_b, h_c) = (\lambda, 1-\lambda)$ vary while the OPE $b(z)c(w) \sim 1/(z-w)$ is preserved.  This gives:
 $$HH^2(\mathcal{F}) = \mathbb{C}$$
 
-\subsubsection{Summary for Free Fermion}
+\subsubsection{Summary for free fermion}
 
 $$HH^*(\mathcal{F}) = \begin{cases}
 \mathbb{C} & n = 0\\
@@ -1194,11 +1207,11 @@ $$HH^*(\mathcal{F}) \cong \Lambda(c)$$
 (exterior algebra on one generator of degree 2)
 \end{example}
 
-\subsection{Koszul Duality and HH* Pairing}
+\subsection{Koszul duality and HH* pairing}
 
 The Koszul duality for Hochschild cohomology (Theorem~\ref{thm:main-koszul-hoch}\label{thm:koszul-duality-HH}) is now verified on examples.
 
-\begin{verification}[Boson-Fermion Duality; \ClaimStatusProvedHere]\label{ver:boson-fermion-HH}
+\begin{verification}[Boson-fermion duality; \ClaimStatusProvedHere]\label{ver:boson-fermion-HH}
 The Koszul pair ($bc$ ghost system $\mathcal{F}_{bc}$, $\beta\gamma$ system $\mathcal{BG}$) satisfies (where the Hochschild cohomology of $\mathcal{F}_{bc}$ coincides with that of $\mathcal{B}$ in these degrees):
 \begin{align*}
 HH^0(\mathcal{B}) = \mathbb{C} &\xleftrightarrow{\text{dual}} HH^2(\mathcal{BG})^* = \mathbb{C}\\
@@ -1209,44 +1222,44 @@ HH^2(\mathcal{B}) = \mathbb{C} &\xleftrightarrow{\text{dual}} HH^0(\mathcal{BG})
 This confirms the duality.
 \end{verification}
 
-\subsection{Comparison with Classical Hochschild Cohomology}
+\subsection{Comparison with classical Hochschild cohomology}
 
-\begin{remark}[Chiral vs. Classical]\label{rem:chiral-vs-classical-hochschild}
+\begin{remark}[Chiral vs. classical]\label{rem:chiral-vs-classical-hochschild}
 Classical Hochschild cohomology (for associative algebras) is defined similarly:
 $$HH^n_{\text{classical}}(A) = \text{Ext}^n_{A^e}(A, A)$$
 
-\textbf{Key differences with chiral version:}
+The differences with the chiral version are as follows:
 
 \begin{enumerate}
-\item \textbf{Locality}: Chiral algebras have locality axiom (fields commute away from
+\item \emph{Locality}: Chiral algebras have locality axiom (fields commute away from
 coincident points), adding geometric structure
 
-\item \textbf{Configuration spaces}: Chiral HH* involves integrals over configuration spaces,
+\item \emph{Configuration spaces}: Chiral HH* involves integrals over configuration spaces,
 while classical HH* is purely algebraic
 
-\item \textbf{Differential forms}: Chiral cochains are tensored with differential forms,
+\item \emph{Differential forms}: Chiral cochains are tensored with differential forms,
 encoding geometric information
 
-\item \textbf{Dimensionality}: For vertex algebras, the cochains have an additional ``spatial''
+\item \emph{Dimensionality}: For vertex algebras, the cochains have an additional ``spatial''
 direction from the curve $X$
 \end{enumerate}
 
-\textbf{Relation:} For the ``constant loops'' (fields independent of $z$), chiral HH* reduces
+\emph{Relation.} For the ``constant loops'' (fields independent of $z$), chiral HH* reduces
 to classical HH*:
 $$HH^n_{\text{chiral}}(\mathcal{A})|_{\text{constant}} \cong HH^n_{\text{classical}}(H^0(\mathcal{A}))$$
 \end{remark}
 
-\subsection{The Gerstenhaber Bracket from Configuration Spaces}
+\subsection{The Gerstenhaber bracket from configuration spaces}
 
-\begin{theorem}[Gerstenhaber Structure on HH*; \ClaimStatusProvedElsewhere]\label{thm:gerstenhaber-structure}
+\begin{theorem}[Gerstenhaber structure on HH*; \ClaimStatusProvedElsewhere]\label{thm:gerstenhaber-structure}
 \index{Gerstenhaber bracket|textbf}
-Hochschild cohomology carries a \textbf{Gerstenhaber bracket}:
+Hochschild cohomology carries a \emph{Gerstenhaber bracket}:
 $$[\cdot, \cdot]: HH^p(\mathcal{A}) \otimes HH^q(\mathcal{A}) \to HH^{p+q-1}(\mathcal{A})$$
 
 making $HH^*(\mathcal{A})$ into a graded Lie algebra (with appropriate degree shift).
 \end{theorem}
 
-\begin{construction}[Geometric Realization of Bracket]\label{const:gerstenhaber-bracket}
+\begin{construction}[Geometric realization of bracket]\label{const:gerstenhaber-bracket}
 The Gerstenhaber bracket has a natural geometric interpretation via configuration spaces.
 
 For $f \in HH^p$ and $g \in HH^q$, represented as:
@@ -1257,9 +1270,9 @@ g &\in \Gamma(\overline{C}_{q+2}(X), \ldots)
 
 The bracket $[f, g]$ is constructed by:
 \begin{enumerate}
-\item \textbf{Diagonal insertion}: Insert configuration of $f$ ``inside'' configuration of $g$
-\item \textbf{Summation}: Sum over all possible insertion points
-\item \textbf{Residue}: Extract the coefficient of singular terms
+\item \emph{Diagonal insertion}: Insert configuration of $f$ ``inside'' configuration of $g$
+\item \emph{Summation}: Sum over all possible insertion points
+\item \emph{Residue}: Extract the coefficient of singular terms
 \end{enumerate}
 
 Explicitly:
@@ -1269,7 +1282,7 @@ $$[f, g] = \sum_{i=1}^{q+1} (-1)^{\epsilon_i} \text{Res}_{z_0 \to z_i}\left[f(z_
 where the residue extracts the collision behavior as one configuration approaches another.
 \end{construction}
 
-\begin{example}[Gerstenhaber Bracket for Heisenberg]\label{ex:gerstenhaber-heisenberg}
+\begin{example}[Gerstenhaber bracket for Heisenberg]\label{ex:gerstenhaber-heisenberg}
 For $\mathcal{B}$ (Heisenberg), $HH^2 = \mathbb{C} \cdot [k]$ (level class).
 
 The bracket:
@@ -1278,58 +1291,57 @@ $$[[k], [k]] = [k, k]$$
 must have degree $2 + 2 - 1 = 3$. But $HH^3(\mathcal{B}) = 0$, so:
 $$[[k], [k]] = 0$$
 
-This reflects that the level is a \textbf{central element} in the Lie algebra structure
+This reflects that the level is a \emph{central element} in the Lie algebra structure
 (it commutes with everything).
 \end{example}
 
-\subsection{\texorpdfstring{Higher Structure: $L_\infty$ Operations}{Higher Structure: L infty Operations}}
+\subsection{\texorpdfstring{Higher structure: $L_\infty$ operations}{Higher structure: L-infinity operations}}
 
-\begin{remark}[Beyond Gerstenhaber: Full $L_\infty$]\label{rem:L-infty-structure}
-The configuration space geometry actually encodes a full \textbf{$L_\infty$ structure} on
+\begin{remark}[Beyond Gerstenhaber: full $L_\infty$]\label{rem:L-infty-structure}
+The configuration space geometry actually encodes a full \emph{$L_\infty$ structure} on
 $HH^*(\mathcal{A})$, not just the binary bracket.
 
-\textbf{$L_\infty$ operations:}
+\emph{$L_\infty$ operations.}
 $$\ell_n: HH^{*}(\mathcal{A})^{\otimes n} \to HH^{*+2-n}(\mathcal{A})$$
 
 for all $n \geq 1$, satisfying higher Jacobi identities.
 
-\textbf{Geometric realization:} Each $\ell_n$ comes from an integral over configuration
-spaces with $n$ ``inputs'' and one ``output'':
-$$\ell_n(f_1, \ldots, f_n) = \int_{\text{Config}_{n,1}} f_1 \wedge \cdots \wedge f_n \wedge K_n$$
+\emph{Geometric realization.} Each $\ell_n$ comes from an integral over the
+configuration space $C_{n,1}(X) = C_{n+1}(X)$ (parametrizing $n$~inputs and
+one output point):
+\[
+\ell_n(f_1, \ldots, f_n) = \int_{C_{n,1}(X)} f_1 \wedge \cdots \wedge f_n
+\wedge K_n
+\]
+where $K_n \in \Omega^{n-2}(\overline{C}_{n+1}(X), \mathrm{End}(\mathcal{A}))$
+is the propagator kernel: the restriction of the fundamental class
+of the Stasheff associahedron $K_{n+1}$ (a codimension-$(n-2)$ cycle in
+$\overline{C}_{n+1}(X)$) tensored with the iterated OPE kernel of~$\mathcal{A}$.
+For $n = 2$, $K_2$ is the Cauchy kernel
+$dz/(z_1 - z_2)$ encoding the binary OPE, recovering the Gerstenhaber
+bracket.  For $n \geq 3$, $K_n$ involves nested residues at the
+codimension-$2$ boundary strata of $\overline{C}_{n+1}(X)$, corresponding
+to iterated OPE collisions.
 
-where $K_n$ is a universal kernel (the ``associahedron measure'').
-
-This $L_\infty$ structure governs the \textbf{deformation theory} of the chiral algebra completely.
+This $L_\infty$ structure governs the deformation theory of the chiral algebra
+completely: formal deformations of~$\mathcal{A}$ are in bijection with
+Maurer--Cartan elements $\gamma \in HH^2(\mathcal{A})[[\hbar]]$ satisfying
+$\sum_{n \geq 1} \frac{1}{n!}\ell_n(\gamma, \ldots, \gamma) = 0$.
 \end{remark}
 
-\subsection{Computational Strategy}
+\subsection{Computational strategy}
 
 \begin{remark}[Computing $HH^*$ in practice]\label{rem:compute-HH}
 To compute $HH^n_{\mathrm{chiral}}(\mathcal{A})$ for a chiral algebra given by generators and OPE data, one proceeds as follows: (1) construct the bar complex $\bar{B}^n(\mathcal{A})$ using configuration space integrals; (2) build the cobar complex $\Omega(\bar{B}(\mathcal{A}))$ by inserting distributional duals; (3) form the Hom complex $\operatorname{Hom}(\Omega(\bar{B}(\mathcal{A})), \mathcal{A})$; (4) compute cohomology $\ker(d)/\operatorname{im}(d)$ at each degree. For Koszul algebras, the quasi-isomorphism $\bar{B}(\mathcal{A}) \simeq \mathcal{A}^!$ reduces the computation to lower-dimensional complexes.
 \end{remark}
 
-\subsection{Summary and Outlook}
+\subsection{Summary and outlook}
 
-\begin{conclusion}
-The bar-cobar approach to Hochschild cohomology provides:
-
-\begin{enumerate}
-\item \textbf{Explicit formulas}: All HH* groups computable via configuration space integrals
-
-\item \textbf{Geometric understanding}: HH* arises from topology of configuration spaces
-
-\item \textbf{Rich structure}: Gerstenhaber bracket and $L_\infty$ operations from geometry
-
-\item \textbf{Koszul duality}: Perfect pairing $HH^n(\mathcal{A}) \leftrightarrow HH^{2-n}(\mathcal{A}^!)$
-
-\item \textbf{Deformation theory}: $HH^2$ controls deformations, obstructions in $HH^3$
-\end{enumerate}
-
-This computational framework is applied throughout the manuscript to understand:
-\begin{itemize}
-\item Quantum corrections (obstruction theory)
-\item W-algebras (screening charge cohomology)
-\item Level-rank duality (Koszul pairing)
-\item Higher genus contributions (moduli space cohomology)
-\end{itemize}
-\end{conclusion}
+The bar-cobar approach to Hochschild cohomology provides explicit formulas
+(all $HH^*$ groups computable via configuration space integrals), a geometric
+interpretation ($HH^*$ from topology of configuration spaces), the Gerstenhaber
+bracket and $L_\infty$ operations, Koszul duality
+($HH^n(\cA) \leftrightarrow HH^{2-n}(\cA^!)$), and deformation theory
+($HH^2$ controls deformations, obstructions in $HH^3$).
+We apply this framework throughout to quantum corrections, W-algebras,
+level-rank duality, and higher genus contributions.
