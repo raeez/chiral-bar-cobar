@@ -1,41 +1,26 @@
-\chapter{BV-BRST Formalism and Gaiotto's Perspective}
+\chapter{BV-BRST formalism and Gaiotto's perspective}
 \label{ch:bv-brst}
 \index{Batalin--Vilkovisky|see{BV algebra}}
 
-\begin{remark}[Chapter Introduction]
-The Batalin-Vilkovisky (BV) formalism provides the most general framework for 
-quantizing gauge theories. When applied to chiral algebras, it reveals deep 
-connections between:
-\begin{itemize}
-\item The bar-cobar construction and the BV complex
-\item Configuration space compactifications and ghost fields
-\item Koszul duality and gauge fixing
-\item Holomorphic-topological field theories and boundary conditions
-\end{itemize}
+The BV formalism applied to chiral algebras identifies the BV complex with the bar complex via Verdier duality, and relates gauge fixing to Koszul duality.  The treatment draws on Gaiotto's work \cite{Gai19} on holomorphic-topological theories.
 
-This chapter develops these connections, following insights from Gaiotto's work on 
-holomorphic-topological theories and their relation to 4d supersymmetric gauge 
-theories. The treatment synthesizes purely mathematical structures with physical 
-gauge theory computations.
-\end{remark}
+\section{BV formalism for chiral algebras}
 
-\section{BV Formalism for Chiral Algebras}
+\subsection{Classical BV setup}
 
-\subsection{Classical BV Setup}
-
-\begin{definition}[BV Data for Chiral Algebra]
+\begin{definition}[BV data for chiral algebra]
 \index{antibracket}
 Let $\mathcal{A}$ be a chiral algebra on curve $X$. The BV formalism requires:
 \begin{enumerate}
-\item \textbf{Fields}: $\phi \in \mathcal{A}$ (fields of the theory)
-\item \textbf{Antifields}: $\phi^+ \in \mathcal{A}^*[1]$ (dual shifted by 1)
-\item \textbf{BV bracket}: $\{\cdot, \cdot\}$ of degree $+1$ (odd Poisson structure)
-\item \textbf{Action}: $S[\phi, \phi^+]$ satisfying classical master equation
+\item \emph{Fields.} $\phi \in \mathcal{A}$ (fields of the theory)
+\item \emph{Antifields.} $\phi^+ \in \mathcal{A}^*[1]$ (dual shifted by 1)
+\item \emph{BV bracket.} $\{\cdot, \cdot\}$ of degree $+1$ (odd Poisson structure)
+\item \emph{Action.} $S[\phi, \phi^+]$ satisfying classical master equation
 $\{S, S\} = 0$
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[BV Complex = Geometric Bar Complex; \ClaimStatusProvedElsewhere]
+\begin{theorem}[BV complex = geometric bar complex; \ClaimStatusProvedElsewhere]
 The BV complex $(C_{\text{BV}}(\mathcal{A}), Q_{\text{BV}})$ is isomorphic to
 the geometric bar complex:
 $$C_{\text{BV}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}(\mathcal{A})$$
@@ -44,8 +29,8 @@ The BV differential $Q_{\text{BV}} = \{S, -\}$ corresponds to the bar differenti
 The precise statement and proof appear in the Costello--Gwilliam framework \cite{CostelloGwilliam}; we give the geometric construction below.
 \end{theorem}
 
-\begin{proof}[Geometric Construction]
-\textbf{Step 1: Field-Antifield Correspondence}
+\begin{proof}[Geometric construction]
+\emph{Step~1: Field-Antifield Correspondence.}
 
 In the bar complex:
 $$\bar{B}^n(\mathcal{A}) = \Omega^*(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes (n+1)})$$
@@ -53,11 +38,11 @@ $$\bar{B}^n(\mathcal{A}) = \Omega^*(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtime
 The logarithmic differential forms $\eta_{ij} = d\log(z_i - z_j)$ play the role of 
 \emph{antifields}. Specifically:
 \begin{itemize}
-\item Fields $\phi_i \in \mathcal{A}$: Operator insertions
-\item Antifields $\eta_{ij}$: Ghost modes for diffeomorphism symmetry
+\item Fields $\phi_i \in \mathcal{A}$: Operator insertions at marked points
+\item Logarithmic forms $\eta_{ij}$: Propagator contractions (encoding pairings between insertion points)
 \end{itemize}
 
-\textbf{Step 2: BV Bracket}
+\emph{Step~2: BV Bracket.}
 
 The BV bracket is realized geometrically:
 $$\{\phi(z_i), \eta_{jk}\} = \delta_{ij} \frac{\partial \phi}{\partial z_i} 
@@ -71,7 +56,7 @@ for $X = \mathbb{C}$, all $\binom{n}{2}$ classes are linearly independent in deg
 (the Arnold relations constrain products in degree~$\geq 2$), giving
 $\dim H^1(C_n(\mathbb{C})) = \binom{n}{2}$.  (For a curve of genus~$g > 0$, additional generators from $H^1(X)$ contribute $2gn$ classes.)
 
-\textbf{Step 3: Master Equation}
+\emph{Step~3: Master Equation.}
 
 The classical master equation $\{S, S\} = 0$ is equivalent to $d^2 = 0$ for the 
 bar differential:
@@ -85,7 +70,7 @@ Each component corresponds to a gauge symmetry:
 \end{itemize}
 \end{proof}
 
-\subsection{Quantum Master Equation}
+\subsection{Quantum master equation}
 
 \begin{definition}[BV Laplacian]
 The BV Laplacian $\Delta_{\text{BV}}$ is the second-order operator:
@@ -98,7 +83,7 @@ $$\Delta_{\text{BV}} = \sum_{i<j} \int \delta(z_i - z_j)
 This inserts delta functions along diagonals—exactly the cobar differential.
 \end{definition}
 
-\begin{theorem}[Quantum Master Equation = Bar-Cobar Duality; \ClaimStatusProvedHere]
+\begin{theorem}[Quantum master equation = bar-cobar duality; \ClaimStatusProvedHere]
 \label{thm:qme-bar-cobar}
 \index{quantum master equation|textbf}
 The quantum master equation:
@@ -147,7 +132,7 @@ naturally in~$\cA$.  Under this identification:
 \begin{itemize}
 \item The bar differential $d_{\bar{B}} = \{S, -\}$ on $\bar{B}(\cA)$ becomes
 the cobar differential $d_\Omega$ on $\Omega(\cA^!)$.
-\item The BV Laplacian $\Delta$ on $\bar{B}(\cA)$ becomes the cobar coproduct on $\Omega(\cA^!)$.
+\item The BV Laplacian $\Delta$ on $\bar{B}(\cA)$ becomes the cobar product on $\Omega(\cA^!)$.
 \item The QME $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ is the condition ensuring
 that both differentials square to zero \emph{simultaneously}, i.e.,
 that the BV algebra $(d_{\bar{B}}, \Delta)$ is consistent.
@@ -168,11 +153,11 @@ synthesis --- identifying the QME as the functorial expression of bar-cobar
 Verdier compatibility --- is new to this work.
 \end{remark}
 
-\section{Gauge Fixing and BRST}
+\section{Gauge fixing and BRST}
 
 \subsection{BRST from BV}
 
-\begin{definition}[BRST Operator]
+\begin{definition}[BRST operator]
 \index{BRST cohomology|textbf}
 The BRST operator $Q_{\text{BRST}}$ arises from gauge fixing the BV action. 
 Choose a Lagrangian submanifold $\mathcal{L} \subset$ (fields + antifields):
@@ -183,12 +168,12 @@ $$Q_{\text{BRST}} = Q_0 + Q_1 + Q_2 + \cdots$$
 where the decomposition is by \emph{antighost number} (not ghost number): $Q_k$ has antighost number~$k$ and operator dimension~$k-1$.  The total BRST charge has definite ghost number~$+1$.
 \end{definition}
 
-\begin{theorem}[BRST Cohomology = Physical States; \ClaimStatusProvedElsewhere]
+\begin{theorem}[BRST cohomology = physical states; \ClaimStatusProvedElsewhere]
 The cohomology of $Q_{\text{BRST}}$ computes physical on-shell states:
 $$H^*(Q_{\text{BRST}}) \cong \mathcal{A}_{\text{phys}}$$
 \end{theorem}
 
-\begin{example}[Free $bc$ Ghost System]
+\begin{example}[Free $bc$ ghost system]
 The $bc$ system has:
 \begin{itemize}
 \item Fields: $b(z)$ (weight $\lambda$), $c(z)$ (weight $1-\lambda$)
@@ -202,27 +187,27 @@ For the bosonic string, $\lambda = 2$ (so $b$ has weight~$2$ and $c$ has weight~
 The BRST nilpotence condition:
 $$Q^2 = 0 \iff c_{\text{matter}} + c_{\text{ghost}} = 0, \quad \text{i.e., } c_{\text{matter}} = 26$$
 
-This is realized in our framework as:
+In the bar-cobar framework, this corresponds to:
 $$Q_{\text{BRST}} = d_{\text{res}} : \bar{B}^{\text{ch}}(\mathcal{A}) 
 \to \bar{B}^{\text{ch}}(\mathcal{A})$$
 
 extracting residues at collision divisors.
 \end{example}
 
-\subsection{Gaiotto's Insight: Coupling to Topological Gravity}
+\subsection{Coupling to topological gravity}
 
-\begin{remark}[Holomorphic vs. Topological BRST]
+\begin{remark}[Holomorphic vs.\ topological BRST]
 Gaiotto observed that there are two natural BRST structures:
 \begin{enumerate}
-\item \textbf{Holomorphic BRST}: Arising from holomorphic gauge symmetries
-\item \textbf{Topological BRST}: Arising from diffeomorphism + Weyl symmetry
+\item \emph{Holomorphic BRST}: arising from holomorphic gauge symmetries
+\item \emph{Topological BRST}: arising from diffeomorphism + Weyl symmetry
 \end{enumerate}
 
 These are related by \emph{twisting}: the passage from holomorphic to 
 topological BRST is exactly the A-twist (or B-twist) procedure in physics.
 \end{remark}
 
-\begin{theorem}[Bar Complex = Topological BRST; \ClaimStatusConjectured]
+\begin{theorem}[Bar complex = topological BRST; \ClaimStatusConjectured]
 The geometric bar complex naturally incorporates topological BRST ghosts:
 $$\bar{B}^{\text{ch}}(\mathcal{A}) \cong C^*_{\text{top-BRST}}(\mathcal{A} \otimes
 \text{Diff}(X))$$
@@ -252,15 +237,15 @@ algebraic structure of quadratic relations, not a literal identification: the Ar
 The theorem is labeled \ClaimStatusConjectured{} because the evidence is a structural analogy, not a constructed isomorphism.  The transformation law of logarithmic forms under coordinate changes matches the BRST ghost transformation, and the Arnold relations mirror the ghost algebra structure.  However, a rigorous proof would require constructing an explicit isomorphism $\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim} C^*_{\mathrm{top}\text{-}\mathrm{BRST}}(\mathcal{A} \otimes \mathrm{Diff}(X))$ as a map of dg algebras, which has not been done.
 \end{remark}
 
-\section{Holomorphic-Topological Field Theories}
+\section{Holomorphic-topological field theories}
 
-\subsection{Gaiotto's Framework: From 4d to 2d}
+\subsection{Gaiotto's framework: from 4d to 2d}
 
-\begin{definition}[Holomorphic-Topological (HT) Theory]
+\begin{definition}[Holomorphic-topological (HT) theory]
 A holomorphic-topological field theory on a complex surface $\Sigma$ is:
 \begin{itemize}
-\item \textbf{Holomorphic} in one direction (say $z$)
-\item \textbf{Topological} in the other direction (say $\bar{z}$)
+\item \emph{Holomorphic} in one direction (say $z$)
+\item \emph{Topological} in the other direction (say $\bar{z}$)
 \end{itemize}
 
 Fields are sections of $\mathcal{O}$-modules that are:
@@ -270,12 +255,12 @@ Fields are sections of $\mathcal{O}$-modules that are:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[HT Theory from 4d $\mathcal{N}=4$ SYM; \ClaimStatusProvedElsewhere]
-Starting with 4d $\mathcal{N}=4$ super Yang-Mills with gauge group $G$:
+\begin{theorem}[HT theory from 4d $\mathcal{N}=4$ SYM; \ClaimStatusProvedElsewhere]
+Starting with 4d $\mathcal{N}=4$ super Yang--Mills with gauge group $G$:
 \begin{enumerate}
-\item Apply the \textbf{A-twist} (also called $\lambda$-twist or holomorphic twist)
+\item Apply the \emph{holomorphic twist} (in the sense of Costello \cite{costello-gaiotto})
 \item Localize to $\bar{\partial}$-connections on a Riemann surface $\Sigma$
-\item Result: Holomorphic Chern-Simons (= holomorphic BF) theory
+\item Result: Holomorphic BF theory (the dimensional reduction of holomorphic Chern--Simons to $\Sigma$)
 \end{enumerate}
 
 The action is:
@@ -293,8 +278,8 @@ The full holomorphic Chern--Simons action $\int \Omega \wedge \operatorname{CS}(
 complex $3$-fold with $(3,0)$-form $\Omega$; on $\Sigma$ only the holomorphic BF action above survives the dimensional reduction.
 \end{theorem}
 
-\begin{proof}[From Costello-Gaiotto]
-\textbf{Step 1: The A-Twist}
+\begin{proof}[From Costello--Gaiotto]
+\emph{Step~1: The Holomorphic Twist.}
 
 Start with $\mathcal{N}=4$ SYM on $\mathbb{R}^4 \cong \mathbb{C}^2$. The field 
 content includes:
@@ -314,7 +299,7 @@ After twisting:
 \item A nilpotent supercharge $Q$ becomes scalar
 \end{itemize}
 
-\textbf{Step 2: Localization}
+\emph{Step~2: Localization.}
 
 The twisted action has $Q^2 = 0$ and:
 $$S_{\text{twisted}} = \{Q, \Lambda\} + S_0$$
@@ -323,11 +308,11 @@ By localization, path integral reduces to:
 $$Z = \int_{\text{Q-fixed locus}} \mathcal{O}(fields)$$
 
 The Q-fixed locus consists of holomorphic data:
-$$\bar{\partial}_A + \Phi = 0$$
+$$\bar{\partial}_A = 0, \qquad \bar{\partial}_A \Phi = 0$$
 
-This is exactly the holomorphic Chern-Simons equation.
+These are the equations for a holomorphic bundle with holomorphic Higgs field (the Hitchin equations in the holomorphic sector).
 
-\textbf{Step 3: Volume Form}
+\emph{Step~3: Volume Form.}
 
 The holomorphic volume form $\Omega$ arises from the topological twist. On
 $\mathbb{C}^2$ with holomorphic coordinates $(z,w)$:
@@ -337,10 +322,10 @@ On the deformed conifold $Y_\mu = \{u_1 w_2 - u_2 w_1 = \mu\} \subset \mathbb{C}
 $$\Omega = \operatorname{Res}_{Y_\mu}\frac{du_1 \wedge du_2 \wedge dw_1 \wedge dw_2}{u_1 w_2 - u_2 w_1 - \mu}$$
 \end{proof}
 
-\subsection{Boundary Conditions and Chiral Algebras}
+\subsection{Boundary conditions and chiral algebras}
 
-\begin{theorem}[Boundary Chiral Algebra; \ClaimStatusProvedElsewhere]
-A boundary condition for holomorphic Chern-Simons theory supports a chiral
+\begin{theorem}[Boundary chiral algebra; \ClaimStatusProvedElsewhere]
+A boundary condition for holomorphic Chern--Simons theory supports a chiral
 algebra $\mathcal{A}_{\text{bdy}}$ whose:
 \begin{itemize}
 \item Generators are local operators at the boundary
@@ -349,11 +334,11 @@ algebra $\mathcal{A}_{\text{bdy}}$ whose:
 \end{itemize}
 \end{theorem}
 
-\begin{example}[Kac-Moody from HCS]
-Holomorphic Chern-Simons with gauge group $G$ at level $k$ produces:
+\begin{example}[Kac--Moody from HCS]
+Holomorphic Chern--Simons with gauge group $G$ at level $k$ produces:
 $$\mathcal{A}_{\text{bdy}} = \widehat{\mathfrak{g}}_k$$
 
-the affine Kac-Moody algebra at level $k$.
+the affine Kac--Moody algebra at level $k$.
 
 The currents:
 $$J^a(z) = \text{Tr}(T^a A(z))$$
@@ -362,15 +347,15 @@ satisfy:
 $$J^a(z) J^b(w) \sim \frac{k \delta^{ab}}{(z-w)^2} + 
 \frac{f^{abc} J^c(w)}{z-w}$$
 
-This OPE is computed via the holomorphic Chern-Simons path integral with
+This OPE is computed via the holomorphic Chern--Simons path integral with
 boundary insertions.
 \end{example}
 
-\subsection{The Holomorphic-Topological Boundary Condition}
+\subsection{The holomorphic-topological boundary condition}
 
-\begin{definition}[HT Boundary Condition]
-For holomorphic Chern-Simons on a surface $\Sigma$ with boundary $\partial \Sigma$, 
-the \textbf{holomorphic-topological boundary condition} requires:
+\begin{definition}[HT boundary condition]
+For holomorphic Chern--Simons on a surface $\Sigma$ with boundary $\partial \Sigma$, 
+the \emph{holomorphic-topological boundary condition} requires:
 \begin{enumerate}
 \item Fields extend holomorphically to a compactification $\bar{\Sigma}$
 \item At the boundary divisor $D = \bar{\Sigma} \setminus \Sigma$, fields have 
@@ -380,17 +365,17 @@ for cubic interaction $(k=3)$
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Bar-Cobar from HT Boundary; \ClaimStatusHeuristic]
+\begin{theorem}[Bar-cobar from HT boundary; \ClaimStatusHeuristic]
 The holomorphic-topological boundary condition realizes bar-cobar duality:
 \begin{itemize}
-\item \textbf{Bar side}: Fields with prescribed asymptotics near $D$ (logarithmic 
+\item \emph{Bar side.} Fields with prescribed asymptotics near $D$ (logarithmic
 forms)
-\item \textbf{Cobar side}: Distributional fields on $\Sigma$ (delta functions at $D$)
-\item \textbf{Duality}: Perfect pairing via residue-distribution integral
+\item \emph{Cobar side.} Distributional fields on $\Sigma$ (delta functions at $D$)
+\item \emph{Duality.} Perfect pairing via residue-distribution integral
 \end{itemize}
 \end{theorem}
 
-\begin{proof}[Geometric Realization]
+\begin{proof}[Geometric realization]
 The key is the volume form behavior. If $\Omega$ has a pole of order $k$ along 
 $D$:
 $$\Omega \sim \frac{dz \wedge dw}{(z-w)^k}$$
@@ -410,11 +395,11 @@ The holomorphic-topological boundary condition enforces this duality at the
 geometric level.
 \end{proof}
 
-\section{W-Algebras from Higgs Branches}
+\section{W-algebras from Higgs branches}
 
-\subsection{\texorpdfstring{4d Gauge Theory $\to$ 2d W-Algebra}{4d Gauge Theory -> 2d W-Algebra}}
+\subsection{\texorpdfstring{4d gauge theory $\to$ 2d W-algebra}{4d gauge theory -> 2d W-algebra}}
 
-\begin{theorem}[Costello-Gaiotto AGT; \ClaimStatusConjectured]
+\begin{theorem}[Costello--Gaiotto AGT; \ClaimStatusConjectured]
 Starting with 4d $\mathcal{N}=2$ gauge theory with gauge group $G$:
 \begin{enumerate}
 \item Compactify on a Riemann surface $\Sigma_g$
@@ -427,15 +412,15 @@ Result: 2d CFT with W-algebra symmetry $\mathcal{W}(G)$.
 For $G = SU(N)$, this gives the $\mathcal{W}_N$ algebra.
 \end{theorem}
 
-\begin{proof}[Via Bar-Cobar]
-\textbf{Step 1: Higgs Moduli Space}
+\begin{proof}[Via bar-cobar]
+\emph{Step~1: Higgs Moduli Space.}
 
 The 4d theory has Higgs branch moduli space:
 $$\mathcal{M}_{\text{Higgs}} = \text{Higgs}(\Sigma_g, G)$$
 
 consisting of $G$-Higgs bundles on $\Sigma_g$.
 
-\textbf{Step 2: Chiral Algebra}
+\emph{Step~2: Chiral Algebra.}
 
 The Higgs moduli space supports a chiral algebra via:
 $$\mathcal{A} = \text{LocalObs}(\mathcal{M}_{\text{Higgs}})$$
@@ -443,7 +428,7 @@ $$\mathcal{A} = \text{LocalObs}(\mathcal{M}_{\text{Higgs}})$$
 Local operators on the moduli space form a factorization algebra, which extends 
 to a chiral algebra.
 
-\textbf{Step 3: W-Algebra Identification}
+\emph{Step~3: W-Algebra Identification.}
 
 For $G = SU(N)$ and $\Sigma_g = \mathbb{C}$, the local operators include:
 \begin{itemize}
@@ -453,7 +438,7 @@ For $G = SU(N)$ and $\Sigma_g = \mathbb{C}$, the local operators include:
 
 These generate precisely the $\mathcal{W}_N$ algebra.
 
-\textbf{Step 4: Bar-Cobar Realization}
+\emph{Step~4: Bar-Cobar Realization.}
 
 The bar complex:
 $$\bar{B}^{\text{ch}}(\mathcal{W}_N) = \Omega^*(\overline{C}_n(\Sigma_g), 
@@ -472,27 +457,27 @@ identification of the Higgs branch moduli space with the space of
 $G$-Higgs bundles (Step~1), the construction of the factorization algebra
 from local operators on $\mathcal{M}_{\mathrm{Higgs}}$ (Step~2), and the
 matching of 4d partition functions with 2d correlators (Step~4).
-The mathematical content that our bar complex computes W-algebra conformal
+The mathematical content that the bar complex computes W-algebra conformal
 blocks is a consequence of the general bar-cobar framework (Part~I), but
 the 4d gauge theory origin of W-algebras via Costello--Gaiotto requires
 the holomorphic twist and infrared localization, which are physics inputs
 beyond the scope of this monograph.
 \end{remark}
 
-\subsection{Quantum Corrections and Central Charge}
+\subsection{Quantum corrections and central charge}
 
-\begin{remark}[Quantum vs. Classical]
+\begin{remark}[Quantum vs.\ classical]
 The 4d $\to$ 2d reduction involves two types of quantum corrections:
 \begin{enumerate}
-\item \textbf{Loop corrections}: From integrating out massive modes (captured 
+\item \emph{Loop corrections.} From integrating out massive modes (captured
 by $m_3, m_4, \ldots$ in $A_\infty$)
-\item \textbf{Instanton corrections}: From non-perturbative effects (not in bar 
+\item \emph{Instanton corrections.} From non-perturbative effects (not in bar
 complex, requires full QFT)
 \end{enumerate}
 \end{remark}
 
-\begin{theorem}[Central Charge from 4d; \ClaimStatusProvedElsewhere]
-The Sugawara central charge of the affine Kac-Moody algebra $\widehat{\mathfrak{g}}_k$ is:
+\begin{theorem}[Central charge from 4d; \ClaimStatusProvedElsewhere]
+The Sugawara central charge of the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ is:
 $$c_{\mathrm{Sug}} = \frac{k \dim \mathfrak{g}}{k + h^\vee}$$
 
 The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ obtained by DS reduction has a \emph{different} central charge, determined by $c_{\mathrm{Sug}}$ minus the ghost contribution (which depends on the nilpotent orbit of $f$):
@@ -501,14 +486,14 @@ The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ obtained by DS reduction has a \e
 \item $h^\vee$ is the dual Coxeter number
 \end{itemize}
 
-This matches the Arakawa-Frenkel-Kac-Radul formula.
+This matches the Feigin--Frenkel formula for DS reduction \cite{Feigin-Frenkel}.
 \end{theorem}
 
-\section{Quantum Observables and BV Integration}
+\section{Quantum observables and BV integration}
 
-\subsection{BV Path Integral}
+\subsection{BV path integral}
 
-\begin{definition}[BV Partition Function]
+\begin{definition}[BV partition function]
 The BV partition function is:
 $$Z_{\text{BV}} = \int_{\mathcal{L}} [D\phi] \, e^{S[\phi]/\hbar}$$
 
@@ -520,7 +505,7 @@ where:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[BV Integration = Bar-Cobar Pairing; \ClaimStatusHeuristic]
+\begin{theorem}[BV integration = bar-cobar pairing; \ClaimStatusHeuristic]
 The BV path integral is realized by the bar-cobar pairing:
 $$Z_{\text{BV}} = \langle \bar{B}^{\text{ch}}(\mathcal{A}), 
 \Omega^{\text{ch}}(\mathcal{C}) \rangle$$
@@ -530,7 +515,7 @@ $$Z = \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar
 \end{theorem}
 
 \begin{proof}
-\textbf{Step 1: Gauge Fixing as Lagrangian}
+\emph{Step~1: Gauge Fixing as Lagrangian.}
 
 Choose gauge fixing Lagrangian $\mathcal{L}$ corresponding to:
 $$\mathcal{L} = \{(\phi, \phi^+) : \phi^+ = F(\phi)\}$$
@@ -540,7 +525,7 @@ for some gauge fermion $F$.
 In geometric terms, this corresponds to choosing a regularization prescription 
 for the configuration space integrals.
 
-\textbf{Step 2: BV Measure}
+\emph{Step~2: BV Measure.}
 
 The BV measure on $\mathcal{L}$ is:
 $$\mu_{\text{BV}} = \text{Ber}(\mathcal{L}) \cdot d\phi$$
@@ -550,7 +535,7 @@ $$\mu_{\text{geom}} = \prod_{i<j} |z_i - z_j|^2 \prod_{i=1}^n d^2z_i$$
 
 with appropriate gauge fixing factors.
 
-\textbf{Step 3: Action and Pairing}
+\emph{Step~3: Action and Pairing.}
 
 The action:
 $$e^{S/\hbar} = \prod_{\text{interactions}} e^{V_k(z_1, \ldots, z_k)/\hbar}$$
@@ -565,9 +550,9 @@ is exactly the BV path integral with gauge fixing determined by the choice of
 regularization.
 \end{proof}
 
-\subsection{Observables and Correlation Functions}
+\subsection{Observables and correlation functions}
 
-\begin{theorem}[Observables = Cohomology; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Observables = cohomology; \ClaimStatusProvedElsewhere]
 Physical observables are:
 $$\mathcal{O}_{\text{phys}} = H^0(Q_{\text{BRST}}) = 
 \ker(Q_{\text{BRST}})/\text{im}(Q_{\text{BRST}})$$
@@ -576,7 +561,7 @@ In the bar-cobar framework:
 $$\mathcal{O}_{\text{phys}} \cong H^0(\bar{B}^{\text{ch}}(\mathcal{A}))$$
 \end{theorem}
 
-\begin{example}[Correlation Functions]
+\begin{example}[Correlation functions]
 An $n$-point correlation function:
 $$\langle \mathcal{O}_1(z_1) \cdots \mathcal{O}_n(z_n) \rangle = 
 \int_{\overline{C}_n(X)} [\mathcal{O}_1 \otimes \cdots \otimes \mathcal{O}_n] 
@@ -593,10 +578,10 @@ This is exactly Gaiotto's prescription for computing observables in
 holomorphic-topological theories.
 \end{example}
 
-\section{Summary: The Unified Picture}
+\section{Dictionary}
 
-\begin{remark}[Summary]
-The BV-BRST formalism provides a unified framework connecting:
+\begin{remark}[Dictionary]
+The BV-BRST formalism connects:
 
 \begin{center}
 \begin{tabular}{|l|l|l|}
@@ -605,7 +590,7 @@ The BV-BRST formalism provides a unified framework connecting:
 \hline
 BV complex & Bar complex & Log forms on $\overline{C}_n$ \\
 BV bracket & Configuration space symplectic & Poisson structure \\
-Master equation & $d^2 = 0$ & Boundary vanishing \\
+Master equation & $d^2 = 0$ & Stokes / boundary residues \\
 BV Laplacian & Cobar differential & Delta functions \\
 Quantum master eq & Bar-cobar duality & Verdier duality \\
 BRST operator & Residue extraction & OPE singularities \\
@@ -619,8 +604,8 @@ W-algebra & Boundary chiral algebra & Higgs moduli \\
 \end{center}
 \end{remark}
 
-\begin{remark}[Gaiotto's Contribution]
-Gaiotto's key insight was recognizing that:
+\begin{remark}[Gaiotto's contribution]
+Gaiotto's contribution was recognizing that:
 \begin{itemize}
 \item Holomorphic-topological theories naturally produce chiral algebras
 \item Boundary conditions for these theories are modules over the chiral algebra
@@ -628,66 +613,63 @@ Gaiotto's key insight was recognizing that:
 \item 4d gauge theory reductions give W-algebras via this mechanism
 \end{itemize}
 
-Our geometric bar-cobar construction provides the mathematical foundation for 
-these physical insights, making them rigorous and computationally tractable.
+The geometric bar-cobar construction provides a mathematical foundation for
+these physical insights.
 \end{remark}
 
-%===================================================================================
-% PATCH 047: COMPLETE BV ALGEBRA STRUCTURE
-%===================================================================================
 
-\section{The Complete BV Algebra Structure}
+\section{The BV algebra structure}
 \label{sec:complete-bv-structure}
 
-\subsection{BV Algebra Definition}
+\subsection{BV algebra definition}
 
-\begin{definition}[BV Algebra - Complete Structure]
+\begin{definition}[BV algebra]
 \label{def:bv-algebra-complete}
 \index{BV algebra|textbf}
-A \textbf{Batalin-Vilkovisky algebra} is a graded commutative algebra $(A, \cdot)$ equipped with:
+A \emph{Batalin--Vilkovisky algebra} is a graded commutative algebra $(A, \cdot)$ equipped with:
 \begin{enumerate}
-\item \textbf{BV bracket}: $\{\cdot, \cdot\}: A \otimes A \to A$ of degree $+1$, satisfying:
+\item \emph{BV bracket.} $\{\cdot, \cdot\}: A \otimes A \to A$ of degree $+1$, satisfying:
 \begin{itemize}
 \item Graded skew-symmetry: $\{a, b\} = -(-1)^{(|a|+1)(|b|+1)} \{b, a\}$
 \item Graded Leibniz: $\{a, bc\} = \{a, b\}c + (-1)^{(|a|+1)|b|} b\{a, c\}$
 \item Graded Jacobi: $\{a, \{b, c\}\} = \{\{a, b\}, c\} + (-1)^{(|a|+1)(|b|+1)} \{b, \{a, c\}\}$
 \end{itemize}
 
-\item \textbf{BV Laplacian}: $\Delta: A \to A$ of degree $+1$, satisfying:
+\item \emph{BV Laplacian.} $\Delta: A \to A$ of degree $+1$, satisfying:
 \begin{itemize}
 \item Nilpotency: $\Delta^2 = 0$
 \item Second-order: $\Delta(ab) = \Delta(a)b + (-1)^{|a|}a\Delta(b) + (-1)^{|a|}\{a, b\}$
 \end{itemize}
 
-\item \textbf{Compatibility}: $\{a, b\} = (-1)^{|a|} [\Delta(ab) - \Delta(a)b - (-1)^{|a|}a\Delta(b)]$
+\item \emph{Compatibility.} $\{a, b\} = (-1)^{|a|} [\Delta(ab) - \Delta(a)b - (-1)^{|a|}a\Delta(b)]$
 \end{enumerate}
 \end{definition}
 
-\subsection{BV Structure from Configuration Spaces}
+\subsection{BV structure from configuration spaces}
 
-\begin{theorem}[Configuration Space BV Structure; \ClaimStatusProvedHere]
+\begin{theorem}[Configuration space BV structure; \ClaimStatusProvedHere]
 \label{thm:config-space-bv}
 The bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ carries a natural BV algebra structure where:
 
-\textbf{(1) Algebra structure}: Wedge product of logarithmic forms
+\emph{(1) Algebra structure.} Wedge product of logarithmic forms
 
-\textbf{(2) BV bracket}: Derived from symplectic structure on $T^*C_n(X)$
+\emph{(2) BV bracket.} Derived from symplectic structure on $T^*C_n(X)$
 
-\textbf{(3) BV Laplacian}: Integration against diagonal (cobar differential)
+\emph{(3) BV Laplacian.} Integration against diagonal (cobar differential)
 $$\Delta(\omega) = \sum_{i < j} \int_{\Delta_{ij}} \omega \cdot \delta(z_i - z_j)$$
 \end{theorem}
 
 \begin{proof}
 We verify the three BV algebra axioms (Definition~\ref{def:bv-algebra-complete}).
 
-\textbf{(1) Commutative algebra structure.}
+\emph{(1) Commutative algebra structure.}
 The bar complex $\bar{B}^n(\mathcal{A}) = \Gamma(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^*_{\log})$ carries a natural commutative product: the wedge product of logarithmic forms.  For $\omega \in \bar{B}^p$ and $\eta \in \bar{B}^q$, define:
 \[
 (\omega \cdot \eta)(z_0, \ldots, z_{p+q+1}) = \omega(z_0, \ldots, z_p) \wedge \eta(z_{p+1}, \ldots, z_{p+q+1})
 \]
 extended to $\overline{C}_{p+q+2}(X)$ via the inclusion $\overline{C}_{p+1}(X) \times \overline{C}_{q+1}(X) \hookrightarrow \overline{C}_{p+q+2}(X)$.  This is graded commutative: $\omega \cdot \eta = (-1)^{|\omega||\eta|}\, \eta \cdot \omega$ by the sign rule for wedge products of forms.
 
-\textbf{(2) BV Laplacian.}
+\emph{(2) BV Laplacian.}
 Define $\Delta: \bar{B}^n \to \bar{B}^{n-1}$ by contraction with the diagonal:
 \[
 \Delta(\omega) = \sum_{i < j} \int_{\Delta_{ij}} \omega \cdot \delta(z_i - z_j) = \sum_{i < j} \operatorname{Res}_{z_i = z_j}[\omega]
@@ -698,7 +680,7 @@ This has degree $+1$ (reduces bar degree by 1, increases cohomological degree by
 
 \emph{Second-order property}: We verify $\Delta(\omega \cdot \eta) = \Delta(\omega) \cdot \eta + (-1)^{|\omega|}\omega \cdot \Delta(\eta) + (-1)^{|\omega|}\{\omega, \eta\}$ by computing the residue of a product.  When $\operatorname{Res}_{z_i = z_j}$ acts on $\omega(z_0, \ldots, z_p) \wedge \eta(z_{p+1}, \ldots, z_{p+q+1})$, the residue localizes to three cases: (a) both $i, j \leq p$, contributing $\Delta(\omega) \cdot \eta$; (b) both $i, j > p$, contributing $\omega \cdot \Delta(\eta)$; (c) $i \leq p < j$ or $j \leq p < i$, contributing the bracket $\{\omega, \eta\}$.  This decomposition is the BV second-order property.
 
-\textbf{(3) BV bracket.}
+\emph{(3) BV bracket.}
 The bracket is defined as the failure of $\Delta$ to be a derivation:
 \[
 \{\omega, \eta\} = (-1)^{|\omega|}[\Delta(\omega \cdot \eta) - \Delta(\omega) \cdot \eta - (-1)^{|\omega|}\omega \cdot \Delta(\eta)]
@@ -708,17 +690,17 @@ Geometrically, $\{\omega, \eta\}$ extracts the residue across the interface betw
 Thus $(\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$ is a BV algebra.
 \end{proof}
 
-\subsection{Quantum Master Equation}
+\subsection{Quantum master equation}
 
-\begin{theorem}[Quantum Master Equation; \ClaimStatusHeuristic]
+\begin{theorem}[Quantum master equation; \ClaimStatusHeuristic]
 \label{thm:quantum-master-complete}
-The \textbf{quantum master equation}
+The \emph{quantum master equation}
 $$\hbar \Delta S + \frac{1}{2}\{S, S\} = 0$$
 or equivalently $\Delta e^{S/\hbar} = 0$
 is solved by the bar-cobar pairing.
 \end{theorem}
 
-\begin{corollary}[BV Quantization = Bar-Cobar Duality; \ClaimStatusHeuristic]
+\begin{corollary}[BV quantization = bar-cobar duality; \ClaimStatusHeuristic]
 \label{cor:bv-equals-bar-cobar}
 The BV quantization of a chiral algebra $\mathcal{A}$ is equivalent to computing the 
 bar-cobar homology:
@@ -726,9 +708,9 @@ $$H^*_{\text{BV}}(\mathcal{A}) \cong H^*(\bar{B}(\mathcal{A}), \Omega(\mathcal{A
 where $\mathcal{A}^!$ is the Koszul dual.
 \end{corollary}
 
-\subsection{Summary: BV as Functor}
+\subsection{Summary: BV as functor}
 
-\begin{theorem}[BV Functor; \ClaimStatusProvedHere]
+\begin{theorem}[BV functor; \ClaimStatusProvedHere]
 \label{thm:bv-functor}
 \index{BV functor}
 The BV quantization defines a functor:
@@ -742,16 +724,16 @@ preserving:
 \end{theorem}
 
 \begin{proof}
-\textbf{Objects.}  For a chiral algebra $\mathcal{A}$ on $X$, define $\mathrm{BV}(\mathcal{A}) = (\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$, the BV algebra structure of Theorem~\ref{thm:config-space-bv}.  This assignment is well-defined: the bar complex, wedge product, and BV Laplacian depend only on the chiral algebra structure of~$\mathcal{A}$.
+\emph{Objects.}  For a chiral algebra $\mathcal{A}$ on $X$, define $\mathrm{BV}(\mathcal{A}) = (\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$, the BV algebra structure of Theorem~\ref{thm:config-space-bv}.  This assignment is well-defined: the bar complex, wedge product, and BV Laplacian depend only on the chiral algebra structure of~$\mathcal{A}$.
 
-\textbf{Morphisms.}  A morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $\bar{B}(f): \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \bar{B}^{\mathrm{ch}}(\mathcal{B})$ via $f^{\boxtimes(n+1)}$ on each bar degree.  This map preserves the wedge product (it acts on coefficients, not on forms) and commutes with the BV Laplacian (which is defined by residues, and $f$ preserves OPE data).  Therefore $\bar{B}(f)$ is a morphism of BV algebras.  Functoriality ($\bar{B}(g \circ f) = \bar{B}(g) \circ \bar{B}(f)$ and $\bar{B}(\mathrm{id}) = \mathrm{id}$) is inherited from the functoriality of $\bar{B}^{\mathrm{ch}}$.
+\emph{Morphisms.}  A morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $\bar{B}(f): \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \bar{B}^{\mathrm{ch}}(\mathcal{B})$ via $f^{\boxtimes(n+1)}$ on each bar degree.  This map preserves the wedge product (it acts on coefficients, not on forms) and commutes with the BV Laplacian (which is defined by residues, and $f$ preserves OPE data).  Therefore $\bar{B}(f)$ is a morphism of BV algebras.  Functoriality ($\bar{B}(g \circ f) = \bar{B}(g) \circ \bar{B}(f)$ and $\bar{B}(\mathrm{id}) = \mathrm{id}$) is inherited from the functoriality of $\bar{B}^{\mathrm{ch}}$.
 
-\textbf{Monoidal structure.}  For chiral algebras $\mathcal{A}_1, \mathcal{A}_2$, the Eilenberg--Zilber theorem provides a quasi-isomorphism
+\emph{Monoidal structure.}  For chiral algebras $\mathcal{A}_1, \mathcal{A}_2$, the Eilenberg--Zilber theorem provides a quasi-isomorphism
 \[
 \bar{B}^{\mathrm{ch}}(\mathcal{A}_1 \otimes \mathcal{A}_2) \xrightarrow{\sim} \bar{B}^{\mathrm{ch}}(\mathcal{A}_1) \otimes \bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
 \]
 via the shuffle map.  This is \emph{not} an isomorphism at the chain level: the bar construction involves iterated tensor powers over a single configuration space $\overline{C}_n(X)$, which does not factor as a product.  However, the shuffle quasi-isomorphism is compatible with the BV structures: the BV Laplacian satisfies $\Delta_{\otimes} = \Delta_1 \otimes \mathrm{id} + \mathrm{id} \otimes \Delta_2$ on the target, and the BV bracket satisfies the Leibniz rule with respect to the tensor product, so the functor $\mathrm{BV}$ is lax monoidal.
 
-\textbf{Verdier duality.}  Verdier duality $\mathbb{D}$ on $\overline{C}_n(X)$ exchanges logarithmic forms (bar data) with distributional sections (cobar data).  Specifically, $\mathbb{D}(\bar{B}^n(\mathcal{A})) = \mathrm{Dist}(C_n(X), (\mathcal{A}^*)^{\boxtimes n}) \cong \Omega^n(\mathcal{A}^!)$ (the cobar complex of the Koszul dual coalgebra), where the isomorphism uses the residue pairing between forms and distributions.  Under this identification, the bar differential becomes the cobar differential of $\mathcal{A}^!$, and the BV Laplacian becomes the cobar product, establishing $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$ as BV algebras.  This is the BV-algebraic manifestation of the bar-cobar Verdier duality proved in Theorem~\ref{thm:verdier-bar-cobar}.
+\emph{Verdier duality.}  Verdier duality $\mathbb{D}$ on $\overline{C}_n(X)$ exchanges logarithmic forms (bar data) with distributional sections (cobar data).  Specifically, $\mathbb{D}(\bar{B}^n(\mathcal{A})) = \mathrm{Dist}(C_n(X), (\mathcal{A}^*)^{\boxtimes n}) \cong \Omega^n(\mathcal{A}^!)$ (the cobar complex of the Koszul dual coalgebra), where the isomorphism uses the residue pairing between forms and distributions.  Under this identification, the bar differential becomes the cobar differential of $\mathcal{A}^!$, and the BV Laplacian becomes the cobar product, establishing $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$ as BV algebras.  This is the BV-algebraic manifestation of the bar-cobar Verdier duality proved in Theorem~\ref{thm:verdier-bar-cobar}.
 \end{proof}
 
