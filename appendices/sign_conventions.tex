@@ -1,20 +1,20 @@
-\chapter{Dictionary of Sign Conventions}
+\chapter{Dictionary of sign conventions}
 \label{app:sign-conventions}
 
-This appendix provides a comprehensive translation between sign conventions used in different sources. Understanding these conventions is critical for verifying calculations.
+This appendix translates between sign conventions used in different sources.
 
-\section{Loday-Vallette vs. This Manuscript}
+\section{Loday--Vallette vs. this manuscript}
 
 \begin{center}
 \begin{longtable}{|>{\raggedright\arraybackslash}p{6cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
-\caption{Sign Convention Comparison} \\
+\caption{Sign convention comparison} \\
 \hline
-\textbf{Object/Operation} & \textbf{Loday-Vallette \cite{LV12}} & \textbf{This Manuscript} \\
+\textbf{Object/Operation} & \textbf{Loday--Vallette \cite{LV12}} & \textbf{This Manuscript} \\
 \hline
 \endfirsthead
 \multicolumn{3}{c}{\tablename\ \thetable\ -- \textit{Continued}} \\
 \hline
-\textbf{Object/Operation} & \textbf{Loday-Vallette} & \textbf{This Manuscript} \\
+\textbf{Object/Operation} & \textbf{Loday--Vallette} & \textbf{This Manuscript} \\
 \hline
 \endhead
 \hline
@@ -25,43 +25,43 @@ Koszul sign rule & $(-1)^{|a| \cdot |b|}$ & $(-1)^{|a| \cdot |b|}$ (same) \\
 Differential degree & $|d| = -1$ & $|d| = +1$ \\
 Suspension & $s: V \to sV$, $|sv| = |v| + 1$ & $s: V \to V[-1]$, $|sv| = |v| + 1$ (cohomological: $V[-1]^k = V^{k-1}$, so $v \in V^m$ maps to $sV^{m+1}$) \\
 Desuspension & $s^{-1}: sV \to V$, $|s^{-1}(sv)| = |v|$ & $[-1]: V[1] \to V$ \\
-Bar construction & $B(\mathcal{A}) = (T^c(s\mathcal{A}), d_{\text{bar}})$ & $\bar{B}(\mathcal{A})_n = \mathcal{A}^{\otimes (n+1)}$ (no explicit suspension) \\
+Bar construction & $B(\mathcal{A}) = (T^c(s\mathcal{A}), d_{\text{bar}})$ & $\bar{B}(\mathcal{A}) = (T^c(s^{-1}\bar{\mathcal{A}}), d)$ (desuspension; cf.\ cohomological convention) \\
 Cobar construction & $\Omega(\mathcal{C}) = (T(s^{-1}\mathcal{C}), d_{\text{cobar}})$ & $\Omega(\mathcal{C})_n = \mathcal{C}^{\otimes_{\text{co}} n}$ \\
 Coproduct sign & $\Delta(ab) = \Delta(a) \cdot \Delta(b)$ with $(-1)^{|a_2| \cdot |b_1|}$ & Same \\
 Shuffle sign & $(a \shuffle b) = \sum (-1)^{\sigma} a_{\sigma(1)} \otimes \cdots$ & Same \\
 Collision divisor ordering & Not applicable (no geometry) & Lexicographic: $i < j$ always \\
-Logarithmic form sign & Not applicable & $\eta_{ji} = \eta_{ij}$ as forms ($d\log(-1)=0$; OS generators antisymmetric) \\
+Logarithmic form sign & Not applicable & $\eta_{ji} = \eta_{ij}$ as differential forms ($d\log(-1)=0$). Note: the Orlik--Solomon generators $\omega_{ij}$ are antisymmetric ($\omega_{ji} = -\omega_{ij}$); the identification $\omega_{ij} \mapsto \eta_{ij}$ for $i < j$ fixes an orientation. \\
 Arnold relations & Not applicable & $\sum_{\text{cyclic}} \eta_{ij} \wedge \eta_{jk} = 0$ \\
 \end{longtable}
 \end{center}
 
-\subsection{Key Differences Explained}
+\subsection{Key differences explained}
 
-\textbf{1. Differential degree:}
+\emph{1.~Differential degree.}
 \begin{itemize}
-\item \textit{Loday-Vallette}: Use homological grading, so $d$ lowers degree ($|d| = -1$)
-\item \textit{This manuscript}: Use cohomological grading, so $d$ raises degree ($|d| = +1$)
+\item \emph{Loday--Vallette}: Use homological grading, so $d$ lowers degree ($|d| = -1$)
+\item \emph{This manuscript}: Use cohomological grading, so $d$ raises degree ($|d| = +1$)
 \end{itemize}
 
-\textbf{Translation:} If $X$ is a complex in LV convention with differential $d_{LV}$, define $X^{\text{LV}} := X[-\bullet]$ (reverse grading) with differential $d_{\text{us}} := -d_{LV}$ to get our convention.
+\emph{Translation.} If $(C_*, d)$ is a chain complex in LV convention ($d: C_n \to C_{n-1}$), set $C^n := C_{-n}$ with the same underlying map~$d$, which now raises cohomological degree by~$1$.  No sign change is needed: $d_{\text{us}} = d_{\text{LV}}$ (as linear maps).
 
-\textbf{2. Suspension:}
+\emph{2.~Suspension.}
 \begin{itemize}
-\item \textit{Loday-Vallette}: Suspension $s$ is an explicit operator
-\item \textit{This manuscript}: Suspension is a shift $[1]$ in the derived category
+\item \emph{Loday--Vallette}: Suspension $s$ is an explicit operator
+\item \emph{This manuscript}: Suspension is a shift $[-1]$: $sV = V[-1]$, so $|sv| = |v| + 1$
 \end{itemize}
 
-\textbf{Translation:} $sV$ (LV) corresponds to $V[1]$ (us). The conceptual meaning is identical.
+\emph{Translation.} $sV$ (LV) corresponds to $V[-1]$ (us), i.e., our $sV$.  Both raise degree by~$1$: LV's convention $(sV)_k = V_{k-1}$ translates via $\deg_{\mathrm{coh}} = -\deg_{\mathrm{hom}}$ to $(sV)^k = V^{k-1} = (V[-1])^k$.
 
-\textbf{3. Bar/cobar formulas:}
+\emph{3.~Bar/cobar formulas.}
 \begin{itemize}
-\item \textit{Loday-Vallette}: Explicit suspension in the formula
-\item \textit{This manuscript}: Suspension is implicit in the D-module structure
+\item \emph{Loday--Vallette}: Explicit suspension in the formula
+\item \emph{This manuscript}: Suspension is implicit in the D-module structure
 \end{itemize}
 
-\textbf{Translation:} Our $\bar{B}_n(\mathcal{A})$ corresponds to LV's $B(\mathcal{A})$ in degree $n$ after removing the suspension $s$.
+\emph{Translation.} Our $\bar{B}_n(\mathcal{A})$ corresponds to LV's $B(\mathcal{A})$ in degree $n$ after removing the suspension $s$.
 
-\section{Beilinson-Drinfeld vs. This Manuscript}
+\section{Beilinson--Drinfeld vs. this manuscript}
 
 \begin{center}
 \begin{tabular}{|>{\raggedright\arraybackslash}p{6cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
@@ -80,9 +80,9 @@ Koszul duality & Not discussed (BD focus on one side) & Central theme \\
 \end{tabular}
 \end{center}
 
-\subsection{Key Differences Explained}
+\subsection{Key differences explained}
 
-\textbf{BD's approach:}
+\emph{BD's approach.}
 \begin{itemize}
 \item Ran space formulation (taking colimits over all $n$)
 \item Factorization axiom as the primary structure
@@ -90,7 +90,7 @@ Koszul duality & Not discussed (BD focus on one side) & Central theme \\
 \item No explicit bar/cobar constructions
 \end{itemize}
 
-\textbf{Our approach:}
+\emph{This monograph.}
 \begin{itemize}
 \item Explicit configuration spaces $\ConfigSpace{n}$ for each $n$
 \item Bar complex as an explicit resolution
@@ -98,9 +98,9 @@ Koszul duality & Not discussed (BD focus on one side) & Central theme \\
 \item Geometric realization via residues
 \end{itemize}
 
-\textbf{Translation:} Our bar complex $\bar{B}_*(\mathcal{A})$ is the "Chevalley-Cousin resolution" of $\mathcal{A}$ viewed as a factorization algebra in BD's sense (BD Theorem 3.4.9).
+\emph{Translation.} Our bar complex $\bar{B}_*(\mathcal{A})$ is the ``Chevalley--Cousin resolution'' of $\mathcal{A}$ viewed as a factorization algebra in BD's sense (BD Theorem 3.4.9).
 
-\section{Costello-Gwilliam vs. This Manuscript}
+\section{Costello--Gwilliam vs. this manuscript}
 
 \begin{center}
 \begin{tabular}{|>{\raggedright\arraybackslash}p{6cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
@@ -109,7 +109,7 @@ Koszul duality & Not discussed (BD focus on one side) & Central theme \\
 \hline
 Factorization algebra & $\mathcal{F}$ (precosheaf) & $\mathcal{A}$ (chiral algebra) \\
 Configuration space & $\text{Conf}_n(M)$ & $\ConfigSpace{n}$ \\
-Compactification & Fulton-MacPherson & Same \\
+Compactification & Fulton--MacPherson & Same \\
 Bar complex & Not emphasized & Central construction \\
 Feynman diagrams & Graph complex & Genus-stratified bar complex \\
 Renormalization & BV formalism & Completion of bar complex \\
@@ -118,9 +118,9 @@ Quantum corrections & Loop order & Genus $g$ \\
 \end{tabular}
 \end{center}
 
-\subsection{Key Differences Explained}
+\subsection{Key differences explained}
 
-\textbf{CG's approach:}
+\emph{CG's approach.}
 \begin{itemize}
 \item Factorization algebras on manifolds (any dimension)
 \item Feynman diagram expansion for observables
@@ -128,7 +128,7 @@ Quantum corrections & Loop order & Genus $g$ \\
 \item Emphasis on renormalization and effective field theory
 \end{itemize}
 
-\textbf{Our approach:}
+\emph{This monograph.}
 \begin{itemize}
 \item Chiral algebras on curves (1-dimensional)
 \item Genus expansion instead of loop expansion
@@ -136,15 +136,15 @@ Quantum corrections & Loop order & Genus $g$ \\
 \item Emphasis on algebraic structure and representation theory
 \end{itemize}
 
-\textbf{Translation:}
+\emph{Translation.}
 \begin{itemize}
-\item CG's "factorization algebra" on a curve $X$ = BD/Our "chiral algebra"
-\item CG's "observable" = Our "element of $\mathcal{A}$"
-\item CG's "1-loop graph" = Our "genus-1 contribution to bar complex"
-\item CG's "renormalization" = Our "nilpotent completion of bar complex"
+\item CG's ``factorization algebra'' on a curve $X$ = BD/Our ``chiral algebra''
+\item CG's ``observable'' = Our ``element of $\mathcal{A}$''
+\item CG's ``1-loop graph'' = Our ``genus-1 contribution to bar complex''
+\item CG's ``renormalization'' = Our ``nilpotent completion of bar complex''
 \end{itemize}
 
-\section{Kontsevich vs. This Manuscript}
+\section{Kontsevich vs. this manuscript}
 
 \begin{center}
 \begin{tabular}{|>{\raggedright\arraybackslash}p{6cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{4cm}|}
@@ -161,9 +161,9 @@ Wheels & Non-planar graphs & Higher genus contributions \\
 \end{tabular}
 \end{center}
 
-\subsection{Key Differences Explained}
+\subsection{Key differences explained}
 
-\textbf{Kontsevich's formality:}
+\emph{Kontsevich's formality.}
 \begin{itemize}
 \item Classical: Poisson manifolds $\to$ deformation quantization
 \item Configuration spaces in $\mathbb{R}^d$ (no compactification)
@@ -171,21 +171,21 @@ Wheels & Non-planar graphs & Higher genus contributions \\
 \item Graph complex (combinatorial)
 \end{itemize}
 
-\textbf{Our chiral formality:}
+\emph{Our chiral formality.}
 \begin{itemize}
-\item Quantum: Chiral Poisson algebras $\to$ chiral quantization (OPE)
+\item Coisson algebras (PVA) $\to$ vertex algebras (OPE) via chiral configuration spaces
 \item Configuration spaces on curves (compactified)
 \item Logarithmic forms (poles at collisions)
 \item Genus-stratified complex (geometric)
 \end{itemize}
 
-\textbf{Relation:} Kontsevich's formality is the \textit{genus-0 part} of chiral formality. Our framework extends Kontsevich to include all genera (higher-loop corrections).
+\emph{Relation.} Kontsevich's formality is the \emph{genus-0 part} of chiral formality. The bar-cobar framework extends Kontsevich to include all genera (higher-loop corrections).
 
-\section{Summary Table: All Conventions}
+\section{Summary table: all conventions}
 
 \begin{center}
 \begin{longtable}{|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{2cm}|>{\raggedright\arraybackslash}p{2cm}|>{\raggedright\arraybackslash}p{2cm}|>{\raggedright\arraybackslash}p{2cm}|}
-\caption{Complete Sign Convention Dictionary} \\
+\caption{Sign convention dictionary} \\
 \hline
 \textbf{Operation} & \textbf{LV} & \textbf{BD} & \textbf{CG} & \textbf{Us} \\
 \hline
@@ -204,44 +204,44 @@ Arnold relations & N/A & Implicit & Yes & Yes \\
 \end{longtable}
 \end{center}
 
-\textbf{Recommendation:} When reading other sources, always consult this appendix to translate signs and conventions. The most common source of error in chiral algebra computations is inconsistent sign conventions.
+\emph{Recommendation.} When reading other sources, always consult this appendix to translate signs and conventions. The most common source of error in chiral algebra computations is inconsistent sign conventions.
 
-\section{Practical Guide: How to Translate}
+\section{Practical guide: how to translate}
 
-\subsection{From Loday-Vallette to Our Conventions}
+\subsection{From Loday--Vallette to our conventions}
 
-\textbf{Rule 1:} Replace $|d| = -1$ with $|d| = +1$
+\emph{Rule~1.} Replace $|d| = -1$ with $|d| = +1$.
 
-\textbf{Rule 2:} Replace suspension $s$ with degree shift $[1]$
+\emph{Rule~2.} Replace LV's suspension $s$ with our degree shift $[-1]$: $sV = V[-1]$.
 
-\textbf{Rule 3:} Our geometric forms $\Omega^n(\log D)$ correspond to LV's suspended generators $s^n V$
+\emph{Rule~3.} Our geometric forms $\Omega^n(\log D)$ correspond to LV's suspended generators $s^n V$.
 
-\subsection{From Beilinson-Drinfeld to Our Conventions}
+\subsection{From Beilinson--Drinfeld to our conventions}
 
-\textbf{Rule 1:} BD's $j_{!*}$ (factorization pushforward) = our explicit configuration space integral
+\emph{Rule~1.} BD's $j_{!*}$ (factorization pushforward) = our explicit configuration space integral.
 
-\textbf{Rule 2:} BD's Ran space $\text{Ran}(X)$ = our $\bigcup_n \ConfigSpace{n} / \sim$ (colimit)
+\emph{Rule~2.} BD's Ran space $\text{Ran}(X)$ = our $\bigcup_n \ConfigSpace{n} / \sim$ (colimit).
 
-\textbf{Rule 3:} BD's "chiral product" = our "OPE residue"
+\emph{Rule~3.} BD's ``chiral product'' = our ``OPE residue''
 
-\subsection{From Costello-Gwilliam to Our Conventions}
+\subsection{From Costello--Gwilliam to our conventions}
 
-\textbf{Rule 1:} CG's "1-loop" = our "genus 1"
+\emph{Rule~1.} CG's ``1-loop'' = our ``genus 1''
 
-\textbf{Rule 2:} CG's "renormalization" = our "I-adic completion"
+\emph{Rule~2.} CG's ``renormalization'' = our ``$I$-adic completion''
 
-\textbf{Rule 3:} CG's BV bracket = our bar differential (when specialized to curves)
+\emph{Rule~3.} CG's BV bracket = our bar differential (when specialized to curves).
 
-\section{Examples of Translation}
+\section{Examples of translation}
 
-\begin{example}[Translating a Bar Differential Formula from LV]
-\textbf{Loday-Vallette writes:}
+\begin{example}[Translating a bar differential formula from LV]
+\emph{Loday--Vallette writes.}
 $$d_{LV}(s a_1 \otimes s a_2 \otimes s a_3) = (-1)^{|a_1|} (s[a_1, a_2] \otimes s a_3) + \cdots$$
 
-\textbf{Our notation:}
+\emph{Our notation.}
 $$d(a_1 \otimes a_2 \otimes a_3 \otimes \omega_2) = ([a_1, a_2] \otimes a_3 \otimes \text{Res}[\omega_2]) + \cdots$$
 
-\textbf{Translation:}
+\emph{Translation.}
 \begin{itemize}
 \item Remove explicit suspension $s$ (implicit in form degree)
 \item Change sign convention: $(-1)^{|a_1|}$ becomes automatic from Koszul rule
@@ -249,14 +249,14 @@ $$d(a_1 \otimes a_2 \otimes a_3 \otimes \omega_2) = ([a_1, a_2] \otimes a_3 \oti
 \end{itemize}
 \end{example}
 
-\begin{example}[Translating a BD Factorization Formula]
-\textbf{Beilinson-Drinfeld writes:}
+\begin{example}[Translating a BD factorization formula]
+\emph{Beilinson--Drinfeld writes.}
 $$j_{!*}(\mathcal{A} \boxtimes \mathcal{A})|_{U \sqcup V} \simeq j_{!*}\mathcal{A}|_U \boxtimes j_{!*}\mathcal{A}|_V$$
 
-\textbf{Our notation:}
+\emph{Our notation.}
 $$\barcomplex{1}{\mathcal{A}}|_{U \sqcup V} = \int_{C_2(U) \sqcup C_2(V)} \mathcal{A}^{\boxtimes 2} \otimes \Omega^1_{\log} \simeq \barcomplex{1}{\mathcal{A}}|_U \otimes \barcomplex{1}{\mathcal{A}}|_V$$
 
-\textbf{Translation:}
+\emph{Translation.}
 \begin{itemize}
 \item $j_{!*}$ (pushforward) = configuration space integral
 \item Factorization isomorphism = bar complex splitting
@@ -264,109 +264,101 @@ $$\barcomplex{1}{\mathcal{A}}|_{U \sqcup V} = \int_{C_2(U) \sqcup C_2(V)} \mathc
 \end{itemize}
 \end{example}
 
-\section{Complete Sign Rules for This Manuscript}
+\section{Sign rules for this manuscript}
 
 For easy reference, here are ALL sign rules used in this manuscript in one place:
 
-\subsection{Koszul Signs}
+\subsection{Koszul signs}
 
-\textbf{Rule:} When permuting two graded objects $a$ and $b$:
+\emph{Rule.} When permuting two graded objects $a$ and $b$:
 $$a \otimes b = (-1)^{|a| \cdot |b|} b \otimes a$$
 
-\textbf{Application:} Moving a form $\omega$ of degree $|\omega| = n$ past fields $\phi_1, \ldots, \phi_k$:
+\emph{Application.} Moving a form $\omega$ of degree $|\omega| = n$ past fields $\phi_1, \ldots, \phi_k$:
 $$(\phi_1 \otimes \cdots \otimes \phi_k) \otimes \omega = (-1)^{n(|\phi_1| + \cdots + |\phi_k|)} \omega \otimes (\phi_1 \otimes \cdots \otimes \phi_k)$$
 
-\subsection{Collision Divisor Signs}
+\subsection{Collision divisor signs}
 
-\textbf{Rule:} Collision divisors are always written with indices in increasing order: $\colldiv{i}{j}$ means $i < j$.
+\emph{Rule.} Collision divisors are always written with indices in increasing order: $\colldiv{i}{j}$ means $i < j$.
 
-\textbf{Convention:} We write $\colldiv{i}{j}$ with $i < j$.  Geometrically $D_{ij} = D_{ji}$ (same subvariety $z_i = z_j$).  The sign convention $\colldiv{j}{i} = -\colldiv{i}{j}$ applies to the \emph{oriented divisor} (i.e., to the associated residue forms, not the subvariety itself).
+\emph{Convention.} We write $\colldiv{i}{j}$ with $i < j$.  Geometrically $D_{ij} = D_{ji}$ (same subvariety $z_i = z_j$).  The sign convention $\colldiv{j}{i} = -\colldiv{i}{j}$ applies to the \emph{oriented divisor} (i.e., to the associated residue forms, not the subvariety itself).
 
-\subsection{Arnold Relation Signs}
+\subsection{Arnold relation signs}
 
-\textbf{3-term Arnold relation:}
+\emph{3-term Arnold relation.}
 $$\LogForm{i}{j} \wedge \LogForm{j}{k} + \LogForm{j}{k} \wedge \LogForm{k}{i} + \LogForm{k}{i} \wedge \LogForm{i}{j} = 0$$
 
-\textbf{Higher-degree consequences:}
+\emph{Higher-degree consequences.}
 All higher-degree relations in the OS algebra follow from the 3-term Arnold relations by repeated application. There is no independent ``general Arnold relation'' beyond the 3-term version.
 
-\subsection{Residue Signs}
+\subsection{Residue signs}
 
-\textbf{Rule:} The residue at $\colldiv{i}{j}$ introduces a sign based on position:
-$$(-1)^{\text{position of } (i,j) \text{ in the collision pattern}}$$
+The sign arising from the residue at $\colldiv{i}{j}$ is determined by the Koszul sign rule: the residue operation (cohomological degree~$1$) must commute past the preceding tensor factors.  For elements $s^{-1}a_1 \otimes \cdots \otimes s^{-1}a_n$ in the bar complex, the residue at $D_{ij}$ (colliding factors $i$ and $j$) picks up the sign $(-1)^{\sum_{k<i}|s^{-1}a_k|}$.  In particular, when all generators have even desuspended degree, all residue signs are positive.
 
-\textbf{Example:} For collision pattern $(1,2) < (2,3) < (1,3)$:
-\begin{itemize}
-\item Residue at $\colldiv{1}{2}$: sign $= (+1)^0 = +1$
-\item Residue at $\colldiv{2}{3}$: sign $= (+1)^1 = +1$
-\item Residue at $\colldiv{1}{3}$: sign $= (+1)^2 = +1$
-\end{itemize}
+For the explicit sign computations relevant to the bar differential, see the proof of $d^2 = 0$ in \S\ref{sec:bar-nilpotency}.
 
-(All positive in lexicographic ordering.)
+\section{Common pitfalls and how to avoid them}
 
-\section{Common Pitfalls and How to Avoid Them}
+\subsection{Pitfall 1: forgetting Koszul signs}
 
-\subsection{Pitfall 1: Forgetting Koszul Signs}
+\emph{Wrong.} $d(a \otimes b \otimes \omega) = da \otimes b \otimes \omega + a \otimes db \otimes \omega$
 
-\textbf{Wrong:} $d(a \otimes b \otimes \omega) = da \otimes b \otimes \omega + a \otimes db \otimes \omega$
-
-\textbf{Right:} $d(a \otimes b \otimes \omega) = da \otimes b \otimes \omega + (-1)^{|a|} a \otimes db \otimes \omega$
+\emph{Right.} $d(a \otimes b \otimes \omega) = da \otimes b \otimes \omega + (-1)^{|a|} a \otimes db \otimes \omega$
 
 The sign $(-1)^{|a|}$ comes from moving $d$ (degree +1) past $a$ (degree $|a|$).
 
-\subsection{Pitfall 2: Confusing Hat Notations}
+\subsection{Pitfall 2: confusing hat notations}
 
-\textbf{Wrong:} $\widehat{ij}$ could mean:
+\emph{Wrong.} $\widehat{ij}$ could mean:
 \begin{itemize}
 \item Omit factors $i$ and $j$
 \item The set $\{i, j\}$
 \item Something else?
 \end{itemize}
 
-\textbf{Right:} Use our convention: $\omitpair{i}{j}$ always means "omit both $i$ and $j$" with no ambiguity.
+\emph{Right.} Use our convention: $\omitpair{i}{j}$ always means ``omit both $i$ and $j$'' with no ambiguity.
 
-\subsection{Pitfall 3: Collision Divisor Ordering}
+\subsection{Pitfall 3: collision divisor ordering}
 
-\textbf{Wrong:} Writing $\colldiv{3}{1}$ (indices not increasing)
+\emph{Wrong.} Writing $\colldiv{3}{1}$ (indices not increasing).
 
-\textbf{Right:} Always write $\colldiv{1}{3}$ with $1 < 3$. If you encounter the "wrong" ordering in a formula, swap and introduce a minus sign:
+\emph{Right.} Always write $\colldiv{1}{3}$ with $1 < 3$. If you encounter the ``wrong'' ordering in a formula, swap and introduce a minus sign:
 $$\colldiv{3}{1} = -\colldiv{1}{3}$$
 
-\subsection{Pitfall 4: Arnold Relation Orientation}
+\subsection{Pitfall 4: Arnold relation orientation}
 
-\textbf{Wrong:} Assuming Arnold relations hold without signs
+\emph{Wrong.} Assuming Arnold relations hold without signs.
 
-\textbf{Right:} The cyclic sum includes signs from wedge product antisymmetry:
+\emph{Right.} The cyclic sum includes signs from wedge product antisymmetry:
 $$\LogForm{1}{2} \wedge \LogForm{2}{3} + \LogForm{2}{3} \wedge \LogForm{3}{1} + \LogForm{3}{1} \wedge \LogForm{1}{2} = 0$$
 
 Note: Each term has a $+$ sign in the cyclic sum, but the individual forms anticommute.
 
-\section{Summary and Recommendations}
+\section{Summary and recommendations}
 
-\textbf{For readers unfamiliar with sign conventions:}
+\emph{For readers unfamiliar with sign conventions.}
 \begin{enumerate}
-\item Start with Appendix \ref{rem:LV-signs} (Loday-Vallette comparison)
+\item Start with Appendix \ref{rem:LV-signs} (Loday--Vallette comparison)
 \item Consult this appendix when reading other sources
 \item Work through the examples in \S 11.3 (Heisenberg explicit calculations)
 \item Verify signs match in low-degree computations
 \end{enumerate}
 
-\textbf{For experts:}
+\emph{For experts.}
 Our conventions match:
 \begin{itemize}
 \item Kontsevich's graph complex (lexicographic ordering)
-\item Costello-Gwilliam's factorization algebras (cohomological grading)
-\item Beilinson-Drinfeld's D-module perspective (implicit signs)
+\item Costello--Gwilliam's factorization algebras (cohomological grading)
+\item Beilinson--Drinfeld's D-module perspective (implicit signs)
 \end{itemize}
 
-The main difference from Loday-Vallette is grading direction ($|d| = +1$ vs $-1$), which is easily translated.
+The main difference from Loday--Vallette is grading direction ($|d| = +1$ vs $-1$); the translation is a global sign reversal on the grading.
 
-\section{Complete Sign Convention Dictionary}
+\section{Sign convention dictionary}
 \label{sec:sign-dictionary-complete}
 
 \begin{table}[ht!]
 \centering
-\caption{Sign Conventions Across Different Sources}
+\caption{Sign conventions across sources}
 \label{tab:sign-conventions-complete}
 \small
 \begin{tabular}{|l|c|c|c|c|}
@@ -376,7 +368,7 @@ The main difference from Loday-Vallette is grading direction ($|d| = +1$ vs $-1$
 \hline
 Differential degree & $|d| = +1$ & implicit & $+1$ & $-1$ \\
 Koszul sign rule & $(-1)^{|a||b|}$ & yes & yes & yes \\
-Suspension & $s: V \to V[1]$ & yes & yes & opposite \\
+Suspension & $s: V \to V[-1]$ & yes & yes & opposite \\
 Bar complex degree & increasing & yes & yes & decreasing \\
 Logarithmic 1-forms & $\eta_{ij} = \frac{dz_i - dz_j}{z_i - z_j}$ & yes & yes & N/A \\
 Residue sign & $\text{Res}_{z=w}[\eta_{ij}] = +1$ & yes & yes & N/A \\
@@ -391,17 +383,17 @@ A-infinity & $\mu_n: \mathcal{A}^{\otimes n} \to \mathcal{A}$ & implicit & yes &
 \end{tabular}
 \end{table}
 
-\textbf{Key to abbreviations:}
+\emph{Key to abbreviations.}
 \begin{itemize}
-\item BD = Beilinson-Drinfeld \cite{BD04}
-\item CG = Costello-Gwilliam \cite{CG17}
-\item LV = Loday-Vallette \cite{LV12}
+\item BD = Beilinson--Drinfeld \cite{BD04}
+\item CG = Costello--Gwilliam \cite{CG17}
+\item LV = Loday--Vallette \cite{LV12}
 \end{itemize}
 
-\subsection{Conversion Formulas}
+\subsection{Conversion formulas}
 
-\begin{proposition}[Loday-Vallette Conversion; \ClaimStatusProvedHere]\label{prop:LV-conversion-complete}
-To convert from our conventions to Loday-Vallette:
+\begin{proposition}[Loday--Vallette conversion; \ClaimStatusProvedHere]\label{prop:LV-conversion-complete}
+To convert from our conventions to Loday--Vallette:
 \begin{enumerate}
 \item Replace $|d| = +1$ with $|d| = -1$ (flip grading direction)
 \item Replace bar complex $\bar{B}^n$ with $\bar{B}_{-n}$ (decreasing filtration)
@@ -422,16 +414,16 @@ For a differential $d$:
 
 The Koszul sign rule in the Leibniz formula is the same in both conventions:
 $$d(a \otimes b) = da \otimes b + (-1)^{|a|} a \otimes db$$
-(The degree $|a|$ is taken in whichever grading is active.)  The sign difference between conventions manifests in the \emph{bar differential}, where LV uses explicitly suspended elements $sa$: the bar differential sign $(-1)^{|sa|} = (-1)^{|a|-1}$ in LV's homological convention differs from $(-1)^{|a|}$ in ours.
+(The degree $|a|$ is taken in whichever grading is active.)  The sign difference between conventions manifests in the \emph{bar differential}, where LV uses explicitly suspended elements $sa$: the bar differential sign $(-1)^{|sa|} = (-1)^{|a|+1}$ in LV's homological convention (where $|sa| = |a|+1$) differs from $(-1)^{|a|}$ in ours.
 \end{proof}
 
-\subsection{Explicit Sign Calculations}
+\subsection{Explicit sign calculations}
 
-\begin{example}[Three-Point Arnold Relation]\label{ex:arnold-sign-explicit-dict}
+\begin{example}[Three-point Arnold relation]\label{ex:arnold-sign-explicit-dict}
 For three points $z_1, z_2, z_3$, the Arnold relation is:
 $$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$$
 
-\textbf{Sign verification:}
+\emph{Sign verification.}
 \begin{enumerate}
 \item Each $\eta_{ij}$ has degree 1
 \item Wedge product: $\eta \wedge \eta'$ has degree 2
@@ -441,24 +433,24 @@ $$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \et
 All signs are explicit and match BD conventions.
 \end{example}
 
-\begin{remark}[Fermionic vs Bosonic]\label{rem:fermionic-bosonic-signs-dict}
+\begin{remark}[Fermionic vs bosonic]\label{rem:fermionic-bosonic-signs-dict}
 For fermionic fields $\psi$: $\psi(z)\psi(w) = -\psi(w)\psi(z)$ (Koszul sign with $|\psi| = 1$).
 
 For bosonic fields $\phi$: $\phi(z)\phi(w) = \phi(w)\phi(z)$ (degree $|\phi| = 0$).
 
-The bar complex treats both uniformly via suspension $s: V \to V[1]$.
+The bar complex treats both uniformly via suspension $s: V \to V[-1]$.
 \end{remark}
 
 % ================================================================
 % PATCH 015: COMPREHENSIVE SIGN DICTIONARY EXPANSION
 % ================================================================
 
-\section{Master Comparison Table - Complete Version}
+\section{Master comparison table}
 \label{sec:master-comparison-signs}
 
 \begin{table}[H]
 \centering
-\caption{Sign Convention Summary Across Four Sources}
+\caption{Sign conventions across four sources}
 \renewcommand{\arraystretch}{1.8}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
@@ -471,9 +463,9 @@ The bar complex treats both uniformly via suspension $s: V \to V[1]$.
 \hline
 \textbf{Cobar degree} & $[n]$ & $[n-2]$ & $[-n]$ & $[2-n]$ \\
 \hline
-\textbf{Suspension} & $s: V \to V[1]$ & $s: V \to V[1]$ & $s: V \to V[1]$ & $s: V \to V[1]$ \\
+\textbf{Suspension} & $s: V \to V[-1]$ & $s: V \to V[-1]$ & $s: V \to V[1]$ & $s: V \to V[-1]$ \\
 \hline
-\textbf{Desuspension} & $s^{-1}: V \to V[-1]$ & $s^{-1}: V \to V[-1]$ & $s^{-1}: V \to V[-1]$ & $s^{-1}: V \to V[-1]$ \\
+\textbf{Desuspension} & $s^{-1}: V \to V[1]$ & $s^{-1}: V \to V[1]$ & $s^{-1}: V \to V[-1]$ & $s^{-1}: V \to V[1]$ \\
 \hline
 \textbf{Twist map} & $(-1)^{|a||b|}(b \otimes a)$ & $(-1)^{|a||b|}(b \otimes a)$ & $(-1)^{|a||b|}(b \otimes a)$ & $(-1)^{|a||b|}(b \otimes a)$ \\
 \hline
@@ -488,42 +480,42 @@ The bar complex treats both uniformly via suspension $s: V \to V[1]$.
 \end{tabular}
 \end{table}
 
-\subsection{Detailed Conversion Formulas}
+\subsection{Detailed conversion formulas}
 
-\subsubsection{Koszul Signs}
+\subsubsection{Koszul signs}
 
-\begin{definition}[Koszul Sign Rule - Four Conventions]
+\begin{definition}[Koszul sign rule]
 When permuting graded elements $a$ and $b$ in a tensor product:
 
-\textbf{BD, CG, Us convention:}
+\emph{BD, CG, Us convention.}
 $$a \otimes b \leftrightarrow b \otimes a \quad \text{with sign} \quad (-1)^{|a| \cdot |b|}$$
 
-\textbf{LV convention:}
+\emph{LV convention.}
 $$a \otimes b \leftrightarrow b \otimes a \quad \text{with sign} \quad (-1)^{|a| \cdot |b|} \quad \text{(same Koszul rule)}$$
 
-\textbf{Key difference:}
+\emph{Key difference.}
 LV works in homological grading ($|d| = -1$), using suspended elements $sa$ with $|sa| = |a| + 1$. The apparent sign differences in bar complex formulas arise from the shifted degrees of $sa$, not from a different Koszul rule. Specifically, swapping $sa \otimes sb$ gives $(-1)^{|sa||sb|} = (-1)^{(|a|+1)(|b|+1)}$, which differs from $(-1)^{|a||b|}$ by the factor $(-1)^{|a|+|b|+1}$.
 \end{definition}
 
-\begin{example}[Koszul Sign in Bar Construction]
+\begin{example}[Koszul sign in bar construction]
 For $a \in \mathcal{A}^m$, $b \in \mathcal{A}^n$, $c \in \mathcal{A}^p$:
 
-\textbf{Us/BD/CG:}
+\emph{Us/BD/CG.}
 $$d(a \otimes b \otimes c) = d(a) \otimes b \otimes c + (-1)^m a \otimes d(b) \otimes c 
 + (-1)^{m+n} a \otimes b \otimes d(c)$$
 
-\textbf{LV (on suspended elements $sa, sb, sc$):}
+\emph{LV (on suspended elements $sa, sb, sc$).}
 $$d(sa \otimes sb \otimes sc) = d(sa) \otimes sb \otimes sc + (-1)^{m+1} sa \otimes d(sb) \otimes sc
 + (-1)^{m+n+2} sa \otimes sb \otimes d(sc)$$
 
-\textbf{Explanation:} The sign differences arise because $|sa| = m+1$, $|sb| = n+1$, $|sc| = p+1$, and the standard Koszul rule is applied to these shifted degrees. The LV Koszul sign rule itself is the same $(-1)^{|x||y|}$.
+\emph{Explanation.} The sign differences arise because $|sa| = m+1$, $|sb| = n+1$, $|sc| = p+1$, and the standard Koszul rule is applied to these shifted degrees. The LV Koszul sign rule itself is the same $(-1)^{|x||y|}$.
 \end{example}
 
-\subsection{Quick Translation Table}
+\subsection{Quick translation table}
 
 \begin{table}[H]
 \centering
-\caption{Quick Translation Formulas Between Conventions}
+\caption{Translation formulas between conventions}
 \begin{tabular}{|l|c|}
 \hline
 \textbf{To convert from} & \textbf{Apply this transformation} \\
@@ -531,7 +523,7 @@ $$d(sa \otimes sb \otimes sc) = d(sa) \otimes sb \otimes sc + (-1)^{m+1} sa \oti
 \hline
 LV $\to$ Us/BD/CG & Multiply internal terms by $(-1)^{|a|}$, add chiral product \\
 \hline
-CG $\to$ Us & Identical (no change needed) \\
+CG $\to$ Us & Shift notation: CG's $V[1]$ (convention $V[n]^k = V^{k-n}$) equals our $V[-1]$ \\
 \hline
 BD $\to$ Us & Split $d''$ into $d_{\text{residue}}$ and $d_{\text{correction}}$ \\
 \hline
@@ -542,27 +534,25 @@ Us $\to$ LV & Remove chiral product, multiply by $(-1)^{|a|}$ \\
 \end{tabular}
 \end{table}
 
-\subsection{Recommendations for Readers}
+\subsection{Recommendations for readers}
 
 \begin{itemize}
-\item \textbf{Reading BD:} Our conventions match closely; main difference is we separate out 
+\item \emph{Reading BD.} Our conventions match closely; main difference is we separate out
 quantum corrections explicitly.
-\item \textbf{Reading CG:} Perfect match! Use their formulas directly.
-\item \textbf{Reading LV:} Add extra $(-1)^{|a|}$ signs and remember to include chiral product 
-which LV doesn't have.
-\item \textbf{Writing papers:} We recommend using CG/Us conventions as they're most explicit 
-about quantum corrections.
+\item \emph{Reading CG.} The conventions match exactly; use their formulas directly.
+\item \emph{Reading LV.} Add extra $(-1)^{|a|}$ signs and remember to include chiral product
+which LV does not have.
+\item \emph{Writing papers.} We recommend the CG conventions (used here) as they are most explicit about quantum corrections.
 \end{itemize}
 
-\begin{remark}[Why Different Conventions Exist]
-\textbf{Historical reasons:}
+\begin{remark}[Origins of different conventions]
+\emph{Historical reasons.}
 \begin{itemize}
-\item \textbf{BD}: Developed for D-modules, where orientation comes from holomorphic structure
-\item \textbf{CG}: Optimized for BV formalism and factorization algebras  
-\item \textbf{LV}: Pure operadic theory, no geometric residues
-\item \textbf{Us}: Emphasizes geometric realization and explicit calculations
+\item \emph{BD.} Developed for D-modules, where orientation comes from holomorphic structure.
+\item \emph{CG.} Optimized for BV formalism and factorization algebras.
+\item \emph{LV.} Pure operadic theory, no geometric residues.
+\item \emph{Us.} Emphasizes geometric realization and explicit calculations.
 \end{itemize}
 
-All conventions are \textbf{mathematically equivalent} - they're just different presentations 
-of the same underlying structures.
+All conventions are \emph{mathematically equivalent}---they are different presentations of the same underlying structures.
 \end{remark}

@@ -1,56 +1,82 @@
-\chapter{Homotopy Transfer}
+\chapter{Homotopy transfer}
 \label{app:homotopy-transfer}
 \index{homotopy transfer theorem|textbf}
 
-The homotopy transfer theorem is one of the most powerful tools in homological 
+The homotopy transfer theorem is a fundamental tool in homological
 algebra, allowing algebraic structures to be transported along quasi-isomorphisms 
 at the cost of introducing higher operations. For chiral algebras, this provides 
 the mechanism for constructing minimal models and understanding the relationship 
 between different presentations of the same homotopy type.
 
-\section{The Homotopy Transfer Theorem}
+\section{The homotopy transfer theorem}
 \label{sec:htt}
 
-\begin{theorem}[Homotopy Transfer Theorem; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Homotopy transfer theorem; \ClaimStatusProvedElsewhere]
 \label{thm:htt}
 Let $(V, d_V)$ and $(W, d_W)$ be chain complexes with:
 \begin{enumerate}[label=(\roman*)]
 \item A chain map $p: V \to W$ (projection).
 \item A chain map $\iota: W \to V$ (inclusion).
 \item A chain homotopy $h: V \to V[-1]$ satisfying $\id_V - \iota p = d_V h + h d_V$.
-\item The \textbf{side conditions}: $p \iota = \id_W$, $h \iota = 0$, $p h = 0$, $h^2 = 0$.
+\item The \emph{side conditions} (compatibility of $h$ with $p, \iota$): $p \iota = \id_W$, $h \iota = 0$, $p h = 0$, $h^2 = 0$.
 \end{enumerate}
-Such data is called a \textbf{strong deformation retract} (SDR).
+Such data is called a \emph{strong deformation retract} (SDR).
 
 If $V$ carries a $\cP_\infty$-algebra structure (for $\cP$ a Koszul operad), 
 then $W$ inherits a $\cP_\infty$-algebra structure such that $p$ and $\iota$ 
 extend to $\infty$-quasi-isomorphisms of $\cP_\infty$-algebras.
 \end{theorem}
 
-\begin{proof}[Proof sketch]
-The transferred structure on $W$ is constructed via the \textbf{tensor trick}. 
-For an $\Ainf$-algebra structure on $V$ with operations $m_n: V^{\otimes n} \to V$, 
-the transferred operations $\tilde{m}_n: W^{\otimes n} \to W$ are:
+\begin{proof}
+The transferred structure on $W$ is constructed via the \emph{tensor trick}
+(\cite{LodayVallette}~\S10.3).
+For an $\Ainf$-algebra structure on $V$ with operations $m_n: V^{\otimes n} \to V$,
+define $T_n: V^{\otimes n} \to V$ recursively by:
 \[
-\tilde{m}_n := p \circ T_n \circ \iota^{\otimes n}
+T_n = m_n + \sum_{\substack{r+s+t = n \\ s < n}} m_{r+1+t}(\id^{\otimes r} \otimes h\, T_s \otimes \id^{\otimes t}).
 \]
-where $T_n: V^{\otimes n} \to V$ sums over all ways of inserting $h$ and $m_k$ 
-in trees. Explicitly:
+This converges since $T_s$ with $s < n$ is already defined and $h$ absorbs
+the degree.  The transferred operations are $\tilde{m}_n := p \circ T_n \circ
+\iota^{\otimes n}$.  Explicitly:
 \begin{align*}
-\tilde{m}_1 &= p \, d_V \, \iota = d_W \\
-\tilde{m}_2 &= p \, m_2 \, \iota^{\otimes 2} \\
-\tilde{m}_3 &= p \, m_3 \, \iota^{\otimes 3} + p \, m_2 (h m_2 \otimes \id) \, \iota^{\otimes 3} 
-              + p \, m_2 (\id \otimes h m_2) \, \iota^{\otimes 3}
+\tilde{m}_1 &= p \, d_V \, \iota = d_W, \\
+\tilde{m}_2 &= p \, m_2 \, \iota^{\otimes 2}, \\
+\tilde{m}_3 &= p \, m_3 \, \iota^{\otimes 3} + p \, m_2 (h m_2 \otimes \id) \, \iota^{\otimes 3}
+              + p \, m_2 (\id \otimes h m_2) \, \iota^{\otimes 3}.
 \end{align*}
-and so on. The $\Ainf$-relations for $\{\tilde{m}_n\}$ follow from those for 
-$\{m_n\}$ and the SDR properties.
+
+\emph{Verification of $\Ainf$-relations.}
+The $\Ainf$-relation at arity~$n$ for $\{\tilde{m}_k\}$ requires:
+\[
+\sum_{\substack{r+s+t=n}} (-1)^{rs+t}\, \tilde{m}_{r+1+t}(\id^{\otimes r} \otimes \tilde{m}_s \otimes \id^{\otimes t}) = 0.
+\]
+Substituting $\tilde{m}_k = p \circ T_k \circ \iota^{\otimes k}$ and using the
+SDR identity $\iota p = \id_V - (d_V h + h d_V)$, each internal composition
+$\iota p$ between an outer $T_{r+1+t}$ and inner $T_s$ decomposes as:
+\begin{itemize}
+\item a term $\id_V$, which together with the $\Ainf$-relations for $\{m_k\}$
+  gives cancelling contributions;
+\item a term $-d_V h - h d_V$, which telescopes by the side conditions
+  $h^2 = 0$, $p h = 0$, $h \iota = 0$.
+\end{itemize}
+Concretely, the terms involving~$\id_V$ reassemble into $p \circ (\text{$\Ainf$
+relation for } \{m_k\}) \circ \iota^{\otimes n} = 0$, while the terms
+involving $d_V h + h d_V$ cancel pairwise: $h^2 = 0$ prevents double
+homotopy insertions, and $ph = h\iota = 0$ kill boundary terms.  Thus
+$\{\tilde{m}_n\}$ satisfies the $\Ainf$-relations.
+
+The maps $p$ and $\iota$ extend to $\infty$-morphisms $\tilde{p}_n$ and
+$\tilde{\iota}_n$ by the same tree formula with $p$ (resp.~$\iota$) at
+the root (resp.~leaves), and the composite $\tilde{p} \circ \tilde{\iota}
+= \id_W$ by $p\iota = \id_W$, while $\tilde{\iota} \circ \tilde{p}
+\sim \id_V$ via the homotopy built from~$h$.
 \end{proof}
 
-\begin{definition}[Strong Deformation Retract Data]
+\begin{definition}[Strong deformation retract data]
 \label{def:sdr}
 \index{strong deformation retract|textbf}
 \index{SDR|see{strong deformation retract}}
-A \textbf{strong deformation retract} (SDR) from $V$ to $W$ is a tuple 
+A \emph{strong deformation retract} (SDR) from $V$ to $W$ is a tuple 
 $(V, W, p, \iota, h)$ satisfying the conditions of Theorem~\ref{thm:htt}. 
 We denote this by:
 \[
@@ -82,30 +108,33 @@ that become boundaries). Define:
 h: V \to V[-1]
 \]
 where $h$ sends $B$ to $C$ via the inverse of $d|_C$, and is zero on $H_*(V) \oplus C$.
-One verifies: $p \circ \iota = \mathrm{id}_{H_*(V)}$ (by definition), $\iota \circ p - \mathrm{id}_V = d \circ h + h \circ d$ (since $h$ inverts $d$ on the acyclic summand $B \oplus C$ and vanishes on $H_*(V)$), and $h^2 = h \circ \iota = p \circ h = 0$ (the annihilation conditions hold because $h$ maps $B \to C$, which is disjoint from its domain of support).
+We verify each condition.
+\emph{(a)} $p \circ \iota = \mathrm{id}_{H_*(V)}$: the inclusion $\iota$ maps $H_*(V)$ into $V$ as a direct summand, and $p$ projects back.
+\emph{(b)} $\iota \circ p - \mathrm{id}_V = d \circ h + h \circ d$: on $H_*(V)$, $dh + hd = 0$ (both $d$ and $h$ vanish) and $\iota p - \mathrm{id} = 0$; on $B$, $dh(b) = d(0) = 0$ (since $h|_B = 0$) while $hd(b) = h(d(b)) \in C$ and $\iota p(b) - b = 0 - b = -b$, so $hd(b) = -b$ as needed since $h$ inverts $d|_C: C \xrightarrow{\sim} B$; on $C$, $dh(c) = d(d^{-1}c) = c$ while $hd(c) = 0$ (since $d(C) \subset H_* \oplus B$ and $h|_{H_*} = 0$, $h|_B = 0$), and $\iota p(c) - c = 0 - c$, confirming $dh + hd = \iota p - \mathrm{id}$.
+\emph{(c)} $h^2 = 0$: $h$ maps $B \to C$ and $h|_C = 0$; $h \circ \iota = 0$: $\iota$ lands in $H_*(V)$ and $h|_{H_*} = 0$; $p \circ h = 0$: $h$ maps into $C$ and $p|_C = 0$.
 
 (ii) The Comparison Theorem for projective resolutions provides the maps; 
 standard homological algebra constructs the homotopy.
 \end{proof}
 
 
-\section{Explicit Formulas for Transferred Structures}
+\section{Explicit formulas for transferred structures}
 \label{sec:transfer-formulas}
 
-\begin{construction}[Transferred $\Ainf$-Structure]
+\begin{construction}[Transferred $\Ainf$-structure]
 \label{constr:transfer-ainf}
 Let $(A, \{m_n\})$ be an $\Ainf$-algebra and $(A, H, p, \iota, h)$ an SDR to 
 the homology $H = H_*(A)$. The transferred $\Ainf$-structure $\{\tilde{m}_n\}$ 
 on $H$ is given by:
 
-\textbf{$\tilde{m}_1 = 0$}: The differential on homology vanishes.
+\emph{$\tilde{m}_1 = 0$.} The differential on homology vanishes.
 
-\textbf{$\tilde{m}_2$}: The induced product:
+\emph{$\tilde{m}_2$.} The induced product:
 \[
 \tilde{m}_2(a, b) = p \, m_2(\iota(a), \iota(b)).
 \]
 
-\textbf{$\tilde{m}_3$}: The \textbf{Massey product} or $\Ainf$-associator:
+\emph{$\tilde{m}_3$.} The \emph{Massey product} or $\Ainf$-associator:
 \begin{align*}
 \tilde{m}_3(a, b, c) &= p \, m_3(\iota(a), \iota(b), \iota(c)) \\
 &\quad + p \, m_2(h \, m_2(\iota(a), \iota(b)), \iota(c)) \\
@@ -113,7 +142,7 @@ on $H$ is given by:
 \end{align*}
 The sign $(-1)^{|a|}$ arises from commuting the homotopy $h$ (degree $-1$) past $\iota(a)$ (degree $|a|$) via the Koszul sign rule.
 
-\textbf{$\tilde{m}_n$} (general): Sum over planar rooted trees $T$ with $n$ 
+\emph{$\tilde{m}_n$} (general). Sum over planar rooted trees $T$ with $n$ 
 leaves:
 \[
 \tilde{m}_n = \sum_{T \in \mathrm{PRT}_n} p \, T(m_\bullet, h, \iota)
@@ -122,7 +151,7 @@ where $T(m_\bullet, h, \iota)$ places $\iota$ at leaves, $m_k$ at vertices of
 valence $k$, and $h$ on internal edges.
 \end{construction}
 
-\begin{theorem}[Tree Formula for Transferred Operations; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Tree formula for transferred operations; \ClaimStatusProvedElsewhere]
 \label{thm:tree-formula}
 \index{tree formula!for transfer}
 The transferred $n$-ary operation is:
@@ -139,8 +168,8 @@ where:
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}[Tree-Level Only]\label{rem:tree-level}
-A fundamental feature of the homotopy transfer theorem is that \emph{only tree-level graphs contribute}: the sum in Theorem~\ref{thm:tree-formula} runs over trees (acyclic connected graphs), never over graphs with loops.  This is because the side condition $h^2 = 0$ ensures that any graph with a cycle (which would route through $h$ at least twice on a closed path) vanishes.  In the chiral algebra setting, this means the transferred operations are algebraic (finite sums), not analytic, and no renormalization issues arise.
+\begin{remark}[Tree-level only]\label{rem:tree-level}
+A fundamental feature of the homotopy transfer theorem is that \emph{only tree-level graphs contribute}: the sum in Theorem~\ref{thm:tree-formula} runs over trees (acyclic connected graphs), never over graphs with loops.  This is because the three side conditions $h^2 = 0$, $ph = 0$, and $h\iota = 0$ together ensure that any graph with a cycle vanishes: $h^2 = 0$ kills paths with consecutive homotopies, $ph = 0$ kills graphs where $h$ appears at the output edge, and $h\iota = 0$ kills graphs where $h$ appears at an input edge.  In the chiral algebra setting, this means the transferred operations are algebraic (finite sums), not analytic, and no renormalization issues arise.
 \end{remark}
 
 \begin{example}[Trees for $\tilde{m}_4$]
@@ -172,7 +201,7 @@ p \, m_2(h \, m_3 \otimes \id) \, \iota^{\otimes 4}, \quad \ldots
 Total: $1 + 5 + 5 = 11$ planar rooted trees with 4 leaves and all internal vertices of arity $\geq 2$.
 \end{example}
 
-\begin{proposition}[Sign Computation; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Sign computation; \ClaimStatusProvedElsewhere]
 \label{prop:transfer-signs}
 The sign $\epsilon(T)$ in the tree formula is:
 \[
@@ -183,13 +212,13 @@ edge $e$ (counting the edge as separating left from right at its source vertex).
 \end{proposition}
 
 
-\section{Applications to Minimal Models}
+\section{Applications to minimal models}
 \label{sec:minimal-models}
 
-\begin{definition}[Minimal Model]
+\begin{definition}[Minimal model]
 \label{def:minimal-model}
 \index{minimal model|textbf}
-A \textbf{minimal model} of a dg-algebra $A$ is an $\Ainf$-algebra $M$ with:
+A \emph{minimal model} of a dg-algebra $A$ is an $\Ainf$-algebra $M$ with:
 \begin{enumerate}[label=(\roman*)]
 \item $M$ has zero differential: $m_1 = 0$.
 \item There is an $\Ainf$-quasi-isomorphism $M \xrightarrow{\sim} A$.
@@ -197,7 +226,7 @@ A \textbf{minimal model} of a dg-algebra $A$ is an $\Ainf$-algebra $M$ with:
 A minimal model is unique up to $\Ainf$-isomorphism.
 \end{definition}
 
-\begin{theorem}[Existence of Minimal Models; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Existence of minimal models; \ClaimStatusProvedElsewhere]
 \label{thm:minimal-model-existence}
 Every $\Ainf$-algebra over a field admits a minimal model. Explicitly, if 
 $A$ is an $\Ainf$-algebra:
@@ -211,7 +240,7 @@ $A$ is an $\Ainf$-algebra:
 
 \begin{corollary}[Formality; \ClaimStatusProvedElsewhere]
 \label{cor:formality}
-An $\Ainf$-algebra $A$ is \textbf{formal} if its minimal model has $m_n = 0$
+An $\Ainf$-algebra $A$ is \emph{formal} if its minimal model has $m_n = 0$
 for all $n \geq 3$, i.e., the minimal model is a graded associative
 algebra with trivial differential and no higher operations.
 
@@ -219,7 +248,7 @@ Equivalently, $A$ is formal if $A \simeq H_*(A)$ as $\Ainf$-algebras, where
 $H_*(A)$ has the trivial $\Ainf$-structure from its product.
 \end{corollary}
 
-\begin{example}[Minimal Model of de Rham Complex]
+\begin{example}[Minimal model of de Rham complex]
 \label{ex:minimal-derham}
 For $X = S^1$ (circle), the de Rham complex is:
 \[
@@ -235,13 +264,13 @@ The minimal model has:
 \end{enumerate}
 \end{example}
 
-\begin{application}[Minimal Model for Chiral Algebras]
+\begin{application}[Minimal model for chiral algebras]
 \label{app:minimal-chiral}
 For a chiral algebra $\cA$, the homotopy transfer theorem provides:
 \begin{enumerate}[label=(\roman*)]
 \item A minimal $\Ainf$-chiral structure on $H^{\mathrm{ch}}_*(\cA)$.
 \item The higher operations $\{m_n\}_{n \geq 3}$ encode obstructions to formality.
-\item For Koszul chiral algebras, the minimal model often simplifies dramatically.
+\item For Koszul chiral algebras, the minimal model simplifies (higher operations vanish).
 \end{enumerate}
 
 For the Heisenberg algebra $\cH$:
@@ -252,37 +281,37 @@ is 1-dimensional (Koszul), and the minimal model is the ground field with
 trivial structure.
 \end{application}
 
-\begin{theorem}[Homotopy Transfer for Operadic Algebras; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Homotopy transfer for operadic algebras; \ClaimStatusProvedElsewhere]
 \label{thm:htt-operadic}
 Let $\cP$ be a Koszul operad and $(A, W, p, \iota, h)$ an SDR with $A$ a 
 $\cP$-algebra. The transferred $\cP_\infty$-structure on $W$ satisfies:
 \begin{enumerate}[label=(\roman*)]
-\item The $\cP_\infty$-relations hold on the nose (not just up to homotopy).
+\item The $\cP_\infty$-relations hold strictly (not just up to homotopy).
 \item The maps $\iota$ and $p$ extend to $\infty$-morphisms.
 \item If $A$ is already $\cP_\infty$ (not just $\cP$), the transfer still works.
 \end{enumerate}
 \end{theorem}
 
 
-\section{Extended Formulas and Computational Techniques}
+\section{Extended formulas and computational techniques}
 \label{sec:extended-htt}
 
 We provide extended formulas for homotopy transfer that are essential for 
 explicit computations in chiral Koszul duality.
 
-\begin{construction}[Homotopy Transfer for $\Linf$-Algebras]
+\begin{construction}[Homotopy transfer for $\Linf$-algebras]
 \label{constr:htt-linf}
 Let $(\fg, \{l_n\})$ be an $\Linf$-algebra and $(\fg, H, p, \iota, h)$ an SDR. 
 The transferred $\Linf$-structure on $H$ has brackets:
 
-\textbf{$\tilde{l}_1 = 0$}: Differential vanishes on homology.
+\emph{$\tilde{l}_1 = 0$.} Differential vanishes on homology.
 
-\textbf{$\tilde{l}_2$}: The induced Lie bracket:
+\emph{$\tilde{l}_2$.} The induced Lie bracket:
 \[
 \tilde{l}_2(a, b) = p \, l_2(\iota(a), \iota(b)).
 \]
 
-\textbf{$\tilde{l}_3$}: The \textbf{Massey--Lie bracket} or Jacobiator:
+\emph{$\tilde{l}_3$.} The \emph{Massey--Lie bracket} or Jacobiator:
 \begin{align*}
 \tilde{l}_3(a, b, c) &= p \, l_3(\iota(a), \iota(b), \iota(c)) \\
 &\quad + p \, l_2(h \, l_2(\iota(a), \iota(b)), \iota(c)) \\
@@ -293,7 +322,7 @@ The transferred $\Linf$-structure on $H$ has brackets:
 The signs arise from the graded antisymmetry of the Lie bracket.
 \end{construction}
 
-\begin{proposition}[$\Linf$-Relations for Transferred Structure; \ClaimStatusProvedElsewhere]
+\begin{proposition}[$\Linf$-relations for transferred structure; \ClaimStatusProvedElsewhere]
 \label{prop:linf-relations}
 The transferred brackets $\{\tilde{l}_n\}$ satisfy the $\Linf$-relations:
 \[
@@ -304,7 +333,7 @@ where $\mathrm{Sh}(i, n-i)$ denotes $(i, n-i)$-unshuffles and $\epsilon(\sigma)$
 is the Koszul sign.
 \end{proposition}
 
-\begin{computation}[Explicit $\tilde{l}_4$ Formula]
+\begin{computation}[Explicit $\tilde{l}_4$ formula]
 \label{comp:l4-formula}
 The 4-ary transferred bracket is:
 \begin{align*}
@@ -317,7 +346,7 @@ The 4-ary transferred bracket is:
 The full formula involves 25 terms corresponding to trees with 4 leaves.
 \end{computation}
 
-\begin{theorem}[Uniqueness of Minimal $\Linf$-Model; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Uniqueness of minimal $\Linf$-model; \ClaimStatusProvedElsewhere]
 \label{thm:linf-minimal-unique}
 If $(\fg, \{l_n\})$ is an $\Linf$-algebra over a field:
 \begin{enumerate}[label=(\roman*)]
@@ -327,26 +356,26 @@ If $(\fg, \{l_n\})$ is an $\Linf$-algebra over a field:
 \end{enumerate}
 \end{theorem}
 
-\begin{construction}[Homotopy Transfer for Coalgebras]
+\begin{construction}[Homotopy transfer for coalgebras]
 \label{constr:htt-coalg}
 For a dg-coalgebra $(C, \Delta, d)$ and SDR $(C, H, p, \iota, h)$, the transferred 
 $\Ainf$-coalgebra structure on $H$ has coproducts:
 
-\textbf{$\tilde{\Delta}_1 = 0$}: No differential on homology.
+\emph{$\tilde{\Delta}_1 = 0$.} No differential on homology.
 
-\textbf{$\tilde{\Delta}_2$}: The induced coproduct:
+\emph{$\tilde{\Delta}_2$.} The induced coproduct:
 \[
 \tilde{\Delta}_2(c) = (p \otimes p) \Delta(\iota(c)).
 \]
 
-\textbf{$\tilde{\Delta}_n$ for $n \geq 3$}: Higher coproducts from trees:
+\emph{$\tilde{\Delta}_n$ for $n \geq 3$.} Higher coproducts from trees:
 \[
 \tilde{\Delta}_n = \sum_{T \in \mathrm{Trees}_n} \epsilon(T) \cdot (p^{\otimes n}) \circ T(\Delta, h) \circ \iota
 \]
 where trees now have edges ``pointing down'' (toward outputs) rather than up.
 \end{construction}
 
-\begin{example}[Transfer for Symmetric Coalgebra]
+\begin{example}[Transfer for symmetric coalgebra]
 \label{ex:transfer-sym-coalg}
 Let $C = S^c(V)$ be the symmetric coalgebra on a chain complex $(V, d_V)$. 
 The coproduct is deconcatenation:
@@ -364,13 +393,13 @@ If $V \xrightarrow{p} H_*(V) =: W$ is a deformation retract:
 \end{example}
 
 
-\section{Applications to Chiral Algebras}
+\section{Applications to chiral algebras}
 \label{sec:htt-chiral}
 
 The homotopy transfer theorem has specific applications to chiral algebra theory 
 that deserve detailed exposition.
 
-\begin{theorem}[Chiral Homotopy Transfer; \ClaimStatusProvedHere]
+\begin{theorem}[Chiral homotopy transfer; \ClaimStatusProvedHere]
 \label{thm:chiral-htt}
 \index{$A_\infty$-structure!transferred}
 Let $\cA$ be an $\Eone$-chiral algebra on a curve $X$ and suppose we have an 
@@ -390,18 +419,18 @@ for the chiral structure.
 \begin{proof}
 We apply the general homotopy transfer theorem (Theorem~\ref{thm:htt}) to the $\Eone$-chiral operad.
 
-\textbf{Step 1} (D-module compatibility): Since $\cA$ is a chiral algebra, it carries a $\cD_X$-module structure.  The SDR maps $(p, \iota, h)$ must be morphisms of $\cD_X$-modules (i.e., commute with the action of $\cD_X$).  This holds because chiral homology $H = H^{\mathrm{ch}}_*(\cA)$ is defined as a derived functor in the category of $\cD_X$-modules, so $p$ and $\iota$ are automatically $\cD_X$-linear, and $h$ can be chosen $\cD_X$-linearly by the splitting argument of Lemma~\ref{lem:sdr-existence}(i) applied within the $\cD_X$-module category (which is abelian with enough projectives over a smooth curve~$X$).
+\emph{Step~1} (D-module compatibility). Since $\cA$ is a chiral algebra, it carries a $\cD_X$-module structure.  The SDR maps $(p, \iota, h)$ must be morphisms of $\cD_X$-modules (i.e., commute with the action of $\cD_X$).  This holds because chiral homology $H = H^{\mathrm{ch}}_*(\cA)$ is defined as a derived functor in the category of $\cD_X$-modules, so $p$ and $\iota$ are automatically $\cD_X$-linear, and $h$ can be chosen $\cD_X$-linearly by the splitting argument of Lemma~\ref{lem:sdr-existence}(i) applied within the $\cD_X$-module category (which is abelian with enough projectives over a smooth curve~$X$).
 
-\textbf{Step 2} (Transferred binary operation): The transferred product is $\tilde{m}_2 = p \circ \mu^{\mathrm{ch}} \circ (\iota \otimes \iota)$, exactly as in Construction~\ref{constr:transfer-ainf}.  Since $\mu^{\mathrm{ch}}$ is a chiral product (defined via the $j_*j^*$ functor on $X \times X$), $\tilde{m}_2$ inherits $\cD_X$-linearity from Step~1.
+\emph{Step~2} (Transferred binary operation). The transferred product is $\tilde{m}_2 = p \circ \mu^{\mathrm{ch}} \circ (\iota \otimes \iota)$, exactly as in Construction~\ref{constr:transfer-ainf}.  Since $\mu^{\mathrm{ch}}$ is a chiral product (defined via the $j_*j^*$ functor on $X \times X$), $\tilde{m}_2$ inherits $\cD_X$-linearity from Step~1.
 
-\textbf{Step 3} (Higher operations via trees): The transferred operations $\tilde{m}_n^{\mathrm{ch}}$ for $n \geq 3$ are sums over planar rooted trees with $n$ leaves (as in Construction~\ref{constr:transfer-ainf}), where each internal edge contributes a factor of $h$ and each internal vertex contributes the chiral product $\mu^{\mathrm{ch}}$.  Since only tree-level graphs contribute (no loops; cf.\ Remark~\ref{rem:tree-level}), each $\tilde{m}_n^{\mathrm{ch}}$ is a finite sum.
+\emph{Step~3} (Higher operations via trees). The transferred operations $\tilde{m}_n^{\mathrm{ch}}$ for $n \geq 3$ are sums over planar rooted trees with $n$ leaves (as in Construction~\ref{constr:transfer-ainf}), where each internal edge contributes a factor of $h$ and each internal vertex contributes the chiral product $\mu^{\mathrm{ch}}$.  Since only tree-level graphs contribute (no loops; cf.\ Remark~\ref{rem:tree-level}), each $\tilde{m}_n^{\mathrm{ch}}$ is a finite sum.
 
-\textbf{Step 4} ($\Ainf$-relations): The transferred operations $\{\tilde{m}_n^{\mathrm{ch}}\}$ satisfy the $\Ainf$-relations by the same algebraic argument as in the general theorem: the identity $\sum_{r+s+t=n}(-1)^{rs+t}\tilde{m}_{r+1+t}(\mathrm{id}^{\otimes r} \otimes \tilde{m}_s \otimes \mathrm{id}^{\otimes t}) = 0$ follows from substituting the tree formulas and using the $\Eone$-relations on $\cA$ together with the SDR identities $p\iota = \mathrm{id}$, $\mathrm{id} - \iota p = dh + hd$, $h^2 = 0$.
+\emph{Step~4} ($\Ainf$-relations). The transferred operations $\{\tilde{m}_n^{\mathrm{ch}}\}$ satisfy the $\Ainf$-relations by the same algebraic argument as in the general theorem: the identity $\sum_{r+s+t=n}(-1)^{rs+t}\tilde{m}_{r+1+t}(\mathrm{id}^{\otimes r} \otimes \tilde{m}_s \otimes \mathrm{id}^{\otimes t}) = 0$ follows from substituting the tree formulas and using the $\Eone$-relations on $\cA$ together with the SDR identities $p\iota = \mathrm{id}$, $\mathrm{id} - \iota p = dh + hd$, $h^2 = 0$.
 
-\textbf{Koszulness} (iii): If $\cA$ is Koszul, the bar complex $\bar{B}(\cA)$ has cohomology concentrated in a single bar degree. By the comparison theorem, the homotopy $h$ on $\bar{B}(\cA)$ vanishes in the relevant degrees, forcing all tree contributions with internal edges (i.e., $\tilde{m}_n^{\mathrm{ch}}$ for $n \geq 3$) to vanish.
+\emph{Koszulness} (iii). If $\cA$ is Koszul, the bar spectral sequence degenerates at $E_2$ with $E_\infty$ concentrated on the Koszul line $q = 0$ (Proposition~\ref{prop:degen-koszul}).  This means $\mathrm{Ext}^{p,q}_{\cA}(k,k) = 0$ for $q \neq 0$: the bar resolution is minimal.  One may therefore choose the SDR for $\Bbar(\cA) \to H^*(\Bbar(\cA))$ compatible with the bigrading, so that the homotopy $h$ preserves bar degree and shifts internal degree.  Every tree contributing to $\tilde{m}_n^{\mathrm{ch}}$ for $n \geq 3$ would produce an operation of bar-degree shift incompatible with the Koszul line concentration, forcing $\tilde{m}_n^{\mathrm{ch}} = 0$.  Equivalently, for a minimal resolution all Massey products vanish.
 \end{proof}
 
-\begin{example}[Kac--Moody Minimal Model]
+\begin{example}[Kac--Moody minimal model]
 \label{ex:km-minimal}
 For the affine Kac--Moody algebra $\hat{\fg}_k$ at level $k$ and a smooth projective curve $X$ of genus $g$:
 \begin{enumerate}[label=(\roman*)]
@@ -413,7 +442,7 @@ vanish by Koszulness of $\hat{\fg}_k$ (at non-critical level $k \neq -h^\vee$).
 \end{enumerate}
 \end{example}
 
-\begin{proposition}[Transferred Structure and Bar Complex; \ClaimStatusProvedHere]
+\begin{proposition}[Transferred structure and bar complex; \ClaimStatusProvedElsewhere]
 \label{prop:transfer-bar}
 The homotopy transfer of chiral structures is compatible with the bar construction:
 \[
@@ -423,11 +452,5 @@ as geometric bar complexes. The quasi-isomorphism is induced by the SDR data.
 \end{proposition}
 
 \begin{proof}
-The bar construction is functorial for $\infty$-morphisms. The SDR $(p, \iota, h)$ 
-extends to an SDR on bar complexes:
-\[
-\Bbar(p), \Bbar(\iota), \Bbar(h): \Bbar(\cA) \rightleftarrows \Bbar(H).
-\]
-The compatibility with the geometric realization follows from the factorization 
-property.
+The bar construction is functorial for $\Ainf$-morphisms \cite{LV12}: an $\Ainf$-quasi-isomorphism $f: A \xrightarrow{\sim} B$ induces a quasi-isomorphism $\Bbar(f): \Bbar(A) \xrightarrow{\sim} \Bbar(B)$ of bar complexes. Since the SDR maps $(\iota, p)$ extend to $\Ainf$-quasi-isomorphisms by Theorem~\ref{thm:htt}, the bar complexes $\Bbar(\cA)$ and $\Bbar(H, \{\tilde{m}_n\})$ are quasi-isomorphic. The geometric realization is compatible because $\Bbar^{\mathrm{geom}}$ is computed as the factorization homology of $\Bbar$, and factorization homology preserves quasi-isomorphisms between factorization algebras on $X$.
 \end{proof}

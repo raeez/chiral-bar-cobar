@@ -1,10 +1,11 @@
-\section{Theta Functions and Modular Forms}
+\section{Theta functions and modular forms}
+\label{app:theta}
 
-\subsection{Classical Theta Functions}
+\subsection{Classical theta functions}
 
 The four Jacobi theta functions form the basis for all elliptic constructions:
 
-\begin{definition}[Jacobi Theta Functions]
+\begin{definition}[Jacobi theta functions]
 \index{theta functions!Jacobi|textbf}
 \begin{align}
 \vartheta_{00}(z|\tau) &\equiv \vartheta_3(z|\tau) = \sum_{n \in \mathbb{Z}} q^{n^2/2} e^{2\pi inz} \\
@@ -15,49 +16,51 @@ The four Jacobi theta functions form the basis for all elliptic constructions:
 where $q = e^{2\pi i\tau}$ is the nome.
 \end{definition}
 
-\subsection{Modular Transformation Laws}
+\subsection{Modular transformation laws}
 
 Under the generators of $SL_2(\mathbb{Z})$:
 $$T: \tau \mapsto \tau + 1, \quad S: \tau \mapsto -1/\tau$$
 
 The theta functions transform as:
 \begin{align}
-\vartheta_{ab}(z|\tau+1) &= e^{\pi ia^2/4} \vartheta_{a,\, b+1-a}(z|\tau) \\
+\vartheta_{ab}(z|\tau+1) &= e^{\pi ia^2/4} \vartheta_{a,\, b+1-a \bmod 2}(z|\tau) \\
 \vartheta_{ab}(z/\tau|-1/\tau) &= (-i\tau)^{1/2} e^{\pi iz^2/\tau} \sum_{cd} K_{ab,cd} \vartheta_{cd}(z|\tau)
 \end{align}
-where the kernel matrix is $K_{ab,cd} = \frac{1}{2}(-1)^{ac+bd}e^{-\pi i(a+c)/2}$, giving explicitly:
-$$K = \frac{1}{2}\begin{pmatrix} 1 & 1 & 1 & 1 \\ 1 & 1 & -1 & -1 \\ 1 & -1 & -i & i \\ 1 & -1 & i & -i \end{pmatrix}$$
-in the basis $(\vartheta_{00}, \vartheta_{01}, \vartheta_{10}, \vartheta_{11})$.
+where the kernel matrix is given explicitly by:
+$$K = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & -i \end{pmatrix}$$
+in the basis $(\vartheta_{00}, \vartheta_{01}, \vartheta_{10}, \vartheta_{11})$.  That is, $S$ permutes $\vartheta_{01} \leftrightarrow \vartheta_{10}$, fixes $\vartheta_{00}$, and multiplies $\vartheta_{11}$ by $-i$.
 
-\subsection{Higher Genus Theta Functions}
+\subsection{Higher genus theta functions}
 
 For genus $g$, theta functions depend on $g \times g$ period matrices $\Omega$:
 $$\Theta[\epsilon](z|\Omega) = \sum_{n \in \mathbb{Z}^g} \exp\left[\pi i(n+\epsilon')^t\Omega(n+\epsilon') + 2\pi i(n+\epsilon')^t(z+\epsilon'')\right]$$
-where $\epsilon = (\epsilon', \epsilon'') \in (\mathbb{Z}_2)^{2g}$ is the characteristic.
+where $\epsilon = (\epsilon', \epsilon'') \in (\mathbb{Z}/2\mathbb{Z})^{2g}$ is the characteristic, with $\epsilon', \epsilon'' \in \{0, \tfrac{1}{2}\}^g$ (half-integer convention).
 
-\subsection{Elliptic and Siegel Modular Forms}
+\subsection{Elliptic and Siegel modular forms}
 
-\begin{definition}[Weight $k$ Modular Form]
+\begin{definition}[Weight $k$ modular form]
 \index{modular form|textbf}
 \index{Siegel modular form}
 A holomorphic function $f: \mathfrak{h} \to \mathbb{C}$ is a modular form of weight $k$ if:
-$$f\left(\frac{a\tau+b}{c\tau+d}\right) = (c\tau+d)^k f(\tau)$$
-for all $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \in SL_2(\mathbb{Z})$.
+\begin{enumerate}
+\item $f\left(\frac{a\tau+b}{c\tau+d}\right) = (c\tau+d)^k f(\tau)$ for all $\begin{psmallmatrix} a & b \\ c & d \end{psmallmatrix} \in SL_2(\mathbb{Z})$, and
+\item $f$ is holomorphic at the cusps: the Fourier expansion $f(\tau) = \sum_{n \geq 0} a_n q^n$ has no negative powers of~$q$.
+\end{enumerate}
 \end{definition}
 
 Key examples:
 \begin{itemize}
 \item Eisenstein series ($k \geq 2$): $E_{2k}(\tau) = 1 - \frac{4k}{B_{2k}}\sum_{n=1}^\infty \sigma_{2k-1}(n)q^n$ (weight-$2k$ modular forms)
-\item \textbf{Quasi-modular Eisenstein series} $E_2$: $E_2(\tau) = 1 - 24\sum_{n=1}^\infty \sigma_1(n)q^n$ transforms as:
+\item \emph{Quasi-modular Eisenstein series} $E_2$: $E_2(\tau) = 1 - 24\sum_{n=1}^\infty \sigma_1(n)q^n$ transforms as:
 $$E_2(\gamma\tau) = (c\tau+d)^2 E_2(\tau) + \frac{6c(c\tau+d)}{\pi i}$$
 for $\gamma = \bigl(\begin{smallmatrix} a & b \\ c & d \end{smallmatrix}\bigr) \in SL_2(\mathbb{Z})$.  The inhomogeneous correction term $6c(c\tau+d)/(\pi i)$ makes $E_2$ \emph{quasi-modular} (weight~$2$, depth~$1$); it appears throughout the genus-$1$ bar complex.
-\item Dedekind eta: $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$; key identity: $\vartheta_1'(0|\tau) = -2\pi\eta(\tau)^3$
+\item Dedekind eta: $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$; key identity: $\vartheta_1'(0|\tau) = 2\pi\eta(\tau)^3$
 \item Discriminant: $\Delta(\tau) = \eta(\tau)^{24} = q\prod_{n=1}^\infty(1-q^n)^{24}$
 \end{itemize}
 
 For genus $g$, Siegel modular forms are functions on the Siegel upper half-space $\mathfrak{h}_g$ transforming under $Sp_{2g}(\mathbb{Z})$.
 
-\subsection{Elliptic Polylogarithms}
+\subsection{Elliptic polylogarithms}
 \index{elliptic polylogarithm|textbf}
 
 The elliptic polylogarithms generalize classical polylogarithms:

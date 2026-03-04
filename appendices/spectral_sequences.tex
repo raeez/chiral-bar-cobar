@@ -1,4 +1,4 @@
-\chapter{Spectral Sequences}
+\chapter{Spectral sequences}
 \label{app:spectral-sequences}
 \index{spectral sequence|textbf}
 
@@ -9,13 +9,13 @@ computes the homology of the bar complex, the Chevalley--Cousin spectral sequenc
 relates D-module cohomology to configuration space geometry, and the genus 
 spectral sequence organizes quantum corrections by loop order.
 
-\section{Filtered Complexes and Spectral Sequences}
+\section{Filtered complexes and spectral sequences}
 \label{sec:filtered-complexes}
 
-\begin{definition}[Filtered Chain Complex]
+\begin{definition}[Filtered chain complex]
 \label{def:filtered-complex}
 \index{filtered complex}
-A \textbf{filtered chain complex} is a chain complex $(C, d)$ together with a 
+A \emph{filtered chain complex} is a chain complex $(C, d)$ together with a 
 sequence of subcomplexes:
 \[
 \cdots \subseteq F_p C \subseteq F_{p+1} C \subseteq \cdots \subseteq C
@@ -24,28 +24,28 @@ such that $d(F_p C) \subseteq F_p C$ for all $p$.
 
 The filtration is:
 \begin{enumerate}[label=(\roman*)]
-\item \textbf{Exhaustive} if $C = \bigcup_p F_p C$.
-\item \textbf{Complete} (or Hausdorff) if $\bigcap_p F_p C = 0$.
-\item \textbf{Bounded below} if for each degree $n$, there exists $p_0(n)$ 
+\item \emph{Exhaustive} if $C = \bigcup_p F_p C$.
+\item \emph{Complete} (or Hausdorff) if $\bigcap_p F_p C = 0$.
+\item \emph{Bounded below} if for each degree $n$, there exists $p_0(n)$
 such that $F_p C_n = 0$ for $p < p_0(n)$.
-\item \textbf{Bounded above} if for each degree $n$, there exists $p_1(n)$ 
+\item \emph{Bounded above} if for each degree $n$, there exists $p_1(n)$
 such that $F_p C_n = C_n$ for $p > p_1(n)$.
-\item \textbf{Bounded} if both bounded below and bounded above.
+\item \emph{Bounded} if both bounded below and bounded above.
 \end{enumerate}
 \end{definition}
 
-\begin{construction}[Associated Graded and Spectral Sequence]
+\begin{construction}[Associated graded and spectral sequence]
 \label{constr:ass-graded-ss}
 Given a filtered complex $(C, F_\bullet, d)$:
 
-\textbf{Step 1}: The \textbf{associated graded} is:
+\emph{Step~1.} The \emph{associated graded} is:
 \[
 \gr_p C := F_p C / F_{p-1} C, \quad \gr C := \bigoplus_p \gr_p C.
 \]
 The differential $d$ induces $d_0: \gr_p C_n \to \gr_p C_{n-1}$ since 
 $d(F_p C) \subseteq F_p C$.
 
-\textbf{Step 2}: Define the \textbf{$r$-th approximation}:
+\emph{Step~2.} Define the \emph{$r$-th approximation}:
 \[
 Z_r^{p,q} := \{x \in F_p C_{p+q} : dx \in F_{p-r} C_{p+q-1}\} / F_{p-1} C_{p+q}
 \]
@@ -53,7 +53,7 @@ Z_r^{p,q} := \{x \in F_p C_{p+q} : dx \in F_{p-r} C_{p+q-1}\} / F_{p-1} C_{p+q}
 B_r^{p,q} := \{dx : x \in F_{p+r-1} C_{p+q+1}, dx \in F_p C_{p+q}\} / F_{p-1} C_{p+q}
 \]
 
-\textbf{Step 3}: The \textbf{$E_r$-page} is:
+\emph{Step~3.} The \emph{$E_r$-page} is:
 \[
 E_r^{p,q} := Z_r^{p,q} / B_r^{p,q}.
 \]
@@ -67,22 +67,22 @@ for $[x] \in E_r^{p,q}$ represented by $x \in F_p C_{p+q}$ with $dx \in F_{p-r} 
 This appendix presents spectral sequences in the \emph{homological} convention (chain complexes, $d$ lowers total degree), so $d_r$ has bidegree $(-r, r-1)$. The main body of the text uses cohomological convention ($d$ raises degree), where the differential $d_r: E_r^{p,q} \to E_r^{p+r, q-r+1}$ has bidegree $(r, -r+1)$. The two conventions are related by reindexing $E_r^{p,q} \leftrightarrow E_r^{-p,-q}$.
 \end{remark}
 
-\textbf{Step 4}: There are canonical isomorphisms:
+\emph{Step~4.} There are canonical isomorphisms:
 \[
 H(E_r^{p,q}, d_r) \cong E_{r+1}^{p,q}.
 \]
-The sequence $(E_r, d_r)_{r \geq 0}$ is the \textbf{spectral sequence} associated 
+The sequence $(E_r, d_r)_{r \geq 0}$ is the \emph{spectral sequence} associated 
 to the filtration.
 \end{construction}
 
-\begin{theorem}[Identification of Early Pages; \ClaimStatusProvedHere]
+\begin{theorem}[Identification of early pages; \ClaimStatusProvedHere]
 \label{thm:early-pages}
 For the spectral sequence of a filtered complex:
 \begin{enumerate}[label=(\roman*)]
 \item $E_0^{p,q} = \gr_p C_{p+q} = F_p C_{p+q} / F_{p-1} C_{p+q}$.
 \item $d_0: E_0^{p,q} \to E_0^{p, q-1}$ is the induced differential on $\gr C$.
 \item $E_1^{p,q} = H_{p+q}(\gr_p C) = H_{p+q}(F_p C / F_{p-1} C)$.
-\item $d_1: E_1^{p,q} \to E_1^{p-1, q}$ is the \textbf{connecting homomorphism} 
+\item $d_1: E_1^{p,q} \to E_1^{p-1, q}$ is the \emph{connecting homomorphism} 
 in the long exact sequence of the short exact sequence:
 \[
 0 \to \gr_{p-1} C \to F_p C / F_{p-2} C \to \gr_p C \to 0.
@@ -108,7 +108,7 @@ long exact sequence.
 \begin{definition}[Convergence]
 \label{def:ss-convergence}
 \index{spectral sequence!convergence}
-A spectral sequence $(E_r^{p,q}, d_r)$ \textbf{converges} to a graded object 
+A spectral sequence $(E_r^{p,q}, d_r)$ \emph{converges} to a graded object 
 $H^* = \bigoplus_n H^n$ if there is a filtration $F_p H^n$ and isomorphisms:
 \[
 E_\infty^{p,q} \cong \gr_p H^{p+q} := F_p H^{p+q} / F_{p-1} H^{p+q}
@@ -120,7 +120,7 @@ E_\infty^{p,q} := \bigcap_{r \geq 0} Z_r^{p,q} / \bigcup_{r \geq 0} B_r^{p,q}.
 We write $E_r^{p,q} \Rightarrow H^{p+q}$.
 \end{definition}
 
-\begin{theorem}[Classical Convergence Theorem; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Classical convergence theorem; \ClaimStatusProvedElsewhere]
 \label{thm:classical-convergence}
 Let $(C, F_\bullet, d)$ be a filtered chain complex.
 \begin{enumerate}[label=(\roman*)]
@@ -128,7 +128,7 @@ Let $(C, F_\bullet, d)$ be a filtered chain complex.
 \[
 E_r^{p,q} \Rightarrow H_{p+q}(C).
 \]
-Moreover, the spectral sequence is \textbf{regular}: $E_r = E_\infty$ for 
+Moreover, the spectral sequence is \emph{regular}: $E_r = E_\infty$ for 
 $r$ sufficiently large (depending on $p, q$).
 
 \item If the filtration is exhaustive and complete, and bounded below in each 
@@ -141,15 +141,15 @@ where $\widehat{C} = \varprojlim_p C / F_p C$ is the completion.
 \end{theorem}
 
 
-\section{Convergence Criteria}
+\section{Convergence criteria}
 \label{sec:convergence-criteria}
 
 For applications to chiral Koszul duality, we need refined convergence criteria 
 that apply to pro-nilpotent and completed settings.
 
-\begin{definition}[Regular Spectral Sequence]
+\begin{definition}[Regular spectral sequence]
 \label{def:regular-ss}
-A spectral sequence is \textbf{regular} if for each bidegree $(p, q)$, the 
+A spectral sequence is \emph{regular} if for each bidegree $(p, q)$, the 
 sequence stabilizes: there exists $r_0 = r_0(p, q)$ such that:
 \[
 E_r^{p,q} = E_{r+1}^{p,q} = \cdots = E_\infty^{p,q} \quad \text{for } r \geq r_0.
@@ -158,7 +158,7 @@ Equivalently, $d_r: E_r^{p,q} \to E_r^{p-r, q+r-1}$ is zero for $r \geq r_0$,
 and $d_r: E_r^{p+r, q-r+1} \to E_r^{p,q}$ is zero for $r \geq r_0$.
 \end{definition}
 
-\begin{proposition}[First Quadrant Spectral Sequences; \ClaimStatusProvedHere]
+\begin{proposition}[First quadrant spectral sequences; \ClaimStatusProvedHere]
 \label{prop:first-quadrant}
 If $E_0^{p,q} = 0$ whenever $p < 0$ or $q < 0$ (first quadrant spectral sequence), 
 then the spectral sequence is regular and converges strongly:
@@ -176,9 +176,9 @@ $r > q+1$ has $q - r + 1 < 0$. Thus $d_r = 0$ on and into $E_r^{p,q}$ for
 $r > \max(p, q+1)$.
 \end{proof}
 
-\begin{definition}[Strongly Convergent]
+\begin{definition}[Strongly convergent]
 \label{def:strong-convergence}
-A spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}$ is \textbf{strongly convergent} 
+A spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}$ is \emph{strongly convergent} 
 if:
 \begin{enumerate}[label=(\roman*)]
 \item The spectral sequence is regular.
@@ -187,7 +187,7 @@ if:
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Zeeman Comparison Theorem; \ClaimStatusProvedHere]
+\begin{theorem}[Zeeman comparison theorem; \ClaimStatusProvedHere]
 \label{thm:zeeman}
 Let $f: C \to D$ be a filtered chain map between filtered complexes, inducing 
 $f_r: E_r(C) \to E_r(D)$ on spectral sequences. If both spectral sequences 
@@ -206,7 +206,7 @@ implies $\gr f_*: \gr H_*(C) \to \gr H_*(D)$ is an isomorphism. Completeness
 and exhaustiveness imply $f_*$ itself is an isomorphism.
 \end{proof}
 
-\begin{proposition}[Convergence for Complete Filtrations; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Convergence for complete filtrations; \ClaimStatusProvedElsewhere]
 \label{prop:complete-filt-convergence}
 Let $(C, F_\bullet)$ be a filtered complex with complete, exhaustive filtration 
 bounded below in each degree. The spectral sequence converges to $H_*(C)$ 
@@ -218,16 +218,16 @@ is an isomorphism (i.e., $\varprojlim^1 H_*(C / F_p C) = 0$).
 \end{proposition}
 
 
-\section{The Bar Spectral Sequence}
+\section{The bar spectral sequence}
 \label{sec:bar-spectral-sequence}
 
 The bar spectral sequence computes the homology of the bar complex by filtering 
 by the number of tensor factors (bar degree).
 
-\begin{construction}[Bar Filtration]
+\begin{construction}[Bar filtration]
 \label{constr:bar-filtration}
 For a chiral algebra $\cA$, the geometric bar complex $\Bbar^{\mathrm{geom}}(\cA)$ 
-has a filtration by \textbf{bar degree}:
+has a filtration by \emph{bar degree}:
 \[
 F_p \Bbar^{\mathrm{geom}}(\cA) := \bigoplus_{n \leq p} \Bbar^{\mathrm{geom}}_n(\cA)
 \]
@@ -241,7 +241,7 @@ The differential $d = d_{\mathrm{res}} + d_{\mathrm{dR}}$ decomposes as:
 Thus $d(F_p) \subseteq F_p$, and the filtration is compatible with the differential.
 \end{construction}
 
-\begin{theorem}[Bar Spectral Sequence; \ClaimStatusProvedHere]
+\begin{theorem}[Bar spectral sequence; \ClaimStatusProvedHere]
 \label{thm:bar-ss}
 The bar filtration induces a spectral sequence:
 \[
@@ -268,7 +268,7 @@ The $d_1$ differential is induced by $d_{\mathrm{res}}$, the residue part of the
 bar differential.
 \end{proof}
 
-\begin{computation}[$E_1$-Page for Heisenberg]
+\begin{computation}[$E_1$-page for Heisenberg]
 \label{comp:e1-heisenberg}
 For the Heisenberg algebra $\cH$ on $X = \bA^1$.  (We use cohomological notation $H^n_{\mathrm{dR}}$ for de~Rham cohomology entries, matching the main text convention.)
 
@@ -284,8 +284,7 @@ At bar degree $p = 2$:
 \[
 E_1^{2,q} = H^{2+q}_{\mathrm{dR}}(\FM_2(\bA^1), \cH \boxtimes \cH \otimes \Omega^1_{\log})
 \]
-The FM compactification $\FM_2(\bA^1) \cong \bA^2$ (since for a curve the diagonal is
-codimension~1, so the blow-up is trivial), with boundary divisor
+The FM compactification $\FM_2(\bA^1) \cong \bA^2$ (the blow-up of $\bA^2$ along the smooth diagonal $\bA^1$ is again isomorphic to~$\bA^2$), with boundary divisor
 $D_{12} \cong \bA^1$. The logarithmic de Rham cohomology computes:
 \[
 E_1^{2,q} = \begin{cases} 
@@ -294,7 +293,7 @@ E_1^{2,q} = \begin{cases}
 \]
 \end{computation}
 
-\begin{proposition}[Degeneration for Koszul Algebras; \ClaimStatusProvedHere]
+\begin{proposition}[Degeneration for Koszul algebras; \ClaimStatusProvedHere]
 \label{prop:degen-koszul}
 If $\cA$ is a Koszul chiral algebra, the bar spectral sequence
 degenerates at $E_2$.  The $E_\infty$ page is concentrated on the
@@ -321,19 +320,19 @@ The identification $E_\infty^{p,0} \cong (\cA^!)_p$ follows from $\mathrm{Ext}^{
 \end{proof}
 
 
-\section{The Genus Spectral Sequence}
+\section{The genus spectral sequence}
 \label{sec:genus-spectral-sequence}
 
 When extending chiral constructions to higher genus, a filtration by genus 
-organizes quantum corrections systematically.
+organizes quantum corrections by genus.
 
-\begin{construction}[Genus Filtration]
+\begin{construction}[Genus filtration]
 \label{constr:genus-filtration}
 For the total bar complex incorporating all genera:
 \[
 \Bbar^{\mathrm{tot}}(\cA) := \bigoplus_{g \geq 0} \Bbar^{(g)}(\cA)
 \]
-the \textbf{genus filtration} is:
+the \emph{genus filtration} is:
 \[
 F^g \Bbar^{\mathrm{tot}}(\cA) := \bigoplus_{h \geq g} \Bbar^{(h)}(\cA).
 \]
@@ -341,7 +340,7 @@ The total differential $d^{\mathrm{tot}} = d_0 + d_1 + d_2 + \cdots$ decomposes
 by genus increase, with $d_k$ raising genus by $k$.
 \end{construction}
 
-\begin{theorem}[Genus Spectral Sequence; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Genus spectral sequence; \ClaimStatusProvedElsewhere]
 \label{thm:genus-ss}
 The genus filtration induces a spectral sequence:
 \[
@@ -356,7 +355,7 @@ corrections.
 \end{enumerate}
 \end{theorem}
 
-\begin{proposition}[Central Charge and $d_1$; \ClaimStatusProvedHere]
+\begin{proposition}[Central charge and $d_1$; \ClaimStatusProvedHere]
 \label{prop:central-charge-d1}
 For a conformal vertex algebra with central charge $c$:
 \begin{enumerate}[label=(\roman*)]
@@ -369,7 +368,7 @@ For a conformal vertex algebra with central charge $c$:
 \begin{proof}
 The $d_1$ differential in the genus spectral sequence (Theorem~\ref{thm:genus-ss}) maps $E_1^{0,n} \to E_1^{1,n}$, encoding the one-loop (genus 1) quantum correction to genus-0 bar homology.
 
-\emph{(i)} If $c = 0$, the genus-1 correction vanishes: the quantum correction to the Arnold relation at genus 1 is proportional to $c \cdot E_2(\tau)$, so $d_1 = 0$ when $c = 0$. With $d_1 = 0$, we have $E_2 = E_1$ and no further differentials can produce nonzero contributions at genus $\geq 2$ (since all higher corrections are built from iterations of the genus-1 propagator, each carrying a factor of $c$). Thus the spectral sequence degenerates at $E_1$.
+\emph{(i)} If $c = 0$, the genus-1 correction vanishes: the quantum correction to the Arnold relation at genus 1 is proportional to $c \cdot E_2(\tau)$, so $d_1 = 0$ when $c = 0$. With $d_1 = 0$, we have $E_2 = E_1$ and no further differentials can produce nonzero contributions at genus $\geq 2$.  Indeed, by Theorem~\ref{thm:genus-universality}, all genus-$g$ corrections are proportional to $\kappa(\cA) = c/2$, so $c = 0$ implies all quantum corrections vanish simultaneously.  Thus the spectral sequence degenerates at $E_1$.
 
 \emph{(ii)} If $c \neq 0$, the genus-1 correction $m_0^{(1)} = c \cdot E_2(\tau)$ is nonzero. The $d_1$ differential on the vacuum class is:
 \[
@@ -380,7 +379,7 @@ which is manifestly proportional to $c$.
 \emph{(iii)} The $E_2$-page $E_2^{g,n} = H(E_1^{g,n}, d_1)$ incorporates the genus-1 correction into the genus-0 homology, giving the one-loop corrected chiral homology by definition.
 \end{proof}
 
-\begin{example}[Heisenberg at Higher Genus]
+\begin{example}[Heisenberg at higher genus]
 \label{ex:heisenberg-genus-ss}
 For the Heisenberg algebra $\cH$ with $c = 1$:
 
@@ -394,7 +393,7 @@ d_1([\mathbf{1}]) \propto \frac{1}{\eta(q)}
 where $\eta(q) = q^{1/24} \prod_{n=1}^\infty (1 - q^n)$ is the Dedekind eta function.
 \end{example}
 
-\begin{theorem}[Convergence of Genus Spectral Sequence; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Convergence of genus spectral sequence; \ClaimStatusProvedElsewhere]
 \label{thm:genus-ss-convergence}
 \leavevmode\\
 The genus spectral sequence converges to $H_*(\Bbar^{\mathrm{tot}}(\cA))$
@@ -412,36 +411,36 @@ H_n(\Bbar^{\mathrm{tot}}(\cA)) = H_n(\Bbar^{(0)}(\cA))
 \end{theorem}
 
 
-\section{The Chevalley--Cousin Spectral Sequence}
+\section{The Chevalley--Cousin spectral sequence}
 \label{sec:chevalley-cousin}
 
 The Chevalley--Cousin spectral sequence is the primary tool for computing 
 D-module cohomology on stratified spaces. It relates the cohomology on the 
 full space to contributions from individual strata.
 
-\begin{construction}[Chevalley--Cousin Complex]
+\begin{construction}[Chevalley--Cousin complex]
 \label{constr:chevalley-cousin}
 Let $Y$ be a variety with stratification $Y = \bigsqcup_\alpha Y_\alpha$ by 
 locally closed subvarieties. For a D-module (or constructible sheaf) $\cM$ on $Y$:
 
-\textbf{Step 1}: Order the strata by closure: $Y_\alpha \subseteq \overline{Y_\beta}$ 
+\emph{Step~1.} Order the strata by closure: $Y_\alpha \subseteq \overline{Y_\beta}$ 
 implies $\alpha \leq \beta$. Let $Y_{\leq \alpha} = \bigcup_{\beta \leq \alpha} Y_\beta$.
 
-\textbf{Step 2}: Define the \textbf{Cousin filtration}:
+\emph{Step~2.} Define the \emph{Cousin filtration}:
 \[
 F^p \cM := i_{p,*} i_p^! \cM
 \]
 where $i_p: Y_{\leq p} \hookrightarrow Y$ is the inclusion of the $p$-th closed 
 subset in the stratification ordering.
 
-\textbf{Step 3}: The \textbf{Chevalley--Cousin complex} is the associated graded:
+\emph{Step~3.} The \emph{Chevalley--Cousin complex} is the associated graded:
 \[
 \gr^p \cM = F^p \cM / F^{p-1} \cM \cong i_{\alpha_p,*} i_{\alpha_p}^! \cM|_{Y_{\alpha_p}}
 \]
 the $!$-restriction to the $p$-th stratum.
 \end{construction}
 
-\begin{theorem}[Chevalley--Cousin Spectral Sequence; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Chevalley--Cousin spectral sequence; \ClaimStatusProvedElsewhere]
 \label{thm:chevalley-cousin-ss}
 For a D-module $\cM$ on a stratified variety $Y$:
 \[
@@ -449,7 +448,7 @@ E_1^{p,q} = H^{p+q}(Y_{\alpha_p}, i_{\alpha_p}^! \cM) \Longrightarrow H^{p+q}(Y,
 \]
 where $\alpha_p$ is the stratum of depth $p$.
 
-The $d_1$ differential is the \textbf{residue map}:
+The $d_1$ differential is the \emph{residue map}:
 \[
 d_1: H^*(Y_\alpha, i_\alpha^! \cM) \to H^{*+1}(Y_{\beta}, i_\beta^! \cM)
 \]
@@ -477,7 +476,7 @@ The $d_1$ differentials encode how residues along boundary strata relate cohomol
 classes.
 \end{computation}
 
-\begin{theorem}[Cousin Resolution for Holonomic D-modules; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Cousin resolution for holonomic D-modules; \ClaimStatusProvedElsewhere]
 \label{thm:cousin-resolution}
 For a holonomic D-module $\cM$ on a smooth variety $X$, the Chevalley--Cousin 
 complex provides a resolution:
@@ -495,15 +494,15 @@ H^*(X, \cM) \cong E_2^{*,0}.
 \end{theorem}
 
 
-\section{Multiplicative Spectral Sequences}
+\section{Multiplicative spectral sequences}
 \label{sec:mult-ss}
 
 For algebra and coalgebra structures, spectral sequences often carry multiplicative 
 structures that must be tracked carefully.
 
-\begin{definition}[Multiplicative Spectral Sequence]
+\begin{definition}[Multiplicative spectral sequence]
 \label{def:mult-ss}
-A spectral sequence $(E_r^{*,*}, d_r)$ is \textbf{multiplicative} if:
+A spectral sequence $(E_r^{*,*}, d_r)$ is \emph{multiplicative} if:
 \begin{enumerate}[label=(\roman*)]
 \item Each $E_r^{*,*}$ is a bigraded algebra.
 \item The differential $d_r$ is a derivation: $d_r(xy) = (d_r x) y + (-1)^{|x|} x (d_r y)$.
@@ -511,7 +510,7 @@ A spectral sequence $(E_r^{*,*}, d_r)$ is \textbf{multiplicative} if:
 \end{enumerate}
 \end{definition}
 
-\begin{proposition}[Bar Spectral Sequence is Multiplicative; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Bar spectral sequence is multiplicative; \ClaimStatusProvedElsewhere]
 \label{prop:bar-ss-mult}
 The bar spectral sequence for an algebra $A$ is multiplicative with product:
 \[
@@ -524,7 +523,7 @@ $\mathrm{Sh}(m,n)$ is the set of $(m,n)$-shuffles.
 The shuffle product gives $\Bbar(A)$ an algebra structure; together with the deconcatenation comultiplication, $\Bbar(A)$ becomes a differential graded bialgebra.
 \end{proposition}
 
-\begin{theorem}[Convergence of Multiplicative Spectral Sequences; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Convergence of multiplicative spectral sequences; \ClaimStatusProvedElsewhere]
 \label{thm:mult-ss-conv}
 If a multiplicative spectral sequence $E_r \Rightarrow H$ converges strongly, 
 then:
@@ -535,7 +534,7 @@ then:
 \end{enumerate}
 \end{theorem}
 
-\begin{example}[Adams Spectral Sequence]
+\begin{example}[Adams spectral sequence]
 \label{ex:adams-ss}
 The Adams spectral sequence in stable homotopy theory is multiplicative:
 \[
