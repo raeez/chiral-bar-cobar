@@ -1,60 +1,215 @@
 \chapter*{Summary of Part XI}
 \addcontentsline{toc}{chapter}{Summary of Part XI}
 
-Part XI has provided explicit computations for the full range of chiral algebras, 
-demonstrating the power of the bar-cobar framework developed in earlier parts.
+Part XI has provided explicit computations for the full range of chiral
+algebras treated in this monograph. We consolidate the principal numerical invariants
+into a single reference table, then summarize the results by category.
 
-\section*{Key Results}
+\section*{Master table of computed invariants}
+\label{sec:master-table}
+\index{master table of invariants|textbf}
 
-\textbf{$\Einf$-Chiral Algebras (Vertex Algebras):}
-\begin{enumerate}[label=(\roman*)]
-\item Heisenberg: Bar complex with vanishing higher residues; Koszul dual is the
-Chevalley-Eilenberg DG chiral algebra $\mathrm{CE}(\mathfrak{h}_{-\kappa})$ with curvature
-$m_0 = -\kappa \cdot \mathbf{1}$ (level inverts since $h^\vee = 0$; cf.\ Theorem~\ref{thm:heisenberg-koszul-dual-early}).
-\item $bc$ Ghosts: Clifford structure (two fermionic generators); bar construction is an exterior coalgebra $\bar{B}(bc) = \Lambda^c(V^*)$, and the Koszul dual \emph{algebra} is its linear dual $(bc)^! = \bar{B}(bc)^\vee \cong \beta\gamma$ system (Sym-type algebra, exchanging $\Lambda \leftrightarrow \mathrm{Sym}$).
-\item Affine Kac--Moody: Bar complex encodes the Lie bracket; Koszul dual is
-$\widehat{\fg}_{-k-2h^\vee}$ (affine Kac--Moody at shifted level).
-\item Virasoro: $\mathcal{W}^k(\mathfrak{sl}_2) = \mathrm{Vir}_{c(k)}$ with nonlinear OPE; Koszul dual is $\mathrm{Vir}_{26-c(k)}$ (Virasoro at complementary central charge), by the $\mathfrak{sl}_2$ case of Theorem~\ref{thm:w-algebra-koszul-main}.
-\item W-algebras: BRST construction; Koszul dual is $\mathcal{W}^{k'}(\fg)$ at shifted level $k' = -k - 2h^\vee$ (Theorem~\ref{thm:w-algebra-koszul-main}); for non-simply-laced $\fg$, this involves the Langlands dual $\fg^\vee$.
-\end{enumerate}
-
-\textbf{$\Eone$-Chiral Algebras (Nonlocal Vertex Algebras):}
-\begin{enumerate}[label=(\roman*)]
-\item Lattice algebras with non-symmetric cocycles: First strictly $\Eone$ examples; 
-Koszul dual uses inverse cocycle.
-\item R-twisted vertex algebras: Yang--Baxter equation ensures associativity; 
-Yangians are fundamental examples.
-\item $q$-deformed algebras: $q$-Heisenberg, $q$-Virasoro, quantum W-algebras; 
-$\Eone$ structure with $q \neq 1$.
-\item Yangians and shifted Yangians: Connected to Coulomb branches and CoHA.
-\item Toroidal and elliptic algebras: Double affine structures with theta function OPEs.
-\end{enumerate}
-
-\textbf{Physical Origins:}
-\begin{enumerate}[label=(\roman*)]
-\item 4d/2d correspondence produces $\Einf$-chiral from 4d $\mathcal{N}=2$.
-\item Non-commutative Chern--Simons gives $\Eone$-chiral.
-\item D-brane configurations naturally produce $\Eone$ structures.
-\item AGT connects Virasoro to gauge theory; $q$-AGT gives $\Eone$ quantum W-algebras.
-\end{enumerate}
-
-\textbf{Deformation Quantization:}
-\begin{enumerate}[label=(\roman*)]
-\item $\Pinf$-chiral structures encode classical data.
-\item Formality ensures quantization exists (no obstructions for nice examples).
-\item Star product computed via configuration space integrals.
-\item Maurer--Cartan elements classify deformations.
-\end{enumerate}
-
-\section*{The Dual Approach in Action}
-
-Throughout Part XI, we demonstrated the dual abstract-concrete methodology:
+Table~\ref{tab:master-invariants} records, for each Koszul chiral
+algebra~$\cA$ computed in this monograph:
 \begin{itemize}
-\item \textbf{Abstract}: $\infty$-categorical bar-cobar adjunction, operadic Koszul duality.
-\item \textbf{Concrete}: Explicit generators and relations, computed differentials, 
+\item the Koszul dual~$\cA^!$;
+\item the central charge~$c(\cA)$;
+\item the level-independent sum $c(\cA) + c(\cA^!)$ under Koszul duality
+  (Theorem~\ref{thm:central-charge-complementarity});
+\item the obstruction coefficient $\kappa(\cA)$ from the genus universality
+  theorem $\operatorname{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+  (Theorem~\ref{thm:genus-universality}).
+\end{itemize}
+Throughout, $d = \dim\fg$, $r = \operatorname{rank}\fg$,
+$h^\vee$ is the dual Coxeter number, and $t = k + h^\vee$.
+
+\begin{table}[ht]
+\centering
+\caption{Computed invariants for Koszul chiral algebras}
+\label{tab:master-invariants}
+\index{Koszul duality!master table}
+\renewcommand{\arraystretch}{1.5}
+{\small
+\begin{tabular}{|l|l|c|c|c|}
+\hline
+\textbf{Algebra $\cA$} & \textbf{Koszul Dual $\cA^!$}
+  & $\boldsymbol{c(\cA)}$ & $\boldsymbol{c + c'}$
+  & $\boldsymbol{\kappa(\cA)}$ \\
+\hline
+\multicolumn{5}{|c|}{\textit{Free Fields
+  \textup{(}exact Koszul duality, $\kappa = 0$,
+  $\operatorname{obs}_g = 0$ for all~$g$\textup{)}}} \\
+\hline
+Free fermion $\psi$
+  & $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$
+  & $\tfrac{1}{2}$ & $0$ & $0$ \\
+\hline
+$bc$ ghosts (weight $\lambda$)
+  & $\beta\gamma$ system (weight $\lambda$)
+  & $1 - 3(2\lambda{-}1)^2$ & $0$ & $0$ \\
+\hline
+\multicolumn{5}{|c|}{\textit{Heisenberg \textup{(}curved abelian\textup{)}}} \\
+\hline
+Heisenberg $\mathcal{H}_\kappa$
+  & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (curved)
+  & $1$ & --- & $\kappa$ \\
+\hline
+\multicolumn{5}{|c|}{\textit{Affine Kac--Moody
+  \textup{(}Feigin--Frenkel level shift $k \mapsto -k - 2h^\vee$\textup{)}}} \\
+\hline
+$\widehat{\fg}_k$ (general)
+  & $\widehat{\fg}_{-k-2h^\vee}$
+  & $\dfrac{kd}{k + h^\vee}$ & $2d$
+  & $\dfrac{td}{2h^\vee}$ \\[4pt]
+\hline
+$\widehat{\mathfrak{sl}}_2$ at level $k$
+  & $\widehat{\mathfrak{sl}}_2$ at $-k{-}4$
+  & $\dfrac{3k}{k+2}$ & $6$ & $\dfrac{3(k+2)}{4}$ \\[4pt]
+\hline
+$\widehat{\mathfrak{sl}}_3$ at level $k$
+  & $\widehat{\mathfrak{sl}}_3$ at $-k{-}6$
+  & $\dfrac{8k}{k+3}$ & $16$ & $\dfrac{4(k+3)}{3}$ \\[4pt]
+\hline
+$\widehat{E}_8$ at level $k$
+  & $\widehat{E}_8$ at $-k{-}60$
+  & $\dfrac{248k}{k+30}$ & $496$ & $\dfrac{62(k+30)}{15}$ \\[4pt]
+\hline
+\multicolumn{5}{|c|}{\textit{$\mathcal{W}$-Algebras
+  \textup{(}Drinfeld--Sokolov reduction, $k' = -k - 2h^\vee$\textup{)}}} \\
+\hline
+$\mathrm{Vir}_c = \mathcal{W}^k(\mathfrak{sl}_2)$
+  & $\mathrm{Vir}_{26-c}$
+  & $1 - \dfrac{6(k{+}1)^2}{k{+}2}$ & $26$ & $c/2$ \\[4pt]
+\hline
+$\mathcal{W}_3^k(\mathfrak{sl}_3)$
+  & $\mathcal{W}_3^{k'}(\mathfrak{sl}_3)$
+  & $2 - \dfrac{24(k{+}2)^2}{k{+}3}$ & $100$ & $\tfrac{5c}{6}$ \\[4pt]
+\hline
+$\mathcal{W}_N^k(\mathfrak{sl}_N)$ (general)
+  & $\mathcal{W}_N^{k'}(\mathfrak{sl}_N)$
+  & $c(k)$ & $2(N{-}1)(2N^2{+}2N{+}1)$
+  & $c \displaystyle\sum_{j=2}^{N}\tfrac{1}{j}$ \\[6pt]
+\hline
+\multicolumn{5}{|c|}{\textit{$\Eone$-Chiral Algebras}} \\
+\hline
+Yangian $Y(\fg)$
+  & $Y_{R^{-1}}(\fg)$
+  & --- & --- & --- \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{remark}[Genus-$1$ free energy and the conformal anomaly]\label{rem:genus-1-verification}
+\index{free energy!genus one}
+The Faber--Pandharipande $\lambda_g$ formula (Theorem~\ref{thm:genus-universality}(iii))
+gives the genus-$g$ free energy
+$F_g(\cA) = \kappa(\cA) \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$.
+At $g = 1$, $|B_2| = 1/6$, yielding
+\[
+F_1(\cA) = \frac{\kappa(\cA)}{24}.
+\]
+For the Heisenberg algebra at level $\kappa = 1$ (single free boson, $c = 1$),
+$F_1(\mathcal{H}_1) = 1/24 = c/24$---precisely the conformal anomaly coefficient
+$q^{-c/24}$ in the torus partition function $Z(\tau) = q^{-c/24}\sum_h d(h)\,q^h$.
+For $\widehat{\mathfrak{sl}}_2$ at level~$k$:
+$F_1 = 3(k{+}2)/96 = (k{+}2)/32$.
+In general, $F_1 = \kappa/24$ differs from the conformal anomaly $c/24$ by the ratio $\kappa/c$, which is~$1$ for the Heisenberg algebra but varies for other algebras.
+\end{remark}
+
+\begin{remark}[Reading the table]\label{rem:reading-master-table}
+Three structural features are visible from the table:
+\begin{enumerate}
+\item \emph{Complementarity.}
+  Every $c + c'$ entry is independent of the level~$k$: it depends
+  only on the root datum of~$\fg$.
+  This is the content of Theorem~\ref{thm:central-charge-complementarity}.
+\item \emph{Critical level.}
+  Setting $\kappa(\cA) = 0$ (i.e., $t = k + h^\vee = 0$)
+  simultaneously forces $\operatorname{obs}_g = 0$
+  for all genera: the bar complex becomes \emph{uncurved}, and
+  the Feigin--Frenkel center $\mathfrak{z}(\widehat{\fg}_{-h^\vee})$
+  emerges as the degree-zero cohomology.
+\item \emph{Free fields.}
+  The exact (uncurved) Koszul dualities ($\psi \leftrightarrow \gamma$,
+  $bc \leftrightarrow \beta\gamma$) have $\kappa = 0$ identically:
+  their bar complexes are acyclic at every genus, reflecting the
+  absence of interactions.  The Heisenberg is the borderline
+  case---abelian but curved, with $\kappa = \kappa$ recording the
+  central extension.
+\end{enumerate}
+\end{remark}
+
+\section*{Key results by category}
+
+\emph{$\Einf$-Chiral Algebras (Vertex Algebras).}
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Heisenberg}: Koszul dual is the commutative chiral algebra
+$\mathrm{Sym}^{\mathrm{ch}}(V^*)$ with curvature $m_0 = -\kappa \cdot \mathbf{1}$;
+the bar complex is the Chevalley--Eilenberg coalgebra
+(Theorem~\ref{thm:heisenberg-koszul-dual-early}).
+Complete genus-$1$ pipeline for $\widehat{\mathfrak{sl}}_2$ computed
+in \S\ref{sec:sl2-genus-one-pipeline}.
+\item \emph{$bc$--$\beta\gamma$}: Clifford/Sym exchange;
+bar construction $\bar{B}(bc) = \Lambda^c(V^*)$, Koszul dual
+$(bc)^! \cong \beta\gamma$
+(\S\ref{sec:betagamma-koszul-dual}).
+\item \emph{Affine Kac--Moody}: Koszul dual is
+$\widehat{\fg}_{-k-2h^\vee}$; explicit computation through degree~$3$
+for $\mathfrak{sl}_2$ (Theorem~\ref{thm:sl2-koszul-dual}),
+general case via Serre duality on FM spaces
+(Theorem~\ref{thm:universal-kac-moody-koszul}).
+\item \emph{Virasoro and $\mathcal{W}$-algebras}:
+$\mathcal{W}^k(\fg)^! \cong \mathcal{W}^{-k-2h^\vee}(\fg)$
+(Theorem~\ref{thm:w-algebra-koszul-main}).
+Complete genus-$1$ pipelines for $\mathrm{Vir}_c$
+(\S\ref{sec:virasoro-genus-one-pipeline}, $c + c' = 26$, $\kappa = c/2$)
+and $\mathcal{W}_3^k$
+(\S\ref{sec:w3-genus-one-pipeline}, $c + c' = 100$, $\kappa = 5c/6$).
+General $\mathcal{W}_N$: $\kappa = c \cdot (H_N - 1)$
+(Theorem~\ref{thm:wn-obstruction}).
+\end{enumerate}
+
+\emph{$\Eone$-Chiral Algebras (Nonlocal Vertex Algebras).}
+\begin{enumerate}[label=(\roman*)]
+\item Lattice algebras with non-symmetric cocycles: first strictly $\Eone$ examples;
+Koszul dual uses inverse cocycle.
+\item R-twisted vertex algebras: Yang--Baxter equation ensures associativity;
+Yangians are fundamental examples.
+\item Yangians: $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$, self-dual at the classical
+level (Theorem~\ref{thm:yangian-koszul-dual}).
+\item Toroidal and elliptic algebras: double affine structures with theta function OPEs.
+\end{enumerate}
+
+Deformation quantization.
+\begin{enumerate}[label=(\roman*)]
+\item Coisson algebras (PVA) quantize to $\Einf$-chiral algebras (vertex algebras)
+via configuration space integrals (Theorem~\ref{thm:chiral-kontsevich}).
+\item $\Pinf$-chiral algebras ($\Einf + L_\infty$) quantize to $\Eone$-chiral
+algebras (nonlocal VAs; Construction~\ref{constr:quantization}).
+\item Maurer--Cartan elements classify deformations at each level.
+\end{enumerate}
+
+\section*{The dual approach in action}
+
+Throughout Part~XI, we demonstrated the dual abstract-concrete methodology:
+\begin{itemize}
+\item On the abstract side: $\infty$-categorical bar-cobar adjunction, operadic Koszul duality.
+\item On the concrete side: explicit generators and relations, computed differentials,
 verified acyclicity.
 \end{itemize}
 
-The synthesis shows that geometric constructions (configuration space integrals, 
-residues at collision divisors) are the computational realization of abstract 
-homotopy-coherent structures.
+Every row of Table~\ref{tab:master-invariants} instantiates the three main
+theorems:
+Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main}) produces the
+Koszul dual column;
+Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}) produces the
+$c + c'$ column via the complementarity formula;
+Theorem~\ref{thm:genus-universality} produces the $\kappa$ column.
+The individual synthesis remarks---Remark~\ref{rem:sl2-three-theorems}
+(Kac--Moody), Remark~\ref{rem:free-field-three-theorems} (free fields),
+Remark~\ref{rem:lattice-three-theorems} (lattices),
+Remark~\ref{rem:w-algebra-three-theorems} (W-algebras),
+Remark~\ref{rem:deformation-three-theorems} (deformation quantization),
+Remark~\ref{rem:yangian-three-theorems} (Yangians)---provide
+detailed verifications for each example class.

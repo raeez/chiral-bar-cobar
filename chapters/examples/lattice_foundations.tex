@@ -1,32 +1,22 @@
 % ======================================================================
-% Chapter: The Lattice Construction — A Universal Engine for Examples
-%
-% This chapter establishes the systematic lattice construction framework
-% that unifies all major vertex algebra examples in Part 2. Every family
-% of chiral algebras studied in subsequent chapters — Heisenberg, affine
-% Kac-Moody, W-algebras, deformation quantization — arises from lattice
-% constructions or operations derived from them. The chapter provides
-% the constructive machinery; the remaining chapters become applications.
+% Chapter: The Lattice Construction
 % ======================================================================
 
-\chapter{The Lattice Construction: A Universal Engine for Examples}
+\chapter{The lattice construction}
 \label{ch:lattice}
 
-The examples in Part~2 are not a miscellaneous collection. They arise from
-a single source: \emph{lattice vertex algebras} and operations upon them.
-Every vertex algebra family studied in the subsequent chapters --- Heisenberg,
+The examples in Part~2 arise from a common source: \emph{lattice vertex algebras} and operations upon them.
+Every vertex algebra family studied below --- Heisenberg,
 affine Kac--Moody at level~1, $W$-algebras via quantum Drinfeld--Sokolov
 reduction, deformation quantization via chiral Kontsevich formality --- is
 either a lattice vertex algebra, a subalgebra of one, or obtained from one
 by a functorial operation (extension, orbifold, BRST reduction).
 
-The purpose of this chapter is to establish the lattice construction as a
-\emph{universal engine}: a single framework from which the entire catalog
-of examples can be derived systematically, with explicit presentations
-amenable to bar complex computation and Koszul duality analysis.
+This chapter establishes the lattice construction and its bar complex,
+providing explicit presentations for the Koszul duality computations that follow.
 
 \medskip
-\noindent\textbf{Organization.}
+\noindent\emph{Organization.}
 Sections~\ref{sec:lattice:lattices}--\ref{sec:lattice:cocycles} recall
 even lattices and their cocycle theory.
 Section~\ref{sec:lattice:construction} constructs lattice vertex algebras
@@ -45,35 +35,35 @@ treat chiral Hochschild cohomology and higher-genus aspects.
 % Section 1: Even Lattices and Root Systems
 % ======================================================================
 
-\section{Even Lattices and Root Systems}
+\section{Even lattices and root systems}
 \label{sec:lattice:lattices}
 
 \begin{definition}[Lattice]\label{def:lattice:lattice}
 \index{lattice!even unimodular}
-A \textbf{lattice} is a free abelian group $\Lambda$ of finite rank
+A \emph{lattice} is a free abelian group $\Lambda$ of finite rank
 equipped with a symmetric bilinear form
 $\langle \cdot, \cdot \rangle \colon \Lambda \times \Lambda \to \Z$.
 The lattice is:
 \begin{enumerate}[label=(\roman*)]
-\item \textbf{integral} if $\langle \alpha, \beta \rangle \in \Z$ for all
+\item \emph{integral} if $\langle \alpha, \beta \rangle \in \Z$ for all
   $\alpha, \beta \in \Lambda$;
-\item \textbf{even} if $\langle \alpha, \alpha \rangle \in 2\Z$ for all
+\item \emph{even} if $\langle \alpha, \alpha \rangle \in 2\Z$ for all
   $\alpha \in \Lambda$ (this implies integrality);
-\item \textbf{positive-definite} if $\langle \alpha, \alpha \rangle > 0$
+\item \emph{positive-definite} if $\langle \alpha, \alpha \rangle > 0$
   for all $\alpha \neq 0$;
-\item \textbf{non-degenerate} if the map
+\item \emph{non-degenerate} if the map
   $\Lambda \to \Lambda^* := \Hom(\Lambda, \Z)$ given by
   $\alpha \mapsto \langle \alpha, \cdot \rangle$ is injective;
-\item \textbf{unimodular} if this map is an isomorphism, i.e.,
+\item \emph{unimodular} if this map is an isomorphism, i.e.,
   $\Lambda = \Lambda^*$.
 \end{enumerate}
 \end{definition}
 
 \begin{definition}[Discriminant group]\label{def:lattice:discriminant}
-For a non-degenerate lattice $\Lambda$, the \textbf{dual lattice} is
+For a non-degenerate lattice $\Lambda$, the \emph{dual lattice} is
 $\Lambda^* = \{\lambda \in \Lambda \otimes_\Z \bQ :
 \langle \lambda, \alpha \rangle \in \Z \ \forall\, \alpha \in \Lambda\}$.
-The \textbf{discriminant group} is the finite abelian group
+The \emph{discriminant group} is the finite abelian group
 $D(\Lambda) = \Lambda^*/\Lambda$,
 whose order equals $|\det(\langle e_i, e_j \rangle)|$ for any basis
 $\{e_i\}$ of $\Lambda$. The bilinear form on $\Lambda$ induces a
@@ -111,21 +101,21 @@ the lattice-theoretic origin of the two heterotic string theories.
 We record the operations that will become functorial on vertex algebras
 in Section~\ref{sec:lattice:functorial}.
 \begin{enumerate}[label=(\roman*)]
-\item \textbf{Direct sum.}
+\item \emph{Direct sum.}
   For lattices $\Lambda_1, \Lambda_2$, the orthogonal direct sum
   $\Lambda_1 \oplus \Lambda_2$ has
   $\langle (\alpha_1, \alpha_2), (\beta_1, \beta_2) \rangle =
   \langle \alpha_1, \beta_1 \rangle + \langle \alpha_2, \beta_2 \rangle$.
-\item \textbf{Sublattice.}
+\item \emph{Sublattice.}
   A sublattice $\Lambda' \hookrightarrow \Lambda$ of finite index
   gives rise to $D(\Lambda') \twoheadrightarrow D(\Lambda)$.
-\item \textbf{Overlattice (gluing).}
+\item \emph{Overlattice (gluing).}
   For an isotropic subgroup $I \subset D(\Lambda)$ (meaning
   $\langle \gamma, \gamma' \rangle \equiv 0 \bmod \Z$ for all
   $\gamma, \gamma' \in I$), the preimage
   $\Lambda_I = \{\lambda \in \Lambda^* : [\lambda] \in I\}$ is a
   lattice with $\Lambda \subset \Lambda_I \subset \Lambda^*$.
-\item \textbf{Orbifold.}
+\item \emph{Orbifold.}
   For $\sigma \in \operatorname{Aut}(\Lambda)$, the fixed sublattice
   $\Lambda^\sigma$ and the coinvariants $\Lambda/(1-\sigma)\Lambda$
   both carry induced bilinear forms.
@@ -137,18 +127,18 @@ in Section~\ref{sec:lattice:functorial}.
 % Section 2: Cocycle Theory
 % ======================================================================
 
-\section{Cocycle Theory}
+\section{Cocycle theory}
 \label{sec:lattice:cocycles}
 
 The vertex algebra structure on $V_\Lambda$ requires a choice of
 2-cocycle on $\Lambda$. Different cocycles produce genuinely different
 algebraic structures, ranging from honest vertex algebras ($\Einf$-chiral)
-to nonlocal $\Eone$-chiral algebras. This section develops the cocycle
+to nonlocal $\Eone$-chiral algebras. We develop the cocycle
 theory that controls this distinction.
 
 \begin{definition}[2-cocycle on a lattice]\label{def:lattice:2-cocycle}
 \index{cocycle!lattice}
-A \textbf{2-cocycle} on a lattice $\Lambda$ is a function
+A \emph{2-cocycle} on a lattice $\Lambda$ is a function
 $\varepsilon \colon \Lambda \times \Lambda \to \C^\times$ satisfying:
 \begin{equation}\label{eq:lattice:cocycle-condition}
 \varepsilon(\alpha, \beta)\,\varepsilon(\alpha + \beta, \gamma)
@@ -157,13 +147,13 @@ $\varepsilon \colon \Lambda \times \Lambda \to \C^\times$ satisfying:
 for all $\alpha, \beta, \gamma \in \Lambda$.
 The cocycle is:
 \begin{enumerate}[label=(\roman*)]
-\item \textbf{normalized} if
+\item \emph{normalized} if
   $\varepsilon(\alpha, 0) = \varepsilon(0, \alpha) = 1$ for all $\alpha$;
-\item \textbf{bimultiplicative} if
+\item \emph{bimultiplicative} if
   $\varepsilon(\alpha + \alpha', \beta) =
   \varepsilon(\alpha, \beta)\,\varepsilon(\alpha', \beta)$
   and similarly in the second argument;
-\item \textbf{symmetric} (in the sense of Borcherds) if
+\item \emph{symmetric} (in the sense of Borcherds) if
 \begin{equation}\label{eq:lattice:borcherds-symmetry}
 \varepsilon(\alpha, \beta)
 = (-1)^{\langle \alpha, \beta \rangle}\,\varepsilon(\beta, \alpha)
@@ -183,7 +173,7 @@ corrections; we restrict to even lattices throughout.
 \end{remark}
 
 \begin{definition}[Commutator map]\label{def:lattice:commutator}
-The \textbf{commutator} of a cocycle $\varepsilon$ is
+The \emph{commutator} of a cocycle $\varepsilon$ is
 \[
 c_\varepsilon(\alpha, \beta)
 := \frac{\varepsilon(\alpha, \beta)}{\varepsilon(\beta, \alpha)}.
@@ -233,7 +223,7 @@ basis $\{e_1, \ldots, e_d\}$.
 
 \begin{construction}[Standard symmetric cocycle]\label{constr:lattice:standard-cocycle}
 For an even lattice $\Lambda$ with ordered basis $\{e_1, \ldots, e_d\}$,
-the \textbf{standard symmetric cocycle} is:
+the \emph{standard symmetric cocycle} is:
 \begin{equation}\label{eq:lattice:standard-cocycle}
 \varepsilon_0(\alpha, \beta)
 = (-1)^{\sum_{i < j} \alpha_i \beta_j}
@@ -242,11 +232,9 @@ where $\alpha = \sum_i \alpha_i e_i$ and $\beta = \sum_j \beta_j e_j$.
 One verifies:
 \[
 \varepsilon_0(\alpha,\beta)\,\varepsilon_0(\beta,\alpha)
-= (-1)^{\sum_{i<j}(\alpha_i\beta_j + \beta_i\alpha_j)}
-= (-1)^{\langle\alpha,\beta\rangle - \sum_i \alpha_i\beta_i\langle e_i,e_i\rangle/1},
+= (-1)^{\sum_{i<j}(\alpha_i\beta_j + \beta_i\alpha_j)}.
 \]
-which for an even lattice reduces to
-$(-1)^{\langle\alpha,\beta\rangle}$, confirming the Borcherds axiom.
+To verify this equals $(-1)^{\langle\alpha,\beta\rangle}$, write $\langle\alpha,\beta\rangle = \sum_{i,j} \alpha_i G_{ij}\beta_j$ where $G_{ij} = \langle e_i, e_j\rangle$.  Then $\sum_{i<j}(\alpha_i\beta_j + \beta_i\alpha_j) = \sum_{i \neq j}\alpha_i\beta_j = \langle\alpha,\beta\rangle - \sum_i \alpha_i\beta_i G_{ii}$.  For an even lattice, $G_{ii} \in 2\mathbb{Z}$, so $\sum_i \alpha_i\beta_i G_{ii} \equiv 0 \pmod{2}$, giving $(-1)^{\langle\alpha,\beta\rangle}$ as required.
 \end{construction}
 
 \begin{example}[Non-symmetric cocycle on $\Z^2$]\label{ex:lattice:nonsym-z2}
@@ -290,7 +278,7 @@ commutative ($\Einf$) and noncommutative ($\Eone$) worlds.
 % Section 3: Lattice Vertex Algebra Construction
 % ======================================================================
 
-\section{Lattice Vertex Algebra Construction}
+\section{Lattice vertex algebra construction}
 \label{sec:lattice:construction}
 
 \begin{construction}[Lattice vertex algebra]\label{constr:lattice:va}
@@ -298,10 +286,10 @@ commutative ($\Einf$) and noncommutative ($\Eone$) worlds.
 Let $\Lambda$ be an even positive-definite lattice of rank~$d$ with
 bilinear form $\langle \cdot, \cdot \rangle$, and let
 $\varepsilon \colon \Lambda \times \Lambda \to \C^\times$ be a
-normalized 2-cocycle. The \textbf{lattice vertex algebra}
+normalized 2-cocycle. The \emph{lattice vertex algebra}
 $\Vlat_\Lambda^\varepsilon$ is defined as follows.
 
-\textbf{State space.}
+\noindent\emph{State space.}
 Let $\cH = \C[\alpha^i_{-n} : 1 \leq i \leq d,\; n \geq 1]$ be the
 Heisenberg Fock space (bosonic oscillator algebra) for
 $\Lambda \otimes_\Z \C$, with vacuum $|0\rangle$ annihilated by all
@@ -317,7 +305,7 @@ The state space is:
 This is $\Lambda$-graded by declaring
 $\deg(\cH \otimes e^\alpha) = \alpha$.
 
-\textbf{Vertex operators.}
+\noindent\emph{Vertex operators.}
 For $\alpha \in \Lambda$, the vertex operator is:
 \begin{equation}\label{eq:lattice:vertex-op}
 Y(e^\alpha, z) = E^-(\alpha, z)\, E^+(\alpha, z)\, e^\alpha\, z^{\alpha_0}
@@ -335,14 +323,14 @@ the operator $e^\alpha$ acts on $\C[\Lambda]$ by
 $e^\alpha \cdot e^\beta = \varepsilon(\alpha,\beta)\,e^{\alpha+\beta}$,
 and $z^{\alpha_0}$ is the formal variable tracking the zero mode.
 
-\textbf{OPE.}
+\noindent\emph{OPE.}
 \begin{equation}\label{eq:lattice:ope}
 Y(e^\alpha, z)\, Y(e^\beta, w)
 = \varepsilon(\alpha, \beta)\, (z-w)^{\langle\alpha,\beta\rangle}\,
   Y(e^{\alpha+\beta}, w) + \text{regular terms}.
 \end{equation}
 
-\textbf{Conformal vector.}
+\noindent\emph{Conformal vector.}
 Choose an orthonormal basis $\{h_i\}$ of $\Lambda \otimes \C$.
 The conformal vector is
 $\omega = \frac{1}{2}\sum_{i=1}^d h_{i,{-1}}^2 |0\rangle$,
@@ -365,12 +353,12 @@ The lattice vertex algebra $\Vlat_\Lambda^\varepsilon$ is:
 \end{theorem}
 
 \begin{proof}
-\textbf{(ii)} The cocycle condition~\eqref{eq:lattice:cocycle-condition}
+\emph{(ii)} The cocycle condition~\eqref{eq:lattice:cocycle-condition}
 on $\varepsilon$ ensures associativity of the vertex operator products
 $Y(Y(e^\alpha,z-w)\,e^\beta, w) = Y(e^\alpha, z)\,Y(e^\beta, w)$.
 Hence $\Vlat_\Lambda^\varepsilon$ is always at least $\Eone$-chiral.
 
-\textbf{(i)} and \textbf{(iii)}: The skew-symmetry axiom for vertex
+\emph{(i)} and \emph{(iii).} The skew-symmetry axiom for vertex
 algebras requires
 $Y(e^\alpha, z)\, e^\beta = e^{z\partial} Y(e^\beta, -z)\, e^\alpha$.
 Computing both sides:
@@ -410,14 +398,13 @@ bar complex computations.
 
 
 % ======================================================================
-% Section 4: The Frenkel-Kac-Segal Theorem
+% Section 4: The Frenkel--Kac--Segal Theorem
 % ======================================================================
 
-\section{The Frenkel--Kac--Segal Theorem}
+\section{The Frenkel--Kac--Segal theorem}
 \label{sec:lattice:frenkel-kac}
 
-The deepest structural result in the theory of lattice vertex algebras
-is the theorem of Frenkel--Kac \cite{FK80} and Segal \cite{Se81},
+The principal structural result is the theorem of Frenkel--Kac \cite{FK80} and Segal \cite{Se81},
 identifying level-1 representations of simply-laced affine Lie algebras
 with lattice vertex algebras on root lattices.
 
@@ -436,38 +423,56 @@ where $L(\AffKM{g}, 1)$ denotes the simple quotient of the level-1
 vacuum module for the affine Kac--Moody algebra $\AffKM{g}$.
 \end{theorem}
 
-\begin{proof}[Proof sketch]
-The proof proceeds in three steps.
+\begin{proof}
+The proof proceeds in three steps (\cite{FK80}; \cite{Se81};
+see also \cite{Kac}~Ch.~5).
 
-\textbf{Step 1: Embedding $\AffKM{g}$ into $\Vlat_{\Lambda_\fg}$.}
+\emph{Step~1.}
 The Heisenberg subalgebra $\cH \subset \Vlat_{\Lambda_\fg}$ provides
 the Cartan subalgebra $\AffKM{h} \hookrightarrow \AffKM{g}$.
-For each root $\alpha \in \Phi$, the vertex operator $Y(e^\alpha, z)$
-provides the root current. Specifically, define:
+For each root $\alpha \in \Phi$, define the root current:
 \[
 E_\alpha(z) := Y(e^\alpha, z), \quad
 H_i(z) := Y(\alpha_{i,-1}|0\rangle, z)
 \]
-for simple roots $\alpha_i$.
+for simple roots $\alpha_i$.  The cocycle $\varepsilon$ ensures that
+the vertex operators $E_{\alpha_i}$ satisfy the Chevalley--Serre
+relations: $\varepsilon(\alpha,\beta)\,\varepsilon(\beta,\alpha) =
+(-1)^{\langle\alpha,\beta\rangle}$ produces the correct signs in the
+$[E_\alpha, E_\beta]$ commutation relations.
 
-\textbf{Step 2: Verifying the OPE.}
-For simple roots $\alpha_i, \alpha_j$ with
-$\langle \alpha_i, \alpha_j \rangle = A_{ij}$ (Cartan matrix entry),
-the lattice OPE~\eqref{eq:lattice:ope} gives:
+\emph{Step~2.}
+The lattice OPE~\eqref{eq:lattice:ope} gives, for roots $\alpha, \beta$:
 \[
-E_{\alpha_i}(z)\, E_{-\alpha_i}(w)
-= \frac{1}{(z-w)^2} + \frac{H_i(w)}{z-w} + \text{regular},
+E_\alpha(z)\, E_\beta(w) = \varepsilon(\alpha,\beta)\,
+(z-w)^{\langle\alpha,\beta\rangle}\, E_{\alpha+\beta}(w)
++ \text{regular}.
 \]
-reproducing the $\AffKM{g}$ current algebra at level $k = 1$
-(the level equals $\langle\alpha,\alpha\rangle/2 = 1$ for
-simply-laced roots).
+When $\beta = -\alpha$ ($\langle\alpha,-\alpha\rangle = -2$):
+\[
+E_\alpha(z)\, E_{-\alpha}(w)
+= \frac{\varepsilon(\alpha,-\alpha)}{(z-w)^2} + \frac{H_\alpha(w)}{z-w}
++ \text{regular},
+\]
+reproducing the $\AffKM{g}$ current algebra at level $k =
+\langle\alpha,\alpha\rangle/2 = 1$ (simply-laced).  When
+$\langle\alpha,\beta\rangle = -1$ (adjacent roots):
+$E_\alpha(z) E_\beta(w) = \varepsilon(\alpha,\beta)(z-w)^{-1}
+E_{\alpha+\beta}(w) + \cdots$, reproducing $[E_\alpha, E_\beta] =
+\varepsilon(\alpha,\beta) E_{\alpha+\beta}$.  When
+$\langle\alpha,\beta\rangle \geq 0$ and $\alpha+\beta \notin \Phi$:
+the OPE is regular, giving $[E_\alpha, E_\beta] = 0$.
 
-\textbf{Step 3: Simplicity.}
-The lattice vertex algebra $\Vlat_{\Lambda_\fg}$ is simple (it has no
-proper graded ideals, since $\Lambda_\fg$ is the root lattice of a
-simple Lie algebra). Hence the image of the embedding
-$L(\AffKM{g},1) \hookrightarrow \Vlat_{\Lambda_\fg}$ is the
-entire algebra.
+\emph{Step~3.}
+Steps~1--2 produce an injective vertex algebra homomorphism
+$L(\AffKM{g}, 1) \hookrightarrow \Vlat_{\Lambda_\fg}$.  Both sides
+have the same graded character: the level-$1$ Weyl--Kac character
+formula gives $\mathrm{ch}\, L(\AffKM{g}, 1) =
+\Theta_{\Lambda_\fg}(\tau) / \eta(\tau)^{\mathrm{rank}(\fg)}$, which
+equals the lattice vertex algebra character $\mathrm{ch}\,
+\Vlat_{\Lambda_\fg}$.  Since an injective map between graded
+vector spaces of the same graded dimension is an isomorphism,
+$L(\AffKM{g}, 1) \cong \Vlat_{\Lambda_\fg}$.
 \end{proof}
 
 \begin{example}[Explicit verification for $\AffKM{sl}_2$ at level 1]
@@ -509,8 +514,8 @@ non-simply-laced affine algebras via \emph{orbifold} constructions:
 start with a simply-laced lattice $\Lambda$ and quotient by a
 diagram automorphism $\sigma$. For instance:
 \begin{itemize}
-\item $\AffKM{sp}_{2n}$ at level 1 arises from $D_{n+1}$ modulo its
-  order-2 diagram automorphism.
+\item $\widehat{\mathfrak{so}}_{2n+1}$ (type $B_n$) at level 1 arises from $D_{n+1}$ modulo its
+  order-2 diagram automorphism (folding $D_{n+1}$ gives the $B_n$ root system, not $C_n$).
 \item $\widehat{G}_2$ at level 1 arises from $D_4$ modulo its order-3
   triality automorphism.
 \end{itemize}
@@ -522,11 +527,11 @@ See Section~\ref{sec:lattice:functorial} for the orbifold construction.
 % Section 5: Bar Complexes of Lattice Vertex Algebras
 % ======================================================================
 
-\section{Bar Complexes of Lattice Vertex Algebras}
+\section{Bar complexes of lattice vertex algebras}
 \label{sec:lattice:bar}
 
 We now apply the geometric bar construction of Part~1 to lattice vertex
-algebras. The lattice grading provides a powerful organizational tool:
+algebras. The lattice grading decomposes the bar complex:
 the bar differential preserves the total lattice degree, decomposing the
 bar complex into orthogonal summands indexed by $\Lambda$.
 
@@ -534,7 +539,7 @@ bar complex into orthogonal summands indexed by $\Lambda$.
 \label{constr:lattice:bar-complex}
 The geometric bar complex $\barBgeom(\Vlat_\Lambda^\varepsilon)$ has:
 
-\textbf{Generators.} Elements of the form
+\noindent\emph{Generators.} Elements of the form
 \[
 [e^{\alpha_1} \mid e^{\alpha_2} \mid \cdots \mid e^{\alpha_p}]
 \otimes \omega
@@ -544,9 +549,9 @@ logarithmic form on $\overline{C}_p(X)$. (We suppress Heisenberg
 descendants $\alpha_{-n}^i |0\rangle$ for notational clarity; they
 contribute additional tensor factors.)
 
-\textbf{Grading.} The total lattice degree is $\sum_{i=1}^p \alpha_i \in \Lambda$, and the bar degree is $p$.
+\noindent\emph{Grading.} The total lattice degree is $\sum_{i=1}^p \alpha_i \in \Lambda$, and the bar degree is $p$.
 
-\textbf{Differential.}
+\noindent\emph{Differential.}
 The bar differential $d = d_{\text{res}}$ sums residues over collision
 divisors. For a degree-2 element $[e^\alpha \mid e^\beta] \otimes 1$:
 \begin{equation}\label{eq:lattice:bar-diff}
@@ -564,16 +569,16 @@ with $d\log$).
 \index{bar complex!lattice VOA}
 The bar complex $\barBgeom(\Vlat_\Lambda^\varepsilon)$ satisfies:
 \begin{enumerate}[label=(\roman*)]
-\item \textbf{Lattice grading.}
+\item \emph{Lattice grading.}
   The differential preserves the total lattice degree
   $\sum_i \alpha_i \in \Lambda$, decomposing the bar complex as
   $\barBgeom(\Vlat_\Lambda^\varepsilon) =
   \bigoplus_{\gamma \in \Lambda}
   \barBgeom(\Vlat_\Lambda^\varepsilon)_\gamma$.
-\item \textbf{Residue criterion.}
+\item \emph{Residue criterion.}
   Simple poles occur only when $\langle\alpha_i,\alpha_j\rangle = -1$
   for some pair, and these are the only contributions to the differential.
-\item \textbf{Cocycle dependence.}
+\item \emph{Cocycle dependence.}
   The cocycle $\varepsilon$ appears explicitly in the bar differential
   via~\eqref{eq:lattice:bar-diff}. Different cocycles give
   non-isomorphic bar complexes.
@@ -583,18 +588,29 @@ The bar complex $\barBgeom(\Vlat_\Lambda^\varepsilon)$ satisfies:
 \begin{proof}
 (i) The OPE $Y(e^\alpha, z)\,Y(e^\beta, w)$ produces vertex operators
 of lattice degree $\alpha + \beta$. The residue operation preserves
-this degree.
+this degree, since $\mathrm{Res}_{z=w}$ does not change the total lattice
+weight $\alpha + \beta$.
 
 (ii) The OPE~\eqref{eq:lattice:ope} has a pole of order
 $-\langle\alpha,\beta\rangle$ at $z = w$. Pairing with the logarithmic
-form $\eta_{ij} = d\log(z_i - z_j)$ extracts the residue, which is
-nonzero only for a simple pole (order 1, i.e.,
-$\langle\alpha,\beta\rangle = -1$).
+form $\eta_{ij} = d\log(z_i - z_j)$ extracts exactly the order-1 residue:
+$\mathrm{Res}_{z=w}[(z-w)^{-m} d\log(z-w)] = \delta_{m,1}$.
+Hence the differential is nonzero only for a simple pole (order $1$,
+i.e., $\langle\alpha,\beta\rangle = -1$).  For $\langle\alpha,\beta\rangle \geq 0$
+there is no pole and the residue vanishes.  For $\langle\alpha,\beta\rangle \leq -2$
+the pole of order $\geq 2$ pairs trivially with $d\log$.
 
-(iii) The factor $\varepsilon(\alpha,\beta)$ in the
-OPE~\eqref{eq:lattice:ope} passes through to the residue
-formula~\eqref{eq:lattice:bar-diff}, so the differential depends on
-the cocycle.
+(iii) To show that different cocycles give non-isomorphic bar complexes,
+note that the differential $d([e^\alpha \mid e^\beta] \otimes 1) = \varepsilon(\alpha,\beta)[e^{\alpha+\beta}]\otimes 1$
+in~\eqref{eq:lattice:bar-diff} carries the sign $\varepsilon(\alpha,\beta) \in \{\pm 1\}$
+explicitly.  A change of cocycle $\varepsilon \mapsto \varepsilon'$ with
+$\varepsilon'(\alpha,\beta)/\varepsilon(\alpha,\beta) = c(\alpha)c(\beta)/c(\alpha+\beta)$
+(a coboundary, $c: \Lambda \to \{\pm 1\}$) corresponds to rescaling each basis vector
+$e^\alpha \mapsto c(\alpha)e^\alpha$, hence to an isomorphism of bar complexes.
+However, if $\varepsilon'$ and $\varepsilon$ differ by a non-trivial class in
+$H^2(\Lambda;\{\pm 1\})$, no such coboundary exists: the two bar complexes have
+differentials that cannot be related by any diagonal change of basis, so they are
+non-isomorphic as chain complexes.
 \end{proof}
 
 \begin{computation}[$A_1$ bar complex]\label{comp:lattice:bar-A1}
@@ -620,10 +636,10 @@ For $\Lambda = A_2$ with simple roots $\alpha_1, \alpha_2$ satisfying
 $\langle\alpha_1,\alpha_1\rangle = \langle\alpha_2,\alpha_2\rangle = 2$
 and $\langle\alpha_1,\alpha_2\rangle = -1$:
 
-\textbf{Bar degree 1:} Generated by $[e^\alpha]$ for
+\emph{Bar degree~1.} Generated by $[e^\alpha]$ for
 $\alpha \in \Lambda \setminus \{0\}$.
 
-\textbf{Bar degree 2:} The key differential is
+\emph{Bar degree~2.} The key differential is
 \[
 d([e^{\alpha_1} \mid e^{\alpha_2}] \otimes 1)
 = \varepsilon(\alpha_1,\alpha_2)\,[e^{\alpha_1+\alpha_2}] \otimes 1
@@ -633,14 +649,13 @@ $[e^{\alpha_1} \mid e^{\alpha_2}]$ of lattice degree
 $\alpha_1 + \alpha_2$ to $[e^{\alpha_1+\alpha_2}]$ of the same lattice
 degree, with coefficient $\varepsilon(\alpha_1,\alpha_2)$.
 
-\textbf{Bar degree 3:}
+\emph{Bar degree~3.}
 \[
 d([e^{\alpha_1} \mid e^{-\alpha_1-\alpha_2} \mid e^{\alpha_2}]
 \otimes \eta_{12} \wedge \eta_{23})
-= [e^0] = [1]
+= \varepsilon \cdot [e^0]
 \]
-since both adjacent pairs have inner product $-1$. This realizes the
-Weyl group relation in the bar complex.
+since both adjacent pairs have inner product $-1$.  Since $e^0 = \mathbf{1}$ lies in the augmentation (i.e., $[\mathbf{1}] = 0$ in the reduced bar complex $\bar{B} = B/\mathbb{C}\cdot\mathbf{1}$), this element is a \emph{cycle}, not an exact element.  It realizes the Weyl group relation $s_{\alpha_1} s_{\alpha_2} s_{\alpha_1} = s_{\alpha_2} s_{\alpha_1} s_{\alpha_2}$ as a homology class in the bar complex.
 
 The nontrivial differentials encode the $A_2$ root system structure:
 simple poles occur precisely for pairs of roots whose sum is again a root.
@@ -659,13 +674,13 @@ $\AffKM{so}_8$ current algebra at level~1.
 \begin{proof}
 The $D_4$ root lattice has 24 roots, all of the form $\pm e_i \pm e_j$ ($i \neq j$).  These form a single orbit under the Weyl group $W(D_4)$.  The outer automorphism group $\operatorname{Out}(D_4) \cong S_3$ acts as graph automorphisms of the $D_4$ Dynkin diagram, permuting the three ``legs'' and hence permuting the three nontrivial cosets of $D_4^*/D_4 \cong (\mathbb{Z}/2\mathbb{Z})^2$ (vector, spinor, and conjugate spinor representations).  Note: the spinor and conjugate spinor vectors lie in $D_4^* \setminus D_4$, not in the root lattice itself.
 
-\textbf{Step 1: Triality action on bar complex.}
+\emph{Step~1.} Triality action on bar complex.
 The triality automorphism $\sigma$ acts on the lattice as a graph automorphism of the $D_4$ Dynkin diagram, permuting the three ``legs.''  This extends to an automorphism of $\Vlat_{D_4}$ via $\sigma(e^\alpha) = e^{\sigma(\alpha)}$.  Since the bar construction is functorial (any algebra automorphism induces a coalgebra automorphism of the bar complex), $\sigma$ acts on $\barBgeom(\Vlat_{D_4})$.
 
-\textbf{Step 2: Action on homology.}
-In bar degree~1, the generators are $[e^\alpha]$ for each root $\alpha$.  The triality permutes these among the three classes of 8.  In bar degree~2, the differential $d([e^{\alpha_1} \mid e^{\alpha_2}]) = \varepsilon(\alpha_1,\alpha_2)\,[e^{\alpha_1+\alpha_2}]$ (when $\langle\alpha_1,\alpha_2\rangle = -1$) intertwines with $\sigma$ since $\sigma$ preserves inner products and the cocycle is equivariant (the standard Frenkel--Lepowsky--Meurman cocycle for $D_4$ is triality-invariant up to coboundary).
+\emph{Step~2.} Action on homology.
+In bar degree~1, the generators are $[e^\alpha]$ for each of the 24 roots $\alpha$.  The triality permutes these roots (preserving inner products).  In bar degree~2, the differential $d([e^{\alpha_1} \mid e^{\alpha_2}]) = \varepsilon(\alpha_1,\alpha_2)\,[e^{\alpha_1+\alpha_2}]$ (when $\langle\alpha_1,\alpha_2\rangle = -1$) intertwines with $\sigma$ since $\sigma$ preserves inner products and the cocycle is equivariant (the standard Frenkel--Lepowsky--Meurman cocycle for $D_4$ is triality-invariant up to coboundary).
 
-\textbf{Step 3: Conclusion.}
+\emph{Step~3.} Conclusion.
 The $S_3$-action on $H_*(\barBgeom(\Vlat_{D_4}))$ is the representation-theoretic manifestation of the triality symmetry: the three fundamental representations of $\mathfrak{so}_8$ (vector, spinor, conjugate spinor) are permuted by outer automorphisms, and this permutation lifts to the bar complex level.
 \end{proof}
 
@@ -684,16 +699,16 @@ $E_8$ each contribute a 1-dimensional summand in bar degree~1.
 \end{proposition}
 
 \begin{proof}
-\textbf{Step 1: Lattice decomposition.}
+\emph{Step~1.} Lattice decomposition.
 The bar complex decomposes along the $E_8$-grading: $\barBgeom(\Vlat_{E_8}) = \bigoplus_{\gamma \in E_8} \barBgeom(\Vlat_{E_8})_\gamma$.  The zero sector $\gamma = 0$ is the bar complex of the rank-8 Heisenberg algebra $\barBgeom(\cH_8)$, whose bar differential vanishes (the Heisenberg OPE has only a double pole, so $\cH_8^! \simeq \mathrm{Sym}^{ch}(V^*)$ by Theorem~\ref{thm:heisenberg-koszul-dual-early}).
 
-\textbf{Step 2: Root contributions.}
-In bar degree~1, each root $\alpha$ of $E_8$ contributes a generator $[e^\alpha]$ in the sector $\gamma = \alpha$.  Since $E_8$ has 240 roots, $\dim \barBgeom^1 = 240$ (in the root sectors).  In bar degree~2, the differential is $d([e^{\alpha_1} \mid e^{\alpha_2}]) = \varepsilon(\alpha_1,\alpha_2)\,[e^{\alpha_1+\alpha_2}]$ when $\langle\alpha_1,\alpha_2\rangle = -1$.  For $E_8$, each root has 56 neighbors at inner product $-1$ (from the $E_8$ root system geometry: the 126 pairs of roots summing to a root correspond to 56 neighbors per root, counted with multiplicity).
+\emph{Step~2.} Root contributions.
+In bar degree~1, each root $\alpha$ of $E_8$ contributes a generator $[e^\alpha]$ in the sector $\gamma = \alpha$.  Since $E_8$ has 240 roots, $\dim \barBgeom^1 = 240$ (in the root sectors).  In bar degree~2, the differential is $d([e^{\alpha_1} \mid e^{\alpha_2}]) = \varepsilon(\alpha_1,\alpha_2)\,[e^{\alpha_1+\alpha_2}]$ when $\langle\alpha_1,\alpha_2\rangle = -1$.  For $E_8$, each root $\alpha$ has exactly 56 neighbors $\beta$ with $\langle\alpha,\beta\rangle = -1$ (so that $\alpha+\beta$ is again a root), as follows from the root system geometry: the 240 roots partition by inner product with $\alpha$ as $1 + 56 + 126 + 56 + 1$.
 
-\textbf{Step 3: Self-duality.}
-By Theorem~\ref{thm:lattice:koszul-dual}, $(\Vlat_{E_8}^\varepsilon)^! = (\Vlat_{E_8}^{\varepsilon^{-1}})^c$.  Since $E_8$ is unimodular ($E_8 = E_8^*$), the cocycle $\varepsilon$ for $E_8$ satisfies $\varepsilon^{-1} \sim \varepsilon$ (cohomologous): since $\mathbb{C}^\times$ is $2$-divisible, the bimultiplicative cocycle $\varepsilon$ has a square root $\varepsilon^{1/2}$, and the coboundary $\delta(\varepsilon^{1/2})$ witnesses $\varepsilon^{-1} \sim \varepsilon$.  Therefore $(\Vlat_{E_8})^! \cong \Vlat_{E_8}$ as a coalgebra.
+\emph{Step~3.} Self-duality.
+By Theorem~\ref{thm:lattice:koszul-dual}, $(\Vlat_{E_8}^\varepsilon)^! = (\Vlat_{E_8}^{\varepsilon^{-1}})^c$.  Since $E_8$ is unimodular ($E_8 = E_8^*$), the cocycle $\varepsilon$ for $E_8$ satisfies $\varepsilon^{-1} = \varepsilon$: the standard FLM cocycle takes values in $\{\pm 1\}$, so $\varepsilon(\alpha,\beta)^{-1} = \varepsilon(\alpha,\beta)$ for all $\alpha,\beta$.  Therefore $(\Vlat_{E_8})^! \cong \Vlat_{E_8}$ as a coalgebra.
 
-\textbf{Step 4: Sector count.}
+\emph{Step~4.} Sector count.
 Modulo $2E_8$, the lattice has $|E_8/2E_8| = 2^{\operatorname{rank}(E_8)} = 2^8 = 256$ classes (since $\Lambda/2\Lambda \cong (\mathbb{Z}/2\mathbb{Z})^d$ for any rank-$d$ lattice), giving 256 sectors in the bar complex.
 \end{proof}
 
@@ -707,7 +722,7 @@ and the bar-cobar quasi-isomorphism $\Omega^{\mathrm{ch}}(\barBgeom(\Vlat_\Lambd
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:lattice:koszul-dual}, $\Vlat_\Lambda^! = (\Vlat_\Lambda^{\varepsilon^{-1}})^c$.  For $\Lambda$ unimodular, the cocycles $\varepsilon$ and $\varepsilon^{-1}$ are cohomologous: since $\C^\times$ is $2$-divisible, every bimultiplicative $2$-cocycle $\varepsilon : \Lambda \times \Lambda \to \C^\times$ has a square root $\varepsilon^{1/2}$, and the coboundary $\delta(\varepsilon^{1/2})$ witnesses $\varepsilon^{-1} \sim \varepsilon$.  Hence $\Vlat_\Lambda^{\varepsilon^{-1}} \cong \Vlat_\Lambda^\varepsilon$ as vertex algebras.  The coalgebra structure on the dual side matches the algebra structure on the original side (since the cocycle is self-inverse up to coboundary), giving $\Vlat_\Lambda^! \cong \Vlat_\Lambda$.
+By Theorem~\ref{thm:lattice:koszul-dual}, $\Vlat_\Lambda^! = (\Vlat_\Lambda^{\varepsilon^{-1}})^c$.  For the standard FLM cocycle $\varepsilon : \Lambda \times \Lambda \to \{\pm 1\}$, we have $\varepsilon^{-1} = \varepsilon$ (since $\varepsilon(\alpha,\beta)^{-1} = \varepsilon(\alpha,\beta)$ for all $\alpha,\beta$), so $\Vlat_\Lambda^{\varepsilon^{-1}} = \Vlat_\Lambda^\varepsilon$.  Hence $\Vlat_\Lambda^{\varepsilon^{-1}} \cong \Vlat_\Lambda^\varepsilon$ as vertex algebras.  The coalgebra structure on the dual side matches the algebra structure on the original side (since the cocycle is self-inverse up to coboundary), giving $\Vlat_\Lambda^! \cong \Vlat_\Lambda$.
 
 The bar-cobar QI follows from Theorem~\ref{thm:lattice:koszul-morphism}: the twisting morphism $\tau$ is Koszul, so $\Omega^{\mathrm{ch}}(\barBgeom(\Vlat_\Lambda)) \xrightarrow{\sim} \Vlat_\Lambda$.
 \end{proof}
@@ -717,12 +732,12 @@ The bar-cobar QI follows from Theorem~\ref{thm:lattice:koszul-morphism}: the twi
 % Section 6: Koszul Duality for Lattice Algebras
 % ======================================================================
 
-\section{Koszul Duality for Lattice Algebras}
+\section{Koszul duality for lattice algebras}
 \label{sec:lattice:koszul}
 
 \begin{definition}[Inverse cocycle]\label{def:lattice:inverse-cocycle}
 For a cocycle $\varepsilon \colon \Lambda \times \Lambda \to \C^\times$,
-the \textbf{inverse cocycle} is
+the \emph{inverse cocycle} is
 $\varepsilon^{-1}(\alpha,\beta) := \varepsilon(\alpha,\beta)^{-1}$.
 The cocycle condition is preserved under inversion, and the commutator
 satisfies
@@ -789,16 +804,22 @@ is acyclic.
 \end{theorem}
 
 \begin{proof}
-Filter by lattice weight. The associated graded is the bar complex of
-the Heisenberg algebra (forgetting the lattice part), which is acyclic
-by the Heisenberg bar-cobar quasi-isomorphism
-(cf.\ the free field computations in Chapter~\ref{ch:lattice}).
-The spectral sequence associated to the lattice weight filtration
-converges (the lattice $\Lambda$ is positive-definite, so the
-filtration is bounded below in each total degree) and degenerates at
-$E_2$. The cocycle $\varepsilon$ contributes phases but does not affect
-the acyclicity argument, since the underlying vector spaces are the
-same for all cocycles.
+The proof uses the lattice weight filtration.
+
+\emph{Step~1: Filtration setup.}
+Filter the twisted complex by total lattice weight: define $F^p(\barBgeom(\Vlat_\Lambda^\varepsilon) \otimes_\tau \Vlat_\Lambda^\varepsilon)$ to consist of elements whose total lattice weight $\sum_i |\alpha_i|^2 \geq p$ (where $|\alpha|^2 = \langle\alpha,\alpha\rangle$ for the inner product on $\Lambda$, which is positive-definite by assumption).  Since $\Lambda$ is positive-definite, each total degree $n$ contains only finitely many lattice vectors of bounded weight, so the filtration is bounded below and convergent.
+
+\emph{Step~2: $E_1$ identification.}
+The differential $d_0$ on the associated graded $E_0$ is the bar differential for the Heisenberg subalgebra $\cH_d \subset \Vlat_\Lambda^\varepsilon$ (the zero-weight sector, generated by the oscillator modes $a^i_n$, $n < 0$).  This is because the leading-order OPE at weight $p$ is between a weight-$p$ vertex operator and the unit: the lattice exponentials are constant on $\mathrm{gr}$ and only the Heisenberg structure contributes to $d_0$.
+
+\emph{Step~3: Acyclicity at $E_1$.}
+By the Heisenberg bar-cobar quasi-isomorphism (Theorem~\ref{thm:heisenberg-koszul-dual-early}, applied to $\cH_d$), the twisted complex for the Heisenberg algebra is acyclic: $H^*(\barBgeom(\cH_d) \otimes_\tau \cH_d) = 0$ in positive degree.  Hence $E_1^{p,q} = 0$ for $p+q > 0$, and the spectral sequence collapses at $E_1$.
+
+\emph{Step~4: Cocycle phases.}
+The cocycle $\varepsilon(\alpha,\beta) \in \{\pm 1\}$ appears as a sign in the differential of the twisted complex, but the underlying graded vector spaces depend only on $\Lambda$ (not on the choice of $\varepsilon$).  Since the acyclicity at $E_1$ is established for all choices of $\varepsilon$ simultaneously (the Heisenberg part $d_0$ is $\varepsilon$-independent), the twisted complex is acyclic for every valid 2-cocycle.
+
+\emph{Step~5: Convergence.}
+Since the filtration is bounded below in each total degree and $E_1^{p,q} = 0$ for $p+q > 0$, the spectral sequence converges to zero in positive total degree, establishing acyclicity of $\barBgeom(\Vlat_\Lambda^\varepsilon) \otimes_\tau \Vlat_\Lambda^\varepsilon$ as required.
 \end{proof}
 
 \begin{remark}[Self-duality for unimodular lattices]
@@ -845,10 +866,9 @@ Overlattice $\Vlat_{\Lambda_I}$
 % Section 7: Functorial Properties and Lattice Operations
 % ======================================================================
 
-\section{Functorial Properties and Lattice Operations}
+\section{Functorial properties and lattice operations}
 \label{sec:lattice:functorial}
 
-This section is the conceptual heart of the ``engine'' vision.
 Each lattice operation from
 Definition~\ref{def:lattice:operations} lifts to a functorial operation
 on vertex algebras, and these lifts are compatible with the bar
@@ -920,13 +940,38 @@ induces:
 \end{proposition}
 
 \begin{proof}
-(i) The inclusion $\iota$ induces $\C[\Lambda'] \hookrightarrow \C[\Lambda]$
-and $\cH_{\Lambda'} \hookrightarrow \cH_\Lambda$. The cocycle on
-$\Lambda'$ is the restriction $\iota^*\varepsilon$.
+(i) The inclusion $\iota \colon \Lambda' \hookrightarrow \Lambda$
+induces an embedding of group algebras
+$\C[\Lambda'] \hookrightarrow \C[\Lambda]$
+(sending $e^\gamma \mapsto e^{\iota(\gamma)}$) and of Heisenberg
+algebras $\cH_{\Lambda'} \hookrightarrow \cH_\Lambda$
+(the lattice is a subspace of the target space).
+The cocycle on $\Lambda'$ is the restriction
+$\iota^*\varepsilon(\gamma, \gamma') = \varepsilon(\iota(\gamma),\iota(\gamma'))$.
+The vertex algebra structure is preserved because
+the state--field correspondence $Y(e^\gamma, z) = V_\gamma(z)$
+restricts to $Y(e^{\iota(\gamma)}, z)$, and the OPE singularities
+are determined by the inner product which is preserved by $\iota$.
 
-(ii) The bar construction is functorial in the algebra.
+(ii) The bar construction $\barBgeom$ is a functor from chiral algebras to
+chiral coalgebras.  The embedding $\iota_*$ is a morphism of chiral
+algebras, so $\barBgeom(\iota_*)$ is a well-defined coalgebra map.
+Concretely, the configuration space integrals defining the bar
+differential on $\barBgeom(\Vlat_{\Lambda'})$ are computed using the
+OPE of $\Vlat_{\Lambda'}$, which is the restriction of the OPE of
+$\Vlat_\Lambda$, so $\barBgeom(\iota_*)$ commutes with differentials.
 
-(iii) The lattice grading is preserved by $\iota$.
+(iii) The lattice grading is defined by total lattice charge
+$\gamma_{\mathrm{tot}} = \sum_i \gamma_i$ for a bar element
+$s^{-1}e^{\gamma_1} \otimes \cdots \otimes s^{-1}e^{\gamma_n}$.
+Since $\iota$ maps $\Lambda'$-elements to $\Lambda$-elements via a
+group homomorphism,
+$\iota(\gamma_{\mathrm{tot}}) = \sum_i \iota(\gamma_i) = \iota(\gamma)_{\mathrm{tot}}$,
+so the $\gamma$-sector of $\barBgeom(\Vlat_{\Lambda'})$ maps into the
+$\iota(\gamma)$-sector of $\barBgeom(\Vlat_\Lambda)$.
+The differential preserves lattice charge (the product
+$e^\alpha \cdot e^\beta = \varepsilon(\alpha,\beta)\,e^{\alpha+\beta}$
+preserves total charge), so the grading is compatible on homology.
 \end{proof}
 
 \subsection{Overlattice extension}
@@ -939,19 +984,54 @@ an isotropic subgroup. The overlattice $\Lambda_I$ is even, and:
 \;\cong\; \bigoplus_{\gamma \in I} \Vlat_\Lambda^\gamma
 \end{equation}
 where $\Vlat_\Lambda^\gamma$ denotes the $\gamma$-twisted module
-for $\Vlat_\Lambda$ (the sector of states with lattice charge in the
-coset $\gamma + \Lambda$).
+for $\Vlat_\Lambda$, defined as follows.
+
+\begin{definition}[Twisted module for lattice VOA]\label{def:twisted-module-lattice}
+For a coset $\gamma \in \Lambda^*/\Lambda$, the \emph{$\gamma$-twisted module} for the lattice VOA $\Vlat_\Lambda$ is:
+\[
+\Vlat_\Lambda^\gamma = \cH \otimes \C[\gamma + \Lambda]
+\]
+where $\cH$ is the Heisenberg Fock space and $\C[\gamma + \Lambda]$ is the group algebra of the coset.  The vertex operators act by $Y(e^\alpha, z) = E^-(\alpha, z) E^+(\alpha, z) e^\alpha z^{\langle \alpha, - \rangle}$ with the shift $z^{\langle \alpha, \gamma \rangle}$ in the monodromy.  When $\gamma \neq 0$, the fields $Y(v, z)$ have branch cuts of order $\langle \alpha, \gamma \rangle \bmod \mathbb{Z}$, making this a genuine twisted (non-local) module.
+\end{definition}
 \end{theorem}
 
-\begin{proof}[Proof sketch]
-The state space of $\Vlat_{\Lambda_I}$ decomposes under the sublattice
-$\Lambda \subset \Lambda_I$ as
-$\Vlat_{\Lambda_I} = \bigoplus_{\gamma \in \Lambda_I/\Lambda}
-\cH \otimes \C[\gamma + \Lambda]$.
-Each summand $\cH \otimes \C[\gamma + \Lambda]$ is the twisted module
-$\Vlat_\Lambda^\gamma$. The isotropicity of $I$ ensures that the
-extended multiplication is well-defined (the cocycle extends from
-$\Lambda$ to $\Lambda_I$) and that the vertex algebra axioms hold.
+\begin{proof}
+\emph{Step 1: State space decomposition.}
+Since $\Lambda \subset \Lambda_I$ is a sublattice of finite index,
+the group algebra decomposes as
+$\C[\Lambda_I] = \bigoplus_{\gamma \in \Lambda_I/\Lambda} \C[\gamma + \Lambda]$.
+Tensoring with the Fock space gives:
+\[
+\Vlat_{\Lambda_I} = \cH \otimes \C[\Lambda_I]
+= \bigoplus_{\gamma \in \Lambda_I/\Lambda} \cH \otimes \C[\gamma + \Lambda]
+= \bigoplus_{\gamma \in I} \Vlat_\Lambda^\gamma,
+\]
+where the last equality identifies $\Lambda_I/\Lambda \cong I$ (by
+definition of the overlattice) and
+$\cH \otimes \C[\gamma + \Lambda] = \Vlat_\Lambda^\gamma$.
+
+\emph{Step 2: Cocycle extension.}
+A $2$-cocycle $\varepsilon$ on $\Lambda$ extends to $\Lambda_I$ if
+and only if $\varepsilon(\alpha,\beta)\,\varepsilon(\beta,\alpha) =
+(-1)^{\langle\alpha,\beta\rangle}$ holds for all
+$\alpha, \beta \in \Lambda_I$.  For $\gamma, \gamma' \in I$ and
+$\lambda, \lambda' \in \Lambda$, we need
+$(-1)^{\langle\gamma+\lambda, \gamma'+\lambda'\rangle}$ to be
+well-defined modulo coboundaries.  The isotropicity condition
+$\langle\gamma, \gamma'\rangle \in \Z$ for all
+$\gamma, \gamma' \in I$ ensures this: the bilinear form on the
+discriminant group $D(\Lambda)$ restricts to zero on~$I$, so the
+$\Lambda$-cocycle extends without obstruction.
+
+\emph{Step 3: Vertex algebra structure.}
+With the extended cocycle, the vertex operators
+$Y(e^{\gamma+\lambda}, z)$ for $\gamma \in I$, $\lambda \in \Lambda$
+satisfy the same OPE as for $\Lambda$ (locality, associativity,
+vacuum axiom), since these follow from the cocycle identity and the
+lattice inner product.  The resulting structure on
+$\bigoplus_{\gamma \in I} \Vlat_\Lambda^\gamma$ is a vertex algebra,
+and the decomposition is an isomorphism of vertex algebras by
+construction.
 \end{proof}
 
 \begin{example}[Heterotic lattices]\label{ex:lattice:heterotic}
@@ -973,7 +1053,7 @@ determinant.
 \begin{construction}[Orbifold vertex algebra]
 \label{constr:lattice:orbifold}
 For $\sigma \in \operatorname{Aut}(\Lambda)$ of finite order $N$,
-the \textbf{orbifold vertex algebra} is the fixed-point subalgebra:
+the \emph{orbifold vertex algebra} is the fixed-point subalgebra:
 \[
 (\Vlat_\Lambda^\varepsilon)^\sigma
 = \{v \in \Vlat_\Lambda^\varepsilon : \sigma \cdot v = v\},
@@ -1058,18 +1138,26 @@ duality theory of Part~1 applies throughout.
 % Section 8: Chiral Hochschild Cohomology
 % ======================================================================
 
-\section{Chiral Hochschild Cohomology of Lattice Algebras}
+\section{Chiral Hochschild cohomology of lattice algebras}
 \label{sec:lattice:hochschild}
 
 \begin{theorem}[Lattice Hochschild cohomology; \ClaimStatusProvedHere]\label{thm:lattice:hochschild}
 For an even integral lattice $\Lambda$:
 \begin{equation}\label{eq:lattice:hochschild}
 HH^n_{\mathrm{ch}}(\Vlat_\Lambda, \Vlat_\Lambda)
-\;\cong\; H^n(\Lambda, \Vlat_\Lambda^{\Lambda})
+\;=\; \bigoplus_{\alpha \in \Lambda}
+HH^n_{\mathrm{ch}}(\Vlat_\Lambda, \Vlat_\Lambda^\alpha)
 \end{equation}
-where $\Vlat_\Lambda^\Lambda$ denotes the $\Lambda$-invariants (the
-degree-zero sector under the lattice grading) and $H^n(\Lambda, -)$ is
-group cohomology of the free abelian group $\Lambda$.
+and the degree-zero component ($\alpha = 0$) is:
+\[
+HH^n_{\mathrm{ch}}(\Vlat_\Lambda, \Vlat_\Lambda^0)
+\;\cong\; H^n(\Lambda, \Vlat_\Lambda^{\Lambda})
+\]
+where $\Vlat_\Lambda^\Lambda = \Vlat_\Lambda^0 = \cH$ denotes the
+$\Lambda$-invariants (the degree-zero sector under the lattice grading)
+and $H^n(\Lambda, -)$ is group cohomology of the free abelian group
+$\Lambda$.  The non-zero sectors $\alpha \neq 0$ contribute additional
+classes that depend on the lattice geometry.
 \end{theorem}
 
 \begin{proof}
@@ -1130,7 +1218,7 @@ deformations (the level) and no higher obstructions.
 % Section 9: Higher Genus
 % ======================================================================
 
-\section{Higher Genus}
+\section{Higher genus}
 \label{sec:lattice:higher-genus}
 
 At higher genus, the lattice grading on the bar complex persists and
@@ -1210,7 +1298,7 @@ $\Theta_\Lambda^{(g)}$ transforms as a Siegel modular form of weight
 $d/2$ for $\operatorname{Sp}(2g, \Z)$, as discussed in
 Chapter~\ref{ch:genus-expansions}.
 
-The key point for this monograph: the lattice grading on the bar complex
+The lattice grading on the bar complex
 persists at all genera. At genus $g$, the bar differential acquires
 corrections from the cohomology of $\overline{\cM}_{g,n}$, but these
 corrections preserve the total lattice degree. The spectral sequence
@@ -1220,7 +1308,58 @@ higher differentials $d_r$ for $r \geq 1$ encode the genus-$g$
 quantum corrections studied in Part~1.
 \end{remark}
 
-\section{Catalog of Lattice Koszul Dual Pairs}\label{sec:lattice:catalog}
+\subsection{The three theorems for lattice algebras}
+
+\begin{remark}[Main theorems for lattice VOAs]
+\label{rem:lattice-three-theorems}
+\index{main theorems!lattice VOA verification}
+The computations of this chapter provide an abelian verification of the
+main theorems of Part~1:
+
+\begin{enumerate}
+\item \emph{Theorem~A} (Geometric Bar-Cobar Duality,
+  Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+  The bar complex $\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)$
+  is computed explicitly in \S\ref{sec:lattice:bar},
+  and the Koszul dual is identified as the lattice algebra with
+  inverse cocycle (Theorem~\ref{thm:lattice:koszul-dual}).
+  The lattice grading decomposes the bar complex into finite-dimensional
+  sectors (Theorem~\ref{thm:lattice:bar-structure}), making the
+  bar-cobar adjunction concrete and computable.
+
+\item \emph{Theorem~B} (Bar-Cobar Inversion,
+  Theorem~\ref{thm:higher-genus-inversion}).
+  For unimodular lattices, self-duality
+  (Theorem~\ref{thm:lattice:unimodular-self-dual})
+  ensures the spectral sequence of Theorem~B
+  collapses: the bar complex is a resolution of $\Vlat_\Lambda$
+  by free Heisenberg modules.
+
+\item \emph{Theorem~C} (Complementarity,
+  Theorem~\ref{thm:quantum-complementarity-main}).
+  The central charge of $\Vlat_\Lambda$ equals the rank $d$.
+  By Theorem~\ref{thm:central-charge-complementarity},
+  $c(\Vlat_\Lambda) + c((\Vlat_\Lambda)^!) = 2d$
+  when both algebras exist with distinct cocycles.
+  The genus universality theorem
+  (Theorem~\ref{thm:genus-universality}) predicts
+  $\operatorname{obs}_g = \kappa \cdot \lambda_g$;
+  the lattice Hochschild cohomology
+  (Theorem~\ref{thm:lattice:hochschild}) identifies the
+  obstruction parameter $\kappa = d/2$ for the Heisenberg
+  sector.
+\end{enumerate}
+
+The lattice construction provides the simplest non-trivial test of the
+general framework: the abelian structure makes the bar complex explicitly
+computable, yet the cocycle twist introduces genuine duality phenomena
+absent in the free-field case.  The functorial properties
+(\S\ref{sec:lattice:functorial}) show that bar-cobar duality intertwines
+lattice-theoretic operations (direct sum, overlattice, orbifold) with
+algebraic operations on chiral algebras.
+\end{remark}
+
+\section{Catalog of lattice Koszul dual pairs}\label{sec:lattice:catalog}
 
 The lattice engine produces Koszul dual pairs for every even lattice.
 Table~\ref{tab:lattice:koszul-catalog} summarizes the results.
@@ -1232,16 +1371,16 @@ Table~\ref{tab:lattice:koszul-catalog} summarizes the results.
 \begin{tabular}{l c c c c}
 \textbf{Lattice $\Lambda$} & \textbf{Rank} & \textbf{$\Vlat_\Lambda^!$} & \textbf{$\Theta_\Lambda(\tau)$} & \textbf{Self-dual?} \\
 \hline
-$A_1$ & 1 & $\Vlat_{A_1^*}$ & $\theta_3(2\tau)$ & No \\
-$A_2$ & 2 & $\Vlat_{A_2^*}$ & $\theta_3^{A_2}(\tau)$ & No \\
-$D_4$ & 4 & $\Vlat_{D_4^*}$ & $\frac{1}{2}(\theta_3^4+\theta_4^4)$ & No \\
-$D_8$ & 8 & $\Vlat_{D_8^*}$ & $\Theta_{D_8}(\tau)$ & No \\
-$E_6$ & 6 & $\Vlat_{E_6^*}$ & $\Theta_{E_6}(\tau)$ & No \\
-$E_7$ & 7 & $\Vlat_{E_7^*}$ & $\Theta_{E_7}(\tau)$ & No \\
+$A_1$ & 1 & $(\Vlat_{A_1}^{\varepsilon^{-1}})^c$ & $\theta_3(2\tau)$ & No \\
+$A_2$ & 2 & $(\Vlat_{A_2}^{\varepsilon^{-1}})^c$ & $\theta_3^{A_2}(\tau)$ & No \\
+$D_4$ & 4 & $(\Vlat_{D_4}^{\varepsilon^{-1}})^c$ & $\frac{1}{2}(\theta_3^4+\theta_4^4)$ & No \\
+$D_8$ & 8 & $(\Vlat_{D_8}^{\varepsilon^{-1}})^c$ & $\Theta_{D_8}(\tau)$ & No \\
+$E_6$ & 6 & $(\Vlat_{E_6}^{\varepsilon^{-1}})^c$ & $\Theta_{E_6}(\tau)$ & No \\
+$E_7$ & 7 & $(\Vlat_{E_7}^{\varepsilon^{-1}})^c$ & $\Theta_{E_7}(\tau)$ & No \\
 $E_8$ & 8 & $\Vlat_{E_8}$ & $E_4(\tau)$ & Yes \\
 $E_8 \oplus E_8$ & 16 & $\Vlat_{E_8 \oplus E_8}$ & $E_4(\tau)^2$ & Yes \\
 $D_{16}^+$ & 16 & $\Vlat_{D_{16}^+}$ & $E_4(\tau)^2$ & Yes \\
-$\mathrm{Leech}$ & 24 & $\Vlat_{\mathrm{Leech}}$ & $Z = \Theta_{\mathrm{Leech}}/\eta^{24} = j - 24$ & Yes \\
+$\mathrm{Leech}$ & 24 & $\Vlat_{\mathrm{Leech}}$ & $\Theta_{\mathrm{Leech}}/\eta^{24} = j - 744$ & Yes \\
 \end{tabular}
 \end{table}
 
@@ -1254,15 +1393,102 @@ The ``only if'' direction: if $\Vlat_\Lambda^! \cong \Vlat_\Lambda$, then by The
 \end{proof}
 
 \begin{proposition}[$D_4$ and triality; \ClaimStatusProvedHere]\label{prop:lattice:D4-triality}
-The $D_4$ lattice is \emph{not} unimodular: $\det(\mathrm{Gram}_{D_4}) = 4$ and $D_4^*/D_4 \cong (\Z/2\Z)^2$.  In particular, $\Vlat_{D_4}$ is \emph{not} Koszul self-dual; its Koszul dual is $\Vlat_{D_4^*}$.
+The $D_4$ lattice is \emph{not} unimodular: $\det(\mathrm{Gram}_{D_4}) = 4$ and $D_4^*/D_4 \cong (\Z/2\Z)^2$.  In particular, $\Vlat_{D_4}$ is \emph{not} Koszul self-dual; its Koszul dual is $(\Vlat_{D_4}^{\varepsilon^{-1}})^c$ by Theorem~\ref{thm:lattice:koszul-dual}.
 
 The overlattice $D_4^+ = D_4 \cup (D_4 + s)$ (adding the spinor class $s = \tfrac{1}{2}(1,1,1,1)$) is unimodular but \emph{odd}: $\langle s, s\rangle = 1 \notin 2\mathbb{Z}$, so $D_4^+ \cong \mathbb{Z}^4$ as lattices.  Even unimodular overlattices $D_n^+$ exist only for $n \equiv 0 \pmod{8}$ (e.g., $D_8^+ \cong E_8$).  Triality (the $S_3$ symmetry of the $D_4$ Dynkin diagram) permutes the three nontrivial cosets in $D_4^*/D_4$ --- vector, spinor, and conjugate spinor --- and acts as an outer automorphism of the $D_4$ root system.
 \end{proposition}
 
 \begin{proof}
-The discriminant computation $D_4^*/D_4 \cong (\Z/2\Z)^2$ shows $D_4 \neq D_4^*$, so Theorem~\ref{thm:lattice:koszul-dual} gives $\Vlat_{D_4}^! \cong \Vlat_{D_4^*} \not\cong \Vlat_{D_4}$.  The overlattice $D_4^+$ is unimodular ($[D_4^+ : D_4] = 2$ and $\det = 4/4 = 1$) but odd ($\langle s, s\rangle = 1$), so Theorem~\ref{thm:lattice:unimodular-self-dual} does not apply.  The triality action on $D_4^*/D_4$ is the standard $S_3$-symmetry permuting the three nontrivial cosets.
+The discriminant computation $D_4^*/D_4 \cong (\Z/2\Z)^2$ shows $D_4 \neq D_4^*$, so $\Vlat_{D_4}$ is not unimodular and Theorem~\ref{thm:lattice:unimodular-self-dual} does not apply; Theorem~\ref{thm:lattice:koszul-dual} gives $\Vlat_{D_4}^! \cong (\Vlat_{D_4}^{\varepsilon^{-1}})^c \not\cong \Vlat_{D_4}$.  The overlattice $D_4^+$ is unimodular ($[D_4^+ : D_4] = 2$ and $\det = 4/4 = 1$) but odd ($\langle s, s\rangle = 1$), so Theorem~\ref{thm:lattice:unimodular-self-dual} does not apply.  The triality action on $D_4^*/D_4$ is the standard $S_3$-symmetry permuting the three nontrivial cosets.
 \end{proof}
 
+\begin{proposition}[Lattice VOA modules under Koszul duality; \ClaimStatusProvedHere]
+\label{prop:lattice-module-koszul}
+\index{lattice VOA!module Koszul duality}
+Let $\Lambda$ be an even lattice with Koszul dual
+$\Vlat_\Lambda^! \cong (\Vlat_\Lambda^{\varepsilon^{-1}})^c$
+\textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual})}.  The
+module Koszul duality functor
+\textup{(}Theorem~\textup{\ref{thm:monoidal-module-koszul})}
+acts on the twisted modules as:
+\begin{equation}\label{eq:lattice-module-koszul}
+\Phi(\Vlat_\Lambda^\gamma)
+\;=\;
+(\Vlat_\Lambda^!)^{-\gamma}
+\quad\text{for }\gamma \in \Lambda^*/\Lambda.
+\end{equation}
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The number of simple modules is preserved:
+  $|D(\Lambda)| = |D(\Lambda^!)|$
+  \textup{(}both equal $|\Lambda^*/\Lambda|$\textup{)}.
+\item The fusion product of twisted modules is preserved:
+  $\Phi(\Vlat_\Lambda^\gamma \boxtimes \Vlat_\Lambda^{\gamma'})
+  = \Phi(\Vlat_\Lambda^\gamma) \boxtimes \Phi(\Vlat_\Lambda^{\gamma'})$,
+  since the fusion product of twisted modules corresponds to addition
+  in the discriminant group.
+\item The modular $S$-matrix is invariant:
+  $S_{\gamma,\gamma'} = |D(\Lambda)|^{-1/2}\,e^{2\pi i \langle\gamma,\gamma'\rangle}$
+  depends only on the discriminant group order and the lattice inner product,
+  both of which are preserved by the Koszul duality
+  \textup{(}both $\Lambda$ and the dual carry the same bilinear
+  form\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The bar construction applied to the twisted module
+$\Vlat_\Lambda^\gamma = \mathcal{H} \otimes \mathbb{C}[\gamma + \Lambda]$
+produces a comodule over $\bar{B}(\Vlat_\Lambda)$, which is a
+coalgebra over the dual lattice data.  The key point is that the
+coset $\gamma \in \Lambda^*/\Lambda$ enters the bar complex via
+the monodromy: the vertex operator $Y(e^\alpha, z)$ acting on
+$\Vlat_\Lambda^\gamma$ has monodromy $z^{\langle\alpha,\gamma\rangle}$
+around the module insertion point.
+
+Under the bar construction, this monodromy becomes a
+$\langle\alpha,\gamma\rangle$-twist in the differential on
+$\overline{C}_{n+1}(X)$.  The Verdier involution (which underlies
+Koszul duality) reverses the monodromy:
+$z^{\langle\alpha,\gamma\rangle} \mapsto
+z^{-\langle\alpha,\gamma\rangle}$,
+mapping $\gamma$ to $-\gamma$ in the discriminant group.
+
+(i) follows from the fact that $D(\Lambda) \cong D(\Lambda)$
+(the discriminant group depends only on the lattice, not the
+cocycle).
+
+(ii) The fusion product $\Vlat_\Lambda^\gamma \boxtimes
+\Vlat_\Lambda^{\gamma'} = \Vlat_\Lambda^{\gamma+\gamma'}$ is
+computed by the group multiplication in $D(\Lambda)$.  The
+Koszul duality functor is monoidal
+(Theorem~\ref{thm:monoidal-module-koszul}), so it preserves
+the fusion product.
+
+(iii) The $S$-matrix $S_{\gamma,\gamma'} =
+|D(\Lambda)|^{-1/2}\, e^{2\pi i\langle\gamma,\gamma'\rangle}$
+depends only on the inner product $\langle\gamma,\gamma'\rangle$,
+which is the same for $\Lambda$ and $\Lambda^!$ (both use the
+same bilinear form on $\Lambda^*$, only the cocycle changes).
+\end{proof}
+
+\begin{example}[Module Koszul duality for $A_1$ lattice]
+\label{ex:lattice-module-A1}
+For $\Lambda = A_1 = \sqrt{2}\,\mathbb{Z}$:
+the discriminant group is $D(A_1) = A_1^*/A_1 \cong \mathbb{Z}/2\mathbb{Z}$,
+with two simple $\Vlat_{A_1}$-modules:
+$\Vlat_{A_1}^0 = \Vlat_{A_1}$ (vacuum) and
+$\Vlat_{A_1}^{1/\sqrt{2}}$ (spinor).  Under Koszul duality,
+$\Phi(\Vlat_{A_1}^0) = (\Vlat_{A_1}^!)^0$ and
+$\Phi(\Vlat_{A_1}^{1/\sqrt{2}}) = (\Vlat_{A_1}^!)^{-1/\sqrt{2}}
+= (\Vlat_{A_1}^!)^{1/\sqrt{2}}$ (since $-1 \equiv 1 \bmod 2$
+in $\mathbb{Z}/2\mathbb{Z}$).  The $S$-matrix
+$S = \frac{1}{\sqrt{2}}\bigl(\begin{smallmatrix}1 & 1 \\
+1 & -1\end{smallmatrix}\bigr)$
+is preserved by the Koszul duality, consistent with the
+Verlinde formula.
+\end{example}
+
 \begin{remark}[Distinguishing $E_8 \oplus E_8$ from $D_{16}^+$]
-The bar complexes of $\Vlat_{E_8 \oplus E_8}$ and $\Vlat_{D_{16}^+}$ are both self-dual (both are even unimodular lattices of rank~16), but they are \emph{non-isomorphic} as coalgebras.  At genus~1, the two lattices are \emph{indistinguishable}: both have theta function $\Theta_\Lambda(\tau) = E_4(\tau)^2$, since the space~$M_8(\mathrm{SL}_2(\Z))$ is one-dimensional.  The distinction first appears at genus~2: the Siegel theta functions $\Theta^{(2)}_{E_8 \oplus E_8}$ and $\Theta^{(2)}_{D_{16}^+}$ are distinct Siegel modular forms of weight~8, providing a complete invariant distinguishing the two heterotic lattices.  This illustrates how the genus-$g$ bar complex captures strictly finer information than the genus-1 bar complex.
+The bar complexes of $\Vlat_{E_8 \oplus E_8}$ and $\Vlat_{D_{16}^+}$ are both self-dual (both are even unimodular lattices of rank~16), but they are \emph{non-isomorphic} as coalgebras.  At genus~1, the two lattices are \emph{indistinguishable}: both have theta function $\Theta_\Lambda(\tau) = E_4(\tau)^2$, since the space~$M_8(\mathrm{SL}_2(\Z))$ is one-dimensional.  The distinction first appears at genus~2: the Siegel theta functions $\Theta^{(2)}_{E_8 \oplus E_8}$ and $\Theta^{(2)}_{D_{16}^+}$ are distinct Siegel modular forms of weight~8, sufficing to distinguish the two even unimodular lattices of rank~$16$.  This illustrates how the genus-$g$ bar complex captures strictly finer information than the genus-1 bar complex.
 \end{remark}

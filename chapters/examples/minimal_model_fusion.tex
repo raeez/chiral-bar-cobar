@@ -1,15 +1,15 @@
 
-\section{Minimal Model Fusion Rules via Verlinde Formula}
+\section{Minimal model fusion rules via Verlinde formula}
 \label{sec:minimal-model-fusion}
 
 We now derive the complete fusion rules for $W_N$ minimal models using the 
 Verlinde formula. We provide explicit fusion matrices for $W_3$ at $c < 1$ and 
 verify against known minimal models.
 
-\subsection{Recollection: Verlinde Formula}
+\subsection{Recollection: Verlinde formula}
 \label{subsec:verlinde-formula-recall}
 
-\begin{theorem}[Verlinde Formula - General; \ClaimStatusProvedElsewhere]\label{thm:verlinde-general}
+\begin{theorem}[Verlinde formula, general form; \ClaimStatusProvedElsewhere]\label{thm:verlinde-general}
 \index{Verlinde formula|textbf}
 For a rational conformal field theory with modular-invariant partition function, 
 the fusion coefficients $N_{ij}^k$ are given by:
@@ -19,28 +19,25 @@ N_{ij}^k = \sum_{\ell=0}^{r-1} \frac{S_{i\ell} S_{j\ell} (S^{-1})_{\ell k}}{S_{0
 \end{equation}
 where:
 \begin{itemize}
-\item $S$ is the modular S-matrix: $S_{ij} = \langle i | T: \tau \to -1/\tau | j \rangle$
+\item $S$ is the modular S-matrix: $S_{ij} = \langle i | S: \tau \to -1/\tau | j \rangle$
 \item $r$ is the number of primary fields
 \item $N_{ij}^k$ counts the number of times primary $k$ appears in $i \times j$ OPE
 \end{itemize}
 \end{theorem}
 
-\begin{remark}[Witten's Interpretation]\label{rem:witten-verlinde}
+\begin{remark}[Witten's interpretation]\label{rem:witten-verlinde}
 Witten showed that the Verlinde formula can be understood via:
 \begin{enumerate}
-\item Chern-Simons theory on $S^3$
+\item Chern--Simons theory on $S^3$
 \item Moduli spaces of flat connections
 \item Geometric quantization of character varieties
 \end{enumerate}
-
-This connects fusion rules (algebra) to topology (3-manifold invariants) to 
-geometry (moduli spaces).
 \end{remark}
 
-\subsection{\texorpdfstring{$W_N$ Modular Data}{W N Modular Data}}
+\subsection{\texorpdfstring{$W_N$ modular data}{W N modular data}}
 \label{subsec:wn-modular-data}
 
-\begin{definition}[$W_N$ Minimal Models]\label{def:wn-minimal}
+\begin{definition}[$W_N$ minimal models]\label{def:wn-minimal}
 \index{WN minimal models@$W_N$ minimal models|textbf}
 \index{minimal model!WN@$W_N$|textbf}
 A $W_N$ minimal model is characterized by coprime integers $(p,q)$ with $p > q \geq N$. The central charge is:
@@ -56,24 +53,24 @@ Total number of primaries (after identification):
 $$r_N(p,q) = \frac{1}{2}\binom{p-1}{N-1}\binom{q-1}{N-1}$$
 \end{definition}
 
-\begin{theorem}[$W_N$ Modular S-Matrix; \ClaimStatusProvedElsewhere]\label{thm:wn-s-matrix}
-For $W_N$ minimal model $(p,q)$, the modular S-matrix has entries:
+\begin{theorem}[$W_N$ modular S-matrix; \ClaimStatusProvedElsewhere]\label{thm:wn-s-matrix}
+For the Virasoro ($N=2$) minimal model $\mathcal{M}(p,q)$, the modular
+S-matrix is (Cappelli--Itzykson--Zuber):
 \begin{equation}
-S_{\vec{r},\vec{s}} = \mathcal{N}_{p,q,N} \prod_{i=1}^{N-1} 
-\sin\left(\frac{\pi r_i s_i}{p}\right) \cdot e^{i\theta(\vec{r},\vec{s})}
+S_{(r,s),(r',s')} = (-1)^{1+rs'+r's}\,\sqrt{\tfrac{8}{pq}}\;
+\sin\!\left(\tfrac{\pi q\, r r'}{p}\right)
+\sin\!\left(\tfrac{\pi p\, s s'}{q}\right).
 \end{equation}
-where:
-\begin{itemize}
-\item $\mathcal{N}_{p,q,N}$ is a normalization constant
-\item $\theta(\vec{r},\vec{s})$ is a phase depending on conformal dimensions
-\item The product is over all $N-1$ labels
-\end{itemize}
+For general $W_N$ minimal models, the S-matrix involves products
+over positive roots of $\mathfrak{sl}_N$ and Weyl-orbit summation;
+we refer to Frenkel--Zhu \cite{FZ92} and Arakawa \cite{Arakawa17}
+for the precise formula.
 \end{theorem}
 
-\subsection{\texorpdfstring{$W_3$ Minimal Models: Complete Classification}{W 3 Minimal Models: Complete Classification}}
+\subsection{\texorpdfstring{$W_3$ minimal models: complete classification}{W 3 minimal models: complete classification}}
 \label{subsec:w3-minimal-complete}
 
-\begin{theorem}[$W_3$ Minimal Models; \ClaimStatusProvedHere]\label{thm:w3-minimal-complete}
+\begin{theorem}[$W_3$ minimal models; \ClaimStatusProvedHere]\label{thm:w3-minimal-complete}
 For $W_3$, a minimal model $(p,q)$ has:
 \begin{itemize}
 \item Central charge: $c = 2\left(1 - \frac{12(p-q)^2}{pq}\right)$
@@ -83,29 +80,29 @@ For $W_3$, a minimal model $(p,q)$ has:
 \end{itemize}
 \end{theorem}
 
-\begin{proof}[Derivation of Virasoro Conformal Dimensions]
+\begin{proof}[Derivation of Virasoro conformal dimensions]
 The Kac determinant for $W_3$ representations involves both the Virasoro weight $h$ and the $W_3$-charge $w$. The full parametrization requires pairs of $A_2$ dominant integral weights $(\Lambda^+, \Lambda^-)$ at levels $p-3$ and $q-3$ respectively. Projecting to the Virasoro subalgebra recovers the standard Kac formula:
 $$h_{r,s} = \frac{(pr - qs)^2 - (p-q)^2}{4pq}$$
 with $1 \leq r \leq q-1$, $1 \leq s \leq p-1$, and identification $(r,s) \sim (q-r, p-s)$.
 \end{proof}
 
-\begin{remark}[W$_3$ Primary Labeling]
-The single-pair labeling $\Phi_{r,s}$ is a simplification. Properly, $W_3$ primaries are labeled by pairs of $A_2$ highest weights, giving a two-component labeling $(r_1, r_2; s_1, s_2)$. The projection to $\operatorname{Vir} \subset W_3$ forgets the additional $W_3$-charge quantum number. The full $W_3$ conformal dimensions and fusion rules require the Fateev-Lukyanov Kac formula for $W_3$.
+\begin{remark}[W$_3$ primary labeling]
+The single-pair labeling $\Phi_{r,s}$ is a simplification. Properly, $W_3$ primaries are labeled by pairs of $A_2$ highest weights, giving a two-component labeling $(r_1, r_2; s_1, s_2)$. The projection to $\operatorname{Vir} \subset W_3$ forgets the additional $W_3$-charge quantum number. The full $W_3$ conformal dimensions and fusion rules require the Fateev--Lukyanov Kac formula for $W_3$.
 \end{remark}
 
-\subsection{\texorpdfstring{Example 1: $W_3$ Minimal Model $(4,3)$}{Example 1: W 3 Minimal Model (4,3)}}
+\subsection{\texorpdfstring{Example 1: $W_3$ minimal model $(4,3)$}{Example 1: W 3 minimal model (4,3)}}
 \label{subsec:w3-example-3-4}
 
-\begin{example}[$W_3(4,3)$ Complete Data]\label{ex:w3-3-4-complete}
+\begin{example}[$W_3(4,3)$ complete data]\label{ex:w3-3-4-complete}
 
-\textbf{Parameters:}
+\emph{Parameters.}
 \begin{itemize}
 \item $(p,q) = (4,3)$
 \item Central charge: $c = 2(1 - \frac{12 \cdot 1}{12}) = 0$
 \item Number of Virasoro primaries: $(p-1)(q-1) = 6$ (before $\mathbb{Z}_2$ identification), giving 3 after identification
 \end{itemize}
 
-\textbf{Virasoro conformal dimensions} (using $h_{r,s} = \frac{(4r-3s)^2-1}{48}$ with $1 \leq r \leq 2$, $1 \leq s \leq 3$):
+\emph{Virasoro conformal dimensions} (using $h_{r,s} = \frac{(4r-3s)^2-1}{48}$ with $1 \leq r \leq 2$, $1 \leq s \leq 3$):
 \begin{align}
 \Phi_{1,1}: \quad h &= \frac{(4-3)^2 - 1}{48} = 0 \quad \text{(identity)} \\
 \Phi_{1,2}: \quad h &= \frac{(4-6)^2 - 1}{48} = \frac{3}{48} = \frac{1}{16} \\
@@ -114,7 +111,7 @@ The single-pair labeling $\Phi_{r,s}$ is a simplification. Properly, $W_3$ prima
 \end{align}
 Note: with the identification $(r,s) \sim (q-r, p-s) = (3-r, 4-s)$, we have $\Phi_{1,3} \sim \Phi_{2,1}$ (both with $h = 1/2$), reducing the distinct Virasoro weights to three: $h = 0, 1/16, 1/2$. These are the \emph{same numerical values} as the Virasoro Ising model $\mathcal{M}(4,3)$, but at $W_3$ central charge $c = 0$ rather than $c_{\text{Vir}} = 1/2$. This coincidence arises because the Kac formula $h_{r,s}$ depends on $(p,q,r,s)$ but not directly on $c$; the distinct Virasoro representations at $c = 0$ and $c = 1/2$ with the same conformal weights have different character formulas and null vector structures.
 
-\textbf{Virasoro modular S-matrix (after identification):}
+\emph{Virasoro modular S-matrix (after identification).}
 
 After the identification $\Phi_{r,s} \sim \Phi_{q-r,p-s}$, there are three Virasoro primaries: $\Phi_{1,1}$ ($h=0$), $\Phi_{1,2}$ ($h=1/16$), $\Phi_{1,3}$ ($h=1/2$).  The Virasoro modular S-matrix for $\mathcal{M}(4,3)$ in this basis is:
 \begin{equation}
@@ -125,14 +122,14 @@ S = \frac{1}{2}\begin{pmatrix}
 \end{pmatrix}
 \end{equation}
 
-\textbf{Verification:} $S$ is symmetric and unitary ($S^2 = \mathbb{I}$, hence $S = S^{-1} = S^\dagger$).  Row orthonormality: $\|S_1\|^2 = \frac{1}{4}(1+2+1)=1$, $\langle S_1, S_2\rangle = \frac{1}{4}(\sqrt{2}+0-\sqrt{2})=0$, etc.
+\emph{Verification.} $S$ is symmetric and unitary ($S^2 = \mathbb{I}$, hence $S = S^{-1} = S^\dagger$).  Row orthonormality: $\|S_1\|^2 = \frac{1}{4}(1+2+1)=1$, $\langle S_1, S_2\rangle = \frac{1}{4}(\sqrt{2}+0-\sqrt{2})=0$, etc.
 \end{example}
 
-\begin{computation}[Fusion Rules from Verlinde]\label{comp:fusion-3-4}
+\begin{computation}[Fusion rules from Verlinde]\label{comp:fusion-3-4}
 
 Using the Verlinde formula with the S-matrix above, compute fusion coefficients:
 
-\textbf{Example: $\Phi_{1,1} \times \Phi_{1,1} = ?$}
+\emph{Example: $\Phi_{1,1} \times \Phi_{1,1} = ?$}
 
 \begin{align}
 N_{(1,1),(1,1)}^{(r,s)} &= \sum_{\ell} \frac{S_{(1,1),\ell} S_{(1,1),\ell} S_{\ell,(r,s)}^*}
@@ -145,12 +142,12 @@ As a consistency check, the identity field $\Phi_{1,1}$ must fuse trivially: $\P
 A complete computation of all $W_3(4,3)$ fusion coefficients requires the full $W_3$ modular S-matrix (with $A_2$ weight labeling), which we do not reproduce here. The Verlinde formula applies directly once the correct modular data is specified.
 \end{computation}
 
-\subsection{\texorpdfstring{Example 2: $W_3$ Minimal Model $(6,5)$}{Example 2: W 3 Minimal Model (6,5)}}
+\subsection{\texorpdfstring{Example 2: $W_3$ minimal model $(6,5)$}{Example 2: W 3 minimal model (6,5)}}
 \label{subsec:w3-example-6-5}
 
 \begin{example}[$W_3(6,5)$]\label{ex:w3-6-5}
 
-\textbf{Parameters:}
+\emph{Parameters.}
 \begin{itemize}
 \item $(p,q) = (6,5)$
 \item Central charge: $c = 2(1 - \frac{12 \cdot 1}{30}) = 2 \cdot \frac{18}{30}
@@ -158,14 +155,14 @@ A complete computation of all $W_3(4,3)$ fusion coefficients requires the full $
 \item Number of primaries: $\frac{1}{2}\binom{5}{2}\binom{4}{2} = \frac{10 \cdot 6}{2} = 30$ (after $\mathbb{Z}_2$ identification)
 \end{itemize}
 
-\textbf{Primary field labels:}
+\emph{Primary field labels.}
 $$\Phi_{(r_1,r_2),(s_1,s_2)} \quad \text{with } 1 \leq r_1 < r_2 \leq 5, \quad 1 \leq s_1 < s_2 \leq 4$$
 
-\textbf{Low-lying conformal dimensions:}
+\emph{Low-lying conformal dimensions.}
 
 The conformal dimensions of $W_3$ primaries are determined by the $W_3$ Kac formula (Fateev--Lukyanov), which depends on two pairs of Weyl alcove labels.  The full table of all 30 primaries requires the $A_2$ weight technology.  We list a few representative values; see Bouwknegt--Schoutens for the complete tabulation of $W_3(6,5)$ primaries.
 
-\textbf{Fusion rules (selected):}
+\emph{Fusion rules (selected).}
 \begin{align}
 \Phi_{1,2} \times \Phi_{1,2} &= \mathbb{I} + \Phi_{2,2} + \Phi_{1,4} \\
 \Phi_{2,1} \times \Phi_{2,1} &= \mathbb{I} + \Phi_{2,2} + \Phi_{4,1} \\
@@ -175,9 +172,9 @@ The conformal dimensions of $W_3$ primaries are determined by the $W_3$ Kac form
 These match the known fusion rules for the $W_3(6,5)$ minimal model.
 \end{example}
 
-\begin{verification}[Against Literature]\label{verif:w3-5-6-literature}
+\begin{verification}[Against literature]\label{verif:w3-5-6-literature}
 
-\textbf{Source 1: Fateev-Zamolodchikov (1987).}
+\emph{Source~1: Fateev--Zamolodchikov (1987).}
 
 FZ compute the fusion rules for $W_3(6,5)$ using bootstrap methods. Their Table II
 lists:
@@ -185,7 +182,7 @@ $$\Phi_{(1,2)} \times \Phi_{(1,2)} = 1 + \Phi_{(2,2)} + \Phi_{(1,4)}$$
 
 Our result: (exact match)
 
-\textbf{Source 2: Arakawa (2015).}
+\emph{Source~2: Arakawa (2015).}
 
 Arakawa's representation-theoretic approach gives:
 $$[\mathcal{L}_{1,2}] \otimes [\mathcal{L}_{1,2}] = [\mathcal{L}_{0,0}] 
@@ -195,7 +192,7 @@ in the Grothendieck ring $K_0(W_3\text{-mod})$.
 
 Our result: (exact match)
 
-\textbf{Source 3: Fuchs-Runkel-Schweigert (2002).}
+\emph{Source~3: Fuchs--Runkel--Schweigert (2002).}
 
 FRS compute modular invariants and fusion rules using TFT methods. Their results 
 for $(5,6)$ match ours exactly.
@@ -203,10 +200,10 @@ for $(5,6)$ match ours exactly.
 Our result: (exact match)
 \end{verification}
 
-\subsection{Grothendieck Ring Computation}
+\subsection{Grothendieck ring computation}
 \label{subsec:grothendieck-ring}
 
-\begin{definition}[Grothendieck Ring]\label{def:grothendieck-w3}
+\begin{definition}[Grothendieck ring]\label{def:grothendieck-w3}
 \index{Grothendieck ring!of W3 modules@of $W_3$ modules|textbf}
 The Grothendieck ring $K_0(W_3\text{-mod})$ of a $W_3$ minimal model is the 
 free abelian group generated by irreducible modules $[\mathcal{L}_{r,s}]$ with 
@@ -216,27 +213,27 @@ multiplication given by fusion:
 \end{equation}
 \end{definition}
 
-\begin{theorem}[Structure of Grothendieck Ring; \ClaimStatusProvedHere]\label{thm:grothendieck-structure}
+\begin{theorem}[Structure of Grothendieck ring; \ClaimStatusProvedHere]\label{thm:grothendieck-structure}
 For $W_3$ minimal model $(p,q)$, the Grothendieck ring satisfies:
 \begin{enumerate}
-\item \textbf{Commutativity}: $[\mathcal{L}_i] \cdot [\mathcal{L}_j] = 
+\item \emph{Commutativity.} $[\mathcal{L}_i] \cdot [\mathcal{L}_j] =
 [\mathcal{L}_j] \cdot [\mathcal{L}_i]$
-\item \textbf{Associativity}: $([\mathcal{L}_i] \cdot [\mathcal{L}_j]) \cdot 
+\item \emph{Associativity.} $([\mathcal{L}_i] \cdot [\mathcal{L}_j]) \cdot
 [\mathcal{L}_k] = [\mathcal{L}_i] \cdot ([\mathcal{L}_j] \cdot [\mathcal{L}_k])$
-\item \textbf{Unit}: $[\mathcal{L}_{0,0}]$ is the multiplicative identity
-\item \textbf{Dimension}: $\text{rank}(K_0) = \frac{1}{2}\binom{p-1}{N-1}\binom{q-1}{N-1}$ as abelian group (number of distinct $W_N$ primaries after Weyl group identification; for $N = 2$ this reduces to the Virasoro count $\frac{(p-1)(q-1)}{2}$)
+\item \emph{Unit.} $[\mathcal{L}_{0,0}]$ is the multiplicative identity
+\item \emph{Dimension.} $\text{rank}(K_0) = \frac{1}{2}\binom{p-1}{N-1}\binom{q-1}{N-1}$ as abelian group (number of distinct $W_N$ primaries after Weyl group identification; for $N = 2$ this reduces to the Virasoro count $\frac{(p-1)(q-1)}{2}$)
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}[Proof via Verlinde Formula]
+\begin{proof}[Proof via Verlinde formula]
 
-\textbf{Commutativity:}
+\emph{Commutativity.}
 $$N_{ij}^k = \sum_\ell \frac{S_{i\ell}S_{j\ell}S_{\ell k}^*}{S_{0\ell}} 
 = \sum_\ell \frac{S_{j\ell}S_{i\ell}S_{\ell k}^*}{S_{0\ell}} = N_{ji}^k$$
 
 
 
-\textbf{Associativity:}
+\emph{Associativity.}
 \begin{align}
 \sum_m N_{ij}^m N_{mk}^\ell &= \sum_m \left(\sum_p \frac{S_{ip}S_{jp}S_{pm}^*}{S_{0p}}\right)
 \left(\sum_q \frac{S_{mq}S_{kq}S_{q\ell}^*}{S_{0q}}\right) \\
@@ -249,15 +246,15 @@ $$= \sum_p \frac{S_{ip}S_{jp}S_{kp}S_{p\ell}^*}{S_{0p}^2}$$
 
 By symmetry, this equals $\sum_n N_{ik}^n N_{nj}^\ell$.
 
-\textbf{Unit:} Verlinde formula gives $N_{i0}^j = \delta_{ij}$.
+\emph{Unit.} Verlinde formula gives $N_{i0}^j = \delta_{ij}$.
 
-\textbf{Dimension:} The rank equals the number of Virasoro primaries after identification $= (p-1)(q-1)/2$.
+\emph{Dimension.} The rank equals the number of $W_N$ primaries after identification $= r_N(p,q) = \frac{1}{2}\binom{p-1}{N-1}\binom{q-1}{N-1}$ (which reduces to $(p-1)(q-1)/2$ for the Virasoro case $N=2$).
 \end{proof}
 
-\subsection{\texorpdfstring{Complete Fusion Matrices for $W_3(3,4)$}{Complete Fusion Matrices for W 3(3,4)}}
+\subsection{\texorpdfstring{Fusion matrices for $\mathcal{M}(4,3)$}{Fusion matrices for M(4,3)}}
 \label{subsec:fusion-matrices-3-4}
 
-\begin{theorem}[Virasoro Fusion Rules for $\mathcal{M}(4,3)$; \ClaimStatusProvedElsewhere]\label{thm:fusion-3-4-complete}
+\begin{theorem}[Virasoro fusion rules for $\mathcal{M}(4,3)$; \ClaimStatusProvedElsewhere]\label{thm:fusion-3-4-complete}
 After the identification $\Phi_{r,s} \sim \Phi_{q-r,p-s}$, the three Virasoro primaries of $\mathcal{M}(4,3)$ are $\mathbb{I} = \Phi_{1,1}$ (identity, $h=0$), $\sigma = \Phi_{1,2}$ ($h=1/16$), and $\varepsilon = \Phi_{1,3}$ ($h=1/2$).  Their fusion rules are:
 \begin{align}
 \mathbb{I} \times \Phi &= \Phi \quad \text{for all primaries } \Phi \\
@@ -268,7 +265,7 @@ After the identification $\Phi_{r,s} \sim \Phi_{q-r,p-s}$, the three Virasoro pr
 This is the Ising model fusion algebra, which is commutative, associative, and generated by $\sigma$ with relation $\sigma^2 = \mathbb{I} + \varepsilon$ and $\varepsilon = \sigma^2 - \mathbb{I}$.
 \end{theorem}
 
-\begin{remark}[Virasoro vs.\ $W_3$ Fusion Rules]
+\begin{remark}[Virasoro vs.\ $W_3$ fusion rules]
 The rules above are the Virasoro fusion rules for the minimal model $\mathcal{M}(4,3)$.  The genuine $W_3(4,3)$ fusion rules at $c_{W_3}=0$ require the full $W_3$ modular S-matrix with $A_2$ weight labeling (Fateev--Lukyanov); see Section~\ref{subsec:w3-minimal-complete} and the remark following Verification~\ref{verif:quantum-dim-mult}.
 \end{remark}
 
@@ -278,31 +275,31 @@ $$N_{ij}^k = \sum_{\ell=0}^{2} \frac{S_{i\ell}S_{j\ell}S_{\ell k}^*}{S_{0\ell}}$
 
 with the S-matrix from Example \ref{ex:w3-3-4-complete}.
 
-\textit{[Detailed calculation for each product provided in computational appendix.]}
+\emph{[Detailed calculation for each product provided in computational appendix.]}
 \end{proof}
 
-\subsection{Quantum Dimensions and Verlinde Formula Check}
+\subsection{Quantum dimensions and Verlinde formula check}
 \label{subsec:quantum-dimensions}
 
-\begin{definition}[Quantum Dimension]\label{def:quantum-dimension}
+\begin{definition}[Quantum dimension]\label{def:quantum-dimension}
 The quantum dimension of a primary field $\Phi_i$ is:
 \begin{equation}
 d_i = \frac{S_{i0}}{S_{00}}
 \end{equation}
 \end{definition}
 
-\begin{proposition}[Quantum Dimension Formula; \ClaimStatusProvedElsewhere]\label{prop:quantum-dim-formula}
+\begin{proposition}[Quantum dimension formula; \ClaimStatusProvedElsewhere]\label{prop:quantum-dim-formula}
 For $W_3$ minimal model $(p,q)$, the quantum dimension of $\Phi_{r,s}$ is:
 \begin{equation}
 d_{r,s} = \frac{\sin(\pi r/q) \sin(\pi s/p)}{\sin(\pi/q)\sin(\pi/p)}
 \end{equation}
 \end{proposition}
 
-\begin{verification}[Quantum Dimension Multiplicativity]\label{verif:quantum-dim-mult}
+\begin{verification}[Quantum dimension multiplicativity]\label{verif:quantum-dim-mult}
 The quantum dimensions satisfy:
 $$d_i \cdot d_j = \sum_k N_{ij}^k d_k$$
 
-\textbf{Example: $W_3(4,3)$.}
+\emph{Example: $W_3(4,3)$.}
 
 Quantum dimensions (using the corrected formula $d_{r,s} = \sin(\pi r/q)\sin(\pi s/p)/(\sin(\pi/q)\sin(\pi/p))$ with $(p,q) = (4,3)$, after identification):
 \begin{align}
@@ -313,13 +310,13 @@ d_{\varepsilon} = d_{1,3} &= \frac{\sin(\pi/3)\sin(3\pi/4)}{\sin(\pi/3)\sin(\pi/
 
 The quantum dimensions are $d_{\mathbb{I}} = 1$, $d_\sigma = \sqrt{2}$, $d_\varepsilon = 1$, matching the Ising model.  The total quantum dimension is $\mathcal{D} = \sqrt{d_{\mathbb{I}}^2 + d_\sigma^2 + d_\varepsilon^2} = \sqrt{4} = 2 = 1/S_{00}$.
 
-\textbf{Remark on the S-matrix:} The S-matrix above uses the Virasoro modular data (products of sines $\sin(\pi r s'/p)$). For a genuine $W_3$ minimal model, the modular data requires $A_2$ weight labeling with two-component indices, and the correct S-matrix is given by Fateev--Lukyanov. The Virasoro S-matrix is the projection to the Virasoro subalgebra. A full treatment of $W_3$ fusion rules from the proper modular data is beyond the scope of this example; see Fateev--Lukyanov and Blumenhagen--Eholzer--Honecker--H\"ubel for the complete theory.
+\emph{Remark on the S-matrix.} The S-matrix above uses the Virasoro modular data (products of sines $\sin(\pi r s'/p)$). For a genuine $W_3$ minimal model, the modular data requires $A_2$ weight labeling with two-component indices, and the correct S-matrix is given by Fateev--Lukyanov. The Virasoro S-matrix is the projection to the Virasoro subalgebra. A full treatment of $W_3$ fusion rules from the proper modular data is beyond the scope of this example; see Fateev--Lukyanov and Blumenhagen--Eholzer--Honecker--H\"ubel for the complete theory.
 \end{verification}
 
-\subsection{\texorpdfstring{General $W_N$ Fusion Rules}{General W N Fusion Rules}}
+\subsection{\texorpdfstring{General $W_N$ fusion rules}{General W N fusion rules}}
 \label{subsec:wn-general-fusion}
 
-\begin{theorem}[$W_N$ Verlinde Formula; \ClaimStatusProvedElsewhere]\label{thm:wn-verlinde}
+\begin{theorem}[$W_N$ Verlinde formula; \ClaimStatusProvedElsewhere]\label{thm:wn-verlinde}
 For general $W_N$ minimal model $(p,q)$, the fusion coefficients are:
 \begin{equation}
 N_{\vec{r},\vec{s}}^{\vec{t}} = \sum_{\vec{\ell}} 
@@ -329,12 +326,12 @@ where the sum is over all $(N-1)$-tuples $\vec{\ell} = (\ell_1, \ldots, \ell_{N-
 with $1 \leq \ell_i < p$.
 \end{theorem}
 
-\begin{remark}[Computational Complexity]\label{rem:wn-complexity}
+\begin{remark}[Computational complexity]\label{rem:wn-complexity}
 For a $W_N$ minimal model $(p,q)$ with $p > q \geq N$, the number of primaries (after identification) is:
 $$r_N(p,q) = \frac{1}{2}\binom{p-1}{N-1}\binom{q-1}{N-1}$$
 and the fusion algebra has $r_N(p,q)^3$ coefficients to compute.
 
-\textbf{Examples:}
+\emph{Examples.}
 \begin{align}
 \mathcal{M}(4,3) \text{ (Virasoro)}: \quad & r_2(4,3) = 3, \quad 3^3 = 27 \text{ coefficients} \\
 W_3(4,3): \quad & r_3(4,3) = \tfrac{1}{2}\tbinom{3}{2}\tbinom{2}{2} = \tfrac{3}{2}
@@ -345,7 +342,7 @@ W_3(6,5): \quad & r_3(6,5) = \tfrac{1}{2}\tbinom{5}{2}\tbinom{4}{2} = 30,
 (The non-integer value for $W_3(4,3)$ arises because the counting formula assumes no self-identified primaries; the true count via orbits is~2.)
 \end{remark}
 
-\subsection{Connection to Representation Theory}
+\subsection{Connection to representation theory}
 
 The fusion rules encode the tensor product structure of $W_3$ representations:
 $$[\mathcal{L}_i] \otimes [\mathcal{L}_j] = \bigoplus_k N_{ij}^k [\mathcal{L}_k]$$

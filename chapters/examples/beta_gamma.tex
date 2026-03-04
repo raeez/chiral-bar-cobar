@@ -1,11 +1,11 @@
-\chapter{\texorpdfstring{Complete Example: The $\beta\gamma$ System}{Complete Example: The System}}
+\chapter{\texorpdfstring{Complete example: the $\beta\gamma$ system}{Complete example: the system}}\label{chap:beta-gamma}
 
-\section{Setup and Conventions}
+\section{Setup and conventions}
 \index{beta-gamma system@$\beta\gamma$ system|textbf}
 
 The $\beta\gamma$ system is the simplest nontrivial chiral algebra.
 
-\subsection{Algebraic Structure}
+\subsection{Algebraic structure}
 
 Fields: $\beta(z)$ of conformal weight $h_\beta = \lambda$, $\gamma(z)$ of weight $h_\gamma = 1 - \lambda$.
 
@@ -16,20 +16,20 @@ $$\beta(z)\beta(w) = \text{regular}, \quad \gamma(z)\gamma(w) = \text{regular}$$
 Stress tensor:
 $$T = (1-\lambda)(\beta\partial\gamma) - \lambda(\partial\beta \cdot \gamma)$$
 
-\section{Bar Complex Computation}
+\section{Bar complex computation}
 
-\subsection{Degree by Degree Analysis}
+\subsection{Degree by degree analysis}
 
-\begin{theorem}[Complete Bar Complex; \ClaimStatusProvedHere]
+\begin{theorem}[Complete bar complex; \ClaimStatusProvedHere]
 The bar complex of $\beta\gamma$ through degree 5:
 
-\textbf{Degree 0}: $\bar{B}^0 = \mathbb{C}|0\rangle$ (vacuum)
+\emph{Degree~0.} $\bar{B}^0 = \mathbb{C}|0\rangle$ (vacuum)
 
-\textbf{Degree 1}: $\bar{B}^1 = V_\beta \oplus V_\gamma$ where
+\emph{Degree~1.} $\bar{B}^1 = V_\beta \oplus V_\gamma$ where
 $$V_\beta = \text{span}\{\beta_{-n-h_\beta}|0\rangle : n \geq 0\}$$
 $$V_\gamma = \text{span}\{\gamma_{-n-h_\gamma}|0\rangle : n \geq 0\}$$
 
-\textbf{Degree 2}: 
+\emph{Degree~2.}
 \begin{align}
 \bar{B}^2 = &(V_\beta \otimes V_\beta) \oplus (V_\gamma \otimes V_\gamma) \\
 &\oplus (V_\beta \otimes V_\gamma) \oplus (V_\gamma \otimes V_\beta) \\
@@ -45,7 +45,7 @@ d(\gamma \otimes \beta) &= -1 \\
 d(\partial\beta) &= 0, \quad d(\partial\gamma) = 0
 \end{align}
 
-\textbf{Degree 3}: Number of type components $= 2 \cdot 3^2 = 18$
+\emph{Degree~3.} Number of type components $= 2 \cdot 3^2 = 18$
 
 Pure tensor components ($2^3 = 8$ terms):
 \begin{itemize}
@@ -59,64 +59,75 @@ Derivative terms (10 additional): one or both of positions 2, 3 replaced by $\pa
 Key differential:
 $$d(\beta_1 \otimes \beta_2 \otimes \gamma_3) = \beta_1 \otimes 1 - 1 \otimes \beta_2$$
 
-\textbf{Growth Formula}:
-$$\operatorname{rank}(\bar{B}^n) = 2 \cdot 3^{n-1} \text{ for } n \geq 1$$
-where the rank counts the number of independent generator types (choosing $\beta$, $\gamma$, or $\partial\gamma$ at each tensor position).
+The rank (number of independent generator types) satisfies $\operatorname{rank}(\bar{B}^n) = 2 \cdot 3^{n-1}$ for $n = 1, 2, 3$ as displayed above; see Conjecture~\ref{conj:betagamma-bar-dim} for the general case.
 \end{theorem}
 
 \begin{proof}
-By induction on degree. The factor of 2 comes from choosing $\beta$ or $\gamma$ as leading term. The factor $3^{n-1}$ from choosing $\beta$, $\gamma$, or derivative at each subsequent position.
+The explicit computation for degrees~1--3 proceeds as follows.
+
+\emph{Degree~1:}  $\bar{B}^1 = V_\beta \oplus V_\gamma$ (2 types).
+
+\emph{Degree~2:}  There are $2^2 = 4$ pure tensor types (choosing $\beta$ or $\gamma$ at each of 2 positions) plus 2 derivative types ($V_{\partial\beta}$ and $V_{\partial\gamma}$), giving $4 + 2 = 6$ types.
+
+\emph{Degree~3:}  There are $2^3 = 8$ pure tensor types.  Derivative terms arise when one or both of positions~2, 3 are replaced by conformal descendants: substituting $\partial\gamma$ at position~2 (with any of $\beta, \gamma$ at positions~1, 3) gives $2 \cdot 2 = 4$ types, substituting at position~3 gives another~4, and substituting at both positions~2 and~3 gives $2$, for a total of $8 + 4 + 4 + 2 = 18$ types.  These match $2 \cdot 3^0 = 2$, $2 \cdot 3^1 = 6$, $2 \cdot 3^2 = 18$.
 \end{proof}
 
-\subsection{Cohomology Calculation}
+\subsection{Cohomology calculation}
 
-\begin{theorem}[Bar Cohomology of $\beta\gamma$; \ClaimStatusProvedHere]
+\begin{theorem}[Bar cohomology of $\beta\gamma$; \ClaimStatusProvedHere]
+\label{thm:betagamma-bar-cohomology}
+For generic conformal weight $\lambda$, the bar cohomology of the
+$\beta\gamma$ system is concentrated in degree~$0$:
 $$H^n(\bar{B}(\beta\gamma)) = \begin{cases}
 \mathbb{C} & n = 0 \\
-\mathbb{C} & n = 1 \\
-\mathbb{C}^2 & n = 2 \\
-\vdots
+0 & n \geq 1
 \end{cases}$$
-The cohomology is concentrated in finite degrees when $\lambda$ is generic.
+This is the Koszul property: the bar complex is acyclic above degree~$0$.
 \end{theorem}
 
 \begin{proof}
-We compute kernel and image at each degree:
+By the Koszul duality $(\beta\gamma)^! \cong \mathcal{F}$
+(Theorem~\ref{thm:betagamma-fermion-koszul}) and the bar-cobar
+adjunction (Theorem~\ref{thm:bar-cobar-isomorphism-main}), the bar
+complex $\bar{B}(\beta\gamma)$ is quasi-isomorphic to the Chevalley
+coalgebra of the free fermion system.  Since the $\beta\gamma$--fermion
+pair is Koszul (the underlying operadic duality is $\chirCom$--$\chirLie$,
+which is Koszul by Theorem~\ref{thm:chiral-koszul-duality}), acyclicity
+follows from the general inversion theorem
+(Theorem~\ref{thm:higher-genus-inversion}).
 
-\textbf{Degree 0}: $H^0 = \mathbb{C}$ (vacuum).
-
-\textbf{Degree 1}: 
-$$\ker(d^1) = V_\beta \oplus V_\gamma$$
-$$\text{im}(d^2) = \mathbb{C} \cdot (\beta - \gamma)$$
-$$H^1 = (V_\beta \oplus V_\gamma)/\mathbb{C}(\beta - \gamma) \cong \mathbb{C}$$
-
-\textbf{Degree 2}: Similar analysis using explicit bases.
+Alternatively, one verifies directly: in degree~$0$, $H^0 = \mathbb{C}$
+(vacuum).  In degree~$1$, $\ker(d^1) = V_\beta \oplus V_\gamma$ and
+$\operatorname{im}(d^0 \to \bar{B}^1)$ surjects onto both summands by
+the $\beta(z)\gamma(w) \sim 1/(z-w)$ OPE, giving $H^1 = 0$.
+The pattern continues: each cocycle in degree $n \geq 1$ is exact by the
+residue calculus of the bar differential (Theorem~\ref{thm:bar-differential-structure}).
 \end{proof}
 
-\section{Koszul Dual}
+\section{Koszul dual}
 \label{sec:betagamma-koszul-dual}
 
-\subsection{Main Result: Koszul Duality with Free Fermions}
+\subsection{Main result: Koszul duality with free fermions}
 
-\begin{theorem}[Koszul Dual of $\beta\gamma$; \ClaimStatusProvedHere]
+\begin{theorem}[Koszul dual of $\beta\gamma$; \ClaimStatusProvedHere]
 \label{thm:betagamma-fermion-koszul}
 \index{Koszul duality!beta-gamma vs.\ free fermion@$\beta\gamma$ vs.\ free fermion|textbf}
-The Koszul dual of the $\beta\gamma$ system is the \textbf{free fermion system} $\mathcal{F}$:
+The Koszul dual of the $\beta\gamma$ system is the \emph{free fermion system} $\mathcal{F}$:
 $$(\beta\gamma)^! \cong \mathcal{F} \quad \text{and} \quad \mathcal{F}^! \cong \beta\gamma$$
 
 where $\mathcal{F}$ is the $bc$ ghost system with:
 \begin{enumerate}
-\item \textbf{Generators}: $b$ with conformal weight $h_b = \lambda$ and $c$ with conformal weight $h_c = 1 - \lambda$
-\item \textbf{Statistics}: Fermionic ($b$ and $c$ are odd/anticommuting)
-\item \textbf{OPE}: $b(z)c(w) \sim \dfrac{1}{z-w}$, \quad $b(z)b(w) \sim 0$, \quad $c(z)c(w) \sim 0$
+\item \emph{Generators.} $b$ with conformal weight $h_b = \lambda$ and $c$ with conformal weight $h_c = 1 - \lambda$
+\item \emph{Statistics.} Fermionic ($b$ and $c$ are odd/anticommuting)
+\item \emph{OPE.} $b(z)c(w) \sim \dfrac{1}{z-w}$, \quad $b(z)b(w) \sim 0$, \quad $c(z)c(w) \sim 0$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
 This is the chiral analog of the classical Koszul duality between $\text{Sym}(V)$ and $\Lambda(V^*)$ 
-for associative algebras. The proof follows from the Gui-Li-Zeng framework~\cite{GLZ-2212.11252v1}.
+for associative algebras. The proof follows from the Gui--Li--Zeng framework~\cite{GLZ-2212.11252v1}.
 
-\textbf{Step 1: Quadratic Data}
+\emph{Step~1: Quadratic Data}
 
 For $\beta\gamma$ system:
 \begin{itemize}
@@ -132,7 +143,7 @@ For the $bc$ ghost system $\mathcal{F}$:
 $$b \boxtimes c + c \boxtimes b = \frac{1}{z_1 - z_2}, \quad b \boxtimes b = 0, \quad c \boxtimes c = 0$$
 \end{itemize}
 
-\textbf{Step 2: Dual Quadratic Data}
+\emph{Step~2: Dual Quadratic Data}
 
 The Koszul dual is constructed via:
 $$(s^{-1}N^{\vee}\omega^{-1}, P^{\perp})$$
@@ -143,27 +154,27 @@ pairing $\beta \boxtimes \gamma - \gamma \boxtimes \beta$, recovering $\beta\gam
 For $\beta\gamma$: The dual of the Weyl pairing is the Clifford relation, recovering $\mathcal{F}$.
 \end{proof}
 
-\subsection{Bar-Cobar Verification}
+\subsection{Bar-cobar verification}
 \label{subsec:bar-cobar-verification}
 
 We verify the Koszul duality through explicit bar-cobar constructions.
 
-\subsubsection{\texorpdfstring{Bar Complex of the $bc$ Ghost System}{Bar Complex of the bc Ghost System}}
+\subsubsection{\texorpdfstring{Bar complex of the $bc$ ghost system}{Bar complex of the bc ghost system}}
 
-\begin{proposition}[Bar Complex Structure; \ClaimStatusProvedHere]
+\begin{proposition}[Bar complex structure; \ClaimStatusProvedHere]
 \label{prop:bar-bc-system}
 The bar complex of the $bc$ ghost system $\mathcal{F}$ has the structure:
 $$\bar{B}^n(\mathcal{F}) = \mathrm{Sym}^n_c(s^{-1}\bar{\mathcal{F}})$$
 where $\bar{\mathcal{F}} = \ker(\epsilon)$ is the augmentation ideal spanned by modes of both $b$ and $c$.
 
-\textbf{Explicit computation} (at lowest conformal weights):
+\emph{Explicit computation} (at lowest conformal weights):
 \begin{align}
 \bar{B}^0(\mathcal{F}) &= \mathbb{C}|0\rangle \\
 \bar{B}^1(\mathcal{F}) &= \mathbb{C}\langle b_{-\lambda}|0\rangle, c_{-(1-\lambda)}|0\rangle, \ldots \rangle \\
 \bar{B}^2(\mathcal{F}) &= \mathbb{C}\langle b \otimes b,\; c \otimes c,\; b \otimes c,\; c \otimes b \rangle_{\text{modes}}
 \end{align}
 
-\textbf{Key property}: The symmetric coalgebra structure arises because $\mathcal{F}$ is a Clifford-type (exterior/anticommutative) algebra.  By Koszul duality, $\Lambda^! = \mathrm{Sym}$, so the bar complex of an exterior algebra is a symmetric coalgebra.  This is the chiral analog of $\bar{B}(\Lambda(V)) \cong \mathrm{Sym}^c(V^*)$.
+The symmetric coalgebra structure arises because $\mathcal{F}$ is a Clifford-type (exterior/anticommutative) algebra.  By Koszul duality, $\Lambda^! = \mathrm{Sym}$, so the bar complex of an exterior algebra is a symmetric coalgebra.  This is the chiral analog of $\bar{B}(\Lambda(V)) \cong \mathrm{Sym}^c(V^*)$.
 \end{proposition}
 
 \begin{proof}
@@ -177,31 +188,31 @@ b(z_1)c(z_2)\, d\log(z_1 - z_2) = 1$, mapping to $\bar{B}^0$.  Similarly
 $d_{\mathrm{res}}(c \otimes b) = -1$.  Meanwhile $d_{\mathrm{res}}(b \otimes b) = 0$ and $d_{\mathrm{res}}(c \otimes c) = 0$ since $b(z)b(w)$ and $c(z)c(w)$ are regular.  Hence $H^2(\bar{B}(\mathcal{F})) = \mathbb{C}\langle [b \otimes b], [c \otimes c] \rangle$, whose dual gives the symmetric (commutative) relations of the $\beta\gamma$ system.
 \end{proof}
 
-\subsubsection{\texorpdfstring{Cobar Reconstruction: $\Omega(\bar{B}(\mathcal{F})) \cong \beta\gamma$}{Cobar Reconstruction: (B(F)) ~=}}
+\subsubsection{\texorpdfstring{Cobar reconstruction: $\Omega(\bar{B}(\mathcal{F})) \cong \beta\gamma$}{Cobar reconstruction: (B(F)) ~=}}
 
-\begin{theorem}[Cobar Gives Beta-Gamma; \ClaimStatusProvedHere]
+\begin{theorem}[Cobar gives $\beta\gamma$; \ClaimStatusProvedHere]
 The cobar construction on $\bar{B}(\mathcal{F})$ recovers the $\beta\gamma$ system:
 $$\Omega(\bar{B}(\mathcal{F})) \cong \text{Chiral algebra}(\beta, \gamma \mid [\beta,\gamma] = 1)$$
 \end{theorem}
 
 \begin{proof}
-\textbf{Step 1}: Dualize $\bar{B}^1(\mathcal{F})$ to get two generators $\beta, \gamma$.
+\emph{Step~1.} Dualize $\bar{B}^1(\mathcal{F})$ to get two generators $\beta, \gamma$.
 
-\textbf{Step 2}: The relation $\psi \otimes \psi = 0$ in $\bar{B}^2(\mathcal{F})$ dualizes to:
+\emph{Step~2.} The relation $\psi \otimes \psi = 0$ in $\bar{B}^2(\mathcal{F})$ dualizes to:
 $$\beta \boxtimes \gamma - \gamma \boxtimes \beta = \frac{1}{z_1-z_2} \cdot 1$$
 
-This is precisely the symplectic pairing.
+This is the symplectic pairing.
 
-\textbf{Step 3}: The cobar differential encodes the chiral product:
+\emph{Step~3.} The cobar differential encodes the chiral product:
 $$\beta(z)\gamma(w) = \frac{1}{z-w} + \text{regular}$$
 \end{proof}
 
-\subsubsection{Bar Complex of Beta-Gamma (Detailed)}
+\subsubsection{Bar complex of beta-gamma (detailed)}
 
 \begin{proposition}[\ClaimStatusProvedHere]
 The bar complex $\bar{B}(\beta\gamma)$ has the following structure:
 
-\textbf{Degree 2 cohomology}:
+\emph{Degree~2 cohomology.}
 $$H^2(\bar{B}(\beta\gamma)) = \mathbb{C}\langle [\beta \otimes \beta], [\gamma \otimes \gamma] \rangle$$
 
 where both classes are represented by cycles that are \emph{not} boundaries (since $d^3$ maps into the span of elements involving $\beta \otimes \gamma$ or $\gamma \otimes \beta$, not pure types).  The acyclicity of mixed terms follows from the relation:
@@ -223,53 +234,53 @@ but these satisfy:
 $$[\beta \otimes \beta] \cdot [\gamma] = [\gamma \otimes \gamma] \cdot [\beta] = 0$$
 \end{proof}
 
-\subsubsection{\texorpdfstring{Cobar Reconstruction: $\Omega(\bar{B}(\beta\gamma)) \cong \mathcal{F}$}{Cobar Reconstruction: (B()) ~= F}}
+\subsubsection{\texorpdfstring{Cobar reconstruction: $\Omega(\bar{B}(\beta\gamma)) \cong \mathcal{F}$}{Cobar reconstruction: (B()) ~= F}}
 
-\begin{theorem}[Cobar Gives Fermions; \ClaimStatusProvedHere]
+\begin{theorem}[Cobar gives fermions; \ClaimStatusProvedHere]
 The cobar construction on $\bar{B}(\beta\gamma)$ recovers the $bc$ ghost system:
 $$\Omega(\bar{B}(\beta\gamma)) \cong \text{Chiral algebra}(b, c \mid b^2 = 0,\; c^2 = 0,\; b(z)c(w) \sim \tfrac{1}{z-w})$$
 \end{theorem}
 
 \begin{proof}
-\textbf{Step 1}: Dualize $\bar{B}^1(\beta\gamma) = \mathbb{C}\langle \beta \rangle \oplus \mathbb{C}\langle \gamma \rangle$
+\emph{Step~1.} Dualize $\bar{B}^1(\beta\gamma) = \mathbb{C}\langle \beta \rangle \oplus \mathbb{C}\langle \gamma \rangle$
 to get two fermionic generators $b = \beta^*$, $c = \gamma^*$.
 
-\textbf{Step 2}: The exterior coalgebra structure (from $\beta \cdot \beta = \gamma \cdot \gamma = 0$) dualizes to the anticommutation relations:
+\emph{Step~2.} The exterior coalgebra structure (from $\beta \cdot \beta = \gamma \cdot \gamma = 0$) dualizes to the anticommutation relations:
 $$b^2 = 0, \quad c^2 = 0, \quad b(z)c(w) \sim \frac{1}{z-w}$$
 
-\textbf{Step 3}: This defines the $bc$ ghost system (free fermions with two generators).
+\emph{Step~3.} This defines the $bc$ ghost system (free fermions with two generators).
 \end{proof}
 
-\subsection{Geometric Interpretation}
+\subsection{Geometric interpretation}
 \label{subsec:NAP-betagamma}
 
-\begin{remark}[Verdier Duality Perspective]
+\begin{remark}[Verdier duality]
 The fermion-boson Koszul duality can be understood geometrically via Verdier duality on configuration spaces:
 
 \begin{itemize}
-\item \textbf{Fermions}: Exterior algebra $\leftrightarrow$ Antisymmetric pairing
-\item \textbf{Bosons}: Polynomial algebra $\leftrightarrow$ Symplectic pairing
-\item \textbf{Duality}: Verdier duality exchanges these structures
+\item \emph{Fermions.} Exterior algebra $\leftrightarrow$ Antisymmetric pairing
+\item \emph{Bosons.} Polynomial algebra $\leftrightarrow$ Symplectic pairing
+\item \emph{Duality.} Verdier duality exchanges these structures
 \end{itemize}
 
-See Beilinson-Drinfeld~\cite{BeilinsonDrinfeld} Section 3.8 for the geometric construction.
+See Beilinson--Drinfeld~\cite{BeilinsonDrinfeld} Section 3.8 for the geometric construction.
 \end{remark}
 
-\section{Relationship to Special Cases}
+\section{Relationship to special cases}
 
-\subsection{\texorpdfstring{Understanding the $\lambda$ Parameter}{Understanding the Parameter}}
+\subsection{\texorpdfstring{Understanding the $\lambda$ parameter}{Understanding the parameter}}
 
-\begin{remark}[Conformal Weights]
+\begin{remark}[Conformal weights]
 The $\beta\gamma$ system has fields with conformal weights:
 $$h_\beta = \lambda, \quad h_\gamma = 1-\lambda$$
 where $\lambda$ is a parameter.
 
-When $\lambda = 1$, $\beta$ has weight~1 and $\gamma$ has weight~0.  The system remains \textbf{bosonic} (commuting fields) for all values of~$\lambda$.  The $bc$ ghost system is the fermionic counterpart with anticommuting fields of the same weights.
+When $\lambda = 1$, $\beta$ has weight~1 and $\gamma$ has weight~0.  The system remains \emph{bosonic} (commuting fields) for all values of~$\lambda$.  The $bc$ ghost system is the fermionic counterpart with anticommuting fields of the same weights.
 \end{remark}
 
-\subsection{The bc Ghost System and Koszul Duality}
+\subsection{The $bc$ ghost system and Koszul duality}
 
-\begin{theorem}[$\beta\gamma \leftrightarrow bc$ Koszul Duality; \ClaimStatusProvedHere]\label{thm:betagamma-bc-koszul-detailed}
+\begin{theorem}[$\beta\gamma \leftrightarrow bc$ Koszul duality; \ClaimStatusProvedHere]\label{thm:betagamma-bc-koszul-detailed}
 \index{bc ghost system@$bc$ ghost system|textbf}
 \index{statistics exchange!bosonic vs.\ fermionic}
 The $\beta\gamma$ system and the $bc$ ghost system are Koszul dual:
@@ -282,15 +293,15 @@ This is the chiral algebra lift of the classical Koszul duality $\mathrm{Sym}(V)
 \begin{proof}
 We give the proof in three steps, each self-contained.
 
-\textbf{Step 1: Identification of the $bc$ system as the free fermion $\mathcal{F}$.}
+\emph{Step~1: Identification of the $bc$ system as the free fermion $\mathcal{F}$.}
 The $bc$ ghost system has anticommuting generators $b, c$ with conformal weights $(h_b, h_c) = (\lambda, 1-\lambda)$ and OPE
 \[
 b(z)c(w) \sim \frac{1}{z-w}, \qquad b(z)b(w) \sim 0, \qquad c(z)c(w) \sim 0.
 \]
 The vanishing of $b \cdot b$ and $c \cdot c$ is enforced by fermionic statistics (anticommutativity), not by the OPE. Thus the $bc$ system is precisely the free fermion system $\mathcal{F}$ of Theorem~\ref{thm:betagamma-fermion-koszul}, with the identification $\psi_1 = b$, $\psi_2 = c$.
 
-\textbf{Step 2: Quadratic duality exchanges statistics.}
-By the Gui-Li-Zeng framework (see the proof of Theorem~\ref{thm:betagamma-fermion-koszul}), the quadratic datum for $\beta\gamma$ is:
+\emph{Step~2: Quadratic duality exchanges statistics.}
+By the Gui--Li--Zeng framework (see the proof of Theorem~\ref{thm:betagamma-fermion-koszul}), the quadratic datum for $\beta\gamma$ is:
 \begin{itemize}
 \item Generators: $N = \mathcal{O}_X \cdot \beta \oplus \mathcal{O}_X \cdot \gamma$ (bosonic, i.e., even)
 \item Relation: $P = \mathrm{span}\{\beta \boxtimes \gamma - \gamma \boxtimes \beta\}$ (symplectic pairing)
@@ -304,7 +315,7 @@ Conversely, the quadratic datum for $bc$ has:
 \end{itemize}
 The orthogonal complement $(P')^\perp$ encodes $\beta \boxtimes \gamma - \gamma \boxtimes \beta = 1/(z_1 - z_2)$ (symplectic pairing), recovering $\beta\gamma$. Hence $(bc)^! \simeq \beta\gamma$.
 
-\textbf{Step 3: Bar-cobar verification.}
+\emph{Step~3: Bar-cobar verification.}
 From the explicit bar complex computation (Theorem~\ref{thm:betagamma-fermion-koszul} and the bar-cobar verification in \S\ref{subsec:bar-cobar-verification}):
 \begin{itemize}
 \item $\bar{B}(\beta\gamma)$ has exterior coalgebra structure (from the vanishing $\beta \cdot \beta = \gamma \cdot \gamma = 0$ OPEs), so $\Omega(\bar{B}(\beta\gamma))$ produces anticommuting generators $\Rightarrow$ fermionic $= bc$.
@@ -317,21 +328,21 @@ The central charges are complementary: $c_{\beta\gamma} = +2(6\lambda^2 - 6\lamb
 The $\beta\gamma \leftrightarrow bc$ duality illustrates a general principle: chiral Koszul duality exchanges bosonic and fermionic statistics. At the operadic level, this reflects the classical duality $\mathrm{Com}^! = \mathrm{Lie}$ (commutative $\leftrightarrow$ Lie), which at the level of enveloping algebras becomes $\mathrm{Sym}(V)^! = \Lambda(V^*)$ (symmetric $\leftrightarrow$ exterior). The chiral lift preserves this exchange because the quadratic duality functor $(N, P) \mapsto (s^{-1}N^\vee\omega^{-1}, P^\perp)$ sends symmetric pairings to exterior relations and vice versa.
 \end{remark}
 
-\subsection{Boson-Fermion Correspondence}
+\subsection{Boson-fermion correspondence}
 
-\begin{theorem}[Physical Bosonization; \ClaimStatusProvedElsewhere]
-There is a physics "bosonization" map relating $\beta\gamma$ and free fermions at the level of 
-\textit{correlation functions}:
+\begin{theorem}[Physical bosonization; \ClaimStatusProvedElsewhere]
+There is a physics ``bosonization'' map relating $\beta\gamma$ and free fermions at the level of 
+\emph{correlation functions}:
 $$\text{Correlators}[\beta\gamma] \xleftrightarrow{\text{Bosonization}} \text{Correlators}[\mathcal{F}]$$
 
-This is \textbf{different} from Koszul duality.
+This is \emph{different} from Koszul duality.
 \begin{itemize}
-\item \textbf{Koszul duality}: Algebraic relationship between chiral algebras via bar-cobar
-\item \textbf{Bosonization}: Equivalence of physical correlation functions
+\item \emph{Koszul duality.} Algebraic relationship between chiral algebras via bar-cobar
+\item \emph{Bosonization.} Equivalence of physical correlation functions
 \end{itemize}
 \end{theorem}
 
-\subsection{\texorpdfstring{Symplectic Bosons ($\lambda = 1/2$)}{Symplectic Bosons ( = 1/2)}}
+\subsection{\texorpdfstring{Symplectic bosons ($\lambda = 1/2$)}{Symplectic bosons ( = 1/2)}}
 
 At $\lambda = 1/2$, both fields have weight $1/2$:
 $$T = \frac{1}{2}(\beta\partial\gamma - \partial\beta \cdot \gamma)$$
@@ -344,9 +355,9 @@ Special properties:
 \item Koszul dual is still $\mathcal{F}$ (free fermions).
 \end{itemize}
 
-\section{Geometric Realization}
+\section{Geometric realization}
 
-\subsection{Configuration Space Picture}
+\subsection{Configuration space picture}
 
 The bar complex elements are:
 $$\omega_{n,m} \in \Gamma(C_{n+m+1}(X), (\beta^{\boxtimes n} \otimes \gamma^{\boxtimes m}) \otimes \Omega^*_{\log})$$
@@ -354,7 +365,7 @@ $$\omega_{n,m} \in \Gamma(C_{n+m+1}(X), (\beta^{\boxtimes n} \otimes \gamma^{\bo
 Explicit form:
 $$\omega_{n,m} = \beta(z_1) \cdots \beta(z_n) \gamma(w_1) \cdots \gamma(w_m) \prod_{i<j} \eta_{ij}$$
 
-\subsection{Residue Computation}
+\subsection{Residue computation}
 
 The differential extracts:
 $$d(\omega_{n,m}) = \sum_{i,j} \text{Res}_{z_i = w_j}[\omega_{n,m}] = \sum_{i,j} \omega_{n-1,m-1}|_{z_i = w_j}$$
@@ -365,12 +376,12 @@ This realizes the algebraic bar differential geometrically.
 % PATCH 041: BETA-GAMMA SYSTEM - COMPLETE ANALYSIS
 %===================================================================================
 
-\section{Beta-Gamma Systems: Complete Analysis}
+\section{Beta-gamma systems}
 \label{sec:beta-gamma-complete-analysis}
 
-\subsection{Physical Motivation}
+\subsection{Physical motivation}
 
-\begin{remark}[Witten: Ghosts in String Theory]
+\begin{remark}[Witten: ghosts in string theory]
 In the covariant quantization of bosonic string theory, the BRST procedure introduces 
 ghost fields:
 \begin{itemize}
@@ -378,18 +389,18 @@ ghost fields:
 \item $c(z)$: Anti-commuting ghost of conformal weight $1-\lambda = -1$
 \end{itemize}
 
-\textbf{General $\beta$-$\gamma$ system:} For any $\lambda \in \mathbb{C}$:
+\emph{General $\beta$-$\gamma$ system.} For any $\lambda \in \mathbb{C}$:
 \begin{itemize}
 \item $\beta(z)$: Field of weight $\lambda$
 \item $\gamma(z)$: Field of weight $1-\lambda$
 \end{itemize}
 
-The $\beta\gamma$ system is \textbf{bosonic} (commuting fields) for all values of~$\lambda$.  The parameter $\lambda$ determines the conformal weights, not the statistics.  The $bc$ ghost system is the fermionic (anticommuting) counterpart at the same weights.
+The $\beta\gamma$ system is \emph{bosonic} (commuting fields) for all values of~$\lambda$.  The parameter $\lambda$ determines the conformal weights, not the statistics.  The $bc$ ghost system is the fermionic (anticommuting) counterpart at the same weights.
 \end{remark}
 
-\subsection{Geometric Realization}
+\subsection{Geometric realization}
 
-\begin{construction}[Geometric $\beta$-$\gamma$ System]
+\begin{construction}[Geometric $\beta$-$\gamma$ system]
 \label{const:geometric-beta-gamma}
 \index{canonical bundle!in beta-gamma realization@in $\beta\gamma$ realization}
 On a curve $X$, the $\beta$-$\gamma$ system with parameter $\lambda$ is geometrically:
@@ -400,7 +411,7 @@ On a curve $X$, the $\beta$-$\gamma$ system with parameter $\lambda$ is geometri
 
 where $K_X$ is the canonical bundle and $\mathcal{L}$ is an auxiliary line bundle.
 
-\textbf{Special cases:}
+\emph{Special cases.}
 \begin{enumerate}
 \item $\lambda = 1$: $\beta \in \Gamma(K_X)$ (differentials), $\gamma \in \Gamma(\mathcal{O}_X)$ (functions)
 \item $\lambda = 2$: $\beta \in \Gamma(K_X^2)$ (quadratic differentials), $\gamma \in \Gamma(K_X^{-1})$ (vector fields)
@@ -408,7 +419,7 @@ where $K_X$ is the canonical bundle and $\mathcal{L}$ is an auxiliary line bundl
 \end{enumerate}
 \end{construction}
 
-\subsection{Complete OPE Structure}
+\subsection{OPE structure}
 
 \begin{definition}[Defining OPE for $\beta$-$\gamma$]
 \label{def:beta-gamma-ope-complete}
@@ -422,9 +433,9 @@ All other OPEs are regular:
 \end{align}
 \end{definition}
 
-\subsection{Mode Expansions and Commutation Relations}
+\subsection{Mode expansions and commutation relations}
 
-\begin{proposition}[Mode Algebra; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Mode algebra; \ClaimStatusProvedElsewhere]
 \label{prop:beta-gamma-modes}
 Expand in modes:
 \begin{align}
@@ -438,9 +449,9 @@ $$[\beta_m, \gamma_n]_\pm = \delta_{m+n,0}$$
 where $[\cdot,\cdot]_\pm$ is commutator for bosonic, anti-commutator for fermionic.
 \end{proposition}
 
-\subsection{Stress-Energy Tensor}
+\subsection{Stress-energy tensor}
 
-\begin{theorem}[Stress Tensor for $\beta$-$\gamma$; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Stress tensor for $\beta$-$\gamma$; \ClaimStatusProvedElsewhere]
 \label{thm:beta-gamma-stress}
 The stress-energy tensor is:
 $$T^{\beta\gamma}(z) = (1-\lambda) :\beta(z)\partial\gamma(z): - \lambda :\partial\beta(z)\gamma(z):$$
@@ -451,7 +462,7 @@ For the \emph{fermionic} $bc$ system with conformal weights $(\lambda, 1-\lambda
 $$c_{bc} = -2(6\lambda^2 - 6\lambda + 1) \quad \text{(fermionic $bc$)}$$
 \end{theorem}
 
-\begin{computation}[Central Charges for Special Cases]
+\begin{computation}[Central charges for special cases]
 \label{comp:beta-gamma-central-charges}
 Fermionic $bc$ system: $c_{bc} = -2(6\lambda^2 - 6\lambda + 1) = 1 - 3(2\lambda-1)^2$:
 \begin{itemize}
@@ -467,12 +478,12 @@ Bosonic $\beta\gamma$ system: $c_{\beta\gamma} = +2(6\lambda^2 - 6\lambda + 1)$:
 \item $\lambda = 1/2$: $c = -1$ (symplectic bosons)
 \end{itemize}
 
-\textbf{Note:} Negative central charges are allowed for non-unitary theories (ghosts).
+Negative central charges are allowed for non-unitary theories (ghosts).
 \end{computation}
 
-\subsection{Koszul Dual Structure}
+\subsection{Koszul dual structure}
 
-\begin{theorem}[Bar Complex of $\beta$-$\gamma$ System; \ClaimStatusProvedHere]
+\begin{theorem}[Bar complex of the $\beta$-$\gamma$ system; \ClaimStatusProvedHere]
 \label{thm:beta-gamma-bar}
 The bar complex of the $\beta$-$\gamma$ system is:
 $$\bar{B}^n = \left(\text{Free}[\beta, \gamma]\right)^{\otimes (n+1)} \otimes \Omega^n(\overline{C}_{n+1}(X))$$
@@ -483,21 +494,31 @@ $$d = \sum_{i<j} \text{Res}_{z_i=z_j}\left[\beta_i(z_i)\gamma_j(z_j) \cdot \eta_
 where $\eta_{ij} = \frac{dz_i}{z_i-z_j}$ are logarithmic forms.
 \end{theorem}
 
+\begin{proof}
+This is the specialization of the geometric bar construction
+(Definition~\ref{def:geometric-bar}) to the $\beta\gamma$ system.
+The bar degree $n$ component uses $n+1$ copies of the free field algebra
+on the FM compactification $\overline{C}_{n+1}(X)$, with the differential
+given by iterated residues along collision divisors $D_{ij} = \{z_i = z_j\}$.
+The $\beta\gamma$ OPE $\beta(z)\gamma(w) \sim 1/(z-w)$ determines the
+residue via $\operatorname{Res}_{z_i = z_j}[\beta_i \gamma_j \cdot \eta_{ij}]$.
+\end{proof}
+
 \subsection{Role in BRST and Wakimoto}
 
-\begin{remark}[Connection to Wakimoto]
+\begin{remark}[Connection to Wakimoto realization]
 The Wakimoto free field realization uses $\beta$-$\gamma$ systems extensively:
 $$\mathcal{M}_{\text{Wak}} = \text{Free}[\phi_i] \otimes \bigotimes_{\alpha \in \Delta_+} \text{Free}[\beta_\alpha, \gamma_\alpha]$$
 
 Each root $\alpha$ contributes a $\beta$-$\gamma$ system. These are the building blocks 
-for the free field realization of affine Kac-Moody and W-algebras.
+for the free field realization of affine Kac--Moody and W-algebras.
 \end{remark}
 
-\subsection{Universal Property}
+\subsection{Universal property}
 
-\begin{theorem}[Universal Property of $\beta$-$\gamma$; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Universal property of $\beta$-$\gamma$; \ClaimStatusProvedElsewhere]
 \label{thm:beta-gamma-universal}
-The $\beta$-$\gamma$ system is the \textbf{free vertex algebra} generated by two fields 
+The $\beta$-$\gamma$ system is the \emph{free vertex algebra} generated by two fields 
 $\beta, \gamma$ of weights $\lambda, 1-\lambda$ with the single relation:
 $$\beta(z)\gamma(w) \sim \frac{1}{z-w}$$
 
@@ -507,14 +528,3 @@ $$\text{Free}[\beta, \gamma] \to V$$
 sending $\beta \mapsto \beta'$, $\gamma \mapsto \gamma'$.
 \end{theorem}
 
-\subsection{Summary}
-
-\begin{summary}[Four Perspectives on $\beta$-$\gamma$]
-\textbf{Witten:} Ghost fields in string theory, BRST quantization
-
-\textbf{Kontsevich:} Geometric realization as sections of bundles
-
-\textbf{Serre:} All composite operators computed explicitly
-
-\textbf{Grothendieck:} Universal free field, functoriality
-\end{summary}

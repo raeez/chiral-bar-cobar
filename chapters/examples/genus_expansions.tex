@@ -1,226 +1,617 @@
-\chapter{Explicit Genus Expansions}\label{ch:genus-expansions}
+\chapter{Explicit genus expansions}\label{ch:genus-expansions}
 
-\section{Free Boson at All Genera}
+\section{Free fields at all genera}\label{sec:free-field-genera}
 
-The free boson with $c=1$ has partition function:
-$$Z_g^{\text{boson}} = \left[\det'(\Delta_g)\right]^{-1/2}$$
-where $\det'$ denotes the zeta-regularized determinant with zero modes removed.
+\subsection{Heisenberg algebra}\label{subsec:heisenberg-all-genera}
 
-Explicit formulas by genus:
+\begin{theorem}[Heisenberg free energy at all genera;
+\ClaimStatusProvedHere]\label{thm:heisenberg-all-genera}
+\index{Heisenberg algebra!genus expansion}
+For the Heisenberg algebra $\mathcal{H}_\kappa$
+of rank~$d$ at level~$\kappa \neq 0$, the genus-$g$
+free energy is:
+\begin{equation}\label{eq:heisenberg-Fg}
+F_g(\mathcal{H}_\kappa) = d\kappa \cdot
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}
+\end{equation}
+for all $g \geq 1$.  The generating function is
+\begin{equation}\label{eq:heisenberg-generating}
+\sum_{g=1}^{\infty} F_g(\mathcal{H}_\kappa)\, x^{2g}
+= d\kappa \left(\frac{x/2}{\sin(x/2)} - 1\right).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By the genus universality theorem
+(Theorem~\ref{thm:genus-universality}) with
+$\kappa(\mathcal{H}_\kappa) = d\kappa$
+(Theorem~\ref{thm:heisenberg-obs}) and
+the Faber--Pandharipande formula
+(Theorem~\ref{thm:mumford-formula}).
+The generating function follows from
+Proposition~\ref{prop:complementarity-genus-series}.
+\end{proof}
+
+\begin{remark}[Connection to partition functions]
+\label{rem:heisenberg-partition}
+The genus-$g$ free energy of the bar complex
+should not be confused with the physical partition
+function.  For a single free boson ($d = 1$,
+$\kappa = 1$, $c = 1$):
 \begin{itemize}
-\item $g=0$: $Z_0 = 1$ (trivial; the sphere admits no nontrivial conformal moduli)
-\item $g=1$: $Z_1(\tau) = (\mathrm{Im}\,\tau)^{-1/2}|\eta(\tau)|^{-2}$ where $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$ is the Dedekind eta function, $q = e^{2\pi i\tau}$.  Here $|\eta|^{-2}$ comes from $[\det'(\Delta_1)]^{-1/2}$ (oscillator modes) and $(\mathrm{Im}\,\tau)^{-1/2}$ from the zero-mode integral $\int d^2p \, e^{-\pi \mathrm{Im}\,\tau\,|p|^2}$ (for a non-compact boson; for a compact boson on a circle of radius $R$, the zero-mode sum replaces this by a lattice theta function)
-\item $g=2$: $Z_2(\Omega) = [\det(\mathrm{Im}\,\Omega)]^{-1/2} \cdot |\mathcal{F}_2(\Omega)|^{-1}$ where $\mathcal{F}_2$ is expressible in terms of Riemann theta functions on the Siegel upper half-space $\mathcal{H}_2$. The Igusa cusp form $\Psi_{10}$ enters the \emph{bosonic string measure} (all 26 bosons) via the Belavin--Knizhnik theorem, not the single-boson partition function.
-\item General $g$: the partition function depends on the full period matrix $\Omega \in \mathcal{H}_g$. The \emph{universal factor} from the conformal anomaly is $\exp(-\frac{1}{2}\zeta(-1) \chi(\Sigma_g))$ where $\chi(\Sigma_g) = 2-2g$ and $\zeta(-1) = -\frac{1}{12}$ (the Riemann zeta function at $s=-1$, not to be confused with $\zeta'(-1) = \frac{1}{12} - \ln A$ where $A$ is the Glaisher-Kinkelin constant), but this is only the moduli-independent prefactor.
+\item $g = 1$: the physical partition function
+$Z_1(\tau) = (\mathrm{Im}\,\tau)^{-1/2}|\eta(\tau)|^{-2}$
+(oscillator modes $+$ zero-mode integral), while
+$F_1(\mathcal{H}_1) = 1/24$ captures only the
+obstruction to extending the bar complex from genus~$0$
+to genus~$1$.
+\item $g = 2$: the physical partition function
+involves the full period matrix
+$\Omega \in \mathcal{H}_2$, while
+$F_2(\mathcal{H}_1) = 7/5760$ is a single
+tautological intersection number on
+$\overline{\mathcal{M}}_2$.
+\item General~$g$: the physical partition function
+$Z_g = [\det'(\Delta_g)]^{-1/2}$ depends on all
+of~$\mathcal{M}_g$, while $F_g$ extracts
+the single class $\kappa \cdot \lambda_g \in
+H^{2g}(\overline{\mathcal{M}}_g)$.
 \end{itemize}
+\end{remark}
 
-For weight $\lambda$, the correlation functions are:
-$$\beta(z)\gamma(w) \sim \frac{1}{z-w}$$
+\subsection{$\beta\gamma$-system}\label{subsec:betagamma-all-genera}
 
-At genus $g$:
-$$\langle \prod_i \beta(z_i) \prod_j \gamma(w_j) \rangle_g = \frac{\det G_{ij}^{(g)}}{\left[\det(\text{Im}\,\Omega)\right]^{(2\lambda-1)(g-1)/2}}$$
-where $G_{ij}^{(g)}$ is the period-normalized Green's function and the exponent
-matches the partition function normalization from \S\ref{subsec:heisenberg-dictionary-complete} at $g \geq 2$.
-
-At genus 1, the partition function is (for the untwisted $\beta\gamma$ system on the torus, where the canonical bundle $\omega_{E_\tau}$ is trivial):
-$$Z_1^{\beta\gamma} = |\eta(\tau)|^{-2}$$
-independent of $\lambda$.  The conformal weight assignment $(\lambda, 1-\lambda)$ does not affect the genus-1 partition function because $\omega_{E_\tau} \cong \mathcal{O}_{E_\tau}$, so sections of $\omega^{\otimes \lambda}$ are ordinary functions regardless of $\lambda$.  The $\lambda$-dependence enters at genus $g \geq 2$, where $\omega_{\Sigma_g}$ is nontrivial and the index of $\bar{\partial}_\lambda$ depends on $\lambda$ via Riemann--Roch: $\chi(\omega^{\otimes \lambda}) = (2\lambda-1)(g-1)$.
-
-At genus $g \geq 2$, the partition function depends on the full period matrix $\Omega \in \mathcal{H}_g$:
-$$Z_g^{\beta\gamma}(\lambda) = \left[\det(\text{Im}\,\Omega)\right]^{(1-2\lambda)(1-g)/2} \cdot \left[\det'(\bar{\partial}_\lambda)\right]^{-1}$$
-where $\bar{\partial}_\lambda$ is the $\bar{\partial}$-operator on sections of $\omega_X^{\otimes \lambda}$ and the determinant is zeta-regularized. The infinite product formula above is specific to genus~1, where $q = e^{2\pi i\tau}$ parametrizes the moduli.
-
-\section{Lattice VOAs: From Torus to Higher Genus}
-
-For a lattice $\Lambda$ of rank $d$:
-
-\begin{itemize}
-\item Genus 1: $Z_1 = \frac{\Theta_\Lambda(\tau)}{[\eta(\tau)]^d}$
-\item Genus 2: Involves Riemann theta functions $\Theta[\delta](\Omega)$
-\item General genus: Siegel theta series
-\end{itemize}
-
-For a unimodular even lattice $\Lambda$ (i.e., $\Lambda = \Lambda^*$ and $\langle v, v \rangle \in 2\mathbb{Z}$ for all $v \in \Lambda$), the Siegel theta series transforms as:
-$$\Theta_\Lambda(\gamma \cdot \Omega) = \det(C\Omega + D)^{d/2} \, \Theta_\Lambda(\Omega)$$
-for $\gamma = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \in \mathrm{Sp}(2g, \mathbb{Z})$. For non-unimodular lattices, an additional phase factor (a root of unity depending on $\gamma$ and the discriminant form $\Lambda^*/\Lambda$) appears; the precise formula involves the Weil representation of $\mathrm{Sp}(2g, \mathbb{Z})$ on $\mathbb{C}[\Lambda^*/\Lambda]$.
-
-\section{W-Algebras and Higgs Bundles}
-
-The W-algebra $\mathcal{W}^k(\mathfrak{g})$ at genus $g$ is related to the geometry of Higgs bundles through multiple distinct connections:
-
-\begin{enumerate}
-\item \textbf{Classical limit}: The Poisson algebra underlying $\mathcal{W}^k(\mathfrak{g})$ is the algebra of functions on the Hitchin base $\mathcal{B}_g(\mathfrak{g}) = \bigoplus_{i=1}^r H^0(\Sigma_g, \omega_{\Sigma_g}^{\otimes d_i})$, where $d_i$ are the degrees of the fundamental invariants of $\mathfrak{g}$ (i.e., the exponents plus one: for $\mathfrak{sl}_n$, the degrees are $2, 3, \ldots, n$).
-
-\item \textbf{Symplectic volume}: The integral $\int_{\mathcal{M}_{\mathrm{Higgs}}^g(\mathfrak{g})} \exp(k\,\omega_{\mathrm{Hitchin}})$ computes the symplectic volume of the Hitchin moduli space, which by the Verlinde formula equals the dimension of the space of conformal blocks at level $k$.
-
-\item \textbf{AGT correspondence}: The genus-$g$ partition function of $\mathcal{W}^k(\mathfrak{g})$ equals the Nekrasov partition function of the corresponding 4d $\mathcal{N}=2$ theory on $\Sigma_g$; this is \emph{not} the symplectic volume but rather involves the full quantum structure.
+\begin{proposition}[$\beta\gamma$ genus expansion;
+\ClaimStatusProvedHere]\label{prop:betagamma-all-genera}
+\index{beta-gamma system@$\beta\gamma$-system!genus expansion}
+For the $\beta\gamma$-system of conformal weights
+$(\lambda, 1-\lambda)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The genus-$g$ free energy is
+$F_g(\beta\gamma) = \kappa(\beta\gamma) \cdot
+\lambda_g^{\mathrm{FP}}$, where $\kappa(\beta\gamma)$
+depends on the conformal weight~$\lambda$ via the
+genus-$1$ curvature.
+\item At genus $g \geq 2$, the physical partition function
+\begin{equation}\label{eq:betagamma-partition}
+Z_g^{\beta\gamma}(\lambda) =
+\bigl[\det(\mathrm{Im}\,\Omega)\bigr]^{(1-2\lambda)(1-g)/2}
+\cdot \bigl[\det'(\bar{\partial}_\lambda)\bigr]^{-1}
+\end{equation}
+depends on the full period matrix
+$\Omega \in \mathcal{H}_g$, where
+$\bar{\partial}_\lambda$ acts on sections of
+$\omega_X^{\otimes \lambda}$ and the Riemann--Roch
+index $\chi(\omega^{\otimes \lambda}) =
+(2\lambda-1)(g-1)$ governs the zero-mode structure.
+\item At genus~$1$, $Z_1^{\beta\gamma} =
+|\eta(\tau)|^{-2}$ is independent of~$\lambda$
+because $\omega_{E_\tau} \cong \mathcal{O}_{E_\tau}$.
 \end{enumerate}
+\end{proposition}
 
-The relationship to geometric Langlands:
+\begin{proof}
+Part~(i) is a direct application of genus universality
+(Theorem~\ref{thm:genus-universality}).
+Part~(ii) is the standard result from the
+Quillen determinant line bundle computation
+(\ClaimStatusProvedElsewhere).
+Part~(iii) follows from the triviality of the
+canonical bundle on an elliptic curve.
+\end{proof}
+
+\section{Lattice VOAs at all genera}\label{sec:lattice-genera}
+\index{lattice VOA!genus expansion}
+
+\begin{theorem}[Lattice VOA free energy;
+\ClaimStatusProvedHere]\label{thm:lattice-all-genera}
+For a positive-definite even lattice $\Lambda$ of
+rank~$d$, the lattice vertex algebra
+$V_\Lambda = \mathcal{H}_1^{\otimes d} \otimes
+\mathbb{C}[\Lambda]$
+has genus-$g$ free energy:
+\begin{equation}\label{eq:lattice-Fg}
+F_g(V_\Lambda) = d \cdot
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}
+\end{equation}
+In particular, $F_g(V_\Lambda)$ depends only on
+$\mathrm{rank}(\Lambda) = d$, not on the lattice
+structure.
+\end{theorem}
+
+\begin{proof}
+The lattice VOA is an extension of the rank-$d$
+Heisenberg algebra $\mathcal{H}_1^{\otimes d}$ by
+lattice vertex operators.  Since the lattice vertex
+operators have conformal weight $\langle v, v
+\rangle / 2 \geq 1$ for $v \neq 0$, they do not
+contribute to the genus-$1$ curvature (which is
+determined by the singular part of the OPE,
+Theorem~\ref{thm:heisenberg-obs}).
+Therefore $\kappa(V_\Lambda) =
+\kappa(\mathcal{H}_1^{\otimes d}) = d$.
+By genus universality
+(Theorem~\ref{thm:genus-universality}),
+$F_g(V_\Lambda) = d \cdot \lambda_g^{\mathrm{FP}}$.
+\end{proof}
+
+\begin{remark}[Partition functions vs.\ free energy]
+\label{rem:lattice-partition-vs-free}
+While the bar-complex free energy~\eqref{eq:lattice-Fg}
+depends only on~$d$, the physical partition function
+encodes the full lattice structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus~$1$:} $Z_1(V_\Lambda, \tau) =
+\Theta_\Lambda(\tau)/\eta(\tau)^d$, where
+$\Theta_\Lambda(\tau) = \sum_{v \in \Lambda}
+q^{\langle v,v \rangle/2}$ is the lattice theta
+function.
+\item \emph{General~$g$:} $Z_g(V_\Lambda, \Omega) =
+\Theta_\Lambda^{(g)}(\Omega)/F_g^{\mathrm{osc}}(\Omega)$,
+where $\Theta_\Lambda^{(g)}(\Omega) =
+\sum_{v \in \Lambda^g}
+\exp(\pi i \, {}^tv \Omega v)$ is the degree-$g$
+Siegel theta series and $F_g^{\mathrm{osc}}$
+is the oscillator determinant.
+\end{enumerate}
+For unimodular even $\Lambda$
+($\Lambda = \Lambda^*$,
+$\langle v, v \rangle \in 2\mathbb{Z}$),
+the Siegel theta series transforms as
+$\Theta_\Lambda(\gamma \cdot \Omega) =
+\det(C\Omega + D)^{d/2}\,\Theta_\Lambda(\Omega)$
+for $\gamma = \bigl(\begin{smallmatrix}
+A & B \\ C & D \end{smallmatrix}\bigr)
+\in \mathrm{Sp}(2g, \mathbb{Z})$.
+For non-unimodular lattices, the transformation
+involves the Weil representation of
+$\mathrm{Sp}(2g, \mathbb{Z})$ on
+$\mathbb{C}[\Lambda^*/\Lambda]$.
+\end{remark}
+
+\section{$\mathcal{W}$-algebra free energy and Higgs bundles}
+\label{sec:w-algebra-genera}
+\index{W-algebra@$\mathcal{W}$-algebra!genus expansion}
+
+\begin{theorem}[$\mathcal{W}$-algebra free energy at all genera;
+\ClaimStatusProvedHere]\label{thm:w-algebra-all-genera}
+For the principal $\mathcal{W}$-algebra
+$\mathcal{W}^k(\mathfrak{g})$ at generic level
+$k \neq -h^\vee$, the genus-$g$ free energy is
+\begin{equation}\label{eq:w-Fg-general}
+F_g\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
+= \kappa\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
+\cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}
+\end{equation}
+where $\kappa(\mathcal{W}^k(\mathfrak{g}))$ is
+determined by the genus-$1$ curvature of the bar
+complex and depends on the central charge via the
+Drinfeld--Sokolov formula.  The complementarity sum
+is
+\[
+\kappa\bigl(\mathcal{W}^k(\mathfrak{g})\bigr) +
+\kappa\bigl(\mathcal{W}^{k'}(\mathfrak{g})\bigr)
+\]
+where $k' = -k - 2h^\vee$ is the Feigin--Frenkel
+dual level.
+\end{theorem}
+
+\begin{proof}
+Genus universality
+(Theorem~\ref{thm:genus-universality}) applies
+to $\mathcal{W}^k(\mathfrak{g})$ as a Koszul
+chiral algebra
+(Theorem~\ref{thm:w-algebra-koszul}).
+The obstruction coefficient is read off from the
+genus-$1$ bar complex curvature, and the
+Faber--Pandharipande formula
+(Theorem~\ref{thm:mumford-formula}) evaluates
+the tautological integral.
+\end{proof}
+
+\begin{remark}[Connections to Higgs bundle geometry]
+\label{rem:w-higgs-connections}
+\index{Higgs bundle!W-algebra connection}
+The $\mathcal{W}$-algebra genus expansion connects to
+Hitchin geometry at three levels:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Classical limit.}
+The Poisson algebra underlying
+$\mathcal{W}^k(\mathfrak{g})$ is the algebra of
+functions on the Hitchin base
+$\mathcal{B}_g(\mathfrak{g}) =
+\bigoplus_{i=1}^r H^0(\Sigma_g,
+\omega_{\Sigma_g}^{\otimes d_i})$, where
+$d_1, \ldots, d_r$ are the degrees of the
+fundamental invariants of~$\mathfrak{g}$.
+\item \emph{Symplectic volume.}
+The Verlinde formula gives
+$\dim \mathbb{V}_{g,k}(G) =
+\int_{\mathcal{M}_{\mathrm{Higgs}}^g(\mathfrak{g})}
+\exp(k\,\omega_{\mathrm{Hitchin}})$ at leading
+order in~$k$, relating conformal block dimensions
+to the symplectic volume of the Hitchin moduli
+space.
+\item \emph{AGT correspondence
+\textup{(\ClaimStatusConjectured; physics)}:}
+the genus-$g$ partition function of
+$\mathcal{W}^k(\mathfrak{g})$ equals the
+Nekrasov partition function of the corresponding
+$4$d $\mathcal{N} = 2$ theory on~$\Sigma_g$.
+This involves the full quantum structure, not
+just the symplectic volume.
+\end{enumerate}
+At critical level $k = -h^\vee$, the free energy
+vanishes ($\kappa = 0$) and the genus expansion
+degenerates.  In this regime, the geometric
+Langlands correspondence (\ClaimStatusProvedElsewhere;
+Gaitsgory~\cite{Gai19}) identifies
+$\mathcal{D}$-modules on $\mathrm{Bun}_G(\Sigma_g)$
+with quasi-coherent sheaves on
+$\mathrm{Loc}_{G^\vee}(\Sigma_g)$.
+\end{remark}
+
+\section{Three theorems in action: $\widehat{\mathfrak{sl}}_2$ at all genera}\label{sec:three-theorems-sl2}
+\index{three theorems!sl2 showcase@$\mathfrak{sl}_2$ showcase}
+\index{genus expansion!sl2@$\mathfrak{sl}_2$}
+
+We trace all three main theorems through a single example: the affine Kac--Moody algebra $\widehat{\mathfrak{sl}}_{2,k}$ at generic level~$k$, computing the genus-$g$ invariants explicitly.
+
+\subsection{Setup}\label{subsec:sl2-genus-setup}
+
+Recall from the Master Table (Table~\ref{tab:master-invariants}) the Koszul duality data for $\widehat{\mathfrak{sl}}_2$:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lllll}
+\toprule
+Algebra & Koszul Dual & $c(\cA)$ & $c + c'$ & $\kappa(\cA)$ \\
+\midrule
+$\widehat{\mathfrak{sl}}_{2,k}$ & $\widehat{\mathfrak{sl}}_{2,-k-4}$ & $\dfrac{3k}{k+2}$ & $6$ & $\dfrac{3(k+2)}{4}$ \\[6pt]
+\bottomrule
+\end{tabular}
+\end{center}
+The Feigin--Frenkel involution $k \mapsto k' = -k - 2h^\vee = -k-4$ acts on the central charge as $c \mapsto c' = 6 - c$, and on the obstruction coefficient as $\kappa \mapsto -\kappa$.
+
 \begin{itemize}
-\item At critical level $k = -h^\vee$: $\mathcal{D}$-modules on $\mathrm{Bun}_G(\Sigma_g) \leftrightarrow$ quasi-coherent sheaves on $\mathrm{Loc}_{G^\vee}(\Sigma_g)$
-\item At general level: quantum geometric Langlands (Gaitsgory--Lurie)
+\item \emph{Theorem~A} (Geometric Bar-Cobar Duality, Theorem~\ref{thm:bar-cobar-isomorphism-main}):
+$(\widehat{\mathfrak{sl}}_{2,k})^! \simeq \widehat{\mathfrak{sl}}_{2,-k-4}$ via bar-cobar adjunction on configuration space integrals.
+\item \emph{Theorem~B} (Bar-Cobar Inversion, Theorem~\ref{thm:higher-genus-inversion}):
+For $k \neq -2$, the genus-$g$ spectral sequence collapses at $E_2$; at critical level $k = -2$, the inversion $\Omega(\bar{B}(\widehat{\mathfrak{sl}}_{2,-2})) \xrightarrow{\sim} \widehat{\mathfrak{sl}}_{2,-2}$ is strict.
+\item \emph{Theorem~C} (Complementarity, Theorem~\ref{thm:quantum-complementarity-main}):
+$\mathrm{obs}_g(\widehat{\mathfrak{sl}}_{2,k}) + \mathrm{obs}_g(\widehat{\mathfrak{sl}}_{2,-k-4}) = 0$ in $H^{2g}(\overline{\mathcal{M}}_g)$ for all~$g$.
 \end{itemize}
 
-\chapter{Modular Forms and Higher Genus Phenomena}
+\subsection{Genus-$g$ free energy}\label{subsec:sl2-free-energy}
 
-\section{Eisenstein Series and Genus One}
+\begin{theorem}[$\widehat{\mathfrak{sl}}_2$ free energy at all genera; \ClaimStatusProvedHere]\label{thm:sl2-all-genera}
+For $\widehat{\mathfrak{sl}}_{2,k}$ at generic level $k \neq -2$, the genus-$g$ free energy is:
+\begin{equation}\label{eq:sl2-Fg}
+F_g(\widehat{\mathfrak{sl}}_{2,k}) = \frac{3(k+2)}{4} \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+where $B_{2g}$ are the Bernoulli numbers ($B_2 = \frac{1}{6}$, $B_4 = -\frac{1}{30}$, $B_6 = \frac{1}{42}$, $B_8 = -\frac{1}{30}$, $B_{10} = \frac{5}{66}$).
+\end{theorem}
 
-At genus one, the universal chiral algebra contribution is:
-$$\omega_{1,0}^{\text{univ}}(\tau) = -\frac{c}{24} \frac{E_2(\tau)}{2\pi i} dz$$
-where $E_2(\tau) = 1 - 24\sum_{n=1}^{\infty} \sigma_1(n)q^n$ is the weight-2 Eisenstein series.
+\begin{proof}
+By the genus universality theorem (Theorem~\ref{thm:genus-universality}), the genus-$g$ obstruction class factors as $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$, where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle on $\overline{\mathcal{M}}_g$.  For $\widehat{\mathfrak{sl}}_{2,k}$, the genus-1 curvature computation (Theorem~\ref{thm:sl2-genus1-curvature}) gives $\kappa = 3(k+2)/4$.
 
-This generates all genus-one corrections through:
-$$\langle T \rangle_{\tau} = -\frac{c}{24} (2\pi i)^2 E_2(\tau)$$
-where $E_2$ is the quasi-modular Eisenstein series. (The one-point function is $z$-independent by translation invariance of the torus; the Weierstrass $\wp$-function appears in the \emph{two}-point function $\langle T(z)T(0)\rangle_\tau$.)
+The free energy is the tautological integral:
+\[
+F_g(\cA) = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g
+\]
+The Faber--Pandharipande formula (Theorem~\ref{thm:mumford-formula}) evaluates the integral:
+\[
+\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\]
+Substituting $\kappa = 3(k+2)/4$ yields~\eqref{eq:sl2-Fg}.
+\end{proof}
 
-\section{Siegel Modular Forms at Higher Genus}
+\begin{computation}[Explicit values through $g = 5$]\label{comp:sl2-genus-table}
+Evaluating~\eqref{eq:sl2-Fg} for the first five genera:
 
-At genus $g \geq 2$, correlation functions involve Siegel modular forms on $\mathcal{H}_g$:
-$$F^{(g)}(\Omega) = \sum_{T \geq 0} a(T) \exp(2\pi i \operatorname{tr}(T\Omega))$$
-where $T$ ranges over symmetric half-integral positive semi-definite $g \times g$ matrices.
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cccccc}
+\toprule
+$g$ & $|B_{2g}|$ & $\frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$ & $F_g$ (general $k$) & $F_g$ ($k=1$) & $F_g$ ($k=2$)  \\
+\midrule
+$1$ & $\frac{1}{6}$ & $\frac{1}{24}$ & $\frac{k+2}{32}$ & $\frac{3}{32}$ & $\frac{1}{8}$  \\[6pt]
+$2$ & $\frac{1}{30}$ & $\frac{7}{5760}$ & $\frac{7(k+2)}{7680}$ & $\frac{7}{2560}$ & $\frac{7}{1920}$  \\[6pt]
+$3$ & $\frac{1}{42}$ & $\frac{31}{967680}$ & $\frac{31(k+2)}{1290240}$ & $\frac{31}{430080}$ & $\frac{31}{322560}$  \\[6pt]
+$4$ & $\frac{1}{30}$ & $\frac{127}{154828800}$ & $\frac{127(k+2)}{206438400}$ & $\frac{127}{68812800}$ & $\frac{127}{51609600}$  \\[6pt]
+$5$ & $\frac{5}{66}$ & $\frac{511}{24524881920}$ & $\frac{511(k+2)}{32699842560}$ & $\frac{511}{10899947520}$ & $\frac{511}{8174960640}$  \\[4pt]
+\bottomrule
+\end{tabular}
+\end{center}
 
-Key examples:
+\medskip
+\noindent
+In each case, $F_g$ is a linear function of~$k$, reflecting the factored form $F_g = \frac{3}{4}(k+2) \cdot (\text{Bernoulli--FP constant})$.  At critical level $k = -2$, every entry vanishes: $F_g(\widehat{\mathfrak{sl}}_{2,-2}) = 0$ for all~$g$.
+\end{computation}
+
+\subsection{Complementarity at every genus}\label{subsec:sl2-complementarity}
+
+\begin{proposition}[$\widehat{\mathfrak{sl}}_2$ complementarity; \ClaimStatusProvedHere]\label{prop:sl2-complementarity-all-genera}
+For all $g \geq 1$ and all $k \neq -2$:
+\begin{equation}\label{eq:sl2-complementarity-allgenera}
+F_g(\widehat{\mathfrak{sl}}_{2,k}) + F_g(\widehat{\mathfrak{sl}}_{2,-k-4}) = 0
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The obstruction coefficients satisfy:
+\[
+\kappa(\widehat{\mathfrak{sl}}_{2,k}) + \kappa(\widehat{\mathfrak{sl}}_{2,-k-4}) = \frac{3(k+2)}{4} + \frac{3(-k-4+2)}{4} = \frac{3(k+2)}{4} + \frac{3(-k-2)}{4} = 0
+\]
+Since $F_g$ is linear in $\kappa$, the result follows.
+\end{proof}
+
+\begin{remark}[Comparison with Virasoro complementarity]\label{rem:sl2-vs-vir-complementarity}
+For $\widehat{\mathfrak{sl}}_2$, the obstruction coefficients cancel exactly ($\kappa + \kappa' = 0$), a consequence of the symmetric level-shift $k \mapsto -k-4$ fixing the midpoint $k = -2$.  For the Virasoro algebra $\mathrm{Vir}_c \simeq \mathcal{W}^k(\mathfrak{sl}_2)$, the complementarity takes a different form:
+\[
+\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = \frac{c}{2} + \frac{26-c}{2} = 13
+\]
+so $F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c}) = 13 \cdot \lambda_g^{\mathrm{FP}}$, where $\lambda_g^{\mathrm{FP}} = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$.  The nonzero sum $\kappa + \kappa' = 13$ reflects the conformal anomaly of the $c = 26$ bosonic string: the combined obstruction of Virasoro and its dual equals half the bosonic string central charge times $\lambda_g^{\mathrm{FP}}$.
+
+For the $\mathcal{W}_3$ algebra (where $c + c' = 100$), the analogous computation gives $\kappa + \kappa' = 250/3$.
+\end{remark}
+
+\subsection{Genus-3 obstruction: first computation}\label{subsec:genus-3}
+
+\begin{computation}[First genus-3 result]\label{comp:genus-3-sl2}
+The genus-3 obstruction is the first case where the dimensional vanishing argument for nilpotence fails (Conjecture~\ref{conj:obstruction-nilpotent-higher}).  Nevertheless, the genus universality theorem yields an explicit formula.
+
+The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_3$ has rank~$3$, and $\lambda_3 = c_3(\mathbb{E}) \in H^6(\overline{\mathcal{M}}_3)$.  The moduli space $\overline{\mathcal{M}}_3$ has complex dimension~$3 \cdot 3 - 3 = 6$, so $\lambda_3 = c_3(\mathbb{E})$ is the \emph{top Chern class} of the rank-$3$ Hodge bundle (though $H^6(\overline{\mathcal{M}}_3)$ is middle-degree cohomology on this $6$-dimensional space).
+
+The free energy:
+\[
+F_3(\widehat{\mathfrak{sl}}_{2,k}) = \frac{3(k+2)}{4} \cdot \frac{31}{967680}
+= \frac{31(k+2)}{1290240}
+\]
+At level $k = 1$ (the integrable representation of highest interest):
+\begin{equation}\label{eq:genus3-k1}
+F_3(\widehat{\mathfrak{sl}}_{2,1}) = \frac{31}{430080}
+\end{equation}
+Complementarity: $F_3(\widehat{\mathfrak{sl}}_{2,-5}) = -\frac{31}{430080}$, confirming $F_3 + F_3' = 0$.
+
+The numerical value $F_3 \approx 7.2 \times 10^{-5}$ is small relative to $F_1 = 3/32 \approx 0.094$ and $F_2 = 7/2560 \approx 0.0027$, reflecting the rapid Bernoulli decay analyzed in \S\ref{subsec:bernoulli-asymptotics}.
+\end{computation}
+
+\subsection{Bernoulli asymptotics and convergence}\label{subsec:bernoulli-asymptotics}
+
+\begin{proposition}[Convergence of the genus expansion; \ClaimStatusProvedHere]\label{prop:genus-expansion-convergence}
+For any fixed $\kappa \neq 0$, the genus expansion $\sum_{g=1}^\infty F_g(\cA)$ converges absolutely.  More precisely:
+\begin{equation}\label{eq:Fg-asymptotics}
+|F_g(\cA)| \sim \frac{2|\kappa|}{(2\pi)^{2g}} \quad \text{as } g \to \infty
+\end{equation}
+so the series converges geometrically with ratio $1/(2\pi)^2 \approx 0.025$.
+\end{proposition}
+
+\begin{proof}
+The Bernoulli numbers satisfy the classical asymptotic formula:
+\[
+|B_{2g}| \sim \frac{2 \cdot (2g)!}{(2\pi)^{2g}} \quad \text{as } g \to \infty
+\]
+(this follows from the functional equation for the Riemann zeta function: $\zeta(2g) = (-1)^{g+1} (2\pi)^{2g} B_{2g} / (2(2g)!)$, combined with $\zeta(2g) \to 1$).  Therefore:
+\[
+\frac{|B_{2g}|}{(2g)!} \sim \frac{2}{(2\pi)^{2g}}
+\]
+Since $(2^{2g-1}-1)/2^{2g-1} \to 1$ as $g \to \infty$, we obtain~\eqref{eq:Fg-asymptotics}.
+
+In particular, $|F_{g+1}/F_g| \to 1/(2\pi)^2 \approx 0.025$, giving geometric convergence.
+\end{proof}
+
+\begin{remark}[Contrast with string amplitudes]\label{rem:convergence-vs-string}
+The convergence of our genus expansion is in sharp contrast with the \emph{divergent} genus expansion of string theory, where amplitudes grow as $(2g)!$ (the volume of $\overline{\mathcal{M}}_g$ by Mirzakhani's recursion~\cite{Mirzakhani}).  The distinction is structural: our $F_g$ is the integral $\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g$, which extracts a single tautological intersection number, while string amplitudes integrate over the full moduli space with a measure involving all $\lambda$-classes.  The Bernoulli decay of the tautological integral $\int \psi^{2g-2}\lambda_g$ overwhelms the $(2g)!$ growth of $|B_{2g}|$.
+\end{remark}
+
+\subsection{Genus expansion of complementarity sums}\label{subsec:complementarity-sums}
+
+\begin{proposition}[Central charge genus series; \ClaimStatusProvedHere]\label{prop:complementarity-genus-series}
+For $\widehat{\mathfrak{sl}}_{2,k}$, the generating function encoding all genus-$g$ free energies is:
+\begin{equation}\label{eq:generating-function}
+\sum_{g=1}^{\infty} F_g(\widehat{\mathfrak{sl}}_{2,k}) \, x^{2g} = \frac{3(k+2)}{4} \left(\frac{x/2}{\sin(x/2)} - 1\right)
+\end{equation}
+with radius of convergence $|x| < 2\pi$.
+\end{proposition}
+
+\begin{proof}
+The standard expansion of $t/\sin(t)$ is:
+\[
+\frac{t}{\sin t} = 1 + \sum_{g=1}^{\infty} \frac{(2^{2g}-2)\,|B_{2g}|}{(2g)!}\, t^{2g}
+\]
+(the coefficients $(2^{2g}-2)|B_{2g}|/(2g)!$ arise from the partial fraction expansion of $\csc(t)$; the first two terms $1 + t^2/6 + 7t^4/360$ are verified directly).  Substituting $t = x/2$:
+\[
+\frac{x/2}{\sin(x/2)} = 1 + \sum_{g=1}^{\infty} \frac{(2^{2g}-2)\,|B_{2g}|}{(2g)!} \cdot \frac{x^{2g}}{2^{2g}}
+= 1 + \sum_{g=1}^{\infty} \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}\, x^{2g}
+\]
+using $(2^{2g}-2)/2^{2g} = (2^{2g-1}-1)/2^{2g-1}$.  Multiplying by $\kappa = 3(k+2)/4$ gives~\eqref{eq:generating-function}.  The radius of convergence is $|x| = 2\pi$, the first zero of $\sin(x/2)$.
+\end{proof}
+
+\begin{remark}[Relation to the $\hat{A}$-genus]\label{rem:A-hat-genus}
+\index{A-hat genus@$\hat{A}$-genus}
+The generating function $(x/2)/\sin(x/2)$ is the Wick rotation of the $\hat{A}$-genus: $\hat{A}(x) = (x/2)/\sinh(x/2)$, related by the substitution $x \mapsto ix$.  In the Atiyah--Singer index theorem, $\hat{A}$ governs the Dirac operator; the appearance of its trigonometric counterpart $(x/2)/\sin(x/2)$ in the genus expansion reflects the fact that the Faber--Pandharipande integral $\int \psi^{2g-2}\lambda_g$ extracts a specific tautological intersection number on $\overline{\mathcal{M}}_g$ with \emph{positive} coefficients (all $\lambda_g^{\mathrm{FP}} > 0$), unlike the alternating-sign $\hat{A}$-expansion.
+\end{remark}
+
+\subsection{Verlinde dimensions and large-level asymptotics}\label{subsec:verlinde-connection}
+
+The Verlinde formula~\cite{Verlinde} gives the dimension of the space of $\mathrm{SU}(2)$ conformal blocks at level~$k$ and genus~$g$:
+\begin{equation}\label{eq:verlinde-su2}
+\dim V_{g,k}(\mathrm{SU}(2)) = \left(\frac{k+2}{2}\right)^{g-1} \sum_{j=0}^{k} \left[\sin\frac{\pi(j+1)}{k+2}\right]^{2-2g}
+\end{equation}
+
+\begin{computation}[Verlinde dimensions for $\widehat{\mathfrak{sl}}_2$]\label{comp:verlinde-sl2}
+For the first three genera and small levels:
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{ccccc}
+\toprule
+$g \backslash k$ & $1$ & $2$ & $3$ & $4$ \\
+\midrule
+$1$ & $2$ & $3$ & $4$ & $5$ \\
+$2$ & $4$ & $10$ & $20$ & $35$ \\
+$3$ & $8$ & $36$ & $120$ & $329$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+At genus~1, $\dim V_{1,k} = k+1$ (the number of integrable representations).  At genus~2, $\dim V_{2,k} = \binom{k+3}{3} = (k+1)(k+2)(k+3)/6$, which follows from the identity $\sum_{j=1}^{k+1} \csc^2(j\pi/(k+2)) = (k+1)(k+3)/3$.
+\end{computation}
+
+\begin{remark}[Large-$k$ asymptotics and $F_g$]\label{rem:verlinde-asymptotics}
+\index{Verlinde formula!large-level}
+As $k \to \infty$, the Verlinde dimension grows polynomially:
+\[
+\dim V_{g,k}(\mathrm{SU}(2)) \sim C_g \cdot k^{3(g-1)}
+\]
+where $3(g-1) = \dim_\mathbb{C} \mathcal{M}_g(\mathrm{SU}(2))$ is the dimension of the moduli space of flat $\mathrm{SU}(2)$-bundles on $\Sigma_g$ (for $g \geq 2$), and $C_g$ is the symplectic volume $\mathrm{Vol}\,\mathcal{M}_g(\mathrm{SU}(2))$ (Witten's formula~\cite{Witten91}).
+
+The genus-$g$ free energy $F_g = \frac{3(k+2)}{4} \cdot \lambda_g^{\mathrm{FP}}$ captures the \emph{linear} part of the Verlinde dimension in~$k$: the coefficient of $k$ in $\log \dim V_{g,k}$ at leading order equals $\frac{3}{4}\lambda_g^{\mathrm{FP}}$ up to additive constants from the symplectic volume.  The higher-order terms in $\log \dim V_{g,k}$ are controlled by higher-genus corrections beyond the single-$\lambda_g$ approximation.
+\end{remark}
+
+\subsection{$\mathcal{W}_3$ at higher genus}\label{subsec:w3-higher-genus}
+
+The computation extends to the $\mathcal{W}_3$ algebra, where the higher-order OPE structure (sixth-order pole in the $WW$ OPE; see Computation~\ref{comp:w3-nthproducts}) leads to new phenomena.
+
+\begin{computation}[$\mathcal{W}_3$ genus expansion]\label{comp:w3-genus-expansion}
+For $\mathcal{W}_3^k(\mathfrak{sl}_3)$ with central charge $c(k) = 2 - 24(k+2)^2/(k+3)$, the obstruction coefficient is $\kappa = 5c/6$ (Table~\ref{tab:master-invariants}).  The genus-$g$ free energy:
+\begin{equation}\label{eq:w3-Fg}
+F_g(\mathcal{W}_3^k) = \frac{5c(k)}{6} \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+Under the Feigin--Frenkel involution $k \mapsto k' = -k-6$ (so $c' = 100 - c$, $\kappa' = 5c'/6$):
+\[
+\kappa(\mathcal{W}_3^k) + \kappa(\mathcal{W}_3^{k'}) = \frac{5c}{6} + \frac{5(100-c)}{6} = \frac{250}{3}
+\]
+Unlike $\widehat{\mathfrak{sl}}_2$ where $\kappa + \kappa' = 0$, the $\mathcal{W}_3$ complementarity produces a \emph{nonzero} sum, reflecting the nontrivial central charge constraint $c + c' = 100$.
+
+At critical level $k = -3$ (where $c$ is undefined due to the pole in $c(k)$), the Drinfeld--Sokolov construction degenerates and the genus expansion formalism does not apply directly (see Computation~\ref{comp:w3-curvature-dual}).
+
+\medskip
+\noindent
+At the first nontrivial integrable level $k = 1$:
 \begin{itemize}
-\item Genus 2: Igusa invariants $\psi_4, \psi_6, \chi_{10}, \chi_{12}$
-\item Genus 3: Schottky form vanishes on Jacobian locus
-\item General $g$: Theta constants $\theta[\delta](\Omega)$ for characteristics $\delta$
+\item $c(1) = 2 - 24 \cdot 9/4 = -52$, \quad $\kappa(1) = 5 \cdot (-52)/6 = -130/3$
+\item $F_1(\mathcal{W}_3^1) = (-130/3) \cdot (1/24) = -65/36$
+\item $F_2(\mathcal{W}_3^1) = (-130/3) \cdot (7/5760) = -910/17280 = -91/1728$
 \end{itemize}
+The negative free energies reflect the negative central charge at $k = 1$.  At the dual level $k' = -7$: $c' = 152$, $\kappa' = 380/3$, and $F_g' = -F_g + \frac{250}{3} \cdot \lambda_g^{\mathrm{FP}}$.
+\end{computation}
 
-\section{Bosonization at All Genera}
+\section{Virasoro duality and the bosonic string at all genera}\label{sec:virasoro-all-genera}
+\index{Virasoro algebra!genus expansion}
+\index{bosonic string!genus expansion}
 
-The bosonization formula extends to:
-$$Z_g^{\text{fermion}} = \sum_{\delta} (-1)^{\mathrm{Arf}(\delta)} \, Z_g^{\text{boson}}[\delta]$$
-where the sum is over spin structures $\delta$ and $\mathrm{Arf}(\delta) \in \{0, 1\}$ is the Arf invariant of the quadratic form associated to $\delta$. Even spin structures have $\mathrm{Arf}(\delta) = 0$; odd spin structures have $\mathrm{Arf}(\delta) = 1$.
+The Virasoro algebra provides the second key showcase for the three main theorems.  Unlike the affine Kac--Moody case (where $\kappa + \kappa' = 0$ and complementarity is exact cancellation), the Virasoro has a \emph{nonzero} complementarity sum $\kappa + \kappa' = 13$, reflecting the conformal anomaly of the bosonic string.  Moreover, the Virasoro exhibits a trichotomy at $c = 0$ (uncurved), generic $c$ (curved), and $c = 26$ (dual to the uncurved algebra) that has no Kac--Moody analog.
 
-At genus $g$:
+\subsection{Setup}\label{subsec:vir-genus-setup}
+
+Recall from the Master Table (Table~\ref{tab:master-invariants}) and the genus-1 pipeline (\S\ref{sec:virasoro-genus-one-pipeline}):
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lllll}
+\toprule
+Algebra & Koszul Dual & $c(\cA)$ & $c + c'$ & $\kappa(\cA)$ \\
+\midrule
+$\mathrm{Vir}_c$ & $\mathrm{Vir}_{26-c}$ & $c$ & $26$ & $c/2$ \\[4pt]
+\bottomrule
+\end{tabular}
+\end{center}
+The Feigin--Frenkel involution acts as $c \mapsto 26 - c$, with fixed point $c = 13$.  The obstruction coefficient $\kappa = c/2$ is half the central charge, arising from the quartic pole $T_{(3)}T = c/2$ in the Virasoro OPE (Theorem~\ref{thm:vir-genus1-curvature}).
+
+\subsection{Genus-$g$ free energy}\label{subsec:vir-free-energy}
+
+\begin{theorem}[Virasoro free energy at all genera; \ClaimStatusProvedHere]\label{thm:vir-all-genera}
+For the Virasoro algebra $\mathrm{Vir}_c$ at any central charge $c$, the genus-$g$ free energy is:
+\begin{equation}\label{eq:vir-Fg}
+F_g(\mathrm{Vir}_c) = \frac{c}{2} \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By the genus universality theorem (Theorem~\ref{thm:genus-universality}) with $\kappa(\mathrm{Vir}_c) = c/2$ (Theorem~\ref{thm:vir-genus1-curvature}) and the Faber--Pandharipande formula (Theorem~\ref{thm:mumford-formula}).
+\end{proof}
+
+\begin{computation}[Explicit values at physical central charges]\label{comp:vir-physical-cc}
+We evaluate~\eqref{eq:vir-Fg} at central charges of physical interest:
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clcccc}
+\toprule
+$c$ & Model & $\kappa$ & $F_1$ & $F_2$ & $F_3$ \\
+\midrule
+$0$ & Topological & $0$ & $0$ & $0$ & $0$ \\[3pt]
+$\frac{1}{2}$ & Ising & $\frac{1}{4}$ & $\frac{1}{96}$ & $\frac{7}{23040}$ & $\frac{31}{3870720}$ \\[6pt]
+$1$ & Free boson (Sug.) & $\frac{1}{2}$ & $\frac{1}{48}$ & $\frac{7}{11520}$ & $\frac{31}{1935360}$ \\[6pt]
+$25$ & Near-bosonic & $\frac{25}{2}$ & $\frac{25}{48}$ & $\frac{175}{11520}$ & $\frac{775}{1935360}$ \\[6pt]
+$26$ & Bosonic string & $13$ & $\frac{13}{24}$ & $\frac{91}{5760}$ & $\frac{403}{967680}$ \\[3pt]
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+Three features are visible from the table.  First, $c = 0$ gives $F_g = 0$ for all~$g$: the Virasoro is uncurved, and $\mathrm{Vir}_0^! \simeq \mathrm{Vir}_0$ (Theorem~\ref{thm:virasoro-self-duality}).  Second, the $c = 26$ column gives $F_g(26) = 13 \cdot \lambda_g^{\mathrm{FP}}$, which (by complementarity) equals $F_g(0) + 13 \cdot \lambda_g^{\mathrm{FP}} = 13 \cdot \lambda_g^{\mathrm{FP}}$; in other words, $\mathrm{Vir}_{26}$ carries the \emph{entire} obstruction budget of the Koszul pair $(\mathrm{Vir}_{26}, \mathrm{Vir}_0)$.  Third, $F_g$ is linear in~$c$, so the table is determined by the single datum $\kappa = c/2$.
+\end{computation}
+
+\subsection{Non-canceling complementarity}\label{subsec:vir-complementarity}
+
+\begin{proposition}[Virasoro complementarity; \ClaimStatusProvedHere]\label{prop:vir-complementarity}
+For all $g \geq 1$:
+\begin{equation}\label{eq:vir-complementarity-allgenera}
+F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c}) = 13 \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+The right-hand side is independent of~$c$ and strictly positive for all $g \geq 1$.
+\end{proposition}
+
+\begin{proof}
+The obstruction coefficients satisfy $\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = c/2 + (26-c)/2 = 13$.  Since $F_g$ is linear in~$\kappa$, the sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.  Positivity holds because $|B_{2g}| > 0$ and $(2^{2g-1}-1)/2^{2g-1} > 0$ for all $g \geq 1$.
+\end{proof}
+
+\begin{remark}[Structural contrast with affine Kac--Moody]\label{rem:vir-vs-km-complementarity}
+\index{complementarity!non-canceling}
+The non-canceling complementarity $\kappa + \kappa' = 13 \neq 0$ distinguishes the Virasoro from the affine Kac--Moody case ($\kappa + \kappa' = 0$, Proposition~\ref{prop:sl2-complementarity-all-genera}).  The mechanism:
 \begin{itemize}
-\item Number of spin structures: $2^{2g}$
-\item Even (periodic) spin structures: $2^{g-1}(2^g + 1)$
-\item Odd (antiperiodic) spin structures: $2^{g-1}(2^g - 1)$
+\item For affine Kac--Moody algebras, the Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ shifts the level through the critical point $k = -h^\vee$.  Since $\kappa \propto (k + h^\vee)$, the involution sends $\kappa \mapsto -\kappa$, giving exact cancellation.
+\item For the Virasoro algebra, the Drinfeld--Sokolov parametrization $c = 1 - 6(k+1)^2/(k+2)$ is nonlinear in~$k$, and the involution $c \mapsto 26 - c$ does \emph{not} pass through $c = 0$.  Instead, the fixed point is $c = 13$ (at $k = -2 \pm i$, complex!), and $\kappa = c/2$ maps to $\kappa' = 13 - \kappa$, not $-\kappa$.
 \end{itemize}
+For the $\mathcal{W}_N$ algebra, the complementarity sum grows with~$N$: $\kappa + \kappa' = 13$ ($N = 2$), $250/3$ ($N = 3$), and in general depends on $r = N - 1$, $h^\vee = N$, $d = N^2 - 1$ (Computation~\ref{comp:w3-genus-expansion}).
+\end{remark}
 
-\section{Mumford Forms and Belavin-Knizhnik Measure}
+\subsection{The $c = 0$ / $c = 26$ trichotomy at all genera}\label{subsec:vir-trichotomy}
 
-For a CFT of central charge $c$, the Polyakov measure on $\mathcal{M}_g$ (for $g \geq 2$) takes the form:
-$$d\mu_g^{\text{Pol}} = \frac{|\det(\text{CKV})|^2}{|\det'(\Delta_g)|^{c/2}} \prod_{k=1}^{3g-3} d^2\tau_k$$
-where $\tau_k$ are Beltrami coordinates on $\mathcal{M}_g$. The Belavin--Knizhnik theorem expresses this in terms of the period matrix $\Omega$. For the \emph{bosonic string} ($c = 26$):
-$$d\mu_g^{\text{bosonic}} = \prod_{k=1}^{3g-3} d^2\tau_k \left[\det(\mathrm{Im}\,\Omega)\right]^{-13}$$
+\begin{remark}[Three regimes of the Virasoro genus expansion]\label{rem:vir-trichotomy-genera}
+\index{Virasoro algebra!trichotomy}
+The genus-0 curvature trichotomy (Computation~\ref{comp:virasoro-curvature}) extends to all genera:
+\begin{enumerate}
+\item \emph{$c = 0$ (uncurved).} $F_g = 0$ for all $g \geq 1$.  The bar complex $\bar{B}(\mathrm{Vir}_0)$ is a genuine cochain complex ($d^2 = 0$) at every genus, and the Koszul duality $\mathrm{Vir}_0^! \simeq \mathrm{Vir}_0$ is of classical type.  No quantum corrections arise.
+\item \emph{$c$ generic.} $F_g = (c/2) \cdot \lambda_g^{\mathrm{FP}} \neq 0$ for all $g \geq 1$.  The bar complex is curved, and the curved $A_\infty$ structure is nontrivial at every genus.  The Koszul dual $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}$ is a \emph{different} Virasoro algebra, and the complementarity sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.
+\item \emph{$c = 26$ (maximal curvature for the uncurved dual).} $F_g(\mathrm{Vir}_{26}) = 13 \cdot \lambda_g^{\mathrm{FP}}$ for all~$g$.  The dual algebra $\mathrm{Vir}_0$ is uncurved, so $\mathrm{Vir}_{26}$ carries the entire complementarity budget.  This is the unique central charge at which the Koszul dual is uncurved.
+\end{enumerate}
+The generating function:
+\begin{equation}\label{eq:vir-generating}
+\sum_{g=1}^{\infty} F_g(\mathrm{Vir}_c)\, x^{2g} = \frac{c}{2}\left(\frac{x/2}{\sin(x/2)} - 1\right)
+\end{equation}
+has radius of convergence $|x| = 2\pi$ (independent of~$c$), reflecting the universal Bernoulli asymptotics of Proposition~\ref{prop:genus-expansion-convergence}.  At $c = 26$:
+\[
+\sum_{g=1}^\infty F_g(\mathrm{Vir}_{26})\, x^{2g} = 13\left(\frac{x/2}{\sin(x/2)} - 1\right)
+\]
+\end{remark}
 
-The exponent $-13$ arises as follows:
-\begin{itemize}
-\item Each free boson contributes $[\det(\mathrm{Im}\,\Omega)]^{-1/2}$ to the partition function (from the zero-mode integration over the Jacobian torus).
-\item For $c = 26$ free bosons: the matter contribution is $[\det(\mathrm{Im}\,\Omega)]^{-26/2} = [\det(\mathrm{Im}\,\Omega)]^{-13}$.
-\item The $bc$ ghost system contributes a \emph{holomorphic} section of a line bundle on $\mathcal{M}_g$ (the Mumford form), which does not affect the $\det(\mathrm{Im}\,\Omega)$ exponent.
-\item The Weyl anomaly cancels when $c + c_{\text{gh}} = 26 - 26 = 0$.
-\end{itemize}
+\begin{remark}[Obstruction coefficient and the bosonic string]\label{rem:vir-bosonic-string-genus}
+\index{bosonic string!obstruction coefficient}
+The Virasoro obstruction coefficient $\kappa(\mathrm{Vir}_c) = c/2$ should be compared with the Heisenberg coefficient $\kappa(\mathcal{H}_\kappa) = \kappa$.  For a single free boson ($c = 1$): $\kappa(\mathcal{H}_1) = 1$ but $\kappa(\mathrm{Vir}_1) = 1/2$.  The factor~$2$ discrepancy reflects the difference between computing $F_g$ for the full vertex algebra (Heisenberg, with spin-$1$ generator $J$) versus its Virasoro subalgebra (with spin-$2$ generator $T = \frac{1}{2}\normord{JJ}$).  The genus expansion is an invariant of the \emph{algebra}, not merely of its central charge.
 
-\section{The Genus-Graded Chiral Operad}
-
-The chiral operad extends to:
-$$\mathcal{P} = \bigoplus_{g \geq 0} \mathcal{P}^{(g)}$$
-with composition:
-$$\circ: \mathcal{P}^{(g_1)}(m) \otimes \mathcal{P}^{(g_2)}(n) \to \mathcal{P}^{(g_1+g_2)}(m+n-2)$$
-
-This encodes:
-\begin{itemize}
-\item Gluing of surfaces along boundaries
-\item Factorization at nodes
-\item Modular operad structure
-\end{itemize}
-
-\section{Swiss-Cheese Structure}
-
-At higher genus, we get a Swiss-cheese operad:
-\begin{itemize}
-\item Closed sector: Full genus-$g$ surfaces
-\item Open sector: Surfaces with boundaries
-\item Mixed compositions: Open-closed duality
-\end{itemize}
-
-This relates to:
-\begin{itemize}
-\item D-branes in string theory
-\item Boundary CFT
-\item Kapustin-Witten equations
-\end{itemize}
-
-\section{String Amplitudes}
-
-The genus-$g$ string amplitude:
-$$A_g = \int_{\mathcal{M}_g} \langle \prod_i V_i \rangle_g \, d\mu_g^{\text{Pol}}$$
-
-For critical strings ($c=26$ bosonic, $c=15$ superstring):
-\begin{itemize}
-\item Tree level: Classical scattering
-\item One loop: Quantum corrections
-\item Higher loops: Quantum gravity
-\end{itemize}
-
-\section{Mirror Symmetry}
-
-The genus-$g$ Gromov-Witten invariants:
-$$F_g^{\text{GW}} = \sum_{d} N_{g,d} \, Q^d$$
-relate to B-model periods:
-$$F_g^{\text{B-model}} = \int_{\Gamma_g} \Omega_g$$
-
-The bar-cobar duality provides the mathematical framework:
-\begin{itemize}
-\item A-model: Holomorphic maps (bar complex)
-\item B-model: Period integrals (cobar complex)
-\item Mirror map: Bar-cobar duality
-\end{itemize}
-
-\section{AGT Correspondence}
-
-The Alday-Gaiotto-Tachikawa correspondence relates:
-\begin{itemize}
-\item 4d $\mathcal{N}=2$ gauge theory of class $\mathcal{S}$ on $\mathbb{R}^4$, obtained by compactifying the 6d $(2,0)$ theory on $\Sigma_g$
-\item 2d Toda CFT (with $\mathcal{W}_N$-algebra symmetry) on $\Sigma_g$
-\end{itemize}
-
-More precisely, the Nekrasov partition function of the 4d theory in the $\Omega$-background $(\epsilon_1, \epsilon_2)$ equals the conformal block of the W-algebra $\mathcal{W}^k(\mathfrak{g})$ on $\Sigma_g$, with level $k$ determined by $\epsilon_1/\epsilon_2$.
-
-The bar-cobar perspective: the genus-$g$ conformal block can be expressed as a correlation function in the chiral bar complex:
-$$\mathcal{Z}_{\text{Nek}}^{(g)} = \int_{\overline{\mathcal{M}}_{g,n}} \langle V_1 \cdots V_n \rangle_{\mathcal{W}^k(\mathfrak{g})}$$
-where $V_i$ are vertex operators for punctures on $\Sigma_g$.
-
-% NOTE: The "Operadic Structure at All Genera" chapter (genus-graded chiral operad,
-% Swiss-cheese structure) appeared verbatim above in lines 104--132 and is not repeated.
-
-\chapter{Spectral Sequences and Computational Tools}
-
-\section{Genus Filtration Spectral Sequence}
-
-The genus filtration induces a spectral sequence:
-$$E_1^{p,q} = H^q(\text{Bar}^{(p)}(\mathcal{A})) \Rightarrow H^{p+q}(\text{Bar}(\mathcal{A}))$$
-
-The differentials encode:
-\begin{itemize}
-\item $d_1$: Degeneration of curves (nodes forming)
-\item $d_2$: Bubble corrections (genus reduction)
-\item $d_r$: Higher quantum corrections
-\end{itemize}
-
-\section{Feynman Rules for Higher Genus}
-
-The contribution from a stable graph $\Gamma$:
-$$A_{\Gamma} = \frac{1}{|\text{Aut}(\Gamma)|} \prod_{v \in V} C_v \prod_{e \in E} P_e$$
-where:
-\begin{itemize}
-\item Vertices $v$: Correlation functions on $\Sigma_{g(v)}$
-\item Edges $e$: Propagators (Green's functions)
-\item Loops: Integration over moduli
-\end{itemize}
-
-\section{Resurgence and Non-Perturbative Effects}
-
-The genus expansion exhibits resurgent structure:
-$$Z = \sum_{g=0}^{\infty} \lambda^{2g-2} Z_g + \sum_{\text{instantons}} e^{-S_{\text{inst}}/\lambda} Z_{\text{inst}}$$
-
-Trans-series sectors correspond to:
-\begin{itemize}
-\item D-branes wrapping cycles
-\item Worldsheet instantons
-\item Non-perturbative condensates
-\end{itemize}
+For the bosonic string matter sector ($26$ free bosons $\mathcal{H}_1^{\oplus 26}$, $c = 26$):
+\[
+F_g^{\text{matter}} = 26 \cdot \lambda_g^{\mathrm{FP}}, \qquad
+F_g^{\text{ghost}} = 0 \quad (\text{$bc$ system has } \kappa = 0)
+\]
+so $F_g^{\text{total}} = 26 \cdot \lambda_g^{\mathrm{FP}}$.  This is \emph{twice} $F_g(\mathrm{Vir}_{26}) = 13 \cdot \lambda_g^{\mathrm{FP}}$, confirming that the Virasoro obstruction captures the stress-energy sector only, not the full chiral algebra.
+\end{remark}
