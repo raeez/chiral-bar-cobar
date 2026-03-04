@@ -92,6 +92,7 @@
 \usepackage[hypertexnames=false,unicode,pdfencoding=auto,psdextra]{hyperref}
 %\usepackage{amsfonts}
 \usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc}
 \usepackage[margin=1in]{geometry}
 \setlength{\headheight}{28pt}
 \setlength{\emergencystretch}{2em}
@@ -465,7 +466,7 @@
 \newcommand{\PrimeForm}{E}                      % Prime form on Riemann surface
 \newcommand{\ThetaChar}{\vartheta}              % Theta characteristics
 \newcommand{\ModularParam}{\tau}                % Modular parameter
-\newcommand{\DS}{\text{DS}}                     % Drinfeld-Sokolov
+\newcommand{\DS}{\text{DS}}                     % Drinfeld--Sokolov
 
 % Fallback macros for imported chapter fragments.
 % Operads, categories, and D-module macros are now in the preamble;
@@ -550,7 +551,7 @@
 \medskip
 \noindent
 \textbf{Main Results.}
-We construct a geometric realization of the bar construction $\bar{B}_{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ for chiral algebras on an algebraic curve $X$. This construction extends the genus-zero framework of Beilinson-Drinfeld to incorporate: (i) one-loop quantum corrections via elliptic chiral homology on the formal torus $\hat{E}_\tau$, (ii) higher-genus contributions through the universal chiral homology over the moduli stack $\overline{\mathcal{M}}_{g,n}$, and (iii) quantum deformation parameters $t_g \in H^1(\mathcal{M}_g)$ controlling genus-$g$ amplitudes. The bar construction is realized through residue calculus on the Fulton-MacPherson compactification $\mathrm{Conf}_n[X]$ of configuration spaces, with the differential $d_{\text{geom}} = \sum_{D \in \partial \mathrm{Conf}_n[X]} (-1)^{|D|} \mathrm{Res}_D$ summing residues over boundary divisors. The nilpotence $d_{\text{geom}}^2 = 0$ follows from the Arnold-Orlik-Solomon relations in $H^*(\mathrm{Conf}_n[X])$, providing a geometric incarnation of the associativity of chiral operations.
+We construct a geometric realization of the bar construction $\bar{B}_{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ for chiral algebras on an algebraic curve $X$. This construction extends the genus-zero framework of Beilinson--Drinfeld to incorporate: (i) one-loop quantum corrections via elliptic chiral homology on the formal torus $\hat{E}_\tau$, (ii) higher-genus contributions through the universal chiral homology over the moduli stack $\overline{\mathcal{M}}_{g,n}$, and (iii) quantum deformation parameters $t_g \in H^1(\mathcal{M}_g)$ controlling genus-$g$ amplitudes. The bar construction is realized through residue calculus on the Fulton--MacPherson compactification $\mathrm{Conf}_n[X]$ of configuration spaces, with the differential $d_{\text{geom}} = \sum_{D \in \partial \mathrm{Conf}_n[X]} (-1)^{|D|} \mathrm{Res}_D$ summing residues over boundary divisors. The nilpotence $d_{\text{geom}}^2 = 0$ follows from the Arnold--Orlik--Solomon relations in $H^*(\mathrm{Conf}_n[X])$, providing a geometric incarnation of the associativity of chiral operations.
 
 \medskip
 \noindent
@@ -596,7 +597,7 @@ Poincar\'e duality, quantum corrections, higher genus, factorization algebras.
 
 \tableofcontents
 
-\begin{remark}[Notation Convention]
+\begin{remark}[Notation convention]
 Throughout this manuscript:
 \begin{itemize}
 \item $\barBgeom(\mathcal{A})$ denotes the geometric bar complex
@@ -637,7 +638,7 @@ Throughout this manuscript:
 
 % --------------------------------------------------
 % Chapter 3: Configuration Spaces and Logarithmic Forms
-% Fulton-MacPherson compactification, Arnold relations, residue calculus.
+% Fulton--MacPherson compactification, Arnold relations, residue calculus.
 % --------------------------------------------------
 \include{chapters/theory/configuration_spaces}
 
@@ -705,44 +706,31 @@ Throughout this manuscript:
 %
 %                       PART 2: EXAMPLES
 %
-% Systematic derivation of examples in their natural generality, according
-% to their essence. The lattice construction (first chapter) provides the
-% universal engine: all major vertex algebra families arise from lattice
-% constructions or operations derived from them. Subsequent chapters
-% study each family via explicit presentations and lattice operations,
-% yielding a catalog that includes both classical objects and new ones
-% not yet in the literature. The examples are not illustrations of the
-% theory — they are the theory's natural output, derived at the scope
-% the objects demand.
+% Part II: Examples via lattice constructions and derived operations.
 %
 % ======================================================================
 
 \part{Examples}
 
 \noindent
-Part~II develops the abstract framework of Part~I through a systematic catalog
-of examples.  The organizational principle is the \emph{lattice engine}: every
-major family of vertex algebras---Heisenberg, free fermion, $\beta\gamma$, $bc$,
+Part~II develops the framework of Part~I through a catalog of examples.
+Every major family of vertex algebras---Heisenberg, free fermion, $\beta\gamma$, $bc$,
 affine Kac--Moody, and $\mathcal{W}$-algebras---arises from lattice vertex
 algebra constructions or operations derived from them (Drinfeld--Sokolov
-reduction, coset, orbifold).  The lattice framework of the first chapter
-provides a uniform starting point from which all bar complexes, Koszul duals,
-and genus-$g$ corrections can be computed explicitly.
+reduction, coset, orbifold).  The lattice construction of the first chapter
+provides a uniform starting point; bar complexes, Koszul duals,
+and genus-$g$ corrections are computed explicitly for each family.
 
 Subsequent chapters apply this engine to each family in turn, producing both
 classical identifications (the Feigin--Frenkel duality
 $\hat{\mathfrak{g}}_k^! \simeq \hat{\mathfrak{g}}_{-k-2h^\vee}$,
 Virasoro self-duality at $c = 0$) and new results (curved $A_\infty$
 structures for $\mathcal{W}$-algebras, Yangian Koszul duals via RTT
-relations, deformation quantization of chiral Poisson algebras).
-The examples are not illustrations of the abstract theory---they are its
-natural output, derived at the scope the objects demand.
+relations, deformation quantization of coisson algebras to vertex algebras).
+Subsequent chapters apply this construction to each family in turn.
 
 % --------------------------------------------------
-% The Lattice Engine
-% Universal construction framework: even lattices, cocycles, vertex algebras,
-% Frenkel-Kac-Segal, bar complexes, Koszul duality, functorial operations.
-% All subsequent example chapters are applications of this engine.
+% Lattice vertex algebras
 % --------------------------------------------------
 \include{chapters/examples/lattice_foundations}
 
@@ -756,8 +744,8 @@ natural output, derived at the scope the objects demand.
 % chapters/examples/heisenberg_eisenstein.tex.
 % \input{chapters/examples/heisenberg_higher_genus}
 
-% Obstruction class explicit computations: Heisenberg, Kac-Moody, W-algebras.
-% obs_g = kappa * lambda_g for Heisenberg; Sugawara shift for Kac-Moody.
+% Obstruction class explicit computations: Heisenberg, Kac--Moody, W-algebras.
+% obs_g = kappa * lambda_g for Heisenberg; Sugawara shift for Kac--Moody.
 % Nilpotence proof, deformation-obstruction pairing via Serre duality.
 % Phase 0 canonicalization: overlapping stream consolidated in
 % chapters/theory/higher_genus.tex.
@@ -768,7 +756,7 @@ natural output, derived at the scope the objects demand.
 \input{chapters/examples/heisenberg_eisenstein}
 
 % --------------------------------------------------
-% Chapter 9: Affine Kac-Moody Algebras
+% Chapter 9: Affine Kac--Moody Algebras
 % Two complementary files: framework provides the abstract structure
 % (setup, config space geometry, screening charges, W-algebra bridge,
 %  algorithms, applications); computations provides exhaustive degree-by-degree
@@ -811,8 +799,8 @@ natural output, derived at the scope the objects demand.
 % Phase 0 canonicalization: complete overlap archived.
 % \include{chapters/examples/deformation_quantization_complete}
 
-% Deformation quantization examples: P-infinity chiral, coisson algebras,
-% formality, star product, obstruction theory, Maurer-Cartan.
+% Deformation quantization examples: coisson (PVA) to E-infinity chiral,
+% P-infinity chiral to E-1 chiral, formality, star product, Maurer--Cartan.
 \input{chapters/examples/deformation_examples}
 
 % --------------------------------------------------
@@ -876,12 +864,12 @@ for a complete proof.
 \input{chapters/connections/physical_origins}
 
 % Complete genus theory: elliptic realm (genus 1), hyperbolic realm (genus >= 2),
-% universal tower, Eynard-Orantin topological recursion, string amplitudes,
-% holographic duality, extended Prism Principle, Poincare-Verdier at all genera.
+% universal tower, Eynard--Orantin topological recursion, string amplitudes,
+% holographic duality, extended Prism Principle, Poincaré--Verdier at all genera.
 \input{chapters/connections/genus_complete}
 
-% Literature concordance: precise relationship to BD, Francis-Gaitsgory,
-% Gui-Li-Zeng, Loday-Vallette. Our extensions beyond each.
+% Literature concordance: precise relationship to BD, Francis--Gaitsgory,
+% Gui--Li--Zeng, Loday--Vallette. Our extensions beyond each.
 \input{chapters/connections/concordance}
 
 % ======================================================================
@@ -909,7 +897,7 @@ for a complete proof.
 \input{appendices/theta_functions}
 
 % Comprehensive spectral sequences: filtered complexes, convergence criteria,
-% bar SS, genus SS, Chevalley-Cousin SS, multiplicative SS.
+% bar SS, genus SS, Chevalley--Cousin SS, multiplicative SS.
 \input{appendices/spectral_sequences}
 
 % Higher genus spectral sequences (Hodge-to-de Rham, convergence).
@@ -922,7 +910,7 @@ for a complete proof.
 \input{appendices/homotopy_transfer}
 
 % Dual abstract-concrete methodology: philosophy, bar-cobar equivalence
-% (abstract vs. concrete proofs), Riemann-Hilbert, infinity-operads.
+% (abstract vs. concrete proofs), Riemann--Hilbert, infinity-operads.
 \input{appendices/dual_methodology}
 
 \input{appendices/computational_tables}
