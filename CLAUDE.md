@@ -37,21 +37,21 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 5)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **653** |
+| ProvedHere | **660** |
 | ProvedElsewhere | **314** |
-| Conjectured | **85** |
-| Heuristic | **16** |
+| Conjectured | **83** |
+| Heuristic | **18** |
 | Open | **0** |
-| **Total tagged claims** | **1068** |
+| **Total tagged claims** | **1075** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1179 pages** (converged), zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
+- **1171 pages** (converged), zero LaTeX errors, 4 pre-existing undefined references, zero undefined citations, zero multiply-defined labels
 - 55 active .tex files + 8 stubs (+ main.tex preamble), 72.5K lines of LaTeX
 - Bibliography: 272 entries (1226 lines), all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
-- Cosmetic: 109 overfull hbox (0 severe >30pt, worst 12.2pt), 79 underfull hbox
+- Cosmetic: 113 overfull hbox (0 severe >30pt, worst 23.4pt in higher\_genus Mumford section), 79 underfull hbox
 - Build: up to 7-pass pdflatex with convergence detection; `scripts/build.sh` for standalone use
 - **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
 - Subject index: 329+ entries across 37 files

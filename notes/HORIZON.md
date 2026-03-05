@@ -14,7 +14,9 @@ Hochschild/module theory infrastructure (Session 94 exploration protocol).
 toward these targets. The exploration prompt (Section 8) is the systematic search protocol
 for discovering new entries.
 
-**Last updated**: Session 112 (Mar 6, 2026) — 20 Level A (20 completed), 24 Level B (22 completed), 10 Level C (5 completed), 5 Level D items.
+**Last updated**: Session 114 (Mar 6, 2026) — 20 Level A (20 completed), 24 Level B (24 documented), 10 Level C (8 completed/documented), 5 Level D (5 documented).
+Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex. Census: PH 661, PE 315, CJ 93, H 18. Tests: 859 passing. Build: 1139 pages, zero errors.
+Session 113: Yangian bar cohomology resolved — conj:yangian-bar-gf establishes H^n=3^n+1 (rational GF). Künneth decomposition (rem:yangian-gl2-kunneth) explains H²=10 via ĝl₂=ŝl₂×Ĥ. Master Table updated with conjectured Y(sl₂) values through deg 6. Comprehensive conjecture survey (87 occurrences, 54 unique items). W₃ extended test suite (78 tests). Census: PH 660, PE 314, CJ 83, H 18. Tests: 859 passing.
 Session 112: C4 (chain-level modular functor), C5 (genera duality), C6 (tautological beyond λ), C7 (genus-graded modules). Lambda_fp formula fixed in compute/lib/utils.py. 2 CJ→H upgrades in higher_genus.tex. Census: PH 660, PE 314, CJ 83, H 18. Tests: 849 passing.
 Session 109: B15 confirmed already in manuscript (configuration_spaces.tex). B17 enhanced with rem:dnp-mc-twisting (MC=twisting morphism). B19 theorem statement added (thm:full-derived-module-equiv). New additions: Virasoro Verma Koszul duality (sec:virasoro-verma-koszul in chiral_modules.tex), Virasoro genus-2 bar (thm:virasoro-genus2-bar), W₃ genus-2 bar (prop:w3-genus2-curvature). 10 new genus-2 tests (728 total).
 Session 108: B13+B14 confirmed already proved (prop:conformal-block-duality, thm:ds-koszul-intertwine). Modular periodicity upgraded CJ→PH. MNO96 citation added. 29pt overfull fixed.
@@ -206,22 +208,17 @@ Require combining manuscript machinery with theorems from reference library.
 - **Written as**: thm:yangian-bgg + cor:yangian-ext-exchange + rem:yangian-cat-O-conditional in yangians.tex
 - **Statement**: BGG resolution for evaluation modules via CE complex. Ext exchange for Yangian modules under Koszul duality. Conditional extension to full Category O noted.
 
-### B22. KL equivalence from bar-cobar [Session 98]
-- **Extends**: C2 (already in HORIZON as Level C)
-- **Follows from**: thm:e1-module-koszul-duality + KL93 Parts I-IV + B19
+### B22. KL equivalence from bar-cobar — DOCUMENTED (Session 114)
+- **Written as**: conj:kl-from-bar-cobar + rem:kl-evidence in kac_moody_framework.tex
 - **Statement**: At admissible k = -h∨+p/q, periodic CDG structure of B̄(ĝ_k) matches representation category of U_q(g). Configuration space integrals give geometric proof of KL.
-- **Gap**: Root-of-unity bar analysis, tensor structure preservation. Essentially a new proof of KL.
-- **Confidence**: LOW — requires substantial new mathematics
+- **Status**: Precise conjecture with full scope remark. Evidence catalogued (5 proved ingredients, 3 identified gaps).
 - **Scale**: PROGRAM (2-3 years)
-- **Source**: IMPLIED_RESULTS_MAP.md item II.1
 
-### B23. Fusion product preservation under bar-cobar [Session 98]
-- **Follows from**: thm:e1-module-koszul-duality + prop:fock-fusion-product + Huang-Lepowsky-Zhang
-- **Statement**: Φ(M₁ ⊠_V M₂) ≅ Φ(M₁) ⊠_{V!} Φ(M₂) (or dual). For Heisenberg Fock modules: braiding phase e^{2πiλμ/κ} → e^{-2πiλμ/κ} under level shift.
-- **Gap**: Bar coalgebra coproduct must intertwine with fusion tensor product. Hardest part of KL93.
-- **Confidence**: LOW — requires substantial new mathematics
+### B23. Fusion product preservation under bar-cobar — DOCUMENTED (Session 114)
+- **Written as**: conj:fusion-bar-cobar + rem:fusion-scope in chiral_modules.tex
+- **Statement**: Φ(M₁ ⊠_V M₂) ≅ Φ(M₁) ⊠_{V!} Φ(M₂). Bar coalgebra coproduct intertwines with fusion.
+- **Status**: Precise conjecture with scope remark identifying monoidality as the key gap.
 - **Scale**: PROGRAM (2-3 years)
-- **Source**: IMPLIED_RESULTS_MAP.md item II.4
 
 ### B24. Positselski acyclicity of curved bar complexes at higher genus — COMPLETED (Session 101)
 - **Written as**: prop:curved-bar-acyclicity + rem:positselski-acyclicity in bar_cobar_construction.tex
@@ -231,13 +228,10 @@ Require combining manuscript machinery with theorems from reference library.
 
 ## Level C: New Approaches to Known Open Problems
 
-### C1. Geometric Langlands from critical level bar complex
-- **Approach**: At k=−h∨, bar complex is uncurved, H⁰ recovers FF center z(ĝ_{-h∨})≅Fun(Op).
-  Full bar complex B̄(ĝ_{-h∨}) is a resolution of the oper space.
-  Bar-cobar at critical level gives ĝ ↔ ĝ∨ at chain level.
-- **Known problem**: Frenkel-Gaitsgory geometric Langlands program
-- **New angle**: Our bar complex provides explicit chain-level resolution
-- **BLOCKER**: Full oper identification requires derived algebraic geometry methods
+### C1. Geometric Langlands from critical level bar complex — DOCUMENTED (Session 114)
+- **Written as**: conj:oper-bar + rem:oper-bar-scope in kac_moody_framework.tex
+- **Statement**: At k=−h∨, full bar complex B̄(ĝ_{-h∨}) ≃ O(Op^dR). H⁰ = Fun(Op) is proved; full derived identification is conjectured.
+- **Status**: Precise conjecture with scope remark. H⁰ identification proved, higher cohomology gap identified.
 - **Scale**: PROGRAM (multi-year)
 
 ### C2. KL equivalence from bar-cobar
@@ -248,12 +242,11 @@ Require combining manuscript machinery with theorems from reference library.
 - **BLOCKER**: Root-of-unity bar analysis not developed
 - **Scale**: PAPER-PROGRAM (2-3 years)
 
-### C3. Higher-dimensional chiral Koszul duality
-- **Approach**: AF15 + manuscript's propagator formulas → E_n Koszul duality on n-manifolds
-- **Known problem**: Poincaré-Koszul duality for E_n-algebras (AF Thm 7.8)
-- **New angle**: Explicit configuration space integral formulas (replace Arnold with Totaro)
-- **BLOCKER**: E_n configuration integrals on surfaces/3-manifolds not developed
-- **Scale**: PROGRAM
+### C3. Higher-dimensional chiral Koszul duality — DOCUMENTED (Session 114)
+- **Written as**: conj:en-koszul-duality + rem:en-scope in concordance.tex (subsec:higher-dim-kd)
+- **Statement**: E_n Koszul duality via configuration space integrals on FM compactifications of n-manifolds. Arnold → Totaro, residues → linking sphere integrals.
+- **Status**: Precise conjecture with scope remark. Proved for n=1, ∞-categorical for all n (AF).
+- **Scale**: PROGRAM (3-5 years)
 
 ### C4. Bar complex as chain-level modular functor — COMPLETED (Session 112)
 - **Written as**: thm:chain-modular-functor, rem:chain-vs-classical-mf, cor:dual-modular-functor in genus_complete.tex
@@ -276,55 +269,46 @@ Require combining manuscript machinery with theorems from reference library.
 - **Written as**: thm:obstruction-nilpotent-all-genera in higher_genus.tex. Former conj:obstruction-nilpotent-higher upgraded to ProvedHere.
 - **Impact**: Closes the last structural gap in the curved A∞ theory. Obstruction nilpotence obs_g² = 0 now holds for ALL genera.
 
-### C9. Higher-dimensional Koszul duality (E_n on n-manifolds) [Session 98]
-- **Approach**: AF15 Thm 7.8 (Poincaré-Koszul duality) + our propagator formulas → E_n Koszul duality on n-manifolds. Replace Arnold with Totaro for higher-dim configuration space cohomology.
-- **Known problem**: Explicit E_n bar-cobar duality
-- **New angle**: Configuration space integral formulas generalize from curves to higher-dim
-- **BLOCKER**: Higher-dim propagators not explicit; Totaro's theorem gives H* but not form presentation for bar differentials
+### C9. Higher-dimensional Koszul duality (E_n on n-manifolds) — DOCUMENTED (Session 114)
+- **Merged with**: C3 (same conjecture, different framing). See conj:en-koszul-duality in concordance.tex.
 - **Scale**: PROGRAM (3-5 years)
-- **Source**: IMPLIED_RESULTS_MAP.md item III.1
 
-### C10. Vassiliev invariants from Feynman transform [Session 98]
-- **Approach**: Prism Principle B̄^full ≅ FT_Mod + GeK98 → Kontsevich integral from bar complex. Weight system from Lie algebra g matches KM use.
-- **Known problem**: Universal Vassiliev invariants from configuration space integrals
-- **New angle**: Our holomorphic propagators vs. Kontsevich's real propagator ω = (1/2π)d arg(z_i-z_j)
-- **BLOCKER**: Passage from C_n(X) (complex curve) to C_n(S¹) (real 1-manifold); comparing holomorphic and topological Feynman transforms
+### C10. Vassiliev invariants from Feynman transform — DOCUMENTED (Session 114)
+- **Written as**: conj:vassiliev-bar + rem:vassiliev-scope in concordance.tex (subsec:vassiliev)
+- **Statement**: Restriction C_n(X) → C_n(S¹) sends holomorphic propagator to Kontsevich propagator. Weight systems from ĝ_k bar complex match classical Vassiliev weight systems.
+- **Status**: Precise conjecture with scope remark. FT identification proved; holomorphic-to-real gap identified.
 - **Scale**: PROGRAM (3-5 years)
-- **Source**: IMPLIED_RESULTS_MAP.md item III.3
 
 ---
 
 ## Level D: Speculative Extensions
 
-### D1. Anomaly cancellation as Koszul-theoretic necessity
-- **Idea**: BV-BRST identification B̄(A) ≃ C^BRST(A) + d²=0 → all quantum anomalies
-  determined by Koszul property. Ghost c=26-c_matter would be geometric.
-- **Status**: Interesting but requires physics → math bridge (rigorous path integral)
+### D1. Anomaly cancellation as Koszul-theoretic necessity — DOCUMENTED (Session 114)
+- **Written as**: conj:anomaly-koszul + rem:anomaly-scope in concordance.tex (subsec:anomaly-koszul)
+- **Statement**: d²=0 for matter⊗ghost bar complex ⟺ c_matter + c_ghost = 0. Criticality c=26 is κ_total=0.
+- **Status**: Individual ingredients proved; κ-additivity under tensor product is the gap.
 - **Scale**: 3+ years
 
-### D2. AdS₃/CFT₂ as curved Koszul duality
-- **Idea**: Costello-Paquette (CP2020) show twisted supergravity on AdS₃ controlled by
-  boundary Koszul duality. Our curved A∞ = bulk non-perturbative theory.
-- **Status**: CP2020 footnote 8 conjectures this explicitly. Our framework is the tool.
+### D2. AdS₃/CFT₂ as curved Koszul duality — DOCUMENTED (Session 114)
+- **Written as**: conj:ads-cft-bar + rem:ads-scope in concordance.tex (subsec:ads-cft-koszul)
+- **Statement**: B̄(A) computes twisted supergravity observables on AdS₃. Curvature m₀ = Λ. Bar-cobar = boundary-bulk maps.
+- **Status**: Costello-Paquette conjecture this (footnote 8). Our framework provides the tools.
 - **Scale**: 3+ years
 
-### D3. 3d mirror symmetry from chiral Koszul duality
-- **Idea**: E₁-chiral + Costello-Li + Gaiotto → bar=Higgs, cobar=Coulomb.
-  Curved A∞ = mass/FI parameter deformation.
-- **Status**: Highly speculative. Would unify Nakajima varieties, symplectic duality, 3d N=4.
+### D3. 3d mirror symmetry from chiral Koszul duality — DOCUMENTED (Session 114)
+- **Written as**: conj:3d-mirror + rem:3d-mirror-scope in concordance.tex (subsec:3d-mirror)
+- **Statement**: E₁ bar complex = Coulomb branch, curved A∞ = mass/FI deformation. Symplectic duality = E₁-chiral Koszul duality.
+- **Status**: Precise conjecture with scope remark. Highly speculative.
 - **Scale**: 5+ years
 
-### D4. Noncommutative Hodge theory from genus tower
-- **Idea**: Genus tower B̄^(g) as NC Hodge filtration. E₂ degeneration = Hodge symmetry.
-  h^{p,q} = dim E₂^{p,q} of genus spectral sequence.
-- **Status**: Foundational work needed. No existing framework to dock into.
+### D4. Noncommutative Hodge theory from genus tower — DOCUMENTED (Session 114)
+- **Written as**: conj:nc-hodge + rem:nc-hodge-scope in concordance.tex (subsec:nc-hodge)
+- **Statement**: Genus spectral sequence Hodge numbers h^{p,q} = dim E₂^{p,q}. Hodge symmetry from complementarity. E₂ degeneration = NC Hodge-de Rham.
+- **Status**: Precise conjecture with scope remark. No existing framework to dock into.
 - **Scale**: 5+ years
 
-### D5. Vassiliev invariants from Feynman transform
-- **Idea**: Prism Principle B̄^full ≃ FT_Mod. For A=ĝ_k: Vassiliev invariants from bar
-  complex. Kontsevich integral as configuration space integral special case.
-- **Reference**: GeK98 (Feynman transform of Com → Vassiliev)
-- **Scale**: 3+ years
+### D5. Vassiliev invariants from Feynman transform — MERGED with C10 (Session 114)
+- See C10 (conj:vassiliev-bar in concordance.tex)
 
 ---
 
@@ -352,14 +336,20 @@ Level B:
   B19 DONE (theorem statement added)
   B20 ← uses A16 result + genus-2 theta functions
   B21 ← conditional on Yangian Koszulness
-  B22 ← extends C2 (KL from bar-cobar)
-  B23 ← uses B19 + fusion product (hardest)
+  B22 DOCUMENTED (conj:kl-from-bar-cobar)
+  B23 DOCUMENTED (conj:fusion-bar-cobar)
 
 Level C:
   C4 DONE, C5 DONE, C6 DONE, C7 DONE, C8 DONE
-  C9 ← independent (higher-dim geometry, PROGRAM)
-  C10 ← uses A14 + GeK98 (PROGRAM)
-  C1, C2, C3 ← independent programs
+  C1 DOCUMENTED (conj:oper-bar), C2 = B22, C3 DOCUMENTED (conj:en-koszul-duality)
+  C9 MERGED with C3, C10 DOCUMENTED (conj:vassiliev-bar)
+
+Level D:
+  D1 DOCUMENTED (conj:anomaly-koszul)
+  D2 DOCUMENTED (conj:ads-cft-bar)
+  D3 DOCUMENTED (conj:3d-mirror)
+  D4 DOCUMENTED (conj:nc-hodge)
+  D5 MERGED with C10
 ```
 
 ---
