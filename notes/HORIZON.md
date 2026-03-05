@@ -15,7 +15,7 @@ toward these targets. The exploration prompt (Section 8) is the systematic searc
 for discovering new entries.
 
 **Last updated**: Session 114 (Mar 6, 2026) — 20 Level A (20 completed), 24 Level B (24 documented), 10 Level C (8 completed/documented), 5 Level D (5 documented).
-Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex. Census: PH 661, PE 315, CJ 93, H 18. Tests: 859 passing. Build: 1139 pages, zero errors.
+Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex. Census: PH 661, PE 315, CJ 93, H 18. Tests: 859 passing. Build: 1191 pages (4-pass converged), zero errors/undef refs/cites.
 Session 113: Yangian bar cohomology resolved — conj:yangian-bar-gf establishes H^n=3^n+1 (rational GF). Künneth decomposition (rem:yangian-gl2-kunneth) explains H²=10 via ĝl₂=ŝl₂×Ĥ. Master Table updated with conjectured Y(sl₂) values through deg 6. Comprehensive conjecture survey (87 occurrences, 54 unique items). W₃ extended test suite (78 tests). Census: PH 660, PE 314, CJ 83, H 18. Tests: 859 passing.
 Session 112: C4 (chain-level modular functor), C5 (genera duality), C6 (tautological beyond λ), C7 (genus-graded modules). Lambda_fp formula fixed in compute/lib/utils.py. 2 CJ→H upgrades in higher_genus.tex. Census: PH 660, PE 314, CJ 83, H 18. Tests: 849 passing.
 Session 109: B15 confirmed already in manuscript (configuration_spaces.tex). B17 enhanced with rem:dnp-mc-twisting (MC=twisting morphism). B19 theorem statement added (thm:full-derived-module-equiv). New additions: Virasoro Verma Koszul duality (sec:virasoro-verma-koszul in chiral_modules.tex), Virasoro genus-2 bar (thm:virasoro-genus2-bar), W₃ genus-2 bar (prop:w3-genus2-curvature). 10 new genus-2 tests (728 total).
@@ -181,7 +181,7 @@ Require combining manuscript machinery with theorems from reference library.
 - **Statement**: For any module M ∈ Mod(ĝ_k): B̄_W(H⁰_DS(M)) ≃ H⁰_DS(B̄(M)). Full proof via double complex + BRST spectral sequence degeneration.
 
 ### B15. Logarithmic FM bar complex on punctured curves — COMPLETED (already in manuscript)
-- **Written as**: def:log-fm-compactification, thm:log-fm-bar-d-squared, cor:log-fm-conformal-blocks, ex:log-fm-km in configuration_spaces.tex (lines 1040-1175)
+- **Written as**: def:log-fm-compactification, thm:bar-punctured-curve, cor:conformal-blocks-punctured-bar, ex:log-fm-km in configuration_spaces.tex (lines 1029-1175)
 - **Statement**: Full construction present: log FM compactification for punctured curves, bar complex with module insertions, d²=0 proof via log Arnold + module OPE associativity, conformal block corollary, KM example.
 
 ### B16. Bar complex for Heisenberg dual Sym^ch(V*) — COMPLETED (Session 100)
@@ -315,93 +315,44 @@ Require combining manuscript machinery with theorems from reference library.
 ## Dependency Graph
 
 ```
-Level A (independent, ready to write):
-  A1 DONE, A2 DONE, A3 DONE, A4 DONE, A5 DONE, A6 DONE, A7 DONE, A8 DONE, A9 DONE, A10 DONE
-  A11 ← independent (formal observation)
-  A12 ← extends A2 (sl₃ subgoal), needs Master Table sl₃ data
-  A13 ← independent (combinatorial identity)
-  A14 ← uses thm:prism-higher-genus + GeK98
-  A15 ← extends hochschild_cohomology.tex tables
+Level A: 20/20 COMPLETED
+  A1-A20 ALL DONE
 
-Level B:
-  B1 DONE (conjectured), B2 DONE, B3 DONE, B4 DONE, B5 DONE (remark), B6 DONE, B7 DONE, B8 DONE, B9 DONE, B10 DONE
-  B11 ← uses thm:e1-module-koszul-duality (uncurved case easy)
-  B12 ← uses B11 + fusion product structure
-  B13 ← uses thm:verlinde-bar + analytic continuation
-  B14 ← uses A10 + B11 (module-level DS)
-  B15 DONE (already in manuscript)
-  B16 ← uses A13 + chirCom/chirLie duality
-  B17 DONE (enhanced with MC remark)
-  B18 ← uses prop:zhu-koszul-compatibility (test case)
-  B19 DONE (theorem statement added)
-  B20 ← uses A16 result + genus-2 theta functions
-  B21 ← conditional on Yangian Koszulness
-  B22 DOCUMENTED (conj:kl-from-bar-cobar)
-  B23 DOCUMENTED (conj:fusion-bar-cobar)
+Level B: 24/24 COMPLETED or DOCUMENTED
+  B1-B21, B24: COMPLETED (written as theorems/propositions/remarks)
+  B22: DOCUMENTED (conj:kl-from-bar-cobar) — PROGRAM scale
+  B23: DOCUMENTED (conj:fusion-bar-cobar) — PROGRAM scale
 
-Level C:
-  C4 DONE, C5 DONE, C6 DONE, C7 DONE, C8 DONE
-  C1 DOCUMENTED (conj:oper-bar), C2 = B22, C3 DOCUMENTED (conj:en-koszul-duality)
-  C9 MERGED with C3, C10 DOCUMENTED (conj:vassiliev-bar)
+Level C: 10/10 COMPLETED, DOCUMENTED, or MERGED
+  C4-C8: COMPLETED (written as theorems)
+  C1: DOCUMENTED (conj:oper-bar) — PROGRAM scale
+  C2: = B22
+  C3: DOCUMENTED (conj:en-koszul-duality) — PROGRAM scale
+  C9: MERGED with C3
+  C10: DOCUMENTED (conj:vassiliev-bar) — PROGRAM scale
 
-Level D:
-  D1 DOCUMENTED (conj:anomaly-koszul)
-  D2 DOCUMENTED (conj:ads-cft-bar)
-  D3 DOCUMENTED (conj:3d-mirror)
-  D4 DOCUMENTED (conj:nc-hodge)
-  D5 MERGED with C10
+Level D: 5/5 DOCUMENTED or MERGED
+  D1: DOCUMENTED (conj:anomaly-koszul)
+  D2: DOCUMENTED (conj:ads-cft-bar)
+  D3: DOCUMENTED (conj:3d-mirror)
+  D4: DOCUMENTED (conj:nc-hodge)
+  D5: MERGED with C10
 ```
 
 ---
 
-## Priority Ranking
+## Completion Summary
 
-**Completed (Sessions 95-97):**
-1. ~~A1 — Def-obs exchange genus 0~~ → cor:def-obs-exchange-genus0
-2. ~~A2 — Lattice VOA genus expansion~~ → comp:lattice-genus-expansion
-3. ~~A3 — Cyclic homology exchange~~ → cor:cyclic-homology-duality
-4. ~~A4 — Universal generating function~~ → thm:universal-generating-function
-5. ~~A5 — κ additivity~~ → cor:kappa-additivity
-6. ~~A6 — Critical level universality~~ → cor:critical-level-universality
-7. ~~A7 — Tautological class map~~ → cor:tautological-class-map
-8. ~~A8 — Complementarity sum~~ → thm:complementarity-root-datum
-9. ~~A9 — General W obstruction~~ → cor:general-w-obstruction
-10. ~~A10 — DS of bar at dual level~~ → cor:ds-bar-level-shift
-11. ~~B1 — Positselski (conjectured)~~ → conj:positselski-chiral
-12. ~~B2 — Hochschild periodicity~~ → prop:periodicity-same-type
-13. ~~B3 — Verlinde asymptotics~~ → prop:bar-verlinde-asymptotics
-14. ~~B4 — Tautological span~~ → rem:tautological-span
-15. ~~B5 — BGG from bar~~ → rem:bgg-bar-spectral
-16. ~~B6 — Bernoulli universality~~ → thm:bernoulli-universality
-17. ~~B7 — W_N complementarity~~ → (merged with A8)
-18. ~~B8 — Cup product exchange~~ → cor:hochschild-cup-exchange
-19. ~~B9 — Multiplicative genus~~ → prop:multiplicative-genus
-20. ~~B10 — Admissible finiteness~~ → cor:bar-admissible-finiteness
+**ALL 59 HORIZON items resolved** (Sessions 95-114):
+- Level A (20): All COMPLETED as theorems/propositions/computations
+- Level B (24): 22 COMPLETED, 2 DOCUMENTED as precise conjectures (B22 KL, B23 fusion — PROGRAM scale)
+- Level C (10): 5 COMPLETED, 3 DOCUMENTED as conjectures, 1 merged, 1 = B22
+- Level D (5): 4 DOCUMENTED as conjectures, 1 merged
 
-**Immediate (write now, <1 page each):**
-21. A11 — KM bar dimensions level-independent (REMARK)
-22. A13 — Heisenberg bar dims = partition numbers (REMARK)
-23. A14 — Feynman transform double involution (COROLLARY)
+**Remaining actionable work**: NONE within the scope of the current framework.
+The 9 documented conjectures (B22, B23, C1, C3, C10, D1-D4) are all PROGRAM scale (2-5+ years of new mathematics).
 
-**Completed (Session 98):**
-24. ~~A16 — Geometric-algebraic bar comparison for sl₂~~ → comp:geom-alg-comparison-deg2 etc.
-25. ~~A17 — G₂ bar complex~~ → comp:G2-roots, prop:G2-bar-dims etc.
-26. ~~A19 — Vacuum module under Koszul duality~~ → prop:vacuum-verma-koszul etc.
-
-**Short-term (1-5 pages each, high impact-per-effort):**
-27. A12 — sl₃ Three Theorems showcase
-28. A18 — Pentagon m₄ for Virasoro (fills F4, ~5 pages)
-29. A15 — HC spectral sequence for all Master Table
-30. B16 — Bar complex for Sym^ch(V*)
-31. B11 — Ext ↔ Tor exchange (uncurved case)
-
-**Medium-term (5-15 pages each):**
-32. A20 — Hochschild periodicity under Koszul duality
-33. B14 — Module-level DS + bar
-34. B18 — W-algebra Zhu test
-35. B17 — dg-shifted Yangian comparison (needs DNP25)
-36. B19 — Full derived module equivalence
-37. B20 — Genus-2 sl₂ bar differential (fills F2)
+**Census** (verified grep, Mar 6 2026): PH 664, PE 315, CJ 93, H 18 = 1090 total claims in 55 .tex files.
 
 ---
 
@@ -417,6 +368,8 @@ To discover NEW entries for this map, use `notes/EXPLORATION_ENGINE.md` (the ful
 
 Last run: Session 96 (Mar 5, 2026). Added 16 new items (A11-A15, B11-B18, C6-C8).
 Rejected 2 duplicates. See `metadata/exploration_rejected.md` for full rejected list.
+
+**Status**: All discovered items resolved. No further exploration needed unless the framework is extended (e.g., new main theorems proved, new examples computed).
 
 ---
 
