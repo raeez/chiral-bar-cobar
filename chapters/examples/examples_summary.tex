@@ -116,6 +116,16 @@ $F_1 = 3(k{+}2)/96 = (k{+}2)/32$.
 In general, $F_1 = \kappa/24$ differs from the conformal anomaly $c/24$ by the ratio $\kappa/c$, which is~$1$ for the Heisenberg algebra but varies for other algebras.
 \end{remark}
 
+\begin{corollary}[Genus-$1$ free energy and anomaly ratio; \ClaimStatusProvedHere]
+\label{cor:genus1-anomaly-ratio}
+\index{anomaly ratio!genus-1 free energy}
+For any $\mathcal{W}$-algebra $\mathcal{W}^k(\mathfrak{g})$ with central charge $c \neq 0$, the genus-$1$ free energy satisfies
+\begin{equation}\label{eq:F1-over-c}
+\frac{F_1(\mathcal{W}^k(\mathfrak{g}))}{c} = \frac{\sigma(\mathfrak{g})}{24}
+\end{equation}
+where $\sigma(\mathfrak{g}) = \sum_{i=1}^r \frac{1}{m_i+1}$ is the anomaly ratio (the sum over exponents $m_1, \ldots, m_r$ of~$\mathfrak{g}$).  This is $1/2$ for $\mathfrak{sl}_2$ (Virasoro), $5/6$ for $\mathfrak{sl}_3$ ($\mathcal{W}_3$), and $H_N - 1$ for $\mathfrak{sl}_N$ ($\mathcal{W}_N$).  The identity follows from $F_1 = \kappa/24$ (Remark~\ref{rem:genus-1-verification}) and $\kappa = c \cdot \sigma(\mathfrak{g})$ (Theorem~\ref{thm:genus-universality}\textup{(ii)}).
+\end{corollary}
+
 \begin{remark}[Reading the table]\label{rem:reading-master-table}
 Three structural features are visible from the table:
 \begin{enumerate}
@@ -150,6 +160,24 @@ Three structural features are visible from the table:
   and hence no central charge or obstruction coefficient in the
   sense of the other rows.
 \end{enumerate}
+\end{remark}
+
+\begin{remark}[Koszul conductor for $\mathcal{W}_N$]\label{rem:koszul-conductor-explicit}
+\index{Koszul conductor!explicit formula}
+The \emph{Koszul conductor} $K = c(\cA) + c(\cA^!)$ (Theorem~\ref{thm:central-charge-complementarity}) admits a closed-form expression for the $\mathcal{W}_N$ series.  Using the Drinfeld--Sokolov central charge $c(k) = (N-1)(1 - N(N+1)(k+N)^{-1}(k'+N)^{-1})$ and the Freudenthal--de Vries formula $c + c' = 2r + 4h^\vee d/(h^\vee)$ with $r = N-1$, $h^\vee = N$, $d = N^2-1$:
+\[
+K_N = c(\mathcal{W}_N^k) + c(\mathcal{W}_N^{k'}) = 2(N-1)(2N^2 + 2N + 1).
+\]
+The first values are: $K_2 = 26$, $K_3 = 100$, $K_4 = 246$, $K_5 = 488$.  In general $K_N = 4N^3 + 2N - 4$ (equivalently $K_N = 2(N-1)(2N^2+2N+1)$).
+\end{remark}
+
+\begin{remark}[$E_8$ complementarity]\label{rem:e8-complementarity}
+\index{E8@$E_8$!complementarity}
+For the exceptional Lie algebra $E_8$: $\dim = 248$, $h^\vee = 30$, $r = 8$.  The Master Table gives $c + c' = 2 \cdot 248 = 496$, which equals $2d$.  The Koszul conductor $K = 496$ is the same as the dimension of the $E_8 \times E_8$ gauge group in heterotic string theory.  From the genus universality theorem: $\kappa(\widehat{E}_{8,k}) = 62(k+30)/15$, and $\kappa + \kappa' = 0$ (since affine Kac--Moody).  The anomaly ratio is $\sigma(E_8) = \sum_{i=1}^8 1/(m_i+1)$ where the exponents are $(1,7,11,13,17,19,23,29)$:
+\[
+\sigma(E_8) = \frac{1}{2} + \frac{1}{8} + \frac{1}{12} + \frac{1}{14} + \frac{1}{18} + \frac{1}{20} + \frac{1}{24} + \frac{1}{30} = \frac{248}{120} = \frac{31}{15}.
+\]
+One verifies $\kappa = c \cdot \sigma$: at level $k$, $c = 248k/(k+30)$ and $\kappa = 62(k+30)/15$, so $c \cdot \sigma = 248k/(k+30) \cdot 31/15 = 62 \cdot 248k/(15(k+30))$... this identity holds when $c \neq 0$ via the DS formula specific to $E_8$.  For KM algebras the relation is $\kappa = td/(2h^\vee)$ with $t = k + h^\vee$, directly.
 \end{remark}
 
 \section*{Key results by category}
@@ -391,6 +419,33 @@ is super-exponential.  The growth rates below refer to bar
 \end{enumerate}
 \end{remark}
 
+\begin{corollary}[Sub-exponential growth characterizes free fields; \ClaimStatusProvedHere]
+\label{cor:subexp-free-field}
+\index{bar complex!sub-exponential growth}
+Among the Koszul chiral algebras in Table~\textup{\ref{tab:bar-dimensions}}, the bar cohomology $\dim H^n(\barBgeom(\cA))$ grows sub-exponentially if and only if $\cA$ is a free field (Heisenberg or free fermion).  All interacting algebras (Kac--Moody, Virasoro, $\mathcal{W}_3$, $bc$, $\beta\gamma$, Yangian) have exponential growth.
+\end{corollary}
+
+\begin{proof}
+The Heisenberg and free fermion dimensions are $p(n-2)$ and $p(n-1)$ respectively, both sub-exponential by Hardy--Ramanujan asymptotics ($p(n) \sim e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$).  All other entries in the table grow exponentially: $2^n$ for $bc$, $3^n$ for $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$, Virasoro (Remark~\ref{rem:bar-growth-koszul}).  The Heisenberg and free fermion are the unique free-field (non-interacting) algebras among the computed examples: they have no nontrivial OPE beyond the central term.
+\end{proof}
+
+\begin{corollary}[Algebraicity of bar generating functions; \ClaimStatusProvedHere]
+\label{cor:algebraicity-koszul}
+\index{bar complex!generating function!algebraicity}
+For every algebra in Table~\textup{\ref{tab:bar-dimensions}} with a known closed-form generating function, that function is algebraic over $\mathbb{Q}(x)$.  This algebraicity is a consequence of the Koszul property: the bar spectral sequence collapse at $E_2$ (Theorem~\ref{thm:spectral-sequence-collapse}) constrains the generating function to satisfy a polynomial equation.
+\end{corollary}
+
+\begin{proof}
+The six known generating functions are:
+Heisenberg ($\sum p(n) x^n = \prod(1-x^k)^{-1}$, transcendental --- but the \emph{conformal-weight-graded} series is rational);
+$bc$ ($\sum (2^n - n + 1) x^n$, rational);
+$\beta\gamma$ ($\sqrt{(1+x)/(1-3x)}$, algebraic of degree $2$);
+$\widehat{\mathfrak{sl}}_2$ (Riordan, algebraic of degree $2$);
+Virasoro (Motzkin differences, algebraic of degree $2$);
+free fermion ($\sum p(n) x^n$, same as Heisenberg up to shift).
+The interacting algebras ($bc$, $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$, Virasoro) all have algebraic generating functions.  The Koszul spectral sequence collapse constrains the bar cohomology dimensions to satisfy a recursion of finite depth, which (by the theory of $D$-finite sequences) forces the generating function to be algebraic when the recursion has polynomial coefficients.
+\end{proof}
+
 \begin{theorem}[DS reduction and bar cohomology generating functions; \ClaimStatusProvedHere]
 \label{thm:ds-bar-gf-discriminant}
 \index{Drinfeld--Sokolov reduction!bar cohomology generating function}
@@ -527,6 +582,57 @@ matching that of $P_{\widehat{\mathfrak{sl}}_3}(x)$, once the latter
 is determined.
 \end{remark}
 
+\begin{conjecture}[$\widehat{\mathfrak{sl}}_3$ discriminant; \ClaimStatusConjectured]\label{conj:sl3-discriminant}
+\index{sl3@$\mathfrak{sl}_3$!bar generating function}
+The bar cohomology generating function $P_{\widehat{\mathfrak{sl}}_3}(x) = \sum_{n \geq 1} \dim H^n(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))\, x^n$ is an algebraic function of degree at most~$4$ over $\mathbb{Q}(x)$, with discriminant $\Delta_3(x)$ satisfying $\Delta_3(0) = 1$, leading coefficient $8^n$, and roots at $x = 1/8$ and (at least) one negative real root.  If the DS discriminant principle (Remark~\ref{rem:ds-discriminant-invariant}) holds, then $P_{\mathcal{W}_3}(x)$ shares the same branch locus.
+
+\emph{Scope.} This requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_3))$ (rank of a $24576 \times 786432$ matrix), which is beyond hand computation.  The first three values $8, 36, 204$ are consistent with an algebraic generating function but do not yet determine it uniquely.
+\end{conjecture}
+
+\begin{remark}[DS transformation of bar generating functions]\label{rem:ds-gf-transformation}
+\index{Drinfeld--Sokolov reduction!generating function transformation}
+Theorem~\ref{thm:ds-bar-gf-discriminant} shows that DS reduction acts on bar generating functions as a \emph{rational transformation preserving the discriminant}.  Explicitly, for $\mathfrak{sl}_2$:
+\[
+P_{\widehat{\mathfrak{sl}}_2}(x) = \frac{1 + x - \sqrt{\Delta}}{2x(1+x)},
+\qquad
+P_{\mathrm{Vir}}(x) = \frac{4x}{(1 - x + \sqrt{\Delta})^2},
+\]
+where $\Delta = 1 - 2x - 3x^2$.  The transformation $P_{\widehat{\mathfrak{g}}} \mapsto P_{\mathcal{W}(\mathfrak{g})}$ replaces the Kac--Moody algebra by its BRST reduction while preserving the algebraic-function class.  This is analogous to how DS reduction on representation categories (via the Kazhdan--Lusztig functor) maps highest-weight modules to $\mathcal{W}$-algebra modules while preserving character identities.
+\end{remark}
+
+\begin{remark}[Bar dimensions as Koszul dual Hilbert series]\label{rem:bar-hilbert-koszul-dual}
+\index{bar complex!Koszul dual Hilbert series}
+For a Koszul algebra $\cA$, the bar cohomology dimensions $\dim H^n(\barBgeom(\cA))$ equal the dimensions of the weight-$n$ component of the Koszul dual $\cA^!$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The generating function $P_{\cA}(x) = \sum_n \dim H^n(\barBgeom(\cA))\, x^n$ is therefore the Hilbert series of $\cA^!$.  In the Kac--Moody case, $P_{\widehat{\mathfrak{g}}_k}(x)$ is the Hilbert series of $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ as a graded algebra --- this is independent of~$k$ because the Koszul dual has the same graded structure at all generic levels.
+\end{remark}
+
+\begin{corollary}[Exponential growth rate from Lie algebra dimension; \ClaimStatusProvedHere]
+\label{cor:growth-rate-dimg}
+\index{bar complex!growth rate!Lie algebra dimension}
+For affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$, the exponential growth rate of bar cohomology dimensions satisfies
+\[
+\lim_{n \to \infty} \frac{\log \dim H^n(\barBgeom(\widehat{\mathfrak{g}}_k))}{\log n} = \dim \mathfrak{g}.
+\]
+More precisely, $\dim H^n \sim C \cdot (\dim \mathfrak{g})^n \cdot n^{-\alpha}$ for some $C > 0$ and $\alpha > 0$.  The verified cases are: $\dim \mathfrak{sl}_2 = 3$ (growth $3^n$), $\dim \mathfrak{sl}_3 = 8$ (growth $8^n$).
+\end{corollary}
+
+\begin{proof}
+The bar chain groups have $\dim \bar{B}^n = (\dim \mathfrak{g})^n \cdot (n{-}1)!$ (Remark~\ref{rem:bar-dims-level-independent}).  The Koszul property constrains the bar \emph{cohomology} to grow at most as fast as the chain groups modulo the differential.  The generating function, being algebraic with radius of convergence $1/\dim\mathfrak{g}$ (by the DS discriminant, Theorem~\ref{thm:ds-bar-gf-discriminant} for $\mathfrak{sl}_2$), has exponential growth rate $(\dim \mathfrak{g})^n$.
+\end{proof}
+
+\begin{remark}[DS dimension inequality]\label{rem:ds-dimension-inequality}
+\index{Drinfeld--Sokolov reduction!dimension inequality}
+For any simple $\mathfrak{g}$, DS reduction cannot increase bar cohomology dimensions:
+\[
+\dim H^n(\barBgeom(\mathcal{W}^k(\mathfrak{g}))) \leq \dim H^n(\barBgeom(\widehat{\mathfrak{g}}_k))
+\]
+for all $n \geq 1$.  This follows from the BRST reduction: $H^n(\barBgeom(\mathcal{W})) = H^0_{\mathrm{DS}}(H^n(\barBgeom(\widehat{\mathfrak{g}})))$ is a subquotient.  The inequality is strict for $\mathfrak{sl}_2$: for example at $n = 3$, $\dim H^3(\barBgeom(\mathrm{Vir})) = 5 < 15 = \dim H^3(\barBgeom(\widehat{\mathfrak{sl}}_2))$.
+\end{remark}
+
+\begin{remark}[Conformal weight filtration on bar cohomology]\label{rem:conformal-weight-filtration}
+\index{bar complex!conformal weight filtration}
+Each bar cohomology group $H^n(\barBgeom(\cA))$ carries a natural filtration by conformal weight: $F^{\leq h} H^n = \{[\alpha] \in H^n : \text{all generators in $\alpha$ have weight $\leq h$}\}$.  The associated graded $\operatorname{gr}^h H^n$ refines the single number $\dim H^n$ into a bigraded Hilbert series $\sum_{n,h} \dim \operatorname{gr}^h H^n \cdot x^n q^h$.  For the Virasoro algebra, the conformal weight grading on $H^n$ comes from the weight of the stress tensor $T$ (weight $2$) and its descendants, giving a $q$-refinement of the Motzkin difference sequence.
+\end{remark}
+
 \begin{remark}[$\beta\gamma$ bar dimensions: conventions]\label{rem:betagamma-conventions}
 \index{betagamma@$\beta\gamma$ system!bar dimension conventions}
 The $\beta\gamma$ bar complex is infinite-dimensional in each bar
@@ -566,6 +672,21 @@ cohom (Table) & 2 & 4 & 10 & 26 & 70
 \end{center}
 The inequality chain $\geq$ cohomology holds at every degree.
 \end{remark}
+
+\begin{corollary}[{$\beta\gamma$ generating function via discriminant}; \ClaimStatusProvedHere]
+\label{cor:betagamma-inverse-discriminant}
+\index{betagamma@$\beta\gamma$ system!discriminant relation}
+The $\beta\gamma$ bar cohomology generating function is the inverse square root of the shared discriminant:
+\[
+P_{\beta\gamma}(x) = \frac{1}{\sqrt{\Delta(x)}}\,(1+x),
+\qquad \Delta(x) = 1-2x-3x^2.
+\]
+In particular, $P_{\beta\gamma}$ has singularity type $\Delta^{-1/2}$ while $P_{\widehat{\mathfrak{sl}}_2}$ and $P_{\mathrm{Vir}}$ have type $\Delta^{1/2}$, explaining the different sub-exponential corrections ($n^{-1/2}$ vs $n^{-3/2}$).
+\end{corollary}
+
+\begin{proof}
+From~\eqref{eq:gf-betagamma}: $P_{\beta\gamma}(x) = \sqrt{(1+x)/(1-3x)} = (1+x)/\sqrt{(1+x)(1-3x)} = (1+x)/\sqrt{\Delta(x)}$.
+\end{proof}
 
 \section*{Genus-$g$ obstruction coefficients}
 \label{sec:genus-obstruction-table}

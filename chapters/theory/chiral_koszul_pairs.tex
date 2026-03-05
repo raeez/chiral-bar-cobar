@@ -1956,6 +1956,40 @@ with $\mu(F_i \otimes F_j) \subset F_{i+j}$ and $\mathcal{A} = \varprojlim \math
 A curved $A_\infty$ structure has operations $m_k$ for $k \geq 0$ with curvature $m_0 \in F_{\geq 1}\mathcal{A}[2]$ satisfying the Maurer--Cartan equation.
 \end{definition}
 
+\begin{proposition}[Uniqueness of the Feigin--Frenkel involution; \ClaimStatusProvedHere]
+\label{prop:ff-involution-uniqueness}
+\index{Feigin--Frenkel involution!uniqueness}
+Let $\mathfrak{g}$ be a finite-dimensional simple Lie algebra and
+consider the family of affine Kac--Moody algebras
+$\{\widehat{\mathfrak{g}}_k\}_{k \in \bC}$.  The Feigin--Frenkel
+involution $\iota_{\mathrm{FF}}: k \mapsto -k - 2h^\vee$ is the
+\emph{unique} involution $\iota$ of the level parameter satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\iota$ is an affine-linear involution: $\iota(k) = ak + b$
+   with $\iota^2 = \mathrm{id}$;
+\item $\iota$ is compatible with Koszul duality:
+   $(\widehat{\mathfrak{g}}_k)^! \simeq \widehat{\mathfrak{g}}_{\iota(k)}$
+   as curved chiral algebras;
+\item $\iota$ fixes the critical level: $\iota(-h^\vee) = -h^\vee$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+An affine-linear involution $\iota(k) = ak + b$ satisfies
+$\iota^2(k) = a^2k + ab + b = k$ for all~$k$, giving $a^2 = 1$
+and $b(a+1) = 0$.  If $a = 1$, then $b = 0$ and $\iota = \mathrm{id}$,
+which contradicts~(ii) (a non-trivial duality).  Therefore $a = -1$
+and $\iota(k) = -k + b$.
+
+Condition~(iii) requires $\iota(-h^\vee) = h^\vee + b = -h^\vee$,
+so $b = -2h^\vee$.  This gives $\iota(k) = -k - 2h^\vee$, the
+Feigin--Frenkel involution.
+
+That this involution indeed satisfies~(ii) is the content of
+Theorem~\ref{thm:universal-kac-moody-koszul}: the bar construction
+at level~$k$ produces the Koszul dual at level $-k-2h^\vee$.
+\end{proof}
+
 \subsection{Curved Koszul duality}
 
 \begin{theorem}[Curved Koszul pairs; \ClaimStatusProvedHere]\label{thm:curved-koszul-pairs}
@@ -2101,6 +2135,58 @@ In the classical (non-chiral) setting, tensor products of Koszul algebras are Ko
 
 In the \emph{chiral} setting, however, the tensor product $\mathcal{A}_1 \otimes \mathcal{A}_2$ as chiral algebras involves the chiral tensor product (not the ordinary tensor product of vector spaces), and the Koszul property is no longer automatic. The bar complex of a chiral tensor product involves configuration spaces with \emph{colored} points, and the interaction between colors introduces additional structure beyond the Arnold relations for each color separately. Whether chiral Koszulity is preserved under chiral tensor products remains open.
 \end{remark}
+
+\begin{proposition}[Koszul dual of tensor products in the quadratic case; \ClaimStatusProvedHere]
+\label{prop:koszul-dual-tensor-product}
+\index{Koszul dual!tensor product}
+Let $(\cA_1, \cA_1^!)$ and $(\cA_2, \cA_2^!)$ be \emph{quadratic} chiral Koszul pairs
+on a smooth curve~$X$.  Then the chiral tensor product $\cA_1 \otimes^{\mathrm{ch}} \cA_2$
+is Koszul, and its Koszul dual is given by:
+\begin{equation}\label{eq:koszul-dual-tensor}
+(\cA_1 \otimes^{\mathrm{ch}} \cA_2)^! \;\cong\; \cA_1^! \otimes^{\mathrm{ch}} \cA_2^!
+\end{equation}
+as chiral coalgebras.  In particular, for Kac--Moody algebras:
+\[
+(\widehat{\mathfrak{g}}_k \otimes^{\mathrm{ch}} \widehat{\mathfrak{h}}_\ell)^!
+\;\cong\;
+\widehat{\mathfrak{g}}_{-k-2h^\vee_{\mathfrak{g}}}
+\otimes^{\mathrm{ch}}
+\widehat{\mathfrak{h}}_{-\ell-2h^\vee_{\mathfrak{h}}}
+\]
+and the level-shifting involution acts component-wise.
+\end{proposition}
+
+\begin{proof}
+For quadratic chiral algebras, the bar complex of the chiral tensor product
+decomposes via the K\"unneth theorem for configuration spaces.  Let
+$\cA_i = \mathrm{Free}^{\mathrm{ch}}(V_i)/(R_i)$ with relation spaces
+$R_i \subset j_*j^*(V_i^{\boxtimes 2})$.  The tensor product
+$\cA_1 \otimes^{\mathrm{ch}} \cA_2 = \mathrm{Free}^{\mathrm{ch}}(V_1 \oplus V_2)/(R_1 \oplus R_2)$
+is quadratic with generators $V_1 \oplus V_2$ and relations
+$R_1 \oplus R_2 \subset j_*j^*((V_1 \oplus V_2)^{\boxtimes 2})$
+(the mixed products $V_1 \boxtimes V_2$ and $V_2 \boxtimes V_1$
+are free---no relations imposed between generators of different colors).
+
+The orthogonal complement is:
+\[
+(R_1 \oplus R_2)^\perp = R_1^\perp \oplus R_2^\perp
+\]
+under the direct sum decomposition of $(V_1^* \oplus V_2^*)^{\otimes 2}$,
+since the mixed components $(V_1^* \otimes V_2^*)$ and $(V_2^* \otimes V_1^*)$
+are entirely contained in $(R_1 \oplus R_2)^\perp$ (they pair to zero with
+the pure-color relations $R_1, R_2$).  Therefore:
+\[
+(\cA_1 \otimes^{\mathrm{ch}} \cA_2)^!
+= \mathrm{Free}^{\mathrm{ch}}(V_1^* \oplus V_2^*)/(R_1^\perp \oplus R_2^\perp)
+= \cA_1^! \otimes^{\mathrm{ch}} \cA_2^!
+\]
+
+The Koszul complex of the tensor product is the tensor product of the
+Koszul complexes (since the cross-relations are trivial), and acyclicity
+of each factor implies acyclicity of the product by the K\"unneth theorem.
+The KM specialization follows from
+Theorem~\ref{thm:universal-kac-moody-koszul} applied to each factor.
+\end{proof}
 
 % ================================================================
 % SECTION 8.8: COMPUTATIONAL METHODS

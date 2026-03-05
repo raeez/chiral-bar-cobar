@@ -298,6 +298,18 @@ Concretely:
 At critical level $k = -h^\vee$, the BRST differential $Q_{\mathrm{DS}}$ on the Wakimoto module is exact: $\widehat{\mathfrak{g}}_{-h^\vee} = H^0(Q_{\mathrm{DS}}, \mathcal{M}_{\mathrm{Wak}})$.  The bar functor commutes with taking BRST cohomology (since $Q_{\mathrm{DS}}$ is a derivation of the vertex algebra structure and hence compatible with the bar differential).  The Wakimoto module is a tensor product of free fields: $\mathcal{M}_{\mathrm{Wak}} = \bigotimes_{\alpha \in \Delta_+} \mathcal{F}_{\beta_\alpha\gamma_\alpha} \otimes \mathcal{H}^{\otimes r}$.  The bar complexes of free fields are known: $\mathcal{H}_k^! \simeq (\mathrm{Sym}^{ch}(V^*), m_0 = -k \cdot \omega)$ is a curved commutative algebra: the CE differential vanishes (since $\mathfrak{h}$ is abelian) but the level~$k$ produces curvature $m_0$ (see Theorem~\ref{thm:heisenberg-koszul-dual-early}) and $(\mathcal{F}_{\beta\gamma})^! \simeq \mathcal{F}_{bc}$ ($\beta\gamma \leftrightarrow bc$ duality).  The K\"unneth theorem for bar complexes (Corollary~\ref{cor:lattice:kunneth}) gives $\bar{B}(\mathcal{M}_{\mathrm{Wak}}) \simeq \bigotimes \bar{B}(\text{free fields})$.  Applying $Q_{\mathrm{DS}}$-cohomology to both sides yields the identification $\bar{B}(\widehat{\mathfrak{g}}_{-h^\vee}) \simeq H^*(Q_{\mathrm{DS}}, \bar{B}(\mathcal{M}_{\mathrm{Wak}}))$.
 \end{proof}
 
+\begin{remark}[Wakimoto triangle: three realizations of Koszul duality]\label{rem:wakimoto-triangle}
+\index{Wakimoto representation!Koszul triangle}
+Theorem~\ref{thm:wakimoto-koszul} yields a commutative triangle of Koszul dualities:
+\begin{center}
+\begin{tikzcd}[row sep=large, column sep=large]
+\widehat{\mathfrak{g}}_{-h^\vee} \arrow[rr, "\text{Koszul}"] \arrow[dr, "\text{Wakimoto}"'] & & \widehat{\mathfrak{g}}_{-h^\vee} \\
+& \beta\gamma^{\otimes |\Delta_+|} \otimes \mathcal{H}^{\otimes r} \arrow[ur, "Q_{\mathrm{DS}}"'] &
+\end{tikzcd}
+\end{center}
+At critical level, the Koszul self-duality of $\widehat{\mathfrak{g}}_{-h^\vee}$ factors through the Wakimoto free field realization: the bar complex of the KM algebra is computed by the bar complex of the free fields modulo BRST cohomology.  Each edge of the triangle corresponds to a different manifestation of duality: algebraic (bar-cobar), analytic (free field realization), and homological (BRST reduction).  The triangle commutes by Theorem~\ref{thm:wakimoto-koszul}.
+\end{remark}
+
 \section{\texorpdfstring{Explicit computation: $\widehat{\mathfrak{sl}}_2$}{Explicit computation: sl-2}}
 
 \subsection{Setup and generators}
@@ -907,6 +919,42 @@ definitions of $\mathcal{O}_k(\widehat{\mathfrak{g}})$ and
 $\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})$).
 \label{def:category-O-affine}
 
+\begin{remark}[BGG reciprocity and the Kazhdan--Lusztig equivalence]\label{rem:bgg-kl-bridge}
+\index{BGG reciprocity!Kazhdan--Lusztig bridge}
+\index{Kazhdan--Lusztig equivalence!BGG reciprocity}
+The Bernstein--Gelfand--Gelfand (BGG) reciprocity for category~$\mathcal{O}_k$
+of the affine Lie algebra $\widehat{\mathfrak{g}}$ states that, for
+Verma modules $M_k(\lambda)$, simple modules $L_k(\lambda)$, and
+projective covers $P_k(\lambda)$:
+\[
+[P_k(\lambda) : M_k(\mu)] = [M_k(\mu) : L_k(\lambda)]
+\]
+(the multiplicity of $M_k(\mu)$ as a Verma flag factor of $P_k(\lambda)$
+equals the composition multiplicity of $L_k(\lambda)$ in $M_k(\mu)$).
+Under the Kazhdan--Lusztig equivalence
+$\Phi_{\mathrm{KL}}: \mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
+\xrightarrow{\sim}
+\mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ at $q = e^{\pi i/(k+h^\vee)}$,
+BGG reciprocity maps to the corresponding reciprocity for quantum group
+representations:
+\[
+[P_q(\lambda) : \Delta_q(\mu)] = [\Delta_q(\mu) : L_q(\lambda)]
+\]
+where $\Delta_q(\mu)$ is the Weyl module and $P_q(\lambda)$ is the
+projective cover in the quantum group setting.
+
+Koszul duality interacts with this correspondence via the
+$q \leftrightarrow q^{-1}$ exchange
+(Theorem~\ref{thm:km-quantum-groups} below): the duality functor on
+$\mathcal{O}_k$ that sends $L_k(\lambda) \mapsto L_{k'}(\lambda^*)$
+(where $k' = -k-2h^\vee$ and $\lambda^* = -w_0(\lambda)$) preserves
+BGG reciprocity and corresponds, under $\Phi_{\mathrm{KL}}$, to the
+quantum group duality $V \mapsto V^*$ composed with
+$q \mapsto q^{-1}$.  This gives a representation-theoretic
+interpretation of the Koszul dual: \emph{the bar-cobar adjunction
+is the algebraic engine behind BGG reciprocity}.
+\end{remark}
+
 \begin{theorem}[Connection to quantum groups; \ClaimStatusProvedHere]\label{thm:km-quantum-groups}
 \index{Kazhdan--Lusztig equivalence}
 \index{quantum group}
@@ -949,10 +997,14 @@ q' = e^{\pi i/(k' + h^\vee)}
 \]
 
 \emph{Step~3.}
-Combining: the Koszul duality functor
-$(\widehat{\mathfrak{g}}_k)^! \simeq \widehat{\mathfrak{g}}_{k'}$
-from Step~1, composed with the Kazhdan--Lusztig equivalences from Step~2
-for levels~$k$ and~$k'$, yields the parameter correspondence
+Combining Steps~1 and~2: the Koszul duality functor
+$(\widehat{\mathfrak{g}}_k)^! \simeq \widehat{\mathfrak{g}}_{k'}$,
+composed with the Kazhdan--Lusztig equivalences
+for levels~$k$ and~$k'$, induces the functor
+$\mathrm{Rep}(U_q(\mathfrak{g})) \to
+\mathrm{Rep}(U_{q^{-1}}(\mathfrak{g}))$
+on quantum group representations,
+yielding the parameter correspondence
 $q \mapsto q^{-1}$.  This is~(iii).  See Remark~\ref{rem:km-categorical-refinement}
 below for the stronger categorical statement.
 \end{proof}
@@ -1624,11 +1676,11 @@ computes the modular S-matrix and fusion rules as follows.
   The fusion ring is $\mathbb{Z}[\mathbb{Z}/2]$.
 \item \emph{Complementarity.}  The Koszul dual at level
   $k' = -k - 2h^\vee = -7/2$ has $c' = 7$ and
-  $c + c' = 6 = 2\dim(\mathfrak{sl}_2)$
-  \textup{(}Theorem~\textup{\ref{thm:central-charge-complementarity})}.
+  $c + c' = 6 = 2\dim(\mathfrak{sl}_2)$;
+  see Theorem~\ref{thm:central-charge-complementarity}.
   Since $k' + h^\vee = -3/2 < 0$, the dual level does not
-  admit an admissible parametrization $k' = -h^\vee + p'/q'$
-  with $p', q' > 0$.  The associated variety
+  admit an admissible parametrization
+  $k' = -h^\vee + p'/q'$ with $p', q' > 0$.  The associated variety
   $X_{L_{-7/2}} = \mathcal{N}$ is the full nilpotent cone,
   so the dual category is logarithmic (not rational).
   Complementarity operates between the rational admissible
@@ -1649,10 +1701,12 @@ $\chi_1(\tau, z) = (\Theta_{1,6} - \Theta_{-5,6})/
 
 \emph{Step~2: Modular transformation.}
 Under $\tau \to -1/\tau$, the theta functions transform as
-$\Theta_{j,m}(-1/\tau, z/\tau)
+\[
+\Theta_{j,m}(-1/\tau, z/\tau)
 = (-i\tau)^{1/2}\, e^{\pi i m z^2/\tau}\,
 (2m)^{-1/2}\sum_{j'=0}^{2m-1}
-e^{-\pi i j j'/m}\, \Theta_{j',m}(\tau, z)$.
+e^{-\pi i j j'/m}\, \Theta_{j',m}(\tau, z).
+\]
 The S-transformation of the characters
 $\chi_i(-1/\tau, z/\tau) = \sum_j S_{ij}\, \chi_j(\tau, z)$
 yields the S-matrix~\eqref{eq:admissible-s-matrix}.

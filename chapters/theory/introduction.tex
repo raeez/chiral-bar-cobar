@@ -465,6 +465,33 @@ factorization structure).  The subscript indexes the factorization level, not
 the little $n$-discs operad of May--Boardman--Vogt.
 \end{remark}
 
+\begin{definition}[Anomaly ratio]\label{def:anomaly-ratio}
+\index{anomaly ratio|textbf}
+For a Koszul chiral algebra $\cA$ with $c(\cA) \neq 0$, the \emph{anomaly ratio} is
+\[
+\sigma(\cA) := \frac{\kappa(\cA)}{c(\cA)}.
+\]
+For $\mathcal{W}$-algebras $\mathcal{W}^k(\mathfrak{g})$, this equals the exponent sum $\sigma(\mathfrak{g}) = \sum_{i=1}^r 1/(m_i+1)$, independent of the level $k$.  For Kac--Moody algebras $\widehat{\mathfrak{g}}_k$, $\sigma = (k+h^\vee)/(2k)$ depends on $k$.  The anomaly ratio measures the fraction of the conformal anomaly that contributes to the bar-complex curvature.
+\end{definition}
+
+\begin{definition}[Koszul conductor]\label{def:koszul-conductor}
+\index{Koszul conductor|textbf}
+For a chiral Koszul pair $(\cA, \cA^!)$, the \emph{Koszul conductor} is
+\[
+K(\cA) := c(\cA) + c(\cA^!).
+\]
+By Theorem~\ref{thm:central-charge-complementarity}, $K$ depends only on the root datum (not on the level $k$) for Kac--Moody and $\mathcal{W}$-algebra families.  The value $K = 2d$ for $\widehat{\mathfrak{g}}_k$ (where $d = \dim\mathfrak{g}$) is the Freudenthal--de Vries dimension; $K = 26$ for the Virasoro algebra is the bosonic string dimension; $K = 100$ for $\mathcal{W}_3$ is the $\mathcal{W}_3$-string dimension.
+\end{definition}
+
+\begin{definition}[Koszul spectrum]\label{def:koszul-spectrum}
+\index{Koszul spectrum|textbf}
+For a Koszul chiral algebra $\cA$, the \emph{Koszul spectrum} is the triple of invariants
+\[
+\operatorname{KSpec}(\cA) := (c(\cA),\; \kappa(\cA),\; \sigma(\cA))
+\]
+where $c$ is the central charge (Virasoro eigenvalue), $\kappa$ is the obstruction coefficient (Theorem~\ref{thm:genus-universality}), and $\sigma = \kappa/c$ is the anomaly ratio (Definition~\ref{def:anomaly-ratio}).  For $\mathcal{W}$-algebras, $\sigma = \sigma(\mathfrak{g}) = \sum 1/(m_i+1)$ is a root-system invariant (Corollary~\ref{cor:anomaly-ratio}).  The Koszul spectrum is additive under tensor products: $\operatorname{KSpec}(\cA \otimes \mathcal{B}) = \operatorname{KSpec}(\cA) + \operatorname{KSpec}(\mathcal{B})$ (for $c$ and $\kappa$; $\sigma$ is not additive).
+\end{definition}
+
 \begin{remark}[Three Koszul duality mechanisms]\label{rem:three-koszul-mechanisms}
 Throughout this monograph, ``Koszul duality'' refers to three distinct but interrelated
 mechanisms.  To prevent confusion, we distinguish them explicitly:
@@ -494,6 +521,19 @@ A referee should be able to determine, for every theorem in this book labeled
 ``Koszul duality,'' which of (i)--(iii) is being invoked.
 The geometric content of this monograph is that all three mechanisms admit
 configuration space realizations via the Fulton--MacPherson compactification.
+\end{remark}
+
+\begin{remark}[Duality diamond]\label{rem:duality-diamond}
+\index{duality diamond}
+The four principal structures of the theory fit into a commutative diamond:
+\begin{center}
+\begin{tikzcd}[row sep=large, column sep=large]
+& \cA \arrow[dl, "\bar{B}"'] \arrow[dr, "(\cdot)^!"] & \\
+\bar{B}(\cA) \arrow[dr, "\text{cogen}"'] & & \cA^! \arrow[dl, "\bar{B}"] \\
+& \bar{B}(\cA^!) &
+\end{tikzcd}
+\end{center}
+The top vertex is the algebra $\cA$; the left path takes the bar complex; the right path takes the Koszul dual; both reach the bottom via $\bar{B}(\cA^!)$, which is quasi-isomorphic to $\cA$ as a coalgebra (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The diamond commutes: the bar of the Koszul dual recovers the original algebra up to quasi-isomorphism.  At each vertex, the Koszul spectrum $\operatorname{KSpec}$ transforms: $c \mapsto K - c$, $\kappa \mapsto \sigma K - \kappa$ (for $\mathcal{W}$-algebras) or $\kappa \mapsto -\kappa$ (for Kac--Moody).
 \end{remark}
 
 

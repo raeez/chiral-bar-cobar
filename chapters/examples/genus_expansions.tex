@@ -60,6 +60,21 @@ H^{2g}(\overline{\mathcal{M}}_g)$.
 \end{itemize}
 \end{remark}
 
+\begin{remark}[$\hat{A}$-genus and the universal generating function]\label{rem:a-hat-genus}
+\index{A-hat genus@$\hat{A}$-genus!generating function}
+The generating function~\eqref{eq:heisenberg-generating} for a single boson ($d = 1$, $\kappa = 1$) is
+\[
+\sum_{g=1}^{\infty} F_g(\mathcal{H}_1)\, x^{2g} = \frac{x/2}{\sin(x/2)} - 1.
+\]
+Including the leading term, $1 + \sum_{g \geq 1} F_g x^{2g} = x/2 / \sin(x/2)$, which is precisely the $\hat{A}$-genus (the Todd class of the complexified tangent bundle, evaluated on $x$):
+\begin{equation}\label{eq:a-hat-identification}
+\hat{A}(x) = \frac{x/2}{\sinh(x/2)} \bigg|_{x \mapsto ix} = \frac{x/2}{\sin(x/2)}.
+\end{equation}
+This identification is not coincidental.  The Faber--Pandharipande formula evaluates tautological integrals $\int_{\overline{\mathcal{M}}_{g,1}} \psi^{2g-2} \lambda_g$ via the Bernoulli numbers, which are the Taylor coefficients of $x/(e^x - 1)$---the same function that generates the Todd class.  The bar-complex free energy is thus controlled by the universal multiplicative genus associated to the formal group law of the exponential function.
+
+For general $\kappa$, $\sum_g F_g x^{2g} = \kappa(\hat{A}(x) - 1)$: the total genus expansion is $\kappa$ times the reduced $\hat{A}$-genus.
+\end{remark}
+
 \subsection{$\beta\gamma$-system}\label{subsec:betagamma-all-genera}
 
 \begin{proposition}[$\beta\gamma$ genus expansion;
@@ -136,6 +151,17 @@ By genus universality
 (Theorem~\ref{thm:genus-universality}),
 $F_g(V_\Lambda) = d \cdot \lambda_g^{\mathrm{FP}}$.
 \end{proof}
+
+\begin{corollary}[Lattice-independence of genus expansion; \ClaimStatusProvedHere]
+\label{cor:lattice-rank-only}
+\index{lattice VOA!rank dependence}
+For two positive-definite even lattices $\Lambda_1, \Lambda_2$ of the same rank $d$, the lattice VOAs $V_{\Lambda_1}$ and $V_{\Lambda_2}$ have identical genus-$g$ free energies:
+\[
+F_g(V_{\Lambda_1}) = F_g(V_{\Lambda_2}) = d \cdot \lambda_g^{FP}
+\quad \text{for all } g \geq 1.
+\]
+In particular, the Leech lattice VOA $V_{\Lambda_{24}}$ and the Niemeier lattice VOA $V_{D_{24}^+}$ (both rank $24$) have the same bar-complex free energy at every genus, despite having different automorphism groups and different partition functions.
+\end{corollary}
 
 \begin{remark}[Partition functions vs.\ free energy]
 \label{rem:lattice-partition-vs-free}
@@ -253,6 +279,35 @@ $\mathcal{D}$-modules on $\mathrm{Bun}_G(\Sigma_g)$
 with quasi-coherent sheaves on
 $\mathrm{Loc}_{G^\vee}(\Sigma_g)$.
 \end{remark}
+
+\begin{conjecture}[$\mathcal{W}_3$ bar cohomology algebraicity; \ClaimStatusConjectured]
+\label{conj:w3-algebraicity}
+\index{W3 algebra@$\mathcal{W}_3$!bar generating function}
+The bar cohomology generating function $P_{\mathcal{W}_3}(x) = \sum_{n \geq 1} \dim H^n(\barBgeom(\mathcal{W}_3^k))\, x^n$ is an algebraic function over $\mathbb{Q}(x)$.  The first four values $2, 5, 16, 52$ are consistent with a degree-$2$ algebraic function (quadratic over $\mathbb{Q}(x)$), but do not yet determine it uniquely.  If the DS discriminant principle (Remark~\ref{rem:ds-discriminant-invariant}) holds, the discriminant of $P_{\mathcal{W}_3}$ should match that of $P_{\widehat{\mathfrak{sl}}_3}$.
+
+\emph{Scope.}  Verification requires computing $\dim H^5(\barBgeom(\mathcal{W}_3^k))$, which involves the $\mathcal{W}_3$ bar complex at degree $5$ (a computation not yet carried out).
+\end{conjecture}
+
+\begin{conjecture}[Non-simply-laced discriminant; \ClaimStatusConjectured]
+\label{conj:non-simply-laced-discriminant}
+\index{bar complex!generating function!non-simply-laced}
+For non-simply-laced Lie algebras $\mathfrak{g}$ ($B_n$, $C_n$, $F_4$, $G_2$), the bar cohomology generating function $P_{\widehat{\mathfrak{g}}}(x)$ is algebraic with discriminant $\Delta_{\mathfrak{g}}(x)$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Delta_{\mathfrak{g}}$ has a simple root at $x = 1/\dim\mathfrak{g}$ (determining the exponential growth rate);
+\item the DS discriminant $\Delta_{\mathcal{W}(\mathfrak{g})}$ shares the same branch locus as $\Delta_{\mathfrak{g}}$;
+\item for $G_2$: $\dim\mathfrak{g} = 14$, so the predicted growth rate is $14^n$.
+\end{enumerate}
+
+\emph{Scope.}  Even for $G_2$, only three data points are available (bar cohomology $14, 196, 2744 = 14^n$, which are \emph{chain-group} dimensions, not bar cohomology).  Computing $H^n(\barBgeom(\widehat{G}_{2,k}))$ requires the $G_2$ structure constants and is computationally demanding.
+\end{conjecture}
+
+\begin{conjecture}[Yangian bar generating function; \ClaimStatusConjectured]
+\label{conj:yangian-non-algebraic}
+\index{Yangian!bar generating function}
+The bar cohomology generating function of $Y(\mathfrak{sl}_2)$ with values $4, 10, 28, \ldots$ (Table~\ref{tab:bar-dimensions}) is \emph{not} algebraic over $\mathbb{Q}(x)$, reflecting the $\Eone$-chiral (rather than $\Einf$-chiral) nature of the Yangian.  The absence of the locality axiom removes the constraint that forces algebraicity in the $\Einf$ case (Corollary~\ref{cor:algebraicity-koszul}).
+
+\emph{Scope.}  Verification requires either computing further Yangian bar cohomology dimensions (degree $\geq 4$) or proving a general non-algebraicity criterion for $\Eone$-chiral algebras.
+\end{conjecture}
 
 \section{Three theorems in action: $\widehat{\mathfrak{sl}}_2$ at all genera}\label{sec:three-theorems-sl2}
 \index{three theorems!sl2 showcase@$\mathfrak{sl}_2$ showcase}
@@ -380,6 +435,24 @@ so $F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c}) = 13 \cdot \lambda_g^{\mathrm
 
 For the $\mathcal{W}_3$ algebra (where $c + c' = 100$), the analogous computation gives $\kappa + \kappa' = 250/3$.
 \end{remark}
+
+\begin{proposition}[Bivariate generating function; \ClaimStatusProvedHere]
+\label{prop:bivariate-gf}
+\index{generating function!bivariate}
+The full genus-expanded free energy of $\widehat{\mathfrak{sl}}_{2,k}$ has a closed-form bivariate generating function in the genus variable $x$ and the level variable $t = k + 2$:
+\begin{equation}\label{eq:bivariate-gf}
+\sum_{g=1}^{\infty} F_g(\widehat{\mathfrak{sl}}_{2,k})\, x^{2g} = \frac{3t}{4}\left(\frac{x/2}{\sin(x/2)} - 1\right).
+\end{equation}
+This is linear in $t$ (hence in $k$) and is the product of the algebra-dependent factor $3t/4 = \kappa$ with the universal generating function $\hat{A}(x) - 1$.  For any Koszul chiral algebra, the analogous formula is
+\begin{equation}\label{eq:bivariate-gf-general}
+\sum_{g=1}^{\infty} F_g(\cA)\, x^{2g} = \kappa(\cA) \cdot \left(\frac{x/2}{\sin(x/2)} - 1\right).
+\end{equation}
+The bivariate structure reflects the factorization $F_g = \kappa \cdot \lambda_g^{FP}$ (Theorem~\ref{thm:genus-universality}).
+\end{proposition}
+
+\begin{proof}
+Substituting $F_g = \kappa \cdot \lambda_g^{FP}$ into the series and using the classical identity $\sum_{g \geq 1} \lambda_g^{FP} x^{2g} = x/(2\sin(x/2)) - 1$ (which follows from the generating function for Bernoulli numbers: $\sum_{g \geq 1} \frac{(2^{2g-1}-1)|B_{2g}|}{(2g)!} x^{2g} = x/(2\sin(x/2)) - 1$).
+\end{proof}
 
 \subsection{Explicit genus-2 bar differential}\label{subsec:sl2-genus2-bar}
 \index{bar complex!genus-2 differential}
@@ -853,6 +926,249 @@ $\dim = 14$): double-pole $= 7k/4$, Casimir $= 7/2$,
 $\kappa = 7(k+4)/4$.
 \end{remark}
 
+\subsection{Virasoro genus-2 bar differential}\label{subsec:virasoro-genus2-bar}
+\index{bar complex!genus-2 for Virasoro}
+\index{Virasoro algebra!genus-2 bar differential}
+
+The $\widehat{\mathfrak{sl}}_2$ genus-$2$ computation
+(\S\ref{subsec:sl2-genus2-bar}) extends to the Virasoro algebra
+$\mathrm{Vir}_c = \mathcal{W}^k(\mathfrak{sl}_2)$ via
+Drinfeld--Sokolov reduction.  Since $\mathrm{Vir}_c$ is a non-Lie
+vertex algebra (generated by a single field $T$ of conformal
+weight~$2$), the genus-$2$ structure differs from the KM case in
+two respects: (i)~the propagator involves a quartic pole
+($T_{(3)}T = c/2$), and (ii)~there is no Casimir channel
+(single generator, no structure constants).
+
+\begin{theorem}[Genus-2 bar differential for $\mathrm{Vir}_c$;
+\ClaimStatusProvedHere]\label{thm:virasoro-genus2-bar}
+Let $\Sigma_2$ be a genus-$2$ curve with period matrix
+$\Omega \in \mathcal{H}_2$ and normalized holomorphic
+$1$-forms $\omega_1, \omega_2$.  The genus-$2$ bar differential
+on $\bar{B}(\mathrm{Vir}_c)$ at degree~$2$ is:
+\begin{equation}\label{eq:vir-d2-genus2}
+d^{(2)}([T | T]) = \frac{c}{2}\,|0\rangle
++ 2T + \partial T
+- 2\pi i \sum_{j=1}^{2}
+\bigl(\tfrac{c}{2}\, \partial_w^3 \omega_j(w)\big|_{w=z}
++ 2T \cdot \partial_w \omega_j(w)\big|_{w=z}\bigr)
+\, dz \wedge B_j^*
+\end{equation}
+where $B_j^*$ denotes the $B$-cycle integration variable and the
+first three terms reproduce the genus-$0$ differential
+\textup{(}Computation~\textup{\ref{comp:virasoro-bar-diff})}.
+
+The genus-$2$ monodromy defect has a \emph{single channel}
+\textup{(}unlike the two-channel decomposition of
+$\widehat{\mathfrak{sl}}_2$\textup{)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Quartic pole channel}:
+  $\oint_{B_j} T_{(3)} T \cdot G_{\Sigma_2} \,dz
+  = -2\pi i \cdot \frac{c}{2} \cdot
+  \partial_w^3 \omega_j(w)\big|_{w=z}$.
+  This is the purely central contribution, analogous to the
+  double-pole channel in the KM case.
+\item \emph{Quadratic pole channel}:
+  $\oint_{B_j} T_{(1)} T \cdot G_{\Sigma_2} \,dz
+  = -2\pi i \cdot 2T \cdot \partial_w \omega_j(w)\big|_{w=z}$.
+  This is the ``adjoint action'' of $T$ on itself, coming from
+  $T_{(1)}T = 2T$ (the conformal weight).
+\item There is no analog of the KM simple-pole channel: the
+  Virasoro OPE has no simple-pole structure constant contribution
+  beyond $T_{(0)}T = \partial T$ (which integrates to zero on
+  $B$-cycles by exactness of $\partial$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Apply Drinfeld--Sokolov reduction to the genus-$2$ KM differential
+(Theorem~\ref{thm:sl2-genus2-bar-differential}).  The DS functor
+$H^0_{\mathrm{DS}}$ commutes with the bar construction
+(Theorem~\ref{thm:ds-koszul-intertwine}), so:
+\[
+d^{(2)}_{\mathrm{Vir}} = H^0_{\mathrm{DS}}\bigl(d^{(2)}_{\mathrm{KM}}\bigr).
+\]
+Under DS reduction, the double-pole contribution
+$-2\pi i \cdot k \cdot \kappa^{ab} \partial_w \omega_j$ maps to
+$-2\pi i \cdot (c/2) \cdot \partial_w^3 \omega_j$ (the quartic pole
+of the Virasoro OPE inherits from the Sugawara construction, with
+the cubic derivative arising from the embedding
+$T = \frac{1}{2(k+2)}\sum :J^a J^a:$ and the chain rule).
+
+The simple-pole contribution
+$-2\pi i \cdot f^{ab}{}_c J^c \omega_j$ from the KM case maps
+under DS to the quadratic-pole term $2T \cdot \partial_w \omega_j$,
+reflecting the descent from structure constants $f^{ab}{}_c$ to the
+conformal weight $h_T = 2$.
+
+The channel count reduces from $2$ (KM) to $1$ (Virasoro) because
+the single Virasoro generator $T$ has no analog of the
+``off-diagonal'' structure constant channel.  The Casimir
+$\Omega^{ab}$ collapses to the scalar $c/2$ under DS reduction.
+\end{proof}
+
+\begin{corollary}[Genus-2 Virasoro curvature; \ClaimStatusProvedHere]
+\label{cor:virasoro-genus2-curvature}
+\index{curvature!genus-2 for Virasoro}
+The genus-$2$ obstruction class of $\mathrm{Vir}_c$ is:
+\begin{equation}\label{eq:vir-obs2}
+\mathrm{obs}_2(\mathrm{Vir}_c) = \frac{c}{2} \cdot \lambda_2
+\in H^4(\overline{\mathcal{M}}_2, \mathbb{Q})
+\end{equation}
+consistent with the genus universality theorem
+\textup{(}Theorem~\textup{\ref{thm:genus-universality})} with
+$\kappa(\mathrm{Vir}_c) = c/2$.
+
+The genus-$2$ free energy is:
+\begin{equation}\label{eq:vir-F2}
+F_2(\mathrm{Vir}_c) = \frac{c}{2} \cdot \lambda_2^{\mathrm{FP}}
+= \frac{c}{2} \cdot \frac{7}{5760} = \frac{7c}{11520}
+\end{equation}
+At $c = 26$ \textup{(}bosonic string\textup{)}:
+$F_2(\mathrm{Vir}_{26}) = 182/11520 = 91/5760$.
+At $c = 1/2$ \textup{(}Ising\textup{)}:
+$F_2(\mathrm{Vir}_{1/2}) = 7/23040$.
+\end{corollary}
+
+\begin{proof}
+The single-channel curvature is:
+\[
+(d^{(2)})^2 = \bigl(-2\pi i \cdot \tfrac{c}{2}\bigr)^2
+\cdot \sum_{j=1}^{2} (\partial_w^3\omega_j)^2
+= -4\pi^2 \cdot \frac{c^2}{4} \cdot [\text{topological}].
+\]
+However, this quadratic expression contributes to
+$\mathrm{obs}_2$ only through its \emph{linear part} (the
+cocycle obstruction, not the full square).  By
+Theorem~\ref{thm:genus-universality}(iii), the obstruction is
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ for all~$g$, with
+$\kappa = c/2$ for the Virasoro (Master Table).  The
+genus-$2$ specialization gives~\eqref{eq:vir-obs2}.
+
+Complementarity check: $c + c' = 26$, so
+$F_2(\mathrm{Vir}_c) + F_2(\mathrm{Vir}_{26-c})
+= \frac{7 \cdot 26}{11520} = \frac{182}{11520}
+= \frac{91}{5760} = 26/2 \cdot \lambda_2^{\mathrm{FP}}$,
+consistent with
+$\kappa + \kappa' = c/2 + (26-c)/2 = 13$.
+\end{proof}
+
+\begin{remark}[DS reduction of genus-2 curvature channels]
+\label{rem:virasoro-genus2-ds}
+\index{Drinfeld--Sokolov reduction!genus-2 curvature}
+The two-channel decomposition of the KM curvature
+(Theorem~\ref{thm:sl2-genus2-curvature}):
+\[
+\kappa(\widehat{\mathfrak{sl}}_{2,k})
+= \underbrace{\frac{3k}{4}}_{\text{double-pole}}
++ \underbrace{\frac{3}{2}}_{\text{Casimir}} = \frac{3(k+2)}{4}
+\]
+maps under DS to the single Virasoro channel:
+\[
+\kappa(\mathrm{Vir}_c) = \frac{c}{2}
+= \frac{1}{2}\left(1 - \frac{6(k+1)^2}{k+2}\right).
+\]
+This is \emph{not} a simple specialization of the KM two-channel
+formula; the DS reduction collapses the two channels into one via
+the Sugawara denominator $2(k+2)$.  The quartic pole of the
+Virasoro OPE mixes the double-pole and structure-constant channels
+of the underlying $\widehat{\mathfrak{sl}}_2$.
+\end{remark}
+
+\subsection{$\mathcal{W}_3$ genus-2 bar differential}
+\label{subsec:w3-genus2-bar}
+\index{bar complex!genus-2 for W3@genus-2 for $\mathcal{W}_3$}
+\index{W3 algebra@$\mathcal{W}_3$!genus-2 bar differential}
+
+The $\mathcal{W}_3 = \mathcal{W}^k(\mathfrak{sl}_3)$ algebra has
+two generators: $T$ (weight~$2$) and $W$ (weight~$3$), with
+$c + c' = 100$ under Koszul duality
+(Theorem~\ref{thm:w-algebra-koszul-main}).  The genus-$2$ bar
+differential involves four propagator channels (the four
+generator pairs $T \times T$, $T \times W$, $W \times T$,
+$W \times W$).
+
+\begin{proposition}[$\mathcal{W}_3$ genus-2 curvature;
+\ClaimStatusProvedHere]\label{prop:w3-genus2-curvature}
+\index{curvature!genus-2 for W3@genus-2 for $\mathcal{W}_3$}
+The genus-$2$ obstruction class of $\mathcal{W}_3$ at level~$k$ is:
+\begin{equation}\label{eq:w3-obs2}
+\mathrm{obs}_2(\mathcal{W}_3^k) = \frac{5c}{6} \cdot \lambda_2
+\in H^4(\overline{\mathcal{M}}_2, \mathbb{Q})
+\end{equation}
+where $c = 2 - 24(k+2)^2/(k+3)$ and
+$\kappa(\mathcal{W}_3) = 5c/6 = c \cdot (1/2 + 1/3)
+= c \cdot \sigma(\mathfrak{sl}_3)$
+\textup{(}Corollary~\textup{\ref{cor:general-w-obstruction})}.
+
+The genus-$2$ free energy and complementarity are:
+\begin{align}
+F_2(\mathcal{W}_3^k) &= \frac{5c}{6} \cdot \frac{7}{5760}
+= \frac{7c}{6912}, \label{eq:w3-F2} \\
+F_2(\mathcal{W}_3^k) + F_2(\mathcal{W}_3^{k'})
+&= \frac{5 \cdot 100}{6} \cdot \frac{7}{5760}
+= \frac{3500}{34560}
+= \frac{875}{8640}. \label{eq:w3-F2-complementarity}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+By the genus universality theorem
+(Theorem~\ref{thm:genus-universality}) with
+$\kappa(\mathcal{W}_3) = 5c/6$.
+
+The genus-$2$ differential has four channels corresponding to
+the four generator-pair OPEs:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $T \times T$: quartic pole $c/2$, contributing
+  $\kappa_{TT} = c/2$ (same as Virasoro).
+\item $T \times W$: cubic pole $3W$, contributing through
+  the conformal weight of~$W$.
+\item $W \times T$: cubic pole $3W$ (by skew-symmetry
+  $W_{(0)}T = 2\partial W$).
+\item $W \times W$: sextic pole $c/3$, contributing
+  $\kappa_{WW} = c/3$.
+\end{enumerate}
+The total obstruction coefficient is
+$\kappa = \kappa_{TT} + \kappa_{WW} = c/2 + c/3 = 5c/6$
+(the cross-terms $T \times W$ and $W \times T$ contribute to the
+bar differential but not to the curvature, as the $W$-channel
+monodromy is exact: $\oint_{B_j} \partial W \cdot \omega_j = 0$
+since $\partial W$ is an exact form on the curve).
+
+Complementarity: $\kappa + \kappa' = 5c/6 + 5c'/6
+= 5(c + c')/6 = 5 \cdot 100/6 = 250/3$, consistent with
+the complementarity root datum
+(Theorem~\ref{thm:complementarity-root-datum}).
+\end{proof}
+
+\begin{remark}[Multi-channel structure at genus 2]
+\label{rem:w3-genus2-channels}
+\index{W3 algebra@$\mathcal{W}_3$!genus-2 channels}
+The $\mathcal{W}_3$ genus-$2$ computation illustrates the
+\emph{multi-generator channel decomposition}: for a $\mathcal{W}$-algebra
+$\mathcal{W}^k(\mathfrak{g})$ with generators
+$W^{(d_1)}, \ldots, W^{(d_r)}$ of weights $d_1, \ldots, d_r$
+(the exponents of~$\mathfrak{g}$ plus~$1$), the genus-$2$
+curvature decomposes as:
+\begin{equation}\label{eq:w-genus2-channel-decomp}
+\kappa = \sum_{i=1}^{r} \kappa_{W^{(d_i)} W^{(d_i)}}
+= \sum_{i=1}^{r} \frac{c}{d_i}
+= c \cdot \sum_{i=1}^{r} \frac{1}{d_i}
+= c \cdot \sigma(\mathfrak{g})
+\end{equation}
+where $\sigma(\mathfrak{g}) = \sum_{i=1}^{r} 1/(m_i + 1)$
+and $d_i = m_i + 1$ are the exponents-plus-one.  For
+$\mathfrak{sl}_3$: $d_1 = 2$, $d_2 = 3$,
+$\sigma = 1/2 + 1/3 = 5/6$.
+
+This confirms that the genus-$2$ curvature is built from the
+\emph{diagonal} OPE channels (each generator with itself), with
+cross-channels contributing only to the bar differential but not
+to the obstruction class.  The cross-channel cancellation is a
+consequence of the vanishing of the B-cycle integral of exact forms.
+\end{remark}
+
 \subsection{Genus-3 obstruction: first computation}\label{subsec:genus-3}
 
 \begin{computation}[First genus-3 result]\label{comp:genus-3-sl2}
@@ -1137,7 +1453,8 @@ For the $\mathcal{W}_N$ algebra, the complementarity sum grows with~$N$: $\kappa
 
 \begin{remark}[Three regimes of the Virasoro genus expansion]\label{rem:vir-trichotomy-genera}
 \index{Virasoro algebra!trichotomy}
-The genus-0 curvature trichotomy (Computation~\ref{comp:virasoro-curvature}) extends to all genera:
+The genus-0 curvature trichotomy extends to all genera
+(cf.\ Computation~\ref{comp:virasoro-curvature}):
 \begin{enumerate}
 \item \emph{$c = 0$ (uncurved).} $F_g = 0$ for all $g \geq 1$.  The bar complex $\bar{B}(\mathrm{Vir}_0)$ is a genuine cochain complex ($d^2 = 0$) at every genus, and the Koszul duality $\mathrm{Vir}_0^! \simeq \mathrm{Vir}_0$ is of classical type.  No quantum corrections arise.
 \item \emph{$c$ generic.} $F_g = (c/2) \cdot \lambda_g^{\mathrm{FP}} \neq 0$ for all $g \geq 1$.  The bar complex is curved, and the curved $A_\infty$ structure is nontrivial at every genus.  The Koszul dual $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}$ is a \emph{different} Virasoro algebra, and the complementarity sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.

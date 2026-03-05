@@ -1006,6 +1006,174 @@ The Fulton--MacPherson compactification $\overline{C}_n(\Sigma_g)$ (for a \emph{
 $$\overline{C}_n(\Sigma_g) = \coprod_{S \in \mathrm{Nest}(\{1,\ldots,n\})} C_S$$
 where $\mathrm{Nest}(\{1,\ldots,n\})$ denotes the poset of nested collections of subsets of $\{1,\ldots,n\}$, recording which groups of points collide simultaneously. (By contrast, the strata of $\overline{\mathcal{M}}_{g,n}$ are indexed by stable graphs $\mathcal{G}_{g,n}$, which involve \emph{curve} degenerations.)
 
+\section{Logarithmic FM compactification on punctured curves}
+\label{sec:log-fm-punctured}
+\index{Fulton--MacPherson compactification!logarithmic}
+\index{punctured curve!configuration space}
+
+When the base curve $X$ carries marked points $p_1, \ldots, p_r$
+(``punctures''), the configuration space $C_m(X \setminus \{p_1,
+\ldots, p_r\})$ of $m$ points on the complement is no longer an
+open subset of $X^m$ (it is open in $(X \setminus D)^m$ where
+$D = \{p_1, \ldots, p_r\}$).  The FM compactification must be
+modified to account for the \emph{two} types of collisions:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{FM collisions}: distinct moving points
+  $z_i \to z_j$, encoded by the usual FM blow-ups;
+\item \emph{Puncture collisions}: moving points $z_i \to p_\alpha$
+  approaching a puncture, encoded by logarithmic blow-ups along
+  the divisor $D$.
+\end{enumerate}
+
+\begin{definition}[Logarithmic FM compactification \cite{Mok25}]
+\label{def:log-fm-compactification}
+\index{logarithmic FM compactification|textbf}
+Let $X$ be a smooth projective curve, $D = p_1 + \cdots + p_r$ an
+effective divisor.  The \emph{logarithmic Fulton--MacPherson
+compactification} $\mathrm{FM}_m(X \mathbin{|} D)$ is a smooth
+compactification of $C_m(X \setminus D)$ with the following
+properties:
+\begin{enumerate}
+\item There is an open embedding
+  $j\colon C_m(X \setminus D) \hookrightarrow
+  \mathrm{FM}_m(X \mathbin{|} D)$
+  with dense image.
+\item The boundary $\partial \mathrm{FM}_m(X \mathbin{|} D)
+  = \mathrm{FM}_m(X \mathbin{|} D) \setminus C_m(X \setminus D)$
+  is a normal-crossings divisor with two types of irreducible
+  components:
+  \begin{itemize}
+  \item $D_{ij}^{\mathrm{FM}}$ ($1 \leq i < j \leq m$):
+    the locus where $z_i = z_j$ (as in the standard FM space);
+  \item $D_{i,\alpha}^{\mathrm{punc}}$ ($1 \leq i \leq m$,
+    $1 \leq \alpha \leq r$): the locus where $z_i = p_\alpha$.
+  \end{itemize}
+\item The strata of $\mathrm{FM}_m(X \mathbin{|} D)$ are indexed
+  by \emph{marked nestings}: pairs $(S, \varphi)$ where
+  $S \in \mathrm{Nest}(\{1, \ldots, m\})$ records FM collisions
+  and $\varphi\colon \{1, \ldots, m\} \to \{0, 1, \ldots, r\}$
+  records puncture attachments ($\varphi(i) = \alpha$ means
+  $z_i \to p_\alpha$; $\varphi(i) = 0$ means $z_i$ remains generic).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Bar complex on punctured curves; \ClaimStatusProvedHere]
+\label{thm:bar-punctured-curve}
+\index{bar complex!punctured curve}
+Let $\cA$ be a chiral algebra on $X$, and let
+$\mathcal{M}_1, \ldots, \mathcal{M}_r$ be $\cA$-modules
+supported at $p_1, \ldots, p_r$.  The bar complex with module
+insertions is:
+\begin{equation}\label{eq:bar-punctured}
+\bar{B}_n(\cA;\, \mathcal{M}_1, \ldots, \mathcal{M}_r;\, X)
+= \Gamma\bigl(\mathrm{FM}_{n+r}(X \mathbin{|} D),\;
+  j_* j^*(\cA^{\boxtimes n}
+  \boxtimes \mathcal{M}_1 \boxtimes \cdots
+  \boxtimes \mathcal{M}_r)
+  \otimes \Omega^n_{\log}\bigr)
+\end{equation}
+where $\Omega^n_{\log} = \Omega^n_{\mathrm{FM}_{n+r}(X|D)}
+(\log \partial)$ is the sheaf of logarithmic $n$-forms
+on $\mathrm{FM}_{n+r}(X \mathbin{|} D)$.
+The differential
+$d = d_{\mathrm{FM}} + d_{\mathrm{punc}}$
+has two components:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $d_{\mathrm{FM}}$: residues along FM collision divisors
+  $D_{ij}^{\mathrm{FM}}$, extracting the $\cA$-algebra OPE
+  \textup{(}exactly as in the unpunctured
+  case, Theorem~\textup{\ref{thm:bar-nilpotency-complete})};
+\item $d_{\mathrm{punc}}$: residues along puncture divisors
+  $D_{i,\alpha}^{\mathrm{punc}}$, extracting the
+  $\cA$-module action $\rho_\alpha\colon \cA \boxtimes
+  \mathcal{M}_\alpha \to \Delta_* \mathcal{M}_\alpha$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The key identity is $d^2 = 0$, which follows from
+three types of double-residue cancellations:
+\begin{enumerate}
+\item \emph{FM-FM:} $\operatorname{Res}_{D_{ij}}
+  \operatorname{Res}_{D_{jk}}$ terms cancel by the Arnold
+  relation $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge
+  \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$, exactly as
+  in the unpunctured case
+  (Theorem~\ref{thm:bar-nilpotency-complete}).
+\item \emph{FM-puncture:} $\operatorname{Res}_{D_{ij}}
+  \operatorname{Res}_{D_{j,\alpha}}$ involves the OPE
+  $\cA(z_i) \cdot \cA(z_j)$ followed by the module action
+  $\rho_\alpha$.  The cancellation uses the module axiom:
+  the $\cA$-module action is associative, so
+  $\rho_\alpha \circ (m \boxtimes \mathrm{id}_{\mathcal{M}})
+  = \rho_\alpha \circ (\mathrm{id}_\cA \boxtimes \rho_\alpha)$
+  on the triple-collision locus $z_i = z_j = p_\alpha$.
+\item \emph{Puncture-puncture:} For $\alpha \neq \beta$,
+  $D_{i,\alpha}^{\mathrm{punc}} \cap D_{j,\beta}^{\mathrm{punc}}$
+  is empty when $i = j$ (a single point cannot approach two
+  distinct punctures), so these terms vanish.  For $i \neq j$,
+  the normal-crossings property gives
+  $\operatorname{Res}_{D_{i,\alpha}}
+  \operatorname{Res}_{D_{j,\beta}}
+  = \operatorname{Res}_{D_{j,\beta}}
+  \operatorname{Res}_{D_{i,\alpha}}$
+  (residues at disjoint divisors commute).
+\end{enumerate}
+Each case contributes zero to $d^2$, establishing
+$d^2 = 0$.
+\end{proof}
+
+\begin{corollary}[Conformal blocks from punctured bar complex;
+\ClaimStatusProvedHere]
+\label{cor:conformal-blocks-punctured-bar}
+The zeroth cohomology of the punctured bar complex recovers
+the space of conformal blocks:
+\[
+H^0(\bar{B}_\bullet(\cA;\, \vec{\mathcal{M}};\, X))
+\;\cong\;
+\mathbb{V}(\cA;\, \mathcal{M}_1, \ldots, \mathcal{M}_r;\, X).
+\]
+\end{corollary}
+
+\begin{proof}
+The zeroth bar cohomology computes the space of coinvariants:
+elements of $\mathcal{M}_1 \otimes \cdots \otimes \mathcal{M}_r$
+modulo the $\cA(X \setminus \{p_1, \ldots, p_r\})$-action.
+By definition, this is $\mathbb{V}(\cA;\, \vec{\mathcal{M}};\, X)$
+(Definition~\ref{def:conformal-blocks}).
+The identification follows from the quasi-isomorphism
+of the bar complex with the Čech resolution of the
+coinvariant functor, applied to the Weiss cover
+of $X \setminus D$ subordinate to the FM stratification.
+\end{proof}
+
+\begin{example}[Kac--Moody modules on $\mathbb{P}^1$ with
+$3$ punctures]\label{ex:log-fm-km}
+For $\cA = \widehat{\mathfrak{g}}_k$ on $\mathbb{P}^1$ with
+simple modules $L(\Lambda_i)$ at $0, 1, \infty$:
+\[
+\bar{B}_1(\widehat{\mathfrak{g}}_k;\,
+L(\Lambda_1), L(\Lambda_2), L(\Lambda_3);\, \mathbb{P}^1)
+= \Gamma(\mathrm{FM}_4(\mathbb{P}^1 \mathbin{|} \{0,1,\infty\}),\;
+\mathfrak{g} \boxtimes L(\Lambda_1) \boxtimes L(\Lambda_2)
+\boxtimes L(\Lambda_3) \otimes \Omega^1_{\log})
+\]
+The bar differential extracts:
+\begin{itemize}
+\item $d_{\mathrm{FM}}$: the algebra OPE
+  $J^a(z_1) J^b(z_2) \sim k\delta^{ab}/(z_1 - z_2)^2
+  + f^{ab}{}_c J^c/(z_1 - z_2)$;
+\item $d_{\mathrm{punc}}$: the module action
+  $J^a(z) \cdot v_\alpha
+  = \operatorname{Res}_{z=p_\alpha}
+  [J^a(z) \cdot v_\alpha \, dz/(z - p_\alpha)]$
+  for $v_\alpha \in L(\Lambda_\alpha)$.
+\end{itemize}
+The cohomology $H^0$ computes the fusion coefficient
+$N_{\Lambda_1 \Lambda_2}^{\Lambda_3^*}$
+\textup{(}Theorem~\textup{\ref{thm:verlinde-bar})}.
+\end{example}
+
 \section{Period coordinates at higher genus}
 
 At genus $g$, we have additional coordinates from:
