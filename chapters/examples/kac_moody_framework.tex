@@ -9,10 +9,22 @@ The representation theory of the affine Kac--Moody algebra $\widehat{\mathfrak{g
 
 \begin{remark}[Level-shifting Koszul duality]
 The affine Kac--Moody chiral algebra $\widehat{\mathfrak{g}}_k$ at level $k$ and its Koszul dual are related by:
-\begin{equation}\label{eq:kac-moody-koszul-basic}
-\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k) \simeq \mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee}), \qquad \Omega\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)^\vee\bigr) \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}
-\end{equation}
-The bar construction gives the curved chiral Chevalley--Eilenberg coalgebra $\mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee}) = (\mathrm{Sym}^c(\mathfrak{g}^*[-1]),\, d_{\mathrm{CE}},\, m_0)$ with curvature $m_0$ encoding the shifted level; applying cobar to its dual recovers the vertex algebra $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorem~\ref{thm:universal-kac-moody-koszul}).  This is \emph{curved} Koszul duality when $k \neq -h^\vee$.  At the critical level $k = -h^\vee$, the curvature vanishes.
+\begin{align}\label{eq:kac-moody-koszul-basic}
+\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k) &\simeq \mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee}), \nonumber\\
+\Omega\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)^\vee\bigr) &\simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}
+\end{align}
+The bar construction gives the curved chiral Chevalley--Eilenberg
+coalgebra
+\[
+\mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee})
+= \bigl(\mathrm{Sym}^c(\mathfrak{g}^*[-1]),\, d_{\mathrm{CE}},\, m_0\bigr)
+\]
+with curvature~$m_0$ encoding the shifted level; applying cobar
+to its dual recovers the vertex algebra
+$\widehat{\mathfrak{g}}_{-k-2h^\vee}$
+(Theorem~\ref{thm:universal-kac-moody-koszul}).
+This is \emph{curved} Koszul duality when $k \neq -h^\vee$.
+At the critical level $k = -h^\vee$, the curvature vanishes.
 \end{remark}
 
 \begin{remark}[Physical context]
@@ -480,16 +492,59 @@ This is Theorem~\ref{thm:universal-kac-moody-koszul} applied to $\mathfrak{g} = 
 
 \subsection{Explicit bar complex through degree 3}
 
-\begin{computation}[Bar complex dimensions]\label{comp:sl3-bar-dimensions}
+\begin{computation}[Bar complex chain-group dimensions]\label{comp:sl3-bar-dimensions}
+The chain-group dimensions decompose as
+$\dim(\bar{B}^n) = (\dim\mathfrak{g})^n \cdot (n-1)!$
+(generator factor times Orlik--Solomon form factor;
+see Computation~\ref{comp:sl3-bar}):
 \begin{align}
 \dim(\bar{B}^0) &= 1 \\
-\dim(\bar{B}^1) &= 8 \quad \text{(single current from $\dim\mathfrak{sl}_3 = 8$)} \\
-\dim(\bar{B}^2) &= 8^2 = 64 \quad \text{(ordered pairs of currents at two distinct points)} \\
-\dim(\bar{B}^3) &= 8^3 = 512 \quad \text{(ordered triples of currents at three distinct points)}
+\dim(\bar{B}^1) &= 8 \cdot 1 = 8
+  \quad \text{($8$ currents, $\dim\Omega^0 = 1$)} \\
+\dim(\bar{B}^2) &= 64 \cdot 1 = 64
+  \quad \text{($8^2$ ordered pairs, $\dim\Omega^1 = 1$)} \\
+\dim(\bar{B}^3) &= 512 \cdot 2 = 1024
+  \quad \text{($8^3$ ordered triples, $\dim\Omega^2 = 2$)}
 \end{align}
 \end{computation}
 
 The explicit generators and differentials are computed using the multi-residue calculus on $\overline{C}_n(X)$ for $n \leq 4$.
+
+\begin{remark}[Bar chain groups are level-independent; \ClaimStatusProvedHere]%
+\label{rem:bar-dims-level-independent}
+\index{bar complex!level-independence}
+The dimensions $\dim(\bar{B}^n(\widehat{\mathfrak{g}}_k))$ depend on
+$\mathfrak{g}$ but are \emph{independent of the level~$k$}.  This is
+immediate from the construction: the bar chain groups
+\[
+\bar{B}^n(\widehat{\mathfrak{g}}_k)
+= \Gamma\!\bigl(\overline{C}_{n+1}(X),\;
+  \mathfrak{g}^{\boxtimes(n+1)} \otimes \Omega^n_{\log}\bigr)
+\]
+involve only the Lie algebra $\mathfrak{g}$ (via its generators
+$J^a$, $a = 1, \ldots, \dim\mathfrak{g}$) and the geometry of the
+configuration space $\overline{C}_{n+1}(X)$.  Neither ingredient
+depends on~$k$.  In particular, the chain-group dimension
+is $\dim(\bar{B}^n) = (\dim\mathfrak{g})^n \cdot (n-1)!$,
+the product of the generator factor $(\dim\mathfrak{g})^n$
+(one copy of $\mathfrak{g}$ per configuration point) and
+the form factor $(n-1)! = \dim\Omega^{n-1}(\mathrm{Conf}_n(\mathbb{C}))$
+(top-degree Orlik--Solomon algebra).  For instance,
+$\mathfrak{sl}_2$ gives $3, 9, 54, 486, \ldots$ and
+$\mathfrak{sl}_3$ gives $8, 64, 1024, 24576, \ldots$ regardless of
+level (see Computation~\ref{comp:sl3-bar} for the
+explicit tabulation).
+
+The level enters only through the \emph{bar differential}
+$d\colon \bar{B}^n \to \bar{B}^{n+1}$, which involves the OPE
+residue containing the factor~$k$ in the double-pole coefficient
+$J^a_{(1)}J^b = k\,\delta^{ab}$.  Consequently the bar
+\emph{cohomology} $H^n(\bar{B})$ depends on~$k$, but the chain
+groups do not.  The bar cohomology dimensions
+(Table~\ref{tab:bar-dimensions}) are significantly smaller
+than the chain-group dimensions and exhibit polynomial growth
+for Koszul algebras.
+\end{remark}
 
 \section{\texorpdfstring{General $\widehat{\mathfrak{g}}$: functorial construction}{General g: functorial construction}}
 
@@ -1244,6 +1299,28 @@ expected for all types).  The vertex algebra $L_{k'}(\mathfrak{g})$
 is well-defined but not admissible in the sense of
 Definition~\ref{def:admissible-level}; its representation theory
 is governed by the Koszul dual bar complex.
+\end{proof}
+
+\begin{corollary}[Bar complex finiteness at non-degenerate admissible levels; \ClaimStatusProvedHere]
+\label{cor:bar-admissible-finiteness}
+\index{admissible level!bar finiteness}
+\index{bar complex!finiteness at admissible level}
+At a non-degenerate admissible level $k = -h^\vee + p/q$, the bar complex of $L_k(\mathfrak{g})$ has the following finiteness properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Each bar degree $\bar{B}^n(L_k)$ is a finitely generated module over $\mathbb{C}$.
+\item The spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}(L_k))$ terminates at a finite page $r_0 \leq \dim A(L_k)$, where $A(L_k)$ is the Zhu algebra.
+\item The total cohomology $H^*(\bar{B}(L_k))$ is finite-dimensional in each degree.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:admissible-rep-theory}(ii), $L_k(\mathfrak{g})$ is rational at non-degenerate admissible level, with finitely many simple modules $\{M_1, \ldots, M_N\}$ where $N = |\mathrm{Adm}_k|$.  The Zhu algebra $A(L_k)$ is a finite-dimensional semisimple algebra of dimension $\dim A(L_k) = \sum_{i=1}^N (\dim M_i^{(0)})^2$ (Theorem~\ref{thm:zhu-correspondence}).
+
+For~(i): the Li filtration $F_p L_k$ has $\mathrm{gr}^F L_k$ finite-dimensional in each conformal weight (by $C_2$-cofiniteness, Theorem~\ref{thm:arakawa-rationality}).  The bar complex $\bar{B}^n(L_k) = \Gamma(\overline{C}_n(X), L_k^{\boxtimes n} \otimes \Omega^n_{\log})$ inherits this finiteness: the configuration space $\overline{C}_n(X)$ is a smooth projective variety of finite dimension, and the sheaf $L_k^{\boxtimes n}$ has finite-dimensional fibers in each weight.
+
+For~(ii): Proposition~\ref{prop:bar-admissible}(i) establishes that the spectral sequence degenerates at a finite page bounded by $\dim A(L_k)$.
+
+For~(iii): since the spectral sequence has finitely many pages with finite-dimensional entries, the abutment is finite-dimensional.
 \end{proof}
 
 \begin{example}[$\widehat{\mathfrak{sl}}_2$ at admissible level

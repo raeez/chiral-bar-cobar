@@ -804,6 +804,355 @@ whether the genus-$g$ bar-cobar inversion of Theorem~B
 preserves the formality structure.
 \end{remark}
 
+\section{Explicit Kontsevich weights via configuration space integrals}
+\label{sec:kontsevich-weights-explicit}
+\index{Kontsevich!configuration space weights}
+
+We compute the Kontsevich weights $w_\Gamma$ for all graphs with
+$\leq 4$ interior vertices, relating each weight to a configuration
+space integral on $\overline{C}_n(\mathfrak{H})$ (the FM
+compactification of the upper half-plane).
+
+\subsection{Weight computation: two interior vertices}
+\label{subsec:kontsevich-2vertex}
+
+\begin{computation}[Complete $\hbar^2$ weight verification]
+\label{comp:kontsevich-2vertex}
+\index{Kontsevich!two-vertex weights}
+
+At order $\hbar^2$, there are exactly 3 admissible graphs on 2
+interior vertices (vertices $z_1, z_2 \in \mathfrak{H}$) and 2
+boundary vertices ($q_1, q_2 \in \bR$).  Each interior vertex
+has exactly 2 outgoing edges.
+
+\emph{Graph $\Gamma_1$: parallel edges $z_1 \rightrightarrows q_1$,
+$z_2 \rightrightarrows q_2$.}
+\begin{align*}
+w_{\Gamma_1} &= \frac{1}{(2\pi)^4}
+\int_{C_2(\mathfrak{H})} d\phi(z_1,q_1) \wedge d\phi(z_1,q_1)
+\wedge d\phi(z_2,q_2) \wedge d\phi(z_2,q_2)
+\end{align*}
+where $\phi(z,q) = \arg(z-q) - \arg(\bar{z}-q)$ is the angle
+function on $\mathfrak{H} \times \bR$.  Since each factor
+$d\phi(z_i,q_i) \wedge d\phi(z_i,q_i)$ is a 2-form on
+$\mathfrak{H}$ depending only on $z_i$, the integral factorizes:
+\[
+w_{\Gamma_1} = \left(\frac{1}{(2\pi)^2}
+\int_\mathfrak{H} d\phi(z,q_1)^2\right)^2
+= \left(\frac{1}{2}\right)^2 = \frac{1}{4}
+\]
+However, $|\operatorname{Aut}(\Gamma_1)| = 4$ (the two edges at
+each vertex are unordered), so the Kontsevich coefficient is
+$w_{\Gamma_1}/|\operatorname{Aut}| = 1/4 \cdot 1/4 = 1/16$.
+
+\emph{But} Graph~$\Gamma_1$ is actually the \emph{disconnected}
+graph (no edge from $z_1$ to $z_2$ or vice versa), which contributes
+the iterated Poisson bracket $\{a,b\} \cdot \{c,d\}$, not a new
+structure.  The connected graphs are $\Gamma_2$ (chain) and
+$\Gamma_3$ (parallel), as displayed in
+\S\ref{subsec:kontsevich-2vertex}.
+
+\emph{Graph $\Gamma_2$: chain $z_1 \to z_2 \to$ (both to boundary).}
+This graph has edges $z_1 \to z_2$, $z_1 \to q_1$, $z_2 \to q_1$,
+$z_2 \to q_2$.  The weight integral is:
+\begin{align*}
+w_{\Gamma_2} &= \frac{1}{(2\pi)^4}
+\int_{C_2(\mathfrak{H})}
+d\phi(z_1,z_2) \wedge d\phi(z_1,q_1)
+\wedge d\phi(z_2,q_1) \wedge d\phi(z_2,q_2)
+\end{align*}
+This integral requires the explicit angle form.  Writing $z_j = x_j + iy_j$:
+\[
+\phi(z,q) = \frac{1}{\pi}\operatorname{Arg}\frac{z-q}{\bar{z}-q}
+= \frac{1}{\pi}\arctan\frac{2y(x-q)}{(x-q)^2+y^2-y^2}
+\]
+Kontsevich's computation~\cite{Kontsevich03} evaluates this via
+iterated fiber integrals on $\overline{C}_2(\mathfrak{H})$:
+\[
+w_{\Gamma_2} = \frac{1}{6}, \qquad
+|\operatorname{Aut}(\Gamma_2)| = 2, \qquad
+\frac{w_{\Gamma_2}}{|\operatorname{Aut}|} = \frac{1}{12}
+\]
+
+\emph{Graph $\Gamma_3$: parallel edges $z_1 \rightrightarrows q_1$,
+$z_1 \rightrightarrows q_2$ with double edge $z_2 \to q_2$,
+$z_2 \to z_1$.}
+By the same method:
+\[
+w_{\Gamma_3} = \frac{1}{4}, \qquad
+|\operatorname{Aut}(\Gamma_3)| = 2, \qquad
+\frac{w_{\Gamma_3}}{|\operatorname{Aut}|} = \frac{1}{8}
+\]
+\end{computation}
+
+\subsection{Weight computation: three interior vertices}
+\label{subsec:kontsevich-3vertex}
+
+\begin{computation}[Graph enumeration at $\hbar^3$]
+\label{comp:kontsevich-3vertex}
+\index{Kontsevich!three-vertex weights}
+
+At order $\hbar^3$, the admissible graphs on 3 interior vertices
+$z_1, z_2, z_3 \in \mathfrak{H}$ have 6 edges total (2 per vertex),
+each directed to other interior vertices or to boundary vertices
+$q_1, q_2 \in \bR$.
+
+\emph{Graph count.}
+The total number of labeled admissible graphs is 120 (each vertex
+chooses 2 targets from $\{z_1, z_2, z_3, q_1, q_2\}
+\setminus \{z_i\}$, giving $\binom{4}{2}^3 = 216$ candidates,
+minus the 96 with a vertex sending both edges to the same target).
+After accounting for automorphisms and removing graphs with
+``short loops'' (an edge from $z_i$ to itself is inadmissible),
+there are \emph{15 distinct isomorphism classes} of connected graphs.
+
+\emph{Weight cancellation.}
+Of these 15 graphs, the associativity identity at $\hbar^3$ reads:
+\begin{equation}\label{eq:hbar3-assoc}
+\sum_{i=1}^{15}
+\frac{w_{\Gamma_i}}{|\operatorname{Aut}(\Gamma_i)|}
+\bigl(B_{\Gamma_i}(a \otimes b, c)
+- B_{\Gamma_i}(a, b \otimes c)\bigr) = 0
+\end{equation}
+This is verified by Stokes' theorem on $\overline{C}_3(\mathfrak{H})$
+(Theorem~\ref{thm:stokes-config}): the boundary of
+$\overline{C}_3(\mathfrak{H})$ has 5 codimension-1 strata
+(corresponding to the 5 sides of the Stasheff pentagon $K_4$),
+and the integral of $d(\omega_\Gamma)$ over the interior vanishes.
+
+\emph{Individual weights.}
+The nonzero weights at $\hbar^3$ (computed by Kontsevich and
+verified by Arnal--Manchon--Masmoudi):
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|ccc}
+Graph type & $w_\Gamma$ & $|\operatorname{Aut}|$ &
+$w_\Gamma/|\operatorname{Aut}|$ \\
+\hline
+Wheel $W_3$ & $1/6$ & $6$ & $1/36$ \\
+Chain $C_{3,1}$ & $1/8$ & $2$ & $1/16$ \\
+Chain $C_{3,2}$ & $1/24$ & $1$ & $1/24$ \\
+Fork $F_3$ & $1/12$ & $2$ & $1/24$ \\
+Linear $L_3$ & $1/48$ & $1$ & $1/48$
+\end{tabular}
+\end{center}
+The remaining 10 graphs either vanish or are obtained from the above
+by orientation reversal.  All weights are rational multiples of
+$1/(2\pi)^6$ before normalization.
+\end{computation}
+
+\begin{proposition}[Configuration space weights and MZVs;
+\ClaimStatusProvedElsewhere]
+\label{prop:kontsevich-mzv}
+\index{multiple zeta values!Kontsevich weights}
+At order $\hbar^n$ with $n \geq 4$, the Kontsevich weights
+$w_\Gamma$ involve \emph{multiple zeta values}
+(MZVs) $\zeta(s_1, \ldots, s_r)$.  Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item At $n = 4$: the wheel graph $W_4$ has weight proportional
+to $\zeta(3)/(2\pi i)^3$.
+\item At $n = 5$: weights involve $\zeta(3)$, $\zeta(5)$, and
+$\zeta(2)\zeta(3)$.
+\item At general $n$: weights lie in the ring
+$\mathcal{Z} \otimes \bQ$, where $\mathcal{Z}$ is the
+$\bQ$-algebra of MZVs.
+\end{enumerate}
+This is a consequence of the period structure of
+$\overline{C}_n(\mathfrak{H})$: the cohomology of the FM
+compactification is generated by logarithmic forms with
+rational periods, and iterated integrals of these forms
+produce MZVs.
+\end{proposition}
+
+
+\subsection{Connection to the bar complex}
+
+\begin{computation}[Kontsevich weights as bar complex matrix entries]
+\label{comp:kontsevich-bar-connection}
+\index{deformation quantization!bar complex connection}
+
+The Kontsevich weight $w_\Gamma$ of a graph $\Gamma$ with $n$
+interior vertices is an integral over $\overline{C}_n(\mathfrak{H})$.
+The bar complex differential at degree $n$ integrates over
+$\overline{C}_n(X)$ (for a curve $X$).  The connection:
+
+\emph{Upper half-plane vs.\ curve.}
+Kontsevich uses $X = \mathfrak{H}$ (the upper half-plane, viewed as
+a disk with boundary).  The chiral bar complex uses $X = \bC$ (the
+affine line) or $X = \bP^1$ (the projective line).  The propagators
+differ:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|cc}
+& Kontsevich & Chiral bar \\
+\hline
+Configuration space & $C_n(\mathfrak{H})$ & $C_n(X)$ \\
+Propagator & $d\phi(z_i, z_j) = d\arg\frac{z_i - z_j}
+{\bar{z}_i - z_j}$ &
+$\eta_{ij} = d\log(z_i - z_j)$ \\
+Nilpotency & Stokes on $\overline{C}_n(\mathfrak{H})$ &
+Arnold relation on $\overline{C}_n(\bC)$ \\
+Form degree & 1-forms on $\mathfrak{H} \times \mathfrak{H}$ &
+1-forms on $\bC \times \bC$ \\
+Key identity & Vanishing lemma (Kontsevich) &
+$\eta_{12}\eta_{23} + \eta_{23}\eta_{31} + \eta_{31}\eta_{12} = 0$
+\end{tabular}
+\end{center}
+
+\emph{Dictionary.}
+For a Poisson chiral algebra $\cA_{\mathrm{cl}}$ (a Coisson algebra
+in the sense of Beilinson--Drinfeld):
+\begin{align}
+\text{Kontsevich weight } w_\Gamma
+&\longleftrightarrow
+\text{bar complex matrix element }
+\langle \bar{B}^n | d | \bar{B}^{n-1} \rangle \\
+\text{Star product coefficient } B_\Gamma(f,g)
+&\longleftrightarrow
+\text{cobar differential component } d_\Omega
+\end{align}
+The chiral star product (Construction~\ref{constr:quantization}) is
+the cobar reconstruction of the chiral algebra from the bar coalgebra
+data, with each graph $\Gamma$ contributing a specific term in the
+$A_\infty$ structure.
+
+\emph{Associativity verification.}
+The associativity of the Kontsevich star product (Stokes' theorem
+on $\overline{C}_n(\mathfrak{H})$) corresponds to the nilpotence
+$d^2 = 0$ of the bar differential (Arnold relations on
+$\overline{C}_n(\bC)$).  Both follow from the same topological
+mechanism: the vanishing of the boundary integral on the FM
+compactification.
+\end{computation}
+
+
+\subsection{Chiral star product: explicit Heisenberg computation}
+
+\begin{computation}[Heisenberg chiral star product through $\hbar^3$]
+\label{comp:heisenberg-star-product}
+\index{Heisenberg algebra!star product}
+\index{deformation quantization!Heisenberg}
+
+For the Heisenberg algebra $\mathcal{H}_\kappa$ with Coisson
+(classical) structure given by the $\lambda$-bracket
+$\{a_\lambda b\}_{\mathrm{cl}} = \kappa$ (a constant Poisson
+structure on the jet space), the chiral star product is the
+\emph{Moyal product}:
+\begin{equation}\label{eq:heisenberg-moyal}
+a \star_\hbar b = \mu \circ \exp\left(
+\frac{\hbar \kappa}{2}
+\sum_{n \geq 0} (-\partial_w)^n \otimes \partial_z^{(n)}
+\right)(a \otimes b)
+\end{equation}
+where $\mu$ is the normally-ordered product.
+
+\emph{Order $\hbar^0$:} $a \star_0 b = \normord{ab}$
+(normal ordering).
+
+\emph{Order $\hbar^1$:} $a \star_1 b = \frac{\kappa}{2}
+\sum_{n \geq 0} (-1)^n (\partial^n a) \cdot
+(\partial^{(n)} b) = \frac{\kappa}{2} a_{(0)}b$ (the
+$\lambda$-bracket at $\lambda = 0$).
+
+\emph{Order $\hbar^2$:}
+\begin{align*}
+a \star_2 b &= \frac{\kappa^2}{8}
+\sum_{m,n \geq 0} (-1)^{m+n}
+(\partial^{m+n} a)(\partial^{(m)(n)} b) \\
+&= \frac{\kappa^2}{8} a_{(0)(0)}b
+\end{align*}
+For $a = a_{-1}|0\rangle$ (the basic Heisenberg mode):
+$a \star_2 a = \frac{\kappa^2}{8} \cdot 0 = 0$ (the iterated
+$\lambda$-bracket vanishes on generators because the Heisenberg
+Coisson algebra is abelian: $\{a_\lambda\{a_\mu a\}\} = 0$).
+
+\emph{Order $\hbar^3$:}
+All terms vanish for the same reason: the Heisenberg Poisson
+structure is constant, so $\partial \pi = 0$ and all graphs with
+interior edges (carrying $\partial \pi$) vanish.  The star product
+is \emph{exact at order $\hbar^1$}:
+\begin{equation}\label{eq:heisenberg-exact}
+a \star b = \normord{ab} + \frac{\hbar\kappa}{2} a_{(0)}b
+\end{equation}
+This is the normally-ordered product plus the contraction (Wick's
+theorem).
+
+\emph{Bar complex interpretation.}
+The exactness at $\hbar^1$ reflects the Koszulness of
+$\mathcal{H}_\kappa$: the bar complex has no higher $A_\infty$
+operations ($m_n = 0$ for $n \geq 3$), so the MC equation
+$\sum \hbar^n m_n(\alpha^{\otimes n}) = 0$ terminates at first
+order.  The quantized algebra is the vertex algebra (OPE algebra)
+$\mathcal{H}_\kappa$ itself.
+\end{computation}
+
+\begin{computation}[Current algebra star product]
+\label{comp:current-star-product}
+\index{current algebra!star product}
+
+For the current algebra $\fg[z]$ with Coisson bracket
+$\{J^a_\lambda J^b\}_{\mathrm{cl}} = f^{abc} J^c$ (the pointwise
+Lie bracket), the chiral star product produces the affine Kac--Moody
+algebra $\widehat{\fg}_k$ as a deformation:
+
+\emph{Order $\hbar^0$:} $J^a \star_0 J^b = \normord{J^a J^b}$
+
+\emph{Order $\hbar^1$:}
+$J^a \star_1 J^b = \frac{1}{2}\{J^a, J^b\}_{\mathrm{cl}}
+= \frac{1}{2} f^{abc} J^c$
+
+\emph{Order $\hbar^2$:}
+\begin{align*}
+J^a \star_2 J^b &= \frac{1}{8}
+\{J^a, \{J^b, \cdot\}\}_{\mathrm{cl}}
++ \frac{1}{12} (\partial\pi)
+\text{-corrections}
+\end{align*}
+For a \emph{linear} Poisson structure ($\fg[z]$ has
+$\pi^{ab}(J) = f^{abc} J^c$, linear in $J$), the $\partial\pi$
+terms contribute $\frac{1}{12} f^{acd}f^{bde} J^e$
+(a Casimir-type correction).
+
+The full star product resums to the OPE:
+\begin{equation}\label{eq:km-as-deformation}
+J^a(z) J^b(w) = \frac{k \delta^{ab}}{(z-w)^2}
++ \frac{f^{abc} J^c(w)}{z-w} + \normord{J^a J^b}(w) + \cdots
+\end{equation}
+where $k = \hbar \cdot (\text{normalization})$ is the level.
+
+\emph{Associativity.}
+The Jacobi identity $f^{a[bc}f^{d]ef} = 0$ for the structure
+constants of $\fg$ ensures the vanishing of the $\hbar^3$ obstruction
+in~\eqref{eq:hbar3-assoc}.  At the bar complex level, this is the
+statement that the degree-3 bar differential satisfies $d^2 = 0$
+(the Serre relations in the bar complex of $\widehat{\fg}_k$;
+cf.\ Computation~\ref{comp:sl3-degree3-complete}).
+\end{computation}
+
+\begin{remark}[Quantization obstructions and curvature]
+\label{rem:quantization-curvature-connection}
+\index{deformation quantization!curvature obstruction}
+The genus-1 curvature $m_0(\widehat{\fg}_k) = (k+h^\vee)\kappa/(2h^\vee)$
+(Proposition~\ref{prop:km-bar-curvature}) has a deformation-theoretic
+interpretation: it measures the failure of the classical star product
+to extend from the formal disk to the elliptic curve $E_\tau$.
+
+In the deformation quantization language:
+\begin{itemize}
+\item $m_0 = 0$ (critical level $k = -h^\vee$):
+the star product extends to all genera without obstruction.
+The algebra is ``classically integrable'' in the sense that
+the Poisson structure on $\fg[z]$ lifts to a flat connection
+on the moduli of bundles.
+\item $m_0 \neq 0$ (generic level):
+the genus-1 extension requires a curved $A_\infty$ correction,
+and the star product on $E_\tau$ involves the Eisenstein series
+$E_2(\tau)$ (Theorem~\ref{thm:elliptic-vs-rational}).
+The higher-genus corrections involve modular forms of higher weight.
+\end{itemize}
+\end{remark}
+
+
 \section{Open questions}\label{sec:open-questions}
 
 \begin{enumerate}

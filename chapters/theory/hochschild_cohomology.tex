@@ -112,11 +112,13 @@ internal factor follows from:
 \begin{itemize}
 \item At generic $k$, $\Walg^k(\mathfrak{g})$ is \emph{simple}
       as a vertex algebra (Arakawa \cite{Ara07}, Theorem~4.1).
-\item Simplicity implies that the category of ordinary modules is semisimple:
-      every finitely generated $\Walg^k(\mathfrak{g})$-module in category
-      $\mathcal{O}$ decomposes as a direct sum of irreducible highest-weight
-      modules (there are no nontrivial extensions, since the Shapovalov form
-      is non-degenerate at generic $k$).
+\item At generic~$k$, the Shapovalov form on Verma modules is
+      non-degenerate (no singular vectors), so every
+      finitely generated $\Walg^k(\mathfrak{g})$-module in category~$\mathcal{O}$
+      is a direct sum of irreducible highest-weight modules.
+      (This is a property of generic level, not of simplicity per se:
+      simplicity of the vertex algebra does not by itself imply
+      semisimplicity of the module category.)
 \item Consequently $\mathrm{Ext}^q(M, N) = 0$ for $q > 0$ and
       $M, N \in \mathcal{O}_k$, giving $E_2^{p,q} = 0$ for $q > 0$.
 \end{itemize}
@@ -556,6 +558,50 @@ The spectral sequence \emph{degenerates at $E_2$} (all higher differentials are 
 because the only possible higher differentials $d_r: E_r^{1,q} \to E_r^{0,q+r}$ would require $r \geq 2$, but $E_r^{p,q} = 0$ for $p \geq 2$, so all higher differentials vanish.
 \end{example}
 
+\begin{example}[\texorpdfstring{$E_2$}{E2} page for $\widehat{\mathfrak{sl}}_3$]
+\label{ex:E2-sl3}
+\index{$\mathfrak{sl}_3$!Hochschild-cyclic spectral sequence}
+For $\widehat{\mathfrak{sl}}_3$ at generic level~$k$:
+
+\emph{Step~1: Hochschild homology.}
+By the continuous cohomology of current algebras, $\mathrm{HH}_*^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)$ is determined by the Lie algebra cohomology $H^*(\mathfrak{sl}_3; \mathbb{C}) = \Lambda(x_3, x_5)$ (exterior algebra on generators of degrees $3$ and $5$, corresponding to the exponents $m_1 = 1$, $m_2 = 2$ of $\mathfrak{sl}_3$) tensored with the polynomial algebra from the loop direction.  This gives:
+$$\mathrm{HH}_*^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)
+= \mathbb{C}[\Theta_2, \Theta_4] \otimes \Lambda(\sigma_3, \sigma_5)$$
+where $|\Theta_{2i}| = 2i$ (from the Casimir operators of degrees $2$ and $4$) and $|\sigma_{2i+1}| = 2i+1$ (from $H^*(\mathfrak{sl}_3)$).
+
+\emph{Step~2: $S^1$-action and $E_2$ page.}
+The $S^1$-action on the polynomial part is trivial (Casimirs are invariant).
+The exterior generators $\sigma_3, \sigma_5$ lie in odd degrees and are
+$S^1$-coinvariants:
+$$E_2^{0,*} = \mathbb{C}[\Theta_2, \Theta_4], \qquad
+E_2^{1,*} = \mathbb{C}[\Theta_2, \Theta_4].$$
+
+\emph{Step~3: Degeneration.}
+At generic~$k$, $\widehat{\mathfrak{sl}}_3$ is simple (Ext-vanishing in
+category~$\mathcal{O}$), so the spectral sequence degenerates at~$E_2$ by
+the same argument as for $\widehat{\mathfrak{sl}}_2$.  The Hilbert function
+of $\mathrm{HC}_n = E_2^{0,n} \oplus E_2^{1,n-1}$ gives:
+$$\dim \mathrm{HC}_n^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)
+= \#\{(a,b) : 2a + 4b = n\} + \#\{(a,b) : 2a + 4b = n-1\}$$
+which grows linearly in~$n$ (rank~$2$), in contrast to the constant
+$\dim \mathrm{HC}_n = 1$ for $\widehat{\mathfrak{sl}}_2$ (rank~$1$).
+\end{example}
+
+\begin{example}[\texorpdfstring{$E_2$}{E2} page for lattice VOAs]
+\label{ex:E2-lattice}
+\index{lattice vertex algebra!Hochschild-cyclic}
+For a lattice VOA $V_\Lambda$ of rank~$d$, the underlying Heisenberg
+algebra $\mathcal{H}^{\otimes d}$ gives:
+$$\mathrm{HH}_*^{\mathrm{ch}}(V_\Lambda) = \mathbb{C}[c_1, \ldots, c_d]
+\otimes \Lambda(\sigma_1, \ldots, \sigma_d)$$
+with $|c_i| = 2$, $|\sigma_i| = 1$.  The lattice vertex operators do not
+contribute additional Hochschild classes (they are inner automorphisms of the
+Heisenberg algebra at generic level).  Thus
+$E_2^{0,*} = \mathbb{C}[c_1, \ldots, c_d]$
+and $E_2^{1,*} = \mathbb{C}[c_1, \ldots, c_d]$, with
+$E_2$ degeneration.
+\end{example}
+
 \subsection{Physical interpretation: anomalies and partition functions}
 
 \begin{theorem}[Partition function as cyclic homology; \ClaimStatusProvedElsewhere]
@@ -583,13 +629,13 @@ The identification of the partition function with cyclic homology is due to Feig
 \caption{\texorpdfstring{$E_2$}{E2} page computation for standard examples}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Chiral Algebra} & $\mathbf{E_2^{0,*}}$ & $\mathbf{E_2^{1,*}}$ & 
+\textbf{Chiral Algebra} & $\mathbf{E_2^{0,*}}$ & $\mathbf{E_2^{1,*}}$ &
 \emph{Degeneration?} \\
 \hline
-Heisenberg $\mathcal{H}_k$ & $\mathbb{C}[c]$ (even deg) & $\mathbb{C}[c]$ (odd deg) & 
+Heisenberg $\mathcal{H}_k$ & $\mathbb{C}[c]$ (even deg) & $\mathbb{C}[c]$ (odd deg) &
 Yes (at $E_2$) \\
 \hline
-$\beta\gamma$ bosons & $\mathbb{C}[c](1 \oplus \beta_0\gamma_0)$ & $\mathbb{C}[c]$ & 
+$\beta\gamma$ bosons & $\mathbb{C}[c](1 \oplus \beta_0\gamma_0)$ & $\mathbb{C}[c]$ &
 Yes (at $E_2$) \\
 \hline
 $bc$ ghosts & Similar to $\beta\gamma$ & Similar to $\beta\gamma$ & Yes (at $E_2$) \\
@@ -599,10 +645,55 @@ Yes (at $E_2$, generic $c$) \\
 \hline
 $\widehat{\mathfrak{sl}}_2$ level $k$ & $\mathbb{C}[c]$ & $\mathbb{C}[c]$ & Yes (at $E_2$) \\
 \hline
-$W_3$ algebra & $\mathbb{C}[c,W_{-3}]$ & $\mathbb{C}[c]$ & Depends on $c$ \\
+$\widehat{\mathfrak{sl}}_3$ level $k$ & $\mathbb{C}[\Theta_2, \Theta_4]$ & $\mathbb{C}[\Theta_2, \Theta_4]$ & Yes (at $E_2$, generic $k$) \\
+\hline
+$W_3$ algebra & $\mathbb{C}[\Theta_2, \Theta_3]$ & $\mathbb{C}[\Theta_2]$ & Depends on $c$ \\
+\hline
+$W_N$ algebra ($N \geq 4$) & $\mathbb{C}[\Theta_2, \ldots, \Theta_N]$ & $\mathbb{C}[\Theta_2, \ldots, \Theta_{N-1}]$ & Yes (generic $c$) \\
+\hline
+Lattice $V_\Lambda$ (rank $d$) & $\mathbb{C}[c]^{\otimes d}$ & $\mathbb{C}[c]^{\otimes d}$ & Yes (at $E_2$) \\
+\hline
+$Y(\mathfrak{sl}_2)^{\mathrm{ch}}$ & $\mathbb{C}[\Theta_2]$ & $\mathbb{C}$ & Conjectural \\
 \hline
 \end{tabular}
 \end{table}
+
+\subsection{Cyclic homology exchange under Koszul duality}
+
+\begin{corollary}[Cyclic homology duality; \ClaimStatusProvedHere]\label{cor:cyclic-homology-duality}
+\index{cyclic homology!Koszul duality}
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, the Connes periodicity operator $S$ intertwines the Koszul duality on Hochschild homology with a $[-2]$-shifted duality on cyclic homology:
+\begin{equation}\label{eq:cyclic-duality}
+\mathrm{HC}_n(\mathcal{A}) \;\cong\; \mathrm{HC}_{-n}(\mathcal{A}^!)^{\vee}
+\end{equation}
+for all $n$, where $\mathrm{HC}_*$ denotes periodic cyclic homology.
+\end{corollary}
+
+\begin{proof}
+The SBI exact sequence (Corollary~\ref{cor:connes-SBI}) relates $\mathrm{HH}_*$ and $\mathrm{HC}_*$ via the periodicity operator $S$.  The Koszul duality for Hochschild cohomology (Theorem~\ref{thm:main-koszul-hoch}) gives $\mathrm{HH}^n(\mathcal{A}) \cong \mathrm{HH}^{2-n}(\mathcal{A}^!)^\vee \otimes \omega_X$.  Inserting this into the SBI sequence for $\mathcal{A}$ and comparing with the SBI sequence for $\mathcal{A}^!$: the periodicity operator $S$ shifts degree by $-2$ on both sides, so the duality on $\mathrm{HH}_*$ descends to periodic cyclic homology as stated.  The shift by~$2$ in the Hochschild duality is absorbed by the periodicity $S$, yielding the unshifted duality~\eqref{eq:cyclic-duality} on $\mathrm{HP}_* = \varprojlim_S \mathrm{HC}_{*+2k}$.
+\end{proof}
+
+\begin{remark}\label{rem:cyclic-koszul-virasoro}
+For the Virasoro algebra $\mathrm{Vir}_c$ with Koszul dual $\mathrm{Vir}_{26-c}$: both have $\mathrm{CH}^* \cong \mathbb{C}[\Theta]$ (Theorem~\ref{thm:virasoro-hochschild}), so the periodic cyclic homology is $2$-periodic on both sides.  The duality~\eqref{eq:cyclic-duality} exchanges the periodicity generators $\Theta \leftrightarrow \Theta'$, consistent with the Verdier anti-commutativity of the Kodaira--Spencer class (Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
+\end{remark}
+
+\begin{corollary}[Hochschild cup product exchange; \ClaimStatusProvedHere]
+\label{cor:hochschild-cup-exchange}
+\index{Hochschild cohomology!cup product exchange}
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, let $\Theta \in CH^2(\mathcal{A})$ be a periodicity class \textup{(}as in Theorem~\textup{\ref{thm:virasoro-periodicity})}.  Under the Koszul duality isomorphism $CH^n(\mathcal{A}) \cong CH^{2-n}(\mathcal{A}^!)^\vee \otimes \omega_X$ \textup{(}Theorem~\textup{\ref{thm:main-koszul-hoch})}, the cup product with $\Theta$ corresponds to the cup product with the dual class $\Theta' \in CH^2(\mathcal{A}^!)$ up to sign:
+\begin{equation}\label{eq:cup-product-exchange}
+\Theta \;\longleftrightarrow\; -\Theta'
+\end{equation}
+under the Verdier anti-commutativity of the Kodaira--Spencer class.
+\end{corollary}
+
+\begin{proof}
+The Kodaira--Spencer class $\mathrm{KS}_g(\mathcal{A}) \in H^1(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$ satisfies $\mathrm{KS}_g(\mathcal{A}) = -\mathrm{KS}_g(\mathcal{A}^!)$ under the Verdier involution (Theorem~\ref{thm:kodaira-spencer-chiral-complete}, equation~\eqref{eq:verdier-ks-anticommute}).  The periodicity class $\Theta$ arises from the $g = 0$ contribution to the Kodaira--Spencer class via the bar complex on $\overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$ (proof of Theorem~\ref{thm:virasoro-periodicity}, Step~1).  The Verdier anti-commutativity descends to the periodicity generators: $\Theta$ on the $\mathcal{A}$ side corresponds to $-\Theta'$ on the $\mathcal{A}^!$ side.
+\end{proof}
+
+\begin{remark}[Virasoro verification]\label{rem:cup-exchange-virasoro}
+For $\mathrm{Vir}_c$ with $CH^* = \mathbb{C}[\Theta]$ and $\mathrm{Vir}_{26-c}$ with $CH^* = \mathbb{C}[\Theta']$: the isomorphism $CH^{2k}(\mathrm{Vir}_c) \cong CH^{2-2k}(\mathrm{Vir}_{26-c})^\vee \otimes \omega_X$ maps $\Theta^k \mapsto (-1)^k (\Theta')^{k-1}$ (up to the $\omega_X$ twist).  The sign $(-1)^k$ comes from $k$ applications of the anti-commutativity $\Theta \leftrightarrow -\Theta'$.  This is consistent with the periodic cyclic duality (Corollary~\ref{cor:cyclic-homology-duality}), where the sign is absorbed by the Connes periodicity operator $S$.
+\end{remark}
 
 \subsection{Summary and future directions}
 

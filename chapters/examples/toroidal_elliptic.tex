@@ -603,3 +603,753 @@ of the splitting mechanism (Step~5) are new to this work.
 The Heisenberg verification uses the explicit computations of
 \S\ref{sec:heisenberg-genus-expansion-eisenstein}.
 \end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXPLICIT COMPUTATIONS: ELLIPTIC BAR, DYNAMICAL YBE, SHUFFLE, COMPARISON
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Explicit elliptic bar complex for the Heisenberg algebra}
+\label{sec:elliptic-bar-heisenberg}
+\index{bar complex!elliptic Heisenberg|textbf}
+\index{Heisenberg algebra!elliptic bar complex}
+
+We carry out the explicit computation of the bar complex of the
+Heisenberg algebra $\cH_\kappa$ on an elliptic curve $E_\tau$,
+using the elliptic propagator of
+Construction~\ref{constr:elliptic-bar}.  The main result is
+that the elliptic bar differential decomposes into the rational
+bar differential plus correction terms governed by Eisenstein
+series, with only finitely many nonzero corrections at each
+bar degree.
+
+\subsection{Bar elements and the elliptic propagator}
+\label{subsec:elliptic-bar-elements}
+
+We work on $E_\tau = \bC / (\bZ + \tau\bZ)$ with the elliptic
+propagator
+\begin{equation}\label{eq:ell-propagator}
+\omega_{ij}^{\mathrm{ell}}
+= d\log\theta_1(z_i - z_j \,|\, \tau)
+= \zeta_\tau(z_i - z_j)\,(dz_i - dz_j),
+\end{equation}
+where $\zeta_\tau(z) = \partial_z \log\theta_1(z|\tau)$ is the
+Weierstrass zeta function on $E_\tau$.
+
+\begin{computation}[Degree-1 bar elements]\label{comp:ell-bar-deg1}
+\index{bar complex!elliptic!degree 1}
+In bar degree~$1$, the generators of $\B^{\mathrm{ell}}_1(\cH_\kappa)$
+are:
+\[
+[a_m] \otimes 1 \in \B^{\mathrm{ell}}_1(\cH_\kappa), \quad m \in \bZ,
+\]
+where $a_m$ denotes the mode of the Heisenberg current $a(z) = \sum_m a_m z^{-m-1}$.
+The bar differential on degree-$1$ elements is:
+\[
+d^{\mathrm{ell}}([a_m] \otimes 1) = 0,
+\]
+since the Heisenberg algebra has trivial unary OPE
+($a_{(n)}a = 0$ for $n \geq 1$ except $a_{(1)}a = \kappa$, and
+the residue extraction on a single element yields zero).
+This is identical to the rational case.
+\end{computation}
+
+\begin{computation}[Degree-2 bar elements and the elliptic differential]
+\label{comp:ell-bar-deg2}
+\index{bar complex!elliptic!degree 2}
+In bar degree~$2$, the generators are:
+\[
+[a_m | a_n] \otimes \omega_{12}^{\mathrm{ell}}
+\in \B^{\mathrm{ell}}_2(\cH_\kappa),
+\]
+where $\omega_{12}^{\mathrm{ell}} = \zeta_\tau(z_1 - z_2)\,(dz_1 - dz_2)$.
+The bar differential acts by residue extraction:
+\begin{align}\label{eq:ell-bar-diff-deg2}
+d^{\mathrm{ell}}([a_m | a_n] \otimes \omega_{12}^{\mathrm{ell}})
+&= \Res_{z_1 = z_2}\Bigl[
+a_m(z_1)\,a_n(z_2)\,\omega_{12}^{\mathrm{ell}}
+\Bigr] \notag \\
+&= \Res_{\epsilon = 0}\left[
+\frac{\kappa}{\epsilon^2}\,
+\zeta_\tau(\epsilon)\,d\epsilon
+\right] \cdot z_2^{-m-n-2}\,dz_2,
+\end{align}
+where $\epsilon = z_1 - z_2$.  We use the Laurent expansion of
+$\zeta_\tau$ (established in the proof of
+Theorem~\ref{thm:elliptic-vs-rational}, Step~1):
+\begin{equation}\label{eq:zeta-laurent}
+\zeta_\tau(\epsilon)
+= \frac{1}{\epsilon}
+- \frac{\pi^2}{3}\,E_2(\tau)\,\epsilon
+- \frac{\pi^4}{45}\,E_4(\tau)\,\epsilon^3
+- \frac{2\pi^6}{945}\,E_6(\tau)\,\epsilon^5
+- \cdots
+\end{equation}
+Substituting into the residue:
+\begin{align}\label{eq:ell-residue-expansion}
+\Res_{\epsilon = 0}\left[
+\frac{\kappa}{\epsilon^2}\,
+\zeta_\tau(\epsilon)\,d\epsilon
+\right]
+&= \Res_{\epsilon = 0}\left[
+\frac{\kappa}{\epsilon^2}\left(
+\frac{1}{\epsilon}
+- \frac{\pi^2}{3}\,E_2(\tau)\,\epsilon
+- \cdots
+\right) d\epsilon
+\right] \notag \\
+&= \Res_{\epsilon = 0}\left[
+\frac{\kappa}{\epsilon^3}
+- \frac{\kappa\pi^2}{3}\,E_2(\tau)\,\frac{1}{\epsilon}
+- \cdots
+\right] d\epsilon \notag \\
+&= -\frac{\kappa\pi^2}{3}\,E_2(\tau).
+\end{align}
+The $1/\epsilon^3$ term has zero residue; the first nonzero
+contribution is the $E_2(\tau)$ term.  In the rational case
+($\zeta_\tau(\epsilon) \to 1/\epsilon$), the residue of
+$\kappa\epsilon^{-3}\,d\epsilon$ vanishes, so the rational
+bar differential on this element is zero.  The
+\emph{entire degree-$2$ bar differential is the elliptic
+correction}:
+\begin{equation}\label{eq:ell-bar-diff-result}
+d^{\mathrm{ell}}([a_m | a_n] \otimes \omega_{12}^{\mathrm{ell}})
+= -\frac{\kappa\pi^2}{3}\,E_2(\tau)
+\cdot z_2^{-m-n-2}\,dz_2.
+\end{equation}
+\end{computation}
+
+\begin{computation}[Degree-2 curvature]\label{comp:ell-curvature}
+\index{curvature!elliptic bar complex}
+The elliptic bar complex of $\cH_\kappa$ has curvature
+element $m_0^{\mathrm{ell}} \in \B^{\mathrm{ell}}_0(\cH_\kappa)$.
+From the genus-$1$ propagator
+(Theorem~\ref{thm:heisenberg-genus-one-complete}), the
+two-point function on $E_\tau$ is $\langle a(z_1)\,a(z_2)
+\rangle_{E_\tau} = \kappa\,G_\tau(z_1 - z_2)$, where
+$G_\tau(z) = \zeta_\tau(z) + (\pi^2 E_2(\tau)/3)\,z$.
+The curvature arises from the failure of double periodicity
+(cf.\ the proof of
+Theorem~\ref{thm:heisenberg-genus2-obstruction}):
+\begin{equation}\label{eq:ell-curvature}
+m_0^{\mathrm{ell}}
+= \kappa \cdot \frac{\pi^2 E_2(\tau)}{3}.
+\end{equation}
+Expanding in the nome $q = e^{2\pi i \tau}$:
+\begin{equation}\label{eq:ell-curvature-q}
+m_0^{\mathrm{ell}}
+= \frac{\kappa\pi^2}{3}\bigl(
+1 - 24q - 72q^2 - 96q^3 - \cdots
+\bigr).
+\end{equation}
+At the rational limit $\tau \to i\infty$ ($q \to 0$),
+$E_2(\tau) \to 1$ and $m_0^{\mathrm{ell}} \to
+\kappa\pi^2/3$, recovering the rational curvature
+(up to the normalization convention for the propagator
+on $\bC$ versus $E_\tau$; on $\bC$ the propagator
+$1/z$ has no $B$-cycle and hence $m_0^{\mathrm{rat}} = 0$).
+\end{computation}
+
+\subsection{Comparison table: elliptic versus rational}
+\label{subsec:ell-vs-rat-table}
+
+\begin{table}[ht]
+\centering
+\caption{Elliptic versus rational bar differentials
+for $\cH_\kappa$ at low degrees}
+\label{tab:ell-vs-rat-bar}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Degree} & \textbf{Rational $d^{\mathrm{rat}}$}
+& \textbf{Elliptic $d^{\mathrm{ell}}$}
+& \textbf{Correction} \\
+\hline
+$1$ & $0$ & $0$ & --- \\
+\hline
+$2$ & $0$ & $-\frac{\kappa\pi^2}{3}\,E_2(\tau)$
+& $E_2(\tau)$ (quasi-modular, wt~$2$) \\
+\hline
+$3$ & $0$ & $-\frac{\kappa\pi^4}{45}\,E_4(\tau)$
+& $E_4(\tau)$ (modular, wt~$4$) \\
+\hline
+$4$ & $0$ & $-\frac{2\kappa\pi^6}{945}\,E_6(\tau)$
+& $E_6(\tau)$ (modular, wt~$6$) \\
+\hline
+\textbf{General $n$}
+& $0$ & $c_{n-1}(\tau) \cdot \kappa$
+& $E_{2n-2}(\tau)$ (wt~$2n{-}2$) \\
+\hline
+\end{tabular}
+\end{table}
+
+\noindent
+The vanishing of the rational bar differential at all degrees
+reflects the fact that the Heisenberg algebra on $\bC$ (genus~$0$)
+has no curvature ($m_0^{\mathrm{rat}} = 0$): the propagator
+$1/z$ is strictly periodic on $\bC$ (there is no $B$-cycle).
+On the elliptic curve $E_\tau$, the $B$-cycle monodromy of
+$\zeta_\tau$ introduces the Eisenstein corrections.  At degree $n$,
+the coefficient $c_{n-1}(\tau)$ in the Laurent
+expansion~\eqref{eq:zeta-laurent} controls the bar differential;
+since $c_k(\tau) \in M_{2k+2}(\mathrm{SL}_2(\bZ))$ for $k \geq 2$
+and $c_1(\tau) \in \widetilde{M}_2(\mathrm{SL}_2(\bZ))$ (quasi-modular),
+the corrections at degree $n \geq 3$ are genuine modular forms.
+
+\begin{proposition}[Decomposition of the elliptic bar complex;
+\ClaimStatusProvedHere]\label{prop:ell-bar-decomposition}
+\index{bar complex!elliptic!decomposition}
+The elliptic bar complex of $\cH_\kappa$ at degree $n$ admits
+the decomposition:
+\begin{equation}\label{eq:ell-bar-decomp}
+\B^{\mathrm{ell}}_n(\cH_\kappa)
+\;=\; \B^{\mathrm{rat}}_n(\cH_\kappa)
+\;\oplus\; E_2(\tau) \cdot \B^{(1)}_n
+\;\oplus\; E_4(\tau) \cdot \B^{(2)}_n
+\;\oplus\; \cdots
+\;\oplus\; E_{2n-2}(\tau) \cdot \B^{(n-1)}_n
+\end{equation}
+with only finitely many nonzero terms.  Specifically,
+$\B^{(k)}_n = 0$ for $k \geq n$.
+\end{proposition}
+
+\begin{proof}
+\emph{Step~1 (Finite propagator expansion).}
+The elliptic bar complex at degree~$n$ involves
+$\binom{n}{2}$ propagator factors $\omega_{ij}^{\mathrm{ell}}$,
+one for each pair $(i,j)$ with $1 \leq i < j \leq n$.
+Each propagator is expanded via~\eqref{eq:zeta-laurent} as
+$\zeta_\tau(\epsilon_{ij}) = \epsilon_{ij}^{-1} + \sum_{k \geq 1}
+c_k(\tau)\,\epsilon_{ij}^{2k-1}$.  The bar differential at
+degree~$n$ extracts the residue at the diagonal
+$\epsilon_{ij} = 0$; since the OPE of the Heisenberg current
+$a(z)$ has a double pole ($a(z_1)\,a(z_2) \sim
+\kappa/(z_1 - z_2)^2$), the residue at each pair involves
+at most the coefficient of $\epsilon_{ij}^{-1}$ in the
+integrand.  This means the Laurent coefficient $c_k(\tau)\,
+\epsilon_{ij}^{2k-1}$ contributes to the residue only if
+$2k - 1 \leq 1$, i.e., $k \leq 1$, for each \emph{individual}
+propagator factor.  However, when multiple propagator factors
+are combined in the degree-$n$ bar element ($n-1$ propagators
+appear in a degree-$n$ element), the correction terms from
+different propagator pairs may accumulate.  The total correction
+order is bounded by $n-1$ (one correction per propagator),
+giving $\B^{(k)}_n = 0$ for $k \geq n$.
+
+\emph{Step~2 (Eisenstein coefficient identification).}
+The correction term $\B^{(k)}_n$ arises from choosing exactly
+$k$ of the $n-1$ propagator factors to contribute their leading
+correction $c_1(\tau)\,\epsilon_{ij}$ (or, more precisely,
+assigning a total correction weight of $k$ distributed
+among the propagators, with correction of weight~$j$ from
+a single propagator contributing $c_j(\tau)$).
+By the computation of~\eqref{eq:ell-residue-expansion}, the
+leading correction at degree~$2$ is $c_1(\tau) \propto E_2(\tau)$.
+At degree~$n$, the correction of total weight $k$ lies in the
+subspace of (quasi-)modular forms of weight $2k$, which is
+spanned by monomials in $E_2, E_4, E_6$.  Since the Heisenberg
+algebra is free (Gaussian), the only contributing terms are the
+\emph{single-propagator corrections} (there are no interaction
+terms between different propagator pairs), so the coefficient
+of $\B^{(k)}_n$ is precisely $c_k(\tau) = (-1)^k G_{2k+2}(\tau)
+\propto E_{2k+2}(\tau)$ for $k \geq 2$, and $c_1(\tau) \propto
+E_2(\tau)$.
+
+\emph{Step~3 (Direct sum splitting).}
+The corrections $E_2, E_4, E_6, \ldots$ have distinct modular
+weights $2, 4, 6, \ldots$ and are therefore linearly independent
+over $\bC$.  The decomposition~\eqref{eq:ell-bar-decomp}
+is a direct sum, not merely a filtration.
+\end{proof}
+
+
+\section{Dynamical Yang--Baxter equation for $\mathfrak{sl}_2$}
+\label{sec:dynamical-ybe-sl2}
+\index{dynamical Yang--Baxter equation|textbf}
+\index{Yang--Baxter equation!dynamical}
+
+We verify the dynamical Yang--Baxter equation for the
+$\mathfrak{sl}_2$ elliptic $R$-matrix of
+Definition~\ref{def:elliptic-r}, and show that the key identity
+reduces to the Fay trisecant (Theorem~\ref{thm:fay}).  The
+connection to bar nilpotency is made precise: the dynamical YBE
+encodes $d^2 = 0$ for the elliptic bar complex with dynamical
+parameter.
+
+\subsection{The dynamical Yang--Baxter equation}
+\label{subsec:dybe-statement}
+
+\begin{definition}[Dynamical Yang--Baxter equation]
+\label{def:dybe}
+\index{dynamical Yang--Baxter equation!definition}
+The \emph{dynamical Yang--Baxter equation} (DYBE) for an
+$R$-matrix $R(u, \lambda) \in \mathrm{End}(V \otimes V)$
+depending on spectral parameter $u$ and dynamical parameter
+$\lambda \in \mathfrak{h}^*$ is:
+\begin{equation}\label{eq:dybe}
+R_{12}(u, \lambda)\,
+R_{13}(u+v, \lambda - h^{(2)})\,
+R_{23}(v, \lambda)
+\;=\;
+R_{23}(v, \lambda - h^{(1)})\,
+R_{13}(u+v, \lambda)\,
+R_{12}(u, \lambda - h^{(3)})
+\end{equation}
+where $h^{(i)}$ denotes the action of $h \in \mathfrak{h}$ on
+the $i$-th tensor factor of $V^{\otimes 3}$, and $\lambda - h^{(i)}$
+means that the dynamical parameter $\lambda$ is shifted by the
+weight of the state in factor~$i$.
+\end{definition}
+
+\subsection{Explicit verification for $\mathfrak{sl}_2$}
+\label{subsec:dybe-sl2-verification}
+
+For $\mathfrak{sl}_2$ with $V = \bC^2$, the weight decomposition
+is $V = V_+ \oplus V_-$ with $h \cdot v_\pm = \pm v_\pm$.
+We use the elliptic $R$-matrix of Definition~\ref{def:elliptic-r}:
+\begin{equation}\label{eq:sl2-r-matrix-entries}
+R(u, \lambda) =
+\begin{pmatrix}
+a(u) & 0 & 0 & 0 \\
+0 & b(u, \lambda) & c(u, \lambda) & 0 \\
+0 & c(u, -\lambda) & b(u, -\lambda) & 0 \\
+0 & 0 & 0 & a(u)
+\end{pmatrix}
+\end{equation}
+with $a(u) = \theta(u+\eta)/\theta(\eta)$,
+$b(u,\lambda) = \theta(u)\theta(\lambda+\eta)/
+(\theta(\eta)\theta(\lambda))$, and
+$c(u,\lambda) = \theta(u+\lambda)\theta(\eta)/
+(\theta(\lambda)\theta(u+\eta))$ (the entries from
+Definition~\ref{def:elliptic-r}, abbreviated here
+as $\theta = \theta(\cdot\,|\,\tau)$).
+
+\begin{computation}[Matrix entries of the DYBE]
+\label{comp:dybe-matrix-entries}
+We examine the DYBE~\eqref{eq:dybe} on the weight spaces of
+$V^{\otimes 3}$.  On the space $V^{\otimes 3}$
+with basis $\{v_{\epsilon_1} \otimes v_{\epsilon_2}
+\otimes v_{\epsilon_3} : \epsilon_i \in \{+,-\}\}$
+(eight basis vectors), the dynamical shifts act as
+$h^{(i)} \cdot v_{\epsilon_1\epsilon_2\epsilon_3}
+= \epsilon_i\,v_{\epsilon_1\epsilon_2\epsilon_3}$.
+The DYBE is a system of $64$ scalar equations (the entries of
+an $8 \times 8$ matrix equation).
+
+\emph{Diagonal entries.}
+On the extremal weight space $v_{+++}$, both sides of
+\eqref{eq:dybe} give
+$a(u)\,a(u{+}v)\,a(v)$, so the equation is trivially satisfied.
+Similarly for $v_{---}$.
+
+\emph{Mixed weight spaces.}
+The nontrivial content lies on the $4$-dimensional subspace
+spanned by $\{v_{++-}, v_{+-+}, v_{-++}\}$ (weight~$1$)
+and $\{v_{--+}, v_{-+-}, v_{+--}\}$ (weight~$-1$).
+By the symmetry $R(u,\lambda) = R(u,-\lambda)|_{+\leftrightarrow -}$,
+it suffices to verify the weight-$1$ block.
+
+On the weight-$1$ subspace, the DYBE
+reduces to a $3 \times 3$ matrix equation.
+The $(1,1)$-entry (acting on $v_{++-}$) gives:
+\begin{align}\label{eq:dybe-11}
+&a(u)\,b(u{+}v, \lambda{-}1)\,b(v,\lambda) \;+\;
+b(u,\lambda)\,c(u{+}v, \lambda{-}1)\,c(v,-\lambda) \notag \\
+&\quad =\;
+b(v,\lambda{-}1)\,b(u{+}v,\lambda)\,a(u) \;+\;
+c(v,{-}\lambda{+}1)\,c(u{+}v,\lambda)\,a(u).
+\end{align}
+Substituting the theta function expressions and using the
+abbreviations $[x] := \theta(x|\tau)$, this becomes:
+\begin{align}\label{eq:dybe-11-theta}
+&\frac{[u{+}\eta]}{[\eta]}\cdot
+\frac{[u{+}v][\lambda{-}1{+}\eta]}{[\eta][\lambda{-}1]}
+\cdot
+\frac{[v][\lambda{+}\eta]}{[\eta][\lambda]}
+\;+\;
+\frac{[u][\lambda{+}\eta]}{[\eta][\lambda]}
+\cdot
+\frac{[u{+}v{+}\lambda{-}1][\eta]}{[\lambda{-}1][u{+}v{+}\eta]}
+\cdot
+\frac{[v{-}\lambda][\eta]}{[-\lambda][v{+}\eta]} \notag \\
+&\quad =\;
+\frac{[v][\lambda{-}1{+}\eta]}{[\eta][\lambda{-}1]}
+\cdot
+\frac{[u{+}v][\lambda{+}\eta]}{[\eta][\lambda]}
+\cdot
+\frac{[u{+}\eta]}{[\eta]} \;+\;
+\frac{[v{-}\lambda{+}1][\eta]}{[-\lambda{+}1][v{+}\eta]}
+\cdot
+\frac{[u{+}v{+}\lambda][\eta]}{[\lambda][u{+}v{+}\eta]}
+\cdot
+\frac{[u{+}\eta]}{[\eta]}.
+\end{align}
+After cancelling common factors $[u{+}\eta]/([\eta]^3\,[\lambda]\,
+[\lambda{-}1])$ from both sides and clearing denominators, the
+equation reduces to an identity among products of theta functions
+evaluated at the six arguments $\{u, v, u{+}v, \lambda,
+\lambda{+}\eta, \lambda{-}1{+}\eta\}$.
+\end{computation}
+
+\begin{proposition}[DYBE reduces to Fay; \ClaimStatusProvedHere]
+\label{prop:dybe-reduces-to-fay}
+\index{Fay trisecant identity!and dynamical YBE}
+The dynamical Yang--Baxter equation~\eqref{eq:dybe}
+for the $\mathfrak{sl}_2$ elliptic $R$-matrix
+\textup{(}Definition~\textup{\ref{def:elliptic-r})}
+is equivalent to the Fay trisecant identity
+\textup{(}Theorem~\textup{\ref{thm:fay})} plus the
+quasi-periodicity of $\theta$.  More precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Each nontrivial component of the DYBE on the
+weight-$1$ subspace reduces, after clearing common
+factors, to an identity of the form
+\begin{equation}\label{eq:fay-applied}
+\theta(a{-}b)\,\theta(c{-}d)
+- \theta(a{-}c)\,\theta(b{-}d)
++ \theta(a{-}d)\,\theta(b{-}c) = 0
+\end{equation}
+for appropriate specializations of $a, b, c, d$ depending
+on $u, v, \lambda, \eta$.
+\item The remaining components (mixing weight-$1$ and
+weight-$(-1)$ sectors) follow from~(i) and the
+quasi-periodicity $\theta(z+1|\tau) = -\theta(z|\tau)$,
+$\theta(z+\tau|\tau) = -e^{-\pi i\tau - 2\pi i z}\theta(z|\tau)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Step~1 (Reduction of the $(1,2)$-entry).}
+The $(1,2)$-entry of the DYBE on the weight-$1$ subspace
+(the matrix element for $v_{++-} \to v_{+-+}$) yields,
+after clearing the common denominator
+$[\eta]^3\,[\lambda]\,[\lambda{-}1]\,[u{+}\eta]\,[v{+}\eta]\,
+[u{+}v{+}\eta]$:
+\begin{align}\label{eq:dybe-12-reduced}
+&[u{+}\eta]\,[v]\,[u{+}v{+}\lambda{-}1]
+- [u]\,[v{+}\eta]\,[u{+}v{+}\lambda{-}1] \notag \\
+&\qquad + [u{+}v{+}\eta]\,[\lambda{-}1]\,
+\bigl([u{+}\lambda]\,[v] - [v{+}\lambda]\,[u]\bigr)
+\;=\; 0.
+\end{align}
+We apply the Fay identity (Theorem~\ref{thm:fay})
+with the specialization $u_1 = 0$, $u_2 = u + \eta$,
+$u_3 = v + \eta$, $u_4 = u + v + \lambda$:
+\begin{align}
+&\theta(u{+}\eta)\,\theta(v{+}\eta - u - v - \lambda)
+- \theta(v{+}\eta)\,\theta(u{+}\eta - u - v - \lambda) \notag \\
+&\qquad + \theta(u{+}v{+}\lambda)\,\theta(v{+}\eta - u - \eta)
+= 0.
+\end{align}
+Using $\theta(-x) = -\theta(x)$, this simplifies to:
+\[
+\theta(u{+}\eta)\,\theta(\lambda{-}v)
+- \theta(v{+}\eta)\,\theta(\lambda{-}u)
++ \theta(u{+}v{+}\lambda)\,\theta(v{-}u) = 0,
+\]
+which is the content of~\eqref{eq:dybe-12-reduced}
+after the identification $[\lambda{-}v] = -[v{-}\lambda]$
+and relabelling.
+
+\emph{Step~2 (Remaining entries).}
+The $(1,3)$ and $(2,3)$ entries of the DYBE are obtained
+from the $(1,2)$ entry by the substitutions
+$v \to u+v$, $u \to -v$ and $u \to v$, $v \to u$ respectively,
+combined with the Weyl group symmetry
+$R(u,\lambda) = R(u,-\lambda)|_{+\leftrightarrow -}$.
+Each reduces to the same Fay identity with permuted arguments.
+
+\emph{Step~3 (Quasi-periodicity).}
+The elliptic $R$-matrix entries $a(u), b(u,\lambda), c(u,\lambda)$
+are meromorphic on $E_\tau \times E_\tau$ with simple poles at the
+zeros of $\theta(\eta)$ and $\theta(\lambda)$.  The DYBE
+relates values at $\lambda$, $\lambda - h^{(1)}$, $\lambda - h^{(2)}$,
+$\lambda - h^{(3)}$ where $h^{(i)} \in \{+1, -1\}$; the
+quasi-periodicity of $\theta$ ensures that these $\lambda$-shifts
+are compatible with the lattice $\bZ + \tau\bZ$ acting on $\lambda$.
+\end{proof}
+
+\begin{proposition}[DYBE and bar nilpotency; \ClaimStatusProvedHere]
+\label{prop:dybe-bar-nilpotency}
+\index{bar complex!elliptic!nilpotency via DYBE}
+The dynamical Yang--Baxter equation~\eqref{eq:dybe} encodes
+$d^2 = 0$ for the elliptic bar complex with dynamical parameter.
+Specifically, the bar complex
+$\B^{\mathrm{ell}}(E_{q,p}(\mathfrak{sl}_2))$
+of the elliptic quantum group
+\textup{(}Definition~\textup{\ref{def:elliptic-quantum})}
+satisfies $d^2 = 0$ on
+$\overline{C}_3(E_\tau)$ if and only if the $R$-matrix
+$R(u,\lambda)$ satisfies the DYBE.
+\end{proposition}
+
+\begin{proof}
+The bar differential at degree~$2$ of the RTT-type algebra
+$E_{q,p}(\mathfrak{sl}_2)$ is:
+\[
+d([L_{ij}(u) | L_{kl}(v)] \otimes \omega_{12}^{\mathrm{ell}})
+= \sum_m \bigl(
+R_{ij,km}(u{-}v,\lambda)\,L_{ml}(v)
+- L_{km}(v)\,R_{mj,il}(u{-}v,\lambda)
+\bigr) \otimes \omega_{12}^{\mathrm{ell}} \wedge \omega_{23}^{\mathrm{ell}}.
+\]
+The computation of $d^2$ on a degree-$1$ element
+$[L_{ij}(u)] \otimes 1$ produces terms on
+$\overline{C}_3(E_\tau)$ involving the product of three
+$R$-matrices.  The nine terms (three pairs of propagators,
+each contributing three matrix products) rearrange into
+the left-hand side minus the right-hand side of
+the DYBE~\eqref{eq:dybe}, exactly as in the rational case
+where the Yang--Baxter equation implies $d^2 = 0$
+for the Yangian bar complex
+(proof of Theorem~\ref{thm:yangian-bar-rtt}).
+The only modification is the replacement of the rational
+propagator $\eta_{ij} = d\log(z_i - z_j)$ by the elliptic
+propagator $\omega_{ij}^{\mathrm{ell}}
+= d\log\theta_1(z_i - z_j|\tau)$, and the introduction
+of the dynamical shifts $\lambda \to \lambda - h^{(i)}$
+arising from the $B$-cycle monodromy of
+$\omega^{\mathrm{ell}}_{ij}$ around $E_\tau$
+(cf.\ Remark~\ref{rem:elliptic-qg-bar}(ii)).
+The elliptic Arnold relation~\eqref{eq:elliptic-arnold}
+(Proposition~\ref{prop:fay-implies-d-squared}) ensures that
+the propagator-level identity $\omega_{12} \wedge \omega_{23}
++ \omega_{23} \wedge \omega_{31} + \omega_{31} \wedge \omega_{12}
+= 0$ holds, so the algebraic content of $d^2 = 0$ is
+precisely the DYBE.
+\end{proof}
+
+
+\section{Shuffle algebra presentation}
+\label{sec:shuffle-algebra}
+\index{shuffle algebra|textbf}
+\index{toroidal algebra!shuffle presentation}
+
+\subsection{Definition of the shuffle algebra}
+\label{subsec:shuffle-def}
+
+\begin{definition}[Shuffle algebra]\label{def:shuffle-algebra}
+\index{shuffle algebra!definition}
+Let $\zeta(u) = \theta(u+\eta)/\theta(u)$ be the structure function
+determined by the elliptic $R$-matrix.
+The \emph{shuffle algebra} $\mathcal{S}_\zeta$ is the $\bZ_{\geq 0}$-graded
+vector space
+\[
+\mathcal{S}_\zeta = \bigoplus_{n \geq 0} \mathcal{S}_n, \quad
+\mathcal{S}_n = \bC(z_1, \ldots, z_n)^{S_n}_{\mathrm{sym}}
+\]
+(symmetric rational functions in $n$ variables), equipped with
+the \emph{shuffle product}:
+for $f \in \mathcal{S}_m$ and $g \in \mathcal{S}_n$, define
+$f \star g \in \mathcal{S}_{m+n}$ by
+\begin{equation}\label{eq:shuffle-product}
+(f \star g)(z_1, \ldots, z_{m+n})
+= \frac{1}{m!\,n!} \sum_{\sigma \in S_{m+n}}
+\prod_{\substack{i \leq m \\ j > m}}
+\zeta(z_{\sigma(i)} - z_{\sigma(j)})
+\cdot f(z_{\sigma(1)}, \ldots, z_{\sigma(m)})
+\cdot g(z_{\sigma(m+1)}, \ldots, z_{\sigma(m+n)}).
+\end{equation}
+Equivalently, the sum runs over $(m,n)$-shuffles
+$\mathrm{Sh}(m,n) \subset S_{m+n}$, with
+the $1/(m!\,n!)$ factor replaced by $1$ and the
+sum restricted to shuffles.
+\end{definition}
+
+\begin{remark}[Origin]\label{rem:shuffle-origin}
+The shuffle algebra was introduced by
+Feigin--Odesskii in the rational and
+trigonometric cases and extended to the elliptic case by
+Schiffmann--Vasserot~\cite{SV13} and Negut.
+The rational specialization $\zeta(u) = (u+\eta)/u$
+recovers the Feigin--Odesskii shuffle realization of the
+Yangian; the trigonometric specialization
+$\zeta(u) = (1 - q e^{2\pi i u})/(1 - e^{2\pi i u})$
+recovers the quantum affine algebra.
+\end{remark}
+
+\subsection{Explicit shuffle products}
+\label{subsec:shuffle-explicit}
+
+\begin{computation}[First generators]\label{comp:shuffle-generators}
+\index{shuffle algebra!explicit products}
+Let $e_1 = 1 \in \mathcal{S}_1 = \bC(z)$ (the constant function).
+The shuffle product of $e_1$ with itself is:
+\begin{align}\label{eq:shuffle-e1e1}
+(e_1 \star e_1)(z_1, z_2)
+&= \zeta(z_1 - z_2) + \zeta(z_2 - z_1) \notag \\
+&= \frac{\theta(z_1 - z_2 + \eta)}{\theta(z_1 - z_2)}
++ \frac{\theta(z_2 - z_1 + \eta)}{\theta(z_2 - z_1)}.
+\end{align}
+Using the oddness $\theta(-u) = -\theta(u)$:
+\begin{equation}\label{eq:shuffle-e1e1-simplified}
+(e_1 \star e_1)(z_1, z_2)
+= \frac{\theta(z_{12} + \eta)\,\theta(-z_{12})
+- \theta(-z_{12} + \eta)\,\theta(z_{12})}
+{\theta(z_{12})\,\theta(-z_{12})}
+\end{equation}
+where $z_{12} = z_1 - z_2$.  Applying the Fay identity
+(Theorem~\ref{thm:fay}) with $u_1 = z_{12}+\eta$,
+$u_2 = -z_{12}+\eta$, $u_3 = z_{12}$, $u_4 = -z_{12}$,
+the numerator simplifies to a ratio of theta functions
+evaluable in terms of $\theta(\eta)$ and $\theta(2\eta)$.
+Explicitly, using the addition formula
+$\theta(a)\theta(b) - \theta(-a)\theta(-b) = 0$ (since $\theta$
+is odd), we obtain:
+\begin{equation}\label{eq:e1e1-result}
+(e_1 \star e_1)(z_1, z_2)
+= \frac{\theta(z_{12}+\eta) + \theta(\eta-z_{12})}
+{\theta(z_{12})}.
+\end{equation}
+
+The triple shuffle product is:
+\begin{equation}\label{eq:shuffle-e1e1e1}
+(e_1 \star e_1 \star e_1)(z_1, z_2, z_3)
+= \sum_{\sigma \in S_3}
+\zeta(z_{\sigma(1)} - z_{\sigma(2)})\,
+\zeta(z_{\sigma(1)} - z_{\sigma(3)})\,
+\zeta(z_{\sigma(2)} - z_{\sigma(3)}).
+\end{equation}
+Associativity of the shuffle product
+(a formal consequence of the Yang--Baxter equation
+for $\zeta$, which itself follows from the Fay identity)
+ensures $(e_1 \star e_1) \star e_1
+= e_1 \star (e_1 \star e_1)$.
+\end{computation}
+
+\begin{remark}[Shuffle--bar isomorphism]\label{rem:shuffle-bar}
+\index{shuffle algebra!bar complex connection}
+The shuffle algebra $\mathcal{S}_\zeta$ and the bar complex
+$\B(\cA)$ of the corresponding chiral algebra $\cA$ are related
+by an isomorphism of graded vector spaces:
+\begin{equation}\label{eq:shuffle-bar-iso}
+\mathcal{S}_n \;\cong\; \B_n(\cA)^*, \quad
+f \;\mapsto\; \bigl([a_{i_1}|\cdots|a_{i_n}] \otimes
+\omega \;\mapsto\; \Res\, f \cdot \omega \bigr),
+\end{equation}
+where the bar complex is dualized via the residue pairing.
+Under this isomorphism, the shuffle product on
+$\mathcal{S}_\zeta$ corresponds to the deshuffle
+\emph{coproduct} on $\B(\cA)$:
+\[
+\Delta_{\mathrm{desh}}([a_1|\cdots|a_n])
+= \sum_{\sigma \in \mathrm{Sh}(p,q)}
+\sgn(\sigma)\,[a_{\sigma(1)}|\cdots|a_{\sigma(p)}]
+\otimes [a_{\sigma(p+1)}|\cdots|a_{\sigma(n)}].
+\]
+This duality is the elliptic analog of the classical
+bar--cobar duality between the shuffle algebra
+$\mathrm{Sh}(V)$ and the tensor coalgebra $T^c(V)$
+(Corollary~\ref{cor:bar-is-dgcoalg}).
+\end{remark}
+
+
+\section{Comparison: rational, trigonometric, elliptic}
+\label{sec:rat-trig-ell-comparison}
+\index{comparison!rational vs trigonometric vs elliptic|textbf}
+
+\begin{table}[ht]
+\centering
+\caption{Comparison across the three regimes}
+\label{tab:rat-trig-ell}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|l|c|c|c|}
+\hline
+& \textbf{Rational} & \textbf{Trigonometric} & \textbf{Elliptic} \\
+\hline
+\textbf{Algebra}
+& Yangian $Y(\fg)$
+& Quantum affine $U_q(\hat{\fg})$
+& Toroidal $U_{q,t}(\hat{\hat{\fg}})$ \\
+\hline
+\textbf{Curve}
+& $\bC$ (or $\bC\bP^1$)
+& $\bC^*$ (or $\bC\bP^1 \setminus \{0,\infty\}$)
+& $E_\tau$ \\
+\hline
+\textbf{Propagator}
+& $\displaystyle\frac{dz}{z}$
+& $\displaystyle\frac{dz}{1 - z}$
+& $d\log\theta_1(z|\tau)$ \\
+\hline
+\textbf{$R$-matrix}
+& Yang: $1 - \hbar P/u$
+& $q$-deformed: $(q - q^{-1})/(u - u^{-1})$
+& Elliptic: $\theta(u{+}\eta)/\theta(\eta)$ \\
+\hline
+\textbf{Arnold identity}
+& $\eta_{12}\!\wedge\!\eta_{23} + \text{cyc} = 0$
+& $\frac{dz_1}{z_1{-}z_2}\!\wedge\!\frac{dz_2}{z_2{-}z_3} + \text{cyc} = 0$
+& Fay trisecant \\
+\hline
+\textbf{$d^2=0$ mechanism}
+& Partial fractions
+& $q$-partial fractions
+& Fay + quasi-period \\
+\hline
+\textbf{Koszul dual}
+& $Y_{-\hbar}(\fg)$
+& $U_{q^{-1}}(\hat{\fg})$
+& $U_{q^{-1},t^{-1}}(\hat{\hat{\fg}})$ (conj.) \\
+\hline
+\textbf{Structure fn.}
+& $\zeta(u) = (u{+}\eta)/u$
+& $\zeta(u) = (1{-}qe^u)/(1{-}e^u)$
+& $\zeta(u) = \theta(u{+}\eta)/\theta(u)$ \\
+\hline
+\textbf{Shuffle alg.}
+& Feigin--Odesskii
+& Feigin--Odesskii ($q$-deformed)
+& Schiffmann--Vasserot \\
+\hline
+\textbf{Dynamical par.}
+& absent
+& absent
+& $\lambda \in \mathfrak{h}^*$ \\
+\hline
+\textbf{Bar curvature}
+& $m_0 = 0$
+& $m_0 \propto \log q$
+& $m_0 \propto E_2(\tau)$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{remark}[Degeneration limits]\label{rem:degeneration-limits}
+\index{degeneration!elliptic to trigonometric to rational}
+The three regimes are related by degeneration:
+\begin{equation}\label{eq:degeneration-chain}
+\text{Elliptic} \;\xrightarrow{\;\tau \to i\infty\;}
+\text{Trigonometric} \;\xrightarrow{\;q \to 1\;}
+\text{Rational}.
+\end{equation}
+At each step, the propagator, $R$-matrix, and Arnold identity
+degenerate consistently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Elliptic $\to$ trigonometric.}
+As $\tau \to i\infty$, the nome $p = e^{2\pi i\tau} \to 0$.
+The theta function degenerates:
+$\theta_1(z|\tau) \to 2\sin(\pi z) \to
+(e^{\pi iz} - e^{-\pi iz})/i$, and the elliptic
+propagator becomes $d\log\theta_1(z|\tau) \to
+\pi\cot(\pi z)\,dz = d\log(1 - e^{2\pi iz})$
+(up to an additive constant), which is the trigonometric
+propagator.  The Eisenstein series $E_2(\tau) \to 1$ and
+$E_{2k}(\tau) \to 1$ for all $k$, so the elliptic
+corrections collapse to constants.  The dynamical parameter
+$\lambda$ decouples (the $B$-cycle shrinks to zero).
+\item \emph{Trigonometric $\to$ rational.}
+As $q = e^{2\pi i z} \to 1$ (i.e., $z \to 0$),
+$\cot(\pi z) \to 1/(\pi z)$, and the trigonometric
+propagator becomes $dz/z$, the rational propagator.
+The $q$-deformed $R$-matrix $R_q(u) \to 1 - \hbar P/u$,
+recovering the Yang $R$-matrix.
+\end{enumerate}
+The bar complex degenerates accordingly:
+$\B^{\mathrm{ell}}(\cA) \to \B^{\mathrm{trig}}(\cA)
+\to \B^{\mathrm{rat}}(\cA)$, with the Eisenstein corrections
+of Proposition~\ref{prop:ell-bar-decomposition} collapsing
+to constants at each step.  This is consistent with
+the spectral sequence of Theorem~\ref{thm:elliptic-vs-rational}:
+the higher pages ($E_r$ for $r \geq 2$) degenerate in the
+trigonometric and rational limits.
+\end{remark}

@@ -408,6 +408,23 @@ Kodaira--Spencer map for general Koszul pairs.  With this infrastructure,
 both arguments go through as presented.
 \end{remark}
 
+\begin{corollary}[Deformation-obstruction exchange at genus $0$; \ClaimStatusProvedHere]\label{cor:def-obs-exchange-genus0}
+\index{deformation-obstruction!genus-0 exchange}
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ on a smooth projective curve $X$, the first-order deformations of $\mathcal{A}$ are dual to the primary obstructions of $\mathcal{A}^!$:
+\begin{equation}\label{eq:def-obs-genus0}
+HH^2_{\mathrm{chiral}}(\mathcal{A}) \;\cong\; HH^0_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
+\end{equation}
+More generally, the genus-$0$ deformation complex of $\mathcal{A}$ is dual to the genus-$0$ obstruction complex of $\mathcal{A}^!$ with a shift by~$2$.
+\end{corollary}
+
+\begin{proof}
+Set $n = 2$ in Theorem~\ref{thm:main-koszul-hoch}: $HH^2(\mathcal{A}) \cong HH^{2-2}(\mathcal{A}^!)^\vee \otimes \omega_X = HH^0(\mathcal{A}^!)^\vee \otimes \omega_X$.  Here $HH^2(\mathcal{A})$ classifies first-order deformations of~$\mathcal{A}$, and $HH^0(\mathcal{A}^!) = Z(\mathcal{A}^!)$ is the center of the Koszul dual.  The duality exchanges the deformation space of one algebra with the center of the other, incarnating ``complementarity'' at the level of Hochschild cohomology.
+\end{proof}
+
+\begin{remark}\label{rem:def-obs-higher-genus}
+At genus $g \geq 1$, the exchange is already the content of Theorem~\ref{thm:quantum-complementarity-main} (Main Theorem~C): $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$.  The genus-$0$ corollary above is the ``seed'' from which the higher-genus complementarity grows via the Faber--Pandharipande mechanism (Theorem~\ref{thm:genus-universality}).
+\end{remark}
+
 \section{Example: boson-fermion duality}
 
 \subsection{The free boson chiral algebra}
@@ -589,13 +606,20 @@ The Hochschild cohomology of chiral algebras can exhibit three distinct types of
 
 When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
-\begin{theorem}[Modular periodicity; \ClaimStatusProvedHere]
+\begin{theorem}[Modular periodicity of graded dimensions; \ClaimStatusProvedHere]
+\label{thm:modular-periodicity}
 \index{periodicity!modular|textbf}
-Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$. Then there exists $N | \mathrm{lcm}(p,q,24)$ such that
+Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$.  Set
 \[
-HH^{n+N}_{\text{chiral}}(\mathcal{A}) \cong HH^n_{\text{chiral}}(\mathcal{A}) \otimes M_N
+N \;=\; \frac{24q}{\gcd(p,24)}.
 \]
-where $M_N$ is a module over the ring of modular forms of weight $N$.
+Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
+\[
+\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}(\mathcal{A}))
+\;=\;
+\dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(\mathcal{A})).
+\]
+In particular, the weight-graded Euler characteristics of the chiral Hochschild complex satisfy $N$-periodicity in the weight variable.
 \end{theorem}
 
 \begin{proof}
@@ -614,6 +638,17 @@ The bar complex $\bar{B}_n^{\mathrm{ch}}(\mathcal{A})$ inherits a weight grading
 
 The weight-graded pieces of the bar complex decompose: $\bar{B}^{(n)}_{[h]}(\mathcal{A})$ is the subspace of conformal weight~$h$ in bar degree~$n$.  Since $\mathcal{A}$ is rational, each $\bar{B}^{(n)}_{[h]}$ is finite-dimensional (the fusion rules are finite: $\dim \mathrm{Hom}(V_i \otimes V_j, V_k) < \infty$ by Zhu's theorem).  The $T$-periodicity acts on the weight grading by $h \mapsto h + N$, and the bar differential respects this shift (it is weight-preserving).  Therefore $H^n(\bar{B}_{[h+N]}) \cong H^n(\bar{B}_{[h]})$ for all $h$ sufficiently large (once the initial weight spaces are exhausted).  Summing over weight spaces gives the stated periodicity.
 \end{proof}
+
+\begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
+A stronger form of Theorem~\ref{thm:modular-periodicity} would assert
+a vector space isomorphism
+$HH^{n+N}_{\mathrm{chiral}}(\mathcal{A}) \cong HH^n_{\mathrm{chiral}}(\mathcal{A}) \otimes M_N$
+where $M_N$ is a module over the ring of modular forms.  This requires
+additionally that the bar differential (which involves OPE structure
+constants, not just conformal weights) is compatible with the $T$-matrix
+shift.  Compatibility holds for minimal models, where fusion rules are
+periodic; the general rational case is expected but not proved here.
+\end{remark}
 
 \subsubsection{Examples}
 

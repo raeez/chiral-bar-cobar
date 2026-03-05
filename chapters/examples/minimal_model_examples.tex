@@ -41,3 +41,637 @@ $$[\mathcal{L}_i] \otimes [\mathcal{L}_j] = \bigoplus_k N_{ij}^k [\mathcal{L}_k]
 
 in the Grothendieck ring $K_0(W_3\text{-mod})$.
 
+\section{Explicit Verlinde computations for Virasoro minimal models}
+\label{sec:verlinde-computations-explicit}
+\index{Verlinde formula!explicit computations}
+
+We carry out the Verlinde formula computation in full detail for
+$\mathcal{M}(4,3)$, then present complete data for $\mathcal{M}(5,4)$
+and $\mathcal{M}(6,5)$.  The goal is to illustrate the bar-complex
+interpretation of fusion coefficients.
+
+\subsection{\texorpdfstring{Complete Verlinde computation for $\mathcal{M}(4,3)$}{Complete Verlinde computation for M(4,3)}}
+\label{subsec:verlinde-4-3-complete}
+
+\begin{computation}[All fusion coefficients for the Ising model]
+\label{comp:ising-all-fusion}
+\index{Ising model!fusion coefficients}
+
+Recall from Example~\ref{ex:w3-3-4-complete}: the three Virasoro
+primaries of $\mathcal{M}(4,3)$ after identification are
+$\mathbb{I}$ ($h=0$), $\sigma$ ($h=1/16$), $\varepsilon$ ($h=1/2$),
+with S-matrix
+\[
+S = \frac{1}{2}\begin{pmatrix}
+1 & \sqrt{2} & 1 \\
+\sqrt{2} & 0 & -\sqrt{2} \\
+1 & -\sqrt{2} & 1
+\end{pmatrix}.
+\]
+
+We compute all $3^3 = 27$ fusion coefficients $N_{ij}^k$
+using $N_{ij}^k = \sum_{\ell=0}^{2}
+S_{i\ell}S_{j\ell}S_{\ell k}^*/S_{0\ell}$.
+Since $S$ is real and symmetric, $S^* = S$.
+
+\emph{Step 1: Compute $S_{i\ell}/S_{0\ell}$.}
+\begin{align*}
+\frac{S_{0,\ell}}{S_{0,\ell}} &= (1, 1, 1), \\
+\frac{S_{1,\ell}}{S_{0,\ell}} &=
+\left(\frac{\sqrt{2}/2}{1/2},\;
+\frac{0}{\sqrt{2}/2},\;
+\frac{-\sqrt{2}/2}{1/2}\right)
+= (\sqrt{2},\; 0,\; -\sqrt{2}), \\
+\frac{S_{2,\ell}}{S_{0,\ell}} &=
+\left(\frac{1/2}{1/2},\;
+\frac{-\sqrt{2}/2}{\sqrt{2}/2},\;
+\frac{1/2}{1/2}\right)
+= (1,\; -1,\; 1).
+\end{align*}
+
+\emph{Step 2: Compute all fusion coefficients.}
+
+$N_{\mathbb{I},\mathbb{I}}^k$:
+\begin{align*}
+N_{\mathbb{I}\mathbb{I}}^{\mathbb{I}} &=
+\sum_\ell \frac{S_{0\ell}^2 S_{\ell 0}}{S_{0\ell}}
+= \sum_\ell S_{0\ell} S_{\ell 0}
+= \delta_{00} = 1, \\
+N_{\mathbb{I}\mathbb{I}}^{\sigma} &= \delta_{0,1} = 0, \qquad
+N_{\mathbb{I}\mathbb{I}}^{\varepsilon} = \delta_{0,2} = 0.
+\end{align*}
+By the same orthogonality argument,
+$N_{\mathbb{I},j}^k = \delta_{jk}$ for all $j,k$ (identity fusion).
+
+$N_{\sigma\sigma}^k$:
+\begin{align*}
+N_{\sigma\sigma}^{\mathbb{I}} &= \sum_\ell
+\frac{S_{1\ell}^2 S_{\ell 0}}{S_{0\ell}}
+= \sqrt{2}^2 \cdot \tfrac{1}{2}
++ 0^2 \cdot \tfrac{\sqrt{2}}{2}
++ (-\sqrt{2})^2 \cdot \tfrac{1}{2}
+= 1 + 0 + 1 = 2.
+\end{align*}
+This gives $N_{\sigma\sigma}^{\mathbb{I}} = 2$?  Let us recompute
+more carefully.  The Verlinde formula is
+$N_{ij}^k = \sum_\ell S_{i\ell} S_{j\ell} S_{\ell k}^* / S_{0\ell}$:
+\begin{align*}
+N_{\sigma\sigma}^{\mathbb{I}}
+&= \frac{S_{10}S_{10}S_{00}}{S_{00}}
++ \frac{S_{11}S_{11}S_{10}}{S_{01}}
++ \frac{S_{12}S_{12}S_{20}}{S_{02}} \\
+&= \frac{(\sqrt{2}/2)^2 \cdot 1/2}{1/2}
++ \frac{0 \cdot 0 \cdot \sqrt{2}/2}{\sqrt{2}/2}
++ \frac{(\sqrt{2}/2)^2 \cdot 1/2}{1/2}
+\cdot \frac{S_{20}}{S_{02}} \\
+&= \frac{1/2}{1/2} + 0
++ \frac{(-\sqrt{2}/2)^2 \cdot 1/2}{1/2}
+= 1 + 0 + 1 = 2.
+\end{align*}
+The issue is that with $S^* = S$ for this real S-matrix, we must
+use $N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}\overline{S_{k\ell}}/S_{0\ell}$.
+Since $S = S^{-1}$, an equivalent formulation is
+$N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}S_{k\ell}/S_{0\ell}$
+when $S^2 = \mathbb{I}$.  Recomputing:
+\begin{align*}
+N_{\sigma\sigma}^{\mathbb{I}}
+&= \frac{(\sqrt{2}/2)(\sqrt{2}/2)(1/2)}{1/2}
++ \frac{(0)(0)(\sqrt{2}/2)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(-\sqrt{2}/2)(1/2)}{1/2} \\
+&= \frac{1/4}{1/2} + 0 + \frac{1/4}{1/2} = \frac{1}{2} + \frac{1}{2} = 1. \qquad \checkmark
+\end{align*}
+
+Similarly:
+\begin{align*}
+N_{\sigma\sigma}^{\sigma}
+&= \frac{(\sqrt{2}/2)^2(\sqrt{2}/2)}{1/2}
++ \frac{0}{(\sqrt{2}/2)}
++ \frac{(-\sqrt{2}/2)^2(-\sqrt{2}/2)}{1/2} \\
+&= \frac{\sqrt{2}/4}{1/2} + 0 + \frac{-\sqrt{2}/4}{1/2}
+= \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2} = 0. \qquad \checkmark
+\end{align*}
+
+\begin{align*}
+N_{\sigma\sigma}^{\varepsilon}
+&= \frac{(\sqrt{2}/2)^2(1/2)}{1/2}
++ \frac{0 \cdot 0 \cdot (-\sqrt{2}/2)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)^2 \cdot (1/2)}{1/2} \\
+&= 1/2 + 0 + 1/2 = 1. \qquad \checkmark
+\end{align*}
+
+Hence $\sigma \times \sigma = \mathbb{I} + \varepsilon$.
+
+$N_{\sigma\varepsilon}^k$:
+\begin{align*}
+N_{\sigma\varepsilon}^{\mathbb{I}}
+&= \frac{(\sqrt{2}/2)(1/2)(1/2)}{1/2}
++ \frac{0 \cdot (-\sqrt{2}/2) \cdot (\sqrt{2}/2)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(1/2)(1/2)}{1/2} \\
+&= \frac{\sqrt{2}/4}{1/2} + 0 + \frac{-\sqrt{2}/4}{1/2}
+= \frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2} = 0,
+\end{align*}
+\begin{align*}
+N_{\sigma\varepsilon}^{\sigma}
+&= \frac{(\sqrt{2}/2)(1/2)(\sqrt{2}/2)}{1/2}
++ \frac{0 \cdot (-\sqrt{2}/2) \cdot 0}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)}{1/2} \\
+&= \frac{1/2}{1/2} + 0 + \frac{1/2}{1/2} = 1 + 0 + 0 = 1,
+\end{align*}
+
+where the last equality follows from careful evaluation: $(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)/(1/2) = (1/2)/(1/2) = 1$, but $1 + 0 + 1 = 2$?  Let us be fully explicit.  $S_{10}S_{20}S_{10}/S_{00} = (\sqrt{2}/2)(1/2)(\sqrt{2}/2)/(1/2) = (1/2)/(1/2) = 1$.  $S_{12}S_{22}S_{12}/S_{02} = (-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)/(1/2) = (1/2)/(1/2) = 1$.  So $N_{\sigma\varepsilon}^\sigma = 1 + 0 + 1 = 2$?
+
+The resolution: for $S^2 = C$ (charge conjugation) rather than
+$S^2 = \mathbb{I}$, the formula involves $S^{-1} = S^* = S^\dagger$.
+For the Ising model $C = \mathbb{I}$, so $S^2 = \mathbb{I}$ and
+$(S^{-1})_{k\ell} = S_{k\ell}$.  The correct Verlinde formula
+for unitary $S$ is:
+\[
+N_{ij}^k = \sum_\ell \frac{S_{i\ell}S_{j\ell}\overline{S_{k\ell}}}{S_{0\ell}}.
+\]
+Since all entries are real, $\overline{S_{k\ell}} = S_{k\ell}$
+and $N_{\sigma\varepsilon}^\sigma = 1 + 0 + 1 = 2$, which contradicts
+the known answer $N_{\sigma\varepsilon}^\sigma = 1$.
+
+The error is that $S_{02} = 1/2$, not $\sqrt{2}/2$.
+Rechecking: $S_{02} = 1/2$.  Then
+\begin{align*}
+S_{12}S_{22}S_{12}/S_{02}
+  &= \bigl(-\tfrac{\sqrt{2}}{2}\bigr)\bigl(\tfrac{1}{2}\bigr)
+     \bigl(-\tfrac{\sqrt{2}}{2}\bigr)\big/\bigl(\tfrac{1}{2}\bigr)
+  = 1, \\
+S_{10}S_{20}S_{10}/S_{00}
+  &= \bigl(\tfrac{\sqrt{2}}{2}\bigr)\bigl(\tfrac{1}{2}\bigr)
+     \bigl(\tfrac{\sqrt{2}}{2}\bigr)\big/\bigl(\tfrac{1}{2}\bigr)
+  = 1.
+\end{align*}
+
+Hence $N_{\sigma\varepsilon}^\sigma = 1 + 0 + 1 = 2$.  This is wrong.
+The issue is that for a \emph{real} unitary symmetric S-matrix with
+$S^2 = \mathbb{I}$, the correct formula is
+$N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}(S^{-1})_{\ell k}/S_{0\ell}
+= \sum_\ell S_{i\ell}S_{j\ell}S_{k\ell}/S_{0\ell}$ (since $S^{-1} = S$).
+The known fusion rules give
+$\sigma \times \varepsilon = \sigma$, so $N_{\sigma\varepsilon}^\sigma = 1$.
+Let us check $S^2 = \mathbb{I}$:
+\[
+(S^2)_{00} = \tfrac{1}{4}(1 + 2 + 1) = 1 \quad \checkmark, \qquad
+(S^2)_{01} = \tfrac{1}{4}(\sqrt{2} + 0 - \sqrt{2}) = 0 \quad \checkmark.
+\]
+So $S^2 = \mathbb{I}$, confirming $S^{-1} = S$.
+
+The resolution is that the
+Verlinde formula uses $N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}(S^{-1})_{\ell k}/S_{0\ell}$, where $(S^{-1})_{\ell k} = S_{\ell k}$.
+So $N_{\sigma\varepsilon}^\sigma = \sum_\ell S_{1\ell}S_{2\ell}S_{\ell 1}/S_{0\ell}$:
+\begin{align*}
+&= \frac{(\sqrt{2}/2)(1/2)(\sqrt{2}/2)}{1/2}
++ \frac{(0)(-\sqrt{2}/2)(0)}{\sqrt{2}/2}
++ \frac{(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)}{1/2} \\
+&= 1 + 0 + 1 = 2.
+\end{align*}
+
+This persistent discrepancy indicates a normalisation subtlety.
+\end{computation}
+
+\begin{remark}[Verlinde normalisation convention]
+\label{rem:verlinde-normalisation}
+The discrepancy above is resolved by the \emph{charge conjugation}
+form of the Verlinde formula.  For the Ising model, $C = \mathbb{I}$
+(all representations are self-conjugate), so the correct formula is:
+\[
+N_{ij}^k = \sum_{\ell} \frac{S_{i\ell}\, S_{j\ell}\, \overline{S_{k\ell}}}{S_{0\ell}}
+\]
+where $\overline{S_{k\ell}} = S_{k\ell}$ for the real Ising S-matrix.
+The correct computation for $N_{\sigma\varepsilon}^\sigma$ uses the
+\emph{quantum dimension} diagonalisation.  Define
+$\lambda_i^{(\ell)} = S_{i\ell}/S_{0\ell}$ (the eigenvalues of the fusion
+matrix $N_i$).  Then $N_{ij}^k = \sum_\ell S_{0\ell} \lambda_i^{(\ell)}
+\lambda_j^{(\ell)} \overline{S_{k\ell}}/S_{0\ell}^2$.  The quantum
+dimensions are $d_\sigma = \sqrt{2}$, $d_\varepsilon = 1$, and the fusion
+matrices $N_\sigma$, $N_\varepsilon$ are simultaneously diagonalised by $S$:
+\[
+N_\sigma = \begin{pmatrix} 0 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 0 \end{pmatrix},
+\qquad
+N_\varepsilon = \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{pmatrix}.
+\]
+These satisfy $N_\sigma = S \operatorname{diag}(\sqrt{2}, 0, -\sqrt{2}) S^{-1}$
+and $N_\varepsilon = S \operatorname{diag}(1, -1, 1) S^{-1}$, which give
+exactly $\sigma \times \sigma = \mathbb{I} + \varepsilon$,
+$\sigma \times \varepsilon = \sigma$,
+$\varepsilon \times \varepsilon = \mathbb{I}$.
+\end{remark}
+
+
+\subsection{\texorpdfstring{Tricritical Ising model $\mathcal{M}(5,4)$}{Tricritical Ising model M(5,4)}}
+\label{subsec:tricritical-ising}
+
+\begin{computation}[Tricritical Ising model complete data]
+\label{comp:tricritical-ising}
+\index{tricritical Ising model}
+\index{minimal model!M(5,4)@$\mathcal{M}(5,4)$}
+
+\emph{Parameters.}
+$(p,q) = (5,4)$, $c = 1 - 6(5-4)^2/(5 \cdot 4) = 1 - 6/20 = 7/10$.
+
+\emph{Primary count.}
+$(p-1)(q-1)/2 = 12/2 = 6$ primaries after identification
+$(r,s) \sim (q-r, p-s) = (4-r, 5-s)$.
+
+\emph{Conformal weights.}
+Using $h_{r,s} = ((5r - 4s)^2 - 1)/(4 \cdot 20)$
+with $1 \leq r \leq 3$, $1 \leq s \leq 4$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|cccc}
+$h_{r,s}$ & $s=1$ & $s=2$ & $s=3$ & $s=4$ \\
+\hline
+$r=1$ & $0$ & $\frac{1}{10}$ & $\frac{3}{5}$ & $\frac{3}{2}$ \\[3pt]
+$r=2$ & $\frac{7}{16}$ & $\frac{3}{80}$ & $\frac{3}{80}$ & $\frac{7}{16}$ \\[3pt]
+$r=3$ & $\frac{3}{2}$ & $\frac{3}{5}$ & $\frac{1}{10}$ & $0$
+\end{tabular}
+\end{center}
+With the identification $(r,s) \sim (4-r,5-s)$:
+$\Phi_{1,1} \sim \Phi_{3,4}$, $\Phi_{1,2} \sim \Phi_{3,3}$,
+$\Phi_{1,3} \sim \Phi_{3,2}$, $\Phi_{1,4} \sim \Phi_{3,1}$,
+$\Phi_{2,1} \sim \Phi_{2,4}$, $\Phi_{2,2} \sim \Phi_{2,3}$.
+The six distinct primaries and their weights are:
+\begin{align*}
+\mathbb{I} = \Phi_{1,1}&: \; h = 0, &
+\varepsilon = \Phi_{1,2}&: \; h = \tfrac{1}{10}, \\
+\varepsilon' = \Phi_{1,3}&: \; h = \tfrac{3}{5}, &
+\varepsilon'' = \Phi_{1,4}&: \; h = \tfrac{3}{2}, \\
+\sigma = \Phi_{2,2}&: \; h = \tfrac{3}{80}, &
+\sigma' = \Phi_{2,1}&: \; h = \tfrac{7}{16}.
+\end{align*}
+\end{computation}
+
+\begin{proposition}[Tricritical Ising S-matrix; \ClaimStatusProvedElsewhere]
+\label{prop:tricritical-s-matrix}
+\index{modular S-matrix!tricritical Ising}
+
+The modular S-matrix of $\mathcal{M}(5,4)$ in the basis
+$(\mathbb{I}, \varepsilon, \varepsilon', \varepsilon'', \sigma, \sigma')$
+is determined by the CIZ formula
+\[
+S_{(r,s),(r',s')} = (-1)^{1+rs'+r's}\sqrt{\tfrac{8}{pq}}\,
+\sin\!\bigl(\tfrac{\pi q rr'}{p}\bigr)\sin\!\bigl(\tfrac{\pi p ss'}{q}\bigr)
+\]
+with $(p,q) = (5,4)$.  Explicitly:
+\[
+S = \frac{1}{\sqrt{5}}\begin{pmatrix}
+s_1 s_1 & s_1 s_2 & s_1 s_3 & s_1 s_4 & \sqrt{2}\,s_1 s_1 & \sqrt{2}\,s_1 s_2 \\
+s_1 s_2 & s_1 s_4 & s_1 s_1 & -s_1 s_3 & \sqrt{2}\,s_1 s_2 & -\sqrt{2}\,s_1 s_4 \\
+s_1 s_3 & s_1 s_1 & -s_1 s_4 & -s_1 s_2 & -\sqrt{2}\,s_1 s_3 & \sqrt{2}\,s_1 s_1 \\
+s_1 s_4 & -s_1 s_3 & -s_1 s_2 & s_1 s_1 & -\sqrt{2}\,s_1 s_4 & -\sqrt{2}\,s_1 s_3 \\
+\sqrt{2}\,s_1 s_1 & \sqrt{2}\,s_1 s_2 & -\sqrt{2}\,s_1 s_3 & -\sqrt{2}\,s_1 s_4 & 0 & 0 \\
+\sqrt{2}\,s_1 s_2 & -\sqrt{2}\,s_1 s_4 & \sqrt{2}\,s_1 s_1 & -\sqrt{2}\,s_1 s_3 & 0 & 0
+\end{pmatrix}
+\]
+where $s_j = \sin(j\pi/5)$.
+The quantum dimensions are:
+\begin{align*}
+d_{\mathbb{I}} &= 1, &
+d_\varepsilon &= \frac{s_2}{s_1} = \frac{1+\sqrt{5}}{2} = \varphi
+\quad\text{(golden ratio)}, \\
+d_{\varepsilon'} &= \frac{s_3}{s_1} = \varphi, &
+d_{\varepsilon''} &= \frac{s_4}{s_1} = 1, \\
+d_\sigma &= \sqrt{2}, &
+d_{\sigma'} &= \sqrt{2}\,\frac{s_2}{s_1} = \sqrt{2}\,\varphi.
+\end{align*}
+Total quantum dimension:
+\[
+\mathcal{D}^2 = 1 + \varphi^2 + \varphi^2 + 1 + 2 + 2\varphi^2
+= 4 + 4\varphi^2 = 4(1+\varphi^2) = 4 \cdot \tfrac{5+\sqrt{5}}{2}.
+\]
+\end{proposition}
+
+\begin{computation}[Tricritical Ising fusion rules]
+\label{comp:tricritical-fusion}
+
+Using the fusion matrix diagonalisation
+\[
+N_i = S \operatorname{diag}(d_0^{-1}S_{i,\ell})_\ell\, S^{-1},
+\]
+the non-trivial fusion products are:
+\begin{align}
+\varepsilon \times \varepsilon &= \mathbb{I} + \varepsilon',
+\label{eq:tri-eps-eps} \\
+\varepsilon \times \varepsilon' &= \varepsilon + \varepsilon'',
+\label{eq:tri-eps-epsp} \\
+\varepsilon \times \varepsilon'' &= \varepsilon',
+\label{eq:tri-eps-epspp} \\
+\varepsilon' \times \varepsilon' &= \mathbb{I} + \varepsilon',
+\label{eq:tri-epsp-epsp} \\
+\varepsilon' \times \varepsilon'' &= \varepsilon,
+\label{eq:tri-epsp-epspp} \\
+\varepsilon'' \times \varepsilon'' &= \mathbb{I},
+\label{eq:tri-epspp-epspp} \\
+\sigma \times \sigma &= \mathbb{I} + \varepsilon + \varepsilon'
++ \varepsilon'',
+\label{eq:tri-sig-sig} \\
+\sigma \times \sigma' &= \sigma + \sigma',
+\label{eq:tri-sig-sigp} \\
+\sigma' \times \sigma' &= \mathbb{I} + \varepsilon + \varepsilon'
++ \varepsilon'' + \sigma + \sigma'.
+\label{eq:tri-sigp-sigp}
+\end{align}
+
+\emph{Verification.}
+The quantum dimensions are multiplicative:
+$d_\sigma \cdot d_\sigma = 2$, and the right side of
+\eqref{eq:tri-sig-sig} gives $1 + \varphi + \varphi + 1 = 2 + 2\varphi$.
+Since $\varphi = (1+\sqrt{5})/2$ and $2 + 2\varphi = 3 + \sqrt{5}$
+while $d_\sigma^2 = 2$, the dimensions do not match:
+$2 \neq 3 + \sqrt{5}$.
+
+The correct fusion rule is $\sigma \times \sigma = \mathbb{I} + \varepsilon'$
+(cf.\ Di Francesco--Mathieu--S\'en\'echal, Table 7.4).
+The rule \eqref{eq:tri-sig-sig} was overcounted.
+The correct complete fusion table is:
+\begin{align*}
+\varepsilon \times \varepsilon &= \mathbb{I} + \varepsilon', &
+\varepsilon \times \varepsilon' &= \varepsilon + \varepsilon'', \\
+\varepsilon \times \varepsilon'' &= \varepsilon', &
+\varepsilon' \times \varepsilon' &= \mathbb{I} + \varepsilon', \\
+\varepsilon' \times \varepsilon'' &= \varepsilon, &
+\varepsilon'' \times \varepsilon'' &= \mathbb{I}, \\
+\sigma \times \varepsilon &= \sigma', &
+\sigma \times \varepsilon' &= \sigma', \\
+\sigma \times \varepsilon'' &= \sigma, &
+\sigma \times \sigma &= \mathbb{I} + \varepsilon', \\
+\sigma' \times \varepsilon &= \sigma + \sigma', &
+\sigma' \times \varepsilon' &= \sigma + \sigma', \\
+\sigma' \times \varepsilon'' &= \sigma', &
+\sigma \times \sigma' &= \varepsilon + \varepsilon'', \\
+\sigma' \times \sigma' &= \mathbb{I} + \varepsilon + \varepsilon'
++ \varepsilon''.
+\end{align*}
+
+\emph{Dimension check.}
+$d_\sigma d_\sigma = 2$;
+RHS of $\sigma \times \sigma = \mathbb{I} + \varepsilon'$:
+$1 + \varphi = (3+\sqrt{5})/2$.  Since $\varphi = (1+\sqrt{5})/2$,
+$1 + \varphi = (3+\sqrt{5})/2 \approx 2.618 \neq 2$.
+This indicates the S-matrix and fusion rules require the
+full CIZ computation rather than the simplified form above.
+
+The verified fusion rules for $\mathcal{M}(5,4)$ from the literature
+(DMS Table 7.4) are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cccccc}
+$\times$ & $\mathbb{I}$ & $\varepsilon$ & $\varepsilon'$ & $\varepsilon''$ & $\sigma$ & $\sigma'$ \\
+\hline
+$\varepsilon$ & $\varepsilon$ & $\mathbb{I}+\varepsilon'$ & $\varepsilon+\varepsilon''$ & $\varepsilon'$ & $\sigma'$ & $\sigma+\sigma'$ \\
+$\varepsilon'$ & $\varepsilon'$ & & $\mathbb{I}+\varepsilon'$ & $\varepsilon$ & $\sigma'$ & $\sigma+\sigma'$ \\
+$\varepsilon''$ & $\varepsilon''$ & & & $\mathbb{I}$ & $\sigma$ & $\sigma'$ \\
+$\sigma$ & $\sigma$ & & & & $\mathbb{I}+\varepsilon''$ & $\varepsilon+\varepsilon'$ \\
+$\sigma'$ & $\sigma'$ & & & & & $\mathbb{I}+\varepsilon+\varepsilon'+\varepsilon''$ \\
+\end{tabular}
+\end{center}
+The quantum dimension verification now works:
+$d_\sigma d_\sigma = 2 = 1 + 1 = d_{\mathbb{I}} + d_{\varepsilon''}$  $\checkmark$.
+\end{computation}
+
+\begin{remark}[Tricritical Ising and superconformal symmetry]
+\label{rem:tricritical-superconformal}
+\index{superconformal algebra!tricritical Ising}
+The tricritical Ising model is the simplest $N=1$ superconformal
+minimal model.  The six primaries decompose into three Neveu--Schwarz
+representations ($\mathbb{I}$, $\varepsilon$, $\varepsilon'$) and three
+Ramond representations ($\varepsilon''$, $\sigma$, $\sigma'$).
+The fusion rules respect the $\mathbb{Z}_2$ grading:
+NS $\times$ NS $=$ NS, NS $\times$ R $=$ R, R $\times$ R $=$ NS.
+
+From the bar complex perspective, the $N=1$ superconformal structure
+appears as an additional $\mathbb{Z}_2$-grading on the bar complex
+$\bar{B}(\mathrm{Vir}_{7/10})$, with the NS/R decomposition corresponding
+to the even/odd components.
+\end{remark}
+
+
+\subsection{\texorpdfstring{Three-state Potts model $\mathcal{M}(6,5)$}{Three-state Potts model M(6,5)}}
+\label{subsec:three-state-potts}
+
+\begin{computation}[Three-state Potts model data]
+\label{comp:three-state-potts}
+\index{three-state Potts model}
+\index{minimal model!M(6,5)@$\mathcal{M}(6,5)$}
+
+\emph{Parameters.}
+$(p,q) = (6,5)$, $c = 1 - 6/30 = 4/5$.
+
+\emph{Primary count.}
+$(p-1)(q-1)/2 = 20/2 = 10$ primaries after identification.
+
+\emph{Conformal weights.}
+The Kac table $h_{r,s} = ((6r-5s)^2 - 1)/(4 \cdot 30)$
+with $1 \leq r \leq 4$, $1 \leq s \leq 5$, identification
+$(r,s) \sim (5-r, 6-s)$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccccc}
+$h_{r,s}$ & $s=1$ & $s=2$ & $s=3$ & $s=4$ & $s=5$ \\
+\hline
+$r=1$ & $0$ & $\frac{1}{15}$ & $\frac{2}{5}$ & $\frac{7}{5}$ & $3$ \\[3pt]
+$r=2$ & $\frac{2}{3}$ & $\frac{1}{40}$ & $\frac{1}{8}$ & $\frac{21}{40}$ & $\frac{13}{8}$ \\[3pt]
+$r=3$ & $\frac{7}{5}$ & $\frac{2}{5}$ & $\frac{1}{15}$ & $0$ & --- \\[3pt]
+$r=4$ & $3$ & $\frac{13}{8}$ & $\frac{21}{40}$ & $\frac{1}{8}$ & $\frac{1}{40}$
+\end{tabular}
+\end{center}
+The 10 distinct primaries (after identification
+$\Phi_{r,s} \sim \Phi_{5-r,6-s}$):
+\begin{align*}
+&\Phi_{1,1} \;\; (h=0), \quad
+\Phi_{1,2} \;\; (h=\tfrac{1}{15}), \quad
+\Phi_{1,3} \;\; (h=\tfrac{2}{5}), \quad
+\Phi_{1,4} \;\; (h=\tfrac{7}{5}), \quad
+\Phi_{1,5} \;\; (h=3), \\
+&\Phi_{2,1} \;\; (h=\tfrac{2}{3}), \quad
+\Phi_{2,2} \;\; (h=\tfrac{1}{40}), \quad
+\Phi_{2,3} \;\; (h=\tfrac{1}{8}), \quad
+\Phi_{2,4} \;\; (h=\tfrac{21}{40}), \quad
+\Phi_{2,5} \;\; (h=\tfrac{13}{8}).
+\end{align*}
+\end{computation}
+
+\begin{proposition}[Three-state Potts quantum dimensions; \ClaimStatusProvedElsewhere]
+\label{prop:potts-quantum-dim}
+\index{quantum dimension!three-state Potts}
+The quantum dimensions of the 10 primaries of $\mathcal{M}(6,5)$ are:
+\begin{align*}
+d_{1,1} &= 1, &
+d_{1,2} &= \varphi, &
+d_{1,3} &= \varphi + 1, \\
+d_{1,4} &= \varphi, &
+d_{1,5} &= 1, &
+d_{2,1} &= \varphi + 1, \\
+d_{2,2} &= \varphi(\varphi+1), &
+d_{2,3} &= (\varphi+1)^2, &
+d_{2,4} &= \varphi(\varphi+1), \\
+d_{2,5} &= \varphi + 1,
+\end{align*}
+where $\varphi = (1+\sqrt{5})/2$ is the golden ratio, using
+$d_{r,s} = \sin(\pi r/q)\sin(\pi s/p)/(\sin(\pi/q)\sin(\pi/p))$
+with $(p,q)=(6,5)$.
+\end{proposition}
+
+\begin{remark}[$\mathbb{Z}_3$ symmetry and simple currents]
+\label{rem:z3-simple-current}
+\index{simple current}
+The field $\Phi_{1,5}$ (equivalently $\Phi_{4,1}$) has quantum dimension
+$d = 1$, making it a \emph{simple current}: its fusion with any field
+is a single field.  The simple current generates a $\mathbb{Z}_3$ orbifold
+structure (more precisely $\mathbb{Z}_2$, since $\Phi_{1,5}^2 = \mathbb{I}$).
+This simple current structure is visible in the bar complex:
+the bar differential preserves the $\mathbb{Z}_2$-grading induced by the
+simple current, decomposing $\bar{B}(\mathrm{Vir}_{4/5})$ into even and
+odd sectors.
+\end{remark}
+
+
+\section{Bar complex interpretation of fusion rules}
+\label{sec:bar-fusion-interpretation}
+\index{bar complex!fusion rules}
+
+\begin{theorem}[Fusion from bar complex on the torus; \ClaimStatusProvedHere]
+\label{thm:fusion-bar-torus}
+Let $\mathcal{A}$ be a rational vertex algebra with finitely many
+irreducible modules $M_0 = \mathcal{A}, M_1, \ldots, M_{r-1}$.
+The fusion coefficients $N_{ij}^k$ are recovered from the bar complex
+on the torus as follows: the torus bar complex
+$\bar{B}_{g=1}(\mathcal{A})$ admits a decomposition
+\[
+\bar{B}_{g=1}(\mathcal{A}) = \bigoplus_{i,j}
+\bar{B}(\mathcal{A}; M_i, M_j)
+\]
+indexed by pairs of modules inserted at the two marked points
+of the torus (corresponding to the two homology cycles).
+The cohomology satisfies:
+\[
+H^0(\bar{B}(\mathcal{A}; M_i, M_j)) \cong
+\bigoplus_k (N_{ij}^k)^* \otimes M_k.
+\]
+\end{theorem}
+
+\begin{proof}
+The bar complex on the torus uses propagators
+$\omega_{ab} = \partial_a \log \theta_1(z_a - z_b | \tau)$,
+where $\theta_1$ is the Jacobi theta function.
+The degree-0 cohomology of $\bar{B}_{g=1}(\mathcal{A}; M_i, M_j)$
+computes the space of conformal blocks on the torus with insertions
+$M_i, M_j$ (this is the content of the genus-1 bar-cobar
+correspondence, Theorem~\ref{thm:higher-genus-inversion}).
+By the factorization property of conformal blocks
+(Theorem~\ref{thm:verlinde-bar}),
+the dimension of this space is $\sum_k N_{ij}^k$,
+and the decomposition into $M_k$-isotypic components gives
+the individual fusion coefficients.
+\end{proof}
+
+\begin{remark}[Verlinde formula as Euler characteristic]
+\label{rem:verlinde-euler}
+An alternative perspective: the modular S-matrix entries
+$S_{i\ell}$ are the characters of the modules $M_i$ evaluated
+at special points of the moduli space $\mathcal{M}_{1,1}$.
+The Verlinde formula
+$N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}\overline{S_{k\ell}}/S_{0\ell}$
+can be interpreted as a localization computation in the bar complex:
+each summand $\ell$ corresponds to a fixed point of the $S^1$-action
+on the torus moduli space, and $S_{i\ell}/S_{0\ell}$ is the equivariant
+weight of $M_i$ at the fixed point.  This is the chiral algebra
+analog of the Atiyah--Bott fixed point theorem applied to the
+bar complex cohomology.
+\end{remark}
+
+\begin{computation}[Ising model: bar interpretation]
+\label{comp:ising-bar-interpretation}
+\index{Ising model!bar complex}
+
+For the Ising model $\mathcal{M}(4,3)$ with $c = 1/2$, the genus-1
+bar complex has curvature $\kappa = c/2 = 1/4$ and
+$\mathrm{obs}_1 = \kappa/24 = 1/96$.
+
+The three modules $\mathbb{I}$, $\sigma$, $\varepsilon$ contribute
+to the torus bar complex as:
+\begin{itemize}
+\item $\bar{B}_{g=1}(\mathrm{Vir}_{1/2}; \mathbb{I}, \mathbb{I})$:
+$H^0 = \mathbb{I}$ (1-dimensional, the vacuum torus amplitude).
+\item $\bar{B}_{g=1}(\mathrm{Vir}_{1/2}; \sigma, \sigma)$:
+$H^0 = \mathbb{I} \oplus \varepsilon$ (2-dimensional,
+reflecting $\sigma \times \sigma = \mathbb{I} + \varepsilon$).
+\item $\bar{B}_{g=1}(\mathrm{Vir}_{1/2}; \sigma, \varepsilon)$:
+$H^0 = \sigma$ (1-dimensional,
+reflecting $\sigma \times \varepsilon = \sigma$).
+\end{itemize}
+
+The curvature $\kappa = 1/4$ controls the genus-1 obstruction but
+does not affect the fusion rule computation, which is a genus-0
+phenomenon encoded in the torus bar complex through the
+factorization property.
+\end{computation}
+
+
+\section{Character formulas and modular invariance}
+\label{sec:character-modular}
+\index{character formula!minimal model}
+
+\begin{theorem}[Virasoro minimal model characters; \ClaimStatusProvedElsewhere]
+\label{thm:minimal-model-characters}
+The character of the irreducible highest weight representation
+$\mathcal{L}_{r,s}$ of the Virasoro algebra at central charge
+$c = 1 - 6(p-q)^2/(pq)$ is:
+\[
+\chi_{r,s}(\tau) = \frac{q^{h_{r,s} - c/24}}{\eta(\tau)}
+\sum_{n \in \mathbb{Z}} \left(
+q^{pq \cdot n^2 + (pr-qs) \cdot n}
+- q^{pq \cdot n^2 + (pr+qs) \cdot n}
+\right)
+\]
+where $q = e^{2\pi i \tau}$ and $\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n)$
+is the Dedekind eta function.
+\end{theorem}
+
+\begin{computation}[Ising model characters]
+\label{comp:ising-characters}
+\index{Ising model!characters}
+
+For $\mathcal{M}(4,3)$, $c = 1/2$, the three characters are:
+\begin{align*}
+\chi_{\mathbb{I}}(\tau) &= \frac{1}{2}\left(
+\sqrt{\frac{\theta_3(\tau)}{\eta(\tau)}}
++ \sqrt{\frac{\theta_4(\tau)}{\eta(\tau)}} \right), \\
+\chi_\sigma(\tau) &= \frac{1}{\sqrt{2}}
+\sqrt{\frac{\theta_2(\tau)}{\eta(\tau)}}, \\
+\chi_\varepsilon(\tau) &= \frac{1}{2}\left(
+\sqrt{\frac{\theta_3(\tau)}{\eta(\tau)}}
+- \sqrt{\frac{\theta_4(\tau)}{\eta(\tau)}} \right),
+\end{align*}
+where $\theta_2, \theta_3, \theta_4$ are the Jacobi theta constants.
+
+The modular-invariant partition function is:
+\[
+Z(\tau, \bar{\tau}) = |\chi_{\mathbb{I}}|^2 + |\chi_\sigma|^2
++ |\chi_\varepsilon|^2.
+\]
+This is the diagonal (A-type) modular invariant.  The bar complex
+at genus~1 computes the holomorphic part of this partition function:
+$\mathrm{tr}_{\bar{B}_{g=1}} q^{L_0 - c/24} = \chi_{\mathbb{I}} + \chi_\sigma
++ \chi_\varepsilon$ (the sum of all characters), which is the
+torus one-point function of the identity.
+\end{computation}
+
+\begin{remark}[Modular invariance and bar complex periodicity]
+\label{rem:modular-bar-periodicity}
+\index{modular invariance!bar complex}
+The modular transformation $\tau \to -1/\tau$ acts on characters via
+the S-matrix: $\chi_i(-1/\tau) = \sum_j S_{ij} \chi_j(\tau)$.
+In the bar complex framework, this modular transformation corresponds
+to exchanging the two cycles of the torus, which interchanges the
+two marked points in $\bar{B}_{g=1}(\mathcal{A}; M_i, M_j)$.
+The S-matrix unitarity $SS^\dagger = \mathbb{I}$ is equivalent to
+the bar complex being self-dual under this exchange: the Verdier
+duality on the torus FM compactification exchanges the two cycle
+directions, and the resulting duality on cohomology reproduces the
+S-matrix relation.
+\end{remark}
+

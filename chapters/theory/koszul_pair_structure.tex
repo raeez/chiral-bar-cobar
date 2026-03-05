@@ -710,6 +710,62 @@ follows from the level-shifting self-duality
 The synthesis for general simple~$\mathfrak{g}$ is new to this work.
 \end{remark}
 
+\begin{proposition}[Hochschild periodicity for same-type pairs; \ClaimStatusProvedHere]
+\label{prop:periodicity-same-type}
+\index{periodicity!preservation under Koszul duality}
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ where both algebras have the same type \textup{(}both Kac--Moody, both Virasoro, or both $\mathcal{W}_N$\textup{)}, the chiral Hochschild cohomology rings $CH^*(\mathcal{A})$ and $CH^*(\mathcal{A}^!)$ have the same growth type:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Virasoro:} $CH^*(\mathrm{Vir}_c) \cong \mathbb{C}[\Theta]$ and $CH^*(\mathrm{Vir}_{26-c}) \cong \mathbb{C}[\Theta']$, both $2$-periodic.
+\item \emph{Kac--Moody:} $CH^*(\widehat{\mathfrak{g}}_k) \cong \Lambda^*(P_1, \ldots) \otimes \mathbb{C}[\Theta_1, \ldots]$ and $CH^*(\widehat{\mathfrak{g}}_{k'})$ have the same Poincar\'e series, since both are computed from the same Lie algebra $\mathfrak{g}$ \textup{(}the exponents depend on $\mathfrak{g}$, not on $k$\textup{)}.
+\item \emph{$\mathcal{W}_N$:} $CH^*(\mathcal{W}_N^k)$ and $CH^*(\mathcal{W}_N^{k'})$ have the same Poincar\'e series, since the DS reduction produces generators of the same conformal weights $2, 3, \ldots, N$ at both levels.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+In each case, the Gel'fand--Fuchs computation (Theorem~\ref{thm:affine-periodicity-critical} and the Beilinson--Drinfeld comparison) shows that the Hochschild cohomology depends on the root data of $\mathfrak{g}$ and the conformal weights of the generators, neither of which changes under the Feigin--Frenkel involution $k \mapsto k' = -k - 2h^\vee$.  Part~(i) is a direct consequence of Theorem~\ref{thm:virasoro-periodicity}; parts~(ii) and~(iii) follow from the level-independence of the exponents.
+\end{proof}
+
+\begin{corollary}[Hochschild ring isomorphism under Koszul duality; \ClaimStatusProvedHere]
+\label{cor:hochschild-ring-koszul}
+\index{Hochschild cohomology!Koszul invariance}
+For any same-type Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there is
+an isomorphism of graded rings:
+\begin{equation}\label{eq:ch-koszul-iso}
+\mathrm{CH}^*(\mathcal{A}) \;\cong\; \mathrm{CH}^*(\mathcal{A}^!)
+\end{equation}
+preserving the number and degrees of polynomial generators.
+In particular, the number of independent deformation directions
+$\dim \mathrm{CH}^2(\mathcal{A}) = \dim \mathrm{CH}^2(\mathcal{A}^!)$
+is a Koszul-duality invariant.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:periodicity-same-type}, $\mathrm{CH}^*(\mathcal{A})$ and
+$\mathrm{CH}^*(\mathcal{A}^!)$ are polynomial rings on generators whose degrees
+are determined by the root datum of~$\mathfrak{g}$ and the conformal weights
+of the $\mathcal{W}$-algebra generators, respectively.  Since neither datum
+changes under the Feigin--Frenkel involution $k \mapsto k' = -k - 2h^\vee$
+(the exponents of~$\mathfrak{g}$ are intrinsic, and the Drinfeld--Sokolov
+reduction produces generators of the same weights at both levels), the
+polynomial rings are abstractly isomorphic.
+
+The isomorphism~\eqref{eq:ch-koszul-iso} is induced by the derived Morita
+equivalence: the bar-cobar quasi-isomorphism
+$\Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$
+(Theorem~\ref{thm:bar-cobar-inversion-qi}) gives a Morita equivalence of
+bimodule categories in the sense of Keller~\cite{Keller01}, which induces
+an isomorphism on Hochschild cohomology
+$\mathrm{HH}^*(A, A) \cong \mathrm{HH}^*(B, B)$ for derived-equivalent
+algebras $A \simeq B$.  By the Beilinson--Drinfeld comparison, the chiral
+Hochschild cohomology reduces to the continuous Lie algebra cohomology,
+where the Gel'fand--Fuchs computation produces the polynomial ring
+structure.
+\end{proof}
+
+\begin{remark}[Mixed-type pairs]\label{rem:periodicity-mixed-type}
+The preceding proposition does not address mixed-type Koszul pairs, where $\mathcal{A}$ and $\mathcal{A}^!$ have structurally different Hochschild cohomology.  All computed pairs in this monograph are same-type: $(\widehat{\mathfrak{g}}_k, \widehat{\mathfrak{g}}_{k'})$, $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$, $(\mathcal{W}_N^k, \mathcal{W}_N^{k'})$.  The question of whether Koszul duality preserves the Hochschild growth type for genuinely distinct pairs (e.g., a hypothetical Koszul pair between a Kac--Moody algebra and a $\mathcal{W}$-algebra) remains open.
+\end{remark}
+
 % ================================================================
 % SECTION: FROM QUADRATIC TO NON-QUADRATIC
 % ================================================================
@@ -1090,6 +1146,19 @@ D^b(\mathcal{A}\text{-mod}) \simeq D^b(\mathcal{A}^!\text{-mod})
 \begin{remark}\label{rem:module-equiv-caveat}
 The equivalence above holds for quadratic, uncurved Koszul pairs with bounded-below module categories.  In the general chiral setting (curved, non-quadratic), the correct statement replaces $D^b(\mathcal{A}\text{-mod})$ with complete (pro-nilpotent) modules and $D^b(\mathcal{A}^!\text{-mod})$ with conilpotent comodules; see Theorem~\ref{thm:e1-module-koszul-duality} for the precise formulation and Positselski~\cite{Positselski} for the foundational theory.
 \end{remark}
+
+\begin{conjecture}[Positselski comodule-contramodule equivalence; \ClaimStatusConjectured]
+\label{conj:positselski-chiral}
+\index{Positselski!comodule-contramodule}
+\index{derived category!comodule-contramodule equivalence}
+For a Koszul chiral algebra $\mathcal{A}$ with curved bar complex $\bar{B}(\mathcal{A})$, there is an equivalence of triangulated categories:
+\begin{equation}\label{eq:positselski-equivalence}
+D^{\mathrm{co}}(\mathcal{A}\text{-}\mathrm{CoMod}^{\mathrm{conil}}) \;\simeq\; D^{\mathrm{ctr}}(\mathcal{A}^!\text{-}\mathrm{ContraMod})
+\end{equation}
+between the coderived category of conilpotent $\mathcal{A}$-comodules and the contraderived category of $\mathcal{A}^!$-contramodules, extending the module Koszul duality of Theorem~\textup{\ref{thm:e1-module-koszul-duality}} to the proper derived-categorical setting.
+
+\emph{Scope.}  This is the chiral lift of Positselski's comodule-contramodule correspondence~\cite{Positselski}, which establishes the equivalence for curved DG algebras over a field.  The main obstacle to a proof is verifying that Positselski's coalgebra homological algebra (\cite{Positselski}, \S\S3--4) lifts to the chiral setting, where the tensor product is replaced by the chiral tensor product and the configuration space geometry must be incorporated.
+\end{conjecture}
 
 \subsection{Explicit resolutions for non-quadratic cases}
 

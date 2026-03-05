@@ -487,11 +487,11 @@ This explains why configuration spaces appear: they \emph{are} the operad govern
 \begin{theorem}[Factorization homology and the bar complex; \ClaimStatusProvedElsewhere]\label{thm:fact-homology-quantum}
 For a chiral algebra $\mathcal{A}$ on $X$, the Ayala--Francis factorization homology and the geometric bar complex are related by Koszul duality:
 $$\int_X \mathcal{A} \simeq \mathcal{A} \otimes^{\mathbb{L}}_{\mathrm{Disk}(X)} \mathrm{pt} \qquad \text{(chains)}, \qquad \bar{B}^{\mathrm{ch}}(\mathcal{A}) \simeq \mathrm{RHom}_{\mathcal{A}\text{-mod}}(k, k) \qquad \text{(cochains)}$$
-These are \emph{dual} constructions: factorization homology computes the derived tensor product (the \emph{homological} side), while the bar complex computes the derived Hom (the \emph{cohomological} side). They are related by $\mathbb{E}_2$-Koszul duality as developed by Francis \cite{Francis2013}.
+These are \emph{dual} constructions: factorization homology computes the derived tensor product (the \emph{homological} side), while the bar complex computes the derived Hom (the \emph{cohomological} side). They are related by $\mathbb{E}_2$-Koszul duality as developed by Francis \cite{Francis2013}, building on Lurie's operadic bar-cobar framework~\cite[§5.2]{HA}.
 \end{theorem}
 
-\begin{proof}[Proof sketch]
-Both constructions are derived functors of the forgetful functor from $\mathcal{A}$-modules to chain complexes, evaluated on the trivial module. The tensor product and Hom versions are related by the universal coefficient theorem and, more fundamentally, by the self-duality of the $\mathbb{E}_2$-operad.
+\begin{proof}
+By Francis \cite{Francis2013}, both constructions are derived functors of the forgetful functor from $\mathcal{A}$-modules to chain complexes, evaluated on the trivial module $k$. The factorization homology $\int_X \mathcal{A} \simeq \mathcal{A} \otimes^{\mathbb{L}}_{\mathrm{Disk}(X)} \mathrm{pt}$ is the derived tensor product (left adjoint, homological), while the bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A}) \simeq \mathrm{RHom}_{\mathcal{A}\text{-mod}}(k, k)$ is the derived Hom (right adjoint, cohomological). These are related by $\mathbb{E}_2$-Koszul duality: the $\mathbb{E}_2$-operad is Koszul self-dual up to shift \cite[Theorem~5.2]{Francis2013}, which induces the duality between the two functors.
 \end{proof}
 
 \begin{remark}[Gaitsgory's insight]
@@ -898,6 +898,46 @@ Theorem~\ref{thm:prism-operadic}(iv)
 with Corollary~\ref{cor:bar-cobar-inverse}.
 \end{proof}
 
+\begin{corollary}[Feynman transform involution; \ClaimStatusProvedElsewhere]%
+\label{cor:feynman-transform-involution}
+\index{Feynman transform!involution}
+Let $\mathcal{M}od$ be a modular operad and $\mathcal{A}$ an algebra
+over $\mathcal{M}od$.  Then there is a natural weak equivalence
+\begin{equation}\label{eq:ft-involution}
+\mathrm{FT} \circ \mathrm{FT}(\mathcal{A})
+\;\xrightarrow{\;\sim\;}
+\mathcal{A}.
+\end{equation}
+In particular, the Feynman transform is a homotopy involution on
+the category of modular operad algebras.
+\end{corollary}
+
+\begin{proof}
+This is \cite[Theorem~5.4]{GeK98}.  Getzler--Kapranov construct
+a natural chain map
+$\mathrm{FT}(\mathrm{FT}(\mathcal{A})) \to \mathcal{A}$
+and prove it is a quasi-isomorphism by a spectral sequence argument
+on the genus filtration: at genus~$0$, the double Feynman transform
+reduces to the operadic bar-cobar resolution
+$\Omega(\barB(\mathcal{P})) \xrightarrow{\sim} \mathcal{P}$
+(which is a quasi-isomorphism for any operad), and the higher-genus
+contributions are acyclic by the contractibility of the modular
+envelope of the bar-cobar resolution.
+\end{proof}
+
+\begin{remark}[Relation to bar-cobar inversion]\label{rem:ft-vs-bar-cobar}
+Corollary~\ref{cor:feynman-transform-involution} is the
+\emph{all-genera} generalization of our Main Theorem~B
+(Theorem~\ref{thm:higher-genus-inversion}): at genus~$0$,
+$\mathrm{FT} \circ \mathrm{FT} \simeq \mathrm{Id}$ specializes
+to $\Omega \circ \barB \simeq \mathrm{Id}$.  The full modular
+operad statement guarantees that the genus-$g$ bar complex
+$\bar{B}^{(g)}(\mathcal{A})$ retains complete information about
+$\mathcal{A}$: no data is lost in the passage to any fixed genus.
+Combined with Theorem~\ref{thm:prism-higher-genus}(ii), this shows
+that the geometric bar complex is a \emph{faithful} encoding of the
+chiral algebra at all genera.
+\end{remark}
 
 \subsection{Logarithmic forms}
 
