@@ -158,6 +158,63 @@ def coulomb_branch_data(g: str) -> Dict[str, str]:
 # Verification
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Chiral bar cohomology (conjectured)
+# ---------------------------------------------------------------------------
+
+# Known (proved) values from Master Table
+YANGIAN_BAR_COHOMOLOGY_KNOWN = {1: 4, 2: 10, 3: 28}
+
+# Conjectured formula: H^n = 3^n + 1 for n >= 1
+# GF: (1 - 3x^2) / ((1-x)(1-3x))
+# Recurrence: a(n) = 4*a(n-1) - 3*a(n-2), a(1)=4, a(2)=10
+
+
+def yangian_bar_cohomology_conjectured(n: int) -> int:
+    """Conjectured chiral bar cohomology dim H^n(B(Y(sl_2))).
+
+    Formula: 3^n + 1 for n >= 1, 1 for n = 0.
+    Source: conj:yangian-bar-gf in genus_expansions.tex.
+    """
+    if n == 0:
+        return 1
+    return 3**n + 1
+
+
+def yangian_bar_kunneth_gl2(n: int) -> int:
+    """Kunneth contribution from gl_2 = sl_2 x gl_1.
+
+    H^n(gl_2) = sum_{i+j=n} H^i(sl_2) * H^j(H)
+    where H^i(sl_2) = Riordan R(i+3) and H^j(H) = partition p(j-2).
+    """
+    from compute.lib.bar_gf_solver import riordan_numbers
+    from compute.lib.utils import partition_number
+
+    R = riordan_numbers(n + 4)  # R[0], ..., R[n+3]
+
+    total = 0
+    for i in range(n + 1):
+        j = n - i
+        # H^i(sl_2) = Riordan R(i+3)
+        h_sl2 = R[i + 3]
+        # H^j(H) = p(j-2) with p(-2)=p(-1)=1
+        if j <= 1:
+            h_heis = 1
+        else:
+            h_heis = partition_number(j - 2)
+        total += h_sl2 * h_heis
+    return total
+
+
+def yangian_serre_correction(n: int) -> int:
+    """Difference between Yangian bar cohomology and gl_2 Kunneth.
+
+    C(n) = H^n(Y(sl_2)) - H^n(gl_2)
+    These are the additional classes from Yangian Serre-type relations.
+    """
+    return yangian_bar_cohomology_conjectured(n) - yangian_bar_kunneth_gl2(n)
+
+
 def verify_yangian():
     results = {}
 
@@ -178,6 +235,29 @@ def verify_yangian():
     # Bar deg 2
     results["B^2_{E1}(sl2) = 9"] = e1_bar_deg2_dim("sl2") == 9
     results["B^2_{E1}(sl3) = 64"] = e1_bar_deg2_dim("sl3") == 64
+
+    # Chiral bar cohomology (known values)
+    for n, expected in YANGIAN_BAR_COHOMOLOGY_KNOWN.items():
+        val = yangian_bar_cohomology_conjectured(n)
+        results[f"H^{n}(Y(sl2)) = {expected}"] = val == expected
+
+    # Kunneth match at degrees 1-2
+    for n in [1, 2]:
+        kunneth = yangian_bar_kunneth_gl2(n)
+        known = YANGIAN_BAR_COHOMOLOGY_KNOWN[n]
+        results[f"Kunneth gl2 matches at deg {n}"] = kunneth == known
+
+    # Serre correction = 0 at degrees 1-2
+    results["Serre correction = 0 at deg 1"] = yangian_serre_correction(1) == 0
+    results["Serre correction = 0 at deg 2"] = yangian_serre_correction(2) == 0
+    results["Serre correction = 3 at deg 3"] = yangian_serre_correction(3) == 3
+
+    # Recurrence verification
+    a = [0, 4, 10]
+    for n in range(3, 8):
+        a.append(4 * a[n - 1] - 3 * a[n - 2])
+    for n in range(1, 8):
+        results[f"recurrence a({n}) = 3^{n}+1"] = a[n] == 3**n + 1
 
     return results
 

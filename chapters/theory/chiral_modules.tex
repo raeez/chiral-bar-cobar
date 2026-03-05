@@ -4219,7 +4219,7 @@ of Definition~\textup{\ref{def:genus-graded-module}}.
 The bar complex with module insertion
 $\bar{B}^{(g)}_n(\cA; M)$ is defined via configuration space
 integrals on the logarithmic FM compactification
-(Theorem~\ref{thm:log-fm-bar-d-squared}).  The nilpotency
+(Theorem~\ref{thm:genus-induction-strict}).  The nilpotency
 $d^2 = 0$ is proved there.
 
 The factorization map~\eqref{eq:module-factorization} is
@@ -4314,3 +4314,69 @@ at generic level, the genus-graded module tower has:
   tower restriction maps of Theorem~\ref{thm:master-tower}.
 \end{itemize}
 \end{example}
+
+\subsection{Fusion product preservation under bar-cobar}
+\label{subsec:fusion-bar-cobar}
+\index{fusion product!bar-cobar preservation}
+
+\begin{conjecture}[Fusion product preservation;
+\ClaimStatusConjectured]\label{conj:fusion-bar-cobar}
+\index{fusion product!Koszul duality}
+For a Koszul chiral algebra $\cA$ with Koszul dual $\cA^!$,
+the module-level bar-cobar functor
+$\Phi\colon \mathrm{Mod}(\cA) \to \mathrm{CoMod}(\cA^!)$
+\textup{(}Theorem~\textup{\ref{thm:e1-module-koszul-duality})}
+preserves fusion products:
+\begin{equation}\label{eq:fusion-preservation}
+\Phi(M_1 \boxtimes_\cA M_2) \;\simeq\;
+\Phi(M_1) \boxtimes_{\cA^!} \Phi(M_2)
+\end{equation}
+as objects of the comodule category.
+
+For Kac--Moody algebras $\widehat{\fg}_k$ at integrable level:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The fusion product $\boxtimes_k$ on
+  $\mathcal{O}_k^{\mathrm{int}}(\widehat{\fg})$ is sent to
+  the tensor product $\otimes_q$ on
+  $\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$, preserving the
+  braiding up to a sign determined by the level shift.
+\item For Heisenberg Fock modules $F_\lambda \boxtimes_\kappa
+  F_\mu \cong F_{\lambda+\mu}$, the braiding phase
+  $e^{2\pi i \lambda\mu/\kappa}$ is sent to
+  $e^{-2\pi i \lambda\mu/\kappa}$ under $\kappa \mapsto -\kappa$.
+\item The bar coalgebra coproduct
+  \begin{equation}\label{eq:bar-coproduct-fusion}
+  \Delta\colon \barB(\cA, M_1 \boxtimes M_2) \to
+  \barB(\cA, M_1) \otimes \barB(\cA, M_2)
+  \end{equation}
+  is the chain-level realization of the fusion product, induced by
+  the separating degeneration map of
+  Theorem~\textup{\ref{thm:chain-modular-functor}(ii)}.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Scope]\label{rem:fusion-scope}
+The conjecture assembles three ingredients from this monograph:
+\begin{itemize}
+\item The module-level bar-cobar adjunction
+  (Theorem~\ref{thm:e1-module-koszul-duality}), which provides
+  $\Phi$ as an exact functor.
+\item The chain-level modular functor
+  (Theorem~\ref{thm:chain-modular-functor}), which provides the
+  factorization map $\Delta_{\mathrm{sep}}$ realizing fusion at
+  chain level.
+\item The Heisenberg fusion computation
+  (Proposition~\ref{prop:fock-fusion-product}), which verifies the
+  phase inversion in part~(ii).
+\end{itemize}
+The gap is showing that $\Phi$ is \emph{monoidal}: the bar coalgebra
+coproduct~\eqref{eq:bar-coproduct-fusion} must intertwine with the
+fusion tensor product.  This is the hardest part of the
+Kazhdan--Lusztig programme~\cite{KL93}, where the analogous
+statement requires the analysis of $\mathcal{D}$-modules on
+configuration spaces of the flag variety.  A configuration space
+proof via the bar complex would need to show that the residue
+maps along separating divisors of $\overline{\mathcal{M}}_{g,n}$
+are compatible with the fusion product's associativity and commutativity
+constraints.
+\end{remark}

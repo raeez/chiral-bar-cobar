@@ -3673,6 +3673,73 @@ with $\dim \overline{\mathcal{M}}_3 = 6$, so the dimensional
 argument fails) and all $g \geq 4$.
 \end{remark}
 
+\begin{corollary}[Mumford multiplicative relations for obstruction classes; \ClaimStatusProvedHere]
+\label{cor:mumford-multiplicative}
+\index{Mumford relation!multiplicative consequences}
+\index{obstruction class!multiplicative relations}
+\index{lambda class@$\lambda$-class!product identities}
+Let $\mathcal{A}$ be a Koszul chiral algebra.  The obstruction classes
+$\operatorname{obs}_g = \kappa(\mathcal{A}) \cdot \lambda_g$ satisfy the
+following \emph{multiplicative relations}, inherited from
+Mumford's relation~\eqref{eq:mumford-relation}:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textbf{Nilpotence} (Theorem~\ref{thm:obstruction-nilpotent-all-genera}):
+$(\operatorname{obs}_g)^2 = 0$ for all $g \geq 1$.
+\item \textbf{Degree-$k$ Mumford relations}: For each
+$k = 1, \ldots, 2g$,
+\begin{equation}\label{eq:mumford-degree-k}
+\sum_{\substack{i + j = k \\ 0 \leq i,j \leq g}}
+(-1)^j \operatorname{obs}_i \cdot \operatorname{obs}_j = 0
+\qquad \text{in } \mathrm{CH}^k(\overline{\mathcal{M}}_g) \otimes Z(\mathcal{A})^{\otimes 2}.
+\end{equation}
+\item \textbf{Recursive structure}: Setting $k = 2$ in~\eqref{eq:mumford-degree-k}
+gives $(\operatorname{obs}_1)^2 = 2 \operatorname{obs}_2$. More generally, for $g \geq 3$,
+setting $k = 2g - 2$ gives the recurrence:
+\begin{equation}\label{eq:lambda-recurrence}
+\lambda_{g-1}^2 = 2\lambda_g \cdot \lambda_{g-2}
+\qquad \text{in } \mathrm{CH}^{2g-2}(\overline{\mathcal{M}}_g).
+\end{equation}
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Since $\operatorname{obs}_g = \kappa \cdot \lambda_g$ by
+Theorem~\ref{thm:genus-universality}, part~(b) follows from extracting
+the degree-$k$ component of Mumford's relation
+$c(\mathbb{E}) \cdot c(\mathbb{E}^\vee) = 1$, then scaling by
+$\kappa^2$.  Part~(a) is the case $k = 2g$.
+
+For part~(c), the degree-$2$ relation reads
+$\lambda_2 - \lambda_1^2 + \lambda_2 = 0$, i.e.,
+$\lambda_1^2 = 2\lambda_2$.  For the degree-$(2g-2)$ relation with
+$g \geq 3$, the constraint $0 \leq i,j \leq g$ with $i + j = 2g - 2$
+admits three pairs: $(g, g-2)$, $(g-1, g-1)$, $(g-2, g)$.
+The relation becomes
+\[
+(-1)^{g-2}\lambda_g \lambda_{g-2}
++ (-1)^{g-1}\lambda_{g-1}^2
++ (-1)^{g}\lambda_{g-2}\lambda_g = 0.
+\]
+Since $\lambda_i \lambda_j = \lambda_j \lambda_i$ in
+$\mathrm{CH}^*(\overline{\mathcal{M}}_g)$, factoring
+$(-1)^{g-2}$ yields
+$2\lambda_g \lambda_{g-2} - \lambda_{g-1}^2 = 0$.
+\end{proof}
+
+\begin{remark}[Chern character reformulation]
+\label{rem:chern-character-mumford}
+Mumford's relation $c(\mathbb{E}) \cdot c(\mathbb{E}^\vee) = 1$
+is equivalent to $\operatorname{ch}(\mathbb{E} \oplus \mathbb{E}^\vee)$ being
+concentrated in degree~$0$, since $\mathbb{E} \oplus \mathbb{E}^\vee
+= \mathcal{H}^1_{\mathrm{dR}}$ has trivial Chern character.
+Via the Newton identities relating power sums to elementary symmetric
+functions, all $\lambda$-class products are determined by the
+Bernoulli-number weighted traces
+$\operatorname{ch}_k(\mathbb{E}) = B_k \cdot \kappa_k / k!$
+(where $\kappa_k$ are the Miller--Morita--Mumford classes),
+giving the full multiplicative structure of the obstruction ring.
+\end{remark}
+
 \begin{example}[Heisenberg case]\label{ex:heisenberg-obs-squares}
 For the Heisenberg algebra with
 $\operatorname{obs}_g = \kappa \cdot \lambda_g$,

@@ -2384,6 +2384,159 @@ The passage from $\mathfrak{sl}_2$ (rank~1) to $\mathfrak{sl}_3$ (rank~2) introd
 Despite these rank-2 features, the genus-1 answer depends only on $k+3$ (the shifted level) and $\dim(\mathfrak{sl}_3) = 8$ (the number of currents).  This confirms the universality principle: the genus-1 pipeline for any simple $\widehat{\mathfrak{g}}_k$ is controlled by $k + h^\vee$ and $\dim(\mathfrak{g})$, with all root system dependence absorbed into the Casimir identity $C_2^{\mathrm{ad}} = 2h^\vee$.
 \end{remark}
 
+\section{Research programmes}
+
+\subsection{Kazhdan--Lusztig equivalence from bar-cobar duality}
+\label{subsec:kl-from-bar-cobar}
+\index{Kazhdan--Lusztig equivalence!from bar-cobar}
+
+The chiral Koszul duality of Theorem~\ref{thm:universal-kac-moody-koszul}
+and the module-level duality of Theorem~\ref{thm:e1-module-koszul-duality}
+suggest a configuration space proof of the Kazhdan--Lusztig
+equivalence~\cite{KL93}.
+
+\begin{conjecture}[KL equivalence from bar-cobar;
+\ClaimStatusConjectured]\label{conj:kl-from-bar-cobar}
+\index{Kazhdan--Lusztig equivalence!bar-cobar proof}
+At admissible level $k = -h^\vee + p/q$ ($p, q$ coprime positive integers,
+$q \geq h^\vee$), the bar complex $\barB(\widehat{\fg}_k)$ acquires a
+periodic CDG structure with period dividing $2q$, and there is an
+equivalence of abelian categories:
+\begin{equation}\label{eq:kl-bar-cobar}
+\mathcal{O}_k^{\mathrm{int}}(\widehat{\fg})
+\;\simeq\;
+\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))
+\end{equation}
+where $q = e^{\pi i/(k+h^\vee)} = e^{\pi i q/p}$.
+
+The equivalence is realized at chain level by the bar-cobar adjunction:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The bar complex $\barB(\widehat{\fg}_k, M)$ of an integrable
+  $\widehat{\fg}_k$-module $M$ has cohomology that is a finite-dimensional
+  $U_q(\fg)$-module.
+\item The cobar construction $\Omega(\barB(\widehat{\fg}_k, M))
+  \xrightarrow{\sim} M$ inverts this at the derived level.
+\item The bar resolution multiplicities are the Kazhdan--Lusztig
+  polynomials:
+  \begin{equation}\label{eq:bar-kl-poly}
+  [\barB^n(\widehat{\fg}_k, L(\lambda))]
+  = \sum_{\ell(w) = n} P_{e,w}(q) \cdot [\mathcal{M}(w \cdot \lambda)]
+  \end{equation}
+  recovering Remark~\textup{\ref{rem:bar-complex-kl-polynomials}}.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Evidence and gaps]\label{rem:kl-evidence}
+\emph{What is proved in this monograph}:
+\begin{itemize}
+\item Level-shifting Koszul duality $\widehat{\fg}_k^! \simeq
+  \widehat{\fg}_{-k-2h^\vee}$
+  (Theorem~\ref{thm:universal-kac-moody-koszul}).
+\item Module-level bar-cobar adjunction
+  (Theorem~\ref{thm:e1-module-koszul-duality}).
+\item Bar resolution with KL multiplicities at generic level
+  (Remark~\ref{rem:bar-complex-kl-polynomials}).
+\item Periodicity of chiral Hochschild cohomology with period $2h$
+  for $\widehat{\fg}_k$ of type $A_1$
+  (Proposition~\ref{prop:periodicity-same-type}).
+\item Affine Hecke algebra Koszul duality
+  (Proposition~\ref{prop:affine-hecke-kd}).
+\end{itemize}
+
+\emph{What remains}:
+\begin{itemize}
+\item Root-of-unity bar analysis: at admissible $k$, the parameter
+  $q = e^{\pi i/(k+h^\vee)}$ is a root of unity, and the bar complex
+  acquires quotient/truncation structure.  The CDG periodicity
+  $\barB^{n+2q} \cong \barB^n$ must be established.
+\item Tensor structure: the KL equivalence is monoidal
+  ($\boxtimes \leftrightarrow \otimes_q$); proving this via bar-cobar
+  requires Conjecture~\ref{conj:fusion-bar-cobar} below.
+\item Finite-dimensionality: the bar cohomology at admissible
+  level must be shown to be finite-dimensional (a consequence of the
+  Arakawa--Frenkel vanishing theorem for admissible representations).
+\end{itemize}
+
+This programme would give a \emph{geometric} proof of
+KL~\cite{KL93}, replacing the algebraic
+argument (which uses Jantzen filtrations and translation functors) with
+configuration space integrals and Verdier duality on FM
+compactifications.  The admissible-level specialization
+$q = e^{\pi i q/p}$ is the key new ingredient.
+\end{remark}
+
+\begin{remark}[KM fusion product under bar-cobar]
+\label{rem:km-fusion-bar-cobar}
+\index{fusion product!KM bar-cobar}
+The general fusion preservation conjecture
+(Conjecture~\ref{conj:fusion-bar-cobar}) specializes to
+Kac--Moody algebras as follows: for
+integrable $\widehat{\fg}_k$-modules $M_1, M_2$ at admissible
+level,
+\begin{equation}\label{eq:fusion-bar-cobar}
+\barB(\widehat{\fg}_k,\, M_1 \boxtimes_{\widehat{\fg}_k} M_2)
+\simeq
+\barB(\widehat{\fg}_k, M_1) \otimes_{U_q(\fg)}
+\barB(\widehat{\fg}_k, M_2)
+\end{equation}
+where $\boxtimes$ is the Kazhdan--Lusztig fusion product and
+$\otimes_q$ is the quantum group tensor product.
+The braiding phases transform as
+$e^{2\pi i \lambda\mu/(k+h^\vee)} \mapsto
+e^{-2\pi i \lambda\mu/(k+h^\vee)}$ under the level shift
+$k \mapsto -k - 2h^\vee$.
+
+The admissible-level case requires the root-of-unity
+bar analysis of Conjecture~\ref{conj:kl-from-bar-cobar} and
+constitutes the monoidal component of the KL programme.
+\end{remark}
+
+\subsection{Geometric Langlands from critical level bar complex}
+\label{subsec:geom-langlands-bar}
+\index{geometric Langlands!from bar complex}
+
+\begin{conjecture}[Oper space from bar complex;
+\ClaimStatusConjectured]\label{conj:oper-bar}
+\index{oper!from bar complex}
+At the critical level $k = -h^\vee$, the bar complex
+$\barB(\widehat{\fg}_{-h^\vee})$ is uncurved ($\kappa = 0$,
+Corollary~\ref{cor:critical-level-universality}) and provides a
+chain-level resolution of the Feigin--Frenkel center:
+\begin{equation}\label{eq:bar-oper}
+H^0(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \mathfrak{z}(\widehat{\fg}_{-h^\vee})
+\cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))
+\end{equation}
+where $\mathrm{Op}_{\fg^\vee}(D)$ is the space of $\fg^\vee$-opers
+on the formal disc~$D$.
+
+Moreover, the full bar complex computes the derived space of opers:
+\begin{equation}\label{eq:bar-derived-oper}
+\barB(\widehat{\fg}_{-h^\vee})
+\simeq \mathcal{O}(\mathrm{Op}_{\fg^\vee}^{\mathrm{dR}}(X))
+\end{equation}
+the derived algebra of functions on the de~Rham space of
+$\fg^\vee$-opers on the curve~$X$.
+\end{conjecture}
+
+\begin{remark}[Scope]\label{rem:oper-bar-scope}
+The $H^0$ identification~\eqref{eq:bar-oper} is established:
+Proposition~\ref{prop:km-generic-acyclicity} shows that at
+$k = -h^\vee$ the uncurved bar complex has $H^0 = \mathfrak{z}$,
+and the Feigin--Frenkel isomorphism
+$\mathfrak{z} \cong \mathrm{Fun}(\mathrm{Op})$ is
+\ClaimStatusProvedElsewhere{} \cite{Feigin-Frenkel, FG06}.
+
+The full derived identification~\eqref{eq:bar-derived-oper} would
+connect the bar-cobar adjunction to the Frenkel--Gaitsgory programme
+for geometric Langlands~\cite{FG06}: the bar complex at critical
+level provides an explicit chain-level model for the local geometric
+Langlands correspondence.  The gap is identifying the higher bar
+cohomology $H^n(\barB(\widehat{\fg}_{-h^\vee}))$ for $n \geq 1$
+with the cotangent complex of the oper space, which requires methods
+from derived algebraic geometry (Lurie \cite{HA}).
+\end{remark}
+
 \section{Open questions}
 
 \begin{question}
@@ -2395,10 +2548,20 @@ Can we extend beyond simple $\mathfrak{g}$ to affine algebras of twisted type, s
 \end{question}
 
 \begin{question}
-What is the categorification? Is there a 2-categorical Koszul duality for affine Kac--Moody categories?
+What is the categorification?  Is there a $2$-categorical Koszul
+duality for affine Kac--Moody categories, lifting the module-level
+duality of Theorem~\ref{thm:e1-module-koszul-duality} to a
+$2$-functor on the $2$-category of module categories?
 \end{question}
 
 \begin{question}
-How does this relate to quantum geometric Langlands and the emerging understanding via 4d gauge theory?
+How does the bar-cobar framework interact with the quantum geometric
+Langlands program?  The critical-level bar complex provides a
+chain-level oper resolution
+(Conjecture~\ref{conj:oper-bar}), and the admissible-level bar
+complex should recover the KL equivalence
+(Conjecture~\ref{conj:kl-from-bar-cobar}).  Does the full genus-graded
+bar complex (Theorem~\ref{thm:genus-graded-bar}) provide a
+chain-level refinement of the quantum Langlands kernel?
 \end{question}
 

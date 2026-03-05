@@ -10,6 +10,10 @@ from compute.lib.yangian_bar import (
     yangian_koszulness_status,
     coulomb_branch_data,
     verify_yangian,
+    yangian_bar_cohomology_conjectured,
+    yangian_bar_kunneth_gl2,
+    yangian_serre_correction,
+    YANGIAN_BAR_COHOMOLOGY_KNOWN,
 )
 
 
@@ -68,6 +72,49 @@ class TestCoulomb:
         data = coulomb_branch_data("sl2")
         assert "Coulomb" in data["geometry"]
         assert "Higgs" in data["koszul_dual"]
+
+
+class TestChiralBarCohomology:
+    """Tests for the conjectured chiral bar cohomology H^n = 3^n + 1."""
+
+    def test_known_values(self):
+        for n, expected in YANGIAN_BAR_COHOMOLOGY_KNOWN.items():
+            assert yangian_bar_cohomology_conjectured(n) == expected
+
+    def test_h0(self):
+        assert yangian_bar_cohomology_conjectured(0) == 1
+
+    def test_h4_prediction(self):
+        assert yangian_bar_cohomology_conjectured(4) == 82
+
+    def test_h5_prediction(self):
+        assert yangian_bar_cohomology_conjectured(5) == 244
+
+    def test_recurrence(self):
+        """Verify a(n) = 4a(n-1) - 3a(n-2) for n >= 3."""
+        for n in range(3, 10):
+            a_n = yangian_bar_cohomology_conjectured(n)
+            a_n1 = yangian_bar_cohomology_conjectured(n - 1)
+            a_n2 = yangian_bar_cohomology_conjectured(n - 2)
+            assert a_n == 4 * a_n1 - 3 * a_n2
+
+    def test_kunneth_match_deg1(self):
+        assert yangian_bar_kunneth_gl2(1) == 4
+
+    def test_kunneth_match_deg2(self):
+        assert yangian_bar_kunneth_gl2(2) == 10
+
+    def test_kunneth_deviates_deg3(self):
+        """gl_2 Kunneth gives 25, Yangian gives 28."""
+        assert yangian_bar_kunneth_gl2(3) == 25
+        assert yangian_bar_cohomology_conjectured(3) == 28
+
+    def test_serre_correction_vanishes_low_degree(self):
+        assert yangian_serre_correction(1) == 0
+        assert yangian_serre_correction(2) == 0
+
+    def test_serre_correction_deg3(self):
+        assert yangian_serre_correction(3) == 3
 
 
 class TestSelfConsistency:
