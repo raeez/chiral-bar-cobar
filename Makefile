@@ -3,7 +3,7 @@
 # ============================================================================
 #
 #  Usage:
-#    make            Build the manuscript (default: pdflatex, 3 passes)
+#    make            Build the manuscript (default: pdflatex, 5 passes)
 #    make fast       Single-pass build for quick iteration
 #    make watch      Continuous rebuild on file changes (requires latexmk)
 #    make clean      Remove all LaTeX build artifacts
@@ -18,12 +18,12 @@
 
 MAIN      := main
 TEX       := pdflatex
-TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=1
+TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=0 -cnf-line='buf_size=1000000'
 LATEXMK   := latexmk
 MKFLAGS   := -pdf -pdflatex="$(TEX) $(TEXFLAGS)" -interaction=nonstopmode
 
 # Number of passes for cross-references, TOC, and page numbers to stabilize.
-PASSES    := 3
+PASSES    := 6
 
 # Source files: every .tex file that main.tex transitively \input's or \include's.
 SOURCES   := $(wildcard *.tex) \
@@ -44,34 +44,49 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index help
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test help
 
-## all: Full build — three pdflatex passes for stable cross-references.
+## all: Full build — up to PASSES pdflatex passes, stopping when converged.
 all: $(PDF)
 
 $(PDF): $(SOURCES)
 	@echo "══════════════════════════════════════════════════════════"
 	@echo "  Building: $(MAIN).tex  →  $(PDF)"
-	@echo "  Engine:   $(TEX) ($(PASSES) passes)"
+	@echo "  Engine:   $(TEX) (up to $(PASSES) passes)"
 	@echo "══════════════════════════════════════════════════════════"
 	@for i in $$(seq 1 $(PASSES)); do \
 		echo ""; \
 		echo "  ── Pass $$i / $(PASSES) ──────────────────────────────────"; \
-		if [ $$i -eq $(PASSES) ]; then \
-			$(TEX) $(TEXFLAGS) $(MAIN).tex || exit 1; \
-		else \
-			$(TEX) $(TEXFLAGS) $(MAIN).tex || true; \
-		fi; \
+		find . -name '*.aux' -exec xattr -c {} \; 2>/dev/null; \
+		xattr -c $(MAIN).out 2>/dev/null; \
+		$(TEX) $(TEXFLAGS) $(MAIN).tex || true; \
 		if [ -f $(MAIN).idx ]; then makeindex -q $(MAIN).idx 2>/dev/null || true; fi; \
+		if [ $$i -ge 2 ] && ! grep -q 'Rerun to get' $(MAIN).log 2>/dev/null \
+		   && [ $$(grep -c 'Citation.*undefined' $(MAIN).log) -eq 0 ] \
+		   && [ $$(grep -c 'Reference.*undefined' $(MAIN).log) -eq 0 ]; then \
+			echo "  ✓  Converged after $$i passes."; \
+			break; \
+		fi; \
 	done
+	@if [ ! -f $(MAIN).pdf ]; then \
+		echo "  ✗  Build failed — no PDF produced."; exit 1; \
+	fi
 	@echo ""
 	@echo "  ✓  $(PDF) built successfully."
 	@echo ""
 
 ## fast: Single-pass build for rapid iteration during writing.
+##   Tolerates font-shape warnings (newtx exit code 1) if PDF is produced.
 fast:
 	@echo "  ── Fast build (single pass) ──"
-	$(TEX) $(TEXFLAGS) $(MAIN).tex
+	@find . -name '*.aux' -exec xattr -c {} \; 2>/dev/null
+	@xattr -c $(MAIN).out 2>/dev/null || true
+	@$(TEX) $(TEXFLAGS) $(MAIN).tex; rc=$$?; \
+	if [ -f $(MAIN).pdf ] && grep -q "Output written" $(MAIN).log; then \
+		exit 0; \
+	else \
+		exit $$rc; \
+	fi
 
 ## watch: Continuous rebuild on save (requires latexmk).
 watch:
@@ -107,7 +122,6 @@ clean:
 	@find chapters appendices bibliography -name '*.aux' -delete 2>/dev/null || true
 	@rm -f texput.log
 	@rm -f $(MAIN).pdf
-	@touch $(MAIN).aux
 	@echo "  ✓  Clean."
 
 ## veryclean: Alias for clean (kept for backward compatibility).
@@ -129,6 +143,34 @@ count:
 	fi
 	@echo ""
 
+## metadata: Regenerate all machine-readable metadata from .tex sources.
+metadata:
+	@echo "  ── Generating metadata ──"
+	@python3 scripts/generate_metadata.py
+
+## census: Print claim census from generated metadata.
+census: metadata
+	@python3 -c "import json; d=json.load(open('metadata/census.json')); t=d['totals']; print(f'  PH={t[\"ProvedHere\"]} PE={t[\"ProvedElsewhere\"]} CJ={t[\"Conjectured\"]} H={t[\"Heuristic\"]} O={t[\"Open\"]} total={t[\"total_claims\"]}')"
+
+## verify: Run anti-pattern verification on all .tex files.
+verify:
+	@./scripts/verify_edit.sh --all
+
+## test: Run computational kernel test suite (if it exists).
+test:
+	@if [ -d compute/tests ] && ls compute/tests/test_*.py 1>/dev/null 2>&1; then \
+		echo "  ── Running compute test suite ──"; \
+		if [ -f compute/.venv/bin/python ]; then \
+			compute/.venv/bin/python -m pytest compute/tests/ -v; \
+		elif [ -f .venv/bin/python ]; then \
+			.venv/bin/python -m pytest compute/tests/ -v; \
+		else \
+			python3 -m pytest compute/tests/ -v; \
+		fi; \
+	else \
+		echo "  (no compute tests found — skipping)"; \
+	fi
+
 ## help: Show available targets.
 help:
 	@echo ""
@@ -145,5 +187,9 @@ help:
 	@echo "  make clean      Remove build artifacts and compiled PDF"
 	@echo "  make veryclean  Alias for clean"
 	@echo "  make count      Manuscript statistics"
+	@echo "  make metadata   Regenerate machine-readable metadata"
+	@echo "  make census     Print claim census"
+	@echo "  make verify     Run anti-pattern verification"
+	@echo "  make test       Run computational kernel tests"
 	@echo "  make help       This message"
 	@echo ""
