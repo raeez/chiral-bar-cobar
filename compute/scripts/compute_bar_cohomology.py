@@ -9,6 +9,8 @@ Strategy:
   5. Compute cohomology = ker(d_out)/im(d_in) at each (n, w)
   6. Sum over w to get total dim H^n
 
+Uses exact Fraction arithmetic throughout (no numpy dependency).
+
 Validates against known Virasoro values (Motzkin differences):
   1, 2, 5, 12, 30, 76, 196, 512, ...
 
@@ -17,12 +19,86 @@ Then computes W_3 bar cohomology (known: 2, 5, 16, 52).
 Author: Raeez Lorgat
 """
 
-import numpy as np
 from fractions import Fraction
-from itertools import combinations
-from functools import lru_cache
 import sys
 import time
+
+ZERO = Fraction(0)
+ONE = Fraction(1)
+
+
+# ============================================================================
+# Pure Python linear algebra with Fraction
+# ============================================================================
+
+def matrix_rank(mat, nrows, ncols):
+    """Compute rank of a matrix via Gaussian elimination over Q.
+    mat is a list of lists of Fraction, shape nrows x ncols.
+    """
+    if nrows == 0 or ncols == 0:
+        return 0
+    # Copy matrix
+    m = [row[:] for row in mat]
+    rank = 0
+    for col in range(ncols):
+        # Find pivot
+        pivot = None
+        for row in range(rank, nrows):
+            if m[row][col] != ZERO:
+                pivot = row
+                break
+        if pivot is None:
+            continue
+        # Swap
+        m[rank], m[pivot] = m[pivot], m[rank]
+        # Eliminate
+        inv = Fraction(1, m[rank][col])
+        for row in range(nrows):
+            if row != rank and m[row][col] != ZERO:
+                factor = m[row][col] * inv
+                for c in range(ncols):
+                    m[row][c] -= factor * m[rank][c]
+        rank += 1
+    return rank
+
+
+def mat_mul(A, A_rows, A_cols, B, B_rows, B_cols):
+    """Multiply A (A_rows x A_cols) by B (B_rows x B_cols). Returns list of lists."""
+    assert A_cols == B_rows
+    result = [[ZERO] * B_cols for _ in range(A_rows)]
+    for i in range(A_rows):
+        for k in range(A_cols):
+            if A[i][k] == ZERO:
+                continue
+            for j in range(B_cols):
+                if B[k][j] != ZERO:
+                    result[i][j] += A[i][k] * B[k][j]
+    return result
+
+
+def mat_add(A, B, nrows, ncols):
+    """Add two matrices."""
+    return [[A[i][j] + B[i][j] for j in range(ncols)] for i in range(nrows)]
+
+
+def mat_scale(A, nrows, ncols, scalar):
+    """Scale matrix by scalar."""
+    return [[A[i][j] * scalar for j in range(ncols)] for i in range(nrows)]
+
+
+def identity_matrix(n):
+    """n x n identity matrix."""
+    return [[ONE if i == j else ZERO for j in range(n)] for i in range(n)]
+
+
+def zero_matrix(nrows, ncols):
+    """nrows x ncols zero matrix."""
+    return [[ZERO] * ncols for _ in range(nrows)]
+
+
+def is_zero_matrix(mat, nrows, ncols):
+    """Check if matrix is all zeros."""
+    return all(mat[i][j] == ZERO for i in range(nrows) for j in range(ncols))
 
 
 # ============================================================================
@@ -46,8 +122,6 @@ def partitions_geq(n, min_part, max_part=None):
 
 def vir_pbw_basis(weight):
     """PBW basis at given weight for Virasoro: partitions into parts >= 2."""
-    if weight < 0:
-        return [()]  if weight == 0 else []
     if weight == 0:
         return [()]
     if weight == 1:
@@ -64,56 +138,41 @@ def w3_pbw_basis(weight):
     Represented as (L_tuple, W_tuple).
     """
     basis = []
-    # Split weight into L-part and W-part
     for w_part in range(0, weight + 1):
         l_part = weight - w_part
         for l_partition in partitions_geq(l_part, 2):
             for w_partition in partitions_geq(w_part, 3):
                 basis.append((l_partition, w_partition))
-    # Remove the vacuum (0, 0) if weight > 0, keep if weight == 0
     if weight == 0:
         return [((), ())]
     return [(l, w) for l, w in basis if l or w]
 
 
 # ============================================================================
-# Virasoro mode algebra (numerical, float64)
+# Virasoro mode algebra (exact Fraction arithmetic)
 # ============================================================================
 
 class VirasoroFock:
-    """Truncated Virasoro vacuum module with numerical mode matrices.
-
-    Stores PBW bases at each weight and precomputes L_n matrices.
-    """
+    """Truncated Virasoro vacuum module with exact mode matrices."""
 
     def __init__(self, c, max_weight):
-        self.c = float(c)
+        self.c = Fraction(c)
         self.max_h = max_weight
 
-        # PBW bases at each weight
         self.basis = {}
-        self.basis_index = {}  # partition -> (weight, index)
+        self.basis_index = {}
         for h in range(0, max_weight + 1):
-            if h == 0:
-                b = [()]
-            elif h == 1:
-                b = []
-            else:
-                b = vir_pbw_basis(h)
+            b = vir_pbw_basis(h)
             self.basis[h] = b
             for i, part in enumerate(b):
                 self.basis_index[part] = (h, i)
 
         self.dim = {h: len(b) for h, b in self.basis.items()}
-
-        # Cache for L_n matrices
         self._L_cache = {}
 
     def L_matrix(self, n, h_source):
         """Matrix of L_n: V_{h_source} -> V_{h_source - n}.
-
-        Returns numpy array of shape (dim_target, dim_source), or None if
-        target weight is out of range.
+        Returns (matrix, dim_target, dim_source) or None.
         """
         h_target = h_source - n
         key = (n, h_source)
@@ -133,96 +192,90 @@ class VirasoroFock:
 
         dim_s = len(src_basis)
         dim_t = len(tgt_basis)
-        mat = np.zeros((dim_t, dim_s))
-
+        mat = zero_matrix(dim_t, dim_s)
         tgt_index = {p: i for i, p in enumerate(tgt_basis)}
 
         for col, partition in enumerate(src_basis):
-            # Compute L_n applied to this PBW state
             result = self._L_on_pbw(n, partition)
             for part, coeff in result.items():
                 if part in tgt_index:
-                    mat[tgt_index[part], col] += coeff
+                    mat[tgt_index[part]][col] += coeff
 
-        self._L_cache[key] = mat
-        return mat
+        self._L_cache[key] = (mat, dim_t, dim_s)
+        return (mat, dim_t, dim_s)
 
     def _L_on_pbw(self, n, partition):
-        """Apply L_n to PBW state. Returns dict {partition: float_coeff}."""
+        """Apply L_n to PBW state. Returns dict {partition: Fraction coeff}."""
         if not partition:
-            # L_n |0> = 0 for n >= -1
             if n >= -1:
                 return {}
             else:
-                return {(-n,): 1.0}
+                return {(-n,): ONE}
 
         if n <= -2:
             return self._insert_mode(-n, partition)
 
-        # Annihilation: commute L_n through from left
         m1 = partition[0]
         rest = partition[1:]
         result = {}
 
-        # [L_n, L_{-m1}] = (n+m1) L_{n-m1}
-        comm = n + m1
-        new_n = n - m1  # mode index of commutator result
+        # [L_n, L_{-m1}] = (n+m1) L_{n-m1} + central
+        comm_coeff = n + m1
+        new_n = n - m1
 
-        if comm != 0:
+        if comm_coeff != 0:
             if new_n <= -2:
                 inner = self._insert_mode(-new_n, rest)
             else:
                 inner = self._L_on_pbw(new_n, rest)
+            c_frac = Fraction(comm_coeff)
             for p, c in inner.items():
-                result[p] = result.get(p, 0.0) + comm * c
+                result[p] = result.get(p, ZERO) + c_frac * c
 
-        # Central term: (c/12) n(n^2-1) delta_{n, m1}
+        # Central: (c/12) n(n^2-1) delta_{n,m1}
         if n == m1 and n >= 2:
-            central = self.c / 12.0 * n * (n * n - 1)
-            if abs(central) > 1e-15:
+            central = self.c * Fraction(n * (n * n - 1), 12)
+            if central != ZERO:
                 rest_key = rest if rest else ()
-                result[rest_key] = result.get(rest_key, 0.0) + central
+                result[rest_key] = result.get(rest_key, ZERO) + central
 
-        # Pass-through: L_{-m1} (L_n on rest)
+        # Pass-through: L_{-m1} (L_n rest)
         inner = self._L_on_pbw(n, rest)
         for p, c in inner.items():
             new_p = self._prepend(m1, p)
-            result[new_p] = result.get(new_p, 0.0) + c
+            result[new_p] = result.get(new_p, ZERO) + c
 
-        return {k: v for k, v in result.items() if abs(v) > 1e-15}
+        return {k: v for k, v in result.items() if v != ZERO}
 
     def _insert_mode(self, m, partition):
         """Insert L_{-m} before L_{-p1}...L_{-pk}|0>, reorder to PBW."""
         if not partition:
-            return {(m,): 1.0}
+            return {(m,): ONE}
 
         p1 = partition[0]
         if m >= p1:
-            return {(m,) + partition: 1.0}
+            return {(m,) + partition: ONE}
 
         rest = partition[1:]
         result = {}
 
         # L_{-m} L_{-p1} = L_{-p1} L_{-m} + (p1-m) L_{-(m+p1)}
-        # Term 1: push L_{-m} past L_{-p1}
         inner1 = self._insert_mode(m, rest)
         for p, c in inner1.items():
             new_p = (p1,) + p
-            result[new_p] = result.get(new_p, 0.0) + c
+            result[new_p] = result.get(new_p, ZERO) + c
 
-        # Term 2: commutator (p1-m) L_{-(m+p1)}
+        coeff = Fraction(p1 - m)
         inner2 = self._insert_mode(m + p1, rest)
-        coeff = float(p1 - m)
         for p, c in inner2.items():
-            result[p] = result.get(p, 0.0) + coeff * c
+            result[p] = result.get(p, ZERO) + coeff * c
 
-        return {k: v for k, v in result.items() if abs(v) > 1e-15}
+        return {k: v for k, v in result.items() if v != ZERO}
 
     def _prepend(self, m, partition):
-        """Prepend m to partition (assumes m >= partition[0])."""
+        """Prepend m to partition maintaining PBW order."""
         if not partition or m >= partition[0]:
             return (m,) + partition
-        # Need to insert properly
         result = list(partition)
         for i in range(len(result)):
             if m >= result[i]:
@@ -239,29 +292,27 @@ class ZerothProductEngine:
 
     For a PBW state a at weight h_a, a_(0) maps V_{h_b} -> V_{h_a+h_b-1}.
 
-    Uses the recursive formula:
+    Uses the recursive Borcherds formula:
     - T_(0) = L_{-1}
-    - (L_{-m} v)_(0) = sum_j f(j) [L_{-m-j} v_(j) + (-1)^m v_(1-m-j) L_{j-1}]
-
-    where f(j) = (-1)^j C(1-m, j) and v_(j) is the j-th product mode.
+    - (partial^k T)_(0) = 0 for k >= 1
+    - (L_{-m} v)_(0) via iterate formula
     """
 
     def __init__(self, fock):
         self.fock = fock
-        self._cache = {}  # (a_partition, h_b) -> matrix
-        self._product_cache = {}  # (partition, j, h) -> matrix
+        self._cache = {}
+        self._product_cache = {}
 
     def zeroth_product_matrix(self, a_partition, h_b):
         """Matrix of a_(0): V_{h_b} -> V_{h_a+h_b-1}.
-
-        Returns numpy matrix or None if out of range.
+        Returns (matrix, dim_target, dim_source) or None.
         """
         h_a = sum(a_partition)
         h_target = h_a + h_b - 1
 
         if h_target < 0 or h_target > self.fock.max_h:
             return None
-        if h_b not in self.fock.dim or self.fock.dim.get(h_b, 0) == 0:
+        if self.fock.dim.get(h_b, 0) == 0:
             return None
         if self.fock.dim.get(h_target, 0) == 0:
             return None
@@ -277,7 +328,6 @@ class ZerothProductEngine:
     def _compute_zeroth(self, a_partition, h_b):
         """Compute the zeroth product matrix."""
         if not a_partition:
-            # Vacuum: zero zeroth product
             return None
 
         if len(a_partition) == 1:
@@ -286,10 +336,10 @@ class ZerothProductEngine:
                 # T_(0) = L_{-1}
                 return self.fock.L_matrix(-1, h_b)
             else:
-                # Single mode L_{-m}|0> for m >= 3: zeroth product = 0
+                # (partial^{m-2} T)_(0) = 0 for m >= 3
                 return None
 
-        # Multi-mode: use (L_{-m1} v)_(0) = sum_j [terms]
+        # Multi-mode: Borcherds iterate
         m1 = a_partition[0]
         v_partition = a_partition[1:]
         h_v = sum(v_partition)
@@ -301,57 +351,65 @@ class ZerothProductEngine:
         if dim_s == 0 or dim_t == 0:
             return None
 
-        result = np.zeros((dim_t, dim_s))
+        result = zero_matrix(dim_t, dim_s)
 
-        max_j = h_b + h_v + 5
+        # The Borcherds iterate formula:
+        # (L_{-m} v)_(j) = sum_{i>=0} (-1)^i C(1-m, i) *
+        #   [ L_{-m-i} v_(j+i) + (-1)^m v_(j+1-m-i) L_{i-1} ]
+        # We need j = 0.
+        max_i = h_b + h_v + 5
 
-        for j in range(max_j):
-            binom_coeff = self._binom(1 - m1, j) * ((-1) ** j)
-            if abs(binom_coeff) < 1e-15 and j > h_b + 3:
+        for i in range(max_i):
+            bc = _binom(1 - m1, i) * ((-1) ** i)
+            if bc == 0 and i > h_b + 3:
                 continue
+            bc = Fraction(bc) if not isinstance(bc, Fraction) else bc
 
-            # Term 1: L_{-m1-j} (v_(j) |b>)
-            # v_(j): V_{h_b} -> V_{h_v + h_b - j - 1}
-            h_mid1 = h_v + h_b - j - 1
-            v_j_mat = self._jth_product_matrix(v_partition, j, h_b)
-            if v_j_mat is not None and h_mid1 >= 0:
-                # L_{-m1-j}: V_{h_mid1} -> V_{h_mid1 + m1 + j} = V_{h_target}
-                L_mat = self.fock.L_matrix(-m1 - j, h_mid1)
-                if L_mat is not None:
-                    result += binom_coeff * (L_mat @ v_j_mat)
+            # Term 1: L_{-m1-i} (v_(i) |b>)
+            h_mid1 = h_v + h_b - i - 1
+            v_i_data = self._jth_product_matrix(v_partition, i, h_b)
+            if v_i_data is not None and 0 <= h_mid1 <= self.fock.max_h:
+                v_i_mat, v_i_rows, v_i_cols = v_i_data
+                L_data = self.fock.L_matrix(-m1 - i, h_mid1)
+                if L_data is not None:
+                    L_mat, L_rows, L_cols = L_data
+                    prod = mat_mul(L_mat, L_rows, L_cols, v_i_mat, v_i_rows, v_i_cols)
+                    prod_s = mat_scale(prod, L_rows, v_i_cols, bc)
+                    result = mat_add(result, prod_s, dim_t, dim_s)
 
-            # Term 2: (-1)^m1 * v_(1-m1-j) (L_{j-1} |b>)
-            # L_{j-1}: V_{h_b} -> V_{h_b - j + 1}
-            h_mid2 = h_b - j + 1
-            L_jm1 = self.fock.L_matrix(j - 1, h_b)
-            if L_jm1 is not None and h_mid2 >= 0:
-                k2 = 1 - m1 - j
-                v_k2_mat = self._jth_product_matrix(v_partition, k2, h_mid2)
-                if v_k2_mat is not None:
-                    result += binom_coeff * ((-1) ** m1) * (v_k2_mat @ L_jm1)
+            # Term 2: (-1)^m1 * v_(1-m1-i) (L_{i-1} |b>)
+            h_mid2 = h_b - i + 1
+            L_im1_data = self.fock.L_matrix(i - 1, h_b)
+            if L_im1_data is not None and 0 <= h_mid2 <= self.fock.max_h:
+                L_im1_mat, L_im1_rows, L_im1_cols = L_im1_data
+                k2 = 1 - m1 - i
+                v_k2_data = self._jth_product_matrix(v_partition, k2, h_mid2)
+                if v_k2_data is not None:
+                    v_k2_mat, v_k2_rows, v_k2_cols = v_k2_data
+                    prod = mat_mul(v_k2_mat, v_k2_rows, v_k2_cols,
+                                   L_im1_mat, L_im1_rows, L_im1_cols)
+                    sign = Fraction((-1) ** m1)
+                    prod_s = mat_scale(prod, v_k2_rows, L_im1_cols, bc * sign)
+                    result = mat_add(result, prod_s, dim_t, dim_s)
 
-        if np.max(np.abs(result)) < 1e-12:
+        if is_zero_matrix(result, dim_t, dim_s):
             return None
-        return result
+        return (result, dim_t, dim_s)
 
-    def _jth_product_matrix(self, v_partition, j, h_target_input):
-        """Matrix of v_(j): V_{h_target_input} -> V_{h_v + h_target_input - j - 1}.
-
-        For single mode L_{-p}|0>:
-          v_(j) = (1/(p-2)!) * (-1)^{p-2} * falling(j, p-2) * L_{j-p+1}
-
-        For vacuum: v_(j) = delta_{j,-1} * id
+    def _jth_product_matrix(self, v_partition, j, h_source):
+        """Matrix of v_(j): V_{h_source} -> V_{h_v+h_source-j-1}.
+        Returns (matrix, nrows, ncols) or None.
         """
-        key = (v_partition, j, h_target_input)
+        key = (v_partition, j, h_source)
         if key in self._product_cache:
             return self._product_cache[key]
 
-        mat = self._compute_jth_product(v_partition, j, h_target_input)
+        mat = self._compute_jth_product(v_partition, j, h_source)
         self._product_cache[key] = mat
         return mat
 
     def _compute_jth_product(self, v_partition, j, h_source):
-        """Compute matrix of v_(j): V_{h_source} -> V_{...}."""
+        """Compute v_(j) matrix."""
         h_v = sum(v_partition) if v_partition else 0
         h_target = h_v + h_source - j - 1
 
@@ -363,35 +421,39 @@ class ZerothProductEngine:
             return None
 
         if not v_partition:
-            # Vacuum: v_(j) = delta_{j,-1} * id
+            # Vacuum _(j) = delta_{j,-1} * id
             if j == -1 and h_source == h_target:
-                return np.eye(self.fock.dim[h_source])
+                n = self.fock.dim[h_source]
+                return (identity_matrix(n), n, n)
             return None
 
         if len(v_partition) == 1:
             p = v_partition[0]
-            k = p - 2  # number of derivatives
+            k = p - 2  # number of derivatives: (partial^k T)
 
-            # v_(j) = ((-1)^k / k!) * j*(j-1)*...*(j-k+1) * L_{j-p+1}
-            falling = 1.0
-            for i in range(k):
-                falling *= (j - i)
+            # (partial^k T)_(j) = (-1)^k / k! * j(j-1)...(j-k+1) * L_{j-k-1}
+            # = (-1)^k * C(j, k) * L_{j-k-1}   (since falling/k! = C(j,k))
+            # Actually: (partial^k T)_(j) = (-1)^k * falling(j,k) / k! * L_{j-p+1}
+            falling = ONE
+            for ii in range(k):
+                falling *= Fraction(j - ii)
 
-            factorial_k = 1
-            for i in range(2, k + 1):
-                factorial_k *= i
+            factorial_k = ONE
+            for ii in range(2, k + 1):
+                factorial_k *= Fraction(ii)
 
             coeff = ((-1) ** k) * falling / factorial_k
-            if abs(coeff) < 1e-15:
+            if coeff == ZERO:
                 return None
 
-            mode = j - p + 1  # L_{j-p+1}
-            L_mat = self.fock.L_matrix(mode, h_source)
-            if L_mat is None:
+            mode = j - p + 1  # L_{mode}
+            L_data = self.fock.L_matrix(mode, h_source)
+            if L_data is None:
                 return None
-            return coeff * L_mat
+            L_mat, L_rows, L_cols = L_data
+            return (mat_scale(L_mat, L_rows, L_cols, Fraction(coeff)), L_rows, L_cols)
 
-        # Multi-mode: recursive via Borcherds
+        # Multi-mode: recursive Borcherds
         m1 = v_partition[0]
         w_partition = v_partition[1:]
         h_w = sum(w_partition) if w_partition else 0
@@ -401,82 +463,71 @@ class ZerothProductEngine:
         if dim_s == 0 or dim_t == 0:
             return None
 
-        result = np.zeros((dim_t, dim_s))
+        result = zero_matrix(dim_t, dim_s)
         max_i = h_source + h_w + 5
 
         for i in range(max_i):
-            bc = self._binom(1 - m1, i) * ((-1) ** i)
-            if abs(bc) < 1e-15 and i > h_source + 3:
+            bc = _binom(1 - m1, i) * ((-1) ** i)
+            if bc == 0 and i > h_source + 3:
                 continue
+            bc = Fraction(bc) if not isinstance(bc, Fraction) else bc
 
-            # Term 1: L_{-m1-i} (w_(j+i) target)
+            # Term 1: L_{-m1-i} (w_(j+i) source)
             h_mid1 = h_w + h_source - (j + i) - 1
-            w_ji = self._jth_product_matrix(w_partition, j + i, h_source)
-            if w_ji is not None and 0 <= h_mid1 <= self.fock.max_h:
-                L_mat = self.fock.L_matrix(-m1 - i, h_mid1)
-                if L_mat is not None:
-                    result += bc * (L_mat @ w_ji)
+            w_ji_data = self._jth_product_matrix(w_partition, j + i, h_source)
+            if w_ji_data is not None and 0 <= h_mid1 <= self.fock.max_h:
+                w_ji_mat, w_ji_rows, w_ji_cols = w_ji_data
+                L_data = self.fock.L_matrix(-m1 - i, h_mid1)
+                if L_data is not None:
+                    L_mat, L_rows, L_cols = L_data
+                    prod = mat_mul(L_mat, L_rows, L_cols, w_ji_mat, w_ji_rows, w_ji_cols)
+                    prod_s = mat_scale(prod, L_rows, w_ji_cols, bc)
+                    result = mat_add(result, prod_s, dim_t, dim_s)
 
-            # Term 2: (-1)^m1 * w_(1-m1+j-i) (L_{i-1} target)
+            # Term 2: (-1)^m1 * w_(j+1-m1-i) (L_{i-1} source)
             h_mid2 = h_source - i + 1
-            L_im1 = self.fock.L_matrix(i - 1, h_source)
-            if L_im1 is not None and 0 <= h_mid2 <= self.fock.max_h:
-                k2 = 1 - m1 + j - i
-                w_k2 = self._jth_product_matrix(w_partition, k2, h_mid2)
-                if w_k2 is not None:
-                    result += bc * ((-1) ** m1) * (w_k2 @ L_im1)
+            L_im1_data = self.fock.L_matrix(i - 1, h_source)
+            if L_im1_data is not None and 0 <= h_mid2 <= self.fock.max_h:
+                L_im1_mat, L_im1_rows, L_im1_cols = L_im1_data
+                k2 = j + 1 - m1 - i
+                w_k2_data = self._jth_product_matrix(w_partition, k2, h_mid2)
+                if w_k2_data is not None:
+                    w_k2_mat, w_k2_rows, w_k2_cols = w_k2_data
+                    prod = mat_mul(w_k2_mat, w_k2_rows, w_k2_cols,
+                                   L_im1_mat, L_im1_rows, L_im1_cols)
+                    sign = Fraction((-1) ** m1)
+                    prod_s = mat_scale(prod, w_k2_rows, L_im1_cols, bc * sign)
+                    result = mat_add(result, prod_s, dim_t, dim_s)
 
-        if np.max(np.abs(result)) < 1e-12:
+        if is_zero_matrix(result, dim_t, dim_s):
             return None
-        return result
+        return (result, dim_t, dim_s)
 
-    def _binom(self, n, k):
-        """Generalized binomial coefficient C(n, k) for real n, int k >= 0."""
-        if k < 0:
-            return 0.0
-        result = 1.0
-        for i in range(k):
-            result *= (n - i) / (i + 1)
-        return result
+
+def _binom(n, k):
+    """Generalized binomial coefficient C(n, k) for integer n, int k >= 0."""
+    if k < 0:
+        return Fraction(0)
+    result = Fraction(1)
+    for i in range(k):
+        result *= Fraction(n - i, i + 1)
+    return result
 
 
 # ============================================================================
 # OS form residues
 # ============================================================================
 
-# Form residue tables for the bar complex.
-# OS^{n-1}(C_n) has dim (n-1)!
-# The residue R_{ij}: OS^{n-1}(C_n) -> OS^{n-2}(C_{n-1}) is a linear map.
-
+# For n=2: OS^1(C_2) has dim 1 (the form eta_{12}), residue = 1.
 # For n=3: OS^2(C_3) has basis {w1=eta12^eta13, w2=eta12^eta23}, dim=2.
-# Residues:
-#   R_12(w1)=+1, R_12(w2)=+1
-#   R_13(w1)=+1, R_13(w2)=0
-#   R_23(w1)=0,  R_23(w2)=-1
-
 OS2_RESIDUES = {
-    # (form_idx, (i,j)): coefficient
-    (0, (1, 2)): 1.0,
-    (0, (1, 3)): 1.0,
-    (0, (2, 3)): 0.0,
-    (1, (1, 2)): 1.0,
-    (1, (1, 3)): 0.0,
-    (1, (2, 3)): -1.0,
+    (0, (1, 2)): ONE,   (0, (1, 3)): ONE,   (0, (2, 3)): ZERO,
+    (1, (1, 2)): ONE,   (1, (1, 3)): ZERO,  (1, (2, 3)): -ONE,
 }
 
-# After collision (i,j), the ordering of the result in degree n-1:
-# (1,2): merged -> pos 1, remaining -> pos 2 (for 3-pt)
-# (1,3): merged -> pos 1, remaining=z2 -> pos 2
-# (2,3): remaining=z1 -> pos 1, merged -> pos 2
 
 def collision_result_3pt(i, j, a1, a2, a3):
-    """After collision (i,j) in a 3-point bar element [a1|a2|a3],
-    return (contracted_pair, remaining, order).
-
-    contracted_pair = (a_i, a_j) to apply zeroth product
-    remaining = the spectator
-    order: 'merged_first' or 'remaining_first' in the degree-2 result
-    """
+    """After collision (i,j) in [a1|a2|a3], return (ai, aj, remaining, order)."""
     if (i, j) == (1, 2):
         return (a1, a2), a3, 'merged_first'
     elif (i, j) == (1, 3):
@@ -498,11 +549,7 @@ class BarCohomology:
         self.max_h = max_weight
 
     def bar_tensor_basis(self, n, total_h):
-        """Enumerate basis of the tensor part of B^n at total conformal weight total_h.
-
-        Each element is a tuple (a1, a2, ..., an) of PBW partitions with
-        sum(a_i weights) = total_h.
-        """
+        """Basis of tensor part of B^n at total conformal weight total_h."""
         basis = []
         self._enum_tensor(n, total_h, [], basis)
         return basis
@@ -522,58 +569,36 @@ class BarCohomology:
                                   current + [part], result)
 
     def differential_2to1(self, w):
-        """Matrix of d: B^2_w -> B^1_w.
-
-        d([a|b]) = a_(0) b.
-        Shifted weight w: h_a + h_b - 2 = w, so total_h = w + 2.
-        Target: B^1_w = V_{w+1}.
-        """
+        """Matrix of d: B^2_w -> B^1_w. Returns (mat, nrows, ncols, src, tgt)."""
         total_h = w + 2
         src_basis = self.bar_tensor_basis(2, total_h)
         tgt_h = w + 1
         tgt_basis = self.fock.basis.get(tgt_h, [])
 
-        if not src_basis or not tgt_basis:
-            return np.zeros((len(tgt_basis), len(src_basis))), src_basis, tgt_basis
-
-        dim_t = len(tgt_basis)
         dim_s = len(src_basis)
-        mat = np.zeros((dim_t, dim_s))
+        dim_t = len(tgt_basis)
+        if dim_s == 0 or dim_t == 0:
+            return zero_matrix(dim_t, dim_s), dim_t, dim_s
 
-        tgt_idx = {p: i for i, p in enumerate(tgt_basis)}
+        mat = zero_matrix(dim_t, dim_s)
 
         for col, (a, b) in enumerate(src_basis):
             h_b = sum(b)
-            zp_mat = self.zp.zeroth_product_matrix(a, h_b)
-            if zp_mat is None:
+            zp_data = self.zp.zeroth_product_matrix(a, h_b)
+            if zp_data is None:
                 continue
+            zp_mat, zp_rows, zp_cols = zp_data
 
-            # b is a PBW state in V_{h_b}: find its index
-            b_idx = None
-            for ii, bp in enumerate(self.fock.basis[h_b]):
-                if bp == b:
-                    b_idx = ii
-                    break
-            if b_idx is None:
-                continue
+            b_idx = self.fock.basis[h_b].index(b)
 
-            # a_(0)b is the b_idx-th column of zp_mat
-            result_vec = zp_mat[:, b_idx]
-
-            # Map to target basis
             for row in range(dim_t):
-                mat[row, col] += result_vec[row]
+                mat[row][col] += zp_mat[row][b_idx]
 
-        return mat, src_basis, tgt_basis
+        return mat, dim_t, dim_s
 
     def differential_3to2(self, w):
         """Matrix of d: B^3_w -> B^2_w.
-
-        B^3_w includes OS^2 factor (dim 2).
-        Source basis: tensor_basis_3 x {0, 1} (form index).
-        Target basis: tensor_basis_2 (OS^1 is 1-dim).
-
-        d([a1|a2|a3] x omega_k) = sum_{i<j} R_{ij}(omega_k) * [contracted | remaining]
+        Source: tensor3 x OS^2 (dim 2). Target: tensor2.
         """
         total_h_src = w + 3
         total_h_tgt = w + 2
@@ -581,17 +606,12 @@ class BarCohomology:
         tensor3 = self.bar_tensor_basis(3, total_h_src)
         tensor2 = self.bar_tensor_basis(2, total_h_tgt)
 
-        if not tensor3 or not tensor2:
-            n_s = len(tensor3) * 2
-            n_t = len(tensor2)
-            return np.zeros((n_t, n_s)), tensor3, tensor2
-
-        # Source: each tensor3 element x 2 OS forms = len(tensor3) * 2
-        # Target: tensor2 elements
         dim_s = len(tensor3) * 2
         dim_t = len(tensor2)
-        mat = np.zeros((dim_t, dim_s))
+        if dim_s == 0 or dim_t == 0:
+            return zero_matrix(dim_t, dim_s), dim_t, dim_s
 
+        mat = zero_matrix(dim_t, dim_s)
         tgt_idx = {elem: i for i, elem in enumerate(tensor2)}
 
         for t_idx, (a1, a2, a3) in enumerate(tensor3):
@@ -599,33 +619,24 @@ class BarCohomology:
                 col = t_idx * 2 + form_idx
 
                 for (i, j) in [(1, 2), (1, 3), (2, 3)]:
-                    residue = OS2_RESIDUES.get((form_idx, (i, j)), 0.0)
-                    if abs(residue) < 1e-15:
+                    residue = OS2_RESIDUES.get((form_idx, (i, j)), ZERO)
+                    if residue == ZERO:
                         continue
 
                     (ai, aj), remaining, order = collision_result_3pt(
                         i, j, a1, a2, a3)
 
-                    # Compute ai_(0) aj
                     h_aj = sum(aj)
-                    zp_mat = self.zp.zeroth_product_matrix(ai, h_aj)
-                    if zp_mat is None:
+                    zp_data = self.zp.zeroth_product_matrix(ai, h_aj)
+                    if zp_data is None:
                         continue
+                    zp_mat, zp_rows, zp_cols = zp_data
 
-                    aj_idx = None
-                    for ii, bp in enumerate(self.fock.basis[h_aj]):
-                        if bp == aj:
-                            aj_idx = ii
-                            break
-                    if aj_idx is None:
-                        continue
-
-                    contracted_vec = zp_mat[:, aj_idx]
+                    aj_idx = self.fock.basis[h_aj].index(aj)
                     h_contracted = sum(ai) + h_aj - 1
 
-                    # Build degree-2 elements from contracted + remaining
-                    for c_idx in range(len(contracted_vec)):
-                        if abs(contracted_vec[c_idx]) < 1e-15:
+                    for c_idx in range(zp_rows):
+                        if zp_mat[c_idx][aj_idx] == ZERO:
                             continue
 
                         contracted_part = self.fock.basis[h_contracted][c_idx]
@@ -637,68 +648,33 @@ class BarCohomology:
 
                         if deg2_elem in tgt_idx:
                             row = tgt_idx[deg2_elem]
-                            mat[row, col] += residue * contracted_vec[c_idx]
+                            mat[row][col] += residue * zp_mat[c_idx][aj_idx]
 
-        return mat, tensor3, tensor2
+        return mat, dim_t, dim_s
 
-    def compute_H1(self, max_w):
-        """Compute dim H^1 = sum_w dim H^1_w.
-
-        H^1_w = B^1_w / im(d: B^2_w -> B^1_w)
-        """
-        total = 0
-        for w in range(1, max_w + 1):
-            tgt_h = w + 1
-            dim_B1 = self.fock.dim.get(tgt_h, 0)
-            if dim_B1 == 0:
-                continue
-
-            mat, _, _ = self.differential_2to1(w)
-            if mat.size == 0:
-                total += dim_B1
-                continue
-
-            rank = np.linalg.matrix_rank(mat, tol=1e-8)
-            total += dim_B1 - rank
-
-        return total
-
-    def compute_Hn(self, n, max_w):
-        """Compute dim H^n = sum_w dim H^n_w for n >= 1.
-
-        H^n_w = ker(d_out: B^n_w -> B^{n-1}_w) / im(d_in: B^{n+1}_w -> B^n_w)
-        """
+    def compute_Hn(self, n, max_w, debug=False):
+        """Compute dim H^n = sum_w dim H^n_w."""
         if n < 1:
             return 0
-
         total = 0
         for w in range(n, max_w + 1):
-            dim_Hn_w = self._Hn_at_w(n, w)
-            total += dim_Hn_w
+            h = self._Hn_at_w(n, w, debug=debug)
+            if h > 0:
+                if debug:
+                    print(f"    H^{n}_{w} = {h}")
+                total += h
         return total
 
-    def _Hn_at_w(self, n, w):
+    def _Hn_at_w(self, n, w, debug=False):
         """Compute dim H^n_w = dim ker(d_out) - dim im(d_in)."""
-        # d_out: B^n_w -> B^{n-1}_w
-        # d_in:  B^{n+1}_w -> B^n_w
-
-        total_h_n = w + n  # conformal weight at degree n
-
-        # dim B^n_w (including OS forms for n >= 3)
+        # dim B^n_w
         if n == 1:
             dim_Bn = self.fock.dim.get(w + 1, 0)
-            os_factor = 1
         elif n == 2:
-            tensor2 = self.bar_tensor_basis(2, w + 2)
-            dim_Bn = len(tensor2)
-            os_factor = 1  # OS^1 is 1-dim
+            dim_Bn = len(self.bar_tensor_basis(2, w + 2))
         elif n == 3:
-            tensor3 = self.bar_tensor_basis(3, w + 3)
-            dim_Bn = len(tensor3) * 2  # OS^2 has dim 2
-            os_factor = 2
+            dim_Bn = len(self.bar_tensor_basis(3, w + 3)) * 2
         else:
-            # For n >= 4, need to implement OS^{n-1}
-            # For now, skip
             return 0
 
         if dim_Bn == 0:
@@ -706,35 +682,32 @@ class BarCohomology:
 
         # d_out: B^n_w -> B^{n-1}_w
         if n == 1:
-            # d: B^1 -> B^0 = 0 (no bar degree 0 in augmentation)
-            ker_dim = dim_Bn
+            ker_dim = dim_Bn  # d: B^1 -> 0
         elif n == 2:
-            mat_out, _, _ = self.differential_2to1(w)
-            if mat_out.size == 0:
-                ker_dim = dim_Bn
-            else:
-                ker_dim = dim_Bn - np.linalg.matrix_rank(mat_out, tol=1e-8)
+            mat_out, nr, nc = self.differential_2to1(w)
+            rank_out = matrix_rank(mat_out, nr, nc)
+            ker_dim = dim_Bn - rank_out
         elif n == 3:
-            mat_out, _, _ = self.differential_3to2(w)
-            if mat_out.size == 0:
-                ker_dim = dim_Bn
-            else:
-                ker_dim = dim_Bn - np.linalg.matrix_rank(mat_out, tol=1e-8)
+            mat_out, nr, nc = self.differential_3to2(w)
+            rank_out = matrix_rank(mat_out, nr, nc)
+            ker_dim = dim_Bn - rank_out
         else:
             ker_dim = dim_Bn
 
         # d_in: B^{n+1}_w -> B^n_w
         if n + 1 == 2:
-            mat_in, _, _ = self.differential_2to1(w)
-            im_dim = np.linalg.matrix_rank(mat_in, tol=1e-8) if mat_in.size > 0 else 0
+            mat_in, nr, nc = self.differential_2to1(w)
+            im_dim = matrix_rank(mat_in, nr, nc)
         elif n + 1 == 3:
-            mat_in, _, _ = self.differential_3to2(w)
-            im_dim = np.linalg.matrix_rank(mat_in, tol=1e-8) if mat_in.size > 0 else 0
+            mat_in, nr, nc = self.differential_3to2(w)
+            im_dim = matrix_rank(mat_in, nr, nc)
         else:
             im_dim = 0
 
-        h_n = ker_dim - im_dim
-        return max(h_n, 0)
+        if debug and (ker_dim - im_dim) != 0:
+            print(f"      w={w}: dim_B^{n}={dim_Bn}, ker={ker_dim}, im={im_dim}, H={ker_dim-im_dim}")
+
+        return max(ker_dim - im_dim, 0)
 
     def compute_all(self, max_n, max_w):
         """Compute dim H^n for n = 1, ..., max_n."""
@@ -749,49 +722,18 @@ class BarCohomology:
 
 
 # ============================================================================
-# Main: validation and computation
+# Validation and main
 # ============================================================================
 
 def motzkin_differences(max_n):
-    """Motzkin differences M(n+1) - M(n) for n = 1, 2, ...
-
-    Ground truth for Virasoro bar cohomology.
-    """
-    # Motzkin numbers: M(0)=1, M(1)=1, M(2)=2, M(3)=4, M(4)=9, ...
+    """Motzkin differences M(n+1) - M(n): ground truth for Virasoro."""
     N = max_n + 5
     M = [0] * N
     M[0] = 1
     M[1] = 1
     for i in range(2, N):
         M[i] = M[i-1] + sum(M[k] * M[i-2-k] for k in range(i-1))
-
     return {n: M[n+1] - M[n] for n in range(1, max_n + 1)}
-
-
-def validate_virasoro():
-    """Validate the computation against known Virasoro bar cohomology."""
-    print("=" * 70)
-    print("VIRASORO BAR COHOMOLOGY VALIDATION")
-    print("=" * 70)
-
-    expected = motzkin_differences(8)
-    print(f"\nExpected (Motzkin differences): {[expected[n] for n in range(1, 9)]}")
-
-    # First test: c = 7
-    print("\n--- c = 7, max_weight = 25 ---")
-    bc = BarCohomology(c=7, max_weight=25)
-
-    # Compute H^1 first as a basic check
-    print("\nComputing bar cohomology:")
-    results = bc.compute_all(max_n=3, max_w=20)
-
-    print(f"\nValidation:")
-    for n in sorted(results.keys()):
-        exp = expected.get(n, "?")
-        ok = results[n] == exp
-        print(f"  H^{n}: computed={results[n]}, expected={exp}  {'OK' if ok else 'MISMATCH'}")
-
-    return results
 
 
 def validate_zeroth_product():
@@ -800,64 +742,99 @@ def validate_zeroth_product():
     print("ZEROTH PRODUCT VALIDATION")
     print("=" * 70)
 
-    c_val = 7.0
+    c_val = 7
     fock = VirasoroFock(c_val, 20)
     zp = ZerothProductEngine(fock)
+    all_ok = True
 
-    # T_(0) T = L_{-1} T = partial T = L_{-3}|0>
-    # In PBW at weight 3: [(3,)]
-    mat = zp.zeroth_product_matrix((2,), 2)
-    print(f"\nT_(0) acting on V_2 -> V_3:")
-    if mat is not None:
-        print(f"  Matrix shape: {mat.shape}")
-        print(f"  Matrix:\n{mat}")
-        # T is the only basis at weight 2, mapped to L_{-3}|0> at weight 3
-        # But weight 3 basis is [(3,)] only
-        expected = np.array([[1.0]])  # L_{-1} L_{-2}|0> = L_{-3}|0>
-        ok = np.allclose(mat, expected)
-        print(f"  Expected: {expected.flatten()} -> {'OK' if ok else 'MISMATCH'}")
+    # T_(0) T = L_{-1} T = L_{-3}|0>
+    data = zp.zeroth_product_matrix((2,), 2)
+    print(f"\nT_(0) on V_2 -> V_3:")
+    if data is not None:
+        mat, nr, nc = data
+        expected = ONE  # single entry
+        ok = (nr == 1 and nc == 1 and mat[0][0] == expected)
+        print(f"  mat[0][0] = {mat[0][0]}, expected {expected} -> {'OK' if ok else 'MISMATCH'}")
+        all_ok &= ok
+    else:
+        print("  None returned -> MISMATCH")
+        all_ok = False
 
     # :TT:_(0) T = (2+c) L_{-5} + 6 L_{-3}L_{-2}
-    # Weight 4 basis: [(4,), (2,2)]
-    # Weight 5 basis: [(5,), (3,2)]
-    mat_tt = zp.zeroth_product_matrix((2, 2), 2)
-    print(f"\n:TT:_(0) acting on V_2 -> V_5:")
-    if mat_tt is not None:
-        print(f"  Matrix shape: {mat_tt.shape}")
-        print(f"  Matrix:\n{mat_tt}")
-        # Expect: (2+c)*e_{(5,)} + 6*e_{(3,2)}
-        expected_5 = 2 + c_val  # coefficient of L_{-5}|0>
-        expected_32 = 6.0       # coefficient of L_{-3}L_{-2}|0>
-        print(f"  Expected: [{expected_5}, {expected_32}]^T")
-        ok = (abs(mat_tt[0, 0] - expected_5) < 1e-10 and
-              abs(mat_tt[1, 0] - expected_32) < 1e-10)
-        print(f"  -> {'OK' if ok else 'MISMATCH'}")
+    data = zp.zeroth_product_matrix((2, 2), 2)
+    print(f"\n:TT:_(0) on V_2 -> V_5:")
+    if data is not None:
+        mat, nr, nc = data
+        expected_5 = Fraction(2 + c_val)  # coeff of (5,)
+        expected_32 = Fraction(6)          # coeff of (3,2)
+        ok = (mat[0][0] == expected_5 and mat[1][0] == expected_32)
+        print(f"  [{mat[0][0]}, {mat[1][0]}]^T, expected [{expected_5}, {expected_32}]^T -> {'OK' if ok else 'MISMATCH'}")
+        all_ok &= ok
     else:
-        print("  (None returned)")
+        print("  None returned -> MISMATCH")
+        all_ok = False
 
-    # (partial T)_(0) = 0 (derivative has zero zeroth product)
-    mat_dt = zp.zeroth_product_matrix((3,), 2)
-    print(f"\n(partial T)_(0) acting on V_2:")
-    print(f"  {mat_dt}  (expected: None)")
-    ok = mat_dt is None
-    print(f"  -> {'OK' if ok else 'MISMATCH'}")
+    # (partial T)_(0) = 0
+    data = zp.zeroth_product_matrix((3,), 2)
+    ok = data is None
+    print(f"\n(partial T)_(0) on V_2: {data} (expected None) -> {'OK' if ok else 'MISMATCH'}")
+    all_ok &= ok
 
     # L_{-4}|0>_(0) = 0
-    mat_4 = zp.zeroth_product_matrix((4,), 2)
-    print(f"\nL_{{-4}}|0>_(0) acting on V_2:")
-    print(f"  {mat_4}  (expected: None)")
+    data = zp.zeroth_product_matrix((4,), 2)
+    ok = data is None
+    print(f"L_{{-4}}|0>_(0) on V_2: {data} (expected None) -> {'OK' if ok else 'MISMATCH'}")
+    all_ok &= ok
+
+    return all_ok
+
+
+def validate_virasoro(max_w=12):
+    """Validate against known Virasoro bar cohomology."""
+    print("\n" + "=" * 70)
+    print("VIRASORO BAR COHOMOLOGY VALIDATION")
+    print("=" * 70)
+
+    expected = motzkin_differences(10)
+    print(f"\nExpected (Motzkin diffs): {[expected[n] for n in range(1, 9)]}")
+    print(f"\nc = 7, max_weight = {max_w + 5}")
+
+    bc = BarCohomology(c=7, max_weight=max_w + 5)
+
+    print("\nComputing bar cohomology (bar degrees 1-3):")
+    # Debug: show per-weight contributions
+    print("\nDetailed per-weight breakdown:")
+    for n in range(1, 4):
+        t0 = time.time()
+        h = bc.compute_Hn(n, max_w, debug=True)
+        dt = time.time() - t0
+        print(f"  H^{n} = {h}  ({dt:.1f}s)")
+
+    print("\nFinal results:")
+    results = bc.compute_all(max_n=3, max_w=max_w)
+
+    print(f"\nValidation:")
+    all_ok = True
+    for n in sorted(results.keys()):
+        exp = expected.get(n, "?")
+        ok = results[n] == exp
+        print(f"  H^{n}: computed={results[n]}, expected={exp}  {'OK' if ok else 'MISMATCH'}")
+        all_ok &= ok
+
+    return all_ok
 
 
 def main():
-    print("Bar Cohomology Computation")
+    print("Bar Cohomology Computation (exact arithmetic)")
     print("=" * 70)
 
-    # Step 1: Validate zeroth products
-    validate_zeroth_product()
+    ok1 = validate_zeroth_product()
+    ok2 = validate_virasoro(max_w=10)
 
-    # Step 2: Validate Virasoro bar cohomology
-    print()
-    validate_virasoro()
+    if ok1 and ok2:
+        print("\n*** ALL VALIDATIONS PASSED ***")
+    else:
+        print("\n*** SOME VALIDATIONS FAILED ***")
 
 
 if __name__ == "__main__":
