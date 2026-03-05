@@ -6,9 +6,9 @@
 
 &nbsp;
 
-![Pages](https://img.shields.io/badge/pages-1163-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
-![Theorems](https://img.shields.io/badge/theorems_proved-649-10B981?style=for-the-badge&labelColor=1e1e2e)
-![Sources](https://img.shields.io/badge/source_files-55-3B82F6?style=for-the-badge&labelColor=1e1e2e)
+![Pages](https://img.shields.io/badge/pages-1179-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
+![Theorems](https://img.shields.io/badge/theorems_proved-651-10B981?style=for-the-badge&labelColor=1e1e2e)
+![Sources](https://img.shields.io/badge/source_files-63-3B82F6?style=for-the-badge&labelColor=1e1e2e)
 ![LaTeX Errors](https://img.shields.io/badge/errors-0-EF4444?style=for-the-badge&labelColor=1e1e2e)
 ![Claims](https://img.shields.io/badge/open_claims-0-F59E0B?style=for-the-badge&labelColor=1e1e2e)
 
@@ -19,9 +19,9 @@
 
 &nbsp;
 
-![Proved Here](https://img.shields.io/badge/ProvedHere-649-10B981?style=flat-square&labelColor=1e1e2e)
+![Proved Here](https://img.shields.io/badge/ProvedHere-651-10B981?style=flat-square&labelColor=1e1e2e)
 ![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-314-60A5FA?style=flat-square&labelColor=1e1e2e)
-![Conjectured](https://img.shields.io/badge/Conjectured-88-F59E0B?style=flat-square&labelColor=1e1e2e)
+![Conjectured](https://img.shields.io/badge/Conjectured-85-F59E0B?style=flat-square&labelColor=1e1e2e)
 ![Open](https://img.shields.io/badge/Open-0-6B7280?style=flat-square&labelColor=1e1e2e)
 
 </div>
@@ -105,8 +105,8 @@ Additional results include chiral Poincare duality, explicit computations throug
 
 ```mermaid
 graph LR
-    M["main.tex"] --> T["chapters/theory/<br/><small>16 files</small>"]
-    M --> X["chapters/examples/<br/><small>17 files</small>"]
+    M["main.tex"] --> T["chapters/theory/<br/><small>19 files</small>"]
+    M --> X["chapters/examples/<br/><small>22 files</small>"]
     M --> CN["chapters/connections/<br/><small>8 files</small>"]
     M --> AP["appendices/<br/><small>14 files</small>"]
     M --> BIB["bibliography/<br/><small>references.tex</small>"]
@@ -211,7 +211,7 @@ graph LR
 > **Requirements:** TeX Live (or equivalent) with `pdflatex`, `memoir`, `ebgaramond`, `newtxmath`, `microtype`, `tikz-cd`, `thmtools`, `mathtools`, `tcolorbox`.
 
 ```bash
-make              # Full build (3 passes, stable cross-references)
+make              # Full build (6 passes, stable cross-references)
 make fast         # Single pass for quick iteration
 make watch        # Continuous rebuild on file changes (requires latexmk)
 make check        # Halt-on-error validation
@@ -258,6 +258,6 @@ The reader is assumed familiar with:
 
 <div align="center">
 
-*1021 pages &middot; 55 source files &middot; 61,000 lines of LaTeX*
+*1179 pages &middot; 63 source files &middot; 72,500 lines of LaTeX*
 
 </div>

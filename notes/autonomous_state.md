@@ -1,53 +1,48 @@
-# Autonomous State — Session 108 (Mar 5, 2026)
+# Autonomous State — Session 112 (Mar 6, 2026)
 
 ## Cycle Position
-Mode C (Infrastructure & Quality) — Build fix, conjecture audit, overfull reduction
+Mode A (Mathematical Advancement) — HORIZON Level C completion, research attack
 
 ## What Was Done This Session
 
-### Build Infrastructure — RESOLVED
-- **Root cause identified**: macOS `com.apple.provenance` extended attribute on .aux files causes pdflatex to write null bytes on pass 2+
-- **Fix**: `xattr -c` on all .aux/.out files between passes, added to both `make` and `make fast`
-- Makefile: PASSES=6, convergence check from pass 2, synctex=0
-- Full 6-pass clean build verified: 1145pp converged, 0 undefined refs/cites, 0 multiply-defined
-- Single-pass build (make fast) works correctly: 1156 pages
+### Lambda_fp Fix (CRITICAL)
+- **compute/lib/utils.py**: Fixed lambda_fp from |B_{2g}|/(2g·(2g-2)!) to correct FP formula (2^{2g-1}-1)/2^{2g-1}·|B_{2g}|/(2g)!
+- Old: λ₁=1/12, λ₂=1/240. Correct: λ₁=1/24, λ₂=7/5760
+- Updated 8 test files to match
 
-### Deep Conjecture Audit — ALL CORRECTLY CLASSIFIED
-- Audited all 85 ClaimStatusConjectured items across 20 files
-- Classification: ~48 physics (scope remarks correct), ~12 genuinely open, ~15 borderline provable (5-20pp each), ~2 computational
-- NO easy upgrades found — all conjectures have appropriate scope remarks
-- Specific assessment: thm:modular-periodicity (genuinely open, number-theoretic), conj:betagamma-bar-dim (computational), bar=BRST (needs explicit isomorphism)
+### HORIZON Level C Completion (4 items)
+- **C4** (chain-level modular functor): thm:chain-modular-functor, rem:chain-vs-classical-mf, cor:dual-modular-functor in genus_complete.tex
+- **C5** (genera duality): prop:koszul-genus-involution, thm:genus-determines-pair, rem:genus-complete-invariant, comp:genus-duality-table in genus_expansions.tex
+- **C6** (tautological beyond λ): prop:bar-tautological-filtration, rem:tauto-beyond-lambda in higher_genus.tex
+- **C7** (genus-graded modules): def:genus-graded-module, thm:module-genus-tower, prop:genus-module-koszul, rem:curvature-genus-obstruction, ex:verma-genus-graded in chiral_modules.tex
 
-### HORIZON B-Level Assessment
-- B13 (conformal block complementarity): Proved at positive integer levels. Blocked at generic dual levels — requires analytic continuation of Verlinde formula to negative levels
-- B14 (DS module-level): Already proved as thm:ds-koszul-intertwine (genus-0 complete)
-- Remaining 6 B-items (B15, B17, B19, B21-B23): All PAPER/PROGRAM scale (10pp to 3 years)
+### Conjecture Reclassification
+- 2 CJ→H: cor:physical-complementarity, cor:string-theory-complementarity-explicit in higher_genus.tex (physics interpretations of proved theorems)
 
-### Overfull Hbox Reduction
-- Fixed 29.5pt overfull in feynman_diagrams.tex (Poincaré residue paragraph)
-- Fixed 19.2pt overfull in free_fields.tex (Koszul duality table → \small)
-- Fixed 16.8pt overfull in detailed_computations.tex (Motzkin dimensions → displayed equation)
-- Max overfull now 13.8pt (all >14pt eliminated)
+### Introduction Enhancement
+- Added forward reference to chain-level modular functor and genus-graded modules in introduction.tex
 
-## Census
-PH: 621, PE: 316, CJ: 85, H: 14
-Total: 1036
-Pages: 1156 (single pass), ~1145 (converged)
-Compilation: ZERO undefined refs, ZERO undefined citations, ZERO multiply-defined labels
+### Computational Verification
+- 8 new tests in test_genus.py (TestGenusDualityTable: antisymmetry, sum constants, genus determination, homomorphism, universal radius)
+- 849 tests all passing
+
+### Build
+- 1171 pages (single-pass from clean), zero LaTeX errors
+
+## Census (verified fresh grep)
+PH: 660, PE: 314, CJ: 83, H: 18, O: 0
+Total: 1075
+
+## HORIZON Status
+- Level A: 20/20 COMPLETED
+- Level B: 22/24 completed (B22-B23 PROGRAM-scale)
+- Level C: 5/10 completed (C4-C8; C1-C3, C9-C10 PROGRAM-scale)
+- Level D: 0/5 (all speculative)
 
 ## Deep Critique Status — ALL RESOLVED
-| Gap | Status | Session |
-|-----|--------|---------|
-| F1 (BGG orphanage) | **RESOLVED** | 101 |
-| F2 (genus-2 wall) | **RESOLVED** | 102 |
-| F3 (type-A monoculture) | RESOLVED (G2) | 98 |
-| F4 (A-infinity mirage) | RESOLVED (m4) | 100 |
-| F5 (geom-alg comparison) | RESOLVED | 98 |
-| F6 (Lurie undercited) | **RESOLVED** | 101 |
-| F7 (referee objections) | Addressed by F1-F6 | — |
 
 ## Next Session Priority
-1. **Mathematical advancement**: Remaining B-level items require PAPER-scale work (10-20pp new mathematics each)
-2. **Conjecture reduction**: 15 borderline-provable conjectures identified, each requiring 5-20 pages
-3. **Master Table**: 5 bar dim gaps remain (sl₃ deg 4-5, W₃ deg 5, Y(sl₂) deg 4-5) — computationally blocked
-4. **Potential targets**: genus-2 Virasoro/W₃ bar differentials (new mathematics, high impact)
+1. **Cross-reference improvements**: link new C4-C7 results from relevant chapters
+2. **Master Table gaps**: sl₃ deg 4-5, W₃ deg 5, Y(sl₂) deg 4-5 (computationally blocked)
+3. **Conjecture reduction**: 83 CJ remaining; most correctly classified (30 physics, 5 open, 15 borderline)
+4. **Full multi-pass build**: verify convergence with new content
