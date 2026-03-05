@@ -6,9 +6,9 @@
 
 &nbsp;
 
-![Pages](https://img.shields.io/badge/pages-951-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
-![Theorems](https://img.shields.io/badge/theorems_proved-827-10B981?style=for-the-badge&labelColor=1e1e2e)
-![Sources](https://img.shields.io/badge/source_files-64-3B82F6?style=for-the-badge&labelColor=1e1e2e)
+![Pages](https://img.shields.io/badge/pages-1156-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
+![Theorems](https://img.shields.io/badge/theorems_proved-1118-10B981?style=for-the-badge&labelColor=1e1e2e)
+![Sources](https://img.shields.io/badge/source_files-55-3B82F6?style=for-the-badge&labelColor=1e1e2e)
 ![LaTeX Errors](https://img.shields.io/badge/errors-0-EF4444?style=for-the-badge&labelColor=1e1e2e)
 ![Claims](https://img.shields.io/badge/open_claims-0-F59E0B?style=for-the-badge&labelColor=1e1e2e)
 
@@ -19,9 +19,9 @@
 
 &nbsp;
 
-![Proved Here](https://img.shields.io/badge/ProvedHere-827-10B981?style=flat-square&labelColor=1e1e2e)
-![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-349-60A5FA?style=flat-square&labelColor=1e1e2e)
-![Conjectured](https://img.shields.io/badge/Conjectured-78-F59E0B?style=flat-square&labelColor=1e1e2e)
+![Proved Here](https://img.shields.io/badge/ProvedHere-1118-10B981?style=flat-square&labelColor=1e1e2e)
+![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-443-60A5FA?style=flat-square&labelColor=1e1e2e)
+![Conjectured](https://img.shields.io/badge/Conjectured-108-F59E0B?style=flat-square&labelColor=1e1e2e)
 ![Open](https://img.shields.io/badge/Open-0-6B7280?style=flat-square&labelColor=1e1e2e)
 
 </div>
@@ -105,8 +105,8 @@ Additional results include chiral Poincare duality, explicit computations throug
 
 ```mermaid
 graph LR
-    M["main.tex"] --> T["chapters/theory/<br/><small>19 files</small>"]
-    M --> X["chapters/examples/<br/><small>21 files</small>"]
+    M["main.tex"] --> T["chapters/theory/<br/><small>16 files</small>"]
+    M --> X["chapters/examples/<br/><small>17 files</small>"]
     M --> CN["chapters/connections/<br/><small>8 files</small>"]
     M --> AP["appendices/<br/><small>14 files</small>"]
     M --> BIB["bibliography/<br/><small>references.tex</small>"]
@@ -128,11 +128,8 @@ graph LR
 | `algebraic_foundations.tex` | Classical Koszul duality, operads, Weiss covers |
 | `configuration_spaces.tex` | FM compactification, Arnold relations |
 | `bar_cobar_construction.tex` | The core construction |
-| `bar_cobar_quasi_isomorphism.tex` | Inversion theorem, spectral sequence |
 | `poincare_duality.tex` | Non-abelian Poincare duality |
 | `higher_genus.tex` | Extension to all genera |
-| `higher_genus_full.tex` | Full genus theory, propagators |
-| `higher_genus_quasi_isomorphism.tex` | Higher genus inversion |
 | `chiral_koszul_pairs.tex` | Curved structures, non-quadratic extensions |
 | `koszul_pair_structure.tex` | Pair classification, periodicity |
 | `deformation_theory.tex` | Deformation-obstruction theory |
@@ -151,25 +148,21 @@ graph LR
 |------|---------|
 | `free_fields.tex` | Heisenberg, free fermion, bc system |
 | `beta_gamma.tex` | Symplectic bosons |
-| `heisenberg_higher_genus.tex` | Higher genus Heisenberg |
-| `obstruction_classes.tex` | Obstruction class computations |
 | `heisenberg_eisenstein.tex` | Eisenstein series, modular forms |
 | `kac_moody_framework.tex` | Affine Kac-Moody: screening, Wakimoto |
-| `kac_moody_computations.tex` | sl2, sl3, E8 computations |
 | `w_algebras_framework.tex` | W-algebra Koszul duality |
-| `w_algebras_computations.tex` | W3, WN, minimal models |
 | `w3_composite_fields.tex` | W3 Lambda field derivation |
 | `minimal_model_fusion.tex` | Verlinde formula, fusion rules |
 | `minimal_model_examples.tex` | Fusion tables |
 | `w_algebras_deep.tex` | Flag varieties, jet geometry, Toda |
 | `deformation_quantization.tex` | Chiral Kontsevich formality |
-| `deformation_quantization_complete.tex` | Complete proofs |
 | `deformation_examples.tex` | Star products, Maurer-Cartan |
 | `yangians.tex` | Drinfeld Yangians, Coulomb branches |
 | `toroidal_elliptic.tex` | Double affine, elliptic R-matrix |
 | `lattice_foundations.tex` | Lattice VOA engine |
 | `genus_expansions.tex` | All-genera expansions |
 | `detailed_computations.tex` | Degree-by-degree tables |
+| `examples_summary.tex` | Master Table of Computed Invariants |
 
 </details>
 
@@ -265,6 +258,6 @@ The reader is assumed familiar with:
 
 <div align="center">
 
-*951 pages &middot; 64 source files &middot; 120,000 lines of LaTeX*
+*1021 pages &middot; 55 source files &middot; 61,000 lines of LaTeX*
 
 </div>

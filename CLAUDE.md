@@ -34,25 +34,29 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 
 ## Current State (Mar 2026)
 
-### Census (verified fresh grep, Mar 4)
+### Census (verified fresh grep, Mar 5)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **870** |
-| ProvedElsewhere | **395** |
-| Conjectured | **101** |
+| ProvedHere | **1118** |
+| ProvedElsewhere | **443** |
+| Conjectured | **108** |
 | Heuristic | **20** |
 | Open | **0** |
-| **Total tagged claims** | **1385** |
+| **Total tagged claims** | **1689** |
+
+Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **994 pages**, zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
-- 55 active .tex files (+ main.tex preamble), 54K+ lines of LaTeX
-- Bibliography: 241 entries, all citations resolved
+- **1156 pages** (converged), zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
+- 55 active .tex files + 5 stubs (+ main.tex preamble), 70.5K+ lines of LaTeX
+- Bibliography: 269 entries, all citations resolved
 - Reference library: 38 PDFs in references/ (131 MB, 3600+ pages)
-- Cosmetic only: 15 overfull hbox, 33 underfull hbox
+- Cosmetic: ~111 overfull hbox (0 severe >30pt, worst 19pt), ~60 underfull hbox
+- Build: up to 7-pass pdflatex with convergence detection; `scripts/build.sh` for standalone use
+- **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
 - Subject index: 329+ entries across 37 files
 - Master Table of Computed Invariants in examples_summary.tex
-- Leitfaden (Reader's Guide) with TikZ dependency diagram in introduction.tex
+- TikZ concept diagrams in introduction.tex (§Dictionary, §NAP foundation)
 - CONSTRAINT_MAP.md: 33-entry reference registry (22 SATISFIED, 6 FRONTIER)
 
 ### Work History
@@ -65,20 +69,25 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 - Complete appendix audit (14/14), full codebase cross-audit (all 55 files)
 - P∞ vs Coisson distinction corrected throughout
 - "Three Theorems Interlock" narrative section in introduction.tex
-- All proof sketches verified; conjecture + cross-ref audits clean
+- Proof sketch campaign (sessions 70-83); conjecture + cross-ref audits clean
+- Adversarial audit (session 2): 16 findings (3 errors, 1 contradiction, 7 gaps, 5 expository), ALL FIXED
+- Adversarial audit (session 3): 35 findings from 8 parallel agents. 12 priority fixes applied: W-algebra duality σK formula, FP formula, proof integral, g=0 nilpotence, free field κ≠0, Heisenberg dual, H²(M̄_g), Yangian Ext, bosonic string gloss, KL diagram, modular periodicity downgrade, conformal block rationality caveat
+- Adversarial audit (session 4): 45+ findings from 7 parallel agents. 17 fixes applied: genus-1 d²=0 full proof, Leray fibration notation, propagator antisymmetry removal, obstruction degree clarification, nilpotent citation scope, fermionic coproduct sign, Koszul pair equivalence sketch, HH⁰/obstruction language, Heisenberg bar computation, W-algebra simplicity≠semisimplicity, Heisenberg dual table (CE→Sym^ch), Yangian bar description, boundary divisor H²|I|-2→H², MMM vs λ-class naming, W₃ obstruction Mumford isomorphism correction, ProvedElsewhere→ProvedHere tag, ℏ convention reconciliation
 
-### Proof Sketches: ALL RESOLVED
-- All 9 former "proof sketches" verified as complete proofs (Session 70 audit)
-- koszul_reference.tex:472: upgraded PE→PH (curvature centrality proof is self-contained)
-- bar_cobar_construction.tex:4386: BRST conjectural equality now explicitly hedged
+### Proof Sketches: 1 REMAINING (correctly so)
+| File | Line | Context | Status |
+|------|------|---------|--------|
+| holomorphic_topological.tex | 77 | CL → chiral algebra conditions | Conjectured (physics) — correctly a sketch |
 
-### What Remains — 101 Conjectured Claims
+*7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
+
+### What Remains — 83 Conjectured Claims
 
 All have scope remarks. Classification:
 
 | Category | Count | Action |
 |----------|-------|--------|
-| **PHYSICS** | ~28 | Correctly scoped — outside pure math |
+| **PHYSICS** | ~30 | Correctly scoped — outside pure math |
 | **BORDERLINE PROVABLE** | ~4 | Provable in principle; substantial new work |
 | **GENUINELY OPEN** | ~5 | Actual open mathematical problems |
 | **COMPUTATIONAL** | ~3 | Explicit calculations not yet carried out |
@@ -88,9 +97,11 @@ All have scope remarks. Classification:
 
 **Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), obs_g^2=0 for g>=3, derived bc-betagamma
 
-**Physics conjectures (~28)**: holomorphic_topological.tex (13), bv_brst.tex (4), free_fields.tex (16), physical_origins.tex (3), koszul_pair_structure.tex (7). All with scope remarks.
+**Physics conjectures (~30)**: holomorphic_topological.tex (13), bv_brst.tex (4), free_fields.tex (16), physical_origins.tex (3), koszul_pair_structure.tex (7). All with scope remarks.
 
-**Conjectures by Part**: Theory 28, Examples 20, Connections 25, Appendices 1.
+**Conjectures by Part**: Theory 28, Examples 24, Connections 25, Appendices 1.
+
+**WARNING**: Always verify against fresh `grep -c ClaimStatusConjectured` before acting.
 
 **WARNING**: Always verify against fresh `grep -c ClaimStatusConjectured` before acting.
 
@@ -112,10 +123,11 @@ All have scope remarks. Classification:
 8. Never guess a formula — compute it or cite it
 
 ### Autonomous Loop (for unattended operation)
-See `notes/SESSION_PROMPT.md` for the full session prompt and `notes/AUTONOMOUS_LOOP.md` for the indefinite cycle specification. Launch with:
+See `notes/SESSION_PROMPT_v8.md` for the current unified session prompt (state-driven mode selection, subsumes v1-v7 + specialized prompts). Launch with:
 ```
-Read notes/SESSION_PROMPT.md and execute it as an autonomous constraint solver.
+Read notes/SESSION_PROMPT_v8.md and execute it.
 ```
+All prior prompts (v1-v7) and specialized prompts archived in `notes/archive/`.
 
 ### Mathematical Standards
 - Every theorem gets a complete proof. "Sketch" and "the proof is similar" are temporary.
@@ -209,68 +221,76 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 
 ## File Map
 
-### Part 1: Theory (chapters/theory/) — 30.5K lines, 302 PH / 140 PE / 28 CJ
+### Part 1: Theory (chapters/theory/) — 33K lines, 338 PH / 152 PE / 27 CJ
 | File | Lines | PH | PE | CJ | Notes |
 |------|------:|---:|---:|---:|-------|
-| introduction.tex | 1636 | 18 | 2 | 0 | Main results, Leitfaden, E_1/E_inf dictionary |
-| algebraic_foundations.tex | 1362 | 4 | 9 | 0 | Classical Koszul duality, operads, Weiss covers |
-| configuration_spaces.tex | 3897 | 40 | 29 | 0 | C_n(X), FM compactification, OS algebra |
-| bar_cobar_construction.tex | 7334 | 76 | 16 | 4 | Bar/cobar functors, d^2=0, Verdier — **core chapter** |
-| poincare_duality.tex | 670 | 7 | 1 | 0 | Verdier duality, bar-computes-dual |
-| poincare_duality_quantum.tex | 1066 | 6 | 11 | 6 | Quantum corrections, modular operad, Feynman transform |
-| higher_genus.tex | 6645 | 80 | 24 | 6 | Genus-g bar, Main Theorems B+C, KS — **deepest** |
-| chiral_koszul_pairs.tex | 2176 | 13 | 8 | 2 | Koszul pair theory, E_1 duality theorem |
-| koszul_pair_structure.tex | 1433 | 13 | 13 | 7 | Periodicity, affine/Virasoro structure |
-| chiral_modules.tex | 757 | 15 | 1 | 0 | Module categories, E_1 module Koszul duality |
-| deformation_theory.tex | 1344 | 14 | 4 | 3 | Deformation-obstruction, curved A-infinity |
-| hochschild_cohomology.tex | 657 | 4 | 17 | 0 | Hochschild-cyclic spectral sequence |
-| quantum_corrections.tex | 381 | 1 | 0 | 0 | Quantum correction formulas |
-| filtered_curved.tex | 314 | 1 | 1 | 0 | Filtered-curved hierarchy |
-| koszul_across_genera.tex | 362 | 4 | 0 | 0 | (absorbed into higher_genus) |
-| classical_to_chiral.tex | 462 | 6 | 4 | 0 | (absorbed into introduction) |
+| introduction.tex | 1353 | 17 | 2 | 0 | Main results, Leitfaden, E_1/E_inf dictionary |
+| algebraic_foundations.tex | 1319 | 5 | 9 | 0 | Classical Koszul duality, operads, Weiss covers |
+| configuration_spaces.tex | 3774 | 40 | 29 | 0 | C_n(X), FM compactification, OS algebra |
+| bar_cobar_construction.tex | 7125 | 77 | 17 | 2 | Bar/cobar functors, d^2=0, Verdier — **core chapter** |
+| poincare_duality.tex | 677 | 7 | 1 | 0 | Verdier duality, bar-computes-dual |
+| poincare_duality_quantum.tex | 1091 | 6 | 12 | 6 | Quantum corrections, modular operad, Feynman transform |
+| higher_genus.tex | 6555 | 86 | 22 | 6 | Genus-g bar, Main Theorems B+C, KS — **deepest** |
+| chiral_koszul_pairs.tex | 2149 | 13 | 8 | 2 | Koszul pair theory, E_1 duality theorem |
+| koszul_pair_structure.tex | 1472 | 14 | 14 | 8 | Periodicity, affine/Virasoro structure |
+| chiral_modules.tex | 3934 | 38 | 14 | 0 | Module categories, rep theory, E_1 module Koszul duality |
+| deformation_theory.tex | 1364 | 16 | 3 | 3 | Deformation-obstruction, curved A-infinity |
+| hochschild_cohomology.tex | 697 | 7 | 16 | 0 | Hochschild-cyclic spectral sequence |
+| quantum_corrections.tex | 344 | 1 | 0 | 0 | Quantum correction formulas |
+| filtered_curved.tex | 304 | 1 | 1 | 0 | Filtered-curved hierarchy |
+| koszul_across_genera.tex | 363 | 4 | 0 | 0 | (absorbed into higher_genus) |
+| classical_to_chiral.tex | 452 | 6 | 4 | 0 | (absorbed into introduction) |
 
-### Part 2: Examples (chapters/examples/) — 11.4K lines, 108 PH / 67 PE / 20 CJ
-| File | Lines | PH | PE | CJ | Notes |
-|------|------:|---:|---:|---:|-------|
-| lattice_foundations.tex | 1273 | 16 | 3 | 0 | Lattice VOA engine |
-| free_fields.tex | 2800 | 36 | 11 | 16 | Heisenberg, fermion, beta-gamma, bc |
-| beta_gamma.tex | 537 | 9 | 4 | 0 | beta-gamma system detail |
-| heisenberg_eisenstein.tex | 545 | 5 | 5 | 0 | Heisenberg genus expansion, Eisenstein |
-| kac_moody_framework.tex | 1234 | 17 | 6 | 1 | Affine KM: screening, Wakimoto, sl_2 pipeline |
-| w_algebras_framework.tex | 1255 | 9 | 6 | 1 | W-algebra Koszul duality |
-| w3_composite_fields.tex | 427 | 4 | 1 | 0 | W_3 composite Lambda |
-| w_algebras_deep.tex | 170 | 1 | 4 | 0 | Flag varieties, jet geometry |
-| minimal_model_fusion.tex | 354 | 2 | 5 | 0 | Verlinde formula, fusion tables |
-| deformation_quantization.tex | 860 | 4 | 11 | 1 | Chiral Kontsevich, formality |
-| deformation_examples.tex | 198 | 0 | 6 | 0 | Coisson, star product |
-| yangians.tex | 441 | 6 | 1 | 0 | RTT, E_1 Yangian, Koszulness, Coulomb branch |
-| toroidal_elliptic.tex | 498 | 2 | 4 | 1 | Double affine, Fay d²=0, elliptic R-matrix |
-| genus_expansions.tex | 582 | 6 | 0 | 0 | **Three Theorems showcase**: sl₂, Vir, W₃ all-genera |
-| detailed_computations.tex | 891 | 3 | 0 | 0 | sl_3 bar, W_3, Yangian, structure theorems |
-| examples_summary.tex | 200 | 0 | 0 | 0 | Master Table of Computed Invariants |
-| minimal_model_examples.tex | 43 | 0 | 0 | 0 | W_3(3,4), W_3(5,6) |
+*Stubs (5 lines each, placeholders): bar_cobar_quasi_isomorphism.tex, higher_genus_full.tex, higher_genus_quasi_isomorphism.tex*
 
-### Part 3: Connections (chapters/connections/) — 4.8K lines, 26 PH / 25 PE / 25 CJ
+### Part 2: Examples (chapters/examples/) — 26.3K lines, 224 PH / 85 PE / 30 CJ
 | File | Lines | PH | PE | CJ | Notes |
 |------|------:|---:|---:|---:|-------|
-| feynman_diagrams.tex | 1226 | 8 | 3 | 0 | Feynman diagram interpretation (7 Heur) |
-| holomorphic_topological.tex | 1157 | 6 | 7 | 13 | HT theories, AGT, 4d/2d |
-| bv_brst.tex | 757 | 5 | 7 | 4 | BV-BRST formalism (4 Heur) |
-| genus_complete.tex | 604 | 4 | 4 | 5 | Complete genus theory, EO recursion |
-| feynman_connection.tex | 455 | 0 | 1 | 0 | Feynman-bar-cobar bridge |
-| poincare_computations.tex | 360 | 1 | 0 | 0 | NAP explicit computations |
-| physical_origins.tex | 167 | 0 | 3 | 3 | NC Chern-Simons, D-branes |
+| lattice_foundations.tex | 1494 | 17 | 3 | 0 | Lattice VOA engine |
+| free_fields.tex | 3530 | 44 | 11 | 18 | Heisenberg, fermion, beta-gamma, bc |
+| beta_gamma.tex | 1381 | 15 | 4 | 0 | beta-gamma bar complex, spectral sequence |
+| heisenberg_eisenstein.tex | 877 | 7 | 5 | 0 | Heisenberg genus expansion, Eisenstein |
+| kac_moody_framework.tex | 2338 | 28 | 10 | 1 | Affine KM: screening, Wakimoto, admissible, Whittaker |
+| w_algebras_framework.tex | 2298 | 18 | 9 | 2 | W-algebra Koszul duality, logarithmic |
+| w3_composite_fields.tex | 1021 | 13 | 2 | 0 | W_3 composite Lambda, weight-6, null vectors, Kac det |
+| w_algebras_deep.tex | 997 | 3 | 4 | 0 | W₃ degree-3 bar, BP bar, DS hierarchy |
+| minimal_model_fusion.tex | 822 | 12 | 8 | 0 | Verlinde formula, fusion tables, MTC |
+| deformation_quantization.tex | 1169 | 4 | 12 | 1 | Chiral Kontsevich, formality, star products |
+| deformation_examples.tex | 744 | 2 | 6 | 0 | Coisson, star product, lattice/symplectic fermion DQ |
+| yangians.tex | 1059 | 9 | 1 | 3 | RTT, E_1 Yangian, Koszulness, Coulomb branch, Y(sl₃) |
+| toroidal_elliptic.tex | 1355 | 5 | 4 | 3 | Double affine, Fay d²=0, elliptic R-matrix, shuffle |
+| genus_expansions.tex | 1996 | 25 | 2 | 1 | **Three Theorems showcase**: sl₂, Vir, W₃, genus-2 |
+| detailed_computations.tex | 3681 | 18 | 0 | 0 | sl_3 bar, W_3, fermion, E₈, Vir deg 4-5, G₂, BGG |
+| examples_summary.tex | 835 | 3 | 1 | 1 | Master Table, bar dimensions, spectral data |
+| minimal_model_examples.tex | 665 | 1 | 3 | 0 | Ising, tricritical Ising, three-state Potts, bar-fusion |
+
+*Stubs (5 lines each, placeholders): kac_moody_computations.tex, obstruction_classes.tex, heisenberg_higher_genus.tex, deformation_quantization_complete.tex, w_algebras_computations.tex*
+
+### Part 3: Connections (chapters/connections/) — 4.9K lines, 23 PH / 27 PE / 26 CJ
+| File | Lines | PH | PE | CJ | Notes |
+|------|------:|---:|---:|---:|-------|
+| feynman_diagrams.tex | 1261 | 6 | 3 | 0 | Feynman diagram interpretation (9 Heur) |
+| holomorphic_topological.tex | 1119 | 6 | 8 | 13 | HT theories, AGT, 4d/2d |
+| bv_brst.tex | 739 | 5 | 7 | 4 | BV-BRST formalism (4 Heur) |
+| genus_complete.tex | 576 | 3 | 5 | 5 | Complete genus theory, EO recursion |
+| feynman_connection.tex | 447 | 0 | 1 | 1 | Feynman-bar-cobar bridge |
+| poincare_computations.tex | 310 | 1 | 0 | 0 | NAP explicit computations |
+| physical_origins.tex | 166 | 0 | 3 | 3 | NC Chern-Simons, D-branes |
 | concordance.tex | 311 | 2 | 0 | 0 | Literature comparison (BD, FG, AF, CG, LV) |
 
-### Appendices (appendices/) — 6.4K lines, 35 PH / 52 PE / 1 CJ
-14 files: arnold_relations (1145), signs_and_shifts (713), sign_conventions (558), spectral_sequences (549), koszul_reference (580), existence_criteria (747), homotopy_transfer (427), nilpotent_completion (499), dual_methodology (233), notation_index (428), computational_tables (185), theta_functions (78), spectral_higher_genus (163), general_relations (136)
+### Appendices (appendices/) — 6.3K lines, 34 PH / 53 PE / 1 CJ
+14 files: arnold_relations (1049), signs_and_shifts (713), sign_conventions (558), spectral_sequences (549), koszul_reference (596), existence_criteria (712), homotopy_transfer (456), nilpotent_completion (469), dual_methodology (241), notation_index (428), computational_tables (185), theta_functions (78), spectral_higher_genus (163), general_relations (136)
 
 ### Bibliography
 bibliography/references.tex — 1094 lines, 239 entries, all citations resolved
 
-### Planning & Automation (notes/)
-SESSION_PROMPT.md — Autonomous audit-execute-advance session prompt (Opus 4.6 optimized)
-AUTONOMOUS_LOOP.md — Indefinite cycle specification with agent deployment patterns
+### Planning & Automation (notes/ — 4 active files)
+SESSION_PROMPT_v8.md — Current unified session prompt: state-driven mode selection, subsumes v1-v7
+HORIZON.md — Implied results map (20/20 Level A done, 16/24 Level B done)
+DEEP_CRITIQUE_OUTPUT.md — Referee gap analysis (ALL F1-F7 RESOLVED)
+autonomous_state.md — Session continuity state (canonical)
+
+Archive (notes/archive/): 21 superseded files including all prior prompts (v1-v7), specialized prompts (DEEP_CRITIQUE, ADVERSARIAL_AUDIT, STRATEGIC_SYNTHESIS, EXPLORATION_ENGINE, COMPUTE_ENGINE), absorbed maps (IMPLIED_RESULTS_MAP, RESTRUCTURING_PROPOSAL), session snapshots, and historical audit outputs.
 
 ### Reference Library (references/)
 CONSTRAINT_MAP.md — 33-entry machine-readable registry (22 SATISFIED, 6 FRONTIER)
