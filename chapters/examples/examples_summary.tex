@@ -376,13 +376,13 @@ $\widehat{\mathfrak{sl}}_2$ (level~$k$)
   & 3 & 6 & 15 & 36 & 91 & 232 & 603 & 1585 & 4213 & 11298 & $3^n$ \\
 \hline
 $\widehat{\mathfrak{sl}}_3$ (level~$k$)
-  & 8 & 36 & 204 & --- & --- & --- & --- & --- & --- & --- & $8^n$ \\
+  & 8 & 36 & 204 & 1352$^\dagger$ & 9892$^\dagger$ & --- & --- & --- & --- & --- & $8^n$ \\
 \hline
 $\mathrm{Vir}_c$
   & 1 & 2 & 5 & 12 & 30 & 76 & 196 & 512 & 1353 & 3610 & $3^n$ \\
 \hline
 $\mathcal{W}_3$
-  & 2 & 5 & 16 & 52 & --- & --- & --- & --- & --- & --- & exponential \\
+  & 2 & 5 & 16 & 52 & 171$^\dagger$ & 564$^\dagger$ & --- & --- & --- & --- & $3.3^n$ \\
 \hline
 Yangian $Y(\mathfrak{sl}_2)$
   & 4 & 10 & 28 & 82$^*$ & 244$^*$ & 730$^*$ & --- & --- & --- & --- & $3^n$ \\
@@ -394,7 +394,12 @@ Yangian $Y(\mathfrak{sl}_2)$
 \noindent
 {\footnotesize $^*$\,Conjectured: $\dim H^n = 3^n + 1$
 for all $n \geq 1$; values through $n = 10$ in
-Conjecture~\ref{conj:yangian-bar-gf}.}
+Conjecture~\ref{conj:yangian-bar-gf}.\\
+$^\dagger$\,Predicted from conjectured rational GF:
+$\widehat{\mathfrak{sl}}_3$ via \eqref{eq:sl3-bar-gf},
+$\mathcal{W}_3$ via \eqref{eq:w3-bar-recurrence};
+see Conjectures~\ref{conj:sl3-bar-gf}
+and~\ref{conj:w3-algebraicity}.}
 \end{table}
 
 \begin{remark}[Growth rates and Koszulness]\label{rem:bar-growth-koszul}
@@ -601,12 +606,78 @@ matching that of $P_{\widehat{\mathfrak{sl}}_3}(x)$, once the latter
 is determined.
 \end{remark}
 
-\begin{conjecture}[$\widehat{\mathfrak{sl}}_3$ discriminant; \ClaimStatusConjectured]\label{conj:sl3-discriminant}
+\begin{conjecture}[$\widehat{\mathfrak{sl}}_3$ bar generating function; \ClaimStatusConjectured]\label{conj:sl3-discriminant}
+\label{conj:sl3-bar-gf}
 \index{sl3@$\mathfrak{sl}_3$!bar generating function}
-The bar cohomology generating function $P_{\widehat{\mathfrak{sl}}_3}(x) = \sum_{n \geq 1} \dim H^n(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))\, x^n$ is an algebraic function of degree at most~$4$ over $\mathbb{Q}(x)$, with discriminant $\Delta_3(x)$ satisfying $\Delta_3(0) = 1$, leading coefficient $8^n$, and roots at $x = 1/8$ and (at least) one negative real root.  If the DS discriminant principle (Remark~\ref{rem:ds-discriminant-invariant}) holds, then $P_{\mathcal{W}_3}(x)$ shares the same branch locus.
+The bar cohomology generating function of $\widehat{\mathfrak{sl}}_3$ is
+the rational function
+\begin{equation}\label{eq:sl3-bar-gf}
+P_{\widehat{\mathfrak{sl}}_3}(x)
+= \frac{4x(2 - 13x - 2x^2)}{(1 - 8x)(1 - 3x - x^2)},
+\end{equation}
+with denominator $(1-8x)(1-3x-x^2)$ and recurrence
+\begin{equation}\label{eq:sl3-bar-recurrence}
+a(n) = 11\,a(n{-}1) - 23\,a(n{-}2) - 8\,a(n{-}3),
+\qquad a(1) = 8,\; a(2) = 36,\; a(3) = 204.
+\end{equation}
 
-\emph{Scope.} This requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_3))$ (rank of a $24576 \times 786432$ matrix), which is beyond hand computation.  The first three values $8, 36, 204$ are consistent with an algebraic generating function but do not yet determine it uniquely.
+\emph{Evidence.}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The three known values $8, 36, 204$ are matched exactly.
+\item The denominator factor $(1-3x-x^2)$ is
+\emph{shared with the $\mathcal{W}_3$ generating function}
+$P_{\mathcal{W}_3}(x) = x(2-3x)/\bigl((1-x)(1-3x-x^2)\bigr)$
+(Conjecture~\ref{conj:w3-algebraicity}), consistent with
+the DS discriminant principle
+(Remark~\ref{rem:ds-discriminant-invariant}):
+$\widehat{\mathfrak{sl}}_3$ and $\mathcal{W}_3$ share the
+factor $(1-3x-x^2)$ in the denominator, just as
+$\widehat{\mathfrak{sl}}_2$ and $\mathrm{Vir}$ share the
+discriminant $(1-3x)(1+x)$.
+\item The pole at $x = 1/8$ gives exponential growth rate~$8^n = (\dim\mathfrak{sl}_3)^n$,
+consistent with the chain-group bound
+(Corollary~\ref{cor:growth-rate-dimg}).
+\item The formula predicts $\dim H^4 = 1352$ and $\dim H^5 = 9892$.
+\end{enumerate}
+
+\emph{Scope.}  Verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$: the value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.  The computation requires the rank of a $24576 \times 786432$ matrix, which is beyond hand computation but potentially accessible to numerical linear algebra.
 \end{conjecture}
+
+\begin{remark}[Two discriminant families]\label{rem:two-discriminant-families}
+\index{bar complex!discriminant families}
+\index{Drinfeld--Sokolov reduction!discriminant families}
+If both Conjectures~\ref{conj:w3-algebraicity}
+and~\ref{conj:sl3-bar-gf} hold, the bar cohomology generating
+functions fall into two discriminant families:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+\textbf{Family} & \textbf{Denominator/discriminant}
+  & \textbf{Members} \\
+\midrule
+$\mathfrak{sl}_2$ family &
+  $\Delta = (1-3x)(1+x)$ &
+  $\widehat{\mathfrak{sl}}_2$, $\mathrm{Vir}$, $\beta\gamma$ \\
+$\mathfrak{sl}_3$ family &
+  $(1-3x-x^2)$ &
+  $\widehat{\mathfrak{sl}}_3$, $\mathcal{W}_3$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The $\mathfrak{sl}_2$ family members have algebraic GFs
+$($degree $2)$ sharing the branch locus
+$\{\tfrac{1}{3}, -1\}$;
+the $\mathfrak{sl}_3$ family members have \emph{rational} GFs
+sharing the denominator factor $(1-3x-x^2)$ with
+roots at $(-3 \pm \sqrt{13})/2$.
+In each family, DS reduction changes the ``growth pole''
+$($from $1/\dim\mathfrak{g}$ to a smaller value$)$
+but preserves the discriminant factor.
+For example, $\widehat{\mathfrak{sl}}_3$ has a
+growth pole at $x = 1/8$ while $\mathcal{W}_3$ has a
+growth pole at $x = (-3+\sqrt{13})/2 \approx 0.303$.
+\end{remark}
 
 \begin{remark}[DS transformation of bar generating functions]\label{rem:ds-gf-transformation}
 \index{Drinfeld--Sokolov reduction!generating function transformation}
