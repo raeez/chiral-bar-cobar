@@ -48,9 +48,9 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 ### Compilation
 - **1163 pages** (single-pass; converged count pending), zero LaTeX errors, zero undefined citations, zero multiply-defined labels
-- 55 active .tex files + 5 stubs (+ main.tex preamble), 71.5K lines of LaTeX
-- Bibliography: 272 entries, all citations resolved
-- Reference library: 38 PDFs in references/ (131 MB, 3600+ pages)
+- 55 active .tex files + 8 stubs (+ main.tex preamble), 72.5K lines of LaTeX
+- Bibliography: 272 entries (1226 lines), all citations resolved
+- Reference library: 38 PDFs in references/ (64 MB)
 - Cosmetic: ~108 overfull hbox (0 severe >30pt, worst 12.2pt), ~60 underfull hbox
 - Build: up to 7-pass pdflatex with convergence detection; `scripts/build.sh` for standalone use
 - **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
@@ -99,7 +99,7 @@ All have scope remarks. Classification:
 
 **Physics conjectures (~30)**: holomorphic_topological.tex (13), bv_brst.tex (4), free_fields.tex (18), physical_origins.tex (3), koszul_pair_structure.tex (8). All with scope remarks.
 
-**Conjectures by Part**: Theory 28, Examples 24, Connections 25, Appendices 1.
+**Conjectures by Part**: Theory 27, Examples 34, Connections 26, Appendices 1.
 
 **WARNING**: Always verify census with `grep -r 'ClaimStatus...' chapters/ appendices/ --include='*.tex' | wc -l` (the `--include` flag is critical to avoid counting .aux files).
 
@@ -144,7 +144,7 @@ All prior prompts (v1-v7) and specialized prompts archived in `notes/archive/`.
 
 ### LaTeX Standards
 - Document class: memoir, EB Garamond via newtxmath + ebgaramond
-- Compile: `make` (3 pdflatex passes), `make fast` (1 pass), `make clean`
+- Compile: `make` (6 pdflatex passes), `make fast` (1 pass), `make clean`
 - Chapter files: \include from main.tex; sub-files: \input
 - All macros in main.tex preamble — NEVER \newcommand in chapter files
 - Key macros: \chirAss, \chirCom, \chirLie, \Eone, \Einf, \Pinf, \B (bar), \cA (chiral algebra)
