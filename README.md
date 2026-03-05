@@ -6,8 +6,8 @@
 
 &nbsp;
 
-![Pages](https://img.shields.io/badge/pages-1179-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
-![Theorems](https://img.shields.io/badge/theorems_proved-651-10B981?style=for-the-badge&labelColor=1e1e2e)
+![Pages](https://img.shields.io/badge/pages-1191-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
+![Theorems](https://img.shields.io/badge/theorems_proved-666-10B981?style=for-the-badge&labelColor=1e1e2e)
 ![Sources](https://img.shields.io/badge/source_files-63-3B82F6?style=for-the-badge&labelColor=1e1e2e)
 ![LaTeX Errors](https://img.shields.io/badge/errors-0-EF4444?style=for-the-badge&labelColor=1e1e2e)
 ![Claims](https://img.shields.io/badge/open_claims-0-F59E0B?style=for-the-badge&labelColor=1e1e2e)
@@ -19,9 +19,9 @@
 
 &nbsp;
 
-![Proved Here](https://img.shields.io/badge/ProvedHere-651-10B981?style=flat-square&labelColor=1e1e2e)
-![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-314-60A5FA?style=flat-square&labelColor=1e1e2e)
-![Conjectured](https://img.shields.io/badge/Conjectured-85-F59E0B?style=flat-square&labelColor=1e1e2e)
+![Proved Here](https://img.shields.io/badge/ProvedHere-666-10B981?style=flat-square&labelColor=1e1e2e)
+![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-313-60A5FA?style=flat-square&labelColor=1e1e2e)
+![Conjectured](https://img.shields.io/badge/Conjectured-93-F59E0B?style=flat-square&labelColor=1e1e2e)
 ![Open](https://img.shields.io/badge/Open-0-6B7280?style=flat-square&labelColor=1e1e2e)
 
 </div>
@@ -258,6 +258,6 @@ The reader is assumed familiar with:
 
 <div align="center">
 
-*1179 pages &middot; 63 source files &middot; 72,500 lines of LaTeX*
+*1191 pages &middot; 63 source files &middot; 75,000 lines of LaTeX*
 
 </div>
