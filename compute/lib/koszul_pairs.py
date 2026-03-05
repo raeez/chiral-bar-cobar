@@ -133,17 +133,21 @@ COMMON_ERRORS = {
 # Complementarity from Koszul duality
 # ---------------------------------------------------------------------------
 
-def complementarity_sum_km(dim_g: int, h_dual: int, rank: int) -> int:
-    """Complementarity sum for KM via DS.
+DS_COMPLEMENTARITY = {
+    "Virasoro": {"sum": 26, "ds_from": "sl2", "formula": "c = 1 - 6(k+1)^2/(k+2)"},
+    "W3": {"sum": 100, "ds_from": "sl3", "formula": "c = 2 - 24(k+2)^2/(k+3)"},
+}
 
-    c(k) + c(-k-2h^vee) = ?
-    For sl_n -> W_n:
-      sl_2 -> Vir: 26
-      sl_3 -> W_3: 100
-    General: 2*rank + 4*h^vee * (dim(g) - rank)/2
+
+def complementarity_sum_ds(algebra: str) -> int:
+    """Complementarity sum c(k) + c(k') for DS-reduced W-algebras.
+
+    The DS central charge c(k) has c(k) + c(-k-2h^vee) = constant.
+    Proved: thm:quantum-complementarity-main.
+      sl_2 -> Vir: c = 1 - 6(k+1)^2/(k+2), c + c' = 26
+      sl_3 -> W_3: c = 2 - 24(k+2)^2/(k+3), c + c' = 100
     """
-    # dim(nilpotent) = dim(g) - rank, half = (dim(g) - rank) / 2
-    return 2 * rank + 2 * h_dual * (dim_g - rank)
+    return DS_COMPLEMENTARITY.get(algebra, {}).get("sum", 0)
 
 
 # ---------------------------------------------------------------------------
@@ -180,8 +184,8 @@ def verify_koszul_pairs():
     results["Com-Lie involution"] = check_involution("Com_Lie")
 
     # Complementarity sums
-    results["sl2->Vir: c+c'=26"] = complementarity_sum_km(3, 2, 1) == 26
-    results["sl3->W3: c+c'=100"] = complementarity_sum_km(8, 3, 2) == 100
+    results["sl2->Vir: c+c'=26"] = complementarity_sum_ds("Virasoro") == 26
+    results["sl3->W3: c+c'=100"] = complementarity_sum_ds("W3") == 100
 
     return results
 

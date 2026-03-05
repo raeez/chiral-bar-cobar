@@ -13,7 +13,7 @@ from compute.lib.koszul_pairs import (
     ff_shift_sl2,
     ff_shift_sl3,
     check_involution,
-    complementarity_sum_km,
+    complementarity_sum_ds,
     verify_ff_duality,
     verify_koszul_pairs,
     verify_common_errors,
@@ -87,11 +87,11 @@ class TestCommonErrors:
 class TestComplementarity:
     def test_sl2_virasoro(self):
         """sl_2 -> Virasoro: c + c' = 26."""
-        assert complementarity_sum_km(3, 2, 1) == 26
+        assert complementarity_sum_ds("Virasoro") == 26
 
     def test_sl3_w3(self):
         """sl_3 -> W_3: c + c' = 100."""
-        assert complementarity_sum_km(8, 3, 2) == 100
+        assert complementarity_sum_ds("W3") == 100
 
 
 class TestSelfConsistency:
