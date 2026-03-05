@@ -6,8 +6,8 @@
 
 &nbsp;
 
-![Pages](https://img.shields.io/badge/pages-1156-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
-![Theorems](https://img.shields.io/badge/theorems_proved-1118-10B981?style=for-the-badge&labelColor=1e1e2e)
+![Pages](https://img.shields.io/badge/pages-1163-8B5CF6?style=for-the-badge&labelColor=1e1e2e)
+![Theorems](https://img.shields.io/badge/theorems_proved-649-10B981?style=for-the-badge&labelColor=1e1e2e)
 ![Sources](https://img.shields.io/badge/source_files-55-3B82F6?style=for-the-badge&labelColor=1e1e2e)
 ![LaTeX Errors](https://img.shields.io/badge/errors-0-EF4444?style=for-the-badge&labelColor=1e1e2e)
 ![Claims](https://img.shields.io/badge/open_claims-0-F59E0B?style=for-the-badge&labelColor=1e1e2e)
@@ -19,9 +19,9 @@
 
 &nbsp;
 
-![Proved Here](https://img.shields.io/badge/ProvedHere-1118-10B981?style=flat-square&labelColor=1e1e2e)
-![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-443-60A5FA?style=flat-square&labelColor=1e1e2e)
-![Conjectured](https://img.shields.io/badge/Conjectured-108-F59E0B?style=flat-square&labelColor=1e1e2e)
+![Proved Here](https://img.shields.io/badge/ProvedHere-649-10B981?style=flat-square&labelColor=1e1e2e)
+![Proved Elsewhere](https://img.shields.io/badge/ProvedElsewhere-314-60A5FA?style=flat-square&labelColor=1e1e2e)
+![Conjectured](https://img.shields.io/badge/Conjectured-88-F59E0B?style=flat-square&labelColor=1e1e2e)
 ![Open](https://img.shields.io/badge/Open-0-6B7280?style=flat-square&labelColor=1e1e2e)
 
 </div>

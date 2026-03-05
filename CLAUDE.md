@@ -37,21 +37,21 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 5)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **1118** |
-| ProvedElsewhere | **443** |
-| Conjectured | **108** |
-| Heuristic | **20** |
+| ProvedHere | **649** |
+| ProvedElsewhere | **314** |
+| Conjectured | **88** |
+| Heuristic | **14** |
 | Open | **0** |
-| **Total tagged claims** | **1689** |
+| **Total tagged claims** | **1065** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1156 pages** (converged), zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
-- 55 active .tex files + 5 stubs (+ main.tex preamble), 70.5K+ lines of LaTeX
-- Bibliography: 269 entries, all citations resolved
+- **1163 pages** (single-pass; converged count pending), zero LaTeX errors, zero undefined citations, zero multiply-defined labels
+- 55 active .tex files + 5 stubs (+ main.tex preamble), 71.5K lines of LaTeX
+- Bibliography: 272 entries, all citations resolved
 - Reference library: 38 PDFs in references/ (131 MB, 3600+ pages)
-- Cosmetic: ~111 overfull hbox (0 severe >30pt, worst 19pt), ~60 underfull hbox
+- Cosmetic: ~108 overfull hbox (0 severe >30pt, worst 12.2pt), ~60 underfull hbox
 - Build: up to 7-pass pdflatex with convergence detection; `scripts/build.sh` for standalone use
 - **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
 - Subject index: 329+ entries across 37 files
@@ -81,7 +81,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 83 Conjectured Claims
+### What Remains — 88 Conjectured Claims
 
 All have scope remarks. Classification:
 
@@ -97,9 +97,11 @@ All have scope remarks. Classification:
 
 **Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), obs_g^2=0 for g>=3, derived bc-betagamma
 
-**Physics conjectures (~30)**: holomorphic_topological.tex (13), bv_brst.tex (4), free_fields.tex (16), physical_origins.tex (3), koszul_pair_structure.tex (7). All with scope remarks.
+**Physics conjectures (~30)**: holomorphic_topological.tex (13), bv_brst.tex (4), free_fields.tex (18), physical_origins.tex (3), koszul_pair_structure.tex (8). All with scope remarks.
 
 **Conjectures by Part**: Theory 28, Examples 24, Connections 25, Appendices 1.
+
+**WARNING**: Always verify census with `grep -r 'ClaimStatus...' chapters/ appendices/ --include='*.tex' | wc -l` (the `--include` flag is critical to avoid counting .aux files).
 
 **WARNING**: Always verify against fresh `grep -c ClaimStatusConjectured` before acting.
 

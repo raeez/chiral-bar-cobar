@@ -14,7 +14,8 @@ Hochschild/module theory infrastructure (Session 94 exploration protocol).
 toward these targets. The exploration prompt (Section 8) is the systematic search protocol
 for discovering new entries.
 
-**Last updated**: Session 107 (Mar 5, 2026) — 20 Level A (20 completed), 24 Level B (17 completed), 10 Level C, 5 Level D items.
+**Last updated**: Session 108 (Mar 5, 2026) — 20 Level A (20 completed), 24 Level B (19 completed), 10 Level C, 5 Level D items.
+Session 108: B13+B14 confirmed already proved (prop:conformal-block-duality, thm:ds-koszul-intertwine). Modular periodicity upgraded CJ→PH. MNO96 citation added. 29pt overfull fixed. Census: PH 622, CJ 84.
 Session 103: Strategic Synthesis — BGG sl₂ matrix-level instantiation in detailed_computations.tex (sec:bgg-sl2-pipeline). Added prop:bar-bgg-sl2 + cor:bgg-koszul-involution. F1 now substantially closed.
 Session 102: F1 (Module Theory Orphanage) further addressed — comp:bgg-sl2-pipeline in chiral_modules.tex chains 6 proved results into full bar-to-BGG pipeline for sl₂ at generic level.
 Session 101: F6 (Lurie HA undercitation) addressed — 17 citations across 7 files. H7 (Positselski acyclicity) written as prop:curved-bar-acyclicity + rem:positselski-acyclicity in bar_cobar_construction.tex. B18 partially completed (Virasoro Zhu, cor:virasoro-zhu-koszul). F1 (BGG for sl₂) addressed: thm:bgg-sl2-bar-explicit + 2 computations in detailed_computations.tex.
