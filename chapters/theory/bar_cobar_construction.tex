@@ -1466,7 +1466,7 @@ $d$ is coderivation & $\Delta \circ d = (d \otimes \text{id} + \text{id} \otimes
 \emph{Status.} All axioms verified explicitly with complete proofs. The bar construction is rigorously established as a functor $\mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$.
 \end{remark}
 
-\begin{theorem}[Differential is coderivation; \ClaimStatusProvedElsewhere]\label{thm:diff-is-coderivation}
+\begin{theorem}[Differential is coderivation; \ClaimStatusProvedHere]\label{thm:diff-is-coderivation}
 The differential $d$ on $\bar{B}(\mathcal{A})$ is a coderivation:
 $$\Delta \circ d = (d \otimes \text{id} + \text{id} \otimes d) \circ \Delta$$
 \end{theorem}
@@ -1661,7 +1661,9 @@ the cohomological degree.
    \end{lemma}
    
    \begin{proof}
-   Part~(1): A section $\omega \in \Omega^*_{\log}(\overline{C}_{n+1}(X))$ has at most a simple pole along $D_{ij}$.  In a local coordinate $u$ with $D_{ij} = \{u = 0\}$, write $\omega = f(u)\,d\log u + g(u)\,(\text{terms regular in }u)$ where $f(0) = \mathrm{Res}_{D_{ij}}\omega$.  The residue $\mathrm{Res}_{D_{ij}}\omega = f(0)$ is a section on $D_{ij}$ with no pole along $D_{ij}$, so $\mathrm{Res}_{D_{ij}}^2\omega = \mathrm{Res}_{D_{ij}}(f(0)) = 0$.
+   Part~(1): A section $\omega \in \Omega^*_{\log}(\overline{C}_{n+1}(X))$ has at most a simple pole along $D_{ij}$.  In a local coordinate $u$ with $D_{ij} = \{u = 0\}$, write
+   $\omega = f(u)\,d\log u + g(u)\,(\text{terms regular in }u)$
+   where $f(0) = \mathrm{Res}_{D_{ij}}\omega$.  The residue $\mathrm{Res}_{D_{ij}}\omega = f(0)$ is a section on $D_{ij}$ with no pole along $D_{ij}$, so $\mathrm{Res}_{D_{ij}}^2\omega = \mathrm{Res}_{D_{ij}}(f(0)) = 0$.
 
    Part~(2): This is Corollary~\ref{cor:residues-anticommute}: for disjoint index pairs, the divisors $D_{ij}$ and $D_{k\ell}$ are transverse, and the anticommutativity follows from the antisymmetry of $d\log u \wedge d\log v$.
 
@@ -1884,8 +1886,10 @@ The OPE gives:
 \frac{C^{\gamma,n}_{\alpha_i\alpha_j} \partial^n\phi_\gamma(u)}{(\epsilon e^{i\theta})^{h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n}}
 + O(\epsilon^0)
 \]
-The residue $\text{Res}_{D_{ij}}$ extracts the coefficient of $\frac{d\log\epsilon}{\epsilon}$, which is 
-nonzero only when the pole order equals 1, i.e., when $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$. This is the 
+The residue $\text{Res}_{D_{ij}}$ extracts the coefficient of
+$\frac{d\log\epsilon}{\epsilon}$, which is nonzero only when the pole
+order equals~$1$, i.e., when
+$h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$. This is the 
 \emph{criticality condition} for the residue pairing. The sign $(-1)^r$ comes from 
 moving $\eta_{ij}$ past $r-1$ other 1-forms via the Koszul rule for graded
 commutativity.
@@ -3152,7 +3156,7 @@ open configuration space
 
 \emph{Properties of the pairing.}
 \begin{enumerate}
-\item \emph{Perfect pairing:} Non-degenerate in both arguments
+\item \emph{Perfect pairing:} Non-degenerate in both arguments (by the holonomicity standing assumption: each graded piece is a holonomic $\mathcal{D}$-module on $\overline{C}_n(X)$, hence has finite-dimensional stalks, and Verdier duality for holonomic $\mathcal{D}$-modules is an involution \cite{KashiwaraSchapira})
 \item \emph{Differential compatibility:} $\langle d_{\text{bar}}\omega, K \rangle 
 = -\langle \omega, d_{\text{cobar}}K \rangle$ (graded Leibniz rule)
 \item \emph{Residue-distribution duality:} $\langle \text{Res}_{D}[\omega], 
@@ -4595,7 +4599,19 @@ $$d_g^2 = [\mu_0, -] \otimes \left(\int_{\mathcal{M}_g} \omega_g^2\right)
 which is the obstruction class.
 \end{corollary}
 \begin{proof}
-The genus-$g$ bar differential receives quantum corrections from the period matrix of the curve (Theorem~\ref{thm:quantum-diff-squares-zero}).  When $\mathcal{A}$ has nonzero curvature $\mu_0$, the correction class $\omega_g$ lives in the cohomology of $\mathcal{M}_g$ with coefficients in the center $\mathcal{Z}(\mathcal{A})$ by Theorem~\ref{thm:quantum-complementarity-main}.  The formula $d_g^2 = [\mu_0, -] \otimes \int_{\mathcal{M}_g} \omega_g^2$ follows from expanding $(d_0 + \mu_0 \otimes \omega_g)^2 = d_0^2 + d_0(\mu_0 \otimes \omega_g) + (\mu_0 \otimes \omega_g)d_0 + \mu_0^2 \otimes \omega_g^2$ and using $d_0^2 = 0$, $d_0 \mu_0 = 0$ (Maurer--Cartan), and $\mu_0^2 = [\mu_0, -]$ (curvature squaring).
+The genus-$g$ bar differential receives quantum corrections from the
+period matrix of the curve
+(Theorem~\ref{thm:quantum-diff-squares-zero}).  When $\mathcal{A}$ has
+nonzero curvature $\mu_0$, the correction class $\omega_g$ lives in
+$H^*(\mathcal{M}_g, \mathcal{Z}(\mathcal{A}))$ by
+Theorem~\ref{thm:quantum-complementarity-main}.  The formula
+$d_g^2 = [\mu_0, -] \otimes \int_{\mathcal{M}_g} \omega_g^2$ follows
+from expanding
+$(d_0 + \mu_0 \otimes \omega_g)^2
+= d_0^2 + d_0(\mu_0 \otimes \omega_g)
++ (\mu_0 \otimes \omega_g)d_0 + \mu_0^2 \otimes \omega_g^2$
+and using $d_0^2 = 0$, $d_0 \mu_0 = 0$ (Maurer--Cartan), and
+$\mu_0^2 = [\mu_0, -]$ (curvature squaring).
 \end{proof}
 
 \section{Curved Koszul duality and I-adic completion}

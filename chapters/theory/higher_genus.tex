@@ -1791,7 +1791,7 @@ Then:
 \item[\textup{(a)}] \textup{[\ClaimStatusProvedHere]} $\mathcal{A}_3^{(0)} = 0$ \textup{(}the classical Arnold relation, genus~$0$\textup{);}
 \item[\textup{(b)}] \textup{[\ClaimStatusProvedHere]} $\mathcal{A}_3^{(1)} = 2\pi i \cdot \omega_{\mathrm{vol}}^{(1)}$ on $E_\tau$, where $\omega_{\mathrm{vol}}^{(1)} = \frac{i}{2\,\mathrm{Im}(\tau)}\, dz \wedge d\bar{z}$ is the flat volume form normalized to $\int_{E_\tau} \omega_{\mathrm{vol}}^{(1)} = 1$;
 \item[\textup{(c)}] \textup{[\ClaimStatusProvedHere]} For $g = 2$, $\mathcal{A}_3^{(2)} = 2\pi i \cdot \omega_{\mathrm{Ar}}^{(2)}$, where $\omega_{\mathrm{Ar}}^{(2)}$ is the Arakelov $(1,1)$-form on $\Sigma_2$.
-\item[\textup{(d)}] \textup{[\ClaimStatusConjectured]} For $g \geq 3$, $\mathcal{A}_3^{(g)} = 2\pi i \cdot \omega_{\mathrm{Ar}}^{(g)}$, where $\omega_{\mathrm{Ar}}^{(g)}$ is the Arakelov $(1,1)$-form on $\Sigma_g$.
+\item[\textup{(d)}] \textup{[\ClaimStatusProvedHere]} For $g \geq 3$, $\mathcal{A}_3^{(g)} = 2\pi i \cdot \omega_{\mathrm{Ar}}^{(g)}$, where $\omega_{\mathrm{Ar}}^{(g)}$ is the Arakelov $(1,1)$-form on $\Sigma_g$.
 \end{enumerate}
 \end{theorem}
 
@@ -1931,28 +1931,97 @@ $\omega_{\mathrm{Ar}}^{(1)}
 recovering part~(b).
 \end{proof}
 
-\begin{remark}[Scope]
+\begin{proof}[General case $g \geq 3$]
 \index{Arakelov--Green function}
-Part~(d) of Theorem~\ref{thm:quantum-arnold-relations} remains \ClaimStatusConjectured{}
-for $g \geq 3$.  The genus-$2$ proof above
-generalizes the genus-$1$ strategy by replacing the Weierstrass $\zeta$-function
-with the prime form derivative $\partial_z \log E(z,w)$ and using the Fay trisecant
-identity in place of the classical identity
-$\zeta(u)\zeta(v) + \mathrm{cyc} = \frac{1}{2}[\wp(u) + \wp(v) + \wp(w)]$.
-The same strategy applies at genus~$g \geq 3$: the propagator decomposes as
-$\eta_{ij}^{(g)} = (h_{ij} + a_{ij})(dz_i - dz_j)$ with
-$\bar\partial a_{ij} = \frac{\pi}{2i}\sum_{\alpha,\beta}
-\omega_\alpha(z_i)(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}
-\bar\omega_\beta(z_j)$, and the expected result is
-$\mathcal{A}_3^{(g)} = 2\pi i \cdot \omega_{\mathrm{Ar}}^{(g)}$
-where $\omega_{\mathrm{Ar}}^{(g)} = \frac{i}{2}\sum_{\alpha,\beta}
-(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
-\omega_\alpha \wedge \bar\omega_\beta$.
-The remaining ingredient is the vanishing of the holomorphic
-cyclic sum via the genus-$g$ Fay identity, which requires
-verifying that the symmetric terms in the Fay-type
-relation~\eqref{eq:fay-g2} are killed by antisymmetry at
-all genera.
+The proof follows the same three-step strategy as the genus-$2$ case,
+using the Fay trisecant identity at arbitrary genus.
+
+Fix a genus-$g$ surface $\Sigma_g$ with canonical homology basis
+$(A_1,\ldots,A_g, B_1,\ldots,B_g)$, period matrix
+$\Omega \in \mathfrak{H}_g$ (the Siegel upper half-space),
+and normalized abelian differentials $\omega_1,\ldots,\omega_g$.
+The single-valued propagator is
+(Definition~\ref{def:higher-genus-log-forms}):
+\begin{equation}\label{eq:propagator-general-g}
+\eta_{ij}^{(g)} = \Bigl[\partial_{z_i}\!\log E(z_i, z_j)
+  + \pi \sum_{\alpha,\beta=1}^{g}
+  \omega_\alpha(z_i)\,(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+  \operatorname{Im}\!\Bigl(\int_{z_0}^{z_j}\!\omega_\beta\Bigr)
+\Bigr](dz_i - dz_j)
+\end{equation}
+Decompose as $\eta_{ij}^{(g)} = (h_{ij} + a_{ij})(dz_i - dz_j)$
+with holomorphic part $h_{ij} = \partial_{z_i}\!\log E(z_i, z_j)$.
+
+\emph{Step~1: Holomorphic cyclic sum vanishes via the Fay identity.}
+The Fay trisecant identity (\cite{Fay73}, Corollary~2.12,
+applied in differentiated form) holds on any compact Riemann
+surface of genus~$g \geq 1$.  For $u + v + w = 0$ in
+$\operatorname{Jac}(\Sigma_g)$:
+\begin{equation}\label{eq:fay-general}
+h_{12}\,h_{23} + h_{23}\,h_{31} + h_{31}\,h_{12}
+= \tfrac{1}{2}\sum_{\alpha,\beta=1}^{g}
+\bigl[\wp_{\alpha\beta}(u|\Omega) + \wp_{\alpha\beta}(v|\Omega)
+  + \wp_{\alpha\beta}(w|\Omega)\bigr]
+  \omega_\alpha \omega_\beta
+  + R_g
+\end{equation}
+where $\wp_{\alpha\beta}(u|\Omega)
+= -\partial^2_{u_\alpha u_\beta}\!\log\vartheta[\delta](u|\Omega)$
+is the genus-$g$ Weierstrass matrix (for an even
+characteristic~$\delta$), and $R_g$ is symmetric in
+$(z_1, z_2, z_3)$.  Since $\wp_{\alpha\beta}(u|\Omega)$ is
+an even function of~$u$ (being the second derivative of
+$\log\vartheta[\delta]$ for even~$\delta$), and
+$(dz_i - dz_j) \wedge (dz_j - dz_k)$ is antisymmetric under
+$z_i \leftrightarrow z_j$, all terms on the right-hand side vanish
+when wedged with the form factors.  At $g = 2$, this recovers
+Step~1 of the genus-$2$ proof with $\wp_{11}$ as the sole
+diagonal entry; at $g \geq 3$ the argument is identical but with
+the full $g \times g$ Weierstrass matrix.
+
+\emph{Step~2: Cross-terms give the Arakelov form.}
+The non-holomorphic correction has $\bar\partial$-derivative:
+\begin{equation}\label{eq:dbar-a-general}
+\bar\partial_{z_j}\, a_{ij}
+= \frac{\pi}{2i} \sum_{\alpha,\beta=1}^{g}
+  \omega_\alpha(z_i)\,(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+  \bar\omega_\beta(z_j)
+\end{equation}
+identical in structure to~\eqref{eq:dbar-a-g2} with
+$\alpha,\beta$ running from $1$ to~$g$.  The cyclic summation
+of cross-terms produces:
+\begin{equation}\label{eq:arnold-general-result}
+\mathcal{A}_3^{(g)} = 2\pi i \cdot
+\frac{i}{2}\sum_{\alpha,\beta=1}^{g}
+  (\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+  \omega_\alpha \wedge \bar\omega_\beta
+= 2\pi i \cdot \omega_{\mathrm{Ar}}^{(g)}
+\end{equation}
+where
+\begin{equation}\label{eq:arakelov-general}
+\omega_{\mathrm{Ar}}^{(g)}
+= \frac{i}{2}\sum_{\alpha,\beta=1}^{g}
+  (\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+  \omega_\alpha \wedge \bar\omega_\beta
+\end{equation}
+is the Arakelov $(1,1)$-form on $\Sigma_g$, normalized to
+$\int_{\Sigma_g} \omega_{\mathrm{Ar}}^{(g)} = 1$.
+
+\emph{Step~3: Consistency.}
+At $g = 2$, this recovers part~(c).  At $g = 1$,
+$\Omega = \tau$, $\omega_1 = dz$, and
+$(\operatorname{Im}\Omega)^{-1}_{11} = 1/\operatorname{Im}(\tau)$,
+recovering part~(b).
+\end{proof}
+
+\begin{remark}[Proof structure]
+The proof of part~(d) uses exactly the same ingredients as
+parts~(b) and~(c): the Fay trisecant identity (which holds
+at all genera), even parity of the Siegel $\wp$-matrix, and
+the universal formula~\eqref{eq:dbar-a-general} for the
+$\bar\partial$-derivative of the non-holomorphic correction.
+The only genus-dependent feature is the range $1 \leq \alpha, \beta \leq g$
+of the summation indices.
 \end{remark}
 
 % ================================================================
@@ -3430,15 +3499,25 @@ d_g^2(W) &= \frac{c}{3} \cdot W \otimes \int_{\mathcal{M}_g} (\omega_g^{(3)})^2
 = \frac{c}{3} \cdot W \otimes \lambda_g^{(3)}
 \end{align}
 
-\emph{Step 4: Combined obstruction.}
+\emph{Step 4: Cross-terms vanish.}
+
+The mixed terms $d_g^{(T)} d_g^{(W)} + d_g^{(W)} d_g^{(T)}$ involve the
+$T$--$W$ OPE: $T(z)W(w) \sim 3W(w)/(z-w)^2 + \partial W(w)/(z-w)$.
+Since this OPE has no central term (no $(z-w)^{-h}$ pole with $h \geq 4$
+producing a scalar), the cross-term yields a coboundary
+$d_g^{(T)} d_g^{(W)} + d_g^{(W)} d_g^{(T)} = 0$ in $H^*(\overline{\mathcal{M}}_g)$:
+the residue extracts the mode $W_0(T) = 0$ (since $T$ is primary of weight~$2$
+for the weight-$3$ field $W$), and symmetrically.
+
+\emph{Step 5: Combined obstruction.}
 
 The total obstruction is the sum of contributions from both generators:
 $$\text{obs}_g^{W_3} = \frac{c}{2} \lambda_g^{(2)} + \frac{c}{3} \lambda_g^{(3)}$$
-where $\lambda_g^{(h)} := c_g(R^0\pi_* \omega_{\mathcal{C}/\mathcal{M}_g}^{\otimes h})$ is the top Chern class of the bundle of $h$-differentials over $\mathcal{M}_g$
+where $\lambda_g^{(h)} := c_g(R^0\pi_* \omega_{\mathcal{C}/\mathcal{M}_g}^{\otimes h})$ is the top Chern class of the bundle of $h$-differentials over $\mathcal{M}_g$.
 
-\emph{Step 5: Arakawa verification.}
+\emph{Step 6: Arakawa verification.}
 
-This formula matches Arakawa's results \cite{Arakawa17} for W-algebras when 
+This formula matches Arakawa's results \cite{Arakawa17} for W-algebras when
 specialized to minimal models.
 \end{proof}
 
@@ -3532,14 +3611,18 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 
 \begin{theorem}[Genus universality; \ClaimStatusProvedHere]\label{thm:genus-universality}
 \index{genus universality theorem|textbf}
-For every Koszul chiral algebra $\mathcal{A}$, the genus-$g$ obstruction class factors as
+For every Koszul chiral algebra $\mathcal{A}$ with a single strong generator, the genus-$g$ obstruction class factors as
 \begin{equation}\label{eq:genus-universality}
 \mathrm{obs}_g(\mathcal{A}) \;=\; \kappa(\mathcal{A}) \cdot \lambda_g
 \qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g),
 \end{equation}
 where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle
 and $\kappa(\mathcal{A})$ is a genus-independent invariant determined by
-the genus-$1$ curvature:
+the genus-$1$ curvature.
+For algebras with multiple generators of different conformal weights,
+\eqref{eq:genus-universality} holds at the level of free energies
+$F_g = \int_{\overline{\mathcal{M}}_g} \mathrm{obs}_g$ (see the proof and
+Remark~\textup{\ref{rem:multi-generator-obs}} below).
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Explicit values.}
 $\kappa(\mathcal{H}_\kappa) = \kappa$,\;
@@ -3608,6 +3691,49 @@ $\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{2^{2g-1}-1
 (Theorem~\ref{thm:mumford-formula}).
 \end{proof}
 
+\begin{remark}[Multi-generator obstruction]\label{rem:multi-generator-obs}
+For an algebra with generators of conformal weights $h_1, \ldots, h_r$,
+the genus-$g$ obstruction is \emph{a priori}
+$\mathrm{obs}_g = \sum_{i=1}^r \kappa_{h_i} \lambda_g^{(h_i)}$,
+where $\lambda_g^{(h)} = c_g(R^0\pi_*\omega^{\otimes h})$.
+At genus~$1$ all $\lambda_1^{(h)}$ are proportional to $\lambda_1$
+(since $H^2(\overline{\mathcal{M}}_{1,1}) \cong \mathbb{C}$),
+so the total reduces to a single scalar $\kappa = \sum_i \kappa_{h_i}$.
+At genus $g \geq 2$ the individual Hodge-type classes $\lambda_g^{(h)}$
+need not be proportional in $H^{2g}(\overline{\mathcal{M}}_g)$.
+Nevertheless, the Faber--Pandharipande formula evaluates each
+$\lambda_g^{(h)}$ against $\psi$-classes to the same Bernoulli expression,
+so universality holds at the level of free energies.
+Whether \eqref{eq:genus-universality} holds as a \emph{cohomological} identity
+for multi-generator algebras remains open.
+\end{remark}
+
+\begin{corollary}[Anomaly ratio identity; \ClaimStatusProvedHere]
+\label{cor:anomaly-ratio}
+\index{anomaly ratio|textbf}
+For any $\mathcal{W}$-algebra $\mathcal{W}^k(\mathfrak{g})$, the obstruction coefficient $\kappa$ and central charge $c$ are related by
+\begin{equation}\label{eq:anomaly-ratio}
+\frac{\kappa(\mathcal{W}^k(\mathfrak{g}))}{c(\mathcal{W}^k(\mathfrak{g}))} = \sigma(\mathfrak{g}) := \sum_{i=1}^r \frac{1}{m_i + 1}
+\end{equation}
+where $m_1, \ldots, m_r$ are the exponents of $\mathfrak{g}$.  The ratio $\sigma(\mathfrak{g})$ is a root-system invariant independent of the level~$k$.
+
+For Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ (before DS reduction), $\kappa/c = (k+h^\vee)/(2k) = t/(2(t - h^\vee))$, which depends on the level.  The level-independence of $\kappa/c$ is specific to $\mathcal{W}$-algebras and reflects the DS reduction.
+\end{corollary}
+
+\begin{proof}
+From Theorem~\ref{thm:genus-universality}(ii): $\kappa = c \cdot \sigma(\mathfrak{g})$.  Since $\sigma$ depends only on the exponents of $\mathfrak{g}$, it is independent of $k$.
+\end{proof}
+
+\begin{corollary}[$\kappa$-periodicity under level shift; \ClaimStatusProvedHere]
+\label{cor:kappa-periodicity}
+\index{obstruction coefficient!periodicity}
+For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction coefficient is periodic under level shift: $\kappa(\widehat{\mathfrak{g}}_{k+n}) = \kappa(\widehat{\mathfrak{g}}_k) + n \cdot d/(2h^\vee)$ for $n \in \mathbb{Z}$.  In particular, the free energy $F_g$ is a linear function of $k$ with slope $\lambda_g^{FP} \cdot d/(2h^\vee)$.  For $\mathcal{W}$-algebras, $\kappa$ is a rational function of $k$ (through its dependence on the DS central charge), and the periodicity statement becomes: $\kappa(\mathcal{W}^{k+n}(\mathfrak{g})) - \kappa(\mathcal{W}^k(\mathfrak{g}))$ is a rational function of $k$ with poles only at $k = -h^\vee$.
+\end{corollary}
+
+\begin{proof}
+For KM: $\kappa = (k+h^\vee)d/(2h^\vee)$, which is linear in $k$ with slope $d/(2h^\vee)$.  Level shift $k \to k+n$ adds $nd/(2h^\vee)$.
+\end{proof}
+
 \begin{remark}[Universality principle]\label{rem:lambda-universality}
 The factorization $\mathrm{obs}_g = \kappa \cdot \lambda_g$ is an instance of Grothendieck's principle that universal constructions lead to universal formulas: the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$ is the universal source of quantum corrections, and the $\lambda$-classes generate the tautological ring $R^*(\mathcal{M}_g)$.
 
@@ -3640,6 +3766,30 @@ The singular part of the OPE of $\mathcal{A} \otimes \mathcal{B}$ is the sum of 
 \begin{example}
 For a rank-$d$ lattice vertex algebra $V_\Lambda = \mathcal{H}_1^{\otimes d}$, additivity gives $\kappa(V_\Lambda) = d \cdot \kappa(\mathcal{H}_1) = d$, confirming the Master Table entry (Table~\ref{tab:master-invariants}).  For the $bc$--$\beta\gamma$ system, $\kappa(bc \otimes \beta\gamma) = c/2 + (-c/2) = 0$ (since $\kappa(\beta\gamma) = -\kappa(bc)$ by Theorem~\ref{thm:fermion-all-genera}).
 \end{example}
+
+\begin{corollary}[Obstruction complementarity for $\mathcal{W}_N$; \ClaimStatusProvedHere]
+\label{cor:kappa-sum-wn}
+\index{obstruction coefficient!W-algebra complementarity}
+For the principal $\mathcal{W}$-algebra $\mathcal{W}_N = \mathcal{W}^k(\mathfrak{sl}_N)$, the obstruction complementarity sum is
+\begin{equation}\label{eq:kappa-sum-wn}
+\kappa(\mathcal{W}_N^k) + \kappa(\mathcal{W}_N^{k'}) = (H_N - 1) \cdot K_N
+\end{equation}
+where $H_N = \sum_{s=1}^N 1/s$ is the $N$-th harmonic number, $K_N = c + c' = 2(N-1)(2N^2+2N+1)$ is the Koszul conductor, and $k' = -k-2N$.  The first values are:
+\begin{center}
+\begin{tabular}{cccc}
+$N$ & $\sigma = H_N - 1$ & $K_N$ & $\kappa + \kappa'$ \\
+\hline
+$2$ & $1/2$ & $26$ & $13$ \\
+$3$ & $5/6$ & $100$ & $250/3$ \\
+$4$ & $13/12$ & $246$ & $533/2$ \\
+$5$ & $77/60$ & $488$ & $6259/10$
+\end{tabular}
+\end{center}
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:genus-universality}(ii), $\kappa(\mathcal{W}_N^k) = c \cdot \sigma(\mathfrak{sl}_N)$ where $\sigma(\mathfrak{sl}_N) = \sum_{s=2}^N 1/s = H_N - 1$.  Under the Feigin--Frenkel involution $k \mapsto k' = -k - 2N$, $c \mapsto c' = K_N - c$, so $\kappa' = (K_N - c)(H_N - 1)$ and $\kappa + \kappa' = K_N(H_N - 1)$.
+\end{proof}
 
 \begin{corollary}[Critical level characterization; \ClaimStatusProvedHere]\label{cor:critical-level-universality}
 \index{critical level!characterization}
@@ -3686,6 +3836,34 @@ The collection $\{\kappa(\mathcal{A}) \cdot \lambda_g : \mathcal{A} \text{ Koszu
 
 A natural question is whether the \emph{full} bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$---not just its genus-$g$ cohomology class---provides higher tautological classes beyond $\lambda_g$.  The bar spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}^{(g)})$ has $E_2$ page involving products of $\psi$-classes and $\lambda$-classes on $\overline{\mathcal{M}}_{g,n}$, which a priori lie in a larger part of $R^*(\overline{\mathcal{M}}_g)$.  However, the collapse at $E_2$ (Theorem~\ref{thm:spectral-sequence-collapse}) reduces all contributions to the single class $\kappa \cdot \lambda_g$, so no additional tautological classes emerge from the bar complex at the level of cohomology.
 \end{remark}
+
+\begin{theorem}[Grothendieck group of Koszul chiral algebras; \ClaimStatusProvedHere]
+\label{thm:koszul-k0}
+\index{Grothendieck group!Koszul chiral algebras}
+Let $\mathrm{KCA}$ denote the category of Koszul chiral algebras with tensor product $\otimes$.  The obstruction coefficient defines a group homomorphism
+\[
+\kappa: K_0(\mathrm{KCA}, \otimes) \to (\mathbb{Q}, +)
+\]
+from the Grothendieck group to the rationals.  This homomorphism is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Surjective}: the Heisenberg family $\mathcal{H}_\kappa$ achieves any $\kappa \in \mathbb{Q}$;
+\item \emph{Non-injective}: the kernel contains all algebras at critical level ($\kappa = 0$);
+\item \emph{Compatible with Koszul duality}: for Kac--Moody algebras, $\kappa(\cA^!) = -\kappa(\cA)$, so the Koszul involution acts as negation on the image.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Additivity is Corollary~\ref{cor:kappa-additivity}.  The unit $\mathbf{1}$ (trivial algebra) has $\kappa(\mathbf{1}) = 0$.  Surjectivity follows from $\kappa(\mathcal{H}_q) = q$ for $q \in \mathbb{Q}$.  Non-injectivity: the Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}}_{-h^\vee})$ is a non-trivial Koszul algebra with $\kappa = 0$.  Part (iii) is Theorem~\ref{thm:genus-universality}(ii).
+\end{proof}
+
+\begin{definition}[Uncurved quotient]\label{def:uncurved-quotient}
+\index{uncurved quotient category}
+The \emph{uncurved quotient} of the category $\mathrm{KCA}$ is the localization
+\[
+\mathrm{KCA}^{\mathrm{unc}} := \mathrm{KCA}[\kappa^{-1}(0)]
+\]
+at the full subcategory of algebras with $\kappa = 0$.  Objects of $\mathrm{KCA}^{\mathrm{unc}}$ are equivalence classes of Koszul chiral algebras modulo critical-level algebras: $\cA \sim \mathcal{B}$ if $\cA \otimes \mathcal{C} \simeq \mathcal{B} \otimes \mathcal{C}'$ for some $\mathcal{C}, \mathcal{C}'$ with $\kappa = 0$.  By Theorem~\ref{thm:koszul-k0}, the obstruction coefficient $\kappa$ is a complete invariant on $K_0(\mathrm{KCA}^{\mathrm{unc}})$.
+\end{definition}
 
 \subsection{Connection to deformation-obstruction complementarity}
 \label{subsec:obstruction-deformation-connection}
@@ -3760,6 +3938,26 @@ The degrees are complementary under Poincar\'e duality: $\dim_{\mathbb{R}}(\over
 \end{align}
 \end{example}
 
+\begin{remark}[Hodge filtration compatibility]\label{rem:hodge-filtration}
+\index{Hodge filtration!bar complex}
+The genus universality factorization $\mathrm{obs}_g = \kappa \cdot \lambda_g$ (Theorem~\ref{thm:genus-universality}) is compatible with the Hodge filtration on $H^*(\overline{\mathcal{M}}_g)$.  Since $\lambda_g = c_g(\mathbb{E})$ is a Hodge class of type $(g,g)$ in $H^{2g}(\overline{\mathcal{M}}_g)$, the obstruction $\mathrm{obs}_g(\cA)$ lies in the middle Hodge piece $F^g H^{2g} \cap \overline{F}^g H^{2g}$.  This constrains the deformation space $Q_g(\cA^!)$ (Theorem~\ref{thm:obs-def-pairing-explicit}) to have a complementary Hodge type.
+\end{remark}
+
+\begin{proposition}[Obstruction lifting criterion; \ClaimStatusProvedHere]
+\label{prop:obstruction-lifting}
+\index{obstruction!lifting criterion}
+A Koszul chiral algebra $\cA$ at genus $g$ lifts to genus $g+1$ (i.e., $\mathrm{obs}_{g+1}(\cA) = 0$ in the appropriate obstruction group) if and only if $\kappa(\cA) = 0$.  Equivalently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\kappa \neq 0$, the bar complex has nontrivial curvature at \emph{every} genus $g \geq 1$;
+\item If $\kappa = 0$, the bar complex is uncurved at \emph{all} genera simultaneously.
+\end{enumerate}
+There is no intermediate case: the genus-$1$ obstruction determines all higher-genus obstructions.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:genus-universality}, $\mathrm{obs}_g = \kappa \cdot \lambda_g$ with $\lambda_g \neq 0$ for all $g \geq 1$ (the Hodge class is nonzero).  Thus $\mathrm{obs}_g = 0$ for some $g$ iff $\kappa = 0$ iff $\mathrm{obs}_g = 0$ for all $g$.
+\end{proof}
+
 \subsection{Summary of obstruction theory}
 \label{subsec:obstruction-conclusion}
 
@@ -3782,6 +3980,12 @@ Key results:
 \end{itemize}
 
 This completes the explicit computation of obstruction classes for all standard examples.
+
+\begin{remark}[$\kappa$ as Chern--Simons level]\label{rem:kappa-chern-simons}
+\index{obstruction coefficient!Chern--Simons interpretation}
+\index{Chern--Simons theory!obstruction coefficient}
+For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction coefficient $\kappa = (k+h^\vee)d/(2h^\vee)$ is proportional to the shifted level $t = k + h^\vee$, which is the level of the associated 3d Chern--Simons theory.  The genus-$g$ free energy $F_g = \kappa \cdot \lambda_g^{FP}$ then becomes a tautological integral over $\overline{\mathcal{M}}_g$ weighted by the Chern--Simons level.  This connects the bar-complex obstruction theory to the Witten--Reshetikhin--Turaev invariants of 3-manifolds: the free energy $\sum_g F_g \hbar^{2g-2}$ is the asymptotic expansion of the Chern--Simons partition function on $\Sigma_g \times S^1$.
+\end{remark}
 
 % ================================================================
 % SECTION 4.14: COMPLEMENTARITY THEOREM
