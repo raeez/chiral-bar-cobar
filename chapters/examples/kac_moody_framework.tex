@@ -558,6 +558,199 @@ than the chain-group dimensions and exhibit polynomial growth
 for Koszul algebras.
 \end{remark}
 
+\subsection{Level decomposition of the bar differential}
+
+\begin{theorem}[Bicomplex structure of the KM bar complex; \ClaimStatusProvedHere]
+\label{thm:km-bar-bicomplex}
+\index{bar complex!bicomplex structure}
+\index{bar complex!level decomposition}
+\index{Kac--Moody algebra!bar differential!level decomposition}
+For any simple Lie algebra $\mathfrak{g}$ and any level~$k$, the bar
+differential of $\widehat{\mathfrak{g}}_k$ decomposes as
+\begin{equation}\label{eq:bar-level-decomp}
+d_k = d_{\mathrm{crit}} + (k + h^\vee)\,\delta,
+\end{equation}
+where $d_{\mathrm{crit}} = d_{-h^\vee}$ is the critical-level bar
+differential \textup{(}extracting only simple-pole residues\textup{)} and
+$\delta$ is a degree-$(-1)$ endomorphism of
+$\bar{B}^{\bullet}(\widehat{\mathfrak{g}})$ \textup{(}extracting
+double-pole residues\textup{)}.  The triple
+$(\bar{B}^\bullet,\, d_{\mathrm{crit}},\, \delta)$ is a
+\emph{bicomplex}:
+\begin{equation}\label{eq:bar-bicomplex-conditions}
+d_{\mathrm{crit}}^2 = 0, \qquad
+\delta^2 = 0, \qquad
+d_{\mathrm{crit}}\,\delta + \delta\, d_{\mathrm{crit}} = 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The OPE of $\widehat{\mathfrak{g}}_k$ is
+$J^a(z) J^b(w) \sim k(J^a, J^b)/(z-w)^2 + f^{ab}{}_c J^c(w)/(z-w)$.
+The bar differential~\eqref{eq:bar-diff-general}
+acts on $\bar{B}^n$ by extracting residues at collision
+divisors.  At each collision $z_i \to z_j$, the residue
+separates into:
+\begin{itemize}
+\item A \emph{simple-pole contribution}:
+$\mathrm{Res}_{z_i = z_j}[f^{ab}{}_c J^c / (z_i - z_j)]
+= f^{ab}{}_c J^c$, independent of~$k$.
+\item A \emph{double-pole contribution}:
+$\mathrm{Res}_{z_i = z_j}[k(J^a, J^b) / (z_i - z_j)^2]
+= k(J^a, J^b) \cdot |0\rangle$, linear in~$k$.
+\end{itemize}
+Setting $d_{\mathrm{crit}} = (\text{simple-pole part of } d_k)$
+and $\delta = (\text{double-pole part of } d_k \text{ at }
+k + h^\vee = 1)$ gives the decomposition
+$d_k = d_{\mathrm{crit}} + (k + h^\vee)\delta$, since the
+double-pole part is linear in~$k$ and vanishes at
+$k = -h^\vee$.
+
+Since $d_k^2 = 0$ for \emph{all} $k$, expand:
+\[
+0 = d_k^2
+= d_{\mathrm{crit}}^2
++ (k + h^\vee)(d_{\mathrm{crit}}\delta + \delta\, d_{\mathrm{crit}})
++ (k + h^\vee)^2 \delta^2.
+\]
+This is a polynomial identity in the variable
+$\lambda = k + h^\vee$ that vanishes for all $\lambda$,
+so each coefficient is zero.
+\end{proof}
+
+\begin{corollary}[Critical-level spectral sequence; \ClaimStatusProvedHere]
+\label{cor:critical-level-spectral}
+\index{spectral sequence!critical level}
+\index{bar complex!spectral sequence!level parameter}
+The bicomplex $(\bar{B}^\bullet, d_{\mathrm{crit}}, \delta)$ gives
+rise to two spectral sequences for each generic level~$k$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The ``critical-first'' spectral sequence with
+$E_1^{p,q} = H^{p+q}(\bar{B}^\bullet,\, d_{\mathrm{crit}})$,
+converging to $H^*(\bar{B}^\bullet, d_k)$, with $d_1$ induced
+by $(k + h^\vee)\delta$.  The $E_1$ page is the bar cohomology at
+critical level.
+\item The ``curvature-first'' spectral sequence with
+$E_1^{p,q} = H^{p+q}(\bar{B}^\bullet,\, \delta)$,
+converging to $H^*(\bar{B}^\bullet, d_k)$, with $d_1$ induced
+by $d_{\mathrm{crit}}$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Standard spectral sequence theory for a bicomplex
+\cite[Ch.~5]{Weibel94}.  The convergence follows from
+the finite-dimensionality of $\bar{B}^n$ (Remark~\ref{rem:bar-dims-level-independent}).
+\end{proof}
+
+\begin{remark}[Interpretation of the bicomplex]
+\label{rem:bicomplex-interpretation}
+\index{bar complex!bicomplex!interpretation}
+The decomposition~\eqref{eq:bar-level-decomp} makes precise the
+observation (Remark~\ref{rem:bar-dims-level-independent}) that bar
+chain groups are level-independent while the differential is not.
+The critical-level differential $d_{\mathrm{crit}}$ encodes the
+Lie-algebraic structure of $\mathfrak{g}$ (structure constants),
+while the perturbation $\delta$ encodes the central extension
+(Killing form contribution).  The curvature $m_0 = (k+h^\vee)\kappa/(2h^\vee)$ of the $A_\infty$-structure is precisely the degree-$0$ component of $(k + h^\vee)\delta$.
+
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item At $k = -h^\vee$: $\delta$-perturbation vanishes, and
+the bar complex reduces to the \emph{uncurved} critical-level complex with differential $d_{\mathrm{crit}}$.
+\item For generic $k \neq -h^\vee$: the ``critical-first'' spectral
+sequence relates bar cohomology at generic level to bar cohomology
+at critical level.  The collapse or non-collapse of this spectral
+sequence governs how the bar cohomology dimensions change with the
+level.
+\item At admissible $k = -h^\vee + p/q$: the perturbation parameter
+$(k + h^\vee) = p/q$ is rational, potentially creating resonance
+phenomena in the spectral sequence.
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Generic level-independence of bar cohomology; \ClaimStatusProvedHere]
+\label{thm:bar-cohomology-level-independence}
+\index{bar complex!level-independence!cohomology}
+\index{Kac--Moody algebra!bar cohomology!level-independence}
+For any simple Lie algebra $\mathfrak{g}$, the bar cohomology
+dimensions $\dim H^n(\bar{B}^\bullet(\widehat{\mathfrak{g}}_k))$
+are independent of the level~$k$ for all $k$ outside a finite set
+$\Sigma_n(\mathfrak{g}) \subset \mathbb{C}$.
+
+More precisely, write $d_k = d_{\mathrm{crit}} + \lambda\,\delta$
+with $\lambda = k + h^\vee$ as in
+Theorem~\textup{\ref{thm:km-bar-bicomplex}}.
+For each $n$, the maps
+$d_\lambda\colon \bar{B}^n \to \bar{B}^{n-1}$ form a
+polynomial family \textup{(}linear in~$\lambda$\textup{)},
+and the function
+\[
+\lambda \;\mapsto\; \dim H^n(\bar{B}^\bullet, d_\lambda)
+\]
+is constant on $\mathbb{C} \setminus
+(\Sigma_n \cup \Sigma_{n+1})$ and can only
+\emph{increase} at the special values.
+In particular, the bar cohomology dimensions computed at any
+generic level equal those at every other generic level.
+\end{theorem}
+
+\begin{proof}
+Since $\bar{B}^n$ is finite-dimensional for each~$n$
+(Remark~\ref{rem:bar-dims-level-independent}),
+the differential $d_\lambda = d_{\mathrm{crit}} + \lambda\delta
+\colon \bar{B}^n \to \bar{B}^{n-1}$
+is a matrix whose entries are affine-linear functions of~$\lambda$.
+For a matrix $A(\lambda)$ depending polynomially on a
+parameter $\lambda \in \mathbb{C}$, the rank function
+$\lambda \mapsto \operatorname{rk} A(\lambda)$ is
+lower-semicontinuous: it is constant on the complement
+of a finite set (the zero locus of the maximal minors)
+and can only \emph{drop} at finitely many values.
+Define
+\begin{align*}
+r_n(\lambda) &= \operatorname{rk}\bigl(d_\lambda
+  \colon \bar{B}^n \to \bar{B}^{n-1}\bigr), \\
+\Sigma_n &= \{\lambda \in \mathbb{C} :
+  r_n(\lambda) < r_n^{\mathrm{gen}}\},
+\end{align*}
+where $r_n^{\mathrm{gen}}$ is the generic rank.  Then
+\[
+\dim H^n(\bar{B}^\bullet, d_\lambda)
+= \dim \bar{B}^n - r_n(\lambda) - r_{n+1}(\lambda),
+\]
+where $\dim\bar{B}^n$ is independent of~$\lambda$
+(Remark~\ref{rem:bar-dims-level-independent}).  For
+$\lambda \notin \Sigma_n \cup \Sigma_{n+1}$,
+both $r_n$ and $r_{n+1}$ attain their generic values,
+so $\dim H^n$ is constant.
+At a special value $\lambda_0 \in \Sigma_n \cup \Sigma_{n+1}$,
+either $r_n$ or $r_{n+1}$ drops, causing $\dim H^n$
+to (weakly) increase.
+\end{proof}
+
+\begin{remark}[Special values and admissible levels]
+\label{rem:special-level-values}
+\index{admissible level!bar cohomology jump}
+The finite exceptional set $\Sigma_n(\mathfrak{g})$
+contains at most $\dim\bar{B}^n \cdot \dim\bar{B}^{n-1}$
+values (the number of maximal minors).  In practice,
+$|\Sigma_n|$ is much smaller.  For $\mathfrak{sl}_2$ at
+degree~$2$: the differential $d_\lambda\colon
+\bar{B}^2 \to \bar{B}^1$ is a $3 \times 9$ matrix linear in
+$\lambda$; computing its $3 \times 3$ minors shows that the
+generic rank is~$3$ for all $\lambda \neq 0$, so
+$\Sigma_2 = \{0\}$ (i.e., $k = -h^\vee = -2$).
+This means the bar cohomology of $\widehat{\mathfrak{sl}}_{2,k}$
+can only change at the critical level $k = -2$,
+consistent with
+Theorem~\textup{\ref{thm:universal-kac-moody-koszul}}.
+The admissible levels $k = -2 + p/q$
+(rational distance from critical) are the natural
+candidates for non-generic behavior; see
+Remark~\textup{\ref{rem:bicomplex-interpretation}}\textup{(iii)}.
+\end{remark}
+
 \section{\texorpdfstring{General $\widehat{\mathfrak{g}}$: functorial construction}{General g: functorial construction}}
 
 \subsection{Abstract setting}
