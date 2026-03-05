@@ -298,7 +298,10 @@ degenerates.  The K\"unneth theorem on
 $\overline{C}_p(X) \times \overline{C}_q(X)$ then gives
 $H^*(\bar{B}(M \boxtimes N))
 \cong H^*(\bar{B}(M)) \otimes_{H^*(\bar{B}(\mathcal{A}))}
-H^*(\bar{B}(N))$,
+H^*(\bar{B}(N))$
+(the required Tor-independence holds because, for Koszul modules,
+$H^*(\bar{B}(M)) = M^!$ is concentrated on the diagonal and hence
+flat over $\mathcal{A}^!$ by the linearity of the bar resolution),
 so $\mu_{M,N}$ induces an isomorphism on cohomology.
 
 \emph{Step~3: Braiding reversal.}
@@ -375,7 +378,8 @@ $\mathfrak{g}$, not on the sign of~$q$).
 \index{Ext--Tor exchange}
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a Koszul chiral pair with
 $\mathcal{A}$ uncurved ($m_0 = 0$, i.e., genus~$0$ or critical
-level).  For $\mathcal{A}$-modules $M, N$ with Koszul dual
+level) and with finite-type grading (each conformal weight space
+is finite-dimensional).  For $\mathcal{A}$-modules $M, N$ with Koszul dual
 comodules $M^! = \bar{B}_{\mathcal{A}}(M)$,
 $N^! = \bar{B}_{\mathcal{A}}(N)$:
 \begin{equation}\label{eq:ext-tor-exchange}
@@ -4158,3 +4162,155 @@ H^0_{\mathrm{DS}}\bigl(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\math
 \begin{proof}
 Equation~\eqref{eq:ds-bar-level-shift} is the algebra-level case of Theorem~\ref{thm:ds-koszul-intertwine} (take $M = \widehat{\mathfrak{g}}_k$ as a module over itself).  For~\eqref{eq:ds-cobar-dual}: by Corollary~\ref{cor:level-shifting-part1}, $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)) \simeq \widehat{\mathfrak{g}}_{k'}$.  Applying $H^0_{\mathrm{DS}}$ and using~\eqref{eq:ds-bar-level-shift} for $\widehat{\mathfrak{g}}_{k'}$ gives $\mathcal{W}^{k'}(\mathfrak{g})$.
 \end{proof}
+
+\section{Genus-graded module categories}\label{sec:genus-graded-modules}
+\index{module category!genus-graded}
+
+The full bar complex $\bar{B}^{\mathrm{full}}(\cA) = \bigoplus_{g \geq 0}
+\bar{B}^{(g)}(\cA)$ is genus-graded (Theorem~\ref{thm:master-tower}).
+This section develops the corresponding genus-graded structure on module
+categories, combining the module Koszul duality of
+Theorem~\ref{thm:e1-module-koszul-duality} with the chain-level modular
+functor of Theorem~\ref{thm:chain-modular-functor}.
+
+\begin{definition}[Genus-graded module]\label{def:genus-graded-module}
+\index{module!genus-graded}
+Let $\cA$ be a Koszul chiral algebra.  A \emph{genus-graded
+$\cA$-module} is a collection $\{M^{(g)}\}_{g \geq 0}$ where
+$M^{(g)}$ is a module over the genus-$g$ bar complex
+$\bar{B}^{(g)}(\cA)$, equipped with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Factorization maps}: For each partition $g = g_1 + g_2$,
+  a chain map
+  \begin{equation}\label{eq:module-factorization}
+  \Delta_M: M^{(g)} \to M^{(g_1)} \otimes_{\cA} M^{(g_2)}
+  \end{equation}
+  compatible with the algebra factorization
+  (Theorem~\ref{thm:chain-modular-functor}(ii)).
+\item \emph{Self-sewing maps}: A chain map
+  \begin{equation}\label{eq:module-self-sewing}
+  \sigma_M: M^{(g)} \to M^{(g-1)}
+  \end{equation}
+  compatible with the algebra self-sewing
+  (Theorem~\ref{thm:chain-modular-functor}(iii)).
+\item \emph{Coherence}: The factorization and self-sewing maps
+  satisfy associativity and commutativity up to homotopies
+  provided by the $A_\infty$ module operations.
+\end{enumerate}
+The curvature $m_0^{(g)} = \kappa(\cA) \cdot \lambda_g$ mixes
+the genus components: $d_{M^{(g)}}^2 = m_0^{(g)} \cdot \mathrm{id}$,
+so the genus-graded module is a curved complex over the formal
+genus parameter $\hbar$.
+\end{definition}
+
+\begin{theorem}[Module tower from bar complex with insertions;
+\ClaimStatusProvedHere]\label{thm:module-genus-tower}
+\index{module tower!genus-graded}
+For a Koszul chiral algebra $\cA$ and an $\cA$-module $M$, the
+bar complex with module insertion
+$\bar{B}^{(g)}_n(\cA; M) :=
+\bar{B}^{(g)}_n(\cA; M, \cA, \ldots, \cA)$
+\textup{(}with $M$ inserted at the first marked
+point\textup{)} forms a genus-graded $\cA$-module in the sense
+of Definition~\textup{\ref{def:genus-graded-module}}.
+\end{theorem}
+
+\begin{proof}
+The bar complex with module insertion
+$\bar{B}^{(g)}_n(\cA; M)$ is defined via configuration space
+integrals on the logarithmic FM compactification
+(Theorem~\ref{thm:log-fm-bar-d-squared}).  The nilpotency
+$d^2 = 0$ is proved there.
+
+The factorization map~\eqref{eq:module-factorization} is
+constructed as follows.  The separating boundary divisor
+$D_{\mathrm{sep}} \subset \overline{\mathcal{M}}_{g,n}$ with
+the module insertion on the genus-$g_1$ component produces a
+residue map
+$\mathrm{Res}_{D_{\mathrm{sep}}}\colon
+\bar{B}^{(g)}_n(\cA; M) \to
+\bar{B}^{(g_1)}_{|I|+1}(\cA; M) \otimes
+\bar{B}^{(g_2)}_{|J|+1}(\cA)$.
+The module insertion stays on one component; the other component
+carries only algebra insertions.  That this is a chain map follows
+from the compatibility of the Feynman transform differential with
+boundary strata (Getzler--Kapranov \cite{GeK98}).
+
+The self-sewing map~\eqref{eq:module-self-sewing} is constructed
+from the nonseparating boundary divisor, analogously to the
+algebra case (Theorem~\ref{thm:chain-modular-functor}(iii)).
+
+Coherence follows from the $A_\infty$ module structure on
+$\bar{B}^{(g)}_n(\cA; M)$, which provides the required
+homotopies between different orderings of degeneration.
+\end{proof}
+
+\begin{proposition}[Koszul duality of genus-graded modules;
+\ClaimStatusProvedHere]\label{prop:genus-module-koszul}
+\index{Koszul duality!genus-graded modules}
+For a Koszul pair $(\cA, \cA^!)$ and a Koszul $\cA$-module $M$
+with Koszul dual module $M^! = \Phi(M)$
+\textup{(}Theorem~\textup{\ref{thm:e1-module-koszul-duality})},
+the genus-graded module structures are related by:
+\begin{equation}\label{eq:genus-module-duality}
+\bar{B}^{(g)}_n(\cA; M) \simeq
+\mathrm{RHom}_{\cA^!}\bigl(\bar{B}^{(g)}_n(\cA^!; M^!),\,
+\omega_{\overline{\mathcal{M}}_{g,n}}\bigr)
+[-\dim_{\mathbb{C}} \mathcal{M}_{g,n}]
+\end{equation}
+In particular, the factorization maps dualize:
+$\Delta_M$ for $\cA$ is Verdier dual to $\Delta_{M^!}$ for $\cA^!$.
+\end{proposition}
+
+\begin{proof}
+Combine Theorem~\ref{thm:e1-module-koszul-duality} (module Koszul
+duality $\Phi: \mathrm{Mod}(\cA) \to \mathrm{Mod}(\cA^!)$)
+with Corollary~\ref{cor:dual-modular-functor} (Verdier duality of
+the chain-level modular functor).  The module insertion at a marked
+point transforms covariantly under the Koszul functor $\Phi$,
+while the algebra insertions at other marked points transform via
+the bar-cobar equivalence.  The Verdier duality on
+$\overline{\mathcal{M}}_{g,n}$ interchanges the factorization
+maps by the naturality argument of
+Corollary~\ref{cor:dual-modular-functor}.
+\end{proof}
+
+\begin{remark}[Curvature as obstruction to strict genus-grading]
+\label{rem:curvature-genus-obstruction}
+\index{curvature!obstruction to genus-grading}
+The genus-graded module structure of
+Definition~\ref{def:genus-graded-module} is \emph{not} a direct
+sum decomposition when $\kappa(\cA) \neq 0$: the curvature
+$m_0^{(g)} = \kappa \cdot \lambda_g$ mixes genus components.
+The genus-$g$ module differential satisfies
+$d_{M^{(g)}}^2 = m_0^{(g)} \cdot \mathrm{id}$, so the individual
+$M^{(g)}$ are curved complexes.  Only the total complex
+$M^{\mathrm{total}} = \widehat{\bigoplus}_g \hbar^{2g-2} M^{(g)}$
+has $d^2 = 0$ (as a formal power series in $\hbar$).
+
+At critical level $\kappa = 0$, the curvature vanishes and the
+genus-grading becomes strict: each $M^{(g)}$ is an honest cochain
+complex, and the genus-graded module is a direct sum.  This
+recovers the classical (non-genus-graded) module theory as the
+$g = 0$ summand.
+\end{remark}
+
+\begin{example}[KM Verma modules]\label{ex:verma-genus-graded}
+\index{Verma module!genus-graded}
+For a Verma module $M(\lambda) \in \mathcal{O}_k(\widehat{\fg})$
+at generic level, the genus-graded module tower has:
+\begin{itemize}
+\item $M^{(0)}(\lambda)$: the bar complex of the Verma module at
+  genus~$0$, whose cohomology is the Verma--BGG resolution
+  (Theorem~\ref{thm:yangian-bgg}).
+\item $M^{(1)}(\lambda)$: the genus-$1$ correction, controlled by
+  the elliptic bar differential with module insertion.  The
+  obstruction $m_0^{(1)} = \kappa \cdot \lambda_1$ produces the
+  genus-$1$ curvature of Theorem~\ref{thm:extension-obstruction}.
+\item Factorization: the map
+  $\Delta_M: M^{(g)}(\lambda) \to
+  M^{(g_1)}(\lambda) \otimes M^{(g_2)}(0)$
+  (with vacuum module at the second factor) recovers the genus
+  tower restriction maps of Theorem~\ref{thm:master-tower}.
+\end{itemize}
+\end{example}

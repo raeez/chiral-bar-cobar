@@ -283,9 +283,24 @@ $\mathrm{Loc}_{G^\vee}(\Sigma_g)$.
 \begin{conjecture}[$\mathcal{W}_3$ bar cohomology algebraicity; \ClaimStatusConjectured]
 \label{conj:w3-algebraicity}
 \index{W3 algebra@$\mathcal{W}_3$!bar generating function}
-The bar cohomology generating function $P_{\mathcal{W}_3}(x) = \sum_{n \geq 1} \dim H^n(\barBgeom(\mathcal{W}_3^k))\, x^n$ is an algebraic function over $\mathbb{Q}(x)$.  The first four values $2, 5, 16, 52$ are consistent with a degree-$2$ algebraic function (quadratic over $\mathbb{Q}(x)$), but do not yet determine it uniquely.  If the DS discriminant principle (Remark~\ref{rem:ds-discriminant-invariant}) holds, the discriminant of $P_{\mathcal{W}_3}$ should match that of $P_{\widehat{\mathfrak{sl}}_3}$.
+The bar cohomology generating function $P_{\mathcal{W}_3}(x) = \sum_{n \geq 1} \dim H^n(\barBgeom(\mathcal{W}_3^k))\, x^n$ is an algebraic function over $\mathbb{Q}(x)$.  The first four values $2, 5, 16, 52$ are the unique solution of the depth-$2$ linear recurrence with constant term
+\begin{equation}\label{eq:w3-bar-recurrence}
+a(n) = 3\,a(n{-}1) + a(n{-}2) - 1, \qquad a(0) = 0,\; a(1) = 2,
+\end{equation}
+which yields the rational generating function
+$P_{\mathcal{W}_3}(x) = x(2-3x)/\bigl((1-x)(1-3x-x^2)\bigr)$.
+This predicts $\dim H^5 = 171$ and exponential growth rate
+$(3+\sqrt{13})/2 \approx 3.303$.
+However, four data points do not distinguish this rational function
+from a degree-$2$ algebraic function with different discriminant.
+If the DS discriminant principle
+(Remark~\ref{rem:ds-discriminant-invariant}) holds,
+the discriminant of $P_{\mathcal{W}_3}$ should match that of
+$P_{\widehat{\mathfrak{sl}}_3}$; the rational candidate has
+discriminant $1 - 3x - x^2$, whose compatibility with
+$\widehat{\mathfrak{sl}}_3$ remains to be checked.
 
-\emph{Scope.}  Verification requires computing $\dim H^5(\barBgeom(\mathcal{W}_3^k))$, which involves the $\mathcal{W}_3$ bar complex at degree $5$ (a computation not yet carried out).
+\emph{Scope.}  Verification requires computing $\dim H^5(\barBgeom(\mathcal{W}_3^k))$: the value $171$ would confirm the recurrence~\eqref{eq:w3-bar-recurrence}, while any other value would rule it out and point to a non-rational generating function.
 \end{conjecture}
 
 \begin{conjecture}[Non-simply-laced discriminant; \ClaimStatusConjectured]
@@ -1172,7 +1187,7 @@ consequence of the vanishing of the B-cycle integral of exact forms.
 \subsection{Genus-3 obstruction: first computation}\label{subsec:genus-3}
 
 \begin{computation}[First genus-3 result]\label{comp:genus-3-sl2}
-The genus-3 obstruction is the first case where the dimensional vanishing argument for nilpotence fails (Conjecture~\ref{conj:obstruction-nilpotent-higher}).  Nevertheless, the genus universality theorem yields an explicit formula.
+The genus-3 obstruction is the first case where the dimensional vanishing argument for nilpotence fails; however, Theorem~\ref{thm:obstruction-nilpotent-all-genera} (via Mumford's relation) proves $(\operatorname{obs}_3)^2 = 0$ for all genera.  The genus universality theorem yields an explicit formula.
 
 The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_3$ has rank~$3$, and $\lambda_3 = c_3(\mathbb{E}) \in H^6(\overline{\mathcal{M}}_3)$.  The moduli space $\overline{\mathcal{M}}_3$ has complex dimension~$3 \cdot 3 - 3 = 6$, so $\lambda_3 = c_3(\mathbb{E})$ is the \emph{top Chern class} of the rank-$3$ Hodge bundle (though $H^6(\overline{\mathcal{M}}_3)$ is middle-degree cohomology on this $6$-dimensional space).
 
@@ -2342,3 +2357,119 @@ Immediate from $\phi_{\mathcal{A}} = \kappa \cdot (x/2)/\sin(x/2)$ and linearity
 \index{index theory!genus expansion}
 The appearance of the modified Todd class $(x/2)/\sin(x/2)$ (rather than the $\hat{A}$-genus $(x/2)/\sinh(x/2)$) reflects the \emph{positive} Faber--Pandharipande coefficients: all $\lambda_g^{\mathrm{FP}} > 0$ (Remark~\ref{rem:A-hat-genus}).  In the Atiyah--Singer framework, the $\hat{A}$-genus governs the Dirac operator and has alternating signs.  The Wick rotation $x \mapsto ix$ relates the two generating functions, but the underlying geometry is distinct: the genus expansion operates on the algebraic moduli space $\overline{\mathcal{M}}_g$ (with tautological intersection theory), while the $\hat{A}$-genus operates on smooth manifolds (with characteristic classes of the tangent bundle).
 \end{remark}
+
+\subsection{Koszul duality as duality of genera}\label{subsec:koszul-genera-duality}
+\index{multiplicative genus!Koszul duality}
+
+The multiplicative genus $\phi_{\cA}$ packages the genus expansion into a single
+algebro-geometric invariant.  This section develops the structural consequences:
+the duality pairing on genera induced by Koszul duality is \emph{not visible}
+in the Frenkel--Gaitsgory or Costello--Gwilliam frameworks, and constitutes a
+new phenomenon specific to the bar-cobar approach.
+
+\begin{proposition}[Koszul duality as genus involution; \ClaimStatusProvedHere]
+\label{prop:koszul-genus-involution}
+\index{multiplicative genus!involution}
+The assignment $\mathcal{A} \mapsto \phi_{\mathcal{A}}$ defines a homomorphism
+from the Grothendieck group $K_0(\mathrm{KCA})$ of Koszul chiral algebras
+\textup{(}under tensor product\textup{)} to the additive group of multiplicative
+sequences:
+\begin{equation}\label{eq:koszul-genus-hom}
+\phi_{\mathcal{A} \otimes \mathcal{B}} = \phi_{\mathcal{A}} + \phi_{\mathcal{B}}.
+\end{equation}
+The Koszul duality functor $\mathcal{A} \mapsto \mathcal{A}^!$ induces an
+involution on genera:
+\begin{equation}\label{eq:genus-involution}
+\phi_{\mathcal{A}^!}(x) = -\phi_{\mathcal{A}}(x)
+\qquad\text{for Kac--Moody algebras \textup{(}$\kappa + \kappa' = 0$\textup{)}},
+\end{equation}
+and more generally
+\begin{equation}\label{eq:genus-involution-general}
+\phi_{\mathcal{A}^!}(x) = (\kappa + \kappa') \cdot \frac{x/2}{\sin(x/2)} - \phi_{\mathcal{A}}(x)
+\end{equation}
+for arbitrary Koszul pairs.
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:koszul-genus-hom} follows from the additivity
+$\kappa(\mathcal{A} \otimes \mathcal{B}) = \kappa(\mathcal{A}) + \kappa(\mathcal{B})$
+(Corollary~\ref{cor:kappa-additivity}) and the linearity of the generating
+function in~$\kappa$ (Proposition~\ref{prop:multiplicative-genus}).
+Equations~\eqref{eq:genus-involution}--\eqref{eq:genus-involution-general}
+restate Corollary~\ref{cor:complementary-genera}.
+\end{proof}
+
+\begin{theorem}[Genus duality determines the Koszul pair; \ClaimStatusProvedHere]
+\label{thm:genus-determines-pair}
+\index{multiplicative genus!determination}
+For a Koszul chiral algebra $\mathcal{A}$ with obstruction coefficient
+$\kappa \neq 0$, the genus expansion determines:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The obstruction coefficient $\kappa(\mathcal{A})$
+\textup{(}from $F_1 = \kappa/24$\textup{)};
+\item The central charge $c(\mathcal{A})$ whenever $\sigma(\mathfrak{g})$ is
+known \textup{(}from $\kappa = c \cdot \sigma$,
+Corollary~\textup{\ref{cor:general-w-obstruction})};
+\item The Feigin--Frenkel dual level $k'$ for affine algebras
+\textup{(}from $\kappa + \kappa' = 0$\textup{)};
+\item The radius of convergence $|x| = 2\pi$
+\textup{(}independent of $\mathcal{A}$,
+Theorem~\textup{\ref{thm:bernoulli-universality})}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): $F_1(\mathcal{A}) = \kappa \cdot \lambda_1^{\mathrm{FP}} = \kappa/24$
+(Theorem~\ref{thm:genus-universality}), so $\kappa = 24 F_1$.
+Part~(ii): $\kappa = c \cdot \sigma(\mathfrak{g})$ with $\sigma$ tabulated
+(Remark~\ref{rem:general-w-kappa-values}), so $c = \kappa/\sigma$.
+Part~(iii): The Feigin--Frenkel involution gives $k' = -k - 2h^\vee$ with
+$\kappa(k') = -\kappa(k)$ (antisymmetry of the complementarity sum for
+Kac--Moody algebras), determining $k'$ from $\kappa$.
+Part~(iv): Theorem~\ref{thm:bernoulli-universality} (the convergence
+ratio $F_{g+1}/F_g \to 1/(2\pi)^2$ is $\kappa$-independent).
+\end{proof}
+
+\begin{remark}[The genus expansion as a complete invariant]
+\label{rem:genus-complete-invariant}
+\index{multiplicative genus!completeness}
+Theorem~\ref{thm:genus-determines-pair} shows that the genus expansion
+$\{F_g(\mathcal{A})\}_{g \geq 1}$ is an \emph{almost-complete} invariant
+of the Koszul pair: it determines $\kappa$, $c$, and $k'$ (hence $\mathcal{A}^!$
+as an abstract algebra).  It does \emph{not} determine the algebra $\mathcal{A}$
+itself: many non-isomorphic algebras share the same $\kappa$
+(e.g., $\mathcal{H}_1$ and $\mathrm{Vir}_2$ both have $\kappa = 1$).
+The additional data needed to reconstruct $\mathcal{A}$ from $\kappa$ is
+the bar cohomology generating function $P_{\mathcal{A}}(x) = \sum_n \dim H^n(\bar{B}(\mathcal{A})) x^n$,
+which encodes the algebra's \emph{complexity} beyond the single number $\kappa$.
+\end{remark}
+
+\begin{computation}[Genus duality table]\label{comp:genus-duality-table}
+\index{multiplicative genus!duality table}
+Genus duality data for all Master Table entries.
+The columns show $\kappa$, $\kappa'$, the sum $\kappa + \kappa'$
+(the \emph{genus-duality invariant}), and the complementary genus
+$\phi_{\cA} + \phi_{\cA^!}$.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccl}
+\toprule
+Algebra $\mathcal{A}$ & $\kappa$ & $\kappa'$ & $\kappa + \kappa'$ & Complementary genus \\
+\midrule
+Heisenberg $\mathcal{H}_1$ & $1$ & $-1$ & $0$ & $0$ (antisymmetric) \\
+$\widehat{\mathfrak{sl}}_{2,k}$ & $\frac{3(k+2)}{4}$ & $\frac{-3(k+2)}{4}$ & $0$ & $0$ \\
+$\widehat{\mathfrak{sl}}_{3,k}$ & $\frac{4(k+3)}{3}$ & $\frac{-4(k+3)}{3}$ & $0$ & $0$ \\
+$\mathrm{Vir}_c$ & $\frac{c}{2}$ & $\frac{26-c}{2}$ & $13$ & $13\phi_0$ \\
+$\mathcal{W}_{3,c}$ & $\frac{5c}{6}$ & $\frac{5(100-c)}{6}$ & $\frac{250}{3}$ & $\frac{250}{3}\phi_0$ \\
+$E_{8,k}$ lattice & $\frac{31(k+30)}{60}$ & $\frac{-31(k+30)}{60}$ & $0$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+where $\phi_0(x) = (x/2)/\sin(x/2)$ is the universal generating function.
+For all Kac--Moody algebras, the complementary genus vanishes
+\textup{(}$\kappa + \kappa' = 0$\textup{)}: the genus expansion is an
+\emph{antisymmetric} function of the Koszul pair.  For Virasoro and
+$\mathcal{W}$-algebras, the nonvanishing sum $\kappa + \kappa'$ is
+a root-datum invariant
+\textup{(}Theorem~\textup{\ref{thm:complementarity-root-datum})}.
+\end{computation}

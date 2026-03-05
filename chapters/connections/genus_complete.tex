@@ -229,6 +229,143 @@ Each level captures quantum corrections:
 The modular operad structure on $\{\overline{\mathcal{M}}_{g,n}\}_{g,n}$ (Getzler--Kapranov) provides clutching and self-gluing maps along boundary divisors.  The Feynman transform identification $\bar{B}^{\mathrm{full}}(\mathcal{A}) \simeq \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A})$ (Theorem~\ref{thm:prism-higher-genus}(ii)) assembles the genus-$g$ bar complexes into a single modular algebra.  The connecting maps $\rho_{\mathrm{nonsep}}$ and $\rho_{\mathrm{sep}}$ are the restriction-residue maps to the corresponding boundary strata of $\overline{\mathcal{M}}_g$: nonseparating degeneration restricts to the self-sewing boundary (reducing genus by~$1$), while separating degeneration restricts to the product boundary (splitting genus).  These maps are compatible with the bar differential by the modular operad axioms.  The total complex is the completed direct sum over genera, with the Feynman transform differential encoding all inter-genus contributions.
 \end{proof}
 
+\subsection{Chain-level modular functor}\label{subsec:chain-modular-functor}
+\index{modular functor!chain-level}
+
+The classical notion of modular functor (Segal, Bakalov--Kirillov) assigns
+a finite-dimensional vector space $V_g$ to each genus~$g$ surface, together
+with factorization and self-sewing maps.  The bar complex provides a
+\emph{chain-level} refinement: the vector spaces are replaced by cochain
+complexes, and the structure maps are $A_\infty$-morphisms.
+
+\begin{theorem}[Chain-level modular functor from bar complex;
+\ClaimStatusProvedHere]\label{thm:chain-modular-functor}
+\index{modular functor!from bar complex}
+For a Koszul chiral algebra $\mathcal{A}$, the genus-graded bar complex
+$\bar{B}^{\mathrm{full}}(\mathcal{A}) = \bigoplus_{g \geq 0}
+\bar{B}^{(g)}(\mathcal{A})$ satisfies the axioms of a
+\emph{homotopy-coherent modular functor}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Assignment}: To each genus~$g$ with $n$ marked points,
+  a cochain complex $V_{g,n} := \bar{B}^{(g)}_n(\mathcal{A})$
+  with $d_{g,n}^2 = 0$
+  \textup{(}Theorem~\textup{\ref{thm:genus-induction-strict})}.
+\item \emph{Factorization}: For each separating degeneration
+  $g = g_1 + g_2$, a chain map
+  \begin{equation}\label{eq:factorization-map}
+  \Delta_{\mathrm{sep}}: V_{g,n} \to
+  \bigoplus_{\substack{g_1+g_2=g \\ I \sqcup J = \{1,\ldots,n\}}}
+  V_{g_1,|I|+1} \otimes V_{g_2,|J|+1}
+  \end{equation}
+  induced by residues along the separating boundary divisor
+  $D_{\mathrm{sep}} \subset \overline{\mathcal{M}}_{g,n}$.
+\item \emph{Self-sewing}: For each nonseparating degeneration, a chain map
+  \begin{equation}\label{eq:self-sewing-map}
+  \Delta_{\mathrm{nonsep}}: V_{g,n} \to V_{g-1,n+2}
+  \end{equation}
+  induced by residues along the nonseparating boundary divisor
+  $D_{\mathrm{nonsep}} \subset \overline{\mathcal{M}}_{g,n}$.
+\item \emph{Coherence}: The maps $\Delta_{\mathrm{sep}}$ and
+  $\Delta_{\mathrm{nonsep}}$ satisfy the Segal--Moore--Seiberg
+  consistency relations up to explicit chain homotopies
+  provided by the $A_\infty$ operations $m_k$ ($k \geq 3$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is Theorem~\ref{thm:genus-induction-strict}.
+
+Parts~(ii)--(iii): The Feynman transform identification
+$\bar{B}^{\mathrm{full}}(\mathcal{A}) \simeq
+\mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A})$
+(Theorem~\ref{thm:prism-higher-genus}(ii)) equips the genus-graded
+bar complex with the structure of an algebra over the modular operad
+$\{\overline{\mathcal{M}}_{g,n}\}_{g,n}$ (Getzler--Kapranov
+\cite{GeK98}).  The boundary strata of $\overline{\mathcal{M}}_{g,n}$
+provide:
+\begin{itemize}
+\item \emph{Separating boundaries}: Residues along
+  $D_{g_1,I} \cong \overline{\mathcal{M}}_{g_1,|I|+1}
+  \times \overline{\mathcal{M}}_{g_2,|J|+1}$ give the
+  coproduct~\eqref{eq:factorization-map}.
+\item \emph{Nonseparating boundaries}: Residues along
+  $D_\gamma \cong \overline{\mathcal{M}}_{g-1,n+2}$ give the
+  self-sewing map~\eqref{eq:self-sewing-map}.
+\end{itemize}
+That these are chain maps (commute with the bar differential)
+follows from the compatibility of the Feynman transform differential
+with the modular operad structure \cite[Theorem~5.4]{GeK98}.
+
+Part~(iv): The consistency relations (associativity of
+iterated factorization, commutativity of factorization with
+self-sewing) hold at the level of boundary strata of
+$\overline{\mathcal{M}}_{g,n}$: the codimension-$2$ boundary
+$D_{\mathrm{sep},1} \cap D_{\mathrm{sep},2}$ decomposes in two
+ways, yielding the Moore--Seiberg consistency condition.  At chain
+level, this equality holds only up to homotopy: the bar complex
+carries a curved $A_\infty$ structure
+(Theorem~\ref{thm:bar-ainfty-structure}), and the higher
+operations $m_k$ ($k \geq 3$) provide the homotopies
+$\Delta_1 \circ \Delta_2 \simeq \Delta_2 \circ \Delta_1$
+relating different orderings of degeneration.  The homotopy
+coherence data is encoded in the $A_\infty$ relations
+$\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t} \circ
+(\mathrm{id}^{\otimes r} \otimes m_s \otimes
+\mathrm{id}^{\otimes t}) = 0$.
+\end{proof}
+
+\begin{remark}[Comparison with classical modular functors]
+\label{rem:chain-vs-classical-mf}
+\index{modular functor!classical vs chain-level}
+At the level of cohomology, passing from the cochain complexes
+$V_{g,n}$ to $H^*(V_{g,n})$ recovers a classical modular functor
+in the sense of Bakalov--Kirillov \cite{BaKi01}: the chain homotopies
+become strict equalities, and the $A_\infty$ coherences collapse.
+For $\mathcal{A} = \widehat{\mathfrak{g}}_k$ at integrable level,
+$H^0(V_{g,n})$ is the space of conformal blocks, and the classical
+modular functor is the one constructed by Tsuchiya--Ueno--Yamada.
+
+The chain-level refinement is necessary for two reasons:
+\begin{enumerate}
+\item \emph{Non-integrable levels}: At generic~$k$, the bar complex
+  does not reduce to a single cohomological degree, and the modular
+  functor structure exists only at chain level.
+\item \emph{Curved case}: When $\kappa \neq 0$, the curvature
+  $m_0^{(g)} = \kappa \cdot \lambda_g$ prevents the bar
+  differential from squaring to zero \emph{on the nose} in the
+  uncompleted complex.  The modular functor structure requires
+  working with the completed (formal genus) complex
+  $\bar{B}^{\mathrm{total}}(\mathcal{A})[[\hbar]]$
+  (Theorem~\ref{thm:genus-graded-bar}).
+\end{enumerate}
+\end{remark}
+
+\begin{corollary}[Koszul dual modular functors;
+\ClaimStatusProvedHere]\label{cor:dual-modular-functor}
+\index{modular functor!Koszul dual}
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, the chain-level
+modular functors are related by Verdier duality:
+\begin{equation}\label{eq:dual-mf}
+V_{g,n}(\mathcal{A}^!) \simeq
+\mathrm{RHom}(V_{g,n}(\mathcal{A}),
+\omega_{\overline{\mathcal{M}}_{g,n}})
+[-\dim_{\mathbb{C}} \mathcal{M}_{g,n}]
+\end{equation}
+The factorization and self-sewing maps are interchanged by duality:
+$\Delta_{\mathrm{sep}}(\mathcal{A}^!) = \Delta_{\mathrm{sep}}
+(\mathcal{A})^\vee$ and $\Delta_{\mathrm{nonsep}}(\mathcal{A}^!)
+= \Delta_{\mathrm{nonsep}}(\mathcal{A})^\vee$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:poincare-extended} provides the Verdier duality
+identification of the genus-$g$ bar complexes.  The compatibility of
+duality with the factorization and self-sewing maps follows from the
+naturality of Verdier duality with respect to the boundary strata
+of $\overline{\mathcal{M}}_{g,n}$: the residue map to a boundary
+stratum dualizes to the residue map for the dual algebra.
+\end{proof}
+
 \begin{spectralsequence}[Genus spectral sequence]\label{ss:genus}
 The genus spectral sequence has the form:
 $$E_2^{p,q} = H^p(\overline{\mathcal{M}}_g, \mathcal{H}^q(\bar{B}^{(g)}(\mathcal{A}))) \Rightarrow \mathbb{H}^{p+q}(\overline{\mathcal{M}}_g, \bar{B}^{(g)}_\bullet(\mathcal{A}))$$

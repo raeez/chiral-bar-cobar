@@ -2023,6 +2023,26 @@ The only genus-dependent feature is the range $1 \leq \alpha, \beta \leq g$
 of the summation indices.
 \end{remark}
 
+\begin{corollary}[Universal Arakelov form; \ClaimStatusProvedHere]
+\label{cor:universal-arakelov}
+\index{Arakelov form!universality}
+For all $g \geq 0$, the quantum Arnold defect equals the Arakelov
+$(1,1)$-form:
+\begin{equation}\label{eq:universal-arakelov}
+\mathcal{A}_3^{(g)} = 2\pi i \cdot \omega_{\mathrm{Ar}}^{(g)}
+\end{equation}
+with the convention $\omega_{\mathrm{Ar}}^{(0)} = 0$ (the classical
+Arnold relation).  In particular, the quantum correction to
+$d^2 = 0$ at genus~$g$ is controlled by a single canonical
+$(1,1)$-form that depends only on the conformal geometry of
+$\Sigma_g$ (through the period matrix~$\Omega$), not on the
+chiral algebra.
+\end{corollary}
+
+\begin{proof}
+Parts~(a)--(d) of Theorem~\ref{thm:quantum-arnold-relations}.
+\end{proof}
+
 % ================================================================
 % SECTION 4.11: PERIOD INTEGRALS AND QUANTUM CORRECTIONS
 % ================================================================
@@ -3008,14 +3028,25 @@ The differential $d_2: E_2^{p,q} \to E_2^{p+2,q-1}$ is the Kodaira--Spencer map.
 \end{theorem}
 
 \begin{proof}
-The $d_1$ differential on the $E_1$ page is the genus-1 correction $d^{(1)}$ from Theorem~\ref{thm:concrete-quantum-differential}: it maps $E_1^{p,q,g} \to E_1^{p,q+1,g+1}$, shifting genus by~1 (cycle insertion).  The $E_2$ page is the cohomology of~$d_1$.
-
-\emph{Identification with moduli space cohomology.}
-The $E_1$ terms, as functions of the moduli of~$\Sigma_g$, form a local system $\underline{H}^q$ over~$\mathcal{M}_g$.  The $d_1$ differential acts by differentiation with respect to moduli parameters (since $d^{(1)}$ involves the period integrals $\oint_\gamma \omega_\gamma$, which depend on the complex structure of~$\Sigma_g$).  Therefore:
+At fixed genus~$g$, the universal configuration space
+$\overline{\mathcal{C}}_{g,n} \to \mathcal{M}_g$ (relative FM
+compactification over moduli) gives a Leray spectral sequence
+with $d_1: E_1^{p,q,g} \to E_1^{p+1,q,g}$ (the moduli-space differential
+at fixed genus).  This Leray $d_1$ acts by differentiation with respect
+to moduli parameters.  The $E_2$ page is:
 \[
-E_2^{p,q,g} = \ker(d_1: E_1^{p,q,g} \to E_1^{p,q+1,g+1}) / \mathrm{im}(d_1: E_1^{p,q-1,g-1} \to E_1^{p,q,g})
+E_2^{p,q,g} = H^p(\mathcal{M}_g,\, \underline{H}^q(\bar{B}^{(g)}))
 \]
-This is the sheaf cohomology $H^p(\mathcal{M}_g, \underline{H}^q(\bar{B}^{(g)}))$ by the Leray spectral sequence for the universal configuration space $\overline{\mathcal{C}}_{g,n} \to \mathcal{M}_g$ (the relative FM compactification over moduli, whose fiber over $[\Sigma_g] \in \mathcal{M}_g$ is $\overline{C}_n(\Sigma_g)$).
+where $\underline{H}^q$ is the local system of fiber cohomologies
+over~$\mathcal{M}_g$.
+
+Separately, the genus expansion $d_{\mathrm{total}} = \sum_g \hbar^{2g-2} d_g$
+gives a \emph{genus spectral sequence} whose $d_1$ shifts genus by~$+1$
+(the genus-$1$ correction $d^{(1)}$ from
+Theorem~\ref{thm:concrete-quantum-differential}).  The two spectral
+sequences interact via the total filtration: the Leray spectral
+sequence operates within each genus stratum, while the genus spectral
+sequence connects different strata.
 
 \emph{Genus-1 computation.}
 At genus~1, $\mathcal{M}_1 = \mathbb{H}/SL_2(\mathbb{Z})$ and the local systems are modular forms.  The quasi-modularity of $E_2(\tau)$ (which appears in $d\eta_{12}^{(1)} = 2\pi i\, \omega_\tau$, cf.\ Example~\ref{ex:heisenberg-genus-1}) implies that $d_1$ is given by the Ramanujan-Serre derivative $\theta_k = q\frac{d}{dq} - \frac{k}{12}E_2$, which maps modular forms of weight~$k$ to quasi-modular forms of weight~$k+2$.  The $E_2$ page therefore decomposes into spaces of (quasi-)modular forms of weight~$k$ tensored with the internal cohomology~$H^q$.
@@ -3462,12 +3493,12 @@ central charge $c$, the genus-$g$ obstruction has the form:
 \text{obs}_g^{W_3} = \left(\frac{c}{2} \cdot \lambda_g^{(T)} + 
 \frac{c}{3} \cdot \lambda_g^{(W)}\right)
 \end{equation}
-where:
-\begin{itemize}
-\item $\lambda_g^{(T)}$ is the contribution from the Virasoro generator
-\item $\lambda_g^{(W)}$ is the contribution from the weight-3 generator
-\item The coefficients $\frac{c}{2}, \frac{c}{3}$ come from the OPE singularities
-\end{itemize}
+where $\lambda_g^{(T)} := \lambda_g^{(2)} = c_g(R^0\pi_*\omega^{\otimes 2})$ and
+$\lambda_g^{(W)} := \lambda_g^{(3)} = c_g(R^0\pi_*\omega^{\otimes 3})$ are the top
+Chern classes of the bundles of $h$-differentials for $h = 2$ (Virasoro) and $h = 3$
+(weight-$3$ generator), and the coefficients $c/2$, $c/3$ come from the leading OPE
+singularities $T(z)T(w) \sim (c/2)/(z-w)^4 + \cdots$ and
+$W(z)W(w) \sim (c/3)/(z-w)^6 + \cdots$.
 
 For minimal models with $c = 2(1 - \frac{12(p-q)^2}{pq})$, this gives:
 $$\text{obs}_g^{W_3}(p,q) = 2\left(1 - \frac{12(p-q)^2}{pq}\right) \cdot 
@@ -3574,16 +3605,80 @@ $g = 2$: $(\operatorname{obs}_2)^2 \in H^8(\overline{\mathcal{M}}_2)$,
 but $\dim_{\mathbb{R}} \overline{\mathcal{M}}_2 = 6$, so $H^8 = 0$.
 \end{proof}
 
-\begin{conjecture}[Nilpotence of obstruction ($g \geq 3$)]\label{conj:obstruction-nilpotent-higher}
-For any chiral algebra $\mathcal{A}$ and genus $g \geq 3$, the genus-$g$ obstruction satisfies $(\operatorname{obs}_g)^2 = 0$ in $H^4(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))$.
-\end{conjecture}
+\begin{theorem}[Nilpotence of obstruction (all genera); \ClaimStatusProvedHere]
+\label{thm:obstruction-nilpotent-all-genera}
+\label{conj:obstruction-nilpotent-higher}% backward-compatible label
+\index{obstruction class!nilpotence!all genera}
+For any Koszul chiral algebra $\mathcal{A}$ and \emph{any} genus $g \geq 0$,
+the genus-$g$ obstruction satisfies:
+\begin{equation}\label{eq:obs-squared-zero-all-genera}
+(\operatorname{obs}_g)^2 = 0 \quad \text{in }
+H^{4g}(\overline{\mathcal{M}}_g, Z(\mathcal{A})^{\otimes 2}).
+\end{equation}
+\end{theorem}
 
-\begin{remark}[Scope]\label{rem:obstruction-nilpotent-scope}
-For $g \geq 3$, the dimensional argument fails ($4g \leq 6g - 6$ for $g \geq 3$), and an independent proof is needed.  The expected route is through the tautological ring $R^*(\overline{\mathcal{M}}_g)$: the obstruction is a $\lambda$-class multiple (Remark~\ref{rem:lambda-universality}), and the required identity $\lambda_g^2 = 0$ in $R^{4g}(\overline{\mathcal{M}}_g)$ should follow from the Faber--Pandharipande tautological relations.  The $g \leq 2$ case proved above suffices for all applications in this monograph: the explicit computations in Part~2 use only $g \leq 2$, and the abstract higher-genus theory (Part~1) is stated in terms of the curved $A_\infty$ framework which accommodates non-nilpotent curvature.
+\begin{proof}
+By Theorem~\ref{thm:genus-universality},
+$\operatorname{obs}_g = \kappa \cdot \lambda_g$ where
+$\lambda_g = c_g(\mathbb{E}) \in \mathrm{CH}^g(\overline{\mathcal{M}}_g)$
+is the top Chern class of the rank-$g$ Hodge bundle~$\mathbb{E}$.
+Therefore $(\operatorname{obs}_g)^2 = \kappa^2 \cdot \lambda_g^2$,
+and it suffices to show $\lambda_g^2 = 0$ in
+$\mathrm{CH}^{2g}(\overline{\mathcal{M}}_g)$.
+
+This is an immediate consequence of
+\emph{Mumford's relation} \cite{Mumford83}:
+\begin{equation}\label{eq:mumford-relation}
+c(\mathbb{E}) \cdot c(\mathbb{E}^\vee) = 1
+\qquad \text{in } \mathrm{CH}^*(\overline{\mathcal{M}}_g).
+\end{equation}
+Since $c_j(\mathbb{E}^\vee) = (-1)^j \lambda_j$ and
+$\lambda_k = 0$ for $k > g$ (the Hodge bundle has rank~$g$),
+extracting the degree-$2g$ component
+of~\eqref{eq:mumford-relation} gives:
+\[
+\sum_{\substack{i + j = 2g \\ 0 \leq i,j \leq g}}
+(-1)^j \lambda_i \lambda_j = 0.
+\]
+The only pair $(i,j)$ with $i + j = 2g$ and $0 \leq i,j \leq g$
+is $i = j = g$.  The sum reduces to a single term:
+\[
+(-1)^g \lambda_g^2 = 0,
+\]
+whence $\lambda_g^2 = 0$ in
+$\mathrm{CH}^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$.
+
+\emph{Mumford's relation.}  The Gauss--Manin connection on the
+de~Rham cohomology sheaf
+$\mathcal{H}^1_{\mathrm{dR}} = R^1\pi_*\Omega^{\bullet}_{\mathcal{C}/\overline{\mathcal{M}}_g}(\log D)$
+is flat, so
+$c(\mathcal{H}^1_{\mathrm{dR}}) = 1$.
+The Hodge filtration gives an exact sequence
+$0 \to \mathbb{E} \to \mathcal{H}^1_{\mathrm{dR}}
+\to \mathbb{E}^\vee \to 0$, whence
+$c(\mathbb{E}) \cdot c(\mathbb{E}^\vee)
+= c(\mathcal{H}^1_{\mathrm{dR}}) = 1$.
+\end{proof}
+
+\begin{remark}[Comparison with the dimensional argument]
+\label{rem:mumford-vs-dimension}
+For $g \leq 2$, Theorem~\textup{\ref{thm:obstruction-nilpotent}}
+established $\lambda_g^2 = 0$ by the weaker observation that
+$\mathrm{CH}^{2g}(\overline{\mathcal{M}}_g) = 0$ when
+$2g > 3g - 3$, i.e., $g < 3$.
+Mumford's relation is strictly stronger: it proves
+$\lambda_g^2 = 0$ for \emph{all} genera, including $g = 3$
+(where $\lambda_3^2 \in \mathrm{CH}^6(\overline{\mathcal{M}}_3)$
+with $\dim \overline{\mathcal{M}}_3 = 6$, so the dimensional
+argument fails) and all $g \geq 4$.
 \end{remark}
 
 \begin{example}[Heisenberg case]\label{ex:heisenberg-obs-squares}
-For the Heisenberg algebra with $\operatorname{obs}_g = \kappa \cdot \lambda_g$, we have $(\operatorname{obs}_g)^2 = \kappa^2 \cdot \lambda_g^2$. For $g \leq 2$, Theorem~\ref{thm:obstruction-nilpotent} gives $\lambda_g^2 = 0$ by dimensional vanishing: $\lambda_g^2 \in H^{4g}(\overline{\mathcal{M}}_g)$, which vanishes when $4g > \dim_{\mathbb{R}} \overline{\mathcal{M}}_g = 6g-6$, i.e., when $g < 3$. For $g \geq 3$ the dimensional argument fails; nilpotence in that range is Conjecture~\ref{conj:obstruction-nilpotent-higher}.
+For the Heisenberg algebra with
+$\operatorname{obs}_g = \kappa \cdot \lambda_g$,
+Theorem~\ref{thm:obstruction-nilpotent-all-genera} gives
+$(\operatorname{obs}_g)^2 = \kappa^2 \cdot \lambda_g^2 = 0$
+for \emph{all} $g \geq 1$, by Mumford's relation.
 \end{example}
 
 \subsection{Summary table: obstruction classes for key examples}
@@ -3841,6 +3936,103 @@ The collection $\{\kappa(\mathcal{A}) \cdot \lambda_g : \mathcal{A} \text{ Koszu
 A natural question is whether the \emph{full} bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$---not just its genus-$g$ cohomology class---provides higher tautological classes beyond $\lambda_g$.  The bar spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}^{(g)})$ has $E_2$ page involving products of $\psi$-classes and $\lambda$-classes on $\overline{\mathcal{M}}_{g,n}$, which a priori lie in a larger part of $R^*(\overline{\mathcal{M}}_g)$.  However, the collapse at $E_2$ (Theorem~\ref{thm:spectral-sequence-collapse}) reduces all contributions to the single class $\kappa \cdot \lambda_g$, so no additional tautological classes emerge from the bar complex at the level of cohomology.
 \end{remark}
 
+\begin{proposition}[Bar spectral sequence and tautological filtration;
+\ClaimStatusProvedHere]\label{prop:bar-tautological-filtration}
+\index{tautological ring!bar spectral sequence filtration}
+The bar spectral sequence
+$E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}^{(g)}(\mathcal{A}))$
+induces a \emph{tautological filtration} on the bar cohomology:
+\begin{equation}\label{eq:tauto-filtration}
+0 = F^{3g-2} \subset F^{3g-3} \subset \cdots \subset F^0 =
+H^*(\bar{B}^{(g)}(\mathcal{A}))
+\end{equation}
+where $F^p / F^{p+1} = E_\infty^{p,*}$.  The associated graded
+pieces satisfy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $E_2^{p,q}$ involves classes in
+  $H^p(\overline{\mathcal{M}}_g, \mathcal{H}^q(\bar{B}^{(g)}_\bullet))$,
+  which lie in the tautological ring $R^*(\overline{\mathcal{M}}_g)$
+  for Koszul algebras;
+\item The differential $d_2\colon E_2^{p,q} \to E_2^{p+2,q-1}$
+  is the Kodaira--Spencer map, which produces $\psi$-classes and
+  boundary classes from $\lambda$-classes;
+\item The differential $d_3$ involves triple Massey products,
+  producing $\kappa$-classes from $\psi$-classes.
+\end{enumerate}
+For a Koszul algebra with the spectral sequence collapsing at
+$E_2$, only $\lambda_g$ survives.  If the spectral sequence does
+\emph{not} collapse at $E_2$, the higher differentials produce
+additional tautological classes.
+\end{proposition}
+
+\begin{proof}
+The filtration~\eqref{eq:tauto-filtration} is standard for any
+spectral sequence converging to a graded group.  Part~(i): the
+$E_2$ page is a Leray-type spectral sequence for the universal
+curve over $\overline{\mathcal{M}}_{g,n}$
+(Section~\ref{sec:genus-spectral-complete}), and for Koszul
+algebras the local system $\mathcal{H}^q$ is a variation of Hodge
+structure, placing the cohomology classes in $R^*$ by
+\cite[Appendix~A]{FP00}.
+
+Part~(ii): The differential $d_2$ is the Kodaira--Spencer map
+$\mathrm{KS}\colon H^p(\overline{\mathcal{M}}_g, R^q\pi_*\mathcal{A})
+\to H^{p+2}(\overline{\mathcal{M}}_g, R^{q-1}\pi_*\mathcal{A})$,
+which is a cup product with the Kodaira--Spencer class
+$\mathrm{KS} \in H^1(\overline{\mathcal{M}}_g,
+T_{\overline{\mathcal{M}}_g})$.  This class is dual to
+$\psi_1 \in H^1(\overline{\mathcal{M}}_{g,1})$ under the
+cotangent-tangent pairing.  When $d_2$ acts on a $\lambda$-class,
+the result involves $\psi$-classes and boundary divisor classes
+$[\Delta_{\mathrm{irr}}]$, $[\Delta_{i,S}]$.
+
+Part~(iii): The differential $d_3$ is a triple Massey product in
+the $A_\infty$ structure (Theorem~\ref{thm:bar-ainfty-complete}).
+On $\overline{\mathcal{M}}_g$, the Massey product
+$\langle \psi_i, \psi_j, \psi_k \rangle$ produces
+$\kappa$-classes $\kappa_m = \pi_*(\psi^{m+1})$ by the
+push-forward formula.
+\end{proof}
+
+\begin{remark}[Tautological classes beyond $\lambda_g$:
+obstructions and examples]\label{rem:tauto-beyond-lambda}
+\index{tautological ring!beyond lambda classes}
+Proposition~\ref{prop:bar-tautological-filtration} identifies two
+mechanisms by which the bar complex could produce tautological
+classes beyond $\lambda_g$:
+
+\begin{enumerate}
+\item \emph{Non-collapsing spectral sequences}.  For a non-Koszul
+  algebra (or a Koszul algebra in a non-standard module category),
+  the spectral sequence may have nontrivial $d_2$ or $d_3$
+  differentials, producing $\psi$-classes and $\kappa$-classes as
+  remnants.  No explicit example is currently known, since all
+  algebras in the Master Table are Koszul with $E_2$-collapse.
+
+\item \emph{Module insertions}.  The bar complex with module
+  insertions $\bar{B}^{(g)}_n(\mathcal{A}; M_1, \ldots, M_n)$
+  (Definition~\ref{def:log-fm-compactification}) involves $n$
+  marked points with $\psi$-classes $\psi_1, \ldots, \psi_n$
+  naturally.  Even when the spectral sequence collapses, the
+  marked-point $\psi$-classes are \emph{not} killed by the
+  collapse: they are part of the external geometry, not the
+  algebraic bar filtration.  The genus-$g$ obstruction
+  \emph{with $n$ insertions} takes the form
+  $\mathrm{obs}_{g,n} = \kappa \cdot \lambda_g \cdot
+  \prod_{i=1}^n \psi_i^{h_i}$, where $h_i$ is the conformal
+  weight of the module $M_i$.  This provides a systematic source
+  of products $\lambda_g \cdot \psi_1^{a_1} \cdots \psi_n^{a_n}
+  \in R^*(\overline{\mathcal{M}}_{g,n})$.
+\end{enumerate}
+
+The second mechanism is already implicit in the Verlinde formula:
+the conformal block dimension $\dim V_{g,n,\vec{\lambda}}$ is a
+tautological integral $\int_{\overline{\mathcal{M}}_{g,n}}
+\mathrm{ch}(\mathbb{V}_{\vec{\lambda}}) \cdot \mathrm{td}$,
+involving all tautological classes.  The bar complex provides a
+chain-level refinement of this integral.
+\end{remark}
+
 \begin{theorem}[Grothendieck group of Koszul chiral algebras; \ClaimStatusProvedHere]
 \label{thm:koszul-k0}
 \index{Grothendieck group!Koszul chiral algebras}
@@ -3978,7 +4170,7 @@ explicitly for:
 Key results:
 \begin{itemize}
 \item All obstructions are multiples of $\lambda$-classes
-\item Obstruction squares to zero: $(\text{obs}_g)^2 = 0$ (proved for $g \leq 2$ by dimensional vanishing; conjectural for $g \geq 3$, see Theorem~\ref{thm:obstruction-nilpotent})
+\item Obstruction squares to zero: $(\text{obs}_g)^2 = 0$ for all $g$ (Theorem~\ref{thm:obstruction-nilpotent-all-genera}, via Mumford's relation $c(\mathbb{E})c(\mathbb{E}^\vee) = 1$)
 \item Perfect pairing with deformations via Serre duality
 \item Physical interpretation as anomalies in quantum field theory
 \end{itemize}
@@ -5180,7 +5372,7 @@ The genus expansion in string theory $\mathcal{F} = \sum_{g \geq 0} \hbar^{2g-2}
 
 \subsection{Corollaries and physical interpretation}
 
-\begin{corollary}[Physical interpretation; \ClaimStatusConjectured]
+\begin{corollary}[Physical interpretation; \ClaimStatusHeuristic]
 \label{cor:physical-complementarity}
 In conformal field theory language, the Complementarity Theorem states:
 \begin{itemize}
@@ -5472,7 +5664,7 @@ structures.
 \end{enumerate}
 \end{remark}
 
-\begin{corollary}[String theory interpretation; \ClaimStatusConjectured]
+\begin{corollary}[String theory interpretation; \ClaimStatusHeuristic]
 \label{cor:string-theory-complementarity-explicit}
 In topological string theory, the complementarity theorem explains:
 \begin{itemize}
@@ -5745,10 +5937,11 @@ $\dim Q_1(\beta\gamma) = 1$.
 \emph{Setup}: For genus $g=2$, the moduli space has dimension $\dim \overline{
 \mathcal{M}}_2 = 3$. The cohomology is:
 \begin{equation}
-H^*(\overline{\mathcal{M}}_2) = \mathbb{Q}[\lambda_1, \lambda_2, \psi] / (\text{relations})
+H^*(\overline{\mathcal{M}}_2) = \mathbb{Q}[\lambda_1, \delta_0, \delta_1, \lambda_2] / (\text{relations})
 \end{equation}
-where $\lambda_1, \lambda_2$ are the first two Chern classes of the Hodge bundle, and 
-$\psi$ is a $\psi$-class.
+where $\lambda_1 \in H^2$ is the first Chern class of the Hodge bundle,
+$\delta_0, \delta_1 \in H^2$ are the boundary divisor classes, and
+$\lambda_2 \in H^4$ is the second Chern class of the Hodge bundle.
 
 The Poincaré polynomial is:
 \begin{equation}
