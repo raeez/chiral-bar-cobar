@@ -1519,7 +1519,7 @@ The key: Insertion of $\delta(z_i - z_j)$ implements \emph{product operations},
 reconstructing algebra structure from coalgebra data.
 
 For the Koszul dual coalgebra $\mathcal{A}_2^!$, the cobar reconstruction
-$\Omega^{\text{ch}}(\mathcal{A}_2^!) \simeq \mathcal{A}_2$ is proved by
+$\Omega^{\text{ch}}(\mathcal{A}_2^!) \simeq \mathcal{A}_1$ is proved by
 Theorem~\ref{thm:verdier-bar-cobar} (Verdier duality exchanges bar and cobar) and
 Theorem~\ref{thm:cobar-d-squared-zero} (cobar nilpotency, giving $d_{\text{cobar}}^2 = 0$).
 
@@ -1527,14 +1527,13 @@ Theorem~\ref{thm:cobar-d-squared-zero} (cobar nilpotency, giving $d_{\text{cobar
 
 Combining Steps 1 and 2:
 \begin{align*}
-\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1)) 
+\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1))
    &\simeq \Omega^{\text{ch}}(\mathcal{A}_2^!) \quad \text{(by Step 1)} \\
-   &\simeq \mathcal{A}_2 \quad \text{(by Step 2)}
+   &\simeq \mathcal{A}_1 \quad \text{(by Step 2)}
 \end{align*}
 
-This establishes the Koszul duality: starting from $\mathcal{A}_1$, applying bar-then-cobar 
-produces $\mathcal{A}_2$ (the partner algebra), not $\mathcal{A}_1$ (which would be mere 
-bar-cobar inversion).
+This is the bar-cobar inversion: starting from $\mathcal{A}_1$, applying bar-then-cobar
+recovers $\mathcal{A}_1$ up to quasi-isomorphism.
 
 \emph{Step 4: Quasi-Inverse Property (Part IV)}
 
@@ -3296,12 +3295,17 @@ d_g^2(a_m) &= d_g\left(\sum_k \int_{\mathcal{M}_g} a_k \otimes a_{m-k} \otimes \
 
 \emph{Step 4: Commutator evaluation.}
 
-Using $[a_{k_1}, a_{k_2}] = \kappa \cdot k_1 \cdot \delta_{k_1 + k_2, 0} \cdot c$:
-\begin{align}
-d_g^2(a_m) &= \kappa \cdot c \cdot \sum_{k} k \cdot \int_{\mathcal{M}_g} 
-a_0 \otimes a_m \otimes \omega_g^2 \\
-&= \kappa \cdot c \cdot a_m \otimes \int_{\mathcal{M}_g} \omega_g^2
-\end{align}
+Using $[a_{k_1}, a_{k_2}] = \kappa \cdot k_1 \cdot \delta_{k_1 + k_2, 0} \cdot c$,
+the Kronecker delta forces $k_2 = -k_1$, so
+$a_{m - k_1 - k_2} = a_m$.  The remaining sum
+$\sum_{k} k$ over mode indices is evaluated geometrically:
+in the D-module formulation, the mode sum computes the
+first Chern class of the direct image sheaf $R^0\pi_*\omega_{\mathcal{C}/\mathcal{M}_g}$
+via the Quillen determinant anomaly formula.  The result is:
+\begin{equation}
+d_g^2(a_m) = \kappa \cdot a_m \otimes \lambda_g
+\end{equation}
+where $\lambda_g = c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$.
 
 \emph{Step 5: Evaluation of the obstruction class.}
 
