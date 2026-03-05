@@ -150,14 +150,17 @@ def koszul_sign(degrees: List[int], permutation: List[int]) -> int:
 def lambda_fp(g: int) -> Rational:
     """Faber-Pandharipande intersection number lambda_g^FP.
 
-    lambda_g = |B_{2g}| / (2g * (2g-2)!)
+    lambda_g = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    where B_{2g} is the 2g-th Bernoulli number.
+    This is the tautological integral int_{M-bar_{g,1}} psi^{2g-2} lambda_g.
+    Generating function: sum_{g>=1} lambda_g x^{2g} = (x/2)/sin(x/2) - 1.
     """
     if g < 1:
         raise ValueError(f"Genus must be >= 1, got {g}")
     B_2g = bernoulli(2 * g)
-    return Rational(abs(B_2g), 2 * g * factorial(2 * g - 2))
+    numerator = (2 ** (2 * g - 1) - 1) * abs(B_2g)
+    denominator = 2 ** (2 * g - 1) * factorial(2 * g)
+    return Rational(numerator, denominator)
 
 
 def F_g(kappa: sympy.Expr, g: int) -> sympy.Expr:

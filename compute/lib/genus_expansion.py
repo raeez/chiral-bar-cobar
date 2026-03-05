@@ -4,7 +4,7 @@ For any Koszul chiral algebra A with obstruction coefficient kappa(A):
 
   F_g(A) = kappa(A) * lambda_g^FP
 
-where lambda_g^FP = |B_{2g}| / (2g * (2g-2)!) are Faber-Pandharipande numbers.
+where lambda_g^FP = (2^{2g-1}-1)/2^{2g-1} * |B_{2g}|/(2g)! are Faber-Pandharipande numbers.
 
 The universal generating function (thm:universal-generating-function):
   sum_{g>=1} F_g(A) x^{2g} = kappa * ((x/2)/sin(x/2) - 1)

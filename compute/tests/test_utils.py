@@ -97,22 +97,22 @@ class TestKoszulSign:
 
 class TestBernoulli:
     def test_lambda_fp_genus1(self):
-        """lambda_1 = |B_2| / (2 * 0!) = (1/6) / 2 = 1/12."""
-        assert lambda_fp(1) == Rational(1, 12)
+        """lambda_1 = (2^1-1)/2^1 * |B_2|/2! = (1/2)*(1/6)/2 = 1/24."""
+        assert lambda_fp(1) == Rational(1, 24)
 
     def test_lambda_fp_genus2(self):
-        """lambda_2 = |B_4| / (4 * 2!) = (1/30) / 8 = 1/240."""
-        assert lambda_fp(2) == Rational(1, 240)
+        """lambda_2 = (2^3-1)/2^3 * |B_4|/4! = (7/8)*(1/30)/24 = 7/5760."""
+        assert lambda_fp(2) == Rational(7, 5760)
 
     def test_lambda_fp_genus3(self):
-        """lambda_3 = |B_6| / (6 * 4!) = (1/42) / 144 = 1/6048."""
-        assert lambda_fp(3) == Rational(1, 6048)
+        """lambda_3 = (2^5-1)/2^5 * |B_6|/6! = (31/32)*(1/42)/720 = 31/967680."""
+        assert lambda_fp(3) == Rational(31, 967680)
 
     def test_F_g_heisenberg(self):
-        """F_1(H_kappa) = kappa/12."""
+        """F_1(H_kappa) = kappa/24."""
         from sympy import Symbol
         kappa = Symbol("kappa")
-        assert F_g(kappa, 1) == kappa / 12
+        assert F_g(kappa, 1) == kappa / 24
 
 
 class TestPartition:

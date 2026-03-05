@@ -178,29 +178,42 @@ def w3_vacuum_basis(max_weight: int) -> Dict[int, List[str]]:
     """Basis for W₃ augmentation ideal V̄ up to given weight.
 
     Two generators: T (weight 2), W (weight 3).
-    Plus descendants: dT (3), dW (4), d²T (4), :TT: (4), etc.
-    And the composite field Λ = :TT: - (3/10)d²T (weight 4).
+    PBW basis: L_{-n1}...L_{-na} W_{-m1}...W_{-mb} |0>
+    with n1 >= ... >= na >= 2 and m1 >= ... >= mb >= 3.
+    Character: prod_{n>=2} 1/(1-q^n) * prod_{m>=3} 1/(1-q^m).
     """
     basis = {}
     if max_weight >= 2:
-        basis[2] = ["T"]
+        basis[2] = ["T"]  # L_{-2}|0>
     if max_weight >= 3:
-        basis[3] = ["W", "dT"]
+        basis[3] = ["W", "dT"]  # W_{-3}|0>, L_{-3}|0>
     if max_weight >= 4:
-        basis[4] = ["dW", "d2T", "TT"]  # TT = :TT:, Lambda = TT - 3/10 d2T
+        basis[4] = ["dW", "d2T", "TT"]  # W_{-4}|0>, L_{-4}|0>, L_{-2}^2|0>
     if max_weight >= 5:
-        basis[5] = ["d2W", "d3T", "dTT", "TW"]  # dTT = :dT·T:, TW = :TW:
+        basis[5] = ["d2W", "d3T", "dTT", "TW"]  # W_{-5}, L_{-5}, L_{-3}L_{-2}, L_{-2}W_{-3}
     return basis
 
 
 def w3_vacuum_dim(weight: int) -> int:
     """Dimension of W₃ augmentation ideal at given conformal weight.
 
-    Two generators create states via L_{-n} and W_{-n} modes.
-    This grows faster than Virasoro (which has only T).
+    Character: prod_{n>=2} 1/(1-q^n) * prod_{m>=3} 1/(1-q^m) - 1.
+    Computed as convolution of p_{>=2} and p_{>=3} partition functions.
     """
-    basis = w3_vacuum_basis(weight)
-    return len(basis.get(weight, []))
+    return _w3_vacuum_dims_table().get(weight, 0)
+
+
+def _w3_vacuum_dims_table(max_h: int = 20) -> Dict[int, int]:
+    """Compute W₃ vacuum module dimensions via product formula."""
+    coeffs = [0] * (max_h + 1)
+    coeffs[0] = 1
+    for n in range(2, max_h + 1):
+        for i in range(n, max_h + 1):
+            coeffs[i] += coeffs[i - n]
+    for m in range(3, max_h + 1):
+        for i in range(m, max_h + 1):
+            coeffs[i] += coeffs[i - m]
+    return {h: coeffs[h] for h in range(2, max_h + 1)}
 
 
 # ---------------------------------------------------------------------------
@@ -322,17 +335,15 @@ def w3_deg3_chain_dim(weight: int) -> int:
     """
     if weight < 6:
         return 0
-    # Count compositions h = a+b+c with a,b,c >= 2
-    # equivalently h-6 = a'+b'+c' with a',b',c' >= 0
-    # number = C(h-6+2, 2) = C(h-4, 2) for the "pure T" part
-    # But also need dim V-bar at each weight
-    # At h=6: only (2,2,2) -> 1 triple, × 2 forms = 2
-    # At h=7: (2,2,3) in 3 orderings × 2 forms = 6
-    if weight == 6:
-        return 2  # [T|T|T] × 2 forms
-    if weight == 7:
-        return 6  # 3 orderings of (T,T,W) × 2 forms
-    return -1  # not computed for higher weights
+    vdims = _w3_vacuum_dims_table()
+    os_dim = 2  # dim Omega^2(C_bar_3)
+    total = 0
+    for h1 in range(2, weight):
+        for h2 in range(2, weight - h1):
+            h3 = weight - h1 - h2
+            if h3 >= 2:
+                total += vdims.get(h1, 0) * vdims.get(h2, 0) * vdims.get(h3, 0)
+    return total * os_dim
 
 
 # ---------------------------------------------------------------------------
@@ -381,7 +392,7 @@ def verify_w3_deg3():
 
     # Chain dims
     results["dim B^3_6 = 2"] = w3_deg3_chain_dim(6) == 2
-    results["dim B^3_7 = 6"] = w3_deg3_chain_dim(7) == 6
+    results["dim B^3_7 = 12"] = w3_deg3_chain_dim(7) == 12
     results["dim B^3_5 = 0"] = w3_deg3_chain_dim(5) == 0
 
     # Cohomology

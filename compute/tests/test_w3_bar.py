@@ -376,8 +376,8 @@ class TestArnoldDeg3:
         assert w3_deg3_chain_dim(6) == 2
 
     def test_chain_dim_h7(self):
-        """dim B^3_7 = 6 (3 orderings of (T,T,W) × 2 forms)."""
-        assert w3_deg3_chain_dim(7) == 6
+        """dim B^3_7 = 12 (3 orderings × dim V̄_3=2 states × 2 forms)."""
+        assert w3_deg3_chain_dim(7) == 12
 
     def test_chain_dim_below(self):
         """dim B^3_5 = 0 (minimum weight 2+2+2=6)."""
