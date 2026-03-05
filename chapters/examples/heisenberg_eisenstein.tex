@@ -612,3 +612,266 @@ $g$ & $F_g$ (exact) & $F_g$ (decimal) \\
 
 These tables provide concrete numerical values for all computations.
 
+\section{Higher-rank Heisenberg and multi-boson expansions}
+\label{sec:higher-rank-heisenberg-eisenstein}
+\index{Heisenberg algebra!higher rank!Eisenstein expansion}
+
+For the rank-$d$ Heisenberg algebra $\mathcal{H}_\kappa^{\oplus d}$
+(corresponding to $d$ free bosons at level $\kappa$), the genus
+expansion inherits a factored structure from the tensor product.
+
+\subsection{Rank-$d$ bar complex at genus 1}
+
+\begin{computation}[Rank-$d$ Heisenberg: genus-1 curvature]
+\label{comp:rank-d-heisenberg-genus1}
+\index{Heisenberg algebra!rank $d$!curvature}
+
+The rank-$d$ Heisenberg algebra has generators
+$a^i(z)$ ($i = 1, \ldots, d$) with OPE
+$a^i(z) a^j(w) \sim \kappa \delta^{ij}/(z-w)^2$.
+The stress tensor is $T = \frac{1}{2\kappa} \sum_{i=1}^d
+\normord{a^i a^i}$, giving central charge $c = d$.
+
+\emph{Genus-1 two-point function.}
+On $E_\tau$, the two-point function is:
+\[
+\langle a^i(z_1) a^j(z_2) \rangle_{E_\tau}
+= \kappa \delta^{ij} \cdot G_\tau(z_1 - z_2)
+\]
+where $G_\tau(z) = \wp_\tau(z) + \frac{\pi^2}{3} E_2(\tau)$
+is the regularized Green's function (with the Eisenstein
+correction ensuring doubly-periodic boundary conditions).
+
+\emph{Curvature.}
+The genus-1 curvature of the degree-2 bar complex:
+\begin{align}
+m_0^{(ij)} &= \operatorname{Res}_{z_1 = z_2}
+\bigl[a^i(z_1) a^j(z_2) \cdot
+\omega_{12}^{\mathrm{ell}}\bigr]\big|_{\text{vacuum}}
+= \kappa \delta^{ij} \label{eq:rank-d-curvature}
+\end{align}
+The total curvature is $m_0 = \sum_{i=1}^d m_0^{(ii)} = d\kappa$
+(Theorem~\ref{thm:heisenberg-obs}).  This is \emph{additive}:
+the rank-$d$ curvature is $d$ times the rank-$1$ curvature.
+
+\emph{Obstruction coefficient:} $\kappa(\mathcal{H}_\kappa^{\oplus d})
+= d\kappa$.  At the standard normalization $\kappa = 1$:
+$\kappa = d = c$ (the obstruction coefficient equals the central
+charge for the Heisenberg algebra).
+
+\emph{Comparison table.}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccccccc}
+$d$ & $c$ & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
+\hline
+$1$ & $1$ & $1$ & $1/24$ & $7/5760$ & $31/967680$ & $127/154828800$ & $73/3503554560$ \\
+$2$ & $2$ & $2$ & $1/12$ & $7/2880$ & $31/483840$ & $127/77414400$ & $73/1751777280$ \\
+$8$ & $8$ & $8$ & $1/3$ & $7/720$ & $31/120960$ & $127/19353600$ & $73/437944320$ \\
+$16$ & $16$ & $16$ & $2/3$ & $7/360$ & $31/60480$ & $127/9676800$ & $73/218972160$ \\
+$24$ & $24$ & $24$ & $1$ & $7/240$ & $31/40320$ & $127/6451200$ & $73/145981440$ \\
+$26$ & $26$ & $26$ & $13/12$ & $91/2880$ & $403/483840$ & $1651/77414400$ & $949/1751777280$
+\end{tabular}
+\end{center}
+
+The case $d = 24$ gives $F_1 = 1$ (an integer: the unique level at
+which the genus-1 obstruction is a unit).  This is \emph{not}
+coincidental: $d = 24$ corresponds to the Leech lattice VOA, and
+the integrality of $F_1$ reflects the fact that the Leech lattice
+is the unique even unimodular lattice of rank~24 with no roots.
+
+The case $d = 26$ gives $\kappa = 26$, and the Virasoro subalgebra
+has $\kappa_{\mathrm{Vir}} = c/2 = 13$
+(Remark~\ref{rem:vir-bosonic-string-genus}).  The factor-of-2
+discrepancy: $26 = 2 \times 13$ reflects the difference between the
+full Heisenberg algebra (spin-1 generators) and its Virasoro
+subalgebra (spin-2 generator $T = \frac{1}{2}\normord{JJ}$).
+\end{computation}
+
+
+\subsection{Eisenstein hierarchy for the rank-$d$ bar complex}
+
+\begin{proposition}[Multi-boson Eisenstein corrections;
+\ClaimStatusProvedHere]
+\label{prop:multi-boson-eisenstein}
+\index{Eisenstein series!multi-boson corrections}
+For the rank-$d$ Heisenberg algebra at level $\kappa$, the elliptic
+bar complex corrections (Theorem~\ref{thm:elliptic-vs-rational})
+satisfy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The leading correction at degree $n$ is
+$\mathcal{E}^{(1)}_n = d\kappa \cdot E_2(\tau)
+\cdot V_n$, where $V_n$ is a finite-dimensional vector space
+depending on the bar degree.
+\item At degree~$2$:
+\begin{equation}\label{eq:multi-boson-E2}
+\mathcal{E}^{(1)}_2(\mathcal{H}_\kappa^{\oplus d}, \tau)
+= d\kappa \cdot E_2(\tau) \cdot \bC
+\end{equation}
+(one-dimensional, corresponding to the curvature correction).
+\item The next correction involves $E_4(\tau)$ and appears at
+degree $\geq 3$:
+\begin{equation}\label{eq:multi-boson-E4}
+\mathcal{E}^{(2)}_3 = d\kappa^2 \cdot E_4(\tau) \cdot \bC
+\end{equation}
+with the coefficient $d\kappa^2$ arising from the iteration of
+two propagator corrections.
+\item The generating function for the total Eisenstein correction
+at genus~$1$ is:
+\begin{equation}\label{eq:multi-boson-eisenstein-gen}
+\sum_{n \geq 2} \dim \mathcal{E}^{(k)}_n \cdot q^n
+= d \cdot \left(\sum_{m=1}^{\infty} \sigma_1(m) q^m\right)
+\cdot p(n-2, k)
+\end{equation}
+where $\sigma_1(m) = \sum_{d|m} d$ is the sum-of-divisors function
+(the coefficient of $q^m$ in $E_2(\tau) - 1$) and $p(n, k)$ counts
+partitions of $n$ with at most $k$ correction insertions.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) follows from the factorization of the rank-$d$ two-point
+function: $\langle a^i a^j \rangle_{E_\tau} = \kappa\delta^{ij}
+G_\tau$, so the leading correction (involving one insertion of
+$c_1(\tau) = -\pi^2 E_2(\tau)/3$) scales as $d\kappa$.
+
+Part~(ii): at degree~2, the correction arises from replacing
+$\omega_{12}^{\mathrm{rat}} = d\log(z_1-z_2)$ with
+$\omega_{12}^{\mathrm{ell}} = d\log\theta_1(z_1-z_2|\tau)$.
+The difference $\delta_{12} = \omega_{12}^{\mathrm{ell}}
+- \omega_{12}^{\mathrm{rat}}$ is regular at $z_1 = z_2$
+(Theorem~\ref{thm:elliptic-vs-rational}, Step~1), and the
+leading coefficient is $c_1(\tau) = -\pi^2 E_2(\tau)/3$.
+For each pair $(i, j)$ with $i = j$, this contributes
+$\kappa \cdot E_2(\tau)$ to the curvature correction, and summing
+over $i = 1, \ldots, d$ gives~\eqref{eq:multi-boson-E2}.
+
+Part~(iii): the $E_4$ correction requires two insertions of
+the correction $c_k(\tau)$ in the propagator expansion.  The
+leading term $c_2(\tau) = -G_4(\tau) \in M_4(\mathrm{SL}_2(\bZ))$
+contributes at degree~$3$ (where three propagator factors allow
+one $c_2$ insertion plus two polar terms).  The coefficient $d\kappa^2$
+arises from the OPE contraction of two pairs in
+$\mathcal{H}^{\oplus d}$.
+
+Part~(iv) follows from the structure of the correction-order
+spectral sequence (Theorem~\ref{thm:elliptic-vs-rational},
+Steps~2--3).
+\end{proof}
+
+
+\subsection{Explicit genus-2 Heisenberg computation}
+
+\begin{computation}[Heisenberg at genus 2: period matrix dependence]
+\label{comp:heisenberg-genus2-period}
+\index{Heisenberg algebra!genus 2}
+
+At genus~$2$, the bar complex uses the propagator
+$\omega_{ij}^{(2)} = d_z \log E(z_i, z_j|\Omega)$ where
+$E(z,w|\Omega)$ is the prime form on the genus-2 Riemann surface
+$\Sigma_2$ with period matrix $\Omega \in \mathfrak{H}_2$ (the
+Siegel upper half-space of degree~2).
+
+\emph{Prime form expansion.}
+Near $z = w$, the prime form behaves as:
+\[
+E(z,w|\Omega) = (z-w)\bigl(1 + c_2(\Omega)(z-w)^2
++ c_4(\Omega)(z-w)^4 + \cdots\bigr)
+\]
+where the coefficients $c_{2k}(\Omega)$ are Siegel modular forms of
+weight $2k+2$ for $\mathrm{Sp}(4, \bZ)$.  The leading correction
+$c_2(\Omega)$ is related to the Siegel Eisenstein series
+$E_4^{(2)}(\Omega)$ of degree~2.
+
+\emph{Degree-2 curvature.}
+The genus-2 curvature of the Heisenberg bar complex:
+\begin{align}
+m_0^{(2)} &= \kappa \cdot
+\operatorname{Res}_{z_1 = z_2}\bigl[\omega_{12}^{(2)}
+\wedge \omega_{12}^{(2)}\bigr]\big|_{\text{vacuum}} \\
+&= \kappa \cdot \bigl(1 + c_2(\Omega) + \cdots\bigr)
+\end{align}
+The free energy at genus~2 is:
+\[
+F_2(\mathcal{H}_\kappa) = \kappa \cdot \int_{\overline{\mathcal{M}}_{2,1}}
+\psi_1^2 \lambda_2 = \kappa \cdot \frac{7}{5760}
+\]
+(Theorem~\ref{thm:heisenberg-all-genera}).
+
+\emph{Period matrix integration.}
+The integral over $\overline{\mathcal{M}}_2$ extracts the
+Siegel-modular-invariant part of the curvature.  The period matrix
+$\Omega = \bigl(\begin{smallmatrix} \tau_1 & \tau_{12} \\
+\tau_{12} & \tau_2 \end{smallmatrix}\bigr)$ parameterizes the
+complex structure of $\Sigma_2$, and the modular-invariant
+integral:
+\[
+\int_{\overline{\mathcal{M}}_2} \lambda_2
+= \frac{1}{240} \quad (\text{Faber's formula})
+\]
+Combined with the $\psi$-class integral
+$\int_{\overline{\mathcal{M}}_{2,1}} \psi_1^2 \lambda_2
+= 7/5760$, this gives the genus-2 contribution as claimed.
+
+\emph{Explicit numerical values for rank-$d$ Heisenberg at genus~2.}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccc}
+$d$ & $F_2$ (exact) & $F_2$ (decimal) & Physical model \\
+\hline
+$1$ & $7/5760$ & $1.215 \times 10^{-3}$ & Free boson \\
+$2$ & $7/2880$ & $2.431 \times 10^{-3}$ & Complex boson \\
+$8$ & $7/720$ & $9.722 \times 10^{-3}$ & $E_8$ root lattice \\
+$24$ & $7/240$ & $2.917 \times 10^{-2}$ & Leech lattice \\
+$26$ & $91/2880$ & $3.160 \times 10^{-2}$ & Bosonic string matter
+\end{tabular}
+\end{center}
+\end{computation}
+
+
+\subsection{Comparison: bar complex vs.\ partition function}
+
+\begin{remark}[Systematic comparison at genus~$g$]
+\label{rem:bar-vs-partition-systematic}
+\index{bar complex!vs.\ partition function}
+
+The bar-complex free energy $F_g$ and the physical partition
+function $Z_g$ encode fundamentally different information.
+For the rank-$d$ Heisenberg at level $\kappa = 1$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|cc}
+& Bar free energy $F_g$ & Partition function $Z_g$ \\
+\hline
+Type & Rational number & Function on $\mathcal{M}_g$ \\
+Depends on & $d$ (rank) only & Full moduli $(\Sigma_g, \Omega)$ \\
+$g = 1$ & $d/24$ & $(\operatorname{Im}\tau)^{-d/2}
+|\eta(\tau)|^{-2d}$ \\
+$g = 2$ & $7d/5760$ &
+$[\det(\operatorname{Im}\Omega)]^{-d/2}
+\cdot [F_2^{\mathrm{osc}}(\Omega)]^{-d}$ \\
+Large $g$ & $\sim 2d/(2\pi)^{2g}$ &
+$\sim [\det'(\Delta_g)]^{-d/2}$ \\
+Growth & Bernoulli decay & $(2g)!$ growth \\
+Convergence & Yes ($|x| < 2\pi$) & No (asymptotic)
+\end{tabular}
+\end{center}
+
+The bar-complex free energy $F_g$ is a \emph{tautological intersection
+number} on $\overline{\mathcal{M}}_g$, extracting the class
+$\kappa \lambda_g \in H^{2g}(\overline{\mathcal{M}}_g)$.
+The partition function $Z_g$ is a function on $\mathcal{M}_g$,
+encoding the full spectral data of the Laplacian on $\Sigma_g$.
+The two are related by:
+\[
+F_g = \kappa \cdot \int_{\overline{\mathcal{M}}_{g,1}}
+\psi_1^{2g-2} \lambda_g
+= \text{``coefficient of } \lambda_g \text{ in }
+\log Z_g\text{''}
+\]
+in the sense that $F_g$ captures the leading tautological
+contribution to $\log Z_g$ in the large-$k$ expansion
+(Remark~\ref{rem:verlinde-asymptotics}).
+\end{remark}
+

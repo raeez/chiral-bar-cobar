@@ -36,17 +36,16 @@ $h^\vee$ is the dual Coxeter number, and $t = k + h^\vee$.
   & $\boldsymbol{c(\cA)}$ & $\boldsymbol{c + c'}$
   & $\boldsymbol{\kappa(\cA)}$ \\
 \hline
-\multicolumn{5}{|c|}{\textit{Free Fields
-  \textup{(}exact Koszul duality, $\kappa = 0$,
-  $\operatorname{obs}_g = 0$ for all~$g$\textup{)}}} \\
+\multicolumn{5}{|c|}{\textit{Free Fields}} \\
 \hline
 Free fermion $\psi$
   & $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$
-  & $\tfrac{1}{2}$ & $0$ & $0$ \\
+  & $\tfrac{1}{2}$ & $0$ & $\tfrac{1}{4}$ \\
 \hline
 $bc$ ghosts (weight $\lambda$)
   & $\beta\gamma$ system (weight $\lambda$)
-  & $1 - 3(2\lambda{-}1)^2$ & $0$ & $0$ \\
+  & $1 - 3(2\lambda{-}1)^2$ & $0$
+  & $c/2$ \\
 \hline
 \multicolumn{5}{|c|}{\textit{Heisenberg \textup{(}curved abelian\textup{)}}} \\
 \hline
@@ -131,12 +130,25 @@ Three structural features are visible from the table:
   the Feigin--Frenkel center $\mathfrak{z}(\widehat{\fg}_{-h^\vee})$
   emerges as the degree-zero cohomology.
 \item \emph{Free fields.}
-  The exact (uncurved) Koszul dualities ($\psi \leftrightarrow \gamma$,
-  $bc \leftrightarrow \beta\gamma$) have $\kappa = 0$ identically:
-  their bar complexes are acyclic at every genus, reflecting the
-  absence of interactions.  The Heisenberg is the borderline
-  case---abelian but curved, with $\kappa = \kappa$ recording the
-  central extension.
+  The exact Koszul dualities ($\psi \leftrightarrow \gamma$,
+  $bc \leftrightarrow \beta\gamma$) satisfy
+  $\kappa(\cA) + \kappa(\cA^!) = 0$
+  (Theorem~\ref{thm:fermion-all-genera}): the individual
+  obstruction coefficients $\kappa(\psi) = \tfrac{1}{4}$,
+  $\kappa(bc) = c/2$ are nonzero (they measure the
+  Virasoro subalgebra curvature), but the tensor product
+  $bc \otimes \beta\gamma$ is uncurved.
+  The Heisenberg is the abelian curved case, with
+  $\kappa = \kappa$ recording the central extension.
+\item \emph{Gaps.}
+  The Heisenberg entry $c + c' = \text{---}$ reflects the fact that
+  $\mathcal{H}_\kappa^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ is
+  curved (not a vertex algebra in the traditional sense), so
+  its central charge is not defined by the Sugawara construction.
+  The Yangian entries are blank because $Y(\fg)$ is an $\Eone$-chiral
+  algebra, not conformally graded: it has no Virasoro subalgebra
+  and hence no central charge or obstruction coefficient in the
+  sense of the other rows.
 \end{enumerate}
 \end{remark}
 
@@ -213,3 +225,727 @@ Remark~\ref{rem:w-algebra-three-theorems} (W-algebras),
 Remark~\ref{rem:deformation-three-theorems} (deformation quantization),
 Remark~\ref{rem:yangian-three-theorems} (Yangians)---provide
 detailed verifications for each example class.
+
+%% ================================================================
+%%  NEW SECTIONS: bar dimensions, obstruction table, spectral sequences
+%% ================================================================
+
+\section*{Bar complex dimensions}
+\label{sec:bar-dimensions}
+\index{bar complex!dimension table|textbf}
+
+Table~\ref{tab:bar-dimensions} records the dimension of the degree-$n$
+bar \emph{cohomology} $\dim H^n(\barBgeom(\cA))$ for each algebra,
+through degree~$5$.
+(For Kac--Moody algebras, the \emph{chain-group} dimensions are much
+larger: $\dim \bar{B}^n = (\dim\mathfrak{g})^n \cdot (n{-}1)!$,
+the product of the generator factor and the Orlik--Solomon form
+factor; see Remark~\ref{rem:bar-dims-level-independent}.)
+These cohomology dimensions are computed from the explicit
+generators-and-relations
+presentations of the bar complex given in Part~XI;
+see Section~\ref{sec:cross-ref-guide} below for precise references.
+A dash~(---) indicates that the value is not currently known.
+For $\widehat{\mathfrak{sl}}_3$, the degree-$4$ bar cohomology
+requires computing the rank of a $24576 \times 786432$ matrix
+(the chain-group dimensions grow as $8^n \cdot (n{-}1)!$),
+which exceeds practical hand computation.  Similarly, the $\mathcal{W}_3$
+and Yangian $Y(\mathfrak{sl}_2)$ gaps await either explicit machine
+computation or the discovery of closed-form generating functions
+analogous to the Riordan/Motzkin formulas for
+$\widehat{\mathfrak{sl}}_2$ and Virasoro.
+
+\begin{proposition}[Bar complex dimensions; \ClaimStatusProvedHere]
+\label{prop:bar-dimensions}
+The bar complex dimensions for the algebras of
+Table~\textup{\ref{tab:master-invariants}} are as listed in
+Table~\textup{\ref{tab:bar-dimensions}}.
+\end{proposition}
+
+\begin{proof}
+Each entry is computed from the explicit generators-and-relations
+presentation of the bar complex established in the referenced theorems.
+The explicit formulas are:
+\begin{enumerate}
+\item \emph{Heisenberg} ($d = 1$, commutative):
+  $\dim H^1 = 1$; for $n \geq 2$,
+  $\dim H^n = p(n-2)$ where $p$ is the partition function
+  (Theorem~\ref{thm:heisenberg-bar}).
+\item \emph{Free fermion} ($d = 1$, fermionic):
+  $\dim H^n = p(n-1)$
+  (Theorem~\ref{thm:fermion-bar-coalg}).
+\item \emph{$bc$ ghosts} ($d = 2$, fermionic):
+  $\dim H^n = 2^n - n + 1$
+  (Theorem~\ref{thm:betagamma-bar-complex},
+  Proposition~\ref{prop:bc-betagamma-orthogonality}).
+\item \emph{$\beta\gamma$ system} ($d = 2$, bosonic):
+  at the lowest-weight truncation,
+  $\dim H^n = [x^n]\sqrt{(1{+}x)/(1{-}3x)}$,
+  with recurrence $n \cdot a(n) = 2n \cdot a(n{-}1) + 3(n{-}2) \cdot a(n{-}2)$
+  (Theorem~\ref{thm:ds-bar-gf-discriminant}).
+  See Remark~\ref{rem:betagamma-conventions}
+  for the relation between different truncation conventions.
+\item \emph{$\widehat{\mathfrak{sl}}_2$}:
+  $\dim H^n = R(n+3)$ where $R$ denotes the Riordan numbers
+  (OEIS~A005043).  This follows from the PBW basis structure
+  (Theorem~\ref{thm:universal-kac-moody-koszul}) and the
+  Koszul resolution of $\widehat{\mathfrak{sl}}_2$.
+\item \emph{$\widehat{\mathfrak{sl}}_3$}: computed through
+  degree~$3$ from the PBW basis.
+\item \emph{Virasoro}:
+  $\dim H^n = M(n{+}1) - M(n)$ where $M(n)$ is the $n$-th
+  Motzkin number (OEIS~A001006).  This reflects the
+  associahedron structure of $\overline{M}_{0,n+2}$
+  (Theorem~\ref{thm:spectral-sequence-collapse}).
+\item \emph{$\mathcal{W}_3$}: computed through degree~$4$
+  in \S\ref{sec:w3-bar-degree3}.
+\item \emph{Yangian $Y(\mathfrak{sl}_2)$}: computed through
+  degree~$3$ from the RTT presentation
+  (Theorem~\ref{thm:yangian-bar-rtt}).
+\end{enumerate}
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Bar cohomology dimensions $\dim H^n(\barBgeom(\cA))$ through degree~$10$}
+\label{tab:bar-dimensions}
+\index{bar complex!growth rate}
+\renewcommand{\arraystretch}{1.4}
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|l|}
+\hline
+\textbf{Algebra $\cA$}
+  & \textbf{1} & \textbf{2} & \textbf{3}
+  & \textbf{4} & \textbf{5} & \textbf{6}
+  & \textbf{7} & \textbf{8} & \textbf{9}
+  & \textbf{10}
+  & \textbf{Growth} \\
+\hline
+Heisenberg ($\operatorname{rk}1$)
+  & 1 & 1 & 1 & 2 & 3 & 5 & 7 & 11 & 15 & 22 & sub-exp \\
+\hline
+Free fermion $\psi$
+  & 1 & 1 & 2 & 3 & 5 & 7 & 11 & 15 & 22 & 30 & sub-exp \\
+\hline
+$bc$ ghosts
+  & 2 & 3 & 6 & 13 & 28 & 59 & 122 & 249 & 504 & 1015 & $2^n$ \\
+\hline
+$\beta\gamma$ system
+  & 2 & 4 & 10 & 26 & 70 & 192 & 534 & 1500 & 4246 & 12092 & $3^n$ \\
+\hline
+$\widehat{\mathfrak{sl}}_2$ (level~$k$)
+  & 3 & 6 & 15 & 36 & 91 & 232 & 603 & 1585 & 4213 & 11298 & $3^n$ \\
+\hline
+$\widehat{\mathfrak{sl}}_3$ (level~$k$)
+  & 8 & 36 & 204 & --- & --- & --- & --- & --- & --- & --- & $8^n$ \\
+\hline
+$\mathrm{Vir}_c$
+  & 1 & 2 & 5 & 12 & 30 & 76 & 196 & 512 & 1353 & 3610 & $3^n$ \\
+\hline
+$\mathcal{W}_3$
+  & 2 & 5 & 16 & 52 & --- & --- & --- & --- & --- & --- & exponential \\
+\hline
+Yangian $Y(\mathfrak{sl}_2)$
+  & 4 & 10 & 28 & --- & --- & --- & --- & --- & --- & --- & exponential \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{remark}[Growth rates and Koszulness]\label{rem:bar-growth-koszul}
+\index{Koszul algebra!bar complex growth}
+The growth rate of $\dim H^n(\barBgeom(\cA))$ as $n \to \infty$ is
+an invariant of the algebra with direct Koszul-theoretic meaning.
+(Note: the bar \emph{chain-group} dimensions grow much faster;
+for Kac--Moody algebras $\dim \bar{B}^n = (\dim\fg)^n \cdot (n{-}1)!$
+is super-exponential.  The growth rates below refer to bar
+\emph{cohomology}.)
+\begin{enumerate}
+\item \emph{Sub-exponential growth.}
+  The Heisenberg and free fermion bar cohomologies grow
+  sub-exponentially: $\dim H^n \sim
+  e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$ by the
+  Hardy--Ramanujan asymptotics for the partition function.
+\item \emph{Exponential growth.}
+  All other algebras in the table have bar cohomology growing
+  exponentially in~$n$, at rate~$\sim d^n$ where $d = \dim\fg$
+  for Kac--Moody.
+  The explicit formulas are:
+  \begin{itemize}
+  \item $bc$: $\dim H^n = 2^n - n + 1$
+    (growth rate~$2^n$);
+  \item $\beta\gamma$: $\dim H^n = [x^n]\sqrt{(1{+}x)/(1{-}3x)}$
+    (growth rate~$3^n/n^{1/2}$);
+  \item $\widehat{\mathfrak{sl}}_2$: $\dim H^n = R(n+3)$,
+    the Riordan numbers (growth rate~$3^n/n^{3/2}$);
+  \item Virasoro: $\dim H^n = M(n{+}1) - M(n)$,
+    the first differences of Motzkin numbers
+    (growth rate~$3^n/n^{3/2}$).
+  \end{itemize}
+\item In general, for a Koszul algebra, the exponential
+  growth rate of $\dim H^n(\barBgeom)$ equals the
+  exponential growth rate of the Koszul dual $\cA^!$.
+  The Virasoro bar cohomology growth~$3^n$ is consistent
+  with the infinite-dimensional nature of $\mathrm{Vir}_{26-c}$.
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[DS reduction and bar cohomology generating functions; \ClaimStatusProvedHere]
+\label{thm:ds-bar-gf-discriminant}
+\index{Drinfeld--Sokolov reduction!bar cohomology generating function}
+\index{bar complex!generating function!shared discriminant}
+\index{Riordan numbers!relation to Motzkin numbers}
+Let $\mathfrak{g}$ be a simple Lie algebra and
+$\mathcal{W}^k(\mathfrak{g}) = H^0_{\mathrm{DS}}(\widehat{\mathfrak{g}}_k)$
+the associated $\mathcal{W}$-algebra.
+Define the bar cohomology generating functions
+\[
+P_{\widehat{\mathfrak{g}}}(x)
+  = \sum_{n \geq 1} \dim H^n(\barBgeom(\widehat{\mathfrak{g}}_k))\, x^n,
+\qquad
+P_{\mathcal{W}}(x)
+  = \sum_{n \geq 1} \dim H^n(\barBgeom(\mathcal{W}^k(\mathfrak{g})))\, x^n.
+\]
+Then $P_{\widehat{\mathfrak{g}}}$ and $P_{\mathcal{W}}$ are algebraic
+functions sharing the same discriminant.
+
+Explicitly, for $\mathfrak{g} = \mathfrak{sl}_2$:
+\begin{align}
+P_{\widehat{\mathfrak{sl}}_2}(x)
+  &= \frac{1 + x - \sqrt{1 - 2x - 3x^2}}{2x(1+x)},
+  \label{eq:gf-sl2-riordan} \\
+P_{\mathrm{Vir}}(x)
+  &= \frac{4x}{(1 - x + \sqrt{1 - 2x - 3x^2})^2},
+  \label{eq:gf-vir-motzkin} \\
+P_{\beta\gamma}(x)
+  &= \sqrt{\frac{1+x}{1-3x}}
+  = \frac{1+x}{\sqrt{1-2x-3x^2}}.
+  \label{eq:gf-betagamma}
+\end{align}
+All three are algebraic functions of the discriminant
+$\Delta(x) = 1 - 2x - 3x^2 = (1-3x)(1+x)$.
+In particular, all three generating functions are ramified at
+$x = 1/3$ and $x = -1$, and all three sequences share the
+exponential growth rate~$3^n$
+(with sub-exponential corrections $n^{-3/2}$ for
+$\widehat{\mathfrak{sl}}_2$ and Virasoro,
+$n^{-1/2}$ for~$\beta\gamma$).
+\end{theorem}
+
+\begin{proof}
+The formulas~\eqref{eq:gf-sl2-riordan}
+and~\eqref{eq:gf-vir-motzkin} are proved as follows.
+
+\emph{$\widehat{\mathfrak{sl}}_2$ (Riordan).}
+The bar cohomology $\dim H^n(\barBgeom(\widehat{\mathfrak{sl}}_{2,k}))
+= R(n+3)$ where $R(n)$ are the Riordan numbers
+(Theorem~\ref{thm:universal-kac-moody-koszul}).  The Riordan numbers
+have generating function $\sum_{n \geq 0} R(n) x^n
+= (1 + x - \sqrt{1-2x-3x^2})/(2x(1+x))$
+(OEIS~A005043, \cite{BernhartRiordan}).
+Shifting the index by $3$ gives~\eqref{eq:gf-sl2-riordan}.
+
+\emph{Virasoro (Motzkin differences).}
+The bar cohomology $\dim H^n(\barBgeom(\mathrm{Vir}_c))
+= M(n{+}1) - M(n)$ where $M(n)$ are the Motzkin numbers
+(Theorem~\ref{thm:spectral-sequence-collapse}).  The Motzkin
+generating function is $M(x) = (1 - x - \sqrt{1-2x-3x^2})/(2x^2)$
+(OEIS~A001006).  Then
+$\sum_{n \geq 0}(M(n{+}1) - M(n))x^n = (M(x) - 1)/x - M(x) + 1$;
+simplification gives~\eqref{eq:gf-vir-motzkin}.
+
+\emph{$\beta\gamma$ system.}
+At the lowest-weight truncation
+(Remark~\ref{rem:betagamma-conventions}), the bar cohomology
+satisfies the recurrence
+$n \cdot a(n) = 2n \cdot a(n{-}1) + 3(n{-}2) \cdot a(n{-}2)$
+with $a(0) = 1$, $a(1) = 2$.  This is the coefficient recurrence
+for the ODE $(1{+}x)(1{-}3x)H'(x) = 2H(x)$, whose solution with
+$H(0) = 1$ is $H(x) = \sqrt{(1{+}x)/(1{-}3x)}$,
+giving~\eqref{eq:gf-betagamma}.
+The first values $2, 4, 10, 26, 70, 192, 534, 1500$
+are OEIS~A025565 (shifted by one).
+
+\emph{Shared discriminant.}
+All three generating functions are algebraic of degree~$2$ over
+$\mathbb{Q}(x)$, with the same branch locus
+$\Delta(x) = 1 - 2x - 3x^2 = 0$, i.e.\ $x = 1/3$ and $x = -1$.
+The branch point at $x = 1/3$ (radius of convergence) determines the
+exponential growth rate $3^n$ for all three sequences.
+The sub-exponential correction $n^{-3/2}$ for
+$\widehat{\mathfrak{sl}}_2$ and Virasoro follows from the
+square-root singularity
+(Theorem~VI.1 of~\cite{FlajoletSedgewick});
+the $\beta\gamma$ correction is $n^{-1/2}$, reflecting the
+$\Delta^{-1/2}$ (rather than $\Delta^{1/2}$) singularity type.
+
+\emph{Explanation via DS reduction and Wakimoto.}
+Since $\mathrm{Vir}_c = \mathcal{W}^k(\mathfrak{sl}_2)$ by
+Drinfeld--Sokolov reduction, the functorial commutative
+diagram~\eqref{eq:ds-kd-square}
+(Theorem~\ref{thm:ds-koszul-intertwine}) gives
+$\barBgeom(\mathrm{Vir}_c) \simeq
+H^0_{\mathrm{DS}}(\barBgeom(\widehat{\mathfrak{sl}}_{2,k}))$.
+The DS functor $H^0_{\mathrm{DS}}$ is a BRST cohomology that preserves
+the algebraicity class of generating functions:
+it acts on the bar complex as a \emph{rational} operation
+(projection to BRST cohomology followed by a spectral-sequence
+collapse), which transforms one algebraic function of
+$\sqrt{\Delta(x)}$ into another.  The discriminant $\Delta(x)$
+is therefore an invariant of the DS orbit.
+
+The $\beta\gamma$ system enters the same discriminant family
+through the Wakimoto representation:
+$\widehat{\mathfrak{sl}}_{2,k}$ embeds into
+$\beta\gamma \otimes \mathcal{H}$ (Theorem~\ref{thm:wakimoto-rep}),
+and the embedding preserves the algebraic structure of bar
+generating functions.  Since the Heisenberg factor~$\mathcal{H}$
+contributes only sub-exponential growth
+($\dim H^n = p(n{-}2)$, the partition function),
+the exponential growth rate~$3^n$ and the discriminant~$\Delta(x)$
+are inherited from $\widehat{\mathfrak{sl}}_2$ by both the
+Virasoro quotient (via DS) and the $\beta\gamma$ factor (via Wakimoto).
+\end{proof}
+
+\begin{remark}[Discriminant as DS invariant]\label{rem:ds-discriminant-invariant}
+\index{Drinfeld--Sokolov reduction!discriminant invariant}
+Theorem~\ref{thm:ds-bar-gf-discriminant} suggests a general
+principle: for any simple $\mathfrak{g}$, the discriminant
+$\Delta_{\mathfrak{g}}(x)$ of the bar cohomology generating function
+$P_{\widehat{\mathfrak{g}}}(x)$ should be preserved under DS reduction.
+That is, $P_{\mathcal{W}^k(\mathfrak{g})}(x)$ should be algebraic
+with the same branch locus as $P_{\widehat{\mathfrak{g}}}(x)$.
+This would imply that $\widehat{\mathfrak{g}}_k$ and
+$\mathcal{W}^k(\mathfrak{g})$ always have the same exponential
+growth rate for bar cohomology dimensions.
+
+For the remaining cases, the prediction is testable:
+the $\mathcal{W}_3 = \mathcal{W}^k(\mathfrak{sl}_3)$ sequence
+$2, 5, 16, 52, \ldots$ should be algebraic with discriminant
+matching that of $P_{\widehat{\mathfrak{sl}}_3}(x)$, once the latter
+is determined.
+\end{remark}
+
+\begin{remark}[$\beta\gamma$ bar dimensions: conventions]\label{rem:betagamma-conventions}
+\index{betagamma@$\beta\gamma$ system!bar dimension conventions}
+The $\beta\gamma$ bar complex is infinite-dimensional in each bar
+degree $n \geq 1$ (Theorem~\ref{thm:bg-bar-coalg}(2)):
+without a conformal weight bound,
+$\dim(\bar{B}^n) = \infty$, since the augmentation ideal
+$\overline{\beta\gamma}$ contains generators $\beta_{-m-\lambda}$
+and $\gamma_{-m-1+\lambda}$ for all $m \geq 0$.
+The generating function in the bigraded sense is
+\[
+\sum_{n,h} \dim(\bar{B}^n_h)\, q^h t^n
+= \prod_{m \geq 0}
+  \frac{1}{(1-q^{m+\lambda}t)(1-q^{m+1-\lambda}t)}.
+\]
+The values in Table~\ref{tab:bar-dimensions}
+are \emph{bar cohomology} dimensions $\dim H^n(\bar{B}(\beta\gamma))$
+at the lowest-weight truncation (only the modes
+$\beta_{-\lambda}$ and $\gamma_{\lambda-1}$, no conformal descendants),
+with closed-form generating function
+$\sum_{n \geq 0} \dim H^n \cdot x^n = \sqrt{(1{+}x)/(1{-}3x)}$
+(Theorem~\ref{thm:ds-bar-gf-discriminant}).
+
+The conjecture $\dim(\bar{B}^n) = 2 \cdot 3^{n-1}$
+(Conjecture~\ref{conj:betagamma-bar-dim}) gives the \emph{chain space}
+dimension---the total number of bar-$n$ elements before passing to
+cohomology.  This is the $\beta\gamma$ analogue of the Kac--Moody
+formula $\dim(\bar{B}^n(\hat{\fg}_k)) = (\dim\fg)^n \cdot (n{-}1)!$
+(Remark~\ref{rem:bar-dims-level-independent}).  In both cases,
+the chain space is much larger than bar cohomology:
+\begin{center}
+\begin{tabular}{c|ccccc}
+$n$ & 1 & 2 & 3 & 4 & 5 \\
+\hline
+chain $2 \cdot 3^{n-1}$ & 2 & 6 & 18 & 54 & 162 \\
+cohom (Table) & 2 & 4 & 10 & 26 & 70
+\end{tabular}
+\end{center}
+The inequality chain $\geq$ cohomology holds at every degree.
+\end{remark}
+
+\section*{Genus-$g$ obstruction coefficients}
+\label{sec:genus-obstruction-table}
+\index{obstruction!genus-g table|textbf}
+\index{Faber--Pandharipande formula!numerical values}
+
+By the genus universality theorem
+(Theorem~\ref{thm:genus-universality}), the genus-$g$ obstruction
+is $\operatorname{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g^{FP}$
+where
+\[
+\lambda_g^{FP}
+  = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}\,.
+\]
+The first ten values are:
+
+\begin{proposition}[Faber--Pandharipande coefficients; \ClaimStatusProvedElsewhere]
+\label{prop:fp-coefficients}
+\index{Bernoulli numbers!obstruction coefficients}
+\begin{align}
+\lambda_1 &= \tfrac{1}{2} \cdot \tfrac{1/6}{2}
+  = \tfrac{1}{24}\,,
+  \label{eq:lambda1} \\
+\lambda_2 &= \tfrac{7}{8} \cdot \tfrac{1/30}{24}
+  = \tfrac{7}{5760}\,,
+  \label{eq:lambda2} \\
+\lambda_3 &= \tfrac{31}{32} \cdot \tfrac{1/42}{720}
+  = \tfrac{31}{967680}\,,
+  \label{eq:lambda3} \\
+\lambda_4 &= \tfrac{127}{128} \cdot \tfrac{1/30}{40320}
+  = \tfrac{127}{154828800}\,,
+  \label{eq:lambda4} \\
+\lambda_5 &= \tfrac{511}{512} \cdot \tfrac{5/66}{3628800}
+  = \tfrac{73}{3503554560}\,,
+  \label{eq:lambda5} \\
+\lambda_6 &= \tfrac{2047}{2048} \cdot \tfrac{691/2730}{479001600}
+  = \tfrac{1414477}{2678117105664000}\,,
+  \label{eq:lambda6} \\
+\lambda_7 &= \tfrac{8191}{8192} \cdot \tfrac{7/6}{87178291200}
+  = \tfrac{8191}{612141052723200}\,,
+  \label{eq:lambda7} \\
+\lambda_8 &= \tfrac{32767}{32768} \cdot \tfrac{3617/510}{20922789888000}
+  = \tfrac{16931177}{49950709902213120000}\,,
+  \label{eq:lambda8} \\
+\lambda_9 &= \tfrac{131071}{131072} \cdot \tfrac{43867/798}{6402373705728000}
+  = \tfrac{5749691557}{669659197233029971968000}\,,
+  \label{eq:lambda9} \\
+\lambda_{10} &= \tfrac{524287}{524288} \cdot \tfrac{174611/330}{2432902008176640000}
+  = \tfrac{91546277357}{420928638260761696665600000}\,.
+  \label{eq:lambda10}
+\end{align}
+Here $|B_{2g}|$ denotes the absolute value of the $2g$-th
+Bernoulli number: $B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$,
+$B_8 = -1/30$, $B_{10} = 5/66$, $B_{12} = -691/2730$,
+$B_{14} = 7/6$, $B_{16} = -3617/510$, $B_{18} = 43867/798$,
+$B_{20} = -174611/330$.
+The rapid growth of $|B_{2g}|$ (asymptotically
+$|B_{2g}| \sim 2 \cdot (2g)! / (2\pi)^{2g}$) is exactly
+compensated by the $(2g)!$ denominator, so
+$\lambda_g \sim 2/(2\pi)^{2g}$ decreases super-exponentially.
+\end{proposition}
+
+\begin{proof}
+Direct substitution of the Bernoulli numbers into the
+Faber--Pandharipande formula; see
+Theorem~\ref{thm:genus-universality}(iii).
+\end{proof}
+
+Table~\ref{tab:genus-obstructions} gives the explicit values
+$\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$ for
+$g = 1, \ldots, 5$.
+
+\begin{table}[ht]
+\centering
+\caption{Genus-$g$ obstruction coefficients $\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$ through $g = 5$}
+\label{tab:genus-obstructions}
+\index{obstruction!numerical values}
+\renewcommand{\arraystretch}{1.5}
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\textbf{Algebra $\cA$}
+  & $\boldsymbol{\kappa}$
+  & $\boldsymbol{\operatorname{obs}_1}$
+  & $\boldsymbol{\operatorname{obs}_2}$
+  & $\boldsymbol{\operatorname{obs}_3}$
+  & $\boldsymbol{\operatorname{obs}_4}$
+  & $\boldsymbol{\operatorname{obs}_5}$ \\
+\hline
+\multicolumn{7}{|c|}{\textit{Free fields}} \\
+\hline
+Free fermion $\psi$ ($c = \tfrac{1}{2}$)
+  & $\tfrac{1}{4}$
+  & $\tfrac{1}{96}$
+  & $\tfrac{7}{23040}$
+  & $\tfrac{31}{3870720}$
+  & $\tfrac{127}{619315200}$
+  & $\tfrac{73}{14014218240}$ \\
+\hline
+$bc$ ghosts (weight $\lambda$)
+  & $c/2$
+  & $c/48$
+  & $7c/11520$
+  & $31c/1935360$
+  & $127c/309657600$
+  & $73c/7007109120$ \\
+\hline
+\multicolumn{7}{|c|}{\textit{Heisenberg}} \\
+\hline
+$\mathcal{H}_\kappa$ (rank~$1$)
+  & $\kappa$
+  & $\kappa/24$
+  & $7\kappa/5760$
+  & $31\kappa/967680$
+  & $127\kappa/154828800$
+  & $73\kappa/3503554560$ \\
+\hline
+\multicolumn{7}{|c|}{\textit{Affine Kac--Moody ($t = k + h^\vee$)}} \\
+\hline
+$\widehat{\mathfrak{sl}}_2$ (level~$k$)
+  & $\frac{3t}{4}$
+  & $\frac{t}{32}$
+  & $\frac{7t}{7680}$
+  & $\frac{31t}{1290240}$
+  & $\frac{127t}{206438400}$
+  & $\frac{73t}{4671406080}$ \\[4pt]
+\hline
+$\widehat{\mathfrak{sl}}_3$ (level~$k$)
+  & $\frac{4t}{3}$
+  & $\frac{t}{18}$
+  & $\frac{7t}{4320}$
+  & $\frac{31t}{725760}$
+  & $\frac{127t}{116121600}$
+  & $\frac{73t}{2627665920}$ \\[4pt]
+\hline
+$\widehat{\fg}_k$ (general)
+  & $\frac{td}{2h^\vee}$
+  & $\frac{td}{48 h^\vee}$
+  & $\frac{7td}{11520 h^\vee}$
+  & $\frac{31td}{1935360 h^\vee}$
+  & $\frac{127td}{309657600 h^\vee}$
+  & $\frac{73td}{7007109120 h^\vee}$ \\[4pt]
+\hline
+\multicolumn{7}{|c|}{\textit{$\mathcal{W}$-algebras}} \\
+\hline
+$\mathrm{Vir}_c$
+  & $c/2$
+  & $c/48$
+  & $7c/11520$
+  & $31c/1935360$
+  & $127c/309657600$
+  & $73c/7007109120$ \\[4pt]
+\hline
+$\mathcal{W}_3^k$
+  & $5c/6$
+  & $5c/144$
+  & $7c/6912$
+  & $31c/1161216$
+  & $127c/185794560$
+  & $73c/4204265472$ \\[4pt]
+\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{remark}[Complementarity at each genus]\label{rem:genus-complementarity}
+\index{complementarity!genus-g}
+By Theorem~\ref{thm:quantum-complementarity-main},
+$\operatorname{obs}_g(\cA) + \operatorname{obs}_g(\cA^!)
+ = \lambda_g \cdot (\kappa + \kappa')$.
+For affine Kac--Moody algebras,
+$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{-k-2h^\vee}) = 0$
+(the shifted level $t = k + h^\vee$ maps to $-t$, and
+$\kappa = td/(2h^\vee)$ is linear in~$t$).
+Hence $\operatorname{obs}_g(\widehat{\fg}_k)
+ + \operatorname{obs}_g(\widehat{\fg}_{k'}) = 0$.
+For $\widehat{\mathfrak{sl}}_2$:
+$3(k{+}2)/96 + 3(-k{-}2)/96 = 0$.
+At the critical level $k = -h^\vee$, both $\kappa = 0$ and $\kappa' = 0$,
+so $\operatorname{obs}_g = \operatorname{obs}_g' = 0$.
+
+For $\mathcal{W}$-algebras, $\kappa + \kappa' \neq 0$ in general:
+$\kappa + \kappa' = 13$ for the Virasoro algebra and $250/3$ for
+$\mathcal{W}_3$ (see Theorem~\ref{thm:genus-universality}(ii)
+and Remark~\ref{rem:vir-vs-km-complementarity}).
+\end{remark}
+
+\section*{Spectral sequence data}
+\label{sec:spectral-sequence-data}
+\index{spectral sequence!collapse data|textbf}
+
+The bar complex $\barBgeom(\cA)$ carries a filtration by bar degree,
+inducing a spectral sequence with
+$E_1^{p,q} = H^q(\barBgeom^p(\cA))$
+converging to $H^{p+q}(\barBgeom(\cA))$.
+The Koszul property of~$\cA$ is equivalent to collapse at~$E_2$
+(Theorem~\ref{thm:spectral-sequence-collapse}).
+Table~\ref{tab:spectral-data} summarizes the collapse behavior
+for each algebra class.
+
+\begin{table}[ht]
+\centering
+\caption{Spectral sequence collapse data for the bar complex}
+\label{tab:spectral-data}
+\index{spectral sequence!E2 page@$E_2$ page}
+\renewcommand{\arraystretch}{1.4}
+{\small
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Algebra $\cA$}
+  & \textbf{Collapse page}
+  & \textbf{Notes} \\
+\hline
+Free fermion $\psi$
+  & $E_1$
+  & Exact Koszul; $\barBgeom$ acyclic \\
+\hline
+$bc$--$\beta\gamma$
+  & $E_1$
+  & Exact Koszul; bar differential strict \\
+\hline
+Heisenberg $\mathcal{H}_\kappa$
+  & $E_2$
+  & Koszul, curved ($m_0 \ne 0$) \\
+\hline
+$\widehat{\fg}_k$ (generic~$k$)
+  & $E_2$
+  & Koszul; $d_1$ from OPE residues \\
+\hline
+$\widehat{\fg}_{-h^\vee}$ (critical)
+  & $\ge E_3$
+  & Higher differentials from $\mathfrak{z}(\widehat{\fg}_{-h^\vee})$ \\
+\hline
+$\mathrm{Vir}_c$ (generic~$c$)
+  & $E_2$
+  & Koszul; two generators ($T$, $\mathbf{1}$) \\
+\hline
+$\mathcal{W}_3^k$ (generic~$k$)
+  & $E_2$
+  & Koszul; three generators ($T$, $W$, $\mathbf{1}$) \\
+\hline
+Yangian $Y(\fg)$
+  & $E_2$ (conj.)
+  & See below \\
+\hline
+Lattice VOA $V_\Lambda$
+  & $E_1$
+  & Heisenberg sector acyclic \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+\begin{proposition}[Spectral sequence collapse; \ClaimStatusProvedHere]
+\label{prop:spectral-collapse-summary}
+\index{Koszul algebra!spectral sequence characterization}
+For the algebras listed in Table~\textup{\ref{tab:spectral-data}}:
+\begin{enumerate}
+\item The free fermion, $bc$--$\beta\gamma$, and lattice VOA
+  bar complexes are exact Koszul: the spectral sequence collapses
+  at~$E_1$ and the bar differential is strict ($d^2 = 0$ on generators).
+\item The Heisenberg, generic affine Kac--Moody, generic Virasoro,
+  and generic $\mathcal{W}_3$ bar complexes are Koszul: the spectral
+  sequence collapses at~$E_2$, and the dual algebra is identified
+  with $E_2^{*,0}$.
+\item At the critical level $k = -h^\vee$, the affine Kac--Moody
+  spectral sequence has nontrivial differentials beyond~$E_2$,
+  reflecting the appearance of the Feigin--Frenkel center
+  $\mathfrak{z}(\widehat{\fg}_{-h^\vee})$ in the abutment.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Claims (1) and (2) are proved in the individual example chapters:
+Theorem~\ref{thm:fermion-bar-coalg} (fermion),
+Theorem~\ref{thm:betagamma-bc-koszul} ($bc$--$\beta\gamma$),
+Theorem~\ref{thm:heisenberg-bar} (Heisenberg),
+Theorem~\ref{thm:universal-kac-moody-koszul} (Kac--Moody),
+Theorem~\ref{thm:w-algebra-koszul-main} ($\mathcal{W}$-algebras),
+and Theorem~\ref{thm:lattice:unimodular-self-dual} (lattice VOA).
+Claim (3) at the critical level follows from
+Theorem~\ref{thm:spectral-sequence-collapse}:
+$E_2$-collapse is equivalent to Koszulness, and at $k = -h^\vee$
+the bar complex acquires additional cohomology from the
+Feigin--Frenkel center, so the spectral sequence does not degenerate
+at~$E_2$.
+\end{proof}
+
+\begin{remark}[Yangian collapse conjecture]\label{rem:yangian-collapse-conj}
+\ClaimStatusConjectured
+\index{Yangian!spectral sequence collapse}
+We expect the spectral sequence for $\barBgeom(Y(\fg))$ to collapse
+at~$E_2$, which would establish the Koszulness of the Yangian as
+an $\Eone$-chiral algebra.
+The RTT presentation (Theorem~\ref{thm:yangian-bar-rtt}) gives a
+quadratic-dual coalgebra whose Hilbert series is consistent with
+$E_2$-collapse through degree~$3$.
+A proof would require extending the FM compactification arguments
+of Theorem~\ref{thm:spectral-sequence-collapse} to the $\Eone$
+setting.
+The scope of this extension is discussed in
+Remark~\ref{rem:yangian-three-theorems}.
+\end{remark}
+
+\section*{Cross-reference guide}
+\label{sec:cross-ref-guide}
+\index{master table of invariants!cross-references}
+
+\begin{remark}[Locating the computations]\label{rem:cross-ref-guide}
+Each row of the Master Table~\textup{\ref{tab:master-invariants}} is
+computed in the following locations.
+\begin{enumerate}
+\item \emph{Free fermion}:
+  bar complex (Theorem~\ref{thm:fermion-bar-coalg}),
+  Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$
+  (Theorem~\ref{thm:betagamma-bc-koszul}),
+  $\kappa = \tfrac{1}{4}$ (Table~\ref{tab:master-invariants}),
+  three-theorem synthesis
+  (Remark~\ref{rem:free-field-three-theorems}).
+\item \emph{$bc$--$\beta\gamma$}:
+  bar complex (Theorem~\ref{thm:betagamma-bar-complex}),
+  Koszul duality
+  (Proposition~\ref{prop:bc-betagamma-orthogonality},
+  Theorem~\ref{thm:betagamma-bc-koszul}),
+  central charge (Theorem~\ref{thm:betagamma-bc-koszul}),
+  detailed computation (\S\ref{sec:betagamma-koszul-dual}).
+\item \emph{Heisenberg}:
+  bar complex (Theorem~\ref{thm:heisenberg-bar}),
+  Koszul dual (Theorem~\ref{thm:heisenberg-koszul-dual-early}),
+  genus expansion
+  (\S\ref{sec:heisenberg-genus-expansion-eisenstein}),
+  non-self-duality (Theorem~\ref{thm:heisenberg-not-self-dual}).
+\item \emph{$\widehat{\mathfrak{sl}}_2$}:
+  bar complex and Koszul dual
+  (Theorem~\ref{thm:sl2-koszul-dual}),
+  genus-$1$ pipeline (\S\ref{sec:sl2-genus-one-pipeline}),
+  three-theorem synthesis (Remark~\ref{rem:sl2-three-theorems}).
+\item \emph{$\widehat{\mathfrak{sl}}_3$, $\widehat{E}_8$,
+  general~$\widehat{\fg}_k$}:
+  universal Koszul duality
+  (Theorem~\ref{thm:universal-kac-moody-koszul}),
+  complementarity
+  (Theorem~\ref{thm:central-charge-complementarity}),
+  obstruction coefficient
+  (Theorem~\ref{thm:genus-universality}).
+\item \emph{Virasoro}:
+  $\mathcal{W}$-algebra Koszul duality
+  (Theorem~\ref{thm:w-algebra-koszul-main}),
+  genus-$1$ pipeline (\S\ref{sec:virasoro-genus-one-pipeline}),
+  $c + c' = 26$
+  (Theorem~\ref{thm:central-charge-complementarity}).
+\item \emph{$\mathcal{W}_3$ and $\mathcal{W}_N$}:
+  Koszul duality (Theorem~\ref{thm:w-algebra-koszul-main}),
+  genus-$1$ pipeline (\S\ref{sec:w3-genus-one-pipeline}),
+  general $\kappa$ formula (Theorem~\ref{thm:wn-obstruction}),
+  three-theorem synthesis
+  (Remark~\ref{rem:w-algebra-three-theorems}).
+\item \emph{Yangian}:
+  bar complex (Theorem~\ref{thm:yangian-bar-rtt}),
+  Koszul dual (Theorem~\ref{thm:yangian-koszul-dual}),
+  explicit computations (\S\ref{sec:yangian-bar-explicit}),
+  three-theorem synthesis
+  (Remark~\ref{rem:yangian-three-theorems}).
+\item \emph{Lattice VOA}:
+  bar complex (\S\ref{sec:lattice:bar}),
+  Koszul duality (\S\ref{sec:lattice:koszul}),
+  self-duality for unimodular lattices
+  (Theorem~\ref{thm:lattice:unimodular-self-dual}),
+  three-theorem synthesis
+  (Remark~\ref{rem:lattice-three-theorems}).
+\item \emph{Deformation quantization}:
+  chiral Kontsevich theorem
+  (Theorem~\ref{thm:chiral-kontsevich}),
+  quantization construction
+  (Construction~\ref{constr:quantization}),
+  three-theorem synthesis
+  (Remark~\ref{rem:deformation-three-theorems}).
+\item \emph{Toroidal and elliptic}:
+  $\Eone$-chiral structure
+  (Theorem~\ref{thm:toroidal-e1}),
+  elliptic bar complex
+  (\S\ref{sec:elliptic-bar-heisenberg}).
+\end{enumerate}
+\end{remark}

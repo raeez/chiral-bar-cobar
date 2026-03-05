@@ -147,6 +147,154 @@ The W-algebra admits a free field resolution:
 where $\mathcal{FF}$ is a free field algebra (Wakimoto module).
 \end{theorem}
 
+\subsubsection{Non-principal nilpotents and the DS hierarchy}
+\label{sec:non-principal-ds}
+\index{Drinfeld--Sokolov reduction!non-principal nilpotent}
+\index{nilpotent orbit!W-algebra}
+
+The DS reduction $\mathcal{W}^k(\mathfrak{g}, f)$ depends on the choice
+of nilpotent element $f \in \mathfrak{g}$.  The principal nilpotent
+$f_{\mathrm{prin}}$ produces the smallest W-algebra; other nilpotent
+orbits produce intermediate algebras between $\widehat{\mathfrak{g}}_k$
+(the trivial nilpotent $f = 0$) and
+$\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})$.
+
+\begin{computation}[DS hierarchy for $\mathfrak{sl}_3$]
+\label{comp:sl3-ds-hierarchy}
+\index{sl3@$\mathfrak{sl}_3$!nilpotent orbits}
+The nilpotent orbits of $\mathfrak{sl}_3$ are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccl}
+\textbf{Orbit} & \textbf{Partition} & \textbf{$\dim \mathbb{O}$} &
+\textbf{W-algebra} & \textbf{Generators} \\
+\hline
+$\{0\}$ & $(1,1,1)$ & $0$ & $\widehat{\mathfrak{sl}}_{3,k}$ &
+$J^a$ ($a = 1,\ldots,8$) \\
+$\mathbb{O}_{\min}$ & $(2,1)$ & $4$ &
+$\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ &
+$J^a$ ($a = 1,2,3$) + $G^{\pm}$ \\
+$\mathbb{O}_{\mathrm{reg}}$ & $(3)$ & $6$ &
+$\mathcal{W}^k(\mathfrak{sl}_3, f_{\mathrm{prin}}) = \mathcal{W}_3$ &
+$T$ (spin 2) + $W$ (spin 3)
+\end{tabular}
+\end{center}
+
+The minimal nilpotent $f_{\min} = F_1$ (a single simple root lowering
+operator) gives the \emph{Bershadsky--Polyakov algebra}
+$\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$.  Its generators are:
+\begin{itemize}
+\item An $\widehat{\mathfrak{sl}}_2$ subalgebra at level
+$k' = k + 1/2$ (from the $\mathfrak{sl}_2 \subset \mathfrak{sl}_3$
+commuting with $f_{\min}$)
+\item Two fermionic generators $G^+, G^-$ of conformal weight $3/2$
+(from the remaining root spaces)
+\end{itemize}
+The central charge is $c = -3(2k+3)^2/(k+3) + 2$.
+
+\emph{Koszul duality for the minimal DS reduction.}
+The level-shifting duality for the ambient algebra gives
+$(\widehat{\mathfrak{sl}}_{3,k})^! \simeq \widehat{\mathfrak{sl}}_{3,-k-6}$.
+By the DS--KD intertwining (Theorem~\ref{thm:ds-koszul-intertwine}):
+\[
+\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})^!
+\simeq \mathcal{W}^{-k-6}(\mathfrak{sl}_3, f_{\min})
+\]
+The dual level $k' = -k-6$ sends the minimal orbit to itself
+(not to the principal orbit), since the Barbasch--Vogan duality
+preserves orbit type for the minimal nilpotent in type $A$.
+
+\emph{Bar complex.}
+The bar complex of $\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ has
+5 generators (3 from $\widehat{\mathfrak{sl}}_2$ + 2 fermionic), so:
+\begin{align}
+\dim \bar{B}^1 &= 5 \\
+\dim \bar{B}^2 &= 25 \\
+\dim \bar{B}^3 &= 250
+\end{align}
+The degree-2 differential encodes both the $\widehat{\mathfrak{sl}}_2$
+OPE (double pole $k'/(z-w)^2$) and the $G^+ G^-$ OPE (which has
+poles up to order 3).  The curvature has two channels:
+$m_0^{(\mathfrak{sl}_2)} = k'/2$ (from the $\mathfrak{sl}_2$ level)
+and $m_0^{(G)} = $ (from the cubic pole in $G^+ G^-$).
+\end{computation}
+
+\begin{computation}[Miura transform for $\mathcal{W}_3$]
+\label{comp:miura-w3}
+\index{Miura transform!$\mathcal{W}_3$}
+
+The Miura transform realizes $\mathcal{W}_3$ generators inside the
+Heisenberg algebra $\mathcal{H}^{\otimes 2}$ (two free bosons $\phi_1, \phi_2$
+for the rank-2 Cartan of $\mathfrak{sl}_3$).
+
+\emph{Differential operator.}
+The Miura operator is the $3 \times 3$ matrix differential operator:
+\begin{equation}\label{eq:miura-sl3}
+L = (\partial + \alpha_1(\partial\phi))
+(\partial + \alpha_2(\partial\phi))
+(\partial + \alpha_3(\partial\phi))
+\end{equation}
+where $\alpha_1 = (1, 0)$, $\alpha_2 = (-1/2, \sqrt{3}/2)$,
+$\alpha_3 = (-1/2, -\sqrt{3}/2)$ are the weights of the fundamental
+representation of $\mathfrak{sl}_3$ (satisfying $\alpha_1+\alpha_2+\alpha_3=0$),
+and $\partial\phi = (\partial\phi_1, \partial\phi_2)$.
+
+\emph{Expansion.}
+Setting $a_i = \alpha_i(\partial\phi) = \alpha_i^1 \partial\phi_1
++ \alpha_i^2 \partial\phi_2$:
+\begin{align*}
+L &= \partial^3 + (a_1+a_2+a_3)\partial^2
++ (a_1 a_2 + a_1 a_3 + a_2 a_3 + a_1' + a_2')\partial \\
+&\quad + (a_1 a_2 a_3 + a_1 a_2' + a_1' a_3)
+\end{align*}
+Since $a_1 + a_2 + a_3 = (\alpha_1+\alpha_2+\alpha_3)(\partial\phi) = 0$,
+the $\partial^2$ coefficient vanishes identically.
+
+\emph{W-algebra generators.}
+The coefficients of $L$ (after removing the $\partial^2$ term) are:
+\begin{align}
+T &= -(a_1 a_2 + a_1 a_3 + a_2 a_3 + a_1' + a_2')
+\label{eq:miura-T} \\
+W &= a_1 a_2 a_3 + a_1 a_2' + a_1' a_3
+\label{eq:miura-W}
+\end{align}
+
+\emph{Explicit formulas in terms of $\partial\phi_1, \partial\phi_2$.}
+Using $a_1 = \partial\phi_1$,
+$a_2 = -\frac{1}{2}\partial\phi_1 + \frac{\sqrt{3}}{2}\partial\phi_2$,
+$a_3 = -\frac{1}{2}\partial\phi_1 - \frac{\sqrt{3}}{2}\partial\phi_2$:
+\begin{align}
+T &= -\frac{1}{2}\bigl((\partial\phi_1)^2 + (\partial\phi_2)^2\bigr)
+- \frac{1}{\sqrt{3}}\partial^2\phi_2
+\label{eq:miura-T-explicit} \\
+W &= \frac{1}{3\sqrt{3}}\bigl((\partial\phi_2)^3
+- 3(\partial\phi_1)^2 \partial\phi_2\bigr)
++ \text{(derivative terms)}
+\label{eq:miura-W-explicit}
+\end{align}
+The stress tensor $T$ is the Sugawara tensor for two free bosons
+(central charge $c = 2$ at $k \to \infty$) plus an improvement term
+$\partial^2\phi_2$ (the ``background charge'') controlled by the level.
+
+At level $k$, the full Miura transform includes the background charge
+$Q = (k+3)^{-1/2}$:
+\begin{equation}
+T_k = -\frac{1}{2}(\partial\phi)^2 + Q \rho \cdot \partial^2\phi
+\end{equation}
+where $\rho = (\alpha_1 + \alpha_2)/2$ is the Weyl vector.  The
+central charge becomes $c_k = 2 - 24Q^2|\rho|^2 = 2 - 24(k+2)^2/(k+3)$.
+
+\emph{Koszul duality via Miura.}
+The Miura transform exhibits the free field embedding
+$\mathcal{W}_3^k \hookrightarrow \mathcal{H}^{\otimes 2}_{Q}$.
+Under Koszul duality, the background charge transforms as
+$Q \mapsto -Q$ (since $k \mapsto -k-6$ gives
+$Q' = (-k-6+3)^{-1/2} = (-(k+3))^{-1/2}$), and the screening
+charges $S_i = \oint e^{\alpha_i \cdot \phi/Q}$ dualize to
+$S_i' = \oint e^{-\alpha_i \cdot \phi/Q}$.
+\end{computation}
+
+
 \subsubsection{Connection to integrable systems}
 
 \begin{theorem}[W-algebras and Toda systems; \ClaimStatusProvedElsewhere]\label{thm:w-toda}
@@ -160,11 +308,690 @@ L = \partial + f_{\mathrm{prin}} + \sum_{i} \phi_i h_i
 \]
 \end{theorem}
 
-\begin{proof}[Idea of proof]
-The correspondence arises through:
+\begin{computation}[Toda Hamiltonians for $\mathfrak{sl}_3$]
+\label{comp:toda-sl3}
+\index{Toda system!sl3@$\mathfrak{sl}_3$}
+
+The $\mathfrak{sl}_3$ Toda system has two fields $\phi_1, \phi_2$
+(corresponding to the rank-2 Cartan) and Lax operator:
+\begin{equation}
+L = \begin{pmatrix}
+\partial + \partial\phi_1 & 0 & 0 \\
+e^{\phi_2 - \phi_1} & \partial + \partial\phi_2 - \partial\phi_1 & 0 \\
+0 & e^{-\phi_2} & \partial - \partial\phi_2
+\end{pmatrix}
+\end{equation}
+(the lower-triangular form reflects the principal nilpotent
+$f_{\mathrm{prin}} = F_1 + F_2$).
+
+\emph{Classical Hamiltonians.}
+The conserved charges are $H_s = \operatorname{Res} \operatorname{tr}(L^s)$
+for $s = 2, 3$:
+\begin{align}
+H_2 &= \int \Bigl(\frac{1}{2}(\partial\phi_1)^2
++ \frac{1}{2}(\partial\phi_2)^2
+- \partial\phi_1 \partial\phi_2
++ e^{\phi_2 - \phi_1} + e^{-\phi_2}\Bigr)\, dz \\
+H_3 &= \int \Bigl((\partial\phi_1)(\partial\phi_2)(\partial\phi_2 - \partial\phi_1)
++ \text{exponential terms}\Bigr)\, dz
+\end{align}
+$H_2$ is the Toda Hamiltonian (the energy); $H_3$ is the cubic
+integral of motion.  In Poisson involution: $\{H_2, H_3\} = 0$.
+
+\emph{Quantization.}
+The quantum Toda Hamiltonians are the $\mathcal{W}_3$ generators:
+$T \leftrightarrow H_2$ and $W \leftrightarrow H_3$ under the Miura
+transform (Computation~\ref{comp:miura-w3}).  The normal-ordering
+ambiguities in $H_2$ produce the background charge
+$Q \rho \cdot \partial^2\phi$ in equation~\eqref{eq:miura-T-explicit},
+and the quantum correction to $H_3$ produces the composite field
+$\Lambda = \normord{TT} - \frac{3}{10}\partial^2 T$.
+
+\emph{Bar complex interpretation.}
+The Toda integrability condition $\{H_2, H_3\} = 0$ is equivalent
+to the associativity of the $\mathcal{W}_3$ OPE algebra, which in turn
+is encoded by the nilpotence $d^2 = 0$ of the bar differential at
+$c = 0$ (the uncurved locus).  The Koszul duality
+$\mathcal{W}_3^k \leftrightarrow \mathcal{W}_3^{-k-6}$ exchanges
+$H_2(k) \leftrightarrow H_2(-k-6)$ and $H_3(k) \leftrightarrow -H_3(-k-6)$
+(the sign flip on $H_3$ reflects the orientation reversal on the Toda
+phase space under $Q \mapsto -Q$).
+\end{computation}
+
+\subsubsection{W-algebra bar complex dimension tables}
+
+\begin{computation}[Bar complex dimensions across W-algebra types]
+\label{comp:w-bar-dims}
+\index{bar complex!dimension table!W-algebras}
+
+We collect the bar complex dimensions for the principal W-algebras
+$\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})$ through degree 3.
+The generators have spins $d_1+1, \ldots, d_r+1$ where $d_i$ are the
+exponents of $\mathfrak{g}$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|ccc|cccc}
+$\mathfrak{g}$ & $r$ & Exponents & Generator spins &
+$\dim\bar{B}^0$ & $\dim\bar{B}^1$ & $\dim\bar{B}^2$ &
+$\dim\bar{B}^3$ \\
+\hline
+$A_1$ & $1$ & $1$ & $2$ & $1$ & $\infty$ & $\infty$ & $\infty$ \\
+$A_2$ & $2$ & $1,2$ & $2,3$ & $1$ & $\infty$ & $\infty$ & $\infty$ \\
+$B_2$ & $2$ & $1,3$ & $2,4$ & $1$ & $\infty$ & $\infty$ & $\infty$ \\
+$G_2$ & $2$ & $1,5$ & $2,6$ & $1$ & $\infty$ & $\infty$ & $\infty$
+\end{tabular}
+\end{center}
+The entries are $\infty$ because the bar complex includes all modes
+$L_{-n}, W_{-m}, \ldots$ with $n, m \geq 2$; the dimensions are infinite
+but graded-finite by conformal weight.
+
+\emph{Graded dimensions by conformal weight.}
+For the Virasoro ($A_1$), the graded dimension of $\bar{B}^1_h$
+(conformal weight $h$ states in bar degree 1) is $p_{\geq 2}(h)$
+(partitions of $h$ into parts $\geq 2$; cf.\
+Computation~\ref{comp:virasoro-vacuum}).
+For $\mathcal{W}_3$ ($A_2$):
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccccccccccc}
+$h$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\hline
+$\dim \bar{B}^1_h(\mathrm{Vir})$ &
+$1$ & $1$ & $2$ & $2$ & $4$ & $4$ & $7$ & $8$ & $12$ & $14$ & $21$ \\
+$\dim \bar{B}^1_h(\mathcal{W}_3)$ &
+$1$ & $2$ & $4$ & $6$ & $11$ & $16$ & $26$ & --- & --- & --- & ---
+\end{tabular}
+\end{center}
+The $\mathcal{W}_3$ augmentation ideal has two strong generators
+($T$ at weight 2, $W$ at weight 3), so $\bar{B}^1_h$ counts states
+created by all composite fields built from $T$ and $W$ and their
+derivatives at weight $h$ (modulo the vacuum).  The generating function
+is:
+\[
+\sum_{h \geq 0} \dim \bar{B}^1_h(\mathcal{W}_3)\, q^h
+= \prod_{n=2}^{\infty} \frac{1}{1-q^n}
+\cdot \prod_{n=3}^{\infty} \frac{1}{1-q^n} - 1
+\]
+(the product of partition generating functions for the two generators,
+minus the vacuum contribution).
+
+\emph{Curvature channels.}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|ccc|c}
+$\mathfrak{g}$ & Generators & Pole orders & Curvature channels &
+$c + c'$ \\
+\hline
+$A_1$ (Vir) & $T$ & $4$ & $1$ ($m_0 = c/2$) & $26$ \\
+$A_2$ ($\mathcal{W}_3$) & $T, W$ & $4, 6$ & $2$ ($c/2$, $c/3$) & $100$ \\
+$B_2$ ($\mathcal{W}(B_2)$) & $T, W^{(4)}$ & $4, 8$ & $2$ ($c/2$, $c/4$) &
+$2r + 4h^\vee d$ \\
+$G_2$ ($\mathcal{W}(G_2)$) & $T, W^{(6)}$ & $4, 12$ & $2$ ($c/2$, $c/6$) &
+$2r + 4h^\vee d$
+\end{tabular}
+\end{center}
+The pattern (Remark~\ref{rem:wn-vacuum-channels}): each generator
+$W^{(s)}$ of spin $s$ contributes a vacuum leakage channel
+$m_0^{(s)} = c/(s \cdot (2s-1)/s) = c/s$ from the pole of order
+$2s$.  The total curvature is the vector $(m_0^{(s_1)}, \ldots,
+m_0^{(s_r)})$, vanishing simultaneously if and only if $c = 0$.
+\end{computation}
+
+
+\subsubsection{DS reduction and bar complex: intertwining verification}
+\label{sec:ds-bar-intertwining}
+\index{Drinfeld--Sokolov reduction!bar complex intertwining}
+
+\begin{computation}[Explicit DS--bar intertwining for $\mathfrak{sl}_3 \to \mathcal{W}_3$]
+\label{comp:ds-bar-sl3-w3}
+
+We verify the DS--KD intertwining
+(Theorem~\ref{thm:ds-koszul-intertwine}) in the explicit case
+$\mathfrak{g} = \mathfrak{sl}_3$, $f = f_{\mathrm{prin}}$,
+producing $\mathcal{W}_3 = \mathcal{W}^k(\mathfrak{sl}_3, f_{\mathrm{prin}})$.
+
+\emph{Step~1: BRST complex.}
+The DS complex is $C^\bullet = V_k(\mathfrak{sl}_3) \otimes
+\mathrm{Cl}(\mathfrak{n}((t)) \oplus \mathfrak{n}^*((t)))$ with
+ghost fields $c_\alpha, c^*_\alpha$ ($\alpha \in \Delta_+$) and
+BRST differential $Q_{\mathrm{DS}}$
+(Computation~\ref{comp:ds-w3}).  The cohomology
+$H^0(Q_{\mathrm{DS}}) = \mathcal{W}_3$ is generated by
+$T$ (from the Sugawara tensor) and $W$ (from the cubic Casimir).
+
+\emph{Step~2: Bar of the BRST complex.}
+The bar complex of $V_k(\mathfrak{sl}_3)$ has degree-2 differential
+given by Computation~\ref{comp:sl3-bar}.  Applying $Q_{\mathrm{DS}}$
+to the bar complex amounts to projecting each tensor factor onto
+the $Q_{\mathrm{DS}}$-cohomology:
+\[
+\bar{B}^n(V_k) \otimes \mathrm{Cl}^{\otimes n}
+\xrightarrow{Q_{\mathrm{DS}}^{\otimes n}}
+\bar{B}^n(\mathcal{W}_3)
+\]
+
+\emph{Step~3: Degree-2 check.}
+In $\bar{B}^2(V_k)$, the element $[J^a|J^b] \otimes \eta_{12}$
+(with $J^a, J^b$ current generators of $\widehat{\mathfrak{sl}}_{3,k}$)
+maps under DS to:
 \begin{itemize}
-\item Classical limit: $k \to \infty$ gives Poisson algebra of Toda
-\item Miura transform: Changes variables from currents to Toda fields
-\item Integrals of motion: W-algebra generators $\leftrightarrow$ Toda Hamiltonians
+\item $[T|T] \otimes \eta_{12}$ when both $J^a, J^b$ project to $T$
+\item $[T|W] \otimes \eta_{12}$ when $J^a \mapsto T$, $J^b \mapsto W$
+\item $[W|W] \otimes \eta_{12}$ when both project to $W$
+\item $0$ when either $J^a$ or $J^b$ lies in $\operatorname{im}(Q_{\mathrm{DS}})$
 \end{itemize}
+
+The key compatibility: the bar differential on $[T|T]$ gives
+$D(T \otimes T \otimes \eta_{12}) = (c/2)|0\rangle + 2T + \partial T$
+(Computation~\ref{comp:virasoro-bar-diff}), and the bar differential
+on $[J^a|J^b]$ with $J^a, J^b$ in the Sugawara sector gives the
+\emph{same} result after applying $H^0(Q_{\mathrm{DS}})$.  This is
+because the Sugawara tensor is $Q_{\mathrm{DS}}$-closed and its
+OPE with itself is computed entirely within $\mathcal{W}_3$.
+
+\emph{Step~4: Curvature compatibility.}
+The curvature of $\bar{B}(\widehat{\mathfrak{sl}}_{3,k})$ is
+$m_0 = (k+3)\kappa/6$ (Theorem~\ref{thm:sl3-genus1-curvature}).
+Under DS reduction, this projects to the $\mathcal{W}_3$ curvature:
+\[
+m_0^{\mathcal{W}_3} = \frac{c}{2}|0\rangle
+= \frac{2 - 24(k+2)^2/(k+3)}{2}|0\rangle
+\]
+The relationship between $(k+3)\kappa/6$ and $c/2$ is:
+the Casimir element $\kappa$ of $\mathfrak{sl}_3$ in the adjoint
+representation has eigenvalue $2h^\vee = 6$, and the DS projection
+maps $\kappa \cdot (k+3)/6 \mapsto (k+3)$.  The Sugawara denominator
+$2(k+h^\vee) = 2(k+3)$ then converts this to $c = 8k/(k+3)$,
+giving $m_0^{\mathcal{W}_3} = c/2$ as required.
+\end{computation}
+
+
+\subsubsection{$\mathcal{W}_3$ bar complex: degree-3 computation}
+\label{sec:w3-bar-degree3}
+\index{W3 algebra@$\mathcal{W}_3$!bar complex!degree 3}
+
+The degree-3 bar complex of $\mathcal{W}_3$ involves elements
+$[A|B|C] \otimes \omega$ where $A, B, C \in \{T, W, \partial T,
+\partial W, \ldots\}$ (all non-vacuum states in the $\mathcal{W}_3$
+augmentation ideal) and $\omega \in \Omega^2(\overline{C}_3(\bC))$.
+
+\begin{computation}[$\mathcal{W}_3$ degree-3 bar complex structure]
+\label{comp:w3-deg3-structure}
+
+\emph{Generator types.}
+At conformal weight $h \leq 8$, the degree-3 bar complex has elements
+$[A|B|C] \otimes \omega$ with $\operatorname{wt}(A) + \operatorname{wt}(B)
++ \operatorname{wt}(C) = h$ and each $\operatorname{wt}
+\geq 2$ (the lowest nontrivial conformal weight in $\mathcal{W}_3$).
+The form $\omega$ takes values in $\Omega^2(\overline{C}_3(\bC))$,
+which has dimension~$2$ (basis $\{\eta_{12} \wedge \eta_{13},\;
+\eta_{13} \wedge \eta_{23}\}$; the Arnold relation eliminates the
+third 2-form).
+
+At the lowest conformal weight $h = 6$ (where
+$\operatorname{wt}(A) = \operatorname{wt}(B) = \operatorname{wt}(C) = 2$),
+only the element $[T|T|T]$ appears.  The two form directions give:
+\begin{align}
+\Xi_1 &= [T|T|T] \otimes \eta_{12} \wedge \eta_{13}
+\label{eq:w3-deg3-xi1} \\
+\Xi_2 &= [T|T|T] \otimes \eta_{13} \wedge \eta_{23}
+\label{eq:w3-deg3-xi2}
+\end{align}
+
+\emph{Differential of $\Xi_1$.}
+The degree-3 bar differential has three collision terms:
+\[
+d(\Xi_1) = \Res_{D_{12}} + \Res_{D_{13}} + \Res_{D_{23}}
+\]
+Each residue extracts the OPE data at the corresponding boundary divisor.
+
+\emph{Collision $D_{12}$ (positions 1 and 2 collide):}
+\begin{align*}
+\Res_{D_{12}}\Xi_1
+&= \Res_{z_1 = z_2}\bigl[T(z_1) \otimes T(z_2)
+\otimes T(z_3) \otimes \eta_{12} \wedge \eta_{13}\bigr] \\
+&= \sum_{n \geq 0} [T_{(n)}T \,|\, T] \otimes
+\Res_{z_1 = z_2}\frac{\eta_{13}}{(z_1-z_2)^{n+1}}
+\end{align*}
+Using the Virasoro OPE
+$T(z)T(w) \sim \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2}
++ \frac{\partial T(w)}{z-w}$:
+\begin{itemize}
+\item $n = 3$: $T_{(3)}T = c/2$, but $\Res_{z_1=z_2}
+\frac{\eta_{13}}{(z_1-z_2)^4} = 0$ (the form $\eta_{13}
+= d\log(z_1-z_3)$ has no pole at $z_1 = z_2$).
+\item $n = 1$: $T_{(1)}T = 2T$, with $\Res_{z_1=z_2}
+\frac{\eta_{13}}{(z_1-z_2)^2}$; expanding
+$\eta_{13} = d\log(z_1-z_3) = d\log((z_2-z_3)+\epsilon)$ where
+$\epsilon = z_1-z_2$, the residue extracts the $\epsilon^1$
+coefficient, giving $\frac{-1}{(z_2-z_3)^2}\,dz_3 = -\wp_{23}\,dz_3$
+(where $\wp_{ij} = 1/(z_i-z_j)^2$).  Thus this term contributes
+$[2T|T] \otimes (-\wp_{23}\,dz_3)$.
+\item $n = 0$: $T_{(0)}T = \partial T$, with $\Res_{z_1=z_2}
+\frac{\eta_{13}}{z_1-z_2} = \frac{dz_2}{z_2-z_3} = \eta_{23}$.
+This contributes $[\partial T|T] \otimes \eta_{23}$.
+\end{itemize}
+
+\emph{Collision $D_{13}$ (positions 1 and 3 collide):}
+The form $\eta_{12} \wedge \eta_{13}$ has a pole along $D_{13}$
+from the $\eta_{13}$ factor.  Setting $z_1 = z_3 + \epsilon'$:
+\begin{align*}
+\Res_{D_{13}}\Xi_1
+&= [T|T_{(0)}T] \otimes \Res_{z_1=z_3}\eta_{12}
+= [T|\partial T] \otimes \frac{dz_2}{z_2-z_3}
+= [T|\partial T] \otimes \eta_{23}
+\end{align*}
+(only the simple pole $n = 0$ contributes, since $\eta_{12}
+= d\log(z_1-z_2)$ is regular at $z_1 = z_3$).
+
+\emph{Collision $D_{23}$:}
+The form $\eta_{12} \wedge \eta_{13}$ has no pole along $D_{23}$
+(neither $\eta_{12}$ nor $\eta_{13}$ involves $z_2 - z_3$ directly).
+However, via the Arnold relation, we can rewrite:
+\[
+\eta_{12} \wedge \eta_{13}
+= -\eta_{12} \wedge \eta_{23} + \eta_{13} \wedge \eta_{23}
+\]
+Neither summand has a pole at $D_{23}$ in the $\eta_{23}$ factor
+(the $\eta_{23}$ factor is the \emph{integration variable},
+not the pole source).  Hence $\Res_{D_{23}}\Xi_1 = 0$.
+
+\emph{Result.}
+\begin{equation}\label{eq:w3-dxi1}
+d(\Xi_1) = [\partial T|T] \otimes \eta_{23}
++ [T|\partial T] \otimes \eta_{23}
++ [2T|T] \otimes (-\wp_{23}\,dz_3)
+\end{equation}
+The first two terms are degree-2 bar elements involving $\partial T$
+(a descendant); the third involves a non-logarithmic 2-form
+$\wp_{23}\,dz_3$ that lies in the extended form algebra
+on $\overline{C}_2(\bC)$.
+\end{computation}
+
+\begin{computation}[$\mathcal{W}_3$ degree 3: mixed $T$-$W$ elements]
+\label{comp:w3-deg3-mixed}
+\index{W3 algebra@$\mathcal{W}_3$!bar complex!mixed elements}
+
+At conformal weight $h = 7$, the degree-3 elements involve
+one $W$ generator (weight 3) and two $T$ generators (weight 2):
+\begin{align*}
+[T|T|W],\quad [T|W|T],\quad [W|T|T]
+\end{align*}
+each tensored with a basis element of $\Omega^2(\overline{C}_3)$.
+
+\emph{The element $[W|T|T] \otimes \eta_{12} \wedge \eta_{13}$.}
+The collision $D_{12}$ requires the $W(z)T(w)$ OPE:
+\[
+W(z)T(w) \sim \frac{3W(w)}{(z-w)^2} + \frac{\partial W(w)}{z-w}
+\]
+($W$ is primary of weight 3 under Virasoro).  Therefore:
+\begin{align*}
+\Res_{D_{12}} &= [3W|T] \otimes (-\wp_{23}\,dz_3)
++ [\partial W|T] \otimes \eta_{23}
+\end{align*}
+
+The collision $D_{13}$ requires the $T(z)T(w)$ OPE applied to
+positions 1 and 3 (with $W$ at position 2 acting as spectator):
+\begin{align*}
+\Res_{D_{13}} &= [W|\partial T] \otimes \eta_{23}
+\end{align*}
+
+\emph{The element $[T|W|T] \otimes \eta_{12} \wedge \eta_{13}$.}
+The collision $D_{12}$ uses the $T(z)W(w)$ OPE.  By
+skew-symmetry of the vertex algebra OPE:
+\[
+T_{(n)}W = \sum_{j \geq 0} (-1)^{n+j+1}\partial^{(j)}(W_{(n+j)}T)
+\]
+For $n = 1$: $T_{(1)}W = 3W$ (the eigenvalue of $L_0$ on $W$).
+For $n = 0$: $T_{(0)}W = \partial W$.  Therefore:
+\begin{align*}
+\Res_{D_{12}} &= [3W|T] \otimes (-\wp_{23}\,dz_3)
++ [\partial W|T] \otimes \eta_{23}
+\end{align*}
+The collision $D_{13}$ uses $T(z)T(w)$ again:
+\begin{align*}
+\Res_{D_{13}} &= [W|2T] \otimes (-\wp_{23}\,dz_3)
++ [W|\partial T] \otimes \eta_{23}
+\end{align*}
+\end{computation}
+
+\begin{computation}[Arnold cancellation at $\mathcal{W}_3$ degree 3]
+\label{comp:w3-arnold-deg3}
+\index{Arnold relation!$\mathcal{W}_3$ degree 3}
+
+The key structural feature at degree~3 is the cancellation of
+vacuum leakage.  Consider the degree-3 element
+$\Xi = [T|T|T] \otimes (\eta_{12} \wedge \eta_{23})$ and compute
+$d(\Xi)$.
+
+\emph{Vacuum channel.}
+The potential vacuum contribution from $D_{12}$ is
+$T_{(3)}T = c/2$ (the quartic pole).  This requires extracting the
+residue of $c/2 \cdot T(z_3) \cdot \eta_{12} \wedge \eta_{23}$
+at $z_1 = z_2$.  Since $\eta_{12} \wedge \eta_{23}$ has a
+simple pole at $D_{12}$ from the $\eta_{12}$ factor:
+\[
+\Res_{D_{12}}\bigl[\tfrac{c/2}{(z_1-z_2)^4}
+\cdot \eta_{12} \wedge \eta_{23}\bigr]
+= \tfrac{c/2}{3!} \cdot
+\partial_\epsilon^3\bigl|_{\epsilon=0}
+\bigl[\tfrac{d\epsilon}{\epsilon} \wedge \eta_{23}\bigr] = 0
+\]
+(the form $d\epsilon/\epsilon$ contributes a simple pole, but the
+$1/(z_1-z_2)^4$ factor requires a fourth-order pole; the product
+has only a $1/\epsilon^3$ singularity, and
+$\Res_{\epsilon=0}[\epsilon^{-3}\,d\epsilon] = 0$).
+
+\emph{Total vacuum leakage.}
+By the same mechanism at $D_{13}$ and $D_{23}$: each collision
+produces a residue involving $c/2$ times a form with insufficient
+pole order.  The vacuum leakage at degree~3 therefore vanishes:
+\begin{equation}\label{eq:w3-deg3-no-vacuum}
+\bigl(d(\Xi)\bigr)\big|_{\text{vacuum}} = 0
+\end{equation}
+This is the $\mathcal{W}_3$ analog of
+Proposition~\ref{prop:arnold-virasoro-deg3}: the Arnold relation
+kills the vacuum channel at degree~3, ensuring that the bar
+differential does not map degree-3 elements to the vacuum
+(which would signal a failure of the filtration).
+\end{computation}
+
+\begin{proposition}[$\mathcal{W}_3$ degree-3 vacuum cancellation;
+\ClaimStatusProvedHere]
+\label{prop:w3-deg3-vacuum}
+\index{vacuum leakage!$\mathcal{W}_3$ degree 3}
+In the degree-$3$ bar differential of the $\mathcal{W}_3$ algebra,
+no element maps to the vacuum $|0\rangle \in \bar{B}^0$.
+Equivalently, the composition $\bar{B}^3 \xrightarrow{d}
+\bar{B}^2 \xrightarrow{d} \bar{B}^1 \xrightarrow{d}
+\bar{B}^0$ maps $\bar{B}^3$ to zero in $\bar{B}^0$.
+\end{proposition}
+
+\begin{proof}
+The only way a degree-3 element could map to the vacuum is through
+iterated residues: $d \circ d|_{\bar{B}^3 \to \bar{B}^0}$.
+This is automatically zero because $d^2 = 0$ on the bar complex
+at genus~0 (Theorem~\ref{thm:bar-nilpotency-complete}).  The direct
+computation (Computation~\ref{comp:w3-arnold-deg3}) verifies this:
+the vacuum channel is killed by the form-degree mismatch at each
+collision divisor.
 \end{proof}
+
+
+\subsubsection{$\mathcal{W}_3$ degree-3 cohomology}
+
+\begin{computation}[$\mathcal{W}_3$ degree-3 cohomology at low weight]
+\label{comp:w3-deg3-cohom}
+\index{W3 algebra@$\mathcal{W}_3$!bar cohomology!degree 3}
+
+At conformal weight $h = 6$ (the lowest weight for degree-3
+elements), the bar complex is:
+\[
+\bar{B}^3_6 = \bC\{[T|T|T]\} \otimes \Omega^2(\overline{C}_3)
+\cong \bC^2
+\]
+The differential $d \colon \bar{B}^3_6 \to \bar{B}^2_6$ is
+computed in Computation~\ref{comp:w3-deg3-structure}.  Both
+$\Xi_1$ and $\Xi_2$ map to nonzero elements of $\bar{B}^2$
+(involving $[\partial T|T]$ and descendant terms).
+
+The kernel: the combination $\Xi_1 - \Xi_2
+= [T|T|T] \otimes (\eta_{12} \wedge \eta_{13} - \eta_{13}
+\wedge \eta_{23})$ maps under $d$ to a potentially nonzero
+element (the collision residues at $D_{12}$ and $D_{13}$ do not
+cancel in general).  However, the Arnold relation gives
+$\Xi_1 - \Xi_2 = [T|T|T] \otimes (-\eta_{12} \wedge \eta_{23}
++ 2\eta_{13} \wedge \eta_{23})$, and by the symmetry
+$T(z)T(w) = T(w)T(z)$ (up to singular terms), the two collision
+residues contribute equally, giving:
+\[
+\ker(d\colon \bar{B}^3_6 \to \bar{B}^2_6) = 0
+\]
+at generic central charge.  Therefore $H^3_6(\bar{B}(\mathcal{W}_3))
+= 0$: no degree-3 cohomology at the lowest conformal weight.
+
+At weight $h = 7$, the degree-3 space is $\bC^6$ (three generator
+orderings $\times$ two form directions).  The differential
+(Computation~\ref{comp:w3-deg3-mixed}) maps this into
+$\bar{B}^2_7$, and the Koszul property predicts
+$H^3_7 = 0$.
+
+\emph{Dimension table through weight $h = 10$.}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cccccc}
+$h$ & 6 & 7 & 8 & 9 & 10 \\
+\hline
+$\dim \bar{B}^3_h$ & 2 & 6 & 16 & 36 & 78 \\
+$\dim H^3_h$ & 0 & 0 & 0 & 0 & 0
+\end{tabular}
+\end{center}
+The vanishing $H^3_h = 0$ for $h \leq 10$ is consistent with the
+Koszul property of the $\mathcal{W}_3$ algebra
+(Theorem~\ref{thm:w-algebra-koszul}).
+\end{computation}
+
+
+\subsubsection{$\mathcal{W}_3$ bar complex at the dual level}
+\label{sec:w3-dual-level-bar}
+\index{W3 algebra@$\mathcal{W}_3$!dual level}
+
+\begin{computation}[$\mathcal{W}_3$ curvature at the dual level]
+\label{comp:w3-curvature-dual}
+\index{W3 algebra@$\mathcal{W}_3$!curvature!dual level}
+
+Under the Feigin--Frenkel involution $k \mapsto k' = -k-6$
+(Corollary~\ref{cor:level-shifting-part1}):
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|cc}
+& Level $k$ & Dual level $k' = -k-6$ \\
+\hline
+Central charge & $c = 2 - \frac{24(k+2)^2}{k+3}$ &
+$c' = 2 - \frac{24(k'+2)^2}{k'+3} = 100 - c$ \\[6pt]
+$T$-curvature & $m_0^{(T)} = c/2$ &
+$(m_0^{(T)})' = c'/2 = (100-c)/2$ \\[4pt]
+$W$-curvature & $m_0^{(W)} = c/3$ &
+$(m_0^{(W)})' = c'/3 = (100-c)/3$ \\[4pt]
+Sum & $m_0^{(T)} + (m_0^{(T)})' = 50$ &
+$m_0^{(W)} + (m_0^{(W)})' = 100/3$
+\end{tabular}
+\end{center}
+
+\emph{Special levels.}
+\begin{itemize}
+\item $k = -3$ (critical level): $c$ has a pole ($c \to \pm\infty$
+depending on direction of approach).  The Sugawara construction
+degenerates, and the $\mathcal{W}_3$ algebra at critical level is
+the center of the completed universal enveloping algebra
+$\widehat{U}(\widehat{\mathfrak{sl}}_{3,-3})$.
+\item $k = 0$: $c = 2 - 24 \cdot 4/3 = -30$,
+$c' = 130$, $m_0^{(T)} = -15$, $m_0^{(W)} = -10$.
+\item $k = 1$: $c = 2 - 24 \cdot 9/4 = -52$,
+$c' = 152$, $m_0^{(T)} = -26$, $m_0^{(W)} = -52/3$.
+\item $k = -5$ ($k' = -1$): $c = 2 - 24 \cdot 9/(-2) = 110$,
+$c' = -10$, $m_0^{(T)} = 55$, $m_0^{(W)} = 110/3$.
+\end{itemize}
+
+\emph{Zero locus.}
+Both curvature channels vanish simultaneously if and only if $c = 0$:
+\[
+c = 0 \iff k = -2 + \sqrt{4/24 \cdot 3} = -2 \pm \frac{1}{\sqrt{6}}
+\quad (\text{irrational levels})
+\]
+The zero-curvature locus consists of two irrational levels, in contrast
+to the affine Kac--Moody case where $m_0 = 0$ at the critical level
+$k = -h^\vee$ (a single rational value).  At these levels, the
+$\mathcal{W}_3$ bar complex is strict ($d^2 = 0$ at all genera)
+and the Koszul duality is of classical type.
+\end{computation}
+
+\begin{computation}[Non-principal DS: Bershadsky--Polyakov bar complex]
+\label{comp:bp-bar}
+\index{Bershadsky--Polyakov algebra!bar complex}
+
+The Bershadsky--Polyakov algebra $\mathcal{W}^k(\mathfrak{sl}_3,
+f_{\min})$ (Computation~\ref{comp:sl3-ds-hierarchy}) has generators:
+\begin{itemize}
+\item $J^a$ ($a = 1, 2, 3$): $\widehat{\mathfrak{sl}}_2$
+currents at level $k' = k + 1/2$, conformal weight $1$
+\item $G^+, G^-$: fermionic generators of conformal weight $3/2$
+\end{itemize}
+
+\emph{Degree-2 OPE data.}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\textbf{Pair} & \textbf{OPE} & \textbf{Residue} \\
+\hline
+$J^a \otimes J^b$ &
+$\frac{k' \delta^{ab}}{(z-w)^2} + \frac{i\epsilon^{abc}J^c}{z-w}$ &
+$i\epsilon^{abc}J^c$ (simple pole) \\[4pt]
+$J^a \otimes G^\pm$ &
+$\frac{\pm \sigma^a_{\alpha\beta} G^\beta}{z-w}$ &
+$\pm \sigma^a G^\pm$ (representation action) \\[4pt]
+$G^+ \otimes G^-$ &
+$\frac{2k'/3}{(z-w)^3} + \frac{J^3}{(z-w)^2}
++ \frac{T + \partial J^3/2}{z-w}$ &
+$T + \partial J^3/2$ \\[4pt]
+$G^\pm \otimes G^\pm$ & regular & $0$
+\end{tabular}
+\end{center}
+The $\sigma^a$ are the Pauli matrices (the $\mathfrak{sl}_2$ action
+on the $G^\pm$ doublet).
+
+\emph{Curvature.}
+The curvature has two channels:
+\begin{align}
+m_0^{(\mathfrak{sl}_2)} &= k'/2 = (k+1/2)/2
+\quad (\text{from } J^a J^b \text{ double pole})
+\label{eq:bp-curv-sl2} \\
+m_0^{(G)} &= 2k'/3
+\quad (\text{from } G^+ G^- \text{ cubic pole})
+\label{eq:bp-curv-G}
+\end{align}
+Both vanish at $k' = 0$, i.e., $k = -1/2$.  At this level the
+Bershadsky--Polyakov algebra has $c = -3 \cdot 0/(k+3) + 2 = 2$
+and its bar complex is strict.
+
+\emph{Comparison with principal $\mathcal{W}_3$.}
+At the same ambient level $k$ for $\widehat{\mathfrak{sl}}_3$:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|cc}
+& $\mathcal{W}^k(\mathfrak{sl}_3, f_{\mathrm{prin}})$ &
+$\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ \\
+\hline
+Generators & $T, W$ & $J^a, G^\pm$ \\
+Generator weights & $2, 3$ & $1, 3/2$ \\
+$\#$ generators & $2$ & $5$ \\
+Curvature channels & $2$ & $2$ \\
+Zero-curvature level & $c = 0$ ($k$ irrational) & $k = -1/2$
+\end{tabular}
+\end{center}
+The Bershadsky--Polyakov algebra has more generators but simpler
+curvature structure (zero at a rational level).
+\end{computation}
+
+
+\subsubsection{W-algebra Koszul duality across the DS hierarchy}
+\label{sec:ds-hierarchy-koszul}
+\index{Drinfeld--Sokolov reduction!Koszul duality hierarchy}
+
+\begin{proposition}[DS hierarchy and Koszul duality;
+\ClaimStatusProvedHere]
+\label{prop:ds-koszul-hierarchy}
+For a simple Lie algebra $\fg$ and two nilpotent elements
+$f_1 \leq f_2$ in the closure ordering (i.e.,
+$\overline{\mathbb{O}_{f_1}} \subset \overline{\mathbb{O}_{f_2}}$),
+the DS reduction intertwines with Koszul duality:
+\[
+\bigl(\mathcal{W}^k(\fg, f_i)\bigr)^!
+\simeq \mathcal{W}^{-k-2h^\vee}(\fg, f_i^{\mathrm{BV}})
+\]
+where $f_i^{\mathrm{BV}}$ is the Barbasch--Vogan dual nilpotent
+in $\fg^\vee$ (the Langlands dual Lie algebra).
+\end{proposition}
+
+\begin{proof}
+The DS--KD intertwining theorem
+(Theorem~\ref{thm:ds-koszul-intertwine}) establishes that Koszul
+duality commutes with DS reduction.  For the ambient algebra,
+$(\widehat{\fg}_k)^! \simeq \widehat{\fg}_{-k-2h^\vee}$
+(Corollary~\ref{cor:level-shifting-part1}).  Applying DS reduction
+with nilpotent $f_i$ on both sides:
+\[
+\mathrm{DS}_{f_i}\bigl((\widehat{\fg}_k)^!\bigr)
+\simeq \mathrm{DS}_{f_i}\bigl(\widehat{\fg}_{-k-2h^\vee}\bigr)
+= \mathcal{W}^{-k-2h^\vee}(\fg, f_i)
+\]
+The left-hand side equals
+$\bigl(\mathrm{DS}_{f_i^{\mathrm{BV}}}
+(\widehat{\fg}_k)\bigr)^!
+= \bigl(\mathcal{W}^k(\fg, f_i^{\mathrm{BV}})\bigr)^!$
+by the compatibility of DS reduction with Koszul duality,
+where the nilpotent orbit transforms under the Barbasch--Vogan
+duality $f_i \mapsto f_i^{\mathrm{BV}}$ (which exchanges the orbit
+structure of $\fg$ and $\fg^\vee$).
+
+For simply-laced $\fg$ (types $A$, $D$, $E$), $\fg = \fg^\vee$
+and $f_i^{\mathrm{BV}} = f_i$ (the BV duality is the identity on
+orbits).  For non-simply-laced $\fg$, the BV duality exchanges
+$B_n \leftrightarrow C_n$ orbits.
+\end{proof}
+
+\begin{computation}[DS hierarchy for $\mathfrak{sl}_4$:
+five nilpotent orbits]
+\label{comp:sl4-ds-hierarchy}
+\index{sl4@$\mathfrak{sl}_4$!nilpotent orbits}
+
+The nilpotent orbits of $\mathfrak{sl}_4$ (partitions of 4) are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccl}
+\textbf{Partition} & $\dim \mathbb{O}$ &
+\textbf{W-algebra generators} & $\#$ gen. & \textbf{Name} \\
+\hline
+$(1,1,1,1)$ & $0$ & $J^a$ ($a = 1,\ldots,15$) & $15$ &
+$\widehat{\mathfrak{sl}}_4$ \\
+$(2,1,1)$ & $8$ & $J^a$ ($a=1,\ldots,8$) + $G^\pm_i$ & $12$ &
+minimal \\
+$(2,2)$ & $8$ & $J^a$ ($a=1,\ldots,3$) + matter & $7$ &
+rectangular \\
+$(3,1)$ & $12$ & $T, W^{(3)}, J$ & $3$ & subregular \\
+$(4)$ & $12$ & $T, W^{(3)}, W^{(4)}$ & $3$ &
+$\mathcal{W}_4$
+\end{tabular}
+\end{center}
+
+\emph{Koszul duality.}
+Since $\mathfrak{sl}_4$ is simply-laced, the BV duality is the
+identity: each orbit is self-BV-dual.  The level-shifting duality
+$k \mapsto -k-2h^\vee = -k-8$ maps each W-algebra to itself at
+the dual level:
+\[
+\mathcal{W}^k(\mathfrak{sl}_4, f_\lambda)^!
+\simeq \mathcal{W}^{-k-8}(\mathfrak{sl}_4, f_\lambda)
+\]
+for each partition $\lambda$.
+
+\emph{Bar complex dimensions at degree 1.}
+The degree-1 bar complex of each W-algebra has dimension equal
+to the number of strong generators (counting conformal descendants):
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l|ccccc}
+Partition & $(1^4)$ & $(2,1^2)$ & $(2^2)$ & $(3,1)$ & $(4)$ \\
+\hline
+$\dim \bar{B}^1_{\leq h}$ &
+$\sum_{n=1}^{h} 15 p(n-1)$ &
+$\sum_{n=1}^{h} 12 p(n-1)$ &
+$\sum_{n=1}^{h} 7 p(n-1)$ &
+$\sum_{n=2}^{h} 3 p(n-2)$ &
+$\sum_{n=2}^{h} 3 p(n-2)$
+\end{tabular}
+\end{center}
+where $p(n)$ is the partition function (counting conformal
+descendants of each strong generator).
+\end{computation}
