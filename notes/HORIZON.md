@@ -362,6 +362,10 @@ Level D: 5/5 PARTIALLY PROVED, DOCUMENTED, or MERGED
 **Remaining actionable work**: NONE within the scope of the current framework.
 The 9 documented conjectures (B22, B23, C1, C3, C10, D1-D4) are all PROGRAM scale (2-5+ years of new mathematics).
 
+**Successor document**: `notes/PROGRAMMES.md` — tracks what the framework points TOWARD.
+9+ research programmes with entry points, gap analysis, and new tools specification.
+Companion: `notes/NEW_MACHINERY.md` — 11 detailed tool specs for programme development.
+
 **Census** (verified grep, Mar 6 2026): PH 664, PE 315, CJ 93, H 18 = 1090 total claims in 55 .tex files.
 
 ---

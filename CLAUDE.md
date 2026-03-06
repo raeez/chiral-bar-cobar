@@ -2,13 +2,19 @@
 
 ## Identity
 
-Mathematical collaborator for Raeez Lorgat's research monograph:
+Research collaborator for Raeez Lorgat's monograph, operating at the triple intersection of pure mathematics, mathematical physics, and theoretical physics:
 
 **Chiral Duality in the Presence of Quantum Corrections: Geometric Realizations via Configuration Spaces**
 
-Target: Annals of Mathematics / Astérisque. Every definition precise, every theorem proved, every construction functorial.
+### Three disciplines, one work
 
-Think like a research mathematician: "is this proved? What hypotheses? Where used?" Write like Serre: concise, complete, no gaps.
+**As mathematician** (Serre/Grothendieck/Faltings/Beilinson-Drinfeld standard): Every definition precise, every theorem proved, every construction functorial. Proofs are complete — no "the reader can verify" or "by a similar argument." Functoriality is not optional. The algebraic geometry is scheme-theoretic, the homological algebra is derived, the operadic structures are rigorous. Target: Annals / Astérisque grade.
+
+**As mathematical physicist** (Witten/Gaiotto/Costello standard): The algebraic structures are not ends in themselves — they model physical theories. The bar complex IS the BRST complex. The genus expansion IS the string perturbation series. Koszul duality IS holographic duality at the algebraic level. Every physical identification gets a precise mathematical formulation and, where possible, a proof. The gap between algebra and physics is our gap to close.
+
+**As physicist** (Polyakov/Dirac standard): Physical intuition drives the mathematics, not the reverse. The central charge is not just a number — it controls the anomaly. The curvature m₀ is not just an obstruction — it is the cosmological constant. Configuration space integrals are not abstract — they are Feynman path integrals made rigorous. When the physics suggests a structure, we find it. When the mathematics reveals a pattern, we ask what it means physically.
+
+**All three at once**: The work draws from Serre's concision, Grothendieck's functoriality, Beilinson-Drinfeld's chiral geometry, Witten's structural insight, Costello's rigor-in-physics, and Polyakov's physical directness. No discipline is subordinate. The physics conjectures (BRST-bar, holographic dictionary, anomaly cancellation, AGT) are IN SCOPE — they are results we aim to prove.
 
 ---
 
@@ -37,21 +43,21 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 6)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **687** |
-| ProvedElsewhere | **313** |
-| Conjectured | **99** |
+| ProvedHere | **699** |
+| ProvedElsewhere | **328** |
+| Conjectured | **115** |
 | Heuristic | **18** |
 | Open | **0** |
-| **Total tagged claims** | **1117** |
+| **Total tagged claims** | **1160** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1214 pages** (converged), zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
-- 55 active .tex files + 8 stubs (+ main.tex preamble), 75K lines of LaTeX
-- Bibliography: 275 entries (1243 lines), all citations resolved
+- **1276 pages** (converged), zero LaTeX errors, 6 pre-existing undefined forward refs, zero undefined citations, zero multiply-defined labels
+- 55 active .tex files + 8 stubs (+ main.tex preamble), 75K+ lines of LaTeX
+- Bibliography: 289 entries (~1395 lines), all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
-- Cosmetic: 113 overfull hbox (0 severe >14pt, worst 12.2pt), 79 underfull hbox
+- Cosmetic: ~115 overfull hbox (2 severe >14pt in chiral_koszul_pairs.tex and higher_genus.tex), ~80 underfull hbox
 - Build: up to 7-pass pdflatex with convergence detection; `scripts/build.sh` for standalone use
 - **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
 - Subject index: 329+ entries across 37 files
@@ -73,6 +79,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 - Adversarial audit (session 2): 16 findings (3 errors, 1 contradiction, 7 gaps, 5 expository), ALL FIXED
 - Adversarial audit (session 3): 35 findings from 8 parallel agents. 12 priority fixes applied: W-algebra duality σK formula, FP formula, proof integral, g=0 nilpotence, free field κ≠0, Heisenberg dual, H²(M̄_g), Yangian Ext, bosonic string gloss, KL diagram, modular periodicity downgrade, conformal block rationality caveat
 - Adversarial audit (session 4): 45+ findings from 7 parallel agents. 17 fixes applied: genus-1 d²=0 full proof, Leray fibration notation, propagator antisymmetry removal, obstruction degree clarification, nilpotent citation scope, fermionic coproduct sign, Koszul pair equivalence sketch, HH⁰/obstruction language, Heisenberg bar computation, W-algebra simplicity≠semisimplicity, Heisenberg dual table (CE→Sym^ch), Yangian bar description, boundary divisor H²|I|-2→H², MMM vs λ-class naming, W₃ obstruction Mumford isomorphism correction, ProvedElsewhere→ProvedHere tag, ℏ convention reconciliation
+- 9-programme research synthesis: BV duality error fixed (partition transpose, not identity), DS-KD proof restructured (2-stage with BV orbit identification), Frenkel-Teleman/FLE/Raskin documented, N-complex framework added, E_n/Vassiliev/BRST chain map literature integrated, hook-type W-algebra duality cited, sl₃ modular rank computation (new: Casimir anomaly at p|dim(g)), 12 new bibliography entries (287 total), weight filtration computability, Booth-Lazarev monoidal model structures
 
 ### Proof Sketches: 1 REMAINING (correctly so)
 | File | Line | Context | Status |
@@ -81,15 +88,15 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 99 Conjectured Claims
+### What Remains — 114 Conjectured Claims
 
 All have scope remarks. Classification:
 
 | Category | Count | Action |
 |----------|-------|--------|
-| **PHYSICS** | ~48 | Correctly scoped — outside pure math |
+| **MATH-PHYSICS** | ~48 | IN SCOPE — this is a mathematical physics book. Prove or refine. |
 | **BORDERLINE PROVABLE** | ~2 | Provable in principle; substantial new work |
-| **GENUINELY OPEN** | ~7 | Actual open mathematical problems |
+| **GENUINELY OPEN** | ~7 | Open mathematical problems with identified gaps |
 | **COMPUTATIONAL** | ~3 | Explicit calculations not yet carried out |
 | **HORIZON-DOCUMENTED** | ~10 | New conjectures from HORIZON programme documentation |
 | **SCOPE-REMARK REFS** | ~20 | Re-references of above in scope remarks |
@@ -98,7 +105,7 @@ All have scope remarks. Classification:
 
 **Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), derived bc-betagamma, KL from bar-cobar
 
-**Physics conjectures (~48)**: holomorphic_topological.tex (14), bv_brst.tex (4), free_fields.tex (18), physical_origins.tex (3), koszul_pair_structure.tex (9). All with scope remarks.
+**Math-physics conjectures (~48)**: holomorphic_topological.tex (14), bv_brst.tex (4), free_fields.tex (18), physical_origins.tex (3), koszul_pair_structure.tex (9). All IN SCOPE — the BRST-bar identification, holographic dictionary, anomaly cancellation, and AGT realization are mathematical physics results we aim to prove. See Programme VI in PROGRAMMES.md.
 
 **Conjectures by Part**: Theory 23, Examples 36, Connections 33, Appendices 1.
 
@@ -133,17 +140,29 @@ All have scope remarks. Classification:
 8. Never guess a formula — compute it or cite it
 
 ### Autonomous Loop (for unattended operation)
-See `notes/SESSION_PROMPT_v8.md` for the current unified session prompt (state-driven mode selection, subsumes v1-v7 + specialized prompts). Launch with:
+See `notes/SESSION_PROMPT_v9.md` for the current session prompt (triple-intersection identity, audit-5 integration, research programme map). Launch with:
 ```
-Read notes/SESSION_PROMPT_v8.md and execute it.
+Read notes/SESSION_PROMPT_v9.md and execute it.
 ```
-All prior prompts (v1-v7) and specialized prompts archived in `notes/archive/`.
+v8 and all prior prompts (v1-v7) archived in `notes/archive/`.
 
-### Mathematical Standards
+### Mathematical Standards (Serre/Grothendieck)
 - Every theorem gets a complete proof. "Sketch" and "the proof is similar" are temporary.
 - Definitions before use. Functoriality is not optional. Examples are not decoration.
+- Proofs should be natural, not clever. If a proof feels forced, the definitions are wrong.
 - Notation: A for chiral algebras, A^! for Koszul dual, B(A) for bar, Omega(C) for cobar, C_n(X) for configuration space, FM_n(X) for FM compactification, M_g for moduli, kappa for level, c for central charge.
 - Claim status: \ClaimStatusProvedHere, \ClaimStatusProvedElsewhere, \ClaimStatusConjectured
+
+### Mathematical Physics Standards (Witten/Costello)
+- Every physical identification gets a precise mathematical formulation.
+- When physics predicts a structure (anomaly cancellation, holographic duality, BRST), formulate the prediction as a theorem and prove it or state it as a conjecture with identified gaps.
+- Physical intuition is evidence, not proof. But physical intuition that is consistently confirmed across examples should be taken seriously as indicating provable theorems.
+- The bar complex / BRST complex / Feynman path integral identifications are not analogies — they are precise mathematical statements to be proved.
+
+### Physics Standards (Polyakov/Dirac)
+- Physical content comes first. A formula is not understood until its physical meaning is clear.
+- When a computation yields a number (central charge, anomaly coefficient, obstruction class), ask: what does this mean physically? What does it predict?
+- Symmetry dictates structure. When the mathematics reveals an unexpected pattern, look for the symmetry that explains it.
 
 ### Writing Standards
 - Voice: impersonal ("we construct," "one verifies")
@@ -254,6 +273,9 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 | koszul_across_genera.tex | 363 | 4 | 0 | 0 | (absorbed into higher_genus) |
 | classical_to_chiral.tex | 452 | 6 | 4 | 0 | (absorbed into introduction) |
 
+| en_koszul_duality.tex | 915 | — | — | — | E_n Koszul duality, higher-dim propagators |
+| derived_langlands.tex | 700 | — | — | — | Derived Langlands, critical-level oper bar |
+
 *Stubs (5 lines each, placeholders): bar_cobar_quasi_isomorphism.tex, higher_genus_full.tex, higher_genus_quasi_isomorphism.tex*
 
 ### Part 2: Examples (chapters/examples/) — 28.6K lines, 247 PH / 86 PE / 36 CJ
@@ -289,6 +311,7 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 | feynman_connection.tex | 447 | 0 | 1 | 1 | Feynman-bar-cobar bridge |
 | poincare_computations.tex | 310 | 1 | 0 | 0 | NAP explicit computations |
 | physical_origins.tex | 166 | 0 | 3 | 3 | NC Chern-Simons, D-branes |
+| kontsevich_integral.tex | 523 | — | — | — | Kontsevich integral, Vassiliev invariants, CS bridge |
 | concordance.tex | 569 | 2 | 0 | 6 | Literature comparison, HORIZON conjectures |
 
 ### Appendices (appendices/) — 6.3K lines, 35 PH / 52 PE / 1 CJ
@@ -297,13 +320,16 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 ### Bibliography
 bibliography/references.tex — 1243 lines, 275 entries, all citations resolved
 
-### Planning & Automation (notes/ — 4 active files)
-SESSION_PROMPT_v8.md — Current unified session prompt: state-driven mode selection, subsumes v1-v7
-HORIZON.md — Implied results map (20/20 A, 24/24 B, 10/10 C, 5/5 D — ALL documented)
+### Planning & Automation (notes/ — active files)
+SESSION_PROMPT_v9.md — Current session prompt: triple-intersection engine (supersedes v8)
+PROGRAMMES.md — 9 research programmes, priority-ordered, with entry points
+NEW_MACHINERY.md — 11 tool specs (M1-M11) for programme entry points
+ADVERSARIAL_AUDIT_SESSION5.md — 234 findings (4 CRITICAL unfixed), full report
+HORIZON.md — Implied results map (ALL 59 documented, historical reference)
 DEEP_CRITIQUE_OUTPUT.md — Referee gap analysis (ALL F1-F7 RESOLVED)
-autonomous_state.md — Session continuity state (canonical)
+autonomous_state.md — Session continuity state (canonical, includes priority queue)
 
-Archive (notes/archive/): 21 superseded files including all prior prompts (v1-v7), specialized prompts (DEEP_CRITIQUE, ADVERSARIAL_AUDIT, STRATEGIC_SYNTHESIS, EXPLORATION_ENGINE, COMPUTE_ENGINE), absorbed maps (IMPLIED_RESULTS_MAP, RESTRUCTURING_PROPOSAL), session snapshots, and historical audit outputs.
+Archive (notes/archive/): v1-v8 prompts, specialized prompts, absorbed maps, session snapshots, historical audit outputs.
 
 ### Reference Library (references/)
 CONSTRAINT_MAP.md — 33-entry machine-readable registry (22 SATISFIED, 6 FRONTIER)

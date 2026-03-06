@@ -37,7 +37,7 @@ MASTER_TABLE = {
     "Heisenberg":    [1, 1, 1, 2, 3],
     "Free fermion":  [1, 1, 2, 3, 5],
     "bc":            [2, 3, 6, 13, 28],
-    "betagamma":     [2, 4, 10, 26, 70],
+    "beta_gamma":    [2, 4, 10, 26, 70],
     "sl2":           [3, 6, 15, 36, 91],
     "sl3":           [8, 36, 204, None, None],
     "Virasoro":      [1, 2, 5, 12, 30],

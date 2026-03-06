@@ -378,4 +378,35 @@ The introduction previews (3 of 7) are standard expository practice but inflate 
 
 ---
 
+## Fix Execution Log (Session 2026-03-06)
+
+All 28 findings addressed. Changes across 15 files.
+
+| Finding | Status | What was done |
+|---------|--------|---------------|
+| **F1** | **FIXED** | introduction.tex: periodicity thm restricted to rank-1 for KM, W-algebra claim corrected to polynomial growth, proof rewritten with correct BD/FFT references, misleading attribution corrected. hochschild_cohomology.tex: PE theorem rewritten as exterior-polynomial structure with rank distinction. |
+| **F2** | **FIXED** | deformation_theory.tex: PH→CJ downgrade, scope remark added documenting Step 4 gap, downstream CJ proofs now use conditional language. Census: PH 687→686, CJ 99→100. |
+| **F3** | **FIXED** | higher_genus.tex: Theorem A Steps 1,2,4 expanded with explicit logical connectives showing how cited theorems combine. |
+| **F4a-c** | **FIXED** | bar_cobar_construction.tex: Three sketch lemmas annotated "(proof sketch; full proof in Theorem~ref{thm:quantum-complementarity-main})". PH tags retained since full proofs exist later. |
+| **F4d** | **FIXED** | bar_cobar_construction.tex: thm:geom-unit proof expanded with spectral sequence argument for QI. |
+| **F4e** | **FIXED** | bar_cobar_construction.tex: prop:counit-qi proof replaced with clean 1-sentence Verdier duality argument (was 4 "similar" steps). |
+| **F4f** | **FIXED** | bar_cobar_construction.tex: rem:completion-necessity-scope added explaining which condition each example establishes. |
+| **F4g** | **FIXED** | bar_cobar_construction.tex: Rigorous alternative note added pointing to cor:cobar-nilpotence-verdier for distributional-free proof. |
+| **F5** | **FIXED** | higher_genus.tex: cor:hochschild-duality rewritten with defined [2]-shift, expanded proof via Verdier duality on FM compactifications. |
+| **F6** | **FIXED** | higher_genus.tex: Theorem C Step 4 (pole order filtration argument), Step 7 (Verdier sign reversal via contravariance), Step 8 expanded. |
+| **F7** | **FIXED** | 7 cross-file fixes: curved bar caveat (bar_cobar), formality→QI (higher_genus), Yangian E₁ ref (examples_summary), minimal model Koszul failure (minimal_model_examples), Vir generic c (chiral_modules), KS→Main Thm C ref (higher_genus), toroidal conditional expansion (toroidal_elliptic). |
+| **F8** | **FIXED** | higher_genus.tex: "T is primary for W" corrected to "W is primary for T" with vacuum projection argument. |
+| **S1** | **FIXED** | examples_summary.tex: H^4(W3)=52 marked conjectural with dagger, referenced recurrence conjecture. |
+| **S2** | **FIXED** | genus_expansions.tex: G2 chain-group dims corrected with proper (dim g)^n·(n-1)! formula. |
+| **S3** | — | Correctly tagged CJ with zero-DOF note. No action needed. |
+| **S4** | **MITIGATED** | heisenberg_eisenstein.tex: Triple-kappa disambiguated with explicit subscript notation. Full global rename deferred. |
+| **S5** | **FIXED** | free_fields.tex: First Heisenberg definition harmonized to use α(z) with J(z) noted as physics convention. |
+| **S6** | **FIXED** | Cross-references added between duplicate Koszul pair definitions (algebraic_foundations.tex). Coisson duplicate converted to remark (deformation_quantization.tex). |
+| **S7** | **FIXED** | free_fields.tex: coLie→coSym with explanation. deformation_quantization.tex: "Poisson chiral"→"Coisson" with not-a-chiral-algebra caveat. introduction.tex: boson-fermion→βγ-fermion duality with Koszul vs bosonization distinction. |
+| **S8** | **FIXED** | CLAUDE.md census updated to PH=686, PE=313, CJ=100, HE=18 (total 1117). |
+
+**Post-fix compilation**: 1232 pages, zero LaTeX errors, zero new undefined references.
+
+---
+
 *End of STRUCTURAL_AUDIT.md*
