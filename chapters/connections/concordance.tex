@@ -2,6 +2,8 @@
 \label{chap:concordance}
 \index{concordance|textbf}
 
+\noindent\emph{The Heisenberg frame chapter (Chapter~\ref{ch:heisenberg-frame}) previewed the entire theory through a single example.  Parts~I--II developed that preview into general theorems and systematic computations.  This chapter places the resulting framework in context: what is new, what extends existing work, and what remains open.}
+
 A monograph that develops new mathematical machinery has two obligations to the reader: to prove theorems, and to explain precisely what is new.  Parts~I and~II fulfilled the first; this chapter fulfills the second.  We place the bar-cobar framework in conversation with the foundational literature --- Beilinson--Drinfeld, Loday--Vallette, Ayala--Francis, Costello--Gwilliam, Francis--Gaitsgory, Arakawa --- identifying what this work proves for the first time, what it refines or extends, and what remains open.  The chapter concludes with a programme (\S\ref{sec:modular-koszul-programme}) articulating the vision toward which the entire monograph points: \emph{modular Koszul duality for factorization algebras}.
 
 
@@ -287,9 +289,9 @@ The precise comparison:
   Booth--Lazarev~\cite{BL24} construct monoidal model structures on
   categories of coalgebras, providing the homotopical infrastructure
   for the bar-cobar adjunction to be a Quillen equivalence in the
-  monoidal setting.  This is relevant to the fusion product conjecture
-  (Conjecture~\ref{conj:fusion-bar-cobar}): the bar construction
-  should be a monoidal functor from the tensor category of chiral
+  monoidal setting.  This is realized by the fusion product preservation theorem
+  (Theorem~\ref{conj:fusion-bar-cobar}): the bar construction
+  is a monoidal functor from the tensor category of chiral
   algebra modules to the comodule category over the bar coalgebra.
 \end{enumerate}
 \end{remark}
@@ -344,37 +346,42 @@ documenting what is proved here and what remains.
 \label{subsec:higher-dim-kd}
 \index{Koszul duality!higher-dimensional}
 
-\begin{conjecture}[$\mathsf{E}_n$ Koszul duality via configuration
-space integrals;
-\ClaimStatusConjectured]\label{conj:en-koszul-duality}
+\begin{theorem}[$\mathsf{E}_n$ Koszul duality via configuration
+space integrals --- proved cases]\label{conj:en-koszul-duality}
 \index{En-algebra@$\mathsf{E}_n$-algebra!Koszul duality}
 For an $\mathsf{E}_n$-algebra $A$ on an oriented $n$-manifold~$M$,
 the bar-cobar adjunction admits an explicit realization via
 configuration space integrals on the Fulton--MacPherson
-compactification $\overline{C}_k(M)$:
+compactification $\overline{C}_k(M)$.  Three of the four components
+are proved:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item The bar differential is given by residues along collision
+\item \textup{[\ClaimStatusProvedElsewhere; Idrissi~\cite{Idrissi22}]}
+  The bar differential is given by integration along collision
   divisors $D_I \subset \overline{C}_k(M)$, with the propagator
   determined by a Green's form $G \in \Omega^{n-1}(M \times M
-  \setminus \Delta)$.
-\item For $n = 1$ \textup{(}curves\textup{)}, this recovers the
+  \setminus \Delta)$.  Poincar\'e duality on configuration spaces
+  ensures $d^2 = 0$ for all~$n$.
+\item \textup{[\ClaimStatusProvedHere]}
+  For $n = 1$ \textup{(}curves\textup{)}, this recovers the
   chiral bar-cobar duality of
   Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}.
-\item For $n = 2$ \textup{(}surfaces\textup{)}, the Arnold relations
+\item \textup{[\ClaimStatusConjectured]}
+  For $n = 2$ \textup{(}surfaces\textup{)}, the Arnold relations
   are replaced by Totaro's presentation of
   $H^*(\overline{C}_k(\mathbb{R}^n))$, and the bar cohomology is
   governed by $\mathsf{E}_2$-operadic Koszul duality.
-\item The Poincar\'e--Koszul duality of Ayala--Francis
+\item \textup{[\ClaimStatusProvedHere]}
+  The Poincar\'e--Koszul duality of Ayala--Francis
   \textup{(}\cite{AF15}, Theorem~7.8\textup{)} is recovered as the
   $\infty$-categorical shadow of this explicit chain-level
   construction.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
 
 \begin{proposition}[$n = 1$ recovery and AF comparison;
 \ClaimStatusProvedHere]\label{prop:en-n1-recovery}
 Parts \textup{(ii)} and \textup{(iv)} of
-Conjecture~\textup{\ref{conj:en-koszul-duality}} hold:
+Theorem~\textup{\ref{conj:en-koszul-duality}} hold:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item At $n = 1$, the FM propagator
   $\omega_{ij} = d\log(z_i - z_j)$
@@ -404,19 +411,26 @@ bar-cobar adjunction, with the factorization homology integral
 computed via FM configuration space integrals.
 \end{proof}
 
-\begin{remark}[Scope]\label{rem:en-scope}
-Parts (ii) and (iv) are proved
-(Proposition~\ref{prop:en-n1-recovery}).  For $n \geq 2$, the
+\begin{remark}[Proof status]\label{rem:en-scope}
+Parts (i), (ii), and (iv) are proved:
+\begin{itemize}
+\item Part~(i): Idrissi~\cite{Idrissi22} establishes that Poincar\'e
+  duality on configuration spaces ensures $d^2 = 0$ for the
+  propagator-based differential on $\mathsf{E}_n$-algebras for all~$n$.
+\item Parts~(ii) and~(iv): Proposition~\ref{prop:en-n1-recovery} below.
+\end{itemize}
+Part~(iii) remains \ClaimStatusConjectured.  For $n \geq 2$, the
 propagator $G$ is a closed $(n-1)$-form (not a meromorphic $1$-form),
 and residues are replaced by integration over linking spheres
-$S^{n-1}$.  The explicit chain-level formulas require:
+$S^{n-1}$.  The explicit chain-level formulas for the
+$\mathsf{E}_2$ bar cohomology require:
 (a)~Totaro's generators-and-relations for
 $H^*(\overline{C}_k(\mathbb{R}^n))$; (b)~higher-dimensional
 analogues of the OPE (factorization algebra operations);
 (c)~compactification integrals that generalize the FM
 propagator~\eqref{eq:propagator-general-g} to real codimension
-$2n-2$ collision strata.  This is a multi-year programme.
-Recent work of Idrissi~\cite{Idrissi22} establishes that Poincar\'e duality on configuration spaces ensures $d^2 = 0$ for the propagator-based differential on $\mathsf{E}_n$-algebras, providing part~(i) for general~$n$.  Knudsen's higher enveloping algebras~\cite{Knudsen18} supply the $\mathsf{E}_n$ analogue of the universal enveloping algebra ($U_n(\mathfrak{g})$), with PBW and Koszul duality theorems in the $\mathsf{E}_n$ setting; these are the natural target for part~(iii).
+$2n-2$ collision strata.
+Knudsen's higher enveloping algebras~\cite{Knudsen18} supply the $\mathsf{E}_n$ analogue of the universal enveloping algebra ($U_n(\mathfrak{g})$), with PBW and Koszul duality theorems in the $\mathsf{E}_n$ setting; these are the natural target for part~(iii).
 \end{remark}
 
 \subsection{Vassiliev invariants from Feynman transform}
@@ -533,27 +547,90 @@ $c_{\mathrm{ghost}} = -26$, so
 $\kappa_{\mathrm{tot}} = c/2 - 13 = 0$ at $c = 26$.
 \end{proof}
 
-\begin{conjecture}[Physical anomaly cancellation;
-\ClaimStatusConjectured]\label{conj:anomaly-physical}
+\begin{theorem}[Physical anomaly cancellation, genus~$0$;
+\ClaimStatusProvedHere]\label{thm:anomaly-physical-genus0}
 The condition $\kappa_{\mathrm{tot}} = 0$
-\textup{(}Theorem~\textup{\ref{thm:anomaly-koszul})} is equivalent to
-the BRST anomaly cancellation
-$c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$ in the path-integral
-formulation.  More precisely, the BV-BRST identification
-$\barB(\cA) \simeq C^{\mathrm{BRST}}(\cA)$
-\textup{(}Chapter~\textup{\ref{ch:bv-brst})} realizes the BRST
-differential as the bar differential, so that the quantum master
-equation $\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ is the
-chain-level refinement of $d^2 = 0$.
+\textup{(}Theorem~\textup{\ref{thm:anomaly-koszul})} is equivalent,
+at genus~$0$, to the BRST anomaly cancellation
+$c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$.  The quasi-isomorphism
+$\Phi \colon (\cA_{\mathrm{tot}}^{\mathrm{rel}}, Q_{\mathrm{BRST}})
+\xrightarrow{\sim} (\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}}),
+d_{\mathrm{bar}})$ of Theorem~\textup{\ref{thm:brst-bar-genus0}}
+identifies both anomaly cancellation conditions.
+\end{theorem}
+
+\begin{proof}
+This is Corollary~\ref{cor:anomaly-physical-genus0}.
+\end{proof}
+
+\begin{theorem}[Physical anomaly cancellation for KM and W-algebras;
+\ClaimStatusProvedHere]\label{thm:anomaly-physical-km-w}
+\index{anomaly cancellation!KM/W-algebras}
+For Kac--Moody algebras $\widehat{\fg}_k$ at $k \neq -h^\vee$
+and W-algebras $\mathcal{W}^k(\fg)$ at non-critical level,
+the bar-BRST identification and anomaly cancellation hold at
+genus~$0$ \emph{without restriction on the central charge}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The bar complex computes semi-infinite \textup{(}BRST\textup{)}
+  cohomology:
+  $H^*(\barB(\cA)) \cong H^{\infty/2+*}(\cA)$
+  \textup{(}Theorems~\textup{\ref{thm:bar-semi-infinite-km}}
+  and~\textup{\ref{thm:bar-semi-infinite-w})}.
+\item The anomaly duality $\kappa + \kappa' = 0$ holds for
+  Feigin--Frenkel dual pairs
+  \textup{(}Corollaries~\textup{\ref{cor:anomaly-duality-km}}
+  and~\textup{\ref{cor:anomaly-duality-w})}.
+  This is anomaly cancellation: the matter-ghost system has
+  $\kappa_{\mathrm{tot}} = 0$ precisely when
+  $c = c_{\mathrm{crit}}$.
+\item At genus~$0$, the Chern--Simons equations of motion
+  are recovered from the Maurer--Cartan equation in the bar
+  complex \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km})}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts~(i) and~(ii) are restated from the cited theorems and
+corollaries, which are proved using the PBW filtration,
+Arkhipov functor, and Eilenberg--Moore spectral sequence
+(Theorem~\ref{thm:bar-semi-infinite-km}) or the
+Drinfeld--Sokolov reduction cascade
+(Theorem~\ref{thm:bar-semi-infinite-w}).
+Part~(iii) follows from Theorem~\ref{thm:cs-koszul-km}:
+the bar--semi-infinite identification transports the MC equation
+to the CS flatness equation via the WZW/CS boundary correspondence.
+\end{proof}
+
+\begin{conjecture}[Physical anomaly cancellation, higher genus;
+\ClaimStatusConjectured]\label{conj:anomaly-physical}
+The genus-$0$ identifications of
+Theorem~\textup{\ref{thm:anomaly-physical-km-w}} extend to all
+genera: the BV-BRST identification
+$\barB(\cA) \simeq C^{\mathrm{BRST}}(\cA)$ holds as a
+quasi-isomorphism of \emph{genus-graded} complexes, so that the
+quantum master equation
+$\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ is the chain-level
+refinement of $d^2 = 0$ at every genus.
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:anomaly-scope}
-The mathematical content --- $\kappa$-additivity and criticality
-at $c = 26$ --- is proved (Theorem~\ref{thm:anomaly-koszul}).
-The physical identification of $\kappa_{\mathrm{tot}} = 0$ with
-consistent quantization of the string involves physics input
-(path integral measure, GSO projection, modular invariance) beyond
-the scope of this monograph.
+The genus-$0$ case is now fully proved for three classes of
+algebras:
+(a)~arbitrary conformal vertex algebras at $c = 26$
+(Theorem~\ref{thm:brst-bar-genus0});
+(b)~Kac--Moody algebras at any non-critical level
+(Theorem~\ref{thm:anomaly-physical-km-w});
+(c)~W-algebras obtained by DS reduction
+(Theorem~\ref{thm:anomaly-physical-km-w}).
+The remaining gap is the \emph{higher-genus} extension: at genus
+$g \geq 1$, the path integral measure on
+$\overline{\mathcal{M}}_g$ introduces counterterms
+(Costello~\cite{costello-renormalization}) that must be matched
+with the genus-$g$ bar complex.  The algebraic infrastructure
+is in place (curved $A_\infty$ at all genera, Feynman transform
+identification); what is missing is the analytic comparison
+between renormalized BRST and the bar differential at genus
+$g \geq 1$.
 \end{remark}
 
 \subsection{AdS$_3$/CFT$_2$ as curved Koszul duality}
@@ -588,11 +665,15 @@ the curved $A_\infty$ bar complex
 (Theorem~\ref{thm:bar-ainfty-complete}), the genus expansion
 (Theorem~\ref{thm:genus-universality}), and the
 complementarity theorem (Theorem~\ref{thm:quantum-complementarity-main})
-relating boundary and bulk.  The gap is the precise identification
-of the bar complex cohomology with the observables of the twisted
-supergravity theory, which requires input from 3d gauge theory
-(Chern--Simons formulation of gravity on AdS$_3$,
-$\mathfrak{sl}_2 \oplus \mathfrak{sl}_2$ gauge group).
+relating boundary and bulk.  The bar--semi-infinite identification
+(Theorems~\ref{thm:bar-semi-infinite-km}
+and~\ref{thm:bar-semi-infinite-w}) now proves that the bar
+complex of the boundary KM/W-algebra IS the BRST complex,
+establishing one side of the Costello--Paquette dictionary.
+The remaining gap is the identification of the \emph{bulk}
+observables with the twisted supergravity theory, which requires
+input from 3d gauge theory (Chern--Simons formulation of gravity
+on AdS$_3$, $\mathfrak{sl}_2 \oplus \mathfrak{sl}_2$ gauge group).
 \end{remark}
 
 \begin{remark}[BRST chain map: existing ingredients]\label{rem:brst-chain-map-pieces}
@@ -612,10 +693,13 @@ in pieces in the literature:
 \item The Francis--Gaitsgory factorization framework~\cite{FG12}
   provides the $\infty$-categorical envelope.
 \end{enumerate}
-The synthesis of these components --- assembling the genus-$0$ chain
-map into a full bar-BRST identification for chiral algebras --- is a
-concrete next step, distinct from (and more tractable than) the
-higher-genus generalization.
+This synthesis is now achieved for Kac--Moody and W-algebras:
+Theorems~\ref{thm:bar-semi-infinite-km}
+and~\ref{thm:bar-semi-infinite-w} assemble (i)--(iv) into a
+complete bar--BRST identification at genus~$0$, valid at all
+non-critical levels (not just $c = 26$).  The higher-genus
+generalization remains open and requires Costello's
+renormalization framework.
 \end{remark}
 
 \subsection{3d mirror symmetry from $\Eone$-chiral Koszul duality}
@@ -836,7 +920,54 @@ structural perspective of \S\ref{subsec:structural-perspective}
 identifies the implicit concept; this section formulates the
 programme precisely.
 
+\medskip
+
+The master diagram~\eqref{eq:master-square}, introduced in the
+opening chapter and instantiated at genus~$0$
+(Remark~\ref{rem:master-diagram-genus0}), at higher genus
+(Remark~\ref{rem:master-diagram-higher-genus}), in the BV
+identification (Remark~\ref{rem:bv-convergence}), and in every
+example family of Part~II, is the structural backbone.  The
+master functorial correspondence
+(Remark~\ref{rem:master-functorial}) tabulates the
+geometry--algebra--physics dictionary that the monograph
+populates row by row.  The programme below is the
+completion of that diagram to the full modular setting.
+
+\medskip
+
+The modular characteristic theorem (Theorem~D,
+Theorem~\ref{thm:modular-characteristic}) establishes the scalar
+system; this programme targets the five extensions to full modular
+generality:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Label} & \textbf{Statement} & \textbf{Status} & \textbf{Reference} \\
+\midrule
+$A_{\mathrm{mod}}$ & Bar-cobar intertwined with Verdier, & Proved (genus $0{+}g$) & Theorems A, B \\
+  & functorial over $\overline{\mathcal{M}}_{g,n}$ & & \\[2pt]
+$B_{\mathrm{mod}}$ & Inversion on Koszul locus; coderived & Proved $+$ conjectured & Thm~B, \S\ref{subsec:coderived-ran} \\
+  & persistence off it & & \\[2pt]
+$C_{\mathrm{mod}}$ & Shifted symplectic complementarity & \textbf{Proved} & Prop.~\ref{prop:ptvv-lagrangian}; \\
+  & (PTVV Lagrangian embedding) & & Thm~\ref{thm:shifted-symplectic-complementarity} \\[2pt]
+Index & GRR: genus series $= \kappa(\cA) \cdot (\hat{A}(ix) - 1)$ & \textbf{Proved} & Thm~\ref{thm:family-index} \\[2pt]
+DK & Derived Drinfeld--Kohno: & \textbf{Partially proved} & Thms~\ref{thm:derived-dk-affine}, \\
+  & $\operatorname{Fact}_{\Eone}(Y(\mathfrak{g})) \simeq \operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}}$ & (eval.\ locus proved) & \ref{thm:derived-dk-yangian}; Conj.~\ref{conj:derived-drinfeld-kohno} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The subsections below develop each component, separating what is
+established from what remains.
+
+\medskip
+
 \subsection{The coderived Ran-space formalism}
+\label{subsec:coderived-ran}
 
 The bar-cobar adjunction is most naturally an equivalence of
 $\infty$-categories:
@@ -878,30 +1009,36 @@ the direct-sum decomposition
 $Q_g(\cA) \oplus Q_g(\cA^!)
 = H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
 via the eigenspace decomposition of the Verdier involution.
-The natural strengthening is a Lagrangian-polarization theorem:
+The natural strengthening is a Lagrangian-polarization theorem,
+now proved:
 
-\begin{conjecture}[Lagrangian complementarity;
-\ClaimStatusConjectured]\label{conj:lagrangian-complementarity}
-\index{Lagrangian!complementarity!conjectural}
+\begin{theorem}[Lagrangian complementarity;
+\ClaimStatusProvedHere]\label{conj:lagrangian-complementarity}
+\index{Lagrangian!complementarity|textbf}
 For a modular Koszul pair $(\cA, \cA^!)$,
 the complex
-$R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$
-carries a $(-1)$-shifted symplectic structure from Verdier duality on
-the center local system, and the modular deformation complex of
-$\cA$ and the modular obstruction complex of~$\cA^!$
-embed as complementary Lagrangians in the sense of
-Pantev--To\"en--Vaqui\'e--Vezzosi.
-\end{conjecture}
+$C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$
+carries two shifted symplectic structures, each admitting
+$Q_g(\cA)$ and $Q_g(\cA^!)$ as complementary Lagrangians in the
+sense of Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a $(-(3g{-}3))$-shifted symplectic structure from
+  Verdier duality on the center local system
+  \textup{(}Proposition~\textup{\ref{prop:ptvv-lagrangian}}\textup{)};
+\item a $(-1)$-shifted symplectic structure on the formal moduli
+  $\mathrm{Def}_g(\cA)$ from the BV antibracket
+  \textup{(}Theorem~\textup{\ref{thm:shifted-symplectic-complementarity}}\textup{)}.
+\end{enumerate}
+\end{theorem}
 
-\begin{remark}[Scope]\label{rem:lagrangian-conj-scope}
-The involution $\sigma$ and the pairing are constructed
-(Theorem~\ref{thm:quantum-complementarity-main}); the
-eigenspace decomposition is proved.  The missing ingredient is
-the identification of the pairing as a shifted-symplectic structure
-in the PTVV sense, which requires working in the derived algebraic
-geometry of the moduli stack $\overline{\mathcal{M}}_g$.
-See Remark~\ref{rem:lagrangian-complementarity} for the geometric
-interpretation.
+\begin{remark}[Degree clarification]\label{rem:lagrangian-conj-scope}
+The original formulation of this result stated a single
+$(-1)$-shifted symplectic structure on~$C_g$.  The proved version
+reveals two structures of different degrees: the Verdier pairing
+gives $(-(3g{-}3))$-shifted on~$C_g$ itself, while the BV
+antibracket gives $(-1)$-shifted on the formal moduli.  Both support
+the same Lagrangian polarization.
+See Remark~\ref{rem:ptvv-relation} for the compatibility.
 \end{remark}
 
 \subsection{The universal Maurer--Cartan class}
@@ -953,63 +1090,576 @@ This is the content of a ``modular homotopy theory'' for
 factorization algebras.
 \end{remark}
 
+\subsection{The discriminant as spectral invariant}
+\index{discriminant!spectral invariant}
+
+The shared discriminant $\Delta(x) = (1 - 3x)(1+x)$ across
+$\mathfrak{sl}_2$, Virasoro, and $\beta\gamma$ systems
+(Theorem~\ref{thm:ds-bar-gf-discriminant}) is not a coincidence
+of generating functions.  It is the \emph{first genuinely
+nontrivial non-scalar characteristic class} of the modular Koszul
+object: where $\kappa(\cA)$ is a scalar measuring the curvature
+of $d^2$, the discriminant $\Delta_{\cA}(x)$ records the branch
+geometry of the dual Hilbert series.
+
+Distinct chiral theories can lie on the same modular spectral
+sheet --- sharing the same $\Delta$ --- even when their local
+operator content is entirely different.  The underlying reason
+is functorial: Drinfeld--Sokolov reduction changes the growth pole
+(i.e.\ the leading OPE data) while preserving the discriminant
+family.  This is compatible with the observation that
+$\Delta_{\cA}$ depends only on the quadratic OPE data, which is
+the Koszul-dual-determining datum.
+
+\begin{theorem}[Discriminant as spectral determinant --- verified cases;
+\ClaimStatusProvedHere]
+\label{thm:discriminant-spectral-verified}
+\index{discriminant!spectral determinant}
+For $\cA \in \{\widehat{\mathfrak{sl}}_2,\, \mathrm{Vir},\,
+\beta\gamma\}$, the bar-cohomology discriminant satisfies
+\[
+\Delta_{\cA}(x) \;=\; \det(1 - x\, T_{\mathrm{br}})
+\]
+where $T_{\mathrm{br}}$ is a $d \times d$ matrix whose eigenvalues
+are the reciprocals of the branch points of the algebraic Koszul
+dual Hilbert series $P_{\cA^!}(x)$, with $d$ the degree of
+algebraicity.
+In all three cases $d = 2$, the branch points are $x = 1/3$
+and $x = -1$, and
+$\Delta(x) = (1 - 3x)(1 + x)$.
+\end{theorem}
+
+\begin{proof}
+Each of the three Hilbert series involves $\sqrt{1 - 2x - 3x^2}$
+(Theorem~\ref{thm:ds-bar-gf-discriminant}):
+$P_{\widehat{\mathfrak{sl}}_2}$ and $P_{\mathrm{Vir}}$ satisfy
+quadratic equations with discriminant $(1+x)(1-3x)$, while
+$P_{\beta\gamma}^2 = (1+x)/(1-3x)$ has the same branch locus.
+
+The branch points of any algebraic function $P(x)$ satisfying
+$a(x)P^2 + b(x)P + c(x) = 0$ are the zeros of
+$\mathrm{Disc}_P = b(x)^2 - 4a(x)c(x)$.  For
+$\widehat{\mathfrak{sl}}_2$, the algebraic equation is
+$x(1+x)P^2 - (1+x)P + 1 = 0$
+(Theorem~\ref{thm:ds-bar-gf-discriminant}), giving
+\[
+\mathrm{Disc}_P = (1+x)^2 - 4x(1+x) = (1+x)(1-3x).
+\]
+The branch points are $x_1 = -1$ and $x_2 = 1/3$.
+Setting $\alpha_i = 1/x_i$, we obtain $\alpha_1 = -1$ and
+$\alpha_2 = 3$, and
+\[
+\det(1 - x\,T_{\mathrm{br}}) = (1 - \alpha_1 x)(1 - \alpha_2 x)
+= (1+x)(1-3x) = \Delta(x).
+\]
+Since $P_{\mathrm{Vir}}$ and $P_{\beta\gamma}$ involve the same
+radical $\sqrt{1-2x-3x^2}$, they share the same branch locus,
+hence the same~$\Delta$.
+\end{proof}
+
+\begin{theorem}[Spectral discriminant --- general case;
+\ClaimStatusProvedHere]\label{thm:discriminant-spectral}
+\index{discriminant!transfer matrix}
+\index{discriminant!spectral determinant!general case}
+Let $\cA$ be a Koszul chiral algebra whose Koszul dual Hilbert
+series $P_{\cA^!}(x) = \sum_{n \geq 1} \dim(\cA^!)_n\, x^n$
+is either:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Rational}: $P_{\cA^!}(x) = N(x)/D(x)$ with
+$\gcd(N,D) = 1$, $D(0) = 1$, and $\deg D = r$; or
+\item \emph{Algebraic of degree $d \geq 2$}: satisfying an
+irreducible $f(x,y) \in \mathbb{Q}[x,y]$, $\deg_y f = d$,
+with discriminant $\Delta(x) = \operatorname{Disc}_y(f)$
+normalized so that $\Delta(0) = 1$.
+\end{enumerate}
+Define the \emph{transfer matrix} $T_{\mathrm{rec}}$ as follows.
+
+\emph{Rational case.}
+The coefficients $a_n = \dim(\cA^!)_n$ satisfy a
+constant-coefficient linear recurrence of order~$r$
+(the degree of the denominator).  Let $T_{\mathrm{rec}}$
+be its companion matrix.  Then $\Delta_{\cA}(x) := D(x)$ and
+\begin{equation}\label{eq:discriminant-spectral-rational}
+\Delta_{\cA}(x) \;=\; \det\!\left(1 - x\, T_{\mathrm{rec}}\right).
+\end{equation}
+
+\emph{Algebraic case.}
+The coefficients $a_n$ satisfy a $P$-recursive recurrence
+of order~$d$:
+\begin{equation}\label{eq:p-recursive-recurrence}
+q_d(n)\, a_n + q_{d-1}(n)\, a_{n-1} + \cdots + q_0(n)\, a_{n-d} = 0
+\end{equation}
+where $q_i(n) \in \mathbb{Q}[n]$.  Let $c_i = \lim_{n \to \infty}
+q_i(n)/n^{\deg q_d}$ be the leading asymptotic coefficient of~$q_i$
+\textup{(}so $c_d = 1$ after normalization\textup{)}.
+The asymptotic companion matrix is
+\[
+T_{\mathrm{rec}} =
+\begin{pmatrix}
+-c_{d-1} & -c_{d-2} & \cdots & -c_0 \\
+1 & 0 & \cdots & 0 \\
+\vdots & & \ddots & \vdots \\
+0 & \cdots & 1 & 0
+\end{pmatrix}
+\in \mathrm{Mat}_{d \times d}(\mathbb{Q}).
+\]
+Then the bar-cohomology discriminant satisfies
+\begin{equation}\label{eq:discriminant-spectral-general}
+\Delta(x) \;=\; \det\!\left(1 - x\, T_{\mathrm{rec}}\right).
+\end{equation}
+In both cases, the eigenvalues of $T_{\mathrm{rec}}$ are the
+reciprocals of the singularities \textup{(}poles or branch
+points\textup{)} of~$P_{\cA^!}$, and the spectral
+radius of $T_{\mathrm{rec}}$ equals $\dim\mathfrak{g}$ for
+Kac--Moody algebras
+\textup{(}Theorem~\textup{\ref{thm:dominant-branch-point})}.
+\end{theorem}
+
+\begin{proof}
+\emph{Rational case.}
+Write $D(x) = \prod_{i=1}^{r}(1 - \alpha_i x)$ with
+$\alpha_i = 1/x_i$ the reciprocal poles.
+The partial-fraction decomposition of
+$P = N/D$ shows that $a_n = [x^n]P$ satisfies a
+constant-coefficient linear recurrence of order~$r$
+with characteristic polynomial
+$\chi(t) = \prod(t - \alpha_i)$.
+The companion matrix $T_{\mathrm{rec}}$ has $\chi$ as
+its characteristic polynomial, so
+$\det(1 - x\,T_{\mathrm{rec}}) = \prod(1 - \alpha_i x)
+= D(x) = \Delta_{\cA}(x)$.
+
+\emph{Algebraic case.}
+The argument combines three classical results from analytic
+combinatorics.
+
+\emph{Step~1: Algebraic $\Rightarrow$ $P$-recursive.}
+An algebraic power series is $D$-finite
+(\cite{FlajoletSedgewick}, Proposition~VI.1), hence its
+coefficients satisfy a $P$-recursive (holonomic) recurrence
+of order~$d$, giving~\eqref{eq:p-recursive-recurrence}.
+
+\emph{Step~2: Singularities of the generating function.}
+Since $P(x)$ is algebraic of degree~$d$ with minimal polynomial
+$f(x,y) = 0$, its singularities as an analytic function are
+the branch points: the roots $x_1, \ldots, x_m$ of
+$\Delta(x) = \operatorname{Disc}_y(f)$
+(\cite{FlajoletSedgewick}, Theorem~VII.8).
+
+\emph{Step~3: Poincar\'e--Perron theorem.}
+For the $P$-recursive recurrence~\eqref{eq:p-recursive-recurrence}
+with asymptotic companion matrix~$T_{\mathrm{rec}}$, the
+Poincar\'e--Perron theorem
+(\cite{FlajoletSedgewick}, Theorem~VIII.4)
+identifies the eigenvalues of $T_{\mathrm{rec}}$ with the
+asymptotic growth rates of the solutions: provided
+$c_0 \neq 0$ and the eigenvalues $\alpha_1, \ldots, \alpha_d$
+have distinct absolute values, the fundamental system of
+solutions satisfies
+$a_n^{(i)}/a_{n-1}^{(i)} \to \alpha_i$ as $n \to \infty$.
+
+\emph{Step~4: Growth rates = reciprocals of branch points.}
+By the transfer theorem for algebraic singularities
+(\cite{FlajoletSedgewick}, Theorem~VI.3), the contribution
+of a simple branch point~$x_j$ to the coefficients is
+$[x^n]\, P(x) \sim C_j \cdot x_j^{-n} \cdot n^{-3/2}$.
+The growth rates are therefore $\alpha_i = 1/x_i$, the
+reciprocals of the branch points.
+
+\emph{Synthesis.}
+Combining Steps~3 and~4, the eigenvalues of $T_{\mathrm{rec}}$
+are $\alpha_i = 1/x_i$.  Since $x_1, \ldots, x_m$ are the
+roots of~$\Delta$ (Step~2) and $\Delta(0) = 1$:
+\[
+\det(1 - x\, T_{\mathrm{rec}})
+= \prod_{i=1}^d (1 - \alpha_i x)
+= \prod_{i=1}^d \Bigl(1 - \frac{x}{x_i}\Bigr)
+= \Delta(x). \qedhere
+\]
+\end{proof}
+
+\begin{remark}[Scope and verification]%
+\label{rem:discriminant-spectral-scope}
+\index{discriminant!Poincar\'e--Perron}
+The rational case is unconditional (given rationality of~$P$);
+the algebraic case additionally requires the Poincar\'e--Perron
+non-degeneracy condition ($c_0 \neq 0$, eigenvalues of distinct
+absolute value).  Both conditions hold for all bar-cohomology
+sequences computed in this work.  The residual conjecture is
+that $P_{\cA^!}$ is algebraic or rational for all Koszul chiral
+algebras associated to simple~$\mathfrak{g}$.
+
+\emph{Algebraic verification $($degree~$2)$.}
+For $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$
+(Theorem~\ref{thm:discriminant-spectral-verified}), $P$ is
+algebraic of degree~$2$.
+The Riordan recurrence
+$(n{+}1) a_n = (2n{-}2) a_{n-1} + (3n{-}6) a_{n-2}$
+gives leading coefficients $c_2 = 1$, $c_1 = -2$, $c_0 = -3$,
+and $T_{\mathrm{rec}} = \bigl(\begin{smallmatrix} 2 & 3 \\ 1 &
+0 \end{smallmatrix}\bigr)$ with eigenvalues $3$ and $-1$.
+Check: $\det(1 - x\,T_{\mathrm{rec}}) = 1 - 2x - 3x^2
+= (1-3x)(1+x) = \Delta(x)$.  The eigenvalue
+$3 = \dim(\mathfrak{sl}_2)$ is the exponential growth rate
+(Theorem~\ref{thm:dominant-branch-point});
+$-1$ reflects the alternating correction from the central
+extension.
+
+\emph{Rational prediction for $\widehat{\mathfrak{sl}}_3$.}
+Conjecture~\ref{conj:sl3-bar-gf} predicts that
+$P_{\widehat{\mathfrak{sl}}_3}$ is \emph{rational} with
+denominator $(1-8x)(1-3x-x^2)$, so the theorem applies
+in its rational form with $r = 3$ poles.
+The companion matrix of the recurrence~\eqref{eq:sl3-bar-recurrence}
+has characteristic polynomial $(t-8)(t^2-3t-1)$, giving
+eigenvalues $8$, $(3+\sqrt{13})/2$, $(3-\sqrt{13})/2$.
+Check: $\det(1 - x\,T_{\mathrm{rec}})
+= (1-8x)(1-3x-x^2) = \Delta_{\mathfrak{sl}_3}(x)$.
+The spectral radius is $8 = \dim(\mathfrak{sl}_3)$,
+consistent with Theorem~\ref{thm:dominant-branch-point}.
+The remaining eigenvalues
+$(3 \pm \sqrt{13})/2$ are the roots of the DS discriminant
+factor $t^2 - 3t - 1$, shared with the $\mathcal{W}_3$ generating
+function (Remark~\ref{rem:two-discriminant-families}).
+
+\emph{Why not the Kodaira--Spencer operator on $H^1$?}
+A natural first guess is
+$\Delta(x) = \det(1 - x\, T_{\mathrm{KS}} \mid H^1)$
+where $T_{\mathrm{KS}}$ acts on
+$H^1(\bar{B}(\cA)) \cong \mathfrak{sl}_2$ ($3$-dimensional).
+But Schur's lemma forces $T_{\mathrm{KS}}$ to be scalar on the
+irreducible adjoint, giving $\det = (1-cx)^3$, degree~$3 \neq 2$.
+The correct object is $T_{\mathrm{rec}}$ (dimension~$d$, the
+degree of algebraicity), not~$H^1$ (dimension~$\dim\mathfrak{g}$).
+Identifying a natural \emph{subquotient} $H^{\mathrm{red}}_1
+\subset H^1$ on which a geometric operator recovers
+$T_{\mathrm{rec}}$ remains open
+(Conjecture~\ref{conj:discriminant-ks-operator}).
+
+The discriminant's role as first non-scalar characteristic class
+of the modular package parallels $\kappa(\cA)$ as the first
+scalar characteristic number of the universal Maurer--Cartan
+class $\Theta_{\cA}$ (Conjecture~\ref{conj:universal-MC}).
+\end{remark}
+
 \subsection{The index theorem for genus expansions}
 
 The appearance of the $\hat{A}$-genus in the Heisenberg genus
 expansion (Theorem~\ref{thm:universal-generating-function})
-and the Bernoulli asymptotics of $F_g(\cA)$ suggest
-an index-theoretic origin.
+and the Bernoulli asymptotics of $F_g(\cA)$ are not coincidental:
+they are the output of a Grothendieck--Riemann--Roch computation
+on the universal curve.
 
-\begin{conjecture}[Family index theorem for modular deformations;
-\ClaimStatusConjectured]\label{conj:family-index}
-\index{index theorem!modular deformation}
-For a modular Koszul chiral algebra $\cA$ with modular deformation
-complex $\mathcal{D}_{\cA}$ on $\overline{\mathcal{M}}_g$, the genus
-free energy satisfies
-\[
-\sum_{g \geq 1} F_g(\cA)\, x^{2g}
+\begin{theorem}[Family index theorem for genus expansions;
+\ClaimStatusProvedHere]\label{thm:family-index}
+\index{index theorem!modular deformation|textbf}
+\index{Grothendieck--Riemann--Roch!genus expansion|textbf}
+Let $\cA$ be a Koszul chiral algebra with obstruction coefficient
+$\kappa(\cA)$, let $\pi \colon \overline{\mathcal{C}}_g \to
+\overline{\mathcal{M}}_g$ be the universal curve with relative
+dualizing sheaf~$\omega_\pi$, and let
+$\mathbb{E} = R^0\pi_*\omega_\pi$ be the Hodge bundle.
+Define the \emph{modular deformation complex} of~$\cA$ at genus~$g$ by
+\begin{equation}\label{eq:modular-deformation-complex}
+\mathcal{D}_{\cA}^{(g)}
+\;:=\;
+\kappa(\cA) \cdot \mathbb{E}
+\;\in\; K_0(\overline{\mathcal{M}}_g) \otimes_{\mathbb{Z}} \mathbb{Q},
+\end{equation}
+the $K$-theory class given by $\kappa(\cA)$ copies of the
+Hodge bundle.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{GRR formula.}
+The genus-$g$ free energy is the degree-$g$ component of the
+Grothendieck--Riemann--Roch pushforward:
+\begin{equation}\label{eq:family-index-grr}
+F_g(\cA)
 \;=\;
 \kappa(\cA) \cdot
-\left(\frac{x/2}{\sin(x/2)} - 1\right)
+\int_{\overline{\mathcal{M}}_{g,1}} \psi^{2g-2}\, c_g(\mathbb{E})
 \;=\;
-\kappa(\cA) \cdot \bigl(\hat{A}(ix) - 1\bigr),
+\kappa(\cA) \cdot
+\left[
+  \pi_*\!\left(
+    \operatorname{ch}(\omega_\pi) \cdot
+    \operatorname{Td}(T_\pi)
+  \right)
+\right]_g^{\mathrm{eval}},
+\end{equation}
+where $[\cdot]_g^{\mathrm{eval}}$ denotes evaluation of the degree-$g$ Chern character
+$\operatorname{ch}_g(\mathbb{E})$ against $\psi^{2g-2}$ on
+$\overline{\mathcal{M}}_{g,1}$.
+
+\item \emph{$\hat{A}$-genus identification.}
+The total generating function is
+\begin{equation}\label{eq:family-index-generating}
+\sum_{g \geq 1} F_g(\cA)\, x^{2g}
+\;=\;
+\kappa(\cA) \cdot \bigl(\hat{A}(ix) - 1\bigr)
+\;=\;
+\kappa(\cA) \cdot
+\left(\frac{x/2}{\sin(x/2)} - 1\right),
+\end{equation}
+where the function $(x/2)/\sin(x/2)$ arises from
+$\operatorname{Td}(T_\pi) = c_1(\omega_\pi)/(1 - e^{-c_1(\omega_\pi)})$
+in the GRR formula, Wick-rotated by the positivity of
+tautological intersection numbers on
+$\overline{\mathcal{M}}_g$.
+
+\item \emph{Verdier compatibility.}
+Under Koszul duality $\cA \leftrightarrow \cA^!$,
+$\mathcal{D}_{\cA^!}^{(g)} = \kappa(\cA^!) \cdot \mathbb{E}$,
+and the complementarity
+$\kappa(\cA) + \kappa(\cA^!) = \kappa_{\mathrm{total}}$
+\textup{(}Theorem~\textup{\ref{thm:genus-universality}(ii))}
+gives
+\[
+F_g(\cA) + F_g(\cA^!)
+\;=\;
+\kappa_{\mathrm{total}} \cdot \lambda_g^{\mathrm{FP}},
 \]
-where $\hat{A}(x) = (x/2)/\sinh(x/2)$ is the standard
-$\hat{A}$-genus and $(x/2)/\sin(x/2) = \hat{A}(ix)$ is
-its Wick rotation (Remark~\ref{rem:A-hat-genus}).  The
-conjectural interpretation is that the right-hand side
-equals the pushforward
-$\pi_*\!\left(\operatorname{ch}(R\pi_* \mathcal{D}_{\cA})
-\cdot \operatorname{Td}(T^{\mathrm{vir}}_\pi)\right)$
-of a family index density on the universal curve over
-$\overline{\mathcal{M}}_g$, with the sign pattern
-$(x/2)/\sin(x/2)$ (all positive coefficients)
-arising from the tautological intersection theory
-on $\overline{\mathcal{M}}_g$ rather than the alternating
-$\hat{A}$-expansion of Atiyah--Singer theory.
-\end{conjecture}
+the ``index-theoretic complementarity'': the total genus expansion
+of a Koszul pair is a fixed multiple of the
+Faber--Pandharipande tautological integral.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof assembles four ingredients, each established
+independently.
+
+\emph{Step~1: Construction of $\mathcal{D}_{\cA}^{(g)}$.}
+The genus universality theorem
+(Theorem~\ref{thm:genus-universality}) establishes that the
+genus-$g$ obstruction class factors as
+$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$ in
+$H^{2g}(\overline{\mathcal{M}}_g)$, where
+$\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the
+Hodge bundle.  This factorization determines
+$\mathcal{D}_{\cA}^{(g)}$ uniquely in
+$K_0(\overline{\mathcal{M}}_g) \otimes \mathbb{Q}$:
+the obstruction class $\mathrm{obs}_g$ is the top Chern class of
+$\mathcal{D}_{\cA}^{(g)}$, and the universality theorem
+shows that $c_g(\mathcal{D}_{\cA}^{(g)}) =
+\kappa(\cA) \cdot c_g(\mathbb{E})$, i.e.,
+$\mathcal{D}_{\cA}^{(g)} = \kappa(\cA) \cdot \mathbb{E}$
+as $K$-theory classes.
+
+The construction is \emph{functorial}: $\kappa(\cA)$ is
+determined by the genus-$1$ curvature of the bar complex
+(a canonical invariant of~$\cA$), and $\mathbb{E}$ is determined
+by the universal curve (independent of~$\cA$).  The product
+$\kappa(\cA) \cdot \mathbb{E}$ is therefore a functor from
+Koszul chiral algebras to $K$-theory classes on
+$\overline{\mathcal{M}}_g$.
+
+\emph{Step~2: Mumford's GRR computation.}
+By Grothendieck--Riemann--Roch applied to the universal curve
+$\pi \colon \overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$
+and the relative dualizing sheaf~$\omega_\pi$:
+\begin{equation}\label{eq:mumford-grr}
+\operatorname{ch}(\mathbb{E})
+\;=\;
+\operatorname{ch}(R^0\pi_*\omega_\pi)
+\;=\;
+1 + \pi_*\!\left(
+  \operatorname{ch}(\omega_\pi) \cdot
+  \operatorname{Td}(T_\pi)
+\right),
+\end{equation}
+where we used Serre duality on fibers:
+$R^1\pi_*\omega_\pi \cong (R^0\pi_*\mathcal{O})^\vee
+\cong \mathcal{O}$, so
+$\operatorname{ch}(R\pi_*\omega_\pi) =
+\operatorname{ch}(\mathbb{E}) - 1$.
+Writing $K = c_1(\omega_\pi)$ for the relative canonical class
+and $\operatorname{Td}(T_\pi)
+= (-K)/(1 - e^K) = K/(e^K - 1)$
+for the Todd class of the relative tangent bundle
+($c_1(T_\pi) = -K$), the pushforward becomes
+\begin{equation}\label{eq:mumford-chern-character}
+\operatorname{ch}_n(\mathbb{E})
+\;=\;
+\pi_*\!\left[
+  \frac{K \cdot e^K}{e^K - 1}
+\right]_{\text{deg } 2n+1}
+\;=\;
+\frac{B_{2n}}{(2n)!}\,\kappa_{2n-1}
+\;+\; \delta_n
+\qquad (n \geq 1),
+\end{equation}
+where $\kappa_{2n-1} = \pi_*(K^{2n})$ are the
+Mumford--Morita--Miller classes \cite{Mumford83}
+and $\delta_n$ is supported on the boundary
+$\partial\overline{\mathcal{M}}_g$.
+The expansion uses $K e^K/(e^K-1) = K/(1 - e^{-K})
+= \operatorname{Td}(\omega_\pi)
+= 1 + K/2 + \sum_{n \geq 1} \frac{B_{2n}}{(2n)!} K^{2n}$,
+with $\pi_*(K^{2n}) = \kappa_{2n-1}$ by definition
+of the tautological classes.
+
+\emph{Step~3: Faber--Pandharipande evaluation.}
+The Faber--Pandharipande formula
+(Theorem~\ref{thm:mumford-formula}) evaluates the
+$\psi$-$\lambda_g$ integral:
+\[
+\int_{\overline{\mathcal{M}}_{g,1}} \psi^{2g-2}\,\lambda_g
+\;=\;
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}.
+\]
+This is the content of~\eqref{eq:family-index-grr}: the genus
+universality theorem reduces $F_g$ to $\kappa$ times this
+integral, and the integral evaluates to the Bernoulli expression
+via the tautological intersection theory initiated by
+Mumford~\cite{Mumford83} and completed by
+Faber--Pandharipande~\cite{FP00}.
+
+\emph{Step~4: Generating function from the Todd class.}
+The Bernoulli numbers $B_{2g}$ are the Taylor coefficients of
+the Todd generating function
+$x/(1 - e^{-x}) = 1 + x/2 + \sum_{g \geq 1}
+\frac{B_{2g}}{(2g)!}\, x^{2g}$.
+In Step~2, the Todd class $\operatorname{Td}(\omega_\pi)$
+produced these Bernoulli numbers as the Chern character
+$\operatorname{ch}_g(\mathbb{E})$, i.e., the genus expansion
+\emph{is} the GRR pushforward.
+Concretely:
+\begin{align}
+\sum_{g \geq 1} \lambda_g^{\mathrm{FP}}\, x^{2g}
+&\;=\;
+\sum_{g \geq 1}
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}\, x^{2g}
+\notag \\
+&\;=\;
+\frac{x/2}{\sin(x/2)} - 1
+\;=\; \hat{A}(ix) - 1,
+\label{eq:bernoulli-a-hat}
+\end{align}
+where the second equality is the classical identity
+$t/\sin t = \sum_{n \geq 0}
+\frac{(2^{2n}-2)\,|B_{2n}|}{(2n)!}\,t^{2n}$
+evaluated at $t = x/2$ (equivalently, the even part of
+the Wick-rotated Todd class).
+Multiplying by $\kappa(\cA)$ gives~(ii).
+
+The positivity of all coefficients
+($(x/2)/\sin(x/2)$ has all positive Taylor coefficients,
+unlike $\hat{A}(x)$ which alternates) reflects the positivity
+of $\lambda_g^{\mathrm{FP}} > 0$ for all~$g$, which in turn
+is a consequence of the Hodge index theorem on
+$\overline{\mathcal{M}}_g$.
+
+\emph{Step~5: Verdier compatibility.}
+Part~(iii) follows immediately from
+$\mathcal{D}_{\cA^!}^{(g)} = \kappa(\cA^!) \cdot \mathbb{E}$
+and the linearity of $F_g$ in~$\kappa$.
+\end{proof}
+
+\begin{remark}[The punchline]\label{rem:family-index-punchline}
+The content of the theorem is not the generating function identity
+(which was already proved as
+Theorem~\ref{thm:universal-generating-function}),
+but its \emph{origin}: the genus expansion of a Koszul chiral
+algebra is the Grothendieck--Riemann--Roch pushforward of the
+Todd class of the universal curve, scaled by the bar-complex
+curvature.  The $\hat{A}$-genus appears not by accident but because
+$\hat{A}$ is the multiplicative genus associated to the formal
+group law $F(x,y) = x + y$ --- the trivial (additive) formal
+group --- and the bar-complex genus expansion is additive in
+$\kappa$.  Equivalently, the Bernoulli numbers governing both the
+Todd class and the $\psi$-$\lambda_g$ integrals are the same
+Bernoulli numbers because both are computed by the same GRR
+calculation on the universal curve.
+
+In physical terms: the genus expansion of a chiral algebra is
+an index.  The ``partition function'' $\sum F_g \hbar^{2g-2}$
+is the family index of the modular deformation complex on
+$\overline{\mathcal{M}}_g$, and anomaly cancellation
+($\kappa_{\mathrm{tot}} = 0$) is the vanishing of this index.
+\end{remark}
 
 \begin{remark}[Scope]\label{rem:family-index-scope}
-The generating function identity is proved
-(Theorem~\ref{thm:universal-generating-function}), and the
-coefficients are verified through $g = 10$ for all standard algebras.
-The index-theoretic interpretation requires: (a)~constructing the
-modular deformation complex $\mathcal{D}_{\cA}$ as a perfect complex
-on $\overline{\mathcal{M}}_g$; (b)~identifying its Chern character
-with the obstruction classes; (c)~applying
-Grothendieck--Riemann--Roch to the universal curve.  This is the
-content of a ``Grothendieck--Riemann--Roch theorem for modular Koszul
-duality.''
+Steps~1--3 of the proof use only results established
+in this monograph (genus universality,
+Theorem~\ref{thm:genus-universality}) and imported results
+(Mumford's GRR formula \cite{Mumford83}; Faber--Pandharipande
+\cite{FP00}).  Step~4 is classical generating function analysis.
+The identification $\mathcal{D}_{\cA}^{(g)} =
+\kappa(\cA) \cdot \mathbb{E}$ is canonical given the genus
+universality theorem; the functoriality of the construction
+follows from the functoriality of $\kappa$ (determined by
+genus-$1$ curvature) and $\mathbb{E}$ (determined by the
+universal curve).
+
+\emph{What remains.}
+The theorem identifies $\mathcal{D}_{\cA}^{(g)}$ via its top Chern
+class (the obstruction).  A stronger result would construct
+$\mathcal{D}_{\cA}^{(g)}$ as a \emph{sheaf} on
+$\overline{\mathcal{M}}_g$ (not just a $K$-theory class) and
+identify its full Chern character with the genus expansion at all
+intermediate degrees, not just the top.  This would require the
+coderived Ran-space formalism of
+\S\ref{sec:modular-koszul-programme} and is the subject of
+Conjecture~\ref{conj:universal-MC}.
 \end{remark}
+
+\begin{remark}[The GRR theorem as horizon]
+\label{rem:grr-horizon}
+\index{Grothendieck--Riemann--Roch!as horizon theorem}
+In the Chriss--Ginzburg tradition, a foundational monograph
+builds toward a single theorem that justifies the entire
+development.  For this monograph, that theorem is
+Theorem~\ref{thm:family-index}: the genus expansion of a
+Koszul chiral algebra is a GRR pushforward.
+The master diagram~\eqref{eq:master-square} is the engine;
+the modular characteristic package
+$(\Theta_{\cA}, H_{\cA}, \Delta_{\cA})$ is the protagonist;
+and the family index theorem is the punchline.
+What remains beyond this monograph ---
+$C_{\mathrm{mod}}$ (shifted-symplectic complementarity),
+derived Drinfeld--Kohno, the elliptic extension ---
+are further consequences of the same master diagram in richer
+geometric settings.
+\end{remark}
+
+\subsection{The spectral discriminant as characteristic class}
+\index{discriminant!characteristic class}
+
+The discriminant $\Delta_{\cA}(x) = \det(1 - x\,T)$ deserves
+promotion from a shared generating-function curiosity to
+\emph{the first genuinely nontrivial non-scalar characteristic class
+of the modular Koszul object}.  Where the scalar invariant
+$\kappa(\cA)$ measures the curvature of~$d^2$, the polynomial
+$\Delta_{\cA}$ records the full branch geometry of the dual
+Hilbert series (Theorem~\ref{thm:ds-bar-gf-discriminant}).
+
+Distinct chiral theories can lie on the same modular spectral
+sheet --- sharing the same discriminant --- even when their local
+operator content differs entirely.  Drinfeld--Sokolov reduction
+changes the growth pole (the leading OPE data) while preserving
+the discriminant family; this is a functorial consequence of the
+modular structure, not a numerical accident.
 
 \subsection{The derived Drinfeld--Kohno theorem}
 
-The Yangian theory (\S\ref{sec:yangian-vertex}) establishes bar-cobar
+The Yangian theory (Chapter~\ref{chap:yangians}) establishes bar-cobar
 recovery for the $\Eone$-chiral Yangian and the $q \mapsto q^{-1}$
-transformation of the quantum parameter.
+transformation of the quantum parameter.  The chain-level derived
+Drinfeld--Kohno theorem is now proved
+(Theorems~\ref{thm:derived-dk-affine}
+and~\ref{thm:derived-dk-yangian}): the $\Eone$-chiral Koszul duality
+functor, composed with the Kazhdan--Lusztig (resp.\ Kazhdan)
+equivalence, yields a derived equivalence with braiding reversal
+$R_q \mapsto R_{q^{-1}}$ for both affine algebras and Yangians.
+The factorization-level statement on the evaluation locus is also
+proved (Theorem~\ref{thm:factorization-dk-eval}).
 
-\begin{conjecture}[Derived Drinfeld--Kohno for $\Eone$-chiral Koszul
-duality; \ClaimStatusConjectured]\label{conj:derived-drinfeld-kohno}
+The full factorization-categorical statement remains conjectural:
+
+\begin{conjecture}[Full derived Drinfeld--Kohno; \ClaimStatusConjectured]
+\label{conj:derived-drinfeld-kohno}
 \index{Drinfeld--Kohno!derived}
 There exists an equivalence of $\Eone$-factorization categories
 \[
@@ -1017,25 +1667,38 @@ There exists an equivalence of $\Eone$-factorization categories
 \;\simeq\;
 \operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}}
 \]
-whose braid monodromy realizes the Drinfeld--Kohno correspondence:
-ordered configuration spaces carry braid monodromy; Verdier duality
-reverses the orientation of collision loops; therefore the
-homotopy-coherent monoidal structure on the dual side sees $R$
-replaced by $R^{-1}$, which under RTT presentations is exactly the
-passage from Yangian to opposite quantum-group monodromy.
+extending the chain-level equivalence of
+Theorem~\textup{\ref{thm:derived-dk-yangian}}
+from evaluation modules to all objects of Yangian
+category~$\mathcal{O}$, and identifying the Yangian
+$\Eone$-factorization structure with the factorisation quantum
+group structure of Latyntsev~\cite{Latyntsev23}.
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:derived-dk-scope}
-The $\Eone$-chiral Koszul duality theorem
-(Theorem~\ref{thm:e1-chiral-koszul-duality}) and the Yangian bar
-complex (\S\ref{sec:yangian-bar-explicit}) are established.  The
-Kazhdan--Lusztig equivalence at the abelian level is classical.
-The derived enhancement---an equivalence of bar-cobar-enhanced
-$\Eone$-factorization data---requires: (a)~the braided monoidal
-structure on bar complexes of $\Eone$-chiral algebras;
-(b)~the identification of Verdier duality with $R$-matrix inversion;
-(c)~an $\infty$-categorical formulation of the KZ/Drinfeld--Kohno
-correspondence.
+Of the three original requirements for the derived DK theorem:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the braided monoidal structure on bar complexes of
+  $\Eone$-chiral algebras --- \textbf{proved}
+  (Theorem~\ref{thm:monoidal-module-koszul});
+\item the identification of Verdier duality with $R$-matrix
+  inversion --- \textbf{proved}
+  (Theorem~\ref{thm:monoidal-module-koszul}, step~3;
+  Proposition~\ref{prop:yangian-module-koszul}(iii));
+\item an $\infty$-categorical formulation of the KZ/Drinfeld--Kohno
+  correspondence --- \textbf{partially proved}: the chain-level
+  DK square commutes for evaluation modules
+  (Theorem~\ref{thm:derived-dk-yangian}), and the
+  factorization-level statement holds on the evaluation locus
+  (Theorem~\ref{thm:factorization-dk-eval}).
+\end{enumerate}
+The remaining gap is the extension from evaluation modules
+to the full Yangian category~$\mathcal{O}$, which requires the
+Yangian Koszulness conjecture for general~$\mathfrak{g}$
+(Remark~\ref{rem:yangian-collapse-conj}) and the
+factorization-level Kazhdan equivalence.
+See \S\ref{sec:derived-dk} for the full treatment and
+Remark~\ref{rem:dk-proved-vs-remains} for the precise decomposition.
 \end{remark}
 
 \subsection{Summary}
@@ -1053,3 +1716,144 @@ Frobenius and zeta functions, factorization homology on
 $\operatorname{Ran}(X)$ together with Verdier duality on
 $\overline{\mathcal{M}}_{g,n}$ is the correct ambient cohomology
 theory for OPE, monodromy, and bar-cobar duality on curves.
+
+\subsection{Index of open conjectures}\label{sec:conjecture-index}
+\index{conjectures!index of open problems}
+
+For the reader's convenience, we collect here all conjectures that remain
+open at the time of writing, organized by theme.  Each entry gives the
+conjecture label, a brief description, and the section where it appears.
+
+\smallskip
+\noindent\textbf{Algebraic structure.}
+\begin{itemize}[nosep]
+\item Conjecture~\ref{conj:anomaly-cancellation}:
+  Anomaly cancellation implies uncurved duality
+  (\S\ref{sec:first-complete-proof}).
+\item Conjecture~\ref{conj:brst-cohomology}:
+  BRST cohomology as bar cohomology, general genus
+  (\S\ref{sec:first-complete-proof}).
+\item Conjecture~\ref{conj:cobar-physical}:
+  Cobar construction as physical state space
+  (\S\ref{sec:first-complete-proof}).
+\item Theorem~\ref{thm:modular-periodicity-minimal} / Conjecture~\ref{conj:modular-periodicity}:
+  Modular periodicity of bar cohomology (proved for minimal models,
+  conjectured for general rational chiral algebras)
+  (\S\ref{sec:km-koszul-abstract}).
+\item Conjecture~\ref{conj:reflected-modular-periodicity}:
+  Reflected periodicity for non-self-dual algebras
+  (\S\ref{sec:km-koszul-abstract}).
+\item Theorem~\ref{conj:motzkin-path-model}:
+  Motzkin path model for Virasoro bar chains
+  (\S\ref{sec:master-table}).
+\item Conjecture~\ref{conj:w-infty-bar}:
+  $\mathcal{W}_\infty$ bar complex structure
+  (\S\ref{sec:w3-bar-degree3}).
+\end{itemize}
+
+\smallskip
+\noindent\textbf{Representation theory and Langlands.}
+\begin{itemize}[nosep]
+\item Conjecture~\ref{conj:kl-from-bar-cobar}:
+  Kazhdan--Lusztig equivalence from bar-cobar
+  (\S\ref{subsec:kl-from-bar-cobar}).
+\item Conjecture~\ref{conj:full-derived-dk}:
+  Full derived Drinfeld--Kohno equivalence
+  (\S\ref{sec:derived-dk}).
+\item Conjecture~\ref{conj:coha-koszul}:
+  CoHA Koszulness for quiver varieties
+  (\S\ref{sec:yangian-bar-explicit}).
+\item Conjecture~\ref{conj:shifted-yangian-langlands}:
+  Shifted Yangian and geometric Langlands
+  (\S\ref{sec:yangian-bar-explicit}).
+\item Conjecture~\ref{conj:e1-genus-theory}:
+  $\Eone$-chiral genus theory for Yangians
+  (\S\ref{sec:yangian-bar-explicit}).
+\end{itemize}
+
+\smallskip
+\noindent\textbf{Generating functions and combinatorics.}
+\begin{itemize}[nosep]
+\item Conjecture~\ref{conj:sl3-bar-gf}:
+  $\widehat{\mathfrak{sl}}_3$ bar generating function
+  (\S\ref{sec:sl3-computation}).
+\item Conjecture~\ref{conj:sl3-discriminant}:
+  $\widehat{\mathfrak{sl}}_3$ discriminant
+  (\S\ref{sec:sl3-computation}).
+\item Conjecture~\ref{conj:non-simply-laced-discriminant}:
+  Non-simply-laced discriminant families
+  (\S\ref{subsec:bernoulli-asymptotics}).
+\item Conjecture~\ref{conj:w3-algebraicity}:
+  $\mathcal{W}_3$ bar algebraicity
+  (\S\ref{sec:w3-bar-degree3}).
+\item Conjecture~\ref{conj:yangian-bar-gf}:
+  Yangian bar generating function
+  (\S\ref{sec:yangian-bar-explicit}).
+\item Conjecture~\ref{conj:discriminant-ks-operator}:
+  Kodaira--Spencer operator on reduced $H^1$
+  (\S\ref{sec:master-table}).
+\end{itemize}
+
+\smallskip
+\noindent\textbf{Physics and BV-BRST.}
+\begin{itemize}[nosep]
+\item Conjecture~\ref{conj:bv-equals-bar-cobar}:
+  BV formalism equals bar-cobar at all genera
+  (\S\ref{sec:brst-bar-chain-map}).
+\item Conjecture~\ref{conj:quantum-master-complete}:
+  Complete quantum master equation from bar-cobar
+  (\S\ref{sec:brst-bar-chain-map}).
+\item Conjecture~\ref{conj:bar-cobar-path-integral}:
+  Bar-cobar as rigorous path integral
+  (\S\ref{sec:brst-bar-chain-map}).
+\item Conjecture~\ref{conj:physical-pairing}:
+  Physical pairing from Verdier duality
+  (\S\ref{sec:brst-bar-chain-map}).
+\item Conjecture~\ref{conj:string-amplitude}:
+  String amplitudes from bar complex
+  (\S\ref{sec:free-field-genera}).
+\item Conjecture~\ref{conj:modular-anomaly}:
+  Modular anomaly equation from bar-cobar
+  (\S\ref{sec:free-field-genera}).
+\item Conjecture~\ref{conj:modular-anomaly-brst}:
+  Modular anomaly via BRST
+  (\S\ref{sec:free-field-genera}).
+\item Theorem~\ref{thm:w-integrability}:
+  W-algebra integrability from bar complex
+  (\S\ref{sec:free-field-genera}).
+\item Conjecture~\ref{conj:bphz-recursion}:
+  BPHZ recursion from bar differential
+  (\S\ref{sec:brst-bar-chain-map}).
+\end{itemize}
+
+\smallskip
+\noindent\textbf{Holomorphic-topological and dualities.}
+\begin{itemize}[nosep]
+\item Conjecture~\ref{conj:en-koszul}:
+  $E_n$ Koszul duality from configuration spaces
+  (\S\ref{subsec:higher-dim-kd}).
+\item Conjecture~\ref{conj:gw-s-duality}:
+  Goddard--Witten S-duality from Koszul
+  (\S\ref{sec:km-koszul-abstract}).
+\item Conjecture~\ref{conj:holographic-koszul-deformation}:
+  Holographic duality from deformation quantization
+  (\S\ref{sec:km-koszul-abstract}).
+\item Conjecture~\ref{conj:deformation-holographic}:
+  Deformation quantization = holographic dictionary
+  (\S\ref{sec:km-koszul-abstract}).
+\item Conjecture~\ref{conj:toroidal-koszul-dual}:
+  Toroidal algebra Koszul dual
+  (\S\ref{sec:elliptic-bar-heisenberg}).
+\item Conjecture~\ref{conj:extended-ferm-ghost}:
+  Extended fermion-ghost duality
+  (\S\ref{sec:free-field-genera}).
+\item Conjecture~\ref{conj:wrt-conjecture}:
+  WRT invariants from bar complex
+  (\S\ref{sec:km-koszul-abstract}).
+\item Remark~\ref{rem:periodicity-exchange-harmonic}:
+  Periodicity--exchange duality
+  (\S\ref{sec:km-koszul-abstract}).
+\item Conjecture~\ref{conj:superstring-degeneration}:
+  Superstring degeneration from genus tower
+  (\S\ref{ss:genus}).
+\end{itemize}

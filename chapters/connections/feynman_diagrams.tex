@@ -2,6 +2,8 @@
 \label{ch:feynman}
 \index{Feynman diagram|textbf}
 
+\noindent\emph{The bar complex propagators $\eta_{ij} = d\log(z_i - z_j)$ that appeared in the Heisenberg computation (Chapter~\ref{ch:heisenberg-frame}) are Feynman propagators.  This chapter makes the identification precise for all chiral algebras.}
+
 Parts~I and~II developed chiral bar-cobar duality as a piece of pure algebra and algebraic geometry: configuration spaces, Verdier duality, operadic Koszul theory.  This chapter and those that follow connect this machinery to physics.  The connection is not merely analogical.  Bar operations \emph{are} off-shell correlation functions; cobar operations \emph{are} on-shell propagators; the bar-cobar adjunction \emph{is} the passage from the space of fields to the S-matrix.  The genus expansion $F_g(\mathcal{A})$ \emph{is} the genus-$g$ string amplitude.  The curvature $m_0$ \emph{is} the conformal anomaly.  Making these identifications precise is the purpose of Part~III.
 
 We begin with Feynman diagrams, following Costello~\cite{costello-renormalization}.
@@ -91,7 +93,7 @@ support in codimension-1
 \end{enumerate}
 \end{conjecture}
 
-\begin{proof}[Evidence]
+\begin{evidence}
 Each loop corresponds to a \emph{free integration variable} that is not fixed by 
 external momenta or on-shell conditions. Geometrically:
 \begin{itemize}
@@ -101,9 +103,11 @@ external momenta or on-shell conditions. Geometrically:
 \end{itemize}
 
 The bar complex encodes this: degree $k$ in $\bar{B}^k$ corresponds to $(k+1)$ field insertions with $k$ propagator contractions (logarithmic forms). This includes both tree-level graphs (which already appear at degree $k = n-1$ for $n$ external legs) and loop corrections.
-\end{proof}
+\end{evidence}
 
 \section{Bar complex as off-shell amplitudes}
+
+In the Heisenberg computation (\S\ref{sec:frame-bar-deg2}), each bar element $\alpha_1 \cdots \alpha_n \cdot \eta_{ij}$ was a product of field insertions at $n$ points with a propagator $\eta_{ij} = d\log(z_i - z_j)$ connecting two of them --- precisely a Feynman diagram with $n$ external legs and one internal edge.  The general bar complex $\bar{B}^n(\cA)$ consists of \emph{all} such off-shell amplitudes.
 
 \subsection{Off-shell vs.\ on-shell}
 
@@ -134,7 +138,7 @@ cutoff at infinity
 \end{itemize}
 \end{conjecture}
 
-\begin{proof}[Evidence]
+\begin{evidence}
 For $\omega \in \bar{B}^n(\mathcal{A})$, write:
 $$\omega = \phi_0(z_0) \otimes \phi_1(z_1) \otimes \cdots \otimes \phi_n(z_n) 
 \otimes \bigwedge_{i<j} \eta_{ij}^{k_{ij}}$$
@@ -153,7 +157,7 @@ implements three physical operations:
 \item $d_{\text{int}}$: Applies BRST operator to fields (equations of motion)
 \item $d_{\text{res}}$: Extracts residues (on-shell projection)
 \end{enumerate}
-\end{proof}
+\end{evidence}
 
 \subsection{Infrared regularization via compactification}
 
@@ -196,7 +200,7 @@ with:
 \end{itemize}
 \end{conjecture}
 
-\begin{proof}[Evidence]
+\begin{evidence}
 The cobar complex uses distributions on the \emph{open} configuration space $C_n(X)$:
 $$\Omega^n(\mathcal{C}) = \text{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$$
 
@@ -209,7 +213,7 @@ $$d_{\text{cobar}} = \sum_{i<j} \Delta_{ij} \cdot \delta(z_i-z_j)$$
 inserts delta functions, forcing particles on-shell.
 
 Before applying $d_{\text{cobar}}$, the kernel $K$ is an off-shell propagator; the cobar differential enforces the on-shell condition $\delta(p^2)$, so the cohomology computes physical on-shell scattering amplitudes.
-\end{proof}
+\end{evidence}
 
 \subsection{UV regularization via delta functions}
 
@@ -245,7 +249,7 @@ computes the S-matrix element:
 $$\mathcal{S}_{n \to n'} = \langle \text{in} | S | \text{out} \rangle$$
 \end{conjecture}
 
-\begin{proof}[Evidence: Physical interpretation]
+\begin{evidence}[Evidence: Physical interpretation]
 \noindent\emph{Bar side $\omega_{\text{bar}}$.} Represents asymptotic states
 \begin{itemize}
 \item Compactification encodes infrared behavior (states at infinity)
@@ -267,7 +271,7 @@ $$\langle \text{in} | S | \text{out} \rangle =
 \times \text{vertices}$$
 
 This is the Feynman path integral formulation.
-\end{proof}
+\end{evidence}
 
 \subsection{Feynman rules from bar-cobar}
 
@@ -323,7 +327,7 @@ m_k &: \text{$(k-2)$-loop or lower-loop with splittings}
 \end{align*}
 \end{conjecture}
 
-\begin{proof}[Evidence: Diagrammatic]
+\begin{evidence}[Evidence: Diagrammatic]
 Each $m_k$ arises from a boundary stratum of $\overline{M}_{0,k+1}$:
 \begin{itemize}
 \item Boundary components correspond to ways nodes can degenerate
@@ -342,7 +346,7 @@ The boundary divisors of $\overline{C}_3(X)$ give three collision channels:
 \end{enumerate}
 
 The $m_3$ measures the associativity defect.  In the homotopy transfer formula, it involves two propagator insertions, analogous to a one-loop triangle diagram (though the underlying graphs are trees; see Theorem~\ref{thm:mk-tree-level}).
-\end{proof}
+\end{evidence}
 
 \subsection{Explicit one-loop calculation}
 
@@ -424,7 +428,7 @@ where $\text{GC}(\mathcal{A})$ is the graph complex with vertices decorated by
 fields from $\mathcal{A}$.
 \end{conjecture}
 
-\begin{proof}[Evidence: Sketch]
+\begin{evidence}[Evidence: Sketch]
 \emph{Step~1.} Each element $\omega \in \bar{B}^n(\mathcal{A})$ corresponds to
 a graph:
 \begin{itemize}
@@ -441,7 +445,7 @@ a graph:
 \end{itemize}
 
 \emph{Step~3.} Show these operations match the graph complex differential.
-\end{proof}
+\end{evidence}
 
 \subsection{Kontsevich's formality and chiral algebras}
 
@@ -1066,7 +1070,7 @@ where the sum is over all ways to factor $\Gamma$ into a lower-order subgraph $\
 and the reduced graph $\Gamma/\Gamma'$.
 \end{conjecture}
 
-\begin{proof}[Evidence: Argument]
+\begin{evidence}[Evidence: Argument]
 \emph{Step~1: Write the $A_\infty$ relation explicitly.}
 
 For $n=3$ (one-loop):
@@ -1117,7 +1121,7 @@ The signs $(-1)^{rs+t}$ in the $A_\infty$ relation account for:
 \end{itemize}
 
 All these match precisely with the signs in BPHZ renormalization.
-\end{proof}
+\end{evidence}
 
 \begin{example}[One-loop BPHZ formula]
 \label{ex:bphz-one-loop}
@@ -1165,7 +1169,7 @@ singularities:
 $$\eta_{ij} \sim \frac{d(z_i - z_j)}{z_i - z_j} \sim G(z_i,z_j)^{-1} dG$$
 \end{conjecture}
 
-\begin{proof}[Evidence]
+\begin{evidence}
 Compare the bar complex integral:
 $$m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \int_{\overline{C}_k(X)} 
 \phi_1(z_1) \cdots \phi_k(z_k) \cdot \eta_{12} \wedge \cdots \wedge \eta_{k-1,k}$$
@@ -1180,7 +1184,7 @@ $$\eta_{ij} = d\log(z_i-z_j) = \frac{dG}{G} \quad \text{(up to normalization)}$$
 The compactification $\overline{C}_k(X)$ provides the IR regularization (large 
 distance cutoff), while the logarithmic singularities encode the UV behavior 
 (short distance).
-\end{proof}
+\end{evidence}
 
 \begin{remark}[Formality perspective]
 \label{rem:kontsevich-worldline}

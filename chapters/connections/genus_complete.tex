@@ -566,34 +566,43 @@ The pattern is that each genus~$g$ introduces degree-$g$ Siegel modular forms.  
 
 \subsection{Physical interpretation: strings and holography}\label{subsec:physics}
 
+\begin{theorem}[Bar complex computes moduli integrals; \ClaimStatusProvedHere]\label{thm:bar-moduli-integrals}
+For a Koszul chiral algebra $\mathcal{A}$ and modules $\mathcal{V}_1, \ldots, \mathcal{V}_n$, the bar complex with module insertions computes integrals over the moduli space of curves:
+$$\mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n) = \int_{\overline{\mathcal{M}}_{g,n}} \mathrm{ev}^*\left(H^*(\bar{B}^{(g)}_n(\mathcal{V}_1 \otimes \cdots \otimes \mathcal{V}_n))\right)$$
+where $\mathrm{ev}\colon \overline{C}_n^{(g)}(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}$ is the evaluation map from configuration space to moduli space.  The genus expansion
+$$\mathcal{I}_{\mathrm{total}} = \sum_{g=0}^\infty g_s^{2g-2+n}\, \mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)$$
+is the formal power series in $g_s$ assembled from the genus-graded bar complex (Theorem~\ref{thm:master-tower}).
+\end{theorem}
+
+\begin{proof}
+The bar complex at genus~$g$ with module insertions is a sheaf on $\overline{\mathcal{M}}_{g,n}$, constructed via the Feynman transform identification $\bar{B}^{(g)}_n(\mathcal{V}_1 \otimes \cdots \otimes \mathcal{V}_n) \simeq \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A}; \mathcal{V}_1, \ldots, \mathcal{V}_n)_g$ (Theorem~\ref{thm:prism-higher-genus}).  The evaluation map $\mathrm{ev}$ is the forgetful map from the configuration space fibration $\pi\colon \overline{C}_n^{(g)}(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}$ (Definition~\ref{def:higher-genus-config}).  The integral $\mathcal{I}_{g,n}$ is the pushforward $\int_{\overline{\mathcal{M}}_{g,n}} \mathrm{ev}^*(-)$, which is well-defined because $\overline{\mathcal{M}}_{g,n}$ is a proper Deligne--Mumford stack.  The genus assembly into $\mathcal{I}_{\mathrm{total}}$ follows from the genus tower structure (Theorem~\ref{thm:master-tower}).
+\end{proof}
+
 \begin{conjecture}[String amplitude = bar complex cohomology; \ClaimStatusConjectured]\label{conj:string-amplitude-bar}
-For a chiral algebra $\mathcal{A}$ describing string theory vertex operators:
-$$\mathcal{A}_{g,n}^{\text{string}}(\mathcal{V}_1,\ldots,\mathcal{V}_n) = \int_{\overline{\mathcal{M}}_{g,n}} \text{ev}^*\left(H^*(\bar{B}^{(g)}_n(\mathcal{V}_1 \otimes \cdots \otimes \mathcal{V}_n))\right)$$
-
-where:
-\begin{itemize}
-\item $\mathcal{A}_{g,n}^{\text{string}}$ is the $g$-loop, $n$-point string amplitude
-\item $\mathcal{V}_i$ are vertex operators (elements of the chiral algebra)
-\item ev is the evaluation map from configuration space to moduli space
-\end{itemize}
-
-The string coupling expansion:
-$$\mathcal{A}^{\text{string}}_{\text{total}} = \sum_{g=0}^\infty g_s^{2g-2+n} \mathcal{A}_{g,n}^{\text{string}}$$
-matches the genus expansion of the bar complex.
+For a chiral algebra $\mathcal{A}$ describing string theory vertex operators, the moduli integrals of Theorem~\ref{thm:bar-moduli-integrals} compute string scattering amplitudes:
+$$\mathcal{A}_{g,n}^{\mathrm{string}}(\mathcal{V}_1,\ldots,\mathcal{V}_n) = \mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)$$
+where $\mathcal{A}_{g,n}^{\mathrm{string}}$ is the $g$-loop, $n$-point string amplitude and $\mathcal{V}_i$ are string vertex operators.  The string coupling expansion $\mathcal{A}^{\mathrm{string}}_{\mathrm{total}} = \sum_{g=0}^\infty g_s^{2g-2+n}\, \mathcal{A}_{g,n}^{\mathrm{string}}$ matches the genus expansion of the bar complex.
 \end{conjecture}
 
 \begin{remark}[Scope]
-Conjecture~\ref{conj:string-amplitude-bar} is labeled \ClaimStatusConjectured{}
-because the identification of bar complex cohomology with string amplitudes
-requires string-theoretic input: specifically, the construction of
-string vertex operators as elements of a chiral algebra
-(Friedan--Martinec--Shenker), the identification of the string measure on
-$\overline{\mathcal{M}}_{g,n}$ with the evaluation map from the bar complex,
-and BRST invariance of the resulting amplitudes.  The mathematical content ---
-that the bar complex with coefficients in $\mathcal{V}_1 \otimes \cdots \otimes
-\mathcal{V}_n$ computes integrals over $\overline{\mathcal{M}}_{g,n}$ via the
-evaluation map --- is established in Part~I.  The string-theoretic interpretation
-of these integrals as scattering amplitudes is a physics statement.
+The mathematical content of Theorem~\ref{thm:bar-moduli-integrals}
+--- that the bar complex with module insertions computes integrals
+over $\overline{\mathcal{M}}_{g,n}$ --- is established in Part~I.
+At genus~$0$, the identification with string amplitudes is now
+proved: Corollary~\ref{cor:string-amplitude-genus0} shows that
+tree-level string amplitudes are computed by the bar complex
+(via the BRST chain map of
+Theorem~\ref{thm:brst-bar-genus0}).  The algebraic string
+theory dictionary (Theorem~\ref{thm:algebraic-string-dictionary})
+collects the proved identifications.
+For Kac--Moody and W-algebras, the bar--semi-infinite
+identifications (Theorems~\ref{thm:bar-semi-infinite-km}
+and~\ref{thm:bar-semi-infinite-w}) establish $\barB(\cA)
+\simeq C^{\infty/2+*}(\cA)$ at genus~$0$ for all levels
+$k \neq -h^\vee$, not just $c = 26$.
+Conjecture~\ref{conj:string-amplitude-bar} extends this to all
+genera, which requires the higher-genus BRST-bar identification
+(Conjecture~\ref{conj:anomaly-physical}).
 \end{remark}
 
 \begin{remark}[Physical interpretation]
