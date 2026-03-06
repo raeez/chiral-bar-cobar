@@ -283,6 +283,14 @@ The precise comparison:
   field theory (Chapter~\ref{ch:bv-brst}).  The identification
   $\bar{B}(\cA) \simeq C^{\mathrm{BRST}}(\cA)$ connects the
   algebraic (bar complex) and physical (BRST cohomology) perspectives.
+\item \emph{Monoidal bar-cobar.}
+  Booth--Lazarev~\cite{BL24} construct monoidal model structures on
+  categories of coalgebras, providing the homotopical infrastructure
+  for the bar-cobar adjunction to be a Quillen equivalence in the
+  monoidal setting.  This is relevant to the fusion product conjecture
+  (Conjecture~\ref{conj:fusion-bar-cobar}): the bar construction
+  should be a monoidal functor from the tensor category of chiral
+  algebra modules to the comodule category over the bar coalgebra.
 \end{enumerate}
 \end{remark}
 
@@ -306,6 +314,22 @@ In Loday--Vallette \cite{LV12}, \S7.1--7.2, the Koszul dual includes the sign re
 
 \begin{remark}[Chiral enhancement]
 We lift the entire LV framework to the chiral setting, replacing vector spaces with D-modules and tensor products with chiral tensor products.
+\end{remark}
+
+\begin{remark}[Synthesis]\label{rem:concordance-synthesis}
+The common thread running through the comparisons above is that each
+framework---Beilinson--Drinfeld's chiral algebras, Francis--Gaitsgory's
+chiral Koszul duality, Costello--Gwilliam's factorization algebras,
+Loday--Vallette's operadic Koszul theory---captures one projection of a
+single underlying phenomenon: \emph{the duality between commutative and
+Lie structures, mediated by configuration spaces}.  The contribution of
+the present monograph is the explicit chain-level realization of this
+duality via configuration space integrals, which makes all projections
+simultaneously computable.  The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$
+is the meeting point: it is BD's chiral homology, FG's Koszul dual
+coalgebra, CG's factorization homology on the Ran space, and LV's bar
+construction---all incarnated as a single cochain complex with an
+explicitly computable differential.
 \end{remark}
 
 \section{Research programmes}
@@ -392,6 +416,7 @@ analogues of the OPE (factorization algebra operations);
 (c)~compactification integrals that generalize the FM
 propagator~\eqref{eq:propagator-general-g} to real codimension
 $2n-2$ collision strata.  This is a multi-year programme.
+Recent work of Idrissi~\cite{Idrissi22} establishes that Poincar\'e duality on configuration spaces ensures $d^2 = 0$ for the propagator-based differential on $\mathsf{E}_n$-algebras, providing part~(i) for general~$n$.  Knudsen's higher enveloping algebras~\cite{Knudsen18} supply the $\mathsf{E}_n$ analogue of the universal enveloping algebra ($U_n(\mathfrak{g})$), with PBW and Koszul duality theorems in the $\mathsf{E}_n$ setting; these are the natural target for part~(iii).
 \end{remark}
 
 \subsection{Vassiliev invariants from Feynman transform}
@@ -468,6 +493,7 @@ complex curves to real $1$-manifolds: our propagators are
 holomorphic, while Kontsevich's are real.  Comparing requires an
 analytic continuation argument from holomorphic to topological
 Feynman transforms.
+The correct bridge between holomorphic and topological frameworks is Chern--Simons gauge equivalence, not merely restriction from complex curves to $S^1$: Cattaneo--Mnev~\cite{CattaneoMnev10} establish that configuration space integrals on $3$-manifolds produce Vassiliev invariants via BV integration, and the comparison map involves the CS partition function (not a pointwise restriction of propagators).
 \end{remark}
 
 \subsection{Anomaly cancellation and Koszul structure}
@@ -569,6 +595,29 @@ supergravity theory, which requires input from 3d gauge theory
 $\mathfrak{sl}_2 \oplus \mathfrak{sl}_2$ gauge group).
 \end{remark}
 
+\begin{remark}[BRST chain map: existing ingredients]\label{rem:brst-chain-map-pieces}
+\index{BRST!chain map to bar complex}
+The genus-$0$ component of the bar-BRST identification already exists
+in pieces in the literature:
+\begin{enumerate}[label=(\roman*)]
+\item Arkhipov~\cite{Arkhipov97} constructs a chain map from the
+  semi-infinite (BRST) complex to the bar complex for associative
+  algebras at genus~$0$.
+\item Markl~\cite{Markl23} clarifies the relationship between BV
+  brackets and bar complex structures via higher-order derivations.
+\item Si~Li~\cite{SiLi12, SiLi16} establishes BV quantization for holomorphic
+  Chern--Simons theory, producing the $A_\infty$ structure from
+  Feynman diagrams; the Feynman graph integrals yield almost modular
+  forms that connect to our genus expansion.
+\item The Francis--Gaitsgory factorization framework~\cite{FG12}
+  provides the $\infty$-categorical envelope.
+\end{enumerate}
+The synthesis of these components --- assembling the genus-$0$ chain
+map into a full bar-BRST identification for chiral algebras --- is a
+concrete next step, distinct from (and more tractable than) the
+higher-genus generalization.
+\end{remark}
+
 \subsection{3d mirror symmetry from $\Eone$-chiral Koszul duality}
 \label{subsec:3d-mirror}
 \index{3d mirror symmetry}
@@ -653,6 +702,10 @@ Theorem~\ref{thm:bar-cobar-spectral-sequence}.  Part (iii)
 is immediate from (i).
 \end{proof}
 
+\begin{remark}[Computability of the weight filtration]\label{rem:weight-filtration-computable}
+The weight filtration on $H^*(\overline{C}_n(X))$ that enters the genus spectral sequence $E_2^{p,q}$ is explicitly computable by combinatorial methods.  Bibby--Gadish~\cite{BG24} establish effective algorithms for computing the mixed Hodge structure on configuration space cohomology via intersection lattice data.  For our chiral Hodge numbers $h^{p,q}_g(\cA)$, this means the $E_2$ page can in principle be computed from the combinatorial data of the Orlik--Solomon algebra (for genus~$0$) and the augmented OS algebra (for genus~$g \geq 1$), without needing the full geometric machinery of mixed Hodge modules.
+\end{remark}
+
 \begin{conjecture}[Twistor interpretation of genus expansion;
 \ClaimStatusConjectured]\label{conj:nc-hodge}
 The genus expansion variable $g_s$ in the total bar complex
@@ -674,6 +727,101 @@ conjecture is the identification with the Kontsevich--Soibelman
 $\mathbb{C}^*$-action, which requires establishing a twistor
 structure on the genus tower.  There is currently no framework
 in which to formulate this precisely for chiral algebras.
+\end{remark}
+
+\subsection{The nine programmes: synthesis and interdependence}
+\label{subsec:programme-synthesis}
+\index{research programmes!interdependence}
+
+The seven programmes above are not independent lines of inquiry:
+they form a web of mutual dependencies, with shared foundational
+objects and interlocking predictions.  We describe this web, then
+identify the single conjecture of which all programmes are facets.
+
+Programmes~I (higher-dimensional Koszul duality,
+\S\ref{subsec:higher-dim-kd}) and~II (Vassiliev invariants,
+\S\ref{subsec:vassiliev}) share the critical-level bar complex
+as common foundation, but diverge in application: Programme~I
+computes $\mathsf{E}_n$-operadic Koszul duals via configuration
+space integrals on $n$-manifolds, while Programme~II specializes
+from complex curves to real circles, extracting knot invariants via
+the Kontsevich integral.  At $n = 3$, the two programmes converge:
+the $\mathsf{E}_3$-bar complex on a $3$-manifold computes
+perturbative Chern--Simons invariants, and the restriction to
+configuration spaces of circles in $S^3$ produces precisely the
+Vassiliev weight systems of Programme~II
+(Proposition~\ref{prop:vassiliev-genus0}).
+
+The anomaly cancellation programme
+(\S\ref{subsec:anomaly-koszul}) is the physical interpretation of
+the curvature theory: $\kappa_{\mathrm{tot}} = 0$ is both the
+mathematical condition $d_{\mathrm{bar}}^2 = 0$ and the
+physical condition for consistent quantization
+(Theorem~\ref{thm:anomaly-koszul}).  This feeds directly into the
+AdS$_3$/CFT$_2$ programme (\S\ref{subsec:ads-cft-koszul}), where
+the curvature $m_0 = \kappa \cdot \mathbf{1}$ plays the role of
+the cosmological constant: the bar-cobar adjunction
+$\barB(\cA) \dashv \Omega(\barB(\cA))$ models the
+boundary-to-bulk and bulk-to-boundary maps of holographic duality.
+The $3$d mirror symmetry programme (\S\ref{subsec:3d-mirror})
+extends this physical circle from $2$d to $3$d, with
+$\Eone$-chiral Koszul duality
+(Theorem~\ref{thm:e1-chiral-koszul-duality}) replacing the
+$\Etwo$-chiral theory and Coulomb--Higgs exchange replacing
+bar-cobar inversion.
+
+The noncommutative Hodge programme (\S\ref{subsec:nc-hodge})
+reinterprets the entire genus tower as a twistor family: the
+genus expansion variable $g_s$ plays the role of the
+Kontsevich--Soibelman twistor parameter, and the chiral Hodge
+numbers $h^{p,q}_g(\cA)$ provide the Hodge-theoretic data.
+This programme depends on the complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}), which supplies
+the Hodge symmetry $h^{p,q}_g(\cA) = h^{q,p}_g(\cA^!)$.
+
+\begin{remark}[Unifying vision: modular Koszul duality for
+factorization algebras]\label{rem:unifying-vision}
+\index{modular Koszul duality!unifying conjecture}
+All of the programmes above are facets of a single conjecture:
+for a factorization algebra~$\mathcal{F}$ on an oriented
+$n$-manifold~$M$, the Feynman transform
+$\mathrm{FT}(\mathcal{F})$ computes the Koszul dual
+factorization algebra on~$M$ with reversed orientation.
+The evidence is the following hierarchy of established and
+conjectural instances:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item At $n = 1$ \textup{(}$A_\infty$-algebras\textup{)}:
+  classical bar-cobar duality
+  \textup{(}Loday--Vallette~\cite{LV12}\textup{)}.  This is the
+  foundational case, with the bar and cobar constructions as mutual
+  inverses on the Koszul locus.
+\item At $n = 2$ with complex structure
+  \textup{(}chiral algebras\textup{)}: the Main Theorems~A, B, C
+  of this monograph
+  \textup{(}Theorems~\ref{thm:bar-cobar-isomorphism-main},
+  \ref{thm:higher-genus-inversion},
+  \ref{thm:quantum-complementarity-main}\textup{)}.  The Feynman
+  transform is realized by Verdier duality on FM compactifications,
+  and the genus expansion provides the quantum corrections.
+\item At $n = 2$ topological
+  \textup{(}$\mathsf{E}_2$-algebras\textup{)}: Kontsevich
+  formality~\cite{Kon03}, which identifies the $\mathsf{E}_2$-bar
+  complex with the deformation complex of the associative operad.
+\item At $n = 3$
+  \textup{(}$\mathsf{E}_3$-algebras\textup{)}:
+  perturbative Chern--Simons invariants, with Vassiliev weight
+  systems extracted from the $\mathsf{E}_3$-bar complex
+  \textup{(}Conjecture~\ref{conj:vassiliev-bar}\textup{)}.
+\item At $n = \infty$
+  \textup{(}$\mathsf{E}_\infty$-algebras\textup{)}:
+  factorization homology duality of
+  Ayala--Francis~\cite{AF15}, which provides the
+  $\infty$-categorical framework for Poincar\'e--Koszul
+  duality on arbitrary manifolds.
+\end{enumerate}
+This monograph provides case~(ii) in full detail; the passage
+from (ii) to the general conjecture is the content of
+\S\ref{sec:modular-koszul-programme} below.
 \end{remark}
 
 

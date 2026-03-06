@@ -56,7 +56,7 @@ $$\text{Chiral algebras} \xleftrightarrow{\sim} \text{Factorization algebras on 
 is an equivalence (Beilinson--Drinfeld \cite[Theorem~3.4.9]{BD04}).  In higher dimensions, chiral algebras embed into CG-style factorization algebras as those with $\mathcal{D}$-module structure and holomorphic dependence.
 \end{remark}
 
-\begin{proposition}[When does CL produce chiral algebras?; \ClaimStatusConjectured]\label{prop:CL-produces-chiral}
+\begin{conjecture}[When does CL produce chiral algebras?; \ClaimStatusConjectured]\label{conj:CL-produces-chiral}
 The Costello--Li construction produces a \emph{genuine chiral algebra} (not just
 factorization algebra) if and only if:
 \begin{enumerate}
@@ -72,9 +72,9 @@ factorization algebra) if and only if:
 \item $\mathcal{N}=2$ SYM with matter $\to$ W-algebras $\mathcal{W}_k(\mathfrak{g})$ 
       in some cases
 \end{itemize}
-\end{proposition}
+\end{conjecture}
 
-\begin{proof}[Proof sketch]
+\begin{remark}[Evidence: Proof sketch]
 The proof requires three ingredients:
 
 \emph{Step~1: Holomorphicity.} The twist must preserve a holomorphic structure.
@@ -91,10 +91,10 @@ twisted gauge theories.
 
 When all three conditions hold, the CL factorization algebra admits chiral envelope 
 in the sense of \BDref{Chapter 3}, making it a genuine chiral algebra.
-\end{proof}
+\end{remark}
 
 \begin{remark}[Scope]
-Proposition~\ref{prop:CL-produces-chiral} is labeled \ClaimStatusConjectured{}
+Conjecture~\ref{conj:CL-produces-chiral} is labeled \ClaimStatusConjectured{}
 because the three conditions (holomorphicity, conformal symmetry, $\mathcal{D}$-module
 structure) involve physics input: condition~(1) requires the existence
 of a holomorphic complex structure on the Coulomb branch that survives the twist,
@@ -106,6 +106,64 @@ by Costello--Li \cite{CL16}, but the general ``if and only if'' characterization
 remains a physics conjecture.  See also Costello--Dimofte--Gaiotto \cite{CDG20}
 for boundary chiral algebras via holomorphic twists, and Zeng \cite{Zeng23}
 for the twisted holography perspective.  Computing the bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A}_{\mathrm{bdy}})$ for specific CDG20 boundary chiral algebras remains an open problem.
+\end{remark}
+
+\subsection{Costello--Li conditions: from factorization to chiral}
+
+The preceding conjecture identifies three conditions for the CL construction
+to produce a genuine chiral algebra.  The following theorem and conjecture
+make this precise in terms of the gauge-theoretic data $(G, R)$.
+
+\begin{theorem}[CL chirality for $\mathcal{N}=4$; \ClaimStatusProvedElsewhere]
+\label{thm:cl-n4-chirality}
+\index{Costello--Li construction!chirality criterion}
+\cite{CL16}
+Let $G$ be a reductive group and consider 4d $\mathcal{N}=2$ gauge theory
+with gauge group $G$ and matter in a representation $R$ on $\Sigma \times \mathbb{C}$.
+After holomorphic twist, the theory produces a factorization algebra
+$\mathcal{F}_{G,R}$ on $\Sigma$.  When the theory has $\mathcal{N}=4$
+supersymmetry (equivalently, $R = \mathrm{Ad}(G)$), the factorization algebra
+is strictly chiral: $\mathcal{F}_{G,\mathrm{Ad}}$ satisfies the chiral algebra
+axioms of Beilinson--Drinfeld.  The resulting chiral algebra is the affine
+Kac--Moody algebra $\widehat{\fg}_k$ at level $k$ determined by the gauge coupling.
+\end{theorem}
+
+\begin{conjecture}[CL chirality conditions for general $R$; \ClaimStatusConjectured]
+\label{conj:cl-general-chirality}
+\index{Costello--Li construction!$\mathcal{N}=2$ conditions}
+For $\mathcal{N}=2$ gauge theory with gauge group $G$ and matter content $R$,
+the factorization algebra $\mathcal{F}_{G,R}$ is chiral provided:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $R$ is self-dual: $R \cong R^*$ as a $G$-representation.
+\item The one-loop anomaly $c_1(R) \in H^2(\Sigma, \mathbb{Z})$ vanishes.
+\item The matter content is balanced: $\chi(\Sigma, R) = 0$ for all genera.
+\end{enumerate}
+When these conditions hold, the resulting chiral algebra $\mathcal{A}_{\mathrm{CL}}(G, R)$
+on $\Sigma$ has:
+\begin{itemize}
+\item Central charge $c = \dim(G) \cdot (1 - h^\vee/k) + \tfrac{1}{2}\dim(R)$,
+  where $k$ is the level and $h^\vee$ is the dual Coxeter number.
+\item Koszul dual $\mathcal{A}_{\mathrm{CL}}(G, R)^! = \mathcal{A}_{\mathrm{CL}}(G^\vee, R^\vee)$,
+  where $G^\vee$ is the Langlands dual group and $R^\vee$ the dual representation.
+\item Bar complex $\barB(\mathcal{A}_{\mathrm{CL}})$ computing the derived moduli
+  of solutions to the BPS equations on $\Sigma \times \mathbb{C}$.
+\end{itemize}
+For $G = \mathrm{GL}(N)$ and $R = \mathrm{Ad}$, the chiral algebra is the
+$\mathcal{W}_N$-algebra, and the instanton partition function on $\mathbb{C}^2$
+equals the genus-$0$ bar complex evaluation --- this is the AGT correspondence
+(Theorem~\ref{thm:agt}).
+\end{conjecture}
+
+\begin{remark}[Scope]
+Theorem~\ref{thm:cl-n4-chirality} is proved in \cite{CL16} using the
+deformation-obstruction analysis of the holomorphic twist.
+Conjecture~\ref{conj:cl-general-chirality} extends this to general
+$\mathcal{N}=2$ matter content; conditions~(i)--(iii) are motivated by anomaly
+cancellation in the twisted theory but their sufficiency for chirality has not been
+established mathematically.  The identification of the Koszul dual with the
+Langlands dual theory is a physics prediction from S-duality.  The AGT
+interpretation of the bar complex is compatible with Theorem~\ref{thm:agt}
+but requires independent verification at higher genus.
 \end{remark}
 
 \subsection{Paquette--Williams boundary vertex algebras}
@@ -129,7 +187,7 @@ $\mathbb{C}^2$ with boundary at $z_2 = 0$. Then:
 
 \begin{remark}[Bar-cobar duality for boundary VOAs]\label{rem:PW-connection}
 Paquette--Williams produce vertex algebras, which are algebraic objects (Frenkel--Ben-Zvi
-\cite{FrenkelBenZvi04}). The bar-cobar framework of Part~I applies to their \emph{chiral envelopes}, which are
+\cite{FBZ04}). The bar-cobar framework of Part~I applies to their \emph{chiral envelopes}, which are
 geometric objects ($\mathcal{D}$-modules).
 
 \begin{center}
@@ -334,7 +392,7 @@ These are precisely the axioms of a chiral algebra in Beilinson--Drinfeld's sens
 
 \subsection{Chiral operad action}
 
-\begin{theorem}[Chiral operad from HCS; \ClaimStatusConjectured]
+\begin{conjecture}[Chiral operad from HCS; \ClaimStatusConjectured]
 The holomorphic Chern--Simons theory defines a chiral operad $\mathcal{P}_{\text{HCS}}$ 
 acting on boundary chiral algebras.
 
@@ -342,7 +400,7 @@ The operad operations:
 $$\mathcal{P}_{\text{HCS}}(n) = \text{Obs}(X; D \times \overline{C}_n(D))$$
 
 are observables on $X$ with marked points on the boundary.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
 This theorem requires constructing the chiral operad $\mathcal{P}_{\mathrm{HCS}}$
@@ -376,16 +434,16 @@ This is derivable from the HCS path integral.
 
 \subsection{Open and closed sectors}
 
-\begin{theorem}[Topological open-closed duality; \ClaimStatusConjectured]
+\begin{conjecture}[Topological open-closed duality; \ClaimStatusConjectured]
 In holomorphic-topological string theory:
 \begin{itemize}
 \item \emph{Open strings.} Described by bar complex $\bar{B}^{\text{ch}}(\mathcal{A}_{\text{bdy}})$
 \item \emph{Closed strings.} Described by cobar complex $\Omega^{\text{ch}}(\mathcal{C}_{\text{bulk}})$
 \item \emph{Duality.} Bar-cobar adjunction realizes open-closed correspondence
 \end{itemize}
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}[Physical picture]
+\begin{remark}[Evidence: Physical picture]
 \emph{Open string sector.}
 \begin{itemize}
 \item Worldsheet is a disk $D^2$ with boundary on the D-brane (HT boundary condition)
@@ -414,7 +472,7 @@ corresponds to:
 \end{itemize}
 
 This is bar-cobar duality.
-\end{proof}
+\end{remark}
 
 \begin{remark}[Scope]
 The Topological Open-Closed Duality theorem interprets bar-cobar duality
@@ -431,7 +489,7 @@ verification that the BRST complex coincides with the bar complex.
 
 \subsection{Factorization and dimensional reduction}
 
-\begin{theorem}[Factorization along dimension tower; \ClaimStatusConjectured]
+\begin{conjecture}[Factorization along dimension tower; \ClaimStatusConjectured]
 The dimensional reduction sequence:
 $$\text{4d SYM} \xrightarrow{\text{HT twist + reduce}}
 \text{3d HCS} \xrightarrow{\text{boundary}}
@@ -439,7 +497,7 @@ $$\text{4d SYM} \xrightarrow{\text{HT twist + reduce}}
 \text{1d quantum mechanics}$$
 
 is governed by iterated bar-cobar constructions at each level.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
 This theorem asserts that each step in the dimensional reduction tower
@@ -501,14 +559,14 @@ $$\mathcal{A}_{\mathrm{local}}(\mathcal{M}_{\mathrm{Hit}}(\Sigma_g, SL_2)) \cong
 The Hitchin system for $SL_2$ is the cotangent bundle $T^*\mathrm{Bun}_{SL_2}(\Sigma_g)$; quantization of the coordinate ring via the Beilinson--Drinfeld construction \cite{BD04} produces the Virasoro vertex algebra at the level determined by the symplectic structure.
 \end{proof}
 
-\begin{theorem}[W-algebra from Hitchin; \ClaimStatusConjectured]
+\begin{conjecture}[W-algebra from Hitchin; \ClaimStatusConjectured]
 For general $G$, the chiral algebra of local operators on $\mathcal{M}_{\mathrm{Hit}}(\Sigma_g, G)$ is:
 $$\mathcal{A}_{\mathrm{local}}(\mathcal{M}_{\mathrm{Hit}}) \cong \mathcal{W}(G)$$
 
 the W-algebra associated to $G$.  For $G = SL_N$, this is the $\mathcal{W}_N$ algebra
 with generators $T(z), W^{(3)}(z), \ldots, W^{(N)}(z)$
 of conformal weights $2, 3, \ldots, N$.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
 Proposition~\ref{prop:virasoro-from-hitchin} ($G = SL_2$) is established by Beilinson--Drinfeld \cite{BD04}.  The general case relies on the AGT correspondence and $\Omega$-background localization (Steps~1--3 of the proof below), which are gauge-theoretic inputs.  Partial results for specific $G$ and representations are due to Schiffmann--Vasserot \cite{SV13} and Maulik--Okounkov \cite{MO19}; see also Arakawa \cite{Ara07} for the vertex algebra quantization of Hitchin moduli spaces.
@@ -687,7 +745,7 @@ dimensional reduction
 \subsection{W-algebras from 2D CFT perspective}
 
 \begin{definition}[W-algebra (CFT definition)]\label{def:w-algebra-cft}
-Following Zamolodchikov \cite{Zam85} and Fateev--Lukyanov \cite{FL88}, a 
+Following Zamolodchikov \cite{Zamolodchikov} and Fateev--Lukyanov \cite{FL88}, a 
 \emph{W-algebra} $\mathcal{W}$ is a vertex operator algebra containing:
 \begin{enumerate}
 \item Virasoro element $L$ (conformal weight 2)
@@ -963,7 +1021,7 @@ corrections; this remains open in the current manuscript.
 
 \subsection{AGT correspondence via bar-cobar}
 
-\begin{theorem}[AGT through bar-cobar lens; \ClaimStatusConjectured]\label{thm:agt-bar-cobar}
+\begin{conjecture}[AGT through bar-cobar lens; \ClaimStatusConjectured]\label{conj:agt-bar-cobar}
 \index{AGT correspondence}
 The Alday--Gaiotto--Tachikawa (AGT) correspondence \cite{AGT09} can be understood 
 via bar-cobar duality:
@@ -984,10 +1042,10 @@ Moreover:
 \item The bar complex on both sides computes the same homology:
       $$H_\bullet^{\text{ch}}(X, \mathcal{W}_k(\mathfrak{g})) = H_\bullet^{\text{BV}}(\mathcal{F}_G)$$
 \end{enumerate}
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
-Theorem~\ref{thm:agt-bar-cobar} reinterprets the AGT correspondence through
+Conjecture~\ref{conj:agt-bar-cobar} reinterprets the AGT correspondence through
 the bar-cobar lens.  The mathematical content --- that both sides compute
 factorization homology of a common object --- is a structural observation
 within the bar-cobar framework.  However, the AGT correspondence itself
@@ -1100,7 +1158,7 @@ representatives.
 \emph{Scope.}  For $n \geq 3$, the configuration space integrals involve
 the Axelrod--Singer propagator (which is not holomorphic), and the
 combinatorics of boundary strata are governed by graph complexes
-(Kontsevich \cite{Kontsevich94}).  The key missing ingredient is an
+(Kontsevich \cite{Kon94}).  The key missing ingredient is an
 explicit form-level presentation of the $E_n$ bar differential in terms
 of iterated integrals over $\overline{C}_k(M)$.  The $n = 3$ case
 with $M = S^3$ connects to the Chern--Simons perturbative expansion and
@@ -1135,6 +1193,17 @@ Which W-algebras $\mathcal{W}_k(\mathfrak{g})$ are Koszul?
 \emph{Conjecture} (Arakawa--Creutzig--Linshaw): Koszul W-algebras correspond to
 minimal models and their generalizations. Complete classification remains open.
 \end{question}
+
+\begin{remark}[Hook-type W-algebras and proven duality]\label{rem:hook-type-duality}
+\index{W-algebra!hook-type}
+Arakawa--van~Ekeren~\cite{AvE23} prove rationality and explicit Koszul duality for hook-type W-algebras $\mathcal{W}^k(\mathfrak{sl}_N, f_{\mathrm{hook}})$, where $f_{\mathrm{hook}}$ corresponds to a hook partition $(N-r, 1^r)$.  These are the simplest non-principal, non-minimal W-algebras, and the proven duality
+\[
+\mathcal{W}^k(\mathfrak{sl}_N, f_{(N-r,1^r)})^!
+\simeq
+\mathcal{W}^{-k-2N}(\mathfrak{sl}_N, f_{(r+1, 1^{N-r-1})})
+\]
+(where the dual hook $(r+1, 1^{N-r-1})$ is the BV dual = partition transpose of $(N-r, 1^r)$) confirms the DS--KD intertwining of Proposition~\ref{prop:ds-koszul-hierarchy} for a non-trivial family of nilpotent orbits.  The Arakawa--van~Ekeren result uses the Kazhdan--Lusztig equivalence at admissible levels, providing independent evidence for the programme of \S\ref{subsec:kl-from-bar-cobar}.
+\end{remark}
 
 \begin{question}[Quantum AGT from bar-cobar]\label{q:quantum-agt}
 Can full quantum AGT with $\Omega$-background be derived from our

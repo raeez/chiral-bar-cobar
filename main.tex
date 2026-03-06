@@ -246,6 +246,13 @@
 \declaretheorem[style=garamonddef, name=Strategy, sibling=theorem]{strategy}
 \declaretheorem[style=garamonddef, name=Open Problem, sibling=theorem]{openproblem}
 
+% Evidence environment: used after conjectures in place of \begin{proof}.
+% Unnumbered, no QED box, italic header matching remark style.
+\newenvironment{evidence}[1][Evidence]{%
+  \par\medskip\noindent\textit{#1.}\enspace\ignorespaces
+}{%
+  \par\medskip
+}
 
 % Hyperref bookmark levels for theorem-like environments.
 % Without these, hyperref emits "bookmark level for unknown ... defaults to 0"
@@ -336,7 +343,7 @@
 \newcommand{\Chir}{\mathsf{Chir}}
 \newcommand{\Fact}{\mathsf{Fact}}
 \newcommand{\FM}{\mathrm{FM}}
-\newcommand{\chirstar}{{}^{\mathrm{ch}\star}}
+\newcommand{\chirstar}{{}^{\mathrm{ch}\star}}  % unused
 \newcommand{\chirtensor}{\otimes^{\mathrm{ch}}}
 \newcommand{\facttensor}{\otimes^{!}}
 \newcommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
@@ -366,25 +373,25 @@
 % ==========================================
 % COMMON SYMBOLS
 % ==========================================
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\Vlat}{V}            % Lattice vertex algebra (V_\Lambda)
-\newcommand{\grpalg}[1]{\C[#1]}  % Group algebra C[Lambda]
+\newcommand{\C}{\mathbb{C}}  % NB: overrides built-in accent command \c (cedilla)
+\newcommand{\Z}{\mathbb{Z}}  % NB: overrides built-in accent command
+\newcommand{\R}{\mathbb{R}}  % NB: overrides built-in accent command
+\newcommand{\Vlat}{V}            % Lattice vertex algebra (V_\Lambda)  % unused
+\newcommand{\grpalg}[1]{\C[#1]}  % Group algebra C[Lambda]  % unused
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cV}{\mathcal{V}}
-\newcommand{\barC}{\overline{C}}
+\newcommand{\barC}{\overline{C}}  % unused
 \newcommand{\barB}{\overline{B}}
-\newcommand{\barPi}{\overline{\Pi}}
+\newcommand{\barPi}{\overline{\Pi}}  % unused
 
 % ==========================================
 % NOTATION SYSTEM — bar/cobar and configuration spaces
 % ==========================================
-\newcommand{\chirbar}{\bar{B}^{\text{ch}}}       % chiral bar complex
-\newcommand{\chircobar}{\Omega^{\text{ch}}}       % chiral cobar complex
+\newcommand{\chirbar}{\bar{B}^{\text{ch}}}       % chiral bar complex  % unused (duplicate of \barBch)
+\newcommand{\chircobar}{\Omega^{\text{ch}}}       % chiral cobar complex  % unused (duplicate of \Omegach)
 \newcommand{\Conf}{C}                              % config space (open); use \overline{\Conf} for FM compactification
-\newcommand{\OPE}[2]{\phi_{#1}(z)\phi_{#2}(w)}   % operator product
+\newcommand{\OPE}[2]{\phi_{#1}(z)\phi_{#2}(w)}   % operator product  % unused
 \newcommand{\MC}{\text{MC}}                        % Maurer--Cartan
 
 % Hat notation — consistent single-index style
@@ -393,15 +400,15 @@
 
 % Collision divisors with explicit ordering
 \newcommand{\colldiv}[2]{D_{#1#2}}
-\newcommand{\collspace}[1]{\overline{C}_{#1}^{\text{coll}}}
+\newcommand{\collspace}[1]{\overline{C}_{#1}^{\text{coll}}}  % unused
 
 % Bar and cobar complexes with explicit notation
 \newcommand{\barcomplex}[2]{\bar{B}^{#1}(#2)}
-\newcommand{\cobarcomplex}[2]{\Omega^{#1}(#2)}
-\newcommand{\genusbar}[3]{\bar{B}^{(#1)}_{#2}(#3)}
+\newcommand{\cobarcomplex}[2]{\Omega^{#1}(#2)}  % unused
+\newcommand{\genusbar}[3]{\bar{B}^{(#1)}_{#2}(#3)}  % unused
 
 % Configuration spaces (additional variants)
-\newcommand{\OpenConfig}[1]{C_{#1}(X)}
+\newcommand{\OpenConfig}[1]{C_{#1}(X)}  % unused
 
 % BD references shorthand
 \newcommand{\BDref}[1]{\textup{[\cite{BD04}, #1]}}
@@ -409,13 +416,36 @@
 % ==========================================
 % W-ALGEBRA AND DEFORMATION NOTATION
 % ==========================================
-\newcommand{\StarProd}[1]{\star_{\hbar}^{#1}}     % star product with parameter
-\newcommand{\ChiralStar}{\star_{\text{ch}}}        % chiral star product
-\newcommand{\ConfigInt}[2]{\int_{\overline{C}_{#1}(X)} #2}  % config space integral
+\newcommand{\StarProd}[1]{\star_{\hbar}^{#1}}     % star product with parameter  % unused
+\newcommand{\ChiralStar}{\star_{\text{ch}}}        % chiral star product  % unused
+\newcommand{\ConfigInt}[2]{\int_{\overline{C}_{#1}(X)} #2}  % config space integral  % unused
 \newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})}  % W-algebra W_k(g)
-\newcommand{\SugawaraT}{T^{\text{Sug}}}            % Sugawara stress tensor
+\newcommand{\SugawaraT}{T^{\text{Sug}}}            % Sugawara stress tensor  % unused
 \newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}}   % affine Kac--Moody
-\newcommand{\MCeq}{\text{MC}}                      % Maurer--Cartan equation space
+\newcommand{\MCeq}{\text{MC}}                      % Maurer--Cartan equation space  % unused (duplicate of \MC)
+
+% ==========================================
+% NOTATION CONSISTENCY DECLARATIONS
+% (PM6: moved here from after \begin{document})
+% ==========================================
+\newcommand{\barBgeom}{\bar{\mathbf{B}}}
+\newcommand{\barBch}{\bar{B}^{\text{ch}}}       % Alternative notation  % unused (duplicate of \chirbar)
+\newcommand{\Omegach}{\Omega^{\text{ch}}}       % Cobar notation (canonical; \chircobar is duplicate)
+\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)}  % Configuration space
+\newcommand{\LogForm}[2]{\eta_{#1#2}}           % Logarithmic forms
+\newcommand{\OPEcoeff}[4]{C_{#1#2}^{#3,#4}}    % OPE coefficients  % unused
+\newcommand{\ChirAlg}{\mathsf{ChirAlg}}         % Category of chiral algebras  % unused
+\newcommand{\dgCoalg}{\mathsf{dgCoalg}}         % Category of dg coalgebras  % unused
+
+% Additional notation for consistency
+\newcommand{\ChirHoch}{CH}                      % Chiral Hochschild
+\newcommand{\Wakimoto}{\mathcal{M}_{\text{Wak}}} % Wakimoto module  % unused
+\newcommand{\Walg}{\mathcal{W}}                 % W-algebra
+\newcommand{\critLevel}{-h^\vee}                % Critical level
+\newcommand{\PrimeForm}{E}                      % Prime form on Riemann surface  % unused
+\newcommand{\ThetaChar}{\vartheta}              % Theta characteristics  % unused
+\newcommand{\ModularParam}{\tau}                % Modular parameter  % unused
+\newcommand{\DS}{\text{DS}}                     % Drinfeld--Sokolov  % unused
 
 % ==========================================
 % TYPOGRAPHY SETTINGS FOR OPTIMAL READABILITY
@@ -426,13 +456,7 @@
 %\setstretch{1.08} % Slightly increased for Garamond's proportions
 
 % Page layout adjusted for Garamond's characteristics
-\usepackage{geometry}[
-  top=1.2in,
-  bottom=1.2in,
-  left=1.25in,
-  right=1.25in,
-  footskip=0.5in
-]
+\geometry{top=1.2in, bottom=1.2in, left=1.25in, right=1.25in, footskip=0.5in}
 
 % Section formatting with small caps (memoir-native configuration).
 \setsecheadstyle{\normalfont\Large\scshape}
@@ -445,28 +469,6 @@
 \date{March 2026}
  
 \begin{document}
-
-% ==========================================
-% NOTATION CONSISTENCY DECLARATIONS
-% ==========================================
-\newcommand{\barBgeom}{\bar{\mathbf{B}}}
-\newcommand{\barBch}{\bar{B}^{\text{ch}}}       % Alternative notation
-\newcommand{\Omegach}{\Omega^{\text{ch}}}       % Cobar notation
-\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)}  % Configuration space
-\newcommand{\LogForm}[2]{\eta_{#1#2}}           % Logarithmic forms
-\newcommand{\OPEcoeff}[4]{C_{#1#2}^{#3,#4}}    % OPE coefficients
-\newcommand{\ChirAlg}{\mathsf{ChirAlg}}         % Category of chiral algebras
-\newcommand{\dgCoalg}{\mathsf{dgCoalg}}         % Category of dg coalgebras
-
-% Additional notation for consistency
-\newcommand{\ChirHoch}{CH}                      % Chiral Hochschild
-\newcommand{\Wakimoto}{\mathcal{M}_{\text{Wak}}} % Wakimoto module
-\newcommand{\Walg}{\mathcal{W}}                 % W-algebra
-\newcommand{\critLevel}{-h^\vee}                % Critical level
-\newcommand{\PrimeForm}{E}                      % Prime form on Riemann surface
-\newcommand{\ThetaChar}{\vartheta}              % Theta characteristics
-\newcommand{\ModularParam}{\tau}                % Modular parameter
-\newcommand{\DS}{\text{DS}}                     % Drinfeld--Sokolov
 
 % Fallback macros for imported chapter fragments.
 % Operads, categories, and D-module macros are now in the preamble;
@@ -710,11 +712,23 @@ Verdier duality on the center local system (Theorem~C).
 
 % The filtered-curved hierarchy: when does filtering degenerate to curved?
 % Virasoro (curved) vs. W_3 (truly filtered). Convergence criteria.
+% \input (not \include): continues within the preceding chapter (Quantum Corrections)
 \input{chapters/theory/filtered_curved}
 
 % Chiral Hochschild cohomology, cyclic structure, Connes operator,
 % the Hochschild-cyclic spectral sequence with explicit E_2 computations.
+% \input (not \include): continues within the preceding chapter
 \input{chapters/theory/hochschild_cohomology}
+
+% E_n Koszul duality: higher-dimensional bar complexes,
+% Totaro relations, connection to Ayala--Francis, the n=2 case.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
+\input{chapters/theory/en_koszul_duality}
+
+% Derived structures and geometric Langlands: critical-level bar complex,
+% oper space, root-of-unity periodic CDG, KL from bar-cobar.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
+\input{chapters/theory/derived_langlands}
 
 % ======================================================================
 %
@@ -727,26 +741,30 @@ Verdier duality on the center local system (Theorem~C).
 \part{Examples}
 
 \noindent
-The abstract theory of Part~I makes no reference to specific
-algebras; its content is the bar-cobar adjunction, Verdier
-duality on configuration spaces, and the complementarity of
-quantum corrections.  Part~II populates this framework.  Each
-family of chiral algebras reveals a distinct face of the modular
-Koszul structure: the Feigin--Frenkel involution
+A general theory earns its place through the quality of its
+examples.  The constructions of Part~I---the bar complex, the genus
+tower, the Koszul pair structure---are defined for any chiral algebra
+satisfying mild finiteness conditions.  Part~II asks: what do these
+constructions \emph{produce} when applied to the algebras that arise
+in practice?
+
+The answer is unexpectedly structured.  The bar cohomology dimensions
+of apparently unrelated algebras---the Kac--Moody algebra
+$\widehat{\mathfrak{sl}}_2$, the Virasoro algebra, the
+$\beta\gamma$-system---share a common discriminant
+$\Delta(x) = (1-3x)(1+x)$.  The genus expansion of every Koszul
+algebra is controlled by a single obstruction invariant~$\kappa$,
+and $\kappa$ transforms predictably under Drinfeld--Sokolov
+reduction.  The complementarity sums $c + c'$ are root-datum
+invariants.  These are not coincidences; they are the fingerprints
+of the general theory made visible in specific examples.  Each family
+of chiral algebras reveals a distinct face of the modular Koszul
+structure: the Feigin--Frenkel involution
 $k \mapsto -k - 2h^\vee$ is Koszul duality for Kac--Moody
-algebras; Drinfeld--Sokolov reduction is a Koszul functor,
-preserving the bar-cohomology discriminant; the
-$\hat{A}$-genus in the Heisenberg genus expansion hints at a
+algebras; Drinfeld--Sokolov reduction is a Koszul functor;
+the $\hat{A}$-genus in the Heisenberg genus expansion witnesses a
 family index theorem; the Yangian forces a departure from
 $E_\infty$-chiral to $E_1$-chiral Koszul duality.
-
-The computations are not merely illustrative.  The shared
-discriminant $\Delta(x) = (1-3x)(1+x)$ across
-$\mathfrak{sl}_2$, Virasoro, and $\beta\gamma$; the universal
-complementarity sums $c + c' = K$; the genus universality
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ --- these patterns are
-invisible at the abstract level and become the central structural
-discoveries of the monograph.
 
 % --------------------------------------------------
 % Lattice vertex algebras
@@ -772,6 +790,7 @@ discoveries of the monograph.
 
 % Complete genus expansion of Heisenberg with Eisenstein series E_2, E_4, E_6,
 % Dedekind eta. Modular transformation laws. Agreement with DMVV.
+% \input (not \include): continues within the preceding chapter (Free Fields)
 \input{chapters/examples/heisenberg_eisenstein}
 
 % --------------------------------------------------
@@ -799,15 +818,19 @@ discoveries of the monograph.
 
 % Complete W_3 composite field Lambda derivation: alpha(c) = 16/(22+5c),
 % beta(c) = 3/10. Mode expansion, central charge analysis, literature match.
+% \input (not \include): continues within the preceding chapter (W-Algebras)
 \input{chapters/examples/w3_composite_fields}
 
 % Minimal model fusion rules via Verlinde formula. W_N modular data,
 % W_3(3,4) and W_3(5,6) complete fusion tables, Grothendieck ring.
+% \input (not \include): continues within the preceding chapter (W-Algebras)
 \input{chapters/examples/minimal_model_fusion}
+% \input (not \include): continues within the preceding chapter (W-Algebras)
 \input{chapters/examples/minimal_model_examples}
 
 % Deep W-algebra structures: affine flag varieties, jet geometry,
 % chiral de Rham complex, bar coalgebra, screening operators, Toda systems.
+% \input (not \include): continues within the preceding chapter (W-Algebras)
 \input{chapters/examples/w_algebras_deep}
 
 % --------------------------------------------------
@@ -820,17 +843,20 @@ discoveries of the monograph.
 
 % Deformation quantization examples: coisson (PVA) to E-infinity chiral,
 % P-infinity chiral to E-1 chiral, formality, star product, Maurer--Cartan.
+% \input (not \include): continues within the preceding chapter (Deformation Quantization)
 \input{chapters/examples/deformation_examples}
 
 % --------------------------------------------------
 % Chapter 12: Yangians, Shifted Yangians, and Coulomb Branches
 % Drinfeld presentation, E_1 classification, BFN construction, CoHA.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 % --------------------------------------------------
 \input{chapters/examples/yangians}
 
 % --------------------------------------------------
 % Chapter 13: Toroidal and Elliptic Algebras
 % Double affine, Fay trisecant, elliptic R-matrix, elliptic bar complex.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 % --------------------------------------------------
 \input{chapters/examples/toroidal_elliptic}
 
@@ -839,15 +865,18 @@ discoveries of the monograph.
 % Free boson, beta-gamma, lattice VOAs, W-algebras and Higgs bundles
 % at all genera. Modular forms, Siegel modular forms, bosonization,
 % Mumford forms, mirror symmetry, AGT.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 % --------------------------------------------------
 \input{chapters/examples/genus_expansions}
 
 % Detailed computations: Heisenberg through degree 5,
 % sl_3 bar differential with Serre relations, W_3 structure constants,
 % Yangian sl_2 with R-matrix, q-commutator calculus, higher genus formulas.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 \input{chapters/examples/detailed_computations}
 
 % Summary of extended examples catalogue.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 \input{chapters/examples/examples_summary}
 
 % ======================================================================
@@ -862,17 +891,22 @@ discoveries of the monograph.
 \part{Connections and Applications}
 
 \noindent
-The bar-cobar framework of Parts~I--II is a piece of pure mathematics.
-Part~III reveals that it is also, simultaneously, the algebraic skeleton of
-quantum field theory.  The bar complex \emph{is} the BV complex; the cobar
-complex \emph{is} the space of on-shell observables; the bar-cobar adjunction
-\emph{is} the off-shell/on-shell correspondence; the genus expansion
-$F_g(\mathcal{A})$ \emph{is} the $g$-loop partition function; the curvature
-$m_0$ \emph{is} the conformal anomaly.  These identifications connect the
-framework to Feynman diagrams, the BV-BRST formalism, holomorphic-topological
-field theories, the AGT correspondence, and holographic duality.
+The three theorems of Part~I and the computations of Part~II establish
+chiral Koszul duality as a self-contained mathematical framework.  But the
+framework is not isolated: its constructions appear, in different guises,
+throughout modern mathematics and mathematical physics.  The BV-BRST complex
+of perturbative quantum field theory \emph{is} the bar complex, with the
+ghost fields incarnating the desuspended generators and the BRST differential
+incarnating the bar differential
+(Chapter~\ref{ch:bv-brst}).  The Kontsevich integral of knot theory \emph{is}
+the restriction of the configuration space propagator from complex curves to
+embedded circles (\S\ref{subsec:vassiliev}).  The Costello--Li construction
+of chiral algebras from four-dimensional gauge theories \emph{is} the
+factorization algebra incarnation of the bar-cobar adjunction applied to
+the four-dimensional factorization algebra
+(Chapter~\ref{ch:ht-boundary}).  Part~III traces these identifications.
 
-The chapters of Part~III are more concise than those of Parts~I--II,
+The chapters here are more concise than those of Parts~I--II,
 indicating directions of active investigation rather than definitive
 treatments.  Several results are labeled \emph{Conjectured} with scope
 remarks identifying the additional input---typically from gauge theory or
@@ -882,21 +916,30 @@ the entire monograph points: modular Koszul duality for factorization algebras.
 
 \include{chapters/connections/poincare_computations}
 \include{chapters/connections/feynman_diagrams}
+% \input (not \include): continues within the preceding chapter (Feynman Diagrams)
 \input{chapters/connections/feynman_connection}
 \include{chapters/connections/bv_brst}
 \include{chapters/connections/holomorphic_topological}
 
+% Knot invariants and the Kontsevich integral: Vassiliev invariants,
+% weight systems from bar complex, Drinfeld associator, CS bridge.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
+\input{chapters/connections/kontsevich_integral}
+
 % Physical origins: 4d/2d correspondence, non-commutative Chern-Simons,
 % D-brane vertex algebras, AGT correspondence, dimensional lift.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 \input{chapters/connections/physical_origins}
 
 % Complete genus theory: elliptic realm (genus 1), hyperbolic realm (genus >= 2),
 % universal tower, Eynard--Orantin topological recursion, string amplitudes,
 % holographic duality, extended Prism Principle, Poincaré--Verdier at all genera.
+% \input (not \include): continues within the preceding chapter
 \input{chapters/connections/genus_complete}
 
 % Literature concordance: precise relationship to BD, Francis--Gaitsgory,
 % Gui--Li--Zeng, Loday--Vallette. Our extensions beyond each.
+% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 \input{chapters/connections/concordance}
 
 % ======================================================================

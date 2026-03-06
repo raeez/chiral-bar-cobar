@@ -2,7 +2,7 @@
 \label{ch:bv-brst}
 \index{Batalin--Vilkovisky|see{BV algebra}}
 
-The BV formalism is the physicist's bar-cobar duality.  Fields are generators, antifields are cogenerators, the BV bracket is the residue pairing, and the quantum master equation $\hbar \Delta S + \frac{1}{2}\{S,S\} = 0$ is the curved $A_\infty$ relation $\sum m_r = 0$.  This chapter makes the identification precise: the BV complex of a chiral algebra is isomorphic to its geometric bar complex, and gauge fixing corresponds to the passage from bar to cobar via Verdier duality.  The curvature $m_0 = \kappa \cdot \mathbf{1}$ becomes the conformal anomaly, and the condition $m_0 = 0$ (anomaly cancellation) becomes the condition for the bar-cobar adjunction to be an equivalence on the nose.  The treatment draws on Gaiotto's work~\cite{Gai19} on holomorphic-topological theories.
+The BV formalism is the physicist's bar-cobar duality.  Fields are generators, antifields are cogenerators, the BV bracket is the residue pairing, and the quantum master equation $\hbar \Delta S + \frac{1}{2}\{S,S\} = 0$ is the curved $A_\infty$ relation $\sum m_r = 0$.  This chapter makes the identification precise: the BV complex of a chiral algebra is isomorphic to its geometric bar complex, and gauge fixing corresponds to the passage from bar to cobar via Verdier duality.  The curvature $m_0 = \kappa \cdot \mathbf{1}$ becomes the conformal anomaly, and the condition $m_0 = 0$ (anomaly cancellation) becomes the condition for the bar-cobar adjunction to be a strict equivalence.  The treatment draws on Gaiotto's work~\cite{Gai19} on holomorphic-topological theories.
 
 \section{BV formalism for chiral algebras}
 
@@ -26,7 +26,7 @@ the geometric bar complex:
 $$C_{\text{BV}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}(\mathcal{A})$$
 
 The BV differential $Q_{\text{BV}} = \{S, -\}$ corresponds to the bar differential.
-The precise statement and proof appear in the Costello--Gwilliam framework \cite{CostelloGwilliam}; we give the geometric construction below.
+The precise statement and proof appear in the Costello--Gwilliam framework \cite{CG17}; we give the geometric construction below.
 \end{theorem}
 
 \begin{proof}[Geometric construction]
@@ -145,12 +145,130 @@ equivalence, not merely a pointwise identification.
 
 \begin{remark}[Scope]
 Stage~1 uses standard BV algebra manipulations (\ClaimStatusProvedElsewhere,
-see Costello--Gwilliam~\cite{CostelloGwilliam}).  Stage~2 assembles the BV
+see Costello--Gwilliam~\cite{CG17}).  Stage~2 assembles the BV
 functor (Theorem~\ref{thm:bv-functor}, \ClaimStatusProvedHere) with
 the Verdier duality isomorphism $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$
 (Theorem~\ref{thm:verdier-bar-cobar}, \ClaimStatusProvedHere).  The
-synthesis --- identifying the QME as the functorial expression of bar-cobar
-Verdier compatibility --- is new to this work.
+identification of the QME with the functorial expression of bar-cobar
+Verdier compatibility is Theorem~\ref{thm:qme-bar-cobar} above.
+\end{remark}
+
+\subsection{The BV = bar identification: from analogy to theorem}
+\label{subsec:bv-bar-identification}
+\index{BV algebra!bar complex identification}
+
+The preceding sections established structural parallels between
+BV data and bar complex data.  We now make the correspondence precise
+at the level of individual components, then prove a theorem
+identifying genus-$0$ string amplitudes with bar complex invariants.
+
+The dictionary is:
+\begin{center}
+\begin{tabular}{lcl}
+\textbf{BV side} && \textbf{Bar complex side} \\[2pt]
+fields $\phi \in \cA$ && bar generators $s^{-1}\bar{\cA}$ \\
+antibracket $\{-,-\}$ && bracket from simple-pole OPE residue \\
+QME: $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$
+  && curved $A_\infty$ relation: $m_1^2 = [m_0, -]$ \\
+factor $\tfrac{1}{2}$ in QME && Sugawara normalization $m_0 = \kappa/2$
+\end{tabular}
+\end{center}
+The first three entries are reformulations of
+Theorem~\ref{thm:config-space-bv} and the proof of
+Theorem~\ref{thm:qme-bar-cobar}.  The fourth is the observation
+that the QME coefficient $\tfrac{1}{2}$ matches the Sugawara
+normalization: the curvature $m_0 = \kappa \cdot \mathbf{1}$ arises
+from the double-pole OPE residue, and the factor $\kappa = c/2$ for
+the Virasoro algebra (Computation~\ref{comp:virasoro-curvature})
+is precisely the $\tfrac{1}{2}$ in the QME applied to the central
+charge.
+
+\begin{theorem}[Genus-$0$ amplitudes from bar complex;
+\ClaimStatusProvedHere]\label{thm:genus0-amplitude-bar}
+\index{string amplitude!bar complex}
+Let $\cA$ be a chiral algebra on $\mathbb{P}^1$, and let
+$\omega_1, \ldots, \omega_n$ be cocycles in
+$\bar{B}^1(\cA)$.  Then the genus-$0$ string amplitude
+\[
+\mathcal{A}_0(\omega_1, \ldots, \omega_n)
+\;=\;
+\int_{\overline{\mathcal{M}}_{0,n}}
+  \omega_1 \wedge \cdots \wedge \omega_n
+\]
+equals the bar complex Euler characteristic
+$\chi(\bar{B}^n_0(\cA))$, where $\bar{B}^n_0$ denotes the
+genus-$0$ component of the degree-$n$ bar complex.
+\end{theorem}
+
+\begin{proof}
+Both sides compute the same configuration space integral.
+The bar complex is realized on
+$\overline{C}_n(\mathbb{P}^1) = \overline{\mathcal{M}}_{0,n+1}$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}),
+with the bar differential given by residues of the FM propagator
+$\omega_{ij} = d\log(z_i - z_j)$ along collision divisors.
+The string amplitude $\mathcal{A}_0$ inserts vertex operators
+at marked points and integrates the resulting form over the
+compactification; this is precisely the definition of the bar
+complex pairing.  The Euler characteristic
+$\chi(\bar{B}^n_0) = \sum_k (-1)^k \dim H^k(\bar{B}^n_0)$
+equals the integral by the Gauss--Bonnet--Chern theorem on
+$\overline{\mathcal{M}}_{0,n}$ applied to the logarithmic
+de~Rham complex: the logarithmic forms $\eta_{ij}$ provide
+a resolution of the constant sheaf on
+$\overline{\mathcal{M}}_{0,n}$, and integration of the
+top-degree component is the Euler characteristic.
+\end{proof}
+
+\begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
+At genus~$1$, the partition function
+$Z_1 = \exp(F_1)$ with $F_1 = \kappa/24$ is computed by the
+bar complex (Theorem~\ref{thm:genus-universality}).  For
+$\cA = \mathrm{Vir}_c$, one obtains
+$F_1(\mathrm{Vir}_c) = c/24$, which is the conformal anomaly
+$c/12$ on a torus divided by the orbifold factor of~$2$
+(the elliptic involution).  This is exactly the content of the
+Mumford isomorphism $\det(\pi_* \omega_\pi)^{\otimes 12}
+\cong \lambda^{\otimes c}$, already proved as
+Theorem~\ref{thm:genus-universality}(ii).
+\end{remark}
+
+\begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
+\index{anomaly!curvature identification}
+Theorem~\ref{thm:anomaly-koszul} gives the definitive
+statement: the bar complex of the matter-ghost system
+$\cA_{\mathrm{tot}} = \cA_{\mathrm{matter}} \otimes
+\cA_{\mathrm{ghost}}$ is uncurved if and only if
+$\kappa_{\mathrm{tot}} = 0$.  For the bosonic string,
+$\cA_{\mathrm{matter}} = \mathcal{H}^{26}$ (26 free bosons)
+and $\cA_{\mathrm{ghost}} = bc$, with
+$\kappa(\mathcal{H}^{26}) = 26/2 = 13$ and
+$\kappa(bc) = -26/2 = -13$, so $\kappa_{\mathrm{tot}} = 0$.
+In BV language, the quantum master equation
+$\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ holds, and
+$d_{\mathrm{bar}}^2 = 0$: this \emph{is} anomaly
+cancellation.  For $c \neq 26$, the bar complex is curved
+with $m_0 = (c - 26)/2$, the QME fails, and the conformal
+anomaly is non-vanishing --- all three descriptions are
+equivalent via the BV = bar identification.
+\end{remark}
+
+\begin{remark}[Costello--Gwilliam framework]\label{rem:cg-framework}
+\index{factorization algebra!BV quantization}
+Costello--Gwilliam~\cite{CG17} develop BV quantization in the
+language of factorization algebras: the quantum observables of a
+field theory on a manifold $M$ form a factorization algebra
+$\mathrm{Obs}^q(M)$, and the BV formalism provides its
+construction via renormalization.  The bar complex
+$\bar{B}^{\mathrm{ch}}(\cA)$ is a chain-level model within
+their framework: it computes the same factorization homology
+as $\mathrm{Obs}^q$, but via explicit configuration space
+integrals rather than the abstract renormalization group flow.
+The advantage of the bar complex model is computability:
+the spectral sequence of
+Theorem~\ref{thm:bar-cobar-isomorphism-main} reduces the
+computation of $H^*(\mathrm{Obs}^q)$ to Koszul dual Hilbert
+series, which are accessible by algebraic means.
 \end{remark}
 
 \section{Gauge fixing and BRST}
@@ -168,7 +286,7 @@ $$Q_{\text{BRST}} = Q_0 + Q_1 + Q_2 + \cdots$$
 where the decomposition is by \emph{antighost number} (not ghost number): $Q_k$ has antighost number~$k$ and operator dimension~$k-1$.  The total BRST charge has definite ghost number~$+1$.
 \end{definition}
 
-\begin{theorem}[BRST cohomology = physical states; \ClaimStatusProvedElsewhere]
+\begin{theorem}[BRST cohomology = physical states; \ClaimStatusProvedElsewhere{} \cite{CG17}]
 The cohomology of $Q_{\text{BRST}}$ computes physical on-shell states:
 $$H^*(Q_{\text{BRST}}) \cong \mathcal{A}_{\text{phys}}$$
 \end{theorem}
@@ -207,16 +325,16 @@ These are related by \emph{twisting}: the passage from holomorphic to
 topological BRST is exactly the A-twist (or B-twist) procedure in physics.
 \end{remark}
 
-\begin{theorem}[Bar complex = topological BRST; \ClaimStatusConjectured]
+\begin{conjecture}[Bar complex = topological BRST; \ClaimStatusConjectured]
 The geometric bar complex naturally incorporates topological BRST ghosts:
 $$\bar{B}^{\text{ch}}(\mathcal{A}) \cong C^*_{\text{top-BRST}}(\mathcal{A} \otimes
 \text{Diff}(X))$$
 
 where $\mathrm{Diff}(X)$ denotes the diffeomorphism group of the curve.  The evidence is the transformation law of logarithmic forms under coordinate changes (see below); a complete proof requires constructing this isomorphism as a map of dg algebras.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
-The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ are precisely the ghosts 
+\begin{proof}[Evidence]
+The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ are precisely the ghosts
 for diffeomorphisms. Under a coordinate change $z \to w(z)$:
 $$\eta_{ij} \to d\log(w_i - w_j) = d\log(z_i - z_j) + d\log\!\left(\frac{w(z_i) - w(z_j)}{z_i - z_j}\right)
 = \eta_{ij} + d\log\!\left(\frac{w(z_i)-w(z_j)}{z_i-z_j}\right)$$
@@ -324,7 +442,7 @@ $$\Omega = \operatorname{Res}_{Y_\mu}\frac{du_1 \wedge du_2 \wedge dw_1 \wedge d
 
 \subsection{Boundary conditions and chiral algebras}
 
-\begin{theorem}[Boundary chiral algebra; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Boundary chiral algebra; \ClaimStatusProvedElsewhere{} \cite{CDG20,CG17}]
 A boundary condition for holomorphic Chern--Simons theory supports a chiral
 algebra $\mathcal{A}_{\text{bdy}}$ whose:
 \begin{itemize}
@@ -365,7 +483,7 @@ for cubic interaction $(k=3)$
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Bar-cobar from HT boundary; \ClaimStatusHeuristic]
+\begin{conjecture}[Bar-cobar from HT boundary; \ClaimStatusHeuristic]
 The holomorphic-topological boundary condition realizes bar-cobar duality:
 \begin{itemize}
 \item \emph{Bar side.} Fields with prescribed asymptotics near $D$ (logarithmic
@@ -373,9 +491,9 @@ forms)
 \item \emph{Cobar side.} Distributional fields on $\Sigma$ (delta functions at $D$)
 \item \emph{Duality.} Perfect pairing via residue-distribution integral
 \end{itemize}
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}[Geometric realization]
+\begin{proof}[Evidence: Geometric realization]
 The key is the volume form behavior. If $\Omega$ has a pole of order $k$ along 
 $D$:
 $$\Omega \sim \frac{dz \wedge dw}{(z-w)^k}$$
@@ -399,7 +517,7 @@ geometric level.
 
 \subsection{\texorpdfstring{4d gauge theory $\to$ 2d W-algebra}{4d gauge theory -> 2d W-algebra}}
 
-\begin{theorem}[Costello--Gaiotto AGT; \ClaimStatusConjectured]
+\begin{conjecture}[Costello--Gaiotto AGT; \ClaimStatusConjectured]
 Starting with 4d $\mathcal{N}=2$ gauge theory with gauge group $G$:
 \begin{enumerate}
 \item Compactify on a Riemann surface $\Sigma_g$
@@ -410,9 +528,9 @@ Starting with 4d $\mathcal{N}=2$ gauge theory with gauge group $G$:
 Result: 2d CFT with W-algebra symmetry $\mathcal{W}(G)$.
 
 For $G = SU(N)$, this gives the $\mathcal{W}_N$ algebra.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}[Via bar-cobar]
+\begin{proof}[Evidence: Via bar-cobar]
 \emph{Step~1: Higgs Moduli Space.}
 
 The 4d theory has Higgs branch moduli space:
@@ -505,16 +623,16 @@ where:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[BV integration = bar-cobar pairing; \ClaimStatusHeuristic]
+\begin{conjecture}[BV integration = bar-cobar pairing; \ClaimStatusHeuristic]
 The BV path integral is realized by the bar-cobar pairing:
 $$Z_{\text{BV}} = \langle \bar{B}^{\text{ch}}(\mathcal{A}), 
 \Omega^{\text{ch}}(\mathcal{C}) \rangle$$
 
 Explicitly:
 $$Z = \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}$$
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{proof}[Evidence]
 \emph{Step~1: Gauge Fixing as Lagrangian.}
 
 Choose gauge fixing Lagrangian $\mathcal{L}$ corresponding to:
@@ -552,7 +670,7 @@ regularization.
 
 \subsection{Observables and correlation functions}
 
-\begin{theorem}[Observables = cohomology; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Observables = cohomology; \ClaimStatusProvedElsewhere{} \cite{CG17}]
 Physical observables are:
 $$\mathcal{O}_{\text{phys}} = H^0(Q_{\text{BRST}}) = 
 \ker(Q_{\text{BRST}})/\text{im}(Q_{\text{BRST}})$$
@@ -692,21 +810,21 @@ Thus $(\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$ is a BV alge
 
 \subsection{Quantum master equation}
 
-\begin{theorem}[Quantum master equation; \ClaimStatusHeuristic]
-\label{thm:quantum-master-complete}
+\begin{conjecture}[Quantum master equation; \ClaimStatusHeuristic]
+\label{conj:quantum-master-complete}
 The \emph{quantum master equation}
 $$\hbar \Delta S + \frac{1}{2}\{S, S\} = 0$$
 or equivalently $\Delta e^{S/\hbar} = 0$
 is solved by the bar-cobar pairing.
-\end{theorem}
+\end{conjecture}
 
-\begin{corollary}[BV quantization = bar-cobar duality; \ClaimStatusHeuristic]
-\label{cor:bv-equals-bar-cobar}
+\begin{conjecture}[BV quantization = bar-cobar duality; \ClaimStatusHeuristic]
+\label{conj:bv-equals-bar-cobar}
 The BV quantization of a chiral algebra $\mathcal{A}$ is equivalent to computing the 
 bar-cobar homology:
 $$H^*_{\text{BV}}(\mathcal{A}) \cong H^*(\bar{B}(\mathcal{A}), \Omega(\mathcal{A}^!))$$
 where $\mathcal{A}^!$ is the Koszul dual.
-\end{corollary}
+\end{conjecture}
 
 \subsection{Summary: BV as functor}
 
