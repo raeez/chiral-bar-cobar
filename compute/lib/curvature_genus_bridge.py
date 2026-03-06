@@ -189,6 +189,117 @@ def verify_curvature_genus_bridge() -> Dict[str, bool]:
     return results
 
 
+# ---------------------------------------------------------------------------
+# Multi-generator obstruction structure
+# ---------------------------------------------------------------------------
+
+def multi_generator_obstruction():
+    """Multi-generator obstruction analysis.
+
+    For single-generator algebras (Heisenberg, KM, Virasoro):
+      obs_g = kappa * lambda_g  (Hodge class)
+      (obs_g)^2 = 0  by Mumford's relation (PROVED)
+
+    For multi-generator algebras (W_3, W_N):
+      obs_g = sum_h kappa_h * lambda_g^{(h)}
+      where lambda_g^{(h)} = c_g(R^0 pi_* omega^{h})
+
+    Mumford's relation applies ONLY to h=1 (Hodge bundle).
+    For h >= 2: no flatness, no Mumford, nilpotence OPEN for g >= 3.
+
+    Ground truth: rem:multi-generator-nilpotence in higher_genus.tex.
+    """
+    c = Symbol('c')
+
+    return {
+        "W3": {
+            "generators": {"T": 2, "W": 3},  # conformal weights
+            "curvature_channels": {"T": c / 2, "W": c / 3},
+            "kappa_total": 5 * c / 6,
+            "obstruction_formula": "obs_g = (c/2)*lambda_g^{(2)} + (c/3)*lambda_g^{(3)}",
+            "hodge_bundle_ranks": {
+                # rank(R^0 pi_* omega^h) at genus g:
+                # h=1: g (Hodge bundle)
+                # h>=2: (2h-1)(g-1)
+                "h=2": lambda g: 3 * (g - 1),
+                "h=3": lambda g: 5 * (g - 1),
+            },
+            "mumford_applies": False,
+            "nilpotence_proved_for": "g <= 2 (dimensional argument: 4g > 6g-6)",
+            "nilpotence_open_for": "g >= 3",
+        },
+        "W4": {
+            "generators": {"T": 2, "W3": 3, "W4": 4},
+            "curvature_channels": {"T": c / 2, "W3": c / 3, "W4": c / 4},
+            "kappa_total": c * (Rational(1, 2) + Rational(1, 3) + Rational(1, 4)),
+            "obstruction_formula": "obs_g = sum kappa_h * lambda_g^{(h)}",
+            "mumford_applies": False,
+            "nilpotence_proved_for": "g <= 2",
+            "nilpotence_open_for": "g >= 3",
+        },
+    }
+
+
+def dimensional_nilpotence_check(g: int) -> dict:
+    """Check whether (obs_g)^2 = 0 by the dimensional argument.
+
+    (obs_g)^2 lives in H^{4g}(M-bar_g).
+    dim_C M-bar_g = 3g - 3.
+    So H^{4g} = 0 iff 4g > 2(3g-3) = 6g-6, i.e., g < 3.
+
+    For g >= 3: 4g <= 6g-6, so H^{4g} may be nonzero.
+    """
+    dim_moduli = 3 * g - 3
+    obs_squared_degree = 4 * g
+    max_cohomological_degree = 2 * dim_moduli
+
+    return {
+        "genus": g,
+        "dim_moduli_space": dim_moduli,
+        "obs_squared_degree": obs_squared_degree,
+        "max_degree": max_cohomological_degree,
+        "dimensional_vanishing": obs_squared_degree > max_cohomological_degree,
+        "mumford_needed": not (obs_squared_degree > max_cohomological_degree),
+    }
+
+
+def verify_multi_generator_obstruction() -> Dict[str, bool]:
+    """Verify multi-generator obstruction structure."""
+    c = Symbol('c')
+    results = {}
+
+    data = multi_generator_obstruction()
+
+    # W3 kappa decomposition: c/2 + c/3 = 5c/6
+    w3 = data["W3"]
+    kappa_sum = sum(w3["curvature_channels"].values())
+    results["W3: kappa_T + kappa_W = 5c/6"] = simplify(kappa_sum - w3["kappa_total"]) == 0
+
+    # W4 kappa: 1/2 + 1/3 + 1/4 = 13/12
+    w4 = data["W4"]
+    results["W4: sigma = 13/12"] = simplify(
+        w4["kappa_total"] / c - Rational(13, 12)
+    ) == 0
+
+    # Dimensional argument for g=1,2 (holds for all algebras)
+    for g in [1, 2]:
+        check = dimensional_nilpotence_check(g)
+        results[f"g={g}: dimensional vanishing"] = check["dimensional_vanishing"]
+
+    # g=3: dimensional argument fails
+    check3 = dimensional_nilpotence_check(3)
+    results["g=3: dimensional argument FAILS"] = not check3["dimensional_vanishing"]
+
+    # g=3: obs^2 degree = 12, max degree = 12 (top cohomology!)
+    results["g=3: obs^2 in top degree"] = check3["obs_squared_degree"] == check3["max_degree"]
+
+    # Hodge bundle ranks at g=3
+    results["g=3: rank E_2 = 6"] = w3["hodge_bundle_ranks"]["h=2"](3) == 6
+    results["g=3: rank E_3 = 10"] = w3["hodge_bundle_ranks"]["h=3"](3) == 10
+
+    return results
+
+
 if __name__ == "__main__":
     print("=" * 60)
     print("CURVATURE-GENUS BRIDGE VERIFICATION")
@@ -200,4 +311,8 @@ if __name__ == "__main__":
 
     print("\n--- Kappa Complementarity ---")
     for name, ok in verify_kappa_complementarity().items():
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}")
+
+    print("\n--- Multi-Generator Obstruction ---")
+    for name, ok in verify_multi_generator_obstruction().items():
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}")

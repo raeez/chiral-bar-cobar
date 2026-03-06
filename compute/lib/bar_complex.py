@@ -318,12 +318,33 @@ def bar_dim_w3(degree: int) -> Optional[int]:
 def bar_dim_sl3(degree: int) -> Optional[int]:
     """Bar COHOMOLOGY dimension for sl3-hat at given bar degree.
 
-    From the Master Table (examples_summary.tex): 8, 36, 204.
+    From the Master Table (examples_summary.tex): 8, 36, 204 (proved).
     These are dim H^n(B-bar), NOT chain group dims.
     Chain group dim = dim(g)^n * (n-1)! = 8^n * (n-1)! (proved).
+
+    Conjectured rational GF (conj:sl3-bar-gf):
+      P(x) = 4x(2-13x-2x^2) / ((1-8x)(1-3x-x^2))
+    Recurrence: a(n) = 11*a(n-1) - 23*a(n-2) - 8*a(n-3).
+    Characteristic polynomial: (t-8)(t^2-3t-1).
+    Predicted: a(4) = 1352, a(5) = 9892 (dagger in Master Table).
     """
     known = {1: 8, 2: 36, 3: 204}
     return known.get(degree)
+
+
+def bar_dim_sl3_conjectured(degree: int) -> Optional[int]:
+    """Conjectured bar cohomology for sl3 via rational GF recurrence.
+
+    a(n) = 11*a(n-1) - 23*a(n-2) - 8*a(n-3), a(1)=8, a(2)=36, a(3)=204.
+    Returns conjectured value for any degree >= 1.
+    """
+    if degree < 1:
+        return None
+    a = [0, 8, 36, 204]
+    while len(a) <= degree:
+        n = len(a)
+        a.append(11 * a[n-1] - 23 * a[n-2] - 8 * a[n-3])
+    return a[degree]
 
 
 # ---------------------------------------------------------------------------
@@ -364,7 +385,7 @@ KNOWN_BAR_DIMS = {
     "beta_gamma": {1: 2, 2: 4, 3: 10, 4: 26, 5: 70, 6: 192, 7: 534, 8: 1500},  # [x^n]sqrt((1+x)/(1-3x))
     # === KM BAR COHOMOLOGY dims (from summary table) ===
     "sl2": {1: 3, 2: 6, 3: 15, 4: 36, 5: 91, 6: 232, 7: 603},
-    "sl3": {1: 8, 2: 36, 3: 204},
+    "sl3": {1: 8, 2: 36, 3: 204},  # degrees 4,5 conjectured: 1352, 9892
     # === Non-KM: from summary table ===
     "Virasoro": {1: 1, 2: 2, 3: 5, 4: 12, 5: 30, 6: 76, 7: 196, 8: 512},
     "W3": {1: 2, 2: 5, 3: 16, 4: 52},

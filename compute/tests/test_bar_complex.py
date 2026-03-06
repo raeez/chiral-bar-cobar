@@ -304,3 +304,66 @@ class TestAssociativeBarDifferential:
         assert result[0] == 2   # 2·e
         assert result[1] == 0
         assert result[2] == 0
+
+
+class TestSl3BarGFConjecture:
+    """Tests for conj:sl3-bar-gf — rational GF for sl₃ bar cohomology.
+
+    GF = 4x(2-13x-2x²) / ((1-8x)(1-3x-x²))
+    Recurrence: a(n) = 11*a(n-1) - 23*a(n-2) - 8*a(n-3)
+    Characteristic polynomial: (t-8)(t²-3t-1)
+    """
+
+    def test_recurrence_matches_known(self):
+        """Recurrence reproduces known values a(1)=8, a(2)=36, a(3)=204."""
+        from compute.lib.bar_complex import bar_dim_sl3_conjectured
+        assert bar_dim_sl3_conjectured(1) == 8
+        assert bar_dim_sl3_conjectured(2) == 36
+        assert bar_dim_sl3_conjectured(3) == 204
+
+    def test_predicted_deg4(self):
+        """Predicted a(4) = 1352."""
+        from compute.lib.bar_complex import bar_dim_sl3_conjectured
+        assert bar_dim_sl3_conjectured(4) == 1352
+
+    def test_predicted_deg5(self):
+        """Predicted a(5) = 9892."""
+        from compute.lib.bar_complex import bar_dim_sl3_conjectured
+        assert bar_dim_sl3_conjectured(5) == 9892
+
+    def test_gf_series_expansion(self):
+        """GF power series matches recurrence through degree 10."""
+        from sympy import symbols, series, Rational
+        from compute.lib.bar_complex import bar_dim_sl3_conjectured
+        x = symbols('x')
+        gf = -4*x*(2*x**2 + 13*x - 2) / ((1-8*x)*(1-3*x-x**2))
+        s = series(gf, x, 0, 11)
+        for n in range(1, 11):
+            assert s.coeff(x, n) == bar_dim_sl3_conjectured(n)
+
+    def test_characteristic_polynomial(self):
+        """Char poly (t-8)(t²-3t-1) matches denominator."""
+        from sympy import symbols, factor, expand
+        t = symbols('t')
+        char_poly = t**3 - 11*t**2 + 23*t + 8
+        assert factor(char_poly) == (t - 8) * (t**2 - 3*t - 1)
+
+    def test_growth_rate(self):
+        """a(n)/a(n-1) → 8 = dim(sl₃)."""
+        from compute.lib.bar_complex import bar_dim_sl3_conjectured
+        ratio = bar_dim_sl3_conjectured(15) / bar_dim_sl3_conjectured(14)
+        assert abs(ratio - 8.0) < 0.001
+
+    def test_all_positive(self):
+        """All bar cohomology dimensions are positive."""
+        from compute.lib.bar_complex import bar_dim_sl3_conjectured
+        for n in range(1, 20):
+            assert bar_dim_sl3_conjectured(n) > 0
+
+    def test_h2_equals_sym2(self):
+        """H² = C(d+1,2) = dim S²(g) for KM algebras."""
+        from math import comb
+        # sl₂: dim=3, H²=6
+        assert comb(3+1, 2) == 6 == KNOWN_BAR_DIMS["sl2"][2]
+        # sl₃: dim=8, H²=36
+        assert comb(8+1, 2) == 36 == KNOWN_BAR_DIMS["sl3"][2]

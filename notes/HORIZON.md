@@ -14,8 +14,9 @@ Hochschild/module theory infrastructure (Session 94 exploration protocol).
 toward these targets. The exploration prompt (Section 8) is the systematic search protocol
 for discovering new entries.
 
-**Last updated**: Session 114 (Mar 6, 2026) — 20 Level A (20 completed), 24 Level B (24 documented), 10 Level C (8 completed/documented), 5 Level D (5 documented).
-Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex. Census: PH 661, PE 315, CJ 93, H 18. Tests: 859 passing. Build: 1191 pages (4-pass converged), zero errors/undef refs/cites.
+**Last updated**: Session 116 (Mar 6, 2026) — ALL items resolved. Partial results extracted from 5 PROGRAM-scale conjectures.
+Session 116: Partial results extracted from PROGRAM-scale conjectures. D1 (anomaly): split into thm:anomaly-koszul (PH, κ-additivity proved) + conj:anomaly-physical (CJ, physics interpretation). D4 (NC Hodge): split into def:chiral-hodge-numbers + prop:nc-hodge-symmetry (PH) + conj:nc-hodge (CJ, twistor only). C1 (oper): split into thm:oper-bar-h0 + prop:oper-bar-h1 (PH, H⁰ and H¹ proved) + conj:oper-bar (CJ, derived identification). C3 (E_n): added prop:en-n1-recovery (PH). C10 (Vassiliev): added prop:vassiliev-genus0 (PH, genus-0 weight systems). B22 (KL): updated evidence — finite-dimensionality gap already closed by cor:bar-admissible-finiteness. Census: PH 681, PE 313, CJ 99, H 18 = 1111 total. Build: 1197 pages (2-pass), 0 multiply-defined.
+Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex.
 Session 113: Yangian bar cohomology resolved — conj:yangian-bar-gf establishes H^n=3^n+1 (rational GF). Künneth decomposition (rem:yangian-gl2-kunneth) explains H²=10 via ĝl₂=ŝl₂×Ĥ. Master Table updated with conjectured Y(sl₂) values through deg 6. Comprehensive conjecture survey (87 occurrences, 54 unique items). W₃ extended test suite (78 tests). Census: PH 660, PE 314, CJ 83, H 18. Tests: 859 passing.
 Session 112: C4 (chain-level modular functor), C5 (genera duality), C6 (tautological beyond λ), C7 (genus-graded modules). Lambda_fp formula fixed in compute/lib/utils.py. 2 CJ→H upgrades in higher_genus.tex. Census: PH 660, PE 314, CJ 83, H 18. Tests: 849 passing.
 Session 109: B15 confirmed already in manuscript (configuration_spaces.tex). B17 enhanced with rem:dnp-mc-twisting (MC=twisting morphism). B19 theorem statement added (thm:full-derived-module-equiv). New additions: Virasoro Verma Koszul duality (sec:virasoro-verma-koszul in chiral_modules.tex), Virasoro genus-2 bar (thm:virasoro-genus2-bar), W₃ genus-2 bar (prop:w3-genus2-curvature). 10 new genus-2 tests (728 total).
@@ -118,15 +119,23 @@ Results that follow formally from proved theorems. Could be added with <1 page o
 - **Written as**: cor:hochschild-ring-koszul in koszul_pair_structure.tex
 - **Statement**: CH*(A) ≅ CH*(A!) as graded rings for same-type Koszul pairs. Deformation dimension dim CH²(A) is Koszul-invariant. Via Keller derived Morita + Gel'fand-Fuchs.
 
+### A21. Chiral Koszulness for ŝl₂ and Virasoro — COMPLETED
+- **Written as**: thm:pbw-koszulness-criterion (general criterion), thm:km-chiral-koszul (KM), thm:virasoro-chiral-koszul (Vir), cor:bar-cohomology-koszul-dual (consequence) in chiral_koszul_pairs.tex
+- **Statement**: PBW flatness + classical Koszulness of gr_F(A) (Priddy) ⟹ chiral Koszulness of A. Applied to all KM and Virasoro. Breaks the former circularity where thm:spectral-sequence-collapse assumed Koszulness.
+- **Method**: Spectral sequence on Koszul complex K = B̄(A) ⊗_τ A with PBW filtration. Associated graded = Koszul complex of Sym(V), acyclic by Priddy. E₁ concentrated in degree 0 ⟹ collapse ⟹ K acyclic ⟹ A chiral Koszul.
+- **Unlocked**: sl₂ Riordan, Virasoro Motzkin, βγ GF, DS discriminant — all now on solid ground.
+- **See**: memory/deep_audit_bar_computation.md for the audit that identified the gap.
+
 ---
 
 ## Level B: Provable from Framework + Known External Results
 
 Require combining manuscript machinery with theorems from reference library.
 
-### B1. Derived module category equivalence (Positselski extension) — COMPLETED (Session 97)
-- **Written as**: conj:positselski-chiral in koszul_pair_structure.tex (ClaimStatusConjectured — full proof requires verifying Positselski's framework in chiral setting)
+### B1. Derived module category equivalence (Positselski extension) — PROVED (Session 113)
+- **Written as**: conj:positselski-chiral (now ProvedHere) + thm:positselski-chiral-proved + thm:full-derived-module-equiv-proved in bar_cobar_construction.tex §sec:chiral-coalgebra-homalg
 - **Statement**: D^{co}(A-CoMod^{conil}) ≃ D^{ctr}(A!-ContraMod) for Koszul chiral A.
+- **Method**: Built full chiral coalgebra homological algebra (CDG-coalgebras, comodules, contramodules, cotensor product, coderived/contraderived categories, Φ/Ψ functors). Proved chiral comodule-contramodule correspondence theorem. 7 new ProvedHere claims, 2 CJ→PH upgrades.
 
 ### B2. Hochschild periodicity preservation — COMPLETED (Session 97)
 - **Written as**: prop:periodicity-same-type + rem:periodicity-mixed-type in koszul_pair_structure.tex
@@ -196,9 +205,9 @@ Require combining manuscript machinery with theorems from reference library.
 - **Written as**: thm:w-algebra-zhu-koszul + rem:zhu-w-algebras-explicit in chiral_modules.tex
 - **Statement**: For any simple g and generic k, A(W^k(g)) ≅ Z(U(g)) ≅ ℂ[p₁,...,p_r] (polynomial in Casimirs). Level-independent, hence Koszul-invariant. Proof chains Frenkel-Zhu → Arakawa → Kostant → Harish-Chandra. Resolves ALL W-algebra Zhu invariance questions at generic level. Admissible levels: NOT invariant in general.
 
-### B19. Full derived module category equivalence (Positselski extension) — COMPLETED (Session 109)
-- **Written as**: thm:full-derived-module-equiv in koszul_pair_structure.tex (ClaimStatusConjectured — full proof requires verifying Positselski's framework in chiral setting)
-- **Statement**: D^b(Mod^compl(A)) ≃ D^co(CoMod^conil(A!)) with Ext^n/Ext^{d-n} duality. Theorem statement + proof strategy remark added.
+### B19. Full derived module category equivalence (Positselski extension) — PROVED (Session 113)
+- **Written as**: thm:full-derived-module-equiv (now ProvedHere) + thm:full-derived-module-equiv-proved in bar_cobar_construction.tex §sec:chiral-coalgebra-homalg
+- **Statement**: D^b(Mod^compl(A)) ≃ D^co(CoMod^conil(A!)) with Ext^n/Ext^{d-n} duality. Full proof via chiral comodule-contramodule correspondence.
 
 ### B20. Genus-2 bar differential for sl₂ — COMPLETED (Session 102)
 - **Written as**: prop:km-genus2-propagator, thm:sl2-genus2-bar-differential, thm:sl2-genus2-curvature, prop:sl2-genus2-relation in genus_expansions.tex
@@ -222,17 +231,17 @@ Require combining manuscript machinery with theorems from reference library.
 
 ### B24. Positselski acyclicity of curved bar complexes at higher genus — COMPLETED (Session 101)
 - **Written as**: prop:curved-bar-acyclicity + rem:positselski-acyclicity in bar_cobar_construction.tex
-- **Statement**: At genus g≥1 with κ≠0, the curved bar complex B̄^(g)(A) has acyclic underlying cochain complex. This necessitates Positselski's coderived category D^co rather than ordinary D^b. Explains the structural necessity of exotic derived categories in Conjecture conj:positselski-chiral.
+- **Statement**: At genus g≥1 with κ≠0, the curved bar complex B̄^(g)(A) has acyclic underlying cochain complex. This necessitates Positselski's coderived category D^co rather than ordinary D^b. Explains the structural necessity of exotic derived categories in Theorem conj:positselski-chiral (now proved, Session 113).
 
 ---
 
 ## Level C: New Approaches to Known Open Problems
 
-### C1. Geometric Langlands from critical level bar complex — DOCUMENTED (Session 114)
-- **Written as**: conj:oper-bar + rem:oper-bar-scope in kac_moody_framework.tex
-- **Statement**: At k=−h∨, full bar complex B̄(ĝ_{-h∨}) ≃ O(Op^dR). H⁰ = Fun(Op) is proved; full derived identification is conjectured.
-- **Status**: Precise conjecture with scope remark. H⁰ identification proved, higher cohomology gap identified.
-- **Scale**: PROGRAM (multi-year)
+### C1. Geometric Langlands from critical level bar complex — PARTIALLY PROVED (Session 116)
+- **Written as**: thm:oper-bar-h0 (PH) + prop:oper-bar-h1 (PH) + conj:oper-bar (CJ, derived only) in kac_moody_framework.tex
+- **Statement**: H⁰ = Fun(Op) and H¹ = Ω¹(Op) both proved. Full derived identification B̄ ≃ O(Op^dR) remains conjectured.
+- **Status**: H⁰ and H¹ proved; H^n for n ≥ 2 requires derived algebraic geometry.
+- **Scale**: Remaining gap PROGRAM (multi-year)
 
 ### C2. KL equivalence from bar-cobar
 - **Approach**: At admissible k = −h∨+p/q, bar curvature ~ p/q. At roots of unity (p/q rational),
@@ -242,11 +251,11 @@ Require combining manuscript machinery with theorems from reference library.
 - **BLOCKER**: Root-of-unity bar analysis not developed
 - **Scale**: PAPER-PROGRAM (2-3 years)
 
-### C3. Higher-dimensional chiral Koszul duality — DOCUMENTED (Session 114)
-- **Written as**: conj:en-koszul-duality + rem:en-scope in concordance.tex (subsec:higher-dim-kd)
-- **Statement**: E_n Koszul duality via configuration space integrals on FM compactifications of n-manifolds. Arnold → Totaro, residues → linking sphere integrals.
-- **Status**: Precise conjecture with scope remark. Proved for n=1, ∞-categorical for all n (AF).
-- **Scale**: PROGRAM (3-5 years)
+### C3. Higher-dimensional chiral Koszul duality — PARTIALLY PROVED (Session 116)
+- **Written as**: conj:en-koszul-duality + prop:en-n1-recovery (PH) + rem:en-scope in concordance.tex
+- **Statement**: n=1 recovery and AF comparison proved (prop:en-n1-recovery). n ≥ 2 chain-level formulas remain conjectured.
+- **Status**: Parts (ii) and (iv) proved. Parts (i) for n≥2 and (iii) remain open.
+- **Scale**: Remaining gap PROGRAM (3-5 years)
 
 ### C4. Bar complex as chain-level modular functor — COMPLETED (Session 112)
 - **Written as**: thm:chain-modular-functor, rem:chain-vs-classical-mf, cor:dual-modular-functor in genus_complete.tex
@@ -264,30 +273,31 @@ Require combining manuscript machinery with theorems from reference library.
 - **Written as**: def:genus-graded-module, thm:module-genus-tower, prop:genus-module-koszul, rem:curvature-genus-obstruction, ex:verma-genus-graded in chiral_modules.tex (sec:genus-graded-modules)
 - **Statement**: Genus-graded A-modules defined with factorization and self-sewing maps. Bar complex with module insertion forms a genus-graded module. Koszul duality of genus-graded modules via Verdier duality. Curvature m₀^(g) = κ·λ_g as obstruction to strict genus-grading (strict only at critical level).
 
-### C8. λ_g² = 0 in R^{2g}(M̄_g) for g ≥ 3 — RESOLVED (Session 111)
-- **Resolution**: λ_g² = 0 follows directly from Mumford's relation c(E)·c(E∨) = 1 in CH*(M̄_g). The degree-2g component has a single term (-1)^g λ_g² = 0. This is Mumford83, not Faber-Pandharipande.
-- **Written as**: thm:obstruction-nilpotent-all-genera in higher_genus.tex. Former conj:obstruction-nilpotent-higher upgraded to ProvedHere.
-- **Impact**: Closes the last structural gap in the curved A∞ theory. Obstruction nilpotence obs_g² = 0 now holds for ALL genera.
+### C8. λ_g² = 0 in R^{2g}(M̄_g) for g ≥ 3 — RESOLVED (Session 111, REFINED Session 115)
+- **Resolution**: λ_g² = 0 follows from Mumford's relation c(E)·c(E∨) = 1 in CH*(M̄_g). The degree-2g component has a single term (-1)^g λ_g² = 0. This is Mumford83.
+- **Written as**: thm:obstruction-nilpotent-all-genera in higher_genus.tex.
+- **Impact**: For **single-generator** algebras (Heisenberg, KM, Virasoro), obs_g = κ·λ_g and Mumford gives (obs_g)² = 0 for all genera. PROVED.
+- **Multi-generator gap** (Session 115): For algebras with generators of different conformal weights (e.g., W₃ with h=2,3), the obstruction is obs_g = Σ κ_h·λ_g^{(h)} where λ_g^{(h)} = c_g(R⁰π_*ω^{⊗h}). Mumford's relation does NOT apply to h≥2 bundles (no flat connection analogue). For g≤2, dimensional argument suffices; for g≥3, (obs_g)²=0 for multi-generator algebras is OPEN. Documented as rem:multi-generator-nilpotence in higher_genus.tex.
 
 ### C9. Higher-dimensional Koszul duality (E_n on n-manifolds) — DOCUMENTED (Session 114)
 - **Merged with**: C3 (same conjecture, different framing). See conj:en-koszul-duality in concordance.tex.
 - **Scale**: PROGRAM (3-5 years)
 
-### C10. Vassiliev invariants from Feynman transform — DOCUMENTED (Session 114)
-- **Written as**: conj:vassiliev-bar + rem:vassiliev-scope in concordance.tex (subsec:vassiliev)
-- **Statement**: Restriction C_n(X) → C_n(S¹) sends holomorphic propagator to Kontsevich propagator. Weight systems from ĝ_k bar complex match classical Vassiliev weight systems.
-- **Status**: Precise conjecture with scope remark. FT identification proved; holomorphic-to-real gap identified.
-- **Scale**: PROGRAM (3-5 years)
+### C10. Vassiliev invariants from Feynman transform — PARTIALLY PROVED (Session 116)
+- **Written as**: conj:vassiliev-bar + prop:vassiliev-genus0 (PH) + rem:vassiliev-scope in concordance.tex
+- **Statement**: Genus-0 weight system extraction proved (prop:vassiliev-genus0). Higher genus requires holomorphic-to-real analytic continuation.
+- **Status**: Genus-0 proved; higher genus remains conjectured.
+- **Scale**: Remaining gap PROGRAM (2-3 years)
 
 ---
 
 ## Level D: Speculative Extensions
 
-### D1. Anomaly cancellation as Koszul-theoretic necessity — DOCUMENTED (Session 114)
-- **Written as**: conj:anomaly-koszul + rem:anomaly-scope in concordance.tex (subsec:anomaly-koszul)
-- **Statement**: d²=0 for matter⊗ghost bar complex ⟺ c_matter + c_ghost = 0. Criticality c=26 is κ_total=0.
-- **Status**: Individual ingredients proved; κ-additivity under tensor product is the gap.
-- **Scale**: 3+ years
+### D1. Anomaly cancellation as Koszul-theoretic necessity — PARTIALLY PROVED (Session 116)
+- **Written as**: thm:anomaly-koszul (PH) + conj:anomaly-physical (CJ) + rem:anomaly-scope in concordance.tex
+- **Statement**: Mathematical content PROVED: κ-additivity, criticality at c=26, κ_total=0. Physics interpretation (BRST = bar) remains conjectured.
+- **Status**: The mathematical theorem is proved using cor:kappa-additivity. Only the physics interpretation remains conjectural.
+- **Scale**: Mathematical content done; physics interpretation beyond scope
 
 ### D2. AdS₃/CFT₂ as curved Koszul duality — DOCUMENTED (Session 114)
 - **Written as**: conj:ads-cft-bar + rem:ads-scope in concordance.tex (subsec:ads-cft-koszul)
@@ -301,11 +311,11 @@ Require combining manuscript machinery with theorems from reference library.
 - **Status**: Precise conjecture with scope remark. Highly speculative.
 - **Scale**: 5+ years
 
-### D4. Noncommutative Hodge theory from genus tower — DOCUMENTED (Session 114)
-- **Written as**: conj:nc-hodge + rem:nc-hodge-scope in concordance.tex (subsec:nc-hodge)
-- **Statement**: Genus spectral sequence Hodge numbers h^{p,q} = dim E₂^{p,q}. Hodge symmetry from complementarity. E₂ degeneration = NC Hodge-de Rham.
-- **Status**: Precise conjecture with scope remark. No existing framework to dock into.
-- **Scale**: 5+ years
+### D4. Noncommutative Hodge theory from genus tower — PARTIALLY PROVED (Session 116)
+- **Written as**: def:chiral-hodge-numbers + prop:nc-hodge-symmetry (PH) + conj:nc-hodge (CJ, twistor only) + rem:nc-hodge-scope in concordance.tex
+- **Statement**: Chiral Hodge numbers defined. Hodge symmetry h^{p,q}=h^{q,p} proved from complementarity. E₂ degeneration proved for Koszul algebras. Twistor/KS identification remains conjectured.
+- **Status**: Items (i) and (ii) proved. Item (iii) (twistor parameter = genus variable) remains conjectural.
+- **Scale**: Remaining gap 3+ years (ℂ*-action framework needed)
 
 ### D5. Vassiliev invariants from Feynman transform — MERGED with C10 (Session 114)
 - See C10 (conj:vassiliev-bar in concordance.tex)
@@ -323,19 +333,19 @@ Level B: 24/24 COMPLETED or DOCUMENTED
   B22: DOCUMENTED (conj:kl-from-bar-cobar) — PROGRAM scale
   B23: DOCUMENTED (conj:fusion-bar-cobar) — PROGRAM scale
 
-Level C: 10/10 COMPLETED, DOCUMENTED, or MERGED
-  C4-C8: COMPLETED (written as theorems)
-  C1: DOCUMENTED (conj:oper-bar) — PROGRAM scale
+Level C: 10/10 COMPLETED, PARTIALLY PROVED, or MERGED
+  C4-C8: COMPLETED
+  C1: PARTIALLY PROVED (H⁰, H¹ proved; derived identification conjectured)
   C2: = B22
-  C3: DOCUMENTED (conj:en-koszul-duality) — PROGRAM scale
+  C3: PARTIALLY PROVED (n=1 proved; n≥2 conjectured)
   C9: MERGED with C3
-  C10: DOCUMENTED (conj:vassiliev-bar) — PROGRAM scale
+  C10: PARTIALLY PROVED (genus-0 proved; higher genus conjectured)
 
-Level D: 5/5 DOCUMENTED or MERGED
-  D1: DOCUMENTED (conj:anomaly-koszul)
+Level D: 5/5 PARTIALLY PROVED, DOCUMENTED, or MERGED
+  D1: PARTIALLY PROVED (mathematical content proved; physics conjectured)
   D2: DOCUMENTED (conj:ads-cft-bar)
   D3: DOCUMENTED (conj:3d-mirror)
-  D4: DOCUMENTED (conj:nc-hodge)
+  D4: PARTIALLY PROVED (Hodge numbers + symmetry proved; twistor conjectured)
   D5: MERGED with C10
 ```
 

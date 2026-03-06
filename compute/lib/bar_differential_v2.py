@@ -1,6 +1,14 @@
-"""Chiral bar differential v2: correct Poincaré residue computation.
+"""Chiral bar differential v2: Poincaré residue with Arnold decomposition.
 
-Key insight: The Poincaré residue ∂_{ij} operates on OS forms via:
+WARNING: This implementation ALSO has d²≠0 (d₃∘d₄ ≠ 0, max entry 16.0
+for sl₂), identical to bar_differential.py. The Arnold decomposition of
+OS forms does not fix the fundamental issue: the naive "bracket × residue"
+formula is insufficient. The correct chiral bar differential requires
+the full Borcherds identity (Proposition prop:pole-decomposition in
+bar_cobar_construction.tex), not just the Lie bracket (simple pole).
+
+Key insight (correct but insufficient): The Poincaré residue ∂_{ij}
+operates on OS forms via:
   1. Use Arnold relations to write ω = η_{ij} ∧ α + β (with no η_{ij} in β)
   2. Res_{D_{ij}}(ω) = α|_{z_i=z_j} (restrict and relabel)
 
@@ -360,11 +368,6 @@ def bar_differential(dim_g, sc, n):
 
     if n <= 1:
         return np.zeros((1, dim_g))
-
-    if n == 2:
-        # d₂ = 0 (combined pole cancellation)
-        # source = g^{⊗2} ⊗ OS¹(C₂), target = g ⊗ OS⁰(C₁)
-        return np.zeros((dim_g, dim_g ** 2))
 
     src_os = nbc_basis(n, n - 1)
     tgt_os = nbc_basis(n - 1, n - 2)

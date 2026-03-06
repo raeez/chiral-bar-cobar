@@ -1,6 +1,14 @@
 """Chiral bar differential: exact numerical computation.
 
-Computes the bar cohomology of KM algebras at level 0 (uncurved)
+WARNING: This implementation has d²≠0 (d₃∘d₄ ≠ 0, max entry 16.0 for sl₂).
+It produces incorrect bar cohomology (H²=1 instead of 6, H³=-8 for sl₂).
+The naive "bracket × Poincaré residue" formula is INSUFFICIENT for the
+chiral bar differential — the correct differential requires the full
+Borcherds identity (all OPE pole orders simultaneously), not just the
+Lie bracket (simple pole). See bar_cobar_construction.tex
+Proposition prop:pole-decomposition.
+
+Attempts to compute bar cohomology of KM algebras at level 0 (uncurved)
 by building the bar differential as an explicit matrix.
 
 The bar complex B-bar^n = g^{⊗n} ⊗ OS^{n-1}(C_n) with differential

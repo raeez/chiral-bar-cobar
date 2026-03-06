@@ -1,21 +1,22 @@
-"""Chiral bar complex with explicit differentials.
+"""Chevalley-Eilenberg complex and associative bar differentials.
 
-The chiral bar complex for a Kac-Moody algebra ĝ_k has:
-  B-bar^n = g^{⊗n} ⊗ OS^{n-1}(C_n)
+This module implements two DISTINCT complexes:
 
-where OS^{n-1} is the (n-1)-th graded piece of the Orlik-Solomon algebra.
+1. CHEVALLEY-EILENBERG complex (CEComplex class): Λ^n(g*) with the
+   standard CE differential from the Jacobi identity. d²=0 is VERIFIED.
+   This is the classical Lie algebra cohomology complex, equivalent to
+   the genus-0 critical-level specialization of the chiral bar complex.
 
-The differential d = Σ_{i<j} d_{ij} sums over ALL pairwise collisions.
-Each d_{ij} collapses points i,j via the OPE:
-  - Simple pole → Lie bracket f^{ab}_c J^c
-  - Double pole → curvature k·κ^{ab}·1 (maps to lower bar degree)
+2. ASSOCIATIVE bar differentials (sl2_assoc_bar_diff_2to1, etc.):
+   The bar complex for g viewed as an associative algebra under the
+   Lie bracket. d²≠0 here (the associator is nonzero for non-associative
+   products), which is EXPECTED and correctly verifies curvature.
 
-For d² = 0: the form residues R_{ij}(ω) must encode the Jacobi identity.
-
-This module also implements the CHEVALLEY-EILENBERG complex (= classical
-limit / Lie operad bar), which uses Λ^n(g*) with the CE differential.
-The CE complex is the genus-0, critical-level specialization of the
-chiral bar complex.
+NOTE: Neither of these is the full chiral bar complex B̄^n = g^{⊗n} ⊗ OS^{n-1}.
+The chiral bar differential requires the full Borcherds identity (all OPE
+pole orders simultaneously). Implementations in bar_differential.py and
+bar_differential_v2.py attempt this but have d²≠0 bugs — the naive
+"bracket × Poincaré residue" formula is insufficient.
 
 CONVENTIONS:
 - Cohomological grading, |d| = +1
@@ -911,7 +912,9 @@ def chiral_bar_d2_check():
 if __name__ == "__main__":
     sl2_bar_analysis()
     # Note: chiral_bar_d2_check() shows d²≠0 on individual OS^2 basis elements.
-    # This is EXPECTED: the Arnold relation provides cancellation only at the
-    # level of the Chevalley-Eilenberg complex (antisymmetric tensors Λ^n(g*)),
-    # not on the free tensor product g^⊗n ⊗ OS^{n-1}.
-    # The CE complex d²=0 is verified in the CEComplex class above.
+    # This is EXPECTED for the associative bar: the associator is nonzero.
+    # The CE complex (Λ^n(g*)) has d²=0 — verified in CEComplex above.
+    # The full CHIRAL bar complex (g^⊗n ⊗ OS^{n-1}) requires the Borcherds
+    # identity for d²=0, not just the Jacobi identity. Implementations in
+    # bar_differential.py and bar_differential_v2.py attempt this but both
+    # have d²≠0 bugs — the "bracket × residue" formula is insufficient.

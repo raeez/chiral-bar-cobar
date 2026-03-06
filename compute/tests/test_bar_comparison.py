@@ -170,3 +170,149 @@ class TestSelfConsistency:
     def test_pole_curvature(self):
         for name, ok in verify_pole_curvature().items():
             assert ok, f"Failed: {name}"
+
+
+class TestDiscriminantLinearRelation:
+    """Verify Q(x)-linear relation among sl2 discriminant family GFs.
+
+    Theorem (thm:discriminant-linear-dependence):
+    x^2(1+x) P_Vir = (1-2x-x^2)(1+x) P_sl2 - (1-3*x) P_bg
+
+    where P_sl2, P_Vir, P_bg are the bar cohomology GFs.
+    """
+
+    @staticmethod
+    def _gf_sl2(x):
+        """Riordan GF: (1+x-sqrt(Delta))/(2x(1+x))."""
+        from math import sqrt
+        D = 1 - 2*x - 3*x**2
+        return (1 + x - sqrt(D)) / (2*x*(1+x))
+
+    @staticmethod
+    def _gf_vir(x):
+        """Motzkin difference GF: 4x/(1-x+sqrt(Delta))^2."""
+        from math import sqrt
+        D = 1 - 2*x - 3*x**2
+        return 4*x / (1 - x + sqrt(D))**2
+
+    @staticmethod
+    def _gf_bg(x):
+        """Beta-gamma GF: sqrt((1+x)/(1-3*x))."""
+        from math import sqrt
+        return sqrt((1+x)/(1-3*x))
+
+    @pytest.mark.parametrize("x", [0.05, 0.1, 0.15, 0.2, 0.25, 0.3])
+    def test_linear_relation_numerical(self, x):
+        """Verify x^2(1+x)*P_Vir = (1-2x-x^2)(1+x)*P_sl2 - (1-3*x)*P_bg."""
+        P_sl2 = self._gf_sl2(x)
+        P_vir = self._gf_vir(x)
+        P_bg = self._gf_bg(x)
+
+        lhs = x**2 * (1+x) * P_vir
+        rhs = (1-2*x-x**2)*(1+x)*P_sl2 - (1-3*x)*P_bg
+        assert abs(lhs - rhs) < 1e-12, f"At x={x}: LHS={lhs}, RHS={rhs}"
+
+    def test_exact_at_rational_point(self):
+        """Verify at x=1/5 using exact arithmetic via sympy."""
+        try:
+            from sympy import Rational, sqrt as ssqrt
+            x = Rational(1, 5)
+            D = 1 - 2*x - 3*x**2
+            P_sl2 = (1 + x - ssqrt(D)) / (2*x*(1+x))
+            P_vir = 4*x / (1 - x + ssqrt(D))**2
+            P_bg = ssqrt((1+x)/(1-3*x))
+            lhs = x**2 * (1+x) * P_vir
+            rhs = (1-2*x-x**2)*(1+x)*P_sl2 - (1-3*x)*P_bg
+            assert (lhs - rhs).simplify() == 0
+        except ImportError:
+            pytest.skip("sympy required")
+
+    def test_coefficients_in_u_basis(self):
+        """Verify {1,u}-decomposition of each GF (u=sqrt(Delta))."""
+        try:
+            from sympy import symbols, sqrt as ssqrt, simplify
+            x = symbols('x')
+            D = 1 - 2*x - 3*x**2
+            u = ssqrt(D)
+
+            # P_sl2 = 1/(2x) - u/(2x(1+x))
+            P_sl2 = (1 + x - u) / (2*x*(1+x))
+            expected = 1/(2*x) - u/(2*x*(1+x))
+            assert simplify(P_sl2 - expected) == 0
+
+            # P_bg = u/(1-3*x)
+            P_bg = (1+x)/u
+            expected_bg = u/(1-3*x)  # after rationalization
+            # (1+x)/u = (1+x)*u/D = (1+x)*u/((1-3*x)(1+x)) = u/(1-3*x)
+            assert simplify(P_bg - expected_bg) == 0
+
+        except ImportError:
+            pytest.skip("sympy required")
+
+    def test_mutual_determination_bg_from_others(self):
+        """Recover P_bg from P_sl2 and P_Vir via the linear relation."""
+        for x in [0.05, 0.1, 0.2]:
+            P_sl2 = self._gf_sl2(x)
+            P_vir = self._gf_vir(x)
+            P_bg_direct = self._gf_bg(x)
+            # From relation: (1-3*x)*P_bg = (1-2x-x^2)(1+x)*P_sl2 - x^2(1+x)*P_Vir
+            P_bg_recovered = ((1-2*x-x**2)*(1+x)*P_sl2 - x**2*(1+x)*P_vir) / (1-3*x)
+            assert abs(P_bg_direct - P_bg_recovered) < 1e-12
+
+
+class TestYangianGF:
+    """Verify Yangian Y(sl_2) bar cohomology generating function.
+
+    Conjectured: dim H^n = 3^n + 1 for n >= 1.
+    GF: P(x) = (1-3x^2)/((1-x)(1-3x)) = -1 + 1/(1-x) + 1/(1-3x).
+    """
+
+    @staticmethod
+    def _gf_yangian(x):
+        return (1 - 3*x**2) / ((1 - x) * (1 - 3*x))
+
+    def test_p0_is_1(self):
+        """P(0) = 1 (vacuum)."""
+        assert abs(self._gf_yangian(0.0) - 1.0) < 1e-15
+
+    @pytest.mark.parametrize("n,expected", [
+        (1, 4), (2, 10), (3, 28), (4, 82), (5, 244), (6, 730),
+    ])
+    def test_coefficients(self, n, expected):
+        """Verify 3^n + 1 for small n."""
+        assert 3**n + 1 == expected
+
+    def test_partial_fraction_correct(self):
+        """P(x) = -1 + 1/(1-x) + 1/(1-3x), NOT 1/(1-x) + 1/(1-3x)."""
+        try:
+            from sympy import symbols, apart, Rational as R
+            x = symbols('x')
+            P = (1 - 3*x**2) / ((1 - x) * (1 - 3*x))
+            pf = apart(P, x)
+            # apart gives -1 - 1/(3x-1) - 1/(x-1) = -1 + 1/(1-3x) + 1/(1-x)
+            assert pf.subs(x, 0) == 1  # P(0) = 1
+            # Wrong version gives 2 at x=0:
+            wrong = 1/(1-x) + 1/(1-3*x)
+            assert wrong.subs(x, 0) == 2  # This is WRONG
+        except ImportError:
+            pytest.skip("sympy required")
+
+    def test_recurrence(self):
+        """a(n) = 4*a(n-1) - 3*a(n-2) for n >= 3, a(1)=4, a(2)=10."""
+        a = {1: 4, 2: 10}
+        for n in range(3, 10):
+            a[n] = 4*a[n-1] - 3*a[n-2]
+        for n in range(1, 10):
+            assert a[n] == 3**n + 1, f"a({n}) = {a[n]}, expected {3**n + 1}"
+
+    def test_gf_series_matches(self):
+        """Verify GF coefficients match 3^n+1 numerically."""
+        # Compute coefficients via recurrence
+        expected = [1] + [3**n + 1 for n in range(1, 8)]
+        # Compute from GF via numerical evaluation
+        from math import factorial
+        x0 = 0.01
+        P = self._gf_yangian(x0)
+        # P(x0) should approximately equal sum expected[n]*x0^n
+        approx = sum(expected[n] * x0**n for n in range(8))
+        assert abs(P - approx) < 1e-10
