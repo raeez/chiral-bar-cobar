@@ -1,5 +1,7 @@
 \chapter{Explicit genus expansions}\label{ch:genus-expansions}
 
+The genus expansion $\{F_g(\mathcal{A})\}_{g \geq 1}$ is the sequence of quantum corrections to chiral bar-cobar duality: it measures the failure of the genus-0 quasi-isomorphism $\Omega(B(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$ to extend to higher genus, and it is controlled by the curvature invariant $\kappa(\mathcal{A})$ through the genus universality theorem (Theorem~\ref{thm:genus-universality}).  In this chapter, we compute $F_g$ explicitly for every algebra treated in Part~II --- free fields, Kac--Moody, Virasoro, $\mathcal{W}_3$ --- and verify the complementarity theorem $F_g(\mathcal{A}) + F_g(\mathcal{A}^!) = F_g^{\mathrm{univ}}$ in each case.  The computations serve simultaneously as evidence for the conjectures of \S\ref{sec:modular-koszul-programme} and as a worked demonstration that the three main theorems interlock in practice exactly as the theory predicts.
+
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
 \subsection{Heisenberg algebra}\label{subsec:heisenberg-all-genera}
@@ -324,13 +326,13 @@ $\dim H^n(\barBgeom(Y(\mathfrak{sl}_2))) = 3^n + 1$ for all $n \geq 1$,
 with rational generating function
 \begin{equation}\label{eq:yangian-bar-gf}
 P_{Y(\mathfrak{sl}_2)}(x) = \frac{1 - 3x^2}{(1-x)(1-3x)}
-= \frac{1}{1-x} + \frac{1}{1-3x}
+= -1 + \frac{1}{1-x} + \frac{1}{1-3x}
 \end{equation}
 and recurrence $a(n) = 4\,a(n{-}1) - 3\,a(n{-}2)$ for $n \geq 3$
 with $a(1) = 4$, $a(2) = 10$.
 
 \emph{Evidence.}  Three data points ($4, 10, 28$) match $3^n + 1$ exactly.
-The partial fraction decomposition $1/(1{-}x) + 1/(1{-}3x)$ suggests a
+The partial fraction decomposition $-1 + 1/(1{-}x) + 1/(1{-}3x)$ suggests a
 direct sum structure: a ``constant'' contribution (from the
 $\mathfrak{gl}_1$ center) and a ``$3^n$'' contribution (from the
 $\mathfrak{sl}_2$ factor).  At degrees $1$--$2$, the chiral bar complex
@@ -1327,22 +1329,27 @@ The Verlinde formula~\cite{Verlinde} gives the dimension of the space of $\mathr
 \end{equation}
 
 \begin{computation}[Verlinde dimensions for $\widehat{\mathfrak{sl}}_2$]\label{comp:verlinde-sl2}
-For the first five genera and small levels:
+For the first eight genera and small levels:
 
 \medskip
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{ccccccc}
+{\small
+\begin{tabular}{cccccccc}
 \toprule
-$g \backslash k$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ \\
+$g \backslash k$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ \\
 \midrule
-$1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ \\
-$2$ & $4$ & $10$ & $20$ & $35$ & $56$ & $84$ \\
-$3$ & $8$ & $36$ & $120$ & $329$ & $784$ & $1680$ \\
-$4$ & $16$ & $136$ & $800$ & $3611$ & $13328$ & $42048$ \\
-$5$ & $32$ & $528$ & $5600$ & $42065$ & $241472$ & $1122560$ \\
+$1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\
+$2$ & $4$ & $10$ & $20$ & $35$ & $56$ & $84$ & $120$ \\
+$3$ & $8$ & $36$ & $120$ & $329$ & $784$ & $1680$ & $3312$ \\
+$4$ & $16$ & $136$ & $800$ & $3611$ & $13328$ & $42048$ & $117072$ \\
+$5$ & $32$ & $528$ & $5600$ & $42065$ & $241472$ & $1122560$ & $4411584$ \\
+$6$ & $64$ & $2080$ & $40000$ & $499955$ & $4456256$ & $30475264$ & $168816960$ \\
+$7$ & $128$ & $8256$ & $288000$ & $5980889$ & $82671232$ & $831000576$ & $6485090688$ \\
+$8$ & $256$ & $32896$ & $2080000$ & $71698571$ & $1536025344$ & $22687006720$ & $249378186240$ \\
 \bottomrule
 \end{tabular}
+}
 \end{center}
 \medskip
 At genus~1, $\dim V_{1,k} = k+1$ (the number of integrable representations).  At genus~2, $\dim V_{2,k} = \binom{k+3}{3} = (k+1)(k+2)(k+3)/6$, which follows from the identity $\sum_{j=1}^{k+1} \csc^2(j\pi/(k+2)) = (k+1)(k+3)/3$.  The polynomial growth $\dim V_{g,k} \sim C_g \cdot k^{3(g-1)}$ (Witten) is visible: the ratio $\dim V_{g,k}/k^{3(g-1)}$ stabilizes rapidly for large~$k$.
@@ -1440,21 +1447,21 @@ By the genus universality theorem (Theorem~\ref{thm:genus-universality}) with $\
 \end{proof}
 
 \begin{computation}[Explicit values at physical central charges]\label{comp:vir-physical-cc}
-We evaluate~\eqref{eq:vir-Fg} at central charges of physical interest through $g = 5$:
+We evaluate~\eqref{eq:vir-Fg} at central charges of physical interest:
 
 \medskip
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 {\footnotesize
-\begin{tabular}{clccccc}
+\begin{tabular}{clcccccc}
 \toprule
-$c$ & Model & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ \\
+$c$ & Model & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
 \midrule
-$0$ & Topological & $0$ & $0$ & $0$ & $0$ & $0$ \\[3pt]
-$\frac{1}{2}$ & Ising & $\frac{1}{4}$ & $\frac{1}{96}$ & $\frac{7}{23040}$ & $\frac{31}{3870720}$ & $\frac{127}{619315200}$ \\[6pt]
-$1$ & Free boson & $\frac{1}{2}$ & $\frac{1}{48}$ & $\frac{7}{11520}$ & $\frac{31}{1935360}$ & $\frac{127}{309657600}$ \\[6pt]
-$25$ & Near-bosonic & $\frac{25}{2}$ & $\frac{25}{48}$ & $\frac{175}{11520}$ & $\frac{775}{1935360}$ & $\frac{127}{12386304}$ \\[6pt]
-$26$ & Bosonic string & $13$ & $\frac{13}{24}$ & $\frac{91}{5760}$ & $\frac{403}{967680}$ & $\frac{1651}{154828800}$ \\[3pt]
+$0$ & Topological & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ \\[3pt]
+$\frac{1}{2}$ & Ising & $\frac{1}{4}$ & $\frac{1}{96}$ & $\frac{7}{23040}$ & $\frac{31}{3870720}$ & $\frac{127}{619315200}$ & $\frac{73}{14014218240}$ \\[6pt]
+$1$ & Free boson & $\frac{1}{2}$ & $\frac{1}{48}$ & $\frac{7}{11520}$ & $\frac{31}{1935360}$ & $\frac{127}{309657600}$ & $\frac{73}{7007109120}$ \\[6pt]
+$25$ & Near-bosonic & $\frac{25}{2}$ & $\frac{25}{48}$ & $\frac{175}{11520}$ & $\frac{775}{1935360}$ & $\frac{127}{12386304}$ & $\frac{365}{1401421824}$ \\[6pt]
+$26$ & Bosonic string & $13$ & $\frac{13}{24}$ & $\frac{91}{5760}$ & $\frac{403}{967680}$ & $\frac{1651}{154828800}$ & $\frac{949}{3503554560}$ \\[3pt]
 \bottomrule
 \end{tabular}
 }
@@ -1544,11 +1551,20 @@ F_g(\widehat{\mathfrak{sl}}_{3,k}) = \frac{4(k+3)}{3} \cdot \frac{2^{2g-1}-1}{2^
 At the first nontrivial level $k = 1$: $\kappa = 16/3$.
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{cccccc}
+\begin{tabular}{ccc}
 \toprule
-$g$ & $1$ & $2$ & $3$ & $4$ & $5$ \\
+$g$ & $F_g$ (exact) & $F_g$ (decimal) \\
 \midrule
-$F_g$ & $\frac{2}{9}$ & $\frac{7}{1080}$ & $\frac{31}{181440}$ & $\frac{127}{29030400}$ & $\frac{73}{656916480}$ \\
+$1$ & $2/9$ & $2.22 \times 10^{-1}$ \\
+$2$ & $7/1080$ & $6.48 \times 10^{-3}$ \\
+$3$ & $31/181440$ & $1.71 \times 10^{-4}$ \\
+$4$ & $127/29030400$ & $4.37 \times 10^{-6}$ \\
+$5$ & $73/656916480$ & $1.11 \times 10^{-7}$ \\
+$6$ & $1414477/502146957312000$ & $2.82 \times 10^{-9}$ \\
+$7$ & $8191/114776447385600$ & $7.14 \times 10^{-11}$ \\
+$8$ & $16931177/9365758106664960000$ & $1.81 \times 10^{-12}$ \\
+$9$ & $5749691557/125561099481193119744000$ & $4.58 \times 10^{-14}$ \\
+$10$ & $91546277357/78924119673892818124800000$ & $1.16 \times 10^{-15}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1583,13 +1599,13 @@ values at multiple levels]\label{comp:sl3-multi-level}
 \index{sl3@$\mathfrak{sl}_3$!genus expansion, multi-level}
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{ccccccc}
+\begin{tabular}{cccccccc}
 \toprule
-$k$ & $c(k)$ & $\kappa(k)$ & $F_1$ & $F_2$ & $F_3$ \\
+$k$ & $c(k)$ & $\kappa(k)$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
 \midrule
-$1$ & $2$ & $16/3$ & $2/9$ & $7/1080$ & $31/181440$ \\[3pt]
-$2$ & $16/5$ & $20/3$ & $5/18$ & $7/864$ & $31/145152$ \\[3pt]
-$3$ & $4$ & $8$ & $1/3$ & $7/720$ & $31/120960$ \\
+$1$ & $2$ & $16/3$ & $2/9$ & $7/1080$ & $31/181440$ & $127/29030400$ & $73/656916480$ \\[3pt]
+$2$ & $16/5$ & $20/3$ & $5/18$ & $7/864$ & $31/145152$ & $127/23224320$ & $73/525533184$ \\[3pt]
+$3$ & $4$ & $8$ & $1/3$ & $7/720$ & $31/120960$ & $127/19353600$ & $73/437944320$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1613,11 +1629,20 @@ F_g(\widehat{E}_{8,k}) = \frac{62(k+30)}{15} \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \
 At $k = 1$ (the unique integrable level for $E_8$): $\kappa = 62 \cdot 31/15 = 1922/15$.
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{cccccc}
+\begin{tabular}{ccc}
 \toprule
-$g$ & $1$ & $2$ & $3$ & $4$ & $5$ \\
+$g$ & $F_g$ (exact) & $F_g$ (decimal) \\
 \midrule
-$F_g$ & $\frac{961}{180}$ & $\frac{6727}{43200}$ & $\frac{29791}{7257600}$ & $\frac{122047}{1161216000}$ & $\frac{70153}{26276659200}$ \\
+$1$ & $961/180$ & $5.34$ \\
+$2$ & $6727/43200$ & $1.56 \times 10^{-1}$ \\
+$3$ & $29791/7257600$ & $4.10 \times 10^{-3}$ \\
+$4$ & $122047/1161216000$ & $1.05 \times 10^{-4}$ \\
+$5$ & $70153/26276659200$ & $2.67 \times 10^{-6}$ \\
+$6$ & $1359312397/20085878292480000$ & $6.77 \times 10^{-8}$ \\
+$7$ & $7871551/4591057895424000$ & $1.71 \times 10^{-9}$ \\
+$8$ & $16270861097/374630324266598400000$ & $4.34 \times 10^{-11}$ \\
+$9$ & $5525453586277/5022443979247724789760000$ & $1.10 \times 10^{-12}$ \\
+$10$ & $87975972540077/3156964786955712724992000000$ & $2.79 \times 10^{-14}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1645,6 +1670,9 @@ $2$ & $1/2$ & $26$ & $13$ & $13.00$ \\
 $3$ & $5/6$ & $100$ & $250/3$ & $83.33$ \\
 $4$ & $13/12$ & $246$ & $533/2$ & $266.50$ \\
 $5$ & $77/60$ & $488$ & $9394/15$ & $626.27$ \\
+$6$ & $29/20$ & $850$ & $2465/2$ & $1232.50$ \\
+$7$ & $223/140$ & $1356$ & $75597/35$ & $2159.91$ \\
+$8$ & $481/280$ & $2030$ & $13949/4$ & $3487.25$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1659,13 +1687,13 @@ F_g(V_\Lambda) = d \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!
 \end{equation}
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{clcccc}
+\begin{tabular}{clccccc}
 \toprule
-$d$ & Lattice & $\kappa$ & $F_1$ & $F_2$ & $F_3$ \\
+$d$ & Lattice & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ \\
 \midrule
-$8$ & $E_8$ & $8$ & $1/3$ & $7/720$ & $31/120960$ \\[3pt]
-$16$ & $E_8 \oplus E_8$ & $16$ & $2/3$ & $7/360$ & $31/60480$ \\[3pt]
-$24$ & Leech $\Lambda_{24}$ & $24$ & $1$ & $7/240$ & $31/40320$ \\
+$8$ & $E_8$ & $8$ & $1/3$ & $7/720$ & $31/120960$ & $127/19353600$ \\[3pt]
+$16$ & $E_8 \oplus E_8$ & $16$ & $2/3$ & $7/360$ & $31/60480$ & $127/9676800$ \\[3pt]
+$24$ & Leech $\Lambda_{24}$ & $24$ & $1$ & $7/240$ & $31/40320$ & $127/6451200$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1809,10 +1837,13 @@ is $F_g = -13 \cdot \lambda_g^{\mathrm{FP}}$:
 $g$ & $\lambda_g^{\mathrm{FP}}$ & $F_g(bc_2)$ & Decimal & $|F_g/F_{g-1}|$ \\
 \midrule
 $1$ & $\frac{1}{24}$ & $-\frac{13}{24}$ & $-0.5417$ & --- \\[6pt]
-$2$ & $\frac{7}{5760}$ & $-\frac{91}{5760}$ & $-0.01580$ & $0.02917$ \\[6pt]
+$2$ & $\frac{7}{5760}$ & $-\frac{91}{5760}$ & $-1.580 \times 10^{-2}$ & $0.02917$ \\[6pt]
 $3$ & $\frac{31}{967680}$ & $-\frac{403}{967680}$ & $-4.165 \times 10^{-4}$ & $0.02636$ \\[6pt]
 $4$ & $\frac{127}{154828800}$ & $-\frac{1651}{154828800}$ & $-1.066 \times 10^{-5}$ & $0.02560$ \\[6pt]
-$5$ & $\frac{73}{3503554560}$ & $-\frac{949}{3503554560}$ & $-2.709 \times 10^{-7}$ & $0.02540$ \\[4pt]
+$5$ & $\frac{73}{3503554560}$ & $-\frac{949}{3503554560}$ & $-2.709 \times 10^{-7}$ & $0.02540$ \\[6pt]
+$6$ & $\frac{1414477}{2678117105664000}$ & $-\frac{1414477}{206009008128000}$ & $-6.866 \times 10^{-9}$ & $0.02535$ \\[6pt]
+$7$ & $\frac{8191}{612141052723200}$ & $-\frac{8191}{47087773286400}$ & $-1.740 \times 10^{-10}$ & $0.02533$ \\[6pt]
+$8$ & $\frac{16931177}{49950709902213120000}$ & $-\frac{16931177}{3842362300170240000}$ & $-4.406 \times 10^{-12}$ & $0.02533$ \\[4pt]
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1924,44 +1955,54 @@ $V_{E_8}$ lattice
 
 \begin{table}[ht]
 \centering
-\caption{Explicit free energies $F_1, F_2, F_3$
+\caption{Explicit free energies $F_1, \ldots, F_5$
 for representative levels}
 \label{tab:genus-expansion-values}
 \renewcommand{\arraystretch}{1.5}
-{\small
-\begin{tabular}{|l|c|c|c|c|}
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
-\textbf{Algebra (level)} & $\kappa$ & $F_1$ & $F_2$ & $F_3$ \\
+\textbf{Algebra} & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
 \hline
 $\mathcal{H}_1$
-  & $1$ & $\frac{1}{24}$ & $\frac{7}{5760}$ & $\frac{31}{967680}$ \\
+  & $1$ & $\frac{1}{24}$ & $\frac{7}{5760}$ & $\frac{31}{967680}$
+  & $\frac{127}{154828800}$ & $\frac{73}{3503554560}$ \\
 \hline
 $bc_2$ (ghosts)
-  & $-13$ & $-\frac{13}{24}$ & $-\frac{91}{5760}$ & $-\frac{403}{967680}$ \\[2pt]
+  & $-13$ & $-\frac{13}{24}$ & $-\frac{91}{5760}$ & $-\frac{403}{967680}$
+  & $-\frac{1651}{154828800}$ & $-\frac{949}{3503554560}$ \\[2pt]
 \hline
 $bc_{1/2}$ (fermion)
-  & $\frac{1}{2}$ & $\frac{1}{48}$ & $\frac{7}{11520}$ & $\frac{31}{1935360}$ \\[4pt]
+  & $\frac{1}{2}$ & $\frac{1}{48}$ & $\frac{7}{11520}$ & $\frac{31}{1935360}$
+  & $\frac{127}{309657600}$ & $\frac{73}{7007109120}$ \\[4pt]
 \hline
 $\beta\gamma_1$
-  & $1$ & $\frac{1}{24}$ & $\frac{7}{5760}$ & $\frac{31}{967680}$ \\
+  & $1$ & $\frac{1}{24}$ & $\frac{7}{5760}$ & $\frac{31}{967680}$
+  & $\frac{127}{154828800}$ & $\frac{73}{3503554560}$ \\
 \hline
 $\widehat{\mathfrak{sl}}_{2,1}$
-  & $\frac{9}{4}$ & $\frac{3}{32}$ & $\frac{7}{2560}$ & $\frac{31}{430080}$ \\[4pt]
+  & $\frac{9}{4}$ & $\frac{3}{32}$ & $\frac{7}{2560}$ & $\frac{31}{430080}$
+  & $\frac{127}{68812800}$ & $\frac{73}{1557135360}$ \\[4pt]
 \hline
 $\widehat{\mathfrak{sl}}_{3,1}$
-  & $\frac{16}{3}$ & $\frac{2}{9}$ & $\frac{7}{1080}$ & $\frac{31}{181440}$ \\[4pt]
+  & $\frac{16}{3}$ & $\frac{2}{9}$ & $\frac{7}{1080}$ & $\frac{31}{181440}$
+  & $\frac{127}{29030400}$ & $\frac{73}{656916480}$ \\[4pt]
 \hline
-$\mathrm{Vir}_{26}$ (bosonic)
-  & $13$ & $\frac{13}{24}$ & $\frac{91}{5760}$ & $\frac{403}{967680}$ \\
+$\mathrm{Vir}_{26}$
+  & $13$ & $\frac{13}{24}$ & $\frac{91}{5760}$ & $\frac{403}{967680}$
+  & $\frac{1651}{154828800}$ & $\frac{949}{3503554560}$ \\
 \hline
 $\mathrm{Vir}_{1/2}$ (Ising)
-  & $\frac{1}{4}$ & $\frac{1}{96}$ & $\frac{7}{23040}$ & $\frac{31}{3870720}$ \\[4pt]
+  & $\frac{1}{4}$ & $\frac{1}{96}$ & $\frac{7}{23040}$ & $\frac{31}{3870720}$
+  & $\frac{127}{619315200}$ & $\frac{73}{14014218240}$ \\[4pt]
 \hline
 $V_{E_8}$ lattice
-  & $8$ & $\frac{1}{3}$ & $\frac{7}{720}$ & $\frac{31}{120960}$ \\
+  & $8$ & $\frac{1}{3}$ & $\frac{7}{720}$ & $\frac{31}{120960}$
+  & $\frac{127}{19353600}$ & $\frac{73}{437944320}$ \\
 \hline
 $\mathcal{W}_3^1$
-  & $-\frac{130}{3}$ & $-\frac{65}{36}$ & $-\frac{91}{1728}$ & $-\frac{403}{290304}$ \\[4pt]
+  & $-\frac{130}{3}$ & $-\frac{65}{36}$ & $-\frac{91}{1728}$ & $-\frac{403}{290304}$
+  & $-\frac{1651}{46448640}$ & $-\frac{949}{1051066368}$ \\[4pt]
 \hline
 \end{tabular}
 }
@@ -2297,7 +2338,9 @@ $3$ & $0.02560$ & $2.75 \times 10^{-4}$ \\
 $4$ & $0.02540$ & $7.14 \times 10^{-5}$ \\
 $5$ & $0.02535$ & $1.82 \times 10^{-5}$ \\
 $6$ & $0.02534$ & $4.60 \times 10^{-6}$ \\
-$7$ & $0.02533$ & $1.16 \times 10^{-6}$ \\
+$7$ & $0.02533$ & $1.15 \times 10^{-6}$ \\
+$8$ & $0.02533$ & $2.89 \times 10^{-7}$ \\
+$9$ & $0.02533$ & $7.24 \times 10^{-8}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -2498,3 +2541,17 @@ $\mathcal{W}$-algebras, the nonvanishing sum $\kappa + \kappa'$ is
 a root-datum invariant
 \textup{(}Theorem~\textup{\ref{thm:complementarity-root-datum})}.
 \end{computation}
+
+\bigskip
+\noindent
+The genus expansion data confirms the modular Koszul structure in
+every case.  The universality theorem reduces the full genus tower
+to a single number $\kappa(\cA)$; complementarity forces
+$\kappa(\cA) + \kappa(\cA^!) = 0$ for Kac--Moody and
+$\kappa + \kappa' = K$ for W-algebras, where $K$ is a root-datum
+invariant; and the generating function
+$\phi_0(x) = (x/2)/\sin(x/2) - 1$ controls the entire sequence
+$F_g$ through Bernoulli numbers.  The appearance of the
+$\hat{A}$-genus $\phi_0$ is the first indication of a family
+index theorem for modular chiral deformation theory
+(\S\ref{sec:modular-koszul-programme}).

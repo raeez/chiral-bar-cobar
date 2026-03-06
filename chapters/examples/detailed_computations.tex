@@ -1,8 +1,7 @@
 \chapter{Detailed computations}
 \label{chap:detailed-computations}
 
-This chapter provides complete computational details for the key examples of
-Part~II (Examples), including all structure constants and explicit verifications.
+The preceding chapters stated bar cohomology dimensions, spectral sequence collapse pages, and genus expansion coefficients, often deferring the proofs to ``explicit computation.''  This chapter delivers those computations in full: every structure constant, every differential matrix, every chain-level verification.  The level of detail is deliberate --- these calculations are the empirical foundation on which the conjectures of the Master Table rest, and they serve as templates for computations in new algebras.
 
 
 \section{Heisenberg computations}
@@ -262,11 +261,13 @@ $0$ & $\partial T$ & $(z\!-\!w)^{-1}$ & translation
 \begin{computation}[Virasoro vacuum module: low-weight states]\label{comp:virasoro-vacuum}
 The augmentation ideal $\bar{V} = V/\mathbb{C}\cdot|0\rangle$ of the Virasoro vacuum module has a basis of states created by $L_{-n}$ (for $n \geq 2$) applied to the vacuum:
 \begin{center}
-\begin{tabular}{c|ccccccccccc}
-weight $h$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+{\small
+\begin{tabular}{c|ccccccccccccccccccc}
+weight $h$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 \\
 \hline
-$\dim \bar{V}_h$ & 1 & 1 & 2 & 2 & 4 & 4 & 7 & 8 & 12 & 14 & 21
+$\dim \bar{V}_h$ & 1 & 1 & 2 & 2 & 4 & 4 & 7 & 8 & 12 & 14 & 21 & 24 & 34 & 41 & 55 & 66 & 88 & 105 & 137
 \end{tabular}
+}
 \end{center}
 where $p_{\geq 2}(h) = p(h) - p(h-1)$ denotes the number of partitions of~$h$ into parts $\geq 2$, with generating function $\prod_{n=2}^{\infty}(1-q^n)^{-1}$.  The constraint arises from $L_{-1}|0\rangle = 0$ (translation invariance).
 \end{computation}
@@ -1347,7 +1348,15 @@ yielding $d^2 = 0$ on the Chevalley--Eilenberg complex
 $C^*(\mathfrak{g}; \mathbb{C}) = \Lambda^*(\mathfrak{g}^*)$
 (cf.~Appendix~\ref{app:signs}).
 
-\emph{Verified computationally} (108 tests, \texttt{compute/lib/chiral\_bar.py}).
+\emph{Verified computationally}: the Chevalley--Eilenberg complex
+$C^*(\mathfrak{g}; \mathbb{C}) = \Lambda^*(\mathfrak{g}^*)$
+has $d^2 = 0$ (from the Jacobi identity) and the correct cohomology
+(44~tests, \texttt{compute/lib/chiral\_bar.py}).
+Note: this verifies the \emph{classical} CE differential on
+$\Lambda^n(\mathfrak{g}^*)$, not the full chiral bar differential on
+$\mathfrak{g}^{\otimes n} \otimes \operatorname{OS}^{n-1}(C_n)$,
+which requires the Borcherds identity
+(Proposition~\ref{prop:pole-decomposition}).
 \end{computation}
 
 \begin{computation}[SDR and formality for $\mathfrak{sl}_2$]
@@ -1397,7 +1406,7 @@ result that semisimple Lie algebras are formal as dg~Lie algebras
 all SDR conditions
 ($dh + hd = \operatorname{id} - \iota \circ p$,
 $h^2 = 0$, $p \circ h = 0$, $h \circ \iota = 0$)
-pass (\texttt{compute/lib/htt.py}, 108~tests total).
+pass (\texttt{compute/lib/htt.py}, 9~tests).
 \end{computation}
 
 \begin{remark}[The comparison theorem in action]
@@ -1876,14 +1885,18 @@ F_g(\widehat{G}_{2,k}) = \kappa \cdot \lambda_g^{FP}
 
 \emph{Explicit values at $k = 1$} ($\kappa = 35/4$):
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{c|cccc}
-$g$ & $1$ & $2$ & $3$ & $4$ \\
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c}
+$g$ & $F_g$ (exact) & $F_g$ (decimal) \\
 \hline
-$F_g$ & $\dfrac{35}{96}$ &
-  $\dfrac{245}{23040}$ &
-  $\dfrac{1085}{3870720}$ &
-  $\dfrac{35 \cdot 127}{619315200}$
+$1$ & $35/96$ & $3.65 \times 10^{-1}$ \\
+$2$ & $49/4608$ & $1.06 \times 10^{-2}$ \\
+$3$ & $31/110592$ & $2.80 \times 10^{-4}$ \\
+$4$ & $127/17694720$ & $7.18 \times 10^{-6}$ \\
+$5$ & $511/2802843648$ & $1.82 \times 10^{-7}$ \\
+$6$ & $1414477/306070526361600$ & $4.62 \times 10^{-9}$ \\
+$7$ & $8191/69958977454080$ & $1.17 \times 10^{-10}$ \\
+$8$ & $16931177/5708652560252928000$ & $2.97 \times 10^{-12}$
 \end{tabular}
 \end{center}
 
@@ -2985,14 +2998,19 @@ P_t(\Conf_n(\bC)) = \prod_{j=1}^{n-1}(1 + jt).
 The relevant values are:
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{c|l|ccccc}
-$n$ & $P_t$ & $b_0$ & $b_1$ & $b_2$ & $b_3$ & $b_4$ \\
+{\small
+\begin{tabular}{c|l|cccccccc}
+$n$ & $P_t$ & $b_0$ & $b_1$ & $b_2$ & $b_3$ & $b_4$ & $b_5$ & $b_6$ & $b_7$ \\
 \hline
 2 & $1 + t$ & 1 & 1 \\
 3 & $(1+t)(1+2t)$ & 1 & 3 & 2 \\
-4 & $(1+t)(1+2t)(1+3t)$ & 1 & 6 & 11 & 6 \\
-5 & $(1+t)(1+2t)(1+3t)(1+4t)$ & 1 & 10 & 35 & 50 & 24
+4 & $(1+t)\cdots(1+3t)$ & 1 & 6 & 11 & 6 \\
+5 & $(1+t)\cdots(1+4t)$ & 1 & 10 & 35 & 50 & 24 \\
+6 & $(1+t)\cdots(1+5t)$ & 1 & 15 & 85 & 225 & 274 & 120 \\
+7 & $(1+t)\cdots(1+6t)$ & 1 & 21 & 175 & 735 & 1624 & 1764 & 720 \\
+8 & $(1+t)\cdots(1+7t)$ & 1 & 28 & 322 & 1960 & 6769 & 13132 & 13068 & 5040
 \end{tabular}
+}
 \end{center}
 The top Betti number is $b_{n-1} = (n-1)!$ in each case.
 For the bar complex $\B^n(\mathrm{Vir}_c) = \bar{V}^{\otimes n}
@@ -3144,16 +3162,20 @@ $h \geq 2n$.  For weight-$h$ elements involving only the
 generator $T = L_{-2}|0\rangle$ and its descendants, the count is:
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{c|ccccccccccc}
-$n \backslash h$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+{\small
+\begin{tabular}{c|ccccccccccccccc}
+$n \backslash h$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\
 \hline
-1 & 1 & 1 & 2 & 2 & 4 & 4 & 7 & 8 & 12 & 14 & 21 \\
-2 & & & 1 & 2 & 5 & 8 & 16 & 24 & 42 & 62 & 100 \\
-3 & & & & & 2 & 6 & 18 & 38 & 84 & 156 & 298 \\
-4 & & & & & & & 6 & 24 & 84 & 216 & 534 \\
-5 & & & & & & & & & 24 & 120 & 480 \\
-6 & & & & & & & & & & & 120
+1 & 1 & 1 & 2 & 2 & 4 & 4 & 7 & 8 & 12 & 14 & 21 & 24 & 34 & 41 & 55 \\
+2 & & & 1 & 2 & 5 & 8 & 16 & 24 & 42 & 62 & 100 & 144 & 222 & 314 & 465 \\
+3 & & & & & 2 & 6 & 18 & 38 & 84 & 156 & 298 & 516 & 906 & 1492 & 2478 \\
+4 & & & & & & & 6 & 24 & 84 & 216 & 534 & 1152 & 2424 & 4728 & 9048 \\
+5 & & & & & & & & & 24 & 120 & 480 & 1440 & 3960 & 9624 & 22200 \\
+6 & & & & & & & & & & & 120 & 720 & 3240 & 11040 & 33480 \\
+7 & & & & & & & & & & & & & 720 & 5040 & 25200 \\
+8 & & & & & & & & & & & & & & & 5040
 \end{tabular}
+}
 \end{center}
 The row $n = 1$ lists $\dim \bar{V}_h = p_{\geq 2}(h)$ (partitions
 into parts $\geq 2$).  The row $n = 2$ lists
@@ -3210,9 +3232,10 @@ in positive degrees --- it computes the exterior powers $\Lambda^n(V^*)$.
 The PBW filtration gives a spectral sequence with
 $E_1^{p,q} = H_p(\B(\mathrm{gr}\,\mathrm{Vir}_c))_q
 \cong \Lambda^p(V^*)_q$.
-The spectral sequence collapses at $E_2$ by the Koszul property
-of $\mathrm{Vir}_c$
-(Theorem~\ref{thm:spectral-sequence-collapse}),
+The spectral sequence collapses at $E_2$ by the chiral
+Koszulness of $\mathrm{Vir}_c$
+(Theorem~\ref{thm:virasoro-chiral-koszul}, proved via
+the PBW criterion of Theorem~\ref{thm:pbw-koszulness-criterion}),
 and the bar cohomology is the Koszul dual coalgebra
 $\mathrm{Vir}_c^!$, concentrated on the diagonal of the bigrading.
 The dimensions
@@ -3680,5 +3703,10 @@ The explicit $\mathfrak{sl}_3$ bar differential
 provides the input data for the $\mathfrak{sl}_3$
 BGG pipeline.
 \end{remark}
+
+\medskip
+
+\noindent
+The computations of this chapter, together with those distributed throughout the preceding example chapters, are consolidated in the Master Table of Computed Invariants (Table~\ref{tab:master-invariants}), which follows.
 
 

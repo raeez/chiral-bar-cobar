@@ -1,8 +1,23 @@
 \chapter{Chiral Hochschild cohomology and Koszul duality}
+\label{chap:deformation-theory}
 \index{deformation theory!chiral|textbf}
 \index{Hochschild cohomology!chiral|textbf}
 
 \section{The deformation problem for chiral algebras}
+
+The complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}) identifies the
+deformation space $Q_g(\cA)$ and the obstruction space
+$Q_g(\cA^!)$ as complementary Lagrangians in a shifted-symplectic
+ambient space.  This chapter develops the infinitesimal theory
+underlying that result: chiral Hochschild cohomology, the
+obstruction calculus for chiral algebras, and the curved
+$A_\infty$ structures that emerge when obstructions are nonzero.
+The deformation-obstruction exchange at genus~$0$
+--- $HH^2(\cA)$ parametrizes deformations, $HH^3(\cA)$ carries
+obstructions, and Koszul duality sends $HH^n(\cA)$ to
+$HH^{2-n}(\cA^!)^\vee \otimes \omega_X$ --- is the seed from
+which the higher-genus complementarity grows.
 
 \subsection{Origins and physical motivation}
 
@@ -371,7 +386,11 @@ $\mathcal{M} = \mathrm{Hom}(\mathcal{A}^!, \mathcal{A})$:
 the Koszul pairing identifies
 $\mathbb{D}(\mathrm{Hom}(\mathcal{A}^!, \mathcal{A}))
 \cong \mathrm{Hom}(\mathcal{A}, \mathcal{A}^!) \otimes \omega_{\overline{C}_{n+2}}$.
-Since $\dim_{\mathbb{C}} \overline{C}_{n+2}(X) = n+2$ varies with bar degree~$n$, extracting the uniform shift of~$2$ in the total Hochschild grading requires additional input: the Koszul property ensures the bar complex is concentrated along the diagonal (weight $=$ bar degree), so only a single bar degree contributes in each total degree.  Combined with the module Koszul duality equivalence (which gives the shift-free duality on endomorphism algebras), the net effect on the total complex is:
+Since $\dim_{\mathbb{C}} \overline{C}_{n+2}(X) = n+2$ varies with bar degree~$n$, the Verdier shift on bar degree~$n$ is $n+2$.  Nevertheless, the \emph{totalized} shift is constant.  The mechanism is as follows: the Koszul property ensures diagonal concentration, meaning the bar complex contributes to total Hochschild degree~$d$ only through bar degree~$n = d$.  In bar degree~$d$, the complex lives on $\overline{C}_{d+2}(X)$, and Verdier duality gives:
+\[
+H^d(\overline{C}_{d+2}(X), \mathcal{M}) \;\cong\; H^{(d+2)-d}(\overline{C}_{d+2}(X), \mathbb{D}\mathcal{M})^\vee \;=\; H^2(\overline{C}_{d+2}(X), \mathbb{D}\mathcal{M})^\vee.
+\]
+Thus in \emph{every} bar degree, the Verdier shift lands at cohomological degree~$2$ on the configuration space.  The desuspension $s^{-1}$ in the bar construction contributes an additional shift of~$1$, and the Serre duality of the underlying curve~$X$ (one-dimensional) contributes a final shift of~$1$, giving the uniform total shift of~$2$.  The net effect on the total complex is:
 \[
 HH^n_{\mathrm{chiral}}(\mathcal{A})
 \cong HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
@@ -606,7 +625,7 @@ The Hochschild cohomology of chiral algebras can exhibit three distinct types of
 
 When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
-\begin{theorem}[Modular periodicity of graded dimensions; \ClaimStatusProvedHere]
+\begin{theorem}[Modular periodicity of graded dimensions; \ClaimStatusConjectured]
 \label{thm:modular-periodicity}
 \index{periodicity!modular|textbf}
 Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$.  Set
@@ -636,7 +655,9 @@ N = \frac{24q}{\gcd(p,24)}
 
 The bar complex $\bar{B}_n^{\mathrm{ch}}(\mathcal{A})$ inherits a weight grading from $\mathcal{A}$.  By rationality, $\mathcal{A}$ has finitely many irreducible modules $\{V_1, \ldots, V_N\}$, each with character $\mathrm{ch}_{V_i}(\tau) = \mathrm{tr}_{V_i}(q^{L_0 - c/24})$ transforming as a component of a vector-valued modular form for a finite-index subgroup of $\mathrm{SL}_2(\mathbb{Z})$.  The $T$-matrix acts on the space of characters by $T_{ij} = \delta_{ij} e^{2\pi i(h_i - c/24)}$, where $h_i$ is the conformal weight of~$V_i$.  The $T$-eigenvalues have order dividing~$N$, so $T^N = \mathrm{Id}$ on the character space.
 
-The weight-graded pieces of the bar complex decompose: $\bar{B}^{(n)}_{[h]}(\mathcal{A})$ is the subspace of conformal weight~$h$ in bar degree~$n$.  Since $\mathcal{A}$ is rational, each $\bar{B}^{(n)}_{[h]}$ is finite-dimensional (the fusion rules are finite: $\dim \mathrm{Hom}(V_i \otimes V_j, V_k) < \infty$ by Zhu's theorem).  The $T$-periodicity acts on the weight grading by $h \mapsto h + N$, and the bar differential respects this shift (it is weight-preserving).  Therefore $H^n(\bar{B}_{[h+N]}) \cong H^n(\bar{B}_{[h]})$ for all $h$ sufficiently large (once the initial weight spaces are exhausted).  Summing over weight spaces gives the stated periodicity.
+The weight-graded pieces of the bar complex decompose: $\bar{B}^{(n)}_{[h]}(\mathcal{A})$ is the subspace of conformal weight~$h$ in bar degree~$n$.  Since $\mathcal{A}$ is rational, each $\bar{B}^{(n)}_{[h]}$ is finite-dimensional (the fusion rules are finite: $\dim \mathrm{Hom}(V_i \otimes V_j, V_k) < \infty$ by Zhu's theorem).  The $T$-eigenvalue condition $T^N = \mathrm{Id}$ gives $e^{2\pi i N(h_i - c/24)} = 1$ for each module~$V_i$, i.e., the conformal weights satisfy $N h_i \in \mathbb{Z} + Nc/24$.  This is a phase condition on the $T$-eigenvalues; it does NOT directly imply that the bar complex chain spaces at weight~$h$ and weight~$h+N$ are isomorphic, since the structure of these spaces depends on fusion coefficients and OPE data, not solely on conformal weights.
+
+To deduce the stated periodicity would require showing that the bar complex in weight~$h$ depends only on the module decomposition data and fusion multiplicities, and that these are eventually $N$-periodic in the weight variable.  For minimal models this follows from the finite representation category (Verlinde formula gives periodic fusion multiplicities).  The general rational case is expected but the deduction from $T^N = \mathrm{Id}$ alone is insufficient.
 \end{proof}
 
 \begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
@@ -809,7 +830,7 @@ In CFT, this periodicity corresponds to:
 
 On a genus $g > 0$ curve, new sources of periodicity arise:
 
-\begin{theorem}[Geometric periodicity; \ClaimStatusProvedHere]
+\begin{theorem}[Geometric periodicity; \ClaimStatusConjectured]
 \index{periodicity!geometric|textbf}
 For a chiral algebra $\mathcal{A}$ on a genus $g$ curve $X$, the geometric contribution to periodicity satisfies:
 \[
@@ -818,17 +839,23 @@ For a chiral algebra $\mathcal{A}$ on a genus $g$ curve $X$, the geometric contr
 for $g \geq 2$.  At $g = 0$ there is no geometric periodicity; at $g = 1$ the geometric periodicity arises from the modular parameter and is absorbed into $N_{\text{mod}}$.
 \end{theorem}
 
-\begin{proof}
+\begin{remark}[Scope]\label{rem:geometric-periodicity-scope}
+The correct Mumford relation on $\overline{\mathcal{M}}_g$ is
+$12\lambda = \kappa_1 + \delta$,
+where $\lambda = c_1(\mathbb{E})$, $\kappa_1$ is the first kappa class, and $\delta$ is the boundary divisor class.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently $c_1(\mathbb{E})|_{\mathcal{M}_g}$ does not vanish.  This means one cannot deduce the periodicity bound $12(2g-2)$ from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A correct proof would require a more refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$, accounting for both $\kappa_1$ and $\delta$ contributions via the Kodaira--Spencer map.  The stated bound is supported by all computed examples (Virasoro period~2, affine KM period $2h$) and by the dimension constraint $c_1(\mathbb{E})^{3g-3+1} = 0$.
+\end{remark}
+
+\begin{proof}[Proof sketch (partial)]
 The Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) provides a natural map $\kappa\colon H^*(\overline{\mathcal{M}}_g) \to CH^*(\mathcal{A})$.  The geometric periodicity arises from the image of this map.
 
-\emph{Step 1: Mumford's relation.}
-The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$ satisfies Mumford's formula $12\, c_1(\mathbb{E}) = \delta$ in the Chow ring $\mathrm{CH}^*(\overline{\mathcal{M}}_g)$, where $\delta$ is the boundary divisor class.  Since $\delta$ restricts to zero on the interior $\mathcal{M}_g$ (no boundary), we have $12\, c_1(\mathbb{E})|_{\mathcal{M}_g} = 0$.  On the compactification, $c_1(\mathbb{E})^{g}$ is the top Chern class of $\mathbb{E}$ (the $\lambda$-class $\lambda_g$), and $c_1(\mathbb{E})^{3g-3+1} = 0$ by the dimension bound $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g-3$.
+\emph{Step 1: Tautological constraints.}
+The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$ satisfies Mumford's formula $12\lambda = \kappa_1 + \delta$ in the Chow ring $\mathrm{CH}^*(\overline{\mathcal{M}}_g)$.  On the compactification, $c_1(\mathbb{E})^{g}$ is the top Chern class of $\mathbb{E}$ (the $\lambda$-class $\lambda_g$), and $c_1(\mathbb{E})^{3g-3+1} = 0$ by the dimension bound $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g-3$.
 
 \emph{Step 2: Image in Hochschild cohomology.}
-The Kodaira--Spencer map sends $c_1(\mathbb{E})$ to a class in $CH^2(\mathcal{A})$ whose cup powers control the genus-$g$ contributions to Hochschild cohomology.  Mumford's relation $12\, c_1(\mathbb{E}) = \delta$ constrains these cup powers: any class in $\mathrm{im}(\kappa)$ whose degree exceeds $12(2g-2)$ can be expressed in terms of boundary contributions, which factor through lower-genus Hochschild groups by the degeneration formula.
+The Kodaira--Spencer map sends $c_1(\mathbb{E})$ to a class in $CH^2(\mathcal{A})$ whose cup powers control the genus-$g$ contributions to Hochschild cohomology.  The $\kappa_1$-class and boundary contributions interact through the degeneration formula: boundary contributions factor through lower-genus Hochschild groups, while $\kappa_1$ contributions are controlled by the tautological ring relations.
 
-\emph{Step 3: Periodicity.}
-The constraint from Step~2 gives $\kappa(c_1(\mathbb{E})^{12(2g-2)+1}) = 0$ in the Hochschild cohomology, establishing the divisibility $\text{Period}_{\text{geom}} \mid 12(2g-2)$.  At $g = 0$, $\overline{\mathcal{M}}_{0,n}$ has no Hodge bundle, so there is no geometric periodicity.  At $g = 1$, $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$, and the periodicity from $c_1(\mathbb{E})$ is absorbed into the modular periodicity (the $T$-transformation of the torus).
+\emph{Step 3: Partial periodicity.}
+The dimension bound gives $\kappa(c_1(\mathbb{E})^{3g-2}) = 0$, providing the weaker constraint $\text{Period}_{\text{geom}} \mid 3g-2$.  The sharper bound $12(2g-2)$ incorporating the Mumford relation requires a complete analysis of the $\kappa_1$-image under the Kodaira--Spencer map, which remains open.  At $g = 0$, $\overline{\mathcal{M}}_{0,n}$ has no Hodge bundle, so there is no geometric periodicity.  At $g = 1$, $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$, and the periodicity from $c_1(\mathbb{E})$ is absorbed into the modular periodicity.
 \end{proof}
 
 \subsubsection{Examples at different genera}
@@ -863,7 +890,7 @@ Hyperelliptic curve with 16 spin structures:
 
 \subsection{Unified periodicity theorem}
 
-\begin{theorem}[Complete periodicity classification; \ClaimStatusProvedHere]
+\begin{theorem}[Complete periodicity classification; \ClaimStatusConjectured]
 For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level inducing period~$M$:
 \[
 \text{Period}(\mathcal{A}) \mid \text{lcm}(N_{\text{modular}}, N_{\text{quantum}}, N_{\text{geometric}})
@@ -888,12 +915,16 @@ Each factor independently forces divisibility of the total period:
 \item $\text{Period} \mid N_{\text{geometric}}$ by the geometric periodicity theorem above.
 \end{itemize}
 
-The three constraints combine to give $\text{Period} \mid \gcd(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$, but since each provides a divisibility in a \emph{different} direction (the three periodicities need not be synchronous), the optimal bound is the least common multiple: any period that simultaneously satisfies all three constraints must divide $\text{lcm}(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.
+If the three periodicities act on the \emph{same} grading component, the three divisibility constraints combine to give $\text{Period} \mid \gcd(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.  In practice, however, the three periodicities act on different components of a multi-graded bar complex (representation-theoretic, fusion-theoretic, and geometric respectively), so the total period need not divide the gcd.  The stated $\text{lcm}$ upper bound is always valid: any common multiple of the three component periods is a period.  Whether the actual period equals the $\text{lcm}$, or is strictly smaller due to interactions between the three sources, depends on the specific algebra and is not determined by the abstract framework alone.
 \end{proof}
+
+\begin{remark}[Scope of the classification]\label{rem:periodicity-classification-scope}
+The $\operatorname{lcm}$ upper bound is trivially valid (any common multiple of periods is a period), but the precise determination of $\operatorname{Period}(\mathcal{A})$ requires understanding how the three sources interact.  When all three periodicities act on the same grading (as they do for weight-graded Hochschild cohomology), the strongest conclusion from three divisibility constraints $\operatorname{Period} \mid N_i$ is $\operatorname{Period} \mid \gcd(N_1, N_2, N_3)$.  The gap between the $\gcd$ lower bound and the $\operatorname{lcm}$ upper bound measures the extent to which the multi-graded structure of the bar complex separates the three periodicity mechanisms.  Resolving this gap for specific algebras (e.g., minimal models, where all three periods are known) is an open problem.  Furthermore, the geometric periodicity component (Theorem above) is itself conjectural, as the proof requires a complete analysis of the Kodaira--Spencer image under the correct Mumford relation $12\lambda = \kappa_1 + \delta$.
+\end{remark}
 
 \subsection{Koszul duality and periodicity interaction}
 
-\begin{theorem}[Periodicity exchange under Koszul duality; \ClaimStatusProvedHere]
+\begin{theorem}[Periodicity exchange under Koszul duality; \ClaimStatusConjectured]
 \index{periodicity!exchange under duality}
 \label{thm:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
@@ -1033,7 +1064,13 @@ The bar complex $\bar{B}^{\mathrm{geom}}(\mathcal{A})$ is a conilpotent chiral c
 
 The augmentation $\epsilon\colon \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \to \mathcal{A}$ is a quasi-isomorphism by the following spectral sequence argument: the bar filtration induces a spectral sequence with $E_2^{p,q} = H^p(\mathcal{A}^!) \otimes H^q(\mathcal{A})$ (Theorem~\ref{thm:bar-cobar-spectral-sequence}), which collapses at $E_2$ for Koszul algebras (Theorem~\ref{thm:spectral-sequence-collapse}).  The abutment gives $H^*(\Omega(\bar{B}(\mathcal{A}))) \cong \mathcal{A}$.
 
-For general (not necessarily Koszul) chiral algebras, the augmentation is still a quasi-isomorphism by the acyclicity of the bar-cobar adjunction (\cite{LodayVallette}, Theorem~2.2.5), though the spectral sequence need not collapse at $E_2$.
+For general (not necessarily Koszul) chiral algebras, the classical
+bar-cobar adjunction is acyclic in the \emph{connected} graded
+setting (\cite{LodayVallette}, Theorem~2.2.5), but the chiral
+analog requires the Koszul or pro-nilpotent hypothesis: at
+admissible affine levels and minimal-model loci, the counit
+$\Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$ is not a
+quasi-isomorphism (Remark~\ref{rem:sl2-admissible}).
 \end{proof}
 
 \begin{remark}
@@ -1380,3 +1417,16 @@ bracket and $L_\infty$ operations, Koszul duality
 ($HH^2$ controls deformations, obstructions in $HH^3$).
 We apply this framework throughout to quantum corrections, W-algebras,
 level-rank duality, and higher genus contributions.
+
+\medskip
+
+The deformation-obstruction theory developed above is universal: it applies
+to any Koszul chiral algebra.  In Part~2, we make this concrete.  For every
+major family of vertex algebras --- Heisenberg, free fermion, $\beta\gamma$-$bc$,
+affine Kac--Moody, Virasoro, $W$-algebras, Yangians --- we compute the bar
+complex, identify the Koszul dual, determine the obstruction coefficient
+$\kappa(\cA)$, and verify the complementarity and genus universality theorems
+explicitly.  The shared discriminant phenomenon
+(Theorem~\ref{thm:ds-bar-gf-discriminant}) and the $\hat{A}$-genus appearance
+in genus expansions emerge as consequences of the modular characteristic
+package, not as isolated coincidences.

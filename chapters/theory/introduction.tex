@@ -99,6 +99,117 @@ Both stages preserve Koszul duality by
 Theorem~\ref{thm:geometric-equals-operadic-bar}.
 \end{remark}
 
+\section{The central thesis}
+\label{sec:central-thesis}
+\label{subsec:structural-perspective}
+\index{modular Koszul duality|textbf}
+\index{quantum corrections!as modular completion}
+
+The three main results of this monograph---bar-cobar duality,
+bar-cobar inversion, and deformation-obstruction complementarity---are
+three aspects of a single structure.  We state the organizing
+principle before developing the technical tools.
+
+The correct object unifying them is what we call a \emph{modular Koszul
+chiral algebra} (Definition~\ref{def:modular-koszul-chiral}): a
+factorization algebra $\mathcal{A}$ on $\operatorname{Ran}(X)$ whose
+duality data extends over the modular operad of curves, with curvature
+classes compatible under clutching, Verdier duality, and trace.  Such
+an object has, in addition to its Koszul dual~$\mathcal{A}^!$, a
+\emph{modular characteristic package}: a universal Maurer--Cartan class
+\begin{equation}\label{eq:universal-MC}
+\Theta_{\mathcal{A}} \;\in\;
+\operatorname{MC}\!\left(
+  \operatorname{Def}_{\mathrm{cyc}}(\mathcal{A})
+  \;\widehat{\otimes}\;
+  R\Gamma\!\left(\overline{\mathcal{M}}_{g,\bullet},\, \mathbb{Q}\right)
+\right)
+\end{equation}
+whose image in the scalar center produces the sequence of obstruction
+coefficients $\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot
+\lambda_g$ (Theorem~\ref{thm:genus-universality}).  The genus-$1$
+coefficient $\kappa(\mathcal{A})$ is not the fundamental concept; it is
+the first characteristic number of the universal class
+$\Theta_{\mathcal{A}}$.
+
+In this language, the three theorems acquire a unified interpretation:
+\begin{itemize}
+\item \emph{Theorem~A} (Geometric bar-cobar duality,
+  Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+  The reduced bar functor
+  $\bar{B}_X \colon \operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))
+  \to \operatorname{CoAlg}_{\mathrm{conil}}(\operatorname{Fact}(X))$
+  is intertwined with Verdier duality:
+  $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\mathcal{A})
+  \simeq \bar{B}_X(\mathcal{A}^!)$,
+  and this equivalence is functorial in families over
+  $\overline{\mathcal{M}}_{g,n}$.
+
+\item \emph{Theorem~B} (Bar-cobar inversion,
+  Theorem~\ref{thm:higher-genus-inversion}).
+  On the Koszul locus, the counit
+  $\Omega_X \bar{B}_X(\mathcal{A}) \to \mathcal{A}$ is an
+  equivalence.  Off this locus, the same bar-cobar object persists
+  but becomes curved; the failure of inversion is measured by the
+  universal Maurer--Cartan class~\eqref{eq:universal-MC}.
+
+\item \emph{Theorem~C} (Deformation-obstruction complementarity,
+  Theorem~\ref{thm:quantum-complementarity-main}).
+  The ambient space
+  $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\mathcal{A}})$
+  carries a shifted-symplectic pairing from Verdier duality on the
+  center local system, and the deformation and obstruction spaces
+  embed as complementary Lagrangians
+  (Remark~\ref{rem:lagrangian-complementarity}).
+\end{itemize}
+
+\noindent
+The deepest insight is this: \emph{quantum corrections are not a
+perturbative afterthought to Koszul duality; they are the modular
+completion of the duality itself.}  The genus tower
+$\{\bar{B}^{(g)}(\mathcal{A})\}_{g \geq 0}$ is not an external
+perturbation of the genus-$0$ theory but a single Maurer--Cartan
+deformation of the genus-$0$ bar differential inside a cyclic
+$L_\infty$ algebra controlling modular deformations of~$\mathcal{A}$.
+The same datum appears in three disguises:
+\begin{enumerate}[label=(\roman*)]
+\item as a coderivation, the curved term
+  $m_0^{(g)}$ in the bar-cobar package;
+\item as a sheaf-theoretic object, a section of the obstruction sheaf
+  on $\overline{\mathcal{M}}_g$;
+\item as a trace invariant, landing in cyclic homology and then in
+  the tautological ring, producing the scalar shadows
+  $\kappa(\mathcal{A}) \cdot \lambda_g$.
+\end{enumerate}
+These are not three analogies; they are three realizations of the
+universal class $\Theta_{\mathcal{A}}$.
+
+This structural viewpoint explains why the explicit computations of
+Part~2 cohere.  Every Koszul chiral algebra in this monograph---Heisenberg,
+free fermion, $\beta\gamma$-$bc$, affine Kac--Moody, Virasoro,
+$\mathcal{W}_N$, Yangian---is an instance of a modular Koszul object
+(Definition~\ref{def:modular-koszul-chiral}).
+The shared discriminant phenomenon
+(Theorem~\ref{thm:ds-bar-gf-discriminant}), the complementarity sums
+$c + c' = K$ (Theorem~\ref{thm:central-charge-complementarity}), the
+universal genus generating function
+(Theorem~\ref{thm:universal-generating-function}), and the
+$\hat{A}$-genus appearance in genus expansions all follow from the
+modular characteristic package rather than from individual computation.
+The programme of constructing modular Koszul duality in its native
+language---factorization algebras on $\operatorname{Ran}(X)$, coderived
+categories, shifted-symplectic structures---is articulated in
+\S\ref{sec:modular-koszul-programme}.
+
+\medskip
+
+The remaining sections of this introduction develop the tools
+(OPE, configuration spaces, Arnold relations), establish precise
+definitions (the $\Eone$/$\Einf$/$\Pinf$ dictionary), and state the
+three theorems formally with proof locations.  The reader who wishes to
+see the formal statements first may proceed directly to
+\S\ref{sec:main-results-complete}.
+
 \section{The operator product expansion}
 
 \index{operator product expansion}
@@ -743,7 +854,13 @@ A key technical fact is the proof that the bar differential satisfies $d^2 = 0$
 \end{itemize}
 
 Strict nilpotence allows direct computation of Koszul duals without
-$\infty$-categorical techniques.  The result holds at all genera: the
+$\infty$-categorical techniques.  Crucially, the residue differential
+decomposes by OPE pole order into a bracket component (simple poles)
+and a curvature component (double poles); the bracket component alone
+does \emph{not} square to zero, and the full Borcherds identity
+(not merely the Lie-bracket Jacobi identity) is required for
+nilpotence (Proposition~\ref{prop:pole-decomposition}).
+The result holds at all genera: the
 modular operad boundary relations on $\overline{\mathcal{M}}_{g,n}$
 together with centrality of curvature ensure the cross-terms cancel
 (Theorem~\ref{thm:genus-induction-strict}).
@@ -1229,8 +1346,6 @@ See Theorem~\ref{thm:quantum-complementarity-main} for the full proof.
 
 Koszul dual chiral algebras have complementary quantum corrections: what one algebra sees as a deformation, its dual sees as an obstruction, and vice versa. This classifies quantum corrections through Koszul duality and accounts for the duality between bosonic and fermionic theories in physics.
 
-
-
 \section{Computations}
 
 The bar-cobar construction translates algebraic operations (OPE, Koszul duality, quantum corrections) into configuration space integrals, which can be explicitly evaluated.
@@ -1277,9 +1392,12 @@ Part~2.  Five of the nine bar cohomology sequences admit closed-form
 expressions: the Heisenberg and free fermion dimensions are given by partition
 numbers, while the $bc$~ghosts, $\widehat{\mathfrak{sl}}_2$, and Virasoro
 dimensions are expressed through Riordan and Motzkin numbers respectively,
-with the latter two sharing the discriminant $\Delta(x) = 1 - 2x - 3x^2$
+with the latter three sharing the discriminant $\Delta(x) = 1 - 2x - 3x^2$
 in their generating functions
-(Theorem~\ref{thm:ds-bar-gf-discriminant}).
+(Theorem~\ref{thm:ds-bar-gf-discriminant}); the $\beta\gamma$ system
+also belongs to this discriminant family, and all three interacting
+members satisfy a $\mathbb{Q}(x)$-linear relation
+(Theorem~\ref{thm:discriminant-linear-dependence}).
 The universal generating function for genus contributions
 (Theorem~\ref{thm:universal-generating-function}) expresses
 $\sum_{g \geq 1} F_g(\mathcal{A})\, x^{2g}$ in terms of $\kappa(\mathcal{A})$

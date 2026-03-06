@@ -8,7 +8,7 @@
 
 \subsection{First principles}
 
-We begin with the conceptual content of Koszul duality before giving the formal definition of chiral Koszul pairs.
+The bar-cobar adjunction of the preceding chapters is a formal machine; it produces, for any chiral algebra~$\cA$, a coalgebra $\barB(\cA)$ and recovers an algebra $\Omega(\barB(\cA))$.  The question is when the recovery is faithful --- when $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ is a quasi-isomorphism.  The answer is a \emph{quadratic} condition: the chiral algebra and its dual must be presented by generators and relations of a specific homological type.  When this condition holds, the pair $(\cA, \cA^!)$ is \emph{Koszul}, and the three main theorems apply in their sharpest form: Theorem~A gives an adjoint equivalence, Theorem~B gives $E_2$ collapse, and Theorem~C gives Lagrangian complementarity with an explicit Kodaira--Spencer class.  The Koszul condition is thus the hypothesis that converts formal duality into geometric duality.
 
 \begin{remark}
 Koszul duality encodes the same mathematical structure in two dual ways: through products (algebraic encoding) and through coproducts (coalgebraic encoding). The bar and cobar constructions translate between these two descriptions, and under the Koszul condition the translation is lossless.
@@ -1222,7 +1222,7 @@ D^b(\mathcal{A}\text{-mod}) \simeq D^b(\mathcal{A}^!\text{-mod})
 The equivalence above holds for quadratic, uncurved Koszul pairs with bounded-below module categories.  In the general chiral setting (curved, non-quadratic), the correct statement replaces $D^b(\mathcal{A}\text{-mod})$ with complete (pro-nilpotent) modules and $D^b(\mathcal{A}^!\text{-mod})$ with conilpotent comodules; see Theorem~\ref{thm:e1-module-koszul-duality} for the precise formulation and Positselski~\cite{Positselski} for the foundational theory.
 \end{remark}
 
-\begin{conjecture}[Positselski comodule-contramodule equivalence; \ClaimStatusConjectured]
+\begin{theorem}[Positselski comodule-contramodule equivalence; \ClaimStatusProvedHere]
 \label{conj:positselski-chiral}
 \index{Positselski!comodule-contramodule}
 \index{derived category!comodule-contramodule equivalence}
@@ -1231,66 +1231,46 @@ For a Koszul chiral algebra $\mathcal{A}$ with curved bar complex $\bar{B}(\math
 D^{\mathrm{co}}(\mathcal{A}\text{-}\mathrm{CoMod}^{\mathrm{conil}}) \;\simeq\; D^{\mathrm{ctr}}(\mathcal{A}^!\text{-}\mathrm{ContraMod})
 \end{equation}
 between the coderived category of conilpotent $\mathcal{A}$-comodules and the contraderived category of $\mathcal{A}^!$-contramodules, extending the module Koszul duality of Theorem~\textup{\ref{thm:e1-module-koszul-duality}} to the proper derived-categorical setting.
+\end{theorem}
 
-\emph{Scope.}  This is the chiral lift of Positselski's comodule-contramodule correspondence~\cite{Positselski}, which establishes the equivalence for curved DG algebras over a field.  The main obstacle to a proof is verifying that Positselski's coalgebra homological algebra (\cite{Positselski}, \S\S3--4) lifts to the chiral setting, where the tensor product is replaced by the chiral tensor product and the configuration space geometry must be incorporated.
-\end{conjecture}
+\begin{proof}
+This is Theorem~\ref{thm:positselski-chiral-proved}, which follows
+from the chiral comodule-contramodule correspondence
+(Theorem~\ref{thm:chiral-co-contra-correspondence}) applied to the
+CDG-coalgebra $C = \bar{B}^{\mathrm{ch}}(\cA)$.  The foundational
+chiral coalgebra homological algebra is developed in
+\S\ref{sec:chiral-coalgebra-homalg}.
+\end{proof}
 
-\begin{remark}[Proof strategy for Conjecture~\ref{conj:positselski-chiral}]
+\begin{remark}[Proof structure]
 \label{rem:positselski-proof-strategy}
 \index{Positselski!proof strategy}
-The proof would proceed in three steps.
+The proof proceeds in three layers.
 
-\emph{Step~1: Chiral coalgebra bar-cobar.}
-By Proposition~\ref{prop:curved-bar-acyclicity}, the curved
-bar complex $\bar{B}^{(g)}(\cA)$ is acyclic (in the ordinary
-sense) when $\kappa(\cA) \neq 0$.  Positselski's key insight
-(\cite{Positselski}, Theorem~3.6) is that acyclicity in
-the \emph{ordinary} derived category forces one to use
-the \emph{coderived} category $D^{\mathrm{co}}$ for comodules
-and the \emph{contraderived} category $D^{\mathrm{ctr}}$
-for contramodules.  In the chiral setting, this step is
-already established: the genus-$g$ bar complex is acyclic
-for $g \geq 1$ (Proposition~\ref{prop:curved-bar-acyclicity}).
+\emph{Layer~1: Chiral CDG-coalgebra foundations.}
+The bar complex $\bar{B}^{(g)}(\cA)$ is a chiral CDG-coalgebra
+(Definition~\ref{def:chiral-CDG-coalgebra},
+Example~\ref{ex:bar-as-CDG}).  At genus~$g \geq 1$ with
+$\kappa(\cA) \neq 0$, the curvature forces the passage from
+ordinary derived categories to the coderived/contraderived
+framework (Proposition~\ref{prop:curved-bar-acyclicity},
+Definition~\ref{def:chiral-coderived}).
 
-\emph{Step~2: Co-contra correspondence.}
-Positselski (\cite{Positselski}, Theorem~6.1) proves that
-for any CDG-coalgebra $C$ over a field, there is a triangulated
-equivalence $D^{\mathrm{co}}(C\text{-CoMod})
-\simeq D^{\mathrm{ctr}}(C^{\vee}\text{-ContraMod})$
-where $C^{\vee}$ is the dual CDG-algebra.  The chiral
-analogue replaces $C = \bar{B}^{\mathrm{ch}}(\cA)$
-(a CDG-coalgebra in the chiral sense) and
-$C^{\vee} = \cA^{!}$ (the Koszul dual chiral algebra).
-The tensor product in Positselski's construction must be
-replaced by the chiral tensor product
-$\boxtimes_{\cA}$, which is well-defined on the
-configuration space $\overline{C}_n(X)$.
+\emph{Layer~2: The correspondence.}
+The functors $\Phi_C^{\mathrm{ch}}$ and $\Psi_C^{\mathrm{ch}}$
+(Definition~\ref{def:chiral-Phi-Psi}) exchange projective
+contramodules and injective comodules
+(Lemma~\ref{lem:Phi-Psi-properties}), and descend to mutually
+inverse equivalences $D^{\mathrm{co}} \simeq D^{\mathrm{ctr}}$
+(Theorem~\ref{thm:chiral-co-contra-correspondence}).
 
-\emph{Step~3: Ext exchange.}
-The equivalence~\eqref{eq:positselski-equivalence} induces
-an isomorphism on Ext groups:
-$\mathrm{Ext}^n_{\cA}(M_1, M_2)
-\cong \mathrm{Ext}^{d-n}_{\cA^!}(\Phi(M_1), \Phi(M_2))^{\vee}$
-where $d$ is the global dimension and $\Phi$ is the
-bar-cobar functor.  At genus~$0$ (uncurved), this reduces
-to the Ext exchange of
-Theorem~\ref{thm:e1-module-koszul-duality}(ii).
-At higher genus, the shift $d - n$ acquires a correction
-from the curvature $m_0^{(g)} = \kappa \cdot \lambda_g$.
-
-The principal technical obstacle is Step~2: verifying that
-Positselski's ``contraherent cosheaf'' condition
-(\cite{Positselski}, Theorem~8.1) holds in the chiral
-$D$-module setting.  This condition ensures that the
-cotensor product functor $\square_C\colon
-C\text{-CoMod} \times C\text{-ContraMod} \to \mathrm{Vect}$
-has the correct exactness properties.  In the algebraic
-(non-chiral) setting, this is verified via a local criterion;
-the chiral version requires the corresponding locality
-property of the chiral tensor product.
+\emph{Layer~3: Identification with module categories.}
+Conilpotent CDG-comodules over $\bar{B}^{\mathrm{ch}}(\cA)$
+are identified with $\cA$-comodules, and CDG-contramodules with
+complete $\cA^!$-modules (Theorem~\ref{thm:positselski-chiral-proved}).
 \end{remark}
 
-\begin{theorem}[Full derived module equivalence; \ClaimStatusConjectured]
+\begin{theorem}[Full derived module equivalence; \ClaimStatusProvedHere]
 \label{thm:full-derived-module-equiv}
 \index{derived category!full module equivalence}
 \index{Positselski!full derived equivalence}
@@ -1314,20 +1294,16 @@ This equivalence induces the Ext duality:
 \end{equation}
 where $d$ is the global dimension of $\cA$ and
 $\Phi = \bar{B}_{\cA}$ is the bar functor.
-
-\emph{Scope.}  This extends
-Conjecture~\textup{\ref{conj:positselski-chiral}}
-\textup{(}the comodule-contramodule correspondence\textup{)}
-to the full triangulated equivalence with Ext duality.
-The genus-$0$ \textup{(}uncurved\textup{)} case is
-Theorem~\textup{\ref{thm:e1-module-koszul-duality}};
-the higher-genus case requires the curved bar complex
-and Positselski's coderived category formalism.
-The proof strategy is outlined in
-Remark~\textup{\ref{rem:positselski-proof-strategy}}.
-The main technical obstacle is verifying the contraherent
-cosheaf condition in the chiral $D$-module setting.
 \end{theorem}
+
+\begin{proof}
+This is Theorem~\ref{thm:full-derived-module-equiv-proved}.
+The genus-$0$ case is Theorem~\ref{thm:e1-module-koszul-duality};
+the extension to all genera uses the chiral comodule-contramodule
+correspondence (Theorem~\ref{thm:chiral-co-contra-correspondence})
+and the finite homological dimension of Koszul algebras.
+See \S\ref{subsec:positselski-chiral-equivalence} for full details.
+\end{proof}
 
 \subsection{Explicit resolutions for non-quadratic cases}
 
@@ -1639,3 +1615,7 @@ Koszul dual pairs by dual pairs of $2$-categories of modules.
 and~\ref{thm:affine-periodicity-critical}) to non-simply-laced types,
 where the dual Coxeter number and Coxeter number no longer agree.
 \end{enumerate}
+
+\medskip
+
+The Koszul pair structure developed in this chapter --- the quadratic condition, the periodicity phenomena, the level-shifting involution --- provides the algebraic skeleton on which the examples of Part~II are built.  Every explicit computation there begins by verifying the Koszul condition and identifying the dual; the reward is that the three main theorems then deliver bar cohomology, spectral collapse, and complementarity without further work.  The periodicity theorems, in particular, constrain the genus tower: the Hochschild cohomology ring $\mathrm{CH}^*(\cA)$ controls deformations of the bar complex at every genus, and Koszul duality exchanges the periodicity generators of $\cA$ and $\cA^!$ with a sign (Corollary~\ref{cor:hochschild-cup-exchange}).

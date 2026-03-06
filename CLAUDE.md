@@ -37,17 +37,17 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 6)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **666** |
+| ProvedHere | **687** |
 | ProvedElsewhere | **313** |
-| Conjectured | **93** |
+| Conjectured | **99** |
 | Heuristic | **18** |
 | Open | **0** |
-| **Total tagged claims** | **1090** |
+| **Total tagged claims** | **1117** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1193 pages** (converged), zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
+- **1214 pages** (converged), zero LaTeX errors, zero undefined references, zero undefined citations, zero multiply-defined labels
 - 55 active .tex files + 8 stubs (+ main.tex preamble), 75K lines of LaTeX
 - Bibliography: 275 entries (1243 lines), all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
@@ -81,22 +81,22 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 93 Conjectured Claims
+### What Remains — 99 Conjectured Claims
 
 All have scope remarks. Classification:
 
 | Category | Count | Action |
 |----------|-------|--------|
 | **PHYSICS** | ~48 | Correctly scoped — outside pure math |
-| **BORDERLINE PROVABLE** | ~4 | Provable in principle; substantial new work |
-| **GENUINELY OPEN** | ~8 | Actual open mathematical problems |
+| **BORDERLINE PROVABLE** | ~2 | Provable in principle; substantial new work |
+| **GENUINELY OPEN** | ~7 | Actual open mathematical problems |
 | **COMPUTATIONAL** | ~3 | Explicit calculations not yet carried out |
 | **HORIZON-DOCUMENTED** | ~10 | New conjectures from HORIZON programme documentation |
 | **SCOPE-REMARK REFS** | ~20 | Re-references of above in scope remarks |
 
-**Borderline provable**: chiral Kontsevich (all-orders Stokes), EO recursion (axiom verification), general m_k (all-genus propagator), affine periodicity at critical level
+**Borderline provable**: chiral Kontsevich (all-orders Stokes), EO recursion (axiom verification), general m_k (all-genus propagator), affine periodicity at critical level. (Positselski chiral lift PROVED, Session 113.)
 
-**Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), derived bc-betagamma, Positselski chiral lift, KL from bar-cobar
+**Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), derived bc-betagamma, KL from bar-cobar
 
 **Physics conjectures (~48)**: holomorphic_topological.tex (14), bv_brst.tex (4), free_fields.tex (18), physical_origins.tex (3), koszul_pair_structure.tex (9). All with scope remarks.
 
@@ -110,6 +110,13 @@ All have scope remarks. Classification:
 
 ### Structural Issues
 - **Thm 5.10.1 ↔ 7.16.4 dependency**: Resolved. Theorem split into genus-0 clause (2a, self-contained in bar_cobar_construction.tex) and higher-genus clause (2b, proved by induction in higher_genus.tex). Remark rem:proof-dependency-linear documents the linear structure.
+
+### CRITICAL GAP: Chiral Koszulness Circularity (identified Mar 6, 2026)
+- **Problem**: thm:spectral-sequence-collapse (bar_cobar_construction.tex:7819) ASSUMES "A is Koszul" to prove E₂ collapse. The bar cohomology formulas (Riordan for sl₂, Motzkin for Vir) then follow from the collapse. But Koszulness itself is never independently proved. This is circular.
+- **Scope**: Affects sl₂ Riordan claim, Virasoro Motzkin claim, βγ GF (via DS discriminant), prop:bar-dimensions (examples_summary.tex:287). Does NOT affect: main theorems A/B/C (structural, assume Koszulness as hypothesis), free field bar cohomology (d_bracket=0), genus expansions (use κ not bar dims), universal KM duality (Serre duality argument).
+- **Resolution needed**: Standalone theorem "ŝl₂_k is chiral Koszul" with independent proof. Three approaches: (1) deformation from classical BGS Koszulness, (2) independent Hilbert series computation matching Riordan, (3) direct PBW spectral sequence analysis.
+- **Computation note**: Direct bar differential matrix computation is WRONG APPROACH — bracket-only d provably has d²≠0 (all 2048 sign conventions fail). Book's proofs use PBW spectral sequences + Koszul dual Hilbert series instead. See memory/deep_audit_bar_computation.md.
+- **Status**: RESOLVED. Theorems thm:pbw-koszulness-criterion, thm:km-chiral-koszul, thm:virasoro-chiral-koszul, cor:bar-cohomology-koszul-dual added to chiral_koszul_pairs.tex. Proof chain: PBW flatness + classical Koszulness of associated graded (Priddy) → chiral Koszulness via spectral sequence. Circular references in detailed_computations.tex and examples_summary.tex updated to cite new standalone theorems.
 
 ---
 
@@ -177,6 +184,9 @@ Reference facts. Verify against source before editing.
 - Koszul dual coalgebra: SUB-coalgebra of cofree (cogenerated by R-perp), NOT quotient
 - Heisenberg is NOT self-dual: H^! = Sym^ch(V*) (commutative chiral), NOT H_{-k}
 - Free fermion dual: F^! = beta-gamma (Lie<->Com duality), NOT Heisenberg
+- CHIRAL KOSZULNESS ≠ CLASSICAL KOSZULNESS: U(g) Koszul (BGS) does NOT automatically imply ĝ_k is chiral Koszul. The chiral bar complex uses ALL OPE poles (Borcherds identity), not just the Lie bracket. A separate proof is needed for the chiral setting.
+- Bar differential: bracket-only piece d_bracket² ≠ 0 (PROVED, all 2048 sign conventions fail). Full d = d_bracket + d_curvature satisfies d²=0 via Borcherds. Do NOT attempt to compute bar cohomology by building d_bracket as a matrix.
+- Correct computation method: PBW spectral sequence (filter by conformal weight) + Koszul dual Hilbert series from quadratic OPE data. NOT direct matrix rank computation.
 - bc-betagamma is a 2-generator duality (dim V=2)
 - Bosonization != Koszul duality (bc has 2 generators, Heisenberg has 1)
 
@@ -227,18 +237,18 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 ### Part 1: Theory (chapters/theory/) — 35K lines, 361 PH / 150 PE / 23 CJ
 | File | Lines | PH | PE | CJ | Notes |
 |------|------:|---:|---:|---:|-------|
-| introduction.tex | 1450 | 17 | 2 | 0 | Main results, Leitfaden, E_1/E_inf dictionary |
+| introduction.tex | 1569 | 17 | 2 | 0 | Main results, Leitfaden, E_1/E_inf dictionary |
 | algebraic_foundations.tex | 1325 | 5 | 9 | 0 | Classical Koszul duality, operads, Weiss covers |
 | configuration_spaces.tex | 3942 | 42 | 29 | 0 | C_n(X), FM compactification, OS algebra |
-| bar_cobar_construction.tex | 7135 | 78 | 16 | 0 | Bar/cobar functors, d^2=0, Verdier — **core chapter** (3 Heur) |
+| bar_cobar_construction.tex | 8131 | 84 | 16 | 0 | Bar/cobar functors, d^2=0, Verdier, chiral coalgebra homalg — **core chapter** (3 Heur) |
 | poincare_duality.tex | 677 | 7 | 1 | 0 | Verdier duality, bar-computes-dual |
 | poincare_duality_quantum.tex | 1091 | 6 | 12 | 6 | Quantum corrections, modular operad, Feynman transform |
-| higher_genus.tex | 7160 | 100 | 19 | 2 | Genus-g bar, Main Theorems B+C, KS — **deepest** (2 Heur) |
+| higher_genus.tex | 7472 | 102 | 19 | 2 | Genus-g bar, Main Theorems B+C, KS — **deepest** (2 Heur) |
 | chiral_koszul_pairs.tex | 2234 | 15 | 8 | 2 | Koszul pair theory, E_1 duality theorem |
-| koszul_pair_structure.tex | 1641 | 15 | 14 | 9 | Periodicity, affine/Virasoro structure |
-| chiral_modules.tex | 4382 | 43 | 14 | 1 | Module categories, rep theory, E_1 module Koszul duality |
+| koszul_pair_structure.tex | 1617 | 17 | 14 | 7 | Periodicity, affine/Virasoro structure |
+| chiral_modules.tex | 4400 | 43 | 14 | 1 | Module categories, rep theory, E_1 module Koszul duality |
 | deformation_theory.tex | 1382 | 16 | 3 | 3 | Deformation-obstruction, curved A-infinity |
-| hochschild_cohomology.tex | 699 | 7 | 16 | 0 | Hochschild-cyclic spectral sequence |
+| hochschild_cohomology.tex | 702 | 7 | 16 | 0 | Hochschild-cyclic spectral sequence |
 | quantum_corrections.tex | 347 | 1 | 0 | 0 | Quantum correction formulas |
 | filtered_curved.tex | 304 | 1 | 1 | 0 | Filtered-curved hierarchy |
 | koszul_across_genera.tex | 363 | 4 | 0 | 0 | (absorbed into higher_genus) |
@@ -264,7 +274,7 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 | toroidal_elliptic.tex | 1355 | 5 | 4 | 3 | Double affine, Fay d²=0, elliptic R-matrix, shuffle |
 | genus_expansions.tex | 2500 | 32 | 2 | 4 | **Three Theorems showcase**: sl₂, Vir, W₃, genus-2 |
 | detailed_computations.tex | 3684 | 18 | 0 | 0 | sl_3 bar, W_3, fermion, E₈, Vir deg 4-5, G₂, BGG |
-| examples_summary.tex | 1092 | 8 | 1 | 2 | Master Table, bar dimensions, spectral data |
+| examples_summary.tex | 1411 | 12 | 1 | 2 | Master Table, bar dimensions, spectral data |
 | minimal_model_examples.tex | 677 | 1 | 3 | 0 | Ising, tricritical Ising, three-state Potts, bar-fusion |
 
 *Stubs (5 lines each, placeholders): kac_moody_computations.tex, obstruction_classes.tex, heisenberg_higher_genus.tex, deformation_quantization_complete.tex, w_algebras_computations.tex*

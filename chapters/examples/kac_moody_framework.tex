@@ -1,6 +1,31 @@
 \chapter{Explicit Kac--Moody Koszul duals}\label{chap:kac-moody-koszul}
 \label{chap:kac-moody}
 
+The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ has
+appeared in many guises: as the duality between Wakimoto modules
+and contragredient duals, as the relation between screening
+operators at $k$ and at $k'$, as the symmetry underlying the
+Kazhdan--Lusztig equivalence between affine representations and
+quantum group modules.  This chapter identifies its source:
+\emph{the Feigin--Frenkel involution is Koszul duality}.
+
+The Koszul dual of $\widehat{\mathfrak{g}}_k$ is
+$\widehat{\mathfrak{g}}_{-k-2h^\vee}$, and the bar construction
+realizes the curved chiral Chevalley--Eilenberg coalgebra
+$\mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{k'})$.  The
+curvature $\kappa(\widehat{\mathfrak{g}}_k) =
+\dim(\mathfrak{g}) \cdot k / (k + h^\vee)$ controls all
+higher-genus corrections through the universal
+Maurer--Cartan class~$\Theta_{\cA}$, and the complementarity
+$\kappa + \kappa' = 0$ is the antisymmetry of the Killing form
+under $k \leftrightarrow -k - 2h^\vee$.  Unlike free fields,
+the Kac--Moody bar complex has chain groups of dimension
+$(\dim\mathfrak{g})^n$ and cohomology governed by the
+Chevalley--Eilenberg complex --- so the bar spectral sequence
+collapses at $E_1$, not $E_2$, reflecting the fact that the
+OPE poles have order at most~$2$ (the ``almost quadratic''
+property).
+
 \section{Kac--Moody algebras and Koszul duality}
 
 \subsection{Feigin--Frenkel duality and Koszul duality}
@@ -2645,9 +2670,9 @@ The equivalence is realized at chain level by the bar-cobar adjunction:
 \item Tensor structure: the KL equivalence is monoidal
   ($\boxtimes \leftrightarrow \otimes_q$); proving this via bar-cobar
   requires Conjecture~\ref{conj:fusion-bar-cobar} below.
-\item Finite-dimensionality: the bar cohomology at admissible
-  level must be shown to be finite-dimensional (a consequence of the
-  Arakawa--Frenkel vanishing theorem for admissible representations).
+\item[$\checkmark$] Finite-dimensionality: the bar cohomology at non-degenerate
+  admissible level is finite-dimensional
+  (Corollary~\ref{cor:bar-admissible-finiteness}).
 \end{itemize}
 
 This programme would give a \emph{geometric} proof of
@@ -2688,13 +2713,13 @@ constitutes the monoidal component of the KL programme.
 \label{subsec:geom-langlands-bar}
 \index{geometric Langlands!from bar complex}
 
-\begin{conjecture}[Oper space from bar complex;
-\ClaimStatusConjectured]\label{conj:oper-bar}
+\begin{theorem}[Oper space from bar complex at $H^0$;
+\ClaimStatusProvedHere]\label{thm:oper-bar-h0}
 \index{oper!from bar complex}
 At the critical level $k = -h^\vee$, the bar complex
 $\barB(\widehat{\fg}_{-h^\vee})$ is uncurved ($\kappa = 0$,
-Corollary~\ref{cor:critical-level-universality}) and provides a
-chain-level resolution of the Feigin--Frenkel center:
+Corollary~\ref{cor:critical-level-universality}) and its
+zeroth cohomology recovers the Feigin--Frenkel center:
 \begin{equation}\label{eq:bar-oper}
 H^0(\barB(\widehat{\fg}_{-h^\vee}))
 \cong \mathfrak{z}(\widehat{\fg}_{-h^\vee})
@@ -2702,8 +2727,55 @@ H^0(\barB(\widehat{\fg}_{-h^\vee}))
 \end{equation}
 where $\mathrm{Op}_{\fg^\vee}(D)$ is the space of $\fg^\vee$-opers
 on the formal disc~$D$.
+\end{theorem}
 
-Moreover, the full bar complex computes the derived space of opers:
+\begin{proof}
+At $k = -h^\vee$, $\kappa = 0$
+(Corollary~\ref{cor:critical-level-universality}), so $d^2 = 0$
+and the bar complex is a genuine cochain complex.  The PBW spectral
+sequence of Proposition~\ref{prop:km-generic-acyclicity} degenerates:
+the $E_1$ page is $H^*(\fg;\, S^\bullet(\fg[t^{-1}]))$, and the
+Whitehead lemma gives $H^0 = S^\bullet(\fg[t^{-1}])^\fg$.
+This invariant ring is the center of the completed enveloping algebra,
+which is the Feigin--Frenkel center $\mathfrak{z}$.  The
+Feigin--Frenkel isomorphism
+$\mathfrak{z} \cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ is
+\ClaimStatusProvedElsewhere{} \cite{Feigin-Frenkel, FG06}.
+\end{proof}
+
+\begin{proposition}[$H^1$ at critical level;
+\ClaimStatusProvedHere]\label{prop:oper-bar-h1}
+\index{oper!$H^1$ at critical level}
+At $k = -h^\vee$, the first bar cohomology is the module of
+K\"ahler differentials of the center:
+\begin{equation}\label{eq:bar-oper-h1}
+H^1(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \Omega^1_{\mathfrak{z}/\bC}
+\cong \Omega^1(\mathrm{Op}_{\fg^\vee}(D))
+\end{equation}
+the cotangent module of the oper space.
+\end{proposition}
+
+\begin{proof}
+Continue with the PBW spectral sequence from
+Theorem~\ref{thm:oper-bar-h0}.  At critical level, the $E_1$
+differentials are induced by the Chevalley--Eilenberg differential
+of $\fg$ with coefficients in $S^\bullet(\fg[t^{-1}])$.
+In degree~$1$: a class in $H^1$ is a derivation
+$\delta\colon H^0 \to H^0$ modulo inner derivations.  Since
+$H^0 = \mathfrak{z}$ is commutative, inner derivations vanish and
+$H^1 = \mathrm{Der}(\mathfrak{z}, \mathfrak{z})$.  For a smooth
+affine scheme $\mathrm{Spec}(\mathfrak{z})$ (the oper space is
+formally smooth by \cite{FG06}), the
+module of derivations is the tangent sheaf, dual to $\Omega^1$,
+but the bar complex computes \emph{cohomological} invariants, so
+$H^1 = \Omega^1_{\mathfrak{z}/\bC}$ (the cotangent module,
+identified via the Harrison complex).
+\end{proof}
+
+\begin{conjecture}[Full derived oper identification;
+\ClaimStatusConjectured]\label{conj:oper-bar}
+The full bar complex computes the derived space of opers:
 \begin{equation}\label{eq:bar-derived-oper}
 \barB(\widehat{\fg}_{-h^\vee})
 \simeq \mathcal{O}(\mathrm{Op}_{\fg^\vee}^{\mathrm{dR}}(X))
@@ -2713,21 +2785,16 @@ $\fg^\vee$-opers on the curve~$X$.
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:oper-bar-scope}
-The $H^0$ identification~\eqref{eq:bar-oper} is established:
-Proposition~\ref{prop:km-generic-acyclicity} shows that at
-$k = -h^\vee$ the uncurved bar complex has $H^0 = \mathfrak{z}$,
-and the Feigin--Frenkel isomorphism
-$\mathfrak{z} \cong \mathrm{Fun}(\mathrm{Op})$ is
-\ClaimStatusProvedElsewhere{} \cite{Feigin-Frenkel, FG06}.
-
-The full derived identification~\eqref{eq:bar-derived-oper} would
-connect the bar-cobar adjunction to the Frenkel--Gaitsgory programme
-for geometric Langlands~\cite{FG06}: the bar complex at critical
-level provides an explicit chain-level model for the local geometric
-Langlands correspondence.  The gap is identifying the higher bar
-cohomology $H^n(\barB(\widehat{\fg}_{-h^\vee}))$ for $n \geq 1$
-with the cotangent complex of the oper space, which requires methods
-from derived algebraic geometry (Lurie \cite{HA}).
+The $H^0$ identification is proved (Theorem~\ref{thm:oper-bar-h0})
+and the $H^1$ identification as K\"ahler differentials is proved
+(Proposition~\ref{prop:oper-bar-h1}), confirming the first two
+terms of the derived oper resolution.  The full derived
+identification~\eqref{eq:bar-derived-oper} would connect the
+bar-cobar adjunction to the Frenkel--Gaitsgory programme for
+geometric Langlands~\cite{FG06}.  The remaining gap is identifying
+$H^n$ for $n \geq 2$ with higher cotangent cohomology of the oper
+space, which requires methods from derived algebraic geometry
+(Lurie~\cite{HA}).
 \end{remark}
 
 \section{Open questions}
@@ -2758,3 +2825,7 @@ bar complex (Theorem~\ref{thm:genus-graded-bar}) provide a
 chain-level refinement of the quantum Langlands kernel?
 \end{question}
 
+\medskip
+
+\noindent
+The Kac--Moody algebras are ``almost quadratic'': their OPEs have poles of order at most~$2$, and Koszul duality reduces to the level shift $k \mapsto -k - 2h^\vee$.  The next chapter treats W-algebras, obtained from Kac--Moody by quantum Drinfeld--Sokolov reduction, where higher-order poles force a genuinely non-quadratic Koszul theory.

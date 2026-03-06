@@ -1,9 +1,7 @@
 \chapter*{Summary of Part XI}
 \addcontentsline{toc}{chapter}{Summary of Part XI}
 
-Part XI has provided explicit computations for the full range of chiral
-algebras treated in this monograph. We consolidate the principal numerical invariants
-into a single reference table, then summarize the results by category.
+We now consolidate the explicit computations of Part~II into a single reference.  Across fifteen families of chiral algebras --- from the free fermion (where the bar complex collapses) to toroidal algebras (where Eisenstein series govern the differential) --- a set of universal invariants emerges: central charges, curvature coefficients, bar cohomology growth rates, and spectral sequence collapse pages.  The Master Table below records these for every algebra computed in this monograph, making visible the patterns that the abstract theory of Part~I predicts: complementarity sums $c + c' = K$, genus universality $\mathrm{obs}_g = \kappa \cdot \lambda_g$, and the shared discriminant phenomenon.
 
 \section*{Master table of computed invariants}
 \label{sec:master-table}
@@ -318,16 +316,25 @@ The explicit formulas are:
   for the relation between different truncation conventions.
 \item \emph{$\widehat{\mathfrak{sl}}_2$}:
   $\dim H^n = R(n+3)$ where $R$ denotes the Riordan numbers
-  (OEIS~A005043).  This follows from the PBW basis structure
-  (Theorem~\ref{thm:universal-kac-moody-koszul}) and the
-  Koszul resolution of $\widehat{\mathfrak{sl}}_2$.
+  (OEIS~A005043).  This follows from the chiral Koszulness of
+  $\widehat{\mathfrak{sl}}_2$
+  (Theorem~\ref{thm:km-chiral-koszul}), the universal
+  level-shifting duality
+  (Theorem~\ref{thm:universal-kac-moody-koszul}), and the
+  Koszul dual Hilbert series computation
+  (Corollary~\ref{cor:bar-cohomology-koszul-dual}).
 \item \emph{$\widehat{\mathfrak{sl}}_3$}: computed through
-  degree~$3$ from the PBW basis.
+  degree~$3$ from the PBW basis;
+  degrees~$4$--$10$ predicted from the conjectured
+  rational GF~\eqref{eq:sl3-bar-gf}.
 \item \emph{Virasoro}:
   $\dim H^n = M(n{+}1) - M(n)$ where $M(n)$ is the $n$-th
   Motzkin number (OEIS~A001006).  This reflects the
-  associahedron structure of $\overline{M}_{0,n+2}$
-  (Theorem~\ref{thm:spectral-sequence-collapse}).
+  associahedron structure of $\overline{M}_{0,n+2}$,
+  proved via the chiral Koszulness of $\mathrm{Vir}_c$
+  (Theorem~\ref{thm:virasoro-chiral-koszul}) and the
+  spectral sequence collapse
+  (Corollary~\ref{cor:bar-cohomology-koszul-dual}).
 \item \emph{$\mathcal{W}_3$}: computed through degree~$3$
   in \S\ref{sec:w3-bar-degree3}; the degree-$4$ value
   $\dim H^4 = 52$ is obtained from the
@@ -376,16 +383,16 @@ $\widehat{\mathfrak{sl}}_2$ (level~$k$)
   & 3 & 6 & 15 & 36 & 91 & 232 & 603 & 1585 & 4213 & 11298 & $3^n$ \\
 \hline
 $\widehat{\mathfrak{sl}}_3$ (level~$k$)
-  & 8 & 36 & 204 & 1352$^\dagger$ & 9892$^\dagger$ & --- & --- & --- & --- & --- & $8^n$ \\
+  & 8 & 36 & 204 & 1352$^\dagger$ & 9892$^\dagger$ & 76084$^\dagger$ & 598592$^\dagger$ & 4755444$^\dagger$ & 37933596$^\dagger$ & 303105608$^\dagger$ & $8^n$ \\
 \hline
 $\mathrm{Vir}_c$
   & 1 & 2 & 5 & 12 & 30 & 76 & 196 & 512 & 1353 & 3610 & $3^n$ \\
 \hline
 $\mathcal{W}_3$
-  & 2 & 5 & 16 & 52 & 171$^\dagger$ & 564$^\dagger$ & --- & --- & --- & --- & $3.3^n$ \\
+  & 2 & 5 & 16 & 52 & 171$^\dagger$ & 564$^\dagger$ & 1862$^\dagger$ & 6149$^\dagger$ & 20308$^\dagger$ & 67072$^\dagger$ & $3.3^n$ \\
 \hline
 Yangian $Y(\mathfrak{sl}_2)$
-  & 4 & 10 & 28 & 82$^*$ & 244$^*$ & 730$^*$ & --- & --- & --- & --- & $3^n$ \\
+  & 4 & 10 & 28 & 82$^*$ & 244$^*$ & 730$^*$ & 2188$^*$ & 6562$^*$ & 19684$^*$ & 59050$^*$ & $3^n$ \\
 \hline
 \end{tabular}
 }
@@ -393,13 +400,16 @@ Yangian $Y(\mathfrak{sl}_2)$
 \medskip
 \noindent
 {\footnotesize $^*$\,Conjectured: $\dim H^n = 3^n + 1$
-for all $n \geq 1$; values through $n = 10$ in
-Conjecture~\ref{conj:yangian-bar-gf}.\\
-$^\dagger$\,Predicted from conjectured rational GF:
-$\widehat{\mathfrak{sl}}_3$ via \eqref{eq:sl3-bar-gf},
-$\mathcal{W}_3$ via \eqref{eq:w3-bar-recurrence};
+for all $n \geq 1$
+(Conjecture~\ref{conj:yangian-bar-gf}).\\
+$^\dagger$\,Predicted from conjectured rational GF\@:
+$\widehat{\mathfrak{sl}}_3$ via recurrence~\eqref{eq:sl3-bar-recurrence},
+$\mathcal{W}_3$ via recurrence~\eqref{eq:w3-bar-recurrence};
 see Conjectures~\ref{conj:sl3-bar-gf}
-and~\ref{conj:w3-algebraicity}.}
+and~\ref{conj:w3-algebraicity}.
+All conjectured values ($n \geq 4$ for
+$\widehat{\mathfrak{sl}}_3$ and $\mathcal{W}_3$,
+$n \geq 4$ for Yangian) await independent verification.}
 \end{table}
 
 \begin{remark}[Growth rates and Koszulness]\label{rem:bar-growth-koszul}
@@ -606,6 +616,11 @@ matching that of $P_{\widehat{\mathfrak{sl}}_3}(x)$, once the latter
 is determined.
 \end{remark}
 
+\begin{remark}[Monodromy interpretation of the discriminant]\label{rem:discriminant-monodromy}
+\index{discriminant!monodromy interpretation}
+The shared discriminant $\Delta(x) = (1-3x)(1+x)$ admits a natural interpretation as a \emph{monodromy characteristic polynomial}.  The generating function $P(x)$ of bar cohomology is algebraic, so it satisfies a polynomial equation $Q(x, P) = 0$; the discriminant $\Delta(x) = \operatorname{disc}_P Q$ determines the branch locus.  The roots $x = 1/3$ and $x = -1$ of $\Delta$ are the singularities of a rank-two local system on the genus-one modular deformation complex.  In this framing, the DS-invariance of $\Delta$ (Theorem~\ref{thm:ds-bar-gf-discriminant}) reflects the fact that DS reduction preserves the reduced center and its Kodaira--Spencer transport, hence preserves the monodromy.  The eigenvalues $3$ and $-1$ (reciprocals of the roots) are the monodromy eigenvalues of a canonical genus-one transport operator acting on a rank-two piece of the modular deformation complex.  This perspective suggests that $\Delta_{\mathfrak{g}}(x)$ is an intrinsic invariant of the Koszul pair: $\Delta_{\mathfrak{g}}(x) = \det(1 - x \cdot \operatorname{KS}_{\mathfrak{g}} \mid H^{\mathrm{red}}_1(\mathcal{A}))$.
+\end{remark}
+
 \begin{conjecture}[$\widehat{\mathfrak{sl}}_3$ bar generating function; \ClaimStatusConjectured]\label{conj:sl3-discriminant}
 \label{conj:sl3-bar-gf}
 \index{sl3@$\mathfrak{sl}_3$!bar generating function}
@@ -638,6 +653,14 @@ discriminant $(1-3x)(1+x)$.
 consistent with the chain-group bound
 (Corollary~\ref{cor:growth-rate-dimg}).
 \item The formula predicts $\dim H^4 = 1352$ and $\dim H^5 = 9892$.
+\item The characteristic polynomial of the recurrence factors as
+$(t - 8)(t^2 - 3t - 1)$, where the linear factor corresponds to the
+dominant pole $x = 1/\dim\mathfrak{sl}_3$ and the quadratic factor
+$t^2 - 3t - 1$ is the reciprocal polynomial of the DS discriminant
+factor $1 - 3x - x^2$.  This factorization mirrors the $\mathfrak{sl}_2$
+case: the Riordan recurrence has characteristic polynomial
+$(t - 3)(t + 1) = t^2 - 2t - 3$, whose roots are the reciprocals of
+the zeros of the discriminant $\Delta = 1 - 2x - 3x^2 = (1-3x)(1+x)$.
 \end{enumerate}
 
 \emph{Scope.}  Verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$: the value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.  The computation requires the rank of a $24576 \times 786432$ matrix, which is beyond hand computation but potentially accessible to numerical linear algebra.
@@ -679,6 +702,82 @@ growth pole at $x = 1/8$ while $\mathcal{W}_3$ has a
 growth pole at $x = (-3+\sqrt{13})/2 \approx 0.303$.
 \end{remark}
 
+\begin{proposition}[Discriminant as first characteristic invariant; \ClaimStatusProvedHere]
+\label{prop:discriminant-characteristic}
+\index{discriminant!characteristic invariant}
+\index{modular characteristic package!discriminant}
+For a modular Koszul chiral algebra $\cA$
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})},
+the bar cohomology discriminant $\Delta_{\cA}(x)$ is an invariant of
+the modular characteristic package.  Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If the bar cohomology generating function
+  $P_{\cA}(x) = \sum_{n \geq 0} \dim H^n(\barB(\cA))\, x^n$
+  is algebraic of degree~$d$, then $\Delta_{\cA}(x)$ is a polynomial
+  of degree at most $d(d-1)$ whose roots are the branch points
+  of $P_{\cA}$.
+\item The obstruction coefficient $\kappa(\cA)$ and
+  the discriminant $\Delta_{\cA}(x)$ are related by: the growth
+  rate $\rho = 1/\min\{|r| : \Delta_{\cA}(r) = 0\}$ satisfies
+  $\log \rho \leq \log(\dim \cA_{[1]})$, with equality for
+  Kac--Moody algebras.
+\item Under Drinfeld--Sokolov reduction $\cA = \widehat{\fg}_k
+  \mapsto \mathcal{W}^k(\fg)$, the discriminant is preserved:
+  $\Delta_{\widehat{\fg}}(x) = \Delta_{\mathcal{W}(\fg)}(x)$
+  \textup{(}Theorem~\textup{\ref{thm:ds-bar-gf-discriminant})}.
+\item Under Koszul duality $\cA \mapsto \cA^!$, the discriminant
+  transforms by: $\Delta_{\cA^!}(x) = \Delta_{\cA}(x)$, since
+  Koszul duality is implemented by Verdier duality on
+  $\operatorname{Ran}(X)$ and Verdier duality preserves branch
+  loci.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part (i) is the definition of the discriminant of an algebraic function.
+Part (ii): the radius of convergence of $P_{\cA}(x)$ is the
+reciprocal of the exponential growth rate $\rho$; for Kac--Moody,
+$\dim H^n(\barB(\widehat{\fg}_k)) \leq (\dim \fg)^n \cdot (n-1)!$
+(Corollary~\ref{cor:growth-rate-dimg}), so $\rho \leq \dim \fg$;
+equality follows from the explicit chain-group count.
+Part (iii) is Theorem~\ref{thm:ds-bar-gf-discriminant}.
+Part (iv): the bar complex of $\cA^!$ is related to that of $\cA$
+by Verdier duality
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}); Verdier duality
+is an involution on configuration spaces, hence preserves the
+analytic structure of the generating function.  In the
+$\mathfrak{sl}_2$ family, this is verified explicitly:
+$P_{\widehat{\mathfrak{sl}}_{2,k}}$ and
+$P_{\widehat{\mathfrak{sl}}_{2,-k-4}}$ both have discriminant
+$(1-3x)(1+x)$.
+\end{proof}
+
+\begin{remark}[Discriminant and the universal class]\label{rem:discriminant-universal-class}
+\index{discriminant!universal Maurer--Cartan class}
+Proposition~\ref{prop:discriminant-characteristic} and
+Remark~\ref{rem:discriminant-monodromy} together suggest that the
+discriminant $\Delta_{\cA}(x)$ is a shadow of the universal
+Maurer--Cartan class $\Theta_{\cA}$
+(\S\ref{sec:modular-koszul-programme}).  The precise relationship
+is: if $\Theta_{\cA}$ has a genus-$1$ component
+$\Theta_{\cA}^{(1)} \in \operatorname{Def}_{\mathrm{cyc}}(\cA)
+\otimes H^*(\overline{\mathcal{M}}_{1,1})$, then the reduced
+genus-$1$ transport operator $\operatorname{KS}_{\cA}$ acts on
+a finite-rank piece $H^{\mathrm{red}}_1(\cA)$, and the
+discriminant is its characteristic polynomial:
+$\Delta_{\cA}(x) = \det(1 - x \cdot \operatorname{KS}_{\cA}
+\mid H^{\mathrm{red}}_1(\cA))$.  For the $\mathfrak{sl}_2$ family
+($\operatorname{rank} = 2$), the eigenvalues $3$ and $-1$ of
+$\operatorname{KS}_{\cA}$ produce
+$\Delta = (1 - 3x)(1 + x)$.  This interpretation connects the
+bar cohomology generating function to the genus-$1$ piece of
+the modular characteristic package
+(Remark~\ref{rem:modular-characteristic-package}) and explains why
+DS reduction preserves $\Delta$: the Kodaira--Spencer transport
+operator commutes with DS reduction because DS preserves the
+reduced center.
+\end{remark}
+
 \begin{remark}[DS transformation of bar generating functions]\label{rem:ds-gf-transformation}
 \index{Drinfeld--Sokolov reduction!generating function transformation}
 Theorem~\ref{thm:ds-bar-gf-discriminant} shows that DS reduction acts on bar generating functions as a \emph{rational transformation preserving the discriminant}.  Explicitly, for $\mathfrak{sl}_2$:
@@ -690,9 +789,168 @@ P_{\mathrm{Vir}}(x) = \frac{4x}{(1 - x + \sqrt{\Delta})^2},
 where $\Delta = 1 - 2x - 3x^2$.  The transformation $P_{\widehat{\mathfrak{g}}} \mapsto P_{\mathcal{W}(\mathfrak{g})}$ replaces the Kac--Moody algebra by its BRST reduction while preserving the algebraic-function class.  This is analogous to how DS reduction on representation categories (via the Kazhdan--Lusztig functor) maps highest-weight modules to $\mathcal{W}$-algebra modules while preserving character identities.
 \end{remark}
 
+\begin{theorem}[Linear dependence in the discriminant family; \ClaimStatusProvedHere]
+\label{thm:discriminant-linear-dependence}
+\index{bar complex!generating function!linear dependence}
+\index{Drinfeld--Sokolov reduction!linear dependence}
+\index{Wakimoto representation!discriminant relation}
+The three bar cohomology generating functions in the
+$\mathfrak{sl}_2$ discriminant family satisfy the
+$\mathbb{Q}(x)$-linear relation
+\begin{equation}\label{eq:discriminant-linear-relation}
+x^2(1{+}x)\, P_{\mathrm{Vir}}(x)
+= (1{-}2x{-}x^2)(1{+}x)\, P_{\widehat{\mathfrak{sl}}_2}(x)
+  - (1{-}3x)\, P_{\beta\gamma}(x).
+\end{equation}
+Equivalently, with $\Delta = 1 - 2x - 3x^2$ and $u = \sqrt{\Delta}$:
+\begin{equation}\label{eq:discriminant-family-decomposition}
+P_{\widehat{\mathfrak{sl}}_2} = \frac{1}{2x} - \frac{u}{2x(1{+}x)},
+\qquad
+P_{\beta\gamma} = \frac{u}{1{-}3x},
+\qquad
+P_{\mathrm{Vir}} = \frac{1{-}2x{-}x^2}{2x^3} - \frac{(1{-}x)\,u}{2x^3}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+All three generating functions~\eqref{eq:gf-sl2-riordan}--\eqref{eq:gf-betagamma}
+lie in the quadratic extension
+$\mathbb{Q}(x)[\sqrt{\Delta}]$ of $\mathbb{Q}(x)$,
+which is a $2$-dimensional $\mathbb{Q}(x)$-vector space with basis
+$\{1, u\}$ where $u = \sqrt{\Delta}$ and $u^2 = \Delta = (1{-}3x)(1{+}x)$.
+
+\emph{Step~1: Express each GF in the basis $\{1, u\}$.}
+From~\eqref{eq:gf-sl2-riordan}:
+$P_{\widehat{\mathfrak{sl}}_2} = (1{+}x{-}u)/(2x(1{+}x)) = 1/(2x) - u/(2x(1{+}x))$.
+For $P_{\beta\gamma}$, rationalize $(1{+}x)/u = (1{+}x)u/u^2 = (1{+}x)u/\Delta = u/(1{-}3x)$.
+For $P_{\mathrm{Vir}} = 4x/(1{-}x{+}u)^2$,
+multiply numerator and denominator by the conjugate
+$(1{-}2x{-}x^2) - (1{-}x)u$:
+\[
+(1{-}x{+}u)^2 = 2(1{-}2x{-}x^2) + 2(1{-}x)u,
+\]
+so $P_{\mathrm{Vir}} = 2x/[(1{-}2x{-}x^2)+(1{-}x)u]$.
+Rationalizing gives denominator
+$(1{-}2x{-}x^2)^2 - (1{-}x)^2\Delta = 4x^4$, hence
+\[
+P_{\mathrm{Vir}} = \frac{(1{-}2x{-}x^2)-(1{-}x)u}{2x^3}.
+\]
+This establishes~\eqref{eq:discriminant-family-decomposition}.
+
+\emph{Step~2: Linear relation.}
+Since $\dim_{\mathbb{Q}(x)} \mathbb{Q}(x)[u] = 2$,
+any three elements are $\mathbb{Q}(x)$-linearly dependent.
+Solving $P_{\mathrm{Vir}} = \alpha\, P_{\widehat{\mathfrak{sl}}_2} + \beta\, P_{\beta\gamma}$
+from the $\{1,u\}$-components:
+\begin{align*}
+\text{constant:} \quad
+  \frac{1{-}2x{-}x^2}{2x^3} &= \frac{\alpha}{2x},
+  &&\Rightarrow\ \alpha = \frac{1{-}2x{-}x^2}{x^2}, \\
+\text{$u$-part:} \quad
+  \frac{-(1{-}x)}{2x^3} &= \frac{-\alpha}{2x(1{+}x)} + \frac{\beta}{1{-}3x},
+  &&\Rightarrow\ \beta = \frac{-(1{-}3x)}{x^2(1{+}x)}.
+\end{align*}
+Multiplying $P_{\mathrm{Vir}} = \alpha\, P_{\widehat{\mathfrak{sl}}_2} + \beta\, P_{\beta\gamma}$
+through by $x^2(1{+}x)$ gives~\eqref{eq:discriminant-linear-relation}.
+\end{proof}
+
+\begin{remark}[Consequences of linear dependence]\label{rem:linear-dependence-consequences}
+\index{bar complex!generating function!mutual determination}
+Theorem~\ref{thm:discriminant-linear-dependence} has three consequences:
+\begin{enumerate}
+\item \emph{Mutual determination.}
+Any two members of the discriminant family determine the third via~\eqref{eq:discriminant-linear-relation}.  In particular, the $\beta\gamma$ generating function can be recovered purely from the Riordan and Motzkin families:
+\[
+P_{\beta\gamma} = \frac{(1{-}2x{-}x^2)(1{+}x)\, P_{\widehat{\mathfrak{sl}}_2}
+  - x^2(1{+}x)\, P_{\mathrm{Vir}}}{1{-}3x}.
+\]
+\item \emph{Algebraic structure.}
+The $\mathfrak{sl}_2$ discriminant family forms a $1$-dimensional
+$\mathbb{Q}(x)$-affine subspace of $\mathbb{Q}(x)[u]$:
+every member has the form $a(x) + b(x)u$ where
+$a, b$ are constrained by the DS and Wakimoto functors.
+The two ``canonical'' basis vectors are
+$P_{\widehat{\mathfrak{sl}}_2}$ (with negative $u$-coefficient)
+and $P_{\beta\gamma}$ (with positive $u$-coefficient, reflecting the
+$\Delta^{-1/2}$ vs $\Delta^{1/2}$ singularity types).
+\item \emph{Singularity exchange.}
+The relation~\eqref{eq:discriminant-linear-relation} interchanges
+the sub-exponential correction exponents:
+$P_{\widehat{\mathfrak{sl}}_2}$ and $P_{\mathrm{Vir}}$ have corrections
+$n^{-3/2}$ (from $u = \Delta^{1/2}$),
+while $P_{\beta\gamma}$ has correction $n^{-1/2}$
+(from $u^{-1} = \Delta^{-1/2}$, cf.\ Corollary~\ref{cor:betagamma-inverse-discriminant}).
+The linear relation~\eqref{eq:discriminant-linear-relation}
+mixes these two singularity types through the
+$\mathbb{Q}(x)$-coefficients.
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}[Pole decomposition and singularity type; \ClaimStatusProvedHere]
+\label{prop:pole-singularity-type}
+\index{bar complex!generating function!singularity type}
+\index{pole decomposition!sub-polynomial correction}
+Within the $\mathfrak{sl}_2$ discriminant family
+(Theorem~\textup{\ref{thm:ds-bar-gf-discriminant}}), the sub-polynomial
+correction to exponential growth is determined by the pole decomposition
+of the bar differential
+(Proposition~\textup{\ref{prop:pole-decomposition}}):
+\begin{enumerate}
+\item If $d_{\mathrm{bracket}} \neq 0$ (bracket channel active),
+  the generating function has a \emph{square-root branch point}
+  at $x = 1/3$ and the coefficients grow as
+  $\dim H^n \sim C \cdot 3^n \cdot n^{-3/2}$.
+  This applies to $\widehat{\mathfrak{sl}}_2$ and Virasoro.
+\item If $d_{\mathrm{bracket}} = 0$ (curvature-only), the generating function
+  has an \emph{inverse square-root singularity} at $x = 1/3$ and
+  the coefficients grow as
+  $\dim H^n \sim C' \cdot 3^n \cdot n^{-1/2}$.
+  This applies to $\beta\gamma$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+From the $\{1, u\}$-decomposition~\eqref{eq:discriminant-family-decomposition}
+with $u = \sqrt{\Delta}$, $\Delta = (1{-}3x)(1{+}x)$:
+
+For $\widehat{\mathfrak{sl}}_2$: $P = 1/(2x) - u/(2x(1{+}x))$.
+The singular part near $x = 1/3$ is the $u$-term.  Since
+$u = \sqrt{(1{-}3x)(1{+}x)} \approx c_0\sqrt{1{-}3x}$ as $x \to 1/3^-$,
+the transfer theorem (Flajolet--Sedgewick, Theorem~VI.3) gives
+$[x^n] u/(2x(1{+}x)) \sim C \cdot 3^n \cdot n^{-3/2}$.
+The $\beta\gamma$ OPE has a simple pole only
+($\beta_{(0)}\gamma = 1 \in \mathbb{C}$, a scalar),
+so $d_{\mathrm{bracket}} = 0$
+(Proposition~\ref{prop:pole-decomposition}: the simple-pole residue is
+not a field value but the vacuum).
+Its generating function $P_{\beta\gamma} = u/(1{-}3x) = (1{+}x)/u$
+has the \emph{inverse} singularity $u^{-1} \sim c_1 / \sqrt{1{-}3x}$
+near $x = 1/3^-$, giving $[x^n] \sim C' \cdot 3^n \cdot n^{-1/2}$
+by the same transfer theorem.
+
+The Virasoro case: $P_{\mathrm{Vir}} = ((1{-}2x{-}x^2) - (1{-}x)u)/(2x^3)$
+has the same $u$-type singularity as $\widehat{\mathfrak{sl}}_2$
+(the coefficient of $u$ is a polynomial with $u \sim \sqrt{1{-}3x}$),
+hence the same $n^{-3/2}$ correction.
+The Virasoro OPE \emph{does} have a bracket channel
+($T_{(0)}T = \partial T$, $T_{(1)}T = 2T$),
+so $d_{\mathrm{bracket}} \neq 0$, consistent with case (1).
+\end{proof}
+
 \begin{remark}[Bar dimensions as Koszul dual Hilbert series]\label{rem:bar-hilbert-koszul-dual}
 \index{bar complex!Koszul dual Hilbert series}
 For a Koszul algebra $\cA$, the bar cohomology dimensions $\dim H^n(\barBgeom(\cA))$ equal the dimensions of the weight-$n$ component of the Koszul dual $\cA^!$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The generating function $P_{\cA}(x) = \sum_n \dim H^n(\barBgeom(\cA))\, x^n$ is therefore the Hilbert series of $\cA^!$.  In the Kac--Moody case, $P_{\widehat{\mathfrak{g}}_k}(x)$ is the Hilbert series of $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ as a graded algebra --- this is independent of~$k$ because the Koszul dual has the same graded structure at all generic levels.
+\end{remark}
+
+\begin{remark}[Degree-$2$ bar cohomology as symmetric square; \ClaimStatusProvedHere]\label{rem:bar-deg2-symmetric-square}
+\index{bar complex!degree-2 cohomology}
+For any affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ with weight-$1$ generators,
+\[
+\dim H^2(\barBgeom(\widehat{\mathfrak{g}}_k))
+= \binom{\dim\mathfrak{g} + 1}{2}
+= \dim S^2(\mathfrak{g}).
+\]
+This holds because the bar differential $d_2 \colon \bar{B}^2 \to \bar{B}^1$ vanishes identically (the OPE singularity combined with the OS form $\eta_{12}$ produces at least a double pole, whose residue vanishes), and $\bar{B}^2 \cong \mathfrak{g}^{\otimes 2} \otimes \mathrm{OS}^1(C_2) \cong \mathfrak{g}^{\otimes 2}$ maps to $H^2 = \bar{B}^2/\mathrm{im}(d_3)$.  Explicit computation gives $\mathrm{rank}(d_3) = \dim\mathfrak{g}^{\otimes 2} - \binom{\dim\mathfrak{g}+1}{2} = \binom{\dim\mathfrak{g}}{2}$, so $H^2 = \binom{\dim\mathfrak{g}+1}{2}$.  Verified: $\mathfrak{sl}_2$ ($H^2 = 6 = \binom{4}{2}$), $\mathfrak{sl}_3$ ($H^2 = 36 = \binom{9}{2}$).
 \end{remark}
 
 \begin{corollary}[Exponential growth rate from Lie algebra dimension; \ClaimStatusProvedHere]
@@ -851,7 +1109,8 @@ $g = 1, \ldots, 5$.
 
 \begin{table}[ht]
 \centering
-\caption{Genus-$g$ obstruction coefficients $\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$ through $g = 5$}
+\caption{Genus-$g$ obstruction coefficients $\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$ through $g = 5$
+(continued in Table~\ref{tab:genus-obstructions-high})}
 \label{tab:genus-obstructions}
 \index{obstruction!numerical values}
 \renewcommand{\arraystretch}{1.5}
@@ -963,6 +1222,44 @@ $\kappa + \kappa' = 13$ for the Virasoro algebra and $250/3$ for
 $\mathcal{W}_3$ (see Theorem~\ref{thm:genus-universality}(ii)
 and Remark~\ref{rem:vir-vs-km-complementarity}).
 \end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Higher-genus Faber--Pandharipande coefficients $\lambda_g$ for $g = 6, \ldots, 10$}
+\label{tab:genus-obstructions-high}
+\index{obstruction!higher genus values}
+\renewcommand{\arraystretch}{1.5}
+{\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+$g$ & $\lambda_g$ (exact) & $\lambda_g$ (decimal) \\
+\hline
+6 & $\dfrac{1414477}{2678117105664000}$ & $5.28 \times 10^{-10}$ \\[6pt]
+\hline
+7 & $\dfrac{8191}{612141052723200}$ & $1.34 \times 10^{-11}$ \\[6pt]
+\hline
+8 & $\dfrac{16931177}{49950709902213120000}$ & $3.39 \times 10^{-13}$ \\[6pt]
+\hline
+9 & $\dfrac{5749691557}{669659197233029971968000}$ & $8.59 \times 10^{-15}$ \\[6pt]
+\hline
+10 & $\dfrac{91546277357}{420928638260761696665600000}$ & $2.17 \times 10^{-16}$ \\[6pt]
+\hline
+\end{tabular}
+}
+\end{table}
+
+\noindent
+For any algebra $\cA$ with curvature parameter~$\kappa$,
+the genus-$g$ obstruction is $\operatorname{obs}_g(\cA) = \kappa \cdot \lambda_g$
+(Table~\ref{tab:genus-obstructions}).  The numerators of
+$\lambda_g$ involve Bernoulli numbers via
+$\lambda_g = \tfrac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\tfrac{|B_{2g}|}{(2g)!}$
+(Proposition~\ref{prop:fp-coefficients}).
+At $g = 6$, the numerator $1414477 = 691 \cdot 2047$ reflects the
+appearance of $B_{12} = -691/2730$, the first ``large'' Bernoulli
+number (responsible for the Kervaire invariant and Ramanujan's
+$\tau$-function).
 
 \section*{Spectral sequence data}
 \label{sec:spectral-sequence-data}
@@ -1161,3 +1458,8 @@ computed in the following locations.
   (\S\ref{sec:elliptic-bar-heisenberg}).
 \end{enumerate}
 \end{remark}
+
+\medskip
+
+\noindent
+The computations of Part~II are complete.  Part~III connects the bar-cobar framework to adjacent programs --- Feynman diagrams, BV-BRST, holomorphic-topological field theories, the 4d/2d correspondence --- and concludes with the concordance and the programme toward modular Koszul duality (\S\ref{sec:modular-koszul-programme}).

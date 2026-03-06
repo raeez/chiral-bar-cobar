@@ -3,6 +3,27 @@
 
 \section{Factorization modules: definitions and categories}
 
+A chiral algebra without its representations is like a group without
+its actions: the abstract structure exists, but the richest
+mathematics is inaccessible.  Conformal blocks, fusion rules, the
+Kazhdan--Lusztig equivalence, and the Verlinde formula all live
+at the module level.  The bar-cobar adjunction of
+Chapters~\ref{chap:bar-cobar}--\ref{chap:higher-genus} must
+therefore extend from algebras to modules.
+
+The extension is not formal: the bar complex of a module
+$\bar{B}(\cA, M)$ lives on \emph{pointed} configuration spaces
+(one distinguished point carrying the module, the rest carrying
+algebra data), and its Verdier dual is a comodule over
+$\bar{B}(\cA)$.  The Koszul property of the pair $(\cA, \cA^!)$
+descends to modules: if $\cA$ is Koszul, then every module $M$
+admits a bar resolution whose $E_2$-collapse computes Ext groups.
+The resulting module Koszul duality exchanges categories of
+representations under the level involution
+$k \leftrightarrow -k - 2h^\vee$ --- the representation-theoretic
+face of the same Verdier duality that governs the algebra-level
+theory.
+
 We begin by establishing the precise categorical framework for modules
 over chiral and factorization algebras.  The key idea---originating in the
 ``Swiss-cheese'' picture of Voronov~\cite{Voronov99} and developed
@@ -341,6 +362,24 @@ reversal $e^{2\pi i\lambda\mu/\kappa} \mapsto
 e^{-2\pi i\lambda\mu/\kappa}$ of
 Remark~\ref{rem:fusion-koszul}.
 \end{proof}
+
+\begin{remark}[Towards a derived Drinfeld--Kohno theorem]\label{rem:towards-derived-dk}
+\index{Drinfeld--Kohno!derived!preview}
+The mechanism above---Verdier duality reverses collision cycle
+orientation, hence inverts the $R$-matrix monodromy---admits a
+homotopy-coherent enhancement.  Ordered configuration spaces on
+the line carry the braid group action (Arnol'd), and bar-cobar
+duality implements Verdier duality on these configuration spaces.
+A \emph{derived Drinfeld--Kohno theorem} would assert that
+this extends to an equivalence of $\mathsf{E}_1$-factorization
+categories whose braid monodromy realizes the Drinfeld--Kohno
+correspondence up to derived completion: the bar-cobar-enhanced
+$\mathsf{E}_1$-factorization data of the Yangian $Y(\mathfrak{g})$
+is equivalent to that of $U_q(\mathfrak{g})^{\mathrm{op}}$ with
+reversed $R$-matrix.  See
+Conjecture~\textup{\ref{conj:derived-drinfeld-kohno}} for the
+precise formulation.
+\end{remark}
 
 \begin{remark}[Quantum groups and braiding reversal]
 \label{rem:quantum-group-braiding}
@@ -1113,17 +1152,19 @@ braided tensor categories
 \Phi_{\mathrm{KL}} \colon
 \mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
 \;\xrightarrow{\;\sim\;}
-\mathrm{Rep}(U_q(\mathfrak{g})),
+\mathcal{C}(U_q(\mathfrak{g})),
 \end{equation}
-sending the integrable module $L(\Lambda)$ to the
-finite-dimensional irreducible $U_q(\mathfrak{g})$-module
-$V_q(\Lambda)$ and identifying the fusion product
-$\boxtimes_{\widehat{\mathfrak{g}}_k}$ with the quantum group
-tensor product~$\otimes_q$.
+where $\mathcal{C}(U_q(\mathfrak{g}))$ denotes the
+\emph{semisimplified tilting category} of $U_q(\mathfrak{g})$
+at the root of unity $q$.  The equivalence sends the integrable
+module $L(\Lambda)$ to the simple tilting module
+$T_q(\Lambda)$ and identifies the fusion product
+$\boxtimes_{\widehat{\mathfrak{g}}_k}$ with the fusion tensor
+product on~$\mathcal{C}$.
 
 The equivalence sends the braiding
 \textup{(}monodromy of conformal blocks on $\mathbb{P}^1$\textup{)}
-to the $R$-matrix braiding on $\mathrm{Rep}(U_q(\mathfrak{g}))$.
+to the $R$-matrix braiding on $\mathcal{C}(U_q(\mathfrak{g}))$.
 \end{theorem}
 
 \begin{proof}[References]
@@ -1137,6 +1178,20 @@ $\mathcal{O}_k^{\mathrm{int}}$ is constructed by
 Huang--Lepowsky--Zhang~\cite{HLZ} using the theory of intertwining
 operators and analytic continuation.
 \end{proof}
+
+\begin{remark}[Categorical precision]\label{rem:kl-category-precision}
+The target of the KL equivalence is \emph{not} the full
+representation category $\mathrm{Rep}(U_q(\mathfrak{g}))$, which
+at a root of unity $q$ is non-semisimple and has infinitely many
+indecomposable objects.  Rather, the correct target is the
+semisimplified quotient of the tilting category: one takes
+the full subcategory of tilting modules and quotients by the
+tensor ideal of negligible morphisms.  The resulting modular
+tensor category $\mathcal{C}(U_q(\mathfrak{g}))$ is semisimple
+with $|P_+^k|$ simple objects, matching the integrable modules
+at level~$k$.  For $\mathfrak{sl}_2$ at level~$k$, this gives
+$k + 1$ simples on both sides.
+\end{remark}
 
 \begin{remark}[Koszul duality and $q \leftrightarrow q^{-1}$]
 \label{rem:kl-koszul}
@@ -1154,15 +1209,15 @@ duality:
 \begin{tikzcd}
 \mathcal{O}_k^{\mathrm{int}} \arrow[r, "\Phi_{\mathrm{KL}}"]
    \arrow[d, "\mathrm{Koszul}"'] &
-\mathrm{Rep}(U_q(\mathfrak{g}))
+\mathcal{C}(U_q(\mathfrak{g}))
    \arrow[d, "q \mapsto q^{-1}"] \\
 \mathcal{O}_{-k-2h^\vee}^{\mathrm{int}}
    \arrow[r, "\Phi_{\mathrm{KL}}"'] &
-\mathrm{Rep}(U_{q^{-1}}(\mathfrak{g}))
+\mathcal{C}(U_{q^{-1}}(\mathfrak{g}))
 \end{tikzcd}
 \]
 The diagram commutes on simple objects (both sides send
-$L(\Lambda)$ to $V_{q^{-1}}(\Lambda)$); commutativity on
+$L(\Lambda)$ to $T_{q^{-1}}(\Lambda)$); commutativity on
 tensor products follows from the braiding reversal on both sides.
 \end{remark}
 

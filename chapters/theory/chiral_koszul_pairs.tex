@@ -7,6 +7,21 @@
 
 \section{Foundations of chiral Koszul duality}
 
+Chapters~\ref{chap:config-spaces}--\ref{chap:bar-cobar}
+constructed the bar and cobar functors and proved that Verdier
+duality on $\operatorname{Ran}(X)$ intertwines them.  That
+construction takes as input a single chiral algebra $\cA$; the
+present chapter identifies when a \emph{pair} $(\cA, \cA^!)$
+forms a Koszul pair --- the condition under which the bar-cobar
+adjunction becomes an equivalence.  The Koszul property (diagonal
+Ext vanishing) is the genus-$0$ prerequisite for modular
+Koszulity
+(Definition~\ref{def:modular-koszul-chiral}), and the
+classification of Koszul pairs structures the entire
+landscape of examples in Part~II.
+
+The operadic foundations go back to Priddy and Quillen.
+
 \subsection{From homological algebra to homotopy theory}
 
 Priddy~\cite{Priddy70} showed that $H_*(\Omega^n\Sigma^n S^0) \cong H_*(F_n)$ where $F_n$ is the free $n$-fold loop space. The homology operations form an operad---the homology of the little $n$-cubes operad $\mathcal{C}_n$.
@@ -203,6 +218,234 @@ This definition has several advantages:
 
 \item \emph{Higher coherences}: Non-quadratic relations lead to complicated $A_\infty$ structures.
 \end{enumerate}
+
+\subsection{Koszulness verification: the PBW deformation method}
+\label{sec:koszulness-verification}
+\index{Koszul property!verification}
+\index{PBW filtration!Koszulness verification}
+
+Despite the difficulties listed above, a systematic method is available
+for verifying that a chiral algebra is Koszul.  The strategy reduces
+chiral Koszulness to classical Koszulness of the PBW-associated
+graded, via a flat deformation argument.
+
+\begin{theorem}[PBW criterion for chiral Koszulness; \ClaimStatusProvedHere]
+\label{thm:pbw-koszulness-criterion}
+\index{Koszul property!PBW criterion|textbf}
+Let $\cA$ be a chiral algebra with PBW filtration
+$F_0 \subset F_1 \subset \cdots \subset \cA$
+such that the associated graded
+$\operatorname{gr}_F \cA$ is a commutative chiral algebra
+(equivalently, a vertex Poisson algebra).
+Suppose:
+\begin{enumerate}
+\item\label{item:pbw-flat} The filtration is \emph{flat}: each $F_p/F_{p-1}$ is a free
+  $\cO_X$-module of finite rank in each conformal weight.
+\item\label{item:pbw-classical-koszul} The associated graded $\operatorname{gr}_F \cA$
+  is classically Koszul: the Koszul complex
+  $\barBgeom(\operatorname{gr}_F \cA) \otimes_\tau \operatorname{gr}_F \cA$
+  is acyclic in positive degrees.
+\item\label{item:pbw-bounded} For each bar degree $n$ and conformal weight $h$, the
+  chain group $\barBgeom^n_h(\cA)$ is finite-dimensional.
+\end{enumerate}
+Then $\cA$ is chiral Koszul: the Koszul complex
+$\barBgeom(\cA) \otimes_\tau \cA$ is acyclic in positive degrees.
+\end{theorem}
+
+\begin{proof}
+Equip the Koszul complex $K = \barBgeom(\cA) \otimes_\tau \cA$ with
+the filtration induced by $F$:
+\[
+F_p K^n = \sum_{i+j = n} F_i \barBgeom(\cA) \otimes_\tau F_j \cA.
+\]
+This is a bounded-below, exhaustive filtration compatible with the
+differential (the bar differential and the twisting morphism $\tau$
+both respect $F$ since they are defined by the OPE, which respects
+conformal weight).  The resulting spectral sequence has:
+\[
+E_0^{p,q} = \operatorname{gr}^p_F K^{p+q},
+\qquad
+d_0 = \operatorname{gr}_F(d_K).
+\]
+By flatness~\ref{item:pbw-flat}, the associated graded of $K$ is
+the Koszul complex of $\operatorname{gr}_F \cA$:
+\[
+\operatorname{gr}_F K \cong
+\barBgeom(\operatorname{gr}_F \cA) \otimes_\tau \operatorname{gr}_F \cA.
+\]
+(This uses that the bar construction commutes with taking associated
+graded for flat filtrations: the residue differential of the associated
+graded sees only the leading-order OPE terms, i.e., the vertex Poisson
+bracket.)
+
+By hypothesis~\ref{item:pbw-classical-koszul}, the $E_1$ page
+is concentrated in degree $0$:
+\[
+E_1^{p,q} = H^{p+q}(\operatorname{gr}^p K) =
+\begin{cases}
+\bC & p = q = 0, \\
+0 & p + q > 0.
+\end{cases}
+\]
+All higher differentials $d_r$ for $r \geq 1$ are therefore zero
+(they map between zero groups), so the spectral sequence collapses
+at $E_1$.
+
+By completeness of the filtration and the bounded-below hypothesis,
+the spectral sequence converges:
+$E_\infty = \operatorname{gr} H^*(K)$.
+Since $E_\infty$ is concentrated in degree~$0$,
+we conclude $H^n(K) = 0$ for $n > 0$.
+\end{proof}
+
+\begin{remark}[Relation to classical Koszulness]
+\label{rem:classical-to-chiral-koszul}
+The PBW criterion reduces chiral Koszulness to the
+classical statement that the associated graded --- a commutative
+chiral algebra, hence a vertex Poisson algebra --- is Koszul.
+For vertex enveloping algebras of Lie$^*$-algebras
+(such as affine Kac--Moody algebras), the associated graded is
+the symmetric algebra $\operatorname{Sym}(\fg[t^{-1}]t^{-1})$,
+which is Koszul by Priddy's theorem (a polynomial algebra is
+Koszul with dual the exterior algebra).  For the Virasoro algebra,
+the associated graded is $\operatorname{Sym}(L_{-2}, L_{-3}, \ldots)$,
+which is also a polynomial algebra and hence Koszul.
+The key point is that Koszulness of the chiral algebra does
+\emph{not} require the underlying Lie algebra to be semisimple ---
+it follows from the PBW structure alone.
+\end{remark}
+
+We now apply this criterion to the main examples.
+
+\begin{theorem}[Affine Kac--Moody algebras are chiral Koszul; \ClaimStatusProvedHere]
+\label{thm:km-chiral-koszul}
+\index{Kac--Moody algebra!chiral Koszulness|textbf}
+For any simple Lie algebra $\fg$ and generic level
+$k \notin \Sigma(\fg)$ (the finite exceptional set of
+Theorem~\textup{\ref{thm:bar-cohomology-level-independence}}),
+the affine Kac--Moody vertex algebra
+$\widehat{\fg}_k$ is chiral Koszul.
+\end{theorem}
+
+\begin{proof}
+We verify the three hypotheses of
+Theorem~\ref{thm:pbw-koszulness-criterion}.
+
+\emph{Hypothesis~\ref{item:pbw-flat}.}
+The PBW filtration on $\widehat{\fg}_k$ is defined by
+$F_p = \operatorname{span}\{J^{a_1}_{-n_1} \cdots J^{a_r}_{-n_r}
+|0\rangle : r \leq p\}$.
+Each graded piece $F_p/F_{p-1}$ is a direct sum of
+weight spaces of the symmetric algebra
+$S^p(\fg \otimes t^{-1}\bC[t^{-1}])$, which is a free
+$\bC$-module of finite rank in each conformal weight.
+
+\emph{Hypothesis~\ref{item:pbw-classical-koszul}.}
+The associated graded is:
+\[
+\operatorname{gr}_F \widehat{\fg}_k
+\cong \operatorname{Sym}(\fg \otimes t^{-1}\bC[t^{-1}]).
+\]
+This is a polynomial algebra on the generators
+$\{J^a_{-n} : a = 1, \ldots, \dim\fg,\; n \geq 1\}$.
+By Priddy's theorem (\cite[Theorem~3.4.5]{LV12}),
+polynomial algebras are Koszul, with Koszul dual the
+exterior coalgebra $\Lambda^c(\fg^* \otimes t\bC[t])$.
+Equivalently, the Koszul complex of $\operatorname{Sym}(V)$
+is the de~Rham complex of the polynomial ring, which is
+acyclic in positive degrees (Poincar\'{e} lemma for
+formal power series).
+
+\emph{Hypothesis~\ref{item:pbw-bounded}.}
+The bar chain group $\barBgeom^n_h(\widehat{\fg}_k)$ is a
+subspace of $(\fg \otimes t^{-1}\bC[t^{-1}])^{\otimes n}
+\otimes \Omega^{n-1}(\overline{C}_n)$ with total conformal
+weight~$h$.  Since the number of monomials of weight~$h$
+in $n$ tensor factors is bounded by $p(h)^n < \infty$,
+each chain group is finite-dimensional.
+
+All three hypotheses are verified.
+By Theorem~\ref{thm:pbw-koszulness-criterion},
+$\widehat{\fg}_k$ is chiral Koszul.
+\end{proof}
+
+\begin{theorem}[Virasoro algebra is chiral Koszul; \ClaimStatusProvedHere]
+\label{thm:virasoro-chiral-koszul}
+\index{Virasoro algebra!chiral Koszulness|textbf}
+For any central charge $c \in \bC$, the Virasoro vertex algebra
+$\mathrm{Vir}_c$ is chiral Koszul.
+\end{theorem}
+
+\begin{proof}
+The PBW filtration on $\mathrm{Vir}_c$ is defined by the
+number of Virasoro mode applications:
+$F_p = \operatorname{span}\{L_{-n_1} \cdots L_{-n_r}
+|0\rangle : r \leq p,\; n_i \geq 2\}$.
+
+\emph{Hypothesis~\ref{item:pbw-flat}.}
+Each $F_p/F_{p-1} \cong S^p(V)$ where
+$V = \bigoplus_{n \geq 2} \bC \cdot L_{-n}$
+(the Virasoro generators modulo vacuum), which is
+free of finite rank in each conformal weight.
+
+\emph{Hypothesis~\ref{item:pbw-classical-koszul}.}
+$\operatorname{gr}_F \mathrm{Vir}_c
+\cong \operatorname{Sym}(V)$
+is a polynomial algebra (the OPE reduces to a commutative
+product on the associated graded: the non-linear terms
+$T_{(0)}T = \partial T$, $T_{(1)}T = 2T$ are lower-order in the
+PBW filtration, and the quartic pole $T_{(3)}T = c/2$ is a
+scalar that contributes to the curvature, not the
+associated graded bracket).
+By Priddy's theorem, $\operatorname{Sym}(V)$ is Koszul.
+
+\emph{Hypothesis~\ref{item:pbw-bounded}.}
+Same argument as the Kac--Moody case: the number of
+partitions of weight~$h$ into at most $n$ parts (each $\geq 2$)
+is finite.
+
+By Theorem~\ref{thm:pbw-koszulness-criterion},
+$\mathrm{Vir}_c$ is chiral Koszul.
+\end{proof}
+
+\begin{corollary}[Bar cohomology computes Koszul dual; \ClaimStatusProvedHere]
+\label{cor:bar-cohomology-koszul-dual}
+\index{bar complex!Koszul dual computation}
+For a chiral Koszul algebra $\cA$ satisfying the hypotheses of
+Theorem~\textup{\ref{thm:pbw-koszulness-criterion}},
+the PBW spectral sequence on $\barBgeom(\cA)$ collapses
+at $E_2$, and the bar cohomology dimensions equal the
+dimensions of the Koszul dual:
+\[
+\dim H^n(\barBgeom(\cA)) = \dim (\cA^!)_n.
+\]
+In particular:
+\begin{enumerate}
+\item For $\widehat{\fg}_k$ at generic level:
+  $\dim H^n(\barBgeom(\widehat{\fg}_k)) = \dim (\widehat{\fg}_{-k-2h^\vee})_n$
+  \textup{(}Theorem~\textup{\ref{thm:universal-kac-moody-koszul})}.
+\item For $\mathrm{Vir}_c$:
+  $\dim H^n(\barBgeom(\mathrm{Vir}_c)) = \dim (\mathrm{Vir}_c^!)_n$,
+  the $n$-th graded piece of the Virasoro Koszul dual coalgebra.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+The Koszul complex acyclicity
+(Theorems~\ref{thm:km-chiral-koszul},
+\ref{thm:virasoro-chiral-koszul}) implies the
+quasi-isomorphism $\barBgeom(\cA) \simeq \cA^!$
+of graded coalgebras
+(Definition~\ref{def:chiral-koszul-pair}, Version~I).
+The PBW spectral sequence on $\barBgeom(\cA)$ has
+$E_1 \cong H^*(\barBgeom(\operatorname{gr}_F \cA))
+\cong \Lambda^*(V^*)$ (exterior coalgebra on dual generators),
+and collapses at $E_2$ because the $d_1$ differential
+corresponds to the (vanishing) next-order OPE correction
+in the associated graded, which is zero by the Koszul
+complex acyclicity.  Thus
+$H^n(\barBgeom(\cA)) \cong E_2^n = (\cA^!)_n$.
+\end{proof}
 
 % ================================================================
 % SECTION 8.3: YANGIANS AND AFFINE YANGIANS - COMPLETE TREATMENT
