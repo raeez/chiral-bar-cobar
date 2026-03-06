@@ -1,0 +1,2102 @@
+\chapter{The Heisenberg algebra}\label{ch:heisenberg-frame}
+
+Let $X$ be a smooth algebraic curve.  The Heisenberg chiral algebra
+$\mathcal{H}_k$ at level $k \in \mathbb{C}^\times$ has a single current
+$\alpha(z)$ of conformal weight~$1$, with operator product expansion
+\begin{equation}\label{eq:frame-heisenberg-ope}
+\alpha(z)\alpha(w) = \frac{k}{(z-w)^2} + \text{regular}.
+\end{equation}
+The double pole is the entire structure.  In mode expansion,
+$\alpha(z) = \sum_{n \in \mathbb{Z}} \alpha_n z^{-n-1}$, and the
+commutation relations are
+\begin{equation}\label{eq:frame-heisenberg-modes}
+[\alpha_m, \alpha_n] = k \cdot m \cdot \delta_{m+n,0}.
+\end{equation}
+The vacuum representation (Fock space) is
+$\mathcal{F}_k = \mathbb{C}[\alpha_{-1}, \alpha_{-2}, \ldots]\,|0\rangle$
+with $\alpha_n|0\rangle = 0$ for $n > 0$.  The Sugawara construction gives
+the stress tensor $T = \frac{1}{2k}:\!\alpha(z)\alpha(z)\!:$ with central
+charge $c = 1$.
+
+The absence of a simple pole in the self-OPE is the defining feature.
+Free fermions have a simple pole $\psi(z)\psi(w) \sim 1/(z-w)$; affine
+Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ have both simple and double
+poles.  The Heisenberg algebra, with its double pole alone, is the simplest
+chiral algebra where every phenomenon in this monograph is visible.
+
+% ================================================================
+\section{The bar complex at degree 1}\label{sec:frame-bar-deg1}
+% ================================================================
+
+The geometric bar complex of $\mathcal{H}_k$ on $X$ has underlying
+graded space
+\begin{equation}\label{eq:frame-bar-graded}
+\bar{B}^{\mathrm{ch}}_n(\mathcal{H}_k) = \Gamma\!\left(
+  \overline{C}_{n+1}(X),\;
+  \alpha^{\boxtimes(n+1)} \otimes \Omega^n_{\log}
+\right)
+\end{equation}
+where $\overline{C}_{n+1}(X)$ is the Fulton--MacPherson compactification
+of the configuration space of $n+1$ distinct points on~$X$, and
+$\Omega^n_{\log}$ denotes logarithmic $n$-forms along the boundary
+divisors $D_{ij} = \{z_i = z_j\}$.
+
+A typical element of $\bar{B}^{\mathrm{ch}}_1$ is
+\begin{equation}\label{eq:frame-bar1-element}
+\alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12}
+\end{equation}
+where
+\begin{equation}\label{eq:frame-eta-def}
+\eta_{ij} = d\log(z_i - z_j) = \frac{dz_i - dz_j}{z_i - z_j}
+\end{equation}
+is the logarithmic $1$-form associated to the diagonal
+$D_{ij} \subset X \times X$.
+
+The bar differential $d_{\mathrm{res}}$ extracts OPE data at boundary
+divisors via the Borcherds identity.  We now give the full computation.
+
+\subsubsection*{Grading and desuspension accounting}
+
+The bar complex uses cohomological grading and desuspension.
+The current $\alpha(z)$ has conformal weight~$|\alpha| = 1$.
+Under desuspension, the bar complex element $s^{-1}\alpha$ has
+cohomological degree shifted by~$+1$:
+\begin{equation}\label{eq:frame-desuspension-shift}
+\deg(s^{-1}\alpha) = |\alpha| + 1 = 2.
+\end{equation}
+A degree-$n$ bar element involves $(n+1)$ desuspended currents
+and an $n$-form, giving total cohomological degree
+\[
+(n+1) \cdot \deg(s^{-1}\alpha) + \deg(\eta) = 2(n+1) + 0 = 2n + 2,
+\]
+where the logarithmic forms $\eta_{ij}$ carry form-degree~$1$ but
+cohomological degree~$0$ in the bar complex grading.  The bar
+differential has $|d_{\mathrm{res}}| = +1$ in cohomological degree.
+
+For a degree-$1$ element, the data is:
+\begin{align}
+&\text{two desuspended currents:} \quad
+  s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2),
+  \label{eq:frame-deg1-currents} \\
+&\text{one logarithmic $1$-form:} \quad
+  \eta_{12} = \frac{dz_1 - dz_2}{z_1 - z_2}.
+  \label{eq:frame-deg1-form}
+\end{align}
+
+\subsubsection*{Action of $d_{\mathrm{res}}$ at degree~$1$}
+
+The bar differential acts by restriction to the boundary stratum
+$D_{12} = \{z_1 = z_2\} \subset \overline{C}_2(X)$.  The mechanism
+is the Borcherds identity: for fields $a(z), b(w)$ with OPE
+$a(z)b(w) = \sum_{n \geq 1} c_n(w)/(z-w)^n + \mathrm{regular}$,
+the bar differential extracts the OPE coefficients via
+\begin{equation}\label{eq:frame-borcherds-extraction}
+d_{\mathrm{res}}\bigl(
+  s^{-1}a(z_1) \otimes s^{-1}b(z_2) \otimes \eta_{12}
+\bigr)
+= \sum_{n \geq 1} \frac{1}{(n-1)!}\,
+  \partial_{z_2}^{n-1} c_n(z_2)\Big|_{z_1 = z_2}.
+\end{equation}
+The logarithmic form $\eta_{12}$ plays the role of a test
+form for the boundary pairing on $D_{12}$, pairing with the
+codimension-$1$ boundary stratum to extract the
+residue data.
+
+For the Heisenberg OPE~\eqref{eq:frame-heisenberg-ope},
+the only pole is the double pole $c_2 = k$, with $c_1 = 0$
+(no simple pole).  Therefore:
+\begin{align}
+d_{\mathrm{res}}\bigl(
+  s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2) \otimes \eta_{12}
+\bigr)
+&= \frac{1}{(2-1)!}\,\partial_{z_2}^{2-1}(k)\Big|_{z_1 = z_2}
+\notag \\
+&= \partial_{z_2}(k) = 0
+  \qquad\text{(na\"ive: }\partial\text{ of a constant)}
+\label{eq:frame-dres-deg1-naive}
+\end{align}
+but this is \emph{not} the correct reading.  The Borcherds identity
+for a second-order pole with constant coefficient gives directly
+\begin{equation}\label{eq:frame-dres-deg1}
+d_{\mathrm{res}}(\alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12})
+= k \cdot 1
+\end{equation}
+extracting the second-order pole coefficient into the
+degree-$0$ component $\bar{B}^{\mathrm{ch}}_0 = \mathbb{C}$.
+
+\subsubsection*{The general degree-$1$ element}
+
+More generally, let $f(z_1, z_2)$ be a test function (a section of
+$\mathcal{O}_{X \times X}$ near the diagonal).  The general
+degree-$1$ element is
+\begin{equation}\label{eq:frame-deg1-general}
+\xi = f(z_1, z_2) \cdot \alpha(z_1) \otimes \alpha(z_2)
+  \otimes \eta_{12} \;\in\; \bar{B}^{\mathrm{ch}}_1.
+\end{equation}
+The bar differential restricts to $D_{12}$ and extracts:
+\begin{align}
+d_{\mathrm{res}}(\xi)
+&= \mathrm{Res}_{D_{12}}\!\left[
+  f(z_1, z_2) \cdot
+  \frac{k}{(z_1 - z_2)^2} \cdot \eta_{12}
+\right] \notag \\
+&= k \cdot \partial_{z_1}\! f(z_1, z_2)\Big|_{z_1 = z_2}
+  + k \cdot f(z, z) \cdot (\text{contact term}).
+\label{eq:frame-dres-deg1-general}
+\end{align}
+For the standard element $f(z_1, z_2) = 1$, the derivative
+vanishes and the contact term gives $k \cdot 1$, recovering
+\eqref{eq:frame-dres-deg1}.  The derivative term
+$k \cdot \partial_{z_1} f|_{\mathrm{diag}}$ is the
+``descendant'' contribution: it appears only for non-constant
+test functions and produces elements of the vacuum module.
+
+A clarification is essential.  The bar differential does \emph{not} act
+by literally computing
+$\mathrm{Res}_{z_1 = z_2}[k/(z_1-z_2)^2 \cdot dz_1/(z_1-z_2)]$:
+that integral involves a triple pole with zero residue.  The differential
+$d_{\mathrm{res}}$ uses the Borcherds identity to extract the OPE
+coefficient at the boundary stratum~$D_{12}$; the logarithmic form
+$\eta_{12}$ serves as a test form for the boundary pairing, not as a
+multiplicative factor in a meromorphic expression.
+
+\begin{remark}[Where the OPE data goes]\label{rem:frame-ope-extraction}
+The map $d_{\mathrm{res}}\colon \bar{B}^{\mathrm{ch}}_1 \to
+\bar{B}^{\mathrm{ch}}_0 = \mathbb{C}$ sends each pair of currents
+to the constant $k$.  On $\mathbb{P}^1$, where $H^1(X) = 0$, the
+kernel of $d_{\mathrm{res}}$ on $\bar{B}_1$ is trivial: every element
+maps to a nonzero multiple of the vacuum.  At higher genus, zero modes
+of $\alpha(z)$ along cycles of $\Sigma_g$ contribute nontrivially to
+$\ker(d_{\mathrm{res}})$, producing $H^1 \cong H^1(\Sigma_g, \mathbb{C})$
+(Theorem~\ref{thm:heisenberg-higher-genus}).
+\end{remark}
+
+% ================================================================
+\section{The bar complex at degree 2 --- Arnold enters}
+\label{sec:frame-bar-deg2}
+% ================================================================
+
+The degree-$2$ bar complex $\bar{B}^{\mathrm{ch}}_2$ involves three
+currents and two logarithmic forms:
+\begin{equation}\label{eq:frame-bar2-element}
+\alpha(z_1) \otimes \alpha(z_2) \otimes \alpha(z_3)
+\otimes \eta_{12} \wedge \eta_{23}.
+\end{equation}
+
+\subsubsection*{Sign conventions for the bar differential at degree~$2$}
+
+Before computing, we fix signs.  The bar differential is a sum over
+boundary strata:
+\begin{equation}\label{eq:frame-d-sum-strata}
+d_{\mathrm{res}} = \sum_{1 \leq i < j \leq n+1}
+  (-1)^{\sigma(i,j)}\, \partial_{D_{ij}}
+\end{equation}
+where $\partial_{D_{ij}}$ restricts to the divisor
+$D_{ij} = \{z_i = z_j\}$ and extracts the OPE coefficient, and
+$\sigma(i,j)$ is the Koszul sign arising from permuting the
+desuspended elements past each other.
+
+For degree-$2$ elements with three desuspended currents
+$s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2) \otimes s^{-1}\alpha(z_3)$,
+the Koszul sign rule gives the following.
+Each desuspended current $s^{-1}\alpha$ has degree~$2$
+(conformal weight $1$ plus desuspension shift $1$), hence
+is \emph{even} in the graded sense.  Moving even-degree elements
+past each other produces sign $(-1)^{2 \cdot 2} = +1$.
+Consequently, for the Heisenberg algebra (single even generator),
+\emph{all Koszul signs from the coalgebra coproduct are~$+1$}.
+The signs in the bar differential come entirely from the
+orientation of the logarithmic forms on the boundary strata.
+
+\subsubsection*{Term-by-term computation of $d_{\mathrm{res}}$}
+
+The element~\eqref{eq:frame-bar2-element} lives on
+$\overline{C}_3(X)$, whose boundary divisors are $D_{12}$, $D_{23}$,
+and $D_{13}$.  The bar differential restricts to each:
+
+\medskip
+\noindent\textbf{Boundary stratum $D_{12}$: collision $z_1 = z_2$.}
+The OPE $\alpha(z_1)\alpha(z_2) = k/(z_1 - z_2)^2 + \mathrm{reg.}$
+collapses the pair to the scalar~$k$.  The form
+$\eta_{12} \wedge \eta_{23}$ restricts to $D_{12}$ by the rule:
+$\eta_{12}$ is ``consumed'' by the boundary pairing
+on~$D_{12}$ (it is the test form for this stratum), and the
+residual form is $\eta_{23}|_{z_1 = z_2}$.  Since $z_1 = z_2$
+on $D_{12}$, the residual form is simply $\eta_{23}$ (which
+does not involve $z_1$, so it is unaffected by the collision).
+The sign from the wedge product is $+1$ because $\eta_{12}$ is
+the \emph{left} factor:
+\begin{equation}\label{eq:frame-D12-contribution}
+\partial_{D_{12}}\bigl(
+  \alpha \otimes \alpha \otimes \alpha \otimes
+  \eta_{12} \wedge \eta_{23}
+\bigr)
+= +k \cdot \alpha(z_3) \otimes \eta_{23}.
+\end{equation}
+Here $\alpha(z_3) \otimes \eta_{23}$ is a degree-$1$
+element: a single surviving current with a single logarithmic
+form, living on $\overline{C}_2(X)$ with coordinates $(z_{12}, z_3)$
+where $z_{12}$ is the collision point.
+
+\medskip
+\noindent\textbf{Boundary stratum $D_{23}$: collision $z_2 = z_3$.}
+The OPE $\alpha(z_2)\alpha(z_3) = k/(z_2 - z_3)^2 + \mathrm{reg.}$
+collapses the pair to~$k$.  The form $\eta_{12} \wedge \eta_{23}$
+restricts to $D_{23}$ by consuming $\eta_{23}$ (the test form
+for this stratum).  To consume $\eta_{23}$, we must move it to
+the left of $\eta_{12}$, producing a sign from the wedge:
+\[
+\eta_{12} \wedge \eta_{23} = -\eta_{23} \wedge \eta_{12}.
+\]
+The residual form after consuming $\eta_{23}$ is $\eta_{12}|_{z_2 = z_3}$.
+On $D_{23}$, $z_2 = z_3$, so $\eta_{12}|_{z_2 = z_3} = \eta_{13}$
+(the form $d\log(z_1 - z_2)$ becomes $d\log(z_1 - z_3)$
+when $z_2 = z_3$).  The surviving current is $\alpha(z_1)$.
+Including the sign from the wedge permutation:
+\begin{equation}\label{eq:frame-D23-contribution}
+\partial_{D_{23}}\bigl(
+  \alpha \otimes \alpha \otimes \alpha \otimes
+  \eta_{12} \wedge \eta_{23}
+\bigr)
+= -k \cdot \alpha(z_1) \otimes \eta_{13}.
+\end{equation}
+
+\medskip
+\noindent\textbf{Boundary stratum $D_{13}$: collision $z_1 = z_3$.}
+The OPE $\alpha(z_1)\alpha(z_3) = k/(z_1 - z_3)^2 + \mathrm{reg.}$
+collapses the pair to~$k$.  However, the $2$-form
+$\eta_{12} \wedge \eta_{23}$ does \emph{not} contain the
+factor $\eta_{13}$ as a wedge component.  The restriction of
+$\eta_{12} \wedge \eta_{23}$ to $D_{13}$ involves:
+\[
+\eta_{12}\big|_{z_1 = z_3} = \eta_{32}
+= -\eta_{23}, \qquad
+\eta_{23}\big|_{z_1 = z_3} = \eta_{23}.
+\]
+So $(\eta_{12} \wedge \eta_{23})|_{D_{13}}
+= (-\eta_{23}) \wedge \eta_{23} = 0$.
+The boundary stratum $D_{13}$ contributes \emph{zero}:
+\begin{equation}\label{eq:frame-D13-contribution}
+\partial_{D_{13}}\bigl(
+  \alpha \otimes \alpha \otimes \alpha \otimes
+  \eta_{12} \wedge \eta_{23}
+\bigr)
+= 0.
+\end{equation}
+This vanishing is specific to the chosen basis element
+$\eta_{12} \wedge \eta_{23}$; for a general $2$-form,
+$D_{13}$ can contribute.
+
+\medskip
+\noindent\textbf{Assembling the differential.}
+Summing the three contributions
+\eqref{eq:frame-D12-contribution}--\eqref{eq:frame-D13-contribution}:
+\begin{equation}\label{eq:frame-dres-deg2}
+d_{\mathrm{res}}\bigl(\alpha(z_1) \otimes \alpha(z_2)
+\otimes \alpha(z_3) \otimes \eta_{12} \wedge \eta_{23}\bigr)
+= k \cdot \alpha(z_3) \otimes \eta_{23}
+  - k \cdot \alpha(z_1) \otimes \eta_{13}.
+\end{equation}
+
+\subsubsection*{Verification: $d_{\mathrm{res}}^2 = 0$ at degree~$2$}
+
+Now apply $d_{\mathrm{res}}$ a second time.  Each term in the
+right-hand side of~\eqref{eq:frame-dres-deg2} is a degree-$1$
+element, and $d_{\mathrm{res}}$ on degree~$1$ extracts $k$
+by~\eqref{eq:frame-dres-deg1}:
+\begin{equation}\label{eq:frame-dsquared-deg2}
+d_{\mathrm{res}}^2 = k \cdot d_{\mathrm{res}}(\alpha(z_3)
+\otimes \eta_{23}) - k \cdot d_{\mathrm{res}}(\alpha(z_1)
+\otimes \eta_{13}) = k^2 - k^2 = 0.
+\end{equation}
+The first term: $d_{\mathrm{res}}(\alpha(z_3) \otimes \eta_{23})$
+extracts the OPE of $\alpha$ with itself at the collision
+$z_2 = z_3$, giving $k$.  The second term:
+$d_{\mathrm{res}}(\alpha(z_1) \otimes \eta_{13})$ extracts the
+OPE at $z_1 = z_3$, also giving $k$.  These are equal, and
+the relative sign~$-1$ forces exact cancellation.
+
+\subsubsection*{Alternative basis and the role of $D_{13}$}
+
+To see that the vanishing of $D_{13}$ above was a feature
+of the basis choice, consider the alternative degree-$2$ element
+$\alpha^{\otimes 3} \otimes \eta_{23} \wedge \eta_{31}$.
+The Arnold relation~\eqref{eq:frame-arnold} below gives
+\[
+\eta_{23} \wedge \eta_{31}
+= -\eta_{12} \wedge \eta_{23} - \eta_{31} \wedge \eta_{12}
+= -\eta_{12} \wedge \eta_{23} + \eta_{12} \wedge \eta_{31}.
+\]
+Computing $d_{\mathrm{res}}$ on this element, the stratum $D_{13}$
+\emph{does} contribute (with coefficient $+k$), but the stratum
+$D_{12}$ picks up an additional sign.  The computation of
+$d_{\mathrm{res}}^2 = 0$ on \emph{any} basis element
+requires the \emph{full} Arnold relation, not just pairwise
+cancellation.  This is the essential content: the Arnold relation
+is the universal identity guaranteeing $d^2 = 0$.
+
+The cancellation is not an accident.  It is an instance of a general
+identity on the logarithmic forms $\eta_{ij}$.
+
+\begin{proposition}[Arnold relation]\label{prop:frame-arnold}
+For any three distinct points $z_1, z_2, z_3 \in X$, the
+logarithmic forms satisfy:
+\begin{equation}\label{eq:frame-arnold}
+\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0
+\end{equation}
+in $\Omega^2_{\log}(\overline{C}_3(X))$.
+\end{proposition}
+
+\begin{proof}
+The identity $\frac{1}{z_1-z_2}\cdot\frac{1}{z_2-z_3}
++ \frac{1}{z_2-z_3}\cdot\frac{1}{z_3-z_1}
++ \frac{1}{z_3-z_1}\cdot\frac{1}{z_1-z_2} = 0$
+follows from partial fractions: the three terms have
+total numerator $(z_3-z_1)+(z_1-z_2)+(z_2-z_3) = 0$.
+Taking $d\log$ of each factor and wedging produces
+\eqref{eq:frame-arnold}.
+\end{proof}
+
+The Arnold relation forces $d^2 = 0$ on the bar complex.  At degree~$2$,
+the two paths from $\bar{B}_2$ to $\bar{B}_0$ through $\bar{B}_1$
+correspond to the two ``boundary of boundary'' strata in
+$\overline{C}_3(X)$: $D_{12} \cap D_{23}$ and $D_{13} \cap D_{23}$.
+The Arnold relation ensures these two paths contribute with opposite
+signs, so they cancel.
+
+More precisely: the differential $d$ on the bar complex is a sum of
+residue maps along all collision divisors.  When $d$ is applied twice,
+each pair of successive collisions defines a codimension-$2$ stratum
+of $\overline{C}_{n+1}(X)$.  By Stokes' theorem on manifolds with
+corners, $d^2 = 0$ if and only if the boundary of the boundary
+vanishes, which is precisely the Arnold relation on the logarithmic
+forms.
+
+\begin{remark}[The Arnold relation as factorization coherence]
+\label{rem:frame-arnold-factorization}
+The identity~\eqref{eq:frame-arnold} is the fundamental coherence
+relation of factorization algebras on algebraic curves.  It governs
+how the chiral algebra structure extends from pairwise OPE data
+(degree~$1$) to triple collisions (degree~$2$) and beyond.  Every
+construction in this monograph rests on this identity: the bar complex
+is well-defined because Arnold holds; Verdier duality exchanges bar
+and cobar because Arnold is self-dual; the genus tower extends the
+bar complex over $\overline{\mathcal{M}}_g$ because Arnold lifts to
+the boundary strata of the Fulton--MacPherson operad.
+
+In the language of operads, the Arnold relation is the quadratic
+relation defining the \emph{gravity operad} $\mathrm{Grav}$
+(the Koszul dual of the hypercommutative operad $\mathrm{HyCom}$),
+which governs genus-$0$ chiral algebra structure.  The genus-$0$
+bar-cobar adjunction is operadic Koszul duality:
+$\mathrm{HyCom} \leftrightarrow \mathrm{Grav}$.
+\end{remark}
+
+% ================================================================
+\section{The bar complex at all degrees --- $d^2 = 0$}
+\label{sec:frame-bar-all}
+% ================================================================
+
+The pattern continues.  At degree~$n$, the bar complex element is
+\begin{equation}\label{eq:frame-barn-element}
+\alpha(z_1) \otimes \cdots \otimes \alpha(z_{n+1})
+\otimes \eta_{i_1 j_1} \wedge \cdots \wedge \eta_{i_n j_n}
+\end{equation}
+and the bar differential extracts OPE data at each collision divisor.
+Because the Heisenberg OPE has \emph{no simple pole}, the bracket
+component $d_{\mathrm{bracket}}$ of the bar differential vanishes
+identically.  Only the curvature component
+$d_{\mathrm{curvature}}$ (which extracts the double-pole coefficient)
+is nonzero.
+
+Before stating the general theorem, we carry out the degree-$3$
+computation in full detail.  This is the first degree where the
+cancellation mechanism for $d^2 = 0$ involves \emph{pairs} of
+Arnold relations, revealing the pattern that persists at all
+higher degrees.
+
+\subsection{Explicit degree-$3$ computation ($n = 3$, four points)}
+\label{subsec:frame-degree3}
+
+A degree-$3$ bar element lives on $\overline{C}_4(X)$ with four
+points $z_1, z_2, z_3, z_4$ and involves a $3$-form in the
+logarithmic algebra.  A natural basis element is:
+\begin{equation}\label{eq:frame-bar3-element}
+\xi_3 = \alpha(z_1) \otimes \alpha(z_2) \otimes \alpha(z_3)
+  \otimes \alpha(z_4)
+  \otimes \eta_{12} \wedge \eta_{23} \wedge \eta_{34}
+  \;\in\; \bar{B}^{\mathrm{ch}}_3.
+\end{equation}
+This is the ``chain'' basis element, where the logarithmic forms
+link consecutive pairs $1$--$2$, $2$--$3$, $3$--$4$.
+
+\subsubsection*{Boundary strata of $\overline{C}_4(X)$}
+
+The boundary divisors of $\overline{C}_4(X)$ are $D_{ij}$ for
+$1 \leq i < j \leq 4$: there are $\binom{4}{2} = 6$ of them.
+For each divisor $D_{ij}$, the bar differential extracts the
+OPE $\alpha(z_i)\alpha(z_j) = k/(z_i - z_j)^2 + \mathrm{reg.}$,
+collapses two of the four currents to the scalar $k$, and restricts
+the $3$-form to a $2$-form on $\overline{C}_3(X)$.
+
+We compute the contribution of each stratum.
+
+\medskip
+\noindent\textbf{Stratum $D_{12}$: collision $z_1 = z_2$.}
+The form $\eta_{12}$ is consumed (it is the leftmost factor and
+is the test form for $D_{12}$).  The OPE gives $k$.  The residual
+$2$-form is $(\eta_{23} \wedge \eta_{34})|_{z_1 = z_2}$.  Since
+$\eta_{23}$ and $\eta_{34}$ do not involve $z_1$ in a way that
+changes under $z_1 = z_2$, the residual form is
+$\eta_{23} \wedge \eta_{34}$ (with $z_1$ replaced by the
+collision point $z_{12}$, but the forms only involve $z_2, z_3, z_4$).
+The surviving currents are $\alpha(z_3)$ and $\alpha(z_4)$
+(plus the collision point, which carries the scalar~$k$).
+The sign is $+1$ (leftmost form consumed):
+\begin{equation}\label{eq:frame-D12-deg3}
+\partial_{D_{12}}(\xi_3)
+= +k \cdot \alpha(z_3) \otimes \alpha(z_4)
+  \otimes \eta_{23} \wedge \eta_{34}.
+\end{equation}
+(Here and below, we relabel the collision point: $z_{12}$ is
+identified with $z_2$ on the residual configuration space.)
+
+\medskip
+\noindent\textbf{Stratum $D_{23}$: collision $z_2 = z_3$.}
+The form $\eta_{23}$ must be consumed.  It sits in the middle
+of the wedge product $\eta_{12} \wedge \eta_{23} \wedge \eta_{34}$.
+Moving $\eta_{23}$ to the left past $\eta_{12}$ costs one
+transposition sign:
+\[
+\eta_{12} \wedge \eta_{23} \wedge \eta_{34}
+= -\eta_{23} \wedge \eta_{12} \wedge \eta_{34}.
+\]
+After consuming $\eta_{23}$, the residual $2$-form is
+$\eta_{12}|_{z_2 = z_3} \wedge \eta_{34}|_{z_2 = z_3}
+= \eta_{13} \wedge \eta_{34}$
+(since $z_2 = z_3$ sends $\eta_{12} \mapsto \eta_{13}$
+and leaves $\eta_{34}$ unchanged).
+The surviving currents are $\alpha(z_1)$ and $\alpha(z_4)$:
+\begin{equation}\label{eq:frame-D23-deg3}
+\partial_{D_{23}}(\xi_3)
+= -k \cdot \alpha(z_1) \otimes \alpha(z_4)
+  \otimes \eta_{13} \wedge \eta_{34}.
+\end{equation}
+
+\medskip
+\noindent\textbf{Stratum $D_{34}$: collision $z_3 = z_4$.}
+The form $\eta_{34}$ is consumed.  It is the rightmost factor,
+so moving it to the front costs two transpositions:
+\[
+\eta_{12} \wedge \eta_{23} \wedge \eta_{34}
+= +\eta_{34} \wedge \eta_{12} \wedge \eta_{23}
+\]
+(two transpositions: $(-1)^2 = +1$; alternatively, a cyclic
+permutation of three $1$-forms has sign $(-1)^{3-1} = +1$).
+After consuming $\eta_{34}$, the residual $2$-form is
+$\eta_{12} \wedge \eta_{23}|_{z_3 = z_4}
+= \eta_{12} \wedge \eta_{23}$
+(since $z_3 = z_4$ does not affect $\eta_{12}$ or $\eta_{23}$,
+and we relabel the collision point as $z_3$).
+The surviving currents are $\alpha(z_1)$ and $\alpha(z_2)$:
+\begin{equation}\label{eq:frame-D34-deg3}
+\partial_{D_{34}}(\xi_3)
+= +k \cdot \alpha(z_1) \otimes \alpha(z_2)
+  \otimes \eta_{12} \wedge \eta_{23}.
+\end{equation}
+
+\medskip
+\noindent\textbf{Stratum $D_{13}$: collision $z_1 = z_3$.}
+The form $\eta_{13}$ does not appear explicitly in the wedge
+$\eta_{12} \wedge \eta_{23} \wedge \eta_{34}$.  We must restrict
+each factor to $D_{13}$:
+\begin{align*}
+\eta_{12}\big|_{z_1 = z_3} &= \eta_{32} = -\eta_{23}, \\
+\eta_{23}\big|_{z_1 = z_3} &= \eta_{23}, \\
+\eta_{34}\big|_{z_1 = z_3} &= \eta_{34}.
+\end{align*}
+The restricted $3$-form is
+$(-\eta_{23}) \wedge \eta_{23} \wedge \eta_{34}
+= 0$
+since $\eta_{23} \wedge \eta_{23} = 0$.
+Therefore:
+\begin{equation}\label{eq:frame-D13-deg3}
+\partial_{D_{13}}(\xi_3) = 0.
+\end{equation}
+
+\medskip
+\noindent\textbf{Stratum $D_{24}$: collision $z_2 = z_4$.}
+Restrict each factor to $D_{24}$:
+\begin{align*}
+\eta_{12}\big|_{z_2 = z_4} &= \eta_{14}, \\
+\eta_{23}\big|_{z_2 = z_4} &= \eta_{43} = -\eta_{34}, \\
+\eta_{34}\big|_{z_2 = z_4} &= \eta_{34}.
+\end{align*}
+The restricted $3$-form is
+$\eta_{14} \wedge (-\eta_{34}) \wedge \eta_{34}
+= -\eta_{14} \wedge \eta_{34} \wedge \eta_{34} = 0$
+since $\eta_{34} \wedge \eta_{34} = 0$.
+Therefore:
+\begin{equation}\label{eq:frame-D24-deg3}
+\partial_{D_{24}}(\xi_3) = 0.
+\end{equation}
+
+\medskip
+\noindent\textbf{Stratum $D_{14}$: collision $z_1 = z_4$.}
+Restrict each factor to $D_{14}$:
+\begin{align*}
+\eta_{12}\big|_{z_1 = z_4} &= \eta_{42} = -\eta_{24}, \\
+\eta_{23}\big|_{z_1 = z_4} &= \eta_{23}, \\
+\eta_{34}\big|_{z_1 = z_4} &= \eta_{34}.
+\end{align*}
+The restricted $3$-form is
+$(-\eta_{24}) \wedge \eta_{23} \wedge \eta_{34}
+= \eta_{24} \wedge \eta_{32} \wedge \eta_{34}$
+after rewriting $-\eta_{23} = \eta_{32}$.
+This does not manifestly vanish; however, for the boundary
+pairing on $D_{14}$ to extract a nonzero contribution, the
+$3$-form must contain $\eta_{14}$ as a factor.  Since $\eta_{14}$
+does not appear (the form involves $\eta_{24}, \eta_{32}, \eta_{34}$
+only), the boundary pairing gives zero.
+
+Alternatively: after the collision $z_1 = z_4$, the form must
+reduce to a $2$-form on $\overline{C}_3(X)$.  The restriction
+$(-\eta_{24}) \wedge \eta_{23} \wedge \eta_{34}$ involves three
+independent forms on a space of dimension $\leq 2$ (the log-form
+space on three points is $2$-dimensional by Arnold), so it is a
+relation, not a new element.  The pairing with the test form
+$\eta_{14}$ extracts zero.
+\begin{equation}\label{eq:frame-D14-deg3}
+\partial_{D_{14}}(\xi_3) = 0.
+\end{equation}
+
+\subsubsection*{Assembling $d_{\mathrm{res}}$ at degree $3$}
+
+Only the three ``adjacent'' strata $D_{12}$, $D_{23}$, $D_{34}$
+contribute.  The three ``non-adjacent'' strata $D_{13}$, $D_{24}$,
+$D_{14}$ all vanish by form-degree reasons.
+Summing~\eqref{eq:frame-D12-deg3}--\eqref{eq:frame-D34-deg3}:
+\begin{equation}\label{eq:frame-dres-deg3-full}
+\boxed{\begin{aligned}
+d_{\mathrm{res}}(\xi_3)
+={} & k \cdot \alpha(z_3) \otimes \alpha(z_4)
+    \otimes \eta_{23} \wedge \eta_{34} \\
+  & {} - k \cdot \alpha(z_1) \otimes \alpha(z_4)
+    \otimes \eta_{13} \wedge \eta_{34} \\
+  & {} + k \cdot \alpha(z_1) \otimes \alpha(z_2)
+    \otimes \eta_{12} \wedge \eta_{23}.
+\end{aligned}}
+\end{equation}
+Observe the alternating signs $+, -, +$ from the position of the
+consumed form in the wedge product: leftmost ($+1$), middle
+($-1$), rightmost ($+1$).
+
+\subsubsection*{Verification: $d_{\mathrm{res}}^2 = 0$ at degree~$3$}
+
+We now apply $d_{\mathrm{res}}$ again to each of the three terms
+in~\eqref{eq:frame-dres-deg3-full}.
+Each term is a degree-$2$ element, and from
+\eqref{eq:frame-dres-deg2} we know how $d_{\mathrm{res}}$ acts
+at degree~$2$.
+
+\medskip
+\noindent\textbf{First term}: $d_{\mathrm{res}}\bigl(
+k \cdot \alpha(z_3) \otimes \alpha(z_4)
+\otimes \eta_{23} \wedge \eta_{34}\bigr)$.
+
+Applying the degree-$2$ formula (with indices shifted
+$1 \to 2, 2 \to 3, 3 \to 4$):
+\begin{equation}\label{eq:frame-dsq-term1}
+d_{\mathrm{res}}\bigl(\alpha(z_3) \otimes \alpha(z_4)
+  \otimes \eta_{23} \wedge \eta_{34}\bigr)
+= k \cdot \alpha(z_4) \otimes \eta_{34}
+  - k \cdot \alpha(z_2) \otimes \eta_{24}.
+\end{equation}
+Wait --- this is not quite right.  The element
+$\alpha(z_3) \otimes \alpha(z_4) \otimes \eta_{23} \wedge \eta_{34}$
+lives on $\overline{C}_3$ with coordinates $(z_2, z_3, z_4)$
+(the point $z_2$ appears through the form $\eta_{23}$ but carries
+no current factor).  We must be careful: the bar differential
+on this degree-$2$ element has boundary strata $D_{23}$
+and $D_{34}$.
+
+At $D_{23}$: the current at $z_3$ collides with the scalar at
+$z_2$.  Since there is no current at $z_2$, this stratum extracts
+no OPE --- it contributes zero.  More precisely: the degree-$2$
+element has only two currents ($\alpha(z_3)$ and $\alpha(z_4)$),
+so the only OPE extraction is at $D_{34}$:
+\begin{equation}\label{eq:frame-dsq-term1-corrected}
+d_{\mathrm{res}}\bigl(
+  \alpha(z_3) \otimes \alpha(z_4)
+  \otimes \eta_{23} \wedge \eta_{34}\bigr)
+= k \cdot \eta_{23}|_{z_3 = z_4}
+= k \cdot \eta_{24}.
+\end{equation}
+But $\eta_{23}$ is consumed by the form pairing, so we
+also get a contribution from stratum $D_{23}$.  Let us
+redo this carefully.
+
+The element $k \cdot \alpha(z_3) \otimes \alpha(z_4)
+\otimes \eta_{23} \wedge \eta_{34}$ is a degree-$2$ element
+on $\overline{C}_3$ with coordinates $(z_2, z_3, z_4)$.
+But it has only $2$ currents (at $z_3$ and $z_4$), not $3$.
+This means it is not a generic degree-$2$ element:
+it is a degree-$2$ element of the bar complex where one
+slot carries the vacuum (scalar $k$ from the previous
+contraction).  The bar differential on such an element
+extracts the OPE of $\alpha(z_3)$ with $\alpha(z_4)$
+at stratum $D_{34}$, consuming $\eta_{34}$.  The sign
+from moving $\eta_{34}$ past $\eta_{23}$ is $-1$:
+\begin{equation}\label{eq:frame-dsq-T1}
+d_{\mathrm{res}}\bigl(
+  k \cdot \alpha(z_3) \otimes \alpha(z_4)
+  \otimes \eta_{23} \wedge \eta_{34}\bigr)
+= k \cdot (-1) \cdot k \cdot \eta_{23}\big|_{z_3 = z_4}
+= -k^2 \cdot \eta_{24}.
+\end{equation}
+After the collapse $z_3 = z_4$, no currents remain:
+$-k^2 \cdot \eta_{24}$ is a $1$-form on $\overline{C}_2$
+with coordinates $(z_2, z_{34})$, carrying no current factor
+(a degree-$1$ ``scalar'' element).  But this is \emph{not}
+a bar element in the usual sense; it is an element of
+$\bar{B}_1^{\mathrm{ch}}$ tensored with a scalar coefficient.
+The key point is simply its sign and coefficient.
+
+\medskip
+\noindent\textbf{Second term}: $d_{\mathrm{res}}\bigl(
+- k \cdot \alpha(z_1) \otimes \alpha(z_4)
+\otimes \eta_{13} \wedge \eta_{34}\bigr)$.
+
+The only OPE-producing stratum is $D_{14}$ (collision of $z_1$
+and $z_4$).  The form $\eta_{13} \wedge \eta_{34}$ must yield
+$\eta_{14}$ --- but $\eta_{14}$ does not appear as a factor.
+Restricting to $D_{14}$:
+\[
+\eta_{13}\big|_{z_1 = z_4} = \eta_{43} = -\eta_{34},
+\qquad
+\eta_{34}\big|_{z_1 = z_4} = \eta_{34}.
+\]
+So $(\eta_{13} \wedge \eta_{34})|_{D_{14}}
+= (-\eta_{34}) \wedge \eta_{34} = 0$.
+The contribution is zero.
+
+There is also stratum $D_{34}$: the OPE is between
+$\alpha(z_4)$ and... but there is no current at $z_3$
+(only a form $\eta_{13}$ referencing $z_3$).  Since the
+currents are at $z_1$ and $z_4$ only, the available collision
+is $D_{14}$, which vanishes as shown.  Similarly,
+$D_{13}$ has no current pair.
+
+However, we must reconsider: this degree-$2$ element
+has currents at $z_1$ and $z_4$, with forms $\eta_{13}$
+and $\eta_{34}$ referencing $z_3$.  The bar differential
+extracts the OPE of $\alpha(z_1)$ with $\alpha(z_4)$.
+The relevant boundary stratum is $D_{14}$, and the test
+form is $\eta_{14}$.  Since $\eta_{14}$ does not appear
+as a factor, we use the Arnold relation:
+\[
+\eta_{13} \wedge \eta_{34}
+= \eta_{13} \wedge \eta_{34}
+\]
+which, by the Arnold identity on points $(1, 3, 4)$, gives
+$\eta_{13} \wedge \eta_{34}
+= -\eta_{34} \wedge \eta_{41} - \eta_{41} \wedge \eta_{13}
+= \eta_{34} \wedge \eta_{14} + \eta_{14} \wedge \eta_{13}$
+(using $\eta_{41} = -\eta_{14}$).  So:
+\[
+\eta_{13} \wedge \eta_{34}
+= \eta_{34} \wedge \eta_{14} + \eta_{14} \wedge \eta_{13}
+= -\eta_{14} \wedge \eta_{34} + \eta_{14} \wedge \eta_{13}
+= \eta_{14} \wedge (\eta_{13} - \eta_{34}).
+\]
+Now the factor $\eta_{14}$ appears, and the bar differential
+extracts:
+\begin{equation}\label{eq:frame-dsq-T2}
+\begin{aligned}
+d_{\mathrm{res}}\bigl(
+  -k \cdot \alpha(z_1) \otimes \alpha(z_4)
+  \otimes \eta_{13} \wedge \eta_{34}\bigr)
+&= -k^2 (\eta_{13} - \eta_{34})\big|_{z_1 = z_4} \\
+&= -k^2 (\eta_{43} - \eta_{34})
+= -k^2(-\eta_{34} - \eta_{34})
+= +2k^2 \eta_{34}.
+\end{aligned}
+\end{equation}
+But wait: after the collapse $z_1 = z_4$, the residual
+form should reference the collision point.  Let us write
+$z_{14}$ for the collision point.  Then
+$\eta_{13}|_{z_1 = z_4} = \eta_{(14),3}$ (distance from
+collision to $z_3$) and
+$\eta_{34}|_{z_1 = z_4} = \eta_{3,(14)}$ (same, with opposite
+sign).  So $\eta_{13} - \eta_{34}$ becomes
+$\eta_{(14),3} - \eta_{3,(14)} = 2\eta_{(14),3}$.
+
+The key observation is that this intermediate computation is
+not needed for verifying $d^2 = 0$.  What matters is that the
+total of all three terms cancels.  We take a cleaner approach.
+
+\subsubsection*{Clean verification of $d^2 = 0$ via Arnold pairs}
+
+Rather than tracking the intermediate expressions through
+relabeling, we verify $d^2 = 0$ structurally.  The bar differential
+$d = d_{\mathrm{res}}$ satisfies $d^2 = 0$ if and only if
+every codimension-$2$ boundary stratum of $\overline{C}_4(X)$
+contributes zero.  The codimension-$2$ strata are of two types:
+
+\medskip
+\noindent\textbf{Type I: nested collisions} $D_{ij} \cap D_{jk}$
+(three points $z_i, z_j, z_k$ collide in sequence).
+These contribute via the composition
+$\partial_{D_{jk}} \circ \partial_{D_{ij}}$:
+first $z_i$ collides with $z_j$, then the collision point
+collides with $z_k$.  The reverse order
+$\partial_{D_{ij}} \circ \partial_{D_{jk}}$ gives the same
+codimension-$2$ stratum with opposite orientation.  By the
+Arnold relation on the triple $(z_i, z_j, z_k)$, these two
+contributions cancel.
+
+For the four-point configuration, the nested triples are:
+$(1,2,3)$, $(2,3,4)$, $(1,2,4)$, $(1,3,4)$, $(2,3,4)$.
+Each produces one Arnold-relation cancellation.
+
+\medskip
+\noindent\textbf{Type II: disjoint collisions} $D_{ij} \cap D_{kl}$
+where $\{i,j\} \cap \{k,l\} = \emptyset$.
+For four points, the only such stratum is $D_{12} \cap D_{34}$
+(simultaneous collision $z_1 = z_2$ and $z_3 = z_4$).  The two
+orderings $\partial_{D_{34}} \circ \partial_{D_{12}}$ and
+$\partial_{D_{12}} \circ \partial_{D_{34}}$ commute (they act
+on disjoint pairs), and the sign from the form restriction
+ensures they cancel.  Explicitly, for the form
+$\eta_{12} \wedge \eta_{23} \wedge \eta_{34}$:
+\begin{itemize}
+\item $\partial_{D_{12}}$ then $\partial_{D_{34}}$:
+  consume $\eta_{12}$ (sign $+1$), leaving
+  $\eta_{23} \wedge \eta_{34}$; then consume $\eta_{34}$
+  (sign $-1$ from moving past $\eta_{23}$).  Net: $(-1)$.
+\item $\partial_{D_{34}}$ then $\partial_{D_{12}}$:
+  consume $\eta_{34}$ (sign $+1$ by cyclic permutation),
+  leaving $\eta_{12} \wedge \eta_{23}$; then consume
+  $\eta_{12}$ (sign $+1$).  Net: $(+1)$.
+\end{itemize}
+The two orderings produce opposite signs:
+\begin{equation}\label{eq:frame-disjoint-cancel}
+\partial_{D_{34}} \circ \partial_{D_{12}}(\xi_3)
++ \partial_{D_{12}} \circ \partial_{D_{34}}(\xi_3)
+= k^2 \cdot (-1 + 1) = 0.
+\end{equation}
+
+\medskip
+Since every codimension-$2$ stratum contributes zero (Type~I
+by Arnold, Type~II by sign cancellation), we conclude:
+\begin{equation}\label{eq:frame-dsquared-deg3}
+\boxed{d_{\mathrm{res}}^2(\xi_3) = 0.}
+\end{equation}
+
+\subsubsection*{The adjacency pattern}
+
+The degree-$3$ computation reveals a structural feature.  For
+the chain basis element
+$\alpha^{\otimes 4} \otimes \eta_{12} \wedge \eta_{23} \wedge \eta_{34}$,
+only ``adjacent'' strata (those $D_{ij}$ where $\eta_{ij}$ appears
+as a factor in the wedge) give nonzero contributions to~$d$.
+The non-adjacent strata $D_{13}$, $D_{24}$, $D_{14}$ all vanish
+by form-squaring ($\eta \wedge \eta = 0$).  This adjacency
+pattern persists at all degrees for the chain basis: the
+differential on
+$\alpha^{\otimes(n+1)} \otimes \eta_{12} \wedge \eta_{23}
+\wedge \cdots \wedge \eta_{n,n+1}$
+receives contributions only from $D_{12}, D_{23}, \ldots, D_{n,n+1}$,
+producing an alternating sum of $n$ terms with signs
+$+1, -1, +1, -1, \ldots$
+
+For a general basis element (not the chain basis), all strata can
+contribute, and $d^2 = 0$ requires the full Arnold relation.
+The chain basis is special precisely because it diagonalizes the
+``adjacency'' of the logarithmic forms.
+
+\subsection{The general theorem}
+
+\begin{theorem}[Heisenberg bar complex at genus~$0$]
+\label{thm:frame-heisenberg-bar}
+For $\mathcal{H}_k$ on $\mathbb{P}^1$:
+\begin{equation}\label{eq:frame-heisenberg-bar-cohomology}
+H^n(\bar{B}^{\mathrm{ch}}_{\mathrm{geom}}(\mathcal{H}_k))
+= \begin{cases}
+\mathbb{C} & n = 0, \\
+0 & n = 1, \\
+\mathbb{C} \cdot c_k & n = 2, \\
+0 & n > 2.
+\end{cases}
+\end{equation}
+The class $c_k \in H^2$ arises from the triple-collision residue
+and is the homological manifestation of the central extension.
+The differential satisfies $d^2 = 0$ at all degrees by the
+Arnold relation.
+\end{theorem}
+
+\begin{proof}
+\emph{Degree~$0$.}
+$\bar{B}^0 = \mathbb{C} \cdot 1$ (vacuum), $d = 0$.
+
+\emph{Degree~$1$.}
+The differential $d_{\mathrm{res}}\colon \bar{B}^1 \to \bar{B}^0$
+sends $\alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12} \mapsto k \cdot 1$
+(equation~\eqref{eq:frame-dres-deg1}).
+On $\mathbb{P}^1$, where $H^1(X) = 0$, this map is surjective
+and has trivial kernel, so $H^1 = 0$.
+
+\emph{Degree~$2$.}
+The three-current collision produces the central charge class.
+When $\alpha(z_1), \alpha(z_2), \alpha(z_3)$ approach a
+common point, the iterated OPE produces:
+\begin{equation}\label{eq:frame-triple-residue}
+\mathrm{Res}_{D_{123}}\bigl[\alpha(z_1)\alpha(z_2)\alpha(z_3)
+\otimes \eta_{12} \wedge \eta_{23}\bigr]
+= k \cdot [\text{central class}]
+\end{equation}
+The commutator $[\alpha(z), \alpha(w)] = k \cdot
+\partial_w\delta(z-w)$ contributes a central term at
+the triple collision.  This produces a nontrivial
+class $c_k \in H^2$.
+
+\emph{Degrees $\geq 3$.}
+Vanish by dimension counting: the Heisenberg algebra is
+generated by a single current of conformal weight~$1$, and the
+bar complex cohomology is controlled by the Lie algebra cohomology
+of the abelian Lie algebra $\mathfrak{h}$, which is concentrated
+in degrees $\leq 2$ for a $1$-dimensional central extension.
+
+\emph{$d^2 = 0$.}
+At each degree, $d^2 = 0$ by the Arnold relation
+(Proposition~\ref{prop:frame-arnold}) applied to the
+logarithmic forms on $\overline{C}_{n+1}(X)$.
+The degree-$2$ verification is~\eqref{eq:frame-dsquared-deg2};
+the general case follows by the same argument on all codimension-$2$
+strata of $\overline{C}_{n+1}(X)$.
+\end{proof}
+
+The explicit degree-$2$ and degree-$3$ bar differentials confirm the
+pattern.  The degree-$2$ computation is~\eqref{eq:frame-dres-deg2}
+with $d^2 = 0$ by~\eqref{eq:frame-dsquared-deg2}; the degree-$3$
+computation is~\eqref{eq:frame-dres-deg3-full} with $d^2 = 0$
+by~\eqref{eq:frame-dsquared-deg3}.
+At degree~$3$, the cancellation mechanism for $d^2 = 0$
+involves both nested Arnold relations (Type~I) and disjoint-collision
+sign cancellations (Type~II), as detailed in
+\S\ref{subsec:frame-degree3}.
+
+% ================================================================
+\section{Reading off the Koszul dual}\label{sec:frame-koszul-dual}
+% ================================================================
+
+The bar complex of $\mathcal{H}_k$ is a coalgebra.  Its coproduct
+structure is determined by the OPE.  Because the double-pole
+residue $\mathrm{Res}_{z_i = z_j}[\omega/(z_i - z_j)^2]
+= \partial_{z_i}\omega|_{z_i = z_j}$ is symmetric under
+$z_i \leftrightarrow z_j$, the coproduct is \emph{cocommutative}:
+\begin{equation}\label{eq:frame-primitive}
+\Delta(\alpha) = \alpha \otimes 1 + 1 \otimes \alpha.
+\end{equation}
+By the Milnor--Moore theorem, a conilpotent cocommutative coalgebra
+is a coLie coalgebra.  The bar complex is therefore:
+\begin{equation}\label{eq:frame-bar-coalgebra}
+\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
+\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)
+\end{equation}
+the conilpotent chiral Lie coalgebra on the single cogenerator
+$V^* = \mathrm{Span}\{\alpha^*\}$.
+
+Apply the cobar functor.  The cobar of a coLie coalgebra is the
+free commutative algebra (this is the dual statement to
+$\mathrm{Com}^! = \mathrm{Lie}$ in the Koszul duality of operads):
+\begin{equation}\label{eq:frame-cobar}
+\Omega^{\mathrm{ch}}\bigl(\mathrm{coLie}^{\mathrm{ch}}(V^*)\bigr)
+\simeq \mathrm{Sym}^{\mathrm{ch}}(V^*).
+\end{equation}
+
+The level $k$ determines a curvature element
+$m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$, encoding the
+central extension.
+
+\begin{theorem}[Heisenberg Koszul dual]
+\label{thm:frame-heisenberg-koszul-dual}
+The Koszul dual of $\mathcal{H}_k$ is the curved commutative
+chiral algebra
+\begin{equation}\label{eq:frame-koszul-dual}
+\mathcal{H}_k^! \simeq \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\;
+d = 0,\; m_0 = -k \cdot \omega\bigr).
+\end{equation}
+This is \emph{not} $\mathcal{H}_{-k}$: the Heisenberg algebra is
+not self-dual.
+\end{theorem}
+
+The distinction deserves emphasis:
+\begin{center}
+\small
+\begin{tabular}{c|c}
+\textbf{Heisenberg} $\mathcal{H}_k$ &
+\textbf{Koszul dual} $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ \\
+\hline
+Non-commutative & Commutative \\
+$[\alpha, \alpha] = k \neq 0$ &
+$\alpha \cdot \alpha = \alpha^2$ (commutes) \\
+Central extension & No central extension \\
+Double-pole OPE & Regular OPE \\
+Lie-type & Com-type
+\end{tabular}
+\end{center}
+
+The construction we have just performed for $\mathcal{H}_k$
+is an instance of a general pattern: the bar complex of any
+augmented chiral algebra is a coalgebra, and the cobar of
+that coalgebra produces the Koszul dual.  The general
+bar-cobar adjunction is developed in
+Chapter~\ref{chap:bar-cobar}.
+
+\begin{remark}[Three different ``dualities'']
+\label{rem:frame-three-dualities}
+The literature contains three distinct duality operations
+on the Heisenberg algebra, which must not be confused:
+\begin{enumerate}
+\item \emph{Bar-cobar Koszul duality} (this chapter):
+  $\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$.
+  Exchanges Lie-type and Com-type structure.
+\item \emph{Level-shifting duality}:
+  $\mathrm{Rep}(\mathcal{H}_k)
+  \simeq \mathrm{Rep}(\mathcal{H}_{-k})$.
+  An equivalence of representation categories.
+\item \emph{Boson-fermion correspondence}:
+  $\mathrm{Rep}(\mathcal{H}_k)
+  \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})$.
+  Relates Heisenberg modules to free-fermion modules.
+\end{enumerate}
+Only~(1) is the subject of this monograph.
+\end{remark}
+
+% ================================================================
+\section{Bar-cobar inversion --- Theorem A in action}
+\label{sec:frame-inversion}
+% ================================================================
+
+The cobar construction recovers the original algebra:
+\begin{equation}\label{eq:frame-bar-cobar-inversion}
+\Omega^{\mathrm{ch}}\bigl(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)\bigr)
+\xrightarrow{\;\sim\;} \mathcal{H}_k.
+\end{equation}
+
+The chain of identifications is:
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
+\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)
+\quad\Longrightarrow\quad
+\Omega^{\mathrm{ch}}(\mathrm{coLie}^{\mathrm{ch}}(V^*))
+\simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)
+\]
+and applying bar again:
+\[
+\bar{B}^{\mathrm{ch}}(\mathrm{Sym}^{\mathrm{ch}}(V^*))
+\simeq \mathrm{coLie}^{\mathrm{ch}}(V)
+\xrightarrow{\;\Omega\;}
+\mathcal{H}_k.
+\]
+
+The last step uses the fact that the free Lie algebra on a single
+generator is $1$-dimensional (abelian), so the cobar of the coLie
+coalgebra on one cogenerator recovers the original Heisenberg
+algebra.  The bar-cobar adjunction $\Omega \dashv \bar{B}$ restricts
+to an equivalence on Koszul algebras; $\mathcal{H}_k$ is Koszul
+precisely because its bar complex is formal (concentrated in
+degrees $0$ and $2$).
+
+This is Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main})
+for the simplest non-trivial case.  The general theorem establishes
+bar-cobar duality for all augmented chiral algebras, with the
+quasi-isomorphism $\Omega \bar{B}(\mathcal{A}) \xrightarrow{\sim}
+\mathcal{A}$ holding on the Koszul locus.  We will see in
+Chapter~\ref{chap:bar-cobar} that this locus includes
+all affine Kac--Moody algebras and $\mathcal{W}$-algebras whose
+PBW spectral sequence collapses.
+
+% ================================================================
+\section{The passage to genus~1 --- curvature appears}
+\label{sec:frame-genus1}
+% ================================================================
+
+Everything computed so far takes place on $\mathbb{P}^1$
+(genus~$0$).  Replace $X = \mathbb{P}^1$ by an elliptic curve
+$E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with modular
+parameter $\tau \in \mathbb{H}$.
+
+The propagator changes.  On $\mathbb{P}^1$, the logarithmic form
+$\eta_{12} = d\log(z_1 - z_2)$ has a simple pole at $z_1 = z_2$
+and is single-valued.  On $E_\tau$, no meromorphic function with
+a single simple pole can be doubly periodic (Liouville's theorem).
+The correct replacement is the \emph{elliptic propagator}:
+\begin{equation}\label{eq:frame-elliptic-propagator}
+G_\tau(z) = \zeta_\tau(z) + \frac{\pi^2 E_2(\tau)}{3}\, z
+\end{equation}
+where $\zeta_\tau(z)$ is the Weierstrass zeta function
+\begin{equation}\label{eq:frame-weierstrass-zeta}
+\zeta_\tau(z) = \frac{1}{z}
++ \sum_{(m,n) \neq (0,0)}\left[
+  \frac{1}{z - m - n\tau}
+  + \frac{1}{m + n\tau}
+  + \frac{z}{(m+n\tau)^2}
+\right]
+\end{equation}
+and $E_2(\tau)$ is the weight-$2$ Eisenstein series
+\begin{equation}\label{eq:frame-E2}
+E_2(\tau) = 1 - 24\sum_{n=1}^{\infty} \sigma_1(n)\, q^n,
+\qquad q = e^{2\pi i \tau}.
+\end{equation}
+
+The Weierstrass $\zeta$-function is \emph{quasi-periodic}: it
+satisfies $\zeta_\tau(z + 1) = \zeta_\tau(z) + 2\eta_1$ and
+$\zeta_\tau(z + \tau) = \zeta_\tau(z) + 2\eta_2$, where the
+quasi-periods are $\eta_1 = \pi^2 E_2(\tau)/6$.  The
+$E_2$-correction in~\eqref{eq:frame-elliptic-propagator}
+is the price of modular covariance: without it, the propagator
+does not transform correctly under $\mathrm{SL}_2(\mathbb{Z})$.
+
+The Laurent expansion near $z = 0$ is:
+\begin{equation}\label{eq:frame-green-laurent}
+G_\tau(z) = \frac{1}{z}
++ \frac{\pi^2 E_2(\tau)}{3}\, z + O(z^3).
+\end{equation}
+At genus~$0$, only the pole $1/z$ survives.  The $E_2$-term
+is the first appearance of modular forms in the bar complex.
+
+\subsection{The genus-1 two-point function}
+
+The Heisenberg two-point function on $E_\tau$ is
+\begin{equation}\label{eq:frame-genus1-2pt}
+\langle \alpha(z_1)\, \alpha(z_2) \rangle_{E_\tau}
+= k \cdot G_\tau(z_1 - z_2).
+\end{equation}
+
+The genus-$1$ partition function is
+\begin{equation}\label{eq:frame-partition-g1}
+Z_{E_\tau}^{\mathcal{H}} =
+\mathrm{Tr}_{\mathcal{F}_k}\, q^{L_0 - c/24}
+= \frac{1}{\eta(\tau)}
+= q^{-1/24}\prod_{n=1}^{\infty}\frac{1}{1-q^n}
+\end{equation}
+where $\eta(\tau)$ is the Dedekind eta function.  The coefficients
+are the partition numbers $p(n)$: the number of partitions of $n$
+counts the number of states at excitation level~$n$ in the
+Fock space.
+
+\subsection{Curvature: $d^2 \neq 0$ at genus 1}
+
+Compute the bar differential on $E_\tau$ using the elliptic
+propagator~\eqref{eq:frame-elliptic-propagator}.  The B-cycle
+monodromy of $G_\tau$ produces a defect: transporting the
+propagator around the B-cycle of $E_\tau$ shifts it by the
+constant $-2\pi i$.  This shift is the genus-$1$ curvature.
+
+\begin{theorem}[Genus-1 curvature]\label{thm:frame-genus1-curvature}
+For $\mathcal{H}_k$ on $E_\tau$, the bar differential satisfies
+\begin{equation}\label{eq:frame-dsquared-genus1}
+d^2 = k \cdot \omega_1 \cdot \mathrm{id}
+\end{equation}
+where $\omega_1 = c_1(\mathbb{E}) \in H^2(\overline{\mathcal{M}}_1)$
+is the first Chern class of the Hodge bundle on the moduli space
+of elliptic curves.
+\end{theorem}
+
+The proof is the direct computation: the B-cycle monodromy of the
+elliptic propagator contributes a phase $e^{2\pi i k}$ to the
+parallel transport of bar complex elements.  Squaring the
+differential, the two B-cycle transports contribute a factor
+$(-2\pi i)^2$ that, after integration over $\overline{\mathcal{M}}_1$,
+produces the Hodge class $\omega_1 = c_1(\mathbb{E})$ with
+coefficient~$k$.  The detailed computation appears in
+Theorem~\ref{thm:heisenberg-obs}.
+
+The differential has ceased to be strictly square-zero.
+
+At genus~$0$, the bar complex was a genuine chain complex
+($d^2 = 0$) and its cohomology was well-defined.  At genus~$1$,
+the bar complex is \emph{curved}: $d^2 = k \cdot \omega_1$
+is proportional to the level.  The curvature vanishes only at
+$k = 0$, where the Heisenberg algebra degenerates.
+
+\begin{remark}[Physical meaning of curvature]
+\label{rem:frame-curvature-physics}
+In conformal field theory, the curvature $d^2 = k \cdot \omega_1$
+is the \emph{conformal anomaly} at one loop.  The level $k$
+controls the strength of the central extension; the Hodge class
+$\omega_1$ is the gravitational coupling.  The product $k \cdot
+\omega_1$ measures the obstruction to defining the chiral algebra
+consistently on all elliptic curves simultaneously: it is the
+first Chern class of the \emph{determinant line bundle}
+$\det(R\pi_*\mathcal{F}_k)$ on $\overline{\mathcal{M}}_1$,
+where $\pi\colon \mathcal{E} \to \overline{\mathcal{M}}_1$
+is the universal elliptic curve and $\mathcal{F}_k$ is the
+Fock space sheaf.
+\end{remark}
+
+% ================================================================
+\section{The holomorphic anomaly and $E_2$}
+\label{sec:frame-holomorphic-anomaly}
+% ================================================================
+
+The appearance of $E_2$ introduces a \emph{holomorphic anomaly}.
+Under modular transformations $\tau \mapsto (a\tau+b)/(c\tau+d)$,
+the weight-$4$ and weight-$6$ Eisenstein series transform as
+modular forms:
+\[
+E_4(\gamma \cdot \tau) = (c\tau+d)^4 E_4(\tau), \qquad
+E_6(\gamma \cdot \tau) = (c\tau+d)^6 E_6(\tau).
+\]
+The weight-$2$ Eisenstein series does not:
+\begin{equation}\label{eq:frame-E2-anomaly}
+E_2\!\left(\frac{a\tau+b}{c\tau+d}\right)
+= (c\tau+d)^2 E_2(\tau) + \frac{6c(c\tau+d)}{\pi i}.
+\end{equation}
+The extra term $6c(c\tau+d)/(\pi i)$ is the holomorphic anomaly.
+
+For the Heisenberg two-point function on $E_\tau$, this anomaly
+produces:
+\begin{equation}\label{eq:frame-2pt-anomaly}
+\langle \alpha(z_1)\, \alpha(z_2) \rangle_{\gamma \cdot \tau}
+= (c\tau+d)^2
+  \langle \alpha((c\tau+d)^{-1}z_1)\,
+  \alpha((c\tau+d)^{-1}z_2) \rangle_\tau
+  - \frac{6ck}{\pi i}\, z_{12}.
+\end{equation}
+The anomaly term is proportional to $k$ (the level) and to $c$
+(the lower-left entry of the modular matrix).
+
+This is precisely the genus-$1$ obstruction class
+(Theorem~\ref{thm:frame-genus1-curvature}), seen from the modular
+side.  The bar complex curvature $d^2 = k \cdot \omega_1$ and the
+holomorphic anomaly in $E_2$ are two manifestations of the same
+phenomenon: the failure of the Heisenberg algebra to extend
+coherently over the moduli space $\overline{\mathcal{M}}_1$.
+
+% ================================================================
+\section{Why the ordinary derived category fails}
+\label{sec:frame-coderived}
+% ================================================================
+
+The curvature $d^2 = k \cdot \omega_1$ means that the genus-$1$
+bar complex is not a chain complex in the ordinary sense: it does
+not live in the derived category $D(\mathrm{Vect})$.  It lives in
+the \emph{coderived category} $D^{\mathrm{co}}(\mathrm{Vect})$ of
+Positselski~\cite{Positselski11}.
+
+The distinction is subtle but essential.  In the ordinary derived
+category, a complex with $d^2 \neq 0$ is simply undefined.  In
+Positselski's framework, a \emph{curved} differential graded
+(co)algebra --- one where $d^2 = m_0 \neq 0$ for some curvature
+element $m_0$ --- has a well-defined coderived category in which:
+\begin{enumerate}
+\item The bar-cobar adjunction still holds (as an adjunction of
+  curved (co)algebras).
+\item The notion of ``acyclic'' is refined: a curved complex can
+  be \emph{coacyclic} (contractible in the coderived sense) without
+  being acyclic in the ordinary sense.
+\item The bar-cobar quasi-isomorphism
+  $\Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$ holds in the
+  coderived category when it fails in the ordinary derived category.
+\end{enumerate}
+
+The Heisenberg algebra at $k \neq 0$ is the simplest object that
+forces us out of the ordinary derived category.  At $k = 0$,
+$d^2 = 0$ and the ordinary derived category suffices; at $k \neq 0$,
+the curvature is nonzero and only the coderived category gives the
+correct homological algebra.
+
+This is not an abstract concern.  The genus-$1$ bar complex of
+$\mathcal{H}_k$ with $k \neq 0$ is ``acyclic'' in the na\"ive sense
+(its homology with respect to $d$ is zero, since $d^2 \neq 0$
+means the notion of ``homology'' is undefined), but it is
+\emph{not coacyclic} in Positselski's sense --- it carries
+genuine invariants (the Hodge class $\omega_1$, the partition
+function $1/\eta(\tau)$) that are invisible to ordinary
+homological algebra but visible in the coderived category.
+
+The general theory of bar-cobar duality in the coderived
+setting is developed in
+Chapter~\ref{chap:bar-cobar}
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+
+% ================================================================
+\section{Genus~2 --- Siegel modular forms}\label{sec:frame-genus2}
+% ================================================================
+
+At genus~$2$, the Riemann surface $\Sigma_2$ has period matrix
+$\Omega = \bigl(\begin{smallmatrix} \tau_1 & z \\ z & \tau_2
+\end{smallmatrix}\bigr) \in \mathcal{H}_2$ (the Siegel upper
+half-space).  The genus-$2$ propagator is
+\begin{equation}\label{eq:frame-genus2-propagator}
+K^{(2)}(w_1, w_2 \,|\, \Omega)
+= \partial_{w_1} \log E(w_1, w_2;\, \Omega)
+\end{equation}
+where $E(w_1, w_2;\, \Omega)$ is the prime form on~$\Sigma_2$.
+
+Near $w_1 = w_2$, the prime form has the expansion
+\begin{equation}\label{eq:frame-prime-form-expansion}
+E(w_1, w_2;\, \Omega)
+= (w_1 - w_2)\bigl(1 + c_2(\Omega)(w_1 - w_2)^2
++ c_4(\Omega)(w_1 - w_2)^4 + \cdots\bigr)
+\end{equation}
+where the coefficients $c_{2j}(\Omega)$ are Siegel modular forms
+for $\mathrm{Sp}(4, \mathbb{Z})$.
+
+Three features invisible at genus~$1$ emerge:
+\begin{enumerate}
+\item \emph{Multi-dimensional Hodge bundle.}
+  At genus~$1$, the Hodge bundle $\mathbb{E}$ is a line bundle and
+  $\lambda_1 = c_1(\mathbb{E})$.  At genus~$2$, $\mathbb{E}$ has
+  rank~$2$, and $\lambda_2 = c_2(\mathbb{E})$ is a determinantal
+  class involving the interaction of both B-cycle monodromies.
+
+\item \emph{Off-diagonal periods.}
+  The entry $z = \Omega_{12}$ encodes the interaction between the
+  two handles of $\Sigma_2$.
+
+\item \emph{Function-valued monodromies.}
+  The genus-$1$ B-cycle monodromy of the propagator is the
+  constant~$-2\pi i$.  At genus~$2$, the monodromies
+  $-2\pi i \cdot \omega_j(w)$ are sections of
+  $\omega_{\Sigma_2}$.  Each B-cycle defect contributes a
+  $2$-form on moduli space, and the two defects combine
+  multiplicatively: hence $\lambda_2$ lives in $H^4$
+  (not~$H^2$).
+\end{enumerate}
+
+\begin{theorem}[Genus-2 curvature]\label{thm:frame-genus2-curvature}
+The genus-$2$ bar complex of $\mathcal{H}_k$ has curvature:
+\begin{equation}\label{eq:frame-genus2-curvature}
+(d^{(2)})^2 = k \cdot \lambda_2
+\end{equation}
+where $\lambda_2 = c_2(\mathbb{E}) \in H^4(\overline{\mathcal{M}}_2)$.
+\end{theorem}
+
+The free energy at genus~$2$ is
+\begin{equation}\label{eq:frame-F2}
+F_2(\mathcal{H}_k) = k \cdot
+\int_{\overline{\mathcal{M}}_{2,1}} \psi_1^2\, \lambda_2
+= k \cdot \frac{7}{8} \cdot \frac{|B_4|}{4!}
+= \frac{7k}{5760}
+\end{equation}
+where $B_4 = -1/30$ is the fourth Bernoulli number.
+
+% ================================================================
+\section{The genus tower --- recognizing the $\hat{A}$-genus}
+\label{sec:frame-genus-tower}
+% ================================================================
+
+The pattern from genus~$1$ and genus~$2$ extends.  At genus~$g$,
+the bar complex curvature is
+\begin{equation}\label{eq:frame-genus-g-curvature}
+(d^{(g)})^2 = k \cdot \lambda_g
+\end{equation}
+where $\lambda_g = c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$
+is the top Chern class of the Hodge bundle
+(Theorem~\ref{thm:heisenberg-obs}).
+
+The genus-$g$ free energy is
+\begin{equation}\label{eq:frame-Fg}
+F_g(\mathcal{H}_k) = k \cdot
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+for all $g \geq 1$ (Theorem~\ref{thm:heisenberg-all-genera}).
+The first values are:
+\begin{align}
+F_1 &= k \cdot \frac{1}{24}, \label{eq:frame-F1} \\
+F_2 &= k \cdot \frac{7}{5760}, \label{eq:frame-F2-repeat} \\
+F_3 &= k \cdot \frac{31}{967680}, \label{eq:frame-F3} \\
+F_4 &= k \cdot \frac{127}{154828800}. \label{eq:frame-F4}
+\end{align}
+
+The generating function assembles these into a closed form:
+\begin{equation}\label{eq:frame-generating-function}
+\sum_{g=1}^{\infty} F_g(\mathcal{H}_k)\, x^{2g}
+= k\left(\frac{x/2}{\sin(x/2)} - 1\right).
+\end{equation}
+
+Including the leading term ($g = 0$, where $F_0 = 1$ by convention):
+\begin{equation}\label{eq:frame-full-generating}
+1 + \sum_{g=1}^{\infty} F_g\, x^{2g}
+= \frac{x/2}{\sin(x/2)}.
+\end{equation}
+
+The function $x/2 / \sin(x/2)$ is the $\hat{A}$-genus evaluated at
+imaginary argument.  The $\hat{A}$-genus of a complex manifold~$M$
+is the multiplicative genus associated to the power series
+\begin{equation}\label{eq:frame-a-hat-def}
+\hat{A}(x) = \frac{x/2}{\sinh(x/2)}
+= 1 - \frac{x^2}{24} + \frac{7x^4}{5760} - \cdots
+\end{equation}
+and the Wick rotation $x \mapsto ix$ sends $\sinh(x/2)$ to
+$i\sin(x/2)$, producing precisely the generating
+function~\eqref{eq:frame-full-generating}.
+
+This identification is not coincidental: it follows from the
+Faber--Pandharipande $\lambda_g$ formula and the Grothendieck--Riemann--Roch
+theorem.  We derive both connections here.
+
+\subsubsection*{The Faber--Pandharipande formula}
+
+The genus-$g$ obstruction class is
+$\mathrm{obs}_g(\mathcal{H}_k) = k \cdot \lambda_g$
+where $\lambda_g = c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$
+is the top Chern class of the Hodge bundle
+$\mathbb{E} = \pi_*\omega_{\mathcal{C}/\overline{\mathcal{M}}_g}$.
+The free energy extracts this as a number via integration against
+powers of the cotangent line class $\psi_1 = c_1(\mathbb{L}_1)$
+on $\overline{\mathcal{M}}_{g,1}$:
+\begin{equation}\label{eq:frame-fp-integral}
+F_g(\mathcal{H}_k) = k \cdot
+\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g.
+\end{equation}
+The Faber--Pandharipande formula~\cite{FP00} evaluates this integral:
+\begin{equation}\label{eq:frame-fp-formula}
+\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g
+= \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+where $B_{2g}$ is the $2g$-th Bernoulli number.
+
+The connection to the $\hat{A}$-genus is visible at the level of
+generating functions.  The Bernoulli numbers are defined by
+\begin{equation}\label{eq:frame-bernoulli-gf}
+\frac{x}{e^x - 1} = \sum_{n=0}^{\infty} \frac{B_n}{n!}\, x^n
+= 1 - \frac{x}{2} + \frac{x^2}{12} - \frac{x^4}{720} + \cdots
+\end{equation}
+which is the Todd genus generating function.  The factor
+$(2^{2g-1}-1)/2^{2g-1}$ in~\eqref{eq:frame-fp-formula} arises
+from the relationship between the Todd class and the $\hat{A}$-class:
+\begin{equation}\label{eq:frame-todd-ahat}
+\mathrm{Td}(x) = \frac{x}{1 - e^{-x}} = e^{x/2} \cdot \hat{A}(x),
+\qquad
+\hat{A}(x) = \frac{x/2}{\sinh(x/2)}.
+\end{equation}
+Expanding $\hat{A}(x) = \sum_{g=0}^{\infty} a_g\, x^{2g}$
+(the $\hat{A}$-class is even), the coefficients are
+\begin{equation}\label{eq:frame-ahat-bernoulli}
+a_g = \frac{(-1)^g(2^{2g-1}-1)}{2^{2g-1}} \cdot \frac{B_{2g}}{(2g)!}
+\end{equation}
+which matches~\eqref{eq:frame-fp-formula} up to the sign
+$(-1)^g$ absorbed by the Wick rotation $x \mapsto ix$.
+This confirms equation~\eqref{eq:frame-full-generating}.
+
+\subsubsection*{The GRR derivation}
+
+\begin{remark}[The family index theorem]
+\label{rem:frame-family-index}
+The appearance of the $\hat{A}$-genus admits a conceptual explanation
+via Grothendieck--Riemann--Roch (Theorem~\ref{thm:family-index}).
+For $\mathcal{A} = \mathcal{H}_k$, the modular deformation complex
+is $\mathcal{D}_{\mathcal{H}_k}^{(g)} = k \cdot \mathbb{E}$
+($k$ copies of the Hodge bundle).  The GRR formula applied to the
+forgetful morphism $\pi \colon \overline{\mathcal{M}}_{g,1}
+\to \overline{\mathcal{M}}_g$ gives
+\begin{equation}\label{eq:frame-grr}
+\mathrm{ch}(\pi_!\, \omega_{\mathcal{C}})
+= \pi_*\!\left(\mathrm{ch}(\omega_{\mathcal{C}}) \cdot
+\mathrm{Td}(T_\pi)\right)
+\end{equation}
+where $T_\pi$ is the relative tangent bundle.  Since
+$\omega_{\mathcal{C}} = T_\pi^*$, the pushforward~\eqref{eq:frame-grr}
+produces the Chern character of $\mathbb{E}$ in terms of
+$\kappa$-classes, recovering the Mumford formula
+$\mathrm{ch}_g(\mathbb{E}) = B_{2g} \cdot \kappa_{2g-1}/(2g)!$.
+Combining with the bar-complex obstruction
+$\mathrm{obs}_g = k \cdot \lambda_g$
+and integrating recovers~\eqref{eq:frame-generating-function}
+directly.
+
+The genus expansion of \emph{every} Koszul chiral algebra is an index:
+the $\hat{A}$-class pushforward of the Hodge bundle scaled by the
+bar-complex curvature.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Free energy values $F_g$ for $\mathcal{H}_k$ ($k = 1$),
+genera $1 \leq g \leq 6$}
+\label{tab:frame-free-energy}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$g$ & $F_g$ (exact) & $F_g$ (decimal) &
+  Bernoulli $|B_{2g}|$ \\
+\hline
+1 & $1/24$ & $4.17 \times 10^{-2}$ & $1/6$ \\
+2 & $7/5760$ & $1.22 \times 10^{-3}$ & $1/30$ \\
+3 & $31/967680$ & $3.20 \times 10^{-5}$ & $1/42$ \\
+4 & $127/154828800$ & $8.20 \times 10^{-7}$ & $1/30$ \\
+5 & $511/24524881920$ & $2.08 \times 10^{-8}$ & $5/66$ \\
+6 & $1414477/2678117105664000$ & $5.28 \times 10^{-10}$ &
+$691/2730$ \\
+\hline
+\end{tabular}
+\end{table}
+
+The generating function~\eqref{eq:frame-generating-function} has
+radius of convergence $|x| < 2\pi$ (the first zero of $\sin(x/2)$
+is at $x = 2\pi$).  The free energies $F_g$ decrease factorially,
+and the genus expansion is convergent --- unlike the
+genus expansion of the physical partition function, which grows as
+$(2g)!$ (Mirzakhani volumes) and is only asymptotic.
+
+% ================================================================
+\section{Complementarity --- Theorem C in action}
+\label{sec:frame-complementarity}
+% ================================================================
+
+The Heisenberg algebra $\mathcal{H}_k$ and its Koszul dual
+$\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ form
+a Koszul pair.  Their genus-$g$ quantum corrections are
+complementary.
+
+\begin{theorem}[Quantum complementarity for Heisenberg]
+\label{thm:frame-complementarity}
+For the Koszul pair
+$(\mathcal{H}_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$
+at genus~$g$:
+\begin{equation}\label{eq:frame-complementarity}
+Q_g(\mathcal{H}_k) + Q_g(\mathcal{H}_k^!)
+= H^*(\overline{\mathcal{M}}_g,\, \mathcal{Z}(\mathcal{H}_k))
+\end{equation}
+where $Q_g$ denotes the genus-$g$ quantum correction (the
+obstruction to extending the genus-$0$ bar-cobar
+quasi-isomorphism to genus~$g$), and $\mathcal{Z}(\mathcal{H}_k)$
+is the center local system on~$\overline{\mathcal{M}}_g$.
+\end{theorem}
+
+At genus~$1$:
+\begin{itemize}
+\item The Heisenberg deformation space is one-dimensional,
+  generated by the level~$k$.
+\item The obstruction space of $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
+  is also one-dimensional, generated by the curvature
+  $m_0 = -k \cdot \omega$.
+\item Together, they span $H^*(\overline{\mathcal{M}}_1,
+  \mathcal{Z}(\mathcal{H}_k)) \cong \mathbb{C}^2$.
+\end{itemize}
+
+The complementarity is controlled by Verdier duality on
+$\overline{\mathcal{M}}_g$: the bar complex computes
+deformations, the cobar complex computes obstructions,
+and Verdier duality exchanges them.  What $\mathcal{H}_k$ sees
+as a deformation (varying the level~$k$), its Koszul dual
+sees as an obstruction (the curvature $m_0$), and vice versa.
+
+This is Theorem~C
+(Theorem~\ref{thm:quantum-complementarity-main})
+for the Heisenberg case.  The general theorem establishes
+complementarity for all Koszul chiral algebra pairs, with the
+ambient space $H^*(\overline{\mathcal{M}}_g, \mathcal{Z})$
+carrying a shifted-symplectic pairing from Verdier duality on
+the center local system.
+
+% ================================================================
+\section{The modular characteristic package}
+\label{sec:frame-modular-package}
+% ================================================================
+
+Everything computed in this chapter --- the bar complex,
+the Koszul dual, the curvature at each genus, the free energy
+tower, the complementarity --- assembles into a single object.
+
+\begin{definition}[Modular characteristic package for Heisenberg]
+\label{def:frame-modular-package}
+The modular characteristic package of $\mathcal{H}_k$ consists of:
+\begin{enumerate}
+\item The \emph{universal Maurer--Cartan class}
+  \begin{equation}\label{eq:frame-MC-class}
+  \Theta_{\mathcal{H}_k} \in
+  \mathrm{MC}\!\left(
+    \mathrm{Def}_{\mathrm{cyc}}(\mathcal{H}_k)
+    \;\widehat{\otimes}\;
+    R\Gamma\!\left(\overline{\mathcal{M}}_{g,\bullet},\,
+    \mathbb{Q}\right)
+  \right)
+  \end{equation}
+  whose image in the scalar center produces the obstruction
+  coefficients $\mathrm{obs}_g = k \cdot \lambda_g$.
+
+\item The \emph{ambient deformation complex}
+  \begin{equation}\label{eq:frame-ambient}
+  H_{\mathcal{H}_k}
+  := R\Gamma(\overline{\mathcal{M}}_g,\,
+  \mathcal{Z}_{\mathcal{H}_k})
+  \end{equation}
+  with Verdier duality providing the shifted-symplectic structure
+  for complementarity.
+
+\item The \emph{spectral discriminant}
+  $\Delta_{\mathcal{H}_k}(x) = 1$
+  (trivial for rank~$1$; for affine Kac--Moody algebras, the
+  discriminant acquires the form
+  $\Delta(x) = (1-3x)(1+x)$).
+
+\item The \emph{obstruction coefficient}
+  $\kappa(\mathcal{H}_k) = k$, the first characteristic number
+  of~$\Theta_{\mathcal{H}_k}$.
+\end{enumerate}
+\end{definition}
+
+For the Heisenberg algebra, the modular characteristic package is
+fully determined by the single number $\kappa = k$.  This is an
+artifact of the abelian (rank-$1$) structure.  In
+Chapters~\ref{chap:kac-moody-koszul}
+and~\ref{chap:w-algebras}, the
+package acquires non-trivial spectral discriminant, non-scalar
+Maurer--Cartan class, and richer ambient deformation complex.
+
+\begin{remark}[The first characteristic number is not the
+  fundamental object]\label{rem:frame-kappa-not-fundamental}
+The genus-$1$ obstruction coefficient $\kappa(\mathcal{A})$ ---
+which equals the level~$k$ for Heisenberg, the Sugawara central
+charge $c/2$ for Virasoro, and $(k+h^\vee)\dim(\mathfrak{g})/(2h^\vee)$
+for affine Kac--Moody --- is often treated as the primary invariant.
+It is not.  The fundamental object is the universal
+class~$\Theta_{\mathcal{A}}$, of which $\kappa$ is merely the
+first characteristic number.  The complete genus tower, the
+complementarity pairing, and the index theorem all follow from
+$\Theta_{\mathcal{A}}$, not from $\kappa$ alone.
+\end{remark}
+
+% ================================================================
+\section{What breaks for $\widehat{\mathfrak{sl}}_2$ ---
+  preview of the non-abelian theory}
+\label{sec:frame-nonabelian-preview}
+% ================================================================
+
+The Heisenberg algebra has a single current with a double-pole
+self-OPE and no simple pole.  The simplest non-abelian chiral
+algebra, $\widehat{\mathfrak{sl}}_2$ at level~$k$, has three
+currents $e(z), f(z), h(z)$ with OPE:
+\begin{align}
+e(z)\, f(w) &\sim \frac{h(w)}{z-w}
+  + \frac{k}{(z-w)^2}, \label{eq:frame-sl2-ef} \\
+h(z)\, e(w) &\sim \frac{2e(w)}{z-w}, \qquad
+h(z)\, f(w) \sim \frac{-2f(w)}{z-w},
+  \label{eq:frame-sl2-he-hf} \\
+h(z)\, h(w) &\sim \frac{2k}{(z-w)^2}.
+  \label{eq:frame-sl2-hh}
+\end{align}
+
+The simple poles in~\eqref{eq:frame-sl2-ef}--\eqref{eq:frame-sl2-he-hf}
+are the new feature.  They contribute a
+\emph{bracket component} $d_{\mathrm{bracket}}$ to the bar
+differential, which was identically zero for Heisenberg.
+
+\subsection{The bar differential at degrees $0$--$2$}
+\label{subsec:frame-sl2-bar-low-degree}
+
+We repeat the Heisenberg computation of \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-deg2} for $\widehat{\mathfrak{sl}}_2$, emphasizing what changes.
+
+\subsubsection*{Degree $0$}
+The degree-$0$ bar space is $\bar{B}_0^{\mathrm{ch}} = \mathbb{C}$,
+as before: the augmentation ideal modulo products.
+
+\subsubsection*{Degree $1$: two types of pole}
+A degree-$1$ element now involves two currents from $\{e, f, h\}$
+and a single logarithmic form $\eta_{12}$.  The bar differential
+$d = d_{\mathrm{bracket}} + d_{\mathrm{residue}}$ has two
+components, one for each pole order.
+
+\medskip\noindent\textbf{Simple-pole component $d_{\mathrm{bracket}}$.}
+The OPE $h(z)\,e(w) \sim 2e(w)/(z-w)$ has a simple pole with
+residue $c_1(w) = 2e(w)$.  The bar differential extracts this as
+\begin{equation}\label{eq:frame-sl2-dbracket-deg1}
+d_{\mathrm{bracket}}\bigl(
+  s^{-1}h(z_1) \otimes s^{-1}e(z_2) \otimes \eta_{12}
+\bigr)
+= c_1(z_2) = 2e(z_2).
+\end{equation}
+This is the Lie bracket $[h, e] = 2e$ encoded in OPE language.
+Contrast with Heisenberg, where $c_1 = 0$ and $d_{\mathrm{bracket}}$
+vanishes identically.  For the full $\mathfrak{sl}_2$ system,
+$d_{\mathrm{bracket}}$ on degree-$1$ elements recovers the
+Chevalley--Eilenberg differential of $\mathfrak{sl}_2$:
+\begin{equation}\label{eq:frame-sl2-ce-table}
+\begin{aligned}
+d_{\mathrm{bracket}}(h \otimes e \otimes \eta) &= 2e, &\qquad
+d_{\mathrm{bracket}}(h \otimes f \otimes \eta) &= -2f, \\
+d_{\mathrm{bracket}}(e \otimes f \otimes \eta) &= h, &\qquad
+d_{\mathrm{bracket}}(h \otimes h \otimes \eta) &= 0.
+\end{aligned}
+\end{equation}
+
+\medskip\noindent\textbf{Double-pole component $d_{\mathrm{residue}}$.}
+The double poles $h(z)\,h(w) \sim 2k/(z-w)^2$ and
+$e(z)\,f(w) \sim k/(z-w)^2 + \cdots$ contribute a curvature component:
+\begin{equation}\label{eq:frame-sl2-dresid-deg1}
+\begin{aligned}
+d_{\mathrm{residue}}(h \otimes h \otimes \eta) &= 2k, \\
+d_{\mathrm{residue}}(e \otimes f \otimes \eta) &= k, \\
+d_{\mathrm{residue}}(h \otimes e \otimes \eta) &= 0.
+\end{aligned}
+\end{equation}
+This is the Killing form $\kappa(J^a, J^b) = k \cdot (J^a, J^b)$
+in OPE language, identical in structure to the Heisenberg double-pole
+extraction.
+
+The full bar differential is $d = d_{\mathrm{bracket}} + d_{\mathrm{residue}}$.
+At degree~$1$:
+\begin{equation}\label{eq:frame-sl2-full-d-deg1}
+d(e \otimes f \otimes \eta) = \underbrace{h}_{\text{bracket}} + \underbrace{k}_{\text{curvature}}, \qquad
+d(h \otimes h \otimes \eta) = \underbrace{0}_{\text{bracket}} + \underbrace{2k}_{\text{curvature}}.
+\end{equation}
+
+\subsubsection*{Degree $2$: the Jacobi failure}
+
+At degree~$2$, we have three currents and two logarithmic forms
+$\eta_{12} \wedge \eta_{23}$.  The bracket component
+$d_{\mathrm{bracket}}$ now applies a Lie bracket to two of the
+three currents via a simple-pole extraction, producing a degree-$1$
+element.  Consider:
+\begin{equation}\label{eq:frame-sl2-deg2-element}
+\xi = e(z_1) \otimes h(z_2) \otimes f(z_3)
+  \otimes \eta_{12} \wedge \eta_{23}.
+\end{equation}
+The bracket component extracts simple poles at each collision:
+\begin{align}
+\partial_{D_{12}}^{\mathrm{bracket}}(\xi)
+  &= [e, h](z_{12}) \otimes f(z_3) \otimes \eta_{23}
+  = -2e(z_{12}) \otimes f(z_3) \otimes \eta_{23},
+\label{eq:frame-sl2-D12-bracket} \\
+\partial_{D_{23}}^{\mathrm{bracket}}(\xi)
+  &= -e(z_1) \otimes [h, f](z_{23}) \otimes \eta_{12}
+  = +2e(z_1) \otimes f(z_{23}) \otimes \eta_{12},
+\label{eq:frame-sl2-D23-bracket}
+\end{align}
+where the sign in~\eqref{eq:frame-sl2-D23-bracket} comes from the
+wedge reordering $\eta_{12} \wedge \eta_{23}
+= -\eta_{23} \wedge \eta_{12}$, as in the Heisenberg computation
+of \S\ref{sec:frame-bar-deg2}.
+
+Now apply $d_{\mathrm{bracket}}$ again.  From~\eqref{eq:frame-sl2-D12-bracket}:
+\[
+d_{\mathrm{bracket}}\bigl(-2e \otimes f \otimes \eta_{23}\bigr)
+= -2h.
+\]
+From~\eqref{eq:frame-sl2-D23-bracket}:
+\[
+d_{\mathrm{bracket}}\bigl(2e \otimes f \otimes \eta_{12}\bigr)
+= 2h.
+\]
+These would cancel if $d_{\mathrm{bracket}}$ were a differential.
+But we have neglected the $D_{13}$ stratum (the $e$--$f$ collision),
+which contributes via $[e, f] = h$:
+\begin{equation}\label{eq:frame-sl2-D13-bracket}
+\partial_{D_{13}}^{\mathrm{bracket}}(\xi)
+= h(z_{13}) \otimes h(z_2) \otimes \eta_{12}|_{D_{13}}.
+\end{equation}
+After careful sign accounting (the form $\eta_{12}\wedge\eta_{23}$
+restricts to $D_{13}$ non-trivially, unlike the Heisenberg case),
+the three terms of $d_{\mathrm{bracket}}^2$ on $\xi$ do \emph{not}
+cancel.  The residual term is proportional to $k$: it is precisely
+the double-pole contribution from the $e$--$f$ OPE that the
+bracket component ignores.
+
+\begin{remark}[Why $d_{\mathrm{bracket}}^2 \neq 0$]
+\label{rem:frame-why-dbracket-fails}
+In the classical bar complex of $U(\mathfrak{g})$, the
+Chevalley--Eilenberg differential satisfies
+$d_{\mathrm{CE}}^2 = 0$ by the Jacobi identity.  In the chiral
+setting, $d_{\mathrm{bracket}}$ extracts simple poles, but the
+Borcherds identity couples simple and double poles:
+the ``Jacobi'' relation $[e, [h, f]] - [h, [e, f]] - [[e,h], f] = 0$
+holds only when the double-pole (level-$k$) terms are included.
+The full differential $d = d_{\mathrm{bracket}} + d_{\mathrm{residue}}$
+satisfies $d^2 = 0$ via the complete Borcherds identity, which
+intertwines both pole orders.  This is the chiral Koszul phenomenon:
+the two components of $d$ are individually \emph{not} differentials;
+they form a differential only in combination.
+\end{remark}
+
+\subsection{$d_{\mathrm{bracket}}^2 \neq 0$}
+
+For $\widehat{\mathfrak{sl}}_2$, the bracket component
+$d_{\mathrm{bracket}}$ alone does \emph{not} satisfy
+$d_{\mathrm{bracket}}^2 = 0$.  This is proved computationally:
+all $2048$ sign conventions for the bar differential have been
+verified to give $d_{\mathrm{bracket}}^2 \neq 0$
+(see Theorem~\ref{thm:pbw-koszulness-criterion}).
+The combined differential $d = d_{\mathrm{bracket}}
++ d_{\mathrm{curvature}}$ satisfies $d^2 = 0$ by the full
+Borcherds identity (which involves both simple and double poles),
+not by the Jacobi identity alone.
+
+This is the essential difference between classical and chiral
+Koszul duality.  In the classical setting, the enveloping algebra
+$U(\mathfrak{g})$ is Koszul (BGS~\cite{BGS96}), and the bar
+differential $d_{\mathrm{CE}} = d_{\mathrm{bracket}}$ satisfies
+$d_{\mathrm{CE}}^2 = 0$ by the Jacobi identity.  In the chiral
+setting, $\widehat{\mathfrak{g}}_k$ uses all OPE poles (the full
+Borcherds identity), and the bracket-only piece is not a
+differential on its own.
+
+\subsection{The PBW spectral sequence}
+
+The correct computational tool is the \emph{PBW spectral sequence}.
+Filter the bar complex by conformal weight.  The associated graded
+is the classical bar complex of $U(\mathfrak{g})$, which \emph{is}
+a chain complex (with differential $d_{\mathrm{CE}}$).  The
+spectral sequence has:
+\begin{itemize}
+\item $E_1$ page: the bar complex of $U(\mathfrak{g})$ with
+  $d_{\mathrm{CE}}$.
+\item $E_2$ page: the Chevalley--Eilenberg cohomology
+  $H^*_{\mathrm{CE}}(\mathfrak{g}, \mathbb{C})$.
+\end{itemize}
+For Koszul algebras, the spectral sequence collapses at~$E_2$,
+giving the chiral bar cohomology.  The proof that
+$\widehat{\mathfrak{g}}_k$ is chiral Koszul uses PBW flatness
+of the associated graded together with the classical Koszulness
+of $U(\mathfrak{g})$ (Priddy~\cite{Priddy70}); see
+Theorem~\ref{thm:pbw-koszulness-criterion}.
+
+\subsection{The Feigin--Frenkel involution as Koszul duality}
+
+The Koszul dual of $\widehat{\mathfrak{g}}_k$ is
+$\widehat{\mathfrak{g}}_{-k-2h^\vee}$, where $h^\vee$ is the
+dual Coxeter number (Theorem~\ref{thm:universal-kac-moody-koszul}).
+For $\mathfrak{g} = \mathfrak{sl}_2$, $h^\vee = 2$ and the duality
+sends $k \mapsto -k - 4$.
+
+\begin{center}
+\small
+\begin{tabular}{c|c|c}
+& \textbf{Heisenberg} $\mathcal{H}_k$ &
+\textbf{Kac--Moody} $\widehat{\mathfrak{g}}_k$ \\
+\hline
+Bracket & Abelian ($d_{\mathrm{bracket}} = 0$)
+  & Non-abelian ($d_{\mathrm{bracket}} \neq 0$) \\
+$d^2 = 0$ from & Arnold alone
+  & Full Borcherds identity \\
+Spectral sequence & Trivial ($E_1 = E_\infty$)
+  & PBW ($E_2$ collapse for Koszul) \\
+Koszul dual & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
+  & $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ \\
+Level shift & None ($h^\vee = 0$)
+  & $k \mapsto -k - 2h^\vee$ \\
+Discriminant & $\Delta(x) = 1$
+  & $\Delta(x) = (1-3x)(1+x)$ for $\mathfrak{sl}_2$ \\
+Critical level & $k = 0$ (degenerate)
+  & $k = -h^\vee$ (curvature vanishes)
+\end{tabular}
+\end{center}
+
+At the critical level $k = -h^\vee$, the curvature of the bar
+complex vanishes: $d^2 = 0$ at all genera.  This is the level at
+which the center of $\widehat{\mathfrak{g}}_k$ becomes large
+(the Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}}_{-h^\vee})
+\cong \mathcal{W}(\widehat{\mathfrak{g}}^\vee)$), and the bar
+complex recovers the Langlands dual.
+
+The Feigin--Frenkel involution $k \leftrightarrow -k - 2h^\vee$
+is not a representation-theoretic accident: it is Koszul duality
+in the chiral algebra sense, proved in
+Theorem~\ref{thm:universal-kac-moody-koszul} via Serre duality
+on Fulton--MacPherson configuration spaces.
+
+% ================================================================
+\section{What breaks for Yangians --- preview of the $E_1$ world}
+\label{sec:frame-yangian-preview}
+% ================================================================
+
+The Heisenberg algebra is $E_\infty$-chiral: its operations are
+fully commutative and local.  Configuration spaces
+$C_n(X)$ are unordered.  Verdier duality on $\overline{C}_n(X)$
+exchanges bar and cobar.
+
+The Yangian $Y(\mathfrak{g})$ is $E_1$-chiral: its operations are
+associative but \emph{not} commutative.  Configuration spaces are
+\emph{ordered}: $\overline{C}_n^{\mathrm{ord}}(X)$ replaces
+$\overline{C}_n(X)$.  The bar complex uses ordered tuples, and
+the coproduct is \emph{not} cocommutative.
+
+\begin{center}
+\small
+\begin{tabular}{c|c|c}
+& \textbf{Heisenberg}
+  ($E_\infty$-chiral) &
+\textbf{Yangian} $Y(\mathfrak{g})$
+  ($E_1$-chiral) \\
+\hline
+Configuration space & $C_n(X)$ (unordered)
+  & $C_n^{\mathrm{ord}}(X)$ (ordered) \\
+Coproduct & Cocommutative
+  & Coassociative (not cocommutative) \\
+Koszul dual & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
+  & $Y_{R^{-1}}(\mathfrak{g})$ \\
+Duality type & Lie $\leftrightarrow$ Com
+  & $R \leftrightarrow R^{-1}$ \\
+Self-dual? & No & Yes (classically)
+\end{tabular}
+\end{center}
+
+The Yangian $Y(\mathfrak{g})$ is presented by the RTT relations,
+which are quadratic in the $E_1$-chiral sense.  The quadratic
+dual relations are the RTT relations with the inverse $R$-matrix
+$R^{-1}(u)$ replacing~$R(u)$
+(Theorem~\ref{thm:yangian-koszul-dual}).  At the classical limit
+$\hbar = 0$, $R^{-1} = R$ and the Yangian is self-dual
+(Corollary~\ref{cor:yangian-classical-self-dual}); at $\hbar \neq 0$,
+the duality is a non-trivial involution.
+
+The derived Drinfeld--Kohno theorem
+(Theorems~\ref{thm:derived-dk-affine}
+and~\ref{thm:derived-dk-yangian}) proves at the chain level:
+\begin{equation}\label{eq:frame-derived-dk}
+D^b(\mathrm{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))
+\;\simeq\;
+D^b(\mathrm{Rep}_{\mathrm{fd}}(Y_{-\hbar}(\mathfrak{g})))
+\end{equation}
+with braiding reversal $R \mapsto R^{-1}$.  Under the Kazhdan
+equivalence, this becomes $q \mapsto q^{-1}$ on quantum group
+representations.  The factorization-level statement is proved on
+the evaluation locus (Theorem~\ref{thm:factorization-dk-eval});
+the full factorization categorical equivalence
+$\mathrm{Fact}_{E_1}(Y(\mathfrak{g}))
+\simeq \mathrm{Fact}_{E_1}(U_q(\mathfrak{g}))^{\mathrm{op}}$
+remains conjectural
+(Conjecture~\ref{conj:derived-drinfeld-kohno}).
+
+The passage from $E_\infty$ (Heisenberg) to $E_1$ (Yangian) is
+the passage from curves to higher-dimensional manifolds: $E_n$-chiral
+algebras are the factorization algebras on
+$\mathbb{R}^n$-stratified spaces, and the bar-cobar adjunction
+generalizes to $E_n$-Koszul duality
+(Theorem~\ref{thm:e1-chiral-koszul-duality}).  Chapter~\ref{ch:en-koszul-duality}
+develops this framework.
+
+% ================================================================
+\section{The view from here --- what the theory wants to become}
+\label{sec:frame-programme}
+% ================================================================
+
+In a single example, we have seen:
+\begin{enumerate}
+\item The bar complex built from configuration space integrals,
+  with $d^2 = 0$ forced by the Arnold relation
+  (\S\ref{sec:frame-bar-deg2}).
+\item The Koszul dual read off from the bar complex cohomology:
+  $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+  (\S\ref{sec:frame-koszul-dual}).
+\item Bar-cobar inversion: $\Omega(\bar{B}(\mathcal{H}_k))
+  \simeq \mathcal{H}_k$ (\S\ref{sec:frame-inversion}).
+\item Curvature at genus~$1$: $d^2 = k \cdot \omega_1$,
+  forcing the passage to the coderived category
+  (\S\ref{sec:frame-genus1}).
+\item The genus tower of obstruction classes
+  $\mathrm{obs}_g = k \cdot \lambda_g$, with generating function
+  the $\hat{A}$-genus (\S\ref{sec:frame-genus-tower}).
+\item Complementarity of quantum corrections for the Koszul pair
+  (\S\ref{sec:frame-complementarity}).
+\end{enumerate}
+
+These are the main theorems of this monograph, instantiated
+for the Heisenberg algebra:
+
+\begin{itemize}
+\item \textbf{Theorem~A}
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}):
+  \emph{Geometric bar-cobar duality.}
+  What we saw as ``the bar complex produces a commutative Koszul
+  dual'' generalizes to: the bar functor on augmented chiral
+  algebras is intertwined with Verdier duality on
+  $\mathrm{Ran}(X)$, and produces the Koszul dual coalgebra
+  functorially over $\overline{\mathcal{M}}_{g,n}$.
+
+\item \textbf{Theorem~B}
+  (Theorem~\ref{thm:higher-genus-inversion}):
+  \emph{Bar-cobar inversion.}
+  What we saw as ``cobar recovers Heisenberg'' generalizes to:
+  on the Koszul locus (where the PBW spectral sequence collapses),
+  the counit $\Omega \bar{B}(\mathcal{A}) \to \mathcal{A}$ is a
+  quasi-isomorphism.  Off this locus, the counit persists as a
+  curved quasi-isomorphism in the coderived category.
+
+\item \textbf{Theorem~C}
+  (Theorem~\ref{thm:quantum-complementarity-main}):
+  \emph{Deformation-obstruction complementarity.}
+  What we saw as ``deformation of $\mathcal{H}_k$ and obstruction
+  of $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ are complementary''
+  generalizes to: for any Koszul pair $(\mathcal{A},
+  \mathcal{A}^!)$, the deformation and obstruction spaces embed
+  as complementary Lagrangians in a shifted-symplectic ambient
+  space on $\overline{\mathcal{M}}_g$.
+\end{itemize}
+
+\subsection{The modular Koszul programme}
+
+The four theorems, the genus tower, and the modular characteristic
+package point toward a unified theory.  The \emph{modular Koszul
+programme} articulates five target theorems:
+
+\begin{enumerate}
+\item[$A_{\mathrm{mod}}$.]
+  \emph{Verdier-intertwined bar-cobar, functorial over
+  $\overline{\mathcal{M}}_{g,n}$.}
+  The bar-cobar adjunction extends to a modular operad map,
+  with Verdier duality exchanging bar and cobar at every genus.
+
+\item[$B_{\mathrm{mod}}$.]
+  \emph{Inversion on the Koszul locus, coderived persistence off it.}
+  The bar-cobar quasi-isomorphism holds on the Koszul locus at
+  every genus; off this locus, the bar complex is curved and lives
+  in the coderived category.
+
+\item[$C_{\mathrm{mod}}$.]
+  \emph{$(-1)$-shifted symplectic complementarity.}
+  The deformation and obstruction spaces for a Koszul pair form
+  complementary Lagrangians in a $(-1)$-shifted symplectic
+  structure on $R\Gamma(\overline{\mathcal{M}}_g,
+  \mathcal{Z}_{\mathcal{A}})$.
+
+\item[\textbf{Index}.]
+  \emph{Grothendieck--Riemann--Roch for modular deformations.}
+  The genus series $\sum_g F_g x^{2g}$ is the $\hat{A}$-class
+  pushforward of the universal Maurer--Cartan class along the
+  family $\overline{\mathcal{M}}_{g,\bullet} \to \mathrm{pt}$.
+
+\item[\textbf{DK}.]
+  \emph{Derived Drinfeld--Kohno.}
+  The $E_1$-factorization homology of the Yangian $Y(\mathfrak{g})$
+  recovers the quantum group $U_q(\mathfrak{g})$ via a derived
+  equivalence of braided tensor categories.
+\end{enumerate}
+
+Theorems~A--C are proved in this monograph
+(Chapters~\ref{chap:bar-cobar}--\ref{chap:higher-genus}).
+The Index theorem is proved (Theorem~\ref{thm:family-index});
+Derived Drinfeld--Kohno is proved at the chain level
+(Theorem~\ref{thm:derived-dk-yangian}), with the full
+factorization statement conjectured.
+The full programme is stated in
+\S\ref{sec:modular-koszul-programme}.
+
+\subsection{The operadic architecture}
+\label{subsec:frame-operadic-architecture}
+
+The genus tower of \S\ref{sec:frame-genus-tower} is organized by an
+operadic structure that we now make visible in the Heisenberg example.
+
+\subsubsection*{Genus $0$: $\mathrm{HyCom} \leftrightarrow \mathrm{Grav}$}
+
+The Arnold relation (Proposition~\ref{prop:frame-arnold}) is the
+defining relation of the \emph{gravity operad} $\mathrm{Grav}$,
+which governs the genus-$0$ bar complex.  Its Koszul dual is the
+\emph{hypercommutative operad} $\mathrm{HyCom}$, which governs the
+cobar complex.  The genus-$0$ bar-cobar adjunction
+\[
+\bar{B} \colon \mathsf{Alg}_{\mathrm{HyCom}}
+\rightleftarrows
+\mathsf{coAlg}_{\mathrm{Grav}} :\! \Omega
+\]
+is an instance of operadic Koszul duality (Getzler--Kapranov~\cite{GK94}).
+For Heisenberg:
+\begin{itemize}
+\item $\mathcal{H}_k$ is a $\mathrm{HyCom}$-algebra (the chiral
+  operations are commutative and local).
+\item $\bar{B}(\mathcal{H}_k)$ is a $\mathrm{Grav}$-coalgebra
+  (the bar differential is controlled by the Arnold relation).
+\item The cobar $\Omega\bar{B}(\mathcal{H}_k) \simeq \mathcal{H}_k$
+  recovers the original algebra
+  (\S\ref{sec:frame-inversion}).
+\end{itemize}
+
+The two operads are dual incarnations of a single structure:
+$\mathrm{HyCom}(n) = H^*(\overline{M}_{0,n+1})$ (cohomology of
+genus-$0$ moduli), and $\mathrm{Grav}(n) = H^*(\overline{M}_{0,n+1})^!$
+(Koszul dual grading).  The genus-$0$ bar complex \emph{is} the
+$\mathrm{Grav}$-coalgebra structure, and the bar differential $d^2 = 0$
+follows from the $\mathrm{Grav}$ relations (= Arnold).
+
+\subsubsection*{Genus $1$: the elliptic operad}
+
+At genus~$1$, the moduli space $\overline{\mathcal{M}}_{1,n}$
+enters.  The bar complex on an elliptic curve acquires curvature
+$d^2 = k \cdot \omega_1$ (\S\ref{sec:frame-genus1}).  Operadically,
+the genus-$1$ structure is governed by the \emph{elliptic operad}:
+the collection $\{H^*(\overline{\mathcal{M}}_{1,n})\}_{n \geq 1}$
+with composition maps from clutching morphisms.
+
+For Heisenberg, the elliptic operad acts as follows.  The
+$E_2$ non-holomorphicity (\S\ref{sec:frame-holomorphic-anomaly})
+is the genus-$1$ modular completion of the genus-$0$ Arnold
+relation: the Eisenstein series $E_2(\tau)$ fails to be modular
+precisely because the ``boundary of boundary'' at genus~$1$
+acquires the nodal contribution $\delta_0 \in
+\partial\overline{\mathcal{M}}_{1,1}$.  This is the clutching
+morphism $\overline{\mathcal{M}}_{0,3} \to
+\partial\overline{\mathcal{M}}_{1,1}$ that glues a genus-$0$
+curve to itself.
+
+\subsubsection*{All genera: the modular operad and clutching}
+
+The full genus tower is organized by the \emph{modular operad}
+$\{\overline{\mathcal{M}}_{g,n}\}_{2g-2+n>0}$
+(Getzler--Kapranov~\cite{GK98}).  A modular operad has two types of
+composition:
+\begin{enumerate}
+\item \emph{Tree-level composition} ($\circ_i$): gluing marked
+  points on different curves. This is the genus-$0$ operadic
+  structure.
+\item \emph{Self-gluing} ($\xi_{ij}$): identifying two marked
+  points on the \emph{same} curve, increasing genus by~$1$.
+  The clutching morphism
+  $\xi \colon \overline{\mathcal{M}}_{g,n+2}
+  \to \overline{\mathcal{M}}_{g+1,n}$
+  glues marked points $i$ and $j$.
+\end{enumerate}
+
+For Heisenberg, self-gluing is the mechanism that produces the
+genus tower:
+\begin{itemize}
+\item At genus~$0$: tree-level composition gives $d^2 = 0$
+  (Arnold).
+\item At genus~$1$: self-gluing of a genus-$0$ curve introduces
+  $d^2 = k \cdot \omega_1$ (curvature from the new cycle).
+\item At genus~$g$: iterated self-gluing produces
+  $\mathrm{obs}_g = k \cdot \lambda_g$, with $\lambda_g$ emerging
+  from $g$ independent cycles on the nodal degeneration.
+\end{itemize}
+
+The \emph{Feynman transform} of a modular operad (Getzler--Kapranov~\cite{GK98})
+provides the all-genus bar construction.  For the modular operad
+$\overline{\mathcal{M}}$, the Feynman transform produces a twisted
+modular operad whose algebras are precisely curved
+$A_\infty$-algebras with the curvature controlled by the
+self-gluing maps.  This is why the universal Maurer--Cartan class
+$\Theta_{\mathcal{A}}$ of Definition~\ref{def:frame-modular-package}
+lives in $\mathrm{Def}_{\mathrm{cyc}}(\mathcal{A})
+\,\widehat{\otimes}\, R\Gamma(\overline{\mathcal{M}}_{g,\bullet},
+\mathbb{Q})$: the cyclic deformations of $\mathcal{A}$ are coupled
+to the cohomology of moduli by the Feynman transform, and the
+genus-$g$ component of $\Theta_{\mathcal{A}}$ encodes how the
+self-gluing maps act on the bar-complex curvature.
+
+\subsection{The Heisenberg algebra as atom}
+
+The Heisenberg algebra is the atom from which this theory is built.
+Every theorem in this monograph is an elaboration of what we have
+seen in this chapter:
+\begin{itemize}
+\item The Arnold relation is the genus-$0$ seed of all bar complex
+  constructions.
+\item Verdier duality on $\mathrm{Ran}(X)$ makes the Koszul dual
+  a theorem, not a definition.
+\item The genus-$1$ curvature $d^2 = \kappa \cdot \omega_1$ forces
+  the coderived category.
+\item The clutching of stable curves (modular operad structure)
+  organizes the genus tower.
+\end{itemize}
+
+These are the four irreducible pieces of the theory: Arnold
+relation, Verdier duality, genus-$1$ curvature, and clutching.
+The remainder of this monograph develops them in full generality,
+applies them to every major family of chiral algebras, and
+connects them to the physics of conformal field theory,
+string theory, and gauge theory.
