@@ -84,7 +84,13 @@ def os_dim(n: int, degree: int) -> int:
 
 
 def os_total_dim(n: int) -> int:
-    """Total dimension of OS*(C_n(C)) = n!."""
+    """Total dimension of OS*(C_n(C)) = n!.
+
+    Proof: the Poincare polynomial is prod_{j=1}^{n-1}(1+jt), so
+    total dim = P_1 = prod_{j=1}^{n-1}(1+j) = n!.
+    Equivalently, OS*(C_n(C)) is the cohomology ring of Conf_n(C)
+    and its Euler characteristic (with all signs positive) equals n!.
+    """
     if n < 1:
         return 0
     return factorial(n)
@@ -157,18 +163,11 @@ COMPLEMENTARITY = {
 
 
 def km_complementarity_sum(dim_g: int, h_dual: int) -> int:
-    """KM complementarity: c(k) + c(-k-2h^vee) = 2 * dim(g) * h^vee / (? + h^vee).
+    """KM complementarity sum c(k) + c(-k-2h^vee) for the W-algebra from DS of sl_n.
 
-    Actually for sl_n: complementarity sum = dim(g) = n^2 - 1 ... no.
-    The Feigin-Frenkel duality c(k) + c(-k-2h^vee) = 2*rank*h^vee + dim(g)... not standard.
-
-    For DS from sl_n -> W_n:
-    sl_2 -> Virasoro: c + c' = 26 = 2*1 + 4*1*6 = ... actually 26 = 2r + 4*h^vee*d
-    where r = rank = 1, d = dim(nilpotent part)/2 = 1, h^vee = 2.
-    General: 2r + 4h^vee * (dim(n+)/2) ... 
-
-    For Virasoro: 26
-    For W_3: 100 = 2(2) + 4(3)(8) = 4 + 96 = 100
+    Looks up from the COMPLEMENTARITY table.  The arguments dim_g and h_dual
+    are accepted for interface compatibility but the lookup uses h_dual only
+    (matching sl_{h_dual} in the table).
     """
     return COMPLEMENTARITY.get(f"sl{h_dual}", {}).get("sum", 0)
 

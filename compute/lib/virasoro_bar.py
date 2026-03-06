@@ -59,7 +59,8 @@ def virasoro_nth_products() -> Dict[int, Dict[str, object]]:
     c = Symbol('c')
     return {
         3: {"vac": c / 2},      # quartic pole: curvature
-        # 2: {}                  # cubic pole: absent
+        # n=2 (cubic pole) intentionally omitted: T_{(2)}T = 0 for Virasoro.
+        # No weight-1 state exists in the vacuum module, so the cubic pole vanishes.
         1: {"T": Rational(2)},   # double pole: conformal weight
         0: {"dT": Rational(1)},  # simple pole: translation
     }

@@ -11,6 +11,7 @@ import json
 import sys
 from pathlib import Path
 
+# Scripts are run standalone (not via pytest); add compute/ root for lib.* imports.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sympy import Rational, Symbol, simplify

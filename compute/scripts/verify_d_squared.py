@@ -8,6 +8,7 @@ This script computes everything manually to find the correct signs.
 """
 
 import sys, os
+# Scripts are run standalone (not via pytest); add compute/ root for lib.* imports.
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 import numpy as np

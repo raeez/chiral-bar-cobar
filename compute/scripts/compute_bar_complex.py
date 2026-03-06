@@ -23,6 +23,7 @@ import sys
 from math import factorial
 from pathlib import Path
 
+# Scripts are run standalone (not via pytest); add compute/ root for lib.* imports.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sympy import Matrix, Rational, Symbol, zeros, binomial

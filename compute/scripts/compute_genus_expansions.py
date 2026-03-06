@@ -14,6 +14,7 @@ Usage:
 
 import sys
 import os
+# Scripts are run standalone (not via pytest); add compute/ root for lib.* imports.
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from sympy import Rational, Symbol, simplify

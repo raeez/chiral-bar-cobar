@@ -570,12 +570,14 @@ class W3VacuumModule:
                 sign = (-1) ** j
                 coeff_j = binom * sign
 
-                # Term 1: L_{k-j-1} (a'_{(pp-j)} b)
+                # Term 1: L_{k-j-(h_T-1)} (a'_{(pp-j)} b)
+                # Offset -1 = -(h_T - 1) where h_T = 2 is the conformal weight of T
                 inner1 = self._nth_product_vec(a_prime, b, pp - j)
                 if np.any(np.abs(inner1) > 1e-15):
                     result += coeff_j * (self._get_L_matrix(k - j - 1) @ inner1)
 
-                # Term 2: (-1)^{p-1} a'_{(k+pp-j)} (L_{j-1} b)
+                # Term 2: (-1)^{p-1} a'_{(k+pp-j)} (L_{j-(h_T-1)} b)
+                # Offset -1 = -(h_T - 1) where h_T = 2
                 sign2 = (-1) ** (p - 1)
                 b_vec = self.state_vec(b)
                 Lb = self._get_L_matrix(j - 1) @ b_vec
@@ -596,12 +598,14 @@ class W3VacuumModule:
                 sign = (-1) ** j
                 coeff_j = binom * sign
 
-                # Term 1: W_{k-j-2} (a'_{(pp-j)} b)
+                # Term 1: W_{k-j-(h_W-1)} (a'_{(pp-j)} b)
+                # Offset -2 = -(h_W - 1) where h_W = 3 is the conformal weight of W
                 inner1 = self._nth_product_vec(a_prime, b, pp - j)
                 if np.any(np.abs(inner1) > 1e-15):
                     result += coeff_j * (self._get_W_matrix(k - j - 2) @ inner1)
 
-                # Term 2: (-1)^{q-2} a'_{(k+pp-j)} (W_{j-2} b)
+                # Term 2: (-1)^{q-2} a'_{(k+pp-j)} (W_{j-(h_W-1)} b)
+                # Offset -2 = -(h_W - 1) where h_W = 3
                 sign2 = (-1) ** (q - 2)
                 b_vec = self.state_vec(b)
                 Wb = self._get_W_matrix(j - 2) @ b_vec
