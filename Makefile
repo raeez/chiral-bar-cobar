@@ -36,6 +36,15 @@ SOURCES   := $(wildcard *.tex) \
 # Output
 PDF       := $(MAIN).pdf
 
+# Stamp file: tracks last successful build. Survives `make clean` so that
+# make can skip recompilation when no .tex files have changed.
+STAMP     := .build_stamp
+
+# If PDF was externally deleted but stamp remains, force a rebuild.
+ifeq (,$(wildcard $(PDF)))
+  $(shell rm -f $(STAMP))
+endif
+
 # LaTeX intermediate extensions
 AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
              nav snm vrb idx ilg ind lof lot
@@ -47,9 +56,12 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 .PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test help
 
 ## all: Full build — up to PASSES pdflatex passes, stopping when converged.
-all: $(PDF)
+##   Idempotent: no-op if no .tex files changed since last successful build.
+##   `make clean` removes debris but preserves the stamp, so `make` after
+##   `make clean` is still a no-op when sources are unchanged.
+all: $(STAMP)
 
-$(PDF): $(SOURCES)
+$(STAMP): $(SOURCES)
 	@echo "══════════════════════════════════════════════════════════"
 	@echo "  Building: $(MAIN).tex  →  $(PDF)"
 	@echo "  Engine:   $(TEX) (up to $(PASSES) passes)"
@@ -71,6 +83,7 @@ $(PDF): $(SOURCES)
 	@if [ ! -f $(MAIN).pdf ]; then \
 		echo "  ✗  Build failed — no PDF produced."; exit 1; \
 	fi
+	@touch $(STAMP)
 	@echo ""
 	@echo "  ✓  $(PDF) built successfully."
 	@echo ""
@@ -113,7 +126,9 @@ draft:
 	@echo "  ── Draft build ──"
 	$(TEX) $(TEXFLAGS) "\PassOptionsToClass{draft}{memoir}\input{$(MAIN)}"
 
-## clean: Remove all build artifacts and compiled PDF.
+## clean: Remove build debris (aux, log, etc.) but preserve the build stamp.
+##   Idempotent — safe to spam. After `make clean`, `make` is a no-op if
+##   no .tex files changed since the last successful build.
 clean:
 	@echo "  Cleaning build artifacts..."
 	@for ext in $(AUX_EXTS); do \
@@ -121,11 +136,12 @@ clean:
 	done
 	@find chapters appendices bibliography -name '*.aux' -delete 2>/dev/null || true
 	@rm -f texput.log
-	@rm -f $(MAIN).pdf
-	@echo "  ✓  Clean."
+	@echo "  ✓  Clean (stamp preserved — make will skip rebuild if sources unchanged)."
 
-## veryclean: Alias for clean (kept for backward compatibility).
+## veryclean: Remove EVERYTHING including PDF and build stamp (forces full rebuild).
 veryclean: clean
+	@rm -f $(MAIN).pdf $(STAMP)
+	@echo "  ✓  Stamp and PDF removed — next make will rebuild."
 
 ## count: Manuscript statistics.
 count:
@@ -184,8 +200,8 @@ help:
 	@echo "  make integrity  Strict CI-style integrity gate"
 	@echo "  make phase0-index  Regenerate theorem dependency index"
 	@echo "  make draft      Draft mode (faster, no images)"
-	@echo "  make clean      Remove build artifacts and compiled PDF"
-	@echo "  make veryclean  Alias for clean"
+	@echo "  make clean      Remove build debris (idempotent, preserves stamp)"
+	@echo "  make veryclean  Remove everything including PDF (forces rebuild)"
 	@echo "  make count      Manuscript statistics"
 	@echo "  make metadata   Regenerate machine-readable metadata"
 	@echo "  make census     Print claim census"
