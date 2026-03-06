@@ -1,6 +1,10 @@
 \chapter{Bar and cobar constructions}
 \label{chap:bar-cobar}
 
+The three-step bar differential $d = d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{de\,Rham}}$ that we built by hand for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} now receives its general formulation. For an arbitrary chiral algebra $\cA$ on a smooth curve $X$, the bar complex $\barB(\cA)$ is a cosheaf on the Ran space of $X$ whose sections on $\overline{C}_n(X)$ are computed by the same residue-extraction procedure, applied to the full OPE data of $\cA$.
+
+\medskip
+
 The bar construction is the point where three mathematical
 traditions converge.  In algebra, bar-cobar is an adjunction on
 dg-categories whose unit and counit measure Koszulity.  In geometry,
@@ -46,6 +50,38 @@ In 2D conformal field theory, the operator product expansion (OPE)
 $$\phi_i(z)\phi_j(w) = \sum_{k} \frac{C_{ij}^k}{(z-w)^{h_i+h_j-h_k}} \phi_k(w) + \text{(less singular)}$$
 encodes the structure constants $C_{ij}^k$ (fusion rules) and conformal weights $h_i$ of the theory; associativity of multiple OPEs constrains the $C_{ij}^k$.
 The bar construction geometrizes this data: configuration spaces $\overline{C}_n(X)$ parametrize insertion points, collision divisors $D_{ij}$ encode the limit $z_i \to z_j$, logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ carry the correct singularities, and residues $\operatorname{Res}_{D_{ij}}$ extract the OPE coefficients.
+\end{remark}
+
+\begin{remark}[Parallel track: the BV complex]\label{rem:bv-parallel-track}
+\index{BV complex!parallel track}
+The bar complex developed in this chapter has a second life as the
+BV complex of a chiral field theory.  In the BV formalism
+(Costello--Gwilliam~\cite{CG17}), a chiral algebra~$\cA$ determines a
+classical field theory whose fields are generators of~$\cA$ and whose
+\emph{antifields} are cogenerators of~$\cA^!$; the BV bracket arises from
+the residue pairing on configuration spaces.  The identification
+\[
+\text{bar complex of } \cA
+\;=\; \text{BV complex of the chiral field theory of } \cA
+\]
+is made precise in Theorem~\ref{thm:brst-bar-genus0}.  The reader
+may therefore read each construction in this chapter with dual vision:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\textbf{This chapter} & \textbf{BV reading} \\ \hline
+Bar differential $d_{\mathrm{res}}$ & BRST operator \\
+Logarithmic form $\eta_{ij}$ & Propagator \\
+Arnold relation $\Rightarrow d^2 = 0$ & Quantum master equation \\
+Bar cohomology $H^*(\bar{B}(\cA))$ & Physical observables \\
+Curvature $m_0$ (Chapter~\ref{chap:higher-genus}) & Conformal anomaly
+\end{tabular}
+\end{center}
+\noindent
+This parallel track is not an analogy; it is a theorem
+(Chapter~\ref{ch:bv-brst}).  We develop the algebraic-geometric
+side first because it is the side that admits complete proofs.
 \end{remark}
 
 \begin{example}[OPE as residue: the Heisenberg current]\label{ex:ope-to-residue}
@@ -183,7 +219,7 @@ $\overline{C}_{n+1}^{(g)}(\Sigma_g)$.
 We explain each component of this definition:
 
 \emph{Configuration space $\overline{C}_{n+1}^{(g)}(\Sigma_g)$.}
-This is the Fulton--MacPherson compactification (see Chapter 2). It parametrizes $(n+1)$ points on $\Sigma_g$, with smooth compactification encoding collision patterns.
+This is the Fulton--MacPherson compactification (see Chapter~\ref{chap:config-spaces}). It parametrizes $(n+1)$ points on $\Sigma_g$, with smooth compactification encoding collision patterns.
 
 \emph{The $n+1$ points.} The bar complex in degree $n$ has $(n+1)$ insertions:
 $$\phi_0(z_0) \otimes \phi_1(z_1) \otimes \cdots \otimes \phi_n(z_n)$$
@@ -609,7 +645,7 @@ three cases arise according to how the index sets $\{i,j\}$ and $\{k,\ell\}$ ove
 $$\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = \text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}.$$
 The cancellation comes from the signed sum in $d_2$: the ordered pairs $(i,j),(k,\ell)$ and $(k,\ell),(i,j)$ contribute with opposite signs $(-1)^{\sigma_{ij}+\sigma_{k\ell}'}$ and $(-1)^{\sigma_{k\ell}+\sigma_{ij}'}$ (Lemma~\ref{lem:sign-compatibility}), and these signs differ by $(-1)$, so the two terms cancel.
 
-\emph{Case (ii): One overlap} (say $j = k$). The composition approaches the codimension-2 stratum $D_{ij\ell}$ (triple collision). Three terms contribute, corresponding to the three codimension-1 strata meeting $D_{ij\ell}$:
+\emph{Case (ii): One overlap} (say $j = k$).  This is the case that produced the Arnold relation in the Heisenberg degree-$2$ computation (\S\ref{sec:frame-bar-deg2}): three boundary strata meet at a triple collision, and their contributions cancel cyclically.  In general: the composition approaches the codimension-2 stratum $D_{ij\ell}$ (triple collision). Three terms contribute, corresponding to the three codimension-1 strata meeting $D_{ij\ell}$:
 \begin{align*}
 &\text{Res}_{D_{j\ell}} \circ \text{Res}_{D_{ij}}\bigl[\mu(\mu(\phi_i, \phi_j), \phi_\ell)\bigr] + \text{Res}_{D_{ij}} \circ \text{Res}_{D_{j\ell}}\bigl[\mu(\phi_i, \mu(\phi_j, \phi_\ell))\bigr] \\
 &\qquad + \text{Res}_{D_{i\ell}} \circ \text{Res}_{D_{ij}}\bigl[\mu(\mu(\phi_i, \phi_\ell), \phi_j)\bigr].
@@ -633,7 +669,7 @@ Proposition~\ref{prop:master-sign} in Appendix~\ref{app:signs}.
 \end{remark}
 
 \begin{remark}[What we have proved]\label{rem:d-squared-synthesis}
-The identity $d^2 = 0$ is the engine driving every subsequent construction in this monograph.  It ensures that the bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a genuine cochain complex, and hence that bar cohomology, the bar-cobar adjunction, and the spectral sequences that follow are all well-defined.  The proof required verifying the vanishing of six cross-terms, each drawing on a different mathematical mechanism---the Borcherds identity (algebra), Stokes' theorem (topology), and the residue exact sequence (analysis).  That these mechanisms conspire to produce $d^2 = 0$ is not coincidental; it reflects the factorization structure of the compactification $\overline{C}_n(X)$, as we now explain.
+The identity $d^2 = 0$ is the engine driving every subsequent construction in this monograph.  It ensures that the bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a genuine cochain complex, and hence that bar cohomology, the bar-cobar adjunction, and the spectral sequences that follow are all well-defined.  The reader will recall that for the Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg2}), the identity $d^2 = 0$ reduced to the Arnold relation $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$, which we verified by direct computation.  The general proof required verifying the vanishing of six cross-terms, each drawing on a different mathematical mechanism---the Borcherds identity (algebra), Stokes' theorem (topology), and the residue exact sequence (analysis).  That these mechanisms conspire to produce $d^2 = 0$ is not coincidental; it reflects the factorization structure of the compactification $\overline{C}_n(X)$, as we now explain.
 \end{remark}
 
 \begin{remark}[Compatibility of the three structures]\label{rem:geometric-miracle}
@@ -878,6 +914,9 @@ index set of the collision divisor under consideration.
 \end{convention}
 
 \begin{theorem}[Arnold relations; \ClaimStatusProvedHere]\label{thm:arnold-three}
+\index{Arnold relations|textbf}
+We encountered these relations concretely in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}), where they appeared as the identity forcing $d^2 = 0$ at degree~$2$.  In full generality:
+
 For distinct indices $i, j, k \in \{1, \ldots, n\}$, the logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy:
 
 \emph{Formulation 1 (basic).}
@@ -1434,13 +1473,18 @@ We verify explicitly for $(a_0 \otimes a_1 \otimes a_2 \otimes \omega) \in \bar{
 
 \emph{Step 1:} Apply $\Delta$:
 \begin{align*}
-\Delta(a_0 \otimes a_1 \otimes a_2 \otimes \omega) 
-&= (a_0 \otimes a_1 \otimes a_2 \otimes \omega_{012}) \otimes (1 \otimes \omega_{\emptyset}) && \text{($I=\{0,1,2\}$, $J=\emptyset$)} \\
-&\quad + (a_0 \otimes a_1 \otimes \omega_{01}) \otimes (a_2 \otimes \omega_2) && \text{($I=\{0,1\}$, $J=\{2\}$)} \\
-&\quad + (a_0 \otimes a_2 \otimes \omega_{02}) \otimes (a_1 \otimes \omega_1) && \text{($I=\{0,2\}$, $J=\{1\}$)} \\
-&\quad + (a_0 \otimes \omega_0) \otimes (a_1 \otimes a_2 \otimes \omega_{12}) && \text{($I=\{0\}$, $J=\{1,2\}$)} \\
+\Delta(&a_0 \otimes a_1 \otimes a_2 \otimes \omega) \\
+&= (a_0 \otimes a_1 \otimes a_2 \otimes \omega_{012})
+    \otimes (1 \otimes \omega_{\emptyset}) \\
+&\quad + (a_0 \otimes a_1 \otimes \omega_{01})
+    \otimes (a_2 \otimes \omega_2) \\
+&\quad + (a_0 \otimes a_2 \otimes \omega_{02})
+    \otimes (a_1 \otimes \omega_1) \\
+&\quad + (a_0 \otimes \omega_0)
+    \otimes (a_1 \otimes a_2 \otimes \omega_{12}) \\
 &\quad + \text{(other terms)}
 \end{align*}
+where the summands correspond to partitions $I \sqcup J = \{0,1,2\}$ with $0 \in I$.
 
 \emph{Step 2:} Apply $\Delta \otimes \text{id}$ to each term. For example, the term $(a_0 \otimes a_1 \otimes a_2 \otimes \omega_{012}) \otimes (1 \otimes \omega_{\emptyset})$:
 \begin{align*}
@@ -2435,8 +2479,10 @@ cobar complex of Definition~\ref{def:geom-cobar-intrinsic}, making the
 isomorphism of Theorem~\ref{thm:cobar-distributional-model} concrete.
 
 \begin{definition}[Geometric cobar complex]\label{def:geom-cobar}
-For a conilpotent chiral coalgebra $\mathcal{C}$ on $X$ with coaugmentation 
-$\eta: \omega_X \to \mathcal{C}$ and comultiplication $\Delta: \mathcal{C} \to 
+The bar complex used logarithmic forms on \emph{compactified} configuration spaces; the cobar uses distributions on \emph{open} configuration spaces.  For the Heisenberg algebra (\S\ref{sec:frame-koszul-dual}), the cobar of $\mathrm{coLie}^{\mathrm{ch}}(V^*)$ produced $\mathrm{Sym}^{\mathrm{ch}}(V^*)$; the following definition gives the general construction.
+
+For a conilpotent chiral coalgebra $\mathcal{C}$ on $X$ with coaugmentation
+$\eta: \omega_X \to \mathcal{C}$ and comultiplication $\Delta: \mathcal{C} \to
 \mathcal{C} \boxtimes \mathcal{C}$, the \emph{geometric cobar complex} is:
 \[
 \Omega^{\text{ch}}_{p,q}(\mathcal{C}) = \Gamma\left(C_{p+1}(X), \text{Hom}_{\mathcal{D}}(\pi^*\mathcal{C}^{\otimes(p+1)}, \mathcal{D}_{C_{p+1}(X)}) \otimes \Omega^q_{C_{p+1}(X),\text{dist}}\right)
@@ -3262,6 +3308,8 @@ entire monograph.
 \begin{theorem}[Bar-cobar Verdier duality; \ClaimStatusProvedHere]\label{thm:bar-cobar-verdier}
 \label{thm:verdier-bar-cobar}
 \index{Verdier duality!bar-cobar|textbf}
+For the Heisenberg algebra, the bar construction produced the coLie coalgebra $\mathrm{coLie}^{\mathrm{ch}}(V^*)$ and the cobar produced $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (\S\ref{sec:frame-koszul-dual}): Verdier duality exchanged Lie-type and Com-type.  The following theorem is the general mechanism.
+
 There is a perfect pairing:
 $$\langle \cdot, \cdot \rangle: \bar{B}^{\text{ch}}_n(\mathcal{A}) \otimes 
 \Omega^{\text{ch}}_n(\mathcal{C}) \to \mathbb{C}$$
@@ -3558,8 +3606,10 @@ Hence $\varepsilon(d_\Omega(s^{-1} b)) = 0$.
 \emph{Step~2: Quasi-isomorphism.}
 Filter $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$
 by word length in the free algebra:
-$F_p = \bigoplus_{k \leq p}
-\mathrm{Free}_{\mathrm{ch}}^{(k)}(s^{-1}\overline{B})$,
+\[
+F_p = \bigoplus_{k \leq p}
+\mathrm{Free}_{\mathrm{ch}}^{(k)}(s^{-1}\overline{B}),
+\]
 where $\mathrm{Free}_{\mathrm{ch}}^{(k)}$ is the component of
 word length~$k$.
 On the associated graded, the differential reduces to the
@@ -3957,6 +4007,8 @@ Each boundary stratum $\overline{M}_{0,|I|+1} \times \overline{M}_{0,|J|+1}$ con
 \subsection{Geometric cobar for curved coalgebras}
 
 \begin{definition}[Curved cobar]\label{def:curved-cobar}
+The curvature $m_0 = -k \cdot \omega$ that appeared in the Heisenberg Koszul dual (\S\ref{sec:frame-koszul-dual}) is the simplest instance of the following construction.
+
 For a curved chiral coalgebra $(\mathcal{C}, \kappa_C)$ with curvature element $\kappa_C \in \mathcal{C}^{\otimes 2}[2]$, the cobar complex has modified differential:
 \[
 d_{\text{curved}} = d_{\text{cobar}} + m_0
@@ -5021,14 +5073,16 @@ obstruction classes as $g$ varies, giving
 $Q_g(\mathcal{A}) = \ker(\sigma^* - \mathrm{id})$.
 
 \emph{The $-1$-eigenspace is $Q_g(\mathcal{A}^!)$.}
-By Lemma~\ref{lem:deformation-space}, the deformation space
+By Lemma~\ref{lem:deformation-space},
 $\mathrm{Def}_g(\mathcal{A}^!)$ embeds in
 $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$.
 Since Koszul duality negates the Verdier involution
-($\sigma_{\mathcal{A}^!} = -\sigma_{\mathcal{A}}$ on centers,
-by Theorem~\ref{thm:verdier-bar-cobar}), deformation classes
-lie in the $-1$-eigenspace:
-$Q_g(\mathcal{A}^!) = \ker(\sigma^* + \mathrm{id})$.
+($\sigma_{\mathcal{A}^!} = -\sigma_{\mathcal{A}}$
+on centers, by Theorem~\ref{thm:verdier-bar-cobar}),
+deformation classes lie in the $-1$-eigenspace:
+\[
+Q_g(\mathcal{A}^!) = \ker(\sigma^* + \mathrm{id}).
+\]
 
 \emph{Exhaustion.}
 Since $\ker(\sigma^* - \mathrm{id}) \oplus \ker(\sigma^* + \mathrm{id})$
@@ -5668,6 +5722,8 @@ The special cases of low degree are:
 \end{definition}
 
 \begin{theorem}[Centrality implies strict nilpotence; \ClaimStatusProvedHere]\label{thm:central-implies-strict}
+Recall that for the Heisenberg algebra on an elliptic curve (\S\ref{sec:frame-genus1}), the curvature $d^2 = k \cdot \omega_1$ was a \emph{scalar}, hence automatically central.  The following theorem shows that centrality of the curvature is the general mechanism ensuring that the bar complex remains a genuine cochain complex ($d^2 = 0$ strictly) even in the curved setting.
+
 Let $(\mathcal{A}, m_1, \mu_0)$ be a curved chiral algebra. If the curvature satisfies:
 \begin{equation}
 \mu_0 \in Z(\mathcal{A}) := \{a \in \mathcal{A} \mid m_2(a \otimes b) = (-1)^{|a||b|}m_2(b \otimes a)
@@ -6487,13 +6543,15 @@ have no Koszul dual at all (e.g., $\mathcal{W}_\infty$).
 The passage from quadratic to general is also the passage from $E_\infty$
 to $E_1$: the Yangian $Y(\mathfrak{g})$, which is $E_1$-chiral but
 not $E_\infty$, falls in the filtered class and requires the
-completed framework of Conjecture~\ref{conj:en-koszul-duality}.
+completed framework of Theorem~\ref{conj:en-koszul-duality}.
 
 \subsection{Definitions: four classes of chiral algebras}
 
 \subsubsection{Class I: quadratic chiral algebras}
 
 \begin{definition}[Quadratic chiral algebra]\label{def:quadratic-chiral}
+The Heisenberg algebra $\mathcal{H}_k$ is the prototype: a single generator $\alpha$ with a purely quadratic OPE $\alpha(z)\alpha(w) = k/(z-w)^2 + \mathrm{reg.}$ (\S\ref{sec:frame-bar-deg1}).  The following definition captures this structure in general.
+
 A chiral algebra $\mathcal{A}$ is \emph{quadratic} if it admits a presentation:
 \begin{equation}
 \mathcal{A} = \text{Free}_{\text{ch}}(V) / (R)
@@ -7042,7 +7100,7 @@ $d(F_p)\subseteq F_p$ and the induced differential on $\gr_F$ is degree $-1$.
 Otherwise $d$ is only defined in the product completion.
 
 \emph{(1) $\Rightarrow$ (2).}
-By the Eilenberg--Moore comparison theorem \cite[Theorem~7.14]{Wei94}, the canonical map from the direct-sum totalization to the product totalization is a quasi-isomorphism if and only if the filtration is exhaustive and complete; the growth condition~(2) ensures that the completed bar filtration is exhaustive.  Conversely, if the growth bound fails, the filtration is not exhaustive: there exist infinite-bar-degree elements in the completion that project to zero in every finite truncation, producing cohomology classes in the completion not represented by any finite bar element.  These classes obstruct the comparison quasi-isomorphism, contradicting~(1).  Hence (2) is necessary.
+By the Eilenberg--Moore comparison theorem \cite[Theorem~7.14]{Weibel94}, the canonical map from the direct-sum totalization to the product totalization is a quasi-isomorphism if and only if the filtration is exhaustive and complete; the growth condition~(2) ensures that the completed bar filtration is exhaustive.  Conversely, if the growth bound fails, the filtration is not exhaustive: there exist infinite-bar-degree elements in the completion that project to zero in every finite truncation, producing cohomology classes in the completion not represented by any finite bar element.  These classes obstruct the comparison quasi-isomorphism, contradicting~(1).  Hence (2) is necessary.
 
 \emph{Quadratic finite-type case.}
 For $\mathcal{A}=T(V)/(R)$ with $V$ finite-dimensional,
@@ -7210,13 +7268,19 @@ Axiom (2b): $h \circ d = 0$ follows from $m_0$ being a scalar
 
 \begin{remark}[Morphisms of chiral CDG-coalgebras]
 \label{rem:CDG-morphisms}
-A morphism of chiral CDG-coalgebras $(C, d_C, h_C) \to (D, d_D, h_D)$
-is a pair $(f, a)$ where $f\colon C \to D$ is a morphism of graded
-chiral coalgebras and $a\colon C \to \omega_X$ is a homogeneous
-linear function of degree~$1$ such that
-$d_D(f(c)) = f(d_C(c)) + f(a \ast c) - (-1)^{|c|}f(c \ast a)$ and
-$h_D(f(c)) = h_C(c) + a(d_C(c)) + a^2(c)$ for all $c \in C$.
-Composition of morphisms is defined by $(g, b) \circ (f, a) = (g \circ f, b \circ f + a)$.
+A morphism of chiral CDG-coalgebras
+$(C, d_C, h_C) \to (D, d_D, h_D)$ is a pair
+$(f, a)$ where $f\colon C \to D$ is a morphism of
+graded chiral coalgebras and $a\colon C \to \omega_X$
+is a homogeneous linear function of degree~$1$ such
+that
+\begin{align*}
+d_D(f(c)) &= f(d_C(c)) + f(a \ast c) - (-1)^{|c|}f(c \ast a), \\
+h_D(f(c)) &= h_C(c) + a(d_C(c)) + a^2(c)
+\end{align*}
+for all $c \in C$.
+Composition of morphisms is defined by
+$(g, b) \circ (f, a) = (g \circ f,\allowbreak b \circ f + a)$.
 This follows Positselski~\cite[\S4.1]{Positselski}.
 \end{remark}
 
@@ -7741,18 +7805,21 @@ $\chirtensor$ and exactness properties established via the geometry
 of $\mathcal{D}_X$-modules on configuration spaces.  We verify
 each step.
 
-\emph{Step~1: Definition of derived functors.}
-By Proposition~\ref{prop:chiral-inj-proj-resolutions}(c), the
-contraderived category $D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
-is equivalent to the homotopy category of CDG-contramodules with
-projective underlying graded contramodule, and the coderived category
-$D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})$ is equivalent
-to the homotopy category of CDG-comodules with injective underlying
-graded comodule.  The left derived functor
-$\mathbb{L}\Phi_C^{\mathrm{ch}}$ is obtained by restricting
-$\Phi_C^{\mathrm{ch}}$ to projective contramodules (and composing
-with the localization), and $\mathbb{R}\Psi_C^{\mathrm{ch}}$ by
-restricting $\Psi_C^{\mathrm{ch}}$ to injective comodules.
+\emph{Step~1: Derived functors.}
+By Proposition~\ref{prop:chiral-inj-proj-resolutions}(c),
+the contraderived and coderived categories
+\begin{align*}
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+&\simeq K_{\mathrm{proj}}(C\text{-}\mathrm{contra}^{\mathrm{ch}}),\\
+D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+&\simeq K_{\mathrm{inj}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+\end{align*}
+are equivalent to the homotopy categories of
+CDG-contra\-modules (resp.\ CDG-comodules) with
+projective (resp.\ injective) underlying graded module.
+The left derived functor~$\mathbb{L}\Phi_C^{\mathrm{ch}}$
+restricts to projective contramodules;
+$\mathbb{R}\Psi_C^{\mathrm{ch}}$ restricts to injective comodules.
 
 \emph{Step~2: Mutual inverse on generators.}
 By Lemma~\ref{lem:Phi-Psi-properties}(b)--(c), $\Phi_C^{\mathrm{ch}}$
@@ -8036,6 +8103,8 @@ no analogue in Positselski's ground-field framework.
 \subsection{Statement of the main result}
 
 \begin{theorem}[Bar-cobar inversion is quasi-isomorphism; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-qi}
+For the Heisenberg algebra, we verified directly that $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}): the cobar of the bar recovered the original algebra.  The following theorem establishes this inversion for all Koszul chiral algebras.
+
 Let $\mathcal{A}$ be a \emph{Koszul} chiral algebra on a Riemann surface $X$
 (Definition~\ref{def:chiral-koszul-pair}), with
 $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ conilpotent or $\mathcal{A}$ complete
@@ -8194,7 +8263,7 @@ E_\infty^{p,q} &= \mathrm{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A}))) \quad \tex
 \end{theorem}
 
 \begin{proof}
-This is a standard spectral sequence associated to a filtered complex (Weibel~\cite{Wei94}, Chapter~5).  We verify the key properties:
+This is a standard spectral sequence associated to a filtered complex (Weibel~\cite{Weibel94}, Chapter~5).  We verify the key properties:
 
 \emph{Step 1: $E_0$ page.} This is just the raw complex with its bigrading:
 $$E_0^{p,q} = F^p\Omega^{p+q}(\bar{B}(\mathcal{A})) / F^{p+1}\Omega^{p+q}(\bar{B}(\mathcal{A}))$$
@@ -8227,11 +8296,13 @@ These differentials encode higher-order interactions between bar and cobar opera
 \item The complex is bounded in each column (fixed $p$)
 \end{enumerate}
 
-By standard spectral sequence theory (Weibel \cite{Wei94}, Chapter 5), this ensures:
+By standard spectral sequence theory (Weibel \cite{Weibel94}, Chapter 5), this ensures:
 $$E_\infty^{p,q} = \text{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A})))$$
 \end{proof}
 
 \begin{theorem}[Collapse at $E_2$; \ClaimStatusProvedHere]\label{thm:spectral-sequence-collapse}
+For the Heisenberg algebra, the spectral sequence collapsed trivially because $d_{\mathrm{bracket}} = 0$ (no simple poles): the bar cohomology was concentrated in degrees $0$ and $2$ without further work (\S\ref{sec:frame-bar-all}).  For non-abelian algebras, the collapse is a consequence of the Koszul property.
+
 For a Koszul chiral algebra $\mathcal{A}$ (Definition~\ref{def:koszul-chiral}), the spectral sequence from
 Theorem~\ref{thm:bar-cobar-spectral-sequence} collapses at the $E_2$ page:
 $$E_2^{p,q} = E_\infty^{p,q}.$$
@@ -8643,6 +8714,34 @@ adjunction is an equivalence (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
 This is the genus-$0$ theory.  Everything built so far lives on
 configuration spaces of the fixed curve~$X$, with no reference to
 moduli of curves.
+
+\begin{remark}[The master diagram at genus~$0$]
+\label{rem:master-diagram-genus0}
+\index{master diagram!genus zero}
+The results of this chapter instantiate the master
+diagram~\eqref{eq:master-square} at genus~$0$:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+\cA \arrow[r, "\barB_X"] \arrow[d, "(\cdot)^!"']
+& \barB_X(\cA) \arrow[d, "\mathbb{D}_{\mathrm{Ran}}"] \\
+\cA^! \arrow[r, "\barB_X"']
+& \barB_X(\cA^!)
+\end{tikzcd}
+\]
+The top row is the bar construction of this chapter; the right
+column is Verdier duality
+(Theorem~\ref{thm:verdier-bar-cobar}); the commutativity
+$\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA) \simeq \barB_X(\cA^!)$
+is Theorem~A.  The cobar functor $\Omega_X$ is left adjoint
+to~$\barB_X$, and the counit
+$\Omega_X\barB_X(\cA) \xrightarrow{\sim} \cA$ is an
+equivalence for Koszul algebras.
+At this stage, $d^2 = 0$ exactly (Arnold relations), and
+the diagram commutes strictly.  At genus~$g \geq 1$
+(Chapter~\ref{chap:higher-genus}), the square acquires
+curvature~$\kappa(\cA) \cdot \omega_1$, and strict commutativity
+is replaced by commutativity in the coderived category.
+\end{remark}
 
 In Chapter~\ref{chap:higher-genus}, the curve itself varies over
 $\overline{\mathcal{M}}_g$, and the bar differential acquires

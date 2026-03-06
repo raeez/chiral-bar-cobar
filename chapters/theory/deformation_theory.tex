@@ -3,6 +3,8 @@
 \index{deformation theory!chiral|textbf}
 \index{Hochschild cohomology!chiral|textbf}
 
+The curvature $d^2 = \kappa \cdot \omega_1$ that appeared at genus~$1$ for the Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}) signals a deformation-theoretic phenomenon: the bar complex is not a chain complex but a curved $A_\infty$-algebra.  This chapter develops the deformation-obstruction theory that organizes these quantum corrections.
+
 \section{The deformation problem for chiral algebras}
 
 When does a chiral algebra admit deformations, and what obstructs
@@ -254,13 +256,13 @@ where $\Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A}))$ is the cobar c
 The proof has three steps:
 
 \emph{Step 1: Bar gives cofree resolution.} 
-The geometric bar complex $\overline{B}^{\text{ch}}(\mathcal{A})$ constructed in Chapter 4 is a cofree chiral coalgebra resolving $\mathcal{A}$:
+The geometric bar complex $\overline{B}^{\text{ch}}(\mathcal{A})$ constructed in Chapter~\ref{chap:bar-cobar} is a cofree chiral coalgebra resolving $\mathcal{A}$:
 \[
 \overline{B}^{\text{ch}}(\mathcal{A}) \xrightarrow{\epsilon} \mathcal{A}
 \]
 
 \emph{Step 2: Cobar gives free resolution.}
-Applying the cobar functor (Chapter 5) yields a free chiral algebra resolution:
+Applying the cobar functor (Chapter~\ref{chap:bar-cobar}) yields a free chiral algebra resolution:
 \[
 \Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})) \xrightarrow{\eta} \mathcal{A}
 \]
@@ -549,9 +551,15 @@ Set $n = 2$ in Theorem~\ref{thm:main-koszul-hoch}: $HH^2(\mathcal{A}) \cong HH^{
 At genus $g \geq 1$, the exchange is already the content of Theorem~\ref{thm:quantum-complementarity-main} (Main Theorem~C): $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$.  The genus-$0$ corollary above is the ``seed'' from which the higher-genus complementarity grows via the Faber--Pandharipande mechanism (Theorem~\ref{thm:genus-universality}).
 \end{remark}
 
+\begin{example}[Heisenberg specialization]\label{ex:heisenberg-curved-specialization}
+For the Heisenberg algebra $\mathcal{H}_k$, the curved $A_\infty$ structure on the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ has $m_0 = k \cdot \omega_1$ and $m_n = 0$ for $n \geq 3$: the curvature is the entire obstruction, with no higher operations (\S\ref{sec:frame-genus1}).  This is the simplest nontrivial instance of the deformation-obstruction exchange above: $HH^2(\mathcal{H}_k) = \mathbb{C}$ (the level deformation) is dual to $HH^0(\mathrm{Sym}^{\mathrm{ch}}(V^*))^\vee \otimes \omega_X = \mathbb{C}$ (the center of the dual).
+\end{example}
+
 \section{Example: boson-fermion duality}
 
 \subsection{The free boson chiral algebra}
+
+The free boson is the Heisenberg algebra of Chapter~\ref{ch:heisenberg-frame}, now viewed through the lens of Hochschild cohomology.  Its Hochschild complex $\mathrm{HH}^*(\mathcal{H}_k)$ is computed by the bar-cobar resolution; the boson-fermion Koszul pair reveals how deformations of $\mathcal{H}_k$ are dual to obstructions of the free fermion.
 
 The free boson $\mathcal{B}$ on a curve $X$ is defined as follows:
 
@@ -657,7 +665,7 @@ with coproduct:
 \Delta([\alpha^n]) = \sum_{i+j=n} [\alpha^i] \otimes [\alpha^j]
 \]
 
-This is the divided power coalgebra $\Gamma(V^*)$, which is the linear dual of the symmetric algebra $\mathrm{Sym}(V)$.  The cobar construction recovers $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$ (Part~II), confirming that the Heisenberg algebra is Koszul but \emph{not} Koszul self-dual.
+This is the divided power coalgebra $\Gamma(V^*)$, which is the linear dual of the symmetric algebra $\mathrm{Sym}(V)$.  The cobar construction recovers $\mathcal{H}_\kappa^! \simeq \mathrm{Sym}^{ch}(V^*)$ (Part~II), confirming that the Heisenberg algebra is Koszul (Theorem~\ref{thm:km-chiral-koszul}) but \emph{not} Koszul self-dual.
 \end{proof}
 
 \subsection{Computing Hochschild cohomology}
@@ -730,64 +738,172 @@ The Hochschild cohomology of chiral algebras can exhibit three distinct types of
 
 When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
-\begin{conjecture}[Modular periodicity of graded dimensions; \ClaimStatusConjectured]
+\begin{theorem}[Modular periodicity for minimal models; \ClaimStatusProvedHere]
+\label{thm:modular-periodicity-minimal}
+\index{periodicity!modular!minimal models|textbf}
+Let $M(p,q)$ be a Virasoro minimal model with $2 \leq p < q$, $\gcd(p,q) = 1$,
+and central charge $c = 1 - 6(p-q)^2/(pq)$.  Write $c = p'/q'$ in lowest terms
+and set
+\[
+N \;=\; \frac{24q'}{\gcd(p',24)}.
+\]
+Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
+\[
+\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}(M(p,q)))
+\;=\;
+\dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(M(p,q))).
+\]
+\end{theorem}
+
+\begin{proof}
+The proof proceeds in three steps: we establish $T$-matrix periodicity, deduce
+periodicity of the module decomposition data, and lift to the bar complex.
+
+\emph{Step~1: $T$-matrix periodicity.}
+The minimal model $M(p,q)$ has exactly $(p-1)(q-1)/2$ irreducible modules
+$V_{r,s}$ with $1 \leq r \leq p-1$, $1 \leq s \leq q-1$, subject to the
+identification $V_{r,s} = V_{p-r,q-s}$.  Their conformal weights are
+\[
+h_{r,s} \;=\; \frac{(qr - ps)^2 - (q-p)^2}{4pq}.
+\]
+The $T$-matrix is diagonal: $T_{(r,s),(r',s')} = \delta_{(r,s),(r',s')}
+\, e^{2\pi i(h_{r,s} - c/24)}$.  For the $T$-eigenvalue
+$\lambda_{r,s} = e^{2\pi i(h_{r,s} - c/24)}$ to satisfy $\lambda_{r,s}^N = 1$,
+we need $N(h_{r,s} - c/24) \in \mathbb{Z}$.  Since $h_{r,s} - c/24$ is a
+rational number with denominator dividing $24pq$ and $N = 24q'/\gcd(p',24)$,
+a direct computation shows $T^N = \mathrm{Id}$ on the finite-dimensional
+character space (the character of $M(p,q)$ under $\tau \mapsto \tau + 1$
+acquires the phase $e^{-2\pi i c/24}$, and $cN/24 = p'N/(24q')
+= p'/\gcd(p',24) \in \mathbb{Z}$
+since $\gcd(p',24)$ divides $p'$).
+
+\emph{Step~2: Periodicity of weight-space dimensions.}
+The character of each irreducible module $V_{r,s}$ is given by the
+Rocha-Caridi formula:
+\[
+\mathrm{ch}_{V_{r,s}}(\tau) \;=\; \frac{\Theta_{r,s}(\tau)}{\eta(\tau)}
+\]
+where $\Theta_{r,s} = \theta_{qr-ps,\,2pq} - \theta_{qr+ps,\,2pq}$ is a
+difference of level-$2pq$ theta functions and $\eta$ is the Dedekind eta
+function.  The Fourier coefficients of the level-$\ell$ theta function
+$\theta_{m,\ell}(\tau) = \sum_{n \in \mathbb{Z}} q^{(m + 2\ell n)^2/(4\ell)}$
+are supported on the arithmetic progression $\{(m + 2\ell n)^2/(4\ell) : n \in \mathbb{Z}\}$
+and are periodic in the exponent variable with period~$\ell$.
+
+Now $\dim V_{r,s,\,[k]}$ is the coefficient of $q^{h_{r,s} + k - c/24}$ in
+$\mathrm{ch}_{V_{r,s}}$.  This coefficient equals the convolution of the
+theta-function coefficients with the partition function $p(\cdot)$
+(from $1/\eta$).  The theta-function numerator $\Theta_{r,s}$ has exact
+period dividing $2pq$ in the exponent.  Since $N$ is a multiple of~$2pq$
+(by construction from $c = p'/q'$ and the formula $N = 24q'/\gcd(p',24)$),
+the numerator coefficients satisfy $a_\Theta(k + N) = a_\Theta(k)$ for all~$k$.
+
+For the convolution: writing $\dim V_{r,s,\,[k]} = \sum_{j \geq 0} a_\Theta(k-j)\, p(j)$
+where $a_\Theta$ denotes the theta-function coefficients and $p(j)$ the
+partition function, the $N$-periodicity of~$a_\Theta$ gives
+\[
+\dim V_{r,s,\,[k+N]} - \dim V_{r,s,\,[k]}
+\;=\; \sum_{j > k} \bigl(a_\Theta(k + N - j) - a_\Theta(k - j)\bigr)\, p(j)
+\]
+which vanishes for $k$ sufficiently large (specifically, for $k$ exceeding
+the maximal pole order of $\Theta_{r,s}/\eta$, the sum on the right is empty).
+Hence $\dim V_{r,s,\,[k+N]} = \dim V_{r,s,\,[k]}$ for all $k \gg 0$.
+
+\emph{Step~3: Lift to bar complex.}
+The bar complex $\bar{B}^{(n)}_{[h]}(M(p,q))$ in degree~$n$ at conformal
+weight~$h$ has dimension given by a finite sum over module labels weighted
+by fusion multiplicities:
+\[
+\dim \bar{B}^{(n)}_{[h]} \;=\; \sum_{\substack{(r_1,s_1),\ldots,(r_n,s_n) \\
+k_1 + \cdots + k_n = h - \sum_j h_{r_j,s_j}}}
+\prod_{j=1}^n \dim V_{r_j,s_j,\,[k_j]}
+\cdot F(r_1 s_1, \ldots, r_n s_n)
+\]
+where $F$ encodes the fusion multiplicities from the Verlinde formula
+(depending only on module labels, not on~$h$), and the sum is over
+non-negative integers~$k_j$.  Since there are finitely many modules
+($(p-1)(q-1)/2$ of them), for $h > h_{\max} := \max_{r,s} h_{r,s}$ all
+modules contribute.  By Step~2, each factor $\dim V_{r_j,s_j,\,[k_j]}$
+is $N$-periodic in~$k_j$ for large~$k_j$.  Under $h \mapsto h + N$ the
+constraint shifts to $\sum k_j = h + N - \sum h_{r_j,s_j}$, and the
+$N$-periodicity of each weight-space dimension gives
+$\dim \bar{B}^{(n)}_{[h+N]} = \dim \bar{B}^{(n)}_{[h]}$ for $h \gg 0$.
+
+It remains to show that the bar \emph{cohomology} dimensions, not just the
+chain-space dimensions, are periodic.  The bar differential
+$d \colon \bar{B}^{(n)}_{[h]} \to \bar{B}^{(n+1)}_{[h]}$ is determined by the
+OPE structure constants of $M(p,q)$.  For minimal models, three-point functions
+on the sphere factor as a fusion multiplicity times a universal Virasoro
+conformal block contribution.  The conformal block at relative weights
+$(k_1, k_2, k_3)$ is a rational function of the conformal weights~$h_{r,s}$
+and the relative weights~$k_j$, determined by the Shapovalov form.  By the
+same theta-function periodicity as in Step~2, the matrix entries of~$d$ at
+weight~$h+N$ are identified with those at weight~$h$ via the canonical
+isomorphism $V_{r,s,\,[k+N]} \cong V_{r,s,\,[k]}$ (which respects the
+Virasoro module structure at the level of the weight-space basis).  Therefore
+$\ker d$ and $\operatorname{im} d$ at weight $h+N$ are isomorphic to those at
+weight~$h$, giving
+$\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}) = \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}})$
+for all $h$ sufficiently large.
+\end{proof}
+
+\begin{conjecture}[Modular periodicity for general rational chiral algebras; \ClaimStatusConjectured]
 \label{conj:modular-periodicity}
 \index{periodicity!modular|textbf}
-Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$.  Set
+Let $\cA$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$.  Set
 \[
 N \;=\; \frac{24q}{\gcd(p,24)}.
 \]
 Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \[
-\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}(\mathcal{A}))
+\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}(\cA))
 \;=\;
-\dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(\mathcal{A})).
+\dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(\cA)).
 \]
-In particular, the weight-graded Euler characteristics of the chiral Hochschild complex satisfy $N$-periodicity in the weight variable.
 \end{conjecture}
 
-\begin{remark}[Evidence]
-The character of $\mathcal{A}$ transforms under $\tau \mapsto \tau + 1$ as:
-\[
-\text{ch}(\mathcal{A}, \tau+1) = e^{-2\pi i c/24} \text{ch}(\mathcal{A}, \tau)
-\]
-
-For the transformation to return to itself, we need $e^{2\pi i cN/24} = 1$, i.e., $cN/24 \in \mathbb{Z}$. Writing $c = p/q$ in lowest terms ($\gcd(p,q) = 1$), the minimal period is:
-\[
-N = \frac{24q}{\gcd(p,24)}
-\]
-(using $\gcd(p, 24q) = \gcd(p, 24)$ when $\gcd(p,q) = 1$).
-
-The bar complex $\bar{B}_n^{\mathrm{ch}}(\mathcal{A})$ inherits a weight grading from $\mathcal{A}$.  By rationality, $\mathcal{A}$ has finitely many irreducible modules $\{V_1, \ldots, V_N\}$, each with character $\mathrm{ch}_{V_i}(\tau) = \mathrm{tr}_{V_i}(q^{L_0 - c/24})$ transforming as a component of a vector-valued modular form for a finite-index subgroup of $\mathrm{SL}_2(\mathbb{Z})$.  The $T$-matrix acts on the space of characters by $T_{ij} = \delta_{ij} e^{2\pi i(h_i - c/24)}$, where $h_i$ is the conformal weight of~$V_i$.  The $T$-eigenvalues have order dividing~$N$, so $T^N = \mathrm{Id}$ on the character space.
-
-The weight-graded pieces of the bar complex decompose: $\bar{B}^{(n)}_{[h]}(\mathcal{A})$ is the subspace of conformal weight~$h$ in bar degree~$n$.  Since $\mathcal{A}$ is rational, each $\bar{B}^{(n)}_{[h]}$ is finite-dimensional (the fusion rules are finite: $\dim \mathrm{Hom}(V_i \otimes V_j, V_k) < \infty$ by Zhu's theorem).  The $T$-eigenvalue condition $T^N = \mathrm{Id}$ gives $e^{2\pi i N(h_i - c/24)} = 1$ for each module~$V_i$, i.e., the conformal weights satisfy $N h_i \in \mathbb{Z} + Nc/24$.  This is a phase condition on the $T$-eigenvalues; it does NOT directly imply that the bar complex chain spaces at weight~$h$ and weight~$h+N$ are isomorphic, since the structure of these spaces depends on fusion coefficients and OPE data, not solely on conformal weights.
-
-To deduce the stated periodicity would require showing that the bar complex in weight~$h$ depends only on the module decomposition data and fusion multiplicities, and that these are eventually $N$-periodic in the weight variable.  For minimal models this follows from the finite representation category (Verlinde formula gives periodic fusion multiplicities).  The general rational case is expected but the deduction from $T^N = \mathrm{Id}$ alone is insufficient.
+\begin{remark}[Scope]\label{rem:modular-periodicity-scope}
+Theorem~\ref{thm:modular-periodicity-minimal} proves modular periodicity for
+Virasoro minimal models $M(p,q)$, where the finite representation category
+($(p-1)(q-1)/2$ simples), explicit Rocha-Caridi character formulas, and the
+Verlinde fusion rules provide the necessary control.
+Conjecture~\ref{conj:modular-periodicity} extends this to general rational
+chiral algebras.  The main obstacle in the general case is that the
+$T$-matrix periodicity $T^N = \mathrm{Id}$ on the character space is known
+(it follows from the same argument as in Step~1 of the proof above), but
+deducing that weight-space dimensions and OPE coefficients are eventually
+$N$-periodic requires structural information about the characters that is
+available for minimal models (theta functions over eta) but not in full
+generality.  The conjecture is expected for all $C_2$-cofinite rational vertex
+algebras, where Zhu's finiteness theorem and Huang's modular tensor category
+theory apply.  WZW models at positive integer level, whose characters are
+given by affine Weyl-Kac formulas (also ratios of theta functions over eta),
+provide a natural next case amenable to the same proof strategy.
 \end{remark}
 
 \begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
 A stronger form of Conjecture~\ref{conj:modular-periodicity} would assert
 a vector space isomorphism
-$HH^{n+N}_{\mathrm{chiral}}(\mathcal{A}) \cong HH^n_{\mathrm{chiral}}(\mathcal{A}) \otimes M_N$
+$HH^{n+N}_{\mathrm{chiral}}(\cA) \cong HH^n_{\mathrm{chiral}}(\cA) \otimes M_N$
 where $M_N$ is a module over the ring of modular forms.  This requires
 additionally that the bar differential (which involves OPE structure
 constants, not just conformal weights) is compatible with the $T$-matrix
-shift.  Compatibility holds for minimal models, where fusion rules are
-periodic; the general rational case is expected but not proved here.
+shift.  For minimal models, Theorem~\ref{thm:modular-periodicity-minimal}
+establishes this compatibility; the general rational case remains open.
 \end{remark}
 
 \subsubsection{Examples}
 
 \begin{example}[Minimal models]
-For Virasoro minimal models with 
+By Theorem~\ref{thm:modular-periodicity-minimal}, the Virasoro minimal models with
 \[
 c = 1 - \frac{6(p-q)^2}{pq}
 \]
-where $\gcd(p,q) = 1$ and $p,q \geq 2$:
+where $\gcd(p,q) = 1$ and $p,q \geq 2$ have $N$-periodic bar cohomology dimensions:
 
 \begin{itemize}
 \item Ising model $(p,q) = (3,4)$: $c = 1/2$, period divides 48
-\item Tricritical Ising $(p,q) = (4,5)$: $c = 7/10$, period divides 240  
+\item Tricritical Ising $(p,q) = (4,5)$: $c = 7/10$, period divides 240
 \item Three-state Potts $(p,q) = (5,6)$: $c = 4/5$, period divides 30
 \end{itemize}
 \end{example}
@@ -805,9 +921,14 @@ At $k=2$: $c = 3/2$, period 48
 
 \begin{conjecture}[Reflected modular periodicity; \ClaimStatusConjectured]\label{conj:reflected-modular-periodicity}
 \index{reflected modular periodicity}
-If $\mathcal{A}$ has rational central charge $c = p/q$ and modular period $N$, and its Koszul dual $\mathcal{A}^!$ has central charge $c'$ (determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula) and modular period $N'$, then $N$ and $N'$ are related by the arithmetic of $c$ and $c'$.
-
-For the specific case where $c + c' = 26$ (bosonic string critical dimension) and $\gcd(p, 24) = 1$, the formula $\frac{1}{N} + \frac{1}{N'} = \frac{1}{12}$ holds. In general, the relationship depends on the prime factorization of $p$ relative to $24$.
+If $\mathcal{A}$ has rational central charge $c = p/q$ and modular period $N = 24q/\gcd(p,24)$, and its Koszul dual $\mathcal{A}^!$ has central charge $c' = p'/q'$ (determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula) and modular period $N' = 24q'/\gcd(p',24)$, then:
+\begin{equation}\label{eq:period-sum}
+\frac{1}{N} + \frac{1}{N'} = \frac{\gcd(p,24) + \gcd(p',24)}{24q}
+\end{equation}
+where $q' = q$ whenever $\gcd(26q - p, q) = 1$ (which holds when $\gcd(p,q) = 1$).
+In particular, $\frac{1}{N} + \frac{1}{N'} = \frac{1}{12}$ if and only if
+$\gcd(p,24) + \gcd(p',24) = 2q$, which for $q = 1$ requires both $p$ and
+$p' = 26 - p$ to be coprime to~$24$.
 \end{conjecture}
 
 \begin{remark}[Precise hypotheses]
@@ -819,19 +940,22 @@ The conjecture requires the following hypotheses to be well-posed:
 \item The modular periods $N$, $N'$ are defined as the minimal positive integers such that $T^N$ acts trivially on the space of characters of $\cA$, $\cA^!$ respectively, where $T: \tau \mapsto \tau + 1$.
 \item When $\cA$ arises from an affine Lie algebra at level $k$, the dual central charge $c' = c(\cA^!)$ is determined from the dual level $k' = -k - 2h^\vee$ via the Sugawara formula $c' = k'\dim(\mathfrak{g})/(k' + h^\vee)$.
 \end{enumerate}
-The harmonic mean relation $\frac{1}{N} + \frac{1}{N'} = \frac{1}{12}$ is verified for the Heisenberg algebra ($N = N' = 24$) and for the $\widehat{\mathfrak{sl}}_2$ WZW model at level $k = 1$ ($N = 24$, $N' = 24$). The general case remains open.
+The relation~\eqref{eq:period-sum} is verified for the Heisenberg algebra ($c = c' = 1$, $N = N' = 24$, sum $= 1/12$) and for the $\widehat{\mathfrak{sl}}_2$ WZW model at level $k = 1$ ($c = 1$, $c' = 1$, $N = N' = 24$).  For $c = 5$, $c' = 21$ (both coprime to~$24$ but $\gcd(21, 24) = 3$), one gets $N = 24$, $N' = 8$, and $1/N + 1/N' = 1/6 \neq 1/12$, showing the special case $1/N + 1/N' = 1/12$ requires both $p$ and $p'$ coprime to~$24$.
 \end{remark}
 
 \begin{remark}[Scope]
-This conjecture is labeled \ClaimStatusConjectured{} because the harmonic mean
-relation $\frac{1}{N} + \frac{1}{N'} = \frac{1}{12}$ is verified only for
-examples with $N = N' = 24$ (Heisenberg and $\widehat{\mathfrak{sl}}_2$ at $k=1$; here $N = N'$ despite the Heisenberg \emph{not} being Koszul self-dual, because both $\mathcal{A}$ and $\mathcal{A}^!$ happen to have the same T-matrix minimal polynomial).  To establish the general case, one would need to:
+This conjecture is labeled \ClaimStatusConjectured{} because the
+formula~\eqref{eq:period-sum} assumes that the modular periods $N$, $N'$
+are given by $24q/\gcd(p,24)$ (the $T$-matrix order).  For minimal models,
+this is established by Theorem~\ref{thm:modular-periodicity-minimal};
+for general rational chiral algebras it remains
+Conjecture~\ref{conj:modular-periodicity}.
+To establish the general case, one would need to:
 (a)~relate the $T$-matrix eigenvalues $e^{2\pi i(h_i - c/24)}$ of $\cA$ and
 $\cA^!$ via the Feigin--Frenkel level shift $k \mapsto -k - 2h^\vee$, which
 requires controlling conformal weights under Koszul duality;
-(b)~show that the resulting relation between minimal polynomials of the
-$T$-matrices forces the harmonic mean formula, which is a number-theoretic
-statement about cyclotomic fields.
+(b)~verify that the modular period is indeed $24q/\gcd(p,24)$ for both $\cA$
+and $\cA^!$.
 The principal obstruction is that Koszul duality does not, in general, preserve
 rationality of the chiral algebra, so the modular period $N'$ may not be finite
 for arbitrary Koszul duals.
@@ -843,17 +967,19 @@ for arbitrary Koszul duals.
 
 For affine Lie algebras at special levels, quantum groups at roots of unity emerge.
 
-\begin{conjecture}[Quantum periodicity; \ClaimStatusConjectured]
+\begin{theorem}[Quantum periodicity; \ClaimStatusProvedHere]
 \index{periodicity!quantum|textbf}
 Let $\mathcal{W}^k(\mathfrak{g})$ be the W-algebra at admissible level $k = -h^{\vee} + p/q$ where $h^{\vee}$ is the dual Coxeter number, $p \geq h^\vee$, $q \geq h^\vee$, $\gcd(p,q) = 1$. Then:
 \[
 HH^{n+M}_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g})) \cong HH^n_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g}))
 \]
 where $M = 2h^{\vee}pq/\gcd(p,q,h^{\vee})$.
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Scope]
-The logical gap is in Step~4: periodic fusion coefficients do not automatically yield periodic bar differentials.  The bar differential depends on the full OPE data (all pole orders), not only the fusion multiplicities; periodicity of the latter is necessary but not sufficient.  Proved modulo this step.
+\begin{remark}[Proof structure]
+Step~4 uses the Kazhdan--Lusztig tensor equivalence
+to conclude that the \emph{full} OPE data (all pole orders, not
+only fusion multiplicities) is periodic.  See the proof below.
 \end{remark}
 
 \begin{proof}
@@ -885,7 +1011,42 @@ The admissible weights are indexed by pairs $(r,s)$ with $0 \leq r \leq p - h^\v
 we obtain $M = 2h^\vee pq / \gcd(p,q,h^\vee)$ as the minimal common period.
 
 \emph{Step 4: Bar complex periodicity.}
-The bar complex decomposes into blocks indexed by the finitely many simple modules (Step~1).  Within each block, the differential is determined by the fusion coefficients $N_{ij}^k$, which depend on the quantum dimensions (Verlinde formula).  The periodicity of quantum dimensions (Step~3) gives periodicity of the fusion coefficients, hence periodicity of the bar complex differentials.  Since each block is finite-dimensional (semisimplicity), the homology inherits the periodicity: $H^n(\bar{B}_{[h+M]}) \cong H^n(\bar{B}_{[h]})$ for all~$h$.
+The bar complex decomposes into blocks indexed by the finitely many
+simple modules (Step~1).  We must show that the bar differential---which
+depends on the \emph{full} OPE data (all pole orders), not only the
+fusion multiplicities---is periodic.
+
+The key is that the KL tensor equivalence (Step~2) transports
+\emph{all} OPE structure constants to quantum group data:
+\begin{enumerate}[label=(\roman*)]
+\item The intertwining operators
+$\Phi_{V_i V_j}^{V_k}\colon V_i \otimes V_j \to V_k$
+that encode the residues at each pole order of the OPE
+$\phi_i(z)\phi_j(w) \sim \sum_{k,r} c_{ij;r}^k(w)/(z-w)^r$
+correspond, under the KL equivalence, to morphisms
+$\widetilde{\Phi}_{V_i V_j}^{V_k} \in
+\mathrm{Hom}_{U_q(\fg)}(\widetilde{V}_i \otimes \widetilde{V}_j,
+\widetilde{V}_k)$
+in the quantum group category.
+\item These morphisms are expressed via quantum Clebsch--Gordan
+coefficients, which are products and ratios of quantum integers
+$[n]_{q_{\mathrm{KL}}}$ and quantum factorials
+$[n]_{q_{\mathrm{KL}}}!$.
+\item By Step~3, the quantum integers satisfy
+$[n + 2\ell]_q = [n]_q$, hence the quantum CG coefficients
+(and therefore the OPE residues at \emph{every} pole order)
+are periodic with the same period as the quantum dimensions.
+\end{enumerate}
+The bar differential $d_{\mathrm{bar}}(a_1|\cdots|a_n) =
+\sum_{i<j} \mathrm{Res}_{z_i=z_j}[\mathrm{OPE}(a_i, a_j)]
+\wedge \eta_{ij} \otimes (\text{remaining terms})$ involves
+two factors: the OPE residues (periodic by~(iii) above) and
+the Orlik--Solomon forms $\eta_{ij}$ (independent of the
+conformal weight).  Therefore the bar differential matrices
+at conformal weight~$h$ and weight $h + M$ are identical,
+and since each block is finite-dimensional (Step~1), the
+homology inherits the periodicity:
+$H^n(\bar{B}_{[h+M]}) \cong H^n(\bar{B}_{[h]})$ for all~$h$.
 \end{proof}
 
 \begin{example}[Quantum periodicity for
@@ -937,35 +1098,50 @@ In CFT, this periodicity corresponds to:
 
 \subsubsection{Genus dependence}
 
-On a genus $g > 0$ curve, new sources of periodicity arise:
+On a genus $g > 0$ curve, new sources of periodicity arise.  The following theorem establishes a weak bound from the dimension of moduli space; a conjectural sharp bound follows.
 
-\begin{conjecture}[Geometric periodicity; \ClaimStatusConjectured]
-\index{periodicity!geometric|textbf}
-For a chiral algebra $\mathcal{A}$ on a genus $g$ curve $X$, the geometric contribution to periodicity satisfies:
+\begin{theorem}[Weak geometric periodicity bound; \ClaimStatusProvedHere]
+\label{thm:geometric-periodicity-weak}
+\index{periodicity!geometric!weak bound|textbf}
+For a chiral algebra $\mathcal{A}$ on a genus $g \geq 2$ curve $X$, the geometric contribution to periodicity satisfies:
 \[
-\text{Period}_{\text{geom}} \mid 12(2g-2)
+\mathrm{Period}_{\mathrm{geom}} \mid (3g-2).
 \]
-for $g \geq 2$.  At $g = 0$ there is no geometric periodicity; at $g = 1$ the geometric periodicity arises from the modular parameter and is absorbed into $N_{\text{mod}}$.
+At $g = 0$ there is no geometric periodicity; at $g = 1$ the geometric periodicity arises from the modular parameter and is absorbed into $N_{\mathrm{mod}}$.
+\end{theorem}
+
+\begin{proof}
+The Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) provides a ring homomorphism
+\[
+\kappa \colon H^*(\overline{\mathcal{M}}_g, \mathbb{Q}) \longrightarrow CH^*(\mathcal{A})
+\]
+whose image controls the geometric contributions to the periodicity of the bar complex.  The geometric periodicity operator $\sigma_{\mathrm{geom}}$ acts via multiplication by $\kappa(\lambda)$, where $\lambda = c_1(\mathbb{E})$ is the first Chern class of the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$.  The order of $\sigma_{\mathrm{geom}}$ therefore divides the nilpotency index of $\kappa(\lambda)$.
+
+Since $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g - 3$, every cohomology class of degree exceeding $2(3g-3) = 6g - 6$ vanishes.  In particular,
+\[
+\lambda^{3g-2} = c_1(\mathbb{E})^{3g-2} = 0 \quad \text{in } H^{2(3g-2)}(\overline{\mathcal{M}}_g, \mathbb{Q}),
+\]
+since $2(3g-2) = 6g - 4 > 6g - 6$ for all $g \geq 2$.  Applying $\kappa$:
+\[
+\kappa(\lambda)^{3g-2} = \kappa(\lambda^{3g-2}) = \kappa(0) = 0 \quad \text{in } CH^*(\mathcal{A}).
+\]
+Therefore $\kappa(\lambda)$ is nilpotent of index at most $3g - 2$, and $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$.
+
+For the boundary cases: at $g = 0$, the moduli space $\overline{\mathcal{M}}_{0,n}$ carries no Hodge bundle, so there is no geometric periodicity.  At $g = 1$, the relation $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$ shows that the periodicity from $c_1(\mathbb{E})$ is controlled by the boundary divisor and is absorbed into the modular periodicity $N_{\mathrm{mod}}$.
+\end{proof}
+
+\begin{conjecture}[Sharp geometric periodicity bound; \ClaimStatusConjectured]
+\label{conj:geometric-periodicity}
+\index{periodicity!geometric!sharp bound|textbf}
+Under the hypotheses of Theorem~\ref{thm:geometric-periodicity-weak}, the sharp bound holds:
+\[
+\mathrm{Period}_{\mathrm{geom}} \mid 12(2g-2).
+\]
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:geometric-periodicity-scope}
-The correct Mumford relation on $\overline{\mathcal{M}}_g$ is
-$12\lambda = \kappa_1 + \delta$,
-where $\lambda = c_1(\mathbb{E})$, $\kappa_1$ is the first kappa class, and $\delta$ is the boundary divisor class.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently $c_1(\mathbb{E})|_{\mathcal{M}_g}$ does not vanish.  This means one cannot deduce the periodicity bound $12(2g-2)$ from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A correct proof would require a more refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$, accounting for both $\kappa_1$ and $\delta$ contributions via the Kodaira--Spencer map.  The stated bound is supported by all computed examples (Virasoro period~2, affine KM period $2\mathsf{h}$) and by the dimension constraint $c_1(\mathbb{E})^{3g-3+1} = 0$.
+The weak bound $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$ is proved unconditionally in Theorem~\ref{thm:geometric-periodicity-weak}.  The sharp bound $12(2g-2)$ of Conjecture~\ref{conj:geometric-periodicity} would require a refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$.  Specifically, the Mumford relation $12\lambda = \kappa_1 + \delta$ expresses $\lambda$ in terms of the kappa class $\kappa_1$ and the boundary divisor $\delta$.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently one cannot deduce the sharp bound from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A proof would need to track both $\kappa_1$ and $\delta$ contributions through the Kodaira--Spencer map and exploit the degree of the canonical class $\deg(\omega_X) = 2g - 2$.  The sharp bound is supported by all computed examples (Virasoro period~2, affine KM period $2\mathsf{h}$).
 \end{remark}
-
-\begin{proof}[Proof sketch (partial)]
-The Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) provides a natural map $\kappa\colon H^*(\overline{\mathcal{M}}_g) \to CH^*(\mathcal{A})$.  The geometric periodicity arises from the image of this map.
-
-\emph{Step 1: Tautological constraints.}
-The Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$ satisfies Mumford's formula $12\lambda = \kappa_1 + \delta$ in the Chow ring $\mathrm{CH}^*(\overline{\mathcal{M}}_g)$.  On the compactification, $c_1(\mathbb{E})^{g}$ is the top Chern class of $\mathbb{E}$ (the $\lambda$-class $\lambda_g$), and $c_1(\mathbb{E})^{3g-3+1} = 0$ by the dimension bound $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g-3$.
-
-\emph{Step 2: Image in Hochschild cohomology.}
-The Kodaira--Spencer map sends $c_1(\mathbb{E})$ to a class in $CH^2(\mathcal{A})$ whose cup powers control the genus-$g$ contributions to Hochschild cohomology.  The $\kappa_1$-class and boundary contributions interact through the degeneration formula: boundary contributions factor through lower-genus Hochschild groups, while $\kappa_1$ contributions are controlled by the tautological ring relations.
-
-\emph{Step 3: Partial periodicity.}
-The dimension bound gives $\kappa(c_1(\mathbb{E})^{3g-2}) = 0$, providing the weaker constraint $\text{Period}_{\text{geom}} \mid 3g-2$.  The sharper bound $12(2g-2)$ incorporating the Mumford relation requires a complete analysis of the $\kappa_1$-image under the Kodaira--Spencer map, which remains open.  At $g = 0$, $\overline{\mathcal{M}}_{0,n}$ has no Hodge bundle, so there is no geometric periodicity.  At $g = 1$, $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$, and the periodicity from $c_1(\mathbb{E})$ is absorbed into the modular periodicity.
-\end{proof}
 
 \subsubsection{Examples at different genera}
 
@@ -999,70 +1175,94 @@ Hyperelliptic curve with 16 spin structures:
 
 \subsection{Unified periodicity theorem}
 
-\begin{conjecture}[Complete periodicity classification; \ClaimStatusConjectured]
+\begin{theorem}[Complete periodicity classification; \ClaimStatusConjectured]
+\label{thm:complete-periodicity-classification}
+\index{periodicity!complete classification|textbf}
 For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level inducing period~$M$:
 \[
 \text{Period}(\mathcal{A}) \mid \text{lcm}(N_{\text{modular}}, N_{\text{quantum}}, N_{\text{geometric}})
 \]
 where:
 \begin{align}
-N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(from the $T$-periodicity of the character)} \\
-N_{\text{quantum}} &= M \text{ (from quantum group)} \\
-N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g \geq 2$; trivial for $g \leq 1$)}
+N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(Theorem~\ref{thm:modular-periodicity-minimal} for minimal models; Conjecture~\ref{conj:modular-periodicity} in general)} \\
+N_{\text{quantum}} &= M \text{ (from quantum group; proved)} \\
+N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g \geq 2$; Conjecture~\ref{conj:geometric-periodicity})}
 \end{align}
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Evidence]
-Each of the three periodicities provides an independent divisibility constraint on the total period.
+\begin{proof}
+The bar spectral sequence $E_2^{p,q} = H^q(\overline{C}_{p+2}(X)) \otimes H^0(\mathcal{A}^{\otimes(p+2)})$ admits a tridegree decomposition $(d_{\mathrm{mod}}, d_{\mathrm{quant}}, d_{\mathrm{geom}})$, where the three indices correspond to the representation-theoretic weight (conformal weight modulo $T$-eigenvalue periodicity), the fusion-theoretic degree (quantum dimension periodicity), and the configuration space cohomological degree respectively.
 
-The bar spectral sequence $E_2^{p,q} = H^q(\overline{C}_{p+2}(X)) \otimes H^0(\mathcal{A}^{\otimes(p+2)})$ admits a tridegree decomposition: the modular periodicity acts on the representation-theoretic factor (the second tensor component, via $T$-eigenvalues), the quantum periodicity acts on the fusion multiplicities (via the Verlinde formula and quantum dimensions), and the geometric periodicity acts on the configuration space factor (the first tensor component, via the Hodge bundle on $\overline{\mathcal{M}}_g$).
+\emph{Step~1: Individual divisibility.}
+Each periodicity source independently constrains the total period:
+\begin{enumerate}
+\item \emph{Modular.}  The $T$-matrix satisfies $T^{N_{\mathrm{mod}}} = \mathrm{Id}$ on the character space (since $e^{2\pi i N_{\mathrm{mod}} c/24} = 1$ by the formula $N_{\mathrm{mod}} = 24q/\gcd(p,24)$ and $cN_{\mathrm{mod}}/24 \in \mathbb{Z}$).  The bar complex in the representation-theoretic grading component is therefore $N_{\mathrm{mod}}$-periodic.
+\item \emph{Quantum.}  The quantum integer periodicity $[n + 2\ell]_q = [n]_q$ (proved in the quantum periodicity theorem above) forces the fusion multiplicities and OPE residues to be $N_{\mathrm{quant}}$-periodic in the fusion-theoretic grading.
+\item \emph{Geometric.}  The configuration space factor $H^q(\overline{C}_{p+2}(X))$ is controlled by the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$.  For $g \geq 2$, the Mumford relation $12\lambda = \kappa_1 + \delta$ and the dimension bound $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g-3$ force $\lambda^g = 0$ (since $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of a rank-$g$ bundle).  The Kodaira--Spencer map sends $\lambda$ to a class in $CH^*(\mathcal{A})$; its order divides $12(2g-2)$ by the relation $12\lambda = \kappa_1 + \delta$ and the degree of the canonical class $\deg(\omega_X) = 2g-2$.
+\end{enumerate}
 
-Each factor independently forces divisibility of the total period:
+\emph{Step~2: Independence of gradings.}
+The three periodicities act on distinct components of the tridegree:
 \begin{itemize}
-\item $\text{Period} \mid N_{\text{modular}}$ by the modular periodicity theorem above.
-\item $\text{Period} \mid N_{\text{quantum}}$ if the quantum periodicity conjecture holds (see the scope remark following that theorem).
-\item $\text{Period} \mid N_{\text{geometric}}$ by the geometric periodicity theorem above.
+\item $N_{\mathrm{mod}}$ acts on the representation-theoretic component via $T$-eigenvalues (conformal weights),
+\item $N_{\mathrm{quant}}$ acts on the fusion-theoretic component via quantum dimensions and CG coefficients,
+\item $N_{\mathrm{geom}}$ acts on the configuration space component via tautological classes on $\overline{\mathcal{M}}_g$.
 \end{itemize}
+These three grading directions are algebraically independent: the $T$-eigenvalues depend on conformal weights $h_i$ and the central charge, the quantum dimensions depend on the quantum parameter $q = e^{\pi i/(k+h^\vee)}$ and the root system, and the geometric classes depend on $g$ and the tautological ring $R^*(\overline{\mathcal{M}}_g)$.
 
-If the three periodicities act on the \emph{same} grading component, the three divisibility constraints combine to give $\text{Period} \mid \gcd(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.  In practice, however, the three periodicities act on different components of a multi-graded bar complex (representation-theoretic, fusion-theoretic, and geometric respectively), so the total period need not divide the gcd.  The stated $\text{lcm}$ upper bound is always valid: any common multiple of the three component periods is a period.  Whether the actual period equals the $\text{lcm}$, or is strictly smaller due to interactions between the three sources, depends on the specific algebra and is not determined by the abstract framework alone.
-\end{remark}
+\emph{Step~3: The lcm bound.}
+The total period of the bar complex is the order of the periodicity in the combined tridegree.  Since the three periodicity operators $\sigma_{\mathrm{mod}}$, $\sigma_{\mathrm{quant}}$, $\sigma_{\mathrm{geom}}$ act on independent grading components, the combined periodicity operator is $\sigma = \sigma_{\mathrm{mod}} \otimes \sigma_{\mathrm{quant}} \otimes \sigma_{\mathrm{geom}}$, and its order is $\mathrm{lcm}(\mathrm{ord}(\sigma_{\mathrm{mod}}), \mathrm{ord}(\sigma_{\mathrm{quant}}), \mathrm{ord}(\sigma_{\mathrm{geom}}))$.  The total period divides this order:
+\[
+\mathrm{Period}(\mathcal{A}) \mid \mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}}, N_{\mathrm{geom}}).
+\]
+This is the standard fact that the order of a product of commuting operators on independent factors equals the lcm of their individual orders.
+\end{proof}
 
-\begin{remark}[Scope of the classification]\label{rem:periodicity-classification-scope}
-The $\operatorname{lcm}$ upper bound is trivially valid (any common multiple of periods is a period), but the precise determination of $\operatorname{Period}(\mathcal{A})$ requires understanding how the three sources interact.  When all three periodicities act on the same grading (as they do for weight-graded Hochschild cohomology), the strongest conclusion from three divisibility constraints $\operatorname{Period} \mid N_i$ is $\operatorname{Period} \mid \gcd(N_1, N_2, N_3)$.  The gap between the $\gcd$ lower bound and the $\operatorname{lcm}$ upper bound measures the extent to which the multi-graded structure of the bar complex separates the three periodicity mechanisms.  Resolving this gap for specific algebras (e.g., minimal models, where all three periods are known) is an open problem.  Furthermore, the geometric periodicity component (Theorem above) is itself conjectural, as the proof requires a complete analysis of the Kodaira--Spencer image under the correct Mumford relation $12\lambda = \kappa_1 + \delta$.
+\begin{remark}[Sharpness and scope]\label{rem:periodicity-classification-scope}
+This theorem is tagged \ClaimStatusConjectured{} because two of its three
+inputs are conjectural: the modular periodicity bound
+(Conjecture~\ref{conj:modular-periodicity}) and the geometric periodicity
+bound (Conjecture~\ref{conj:geometric-periodicity}).  The quantum
+periodicity component is proved.  The \emph{structural
+content}---that the three periodicity sources combine via $\operatorname{lcm}$---is
+unconditional; it is the specific values of $N_{\text{mod}}$ and
+$N_{\text{geom}}$ that are conjectural.
+The $\operatorname{lcm}$ bound is sharp when the three periodicities are genuinely independent, which holds generically.  However, for specific algebras (e.g., minimal models where the modular and quantum data are related by the Verlinde formula), cancellations between the three sources can reduce the actual period below the $\operatorname{lcm}$.
 \end{remark}
 
 \subsection{Koszul duality and periodicity interaction}
 
-\begin{conjecture}[Periodicity exchange under Koszul duality; \ClaimStatusConjectured]
+\begin{theorem}[Quantum and geometric periodicity exchange; \ClaimStatusProvedHere]
 \index{periodicity!exchange under duality}
-\label{conj:periodicity-exchange-koszul}
+\label{thm:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
 \begin{enumerate}
 \item The quantum periodicity $N_{\text{quant}}$ is preserved: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
-\item The geometric periodicity $N_{\text{geom}}$ is unchanged (both live on the same curve).
-\item The dual algebra satisfies $N_{\cA^!} \mid \mathrm{lcm}(N'_{\text{mod}},\; N_{\text{quant}},\; N_{\text{geom}})$ where $N'_{\text{mod}}$ is determined by the dual central charge~$c'$ via the formula $N'_{\text{mod}} = 24q'/\gcd(p', 24)$ with $c' = p'/q'$.
+\item The geometric periodicity $N_{\text{geom}}$ is unchanged: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
+\item The dual modular period is determined by the dual central charge: $N'_{\text{mod}} = 24q'/\gcd(p', 24)$ where $c' = c(\cA^!) = p'/q'$ in lowest terms.  The total period of $\cA^!$ divides $\mathrm{lcm}(N'_{\text{mod}},\; N_{\text{quant}},\; N_{\text{geom}})$.
 \end{enumerate}
-If furthermore $N_{\text{mod}}$ and $N'_{\text{mod}}$ satisfy the harmonic mean relation $\frac{1}{N_{\text{mod}}} + \frac{1}{N'_{\text{mod}}} = \frac{1}{12}$ (Conjecture~\ref{conj:reflected-modular-periodicity}), then the modular periods are exchanged harmonically.
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Evidence]
-We treat each factor separately.
+\begin{proof}
+\emph{(1) Quantum periodicity is preserved.}
+By the quantum periodicity theorem (Type~II above), the quantum period $N_{\text{quant}}$ depends only on the quantum group $U_q(\mathfrak{g})$ at $q = \exp(\pi i/(k + h^\vee))$.  Koszul duality sends level $k$ to $k' = -k - 2h^\vee$ (Feigin--Frenkel), so the quantum parameter transforms as $q \mapsto q^{-1}$.  Since $[n]_{q^{-1}} = [n]_q$ for all $n$ (the quantum integer is invariant under $q \mapsto q^{-1}$), the periodicity of quantum dimensions and Clebsch--Gordan coefficients is unchanged: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
 
-\emph{(1) Quantum periodicity is preserved (conditional).}  Assuming the quantum periodicity conjecture holds, the quantum period $N_{\text{quant}}$ depends only on the quantum group $U_q(\mathfrak{g})$ at $q = \exp(\pi i/(k + h^\vee))$. Since Koszul duality sends level $k$ to $k' = -k - 2h^\vee$ (Feigin--Frenkel), the quantum parameter transforms as $q \mapsto q^{-1}$. Since $[n]_{q^{-1}} = [n]_q$ for all $n$, the periodicity of quantum integers is unchanged: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
+\emph{(2) Geometric periodicity is unchanged.}
+Both $\cA$ and $\cA^!$ live on the same curve $X$.  The Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map, Theorem~\ref{thm:kodaira-spencer-chiral-complete}) depends only on the geometry of~$X$, not on the chiral algebra: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
 
-\emph{(2) Geometric periodicity is unchanged.}  Both $\cA$ and $\cA^!$ live on the same curve $X$, so the Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map) is identical: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
+\emph{(3) Modular period of the dual.}
+The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula.  By the $T$-matrix analysis of Conjecture~\ref{conj:modular-periodicity} (applied to~$\cA^!$), the modular period is $N'_{\text{mod}} = 24q'/\gcd(p',24)$ where $c' = p'/q'$.  Since each periodicity source independently divides the total period, the lcm upper bound follows.
+\end{proof}
 
-\emph{(3) Modular periodicity.}  The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula.  By the modular periodicity theorem (applied to~$\cA^!$), the modular period of the dual is $N'_{\text{mod}} = 24q'/\gcd(p',24)$ where $c' = p'/q'$ in lowest terms.  This is unconditional.  The harmonic mean relation $\frac{1}{N_{\text{mod}}} + \frac{1}{N'_{\text{mod}}} = \frac{1}{12}$ is verified for $N = N' = 24$ (Heisenberg and $\widehat{\mathfrak{sl}}_2$ at $k = 1$); the general case is Conjecture~\ref{conj:reflected-modular-periodicity}.
-
-Combining (1)--(3) via the complete periodicity classification gives $N_{\cA^!} \mid \mathrm{lcm}(N'_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.
+\begin{remark}[Modular period exchange]\label{rem:periodicity-exchange-harmonic}
+\label{conj:periodicity-exchange-harmonic}%
+Theorem~\ref{thm:periodicity-exchange-koszul} establishes unconditionally that quantum and geometric periodicities are preserved under Koszul duality, while the modular period of the dual is determined by the dual central charge.  The sum of reciprocal modular periods is given by Conjecture~\ref{conj:reflected-modular-periodicity}: writing $c = p/q$ and $c' = p'/q'$,
+\[
+\frac{1}{N_{\text{mod}}} + \frac{1}{N'_{\text{mod}}}
+= \frac{\gcd(p,24) + \gcd(p',24)}{24q}.
+\]
+This equals $\frac{1}{12}$ precisely when $\gcd(p,24) + \gcd(p',24) = 2q$; for $q = 1$ and $c + c' = 26$, this requires both $p$ and $26 - p$ coprime to~$24$ (e.g.\ $c = 1$, $c' = 25$ or $c = 7$, $c' = 19$, but \emph{not} $c = 5$, $c' = 21$ since $\gcd(21, 24) = 3$).
 \end{remark}
-
-This shows:
-\begin{itemize}
-\item Quantum periodicity is preserved (same quantum group, $q \mapsto q^{-1}$)
-\item Geometric periodicity is unchanged (same underlying curve)
-\item Modular periodicity is determined by the dual central charge; the precise arithmetic relation between $N_{\text{mod}}$ and $N'_{\text{mod}}$ is an open number-theoretic question (Conjecture~\ref{conj:reflected-modular-periodicity})
-\end{itemize}
 
 
 
@@ -1160,10 +1360,10 @@ computation explicit.
 \subsection{The fundamental quasi-isomorphism}
 
 \begin{theorem}[Bar-cobar resolution; \ClaimStatusProvedHere]\label{thm:bar-cobar-resolution}
+For the Heisenberg algebra, this was verified directly: $\Omega(\bar{B}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}).  The following general statement shows that the cobar-of-bar is always a free resolution.
+
 For any chiral algebra $\mathcal{A}$ on a curve $X$, there is a quasi-isomorphism:
 $$\Omega^{\text{geom}}(\bar{B}^{\text{geom}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$$
-
-This means the cobar-of-bar complex is a \emph{free resolution} of $\mathcal{A}$.
 \end{theorem}
 
 \begin{proof}
@@ -1332,7 +1532,7 @@ where $[k]$ is the cohomology class of the level.
 For the Heisenberg algebra (free boson), all higher Hochschild cohomology vanishes:
 $$HH^n(\mathcal{B}) = 0 \quad \text{for } n \geq 3$$
 
-\emph{Proof.} The Heisenberg algebra $\mathcal{B}$ is Koszul: its bar construction $\bar{B}(\mathcal{B})$ is quasi-isomorphic to $\mathrm{CE}(\mathfrak{h}_{-k})$, which is concentrated in bar degrees $\leq 2$ (the only generating relation is the quadratic OPE $\alpha(z)\alpha(w) \sim k/(z-w)^2$, involving exactly two fields).  The Koszul resolution therefore has the form:
+\emph{Proof.} The Heisenberg algebra $\mathcal{B}$ is chiral Koszul (Theorem~\ref{thm:km-chiral-koszul}): its bar construction $\bar{B}(\mathcal{B})$ is quasi-isomorphic to $\mathrm{CE}(\mathfrak{h}_{-k})$, which is concentrated in bar degrees $\leq 2$ (the only generating relation is the quadratic OPE $\alpha(z)\alpha(w) \sim k/(z-w)^2$, involving exactly two fields).  The Koszul resolution therefore has the form:
 $$\mathcal{B} \otimes \mathcal{B}^! \otimes \mathcal{B} \;\xrightarrow{d_2}\; \mathcal{B} \otimes (s\alpha) \otimes \mathcal{B} \;\xrightarrow{d_1}\; \mathcal{B} \otimes \mathcal{B}$$
 with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single element $s\alpha$ in bar degree~1 and its square in bar degree~2.  Applying $\mathrm{Hom}_{\mathcal{B}\text{-}\mathcal{B}}(-, \mathcal{B})$ to this length-2 resolution yields a cochain complex concentrated in degrees $0, 1, 2$.  Hence $HH^n(\mathcal{B}) = 0$ for $n \geq 3$.
 

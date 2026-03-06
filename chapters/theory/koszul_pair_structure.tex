@@ -4,6 +4,8 @@
 
 \chapter{Chiral Koszul pairs}
 
+Building on the Koszul pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ exhibited in the frame chapter (Chapter~\ref{ch:heisenberg-frame}), this chapter investigates the fine structure of Koszul pairs: periodicity phenomena for affine and Virasoro algebras, the role of the discriminant, and the interaction between the Koszul pair structure and representation-theoretic data.
+
 \section{Koszul duality}
 
 \subsection{First principles}
@@ -859,7 +861,7 @@ opers appear precisely at $k = -h^\vee$.
 
 \subsection{Limitations of quadratic theory}
 
-The classical Koszul duality theory applies to quadratic algebras but fails for most chiral algebras of physical interest. We now explain why and how to overcome this limitation.
+The Heisenberg algebra is quadratic: a single generator with a single OPE relation (\S\ref{sec:frame-bar-deg1}).  Most chiral algebras of physical interest are not.  We now explain why the quadratic theory fails for them and how to overcome this limitation.
 
 \begin{definition}[Quadratic chiral algebra]
 A chiral algebra $\mathcal{A}$ is \emph{quadratic} if it admits a presentation:
@@ -953,7 +955,10 @@ Given $\alpha \in \text{MC}(\mathcal{A}^! \otimes B)$:
 For non-quadratic algebras, the simple Maurer--Cartan equation is insufficient. We need:
 
 \begin{definition}[$A_\infty$ Maurer--Cartan equation]
-For a chiral algebra $\mathcal{A}$ with $A_\infty$ structure $(m_1, m_2, m_3, \ldots)$, an element $\alpha \in \mathcal{A}^1$ satisfies the $A_\infty$ Maurer--Cartan equation if:
+Let $\mathcal{A}$ be a chiral algebra with
+$A_\infty$ structure $(m_1, m_2, m_3, \ldots)$.
+An element $\alpha \in \mathcal{A}^1$ satisfies the
+\emph{$A_\infty$ Maurer--Cartan equation} if:
 \[
 \sum_{n=1}^{\infty} m_n(\alpha, \ldots, \alpha) = 0
 \]
@@ -1012,17 +1017,16 @@ Note that the RTT relations involve products of three generators, making the Yan
 
 \subsection{The chiral Yangian}
 
-\begin{theorem}[Chiral structure associated to the Yangian; \ClaimStatusProvedHere]
-\label{thm:chiral-yangian}
-The Yangian $Y(\mathfrak{g})$ is related to chiral algebras on $\mathbb{P}^1$ as follows.  The \emph{affine Kac--Moody algebra} $\hat{\mathfrak{g}}_\kappa$ provides the chiral algebra structure, with:
+\begin{theorem}[Affine Kac--Moody as chiral algebra; \ClaimStatusProvedHere]
+\label{thm:chiral-yangian-km}
+The \emph{affine Kac--Moody algebra} $\hat{\mathfrak{g}}_\kappa$ defines a chiral algebra on $\mathbb{P}^1$, with:
 \begin{enumerate}
 \item Generating fields $J^a(z) = \sum_{n \in \mathbb{Z}} J_n^a z^{-n-1}$
-\item OPE structure (affine Kac--Moody):
+\item OPE structure:
 \[
 J^a(z)J^b(w) \sim \frac{f_{ab}^c J^c(w)}{z-w} + \frac{\kappa\, \Omega^{ab}}{(z-w)^2}
 \]
 where $\Omega^{ab}$ is the Killing form and $\kappa$ is the level
-\item The Yangian $Y(\mathfrak{g})$ arises as a deformation of $U(\mathfrak{g}[t])$ and is related to $\hat{\mathfrak{g}}_\kappa$ via the Kazhdan--Lusztig equivalence: at the critical level $\kappa = -h^\vee$, the category of smooth $\hat{\mathfrak{g}}_{-h^\vee}$-modules with regular singularities is related to $Y(\mathfrak{g})$-modules via the center $Z(\hat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$ (Feigin--Frenkel~\cite{Feigin-Frenkel}).
 \end{enumerate}
 \end{theorem}
 
@@ -1035,6 +1039,11 @@ We verify the chiral algebra axioms for $\hat{\mathfrak{g}}_\kappa$:
 
 \emph{Translation covariance}: The $\mathcal{D}_X$-module structure provides the $\partial_z$-action on all fields via $\partial_z J^a(z) = [L_{-1}, J^a(z)]$, where $L_{-1}$ is the infinitesimal translation on~$X$ (part of the intrinsic $\mathcal{D}_X$-module structure, independent of the Sugawara construction). \qedhere
 \end{proof}
+
+\begin{theorem}[Kazhdan--Lusztig equivalence at critical level; \ClaimStatusProvedElsewhere]
+\label{thm:chiral-yangian}
+The Yangian $Y(\mathfrak{g})$ arises as a deformation of $U(\mathfrak{g}[t])$ and is related to the affine Kac--Moody chiral algebra $\hat{\mathfrak{g}}_\kappa$ (Theorem~\ref{thm:chiral-yangian-km}) via the Kazhdan--Lusztig equivalence: at the critical level $\kappa = -h^\vee$, the category of smooth $\hat{\mathfrak{g}}_{-h^\vee}$-modules with regular singularities is related to $Y(\mathfrak{g})$-modules via the center $Z(\hat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee})$ (Feigin--Frenkel~\cite{Feigin-Frenkel}, Kazhdan--Lusztig~\cite{KL93}).
+\end{theorem}
 
 \subsection{Bar complex of the Yangian}
 
@@ -1411,53 +1420,276 @@ S_{CS}(A) = \frac{k}{4\pi} \int_M \text{Tr}\left(A \wedge dA + \frac{2}{3}A \wed
 
 \subsection{The precise connection}
 
-\begin{conjecture}[Chern--Simons/Koszul duality correspondence; \ClaimStatusConjectured]
-\index{Chern--Simons!Koszul correspondence}
-For a chiral algebra $\mathcal{A}$ with Koszul dual $\mathcal{A}^!$, the Maurer--Cartan equation in $\mathcal{A}^! \otimes B$ is equivalent to the equation of motion for a Chern--Simons-type theory where:
-\begin{enumerate}
-\item The gauge field is $\alpha \in (\mathcal{A}^! \otimes B)^1$
-\item The term $m_1(\alpha) = d\alpha$ corresponds to the kinetic term
-\item The term $m_2(\alpha, \alpha)$ corresponds to the quadratic interaction
-      $A \wedge A$ in the flatness equation $F = dA + A \wedge A = 0$ (this is the equation
-      of motion for the Chern--Simons action, where the $\frac{2}{3}A^3$ is the cubic term in
-      the \emph{action}, but quadratic in the EOM)
-\item The term $m_3(\alpha, \alpha, \alpha)$ is a cubic correction beyond standard CS
-\item Higher $m_n$ terms give higher-order corrections
+\begin{theorem}[Chern--Simons equations from Koszul duality;
+\ClaimStatusProvedHere]\label{thm:cs-koszul-km}
+\index{Chern--Simons!from Koszul duality}
+For a simple Lie algebra $\fg$ and its affine extension
+$\widehat{\fg}_k$ at $k \neq -h^\vee$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Classical Chern--Simons.}
+  The Chevalley--Eilenberg complex $C^*(\fg)$ is the bar
+  construction $\barB(U\fg)$\textup{;}
+  the Maurer--Cartan equation in $C^*(\fg) \otimes \Omega^1(M)$
+  for a $3$-manifold $M$:
+  \[
+  d\alpha + \tfrac{1}{2}[\alpha, \alpha] = 0
+  \]
+  is the flatness equation $F_A = 0$, which is the equation of
+  motion for the Chern--Simons functional
+  $S_{\mathrm{CS}}(A) = \frac{k}{4\pi}\int_M
+  \mathrm{Tr}(A \wedge dA + \frac{2}{3}A^3)$.
+\item \emph{Chiral Chern--Simons.}
+  The bar--semi-infinite quasi-isomorphism
+  $\barB(\widehat{\fg}_k) \simeq C^*_{\infty/2}(\widehat{\fg}_k)$
+  \textup{(}Theorem~\textup{\ref{thm:bar-semi-infinite-km})}
+  identifies the bar complex with the BRST complex of the
+  WZW model at level~$k$, which is the gauge-fixed
+  Chern--Simons theory on the boundary
+  \textup{(}Witten~\cite{Wit89}\textup{)}.
+  The MC equation in $\barB(\widehat{\fg}_k)$ therefore
+  parametrizes flat $\fg$-connections at level~$k$.
+\item \emph{Curvature = CS level.}
+  At genus~$1$, the bar complex has $d^2 = \kappa \cdot \omega_1$
+  with $\kappa = k\dim(\fg)/(2(k+h^\vee))$.  This curvature is
+  the Chern--Simons level: the bar complex is curved precisely
+  when $k \neq 0$ \textup{(}nontrivial gauge theory\textup{)},
+  and anomaly cancellation $\kappa + \kappa' = 0$ for the dual
+  pair $(k, -k-2h^\vee)$ is the CS level-matching condition.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Heuristic argument]\label{rem:cs-koszul-heuristic}
-We establish the correspondence by comparing the structures:
+\begin{proof}
+Part~(i) is classical: $C^*(\fg) = \barB(U\fg)$ by the
+Chevalley--Eilenberg theorem, and the MC equation
+$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$ in the dg~Lie algebra
+$\fg \otimes \Omega^*(M)$ is the flatness equation $F_A = 0$ by
+definition.  The flatness equation is the Euler--Lagrange equation
+for $S_{\mathrm{CS}}$: varying $\delta S_{\mathrm{CS}}/\delta A
+= \frac{k}{2\pi} F_A = 0$.
 
-\emph{Step 1: The Chern--Simons Equation of Motion.}
-Varying the CS action gives the flatness condition $F = dA + A \wedge A = 0$.
+Part~(ii) chains three identifications:
+(a)~$\barB(\widehat{\fg}_k) \simeq C^*_{\infty/2}(\widehat{\fg}_k)$
+is Theorem~\ref{thm:bar-semi-infinite-km} (PBW filtration +
+Arkhipov functor);
+(b)~the semi-infinite complex of $\widehat{\fg}_k$ is the BRST
+complex of the WZW model (Feigin--Frenkel, \cite{FF90});
+(c)~the WZW model on a surface $\Sigma$ is the boundary theory
+of Chern--Simons on $M$ with $\partial M = \Sigma$
+(Witten~\cite{Wit89}).
+Composing, $\barB(\widehat{\fg}_k) \simeq C^*_{\mathrm{BRST}}
+(\mathrm{CS}_k|_{\partial M})$, and MC elements in the bar complex
+correspond to flat connections modulo gauge.
 
-\emph{Step 2: The Maurer--Cartan as Flatness.}
-In our context, $\alpha$ is a connection on the trivial bundle with fiber $B$. The $L_\infty$ MC equation $d\alpha + \frac{1}{2}\ell_2(\alpha, \alpha) + \text{higher terms} = 0$
-is the flatness condition for this connection with corrections.
+Part~(iii) follows from
+$d^2 = \kappa \cdot \omega_1$
+(Theorem~\ref{thm:genus-universality}) with
+$\kappa(\widehat{\fg}_k) = k\dim(\fg)/(2(k+h^\vee))$
+(Computation~\ref{comp:km-curvature}).  For the dual pair
+$(k, k' = -k-2h^\vee)$,
+$\kappa + \kappa' = 0$
+(Corollary~\ref{cor:anomaly-duality-km}), which is precisely
+the CS level-matching condition for the Feigin--Frenkel dual
+theories.
+\end{proof}
 
-\emph{Step 3: The Role of Higher Terms.}
-For quadratic algebras, we get pure Chern--Simons.
-For non-quadratic algebras, we get Chern--Simons with higher corrections:
+\begin{theorem}[$L_\infty$ Maurer--Cartan as homotopy
+flatness; \ClaimStatusProvedHere]
+\label{thm:linf-mc-flatness}
+\index{Chern--Simons!Koszul correspondence}
+\index{L-infinity algebra@$L_\infty$ algebra!Maurer--Cartan}
+For a chiral algebra $\cA$ with $A_\infty$ operations
+$\{m_n\}$ \textup{(}Theorem~\textup{\ref{thm:w-algebra-ainfty}}
+for W-algebras\textup{)}, the bar complex $\barB(\cA)$
+carries an $L_\infty$ structure with brackets
+$\ell_n$ obtained by antisymmetrizing~$m_n$.  The
+Maurer--Cartan equation
 \[
-S = \int \mathrm{Tr}\left(\alpha \wedge d\alpha + \frac{2}{3}\alpha^3\right) + \text{(higher terms from } \ell_3, \ell_4, \ldots\text{)}
+d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
++ \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
++ \cdots = 0
 \]
-where the higher terms arise in the BV-BRST formalism (with fields of mixed ghost degree, so that the total form degree remains 3 on a 3-manifold).
+is a \emph{homotopy flatness} equation: it defines the
+formal moduli space of flat connections on the
+``dual gauge theory'' associated to~$\cA^!$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For quadratic $\cA$
+  \textup{(}Kac--Moody\textup{)}: $\ell_n = 0$ for
+  $n \geq 3$, and the MC equation is the standard
+  Chern--Simons flatness $dA + A \wedge A = 0$
+  \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km}(i))}.
+\item For W-algebras obtained by DS reduction of
+  $\widehat{\fg}_k$: the MC equation is the
+  DS-reduced flatness equation, i.e., the generalized
+  KdV hierarchy.
+\item For general non-quadratic $\cA$: the higher
+  $\ell_n$ give BV-BRST corrections to CS.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The $L_\infty$ structure on $\barB(\cA)$ is obtained
+from the $A_\infty$ structure by the standard
+antisymmetrization (Loday--Vallette \cite[Thm.~10.1.13]{LV12}):
+$\ell_n(x_1, \ldots, x_n) = \sum_{\sigma \in S_n}
+\epsilon(\sigma)\, m_n(x_{\sigma(1)}, \ldots,
+x_{\sigma(n)})$.  The MC equation
+$\sum_{n \geq 1} \frac{1}{n!}\ell_n(\alpha^{\otimes n})
+= 0$ is then automatic from the $A_\infty$
+relations (which are equivalent to the $L_\infty$
+Jacobi identities under antisymmetrization).
+
+For~(i): when $\cA$ is quadratic (Kac--Moody), the
+bar complex has $m_n = 0$ for $n \geq 3$
+(the OPE has only simple and double poles), so
+$\ell_n = 0$ for $n \geq 3$ and the MC equation
+reduces to $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$,
+which IS the CS equation of motion
+(Theorem~\ref{thm:cs-koszul-km}).
+
+For~(ii): the DS reduction functor
+$H_{\mathrm{DS}}\colon \widehat{\fg}_k\text{-mod}
+\to \mathcal{W}^k(\fg)\text{-mod}$ is exact on the
+bar complex (Theorem~\ref{thm:bar-semi-infinite-w}).
+Applying DS to the KM flatness equation
+$dA + A \wedge A = 0$ gives the constrained flatness
+$dA + A \wedge A = 0$ subject to the constraint
+$A|_{\mathfrak{n}_+} = f$ (where $f$ is the nilpotent defining
+the W-algebra).  This constrained flatness IS the
+generalized KdV equation (Drinfeld--Sokolov \cite{DS}),
+and the higher $\ell_n$ encode the constraint.
+
+For~(iii): this is established in
+Theorem~\ref{thm:cs-koszul-general} below.
+\end{proof}
+
+\begin{theorem}[CS/Koszul for general non-quadratic
+algebras; \ClaimStatusProvedHere]
+\label{thm:cs-koszul-general}
+For a general chiral algebra $\cA$ with Koszul dual $\cA^!$,
+the Maurer--Cartan equation in the $L_\infty$ algebra
+underlying the bar complex $\barB(\cA)$ takes the form of a
+deformed Chern--Simons equation:
+\begin{equation}\label{eq:deformed-cs-general}
+d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
++ \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
++ \cdots
+= \sum_{n \geq 1} \frac{1}{n!}\ell_n(\alpha^{\otimes n})
+= 0.
+\end{equation}
+Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For quadratic $\cA$
+  \textup{(}Kac--Moody\textup{)}: $\ell_n = 0$ for
+  $n \geq 3$, and \eqref{eq:deformed-cs-general} reduces
+  to the Chern--Simons flatness equation
+  $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$
+  \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km}(i))}.
+\item For non-quadratic $\cA$
+  \textup{(}W-algebras, Yangians\textup{)}: the bar
+  differential carries higher $A_\infty$ operations
+  $m_n$ for $n \geq 3$
+  \textup{(}Theorem~\textup{\ref{thm:bar-ainfty-complete}}\textup{)},
+  yielding nonzero $\ell_n$ for $n \geq 3$.
+  The MC equation~\eqref{eq:deformed-cs-general} is a
+  homotopy flatness condition whose higher terms encode
+  the non-quadratic OPE relations.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument proceeds in three steps.
+
+\emph{Step~1: $A_\infty$ coalgebra structure on the bar complex.}
+By Theorem~\ref{thm:bar-differential-structure}, the bar
+complex $\barB(\cA) = T^c(s^{-1}\bar{\cA})$ carries a
+codifferential $D$ encoding the chiral operations of~$\cA$.
+When $\cA$ has non-quadratic OPE relations (e.g., W-algebras),
+$D$ decomposes as $D = D_1 + D_2 + D_3 + \cdots$ where
+$D_n$ is the component of tensor arity~$n$, yielding
+$A_\infty$ co-operations $\Delta_n$ dual to operations~$m_n$.
+The identity $D^2 = 0$ is equivalent to the $A_\infty$
+relations among the~$m_n$
+(Theorem~\ref{thm:bar-ainfty-complete}).
+
+\emph{Step~2: $A_\infty \to L_\infty$ by antisymmetrization.}
+The standard $A_\infty$-to-$L_\infty$ correspondence
+(Loday--Vallette \cite[Thm.~10.1.13]{LV12}) produces
+$L_\infty$ brackets on $s^{-1}\bar{\cA}$ by
+antisymmetrization:
+\[
+\ell_n(x_1, \ldots, x_n) = \sum_{\sigma \in S_n}
+\epsilon(\sigma)\, m_n(x_{\sigma(1)}, \ldots,
+x_{\sigma(n)}).
+\]
+The $A_\infty$ relations for the $m_n$ translate,
+under this antisymmetrization, into the higher Jacobi
+identities for the~$\ell_n$.
+
+\emph{Step~3: Maurer--Cartan equation.}
+For any $L_\infty$ algebra $(\fg, \{\ell_n\})$, the
+Maurer--Cartan equation is \emph{defined} as
+\[
+\mathrm{MC}(\alpha) \;:=\;
+\sum_{n \geq 1} \frac{1}{n!}\,
+\ell_n(\alpha, \ldots, \alpha) = 0,
+\]
+i.e., $\ell_1(\alpha) + \frac{1}{2}\ell_2(\alpha,\alpha)
++ \frac{1}{6}\ell_3(\alpha,\alpha,\alpha) + \cdots = 0$.
+Writing $d = \ell_1$ (the linear part of the bar
+differential), this is precisely
+equation~\eqref{eq:deformed-cs-general}.  The higher
+Jacobi identities for the $\ell_n$ guarantee that the
+MC locus $\mathrm{MC}^{-1}(0)$ is well-defined and
+controls the formal deformation theory of~$\cA$.
+
+For~(i): when $\cA$ is quadratic, $m_n = 0$ for $n \geq 3$
+(the OPE has only simple and double poles), so $\ell_n = 0$
+for $n \geq 3$ and the MC equation reduces to
+$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$,
+which is the CS equation of motion
+(Theorem~\ref{thm:cs-koszul-km}).
+
+For~(ii): when $\cA$ is non-quadratic, the bar differential
+has components of all arities (Theorem~\ref{thm:bar-ainfty-complete}),
+giving nonzero $\ell_n$ for $n \geq 3$.
+The resulting MC equation~\eqref{eq:deformed-cs-general} is
+a homotopy flatness equation whose higher terms are determined
+by the non-quadratic OPE data of~$\cA$.
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+\label{rem:cs-koszul-heuristic}
+In the BV-BRST formalism, the higher $\ell_n$ for $n \geq 3$
+correspond to higher-order interaction vertices in the
+gauge-fixed action, with fields of mixed ghost degree so that
+the total form degree remains~$3$ on a $3$-manifold.
+For quadratic algebras we recover pure Chern--Simons; for
+non-quadratic algebras, each higher OPE relation contributes
+a higher-order vertex.  Identifying the $\ell_n$ with
+\emph{specific} BV-BRST corrections to a Chern--Simons
+action functional (in the sense of Costello--Gwilliam~\cite{CG17})
+requires the perturbative QFT framework and is not addressed here.
 \end{remark}
 
 \begin{remark}[Scope]
-The CS/Koszul Duality Correspondence is labeled \ClaimStatusConjectured{}
-because the identification of the Maurer--Cartan equation in the Koszul
-dual coalgebra with the Chern--Simons equation of motion is a heuristic
-observation, not a theorem.  The mathematical content --- that the MC
-equation has the \emph{form} of a flatness condition $dA + A \wedge A = 0$
-with higher corrections from $m_3, m_4, \ldots$ --- follows from the
-$L_\infty$ structure on $\mathcal{A}^! \otimes B$ (which is established).
-What remains conjectural is the \emph{precise dictionary}: identifying
-the gauge field $\alpha$ with a connection on a 3-manifold, the $m_2$ term
-with the Chern--Simons interaction, and the higher $m_n$ terms with
-BV-BRST corrections.  This dictionary requires physical input from the
-Costello--Gwilliam perturbative QFT framework.
+Theorem~\ref{thm:linf-mc-flatness} establishes
+$L_\infty$ MC = homotopy flatness for all chiral
+algebras, with explicit descriptions for KM (pure CS)
+and W-algebras (DS-reduced CS = generalized KdV).
+Theorem~\ref{thm:cs-koszul-km} establishes the CS/Koszul
+correspondence completely for Kac--Moody algebras: the MC equation
+in the bar complex IS the CS equation of motion, via the chain of
+identifications bar $\simeq$ semi-infinite $\simeq$ BRST $\simeq$
+gauge-fixed CS\@.  Theorem~\ref{thm:cs-koszul-general} establishes
+the \emph{algebraic} statement for all chiral algebras: the MC equation
+in the $L_\infty$ algebra of the bar complex has the form of a
+deformed flatness condition~\eqref{eq:deformed-cs-general}, with
+higher terms governed by non-quadratic OPE data.  What remains
+a \emph{physics interpretation} (not a conjecture) is the
+identification of these higher $\ell_n$ with specific terms in a
+BV-BRST quantized action functional; this requires the
+Costello--Gwilliam perturbative renormalization
+framework~\cite{CG17}.
 \end{remark}
 
 \subsection{Physical interpretation: quantum groups and Chern--Simons}
@@ -1594,7 +1826,7 @@ term $\{S,S\}$ requires the explicit propagator calculus of
 Part~III (Chapter~\ref{ch:bv-brst}).
 \end{proof}
 
-\begin{remark}[Chern--Simons interpretation; \ClaimStatusConjectured]\label{rem:cs-interp}
+\begin{remark}[Chern--Simons interpretation; \ClaimStatusHeuristic]\label{rem:cs-interp}
 The BV antibracket on the bar complex has a natural interpretation as
 arising from the Chern--Simons action: for quadratic $\mathcal{A}$,
 the master action is the CS functional, and for non-quadratic

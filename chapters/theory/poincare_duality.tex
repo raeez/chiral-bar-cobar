@@ -3,6 +3,8 @@
 \index{Poincare duality!chiral|textbf}
 \index{Verdier duality!bar computes dual}
 
+The Verdier duality that exchanged the Heisenberg algebra and its Koszul dual in Chapter~\ref{ch:heisenberg-frame} is a special case of a general mechanism on Fulton--MacPherson spaces. This chapter establishes the Verdier framework for chiral bar complexes.
+
 \section{Introduction}
 
 The bar construction of Chapter~\ref{chap:bar-cobar} produces a
@@ -222,6 +224,16 @@ $$\delta_{ij}(K)(z_1, \ldots, z_k) = K(z_1, \ldots, z_{i-1}, z_{i+1}, \ldots, z_
 This is the fundamental duality.
 \end{proof}
 
+\begin{example}[Heisenberg specialization]\label{ex:dual-diff-heisenberg}
+For the Heisenberg algebra $\cH_k$ with generator $J(z)$,
+Theorem~\ref{thm:dual-differentials} reduces to:
+the residue $\operatorname{Res}_{z_1=z_2} J(z_1) J(z_2)\, d\log(z_1-z_2) = k$
+on the bar side is dual to the delta-function insertion
+$\delta(z_1-z_2)$ on the cobar side, recovering the
+level-$k$ pairing that identifies $\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+in \S\ref{sec:frame-koszul-dual}.
+\end{example}
+
 \begin{remark}[Analytic framework]\label{rem:analytic-framework}
 The computation above is formal: the expression $\eta_{ij} \wedge \delta(z_i - z_j)$ is not well-defined as a pointwise product of distributions, since $\eta_{ij} = d\log(z_i - z_j)$ has a singularity precisely at the support of $\delta(z_i - z_j)$. The correct framework is Verdier duality as a functor on constructible sheaves (see \cite[Expos\'e XVIII]{SGA4}): the pairing is defined at the level of the derived category $D^b_c(\overline{C}_k(X))$ via the proper push-forward theorem, not by pointwise multiplication. The formula above is a shorthand for the sheaf-theoretic adjunction, and the passage from line 1 to line 2 is justified by the localization triangle for the pair $(C_k(X), D_{ij})$ rather than by literal integration of a distribution against a singular function.
 \end{remark}
@@ -349,6 +361,8 @@ This can also be seen from the bar construction perspective: once Theorem~\ref{t
 \begin{theorem}[Bar construction = Verdier dual via NAP; \ClaimStatusProvedHere]\label{thm:bar-computes-dual}
 \index{Verdier duality!bar computes dual|textbf}
 \index{non-abelian Poincare duality}
+For $\mathcal{H}_k$, the bar produced the Lie-type coalgebra and the cobar produced the Com-type algebra (\S\ref{sec:frame-koszul-dual}): bar and Verdier dual coincided.  The following theorem establishes this identification in general via non-abelian Poincar\'e duality.
+
 Let $\mathcal{A}$ be an augmented chiral algebra on a smooth curve $X$,
 valued in holonomic $\mathcal{D}$-modules
 (Convention~\ref{subsec:ambient-category}).  Assume that the configuration-space
@@ -434,6 +448,17 @@ reduces to a strict isomorphism of coalgebras.
 
 The construction is functorial in $\mathcal{A}$ and respects all structure (products, factorization, etc.). Any other natural map $\bar{B}^{\text{ch}}(\mathcal{A}) \to \mathcal{A}^!$ must agree with $\Phi$ by uniqueness of Verdier duality.
 \end{proof}
+
+\begin{example}[Heisenberg specialization]\label{ex:bar-dual-heisenberg}
+For $\cA = \cH_k$, Theorem~\ref{thm:bar-computes-dual} gives
+$\bar{B}^{\mathrm{ch}}(\cH_k) \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)^!$:
+the bar complex, built from logarithmic forms on $\overline{C}_n(X)$,
+is quasi-isomorphic to the Verdier dual coalgebra.
+Since $\cH_k$ is Koszul, both sides are concentrated in a single
+degree per arity, and $H^n(\bar{B}(\cH_k)) \cong \mathbb{C}$ with
+generating function $\prod(1-q^n)^{-1}$
+(cf.\ \S\ref{sec:frame-inversion}).
+\end{example}
 
 \subsection{Explicit computation in low degrees}
 
@@ -547,6 +572,17 @@ By Theorem~\ref{thm:bar-computes-dual}, the bar construction computes the Verdie
 The cobar reconstruction $\Omega^{\text{ch}}((\mathcal{A}_i)^!) \simeq \mathcal{A}_i$ follows from the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}), since for Koszul algebras the counit $\Omega \circ B \to \operatorname{id}$ is a quasi-isomorphism.
 \end{proof}
 
+\begin{example}[Heisenberg specialization]\label{ex:symmetric-heisenberg}
+For the Koszul pair $(\cH_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$,
+Theorem~\ref{thm:symmetric-koszul} gives:
+$\bar{B}^{\mathrm{ch}}(\cH_k) \simeq (\mathrm{Sym}^{\mathrm{ch}}(V^*))^!$
+and $\Omega^{\mathrm{ch}}((\cH_k)^!) \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$.
+The symmetric diagram specializes to the Lie--Com exchange:
+the chiral Lie structure of $\cH_k$ dualizes to the chiral commutative
+structure of $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, and vice versa
+(\S\ref{sec:frame-koszul-dual}).
+\end{example}
+
 \section{Stage 5: non-quadratic cases and completion}
 
 \subsection{The nilpotent completion}
@@ -603,12 +639,28 @@ $$\mathbb{D}: \varprojlim_n \mathcal{F}_n \xrightarrow{\sim} \varinjlim_n \mathb
 The coaugmentation ideal $I = \ker(\epsilon: \bar{B}^{\text{ch}} \to \mathbb{C})$ defines the $I$-adic filtration.  Each quotient $\bar{B}^{\text{ch}}/I^n$ involves only configuration spaces $C_k(X)$ with $k \leq n$, hence is geometric. The polynomial growth condition (hypothesis (2)) ensures $\dim(I^n/I^{n+1}) \leq C \cdot n^d$ for constants $C, d$, so the Mittag-Leffler condition holds for the inverse system $\{H^*(\bar{B}^{\text{ch}}/I^n)\}$.
 
 \emph{Step 3: Lifting to completions.}
-By Theorem~\ref{thm:bar-computes-dual}, we have a quasi-isomorphism $\Phi: \bar{B}^{\text{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$ at each finite level. The universal property of the inverse limit, together with the Mittag-Leffler condition from Step 2, yields:
+By Theorem~\ref{thm:bar-computes-dual}, we have a
+quasi-isomorphism
+$\Phi\colon \bar{B}^{\text{ch}}(\mathcal{A})
+\xrightarrow{\sim} \mathcal{A}^!$ at each finite level.
+The universal property of the inverse limit, together with
+the Mittag-Leffler condition from Step~2, yields:
 $$\widehat{\Phi}: \widehat{\bar{B}}^{\text{ch}}(\mathcal{A}) = \varprojlim_n \bar{B}^{\text{ch}}/I^n \xrightarrow{\sim} \varprojlim_n \mathcal{A}^!/J^n = \widehat{\mathcal{A}^!}$$
 as a quasi-isomorphism of completed coalgebras.
 
-\emph{Step 4: Cobar reconstruction.}
-By formal smoothness (hypothesis (3)), $\dim \mathrm{CH}^n(\mathcal{A}) < \infty$ (Theorem~\ref{thm:existence-koszul}(2)), so the cobar construction $\Omega^{\text{ch}}(\widehat{\mathcal{A}^!})$ is well-defined and carries a complete filtration compatible with the differential. The bar-cobar adjunction unit $\Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$ (Theorem~\ref{thm:bar-cobar-adjunction}) is a quasi-isomorphism for Koszul algebras; in the completed setting, the same argument applies since all operations are continuous with respect to the $I$-adic topology and the Mittag-Leffler condition ensures $\varprojlim^1 = 0$.
+\emph{Step~4: Cobar.}
+By formal smoothness (hypothesis~(3)),
+$\dim \mathrm{CH}^n(\mathcal{A}) < \infty$
+(Theorem~\ref{thm:existence-koszul}(2)), so the cobar
+construction $\Omega^{\text{ch}}(\widehat{\mathcal{A}^!})$ is
+well-defined and carries a complete filtration compatible with
+the differential.  The bar-cobar adjunction unit
+$\Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$
+(Theorem~\ref{thm:bar-cobar-adjunction}) is a quasi-isomorphism
+for Koszul algebras; in the completed setting, the same argument
+applies since all operations are continuous with respect to the
+$I$-adic topology and the Mittag-Leffler condition ensures
+$\varprojlim^1 = 0$.
 \end{proof}
 
 \subsection{Application: W-algebras}
@@ -661,12 +713,27 @@ from first principles, showing that the bar construction computes the intrinsic 
 For Koszul pairs $(\mathcal{A}_1, \mathcal{A}_2)$:
 $$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq (\mathcal{A}_2)^! \quad \text{and} \quad \bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq (\mathcal{A}_1)^!$$
 
-This is not a definition but a theorem, derived from the NAP identity:
+This is not a definition but a theorem, derived from the
+NAP identity:
 $$\int_X \mathcal{A}_1 \simeq \mathbb{D}\left(\int_{-X} \mathcal{A}_2\right)$$
 \end{theorem}
 
 \begin{proof}
-The intrinsic Koszul dual $\mathcal{A}^!$ is defined via Verdier duality on factorization homology (Definition~\ref{def:geom-cobar-intrinsic}): $\mathcal{A}^! := \mathbb{D}(\int_{-X} \mathcal{A})$, using only the factorization structure and Verdier duality, with no reference to bar constructions.  The identification $\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$ is Theorem~\ref{thm:verdier-bar-cobar}, whose proof proceeds by comparing the geometric bar complex with the Verdier dual via the configuration space model of factorization homology (Theorem~\ref{thm:bar-NAP-homology}).  The Koszul pair statement follows by applying this identification to both $\mathcal{A}_1$ and $\mathcal{A}_2$ and using the NAP identity (Theorem~\ref{thm:verdier-NAP}).
+The intrinsic Koszul dual $\mathcal{A}^!$ is defined via
+Verdier duality on factorization homology
+(Definition~\ref{def:geom-cobar-intrinsic}):
+$\mathcal{A}^! := \mathbb{D}(\int_{-X} \mathcal{A})$,
+using only the factorization structure and Verdier duality,
+with no reference to bar constructions.  The identification
+$\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim}
+\mathcal{A}^!$ is Theorem~\ref{thm:verdier-bar-cobar},
+whose proof proceeds by comparing the geometric bar complex
+with the Verdier dual via the configuration space model of
+factorization homology
+(Theorem~\ref{thm:bar-NAP-homology}).  The Koszul pair
+statement follows by applying this identification to both
+$\mathcal{A}_1$ and $\mathcal{A}_2$ and using the NAP
+identity (Theorem~\ref{thm:verdier-NAP}).
 \end{proof}
 
 \begin{remark}[Three viewpoints]\label{rem:three-unified}

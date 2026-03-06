@@ -1,5 +1,7 @@
 \chapter{Algebraic foundations and bar constructions}\label{ch:algebraic-foundations}
 
+In Chapter~\ref{ch:heisenberg-frame}, we computed the bar complex of the Heisenberg algebra and read off its Koszul dual from the resulting coalgebra structure. The construction used specific features of the Heisenberg OPE---the double pole, the absence of simple poles---but the algebraic template is general. This chapter establishes that template: the classical theory of Koszul duality for operads and algebras, from which the chiral generalization of Part~I is built.
+
 \section{Classical Koszul duality}
 \label{sec:classical-koszul-foundation}
 
@@ -101,7 +103,7 @@ A pair of quadratic algebras $(A_1, A_2)$ is a \emph{Koszul pair} if:
 \end{definition}
 
 \noindent
-The chiral analogue is Definition~\ref{def:chiral-koszul-pair-bar-cobar} below;
+The chiral analogue is Definition~\ref{def:chiral-koszul-pair} (Chapter~\ref{chap:koszul-pairs}), previewed in \S\ref{subsec:chiral-koszul-pairs-precise} below;
 the $\Eone$-chiral version appears in
 Theorem~\ref{thm:e1-chiral-koszul-duality} (Chapter~\ref{chap:koszul-pairs}).
 
@@ -342,80 +344,34 @@ Heisenberg is the abelian case where $h^\vee = 0$ and $d_{\text{CE}} = 0$, but t
 % ================================================================
 
 
-\subsection{Precise definition of chiral Koszul pairs}
+\subsection{Chiral Koszul pairs: preview}
 \label{subsec:chiral-koszul-pairs-precise}
 
-We now give the definitive definition that applies to all chiral algebras, not just 
-quadratic ones.
+The classical notion of Koszul pair (Definition~\ref{def:koszul-pair-classical}) extends to chiral algebras.  The definitive treatment, accommodating non-quadratic algebras via bar-cobar characterization and twisting morphisms, is given in Definition~\ref{def:chiral-koszul-pair} (Chapter~\ref{chap:koszul-pairs}).  We summarize the key idea here for orientation.
 
-\begin{definition}[Chiral Koszul pair—Version I: Bar-cobar characterization]
-\label{def:chiral-koszul-pair-bar-cobar}
-Two chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ on a smooth curve $X$ form a 
-\emph{chiral Koszul pair} if they satisfy:
+\label{def:chiral-koszul-pair-bar-cobar}%
+\label{def:chiral-koszul-pair-twisting}%
 
-\begin{enumerate}
-\item \emph{Bar produces dual coalgebra}:
-      $$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$$
-      as a quasi-isomorphism of chiral coalgebras, where $\mathcal{A}_2^!$ is the 
-      Koszul dual coalgebra to $\mathcal{A}_2$
-
-\item \emph{Symmetry}:
-      $$\bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq \mathcal{A}_1^!$$
-      as a quasi-isomorphism of chiral coalgebras
-
-\item \emph{Cobar reconstructs partner}:
-      $$\Omega^{\text{ch}}(\mathcal{A}_2^!) \simeq \mathcal{A}_1 \quad \text{and} \quad
-        \Omega^{\text{ch}}(\mathcal{A}_1^!) \simeq \mathcal{A}_2$$
-      as quasi-isomorphisms of chiral algebras
-\end{enumerate}
-\end{definition}
+Two chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ on a smooth curve $X$ form a \emph{chiral Koszul pair} (cf.\ Definition~\ref{def:chiral-koszul-pair}) if the geometric bar construction of each is quasi-isomorphic to the Koszul dual coalgebra of the other, and cobar inverts bar:
+$$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!, \quad
+  \bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq \mathcal{A}_1^!, \quad
+  \Omega^{\text{ch}}(\mathcal{A}_i^!) \simeq \mathcal{A}_i.$$
+Equivalently, there exists a universal twisting morphism $\tau_{12}\colon \mathcal{A}_1^! \to \mathcal{A}_2$ satisfying the Maurer--Cartan equation, with geometric realization via configuration space integration kernels.
 
 \begin{remark}
 \label{rem:why-definition-works}
-This definition:
-\begin{itemize}
-\item \emph{Escapes quadratic constraint}: Makes no reference to presentations by 
-      generators and relations
-\item \emph{Captures essential duality}: The bar of one is the coalgebra dual to the other
-\item \emph{Is geometrically computable}: Configuration spaces provide explicit realizations
-\item \emph{Includes classical cases}: Quadratic Koszul pairs satisfy these conditions
-\item \emph{Extends to physics}: Natural for vertex operator algebras and CFT
-\end{itemize}
+This definition escapes the quadratic constraint, captures essential duality, is geometrically computable via configuration spaces, includes classical cases, and extends naturally to vertex operator algebras and CFT.  It connects to Gui--Li--Zeng's framework where Koszul
+duality is expressed through Maurer--Cartan elements in
+$\mathcal{A}_1^! \otimes \mathcal{A}_2$.
 \end{remark}
-
-\begin{definition}[Chiral Koszul pair—Version II: Twisting morphism characterization]
-\label{def:chiral-koszul-pair-twisting}
-\index{twisting morphism|textbf}
-Equivalently, $(\mathcal{A}_1, \mathcal{A}_2)$ form a chiral Koszul pair if there exists 
-a \emph{universal twisting morphism} $\tau_{12}: \mathcal{A}_1^! \to \mathcal{A}_2$ 
-satisfying the Maurer--Cartan equation:
-$$d\tau_{12} + \frac{1}{2}[\tau_{12}, \tau_{12}] = 0$$
-
-which induces quasi-isomorphisms:
-\begin{align}
-\mathcal{A}_1 &\simeq \Omega^{\text{ch}}(\mathcal{A}_2^!)_{\tau_{12}} \\
-\mathcal{A}_2 &\simeq (\mathcal{A}_1)_{\tau_{12}}
-\end{align}
-where subscript $\tau$ denotes twisting by $\tau$.
-\end{definition}
 
 \begin{remark}[Twisting morphisms]
 \label{rem:twisting-perspective}
+\index{twisting morphism|textbf}
 \index{Maurer--Cartan element|textbf}
-The twisting morphism $\tau_{12}$ is the \emph{explicit map} realizing the Koszul duality:
-\begin{itemize}
-\item \emph{Domain and codomain}: $\tau_{12}: \mathcal{A}_1^! \to \mathcal{A}_2$ goes 
-      from the coalgebra dual to algebra
-\item \emph{Maurer--Cartan equation}: Ensures $\tau$ intertwines structures correctly
-\item \emph{Geometric realization.}
-      $$\tau(c \otimes d) = \int_{\overline{C}_2(X)} \text{ev}^*(c \otimes d) \wedge K(z_1, z_2)$$
-      where $K$ is a universal integration kernel
-\item \emph{Universality}: Any other twisting factors through $\tau_{12}$
-\end{itemize}
-
-This perspective connects to Gui--Li--Zeng's framework where Koszul
-duality is expressed through Maurer--Cartan elements in
-$\mathcal{A}_1^! \otimes \mathcal{A}_2$.
+The twisting morphism $\tau_{12}\colon \mathcal{A}_1^! \to \mathcal{A}_2$ maps from the coalgebra dual to the algebra and is geometrically realized as:
+$$\tau(c \otimes d) = \int_{\overline{C}_2(X)} \text{ev}^*(c \otimes d) \wedge K(z_1, z_2)$$
+where $K$ is a universal integration kernel.  See Definition~\ref{def:chiral-koszul-pair} for the complete formulation.
 \end{remark}
 
 \subsection{The Gui--Li--Zeng quadratic duality framework}
@@ -1268,14 +1224,14 @@ structure, which is not contained in~\cite{BD04}.
 
 \begin{theorem}[Excision property; \ClaimStatusProvedElsewhere]
 \label{thm:excision-factorization}
-\textup{(Costello--Gwilliam~\cite[§6.3]{CG17}; Lurie~\cite[Theorem~5.5.3.11]{LurieHA})}
+\textup{(Costello--Gwilliam~\cite[§6.3]{CG17}; Lurie~\cite[Theorem~5.5.3.11]{HA})}
 
 Let $\mathcal{F}$ be a factorization algebra on $M$, and let
 $M = U \cup V$ be a \emph{Weiss cover} (i.e., every finite subset of $M$ is contained in $U$ or in $V$). Then there is a natural equivalence:
 $$\mathcal{F}(M) \simeq \mathcal{F}(U) \otimes_{\mathcal{F}(U \cap V)} \mathcal{F}(V)$$
 where the tensor product is the derived pushout over $\mathcal{F}(U \cap V)$.
 
-For \emph{locally constant} factorization algebras ($E_n$-algebras), excision holds more generally for collar-gluing decompositions of manifolds, without the Weiss hypothesis~\cite[Theorem~5.5.3.11]{LurieHA}.
+For \emph{locally constant} factorization algebras ($E_n$-algebras), excision holds more generally for collar-gluing decompositions of manifolds, without the Weiss hypothesis~\cite[Theorem~5.5.3.11]{HA}.
 \end{theorem}
 
 \begin{proof}

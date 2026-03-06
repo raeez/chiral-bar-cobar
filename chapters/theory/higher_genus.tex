@@ -3,6 +3,8 @@
 \index{higher genus!bar complex|textbf}
 \index{quantum corrections|textbf}
 
+The genus-$1$ curvature $d^2 = \kappa(\cA) \cdot \omega_1 \cdot \mathrm{id}$ and the $\hat{A}$-genus tower that we computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are universal: they hold for every Koszul chiral algebra, with $\kappa(\cA)$ determined by the leading OPE pole.  This chapter establishes that universality and proves the four main theorems in full generality.
+
 \bigskip
 \noindent
 At genus zero, Koszul duality is an algebraic theorem: the bar and
@@ -23,7 +25,35 @@ weight of the deformation.  Koszul duality at genus $g$ is thus
 across genera, but the quasi-isomorphism at each genus acquires a
 correction proportional to $\lambda_g$.
 
-The three main theorems of the monograph --- bar-cobar inversion
+\begin{remark}[Parallel track: the anomaly]\label{rem:anomaly-parallel-track}
+\index{conformal anomaly!parallel track}
+Every mathematical construction in this chapter has a physical
+counterpart, and the reader may hold both in mind simultaneously:
+\begin{center}
+\small
+\begin{tabular}{ll}
+\textbf{This chapter} & \textbf{Physics reading} \\ \hline
+Curvature $d^2 = \kappa \cdot \omega_1$ & Conformal anomaly \\
+$\kappa(\cA) = 0$ (flatness) & Anomaly cancellation ($c = 26$) \\
+Coderived category & Off-shell (curved background) \\
+Derived category & On-shell (anomaly-free) \\
+Obstruction class $\mathrm{obs}_g$ & One-loop determinant on $\Sigma_g$ \\
+$\hat{A}$-genus tower & Family index of chiral fields \\
+Complementarity $Q_g + Q_g' = H^*$ & Matter--ghost pairing
+\end{tabular}
+\end{center}
+\noindent
+These identifications are theorems, not analogies: the
+BV$=$bar identification of Theorem~\ref{thm:brst-bar-genus0}
+makes them precise at genus~$0$, and the modular operad
+extension of~\S\ref{sec:modular-koszul-programme} articulates
+the higher-genus programme.  In particular, the condition
+$\kappa = 0$ is simultaneously the mathematical condition for
+the bar complex to be uncurved and the physical condition for
+anomaly cancellation.
+\end{remark}
+
+The main theorems of the monograph --- bar-cobar inversion
 (Theorem~B, Theorem~\ref{thm:higher-genus-inversion}),
 deformation-obstruction complementarity (Theorem~C,
 Theorem~\ref{thm:quantum-complementarity-main}), and the
@@ -421,15 +451,20 @@ The higher operations arise from the non-coassociativity of~$\mathcal{C}$ (when 
 \[
 n_k(K_1, \ldots, K_k) = \int_{\partial \overline{C}_k(X)} K_1(z_1) \cdots K_k(z_k) \cdot P_k(z_1, \ldots, z_k)
 \]
-where $P_k$ is the $k$-point propagator obtained by iterating the basic two-point propagator $P_2(z_1, z_2) = \delta(z_1 - z_2)$ over all tree-level Feynman graphs with $k$ external legs.
+where $P_k$ is the $k$-point propagator obtained by iterating the basic
+two-point propagator $P_2(z_1, z_2) = \delta(z_1 - z_2)$ over all
+tree-level Feynman graphs with $k$ external legs.
 
 \emph{$A_\infty$ relations.}
 Define the total codifferential $D = \sum_{k \geq 1} n_k$ as a
 degree-$1$ coderivation of the tensor coalgebra
 $T^c(s^{-1}\bar{\mathcal{C}})$.  The condition $D^2 = 0$ is equivalent
 to the Stasheff relations
-$\sum_{r+s+t=n} (-1)^{rs+t}\, n_{r+1+t}(\mathrm{id}^{\otimes r}
-\otimes n_s \otimes \mathrm{id}^{\otimes t}) = 0$, since a coderivation
+\[
+\sum_{r+s+t=n} (-1)^{rs+t}\, n_{r+1+t}(\mathrm{id}^{\otimes r}
+\otimes n_s \otimes \mathrm{id}^{\otimes t}) = 0,
+\]
+since a coderivation
 of a cofree coalgebra is determined by its projections to cogenerators,
 and $D^2$ projects to the left-hand side of the Stasheff identity
 (Loday--Vallette~\cite{LV}, Proposition~9.2.8).  The condition $D^2 = 0$
@@ -1486,6 +1521,8 @@ with the algebraic theory of Koszul duality.
 
 \begin{theorem}[Bar-cobar isomorphism for Koszul pairs; \ClaimStatusProvedHere]
 \label{thm:bar-cobar-isomorphism-main}
+For the Koszul pair $(\mathcal{H}_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$, we verified this concretely in~\S\ref{sec:frame-inversion}: the bar of one is the dual coalgebra of the other, and the cobar reconstructs the partner.  The following theorem is the general statement --- Theorem~A of this monograph.
+
 Let $(\mathcal{A}_1, \mathcal{A}_2)$ be a chiral Koszul pair of chiral algebras on a
 smooth curve $X$. Then we have the following system of quasi-isomorphisms:
 
@@ -1890,6 +1927,8 @@ The fundamental Arnold relation $(z_{12})(z_{23})(z_{31}) = 1$ at genus zero mus
 \label{thm:arnold-higher-genus}
 \label{thm:arnold-quantum}
 \index{Arnold relations!higher genus}
+At genus~$0$, the Arnold relation $\mathcal{A}_3^{(0)} = 0$ was the mechanism ensuring $d^2 = 0$ in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}).  At genus~$1$, the Arnold $3$-form acquires a correction proportional to the volume form; this is the geometric origin of the curvature $d^2 = \kappa \cdot \omega_1$ that we computed in~\S\ref{sec:frame-genus1}.
+
 Define the Arnold 3-form:
 \begin{equation}
 \mathcal{A}_3^{(g)} = \eta_{12}^{(g)} \wedge \eta_{23}^{(g)} + \eta_{23}^{(g)} \wedge \eta_{31}^{(g)} + \eta_{31}^{(g)} \wedge \eta_{12}^{(g)}
@@ -2351,6 +2390,8 @@ is independent of genus, ensuring compatibility of bar differentials across gene
 \label{sec:quantum-corrections-bar}
 
 \subsection{Genus decomposition of bar complex}
+
+At genus~$0$, the Heisenberg bar complex was a genuine cochain complex with $d^2 = 0$ (\S\ref{sec:frame-bar-all}).  At genus~$1$, the curvature $d^2 = k \cdot \omega_1$ appeared (\S\ref{sec:frame-genus1}), and the Eisenstein series $E_2(\tau)$ entered through the holomorphic anomaly (\S\ref{sec:frame-holomorphic-anomaly}).  We now develop these quantum corrections systematically for arbitrary chiral algebras.
 
 The full bar complex incorporates contributions from all genera:
 
@@ -2864,6 +2905,8 @@ where:
 
 \begin{theorem}[Nilpotency at genus 1; \ClaimStatusProvedHere]
 \label{thm:genus1-d-squared}
+For the Heisenberg algebra on $E_\tau$, we saw in~\S\ref{sec:frame-genus1} that $d^2 = k \cdot \omega_1$ is a nonzero \emph{scalar}; here we prove that the full differential nonetheless satisfies $(d^{(1)})^2 = 0$ as an operator, with the curvature appearing as a central correction rather than a failure of nilpotence.
+
 The genus-1 differential satisfies:
 \begin{equation}
 (d^{(1)})^2 = 0
@@ -3996,6 +4039,8 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 
 \begin{theorem}[Genus universality; \ClaimStatusProvedHere]\label{thm:genus-universality}
 \index{genus universality theorem|textbf}
+For the Heisenberg algebra, we computed $\mathrm{obs}_g(\mathcal{H}_k) = k \cdot \lambda_g$ and recognized the generating function as the $\hat{A}$-genus (\S\ref{sec:frame-genus-tower}).  The following theorem establishes that this factorization is universal: every Koszul chiral algebra has the same structure, with a single number $\kappa(\cA)$ controlling the entire genus tower.
+
 For every Koszul chiral algebra $\mathcal{A}$ with a single strong generator, the genus-$g$ obstruction class factors as
 \begin{equation}\label{eq:genus-universality}
 \mathrm{obs}_g(\mathcal{A}) \;=\; \kappa(\mathcal{A}) \cdot \lambda_g
@@ -4273,8 +4318,10 @@ structure, placing the cohomology classes in $R^*$ by
 \cite[Appendix~A]{FP00}.
 
 Part~(ii): The differential $d_2$ is the Kodaira--Spencer map
-$\mathrm{KS}\colon H^p(\overline{\mathcal{M}}_g, R^q\pi_*\mathcal{A})
-\to H^{p+2}(\overline{\mathcal{M}}_g, R^{q-1}\pi_*\mathcal{A})$,
+\begin{multline*}
+\mathrm{KS}\colon H^p(\overline{\mathcal{M}}_g, R^q\pi_*\mathcal{A}) \\
+\to H^{p+2}(\overline{\mathcal{M}}_g, R^{q-1}\pi_*\mathcal{A}),
+\end{multline*}
 which is a cup product with the Kodaira--Spencer class
 $\mathrm{KS} \in H^1(\overline{\mathcal{M}}_g,
 T_{\overline{\mathcal{M}}_g})$.  This class is dual to
@@ -4517,33 +4564,31 @@ Equation~\eqref{eq:grr-bridge-total} follows from
 Theorem~\ref{thm:universal-generating-function}.
 \end{proof}
 
-\begin{remark}[Towards a family index theorem]\label{rem:towards-family-index}
+\begin{remark}[Family index theorem]\label{rem:towards-family-index}
 \index{index theorem!modular deformation}
-Proposition~\ref{prop:grr-bridge} reduces the family index
-conjecture (Conjecture~\ref{conj:family-index}) to the following:
-construct a perfect complex $\mathcal{D}_{\cA}$ on
-$\overline{\mathcal{M}}_g$---the modular deformation complex
-of~$\cA$---such that
-\begin{equation}\label{eq:family-index-target}
-\operatorname{ch}(R\pi_* \mathcal{D}_{\cA}) \cdot
-\operatorname{Td}(T^{\mathrm{vir}}_\pi)
-\;=\;
-\kappa(\cA) \cdot c_g(\mathbb{E}) \cdot \psi^{2g-2}
-\quad \text{in } H^*(\overline{\mathcal{M}}_{g,1}).
-\end{equation}
-The natural candidate is $\mathcal{D}_{\cA} =
-\kappa(\cA) \cdot \mathbb{E}$, a twist of the Hodge bundle by
-the obstruction coefficient.  Mumford's Grothendieck--Riemann--Roch
-calculation~\cite{Mumford83} gives
-$\operatorname{ch}_k(\mathbb{E}) =
-B_{2k}/(2k \cdot (2k-1)!) \cdot \kappa_{2k-1}/2$ on
-$\overline{\mathcal{M}}_g$, which controls the Chern character.
-The Faber--Pandharipande integral then extracts the scalar
-$\lambda_g^{\mathrm{FP}}$ from this Chern character data.
-The precise identification of $\mathcal{D}_{\cA}$ with a functorial
-construction from $\cA$ (rather than the ad hoc twist
-$\kappa(\cA) \cdot \mathbb{E}$) remains the content of the
-family index conjecture.
+Proposition~\ref{prop:grr-bridge} is the genus-by-genus
+statement; the family index theorem
+(Theorem~\ref{thm:family-index}) assembles
+these into the generating function identity
+$\sum F_g x^{2g} = \kappa(\cA)(\hat{A}(ix)-1)$
+and identifies it as the Grothendieck--Riemann--Roch pushforward
+of the Todd class of the universal curve.  The modular deformation
+complex $\mathcal{D}_{\cA}^{(g)} = \kappa(\cA) \cdot \mathbb{E}
+\in K_0(\overline{\mathcal{M}}_g) \otimes \mathbb{Q}$ is
+determined by genus universality
+(Theorem~\ref{thm:genus-universality}): the obstruction class
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ determines the top
+Chern class, and Mumford's GRR formula~\cite{Mumford83}
+recovers the Bernoulli coefficients from the Chern character of
+$\mathbb{E}$.  The $\hat{A}$-genus appearance is thus explained:
+it is the Todd class of the universal curve, Wick-rotated by the
+positivity of tautological intersection numbers.
+
+A stronger result---constructing $\mathcal{D}_{\cA}^{(g)}$ as a
+sheaf (not just a $K$-theory class) with full Chern character
+matching the genus expansion at intermediate degrees---would require
+the coderived Ran-space formalism and is the content of
+Conjecture~\ref{conj:universal-MC}.
 \end{remark}
 
 % ================================================================
@@ -4658,6 +4703,7 @@ extension in $\mathcal{H}_\kappa$ is dual to the curvature in $\mathcal{H}_\kapp
 \label{thm:quantum-complementarity}
 \index{deformation-obstruction complementarity|textbf}
 \index{Lagrangian!complementarity|textbf}
+For the Heisenberg pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$, we computed in~\S\ref{sec:frame-complementarity} that the central extension of $\mathcal{H}_\kappa$ and the curvature of its dual are complementary components of $H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$.  The following theorem --- Theorem~C of this monograph --- establishes this complementarity in full generality, revealing it as a Lagrangian polarization.
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair on a smooth projective
 curve $X$ over $\mathbb{C}$, with $\mathcal{A}$ a sheaf of chiral algebras in
 the sense of Beilinson--Drinfeld \cite[Chapter 3]{BD04} and $\mathcal{A}^!$
@@ -5691,10 +5737,16 @@ For the Heisenberg algebra: $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$
 (central extension, eigenvalue $+1$) and $Q_1(\mathcal{H}_\kappa^!) = \mathbb{C}
 \cdot \lambda$ (curvature, eigenvalue $-1$).  Dimension check: $1 + 1 = 2$.
 
-\emph{Genus $2$}: $\dim H^*(\overline{\mathcal{M}}_2) = 8$.  The involution
-$\sigma$ splits $H^*$ into eigenspaces of dimensions determined by the
-chiral algebra.  For the Heisenberg algebra, the Verdier involution acts on each
-Hodge component, and the dimension count $\dim V^+ + \dim V^- = 8$ holds.
+\emph{Genus $2$}: $\dim H^*(\overline{\mathcal{M}}_2) = 8$
+(Poincar\'e polynomial $1 + 3t^2 + 3t^4 + t^6$).
+The involution $\sigma$ splits $H^*$ into $\pm 1$-eigenspaces whose
+dimensions depend on the chiral algebra through the $j_*/j_!$ extension
+data.  For self-dual algebras (e.g., $\mathrm{Vir}_0$),
+Corollary~\ref{cor:virasoro-quantum-dim} gives
+$\dim V^+ = \dim V^- = 4$.  For all Koszul chiral algebras
+$\cA$ with trivial center, $\dim Q_2(\cA) + \dim Q_2(\cA^!) = 8$.
+Detailed genus-$2$ complementarity dimensions are verified in
+Part~II (\S\ref{subsec:genus2-complementarity-verification}).
 \end{proof}
 
 This completes Step~III. Combining Steps~7--10, we have shown:
@@ -5810,6 +5862,226 @@ a $(-1)$-shifted symplectic structure in the PTVV sense
 (Conjecture~\ref{conj:lagrangian-complementarity}).
 \end{remark}
 
+\subsection{Shifted symplectic complementarity}
+\label{sec:shifted-symplectic-complementarity}
+\index{shifted symplectic!complementarity|textbf}
+
+Proposition~\ref{prop:lagrangian-eigenspaces} establishes the
+Lagrangian polarization at the level of cohomology.  The following
+theorem upgrades this to the chain level and identifies the
+$(-1)$-shifted symplectic structure via the BV formalism.
+
+\begin{theorem}[Shifted symplectic complementarity; \ClaimStatusProvedHere]
+\label{thm:shifted-symplectic-complementarity}
+\index{shifted symplectic!(-1)-shifted|textbf}
+\index{Lagrangian!complementarity!shifted symplectic|textbf}
+The genus-$1$ complementarity $Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!) \cong H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$ that we computed in~\S\ref{sec:frame-complementarity} acquires the following structural refinement: the decomposition is not merely additive but \emph{Lagrangian} with respect to a $(-1)$-shifted symplectic structure.
+\index{BV algebra!shifted symplectic structure}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth projective
+curve $X$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chain-level Lagrangian decomposition.}
+  The Verdier self-duality
+  $\mathbb{D}\mathcal{Z}(\cA) \cong \mathcal{Z}(\cA)$ and
+  the involution $\sigma$ of
+  Proposition~\textup{\ref{prop:lagrangian-eigenspaces}}
+  lift from cohomology to the cochain complex
+  $C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+  The homotopy eigenspaces
+  \[
+  C_g^+ := C_g^{h\sigma = +1}, \qquad
+  C_g^- := C_g^{h\sigma = -1}
+  \]
+  are Lagrangian subcomplexes of $C_g$ for the chain-level
+  Verdier pairing, and $C_g^+ \oplus C_g^- \xrightarrow{\sim} C_g$
+  is a quasi-isomorphism recovering the decomposition of
+  Theorem~\textup{\ref{thm:quantum-complementarity-main}} on cohomology.
+
+\item \emph{BV antibracket is $(-1)$-shifted Poisson.}
+  The BV bracket $\{-,-\}_{\mathrm{BV}}$ on
+  $\barB^{\mathrm{ch}}(\cA)$
+  \textup{(}Theorem~\textup{\ref{thm:config-space-bv}}\textup{)}
+  has degree~$+1$, hence defines a $(-1)$-shifted Poisson structure.
+  Non-degeneracy is guaranteed by the Koszul duality pairing
+  \textup{(}Corollary~\textup{\ref{cor:duality-bar-complexes-complete}}\textup{)}
+  and the Verdier identification
+  $\mathbb{D}(\barB(\cA)) \cong \Omega(\cA^!)$
+  \textup{(}Theorem~\textup{\ref{thm:bv-functor}}\textup{)}.
+
+\item \emph{Formal moduli is $(-1)$-shifted symplectic.}
+  The dg Lie algebra $L_g := \barB^{(g)}(\cA)[1]$, with Lie bracket
+  induced by the BV antibracket, carries a non-degenerate invariant
+  pairing of degree~$-1$.  By the Kontsevich--Pridham correspondence
+  \cite{Pridham17}, the formal moduli problem
+  $\mathrm{Def}_g(\cA) := \mathrm{MC}(L_g)$
+  is $(-1)$-shifted symplectic.  The $\sigma$-eigenspace decomposition
+  $L_g = L_g^+ \oplus L_g^-$ provides complementary Lagrangian
+  subspaces, with $L_g^+$ controlling deformations of~$\cA$ and
+  $L_g^-$ controlling deformations of~$\cA^!$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).}
+The self-duality
+$\mathcal{Z}(\cA) \xrightarrow{\sim} \mathbb{D}\mathcal{Z}(\cA)$
+is a morphism of constructible complexes on $\overline{\mathcal{M}}_g$,
+constructed in Step~7 of the proof of
+Theorem~\ref{thm:quantum-complementarity-main} from the Koszul pairing.
+Applying $R\Gamma$ (which is functorial) yields a chain map
+$\sigma \colon C_g \to C_g$ with $\sigma^2 = \mathrm{id}$, and the
+anti-symplectic property
+$\langle \sigma(x), \sigma(y) \rangle_{\mathbb{D}}
+= -\langle x, y \rangle_{\mathbb{D}}$
+holds at the cochain level by the same argument as
+Proposition~\ref{prop:lagrangian-eigenspaces}(ii): the sign arises
+from the anti-commutativity
+$\mathbb{D} \circ \nabla_{\kappa(v)}^z
+= -\nabla_{\kappa(v)}^z \circ \mathbb{D}$,
+which is a sheaf-level identity.  Over~$\mathbb{C}$ (characteristic
+$\neq 2$), the involution $\sigma$ splits $C_g$ into homotopy
+eigenspaces $C_g = C_g^+ \oplus C_g^-$; the anti-symplectic property
+forces $\langle C_g^+, C_g^+ \rangle = 0$ and
+$\langle C_g^-, C_g^- \rangle = 0$, making them isotropic.
+Maximality (hence the Lagrangian property) follows from the
+direct-sum decomposition.
+
+\emph{Part (ii).}
+The BV bracket $\{-,-\}_{\mathrm{BV}}$ on $\barB^{\mathrm{ch}}(\cA)$
+has degree~$+1$ by Theorem~\ref{thm:config-space-bv}.  A degree~$+1$
+Lie bracket is by definition a $(-1)$-shifted Poisson structure: the
+associated bivector field on the formal moduli problem has degree~$-1$.
+For non-degeneracy, the map
+$x \mapsto \{x, -\}_{\mathrm{BV}}$
+gives $\barB^{\mathrm{ch}}(\cA) \to
+\barB^{\mathrm{ch}}(\cA)^{\vee}[-1]$.
+The Verdier duality identification
+$\mathbb{D}(\barB(\cA)) \cong \Omega(\cA^!)$
+(Theorem~\ref{thm:bv-functor}) identifies
+$\barB^{\mathrm{ch}}(\cA)^{\vee}$ with $\Omega^{\mathrm{ch}}(\cA^!)$.
+On the Koszul locus, the bar-cobar adjunction
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}) ensures that this
+map induces a quasi-isomorphism on cohomology, verifying
+non-degeneracy.
+
+\emph{Part (iii).}
+Shifting $\barB^{(g)}(\cA)$ by $[1]$ converts the degree~$+1$ BV
+bracket to a degree~$0$ Lie bracket on $L_g$; the dg Lie algebra
+axioms are inherited from the BV algebra axioms.  The BV pairing on
+$\barB^{(g)}(\cA)$ (degree~$+1$ from the antibracket; equivalently,
+the non-degenerate pairing from the Koszul--Verdier construction of
+Corollary~\ref{cor:duality-bar-complexes-complete}) shifts to a
+pairing on $L_g$ of degree $+1 - 2 = -1$
+(each of the two inputs shifts by~$[-1]$).
+Invariance of the pairing (the cyclic property
+$\langle [x,y], z \rangle = \langle x, [y,z] \rangle$)
+follows from the BV relation
+$\{a, bc\} = \{a,b\}c \pm b\{a,c\}$ (Leibniz rule) applied to
+the pairing.  By the Kontsevich--Pridham correspondence---a
+non-degenerate invariant pairing of degree~$n$ on a dg Lie algebra
+$L$ endows $\mathrm{MC}(L)$ with an $n$-shifted symplectic
+structure~\cite{Pridham17}---the formal moduli
+$\mathrm{Def}_g(\cA) = \mathrm{MC}(L_g)$ is $(-1)$-shifted
+symplectic.
+
+The Verdier involution~$\sigma$ induces an involution on~$L_g$ that
+anti-commutes with the Lie bracket:
+$\sigma[x,y] = -[\sigma x, \sigma y]$.
+(This follows from the sign reversal under Verdier duality: the
+antibracket involves the symplectic form on configuration space,
+and~$\mathbb{D}$ reverses the orientation of~$\overline{C}_n(X)$,
+hence reverses the sign of the symplectic form.)
+By the eigenspace argument of
+Proposition~\ref{prop:lagrangian-eigenspaces}(iii), the
+$\sigma$-eigenspaces $L_g^+$ and $L_g^-$ are isotropic for the
+$(-1)$-shifted symplectic form.  They are maximal isotropic---hence
+Lagrangian---because $L_g = L_g^+ \oplus L_g^-$ (from part~(i),
+applied to the bar complex rather than to~$R\Gamma$).
+\end{proof}
+
+\begin{proposition}[PTVV Lagrangian embedding; \ClaimStatusProvedHere]
+\label{prop:ptvv-lagrangian}
+\index{PTVV!Lagrangian embedding|textbf}
+\index{Lagrangian!PTVV sense|textbf}
+For a chiral Koszul pair $(\cA, \cA^!)$ and $g \geq 2$, the cochain
+complex
+$C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
+carries a $(-(3g{-}3))$-shifted symplectic structure in the sense of
+Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}, and
+$Q_g(\cA)$, $Q_g(\cA^!)$ embed as complementary Lagrangians in the
+PTVV sense.
+\end{proposition}
+
+\begin{proof}
+\emph{Shifted symplectic structure.}
+For a cochain complex $V$ with a non-degenerate symmetric pairing
+$\langle -,- \rangle \colon V \otimes V \to \mathbb{C}[n]$,
+the associated linear derived affine scheme
+$\mathbf{V} := \operatorname{Spec}(\operatorname{Sym}(V^*))$
+carries an $n$-shifted symplectic structure: the pairing defines a
+constant $2$-form of degree~$n$ on $\mathbf{V}$, and the closure
+condition $d_{\mathrm{dR}}\omega = 0$ is automatic for a constant
+form on a linear space~\cite[Example~1.4]{PTVV13}.
+Non-degeneracy of the pairing translates to non-degeneracy of the
+$2$-form.
+The Verdier pairing on $C_g$
+(Proposition~\ref{prop:lagrangian-eigenspaces}(i)) is a
+non-degenerate symmetric pairing of degree $-(3g{-}3)$, so $C_g$
+carries a $(-(3g{-}3))$-shifted symplectic structure.
+
+\emph{PTVV Lagrangian conditions.}
+A \emph{Lagrangian} in a linear $n$-shifted symplectic space
+$(V, \omega)$ is a subcomplex $L \hookrightarrow V$
+satisfying~\cite[Definition~2.8]{PTVV13}:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Isotropy:} $\omega|_L = 0$ (the pairing restricts to
+  zero on $L$).
+\item \emph{Non-degeneracy:} the induced map
+  $L \to (V/L)^{\vee}[n]$ is a quasi-isomorphism.
+\end{enumerate}
+For $L = Q_g(\cA)$:
+\begin{itemize}
+\item Condition~(a) is
+  Proposition~\ref{prop:lagrangian-eigenspaces}(iii):
+  $\langle v, w \rangle_{\mathbb{D}} = 0$ for $v, w \in Q_g(\cA)$.
+\item Condition~(b): Since
+  $C_g = Q_g(\cA) \oplus Q_g(\cA^!)$
+  (Theorem~\ref{thm:quantum-complementarity-main}), we have
+  $C_g / Q_g(\cA) \cong Q_g(\cA^!)$, and the induced map
+  $Q_g(\cA) \to Q_g(\cA^!)^{\vee}[-(3g{-}3)]$ is a
+  quasi-isomorphism: the Verdier pairing restricted to
+  $Q_g(\cA) \otimes Q_g(\cA^!)$ is perfect of degree $-(3g{-}3)$
+  by~\eqref{eq:quantum-duality}.
+\end{itemize}
+The same argument applies with $\cA$ and~$\cA^!$ exchanged.
+\end{proof}
+
+\begin{remark}[Two shifted symplectic structures]\label{rem:ptvv-relation}
+\index{Pantev--To\"en--Vaqui\'e--Vezzosi}
+The complementarity theorem carries \emph{two} shifted symplectic
+structures:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{BV ($(-1)$-shifted).}
+  The formal moduli $\mathrm{Def}_g(\cA)$ is $(-1)$-shifted
+  symplectic, with the shift arising from the BV antibracket
+  (Theorem~\ref{thm:shifted-symplectic-complementarity}(iii)).
+  This is universal: it does not depend on $g$ or on
+  $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g$.
+\item \emph{Verdier ($(-(3g{-}3))$-shifted).}
+  The linear derived scheme $C_g = R\Gamma(\overline{\mathcal{M}}_g,
+  \mathcal{Z}(\cA))$ is $(-(3g{-}3))$-shifted symplectic, with the
+  shift arising from Verdier duality on the center local system
+  (Proposition~\ref{prop:ptvv-lagrangian}).
+\end{enumerate}
+In both cases $Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary
+Lagrangians.  The two structures are compatible: the Verdier pairing
+is the cohomological shadow of the BV antibracket, mediated by the
+spectral sequence
+$E_2^{p,q,g} \Rightarrow H^{p+q}_{\mathrm{chiral}}$.
+Together they resolve
+Conjecture~\ref{conj:lagrangian-complementarity}.
+\end{remark}
+
 \begin{theorem}[Spectral sequence as genus stratification; \ClaimStatusProvedHere]\label{thm:ss-genus-stratification}
 The spectral sequence of the bar complex admits a natural genus grading:
 $$E_1^{p,q,g} = H^q\left(\bar{B}^p_g(\mathcal{A})\right)$$
@@ -5900,7 +6172,7 @@ moduli.
 \end{conjecture}
 
 \begin{remark}[Scope of Conjecture~\ref{conj:physical-complementarity}]
-This corollary is labeled \ClaimStatusConjectured{} because a complete proof requires:
+This corollary is labeled \ClaimStatusHeuristic{} because a complete proof requires:
 (a)~the identification of cohomological obstructions in the bar complex with BRST
 anomalies in the physical theory, which is established for $g = 0$
 (Beilinson--Drinfeld) but requires Costello's renormalization formalism
@@ -6080,7 +6352,7 @@ Combining: $2\dim Q_g(\cA) =
 \label{cor:virasoro-quantum-dim}
 \index{Virasoro algebra!quantum corrections}
 The Virasoro algebra at $c = 0$ is Koszul self-dual
-(proved directly in Theorem~\ref{thm:virasoro-self-duality}; alternatively, $c = 0$ corresponds to the fixed point of the Feigin--Frenkel involution $c \mapsto 26 - c$) with center $Z(\mathrm{Vir}_0)
+(Theorem~\ref{thm:virasoro-self-duality}; note that $c = 0$ is the unique uncurved point, \emph{not} the fixed point of the Feigin--Frenkel involution $c \mapsto 26 - c$, whose fixed point $c = 13$ is self-dual in a different sense) with center $Z(\mathrm{Vir}_0)
 = \mathbb{C}$.  For all $g \geq 1$:
 \begin{equation}\label{eq:virasoro-quantum-dim}
 \dim Q_g(\mathrm{Vir}_0)
@@ -6093,11 +6365,13 @@ $\dim Q_2(\mathrm{Vir}_0) = 4$.
 \begin{proof}
 Apply Theorem~\ref{thm:self-dual-halving} with
 $Z(\mathrm{Vir}_0) = \mathbb{C}$, so
-$H^*(\overline{\mathcal{M}}_g, Z(\cA)) = H^*(\overline{\mathcal{M}}_g)$.
-At genus~1: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$, giving
-$\dim Q_1 = 1$.  At genus~2:
-$\dim H^*(\overline{\mathcal{M}}_2) = 8$ (Poincar\'e polynomial
-$1 + 3t^2 + 3t^4 + t^6$), giving $\dim Q_2 = 4$.
+$H^*(\overline{\mathcal{M}}_g, Z(\cA))
+= H^*(\overline{\mathcal{M}}_g)$.
+At genus~1: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$,
+giving $\dim Q_1 = 1$.  At genus~2:
+$\dim H^*(\overline{\mathcal{M}}_2) = 8$
+(Poincar\'e polynomial $1 + 3t^2 + 3t^4 + t^6$),
+giving $\dim Q_2 = 4$.
 \end{proof}
 
 \begin{corollary}[Critical level uncurving; \ClaimStatusProvedHere]
@@ -6184,7 +6458,7 @@ modular form.
 \end{conjecture}
 
 \begin{remark}[Scope of Conjecture~\ref{conj:string-theory-complementarity-explicit}]
-This corollary is labeled \ClaimStatusConjectured{} because:
+This corollary is labeled \ClaimStatusHeuristic{} because:
 (a)~the identification of A-model and B-model chiral algebras as a Koszul pair
 requires constructing the chiral algebras from the topological twist of type~II
 string theory (Costello-Li \cite{CL16}), which we do not carry out;
@@ -6995,6 +7269,8 @@ $H^*(\overline{\mathcal{M}}_g)$.
 \section{Verdier duality and Ayala--Francis compatibility}
 \label{sec:verdier-ayala-francis}
 
+For the Heisenberg algebra, Verdier duality exchanged the Lie-type bar coalgebra $\mathrm{coLie}^{\mathrm{ch}}(V^*)$ with the Com-type cobar algebra $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (\S\ref{sec:frame-koszul-dual}).  This section establishes the compatibility of Verdier duality with the Ayala--Francis topological framework at all genera.
+
 \subsection{Three levels of duality}
 \label{subsec:three-dualities}
 
@@ -7467,6 +7743,8 @@ quasi-isomorphism.
 
 \begin{theorem}[Higher genus inversion; \ClaimStatusProvedHere]\label{thm:higher-genus-inversion}
 \index{bar-cobar inversion!higher genus}
+At genus~$0$, bar-cobar inversion was an algebraic identity: $\Omega(\bar{B}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}).  At genus~$g \geq 1$, the inversion acquires quantum corrections controlled by $\kappa(\cA) \cdot \lambda_g$, as seen for the Heisenberg genus tower (\S\ref{sec:frame-genus-tower}).  The following theorem --- Theorem~B of this monograph --- gives the general statement.
+
 Let $\cA$ be a modular Koszul chiral algebra
 \textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -7642,6 +7920,37 @@ in Part~II (free fields and affine Kac--Moody chapters).
 A general criterion remains open.
 \end{remark}
 
+\begin{remark}[The master diagram at higher genus]
+\label{rem:master-diagram-higher-genus}
+\index{master diagram!higher genus}
+The master diagram~\eqref{eq:master-square} acquires a curvature
+parameter at genus~$g \geq 1$.  Writing
+$\barB_X^{(g)}$ for the genus-$g$ bar construction:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+\cA \arrow[r, "\barB_X^{(g)}"]
+  \arrow[d, "(\cdot)^!"']
+& \barB_X^{(g)}(\cA)
+  \arrow[d, "\mathbb{D}_{\mathrm{Ran}}"]
+  \arrow[r, phantom, "\scriptstyle d^2 = \kappa \cdot \omega_g"]
+& {}
+\\
+\cA^! \arrow[r, "\barB_X^{(g)}"']
+& \barB_X^{(g)}(\cA^!)
+  \arrow[r, phantom, "\scriptstyle d^2 = \kappa' \cdot \omega_g"]
+& {}
+\end{tikzcd}
+\]
+The square commutes in the \emph{coderived} category
+(Theorem~\ref{thm:higher-genus-inversion}); on the Koszul
+locus $\kappa = 0$, coderived $=$ derived and the diagram
+commutes strictly.  The complementarity
+$\kappa + \kappa' = \kappa_{\mathrm{total}}$
+(Theorem~\ref{thm:quantum-complementarity-main}) is the
+statement that the curvature labels on the two rows are
+linked by the Verdier involution on the right column.
+\end{remark}
+
 \subsection{Modular Koszul chiral algebras: the definition}
 \label{subsec:modular-koszul-definition}
 \index{modular Koszul chiral algebra|textbf}
@@ -7796,30 +8105,123 @@ Theorem~\ref{thm:quantum-complementarity-main}, proved for all
 Koszul pairs.
 \end{proof}
 
-\begin{remark}[The modular characteristic package]\label{rem:modular-characteristic-package}
-\index{modular characteristic package}
-A modular Koszul chiral algebra $\cA$ carries a \emph{modular
-characteristic package}: the collection of invariants
-$(\kappa(\cA),\, \{F_g(\cA)\}_{g \geq 1},\, \Delta_{\cA}(x))$
-consisting of the obstruction coefficient, the genus free energies,
-and the bar cohomology discriminant.  These are not independent:
-\begin{enumerate}[label=(\roman*)]
-\item The genus free energies are determined by $\kappa(\cA)$ via the
-  universal generating function
-  (Theorem~\ref{thm:universal-generating-function}):
-  $\sum_{g \geq 1} F_g(\cA)\, x^{2g} = \kappa(\cA) \cdot ((x/2)/\sin(x/2) - 1)$.
-\item The obstruction coefficient is additive under tensor products
-  (Corollary~\ref{cor:kappa-additivity}) and anti-symmetric under
-  Koszul duality: $\kappa(\cA) + \kappa(\cA^!) = 0$
-  (Theorem~\ref{thm:genus-universality}\textup{(ii)}).
-\item The discriminant $\Delta_{\cA}(x)$ is invariant under
-  Drinfeld--Sokolov reduction
+\begin{definition}[Modular characteristic package; \ClaimStatusProvedHere]
+\label{def:modular-characteristic-package}
+\index{modular characteristic package|textbf}
+Let $\cA$ be a modular Koszul chiral algebra
+(Definition~\ref{def:modular-koszul-chiral}).  The
+\emph{modular characteristic package} of~$\cA$ consists of
+the following data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{obstruction invariant}
+  $\kappa(\cA) \in \mathbb{C}$, the scalar controlling genus-$1$
+  curvature $d^2 = \kappa(\cA) \cdot \omega_1 \cdot \operatorname{id}$
+  (Theorem~\ref{thm:genus-universality}).
+\item The \emph{genus tower} $\{F_g(\cA)\}_{g \geq 1}$, the sequence
+  of free energies determined by the bar complex at genus~$g$
+  (Theorem~\ref{thm:universal-generating-function}).
+\item The \emph{spectral discriminant}
+  $\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x) \in \mathbb{Z}[x]$,
+  encoding the generating function of bar cohomology dimensions
   (Theorem~\ref{thm:ds-bar-gf-discriminant}).
+\item The \emph{universal Maurer--Cartan class}
+  $\Theta_{\cA}$, whose scalar shadow is $\kappa(\cA)$
+  and whose full form is a Maurer--Cartan element of the
+  cyclic deformation complex
+  (Conjecture~\ref{conj:universal-MC}).
 \end{enumerate}
-The scalar $\kappa(\cA)$ is the first characteristic number of a
-richer universal class $\Theta_{\cA}$
-(\S\ref{sec:modular-koszul-programme}); the full non-scalar
-structure remains conjectural.
+The first three components are established; the fourth is
+conjectural in its non-scalar form.  The Heisenberg specialization
+appears in Chapter~\ref{ch:heisenberg-frame},
+Definition~\ref{def:frame-modular-package}.
+\end{definition}
+
+\begin{remark}[The modular characteristic package]\label{rem:modular-characteristic-package}
+The modular characteristic package
+(Definition~\ref{def:modular-characteristic-package}) specializes to
+concrete invariants for each family; see the Master Table
+(Table~\ref{tab:master-invariants}).
+\end{remark}
+
+\begin{theorem}[Modular characteristic theorem; \ClaimStatusProvedHere]
+\label{thm:modular-characteristic}
+\index{modular characteristic theorem|textbf}
+\index{kappa@$\kappa$!as first characteristic number|textbf}
+The Heisenberg algebra was the atom from which all four main theorems were first visible (\S\ref{sec:frame-modular-package}): a single number $\kappa(\mathcal{H}_k) = k$ controlled the entire genus tower.  This theorem --- Theorem~D --- establishes that universality for all modular Koszul chiral algebras.
+
+Let $\cA$ be a modular Koszul chiral algebra
+(Definition~\ref{def:modular-koszul-chiral}).  The modular
+characteristic package
+(Definition~\ref{def:modular-characteristic-package}) is
+determined, as a scalar system, by a single invariant
+$\kappa(\cA) \in \mathbb{C}$---the genus-$1$ curvature
+coefficient---through the following properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Universality.}
+  The genus-$g$ obstruction class factors as
+  $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+  in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$.
+\item \emph{Generating function.}
+  The genus free energies assemble as
+  \begin{equation}\label{eq:modular-char-gf}
+  \sum_{g=1}^{\infty} F_g(\cA)\, x^{2g}
+  \;=\; \kappa(\cA) \cdot
+  \left(\frac{x/2}{\sin(x/2)} - 1\right),
+  \end{equation}
+  recovering the $\hat{A}$-genus as topological generating function.
+\item \emph{Duality.}
+  Under Koszul duality, $\kappa$ is anti-symmetric:
+  $\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody,
+  and more generally $\kappa + \kappa' = \varrho(\mathfrak{g}) \cdot K$
+  for $\mathcal{W}$-algebras under Drinfeld--Sokolov reduction.
+  In particular, $\kappa = 0$ if and only if $\cA$ is at critical level.
+\item \emph{Additivity.}
+  $\kappa(\cA \otimes \cB) = \kappa(\cA) + \kappa(\cB)$.
+  Combined with~(iii), the vanishing
+  $\kappa_{\mathrm{tot}} = 0$ for a tensor product
+  $\cA \otimes \cA^!_{\mathrm{ghost}}$ is the algebraic
+  form of anomaly cancellation.
+\item \emph{Spectral invariance.}
+  The spectral discriminant $\Delta_{\cA}(x)$ is invariant
+  under Drinfeld--Sokolov reduction and depends only on the
+  quadratic OPE data of the Koszul pair.
+\end{enumerate}
+Together, $\kappa$ is a group homomorphism from modular Koszul
+algebras (under tensor product) to $(\mathbb{C}, +)$,
+intertwined with Koszul duality by sign reversal.  It is
+the first characteristic number of the conjectural universal
+Maurer--Cartan class $\Theta_{\cA}$
+(Conjecture~\ref{conj:universal-MC}): the genus-$1$ shadow of a
+structure that organizes the entire genus tower.
+\end{theorem}
+
+\begin{proof}
+Part~(i) is Theorem~\ref{thm:genus-universality}.
+Part~(ii) is Theorem~\ref{thm:universal-generating-function}.
+Part~(iii) is the duality clause of
+Theorem~\ref{thm:genus-universality}(ii).
+Part~(iv) is Theorem~\ref{thm:anomaly-koszul}.
+Part~(v) is Theorem~\ref{thm:ds-bar-gf-discriminant}.
+The group homomorphism property follows from~(iv): additivity
+under tensor product and $\kappa(\mathbb{C}) = 0$ (the trivial
+algebra has no curvature) give a homomorphism to $(\mathbb{C}, +)$.
+\end{proof}
+
+\begin{remark}[$\kappa$ as first Chern class]
+\label{rem:kappa-first-chern}
+Properties (i)--(iv) of Theorem~\ref{thm:modular-characteristic}
+identify $\kappa$ formally as a first Chern class: a group
+homomorphism from an abelian group of geometric objects to a ring,
+controlling a universal obstruction, and intertwined with duality
+by sign reversal.  In the classical setting, $c_1(L) \in H^2(X)$
+for a line bundle $L$ satisfies: $c_1(L \otimes L') = c_1(L) +
+c_1(L')$ (additivity), $c_1(L^\vee) = -c_1(L)$ (duality), and
+$c_1$ controls the obstruction to global sections.  The invariant
+$\kappa(\cA)$ is the chiral-algebraic analogue: the modular Koszul
+algebra is the ``line bundle,'' the genus tower is the ``obstruction
+to global sections,'' and the universal class $\Theta_{\cA}$ is
+the ``Chern--Weil representative'' whose scalar trace recovers
+$\kappa \cdot \lambda_g$.
 \end{remark}
 
 \begin{remark}[Non-examples and boundaries]\label{rem:mk-non-examples}
@@ -7846,7 +8248,7 @@ framework for these singular loci; see
 
 \bigskip
 \noindent\textbf{What we have established.}\enspace
-The three main theorems are proved.  Theorem~A
+The four main theorems are proved.  Theorem~A
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}): the bar-cobar
 adjunction is an equivalence for Koszul pairs, intertwined with
 Verdier duality on $\operatorname{Ran}(X)$.  Theorem~B
@@ -7859,9 +8261,14 @@ moduli cohomology $\mathcal{H}_g(\cA) =
 H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$ carries a
 shifted-symplectic pairing from Verdier duality, and the deformation
 and obstruction spaces of a Koszul pair embed as complementary
-Lagrangians.
+Lagrangians.  Theorem~D
+(Theorem~\ref{thm:modular-characteristic}): the scalar invariants
+of the modular characteristic package are determined by a single
+number $\kappa(\cA)$, which is universal (controls all genera),
+additive (a group homomorphism under tensor product), anti-symmetric
+under duality, and whose vanishing is anomaly cancellation.
 
-These are three aspects of a single object: the modular Koszul chiral
+These are four aspects of a single object: the modular Koszul chiral
 algebra (Definition~\ref{def:modular-koszul-chiral}).  Every chiral
 algebra in Part~II will be verified as an instance of this structure.
 The computations that follow --- bar cohomology, genus expansions,

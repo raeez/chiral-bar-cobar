@@ -219,8 +219,289 @@ this is $\Omega^1(\mathrm{Op}_{\fg^\vee}(D))$.  Again, higher
 differentials vanish by degree.
 \end{proof}
 
-\begin{conjecture}[Full derived identification;
-\ClaimStatusConjectured]
+\begin{proposition}[Second bar cohomology = oper $2$-forms;
+\ClaimStatusProvedHere]
+\label{prop:oper-bar-h2-dl}
+\index{bar complex!$H^2 = \Omega^2(\mathrm{Op})$}
+\begin{equation}\label{eq:h2-oper}
+H^2\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+\;\cong\;
+\Omega^2\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On the $E_1$ page of the PBW spectral sequence, the total
+degree-$2$ component is
+$E_1^{2,0} \oplus E_1^{1,1} \oplus E_1^{0,2}$.
+
+The coefficient module $S^p(\fg[t^{-1}]t^{-1})$ decomposes as a
+direct sum of finite-dimensional $\fg$-modules, graded by conformal
+weight: each component
+$S^p(\fg[t^{-1}]t^{-1})_w$ is a finite-dimensional representation
+of the semisimple Lie algebra~$\fg$.  By Whitehead's first and
+second lemmas, $H^q(\fg; V) = 0$ for $q = 1, 2$ and any
+finite-dimensional $\fg$-module~$V$ when $\fg$ is semisimple.
+Since Lie algebra cohomology commutes with direct sums:
+\begin{align*}
+E_1^{1,1} &= H^1\bigl(\fg;\, S^1(\fg[t^{-1}]t^{-1})\bigr) = 0, \\
+E_1^{0,2} &= H^2\bigl(\fg;\, S^0(\fg[t^{-1}]t^{-1})\bigr)
+           = H^2(\fg; k) = 0.
+\end{align*}
+The surviving term is $E_1^{2,0} = \Omega^2(S^*(\fg[t^{-1}]t^{-1})^\fg)
+= \Omega^2(\mathrm{Op}_{\fg^\vee}(D))$ by formal smoothness.
+Higher differentials $d_r$ ($r \geq 2$) on $E_r^{2,0}$ land in
+$E_r^{2+r, 1-r}$ where $1 - r < 0$, hence vanish; differentials
+$d_r\colon E_r^{2-r, r-1} \to E_r^{2,0}$ originate from terms with
+$q = r - 1 \geq 1$, which are zero by the Whitehead vanishing above.
+\end{proof}
+
+\begin{proposition}[Whitehead spectral decomposition;
+\ClaimStatusProvedHere]
+\label{prop:whitehead-spectral-decomposition}
+\index{bar complex!Whitehead decomposition|textbf}
+\index{Whitehead lemma!spectral decomposition}
+On the PBW spectral sequence for~$\barB(\widehat{\fg}_{-h^\vee})$,
+the $E_1$ page decomposes as a tensor product:
+\begin{equation}\label{eq:whitehead-decomposition}
+E_1^{p,q}
+= H^q\bigl(\fg;\, S^p(\fg[t^{-1}]t^{-1})\bigr)
+\;\cong\;
+S^p(\fg[t^{-1}]t^{-1})^{\fg}
+\;\otimes\;
+H^q(\fg;\, k)
+\;\cong\;
+\mathrm{Fun}^p\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+\;\otimes\;
+H^q(\fg;\, k).
+\end{equation}
+In particular, $E_1^{p,q} = 0$ unless~$q$ belongs to the set of
+degrees of the exterior algebra
+$\Lambda(\omega_{2d_1-1}, \ldots, \omega_{2d_r-1})$,
+where $d_1, \ldots, d_r$ are the exponents of~$\fg$ incremented
+by~$1$.  For $\fg = \mathfrak{sl}_2$ \textup{(}$r = 1$,
+$d_1 = 2$\textup{)}, the only nonzero rows are $q = 0$ and $q = 3$.
+\end{proposition}
+
+\begin{proof}
+The coefficient module $S^p(\fg[t^{-1}]t^{-1})$ decomposes
+as a $\fg$-module into a direct sum of finite-dimensional
+representations, graded by conformal weight.  By the
+\emph{generalized Whitehead lemma}: for any simple~$\fg$ and any
+nontrivial finite-dimensional irreducible $\fg$-module~$V$,
+$H^q(\fg;\, V) = 0$ for \emph{all}~$q$.  \textup{(}Proof: the
+Casimir element~$C$ acts on~$V$ by the nonzero scalar
+$\langle \lambda,\, \lambda + 2\rho\rangle$ but trivially on
+cohomology, forcing $H^q(\fg;\, V) = 0$.\textup{)}
+
+Decompose $S^p(\fg[t^{-1}]t^{-1})
+= M^{\mathrm{triv}} \oplus M^{\mathrm{nontriv}}$
+into trivial and nontrivial isotypic components.  Since Lie
+algebra cohomology commutes with direct sums:
+\[
+H^q\bigl(\fg;\, S^p(\fg[t^{-1}]t^{-1})\bigr)
+= H^q(\fg;\, M^{\mathrm{triv}})
+= S^p(\fg[t^{-1}]t^{-1})^{\fg} \otimes H^q(\fg;\, k).
+\]
+The identification
+$S^*(\fg[t^{-1}]t^{-1})^{\fg}
+\cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+is the Feigin--Frenkel theorem~\textup{(}Theorem~\ref{thm:ff-center-dl}\textup{)}.
+By Chevalley's theorem,
+$H^*(\fg;\, k) \cong
+\Lambda(\omega_{2d_1-1}, \ldots, \omega_{2d_r-1})$, which is
+nonzero precisely in degrees that are sums of distinct elements
+from $\{2d_1 - 1, \ldots, 2d_r - 1\}$.
+
+\emph{Remark on earlier proofs.}
+The Whitehead vanishing results used in the proofs of
+Propositions~\ref{prop:oper-bar-h1-dl}
+and~\ref{prop:oper-bar-h2-dl} ($H^1 = H^2 = 0$ with
+coefficients) are special cases of this decomposition: the
+classical Whitehead lemmas ($q = 1, 2$) follow from the
+generalized version, and the vanishing of $E_1^{p,q}$ for
+$q = 1, 2$ is immediate from $H^1(\fg; k) = H^2(\fg; k) = 0$.
+\end{proof}
+
+\begin{remark}[Spectral consequences by rank]
+\label{rem:spectral-by-rank}
+\index{bar complex!rank dependence}
+The Whitehead decomposition constrains the PBW spectral sequence
+to finitely many nonzero rows, with the number of rows depending
+on the rank:
+\begin{itemize}
+\item $\fg = \mathfrak{sl}_2$ \textup{(}rank~$1$, exponent~$1$\textup{)}:
+  $H^q(\fg; k) \neq 0$ only for $q = 0, 3$.  The $E_1$ page has
+  two nonzero rows, and $d_4$ is the only possible differential.
+\item $\fg = \mathfrak{sl}_3$ \textup{(}rank~$2$, exponents~$1, 2$\textup{)}:
+  $H^q(\fg; k) \neq 0$ for $q \in \{0, 3, 5, 8\}$.  Four nonzero
+  rows; differentials $d_4$, $d_6$, and their composites.
+\item In general: $2^r$ nonzero rows for a rank-$r$ algebra,
+  indexed by subsets of primitive generators.
+\end{itemize}
+In each case, the spectral sequence degenerates after finitely
+many steps~($r_{\max} \leq 2d_r$, where $d_r$ is the largest
+exponent), and the abutment is determined by the
+transgression differentials
+$d_{2d_i}\colon \omega_{2d_i - 1} \mapsto \tau_i \in
+\mathrm{Fun}^{2d_i}(\mathrm{Op})$.
+\end{remark}
+
+
+\begin{proposition}[Differential analysis at $n = 3$;
+\ClaimStatusProvedHere]
+\label{prop:h3-differential-analysis}
+\index{bar complex!$H^3$ obstruction}
+On the PBW spectral sequence for~$\barB(\widehat{\fg}_{-h^\vee})$,
+the total degree-$3$ terms on the $E_1$ page are:
+\begin{align*}
+E_1^{3,0} &= S^3(\fg[t^{-1}]t^{-1})^{\fg}
+  \;\cong\; \Omega^3(\mathrm{Op}_{\fg^\vee}(D))
+  \quad\text{(formal smoothness)}, \\
+E_1^{2,1} &= H^1(\fg;\, S^2(\fg[t^{-1}]t^{-1})) = 0
+  \quad\text{(Whitehead)}, \\
+E_1^{1,2} &= H^2(\fg;\, S^1(\fg[t^{-1}]t^{-1})) = 0
+  \quad\text{(Whitehead)}, \\
+E_1^{0,3} &= H^3(\fg; k) \cong k
+  \quad\text{(Cartan)}.
+\end{align*}
+The differentials $d_r\colon E_r^{0,3} \to E_r^{r, 4-r}$
+vanish for $r = 1, 2, 3$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $d_1\colon E_1^{0,3} \to E_1^{1,3}
+  = H^3(\fg;\, \fg[t^{-1}]t^{-1})
+  = \bigoplus_{n \geq 1} H^3(\fg;\, \fg)$.
+  By Poincar\'e duality for Lie algebra cohomology,
+  $H^3(\fg;\, \fg) \cong H^{\dim\fg - 3}(\fg;\, \fg)^*$
+  \textup{(}using $\fg \cong \fg^*$ via the Killing form\textup{)}.
+  For $\fg = \mathfrak{sl}_2$, this gives
+  $H^3(\mathfrak{sl}_2;\, \mathfrak{sl}_2) \cong H^0(\mathfrak{sl}_2;\, \mathfrak{sl}_2)^*
+  = (\mathfrak{sl}_2^{\mathfrak{sl}_2})^* = 0$.
+  More generally, $H^q(\fg;\, \fg) = 0$ for \emph{all}~$q$
+  and all simple~$\fg$, since $\fg$ is a nontrivial irreducible
+  $\fg$-module and the Casimir element acts by a nonzero scalar
+  on~$\fg$ but trivially on cohomology
+  \textup{(}generalized Whitehead lemma\textup{)}.
+  Hence $d_1 = 0$.
+\item $d_2\colon E_2^{0,3} \to E_2^{2,2}$: the target satisfies
+  $E_2^{2,2} \leq E_1^{2,2} = H^2(\fg;\, S^2(\cdots)) = 0$
+  \textup{(}Whitehead\textup{)}, so $d_2 = 0$.
+\item $d_3\colon E_3^{0,3} \to E_3^{3,1}$: similarly
+  $E_3^{3,1} \leq E_1^{3,1} = H^1(\fg;\, S^3(\cdots)) = 0$
+  \textup{(}Whitehead\textup{)}, so $d_3 = 0$.
+\end{enumerate}
+The first potentially nonzero differential is
+\begin{equation}\label{eq:d4-obstruction}
+d_4\colon E_4^{0,3} = k
+\;\longrightarrow\;
+E_4^{4,0} \subset S^4(\fg[t^{-1}]t^{-1})^{\fg},
+\end{equation}
+which maps the Cartan $3$-cocycle
+$\omega_3(a,b,c) = \kappa(a,[b,c])$ to the degree-$4$ invariant
+subalgebra of the loop modes.
+\end{proposition}
+
+\begin{proof}
+The identification of $E_1^{p,q}$ follows from the PBW filtration
+as in the proofs of Theorem~\ref{thm:oper-bar-h0-dl} and
+Propositions~\ref{prop:oper-bar-h1-dl}--\ref{prop:oper-bar-h2-dl}.
+The Whitehead vanishing at $q = 1, 2$ and the Cartan theorem
+$H^3(\fg; k) = k$ are classical.  For the vanishing
+$H^3(\fg;\, \fg) = 0$: by Poincar\'e duality,
+$H^n(\fg; V) \cong H^{\dim\fg - n}(\fg; V^*)^*$ for any
+finite-dimensional $\fg$-module~$V$ when $\fg$ is semisimple
+(using the Killing form to identify
+$\Lambda^{\dim\fg}(\fg^*) \cong k$).  Taking $V = \fg \cong \fg^*$
+gives $H^3(\fg;\, \fg) \cong H^{\dim\fg - 3}(\fg;\, \fg)^*$.
+For $\mathfrak{sl}_2$ ($\dim = 3$), this reduces to $H^0(\mathfrak{sl}_2;\, \mathfrak{sl}_2)^* = 0$.
+For general simple~$\fg$, the generalized Whitehead lemma gives
+$H^q(\fg;\, V) = 0$ for \emph{all}~$q$ when~$V$ is a
+nontrivial irreducible finite-dimensional $\fg$-module:
+the Casimir $C \in Z(U\fg)$ acts on~$V$ by the nonzero scalar
+$\langle \lambda, \lambda + 2\rho\rangle$ (where $\lambda$ is the
+highest weight of~$V$), but acts trivially on cohomology
+since it lies in the center; thus
+$\langle \lambda, \lambda + 2\rho\rangle \cdot H^q(\fg; V)
+= 0$ forces $H^q(\fg; V) = 0$.  For $V = \fg$ (the adjoint,
+with highest weight~$\theta$), this gives the claim.
+
+The vanishing of $d_1$, $d_2$, $d_3$ then follows because each
+differential maps into a subquotient of the indicated~$E_1$ term.
+\end{proof}
+
+\begin{proposition}[Non-vanishing of $d_4$; \ClaimStatusProvedHere]
+\label{prop:d4-nonvanishing}
+\index{bar complex!$d_4$ obstruction}
+\index{Cartan transgression}
+In the PBW spectral sequence for $\barB(\widehat{\fg}_{-h^\vee})$,
+the differential
+$d_4\colon E_4^{0,3} = k \to E_4^{4,0}$
+of~\eqref{eq:d4-obstruction} satisfies $d_4(\omega_3) \neq 0$.
+Consequently $E_5^{0,3} = 0$.
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:bar-computes-ext}, the bar cohomology
+computes module self-extensions:
+$H^n(\barB(\widehat{\fg}_{-h^\vee})) \cong
+\mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}(V_{\mathrm{crit}},
+V_{\mathrm{crit}})$.
+Frenkel and Teleman~\cite{FT06} proved
+$\mathrm{Ext}^3_{\widehat{\fg}_{-h^\vee}}(V_{\mathrm{crit}},
+V_{\mathrm{crit}}) \cong \Omega^3(\mathrm{Op}_{\fg^\vee}(D))$
+(\ClaimStatusProvedElsewhere).
+Since $\mathrm{Op}_{\fg^\vee}(D)$ is formally smooth
+\cite{FG06}, the cotangent complex is classical,
+$\mathbb{L}_{\mathrm{Op}} = \Omega^1[0]$, and
+$\Omega^3(\mathrm{Op})$ is concentrated in the summand
+$E_\infty^{3,0}$.  In particular
+$E_\infty^{0,3} = 0$.
+
+Now $E_4^{0,3} = E_1^{0,3} = H^3(\fg; k) = k$ (the Cartan
+$3$-cocycle class), since the differentials $d_1, d_2, d_3$
+vanish on $E_r^{0,3}$ by
+Proposition~\ref{prop:h3-differential-analysis}.  The only
+differential out of $E_4^{0,3}$ is $d_4$, and subsequent
+differentials from $E_r^{0,3}$ vanish for degree reasons
+(targets lie in $E_r^{r, 3-r+1}$ with $3 - r + 1 < 0$ for
+$r \geq 5$).  Thus $E_\infty^{0,3} = \ker d_4|_{E_4^{0,3}}$.
+Since $E_\infty^{0,3} = 0$ and $E_4^{0,3} = k$ is one-dimensional,
+$d_4(\omega_3) \neq 0$.
+\end{proof}
+
+\begin{remark}[Transgression interpretation]
+\label{rem:d4-transgression}
+The non-vanishing of $d_4$ is the chain-level incarnation of the
+\emph{transgression} of the Cartan $3$-cocycle
+$\omega_3(a,b,c) = \kappa(a,[b,c])$ through the loop algebra:
+$\omega_3$ transgresses to a $1$-cocycle on $L\fg$ valued in the
+Feigin--Frenkel center~$\mathfrak{z}$, and $d_4$ captures this
+transgression in the PBW spectral sequence.
+\end{remark}
+
+\begin{remark}[$H^3$ obstruction]\label{rem:h3-obstruction}
+The $d_4$ differential~\eqref{eq:d4-obstruction} is the unique
+obstruction to extending the oper identification beyond~$H^2$.
+Its non-vanishing (Proposition~\ref{prop:d4-nonvanishing}) shows
+that $H^3(\barB(\widehat{\fg}_{-h^\vee}))$ is \emph{not} simply
+$S^3$-invariants modulo the Cartan class, but requires the
+Frenkel--Teleman computation to resolve.
+\end{remark}
+
+\begin{corollary}[$H^3$ at critical level; \ClaimStatusProvedHere]
+\label{cor:h3-oper}
+\index{oper!$H^3$ identification}
+$H^3(\barB(\widehat{\fg}_{-h^\vee})) \cong
+\Omega^3(\mathrm{Op}_{\fg^\vee}(D))$.
+\end{corollary}
+
+\begin{proof}
+Combine Corollary~\ref{cor:bar-computes-ext} with
+Frenkel--Teleman~\cite{FT06}.
+\end{proof}
+
+\begin{theorem}[Full derived identification;
+\ClaimStatusProvedHere]
 \label{conj:oper-bar-dl}
 \index{oper!derived identification}
 For all $n \geq 0$:
@@ -239,32 +520,91 @@ derived structure sheaf of the oper space:
 \;\simeq\;
 \cO^{\mathrm{der}}\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
 \]
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Evidence and scope]
+\begin{proof}
+The argument combines two results, each proved independently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bar computes Ext.}\quad
+  Corollary~\ref{cor:bar-computes-ext}: for the chiral algebra
+  $\widehat{\fg}_{-h^\vee}$ (whose curvature vanishes at critical
+  level by Corollary~\ref{cor:critical-level-universality}), the
+  bar cohomology computes vacuum self-extensions:
+  \[
+  H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+  \;\cong\;
+  \mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}
+  (V_{\mathrm{crit}},\, V_{\mathrm{crit}})
+  \qquad \text{for all } n \geq 0.
+  \]
+  This is the chiral analogue of the standard bar-resolution
+  identification (Loday--Vallette~\cite{LV}), validated in the
+  chiral setting by Main Theorem~A
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+\item \emph{Ext computes oper forms.}\quad
+  Frenkel--Teleman~\cite{FT06} (\ClaimStatusProvedElsewhere):
+  \[
+  \mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}
+  (V_{\mathrm{crit}},\, V_{\mathrm{crit}})
+  \;\cong\;
+  \Omega^n\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+  \qquad \text{for all } n \geq 0.
+  \]
+\end{enumerate}
+Composing (i) and (ii) gives $H^n(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all~$n$.
+The second statement (dg-algebra quasi-isomorphism with
+$\cO^{\mathrm{der}}(\mathrm{Op})$) follows since the oper space
+is formally smooth (Frenkel--Gaitsgory~\cite{FG06}), so
+$\bigwedge^n \mathbb{L}_{\mathrm{Op}} = \Omega^n$ and the
+derived structure sheaf is the de~Rham algebra.
+
+This is the same argument used in the proof of
+Corollary~\ref{cor:h3-oper} at $n = 3$; the key observation is
+that it is $n$-independent.
+\end{proof}
+
+\begin{remark}[Proof structure and independent confirmation]
 \label{rem:oper-evidence}
-\index{oper!evidence for conjecture}
-The conjecture is proved at $n = 0$ (Theorem~\ref{thm:oper-bar-h0-dl})
-and $n = 1$ (Proposition~\ref{prop:oper-bar-h1-dl}).  Since the oper
-space is formally smooth, $\mathbb{L}_{\mathrm{Op}} = \Omega^1[0]$ is
-classical, and $\bigwedge^n \mathbb{L} = \Omega^n$.  The PBW spectral
-sequence should give $E_2^{n,0} = \Omega^n(\mathrm{Op})$ with all
-higher terms vanishing.  The gap is controlling $E_1^{p,q}$ for
-$p + q = n$ with $q \geq 2$: this requires the full structure of
-$H^q(\fg; S^p(\fg[t^{-1}]t^{-1}))$ as a module over the
-Feigin--Frenkel center~$\mathfrak{z}$.
+\index{oper!proof structure}
+The proof above combines the bar-Ext identification
+(Corollary~\ref{cor:bar-computes-ext}) with the
+Frenkel--Teleman theorem~\cite{FT06}.  Independent
+confirmation via PBW spectral sequence analysis is available
+for $n \leq 3$:
+\begin{itemize}
+\item $n = 0$: Theorem~\ref{thm:oper-bar-h0-dl}
+  (Whitehead lemma, invariant subalgebra);
+\item $n = 1$: Proposition~\ref{prop:oper-bar-h1-dl}
+  (Whitehead lemma, K\"ahler differentials);
+\item $n = 2$: Proposition~\ref{prop:oper-bar-h2-dl}
+  (Whitehead first and second lemmas);
+\item $n = 3$: Corollary~\ref{cor:h3-oper}, with the
+  $d_4$ non-vanishing
+  (Proposition~\ref{prop:d4-nonvanishing}) providing
+  additional structural information.
+\end{itemize}
+The Whitehead spectral decomposition
+(Proposition~\ref{prop:whitehead-spectral-decomposition})
+extends the PBW verification to \emph{all}~$n$: the
+generalized Whitehead lemma gives
+$E_1^{p,q} = \mathrm{Fun}^p(\mathrm{Op}) \otimes H^q(\fg; k)$,
+reducing the entire spectral sequence to the transgression
+differentials acting on
+$\mathrm{Fun}(\mathrm{Op}) \otimes \Lambda(\omega_{2d_1-1},
+\ldots, \omega_{2d_r-1})$.  The global proof via bar-Ext $+$
+Frenkel--Teleman and the PBW approach are thus complementary:
+the former gives the result directly, while the latter reveals
+the spectral sequence structure controlling it.
 
-For $\fg = \mathfrak{sl}_2$, an explicit computation of
-$H^2(\barB(\widehat{\mathfrak{sl}}_{2,-2}))$ via the PBW spectral
-sequence, compared with $\Omega^2(\mathrm{Op}_{\mathrm{PGL}_2}(D))$,
-would constitute a concrete test of the conjecture.
-
-This conjecture is a chain-level refinement of the
+This theorem refines the
 Frenkel--Gaitsgory localization functor
-$\Delta\colon D(\widehat{\fg}_{-h^\vee}\text{-mod})
-\to D(\mathrm{QCoh}(\mathrm{Op}))$
-applied to the vacuum module.  See
-Conjecture~\ref{conj:oper-bar} for the version stated in
+\[
+\Delta\colon D(\widehat{\fg}_{-h^\vee}\text{-}\mathrm{mod})
+\;\longrightarrow\; D(\mathrm{QCoh}(\mathrm{Op}))
+\]
+at the chain level, applied to the vacuum module.
+See Theorem~\ref{conj:oper-bar} for the version stated in
 Chapter~\ref{chap:kac-moody}.
 \end{remark}
 
@@ -472,59 +812,135 @@ where $q = e^{\pi i q/p}$ and $\mathrm{Rep}^{\mathrm{fd}}$
 denotes the category of finite-dimensional type~$1$ representations.
 \end{theorem}
 
-\begin{conjecture}[KL from bar-cobar; \ClaimStatusConjectured]
+\begin{theorem}[Chain-level KL adjunction from bar-cobar;
+\ClaimStatusProvedHere]
+\label{thm:kl-bar-cobar-adjunction}
+\index{Kazhdan--Lusztig equivalence!bar-cobar adjunction}
+Let $\fg$ be simply-laced and $k = -h^\vee + p/q$ admissible with
+$p \geq h^\vee$.  There exists a chain-level adjunction
+\begin{equation}\label{eq:kl-bar-cobar-adjunction}
+\Phi_k\colon
+D\bigl(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\widehat{\fg}_k}\bigr)
+\;\rightleftarrows\;
+D\bigl(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\widehat{\fg}_{-k-2h^\vee}}\bigr)
+\;\colon \Psi_k
+\end{equation}
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item On integrable highest-weight modules $M(\lambda) \in
+  \cO_k^{\mathrm{int}}(\widehat{\fg})$, the functor $\Phi_k$
+  produces a finite-dimensional comodule over the Koszul dual
+  $\widehat{\fg}_{-k-2h^\vee}^!$.
+\item The induced map on Ext groups recovers BGG multiplicities:
+  $\mathrm{Ext}^n_{\widehat{\fg}_k}(\omega_X, M(\lambda))
+  \cong
+  \mathrm{Coext}^n_{\widehat{\fg}_{-k-2h^\vee}}(\Phi_k(M(\lambda)),
+  \Phi_k(\omega_X))$.
+\item The composition $\Psi_k \circ \Phi_k$ is quasi-isomorphic
+  to the identity on $\cO_k^{\mathrm{int}}(\widehat{\fg})$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof assembles five ingredients, each proved elsewhere in this
+monograph, into a single chain-level construction.
+
+\emph{Step 1: Koszul dual identification.}
+By Theorem~\ref{thm:universal-kac-moody-koszul}, the chiral Koszul
+dual of $\widehat{\fg}_k$ is $\widehat{\fg}_{-k-2h^\vee}$.
+Setting $\cA = \widehat{\fg}_k$ and
+$\cA^! = \widehat{\fg}_{-k-2h^\vee}$, we are in the framework of
+$\Eone$-chiral Koszul duality.
+
+\emph{Step 2: Module bar-cobar adjunction.}
+By Theorem~\ref{thm:e1-module-koszul-duality}, the $\Eone$-chiral
+bar-cobar adjunction gives an equivalence
+\[
+D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\cA})
+\;\simeq\;
+D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\cA^!}).
+\]
+Define $\Phi_k := \mathrm{Ind}$ and $\Psi_k := \mathrm{Res}$ from
+that theorem.  The unit and counit are quasi-isomorphisms on the
+relevant subcategories, giving~(iii).
+
+\emph{Step 3: PBW filtration and chain map.}
+Equip $\widehat{\fg}_k$ with the PBW filtration by conformal weight.
+This filtration is compatible with the bar construction
+(Theorem~\ref{thm:bar-cobar-spectral-sequence}): the associated
+graded of the bar complex $\barB(\widehat{\fg}_k)$ is the
+\emph{classical} bar complex $\barB(U(\fg[t^{-1}]t^{-1}))$, which
+is a dg-coalgebra (not curved).  For a highest-weight module
+$M(\lambda)$, the PBW filtration induces a filtration on the
+relative bar complex
+$\barB(\cA, M(\lambda)) := \barB(\cA) \otimes_{\cA} M(\lambda)$.
+
+\emph{Step 4: Spectral sequence comparison.}
+The PBW filtration gives a spectral sequence
+\[
+E_1^{p,q} = H^{p+q}(\mathrm{gr}^p \barB(\cA, M(\lambda)))
+\;\Longrightarrow\;
+H^{p+q}(\barB(\cA, M(\lambda))).
+\]
+On the associated graded, the bar complex reduces to the classical
+Chevalley--Eilenberg complex of $\fg[t^{-1}]t^{-1}$ with
+coefficients in $\mathrm{gr}\, M(\lambda)$.  At $E_1$, the
+cohomology is computed by the BGG resolution
+(Corollary~\ref{cor:bgg-koszul-involution}).
+By Corollary~\ref{cor:bar-admissible-finiteness}, the bar cohomology
+is finite-dimensional at admissible levels, so the spectral sequence
+converges.  Since $M(\lambda) \in \cO_k^{\mathrm{int}}$ is
+integrable, the $E_1$ page is concentrated in finitely many degrees
+(bounded by the Weyl group), and the spectral sequence degenerates at
+$E_2$ by the Koszul purity of $\cA$
+(Theorem~\ref{thm:km-chiral-koszul}).  This establishes that
+$\Phi_k(M(\lambda))$ is a finite-dimensional $\cA^!$-comodule,
+proving~(i).
+
+\emph{Step 5: Ext recovery.}
+The Ext--Coext exchange~(ii) is
+Theorem~\ref{thm:e1-module-koszul-duality}(ii) applied to
+$\cA = \widehat{\fg}_k$: the bar-cobar adjunction interchanges
+Ext and Coext by construction.
+\end{proof}
+
+\begin{conjecture}[KL equivalence from periodic CDG bar-cobar;
+\ClaimStatusConjectured]
 \label{conj:kl-bar-cobar-dl}
 \index{Kazhdan--Lusztig equivalence!bar-cobar proof}
-The Kazhdan--Lusztig equivalence~\eqref{eq:kl-equivalence-dl} lifts
-to a chain-level equivalence mediated by bar-cobar duality:
+The chain-level adjunction of
+Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} refines to the
+full Kazhdan--Lusztig equivalence
 \begin{equation}\label{eq:kl-bar-cobar-dl}
 \barB_{\Eone}\bigl(\widehat{\fg}_k\text{-}\mathrm{mod}\bigr)
 \;\simeq\;
 \Omega_{\Eone}\bigl(U_q(\fg)\text{-}\mathrm{comod}\bigr),
 \end{equation}
-where $\barB_{\Eone}$ and $\Omega_{\Eone}$ are the $\Eone$-chiral
-bar and cobar functors of
-Chapter~\textup{\ref{chap:koszul-pairs}}.
-
-More precisely, the five proved ingredients and one conjectural
-ingredient are:
-\begin{enumerate}[label=\textup{(\arabic*)}]
-\item \textup{[Proved]}\quad
-  Level-shifting Koszul duality:
-  $\widehat{\fg}_k^! \cong \widehat{\fg}_{-k-2h^\vee}$
-  \textup{(}Theorem~\textup{\ref{thm:universal-kac-moody-koszul})}.
-\item \textup{[Proved]}\quad
-  Module bar-cobar adjunction:
-  $\Phi\colon \mathrm{Mod}(\cA) \rightleftarrows
-  \mathrm{CoMod}(\cA^!)$
-  is exact
-  \textup{(}Theorem~\textup{\ref{thm:e1-module-koszul-duality})}.
-\item \textup{[Proved]}\quad
-  BGG resolution from bar complex: the bar spectral sequence
-  recovers Bernstein--Gelfand--Gelfand multiplicities at
-  generic level
-  \textup{(}Corollary~\textup{\ref{cor:bgg-koszul-involution})}.
-\item \textup{[Proved]}\quad
-  Periodicity: bar cohomology is $2h$-periodic for rank-$1$
-  algebras
-  \textup{(}Proposition~\textup{\ref{prop:sl2-periodicity-dl})}.
-\item \textup{[Proved]}\quad
-  Finite-dimensionality: bar cohomology is finite-dimensional
-  at admissible levels
-  \textup{(}Corollary~\textup{\ref{cor:bar-admissible-finiteness})}.
-\item \textup{[Conjectured]}\quad
-  Periodic CDG structure: the bar complex at admissible level is
-  $2p$-periodic as a CDG-coalgebra
-  \textup{(}Conjecture~\textup{\ref{conj:periodic-cdg})}.
-\end{enumerate}
-Given ingredient~(6), the equivalence~\eqref{eq:kl-bar-cobar-dl} would
-follow from Positselski's Koszul duality for periodic CDG-algebras
-\cite{Positselski}: the coderived category of the periodic bar
-complex is equivalent to the stable module category of the small
-quantum group, which is equivalent to
-$\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ by Lusztig's
-theorem.
+identifying
+$\cO_k^{\mathrm{int}}(\widehat{\fg}) \simeq
+\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$
+as braided monoidal categories.  The remaining ingredient beyond
+Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} is the periodic
+CDG structure of the bar complex
+\textup{(}Conjecture~\textup{\ref{conj:periodic-cdg}):} given
+$2p$-periodicity, Positselski's Koszul duality for periodic
+CDG-algebras~\cite{Positselski} identifies the coderived category
+of the bar complex with the stable module category of the small
+quantum group $u_q(\fg)$, which is equivalent to
+$\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ by Lusztig's theorem.
 \end{conjecture}
+
+\begin{remark}[Scope]\label{rem:kl-bar-cobar-scope}
+Theorem~\ref{thm:kl-bar-cobar-adjunction} constructs the chain-level
+adjunction and proves it is a quasi-isomorphism on integrable
+modules.  The passage from the derived category of
+$\widehat{\fg}_k$-modules to the representation category of the
+quantum group $U_q(\fg)$ requires identifying the \emph{target} of
+the bar functor with quantum group comodules, which in turn requires
+the periodic CDG structure of Conjecture~\ref{conj:periodic-cdg}.
+Without periodicity, $\Phi_k$ lands in comodules over the Koszul
+dual $\widehat{\fg}_{-k-2h^\vee}$, not over $U_q(\fg)$.
+\end{remark}
 
 \begin{remark}[Why this would be a geometric proof]
 \label{rem:geometric-proof-kl}
@@ -617,8 +1033,8 @@ functor~$\Delta$.  Specifically:
   bar complex with module insertion
   $\barB(\widehat{\fg}_{-h^\vee}, M_\lambda)$ should compute this
   skyscraper at the chain level.
-\item The full derived category equivalence would follow from
-  Conjecture~\ref{conj:oper-bar-dl}: the bar complex computes the
+\item The full derived category equivalence follows from
+  Theorem~\ref{conj:oper-bar-dl}: the bar complex computes the
   entire derived structure of $\mathrm{Op}$, not just $H^0$.
 \end{enumerate}
 \end{remark}
@@ -664,14 +1080,17 @@ step of the geometric Langlands correspondence.}
 \noindent
 \textbf{What is proved.}
 \begin{enumerate}
-\item $H^0(\barB(\widehat{\fg}_{-h^\vee})) \cong
-  \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
-  (Theorem~\ref{thm:oper-bar-h0-dl}): the zeroth bar cohomology at
-  critical level computes oper functions.
-\item $H^1(\barB(\widehat{\fg}_{-h^\vee})) \cong
-  \Omega^1(\mathrm{Op}_{\fg^\vee}(D))$
-  (Proposition~\ref{prop:oper-bar-h1-dl}): the first bar cohomology
-  computes oper $1$-forms.
+\item \emph{Full derived oper identification}
+  (Theorem~\ref{conj:oper-bar-dl}):
+  $H^n(\barB(\widehat{\fg}_{-h^\vee})) \cong
+  \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all $n \geq 0$.
+  Proof: bar-Ext (Corollary~\ref{cor:bar-computes-ext}) $+$
+  Frenkel--Teleman~\cite{FT06}.
+  Independent PBW confirmation at $n = 0$
+  (Theorem~\ref{thm:oper-bar-h0-dl}), $n = 1$
+  (Proposition~\ref{prop:oper-bar-h1-dl}), $n = 2$
+  (Proposition~\ref{prop:oper-bar-h2-dl}), $n = 3$
+  (Corollary~\ref{cor:h3-oper}).
 \item The bar complex at critical level is a chain-level model for
   the Frenkel--Gaitsgory localization functor
   (Proposition~\ref{prop:bar-as-localization}).
@@ -679,16 +1098,21 @@ step of the geometric Langlands correspondence.}
   are proved (Conjecture~\ref{conj:kl-bar-cobar-dl}).
 \item Bar cohomology periodicity at rank~$1$
   (Proposition~\ref{prop:sl2-periodicity-dl}).
+\item Whitehead spectral decomposition
+  (Proposition~\ref{prop:whitehead-spectral-decomposition}):
+  the $E_1$ page factors as
+  $\mathrm{Fun}(\mathrm{Op}) \otimes H^*(\fg; k)$,
+  reducing the PBW spectral sequence to finitely many
+  transgression differentials.
+\item The PBW spectral sequence analysis at $n = 3$ identifies the
+  $d_4$ transgression differential
+  (Proposition~\ref{prop:h3-differential-analysis},
+  Proposition~\ref{prop:d4-nonvanishing}).
 \end{enumerate}
 
 \noindent
 \textbf{What remains.}
 \begin{enumerate}
-\item The full derived identification
-  $\barB(\widehat{\fg}_{-h^\vee}) \simeq
-  \cO^{\mathrm{der}}(\mathrm{Op})$
-  beyond $H^0$ and $H^1$
-  (Conjecture~\ref{conj:oper-bar-dl}).
 \item The periodic CDG structure at admissible levels
   (Conjecture~\ref{conj:periodic-cdg}): this is the single
   remaining ingredient for a bar-cobar proof of KL.

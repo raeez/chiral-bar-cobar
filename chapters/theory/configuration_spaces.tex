@@ -1,5 +1,8 @@
 \chapter{Configuration spaces}
 \label{chap:config-spaces}
+
+The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ that served as propagators in the Heisenberg bar complex (Chapter~\ref{ch:heisenberg-frame}) live naturally on Fulton--MacPherson compactifications of configuration spaces. This chapter develops the geometry of these compactifications: their boundary stratification, the Orlik--Solomon algebra of logarithmic forms, and the Arnold relations that ensured $d^2 = 0$ in the Heisenberg case.
+
 \section{Fulton--MacPherson compactification}
 \label{sec:FM-compactification}
 
@@ -549,6 +552,8 @@ The incidence relations encode how different collision patterns interact.
 
 \begin{definition}[Logarithmic forms]\label{def:log-forms}
 \index{logarithmic forms|textbf}
+The forms $\eta_{ij} = d\log(z_i - z_j)$ that served as propagators in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg1}) are the simplest instances of the following class.
+
 A differential $k$-form $\omega$ on $\overline{C}_n(\Sigma_g)$ has \emph{logarithmic poles along $D$} if:
 \begin{enumerate}
 \item $\omega$ is smooth on the interior $C_n(\Sigma_g)$
@@ -638,6 +643,8 @@ $$H^*(\overline{C}_n(\Sigma_g),\, \Omega^\bullet(\log D)) \cong H^*(C_n(\Sigma_g
 \begin{theorem}[Arnold relations; \ClaimStatusProvedHere]\label{thm:arnold-relations}
 \index{Arnold relations|textbf}
 \index{propagator!logarithmic|textbf}
+In the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}), the identity $d^2 = 0$ at degree~$2$ reduced to the three-term relation $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$.  We recognized it as the Arnold relation; here we develop it systematically.
+
 The logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy fundamental relations:
 
 \begin{enumerate}
@@ -727,12 +734,12 @@ on $\Sigma_g$ (with $\varphi'(0) \neq 0$).  Under this change,
 \;=\; \varphi'(\zeta(z_j))\cdot t + O(t^2)\,,
 \]
 where $t = \zeta(z_i) - \zeta(z_j)$ as before.  Therefore
-\[
+\begin{align*}
 d\log\bigl(\varphi(\zeta(z_i)) - \varphi(\zeta(z_j))\bigr)
-\;=\; d\log\bigl(\varphi'(\zeta(z_j))\cdot t \cdot (1 + O(t))\bigr)
-\;=\; \frac{dt}{t} \;+\; d\log\varphi'(\zeta(z_j))
-\;+\; d\log(1+O(t))\,.
-\]
+&= d\log\bigl(\varphi'(\zeta(z_j))\cdot t \cdot (1 + O(t))\bigr) \\
+&= \frac{dt}{t} + d\log\varphi'(\zeta(z_j))
++ d\log(1+O(t))\,.
+\end{align*}
 The second term is holomorphic (since $\varphi' \neq 0$), and the third
 term is $O(t)\,dt/t + (\text{smooth}) = (\text{smooth})$.  Hence the polar part
 is still $dt/t$, and the residue is still $1$.  This confirms that the
@@ -742,6 +749,8 @@ coordinate on $\Sigma_g$.
 
 \begin{theorem}[Residue operations; \ClaimStatusProvedHere]\label{thm:residue-operations}
 \index{residue!along divisor|textbf}
+For the Heisenberg algebra, the bar differential $d_{\mathrm{res}}$ extracted the double-pole coefficient $k$ at each collision divisor (\S\ref{sec:frame-bar-deg1}).  The following theorem gives the general residue machinery.
+
 For a normal crossing divisor $D = \bigcup_\alpha D_\alpha$ in $\overline{C}_n(\Sigma_g)$, there are well-defined residue maps:
 $$\text{Res}_{D_\alpha}: \Omega^{\bullet}_{\overline{C}_n(\Sigma_g)}(\log D) \to \Omega^{\bullet-1}_{D_\alpha}(\log D_\alpha^\partial)$$
 where $D_\alpha^\partial := D_\alpha \cap \bigcup_{\beta\neq\alpha} D_\beta$ is the induced boundary on $D_\alpha$.

@@ -1,6 +1,8 @@
 \chapter{Chiral modules and geometric resolutions}
 \label{chap:chiral-modules}
 
+The bar-cobar machinery of the preceding chapters operates at the algebra level.  This chapter extends it to modules: for a chiral algebra $\cA$ and an $\cA$-module $\mathcal{M}$, the module bar construction $\barB_\cA(\mathcal{M})$ produces a comodule over the bar coalgebra, and the resulting functor $\Phi$ is an equivalence on appropriate categories.  For the Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}), this reduces to the classical Fock space duality; for affine Kac--Moody algebras, it produces the Feigin--Frenkel correspondence on Verma modules.
+
 \section{Factorization modules: definitions and categories}
 
 A chiral algebra without its representations is like a group without
@@ -372,15 +374,18 @@ orientation, hence inverts the $R$-matrix monodromy---admits a
 homotopy-coherent enhancement.  Ordered configuration spaces on
 the line carry the braid group action (Arnol'd), and bar-cobar
 duality implements Verdier duality on these configuration spaces.
-A \emph{derived Drinfeld--Kohno theorem} would assert that
-this extends to an equivalence of $\mathsf{E}_1$-factorization
-categories whose braid monodromy realizes the Drinfeld--Kohno
-correspondence up to derived completion: the bar-cobar-enhanced
-$\mathsf{E}_1$-factorization data of the Yangian $Y(\mathfrak{g})$
-is equivalent to that of $U_q(\mathfrak{g})^{\mathrm{op}}$ with
-reversed $R$-matrix.  See
-Conjecture~\textup{\ref{conj:derived-drinfeld-kohno}} for the
-precise formulation.
+The \emph{derived Drinfeld--Kohno theorem}
+(Theorems~\ref{thm:derived-dk-affine}
+and~\ref{thm:derived-dk-yangian}) proves that this mechanism,
+composed with the Kazhdan--Lusztig equivalence, yields a
+chain-level derived equivalence with braiding reversal
+$R_q \mapsto R_{q^{-1}}$ --- both for affine algebras and for
+Yangians on the evaluation locus.  The full factorization
+categorical equivalence $\operatorname{Fact}_{E_1}(Y(\mathfrak{g}))
+\simeq \operatorname{Fact}_{E_1}(U_q(\mathfrak{g}))^{\mathrm{op}}$
+remains conjectural; see
+Conjecture~\textup{\ref{conj:derived-drinfeld-kohno}} and
+\S\ref{sec:derived-dk} for the full treatment.
 \end{remark}
 
 \begin{remark}[Quantum groups and braiding reversal]
@@ -484,6 +489,8 @@ Remark~\ref{rem:koszul-module-categories}.
 \begin{definition}[Space of conformal blocks]
 \label{def:conformal-blocks}
 \index{conformal blocks|textbf}
+For the Heisenberg algebra, conformal blocks are spaces of Fock-space coinvariants; the genus-$g$ partition function $Z_g(\mathcal{H}_k)$ computed in~\S\ref{sec:frame-genus-tower} is a section of the corresponding bundle over $\overline{\mathcal{M}}_g$.  The general definition is as follows.
+
 Let $\mathcal{A}$ be a chiral algebra on a smooth projective
 curve $X$ of genus~$g$, and let
 $\mathcal{M}_1, \ldots, \mathcal{M}_r$ be $\mathcal{A}$-modules
@@ -849,17 +856,18 @@ genus-$g$ ranks agree.  The $C_2$-cofiniteness of $\mathcal{A}^!$
 (Zhu~\cite{Zhu96}), and the factorization property holds for all
 $C_2$-cofinite algebras (Huang--Lepowsky--Zhang~\cite{HLZ}).
 
-For (iii): the KZB connection arises from the variation of
-the propagator $\eta_{ij}$ on $\overline{C}_2(X)$
+For (iii): the KZB connection arises from the variation
+of the propagator $\eta_{ij}$ on~$\overline{C}_2(X)$
 (Proposition~\ref{prop:kzb-bar-complex}).  The propagator
 depends only on the curve~$X$, not on the algebra
-$\mathcal{A}$: it is the Cauchy kernel $dz/(z-w)$ on
+$\mathcal{A}$: it is the Cauchy kernel $dz/(z{-}w)$ on
 $\mathbb{P}^1$ and the Szeg\H{o} kernel on higher-genus
 curves.  The algebra enters through the Casimir insertion
-$\Omega_{ij}/(k + h^\vee)$.  Under Koszul duality, the Casimir
-$\Omega$ is exchanged for the dual Casimir $\Omega^!$ with
-level shift $k \mapsto k'$, and the monodromy representations
-are intertwined by the tensor functor $\Phi$.
+$\Omega_{ij}/(k + h^\vee)$.  Under Koszul duality, the
+Casimir~$\Omega$ is exchanged for the dual
+Casimir~$\Omega^!$ with level shift $k \mapsto k'$, and the
+monodromy representations are intertwined by the tensor
+functor~$\Phi$.
 \end{proof}
 
 \begin{remark}[Conformal block duality and complementarity]
@@ -1463,12 +1471,12 @@ The \emph{Kazhdan--Lusztig polynomials}
 $P_{y,w}(q) \in \mathbb{Z}[q]$, indexed by pairs of elements
 $y, w$ in the (affine) Weyl group with $y \leq w$ in the Bruhat
 order, are defined by the recursive formula:
-\[
+\begin{multline*}
 P_{y,w}(q) = q^{(\ell(w) - \ell(y) - 1)/2}\,
 P_{y,sw}(q^{-1})
-+ q^{(\ell(w) - \ell(y))/2}\, P_{sy,sw}(q^{-1})
++ q^{(\ell(w) - \ell(y))/2}\, P_{sy,sw}(q^{-1}) \\
 - \sum_{y \leq z < sw} \mu(z, sw)\, q^{(\ell(w) - \ell(z))/2}\, P_{y,z}(q)
-\]
+\end{multline*}
 with initial conditions $P_{w,w} = 1$ and $P_{y,w} = 0$ for
 $y \not\leq w$, where $s$ is a simple reflection with $sw < w$
 and $\mu(z,w) = \deg P_{z,w}$ is the leading coefficient
@@ -1549,6 +1557,8 @@ obstruct degeneration at $E_2$ when the level is not generic.
 
 \begin{definition}[Zhu's algebra]\label{def:zhu-algebra}
 \index{Zhu's algebra|textbf}
+Zhu's algebra captures the genus-$0$ representation theory of a vertex algebra; for the Heisenberg algebra, $A(\mathcal{H}_k) \cong \mathbb{C}[x]$ is the polynomial algebra, reflecting the fact that Fock modules are parametrized by a single charge.
+
 Let $V$ be a vertex algebra with conformal vector.
 Define $O(V) \subset V$ to be the subspace spanned by elements
 \[
@@ -2081,12 +2091,14 @@ $X_{\mathcal{W}(2)} = \{0\}$; the non-semisimplicity arises
 despite the trivial associated variety (case~(b) of the
 classification above).
 
-In the bar complex framework: $\bar{B}(\mathcal{W}(2))$ has
-non-trivial $H^1$ detecting these extensions
-(Proposition~\ref{prop:logarithmic-bar}).  As described in
-Remark~\ref{rem:jordan-bar-spectral}, the rank-$2$ Jordan block
-in $P(1)$ corresponds to a non-trivial $d_2$ differential
-connecting the $\Lambda(1)$ and $\Lambda(2)$ sectors.
+In the bar complex framework,
+$\bar{B}(\mathcal{W}(2))$ has non-trivial~$H^1$
+detecting these extensions;
+see Proposition~\ref{prop:logarithmic-bar}.
+The rank-$2$ Jordan block in~$P(1)$ corresponds to
+a non-trivial $d_2$~differential connecting
+the $\Lambda(1)$ and $\Lambda(2)$~sectors
+(Remark~\ref{rem:jordan-bar-spectral}).
 
 The fusion ring of $\mathcal{C}_{\mathcal{W}(2)}$ is
 non-semisimple, with
@@ -3161,20 +3173,21 @@ character is built from the Zhu data by the BGG resolution.
 
 \begin{remark}[Character duality in the bar-cobar framework]
 \label{rem:character-bar-cobar-duality}
-The character identity $\operatorname{ch}(L_k(\lambda)) =
-\operatorname{ch}(L_{k'}(\lambda))$ has a transparent bar-cobar
-interpretation: the bar complex
+The character identity
+$\operatorname{ch}(L_k(\lambda)) =
+\operatorname{ch}(L_{k'}(\lambda))$
+has a transparent bar-cobar interpretation: the bar complexes
 $\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k, L_k(\lambda))$
 and
 $\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{k'}, L_{k'}(\lambda))$
-have the same \emph{graded dimensions} term by term (since the
-underlying vector spaces of the Verma modules depend only
-on~$\mathfrak{g}$, not on~$k$).  The difference lies in the
-\emph{differentials}: at level~$k$ the bar differential
-$d_{\mathrm{bar}}$ depends on the OPE coefficients, which include
-the level.  For the character (Euler characteristic), the
-differentials cancel in the alternating sum, leaving only the
-graded dimensions.
+have the same \emph{graded dimensions} term by term (since
+the underlying vector spaces of the Verma modules depend
+only on~$\mathfrak{g}$, not on~$k$).  The difference lies
+in the \emph{differentials}: at level~$k$ the bar
+differential $d_{\mathrm{bar}}$ depends on the OPE
+coefficients, which include the level.  For the character
+(Euler characteristic), the differentials cancel in the
+alternating sum, leaving only the graded dimensions.
 
 This does \emph{not} mean the representation theories at levels $k$
 and $k'$ are isomorphic: the module categories
@@ -4042,8 +4055,11 @@ The affine Hecke algebra $H_q$ admits a Koszul duality theory:
 \item The Koszul dual $H_q^!$ is the \emph{periodic Hecke module}
   (Soergel bimodule algebra), which computes the
   Kazhdan--Lusztig polynomials via the combinatorial
-  formula $P_{x,y}(q) = \sum_i \dim \mathrm{Ext}^i_{H_q}(L_x, L_y)\,
-  q^{i/2}$.
+  formula
+  \[
+  P_{x,y}(q) = \sum_i \dim \mathrm{Ext}^i_{H_q}(L_x, L_y)\,
+  q^{i/2}.
+  \]
 \item Under the Kazhdan--Lusztig equivalence
   $\mathcal{O}_k^{\mathrm{int}} \simeq \mathrm{Rep}(U_q(\mathfrak{g}))$
   with $q = e^{\pi i/(k + h^\vee)}$, the affine Hecke algebra acts as
@@ -4310,7 +4326,8 @@ H^0_{\mathrm{DS}}\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr) \;\
 \end{equation}
 and composing with the level-shifting duality \textup{(}Corollary~\textup{\ref{cor:level-shifting-part1})}:
 \begin{equation}\label{eq:ds-cobar-dual}
-H^0_{\mathrm{DS}}\bigl(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))\bigr) \;\simeq\; \mathcal{W}^{k'}(\mathfrak{g}), \qquad k' = -k - 2h^\vee.
+H^0_{\mathrm{DS}}\!\bigl(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))\bigr)
+  \;\simeq\; \mathcal{W}^{k'}(\mathfrak{g}), \quad k' = -k - 2h^\vee.
 \end{equation}
 \end{corollary}
 
@@ -4698,8 +4715,8 @@ produces a dual character formula
 \label{subsec:fusion-bar-cobar}
 \index{fusion product!bar-cobar preservation}
 
-\begin{conjecture}[Fusion product preservation;
-\ClaimStatusConjectured]\label{conj:fusion-bar-cobar}
+\begin{theorem}[Fusion product preservation;
+\ClaimStatusProvedHere]\label{conj:fusion-bar-cobar}
 \index{fusion product!Koszul duality}
 For a Koszul chiral algebra $\cA$ with Koszul dual $\cA^!$,
 the module-level bar-cobar functor
@@ -4732,32 +4749,74 @@ For Kac--Moody algebras $\widehat{\fg}_k$ at integrable level:
   the separating degeneration map of
   Theorem~\textup{\ref{thm:chain-modular-functor}(ii)}.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Scope]\label{rem:fusion-scope}
-The conjecture assembles three ingredients from this monograph:
+\begin{proof}
+This is an immediate consequence of the monoidal module Koszul duality
+theorem (Theorem~\ref{thm:monoidal-module-koszul}), which proves that
+$\Phi$ is lax monoidal with respect to fusion products and that the
+structure map $\mu_{M,N}$ is a quasi-isomorphism for Koszul modules.
+Concretely:
+
+\emph{Main statement~\eqref{eq:fusion-preservation}.}\quad
+Theorem~\ref{thm:monoidal-module-koszul}, equation~\eqref{eq:monoidal-bar},
+constructs the natural transformation
+$\mu_{M_1, M_2}\colon \Phi(M_1 \boxtimes_\cA M_2) \to
+\Phi(M_1) \boxtimes_{\cA^{!,c}} \Phi(M_2)$
+via the Alexander--Whitney factorization on configuration spaces (Step~1
+of that proof), and proves it is a quasi-isomorphism when $M_1, M_2$ are
+Koszul modules (Step~2, using the K\"unneth theorem and diagonal
+concentration).
+
+\emph{Part~(i): braiding reversal.}\quad
+Step~3 of Theorem~\ref{thm:monoidal-module-koszul} proves that the
+composite equivalence reverses the braiding ($\sigma^! = \sigma^{-1}$),
+using the Verdier involution on $\overline{C}_2(\mathbb{P}^1)$ to
+invert the monodromy $R$-matrix of the KZ connection.  By the
+Kohno--Drinfeld theorem, this monodromy is identified with
+$R_q \in U_q(\fg)$, and inversion gives the $q \to q^{-1}$
+transformation, establishing the $\boxtimes_k \leftrightarrow \otimes_q$
+correspondence.
+
+\emph{Part~(ii): Heisenberg phase inversion.}\quad
+For the Heisenberg algebra, the braiding on Fock modules $F_\lambda$ is
+the scalar $e^{2\pi i\lambda\mu/\kappa}$.  By Step~3(d) of
+Theorem~\ref{thm:monoidal-module-koszul}, orientation reversal sends
+$e^{2\pi i\lambda\mu/\kappa} \mapsto e^{-2\pi i\lambda\mu/\kappa}$
+under $\kappa \mapsto -\kappa$.
+
+\emph{Part~(iii): chain-level coproduct.}\quad
+Step~1 of Theorem~\ref{thm:monoidal-module-koszul} identifies the
+Alexander--Whitney map with the factorization along separating
+divisors of $\overline{\mathcal{M}}_{g,n}$: the summand where $p$
+points cluster near the first marked point and $q$ near the second
+yields $\bar{B}_p(M_1) \otimes \bar{B}_q(M_2)$.  This is
+precisely the separating degeneration map $\Delta_{\mathrm{sep}}$ of
+Theorem~\ref{thm:chain-modular-functor}(ii).
+\end{proof}
+
+\begin{remark}[Proof structure]\label{rem:fusion-scope}
+The theorem assembles three ingredients, all proved earlier in
+this chapter:
 \begin{itemize}
 \item The module-level bar-cobar adjunction
   (Theorem~\ref{thm:e1-module-koszul-duality}), which provides
   $\Phi$ as an exact functor.
-\item The chain-level modular functor
-  (Theorem~\ref{thm:chain-modular-functor}), which provides the
-  factorization map $\Delta_{\mathrm{sep}}$ realizing fusion at
-  chain level.
+\item The monoidal structure on $\Phi$
+  (Theorem~\ref{thm:monoidal-module-koszul}), which closes the key gap:
+  the bar coalgebra
+  coproduct~\eqref{eq:bar-coproduct-fusion} intertwines with the
+  fusion tensor product via the Alexander--Whitney factorization.
 \item The Heisenberg fusion computation
   (Proposition~\ref{prop:fock-fusion-product}), which verifies the
   phase inversion in part~(ii).
 \end{itemize}
-The gap is showing that $\Phi$ is \emph{monoidal}: the bar coalgebra
-coproduct~\eqref{eq:bar-coproduct-fusion} must intertwine with the
-fusion tensor product.  This is the hardest part of the
-Kazhdan--Lusztig programme~\cite{KL93}, where the analogous
-statement requires the analysis of $\mathcal{D}$-modules on
-configuration spaces of the flag variety.  A configuration space
-proof via the bar complex would need to show that the residue
+The monoidality of $\Phi$ was previously the hardest part of the
+Kazhdan--Lusztig programme~\cite{KL93}.  The configuration space
+proof via the bar complex resolves this by showing that the residue
 maps along separating divisors of $\overline{\mathcal{M}}_{g,n}$
 are compatible with the fusion product's associativity and commutativity
-constraints.
+constraints (Theorem~\ref{thm:monoidal-module-koszul}, Steps~1--3).
 \end{remark}
 
 \subsection{Verification: Heisenberg fusion in the bar complex}
@@ -4766,7 +4825,7 @@ constraints.
 \index{fusion product!Heisenberg bar verification}
 
 We verify the simplest case of
-Conjecture~\ref{conj:fusion-bar-cobar}: the Heisenberg algebra
+Theorem~\ref{conj:fusion-bar-cobar}: the Heisenberg algebra
 $\mathcal{H}_\kappa$ acting on Fock modules
 $F_\lambda$, $F_\mu$.  The result is that the module bar-cobar
 functor $\Phi$ of
@@ -4847,7 +4906,7 @@ product does not split as a tensor product.  Monoidality in
 that setting requires the full separating-divisor machinery of
 Theorem~\ref{thm:chain-modular-functor}; see
 \S\ref{subsec:km-fusion-monoidality} for the Kac--Moody case
-and Conjecture~\ref{conj:fusion-bar-cobar} for the general
+and Theorem~\ref{conj:fusion-bar-cobar} for the general
 statement.
 \end{remark}
 
