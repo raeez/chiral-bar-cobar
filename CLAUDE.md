@@ -26,10 +26,11 @@ Classical Koszul duality (bar-cobar adjunction) lifts to chiral/vertex algebras 
 ### The Engine — Prism Principle (PROVED)
 Configuration spaces decompose a chiral algebra into its operadic spectrum. Log forms on FM compactifications provide propagators; residues extract OPE data; Arnold relations ensure d^2 = 0. Verdier duality exchanges bar and cobar. Proved as operadic Koszul duality: genus-0 via HyCom <-> Grav, all genera via Feynman transform of modular operad.
 
-### Three Main Theorems — ALL PROVED
+### Four Main Theorems — ALL PROVED
 1. **(A) Geometric Bar-Cobar Duality**: Bar and cobar functors via configuration space integrals form an adjoint pair. For Koszul chiral algebras, the adjunction is an equivalence. [PROVED: thm:bar-cobar-isomorphism-main]
 2. **(B) Bar-Cobar Inversion**: For Koszul A, Omega(B(A)) -> A is a quasi-isomorphism. Spectral sequence collapses at E_2. [PROVED: thm:higher-genus-inversion]
 3. **(C) Deformation-Obstruction Complementarity**: Q_g(A) + Q_g(A!) = H*(M_g, Z(A)). What one algebra sees as deformation, its dual sees as obstruction. Kodaira-Spencer map constructed for all Koszul pairs. [PROVED: thm:quantum-complementarity-main, thm:kodaira-spencer-chiral-complete]
+4. **(D) Modular Characteristic Theorem**: The scalar invariants of the modular characteristic package are determined by a single number κ(A): universal (controls all genera via obs_g = κ·λ_g), additive under tensor product, anti-symmetric under duality (κ+κ'=0), with generating function the Â-genus. κ=0 iff anomaly cancellation. [PROVED: thm:modular-characteristic]
 
 ### Architecture
 - **Part 1: Theory** — Foundations, configuration spaces, bar-cobar, NAP duality, higher genus, Koszul pairs, deformation theory, E_1-chiral framework
@@ -43,17 +44,17 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 6)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **695** |
+| ProvedHere | **731** |
 | ProvedElsewhere | **333** |
-| Conjectured | **113** |
-| Heuristic | **19** |
+| Conjectured | **101** |
+| Heuristic | **21** |
 | Open | **0** |
-| **Total tagged claims** | **1160** |
+| **Total tagged claims** | **1186** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1276 pages** (converged), zero LaTeX errors, 6 pre-existing undefined forward refs, zero undefined citations, zero multiply-defined labels
+- **1414 pages** (converged), zero LaTeX errors, 6 pre-existing undefined forward refs, zero undefined citations, zero multiply-defined labels
 - 55 active .tex files + 8 stubs (+ main.tex preamble), 75K+ lines of LaTeX
 - Bibliography: 289 entries (~1395 lines), all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
@@ -88,26 +89,23 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 114 Conjectured Claims
+### What Remains — 101 Conjectured Claims
 
-All have scope remarks. Classification:
+All have scope remarks. Classification (from comprehensive audit, this session):
 
 | Category | Count | Action |
 |----------|-------|--------|
-| **MATH-PHYSICS** | ~48 | IN SCOPE — this is a mathematical physics book. Prove or refine. |
-| **BORDERLINE PROVABLE** | ~2 | Provable in principle; substantial new work |
-| **GENUINELY OPEN** | ~7 | Open mathematical problems with identified gaps |
-| **COMPUTATIONAL** | ~3 | Explicit calculations not yet carried out |
-| **HORIZON-DOCUMENTED** | ~10 | New conjectures from HORIZON programme documentation |
-| **SCOPE-REMARK REFS** | ~20 | Re-references of above in scope remarks |
+| **MATH-PHYSICS** | ~25 | IN SCOPE — physics predictions with algebraic side proved |
+| **BORDERLINE** | ~45 | Substantial new argument, feasible but multi-week each |
+| **GENUINELY OPEN** | ~8 | Major new mathematics required |
+| **COMPUTATIONAL** | ~5 | Explicit bar cohomology computations needed |
+| **SCOPE-REMARK REFS** | ~10 | Re-references, not independent claims |
 
-**Borderline provable**: chiral Kontsevich (all-orders Stokes), EO recursion (axiom verification), general m_k (all-genus propagator), affine periodicity at critical level. (Positselski chiral lift PROVED, Session 113.)
+**Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), derived bc-betagamma, non-principal W-orbit duality, NC Chern-Simons
 
-**Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), derived bc-betagamma, KL from bar-cobar
+**Upgradeable items exhausted**: All conjectures with proofs assemblable from existing results have been upgraded. Remaining 101 each require either (a) genuine new mathematics, (b) physics input, or (c) explicit computation not yet performed.
 
-**Math-physics conjectures (~48)**: holomorphic_topological.tex (14), bv_brst.tex (4), free_fields.tex (18), physical_origins.tex (3), koszul_pair_structure.tex (9). All IN SCOPE — the BRST-bar identification, holographic dictionary, anomaly cancellation, and AGT realization are mathematical physics results we aim to prove. See Programme VI in PROGRAMMES.md.
-
-**Conjectures by Part**: Theory 23, Examples 36, Connections 33, Appendices 1.
+**Conjectures by Part**: Theory ~25, Examples ~35, Connections ~30, Appendices ~1.
 
 **WARNING**: Always verify census with `grep -r 'ClaimStatus...' chapters/ appendices/ --include='*.tex' | wc -l` (the `--include` flag is critical to avoid counting .aux files).
 

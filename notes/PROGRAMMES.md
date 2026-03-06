@@ -19,6 +19,40 @@ to the field. The author planning next steps.
 
 ---
 
+## The Modular Koszul Programme
+
+All nine programmes below are facets of a single vision: **modular Koszul duality
+for factorization algebras on curves**. The monograph proves this at genus 0 and
+establishes the genus tower via the modular operad. The programmes extend this to
+the full modular homotopy theory the framework demands.
+
+The **four irreducible pieces** of the theory are already proved:
+1. Arnold relation = factorization coherence (genus-0 seed)
+2. Verdier duality on Ran(X) = bar-cobar exchange (Theorem A)
+3. Genus-1 curvature d^2 = kappa * omega_1 (Theorem B + genus universality)
+4. Clutching of stable curves = modular operad compatibility (Theorem in higher_genus)
+
+The **theorematic silhouette** — the target of the full programme — consists of:
+A_mod (Verdier-functorial bar-cobar over M_{g,n}), B_mod (coderived persistence),
+C_mod (Lagrangian complementarity), an Index theorem (GRR for genus series),
+and Derived Drinfeld-Kohno (E1-factorization equivalence). See notes/VISION.md.
+
+Each programme below advances a specific facet:
+
+| Programme | Facet of modular Koszul duality |
+|-----------|-------------------------------|
+| I (Langlands) | Critical level: Theta_A trivializes, bar = opers |
+| II (KL) | Root-of-unity: N-complex periodicity of Theta_A |
+| III (Fusion) | Monoidality: modular package is functorial |
+| IV (E_n) | Higher dimension: Arnold -> Totaro -> Fay |
+| V (Vassiliev) | Topological: Feynman transform = topological shadow |
+| VI (Physics) | Physical: bar = BRST, curvature = anomaly |
+| VII (NC Hodge) | Twistor: genus variable = deformation parameter |
+| VIII (Open math) | Structural: conjectures about the package itself |
+| IX (Computation) | Explicit: data confirming/refuting predictions |
+
+---
+
 ## The Honest Assessment
 
 The monograph has proved everything it can prove with its current tools.
@@ -336,7 +370,9 @@ for the precise tools needed.
 | Result | Label | File | Content |
 |--------|-------|------|---------|
 | kappa-additivity + c=26 | `thm:anomaly-koszul` | concordance.tex | **PROVED** |
-| BRST = bar (genus 0) | `conj:anomaly-physical` | concordance.tex | Conjectured |
+| BRST = bar (genus 0) | `thm:brst-bar-genus0` | bv_brst.tex | **PROVED** |
+| Anomaly cancellation (genus 0) | `cor:anomaly-physical-genus0` | bv_brst.tex | **PROVED** |
+| BRST = bar (all genera) | `conj:anomaly-physical` | concordance.tex | Conjectured |
 | Bar = topological BRST | `thm:bar-complex-eq-top-brst` | bv_brst.tex | Conjectured |
 
 **Gap**: An explicit dg-algebra isomorphism B-bar^ch(A) -> C*_BRST(A tensor Diff(X)).
@@ -355,7 +391,8 @@ rem:brst-chain-map-pieces (concordance.tex).
 Both sides are explicitly computable. The isomorphism at genus 0 is the identification
 of semi-infinite cohomology with bar complex cohomology (Feigin-Frenkel tradition).
 
-**Scale**: 6-12 months for genus 0 (upgraded from 1-2 years given existing pieces).
+**Status**: Genus 0 PROVED (thm:brst-bar-genus0, session ~134). Chain map Φ constructed
+via PBW filtration + Arkhipov classical comparison + Eilenberg-Moore spectral sequence lift.
 Genus g >= 1 requires Costello's renormalization.
 
 ### Sub-programme VI-b: Holographic Dictionary (AdS3/CFT2)
