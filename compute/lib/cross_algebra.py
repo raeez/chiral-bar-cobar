@@ -36,29 +36,37 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [1],
         "max_pole_order": 2,
-        "curvature_formula": "k/2",
+        "curvature_m0": "k",            # m_0 = k (double pole J_{(1)}J = k; manuscript: free_fields.tex)
+        "kappa_formula": "k",          # kappa = k (the level; manuscript: free_fields.tex:1235)
         "complementarity_sum": None,  # no DS reduction
         "koszul_dual": "Sym^ch(V*)",
         "self_dual": False,
         "spectral_collapse": 1,
     },
+    # NOTE: The free fermion entry here describes the bc system (b, c generators),
+    # which is a 2-generator fermionic system.  In bar_complex.py, the free fermion
+    # algebra uses 1 generator (psi of weight 1/2) — that is the single free fermion
+    # field.  Both are standard usages; the bc system is the pair (b, c) of conjugate
+    # fermions, while the single free fermion psi is the simplest fermionic chiral algebra.
     "free_fermion": {
         "n_generators": 2,
         "generator_parity": "fermionic",
         "generator_weights": [Rational(1, 2), Rational(1, 2)],
         "max_pole_order": 1,
-        "curvature_formula": "0",
+        "curvature_m0": "0",
+        "kappa_formula": "0",
         "complementarity_sum": None,
-        "koszul_dual": "Sym^ch(V*)",
+        "koszul_dual": "beta_gamma",  # F^! = beta-gamma (bc/beta-gamma duality, VF014)
         "self_dual": False,
         "spectral_collapse": 2,
     },
-    "betagamma": {
+    "beta_gamma": {
         "n_generators": 2,
         "generator_parity": "bosonic",
         "generator_weights": [0, 1],
         "max_pole_order": 1,
-        "curvature_formula": "0",
+        "curvature_m0": "0",
+        "kappa_formula": "0",
         "complementarity_sum": None,
         "koszul_dual": "bc",
         "self_dual": False,
@@ -69,9 +77,10 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "fermionic",
         "generator_weights": [Symbol('lambda'), 1 - Symbol('lambda')],
         "max_pole_order": 1,
-        "curvature_formula": "0",
+        "curvature_m0": "0",
+        "kappa_formula": "0",
         "complementarity_sum": None,
-        "koszul_dual": "betagamma",
+        "koszul_dual": "beta_gamma",
         "self_dual": False,
         "spectral_collapse": 2,
     },
@@ -80,7 +89,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [1, 1, 1],
         "max_pole_order": 2,
-        "curvature_formula": "(k+2)/4 * kappa",
+        "curvature_m0": "k",           # m_0 = level k (from double pole)
+        "kappa_formula": "3*(k+2)/4",  # obstruction coefficient kappa = dim*(k+h*)/(2h*)
         "complementarity_sum": 6,   # 2*dim = 2*3
         "koszul_dual": "sl2_{-k-4}",
         "self_dual": True,  # as Lie algebra (not as VA at fixed level)
@@ -91,7 +101,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [1] * 8,
         "max_pole_order": 2,
-        "curvature_formula": "(k+3)/6 * kappa",
+        "curvature_m0": "k",           # m_0 = level k
+        "kappa_formula": "8*(k+3)/6",  # = 4*(k+3)/3
         "complementarity_sum": 16,  # 2*dim = 2*8
         "koszul_dual": "sl3_{-k-6}",
         "self_dual": True,
@@ -102,7 +113,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [2],
         "max_pole_order": 4,
-        "curvature_formula": "c/2",
+        "curvature_m0": "c/2",         # m_0 = c/2 (from quartic pole T_{(3)}T)
+        "kappa_formula": "c/2",        # kappa = c/2 (same as m_0 for Virasoro)
         "complementarity_sum": 26,
         "koszul_dual": "conjectured W_inf-related",
         "self_dual": False,
@@ -113,7 +125,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [2, 3],
         "max_pole_order": 6,  # W_{(5)}W = c/3 (hextic pole)
-        "curvature_formula": "5c/6",
+        "curvature_m0": "c/2 + c/3",   # m_0^(T) = c/2, m_0^(W) = c/3
+        "kappa_formula": "5c/6",       # kappa = c/2 + c/3 = 5c/6
         "complementarity_sum": 100,
         "koszul_dual": "conjectured",
         "self_dual": False,
@@ -124,7 +137,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [1] * 248,
         "max_pole_order": 2,
-        "curvature_formula": "(k+30)/60 * kappa",
+        "curvature_m0": "k",           # m_0 = level k
+        "kappa_formula": "248*(k+30)/60",  # = 62*(k+30)/15
         "complementarity_sum": 496,  # 2*248
         "koszul_dual": "E8_{-k-60}",
         "self_dual": True,  # even unimodular lattice
@@ -135,7 +149,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [1] * 10,
         "max_pole_order": 2,
-        "curvature_formula": "(k+3)/6 * kappa",
+        "curvature_m0": "k",           # m_0 = level k
+        "kappa_formula": "10*(k+3)/6",  # = 5*(k+3)/3
         "complementarity_sum": 20,
         "koszul_dual": "B2_{-k-6}",
         "self_dual": True,
@@ -146,7 +161,8 @@ ALGEBRA_REGISTRY = {
         "generator_parity": "bosonic",
         "generator_weights": [1] * 14,
         "max_pole_order": 2,
-        "curvature_formula": "(k+4)/8 * kappa",
+        "curvature_m0": "k",           # m_0 = level k
+        "kappa_formula": "14*(k+4)/8",  # = 7*(k+4)/4
         "complementarity_sum": 28,
         "koszul_dual": "G2_{-k-8}",
         "self_dual": True,
@@ -168,13 +184,13 @@ def algebras_by_property(property_name: str, value: object) -> List[str]:
 def curved_algebras() -> List[str]:
     """Algebras with nonzero curvature."""
     return [name for name, data in ALGEBRA_REGISTRY.items()
-            if data["curvature_formula"] != "0"]
+            if data["curvature_m0"] != "0"]
 
 
 def uncurved_algebras() -> List[str]:
     """Algebras with zero curvature."""
     return [name for name, data in ALGEBRA_REGISTRY.items()
-            if data["curvature_formula"] == "0"]
+            if data["curvature_m0"] == "0"]
 
 
 def kac_moody_algebras() -> List[str]:
@@ -235,15 +251,17 @@ def curvature_sources(algebra: str) -> str:
     """Describe curvature sources for an algebra."""
     data = ALGEBRA_REGISTRY[algebra]
     pole = data["max_pole_order"]
+    m0 = data["curvature_m0"]
+    kap = data["kappa_formula"]
     if pole <= 1:
         return "No curvature (max pole order <= 1)"
     elif pole == 2:
-        return f"Curvature from double pole (Killing form): {data['curvature_formula']}"
+        return f"Curvature m_0={m0} from double pole (Killing form), kappa={kap}"
     elif pole == 4:
-        return f"Curvature from quartic pole: {data['curvature_formula']}"
+        return f"Curvature m_0={m0} from quartic pole, kappa={kap}"
     elif pole == 6:
-        return f"Curvature from hextic pole (W_3): {data['curvature_formula']}"
-    return f"Curvature: {data['curvature_formula']}"
+        return f"Curvature m_0={m0} from hextic pole (W_3), kappa={kap}"
+    return f"Curvature m_0={m0}, kappa={kap}"
 
 
 # ---------------------------------------------------------------------------
@@ -251,7 +269,12 @@ def curvature_sources(algebra: str) -> str:
 # ---------------------------------------------------------------------------
 
 def verify_cross_algebra():
-    """Verify cross-algebra consistency."""
+    """Verify cross-algebra consistency.
+
+    NOTE: These checks compare hardcoded registry values against hardcoded
+    expected values, so they function as regression tests (detecting accidental
+    edits to the registry) rather than independent mathematical verification.
+    """
     results = {}
 
     # All algebras registered
@@ -267,7 +290,7 @@ def verify_cross_algebra():
     results["partition complete"] = len(curved) + len(uncurved) == 11
     results["partition disjoint"] = len(curved & uncurved) == 0
     results["free_fermion uncurved"] = "free_fermion" in uncurved
-    results["betagamma uncurved"] = "betagamma" in uncurved
+    results["beta_gamma uncurved"] = "beta_gamma" in uncurved
     results["bc uncurved"] = "bc" in uncurved
     results["Virasoro curved"] = "Virasoro" in curved
 
@@ -295,11 +318,80 @@ def verify_cross_algebra():
         ALGEBRA_REGISTRY[a]["spectral_collapse"] == 1 for a in km
     )
 
-    # Koszul dual pairs
-    pairs = koszul_dual_pairs()
-    results["bg-bc pair"] = ("betagamma", "bc") in pairs or ("bc", "betagamma") in pairs
+    # Koszul duality chain: free_fermion -> beta_gamma -> bc -> beta_gamma
+    results["F! = beta_gamma"] = ALGEBRA_REGISTRY["free_fermion"]["koszul_dual"] == "beta_gamma"
+    results["bg! = bc"] = ALGEBRA_REGISTRY["beta_gamma"]["koszul_dual"] == "bc"
+    results["bc! = bg"] = ALGEBRA_REGISTRY["bc"]["koszul_dual"] == "beta_gamma"
 
     return results
+
+
+def verify_registry_consistency() -> Dict[str, bool]:
+    """Cross-check ALGEBRA_REGISTRY against KNOWN_BAR_DIMS, KOSZUL_PAIRS,
+    and genus_expansion kappa formulas. Catches data drift between registries."""
+    from compute.lib.bar_complex import KNOWN_BAR_DIMS
+    from compute.lib.koszul_pairs import KOSZUL_PAIRS
+    results = {}
+
+    # 1. Every algebra with known bar dims is in the registry
+    skip = {"Yangian_sl2"}  # not in ALGEBRA_REGISTRY (separate module)
+    for alg in KNOWN_BAR_DIMS:
+        if alg in skip:
+            continue
+        results[f"bar_dims:{alg} in registry"] = alg in ALGEBRA_REGISTRY
+
+    # 2. Koszul dual consistency: ALGEBRA_REGISTRY vs KOSZUL_PAIRS
+    # bg-bc pair
+    results["koszul: bg->bc consistent"] = (
+        ALGEBRA_REGISTRY["beta_gamma"]["koszul_dual"] == "bc"
+        and KOSZUL_PAIRS["beta_gamma_bc"]["A"] == "beta_gamma"
+    )
+    results["koszul: Heis not self-dual"] = (
+        not ALGEBRA_REGISTRY["Heisenberg"]["self_dual"]
+        and not KOSZUL_PAIRS["Heisenberg_Symch"]["self_dual"]
+    )
+
+    # 3. KM kappa complementarity: kappa(A) + kappa(A!) = 0 (identically in k)
+    # The complementarity_sum in ALGEBRA_REGISTRY is c + c' (central charges), not kappa + kappa'.
+    from compute.lib.lie_algebra import kappa_km as kappa_fn, ff_dual_level as ff_fn
+    from sympy import Symbol, simplify
+    k = Symbol('k')
+    for typ, rank, name in [("A", 1, "sl2"), ("A", 2, "sl3"), ("G", 2, "G2"), ("B", 2, "B2")]:
+        kap = kappa_fn(typ, rank, k)
+        kp = ff_fn(typ, rank, k)
+        kap_dual = kappa_fn(typ, rank, kp)
+        total = simplify(kap + kap_dual)
+        results[f"kappa:{name} kappa+kappa'=0"] = (total == 0)
+
+    # 4. Spectral collapse pages match spectral_sequence.py
+    from compute.lib.spectral_sequence import spectral_sequence_collapse
+    for alg in ["Heisenberg", "sl2", "sl3", "Virasoro"]:
+        ss_name = alg
+        reg_collapse = ALGEBRA_REGISTRY[alg]["spectral_collapse"]
+        ss_collapse = spectral_sequence_collapse(ss_name).get("collapse_page", None)
+        if ss_collapse is not None:
+            results[f"collapse:{alg} consistent"] = (reg_collapse == ss_collapse)
+
+    return results
+
+
+def unified_algebra_data(algebra: str) -> Dict:
+    """Unified view of an algebra from all registries.
+
+    Combines ALGEBRA_REGISTRY metadata, KNOWN_BAR_DIMS, and
+    computed kappa values into a single dict.
+    """
+    from compute.lib.bar_complex import KNOWN_BAR_DIMS, CONJECTURAL_BAR_DIMS
+    data = dict(ALGEBRA_REGISTRY.get(algebra, {}))
+    data["name"] = algebra
+
+    # Bar cohomology
+    bar_dims = KNOWN_BAR_DIMS.get(algebra, {})
+    conj_degs = CONJECTURAL_BAR_DIMS.get(algebra, set())
+    data["bar_cohomology"] = bar_dims
+    data["conjectural_degrees"] = conj_degs
+
+    return data
 
 
 if __name__ == "__main__":
@@ -308,4 +400,9 @@ if __name__ == "__main__":
     print("=" * 60)
 
     for name, ok in verify_cross_algebra().items():
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}")
+
+    print()
+    print("REGISTRY CONSISTENCY:")
+    for name, ok in verify_registry_consistency().items():
         print(f"  [{'PASS' if ok else 'FAIL'}] {name}")

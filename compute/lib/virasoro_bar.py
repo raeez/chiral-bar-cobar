@@ -441,7 +441,11 @@ def verify_virasoro_curvature():
 
 
 def verify_vacuum_dims():
-    """Verify vacuum module dimensions against ground truth."""
+    """Verify vacuum module dimensions against ground truth.
+
+    NOTE: This is a regression test — it checks that the computation functions
+    reproduce known values, not an independent mathematical derivation.
+    """
     expected = {2: 1, 3: 1, 4: 2, 5: 2, 6: 4, 7: 4, 8: 7, 9: 8, 10: 12, 11: 14, 12: 21}
     dims = vacuum_module_dims(12)
     results = {}
@@ -454,6 +458,9 @@ def verify_bar_dims():
     """Verify bar complex dimensions against manuscript table.
 
     Ground truth: comp:virasoro-dim-table.
+
+    NOTE: This is a regression test — it checks that the computation functions
+    reproduce known values from the manuscript, not an independent derivation.
     """
     expected = {
         (1, 2): 1, (1, 3): 1, (1, 4): 2, (1, 5): 2, (1, 6): 4,

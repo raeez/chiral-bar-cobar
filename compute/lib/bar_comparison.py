@@ -32,7 +32,7 @@ POLE_ORDERS = {
     "Virasoro":     {"highest_pole": 4, "generators": 1, "description": "T_{(3)}T = c/2"},
     "W3":           {"highest_pole": 6, "generators": 2, "description": "W_{(5)}W = c/3"},
     "free_fermion": {"highest_pole": 1, "generators": 2, "description": "psi_i_{(0)}psi_j = delta_{ij}"},
-    "betagamma":    {"highest_pole": 1, "generators": 2, "description": "beta_{(0)}gamma = 1"},
+    "beta_gamma":    {"highest_pole": 1, "generators": 2, "description": "beta_{(0)}gamma = 1"},
     "bc":           {"highest_pole": 1, "generators": 2, "description": "b_{(0)}c = 1"},
 }
 
@@ -66,16 +66,21 @@ def curvature_from_pole(algebra: str) -> str:
 def os_dim(n: int, degree: int) -> int:
     """Dimension of OS^degree(C_n(C)).
 
-    Poincare polynomial: P_t = prod_{j=0}^{n-2}(1 + (j+1)t).
-    OS^k = (n-1)! / (n-1-k)! = falling_factorial(n-1, k).
+    Poincare polynomial: P_t = prod_{j=1}^{n-1}(1 + j*t).
+    The coefficient of t^k gives the elementary symmetric polynomial
+    e_k(1, 2, ..., n-1), not falling_factorial(n-1, k).
     """
     if degree < 0 or degree > n - 1 or n < 1:
         return 0
-    # Falling factorial: (n-1)(n-2)...(n-1-degree+1)
-    result = 1
-    for j in range(degree):
-        result *= (n - 1 - j)
-    return result
+    # Compute via Poincare polynomial: prod_{j=1}^{n-1}(1 + j*t)
+    # Extract coefficient of t^degree = e_degree(1, 2, ..., n-1)
+    poly = [0] * n
+    poly[0] = 1
+    for j in range(1, n):
+        # Multiply by (1 + j*t), working backwards to avoid overwriting
+        for k in range(min(j, n - 1), 0, -1):
+            poly[k] += j * poly[k - 1]
+    return poly[degree] if degree < len(poly) else 0
 
 
 def os_total_dim(n: int) -> int:
@@ -100,7 +105,7 @@ GENERATOR_PARITY = {
     "Virasoro":     {"bosonic": True,  "after_desuspension": "odd",  "coalgebra": "exterior"},
     "W3":           {"bosonic": True,  "after_desuspension": "odd",  "coalgebra": "exterior"},
     "free_fermion": {"bosonic": False, "after_desuspension": "even", "coalgebra": "symmetric"},
-    "betagamma":    {"bosonic": True,  "after_desuspension": "odd",  "coalgebra": "exterior"},
+    "beta_gamma":    {"bosonic": True,  "after_desuspension": "odd",  "coalgebra": "exterior"},
     "bc":           {"bosonic": False, "after_desuspension": "even", "coalgebra": "symmetric"},
 }
 
@@ -134,7 +139,7 @@ ARNOLD_CANCELLATION = {
     "Virasoro":     {"deg2": False, "deg3": True,  "mechanism": "quartic pole, form provides at most simple pole"},
     "W3":           {"deg2": False, "deg3": True,  "mechanism": "sixth-order pole, form provides at most simple pole"},
     "free_fermion": {"deg2": False, "deg3": True,  "mechanism": "only simple pole, form residue kills vacuum"},
-    "betagamma":    {"deg2": False, "deg3": True,  "mechanism": "only simple pole, form residue kills vacuum"},
+    "beta_gamma":    {"deg2": False, "deg3": True,  "mechanism": "only simple pole, form residue kills vacuum"},
     "bc":           {"deg2": False, "deg3": True,  "mechanism": "only simple pole, form residue kills vacuum"},
 }
 
@@ -145,7 +150,7 @@ ARNOLD_CANCELLATION = {
 
 COMPLEMENTARITY = {
     "sl2":      {"sum": 26, "formula": "c + c' where k' = -k - 2h^vee", "h_dual": 2},
-    "sl3":      {"sum": 48, "formula": "c + c' where k' = -k - 2h^vee", "h_dual": 3},
+    "sl3":      {"sum": 16, "formula": "c + c' = 2*dim(sl_3) = 16 where k' = -k - 2h^vee", "h_dual": 3},
     "Virasoro": {"sum": 26, "formula": "c + c' = 26 (DS from sl_2)"},
     "W3":       {"sum": 100, "formula": "c + c' = 100 (DS from sl_3)"},
 }
@@ -216,6 +221,14 @@ def verify_os_dims():
     # Total: OS*(C_n) = n!
     for n in range(1, 6):
         results[f"|OS*(C_{n})| = {factorial(n)}"] = os_total_dim(n) == factorial(n)
+    # Intermediate degrees: OS^k(C_4) = [1, 6, 11, 6]
+    expected_c4 = [1, 6, 11, 6]
+    for k, exp in enumerate(expected_c4):
+        results[f"OS^{k}(C_4) = {exp}"] = os_dim(4, k) == exp
+    # OS^1(C_n) = C(n-1, 2) + (n-1) = n(n-1)/2... actually e_1(1,...,n-1) = n(n-1)/2
+    for n in range(2, 6):
+        expected_e1 = n * (n - 1) // 2
+        results[f"OS^1(C_{n}) = {expected_e1}"] = os_dim(n, 1) == expected_e1
     return results
 
 
@@ -249,7 +262,7 @@ def verify_pole_curvature():
         "Virasoro": "central_charge_T",
         "W3": "central_charge_TW",
         "free_fermion": "mixed_channel",
-        "betagamma": "mixed_channel",
+        "beta_gamma": "mixed_channel",
         "bc": "mixed_channel",
     }
     for name, exp in expected.items():

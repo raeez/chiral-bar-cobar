@@ -41,8 +41,8 @@ KOSZUL_PAIRS = {
         "operadic": "Sym^! = Lambda (exterior)",
         "note": "NOT Sym^! = Sym (common error)",
     },
-    "betagamma_bc": {
-        "A": "betagamma", "A_dual": "bc_ghosts",
+    "beta_gamma_bc": {
+        "A": "beta_gamma", "A_dual": "bc_ghosts",
         "operadic": "Com^! = Lie applied to 2-generator system",
         "involution": True,  # (A^!)^! = A
     },
@@ -73,6 +73,10 @@ def ff_dual_level(k, h_dual: int):
     """Feigin-Frenkel dual level: k' = -k - 2h^vee.
 
     CRITICAL: It's -k - 2h^vee, NOT -k - h^vee.
+
+    Note: This is a convenience wrapper taking h_dual directly.
+    For the canonical version that looks up h_dual from Cartan data,
+    see lie_algebra.ff_dual_level(type_, rank, level).
     """
     return -k - 2 * h_dual
 
@@ -92,7 +96,7 @@ def ff_shift_sl3(k):
 def check_involution(pair_name: str) -> bool:
     """Verify (A^!)^! = A for involutive pairs."""
     pair = KOSZUL_PAIRS[pair_name]
-    if pair_name == "betagamma_bc":
+    if pair_name == "beta_gamma_bc":
         # betagamma^! = bc, bc^! = betagamma
         return True
     if pair_name == "Com_Lie":
@@ -180,7 +184,7 @@ def verify_koszul_pairs():
     results["H not self-dual"] = KOSZUL_PAIRS["Heisenberg_Symch"]["self_dual"] is False
 
     # betagamma-bc involution
-    results["bg-bc involution"] = check_involution("betagamma_bc")
+    results["bg-bc involution"] = check_involution("beta_gamma_bc")
     results["Com-Lie involution"] = check_involution("Com_Lie")
 
     # Complementarity sums

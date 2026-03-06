@@ -378,18 +378,32 @@ def km_chain_space_dim(dim_g: int, degree: int) -> int:
 
 KNOWN_BAR_DIMS = {
     # === PROVED by formula (rem:bar-dims-partitions, free_fields.tex) ===
-    "Heisenberg": {1: 1, 2: 1, 3: 1, 4: 2, 5: 3, 6: 5, 7: 7, 8: 11},
-    "free_fermion": {1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 7, 7: 11, 8: 15},
-    # === From summary table ===
-    "bc": {1: 2, 2: 3, 3: 6, 4: 13, 5: 28, 6: 59, 7: 122, 8: 249},  # 2^n - n + 1
-    "beta_gamma": {1: 2, 2: 4, 3: 10, 4: 26, 5: 70, 6: 192, 7: 534, 8: 1500},  # [x^n]sqrt((1+x)/(1-3x))
-    # === KM BAR COHOMOLOGY dims (from summary table) ===
-    "sl2": {1: 3, 2: 6, 3: 15, 4: 36, 5: 91, 6: 232, 7: 603},
+    # Heisenberg: dim = 1 at n=1, p(n-2) for n>=2
+    "Heisenberg": {n: (1 if n == 1 else partition_number(n - 2)) for n in range(1, 11)},
+    # Free fermion: dim = p(n-1)
+    "free_fermion": {n: partition_number(n - 1) for n in range(1, 11)},
+    # === From summary table (closed-form formulas) ===
+    # bc: dim = 2^n - n + 1
+    "bc": {n: 2**n - n + 1 for n in range(1, 11)},
+    # beta_gamma: [x^n] sqrt((1+x)/(1-3x)), recurrence n*a(n)=2n*a(n-1)+3(n-2)*a(n-2)
+    "beta_gamma": {1: 2, 2: 4, 3: 10, 4: 26, 5: 70, 6: 192, 7: 534, 8: 1500, 9: 4246, 10: 12092},
+    # === KM BAR COHOMOLOGY dims (Riordan R(n+3) for sl2) ===
+    "sl2": {n: bar_dim_sl2(n) for n in range(1, 11)},
     "sl3": {1: 8, 2: 36, 3: 204},  # degrees 4,5 conjectured: 1352, 9892
-    # === Non-KM: from summary table ===
-    "Virasoro": {1: 1, 2: 2, 3: 5, 4: 12, 5: 30, 6: 76, 7: 196, 8: 512},
+    # === Non-KM: from summary table (Motzkin diffs for Virasoro) ===
+    "Virasoro": {n: bar_dim_virasoro(n) for n in range(1, 11)},
+    # W3: degrees 1-3 proved; degree 4 CONJECTURAL (no independent derivation documented)
     "W3": {1: 2, 2: 5, 3: 16, 4: 52},
+    # Yangian_sl2: seed values from low-degree computation;
+    # the formula 3^n+1 is conjectural (see yangian_bar.py)
     "Yangian_sl2": {1: 4, 2: 10, 3: 28},
+}
+
+# Degrees for which bar cohomology values are conjectural (not independently derived)
+CONJECTURAL_BAR_DIMS = {
+    "W3": {4},          # H^4(W3)=52 has no documented derivation
+    "Yangian_sl2": {1, 2, 3},  # seed values; 3^n+1 formula is conjectural
+    "sl3": set(),       # degrees 4,5 not in KNOWN_BAR_DIMS (only conjectured via recurrence)
 }
 
 # KM chain group dimensions (PROVED, rem:bar-dims-level-independent):
@@ -407,14 +421,17 @@ def verify_bar_dim(algebra: str, degree: int, computed: int) -> Tuple[bool, str]
     """Verify a computed bar dimension against ground truth.
 
     Returns (matches, message).
+    Status is "CONJECTURAL" if the degree is in CONJECTURAL_BAR_DIMS for this algebra.
     """
     known = KNOWN_BAR_DIMS.get(algebra, {})
     expected = known.get(degree)
     if expected is None:
         return True, f"No ground truth for {algebra} bar dim at degree {degree}"
+    conjectural_degs = CONJECTURAL_BAR_DIMS.get(algebra, set())
+    status = "CONJECTURAL" if degree in conjectural_degs else "VERIFIED"
     if computed == expected:
-        return True, f"VERIFIED: dim B-bar^{degree}({algebra}) = {computed} matches Master Table"
+        return True, f"{status}: dim B-bar^{degree}({algebra}) = {computed} matches Master Table"
     return False, (
         f"MISMATCH: computed dim B-bar^{degree}({algebra}) = {computed}, "
-        f"but Master Table says {expected}"
+        f"but Master Table says {expected} ({status})"
     )

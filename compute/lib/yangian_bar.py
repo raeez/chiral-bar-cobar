@@ -162,7 +162,9 @@ def coulomb_branch_data(g: str) -> Dict[str, str]:
 # Chiral bar cohomology (conjectured)
 # ---------------------------------------------------------------------------
 
-# Known (proved) values from Master Table
+# Seed values from low-degree computation (Master Table).
+# These are NOT independently proved; the formula 3^n + 1 is CONJECTURAL.
+# See also CONJECTURAL_BAR_DIMS in bar_complex.py.
 YANGIAN_BAR_COHOMOLOGY_KNOWN = {1: 4, 2: 10, 3: 28}
 
 # Conjectured formula: H^n = 3^n + 1 for n >= 1

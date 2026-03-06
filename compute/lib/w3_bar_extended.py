@@ -740,7 +740,7 @@ def verify_ds_central_charge(c_val: float = 7.0) -> Dict[str, bool]:
     # k+3 = 24(k+2)^2/(2-c) ... too messy. Just check at specific k.
     results = {}
 
-    for k in [1, 2, 3, -1, Rational(1, 2)]:
+    for k in [1, 2, 3, -1, 0.5]:
         k = float(k)
         c = 2 - 24 * (k + 2)**2 / (k + 3)
         c_prime = 100 - c
@@ -749,10 +749,6 @@ def verify_ds_central_charge(c_val: float = 7.0) -> Dict[str, bool]:
         results[f"c+c'=100 at k={k:.1f}"] = abs(c + c_from_k_prime - 100) < 1e-10
 
     return results
-
-
-def Rational(a, b):
-    return a / b
 
 
 # =========================================================================

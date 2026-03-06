@@ -75,6 +75,10 @@ def quadratic_dual_dims(d: int, relations: np.ndarray, max_degree: int) -> List[
     # Since relations is r_orig × d², R^⊥ has dim = d² - rank(relations)
 
     # Use SVD to get basis of R^⊥
+    # NOTE: numpy SVD uses floating-point arithmetic, so rank detection via
+    # threshold (S > 1e-10) is approximate.  For the small integer matrices
+    # arising from Lie algebra relations this is reliable, but for larger or
+    # ill-conditioned matrices, sympy.Matrix.rank() would give exact results.
     U, S, Vt = np.linalg.svd(relations)
     rank = np.sum(S > 1e-10)
     # R^⊥ is spanned by rows of Vt[rank:]
@@ -305,8 +309,9 @@ def riordan(n: int) -> int:
     # (n+1) R(n) = (n-1)(2R(n-1) + 3R(n-2))
     R = [1, 0]
     for k in range(2, n + 1):
-        val = ((k - 1) * (2 * R[k-1] + 3 * R[k-2])) // (k + 1)
-        R.append(val)
+        num = (k - 1) * (2 * R[k-1] + 3 * R[k-2])
+        assert num % (k + 1) == 0, f"Riordan recurrence: {num} not divisible by {k+1} at k={k}"
+        R.append(num // (k + 1))
     return R[n]
 
 
@@ -318,8 +323,9 @@ def motzkin(n: int) -> int:
         return 1
     M = [1, 1]
     for k in range(2, n + 1):
-        val = ((2*k + 1) * M[k-1] + 3 * (k-1) * M[k-2]) // (k + 2)
-        M.append(val)
+        num = (2*k + 1) * M[k-1] + 3 * (k-1) * M[k-2]
+        assert num % (k + 2) == 0, f"Motzkin recurrence: {num} not divisible by {k+2} at k={k}"
+        M.append(num // (k + 2))
     return M[n]
 
 

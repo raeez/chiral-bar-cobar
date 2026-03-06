@@ -12,7 +12,8 @@ Ground truth:
     kappa = 10(k+3)/6 = 5(k+3)/3
 
   G_2: dim=14, h=6, h^vee=4, rank=2
-    Roots: 6 long (|alpha|^2=2), 6 short (|alpha|^2=2/3)
+    Roots: 6 long (|alpha|^2=6), 6 short (|alpha|^2=2)
+    (Convention: short root normalized to |alpha|^2=2; ratio short:long = 1:3)
     c = 14k/(k+4)
     k' = -k - 8 (FF dual)
     kappa = 14(k+4)/8 = 7(k+4)/4
@@ -53,7 +54,7 @@ def b2_data() -> Dict[str, object]:
         "h_dual": data.h_dual,  # 3
         "n_positive_roots": len(data.positive_roots),  # 4
         "exponents": data.exponents,  # [1, 3]
-        "root_lengths": data.root_lengths_squared,  # [2, 1] (long, short)
+        "root_lengths": data.root_lengths_squared,  # B_2: [2, 1] (long alpha_1, short alpha_2)
         "generators": 2 * len(data.positive_roots) + data.rank,  # 10
     }
 
@@ -125,7 +126,7 @@ def g2_data() -> Dict[str, object]:
         "h_dual": data.h_dual,  # 4
         "n_positive_roots": len(data.positive_roots),  # 6
         "exponents": data.exponents,  # [1, 5]
-        "root_lengths": data.root_lengths_squared,  # [2, 2] (normalized)
+        "root_lengths": data.root_lengths_squared,  # [2, 6] (alpha_1 short, alpha_2 long)
         "generators": 2 * len(data.positive_roots) + data.rank,  # 14
     }
 

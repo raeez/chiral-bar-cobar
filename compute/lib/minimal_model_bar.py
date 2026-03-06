@@ -13,7 +13,7 @@ Ground truth from the manuscript (minimal_model_examples.tex, minimal_model_fusi
   Minimal model central charges:
     M(3,2): c = 0 (trivial)
     M(4,3): c = 1/2 (Ising)
-    M(5,3): c = -3/5 (non-unitary Lee-Yang)
+    M(5,2): c = -22/5 (non-unitary Lee-Yang)
     M(5,4): c = 7/10 (tricritical Ising)
     M(6,5): c = 4/5 (three-state Potts)
 

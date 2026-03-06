@@ -39,7 +39,14 @@ from .lie_algebra import (
 # ---------------------------------------------------------------------------
 
 def kappa_heisenberg(kappa_param=None):
-    """kappa(H_kappa) = kappa (the level IS the obstruction coefficient)."""
+    """kappa(H_kappa) = kappa (the level IS the obstruction coefficient).
+
+    Args:
+        kappa_param: Numeric level value, or None for symbolic.
+            Must be a number (int, float, or Rational) when provided;
+            passing a sympy Symbol will cause Rational() to raise TypeError.
+            For symbolic computation, use kappa_param=None (returns Symbol('kappa')).
+    """
     if kappa_param is None:
         return Symbol("kappa")
     return Rational(kappa_param)

@@ -57,15 +57,18 @@ def moduli_dimension(g: int) -> int:
 # Genus expansion data from Master Table
 # ---------------------------------------------------------------------------
 
+# Kappa formulas: kappa(A) = dim(g)*(k+h*)/(2h*) for KM; c/2 for Virasoro; 5c/6 for W3.
+# For Heisenberg: kappa = k (the level itself; h* = 0 so the KM formula doesn't apply).
+# All expressed in canonical form dim*(k+h*)/(2h*) to ensure sympy equality consistency.
 GENUS_KAPPA = {
-    "Heisenberg": lambda k: k / 2,
-    "sl2": lambda k: Rational(3) * (k + 2) / 4,
-    "sl3": lambda k: Rational(8) * (k + 3) / 6,
+    "Heisenberg": lambda k: k,
+    "sl2": lambda k: Rational(3) * (k + 2) / 4,          # 3*(k+2)/4
+    "sl3": lambda k: Rational(4) * (k + 3) / 3,          # 8*(k+3)/6 = 4*(k+3)/3
     "Virasoro": lambda c: c / 2,
     "W3": lambda c: 5 * c / 6,
-    "E8": lambda k: Rational(248) * (k + 30) / 60,
-    "B2": lambda k: Rational(10) * (k + 3) / 6,
-    "G2": lambda k: Rational(14) * (k + 4) / 8,
+    "E8": lambda k: Rational(62) * (k + 30) / 15,        # 248*(k+30)/60 = 62*(k+30)/15
+    "B2": lambda k: Rational(5) * (k + 3) / 3,           # 10*(k+3)/6 = 5*(k+3)/3
+    "G2": lambda k: Rational(7) * (k + 4) / 4,           # 14*(k+4)/8 = 7*(k+4)/4
 }
 
 
@@ -159,7 +162,7 @@ def verify_genus_bridge():
     c = Symbol('c')
 
     # Kappa values
-    results["kappa(Heis) = k/2"] = kappa("Heisenberg", k) == k / 2
+    results["kappa(Heis) = k"] = kappa("Heisenberg", k) == k
     results["kappa(sl2) = 3(k+2)/4"] = kappa("sl2", k) == Rational(3) * (k + 2) / 4
     results["kappa(Vir) = c/2"] = kappa("Virasoro", c) == c / 2
     results["kappa(W3) = 5c/6"] = kappa("W3", c) == 5 * c / 6

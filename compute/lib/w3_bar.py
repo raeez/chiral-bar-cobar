@@ -52,7 +52,10 @@ def w3_nth_products() -> Dict[Tuple[str, str], Dict[int, Dict[str, object]]]:
     Ground truth: comp:w3-nthproducts (detailed_computations.tex:401-446).
     """
     c = Symbol('c')
-    alpha = Rational(16, 1) / (22 + 5 * c)  # composite field coefficient
+    # Composite field coefficient alpha = 16/(22+5c).
+    # SINGULAR at c = -22/5 (pole cancellation in W_3 theory).
+    # For symbolic c, this is well-defined as a rational expression.
+    alpha = Rational(16, 1) / (22 + 5 * c)
 
     return {
         # T × T (quartic pole, same as Virasoro)

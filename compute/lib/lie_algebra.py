@@ -106,9 +106,9 @@ def cartan_data(type_: str, rank: int) -> LieAlgebraData:
         ("B", 2): (10, 4, 3, [1, 3], [2, 1]),     # so(5), long root = 2, short = 1
         ("B", 3): (21, 6, 5, [1, 3, 5], [2, 2, 1]),
         ("C", 2): (10, 4, 3, [1, 3], [1, 2]),     # sp(4), short root = 1, long = 2
-        ("C", 3): (21, 6, 4, [1, 3, 5], [2, 2, 1]),  # NOTE: C_3 h*=4, not 5
+        ("C", 3): (21, 6, 4, [1, 3, 5], [1, 1, 2]),  # sp(6): alpha_1,alpha_2 short, alpha_3 long
         ("D", 4): (28, 6, 6, [1, 3, 3, 5], [2, 2, 2, 2]),
-        ("G", 2): (14, 6, 4, [1, 5], [2, 2]),     # short root normalized to 2/3
+        ("G", 2): (14, 6, 4, [1, 5], [2, 6]),     # alpha_1 short (|a|^2=2), alpha_2 long (|a|^2=6); ratio 1:3
         ("F", 4): (52, 12, 9, [1, 5, 7, 11], [2, 2, 1, 1]),
     }
 
@@ -299,9 +299,12 @@ def virasoro_ds_c(level) -> Rational:
 
     c = 1 - 6(k+1)^2/(k+2)
 
+    UNDEFINED at k = -2 (sl2 critical level k = -h*). Raises ValueError.
     This is a verified formula (VF032).
     """
     k = sympify(level)
+    if k + 2 == 0:
+        raise ValueError("Virasoro DS central charge undefined at sl2 critical level k = -2")
     return 1 - 6 * (k + 1)**2 / (k + 2)
 
 
@@ -310,7 +313,10 @@ def w3_ds_c(level) -> Rational:
 
     c = 2 - 24(k+2)^2/(k+3)
 
+    UNDEFINED at k = -3 (sl3 critical level k = -h*). Raises ValueError.
     This is a verified formula (VF033).
     """
     k = sympify(level)
+    if k + 3 == 0:
+        raise ValueError("W3 DS central charge undefined at sl3 critical level k = -3")
     return 2 - 24 * (k + 2)**2 / (k + 3)
