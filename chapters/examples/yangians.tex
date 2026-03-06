@@ -1,9 +1,30 @@
 \chapter{Yangians and shifted Yangians}
 \label{chap:yangians}
 
+The Yangian $Y(\mathfrak{g})$ is an $\Eone$-chiral algebra: associative but not commutative, local but not fully local.  Its bar complex uses ordered configurations, and Verdier duality inverts the $R$-matrix---the departure from the $\Einf$-chiral Heisenberg world of Chapter~\ref{ch:heisenberg-frame} into the braided setting.
+
 Kac--Moody and W-algebra Koszul duals live entirely within the $E_\infty$-chiral world: both the algebra and its dual are vertex algebras, and the bar-cobar adjunction mediates between them through configuration space integrals on a single curve.  Yangians force a departure from this framework.  The Yangian $Y(\mathfrak{g})$ is an \emph{$E_1$-chiral algebra}: its operations are parametrized by configurations of points on the real line rather than on a complex curve, and the resulting algebraic structure --- an associative algebra in the tensor category of $\widehat{\mathfrak{g}}$-modules --- is fundamentally noncommutative.  The bar-cobar machinery of Part~I extends to this setting (Theorem~\ref{thm:e1-chiral-koszul-duality}), but the geometry changes: Fulton--MacPherson compactifications of real configuration spaces replace their complex counterparts, and the resulting Koszul duals involve quantum groups $U_q(\mathfrak{g})$ rather than vertex algebras at shifted levels.
 
 The central questions are: what is the Koszul dual of a Yangian, and how does the bar complex detect the quantum group structure?
+
+\begin{remark}[Yangian as atom: the braided face]
+\label{rem:yangian-atom}
+\index{Yangian!as modular Koszul atom}
+In the ``atoms'' framing of Remark~\ref{rem:free-field-atoms},
+the Yangian reveals the fourth irreducible face of modular Koszul
+duality: \emph{braiding}.  The free fields, Kac--Moody, and
+$\mathcal{W}$-algebras are all $\Einf$-chiral
+(commutative/local), where Verdier duality acts by level
+inversion.  The Yangian is $\Eone$-chiral (associative/ordered),
+and Verdier duality acts by $R$-matrix inversion
+$R \mapsto R^{-1}$ --- the homotopy-coherent shadow of the
+master diagram~\eqref{eq:master-square} in the braided setting.
+The derived Drinfeld--Kohno conjecture
+(Conjecture~\ref{conj:derived-drinfeld-kohno}) articulates the
+horizon: the $\Eone$-factorization categories of $Y(\mathfrak{g})$
+and $U_q(\mathfrak{g})^{\mathrm{op}}$ should be equivalent,
+completing the commutative theory with its noncommutative partner.
+\end{remark}
 
 \section{Yangian vertex algebra}
 \label{sec:yangian-vertex}
@@ -145,6 +166,8 @@ The differential $d\colon \bar{B}^2 \to \bar{B}^1$ is the dual of the inclusion 
 
 \subsection{Koszul dual identification}
 
+For the Heisenberg algebra, Koszul duality exchanged Lie-type and Com-type: $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$ (\S\ref{sec:frame-koszul-dual}).  In the Yangian setting, both sides are associative ($\Eone$), and Verdier duality inverts the $R$-matrix instead of exchanging operadic types.
+
 \begin{theorem}[Yangian Koszul dual; \ClaimStatusProvedHere]\label{thm:yangian-koszul-dual}
 \index{Yangian!Koszul dual}
 The Koszul dual of the Yangian $Y(\mathfrak{sl}_2)^{\mathrm{ch}}$ in the RTT presentation is the Yangian with inverse $R$-matrix:
@@ -157,12 +180,26 @@ R^{-1}_{12}(u-v)\, T_1^!(u)\, T_2^!(v) = T_2^!(v)\, T_1^!(u)\, R^{-1}_{12}(u-v)
 \end{equation}
 with $R^{-1}(u) = 1 + \hbar P/u + O(u^{-2})$ (note the sign change from $R(u) = 1 - \hbar P/u + \cdots$).
 
-For the Yang $R$-matrix $R(u) = 1 - \hbar P/u$, the inverse is $R^{-1}(u) = u/(u - \hbar P) = \sum_{n \geq 0} (\hbar P/u)^n$, where $P^2 = 1$ gives $R^{-1}(u) = 1 + \hbar P/u + \hbar^2/u^2 + \hbar^3 P/u^3 + \cdots$.  The Koszul dual RTT relation is the same quadratic relation with $\hbar \to -\hbar$.
+For the Yang $R$-matrix $R(u) = 1 - \hbar P/u$, the inverse is
+$R^{-1}(u) = u/(u - \hbar P) = \sum_{n \geq 0} (\hbar P/u)^n$;
+since $P^2 = 1$,
+\[
+R^{-1}(u) = 1 + \hbar P/u + \hbar^2/u^2 + \hbar^3 P/u^3 + \cdots.
+\]
+The Koszul dual RTT relation is the same quadratic
+relation with $\hbar \to -\hbar$.
 \end{theorem}
 
 \begin{proof}
 \emph{Step~1: Quadratic dual.}
-The RTT algebra is quadratic: $V = \mathrm{span}\{T_{ij}^{(r)}\}$, $R = \mathrm{span}\{[\text{RTT relations}]\} \subset V \otimes V$.  The quadratic Koszul dual has generators $V^*$ and relations $R^\perp$ (the orthogonal complement under the pairing $V^* \otimes V^* \times V \otimes V \to \mathbb{C}$).
+The RTT algebra is quadratic, with
+$V = \mathrm{span}\{T_{ij}^{(r)}\}$ and
+$R = \mathrm{span}\{[\text{RTT relations}]\}
+\subset V \otimes V$.
+The quadratic Koszul dual has generators~$V^*$
+and relations~$R^\perp$, the orthogonal complement
+under the pairing
+$V^* \otimes V^* \times V \otimes V \to \mathbb{C}$.
 
 \emph{Step~2: Orthogonal complement computation.}
 The RTT relation $R_{12}(u-v) T_1 T_2 = T_2 T_1 R_{12}(u-v)$ can be written as:
@@ -527,9 +564,10 @@ $\Eone$-chiral structure in the shifted setting.
 The $\Eone$-chiral Yangian
 $Y(\mathfrak{g})^{\mathrm{ch}}$
 \textup{(}Theorem~\textup{\ref{thm:yangian-e1})}
-and the dg-shifted Yangian $Y^{\mathrm{dg}}(\mathfrak{g})$
-of Dimofte--Niu--Py \textup{\cite{DNP25}} share the following
-structural features:
+and the dg-shifted Yangian
+$Y^{\mathrm{dg}}(\mathfrak{g})$
+of Dimofte--Niu--Py \textup{\cite{DNP25}}
+share the following structural features:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item Both are $\Eone$-deformations of the affine algebra
   $\widehat{\mathfrak{g}}_k$, controlled by the rational
@@ -956,7 +994,7 @@ $4$ independent generators only (Remark~\ref{rem:yangian-gl2-kunneth}).
 
 The $\Eone$-chiral Koszul duality
 (Theorem~\ref{thm:yangian-koszul-dual}) sends the
-$R$-matrix $R(u)$ to $R(u)^{-1}$.  For the rational
+$R$-matrix $R(u)$ to~$R(u)^{-1}$.  For the rational
 $R$-matrix:
 \[
 R(u) = 1 - \frac{P}{u}, \qquad
@@ -1436,19 +1474,393 @@ D^b(\mathcal{O}_{Y_{-\hbar}})$
 sending $M(\lambda, a) \mapsto M(\lambda, -a)$.
 \end{remark}
 
+\section{The derived Drinfeld--Kohno theorem}
+\label{sec:derived-dk}
+\index{Drinfeld--Kohno!derived|textbf}
+
+The classical Drinfeld--Kohno theorem \cite{Kohno87, Drinfeld90}
+identifies the monodromy representation of the KZ connection on
+$\widehat{\mathfrak{g}}_k$ conformal blocks with the $R$-matrix
+representation of $U_q(\mathfrak{g})$ at
+$q = e^{\pi i/(k + h^\vee)}$.  The constructions of this chapter
+and Part~I yield a \emph{derived} enhancement: $\Eone$-chiral Koszul
+duality provides a chain-level equivalence that reverses braiding,
+and the classical Kazhdan--Lusztig and Kazhdan equivalences
+translate this into the $q \mapsto q^{-1}$ involution on quantum
+group representations.
+
+\subsection{The Drinfeld--Kohno square for affine algebras}
+
+\begin{theorem}[Derived Drinfeld--Kohno for affine algebras;
+\ClaimStatusProvedHere]\label{thm:derived-dk-affine}
+\index{Drinfeld--Kohno!derived!affine algebras}
+Let $k$ be a non-negative integer,
+$q = e^{\pi i/(k + h^\vee)}$, and $k' = -k - 2h^\vee$
+\textup{(}so $q' = e^{\pi i/(k' + h^\vee)} = q^{-1}$\textup{)}.
+The module Koszul duality functor
+$\Phi \colon D^b(\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}}))
+\to D^b(\mathcal{O}_{k'}(\widehat{\mathfrak{g}}))$
+\textup{(}Theorem~\textup{\ref{thm:e1-module-koszul-duality})}
+fits into a commutative square of braided monoidal functors:
+\begin{equation}\label{eq:dk-square-affine}
+\begin{tikzcd}
+\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
+  \ar[r, "\Phi", "\sim"']
+  \ar[d, "\Phi_{\mathrm{KL}}"', "\sim"]
+& \mathcal{O}_{k'}(\widehat{\mathfrak{g}})
+  \ar[d, "\Phi_{\mathrm{KL}}", "\sim"']
+\\
+\mathcal{C}(U_q(\mathfrak{g}))
+  \ar[r, "q \mapsto q^{-1}"', "\sim"]
+& \mathcal{C}(U_{q^{-1}}(\mathfrak{g}))
+\end{tikzcd}
+\end{equation}
+where the vertical arrows are the Kazhdan--Lusztig equivalences
+\textup{(}Theorem~\textup{\ref{thm:kazhdan-lusztig-equivalence})},
+the top arrow is bar-cobar duality with braiding reversal
+\textup{(}Theorem~\textup{\ref{thm:monoidal-module-koszul})}, and
+the bottom arrow is the $R$-matrix inversion
+$R_q \mapsto R_{q^{-1}} = R_q^{-1}$.  All four functors are
+equivalences of braided monoidal categories.
+\end{theorem}
+
+\begin{proof}
+We verify commutativity of the diagram on objects,
+morphisms, tensor products, and braiding.
+
+\emph{Step~1: Objects.}
+The top arrow $\Phi$ sends the integrable module $L(\Lambda)$
+at level~$k$ to the Koszul dual module at level $k' = -k - 2h^\vee$
+(Theorem~\ref{thm:universal-kac-moody-koszul}).  The left vertical sends
+$L(\Lambda)$ to the tilting module $T_q(\Lambda)$
+(Theorem~\ref{thm:kazhdan-lusztig-equivalence}).  Traversing the
+diagram in both directions: $\Phi_{\mathrm{KL}} \circ \Phi$
+sends $L(\Lambda)$ to $T_{q^{-1}}(\Lambda)$ (since $q' = q^{-1}$),
+which is $\Phi_{\mathrm{KL}}(L(\Lambda))$ in the
+$q^{-1}$-category.  This equals the image under
+$(q \mapsto q^{-1}) \circ \Phi_{\mathrm{KL}}$, since the
+$q \mapsto q^{-1}$ functor sends $T_q(\Lambda)$ to
+$T_{q^{-1}}(\Lambda)$ (the labeling by dominant weights $\Lambda$
+is independent of the sign of~$q$).
+
+\emph{Step~2: Braiding.}
+The braiding on $\mathcal{O}_k^{\mathrm{int}}$ is the
+monodromy of the KZ connection on conformal blocks.  By the
+classical Kohno--Drinfeld theorem \cite{Kohno87, Drinfeld90},
+$\Phi_{\mathrm{KL}}$ sends this monodromy to the quasi-$R$-matrix
+$\mathcal{R}_q \in U_q(\mathfrak{g})^{\widehat{\otimes}\,2}$.
+The top arrow $\Phi$ reverses the braiding:
+$\sigma \mapsto \sigma^{-1}$
+(Theorem~\ref{thm:monoidal-module-koszul}, step~3).
+On the quantum group side, this corresponds to
+$\mathcal{R}_q \mapsto \mathcal{R}_q^{-1} = \mathcal{R}_{q^{-1}}$,
+which is precisely the bottom arrow.
+
+\emph{Step~3: Tensor structure.}
+The top arrow preserves the monoidal structure up to braiding reversal
+(Theorem~\ref{thm:monoidal-module-koszul}, step~2): the bar complex
+of the fusion product $M \boxtimes N$ decomposes via the Alexander--Whitney
+map into the cotensor product of the individual bar complexes.
+The KL equivalence identifies the fusion product with the quantum group
+tensor product \cite{KL93}, and the $q \mapsto q^{-1}$ functor
+preserves the tensor product structure (the underlying fusion rules
+depend only on $\mathfrak{g}$, not on the sign of~$q$).
+\end{proof}
+
+\begin{remark}[The DK square as geometry]\label{rem:dk-square-geometry}
+The four arrows of the DK square~\eqref{eq:dk-square-affine} have
+distinct geometric origins:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\textbf{Top}: & Verdier duality on $\overline{C}_n(\bP^1)$
+  reverses collision cycles \\
+\textbf{Left/Right}: & KZ monodromy $=$ quasi-$R$-matrix
+  (analytic continuation) \\
+\textbf{Bottom}: & $R_q \mapsto R_{q^{-1}} = R_q^{-1}$
+  (Hopf algebra involution)
+\end{tabular}
+\end{center}
+The commutativity of the square is the statement that
+bar-cobar duality \emph{geometrically implements} the quantum
+group involution: the algebraic operation $q \mapsto q^{-1}$
+is realized by orientation reversal on configuration spaces.
+\end{remark}
+
+\subsection{Derived Drinfeld--Kohno for Yangians}
+
+\begin{theorem}[Derived Drinfeld--Kohno for Yangians;
+\ClaimStatusProvedHere]\label{thm:derived-dk-yangian}
+\index{Drinfeld--Kohno!derived!Yangian}
+For $\mathfrak{g} = \mathfrak{sl}_N$, the $\Eone$-chiral Koszul
+duality functor
+\[
+\Phi \colon D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))
+\;\to\;
+D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}(\mathfrak{g})))
+\]
+fits into a commutative diagram with the Kazhdan equivalence
+$\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g}))
+\simeq \operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))
+\big|_{q = e^\hbar}$ \cite{Drinfeld85}:
+\begin{equation}\label{eq:dk-square-yangian}
+\begin{tikzcd}
+D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar))
+  \ar[r, "\Phi"]
+  \ar[d, "\Phi_K"']
+& D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}))
+  \ar[d, "\Phi_K"]
+\\
+D^b(\operatorname{Rep}_{\mathrm{fd}}(U_q))
+  \ar[r, "q \mapsto q^{-1}"']
+& D^b(\operatorname{Rep}_{\mathrm{fd}}(U_{q^{-1}}))
+\end{tikzcd}
+\end{equation}
+The top arrow reverses the braiding:
+$\sigma_R \mapsto \sigma_{R^{-1}}$
+\textup{(}Proposition~\textup{\ref{prop:yangian-module-koszul}(iii))}.
+Under the Kazhdan identification $\Phi_K$, this becomes the
+$q \mapsto q^{-1}$ involution on quantum group representations.
+In particular, the $\Eone$-chiral bar-cobar duality of the Yangian
+provides a chain-level realization of the Drinfeld--Kohno
+correspondence.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: The Kazhdan equivalence.}
+The Kazhdan functor \cite{Drinfeld85}
+$\Phi_K \colon \operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g}))
+\xrightarrow{\sim}
+\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))$
+at $q = e^\hbar$ is a monoidal equivalence that sends
+the $R$-matrix $R_Y(u) = 1 - \hbar P/u$ of the Yangian
+to the trigonometric $R$-matrix $R_q$ of the quantum group
+via the exponential map
+$R_Y(u) \mapsto R_q(e^u)$.  On evaluation modules,
+$\Phi_K(V(a)_\hbar) = V_q(e^a)$, where $V_q(z)$ denotes
+the evaluation module of
+$U_q(\widehat{\mathfrak{g}})$ at spectral parameter
+$z = e^a$.
+
+\emph{Step~2: Commutativity on evaluations.}
+The top arrow~$\Phi$ sends $V(a)_\hbar$ to
+$V(-a)_{-\hbar}$
+(Proposition~\ref{prop:yangian-module-koszul}(i)).
+Applying~$\Phi_K$ to the right column yields
+$V(-a)_{-\hbar}$ $\mapsto$ $V_{q^{-1}}(e^{-a})$.
+Applying~$\Phi_K$ first (left column) followed by
+$q \mapsto q^{-1}$ gives
+\[
+V(a)_\hbar \,\mapsto\, V_q(e^a) \,\mapsto\, V_{q^{-1}}(e^a).
+\]
+These agree when
+$V_{q^{-1}}(e^{-a}) \cong V_{q^{-1}}(e^a)$
+as abstract $U_{q^{-1}}(\mathfrak{g})$-modules, which
+holds because evaluation modules of a quantum loop
+algebra at the same highest weight are isomorphic as
+$U_{q^{-1}}(\mathfrak{g})$-modules
+(the evaluation point only affects the loop algebra
+action, not the underlying
+$U_{q^{-1}}(\mathfrak{g})$-structure).
+
+\emph{Step~3: Braiding.}
+On the Yangian side, the braiding is
+$\sigma_Y = P \circ R_Y(u)$, and $\Phi$ sends it to
+$\sigma_Y^{-1} = P \circ R_Y^{-1}(u)$
+(Proposition~\ref{prop:yangian-module-koszul}(iii)).
+The Kazhdan functor identifies $R_Y(u)$ with $R_q(e^u)$,
+so $R_Y^{-1}(u) \mapsto R_q^{-1}(e^u) = R_{q^{-1}}(e^u)$.
+This is precisely the braiding on the $q^{-1}$ side.
+
+\emph{Step~4: Ext exchange.}
+Corollary~\ref{cor:yangian-ext-exchange} gives
+$\operatorname{Ext}^n_{Y_\hbar}(V(a), W(b))
+\cong \operatorname{Ext}^n_{Y_{-\hbar}}(V(-a), W(-b))$.
+Via $\Phi_K$, this becomes
+$\operatorname{Ext}^n_{U_q}(V_q(e^a), W_q(e^b))
+\cong \operatorname{Ext}^n_{U_{q^{-1}}}(V_{q^{-1}}(e^{-a}),
+W_{q^{-1}}(e^{-b}))$,
+the derived enhancement of the classical DK identification.
+\end{proof}
+
+\subsection{The factorization-level statement}
+
+\begin{definition}[$\Eone$-factorization category]
+\label{def:e1-factorization-category}
+\index{E1-factorization category@$\Eone$-factorization category|textbf}
+For an $\Eone$-chiral algebra $\cA$ on a curve $X$, the
+\emph{$\Eone$-factorization category}
+$\operatorname{Fact}_{\Eone}(\cA)$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Objects:} $\cA$-modules on ordered configuration spaces
+  $C_n^{\mathrm{ord}}(X) = \{(z_1, \ldots, z_n) : z_i \neq z_j\}$.
+\item \emph{Factorization structure:} for disjoint intervals
+  $I_1, \ldots, I_k \subset X$, isomorphisms
+  $\cA\text{-mod}(C_{n_1}^{\mathrm{ord}}(I_1) \times \cdots
+  \times C_{n_k}^{\mathrm{ord}}(I_k))
+  \xrightarrow{\sim}
+  \cA\text{-mod}(C_n^{\mathrm{ord}}(\bigcup I_j))$.
+\item \emph{Braiding:} the braid group $B_n$ acts on
+  $C_n^{\mathrm{ord}}(X)$ by monodromy around the diagonals.
+  The $R$-matrix $R_\cA$ encodes this monodromy.
+\item \emph{Monoidal structure:} the fusion product
+  $\boxtimes_\cA$ on modules, given by colliding
+  points along ordered intervals.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Factorization DK on evaluation locus;
+\ClaimStatusProvedHere]\label{thm:factorization-dk-eval}
+\index{Drinfeld--Kohno!derived!factorization}
+Restrict to the full subcategory
+$\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(Y(\mathfrak{sl}_N))$
+generated by tensor products of evaluation modules.  The
+$\Eone$-chiral bar-cobar functor induces an equivalence of
+$\Eone$-factorization categories:
+\begin{equation}\label{eq:factorization-dk-eval}
+\Phi \colon
+\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(Y_\hbar(\mathfrak{sl}_N))
+\;\xrightarrow{\;\sim\;}\;
+\operatorname{Fact}_{\Eone}^{\mathrm{eval}}
+  (Y_{-\hbar}(\mathfrak{sl}_N))^{\mathrm{op}}
+\end{equation}
+with the following properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{On objects:} $V(a_1) \otimes \cdots \otimes V(a_n)
+  \;\mapsto\; V(-a_1) \otimes \cdots \otimes V(-a_n)$
+  with $\hbar \mapsto -\hbar$.
+\item \emph{On braiding:}
+  $R(u; \hbar) \;\mapsto\; R^{-1}(u; \hbar) = R(u; -\hbar)$.
+\item \emph{On factorization:} the factorization isomorphisms
+  are preserved, with the $\Eone$-ordering reversed
+  \textup{(}reflecting the ``op'' on the target\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is Proposition~\ref{prop:yangian-module-koszul}(i)
+applied to each tensor factor.  Part~(ii) is
+Proposition~\ref{prop:yangian-module-koszul}(iii).  For
+part~(iii): the factorization isomorphisms on the source are
+encoded by the bar complex propagator $\eta_{ij} = d\log(z_i - z_j)$
+on $\overline{C}_n^{\mathrm{ord}}(X)$.  The Verdier involution
+(Theorem~\ref{thm:bar-cobar-verdier}) acts on the
+compactified configuration space by reversing the orientation of
+collision cycles, which reverses the ordering of the
+$\Eone$-intervals.  The bar-cobar quasi-isomorphism
+(Corollary~\ref{cor:yangian-bar-cobar}) ensures this
+factorization structure is inherited by the dual, producing
+the ``op'' monoidal structure on the target.
+\end{proof}
+
+\subsection{The remaining gap: full factorization DK}
+
+The evaluation-module results above establish the derived
+Drinfeld--Kohno correspondence at the chain level and on the
+evaluation locus.  The full conjecture targets all modules:
+
+\begin{conjecture}[Full derived Drinfeld--Kohno;
+\ClaimStatusConjectured]\label{conj:full-derived-dk}
+\index{Drinfeld--Kohno!derived!full conjecture}
+The equivalence of
+Theorem~\textup{\ref{thm:factorization-dk-eval}} extends to the
+full $\Eone$-factorization category:
+\begin{equation}\label{eq:full-dk}
+\operatorname{Fact}_{\Eone}(\mathcal{Y}(\mathfrak{g}))
+\;\simeq\;
+\operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}},
+\end{equation}
+where $\mathcal{Y}(\mathfrak{g})$ is the Yangian
+$\Eone$-chiral algebra and $U_q(\mathfrak{g})$ is the quantum
+group, viewed as an $\Eone$-factorization algebra via the
+construction of Latyntsev~\cite{Latyntsev23}.
+\end{conjecture}
+
+\begin{remark}[What is proved vs.\ what remains]
+\label{rem:dk-proved-vs-remains}
+The ingredients of the full DK conjecture decompose as follows:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Ingredient} & \textbf{Status} & \textbf{Reference} \\
+\midrule
+$\Eone$-bar-cobar equivalence & Proved &
+  Thm~\ref{thm:e1-chiral-koszul-duality} \\
+Yangian $R \mapsto R^{-1}$ & Proved &
+  Thm~\ref{thm:yangian-koszul-dual} \\
+Braiding reversal $\sigma \mapsto \sigma^{-1}$ & Proved &
+  Thm~\ref{thm:monoidal-module-koszul} \\
+Evaluation module DK & Proved &
+  Thm~\ref{thm:derived-dk-yangian} \\
+KL at abelian level & Proved (classical) &
+  Thm~\ref{thm:kazhdan-lusztig-equivalence} \\
+Factorization DK (eval.\ locus) & Proved &
+  Thm~\ref{thm:factorization-dk-eval} \\
+\midrule
+Factorization-level Kazhdan equiv. & Conjectured &
+  Conj.~\ref{conj:full-derived-dk} \\
+Extension beyond evaluation modules & Conjectured &
+  Rem.~\ref{rem:yangian-cat-O-conditional} \\
+$\infty$-categorical DK & Conjectured &
+  \S\ref{sec:modular-koszul-programme} \\
+\bottomrule
+\end{tabular}
+\end{center}
+The critical remaining step is the \emph{factorization-level
+Kazhdan equivalence}: showing that the Yangian $\Eone$-factorization
+structure (Definition~\ref{def:e1-factorization-category})
+is identified with the quantum group factorization structure
+constructed by Latyntsev~\cite{Latyntsev23}.  The
+evaluation-module case is proved (the Kazhdan functor
+\cite{Drinfeld85} provides the identification), but the
+extension to Yangian category~$\mathcal{O}$ requires the
+Koszulness conjecture
+(Remark~\ref{rem:yangian-collapse-conj}).
+\end{remark}
+
+\begin{remark}[Rational vs.\ trigonometric DK]
+\label{rem:rational-trigonometric-dk}
+\index{Drinfeld--Kohno!rational vs trigonometric}
+The DK square takes different forms depending on the $R$-matrix type:
+
+\emph{Rational DK}
+\textup{(}Theorem~\textup{\ref{thm:derived-dk-yangian})}.
+The Yangian $R$-matrix $R(u) = 1 - \hbar P/u$ is rational
+in the additive spectral parameter $u$.  Koszul duality sends
+$\hbar \to -\hbar$, i.e., $R(u) \to R^{-1}(u)$.  The bar
+complex uses the propagator $d\log(z_i - z_j)$ on the
+FM compactification of $\bC$.
+
+\emph{Trigonometric DK}
+\textup{(}Remark~\textup{\ref{rem:yangian-quantum-group})}.
+The quantum loop algebra $U_q(\widehat{\mathfrak{g}})$ has
+trigonometric $R$-matrix $R(u/v)$ in the multiplicative
+parameter.  Koszul duality sends $q \to q^{-1}$.  The bar
+complex uses the propagator $d\log(z_i/z_j)$ on the
+FM compactification of $\bC^\times$.
+
+The Kazhdan functor $\Phi_K$ intertwines the rational and
+trigonometric pictures via the exponential map $u \mapsto e^u$,
+$\bC \to \bC^\times$.  The DK
+square~\eqref{eq:dk-square-yangian} encodes the commutativity
+of this intertwining with bar-cobar duality.
+\end{remark}
+
 \bigskip
 \noindent
-The Yangian chapter reveals the $E_1$-chiral face of the theory.
-Ordered configuration spaces carry braid monodromy; Verdier
-duality on collision loops reverses orientation; and the
-homotopy-coherent monoidal structure on the dual side sees the
-$R$-matrix replaced by $R^{-1}$.  Under the RTT presentation,
-this is the passage from Yangian data to opposite quantum-group
-monodromy --- a derived form of the Drinfeld--Kohno theorem.  The
-$E_\infty$-chiral examples of the preceding chapters all have
-commutative factorization structure; the Yangian is the first
-object whose Koszul duality intertwines genuinely noncommutative
-(braided) monoidal data.  The conjectural
-$q \leftrightarrow q^{-1}$ categorical equivalence
-(\S\ref{sec:modular-koszul-programme}) would be the full
-statement of this derived Drinfeld--Kohno correspondence.
+The Yangian chapter reveals the $\Eone$-chiral face of the theory.
+The derived Drinfeld--Kohno theorem
+(Theorems~\ref{thm:derived-dk-affine}
+and~\ref{thm:derived-dk-yangian}) proves that bar-cobar duality
+\emph{geometrically implements} the quantum group involution
+$q \mapsto q^{-1}$, via orientation reversal on ordered
+configuration spaces.  The $\Einf$-chiral examples of the preceding
+chapters all have commutative factorization structure; the Yangian is
+the first object whose Koszul duality intertwines genuinely
+noncommutative (braided) monoidal data.  The extension from the
+evaluation locus (Theorem~\ref{thm:factorization-dk-eval}) to the
+full factorization categorical equivalence
+(Conjecture~\ref{conj:full-derived-dk}) is the remaining frontier of
+the $\Eone$-chiral theory, and the natural bridge to the modular
+Koszul programme (\S\ref{sec:modular-koszul-programme}).

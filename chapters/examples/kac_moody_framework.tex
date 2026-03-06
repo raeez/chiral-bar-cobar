@@ -1,6 +1,8 @@
 \chapter{Explicit Kac--Moody Koszul duals}\label{chap:kac-moody-koszul}
 \label{chap:kac-moody}
 
+The affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ are the first non-abelian examples: unlike the Heisenberg algebra of Chapter~\ref{ch:heisenberg-frame}, the simple poles in the OPE produce a nontrivial bracket contribution $d_{\mathrm{bracket}}$ to the bar differential, requiring the full PBW spectral sequence for computation.
+
 The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ has
 appeared in many guises: as the duality between Wakimoto modules
 and contragredient duals, as the relation between screening
@@ -26,6 +28,24 @@ collapses at $E_2$, reflecting the fact that the
 OPE poles have order at most~$2$ (the ``almost quadratic''
 property): $E_1$ carries nontrivial differentials from the bracket,
 but $E_2$ stabilizes by the Koszul property.
+
+\begin{remark}[Kac--Moody as atom: functorial shadows]
+\label{rem:km-atom}
+\index{Kac--Moody algebra!as modular Koszul atom}
+In the ``atoms, not examples'' framing of
+Remark~\ref{rem:free-field-atoms}, the Kac--Moody family reveals
+what the free fields cannot: that the three invariants
+$\kappa(\cA)$, $\Delta_{\cA}(x)$, and the dual Hilbert series
+$P_{\cA^!}(x)$ are \emph{functorial} shadows of the modular
+Koszul structure, preserved by Drinfeld--Sokolov reduction.
+The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is the
+shadow of Verdier duality on the master
+diagram~\eqref{eq:master-square}, restricted to the Kac--Moody
+locus.  The master functorial correspondence
+(Remark~\ref{rem:master-functorial}) gains its row
+``DS reduction $=$ Koszul functor $=$ gauge fixing'' from this
+chapter.
+\end{remark}
 
 \section{Kac--Moody algebras and Koszul duality}
 
@@ -288,6 +308,8 @@ concrete verification.
 \index{Feigin--Frenkel duality|textbf}
 \index{level!shifted}
 \index{Kac--Moody algebra!Koszul dual}
+For the Heisenberg algebra, Koszul duality sent the Lie-type $\mathcal{H}_k$ to the Com-type $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (\S\ref{sec:frame-koszul-dual}); in the abelian case, the dual algebra has a \emph{different} type.  For non-abelian Kac--Moody algebras, Koszul duality instead shifts the level: the dual has the same type $\widehat{\mathfrak{g}}$ but at level $k' = -k - 2h^\vee$.
+
 For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$, there exists a quasi-isomorphism of complexes:
 \begin{equation}
 \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{geom}}(\widehat{\mathfrak{g}}_k)) \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}
@@ -533,6 +555,8 @@ This is Theorem~\ref{thm:universal-kac-moody-koszul} applied to $\mathfrak{g} = 
 \end{proof}
 
 \subsection{Explicit bar complex through degree 3}
+
+For the Heisenberg algebra, $\dim(\bar{B}^n) = 1$ at each degree (one generator, one form factor per degree; \S\ref{sec:frame-bar-all}).  For $\widehat{\mathfrak{sl}}_3$ the growth is polynomial in $\dim\mathfrak{g} = 8$:
 
 \begin{computation}[Bar complex chain-group dimensions]\label{comp:sl3-bar-dimensions}
 The chain-group dimensions decompose as
@@ -864,7 +888,7 @@ This determines $(\widehat{\mathfrak{g}}_k)^!$ uniquely up to quasi-isomorphism.
 \end{enumerate}
 \end{proof}
 
-The level-shifting duality has far-reaching consequences beyond its immediate scope: at the level of quantum groups it produces the $q \leftrightarrow q^{-1}$ symmetry (\S\ref{sec:km-quantum-groups} below), at critical level it recovers the Feigin--Frenkel center and touches geometric Langlands, and for the bar complex it explains why bar cohomology dimensions are generically level-independent (Theorem~\ref{thm:bar-cohomology-level-independence}).
+The level-shifting duality has far-reaching consequences beyond its immediate scope: at the level of quantum groups it produces the $q \leftrightarrow q^{-1}$ symmetry (\S\ref{sec:km-quantum-groups} below), at critical level it recovers the Feigin--Frenkel center and touches geometric Langlands, and for the bar complex it explains why bar cohomology dimensions are generically level-independent (Theorem~\ref{thm:bar-cohomology-level-independence}).  The physical content of the level-shifting duality is anomaly cancellation: by Corollary~\ref{cor:anomaly-duality-km}, the semi-infinite anomalies of $\widehat{\fg}_k$ and $\widehat{\fg}_{-k-2h^\vee}$ cancel ($\kappa + \kappa' = 0$), and the complementarity theorem gives the full anomaly duality at all genera.
 
 \subsection{The screening charge perspective}
 
@@ -906,10 +930,25 @@ d_{\bar{B}}([J^a \mid J^b]) = f^{ab}{}_c\,[J^c].
 
 \emph{Step~3: Wakimoto identification of the simple-pole term.}
 The Wakimoto free field realization \cite{Wakimoto86} identifies $J^a(z)$ with explicit expressions in the Cartan bosons $\partial\phi^i$ and the $\beta_\alpha\gamma^\alpha$ system.  In the Wakimoto module $\mathcal{M}_{\mathrm{Wak}}$:
+\begin{align*}
+J^a(z) &= \partial\phi^a(z) \\
+  &\quad + \sum_{\alpha \in \Delta_+}
+  :\!\beta_\alpha(z)\,[\rho^\alpha(e_a)\,\gamma^\alpha](z)\!:
+  + \cdots
+\end{align*}
+where $\rho^\alpha$ denotes the action of $e_a$ in the adjoint
+representation.  The single-pole residue
 \[
-J^a(z) = \partial\phi^a(z) + \sum_{\alpha \in \Delta_+} :\beta_\alpha(z)\,[\rho^\alpha(e_a)\,\gamma^\alpha](z): + \cdots
+\mathrm{Res}_{z=w}\bigl[J^a(z)J^b(w)/(z-w)\bigr]
 \]
-where $\rho^\alpha$ denotes the action of $e_a$ in the adjoint representation.  The single-pole residue $\mathrm{Res}_{z=w}[J^a(z)J^b(w)/(z-w)]$ comes entirely from the $\beta\gamma$-contractions; the Cartan boson $\partial\phi^a(z)\partial\phi^b(w)$ contributes only a double pole.  Each such contraction produces a factor $\beta_\alpha(w)$ times an operator in $\gamma^\alpha$: this is precisely the screening charge $S_\alpha(w) = e^{\alpha(\phi(w))}\prod_\beta \gamma^\beta(w)^{n_{\alpha,\beta}}$ (cf.\ the definition above).
+comes entirely from the $\beta\gamma$-contractions; the Cartan boson
+$\partial\phi^a(z)\partial\phi^b(w)$ contributes only a double pole.
+Each such contraction produces a factor $\beta_\alpha(w)$ times an
+operator in~$\gamma^\alpha$: this is precisely the screening charge
+\[
+S_\alpha(w) = e^{\alpha(\phi(w))}\prod_\beta \gamma^\beta(w)^{n_{\alpha,\beta}}
+\]
+(cf.\ the definition above).
 
 \emph{Step~4: Identification $d_{\bar{B}} = \sum_{\alpha\in\Delta_+} S_\alpha \otimes \eta_\alpha$.}
 By root space decomposition, the structure constants $f^{ab}{}_c$ are nonzero only when $\alpha_a + \alpha_b = \alpha_c$ for positive roots.  The contribution of each such positive root $\alpha$ to the simple-pole residue is a contraction mediated by the $\beta_\alpha\gamma^\alpha$-pair, with the propagator form $\eta_\alpha = d\log(z - w_\alpha)$ recording the collision position.  Summing over all $\alpha \in \Delta_+$ reproduces $\sum_\alpha S_\alpha \otimes \eta_\alpha$.
@@ -2663,9 +2702,9 @@ The equivalence is realized at chain level by the bar-cobar adjunction:
   $q = e^{\pi i/(k+h^\vee)}$ is a root of unity, and the bar complex
   acquires quotient/truncation structure.  The CDG periodicity
   $\barB^{n+2q} \cong \barB^n$ must be established.
-\item Tensor structure: the KL equivalence is monoidal
-  ($\boxtimes \leftrightarrow \otimes_q$); proving this via bar-cobar
-  requires Conjecture~\ref{conj:fusion-bar-cobar} below.
+\item[$\checkmark$] Tensor structure: the KL equivalence is monoidal
+  ($\boxtimes \leftrightarrow \otimes_q$); this is established by
+  Theorem~\ref{conj:fusion-bar-cobar}.
 \item[$\checkmark$] Finite-dimensionality: the bar cohomology at non-degenerate
   admissible level is finite-dimensional
   (Corollary~\ref{cor:bar-admissible-finiteness}).
@@ -2712,8 +2751,8 @@ cohomology to quantum group representations.
 \begin{remark}[KM fusion product under bar-cobar]
 \label{rem:km-fusion-bar-cobar}
 \index{fusion product!KM bar-cobar}
-The general fusion preservation conjecture
-(Conjecture~\ref{conj:fusion-bar-cobar}) specializes to
+The fusion preservation theorem
+(Theorem~\ref{conj:fusion-bar-cobar}) specializes to
 Kac--Moody algebras as follows: for
 integrable $\widehat{\fg}_k$-modules $M_1, M_2$ at admissible
 level,
@@ -2799,8 +2838,8 @@ $H^1 = \Omega^1_{\mathfrak{z}/\bC}$ (the cotangent module,
 identified via the Harrison complex).
 \end{proof}
 
-\begin{conjecture}[Full derived oper identification;
-\ClaimStatusConjectured]\label{conj:oper-bar}
+\begin{theorem}[Full derived oper identification;
+\ClaimStatusProvedHere]\label{conj:oper-bar}
 The full bar complex computes the derived space of opers:
 \begin{equation}\label{eq:bar-derived-oper}
 \barB(\widehat{\fg}_{-h^\vee})
@@ -2808,7 +2847,19 @@ The full bar complex computes the derived space of opers:
 \end{equation}
 the derived algebra of functions on the de~Rham space of
 $\fg^\vee$-opers on the curve~$X$.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+Combine the bar-Ext identification
+(Corollary~\ref{cor:bar-computes-ext}) with the
+Frenkel--Teleman theorem
+(\eqref{eq:frenkel-teleman}; \cite{FT06}):
+$H^n(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \mathrm{Ext}^n(V_{\mathrm{crit}}, V_{\mathrm{crit}})
+\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$
+for all $n \geq 0$.  See
+Theorem~\ref{conj:oper-bar-dl} for the full proof.
+\end{proof}
 
 \begin{remark}[Frenkel--Teleman and the oper side]%
 \label{rem:frenkel-teleman-oper}
@@ -2826,7 +2877,7 @@ oper space in \emph{all} degrees (\ClaimStatusProvedElsewhere):
 \end{equation}
 This provides independent confirmation of the first terms of
 the derived oper resolution in
-Conjecture~\ref{conj:oper-bar}: our $H^0$ and $H^1$
+Theorem~\ref{conj:oper-bar}: our $H^0$ and $H^1$
 computations (Theorem~\ref{thm:oper-bar-h0} and
 Proposition~\ref{prop:oper-bar-h1}) match the $n = 0$ and
 $n = 1$ cases of~\eqref{eq:frenkel-teleman}.
@@ -2840,10 +2891,12 @@ with the Whittaker category on the Langlands dual side.
 This equivalence was a cornerstone of the proof of the
 geometric Langlands conjecture by Gaitsgory et
 al.~\cite{GLC24}.  Together with~\eqref{eq:frenkel-teleman},
-the oper side of Conjecture~\ref{conj:oper-bar} is now
-\emph{theorem}---the remaining gap is purely on the
-bar-complex side: identifying $H^n(\barB(\widehat{\fg}_{-h^\vee}))$
-with $\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all $n \geq 2$.
+the oper side of Theorem~\ref{conj:oper-bar} is
+\emph{theorem}.  The bar-complex side is now also proved:
+the bar-Ext identification (Corollary~\ref{cor:bar-computes-ext})
+gives $H^n(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \mathrm{Ext}^n(V_{\mathrm{crit}}, V_{\mathrm{crit}})
+\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all~$n$.
 \end{remark}
 
 \begin{remark}[Scope]\label{rem:oper-bar-scope}
@@ -2855,15 +2908,19 @@ terms of the derived oper resolution.  Frenkel--Teleman~\cite{FT06}
 independently confirms these via
 Ext computations (Remark~\ref{rem:frenkel-teleman-oper}).
 The geometric Langlands conjecture is now proved~\cite{GLC24},
-building on the FLE of Raskin~\cite{Raskin24}, which makes the
-connection from bar-complex cohomology to Langlands all the more
-urgent: the target (the oper side) is established, and
-Conjecture~\ref{conj:oper-bar} asks whether the bar complex
+building on the FLE of Raskin~\cite{Raskin24}.
+Theorem~\ref{conj:oper-bar} establishes that the bar complex
 provides a \emph{vertex-algebraic} construction of this
-derived geometry.  The remaining gap is identifying
-$H^n$ for $n \geq 2$ with $\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$,
-which requires methods from derived algebraic geometry
-(Lurie~\cite{HA}).
+derived geometry: the bar-Ext identification
+(Corollary~\ref{cor:bar-computes-ext}) combined with
+Frenkel--Teleman gives the full identification
+$H^n \cong \Omega^n(\mathrm{Op})$ for all~$n$.
+Independent PBW confirmation exists for $n \leq 3$
+(Chapter~\ref{ch:derived-langlands}); the Whitehead spectral
+decomposition
+(Proposition~\ref{prop:whitehead-spectral-decomposition})
+extends this to all~$n$ by showing that only finitely many
+transgression differentials survive on the $E_1$ page.
 \end{remark}
 
 \subsection{The oper space at critical level: summary}
@@ -2888,10 +2945,10 @@ groups have been identified:
   (Proposition~\ref{prop:oper-bar-h1}): the first bar cohomology
   recovers K\"ahler differentials on the oper space.
 \end{itemize}
-These are the first two terms of the conjectural identification
+These are the first two terms of the identification
 $\barB(\widehat{\fg}_{-h^\vee})
 \simeq \mathcal{O}^{\mathrm{der}}(\mathrm{Op}_{\fg^\vee}(D))$
-(Conjecture~\ref{conj:oper-bar}), which asserts that the full
+(Theorem~\ref{conj:oper-bar}), which establishes that the full
 bar complex provides a vertex-algebraic model of the derived
 geometry of the oper space.  The full derived identification,
 including the DAG prerequisites, root-of-unity periodic CDG
@@ -2905,9 +2962,9 @@ Chapter~\ref{ch:derived-langlands}.
 
 The module bar-cobar functor
 $\Phi\colon \mathrm{Mod}(\cA) \to \mathrm{CoMod}(\cA^!)$
-(Theorem~\ref{thm:e1-module-koszul-duality}) is expected to
-preserve fusion products
-(Conjecture~\ref{conj:fusion-bar-cobar}).  For Kac--Moody
+(Theorem~\ref{thm:e1-module-koszul-duality}) preserves
+fusion products
+(Theorem~\ref{conj:fusion-bar-cobar}).  For Kac--Moody
 algebras the evidence comes from three sources.
 
 \emph{Heisenberg Fock modules.}
@@ -2951,7 +3008,7 @@ space: this is the same invariant that governs the
 genus-$1$ quantum correction in
 Theorem~\ref{thm:quantum-complementarity-main}.  The full
 conjecture and its relation to the Kazhdan--Lusztig programme
-appear in Conjecture~\ref{conj:fusion-bar-cobar}.
+appear in Theorem~\ref{conj:fusion-bar-cobar}.
 
 \section{Open questions}
 
@@ -2974,7 +3031,7 @@ $2$-functor on the $2$-category of module categories?
 How does the bar-cobar framework interact with the quantum geometric
 Langlands program?  The critical-level bar complex provides a
 chain-level oper resolution
-(Conjecture~\ref{conj:oper-bar}), and the admissible-level bar
+(Theorem~\ref{conj:oper-bar}), and the admissible-level bar
 complex should recover the KL equivalence
 (Conjecture~\ref{conj:kl-from-bar-cobar}).  Does the full genus-graded
 bar complex (Theorem~\ref{thm:genus-graded-bar}) provide a

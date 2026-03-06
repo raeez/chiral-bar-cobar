@@ -7,6 +7,12 @@
 
 All examples so far live on a single algebraic curve.  Toroidal and elliptic algebras arise when the base geometry itself becomes two-dimensional: a torus fibration, a double loop, or a curve over a curve.  The resulting structures --- double affine algebras $U_{q,t}(\hat{\hat{\mathfrak{g}}})$, elliptic quantum groups, Feigin--Odesskii shuffle algebras --- are among the richest in representation theory, and they provide the most stringent test of our framework.  The bar complex acquires Eisenstein-series corrections controlled by the modular parameter $\tau$, and the Fay trisecant identity replaces the Arnold relation as the mechanism ensuring $d^2 = 0$.
 
+\begin{remark}[The generalization principle: Arnold to Fay]
+\label{rem:arnold-fay-generalization}
+\index{Arnold relation!Fay generalization}
+The Arnold relation (Theorem~\ref{thm:arnold-relations}), which governs the genus-$0$ bar differential, admits two distinct generalizations.  Direction~(a): via clutching morphisms and the universal Maurer--Cartan class $\Theta_A$, one passes to the modular regime on stable curves, recovering the higher-genus bar complex of Part~I (Remark~\ref{rem:four-pieces}).  Direction~(b): via the Fay trisecant identity (Theorem~\ref{thm:fay}), one replaces the additive (logarithmic) propagator $\omega = dz/(z-w)$ by the elliptic (multiplicative) propagator built from the Weierstrass $\sigma$-function, entering the toroidal regime.  The present chapter develops direction~(b): the systematic passage from logarithmic to elliptic propagators and its consequences for bar-cobar duality.
+\end{remark}
+
 \section{Double affine setup}
 \label{sec:double-affine}
 
@@ -163,18 +169,20 @@ $U_{q^{-1},t^{-1}}(\hat{\hat{\mathfrak{g}}})$,
 the toroidal algebra with inverted parameters.
 \end{conjecture}
 
-\begin{remark}[Scope and evidence]\label{rem:toroidal-koszul-evidence}
+\begin{remark}[Evidence]\label{rem:toroidal-koszul-evidence}
 This conjecture is conditional on the $\Eone$-chiral
-structure (Conjecture~\ref{conj:toroidal-e1}).  The evidence is
-threefold:
+structure (Conjecture~\ref{conj:toroidal-e1}).
+The evidence is threefold:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{RTT presentation.}  The toroidal algebra has
-an RTT presentation $R_{12}(u) L_1(u) L_2(v) = L_2(v) L_1(u)
-R_{12}(u)$ with $R$-matrix $R(u) = R(u; q, t)$.  By the
+an RTT presentation
+$R_{12}(u) L_1(u) L_2(v) = L_2(v) L_1(u) R_{12}(u)$
+with $R$-matrix $R(u) = R(u; q, t)$.  By
 $\Eone$-chiral Koszul duality
 (Theorem~\ref{thm:e1-chiral-koszul-duality}),
-the dual algebra has $R$-matrix $R(u; q, t)^{-1}$.
-For the toroidal algebra, $R(u; q, t)^{-1} = R(u; q^{-1}, t^{-1})$
+the dual has $R$-matrix $R(u; q, t)^{-1}$.
+For the toroidal algebra,
+$R(u; q, t)^{-1} = R(u; q^{-1}, t^{-1})$
 (the inversion formula for the Ding--Iohara $R$-matrix;
 cf.\ the analogous formula for the Yangian in
 Theorem~\ref{thm:yangian-koszul-dual}).
@@ -198,12 +206,12 @@ spaces (Theorem~\ref{thm:bar-cobar-verdier}).
 
 \subsection{Connection to the three main theorems}
 
-\begin{remark}[Three theorems for toroidal algebras]
+\begin{remark}[Toroidal three theorems]
 \label{rem:toroidal-three-theorems}
 \index{three theorems!toroidal}
 Conditional on the $\Eone$-chiral structure
-(Conjecture~\ref{conj:toroidal-e1}), the three main
-theorems have the following expected forms:
+(Conjecture~\ref{conj:toroidal-e1}), the three
+main theorems have the following expected forms:
 \begin{itemize}
 \item \emph{Theorem~A} (Geometric bar-cobar duality):
 the bar complex $\bar{B}^{\mathrm{ell}}
@@ -1155,14 +1163,14 @@ vector space
 the \emph{shuffle product}:
 for $f \in \mathcal{S}_m$ and $g \in \mathcal{S}_n$, define
 $f \star g \in \mathcal{S}_{m+n}$ by
-\begin{equation}\label{eq:shuffle-product}
+\begin{multline}\label{eq:shuffle-product}
 (f \star g)(z_1, \ldots, z_{m+n})
 = \frac{1}{m!\,n!} \sum_{\sigma \in S_{m+n}}
 \prod_{\substack{i \leq m \\ j > m}}
-\zeta(z_{\sigma(i)} - z_{\sigma(j)})
-\cdot f(z_{\sigma(1)}, \ldots, z_{\sigma(m)})
+\zeta(z_{\sigma(i)} - z_{\sigma(j)}) \\
+\cdot\, f(z_{\sigma(1)}, \ldots, z_{\sigma(m)})
 \cdot g(z_{\sigma(m+1)}, \ldots, z_{\sigma(m+n)}).
-\end{equation}
+\end{multline}
 Equivalently, the sum runs over $(m,n)$-shuffles
 $\mathrm{Sh}(m,n) \subset S_{m+n}$, with
 the $1/(m!\,n!)$ factor replaced by $1$ and the
@@ -1266,36 +1274,37 @@ $\mathrm{Sh}(V)$ and the tensor coalgebra $T^c(V)$
 \caption{Comparison across the three regimes}
 \label{tab:rat-trig-ell}
 \renewcommand{\arraystretch}{1.35}
+{\footnotesize
 \begin{tabular}{|l|c|c|c|}
 \hline
 & \textbf{Rational} & \textbf{Trigonometric} & \textbf{Elliptic} \\
 \hline
 \textbf{Algebra}
 & Yangian $Y(\fg)$
-& Quantum affine $U_q(\hat{\fg})$
+& Qtm.\ affine $U_q(\hat{\fg})$
 & Toroidal $U_{q,t}(\hat{\hat{\fg}})$ \\
 \hline
 \textbf{Curve}
 & $\bC$ (or $\bC\bP^1$)
-& $\bC^*$ (or $\bC\bP^1 \setminus \{0,\infty\}$)
+& $\bC^*$ (or $\bC\bP^1 \!\setminus\! \{0,\infty\}$)
 & $E_\tau$ \\
 \hline
 \textbf{Propagator}
-& $\displaystyle\frac{dz}{z}$
-& $\displaystyle\frac{dz}{1 - z}$
+& $\frac{dz}{z}$
+& $\frac{dz}{1 - z}$
 & $d\log\theta_1(z|\tau)$ \\
 \hline
 \textbf{$R$-matrix}
-& Yang: $1 - \hbar P/u$
-& $q$-deformed: $(q - q^{-1})/(u - u^{-1})$
-& Elliptic: $\theta(u{+}\eta)/\theta(\eta)$ \\
+& $1 - \hbar P/u$
+& $(q{-}q^{-1})/(u{-}u^{-1})$
+& $\theta(u{+}\eta)/\theta(\eta)$ \\
 \hline
-\textbf{Arnold identity}
+\textbf{Arnold id.}
 & $\eta_{12}\!\wedge\!\eta_{23} + \text{cyc} = 0$
-& $\frac{dz_1}{z_1{-}z_2}\!\wedge\!\frac{dz_2}{z_2{-}z_3} + \text{cyc} = 0$
+& $\frac{dz_1}{z_1{-}z_2}\!\wedge\!\frac{dz_2}{z_2{-}z_3} {+} \text{cyc} = 0$
 & Fay trisecant \\
 \hline
-\textbf{$d^2=0$ mechanism}
+\textbf{$d^2\!=\!0$}
 & Partial fractions
 & $q$-partial fractions
 & Fay + quasi-period \\
@@ -1305,27 +1314,28 @@ $\mathrm{Sh}(V)$ and the tensor coalgebra $T^c(V)$
 & $U_{q^{-1}}(\hat{\fg})$
 & $U_{q^{-1},t^{-1}}(\hat{\hat{\fg}})$ (conj.) \\
 \hline
-\textbf{Structure fn.}
-& $\zeta(u) = (u{+}\eta)/u$
-& $\zeta(u) = (1{-}qe^u)/(1{-}e^u)$
-& $\zeta(u) = \theta(u{+}\eta)/\theta(u)$ \\
+\textbf{Struct.\ fn.}
+& $(u{+}\eta)/u$
+& $(1{-}qe^u)/(1{-}e^u)$
+& $\theta(u{+}\eta)/\theta(u)$ \\
 \hline
 \textbf{Shuffle alg.}
 & Feigin--Odesskii
-& Feigin--Odesskii ($q$-deformed)
+& F--O ($q$-def.)
 & Schiffmann--Vasserot \\
 \hline
-\textbf{Dynamical par.}
+\textbf{Dyn.\ par.}
 & absent
 & absent
 & $\lambda \in \mathfrak{h}^*$ \\
 \hline
-\textbf{Bar curvature}
+\textbf{Bar curv.}
 & $m_0 = 0$
 & $m_0 \propto \log q$
 & $m_0 \propto E_2(\tau)$ \\
 \hline
 \end{tabular}
+}
 \end{table}
 
 \begin{remark}[Degeneration limits]\label{rem:degeneration-limits}

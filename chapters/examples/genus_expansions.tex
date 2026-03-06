@@ -1,6 +1,19 @@
 \chapter{Explicit genus expansions}\label{ch:genus-expansions}
 
+The genus expansion formulas computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are extended here to affine Kac--Moody, Virasoro, and $\mathcal{W}_3$ algebras, demonstrating the three main theorems in interplay.
+
 The genus expansion $\{F_g(\mathcal{A})\}_{g \geq 1}$ is the sequence of quantum corrections to chiral bar-cobar duality: it measures the failure of the genus-0 quasi-isomorphism $\Omega(B(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$ to extend to higher genus, and it is controlled by the curvature invariant $\kappa(\mathcal{A})$ through the genus universality theorem (Theorem~\ref{thm:genus-universality}).  In this chapter, we compute $F_g$ explicitly for every algebra treated in Part~II --- free fields, Kac--Moody, Virasoro, $\mathcal{W}_3$ --- and verify the complementarity theorem $F_g(\mathcal{A}) + F_g(\mathcal{A}^!) = F_g^{\mathrm{univ}}$ in each case.  The computations serve simultaneously as evidence for the conjectures of \S\ref{sec:modular-koszul-programme} and as a worked demonstration that the three main theorems interlock in practice exactly as the theory predicts.
+
+Each genus expansion is a numerical shadow of the master
+diagram~\eqref{eq:master-square} at genus~$g$: the curvature
+$\kappa(\cA)$ enters through the bar construction (top row),
+the complementarity $\kappa + \kappa' = \kappa_{\mathrm{total}}$
+through Verdier duality (right column), and the
+$\hat{A}$-genus through the GRR pushforward
+(Theorem~\ref{thm:family-index}).  The discriminant
+$\Delta_{\cA}(x)$ is invariant across each family, confirming
+that algebras related by Drinfeld--Sokolov reduction share
+a single modular spectral sheet.
 
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
@@ -33,6 +46,8 @@ the Faber--Pandharipande formula
 (Theorem~\ref{thm:mumford-formula}).
 The generating function follows from
 Proposition~\ref{prop:complementarity-genus-series}.
+This is the all-genera extension of the genus-$1$ computation in
+\S\ref{sec:frame-genus1} and the genus tower of \S\ref{sec:frame-genus-tower}.
 \end{proof}
 
 \begin{remark}[Connection to partition functions]
@@ -74,7 +89,7 @@ Including the leading term, $1 + \sum_{g \geq 1} F_g x^{2g} = x/2 / \sin(x/2)$. 
 \mathrm{Td}(x) = \frac{x}{1-e^{-x}} \bigg|_{x \mapsto ix} = \frac{x/2}{\sin(x/2)} \cdot e^{ix/2}.
 \end{equation}
 More precisely, $x/2/\sin(x/2)$ is the even part of the Todd genus (equivalently, $\hat{A}(x) = x/2/\sinh(x/2)$ evaluated at $x \mapsto ix$).
-This identification is not coincidental.  The Faber--Pandharipande formula evaluates tautological integrals $\int_{\overline{\mathcal{M}}_{g,1}} \psi^{2g-2} \lambda_g$ via the Bernoulli numbers, which are the Taylor coefficients of $x/(e^x - 1)$---the same function that generates the Todd class.  The bar-complex free energy is thus controlled by the universal multiplicative genus associated to the formal group law of the exponential function.
+This identification is not coincidental: the family index theorem (Theorem~\ref{thm:family-index}) shows that the bar-complex free energy is the Grothendieck--Riemann--Roch pushforward of the Todd class of the universal curve.  The Faber--Pandharipande formula evaluates tautological integrals $\int_{\overline{\mathcal{M}}_{g,1}} \psi^{2g-2} \lambda_g$ via the Bernoulli numbers, which are the Taylor coefficients of $x/(e^x - 1)$---the same function that generates the Todd class---because both are computed by the same GRR calculation.
 
 For general $\kappa$, $\sum_g F_g x^{2g} = \kappa(\mathrm{Td}_{\mathrm{even}}(ix) - 1)$: the total genus expansion is $\kappa$ times the reduced even Todd genus at imaginary argument.
 \end{remark}
@@ -123,6 +138,8 @@ canonical bundle on an elliptic curve.
 \section{Lattice VOAs at all genera}\label{sec:lattice-genera}
 \index{lattice VOA!genus expansion}
 
+The Heisenberg genus expansion (\S\ref{sec:frame-genus-tower}) was computed for a single free boson.  A lattice VOA $V_\Lambda$ tensors $d$ copies of $\mathcal{H}_1$ with the group algebra $\mathbb{C}[\Lambda]$; the lattice shifts do not change $\kappa$, so the genus expansion is a direct corollary.
+
 \begin{theorem}[Lattice VOA free energy;
 \ClaimStatusProvedHere]\label{thm:lattice-all-genera}
 For a positive-definite even lattice $\Lambda$ of
@@ -150,7 +167,9 @@ contribute to the genus-$1$ curvature (which is
 determined by the singular part of the OPE,
 Theorem~\ref{thm:heisenberg-obs}).
 Therefore $\kappa(V_\Lambda) =
-\kappa(\mathcal{H}_1^{\otimes d}) = d$.
+\kappa(\mathcal{H}_1^{\otimes d}) = d$
+(recall from \S\ref{sec:frame-genus-tower} that
+$F_g(\mathcal{H}_\kappa) = \kappa \cdot \lambda_g^{\mathrm{FP}}$).
 By genus universality
 (Theorem~\ref{thm:genus-universality}),
 $F_g(V_\Lambda) = d \cdot \lambda_g^{\mathrm{FP}}$.
@@ -204,6 +223,8 @@ $\mathbb{C}[\Lambda^*/\Lambda]$.
 \section{$\mathcal{W}$-algebra free energy and Higgs bundles}
 \label{sec:w-algebra-genera}
 \index{W-algebra@$\mathcal{W}$-algebra!genus expansion}
+
+The progression Heisenberg $\to$ $\widehat{\mathfrak{sl}}_2$ $\to$ $\mathcal{W}$-algebra reflects increasing operadic complexity: rank~$1$ abelian (\S\ref{sec:frame-genus-tower}), rank~$1$ nonabelian (\S\ref{sec:three-theorems-sl2}), and Drinfeld--Sokolov reduction.  Since DS reduction preserves $\kappa$ (Theorem~\ref{thm:ds-preserves-kappa}), the genus expansion of a $\mathcal{W}$-algebra is determined by that of its parent Kac--Moody algebra.
 
 \begin{theorem}[$\mathcal{W}$-algebra free energy at all genera;
 \ClaimStatusProvedHere]\label{thm:w-algebra-all-genera}
@@ -357,7 +378,7 @@ bar generating functions (Corollary~\ref{cor:algebraicity-koszul}).
 \index{three theorems!sl2 showcase@$\mathfrak{sl}_2$ showcase}
 \index{genus expansion!sl2@$\mathfrak{sl}_2$}
 
-We trace all three main theorems through a single example: the affine Kac--Moody algebra $\widehat{\mathfrak{sl}}_{2,k}$ at generic level~$k$, computing the genus-$g$ invariants explicitly.
+We trace all three main theorems through a single example: the affine Kac--Moody algebra $\widehat{\mathfrak{sl}}_{2,k}$ at generic level~$k$, computing the genus-$g$ invariants explicitly.  Where the Heisenberg algebra (\S\ref{sec:frame-genus-tower}) was the abelian prototype --- genus expansion controlled by a single number $\kappa = k$ --- $\widehat{\mathfrak{sl}}_2$ is the first \emph{nonabelian} case, introducing structure constants and dual Coxeter corrections.
 
 \subsection{Setup}\label{subsec:sl2-genus-setup}
 
@@ -455,6 +476,8 @@ In each case, $F_g$ is a linear function of~$k$, reflecting the factored form $F
 
 \subsection{Complementarity at every genus}\label{subsec:sl2-complementarity}
 
+For the Heisenberg algebra, complementarity was the identity $\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_{-k}) = 0$ (\S\ref{sec:frame-complementarity}).  The mechanism is the same here --- $\kappa + \kappa' = 0$ for all affine Kac--Moody --- but the dual level $k' = -k - 2h^\vee$ now involves the dual Coxeter number.
+
 \begin{proposition}[$\widehat{\mathfrak{sl}}_2$ complementarity; \ClaimStatusProvedHere]\label{prop:sl2-complementarity-all-genera}
 For all $g \geq 1$ and all $k \neq -2$:
 \begin{equation}\label{eq:sl2-complementarity-allgenera}
@@ -495,7 +518,14 @@ The bivariate structure reflects the factorization $F_g = \kappa \cdot \lambda_g
 \end{proposition}
 
 \begin{proof}
-Substituting $F_g = \kappa \cdot \lambda_g^{FP}$ into the series and using the classical identity $\sum_{g \geq 1} \lambda_g^{FP} x^{2g} = x/(2\sin(x/2)) - 1$ (which follows from the generating function for Bernoulli numbers: $\sum_{g \geq 1} \frac{(2^{2g-1}-1)|B_{2g}|}{(2g)!} x^{2g} = x/(2\sin(x/2)) - 1$).
+Substituting $F_g = \kappa \cdot \lambda_g^{FP}$ into the series and using the classical identity
+\[
+\sum_{g \geq 1} \lambda_g^{FP}\, x^{2g} = \frac{x}{2\sin(x/2)} - 1,
+\]
+which follows from the generating function for Bernoulli numbers:
+\[
+\sum_{g \geq 1} \frac{(2^{2g-1}-1)|B_{2g}|}{(2g)!}\, x^{2g} = \frac{x}{2\sin(x/2)} - 1. \qedhere
+\]
 \end{proof}
 
 \subsection{Explicit genus-2 bar differential}\label{subsec:sl2-genus2-bar}
@@ -507,7 +537,8 @@ Theorem~\ref{thm:sl2-genus1-curvature} by extracting the B-cycle
 monodromy of the elliptic propagator.  We now carry out the analogous
 computation at genus~$2$: the first \emph{non-abelian} genus-$2$ bar
 differential.  The Heisenberg case
-(Theorem~\ref{thm:heisenberg-genus2-obstruction}) serves as template;
+(Theorem~\ref{thm:heisenberg-genus2-obstruction}; see also the
+frame computation in \S\ref{sec:frame-genus2}) serves as template;
 the new content is the interplay between the double-pole
 coefficient~$k$ and the structure constants~$f^{ab}{}_c$, which
 produces the dual Coxeter correction $h^\vee = 2$ in the curvature.
@@ -1213,6 +1244,154 @@ to the obstruction class.  The cross-channel cancellation is a
 consequence of the vanishing of the B-cycle integral of exact forms.
 \end{remark}
 
+\subsection{Genus-2 complementarity verification}\label{subsec:genus2-complementarity-verification}
+\index{complementarity!genus-2 verification}
+
+The preceding subsections computed the genus-$2$ obstruction class
+$\operatorname{obs}_2 = \kappa \cdot \lambda_2$ and free energy
+$F_2 = \kappa \cdot \frac{7}{5760}$ for each example family.
+We now verify the \emph{dimension-level} complementarity
+(Theorem~\ref{thm:quantum-complementarity-main}):
+\begin{equation}\label{eq:genus2-complementarity-dim}
+\dim Q_2(\cA) + \dim Q_2(\cA^!) = \dim H^*(\overline{\mathcal{M}}_2,
+Z(\cA)).
+\end{equation}
+
+Recall that
+$H^*(\overline{\mathcal{M}}_2) = \mathbb{Q} \oplus \mathbb{Q}^3
+\oplus \mathbb{Q}^3 \oplus \mathbb{Q}$
+(Poincar\'e polynomial $1 + 3t^2 + 3t^4 + t^6$, total dimension~$8$),
+with generators: $1 \in H^0$; $\lambda_1, \delta_0, \delta_1 \in H^2$;
+their Poincar\'e duals in $H^4$; and the fundamental class $[pt] \in H^6$.
+
+\begin{computation}[Genus-2 complementarity dimensions; \ClaimStatusProvedHere]%
+\label{comp:genus2-complementarity-table}
+\index{complementarity!genus-2 table}
+For each Koszul chiral algebra with $Z(\cA) = \mathbb{C}$
+(trivial center local system), the complementarity
+theorem gives $\dim Q_2(\cA) + \dim Q_2(\cA^!) = 8$.
+
+\smallskip
+\noindent\textbf{Case 1: Self-dual algebras} ($\cA \cong \cA^!$).
+
+The halving theorem (Theorem~\ref{thm:self-dual-halving}) applies:
+\begin{equation}\label{eq:genus2-self-dual-dims}
+\dim Q_2(\cA) = \tfrac{1}{2}\dim H^*(\overline{\mathcal{M}}_2) = 4.
+\end{equation}
+This holds for
+$\mathrm{Vir}_0$ (Corollary~\ref{cor:virasoro-quantum-dim}),
+and for any Koszul self-dual algebra with trivial center.
+The Verdier involution $\sigma$ has equal-dimensional $\pm 1$-eigenspaces
+$V^+ = V^- = \mathbb{C}^4$; the specific splitting depends on the
+algebra through the $j_*/j_!$ extension data
+(Remark~\ref{rem:self-dual-significance}).
+
+\smallskip
+\noindent\textbf{Case 2: Affine Kac--Moody} ($\kappa + \kappa' = 0$).
+
+For $\widehat{\mathfrak{sl}}_{2,k}$ with $Z = \mathbb{C}$:
+the Feigin--Frenkel involution $k \mapsto -k-4$ sends
+$\kappa = 3(k+2)/4$ to $\kappa' = -\kappa$.  Since
+$F_g(\cA) = \kappa \cdot \lambda_g^{\mathrm{FP}}$, the free
+energies cancel: $F_2 + F_2' = 0$.
+
+The complementarity dimension sum is $\dim Q_2 + \dim Q_2' = 8$.
+The individual dimensions are \emph{not} determined by the free
+energy alone (which is a single scalar invariant, not a dimension
+count).  However, the PBW spectral sequence constrains them.
+The $E_1$ page of the genus-$2$ PBW spectral sequence is:
+\[
+E_1^{p,q} = H^q(\bar{B}^{(2)}_{\mathrm{cl}}(\mathfrak{sl}_2))
+\otimes \mathrm{gr}^p \, H^*(\overline{\mathcal{M}}_2)
+\]
+where $\bar{B}^{(2)}_{\mathrm{cl}}$ is the classical (genus-$0$) bar
+complex.  Since $H^*(\mathfrak{sl}_2;\mathbb{C}) =
+\Lambda^*(x_3)$ is exterior on a single class of degree~$3$:
+\[
+\dim E_1 = 2 \cdot 8 = 16, \qquad
+E_1 = \bigl(H^*(\overline{\mathcal{M}}_2)\bigr)^{\oplus 2}.
+\]
+The $d_1$ differential is the genus-$2$ curvature correction
+$\kappa \cdot \lambda_2$, acting between the two copies.
+For generic $k$ (i.e., $\kappa \neq 0$), this differential
+has rank determined by the $\lambda_2$-multiplication map on
+$H^*(\overline{\mathcal{M}}_2)$, and the $E_2$ page computes
+$Q_2(\widehat{\mathfrak{sl}}_{2,k})$.  For $k = -2$ (critical level,
+$\kappa = 0$), the differential vanishes and $E_1 = E_\infty$, giving
+$\dim Q_2(\widehat{\mathfrak{sl}}_{2,-2}) = 8$---but the center
+enlarges at critical level
+(Corollary~\ref{cor:critical-uncurving}), so the ambient space
+$\dim H^*(\overline{\mathcal{M}}_2,\,
+\mathrm{Fun}(\mathrm{Op}_{\mathfrak{sl}_2^\vee}))$
+grows correspondingly.
+
+\smallskip
+\noindent\textbf{Case 3: Virasoro} ($\kappa + \kappa' = 13 \neq 0$).
+
+For $\mathrm{Vir}_c$ with $Z = \mathbb{C}$:
+$\kappa = c/2$ and $\kappa' = (26-c)/2$, giving
+$F_2 + F_2' = 13 \cdot 7/5760 = 91/5760$.
+The dimension sum is again $\dim Q_2 + \dim Q_2' = 8$.
+
+At the self-dual point $c = 0$ ($\mathrm{Vir}_0 \cong
+\mathrm{Vir}_0^!$, Theorem~\ref{thm:virasoro-self-duality}):
+$\dim Q_2 = 4$ by Case~1.  At the maximally asymmetric point
+$c = 26$ (where $\kappa = 13$, $\kappa' = 0$):
+\[
+\dim Q_2(\mathrm{Vir}_{26}) + \dim Q_2(\mathrm{Vir}_0) = 8
+\implies \dim Q_2(\mathrm{Vir}_{26}) = 4
+\]
+since $\mathrm{Vir}_0$ is self-dual.
+At generic $c$, the splitting is asymmetric:
+$\dim Q_2(\mathrm{Vir}_c) \neq \dim Q_2(\mathrm{Vir}_{26-c})$
+for $c \neq 13$ (the non-self-dual, non-zero point), but
+their sum is always~$8$.
+
+\smallskip
+\noindent\textbf{Case 4: $\mathcal{W}_3$}
+($\kappa + \kappa' = 250/3$).
+
+For $\mathcal{W}_3^k$ with $Z = \mathbb{C}$:
+$\kappa = 5c/6$ and $\kappa' = 5c'/6 = 5(100-c)/6$, giving
+\[
+F_2 + F_2' = \frac{250}{3} \cdot \frac{7}{5760}
+= \frac{1750}{17280} = \frac{875}{8640}.
+\]
+The dimension sum $\dim Q_2 + \dim Q_2' = 8$ holds as in all
+cases with trivial center.
+\end{computation}
+
+\begin{remark}[What genus-2 complementarity reveals]%
+\label{rem:genus2-complementarity-reveals}
+\index{complementarity!genus-2 interpretation}
+The genus-$2$ verification illuminates two structural features
+of the complementarity theorem:
+
+\begin{enumerate}
+\item \emph{Free energy $\neq$ dimension.}
+  The free energy $F_2 = \kappa \cdot 7/5760$ is a single
+  scalar (the pairing of $\operatorname{obs}_2$ with the
+  Faber--Pandharipande class $\lambda_2^{\mathrm{FP}}$), while the
+  complementarity dimension $\dim Q_2$ counts the rank of the full
+  bar cohomology space.  At genus~$1$ the two invariants coincide
+  ($F_1$ determines $\dim Q_1$ because $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$
+  admits only two splittings).  At genus~$2$ ($\dim = 8$),
+  $F_2$ constrains but does not determine the individual
+  $\sigma$-eigenspace dimensions.
+
+\item \emph{Algebra-dependence of $\sigma$.}
+  For self-dual algebras, $\sigma$ has a universal $4 + 4$
+  splitting on $H^*(\overline{\mathcal{M}}_2)$
+  (Theorem~\ref{thm:self-dual-halving}).  For non-self-dual algebras
+  (e.g., $\widehat{\mathfrak{sl}}_{2,k}$ at generic~$k$), the
+  $\sigma$-eigenspaces are asymmetric; the specific splitting encodes
+  the OPE data of $\cA$ through the $j_*/j_!$ extension on
+  $\overline{C}_n(\Sigma_2)$.  This algebra-dependence is a
+  genus-$2$ phenomenon: at genus~$1$, $\dim H^* = 2$ forces
+  a $1 + 1$ splitting for all non-degenerate algebras.
+\end{enumerate}
+\end{remark}
+
 \subsection{Genus-3 obstruction: first computation}\label{subsec:genus-3}
 
 \begin{computation}[First genus-3 result]\label{comp:genus-3-sl2}
@@ -1249,7 +1428,11 @@ The Bernoulli numbers satisfy the classical asymptotic formula:
 \[
 |B_{2g}| \sim \frac{2 \cdot (2g)!}{(2\pi)^{2g}} \quad \text{as } g \to \infty
 \]
-(this follows from the functional equation for the Riemann zeta function: $\zeta(2g) = (-1)^{g+1} (2\pi)^{2g} B_{2g} / (2(2g)!)$, combined with $\zeta(2g) \to 1$).  Therefore:
+(this follows from the functional equation for the Riemann zeta function,
+\[
+\zeta(2g) = (-1)^{g+1} \frac{(2\pi)^{2g} B_{2g}}{2(2g)!},
+\]
+combined with $\zeta(2g) \to 1$).  Therefore:
 \[
 \frac{|B_{2g}|}{(2g)!} \sim \frac{2}{(2\pi)^{2g}}
 \]
@@ -1302,7 +1485,7 @@ using $(2^{2g}-2)/2^{2g} = (2^{2g-1}-1)/2^{2g-1}$.  Multiplying by $\kappa = 3(k
 
 \begin{remark}[Relation to the $\hat{A}$-genus]\label{rem:A-hat-genus}
 \index{A-hat genus@$\hat{A}$-genus}
-The generating function $(x/2)/\sin(x/2)$ is the Wick rotation of the $\hat{A}$-genus: $\hat{A}(x) = (x/2)/\sinh(x/2)$, related by the substitution $x \mapsto ix$.  In the Atiyah--Singer index theorem, $\hat{A}$ governs the Dirac operator; the appearance of its trigonometric counterpart $(x/2)/\sin(x/2)$ in the genus expansion reflects the fact that the Faber--Pandharipande integral $\int \psi^{2g-2}\lambda_g$ extracts a specific tautological intersection number on $\overline{\mathcal{M}}_g$ with \emph{positive} coefficients (all $\lambda_g^{\mathrm{FP}} > 0$), unlike the alternating-sign $\hat{A}$-expansion.
+The generating function $(x/2)/\sin(x/2)$ is the Wick rotation of the $\hat{A}$-genus: $\hat{A}(x) = (x/2)/\sinh(x/2)$, related by the substitution $x \mapsto ix$.  This is not a coincidence: the family index theorem (Theorem~\ref{thm:family-index}) shows that the genus expansion is the Grothendieck--Riemann--Roch pushforward of the Todd class of the universal curve, and $(x/2)/\sin(x/2)$ is the even part of the Wick-rotated Todd class.  The positivity of all coefficients ($\lambda_g^{\mathrm{FP}} > 0$ for all~$g$), in contrast to the alternating-sign $\hat{A}$-expansion, reflects the Hodge index theorem on $\overline{\mathcal{M}}_g$.
 \end{remark}
 
 \begin{theorem}[Universal generating function; \ClaimStatusProvedHere]\label{thm:universal-generating-function}
@@ -1418,7 +1601,7 @@ The negative free energies reflect the negative central charge at $k = 1$.  At t
 \index{Virasoro algebra!genus expansion}
 \index{bosonic string!genus expansion}
 
-The Virasoro algebra provides the second key showcase for the three main theorems.  Unlike the affine Kac--Moody case (where $\kappa + \kappa' = 0$ and complementarity is exact cancellation), the Virasoro has a \emph{nonzero} complementarity sum $\kappa + \kappa' = 13$, reflecting the conformal anomaly of the bosonic string.  Moreover, the Virasoro exhibits a trichotomy at $c = 0$ (uncurved), generic $c$ (curved), and $c = 26$ (dual to the uncurved algebra) that has no Kac--Moody analog.
+The Virasoro algebra provides the second key showcase for the three main theorems.  Unlike the Heisenberg (\S\ref{sec:frame-complementarity}) and Kac--Moody cases (where $\kappa + \kappa' = 0$ and complementarity is exact cancellation), the Virasoro has a \emph{nonzero} complementarity sum $\kappa + \kappa' = 13$, reflecting the conformal anomaly of the bosonic string.  Moreover, the Virasoro exhibits a trichotomy at $c = 0$ (uncurved), generic $c$ (curved), and $c = 26$ (dual to the uncurved algebra) that has no Kac--Moody analog.
 
 \subsection{Setup}\label{subsec:vir-genus-setup}
 
@@ -1542,7 +1725,7 @@ Note that $\kappa_{\text{total}} = 13 = c_{\text{matter}}/2$
 
 \section{Genus expansion for all Master Table entries}\label{sec:genus-all-master}
 
-By the universal generating function (Theorem~\ref{thm:universal-generating-function}), every row of the Master Table (Table~\ref{tab:master-invariants}) admits an explicit genus expansion.  The Heisenberg, $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\mathcal{W}_3$ cases appear above.  We complete the remaining entries.
+By the universal generating function (Theorem~\ref{thm:universal-generating-function}), every row of the Master Table (Table~\ref{tab:master-invariants}) admits an explicit genus expansion.  The Heisenberg (\S\ref{sec:frame-genus-tower}), $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\mathcal{W}_3$ cases appear above.  We complete the remaining entries; each is a one-line specialization of the universal formula, with $\kappa$ as the only algebra-specific input.
 
 \begin{computation}[$\widehat{\mathfrak{sl}}_3$ genus expansion]\label{comp:sl3-genus-expansion}
 \index{sl3@$\mathfrak{sl}_3$!genus expansion}
@@ -2313,10 +2496,9 @@ formula $|B_{2g}| \sim 2(2g)!/(2\pi)^{2g}$
 \]
 giving the limit~\eqref{eq:universal-growth-rate}.
 The radius of convergence of the generating function
-$\sum \lambda_g^{\mathrm{FP}} x^{2g} =
-(x/2)/\sin(x/2) - 1$ is determined by the first
-singularity of $(x/2)/\sin(x/2)$, namely the zero of
-$\sin(x/2)$ at $x = 2\pi$.
+$\sum \lambda_g^{\mathrm{FP}} x^{2g} = (x/2)/\sin(x/2) - 1$
+is determined by the first singularity of~$(x/2)/\sin(x/2)$,
+namely the zero of $\sin(x/2)$ at~$x = 2\pi$.
 \end{proof}
 
 \begin{computation}[Explicit growth ratios]\label{comp:growth-ratios}
@@ -2392,6 +2574,8 @@ consequence of the genus universality theorem
 \section{Multiplicative genus from Koszul duality}\label{sec:multiplicative-genus}
 \index{multiplicative genus|textbf}
 \index{genus expansion!multiplicative genus}
+
+The Heisenberg generating function $\sum_g F_g x^{2g} = k \cdot ((x/2)/\sin(x/2) - 1)$ from \S\ref{sec:frame-genus-tower} was a product of two factors: the curvature $\kappa = k$ and a universal series in~$x$.  This factorization persists for every algebra in the Master Table.  We now identify the universal factor as the modified Todd class and develop its structural consequences.
 
 \begin{proposition}[Koszul duality determines a multiplicative genus; \ClaimStatusProvedHere]
 \label{prop:multiplicative-genus}

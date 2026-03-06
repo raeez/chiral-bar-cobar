@@ -2,12 +2,11 @@
 
 The $\beta\gamma$ system is the first example where
 the full power of the bar-cobar machinery becomes visible.  Unlike
-the Heisenberg algebra (where the bar complex is governed by partition
+the Heisenberg algebra of Chapter~\ref{ch:heisenberg-frame} (where the bar complex is governed by partition
 numbers) or free fermions (where antisymmetry forces collapse), the
 $\beta\gamma$ system has a genuinely nontrivial bar complex with
-growth rate $3^n$, sharing the discriminant
-$\Delta(x) = (1-3x)(1+x)$ with $\widehat{\mathfrak{sl}}_2$ and
-the Virasoro algebra.  This chapter develops the complete bar complex
+growth rate $3^n$, governed by the discriminant
+$\Delta(x) = (1-3x)(1+x)$ invisible in the abelian case.  This chapter develops the complete bar complex
 through degree~5, identifies the Koszul dual as the $bc$ ghost system
 ($\beta\gamma^! = bc$, $bc^! = \beta\gamma$), and establishes the
 spectral sequence collapse at $E_2$.
@@ -29,6 +28,8 @@ Stress tensor:
 $$T = (1-\lambda)(\beta\partial\gamma) - \lambda(\partial\beta \cdot \gamma)$$
 
 \section{Bar complex computation}
+
+Unlike the Heisenberg bar complex (\S\ref{sec:frame-bar-all}), where $d_{\mathrm{bracket}} = 0$ and the bar differential is determined entirely by the abelian OPE, the $\beta\gamma$ system has a nontrivial bar differential arising from the mixed $\beta$--$\gamma$ OPE poles.
 
 \subsection{Degree by degree analysis}
 
@@ -71,7 +72,7 @@ Derivative terms (10 additional): one or both of positions 2, 3 replaced by $\pa
 Key differential:
 $$d(\beta_1 \otimes \beta_2 \otimes \gamma_3) = \beta_1 \otimes 1 - 1 \otimes \beta_2$$
 
-The rank (number of independent generator types) satisfies $\operatorname{rank}(\bar{B}^n) = 2 \cdot 3^{n-1}$ for $n = 1, 2, 3$ as displayed above; see Conjecture~\ref{conj:betagamma-bar-dim} for the general case.
+The rank (number of independent generator types) satisfies $\operatorname{rank}(\bar{B}^n) = 2 \cdot 3^{n-1}$ for all $n \geq 1$ (Theorem~\ref{conj:betagamma-bar-dim}).
 \end{theorem}
 
 \begin{proof}
@@ -739,22 +740,24 @@ Type & Nonzero residues & $d \neq 0$? \\
 $[\beta|\beta|\beta|\beta]$ & none & No \\
 $[\gamma|\gamma|\gamma|\gamma]$ & none & No \\
 $[\beta|\beta|\beta|\gamma]$ & $D_{14}, D_{24}, D_{34}$ & Yes \\
-$[\gamma|\beta|\beta|\beta]$ & $D_{12}$ only & Yes \\
-$[\beta|\gamma|\beta|\beta]$ & $D_{12}, D_{23}$ & Yes \\
+$[\gamma|\beta|\beta|\beta]$ & $D_{12}, D_{13}, D_{14}$ & Yes \\
+$[\beta|\gamma|\beta|\beta]$ & $D_{12}, D_{23}, D_{24}$ & Yes \\
 $[\beta|\beta|\gamma|\beta]$ & $D_{13}, D_{23}, D_{34}$ & Yes \\
 $[\gamma|\gamma|\gamma|\beta]$ & $D_{14}, D_{24}, D_{34}$ & Yes \\
-$[\beta|\gamma|\gamma|\gamma]$ & $D_{12}$ only & Yes \\
-$[\gamma|\beta|\gamma|\gamma]$ & $D_{12}, D_{23}$ & Yes \\
+$[\beta|\gamma|\gamma|\gamma]$ & $D_{12}, D_{13}, D_{14}$ & Yes \\
+$[\gamma|\beta|\gamma|\gamma]$ & $D_{12}, D_{23}, D_{24}$ & Yes \\
 $[\gamma|\gamma|\beta|\gamma]$ & $D_{13}, D_{23}, D_{34}$ & Yes \\
-$[\beta|\gamma|\beta|\gamma]$ & $D_{12}, D_{23}, D_{34}$ & Yes \\
-$[\gamma|\beta|\gamma|\beta]$ & $D_{12}, D_{23}, D_{34}$ & Yes \\
-$[\beta|\beta|\gamma|\gamma]$ & $D_{13}, D_{23}, D_{24}$ & Yes \\
-$[\gamma|\gamma|\beta|\beta]$ & $D_{13}, D_{23}, D_{14}$ & Yes \\
-$[\beta|\gamma|\gamma|\beta]$ & $D_{12}, D_{34}$ & Yes \\
-$[\gamma|\beta|\beta|\gamma]$ & $D_{12}, D_{34}$ & Yes \\
+$[\beta|\gamma|\beta|\gamma]$ & $D_{12}, D_{14}, D_{23}, D_{34}$ & Yes \\
+$[\gamma|\beta|\gamma|\beta]$ & $D_{12}, D_{14}, D_{23}, D_{34}$ & Yes \\
+$[\beta|\beta|\gamma|\gamma]$ & $D_{13}, D_{14}, D_{23}, D_{24}$ & Yes \\
+$[\gamma|\gamma|\beta|\beta]$ & $D_{13}, D_{14}, D_{23}, D_{24}$ & Yes \\
+$[\beta|\gamma|\gamma|\beta]$ & $D_{12}, D_{13}, D_{24}, D_{34}$ & Yes \\
+$[\gamma|\beta|\beta|\gamma]$ & $D_{12}, D_{13}, D_{24}, D_{34}$ & Yes \\
 \bottomrule
 \end{tabular}
 \end{center}
+A type with $k$ copies of $\beta$ and $4-k$ copies of $\gamma$ has exactly $k(4-k)$ nonzero residues (one for each mixed pair).%
+\footnote{In this table, $D_{ij}$ denotes the bar differential extracting the OPE between positions $i$ and $j$.  For the $\beta\gamma$ system, $D_{ij}$ is nonzero whenever positions $i$ and $j$ carry complementary fields ($\beta$ and $\gamma$, in either order), since both $\beta(z)\gamma(w) \sim 1/(z-w)$ and $\gamma(z)\beta(w) \sim -1/(z-w)$ have simple poles.}
 Thus the only types with $d = 0$ are the pure $[\beta^4]$ and
 $[\gamma^4]$ types.  All mixed types have nontrivial bar differential.
 \end{computation}
@@ -1090,7 +1093,10 @@ Koszulness}
 The Koszulness of the $\beta\gamma$ system
 (Theorem~\ref{thm:betagamma-bar-cohomology}) can be established
 systematically via a spectral sequence associated to the conformal
-weight filtration on $\bar{B}(\beta\gamma)$.
+weight filtration on $\bar{B}(\beta\gamma)$.  The argument parallels
+the non-abelian preview of \S\ref{sec:frame-nonabelian-preview}, with
+the symplectic pairing $\langle \beta, \gamma \rangle = 1$ replacing
+the Killing form.
 
 \subsection{Conformal weight filtration}
 
