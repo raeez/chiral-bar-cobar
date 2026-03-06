@@ -22,9 +22,10 @@ under $k \leftrightarrow -k - 2h^\vee$.  Unlike free fields,
 the Kac--Moody bar complex has chain groups of dimension
 $(\dim\mathfrak{g})^n$ and cohomology governed by the
 Chevalley--Eilenberg complex --- so the bar spectral sequence
-collapses at $E_1$, not $E_2$, reflecting the fact that the
+collapses at $E_2$, reflecting the fact that the
 OPE poles have order at most~$2$ (the ``almost quadratic''
-property).
+property): $E_1$ carries nontrivial differentials from the bracket,
+but $E_2$ stabilizes by the Koszul property.
 
 \section{Kac--Moody algebras and Koszul duality}
 
@@ -53,13 +54,20 @@ At the critical level $k = -h^\vee$, the curvature vanishes.
 \end{remark}
 
 \begin{remark}[Physical context]
-In WZW models and Chern--Simons theory:
-\begin{itemize}
-\item \emph{Bulk-boundary correspondence}: open string modes on D-branes (level $k$) are dual to closed string modes in the bulk (level $-k-2h^\vee$).
-\item \emph{Modular invariance}: characters transform under $k \to -k-2h^\vee$ via modular $S$-transformation.
-\item \emph{Quantum groups}: the quantized enveloping algebra $U_q(\mathfrak{g})$ at $q = e^{\pi i/(k+h^\vee)}$ connects both sides.
-\item \emph{Gauge theory}: level shifting appears in S-duality of 4d gauge theories compactified on circles.
-\end{itemize}
+The level shift $k \mapsto -k - 2h^\vee$ appears throughout mathematical
+physics.  In the WZW model, it exchanges open string modes on D-branes
+(at level~$k$) with closed string modes in the bulk (at the dual level),
+realizing the bulk-boundary correspondence.  Characters of
+$\widehat{\mathfrak{g}}_k$ transform under the modular
+$S$-transformation by the same involution, and the quantized
+enveloping algebra $U_q(\mathfrak{g})$ at
+$q = e^{\pi i/(k+h^\vee)}$ provides the bridge: Koszul duality
+sends $q \mapsto q^{-1}$
+(Theorem~\ref{thm:km-quantum-groups}).  In four-dimensional gauge
+theory, the level shift manifests as S-duality for theories
+compactified on circles.  The present chapter identifies the
+common source of all these phenomena: they are shadows of
+Verdier duality on Fulton--MacPherson compactifications.
 \end{remark}
 
 \subsection{The critical level as pivot point}
@@ -72,7 +80,7 @@ The critical level $k = -h^\vee$ is the fixed point of $k \mapsto -k-2h^\vee$:
 At $k = -h^\vee$, the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_{-h^\vee}$ possesses:
 \begin{enumerate}
 \item \emph{Large center} \cite{Feigin-Frenkel}. $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))$, the algebra of functions on $\mathfrak{g}^\vee$-opers.
-\item \emph{Geometric realization} \cite{Feigin-Frenkel90}. The bar complex computes de Rham cohomology of the affine flag variety:
+\item \emph{Geometric realization} \cite{Feigin-Frenkel}. The bar complex computes de Rham cohomology of the affine flag variety:
 \begin{equation}
 H^*(\bar{B}^{\mathrm{geom}}(\widehat{\mathfrak{g}}_{-h^\vee})) \cong H^*_{\mathrm{dR}}(\mathrm{Fl}_{\mathrm{aff}})
 \end{equation}
@@ -85,23 +93,36 @@ H^*(\bar{B}^{\mathrm{geom}}(\widehat{\mathfrak{g}}_{-h^\vee})) \cong H^*_{\mathr
 
 To compute the Koszul duals explicitly, we proceed through a systematic hierarchy:
 
-\begin{remark}[Four-level approach]
-\begin{enumerate}
-\item \emph{Generator level}: identify the generating fields and their conformal weights.
-\item \emph{OPE level}: compute operator product expansions as multi-residues on configuration spaces.
-\item \emph{Relation level}: extract the quadratic (and higher) relations from OPE associativity.
-\item \emph{Cohomology level}: verify the bar-cobar quasi-isomorphisms compute correct cohomology.
-\end{enumerate}
+\begin{remark}[Strategy]
+The computation of the Koszul dual proceeds through four stages.
+First, one identifies the generating fields and their conformal
+weights.  Second, the operator product expansions are computed as
+multi-residues on configuration spaces --- this is the geometric
+content.  Third, the quadratic (and higher) relations are extracted
+from OPE associativity, determining the bar differential.
+Fourth, the bar-cobar quasi-isomorphisms are verified to compute the
+correct cohomology.  We carry out this programme in complete detail
+for $\widehat{\mathfrak{sl}}_2$ (the simplest nontrivial case,
+already exhibiting the Virasoro connection via Drinfeld--Sokolov
+reduction), for $\widehat{\mathfrak{sl}}_3$ (the first case in
+which Serre relations and the two-dimensional weight lattice
+intervene), and for general $\widehat{\mathfrak{g}}$ (a functorial
+construction valid for any simple Lie algebra).
 \end{remark}
 
-The rest of this chapter carries out this program in complete detail for:
-\begin{itemize}
-\item $\widehat{\mathfrak{sl}}_2$ (the simplest nontrivial case, leading to Virasoro algebra)
-\item $\widehat{\mathfrak{sl}}_3$ (first case with non-abelian structure)
-\item General $\widehat{\mathfrak{g}}$ (functorial construction valid for any simple Lie algebra)
-\end{itemize}
-
 \section{Affine Kac--Moody algebras: precise setup}
+
+The affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ is the
+simplest chiral algebra built from a finite-dimensional Lie algebra:
+one takes the loop algebra $\mathfrak{g} \otimes \mathbb{C}((t))$,
+adjoins a central element whose eigenvalue is the level~$k$, and
+discovers that the resulting structure encodes both representation
+theory (via category~$\mathcal{O}$) and geometry (via the Sugawara
+construction, which manufactures conformal symmetry from the Killing
+form).  The reader familiar with the OPE formalism may skip to
+\S\ref{sec:km-koszul-abstract}; the present section fixes conventions
+and establishes the translation between vertex algebra and chiral
+algebra languages that the bar complex computation requires.
 
 \subsection{Loop algebras and central extensions}
 
@@ -162,7 +183,7 @@ Following Beilinson--Drinfeld, the affine Kac--Moody chiral algebra $\widehat{\m
 where $P, Q \in \mathcal{D}_X$ are differential operators and $P(Q)$ denotes the action of $P$ on $Q$ as a function.
 \end{definition}
 
-\begin{theorem}[Equivalence of perspectives; \ClaimStatusProvedElsewhere]\label{thm:vertex-chiral-equivalence}
+\begin{theorem}[Equivalence of perspectives \cite{FBZ04, BD04}; \ClaimStatusProvedElsewhere]\label{thm:vertex-chiral-equivalence}
 For $X = \mathbb{A}^1$ with coordinate $z$, the vertex algebra $V_k(\mathfrak{g})$ and the chiral algebra $\widehat{\mathfrak{g}}_k$ encode the same mathematical structure. The dictionary is:
 \begin{align}
 J^a_n &\longleftrightarrow x^a \otimes t^n \in L\mathfrak{g} \quad \text{(loop algebra element)} \\
@@ -181,20 +202,11 @@ The \emph{level} $k$ determines the central charge of the Virasoro algebra via t
 \begin{equation}
 c(k, \mathfrak{g}) = \frac{k \cdot \dim(\mathfrak{g})}{k + h^\vee}
 \end{equation}
-where $h^\vee$ is the dual Coxeter number:
-\begin{itemize}
-\item For $\mathfrak{sl}_n$: $h^\vee = n$. Specifically $h^\vee(\mathfrak{sl}_2) = 2$, $h^\vee(\mathfrak{sl}_3) = 3$
-\item More generally: $h^\vee = 1 + \sum_i a_i^\vee$ where $\theta = \sum_i a_i \alpha_i$ is the highest root and $a_i^\vee$ are the dual Kac labels (equivalently, $h^\vee = (\rho|\theta^\vee) + 1$ where $\theta^\vee = 2\theta/(\theta|\theta)$)
-\end{itemize}
+where $h^\vee$ is the dual Coxeter number.  For $\mathfrak{sl}_n$ one has $h^\vee = n$ (so $h^\vee(\mathfrak{sl}_2) = 2$, $h^\vee(\mathfrak{sl}_3) = 3$); in general $h^\vee = 1 + \sum_i a_i^\vee$ where $\theta = \sum_i a_i \alpha_i$ is the highest root and $a_i^\vee$ are the dual Kac labels, or equivalently $h^\vee = (\rho|\theta^\vee) + 1$ with $\theta^\vee = 2\theta/(\theta|\theta)$.
 \end{definition}
 
 \begin{remark}[Critical level]
-At $k = -h^\vee$ (the \emph{critical level}), the Sugawara construction is undefined: the denominator $k + h^\vee$ vanishes, so no Virasoro subalgebra is produced. Physically, this means:
-\begin{itemize}
-\item \emph{Classical limit}: the theory admits a commutative chiral algebra structure.
-\item \emph{Infinite-dimensional symmetry}: the center $Z(\widehat{\mathfrak{g}}_{-h^\vee})$ becomes infinite-dimensional.
-\item \emph{Gauge theory connection}: corresponds to self-dual Yang--Mills theory.
-\end{itemize}
+At $k = -h^\vee$ (the \emph{critical level}), the Sugawara construction is undefined: the denominator $k + h^\vee$ vanishes, so no Virasoro subalgebra is produced.  The critical level is distinguished on three counts: the theory admits a commutative chiral algebra structure (the classical limit), the center $Z(\widehat{\mathfrak{g}}_{-h^\vee})$ becomes infinite-dimensional (Feigin--Frenkel), and the algebra governs self-dual Yang--Mills theory.  For bar-cobar duality, the critical level is the fixed point of the Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$; the curvature $m_0$ vanishes precisely here, making the bar complex a genuine differential graded coalgebra.
 \end{remark}
 
 \section{Configuration space realization}
@@ -254,6 +266,21 @@ The central charge term comes from the $1/(z-w)^2$ pole, while the structure con
 \end{proof}
 
 \section{Koszul duality: abstract theory}
+\label{sec:km-koszul-abstract}
+
+Why does level-shifting preserve every structural feature of
+$\widehat{\mathfrak{g}}_k$ --- its representation theory, its
+conformal blocks, its quantum group shadow --- while reversing the
+sign of the central extension?  The answer is that $k \mapsto -k -
+2h^\vee$ is not a coincidence of formulas but a consequence of
+Verdier duality on configuration spaces: the Serre dual of the
+level-$k$ invariant form on $\overline{C}_{n+1}(X)$ is the
+level-$(-k-2h^\vee)$ invariant form, with the shift $2h^\vee$
+arising from the Casimir eigenvalue of the adjoint representation.
+This section establishes the general pattern; the explicit
+computations for $\widehat{\mathfrak{sl}}_2$ and
+$\widehat{\mathfrak{sl}}_3$ in the preceding sections provide the
+concrete verification.
 
 \subsection{The general pattern}
 
@@ -290,20 +317,11 @@ The Wakimoto free field realization provides the most explicit manifestation of 
 
 \begin{definition}[Wakimoto module]\label{def:wakimoto}
 \index{Wakimoto representation|textbf}
-The Wakimoto module $\mathcal{M}_{\mathrm{Wak}}$ at critical level is:
+The Wakimoto module $\mathcal{M}_{\mathrm{Wak}}$ at critical level is the free field algebra
 \begin{equation}
 \mathcal{M}_{\mathrm{Wak}} = \mathrm{Free}[\beta_\alpha, \gamma_\alpha, \phi_i]
 \end{equation}
-where:
-\begin{itemize}
-\item $(\beta_\alpha, \gamma_\alpha)$ for each positive root $\alpha \in \Delta_+$: $\beta$-$\gamma$ systems with conformal weights $(1, 0)$
-\item $\phi_i$ for $i = 1,\ldots,\mathrm{rank}(\mathfrak{g})$: free bosons (Cartan generators)
-\item The currents are realized as:
-\begin{equation}
-J^a = f^a(\beta, \gamma, \phi, \partial\phi)
-\end{equation}
-explicit differential polynomials determined by the Wakimoto construction
-\end{itemize}
+generated by a $\beta$-$\gamma$ system $(\beta_\alpha, \gamma_\alpha)$ of conformal weights $(1, 0)$ for each positive root $\alpha \in \Delta_+$, together with $r = \mathrm{rank}(\mathfrak{g})$ free bosons $\phi_i$ for the Cartan generators.  The currents $J^a = f^a(\beta, \gamma, \phi, \partial\phi)$ are explicit differential polynomials determined by the Wakimoto construction.
 \end{definition}
 
 \begin{theorem}[Wakimoto realization is Koszul dual; \ClaimStatusProvedHere]\label{thm:wakimoto-koszul}
@@ -339,13 +357,7 @@ At critical level, the Koszul self-duality of $\widehat{\mathfrak{g}}_{-h^\vee}$
 
 \subsection{Setup and generators}
 
-For $\mathfrak{g} = \mathfrak{sl}_2$, we have:
-\begin{itemize}
-\item Dual Coxeter number: $h^\vee = 2$
-\item Dimension: $\dim(\mathfrak{sl}_2) = 3$
-\item Basis: $\{e, f, h\}$ with $[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$
-\item Normalized invariant form (trace form): $(h,h) = 2$, $(e,f) = 1$ (the Killing form is $\kappa = 4 \cdot \text{tr}_{\text{fund}}$ for $\mathfrak{sl}_2$, but we use the standard normalization $(\theta|\theta) = 2$)
-\end{itemize}
+For $\mathfrak{g} = \mathfrak{sl}_2$, the data are: $h^\vee = 2$, $\dim(\mathfrak{sl}_2) = 3$, with the standard basis $\{e, f, h\}$ satisfying $[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$.  The normalized invariant form is $(h,h) = 2$, $(e,f) = 1$ (the Killing form for $\mathfrak{sl}_2$ is $\kappa = 4 \cdot \text{tr}_{\text{fund}}$, but we use the standard normalization $(\theta|\theta) = 2$).
 
 \begin{definition}[$\widehat{\mathfrak{sl}}_2$ at level $k$]
 The affine $\mathfrak{sl}_2$ vertex algebra has generators:
@@ -367,7 +379,7 @@ h(z) h(w) &\sim \frac{2k}{(z-w)^2}
 
 At $k = -h^\vee = -2$:
 
-\begin{theorem}[Critical level simplification for $\mathfrak{sl}_2$; \ClaimStatusProvedElsewhere]\label{thm:sl2-critical}
+\begin{theorem}[Critical level simplification for $\mathfrak{sl}_2$ \cite{Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{thm:sl2-critical}
 At $k = -2$:
 \begin{enumerate}
 \item The Sugawara construction is \emph{undefined} ($k + h^\vee = 0$): no Virasoro subalgebra exists. The center of the completed enveloping algebra enlarges to the Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}})$
@@ -477,14 +489,7 @@ By the Feigin--Frenkel theorem, the center of the completed enveloping algebra a
 
 \subsection{Setup}
 
-For $\mathfrak{sl}_3$:
-\begin{itemize}
-\item Dual Coxeter number: $h^\vee = 3$
-\item Dimension: $\dim(\mathfrak{sl}_3) = 8$
-\item Cartan subalgebra: $\mathfrak{h} = \mathrm{span}\{h_1, h_2\}$
-\item Simple roots: $\alpha_1, \alpha_2$
-\item Positive roots: $\Delta_+ = \{\alpha_1, \alpha_2, \alpha_1+\alpha_2\}$
-\end{itemize}
+For $\mathfrak{sl}_3$, the data are: $h^\vee = 3$, $\dim(\mathfrak{sl}_3) = 8$, Cartan subalgebra $\mathfrak{h} = \mathrm{span}\{h_1, h_2\}$, simple roots $\alpha_1, \alpha_2$, and positive roots $\Delta_+ = \{\alpha_1, \alpha_2, \alpha_1+\alpha_2\}$.
 
 \begin{definition}[$\widehat{\mathfrak{sl}}_3$ generators]
 Current generators:
@@ -497,7 +502,7 @@ with OPEs determined by the $\mathfrak{sl}_3$ structure constants and level $k$.
 
 \subsection{\texorpdfstring{Critical level: $k = -3$}{Critical level: k = -3}}
 
-\begin{theorem}[Wakimoto for $\mathfrak{sl}_3$; \ClaimStatusProvedElsewhere]\label{thm:w3-wakimoto-sl3}
+\begin{theorem}[Wakimoto for $\mathfrak{sl}_3$ \cite{FF-wakimoto}; \ClaimStatusProvedElsewhere]\label{thm:w3-wakimoto-sl3}
 At $k = -3$, the Wakimoto module uses:
 \begin{itemize}
 \item $(\beta_{\alpha_1}, \gamma_{\alpha_1})$: $\beta$-$\gamma$ system for root $\alpha_1$
@@ -859,6 +864,8 @@ This determines $(\widehat{\mathfrak{g}}_k)^!$ uniquely up to quasi-isomorphism.
 \end{enumerate}
 \end{proof}
 
+The level-shifting duality has far-reaching consequences beyond its immediate scope: at the level of quantum groups it produces the $q \leftrightarrow q^{-1}$ symmetry (\S\ref{sec:km-quantum-groups} below), at critical level it recovers the Feigin--Frenkel center and touches geometric Langlands, and for the bar complex it explains why bar cohomology dimensions are generically level-independent (Theorem~\ref{thm:bar-cohomology-level-independence}).
+
 \subsection{The screening charge perspective}
 
 \begin{definition}[Screening charges]
@@ -868,12 +875,7 @@ For $\widehat{\mathfrak{g}}_{-h^\vee}$ at critical level, the \emph{screening ch
 \begin{equation}
 S_\alpha = \oint e^{\alpha(\phi)} \prod_{\beta > 0} \gamma_\beta^{n_{\alpha,\beta}}, \quad \alpha \in \Delta_+
 \end{equation}
-where:
-\begin{itemize}
-\item $\phi$: Cartan bosons
-\item $\gamma_\beta$: $\gamma$ fields in Wakimoto module
-\item $n_{\alpha,\beta} \in \mathbb{Z}_{\geq 0}$: structure coefficients from nilpotent subalgebra
-\end{itemize}
+where $\phi$ denotes the Cartan bosons, $\gamma_\beta$ are the $\gamma$ fields in the Wakimoto module, and $n_{\alpha,\beta} \in \mathbb{Z}_{\geq 0}$ are the structure coefficients from the nilpotent subalgebra.
 \end{definition}
 
 \begin{theorem}[Screening charges implement bar differential; \ClaimStatusProvedHere]\label{thm:screening-bar}
@@ -919,7 +921,7 @@ At degree $n$, the bar differential $d_{\bar{B}}$ on $[J^{a_1} \mid \cdots \mid 
 
 \subsection{Drinfeld--Sokolov reduction}
 
-\begin{definition}[DS reduction]
+\begin{definition}[DS reduction \cite{DS, FF}]
 The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ associated to a nilpotent element $f \in \mathfrak{g}$ is the BRST cohomology:
 \begin{equation}
 \mathcal{W}^k(\mathfrak{g}, f) = H^0_{Q_{\mathrm{DS}}}(\widehat{\mathfrak{g}}_k \otimes \mathcal{F}_{\mathrm{gh}})
@@ -970,19 +972,14 @@ for arbitrary $f$ (and the Barbasch--Vogan dual $f^\vee$) is expected from geome
 \end{remark}
 
 \begin{remark}[Langlands duality]
-The principal case of this theorem is a manifestation of geometric Langlands duality:
-\begin{itemize}
-\item $\mathfrak{g} \leftrightarrow \mathfrak{g}^\vee$: Langlands dual Lie algebras
-\item Nilpotent orbits: $f_{\mathrm{prin}} \leftrightarrow f^\vee_{\mathrm{prin}}$ under duality
-\item W-algebras: quantum deformations of Slodowy slices in Langlands duality
-\end{itemize}
+The principal case of Theorem~\ref{thm:w-algebra-koszul} is a manifestation of geometric Langlands duality: the exchange $\mathfrak{g} \leftrightarrow \mathfrak{g}^\vee$ of Langlands dual Lie algebras carries the principal nilpotent $f_{\mathrm{prin}}$ to its dual $f^\vee_{\mathrm{prin}}$, and the corresponding W-algebras --- quantum deformations of the Slodowy slices $\mathcal{S}_f$ and $\mathcal{S}_{f^\vee}$ --- are interchanged by Koszul duality.  That the bar-cobar adjunction produces the Langlands dual at critical level suggests a deeper connection: the chiral bar complex may provide a constructive approach to the geometric Langlands correspondence, building the dual D-modules on $\mathrm{Bun}_G$ from configuration space data on the curve (see \S\ref{sec:km-conformal-blocks} for the conformal block interpretation).
 \end{remark}
 
 \subsection{Principal W-algebra example}
 
 For the principal nilpotent $f = f_{\mathrm{prin}} = \sum_i e_{-\alpha_i}$ (sum of simple root lowering operators):
 
-\begin{theorem}[Principal W-algebra structure; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Principal W-algebra structure \cite{FF, Ara07}; \ClaimStatusProvedElsewhere]
 \begin{equation}
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}}) = \text{Universal enveloping of } \{\text{generators of spin } d_1+1, \ldots, d_r+1\}
 \end{equation}
@@ -1102,12 +1099,15 @@ This is computed from the residue pairing:
 \langle J^a, J^{b*} \rangle = \int_{X^2} J^a(z) \wedge J^{b*}(w) \cdot d\log(z-w) = \delta^{ab}
 \end{equation}
 \end{theorem}
+\begin{proof}
+The OPE formula follows from applying the residue pairing of Theorem~\ref{thm:bar-cobar-isomorphism-main} to the bar complex generators $s^{-1}J^a$ and extracting the coalgebra structure maps.
+\end{proof}
 
 \section{Applications and extensions}
 
 \subsection{Holographic duality}
 
-\begin{theorem}[Kac--Moody in holography; \ClaimStatusConjectured]\label{thm:km-holography}
+\begin{conjecture}[Kac--Moody in holography; \ClaimStatusConjectured]\label{conj:km-holography}
 The level-shifting Koszul duality realizes holographic duality in $\mathrm{AdS}_3/\mathrm{CFT}_2$:
 \begin{center}
 \begin{tikzcd}
@@ -1116,19 +1116,15 @@ The level-shifting Koszul duality realizes holographic duality in $\mathrm{AdS}_
 \end{tikzcd}
 \end{center}
 
-The dictionary:
-\begin{itemize}
-\item Boundary: WZW model at level $k$ $\to$ $\widehat{\mathfrak{g}}_k$
-\item Bulk: Chern--Simons at level $-k-2h^\vee$ $\to$ $(\widehat{\mathfrak{g}}_k)^!$
-\item Holography: Bar-cobar duality between boundary and bulk theories
-\end{itemize}
-\end{theorem}
+The dictionary identifies the boundary WZW model at level $k$ with $\widehat{\mathfrak{g}}_k$, the bulk Chern--Simons theory at level $-k-2h^\vee$ with the Koszul dual $(\widehat{\mathfrak{g}}_k)^!$, and the holographic correspondence itself with the bar-cobar adjunction between boundary and bulk.
+\end{conjecture}
 
 \begin{remark}[Scope]
-The mathematical content of Theorem~\ref{thm:km-holography} --- the identification of the bar-cobar adjunction with the boundary-bulk correspondence --- is established rigorously in the following sense: the Koszul duality $\widehat{\mathfrak{g}}_k^! \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorem~\ref{thm:universal-kac-moody-koszul}) matches the level-shifting that appears in the Chern--Simons/WZW correspondence.  The full physical interpretation (D-branes, open-closed string duality, AdS/CFT) requires string-theoretic input beyond the scope of this monograph.  The theorem remains Conjectured because the precise identification of bar-cobar with holographic duality requires specifying the bulk gravity theory, which involves physics not derivable from the algebraic framework alone.
+The mathematical content of Conjecture~\ref{conj:km-holography} --- the identification of the bar-cobar adjunction with the boundary-bulk correspondence --- is established rigorously in the following sense: the Koszul duality $\widehat{\mathfrak{g}}_k^! \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorem~\ref{thm:universal-kac-moody-koszul}) matches the level-shifting that appears in the Chern--Simons/WZW correspondence.  The full physical interpretation (D-branes, open-closed string duality, AdS/CFT) requires string-theoretic input beyond the scope of this monograph.  The theorem remains Conjectured because the precise identification of bar-cobar with holographic duality requires specifying the bulk gravity theory, which involves physics not derivable from the algebraic framework alone.
 \end{remark}
 
 \subsection{Quantum groups}
+\label{sec:km-quantum-groups}
 
 We recall the basic categorical framework
 (Definition~\ref{def:category-O} and
@@ -1475,7 +1471,7 @@ It is a finite set: $|\mathrm{Adm}_k| < \infty$
 (Kac--Wakimoto~\cite{KW88}).
 \end{definition}
 
-\begin{theorem}[Representation theory at admissible level; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Representation theory at admissible level \cite{KW88, Arakawa17}; \ClaimStatusProvedElsewhere]
 \label{thm:admissible-rep-theory}
 \index{admissible level!representation theory}
 Let $k = -h^\vee + p/q$ be an admissible level.
@@ -1964,7 +1960,7 @@ This asymmetry between rational $k$ and logarithmic
 $k'$ is characteristic of non-self-dual admissible pairs.
 \end{remark}
 
-\begin{proposition}[DS reduction at admissible level; \ClaimStatusProvedElsewhere]
+\begin{proposition}[DS reduction at admissible level \cite{Arakawa17}; \ClaimStatusProvedElsewhere]
 \label{prop:ds-admissible}
 \index{Drinfeld--Sokolov reduction!admissible level}
 At admissible level $k = -h^\vee + p/q$, the DS reduction
@@ -2044,7 +2040,7 @@ The character $\chi$ is \emph{non-degenerate} if
 $\chi(e_i) \neq 0$ for all $i = 1, \ldots, r$.
 \end{definition}
 
-\begin{proposition}[Whittaker modules and DS reduction;
+\begin{proposition}[Whittaker modules and DS reduction \cite{Arakawa17};
 \ClaimStatusProvedElsewhere]
 \label{prop:whittaker-ds}
 \index{Whittaker module!Drinfeld--Sokolov}
@@ -2654,7 +2650,7 @@ The equivalence is realized at chain level by the bar-cobar adjunction:
   (Theorem~\ref{thm:e1-module-koszul-duality}).
 \item Bar resolution with KL multiplicities at generic level
   (Remark~\ref{rem:bar-complex-kl-polynomials}).
-\item Periodicity of chiral Hochschild cohomology with period $2h$
+\item Periodicity of chiral Hochschild cohomology with period $2\mathsf{h}$
   for $\widehat{\fg}_k$ of type $A_1$
   (Proposition~\ref{prop:periodicity-same-type}).
 \item Affine Hecke algebra Koszul duality
@@ -2681,6 +2677,36 @@ argument (which uses Jantzen filtrations and translation functors) with
 configuration space integrals and Verdier duality on FM
 compactifications.  The admissible-level specialization
 $q = e^{\pi i q/p}$ is the key new ingredient.
+\end{remark}
+
+\begin{remark}[N-complex framework for root-of-unity bar]\label{rem:n-complex-framework}
+\index{N-complex}
+At admissible level $k = -h^\vee + p/q$ where $q = e^{\pi i/(k+h^\vee)}$
+is a primitive $N$-th root of unity ($N = 2q$), the bar complex acquires
+the structure of an \emph{$N$-complex} in the sense of
+Kapranov~\cite{Kapranov96}: $d^N = 0$ but $d^2 \neq 0$.  This replaces
+the curved dg structure ($d^2 = \kappa \cdot \omega_1$) with a truncated
+nilpotence condition.
+
+The $N$-complex framework of Kapranov~\cite{Kapranov96} and
+Khovanov--Qi~\cite{KQ20} provides:
+\begin{enumerate}[label=(\roman*)]
+\item A well-defined homological algebra for $d^N = 0$ complexes
+  (cohomology groups $H^{(j)}$ for $0 \leq j \leq N-1$, not just
+  $j = 0$).
+\item A categorification of the quantum group at a root of unity via
+  $N$-complexes.
+\item Faithful braid group actions on derived categories of $N$-complexes
+  (Khovanov--Qi~\cite{KQ20}), which could realize the braided structure
+  of $\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ on the bar complex side.
+\end{enumerate}
+
+This suggests that the CDG periodicity
+$\barB^{n+2q} \cong \barB^n$ of
+Conjecture~\ref{conj:kl-from-bar-cobar} should be reformulated as: at
+admissible level, $\barB(\widehat{\fg}_k)$ is an $N$-complex with
+$N = 2q$, and the KL equivalence is the passage from $N$-complex
+cohomology to quantum group representations.
 \end{remark}
 
 \begin{remark}[KM fusion product under bar-cobar]
@@ -2784,18 +2810,148 @@ the derived algebra of functions on the de~Rham space of
 $\fg^\vee$-opers on the curve~$X$.
 \end{conjecture}
 
+\begin{remark}[Frenkel--Teleman and the oper side]%
+\label{rem:frenkel-teleman-oper}
+\index{Frenkel--Teleman theorem}
+\index{oper!Ext computation}
+\index{fundamental local equivalence}
+Frenkel and Teleman~\cite{FT06} proved that the self-extensions of
+the vacuum module at critical level compute differential forms on the
+oper space in \emph{all} degrees (\ClaimStatusProvedElsewhere):
+\begin{equation}\label{eq:frenkel-teleman}
+\mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}\text{-mod}}
+(V_{\mathrm{crit}},\, V_{\mathrm{crit}})
+\;\cong\; \Omega^n(\mathrm{Op}_{\fg^\vee}(D))
+\qquad \text{for all } n \geq 0.
+\end{equation}
+This provides independent confirmation of the first terms of
+the derived oper resolution in
+Conjecture~\ref{conj:oper-bar}: our $H^0$ and $H^1$
+computations (Theorem~\ref{thm:oper-bar-h0} and
+Proposition~\ref{prop:oper-bar-h1}) match the $n = 0$ and
+$n = 1$ cases of~\eqref{eq:frenkel-teleman}.
+
+The Fundamental Local Equivalence (FLE), conjectured by
+Frenkel--Gaitsgory~\cite{FG06} and fully proved by
+Raskin~\cite{Raskin24} (\ClaimStatusProvedElsewhere),
+\index{geometric Langlands!fundamental local equivalence}
+identifies the category of $\widehat{\fg}_{-h^\vee}$-modules
+with the Whittaker category on the Langlands dual side.
+This equivalence was a cornerstone of the proof of the
+geometric Langlands conjecture by Gaitsgory et
+al.~\cite{GLC24}.  Together with~\eqref{eq:frenkel-teleman},
+the oper side of Conjecture~\ref{conj:oper-bar} is now
+\emph{theorem}---the remaining gap is purely on the
+bar-complex side: identifying $H^n(\barB(\widehat{\fg}_{-h^\vee}))$
+with $\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all $n \geq 2$.
+\end{remark}
+
 \begin{remark}[Scope]\label{rem:oper-bar-scope}
+\index{geometric Langlands!from bar complex}
 The $H^0$ identification is proved (Theorem~\ref{thm:oper-bar-h0})
 and the $H^1$ identification as K\"ahler differentials is proved
 (Proposition~\ref{prop:oper-bar-h1}), confirming the first two
-terms of the derived oper resolution.  The full derived
-identification~\eqref{eq:bar-derived-oper} would connect the
-bar-cobar adjunction to the Frenkel--Gaitsgory programme for
-geometric Langlands~\cite{FG06}.  The remaining gap is identifying
-$H^n$ for $n \geq 2$ with higher cotangent cohomology of the oper
-space, which requires methods from derived algebraic geometry
+terms of the derived oper resolution.  Frenkel--Teleman~\cite{FT06}
+independently confirms these via
+Ext computations (Remark~\ref{rem:frenkel-teleman-oper}).
+The geometric Langlands conjecture is now proved~\cite{GLC24},
+building on the FLE of Raskin~\cite{Raskin24}, which makes the
+connection from bar-complex cohomology to Langlands all the more
+urgent: the target (the oper side) is established, and
+Conjecture~\ref{conj:oper-bar} asks whether the bar complex
+provides a \emph{vertex-algebraic} construction of this
+derived geometry.  The remaining gap is identifying
+$H^n$ for $n \geq 2$ with $\Omega^n(\mathrm{Op}_{\fg^\vee}(D))$,
+which requires methods from derived algebraic geometry
 (Lurie~\cite{HA}).
 \end{remark}
+
+\subsection{The oper space at critical level: summary}
+\label{subsec:oper-critical-summary}
+\index{opers!critical level summary}
+
+The bar complex of the affine algebra at critical level
+$k = -h^\vee$ occupies a distinguished position in the theory.
+By Corollary~\ref{cor:critical-level-universality}, the bar
+complex $\barB(\widehat{\fg}_{-h^\vee})$ is \emph{uncurved}:
+the curvature $m_0$ vanishes because the Sugawara construction
+degenerates at the critical level.  The first two cohomology
+groups have been identified:
+\begin{itemize}
+\item $H^0(\barB(\widehat{\fg}_{-h^\vee}))
+  \cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+  (Theorem~\ref{thm:oper-bar-h0}): the zeroth bar cohomology
+  recovers the algebra of functions on the space of
+  $\fg^\vee$-opers on the formal disc.
+\item $H^1(\barB(\widehat{\fg}_{-h^\vee}))
+  \cong \Omega^1(\mathrm{Op}_{\fg^\vee}(D))$
+  (Proposition~\ref{prop:oper-bar-h1}): the first bar cohomology
+  recovers K\"ahler differentials on the oper space.
+\end{itemize}
+These are the first two terms of the conjectural identification
+$\barB(\widehat{\fg}_{-h^\vee})
+\simeq \mathcal{O}^{\mathrm{der}}(\mathrm{Op}_{\fg^\vee}(D))$
+(Conjecture~\ref{conj:oper-bar}), which asserts that the full
+bar complex provides a vertex-algebraic model of the derived
+geometry of the oper space.  The full derived identification,
+including the DAG prerequisites, root-of-unity periodic CDG
+structure, and the Kazhdan--Lusztig programme, is developed in
+Chapter~\ref{ch:derived-langlands}.
+
+\subsection{Fusion monoidality for Kac--Moody modules}
+\label{subsec:km-fusion-monoidality}
+\index{fusion product!Kac--Moody monoidality}
+\index{Kac--Moody algebra!fusion monoidality}
+
+The module bar-cobar functor
+$\Phi\colon \mathrm{Mod}(\cA) \to \mathrm{CoMod}(\cA^!)$
+(Theorem~\ref{thm:e1-module-koszul-duality}) is expected to
+preserve fusion products
+(Conjecture~\ref{conj:fusion-bar-cobar}).  For Kac--Moody
+algebras the evidence comes from three sources.
+
+\emph{Heisenberg Fock modules.}
+For the Heisenberg algebra $\mathcal{H}_\kappa$, the fusion of
+Fock modules satisfies
+$F_\lambda \boxtimes_\kappa F_\mu \cong F_{\lambda+\mu}$,
+and one verifies
+$\Phi(F_\lambda \boxtimes F_\mu)
+\cong \Phi(F_\lambda) \otimes \Phi(F_\mu)$
+with phase inversion $\kappa \mapsto -\kappa$
+(Proposition~\ref{prop:fock-fusion-product}).  The proof relies
+on the purely double-pole nature of the Heisenberg OPE; see
+\S\ref{subsec:heisenberg-fusion-verification} for the explicit
+bar-level computation.
+
+\emph{Integrable Kac--Moody modules.}
+For $\widehat{\fg}_k$ at positive integral level, the
+separating-divisor coproduct of the chain-level modular functor
+(Theorem~\ref{thm:chain-modular-functor}) provides the
+chain-level fusion map
+\[
+\Delta_{\mathrm{sep}}\colon
+\barB(\widehat{\fg}_k,\, M_1 \boxtimes_k M_2)
+\;\longrightarrow\;
+\barB(\widehat{\fg}_k,\, M_1)
+\otimes \barB(\widehat{\fg}_k,\, M_2).
+\]
+In genus~$0$, the pants decomposition of
+$\overline{\mathcal{M}}_{0,4}$ yields a natural isomorphism
+$\Phi(M_1 \boxtimes_\cA M_2)
+\cong \Phi(M_1) \boxtimes_{\cA^!} \Phi(M_2)$
+as an exact sequence, which is the genus-$0$ case of
+monoidality.
+
+\emph{Genus-$1$ obstruction.}
+At genus~$1$, the curvature $m_0 \neq 0$ prevents strict
+monoidality.  The obstruction is controlled by
+$\kappa(\cA) \cdot [\overline{\mathcal{M}}_{1,1}]$, the
+curvature times the fundamental class of the genus-$1$ moduli
+space: this is the same invariant that governs the
+genus-$1$ quantum correction in
+Theorem~\ref{thm:quantum-complementarity-main}.  The full
+conjecture and its relation to the Kazhdan--Lusztig programme
+appear in Conjecture~\ref{conj:fusion-bar-cobar}.
 
 \section{Open questions}
 

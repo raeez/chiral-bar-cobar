@@ -105,35 +105,6 @@ $N_{\mathbb{I},j}^k = \delta_{jk}$ for all $j,k$ (identity fusion).
 
 $N_{\sigma\sigma}^k$:
 \begin{align*}
-N_{\sigma\sigma}^{\mathbb{I}} &= \sum_\ell
-\frac{S_{1\ell}^2 S_{\ell 0}}{S_{0\ell}}
-= \sqrt{2}^2 \cdot \tfrac{1}{2}
-+ 0^2 \cdot \tfrac{\sqrt{2}}{2}
-+ (-\sqrt{2})^2 \cdot \tfrac{1}{2}
-= 1 + 0 + 1 = 2.
-\end{align*}
-This gives $N_{\sigma\sigma}^{\mathbb{I}} = 2$?  Let us recompute
-more carefully.  The Verlinde formula is
-$N_{ij}^k = \sum_\ell S_{i\ell} S_{j\ell} S_{\ell k}^* / S_{0\ell}$:
-\begin{align*}
-N_{\sigma\sigma}^{\mathbb{I}}
-&= \frac{S_{10}S_{10}S_{00}}{S_{00}}
-+ \frac{S_{11}S_{11}S_{10}}{S_{01}}
-+ \frac{S_{12}S_{12}S_{20}}{S_{02}} \\
-&= \frac{(\sqrt{2}/2)^2 \cdot 1/2}{1/2}
-+ \frac{0 \cdot 0 \cdot \sqrt{2}/2}{\sqrt{2}/2}
-+ \frac{(\sqrt{2}/2)^2 \cdot 1/2}{1/2}
-\cdot \frac{S_{20}}{S_{02}} \\
-&= \frac{1/2}{1/2} + 0
-+ \frac{(-\sqrt{2}/2)^2 \cdot 1/2}{1/2}
-= 1 + 0 + 1 = 2.
-\end{align*}
-The issue is that with $S^* = S$ for this real S-matrix, we must
-use $N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}\overline{S_{k\ell}}/S_{0\ell}$.
-Since $S = S^{-1}$, an equivalent formulation is
-$N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}S_{k\ell}/S_{0\ell}$
-when $S^2 = \mathbb{I}$.  Recomputing:
-\begin{align*}
 N_{\sigma\sigma}^{\mathbb{I}}
 &= \frac{(\sqrt{2}/2)(\sqrt{2}/2)(1/2)}{1/2}
 + \frac{(0)(0)(\sqrt{2}/2)}{\sqrt{2}/2}
@@ -175,74 +146,20 @@ N_{\sigma\varepsilon}^{\sigma}
 &= \frac{(\sqrt{2}/2)(1/2)(\sqrt{2}/2)}{1/2}
 + \frac{0 \cdot (-\sqrt{2}/2) \cdot 0}{\sqrt{2}/2}
 + \frac{(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)}{1/2} \\
-&= \frac{1/2}{1/2} + 0 + \frac{1/2}{1/2} = 1 + 0 + 0 = 1,
+&= \frac{1/4}{1/2} + 0 + \frac{1/4}{1/2} = \frac{1}{2} + 0 + \frac{1}{2} = 1. \qquad \checkmark
 \end{align*}
 
-where the last equality follows from careful evaluation: $(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)/(1/2) = (1/2)/(1/2) = 1$, but $1 + 0 + 1 = 2$?  Let us be fully explicit.  $S_{10}S_{20}S_{10}/S_{00} = (\sqrt{2}/2)(1/2)(\sqrt{2}/2)/(1/2) = (1/2)/(1/2) = 1$.  $S_{12}S_{22}S_{12}/S_{02} = (-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)/(1/2) = (1/2)/(1/2) = 1$.  So $N_{\sigma\varepsilon}^\sigma = 1 + 0 + 1 = 2$?
-
-The resolution: for $S^2 = C$ (charge conjugation) rather than
-$S^2 = \mathbb{I}$, the formula involves $S^{-1} = S^* = S^\dagger$.
-For the Ising model $C = \mathbb{I}$, so $S^2 = \mathbb{I}$ and
-$(S^{-1})_{k\ell} = S_{k\ell}$.  The correct Verlinde formula
-for unitary $S$ is:
-\[
-N_{ij}^k = \sum_\ell \frac{S_{i\ell}S_{j\ell}\overline{S_{k\ell}}}{S_{0\ell}}.
-\]
-Since all entries are real, $\overline{S_{k\ell}} = S_{k\ell}$
-and $N_{\sigma\varepsilon}^\sigma = 1 + 0 + 1 = 2$, which contradicts
-the known answer $N_{\sigma\varepsilon}^\sigma = 1$.
-
-The error is that $S_{02} = 1/2$, not $\sqrt{2}/2$.
-Rechecking: $S_{02} = 1/2$.  Then
-\begin{align*}
-S_{12}S_{22}S_{12}/S_{02}
-  &= \bigl(-\tfrac{\sqrt{2}}{2}\bigr)\bigl(\tfrac{1}{2}\bigr)
-     \bigl(-\tfrac{\sqrt{2}}{2}\bigr)\big/\bigl(\tfrac{1}{2}\bigr)
-  = 1, \\
-S_{10}S_{20}S_{10}/S_{00}
-  &= \bigl(\tfrac{\sqrt{2}}{2}\bigr)\bigl(\tfrac{1}{2}\bigr)
-     \bigl(\tfrac{\sqrt{2}}{2}\bigr)\big/\bigl(\tfrac{1}{2}\bigr)
-  = 1.
-\end{align*}
-
-Hence $N_{\sigma\varepsilon}^\sigma = 1 + 0 + 1 = 2$.  This is wrong.
-The issue is that for a \emph{real} unitary symmetric S-matrix with
-$S^2 = \mathbb{I}$, the correct formula is
-$N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}(S^{-1})_{\ell k}/S_{0\ell}
-= \sum_\ell S_{i\ell}S_{j\ell}S_{k\ell}/S_{0\ell}$ (since $S^{-1} = S$).
-The known fusion rules give
-$\sigma \times \varepsilon = \sigma$, so $N_{\sigma\varepsilon}^\sigma = 1$.
-Let us check $S^2 = \mathbb{I}$:
-\[
-(S^2)_{00} = \tfrac{1}{4}(1 + 2 + 1) = 1 \quad \checkmark, \qquad
-(S^2)_{01} = \tfrac{1}{4}(\sqrt{2} + 0 - \sqrt{2}) = 0 \quad \checkmark.
-\]
-So $S^2 = \mathbb{I}$, confirming $S^{-1} = S$.
-
-The resolution is that the
-Verlinde formula uses $N_{ij}^k = \sum_\ell S_{i\ell}S_{j\ell}(S^{-1})_{\ell k}/S_{0\ell}$, where $(S^{-1})_{\ell k} = S_{\ell k}$.
-So $N_{\sigma\varepsilon}^\sigma = \sum_\ell S_{1\ell}S_{2\ell}S_{\ell 1}/S_{0\ell}$:
-\begin{align*}
-&= \frac{(\sqrt{2}/2)(1/2)(\sqrt{2}/2)}{1/2}
-+ \frac{(0)(-\sqrt{2}/2)(0)}{\sqrt{2}/2}
-+ \frac{(-\sqrt{2}/2)(1/2)(-\sqrt{2}/2)}{1/2} \\
-&= 1 + 0 + 1 = 2.
-\end{align*}
-
-This persistent discrepancy indicates a normalisation subtlety.
+Hence $\sigma \times \varepsilon = \sigma$, as expected.
+The intermediate numerators are
+$(\sqrt{2}/2)(1/2)(\sqrt{2}/2) = (1/2)(1/2) = 1/4$
+(and similarly for the $\ell = 2$ term), so each nonzero
+summand contributes $\tfrac{1}{4}/(1/2) = \tfrac{1}{2}$.
 \end{computation}
 
-\begin{remark}[Verlinde normalisation convention]
+\begin{remark}[Verlinde formula and fusion matrices]
 \label{rem:verlinde-normalisation}
-The discrepancy above is resolved by the \emph{charge conjugation}
-form of the Verlinde formula.  For the Ising model, $C = \mathbb{I}$
-(all representations are self-conjugate), so the correct formula is:
-\[
-N_{ij}^k = \sum_{\ell} \frac{S_{i\ell}\, S_{j\ell}\, \overline{S_{k\ell}}}{S_{0\ell}}
-\]
-where $\overline{S_{k\ell}} = S_{k\ell}$ for the real Ising S-matrix.
-The correct computation for $N_{\sigma\varepsilon}^\sigma$ uses the
-\emph{quantum dimension} diagonalisation.  Define
+An independent verification of the fusion rules is provided by
+the simultaneous diagonalisation of the fusion matrices.  Define
 $\lambda_i^{(\ell)} = S_{i\ell}/S_{0\ell}$ (the eigenvalues of the fusion
 matrix $N_i$).  Then $N_{ij}^k = \sum_\ell S_{0\ell} \lambda_i^{(\ell)}
 \lambda_j^{(\ell)} \overline{S_{k\ell}}/S_{0\ell}^2$.  The quantum
@@ -304,7 +221,7 @@ The six distinct primaries and their weights are:
 \end{align*}
 \end{computation}
 
-\begin{proposition}[Tricritical Ising S-matrix; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Tricritical Ising S-matrix \cite{BPZ84}; \ClaimStatusProvedElsewhere]
 \label{prop:tricritical-s-matrix}
 \index{modular S-matrix!tricritical Ising}
 
@@ -494,7 +411,7 @@ $\Phi_{r,s} \sim \Phi_{5-r,6-s}$):
 \end{align*}
 \end{computation}
 
-\begin{proposition}[Three-state Potts quantum dimensions; \ClaimStatusProvedElsewhere]
+\begin{proposition}[Three-state Potts quantum dimensions \cite{Verlinde88}; \ClaimStatusProvedElsewhere]
 \label{prop:potts-quantum-dim}
 \index{quantum dimension!three-state Potts}
 The quantum dimensions of the 10 primaries of $\mathcal{M}(6,5)$ are:
@@ -559,8 +476,7 @@ $\omega_{ab} = \partial_a \log \theta_1(z_a - z_b | \tau)$,
 where $\theta_1$ is the Jacobi theta function.
 The degree-0 cohomology of $\bar{B}_{g=1}(\mathcal{A}; M_i, M_j)$
 computes the space of conformal blocks on the torus with insertions
-$M_i, M_j$ (this is the content of the genus-1 bar-cobar
-correspondence, Theorem~\ref{thm:higher-genus-inversion}).
+$M_i, M_j$.  (The Koszul hypothesis fails for minimal models---the bar complex does not concentrate in a single degree---so Theorem~\ref{thm:higher-genus-inversion} does not apply as a direct quasi-isomorphism.  The bar-fusion comparison holds at the level of the spectral sequence: the $E_2$ page of the bar complex spectral sequence computes the fusion space, even though the spectral sequence does not collapse at~$E_2$.)
 By the factorization property of conformal blocks
 (Theorem~\ref{thm:verlinde-bar}),
 the dimension of this space is $\sum_k N_{ij}^k$,
@@ -615,7 +531,7 @@ factorization property.
 \label{sec:character-modular}
 \index{character formula!minimal model}
 
-\begin{theorem}[Virasoro minimal model characters; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Virasoro minimal model characters \cite{FF84}; \ClaimStatusProvedElsewhere]
 \label{thm:minimal-model-characters}
 The character of the irreducible highest weight representation
 $\mathcal{L}_{r,s}$ of the Virasoro algebra at central charge

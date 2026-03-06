@@ -3,7 +3,7 @@
 
 Kac--Moody and W-algebra Koszul duals live entirely within the $E_\infty$-chiral world: both the algebra and its dual are vertex algebras, and the bar-cobar adjunction mediates between them through configuration space integrals on a single curve.  Yangians force a departure from this framework.  The Yangian $Y(\mathfrak{g})$ is an \emph{$E_1$-chiral algebra}: its operations are parametrized by configurations of points on the real line rather than on a complex curve, and the resulting algebraic structure --- an associative algebra in the tensor category of $\widehat{\mathfrak{g}}$-modules --- is fundamentally noncommutative.  The bar-cobar machinery of Part~I extends to this setting (Theorem~\ref{thm:e1-chiral-koszul-duality}), but the geometry changes: Fulton--MacPherson compactifications of real configuration spaces replace their complex counterparts, and the resulting Koszul duals involve quantum groups $U_q(\mathfrak{g})$ rather than vertex algebras at shifted levels.
 
-This chapter constructs the Yangian bar complex explicitly, verifies Koszulness in low degrees, and connects the $E_1$-chiral bar-cobar duality to Coulomb branches and cohomological Hall algebras.
+The central questions are: what is the Koszul dual of a Yangian, and how does the bar complex detect the quantum group structure?
 
 \section{Yangian vertex algebra}
 \label{sec:yangian-vertex}
@@ -106,16 +106,7 @@ For $\mathfrak{g} = \mathfrak{sl}_2$, the classical $r$-matrix $r = \frac{1}{2}(
 \end{proof}
 
 \begin{remark}[Presentations and quadraticity]\label{rem:yangian-presentations}
-Whether the Yangian is ``quadratic'' depends on the presentation:
-\begin{itemize}
-\item In the \emph{RTT presentation} (Definition~\ref{def:yangian-rtt}), the
-defining relation \eqref{eq:rtt-relation} is
-quadratic in $T$, so standard quadratic Koszul duality (mechanism~(iii) of
-Remark~\ref{rem:three-koszul-mechanisms}) applies directly.
-\item In the \emph{Drinfeld presentation} (Definition~\ref{def:yangian}), the
-``terrific relation'' is cubic in the generators, so Koszul duality requires
-nilpotent completion (Appendix~\ref{app:nilpotent-completion}).
-\end{itemize}
+Whether the Yangian is ``quadratic'' depends on the presentation.  In the \emph{RTT presentation} (Definition~\ref{def:yangian-rtt}), the defining relation \eqref{eq:rtt-relation} is quadratic in $T$, so standard quadratic Koszul duality (mechanism~(iii) of Remark~\ref{rem:three-koszul-mechanisms}) applies directly.  In the \emph{Drinfeld presentation} (Definition~\ref{def:yangian}), the ``terrific relation'' is cubic in the generators, so Koszul duality requires nilpotent completion (Appendix~\ref{app:nilpotent-completion}).
 The two presentations yield isomorphic algebras but different Koszul dual
 computations.  A rigorous construction of the $\Eone$-chiral structure and its
 Koszul dual should specify which presentation is used.
@@ -726,6 +717,134 @@ For the Jordan quiver (one vertex, one loop), the CoHA is:
 \]
 The CoHA acts on the equivariant cohomology of the Hilbert scheme via Nakajima-type operators (Schiffmann--Vasserot), realizing a Heisenberg/W-algebra structure on the target.  The CoHA itself carries a \emph{different} product structure (the shuffle product) from the OPE product on the chiral algebra side.
 \end{example}
+
+
+\subsection{Shifted Yangians and Coulomb branch algebras}
+\label{sec:shifted-coulomb}
+\index{shifted Yangian!Coulomb branch}
+\index{Coulomb branch!shifted Yangian}
+
+The BFN construction (Theorem~\ref{thm:bfn}) realizes Coulomb branch
+algebras $\mathcal{A}_C(N,G)$ as equivariant Borel--Moore homology of
+spaces of triples on the affine Grassmannian.  For type $A$ quiver gauge
+theories, these algebras are shifted Yangians
+$Y_\mu(\fg)$ (Definition~\ref{def:shifted-yangian}), and their
+$\Eone$-chiral structure (Conjecture~\ref{conj:shifted-yangian-e1})
+interacts with Koszul duality as follows.
+
+\begin{conjecture}[Langlands-dual Koszul duality for shifted Yangians;
+\ClaimStatusConjectured]
+\label{conj:shifted-yangian-langlands}
+\index{shifted Yangian!Koszul dual}
+\index{symplectic duality}
+For a coweight $\mu \in X_*(\mathfrak{h})$ and simple $\fg$:
+\begin{equation}\label{eq:shifted-langlands-dual}
+Y_\mu(\fg)^! \;\simeq\; Y_{-\mu}(\fg^\vee)
+\end{equation}
+as $\Eone$-chiral algebras, where $\fg^\vee$ is the Langlands dual and
+$-\mu$ is the negated coweight (viewed as a weight of $\fg^\vee$ via
+the canonical identification $X_*(\mathfrak{h}) \cong X^*(\mathfrak{h}^\vee)$).
+For unshifted $\mu = 0$, this reduces to Yangian self-duality
+(Theorem~\ref{thm:yangian-koszul-dual}) when $\fg$ is simply-laced.
+\end{conjecture}
+
+\begin{remark}[Scope]
+The conjecture is an $\Eone$-chiral incarnation of symplectic duality
+(Braden--Licata--Proudfoot--Webster \cite{BLPW16}).  In that framework,
+the Coulomb branch $\mathcal{M}_C(N,G)$ and the Higgs branch
+$\mathcal{M}_H(N,G)$ are exchanged: Koszul duality of the quantized
+algebras corresponds to Coulomb--Higgs interchange.  For the RTT
+presentation, the shift $\mu \mapsto -\mu$ reverses the asymptotic
+boundary conditions of the monopole operators, which at the level of
+the $R$-matrix is the replacement $R(u) \mapsto R(u)^{-1}$ together with
+the Langlands involution on root data.  A proof would require
+establishing the $\Eone$-chiral structure on $Y_\mu(\fg)$
+(Conjecture~\ref{conj:shifted-yangian-e1}) and then verifying that
+the bar complex with $R$-matrix data at coweight $\mu$ computes the
+cobar at coweight $-\mu$ for $\fg^\vee$.
+\end{remark}
+
+\begin{example}[Type $A_1$ quiver with framing]
+\label{ex:coulomb-a1-framing}
+\index{Coulomb branch!type $A_1$}
+For the $A_1$ quiver with gauge group $G = GL_1$ and framing
+$\mathbf{w} = (n)$ (i.e., $n$ fundamental hypermultiplets), the
+Coulomb branch is the Kleinian singularity:
+\[
+\mathcal{M}_C(n, GL_1) = \{(x,y,z) \in \bC^3 : xy = z^n\}
+\]
+The quantized Coulomb branch algebra
+$A_\hbar = \bC\langle x, y\rangle / (xy - (z+\hbar)(z+2\hbar)
+\cdots (z+n\hbar))$ is a shifted Yangian $Y_\mu(\mathfrak{sl}_2)$
+with $\mu = (n-1)\omega^\vee$ (fundamental coweight).  Its bar complex
+$\barB(A_\hbar)$ has:
+\begin{align*}
+\dim \barB^1 &= 3 \quad (x, y, z) \\
+\dim \barB^2 &= 9 \quad (\text{all pairs}) \\
+d([x|y]) &= xy = z^n + O(\hbar) \\
+d([y|x]) &= yx = z^n + n\hbar z^{n-1} + O(\hbar^2)
+\end{align*}
+The bar cohomology $H^2(\barB(A_\hbar))$ detects the deformation
+of the singularity: $\dim H^2 = n - 1$ (the Milnor number of $xy = z^n$).
+The Koszul dual is the Higgs branch algebra, which for this quiver is
+$A_{-\hbar} = \bC\langle x', y'\rangle / (x'y' = z^n - n\hbar z^{n-1}
++ \cdots)$, the same singularity with reversed quantization parameter.
+\end{example}
+
+\subsection{Cohomological Hall algebras as $\Eone$-chiral algebras}
+\label{sec:coha-structure}
+\index{CoHA!$\Eone$-chiral structure}
+\index{CoHA!factorization structure}
+
+The CoHA product (Definition~\ref{def:coha}) is defined via Hecke
+correspondences on moduli of quiver representations.  Its factorization
+structure---the assembly of $\mathcal{H}_Q = \bigoplus_{\mathbf{d}}
+H^{G_{\mathbf{d}}}_{\mathrm{BM},*}(\mathcal{M}_{\mathbf{d}}^{\mathrm{nil}})$
+over all dimension vectors---is reminiscent of the factorization algebras
+underlying vertex algebras.
+
+\begin{conjecture}[CoHA--Yangian Koszul duality; \ClaimStatusConjectured]
+\label{conj:coha-koszul}
+\index{CoHA!Koszul duality}
+For a quiver $Q$ whose underlying graph is the Dynkin diagram of a
+simple Lie algebra $\fg_Q$:
+\begin{equation}\label{eq:coha-yangian-dual}
+\mathcal{H}_Q^! \;\simeq\; Y(\fg_Q)
+\end{equation}
+as $\Eone$-algebras, where $\mathcal{H}_Q$ is the CoHA of $Q$
+\textup{(}Definition~\textup{\ref{def:coha})} and $Y(\fg_Q)$ is the
+Yangian \textup{(}Definition~\textup{\ref{def:yangian})}.
+\end{conjecture}
+
+\begin{remark}[Scope and evidence]
+\begin{enumerate}[label=(\roman*)]
+\item For $Q = $ Jordan quiver (one vertex, one loop),
+$\mathcal{H}_{\mathrm{Jordan}}$ is the shuffle algebra, which
+is isomorphic to $U(\widehat{\mathfrak{gl}}_1)^+$
+(Schiffmann--Vasserot \cite{SV13}).  Since $Y(\mathfrak{gl}_1)$
+is the Yangian of $\mathfrak{gl}_1$ and
+$\widehat{\mathfrak{gl}}_1 \cong \mathcal{H}_{\mathrm{Heis}}$,
+the duality $\mathcal{H}_{\mathrm{Jordan}}^! \simeq Y(\mathfrak{gl}_1)$
+reduces to the Heisenberg self-duality phenomenon
+(up to the Sym/Lambda correction of
+Theorem~\ref{thm:heisenberg-not-self-dual}).
+\item The factorization structure of the CoHA over dimension vectors
+$\mathbf{d}$ corresponds to the coproduct structure of the Yangian bar
+complex: the Hecke correspondence $\mathcal{M}_{\mathbf{d}_1}
+\xleftarrow{p} \mathcal{E} \xrightarrow{q}
+\mathcal{M}_{\mathbf{d}_1 + \mathbf{d}_2}$ is the geometric analog
+of the bar complex coproduct $\Delta\colon \barB^n \to
+\bigoplus_{i+j=n} \barB^i \otimes \barB^j$.
+\item At the level of generators, the bar cohomology classes of
+$Y(\fg_Q)$ should correspond to CoHA generators via the identification
+of the RTT bar differential (equation~\eqref{eq:yangian-bar-d2}) with
+the Hecke product.  The quadratic RTT relations map to the quadratic
+part of the shuffle product.
+\end{enumerate}
+A proof would require first establishing the $\Eone$-chiral structure
+on $\mathcal{H}_Q$ (Conjecture~\ref{conj:coha-e1}) and then computing
+its bar complex.
+\end{remark}
 
 
 \section{Explicit Yangian bar complex computations}

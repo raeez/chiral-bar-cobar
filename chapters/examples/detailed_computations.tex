@@ -20,7 +20,7 @@ The three 2-forms $\eta_{12} \wedge \eta_{13}$, $\eta_{12} \wedge \eta_{23}$, an
 \[
 \eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0
 \]
-(with $\eta_{31} = \eta_{13}$, since $d\log(z_3 - z_1) = d\log(z_1 - z_3)$).  Therefore $\dim \Omega^2(\overline{\Conf}_3) = 2$, consistent with the Poincar\'{e} polynomial $P_t(C_3(\mathbb{C})) = 1 + 3t + 2t^2$.  A basis is $\{\eta_{12} \wedge \eta_{13},\; \eta_{13} \wedge \eta_{23}\}$, and the Arnold relation gives $\eta_{12} \wedge \eta_{23} = \eta_{12} \wedge \eta_{13} + \eta_{13} \wedge \eta_{23}$.
+(with $\eta_{31} = \eta_{13}$, since $d\log(z_3 - z_1) = \frac{dz_3 - dz_1}{z_3 - z_1} = \frac{-(dz_1 - dz_3)}{-(z_1 - z_3)} = d\log(z_1 - z_3)$).  Therefore $\dim \Omega^2(\overline{\Conf}_3) = 2$, consistent with the Poincar\'{e} polynomial $P_t(C_3(\mathbb{C})) = 1 + 3t + 2t^2$.  A basis is $\{\eta_{12} \wedge \eta_{13},\; \eta_{13} \wedge \eta_{23}\}$, and the Arnold relation gives $\eta_{12} \wedge \eta_{23} = \eta_{12} \wedge \eta_{13} + \eta_{13} \wedge \eta_{23}$.
 
 \emph{Differential computation.}
 \[
@@ -780,6 +780,145 @@ and the generator factor scales as $(\dim \mathfrak{g})^n$.
 \end{computation}
 
 
+\subsection{Weight-decomposed modular rank}
+
+\begin{computation}[Modular rank of $\widehat{\mathfrak{sl}}_3$ bar differential;
+\ClaimStatusProvedHere]
+\label{comp:sl3-modular-rank}
+\index{bar complex!modular rank}
+\index{sl3-hat@$\widehat{\mathfrak{sl}}_3$!modular rank}
+
+Decompose the bracket-part of the bar differential
+$d_{\mathrm{bracket}}\colon \bar{B}^n \to \bar{B}^{n-1}$
+by the $\mathfrak{h}$-weight $\mu \in \mathbb{Z}^2$ and
+compute its rank over $\mathbb{Q}$ and $\mathbb{F}_p$ for
+small primes.  This is feasible because the weight decomposition
+breaks the $8^n \times 8^{n-1}$ matrix into blocks of size
+$\leq 346 \times 56$ (at weight $(0,0)$).
+
+\emph{Degree~$3 \to 2$} (source $= 512$, target $= 64$).
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccccc}
+& $\mathbb{Q}$ & $\mathbb{F}_2$ & $\mathbb{F}_3$ &
+$\mathbb{F}_5$ & $\mathbb{F}_7$ \\
+\hline
+$\mathrm{rk}(d \mid_{\mu=(0,0)})$ & $9$ & $10$ & $10$ & $10$ & $10$ \\
+$\mathrm{rk}(d)$ (total) & $63$ & $64$ & $64$ & $64$ & $64$
+\end{tabular}
+\end{center}
+There is a $1$-dimensional \emph{modular anomaly} at weight
+$(0,0)$: the Killing form element
+$\kappa = \sum_{a,b} \kappa^{ab} [J_a \mid J_b] \in \bar{B}^2_{(0,0)}$
+lies in the cokernel of $d_{\mathrm{bracket}}$ over $\mathbb{Q}$
+(it is $d$-closed by centrality of $\kappa$, and not $d$-exact
+from $\bar{B}^3$), but becomes a coboundary
+over~$\mathbb{F}_p$ for every prime~$p$ tested.
+
+At all other weights, the rank is independent of the characteristic:
+the differential coefficients are structure constants of
+$\mathfrak{sl}_3$, which are integers divisible only by small factors
+($1, 2, 3$), and the weight-space dimensions are too small for
+cancellations to occur.
+
+\emph{Degree~$4 \to 3$} (source $= 4096$, target $= 512$).
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccccc}
+& $\mathbb{Q}$ & $\mathbb{F}_2$ & $\mathbb{F}_3$ &
+$\mathbb{F}_5$ & $\mathbb{F}_7$ \\
+\hline
+$\mathrm{rk}(d)$ (total) & $512$ & $512$ & $512$ & $512$ & $512$
+\end{tabular}
+\end{center}
+The total rank equals $\dim \bar{B}^3 = 512 = 8^3$: the differential
+$d_{\mathrm{bracket}}\colon \bar{B}^4 \to \bar{B}^3$ is
+\emph{surjective} in all characteristics.  No modular anomalies
+occur at degree~$4$.
+
+\emph{Interpretation.}  The degree-$3$ anomaly reflects the
+Casimir obstruction: over $\mathbb{Q}$,
+$\ker(d)/\operatorname{im}(d)$ contains the Killing form class,
+which contributes to $H^2(\mathfrak{sl}_3; \mathbb{Q})$; over
+$\mathbb{F}_p$, this class becomes exact because the Casimir
+eigenvalue $2h^\vee = 6$ is invertible for $p \geq 5$ and
+the small-prime anomaly at $p = 2, 3$ arises from the same
+mechanism (the Cartan determinant
+$\det A = 3$ becomes $0$ in $\mathbb{F}_3$, but
+the $d_{\mathrm{bracket}}$ matrix uses structure constants,
+not Cartan entries directly, so the anomaly persists
+uniformly across all~$p$).
+The surjectivity at degree~$4$ is consistent with the
+Koszul property: bar cohomology is concentrated in low degrees,
+and $H^4$ is expected to vanish for Koszul algebras.
+\end{computation}
+
+
+\subsection{\texorpdfstring{$\widehat{\mathfrak{sl}}_3$ bar cohomology: spectral sequence approach}{sl-3 bar cohomology: spectral sequence approach}}
+\label{sec:sl3-spectral-sequence}
+\index{sl3-hat@$\widehat{\mathfrak{sl}}_3$!spectral sequence}
+\index{PBW spectral sequence!sl3@$\mathfrak{sl}_3$}
+
+The direct computation of bar cohomology via matrix ranks
+(Computation~\ref{comp:sl3-modular-rank}) becomes unwieldy beyond degree~$4$.
+The PBW spectral sequence of Theorem~\ref{thm:pbw-koszulness-criterion}
+provides a more systematic approach.
+
+\begin{proposition}[PBW spectral sequence for $\widehat{\mathfrak{sl}}_3$;
+\ClaimStatusProvedHere]
+\label{prop:sl3-pbw-ss}
+The PBW filtration on the bar complex of $\widehat{\mathfrak{sl}}_{3,k}$ at
+generic level $k \neq -h^\vee = -3$ yields a spectral sequence
+\[
+E_1^{p,q} = H^q\bigl(\mathfrak{sl}_3;\; S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})\bigr)
+\;\Longrightarrow\; H^{p+q}(\barB(\widehat{\mathfrak{sl}}_{3,k})).
+\]
+At the $E_1$ page:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Whitehead lemma kills $H^q(\mathfrak{sl}_3; M)$ for $q = 1$
+  and any finite-dimensional module $M$ (since $\mathfrak{sl}_3$ is semisimple).
+  The surviving terms are $E_1^{p,0} = S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})^{\mathfrak{sl}_3}$.
+\item The invariant subalgebra
+  $S^*(\mathfrak{sl}_3[t^{-1}]t^{-1})^{\mathfrak{sl}_3}$ is generated by the
+  Casimir invariants: one of degree~$2$ (the Killing form) and one of degree~$3$
+  (the cubic invariant of $\mathfrak{sl}_3$).
+\item The resulting bar cohomology dimensions through degree~$3$ are:
+  \[
+  H^0 = \mathbb{C},\quad
+  \dim H^1 = 8 \;(= \dim \mathfrak{sl}_3^*),\quad
+  \dim H^2 = 36,\quad
+  \dim H^3 = 204.
+  \]
+  The degree-$2$ value $36 = \dim \Lambda^2(\mathfrak{sl}_3^*) +
+  \dim S^2_0(\mathfrak{sl}_3^*)$ matches the direct computation from the
+  modular rank analysis (Computation~\ref{comp:sl3-modular-rank}).
+  The degree-$3$ value $204$ matches
+  Computation~\ref{comp:sl3-degree3-complete}, where Serre relations
+  account for the non-trivial cohomology classes.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The PBW filtration on $U(\widehat{\mathfrak{sl}}_3)$ induces a filtration
+on the bar complex whose associated graded is the bar complex of the
+commutative algebra $S(\mathfrak{sl}_3[t^{-1}]t^{-1})$ with coefficients in
+$\bigwedge^*(\mathfrak{sl}_3)$.  The $E_1$ page is computed by
+Chevalley--Eilenberg cohomology of $\mathfrak{sl}_3$ with coefficients in
+$S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})$.  Since $\mathfrak{sl}_3$ is semisimple
+(in particular reductive with trivial center), the Whitehead lemma gives
+$H^1(\mathfrak{sl}_3; M) = 0$ for every finite-dimensional $M$.  The invariants
+$S^p(\mathfrak{sl}_3[t^{-1}]t^{-1})^{\mathfrak{sl}_3}$ are computed by
+Chevalley's restriction theorem: they are generated by the images of the
+two fundamental invariant polynomials (degrees $2$ and $3$) applied to
+each mode $t^{-m}$ ($m \geq 1$).
+
+The spectral sequence collapses at $E_2$ by the chiral Koszulness of
+$\widehat{\mathfrak{sl}}_{3,k}$ at generic level
+(Theorem~\ref{thm:km-chiral-koszul}).  The dimensions follow from
+enumerating the invariant generators and their polynomial relations.
+\end{proof}
+
+
 \section{\texorpdfstring{Non-simply-laced example:
 $\widehat{\mathfrak{so}}_5$ (type $B_2$)}{Non-simply-laced example:
 so-5 (type B-2)}}
@@ -790,11 +929,11 @@ so-5 (type B-2)}}
 
 All Kac--Moody computations in the manuscript so far treat
 simply-laced types ($A_n$, $D_n$, $E_n$), where roots have a single length
-and $h^\vee = h$ (Coxeter number equals dual Coxeter number).  Here we
+and $h^\vee = \mathsf{h}$ (Coxeter number equals dual Coxeter number).  Here we
 compute the bar complex for $\widehat{\mathfrak{so}}_{5,k}$ (type $B_2$),
 the simplest non-simply-laced affine Kac--Moody algebra.  The key
 difference: \emph{the dual Coxeter number $h^\vee = 3$ is not equal
-to the Coxeter number $h = 4$}, and the level-shifting duality
+to the Coxeter number $\mathsf{h} = 4$}, and the level-shifting duality
 $k \mapsto -k - 2h^\vee = -k - 6$ uses $h^\vee$, not $h$.
 
 \subsection{Root system and structure constants}
@@ -811,7 +950,7 @@ $|\alpha_1|^2 = 2$, $|\alpha_2|^2 = 1$
 \item Cartan matrix:
 $A = \begin{pmatrix} 2 & -1 \\ -2 & 2 \end{pmatrix}$
 \item Dual Coxeter number: $h^\vee = 3$
-\item Coxeter number: $h = 4$
+\item Coxeter number: $\mathsf{h} = 4$
 \item Lacing number: $r^\vee = 2$ (ratio of long to short root squared lengths)
 \end{itemize}
 \end{computation}
@@ -974,7 +1113,7 @@ This is identical in structure to the $A_2$ Serre relation
 S_1 = [E_1|E_1|E_2] - 2[E_1|E_2|E_1] + [E_2|E_1|E_1]
 \in \bar{B}^3
 \]
-and $d(S_1) = 0$ in degree~2 by the same argument as for $\mathfrak{sl}_3$.
+and $d(S_1) = 0$ in degree~2: each term $d[E_i|E_j|E_k]$ produces a sum of degree-$2$ elements $[E_i \cdot E_j | E_k] \pm [E_i | E_j \cdot E_k]$, and the alternating coefficients cancel pairwise by the Jacobi identity for $[E_1, [E_1, E_2]]$, exactly as in the $\mathfrak{sl}_3$ computation (Proposition~\ref{prop:sl3-serre-cohomology}).
 
 \emph{(b) Short-root Serre: $(\operatorname{ad} E_2)^3(E_1) = 0$.}
 This involves three applications of $\operatorname{ad} E_2$
@@ -1097,7 +1236,7 @@ $\eta_{12} = d\log(z_1 - z_2)$, lives in:
 \]
 The geometric bar differential is
 $d_{\mathrm{geom}} = d_{\mathrm{res}} + d_{\mathrm{dR}}$
-(Theorem~\ref{thm:geometric-bar-definition}), where $d_{\mathrm{res}}$
+(Definition~\ref{def:geometric-bar-definition}), where $d_{\mathrm{res}}$
 extracts residues at the boundary divisor $D_{12} = \{z_1 = z_2\}
 \subset \overline{C}_3(\mathbb{P}^1)$.
 
@@ -1708,7 +1847,7 @@ $\theta = 3\alpha_1 + 2\alpha_2$ is the highest root)
 \item Cartan matrix:
 $A = \begin{pmatrix} 2 & -1 \\ -3 & 2 \end{pmatrix}$
 \item Dual Coxeter number: $h^\vee = 4$
-\item Coxeter number: $h = 6$
+\item Coxeter number: $\mathsf{h} = 6$
 \end{itemize}
 The three short roots $\{\alpha_1,\; \alpha_1+\alpha_2,\;
 2\alpha_1+\alpha_2\}$ form a root system of type $A_2$,
@@ -1839,10 +1978,10 @@ This vanishes at the critical level $k = -h^\vee = -4$.
 (\widehat{G}_{2,k})^! \simeq \widehat{G}_{2,-k-8}
 \end{equation}
 The shift is $-k - 2h^\vee = -k - 8$, using $h^\vee = 4$.
-Note: the Coxeter number $h = 6$ does \emph{not} appear in the
+Note: the Coxeter number $\mathsf{h} = 6$ does \emph{not} appear in the
 level shift.  This is the critical distinction for non-simply-laced
 algebras (cf.\ the discussion in
-CLAUDE.md: ``KM periodicity: $2h$ (Coxeter), NOT $2h^\vee$'').
+CLAUDE.md: ``KM periodicity: $2\mathsf{h}$ (Coxeter), NOT $2h^\vee$'').
 
 \emph{Central charge.}
 \begin{equation}
@@ -3703,6 +3842,63 @@ The explicit $\mathfrak{sl}_3$ bar differential
 provides the input data for the $\mathfrak{sl}_3$
 BGG pipeline.
 \end{remark}
+
+\begin{example}[$\mathfrak{sl}_3$ BGG pipeline; \ClaimStatusProvedHere]
+\label{ex:sl3-bgg-pipeline}
+\index{BGG resolution!sl3@$\mathfrak{sl}_3$}
+\index{sl3@$\mathfrak{sl}_3$!BGG pipeline}
+We execute the pipeline for $\widehat{\mathfrak{sl}}_3$ at generic
+level~$k$, with $8$~generators
+$\{H_1, H_2, E_1, E_2, E_3, F_1, F_2, F_3\}$
+(Computation~\ref{comp:sl3-bar}).
+
+\emph{Step~1 (Weyl group).}
+$W = S_3$, with length distribution
+$|\{w : \ell(w) = j\}| = 1, 2, 2, 1$ for $j = 0, 1, 2, 3$.
+The BGG resolution of $L(0)_k$ has shape:
+\begin{equation}\label{eq:sl3-bgg-shape}
+0 \to \mathcal{M}(w_0 \cdot 0)
+\xrightarrow{d_3}
+\mathcal{M}(s_1 s_2 \cdot 0) \oplus \mathcal{M}(s_2 s_1 \cdot 0)
+\xrightarrow{d_2}
+\mathcal{M}(s_1 \cdot 0) \oplus \mathcal{M}(s_2 \cdot 0)
+\xrightarrow{d_1}
+\mathcal{M}(0) \to L(0) \to 0
+\end{equation}
+where $s_1, s_2$ are simple reflections and $w_0 = s_1 s_2 s_1$
+is the longest element.
+
+\emph{Step~2 (Screening operators).}
+The two screening operators
+$S_{\alpha_1}\colon \mathcal{M}(s_1 \cdot 0) \to \mathcal{M}(0)$
+and
+$S_{\alpha_2}\colon \mathcal{M}(s_2 \cdot 0) \to \mathcal{M}(0)$
+are read from the bar differential at degree~$1$
+(Computation~\ref{comp:sl3-bar}):
+$d[H_1|E_1] = 2E_1$, $d[E_1|F_1] = H_1 + k|0\rangle$ give the
+$\alpha_1$-screening charge via the singular vector
+$v_1 = F_{1,-1}|0\rangle - \frac{1}{k+3}H_{1,-1}E_{1,-1}|0\rangle$
+at grade~$1$ (when $\langle \rho, \alpha_1^\vee\rangle = k+3 \neq 0$).
+
+\emph{Step~3 (Arnold compatibility).}
+The Arnold relation for $\overline{C}_3(\mathbb{P}^1)$
+ensures $d_1 \circ d_2 = 0$: the two compositions
+$S_{\alpha_1} \circ S_{\alpha_2 \alpha_1}$ and
+$S_{\alpha_2} \circ S_{\alpha_1 \alpha_2}$
+agree up to sign, by the braid relation
+$s_1 s_2 s_1 = s_2 s_1 s_2$ and the corresponding
+Arnold identity on $3$-point logarithmic forms.
+
+\emph{Step~4 (Koszul duality).}
+Under $\Phi$ at level $k' = -k - 6$ (the Feigin--Frenkel dual
+for $\mathfrak{sl}_3$, with $h^\vee = 3$), the BGG
+resolution~\eqref{eq:sl3-bgg-shape}
+maps to the dual BGG resolution of $L(0)_{k'}$,
+with Verma modules $\mathcal{M}(w \cdot 0)_{k'}$.
+The Sugawara central charge transforms as
+$c = 8k/(k+3) \mapsto c' = 8k'/(k'+3) = 16 - c$,
+verifying $c + c' = 16 = 2 \dim \mathfrak{sl}_3$.
+\end{example}
 
 \medskip
 

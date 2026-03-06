@@ -10,7 +10,7 @@ $I = \{g \in G(\mathbb{C}[[t]]) : g \bmod t \in B(\mathbb{C})\}$ is the Iwahori 
 (the preimage of $B$ under evaluation at $t = 0$; strictly larger than $B(\mathbb{C}[[t]])$).
 \end{definition}
 
-\begin{theorem}[Jet bundle realization; \ClaimStatusProvedElsewhere]\label{thm:jet-flag}
+\begin{theorem}[Jet bundle realization \cite{BD04}; \ClaimStatusProvedElsewhere]\label{thm:jet-flag}
 There is a natural isomorphism:
 \[
 J^{\infty}(G/B) \cong \mathrm{Fl}_{\mathrm{aff}}^{\mathrm{thick}}
@@ -49,7 +49,7 @@ The affine flag variety $\mathrm{Fl}_{\mathrm{aff}} = G(\mathbb{C}((t)))/I$ (whe
 
 \subsubsection{Chiral de Rham complex and resolution}
 
-\begin{theorem}[W-algebras as chiral de Rham; \ClaimStatusProvedElsewhere]\label{thm:w-cdr}
+\begin{theorem}[W-algebras as chiral de Rham \cite{Arakawa}; \ClaimStatusProvedElsewhere]\label{thm:w-cdr}
 At critical level $k = -h^\vee$, the W-algebra admits a resolution:
 \[
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, e) \cong H^*_{\mathrm{DS}}(\Omega^{\mathrm{ch}}_{G/P_e})
@@ -139,7 +139,7 @@ where:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[Screening resolution; \ClaimStatusProvedElsewhere]\label{thm:screen-res}
+\begin{theorem}[Screening resolution \cite{FF-wakimoto}; \ClaimStatusProvedElsewhere]\label{thm:screen-res}
 The W-algebra admits a free field resolution:
 \[
 \mathcal{W}^k(\mathfrak{g}, e) = \mathrm{Ker}(S_1, \ldots, S_r : \mathcal{FF} \to \mathcal{FF}')
@@ -297,7 +297,7 @@ $S_i' = \oint e^{-\alpha_i \cdot \phi/Q}$.
 
 \subsubsection{Connection to integrable systems}
 
-\begin{theorem}[W-algebras and Toda systems; \ClaimStatusProvedElsewhere]\label{thm:w-toda}
+\begin{theorem}[W-algebras and Toda systems \cite{FF}; \ClaimStatusProvedElsewhere]\label{thm:w-toda}
 The W-algebra $\mathcal{W}^k(\mathfrak{g}, e_{\mathrm{prin}})$ at the principal nilpotent is equivalent to:
 \[
 \mathcal{W}^k(\mathfrak{g}, e_{\mathrm{prin}}) \cong \text{Quantization of Toda system for } \mathfrak{g}
@@ -437,6 +437,97 @@ $m_0^{(s)} = c/(s \cdot (2s-1)/s) = c/s$ from the pole of order
 $2s$.  The total curvature is the vector $(m_0^{(s_1)}, \ldots,
 m_0^{(s_r)})$, vanishing simultaneously if and only if $c = 0$.
 \end{computation}
+
+
+\subsubsection{$\mathcal{W}_{1+\infty}$ and the large-$N$ limit}
+\label{sec:w-infty}
+\index{W1infinity@$\mathcal{W}_{1+\infty}$|textbf}
+\index{large-$N$ limit}
+
+The algebra $\mathcal{W}_{1+\infty}$ is the universal W-algebra
+containing generators of all integer spins $\{1, 2, 3, \ldots\}$.
+It arises as the algebra of area-preserving diffeomorphisms of the plane
+(at the classical level) and admits a one-parameter family of central
+charges parametrized by the 't~Hooft coupling.
+
+\begin{definition}[$\mathcal{W}_{1+\infty}$ as colimit]
+\label{def:w-infty}
+\index{W1infinity@$\mathcal{W}_{1+\infty}$!colimit}
+The $\mathcal{W}_{1+\infty}$ algebra at level $(k, N)$ is the
+colimit of the principal W-algebras:
+\[
+\mathcal{W}_{1+\infty}^{(k)}
+= \varinjlim_{N} \mathcal{W}^k(\mathfrak{sl}_N, f_{\mathrm{prin}})
+\]
+where the transition maps
+$\mathcal{W}^k(\mathfrak{sl}_N) \hookrightarrow
+\mathcal{W}^k(\mathfrak{sl}_{N+1})$ are the natural inclusions
+that preserve the generators $W^{(2)}, \ldots, W^{(N)}$ and add a
+new generator $W^{(N+1)}$ of spin $N+1$.
+\end{definition}
+
+\begin{conjecture}[Bar-cobar for $\mathcal{W}_{1+\infty}$;
+\ClaimStatusConjectured]
+\label{conj:w-infty-bar}
+\index{W1infinity@$\mathcal{W}_{1+\infty}$!bar complex}
+The bar complex of $\mathcal{W}_{1+\infty}$ is the inverse limit of
+the finite-$N$ bar complexes:
+\begin{equation}\label{eq:w-infty-bar}
+\barB(\mathcal{W}_{1+\infty}^{(k)})
+= \varprojlim_{N} \barB(\mathcal{W}^k(\mathfrak{sl}_N))
+\end{equation}
+and the curvature is:
+\begin{equation}\label{eq:w-infty-curvature}
+m_0(\mathcal{W}_{1+\infty}) = \lim_{N \to \infty} \frac{c_N}{2},
+\qquad c_N = \frac{N(N^2-1)}{N+k},
+\end{equation}
+which at fixed 't~Hooft coupling $\lambda = N/(N+k)$ behaves as
+$m_0 \sim N^2 \lambda(1-\lambda)/2$ for $N \to \infty$.
+The bar spectral sequence collapses at $E_2$ for generic $\lambda$,
+and the Koszul dual is
+$(\mathcal{W}_{1+\infty}^{(\lambda)})^!
+\simeq \mathcal{W}_{1+\infty}^{(1-\lambda)}$
+\textup{(}the 't~Hooft coupling involution\textup{)}.
+\end{conjecture}
+
+\begin{remark}[Scope: higher spin gravity and minimal model holography]
+\label{rem:w-infty-holography}
+\index{higher spin gravity}
+\index{Gaberdiel--Gopakumar duality}
+\index{minimal model holography}
+The Gaberdiel--Gopakumar duality \cite{GG11} identifies
+$\mathcal{W}_{1+\infty}$ as the boundary algebra of Vasiliev
+higher-spin gravity on $\mathrm{AdS}_3$.  Under this identification,
+the 't~Hooft coupling $\lambda$ parametrizes the bulk gravitational
+coupling constant, and the Koszul duality involution
+$\lambda \mapsto 1 - \lambda$ corresponds to
+the exchange of the two boundary components of $\mathrm{AdS}_3$
+(the bulk/boundary interchange).
+
+The $\mathcal{W}_N$ minimal models $\mathcal{W}_N(N, N{+}1)$ at
+central charge $c_N^{\min} = (N-1)(1 - N(N+1)/(N(N+1)))$ are
+conjectured to be Koszul dual to $\mathcal{W}_N$ at
+$c_N' = (N-1)(1 - N(N+1)/(N(N-1)))$:
+\[
+\mathcal{W}_N^{c_N^{\min}} \;\longleftrightarrow\;
+\mathcal{W}_N^{c_N'},
+\qquad c_N^{\min} + c_N' = 2(N-1) + 4N \cdot \dim(\mathfrak{sl}_N).
+\]
+As $N \to \infty$, this becomes a large-$N$ duality between the
+two asymptotic regions of the higher-spin bulk, providing a
+bar-cobar interpretation of the Gaberdiel--Gopakumar conjecture.
+
+This is a physics conjecture: a proof would require constructing
+the bar complex of $\mathcal{W}_{1+\infty}$ as a completed
+inverse limit, verifying the spectral sequence convergence in the
+$N \to \infty$ limit, and establishing the $E_2$ collapse for
+all sufficiently generic $\lambda$.  The finite-$N$ ingredients
+are available from the DS--KD intertwining theorem
+(Theorem~\ref{thm:ds-koszul-intertwine}), but the passage to the
+colimit involves analytic subtleties (completions, convergence of
+the bar differential on infinite-dimensional chain spaces) that
+lie outside the algebraic framework of this monograph.
+\end{remark}
 
 
 \subsubsection{DS reduction and bar complex: intertwining verification}
@@ -819,10 +910,10 @@ $c' = -10$, $m_0^{(T)} = 55$, $m_0^{(W)} = 110/3$.
 \emph{Zero locus.}
 Both curvature channels vanish simultaneously if and only if $c = 0$:
 \[
-c = 0 \iff k = -2 + \sqrt{4/24 \cdot 3} = -2 \pm \frac{1}{\sqrt{6}}
-\quad (\text{irrational levels})
+c = 0 \iff 12k^2 + 47k + 45 = 0 \iff k = -\tfrac{9}{4},\; -\tfrac{5}{3}
+\quad (\text{non-integral rational levels: } k = -\tfrac{9}{4},\; -\tfrac{5}{3})
 \]
-The zero-curvature locus consists of two irrational levels, in contrast
+The zero-curvature locus consists of two rational non-integral levels, in contrast
 to the affine Kac--Moody case where $m_0 = 0$ at the critical level
 $k = -h^\vee$ (a single rational value).  At these levels, the
 $\mathcal{W}_3$ bar complex is strict ($d^2 = 0$ at all genera)
@@ -889,7 +980,7 @@ Generators & $T, W$ & $J^a, G^\pm$ \\
 Generator weights & $2, 3$ & $1, 3/2$ \\
 $\#$ generators & $2$ & $5$ \\
 Curvature channels & $2$ & $2$ \\
-Zero-curvature level & $c = 0$ ($k$ irrational) & $k = -1/2$
+Zero-curvature level & $c = 0$ ($k$ non-integral rational) & $k = -1/2$
 \end{tabular}
 \end{center}
 The Bershadsky--Polyakov algebra has more generators but simpler
@@ -917,29 +1008,46 @@ in $\fg^\vee$ (the Langlands dual Lie algebra).
 \end{proposition}
 
 \begin{proof}
-The DS--KD intertwining theorem
-(Theorem~\ref{thm:ds-koszul-intertwine}) establishes that Koszul
-duality commutes with DS reduction.  For the ambient algebra,
-$(\widehat{\fg}_k)^! \simeq \widehat{\fg}_{-k-2h^\vee}$
-(Corollary~\ref{cor:level-shifting-part1}).  Applying DS reduction
-with nilpotent $f_i$ on both sides:
-\[
-\mathrm{DS}_{f_i}\bigl((\widehat{\fg}_k)^!\bigr)
-\simeq \mathrm{DS}_{f_i}\bigl(\widehat{\fg}_{-k-2h^\vee}\bigr)
-= \mathcal{W}^{-k-2h^\vee}(\fg, f_i)
-\]
-The left-hand side equals
-$\bigl(\mathrm{DS}_{f_i^{\mathrm{BV}}}
-(\widehat{\fg}_k)\bigr)^!
-= \bigl(\mathcal{W}^k(\fg, f_i^{\mathrm{BV}})\bigr)^!$
-by the compatibility of DS reduction with Koszul duality,
-where the nilpotent orbit transforms under the Barbasch--Vogan
-duality $f_i \mapsto f_i^{\mathrm{BV}}$ (which exchanges the orbit
-structure of $\fg$ and $\fg^\vee$).
+The proof proceeds in two stages: compatibility at the level of
+algebras, and identification of the orbit transformation.
 
-For simply-laced $\fg$ (types $A$, $D$, $E$), $\fg = \fg^\vee$
-and $f_i^{\mathrm{BV}} = f_i$ (the BV duality is the identity on
-orbits).  For non-simply-laced $\fg$, the BV duality exchanges
+\emph{Stage~1: DS--KD compatibility.}
+For the ambient algebra,
+$(\widehat{\fg}_k)^! \simeq \widehat{\fg}_{-k-2h^\vee}$
+(Corollary~\ref{cor:level-shifting-part1}).  The DS--KD
+intertwining theorem (Theorem~\ref{thm:ds-koszul-intertwine})
+establishes that $\mathrm{DS}_f$ commutes with Koszul duality
+up to replacement of the nilpotent by its BV dual:
+\[
+\bigl(\mathrm{DS}_{f_i}(\widehat{\fg}_k)\bigr)^!
+\simeq
+\mathrm{DS}_{f_i^{\mathrm{BV}}}
+\bigl((\widehat{\fg}_k)^!\bigr)
+= \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f_i^{\mathrm{BV}})
+\]
+The key input is that DS reduction is defined via the BRST complex
+$C^*(\mathfrak{n}_{f_i}, -)$, and Koszul duality exchanges the BRST
+nilpotent subalgebra $\mathfrak{n}_{f_i} \subset \fg$ with the
+Barbasch--Vogan dual subalgebra
+$\mathfrak{n}_{f_i^{\mathrm{BV}}} \subset \fg^\vee$.
+
+\emph{Stage~2: BV orbit identification.}
+The Barbasch--Vogan duality
+$f \mapsto f^{\mathrm{BV}}$ is defined by
+$d_{\mathrm{BV}}(\mathbb{O}_f)
+= \text{Ind}_{L_f}^{G^\vee}(\text{triv})$,
+the special orbit attached to the Lusztig--Spaltenstein
+induction of the trivial orbit of the Levi $L_f$ of the
+parabolic $P_f$ determined by $f$~\cite{BV85,Achar03}.  The map
+$f \mapsto f^{\mathrm{BV}}$ is an involution
+on the set of special orbits.
+
+For simply-laced $\fg$ (types $A$, $D$, $E$), $\fg = \fg^\vee$,
+so $f_i^{\mathrm{BV}}$ is a nilpotent in $\fg$ itself.  In type
+$A_n$, all orbits are special and the BV duality is partition
+transpose ($\lambda \mapsto \lambda^t$), which is \emph{not}
+the identity except on self-transpose partitions.
+For non-simply-laced $\fg$, the BV duality exchanges
 $B_n \leftrightarrow C_n$ orbits.
 \end{proof}
 
@@ -968,15 +1076,22 @@ $\mathcal{W}_4$
 \end{center}
 
 \emph{Koszul duality.}
-Since $\mathfrak{sl}_4$ is simply-laced, the BV duality is the
-identity: each orbit is self-BV-dual.  The level-shifting duality
-$k \mapsto -k-2h^\vee = -k-8$ maps each W-algebra to itself at
-the dual level:
+Since $\mathfrak{sl}_4$ is simply-laced, $\fg = \fg^\vee$ and the
+BV duality acts on nilpotent orbits by partition transpose
+$\lambda \mapsto \lambda^t$:
+$(1^4) \leftrightarrow (4)$, $(2,1^2) \leftrightarrow (3,1)$,
+$(2^2) \leftrightarrow (2^2)$ (self-dual).
+Only the rectangular orbit $(2^2)$ is self-BV-dual.
+The level-shifting duality $k \mapsto -k-2h^\vee = -k-8$ combined
+with BV orbit exchange gives:
 \[
 \mathcal{W}^k(\mathfrak{sl}_4, f_\lambda)^!
-\simeq \mathcal{W}^{-k-8}(\mathfrak{sl}_4, f_\lambda)
+\simeq \mathcal{W}^{-k-8}(\mathfrak{sl}_4, f_{\lambda^t})
 \]
-for each partition $\lambda$.
+In particular: the KM algebra $(1^4)$ is dual to $\mathcal{W}_4$
+at $-k-8$, the minimal W-algebra $(2,1^2)$ is dual to the
+subregular $(3,1)$ at $-k-8$, and the rectangular $(2^2)$ is
+self-dual at the shifted level.
 
 \emph{Bar complex dimensions at degree 1.}
 The degree-1 bar complex of each W-algebra has dimension equal
