@@ -43,10 +43,10 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 6)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **699** |
-| ProvedElsewhere | **328** |
-| Conjectured | **115** |
-| Heuristic | **18** |
+| ProvedHere | **695** |
+| ProvedElsewhere | **333** |
+| Conjectured | **113** |
+| Heuristic | **19** |
 | Open | **0** |
 | **Total tagged claims** | **1160** |
 
@@ -58,7 +58,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 - Bibliography: 289 entries (~1395 lines), all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
 - Cosmetic: ~115 overfull hbox (2 severe >14pt in chiral_koszul_pairs.tex and higher_genus.tex), ~80 underfull hbox
-- Build: up to 7-pass pdflatex with convergence detection; `scripts/build.sh` for standalone use
+- Build: `make` (6-pass, stamp-based idempotent), `make fast` (1-pass iteration), `make clean` (debris only, preserves stamp), `make veryclean` (force full rebuild). See "Build System — Stamp Architecture" below.
 - **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
 - Subject index: 329+ entries across 37 files
 - Master Table of Computed Invariants in examples_summary.tex
@@ -136,8 +136,20 @@ All have scope remarks. Classification:
 4. Write mathematics in theorem-proof format
 5. After each change: verify `make fast` compiles cleanly
 6. After each batch (10 edits): run `make fast` as gate
-7. At session end: full `make` (3-pass), update MEMORY.md + session_log.md
+7. At session end: full `make`, update MEMORY.md + session_log.md
 8. Never guess a formula — compute it or cite it
+
+### Build System — Stamp Architecture
+The Makefile uses a `.build_stamp` sentinel file to track the last successful build:
+- **`make`**: Full build (up to 6 passes with convergence detection). **Idempotent** — no-op if no `.tex` file changed since last successful build, even after `make clean`.
+- **`make fast`**: Single-pass pdflatex. Use during active editing. Same stamp-based idempotency as `make` but faster. **This is the primary iteration tool.**
+- **`make clean`**: Removes aux/log/toc debris but **preserves the stamp and PDF**. Safe to spam. `make` after `make clean` is still a no-op when sources are unchanged.
+- **`make veryclean`**: Removes everything including PDF and stamp. Forces full rebuild on next `make`.
+- **`make test`**: Runs compute test suite (1187 tests via `compute/.venv/bin/python -m pytest`).
+
+**Key invariant**: `make clean && make` rebuilds if and only if a `.tex` file changed. The stamp survives `make clean` but not `make veryclean`.
+
+**CAUTION**: A hook/watcher may spawn competing pdflatex on file edits; kill before manual builds (`pkill -f pdflatex` if needed).
 
 ### Autonomous Loop (for unattended operation)
 See `notes/SESSION_PROMPT_v9.md` for the current session prompt (triple-intersection identity, audit-5 integration, research programme map). Launch with:
@@ -171,7 +183,7 @@ v8 and all prior prompts (v1-v7) archived in `notes/archive/`.
 
 ### LaTeX Standards
 - Document class: memoir, EB Garamond via newtxmath + ebgaramond
-- Compile: `make` (6 pdflatex passes), `make fast` (1 pass), `make clean`
+- Compile: `make` (6 passes, idempotent), `make fast` (1 pass, primary iteration tool), `make clean` (debris only), `make veryclean` (force rebuild)
 - Chapter files: \include from main.tex; sub-files: \input
 - All macros in main.tex preamble — NEVER \newcommand in chapter files
 - Key macros: \chirAss, \chirCom, \chirLie, \Eone, \Einf, \Pinf, \B (bar), \cA (chiral algebra)

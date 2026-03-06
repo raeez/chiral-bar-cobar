@@ -59,9 +59,13 @@ done
 
 Expected (Mar 6): PH ~699, PE ~328, CJ ~114, HE ~18
 
-### Build
+### Build (stamp-based idempotent Makefile)
 - 1276 pages, 0 LaTeX errors, 0 undef refs, 0 undef cites
-- `make fast` (1-pass), `make` (6-pass with convergence)
+- `make fast` — single-pass pdflatex, **primary iteration tool**. Idempotent: no-op if no .tex changed.
+- `make` — full 6-pass with convergence detection. Same idempotency.
+- `make clean` — removes aux debris, **preserves stamp and PDF**. Safe to spam. `make`/`make fast` after clean is still a no-op when sources unchanged.
+- `make veryclean` — removes everything including stamp and PDF. Forces rebuild.
+- Key: `.build_stamp` tracks last successful build. Survives `make clean`, deleted by `make veryclean`.
 - CAUTION: hook/watcher spawns competing pdflatex; kill before manual builds
 
 ### Tests
