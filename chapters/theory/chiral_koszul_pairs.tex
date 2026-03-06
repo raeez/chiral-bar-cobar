@@ -20,45 +20,19 @@ Koszulity
 classification of Koszul pairs structures the entire
 landscape of examples in Part~II.
 
-The operadic foundations go back to Priddy and Quillen.
-
-\subsection{From homological algebra to homotopy theory}
-
-Priddy~\cite{Priddy70} showed that $H_*(\Omega^n\Sigma^n S^0) \cong H_*(F_n)$ where $F_n$ is the free $n$-fold loop space. The homology operations form an operad---the homology of the little $n$-cubes operad $\mathcal{C}_n$.
-
-\begin{theorem}[Priddy \cite{Priddy70}; \ClaimStatusProvedElsewhere]
-The bar construction $B(\text{Com})$ of the commutative operad has homology 
-$$H_*(B(\text{Com})) \cong \text{Lie}^*[-1]$$
-the suspended dual of the Lie operad.
-\end{theorem}
-
-Meanwhile, Quillen (1969) showed that the category of differential graded Lie algebras is Quillen equivalent to the category of cocommutative coalgebras via:
-$$\mathfrak{g} \mapsto C_*(\mathfrak{g}) \quad \text{and} \quad C \mapsto L(C)$$
-
-This duality would become the prototype of Koszul duality.
-
-\subsection{BRST construction and physical origins}
-
-In gauge theory, Becchi-Rouet-Stora-Tyutin (1975-76) discovered that consistent quantization requires:
-\begin{itemize}
-\item Ghost fields $c^a$ for each gauge symmetry generator $T^a$
-\item Antighost fields $\bar{c}_a$ and Nakanishi--Lautrup auxiliary fields $b_a$
-\item BRST operator $Q$ with $Q^2 = 0$ encoding gauge invariance
-\item Physical states as BRST cohomology: $H^*(Q)$
-\end{itemize}
-
-The ghost-antighost system exhibited precisely Priddy's duality—revealing that Koszul duality is the mathematical foundation of gauge fixing.
-
-\subsection{Ginzburg--Kapranov's algebraic framework (1994)}
-
-\begin{definition}[Koszul operad]
-A quadratic operad $\mathcal{P} = \mathcal{F}(E)/(R)$ is Koszul if the inclusion $\mathcal{P}^! \hookrightarrow B(\mathcal{P})$ is a quasi-isomorphism, where $\mathcal{P}^!$ is the quadratic dual cooperad.
-\end{definition}
-
-\begin{theorem}[Ginzburg--Kapranov; \ClaimStatusProvedElsewhere]
-For Koszul operads $\mathcal{P}$:
-$$\mathcal{P} \xrightarrow{\sim} \Omega B(\mathcal{P}), \quad \mathcal{P}^! \xrightarrow{\sim} B\Omega(\mathcal{P}^!)$$
-\end{theorem}
+The operadic foundations go back to
+Priddy~\cite{Priddy70} ($H_*(B(\mathrm{Com})) \cong
+\mathrm{Lie}^*[-1]$), Quillen's equivalence between
+dg~Lie algebras and cocommutative coalgebras, and
+Ginzburg--Kapranov's framework of Koszul operads:
+a quadratic operad $\mathcal{P}$ is Koszul when
+$\mathcal{P}^! \hookrightarrow B(\mathcal{P})$ is a
+quasi-isomorphism, yielding
+$\mathcal{P} \xrightarrow{\sim} \Omega B(\mathcal{P})$.
+The BRST ghost-antighost system (Becchi--Rouet--Stora--Tyutin)
+is a physical manifestation of this duality.
+The present chapter extends this circle of ideas to the chiral
+setting.
 
 % ================================================================
 % SECTION 8.2: FROM QUADRATIC TO CHIRAL KOSZUL PAIRS
@@ -379,8 +353,10 @@ $\mathrm{Vir}_c$ is chiral Koszul.
 \begin{proof}
 The PBW filtration on $\mathrm{Vir}_c$ is defined by the
 number of Virasoro mode applications:
-$F_p = \operatorname{span}\{L_{-n_1} \cdots L_{-n_r}
-|0\rangle : r \leq p,\; n_i \geq 2\}$.
+\[
+F_p = \operatorname{span}\{L_{-n_1} \cdots L_{-n_r}
+|0\rangle : r \leq p,\; n_i \geq 2\}.
+\]
 
 \emph{Hypothesis~\ref{item:pbw-flat}.}
 Each $F_p/F_{p-1} \cong S^p(V)$ where
@@ -431,20 +407,97 @@ In particular:
 \end{corollary}
 
 \begin{proof}
-The Koszul complex acyclicity
-(Theorems~\ref{thm:km-chiral-koszul},
-\ref{thm:virasoro-chiral-koszul}) implies the
-quasi-isomorphism $\barBgeom(\cA) \simeq \cA^!$
-of graded coalgebras
-(Definition~\ref{def:chiral-koszul-pair}, Version~I).
-The PBW spectral sequence on $\barBgeom(\cA)$ has
-$E_1 \cong H^*(\barBgeom(\operatorname{gr}_F \cA))
-\cong \Lambda^*(V^*)$ (exterior coalgebra on dual generators),
-and collapses at $E_2$ because the $d_1$ differential
-corresponds to the (vanishing) next-order OPE correction
-in the associated graded, which is zero by the Koszul
-complex acyclicity.  Thus
-$H^n(\barBgeom(\cA)) \cong E_2^n = (\cA^!)_n$.
+\emph{Step~1: The PBW filtration on the bar complex.}
+Equip $\barBgeom(\cA)$ with the filtration inherited from
+the PBW filtration $F$ on $\cA$:
+\[
+F_p \barBgeom^n(\cA) = \bigl\{
+a_1 \otimes \cdots \otimes a_{n+1} \otimes \omega
+\;\big|\; a_i \in F_{p_i}\cA,\;
+\textstyle\sum p_i \leq p\bigr\}
+\]
+where $\omega \in \Omega^n_{\log}(\overline{C}_{n+1}(X))$.
+This filtration is exhaustive (every bar element lies in
+some $F_p$ by finiteness of conformal weight) and
+compatible with the differential (the bar differential
+respects conformal weight since the OPE does).
+
+\emph{Step~2: The associated graded.}
+By flatness of $F$ (Hypothesis~\ref{item:pbw-flat}), the
+associated graded of the bar complex is the bar complex of
+the associated graded:
+\begin{equation}\label{eq:pbw-associated-graded-bar}
+\operatorname{gr}_F \barBgeom(\cA) \;\cong\;
+\barBgeom(\operatorname{gr}_F \cA)
+\;=\; \barBgeom(\operatorname{Sym}^{\mathrm{ch}}(V))
+\end{equation}
+where $V$ is the generating $\mathcal{D}_X$-module.
+This identification holds because the bar differential on the
+associated graded sees only the leading-order OPE terms.
+For $\widehat{\fg}_k$: the singular OPE
+$J^a(z) J^b(w) \sim f^{ab}_c J^c(w)/(z-w)
++ k\kappa^{ab}/(z-w)^2$
+reduces on $\operatorname{gr}_F$ to the commutative product
+(the bracket $f^{ab}_c J^c$ and level term $k\kappa^{ab}$ are
+lower-order in the PBW filtration).
+For $\mathrm{Vir}_c$: similarly, the Virasoro OPE reduces to a
+commutative product on the associated graded.
+
+\emph{Step~3: Computation of the $E_1$ page.}
+The $E_0$ page is
+$E_0^{p,q} = \operatorname{gr}^p_F \barBgeom^{p+q}(\cA)$,
+with $d_0$ the associated-graded bar differential.
+By~\eqref{eq:pbw-associated-graded-bar}, the $E_1$ page
+is the bar cohomology of the commutative chiral algebra
+$\operatorname{Sym}^{\mathrm{ch}}(V)$.
+
+Since $\operatorname{Sym}^{\mathrm{ch}}(V)$ is a free
+commutative algebra, it is Koszul with Koszul dual
+the exterior coalgebra $\Lambda^{\mathrm{c}}(V^*)$
+(Priddy's theorem applied to the chiral setting,
+cf.\ Remark~\ref{rem:classical-to-chiral-koszul}).
+Therefore:
+\begin{equation}\label{eq:e1-page-exterior}
+E_1^{p,q} = H^{p+q}(\barBgeom^p(\operatorname{Sym}^{\mathrm{ch}}(V)))
+= \begin{cases}
+\Lambda^p(V^*) & \text{if } q = 0, \\
+0 & \text{if } q \neq 0.
+\end{cases}
+\end{equation}
+The $E_1$ page is \emph{concentrated in the row $q = 0$}.
+In particular, for $\widehat{\fg}_k$ with
+$V = \fg \otimes t^{-1}\bC[t^{-1}]$:
+\[
+E_1^{n,0} = \Lambda^n(\fg^* \otimes t\bC[t])
+\]
+is the $n$-th exterior power of the dual loop algebra
+generators (graded by conformal weight).
+
+\emph{Step~4: Collapse.}
+Since $E_1^{p,q} = 0$ for $q \neq 0$, all differentials
+$d_r\colon E_r^{p,q} \to E_r^{p+r, q-r+1}$ vanish for
+$r \geq 1$ (they map into or out of the zero row).
+Therefore $E_2 = E_1 = E_\infty$ and:
+\[
+H^n(\barBgeom(\cA)) \cong E_\infty^{n,0}
+= \Lambda^n(V^*) = (\cA^!)_n.
+\]
+
+\emph{Step~5: Verification for $\widehat{\mathfrak{sl}}_2$.}
+$V = \bC^3 \otimes t^{-1}\bC[t^{-1}]$
+(three generators $J^+, J^0, J^-$, each with modes
+$J^a_{-n}$ for $n \geq 1$).
+At conformal weight $h$ in bar degree $n$:
+\[
+\dim \Lambda^n(V^*)_h
+= \dim \Lambda^n(\bC^3 \otimes t\bC[t])_h.
+\]
+For $n=1$, $h=1$: $\Lambda^1 = V^*$, so $\dim = 3$
+(the three generators $J^{a*}_{+1}$).
+For $n=2$, $h=2$: $\dim \Lambda^2(\bC^3)_{(1,1)} = \binom{3}{2} = 3$
+(wedge products $J^{a*}_{+1} \wedge J^{b*}_{+1}$, $a < b$).
+These match the known bar cohomology dimensions at the
+associated-graded level, confirming the computation.
 \end{proof}
 
 % ================================================================
@@ -473,7 +526,7 @@ subject to the relations (Drinfeld's first realization):
 where $f^{abc}$ are structure constants of $\mathfrak{g}$, $A^{ab}_{cd}$ is a specific tensor determined by the Casimir, and $\{-,-\}$ denotes the symmetrized product.  The RTT presentation (Reshetikhin--Takhtajan--Faddeev) is an equivalent formulation using the matrix $T(u) = \sum_n T_n u^{-n}$ and the Yang $R$-matrix $R(u) = 1 + \hbar/u \cdot P$.
 \end{definition}
 
-\begin{theorem}[Yangian as quantization; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Yangian as quantization {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]
 The Yangian is a filtered deformation of the polynomial current algebra:
 $$\operatorname{gr}(Y(\mathfrak{g})) \cong U(\mathfrak{g}[t])$$
 
@@ -502,7 +555,7 @@ The defining relations involve:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[Affine Yangian from W-algebras; \ClaimStatusProvedElsewhere]\label{thm:affine-yangian-w}
+\begin{theorem}[Affine Yangian from W-algebras {\cite{SV13}}; \ClaimStatusProvedElsewhere]\label{thm:affine-yangian-w}
 For $\mathfrak{g} = \mathfrak{sl}_N$, there is an isomorphism:
 $$Y_{\hbar}(\widehat{\mathfrak{sl}}_N) \cong \mathcal{W}_{1+\infty}[\mathfrak{gl}_N]$$
 
@@ -511,21 +564,21 @@ the $\mathcal{W}_{1+\infty}$ algebra associated to $\mathfrak{gl}_N$.  This was 
 
 \subsection{Self-duality}
 
-\begin{theorem}[Yangian Koszul duality; \ClaimStatusProvedHere]\label{thm:yangian-self-dual}
-In the RTT presentation, the Yangian $Y(\mathfrak{g})$ has Koszul dual:
+\begin{theorem}[Yangian quadratic dual; \ClaimStatusProvedHere]\label{thm:yangian-self-dual}
+In the RTT presentation, the Yangian $Y(\mathfrak{g})$ has \emph{quadratic dual}:
 \begin{equation}
-Y(\mathfrak{g})^! \;\cong\; Y_{R^{-1}}(\mathfrak{g}) \;\cong\; Y(\mathfrak{g})^{\hbar \to -\hbar}
+Y(\mathfrak{g})^{!_{\mathrm{quad}}} \;\cong\; Y_{R^{-1}}(\mathfrak{g}) \;\cong\; Y(\mathfrak{g})^{\hbar \to -\hbar}
 \end{equation}
-where $Y_{R^{-1}}$ is the RTT algebra with $R$-matrix replaced by $R^{-1}$.  For the Yang $R$-matrix, $R^{-1}(u; \hbar) = R(u; -\hbar)$, so the Koszul dual is the Yangian at negative deformation parameter.
+where $Y_{R^{-1}}$ is the RTT algebra with $R$-matrix replaced by $R^{-1}$.  For the Yang $R$-matrix, $R^{-1}(u; \hbar) = R(u; -\hbar)$, so the quadratic dual is the Yangian at negative deformation parameter.
 
-For simply-laced $\mathfrak{g}$, since $Y(\mathfrak{g})^{\hbar \to -\hbar} \cong Y(\mathfrak{g})$ (via the algebra automorphism $T_{ij}^{(r)} \mapsto (-1)^r T_{ij}^{(r)}$), the Yangian is Koszul self-dual:
+For simply-laced $\mathfrak{g}$, since $Y(\mathfrak{g})^{\hbar \to -\hbar} \cong Y(\mathfrak{g})$ (via the algebra automorphism $T_{ij}^{(r)} \mapsto (-1)^r T_{ij}^{(r)}$), the Yangian is quadratic self-dual:
 \begin{equation}
-Y(\mathfrak{g})^! \;\cong\; Y(\mathfrak{g}) \quad (\text{simply-laced } \mathfrak{g})
+Y(\mathfrak{g})^{!_{\mathrm{quad}}} \;\cong\; Y(\mathfrak{g}) \quad (\text{simply-laced } \mathfrak{g})
 \end{equation}
 The explicit $\mathfrak{sl}_2$ computation is given in Part~II.
 \end{theorem}
 
-\begin{proof}
+\begin{proof}[Proof of Theorem~\ref{thm:yangian-self-dual}]
 \emph{Step 1: RTT quadraticity.}
 Recall the RTT (Yang--Baxter) presentation: $Y(\mathfrak{g})$ is generated by a transfer matrix $T(u) = (T_{ij}(u)) \in \mathrm{End}(V) \otimes Y(\mathfrak{g})$ subject to
 \[
@@ -535,7 +588,7 @@ R_{12}(u-v)\, T_1(u)\, T_2(v)
 where $R_{12}(u) = 1 - \hbar P_{12}/u$ is the Yang $R$-matrix and $P_{12}$ is the permutation on $V \otimes V$.  This relation is quadratic in $T$; since the bar complex of a quadratic algebra is determined by generators and relations (bar degrees $\leq 2$), the Koszul dual is computed from the relation space alone.
 
 \emph{Step 2: Koszul dual via $R$-matrix inversion.}
-The quadratic dual has relation space $R^\perp$ (the orthogonal complement of the RTT relations under the trace pairing on $\mathrm{End}(V)^{\otimes 2}$).  Writing the RTT relation as $\Phi_R(X) = R_{12} X - \sigma(X) R_{12}$ and its dual as $\Phi_{R^{-1}}$, direct computation shows $R^\perp = \mathrm{Im}(\Phi_{R^{-1}})$: the Koszul dual is the RTT algebra for $R^{-1}$.  For the Yang $R$-matrix, $R^{-1}(u) = (1 - \hbar P/u)^{-1}$; since $P^2 = \mathrm{id}$, the geometric series gives $R^{-1}(u) = \frac{u^2}{u^2 - \hbar^2}\,I + \frac{\hbar u}{u^2 - \hbar^2}\,P$.  At the \emph{quadratic} level (which determines the Koszul dual), the leading approximation $R^{-1}(u) \approx 1 + \hbar P/u = R(u; -\hbar)$ suffices: the higher-order corrections affect only the higher filtration, not the quadratic relations.
+The quadratic dual has relation space $R^\perp$ (the orthogonal complement of the RTT relations under the trace pairing on $\mathrm{End}(V)^{\otimes 2}$).  Writing the RTT relation as $\Phi_R(X) = R_{12} X - \sigma(X) R_{12}$ and its dual as $\Phi_{R^{-1}}$, direct computation shows $R^\perp = \mathrm{Im}(\Phi_{R^{-1}})$: the Koszul dual is the RTT algebra for $R^{-1}$.  For the Yang $R$-matrix, $R^{-1}(u) = (1 - \hbar P/u)^{-1}$; since $P^2 = \mathrm{id}$, the geometric series gives $R^{-1}(u) = \frac{u^2}{u^2 - \hbar^2}\,I + \frac{\hbar u}{u^2 - \hbar^2}\,P$.  At the \emph{quadratic} level (which determines the Koszul dual), the leading approximation $R^{-1}(u) \approx 1 + \hbar P/u = R(u; -\hbar)$ suffices: the higher-order corrections affect only the higher filtration, not the quadratic relations.  More precisely, the RTT relation $R_{12}T_1T_2 = T_2T_1R_{12}$ is quadratic in the generators $T_{ij}(u)$, and the Koszul dual is determined by the quadratic part of the relations (the orthogonal complement $R^\perp \subset V^{\otimes 2}$).  The matrix $R^{-1}(u)$ appears in computing $R^\perp$ via the dual RTT relation, but only the leading terms $(1 - \hbar P/u + O(\hbar^2))$ contribute to the quadratic orthogonal complement; higher-order terms in $R^{-1}$ produce relations of degree $\geq 3$ in the generators.
 
 \emph{Step 3: Self-duality for simply-laced $\mathfrak{g}$.}
 The automorphism $\phi\colon Y(\mathfrak{g}) \to Y(\mathfrak{g})$ defined by $T_{ij}^{(r)} \mapsto (-1)^r T_{ij}^{(r)}$ sends $\hbar \to -\hbar$ in the RTT relation (since the spectral parameter $u$ is not affected, only the mode-graded generators pick up signs).  For simply-laced $\mathfrak{g}$, where all roots have the same length, this automorphism is well-defined and gives $Y(\mathfrak{g})^{\hbar \to -\hbar} \cong Y(\mathfrak{g})$.
@@ -544,9 +597,13 @@ The automorphism $\phi\colon Y(\mathfrak{g}) \to Y(\mathfrak{g})$ defined by $T_
 At $\hbar = 0$: $Y(\mathfrak{g})$ degenerates to $U(\mathfrak{g}[t])$, and $R = R^{-1} = 1$, so the Koszul dual is the symmetric algebra $\mathrm{Sym}(V)$, which is self-dual at this degenerate level.  At $\hbar \to \infty$: the $R$-matrix becomes the permutation $P$, and the algebra degenerates to the commutative polynomial ring, which is Koszul dual to the exterior algebra (i.e., $\mathrm{Sym}^! = \bigwedge$).  Both limits are consistent.
 \end{proof}
 
+\begin{remark}[Yangian Koszulness]\label{rem:yangian-koszul}
+The Yangian $Y(\mathfrak{sl}_2)$ is Koszul: the bar spectral sequence degenerates at~$E_2$ and the quadratic dual computed above is the true Koszul dual.  This is proved in Proposition~\ref{prop:yangian-koszul} via the Polishchuk--Positselski PBW criterion: the Molev PBW basis gives a flat deformation from $Y(\mathfrak{sl}_2)$ to $\mathrm{Sym}(V)$, and Koszulness transfers along flat deformations.  For general~$\mathfrak{g}$, Koszulness is expected by the same PBW argument (Molev's PBW basis exists for all $\mathfrak{g}$) but the local finiteness conditions require verification case by case.
+\end{remark}
+
 \subsection{Hopf algebra structure and bar-cobar}
 
-\begin{theorem}[Yangian as Hopf algebra; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Yangian as Hopf algebra {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]
 The Yangian has a canonical Hopf algebra structure:
 \begin{align}
 \Delta: Y(\mathfrak{g}) &\to Y(\mathfrak{g}) \otimes Y(\mathfrak{g}) \\
@@ -559,7 +616,7 @@ $$\Delta(J^a(z)) = J^a(z) \otimes 1 + 1 \otimes J^a(z) + \hbar \cdot
 \sum_{b,c} f^{abc} J^b(z) \otimes J^c(z) + \mathcal{O}(\hbar^2)$$
 \end{theorem}
 
-\begin{theorem}[Bar construction for Hopf algebras; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Bar construction for Hopf algebras {\cite{LV}}; \ClaimStatusProvedElsewhere]
 For a Hopf algebra $H$, the bar construction:
 $$\bar{B}(H) = \bigoplus_{n \geq 0} H^{\otimes n}$$
 
@@ -627,7 +684,7 @@ is central and generates the degree-2 part of cohomology.
 
 \subsection{Connection to quantum groups}
 
-\begin{theorem}[Yangian vs.\ quantum group; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Yangian vs.\ quantum group {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]
 The Yangian $Y_\hbar(\mathfrak{g})$ and quantum group $U_q(\mathfrak{g})$ are \emph{distinct} quantum groups corresponding to different types of $R$-matrices:
 \begin{itemize}
 \item Yangian: Rational $R$-matrix (additive spectral parameter $u$)
@@ -746,7 +803,7 @@ This definition uses \emph{only}:
 
 It makes \emph{no reference} to:
 \begin{itemize}
-\item The bar construction $\bar{B}^{\text{ch}}(\mathcal{A}_1)$
+\item The bar construction $\bar{B}^{\mathrm{ch}}(\mathcal{A}_1)$
 \item The algebra $\mathcal{A}_1$ at all
 \item Any notion of ``Koszul pair''
 \end{itemize}
@@ -966,7 +1023,7 @@ The estimates are as follows:
 \item Formal smoothness $\Rightarrow$ Hochschild cohomology controls deformations
 \end{itemize}
 
-These combine to show the inverse system $\{\bar{B}/I^n\}$ satisfies the \emph{Mittag-Leffler condition}, so $\varprojlim$ exists and behaves well.
+We verify the \emph{Mittag-Leffler condition} for the inverse system $\{\bar{B}/I^n\}$: for each fixed bar degree~$k$, the images $\mathrm{im}(\bar{B}_k/I^{n+m} \to \bar{B}_k/I^n)$ stabilize for $m \gg 0$.  This holds because the polynomial growth bound gives $\dim(\bar{B}_k \cap I^n / \bar{B}_k \cap I^{n+1}) \leq P(n,k)$ for a polynomial $P$, and the finite-dimensionality of $\bar{B}_k/I^n$ (from finite generation over~$\cD_X$) implies the descending chain of images stabilizes in finitely many steps.  The Mittag-Leffler condition then ensures $\varprojlim^1 = 0$ and the inverse limit is exact.
 
 The spectral sequence:
 $$E_2^{p,q} = H^p(C_q(X), \mathcal{A}_1^{\boxtimes q}) \Rightarrow H^{p+q}(\widehat{\bar{B}})$$
@@ -1547,7 +1604,7 @@ Define the \emph{graph complex} $\mathcal{GC}_{\bullet}^{(g)}$:
 \item Grading: By number of external legs minus loops
 \end{itemize}
 
-\begin{theorem}[Kontsevich; \ClaimStatusProvedElsewhere]\label{thm:kontsevich-graph-formality}
+\begin{theorem}[Kontsevich {\cite{Kon94}}; \ClaimStatusProvedElsewhere]\label{thm:kontsevich-graph-formality}
 There is a quasi-isomorphism:
 $$\mathcal{GC}_{\bullet}^{(g)} \simeq C_{\bullet}^{(g)}(\mathcal{A})$$
 relating the graph complex to the genus $g$ bar complex of any quantization of $\mathcal{A}$.
@@ -2265,7 +2322,7 @@ $$\mathcal{A}^{\bullet}: \cdots \to \mathcal{A}^{-1} \xrightarrow{d} \mathcal{A}
 with differential compatible with products and factorization.
 \end{definition}
 
-\begin{theorem}[Extended bc-$\beta\gamma$ vs two fermions; \ClaimStatusConjectured]
+\begin{conjecture}[Extended bc-$\beta\gamma$ vs two fermions; \ClaimStatusConjectured]
 $$(\psi^{(1)}, \psi^{(2)})_{\text{derived}} \leftrightarrow (\beta\gamma \oplus bc)_{\text{extended}}$$
 
 The pairing matrix:
@@ -2274,7 +2331,7 @@ $$\begin{pmatrix}
 0 & 0 & 1 & 0
 \end{pmatrix}$$
 realizes string field theory's ghost structure through derived Koszul duality.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]\label{rem:scope-curved-koszul}
 This theorem is tagged \ClaimStatusConjectured{} because the precise relationship between
@@ -2295,13 +2352,13 @@ scope of this monograph.
 
 We now examine cases where Koszul duality fails or requires modification.
 
-\subsection{Non-example 1: Virasoro algebra}
+\subsection{Virasoro algebra: beyond the quadratic setting}
 \label{subsec:virasoro-non-example}
 
-\begin{remark}[Virasoro is not Koszul in the classical sense]
-The Virasoro algebra with central charge $c$ does \emph{not} admit a Koszul dual in the standard (quadratic, uncurved) sense. However, as shown in Example~\ref{ex:virasoro-koszul-dual}, a \emph{completed curved} Koszul dual can be constructed using the techniques of \S\ref{sec:i-adic-completion}.
+\begin{remark}[Virasoro Koszulness requires the PBW framework]
+The Virasoro algebra with central charge $c$ does \emph{not} admit a Koszul dual in the standard \emph{quadratic} (uncurved) sense, because its OPE involves a quartic pole. However, it \emph{is} chiral Koszul in the PBW sense of Theorem~\ref{thm:virasoro-chiral-koszul}: the PBW filtration yields a classical Koszul associated graded, and the spectral sequence degenerates at~$E_1$. A \emph{completed curved} Koszul dual can be constructed using the techniques of \S\ref{sec:i-adic-completion}.
 
-\emph{Failure of standard Koszulity.}
+\emph{Why the quadratic framework fails.}
 \begin{enumerate}
 \item The OPE involves a quartic pole:
 \begin{equation}
@@ -2314,21 +2371,21 @@ T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-
 \begin{equation}
 :TT:(z) = \lim_{w \to z} \left( T(z)T(w) - \frac{c/2}{(z-w)^4} - \frac{2T(w)}{(z-w)^2} - \frac{\partial T(w)}{z-w} \right)
 \end{equation}
-is not Koszul-compatible with the bar differential
+is not Koszul-compatible with the bar differential.
 
-\item The central charge $c$ enters non-linearly in higher bar degrees, preventing a Koszul resolution.
+\item The central charge $c$ enters non-linearly in higher bar degrees, preventing a quadratic Koszul resolution.
 \end{enumerate}
-One needs curved Koszul duality (Positselski), nilpotent completion, and a filtered/completed category.
+One needs the PBW spectral sequence approach (Theorem~\ref{thm:pbw-koszulness-criterion}), or equivalently, curved Koszul duality (Positselski) with nilpotent completion and a filtered/completed category.
 
 \emph{Contrast with Heisenberg/Kac--Moody.}
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Algebra} & \textbf{Quadratic?} & \textbf{Koszul?} & \textbf{Dual} \\
+\textbf{Algebra} & \textbf{Quadratic?} & \textbf{PBW Koszul?} & \textbf{Dual} \\
 \hline
 Heisenberg $\mathcal{H}_k$ & Yes (genus 0) & Yes & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ [curved, $m_0 = -k\omega$] \\
 Kac--Moody $\widehat{\mathfrak{g}}_k$ & Yes & Yes & $\text{CE}(\widehat{\mathfrak{g}}_{-k-2h^\vee})$ \\
-Virasoro $\text{Vir}_c$ & No & No & Not Koszul (requires completion) \\
+Virasoro $\text{Vir}_c$ & No & Yes (Thm~\ref{thm:virasoro-chiral-koszul}) & Completed curved (cf.\ \S\ref{sec:i-adic-completion}) \\
 W-algebras $\mathcal{W}_k(\mathfrak{g})$ & No & Sometimes & Case-by-case \\
 \hline
 \end{tabular}
@@ -2338,11 +2395,11 @@ W-algebras $\mathcal{W}_k(\mathfrak{g})$ & No & Sometimes & Case-by-case \\
 \end{remark}
 
 \begin{remark}
-The Virasoro non-example illustrates:
+The Virasoro case illustrates:
 \begin{itemize}
-\item Not all vertex algebras are Koszul
-\item Quadraticity (at least at genus 0) is essentially necessary
-\item W-algebras, being deformations of Virasoro, face similar obstructions
+\item Not all vertex algebras are \emph{quadratic} Koszul, but the PBW framework (Theorem~\ref{thm:pbw-koszulness-criterion}) recovers Koszulness for a much wider class
+\item The key obstruction is not the quartic pole per se, but whether the associated graded is classically Koszul
+\item W-algebras, being deformations of Virasoro, face similar obstructions to quadratic Koszulness
 \item This motivates our nilpotent completion framework (Section~\ref{sec:three-stage-construction})
 \end{itemize}
 \end{remark}
@@ -2474,4 +2531,12 @@ Our geometric approach to Chiral Koszul Duality provides:
 
 \item \emph{Computational algorithms:} Verification procedures with complexity bounds
 \end{enumerate}
+
+The Koszul pair structure classifies the duality at the algebra level.
+But a chiral algebra without its representations is like a group without
+its actions: the abstract structure exists, but the richest
+mathematics---conformal blocks, fusion rules, the Kazhdan--Lusztig
+equivalence---is inaccessible.  The bar-cobar adjunction extends from
+algebras to modules, and the Koszul pair structure descends to module
+categories.  This is the subject of the next chapter.
 

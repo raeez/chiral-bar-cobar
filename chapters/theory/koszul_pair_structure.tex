@@ -15,13 +15,7 @@ Koszul duality encodes the same mathematical structure in two dual ways: through
 \end{remark}
 
 \begin{example}[Elementary illustration: functions vs distributions]
-Consider the simplest infinite-dimensional example:
-\begin{itemize}
-\item \emph{Algebra side}: Smooth functions $C^\infty(\mathbb{R})$ with pointwise multiplication
-\item \emph{Coalgebra side}: Distributions $\mathcal{D}'(\mathbb{R})$ with convolution coproduct
-\end{itemize}
-
-The Fourier transform provides the bridge:
+Consider the simplest infinite-dimensional example: on the algebra side, smooth functions $C^\infty(\mathbb{R})$ with pointwise multiplication; on the coalgebra side, distributions $\mathcal{D}'(\mathbb{R})$ with convolution coproduct.  The Fourier transform provides the bridge:
 \begin{align*}
 \text{Functions (algebra)} &\xrightarrow{\mathcal{F}} \text{Distributions (coalgebra)} \\
 f(x) \cdot g(x) &\longleftrightarrow \hat{f} * \hat{g} \quad \text{(convolution)}
@@ -50,21 +44,15 @@ Chiral algebras & Chiral coalgebras & \textbf{This work} \\
 
 \subsection{The Koszul condition}
 
-We state the criterion precisely:
-
-\begin{definition}[Koszul pair]
-Two structures $(A_1, A_2)$ form a \emph{Koszul pair} if:
-\begin{enumerate}
-\item $A_1$ is naturally an algebra (with products)
-\item $A_2$ is naturally an algebra (with products)
-\item The bar construction $\bar{B}(A_1)$ gives a coalgebra that is \emph{isomorphic} (up to quasi-isomorphism) to a coalgebra $A_2^!$ whose cobar $\Omega(A_2^!)$ reconstructs $A_2$
-\item Symmetrically, the same holds with roles of $A_1$ and $A_2$ reversed
-\end{enumerate}
-\end{definition}
-
-\begin{remark}
-Condition (3) says that applying bar to $A_1$ and then cobar yields $A_2$ up to quasi-isomorphism: the two algebras are dual presentations of the same underlying structure, related by the bar-cobar dictionary.
-\end{remark}
+We recall the notion of Koszul pair
+(Definition~\ref{def:koszul-pair-classical} for the classical setting,
+Definition~\ref{def:chiral-koszul-pair} for the chiral setting):
+two algebras $(A_1, A_2)$ form a \emph{Koszul pair} if the bar
+construction of each is quasi-isomorphic to the Koszul dual coalgebra
+of the other, and the cobar constructions provide quasi-inverse
+equivalences.  In other words, applying bar to $A_1$ and then cobar
+yields $A_2$ up to quasi-isomorphism, and vice versa: the two algebras
+are dual presentations of the same underlying structure.
 
 \section{Historical foundations: from quadratic duality to chiral structures}
 
@@ -72,7 +60,7 @@ Condition (3) says that applying bar to $A_1$ and then cobar yields $A_2$ up to 
 
 Koszul~\cite{Koszul50}, computing $H^*(\mathfrak{g}, \mathbb{C})$ for a finite-dimensional Lie algebra $\mathfrak{g}$, observed a duality between the symmetric algebra $S(\mathfrak{g}^*)$ (polynomial functions on $\mathfrak{g}$) and the exterior algebra $\Lambda(\mathfrak{g})$ (the Chevalley--Eilenberg complex).
 
-\begin{theorem}[Koszul 1950; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Koszul 1950 {\cite{Koszul50}}; \ClaimStatusProvedElsewhere]
 For a finite-dimensional Lie algebra $\mathfrak{g}$, there exists an acyclic complex (the Koszul complex):
 \[
 0 \to S(\mathfrak{g}^*) \otimes \Lambda^{\dim \mathfrak{g}}(\mathfrak{g}) \to S(\mathfrak{g}^*) \otimes \Lambda^{\dim \mathfrak{g}-1}(\mathfrak{g}) \to \cdots \to S(\mathfrak{g}^*) \to \mathbb{C} \to 0
@@ -100,7 +88,7 @@ R^{\perp} = \{r^* \in V^* \otimes V^* : \langle r^*, r \rangle = 0 \text{ for al
 
 The fundamental theorem of quadratic Koszul duality states:
 
-\begin{theorem}[Priddy 1970, BGS 1996; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Priddy 1970, BGS 1996 {\cite{Priddy70, BGS96}}; \ClaimStatusProvedElsewhere]
 A quadratic algebra $A$ is \emph{Koszul} (has a linear resolution) if and only if the Koszul complex
 \[
 \cdots \to A \otimes (A^!)_2 \to A \otimes (A^!)_1 \to A \otimes (A^!)_0 \to \mathbb{C} \to 0
@@ -264,6 +252,9 @@ where the differential $\delta_n$ is:
 &+ (-1)^{n+1} Y(f(a_0, \ldots, a_n), a_{n+1})
 \end{align}
 \end{theorem}
+\begin{proof}
+Apply $\mathrm{Hom}_{\mathcal{D}_X}(-, \mathcal{A})$ to the bar resolution (Theorem~\ref{thm:bar-cobar-isomorphism-main}); the stated differentials $\delta_n$ are the induced maps on $\mathrm{Hom}$ spaces.
+\end{proof}
 
 \subsection{Geometric realization via configuration spaces}
 
@@ -367,7 +358,7 @@ where the chiral composition $\circ_c$ is:
 \end{align}
 \end{definition}
 
-\begin{theorem}[Chiral Gerstenhaber algebra; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Chiral Gerstenhaber algebra {\cite{Ger63, Tamarkin00}}; \ClaimStatusProvedElsewhere]
 The cohomology $CH^*(\mathcal{A})$ with operations $(\cup, \{-,-\}_c)$ forms a Gerstenhaber algebra:
 \begin{enumerate}
 \item \emph{Chiral Jacobi identity}:
@@ -437,7 +428,7 @@ m_n(f_1, \ldots, f_n) = \int_{\overline{C}_n(\mathbb{P}^1)} f_1(z_1) \wedge \cdo
 
 By the commutator construction (antisymmetrizing the $A_\infty$ operations via the natural operad map $\mathrm{Lie} \to \mathrm{Ass}$), an $A_\infty$ structure induces an $L_\infty$ structure:
 
-\begin{theorem}[$L_\infty$ structure; \ClaimStatusProvedElsewhere]
+\begin{theorem}[$L_\infty$ structure {\cite{LV}}; \ClaimStatusProvedElsewhere]
 The shifted complex $CH^{*-1}(\mathcal{A})[-1]$ carries an $L_\infty$ structure with brackets:
 \[
 \ell_n: \Lambda^n CH^{*-1} \to CH^{*-1}[2-n]
@@ -537,8 +528,7 @@ H^*_{\mathrm{cont}}(\mathrm{Vir}, \mathbb{C} \cdot L_0;\, \mathbb{C})
 with respect to $L_0$ to account for the conformal weight grading).
 
 \index{Gel'fand--Fuchs theorem}
-By the theorem of Gel'fand--Fuchs (1970; see Fuks,
-\emph{Cohomology of Infinite-Dimensional Lie Algebras}, Ch.~2, \S2),
+By the theorem of Gel'fand--Fuchs (1970; see \cite[Ch.~2, \S2]{Fuks86}),
 the continuous relative cohomology of the Lie algebra $L_1 = t\,\mathbb{C}[[t]]\,d/dt$
 of formal vector fields vanishing at the origin is a polynomial ring:
 \[
@@ -582,7 +572,7 @@ The proof above assembles three ingredients:
 (ii)~the Beilinson--Drinfeld comparison between chiral Hochschild and
 continuous Lie algebra cohomology (\ClaimStatusProvedElsewhere, \cite{BD04});
 (iii)~the Gel'fand--Fuchs computation of $H^*(L_1; \mathbb{C})$
-(\ClaimStatusProvedElsewhere, Fuks 1986).
+(\ClaimStatusProvedElsewhere, \cite{Fuks86}).
 The combination is new to this work.
 \end{remark}
 
@@ -777,6 +767,13 @@ Under the Feigin--Frenkel involution $k \mapsto k' = -k - 2h^\vee$:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The dual level satisfies $k' + h^\vee = -(k + h^\vee) = -p/q$,
 so $|k' + h^\vee| = p/q$ and the \emph{denominator} is preserved.
+Note that $k' + h^\vee < 0$; the Kac--Wakimoto admissibility condition
+requires $k + h^\vee = p/q > 0$, but for the Feigin--Frenkel dual
+the relevant algebra is the Langlands dual $\widehat{\fg^\vee}_{k'}$,
+where $h^\vee(\fg^\vee)$ may differ from $h^\vee(\fg)$ in the
+non-simply-laced case.  In the simply-laced case $\fg = \fg^\vee$,
+and admissibility of~$k'$ is understood as $|k' + h^\vee| = p/q$ with
+the same Kac--Wakimoto bounds.
 \item The set of admissible levels for $\mathfrak{g}$ is mapped bijectively
 onto the set of admissible levels of opposite sign; in the
 simply-laced case the admissible levels $\{k : k + h^\vee = p/q,\;
@@ -798,7 +795,20 @@ $k + h^\vee \mapsto -(k+h^\vee)$, preserving the absolute value and
 negating the sign.  Since admissibility depends on $|k+h^\vee|$ being
 a rational number $p/q$ satisfying the Kac--Wakimoto bound
 $p \geq h^\vee$ (simply-laced) or $p \geq h$ (non-simply-laced),
-and $p/q = |-p/q|$, the involution preserves the admissibility condition.
+and $p/q = |-p/q|$, the involution preserves the \emph{numerical}
+admissibility condition on $|k+h^\vee|$.
+
+\emph{Sign convention.}
+Strictly speaking, the Kac--Wakimoto definition of admissible level
+requires $k + h^\vee > 0$ (i.e., a \emph{positive} rational number $p/q$),
+so the dual level $k'$ with $k' + h^\vee = -(k+h^\vee) < 0$ is not
+admissible in the literal Kac--Wakimoto sense.  The statement should be
+understood in the extended sense: the representation-theoretic data
+(admissible weights, fusion rules, modular properties) at level $k'$
+are well-defined via analytic continuation in the level, as formalized
+in the Feigin--Frenkel framework~\cite{FF92}, where the involution
+$k \mapsto -k-2h^\vee$ is an equivalence of vertex algebra categories
+regardless of the sign of $k + h^\vee$.
 
 For part~(iii): the derived equivalence of
 Theorem~\ref{thm:module-category-equivalence} applies to Koszul pairs
@@ -1129,7 +1139,7 @@ At critical level $k = -h^\vee$, the Feigin--Frenkel center $\mathfrak{z}(\wideh
 
 \subsection{Langlands duality for W-algebras}
 
-\begin{theorem}[Frenkel-Gaitsgory; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Frenkel--Gaitsgory {\cite{FG06}}; \ClaimStatusProvedElsewhere]
 At critical level, W-algebras exhibit Langlands duality:
 \[
 \mathcal{W}^{-h^{\vee}}(\mathfrak{g})^! = \mathcal{W}^{-h^{\vee}}(\mathfrak{g}^L)
@@ -1161,7 +1171,7 @@ e_{subreg} = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ 
 \]
 \end{definition}
 
-\begin{theorem}[Structure of $\mathcal{W}(\mathfrak{sl}_4, e_{subreg})$; \ClaimStatusProvedElsewhere]\label{thm:w-algebra-sl4}
+\begin{theorem}[Structure of $\mathcal{W}(\mathfrak{sl}_4, e_{subreg})$ {\cite{KRW}}; \ClaimStatusProvedElsewhere]\label{thm:w-algebra-sl4}
 The subregular W-algebra has generators:
 \begin{itemize}
 \item $T$: stress tensor (weight 2)
@@ -1175,8 +1185,21 @@ The fractional weights require orbifold constructions on configuration spaces.
 
 \subsection{S-duality and Koszul duality}
 
-\begin{theorem}[Gaiotto-Witten S-duality; \ClaimStatusConjectured]\label{thm:gw-s-duality}
-There exists a duality:
+\begin{theorem}[Feigin--Frenkel duality as S-duality, principal simply-laced case; \ClaimStatusProvedElsewhere]\label{thm:ff-s-duality}
+For simply-laced $\mathfrak{g}$ and principal nilpotent $f = f_{\mathrm{prin}}$,
+the Gaiotto--Witten S-duality reduces to Feigin--Frenkel duality
+\cite{FF92}:
+\[
+\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})
+\;\longleftrightarrow\;
+\mathcal{W}^{k'}(\mathfrak{g}, f_{\mathrm{prin}}),
+\qquad k' = -k - 2h^{\vee}.
+\]
+This is a theorem of Feigin--Frenkel \cite{FF92}.
+\end{theorem}
+
+\begin{conjecture}[Gaiotto-Witten S-duality, general case; \ClaimStatusConjectured]\label{conj:gw-s-duality}
+For general $\mathfrak{g}$ and nilpotent $f$, there exists a duality:
 \[
 \mathcal{W}^k(\mathfrak{g}, f) \longleftrightarrow \mathcal{W}^{k^L}(\mathfrak{g}^L, f^L)
 \]
@@ -1185,20 +1208,17 @@ where:
 \item $k^L = -h^{\vee}(\mathfrak{g}^L) + r^{\vee}/(k + h^{\vee}(\mathfrak{g}))$, where $r^{\vee}$ is the lacing number of $\mathfrak{g}$
 \item $f^L$ is the Spaltenstein dual nilpotent
 \end{itemize}
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
-The Gaiotto--Witten S-duality is labeled \ClaimStatusConjectured{} because
-the level correspondence $k \leftrightarrow k^L$ and the Spaltenstein dual
-nilpotent $f^L$ arise from S-duality of 4d $\mathcal{N}=4$ gauge theory
-with boundary conditions (Gaiotto--Witten \cite{GW09}).  The mathematical
-content --- that the resulting W-algebras form Koszul dual pairs --- is
-partially verified: for $\mathfrak{g} = \mathfrak{sl}_2$ and principal
-nilpotent, this reduces to Feigin--Frenkel duality $k \leftrightarrow
--k - 2h^\vee$, which is proved.  The general case involving non-principal
+The principal simply-laced case (Theorem~\ref{thm:ff-s-duality}) is the
+Feigin--Frenkel duality theorem \cite{FF92}, which is proved.  For hook-type
+nilpotent orbits in type $A$, Arakawa--van~Ekeren \cite{AvE23} have
+established the duality (see Remark~\ref{rem:hook-type-evidence}).
+The general conjecture involving non-principal
 nilpotents and Langlands dual groups requires gauge-theoretic input
-(boundary conditions for twisted $\mathcal{N}=4$ SYM) that is beyond
-the scope of this monograph.
+(boundary conditions for twisted $\mathcal{N}=4$ SYM, Gaiotto--Witten
+\cite{GW09}) that is beyond the scope of this monograph.
 \end{remark}
 
 This provides a vast class of non-quadratic Koszul dual pairs.
@@ -1211,7 +1231,7 @@ This provides a vast class of non-quadratic Koszul dual pairs.
 
 \subsection{The derived equivalence}
 
-\begin{theorem}[Koszul equivalence of categories; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Koszul equivalence of categories {\cite{BGS96}}; \ClaimStatusProvedElsewhere]
 If $(\mathcal{A}, \mathcal{A}^!)$ form a Koszul pair of chiral algebras, there is an equivalence of triangulated categories:
 \[
 D^b(\mathcal{A}\text{-mod}) \simeq D^b(\mathcal{A}^!\text{-mod})
@@ -1223,7 +1243,7 @@ The equivalence above holds for quadratic, uncurved Koszul pairs with bounded-be
 \end{remark}
 
 \begin{theorem}[Positselski comodule-contramodule equivalence; \ClaimStatusProvedHere]
-\label{conj:positselski-chiral}
+\label{thm:positselski-chiral}
 \index{Positselski!comodule-contramodule}
 \index{derived category!comodule-contramodule equivalence}
 For a Koszul chiral algebra $\mathcal{A}$ with curved bar complex $\bar{B}(\mathcal{A})$, there is an equivalence of triangulated categories:
@@ -1339,7 +1359,7 @@ Y_t(a,b) = Y_0(a,b) + t Y_1(a,b) + t^2 Y_2(a,b) + \cdots
 where $Y_0$ is the original multiplication.
 \end{definition}
 
-\begin{theorem}[Deformations and Maurer--Cartan; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Deformations and Maurer--Cartan {\cite{KontsevichSoibelman}}; \ClaimStatusProvedElsewhere]
 Formal deformations of $\mathcal{A}$ are in bijection with Maurer--Cartan elements in $CH^2(\mathcal{A})[[t]]$.
 \end{theorem}
 
@@ -1377,7 +1397,7 @@ is precisely the equation of motion for Chern--Simons theory with higher correct
 
 \subsection{Witten's Chern--Simons interpretation}
 
-Chern--Simons theory on a 3-manifold $M$ with gauge group $G$ at level $k$ produces~\cite{Witten}:
+Chern--Simons theory on a 3-manifold $M$ with gauge group $G$ at level $k$ produces~\cite{Wit89}:
 \begin{itemize}
 \item The WZW model on $\partial M$ 
 \item Jones polynomial invariants of knots in $M$
@@ -1391,7 +1411,7 @@ S_{CS}(A) = \frac{k}{4\pi} \int_M \text{Tr}\left(A \wedge dA + \frac{2}{3}A \wed
 
 \subsection{The precise connection}
 
-\begin{theorem}[Chern--Simons/Koszul duality correspondence; \ClaimStatusConjectured]
+\begin{conjecture}[Chern--Simons/Koszul duality correspondence; \ClaimStatusConjectured]
 \index{Chern--Simons!Koszul correspondence}
 For a chiral algebra $\mathcal{A}$ with Koszul dual $\mathcal{A}^!$, the Maurer--Cartan equation in $\mathcal{A}^! \otimes B$ is equivalent to the equation of motion for a Chern--Simons-type theory where:
 \begin{enumerate}
@@ -1404,7 +1424,7 @@ For a chiral algebra $\mathcal{A}$ with Koszul dual $\mathcal{A}^!$, the Maurer-
 \item The term $m_3(\alpha, \alpha, \alpha)$ is a cubic correction beyond standard CS
 \item Higher $m_n$ terms give higher-order corrections
 \end{enumerate}
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Heuristic argument]\label{rem:cs-koszul-heuristic}
 We establish the correspondence by comparing the structures:
@@ -1442,14 +1462,14 @@ Costello--Gwilliam perturbative QFT framework.
 
 \subsection{Physical interpretation: quantum groups and Chern--Simons}
 
-\begin{theorem}[Witten--Reshetikhin--Turaev; \ClaimStatusConjectured]\label{thm:wrt-conjecture}
+\begin{conjecture}[Witten--Reshetikhin--Turaev; \ClaimStatusConjectured]\label{conj:wrt-conjecture}
 The Yangian $\leftrightarrow$ quantum affine Koszul duality corresponds to:
 \begin{itemize}
 \item Chern--Simons theory with gauge group $G$ at level $k$
 \item Deformed Chern--Simons with gauge group $G^L$ at level $k^L$
 \end{itemize}
 where the deformation is precisely the non-quadratic structure.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
 This theorem relates Yangian--quantum affine Koszul duality to
@@ -1500,14 +1520,14 @@ where $\Gamma$ is the orbifold group.
 
 \subsection{The holographic interpretation}
 
-\begin{theorem}[AdS/CFT as Chern--Simons/Koszul duality; \ClaimStatusConjectured]
+\begin{conjecture}[AdS/CFT as Chern--Simons/Koszul duality; \ClaimStatusConjectured]
 The AdS$_3$/CFT$_2$ correspondence can be understood as:
 \begin{itemize}
 \item Bulk: Chern--Simons theory on AdS$_3$
 \item Boundary: Chiral algebra (WZW or W-algebra)
 \item The Koszul duality exchanges bulk and boundary descriptions
 \end{itemize}
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]
 The interpretation of AdS$_3$/CFT$_2$ as Chern--Simons/Koszul duality
@@ -1548,8 +1568,9 @@ The chiral bar complex carries a BV algebra structure where:
 (residue extraction along diagonals)
 \item The antibracket $\{-,-\}$ is the failure of $\Delta$ to be a
 derivation (equivalently, the symplectic pairing on $T^*C_n(X)$)
-\item The master equation $\frac{1}{2}\{S, S\} + \hbar\Delta S = 0$ is
-solved by the bar-cobar pairing
+\item The linearized master equation $d_{\bar{B}}^2 = 0$ holds
+(Theorem~\ref{thm:bar-nilpotency-complete}); the full QME solution
+is established in Part~III
 \end{enumerate}
 \end{theorem}
 
@@ -1562,12 +1583,15 @@ Arnold relation $\omega_{ij} \wedge \omega_{jk} + \omega_{jk} \wedge \omega_{ki}
 $\Delta(abc) - \Delta(ab)c - (-1)^{|a|}a\Delta(bc) - (-1)^{(|a|+1)|b|}b\Delta(ac)
 + \Delta(a)bc + (-1)^{|a|}a\Delta(b)c + (-1)^{|a|+|b|}ab\Delta(c) = 0$
 follows from the Leibniz rule for residues on triple collisions.
-Item~(3): for Koszul~$\mathcal{A}$,
-the Verdier duality $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$
-identifies the bar-cobar pairing as a solution of the QME, since the
-bar differential $d_{\bar{B}}$ satisfies $d_{\bar{B}}^2 = 0$
-(Theorem~\ref{thm:bar-nilpotency-complete}), which is the linearized QME.
-See Part~III for the detailed verification.
+Item~(3): the bar differential satisfies $d_{\bar{B}}^2 = 0$
+(Theorem~\ref{thm:bar-nilpotency-complete}), which is the \emph{linearized} QME
+($\hbar\Delta S = 0$ at $S = 0$).  Items~(1) and~(2) provide the BV data
+($\Delta$, $\{-,-\}$) making the bar complex a BV algebra.  For Koszul~$\mathcal{A}$,
+Verdier duality $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$
+identifies the bar-cobar pairing as a candidate solution of the full QME
+$\frac{1}{2}\{S,S\} + \hbar\Delta S = 0$; verification of the interaction
+term $\{S,S\}$ requires the explicit propagator calculus of
+Part~III (Chapter~\ref{ch:bv-brst}).
 \end{proof}
 
 \begin{remark}[Chern--Simons interpretation; \ClaimStatusConjectured]\label{rem:cs-interp}

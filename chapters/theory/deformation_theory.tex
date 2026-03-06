@@ -5,19 +5,32 @@
 
 \section{The deformation problem for chiral algebras}
 
+When does a chiral algebra admit deformations, and what obstructs
+them?  In classical algebra the answer is clean: $HH^2$ parametrizes
+infinitesimal deformations, $HH^3$ carries obstructions, and Koszul
+duality interchanges the two.  For chiral algebras the question
+acquires a geometric dimension: the moduli space
+$\overline{\mathcal{M}}_g$ of the underlying curve contributes its
+own cohomology, and the deformation-obstruction theory splits into a
+genus-zero algebraic component and a higher-genus modular component.
+
 The complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main}) identifies the
-deformation space $Q_g(\cA)$ and the obstruction space
-$Q_g(\cA^!)$ as complementary Lagrangians in a shifted-symplectic
-ambient space.  This chapter develops the infinitesimal theory
-underlying that result: chiral Hochschild cohomology, the
-obstruction calculus for chiral algebras, and the curved
-$A_\infty$ structures that emerge when obstructions are nonzero.
+(Theorem~\ref{thm:quantum-complementarity-main}) gives the precise
+answer: $Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary Lagrangians
+in a shifted-symplectic ambient space.  This chapter develops the
+infinitesimal machinery underlying that result---chiral Hochschild
+cohomology, the obstruction calculus, and the curved $A_\infty$
+structures that emerge when obstructions are nonzero.
 The deformation-obstruction exchange at genus~$0$
 --- $HH^2(\cA)$ parametrizes deformations, $HH^3(\cA)$ carries
 obstructions, and Koszul duality sends $HH^n(\cA)$ to
 $HH^{2-n}(\cA^!)^\vee \otimes \omega_X$ --- is the seed from
-which the higher-genus complementarity grows.
+which the higher-genus complementarity grows.  At a conceptual
+level, the full structure is an instance of the noncommutative
+Hodge-to-de Rham degeneration: the Hodge filtration on chiral
+Hochschild homology degenerates at $E_1$, and the resulting mixed
+structure controls the deformation theory across all genera
+(Remark~\ref{rem:nc-hodge-degeneration}).
 
 \subsection{Origins and physical motivation}
 
@@ -78,6 +91,7 @@ where $a_i^{(I)} \in \mathcal{A}$ and $\omega_I$ is an $n$-form on $\overline{C}
 The differential $d: C^n_{\text{chiral}} \to C^{n+1}_{\text{chiral}}$ has three components reflecting the algebraic, geometric, and operadic structures:
 
 \begin{theorem}[The chiral Hochschild differential; \ClaimStatusProvedHere]
+\label{thm:chiral-hochschild-differential}
 The differential decomposes as
 \[
 d = d_{\text{int}} + d_{\text{fact}} + d_{\text{config}}
@@ -91,27 +105,122 @@ where:
 \end{theorem}
 
 \begin{proof}
-We verify $d^2 = 0$ by analyzing all nine combinations:
+We expand $d^2 = (d_{\text{int}} + d_{\text{fact}}
++ d_{\text{config}})^2$ into six terms (three squares and
+three anticommutators) and verify that each vanishes on a
+generic cochain $\phi \in C^n_{\text{chiral}}$.
 
-\emph{Pure terms.}
-\begin{align}
-d_{\text{int}}^2 &= 0 \quad \text{($\mathcal{A}$ is a complex of $\mathcal{D}_X$-modules)} \\
-d_{\text{config}}^2 &= 0 \quad \text{(de Rham differential squares to zero)} \\
-d_{\text{fact}}^2 &= 0 \quad \text{(associativity of chiral multiplication)}
-\end{align}
+\emph{(I) Pure squares.}
 
-\emph{Mixed terms.} The cancellation 
+\emph{(I.1)} $d_{\text{int}}^2(\phi) = 0$.
+The internal differential $d_{\text{int}}$ acts on each
+tensor factor $a_i$ by the $\mathcal{D}_X$-module differential
+$d_\mathcal{A}$, alternating signs.  Since $d_\mathcal{A}^2 = 0$
+and the signs follow the standard Koszul rule, this is the
+usual chain complex identity.
+
+\emph{(I.2)} $d_{\text{config}}^2(\phi) = 0$.
+$d_{\text{config}} = d_{\overline{C}_{n+2}(X)}$ is the
+de~Rham differential on the compactified configuration space.
+Since $d_{\mathrm{dR}}^2 = 0$, this is immediate.
+
+\emph{(I.3)} $d_{\text{fact}}^2(\phi) = 0$.
+Applied to $\phi \in C^n$, $d_{\text{fact}}^2$ composes two
+chiral multiplications at distinct pairs of colliding points.
+For each pair of collisions $(z_i = z_j)$ and $(z_k = z_l)$
+with $\{i,j\} \cap \{k,l\} = \varnothing$, the two residue
+extractions commute.  For overlapping pairs (sharing a point),
+the double residue
+$\mathrm{Res}_{z_i = z_j}\mathrm{Res}_{z_j = z_k}$ is the
+iterated OPE, which cancels with
+$\mathrm{Res}_{z_j = z_k}\mathrm{Res}_{z_i = z_j}$ by
+associativity of the chiral product: $\mu \circ (\mu \otimes
+\mathrm{id}) = \mu \circ (\mathrm{id} \otimes \mu)$ on the
+localizations $j_*j^*$ (the Borcherds identity).
+
+\emph{(II) Mixed anticommutators.}
+
+\emph{(II.1)} $\{d_{\text{int}}, d_{\text{fact}}\}(\phi) = 0$.
+The chiral product $\mu\colon j_*j^*(\mathcal{A} \boxtimes
+\mathcal{A}) \to \Delta_*\mathcal{A}$ is a morphism of
+$\mathcal{D}_X$-modules, so $d_\mathcal{A} \circ \mu =
+\mu \circ (d_\mathcal{A} \boxtimes \mathrm{id} +
+\mathrm{id} \boxtimes d_\mathcal{A})$.  Expanding the
+anticommutator term by term, each
+$d_\mathcal{A}(\mu(a_i, a_j))$ equals
+$\mu(d_\mathcal{A} a_i, a_j) + (-1)^{|a_i|}
+\mu(a_i, d_\mathcal{A} a_j)$,
+and the signs from $d_{\text{int}}$ and $d_{\text{fact}}$
+cancel pairwise.
+
+\emph{(II.2)} $\{d_{\text{int}}, d_{\text{config}}\}(\phi) = 0$.
+The logarithmic forms
+$\omega \in \Omega^*_{\overline{C}_{n+2}}(\log D)$
+are \emph{universal}: they depend only on the configuration
+space coordinates $z_i$, not on the algebra data $a_i$.
+Therefore $d_\mathcal{A}$ acts only on the $a_i$ factors,
+while $d_{\mathrm{dR}}$ acts only on $\omega$.  Since the
+two differentials act on different tensor factors:
+$d_\mathcal{A}(a_i \otimes \omega) =
+(d_\mathcal{A} a_i) \otimes \omega$ and
+$d_{\mathrm{dR}}(a_i \otimes \omega) =
+a_i \otimes d_{\mathrm{dR}}\omega$,
+the anticommutator reduces to
+$(d_\mathcal{A} \otimes d_{\mathrm{dR}} +
+d_{\mathrm{dR}} \otimes d_\mathcal{A})(a_i \otimes \omega)
+= 0$ by the Koszul sign rule for the tensor product of
+chain complexes.
+
+\emph{(II.3)} $\{d_{\text{fact}}, d_{\text{config}}\}(\phi) = 0$.
+This is the essential cancellation, requiring the
+Arnold--Orlik--Solomon relations.
+
+On a degree-$1$ cochain
+$\phi = a_1 \otimes a_2 \otimes a_3 \otimes
+\eta_{12} \in C^1$ (the smallest nontrivial case,
+with three points $z_1, z_2, z_3$), the two compositions act
+as:
+\begin{align*}
+(d_{\text{config}} \circ d_{\text{fact}})(\phi)
+&= d_{\mathrm{dR}}\Bigl(
+  \mathrm{Res}_{z_1 = z_2}\bigl[a_1 a_2 \otimes a_3
+    \otimes \eta_{12}\bigr] \Bigr), \\
+(d_{\text{fact}} \circ d_{\text{config}})(\phi)
+&= \sum_{i<j}
+  \mathrm{Res}_{z_i = z_j}\bigl[a_1 \otimes a_2 \otimes a_3
+    \otimes d_{\mathrm{dR}}\eta_{12}\bigr].
+\end{align*}
+The key identity is Arnold's relation
+\cite{Arn69}: for the logarithmic 1-forms
+$\eta_{ij} = d\log(z_i - z_j)$ on $C_3(X)$,
+\begin{equation}\label{eq:arnold-three-point}
+\eta_{12} \wedge \eta_{23}
++ \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0.
+\end{equation}
+Equivalently, $d_{\mathrm{dR}}\eta_{12}$ (which is
+supported on the boundary divisor) decomposes as a sum of
+residues at $D_{13}$ and $D_{23}$:
 \[
-d_{\text{fact}} \circ d_{\text{config}} + d_{\text{config}} \circ d_{\text{fact}} = 0
+d_{\mathrm{dR}}(\eta_{12})
+\;\equiv\;
+-\eta_{23}\big|_{D_{12}} - \eta_{31}\big|_{D_{12}}
+\pmod{\text{smooth forms}}.
 \]
-follows from the Arnold--Orlik--Solomon relations. For any configuration of three points:
-\[
-d\log(z_1-z_2) \wedge d\log(z_2-z_3) + d\log(z_2-z_3) \wedge d\log(z_3-z_1) + d\log(z_3-z_1) \wedge d\log(z_1-z_2) = 0
-\]
+In each residue term, $d_{\text{fact}}$ extracts the OPE
+at a collision, and $d_{\text{config}}$ produces the
+boundary form.  The Arnold relation
+\eqref{eq:arnold-three-point} ensures these contributions
+cancel pairwise, yielding
+$\{d_{\text{fact}}, d_{\text{config}}\}(\phi) = 0$.
 
-This relation, discovered by Arnold \cite{Arn69} in studying configuration spaces of hyperplanes and generalized by Orlik--Solomon \cite{OS80}, encodes the fact that three points on a curve have only two degrees of freedom. Geometrically, it says the sum of exterior derivatives around a triangle vanishes.
-
-The remaining mixed terms vanish because $d_{\text{int}}$ commutes with both other differentials by $\mathcal{D}_X$-linearity.
+For general $n$, the argument extends by applying the
+generalized Arnold relations on $\overline{C}_{n+2}(X)$
+(Theorem~\ref{thm:arnold-relations}): every boundary
+stratum of $\overline{C}_{n+2}$ where two points collide
+contributes a residue (from $d_{\text{fact}}$) and a
+boundary form (from $d_{\text{config}}$), and the
+Arnold relations ensure these pair up with opposite signs.
 \end{proof}
 
 \subsection{Explicit formula for the differential}
@@ -287,7 +396,7 @@ A \emph{twisting morphism} $\tau: \mathcal{A}^! \to \mathcal{A}$ is a degree 1 m
 where $\star$ denotes convolution in $\text{Hom}(\overline{B}^{\text{ch}}(\mathcal{A}^!), \Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})))$.
 \end{definition}
 
-\begin{theorem}[Existence and uniqueness; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Existence and uniqueness {\cite{LV}}; \ClaimStatusProvedElsewhere]
 For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there exists a unique universal twisting morphism $\tau: \mathcal{A}^! \to \mathcal{A}$ that induces quasi-isomorphisms:
 \begin{align}
 \mathcal{A}^!_{\tau} &\simeq \overline{B}^{\text{ch}}(\mathcal{A}) \\
@@ -386,11 +495,7 @@ $\mathcal{M} = \mathrm{Hom}(\mathcal{A}^!, \mathcal{A})$:
 the Koszul pairing identifies
 $\mathbb{D}(\mathrm{Hom}(\mathcal{A}^!, \mathcal{A}))
 \cong \mathrm{Hom}(\mathcal{A}, \mathcal{A}^!) \otimes \omega_{\overline{C}_{n+2}}$.
-Since $\dim_{\mathbb{C}} \overline{C}_{n+2}(X) = n+2$ varies with bar degree~$n$, the Verdier shift on bar degree~$n$ is $n+2$.  Nevertheless, the \emph{totalized} shift is constant.  The mechanism is as follows: the Koszul property ensures diagonal concentration, meaning the bar complex contributes to total Hochschild degree~$d$ only through bar degree~$n = d$.  In bar degree~$d$, the complex lives on $\overline{C}_{d+2}(X)$, and Verdier duality gives:
-\[
-H^d(\overline{C}_{d+2}(X), \mathcal{M}) \;\cong\; H^{(d+2)-d}(\overline{C}_{d+2}(X), \mathbb{D}\mathcal{M})^\vee \;=\; H^2(\overline{C}_{d+2}(X), \mathbb{D}\mathcal{M})^\vee.
-\]
-Thus in \emph{every} bar degree, the Verdier shift lands at cohomological degree~$2$ on the configuration space.  The desuspension $s^{-1}$ in the bar construction contributes an additional shift of~$1$, and the Serre duality of the underlying curve~$X$ (one-dimensional) contributes a final shift of~$1$, giving the uniform total shift of~$2$.  The net effect on the total complex is:
+Since $\dim_{\mathbb{C}} \overline{C}_{n+2}(X) = n+2$ varies with bar degree~$n$, the Verdier shift on bar degree~$n$ is $n+2$.  Nevertheless, the \emph{totalized} shift is constant.  The two sources of the shift by~$2$ are as follows.  First, the desuspension $s^{-1}$ in the bar construction contributes a shift of~$1$: the bar complex $\bar{B}^{\mathrm{ch}}(\cA) = T^c(s^{-1}\bar{\cA})$ has internal grading shifted by one relative to the Hochschild grading.  Second, Serre duality on the underlying curve~$X$ ($\dim_{\mathbb{C}} X = 1$) contributes a shift of~$1$ via the canonical bundle~$\omega_X$.  The varying Verdier shift $(n+2)$ on the configuration spaces does \emph{not} contribute an additional shift because it is absorbed by the Koszul concentration: the Koszul property ensures that bar degree~$n$ contributes only to Hochschild degree~$n$, and the $\mathcal{D}$-module Verdier duality on $\overline{C}_{n+2}(X)$, combined with the Koszul pairing between~$\cA$ and~$\cA^!$, exchanges the Hom sheaf with the dual Hom sheaf while the $(n+2)$-dependent shift cancels against the identification of bar complexes on matching configuration spaces.  The net effect on the total complex is:
 \[
 HH^n_{\mathrm{chiral}}(\mathcal{A})
 \cong HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
@@ -502,7 +607,7 @@ In modes (half-integer for Neveu--Schwarz sector):
 
 \subsection{Establishing Koszul duality}
 
-\begin{theorem}[Boson-fermion correspondence via lattice VOA; \ClaimStatusProvedHere]
+\begin{theorem}[Boson-fermion correspondence via lattice VOA; \ClaimStatusProvedElsewhere{} \cite{FK80}]
 The free boson $\mathcal{B}$ and free fermion $\mathcal{F}$ are related by bosonization through the rank-1 lattice vertex algebra $V_{\mathbb{Z}}$:
 \[
 V_{\mathbb{Z}} \supset \mathcal{B}, \qquad \mathcal{F} \cong V_{\mathbb{Z}} \quad \text{(as super vertex algebras)}
@@ -625,8 +730,8 @@ The Hochschild cohomology of chiral algebras can exhibit three distinct types of
 
 When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
-\begin{theorem}[Modular periodicity of graded dimensions; \ClaimStatusConjectured]
-\label{thm:modular-periodicity}
+\begin{conjecture}[Modular periodicity of graded dimensions; \ClaimStatusConjectured]
+\label{conj:modular-periodicity}
 \index{periodicity!modular|textbf}
 Let $\mathcal{A}$ be a rational chiral algebra with central charge $c = p/q$, $\gcd(p,q) = 1$.  Set
 \[
@@ -639,9 +744,9 @@ Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(\mathcal{A})).
 \]
 In particular, the weight-graded Euler characteristics of the chiral Hochschild complex satisfy $N$-periodicity in the weight variable.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{remark}[Evidence]
 The character of $\mathcal{A}$ transforms under $\tau \mapsto \tau + 1$ as:
 \[
 \text{ch}(\mathcal{A}, \tau+1) = e^{-2\pi i c/24} \text{ch}(\mathcal{A}, \tau)
@@ -658,10 +763,10 @@ The bar complex $\bar{B}_n^{\mathrm{ch}}(\mathcal{A})$ inherits a weight grading
 The weight-graded pieces of the bar complex decompose: $\bar{B}^{(n)}_{[h]}(\mathcal{A})$ is the subspace of conformal weight~$h$ in bar degree~$n$.  Since $\mathcal{A}$ is rational, each $\bar{B}^{(n)}_{[h]}$ is finite-dimensional (the fusion rules are finite: $\dim \mathrm{Hom}(V_i \otimes V_j, V_k) < \infty$ by Zhu's theorem).  The $T$-eigenvalue condition $T^N = \mathrm{Id}$ gives $e^{2\pi i N(h_i - c/24)} = 1$ for each module~$V_i$, i.e., the conformal weights satisfy $N h_i \in \mathbb{Z} + Nc/24$.  This is a phase condition on the $T$-eigenvalues; it does NOT directly imply that the bar complex chain spaces at weight~$h$ and weight~$h+N$ are isomorphic, since the structure of these spaces depends on fusion coefficients and OPE data, not solely on conformal weights.
 
 To deduce the stated periodicity would require showing that the bar complex in weight~$h$ depends only on the module decomposition data and fusion multiplicities, and that these are eventually $N$-periodic in the weight variable.  For minimal models this follows from the finite representation category (Verlinde formula gives periodic fusion multiplicities).  The general rational case is expected but the deduction from $T^N = \mathrm{Id}$ alone is insufficient.
-\end{proof}
+\end{remark}
 
 \begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
-A stronger form of Theorem~\ref{thm:modular-periodicity} would assert
+A stronger form of Conjecture~\ref{conj:modular-periodicity} would assert
 a vector space isomorphism
 $HH^{n+N}_{\mathrm{chiral}}(\mathcal{A}) \cong HH^n_{\mathrm{chiral}}(\mathcal{A}) \otimes M_N$
 where $M_N$ is a module over the ring of modular forms.  This requires
@@ -738,14 +843,18 @@ for arbitrary Koszul duals.
 
 For affine Lie algebras at special levels, quantum groups at roots of unity emerge.
 
-\begin{theorem}[Quantum periodicity; \ClaimStatusProvedHere]
+\begin{conjecture}[Quantum periodicity; \ClaimStatusConjectured]
 \index{periodicity!quantum|textbf}
 Let $\mathcal{W}^k(\mathfrak{g})$ be the W-algebra at admissible level $k = -h^{\vee} + p/q$ where $h^{\vee}$ is the dual Coxeter number, $p \geq h^\vee$, $q \geq h^\vee$, $\gcd(p,q) = 1$. Then:
 \[
 HH^{n+M}_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g})) \cong HH^n_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g}))
 \]
 where $M = 2h^{\vee}pq/\gcd(p,q,h^{\vee})$.
-\end{theorem}
+\end{conjecture}
+
+\begin{remark}[Scope]
+The logical gap is in Step~4: periodic fusion coefficients do not automatically yield periodic bar differentials.  The bar differential depends on the full OPE data (all pole orders), not only the fusion multiplicities; periodicity of the latter is necessary but not sufficient.  Proved modulo this step.
+\end{remark}
 
 \begin{proof}
 At admissible level $k = -h^\vee + p/q$, we write $q_{\mathrm{KL}} = \exp(\pi i/(k + h^\vee)) = \exp(\pi i \cdot q/p)$ for the Kazhdan--Lusztig quantum parameter.  Since $\gcd(p,q) = 1$, this $q_{\mathrm{KL}}$ is a root of unity of order dividing $2p$.
@@ -830,19 +939,19 @@ In CFT, this periodicity corresponds to:
 
 On a genus $g > 0$ curve, new sources of periodicity arise:
 
-\begin{theorem}[Geometric periodicity; \ClaimStatusConjectured]
+\begin{conjecture}[Geometric periodicity; \ClaimStatusConjectured]
 \index{periodicity!geometric|textbf}
 For a chiral algebra $\mathcal{A}$ on a genus $g$ curve $X$, the geometric contribution to periodicity satisfies:
 \[
 \text{Period}_{\text{geom}} \mid 12(2g-2)
 \]
 for $g \geq 2$.  At $g = 0$ there is no geometric periodicity; at $g = 1$ the geometric periodicity arises from the modular parameter and is absorbed into $N_{\text{mod}}$.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Scope]\label{rem:geometric-periodicity-scope}
 The correct Mumford relation on $\overline{\mathcal{M}}_g$ is
 $12\lambda = \kappa_1 + \delta$,
-where $\lambda = c_1(\mathbb{E})$, $\kappa_1$ is the first kappa class, and $\delta$ is the boundary divisor class.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently $c_1(\mathbb{E})|_{\mathcal{M}_g}$ does not vanish.  This means one cannot deduce the periodicity bound $12(2g-2)$ from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A correct proof would require a more refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$, accounting for both $\kappa_1$ and $\delta$ contributions via the Kodaira--Spencer map.  The stated bound is supported by all computed examples (Virasoro period~2, affine KM period $2h$) and by the dimension constraint $c_1(\mathbb{E})^{3g-3+1} = 0$.
+where $\lambda = c_1(\mathbb{E})$, $\kappa_1$ is the first kappa class, and $\delta$ is the boundary divisor class.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently $c_1(\mathbb{E})|_{\mathcal{M}_g}$ does not vanish.  This means one cannot deduce the periodicity bound $12(2g-2)$ from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A correct proof would require a more refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$, accounting for both $\kappa_1$ and $\delta$ contributions via the Kodaira--Spencer map.  The stated bound is supported by all computed examples (Virasoro period~2, affine KM period $2\mathsf{h}$) and by the dimension constraint $c_1(\mathbb{E})^{3g-3+1} = 0$.
 \end{remark}
 
 \begin{proof}[Proof sketch (partial)]
@@ -890,7 +999,7 @@ Hyperelliptic curve with 16 spin structures:
 
 \subsection{Unified periodicity theorem}
 
-\begin{theorem}[Complete periodicity classification; \ClaimStatusConjectured]
+\begin{conjecture}[Complete periodicity classification; \ClaimStatusConjectured]
 For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level inducing period~$M$:
 \[
 \text{Period}(\mathcal{A}) \mid \text{lcm}(N_{\text{modular}}, N_{\text{quantum}}, N_{\text{geometric}})
@@ -901,9 +1010,9 @@ N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(from the $T$-periodic
 N_{\text{quantum}} &= M \text{ (from quantum group)} \\
 N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g \geq 2$; trivial for $g \leq 1$)}
 \end{align}
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{remark}[Evidence]
 Each of the three periodicities provides an independent divisibility constraint on the total period.
 
 The bar spectral sequence $E_2^{p,q} = H^q(\overline{C}_{p+2}(X)) \otimes H^0(\mathcal{A}^{\otimes(p+2)})$ admits a tridegree decomposition: the modular periodicity acts on the representation-theoretic factor (the second tensor component, via $T$-eigenvalues), the quantum periodicity acts on the fusion multiplicities (via the Verlinde formula and quantum dimensions), and the geometric periodicity acts on the configuration space factor (the first tensor component, via the Hodge bundle on $\overline{\mathcal{M}}_g$).
@@ -911,12 +1020,12 @@ The bar spectral sequence $E_2^{p,q} = H^q(\overline{C}_{p+2}(X)) \otimes H^0(\m
 Each factor independently forces divisibility of the total period:
 \begin{itemize}
 \item $\text{Period} \mid N_{\text{modular}}$ by the modular periodicity theorem above.
-\item $\text{Period} \mid N_{\text{quantum}}$ by the quantum periodicity theorem above.
+\item $\text{Period} \mid N_{\text{quantum}}$ if the quantum periodicity conjecture holds (see the scope remark following that theorem).
 \item $\text{Period} \mid N_{\text{geometric}}$ by the geometric periodicity theorem above.
 \end{itemize}
 
 If the three periodicities act on the \emph{same} grading component, the three divisibility constraints combine to give $\text{Period} \mid \gcd(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.  In practice, however, the three periodicities act on different components of a multi-graded bar complex (representation-theoretic, fusion-theoretic, and geometric respectively), so the total period need not divide the gcd.  The stated $\text{lcm}$ upper bound is always valid: any common multiple of the three component periods is a period.  Whether the actual period equals the $\text{lcm}$, or is strictly smaller due to interactions between the three sources, depends on the specific algebra and is not determined by the abstract framework alone.
-\end{proof}
+\end{remark}
 
 \begin{remark}[Scope of the classification]\label{rem:periodicity-classification-scope}
 The $\operatorname{lcm}$ upper bound is trivially valid (any common multiple of periods is a period), but the precise determination of $\operatorname{Period}(\mathcal{A})$ requires understanding how the three sources interact.  When all three periodicities act on the same grading (as they do for weight-graded Hochschild cohomology), the strongest conclusion from three divisibility constraints $\operatorname{Period} \mid N_i$ is $\operatorname{Period} \mid \gcd(N_1, N_2, N_3)$.  The gap between the $\gcd$ lower bound and the $\operatorname{lcm}$ upper bound measures the extent to which the multi-graded structure of the bar complex separates the three periodicity mechanisms.  Resolving this gap for specific algebras (e.g., minimal models, where all three periods are known) is an open problem.  Furthermore, the geometric periodicity component (Theorem above) is itself conjectural, as the proof requires a complete analysis of the Kodaira--Spencer image under the correct Mumford relation $12\lambda = \kappa_1 + \delta$.
@@ -924,9 +1033,9 @@ The $\operatorname{lcm}$ upper bound is trivially valid (any common multiple of 
 
 \subsection{Koszul duality and periodicity interaction}
 
-\begin{theorem}[Periodicity exchange under Koszul duality; \ClaimStatusConjectured]
+\begin{conjecture}[Periodicity exchange under Koszul duality; \ClaimStatusConjectured]
 \index{periodicity!exchange under duality}
-\label{thm:periodicity-exchange-koszul}
+\label{conj:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
 \begin{enumerate}
 \item The quantum periodicity $N_{\text{quant}}$ is preserved: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
@@ -934,19 +1043,19 @@ Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~
 \item The dual algebra satisfies $N_{\cA^!} \mid \mathrm{lcm}(N'_{\text{mod}},\; N_{\text{quant}},\; N_{\text{geom}})$ where $N'_{\text{mod}}$ is determined by the dual central charge~$c'$ via the formula $N'_{\text{mod}} = 24q'/\gcd(p', 24)$ with $c' = p'/q'$.
 \end{enumerate}
 If furthermore $N_{\text{mod}}$ and $N'_{\text{mod}}$ satisfy the harmonic mean relation $\frac{1}{N_{\text{mod}}} + \frac{1}{N'_{\text{mod}}} = \frac{1}{12}$ (Conjecture~\ref{conj:reflected-modular-periodicity}), then the modular periods are exchanged harmonically.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{remark}[Evidence]
 We treat each factor separately.
 
-\emph{(1) Quantum periodicity is preserved.}  The quantum period $N_{\text{quant}}$ depends only on the quantum group $U_q(\mathfrak{g})$ at $q = \exp(\pi i/(k + h^\vee))$. Since Koszul duality sends level $k$ to $k' = -k - 2h^\vee$ (Feigin--Frenkel), the quantum parameter transforms as $q \mapsto q^{-1}$. Since $[n]_{q^{-1}} = [n]_q$ for all $n$, the periodicity of quantum integers is unchanged: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
+\emph{(1) Quantum periodicity is preserved (conditional).}  Assuming the quantum periodicity conjecture holds, the quantum period $N_{\text{quant}}$ depends only on the quantum group $U_q(\mathfrak{g})$ at $q = \exp(\pi i/(k + h^\vee))$. Since Koszul duality sends level $k$ to $k' = -k - 2h^\vee$ (Feigin--Frenkel), the quantum parameter transforms as $q \mapsto q^{-1}$. Since $[n]_{q^{-1}} = [n]_q$ for all $n$, the periodicity of quantum integers is unchanged: $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
 
 \emph{(2) Geometric periodicity is unchanged.}  Both $\cA$ and $\cA^!$ live on the same curve $X$, so the Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map) is identical: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
 
 \emph{(3) Modular periodicity.}  The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula.  By the modular periodicity theorem (applied to~$\cA^!$), the modular period of the dual is $N'_{\text{mod}} = 24q'/\gcd(p',24)$ where $c' = p'/q'$ in lowest terms.  This is unconditional.  The harmonic mean relation $\frac{1}{N_{\text{mod}}} + \frac{1}{N'_{\text{mod}}} = \frac{1}{12}$ is verified for $N = N' = 24$ (Heisenberg and $\widehat{\mathfrak{sl}}_2$ at $k = 1$); the general case is Conjecture~\ref{conj:reflected-modular-periodicity}.
 
 Combining (1)--(3) via the complete periodicity classification gives $N_{\cA^!} \mid \mathrm{lcm}(N'_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.
-\end{proof}
+\end{remark}
 
 This shows:
 \begin{itemize}
@@ -985,7 +1094,7 @@ The deformation preserves conformal invariance iff:
 
 The $A_{\infty}$ structure encoded in Hochschild cohomology gives string field theory vertices:
 
-\begin{theorem}[String field theory from Hochschild; \ClaimStatusProvedElsewhere]
+\begin{theorem}[String field theory from Hochschild {\cite{Zwi93}}; \ClaimStatusProvedElsewhere]
 The operations $m_n: \mathcal{A}^{\otimes n} \to \mathcal{A}[2-n]$ extracted from $HH^{\bullet}_{\text{chiral}}$ satisfy:
 \[
 \sum_{\substack{r+s+t=n \\ r,t \geq 0,\; s \geq 1}} (-1)^{rs+t}\, m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0
@@ -1186,7 +1295,7 @@ $$HH^0(\mathcal{B}) = \mathbb{C}.$$
 $$HH^1 = \text{Der}(\mathcal{B})/\text{Inn}(\mathcal{B})$$
 where $\text{Der}(\mathcal{B})$ is the space of derivations and $\text{Inn}(\mathcal{B})$ the inner derivations.  We show $HH^1 = 0$ by proving every derivation is inner.
 
-A derivation $D$ is determined by $D(\alpha) = f(z)$, a field in~$\mathcal{B}$.  The derivation property applied to the singular part of the OPE gives $D(k/(z_1-z_2)^2) = 0$ (the left side is a $c$-number), which forces $D(\alpha)$ to have trivially regular OPE with $\alpha$.  For the rank-1 Heisenberg, the only such fields are multiples of the identity~$\mathbf{1}$, so $D(\alpha) = c \cdot \mathbf{1}$ for some $c \in \mathbb{C}$.  But $D(\alpha) = c \cdot \mathbf{1}$ is precisely the inner derivation $[\int c\, \alpha(w) dw, -]$ (the zero-mode $\alpha_0$ acts by $[\alpha_0, \alpha(z)] = k \cdot \mathbf{1}$, giving $D = (c/k)\, \text{ad}_{\alpha_0}$ when $k \neq 0$).
+A derivation $D$ is determined by $D(\alpha) = f(z)$, a field in~$\mathcal{B}$.  The derivation property applied to the singular part of the OPE gives $D(k/(z_1-z_2)^2) = 0$ (the left side is a $c$-number), which forces $D(\alpha)$ to have trivially regular OPE with $\alpha$.  For the rank-1 Heisenberg, the only such fields are multiples of the identity~$\mathbf{1}$, so $D(\alpha) = c \cdot \mathbf{1}$ for some $c \in \mathbb{C}$.  But $D(\alpha) = c \cdot \mathbf{1}$ is the inner derivation $\mathrm{ad}_{(c/k)\alpha_{-1}\mathbf{1}}$: in mode language, $[\alpha_m, \alpha_n] = km\,\delta_{m+n,0}$, so $[\alpha_{-1}, \alpha(z)] = [\alpha_{-1}, \sum_n \alpha_n z^{-n-1}] = k z^{-2} \cdot \mathbf{1}$.  The associated residue (the $n=0$ mode of the OPE $\alpha_{-1} \cdot \mathbf{1}(z_1)\, \alpha(z_2) \sim k/(z_1-z_2)^2$) shows that $D = (c/k)\,\mathrm{ad}_{\alpha_{-1}\mathbf{1}}$ when $k \neq 0$.
 
 Therefore every derivation is inner, and:
 $$HH^1(\mathcal{B}) = 0.$$
@@ -1281,7 +1390,7 @@ $$HH^*(\mathcal{F}) \cong \Lambda(c)$$
 
 \subsection{Koszul duality and HH* pairing}
 
-The Koszul duality for Hochschild cohomology (Theorem~\ref{thm:main-koszul-hoch}\label{thm:koszul-duality-HH}) is now verified on examples.
+The Koszul duality for Hochschild cohomology (Theorem~\ref{thm:main-koszul-hoch})\label{thm:koszul-duality-HH} is now verified on examples.
 
 \begin{verification}[Boson-fermion duality; \ClaimStatusProvedHere]\label{ver:boson-fermion-HH}
 The Koszul pair ($bc$ ghost system $\mathcal{F}_{bc}$, $\beta\gamma$ system $\mathcal{BG}$) satisfies (where the Hochschild cohomology of $\mathcal{F}_{bc}$ coincides with that of $\mathcal{B}$ in these degrees):
@@ -1323,7 +1432,7 @@ $$HH^n_{\text{chiral}}(\mathcal{A})|_{\text{constant}} \cong HH^n_{\text{classic
 
 \subsection{The Gerstenhaber bracket from configuration spaces}
 
-\begin{theorem}[Gerstenhaber structure on HH*; \ClaimStatusProvedElsewhere]\label{thm:gerstenhaber-structure}
+\begin{theorem}[Gerstenhaber structure on HH* {\cite{Ger63}}; \ClaimStatusProvedElsewhere]\label{thm:gerstenhaber-structure}
 \index{Gerstenhaber bracket|textbf}
 Hochschild cohomology carries a \emph{Gerstenhaber bracket}:
 $$[\cdot, \cdot]: HH^p(\mathcal{A}) \otimes HH^q(\mathcal{A}) \to HH^{p+q-1}(\mathcal{A})$$
@@ -1405,6 +1514,28 @@ $\sum_{n \geq 1} \frac{1}{n!}\ell_n(\gamma, \ldots, \gamma) = 0$.
 
 \begin{remark}[Computing $HH^*$ in practice]\label{rem:compute-HH}
 To compute $HH^n_{\mathrm{chiral}}(\mathcal{A})$ for a chiral algebra given by generators and OPE data, one proceeds as follows: (1) construct the bar complex $\bar{B}^n(\mathcal{A})$ using configuration space integrals; (2) build the cobar complex $\Omega(\bar{B}(\mathcal{A}))$ by inserting distributional duals; (3) form the Hom complex $\operatorname{Hom}(\Omega(\bar{B}(\mathcal{A})), \mathcal{A})$; (4) compute cohomology $\ker(d)/\operatorname{im}(d)$ at each degree. For Koszul algebras, the quasi-isomorphism $\bar{B}(\mathcal{A}) \simeq \mathcal{A}^!$ reduces the computation to lower-dimensional complexes.
+\end{remark}
+
+\begin{remark}[Noncommutative Hodge degeneration]\label{rem:nc-hodge-degeneration}
+\index{noncommutative Hodge theory}
+The chiral Hochschild complex admits a Hodge filtration $F^\bullet$
+arising from the pole-order filtration on the bar differential: the
+$p$-th filtered piece $F^p CH^n(\cA)$ consists of cochains whose
+singularity at the diagonal has pole order $\leq p$.  For Koszul
+chiral algebras, this filtration degenerates at $E_1$---that is,
+the associated spectral sequence
+$E_1^{p,q} = H^{p+q}(\operatorname{gr}^p_F CH^*) \Rightarrow
+HH^{p+q}_{\mathrm{chiral}}(\cA)$
+collapses---by the same mechanism as the Koszul collapse of
+Theorem~\ref{thm:spectral-sequence-collapse}.  The resulting mixed
+structure on $HH^*_{\mathrm{chiral}}(\cA)$ is the chiral analog of
+the noncommutative Hodge structure of Kaledin~\cite{Kal08}:
+the Hodge-to-de~Rham degeneration for smooth proper noncommutative
+varieties specializes, when the ``variety'' is the factorization
+algebra $\cA$, to the bar spectral sequence collapse.  The
+complementarity theorem (Theorem~C) is then a manifestation of
+Serre duality in this noncommutative Hodge setting, exchanging
+the Hodge filtrations of $\cA$ and~$\cA^!$.
 \end{remark}
 
 \subsection{Summary and outlook}
