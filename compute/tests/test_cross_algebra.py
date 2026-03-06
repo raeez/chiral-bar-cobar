@@ -38,7 +38,7 @@ class TestCurvedUncurved:
     def test_uncurved_list(self):
         uc = uncurved_algebras()
         assert "free_fermion" in uc
-        assert "betagamma" in uc
+        assert "beta_gamma" in uc
         assert "bc" in uc
 
     def test_curved_list(self):
@@ -123,10 +123,11 @@ class TestBarDeg2:
 
 
 class TestKoszulPairs:
-    def test_bg_bc(self):
-        pairs = koszul_dual_pairs()
-        names = [(a, b) for a, b in pairs]
-        assert ("betagamma", "bc") in names or ("bc", "betagamma") in names
+    def test_fermion_bg_bc(self):
+        """Check that free_fermion -> beta_gamma -> bc duality chain is registered."""
+        assert ALGEBRA_REGISTRY["free_fermion"]["koszul_dual"] == "beta_gamma"
+        assert ALGEBRA_REGISTRY["beta_gamma"]["koszul_dual"] == "bc"
+        assert ALGEBRA_REGISTRY["bc"]["koszul_dual"] == "beta_gamma"
 
 
 class TestSpectralCollapse:
@@ -138,10 +139,34 @@ class TestSpectralCollapse:
         assert ALGEBRA_REGISTRY["Virasoro"]["spectral_collapse"] == 2
 
     def test_betagamma_E2(self):
-        assert ALGEBRA_REGISTRY["betagamma"]["spectral_collapse"] == 2
+        assert ALGEBRA_REGISTRY["beta_gamma"]["spectral_collapse"] == 2
 
 
 class TestSelfConsistency:
     def test_all_pass(self):
         for name, ok in verify_cross_algebra().items():
             assert ok, f"Failed: {name}"
+
+
+class TestRegistryConsistency:
+    """Cross-check all 4 registries for data consistency."""
+
+    def test_all_consistent(self):
+        from compute.lib.cross_algebra import verify_registry_consistency
+        results = verify_registry_consistency()
+        for name, ok in results.items():
+            assert ok, f"Registry inconsistency: {name}"
+
+    def test_unified_data_has_bar_dims(self):
+        from compute.lib.cross_algebra import unified_algebra_data
+        for alg in ["sl2", "Virasoro", "Heisenberg"]:
+            data = unified_algebra_data(alg)
+            assert "bar_cohomology" in data
+            assert len(data["bar_cohomology"]) > 0, f"{alg} missing bar cohomology"
+
+    def test_unified_data_has_metadata(self):
+        from compute.lib.cross_algebra import unified_algebra_data
+        data = unified_algebra_data("sl2")
+        assert data["n_generators"] == 3
+        assert data["spectral_collapse"] == 1
+        assert data["self_dual"] is True

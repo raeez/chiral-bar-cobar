@@ -49,32 +49,18 @@ class TestOSAlgebra:
         assert os_total_dim(n) == factorial(n)
 
     def test_os1_C3(self):
-        """OS^1(C_3) = 3 (three generators eta_{ij})."""
-        # Actually dim OS^1(C_n) = n-1 choose 1... no, it's (n-1).
-        # For C_3: OS^1 has generators eta_{12}, eta_{13}, eta_{23} -> dim 3
-        # Wait: os_dim(3, 1) = falling_factorial(2, 1) = 2.
-        # But there are 3 generators and Arnold removes 0 in degree 1.
-        # Actually OS^1(C_n) has dim = C(n,2) (all eta_{ij}).
-        # No: the OS algebra on n points has n*(n-1)/2 generators in degree 1,
-        # but there are no Arnold relations in degree 1.
-        # So dim OS^1(C_3) = 3.
-        # But our formula gives (n-1) = 2. This is wrong!
-        # The correct Poincare polynomial for OS(Conf_n(C)) is:
-        # P_t = (1+t)(1+2t)...(1+(n-1)t)
-        # So dim OS^1 = 1+2+...+(n-1) = n(n-1)/2? No.
-        # P_t(C_3) = (1+t)(1+2t) = 1 + 3t + 2t^2
-        # So dim OS^1(C_3) = 3. Our formula gives 2. Bug!
-        # Actually looking at the code: os_dim does falling factorial.
-        # falling_factorial(2, 1) = 2, but the answer should be 3.
-        # The issue: for the braid arrangement on n strands,
-        # P_t = prod_{j=1}^{n-1}(1+jt), so the coefficient of t^k is
-        # the elementary symmetric polynomial e_k(1, 2, ..., n-1).
-        # For k=1: e_1 = 1+2+...+(n-1) = n(n-1)/2.
-        # For C_3: e_1(1,2) = 3. Not falling factorial.
-        # Our os_dim function is WRONG for non-maximal degrees.
-        # But maximal degree (n-1)! is correct since
-        # prod_{j=1}^{n-1} j = (n-1)!.
-        pass  # Skip this test — os_dim only correct for maximal degree
+        """OS^1(C_3) = 3 = e_1(1,2)."""
+        assert os_dim(3, 1) == 3
+
+    def test_intermediate_degrees(self):
+        """OS dimensions match Poincare polynomial for C_4."""
+        # P_t(C_4) = (1+t)(1+2t)(1+3t) = 1 + 6t + 11t^2 + 6t^3
+        assert [os_dim(4, k) for k in range(4)] == [1, 6, 11, 6]
+
+    def test_os1_formula(self):
+        """OS^1(C_n) = e_1(1,...,n-1) = n(n-1)/2."""
+        for n in range(2, 7):
+            assert os_dim(n, 1) == n * (n - 1) // 2
 
     def test_os_beyond_range(self):
         assert os_dim(3, 3) == 0
@@ -128,7 +114,7 @@ class TestPoleCurvature:
         assert curvature_from_pole("W3") == "central_charge_TW"
 
     def test_simple_pole_mixed(self):
-        for name in ["free_fermion", "betagamma", "bc"]:
+        for name in ["free_fermion", "beta_gamma", "bc"]:
             assert curvature_from_pole(name) == "mixed_channel"
 
 

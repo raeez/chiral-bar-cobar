@@ -22,7 +22,8 @@ class TestCurvatureConsistency:
 
         assert virasoro_curvature() == c / 2
         assert virasoro_m0() == c / 2
-        assert ALGEBRA_REGISTRY["Virasoro"]["curvature_formula"] == "c/2"
+        assert ALGEBRA_REGISTRY["Virasoro"]["curvature_m0"] == "c/2"
+        assert ALGEBRA_REGISTRY["Virasoro"]["kappa_formula"] == "c/2"
 
     def test_e8_curvature(self):
         from compute.lib.e8_lattice_bar import e8_curvature
@@ -132,10 +133,10 @@ class TestKoszulPairConsistency:
         from compute.lib.koszul_pairs import KOSZUL_PAIRS
         from compute.lib.cross_algebra import ALGEBRA_REGISTRY
 
-        assert KOSZUL_PAIRS["betagamma_bc"]["A"] == "betagamma"
-        assert KOSZUL_PAIRS["betagamma_bc"]["A_dual"] == "bc_ghosts"
-        assert ALGEBRA_REGISTRY["betagamma"]["koszul_dual"] == "bc"
-        assert ALGEBRA_REGISTRY["bc"]["koszul_dual"] == "betagamma"
+        assert KOSZUL_PAIRS["beta_gamma_bc"]["A"] == "beta_gamma"
+        assert KOSZUL_PAIRS["beta_gamma_bc"]["A_dual"] == "bc_ghosts"
+        assert ALGEBRA_REGISTRY["beta_gamma"]["koszul_dual"] == "bc"
+        assert ALGEBRA_REGISTRY["bc"]["koszul_dual"] == "beta_gamma"
 
 
 class TestSpectralSequenceConsistency:
@@ -202,6 +203,70 @@ class TestDeformationConsistency:
         data = pinf_vs_coisson()
         assert not data["Coisson"]["is_chiral_algebra"]
         assert data["P_inf_chiral"]["is_chiral_algebra"]
+
+
+class TestWNConductorFormula:
+    """Verify W_N conductor K_N = 2*(N-1)*(2*N^2 + 2*N + 1) = 4*N^3 - 2*N - 2."""
+
+    def test_known_values(self):
+        expected = {2: 26, 3: 100, 4: 246, 5: 488}
+        for N, K_expected in expected.items():
+            K_formula1 = 2 * (N - 1) * (2 * N**2 + 2 * N + 1)
+            K_formula2 = 4 * N**3 - 2 * N - 2
+            assert K_formula1 == K_expected, f"K_{N} formula1 = {K_formula1}, expected {K_expected}"
+            assert K_formula2 == K_expected, f"K_{N} formula2 = {K_formula2}, expected {K_expected}"
+            assert K_formula1 == K_formula2, f"Two formulas disagree at N={N}"
+
+
+class TestE8KappaDerivation:
+    """Verify kappa(E8) from general formula dim_g*(k+h_dual)/(2*h_dual)."""
+
+    def test_e8_kappa_formula(self):
+        """kappa(E8, k) = 248*(k+30)/(2*30) = 62*(k+30)/15."""
+        from sympy import Rational, simplify
+        # E8: dim=248, h_dual=30
+        dim_g = 248
+        h_dual = 30
+        for k_val in [0, 1, 2, 5, 10]:
+            expected = Rational(dim_g * (k_val + h_dual), 2 * h_dual)
+            simplified = Rational(62 * (k_val + h_dual), 15)
+            assert expected == simplified, (
+                f"kappa(E8, k={k_val}): {expected} != {simplified}"
+            )
+
+
+class TestBarDimCrossModuleConsistency:
+    """Verify KNOWN_BAR_DIMS (bar_complex.py) is consistent with
+    SL2_BAR_COH (spectral_sequence.py) and Heisenberg E2 leading values."""
+
+    def test_sl2_cross_module(self):
+        from compute.lib.bar_complex import KNOWN_BAR_DIMS
+        from compute.lib.spectral_sequence import SL2_BAR_COH
+        for deg, val in SL2_BAR_COH.items():
+            assert KNOWN_BAR_DIMS["sl2"][deg] == val, (
+                f"sl2 bar dim mismatch at degree {deg}: "
+                f"bar_complex={KNOWN_BAR_DIMS['sl2'][deg]}, "
+                f"spectral_sequence={val}"
+            )
+
+    def test_heisenberg_e2_leading(self):
+        """HEISENBERG_BAR_COH_E2_LEADING is all-ones (leading weight),
+        while full bar cohomology in KNOWN_BAR_DIMS uses p(n-2)."""
+        from compute.lib.bar_complex import KNOWN_BAR_DIMS
+        from compute.lib.spectral_sequence import HEISENBERG_BAR_COH_E2_LEADING
+        # E2 leading is 1 in each degree
+        for deg in range(1, 11):
+            assert HEISENBERG_BAR_COH_E2_LEADING[deg] == 1
+        # Full bar cohomology differs from degree 4 onward
+        assert KNOWN_BAR_DIMS["Heisenberg"][4] == 2  # p(2) = 2, not 1
+
+    def test_virasoro_cross_module(self):
+        from compute.lib.bar_complex import KNOWN_BAR_DIMS
+        from compute.lib.spectral_sequence import VIRASORO_BAR_COH
+        for deg, val in VIRASORO_BAR_COH.items():
+            assert KNOWN_BAR_DIMS["Virasoro"][deg] == val, (
+                f"Virasoro bar dim mismatch at degree {deg}"
+            )
 
 
 class TestGeneratorCounts:

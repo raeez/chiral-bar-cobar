@@ -180,6 +180,16 @@ class TestSigma:
         assert sigma_invariant("G", 2) == Rational(2, 3)
 
 
+class TestE8Sigma:
+    def test_sigma_e8(self):
+        """sigma(E8) = sum(1/(m+1) for m in [1,7,11,13,17,19,23,29]) = 121/126.
+        E8 exponents: 1, 7, 11, 13, 17, 19, 23, 29."""
+        from fractions import Fraction
+        exponents_e8 = [1, 7, 11, 13, 17, 19, 23, 29]
+        sigma = sum(Fraction(1, m + 1) for m in exponents_e8)
+        assert sigma == Fraction(121, 126)
+
+
 class TestDSFormulas:
     def test_virasoro_ds(self):
         """Virasoro DS: c = 1 - 6(k+1)^2/(k+2). VF032."""
@@ -188,7 +198,55 @@ class TestDSFormulas:
         # At k=1: c = 1 - 6*4/3 = 1 - 8 = -7
         assert virasoro_ds_c(1) == Rational(-7)
 
+    def test_virasoro_ds_critical(self):
+        """Virasoro DS undefined at sl2 critical level k = -2."""
+        with pytest.raises(ValueError, match="critical"):
+            virasoro_ds_c(-2)
+
     def test_w3_ds(self):
         """W_3 DS: c = 2 - 24(k+2)^2/(k+3). VF033."""
         # At k=0: c = 2 - 24*4/3 = 2 - 32 = -30
         assert w3_ds_c(0) == Rational(-30)
+
+    def test_w3_ds_critical(self):
+        """W3 DS undefined at sl3 critical level k = -3."""
+        with pytest.raises(ValueError, match="critical"):
+            w3_ds_c(-3)
+
+    def test_virasoro_ds_complementarity(self):
+        """c(k) + c(-k-4) = 26 for all k (Virasoro complementarity)."""
+        from sympy import simplify
+        k = Symbol("k")
+        c_k = virasoro_ds_c(k)
+        c_dual = virasoro_ds_c(-k - 4)
+        assert simplify(c_k + c_dual - 26) == 0
+
+    def test_w3_ds_complementarity(self):
+        """c(k) + c(-k-6) = 100 for all k (W3 complementarity)."""
+        from sympy import simplify
+        k = Symbol("k")
+        c_k = w3_ds_c(k)
+        c_dual = w3_ds_c(-k - 6)
+        assert simplify(c_k + c_dual - 100) == 0
+
+
+class TestCartanDataEdgeCases:
+    def test_unknown_type(self):
+        """Unknown Lie algebra type should raise ValueError."""
+        with pytest.raises(ValueError):
+            cartan_data("Z", 2)
+
+    def test_unknown_rank(self):
+        """Unsupported rank should raise ValueError."""
+        with pytest.raises(ValueError):
+            cartan_data("A", 99)
+
+    def test_sugawara_critical_B2(self):
+        """Sugawara undefined at k = -h* = -3 for B2."""
+        with pytest.raises(ValueError, match="critical"):
+            sugawara_c("B", 2, -3)
+
+    def test_sugawara_critical_G2(self):
+        """Sugawara undefined at k = -h* = -4 for G2."""
+        with pytest.raises(ValueError, match="critical"):
+            sugawara_c("G", 2, -4)

@@ -20,7 +20,7 @@ c = Symbol('c')
 
 class TestKappa:
     def test_heisenberg(self):
-        assert kappa("Heisenberg", k) == k / 2
+        assert kappa("Heisenberg", k) == k
 
     def test_sl2(self):
         assert kappa("sl2", k) == Rational(3) * (k + 2) / 4
@@ -32,7 +32,7 @@ class TestKappa:
         assert kappa("W3", c) == 5 * c / 6
 
     def test_e8(self):
-        assert kappa("E8", k) == Rational(248) * (k + 30) / 60
+        assert kappa("E8", k) == Rational(62) * (k + 30) / 15
 
 
 class TestComplementarity:

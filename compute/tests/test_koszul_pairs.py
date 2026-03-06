@@ -59,7 +59,7 @@ class TestKoszulPairs:
 
     def test_betagamma_bc_involution(self):
         """(betagamma)^! = bc and (bc)^! = betagamma."""
-        assert check_involution("betagamma_bc") is True
+        assert check_involution("beta_gamma_bc") is True
 
     def test_com_lie_involution(self):
         """(Com^!)^! = Lie^! = Com."""

@@ -115,6 +115,41 @@ class TestBernoulli:
         assert F_g(kappa, 1) == kappa / 24
 
 
+class TestLambdaFPExtended:
+    """Verify lambda_fp(g) for g=1..10 against Bernoulli number formula.
+
+    lambda_g = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
+    """
+
+    def test_lambda_fp_through_10(self):
+        """Compute lambda_fp(g) for g=1..10 and verify via generating function."""
+        from sympy import bernoulli as bern, factorial as fac, Abs
+        for g in range(1, 11):
+            B_2g = bern(2 * g)
+            expected = (2**(2*g - 1) - 1) * abs(B_2g) / (2**(2*g - 1) * fac(2*g))
+            computed = lambda_fp(g)
+            assert computed == expected, f"lambda_fp({g}) = {computed} != {expected}"
+
+    def test_lambda_fp_known_exact(self):
+        """Check exact rational values for lambda_1 through lambda_5."""
+        assert lambda_fp(1) == Rational(1, 24)
+        assert lambda_fp(2) == Rational(7, 5760)
+        assert lambda_fp(3) == Rational(31, 967680)
+        # lambda_4 = (2^7 - 1)/2^7 * |B_8|/8! = 127/128 * (1/30) / 40320
+        assert lambda_fp(4) == Rational(127, 154828800)
+        # lambda_5
+        assert lambda_fp(5) == Rational(73, 3503554560)
+
+    def test_all_positive(self):
+        for g in range(1, 11):
+            assert lambda_fp(g) > 0
+
+    def test_decreasing(self):
+        """lambda_fp values are strictly decreasing."""
+        for g in range(1, 10):
+            assert lambda_fp(g) > lambda_fp(g + 1)
+
+
 class TestPartition:
     def test_small_values(self):
         """p(0)=1, p(1)=1, p(2)=2, p(3)=3, p(4)=5, p(5)=7, p(6)=11."""
