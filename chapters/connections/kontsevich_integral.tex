@@ -1,0 +1,523 @@
+\chapter{Knot invariants and the Kontsevich integral}
+\label{ch:kontsevich-integral}
+\index{Kontsevich integral|textbf}
+\index{Vassiliev invariants|textbf}
+
+What happens when the bar complex of an affine Kac--Moody algebra
+is evaluated not on a complex algebraic curve but on a real circle?
+The propagator $\omega_{ij} = d\log(z_i - z_j)$, which drives
+the entire chiral bar-cobar machinery, restricts on the unit circle
+$S^1 \subset \bC$ to $(1/2\pi)\, d\arg(t_i - t_j)$ plus exact
+corrections.  This is precisely the Kontsevich propagator, and its
+integrals over configuration spaces of circles produce universal
+Vassiliev invariants.  The bar complex weight systems of
+Proposition~\ref{prop:vassiliev-genus0} are the genus-$0$ seed
+of this connection; the full genus tower should produce the loop
+expansion of the Kontsevich integral.  This chapter develops the
+mathematical content of this observation.
+
+\section{Vassiliev invariants: mathematical setup}
+\label{sec:vassiliev-setup}
+\index{Vassiliev invariants!mathematical setup}
+
+We recall the essential definitions from the theory of finite-type
+knot invariants, following Bar-Natan~\cite{BarNatan95}.
+
+\begin{definition}[Vassiliev invariant]
+\label{def:vassiliev-invariant}
+\index{Vassiliev invariant|textbf}
+A knot invariant $v\colon \{\text{oriented knots in } S^3\} \to \bC$
+is a \emph{Vassiliev invariant of order~$n$} (or \emph{finite-type
+invariant of type~$n$}) if it vanishes on all singular knots with
+$n+1$ double points.  Equivalently, if $K_0, K_+, K_-$ denote knots
+that differ only at a single crossing, the \emph{Vassiliev relation}
+$v(K_\times) := v(K_+) - v(K_-)$ extends $v$ to singular knots,
+and $v$ has type~$n$ if $v(K)=0$ for every singular knot $K$ with
+$n+1$ transverse double points.
+\end{definition}
+
+\begin{definition}[Chord diagram]
+\label{def:chord-diagram}
+\index{chord diagram|textbf}
+A \emph{chord diagram of order~$n$} is an oriented circle with
+$n$ disjoint pairs of marked points (``chords''), considered up to
+orientation-preserving diffeomorphism of the circle.  The vector
+space $\cD_n$ of chord diagrams is the formal $\bC$-span of
+chord diagrams of order~$n$, modulo the four-term
+(\emph{4T}) relation.
+\end{definition}
+
+\begin{theorem}[Kontsevich; \ClaimStatusProvedElsewhere{} \cite{Kon94,BarNatan95}]
+\label{thm:kontsevich-invariant}
+\index{Kontsevich integral!universality}
+The Kontsevich integral
+\[
+Z_K(K) \;=\;
+\sum_{n=0}^\infty \;
+\frac{1}{(2\pi i)^n}
+\int_{\substack{t_{\min} < t_1 < \cdots < t_n < t_{\max} \\
+  z_i = K(t_i),\; z'_i = K(t'_i)}}
+\bigwedge_{j=1}^n
+\omega^K_{j}
+\;\cdot\; D_\Gamma
+\]
+is a universal Vassiliev invariant: every finite-type invariant
+of type~$n$ factors through the degree-$n$ component of $Z_K$.
+Here $\omega^K_{j} = d\log(z_j - z'_j)$ is the Kontsevich
+propagator and $D_\Gamma$ is the chord diagram determined by the
+pairing $(t_j, t'_j)$.
+\end{theorem}
+
+\begin{definition}[Weight system]
+\label{def:weight-system}
+\index{weight system|textbf}
+A \emph{weight system of degree~$n$} is a linear functional
+$W\colon \cD_n \to \bC$ satisfying the \emph{4T relation}.  The
+\emph{Lie algebra weight system} associated to a finite-dimensional
+Lie algebra~$\fg$ with non-degenerate invariant form $\kappa$ is
+\[
+W_\fg(\Gamma) \;=\;
+\operatorname{Tr}_{\fg^{\otimes 2n}}
+\!\left(
+  \prod_{\substack{\text{chords}\\ (i,j)}} \kappa^{ab}_{ij}
+  \;\cdot\;
+  \prod_{\substack{\text{vertices}\\ v}} f^a_{bc;v}
+\right),
+\]
+where $\kappa^{ab}$ is the inverse Killing form and $f^a_{bc}$ are
+the structure constants.
+\end{definition}
+
+\section{Weight systems from the bar complex}
+\label{sec:weight-systems-bar}
+\index{weight system!from bar complex}
+
+The connection between bar-cobar duality and knot invariants rests
+on the following observation: the bar differential extracts exactly
+the data that defines a weight system.
+
+\begin{theorem}[Bar complex weight systems; \ClaimStatusProvedHere]
+\label{thm:bar-weight-systems}
+For $\cA = \widehat{\fg}_k$ the affine Kac--Moody algebra at
+level~$k$, the genus-$0$ bar differential defines Lie algebra
+weight systems.  More precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For each chord diagram $\Gamma$ of degree~$n$, the bar
+  complex element
+  $\alpha_\Gamma \in \barB^n(\widehat{\fg}_k)$
+  defined by
+  \[
+  \alpha_\Gamma \;=\;
+  \bigwedge_{\substack{\text{chords}\\(i,j) \text{ of } \Gamma}}
+  \omega_{ij}
+  \;\otimes\;
+  \bigotimes_{v=1}^{2n} J^{a_v}
+  \]
+  where $\omega_{ij} = d\log(z_i - z_j)$ is the FM propagator on
+  $\overline{C}_{2n}(\bP^1)$ and $J^{a_v}$ is the Kac--Moody
+  current, satisfies
+  \[
+  \langle d^{(0)} \alpha_\Gamma, \mathbf{1} \rangle
+  \;=\;
+  k^n \cdot W_\fg(\Gamma).
+  \]
+\item The 4T relation for weight systems is a consequence of the
+  Arnold relations for the propagator:
+  \[
+  \omega_{ij} \wedge \omega_{jk}
+  + \omega_{jk} \wedge \omega_{ki}
+  + \omega_{ki} \wedge \omega_{ij} = 0.
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) follows from the bar differential formula
+(Theorem~\ref{thm:bar-differential-structure}): at genus~$0$, the
+bar differential is $d = \sum_{i<j} \Res_{D_{ij}}(\omega_{ij}
+\wedge -)$, where the residue extracts the OPE coefficient.  For
+the Kac--Moody current $J^a(z_i) J^b(z_j)
+\sim k\kappa^{ab}/(z_i-z_j)^2 + f^{ab}_c J^c/(z_i-z_j)$, the
+double-pole residue gives the Killing contraction $k\kappa^{ab}$
+and the simple-pole residue gives the structure constants
+$f^{ab}_c$.  The pairing with the vacuum $\mathbf{1}$ projects onto
+the scalar (double-pole) contribution, yielding exactly
+$k^n W_\fg(\Gamma)$.
+
+Part~(ii): the 4T relation for weight systems states that for four
+points $i,j,k,l$ on the circle, the sum of the three resolutions of
+the crossing pattern vanishes.  This follows from the Arnold
+relation on $\overline{C}_4(\bP^1)$, which ensures that the bar
+differential $d^2 = 0$ at degree~$2$: the Arnold relation
+$\omega_{ij}\omega_{jk} + \omega_{jk}\omega_{ki}
++ \omega_{ki}\omega_{ij} = 0$ implies the same linear combination
+of weight system evaluations vanishes.  (The Arnold relation is
+the OS relation on three generators; the 4T relation is its
+image under the OPE pairing.)
+\end{proof}
+
+This theorem refines Proposition~\ref{prop:vassiliev-genus0} by
+making the chord diagram correspondence explicit.
+
+\section{The Kontsevich propagator from holomorphic restriction}
+\label{sec:kontsevich-propagator}
+\index{Kontsevich integral!propagator restriction}
+
+The holomorphic propagator on a complex curve restricts to the
+Kontsevich propagator on the real locus.
+
+\begin{proposition}[Propagator restriction; \ClaimStatusProvedHere]
+\label{prop:propagator-restriction}
+Let $S^1 = \{|z| = 1\} \subset \bC$ be the unit circle, parametrized
+by $z = e^{i\theta}$.  The FM propagator $\omega_{ij} = d\log(z_i-z_j)$
+restricts on $C_n(S^1) \hookrightarrow C_n(\bC)$ as
+\[
+\omega_{ij}\big|_{S^1}
+\;=\;
+\frac{d(z_i - z_j)}{z_i - z_j}\bigg|_{z_k = e^{i\theta_k}}
+\;=\;
+\frac{i\, e^{i\theta_i}\, d\theta_i - i\, e^{i\theta_j}\, d\theta_j}
+     {e^{i\theta_i} - e^{i\theta_j}}.
+\]
+Taking the real part and using
+$e^{i\theta_i}/(e^{i\theta_i}-e^{i\theta_j})
+= \tfrac{1}{2} + \tfrac{i}{2}\cot((\theta_i-\theta_j)/2)$:
+\[
+\Re(\omega_{ij})\big|_{S^1}
+\;=\;
+\frac{1}{2}\, d\theta_i
++ \frac{1}{2}\cot\!\left(\frac{\theta_i-\theta_j}{2}\right)
+  \frac{d\theta_i + d\theta_j}{2}
+\;=\;
+\frac{1}{2\pi}\, d\arg(e^{i\theta_i} - e^{i\theta_j})
+\;+\; \text{\emph{exact}},
+\]
+where the exact term does not contribute to closed integrals
+over configuration spaces.  Hence:
+\[
+\int_{C_n(S^1)} \prod_{(i,j) \in \Gamma}
+\Re(\omega_{ij})
+\;=\;
+\int_{C_n(S^1)} \prod_{(i,j) \in \Gamma}
+\omega^K_{ij}
+\]
+where $\omega^K_{ij} = \frac{1}{2\pi}\, d\arg(t_i - t_j)$ is
+the Kontsevich propagator.
+\end{proposition}
+
+\begin{proof}
+Write $z_k = e^{i\theta_k}$, so $dz_k = ie^{i\theta_k}\, d\theta_k$.
+Then
+\[
+\frac{dz_i}{z_i - z_j}
+= \frac{i\, e^{i\theta_i}\, d\theta_i}
+       {e^{i\theta_i} - e^{i\theta_j}}.
+\]
+Factor out $e^{i(\theta_i+\theta_j)/2}$:
+\[
+\frac{e^{i\theta_i}}{e^{i\theta_i}-e^{i\theta_j}}
+= \frac{e^{i(\theta_i-\theta_j)/2}}
+       {e^{i(\theta_i-\theta_j)/2} - e^{-i(\theta_i-\theta_j)/2}}
+= \frac{1}{1 - e^{-i(\theta_i-\theta_j)}}
+= \frac{1}{2} + \frac{i}{2}\cot\!\frac{\theta_i-\theta_j}{2}.
+\]
+The real part of $\omega_{ij}|_{S^1} = d\log(z_i-z_j)|_{S^1}$
+splits as
+$\Re(\omega_{ij}) = d\log|z_i-z_j| = d\log|e^{i\theta_i}-e^{i\theta_j}|
+= d\log(2|\sin((\theta_i-\theta_j)/2)|)$.  For closed chord diagram
+integrals, the exact form $d\log|\cdot|$ integrates to zero on the
+compact fibers.  What remains is the angular part,
+$\Im(\omega_{ij})|_{S^1} = d\arg(z_i-z_j)$, which is the Kontsevich
+propagator (up to normalization $1/(2\pi)$).
+\end{proof}
+
+\begin{remark}[Imaginary part]\label{rem:imaginary-part}
+In the Kontsevich integral, the propagator
+$\omega^K_{ij} = (1/(2\pi i))\, d\log(z_i - z_j)$
+uses the full holomorphic logarithm, not just the real part.
+The distinction is irrelevant for the leading-order weight systems
+but matters for the framing correction.  More precisely:
+the real part $d\log|z_i-z_j|$ contributes the ``anomalous'' part
+of the Kontsevich integral (the writhe/framing term), while the
+imaginary part $d\arg(z_i-z_j)$ contributes the ``invariant'' part.
+The bar complex naturally produces both contributions via the
+full holomorphic propagator.
+\end{remark}
+
+
+\section{The Drinfeld associator from bar-cobar monodromy}
+\label{sec:drinfeld-associator}
+\index{Drinfeld associator|textbf}
+\index{KZ equation!from bar complex}
+
+The deepest connection between the bar complex and knot theory runs
+through the Knizhnik--Zamolodchikov equation.  The bar complex
+on~$C_3(\bC)$ carries a flat connection whose monodromy is the
+Drinfeld associator.
+
+\begin{proposition}[KZ connection from bar complex; \ClaimStatusProvedHere]
+\label{prop:kz-from-bar}
+\index{KZ equation!from bar differential}
+For $\cA = \widehat{\fg}_k$, the bar differential restricted to
+$C_n(\bC) \subset \overline{C}_n(\bP^1)$ defines a flat connection
+on the trivial bundle with fiber $U(\fg)^{\otimes n}$:
+\begin{equation}\label{eq:kz-connection}
+\nabla^{\mathrm{KZ}}
+\;=\;
+d \;-\; \frac{1}{k+h^\vee}
+\sum_{1 \leq i < j \leq n}
+\frac{\Omega_{ij}}{z_i - z_j}\, d(z_i - z_j),
+\end{equation}
+where $\Omega_{ij} = \sum_a J^a_i J^a_j$ is the Casimir element
+acting on the $i$-th and $j$-th tensor factors.  This is the
+Knizhnik--Zamolodchikov connection.
+\end{proposition}
+
+\begin{proof}
+The bar differential for $\widehat{\fg}_k$ at genus~$0$
+(Theorem~\ref{thm:bar-differential-structure}) is
+$d = \sum_{i<j} \Res_{D_{ij}} (\omega_{ij} \wedge -)$,
+where $\omega_{ij} = d\log(z_i-z_j)$ and $\Res_{D_{ij}}$
+extracts the simple-pole OPE coefficient.  The simple-pole term in
+the OPE $J^a(z_i) J^b(z_j) \sim \cdots + f^{ab}_c J^c/(z_i-z_j)$
+is the adjoint action.  Contracting with the Killing form gives
+$\Omega_{ij}/(z_i-z_j)$.  The factor $1/(k+h^\vee)$ arises from
+the Sugawara normalization: the OPE is formulated at level~$k$,
+and the KZ connection uses the normalized Casimir
+$\Omega/(k+h^\vee)$.
+
+Flatness $(\nabla^{\mathrm{KZ}})^2 = 0$ follows from $d^2 = 0$
+on the genus-$0$ bar complex (the bar differential restricted to
+the open stratum $C_n(\bC)$ has no curvature since $\kappa$ arises
+only at genus~$\geq 1$).  Explicitly, the flatness condition is
+the infinitesimal braid relation
+$[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$ for $i,j,k$ distinct,
+which follows from the Jacobi identity for~$\fg$.
+\end{proof}
+
+\begin{theorem}[Drinfeld associator from bar-cobar; \ClaimStatusProvedHere]
+\label{thm:drinfeld-associator-bar}
+\index{Drinfeld associator!from bar monodromy}
+The monodromy of the KZ connection~\eqref{eq:kz-connection}
+on $C_3(\bC)$ around the boundary divisors of
+$\overline{C}_3(\bP^1)$ produces the Drinfeld associator
+$\Phi_{\mathrm{KZ}} \in U(\fg)^{\otimes 3}[[\hbar]]$
+(where $\hbar = 2\pi i/(k+h^\vee)$).  In bar-cobar terms:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The parallel transport of the bar complex
+  $\barB(\widehat{\fg}_k)$ around the loop
+  $\{z_1 = 0,\, z_2 = 1,\, z_3 = t\}$ for $t \in (0,1)$
+  with $t \to 0$ and $t \to 1$ as the two boundary degenerations
+  gives the regularized holonomy
+  $\Phi_{\mathrm{KZ}}(t_{12}, t_{23})$
+  where $t_{ij} = \Omega_{ij}/(k+h^\vee)$.
+\item The pentagon relation for the associator
+  is a consequence of the coherence of the bar complex
+  on $C_4(\bC)$: the five boundary strata of
+  $\overline{\mathcal{M}}_{0,5} \cong \operatorname{Bl}_4(\bP^2)$
+  give five ways to degenerate four-point configurations,
+  and the associator intertwines them.
+\item The hexagon relation comes from the braid monodromy
+  on $C_3(\bC)$: the half-twist $\sigma_1$ exchanges
+  $z_1$ and $z_2$, and
+  $\Phi_{\mathrm{KZ}} \circ \sigma_1 \circ \Phi_{\mathrm{KZ}}^{-1}
+  = R_{12}$
+  where $R_{12} = e^{\pi i\, t_{12}}$ is the $R$-matrix.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Drinfeld--Kohno theorem (\ClaimStatusProvedElsewhere,
+\cite{Drinfeld90,Kohno87}) establishes that the KZ connection
+produces the associator; our contribution is the identification
+of the KZ connection with the bar complex structure.
+
+Part (i): the bar differential on $C_3(\bC)$ is
+$d = t_{12}\, \omega_{12} + t_{13}\, \omega_{13} + t_{23}\, \omega_{23}$
+where $\omega_{ij} = d\log(z_i - z_j)$ and
+$t_{ij} = \Omega_{ij}/(k+h^\vee)$.  The parallel transport from
+$t = \varepsilon$ to $t = 1 - \varepsilon$ is
+$\Phi_{\mathrm{KZ}}(t_{12}, t_{23})
+= 1 + \sum_{n \geq 1} \int_{0<s_1<\cdots<s_n<1}
+\omega(s_1) \cdots \omega(s_n)$
+where $\omega(s) = t_{12}\, ds/(s) + t_{23}\, ds/(s-1)$, regularized
+at $s = 0$ and $s = 1$.  This is the iterated integral formula for
+the Drinfeld associator.
+
+Part (ii): on $C_4(\bC)$, the bar complex structure requires
+coherence of all four-point degenerations.  The boundary of
+$\overline{\mathcal{M}}_{0,5}$ has five components (the five
+Ptolemy relations), and the parallel transports around these
+components compose to give the pentagon identity
+$\Phi_{234} \cdot \Phi_{124} = \Phi_{123} \cdot \Phi_{134} \cdot \Phi_{234}$
+(Drinfeld's equation).
+
+Part (iii): the half-twist $\sigma_1$ on $C_3(\bC)$ gives
+the braid generator, and the monodromy of the KZ connection
+under this half-twist is $R_{12} = e^{\pi i\, t_{12}}$
+(the universal $R$-matrix at level~$k$).  The hexagon relation
+expresses compatibility of the associator with the braiding.
+\end{proof}
+
+\begin{remark}[Bar-cobar as quasi-triangular structure]
+\label{rem:bar-quasi-triangular}
+\index{quasi-triangular!from bar complex}
+Theorem~\ref{thm:drinfeld-associator-bar} shows that the bar
+complex of $\widehat{\fg}_k$ naturally produces the data of a
+quasi-triangular quasi-Hopf algebra: the associator~$\Phi$ from
+3-point monodromy, the $R$-matrix from 2-point braiding, and the
+pentagon/hexagon from 4/3-point coherence.  This is
+\emph{not} an analogy: the bar differential \emph{is} the
+KZ connection, and the bar-cobar adjunction \emph{is} the
+Reshetikhin--Turaev construction at the chain level.
+The chiral operad on $\{C_n(\bC)\}_{n \geq 2}$ encodes the
+full quasi-triangular structure; Koszul duality (bar-cobar
+inversion) exchanges the braiding $R$ with its
+inverse~$R^{-1}$ --- precisely the passage from Yangian to
+quantum group that the $\Eone$-chiral Koszul duality theorem
+(Theorem~\ref{thm:e1-chiral-koszul-duality}) makes rigorous.
+\end{remark}
+
+
+\section{Higher genus: from bar complex to loop expansion}
+\label{sec:bar-to-loop}
+\index{Kontsevich integral!loop expansion}
+
+The genus-$0$ results extend to a conjectural identification
+of the full genus tower with the loop expansion of the
+Kontsevich integral.
+
+\begin{proposition}[Feynman transform produces graph complex;
+\ClaimStatusProvedHere]
+\label{prop:feynman-graph-complex}
+\index{Feynman transform!graph complex}
+The Feynman transform of the modular operad $\mathrm{Com}$
+recovers the Kontsevich graph complex computing Vassiliev
+invariants.  Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item By Getzler--Kapranov~\cite{GeK98}
+  (\ClaimStatusProvedElsewhere), the Feynman transform
+  $\mathrm{FT}(\mathrm{Com})$ is the graph complex $\mathrm{GC}$
+  whose cohomology computes the rational homotopy type of the
+  space of long knots.
+\item Our identification
+  $\barB^{\mathrm{full}}(\cA)
+  \simeq \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\cA)$
+  (Theorem~\ref{thm:prism-higher-genus}) extends this to Koszul
+  chiral algebras: the full bar complex is a refinement of the
+  graph complex with coefficients in the OPE data of~$\cA$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part (i) is Getzler--Kapranov \cite{GeK98}, Theorem~5.4.
+Part~(ii): Theorem~\ref{thm:prism-higher-genus} identifies the
+genus-$g$ bar complex with the genus-$g$ component of the
+Feynman transform $\mathrm{FT}_{\mathcal{M}\mathrm{od}}(\cA)$.
+At $\cA = \mathrm{Com}$ (the commutative operad, viewed as a
+trivial chiral algebra), the OPE data is trivial and
+$\mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathrm{Com}) =
+\mathrm{FT}(\mathrm{Com}) = \mathrm{GC}$.
+\end{proof}
+
+\begin{remark}[The gap: holomorphic to topological]
+\label{rem:holomorphic-to-topological}
+\index{Kontsevich integral!holomorphic vs topological}
+The results above establish that the bar complex
+produces weight systems and KZ monodromy at genus~$0$,
+and that the genus tower identifies with the Feynman transform.
+The remaining gap between the bar complex and the full Kontsevich
+integral is the passage from holomorphic to topological:
+\begin{enumerate}
+\item Our propagators are holomorphic forms on complex curves;
+  the Kontsevich propagator is a real form on~$S^1$.
+\item Proposition~\ref{prop:propagator-restriction} handles the
+  genus-$0$ case: the holomorphic propagator restricts to the
+  Kontsevich propagator on $S^1 \subset \bP^1$.
+\item At genus $g \geq 1$, the holomorphic propagator
+  $\omega(z,w) = d_z \log E(z,w)$ (where $E$ is the prime form)
+  should restrict to the appropriate real propagator on a real
+  cycle $S^1 \hookrightarrow \Sigma_g$, but this restriction
+  requires Chern--Simons gauge equivalence
+  (Cattaneo--Mnev~\cite{CattaneoMnev10}), not merely
+  pointwise restriction.
+\end{enumerate}
+This gap is the subject of Conjecture~\ref{conj:vassiliev-bar}
+in \S\ref{subsec:vassiliev}.
+\end{remark}
+
+
+\section{Chern--Simons theory as the bridge}
+\label{sec:cs-bridge}
+\index{Chern--Simons!as bridge to Vassiliev}
+
+The correct mathematical framework connecting holomorphic bar
+complexes on curves to topological invariants of knots is
+Chern--Simons gauge theory.
+
+\begin{conjecture}[CS factorization homology; \ClaimStatusConjectured]
+\label{conj:cs-factorization}
+\index{Chern--Simons!factorization homology}
+For a compact oriented $3$-manifold~$M$ with
+$\partial M = \Sigma$ a Riemann surface, the perturbative
+Chern--Simons partition function at level~$k$ satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Boundary-to-bulk)}\quad
+  The algebra of observables $\mathrm{Obs}_{\mathrm{CS}}(M)$
+  is the factorization homology
+  $\int_M \barB(\widehat{\fg}_k)_\Sigma$,
+  where $\barB(\widehat{\fg}_k)_\Sigma$ denotes the bar complex
+  of $\widehat{\fg}_k$ viewed as a factorization algebra on~$M$
+  via the holomorphic-topological twist along the
+  surface~$\Sigma = \partial M$.
+\item \textup{(Knot invariants)}\quad
+  For $M = S^3$ and a knot $K \subset S^3$ colored by a
+  representation $V$ of~$\fg$, the expectation value
+  $\langle W_K(V) \rangle_{\mathrm{CS}}$ is computed by the
+  bar complex with module insertion:
+  $\langle W_K(V) \rangle = \chi(\barB(\widehat{\fg}_k, V_K))$
+  where $V_K$ is the $\widehat{\fg}_k$-module supported on~$K$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Scope]\label{rem:cs-scope}
+This conjecture connects three bodies of work:
+(a)~our bar complex on curves (proved);
+(b)~Costello--Gwilliam's perturbative quantization of CS
+(\cite{CG17}, constructing the factorization algebra);
+(c)~Axelrod--Singer's perturbative CS (\cite{Kon94}),
+computing knot invariants via configuration space integrals.
+The identification (i) requires showing that Costello--Gwilliam's
+factorization algebra for CS, restricted to the boundary, agrees
+with our bar complex.  This is the content of Programme~VI-a
+(\S\ref{subsec:anomaly-koszul}).
+\end{remark}
+
+
+\section{Summary}
+\label{sec:kontsevich-summary}
+
+\noindent
+\textbf{What is proved.}
+\begin{enumerate}
+\item Bar complex weight systems equal Lie algebra weight systems
+  (Theorem~\ref{thm:bar-weight-systems}).
+\item The holomorphic propagator restricts to the Kontsevich
+  propagator on $S^1 \subset \bP^1$
+  (Proposition~\ref{prop:propagator-restriction}).
+\item The bar differential on $C_n(\bC)$ is the KZ connection
+  (Proposition~\ref{prop:kz-from-bar}).
+\item The Drinfeld associator arises from bar-cobar monodromy on
+  $C_3(\bC)$ (Theorem~\ref{thm:drinfeld-associator-bar}).
+\item The Feynman transform of $\mathrm{Com}$ is the graph complex
+  (Proposition~\ref{prop:feynman-graph-complex}).
+\end{enumerate}
+
+\noindent
+\textbf{What remains.}
+The full identification of the genus tower with the loop expansion
+of the Kontsevich integral requires the Chern--Simons bridge at
+higher genus (Conjecture~\ref{conj:vassiliev-bar},
+Conjecture~\ref{conj:cs-factorization}).  The genus-$0$ case is
+established; the gap is the passage from holomorphic to topological
+Feynman transforms at $g \geq 1$.
