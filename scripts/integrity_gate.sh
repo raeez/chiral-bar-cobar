@@ -96,6 +96,8 @@ main = "\n".join([ln.split("%", 1)[0] for ln in main.splitlines()])
 active = []
 for m in re.finditer(r'\\(?:include|input)\{([^}]+)\}', main):
     p = m.group(1)
+    if not (p.startswith("chapters/") or p.startswith("appendices/")):
+        continue
     if not p.endswith(".tex"):
         p += ".tex"
     pp = pathlib.Path(p)
@@ -134,6 +136,55 @@ echo "  ACTIVE_CLAIM_HEADS=$heads"
 echo "  ACTIVE_TAGGED=$tagged"
 echo "  ACTIVE_UNTAGGED=$untagged"
 if [[ "$untagged" != "0" ]]; then
+  fail=1
+fi
+
+echo "==> Route-discipline coverage (active include graph)"
+read -r active_files gq_missing hms_missing < <(
+python3 - <<'PY'
+import pathlib
+import re
+
+main = pathlib.Path("main.tex").read_text(encoding="utf-8", errors="ignore")
+main = "\n".join([ln.split("%", 1)[0] for ln in main.splitlines()])
+
+active = []
+for m in re.finditer(r'\\(?:include|input)\{([^}]+)\}', main):
+    p = m.group(1)
+    if not (p.startswith("chapters/") or p.startswith("appendices/")):
+        continue
+    if not p.endswith(".tex"):
+        p += ".tex"
+    pp = pathlib.Path(p)
+    if pp.is_file():
+        active.append(pp)
+
+seen = set()
+uniq = []
+for p in active:
+    if p not in seen:
+        seen.add(p)
+        uniq.append(p)
+
+gq_missing = 0
+hms_missing = 0
+hms_re = re.compile(r'conv:hms-levels|semantic levels', re.IGNORECASE)
+
+for path in uniq:
+    text = path.read_text(encoding="utf-8", errors="ignore")
+    if "governing question" not in text.lower():
+        gq_missing += 1
+    if not hms_re.search(text):
+        hms_missing += 1
+
+print(f"{len(uniq)} {gq_missing} {hms_missing}")
+PY
+)
+
+echo "  ACTIVE_FILES=$active_files"
+echo "  ACTIVE_GQ_MISSING=$gq_missing"
+echo "  ACTIVE_HMS_MISSING=$hms_missing"
+if [[ "$gq_missing" != "0" || "$hms_missing" != "0" ]]; then
   fail=1
 fi
 

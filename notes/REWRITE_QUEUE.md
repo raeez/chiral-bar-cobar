@@ -172,6 +172,32 @@ This file tracks the systematic rearchitecture pass. Status values:
 |---|---|---|---|---|
 | 18 | `chapters/theory/chiral_koszul_pairs.tex` | recognition layer chapter | normalize chapter-entry sentence to explicit single-line “The governing question of this chapter…” phrasing so active-input audits are zero-miss | `done` |
 
+## Wave 21: Status-Tag Closure on Active Claim Blocks
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 19 | `chapters/frame/heisenberg_frame.tex` | frame theorem layer | add explicit claim-status tags to all previously untagged frame propositions/theorems so frame computations obey the same status discipline as the core | `done` |
+| 19 | `chapters/theory/bar_cobar_construction.tex` | strict-duality core | add claim-status tag to the cotensor/contratensor adjunction lemma | `done` |
+| 19 | `chapters/theory/poincare_duality.tex` | anti-circularity core | add claim-status tag to the NAP Koszul-pair proposition | `done` |
+| 19 | `chapters/theory/higher_genus.tex` | modular core | add claim-status tags to legacy theorem wrapper, quantum Arnold theorem, and center-isomorphism sublemma | `done` |
+| 19 | `chapters/connections/holomorphic_topological.tex` | gauge-theory bridge | add theorem-level status tag for the W-algebra bar-complex bridge statement | `done` |
+| 19 | `chapters/connections/kontsevich_integral.tex` | topology bridge | mark mixed-proof/open graph-complex proposition as `\ClaimStatusOpen` at theorem-header level | `done` |
+| 19 | `chapters/connections/genus_complete.tex` | all-genus bridge | mark mixed-proof/open EO-recursion theorem as `\ClaimStatusOpen` at theorem-header level | `done` |
+| 19 | `chapters/connections/concordance.tex` | synthesis ledger | mark higher-dimensional “proved cases” theorem as `\ClaimStatusOpen` to match mixed internal status split | `done` |
+| 19 | `appendices/arnold_relations.tex` | appendix proof layer | add claim-status tag to operadic-equivalence proposition | `done` |
+
+## Wave 22: H/M/S Marker Closure on Active Inputs
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 20 | `chapters/theory/filtered_curved.tex` | transition subsection inside quantum corrections | add explicit semantic-level remark so the filtered-to-curved comparison is tagged in the same H/M/S regime discipline as all other active inputs | `done` |
+
+## Wave 23: Integrity-Gate Route Discipline
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 21 | `scripts/integrity_gate.sh` | automation gate | extend active-include checks beyond claim-status coverage to enforce governing-question and H/M/S marker coverage automatically | `done` |
+
 ## Standing Rule
 
 Before advancing to a later wave, make sure the earlier wave compiles and

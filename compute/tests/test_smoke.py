@@ -218,15 +218,35 @@ class TestNonprincipalFrontier:
             verify_nonprincipal_ds_reduction_seed,
             bp_shift_to_target_sum,
             verify_nonprincipal_ds_normalization,
+            sl3_subregular_basis_profile,
+            sl3_subregular_constraints,
+            sl3_subregular_brst_blueprint,
+            sl3_subregular_truncated_brst_complex,
+            first_nonselfdual_hook_pair_ds_seed,
+            complex_has_nilpotent_differential,
             sl3_subregular_ds_seed,
             verify_ds_reduction_seed,
         )
         n, r, pair = first_nonselfdual_type_a_hook_pair()
         seed = sl3_subregular_bp_seed()
+        basis = sl3_subregular_basis_profile()
+        constraints = sl3_subregular_constraints()
+        blueprint = sl3_subregular_brst_blueprint()
+        subregular_complex = sl3_subregular_truncated_brst_complex()
+        hook_pair_seed = first_nonselfdual_hook_pair_ds_seed()
         ds_seed = sl3_subregular_ds_seed()
         assert n == 4 and r == 1
         assert pair.source_orbit == (3, 1) and pair.target_orbit == (2, 1, 1)
         assert seed.partition == (2, 1) and seed.dual_partition == (2, 1)
+        assert len(basis) == 8
+        assert len(constraints) == 2
+        assert blueprint.positive_nilpotent_is_abelian
+        assert subregular_complex.source_tag == "A2_subregular_seed"
+        assert hook_pair_seed.source_partition == (3, 1)
+        assert hook_pair_seed.target_partition == (2, 1, 1)
+        assert complex_has_nilpotent_differential(subregular_complex)
+        assert complex_has_nilpotent_differential(hook_pair_seed.source_complex)
+        assert complex_has_nilpotent_differential(hook_pair_seed.target_complex)
         assert ds_seed.partition == (2, 1)
         assert bp_shift_to_target_sum(22) == -27
         assert all(verify_bv_duality_scaffold(7).values())

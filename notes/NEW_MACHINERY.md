@@ -743,6 +743,26 @@ place:
 This isolates the remaining open work to the genuine non-principal correction
 term and the full BRST differential realization.
 
+Status update (Mar 8, 2026): the DS chain scaffold is now explicit enough to
+launch the BRST differential itself:
+- `compute/lib/ds_reduction.py` now records the full subregular `sl_3`
+  good-grading basis, the linear DS constraint data, and the target
+  Bershadsky--Polyakov presentations.
+- The constrained positive nilpotent is verified to be abelian in this seed,
+  so the quadratic ghost term vanishes at the symbolic scaffold level.
+What remains is no longer "what are the BRST inputs?" but "realize the
+resulting BRST differential/cohomology and then move to the first genuinely
+non-self-dual hook case."
+
+Status update (Mar 8, 2026, second pass): the first BRST differential layer is
+now explicit in compute:
+- `compute/lib/ds_reduction.py` now builds a truncated subregular `sl_3`
+  seed complex with differential `d = \chi \wedge -` and symbolic
+  nilpotence checks (`d^2=0`).
+- The same module now builds paired DS seed complexes for the first
+  non-self-dual type-A hook pair (`A_3`: `(3,1)` and `(2,1,1)`), again with
+  symbolic `d^2=0` verification on both source and target seeds.
+
 ### First concrete step
 ```
 TARGET: Compute W^k(sl3, f_sub)^! for f_sub = subregular nilpotent in sl3.

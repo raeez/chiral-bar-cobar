@@ -350,6 +350,11 @@ For each, we analyze the state of four computations:
   from the raw `76` sum to the chapter-target `22` sum), and the chain-input
   DS scaffold is initialized in `compute/lib/ds_reduction.py`
   (subregular `sl_3` triple, positive-grade root profile, BRST ghost weights).
+- The `sl_3` subregular DS seed now includes an explicit truncated BRST
+  differential (`d = \chi \wedge -` on the seed ghost exterior algebra) with
+  verified `d^2=0`, and the first non-self-dual hook pair (`A_3`:
+  `(3,1) \leftrightarrow (2,1,1)`) now has paired DS seed complexes with
+  symbolic nilpotence checks.
 
 #### 9. W_N (General)
 

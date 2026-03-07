@@ -597,6 +597,15 @@ standalone mathematical question.
   convention bridges for BP central-charge sums, and
   `compute/lib/ds_reduction.py` records the first chain-level non-principal DS
   inputs (subregular `sl_3` triple, grading profile, BRST ghost weights).
+- **BRST-input refinement (Mar 8, 2026)**:
+  `compute/lib/ds_reduction.py` now also includes the full subregular
+  good-grading basis, linear DS constraints, and the abelian positive-nilpotent
+  check forcing the quadratic ghost term to vanish in the `sl_3` seed.
+- **Truncated BRST layer (Mar 8, 2026, second pass)**:
+  `compute/lib/ds_reduction.py` now includes an explicit truncated seed
+  differential `d = \chi \wedge -` with symbolic `d^2=0` verification for the
+  subregular `sl_3` seed, and paired seed complexes for the first non-self-dual
+  hook case (`A_3`: `(3,1) \leftrightarrow (2,1,1)`).
 - **Assessment**: "The hardest pure mathematics conjecture in the manuscript."
   Arakawa-van Ekeren hook-type result covers a non-trivial class beyond principal.
 - **Scale**: 3-5 years. Requires deep representation theory.

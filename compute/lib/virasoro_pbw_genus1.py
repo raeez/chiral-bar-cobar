@@ -127,8 +127,8 @@ class VirasoroVacuumModule:
         result: Dict[State, object] = {}
 
         for state, coeff in self._insert_mode(mode_number, rest).items():
-            lifted = (first,) + state
-            result[lifted] = result.get(lifted, 0) + coeff
+            for lifted, lift_coeff in self._insert_mode(first, state).items():
+                result[lifted] = result.get(lifted, 0) + coeff * lift_coeff
 
         comm_coeff = Rational(first - mode_number)
         for state, coeff in self._insert_mode(mode_number + first, rest).items():
@@ -167,10 +167,10 @@ class VirasoroVacuumModule:
             rest_state = rest if rest else ()
             result[rest_state] = result.get(rest_state, 0) + central
 
-        # L_{-first} L_mode(rest)
+        # L_{-first} L_mode(rest): need _insert_mode to handle commutation
         for state, coeff in self._mode_on_pbw(mode, rest).items():
-            lifted = self._prepend_mode(first, state)
-            result[lifted] = result.get(lifted, 0) + coeff
+            for lifted, lift_coeff in self._insert_mode(first, state).items():
+                result[lifted] = result.get(lifted, 0) + coeff * lift_coeff
 
         return {state: coeff for state, coeff in result.items() if coeff != 0}
 
