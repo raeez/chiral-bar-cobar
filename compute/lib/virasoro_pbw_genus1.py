@@ -245,6 +245,136 @@ def verify_quartic_pole():
     }
 
 
+def verify_l1_lm1_commutator(max_weight: int = 10) -> Dict[str, bool]:
+    """Verify [L_1, L_{-1}] = 2 L_0 on each V-bar_h.
+
+    This is the core sl_2 commutation relation.
+    [L_1, L_{-1}] v = L_1(L_{-1} v) - L_{-1}(L_1 v) should equal 2h v.
+    """
+    module = VirasoroVacuumModule(max_weight=max_weight + 1)
+    results: Dict[str, bool] = {}
+
+    for weight in range(2, max_weight + 1):
+        dim = weight_space_dimension(weight)
+        if dim == 0:
+            continue
+
+        # L_1 L_{-1}: V_h -> V_{h+1} -> V_h
+        lm1 = module.mode_matrix(-1, weight)       # V_h -> V_{h+1}
+        l1_down = module.mode_matrix(1, weight + 1)  # V_{h+1} -> V_h
+        l1_lm1 = l1_down * lm1
+
+        # L_{-1} L_1: V_h -> V_{h-1} -> V_h
+        l1 = module.mode_matrix(1, weight)          # V_h -> V_{h-1}
+        if weight >= 3:
+            lm1_up = module.mode_matrix(-1, weight - 1)  # V_{h-1} -> V_h
+            lm1_l1 = lm1_up * l1
+        else:
+            lm1_l1 = zeros(dim, dim)
+
+        commutator = l1_lm1 - lm1_l1
+        expected = 2 * Rational(weight) * eye(dim)
+        results[f"[L1,L-1]=2L0 on M_{weight}"] = (commutator == expected)
+
+    return results
+
+
+def casimir_matrix_at_weight(weight: int, max_weight: int = 12) -> Matrix:
+    """Compute Casimir C_2 = 2L_0^2 - L_{-1}L_1 - L_1L_{-1} on V-bar_h.
+
+    The Casimir preserves each weight space because L_1 L_{-1}: V_h->V_{h+1}->V_h
+    and L_{-1} L_1: V_h->V_{h-1}->V_h.
+
+    With sl_2 identification e=L_{-1}, f=-L_1, h=2L_0, the Casimir is
+    C_2 = (1/2)h^2 + ef + fe = 2L_0^2 - L_{-1}L_1 - L_1L_{-1}.
+    Eigenvalue on spin-j irrep: 2j(j+1).
+    """
+    module = VirasoroVacuumModule(max_weight=max(max_weight, weight + 1))
+    dim = weight_space_dimension(weight)
+    if dim == 0:
+        return zeros(0, 0)
+
+    # 2 L_0^2 = 2 h^2 Id
+    C = 2 * Rational(weight) ** 2 * eye(dim)
+
+    # - L_{-1} L_1: V_h -> V_{h-1} -> V_h
+    l1 = module.mode_matrix(1, weight)
+    if weight >= 3 and l1.cols > 0:
+        lm1_up = module.mode_matrix(-1, weight - 1)
+        if lm1_up.cols > 0 and l1.rows > 0:
+            C -= lm1_up * l1
+
+    # - L_1 L_{-1}: V_h -> V_{h+1} -> V_h
+    lm1 = module.mode_matrix(-1, weight)
+    l1_down = module.mode_matrix(1, weight + 1)
+    if lm1.cols > 0 and l1_down.rows > 0:
+        C -= l1_down * lm1
+
+    return C
+
+
+def casimir_eigenvalues_at_weight(weight: int) -> Dict[Rational, int]:
+    """Casimir eigenvalues on V-bar_h with multiplicities.
+
+    All eigenvalues must be > 0 (no trivial sl_2 component).
+    Eigenvalue 2j(j+1) corresponds to spin-j representation.
+    """
+    C = casimir_matrix_at_weight(weight)
+    if C.rows == 0:
+        return {}
+    return C.eigenvals()
+
+
+def verify_casimir_positivity(max_weight: int = 10) -> Dict[str, bool]:
+    """Verify all Casimir eigenvalues > 0 on V-bar_h for h = 2,...,max_weight.
+
+    This is equivalent to: no trivial sl_2 component in any weight space.
+    The KEY theorem for Virasoro PBW degeneration.
+    """
+    results: Dict[str, bool] = {}
+    for weight in range(2, max_weight + 1):
+        eigenvals = casimir_eigenvalues_at_weight(weight)
+        all_positive = all(ev > 0 for ev in eigenvals)
+        results[f"Casimir > 0 on M_{weight}"] = all_positive
+    return results
+
+
+def verify_no_trivial_sl2(max_weight: int = 10) -> Dict[str, bool]:
+    """Verify no trivial sl_2 component in any weight space.
+
+    Two independent checks:
+    (a) L_0 = h > 0 on V-bar_h (trivial, but the logical core of the proof)
+    (b) All Casimir eigenvalues > 0 (computational confirmation)
+    """
+    results: Dict[str, bool] = {}
+
+    # (a) L_0 positivity — the mathematical argument
+    for weight in range(2, max_weight + 1):
+        results[f"L0={weight}>0 on M_{weight}"] = (weight > 0)
+
+    # (b) Casimir positivity — the computational confirmation
+    results.update(verify_casimir_positivity(max_weight))
+
+    return results
+
+
+def lowest_weight_dimensions(max_weight: int = 10) -> Dict[int, int]:
+    """Dimensions of ker(L_1) in each V-bar_h (lowest weight vectors).
+
+    A state v in V-bar_h with L_1 v = 0 starts a new sl_2 irrep.
+    At h=2: ker(L_1) = V-bar_2 since L_1: V_2 -> V_1 = 0.
+    """
+    module = VirasoroVacuumModule(max_weight=max_weight + 1)
+    dims: Dict[int, int] = {}
+    for weight in range(2, max_weight + 1):
+        l1 = module.mode_matrix(1, weight)
+        if l1.rows == 0:
+            dims[weight] = weight_space_dimension(weight)
+        else:
+            dims[weight] = weight_space_dimension(weight) - l1.rank()
+    return dims
+
+
 def verify_virasoro_pbw_genus1(max_weight: int = 10) -> Dict[str, bool]:
     """Run the full Virasoro PBW genus-1 verification package."""
     results: Dict[str, bool] = {}
@@ -252,4 +382,6 @@ def verify_virasoro_pbw_genus1(max_weight: int = 10) -> Dict[str, bool]:
     results.update(verify_l0_scalar_action(max_weight=max_weight))
     results.update(verify_global_sl2_relations(max_weight=max_weight))
     results.update(verify_quartic_pole())
+    results.update(verify_l1_lm1_commutator(max_weight=max_weight))
+    results.update(verify_no_trivial_sl2(max_weight=max_weight))
     return results

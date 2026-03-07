@@ -1,11 +1,32 @@
-"""Tests for genus-1 PBW degeneration in the Virasoro family."""
+"""Tests for genus-1 PBW degeneration in the Virasoro family.
 
-from sympy import Rational, Symbol, eye
+Computational verification of the Virasoro PBW theorem (thm:pbw-allgenera-virasoro).
+
+KEY RESULT: The sl_2 = {L_{-1}, L_0, L_1} subalgebra has no trivial component
+in any weight space V-bar_h (h >= 2), because L_0 = h > 0. By Whitehead,
+all enrichment from H^1(Sigma_g) is killed. This makes the Virasoro argument
+SIMPLER than KM (no invariant V_1 requiring a separate d_2 step).
+
+Conventions:
+  - PBW states: L_{-n_1}...L_{-n_r}|0> with n_1 >= ... >= n_r >= 2
+  - Represented as tuples in non-increasing order: (n_1, ..., n_r)
+  - sl_2: e = L_{-1}, f = -L_1, h = 2L_0
+  - Casimir: C_2 = 2L_0^2 - L_{-1}L_1 - L_1L_{-1}, eigenvalue 2j(j+1) on spin j
+  - For m in {-1, 0, 1}: central term m^3 - m = 0, so sl_2 action is c-independent
+"""
+
+from sympy import Rational, Symbol, eye, zeros
 
 from compute.lib.virasoro_pbw_genus1 import (
     VirasoroVacuumModule,
+    casimir_eigenvalues_at_weight,
+    casimir_matrix_at_weight,
+    lowest_weight_dimensions,
+    verify_casimir_positivity,
     verify_global_sl2_relations,
     verify_l0_scalar_action,
+    verify_l1_lm1_commutator,
+    verify_no_trivial_sl2,
     verify_quartic_pole,
     verify_virasoro_pbw_genus1,
     verify_weight_dimensions,
