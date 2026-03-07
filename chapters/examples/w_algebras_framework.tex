@@ -1,7 +1,15 @@
 \chapter{W-algebra Koszul duals}\label{chap:w-algebra-koszul}
 \label{chap:w-algebras}
 
-The $\mathcal{W}$-algebras arise from affine Kac--Moody algebras via Drinfeld--Sokolov reduction.  Their bar-complex behavior inherits the discriminant of the parent algebra, providing a functorial test of the modular Koszul structure (conditional on PBW degeneration; see Theorem~\ref{thm:pbw-koszulness-criterion}) beyond the abelian Heisenberg case of Chapter~\ref{ch:heisenberg-frame}.
+The governing question is transport: what does modular Koszul structure
+do under Drinfeld--Sokolov reduction?  The $\mathcal{W}$-algebras
+arise from affine Kac--Moody algebras via this reduction, and their
+bar-complex behavior carries the discriminant of the parent family.
+This chapter treats DS reduction as a structural functor, not as an
+appendix construction, and uses it as the decisive non-abelian test
+beyond the Heisenberg frame of Chapter~\ref{ch:heisenberg-frame}.  The
+finite-type principal families are unconditional at all genera,
+including higher $\mathcal{W}_N$.
 
 Quantum Drinfeld--Sokolov reduction \cite{DS, FF} sends a Kac--Moody algebra
 $\widehat{\mathfrak{g}}_k$ to a W-algebra
@@ -13,7 +21,7 @@ and its Koszul theory is genuinely non-quadratic.
 
 \begin{remark}[$\mathcal{W}$-algebras as atom: discriminant preservation]
 \label{rem:w-atom}
-\index{W-algebra@$\mathcal{W}$-algebra!as modular Koszul atom (conditional on PBW degeneration)}
+\index{W-algebra@$\mathcal{W}$-algebra!as modular Koszul atom}
 The $\mathcal{W}$-algebra family reveals the ``spectral sheet''
 phenomenon: Drinfeld--Sokolov reduction changes the growth pole of the
 bar generating function but \emph{preserves the discriminant}
@@ -25,7 +33,7 @@ different local operator content.  This invariance under DS
 reduction is a row of the master functorial correspondence
 (Remark~\ref{rem:master-functorial}) and gives the strongest
 evidence that $\Delta_{\cA}$ is a genuine spectral invariant of the
-modular Koszul object (unconditional for Kac--Moody by Theorem~\ref{thm:pbw-allgenera-km}; conditional on PBW degeneration for Virasoro and higher $\mathcal{W}_N$).
+modular Koszul object (unconditional for Kac--Moody by Theorem~\ref{thm:pbw-allgenera-km}, unconditional for Virasoro by Theorem~\ref{thm:pbw-allgenera-virasoro}, and unconditional for principal finite-type $\mathcal{W}$ by Theorem~\ref{thm:pbw-allgenera-principal-w}).
 \end{remark}
 
 DS reduction is a Koszul
@@ -48,12 +56,11 @@ each generator.
 \label{rem:w-status}
 The results in this chapter are stratified:
 \begin{enumerate}
-\item[\textbf{T2.}] \emph{Finite-type $\mathcal{W}_N$} ($N$ fixed, generic $k$):
-  PBW-conditional (Theorem~\ref{thm:pbw-koszulness-criterion}).
-  Duality, $\kappa$, and discriminant preservation under DS reduction
-  are proved.
-  Modular Koszulity is conditional on higher-genus PBW degeneration
-  (Conjecture~\ref{conj:master-pbw}).
+\item[\textbf{T2.}] \emph{Principal finite-type $\mathcal{W}$} (generic $k$):
+  Duality, $\kappa$, discriminant preservation under DS reduction,
+  and modular Koszulity are all proved at all genera
+  (Theorem~\ref{thm:pbw-allgenera-principal-w},
+  Corollary~\ref{cor:unconditional-allgenera-principal-w}).
 \item[\textbf{Horizon.}]  \emph{$\mathcal{W}_\infty$ and infinite-generator
   duals}: require completed bar theory
   (Conjecture~\ref{conj:master-infinite-generator}).
@@ -68,6 +75,18 @@ extracted from \textbf{M-level} models (bar spectral sequences,
 Drinfeld--Sokolov reduction, curved $A_\infty$ structures).
 H-level structures (completed bar for $\mathcal{W}_\infty$,
 modular factorization) are indicated as horizon targets.
+\end{remark}
+
+\begin{remark}[Portrait route]
+\label{rem:w-route}
+This portrait is organized as structural transport:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item start from DS reduction as a functor on Kac--Moody Koszul data;
+\item track what is preserved (\,$\Delta_{\cA}$, level involution,
+  modular package shadows\,);
+\item isolate what is genuinely new (higher-spin curvature channels and
+  non-quadratic \(A_\infty\) corrections).
+\end{enumerate}
 \end{remark}
 
 \section{W-algebras and non-quadratic Koszul duality}
@@ -178,7 +197,6 @@ For non-principal nilpotent $f \in \mathfrak{g}$ and simply-laced $\mathfrak{g}$
 \mathcal{W}^k(\mathfrak{g}, f)^! \simeq \mathcal{W}^{k'}(\mathfrak{g}, f^D)
 \end{equation}
 where $f^D$ is the Barbasch--Vogan dual nilpotent (whose orbit has the same component group $A(\mathcal{O})$ as $\mathcal{O}_f$) and $k'$ is determined by the Feigin--Frenkel involution shifted by the difference in Dynkin gradings.  For non-simply-laced $\mathfrak{g}$, the duality involves the Langlands dual $\mathfrak{g}^\vee$ and the Spaltenstein dual of $f$.
-(Contributing to Conjecture~\ref{conj:master-pbw}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -294,8 +312,7 @@ The result follows.
 \emph{Consistency check.}  The central charges satisfy
 $c(\mathcal{B}^k) + c(\mathcal{B}^{k'}) = -3(2k+3)^2/(k+3) + 2
 + (-3(2k'+3)^2/(k'+3) + 2)$.  Using $k' = -k-6$, one verifies
-$c + c' = 4 + 18 = 22$, consistent with the general complementarity
-formula $2r + 4h^\vee \dim(\fg^{f_{\min}})$ for the minimal reduction.
+$c + c' = 76$ in the normalization used here.
 The curvature data (Computation~\ref{comp:bp-bar}) transforms correctly:
 $m_0^{(\mathfrak{sl}_2)}(k') = (k'+1/2)/2 = (-k-11/2)/2 = -(k+1/2)/2
 - 5/2$, which is the negated curvature shifted by the anomaly.

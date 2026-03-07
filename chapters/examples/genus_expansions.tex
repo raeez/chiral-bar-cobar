@@ -1,6 +1,15 @@
 \chapter{Explicit genus expansions}\label{ch:genus-expansions}
 
-The genus expansion formulas computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are extended here to affine Kac--Moody, Virasoro, and $\mathcal{W}_3$ algebras, demonstrating the three main theorems in interplay.
+This chapter is not a table catalog.  It asks a structural question:
+how do genus expansions interlock with inversion, complementarity, and
+PBW concentration across the main families once the Heisenberg frame is
+fixed?  The formulas computed in
+Chapter~\ref{ch:heisenberg-frame} are propagated here to affine
+Kac--Moody, Virasoro, and $\mathcal{W}_3$, and each propagation step is
+recorded as theorematic transport rather than as isolated numerics.
+
+The governing question is therefore to verify one common transport chain
+across families, rather than present disconnected genus tables.
 
 \begin{remark}[Status legend]
 \label{rem:genus-exp-status}
@@ -12,19 +21,20 @@ The genus expansions in this chapter are organized by proof tier:
 \item[T1$\frac{1}{2}$.] \emph{Unconditional at all genera}:
   $\widehat{\mathfrak{sl}}_2$
   (\S\ref{sec:three-theorems-sl2}), all affine Kac--Moody
-  $\widehat{\fg}_k$ at generic level ---
+  $\widehat{\fg}_k$ at generic level, and Virasoro
+  (\S\ref{sec:virasoro-all-genera}) ---
   by Theorem~\ref{thm:pbw-allgenera-km}, the PBW spectral
-  sequence degenerates unconditionally at all genera.
+  sequence has concentrated $E_\infty$ page unconditionally at all genera for
+  Kac--Moody, and by Theorem~\ref{thm:pbw-allgenera-virasoro}
+  it has concentrated $E_\infty$ page unconditionally for Virasoro.
   The genus-$1$ mechanism (Theorem~\ref{thm:pbw-genus1-km})
   serves as the base case.
-\item[T2.] \emph{PBW-conditional at all genera}:
-  Virasoro (\S\ref{sec:virasoro-all-genera}),
-  $\mathcal{W}$-algebras (\S\ref{sec:w-algebra-genera})
-  --- conditional on Conjecture~\ref{conj:master-pbw}.
-  The genus-$1$ analogue of
-  Theorem~\ref{thm:pbw-genus1-km} for these families
-  (Remark~\ref{rem:pbw-genus1-scope}) is expected to hold
-  by the same Whitehead mechanism.
+\item[T2.] \emph{Unconditional higher-spin finite type}:
+  principal finite-type $\mathcal{W}$-algebras
+  (\S\ref{sec:w-algebra-genera}) ---
+  unconditional at all genera by
+  Theorem~\ref{thm:pbw-allgenera-principal-w}.
+  The first nontrivial higher-spin case is $\mathcal{W}_3$.
 \item[Horizon.] Index-theoretic conjectures are downstream
   of the full modular characteristic package
   (Conjecture~\ref{conj:master-theta}).
@@ -39,6 +49,19 @@ for $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\mathcal{W}_3$.
 These are extracted from \textbf{M-level} models (bar complexes at
 higher genus, PBW spectral sequences, Mumford class pairings).
 H-level input enters only through the genus universality theorem.
+\end{remark}
+
+\begin{remark}[Interlock route]
+\label{rem:genus-exp-route}
+Each family is presented through the same theorematic chain:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item identify \(\kappa(\cA)\) and the relevant PBW concentration input;
+\item propagate to \(F_g(\cA)\) by genus universality;
+\item compare with complementarity and discriminant data to verify
+  compatibility with the modular package.
+\end{enumerate}
+The chapter should be read as a synchronized verification of this
+three-step chain across families, not as independent tables.
 \end{remark}
 
 \section{Free fields at all genera}\label{sec:free-field-genera}
@@ -353,7 +376,6 @@ discriminant $1 - 3x - x^2$, whose compatibility with
 $\widehat{\mathfrak{sl}}_3$ remains to be checked.
 
 \emph{Scope.}  Verification requires computing $\dim H^5(\barBgeom(\mathcal{W}_3^k))$: the value $171$ would confirm the recurrence~\eqref{eq:w3-bar-recurrence}, while any other value would rule it out and point to a non-rational generating function.
-(Contributing to Conjecture~\ref{conj:master-pbw}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -372,7 +394,6 @@ For non-simply-laced Lie algebras $\mathfrak{g}$ ($B_n$, $C_n$, $F_4$, $G_2$), t
 \end{enumerate}
 
 \emph{Scope.}  Even for $G_2$, only three data points are available.  The chain-group dimensions are $\dim(\mathfrak{g})^n \cdot (n{-}1)! = 14, 392, 5488$ for $n = 1, 2, 3$; the \emph{bar cohomology} dimensions are not yet computed beyond $H^1 = 14$.  Computing $H^n(\barBgeom(\widehat{G}_{2,k}))$ requires the $G_2$ structure constants and is computationally demanding.
-(Contributing to Conjecture~\ref{conj:master-pbw}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -2788,7 +2809,7 @@ a root-datum invariant
 \textup{(}Theorem~\textup{\ref{thm:complementarity-root-datum})}.
 \end{computation}
 
-The genus expansion data confirms the modular Koszul structure (unconditional for Kac--Moody by Theorem~\ref{thm:pbw-allgenera-km}; conditional on PBW degeneration for Virasoro and $\mathcal{W}_N$) in
+The genus expansion data confirms the modular Koszul structure (unconditional for Kac--Moody by Theorem~\ref{thm:pbw-allgenera-km}, unconditional for Virasoro by Theorem~\ref{thm:pbw-allgenera-virasoro}, and unconditional for principal finite-type $\mathcal{W}$ by Theorem~\ref{thm:pbw-allgenera-principal-w}) in
 every case.  The universality theorem reduces the scalar genus tower
 to a single number $\kappa(\cA)$; complementarity forces
 $\kappa(\cA) + \kappa(\cA^!) = 0$ for Kac--Moody and
