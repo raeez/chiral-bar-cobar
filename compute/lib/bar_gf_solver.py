@@ -340,7 +340,7 @@ def predict_sl3_degree4(verbose: bool = False):
     """Attempt to predict dim H^4(B(sl3)) from algebraicity.
 
     Known values: 8, 36, 204.
-    Conjecture (conj:sl3-discriminant): P(x) is algebraic of degree <= 4.
+    Conjecture (conj:sl3-bar-gf): P(x) is algebraic of degree <= 4.
 
     We try degree 2 first (like sl2), then degree 3 if needed.
     With 3 data points and a degree-2 equation with low-degree coefficients,
