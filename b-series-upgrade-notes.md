@@ -25,7 +25,7 @@
   Verdict: Genuinely open mathematics — the subquotient identification requires new representation-theoretic insight.
   Cannot upgrade.
 
-  B4: sl₃ bar generating function (conj:sl3-discriminant)
+  B4: sl₃ bar generating function (conj:sl3-bar-gf)
 
   Infrastructure:
   - ŝl₃ is chiral Koszul for generic k: proved (thm:km-chiral-koszul covers ALL simple g)

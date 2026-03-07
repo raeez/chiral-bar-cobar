@@ -645,7 +645,7 @@ standalone mathematical question.
 | Algebra | Conjecture | Label | GF |
 |---------|-----------|-------|-----|
 | W3 | Rational GF | `conj:w3-algebraicity` | x(2-3x)/((1-x)(1-3x-x^2)) |
-| sl3 | Shared discriminant | `conj:sl3-discriminant` | Unknown (need more data) |
+| sl3 | Shared discriminant | `conj:sl3-bar-gf` | Unknown (need more data) |
 | Y(sl2) | 3^n + 1 | `conj:yangian-bar-gf` | (1-3x^2)/((1-x)(1-3x)) |
 | Non-simply-laced | Discriminant family | `conj:non-simply-laced-discriminant` | Unknown |
 
