@@ -150,3 +150,86 @@ class TestUtilities:
         from fractions import Fraction
         f1 = F_g(1, 1)
         assert f1 == Fraction(1, 24)
+
+
+class TestInfiniteGeneratorFrontier:
+    def test_pronilpotent_completion_exports(self):
+        from compute.lib import (
+            w_infinity_weight_sector,
+            verify_w_infinity_completion,
+        )
+        assert (2, 2) in w_infinity_weight_sector(4)[2]
+        assert all(verify_w_infinity_completion(6).values())
+
+    def test_w_infinity_ope_exports(self):
+        from compute.lib import (
+            TruncatedWinfinityOPE,
+            TruncatedWinfinitySupportComplex,
+            verify_truncated_w_infinity_ope,
+            verify_w_infinity_support_complex,
+        )
+        model = TruncatedWinfinityOPE(max_spin=5)
+        support = TruncatedWinfinitySupportComplex(max_spin=5)
+        assert model.generator_spins == (2, 3, 4, 5)
+        assert support.weight_sector_basis(4) == ((4,), (2, 2))
+        assert all(verify_truncated_w_infinity_ope(5, 7).values())
+        assert all(verify_w_infinity_support_complex(5, 7).values())
+
+
+class TestNonprincipalFrontier:
+    def test_nonprincipal_exports(self):
+        from compute.lib import (
+            hook_partition,
+            subregular_partition,
+            type_a_bv_dual,
+            nonprincipal_hook_cases,
+            verify_nonprincipal_ds_orbit_scaffold,
+        )
+        assert hook_partition(5, 2) == (3, 1, 1)
+        assert subregular_partition(4) == (3, 1)
+        assert type_a_bv_dual((3, 1)) == (2, 1, 1)
+        assert nonprincipal_hook_cases(5)
+        assert all(verify_nonprincipal_ds_orbit_scaffold(7).values())
+
+    def test_nonprincipal_ds_seed_exports(self):
+        from sympy import Rational
+        from compute.lib import (
+            bp_dual_level,
+            bp_residual_sl2_level,
+            bp_complementarity_constant,
+            sl3_subregular_good_grading_multiplicities,
+            bp_current_presentation,
+            bp_strong_presentation,
+            verify_nonprincipal_ds_reduction_seed,
+        )
+        assert bp_dual_level(0) == -6
+        assert bp_residual_sl2_level(0) == Rational(1, 2)
+        assert bp_complementarity_constant() == 76
+        assert sl3_subregular_good_grading_multiplicities()[0] == 2
+        assert len(bp_current_presentation()) == 5
+        assert len(bp_strong_presentation()) == 4
+        assert all(verify_nonprincipal_ds_reduction_seed().values())
+
+    def test_bv_and_ds_seed_exports(self):
+        from compute.lib import (
+            first_nonselfdual_type_a_hook_pair,
+            verify_bv_duality_scaffold,
+            sl3_subregular_bp_seed,
+            verify_nonprincipal_ds_reduction_seed,
+            bp_shift_to_target_sum,
+            verify_nonprincipal_ds_normalization,
+            sl3_subregular_ds_seed,
+            verify_ds_reduction_seed,
+        )
+        n, r, pair = first_nonselfdual_type_a_hook_pair()
+        seed = sl3_subregular_bp_seed()
+        ds_seed = sl3_subregular_ds_seed()
+        assert n == 4 and r == 1
+        assert pair.source_orbit == (3, 1) and pair.target_orbit == (2, 1, 1)
+        assert seed.partition == (2, 1) and seed.dual_partition == (2, 1)
+        assert ds_seed.partition == (2, 1)
+        assert bp_shift_to_target_sum(22) == -27
+        assert all(verify_bv_duality_scaffold(7).values())
+        assert all(verify_nonprincipal_ds_reduction_seed().values())
+        assert all(verify_nonprincipal_ds_normalization().values())
+        assert all(verify_ds_reduction_seed().values())

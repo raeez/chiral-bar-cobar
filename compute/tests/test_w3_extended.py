@@ -164,6 +164,18 @@ class TestModeAlgebra:
         result = mod._L_on_state(0, W)
         assert abs(result.get(W, 0) - 3.0) < 1e-12
 
+    def test_L0_scalar_on_all_low_weight_states(self, mod):
+        """L_0 acts by conformal weight on every PBW state through weight 8."""
+        for h in range(2, 9):
+            for state in mod.vbar_states_at_weight(h):
+                result = mod._L_on_state(0, state)
+                assert abs(result.get(state, 0) - h) < 1e-12
+                off_diagonal = {
+                    s: c for s, c in result.items()
+                    if s != state and abs(c) > 1e-12
+                }
+                assert off_diagonal == {}
+
     def test_L1_on_T(self, mod):
         """L_1|T> = 0 (T is primary)."""
         result = mod._L_on_state(1, T)
@@ -185,6 +197,26 @@ class TestModeAlgebra:
         """L_2|T> = c/2 |0> (central charge)."""
         result = mod._L_on_state(2, T)
         assert abs(result.get(VACUUM, 0) - 3.5) < 1e-12  # c=7 -> c/2=3.5
+
+    def test_T1_preserves_weight(self, mod):
+        """T_(1) = L_0 preserves conformal weight on low PBW sectors."""
+        for h in range(2, 7):
+            for state in mod.vbar_states_at_weight(h):
+                vec = mod.compute_nth_product(T, state, 1)
+                for idx, coeff in enumerate(vec):
+                    if abs(coeff) > 1e-12:
+                        target = mod._all_states[idx]
+                        assert state_weight(target) == h
+
+    def test_W1_raises_weight(self, mod):
+        """W_(1) raises conformal weight by 1 on low PBW sectors."""
+        for h in range(2, 7):
+            for state in mod.vbar_states_at_weight(h):
+                vec = mod.compute_nth_product(W, state, 1)
+                for idx, coeff in enumerate(vec):
+                    if abs(coeff) > 1e-12:
+                        target = mod._all_states[idx]
+                        assert state_weight(target) == h + 1
 
 
 # =========================================================================

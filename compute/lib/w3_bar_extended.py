@@ -294,6 +294,10 @@ class W3VacuumModule:
                 return {}
             return {make_state((-m,), ()): 1.0}
 
+        if m == 0:
+            # Homogeneous PBW states are exact L_0-eigenvectors.
+            return {state: float(state_weight(state))}
+
         result: Dict[State, float] = {}
 
         if l_modes:
