@@ -1,6 +1,21 @@
 # Frontier References and Computational Gap Analysis
 
-Generated: 2026-03-05
+Generated: 2026-03-05 (base report)
+Last status refresh: 2026-03-07
+
+## Frontier Reset (March 7, 2026)
+
+- The higher-genus PBW concentration entry theorem is now treated as resolved
+  for the standard finite-type interacting families:
+  affine Kac-Moody, Virasoro, and principal finite-type `W_N`.
+- The finite-type `W_N` row in Part B is now theorem-level (generic principal
+  locus), with `W_3` as explicit support and higher `N` tracked as a
+  computation-depth gap rather than a theorem-status gap.
+- The active `W` frontier is now split cleanly:
+  infinite-generator completion (`W_\infty` / Yangian towers, MC4 infrastructure)
+  and non-principal orbit duality (representation-theoretic frontier).
+- The immediate computational infrastructure target is the completed,
+  weight-filtered/pronilpotent bar scaffold for infinite-generator regimes.
 
 ---
 
@@ -319,18 +334,36 @@ For each, we analyze the state of four computations:
 - **Degree-5 bar complex dimension missing** (listed as "---" in Master Table).
 - No explicit degree-3 or degree-4 bar differential (only dimensions given).
 - Module Koszul duality for W_3 modules not developed.
-- The non-principal nilpotent case (Conjecture conj:w-orbit-duality) remains open.
+- The non-principal nilpotent case (Conjecture conj:w-orbit-duality) remains open,
+  but the type-A hook/subregular combinatorial frontier scaffold is now
+  implemented in `compute/lib/nonprincipal_ds_orbits.py`.
+- The non-principal DS seed layer is now split into
+  `compute/lib/bv_duality.py` (type-A BV dual pairs, including the first
+  non-self-dual hook pair at `A_3`) and
+  `compute/lib/nonprincipal_ds_reduction.py` (proved `sl_3` subregular BP
+  seed invariants + hook-pair seed records). The BP central-charge formulas
+  presently implemented there give a level-independent sum `c(k)+c(k')=76`
+  for `k'=-k-6`; reconciling this with the chapter-level `22` normalization
+  claim is now an explicit frontier consistency task.
+- The normalization bridge is now explicit in
+  `compute/lib/nonprincipal_ds_normalization.py` (shift-only convention map
+  from the raw `76` sum to the chapter-target `22` sum), and the chain-input
+  DS scaffold is initialized in `compute/lib/ds_reduction.py`
+  (subregular `sl_3` triple, positive-grade root profile, BRST ghost weights).
 
 #### 9. W_N (General)
 
 | Computation | Status | Details |
 |-------------|--------|---------|
-| Bar complex | **Only abstract** | Via W-algebra Koszul main theorem. No explicit computation for N >= 4. |
-| Genus pipeline | **Via universality** | kappa = c * sum_{j=2}^N 1/j. |
+| Bar complex | **Finite-type theorem + low-weight support** | Principal finite-type `W`-algebras now satisfy all-genera PBW concentration. The proof uses the unique weight-2 stress tensor and the upper-triangular `d_2` weight argument, with explicit low-weight support from the `W_3` vacuum-module computation. No explicit high-degree bar differential for `N >= 4` yet. |
+| Genus pipeline | **Theorem-level for all g** | `kappa = c * sum_{j=2}^N 1/j`, and the higher-genus obstruction theory is unconditional on the principal finite-type locus. |
 | Module category | **None** | Only the abstract theorem. |
-| Spectral sequence | **Claimed via universal theorem** | No explicit verification for N >= 4. |
+| Spectral sequence | **E_2 collapse proved for generic principal finite-type W** | Explicit `W_3` checks plus the generator-weight argument identify an invertible diagonal `L_0` term and strictly weight-raising off-diagonal higher-spin contributions. |
 
-**Gaps**: Essentially the same situation as hat{E}_8 -- a formula row with no worked computation behind it for N >= 4.
+**Gaps**:
+- No explicit high-degree bar differential or bar-cohomology table for `N >= 4`.
+- No module Koszul duality for principal `W_N` modules.
+- The live `W` frontier has moved to completed infinite-generator bar theory (`W_infinity`) and non-principal orbit duality, not finite-type PBW degeneration.
 
 #### 10. Yangian Y(sl_2)
 

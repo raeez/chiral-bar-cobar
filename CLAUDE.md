@@ -44,17 +44,17 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 7)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **767** |
-| ProvedElsewhere | **334** |
-| Conjectured | **123** |
-| Heuristic | **27** |
+| ProvedHere | **783** |
+| ProvedElsewhere | **344** |
+| Conjectured | **136** |
+| Heuristic | **30** |
 | Open | **0** |
-| **Total tagged claims** | **1251** |
+| **Total tagged claims** | **1293** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1396 pages** (converged in 2-3 passes), zero LaTeX errors, zero undefined refs, zero undefined citations, zero multiply-defined labels
+- **1415 pages** (converged in 2-3 passes), zero LaTeX errors, zero undefined refs, zero undefined citations, zero multiply-defined labels
 - 55 active .tex files + 8 stubs (+ main.tex preamble), 87K+ lines of LaTeX
 - Bibliography: 275 entries, all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
@@ -83,6 +83,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 - 9-programme research synthesis: BV duality error fixed (partition transpose, not identity), DS-KD proof restructured (2-stage with BV orbit identification), Frenkel-Teleman/FLE/Raskin documented, N-complex framework added, E_n/Vassiliev/BRST chain map literature integrated, hook-type W-algebra duality cited, sl₃ modular rank computation (new: Casimir anomaly at p|dim(g)), 12 new bibliography entries (287 total), weight filtration computability, Booth-Lazarev monoidal model structures
 - v16 campaign (SESSION_PROMPT_v16): 10 workstreams executed across 59 files. Homotopy-native remarks (4 main theorems), periodicity triple Pi(A), prose sculpting (-715 lines, -22 pages), physics programme branding (3 files), master table stratification (3-tier), regime tags, differential notation completion, cross-ref verification (clean), coderived appendix (enhanced). Net: 4660 insertions, 5375 deletions.
 - raeeznotes8 campaign: Five-layer architecture restructuring. Theorem A₀ (fundamental twisting morphisms, 4-way equivalence), Theorem C₀ (fiber-center identification), bigraded Hochschild definition, characteristic hierarchy, Theorem H naming, chiral dual pair definition. A₀/A₁/A₂ and C₀/C₁ decomposition references propagated to 8 example/connections files.
+- Higher-genus PBW concentration resolved for the standard finite-type interacting families: Kac-Moody, Virasoro, and principal finite-type W-algebras (including higher W_N). Concordance now treats the former MC1 as a theorem-level entry point rather than a live master conjecture.
 
 ### Proof Sketches: 1 REMAINING (correctly so)
 | File | Line | Context | Status |
@@ -91,7 +92,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 118 Conjectured Claims (post-v16)
+### What Remains — 136 Conjectured Claims (fresh census, Mar 7)
 
 All have scope remarks. Classification (from comprehensive audit, this session):
 
@@ -103,9 +104,9 @@ All have scope remarks. Classification (from comprehensive audit, this session):
 | **COMPUTATIONAL** | ~5 | Explicit bar cohomology computations needed |
 | **SCOPE-REMARK REFS** | ~10 | Re-references, not independent claims |
 
-**Genuinely open**: Virasoro/W_infinity Koszul dual (3), reflected modular periodicity (2), derived bc-betagamma, non-principal W-orbit duality, NC Chern-Simons
+**Genuinely open**: completed infinite-generator bar / Virasoro-W_infinity duality, reflected modular periodicity, derived bc-betagamma, non-principal W-orbit duality, NC Chern-Simons
 
-**Upgradeable items exhausted**: All conjectures with proofs assemblable from existing results have been upgraded. Remaining 101 each require either (a) genuine new mathematics, (b) physics input, or (c) explicit computation not yet performed.
+**Upgradeable items exhausted**: All conjectures with proofs assemblable from existing finite-type PBW input have been upgraded. The remaining conjectured items require either (a) genuine new mathematics, (b) physics input, or (c) infinite-generator/computational infrastructure not yet built.
 
 **Conjectures by Part**: Theory ~25, Examples ~35, Connections ~30, Appendices ~1.
 

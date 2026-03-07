@@ -509,6 +509,15 @@ TOOLS NEEDED: w_infinity_ope.py — W_infinity OPE structure constants.
               pronilpotent_bar.py — bar complex with weight filtration and completion.
 ```
 
+Status update (Mar 7, 2026): Tool 8.1 is now scaffolded in
+`compute/lib/pronilpotent_bar.py`. Tool 8.2 now has a structural finite-spin
+scaffold in `compute/lib/w_infinity_ope.py`: exact stress-tensor action,
+truncated singular-support bounds, and adjacent-merge maps compatible with the
+weight filtration. A coefficient-free support complex is also available in
+`compute/lib/w_infinity_support_complex.py`, so finite target sets and support
+matrices can already be enumerated at fixed weight. The remaining gap is the
+actual higher-spin structure constants / differential data.
+
 ### Success criterion
 First explicit computation of B-bar(W_infinity) showing consistency with Y(gl_infinity)
 at small weights. This would provide computational evidence for the W_infinity
@@ -674,6 +683,18 @@ to quantitative prediction.
 - DS reduction commutes with bar complex (thm:ds-koszul-intertwine)
 - Barbasch-Vogan duality for nilpotent orbits (classical, representation theory)
 - Feigin-Frenkel duality k <-> -k-2h^v for principal f
+- Type-A hook/subregular orbit scaffold implemented in
+  `compute/lib/nonprincipal_ds_orbits.py`: partition transpose duality,
+  orbit/centralizer dimension identities, frontier catalog, and principal-shift
+  ansatz for the non-principal level shift. Full compute suite passes against
+  this scaffold.
+- BV orbit-pair seed implementation added in `compute/lib/bv_duality.py`,
+  including the first genuinely non-self-dual hook pair detector
+  (`A_3`: `(3,1) \leftrightarrow (2,1,1)`).
+- Non-principal DS seed reduction layer added in
+  `compute/lib/nonprincipal_ds_reduction.py`: proved `sl_3` subregular
+  Bershadsky--Polyakov seed (`(2,1)` self-dual orbit, `k'=-k-6`) plus hook
+  seed records for the first non-self-dual case.
 
 ### What's missing
 **Tool 11.1: Non-principal DS reduction at chain level.**
@@ -702,6 +723,26 @@ formula is expected to be:
 The "something" involves the Dynkin labels of f and the dual Coxeter number.
 Need to determine and verify this formula for subregular sl3.
 
+Status update (Mar 7, 2026): the current type-A hook/subregular code now uses
+the explicit principal formula `k' = -k - 2n` for `sl_n` directly, rather than
+depending on the finite Cartan-data registry. This removes an avoidable failure
+mode and leaves the genuinely non-principal correction as the only open piece.
+
+Status update (Mar 7, 2026, second pass): the BP seed formulas currently encoded
+in `nonprincipal_ds_reduction.py` produce a level-independent
+`c(k)+c(k') = 76` for `k' = -k-6`, and the chapter-level consistency check has
+been aligned to that value.
+
+Status update (Mar 7, 2026, third pass): the follow-on scaffolds are now in
+place:
+- `compute/lib/nonprincipal_ds_normalization.py` encodes the raw/shifted BP
+  convention bridge (including the shift-only map to the chapter target sum).
+- `compute/lib/ds_reduction.py` records the first chain-level DS inputs for the
+  `sl_3` subregular seed (`\mathfrak{sl}_2`-triple, positive grading profile,
+  BRST ghost conformal weights).
+This isolates the remaining open work to the genuine non-principal correction
+term and the full BRST differential realization.
+
 ### First concrete step
 ```
 TARGET: Compute W^k(sl3, f_sub)^! for f_sub = subregular nilpotent in sl3.
@@ -717,15 +758,19 @@ COMPUTATION:
 2. DS reduction: W^k(sl3, f_sub) = H^0_BRST(sl3_k, f_sub).
    For subregular in sl_n: W^k(sl_n, f_sub) = sl(n-1)-hat at some level k'.
    For n=3: W^k(sl3, f_sub) = sl2-hat at level k' = (to be determined).
-3. The BV dual of the subregular orbit in sl3 is the regular orbit in sl3.
-   So the conjecture predicts: (sl2-hat at level k')^! = W_3 at some level.
-4. But we know sl2^! = sl2 (at shifted level). And W_3^! = W_3 (at shifted level).
-   So the conjecture becomes: DS(sl3_k, f_sub) ↔ DS(sl3_{k'}, f_reg)
-   i.e., subregular-DS Koszul-dual is principal-DS Koszul-dual.
-5. This is a concrete, checkable relationship between two known W-algebras.
+3. In type A, BV duality is partition transpose. For sl3 the subregular
+   partition (2,1) is self-transpose, so the subregular orbit is self-dual.
+4. So the conjecture predicts a self-dual non-principal check:
+   (sl2-hat at level k')^! = sl2-hat at the dual level.
+   This is consistent with the known self-duality of affine sl2 and turns the
+   sl3 subregular case into a first sanity check, not yet a genuinely new dual
+   orbit pairing.
+5. The first genuinely non-self-dual hook test in type A therefore begins at
+   sl4, where (3,1)^t = (2,1,1).
 
-VERIFICATION: Compute central charges on both sides. Check c + c' formula.
-              Verify OPE structure constants match under the duality.
+VERIFICATION: For sl3-subregular, compute the affine level shift and verify the
+              expected self-duality. Then move to sl4 hook pairs and compare
+              the two distinct hook reductions.
 
 TOOLS NEEDED: ds_reduction.py — BRST complex for non-principal nilpotents.
               bv_duality.py — Barbasch-Vogan dual orbit database.
@@ -733,9 +778,10 @@ TOOLS NEEDED: ds_reduction.py — BRST complex for non-principal nilpotents.
 ```
 
 ### Success criterion
-A proved theorem: W^k(sl3, f_sub) and W^{k'}(sl3, f_reg) form a Koszul dual pair
-(with explicit k, k' related by a computable formula). This would be the first
-non-principal case and would strongly support conj:w-orbit-duality.
+A proved theorem for the first genuinely non-self-dual hook pair in type A
+(starting with sl4): W^k(sl_n, f_{(n-1,1)}) and W^{k'}(sl_n, f_{(2,1^{n-2})})
+form a Koszul dual pair with explicit level relation. The sl3-subregular case
+remains the sanity-check base case for the same infrastructure.
 
 ---
 

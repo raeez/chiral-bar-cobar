@@ -487,7 +487,11 @@ Koszul duality connects higher-spin holography to the Yangian framework.
 
 **Gap**: The bar construction requires completion for infinitely many generators.
 The pro-nilpotent bar complex (filtered by conformal weight) makes this well-defined
-in principle, but no computation has been done. See NEW_MACHINERY.md #M8.
+in principle. The weight-filtered completion scaffold now exists in
+`compute/lib/pronilpotent_bar.py`, and a truncated structural OPE layer now
+exists in `compute/lib/w_infinity_ope.py`. What is still missing is the actual
+`W_infinity` higher-spin structure constants and the induced completed bar
+differential. See NEW_MACHINERY.md #M8.
 
 **Entry point**: Compute B-bar(W_infinity) at small total weight (h = 4, 5, 6) using
 only the generators W_2, W_3 and their OPE. Compare with Y(gl_infinity) at the same
@@ -579,6 +583,20 @@ standalone mathematical question.
   prop:ds-koszul-hierarchy proof restructured (2-stage: BRST + BV orbit identification).
 - **Gap**: DS reduction for arbitrary f; BV duality theory for non-type-A;
   level-shift formula k' = k'(k, f) for non-principal reductions.
+- **Current scaffold**: `compute/lib/nonprincipal_ds_orbits.py` now gives a clean
+  type-A hook/subregular frontier catalog, transpose BV duality in type A,
+  orbit-dimension identities, and the principal Feigin-Frenkel shift as the
+  current non-principal ansatz.
+- **Compute expansion (Mar 7, 2026)**:
+  `compute/lib/bv_duality.py` now isolates type-A BV pair logic
+  (including first non-self-dual hook seed `A_3: (3,1) \leftrightarrow (2,1,1)`),
+  and `compute/lib/nonprincipal_ds_reduction.py` adds the `sl_3` subregular BP
+  seed + hook-pair DS seed records for the orbit-duality frontier.
+- **Chain/normalization scaffolds (Mar 7, 2026, follow-on)**:
+  `compute/lib/nonprincipal_ds_normalization.py` now exposes explicit
+  convention bridges for BP central-charge sums, and
+  `compute/lib/ds_reduction.py` records the first chain-level non-principal DS
+  inputs (subregular `sl_3` triple, grading profile, BRST ghost weights).
 - **Assessment**: "The hardest pure mathematics conjecture in the manuscript."
   Arakawa-van Ekeren hook-type result covers a non-trivial class beyond principal.
 - **Scale**: 3-5 years. Requires deep representation theory.
