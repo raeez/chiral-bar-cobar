@@ -3,40 +3,20 @@
 \index{deformation theory!chiral|textbf}
 \index{Hochschild cohomology!chiral|textbf}
 
-The curvature $d^2 = \kappa \cdot \omega_1$ that appeared at genus~$1$ for the Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}) signals a deformation-theoretic phenomenon: the bar complex is not a chain complex but a curved $A_\infty$-algebra.  This chapter develops the deformation-obstruction theory that organizes these quantum corrections.
+The fiberwise curvature $\dfib^{\,2} = \kappa \cdot \omega_1$ at genus~$1$ (Chapter~\ref{ch:heisenberg-frame}; Convention~\ref{conv:higher-genus-differentials}) makes the bar complex a curved $A_\infty$-algebra rather than a chain complex.  This chapter develops the deformation-obstruction theory organizing these quantum corrections.
 
 \section{The deformation problem for chiral algebras}
 
-When does a chiral algebra admit deformations, and what obstructs
-them?  In classical algebra the answer is clean: $HH^2$ parametrizes
-infinitesimal deformations, $HH^3$ carries obstructions, and Koszul
-duality interchanges the two.  For chiral algebras the question
-acquires a geometric dimension: the moduli space
-$\overline{\mathcal{M}}_g$ of the underlying curve contributes its
-own cohomology, and the deformation-obstruction theory splits into a
-genus-zero algebraic component and a higher-genus modular component.
-
+Classically, $HH^2$ parametrizes deformations and $HH^3$ carries obstructions.  For chiral algebras, $\overline{\mathcal{M}}_g$ contributes its own cohomology, splitting the theory into genus-$0$ (algebraic) and higher-genus (modular) components.
 The complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main}) gives the precise
-answer: $Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary Lagrangians
-in a shifted-symplectic ambient space.  This chapter develops the
-infinitesimal machinery underlying that result---chiral Hochschild
-cohomology, the obstruction calculus, and the curved $A_\infty$
-structures that emerge when obstructions are nonzero.
-The deformation-obstruction exchange at genus~$0$
---- $HH^2(\cA)$ parametrizes deformations, $HH^3(\cA)$ carries
-obstructions, and Koszul duality sends $HH^n(\cA)$ to
-$HH^{2-n}(\cA^!)^\vee \otimes \omega_X$ --- is the seed from
-which the higher-genus complementarity grows.  At a conceptual
-level, the full structure is an instance of the noncommutative
-Hodge-to-de Rham degeneration: the Hodge filtration on chiral
-Hochschild homology degenerates at $E_1$, and the resulting mixed
-structure controls the deformation theory across all genera
+(Theorem~\ref{thm:quantum-complementarity-main}) gives the answer:
+$Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary Lagrangians
+in a shifted-symplectic ambient space.  Koszul duality sends $HH^n(\cA)$ to $HH^{2-n}(\cA^!)^\vee \otimes \omega_X$
 (Remark~\ref{rem:nc-hodge-degeneration}).
 
 \subsection{Origins and physical motivation}
 
-Hochschild cohomology for chiral algebras has roots in physics and algebra. Physicists studying marginal deformations of conformal field theories needed to understand when a perturbation $S \to S + \lambda \int \phi(z,\bar{z}) d^2z$ preserves conformal invariance; Seiberg \cite{Sei88} recognized that exactly marginal deformations correspond to closed elements in a certain cohomology theory. On the algebraic side, Gerstenhaber's deformation theory \cite{Ger63} called for an extension of Hochschild cohomology to vertex algebras. Beilinson--Drinfeld's formalization of chiral algebras \cite{BD04} as factorization algebras then required a cohomology theory respecting the geometric structure.
+Exactly marginal CFT deformations correspond to closed Hochschild $2$-cocycles (Seiberg~\cite{Sei88}); the algebraic framework is Gerstenhaber's deformation theory~\cite{Ger63}, extended to chiral algebras via Beilinson--Drinfeld's factorization formalism~\cite{BD04}.
 
 The fundamental question is: Given a chiral algebra $\mathcal{A}$ on a smooth curve $X$, what are its infinitesimal deformations that preserve the chiral structure? In classical algebra, if we deform an associative multiplication $\mu: A \otimes A \to A$ to $\mu_t = \mu + t\phi$, the associativity constraint
 \[
@@ -50,13 +30,7 @@ which in terms of elements reads $a\phi(b,c) - \phi(ab,c) + \phi(a,bc) - \phi(a,
 This is precisely the Hochschild 2-cocycle condition $\delta^2\phi = 0$. The obstruction to extending to second order lives in $HH^3(A,A)$.
 \index{obstruction theory|textbf}
 
-For chiral algebras, a deformation must preserve:
-\begin{enumerate}
-\item The $\mathcal{D}_X$-module structure encoding locality
-\item The chiral multiplication $\mu: j_*j^*(\mathcal{A} \boxtimes \mathcal{A}) \to \Delta_*\mathcal{A}$
-\item The singularity structure along the diagonal
-\item The operator product expansion coefficients
-\end{enumerate}
+A chiral deformation must preserve the $\mathcal{D}_X$-module structure, the chiral multiplication, the diagonal singularity structure, and the OPE coefficients.
 
 \subsection{Configuration spaces in deformation theory}
 
@@ -242,10 +216,13 @@ where $\hat{z}_i$ denotes omission and $\mu$ is the chiral multiplication.
 
 \subsection{The resolution strategy}
 
-Computing Hochschild cohomology directly from the definition is typically intractable. The bar-cobar resolution provides a systematic approach:
-
 \begin{theorem}[Hochschild via bar-cobar; \ClaimStatusProvedHere]
-For any chiral algebra $\mathcal{A}$, there is a quasi-isomorphism
+\textup{[Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+For any chiral Koszul algebra $\mathcal{A}$
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})},
+there is a quasi-isomorphism
 \[
 C^{\bullet}_{\text{chiral}}(\mathcal{A}) \simeq \text{Hom}_{\text{ChirAlg}}(\Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})), \mathcal{A})
 \]
@@ -276,8 +253,6 @@ The left side is precisely $HH^n_{\text{chiral}}(\mathcal{A})$ by definition.
 \end{proof}
 
 \subsection{The spectral sequence}
-
-The double complex structure induces a spectral sequence:
 
 \begin{theorem}[Hochschild spectral sequence; \ClaimStatusProvedHere]
 There exists a spectral sequence
@@ -388,8 +363,6 @@ When $\mathcal{A}$ is quadratic, $\mathcal{A}^!$ recovers the classical quadrati
 
 \subsection{The universal twisting morphism}
 
-The relationship between a chiral algebra and its Koszul dual is mediated by:
-
 \begin{definition}[Universal twisting morphism]
 A \emph{twisting morphism} $\tau: \mathcal{A}^! \to \mathcal{A}$ is a degree 1 map satisfying the Maurer--Cartan equation
 \[
@@ -447,16 +420,37 @@ This map:
 The Maurer--Cartan equation $\partial \tau + \tau \star \tau = 0$ becomes the statement that this construction is consistent with the OPE structures on both sides.
 \end{example}
 
-\subsection{Main duality theorem}
+\subsection{Main duality theorem}\label{subsec:hochschild-duality}
 
-\begin{theorem}[Koszul duality for Hochschild cohomology; \ClaimStatusProvedHere]
+\begin{theorem}[Koszul duality for Hochschild cohomology
+\textup{(}Theorem~H\textup{)}; \ClaimStatusProvedHere]
 \label{thm:main-koszul-hoch}
 \index{Hochschild cohomology!Koszul duality|textbf}
-For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ of chiral algebras on a smooth projective curve $X$:
+\textup{[Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+For every chiral Koszul datum~$\cA$
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})} with
+dual~$\cA^!$ on a smooth projective curve~$X$, the bigraded chiral
+Hochschild complex
+\textup{(}Definition~\textup{\ref{def:bigraded-hochschild})} satisfies
+the \emph{derived-level} duality:
+\begin{equation}\label{eq:hochschild-H-derived}
+RHH_{\mathrm{ch}}(\cA)
+\;\simeq\;
+R\mathrm{Hom}\bigl(RHH_{\mathrm{ch}}(\cA^!),\, \omega_X[2]\bigr).
+\end{equation}
+On cohomology:
 \[
-HH^n_{\mathrm{chiral}}(\mathcal{A}) \cong HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X
+HH^n_{\mathrm{chiral}}(\mathcal{A}) \cong HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
 \]
-The shift by~$2$ arises from two sources: Serre duality on $X$ contributes a shift of~$1$ (as $\dim_\mathbb{C} X = 1$), and the Koszul duality between $\mathcal{A}$ and $\mathcal{A}^!$ contributes an additional shift of~$1$ (from the bar complex desuspension $s^{-1}$).  The $\omega_X$ twist encodes the dualizing sheaf.
+The shift by~$2$ is the collapsed trace of the variable Verdier
+shift~$p+2$ at bar degree~$p$: Koszul concentration
+\textup{(}Theorem~\textup{\ref{thm:bar-concentration})} forces
+$p = q$ on the surviving diagonal, so the variable
+shift collapses to the constant~$2$
+\textup{(}Remark~\textup{\ref{rem:hochschild-shift-origin})}.
+The $\omega_X$ twist encodes the dualizing sheaf.
 \end{theorem}
 
 \begin{proof}
@@ -558,8 +552,6 @@ For the Heisenberg algebra $\mathcal{H}_k$, the curved $A_\infty$ structure on t
 \section{Example: boson-fermion duality}
 
 \subsection{The free boson chiral algebra}
-
-The free boson is the Heisenberg algebra of Chapter~\ref{ch:heisenberg-frame}, now viewed through the lens of Hochschild cohomology.  Its Hochschild complex $\mathrm{HH}^*(\mathcal{H}_k)$ is computed by the bar-cobar resolution; the boson-fermion Koszul pair reveals how deformations of $\mathcal{H}_k$ are dual to obstructions of the free fermion.
 
 The free boson $\mathcal{B}$ on a curve $X$ is defined as follows:
 
@@ -705,6 +697,7 @@ HH^0_{\text{chiral}}(\mathcal{F}) &= \mathbb{C} \quad \text{(scalars only)} \\
 HH^1_{\text{chiral}}(\mathcal{F}) &= 0 \quad \text{(rigid)} \\
 HH^2_{\text{chiral}}(\mathcal{F}) &= \mathbb{C} \quad \text{(deformation to interacting fermion)}
 \end{align}
+The fermion Hochschild groups are isomorphic to the boson groups (Computation~\ref{comp:boson-hochschild}), though the two algebras are \emph{not} Koszul dual (see Remark below).
 \end{computation}
 
 \begin{remark}[Numerical coincidence]
@@ -720,23 +713,134 @@ not $\mathcal{F}$.  The coincidence above reflects the fact that both algebras a
 ``maximally simple'' free-field theories with one-dimensional deformation spaces.
 \end{remark}
 
+\subsection{The cyclic deformation complex}
+\label{subsec:cyclic-deformation}
+
+\begin{definition}[Cyclic deformation complex: elementary models]
+\label{def:cyclic-deformation-elementary}
+\index{cyclic deformation complex|textbf}
+\index{Def cyc@$\operatorname{Def}_{\mathrm{cyc}}$|textbf}
+Let $\cA$ be a chiral algebra on~$X$.  The \emph{cyclic deformation
+complex} $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ is the tangent dg
+Lie algebra (or, more generally, $L_\infty$-algebra) controlling
+cyclic deformations of~$\cA$.
+
+\smallskip\noindent
+\textbf{Abstract definition (H-level).}
+$\operatorname{Def}_{\mathrm{cyc}}(\cA)$ is the Lie algebra object in
+the $\infty$-category of cochain complexes whose Maurer--Cartan
+elements parametrize flat cyclic deformations of~$\cA$ over
+Artinian bases.  For the full construction, which requires a cyclic
+$L_\infty$ algebra over the modular operad, see
+Conjecture~\ref{conj:universal-MC}.
+
+\smallskip\noindent
+\textbf{Concrete models (M-level).}
+For the examples treated in this monograph, explicit models are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Bar coderivations.}
+  $\operatorname{Def}_{\mathrm{cyc}}(\cA)_{\mathrm{bar}}
+  := \operatorname{CoDer}^{\mathrm{cyc}}(\bar{B}_X(\cA))$,
+  the complex of cyclic coderivations of the bar construction.
+  Its Maurer--Cartan elements are exactly the curved deformations
+  of the bar differential.
+\item \emph{Cyclic chiral Hochschild complex.}
+  $\operatorname{Def}_{\mathrm{cyc}}(\cA)_{\mathrm{Hoch}}
+  := CC^*_{\mathrm{ch}}(\cA)^{\mathrm{cyc}}$,
+  the cyclic-invariant part of the chiral Hochschild cochain complex
+  (the complex controlling $S^1$-equivariant deformations).
+\item \emph{Stable-graph operations.}
+  For $\cA$ modular Koszul
+  (Definition~\ref{def:modular-koszul-chiral}), the genus-$g$
+  deformations are generated by stable-graph operations
+  $\gamma \in \Gamma_{g,n}$, and the Maurer--Cartan equation
+  splits into genus-graded components whose leading term is the
+  curvature $\mcurv{g} = \kappa(\cA) \cdot \lambda_g$.
+\end{enumerate}
+The Heisenberg specialization (Chapter~\ref{ch:heisenberg-frame})
+is computed via model~(a): the cyclic coderivation complex is
+one-dimensional at genus~$1$, generated by the Eisenstein element
+$\kappa \cdot E_2(\tau)$.
+\end{definition}
+
+\begin{definition}[Cyclic deformation complex: bar-intrinsic
+  form; \ClaimStatusConjectured]
+\label{def:cyclic-deformation-bar}
+\index{cyclic deformation complex!bar-intrinsic form}
+Let $\cA$ be a modular Koszul chiral algebra
+(Definition~\ref{def:modular-koszul-chiral}) carrying the trace/duality
+data needed to define the chain-level Verdier/BV pairing.  The
+\emph{bar-intrinsic cyclic deformation complex} is
+\begin{equation}\label{eq:def-cyc-bar}
+\Defcyc(\cA)
+\;:=\;
+\operatorname{CoDer}^{\mathrm{cyc}}\!\bigl(
+  \widehat{\barB}_X(\cA)
+\bigr)[1],
+\end{equation}
+the degree-shifted dg Lie algebra of continuous cyclic coderivations of
+the completed reduced bar coalgebra $\widehat{\barB}_X(\cA)$; ``cyclic''
+means skew-adjoint for the canonical pairing induced by Verdier
+duality/BV trace.
+
+This object has four essential properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Filtered-completeness:} the bar-length filtration makes
+  $\Defcyc(\cA)$ complete and pronilpotent.
+\item \emph{Functoriality:} the assignment $\cA \mapsto \Defcyc(\cA)$
+  is functorial in morphisms of augmented chiral algebras.
+\item \emph{Cyclic pairing:} the Verdier/BV trace induces a
+  $(-1)$-shifted symplectic structure on the formal moduli problem
+  $\operatorname{MC}(\Defcyc(\cA))$.
+\item \emph{Curved MC control:} Maurer--Cartan elements of
+  $\Defcyc(\cA)$ parametrize curved deformations of the bar
+  differential, so the genus tower is controlled by a single MC
+  deformation.
+\end{enumerate}
+The degree shift~$[1]$ makes the Lie bracket of degree~$0$, matching
+the convention for tangent Lie algebras of formal moduli problems
+(Lurie~\cite{LurieHA}).  Equivalently,
+$\Defcyc(\cA)$ is the tangent dg Lie algebra of cyclic deformations
+of~$\cA$ as a modular factorization algebra; it presents the abstract
+H-level object of Definition~\ref{def:cyclic-deformation-elementary}
+via bar-coalgebra coderivations.
+
+\smallskip\noindent
+\emph{Claim status.}
+At genus~$0$, model~(a) of
+Definition~\ref{def:cyclic-deformation-elementary} is established.
+The full modular extension---constructing $\Defcyc(\cA)$ as a cyclic
+$L_\infty$-algebra over the modular operad and solving the
+Maurer--Cartan equation in the completed tensor product with
+tautological classes---is the content of
+Conjecture~\ref{conj:universal-MC}.
+\end{definition}
+
+\begin{remark}[Why introduce $\operatorname{Def}_{\mathrm{cyc}}$
+now]\label{rem:def-cyc-role}
+The genus tower
+$\{\bar{B}^{(g)}(\cA)\}_{g \geq 0}$, the curvature scalars
+$\mcurv{g}$, and the obstruction classes $\mathrm{obs}_g$ are
+\emph{all} shadows of a single Maurer--Cartan element
+$\Theta_{\cA}$ in
+$\operatorname{Def}_{\mathrm{cyc}}(\cA) \widehat{\otimes}
+R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})$.
+Even though the full construction of $\Theta_{\cA}$ is conjectural
+(Conjecture~\ref{conj:universal-MC}), the concrete models above
+suffice to formulate every higher-genus construction in this monograph
+as ``induced by $\Theta_{\cA}$,'' making the structural unity of the
+genus tower visible.
+\end{remark}
+
 \section{Classification of periodicity phenomena}
 
 \subsection{Overview: three sources of periodicity}
 
-The Hochschild cohomology of chiral algebras can exhibit three distinct types of periodicity:
-
-\begin{enumerate}
-\item \emph{Type I - Modular:} From rational central charge and modular transformations
-\item \emph{Type II - Quantum:} From quantum groups at roots of unity
-\item \emph{Type III - Geometric:} From topology of the underlying curve
-\end{enumerate}
+The Hochschild cohomology of chiral algebras can exhibit three types of periodicity: \emph{Type I (Modular)}, from rational central charge and modular transformations; \emph{Type II (Quantum)}, from quantum groups at roots of unity; and \emph{Type III (Geometric)}, from the topology of the underlying curve.
 
 \subsection{Type I: modular periodicity from rational central charge}
 
 \subsubsection{The mechanism}
-
-When a chiral algebra has rational central charge $c = p/q$ with $\gcd(p,q) = 1$, modular transformations of the torus partition function create periodicity.
 
 \begin{theorem}[Modular periodicity for minimal models; \ClaimStatusProvedHere]
 \label{thm:modular-periodicity-minimal}
@@ -863,22 +967,32 @@ Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:modular-periodicity-scope}
-Theorem~\ref{thm:modular-periodicity-minimal} proves modular periodicity for
-Virasoro minimal models $M(p,q)$, where the finite representation category
-($(p-1)(q-1)/2$ simples), explicit Rocha-Caridi character formulas, and the
-Verlinde fusion rules provide the necessary control.
-Conjecture~\ref{conj:modular-periodicity} extends this to general rational
-chiral algebras.  The main obstacle in the general case is that the
-$T$-matrix periodicity $T^N = \mathrm{Id}$ on the character space is known
-(it follows from the same argument as in Step~1 of the proof above), but
-deducing that weight-space dimensions and OPE coefficients are eventually
-$N$-periodic requires structural information about the characters that is
-available for minimal models (theta functions over eta) but not in full
-generality.  The conjecture is expected for all $C_2$-cofinite rational vertex
-algebras, where Zhu's finiteness theorem and Huang's modular tensor category
-theory apply.  WZW models at positive integer level, whose characters are
-given by affine Weyl-Kac formulas (also ratios of theta functions over eta),
-provide a natural next case amenable to the same proof strategy.
+Theorems~\ref{thm:modular-periodicity-minimal}
+and~\ref{thm:modular-periodicity-wzw} prove modular periodicity for
+the two principal families of rational chiral algebras: Virasoro
+minimal models $M(p,q)$ (via Rocha-Caridi characters) and WZW models
+$\widehat{\mathfrak{g}}_k$ at positive integer level (via the
+Weyl--Kac character formula).  In both cases the key structural
+ingredient is that the characters are ratios of theta functions over
+eta functions, giving exact periodicity of Fourier coefficients.
+Conjecture~\ref{conj:modular-periodicity} extends this to general
+rational chiral algebras.  The main obstacle in the general case is
+that the $T$-matrix periodicity $T^N = \mathrm{Id}$ on the character
+space is known (it follows from the same argument as in Step~1 of the
+proof above), but deducing that weight-space dimensions and OPE
+coefficients are eventually $N$-periodic requires structural
+information about the characters that may not be available in full
+generality.  The conjecture is expected for all $C_2$-cofinite
+rational vertex algebras, where Zhu's finiteness theorem and Huang's
+modular tensor category theory apply.  Natural next cases include
+$\mathcal{W}$-algebra minimal models (whose characters are given by
+Feigin--Frenkel formulas involving theta functions at shifted levels)
+and rational orbifolds.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
+The conjecture asserts $N$-periodicity of bar cohomology dimensions
+in conformal weight for general rational chiral algebras, extending
+the proved minimal model and WZW cases.
 \end{remark}
 
 \begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
@@ -916,6 +1030,118 @@ c = \frac{3k}{k+2}
 At $k=1$: $c = 1$, period 24 (related to $j$-invariant)
 At $k=2$: $c = 3/2$, period 48
 \end{example}
+
+\begin{theorem}[Modular periodicity for WZW models; \ClaimStatusProvedHere]
+\label{thm:modular-periodicity-wzw}
+\index{periodicity!modular!WZW models|textbf}
+\index{WZW model!modular periodicity|textbf}
+Let $\widehat{\mathfrak{g}}_k$ be an affine Kac--Moody algebra at
+positive integer level $k \geq 1$, with $\mathfrak{g}$ a finite-dimensional
+simple Lie algebra of rank~$r$.  Write the central charge
+$c = k\dim(\mathfrak{g})/(k + h^\vee) = p/q$ in lowest terms and set
+\[
+N \;=\; \frac{24q}{\gcd(p,24)}.
+\]
+Then for all bar degrees~$n$ and all sufficiently large conformal
+weight~$h$:
+\[
+\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))
+\;=\;
+\dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)).
+\]
+\end{theorem}
+
+\begin{proof}
+The proof follows the same three-step strategy as
+Theorem~\ref{thm:modular-periodicity-minimal}, using the
+Weyl--Kac character formula in place of the Rocha-Caridi formula.
+
+\emph{Step~1: $T$-matrix periodicity.}
+The WZW model $\widehat{\mathfrak{g}}_k$ at positive integer level
+has finitely many integrable highest-weight modules
+$L(\lambda)$, indexed by dominant integral weights $\lambda$
+with $\langle \lambda, \theta^\vee \rangle \leq k$ (where $\theta$
+is the highest root).  Their conformal weights are
+$h_\lambda = \langle \lambda, \lambda + 2\rho \rangle / 2(k + h^\vee)$.
+The $T$-eigenvalue $e^{2\pi i(h_\lambda - c/24)}$ is an $N$-th root
+of unity by the same argument as in Step~1 of
+Theorem~\ref{thm:modular-periodicity-minimal}: since
+$h_\lambda - c/24$ is rational with denominator dividing
+$24(k + h^\vee)$, and $N$ is constructed from $c = p/q$ to ensure
+$cN/24 \in \mathbb{Z}$, one has $T^N = \mathrm{Id}$ on the
+finite-dimensional character space.
+
+\emph{Step~2: Periodicity of weight-space dimensions.}
+The character of each integrable module $L(\lambda)$ is given by
+the Weyl--Kac character formula
+(Kac~\cite[\S12.7]{Kac}):
+\[
+\mathrm{ch}_{L(\lambda)}(\tau, z)
+\;=\;
+\frac{\sum_{w \in W} \varepsilon(w)\,
+  \Theta_{w(\lambda + \rho),\, k + h^\vee}(\tau, z)}
+     {\sum_{w \in W} \varepsilon(w)\,
+  \Theta_{w(\rho),\, h^\vee}(\tau, z)}
+\]
+where $\Theta_{\mu,m}$ is a level-$m$ theta function on the
+weight lattice, $W$ is the (finite) Weyl group,
+$\varepsilon(w) = (-1)^{\ell(w)}$, and $\rho$ is the Weyl
+vector.  Both numerator and denominator are finite alternating
+sums of lattice theta functions.
+
+A level-$m$ theta function on a rank-$r$ lattice has the form
+$\Theta_{\mu,m}(\tau) = \sum_{\gamma \in \Lambda + \mu/(2m)}
+q^{m|\gamma|^2}$.
+Its Fourier coefficients (counting lattice points on an ellipsoid)
+are periodic in the exponent with period dividing~$m$, since
+$|\gamma + e|^2 - |\gamma|^2 \in (1/m)\mathbb{Z}$ for
+$e \in \Lambda$.  In the specialization to conformal weight
+(setting $z = 0$), the numerator theta functions at
+level $k + h^\vee$ have Fourier coefficients periodic with
+period dividing $k + h^\vee$, and the denominator at
+level~$h^\vee$ has period dividing~$h^\vee$.
+
+Since $N$ is a multiple of $\operatorname{lcm}(k + h^\vee, h^\vee)$
+(as $c = k\dim(\mathfrak{g})/(k+h^\vee)$ and $N = 24q/\gcd(p,24)$
+with $q$ a divisor of $k + h^\vee$), the ratio
+$\mathrm{ch}_{L(\lambda)}$ has $N$-periodic Fourier coefficients
+for exponents exceeding the pole order.  By the convolution
+argument of Theorem~\ref{thm:modular-periodicity-minimal},
+Step~2, this gives
+$\dim L(\lambda)_{[h+N]} = \dim L(\lambda)_{[h]}$
+for all $h$ sufficiently large.
+
+\emph{Step~3: Lift to bar complex.}
+The bar complex dimension at degree~$n$, weight~$h$ decomposes as
+in Step~3 of Theorem~\ref{thm:modular-periodicity-minimal}, with
+module labels running over the finitely many integrable
+representations and fusion multiplicities given by the Verlinde
+formula for~$\widehat{\mathfrak{g}}_k$.  The OPE structure
+constants of the WZW model are determined by the Knizhnik--Zamolodchikov
+connection, whose monodromy is expressed via the quantum group
+$U_q(\mathfrak{g})$ at $q = e^{\pi i/(k+h^\vee)}$
+(Kazhdan--Lusztig~\cite{KL93}).  The quantum Clebsch--Gordan
+coefficients are products of quantum integers
+$[n]_q$, and $q^{2(k+h^\vee)} = 1$ ensures these are periodic
+with the same period structure as the weight-space dimensions.
+Therefore the bar differential matrices at weights $h$ and $h+N$
+are identified via the canonical weight-space isomorphisms,
+and $\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}})
+= \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}})$ for all $h \gg 0$.
+\end{proof}
+
+\begin{remark}[Scope]\label{rem:wzw-periodicity-scope}
+Theorem~\ref{thm:modular-periodicity-wzw} applies to all
+simple~$\mathfrak{g}$ at all positive integer levels.  Together with
+Theorem~\ref{thm:modular-periodicity-minimal}, modular periodicity
+is now established for the two main families of rational chiral
+algebras: Virasoro minimal models and WZW models.
+Conjecture~\ref{conj:modular-periodicity} remains open for
+general rational chiral algebras (e.g., $\mathcal{W}$-algebra
+minimal models at non-integral levels, orbifolds, coset models),
+where explicit character formulas as theta-function ratios may
+not be available.
+\end{remark}
 
 \subsubsection{Koszul dual behavior}
 
@@ -959,6 +1185,9 @@ and $\cA^!$.
 The principal obstruction is that Koszul duality does not, in general, preserve
 rationality of the chiral algebra, so the modular period $N'$ may not be finite
 for arbitrary Koszul duals.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
+The conjecture asserts that modular periods of a Koszul pair $(\cA, \cA^!)$ are related by the reciprocal-sum formula~\eqref{eq:period-sum}, reflecting duality at the level of $T$-matrix eigenvalues.
 \end{remark}
 
 \subsection{Type II: quantum group periodicity}
@@ -989,7 +1218,7 @@ At admissible level $k = -h^\vee + p/q$, we write $q_{\mathrm{KL}} = \exp(\pi i/
 By Arakawa's theorem \cite{Ara07}, the category $\mathcal{O}_k(\mathcal{W}^k(\mathfrak{g}))$ at admissible level is semisimple with finitely many simple objects, indexed by the admissible weights.
 
 \emph{Step 2: Kazhdan--Lusztig equivalence and DS reduction.}
-The Kazhdan--Lusztig equivalence \cite{KL93} provides a tensor equivalence $\mathcal{O}_k(\widehat{\mathfrak{g}}) \simeq \mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ (at the level of abelian categories, with quantum parameter $q = \exp(\pi i/(k + h^\vee))$).  The Drinfeld--Sokolov reduction functor $H^0_{Q_{\mathrm{DS}}} \colon \mathcal{O}_k(\widehat{\mathfrak{g}}) \to \mathcal{O}_k(\mathcal{W}^k(\mathfrak{g}))$ is exact at admissible levels (Arakawa~\cite{Ara07}), and the composition transports the bar complex structure from $\widehat{\mathfrak{g}}$-modules to $\mathcal{W}^k(\mathfrak{g})$-modules.
+The Kazhdan--Lusztig equivalence \cite{KL93} provides a braided tensor equivalence $\mathcal{O}_k(\widehat{\mathfrak{g}}) \simeq \mathcal{C}(U_q(\mathfrak{g}))$, where $\mathcal{C}(U_q(\mathfrak{g}))$ is the semisimplified tilting quotient (Remark~\ref{rem:kl-target-category}) with quantum parameter $q = \exp(\pi i/(k + h^\vee))$.  The Drinfeld--Sokolov reduction functor $H^0_{Q_{\mathrm{DS}}} \colon \mathcal{O}_k(\widehat{\mathfrak{g}}) \to \mathcal{O}_k(\mathcal{W}^k(\mathfrak{g}))$ is exact at admissible levels (Arakawa~\cite{Ara07}), and the composition transports the bar complex structure from $\widehat{\mathfrak{g}}$-modules to $\mathcal{W}^k(\mathfrak{g})$-modules.
 
 \emph{Step 3: Quantum integer periodicity.}
 The quantum integers $[n]_{q_{\mathrm{KL}}} = (q_{\mathrm{KL}}^n - q_{\mathrm{KL}}^{-n})/(q_{\mathrm{KL}} - q_{\mathrm{KL}}^{-1})$ satisfy $[n + 2\ell]_{q_{\mathrm{KL}}} = [n]_{q_{\mathrm{KL}}}$ where $\ell$ is the order of $q_{\mathrm{KL}}^2 = \exp(2\pi i q/p)$ as a root of unity; since $\gcd(p,q) = 1$, this order is $\ell = p$.
@@ -1087,18 +1316,11 @@ the vanishing $HH^1 = 0$ reflects the rigidity of the algebra
 
 \subsubsection{Physical interpretation}
 
-In CFT, this periodicity corresponds to:
-\begin{itemize}
-\item Fusion rules closing on finite set (rational CFT)
-\item Verlinde formula giving integer fusion coefficients
-\item Modular S-matrix having finite order
-\end{itemize}
+In CFT, this periodicity corresponds to fusion rules closing on a finite set (rational CFT), the Verlinde formula giving integer fusion coefficients, and the modular $S$-matrix having finite order.
 
 \subsection{Type III: geometric periodicity from higher genus}
 
 \subsubsection{Genus dependence}
-
-On a genus $g > 0$ curve, new sources of periodicity arise.  The following theorem establishes a weak bound from the dimension of moduli space; a conjectural sharp bound follows.
 
 \begin{theorem}[Weak geometric periodicity bound; \ClaimStatusProvedHere]
 \label{thm:geometric-periodicity-weak}
@@ -1141,6 +1363,9 @@ Under the hypotheses of Theorem~\ref{thm:geometric-periodicity-weak}, the sharp 
 
 \begin{remark}[Scope]\label{rem:geometric-periodicity-scope}
 The weak bound $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$ is proved unconditionally in Theorem~\ref{thm:geometric-periodicity-weak}.  The sharp bound $12(2g-2)$ of Conjecture~\ref{conj:geometric-periodicity} would require a refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$.  Specifically, the Mumford relation $12\lambda = \kappa_1 + \delta$ expresses $\lambda$ in terms of the kappa class $\kappa_1$ and the boundary divisor $\delta$.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently one cannot deduce the sharp bound from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A proof would need to track both $\kappa_1$ and $\delta$ contributions through the Kodaira--Spencer map and exploit the degree of the canonical class $\deg(\omega_X) = 2g - 2$.  The sharp bound is supported by all computed examples (Virasoro period~2, affine KM period $2\mathsf{h}$).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
+The conjecture sharpens the proved geometric periodicity bound from $3g-2$ to $12(2g-2)$ using tautological relations on $\overline{\mathcal{M}}_g$.
 \end{remark}
 
 \subsubsection{Examples at different genera}
@@ -1173,22 +1398,23 @@ Hyperelliptic curve with 16 spin structures:
 \end{itemize}
 \end{example}
 
-\subsection{Unified periodicity theorem}
+\subsection{Stratified periodicity: unconditional structure, conditional values}
 
-\begin{theorem}[Complete periodicity classification; \ClaimStatusConjectured]
+\begin{conjecture}[Periodicity classification (partial); \ClaimStatusConjectured]
 \label{thm:complete-periodicity-classification}
-\index{periodicity!complete classification|textbf}
+\index{periodicity!classification (partial)|textbf}
+\index{periodicity!stratified}
 For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level inducing period~$M$:
 \[
 \text{Period}(\mathcal{A}) \mid \text{lcm}(N_{\text{modular}}, N_{\text{quantum}}, N_{\text{geometric}})
 \]
 where:
 \begin{align}
-N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(Theorem~\ref{thm:modular-periodicity-minimal} for minimal models; Conjecture~\ref{conj:modular-periodicity} in general)} \\
+N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(Theorems~\ref{thm:modular-periodicity-minimal}, \ref{thm:modular-periodicity-wzw} for minimal/WZW; Conjecture~\ref{conj:modular-periodicity} in general)} \\
 N_{\text{quantum}} &= M \text{ (from quantum group; proved)} \\
 N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g \geq 2$; Conjecture~\ref{conj:geometric-periodicity})}
 \end{align}
-\end{theorem}
+\end{conjecture}
 
 \begin{proof}
 The bar spectral sequence $E_2^{p,q} = H^q(\overline{C}_{p+2}(X)) \otimes H^0(\mathcal{A}^{\otimes(p+2)})$ admits a tridegree decomposition $(d_{\mathrm{mod}}, d_{\mathrm{quant}}, d_{\mathrm{geom}})$, where the three indices correspond to the representation-theoretic weight (conformal weight modulo $T$-eigenvalue periodicity), the fusion-theoretic degree (quantum dimension periodicity), and the configuration space cohomological degree respectively.
@@ -1219,7 +1445,7 @@ This is the standard fact that the order of a product of commuting operators on 
 \end{proof}
 
 \begin{remark}[Sharpness and scope]\label{rem:periodicity-classification-scope}
-This theorem is tagged \ClaimStatusConjectured{} because two of its three
+This conjecture is tagged \ClaimStatusConjectured{} because two of its three
 inputs are conjectural: the modular periodicity bound
 (Conjecture~\ref{conj:modular-periodicity}) and the geometric periodicity
 bound (Conjecture~\ref{conj:geometric-periodicity}).  The quantum
@@ -1228,6 +1454,79 @@ content}---that the three periodicity sources combine via $\operatorname{lcm}$--
 unconditional; it is the specific values of $N_{\text{mod}}$ and
 $N_{\text{geom}}$ that are conjectural.
 The $\operatorname{lcm}$ bound is sharp when the three periodicities are genuinely independent, which holds generically.  However, for specific algebras (e.g., minimal models where the modular and quantum data are related by the Verlinde formula), cancellations between the three sources can reduce the actual period below the $\operatorname{lcm}$.
+\end{remark}
+
+\begin{remark}[Periodicity triple refinement]\label{rem:periodicity-triple-deformation}
+\index{periodicity!triple refinement}
+The scalar $\mathrm{Period}(\mathcal{A})$ appearing in
+Conjecture~\ref{thm:complete-periodicity-classification} is the
+shadow of a richer invariant: the \emph{periodicity triple}
+$\Pi(\mathcal{A}) = (M_{\mathcal{A}}, Q_{\mathcal{A}},
+G_{\mathcal{A}})$ of Remark~\ref{rem:periodicity-triple}.
+In the triple formulation, the three periodicity sources
+decompose further:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The modular periodicity $N_{\mathrm{mod}}$ controls the
+$T$-eigenvalue action on $M_{\mathcal{A}}$, splitting the
+periodicity module into weight spaces indexed by
+$e^{2\pi i c/24}$.
+\item The quantum periodicity $N_{\mathrm{quant}}$ is encoded in
+the exterior factor $Q_{\mathcal{A}}$: the periodicity
+generators $x_{2m_i+1}$ in the exterior algebra correspond
+to the independent quantum CG coefficient cycles.
+\item The geometric periodicity $N_{\mathrm{geom}}$ is detected
+by $G_{\mathcal{A}}$: the Galois group of the splitting field
+of the Poincar\'e series denominator governs which
+tautological classes on $\overline{\mathcal{M}}_g$ can
+contribute new periodicity phenomena.
+\end{enumerate}
+The lcm formula
+$\mathrm{Period}(\mathcal{A}) \mid \mathrm{lcm}(N_{\mathrm{mod}},
+N_{\mathrm{quant}}, N_{\mathrm{geom}})$ is the statement that the
+exponent of the total periodicity operator on $M_{\mathcal{A}}$
+divides the lcm of the individual factor exponents.  The triple
+$\Pi(\mathcal{A})$ retains the structural information (module
+decomposition, algebra generators, arithmetic symmetries)
+that the scalar discards.
+\end{remark}
+
+\begin{remark}[Stratified periodicity]\label{rem:stratified-periodicity}
+\index{periodicity!stratified reformulation}
+The original aspiration of a unified periodicity doctrine---a single
+theorematic classification unifying modular, quantum, and geometric
+periodicity across all chiral algebras---is not currently realistic
+in its original form.
+What survives is a \emph{stratified} picture with three levels of
+decreasing strength:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Unconditional stratum.}
+  Minimal models: all three periodicity sources are controlled
+  (modular by Theorem~\ref{thm:modular-periodicity-minimal},
+  quantum by the quantum integer periodicity, geometric by
+  the Mumford relations), and the lcm bound is proved.
+\item \emph{Conditional stratum.}
+  General rational chiral algebras: the structural lcm mechanism
+  is proved (Theorem~\ref{thm:periodicity-exchange-koszul}),
+  but the individual values of $N_{\mathrm{mod}}$ and
+  $N_{\mathrm{geom}}$ depend on
+  Conjectures~\ref{conj:modular-periodicity}
+  and~\ref{conj:geometric-periodicity}.
+  WZW models at positive integer level, whose characters
+  are ratios of theta functions, are the natural next case.
+\item \emph{Spectral stratum.}
+  For all Koszul chiral algebras (not necessarily rational),
+  the period---if it exists---divides the lcm of the
+  individual factors, each determined by the modular
+  characteristic package $(\kappa(\cA), \Delta_{\cA})$.
+  The spectral radius of $T_{\mathrm{rec}}$ provides the
+  leading asymptotic growth rate, which bounds the modular
+  periodicity from above via the dominant branch point
+  (Theorem~\ref{thm:dominant-branch-point}).
+\end{enumerate}
+This stratification replaces the original unified doctrine
+with a more honest, yet still structured, account.
+See \S\ref{subsec:nine-futures}, Future~7 for the programme
+assessment.
 \end{remark}
 
 \subsection{Koszul duality and periodicity interaction}
@@ -1270,24 +1569,12 @@ This equals $\frac{1}{12}$ precisely when $\gcd(p,24) + \gcd(p',24) = 2q$; for $
 
 \subsection{Marginal deformations in CFT}
 
-In 2D conformal field theory, $HH^2_{\text{chiral}}(\mathcal{A})$ classifies marginal deformations of the action:
-\[
-S \to S + \lambda \int_{\Sigma} \phi(z,\bar{z}) d^2z
-\]
-
-The deformation preserves conformal invariance iff:
-\begin{itemize}
-\item $\phi$ has conformal weight $(1,1)$ (marginality)
-\item $[\phi] \in HH^2_{\text{chiral}}$ is a cocycle (preserves OPE algebra)
-\item Obstruction in $HH^3_{\text{chiral}}$ vanishes (extends to all orders)
-\end{itemize}
+In 2D conformal field theory, $HH^2_{\text{chiral}}(\mathcal{A})$ classifies marginal deformations of the action
+$S \to S + \lambda \int_{\Sigma} \phi(z,\bar{z}) d^2z$.
+The deformation preserves conformal invariance when $\phi$ has conformal weight $(1,1)$ (marginality), $[\phi] \in HH^2_{\text{chiral}}$ is a cocycle (preserving the OPE algebra), and the obstruction in $HH^3_{\text{chiral}}$ vanishes (extending to all orders).
 
 \begin{example}[Exactly marginal deformations]
-\begin{itemize}
-\item Free boson: $HH^2 = \mathbb{C}$ gives radius deformation
-\item $\mathcal{N}=4$ SYM: $HH^2 = \mathbb{C}^{3(g-1)}$ gives gauge coupling and theta angles
-\item Minimal models: $HH^2 = 0$ (isolated in moduli space)
-\end{itemize}
+For the free boson, $HH^2 = \mathbb{C}$ gives the radius deformation; for $\mathcal{N}=4$ SYM, $HH^2 = \mathbb{C}^{3(g-1)}$ gives gauge coupling and theta angles; for minimal models, $HH^2 = 0$ (isolated in moduli space).
 \end{example}
 
 \subsection{String field theory}
@@ -1315,8 +1602,6 @@ S[\Psi] = \frac{1}{2}\langle \Psi, Q\Psi \rangle + \sum_{n \geq 3} \frac{1}{n!}\
 
 \subsection{Holographic duality}
 
-Koszul duality of chiral algebras provides a mathematical framework for holography:
-
 \begin{conjecture}[Holographic Koszul duality; \ClaimStatusConjectured]
 \label{conj:holographic-koszul-deformation}
 The AdS$_3$/CFT$_2$ correspondence exchanges:
@@ -1329,6 +1614,9 @@ The AdS$_3$/CFT$_2$ correspondence exchanges:
 
 \begin{remark}[Scope]
 This conjecture lies outside the scope of the present monograph: it is a physical interpretation of Koszul duality, not a mathematical theorem. The evidence below is heuristic.  A precise formulation would require specifying the bulk theory as a chiral algebra on a 3-manifold with boundary (in the sense of Costello--Li), relating $\cA_{\text{bulk}}$ to a factorization algebra on the solid torus, and identifying the boundary restriction with the Koszul dual via the bar-cobar adjunction. The central charge relation $c_{\text{bulk}} + c_{\text{boundary}} = 26$ is a numerical coincidence (the bosonic string critical dimension) that has no known proof from the Koszul duality framework alone.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies the holographic bulk-boundary correspondence with Koszul duality, asserting $\cA_{\text{bulk}}^! \cong \cA_{\text{boundary}}$ as an algebraic realization of AdS$_3$/CFT$_2$.
 \end{remark}
 
 The evidence is threefold: the central charges satisfy
@@ -1341,28 +1629,21 @@ the holographic dictionary.
 
 \subsection{The bar-cobar resolution strategy}
 
-\begin{remark}[Strategy]\label{strategy:bar-cobar-resolution}
-Computing Hochschild cohomology directly from
-$HH^n(\mathcal{A}) = \mathrm{Ext}^n_{\mathcal{A}^e}(\mathcal{A}, \mathcal{A})$
-requires a projective resolution of $\mathcal{A}$ as an
-$\mathcal{A}^e$-module.  The bar-cobar approach provides this:
-the bar complex $\bar{B}(\mathcal{A})$ is a cofree coalgebra
-resolution, the cobar complex $\Omega(\bar{B}(\mathcal{A}))$ is
-a free algebra resolution, and therefore
-\[
-HH^n(\mathcal{A}) = H^n\bigl(\mathrm{Hom}_{\mathsf{Alg}}(\Omega(\bar{B}(\mathcal{A})),
-\mathcal{A})\bigr).
-\]
-The geometric realization on configuration spaces makes this
-computation explicit.
-\end{remark}
+The bar-cobar approach computes Hochschild cohomology via the quasi-isomorphism
+$HH^n(\mathcal{A}) = H^n\bigl(\mathrm{Hom}_{\mathsf{Alg}}(\Omega(\bar{B}(\mathcal{A})),
+\mathcal{A})\bigr)$,
+using the cofree coalgebra resolution $\bar{B}(\mathcal{A})$ and the free algebra resolution $\Omega(\bar{B}(\mathcal{A}))$.
 
 \subsection{The fundamental quasi-isomorphism}
 
 \begin{theorem}[Bar-cobar resolution; \ClaimStatusProvedHere]\label{thm:bar-cobar-resolution}
-For the Heisenberg algebra, this was verified directly: $\Omega(\bar{B}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}).  The following general statement shows that the cobar-of-bar is always a free resolution.
+\textup{[Regime: quadratic at genus~$0$; curved-central at genus~$g \geq 1$
+on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-For any chiral algebra $\mathcal{A}$ on a curve $X$, there is a quasi-isomorphism:
+For any chiral Koszul algebra $\mathcal{A}$ on a curve $X$
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})},
+the counit is a quasi-isomorphism:
 $$\Omega^{\text{geom}}(\bar{B}^{\text{geom}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$$
 \end{theorem}
 

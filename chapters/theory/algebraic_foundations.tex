@@ -1,31 +1,9 @@
 \chapter{Algebraic foundations and bar constructions}\label{ch:algebraic-foundations}
 
-In Chapter~\ref{ch:heisenberg-frame}, we computed the bar complex of the Heisenberg algebra and read off its Koszul dual from the resulting coalgebra structure. The construction used specific features of the Heisenberg OPE---the double pole, the absence of simple poles---but the algebraic template is general. This chapter establishes that template: the classical theory of Koszul duality for operads and algebras, from which the chiral generalization of Part~I is built.
+Chapter~\ref{ch:heisenberg-frame} computed the bar complex of the Heisenberg algebra from its OPE\@. The algebraic template is general: Koszul duality for operads and algebras, the bar-cobar adjunction, and the factorization axioms that govern local-to-global assembly.
 
 \section{Classical Koszul duality}
 \label{sec:classical-koszul-foundation}
-
-Every duality in this monograph---Verdier on configuration spaces,
-complementarity of quantum corrections, the Koszul involution
-$k \leftrightarrow -k-2h^\vee$ on affine levels---is a shadow of a
-single algebraic mechanism: the bar-cobar adjunction for quadratic
-algebras.  This chapter develops that mechanism in its purest form,
-before geometry and analysis enter.
-
-The reader should regard the constructions here as the genus-$0$ seed
-of the full modular theory.  Bar and cobar are adjoint functors on
-dg-categories; the Koszul property---diagonal Ext vanishing---controls
-when the adjunction is an equivalence; and the combinatorics of the
-tensor coalgebra $T^c(s^{-1}\bar{A})$ already encodes, in skeleton,
-the boundary stratification of the Fulton--MacPherson
-compactification.  When configuration spaces on curves replace tensor
-products in Chapter~\ref{chap:config-spaces}, and residues on
-logarithmic forms replace the alternating-sum differential in
-Chapter~\ref{chap:bar-cobar}, the formal properties established here
---- $d^2 = 0$ from quadraticity, the Koszul criterion, the adjunction
---- will persist as geometric theorems rather than algebraic identities.
-Without this template, the geometric construction would have no
-structural anchor.
 
 \subsection{Quadratic algebras and Koszul duality}
 
@@ -47,25 +25,11 @@ We write $A = A(V, R)$ where $R \subset V \otimes V$ are the relations.
 \index{exterior algebra}
 \index{universal enveloping algebra}
 \index{tensor algebra}
-\begin{enumerate}
-\item \emph{Commutative algebra} $\text{Sym}(V)$:
-\begin{align}
-\text{Generators:} &\quad V \\
-\text{Relations:} &\quad R_{\text{Com}} = \{v \otimes w - w \otimes v : v,w \in V\} \subset V \otimes V
-\end{align}
-
-\item \emph{Exterior algebra} $\Lambda(V)$:
-\begin{align}
-\text{Generators:} &\quad V \\
-\text{Relations:} &\quad R_{\Lambda} = \{v \otimes w + w \otimes v : v,w \in V\} \subset V \otimes V
-\end{align}
-
-\item \emph{Universal enveloping} $U(\mathfrak{g})$ for Lie algebra $\mathfrak{g}$:
+The symmetric algebra $\mathrm{Sym}(V)$ has $R = \{v \otimes w - w \otimes v\}$; the exterior algebra $\Lambda(V)$ has $R = \{v \otimes w + w \otimes v\}$.  The universal enveloping algebra $U(\mathfrak{g})$ has:
 \begin{align}
 \text{Generators:} &\quad \mathfrak{g} \\
 \text{Relations:} &\quad R_{\mathfrak{g}} = \{x \otimes y - y \otimes x - [x,y] : x,y \in \mathfrak{g}\}
 \end{align}
-\end{enumerate}
 \end{example}
 
 \subsection{The Koszul dual coalgebra}
@@ -84,9 +48,7 @@ where the pairing is:
 \end{equation}
 \end{construction}
 
-\begin{remark}[Orthogonality principle]
-The spaces $R$ and $R^\perp$ are orthogonal complements in $V \otimes V$ and $V^* \otimes V^*$ respectively; this orthogonality is the source of duality.
-\end{remark}
+The spaces $R$ and $R^\perp$ are orthogonal complements; this orthogonality is the source of duality.
 
 \subsection{Koszul pairs: precise definition}
 
@@ -109,16 +71,7 @@ Theorem~\ref{thm:e1-chiral-koszul-duality} (Chapter~\ref{chap:koszul-pairs}).
 
 \begin{remark}[Two phenomena]
 \label{rem:two-phenomena}
-Conditions (1-2) establish \emph{Koszul duality}: $A_1$ and $A_2$ encode dual coalgebraic information.
-
-Conditions (3-4) establish \emph{bar-cobar inversion}: the composite $\Omega \circ \bar{B}$ is homotopy equivalent to the identity.
-
-These are distinct mathematical phenomena:
-\begin{itemize}
-\item $\bar{B}(A_1) \simeq A_2^!$ means that the bar of $A_1$ produces the dual coalgebra to $A_2$;
-\item $\Omega(\bar{B}(A_1)) \simeq A_1$ means that cobar reconstructs $A_1$ from its bar coalgebra;
-\item together, $A_1$ and $A_2$ are Koszul dual, with bar-cobar mediating the duality.
-\end{itemize}
+Conditions (1)--(2) establish \emph{Koszul duality}: bar of $A_1$ produces the dual coalgebra to $A_2$, and vice versa. Conditions (3)--(4) establish \emph{bar-cobar inversion}: $\Omega \circ \bar{B}$ is homotopy equivalent to the identity. These are logically independent.
 \end{remark}
 
 \subsection{Classical examples revisited}
@@ -136,218 +89,12 @@ The following are Koszul pairs in the sense of Definition \ref{def:koszul-pair-c
 Each pair satisfies all four conditions of Definition \ref{def:koszul-pair-classical}.
 \end{theorem}
 
-\begin{remark}[Provenance and citation]
-This theorem is imported and treated as \ClaimStatusProvedElsewhere. Classical
-Koszul duality for these standard quadratic examples is foundational material in
-\cite{GK94,LV}.
-\index{Loday--Vallette}
-\end{remark}
-
-We now view early examples of the chiral enhancement of this classical structure.
-
-
-\emph{Free fermions.}
-
-Let $\mathcal{F}$ be the free fermion chiral algebra with generator $\psi(z)$ and OPE:
-$$\psi(z)\psi(w) \sim \frac{1}{z-w}$$
-
-Computation shows:
-$$\Omega(\bar{B}(\mathcal{F})) \simeq \mathcal{F}$$
-
-
-\emph{Heisenberg algebra.}
-
-Let $\mathcal{H}_k$ be the Heisenberg chiral algebra with generator $\alpha(z)$ and OPE:
-$$\alpha(z)\alpha(w) \sim \frac{k}{(z-w)^2}$$
- 
-$$\bar{B}(\mathcal{H}_k) \simeq \text{CE}^!(\mathfrak{h}_k) \quad \text{and} \quad 
-  \Omega(\bar{B}(\mathcal{H}_k)) \simeq \mathcal{H}_k$$
-
-where $\text{CE}(\mathfrak{h}_k)$ is the \emph{Chevalley--Eilenberg DG chiral algebra} of the Heisenberg Lie$^*$ algebra.
-
-Thus $(\mathcal{H}_k, \text{CE}(\mathfrak{h}_{-k}))$ form a Koszul pair. The level $k$
-parameterizes the central extension, and appears with \emph{inverted sign} as the curvature in the CE algebra (since $h^\vee = 0$ for the Heisenberg):
-$$\text{CE}(\mathfrak{h}_{-k}) = V^{\text{CE}}(\mathfrak{h}_{-k}) = (\text{Sym}((s^{-1}N^\vee)_D), d_{\text{CE}}, m_0 = -k \cdot c)$$
-
-The distinction from free fermions is as follows:
-\begin{itemize}
-\item Free fermions: Simple pole $\psi(z)\psi(w) \sim \frac{1}{z-w}$ → Bar differential is identity → Koszul dual is genuinely different algebra
-\item Heisenberg: Double pole $J(z)J(w) \sim \frac{k}{(z-w)^2}$ → Bar differential vanishes → Koszul dual has CE cooperad structure
-\end{itemize}
-
-The double pole means:
-$$\text{Res}_{z_1=z_2}\left[\frac{k \, dz}{(z_1-z_2)^3}\right] = 0$$
-so the bar complex has zero differential except for the curvature term.
-
-Multiple duality structures coexist for the Heisenberg algebra:
-\begin{enumerate}
-\item \emph{Bar-cobar Koszul duality}: $\mathcal{H}_k^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$ with curvature $m_0 = -k\omega$
-      (equivalently $\mathrm{CE}(\mathfrak{h}_{-k})$ since $\mathfrak{h}$ is abelian; level inverts since $h^\vee = 0$)
-\item \emph{Quadratic projection}: $(qP^\circ)^\perp$ gives
-      $\text{Sym}((s^{-1}N^\vee)_D)$
-      (the underlying graded algebra, missing differential and curvature)
-\item \emph{Level-shifting}: $k \leftrightarrow -k$ in representation
-      categories (representation theory---different from Koszul duality)
-\item \emph{Boson-fermion correspondence}: $V_{\mathbb{Z}} \simeq \mathcal{F}_{\text{charged}}$
-      (the lattice VOA $V_{\mathbb{Z}} \supset \mathcal{H}_k$ is isomorphic to the charged free fermion—this is a lattice extension, not Koszul duality)
-\end{enumerate}
-These are distinct structures; only (1) is bar-cobar Koszul duality.
-
-\begin{remark}[CE versus Sym]
-The quadratic projection $(qP^\circ)^\perp$ gives only the quadratic part:
-$$\text{Sym}((s^{-1}N^\vee)_D)$$
-But the full dual datum $P^{\circ\perp}$ (as in GLZ Proposition 6.2) includes:
-\begin{itemize}
-\item The differential: $d_{\text{CE}}$ (zero for abelian, but structure still DG)
-\item The curving: $m_0 = -k \cdot c$ (essential for level dependence; sign from the central extension)
-\item The twisted pair structure: $(B, B^\circ, S)$
-\end{itemize}
-This is precisely the Chevalley--Eilenberg DG chiral algebra $\text{CE}(\mathfrak{h}_k)$.
-See \cite{GLZ22} Proposition 6.2 (page 19).
-\end{remark}
-
-% ================================================================
-% NEW SECTION: COMPLETE HEISENBERG KOSZUL DUALITY DERIVATION
-% ================================================================
-
-\section{Heisenberg Koszul duality from first principles}
-\label{sec:heisenberg-koszul-complete}
-
-\subsection{The Heisenberg example}
-
-The Heisenberg chiral algebra is the simplest non-trivial example in chiral algebra theory,
-hence its Koszul dual structure forms an
-essential building block:
-\begin{enumerate}
-\item Heisenberg is simultaneously the abelian case of affine Kac--Moody algebras and also the simplest W-algebra (by degeneracy)
-\item It is useful to illustrate the key difference between quadratic projection and full chiral Koszul duality
-\item It shows how bar-cobar constructions naturally produce Chevalley--Eilenberg algebras
-\item It provides the template for understanding all Lie$^*$ algebra enveloping algebras
-\end{enumerate}
-
-\subsection{The setup}
-
-\begin{definition}[Heisenberg Lie$^*$ algebra]
-Let $X$ be a smooth algebraic curve. The Heisenberg Lie$^*$ algebra is:
-$$\mathfrak{h}_\kappa^* = \mathcal{O}_X \oplus \omega_X \cdot \mathbf{c}$$
-with bracket:
-$$[J(z), J(w)] = \kappa \cdot \partial_w \delta(z-w) \otimes \mathbf{c}$$
-where $J \in \mathcal{O}_X$ is the current and $\mathbf{c}$ is central.
-\end{definition}
-
-In OPE language:
-$$J(z)J(w) = \frac{\kappa}{(z-w)^2} + \text{regular}$$
-
-The \emph{double pole} is the key feature distinguishing Heisenberg from free fermions.
-
-\subsection{Two perspectives on Heisenberg Koszul duality}
-
-We now derive the Koszul dual using all four perspectives:
-
-\subsubsection{Perspective 1: physical intuition}
-
-Consider free boson CFT with action:
-$$S = \frac{\kappa}{4\pi} \int |\partial \phi|^2$$
-
-The current is $J = \partial\phi$. To gauge the $U(1)$ symmetry $\phi \mapsto \phi + \epsilon$:
-\begin{itemize}
-\item Introduce ghosts: $c$ (fermionic), $b$ (fermionic antighost)
-\item BRST operator: $Q = \oint c \partial\phi = \oint cJ$
-\item BRST cohomology computes $H^*(\mathfrak{u}(1))$ = Lie algebra cohomology
-\end{itemize}
-
-The gauged theory is described by the Chevalley--Eilenberg complex:
-$$Q: J \mapsto \kappa \cdot \partial c$$
-
-This is precisely $d_{\text{CE}}$ for the abelian Lie algebra $\mathfrak{h}$.
-
-\emph{Physical conclusion.} Koszul dual is CE(h).
-
-\subsubsection{Perspective 2: geometric intuition}
-
-\emph{Degree~1.}
-$\bar{B}_1 = \Gamma(C_2(X), J \boxtimes J \otimes \Omega^1_{\log})$.
-The differential is
-$$d(J(z_1) \otimes J(z_2) \otimes \eta_{12}) = \text{Res}_{z_1=z_2}[J(z_1)J(z_2) \cdot d\log(z_1-z_2)].$$
-Using the OPE:
-\begin{align}
-J(z_1)J(z_2) \cdot d\log(z_1-z_2) &= \frac{\kappa}{(z_1-z_2)^2} \cdot \frac{dz_1 - dz_2}{z_1-z_2} \\
-&= \frac{\kappa \, (dz_1 - dz_2)}{(z_1-z_2)^3}
-\end{align}
-The triple pole has zero residue:
-$$\text{Res}_{z_1=z_2}\left[\frac{\kappa \, dz_1}{(z_1-z_2)^3}\right] = 0.$$
-It follows that the bar complex has the following cohomology.
-
-\emph{Degree~0.} $\bar{B}_0 = \mathbb{C} \cdot \mathbf{1}$, $d = 0$.
-
-\emph{Degree~1.} $\bar{B}_1 = \text{span}\{J \otimes J \otimes \eta_{12}\}$,
-$d(J \otimes J \otimes \eta_{12}) = 0$ as computed above,
-so $H^1 = \bar{B}_1$ survives.
-
-\emph{Degree~2.} $\bar{B}_2 = \text{span}\{J^{\otimes 3} \otimes \eta_{12} \wedge \eta_{23}\}$,
-$d(J^{\otimes 3} \otimes \eta_{12} \wedge \eta_{23}) = 0$
-by the same double-pole argument, so $H^2 = \bar{B}_2$ survives.
-
-
-
-$$d: \bar{B}_1 \to \bar{B}_0 \text{ is the zero map}$$
-
-At every degree, the bar differential vanishes: the double-pole OPE,
-combined with the logarithmic form $d\log(z_1 - z_2)$, produces a
-triple pole whose residue is zero.  The cohomology is:
-$$H^*(\bar{B}(\mathcal{H}_\kappa)) \simeq \bar{B}(\mathcal{H}_\kappa)$$
-with CE cooperad structure.
-
-
-This forces the bar complex to have CE cooperad structure.
-
-\emph{Geometric conclusion.} Bar complex cohomology is $CE(h)$.
-
-
-
-
-
-\begin{theorem}[Heisenberg Koszul duality \cite{FBZ04}; \ClaimStatusProvedElsewhere]
-Let $\mathcal{H}_\kappa$ be the Heisenberg chiral algebra at level $\kappa$ on a smooth curve $X$. Then:
-$$\mathcal{H}_\kappa^! \simeq \text{CE}(\mathfrak{h}_{-\kappa}) = V^{\text{CE}}(\mathfrak{h}_{-\kappa})$$
-where $\text{CE}(\mathfrak{h}_{-\kappa})$ is the Chevalley--Eilenberg DG chiral algebra with:
-\begin{itemize}
-\item \emph{Underlying space}: $\text{Sym}((s^{-1}N^\vee)_D)$ as graded algebra
-\item \emph{Differential}: $d_{\text{CE}} = 0$ (abelian case)
-\item \emph{Curvature}: $m_0 = -\kappa \cdot c$ (level inversion: $\kappa \to -\kappa$ for $h^\vee = 0$)
-\item \emph{Structure}: CE cooperad in the bar-cobar adjunction
-\end{itemize}
-
-
-\end{theorem}
-
-
-\subsection{Generalization}
-
-For any Lie$^*$ algebra $\mathfrak{g}$:
-$$U(\mathfrak{g})^\kappa \quad \xleftrightarrow{\text{Koszul}} \quad \text{CE}(\mathfrak{g}_{-\kappa-2h^\vee})$$
-
-Heisenberg is the abelian case where $h^\vee = 0$ and $d_{\text{CE}} = 0$, but the CE structure remains.
-
-
-\subsection{Mathematical significance}
-
-\begin{enumerate}
-\item \emph{Lie algebra cohomology}: Chiral algebras naturally encode Lie cohomology via Koszul duality
-\item \emph{Deformation theory}: CE algebras control deformations of enveloping algebras
-\item \emph{D-modules}: Connection to D-module theory of Lie algebroid actions
-\item \emph{Factorization algebras}: CE structure arises naturally from factorization
-\end{enumerate}
-
-% ================================================================
-% END OF COMPLETE DERIVATION SECTION
-% ================================================================
-
+The chiral enhancement appears in Chapter~\ref{ch:heisenberg-frame} (Heisenberg, double pole), \S\ref{sec:free-fermion} (free fermions, simple pole), and Chapter~\ref{chap:kac-moody-koszul} (Kac--Moody, mixed poles).
 
 \subsection{Chiral Koszul pairs: preview}
 \label{subsec:chiral-koszul-pairs-precise}
 
-The classical notion of Koszul pair (Definition~\ref{def:koszul-pair-classical}) extends to chiral algebras.  The definitive treatment, accommodating non-quadratic algebras via bar-cobar characterization and twisting morphisms, is given in Definition~\ref{def:chiral-koszul-pair} (Chapter~\ref{chap:koszul-pairs}).  We summarize the key idea here for orientation.
+Definition~\ref{def:koszul-pair-classical} extends to chiral algebras via a two-step formulation: the \emph{construction} of bar and cobar exists for all augmented chiral algebras (Definition~\ref{def:chiral-twisting-datum}), while the Koszul \emph{recognition criterion} identifies when these constructions yield resolutions (Definition~\ref{def:chiral-koszul-morphism}; full treatment: Definition~\ref{def:chiral-koszul-pair}, Chapter~\ref{chap:koszul-pairs}).
 
 \label{def:chiral-koszul-pair-bar-cobar}%
 \label{def:chiral-koszul-pair-twisting}%
@@ -360,9 +107,7 @@ Equivalently, there exists a universal twisting morphism $\tau_{12}\colon \mathc
 
 \begin{remark}
 \label{rem:why-definition-works}
-This definition escapes the quadratic constraint, captures essential duality, is geometrically computable via configuration spaces, includes classical cases, and extends naturally to vertex operator algebras and CFT.  It connects to Gui--Li--Zeng's framework where Koszul
-duality is expressed through Maurer--Cartan elements in
-$\mathcal{A}_1^! \otimes \mathcal{A}_2$.
+The bar-cobar characterization applies beyond the quadratic setting and connects to the Gui--Li--Zeng framework (\S\ref{subsec:gui-li-zeng-framework}), where Koszul duality is expressed through Maurer--Cartan elements in $\mathcal{A}_1^! \otimes \mathcal{A}_2$.
 \end{remark}
 
 \begin{remark}[Twisting morphisms]
@@ -376,9 +121,6 @@ where $K$ is a universal integration kernel.  See Definition~\ref{def:chiral-kos
 
 \subsection{The Gui--Li--Zeng quadratic duality framework}
 \label{subsec:gui-li-zeng-framework}
-
-Our geometric approach to chiral Koszul duality is closely related to the algebraic
-framework of Gui, Li, and Zeng \cite{GLZ22}.
 
 \begin{definition}[Gui--Li--Zeng setup]
 \label{def:glz}
@@ -463,34 +205,13 @@ condition (Definition~\ref{def:twisting-morphism}).  Items~(ii)
 and~(iv) are descriptions of the respective frameworks' scopes.
 \end{proof}
 
-\begin{remark}[Advantages of each approach]
+\begin{remark}[Complementarity of the two approaches]
 \label{rem:advantages-comparison}
-
-\emph{GLZ algebraic approach:}
-\begin{itemize}
-\item[+] Clean algebraic formulation
-\item[+] Direct definition of dual via annihilators
-\item[+] Natural connection to deformation theory
-\item[+] Explicit in quadratic case
-\item[−] Limited to quadratic or near-quadratic examples
-\item[−] Abstract, not immediately computable for complicated algebras
-\end{itemize}
-
-\emph{Our geometric approach:}
-\begin{itemize}
-\item[+] Applies to arbitrary pole order (non-quadratic)
-\item[+] Explicitly computable via configuration spaces
-\item[+] Natural genus expansion and quantum corrections
-\item[+] Physical interpretation via Feynman diagrams
-\item[+] Connects to Poincaré--Verdier duality
-\item[−] Technically more involved (compactifications, stratifications, Arnold relations)
-\item[−] Requires careful analysis of convergence and regularization
-\end{itemize}
-
-The two approaches are complementary. GLZ provides conceptual clarity
-and algebraic foundations. Our geometric framework provides
-computational power and extends to non-quadratic examples essential
-for physics (Virasoro, $W$-algebras, Yangian).
+The GLZ algebraic framework provides conceptual clarity for quadratic
+algebras; the geometric framework of this monograph extends to
+non-quadratic examples (Virasoro, $\mathcal{W}$-algebras, Yangian)
+via configuration space integrals, at the cost of more involved
+compactification and convergence analysis.
 \end{remark}
 
 \chapter{Operadic foundations and bar constructions}
@@ -498,35 +219,11 @@ for physics (Virasoro, $W$-algebras, Yangian).
  
 \section{Symmetric sequences and operads}
 
-\begin{definition}[Symmetric monoidal category]
-We work in the symmetric monoidal $\infty$-category $\mathcal{V} = \text{Ch}_\mathbb{C}$ of 
-cochain complexes over $\mathbb{C}$ with cohomological grading. The monoidal structure is given by:
-\begin{itemize}
-\item Unit object: $\mathbb{C}$ concentrated in degree 0
-\item Tensor product: $(V \otimes W)^n = \bigoplus_{i+j=n} V^i \otimes W^j$
-\item Differential: $d(v \otimes w) = dv \otimes w + (-1)^{|v|}v \otimes dw$
-\item Symmetry: $\tau(v \otimes w) = (-1)^{|v||w|}w \otimes v$
-\end{itemize}
-\emph{Convention.} We use cohomological grading throughout: $\deg(d) = +1$.
+We work in $\mathcal{V} = \mathrm{Ch}_\mathbb{C}$, cochain complexes over $\mathbb{C}$ with cohomological grading ($|d| = +1$) and Koszul sign rule (Convention~\ref{conv:standing-assumptions}).
 
-All constructions respect this grading and differential structure. For a morphism $f: V \to W$ of degree $|f|$, the Koszul sign rule gives $f(v \otimes w) = (-1)^{|f||v|}f(v) \otimes w$ when extended to tensor products.
-
-% Added for clarity
-\emph{Explicit grading convention.} Throughout this paper, we use cohomological grading with $\deg(d) = +1$, and all degree shifts should be interpreted in this context. For a complex $(C^\bullet, d)$, we have $d: C^n \to C^{n+1}$.
-
-\emph{Sign convention for composition.} When composing morphisms of degree $p$ and $q$, the Koszul sign rule applies: passing an element of degree $p$ past one of degree $q$ introduces the sign $(-1)^{pq}$.
-
-\emph{Differential graded context.} All categories are enriched over the category of cochain complexes, with morphism spaces carrying natural differential structures compatible with composition.
-
-\end{definition}
-
-Let $\cV$ be a symmetric monoidal $\infty$-category. In practice, we primarily work with the category of chain complexes over $\C$ (the field of complex numbers), but the constructions apply more generally to any stable presentable symmetric monoidal category. The choice of characteristic 0 is essential for our residue calculus and will be assumed throughout unless otherwise stated.
- 
 \begin{definition}[Symmetric sequence]
 A \emph{symmetric sequence} is a collection $P = \{P(n)\}_{n \geq 0}$ where each $P(n)$ is an object of $\cV$ equipped with a right action of the symmetric group $S_n$. Morphisms of symmetric sequences are collections of $S_n$-equivariant maps. When $\cV$ carries a differential structure, we require that the $S_n$-action commutes with differentials.
 \end{definition}
- 
-The fundamental operation on symmetric sequences is the composition product, which encodes the substitution of operations:
  
 \begin{definition}[Composition product]
 For symmetric sequences $A$ and $B$, their composition product is defined by:
@@ -578,35 +275,9 @@ A chiral algebra $\mathcal{A}$ on a curve X determines a D-module $\mathcal{F}_{
 The bar-cobar duality acts on these sheaves on Ran space, realizing NAP duality for factorization algebras.
 \end{theorem}
 
-\begin{remark}[Imported-proof dependency tags]
-\emph{Dependency tags.}
-\begin{enumerate}[label=(D\arabic*)]
-\item Ran-space setup is fixed by Definition~\ref{def:ran-space}.
-\item Local-to-global factorization input is Principle~\ref{princ:factorization-locality}.
-\item External foundational source is \cite[Chapter~3]{BD04}, where the
-chiral-algebra-to-Ran-space package is constructed.
-\item Compatibility with this manuscript's duality pipeline is through the
-bar-cobar quasi-isomorphism package (Theorem~\ref{thm:bar-cobar-inversion-qi}).
-\end{enumerate}
-\emph{Provenance note.}
-This claim is used as an external theorem, proved in
-\cite[Chapter~3]{BD04}, and not reproved here.
-\end{remark}
-
-\subsection{Connection to our construction}
-
-Our geometric bar-cobar construction via configuration spaces is the explicit realization of NAP duality for chiral algebras viewed as factorization algebras on Ran space. The configuration space $C_n(X)$ is the n-stratum of Ran(X), and our logarithmic forms encode the factorization structure.
-
 \begin{definition}[Operad]
 \index{operad|textbf}
-An \emph{operad} $P$ is a monoid for the composition product, equipped with:
-\begin{itemize}
-\item Composition maps $\gamma : P(k) \otimes P(i_1) \otimes \cdots \otimes P(i_k) \to P(i_1 + \cdots + i_k)$
-\item Unit $\eta : \mathbb{I} \to P(1)$ 
-\item Associativity axioms ensuring that multi-level compositions are independent of bracketing
-\item Equivariance axioms ensuring compatibility with symmetric group actions
-\end{itemize}
-When $\cV$ has a differential structure, all structure maps must be chain maps.
+An \emph{operad} $P$ is a monoid for the composition product: composition maps $\gamma : P(k) \otimes P(i_1) \otimes \cdots \otimes P(i_k) \to P(i_1 + \cdots + i_k)$ and unit $\eta : \mathbb{I} \to P(1)$, satisfying associativity and $S_n$-equivariance. In $\cV = \mathrm{Ch}_\mathbb{C}$, all structure maps are chain maps.
 \end{definition}
  
 \begin{definition}[Cooperad]
@@ -624,20 +295,14 @@ with composition given by substitution of multilinear operations. This is the fu
  
 \section{The cotriple bar construction}
  
-Given an adjunction $F \dashv U : \mathcal{A} \rightleftarrows \mathcal{B}$ (with $F$ left adjoint to $U$), we obtain a comonad (also called a cotriple) $G = FU$ on $\mathcal{B}$ with counit $\epsilon : FU \to \text{id}$ and comultiplication $\delta : FU \to FUFU$ induced by the unit and counit of the adjunction.
- 
+An adjunction $F \dashv U : \mathcal{A} \rightleftarrows \mathcal{B}$ yields a comonad $G = FU$ on $\mathcal{B}$ with counit $\epsilon : FU \to \mathrm{id}$ and comultiplication $\delta : FU \to FUFU$.
+
 \begin{definition}[Cotriple bar resolution]
 The cotriple bar resolution of $B \in \mathcal{B}$ is the simplicial object:
 \[
 B^G_\bullet(B) : \cdots \rightrightarrows (FU)^3B \rightrightarrows (FU)^2B \rightrightarrows FUB \to B
 \]
-with face maps $d_i : B^G_n \to B^G_{n-1}$ given by:
-\begin{itemize}
-\item $d_0 = \epsilon \cdot (FU)^{n-1}$ (apply counit at the first position)
-\item $d_i = (FU)^{i-1} \cdot \epsilon \cdot (FU)^{n-i-1}$ for $0 < i < n$ (apply counit at position $i$, collapsing adjacent $FU$'s)
-\item $d_n = (FU)^{n-1} \cdot \epsilon$ (apply counit at the last position)
-\end{itemize}
-and degeneracy maps $s_i : B^G_n \to B^G_{n+1}$ given by inserting the unit of the adjunction at position $i$.
+with face maps $d_i = (FU)^{i-1} \cdot \epsilon \cdot (FU)^{n-i-1}$ for $0 \le i \le n$ (applying the counit at position $i$) and degeneracy maps $s_i$ inserting the unit at position $i$.
 \end{definition}
  
 \begin{example}[Operadic bar construction]
@@ -651,15 +316,9 @@ This agrees with the construction via iterated insertions of operations from $P$
 \subsection{The fundamental bar-cobar isomorphism}
 \index{cobar construction!algebraic|textbf}
 
-The following characterizes Koszul pairs in the classical setting; the chiral analog is Definition~\ref{def:chiral-koszul-pair}.
-
-\begin{remark}
-Two objects form a Koszul pair when their bar and cobar constructions are inverses up to quasi-isomorphism: $\barB$ converts algebra structure to coalgebra structure, $\Omega$ converts coalgebra structure to algebra structure, and for a Koszul pair $(A_1, A_2)$ the coalgebra $\barB(A_1)$ is quasi-isomorphic to the coalgebra whose cobar construction recovers $A_2$.
-\end{remark}
-
 \begin{remark}[Classical Koszul pair --- quadratic characterization]\label{def:classical-koszul-pair}
 \index{homotopy transfer theorem}
-We record the generators-and-relations characterization of Koszul pairs (cf.\ Definition~\ref{def:koszul-pair-classical}).
+The generators-and-relations characterization of Koszul pairs (cf.\ Definition~\ref{def:koszul-pair-classical}; chiral analog: Definition~\ref{def:chiral-koszul-pair}).
 
 Two quadratic operads/algebras $(P_1, P_2)$ with presentations:
 \begin{align*}
@@ -684,12 +343,6 @@ where $P_i^!$ is the Koszul dual cooperad: the maximal sub-cooperad of $\mathcal
 \end{enumerate}
 \end{remark}
 
-\begin{remark}
-The third condition is the essential content of being a Koszul pair:
-the bar construction of $P_1$ computes the dual cooperad $P_2^{!}$
-that determines $P_2$. Conversely, $\Omega(B(P_1)) \simeq P_1$.
-\end{remark}
-
 \begin{example}[Com-Lie: the prototypical Koszul pair]
 For the commutative and Lie operads:
 \begin{itemize}
@@ -708,13 +361,7 @@ Concretely: the bar complex of the commutative operad is the chain complex of th
 \end{example}
 
 \begin{remark}
-In the chiral setting, we generalize this by:
-\begin{itemize}
-\item Replacing operads with chiral algebras (factorization algebras on curves)
-\item Replacing abstract cooperads with geometric coalgebras (residues on configuration spaces)
-\item The isomorphism $\barB(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ becomes a geometric statement about how logarithmic forms (bar side) relate to distributional kernels (cobar side)
-\end{itemize}
-The principle is the same: Koszul pairs are characterized by bar-cobar being mutually inverse operations.
+In the chiral setting, operads become chiral algebras on curves, abstract cooperads become geometric coalgebras (residues on configuration spaces), and $\barB(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ becomes a statement about logarithmic forms versus distributional kernels. The principle persists: Koszul pairs are characterized by bar-cobar inversion.
 \end{remark}
 
 \section{The operadic bar-cobar duality}
@@ -731,90 +378,19 @@ The bar construction $\barB(P)$ is the cofree cooperad on the desuspension $s^{-
 \barB(P) = T^c(s^{-1}\bar{P}) = \bigoplus_{n \geq 0} (s^{-1}\bar{P})^{\circ n}
 \]
 where $T^c$ denotes the cofree cooperad functor, $(-)^{\circ n}$ denotes the $n$-fold cooperadic composition,
-and the differential $d: \barB(P) \to \barB(P)$ is given by:
-\[
-d = d_{\text{internal}} + d_{\text{decomposition}}
-\]
-where:
-\begin{itemize}
-\item $d_{\text{internal}}$ uses the internal differential of $P$
-\item $d_{\text{decomposition}}$ encodes edge contractions on trees decorated with operations from $P$
-\end{itemize}
+The differential $d = d_{\mathrm{internal}} + d_{\mathrm{decomposition}}$ combines the internal differential of $P$ with edge contractions on trees decorated by operations from $P$.
 \end{definition}
 
 \section{Cotriple resolution and configuration spaces}
 
 \begin{remark}[Configuration spaces and factorization]
-Configuration spaces appear in the bar complex as a consequence of the fundamental theorem of factorization homology (Ayala--Francis \cite{AF}):
-
-\begin{quote}
-\emph{``For a factorization algebra $\mathcal{F}$ on a manifold $M$, its factorization homology 
-$\int_M \mathcal{F}$ is computed by a Čech-type complex over the Ran space of $M$.''}
-\end{quote}
-
-For chiral algebras (2d factorization algebras with conformal structure), this becomes:
-$$\int_X \mathcal{A} \simeq \text{colim}_{n} \left[ \mathcal{A}^{\otimes n} \otimes \Omega^*(\text{Conf}_n(X)) \right]$$
-
-The bar complex is precisely the dual construction, explaining its geometric nature.
+By the Ayala--Francis theorem \cite{AF}, factorization homology $\int_X \mathcal{A}$ of a chiral algebra on a curve $X$ is computed by the colimit $\mathrm{colim}_{n} [ \mathcal{A}^{\otimes n} \otimes \Omega^*(\mathrm{Conf}_n(X)) ]$. The bar complex is the dual construction.
 \end{remark}
 
-\subsection{The genus expansion: a physical and geometric view}
+\subsection{The genus expansion}
 \label{sec:genus_expansion_panorama}
 
-Consider a chiral algebra $\mathcal{A}$ on a curve $X$. The bar-cobar complex
-$C_{\bullet}(\mathcal{A})$ involves tensor products of $\mathcal{A}$ at distinct
-points of $X$:
-$$\mathcal{A}_{x_1} \otimes \mathcal{A}_{x_2} \otimes \cdots \otimes \mathcal{A}_{x_n}$$
-The genus of the underlying surface determines the relevant correction terms:
-
-\begin{itemize}
-\item \emph{Genus 0 (Tree level):} Points connected by a sphere --- this gives
-the classical bar complex, the associative structure.
-
-\item \emph{Genus 1 (One loop):} Points connected by a torus --- this is where
-\emph{central extensions} first appear. The trace $\operatorname{Tr}(a \otimes b)$
-around the $S^1$ of the torus encodes the central charge.
-
-\item \emph{Genus $g \geq 2$ (Multiple loops):} Surfaces with multiple handles ---
-higher genus corrections to the OPE, encoding modular structure.
-\end{itemize}
-
-\subsubsection{The geometric construction}
-
-Consider the configuration spaces:
-$$\mathrm{Conf}_n(\Sigma_g) = \{ (x_1, \ldots, x_n) \in \Sigma_g^n \mid x_i \neq x_j \text{ for } i \neq j \}$$
-for $\Sigma_g$ a Riemann surface of genus $g$.
-
-The \emph{genus $g$ bar complex} is precisely:
-$$C_{\bullet}^{(g)}(\mathcal{A}) = \int_{\mathrm{Conf}_{\bullet}(\Sigma_g)} 
-\mathcal{A}^{\boxtimes \bullet}$$
-where the integration is factorization homology in the sense of Ayala--Francis.
-
-\subsubsection{The functorial uniqueness}
-
-The genus stratification is not a choice but a necessity.
-The category of chiral algebras naturally extends to a category of \emph{modular
-chiral algebras}, where operations are parametrized by:
-$$\mathcal{P}(g,n) = \text{moduli of genus-}g\text{ curves with }n\text{ marked points}$$
-
-The functor:
-$$\mathcal{A} \mapsto \{ C_{\bullet}^{(g)}(\mathcal{A}) \}_{g \geq 0}$$
-is uniquely determined by:
-\begin{enumerate}
-\item Functoriality under degenerations $\Sigma_g \rightsquigarrow \Sigma_{g-1}$
-(separating a handle)
-\item Compatibility with factorization
-\item Genus 0 data (the classical structure)
-\end{enumerate}
-
-\subsubsection{The physical interpretation}
-
-In conformal field theory, the genus expansion \emph{is} the loop expansion:
-$$Z_{\text{CFT}} = \sum_{g=0}^{\infty} \hbar^{2g-2} \int_{\mathcal{M}_g} F_g$$
-where $\mathcal{M}_g$ is the moduli space of genus-$g$ curves.
-
-Our bar-cobar construction at genus $g$ computes exactly the integrand $F_g$.
-The central charge $\kappa$ plays the role of $\hbar$.
+The genus-$g$ bar complex $C_{\bullet}^{(g)}(\mathcal{A}) = \int_{\mathrm{Conf}_{\bullet}(\Sigma_g)} \mathcal{A}^{\boxtimes \bullet}$ (factorization homology in the sense of Ayala--Francis) extends the classical bar complex from genus $0$ to all genera. Genus $0$ gives the associative structure; genus $1$ introduces central extensions via the trace around $S^1$; genus $g \ge 2$ gives higher modular corrections. The functor $\mathcal{A} \mapsto \{ C_\bullet^{(g)}(\mathcal{A}) \}_{g \ge 0}$ is uniquely determined by functoriality under degenerations, compatibility with factorization, and genus-$0$ data. In CFT, this is the loop expansion $Z = \sum_{g} \hbar^{2g-2} \int_{\mathcal{M}_g} F_g$; the bar-cobar construction at genus $g$ computes the integrand $F_g$. The full treatment is Chapter~\ref{chap:higher-genus}.
 
 \begin{theorem}[Operadic bar complex \cite{LV}; \ClaimStatusProvedElsewhere]\label{thm:operadic-bar}
 \index{operadic bar construction}
@@ -877,16 +453,8 @@ Definition~\ref{def:geometric-bar}.
  
 \section{Quadratic operads and Koszul duality}
  
-We now specialize to quadratic operads, which admit a particularly refined duality theory:
- 
 \begin{definition}[Quadratic operad]
-A quadratic operad has the form $P = \Free(E)/(R)$ where:
-\begin{itemize}
-\item $E$ is a collection of generating operations concentrated in arity 2
-\item $R \subset \Free(E)(3)$ consists of quadratic relations (involving exactly two compositions)
-\item $\Free$ denotes the free operad functor
-\item $(R)$ denotes the operadic ideal generated by $R$
-\end{itemize}
+A quadratic operad has the form $P = \Free(E)/(R)$ where $E$ is a collection of generating operations in arity $2$, $R \subset \Free(E)(3)$ consists of quadratic relations, and $(R)$ is the operadic ideal generated by $R$.
 \end{definition}
  
 \begin{definition}[Koszul dual cooperad]
@@ -900,8 +468,6 @@ An operad $P$ is \emph{Koszul} if the canonical map $\Omega(P^!) \to P$ is a qua
 \end{definition}
  
 \section{Derivation of Com-Lie duality}
- 
-We now prove the fundamental duality between the commutative and Lie operads:
  
 \begin{theorem}[Com-Lie Koszul duality; \ClaimStatusProvedHere]\label{thm:com-lie}
 \index{$L_\infty$-algebra}
@@ -1304,8 +870,6 @@ together with appropriate descent; see~\cite[Proposition~6.3.4]{CG17}.
 \end{tabular}
 \end{table}
 
-\bigskip
-\noindent\textbf{What we have established.}\enspace
 The algebraic foundations of Koszul duality are now in place:
 the bar-cobar adjunction, the Koszul criterion via diagonal Ext
 vanishing, the operadic framework for $\mathrm{Com}^! = \mathrm{Lie}$ and
@@ -1319,6 +883,3 @@ divisors, and the Koszul criterion will acquire a geometric proof via
 Arnold relations.  The abstract adjunction $\bar{B} \dashv \Omega$
 will then become the Verdier duality on $\operatorname{Ran}(X)$
 that drives the entire monograph.
-
-\subsection{Summary and significance}
-

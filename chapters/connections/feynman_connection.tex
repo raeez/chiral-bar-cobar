@@ -1,56 +1,23 @@
 \section{Bridge to Feynman diagrams: Heisenberg as free boson QFT}
 
-The genus stratification of the Heisenberg bar-cobar complex reproduces the perturbative loop expansion. The Heisenberg algebra $\mathcal{H}_\kappa$ describes a free massless boson, and its genus-$g$ bar complex corresponds to the $g$-loop Feynman diagrams.
+The Heisenberg algebra $\mathcal{H}_\kappa$ is the free massless boson.  Its genus-$g$ bar complex is the $g$-loop Feynman expansion.
 
 \subsection{The free boson field theory}
 
-The Heisenberg vertex algebra $\mathcal{H}_\kappa$ is the algebraic incarnation of the free boson with action:
+The Heisenberg vertex algebra $\mathcal{H}_\kappa$ has action:
 \begin{equation}
 S[\phi] = \frac{1}{4\pi\kappa} \int d^2z \, \partial\phi \bar{\partial}\phi
 \end{equation}
 
-The field $\phi(z, \bar{z})$ is a real scalar, and we decompose into holomorphic/antiholomorphic parts:
+The holomorphic current $a(z) = \partial_z \phi_L(z)$ generates $\mathcal{H}_\kappa$ with commutator $[a(z), a(w)] = \kappa \cdot \partial_z \delta(z - w)$ and propagator
 \begin{equation}
-\phi = \phi_L(z) + \phi_R(\bar{z})
+\langle a(z) a(w) \rangle = \frac{\kappa}{(z-w)^2}.
 \end{equation}
-
-The holomorphic current is:
-\begin{equation}
-a(z) = \partial_z \phi_L(z)
-\end{equation}
-
-This generates $\mathcal{H}_\kappa$ with:
-\begin{equation}
-[a(z), a(w)] = \kappa \cdot \partial_z \delta(z - w)
-\end{equation}
-
-The \emph{propagator} (two-point function) is:
-\begin{equation}
-\langle \phi(z) \phi(w) \rangle = -\kappa \log|z - w|^2 + \text{const}
-\end{equation}
-
-In complex coordinates:
-\begin{equation}
-\langle a(z) a(w) \rangle = \partial_z \partial_w \langle \phi(z) \phi(w) \rangle = \frac{\kappa}{(z-w)^2}
-\end{equation}
-
 This is the OPE used in the bar-cobar construction.
 
 \subsection{Feynman rules for free boson}
 
-The Feynman rules are:
-\begin{enumerate}
-\item \emph{Propagator.} Draw a line between points $z$ and $w$, contributes
-\begin{equation}
-G(z,w) = \frac{\kappa}{(z-w)^2}
-\end{equation}
-
-\item \emph{Vertex.} For the free theory, there are NO vertices (no interaction)
-
-\item \emph{External legs.} Each insertion of $a(z_i)$ is an external leg
-\end{enumerate}
-
-\emph{Example.} The 2-point function $\langle a(z_1) a(z_2) \rangle$ corresponds to a single propagator:
+The Feynman rules are: each edge between $z$ and $w$ contributes the propagator $G(z,w) = \kappa/(z-w)^2$; the free theory has no vertices; each insertion of $a(z_i)$ is an external leg.
 
 \begin{center}
 \begin{tikzpicture}
@@ -63,12 +30,7 @@ G(z,w) = \frac{\kappa}{(z-w)^2}
 
 \subsection{Genus 0 (tree level) diagrams}
 
-At genus 0, we have only tree diagrams. For the free boson, this means:
-\begin{itemize}
-\item No loops (all diagrams are trees)
-\item Each diagram connects $n$ external points via propagators
-\item The amplitude is computed by products of propagators $G(z_i, z_j)$
-\end{itemize}
+At genus 0, only tree diagrams appear: each diagram connects $n$ external points via propagators, and the amplitude is computed by products of propagators $G(z_i, z_j)$.
 
 \noindent\emph{Bar complex interpretation.}
 \begin{equation}
@@ -134,8 +96,6 @@ extracts the level as the coefficient of the one-loop divergence.
 
 \subsection{Loop number and genus}
 
-The relationship between loop number and genus is as follows.
-
 \begin{theorem}[Loop-genus correspondence; \ClaimStatusProvedElsewhere{} \cite{costello-renormalization}]
 For any connected Feynman diagram $\Gamma$ with:
 \begin{itemize}
@@ -156,11 +116,7 @@ where $F$ is the number of boundary components (faces). Since $F \geq 1$, we hav
 with equality $g = L/2$ when $F = 1$ (single boundary component).
 \end{theorem}
 
-\emph{For the free boson:}
-\begin{itemize}
-\item A tadpole has one vertex ($V = 1$) and one self-loop edge ($E = 1$)
-\item Loop count: $L = E - V + 1 = 1 - 1 + 1 = 1$
-\end{itemize}
+\emph{For the free boson:} a tadpole has one vertex ($V = 1$) and one self-loop edge ($E = 1$), giving loop count $L = E - V + 1 = 1 - 1 + 1 = 1$.
 
 For an interacting theory with $\phi^4$ coupling, a one-loop box diagram has $4$ internal edges forming the loop and $4$ vertices (each 4-valent), giving $L = 4 - 4 + 1 = 1$.
 
@@ -177,12 +133,7 @@ The bar complex homology mirrors this:
 H_*(\bar{B}(\mathcal{H}_\kappa)) = \bigoplus_{g=0}^\infty H_*(\bar{B}^{(g)}) \cdot \kappa^g
 \end{equation}
 
-The genus grading has the following physical interpretation:
-\begin{itemize}
-\item $\kappa^0$ (genus 0): Classical physics, tree amplitudes
-\item $\kappa^1$ (genus 1): First quantum correction, one-loop
-\item $\kappa^g$ (genus $g$): $g$-loop quantum corrections
-\end{itemize}
+The genus grading is the loop expansion: $\kappa^g$ gives $g$-loop quantum corrections.
 
 \begin{remark}[Convention]
 The weighting $\kappa^g$ is the natural grading on the bar filtration: $\bar{B}_g$ is the genus-$g$
@@ -191,72 +142,30 @@ piece and $\kappa$ enters as the level parameter.  In closed string theory, the 
 
 \subsection{Configuration space integrals = Feynman integrals}
 
-The bar complex elements are configuration space integrals. We now make the Feynman diagram connection explicit:
-
 \emph{Genus~0 (tree):}
 \begin{equation}
 \int_{C_n(\mathbb{P}^1)} \omega(z_1, \ldots, z_n) \prod_{i=1}^n a(z_i)
 \end{equation}
-
-This computes tree-level amplitudes. The form $\omega$ encodes the kinematic invariants (like $(z_i - z_j)^{-1}$ propagators).
 
 \emph{Genus~1 (one-loop):}
 \begin{equation}
 \int_{E_\tau} dz \int_{C_n(E_\tau)} a(z) \otimes a(z_1) \otimes \cdots \otimes a(z_n)
 \end{equation}
 
-The first integral $\int_{E_\tau} dz$ is the \emph{loop momentum integral}. On the torus, this becomes:
-\begin{equation}
-\int_0^1 \int_0^1 d\text{Re}(z) \, d\text{Im}(z)
-\end{equation}
-
-summed over lattice points $z \in \mathbb{Z} + \tau\mathbb{Z}$.
-
-\emph{The divergence.} When $z \to z_i$ (loop touches external leg), we get:
-\begin{equation}
-\sim \int \frac{\kappa}{|z - z_i|^2} dz \sim \text{divergent}
-\end{equation}
-
-This is the UV divergence in QFT.
+The first integral $\int_{E_\tau} dz$ is the loop momentum integral.  When $z \to z_i$, the integrand $\sim \kappa/|z - z_i|^2$ diverges---the UV divergence of QFT.
 
 \subsection{Renormalization via compactification}
 
-The bar complex naturally regulates divergences through:
-
-\emph{Fulton--MacPherson compactification.}
-
-\begin{equation}
-\overline{C}_n(X)
-\end{equation}
-
-The boundary divisors $D_{ij}$ where points collide are replaced by exceptional divisors. Logarithmic forms such as $d\log(z_i - z_j)$ (with simple poles) extend to the compactification and give well-defined integrals, while higher-order poles require additional regularization.  The compactification provides a geometric framework for organizing the divergences:
-\begin{itemize}
-\item Exceptional divisor = geometric regulator
-\item Residue on divisor = renormalization condition
-\item Log forms extend; double-pole forms require subtraction
-\end{itemize}
-
-The level $\kappa$ enters as the coefficient needing renormalization at one-loop.
+The Fulton--MacPherson compactification $\overline{C}_n(X)$ regulates divergences geometrically.  Logarithmic forms $d\log(z_i - z_j)$ extend to the compactification; higher-order poles require subtraction.  The level $\kappa$ is the coefficient needing renormalization at one-loop.
 
 \subsection{Higher genus: multi-loop structure}
 
-At genus $g \geq 2$, we have Riemann surfaces $\Sigma_g$ with $g$ handles. Each handle contributes an independent loop integral.
-
-\emph{Two-loop example} ($g=2$). The surface has two handles, giving four independent homology cycles $a_1, b_1, a_2, b_2 \in H_1(\Sigma_2, \mathbb{Z})$ (an $a$-cycle and $b$-cycle for each handle).
-
-The amplitude involves:
+At genus $g \geq 2$, each handle contributes an independent loop integral.  For $g=2$, the amplitude involves:
 \begin{equation}
 \int_{\gamma_1} \int_{\gamma_2} \langle a(z_1) a(z_2) \rangle \, dz_1 \, dz_2
 \end{equation}
 
-This gives a two-loop Feynman integral with:
-\begin{itemize}
-\item Two independent loop momenta
-\item Nested divergences as loops approach each other
-\item Coefficient $\kappa^2$ from two loop momentum integrals
-\end{itemize}
-
-\emph{Bar complex:}
+This is a two-loop Feynman integral with coefficient $\kappa^2$.  The bar complex counterpart:
 \begin{equation}
 \bar{B}^{(2)}_n = \int_{\Sigma_2} \int_{C_n(\Sigma_2)} \omega \otimes a(z_1) \otimes \cdots
 \end{equation}
@@ -268,36 +177,17 @@ H_*(\bar{B}^{(2)}) \approx \kappa^2 \cdot H^*(\overline{\mathcal{M}}_2) \otimes 
 
 \subsection{Explicit one-loop calculation: partition function}
 
-We now compute the one-loop partition function on the torus.
-
-\emph{Setup.} Free boson on $E_\tau$ with action:
+Free boson on $E_\tau$ with action:
 \begin{equation}
 S[\phi] = \frac{1}{4\pi\kappa} \int_{E_\tau} d^2z \, |\partial \phi|^2
 \end{equation}
 
-\emph{Partition function:}
-\begin{equation}
-Z_{E_\tau} = \int \mathcal{D}\phi \, e^{-S[\phi]}
-\end{equation}
-
-For the Gaussian integral (with zero mode excluded):
+The Gaussian path integral (zero mode excluded) gives:
 \begin{equation}
 Z_{E_\tau} = \frac{1}{\sqrt{\det'(-\Delta)}}
 \end{equation}
 
-where $\Delta$ is the Laplacian on $E_\tau$ and $\det'$ denotes the zeta-regularized determinant with zero eigenvalue excluded.  The level $\kappa$ enters only through the zero-mode integral normalization.
-
-\paragraph{Zeta function regularization.}
-\begin{equation}
-\det'(-\Delta) = \exp\left( -\frac{d}{ds} \zeta_{\Delta}(s) \Big|_{s=0} \right)
-\end{equation}
-
-For the torus:
-\begin{equation}
-\zeta_\Delta(s) = \frac{1}{(2\pi)^{2s}} \sum_{(n,m) \neq (0,0)} \frac{\text{Im}(\tau)^s}{|n + m\tau|^{2s}}
-\end{equation}
-
-Evaluating:
+where $\det'$ is the zeta-regularized determinant with zero eigenvalue excluded.  Evaluating via $\zeta_\Delta(s)$:
 \begin{equation}
 Z_{E_\tau} = \frac{1}{\sqrt{\text{Im}(\tau)}} \frac{1}{|\eta(\tau)|^2}
 \end{equation}
@@ -335,26 +225,17 @@ This anomalous transformation is controlled by the central charge class in $H^2(
 
 \subsection{String theory perspective}
 
-In string theory, the worldsheet is a Riemann surface $\Sigma_g$. The string amplitude for genus-$g$ worldsheet is:
+The string amplitude for genus-$g$ worldsheet is:
 \begin{equation}
 \mathcal{A}^{(g)} = \int_{\mathcal{M}_g} d\mu_g \, \langle \mathcal{V}_1 \cdots \mathcal{V}_n \rangle_{\Sigma_g}
 \end{equation}
-
-where:
-\begin{itemize}
-\item $\mathcal{M}_g$ = moduli space of genus-$g$ curves
-\item $d\mu_g$ = natural measure on moduli space
-\item $\langle \cdots \rangle_{\Sigma_g}$ = worldsheet correlation function
-\end{itemize}
 
 \emph{Genus expansion:}
 \begin{equation}
 \mathcal{A}_{\text{total}} = \sum_{g=0}^\infty g_s^{2g-2} \mathcal{A}^{(g)}
 \end{equation}
 
-where $g_s$ is the string coupling.
-
-\emph{Bar-cobar connection.} The bar complex computes exactly these amplitudes:
+The bar complex computes these amplitudes:
 \begin{equation}
 H_*(\bar{B}^{(g)}(\mathcal{H}_\kappa)) \leftrightarrow \mathcal{A}^{(g)}
 \end{equation}
@@ -379,13 +260,7 @@ $g$ & $g$-handle surface & $g$ & $\kappa^g$ & $\bar{B}^{(g)}$\\
 \end{tabular}
 \end{center}
 
-The physical observables at each genus level are:
-\begin{itemize}
-\item Genus 0: Classical action, tree amplitudes
-\item Genus 1: One-loop corrections, vacuum energy, central charge anomaly
-\item Genus 2: Two-loop, first non-planar diagrams
-\item Higher: Multi-loop quantum corrections
-\end{itemize}
+Genus 0 gives tree amplitudes; genus 1 gives one-loop corrections and the central charge anomaly; genus $g$ gives $g$-loop quantum corrections.
 
 \subsection{Path integral interpretation}
 
@@ -491,11 +366,12 @@ chain complex;
 \textup{(iii)}~for non-free theories, the path integral is not Gaussian
 and requires the Costello renormalization framework~\cite{costello-renormalization}
 to define rigorously.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies the bar complex Fredholm determinant with the worldsheet path integral for a general interacting chiral algebra, extending the proved free-field case to all theories.
 \end{remark}
 
-\subsection{\texorpdfstring{Conclusion: three perspectives on $\kappa$}{Conclusion: three perspectives on}}
-
-The level $\kappa$ of the Heisenberg algebra admits three equivalent descriptions:
+\subsection{\texorpdfstring{Three perspectives on $\kappa$}{Three perspectives on}}
 
 \begin{center}
 \begin{tabular}{|l|p{8cm}|}
@@ -509,7 +385,7 @@ The level $\kappa$ of the Heisenberg algebra admits three equivalent description
 \end{tabular}
 \end{center}
 
-These descriptions are related by the correspondence
+These are unified by
 \begin{equation}
 \text{Bar-Cobar Construction} \leftrightarrow \text{Genus Expansion} \leftrightarrow \text{Loop Expansion}.
 \end{equation}

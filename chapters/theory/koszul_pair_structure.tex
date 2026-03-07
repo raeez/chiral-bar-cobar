@@ -4,31 +4,17 @@
 
 \chapter{Chiral Koszul pairs}
 
-Building on the Koszul pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ exhibited in the frame chapter (Chapter~\ref{ch:heisenberg-frame}), this chapter investigates the fine structure of Koszul pairs: periodicity phenomena for affine and Virasoro algebras, the role of the discriminant, and the interaction between the Koszul pair structure and representation-theoretic data.
+The Koszul pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ from Chapter~\ref{ch:heisenberg-frame} is the simplest instance of a general pattern.  This chapter investigates the fine structure: periodicity for affine and Virasoro algebras, the discriminant, and the interaction with representation theory.
 
 \section{Koszul duality}
 
 \subsection{First principles}
 
-The bar-cobar adjunction of the preceding chapters is a formal machine; it produces, for any chiral algebra~$\cA$, a coalgebra $\barB(\cA)$ and recovers an algebra $\Omega(\barB(\cA))$.  The question is when the recovery is faithful --- when $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ is a quasi-isomorphism.  The answer is a \emph{quadratic} condition: the chiral algebra and its dual must be presented by generators and relations of a specific homological type.  When this condition holds, the pair $(\cA, \cA^!)$ is \emph{Koszul}, and the three main theorems apply in their sharpest form: Theorem~A gives an adjoint equivalence, Theorem~B gives $E_2$ collapse, and Theorem~C gives Lagrangian complementarity with an explicit Kodaira--Spencer class.  The Koszul condition is thus the hypothesis that converts formal duality into geometric duality.
-
-\begin{remark}
-Koszul duality encodes the same mathematical structure in two dual ways: through products (algebraic encoding) and through coproducts (coalgebraic encoding). The bar and cobar constructions translate between these two descriptions, and under the Koszul condition the translation is lossless.
-\end{remark}
-
-\begin{example}[Elementary illustration: functions vs distributions]
-Consider the simplest infinite-dimensional example: on the algebra side, smooth functions $C^\infty(\mathbb{R})$ with pointwise multiplication; on the coalgebra side, distributions $\mathcal{D}'(\mathbb{R})$ with convolution coproduct.  The Fourier transform provides the bridge:
-\begin{align*}
-\text{Functions (algebra)} &\xrightarrow{\mathcal{F}} \text{Distributions (coalgebra)} \\
-f(x) \cdot g(x) &\longleftrightarrow \hat{f} * \hat{g} \quad \text{(convolution)}
-\end{align*}
-
-Multiplication becomes convolution; this is the prototype of Koszul duality.
-\end{example}
+The bar-cobar adjunction produces, for any augmented chiral algebra~$\cA$, a coalgebra $\barB(\cA)$ and a counit $\Omega(\barB(\cA)) \to \cA$.  The Koszul condition --- a quadratic constraint on generators and relations --- is what makes this counit a quasi-isomorphism; off the Koszul locus it persists only in the completed coderived category.  When it holds, Theorem~A gives an adjoint equivalence, Theorem~B gives $E_2$ collapse, and Theorem~C gives Lagrangian complementarity.  The Koszul condition converts formal duality into geometric duality.
 
 \subsection{Operadic formulation}
 
-Koszul's original insight (1950s, studying Lie algebras) was that this phenomenon occurs throughout mathematics:
+The bar-cobar exchange appears across algebra:
 
 \begin{center}
 \begin{tabular}{|l|l|l|}
@@ -46,15 +32,10 @@ Chiral algebras & Chiral coalgebras & \textbf{This work} \\
 
 \subsection{The Koszul condition}
 
-We recall the notion of Koszul pair
-(Definition~\ref{def:koszul-pair-classical} for the classical setting,
-Definition~\ref{def:chiral-koszul-pair} for the chiral setting):
-two algebras $(A_1, A_2)$ form a \emph{Koszul pair} if the bar
-construction of each is quasi-isomorphic to the Koszul dual coalgebra
-of the other, and the cobar constructions provide quasi-inverse
-equivalences.  In other words, applying bar to $A_1$ and then cobar
-yields $A_2$ up to quasi-isomorphism, and vice versa: the two algebras
-are dual presentations of the same underlying structure.
+A \emph{Koszul pair} $(A_1, A_2)$
+(Definition~\ref{def:koszul-pair-classical},
+Definition~\ref{def:chiral-koszul-pair}) consists of two algebras
+whose bar and cobar constructions provide quasi-inverse equivalences.
 
 \section{Historical foundations: from quadratic duality to chiral structures}
 
@@ -69,11 +50,11 @@ For a finite-dimensional Lie algebra $\mathfrak{g}$, there exists an acyclic com
 \]
 \end{theorem}
 
-The significance: this provides a \emph{minimal resolution} of $\mathbb{C}$ as an $S(\mathfrak{g}^*)$-module, where ``minimal'' means the differential involves only linear maps (no higher degree terms).
+The Koszul complex is a minimal resolution of $\mathbb{C}$ as an $S(\mathfrak{g}^*)$-module: the differential involves only linear maps.
 
 \subsection{Quadratic Koszul duality (Priddy 1970, Beilinson--Ginzburg--Soergel 1996)}
 
-Stewart Priddy, studying the homology of iterated loop spaces in algebraic topology, needed to understand when the bar construction gives a minimal resolution. He was led to consider algebras with quadratic relations.
+Priddy~\cite{Priddy70} characterized when the bar construction gives a minimal resolution: the algebra must have quadratic relations.
 
 \begin{definition}[Quadratic algebra]
 A \emph{quadratic algebra} is $A = T(V)/(R)$ where $V$ is a vector space in degree 1 and $R \subset V \otimes V$ consists of quadratic relations.
@@ -136,12 +117,7 @@ HH^n(A, M) = \text{Ext}^n_{A^e}(A, M)
 \]
 where $A^e = A \otimes_k A^{\text{op}}$ is the enveloping algebra and $M$ is an $A$-bimodule.
 
-When trying to extend this to chiral algebras, we face several challenges:
-\begin{enumerate}
-\item Chiral algebras live on curves, not just at points
-\item The multiplication involves formal parameters (the OPE)
-\item Locality conditions must be respected
-\end{enumerate}
+Extending this to chiral algebras requires addressing three features: chiral algebras live on curves (not just at points), the multiplication involves formal parameters (the OPE), and locality conditions must be respected.
 
 \subsection{The chiral enveloping algebra}
 
@@ -166,8 +142,6 @@ An \emph{$\mathcal{A}$-bimodule} (in the chiral sense) is a $\mathcal{D}_X$-modu
 \end{enumerate}
 Equivalently, $\mathcal{M}$ is a module for the chiral enveloping algebra $\mathcal{A}^e$.
 \end{definition}
-
-The construction requires care because we work with $\mathcal{D}_X$-modules:
 
 \begin{lemma}[Well-definedness of chiral enveloping algebra; \ClaimStatusProvedHere]
 The chiral tensor product $\mathcal{A} \boxtimes_{\mathcal{D}_X} \mathcal{A}^{\text{op}}$ is well-defined and carries a natural chiral algebra structure.
@@ -207,6 +181,9 @@ d_n(a_0 \otimes \cdots \otimes a_{n+1}) = \sum_{i=0}^n (-1)^i a_0 \otimes \cdots
 \end{definition}
 
 \begin{theorem}[Exactness of chiral bar resolution; \ClaimStatusProvedHere]
+\textup{[Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 The chiral bar complex is exact, providing a free resolution of $\mathcal{A}$ as an $\mathcal{A}^e$-module.
 \end{theorem}
 
@@ -260,8 +237,6 @@ Apply $\mathrm{Hom}_{\mathcal{D}_X}(-, \mathcal{A})$ to the bar resolution (Theo
 
 \subsection{Geometric realization via configuration spaces}
 
-Chiral operations naturally live on configuration spaces:
-
 \begin{theorem}[Geometric model of chiral Hochschild cohomology; \ClaimStatusProvedHere]
 \label{thm:geometric-chiral-hochschild}
 There is a natural isomorphism:
@@ -309,14 +284,7 @@ Theorem~\ref{thm:bar-nilpotency-complete}). \qedhere
 
 \subsection{Motivation from classical theory}
 
-Hochschild cohomology carries more structure than a graded vector space~\cite{Ger63}. It has both:
-\begin{itemize}
-\item A graded commutative product (cup product)
-\item A graded Lie bracket of degree $-1$
-\end{itemize}
-These structures are compatible via a Leibniz rule, forming what is now called a Gerstenhaber algebra.
-
-For chiral algebras, we need to understand how this structure lifts to the chiral setting.
+Hochschild cohomology carries more structure than a graded vector space~\cite{Ger63}: a graded commutative cup product and a graded Lie bracket of degree $-1$, compatible via a Leibniz rule (a Gerstenhaber algebra).
 
 \subsection{Construction of the cup product}
 
@@ -383,12 +351,6 @@ The Leibniz rule follows from the fact that coderivations are derivations with r
 
 \section{\texorpdfstring{Higher structures: $A_\infty$ and $L_\infty$ on chiral Hochschild cohomology}{Higher structures: A-infinity and L-infinity on chiral Hochschild cohomology}}
 
-\subsection{The need for higher operations}
-
-Spaces that are homotopy associative carry higher operations $m_n$ for all $n \geq 2$, satisfying coherence relations~\cite{Sta63}. This led to the notion of $A_\infty$ algebras.
-
-For chiral algebras, especially non-quadratic ones, these higher structures become essential.
-
 \subsection{\texorpdfstring{The $A_\infty$ structure}{The A-infinity structure}}
 
 \begin{theorem}[$A_\infty$ structure on chiral Hochschild cohomology; \ClaimStatusProvedHere]
@@ -448,8 +410,6 @@ related to the $A_\infty$ operations by:
 \section{Periodicity in chiral Hochschild cohomology}
 
 \subsection{Statement and first properties}
-
-The periodicity phenomenon was first observed by Boris Feigin and Edward Frenkel (1990) studying representations of affine Kac--Moody algebras at critical level. They noticed that certain cohomology groups repeat with a fixed period.
 
 \begin{theorem}[Periodicity for Virasoro; \ClaimStatusProvedHere]\label{thm:periodicity-virasoro}
 \label{thm:virasoro-periodicity}
@@ -758,6 +718,127 @@ structure.
 The preceding proposition does not address mixed-type Koszul pairs, where $\mathcal{A}$ and $\mathcal{A}^!$ have structurally different Hochschild cohomology.  All computed pairs in this monograph are same-type: $(\widehat{\mathfrak{g}}_k, \widehat{\mathfrak{g}}_{k'})$, $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$, $(\mathcal{W}_N^k, \mathcal{W}_N^{k'})$.  The question of whether Koszul duality preserves the Hochschild growth type for genuinely distinct pairs (e.g., a hypothetical Koszul pair between a Kac--Moody algebra and a $\mathcal{W}$-algebra) remains open.
 \end{remark}
 
+\begin{remark}[Periodicity profile and upper bounds]\label{rem:periodicity-profile}
+\index{periodicity!profile}
+For rank-$1$ algebras (Virasoro, $\widehat{\mathfrak{sl}}_2$), bar
+cohomology is strictly periodic with a single period
+$N \in \{2, 4\}$.  For rank~$r > 1$, strict periodicity fails:
+the Poincar\'e series is
+$\prod_{i=1}^r (1 + t^{2m_i+1})/(1 - t^{2(m_i+1)})$,
+giving polynomial growth $\dim\,CH^n = O(n^{r-1})$.
+
+When discussing ``the period'' of a higher-rank algebra, the
+\emph{least common multiple}
+\[
+\mathrm{lcm}\bigl(2(m_1{+}1), \ldots, 2(m_r{+}1)\bigr)
+\]
+gives an \emph{upper bound} on the eventual quasi-periodicity length.
+Cancellations may reduce the actual period.  For example, the
+$\mathfrak{sl}_3$ bar cohomology has $\dim\,CH^6 = 1$ but
+$\dim\,CH^{12} = 3$ (Remark~\ref{rem:affine-periodicity-analysis}),
+so the naive $6$-periodicity fails, and no strict period exists.
+
+\emph{Convention.}  We use $\mathrm{Period}(\mathcal{A})$ only for
+algebras with strict periodicity, and call the lcm a
+\emph{quasi-period bound} for higher-rank algebras.
+
+The scalar $\mathrm{Period}(\mathcal{A})$ is an incomplete invariant: it
+discards the module structure, the algebra of periodicity generators,
+and the arithmetic symmetries of the periodicity field.  These are
+captured by the \emph{periodicity triple}
+$\Pi(\mathcal{A}) = (M_{\mathcal{A}},\, Q_{\mathcal{A}},\, G_{\mathcal{A}})$
+introduced in Remark~\ref{rem:periodicity-triple} below.
+\end{remark}
+
+\begin{remark}[The periodicity triple]\label{rem:periodicity-triple}
+\index{periodicity!triple $\Pi(\mathcal{A})$|textbf}
+The periodicity of a chiral algebra is not a number---it is a module
+with an exterior algebra and a Galois group.  Define the
+\emph{periodicity triple}
+\[
+\Pi(\mathcal{A}) \;=\; \bigl(M_{\mathcal{A}},\; Q_{\mathcal{A}},\;
+G_{\mathcal{A}}\bigr)
+\]
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $M_{\mathcal{A}}$ is the \emph{periodicity module}: the
+$\mathbb{Z}$-graded module
+$M_{\mathcal{A}} = \bigoplus_{n \geq 0} CH^n(\mathcal{A})$
+of bar cohomology groups, viewed as a module over the periodicity
+operator $\sigma$ (shift by the quasi-period).
+For rank-$1$ algebras, $M_{\mathcal{A}}$ is a free module of rank~$1$
+over $\mathbb{Z}[\sigma]/(\sigma^N - 1)$ and the scalar
+$\mathrm{Period}(\mathcal{A}) = N$ recovers the full data.
+For rank~$r > 1$, $M_{\mathcal{A}}$ has a filtration with
+$r$~polynomial and $r$~exterior factors reflecting the
+Poincar\'e series
+$\prod_{i=1}^r (1 + t^{2m_i+1})/(1 - t^{2(m_i+1)})$.
+\item $Q_{\mathcal{A}}$ is the \emph{periodicity algebra}: the
+exterior algebra $\Lambda(x_{2m_1+1}, \ldots, x_{2m_r+1})$
+generated by the odd-degree periodicity generators of
+$CH^*(\mathcal{A})$, where $m_1, \ldots, m_r$ are the exponents
+of the underlying Lie algebra.  The polynomial factors
+$\mathbb{C}[y_{2(m_i+1)}]$ act as even-degree generators.
+Together, $Q_{\mathcal{A}} = \Lambda(x_{\mathrm{odd}}) \otimes
+\mathbb{C}[y_{\mathrm{even}}]$ is the Gel'fand--Fuchs cohomology
+ring that governs the structure of $M_{\mathcal{A}}$.
+\item $G_{\mathcal{A}}$ is the \emph{periodicity Galois group}: the
+Galois group $\mathrm{Gal}(K_{\mathcal{A}}/\mathbb{Q})$ of the
+splitting field $K_{\mathcal{A}}$ of the denominator polynomial
+of the Poincar\'e series of $CH^*(\mathcal{A})$.  For
+$\widehat{\mathfrak{sl}}_2$, the Poincar\'e series
+$1/(1-t^4)$ has splitting field $\mathbb{Q}(i)$ with
+$G_{\mathcal{A}} = \mathbb{Z}/2$.  For
+$\widehat{\mathfrak{sl}}_3$, the denominator
+$(1-t^6)(1-t^8)$ yields $G_{\mathcal{A}}$ containing the
+cyclotomic Galois groups of the $6$th and $8$th roots
+of unity.
+\end{enumerate}
+The scalar $\mathrm{Period}(\mathcal{A})$, when it exists,
+equals the exponent of $G_{\mathcal{A}}$ acting on the
+roots of the denominator polynomial.  For higher-rank algebras,
+$G_{\mathcal{A}}$ encodes the arithmetic obstructions to
+strict periodicity: the failure of $\mathfrak{sl}_3$ to be
+$6$-periodic (Remark~\ref{rem:affine-periodicity-analysis})
+is detected by the non-cyclic structure of $G_{\mathcal{A}}$.
+
+Under Koszul duality, the triple transforms as:
+$M_{\mathcal{A}^!}$ is the graded dual of $M_{\mathcal{A}}$
+(reflecting Theorem~\ref{thm:periodicity-exchange-koszul}),
+$Q_{\mathcal{A}^!} \cong Q_{\mathcal{A}}$ (the exponents are
+preserved), and $G_{\mathcal{A}^!} = G_{\mathcal{A}}$ (the
+splitting field is determined by the exponents, not the level).
+\end{remark}
+
+\begin{definition}[Derived scalar period; \ClaimStatusConjectured]
+\label{def:derived-scalar-period}
+\index{periodicity profile!derived scalar period}
+\index{scalar period!derived from profile}
+A scalar period $\Perbr(\cA) \in \mathbb{Z}_{>0}$ exists if and
+only if $M_{\cA}$, $Q_{\cA}$, and $G_{\cA}$ all induce commuting
+finite-order automorphisms of a common finite-type complex.
+In that case,
+\[
+\Perbr(\cA)
+\;:=\;
+\operatorname{ord}\langle T_{\cA},\, R_{\cA},\, G_{\cA} \rangle,
+\]
+the exponent of the group generated by the modular monodromy
+operator~$T_{\cA}$, the spectral $R$-matrix datum~$R_{\cA}$,
+and the geometric amplitude operator~$G_{\cA}$.
+Otherwise the primary invariant is the full profile
+$\Pi_{\cA}$, not an integer.
+
+\smallskip\noindent
+\emph{Status.}
+For rank-$1$ algebras ($\widehat{\mathfrak{sl}}_2$, Virasoro),
+$\Perbr(\cA)$ agrees with the scalar period computed in
+Theorem~\ref{thm:periodicity-exchange-koszul}.  For
+higher-rank algebras where strict periodicity fails
+(Remark~\ref{rem:affine-periodicity-analysis}), the derived
+period is undefined and $\Pi_{\cA}$ is the correct invariant.
+\end{definition}
+
 \begin{proposition}[Admissible levels are permuted under Koszul duality; \ClaimStatusProvedHere]
 \label{prop:admissible-levels-permuted}
 \index{admissible level!Koszul duality}
@@ -816,9 +897,10 @@ For part~(iii): the derived equivalence of
 Theorem~\ref{thm:module-category-equivalence} applies to Koszul pairs
 $(\widehat{\mathfrak{g}}_k, \widehat{\mathfrak{g}}_{k'})$.
 Restricting to the admissible subcategory
-$\mathcal{O}_k^{\mathrm{adm}}$ (the full subcategory of
-$\mathcal{O}_k$ generated by admissible highest-weight modules
-$L_k(\lambda)$ for $\lambda$ in the admissible weight set)
+$\mathcal{O}_k^{\mathrm{adm}}$
+(the full subcategory of~$\mathcal{O}_k$ generated by
+admissible highest-weight modules $L_k(\lambda)$
+for~$\lambda$ in the admissible weight set)
 is compatible with the derived equivalence because the bar-cobar
 resolution preserves the weight lattice, and the Koszul dual of
 an admissible highest-weight module $L_k(\lambda)$ is an admissible
@@ -861,7 +943,7 @@ opers appear precisely at $k = -h^\vee$.
 
 \subsection{Limitations of quadratic theory}
 
-The Heisenberg algebra is quadratic: a single generator with a single OPE relation (\S\ref{sec:frame-bar-deg1}).  Most chiral algebras of physical interest are not.  We now explain why the quadratic theory fails for them and how to overcome this limitation.
+The Heisenberg algebra is quadratic: a single generator with a single OPE relation (\S\ref{sec:frame-bar-deg1}).  Most chiral algebras of physical interest are not.
 
 \begin{definition}[Quadratic chiral algebra]
 A chiral algebra $\mathcal{A}$ is \emph{quadratic} if it admits a presentation:
@@ -1086,12 +1168,7 @@ This shows the non-quadratic structure explicitly in the bar complex. \qedhere
 
 \subsection{Historical development}
 
-\begin{itemize}
-\item 1985: A. Zamolodchikov discovers $W_3$ algebra studying conformal field theories
-\item 1985: V. Drinfeld and V. Sokolov develop classical reduction
-\item 1990: B. Feigin and E. Frenkel discover quantum Drinfeld--Sokolov reduction
-\item 2004: T. Arakawa develops representation theory at critical level
-\end{itemize}
+The $W_3$ algebra (Zamolodchikov, 1985) arises from quantum Drinfeld--Sokolov reduction (Feigin--Frenkel, 1990).
 
 \subsection{The BRST construction}
 
@@ -1103,9 +1180,7 @@ For a simple Lie algebra $\mathfrak{g}$ and principal nilpotent element $e \in \
 where $Q_{DS}$ is the BRST charge and $\mathcal{F}_{gh}$ is the ghost system.
 \end{definition}
 
-We construct this explicitly for $\mathfrak{g} = \mathfrak{sl}_3$:
-
-\begin{example}[$\mathcal{W}_3$ algebra]
+\begin{example}[$\mathcal{W}_3$ algebra for $\mathfrak{g} = \mathfrak{sl}_3$]
 \emph{Step 1}: Start with $\hat{\mathfrak{sl}}_3$ at level $k$.
 
 \emph{Step 2}: Choose principal $\mathfrak{sl}_2$ embedding:
@@ -1162,14 +1237,9 @@ where $\mathfrak{g}^L$ is the Langlands dual Lie algebra.
 
 \section{Non-principal W-algebras}
 
-\subsection{Motivation from physics}
+\subsection{Non-principal orbits}
 
-Gaiotto--Witten showed that 4d $\mathcal{N}=2$ gauge theories on Riemann surfaces exhibit:
-\begin{itemize}
-\item Different punctures correspond to different nilpotent orbits
-\item Non-principal nilpotents give new W-algebras
-\item S-duality exchanges dual nilpotent orbits
-\end{itemize}
+Non-principal nilpotent orbits produce new W-algebras; S-duality exchanges dual orbits (Gaiotto--Witten).
 
 \subsection{\texorpdfstring{Example: Subregular W-algebra for $\mathfrak{sl}_4$}{Example: Subregular W-algebra for sl 4}}
 
@@ -1181,13 +1251,7 @@ e_{subreg} = \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \\ 
 \end{definition}
 
 \begin{theorem}[Structure of $\mathcal{W}(\mathfrak{sl}_4, e_{subreg})$ {\cite{KRW}}; \ClaimStatusProvedElsewhere]\label{thm:w-algebra-sl4}
-The subregular W-algebra has generators:
-\begin{itemize}
-\item $T$: stress tensor (weight 2)
-\item $G^{\pm}$: fermionic currents (weight 3/2)
-\item $J$: U(1) current (weight 1)
-\end{itemize}
-With OPEs involving fractional powers and fermionic statistics.
+The subregular W-algebra has generators $T$ (weight~$2$), $G^{\pm}$ (weight~$3/2$), and $J$ (weight~$1$), with OPEs involving fractional powers and fermionic statistics.
 \end{theorem}
 
 The fractional weights require orbifold constructions on configuration spaces.
@@ -1228,6 +1292,9 @@ The general conjecture involving non-principal
 nilpotents and Langlands dual groups requires gauge-theoretic input
 (boundary conditions for twisted $\mathcal{N}=4$ SYM, Gaiotto--Witten
 \cite{GW09}) that is beyond the scope of this monograph.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
+The conjecture posits a Koszul equivalence $D^b(\mathcal{W}^k(\mathfrak{g},f)\text{-mod}) \simeq D^b(\mathcal{W}^{k^L}(\mathfrak{g}^L,f^L)\text{-mod})$ for general nilpotent orbits and Langlands dual groups.
 \end{remark}
 
 This provides a vast class of non-quadratic Koszul dual pairs.
@@ -1337,7 +1404,8 @@ See \S\ref{subsec:positselski-chiral-equivalence} for full details.
 \subsection{Explicit resolutions for non-quadratic cases}
 
 \begin{example}[BGG resolution for W-algebras]
-For a simple $\mathcal{W}^k(\mathfrak{g})$-module $L(\lambda)$ at admissible level, the Bernstein--Gel'fand--Gel'fand resolution takes the form:
+For a simple $\mathcal{W}^k(\mathfrak{g})$-module $L(\lambda)$ at admissible level,
+the BGG resolution takes the form:
 \[
 \cdots \to \bigoplus_{\ell(w)=2} M(w \cdot \lambda) \to \bigoplus_{\ell(w)=1} M(w \cdot \lambda) \to M(\lambda) \to L(\lambda) \to 0
 \]
@@ -1406,14 +1474,7 @@ is precisely the equation of motion for Chern--Simons theory with higher correct
 
 \subsection{Witten's Chern--Simons interpretation}
 
-Chern--Simons theory on a 3-manifold $M$ with gauge group $G$ at level $k$ produces~\cite{Wit89}:
-\begin{itemize}
-\item The WZW model on $\partial M$ 
-\item Jones polynomial invariants of knots in $M$
-\item Quantum group representations at $q = e^{\pi i/(k+h^\vee)}$
-\end{itemize}
-
-The action is:
+Chern--Simons theory on a 3-manifold $M$ with gauge group $G$ at level $k$ produces~\cite{Wit89} the WZW model on $\partial M$ and quantum group representations at $q = e^{\pi i/(k+h^\vee)}$.  The action is:
 \[
 S_{CS}(A) = \frac{k}{4\pi} \int_M \text{Tr}\left(A \wedge dA + \frac{2}{3}A \wedge A \wedge A\right)
 \]
@@ -1449,7 +1510,7 @@ $\widehat{\fg}_k$ at $k \neq -h^\vee$:
   The MC equation in $\barB(\widehat{\fg}_k)$ therefore
   parametrizes flat $\fg$-connections at level~$k$.
 \item \emph{Curvature = CS level.}
-  At genus~$1$, the bar complex has $d^2 = \kappa \cdot \omega_1$
+  At genus~$1$, the bar complex has $\dfib^{\,2} = \kappa \cdot \omega_1$
   with $\kappa = k\dim(\fg)/(2(k+h^\vee))$.  This curvature is
   the Chern--Simons level: the bar complex is curved precisely
   when $k \neq 0$ \textup{(}nontrivial gauge theory\textup{)},
@@ -1472,7 +1533,7 @@ Part~(ii) chains three identifications:
 is Theorem~\ref{thm:bar-semi-infinite-km} (PBW filtration +
 Arkhipov functor);
 (b)~the semi-infinite complex of $\widehat{\fg}_k$ is the BRST
-complex of the WZW model (Feigin--Frenkel, \cite{FF90});
+complex of the WZW model (Feigin--Frenkel, \cite{FF});
 (c)~the WZW model on a surface $\Sigma$ is the boundary theory
 of Chern--Simons on $M$ with $\partial M = \Sigma$
 (Witten~\cite{Wit89}).
@@ -1481,10 +1542,10 @@ Composing, $\barB(\widehat{\fg}_k) \simeq C^*_{\mathrm{BRST}}
 correspond to flat connections modulo gauge.
 
 Part~(iii) follows from
-$d^2 = \kappa \cdot \omega_1$
+$\dfib^{\,2} = \kappa \cdot \omega_1$
 (Theorem~\ref{thm:genus-universality}) with
 $\kappa(\widehat{\fg}_k) = k\dim(\fg)/(2(k+h^\vee))$
-(Computation~\ref{comp:km-curvature}).  For the dual pair
+(Remark~\ref{rem:km-central-charge-sum}).  For the dual pair
 $(k, k' = -k-2h^\vee)$,
 $\kappa + \kappa' = 0$
 (Corollary~\ref{cor:anomaly-duality-km}), which is precisely
@@ -1695,12 +1756,7 @@ framework~\cite{CG17}.
 \subsection{Physical interpretation: quantum groups and Chern--Simons}
 
 \begin{conjecture}[Witten--Reshetikhin--Turaev; \ClaimStatusConjectured]\label{conj:wrt-conjecture}
-The Yangian $\leftrightarrow$ quantum affine Koszul duality corresponds to:
-\begin{itemize}
-\item Chern--Simons theory with gauge group $G$ at level $k$
-\item Deformed Chern--Simons with gauge group $G^L$ at level $k^L$
-\end{itemize}
-where the deformation is precisely the non-quadratic structure.
+The Yangian $\leftrightarrow$ quantum affine Koszul duality corresponds to Chern--Simons with gauge group $G$ at level $k$ versus deformed Chern--Simons with gauge group $G^L$ at level $k^L$, the deformation being the non-quadratic structure.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1717,6 +1773,9 @@ the Yangian corresponds precisely to the quartic term in the CS action
 is partially verifiable: for $\mathfrak{sl}_2$ the RTT relation
 is the Yang--Baxter equation, whose CS interpretation is established,
 but the general correspondence remains conjectural.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies Yangian--quantum affine Koszul duality with the Chern--Simons/deformed Chern--Simons duality via the Witten--Reshetikhin--Turaev invariants.
 \end{remark}
 
 The RTT relations in the Yangian give rise to the $\alpha^4$ term:
@@ -1753,12 +1812,7 @@ where $\Gamma$ is the orbifold group.
 \subsection{The holographic interpretation}
 
 \begin{conjecture}[AdS/CFT as Chern--Simons/Koszul duality; \ClaimStatusConjectured]
-The AdS$_3$/CFT$_2$ correspondence can be understood as:
-\begin{itemize}
-\item Bulk: Chern--Simons theory on AdS$_3$
-\item Boundary: Chiral algebra (WZW or W-algebra)
-\item The Koszul duality exchanges bulk and boundary descriptions
-\end{itemize}
+The AdS$_3$/CFT$_2$ correspondence identifies the bulk Chern--Simons theory on AdS$_3$ with the boundary chiral algebra (WZW or W-algebra), and Koszul duality exchanges bulk and boundary descriptions.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1775,6 +1829,9 @@ holographic dictionary.  The mathematical content --- that flat
 connections correspond to chiral algebra modules and Wilson lines to
 vertex operators --- is consistent with established results in
 Chern--Simons theory (Witten \cite{Wit89}).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture formulates the AdS$_3$/CFT$_2$ holographic correspondence as an instance of chiral Koszul duality exchanging bulk Chern--Simons theory and boundary WZW/W-algebra.
 \end{remark}
 
 Specifically:
@@ -1846,16 +1903,7 @@ This is a deformed Chern--Simons action where the deformations encode the non-qu
 
 \subsection{Implications for Koszul duality}
 
-The Chern--Simons perspective reveals:
-
-\begin{enumerate}
-\item \emph{Quadratic = Pure CS}: Quadratic chiral algebras correspond to pure Chern--Simons
-\item \emph{Non-Quadratic = Deformed CS}: Each higher relation adds a higher-order term to the action
-\item \emph{Critical Level = Abelian CS}: At special points, the theory abelianizes
-\item \emph{Koszul Duality = CS Duality}: The exchange of algebra and coalgebra is level-rank duality in CS
-\end{enumerate}
-
-Chiral Koszul duality thus recovers standard dualities in Chern--Simons theory and topological quantum field theory.
+The Chern--Simons perspective: quadratic algebras give pure CS, non-quadratic algebras give deformed CS (each higher relation adds a vertex), critical level abelianizes the theory, and algebra/coalgebra exchange is CS level-rank duality.
 
 \section{Open questions}
 

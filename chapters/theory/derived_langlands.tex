@@ -22,11 +22,6 @@ recover the Kazhdan--Lusztig equivalence between
 $\widehat{\fg}_k$-modules and representations of the quantum
 group $U_q(\fg)$.
 
-This chapter develops the derived algebraic geometry needed to
-make these identifications precise, states the full conjectures
-with all hypotheses, and documents the proved ingredients.
-
-
 %================================================================
 % SECTION 1: DERIVED ALGEBRAIC GEOMETRY PREREQUISITES
 %================================================================
@@ -35,10 +30,8 @@ with all hypotheses, and documents the proved ingredients.
 \label{sec:dag-prerequisites}
 \index{derived algebraic geometry}
 
-We recall the minimum framework of derived algebraic geometry
-needed for the oper identification.  Our exposition follows
-Lurie~\cite{HA} and To\"en--Vezzosi; we import definitions and
-key properties without reproducing their proofs.
+The exposition follows
+Lurie~\cite{HA} and To\"en--Vezzosi.
 
 \begin{definition}[Derived stack]
 \label{def:derived-stack}
@@ -156,9 +149,6 @@ plus~$1$\textup{)}.
 \section{Bar complex at critical level = derived oper functions}
 \label{sec:bar-critical}
 \index{bar complex!critical level}
-
-The critical level is the pivot point where bar-cobar duality
-meets the geometric Langlands programme.
 
 \begin{theorem}[Zeroth bar cohomology = oper functions;
 \ClaimStatusProvedHere]
@@ -650,9 +640,6 @@ chain-level model.
 \index{root of unity!bar complex|textbf}
 \index{CDG algebra!periodic}
 
-Moving away from the critical level to admissible levels introduces
-curvature---but curvature with algebraic structure.
-
 \subsection{Admissible levels and the quantum group parameter}
 
 \begin{definition}[Admissible level]
@@ -664,23 +651,20 @@ involved for non-simply-laced types).  The associated quantum group
 parameter is $q_{\mathrm{QG}} = e^{\pi i/(k + h^\vee)} = e^{\pi i q/p}$.
 \end{definition}
 
-At admissible level, two structures interact:
-\begin{enumerate}
-\item The bar complex has curvature
-  $m_0 = k \cdot \kappa \cdot |0\rangle$,
-  where $\kappa$ is the normalized Killing form,
-  which is non-zero but \emph{rational} at admissible level.
-  This curvature arises directly from the level-$k$ central extension:
-  the bilinear form $k\kappa(a, b)$ appears as the double-pole residue
-  $a_{(1)}b = k\kappa(a,b)|0\rangle$ in the OPE, and obstructs
-  $d^2 = 0$ on the unreduced bar complex
-  (Remark~\ref{rem:bicomplex-obstruction}).
-  The related Sugawara central charge $c = k\dim(\fg)/(k+h^\vee)$
-  is a derived quantity, not the direct source of curvature.
-\item The representation category $\cO_k^{\mathrm{int}}(\widehat{\fg})$
-  is semisimple with $|\mathrm{Adm}_k|$ simple objects
-  (Theorem~\ref{thm:admissible-rep-theory}).
-\end{enumerate}
+At admissible level, the bar complex has curvature
+$m_0 = k \cdot \kappa \cdot |0\rangle$
+(where $\kappa$ is the normalized Killing form),
+which is non-zero but \emph{rational}.
+This curvature arises directly from the level-$k$ central extension:
+the bilinear form $k\kappa(a, b)$ appears as the double-pole residue
+$a_{(1)}b = k\kappa(a,b)|0\rangle$ in the OPE, and obstructs
+$d^2 = 0$ on the unreduced bar complex
+(Remark~\ref{rem:bicomplex-obstruction}).
+The related Sugawara central charge $c = k\dim(\fg)/(k+h^\vee)$
+is a derived quantity, not the direct source of curvature.
+Meanwhile, the representation category $\cO_k^{\mathrm{int}}(\widehat{\fg})$
+is semisimple with $|\mathrm{Adm}_k|$ simple objects
+(Theorem~\ref{thm:admissible-rep-theory}).
 
 \subsection{The periodic CDG structure}
 
@@ -741,6 +725,19 @@ relevant to our setting are:
 \end{enumerate}
 Conjecture~\ref{conj:periodic-cdg} asserts that the bar complex at
 admissible level is a periodic CDG-coalgebra in Positselski's sense.
+Upgrading this to a theorem requires constructing an explicit
+isomorphism~\eqref{eq:periodic-cdg} at the chain level, which in
+turn requires understanding the action of the quantum group center
+on the bar complex at a root of unity---beyond the weight-space
+periodicity already established in
+Theorem~\ref{thm:modular-periodicity-wzw}.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V
+(periodicity).  At H-level: $2p$-periodicity of the bar complex as a
+CDG-coalgebra, with the period determined by the root-of-unity
+parameter $q = e^{\pi i/(k+h^\vee)}$.  The M-level model is
+Positselski's periodic CDG framework.  The shadow is the truncation
+from the infinite bar complex to a finite stable category.
 \end{remark}
 
 
@@ -791,10 +788,6 @@ that the bar complex ``sees'' this periodicity via CDG structure.
 \label{sec:kl-from-bar-cobar}
 \index{Kazhdan--Lusztig equivalence!from bar-cobar|textbf}
 
-The Kazhdan--Lusztig equivalence is a central result in
-representation theory.  We formulate the conjecture that bar-cobar
-duality provides a geometric proof.
-
 \begin{theorem}[Kazhdan--Lusztig equivalence;
 \ClaimStatusProvedElsewhere]
 \label{thm:kl-equivalence}
@@ -832,10 +825,12 @@ such that:
   produces a finite-dimensional comodule over the Koszul dual
   $\widehat{\fg}_{-k-2h^\vee}^!$.
 \item The induced map on Ext groups recovers BGG multiplicities:
-  $\mathrm{Ext}^n_{\widehat{\fg}_k}(\omega_X, M(\lambda))
+  \[
+  \mathrm{Ext}^n_{\widehat{\fg}_k}(\omega_X, M(\lambda))
   \cong
-  \mathrm{Coext}^n_{\widehat{\fg}_{-k-2h^\vee}}(\Phi_k(M(\lambda)),
-  \Phi_k(\omega_X))$.
+  \mathrm{Coext}^n_{\widehat{\fg}_{-k-2h^\vee}}\!\bigl(\Phi_k(M(\lambda)),
+  \Phi_k(\omega_X)\bigr).
+  \]
 \item The composition $\Psi_k \circ \Phi_k$ is quasi-isomorphic
   to the identity on $\cO_k^{\mathrm{int}}(\widehat{\fg})$.
 \end{enumerate}
@@ -918,26 +913,52 @@ full Kazhdan--Lusztig equivalence
 \end{equation}
 identifying
 $\cO_k^{\mathrm{int}}(\widehat{\fg}) \simeq
-\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$
-as braided monoidal categories.  The remaining ingredient beyond
+\mathcal{C}(U_q(\fg))$
+as braided monoidal categories, where $\mathcal{C}(U_q(\fg))$ is the
+semisimplified tilting quotient (not the full representation category
+$\mathrm{Rep}(U_q(\fg))$; see Remark~\ref{rem:kl-target-category}).
+The remaining ingredient beyond
 Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} is the periodic
 CDG structure of the bar complex
 \textup{(}Conjecture~\textup{\ref{conj:periodic-cdg}):} given
 $2p$-periodicity, Positselski's Koszul duality for periodic
 CDG-algebras~\cite{Positselski} identifies the coderived category
 of the bar complex with the stable module category of the small
-quantum group $u_q(\fg)$, which is equivalent to
-$\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ by Lusztig's theorem.
+quantum group $u_q(\fg)$, which maps to
+$\mathcal{C}(U_q(\fg))$ via Lusztig's theorem.
 \end{conjecture}
+
+\begin{remark}[KL target category]\label{rem:kl-target-category}
+\index{Kazhdan--Lusztig equivalence!target category}
+The correct target of the KL equivalence is the
+\emph{semisimplified tilting quotient}
+$\mathcal{C}(U_q(\fg))$, not the full representation category
+$\mathrm{Rep}(U_q(\fg))$.  This quotient has $|P_k^+|$ simple objects
+(one for each dominant weight in the fundamental alcove).
+The full category $\mathrm{Rep}(U_q(\fg))$ is much larger and does
+not carry a braided tensor structure compatible with the
+KM fusion rules.
+See~\cite{BK01} for the construction and Remark~11.7.10 of
+\cite{EGNO} for the precise categorical statement.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II
+(equivalence of homotopy categories).  At H-level: a braided monoidal
+equivalence $\mathcal{O}_k^{\mathrm{int}}(\widehat{\fg}) \simeq
+\mathcal{C}(U_q(\fg))$ realized by the bar-cobar adjunction.  The
+M-level model is the periodic CDG bar-cobar adjunction of
+Conjecture~\ref{conj:periodic-cdg}.  The shadow is the Verlinde
+formula matching fusion multiplicities with quantum group tensor
+product multiplicities.
+\end{remark}
 
 \begin{remark}[Scope]\label{rem:kl-bar-cobar-scope}
 Theorem~\ref{thm:kl-bar-cobar-adjunction} constructs the chain-level
 adjunction and proves it is a quasi-isomorphism on integrable
 modules.  The passage from the derived category of
-$\widehat{\fg}_k$-modules to the representation category of the
-quantum group $U_q(\fg)$ requires identifying the \emph{target} of
-the bar functor with quantum group comodules, which in turn requires
-the periodic CDG structure of Conjecture~\ref{conj:periodic-cdg}.
+$\widehat{\fg}_k$-modules to $\mathcal{C}(U_q(\fg))$ requires identifying
+the \emph{target} of the bar functor with quantum group comodules,
+which in turn requires the periodic CDG structure of
+Conjecture~\ref{conj:periodic-cdg}.
 Without periodicity, $\Phi_k$ lands in comodules over the Koszul
 dual $\widehat{\fg}_{-k-2h^\vee}$, not over $U_q(\fg)$.
 \end{remark}

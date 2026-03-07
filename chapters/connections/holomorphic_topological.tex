@@ -2,13 +2,17 @@
 \label{ch:ht-boundary}
 \index{holomorphic-topological theory|textbf}
 
+\begin{remark}[Programme status]\label{rem:programme-ht}
+This chapter develops connections between the algebraic framework of Parts~I--II
+and holomorphic-topological field theories, including the AGT correspondence
+and 4d/2d boundary algebras.  The results range from fully proved theorems
+(\ClaimStatusProvedHere) to conjectural identifications (\ClaimStatusConjectured)
+and physical heuristics; each claim carries its status tag.
+For the conjecture stratification (Foundational / Consequence / Physics horizon),
+see \S\ref{sec:conjecture-stratification}.
+\end{remark}
+
 \noindent\emph{The Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}) arises as the boundary algebra of abelian Chern--Simons theory.  This chapter extends the 4d/2d correspondence to non-abelian gauge theories, relating bar-cobar duality to the open-closed correspondence.}
-
-Many of the chiral algebras in this monograph --- affine Kac--Moody, W-algebras, certain vertex superalgebras --- arise as boundary operator algebras of four-dimensional gauge theories.  The mechanism is the \emph{holomorphic-topological twist}: starting from 4d $\mathcal{N}=2$ Yang--Mills on $\mathbb{C} \times \Sigma$ (where $\Sigma$ is holomorphic and $\mathbb{C}$ is topological), one obtains a factorization algebra on $\Sigma$ whose global sections form a chiral algebra.  In this setting, bar-cobar duality realizes the open-closed correspondence: the bar complex computes bulk observables (closed strings), while the cobar complex recovers the boundary algebra (open strings).  The genus expansion $F_g(\mathcal{A})$ computes the genus-$g$ partition function of the twisted theory.
-
-%================================================================
-% SECTION: MATHEMATICAL RELATIONSHIPS
-%================================================================
 
 \section{Mathematical relationships between frameworks}
 \label{sec:precise-relationships-frameworks}
@@ -36,22 +40,9 @@ on $\mathbb{C}^2$. After holomorphic-topological twist:
 \begin{remark}[Factorization algebras versus chiral algebras]\label{rem:fact-vs-chiral}
 The distinction is as follows (see \BDref{§2.3, §3.2}):
 
-\emph{Factorization algebra} $\mathcal{F}$.
-\begin{itemize}
-\item Assigns $\mathcal{F}(U)$ to every open set $U \subset X$
-\item Multiplication maps: $\mathcal{F}(U) \otimes \mathcal{F}(V) \to \mathcal{F}(U \sqcup V)$ 
-      for disjoint $U, V$
-\item Associativity: Factorization property over multiple disjoint opens
-\item Example: Observables in any QFT
-\end{itemize}
+\emph{Factorization algebra} $\mathcal{F}$: assigns $\mathcal{F}(U)$ to every open set $U \subset X$, with multiplication maps $\mathcal{F}(U) \otimes \mathcal{F}(V) \to \mathcal{F}(U \sqcup V)$ for disjoint $U, V$ satisfying associativity (the factorization property over multiple disjoint opens).  Example: observables in any QFT.
 
-\emph{Chiral algebra} $\mathcal{A}$.
-\begin{itemize}
-\item Assigns $\mathcal{A}_x = \mathcal{D}_X$-module at each point $x \in X$
-\item Chiral product: $j_*j^*(\mathcal{A} \boxtimes \mathcal{A}) \to \Delta_!\mathcal{A}$
-      with prescribed pole structure along the diagonal
-\item Example: Vertex algebras, affine Kac--Moody algebras (Virasoro action is additional structure, not part of the definition)
-\end{itemize}
+\emph{Chiral algebra} $\mathcal{A}$: assigns a $\mathcal{D}_X$-module $\mathcal{A}_x$ at each point $x \in X$, with chiral product $j_*j^*(\mathcal{A} \boxtimes \mathcal{A}) \to \Delta_!\mathcal{A}$ having prescribed pole structure along the diagonal.  Example: vertex algebras, affine Kac--Moody algebras (Virasoro action is additional structure, not part of the definition).
 
 \emph{Relationship} \cite{BD04,CG17}.
 \[\text{Chiral algebras} \xleftrightarrow{\sim} \text{Factorization algebras on curves}\]
@@ -67,13 +58,7 @@ factorization algebra) if and only if:
 \item Central charge and anomaly terms satisfy consistency conditions
 \end{enumerate}
 
-\emph{Examples where this happens.}
-\begin{itemize}
-\item $\mathcal{N}=4$ SYM $\to$ affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ 
-      (level $k$ determined by gauge coupling)
-\item $\mathcal{N}=2$ SYM with matter $\to$ W-algebras $\mathcal{W}_k(\mathfrak{g})$ 
-      in some cases
-\end{itemize}
+Examples where this happens: $\mathcal{N}=4$ SYM produces the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ (level $k$ determined by gauge coupling), and $\mathcal{N}=2$ SYM with matter produces W-algebras $\mathcal{W}_k(\mathfrak{g})$ in some cases.
 \end{conjecture}
 
 \begin{remark}[Evidence: Proof sketch]
@@ -108,13 +93,12 @@ by Costello--Li \cite{CL16}, but the general ``if and only if'' characterization
 remains a physics conjecture.  See also Costello--Dimofte--Gaiotto \cite{CDG20}
 for boundary chiral algebras via holomorphic twists, and Zeng \cite{Zeng23}
 for the twisted holography perspective.  Computing the bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A}_{\mathrm{bdy}})$ for specific CDG20 boundary chiral algebras remains an open problem.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I (existence of homotopy object).
+The conjecture asks for conditions under which the CL factorization algebra admits a chiral envelope, i.e., lifts to a $\mathcal{D}$-module on $\mathrm{Ran}(X)$ in the sense of Beilinson--Drinfeld.
 \end{remark}
 
 \subsection{Costello--Li conditions: from factorization to chiral}
-
-The preceding conjecture identifies three conditions for the CL construction
-to produce a genuine chiral algebra.  The following theorem and conjecture
-make this precise in terms of the gauge-theoretic data $(G, R)$.
 
 \begin{theorem}[CL chirality for $\mathcal{N}=4$; \ClaimStatusProvedElsewhere]
 \label{thm:cl-n4-chirality}
@@ -166,6 +150,9 @@ established mathematically.  The identification of the Koszul dual with the
 Langlands dual theory is a physics prediction from S-duality.  The AGT
 interpretation of the bar complex is compatible with Theorem~\ref{thm:agt}
 but requires independent verification at higher genus.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture posits a quasi-isomorphism between the $L_\infty$ algebra controlling deformations of the CL factorization algebra $\mathcal{F}_{G,R}$ and the $L_\infty$ algebra controlling deformations of the W-algebra $\mathcal{W}_k(\mathfrak{g})$, with the Koszul dual identified via S-duality.
 \end{remark}
 
 \subsection{Paquette--Williams boundary vertex algebras}
@@ -205,15 +192,7 @@ The vertex algebra $V_{\mathcal{B}}$ contains the algebraic information (OPE, mo
 etc.), while the chiral algebra $\mathcal{A}_{\mathcal{B}}$ contains the geometric 
 information (configuration spaces, $\mathcal{D}$-modules, sheaf cohomology).
 
-Bar-cobar duality (Part~I) applies to $\mathcal{A}_{\mathcal{B}}$, giving:
-\begin{itemize}
-\item Bar complex $\bar{B}(\mathcal{A}_{\mathcal{B}})$ = geometric resolution
-\item Cobar complex $\Omega(\mathcal{A}_{\mathcal{B}}^!)$ = coalgebraic dual
-\item Koszul duality = equivalence between the two
-\end{itemize}
-
-This allows one to study PW boundary VOAs via
-configuration space geometry.
+Bar-cobar duality (Part~I) applies to $\mathcal{A}_{\mathcal{B}}$: the bar complex $\bar{B}(\mathcal{A}_{\mathcal{B}})$ provides a geometric resolution, the cobar complex $\Omega(\mathcal{A}_{\mathcal{B}}^!)$ its coalgebraic dual, and Koszul duality an equivalence between the two.  This allows one to study PW boundary VOAs via configuration space geometry.
 \end{remark}
 
 \section{From 4d SYM to holomorphic Chern--Simons}
@@ -324,12 +303,7 @@ The cubic pole of $\Omega$ is \emph{essential} for consistency. The HCS action
 has a cubic term:
 \[\int \Omega \cdot A^3\]
 
-For this to be well-defined when fields approach the boundary:
-\begin{itemize}
-\item If $\Omega \sim (\text{distance to boundary})^{-3}$
-\item Then require $A \sim (\text{distance})^{+1}$
-\item So $A^3 \cdot \Omega \sim (\text{distance})^{0}$ is integrable.
-\end{itemize}
+For this to be well-defined when fields approach the boundary: if $\Omega \sim (\text{distance to boundary})^{-3}$, then requiring $A \sim (\text{distance})^{+1}$ gives $A^3 \cdot \Omega \sim (\text{distance})^{0}$, which is integrable.
 
 This pole-zero matching is the geometric origin of the holomorphic-topological 
 boundary condition.
@@ -414,6 +388,9 @@ observables on $X$ with $n$ boundary marked points requires the perturbative
 quantization of HCS theory, which is a physics construction beyond the scope
 of this monograph.  The mathematical content --- that boundary chiral algebras
 carry operad actions --- is consistent with the Beilinson--Drinfeld framework.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I (existence of homotopy object).
+The conjecture asserts the existence of a chiral operad $\mathcal{P}_{\mathrm{HCS}}$ whose algebras are boundary chiral algebras of holomorphic Chern--Simons theory.
 \end{remark}
 
 \begin{example}[Kac--Moody from gauge HCS]
@@ -496,34 +473,14 @@ a holomorphic-topological string theory.  Then:
 \end{conjecture}
 
 \begin{remark}[Evidence: Physical picture]
-\emph{Open string sector} (proved above).
-\begin{itemize}
-\item Worldsheet is a disk $D^2$ with boundary on the D-brane (HT boundary condition)
-\item Vertex operators at boundary are elements of $\mathcal{A}_{\text{bdy}}$
-\item Off-shell amplitudes are elements of $\bar{B}^{\text{ch}}(\mathcal{A}_{\text{bdy}})$
-\item Compactified moduli space $\overline{M}_{g,n}$ with logarithmic forms
-\end{itemize}
+\emph{Open string sector} (proved above).  The worldsheet is a disk $D^2$ with boundary on the D-brane (HT boundary condition), vertex operators at the boundary are elements of $\mathcal{A}_{\text{bdy}}$, off-shell amplitudes are elements of $\bar{B}^{\text{ch}}(\mathcal{A}_{\text{bdy}})$, and the compactified moduli space $\overline{M}_{g,n}$ carries logarithmic forms.
 
-\emph{Closed string sector} (conjectural).
-\begin{itemize}
-\item Worldsheet is a sphere $S^2$ (no boundary)
-\item Vertex operators anywhere in bulk
-\item On-shell amplitudes require momentum conservation (delta functions)
-\item Distribution-valued correlation functions on open configuration spaces
-\end{itemize}
+\emph{Closed string sector} (conjectural).  The worldsheet is a sphere $S^2$ (no boundary), vertex operators lie anywhere in the bulk, on-shell amplitudes require momentum conservation (delta functions), and correlation functions are distribution-valued on open configuration spaces.
 
 \emph{Open-Closed Duality.}
-The open-closed map:
-\[\text{Bar}(\mathcal{A}_{\text{bdy}}) \to \text{Cobar}(\mathcal{C}_{\text{bulk}})\]
-
-corresponds to:
-\begin{itemize}
-\item Opening up the disk to a sphere with punctures
-\item Boundary operators $\to$ bulk insertions via Stokes' theorem
-\item Residues at boundary $\leftrightarrow$ distributions in bulk
-\end{itemize}
-
-This is bar-cobar duality.
+The open-closed map
+$\text{Bar}(\mathcal{A}_{\text{bdy}}) \to \text{Cobar}(\mathcal{C}_{\text{bulk}})$
+is bar-cobar duality: opening up the disk to a sphere with punctures sends boundary operators to bulk insertions via Stokes' theorem, with residues at the boundary corresponding to distributions in the bulk.
 \end{remark}
 
 \begin{remark}[Scope]
@@ -539,11 +496,14 @@ the closed-string identification requires constructing the closed
 string field theory action (Zwiebach \cite{Zwi93},
 Costello \cite{costello-renormalization}) and verifying its BRST
 complex coincides with the cobar complex.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
+The conjecture asserts an equivalence between the cobar complex $\Omega^{\mathrm{ch}}(\mathcal{C}_{\mathrm{bulk}})$ and the closed string field theory state space, realizing the open-closed correspondence as a bar-cobar adjunction at the level of $\infty$-categories.
 \end{remark}
 
 \subsection{Factorization and dimensional reduction}
 
-\begin{conjecture}[Factorization along dimension tower; \ClaimStatusConjectured]
+\begin{conjecture}[Factorization along dimension tower; \ClaimStatusConjectured]\label{conj:factorization-dim-tower}
 The dimensional reduction sequence:
 \[\text{4d SYM} \xrightarrow{\text{HT twist + reduce}}
 \text{3d HCS} \xrightarrow{\text{boundary}}
@@ -566,6 +526,9 @@ successive dimensional reductions, which are physics constructions.
 The identification of line defects with quantum integrable systems at
 the final step requires additional gauge-theoretic input
 (Costello--Witten--Yamazaki \cite{CWY18}).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies each step of the dimensional reduction tower $4\mathrm{d} \to 3\mathrm{d} \to 2\mathrm{d} \to 1\mathrm{d}$ with a bar or cobar functor, establishing a quasi-isomorphism between the $L_\infty$ algebras controlling deformations at adjacent dimensions.
 \end{remark}
 
 \begin{example}[Explicit tower for $\mathcal{N}=4$ SYM]
@@ -632,6 +595,9 @@ below), which are gauge-theoretic inputs.  Partial results for specific~$G$
 and representations are due to Schiffmann--Vasserot \cite{SV13} and
 Maulik--Okounkov \cite{MO19}; see also Arakawa \cite{Ara07} for the vertex
 algebra quantization of Hitchin moduli spaces.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies the chiral algebra of local operators on the Hitchin moduli space $\mathcal{M}_{\mathrm{Hit}}(\Sigma_g, G)$ with the W-algebra $\mathcal{W}(G)$, relating the deformation problem of Higgs bundles to the deformation problem of the W-algebra via a quasi-isomorphism of controlling $L_\infty$ algebras.
 \end{remark}
 
 \begin{proof}[Via AGT correspondence]
@@ -807,15 +773,7 @@ the semiclassical limit $\epsilon_2 \to 0$ sends $b^2 \to \infty$ and hence $c \
 \section{Summary and outlook}
 
 \begin{remark}[Summary]
-In the holomorphic-topological framework, chiral algebras appear as:
-\begin{enumerate}
-\item \emph{Physical origin.} Boundary operator algebras for HT field theories
-\item \emph{4d connection.} Arising from twisted 4d gauge theories via
-dimensional reduction
-\item \emph{Geometric realization.} Bar-cobar duality as open-closed correspondence
-\item \emph{W-algebras.} Emerging from Hitchin moduli spaces and AGT correspondence
-\item \emph{Quantum structure.} Loop corrections governed by $A_\infty$ operations
-\end{enumerate}
+Chiral algebras are boundary operator algebras for HT field theories, arise from twisted 4d gauge theories, realize bar-cobar duality as the open-closed correspondence, emerge from Hitchin moduli spaces via AGT, and carry loop corrections governed by $A_\infty$ operations.
 \end{remark}
 
 
@@ -838,12 +796,7 @@ Following Zamolodchikov \cite{Zamolodchikov} and Fateev--Lukyanov \cite{FL88}, a
 \end{enumerate}
 \end{definition}
 
-\emph{Standard examples.}
-\begin{itemize}
-\item $\mathcal{W}_3$: Generators $L, W$ with $\text{wt}(L) = 2$, $\text{wt}(W) = 3$
-\item $\mathcal{W}_N$: Generators of weights $2, 3, \ldots, N$
-\item $\mathcal{W}_{1+\infty}$: Infinitely many generators
-\end{itemize}
+Standard examples: $\mathcal{W}_3$ has generators $L, W$ with $\text{wt}(L) = 2$, $\text{wt}(W) = 3$; $\mathcal{W}_N$ has generators of weights $2, 3, \ldots, N$; and $\mathcal{W}_{1+\infty}$ has infinitely many generators.
 
 \subsection{W-algebras from gauge theory perspective}
 
@@ -1091,7 +1044,7 @@ At the quantum level, the relationship becomes more subtle:
       quantum correction to the differential itself, not a failure of nilpotency
       
 \item The quantum bar differential: the total differential $d_g = d_0 + \sum_{k=1}^g t_k d_k$
-      satisfies $d_g^2 = 0$ at each genus truncation
+      satisfies $\Dg{g}^{\,2} = 0$ at each genus truncation
       (Theorem~\ref{thm:quantum-diff-squares-zero}); individual genus components
       satisfy $\sum_{g'+g''=g} d_{g'} d_{g''} = 0$
       
@@ -1178,20 +1131,13 @@ Maulik--Okounkov \cite{MO19}) but not in full generality.
 The CL twist producing the factorization algebra $\mathcal{F}_G$
 and its identification with $\mathcal{W}_k(\fg)$ require
 gauge-theoretic input beyond the methods of this monograph.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture posits a quasi-isomorphism between the BV complex of 4D $\mathcal{N}=2$ gauge theory and the bar complex of the 2D W-algebra $\mathcal{W}_k(\fg)$, identifying the $L_\infty$ algebra controlling 4D gauge deformations with that controlling 2D chiral deformations.
 \end{remark}
 
 \begin{remark}[Bar-cobar interpretation]\label{rem:agt-bar-cobar-interpretation}
-The AGT correspondence admits a reformulation in bar-cobar terms:
-\begin{itemize}
-\item \emph{4D side.} BV complex of gauge theory = bar complex of factorization
-      algebra
-\item \emph{2D side.} Configuration space integrals = bar complex of chiral algebra
-      = semi-infinite complex of $\mathcal{W}_k(\fg)$
-      (Theorem~\ref{thm:bar-semi-infinite-w})
-\item \emph{Duality.} Both sides compute factorization homology of the same object
-\end{itemize}
-The 2D identification is now a theorem; the 4D identification is
-gauge-theoretic input.
+The AGT correspondence admits a reformulation in bar-cobar terms: on the 4D side, the BV complex of gauge theory is the bar complex of the factorization algebra; on the 2D side, configuration space integrals give the bar complex of the chiral algebra, which equals the semi-infinite complex of $\mathcal{W}_k(\fg)$ (Theorem~\ref{thm:bar-semi-infinite-w}); and both sides compute factorization homology of the same object.  The 2D identification is a theorem; the 4D identification is gauge-theoretic input.
 \end{remark}
 
 %================================================================
@@ -1202,33 +1148,7 @@ gauge-theoretic input.
 \label{sec:framework-guidelines}
 
 \begin{remark}[Framework comparison]\label{rem:framework-decision-tree}
-Depending on the research question, different frameworks are more natural:
-
-\emph{Pure holomorphic (BD-style) is suited for.}
-\begin{itemize}
-\item Studying 2D CFT directly (Virasoro representations, minimal models)
-\item Computing conformal blocks and correlation functions
-\item Analyzing modular properties and elliptic functions
-\item Working with explicit vertex algebra OPE
-\item Interested in configuration space topology
-\end{itemize}
-
-\emph{Use topological-holomorphic (CL-style) when.}
-\begin{itemize}
-\item Connecting to 4D gauge theory (AGT, S-duality)
-\item Studying Higgs branch geometry
-\item Using mirror symmetry
-\item Interested in BV quantization methods
-\item Working with interfaces and defects
-\end{itemize}
-
-\emph{Use both (our recommendation) when.}
-\begin{itemize}
-\item Studying W-algebras (they appear in both contexts)
-\item Investigating factorization homology
-\item Computing with Koszul duality
-\item Bridging physics and mathematics
-\end{itemize}
+The BD (holomorphic) framework suits 2D CFT, conformal blocks, modular properties, and configuration space topology.  The CL (topological-holomorphic) framework suits 4D gauge theory connections, Higgs branch geometry, mirror symmetry, and BV quantization.  W-algebras, factorization homology, and Koszul duality computations benefit from both simultaneously.
 \end{remark}
 
 \begin{remark}[Summary]\label{rem:complementary-strengths-summary}
@@ -1291,6 +1211,17 @@ of iterated integrals over $\overline{C}_k(M)$.  The $n = 3$ case
 with $M = S^3$ connects to the Chern--Simons perturbative expansion and
 Vassiliev invariants (see Remark~\textup{\ref{rem:vassiliev}} below).
 \end{conjecture}
+
+\begin{remark}[Scope]
+The abstract $E_n$ bar-cobar adjunction exists by Ayala--Francis \cite{AF15}
+at the $\infty$-categorical level.  What remains is the explicit chain-level
+realization via configuration space integrals with the Axelrod--Singer
+propagator, which requires the perturbative quantization technology of
+graph complexes (Kontsevich \cite{Kon94}).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I (existence of homotopy object).
+The conjecture asserts the existence of an explicit chain-level $E_n$ bar-cobar adjunction realized by configuration space integrals on the Axelrod--Singer compactification $\overline{C}_k(M)$.
+\end{remark}
 
 \begin{remark}[Vassiliev invariants from Feynman transform]
 \label{rem:vassiliev}

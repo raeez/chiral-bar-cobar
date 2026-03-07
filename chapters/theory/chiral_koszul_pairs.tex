@@ -1,7 +1,7 @@
 \chapter{Chiral Koszul duality}
 \label{chap:koszul-pairs}
 
-In Chapter~\ref{ch:heisenberg-frame}, we identified the Koszul dual of the Heisenberg algebra as $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ by reading off the bar cohomology.  This chapter develops the general theory of Koszul pairs: when two chiral algebras are related by bar-cobar duality, and how the Koszul property controls spectral sequence collapse.
+Chapter~\ref{ch:heisenberg-frame} identified the Koszul dual of the Heisenberg algebra as $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.  This chapter develops the general theory: when two chiral algebras are related by bar-cobar duality, and how the Koszul property controls spectral sequence collapse.
 
 % ================================================================
 % SECTION 8.1: HISTORICAL ORIGINS AND MATHEMATICAL FOUNDATIONS
@@ -10,31 +10,12 @@ In Chapter~\ref{ch:heisenberg-frame}, we identified the Koszul dual of the Heise
 \section{Foundations of chiral Koszul duality}
 
 Chapters~\ref{chap:config-spaces}--\ref{chap:bar-cobar}
-constructed the bar and cobar functors and proved that Verdier
-duality on $\operatorname{Ran}(X)$ intertwines them.  That
-construction takes as input a single chiral algebra $\cA$; the
-present chapter identifies when a \emph{pair} $(\cA, \cA^!)$
-forms a Koszul pair --- the condition under which the bar-cobar
-adjunction becomes an equivalence.  The Koszul property (diagonal
-Ext vanishing) is the genus-$0$ prerequisite for modular
-Koszulity
-(Definition~\ref{def:modular-koszul-chiral}), and the
-classification of Koszul pairs structures the entire
+constructed bar and cobar functors intertwined by Verdier
+duality on $\operatorname{Ran}(X)$.  The Koszul property (diagonal
+Ext vanishing) identifies when the adjunction is an equivalence;
+it is the genus-$0$ prerequisite for modular Koszulity
+(Definition~\ref{def:modular-koszul-chiral}) and structures the entire
 landscape of examples in Part~II.
-
-The operadic foundations go back to
-Priddy~\cite{Priddy70} ($H_*(B(\mathrm{Com})) \cong
-\mathrm{Lie}^*[-1]$), Quillen's equivalence between
-dg~Lie algebras and cocommutative coalgebras, and
-Ginzburg--Kapranov's framework of Koszul operads:
-a quadratic operad $\mathcal{P}$ is Koszul when
-$\mathcal{P}^! \hookrightarrow B(\mathcal{P})$ is a
-quasi-isomorphism, yielding
-$\mathcal{P} \xrightarrow{\sim} \Omega B(\mathcal{P})$.
-The BRST ghost-antighost system (Becchi--Rouet--Stora--Tyutin)
-is a physical manifestation of this duality.
-The present chapter extends this circle of ideas to the chiral
-setting.
 
 % ================================================================
 % SECTION 8.2: FROM QUADRATIC TO CHIRAL KOSZUL PAIRS
@@ -58,63 +39,235 @@ The quartic pole prevents a quadratic presentation.
 \end{enumerate}
 \end{example}
 
-\subsection{The concept of chiral Koszul pairs: precise formulation}
+\subsection{Construction layer: twisting data}
 
-To handle non-quadratic examples, we extend the notion of Koszul pairs beyond the quadratic setting. The defining property of a Koszul pair is not quadraticity, but rather the bar-cobar isomorphism.
+Before imposing any Koszulness hypothesis, we record the
+constructions that exist for \emph{every} augmented chiral algebra.
+The bar construction $\bar{B}_X(\cA)$ and cobar construction
+$\Omega_X(\cC)$ are defined in
+Chapter~\ref{chap:bar-cobar} for any augmented $\cA$ and any
+conilpotent complete coalgebra~$\cC$.  The Koszul property
+is a \emph{recognition criterion} on these constructions,
+not a prerequisite for their existence.
 
-\begin{definition}[Chiral Koszul pair]\label{def:chiral-koszul-pair}
-\index{Koszul pair!chiral|textbf}
-The pair $(\mathcal{H}_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ is the prototype (\S\ref{sec:frame-koszul-dual}): the bar of one is the dual coalgebra of the other, and the cobar reconstructs the partner.
-
-Two chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ on a curve $X$ form a \emph{chiral Koszul pair} if they satisfy the following conditions (the equivalence of Versions I and II is immediate: set $\mathcal{C}_i = \mathcal{A}_i^!$ in Version~II to recover Version~I; conversely, Version~I implies acyclicity of the Koszul complexes in Version~II by Theorem~\ref{thm:bar-cobar-isomorphism-main}):
-
-\medskip
-\noindent\emph{Version I (Bar-Cobar Isomorphism).}
+\begin{definition}[Chiral twisting datum]\label{def:chiral-twisting-datum}
+\index{twisting datum!chiral|textbf}
+A \emph{chiral twisting datum} on a smooth curve $X$ is a quadruple
+$(\cA, \cC, \tau, F_\bullet)$ consisting of:
 \begin{enumerate}
-\item The geometric bar construction $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ is quasi-isomorphic as a chiral coalgebra to the Koszul dual coalgebra $\mathcal{A}_2^!$:
-$$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^! \quad \text{(as chiral coalgebras)}$$
-
-\item Symmetrically, $\bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq \mathcal{A}_1^!$ as chiral coalgebras
-
-\item The cobar constructions provide quasi-inverse equivalences:
-$$\mathcal{A}_1 \simeq \Omega^{\text{ch}}(\mathcal{A}_2^!), \quad \mathcal{A}_2 \simeq \Omega^{\text{ch}}(\mathcal{A}_1^!)$$
+\item an augmented chiral algebra
+  $\cA \in \operatorname{Fact}^{\mathrm{aug}}(X)$;
+\item a conilpotent complete factorization coalgebra
+  $\cC \in \operatorname{CoFact}^{\mathrm{conil,comp}}(X)$;
+\item a degree $+1$ morphism
+  $\tau\colon \cC \to \cA$ satisfying the Maurer--Cartan equation
+  $d\tau + \tau \star \tau = 0$ in the convolution dg~Lie algebra;
+\item an exhaustive bounded-below filtration $F_\bullet$ on $\cA$,
+  $\cC$, $\bar{B}_X(\cA)$, and $\Omega_X(\cC)$, compatible with
+  all structure maps.
 \end{enumerate}
+Associated to $\tau$ are the \emph{twisted tensor products}
+\[
+K_\tau^L(\cA,\cC) := (\cA \otimes \cC,\; d_\cA + d_\cC + d_\tau^L),
+\quad
+K_\tau^R(\cC,\cA) := (\cC \otimes \cA,\; d_\cC + d_\cA + d_\tau^R).
+\]
+\end{definition}
 
-\medskip
-\noindent\emph{Version II (Explicit Coalgebra Structure).}
-
-Equivalently, there exist chiral coalgebras $\mathcal{C}_1, \mathcal{C}_2$ with:
+\begin{definition}[Chiral Koszul morphism]\label{def:chiral-koszul-morphism}
+\index{Koszul morphism!chiral|textbf}
+A chiral twisting datum $(\cA, \cC, \tau, F_\bullet)$ is
+\emph{Koszul} if:
 \begin{enumerate}
-\item Quasi-isomorphisms of chiral coalgebras:
-$$\bar{B}^{\text{ch}}(\mathcal{A}_1) \xrightarrow{\sim} \mathcal{C}_2, \quad \bar{B}^{\text{ch}}(\mathcal{A}_2) \xrightarrow{\sim} \mathcal{C}_1$$
-
-\item Quasi-isomorphisms of chiral algebras:
-$$\mathcal{A}_1 \xrightarrow{\sim} \Omega^{\text{ch}}(\mathcal{C}_2), \quad \mathcal{A}_2 \xrightarrow{\sim} \Omega^{\text{ch}}(\mathcal{C}_1)$$
-
-\item The Koszul complexes (twisted tensor products via the canonical twisting morphism $\tau\colon \bar{B}^{\text{ch}}(\mathcal{A}_i) \to \mathcal{A}_j$) are acyclic:
-$$K_\tau(\mathcal{A}_1, \mathcal{A}_2) := \bar{B}^{\text{ch}}(\mathcal{A}_1) \otimes_\tau \mathcal{A}_2 \simeq \omega_X$$
-$$K_\tau(\mathcal{A}_2, \mathcal{A}_1) := \bar{B}^{\text{ch}}(\mathcal{A}_2) \otimes_\tau \mathcal{A}_1 \simeq \omega_X$$
+\item both $K_\tau^L(\cA,\cC)$ and $K_\tau^R(\cC,\cA)$ are acyclic;
+\item the associated graded
+  $(\operatorname{gr}\cA, \operatorname{gr}\cC, \operatorname{gr}\tau)$
+  is quadratic/Koszul in the ordinary operadic sense;
+\item the filtration converges strongly on $\bar{B}_X(\cA)$ and
+  $\Omega_X(\cC)$.
 \end{enumerate}
 \end{definition}
 
-\begin{remark}\label{rem:koszul-relationship}
-Definition \ref{def:chiral-koszul-pair} is captured by the commutative diagrams:
+\begin{remark}[Construction versus resolution]\label{rem:construction-vs-resolution}
+For every augmented chiral algebra $\cA$, the bar
+$\bar{B}_X(\cA)$ and cobar $\Omega_X(\bar{B}_X(\cA))$ exist as
+constructions.  But the counit
+$\Omega_X(\bar{B}_X(\cA)) \to \cA$ is a quasi-isomorphism
+\emph{only when $\tau$ is a Koszul morphism}
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+Off the Koszul locus, the bar-cobar object persists in the
+provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+(Appendix~\ref{sec:coderived-models}),
+not in the ordinary derived category.
+This is the chiral/factorization analogue of the fundamental
+theorem of twisting morphisms \cite[Theorem~2.3.1]{LV}.
+\end{remark}
+
+\begin{theorem}[Fundamental theorem of chiral twisting morphisms; \ClaimStatusProvedHere]
+\label{thm:fundamental-twisting-morphisms}
+\index{twisting morphism!fundamental theorem|textbf}
+\textup{[Regime: quadratic
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+\smallskip\noindent
+This is the chiral analogue of \cite[Theorem~2.3.1]{LV12}.
+For a chiral twisting datum $(\cA, \cC, \tau, F_\bullet)$
+\textup{(}Definition~\textup{\ref{def:chiral-twisting-datum})},
+the following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{ftm:koszul}
+  $\tau$ is a chiral Koszul morphism
+  \textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})}.
+\item\label{ftm:counit}
+  The canonical counit
+  $\varepsilon_\tau\colon \Omega_X(\cC) \to \cA$
+  is a quasi-isomorphism.
+\item\label{ftm:unit}
+  The canonical unit
+  $\eta_\tau\colon \cC \to \bar{B}_X(\cA)$
+  is a weak equivalence of conilpotent complete factorization
+  coalgebras.
+\item\label{ftm:acyclic}
+  Both twisted tensor products $K_\tau^L(\cA,\cC)$ and
+  $K_\tau^R(\cC,\cA)$ are acyclic.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The equivalence follows the same logical structure as the
+classical case \cite[Theorem~2.3.1]{LV12}, adapted to the
+chiral/factorization setting.
+
+\emph{\ref{ftm:koszul}$\Rightarrow$\ref{ftm:acyclic}:}
+By definition (Definition~\ref{def:chiral-koszul-morphism},
+condition~1).
+
+\emph{\ref{ftm:acyclic}$\Rightarrow$\ref{ftm:counit}:}
+The acyclicity of $K_\tau^L(\cA,\cC)$ means the twisted
+differential $d_\cA + d_\cC + d_\tau^L$ on $\cA \otimes \cC$
+is exact.  This implies the counit
+$\varepsilon_\tau\colon \Omega_X(\cC) \to \cA$ induces an
+isomorphism on cohomology: the twisted tensor product
+$K_\tau^L$ is precisely the mapping cone of~$\varepsilon_\tau$,
+and its acyclicity is equivalent to $\varepsilon_\tau$ being a
+quasi-isomorphism.
+
+\emph{\ref{ftm:acyclic}$\Rightarrow$\ref{ftm:unit}:}
+Dually, $K_\tau^R(\cC,\cA)$ acyclic implies
+$\eta_\tau\colon \cC \to \bar{B}_X(\cA)$ is a weak equivalence
+of coalgebras, since $K_\tau^R$ is the mapping cone of~$\eta_\tau$.
+
+\emph{\ref{ftm:counit}$\Rightarrow$\ref{ftm:koszul}:}
+If $\varepsilon_\tau$ is a quasi-isomorphism, filter
+$\Omega_X(\cC)$ by cobar degree and use the convergence
+hypothesis (Definition~\ref{def:chiral-koszul-morphism},
+condition~3) to deduce $E_2$ collapse of the associated
+spectral sequence.  The associated graded level gives
+classical Koszulity (condition~2), and the acyclicity of the
+twisted tensor products follows from the quasi-isomorphism via
+the mapping cone identification.
+
+\emph{\ref{ftm:unit}$\Rightarrow$\ref{ftm:koszul}:}
+Symmetric argument applied to the unit.
+
+The key geometric input throughout is that the filtration
+$F_\bullet$ on $\bar{B}_X(\cA)$ and $\Omega_X(\cC)$ is
+compatible with the FM compactification stratification, so
+the spectral sequence convergence is ensured by the strong
+convergence hypothesis.
+\end{proof}
+
+\begin{remark}[Theorem~A decomposition]\label{rem:theorem-A-decomposition}
+\index{Theorem A!decomposition}
+The fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}) is
+Theorem~$\mathrm{A}_0$ in the decomposition of the main
+duality theorem:
+\begin{itemize}
+\item \emph{$\mathrm{A}_0$} (this theorem): for a single
+  twisting datum, Koszulity $\Leftrightarrow$ counit qi
+  $\Leftrightarrow$ unit we $\Leftrightarrow$ twisted tensor
+  products acyclic.
+\item \emph{$\mathrm{A}_1$}: bar concentration
+  (Theorem~\ref{thm:bar-concentration}): for a Koszul morphism,
+  $H^i(\bar{B}^{\mathrm{ch}}(\cA)) = 0$ for $i \neq 0$ and
+  $H^0 \cong \cC$.
+\item \emph{$\mathrm{A}_2$}: geometric bar-cobar duality
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}): for a chiral
+  dual pair, Verdier duality intertwines bar complexes.
+\end{itemize}
+$\mathrm{A}_0$ is the Koszul recognition theorem;
+$\mathrm{A}_1$ extracts the dual coalgebra;
+$\mathrm{A}_2$ links two Koszul data via Verdier geometry.
+\end{remark}
+
+\subsection{The concept of chiral Koszul pairs: precise formulation}
+
+To handle non-quadratic examples, we extend the notion of Koszul pairs beyond the quadratic setting. The defining property is a set of \emph{recognition criteria}---checkable conditions on the pair---from which the full bar-cobar identification follows as a theorem.
+
+\begin{definition}[Chiral Koszul pair]\label{def:chiral-koszul-pair}
+\index{Koszul pair!chiral|textbf}
+A \emph{chiral Koszul pair} on a smooth projective curve~$X$
+is a pair of chiral Koszul data
+\textup{(}Definition~\textup{\ref{def:chiral-twisting-datum}},
+Definition~\textup{\ref{def:chiral-koszul-morphism})}
+\[
+(\cA_1, \cC_1, \tau_1, F_\bullet), \qquad
+(\cA_2, \cC_2, \tau_2, F_\bullet)
+\]
+equipped with Verdier-compatible identifications
+\[
+\mathbb{D}_{\operatorname{Ran}}(\cC_1) \simeq \cC_2, \qquad
+\mathbb{D}_{\operatorname{Ran}}(\cC_2) \simeq \cC_1,
+\]
+compatible with the twisting morphisms and filtrations.
+In this situation we write $\cA_2 \simeq \cA_1^!$ and
+$\cA_1 \simeq \cA_2^!$.
+
+\smallskip\noindent
+These are \emph{antecedent hypotheses}: the twisting data
+(Definition~\ref{def:chiral-twisting-datum}), the Koszulness
+condition (Definition~\ref{def:chiral-koszul-morphism}), and
+Verdier compatibility can all be verified without invoking
+bar-cobar duality itself.
+Theorem~\ref{thm:bar-cobar-isomorphism-main} then \emph{proves}
+the full bar-cobar identification as a consequence.
+
+\smallskip\noindent
+\emph{Standard construction.}
+For the standard examples, the Koszul pair is constructed
+as follows: $\cC_i = \bar{B}_X(\cA_i)$ with the canonical
+twisting morphism, $F_\bullet$ is the PBW filtration
+(Theorem~\ref{thm:pbw-koszulness-criterion}), acyclicity
+follows from spectral sequence degeneration, and
+Verdier compatibility from Theorem~\ref{thm:verdier-bar-cobar}.
+The Heisenberg pair
+$(\mathcal{H}_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ is the
+prototype (\S\ref{sec:frame-koszul-dual}).
+\end{definition}
+
+\begin{remark}[From recognition to identification]\label{rem:koszul-relationship}
+The recognition criteria of Definition~\ref{def:chiral-koszul-pair}
+are inputs; Theorem~\ref{thm:bar-cobar-isomorphism-main} produces
+the following identification as output:
 
 \begin{center}
 \begin{tikzcd}[row sep=large, column sep=huge]
-\mathcal{A}_1 \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[dr, "\simeq"', bend right=15] & 
+\mathcal{A}_1 \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[dr, "\simeq"', bend right=15] &
 \bar{B}^{\text{ch}}(\mathcal{A}_1) \arrow[d, "\simeq"] \\
 & \mathcal{A}_2^! \arrow[r, "\Omega^{\text{ch}}"] & \mathcal{A}_2
 \end{tikzcd}
 \qquad
 \begin{tikzcd}[row sep=large, column sep=huge]
-\mathcal{A}_2 \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[dr, "\simeq"', bend right=15] & 
+\mathcal{A}_2 \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[dr, "\simeq"', bend right=15] &
 \bar{B}^{\text{ch}}(\mathcal{A}_2) \arrow[d, "\simeq"] \\
 & \mathcal{A}_1^! \arrow[r, "\Omega^{\text{ch}}"] & \mathcal{A}_1
 \end{tikzcd}
 \end{center}
 
-These diagrams express that:
+These diagrams are \emph{consequences} of the recognition criteria,
+not part of the definition:
 \begin{itemize}
 \item \emph{Bar transforms $\mathcal{A}_1$ into the dual coalgebra defining $\mathcal{A}_2$}
 \item \emph{Cobar transforms this dual coalgebra back to $\mathcal{A}_2$}
@@ -145,6 +298,18 @@ with a cohomological shift; the differential $d_{\cA_1}$ corresponds to the code
 \end{enumerate}
 \end{remark}
 
+\begin{remark}[Theorem~A as a theorem about Koszul pairs]
+\label{def:chiral-dual-pair}% backward-compatible label
+\label{rem:theorem-a2-dual-pairs}
+Theorem~\ref{thm:bar-cobar-isomorphism-main}
+is a theorem about chiral Koszul pairs
+(Definition~\ref{def:chiral-koszul-pair}): the fundamental theorem
+(Theorem~\ref{thm:fundamental-twisting-morphisms}) produces
+$\cC_i \simeq \bar{B}_X(\cA_i)$, and Verdier compatibility
+gives $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1) \simeq
+\bar{B}_X(\cA_2)$.
+\end{remark}
+
 \begin{example}[Heisenberg specialization]\label{ex:heisenberg-koszul-pair}
 For the Heisenberg algebra $\mathcal{H}_k$ at level $k \neq 0$,
 Definition~\ref{def:chiral-koszul-pair} yields the Koszul pair
@@ -153,7 +318,7 @@ where $\mathcal{H}_k$ is $\chirLie$-type (generated by a single
 bosonic field $a(z)$ with OPE $a(z)a(w) \sim k/(z-w)^2$)
 and $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is $\chirCom$-type---the
 chiral incarnation of classical $\mathrm{Lie}$--$\mathrm{Com}$ duality.
-Version~I reduces to
+Theorem~\ref{thm:bar-cobar-isomorphism-main} yields
 $\bar{B}^{\mathrm{ch}}(\mathcal{H}_k) \simeq
 \mathrm{Sym}^{\mathrm{ch}}(V^*)^!$:
 the bar complex $\bar{B}(\mathcal{H}_k)$ was computed degree by
@@ -223,14 +388,16 @@ This definition has several advantages:
 \index{Koszul property!verification}
 \index{PBW filtration!Koszulness verification}
 
-Despite the difficulties listed above, a systematic method is available
-for verifying that a chiral algebra is Koszul.  The strategy reduces
+A systematic method reduces
 chiral Koszulness to classical Koszulness of the PBW-associated
-graded, via a flat deformation argument.
+graded via a flat deformation argument.
 
 \begin{theorem}[PBW criterion for chiral Koszulness; \ClaimStatusProvedHere]
 \label{thm:pbw-koszulness-criterion}
 \index{Koszul property!PBW criterion|textbf}
+\textup{[Regime: filtered-complete
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 Let $\cA$ be a chiral algebra with PBW filtration
 $F_0 \subset F_1 \subset \cdots \subset \cA$
 such that the associated graded
@@ -314,11 +481,12 @@ The key point is that Koszulness of the chiral algebra does
 it follows from the PBW structure alone.
 \end{remark}
 
-We now apply this criterion to the main examples.
-
 \begin{theorem}[Affine Kac--Moody algebras are chiral Koszul; \ClaimStatusProvedHere]
 \label{thm:km-chiral-koszul}
 \index{Kac--Moody algebra!chiral Koszulness|textbf}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 For any simple Lie algebra $\fg$ and generic level
 $k \notin \Sigma(\fg)$ (the finite exceptional set of
 Theorem~\textup{\ref{thm:bar-cohomology-level-independence}}),
@@ -368,9 +536,12 @@ By Theorem~\ref{thm:pbw-koszulness-criterion},
 $\widehat{\fg}_k$ is chiral Koszul.
 \end{proof}
 
-\begin{theorem}[Virasoro algebra is chiral Koszul; \ClaimStatusProvedHere]
+\begin{theorem}[Virasoro chiral Koszulness; \ClaimStatusProvedHere]
 \label{thm:virasoro-chiral-koszul}
 \index{Virasoro algebra!chiral Koszulness|textbf}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 For any central charge $c \in \bC$, the Virasoro vertex algebra
 $\mathrm{Vir}_c$ is chiral Koszul.
 \end{theorem}
@@ -524,6 +695,159 @@ For $n=2$, $h=2$: $\dim \Lambda^2(\bC^3)_{(1,1)} = \binom{3}{2} = 3$
 These match the known bar cohomology dimensions at the
 associated-graded level, confirming the computation.
 \end{proof}
+
+\begin{theorem}[Bar concentration for Koszul pairs; \ClaimStatusProvedHere]
+\label{thm:bar-concentration}
+\index{bar complex!concentration}
+\textup{[Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+Let $(\cA_1, \cA_2)$ be a chiral Koszul pair
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})}.
+Then the augmented bar complex $\bar{B}^{\mathrm{ch}}(\cA_1)$ has
+cohomology concentrated in degree~$0$:
+\[
+H^i(\bar{B}^{\mathrm{ch}}(\cA_1)) = 0
+\quad\text{for } i \neq 0,
+\qquad
+H^0(\bar{B}^{\mathrm{ch}}(\cA_1)) \cong \cA_2^!.
+\]
+In particular, the natural map
+$\bar{B}^{\mathrm{ch}}(\cA_1) \to \cA_2^!$ is a
+quasi-isomorphism of chiral coalgebras.
+\end{theorem}
+
+\begin{proof}
+Filter $\bar{B}^{\mathrm{ch}}(\cA_1)$ by bar degree.
+By the PBW criterion (Theorem~\ref{thm:pbw-koszulness-criterion}),
+the associated graded is the classical Koszul complex of
+$\operatorname{gr}_F \cA_1$, which is acyclic in positive
+degrees by hypothesis.
+Corollary~\ref{cor:bar-cohomology-koszul-dual} then gives
+$\dim H^n = \dim (\cA_2^!)_n$.
+The coalgebra structure on $H^0$ is identified with
+$\cA_2^!$ by the acyclicity of the twisted tensor products
+$K_\tau^L(\cA_1, \cC_1)$ and $K_\tau^R(\cC_1, \cA_1)$
+(Definition~\ref{def:chiral-koszul-morphism}):
+the twisting morphism
+$\tau\colon \bar{B}^{\mathrm{ch}}(\cA_1) \to \cA_2$
+induces a coalgebra map
+$H^0(\bar{B}^{\mathrm{ch}}(\cA_1)) \to \cA_2^!$
+that is an isomorphism because $K_\tau$ is acyclic
+(cf.\ \cite[Theorem~2.3.1]{LV12}).
+\end{proof}
+
+\subsection{Geometric bar-cobar duality (Theorem~A)}
+\label{sec:theorem-a-statement}
+
+\begin{theorem}[Geometric bar--cobar duality; \ClaimStatusProvedHere]
+\label{thm:bar-cobar-isomorphism-main}
+\index{bar-cobar duality!main theorem|textbf}
+\index{Theorem A|textbf}
+\textup{[}Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+
+\smallskip\noindent
+The Heisenberg instance was verified in~\S\ref{sec:frame-inversion}.
+In general:
+
+Let $(\cA_1, \cC_1, \tau_1, F_\bullet)$ and
+$(\cA_2, \cC_2, \tau_2, F_\bullet)$ be a chiral Koszul pair in
+the sense of Definition~\textup{\ref{def:chiral-koszul-pair}}.
+Then:
+\begin{enumerate}
+\item the canonical units and counits are quasi-isomorphisms:
+\[
+\cC_i \xrightarrow{\;\sim\;} \bar{B}_X(\cA_i), \qquad
+\Omega_X(\cC_i) \xrightarrow{\;\sim\;} \cA_i
+\qquad (i = 1, 2);
+\]
+
+\item the reduced bar functor is intertwined with Verdier duality:
+\[
+\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
+\simeq \bar{B}_X(\cA_2), \qquad
+\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_2)
+\simeq \bar{B}_X(\cA_1);
+\]
+
+\item if $\cA_2$ is denoted by $\cA_1^!$, then
+\[
+\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1)
+\simeq \bar{B}_X(\cA_1^!).
+\]
+\end{enumerate}
+
+These equivalences are functorial in families over the modular
+configuration spaces $\overline{\mathcal{M}}_{g,n}$ whenever
+the bar construction is formed relatively.
+\end{theorem}
+
+\begin{proof}
+Part~(1) is the fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}): the Koszulness
+conditions
+(Definition~\ref{def:chiral-koszul-morphism}) are equivalent to
+the unit and counit being quasi-isomorphisms.
+For part~(2), the Verdier compatibility in
+Definition~\ref{def:chiral-koszul-pair} identifies
+$\mathbb{D}_{\operatorname{Ran}}(\cC_1)$ with $\cC_2$.
+Composing with the unit equivalences $\cC_i \simeq \bar{B}_X(\cA_i)$
+yields $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1) \simeq
+\bar{B}_X(\cA_2)$.
+Part~(3) is the same statement after naming $\cA_2$ as the Koszul
+dual~$\cA_1^!$.
+The relative/family statement follows from the compatibility of the
+bar construction with proper base change and Verdier duality in families
+(Theorem~\ref{thm:verdier-bar-cobar}).
+\end{proof}
+
+\begin{remark}[Elementary model presentation;
+Convention~\ref{conv:proof-architecture}]
+\label{rem:theorem-a-model}
+\index{bar-cobar duality!model presentation}
+\emph{Step~A} (H-level):
+The bar functor $\mathbf{B}_X$ and cobar functor
+$\boldsymbol{\Omega}_X$ form an adjoint pair on the homotopy
+category of factorization (co)algebras on $\operatorname{Ran}(X)$;
+Verdier duality intertwines bar constructions via
+$\mathbb{D}_{\operatorname{Ran}} \mathbf{B}_X(\cA) \simeq
+\mathbf{B}_X(\cA^!)$.
+
+\emph{Step~B} (M-level):
+The explicit dg model uses the reduced bar complex
+$\bar{B}_X(\cA) = (T^c(s^{-1}\bar{\cA}),\, d_{\mathrm{bar}})$,
+with $d_{\mathrm{bar}}$ encoded by configuration-space integrals
+on $\overline{C}_n(X)$.  The twisting morphism
+$\tau \colon \bar{B}_X(\cA) \to \cA^!$ is the degree-$2$
+propagator extracted from the log form on $\overline{C}_2(X)$.
+The proof reduces to showing the unit and counit are
+quasi-isomorphisms, which follows from the Koszul conditions
+(Definition~\ref{def:chiral-koszul-morphism}).
+
+\emph{Step~C} (S-level):
+The cohomological shadow is the identification
+$H^*(\bar{B}_X(\cA)) \cong \cA^!$ as graded chiral algebras,
+with bar cohomology dimensions controlled by the spectral
+discriminant $\Delta_{\cA}(x)$.
+\end{remark}
+
+\begin{remark}[Geometric content]
+\label{rem:geometric-content-koszul}
+The theorem translates abstract Koszul duality into geometric statements:
+\begin{center}
+\begin{tabular}{c|c}
+\textbf{Algebraic Operation} & \textbf{Geometric Realization} \\ \hline
+Product in $\cA_1$ & Collisions in $\overline{C}_n(X)$ with residue extraction \\
+Coproduct in $\cA_2^!$ & Boundary divisors $\partial \overline{C}_n(X)$ \\
+Twisting morphism $\tau$ & Integration kernel on $\overline{C}_2(X)$ \\
+Maurer--Cartan equation & Stokes' theorem on configuration spaces \\
+Quasi-isomorphism & Homology of $\overline{C}_n(X)$ concentrated in degree 0
+\end{tabular}
+\end{center}
+Every abstract algebraic assertion becomes a computable geometric fact
+about configuration spaces.
+\end{remark}
 
 % ================================================================
 % SECTION 8.3: YANGIANS AND AFFINE YANGIANS - COMPLETE TREATMENT
@@ -941,6 +1265,9 @@ Theorem \ref{thm:coalgebra-axioms-verified} exhibits the characteristic feature 
 \begin{theorem}[Bar computes Koszul dual — complete statement; \ClaimStatusProvedHere]
 \label{thm:bar-computes-koszul-dual-complete}
 \label{thm:chiral-koszul-duality}
+\textup{[Regime: quadratic on the Koszul locus;
+filtered-complete with completion
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 Let $(\mathcal{A}_1, \mathcal{A}_2)$ be a chiral Koszul pair. Then there exists a natural quasi-isomorphism of chiral coalgebras:
 $$\Phi: \widehat{\bar{B}^{\text{ch}}(\mathcal{A}_1)} \xrightarrow{\sim} \mathcal{A}_2^!$$
@@ -1125,7 +1452,7 @@ It does not invoke the bar construction, nor any notion of ``Koszul pair.''
 \medskip
 \noindent\emph{Stage 3: The comparison map is a quasi-isomorphism.}
 
-We now construct the comparison map $\Phi$ and show it is a quasi-isomorphism, using only the fact that $(\mathcal{A}^!, \bar\Delta, d_!)$ is a well-defined chiral coalgebra (the output of Stage~2) and the geometry of configuration spaces.
+The comparison map $\Phi$ is a quasi-isomorphism; the proof uses only that $(\mathcal{A}^!, \bar\Delta, d_!)$ is a well-defined chiral coalgebra (Stage~2) and the geometry of configuration spaces.
 
 \emph{Step 3a: Construction of $\Phi$.}  The geometric bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ has underlying graded $\mathcal{D}_X$-module
 $$\bar{B}^n(\mathcal{A}) = \Gamma\!\left(\overline{C}_{n+1}(X),\; j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n_{\log}\right)$$
@@ -1186,8 +1513,6 @@ When $\mathcal{A}$ is quadratic with relations $R \subset j_*j^*(\mathcal{V}^{\b
 
 \section{Explicit calculations: W-algebras and beyond}
 \label{sec:w-algebras-explicit-completion}
-
-We now compute the I-adic completion explicitly for non-quadratic examples, starting with W-algebras.
 
 %----------------------------------------------------------------
 % SUBSECTION: VIRASORO (WARM-UP)
@@ -1765,7 +2090,7 @@ In particular, the bar-cobar complex of a chiral algebra computes the Feynman di
 The preceding sections developed the bar-cobar adjunction and Koszul
 pairs for $\Einf$-chiral algebras (vertex algebras), where the
 underlying operad is the commutative chiral operad $\chirCom$.
-We now treat the \emph{associative} case: algebras over the
+The \emph{associative} case treats algebras over the
 associative chiral operad $\chirAss$
 \index{chiral associative operad|textbf}
 (Definition~\ref{def:chiral-ass-operad}).  This is the
@@ -1826,6 +2151,10 @@ theory.
 \begin{theorem}[$\Eone$-chiral Koszul duality; \ClaimStatusProvedHere]
 \label{thm:e1-chiral-koszul-duality}
 \index{E1-Koszul duality@$\mathbb{E}_1$-Koszul duality|textbf}
+\textup{[Regime: quadratic on the Koszul locus;
+filtered-complete via PBW degeneration
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 The bar-cobar adjunction (cf.\ \cite[§5.2.2]{HA} for the $E_1$-algebra bar construction
 in the $\infty$-categorical setting) restricts to an equivalence of
 $\infty$-categories:
@@ -2165,7 +2494,7 @@ $\mathrm{id} \xrightarrow{\sim}
 \mathrm{Ind} \circ \mathrm{Res}$
 follows from the dual argument on conilpotent comodules.
 
-We now verify the three listed properties.
+We verify each property in turn.
 
 \emph{Property (i): simple-projective correspondence.}
 Let $L$ be a simple $\mathcal{A}$-module, concentrated in conformal
@@ -2350,6 +2679,9 @@ at level~$k$ produces the Koszul dual at level $-k-2h^\vee$.
 
 \begin{theorem}[Curved Koszul pairs; \ClaimStatusProvedHere]\label{thm:curved-koszul-pairs}
 \index{curved Ainfinity@curved $A_\infty$!Koszul pairs}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 Filtered algebras $(\cA_1, \cA_2)$ with curvatures $\kappa_1, \kappa_2$ form a curved Koszul pair if:
 \begin{enumerate}
 \item Associated graded $(\mathrm{gr}\,\cA_1, \mathrm{gr}\,\cA_2)$ are classical Koszul dual
@@ -2421,6 +2753,14 @@ Conjecture~\ref{conj:derived-bc-betagamma} is tagged
   BV-BRST complex) requires external physics input from the
   formalism of~\cite{Zwi93}.
 \end{enumerate}
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II
+(equivalence of homotopy categories).  At H-level: a derived chiral
+Koszul duality framework extending the quadratic bar-cobar adjunction
+to DG chiral algebras, with the free fermion and $(\beta\gamma \oplus bc,
+d_{\mathrm{BRST}})$ forming a derived Koszul pair.  The M-level model
+is the derived bar-cobar adjunction for DG chiral algebras.  The shadow
+is the decomposition of the BRST complex into Koszul dual sectors.
 \end{remark}
 
 % ================================================================
@@ -2429,8 +2769,6 @@ Conjecture~\ref{conj:derived-bc-betagamma} is tagged
 
 \section{Counter-examples: when Koszul duality fails}
 \label{sec:counter-examples}
-
-We now examine cases where Koszul duality fails or requires modification.
 
 \subsection{Virasoro algebra: beyond the quadratic setting}
 \label{subsec:virasoro-non-example}

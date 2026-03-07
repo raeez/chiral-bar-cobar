@@ -2,14 +2,7 @@
 \label{chap:concordance}
 \index{concordance|textbf}
 
-\noindent\emph{The Heisenberg frame chapter (Chapter~\ref{ch:heisenberg-frame}) previewed the entire theory through a single example.  Parts~I--II developed that preview into general theorems and systematic computations.  This chapter places the resulting framework in context: what is new, what extends existing work, and what remains open.}
-
-A monograph that develops new mathematical machinery has two obligations to the reader: to prove theorems, and to explain precisely what is new.  Parts~I and~II fulfilled the first; this chapter fulfills the second.  We place the bar-cobar framework in conversation with the foundational literature --- Beilinson--Drinfeld, Loday--Vallette, Ayala--Francis, Costello--Gwilliam, Francis--Gaitsgory, Arakawa --- identifying what this work proves for the first time, what it refines or extends, and what remains open.  The chapter concludes with a programme (\S\ref{sec:modular-koszul-programme}) articulating the vision toward which the entire monograph points: \emph{modular Koszul duality for factorization algebras}.
-
-
 \section{Principal contributions}\label{sec:principal-contributions}
-
-We isolate the aspects of this work that go beyond existing literature.
 
 \begin{enumerate}[label=\emph{(\arabic*)}]
 
@@ -21,7 +14,15 @@ We isolate the aspects of this work that go beyond existing literature.
   $\overline{C}_n(X)$, with the bar differential given by residues
   at collision divisors and the cobar differential by inclusions
   of strata.  The adjunction is proved for all Koszul chiral algebras
-  and all genera.  This is the first complete proof of chiral Koszul
+  and all genera.  Theorem~A decomposes into three layers
+  (Remark~\ref{rem:theorem-A-decomposition}):
+  the fundamental theorem of chiral twisting morphisms
+  ($\mathrm{A}_0$, Theorem~\ref{thm:fundamental-twisting-morphisms}),
+  bar concentration
+  ($\mathrm{A}_1$, Theorem~\ref{thm:bar-concentration}), and
+  the Verdier-geometric duality
+  ($\mathrm{A}_2$, Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+  This is the first complete proof of chiral Koszul
   duality via configuration space geometry.
 
 \item \emph{Genus universality
@@ -334,13 +335,230 @@ construction---all incarnated as a single cochain complex with an
 explicitly computable differential.
 \end{remark}
 
+\section{Conjecture stratification}
+\label{sec:conjecture-stratification}
+\index{conjectures!stratification|textbf}
+
+The ${\sim}99$ conjectured claims in this monograph are not peers.
+We stratify them into three tiers by the nature and difficulty of
+the missing input.
+
+\smallskip\noindent\textbf{Tier~1 --- Foundational.}
+Conjectures whose resolution would extend the proved theorems
+to new structural levels.  These require substantial new
+mathematics:
+\begin{itemize}
+\item Full universal Maurer--Cartan class $\Theta_{\cA}$
+  (Conjecture~\ref{conj:universal-MC}): the non-scalar completion
+  of Theorem~D.
+\item PBW spectral sequence degeneration at higher genus
+  (Conjecture~\ref{conj:pbw-higher-genus-degeneration}): the
+  single obstruction to unconditional modular Koszulity for
+  interacting examples.
+\item Coderived Ran formalism for non-Koszul chiral algebras:
+  the categorical extension of Theorem~B off the Koszul locus.
+\item Virasoro and $\mathcal{W}_{\infty}$ Koszul duals: explicit
+  identification of the dual chiral algebras.
+\end{itemize}
+
+\smallskip\noindent\textbf{Tier~2 --- Consequence.}
+Conjectures that follow from known structures by explicit
+computation or extension of existing proofs.  Each is a multi-week
+project but requires no fundamentally new ideas:
+\begin{itemize}
+\item Full derived Drinfeld--Kohno: $\Eone$-factorization with
+  $R$-matrix inversion.
+\item Kazhdan--Lusztig from bar-cobar: the remaining stages
+  beyond the proved chain-level framework.
+\item Shifted-symplectic enhancement: upgrading the Lagrangian
+  complementarity to a shifted symplectic structure on the
+  moduli of Koszul pairs.
+\item Fusion preservation under Koszul duality.
+\end{itemize}
+
+\smallskip\noindent\textbf{Tier~3 --- Physics horizon.}
+Physics-facing conjectures that require input from quantum field
+theory or string theory.  These are correctly conjectural within
+a mathematics monograph:
+\begin{itemize}
+\item BV = bar identification for general field theories
+  (beyond the holomorphic setting).
+\item Path integral $=$ bar-cobar: the full Feynman--Koszul
+  dictionary at all genera.
+\item Holographic Koszul duality: AdS/CFT as bar-cobar.
+\item $\mathsf{E}_n$ extension to higher-dimensional field theories.
+\item AGT correspondence from Koszul duality.
+\end{itemize}
+
+\subsection{Five master conjectures}
+\label{subsec:five-master-conjectures}
+\index{master conjectures|textbf}
+
+The ${\sim}99$ individual conjectures collapse to five master
+conjectures.  Resolving any one would discharge a substantial
+cluster of the individual claims.
+
+\begin{conjecture}[Higher-genus PBW degeneration]\label{conj:master-pbw}
+\ClaimStatusConjectured{}
+For generic affine Kac--Moody $\widehat{\fg}_k$, generic Virasoro
+$\mathrm{Vir}_c$, and generic $\mathcal{W}_N$-algebras, the genus-$g$ PBW
+spectral sequence degenerates at~$E_2$ for all $g \geq 1$.
+
+\emph{This is the single missing hypothesis for unconditional
+modular Koszulity of the standard interacting families
+\textup{(}Proposition~\textup{\ref{prop:conditional-modular-koszul})}.}
+\end{conjecture}
+
+\begin{conjecture}[Cyclic $L_\infty$ deformation algebra and
+universal $\Theta_\cA$]\label{conj:master-theta}
+\ClaimStatusConjectured{}
+For a modular Koszul chiral algebra~$\cA$, there exists a cyclic
+$L_\infty$-algebra $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ and a
+universal Maurer--Cartan element
+$\Theta_\cA \in \operatorname{MC}(
+  \operatorname{Def}_{\mathrm{cyc}}(\cA) \,\widehat{\otimes}\,
+  R\Gamma(\overline{\cM}_{g,\bullet}, \mathbb{Q}))$
+whose trace recovers $\kappa(\cA) \cdot \lambda_g$, whose clutching
+compatibility recovers sewing, and whose Verdier duality
+recovers complementarity.
+
+\emph{This is the genuine foundational conjecture of the modular
+programme.  See Definition~\textup{\ref{def:full-modular-package}}.}
+\end{conjecture}
+
+\begin{conjecture}[Full factorization-categorical DK/KL extension]
+\label{conj:master-dk-kl}
+\ClaimStatusConjectured{}
+The chain-level / evaluation-locus derived Drinfeld--Kohno and
+Kazhdan--Lusztig theorems
+extend to equivalences of full factorization categories.
+
+\emph{This subsumes all DK and KL conjectures in the
+monograph.}
+\end{conjecture}
+
+\begin{conjecture}[Completed bar theory for infinite-generator duals]
+\label{conj:master-infinite-generator}
+\ClaimStatusConjectured{}
+The bar-cobar framework extends to chiral algebras whose Koszul duals
+have infinitely many generators
+($\mathcal{W}_\infty$, Yangian towers, and similar).
+
+\emph{This requires new analytic/topological completion
+techniques beyond the present finite-type setting.}
+\end{conjecture}
+
+\begin{conjecture}[BV/BRST/bar identification]
+\label{conj:master-bv-brst}
+\ClaimStatusConjectured{}
+For a holomorphic field theory on a Riemann surface, the BV/BRST
+complex coincides with the bar complex of the associated chiral algebra,
+at all genera.
+
+\emph{This is the mathematical-physics bridge.  It is
+downstream of Conjectures~\textup{\ref{conj:master-pbw}}--\textup{%
+\ref{conj:master-infinite-generator}} and should not be placed on the
+same logical level.  Genus-$0$ case: proved
+\textup{(}Theorem~\textup{\ref{thm:algebraic-string-dictionary})}.}
+\end{conjecture}
+
+\begin{remark}[Master conjecture hierarchy]\label{rem:master-conjecture-hierarchy}
+Conjecture~\ref{conj:master-pbw} is the \emph{entry point}: its
+resolution would immediately upgrade all interacting-family
+examples from conditional to unconditional modular Koszulity.
+Conjecture~\ref{conj:master-theta} is the \emph{foundational target}:
+it would complete the modular characteristic package.
+Conjectures~\ref{conj:master-dk-kl}
+and~\ref{conj:master-infinite-generator} are
+\emph{structural extensions}.
+Conjecture~\ref{conj:master-bv-brst} is the
+\emph{physics completion}: it depends logically on the others.
+The five master conjectures map to the nine futures
+(\S\ref{subsec:nine-futures}) as follows:
+Conjecture~\ref{conj:master-pbw} $\to$ Future~2;
+Conjecture~\ref{conj:master-theta} $\to$ Futures~3, 4;
+Conjecture~\ref{conj:master-dk-kl} $\to$ Future~6;
+Conjecture~\ref{conj:master-infinite-generator} $\to$ Future~3;
+Conjecture~\ref{conj:master-bv-brst} $\to$ Future~9.
+Futures~1, 5, 7, 8 are resolved or reformulated independently of the
+five master conjectures.
+\end{remark}
+
+\subsection{Homotopy templates for conjectures}
+\label{subsec:homotopy-templates}
+\index{conjectures!homotopy templates|textbf}
+
+The stratification above classifies conjectures by \emph{difficulty}.
+The following classification is orthogonal: it sorts conjectures by
+\emph{homotopy type}---what kind of mathematical object each conjecture
+asserts the existence or properties of.  Every conjecture in this
+monograph fits one of seven templates
+(Convention~\ref{conv:hms-levels}).
+
+\begin{convention}[Homotopy templates]\label{conv:homotopy-templates}
+\index{homotopy templates|textbf}
+\begin{enumerate}[label=\textbf{Type \Roman*.}, leftmargin=3em]
+\item \emph{Existence of a homotopy object.}
+  A filtered cyclic $L_\infty$-algebra, MC element,
+  or factorization (co)algebra is asserted to exist with specified
+  compatibility.  \emph{Example:}
+  $\Theta_{\cA}$ (Conjecture~\ref{conj:master-theta}).
+
+\item \emph{Equivalence of homotopy categories.}
+  Two $\infty$-categories (or stable/E$_1$-monoidal variants)
+  are equivalent; current chain models give a presentation on a
+  dense sublocus.
+  \emph{Examples:} full coderived bar-cobar
+  (Conjecture~\ref{conj:master-dk-kl}),
+  full DK, KL from bar-cobar.
+
+\item \emph{Shifted-symplectic / Lagrangian enhancement.}
+  A pairing already constructed at the model level upgrades to an
+  $n$-shifted symplectic structure on a formal moduli problem.
+  \emph{Examples:} complementarity upgrades, moduli of Koszul pairs.
+
+\item \emph{Trace / index statement.}
+  A scalar invariant is the image of a universal deformation object
+  under a trace or pushforward functor.
+  \emph{Examples:} genus generating series ($\hat{A}$-genus),
+  GRR for modular deformations.
+
+\item \emph{Periodicity / autoequivalence.}
+  A finite homotopy action, graded autoequivalence, or periodic
+  filtration operator exists on a homotopy object; numerical periods
+  are its shadow.
+  \emph{Examples:} reflected modular periodicity,
+  quantum group periodicity at roots of unity.
+
+\item \emph{Completed / pro-object duality.}
+  The duality lives in a pro-category or completed category;
+  finite-stage truncations converge to the desired object.
+  \emph{Examples:} $\mathcal{W}_\infty$ duals
+  (Conjecture~\ref{conj:master-infinite-generator}),
+  Yangian towers.
+
+\item \emph{Physics-dictionary conjecture.}
+  Two deformation problems---one algebraic, one
+  field-theoretic---are controlled by quasi-isomorphic dg~Lie or
+  $L_\infty$-algebras.
+  \emph{Examples:} BRST $=$ bar
+  (Conjecture~\ref{conj:master-bv-brst}),
+  BV $=$ bar-cobar, path integral $=$ factorization.
+\end{enumerate}
+\end{convention}
+
+\begin{remark}[Using the templates]\label{rem:template-usage}
+Each individual conjecture in the monograph carries a scope remark
+identifying its tier (Foundational / Consequence / Physics).
+The homotopy template provides the complementary structural
+information: \emph{what kind of homotopy-theoretic statement}
+the conjecture makes.  The five master conjectures above
+are respectively of Types~I, II, II, VI, and VII.
+\end{remark}
+
 \section{Research programmes}
 \label{sec:research-programmes}
 \index{research programmes|textbf}
-
-The framework of this monograph suggests several research programmes
-that go beyond its scope.  We formulate precise conjectures for each,
-documenting what is proved here and what remains.
 
 \subsection{Higher-dimensional Koszul duality}
 \label{subsec:higher-dim-kd}
@@ -412,13 +630,7 @@ computed via FM configuration space integrals.
 \end{proof}
 
 \begin{remark}[Proof status]\label{rem:en-scope}
-Parts (i), (ii), and (iv) are proved:
-\begin{itemize}
-\item Part~(i): Idrissi~\cite{Idrissi22} establishes that Poincar\'e
-  duality on configuration spaces ensures $d^2 = 0$ for the
-  propagator-based differential on $\mathsf{E}_n$-algebras for all~$n$.
-\item Parts~(ii) and~(iv): Proposition~\ref{prop:en-n1-recovery} below.
-\end{itemize}
+Parts (i), (ii), and (iv) are proved: Part~(i) by Idrissi~\cite{Idrissi22}, who establishes that Poincar\'e duality on configuration spaces ensures $d^2 = 0$ for the propagator-based differential on $\mathsf{E}_n$-algebras for all~$n$; Parts~(ii) and~(iv) by Proposition~\ref{prop:en-n1-recovery} below.
 Part~(iii) remains \ClaimStatusConjectured.  For $n \geq 2$, the
 propagator $G$ is a closed $(n-1)$-form (not a meromorphic $1$-form),
 and residues are replaced by integration over linking spheres
@@ -508,6 +720,11 @@ holomorphic, while Kontsevich's are real.  Comparing requires an
 analytic continuation argument from holomorphic to topological
 Feynman transforms.
 The correct bridge between holomorphic and topological frameworks is Chern--Simons gauge equivalence, not merely restriction from complex curves to $S^1$: Cattaneo--Mnev~\cite{CattaneoMnev10} establish that configuration space integrals on $3$-manifolds produce Vassiliev invariants via BV integration, and the comparison map involves the CS partition function (not a pointwise restriction of propagators).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture asserts that the dg Lie algebras controlling
+holomorphic (chiral bar) and topological (Kontsevich integral)
+deformation problems are quasi-isomorphic.
 \end{remark}
 
 \subsection{Anomaly cancellation and Koszul structure}
@@ -538,8 +755,9 @@ Part (i) is Corollary~\ref{cor:kappa-additivity}: the singular OPE
 of the tensor product is the sum of the individual singular OPEs
 (the fields act on disjoint sectors), so the genus-$1$ curvature
 is additive.  Part~(ii) follows from
-$d^2 = \kappa \cdot \omega_1 \cdot \mathrm{id}$
-(Theorem~\ref{thm:genus-universality}): the total bar complex is
+$\dfib^{\,2} = \kappa \cdot \omega_1 \cdot \mathrm{id}$
+(Theorem~\ref{thm:genus-universality},
+Convention~\ref{conv:higher-genus-differentials}): the total bar complex is
 uncurved if and only if $\kappa_{\mathrm{tot}} = 0$.  Part (iii)
 is the computation $\kappa(\mathrm{Vir}_c) = c/2$
 (Computation~\ref{comp:virasoro-curvature}) combined with
@@ -610,7 +828,8 @@ $\barB(\cA) \simeq C^{\mathrm{BRST}}(\cA)$ holds as a
 quasi-isomorphism of \emph{genus-graded} complexes, so that the
 quantum master equation
 $\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ is the chain-level
-refinement of $d^2 = 0$ at every genus.
+refinement of $\Dg{g}^{\,2} = 0$ at every genus
+\textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})}.
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:anomaly-scope}
@@ -630,7 +849,15 @@ with the genus-$g$ bar complex.  The algebraic infrastructure
 is in place (curved $A_\infty$ at all genera, Feynman transform
 identification); what is missing is the analytic comparison
 between renormalized BRST and the bar differential at genus
-$g \geq 1$.
+$g \geq 1$.  Note, however, that \emph{scalar} anomaly
+cancellation extends to all genera unconditionally:
+Theorem~D (Theorem~\ref{thm:modular-characteristic})
+gives $\mathrm{obs}_g(\cA) + \mathrm{obs}_g(\cA^!) = (\kappa + \kappa') \cdot \lambda_g = 0$
+for Koszul dual pairs with $\kappa + \kappa' = 0$.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture asserts quasi-isomorphism of the $L_\infty$ algebras
+controlling BRST and bar deformation problems, genus by genus.
 \end{remark}
 
 \subsection{AdS$_3$/CFT$_2$ as curved Koszul duality}
@@ -674,6 +901,11 @@ The remaining gap is the identification of the \emph{bulk}
 observables with the twisted supergravity theory, which requires
 input from 3d gauge theory (Chern--Simons formulation of gravity
 on AdS$_3$, $\mathfrak{sl}_2 \oplus \mathfrak{sl}_2$ gauge group).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+At H-level: an equivalence of factorization categories (boundary
+chiral vs.\ bulk twisted SUGRA).  The M-level model is the curved
+bar complex; the S-level shadow is the $1/N$ expansion.
 \end{remark}
 
 \begin{remark}[BRST chain map: existing ingredients]\label{rem:brst-chain-map-pieces}
@@ -737,6 +969,10 @@ the mass/FI deformations to the curvature of the bar complex.
 Each of these steps requires substantial new work combining
 3d gauge theory, symplectic geometry, and the $\Eone$-chiral
 framework.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
+The conjecture asserts an equivalence of $\Eone$-monoidal $\infty$-categories
+(Coulomb branch factorization vs.\ Higgs branch bar-cobar).
 \end{remark}
 
 \subsection{Noncommutative Hodge theory from genus tower}
@@ -811,16 +1047,16 @@ conjecture is the identification with the Kontsevich--Soibelman
 $\mathbb{C}^*$-action, which requires establishing a twistor
 structure on the genus tower.  There is currently no framework
 in which to formulate this precisely for chiral algebras.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~III
+(shifted-symplectic/Lagrangian enhancement).  The conjecture
+upgrades the genus spectral sequence to a $\mathbb{C}^*$-equivariant
+shifted-symplectic structure on the total deformation complex.
 \end{remark}
 
 \subsection{The nine programmes: synthesis and interdependence}
 \label{subsec:programme-synthesis}
 \index{research programmes!interdependence}
-
-The seven programmes above are not independent lines of inquiry:
-they form a web of mutual dependencies, with shared foundational
-objects and interlocking predictions.  We describe this web, then
-identify the single conjecture of which all programmes are facets.
 
 Programmes~I (higher-dimensional Koszul duality,
 \S\ref{subsec:higher-dim-kd}) and~II (Vassiliev invariants,
@@ -905,36 +1141,15 @@ conjectural instances:
 \end{enumerate}
 This monograph provides case~(ii) in full detail; the passage
 from (ii) to the general conjecture is the content of
-\S\ref{sec:modular-koszul-programme} below.
+\S\ref{sec:modular-koszul-programme} below.  For the status of
+each programme-level aspiration, see
+\S\ref{subsec:nine-futures}.
 \end{remark}
 
 
 \section{Towards modular Koszul duality}
 \label{sec:modular-koszul-programme}
 \index{modular Koszul duality!programme}
-
-The constructions of this monograph point toward a theory whose natural
-formulation goes beyond what is proved here.  We articulate this
-programme, separating what is established from what remains.  The
-structural perspective of \S\ref{subsec:structural-perspective}
-identifies the implicit concept; this section formulates the
-programme precisely.
-
-\medskip
-
-The master diagram~\eqref{eq:master-square}, introduced in the
-opening chapter and instantiated at genus~$0$
-(Remark~\ref{rem:master-diagram-genus0}), at higher genus
-(Remark~\ref{rem:master-diagram-higher-genus}), in the BV
-identification (Remark~\ref{rem:bv-convergence}), and in every
-example family of Part~II, is the structural backbone.  The
-master functorial correspondence
-(Remark~\ref{rem:master-functorial}) tabulates the
-geometry--algebra--physics dictionary that the monograph
-populates row by row.  The programme below is the
-completion of that diagram to the full modular setting.
-
-\medskip
 
 The modular characteristic theorem (Theorem~D,
 Theorem~\ref{thm:modular-characteristic}) establishes the scalar
@@ -947,22 +1162,25 @@ generality:
 \toprule
 \textbf{Label} & \textbf{Statement} & \textbf{Status} & \textbf{Reference} \\
 \midrule
-$A_{\mathrm{mod}}$ & Bar-cobar intertwined with Verdier, & Proved (genus $0{+}g$) & Theorems A, B \\
+$A_{\mathrm{mod}}$ & Bar-cobar intertwined with Verdier, & \textbf{Proved} & Thm~\ref{thm:bar-cobar-isomorphism-main} \\
   & functorial over $\overline{\mathcal{M}}_{g,n}$ & & \\[2pt]
-$B_{\mathrm{mod}}$ & Inversion on Koszul locus; coderived & Proved $+$ conjectured & Thm~B, \S\ref{subsec:coderived-ran} \\
-  & persistence off it & & \\[2pt]
-$C_{\mathrm{mod}}$ & Shifted symplectic complementarity & \textbf{Proved} & Prop.~\ref{prop:ptvv-lagrangian}; \\
-  & (PTVV Lagrangian embedding) & & Thm~\ref{thm:shifted-symplectic-complementarity} \\[2pt]
+$B_{\mathrm{mod}}$ & Inversion on Koszul locus; coderived & Proved on Koszul locus; & Thm~\ref{thm:higher-genus-inversion}, \\
+  & persistence off it & coderived persistence conjectural & \S\ref{subsec:coderived-ran} \\[2pt]
+$C_{\mathrm{mod}}$ & Shifted symplectic complementarity & \textbf{Proved} & Thms~\ref{thm:quantum-complementarity-main}, \\
+  & (PTVV Lagrangian embedding) & & \ref{thm:shifted-symplectic-complementarity} \\[2pt]
 Index & GRR: genus series $= \kappa(\cA) \cdot (\hat{A}(ix) - 1)$ & \textbf{Proved} & Thm~\ref{thm:family-index} \\[2pt]
-DK & Derived Drinfeld--Kohno: & \textbf{Partially proved} & Thms~\ref{thm:derived-dk-affine}, \\
-  & $\operatorname{Fact}_{\Eone}(Y(\mathfrak{g})) \simeq \operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}}$ & (eval.\ locus proved) & \ref{thm:derived-dk-yangian}; Conj.~\ref{conj:derived-drinfeld-kohno} \\
+DK & Derived Drinfeld--Kohno: & Proved on eval.\ locus; & Thm~\ref{thm:factorization-dk-eval}; \\
+  & $\operatorname{Fact}_{\Eone}(Y(\mathfrak{g})) \simeq \operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}}$ & full fact.-cat.\ equiv.\ conjectural & Conj.~\ref{conj:derived-drinfeld-kohno} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \noindent
 The subsections below develop each component, separating what is
-established from what remains.
+established from what remains.  For $A_{\mathrm{mod}}$: the present
+proof establishes functorial compatibility of bar and cobar over
+$\overline{\mathcal{M}}_{g,n}$; whether this lifts to an equivalence
+of modular operads is a further question, not addressed here.
 
 \medskip
 
@@ -984,7 +1202,12 @@ When curvature is present, the correct ambient category is not the
 ordinary derived category but the \emph{coderived category} in the
 sense of Positselski~\cite{Positselski}: curved objects produce
 acyclic-but-not-contractible complexes that the derived category
-erases too brutally.  The Koszul locus---where bar-cobar inversion
+erases too brutally.  The provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+(Definition~\ref{def:provisional-coderived},
+Proposition~\ref{prop:coderived-adequacy})
+provides a working substitute within the scope of this monograph.
+The Koszul locus---where bar-cobar inversion
 holds unconditionally (Theorem~\ref{thm:higher-genus-inversion})---is
 the locus where the coderived and derived categories agree.
 
@@ -1088,6 +1311,12 @@ as a cyclic $L_\infty$ algebra; (b)~solving the Maurer--Cartan
 equation in the completed tensor product with tautological classes.
 This is the content of a ``modular homotopy theory'' for
 factorization algebras.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I
+(existence of a homotopy object).  At H-level: a filtered cyclic $L_\infty$
+algebra $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ and an MC element $\Theta_\cA$
+with trace, clutching, and Verdier compatibility.  The scalar shadow is
+$\kappa(\cA) \cdot \lambda_g$ (proved, Theorem~\ref{thm:genus-universality}).
 \end{remark}
 
 \subsection{The discriminant as spectral invariant}
@@ -1341,6 +1570,43 @@ of the modular package parallels $\kappa(\cA)$ as the first
 scalar characteristic number of the universal Maurer--Cartan
 class $\Theta_{\cA}$ (Conjecture~\ref{conj:universal-MC}).
 \end{remark}
+
+\begin{definition}[Spectral branch object; \ClaimStatusConjectured]
+\label{def:spectral-branch-object}
+\index{spectral branch object|textbf}
+\index{discriminant!branch transport operator}
+A \emph{spectral branch object} for a modular Koszul chiral
+algebra~$\cA$ is a finite-rank perfect complex~$V_{\cA}^{\mathrm{br}}$
+together with a \emph{branch transport operator}
+$T_{\mathrm{br},\cA} \colon V_{\cA}^{\mathrm{br}} \to
+V_{\cA}^{\mathrm{br}}$ such that
+\begin{equation}\label{eq:discriminant-det}
+\Delta_{\cA}(x)
+\;=\;
+\det\!\bigl(1 - x\, T_{\mathrm{br},\cA}\bigr).
+\end{equation}
+The pair $(V_{\cA}^{\mathrm{br}}, T_{\mathrm{br},\cA})$ satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Delta_{\cA^!} = \Delta_{\cA}$
+  (the spectral discriminant is self-dual);
+\item exact factorization functors preserving quadratic OPE data
+  preserve $T_{\mathrm{br},\cA}$;
+\item $\operatorname{rank}(V_{\cA}^{\mathrm{br}})$
+  equals the degree of algebraicity of the Koszul-dual
+  Hilbert series.
+\end{enumerate}
+
+\smallskip\noindent
+\emph{Status.}
+In the verified cases (Theorem~\ref{thm:discriminant-spectral-verified}),
+$V_{\cA}^{\mathrm{br}}$ is constructed as the span of the
+companion-matrix eigenvectors of $T_{\mathrm{rec}}$,
+and~\eqref{eq:discriminant-det} is proved.  The general
+construction of $V_{\cA}^{\mathrm{br}}$ from the bar complex
+(rather than from the recurrence) remains open; see
+Conjecture~\ref{conj:discriminant-ks-operator} for the
+conjectural identification with a subquotient of~$H^1$.
+\end{definition}
 
 \subsection{The index theorem for genus expansions}
 
@@ -1615,7 +1881,8 @@ Theorem~\ref{thm:family-index}: the genus expansion of a
 Koszul chiral algebra is a GRR pushforward.
 The master diagram~\eqref{eq:master-square} is the engine;
 the modular characteristic package
-$(\Theta_{\cA}, H_{\cA}, \Delta_{\cA})$ is the protagonist;
+$(\Theta_{\cA}, H_{\cA}, \Delta_{\cA})$ is the protagonist
+($\Theta_{\cA}$ conjectural; Conjecture~\ref{conj:universal-MC});
 and the family index theorem is the punchline.
 What remains beyond this monograph ---
 $C_{\mathrm{mod}}$ (shifted-symplectic complementarity),
@@ -1699,6 +1966,12 @@ Yangian Koszulness conjecture for general~$\mathfrak{g}$
 factorization-level Kazhdan equivalence.
 See \S\ref{sec:derived-dk} for the full treatment and
 Remark~\ref{rem:dk-proved-vs-remains} for the precise decomposition.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II
+(equivalence of homotopy categories).  At H-level: an equivalence of
+$\Eone$-monoidal $\infty$-categories.  The M-level model is the braided
+monoidal bar-cobar dg category; the S-level shadow is the classical DK
+equivalence on evaluation modules.
 \end{remark}
 
 \subsection{Summary}
@@ -1716,6 +1989,389 @@ Frobenius and zeta functions, factorization homology on
 $\operatorname{Ran}(X)$ together with Verdier duality on
 $\overline{\mathcal{M}}_{g,n}$ is the correct ambient cohomology
 theory for OPE, monodromy, and bar-cobar duality on curves.
+The following subsection tracks the status of the nine programme-level
+aspirations that guided this monograph's development
+(Definition~\ref{def:modular-homotopy-theory-working};
+Remark~\ref{rem:nine-futures-summary}).
+
+\subsection{Programme status: nine futures}\label{subsec:nine-futures}
+\index{modular Koszul duality!programme status}
+
+The development of this monograph was guided by nine interrelated
+programme-level aspirations, each advertised in earlier stages of the
+project.  Some have been realized as proved theorems; some survive only
+after reformulation; one is no longer plausible in its original form.
+We assess each, precisely separating what is established from what
+remains and stating the correct reformulation where the original
+vision requires it.
+
+\medskip
+
+\noindent\textbf{Future~1: All-genus $H^1(\mathcal{M}_g)$-parameterized
+bar-cobar theory.}
+\index{parameter source!H1 reformulation}
+
+\emph{Original vision.}
+Genus-$g$ quantum corrections controlled by parameters
+$t_g \in H^1(\mathcal{M}_g)$, with the curved differential
+$d_g^2 = \sum_k t_{g,k}\,\mathrm{obs}_k$.
+
+\emph{Status: reformulated and proved.}
+The original parameterization is incorrect: $H^1(\mathcal{M}_g) = 0$
+for $g \geq 2$ by Harer's theorem, so moduli-space cohomology cannot
+supply the genus-$g$ correction parameters.  The correct source is
+the \emph{fiber} cohomology $H^1(\Sigma_g, \mathbb{C})$, accessed
+via the Leray spectral sequence of the universal curve:
+\[
+t_g \;\in\; H^0\!\bigl(\mathcal{M}_g,\, R^1\pi_*\mathcal{Z}(\cA)\bigr),
+\]
+i.e., global sections of the first direct image of the center local
+system (Convention~\ref{conv:higher-genus-differentials};
+Remark~\ref{rem:parameter-source}).  The reformulated theory is
+\emph{proved}: the total corrected differential $\Dg{g}$ incorporates
+$A$-period parameters from $H^1(\Sigma_g)$ and satisfies
+$\Dg{g}^{\,2} = 0$ (Theorem~\ref{thm:quantum-diff-squares-zero}),
+while the fiberwise differential $\dfib$ is curved with
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$
+(Theorem~\ref{thm:quantum-arnold-relations}).  The genus
+universality theorem (Theorem~\ref{thm:genus-universality}) then
+controls the obstruction tower by the single scalar~$\kappa(\cA)$.
+
+\medskip
+
+\noindent\textbf{Future~2: Modular Koszul programme.}
+
+\emph{Original vision.}
+A complete theory of Koszul duality for factorization algebras
+over the modular operad of stable curves, with Verdier duality
+controlling the bar-cobar exchange at all genera.
+
+\emph{Status: largely realized.}
+The status table on p.~\pageref{sec:modular-koszul-programme}
+gives the precise accounting.  Theorems~A--D establish the scalar
+core; $C_{\mathrm{mod}}$ (Lagrangian complementarity) and the
+Index theorem (GRR for genus expansions) are fully proved; the
+evaluation-locus derived Drinfeld--Kohno is proved.  The remaining
+gaps are: (a)~the coderived Ran-space formalism
+(\S\ref{subsec:coderived-ran}); (b)~the full non-scalar universal
+Maurer--Cartan class (Conjecture~\ref{conj:universal-MC}).  Both
+belong to the next stage of the theory (Future~3 below).
+
+\medskip
+
+\noindent\textbf{Future~3: Modular homotopy theory for factorization
+algebras on curves.}
+
+\emph{Original vision.}
+Factorization presentation on curves plus Verdier duality on
+modular compactifications produces a new homotopy theory, in which
+genus is a deformation variable internal to Koszul duality itself.
+
+\emph{Status: alive and sharpening.}
+This future is the mature endpoint of the project.
+The structural content is now precise enough for a working definition:
+
+\begin{definition}[Modular homotopy theory --- working definition]
+\label{def:modular-homotopy-theory-working}
+\index{modular homotopy theory!working definition}
+A \emph{modular homotopy theory} on a smooth curve~$X$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item an $\infty$-categorical bar-cobar adjunction
+  $\barB_X \dashv \Omega_X$ on the coderived category
+  $D^{\mathrm{co}}(\operatorname{Fact}(X))$ of curved factorization
+  algebras on $\operatorname{Ran}(X)$;
+\item functoriality of the adjunction over the modular operad
+  $\{\overline{\mathcal{M}}_{g,n}\}_{g,n}$, intertwined with Verdier
+  duality:
+  $\mathbb{D}_{\operatorname{Ran}}\,\barB_X(\cA)
+  \simeq \barB_X(\cA^!)$;
+\item a universal Maurer--Cartan class
+  $\Theta_{\cA} \in
+  \operatorname{MC}(\operatorname{Def}_{\mathrm{cyc}}(\cA)
+  \,\widehat{\otimes}\,
+  R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q}))$
+  controlling the genus tower as a single deformation; and
+\item a shifted-symplectic pairing on
+  $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$
+  for which the deformation and obstruction complexes
+  $Q_g(\cA)$, $Q_g(\cA^!)$ are complementary Lagrangians.
+\end{enumerate}
+\end{definition}
+
+\noindent
+Of these four requirements: (ii) and (iv) are proved
+(Theorems~A, C; Proposition~\ref{prop:ptvv-lagrangian}),
+where (ii) is established as functorial compatibility over
+$\overline{\mathcal{M}}_{g,n}$ rather than as an equivalence of
+modular operads;
+(i) is proved at genus~$0$ and on the Koszul locus at all genera
+(Theorems~A, B); (iii) is the principal open problem
+(Conjecture~\ref{conj:universal-MC}).
+
+\medskip
+
+\noindent\textbf{Future~4: Universal modular characteristic package.}
+
+\emph{Original vision.}
+Not only $\kappa(\cA)$ but a richer characteristic object
+$(\Theta_{\cA}, H_{\cA}, \Delta_{\cA})$ whose shadows are genus
+free energies, obstruction classes, and spectral invariants.
+
+\emph{Status: scalar part proved, non-scalar part precisely
+identified.}
+The full package is now formalized as the quintuple
+$\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa(\cA), \Delta_{\cA},
+\Pi_{\cA}, \mathcal{H}_{\cA})$
+(Definition~\ref{def:full-modular-package}).
+Theorem~D (Theorem~\ref{thm:modular-characteristic}) establishes
+the scalar system: $\kappa(\cA)$ determines the entire genus
+tower via $\mathrm{obs}_g = \kappa \cdot \lambda_g$, with
+generating function the $\hat{A}$-genus.  The spectral
+discriminant $\Delta_{\cA}(x) = \det(1 - x\,T_{\mathrm{rec}})$
+is proved as the first non-scalar characteristic class
+(Theorem~\ref{thm:discriminant-spectral};
+Definition~\ref{def:spectral-branch-object}).
+The periodicity profile $\Pi_{\cA}$
+(Remark~\ref{rem:periodicity-triple};
+Definition~\ref{def:derived-scalar-period}) replaces the
+scalar period.  The full non-scalar
+class $\Theta_{\cA}$ requires the cyclic $L_\infty$ construction
+(Conjecture~\ref{conj:universal-MC}).
+
+\emph{Roadmap for $\Theta_{\cA}$.}
+Three of the five properties of the conjectural universal class
+have support from established results:
+\begin{itemize}[nosep]
+\item \emph{Scalar trace}: proved
+  ($\operatorname{tr}(\Theta_{\cA}) = \kappa \cdot \lambda_g$,
+  Theorem~\ref{thm:genus-universality}).
+\item \emph{Clutching compatibility}: implicit in the modular operad
+  structure (Theorem~\ref{thm:prism-higher-genus}).
+\item \emph{Verdier duality}: proved at scalar level
+  ($\kappa + \kappa' = 0$, Theorem~\ref{thm:genus-universality}(ii));
+  the Lagrangian form (Theorem~\ref{conj:lagrangian-complementarity})
+  shows how $\mathbb{D}(\Theta)$ acts on the complementarity
+  complexes.
+\item \emph{Cyclic $L_\infty$ structure}: not yet constructed.
+  The main obstacle is producing the cyclic pairing on
+  $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ compatible with both
+  the Lie bracket and the trace.
+\item \emph{MC equation in completed tensor product}: not yet solved.
+  Requires convergence of the genus series in the appropriate
+  topology on $\operatorname{Def}_{\mathrm{cyc}}(\cA)
+  \,\widehat{\otimes}\, R\Gamma(\overline{\mathcal{M}})$.
+\end{itemize}
+
+\medskip
+
+\noindent\textbf{Future~5: Index-theoretic explanation of genus
+expansions.}
+
+\emph{Original vision.}
+The $\hat{A}$-genus appearance in the genus expansion is a
+family-index theorem (GRR on the universal curve), not a generating
+function accident.
+
+\emph{Status: realized.}
+Theorem~\ref{thm:family-index} proves this in full: the genus
+expansion $\sum F_g\, x^{2g} = \kappa(\cA)\cdot(\hat{A}(ix) - 1)$
+is the GRR pushforward of the Todd class of the universal curve,
+scaled by the bar-complex curvature.  The $\hat{A}$-genus appears
+because it is the multiplicative genus of the additive formal
+group law, and the genus expansion is additive in~$\kappa$.
+A stronger sheaf-level refinement (constructing
+$\mathcal{D}_{\cA}^{(g)}$ as a sheaf, not just a $K$-theory
+class) remains open and requires Future~3.
+
+\medskip
+
+\noindent\textbf{Future~6: Derived Drinfeld--Kohno and quantum
+groups.}
+
+\emph{Original vision.}
+An equivalence of $\Eone$-factorization categories
+$\operatorname{Fact}_{\Eone}(Y(\mathfrak{g})) \simeq
+\operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))^{\mathrm{op}}$,
+with braid monodromy from Verdier reversal.
+
+\emph{Status: partially realized, decomposed into components.}
+Three of the four components are proved:
+(a)~braided monoidal structure on bar complexes
+(Theorem~\ref{thm:monoidal-module-koszul}); (b)~Verdier duality
+= $R$-matrix inversion (same theorem, step~3);
+(c)~chain-level DK square for both affine algebras and Yangians
+(Theorems~\ref{thm:derived-dk-affine},
+\ref{thm:derived-dk-yangian}).  The factorization-level statement
+on the evaluation locus is also proved
+(Theorem~\ref{thm:factorization-dk-eval}).  The remaining gap is
+extension from evaluation modules to full Yangian
+category~$\mathcal{O}$ (Conjecture~\ref{conj:full-derived-dk}),
+requiring Yangian Koszulness for general~$\mathfrak{g}$ and the
+factorization-level Kazhdan equivalence.
+
+\medskip
+
+\noindent\textbf{Future~7: Unified periodicity doctrine.}
+\index{periodicity!programme status}
+
+\emph{Original vision.}
+Modular, quantum, and geometric periodicities unify into a single
+coherent classification, with clean reciprocity laws under Koszul
+duality.
+
+\emph{Status: the weakest of the nine futures in its original form.}
+The reformulation recognizes three distinct levels of
+periodicity, with decreasing strength of current results:
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Modular periodicity} (Type~I).  Proved for minimal models
+  (Theorem~\ref{thm:modular-periodicity-minimal}) and WZW models at
+  all positive integer levels
+  (Theorem~\ref{thm:modular-periodicity-wzw}); conjectured for
+  general rational chiral algebras
+  (Conjecture~\ref{conj:modular-periodicity}).  Natural next cases:
+  $\mathcal{W}$-algebra minimal models and rational orbifolds.
+\item \emph{Quantum periodicity} (Type~II).
+  Proved: the quantum integer periodicity $[n + 2\ell]_q = [n]_q$
+  is unconditional.  Preserved under Koszul duality via
+  $q \mapsto q^{-1}$
+  (Theorem~\ref{thm:periodicity-exchange-koszul}).
+\item \emph{Geometric periodicity} (Type~III).
+  Conjectured with period $12(2g-2)$ from the canonical bundle
+  (Conjecture~\ref{conj:geometric-periodicity}).  The structural
+  lcm bound with the other two types is proved unconditionally
+  (Theorem~\ref{thm:periodicity-exchange-koszul}).
+\end{enumerate}
+The periodicity classification
+(page~\pageref{thm:complete-periodicity-classification}), proved for
+minimal models and WZW but conjectural for general rational CFT,
+assembles these into an lcm upper bound.  The \emph{structural
+content}---that three independent periodicity sources combine
+via lcm---is unconditional.  The specific formulas for
+$N_{\mathrm{mod}}$ and $N_{\mathrm{geom}}$ are conjectural.
+The reflected periodicity conjecture
+(Conjecture~\ref{conj:reflected-modular-periodicity}), which
+would express how modular periods transform under Koszul duality
+via the dual central charge, depends on
+Conjecture~\ref{conj:modular-periodicity}.
+
+What replaces the original ``unified doctrine'' is a
+\emph{stratified periodicity theorem}: unconditional for minimal
+models (where all three sources are controlled via theta
+functions), conditional for general rational algebras (where
+the modular and geometric inputs remain conjectural), and
+\emph{spectral} in all cases (the period divides the lcm,
+with the individual factors determined by the modular
+characteristic package).
+
+\medskip
+
+\noindent\textbf{Future~8: Spectral discriminant geometry.}
+
+\emph{Original vision.}
+The shared discriminant $\Delta(x) = (1-3x)(1+x)$ across
+$\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$ systems
+is the first non-scalar characteristic class of the modular
+Koszul object.
+
+\emph{Status: alive and becoming more central.}
+Theorem~\ref{thm:discriminant-spectral} proves
+$\Delta_{\cA}(x) = \det(1 - x\, T_{\mathrm{rec}})$ in both the
+rational and algebraic cases.  The spectral radius of
+$T_{\mathrm{rec}}$ equals $\dim(\mathfrak{g})$ for Kac--Moody
+algebras (Theorem~\ref{thm:dominant-branch-point}).  The
+Drinfeld--Sokolov invariance of the discriminant
+(Theorem~\ref{thm:ds-bar-gf-discriminant}) shows that distinct
+chiral theories on the same modular spectral sheet share the
+same~$\Delta$, even when their operator content differs entirely.
+
+The discriminant's role is now precise: $\kappa(\cA)$ is the
+\emph{first scalar characteristic number} of the conjectural universal
+class~$\Theta_{\cA}$ (Conjecture~\ref{conj:universal-MC}), and $\Delta_{\cA}(x)$ is the \emph{first
+non-scalar characteristic class}---the spectral determinant of
+the transfer matrix governing the recurrence of bar-cohomology
+dimensions.  The spectral branch object
+(Definition~\ref{def:spectral-branch-object}) formalizes $\Delta$
+as $\det(1 - x\, T_{\mathrm{br},\cA})$ on a finite-rank perfect
+complex~$V_{\cA}^{\mathrm{br}}$.
+Together, the five components of the full package
+$\mathcal{C}_{\cA}$
+(Definition~\ref{def:full-modular-package}) form a hierarchy
+of increasing refinement: scalar $\to$ spectral/polynomial
+$\to$ full Maurer--Cartan class.
+
+\medskip
+
+\noindent\textbf{Future~9: BV/BRST/path-integral/holography
+completion.}
+
+\emph{Original vision.}
+The entire BV-BRST formalism, path integrals, anomalies,
+holographic duality, and higher-dimensional extensions would all
+eventually be read through the Koszul-duality machine.
+
+\emph{Status: genus-$0$ foundation proved; higher genus
+programmatic.}
+The genus-$0$ identifications are now theorems:
+bar = BRST (Theorem~\ref{thm:brst-bar-genus0}); bar = semi-infinite
+cohomology for Kac--Moody at all non-critical levels
+(Theorem~\ref{thm:bar-semi-infinite-km}) and for $\mathcal{W}$-algebras
+via DS reduction (Theorem~\ref{thm:bar-semi-infinite-w}); anomaly
+duality $\kappa + \kappa' = 0$
+(Corollaries~\ref{cor:anomaly-duality-km},
+\ref{cor:anomaly-duality-w}); tree-level string amplitudes from bar at
+$c = 26$ (Corollary~\ref{cor:string-amplitude-genus0}).  The algebraic
+string dictionary
+(Theorem~\ref{thm:algebraic-string-dictionary}) provides the
+four-clause synthesis: bar = BRST, curvature = anomaly, genus
+expansion = perturbation series, factorization = unitarity.
+
+The higher-genus programme
+(Conjectures~\ref{conj:bv-equals-bar-cobar},
+\ref{conj:bar-cobar-path-integral},
+\ref{conj:string-amplitude}) requires Costello's
+renormalization framework at all genera and remains correctly
+conjectural.  The holographic duality programme
+(Conjectures~\ref{conj:holographic-koszul-deformation},
+\ref{conj:deformation-holographic}) and the $\mathsf{E}_n$
+extension (Conjecture~\ref{conj:en-koszul}) are research
+programmes in their own right (Future~3's higher-dimensional
+shadow).
+
+\medskip
+
+\begin{remark}[Summary of the nine futures]\label{rem:nine-futures-summary}
+\index{modular Koszul duality!nine futures}
+Of the nine programme-level aspirations:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}clc@{}}
+\toprule
+\textbf{\#} & \textbf{Future} & \textbf{Status} \\
+\midrule
+1 & $H^1(\mathcal{M}_g)$-parameterized theory & \textbf{Reformulated \& proved} \\
+2 & Modular Koszul programme & \textbf{Largely realized} \\
+3 & Modular homotopy theory & Alive (Definition~\ref{def:modular-homotopy-theory-working}) \\
+4 & Universal characteristic package & Full 5-tuple formalized (Def.~\ref{def:full-modular-package}); $\Theta_{\cA}$ open \\
+5 & Index-theoretic genus expansions & \textbf{Realized} (Theorem~\ref{thm:family-index}) \\
+6 & Derived Drinfeld--Kohno & Triple bridge formalized (Conj.~\ref{conj:full-dk-bridge}) \\
+7 & Unified periodicity doctrine & Stratified: proved for minimal models/WZW; conjectural in general (Def.~\ref{def:derived-scalar-period}) \\
+8 & Spectral discriminant geometry & \textbf{Proved} + branch object (Def.~\ref{def:spectral-branch-object}) \\
+9 & BV/BRST/physics completion & Genus $0$ proved; $g \geq 1$ open \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+The project is becoming \emph{modular homotopy theory for
+factorization algebras on curves}, with a GRR genus theorem
+(Future~5), a spectral characteristic package (Futures~4, 8), and a
+partial-to-full derived Drinfeld--Kohno bridge (Future~6).  It is no
+longer becoming a single theorematic theory of all-genus corrections
+controlled by $H^1(\mathcal{M}_g)$ parameters (Future~1, superseded)
+or a global periodicity classification (Future~7, stratified).  These
+older self-images have been replaced by more precise ones.
+\end{remark}
+
 
 \subsection{Index of open conjectures}\label{sec:conjecture-index}
 \index{conjectures!index of open problems}
@@ -1736,9 +2392,11 @@ conjecture label, a brief description, and the section where it appears.
 \item Conjecture~\ref{conj:cobar-physical}:
   Cobar construction as physical state space
   (\S\ref{sec:first-complete-proof}).
-\item Theorem~\ref{thm:modular-periodicity-minimal} / Conjecture~\ref{conj:modular-periodicity}:
-  Modular periodicity of bar cohomology (proved for minimal models,
-  conjectured for general rational chiral algebras)
+\item Theorems~\ref{thm:modular-periodicity-minimal},
+  \ref{thm:modular-periodicity-wzw} /
+  Conjecture~\ref{conj:modular-periodicity}:
+  Modular periodicity of bar cohomology (proved for minimal models
+  and WZW; conjectured for general rational chiral algebras)
   (\S\ref{sec:km-koszul-abstract}).
 \item Conjecture~\ref{conj:reflected-modular-periodicity}:
   Reflected periodicity for non-self-dual algebras
@@ -1754,9 +2412,10 @@ conjecture label, a brief description, and the section where it appears.
 \smallskip
 \noindent\textbf{Representation theory and Langlands.}
 \begin{itemize}[nosep]
-\item Conjecture~\ref{conj:kl-from-bar-cobar}:
-  Kazhdan--Lusztig equivalence from bar-cobar
-  (\S\ref{subsec:kl-from-bar-cobar}).
+\item Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}:
+  Kazhdan--Lusztig equivalence from bar-cobar (three stages:
+  periodic CDG, coderived identification, braided monoidality;
+  \S\ref{subsec:kl-from-bar-cobar}).
 \item Conjecture~\ref{conj:full-derived-dk}:
   Full derived Drinfeld--Kohno equivalence
   (\S\ref{sec:derived-dk}).

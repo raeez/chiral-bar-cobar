@@ -5,13 +5,7 @@
 \subsection{Genus one extensions}\label{subsec:elliptic}
 
 \begin{remark}[Elliptic geometry at genus one]
-At genus one, the first quantum corrections appear. The torus $\mathbb{T} = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with modulus $\tau \in \mathfrak{h}$ (upper half-plane) introduces:
-\begin{itemize}
-\item \emph{Periodicity:} Functions must respect $f(z + 1) = f(z + \tau) = f(z)$
-\item \emph{Modular invariance:} Under $SL_2(\mathbb{Z})$ action on $\tau$
-\item \emph{Theta functions:} Natural basis for sections, replacing rational functions
-\end{itemize}
-These structures are imposed by the elliptic geometry of the underlying curve.
+At genus one, the torus $\mathbb{T} = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ introduces double periodicity, $SL_2(\mathbb{Z})$-invariance, and theta functions as the natural basis for sections.
 \end{remark}
 
 \begin{definition}[Elliptic configuration spaces]\label{def:elliptic-config}
@@ -57,7 +51,7 @@ where $\mathcal{F}$ is a fundamental domain. This constraint modifies the bar di
 \end{align}
 where $q = e^{2\pi i\tau}$.
 
-\emph{Step 4: Quantum differential.} The genus-1 bar differential acquires monodromy contributions from the two cycles of $E_\tau$. With $\omega = dz$ the normalized holomorphic differential ($\oint_A \omega = 1$, $\oint_B \omega = \tau$), the period matrix $\Omega_1 = \tau$ enters through the Gauss--Manin connection: sections of the bar complex acquire monodromy $M_A = \mathrm{id}$, $M_B = e^{2\pi i \tau \cdot \partial_z}$ around the $A$- and $B$-cycles respectively.
+\emph{Step 4: Quantum differential.} The genus-$1$ fiberwise differential $\dfib$ (Convention~\ref{conv:higher-genus-differentials}) acquires monodromy contributions from the two cycles of $E_\tau$. With $\omega = dz$ the normalized holomorphic differential ($\oint_A \omega = 1$, $\oint_B \omega = \tau$), the period matrix $\Omega_1 = \tau$ enters through the Gauss--Manin connection: sections of the bar complex acquire monodromy $M_A = \mathrm{id}$, $M_B = e^{2\pi i \tau \cdot \partial_z}$ around the $A$- and $B$-cycles respectively.
 
 \emph{Step 5: Modular transformation.} Under $SL_2(\mathbb{Z})$:
 $$\vartheta_1\left(\frac{z}{c\tau+d}\bigg|\frac{a\tau+b}{c\tau+d}\right) = \epsilon(a,b,c,d)\sqrt{c\tau+d}\,e^{\frac{\pi i cz^2}{c\tau+d}}\vartheta_1(z|\tau)$$
@@ -110,12 +104,7 @@ where $\lambda_1 = c_1(\mathbb{E})$ is the first Chern class of the Hodge bundle
 \end{theorem}
 
 \begin{remark}[Central charge as universal parameter]
-The genus-one theory is controlled by a single invariant: the central charge $c$.  It determines:
-\begin{itemize}
-\item The modular properties at genus one (any $c$ can extend; $c = 0, 15, 26$ are distinguished by anomaly cancellation in string theory)
-\item The modular anomaly ($c/24$ appears in transformation laws)
-\item The vacuum energy shift ($-c/24$ in the partition function)
-\end{itemize}
+The genus-one theory is controlled by a single invariant: the central charge $c$.  It determines the modular properties at genus one (any $c$ can extend; $c = 0, 15, 26$ are distinguished by anomaly cancellation in string theory), the modular anomaly ($c/24$ in transformation laws), and the vacuum energy shift ($-c/24$ in the partition function).
 \end{remark}
 
 % ==========================================
@@ -130,20 +119,14 @@ For a genus $g \geq 2$ curve $\Sigma_g$, the configuration space has a fibration
 $$\pi: \overline{C}_n^{(g)}(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}$$
 with fiber $(\Sigma_g)^n_{\text{ordered}}$ over each point in moduli space.
 
-The boundary stratification consists of:
-\begin{enumerate}
-\item \emph{Collision divisors:} $D_{ij}^{(g)}$ where $z_i \to z_j$
-\item \emph{Separating divisors:} $D_{I|J}^{\text{sep}}$ where $\Sigma_g \to \Sigma_{g_1} \cup \Sigma_{g_2}$, $g_1 + g_2 = g$
-\item \emph{Non-separating divisors:} $D_\gamma^{\text{nonsep}}$ where cycle $\gamma$ is pinched
-\end{enumerate}
-
-Each stratum carries a natural orientation from the complex structure.
+The boundary stratification has three types: collision divisors $D_{ij}^{(g)}$ ($z_i \to z_j$), separating divisors $D_{I|J}^{\text{sep}}$ ($\Sigma_g \to \Sigma_{g_1} \cup \Sigma_{g_2}$, $g_1 + g_2 = g$), and non-separating divisors $D_\gamma^{\text{nonsep}}$ (cycle $\gamma$ pinched). Each stratum carries a natural orientation from the complex structure.
 \end{definition}
 
 \begin{theorem}[Higher-genus bar differential; \ClaimStatusProvedElsewhere{} \cite{CG17,costello-renormalization}]\label{thm:higher-genus-diff}
 \index{bar differential!higher genus}
-The bar differential at genus $g$ has the explicit form:
-$$d^{(g)} = d_{\text{local}} + d_{\text{period}} + d_{\text{moduli}} + d_{\text{quantum}}$$
+The total corrected bar differential at genus $g$
+\textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} has the explicit form:
+$$\Dg{g} = d_{\text{local}} + d_{\text{period}} + d_{\text{moduli}} + d_{\text{quantum}}$$
 
 where:
 \begin{align}
@@ -173,7 +156,7 @@ $$E_2^{p,q} = H^p(\mathcal{M}_g, R^q\pi_*\mathcal{A}) \Rightarrow H^{p+q}(\bar{B
 Each piece of the $E_2$ page contributes a component of the differential:
 \begin{itemize}
 \item $E_2^{0,*}$: Local OPE contributions ($d_{\text{local}}$)
-\item $E_2^{1,*}$: Period-dependent corrections from $H^1(\mathcal{M}_g, R^0\pi_*\mathcal{A})$ ($d_{\text{period}}$)
+\item $E_2^{1,*}$: Period-dependent corrections from $H^1(\mathcal{M}_g, R^0\pi_*\mathcal{A})$ ($d_{\text{period}}$).  (This is \emph{sheaf} cohomology of $R^0\pi_*\mathcal{A}$ on $\mathcal{M}_g$, which can be nontrivial even though $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by Harer's theorem; the period parameters ultimately arise from $H^1(\Sigma_g, \mathbb{C})$ via the local system $R^1\pi_*\underline{\mathbb{C}}$.)
 \item $E_2^{p,*}$ ($p \geq 2$): Higher moduli contributions ($d_{\text{moduli}}$)
 \end{itemize}
 The quantum differential $d_{\text{quantum}}$ arises from the curved $A_\infty$ structure at genus~$g$ (the curving element $m_0^{(g)}$ depending on the moduli), which is encoded in the extension data of the spectral sequence (the $E_2$ page alone determines the graded pieces, but the extensions encode the quantum corrections).
@@ -217,12 +200,7 @@ In particular, the tower is not a simple linear sequence but reflects the modula
 The total complex with string coupling $g_s$:
 $$\bar{B}^{\text{total}}(\mathcal{A}) = \widehat{\bigoplus}_{g=0}^\infty g_s^{2g-2} \bar{B}^{(g)}(\mathcal{A})$$
 
-Each level captures quantum corrections:
-\begin{enumerate}
-\item $g=0$: Tree level (classical limit)
-\item $g=1$: One-loop quantum corrections
-\item $g \geq 2$: Higher loop amplitudes
-\end{enumerate}
+The levels $g=0,1,\geq 2$ correspond to tree-level (classical), one-loop, and higher-loop amplitudes respectively.
 \end{theorem}
 
 \begin{proof}
@@ -325,19 +303,7 @@ For $\mathcal{A} = \widehat{\mathfrak{g}}_k$ at integrable level,
 $H^0(V_{g,n})$ is the space of conformal blocks, and the classical
 modular functor is the one constructed by Tsuchiya--Ueno--Yamada.
 
-The chain-level refinement is necessary for two reasons:
-\begin{enumerate}
-\item \emph{Non-integrable levels}: At generic~$k$, the bar complex
-  does not reduce to a single cohomological degree, and the modular
-  functor structure exists only at chain level.
-\item \emph{Curved case}: When $\kappa \neq 0$, the curvature
-  $m_0^{(g)} = \kappa \cdot \lambda_g$ prevents the bar
-  differential from squaring to zero \emph{strictly} in the
-  uncompleted complex.  The modular functor structure requires
-  working with the completed (formal genus) complex
-  $\bar{B}^{\mathrm{total}}(\mathcal{A})[[\hbar]]$
-  (Theorem~\ref{thm:genus-graded-bar}).
-\end{enumerate}
+The chain-level refinement is necessary for two reasons.  At generic~$k$, the bar complex does not reduce to a single cohomological degree, so the modular functor exists only at chain level.  When $\kappa \neq 0$, the curvature $m_0^{(g)} = \kappa \cdot \lambda_g$ prevents $d^2 = 0$ in the uncompleted complex; one must work with $\bar{B}^{\mathrm{total}}(\mathcal{A})[[\hbar]]$ (Theorem~\ref{thm:genus-graded-bar}).
 \end{remark}
 
 \begin{corollary}[Koszul dual modular functors;
@@ -493,13 +459,14 @@ $\sum_{p} \operatorname{Res}_{q \to p} \Phi(q)\,
 \omega_{g,n+1}(q, z_1, \ldots, z_n)
 = (2g-2+n)\,\omega_{g,n}(z_1,\ldots,z_n)$
 where $\Phi = \int^z y\,dx$ is the primitive.
-\item \emph{Loop equations}: The constraint $d^2_{\mathrm{bar}} = 0$
-(Theorem~\ref{thm:genus-induction-strict}) restricted to the
+\item \emph{Loop equations}: The constraint $\Dg{g}^{\,2} = 0$
+(Theorem~\ref{thm:genus-induction-strict},
+Convention~\ref{conv:higher-genus-differentials}) restricted to the
 genus-$g$ sector yields quadratic relations among the
 $\omega_{g',n'}$ for $2g'+n' < 2g+n$.  These are precisely
-the loop equations: $d_{\mathrm{bar}}$ decomposes
+the loop equations: the total corrected differential decomposes
 into a ``residue'' part (extracting OPE poles) and a
-``degeneration'' part (contracting edges), and $d^2 = 0$ says
+``degeneration'' part (contracting edges), and $\Dg{g}^{\,2} = 0$ says
 the composition of residue-then-degenerate equals
 degenerate-then-residue.
 \end{itemize}
@@ -527,7 +494,7 @@ the axioms, but their verification for non-Koszul algebras remains open.
 \end{remark}
 
 \begin{construction}[Higher genus bar differentials]\label{con:higher-genus-bar}
-Given a chiral algebra $\mathcal{A}$, genus $g$, and degree $n$, the bar differential $d^{(g)}_n$ and correlation $\omega_{g,n}$ are computed recursively.
+Given a chiral algebra $\mathcal{A}$, genus $g$, and degree $n$, the total corrected bar differential $\Dg{g}$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} in degree~$n$ and the correlation $\omega_{g,n}$ are computed recursively.
 
 \emph{Step~1: Initialization.}
 Set $\omega_{0,n}$ to be the tree-level OPE coefficients and let $\mathcal{K}$ denote the Bergman kernel on the spectral curve.
@@ -603,16 +570,13 @@ $k \neq -h^\vee$, not just $c = 26$.
 Conjecture~\ref{conj:string-amplitude-bar} extends this to all
 genera, which requires the higher-genus BRST-bar identification
 (Conjecture~\ref{conj:anomaly-physical}).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies bar complex cohomology with string scattering amplitudes at all genera, extending the proved genus-$0$ case to the full string perturbation series.
 \end{remark}
 
 \begin{remark}[Physical interpretation]
-Each term in the recursion corresponds to a Feynman diagram:
-\begin{itemize}
-\item Vertices: Chiral algebra elements (local operators)
-\item Edges: Propagators (Green's functions on $\Sigma_g$)
-\item Loops: Genus contributions (quantum corrections)
-\end{itemize}
-Under this correspondence, the bar differential is identified with the BRST operator of string theory.
+Each term in the recursion corresponds to a Feynman diagram, with vertices given by chiral algebra elements (local operators), edges by propagators (Green's functions on $\Sigma_g$), and loops by genus contributions (quantum corrections).  Under this correspondence, the bar differential is identified with the BRST operator of string theory.
 \end{remark}
 
 \begin{conjecture}[Holographic duality via bar-cobar; \ClaimStatusConjectured]
@@ -635,12 +599,7 @@ The precise correspondence:
 $$Z_{\text{CFT}}[\mathcal{J}] = Z_{\text{gravity}}[\phi_0 = \mathcal{J}]$$
 where the bar complex computes the gravity path integral.
 
-The genus expansion provides the $1/N$ expansion in the holographic dual:
-\begin{itemize}
-\item Genus 0 = Large $N$ limit (classical gravity)
-\item Genus 1 = $1/N$ corrections (1-loop quantum gravity)
-\item Genus $g$ = $1/N^{2g}$ corrections
-\end{itemize}
+The genus expansion provides the $1/N$ expansion: genus $0$ is the large-$N$ limit (classical gravity), genus $1$ gives $1/N$ corrections (one-loop quantum gravity), and genus $g$ gives $1/N^{2g}$ corrections.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -656,6 +615,9 @@ parameter with $1/N$, which involves the 't~Hooft limit; and
 (c)~the matching of Witten diagrams with conformal blocks, which requires
 the bulk-to-boundary propagator.  These are physics inputs beyond the
 scope of this monograph.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies bar-cobar duality with the AdS$_3$/CFT$_2$ correspondence, with the genus expansion providing the $1/N$ expansion of the holographic dual.
 \end{remark}
 
 % ==========================================
@@ -666,7 +628,7 @@ scope of this monograph.
 
 \begin{remark}[Extended prism principle]\label{rem:extended-prism}
 \index{prism principle!higher genus}
-The genus expansion stratifies the algebraic structure by topological complexity: genus $0$ gives tree-level operations, genus $1$ introduces modular forms as one-loop corrections, and genus $g$ brings Siegel modular forms of degree $g$.  The invariants of a genus-$g$ surface --- first Betti number $b_1 = 2g$, moduli dimension $\dim_\mathbb{C} \mathcal{M}_g = 3g - 3$, period matrix $\Omega \in \mathfrak{H}_g$ --- control the complexity of the quantum corrections at each level.
+The genus expansion stratifies algebraic structure by topological complexity: genus $0$ gives tree-level operations, genus $1$ introduces modular forms, genus $g$ brings Siegel modular forms of degree $g$.  The invariants $b_1 = 2g$, $\dim_\mathbb{C} \mathcal{M}_g = 3g - 3$, and $\Omega \in \mathfrak{H}_g$ control the quantum corrections at each level.
 \end{remark}
 
 \begin{theorem}[Poincaré--Verdier duality extended; \ClaimStatusProvedElsewhere{} \cite{BD04,FG12}]\label{thm:poincare-extended}
@@ -698,22 +660,7 @@ modular operad $\{\overline{\mathcal{M}}_{g,n}\}$
 \end{proof}
 
 \begin{remark}[Towards a classification]\label{rem:universal-classification}
-The question of which chiral algebras extend to all genera admits several necessary conditions from different perspectives:
-
-\noindent\emph{Algebraic conditions} (known to be sufficient for genus one):
-\begin{itemize}
-\item Rationality: finitely many irreducible modules
-\item Modularity: characters are vector-valued modular forms
-\item Integrality: fusion coefficients in $\mathbb{Z}_{\geq 0}$
-\end{itemize}
-
-\noindent\emph{Geometric conditions} (sufficient for factorization algebras):
-\begin{itemize}
-\item Factorization: compatible with degeneration of curves
-\item Locality: satisfies cluster decomposition
-\end{itemize}
-
-The precise relationship between these conditions is not fully understood. Rationality together with $C_2$-cofiniteness (Zhu's condition) implies modularity of characters, and the factorization property is automatic for vertex algebras satisfying the axioms of Beilinson--Drinfeld. However, the converse implications are largely open, and no single set of conditions is known to be both necessary and sufficient for extension to all genera.
+Extension to all genera requires algebraic conditions (rationality, modularity of characters, integral fusion coefficients) and geometric conditions (factorization compatibility, locality).  Rationality with $C_2$-cofiniteness implies modularity (Zhu); factorization is automatic for Beilinson--Drinfeld vertex algebras.  The converse implications are largely open.
 \end{remark}
 
 \begin{remark}[Finite data]\label{rem:finite-data-genus}

@@ -2,9 +2,9 @@
 \index{Hochschild cohomology!classical}
 \index{cyclic homology!chiral}
 
-In Chapter~\ref{ch:heisenberg-frame}, the curvature $d^2 = \kappa \cdot \omega_1$ at genus~$1$ signaled that deformations of the bar complex are controlled by a cohomological invariant.  Hochschild cohomology is the algebraic home of this invariant: it organizes all infinitesimal deformations and obstructions of a chiral algebra into a single graded object equipped with a Gerstenhaber bracket.
+In Chapter~\ref{ch:heisenberg-frame}, the fiberwise curvature $\dfib^{\,2} = \kappa \cdot \omega_1$ at genus~$1$ signaled that deformations of the bar complex are controlled by a cohomological invariant.  Hochschild cohomology is the algebraic home of this invariant: it organizes all infinitesimal deformations and obstructions of a chiral algebra into a single graded object equipped with a Gerstenhaber bracket.
 
-The preceding chapters constructed the bar-cobar adjunction (Theorem~A), proved inversion on the Koszul locus (Theorem~B), and established deformation-obstruction complementarity (Theorem~C).  The natural question is: what controls the deformations \emph{themselves}?  For associative algebras, the answer is Hochschild cohomology; for chiral algebras, the answer is a chiral enhancement that incorporates OPE data, the geometry of the curve, and the $A_\infty$ structure of the bar complex.  This chapter develops chiral Hochschild cohomology and its spectral sequence, completing the theoretical foundations of Part~I.
+Chiral Hochschild cohomology enhances the classical theory by incorporating OPE data, the geometry of the curve, and the $A_\infty$ structure of the bar complex.
 
 \section{Classical to chiral}
 
@@ -14,7 +14,7 @@ For an associative algebra $A$ over $\mathbb{C}$, the Hochschild cohomology $HH^
 
 $$HH^n(A, M) = \text{Ext}^n_{A \otimes A^{op}}(A, M)$$
 
-The bar resolution provides the computational tool:
+The bar resolution computes it:
 $$\cdots \to A \otimes A \otimes A \xrightarrow{b} A \otimes A \xrightarrow{b} A$$
 where $b(a_0 \otimes \cdots \otimes a_{n+1}) = \sum_{i=0}^n (-1)^i a_0 \otimes \cdots \otimes a_ia_{i+1} \otimes \cdots \otimes a_{n+1}$.
 
@@ -206,8 +206,8 @@ The class $[\beta\gamma]$ corresponds to the exactly marginal operator changing 
 
 \subsection{Formal deformation theory}
 
-The formal deformation space is controlled by the differential graded Lie algebra:
-$$\mathfrak{g}_{\mathcal{A}} = \ChirHoch^*(\mathcal{A}, \mathcal{A})[1]$$
+The formal deformation space is controlled by the differential graded Lie algebra
+$\mathfrak{g}_{\mathcal{A}} = \ChirHoch^*(\mathcal{A}, \mathcal{A})[1]$
 with bracket induced by the cup product.
 
 \begin{theorem}[Maurer--Cartan equation {\cite{KontsevichSoibelman}}; \ClaimStatusProvedElsewhere]
@@ -219,28 +219,20 @@ $$d\alpha + \frac{1}{2}[\alpha, \alpha] = 0, \quad \alpha \in \mathfrak{g}_{\mat
 
 \subsection{Marginal operators and RG flow}
 
-In CFT, marginal operators have dimension $(1,1)$. They correspond to:
-$$\ChirHoch^2_{\text{marginal}}(\mathcal{A}) = \{\omega \in \ChirHoch^2 : h(\omega) = 1\}$$
-
-The beta function vanishes iff the obstruction in $\ChirHoch^3$ vanishes.
+In CFT, marginal operators have dimension $(1,1)$ and correspond to
+$\ChirHoch^2_{\text{marginal}}(\mathcal{A}) = \{\omega \in \ChirHoch^2 : h(\omega) = 1\}$.
+The beta function vanishes if and only if the obstruction in $\ChirHoch^3$ vanishes.
 
 \subsection{String field theory}
 
 The bar complex computes the BRST cohomology:
 $$H^*_{\text{BRST}}(\text{String}[\mathcal{A}]) \cong \ChirHoch^*(\mathcal{A})$$
 
-String vertices are encoded in the $A_\infty$ structure:
-\begin{itemize}
-\item $m_2$: Three-string vertex
-\item $m_3$: Four-string contact term
-\item Higher $m_k$: Multi-string interactions
-\end{itemize}
+String vertices are encoded in the $A_\infty$ structure: $m_2$ gives the three-string vertex, $m_3$ the four-string contact term, and higher $m_k$ the multi-string interactions.
 
 \section{Computational tools}
 
 \subsection{Spectral sequences}
-
-The bar complex induces several spectral sequences:
 
 \begin{theorem}[Bar spectral sequence {\cite{LV}}; \ClaimStatusProvedElsewhere]
 $$E_1^{p,q} = H^q(\ConfigSpace{p}(X), \mathcal{A}^{\boxtimes p}) \Rightarrow \ChirHoch^{p+q}(\mathcal{A})$$
@@ -310,7 +302,7 @@ $$\text{HC}_*^{\text{ch}}(\beta\gamma) = \mathbb{C}[c] \otimes
    \mathbb{C}[\beta_0^{-1}, \gamma_0^{-1}]_{\text{formal}}$$
 (completed polynomial ring in inverse zero modes).
 
-We compute these through degree 5 with all differentials explicitly.
+The zero-mode periodicity in $\text{HC}_*^{\text{ch}}(\beta\gamma)$ reflects the symplectic pairing of the $\beta\gamma$ system: the inverse zero modes span the deformation space of the Lagrangian splitting.
 \end{computation}
 
 \begin{remark}[Functoriality]

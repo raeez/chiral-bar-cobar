@@ -1,40 +1,19 @@
 \chapter{Configuration spaces}
 \label{chap:config-spaces}
 
-The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ that served as propagators in the Heisenberg bar complex (Chapter~\ref{ch:heisenberg-frame}) live naturally on Fulton--MacPherson compactifications of configuration spaces. This chapter develops the geometry of these compactifications: their boundary stratification, the Orlik--Solomon algebra of logarithmic forms, and the Arnold relations that ensured $d^2 = 0$ in the Heisenberg case.
+The propagators $\eta_{ij} = d\log(z_i - z_j)$ from the Heisenberg bar complex (Chapter~\ref{ch:heisenberg-frame}) live on Fulton--MacPherson compactifications of configuration spaces.  This chapter constructs these compactifications, develops the Orlik--Solomon algebra, and proves the Arnold relations forcing $d^2 = 0$.
 
 \section{Fulton--MacPherson compactification}
 \label{sec:FM-compactification}
 
-The preceding chapter developed Koszul duality as a formal
-adjunction on dg-categories.  This chapter gives it a geometric
-body.  The key identification is:
-\begin{quote}
-\emph{The bar differential on a chiral algebra is the residue map
-on Fulton--MacPherson compactifications, and Verdier duality on
-configuration spaces exchanges bar and cobar.}
-\end{quote}
-Configuration spaces $C_n(X)$ parametrize $n$ distinct insertion
-points on the curve; the Fulton--MacPherson compactification
-$\overline{C}_n(X)$ adds boundary divisors encoding all collision
-patterns; logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ carry
-the correct singularity data.  The Arnold relations among these
-forms translate into $d^2 = 0$ for the bar differential.  Verdier
-duality on these spaces
 \index{Verdier duality!on configuration spaces}
-\begin{align*}
-\overline{C}_n(X) &\xleftrightarrow{\mathbb{D}} C_n(X)\\
-\text{logarithmic forms} &\xleftrightarrow{\text{pairing}} \text{distributions}
-\end{align*}
-realizes the Ran-space duality $\mathbb{D}_{\operatorname{Ran}}
-\bar{B}_X(\cA) \simeq \bar{B}_X(\cA^!)$ at the chain level.
-Everything in this monograph --- the genus tower, the
-complementarity of quantum corrections, the discriminant invariant
---- rests on the geometry developed here.
+The Fulton--MacPherson compactification $\overline{C}_n(X)$ adds
+boundary divisors encoding all collision patterns.  Verdier duality exchanges logarithmic forms
+(bar) and distributions (cobar), realizing
+$\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \simeq
+\bar{B}_X(\cA^!)$ at the chain level.
 
 \subsection{Explicit construction}
-
-The Fulton--MacPherson compactification is built through iterated blow-ups. We provide complete details.
 
 \begin{definition}[Configuration space at genus $g$]\label{def:config-space-genus-g}
 \index{configuration space!ordered|textbf}
@@ -44,35 +23,9 @@ $$C_n(\Sigma_g) = \{(x_1, \ldots, x_n) \in \Sigma_g^n \mid x_i \neq x_j \text{ f
 This is an open dense subset of $\Sigma_g^n$, with complement the ``fat diagonal'' $\Delta = \bigcup_{i<j} \Delta_{ij}$.
 \end{definition}
 
-\begin{remark}[Necessity of compactification]\label{rem:why-compactify}
-The configuration space $C_n(\Sigma_g)$ is highly non-compact. Points can ``escape to infinity'' through various collision patterns:
-\begin{itemize}
-\item \emph{Simultaneous collision:} Multiple points approach the same location
-\item \emph{Sequential collision:} Points collide in stages with different rates
-\item \emph{Angular information:} The relative angles of approach matter
-\item \emph{Topological degenerations (genus $g \geq 1$):} Cycles can pinch, creating nodal curves
-\end{itemize}
-
-Naive compactifications fail because:
-\begin{enumerate}
-\item Simply adding ``collision loci'' creates singularities
-\item Different collision patterns need to be distinguished
-\item The chiral algebra OPE requires knowing \emph{how} points collide, not just \emph{that} they collide
-\item At boundaries, we need well-defined residue operations
-\end{enumerate}
-
-The Fulton--MacPherson compactification \cite{FM94} solves these problems by:
-\begin{itemize}
-\item Performing systematic blow-ups along diagonals
-\item Recording collision rates and angles in the exceptional divisors  
-\item Creating a smooth compactification with normal crossing boundary
-\item Preserving functoriality for embeddings and automorphisms
-\end{itemize}
-\end{remark}
-
 \subsection{The Fulton--MacPherson compactification across genera}
 
-We construct the Fulton--MacPherson compactification following \cite{FM94, BD04}. Blow-ups encode not just \emph{which} points collide, but \emph{how} they collide---their relative rates and angles of approach.  For a logarithmic variant applicable to punctured curves and stable curves with nodes, see Mok~\cite{Mok25}.
+The configuration space $C_n(\Sigma_g)$ is non-compact.  The Fulton--MacPherson compactification~\cite{FM94} resolves this by iterated blow-ups along diagonals, recording collision rates and angles in exceptional divisors. For a logarithmic variant on punctured and nodal curves, see Mok~\cite{Mok25}.
 
 \subsubsection{Iterated blow-up construction}
 
@@ -103,7 +56,7 @@ where the first factor records the collision center plus the remaining $n-|S|$ p
 \end{theorem}
 
 \begin{proof}[Construction]
-We construct $\overline{C}_n(\Sigma_g)$ through a specific sequence of blow-ups that ensures smoothness and functoriality. The construction proceeds in stages:
+The construction proceeds in stages:
 
 \medskip
 \noindent\emph{Stage 0: Initial Space}
@@ -182,17 +135,7 @@ compatible with boundary stratification.
 \end{proof}
 
 \begin{remark}[Recording collision data]\label{rem:recording-collisions}
-The Fulton--MacPherson compactification is designed to answer the question: \emph{``When points collide, how are they approaching each other?''}
-
-\begin{itemize}
-\item \emph{Rates:} If $z_i \to z_j$ as $t \to 0$, at what rate? The blow-up records $|z_i - z_j| \sim \epsilon(t)$.
-\item \emph{Angles:} From which direction? The blow-up records $\arg(z_i - z_j) = \theta$.
-\item \emph{Hierarchies:} If points collide in stages ($z_1, z_2$ collide first, then their center collides with $z_3$), the nested blow-ups record this hierarchy.
-\end{itemize}
-
-This is precisely what is needed for OPE:
-$$\phi_i(z)\phi_j(w) = \sum_k \frac{C_{ij}^k(z,w)}{(z-w)^{h_i+h_j-h_k}} \phi_k(w) + \cdots$$
-The rate $\epsilon \sim |z-w|$ and angle $\theta \sim \arg(z-w)$ appear explicitly in the expansion.
+The blow-up records collision rates $|z_i - z_j| \sim \epsilon(t)$, approach angles $\arg(z_i - z_j) = \theta$, and hierarchies (nested collisions produce screens within screens).  These are the data appearing in the OPE $\phi_i(z)\phi_j(w) = \sum_k C_{ij}^k(z,w)/(z-w)^{h_i+h_j-h_k} \cdot \phi_k(w) + \cdots$.
 \end{remark}
 
 \subsubsection{Boundary stratification and stable curves}
@@ -268,23 +211,7 @@ This gives a divisor parametrizing nodal genus 1 curves with 2 marked points.
 \end{example}
 
 \begin{remark}[Connection to moduli of stable curves]\label{rem:moduli-stable-curves}
-The Fulton--MacPherson compactification is intimately related to the Deligne--Mumford--Knudsen compactification $\overline{\mathcal{M}}_{g,n}$ of the moduli space of curves \cite{DM69, Knu83}. 
-
-For a fixed smooth curve $\Sigma_g$, there is a natural \emph{stabilization} map:
-$$\pi: \overline{C}_n(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}, \qquad (p_1, \ldots, p_n) \mapsto [\Sigma_g; p_1, \ldots, p_n]^{\mathrm{st}}$$
-that records the stable $n$-pointed curve obtained by stabilizing $(\Sigma_g, p_1, \ldots, p_n)$ (contracting any unstable rational components in the bubble tree).
-
-\begin{itemize}
-\item The image lies in the closure of the locus of curves isomorphic to $\Sigma_g$.
-\item Over boundary strata of $\overline{\mathcal{M}}_{g,n}$, the bubble tree structure of $\overline{C}_n(\Sigma_g)$ maps to the nodal curve structure of $\overline{\mathcal{M}}_{g,n}$.
-\end{itemize}
-
-This connection underlies:
-\begin{enumerate}
-\item \emph{Modular properties:} The chiral algebra correlators are sections of line bundles over $\overline{\mathcal{M}}_{g,n}$
-\item \emph{Factorization:} Degenerations correspond to factorization of correlation functions
-\item \emph{Anomalies:} Failure of sections to extend over boundary = conformal anomalies
-\end{enumerate}
+For a fixed smooth curve $\Sigma_g$, stabilization gives a map $\pi: \overline{C}_n(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}$ sending $(p_1, \ldots, p_n) \mapsto [\Sigma_g; p_1, \ldots, p_n]^{\mathrm{st}}$.  Its image lies in the closure of the locus of curves isomorphic to $\Sigma_g$, and over boundary strata the bubble tree structure maps to the nodal curve structure.  This underlies the modular properties of chiral correlators and the identification of conformal anomalies with failure of sections to extend over the boundary.
 \end{remark}
 
 \subsubsection{Local coordinates and blow-up charts}
@@ -399,8 +326,6 @@ $$D_{12} = \{\epsilon = 0\} \cong \Sigma_g \times \Sigma_g$$
 
 \subsubsection{Normal crossing property and residues}
 
-The normal crossing property of the boundary divisor ensures that residues are well-defined.
-
 \begin{theorem}[Normal crossings; \ClaimStatusProvedHere]\label{thm:normal-crossings}
 \index{normal crossings|textbf}
 \index{boundary divisor|textbf}
@@ -461,8 +386,6 @@ which is the expected codimension for the intersection, confirming transversalit
 \subsection{Stratification}
 
 \subsubsection{Incidence relations and poset structure}
-
-The boundary strata form a partially ordered set (poset) encoding collision hierarchies.
 
 \begin{definition}[Stratification poset]\label{def:stratification-poset}
 Define a partial order on partitions $\pi \in \Pi_n^{\geq 2}$:
@@ -749,8 +672,6 @@ coordinate on $\Sigma_g$.
 
 \begin{theorem}[Residue operations; \ClaimStatusProvedHere]\label{thm:residue-operations}
 \index{residue!along divisor|textbf}
-For the Heisenberg algebra, the bar differential $d_{\mathrm{res}}$ extracted the double-pole coefficient $k$ at each collision divisor (\S\ref{sec:frame-bar-deg1}).  The following theorem gives the general residue machinery.
-
 For a normal crossing divisor $D = \bigcup_\alpha D_\alpha$ in $\overline{C}_n(\Sigma_g)$, there are well-defined residue maps:
 $$\text{Res}_{D_\alpha}: \Omega^{\bullet}_{\overline{C}_n(\Sigma_g)}(\log D) \to \Omega^{\bullet-1}_{D_\alpha}(\log D_\alpha^\partial)$$
 where $D_\alpha^\partial := D_\alpha \cap \bigcup_{\beta\neq\alpha} D_\beta$ is the induced boundary on $D_\alpha$.
@@ -1301,102 +1222,8 @@ a wedge product of propagator forms, vanishes identically.
 This exemplifies how configuration spaces encode both local (OPE) and global (monodromy) data across all genera.
 \end{example}
  
-\subsection{Logarithmic differential forms}
-
-\begin{remark}[Logarithmic forms]
-Logarithmic forms are the unique meromorphic 1-forms with prescribed residues at collision divisors. When operators collide in conformal field theory, the singularity structure is captured by forms $d\log(z_i - z_j)$. Making these forms single-valued requires choosing branch cuts, and these choices encode the monodromy data that will later appear in our $A_\infty$ relations.
-\end{remark}
-
-
-\begin{definition}[Branch cut convention]
-For each pair $(i,j)$ with $i < j$, we fix a branch of $\log(z_i - z_j)$ as follows:
-\begin{enumerate}
-\item Choose a basepoint $* \in C_n(X)$
-\item For intuition: think of this as choosing a reference configuration where all points are well-separated
-
-\item For each loop $\gamma$ based at $*$, define the monodromy $M_\gamma: \mathbb{C} \to \mathbb{C}$
-\item The monodromy measures how our chosen branch of the logarithm changes as points wind around each other
-
-\item Fix the branch by requiring $M_\gamma = \text{id}$ for contractible loops
-\item This is equivalent to choosing a trivialization of the local system of logarithms over the universal cover
-\item For concreteness on $X = \mathbb{C}$, we use the principal branch: $-\pi < \text{Im}(\log(z_i - z_j)) \leq \pi$
-
-\item This determines $\log(z_i - z_j)$ up to a constant, which we fix by continuity from the basepoint
-\item The constant is normalized so that $\log(1) = 0$
-\end{enumerate}
-The resulting logarithmic forms are single-valued on the universal cover $\widetilde{C_n(X)}$.
-\end{definition}
-
-\begin{remark}[Monodromy consistency] The choice of branch cuts must be compatible with the factorization structure of the chiral algebra. Specifically, for any three points $z_i, z_j, z_k$, the monodromy around the total diagonal satisfies:
-$$M_{ijk} = M_{ij} \circ M_{jk} \circ M_{ki}$$
-This ensures the Arnold relations lift consistently to the universal cover.
-\end{remark}
-
-\begin{definition}[Logarithmic forms with poles]
-The sheaf of logarithmic $p$-forms on $\overline{C}_n(X)$ is the subsheaf of meromorphic forms:
-$$\Omega^p_{\overline{C}_n(X)}(\log D) = \{p\text{-forms } \omega : \omega \text{ and } d\omega \text{ have at most simple poles along } D\}$$
-
-In local coordinates $(u_1,\ldots,u_n,\epsilon_{ij},\theta_{ij})_{i<j}$ near a boundary stratum:
-$$\Omega^p_{\overline{C}_n(X)}(\log D) = \bigoplus_{I \subset \{(i,j): i<j\}} \Omega^{p-|I|}_{smooth} \wedge \bigwedge_{(i,j) \in I} d\log\epsilon_{ij}$$
-\end{definition}
-
-\begin{proposition}[Logarithmic form properties \cite{Deligne71}; \ClaimStatusProvedElsewhere]
-The forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy:
-\begin{enumerate}
-\item $\eta_{ji} = \eta_{ij}$ as differential forms: $d\log(z_j - z_i) = d\log(z_i - z_j)$ since $\log(z_j-z_i)$ and $\log(z_i-z_j)$ differ by the constant $i\pi$, which is killed by $d$ (see Proposition~\ref{prop:eta})
-\item Near $D_{ij}$: $\eta_{ij} = d\log\epsilon_{ij} + id\theta_{ij} + O(\epsilon_{ij})$
-\item $\text{Res}_{D_{ij}}[\eta_{ij}] = 1$ (normalization)
-\item $d\eta_{ij} = 0$ away from higher codimension strata
-\item The residue map $\text{Res}_{D_{ij}}: \Omega^p(\log D) \to \Omega^{p-1}(D_{ij})$ is well-defined
-\end{enumerate}
-\end{proposition}
-
-Near a boundary divisor $D_{ij}$ where points $x_i \to x_j$ collide, we use blow-up coordinates:
- 
-\begin{definition}[Blow-up coordinates]\label{def:blowup}
-Near $D_{ij} \subset \barC_n(X)$, introduce coordinates:
-\begin{align}
-u_{ij} &= \frac{x_i + x_j}{2} \quad \text{(center of collision)} \\
-\epsilon_{ij} &= |x_i - x_j| \quad \text{(separation, serves as normal coordinate to } D_{ij}) \\
-\theta_{ij} &= \arg(x_i - x_j) \quad \text{(angle of approach)}
-\end{align}
-In these coordinates:
-\begin{align}
-x_i &= u_{ij} + \frac{\epsilon_{ij}}{2}e^{i\theta_{ij}} \\
-x_j &= u_{ij} - \frac{\epsilon_{ij}}{2}e^{i\theta_{ij}}
-\end{align}
-\end{definition}
-
-\begin{proposition}[Explicit local charts for $\overline{C}_n(X)$ \cite{FM94}; \ClaimStatusProvedElsewhere]\label{prop:local-charts}
-Near a boundary divisor $D_{ij}$ where $z_i \to z_j$, introduce local coordinates:
-\begin{align}
-w &= z_j \quad \text{(center of collision)} \\
-\epsilon &= z_i - z_j \quad \text{(separation, goes to 0)} \\
-\zeta_k &= \frac{z_k - z_j}{z_i - z_j} \quad \text{for } k \neq i,j
-\end{align}
-
-The compactification replaces $\epsilon \to 0$ with a $\mathbb{P}^1$ of ``directions of approach.''
-The logarithmic form becomes:
-$$\eta_{ij} = d\log \epsilon = \frac{d\epsilon}{\epsilon}$$
-having a simple pole along $D_{ij} = \{\epsilon = 0\}$.
-
-This construction is:
-\begin{itemize}
-\item \emph{Canonical}: Independent of choices (uses only the complex structure)
-\item \emph{Functorial}: Natural with respect to curve morphisms
-\item \emph{Minimal}: The unique smooth compactification with normal crossing divisors
-\end{itemize}
-\end{proposition}
- 
-The basic logarithmic 1-forms that will appear throughout our constructions are:
- 
-\begin{definition}[Basic logarithmic forms]
-For distinct indices $i, j \in \{1, \ldots, n\}$, define:
-\[
-\eta_{ij} = d\log(x_i - x_j) = \frac{dx_i - dx_j}{x_i - x_j}
-\]
-These forms have simple poles along $D_{ij}$ and are regular elsewhere.
-\end{definition}
+% Logarithmic forms and blow-up coordinates: see Definition~\ref{def:log-forms},
+% Theorem~\ref{thm:local-coords-boundary}, and Proposition~\ref{prop:eta}.
  
 \begin{proposition}[Properties of $\eta_{ij}$; \ClaimStatusProvedHere]\label{prop:eta}
 The forms $\eta_{ij}$ satisfy:
@@ -1427,32 +1254,7 @@ For (4), since $\eta_{ij}$ is locally $d$ of a function away from other collisio
  
 The logarithmic forms $\eta_{ij}$ generate a differential graded algebra with the following properties:
 
-\subsubsection{Three-term relation}
-\begin{theorem}[Arnold relations; \ClaimStatusProvedHere]
-For any triple of distinct indices $i, j, k \in \{1,\ldots,n\}$:
-$$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$$
-\end{theorem}
-
-\begin{proof}
-We work on the universal cover to avoid branch issues. Define:
-$$\omega = \eta_{ij} + \eta_{jk} + \eta_{ki} = d\log((z_i - z_j)(z_j - z_k)(z_k - z_i))$$
-
-Since $\omega = df$ for a single-valued function $f$ on the universal cover, we have $d\omega = 0$.
-
-Computing explicitly:
-\begin{align}
-d\omega &= d\eta_{ij} + d\eta_{jk} + d\eta_{ki}\\
-&= 0 \text{ away from higher codimension}
-\end{align}
-
-At the codimension-2 stratum $D_{ijk}$ where all three points collide, we use residue calculus:
-$$\text{Res}_{D_{ijk}}[\eta_{ij} \wedge \eta_{jk}] = \lim_{(z_i,z_j,z_k) \to (z,z,z)} \left[\frac{dz_i - dz_j}{z_i - z_j} \wedge \frac{dz_j - dz_k}{z_j - z_k}\right]$$
-
-In blow-up coordinates with $z_i = z + \epsilon_1 e^{i\theta_1}$, $z_j = z$, $z_k = z + \epsilon_2 e^{i\theta_2}$:
-$$\eta_{ij} \wedge \eta_{jk} = d\log\epsilon_1 \wedge d\log\epsilon_2 + \text{(angular terms)}$$
-
-The sum of all three terms gives zero by symmetry under $S_3$ action.
-\end{proof}
+The Arnold relations (Theorem~\ref{thm:arnold-relations}) hold in the OS algebra.
  
 \begin{theorem}[Cohomology via Orlik--Solomon {\cite{Arnold69,OS80}}; \ClaimStatusProvedElsewhere]\label{thm:os-cohomology-config}
 \index{Orlik--Solomon algebra|textbf}
@@ -1543,10 +1345,6 @@ This category has:
 \end{itemize}
 \end{definition}
 
-We now introduce the fundamental geometric object underlying chiral algebras---the Ran space---which 
-encodes the idea of ``finite subsets with multiplicities'' of a curve. Following Beilinson--Drinfeld 
-\cite{BD04}, we work with the following precise categorical framework.
- 
 \begin{definition}[Ran space via categorical colimit]\label{def:ran-precise}
 \index{Ran space|textbf}
 Let $X$ be a smooth algebraic curve over $\mathbb{C}$. The \emph{Ran space} of $X$ is the ind-scheme 
@@ -1974,8 +1772,6 @@ equivalence is functorial and preserves quasi-isomorphisms.
  
 \subsection{NBC bases and computational optimality}
  
-The no-broken-circuit (NBC) basis provides the computationally optimal choice for the Orlik--Solomon algebra.
- 
 \begin{definition}[NBC basis]
 For the configuration space $C_n(X)$, an NBC basis element corresponds to a forest $F$ on vertices $\{1,\ldots,n\}$ with edges $(i,j)$ where $i < j$, such that $F$ contains no broken circuit.
 \end{definition}
@@ -2197,15 +1993,7 @@ Correctness follows from the residue formula in Theorem~\ref{thm:residue-operati
 \label{sec:arnold-three-proofs-comprehensive}
 \label{sec:arnold-chiral}
 
-The Arnold relations are the fundamental identities ensuring that the geometric bar
-differential satisfies $d^2 = 0$. These relations connect to:
-\begin{itemize}
-\item \emph{Topology}: Cohomology of braid groups and hyperplane arrangements
-\item \emph{Geometry}: Boundary structure of configuration space compactifications
-\item \emph{Algebra}: Quadratic-cubic relations in Orlik--Solomon algebras
-\end{itemize}
-
-We present three complete, independent proofs, each emphasizing a different aspect of the structure.
+The Arnold relations admit three independent proofs---topological (partial fractions), geometric (boundary calculus), and algebraic (Orlik--Solomon)---each revealing different structure.
 
 \subsection{Proof I: topological perspective (braid group cohomology)}
 \label{sec:arnold-proof-topological}
@@ -2318,13 +2106,6 @@ We verify directly:
 Therefore: $S = 0$, proving the Arnold relation. \qedhere
 \end{proof}
 
-\begin{remark}[Historical context]
-This proof is due to Arnold \cite{Arnold69}, who discovered these relations while 
-studying the cohomology of braid groups. Configuration spaces 
-of points are complements of hyperplane arrangements, and their cohomology rings have 
-quadratic presentations (the Arnold relations are degree 2 in the exterior algebra).
-\end{remark}
-
 \begin{corollary}[Nilpotency from Arnold relations; \ClaimStatusProvedHere]
 \label{cor:nilpotency-arnold-comprehensive}
 The Arnold relations ensure that the bar differential $d = \sum_{D} \text{Res}_D$ 
@@ -2394,20 +2175,7 @@ components:
 \end{equation}
 where $D_T$ corresponds to a rooted tree $T$ with $n$ leaves.
 
-For example, with $n=3$ points, there are three codimension-1 boundaries:
-\begin{itemize}
-\item $D_{12} = \{z_1 \to z_2\}$: points 1 and 2 collide
-\item $D_{23} = \{z_2 \to z_3\}$: points 2 and 3 collide
-\item $D_{13} = \{z_1 \to z_3\}$: points 1 and 3 collide
-\end{itemize}
-
-There are three codimension-2 corners, corresponding to the three binary trees on $\{1,2,3\}$:
-\begin{itemize}
-\item $D_{12} \cap D_{123}$: first $z_1 \to z_2$, then the cluster collides with $z_3$
-\item $D_{13} \cap D_{123}$: first $z_1 \to z_3$, then the cluster collides with $z_2$
-\item $D_{23} \cap D_{123}$: first $z_2 \to z_3$, then the cluster collides with $z_1$
-\end{itemize}
-Note that $D_{ij} \cap D_{jk} = \emptyset$ for distinct pairs $\{i,j\}$ and $\{j,k\}$: the blowup of the total diagonal separates these boundary divisors.
+For $n=3$, the three codimension-$1$ boundaries are $D_{12}$, $D_{23}$, $D_{13}$ (pairwise collisions).  The three codimension-$2$ corners $D_{ij} \cap D_{ijk}$ correspond to the three binary trees on $\{1,2,3\}$: first $z_i \to z_j$, then the cluster meets $z_k$.  Non-nested pairs satisfy $D_{ij} \cap D_{jk} = \emptyset$ after blowup.
 
 \emph{Step 2: Stokes theorem on $\overline{C}_n(X)$.}
 
@@ -2486,27 +2254,14 @@ This is precisely the Arnold relation. \qedhere
 \end{proof}
 
 \begin{remark}[Historical context]
-This proof is due to Arnold \cite{Arnold69}, who discovered these relations while 
-studying the cohomology of braid groups. Configuration spaces 
-of points are complements of hyperplane arrangements, and their cohomology rings have 
-quadratic presentations (the Arnold relations are degree 2 in the exterior algebra).
-
-Arnold proved that $H^*(C_n(\mathbb{C}))$ is isomorphic to the quotient of the exterior 
-algebra $\bigwedge^* \langle \omega_{ij} \rangle$ by the ideal generated by the relations:
-\begin{enumerate}
-\item $e_{ij} + e_{ji} = 0$ (antisymmetry of generators; note that as \emph{differential forms}, $\omega_{ij} = \omega_{ji}$ since $d\log(z_i-z_j) = d\log(z_j-z_i)$; the antisymmetry is a convention on the OS algebra generators $e_{ij}$)
-\item $e_{ij} \wedge e_{jk} + e_{jk} \wedge e_{ki} + e_{ki}
-\wedge e_{ij} = 0$ (Arnold relations)
-\end{enumerate}
+Arnold~\cite{Arnold69} proved $H^*(C_n(\mathbb{C})) \cong \bigwedge^* \langle e_{ij} \rangle / (e_{ij} + e_{ji},\; e_{ij} \wedge e_{jk} + e_{jk} \wedge e_{ki} + e_{ki} \wedge e_{ij})$.  As differential forms $\omega_{ij} = \omega_{ji}$; the antisymmetry is a convention on OS generators.
 \end{remark}
 
 \begin{remark}[Geometric interpretation]
 This geometric proof makes the Arnold relations transparent: they express
-the identity $\partial^2 = 0$.
-
-Kontsevich's formulation of configuration space integrals \cite{Kontsevich03} relies 
-heavily on this perspective: all consistency conditions in the theory come from the 
-combinatorics of how boundary strata intersect.
+$\partial^2 = 0$.  Kontsevich's formulation of configuration space
+integrals \cite{Kontsevich03} relies on this perspective: all consistency
+conditions come from the combinatorics of boundary strata intersections.
 \end{remark}
 
 \begin{corollary}[Stokes theorem and differential; \ClaimStatusProvedHere]
@@ -2731,9 +2486,6 @@ $H^*(C_n(X))$ & Boundary complex & $OS(\mathcal{A}_n)$\\
 \subsection{\texorpdfstring{Explicit computations for $n = 2, 3, 4, 5$}{Explicit computations for n = 2, 3, 4, 5}}
 \label{sec:arnold-explicit-n2345}
 
-We now verify the Arnold relations explicitly for small numbers of points, providing 
-complete computational details.
-
 \begin{example}[$n=2$: no relations]
 \label{ex:arnold-n2-complete}
 
@@ -2747,8 +2499,7 @@ The cohomology is:
 H^*(C_2(\mathbb{C})) = \mathbb{Z}[\omega_{12}] / (\omega_{12}^2)
 \end{equation}
 
-Since there is only one generator, there are no non-trivial relations. The Arnold relation 
-is vacuous.
+Since there is only one generator, the Arnold relation is vacuous.
 
 \emph{Dimension count}:
 \begin{align}
@@ -2769,9 +2520,8 @@ For $n=3$ points, there are three forms:
 \omega_{12}, \omega_{23}, \omega_{13}
 \end{equation}
 
-These are all independent in $H^1(C_3(\mathbb{C}))$: $\dim H^1 = \binom{3}{2} = 3$
-(there are \emph{no} linear relations among the $\omega_{ij}$ in cohomology; the
-Arnold relation is quadratic).
+These are independent in $H^1(C_3(\mathbb{C}))$: $\dim H^1 = \binom{3}{2} = 3$
+(the Arnold relation is quadratic, not linear).
 
 The cohomology is:
 \begin{equation}
@@ -2792,8 +2542,7 @@ dz_3}{z_2 - z_3}\\
 &= \frac{1}{(z_1-z_2)(z_2-z_3)} [dz_1 \wedge dz_2 - dz_1 \wedge dz_3 + dz_2 \wedge dz_3]
 \end{align}
 
-Similarly for the other two terms. Summing with the partial fraction identity gives zero 
-as required.
+Similarly for the other two terms; summing with the partial fraction identity gives zero.
 
 \emph{Dimension count}:
 \begin{align}
@@ -2828,15 +2577,9 @@ There are four independent Arnold relations, one for each choice of three points
 \omega_{42} \wedge \omega_{23} = 0
 \end{align}
 
-These relations are \emph{independent}: no one follows from the others.
+These relations are independent.
 
 \emph{Dimension count}:
-
-Without relations, $\bigwedge^*(\omega_{ij})$ would have dimension $2^6 = 64$.
-
-The cocycle conditions reduce this. The Arnold relations further reduce it.
-
-The actual dimensions are:
 \begin{align}
 \dim H^0(C_4(\mathbb{C})) &= 1\\
 \dim H^1(C_4(\mathbb{C})) &= 6 \quad \text{(all $\binom{4}{2}$ generators independent)}\\
@@ -2849,7 +2592,7 @@ Total dimension: $1 + 6 + 11 + 6 = 24 = 4!$.
 
 \emph{Poincaré polynomial}: $P_t(H^*(C_4(\mathbb{C}))) = (1+t)(1+2t)(1+3t) = 1 + 6t + 11t^2 + 6t^3$.
 
-Note that $C_4(\mathbb{C})$ is non-compact, so Poincaré duality does not apply; the polynomial is \emph{not} palindromic.
+Since $C_4(\mathbb{C})$ is non-compact, Poincar\'{e} duality does not apply; the polynomial is not palindromic.
 \end{example}
 
 \begin{example}[$n=5$: complete computation]
@@ -2915,13 +2658,11 @@ are associative and satisfy the Jacobi identity.
 \end{proof}
 
 \begin{remark}[Witten's physical perspective]
-From the physics viewpoint, Arnold relations are the mathematical expression of 
-\emph{crossing symmetry} in scattering amplitudes. Different orders of taking limits 
-$z_i \to z_j$ must give the same answer, which is precisely what the Arnold relations 
-guarantee.
-
-In string theory, this becomes the statement that different ways of degenerating a 
-Riemann surface (bringing punctures together) give consistent amplitudes.
+Arnold relations are the mathematical expression of
+\emph{crossing symmetry} in scattering amplitudes: different orders of
+taking limits $z_i \to z_j$ must give the same answer.  In string
+theory, different ways of degenerating a Riemann surface (bringing
+punctures together) give consistent amplitudes.
 \end{remark}
 
 \begin{corollary}[Operadic associativity \cite{LV}; \ClaimStatusProvedElsewhere]
@@ -2934,14 +2675,7 @@ where $\gamma$ is the operadic composition.
 \end{corollary}
 
 \begin{remark}[Summary of three proofs]
-Each proof of the Arnold relations provides different information:
-\begin{itemize}
-\item \emph{Topological}: Reveals connection to braid groups and hyperplane arrangements
-\item \emph{Geometric}: Deduces nilpotency $d^2 = 0$ from $\partial^2 = 0$ via Stokes' theorem
-\item \emph{Algebraic}: Provides computational tools via Orlik--Solomon algebra
-\end{itemize}
-
-Together, these proofs show that Arnold relations are intrinsic to the geometry of configuration spaces and essential for consistency of chiral algebras.
+The topological proof connects Arnold relations to braid groups, the geometric proof deduces $d^2 = 0$ from $\partial^2 = 0$ via Stokes, and the algebraic proof gives computability via the Orlik--Solomon algebra.
 \end{remark}
 
 \begin{theorem}[Arnold--Orlik--Solomon relations; \ClaimStatusProvedHere]
@@ -3010,21 +2744,14 @@ $$\eta_{ij}^{(1)} = d\log\vartheta_1\left(\frac{z_i - z_j}{2\pi i}\Big|\tau\righ
 where $\vartheta_1(z|\tau)$ is the odd Jacobi theta function.
 \end{theorem}
 
-The modular correction ensures single-valuedness on the torus.
-
 \subsection{Higher genus: prime forms}
 
 \begin{definition}[Prime form]
 \index{prime form|textbf}
-On a Riemann surface of genus $g \geq 2$, the prime form $E(z,w)$ is the unique $(-1/2, -1/2)$ differential with:
-\begin{itemize}
-\item Simple zero at $z = w$
-\item No other zeros
-\item Normalized appropriately
-\end{itemize}
+On a Riemann surface of genus $g \geq 2$, the prime form $E(z,w)$ is the unique $(-1/2, -1/2)$ differential with a simple zero at $z = w$, no other zeros, and appropriate normalization.
 \end{definition}
 
-The logarithmic forms are built from prime forms and period integrals.
+The logarithmic forms at higher genus are built from prime forms and period integrals.  The next section addresses the normal crossing structure needed for residue maps.
 
 \section{Normal crossings at higher genus}
 \label{sec:normal-crossings-higher-genus}
@@ -3073,8 +2800,6 @@ with exceptional divisors $E_{ij}$ corresponding to coincidences $z_i = z_j$.
 
 Consider the fiber product:
 $$Y := \overline{\mathcal{M}}_{g,n} \times_{X^n} \overline{C}_n(X)$$
-
-The projection $\pi: Y \to \overline{\mathcal{M}}_{g,n}$ is a proper morphism.
 
 \begin{lemma}[Fiber product normal crossings; \ClaimStatusProvedHere]\label{lem:fiber-product-NC}
 If $X_1 \to S$ and $X_2 \to S$ both have normal crossing boundaries, then
@@ -3388,9 +3113,6 @@ The local coordinates $(u_S, \epsilon_S, \boldsymbol{\theta}_S)$ come from:
 
 \subsection{Normal bundle calculations}
 
-A key property of the Fulton--MacPherson compactification is that boundary divisors have
-\emph{negative normal bundles}, making the compactification stable.
-
 \begin{theorem}[Normal bundle formula; \ClaimStatusProvedHere]\label{thm:normal-bundle-formula}
 For a boundary divisor $D_S \subset \overline{C}_n(X)$ where $|S| = k$:
 $$N_{D_S/\overline{C}_n(X)} \cong \mathcal{O}_{D_S}(-1)$$
@@ -3459,8 +3181,6 @@ $$s \mapsto \lambda^{-1} s$$
 \end{example}
 
 \subsection{Transition functions between charts}
-
-Different coordinate charts overlap, and we must specify transition functions.
 
 \begin{proposition}[Transition functions \cite{FM94}; \ClaimStatusProvedElsewhere]\label{prop:transition-functions}
 Consider two overlapping coordinate charts on $\overline{C}_n(X)$:
@@ -3782,7 +3502,8 @@ $$H_*(\text{Ran}(S^1)) = \bigoplus_{n \geq 0} H_*(\text{Sym}^n(S^1))$$
 
 Using the Dold-Thom theorem:
 $$H_*(\text{Ran}(S^1)) \cong \mathbb{Z}[t]$$
-(polynomial ring in one variable)
+(polynomial ring in one variable).
+The polynomial generator~$t$ tracks the cardinality of finite subsets, confirming that $\operatorname{Ran}(S^1)$ sees only the combinatorial stratification by particle number.
 \end{computation}
 
 \begin{remark}
@@ -3957,8 +3678,6 @@ $$H^*(\text{Ran}(\mathbb{P}^1)) = \text{colim}_n \mathbb{Z}[h]/(h^{n+1}) =
 \end{tabular}
 \end{table}
 
-\bigskip
-\noindent
 The geometry of configuration spaces and Ran spaces is now in
 place.  The Fulton--MacPherson compactification provides the
 smooth manifold with normal-crossing boundary on which the bar

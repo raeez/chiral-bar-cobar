@@ -3,22 +3,9 @@
 \index{Poincare duality!chiral|textbf}
 \index{Verdier duality!bar computes dual}
 
-The Verdier duality that exchanged the Heisenberg algebra and its Koszul dual in Chapter~\ref{ch:heisenberg-frame} is a special case of a general mechanism on Fulton--MacPherson spaces. This chapter establishes the Verdier framework for chiral bar complexes.
+The bar construction of Chapter~\ref{chap:bar-cobar} produces a coalgebra $\bar{B}(\cA)$ from any chiral algebra $\cA$. Verdier duality on configuration spaces identifies this coalgebra with the Koszul dual $\cA^!$ intrinsically, without presupposing a definition from classical Koszul theory. The Heisenberg specialization of Chapter~\ref{ch:heisenberg-frame} is the prototypical case.
 
-\section{Introduction}
-
-The bar construction of Chapter~\ref{chap:bar-cobar} produces a
-coalgebra $\bar{B}(\cA)$ from any chiral algebra $\cA$.  But why
-should this coalgebra be the Koszul dual?  The answer is Verdier
-duality: non-abelian Poincar\'e duality on configuration spaces
-identifies $\bar{B}(\cA)$ with $\cA^!$ \emph{intrinsically},
-without presupposing a definition of $\cA^!$ from classical Koszul
-theory.  This chapter resolves the circularity and establishes the
-geometric foundation: the bar construction computes the Koszul dual
-because Verdier duality on $\operatorname{Ran}(X)$ identifies the
-two.
-
-\subsection{The problem}
+\section{The circularity problem}
 
 \begin{problem}[Independent construction of Koszul dual]\label{prob:independent-dual}
 In defining chiral Koszul duality, we face a circular definition issue:
@@ -27,66 +14,31 @@ In defining chiral Koszul duality, we face a circular definition issue:
 $$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$$
 
 \emph{The circularity.}
-\begin{itemize}
-\item $\mathcal{A}_2^!$ is typically ``defined'' abstractly as ``the Koszul dual cooperad to $\mathcal{A}_2$''
-\item We have not given an \emph{independent construction} of $\mathcal{A}_2^!$ as a chiral coalgebra
-\item We have not \emph{proven from first principles} that the bar construction actually computes this dual
-\item For non-quadratic cases, the classical orthogonality criterion $R_1 \perp R_2$ does not apply
-\end{itemize}
+The dual $\mathcal{A}_2^!$ is typically ``defined'' as the Koszul dual cooperad---but no independent construction as a chiral coalgebra has been given, no first-principles proof that the bar construction computes it exists, and for non-quadratic cases the classical orthogonality criterion $R_1 \perp R_2$ does not apply.
 
 \emph{What is needed.}
-\begin{enumerate}
-\item An intrinsic definition of $\mathcal{A}_2^!$ using only the structure of $\mathcal{A}_2$
-\item A natural construction showing $\mathcal{A}_2^!$ is inherently a coalgebra (not just an algebra)
-\item A proof that $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ computes this from configuration space geometry
-\item Extension to non-quadratic and curved cases via nilpotent completion
-\end{enumerate}
+An intrinsic definition of $\mathcal{A}_2^!$ using only $\mathcal{A}_2$; a proof that $\mathcal{A}_2^!$ is inherently a coalgebra; a geometric identification of $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ with this dual; and an extension to non-quadratic and curved cases via nilpotent completion.
 \end{problem}
 
 \begin{remark}[NAP duality]\label{prin:NAP-solution}
-Non-abelian Poincaré duality resolves this circularity:
-
-In quantum field theory (Witten), correlation functions satisfy:
-$$\langle \phi(z_1) \cdots \phi(z_n) \rangle_M = \int_M \text{(local insertions)} \cdot \text{(propagators)}$$
-
-The propagators are \emph{dual} to the insertions under Verdier duality on $M$.
-
-Mathematically (Grothendieck), for a factorization algebra $\mathcal{A}$ on a manifold $M$:
+Non-abelian Poincar\'e duality resolves this circularity.  For a factorization algebra $\mathcal{A}$ on a manifold $M$:
 $$\int_M \mathcal{A} \xleftrightarrow{\text{NAP}} \mathbb{D}\left(\int_{-M} \mathcal{A}^!\right)$$
-
-where:
-\begin{itemize}
-\item $\int_M$ denotes factorization homology
-\item $\mathbb{D}$ is Verdier duality
-\item $-M$ denotes $M$ with opposite orientation
-\item $\mathcal{A}^!$ is the \emph{Koszul dual}, defined via this duality
-\end{itemize}
+where $\int_M$ is factorization homology, $\mathbb{D}$ is Verdier duality, $-M$ is $M$ with opposite orientation, and $\mathcal{A}^!$ is the Koszul dual defined via this duality.
 
 \emph{The construction \textup{(Kontsevich)}.} Factorization homology is computed as a colimit over Weiss covers:
 $$\int_M \mathcal{A} = \operatorname{colim}_{\coprod_i D_i \hookrightarrow M} \bigotimes_i \mathcal{A}(D_i)$$
 where the colimit ranges over collections of disjoint disk embeddings $\coprod_i D_i \hookrightarrow M$ (not over arbitrary configuration spaces; cf.\ the excision property for Weiss covers, Definition~\ref{def:weiss-cover}).
 
-Verdier duality exchanges:
-\begin{align*}
-\text{Integration over } \overline{C}_n(M) &\leftrightarrow \text{Distributions on } C_n(M)\\
-\text{Logarithmic forms} &\leftrightarrow \text{Delta functions}\\
-\text{Residues at collisions} &\leftrightarrow \text{Insertions of singularities}
-\end{align*}
-
-This duality \emph{defines} $\mathcal{A}^!$ intrinsically.
+Verdier duality exchanges integration over $\overline{C}_n(M)$ with distributions on $C_n(M)$, logarithmic forms with delta functions, and residues at collisions with singularity insertions.  Construction~\ref{const:A-dual-intrinsic} makes this precise.
 \end{remark}
 
-\section{Stage 1: Verdier duality on configuration spaces}
-
-\subsection{The geometric foundation}
+\section{Verdier duality on configuration spaces}
 
 \begin{setup}[Configuration space duality]\label{setup:config-verdier}
 Let $X$ be a smooth curve (or more generally, an $n$-dimensional manifold). The configuration space of $k$ points is:
 $$C_k(X) = \{(z_1, \ldots, z_k) \in X^k : z_i \neq z_j \text{ for } i \neq j\}$$
 
 Its Fulton--MacPherson compactification $\overline{C}_k(X)$ is a smooth manifold with corners, with boundary divisors parametrizing collision patterns.
-
-\emph{The fundamental duality.}
 \end{setup}
 
 \begin{theorem}[Verdier duality for configuration spaces; \ClaimStatusProvedElsewhere{} \cite{KashiwaraSchapira}]\label{thm:verdier-config}
@@ -97,12 +49,7 @@ $$\langle \cdot, \cdot \rangle: \Omega^*_{\log}(\overline{C}_k(X)) \otimes \math
 given by integration:
 $$\langle \omega, K \rangle = \int_{\overline{C}_k(X)} \omega \wedge \iota^* K$$
 
-where:
-\begin{itemize}
-\item $\Omega^*_{\log}(\overline{C}_k(X))$ are differential forms with logarithmic poles on boundary divisors
-\item $\mathcal{D}^*_{\text{dist}}(C_k(X))$ are distributional currents on the open configuration space
-\item $\iota: C_k(X) \hookrightarrow \overline{C}_k(X)$ is the inclusion
-\end{itemize}
+Here $\Omega^*_{\log}(\overline{C}_k(X))$ denotes differential forms with logarithmic poles on boundary divisors, $\mathcal{D}^*_{\text{dist}}(C_k(X))$ denotes distributional currents on the open configuration space, and $\iota: C_k(X) \hookrightarrow \overline{C}_k(X)$ is the inclusion.
 
 \emph{Verdier duality.}
 $$\mathbb{D}: \Omega^*_{\log}(\overline{C}_k(X)) \xrightarrow{\simeq} \mathcal{D}^*_{\text{dist}}(C_k(X))[d]$$
@@ -137,8 +84,7 @@ The Verdier duality pairing descends to the de Rham pairing.
 The explicit pairing is computed by residues:
 $$\langle \omega_{\text{log}}, K_{\text{dist}} \rangle = \sum_{\text{strata } S} \int_S \text{Res}_S(\omega_{\text{log}}) \wedge K_{\text{dist}}|_S$$
 
-Perfectness follows from the general theory of Verdier duality
-for constructible complexes on smooth varieties~\cite{KashiwaraSchapira}.
+The general theory of Verdier duality for constructible complexes on smooth varieties~\cite{KashiwaraSchapira} gives perfectness.
 \end{proof}
 
 \begin{remark}[Algebraic vs.\ analytic Verdier duality]\label{rem:verdier-bridge}
@@ -195,11 +141,7 @@ $$\langle \text{Res}_{D_{ij}}(\omega), K \rangle = \langle \omega, \delta_{ij}(K
 \end{theorem}
 
 \begin{proof}[Geometric proof via stratifications]
-\emph{Observation \textup{(Serre)}.} Boundary divisors $D \subset \overline{C}_k(X)$ are in bijection with:
-\begin{itemize}
-\item Collision patterns (combinatorial data)
-\item Diagonal subspaces in $C_k(X)$ (geometric data)
-\end{itemize}
+\emph{Observation \textup{(Serre)}.} Boundary divisors $D \subset \overline{C}_k(X)$ biject with collision patterns (combinatorial data) and with diagonal subspaces in $C_k(X)$ (geometric data).
 
 \emph{Residue operation.}
 For a form $\omega$ with logarithmic pole along $D$:
@@ -220,8 +162,6 @@ $$\delta_{ij}(K)(z_1, \ldots, z_k) = K(z_1, \ldots, z_{i-1}, z_{i+1}, \ldots, z_
 &= \int_{\overline{C}_{k-1}} \text{Res}_D(f \cdot \eta_{ij} \wedge \omega') \wedge K\\
 &= \langle \text{Res}_D(\omega), K \rangle
 \end{align*}
-
-This is the fundamental duality.
 \end{proof}
 
 \begin{example}[Heisenberg specialization]\label{ex:dual-diff-heisenberg}
@@ -238,9 +178,7 @@ in \S\ref{sec:frame-koszul-dual}.
 The computation above is formal: the expression $\eta_{ij} \wedge \delta(z_i - z_j)$ is not well-defined as a pointwise product of distributions, since $\eta_{ij} = d\log(z_i - z_j)$ has a singularity precisely at the support of $\delta(z_i - z_j)$. The correct framework is Verdier duality as a functor on constructible sheaves (see \cite[Expos\'e XVIII]{SGA4}): the pairing is defined at the level of the derived category $D^b_c(\overline{C}_k(X))$ via the proper push-forward theorem, not by pointwise multiplication. The formula above is a shorthand for the sheaf-theoretic adjunction, and the passage from line 1 to line 2 is justified by the localization triangle for the pair $(C_k(X), D_{ij})$ rather than by literal integration of a distribution against a singular function.
 \end{remark}
 
-\section{Stage 2: from Verdier duality to cooperad structure}
-
-\subsection{Construction of $\mathcal{A}^!$ via Verdier duality}
+\section{From Verdier duality to cooperad structure}
 
 \begin{construction}[Intrinsic definition of $\mathcal{A}^!$ via Verdier duality]\label{const:A-dual-intrinsic}
 Let $\mathcal{A}$ be a chiral algebra on $X$. We define the \emph{Koszul dual chiral coalgebra} $\mathcal{A}^!$ intrinsically as follows:
@@ -283,8 +221,8 @@ $$\epsilon: \mathcal{A}^! \to \omega_X$$
 $$\epsilon(\phi^*) = \langle \phi^*, \mathbb{1}_{\mathcal{A}} \rangle$$
 \end{construction}
 
-\begin{remark}[Intrinsic nature of the construction]\label{rem:intrinsic-nature}
-The construction of $\mathcal{A}^!$ uses only the geometry of configuration spaces $C_k(X)$, Verdier duality, and the factorization structure of $\mathcal{A}$. It does not invoke the bar construction, orthogonal relations, quadraticity assumptions, or a second algebra $\mathcal{A}_2$. The coalgebra $\mathcal{A}^!$ arises intrinsically from the collision geometry of fields in $\mathcal{A}$, as encoded by Verdier duality on configuration spaces.
+\begin{remark}\label{rem:intrinsic-nature}
+Construction~\ref{const:A-dual-intrinsic} uses only configuration space geometry, Verdier duality, and factorization --- no bar construction, orthogonal relations, or quadraticity.
 \end{remark}
 
 \subsection{Verification of coalgebra axioms}
@@ -354,14 +292,13 @@ Since $\mathcal{A}$ is graded by conformal weight with finite-dimensional graded
 This can also be seen from the bar construction perspective: once Theorem~\ref{thm:bar-computes-dual} identifies $\mathcal{A}^! \simeq \bar{B}^{\mathrm{ch}}(\mathcal{A})$, conilpotency is manifest because $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is filtered by bar degree and the coproduct (deconcatenation) strictly increases the number of tensor factors, ensuring $\Delta^{(N)} = 0$ on bar degree $\leq N$.
 \end{proof}
 
-\section{\texorpdfstring{Stage 3: the bar construction computes $\mathcal{A}^!$}{Stage 3: the bar construction computes A!}}
-
-\subsection{Main theorem}
+\section{\texorpdfstring{The bar construction computes $\mathcal{A}^!$}{The bar construction computes A!}}
 
 \begin{theorem}[Bar construction = Verdier dual via NAP; \ClaimStatusProvedHere]\label{thm:bar-computes-dual}
 \index{Verdier duality!bar computes dual|textbf}
 \index{non-abelian Poincare duality}
-For $\mathcal{H}_k$, the bar produced the Lie-type coalgebra and the cobar produced the Com-type algebra (\S\ref{sec:frame-koszul-dual}): bar and Verdier dual coincided.  The following theorem establishes this identification in general via non-abelian Poincar\'e duality.
+\textup{[Regime: quadratic
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 Let $\mathcal{A}$ be an augmented chiral algebra on a smooth curve $X$,
 valued in holonomic $\mathcal{D}$-modules
@@ -372,27 +309,13 @@ are well-defined in the derived category of holonomic $\mathcal{D}$-modules on $
 Then there is a canonical quasi-isomorphism of chiral coalgebras:
 $$\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$$
 
-where:
-\begin{itemize}
-\item $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the geometric bar complex
-  (Definition~\ref{def:geometric-bar}), defined via configuration space
-  integrals with logarithmic forms on Fulton--MacPherson compactifications;
-\item $\mathcal{A}^!$ is the Verdier dual chiral coalgebra
-  (\S\ref{const:A-dual-intrinsic}), defined as
-  $\mathcal{A}^! = \mathbb{D}_{\mathrm{Ran}}(\mathcal{A})$
-  where $\mathbb{D}_{\mathrm{Ran}}$ is Verdier duality on
-  the Ran space restricted to each configuration stratum $C_n(X)$.
-\end{itemize}
+Here $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the geometric bar complex (Definition~\ref{def:geometric-bar}) and $\mathcal{A}^! = \mathbb{D}_{\mathrm{Ran}}(\mathcal{A})$ is the Verdier dual chiral coalgebra (Construction~\ref{const:A-dual-intrinsic}).
 
 \emph{The isomorphism.}
 $$\Phi: \bar{B}^{\text{ch}}(\mathcal{A}) \to \mathcal{A}^!$$
 $$\Phi(\phi_1 \otimes \cdots \otimes \phi_k \otimes \omega) = \mathbb{D}(\phi_1 \otimes \cdots \otimes \phi_k) \otimes \iota_*(\omega)$$
 
-where:
-\begin{itemize}
-\item $\mathbb{D}$ is Verdier duality on the factorization algebra
-\item $\iota_*$ is the direct image along the open inclusion $\iota: C_k(X) \hookrightarrow \overline{C}_k(X)$
-\end{itemize}
+with $\mathbb{D}$ the Verdier duality on the factorization algebra and $\iota_*$ the direct image along $\iota: C_k(X) \hookrightarrow \overline{C}_k(X)$.
 \end{theorem}
 
 \begin{proof}
@@ -484,11 +407,7 @@ $$(\mathcal{A}^!)^{(1)} = \mathcal{D}^*(C_2(X), (\mathcal{A}^!)^{\otimes 2})$$
 The isomorphism is:
 $$\Phi_1(\phi_1 \otimes \phi_2 \otimes \eta_{12}) = \mathbb{D}(\phi_1 \otimes \phi_2) \otimes \delta(z_1 - z_2)$$
 
-where:
-\begin{itemize}
-\item $\eta_{12} = d\log(z_1 - z_2)$ (logarithmic form)
-\item $\delta(z_1 - z_2)$ (delta distribution)
-\end{itemize}
+with $\eta_{12} = d\log(z_1 - z_2)$ the logarithmic form and $\delta(z_1 - z_2)$ the delta distribution.
 
 The pairing is given by the residue:
 $$\langle \eta_{12}, \delta_{12} \rangle = \operatorname{Res}_{z_1 = z_2}\, d\log(z_1 - z_2) = 1$$
@@ -523,9 +442,7 @@ viewed as a relation in $H^2(C_3(X))$, yields the corresponding relation in
 the homology $H_{2n-2}$ of the Borel--Moore compactification.
 \end{computation}
 
-\section{Stage 4: Koszul pairs and symmetric duality}
-
-\subsection{Koszul pairs via NAP}
+\section{Koszul pairs and symmetric duality}
 
 \begin{proposition}[Chiral Koszul pair via NAP]\label{def:koszul-pair-NAP}
 \index{Koszul pair!via non-abelian Poincare duality}
@@ -540,15 +457,13 @@ where $\mathcal{A}_i^!$ is defined via Verdier duality as in Construction \ref{c
 \emph{Equivalent characterization (NAP).}
 $$\int_X \mathcal{A}_1 \simeq \mathbb{D}\left(\int_{-X} \mathcal{A}_2\right)$$
 
-where:
-\begin{itemize}
-\item $\int_X$ is factorization homology
-\item $-X$ denotes $X$ with opposite orientation
-\item $\mathbb{D}$ is Verdier duality
-\end{itemize}
+with $\int_X$ the factorization homology, $-X$ the orientation reversal, and $\mathbb{D}$ Verdier duality.
 \end{proposition}
 
 \begin{theorem}[Symmetric Koszul duality; \ClaimStatusProvedHere]\label{thm:symmetric-koszul}
+\textup{[Regime: quadratic on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 If $(\mathcal{A}_1, \mathcal{A}_2)$ is a Koszul pair, then:
 \begin{align}
 (\mathcal{A}_1)^! &\simeq \bar{B}^{\text{ch}}(\mathcal{A}_2) \quad \text{(bar of } \mathcal{A}_2)\\
@@ -583,9 +498,7 @@ structure of $\mathrm{Sym}^{\mathrm{ch}}(V^*)$, and vice versa
 (\S\ref{sec:frame-koszul-dual}).
 \end{example}
 
-\section{Stage 5: non-quadratic cases and completion}
-
-\subsection{The nilpotent completion}
+\section{Non-quadratic cases and completion}
 
 \begin{remark}[Necessity of completion]\label{rem:why-completion}
 For non-quadratic chiral algebras (W-algebras, Yangians, etc.), the bar construction produces infinitely many generators in each degree:
@@ -695,61 +608,17 @@ $$\Omega^{\text{ch}}(\widehat{W_3^!}) = W_3$$
 The relation $\Lambda = :T \cdot T: - \frac{3}{10}\partial^2 T$ (with OPE coefficient $\frac{16}{22+5c}$) becomes a Maurer--Cartan element in the cobar complex.
 \end{example}
 
-\section{Summary and outlook}
+\section{Resolution of the circularity}
 
 \begin{theorem}[Resolution of circularity; \ClaimStatusProvedHere]\label{thm:main-NAP-resolution}
-We have constructed an independent, intrinsic definition of the Koszul dual chiral coalgebra $\mathcal{A}^!$ for any chiral algebra $\mathcal{A}$, using only:
-\begin{enumerate}
-\item Non-abelian Poincaré duality (factorization homology with Verdier duality)
-\item Configuration space geometry
-\item No reference to bar construction or orthogonal relations
-\end{enumerate}
-
-We then proved:
-$$\bar{B}^{\text{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$$
-
-from first principles, showing that the bar construction computes the intrinsic Verdier dual.
-
-For Koszul pairs $(\mathcal{A}_1, \mathcal{A}_2)$:
+Construction~\ref{const:A-dual-intrinsic} defines the Koszul dual $\mathcal{A}^!$ intrinsically via Verdier duality on factorization homology, with no reference to bar constructions or orthogonal relations. Theorem~\ref{thm:bar-computes-dual} then identifies $\bar{B}^{\text{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$, and for Koszul pairs $(\mathcal{A}_1, \mathcal{A}_2)$, Theorem~\ref{thm:symmetric-koszul} gives the symmetric statement
 $$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq (\mathcal{A}_2)^! \quad \text{and} \quad \bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq (\mathcal{A}_1)^!$$
-
-This is not a definition but a theorem, derived from the
-NAP identity:
-$$\int_X \mathcal{A}_1 \simeq \mathbb{D}\left(\int_{-X} \mathcal{A}_2\right)$$
+derived from the NAP identity $\int_X \mathcal{A}_1 \simeq \mathbb{D}\bigl(\int_{-X} \mathcal{A}_2\bigr)$.
 \end{theorem}
 
 \begin{proof}
-The intrinsic Koszul dual $\mathcal{A}^!$ is defined via
-Verdier duality on factorization homology
-(Definition~\ref{def:geom-cobar-intrinsic}):
-$\mathcal{A}^! := \mathbb{D}(\int_{-X} \mathcal{A})$,
-using only the factorization structure and Verdier duality,
-with no reference to bar constructions.  The identification
-$\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim}
-\mathcal{A}^!$ is Theorem~\ref{thm:verdier-bar-cobar},
-whose proof proceeds by comparing the geometric bar complex
-with the Verdier dual via the configuration space model of
-factorization homology
-(Theorem~\ref{thm:bar-NAP-homology}).  The Koszul pair
-statement follows by applying this identification to both
-$\mathcal{A}_1$ and $\mathcal{A}_2$ and using the NAP
-identity (Theorem~\ref{thm:verdier-NAP}).
+The intrinsic Koszul dual $\mathcal{A}^! := \mathbb{D}(\int_{-X} \mathcal{A})$ is defined in Definition~\ref{def:geom-cobar-intrinsic}.  The identification $\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$ is Theorem~\ref{thm:verdier-bar-cobar}, proved by comparing the geometric bar complex with the Verdier dual via the configuration space model (Theorem~\ref{thm:bar-NAP-homology}).  The Koszul pair statement follows from applying this to both $\mathcal{A}_1$ and $\mathcal{A}_2$ and using NAP (Theorem~\ref{thm:verdier-NAP}).
 \end{proof}
 
-\begin{remark}[Three viewpoints]\label{rem:three-unified}
-The NAP construction admits three readings: physical (chiral algebras as local operators, Koszul duality as S-duality, bar-cobar as loop expansion), geometric (configuration spaces as moduli of field insertions, residues as OPE extraction, Verdier duality as compact/open support exchange), and categorical (factorization algebras as sheaves on the Ran space, NAP duality as orientation reversal, Koszul duality as the essential image of NAP).
-\end{remark}
-
-\begin{remark}[Quantum extensions]\label{rem:looking-ahead}
-This NAP-based construction provides the foundation for:
-\begin{itemize}
-\item Computing Koszul duals of specific chiral algebras (Heisenberg, Kac--Moody, W-algebras)
-\item Understanding curved Koszul duality (Maurer--Cartan equations)
-\item Higher genus extensions (quantum corrections, modular forms)
-\item Applications to geometric Langlands (categorical version)
-\item Connections to topological field theory (factorization homology)
-\end{itemize}
-
-The subsequent chapters develop these applications in detail.
-\end{remark}
+The completed bar construction (Theorem~\ref{thm:completion-koszul}) extends this to non-quadratic algebras.  The quantum corrections --- curvature from periods on $\overline{\mathcal{M}}_g$ --- appear in \S\ref{sec:koszul-defects} and Chapter~\ref{chap:higher-genus}.
 

@@ -41,22 +41,22 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 
 ## Current State (Mar 2026)
 
-### Census (verified fresh grep, Mar 6)
+### Census (verified fresh grep, Mar 7)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **731** |
+| ProvedHere | **759** |
 | ProvedElsewhere | **333** |
-| Conjectured | **101** |
-| Heuristic | **21** |
+| Conjectured | **119** |
+| Heuristic | **27** |
 | Open | **0** |
-| **Total tagged claims** | **1186** |
+| **Total tagged claims** | **1238** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1414 pages** (converged), zero LaTeX errors, 6 pre-existing undefined forward refs, zero undefined citations, zero multiply-defined labels
-- 55 active .tex files + 8 stubs (+ main.tex preamble), 75K+ lines of LaTeX
-- Bibliography: 289 entries (~1395 lines), all citations resolved
+- **1372 pages** (converged), zero new LaTeX errors (1 pre-existing definition env mismatch), zero undefined refs, 2 undefined citations (Lurie11, Kac90), zero multiply-defined labels
+- 55 active .tex files + 8 stubs (+ main.tex preamble), 87K+ lines of LaTeX
+- Bibliography: 254 entries, all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
 - Cosmetic: ~115 overfull hbox (2 severe >14pt in chiral_koszul_pairs.tex and higher_genus.tex), ~80 underfull hbox
 - Build: `make` (6-pass, stamp-based idempotent), `make fast` (1-pass iteration), `make clean` (debris only, preserves stamp), `make veryclean` (force full rebuild). See "Build System — Stamp Architecture" below.
@@ -81,6 +81,8 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 - Adversarial audit (session 3): 35 findings from 8 parallel agents. 12 priority fixes applied: W-algebra duality σK formula, FP formula, proof integral, g=0 nilpotence, free field κ≠0, Heisenberg dual, H²(M̄_g), Yangian Ext, bosonic string gloss, KL diagram, modular periodicity downgrade, conformal block rationality caveat
 - Adversarial audit (session 4): 45+ findings from 7 parallel agents. 17 fixes applied: genus-1 d²=0 full proof, Leray fibration notation, propagator antisymmetry removal, obstruction degree clarification, nilpotent citation scope, fermionic coproduct sign, Koszul pair equivalence sketch, HH⁰/obstruction language, Heisenberg bar computation, W-algebra simplicity≠semisimplicity, Heisenberg dual table (CE→Sym^ch), Yangian bar description, boundary divisor H²|I|-2→H², MMM vs λ-class naming, W₃ obstruction Mumford isomorphism correction, ProvedElsewhere→ProvedHere tag, ℏ convention reconciliation
 - 9-programme research synthesis: BV duality error fixed (partition transpose, not identity), DS-KD proof restructured (2-stage with BV orbit identification), Frenkel-Teleman/FLE/Raskin documented, N-complex framework added, E_n/Vassiliev/BRST chain map literature integrated, hook-type W-algebra duality cited, sl₃ modular rank computation (new: Casimir anomaly at p|dim(g)), 12 new bibliography entries (287 total), weight filtration computability, Booth-Lazarev monoidal model structures
+- v16 campaign (SESSION_PROMPT_v16): 10 workstreams executed across 59 files. Homotopy-native remarks (4 main theorems), periodicity triple Pi(A), prose sculpting (-715 lines, -22 pages), physics programme branding (3 files), master table stratification (3-tier), regime tags, differential notation completion, cross-ref verification (clean), coderived appendix (enhanced). Net: 4660 insertions, 5375 deletions.
+- raeeznotes8 campaign: Five-layer architecture restructuring. Theorem A₀ (fundamental twisting morphisms, 4-way equivalence), Theorem C₀ (fiber-center identification), bigraded Hochschild definition, characteristic hierarchy, Theorem H naming, chiral dual pair definition. A₀/A₁/A₂ and C₀/C₁ decomposition references propagated to 8 example/connections files.
 
 ### Proof Sketches: 1 REMAINING (correctly so)
 | File | Line | Context | Status |
@@ -89,7 +91,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 101 Conjectured Claims
+### What Remains — 118 Conjectured Claims (post-v16)
 
 All have scope remarks. Classification (from comprehensive audit, this session):
 

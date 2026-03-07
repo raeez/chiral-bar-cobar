@@ -1,33 +1,7 @@
 \chapter{Explicit Kac--Moody Koszul duals}\label{chap:kac-moody-koszul}
 \label{chap:kac-moody}
 
-The affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ are the first non-abelian examples: unlike the Heisenberg algebra of Chapter~\ref{ch:heisenberg-frame}, the simple poles in the OPE produce a nontrivial bracket contribution $d_{\mathrm{bracket}}$ to the bar differential, requiring the full PBW spectral sequence for computation.
-
-The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ has
-appeared in many guises: as the duality between Wakimoto modules
-and contragredient duals, as the relation between screening
-operators at $k$ and at $k'$, as the symmetry underlying the
-Kazhdan--Lusztig equivalence between affine representations and
-quantum group modules.  This chapter identifies its source:
-\emph{the Feigin--Frenkel involution is Koszul duality}.
-
-The Koszul dual of $\widehat{\mathfrak{g}}_k$ is
-$\widehat{\mathfrak{g}}_{-k-2h^\vee}$, and the bar construction
-realizes the curved chiral Chevalley--Eilenberg coalgebra
-$\mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{k'})$.  The
-curvature $\kappa(\widehat{\mathfrak{g}}_k) =
-\dim(\mathfrak{g}) \cdot k / (k + h^\vee)$ controls all
-higher-genus corrections through the universal
-Maurer--Cartan class~$\Theta_{\cA}$, and the complementarity
-$\kappa + \kappa' = 0$ is the antisymmetry of the Killing form
-under $k \leftrightarrow -k - 2h^\vee$.  Unlike free fields,
-the Kac--Moody bar complex has chain groups of dimension
-$(\dim\mathfrak{g})^n$ and cohomology governed by the
-Chevalley--Eilenberg complex --- so the bar spectral sequence
-collapses at $E_2$, reflecting the fact that the
-OPE poles have order at most~$2$ (the ``almost quadratic''
-property): $E_1$ carries nontrivial differentials from the bracket,
-but $E_2$ stabilizes by the Koszul property.
+The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is Koszul duality.  The Koszul dual of $\widehat{\mathfrak{g}}_k$ is $\widehat{\mathfrak{g}}_{-k-2h^\vee}$, realized by the curved chiral Chevalley--Eilenberg coalgebra; the curvature $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot k / (k + h^\vee)$ controls all higher-genus corrections, and the complementarity $\kappa + \kappa' = 0$ is the antisymmetry of the Killing form.  The bar spectral sequence collapses at $E_2$.
 
 \begin{remark}[Kac--Moody as atom: functorial shadows]
 \label{rem:km-atom}
@@ -50,8 +24,6 @@ chapter.
 \section{Kac--Moody algebras and Koszul duality}
 
 \subsection{Feigin--Frenkel duality and Koszul duality}
-
-The representation theory of the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ at level $k$ is related by Feigin--Frenkel duality to the theory at level $-k - 2h^\vee$, where $h^\vee$ is the dual Coxeter number.
 
 \begin{remark}[Level-shifting Koszul duality]
 The affine Kac--Moody chiral algebra $\widehat{\mathfrak{g}}_k$ at level $k$ and its Koszul dual are related by:
@@ -111,38 +83,11 @@ H^*(\bar{B}^{\mathrm{geom}}(\widehat{\mathfrak{g}}_{-h^\vee})) \cong H^*_{\mathr
 
 \subsection{Strategy for explicit computation}
 
-To compute the Koszul duals explicitly, we proceed through a systematic hierarchy:
-
 \begin{remark}[Strategy]
-The computation of the Koszul dual proceeds through four stages.
-First, one identifies the generating fields and their conformal
-weights.  Second, the operator product expansions are computed as
-multi-residues on configuration spaces --- this is the geometric
-content.  Third, the quadratic (and higher) relations are extracted
-from OPE associativity, determining the bar differential.
-Fourth, the bar-cobar quasi-isomorphisms are verified to compute the
-correct cohomology.  We carry out this programme in complete detail
-for $\widehat{\mathfrak{sl}}_2$ (the simplest nontrivial case,
-already exhibiting the Virasoro connection via Drinfeld--Sokolov
-reduction), for $\widehat{\mathfrak{sl}}_3$ (the first case in
-which Serre relations and the two-dimensional weight lattice
-intervene), and for general $\widehat{\mathfrak{g}}$ (a functorial
-construction valid for any simple Lie algebra).
+The computation proceeds through four stages: identify generators and conformal weights, compute OPEs via multi-residues on configuration spaces, extract quadratic relations from OPE associativity, and verify bar-cobar quasi-isomorphisms.  The programme is carried out for $\widehat{\mathfrak{sl}}_2$, $\widehat{\mathfrak{sl}}_3$, and general $\widehat{\mathfrak{g}}$.
 \end{remark}
 
 \section{Affine Kac--Moody algebras: precise setup}
-
-The affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ is the
-simplest chiral algebra built from a finite-dimensional Lie algebra:
-one takes the loop algebra $\mathfrak{g} \otimes \mathbb{C}((t))$,
-adjoins a central element whose eigenvalue is the level~$k$, and
-discovers that the resulting structure encodes both representation
-theory (via category~$\mathcal{O}$) and geometry (via the Sugawara
-construction, which manufactures conformal symmetry from the Killing
-form).  The reader familiar with the OPE formalism may skip to
-\S\ref{sec:km-koszul-abstract}; the present section fixes conventions
-and establishes the translation between vertex algebra and chiral
-algebra languages that the bar complex computation requires.
 
 \subsection{Loop algebras and central extensions}
 
@@ -180,8 +125,6 @@ This residue pairing is the algebraic shadow of the geometric residue pairing on
 \end{remark}
 
 \subsection{Vertex algebra and chiral algebra presentations}
-
-There are two equivalent perspectives on affine Kac--Moody algebras at level $k \in \mathbb{C}$:
 
 \begin{definition}[Vertex algebra perspective]
 The \emph{universal affine vertex algebra} $V_k(\mathfrak{g})$ at level $k$ is generated by fields:
@@ -233,8 +176,6 @@ At $k = -h^\vee$ (the \emph{critical level}), the Sugawara construction is undef
 
 \subsection{Currents as differential forms}
 
-Following Kontsevich's philosophy, we realize affine Kac--Moody algebras geometrically on configuration spaces.
-
 \begin{construction}[Current fields on configuration space]
 A current $J^a \in \mathfrak{g}$ at level $k$ is realized as a section:
 \begin{equation}
@@ -248,12 +189,7 @@ where $x^a$ is a basis element of $\mathfrak{g}$.
 \end{construction}
 
 \begin{remark}[Choice of bundle]
-The twisting by $\omega_X$ reflects conformal weight $1$ of the current fields:
-\begin{itemize}
-\item Currents $J^a$ are spin-1 fields, hence sections of $\omega_X$ (the canonical bundle)
-\item The level $k$ enters through the OPE (the double pole coefficient $k\delta^{ab}$), not through the bundle twist
-\item The logarithmic form $d\log(z_1-z_2)$ captures the $1/(z-w)$ singularity in OPEs
-\end{itemize}
+Currents $J^a$ are spin-1 fields, hence sections of $\omega_X$.  The level $k$ enters through the double-pole OPE coefficient, not the bundle twist; the logarithmic form $d\log(z_1-z_2)$ captures the $1/(z-w)$ singularity.
 \end{remark}
 
 \subsection{OPEs via multi-residue calculus}
@@ -288,19 +224,7 @@ The central charge term comes from the $1/(z-w)^2$ pole, while the structure con
 \section{Koszul duality: abstract theory}
 \label{sec:km-koszul-abstract}
 
-Why does level-shifting preserve every structural feature of
-$\widehat{\mathfrak{g}}_k$ --- its representation theory, its
-conformal blocks, its quantum group shadow --- while reversing the
-sign of the central extension?  The answer is that $k \mapsto -k -
-2h^\vee$ is not a coincidence of formulas but a consequence of
-Verdier duality on configuration spaces: the Serre dual of the
-level-$k$ invariant form on $\overline{C}_{n+1}(X)$ is the
-level-$(-k-2h^\vee)$ invariant form, with the shift $2h^\vee$
-arising from the Casimir eigenvalue of the adjoint representation.
-This section establishes the general pattern; the explicit
-computations for $\widehat{\mathfrak{sl}}_2$ and
-$\widehat{\mathfrak{sl}}_3$ in the preceding sections provide the
-concrete verification.
+The level shift $k \mapsto -k - 2h^\vee$ is Verdier duality on configuration spaces: the Serre dual of the level-$k$ invariant form on $\overline{C}_{n+1}(X)$ is the level-$(-k-2h^\vee)$ form, with the shift $2h^\vee$ arising from the adjoint Casimir eigenvalue.
 
 \subsection{The general pattern}
 
@@ -335,8 +259,6 @@ where $\kappa = \sum_a J^a \otimes J_a$ is the Casimir element (the quadratic el
 
 \subsection{The Wakimoto perspective}
 
-The Wakimoto free field realization provides the most explicit manifestation of Koszul duality.
-
 \begin{definition}[Wakimoto module]\label{def:wakimoto}
 \index{Wakimoto representation|textbf}
 The Wakimoto module $\mathcal{M}_{\mathrm{Wak}}$ at critical level is the free field algebra
@@ -351,12 +273,7 @@ At critical level $k = -h^\vee$, the Wakimoto free field realization provides th
 \begin{equation}
 \bar{B}(\widehat{\mathfrak{g}}_{-h^\vee}) \;\simeq\; \bar{B}(\mathcal{M}_{\mathrm{Wak}})^{Q_{\mathrm{DS}}}
 \end{equation}
-Concretely:
-\begin{itemize}
-\item Generators $J^a$ of $\widehat{\mathfrak{g}}_{-h^\vee}$ $\leftrightarrow$ Composite operators in Wakimoto
-\item Relations in enveloping algebra $\leftrightarrow$ Freedom in $\beta$-$\gamma$ systems
-\item Bar complex of enveloping algebra $\leftrightarrow$ Cobar complex of free fields
-\end{itemize}
+Concretely, generators $J^a$ of $\widehat{\mathfrak{g}}_{-h^\vee}$ correspond to composite operators in Wakimoto, enveloping algebra relations correspond to freedom in $\beta$-$\gamma$ systems, and the bar complex of the enveloping algebra corresponds to the cobar complex of free fields.
 \end{theorem}
 
 \begin{proof}
@@ -399,10 +316,8 @@ h(z) h(w) &\sim \frac{2k}{(z-w)^2}
 
 \subsection{\texorpdfstring{Critical level: $k = -2$}{Critical level: k = -2}}
 
-At $k = -h^\vee = -2$:
-
 \begin{theorem}[Critical level simplification for $\mathfrak{sl}_2$ \cite{Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{thm:sl2-critical}
-At $k = -2$:
+At $k = -h^\vee = -2$:
 \begin{enumerate}
 \item The Sugawara construction is \emph{undefined} ($k + h^\vee = 0$): no Virasoro subalgebra exists. The center of the completed enveloping algebra enlarges to the Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}})$
 \item The currents form a classical Poisson algebra:
@@ -461,11 +376,7 @@ m_0 &= \frac{k + h^\vee}{2h^\vee} \cdot \kappa, \qquad m_1^2(a) = [m_0, a]
 \end{align}
 where $\kappa$ is the Casimir element.
 
-This shows:
-\begin{itemize}
-\item $m_1^2 = 0$ (i.e., uncurved) if and only if $k = -h^\vee = -2$ (critical level)
-\item For $k \neq -2$, the curved $A_\infty$ curvature $m_0$ is proportional to $k+2$
-\end{itemize}
+Thus $m_1^2 = 0$ if and only if $k = -h^\vee = -2$ (critical level); for $k \neq -2$, the curved $A_\infty$ curvature $m_0$ is proportional to $k+2$.
 
 Applying $\Omega$ to $\bar{B}$ gives free generators dual to the above, with differential twisted by the curvature.
 
@@ -556,8 +467,6 @@ This is Theorem~\ref{thm:universal-kac-moody-koszul} applied to $\mathfrak{g} = 
 
 \subsection{Explicit bar complex through degree 3}
 
-For the Heisenberg algebra, $\dim(\bar{B}^n) = 1$ at each degree (one generator, one form factor per degree; \S\ref{sec:frame-bar-all}).  For $\widehat{\mathfrak{sl}}_3$ the growth is polynomial in $\dim\mathfrak{g} = 8$:
-
 \begin{computation}[Bar complex chain-group dimensions]\label{comp:sl3-bar-dimensions}
 The chain-group dimensions decompose as
 $\dim(\bar{B}^n) = (\dim\mathfrak{g})^n \cdot (n-1)!$
@@ -572,9 +481,8 @@ see Computation~\ref{comp:sl3-bar}):
 \dim(\bar{B}^3) &= 512 \cdot 2 = 1024
   \quad \text{($8^3$ ordered triples, $\dim\Omega^2 = 2$)}
 \end{align}
+The cubic growth $\dim(\bar{B}^n) \sim 8^n$ reflects the $8$-dimensional adjoint representation of $\mathfrak{sl}_3$; the Orlik--Solomon factor $(n-1)!$ accounts for independent logarithmic forms on $\overline{C}_n$.
 \end{computation}
-
-The explicit generators and differentials are computed using the multi-residue calculus on $\overline{C}_n(X)$ for $n \leq 4$.
 
 \begin{remark}[Bar chain groups are level-independent; \ClaimStatusProvedHere]%
 \label{rem:bar-dims-level-independent}
@@ -810,6 +718,9 @@ Remark~\textup{\ref{rem:bicomplex-interpretation}}\textup{(iii)}.
 \subsection{Abstract setting}
 
 \begin{theorem}[Universal Koszul duality for affine Kac--Moody; \ClaimStatusProvedHere]\label{thm:universal-kac-moody-koszul}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$, there is a canonical Koszul duality:
 \begin{equation}
 (\widehat{\mathfrak{g}}_k)^! \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}
@@ -887,8 +798,6 @@ This determines $(\widehat{\mathfrak{g}}_k)^!$ uniquely up to quasi-isomorphism.
 \item \emph{Explicit verification}: For $\mathfrak{sl}_2$ (Theorem~\ref{thm:sl2-koszul-dual}) and $\mathfrak{sl}_3$ (\S\ref{sec:sl3-computation}), the low-degree bar complex computations confirm the predicted dual level. \checkmark
 \end{enumerate}
 \end{proof}
-
-The level-shifting duality has far-reaching consequences beyond its immediate scope: at the level of quantum groups it produces the $q \leftrightarrow q^{-1}$ symmetry (\S\ref{sec:km-quantum-groups} below), at critical level it recovers the Feigin--Frenkel center and touches geometric Langlands, and for the bar complex it explains why bar cohomology dimensions are generically level-independent (Theorem~\ref{thm:bar-cohomology-level-independence}).  The physical content of the level-shifting duality is anomaly cancellation: by Corollary~\ref{cor:anomaly-duality-km}, the semi-infinite anomalies of $\widehat{\fg}_k$ and $\widehat{\fg}_{-k-2h^\vee}$ cancel ($\kappa + \kappa' = 0$), and the complementarity theorem gives the full anomaly duality at all genera.
 
 \subsection{The screening charge perspective}
 
@@ -1016,8 +925,6 @@ The principal case of Theorem~\ref{thm:w-algebra-koszul} is a manifestation of g
 
 \subsection{Principal W-algebra example}
 
-For the principal nilpotent $f = f_{\mathrm{prin}} = \sum_i e_{-\alpha_i}$ (sum of simple root lowering operators):
-
 \begin{theorem}[Principal W-algebra structure \cite{FF, Ara07}; \ClaimStatusProvedElsewhere]
 \begin{equation}
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}}) = \text{Universal enveloping of } \{\text{generators of spin } d_1+1, \ldots, d_r+1\}
@@ -1050,11 +957,11 @@ where $\Phi_n$ is the propagator form (fundamental chain) on $\overline{C}_n(X)$
 \end{theorem}
 
 \begin{proof}
-The $A_\infty$ structure is obtained by homotopy transfer from the bar-cobar adjunction.  By the general theory (Theorem~\ref{thm:bar-cobar-inversion-qi} and the Homotopy Transfer Theorem, Appendix~\ref{app:homotopy-transfer}), for any chiral algebra $\cA$ with bar complex $\bar{B}(\cA)$, the cobar construction $\Omega(\bar{B}(\cA))$ carries a canonical dg algebra structure, and the quasi-isomorphism $\Omega(\bar{B}(\cA)) \xrightarrow{\sim} \cA$ transfers an $A_\infty$ structure to~$\cA$.
+The $A_\infty$ structure is obtained by homotopy transfer from the bar-cobar adjunction.  By the general theory (Theorem~\ref{thm:bar-cobar-inversion-qi} and the Homotopy Transfer Theorem, Appendix~\ref{app:homotopy-transfer}), for a chiral Koszul algebra $\cA$ with bar complex $\bar{B}(\cA)$, the cobar construction $\Omega(\bar{B}(\cA))$ carries a canonical dg algebra structure, and the quasi-isomorphism $\Omega(\bar{B}(\cA)) \xrightarrow{\sim} \cA$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}) transfers an $A_\infty$ structure to~$\cA$.
 
 For $\cA = \widehat{\mathfrak{g}}_k$, the geometric realization of the bar complex on $\overline{C}_{n+1}(X)$ (Theorem~\ref{thm:geometric-equals-operadic-bar}) identifies the transferred operations with configuration space integrals: $m_n$ is computed by integrating the product of input forms against the propagator $\Phi_n$ over the compactified configuration space.  The $A_\infty$ relations $\sum_{r+s+t=n}(-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0$ follow from the Stokes theorem on $\overline{C}_n(X)$: the boundary strata of the FM compactification encode exactly the compositions of lower operations.
 
-The curvature $m_0 = \frac{k+h^\vee}{2h^\vee}\kappa$ (identified in the proof of Theorem~\ref{thm:universal-kac-moody-koszul}) satisfies $m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$ for all $a \in \widehat{\mathfrak{g}}_k$, which is the curved $A_\infty$ relation replacing $d^2 = 0$.
+The curvature $m_0 = \frac{k+h^\vee}{2h^\vee}\kappa$ (identified in the proof of Theorem~\ref{thm:universal-kac-moody-koszul}) satisfies $m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$ for all $a \in \widehat{\mathfrak{g}}_k$, which is the curved $A_\infty$ relation replacing strict nilpotence $\dzero^2 = 0$.
 \end{proof}
 
 \subsection{Quantum corrections from higher genus}
@@ -1160,6 +1067,9 @@ The dictionary identifies the boundary WZW model at level $k$ with $\widehat{\ma
 
 \begin{remark}[Scope]
 The mathematical content of Conjecture~\ref{conj:km-holography} --- the identification of the bar-cobar adjunction with the boundary-bulk correspondence --- is established rigorously in the following sense: the Koszul duality $\widehat{\mathfrak{g}}_k^! \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorem~\ref{thm:universal-kac-moody-koszul}) matches the level-shifting that appears in the Chern--Simons/WZW correspondence.  The full physical interpretation (D-branes, open-closed string duality, AdS/CFT) requires string-theoretic input beyond the scope of this monograph.  The theorem remains Conjectured because the precise identification of bar-cobar with holographic duality requires specifying the bulk gravity theory, which involves physics not derivable from the algebraic framework alone.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies the bar-cobar adjunction with the holographic boundary-bulk correspondence in $\mathrm{AdS}_3/\mathrm{CFT}_2$, translating Koszul duality into the language of open-closed string duality.
 \end{remark}
 
 \subsection{Quantum groups}
@@ -1187,7 +1097,11 @@ equals the composition multiplicity of $L_k(\lambda)$ in $M_k(\mu)$).
 Under the Kazhdan--Lusztig equivalence
 $\Phi_{\mathrm{KL}}: \mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
 \xrightarrow{\sim}
-\mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ at $q = e^{\pi i/(k+h^\vee)}$,
+\mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ at $q = e^{\pi i/(k+h^\vee)}$
+(here the full abelian category $\mathrm{Rep}^{\mathrm{fd}}$, not the
+semisimplified tilting quotient $\mathcal{C}(U_q(\mathfrak{g}))$ of
+Remark~\ref{rem:kl-category-precision}, since BGG reciprocity concerns
+the non-semisimple structure),
 BGG reciprocity maps to the corresponding reciprocity for quantum group
 representations:
 \[
@@ -1238,9 +1152,12 @@ The Kazhdan--Lusztig equivalence \cite{KL93}
 \[
 \mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
 \;\simeq\;
-\mathrm{Rep}(U_q(\mathfrak{g})), \qquad
-q = e^{\pi i/(k + h^\vee)}.
+\mathcal{C}(U_q(\mathfrak{g})), \qquad
+q = e^{\pi i/(k + h^\vee)},
 \]
+where $\mathcal{C}(U_q(\mathfrak{g}))$ is the semisimplified tilting
+category (Definition~\ref{def:tilting-module})---not the full
+representation category $\mathrm{Rep}(U_q(\mathfrak{g}))$.
 Applied to the Koszul dual level $k' = -k - 2h^\vee$:
 \[
 q' = e^{\pi i/(k' + h^\vee)}
@@ -1254,9 +1171,9 @@ Combining Steps~1 and~2: the Koszul duality functor
 $(\widehat{\mathfrak{g}}_k)^! \simeq \widehat{\mathfrak{g}}_{k'}$,
 composed with the Kazhdan--Lusztig equivalences
 for levels~$k$ and~$k'$, induces the functor
-$\mathrm{Rep}(U_q(\mathfrak{g})) \to
-\mathrm{Rep}(U_{q^{-1}}(\mathfrak{g}))$
-on quantum group representations,
+$\mathcal{C}(U_q(\mathfrak{g})) \to
+\mathcal{C}(U_{q^{-1}}(\mathfrak{g}))$
+on semisimplified tilting categories,
 yielding the parameter correspondence
 $q \mapsto q^{-1}$.  This is~(iii).  See Remark~\ref{rem:km-categorical-refinement}
 below for the stronger categorical statement.
@@ -1271,7 +1188,7 @@ tensor structure via the commutativity constraint for vertex algebra modules
 (i.e., the analytic continuation of intertwining operators), and
 show that the equivalence
 $\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}}) \simeq
-\mathrm{Rep}(U_q(\mathfrak{g}))$ preserves this tensor structure.
+\mathcal{C}(U_q(\mathfrak{g}))$ preserves this tensor structure.
 
 A stronger categorical statement ---
 that the bar-cobar adjunction directly intertwines with the Kazhdan--Lusztig
@@ -1280,8 +1197,8 @@ equivalence, i.e., that the diagram
 \begin{tikzcd}
 D^b(\mathrm{Mod}_{\widehat{\mathfrak{g}}_k}^{\Eone}) \arrow[r, "\sim"] \arrow[d, "\mathrm{KL}"] &
 D^b(\mathrm{Comod}_{(\widehat{\mathfrak{g}}_k)^!}^{\Eone}) \arrow[d, "\mathrm{KL}'"] \\
-D^b(\mathrm{Rep}(U_q(\mathfrak{g}))) \arrow[r, dashed, "q \mapsto q^{-1}"] &
-D^b(\mathrm{Rep}(U_{q^{-1}}(\mathfrak{g})))
+D^b(\mathcal{C}(U_q(\mathfrak{g}))) \arrow[r, dashed, "q \mapsto q^{-1}"] &
+D^b(\mathcal{C}(U_{q^{-1}}(\mathfrak{g})))
 \end{tikzcd}
 \]
 commutes as an equivalence of tensor categories --- would require verifying
@@ -1309,7 +1226,7 @@ $3$ & $L(\Lambda_0),\; L(\Lambda_1),\; L(2\Lambda_1),\;
 \end{tabular}
 \end{center}
 At level~$k$, there are $k+1$ integrable modules, matching
-$|\mathrm{Irr}(\mathrm{Rep}(U_q(\mathfrak{sl}_2)))| = k+1$
+$|\mathrm{Irr}(\mathcal{C}(U_q(\mathfrak{sl}_2)))| = k+1$
 at $q = e^{\pi i/(k+2)}$ (a $(2k+4)$th root of unity).
 
 The fusion rules (by the Verlinde formula, or equivalently the
@@ -2220,21 +2137,22 @@ For $\widehat{\mathfrak{sl}}_{2,k}$, the residue extracts both the double-pole (
 
 \begin{theorem}[Genus-1 curvature for $\widehat{\mathfrak{sl}}_{2,k}$; \ClaimStatusProvedHere]
 \label{thm:sl2-genus1-curvature}
-The genus-1 differential satisfies:
+The genus-$1$ fiberwise differential
+$\dfib$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} satisfies:
 \begin{equation}\label{eq:sl2-genus1-dsquared}
-(d^{(1)})^2 = (k+2) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_2}
+\dfib^{\,2} = (k+2) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_2}
 \end{equation}
 where $\omega_1 \in H^2(\overline{\mathcal{M}}_{1,1})$ is the fundamental class and $(k+2)$ is the shifted level $k + h^\vee$ for $\mathfrak{sl}_2$.
 
 The curvature decomposes as:
 \begin{equation}\label{eq:curvature-decomposition}
-(d^{(1)})^2 = \underbrace{k \cdot \omega_1 \cdot \operatorname{id}}_{\text{abelian (level)}} + \underbrace{h^\vee \cdot \omega_1 \cdot \operatorname{id}}_{\text{non-abelian (Casimir)}}
+\dfib^{\,2} = \underbrace{k \cdot \omega_1 \cdot \operatorname{id}}_{\text{abelian (level)}} + \underbrace{h^\vee \cdot \omega_1 \cdot \operatorname{id}}_{\text{non-abelian (Casimir)}}
 \end{equation}
 The first summand is the Heisenberg-type contribution (proportional to $k$, independent of the Lie algebra structure), and the second is the genuinely non-abelian contribution (proportional to $h^\vee=2$, arising from the adjoint Casimir).
 \end{theorem}
 
 \begin{proof}
-We compute $(d^{(1)})^2$ on a degree-1 element $J^a(z_1) \otimes J^b(z_2) \cdot K^{(1)}_{12}$ by tracking the $B$-cycle monodromy.
+We compute $\dfib^{\,2}$ on a degree-1 element $J^a(z_1) \otimes J^b(z_2) \cdot K^{(1)}_{12}$ by tracking the $B$-cycle monodromy.
 
 \emph{Step~1: Transport around the $B$-cycle.}
 Consider the parallel transport of $K^{(1)}_{12} = K^{(1)}(z_1,z_2|\tau)$ as $z_1$ traverses the $B$-cycle $z_1 \mapsto z_1 + \tau$.  By~\eqref{eq:B-cycle-quasi-periodicity}:
@@ -2244,9 +2162,9 @@ K^{(1)}(z_1+\tau,z_2|\tau) - K^{(1)}(z_1,z_2|\tau) = -2\pi i
 This constant shift, upon contraction with the OPE data of $\widehat{\mathfrak{sl}}_{2,k}$, produces the curvature.
 
 \emph{Step~2: OPE contraction.}
-The residue at $z_1 = z_2$ of $J^a(z_1) J^b(z_2) \cdot K^{(1)}_{12}$ extracts the same data as in genus~0: the double pole contributes $k \cdot (J^a, J^b)$ and the simple pole contributes $f^{ab}{}_c J^c$.  Applying $d^{(1)}$ a second time and using the $B$-cycle shift, we obtain:
+The residue at $z_1 = z_2$ of $J^a(z_1) J^b(z_2) \cdot K^{(1)}_{12}$ extracts the same data as in genus~0: the double pole contributes $k \cdot (J^a, J^b)$ and the simple pole contributes $f^{ab}{}_c J^c$.  Applying $\dfib$ a second time and using the $B$-cycle shift, we obtain:
 \begin{equation}
-(d^{(1)})^2(J^a \boxtimes J^b \cdot K^{(1)}_{12}) = (-2\pi i) \cdot \bigl(k \cdot (J^a, J^b) + \delta^{ab} \cdot h^\vee\bigr)
+\dfib^{\,2}(J^a \boxtimes J^b \cdot K^{(1)}_{12}) = (-2\pi i) \cdot \bigl(k \cdot (J^a, J^b) + \delta^{ab} \cdot h^\vee\bigr)
 \end{equation}
 The factor $h^\vee$ arises exactly as in the genus-0 curvature computation (Theorem~\ref{thm:universal-kac-moody-koszul}, Step~2): the contraction $\sum_c f^{ac}{}_d f^{bc}{}_e$ over the adjoint representation produces the eigenvalue $2h^\vee$ of the quadratic Casimir.
 
@@ -2259,18 +2177,18 @@ k \cdot \kappa_{\mathrm{level}} + \frac{1}{2}C_2^{\mathrm{ad}} = k + h^\vee = k 
 \end{equation}
 on $\mathfrak{sl}_2$.
 
-Combining: $(d^{(1)})^2 = (k+2) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_2}$.
+Combining: $\dfib^{\,2} = (k+2) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_2}$.
 
 \emph{Step~4: Abelian limit check.}
 Setting $f^{abc} = 0$ and $h^\vee = 0$ (i.e., replacing $\mathfrak{sl}_2$ by a $3$-dimensional abelian Lie algebra with the same bilinear form), the non-abelian contribution vanishes and we recover:
 \begin{equation}
-(d^{(1)})^2\big|_{f=0} = k \cdot \omega_1 \cdot \operatorname{id}
+\dfib^{\,2}\big|_{f=0} = k \cdot \omega_1 \cdot \operatorname{id}
 \end{equation}
 This is precisely the Heisenberg curvature $\kappa \cdot \omega_1 \cdot \operatorname{id}$ from Example~\ref{ex:heisenberg-complementarity-explicit}, with $\kappa = k$ (the level of each Cartan generator).
 \end{proof}
 
 \begin{remark}[Critical level]
-At $k = -h^\vee = -2$, the curvature $(d^{(1)})^2 = 0$ vanishes, so the genus-1 bar complex becomes a genuine differential graded coalgebra.  This is consistent with the enhanced algebraic structure at critical level (Theorem~\ref{thm:sl2-critical}): the Feigin--Frenkel center provides extra flat sections, and the bar differential is strictly nilpotent.
+At $k = -h^\vee = -2$, the curvature $\dfib^{\,2} = 0$ vanishes (Convention~\ref{conv:higher-genus-differentials}), so the genus-1 bar complex becomes a genuine differential graded coalgebra.  This is consistent with the enhanced algebraic structure at critical level (Theorem~\ref{thm:sl2-critical}): the Feigin--Frenkel center provides extra flat sections, and the bar differential is strictly nilpotent.
 \end{remark}
 
 \subsection{Spectral sequence and bar-cobar inversion}
@@ -2296,7 +2214,7 @@ The proof is an instance of Theorem~\ref{thm:higher-genus-inversion} (higher gen
 The bar complex $\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k})$ carries the conformal weight filtration $F^p\barB^{(1)} = \bigoplus_{w \geq p} \barB^{(1)}_w$, where $w$ is the total conformal weight.  Since all generators $e, f, h$ have conformal weight~$1$, the filtration is bounded below and exhaustive.
 
 \emph{Step~2: $E_1$ page.}
-The associated graded of $d^{(1)}$ with respect to the weight filtration gives the $E_1$ page.  At leading order, the genus-1 propagator $K^{(1)}(z,w|\tau) = 1/(z-w) + O(1)$ agrees with the genus-0 propagator $1/(z-w)$, so the $E_1$ differential is the genus-0 bar differential.  Its cohomology computes the Lie algebra cohomology $H^*(\mathfrak{sl}_2, V_k)$.
+The associated graded of $\dfib$ with respect to the weight filtration gives the $E_1$ page.  At leading order, the genus-1 propagator $K^{(1)}(z,w|\tau) = 1/(z-w) + O(1)$ agrees with the genus-0 propagator $1/(z-w)$, so the $E_1$ differential is the genus-0 bar differential $\dzero$.  Its cohomology computes the Lie algebra cohomology $H^*(\mathfrak{sl}_2, V_k)$.
 
 \emph{Step~3: Shapovalov non-degeneracy.}
 For generic $k$ (i.e., $k+2 \notin \mathbb{Q}_{\leq 0}$, so that the Verma module $M(k)$ is irreducible), the Shapovalov form on $V_k$ is non-degenerate.  This implies:
@@ -2422,7 +2340,7 @@ K^{(1)}_{\mathrm{reg}}(\tau) = \lim_{z \to w}\Bigl(K^{(1)}(z,w|\tau) - \frac{1}{
 \end{equation}
 This is the standard relation between the Eisenstein series $E_2$ and the quasi-modular completion of the Weierstrass $\wp$-function.  The Casimir sum $\sum_a J^a J_a = C_2$ contributes a factor of $\dim(\mathfrak{sl}_2) = 3$, giving $(k+2) \cdot 3 \cdot (-\pi^2/3) E_2 = -(k+2)\pi^2 E_2$.  After absorbing the conventional normalization into the definition of $Z_1$, this yields the stated formula.
 
-The quasi-modularity of $E_2$ (it transforms as $E_2(-1/\tau) = \tau^2 E_2(\tau) + 12\tau/(2\pi i)$) reflects the holomorphic anomaly: the genus-1 partition function is \emph{not} modular, and the failure of modularity is controlled by $(k+2) = k + h^\vee$, i.e., by the same curvature that obstructs $d^2 = 0$.
+The quasi-modularity of $E_2$ (it transforms as $E_2(-1/\tau) = \tau^2 E_2(\tau) + 12\tau/(2\pi i)$) reflects the holomorphic anomaly: the genus-1 partition function is \emph{not} modular, and the failure of modularity is controlled by $(k+2) = k + h^\vee$, i.e., by the same curvature $\mcurv{1}$ that obstructs $\dfib^{\,2} = 0$ (Convention~\ref{conv:higher-genus-differentials}).
 \end{proof}
 
 \subsection{The three theorems for affine Kac--Moody algebras}
@@ -2433,7 +2351,7 @@ The quasi-modularity of $E_2$ (it transforms as $E_2(-1/\tau) = \tau^2 E_2(\tau)
 The computation of this section provides a complete non-abelian verification of all three main theorems at genus~1:
 
 \begin{enumerate}
-\item \emph{Theorem~A} (Geometric Bar--Cobar Duality, Theorem~\ref{thm:bar-cobar-isomorphism-main}): The genus-1 bar complex $\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k})$ is constructed explicitly using configuration spaces on $E_\tau$ with the propagator $K^{(1)} = \theta_1'/\theta_1$.  The bar-cobar adjunction extends from genus~0 to genus~1 via the Feynman transform of the modular operad (Theorem~\ref{thm:km-higher-genus-corrections}).
+\item \emph{Theorem~A} (Geometric Bar--Cobar Duality, Theorem~\ref{thm:bar-cobar-isomorphism-main}; Theorem~$\mathrm{A}_2$ in the decomposition of Remark~\ref{rem:theorem-A-decomposition}): The genus-1 bar complex $\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k})$ is constructed explicitly using configuration spaces on $E_\tau$ with the propagator $K^{(1)} = \theta_1'/\theta_1$.  The bar-cobar adjunction extends from genus~0 to genus~1 via the Feynman transform of the modular operad (Theorem~\ref{thm:km-higher-genus-corrections}).
 
 \item \emph{Theorem~B} (Bar--Cobar Inversion, Theorem~\ref{thm:higher-genus-inversion}): The spectral sequence for $\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k})$ collapses at $E_2$ for generic $k$ (Theorem~\ref{thm:sl2-genus1-inversion}).  The key input is Shapovalov non-degeneracy, which provides Ext-vanishing and hence the Koszul property.  At admissible levels, the collapse fails (Remark~\ref{rem:sl2-admissible}).
 
@@ -2468,9 +2386,10 @@ with the same genus-1 propagator~\eqref{eq:genus1-propagator} and differential~\
 
 \begin{theorem}[Genus-1 curvature for $\widehat{\mathfrak{sl}}_{3,k}$; \ClaimStatusProvedHere]
 \label{thm:sl3-genus1-curvature}
-The genus-1 differential satisfies:
+The genus-$1$ fiberwise differential
+$\dfib$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} satisfies:
 \begin{equation}\label{eq:sl3-genus1-dsquared}
-(d^{(1)})^2 = (k+3) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_3}
+\dfib^{\,2} = (k+3) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_3}
 \end{equation}
 where $\omega_1 \in H^2(\overline{\mathcal{M}}_{1,1})$ is the fundamental class.
 
@@ -2524,7 +2443,7 @@ is a quasi-isomorphism.  The spectral sequence collapses at $E_2$.
 This is Theorem~\ref{thm:higher-genus-inversion} for $g=1$, $\mathfrak{g}=\mathfrak{sl}_3$.
 
 \emph{Step~1: Weight filtration and $E_1$ page.}
-All $8$ generators have conformal weight~$1$, giving a bounded-below exhaustive weight filtration.  The $E_1$ differential agrees with the genus-0 bar differential at leading order (since $K^{(1)}(z,w|\tau) = 1/(z-w) + O(1)$), computing $H^*(\mathfrak{sl}_3, V_k)$.
+All $8$ generators have conformal weight~$1$, giving a bounded-below exhaustive weight filtration.  The $E_1$ differential agrees with $\dzero$ at leading order (since $K^{(1)}(z,w|\tau) = 1/(z-w) + O(1)$), computing $H^*(\mathfrak{sl}_3, V_k)$.
 
 \emph{Step~2: Shapovalov non-degeneracy.}
 For generic $k$ (specifically $k+3 \notin \mathbb{Q}_{\leq 0}$), the $\widehat{\mathfrak{sl}}_3$ Verma module $M(\Lambda)$ is irreducible and the Shapovalov form is non-degenerate.  This gives the Koszul vanishing:
@@ -2648,21 +2567,37 @@ and the module-level duality of Theorem~\ref{thm:e1-module-koszul-duality}
 suggest a configuration space proof of the Kazhdan--Lusztig
 equivalence~\cite{KL93}.
 
-\begin{conjecture}[KL equivalence from bar-cobar;
-\ClaimStatusConjectured]\label{conj:kl-from-bar-cobar}
+\begin{remark}[Programme: KL equivalence from bar-cobar]%
+\label{rem:kl-programme}
 \index{Kazhdan--Lusztig equivalence!bar-cobar proof}
+The recovery of the Kazhdan--Lusztig equivalence from the bar-cobar
+formalism decomposes into three logically ordered conjectures.
+\end{remark}
+
+\begin{conjecture}[KL-I: periodic CDG structure;
+\ClaimStatusConjectured]\label{conj:kl-periodic-cdg}
 At admissible level $k = -h^\vee + p/q$ ($p, q$ coprime positive integers,
 $q \geq h^\vee$), the bar complex $\barB(\widehat{\fg}_k)$ acquires a
-periodic CDG structure with period dividing $2q$, and there is an
-equivalence of abelian categories:
+periodic CDG structure with period dividing $2q$:
+\[
+\barB^{n+2q}(\widehat{\fg}_k) \;\cong\; \barB^n(\widehat{\fg}_k)
+\quad \text{for all } n \gg 0,
+\]
+where $q = e^{\pi i/(k+h^\vee)} = e^{\pi i q/p}$.
+\end{conjecture}
+
+\begin{conjecture}[KL-II: coderived identification;
+\ClaimStatusConjectured]\label{conj:kl-coderived}
+Assuming Conjecture~\textup{\ref{conj:kl-periodic-cdg}}, the
+coderived category of the periodic bar complex identifies with the
+quantum group side: there is an
+equivalence of abelian categories
 \begin{equation}\label{eq:kl-bar-cobar}
 \mathcal{O}_k^{\mathrm{int}}(\widehat{\fg})
 \;\simeq\;
-\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))
+\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg)),
 \end{equation}
-where $q = e^{\pi i/(k+h^\vee)} = e^{\pi i q/p}$.
-
-The equivalence is realized at chain level by the bar-cobar adjunction:
+realized at chain level by the bar-cobar adjunction:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The bar complex $\barB(\widehat{\fg}_k, M)$ of an integrable
   $\widehat{\fg}_k$-module $M$ has cohomology that is a finite-dimensional
@@ -2678,6 +2613,27 @@ The equivalence is realized at chain level by the bar-cobar adjunction:
   recovering Remark~\textup{\ref{rem:bar-complex-kl-polynomials}}.
 \end{enumerate}
 \end{conjecture}
+
+\begin{conjecture}[KL-III: braided monoidality;
+\ClaimStatusConjectured]\label{conj:kl-braided}
+Assuming Conjecture~\textup{\ref{conj:kl-coderived}}, the equivalence
+\eqref{eq:kl-bar-cobar} is braided monoidal: fusion of integrable
+modules ($\boxtimes$) maps to the quantum group tensor product
+($\otimes_q$), and braiding maps to
+$q \mapsto q^{-1}$ under Koszul duality.
+\end{conjecture}
+
+\begin{remark}[Categorical target]\label{rem:kl-conjecture-target}
+Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided} is stated at the abelian level,
+with target $\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ (the full
+non-semisimple category of finite-dimensional representations at a root
+of unity).  The modular tensor category relevant to conformal blocks
+and the Verlinde formula is the \emph{semisimplified tilting quotient}
+$\mathcal{C}(U_q(\fg))$ (Remark~\ref{rem:kl-category-precision}),
+obtained by quotienting out negligible morphisms.
+The abelian equivalence is the stronger statement; the braided monoidal
+equivalence on $\mathcal{C}(U_q(\fg))$ follows from it.
+\end{remark}
 
 \begin{remark}[Evidence and gaps]\label{rem:kl-evidence}
 \emph{What is proved in this monograph}:
@@ -2696,9 +2652,11 @@ The equivalence is realized at chain level by the bar-cobar adjunction:
   (Proposition~\ref{prop:affine-hecke-kd}).
 \end{itemize}
 
-\emph{What remains}:
+\emph{What remains} (organized by the three-stage decomposition
+Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}):
 \begin{itemize}
-\item Root-of-unity bar analysis: at admissible $k$, the parameter
+\item \emph{Stage I} (Conjecture~\ref{conj:kl-periodic-cdg}):
+  Root-of-unity bar analysis: at admissible $k$, the parameter
   $q = e^{\pi i/(k+h^\vee)}$ is a root of unity, and the bar complex
   acquires quotient/truncation structure.  The CDG periodicity
   $\barB^{n+2q} \cong \barB^n$ must be established.
@@ -2716,6 +2674,14 @@ argument (which uses Jantzen filtrations and translation functors) with
 configuration space integrals and Verdier duality on FM
 compactifications.  The admissible-level specialization
 $q = e^{\pi i q/p}$ is the key new ingredient.
+
+\emph{Homotopy templates} (Convention~\ref{conv:hms-levels}):
+Conjecture~\ref{conj:kl-periodic-cdg}: Type~V (periodicity).
+The conjecture asserts a periodic CDG structure on the bar complex at admissible level, with period determined by the root-of-unity parameter.
+Conjecture~\ref{conj:kl-coderived}: Type~II (equivalence).
+The conjecture identifies the coderived category of the periodic bar complex with the quantum group representation category.
+Conjecture~\ref{conj:kl-braided}: Type~II (equivalence).
+The conjecture lifts the abelian equivalence to a braided monoidal equivalence, matching fusion with the quantum group tensor product.
 \end{remark}
 
 \begin{remark}[N-complex framework for root-of-unity bar]\label{rem:n-complex-framework}
@@ -2724,7 +2690,7 @@ At admissible level $k = -h^\vee + p/q$ where $q = e^{\pi i/(k+h^\vee)}$
 is a primitive $N$-th root of unity ($N = 2q$), the bar complex acquires
 the structure of an \emph{$N$-complex} in the sense of
 Kapranov~\cite{Kapranov96}: $d^N = 0$ but $d^2 \neq 0$.  This replaces
-the curved dg structure ($d^2 = \kappa \cdot \omega_1$) with a truncated
+the curved dg structure ($\dfib^{\,2} = \kappa \cdot \omega_1$) with a truncated
 nilpotence condition.
 
 The $N$-complex framework of Kapranov~\cite{Kapranov96} and
@@ -2742,7 +2708,7 @@ Khovanov--Qi~\cite{KQ20} provides:
 
 This suggests that the CDG periodicity
 $\barB^{n+2q} \cong \barB^n$ of
-Conjecture~\ref{conj:kl-from-bar-cobar} should be reformulated as: at
+Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided} should be reformulated as: at
 admissible level, $\barB(\widehat{\fg}_k)$ is an $N$-complex with
 $N = 2q$, and the KL equivalence is the passage from $N$-complex
 cohomology to quantum group representations.
@@ -2770,7 +2736,7 @@ e^{-2\pi i \lambda\mu/(k+h^\vee)}$ under the level shift
 $k \mapsto -k - 2h^\vee$.
 
 The admissible-level case requires the root-of-unity
-bar analysis of Conjecture~\ref{conj:kl-from-bar-cobar} and
+bar analysis of Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided} and
 constitutes the monoidal component of the KL programme.
 \end{remark}
 
@@ -2796,8 +2762,8 @@ on the formal disc~$D$.
 
 \begin{proof}
 At $k = -h^\vee$, $\kappa = 0$
-(Corollary~\ref{cor:critical-level-universality}), so $d^2 = 0$
-and the bar complex is a genuine cochain complex.  The PBW spectral
+(Corollary~\ref{cor:critical-level-universality}), so $\dfib^{\,2} = 0$
+and the bar complex is a genuine cochain complex at every genus.  The PBW spectral
 sequence of Proposition~\ref{prop:km-generic-acyclicity} degenerates:
 the $E_1$ page is $H^*(\fg;\, S^\bullet(\fg[t^{-1}]))$, and the
 Whitehead lemma gives $H^0 = S^\bullet(\fg[t^{-1}])^\fg$.
@@ -3033,7 +2999,7 @@ Langlands program?  The critical-level bar complex provides a
 chain-level oper resolution
 (Theorem~\ref{conj:oper-bar}), and the admissible-level bar
 complex should recover the KL equivalence
-(Conjecture~\ref{conj:kl-from-bar-cobar}).  Does the full genus-graded
+(Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}).  Does the full genus-graded
 bar complex (Theorem~\ref{thm:genus-graded-bar}) provide a
 chain-level refinement of the quantum Langlands kernel?
 \end{question}

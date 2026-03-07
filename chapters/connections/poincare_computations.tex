@@ -2,58 +2,19 @@
 \label{chap:NAP-computations}
 \index{Poincare duality!explicit computations}
 
-Non-abelian Poincar\'e duality (Theorem~\ref{thm:main-NAP-resolution}) identifies the factorization homology $\int_X \mathcal{A}$ with the Verdier dual of $\int_{-X} \mathcal{A}^!$.  This is the geometric engine behind bar-cobar duality: the bar construction \emph{is} factorization homology, and the cobar construction \emph{is} factorization cohomology via the Verdier pairing.  In this chapter, we make the identification explicit for every standard Koszul pair --- Heisenberg, Kac--Moody, $\beta\gamma$/bc --- tracking how the curvature $m_0$, the level shift $k \mapsto -k-2h^\vee$, and the genus corrections emerge from the NAP machinery.
-
-The computations below make precise the Verdier duality mechanism that exchanged $\mathcal{H}_k$ and $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ in the frame chapter (Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-koszul-dual}): there, the duality was established by direct OPE analysis; here, NAP provides the functorial underpinning valid for all Koszul pairs simultaneously.
+Non-abelian Poincar\'e duality (Theorem~\ref{thm:main-NAP-resolution}) identifies $\int_X \mathcal{A}$ with the Verdier dual of $\int_{-X} \mathcal{A}^!$.  The bar construction \emph{is} factorization homology; the cobar construction \emph{is} factorization cohomology via the Verdier pairing.  We make this explicit for the standard Koszul pairs --- Heisenberg, Kac--Moody, $\beta\gamma$/bc --- tracking how curvature $m_0$, level shift $k \mapsto -k-2h^\vee$, and genus corrections emerge from the NAP machinery.
 
 \section{Worked examples: standard Koszul pairs}
 
 \subsection{Heisenberg algebra}
 
 \begin{example}[Heisenberg via NAP]\label{ex:heisenberg-NAP}
-The Heisenberg chiral algebra $\mathcal{H}_k$ at level $k$ has:
-
-The generator is $J(z)$ with conformal weight $h = 1$, and the OPE is:
-$$J(z) J(w) = \frac{k}{(z-w)^2} + \text{regular}$$
-
-\emph{Step~1: Construct $\mathcal{H}_k^!$ via Verdier duality.}
-
-The factorization structure of $\mathcal{H}_k$ gives:
-$$\mathcal{H}_k(U \sqcup V) \cong \mathcal{H}_k(U) \otimes \mathcal{H}_k(V)$$
-
-Apply Verdier duality on configuration spaces:
-$$(\mathcal{H}_k^!)^{\boxtimes 2} = \mathbb{D}(\mathcal{H}_k^{\otimes 2}) \otimes \omega_{C_2(X)}^{-1}$$
-
-The OPE pole $\frac{k}{(z-w)^2}$ encodes a quadratic relation with curvature: the Heisenberg IS quadratic in the inhomogeneous sense (the commutation relation $[a_m, a_n] = km\delta_{m+n,0}$ is bilinear in generators plus a constant), and the level $k$ provides the curvature element $m_0 = k \cdot c$ in the curved Koszul framework.
-
-$\mathcal{H}_k$ is a \emph{curved} Koszul algebra. The bar complex includes:
-$$\bar{B}^0(\mathcal{H}_k) = \text{Sym}(J)$$
-$$\bar{B}^1(\mathcal{H}_k) = \Gamma(\overline{C}_2(X), J \boxtimes J \otimes \eta_{12})$$
-
-The OPE $J(z)J(w) = k/(z-w)^2$ has no simple pole, so the bar differential
-$d = \text{Res}_{z=w}$ vanishes on all bar elements (the residue of $k/(z-w)^2 \cdot \eta_{12} = k\,dz/(z-w)^3$ is zero).  The curvature $m_0 = k\omega_X$ arises instead from the central extension structure.  The Koszul dual is:
-$$\mathcal{H}_k^! = \text{Sym}(V) \quad \text{(commutative)}$$
-
-with a curved $A_\infty$ structure.
-
-From the NAP perspective:
-$$\int_X \mathcal{H}_k = \text{Sym}^*(J) \quad \text{(bar construction)}$$
-$$\mathbb{D}\left(\int_{-X} \text{Sym}(V)\right) = \text{Ext}(V) \quad \text{(Verdier dual)}$$
-
-However, $\mathcal{H}_k$ is not $\text{Ext}(V)$; it is $\text{Sym}(J)$ with level $k$ central extension.
-
-The central extension at level $k$ is the curvature in the NAP duality.  The correct statement is:
-$$\int_X \mathcal{H}_k \simeq \mathbb{D}\left(\int_{-X} \text{Sym}(V)\right) \text{ with curvature } \kappa = k \omega_X$$
+The Heisenberg algebra $\mathcal{H}_k$ with OPE $J(z)J(w) = k/(z-w)^2$ has vanishing bar differential (no simple pole; see~\S\ref{sec:frame-bar-all}) and Koszul dual $\mathcal{H}_k^! = \mathrm{Sym}^{ch}(V^*)$ (Theorem~\ref{thm:heisenberg-not-self-dual}).  From the NAP perspective, the level $k$ central extension becomes the curvature $m_0 = k\omega_X$ in the curved $A_\infty$ structure on the dual:
+$$\int_X \mathcal{H}_k \simeq \mathbb{D}\left(\int_{-X} \mathrm{Sym}^{ch}(V^*)\right) \quad \text{with curvature } m_0 = k\omega_X$$
 \end{example}
 
 \begin{remark}[Heisenberg Koszul duality]\label{rem:heisenberg-koszul}
-The corrected analysis shows that the Heisenberg algebra is \emph{not} Koszul self-dual (Theorem~\ref{thm:heisenberg-not-self-dual}; see also the direct bar complex computation in \S\ref{sec:frame-bar-all}):
-$$\mathcal{H}_k^! = \mathrm{Sym}^{ch}(V^*) \quad \text{(commutative chiral algebra)}$$
-
-The level $k$ enters through the \emph{curvature} $m_0 = k\omega_X$ in the curved $A_\infty$ structure on the dual.  The NAP framework handles this via:
-$$\int_X \mathcal{H}_k \simeq \mathbb{D}\left(\int_{-X} \mathrm{Sym}^{ch}(V^*)\right) \quad \text{with curvature } m_0 = k\omega_X$$
-
-This is distinct from level-rank duality $SU(N)_k \leftrightarrow SU(k)_N$, which involves different algebras.
+The duality $\mathcal{H}_k^! = \mathrm{Sym}^{ch}(V^*)$ is \emph{not} level-rank duality $SU(N)_k \leftrightarrow SU(k)_N$, which exchanges different algebras.  It is operadic: $\mathrm{chirLie}^! = \mathrm{chirCom}$, realized at the factorization algebra level by Verdier duality on configuration spaces.
 \end{remark}
 
 \subsection{Free fermions: correct Koszul pair}
@@ -120,21 +81,12 @@ $$\int_X \widehat{\mathfrak{g}}_{-h^\vee} \simeq \mathbb{D}\left(\int_{-X} \wide
 This is pure NAP duality: Verdier duality on the factorization algebra associated to the \emph{same} chiral algebra on the orientation-reversed curve.  The Langlands dual $\mathfrak{g}^\vee$ enters separately, through the Feigin--Frenkel theorem:
 
 \emph{The geometric Langlands connection.}
-\begin{itemize}
-\item The Feigin--Frenkel theorem identifies $\mathcal{Z}(\widehat{\mathfrak{g}}_{-h^\vee})$ with ${}^L\mathfrak{g}$-opers, providing a bridge to the Langlands dual
-\item $\widehat{\mathfrak{g}}_{-h^\vee}$ describes D-modules on $\text{Bun}_G(X)$
-\item The geometric Langlands correspondence (conjecturally) relates D-modules on $\text{Bun}_G(X)$ to those on $\text{Bun}_{G^\vee}(X)$; this is a deeper phenomenon than NAP duality
-\end{itemize}
+The Feigin--Frenkel theorem identifies $\mathcal{Z}(\widehat{\mathfrak{g}}_{-h^\vee})$ with ${}^L\mathfrak{g}$-opers, providing a bridge to the Langlands dual; $\widehat{\mathfrak{g}}_{-h^\vee}$ describes D-modules on $\text{Bun}_G(X)$; and the geometric Langlands correspondence (conjecturally) relates D-modules on $\text{Bun}_G(X)$ to those on $\text{Bun}_{G^\vee}(X)$, a deeper phenomenon than NAP duality.
 
 The expected Koszul dual, following Costello's 4d Chern--Simons framework, is:
 $$(\widehat{\mathfrak{g}}_{-h^\vee})^! \simeq \text{Yangian } Y(\mathfrak{g}) \quad \text{(conjectural)}$$
 
-This expected identification connects:
-\begin{itemize}
-\item Chiral Koszul duality (bar-cobar framework)
-\item Geometric Langlands correspondence (Beilinson--Drinfeld)
-\item Quantum groups (Drinfeld, Chari--Pressley)
-\end{itemize}
+This identification would connect chiral Koszul duality, the geometric Langlands correspondence, and quantum groups.
 \end{example}
 
 \subsection{Virasoro algebra}
@@ -281,13 +233,7 @@ This differs from $(\mathcal{A}^!)_{(g)}$, the genus-$g$ component of $\mathcal{
 For a Koszul pair $(\mathcal{A}_1, \mathcal{A}_2)$ at genus $g$:
 $$Q_g(\mathcal{A}_1) \oplus Q_g(\mathcal{A}_2) \cong H^*(\mathcal{M}_g, Z(\mathcal{A}_1))$$
 
-where:
-\begin{itemize}
-\item $Q_g(\mathcal{A}_i)$ are genus-$g$ quantum corrections
-\item $Z(\mathcal{A}_1)$ is the center of $\mathcal{A}_1$, viewed as a local system on $\mathcal{M}_g$
-\end{itemize}
-
-\emph{NAP interpretation.} What $\mathcal{A}_1$ sees as a quantum deformation, $\mathcal{A}_2$ sees as an obstruction to extending to higher genus.
+where $Q_g(\mathcal{A}_i)$ denotes genus-$g$ quantum corrections and $Z(\mathcal{A}_1)$ is the center of $\mathcal{A}_1$, viewed as a local system on $\mathcal{M}_g$.  What $\mathcal{A}_1$ sees as deformation, $\mathcal{A}_2$ sees as obstruction.
 \end{theorem}
 
 \begin{proof}
@@ -297,18 +243,9 @@ This is a restatement of Theorem~\ref{thm:quantum-complementarity-main} (Koszul 
 \section{Summary}
 
 \begin{remark}[NAP as computational tool]\label{rem:NAP-computational}
-Non-abelian Poincar\'e duality provides a complete computational framework for chiral Koszul duality. The Koszul dual $\mathcal{A}^!$ is defined intrinsically via Verdier duality, its coproducts and differentials are computed from OPEs, and the coalgebra axioms follow from geometric identities on configuration spaces. Completion handles non-quadratic cases, and the genus-graded extension yields quantum corrections. This resolves the circularity in the definition and provides a systematic method to compute Koszul duals for any chiral algebra.
+NAP duality defines $\mathcal{A}^!$ intrinsically via Verdier duality, computes coproducts from OPEs, and derives coalgebra axioms from configuration space geometry.  Completion handles non-quadratic cases; genus grading yields quantum corrections.
 \end{remark}
 
 \begin{remark}[Outstanding questions]\label{rem:outstanding-NAP}
-Some questions remain:
-\begin{enumerate}
-\item \emph{Classification:} Which chiral algebras admit Koszul duals? (Criterion beyond quadraticity?)
-\item \emph{Uniqueness:} Is the Koszul dual unique (up to quasi-isomorphism)?
-\item \emph{Virasoro self-duality:} Does $c=26$ give genuine self-duality?
-\item \emph{Higher genera:} Do all Koszul pairs extend to higher genera?
-\item \emph{Categorical version:} How does NAP lift to categories of modules?
-\end{enumerate}
-
-These will be addressed in subsequent work.
+Several questions remain open: classification of chiral algebras admitting Koszul duals beyond the quadratic case, uniqueness of the dual up to quasi-isomorphism, whether $c=26$ gives genuine Virasoro self-duality, extension of all Koszul pairs to higher genera, and the categorical lift of NAP to module categories.
 \end{remark}

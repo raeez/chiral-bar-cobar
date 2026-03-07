@@ -3,10 +3,8 @@
 \index{higher genus!bar complex|textbf}
 \index{quantum corrections|textbf}
 
-The genus-$1$ curvature $d^2 = \kappa(\cA) \cdot \omega_1 \cdot \mathrm{id}$ and the $\hat{A}$-genus tower that we computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are universal: they hold for every Koszul chiral algebra, with $\kappa(\cA)$ determined by the leading OPE pole.  This chapter establishes that universality and proves the four main theorems in full generality.
+The genus-$1$ fiberwise curvature $\dfib^{\,2} = \kappa(\cA) \cdot \omega_1 \cdot \mathrm{id}$ (Convention~\ref{conv:higher-genus-differentials}) and the $\hat{A}$-genus tower that we computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are universal: they hold for every Koszul chiral algebra, with $\kappa(\cA)$ determined by the leading OPE pole.  This chapter establishes that universality and proves the four main theorems in full generality.
 
-\bigskip
-\noindent
 At genus zero, Koszul duality is an algebraic theorem: the bar and
 cobar constructions form an adjunction, and for Koszul algebras the
 adjunction is an equivalence.  Nothing in this statement involves
@@ -33,7 +31,7 @@ counterpart, and the reader may hold both in mind simultaneously:
 \small
 \begin{tabular}{ll}
 \textbf{This chapter} & \textbf{Physics reading} \\ \hline
-Curvature $d^2 = \kappa \cdot \omega_1$ & Conformal anomaly \\
+Fiberwise curvature $\dfib^{\,2} = \kappa \cdot \omega_1$ & Conformal anomaly \\
 $\kappa(\cA) = 0$ (flatness) & Anomaly cancellation ($c = 26$) \\
 Coderived category & Off-shell (curved background) \\
 Derived category & On-shell (anomaly-free) \\
@@ -47,10 +45,7 @@ These identifications are theorems, not analogies: the
 BV$=$bar identification of Theorem~\ref{thm:brst-bar-genus0}
 makes them precise at genus~$0$, and the modular operad
 extension of~\S\ref{sec:modular-koszul-programme} articulates
-the higher-genus programme.  In particular, the condition
-$\kappa = 0$ is simultaneously the mathematical condition for
-the bar complex to be uncurved and the physical condition for
-anomaly cancellation.
+the higher-genus programme.  The condition $\kappa = 0$ is simultaneously the mathematical condition for the bar complex to be uncurved and the physical condition for anomaly cancellation.
 \end{remark}
 
 The main theorems of the monograph --- bar-cobar inversion
@@ -60,11 +55,122 @@ Theorem~\ref{thm:quantum-complementarity-main}), and the
 Kodaira--Spencer construction
 (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) --- are all
 proved in this chapter.
-\bigskip
+
+\begin{convention}[Higher-genus differentials]\label{conv:higher-genus-differentials}
+\index{bar differential!higher-genus notation|textbf}
+Three mathematically distinct differentials act on genus-$g$ bar complexes.
+Because the manuscript uses all three extensively, we fix notation once and
+for all.
+\begin{enumerate}
+\item[\textup{(i)}] \textbf{Fiberwise curved differential} $\dfib$.
+  On a fixed curve $\Sigma_g$, the collision-residue differential built
+  from the genus-$g$ propagator.  This differential is \emph{curved}:
+  \[
+    \dfib^{\,2} = \kappa(\cA)\cdot\omega_g\cdot\mathrm{id},
+  \]
+  where $\omega_g$ is the Arakelov $(1,1)$-form
+  (Theorem~\ref{thm:quantum-arnold-relations}) and
+  $\kappa(\cA)$ is the leading OPE anomaly coefficient.
+  The curvature element is $\mcurv{g} = \kappa(\cA)\cdot\lambda_g$.
+
+\item[\textup{(ii)}] \textbf{Total corrected differential} $\Dg{g}$.
+  The full differential on $\bar{B}^{(g)}(\cA)$, incorporating all
+  quantum corrections from period integrals over cycles of~$\Sigma_g$:
+  \[
+    \Dg{g} = \dzero + \sum_{k=1}^{g} t_k\, d_k,
+  \]
+  where $t_k = \oint_{A_k}\omega_k$ are $A$-period parameters from
+  $H^1(\Sigma_g,\C)$ \textup{(}not $H^1(\mathcal{M}_g)$, which
+  vanishes for $g\ge 2$ by Harer\textup{)}.  This differential is
+  \emph{strict}:
+  \[
+    \Dg{g}^{\,2} = 0
+  \]
+  \textup{(}Theorem~\textup{\ref{thm:quantum-diff-squares-zero})}.
+
+\item[\textup{(iii)}] \textbf{Genus-$0$ collision differential} $\dzero$.
+  The classical bar differential from collision residues on~$\mathbb{P}^1$
+  (or the fiberwise collision component $d^{(0)}$ in the Leray
+  decomposition).  Satisfies $\dzero^2 = 0$ by the Arnold relation
+  (Theorem~\ref{thm:arnold-three}).
+\end{enumerate}
+
+\noindent
+\textbf{Relation.}
+On a fixed $\Sigma_g$, the fiberwise differential $\dfib$ is
+the component of $\Dg{g}$ that preserves Leray degree; the
+quantum corrections $\sum t_k d_k$ restore nilpotence by
+cancelling the curvature via the Lagrangian property of the
+$A$-cycle subspace.  The full genus-stratified total differential is
+\[
+  \Dtot = \sum_{g\ge 0} \hbar^{2g-2}\,\Dg{g}, \qquad
+  \Dtot^{\,2} = 0.
+\]
+
+\noindent
+\textbf{Warning.}
+The obstruction class $\mathrm{obs}_g$ (Definition~\ref{def:genus-g-obstruction})
+measures the failure of $\dfib^{\,2} = 0$, \emph{not} of $\Dg{g}^{\,2} = 0$.
+When we write ``$\dfib^{\,2} = \kappa\cdot\omega_g$'' in this chapter, the
+differential is always $\dfib$; when we write ``$\Dg{g}^{\,2} = 0$,'' the
+differential is always $\Dg{g}$.  Earlier chapters that use unadorned
+$d$ for the genus-$0$ bar differential are using $\dzero$.
+\end{convention}
+
+\begin{definition}[Scalar curvature shadow; \ClaimStatusProvedHere]
+\label{def:scalar-curvature-shadow}
+\index{curvature shadow|textbf}
+\index{trace!of curvature coderivation}
+The \emph{scalar curvature shadow} at genus $(g,n)$ is the trace of
+the curvature coderivation:
+\[
+\mathrm{tr}\bigl(\mcurv{g}\bigr) \;\in\; H^*(\overline{\mathcal{M}}_{g,n}).
+\]
+Its $(g, n{=}0)$ component recovers what this monograph denotes
+$\kappa(\cA) \cdot \lambda_g$
+(Theorem~\ref{thm:genus-universality}).
+The scalar curvature shadow is the image of the (conjectural)
+universal genus datum $\Theta_{\cA}$
+(Conjecture~\ref{conj:universal-MC}) under the trace map; it is
+the third and most computable level in the three-tier hierarchy of
+Convention~\ref{conv:higher-genus-differentials}: curvature lives in
+$\dfib$, strict nilpotence in $\Dg{g}$, and scalar anomalies in
+$\mathrm{tr}(\mcurv{g})$.
+\end{definition}
+
+\begin{remark}[Parameter-source diagram]\label{rem:parameter-source}
+\index{parameter source!fiber vs.\ moduli}
+The quantum correction parameters live in a chain of spaces that must
+not be confused:
+\[
+H^1(\Sigma_g, \C)
+\;\xrightarrow{\;\text{MC}\;}
+Z^1(\operatorname{Def}_{\mathrm{cyc}}(\cA)_{\mathrm{model}})
+\;\xrightarrow{\;\text{global}\;}
+R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})
+\;\xrightarrow{\;\mathrm{tr}\;}
+R\Gamma(\overline{\mathcal{M}}_g, \mathbb{Q}).
+\]
+\begin{itemize}
+\item The \emph{fiber-period parameters} $t_k = \oint_{A_k}\omega_k$
+  live in $H^1(\Sigma_g, \C)$: periods of the fixed curve, not classes
+  on moduli.
+\item The \emph{moduli obstruction classes} live in
+  $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$: global sections of the
+  center local system over moduli.
+\item The \emph{scalar obstruction shadows} $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+  live in the tautological ring of $\overline{\mathcal{M}}_g$.
+\end{itemize}
+The notation ``quantum corrections from
+$H^1(\mathcal{M}_g)$'' is
+\emph{incorrect}: $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$
+(Harer).  The parameters arise from $H^1(\Sigma_g)$; they become classes on moduli only via the Kodaira--Spencer map
+(Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
+\end{remark}
 
 \section{\texorpdfstring{$A_\infty$ structures and higher operations}{A-infinity structures and higher operations}}
 
-For historical background on $A_\infty$ algebras---including Stasheff's original discovery via loop spaces, physical origins in string field theory and deformation quantization, and the operadic unification---see Appendix~\ref{sec:ainfty-historical}.
+For historical background on $A_\infty$ algebras, see Appendix~\ref{sec:ainfty-historical}.
 
 % ================================================================
 % SECTION 4.2: THE GEOMETRIC BAR COMPLEX AND ITS A-INFINITY STRUCTURE
@@ -73,8 +179,6 @@ For historical background on $A_\infty$ algebras---including Stasheff's original
 \subsection{\texorpdfstring{The geometric bar complex and its $A_\infty$ structure}{The geometric bar complex and its A-infinity structure}}
 
 \subsubsection{Elementary introduction: logarithmic forms as operations}
-
-Before introducing the full construction, we illustrate the main mechanism through the simplest example.
 
 \begin{example}[Binary operation from residues]
 For two operators $a, b$ in a chiral algebra at positions $z_1, z_2 \in \mathbb{P}^1$:
@@ -171,16 +275,9 @@ The first term gives $m_3$, the second gives the homotopy $h_3$.
 \subsubsection{\texorpdfstring{Enhanced $A_\infty$ structure with moduli space interpretation}{Enhanced A-infinity structure with moduli space interpretation}}
 
 \begin{remark}[$A_\infty$ vs.\ strictly associative]
-Before the computations, we clarify when $A_\infty$ structure is necessary:
-\begin{itemize}
-\item \emph{Strictly associative}: If $\mathcal{A}$ is Koszul (relations are 
-quadratic and satisfy strong conditions), then $\bar{B}^{\text{ch}}(\mathcal{A})$ 
-has trivial higher operations $m_k = 0$ for $k \geq 3$
-\item \emph{$A_\infty$ required}: For general chiral algebras, or when working 
-at chain level before passing to cohomology, we need the full $A_\infty$ structure
-\end{itemize}
-The geometric bar-cobar construction produces $A_\infty$ structures
-through configuration space boundaries.
+If $\mathcal{A}$ is Koszul, then $\bar{B}^{\text{ch}}(\mathcal{A})$
+has $m_k = 0$ for $k \geq 3$ (strictly associative).
+For general chiral algebras, or at chain level before passing to cohomology, the full $A_\infty$ structure is needed.
 \end{remark}
 
 \begin{theorem}[$A_\infty$ operations via moduli spaces; \ClaimStatusProvedHere]\label{thm:ainfty-moduli}
@@ -258,26 +355,18 @@ The $m_3$ operation computes:
 $$m_3(T \otimes T \otimes T) = 
 \int_{\partial \overline{M}_{0,4}} \text{Res}[\text{triple OPE}]$$
 
-This involves:
-\begin{itemize}
-\item Primary pole: $\propto c^2$ from $(T \cdot T) \cdot T$ vs. $T \cdot (T \cdot T)$
-\item Schwarzian derivative terms from conformal anomaly
-\item Descendant contributions from $\partial T$
-\end{itemize}
-
-The result is non-zero (the Virasoro algebra is not Koszul), encoding the conformal anomaly 
+This involves a primary pole $\propto c^2$ from $(T \cdot T) \cdot T$ vs.\ $T \cdot (T \cdot T)$, Schwarzian derivative terms from the conformal anomaly, and descendant contributions from $\partial T$.  The result is non-zero (the Virasoro algebra is not Koszul), encoding the conformal anomaly 
 and central charge. This $m_3$ operation is precisely the obstruction to finding 
 a strictly associative product on the bar construction.
 \end{example}
 
 \begin{remark}[Feynman diagram interpretation]
 \label{rem:ainfty-feynman-preview}
-The operation~$m_k$ corresponds to the contribution of Feynman diagrams
-whose topology is determined by the boundary stratification
-of~$\overline{M}_{0,k+1}$: $m_2$ is tree-level propagation, $m_3$ is the
-one-loop correction, and higher~$m_k$ encode higher-loop quantum effects.
-The precise correspondence between $A_\infty$ operations and Feynman
-diagram topologies is developed in Chapter~\ref{ch:feynman}.
+The operation~$m_k$ corresponds to the Feynman diagrams
+determined by the boundary stratification
+of~$\overline{M}_{0,k+1}$: $m_2$ is tree-level, $m_3$ is
+one-loop, and higher~$m_k$ encode higher loops.
+See Chapter~\ref{ch:feynman}.
 \end{remark}
 
 \subsubsection{Pentagon and higher identities}
@@ -370,7 +459,6 @@ $$\mathbb{D}(\mathcal{F}) = \mathcal{RHom}(\mathcal{F}, \omega_{\overline{C}_n(X
 Applied to the sheaf $j_!\mathbb{C}_{C_n(X)}$ where $j: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the open inclusion, this exchanges $j_!$ and $Rj_*$ (Theorem~\ref{thm:verdier-config}), identifying logarithmic forms on the compactification with distributional forms on the open configuration space. The perfect pairing $\langle \eta_{ij}, \delta(z_i - z_j) \rangle = 1$ realizes the NAP isomorphism at the level of differential forms, since residues (bar operations) and delta functions (cobar operations) are Verdier duals.
 \end{proof}
 
-
 \subsubsection{Distributions vs. differential forms: the dual picture}
 
 While the bar complex uses differential forms on compactified configuration spaces, the cobar complex uses distributions on open configuration spaces. This duality is the distributional manifestation of the intrinsic Verdier-dual definition (Definition~\ref{def:geom-cobar-intrinsic}); see Theorem~\ref{thm:cobar-distributional-model} for the precise identification.
@@ -378,12 +466,7 @@ While the bar complex uses differential forms on compactified configuration spac
 \begin{definition}[Geometric cobar complex]\label{def:geom-cobar-precise}
 For a conilpotent chiral coalgebra $\mathcal{C}$ (valued in holonomic $\mathcal{D}$-modules), the distributional model of the geometric cobar complex is:
 $$\Omega^{\text{ch}}_{p,q}(\mathcal{C}) = \text{Hom}_{\mathcal{D}}\left(\mathcal{C}^{\otimes(p+1)}, \mathcal{D}_{C_{p+1}(X)} \otimes \Omega^q_{\text{dist}}\right)$$
-where:
-\begin{itemize}
-\item $C_{p+1}(X)$ is the \emph{open} configuration space (no compactification)
-\item $\Omega^q_{\text{dist}}$ are distributional $q$-forms with singularities along diagonals
-\item The differential inserts delta functions rather than extracting residues
-\end{itemize}
+where $C_{p+1}(X)$ is the open configuration space, $\Omega^q_{\text{dist}}$ are distributional $q$-forms with singularities along diagonals, and the differential inserts delta functions rather than extracting residues.
 \end{definition}
 
 \begin{example}[Delta function vs.\ residue]
@@ -809,7 +892,7 @@ The difference in these compactifications determines the $A_\infty$ structure.
 
 \subsubsection{\texorpdfstring{Curved $A_\infty$ algebras: central extensions and anomalies}{Curved A-infinity algebras: central extensions and anomalies}}
 
-Physical theories often have anomalies—quantum corrections that break classical symmetries. Algebraically, these appear as curved $A_\infty$ structures.
+Anomalies appear algebraically as curved $A_\infty$ structures.
 
 \begin{definition}[Curved $A_\infty$ algebra]
 \index{curved $A_\infty$-algebra|textbf}
@@ -826,12 +909,7 @@ A curved $A_\infty$ algebra consists of a graded vector space $\mathcal{A}$ with
 The Heisenberg algebra $\mathcal{H}_k$ has current $J$ with OPE:
 $$J(z)J(w) = \frac{k}{(z-w)^2} + \text{regular}$$
 
-The absence of a simple pole means:
-\begin{itemize}
-\item $m_2(J \otimes J) = 0$ (no current algebra)
-\item Curvature $\kappa = k \cdot c$ where $c$ is the central element
-\item Modified differential: $d_{\text{curved}} = d + k \cdot \mu_0$
-\end{itemize}
+The absence of a simple pole gives $m_2(J \otimes J) = 0$, curvature $\kappa = k \cdot c$, and modified differential $d_{\text{curved}} = d + k \cdot \mu_0$.
 
 The bar complex:
 $$\bar{B}^n(\mathcal{H}_k) = \begin{cases}
@@ -862,12 +940,7 @@ The curved structure:
 \begin{definition}[Filtered chiral algebra]
 A filtered chiral algebra has:
 $$F_0\mathcal{A} \subset F_1\mathcal{A} \subset F_2\mathcal{A} \subset \cdots$$
-with:
-\begin{itemize}
-\item $\mu(F_i \otimes F_j) \subset F_{i+j}$
-\item $\mathcal{A} = \bigcup_i F_i\mathcal{A}$ (exhaustive)
-\item $\bigcap_i F_i\mathcal{A} = 0$ (separated)
-\end{itemize}
+with $\mu(F_i \otimes F_j) \subset F_{i+j}$ (compatibility), $\mathcal{A} = \bigcup_i F_i\mathcal{A}$ (exhaustive), and $\bigcap_i F_i\mathcal{A} = 0$ (separated).
 \end{definition}
 
 \begin{theorem}[Convergence for filtered algebras; \ClaimStatusProvedHere]
@@ -946,14 +1019,7 @@ This proves (4).
 The $W_N$ algebra has filtration by conformal weight:
 $$F_k = \mathrm{span}\{W^{(s)} : s \leq k\}$$
 
-This filtration satisfies the hypotheses of Theorem~\ref{thm:convergence-filtered}:
-\begin{itemize}
-\item Complete and separated (conformal weight is bounded below)
-\item Compatible with chiral operations ($\mu(F_i \otimes F_j) \subset F_{i+j}$
-by conformal weight additivity)
-\item Associated graded $\mathrm{gr}\,W_N \cong$ free field algebra (which is Koszul
-by Theorem~\ref{thm:chiral-koszul-duality})
-\end{itemize}
+This filtration satisfies the hypotheses of Theorem~\ref{thm:convergence-filtered}: it is complete and separated (conformal weight is bounded below), compatible with chiral operations ($\mu(F_i \otimes F_j) \subset F_{i+j}$), and has associated graded $\mathrm{gr}\,W_N \cong$ free field algebra (Koszul by Theorem~\ref{thm:chiral-koszul-duality}).
 \end{example}
 
 % ================================================================
@@ -1171,15 +1237,6 @@ This is the $n=6$ case of Theorem~\ref{thm:bar-nilpotency-complete} ($d^2=0$ on 
 \section{Genus 2 OPE contributions: A concrete example in full detail}
 \label{sec:genus_2_ope_example}
 
-We construct a genus-2 contribution for the Heisenberg vertex algebra,
-computing:
-\begin{enumerate}
-\item The configuration space structure
-\item The integration over moduli
-\item The explicit OPE correction formula
-\item Connection to two-loop Feynman diagrams
-\end{enumerate}
-
 \subsection{Setting: genus 2 Riemann surfaces}
 
 \subsubsection{\texorpdfstring{Moduli space $\mathcal{M}_2$}{Moduli space M-2}}
@@ -1189,12 +1246,7 @@ $$\Sigma_2 = \mathbb{H}/\Gamma$$
 where $\mathbb{H}$ is the upper half-plane and $\Gamma \subset \operatorname{PSL}(2,\mathbb{R})$
 is a Fuchsian group.
 
-The moduli space $\mathcal{M}_2$ has:
-\begin{itemize}
-\item Complex dimension: $3g - 3 = 3$ (for $g=2$)
-\item Coordinates: period matrices $\Omega \in \mathbb{H}_2$ (Siegel upper half-space)
-\item Volume form: $d\mu_{\text{WP}}$ (Weil--Petersson measure)
-\end{itemize}
+The moduli space $\mathcal{M}_2$ has complex dimension $3g-3 = 3$, with coordinates given by period matrices $\Omega \in \mathbb{H}_2$ (Siegel upper half-space) and volume form $d\mu_{\text{WP}}$ (Weil--Petersson).
 
 \subsubsection{The period matrix}
 
@@ -1229,11 +1281,7 @@ where $E_{\Sigma_2}$ is the prime form.
 \emph{Explicit formula} (Fay's trisecant identity):
 $$E_{\Sigma_2}(z_1, z_2) = \frac{\theta[\Delta](z_1 - z_2 | \Omega)}
 {\sqrt{\omega_{z_1}(z_1)} \sqrt{\omega_{z_2}(z_2)}}$$
-where:
-\begin{itemize}
-\item $\theta[\Delta]$ is the theta function with characteristic $\Delta$
-\item $\omega_{z_i}$ is the canonical abelian differential
-\end{itemize}
+where $\theta[\Delta]$ is the theta function with characteristic $\Delta$ and $\omega_{z_i}$ is the canonical abelian differential.
 
 \subsection{The Heisenberg algebra at genus 2}
 
@@ -1362,31 +1410,13 @@ where $c_4, c_6$ are computable constants depending on the normalization of the 
 
 \subsubsection{Geometric meaning}
 
-The forms $E_4, E_6$ arise here because they are:
-\begin{itemize}
-\item Modular forms of weight 4 and 6
-\item Generators of the ring $M_*(\Gamma_2)$ of Siegel modular forms
-\item Related to the cohomology of $\mathcal{M}_2$
-\end{itemize}
-
-\emph{Grothendieck's viewpoint.} The genus 2 bar complex $C_{\bullet}^{(2)}(\mathcal{A})$
-is a sheaf on $\mathcal{M}_2$, and pulling back along the forgetful map:
-$$\mathcal{M}_{2,2} \to \mathcal{M}_2$$
-gives the OPE corrections. The Eisenstein series arise as Chern classes of tautological
-bundles.
+The Eisenstein series $E_4, E_6$ generate $M_*(\Gamma_2)$ and arise as Chern classes of tautological bundles on $\mathcal{M}_2$.  The genus-$2$ bar complex $C_{\bullet}^{(2)}(\mathcal{A})$ is a sheaf on $\mathcal{M}_2$; pulling back along $\mathcal{M}_{2,2} \to \mathcal{M}_2$ gives the OPE corrections.
 
 \subsubsection{Physical meaning}
 
-In CFT language:
-\begin{itemize}
-\item The genus 2 partition function is: 
-$Z_2 = \int_{\mathcal{M}_2} |\text{det Im } \Omega|^{-c/2}$
-
-\item The two-point function receives:
-$\langle a(z) a^*(w) \rangle_2 \propto |E(z,w)|^{-2\Delta}$
-
-\item The OPE is the \emph{operator limit} $z \to w$ of this correlator
-\end{itemize}
+In CFT, $Z_2 = \int_{\mathcal{M}_2} |\text{det Im } \Omega|^{-c/2}$,
+$\langle a(z) a^*(w) \rangle_2 \propto |E(z,w)|^{-2\Delta}$,
+and the OPE is the operator limit $z \to w$ of this correlator.
 
 The $E_4, E_6$ terms are \emph{two-loop quantum corrections} to the bar complex curvature,
 appearing in the regular part of the propagator and manifesting as curved $A_\infty$ structure.
@@ -1466,62 +1496,42 @@ The corrections are proportional to $\kappa^2 E_{2k}(\Omega)$.
 
 \subsection{Connection to string theory}
 
-The genus 2 OPE corrections have a natural string-theoretic interpretation:
-
-\begin{itemize}
-\item \emph{Closed string:} $\Sigma_2$ worldsheet, $a(z), a^*(w)$ vertex operators
-
-\item \emph{Amplitude:} $\langle V_a(z) V_{a^*}(w) \rangle_{\Sigma_2}$ is the
-genus 2 string amplitude
-
-\item \emph{OPE limit:} Corresponds to the \emph{factorization limit} where two
-punctures collide
-
-\item \emph{Eisenstein series:} Arise from summing over intermediate states,
-matching the lattice sum in $q$-expansions
-\end{itemize}
+The genus-$2$ OPE corrections have a string-theoretic interpretation: $\Sigma_2$ is the worldsheet, the amplitude $\langle V_a(z) V_{a^*}(w) \rangle_{\Sigma_2}$ is the genus-$2$ string amplitude, the OPE is the factorization limit $z \to w$, and the Eisenstein series arise from summing over intermediate states.
 
 \begin{remark}[Formality]
-The entire construction is an explicit realization of the formality theorem
-at genus 2. The deformation $\star$ product induced by the genus 2 bar-cobar complex
-is exactly the quantization of the Poisson structure defined by the classical OPE,
-with quantum corrections given by Eisenstein series.
+The genus-$2$ bar-cobar complex realizes the formality theorem: the induced $\star$-product is the quantization of the classical OPE Poisson structure, with corrections given by Eisenstein series.
 \end{remark}
-
-\subsection{Exercises for the reader}
-
-To solidify understanding, we recommend:
-
-\begin{enumerate}
-\item \emph{Compute explicitly:} The $E_4$ coefficient for $[a_1, a^*_{-1}]$ at genus 2
-
-\item \emph{Verify:} The cocycle condition $d^{(2)} c_2 = 0$ using boundary degenerations
-
-\item \emph{Generalize:} To genus 3 --- identify which modular forms (of weight $\leq 6$) appear
-
-\item \emph{Compare:} With $W_3$-algebra at genus 2 (using Arakawa's lectures)
-\end{enumerate}
 
 \begin{remark}[Looking ahead]
-In genus $g \geq 3$, the pattern continues but with increasing complexity:
-\begin{itemize}
-\item Modular forms of weight $\leq g(g+1)/2$
-\item Multiple boundary strata in $\overline{\mathcal{M}}_g$
-\item Relations among modular forms from gluing equations
-\end{itemize}
-
-As observed by Witten, all these structures are uniquely determined by the genus~$0$ data (the OPE) together with the requirement of modular invariance.
+At genus $g \geq 3$, modular forms of weight $\leq g(g+1)/2$ appear, with relations from gluing equations along boundary strata of $\overline{\mathcal{M}}_g$.  As observed by Witten, all structures are determined by genus-$0$ data and modular invariance.
 \end{remark}
 
-\section{The fundamental theorem of chiral Koszul duality}
+\section{The fundamental theorem: genus-zero base case}
 \label{sec:fundamental-theorem-koszul}
+% Theorem A now lives in chiral_koszul_pairs.tex
 
-We now state and prove the central result that unifies the geometric bar-cobar constructions 
-with the algebraic theory of Koszul duality.
+\begin{remark}[Summary of Theorem~A --- see Theorem~\ref{thm:bar-cobar-isomorphism-main}]
+\label{rem:theorem-a-summary}
+The genus-zero bar-cobar duality
+(Theorem~\ref{thm:bar-cobar-isomorphism-main},
+Chapter~\ref{chap:koszul-pairs}) establishes:
+for a chiral Koszul pair $(\cA_1, \cA_2)$
+(Definition~\ref{def:chiral-koszul-pair}),
+the unit and counit of the bar-cobar adjunction are
+quasi-isomorphisms, and the bar functor is intertwined
+with Verdier duality on $\operatorname{Ran}(X)$.
+The counit is a quasi-isomorphism \emph{only on the
+Koszul locus}; off this locus it persists in the completed
+coderived category.
+\end{remark}
 
-\begin{theorem}[Bar-cobar isomorphism for Koszul pairs; \ClaimStatusProvedHere]
-\label{thm:bar-cobar-isomorphism-main}
-For the Koszul pair $(\mathcal{H}_k, \mathrm{Sym}^{\mathrm{ch}}(V^*))$, we verified this concretely in~\S\ref{sec:frame-inversion}: the bar of one is the dual coalgebra of the other, and the cobar reconstructs the partner.  The following theorem is the general statement --- Theorem~A of this monograph.
+% The following theorem block is RETAINED for equation label
+% backward compatibility only.  The canonical statement and proof
+% are in chiral_koszul_pairs.tex.
+\begin{theorem}[Bar-cobar isomorphism --- retained for equation labels]
+\label{thm:bar-cobar-isomorphism-main-legacy}
+\textup{For a chiral Koszul pair $(\cA_1, \cA_2)$, the bar-cobar
+system satisfies:}
 
 Let $(\mathcal{A}_1, \mathcal{A}_2)$ be a chiral Koszul pair of chiral algebras on a
 smooth curve $X$. Then we have the following system of quasi-isomorphisms:
@@ -1583,152 +1593,113 @@ Parts~I--IV are one concrete chart on this Ran-space\slash Verdier phenomenon.
 \end{theorem}
 
 \begin{proof}
-The proof proceeds in four steps, each establishing one part of the theorem:
-
-\emph{Step 1: Bar Construction Analysis (Part I)}
-
-For $\mathcal{A}_1$, the geometric bar complex is:
-$$\bar{B}^{\text{ch}}(\mathcal{A}_1)_n = \Gamma\left(\overline{C}_{n+1}(X), 
-   \mathcal{A}_1^{\boxtimes (n+1)} \otimes \Omega^*_{\log}(\overline{C}_{n+1})\right)$$
-
-with differential:
-$$d_{\text{bar}} = d_{\text{strat}} + d_{\text{int}} + d_{\text{res}}$$
-where:
-\begin{itemize}
-\item $d_{\text{strat}}$: alternating sum over boundary strata
-\item $d_{\text{int}}$: interior de Rham differential
-\item $d_{\text{res}}$: residue extraction at collision divisors
-\end{itemize}
-
-The residue component $d_{\text{res}}$ extracts \emph{coproduct
-operations}. Specifically, at a collision divisor $D_{ij}$ where points $z_i$ and $z_j$ collide:
-$$\text{Res}_{D_{ij}}: \mathcal{A}_1^{\boxtimes n} \to \mathcal{A}_1^{\boxtimes (n-1)}$$
-
-extracts the coefficient of the OPE pole:
-$$\phi_i(z_i)\phi_j(z_j) \sim \frac{c_{ij}^k}{(z_i - z_j)^m} + \ldots$$
-
-These residue maps assemble into a \emph{coalgebra structure} on $\bar{B}^{\text{ch}}(\mathcal{A}_1)$.
-
-The non-trivial content of Koszul duality is proving that this coalgebra structure
-coincides (up to quasi-isomorphism) with the Koszul dual coalgebra $\mathcal{A}_2^!$.
-This is established by combining three results:
-Theorem~\ref{thm:geometric-equals-operadic-bar} identifies the geometric bar complex
-with the operadic bar construction $B(\mathcal{P}, \mathcal{A}_1)$, so that the
-coalgebra structure extracted by residues coincides with the standard operadic
-coproduct.  Theorem~\ref{thm:arnold-three} shows $d_{\text{bar}}^2 = 0$ via the
-Arnold relations on $H^*(\overline{C}_n)$, so the bar complex is indeed a chain
-complex of chiral coalgebras.  Finally, Theorem~\ref{thm:bar-nilpotency-complete}
-establishes that the cohomology of the augmented bar complex is concentrated in
-degree~$0$---this is the \emph{Koszul property}, and it identifies $H^0$ with the
-Koszul dual coalgebra $\mathcal{A}_2^!$, yielding~\eqref{eq:bar-A1-is-A2-dual}.
-
-\emph{Step 2: Cobar Construction Analysis (Part II)}
-
-The geometric cobar complex is:
-$$\Omega^{\text{ch}}(\mathcal{C})_n = \int_{\overline{C}_{n+1}(X)} \mathcal{C}^{\otimes (n+1)} 
-   \otimes \delta^{(n)}(z_1, \ldots, z_{n+1})$$
-
-for a chiral coalgebra $\mathcal{C}$, with differential involving distributional singularities:
-$$d_{\text{cobar}} = \sum_{i < j} \Delta_{ij} \cdot \delta(z_i - z_j)$$
-
-The key: Insertion of $\delta(z_i - z_j)$ implements \emph{product operations}, 
-reconstructing algebra structure from coalgebra data.
-
-For the Koszul dual coalgebra $\mathcal{A}_2^!$, the cobar reconstruction
-$\Omega^{\text{ch}}(\mathcal{A}_2^!) \simeq \mathcal{A}_1$ is proved as follows.
-Theorem~\ref{thm:verdier-bar-cobar} (Verdier duality exchanges bar and cobar) provides
-a natural quasi-isomorphism
-$\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1)) \simeq \mathcal{A}_1$,
-which is the unit of the bar-cobar adjunction.
-Theorem~\ref{thm:cobar-d-squared-zero} ensures $d_{\text{cobar}}^2 = 0$, so the
-cobar complex is well-defined.  Substituting the identification
-$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ from Step~1 into the
-Verdier quasi-isomorphism then gives
-$\Omega^{\text{ch}}(\mathcal{A}_2^!) \simeq \mathcal{A}_1$.
-
-\emph{Step 3: Composition Analysis (Part III)}
-
-Combining Steps 1 and 2:
-\begin{align*}
-\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1))
-   &\simeq \Omega^{\text{ch}}(\mathcal{A}_2^!) \quad \text{(by Step 1)} \\
-   &\simeq \mathcal{A}_1 \quad \text{(by Step 2)}
-\end{align*}
-
-This is the bar-cobar inversion: starting from $\mathcal{A}_1$, applying bar-then-cobar
-recovers $\mathcal{A}_1$ up to quasi-isomorphism.
-
-\emph{Step 4: Quasi-Inverse Property (Part IV)}
-
-The bar-cobar adjunction always satisfies:
-$$\bar{B} \dashv \Omega$$
-
-For a Koszul pair, this adjunction becomes an \emph{equivalence}: the unit and counit
-are quasi-isomorphisms. Concretely, the unit
-$\eta \colon \mathcal{A}_1 \to \Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1))$
-is a quasi-isomorphism because the Koszul property (diagonal concentration of Ext,
-Theorem~\ref{thm:bar-nilpotency-complete}) forces the filtration spectral sequence
-computing $H^*(\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1)))$ to degenerate
-at $E_2$ with $E_2 \cong \mathcal{A}_1$.
-The counit $\varepsilon \colon \bar{B}^{\text{ch}}(\Omega^{\text{ch}}(\mathcal{C}))
-\to \mathcal{C}$ is a quasi-isomorphism by the dual argument applied to the Koszul
-dual coalgebra.  Together, bar and cobar are quasi-inverse functors when restricted
-to Koszul algebras and their dual coalgebras.
-
-Geometrically, this follows from:
-\begin{itemize}
-\item Configuration space compactifications provide \emph{explicit resolutions}
-\item Arnold relations ensure $d^2 = 0$ (Theorem~\ref{thm:arnold-three})
-\item Stokes' theorem provides quasi-isomorphism (Theorem~\ref{thm:stokes-config})
-\end{itemize}
+See Theorem~\ref{thm:bar-cobar-isomorphism-main}
+(Chapter~\ref{chap:koszul-pairs}) for the canonical proof.
+The equation labels above are retained for backward compatibility.
 \end{proof}
 
-\begin{remark}[Geometric content]
-\label{rem:geometric-content-koszul}
-The theorem translates abstract Koszul duality into geometric statements:
+\begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-a}
+The statement of Theorem~A is a cohomological shadow of a richer
+derived equivalence.  The bar and cobar functors lift to
+$\infty$-categorical adjunctions
+\[
+\B^{\mathrm{ch}} \colon
+  \Alg_{\mathrm{aug}}(\cat{Fact}(X))
+  \rightleftarrows
+  \CoAlg_{\mathrm{conil}}(\cat{Fact}(X))
+  \,:\!\Omega^{\mathrm{ch}}
+\]
+between the $\infty$-categories of augmented factorization algebras
+and conilpotent factorization coalgebras on~$X$, in the sense of
+Lurie~\cite[Chapter~5]{HA} and
+Ayala--Francis~\cite{AF15}.  On the Koszul locus, the
+quasi-isomorphisms~\eqref{eq:bar-cobar-resolution-A1}--\eqref{eq:bar-cobar-resolution-A2}
+are the decategorification of an equivalence of $\infty$-categories:
+the unit and counit are \emph{homotopy} equivalences, not merely
+cohomology-level isomorphisms.
 
-\begin{center}
-\begin{tabular}{c|c}
-\textbf{Algebraic Operation} & \textbf{Geometric Realization} \\ \hline
-Product in $\mathcal{A}_1$ & Collisions in $\overline{C}_n(X)$ with residue extraction \\
-Coproduct in $\mathcal{A}_2^!$ & Boundary divisors $\partial \overline{C}_n(X)$ \\
-Twisting morphism $\tau$ & Integration kernel on $\overline{C}_2(X)$ \\
-Maurer--Cartan equation & Stokes' theorem on configuration spaces \\
-Quasi-isomorphism & Homology of $\overline{C}_n(X)$ concentrated in degree 0
-\end{tabular}
-\end{center}
+Concretely, the bar-cobar resolution
+$\Omega^{\mathrm{ch}}(\B^{\mathrm{ch}}(\cA_1))$ carries a natural
+$\Ainf$-chiral algebra structure (the transferred structure from
+the bar filtration), and the counit
+$\psi \colon \Omega^{\mathrm{ch}}(\B^{\mathrm{ch}}(\cA_1))
+\xrightarrow{\sim} \cA_1$ is a quasi-isomorphism of
+$\Ainf$-chiral algebras, not just of cochain complexes.
+The Verdier intertwining~\eqref{eq:verdier-intertwining-main}
+likewise lifts: $\mathbb{D}_{\mathrm{Ran}}$ acts as an
+$\infty$-functor exchanging the bar and cobar $\infty$-categories,
+and Koszul duality is the resulting auto-equivalence of
+$\cat{Fact}(X)$ restricted to the Koszul locus.
 
-Every abstract algebraic assertion becomes a computable geometric fact about configuration spaces.
+In the DG-categorical framework, the bar-cobar adjunction descends
+to a Quillen equivalence between suitable model categories of
+DG~factorization algebras and DG~factorization coalgebras,
+whose derived functors recover the $\infty$-categorical equivalence
+above.
 \end{remark}
 
 \begin{corollary}[Hochschild cohomology duality; \ClaimStatusProvedHere]
 \label{cor:hochschild-duality}
-For a chiral Koszul pair $(\mathcal{A}_1, \mathcal{A}_2)$ on a smooth projective curve~$X$,
-their chiral Hochschild cohomologies satisfy Poincar\'e duality:
-$$CH^n(\mathcal{A}_1) \simeq CH^{n}(\mathcal{A}_2)^{\vee}
-   \otimes \omega_X[2]$$
-where $\omega_X$ is the canonical bundle and the $[2]$-shift arises from the
-real dimension of~$X$ (complex dimension~$1$).
+\label{thm:chiral-hochschild-duality}
+For a chiral Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ on a smooth projective curve~$X$,
+chiral Hochschild cohomology satisfies:
+\begin{equation}\label{eq:hochschild-duality-canonical}
+RHH_{\mathrm{chiral}}(\mathcal{A})
+\;\simeq\;
+R\mathrm{Hom}\bigl(RHH_{\mathrm{chiral}}(\mathcal{A}^!),\,
+\omega_X[2]\bigr).
+\end{equation}
+On cohomology, the $[2]$-shift becomes degree reflection:
+\begin{equation}\label{eq:hochschild-duality-groups}
+HH^n_{\mathrm{chiral}}(\mathcal{A})
+\;\cong\; HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee}
+\otimes \omega_X.
+\end{equation}
 \end{corollary}
 
 \begin{proof}
-The chiral Hochschild complex at bar degree~$n$ is
-$CH^n(\mathcal{A}) = \Gamma(\overline{C}_n(X),\, \mathcal{A}^{\boxtimes n})$.
-Poincar\'e--Verdier duality on the smooth $2n$-dimensional (real) manifold
-$\overline{C}_n(X)$ gives:
-\[
-H^i(\overline{C}_n(X),\, \mathcal{F})
-\;\simeq\; H^{2n-i}(\overline{C}_n(X),\,
-   \mathcal{F}^{\vee} \otimes \omega_{\overline{C}_n})^{\vee}.
-\]
-For a Koszul pair $(\mathcal{A}_1, \mathcal{A}_2)$, Theorem~\ref{thm:bar-cobar-isomorphism-main}
-gives $\bar{B}^{\mathrm{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ as chiral coalgebras.
-Applying Verdier duality (Theorem~\ref{thm:verdier-bar-cobar}) to the bar complex
-exchanges $\mathcal{A}_1^{\boxtimes n}$ for $(\mathcal{A}_2^!)^{\boxtimes n}$ with
-a $[2]$-shift from each copy of~$\omega_X$.  Summing over bar degree and
-identifying $\mathcal{A}_2^! = \mathcal{A}_2$ (using the Koszul involution)
-yields the stated duality with the $\omega_X[2]$ twist.
+This is Theorem~\ref{thm:main-koszul-hoch} (Theorem~H), proved
+independently in \S\ref{subsec:hochschild-duality} via
+the bar-cobar quasi-isomorphism and Verdier duality on the Ran space.
 \end{proof}
+
+\begin{definition}[Bigraded chiral Hochschild complex]
+\label{def:bigraded-hochschild}
+\index{Hochschild cohomology!bigraded|textbf}
+The \emph{bigraded chiral Hochschild complex} of a chiral
+algebra~$\cA$ on a smooth curve~$X$ is the double complex
+\[
+CH^{p,\bullet}_{\mathrm{ch}}(\cA) :=
+R\mathrm{Hom}_{\mathcal{D}_{\overline{C}_{p+2}(X)}}
+\bigl(\cA^{\boxtimes(p+2)}, \omega_{\overline{C}_{p+2}(X)}\bigr)
+\]
+at bar degree~$p$, with the total object
+\[
+RHH_{\mathrm{ch}}(\cA) :=
+\operatorname{Tot}\!\left(
+\bigoplus_{p \geq 0} CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]
+\right).
+\]
+At bar degree~$p$, the configuration space
+$\overline{C}_{p+2}(X)$ has complex dimension~$p + 2$
+\textup{(}since $\dim_\C X = 1$\textup{)}, and Verdier duality
+contributes a shift of~$p+2$.
+\end{definition}
+
+\begin{remark}[Origin of the shift by~$2$]\label{rem:hochschild-shift-origin}
+The uniform shift $[2]$ in~\eqref{eq:hochschild-duality-canonical}
+arises from the bigraded structure of
+Definition~\ref{def:bigraded-hochschild}.
+Verdier duality on $\overline{C}_{p+2}(X)$ contributes a shift
+of~$p + 2\dim_{\mathbb{C}} X = p + 2$ at bar degree~$p$.
+Koszul concentration
+(Theorem~\ref{thm:bar-concentration}) forces the only surviving
+contribution to lie on the diagonal $p = q$, so the variable
+shift~$p+2$ collapses to the constant~$2$.
+This is the bookkeeping sentence that resolves the apparent
+tension between a variable Verdier shift and a uniform
+duality shift.
+\end{remark}
 
 % ================================================================
 % SECTION 4.10: HIGHER GENUS CONFIGURATION SPACES - COMPLETE THEORY
@@ -1739,26 +1710,9 @@ yields the stated duality with the $\omega_X[2]$ twist.
 
 \subsection{The genus stratification philosophy}
 
-On a genus-$0$ curve, the bar differential satisfies $d^2 = 0$
-and configuration spaces are rational.  This is the domain of
-classical Koszul duality.  On a curve of genus $g \geq 1$, the
-topology changes: $H^1(\Sigma_g) \neq 0$, the propagator depends
-on the modular parameter, and the bar differential acquires
-curvature.  The passage from genus~$0$ to genus~$g$ is not a
-perturbation but a deformation: the full genus tower is controlled
-by a single Maurer--Cartan element in the cyclic deformation complex,
-and the curvature at each genus is a section of the obstruction
-sheaf on $\overline{\mathcal{M}}_g$.  This is the transition from
-operadic to modular Koszul duality.
-
 \begin{remark}[Genus as quantum number]
 \label{princ:genus-quantum}
-The genus $g$ of a Riemann surface serves as a natural ``quantum number'' organizing corrections:
-\begin{itemize}
-\item \emph{Genus 0:} Classical/tree-level theory, $d^{(0)2} = 0$ exactly
-\item \emph{Genus 1:} First quantum correction, central extensions appear
-\item \emph{Genus $g \geq 2$:} Higher quantum corrections, modular structures
-\end{itemize}
+The genus $g$ organizes corrections: genus~$0$ is classical ($d^{(0)2} = 0$ exactly), genus~$1$ produces central extensions, and genus $g \geq 2$ introduces modular structures.
 
 This parallels the loop expansion in quantum field theory:
 \begin{equation}
@@ -1776,12 +1730,7 @@ Let $\Sigma_g$ be a closed Riemann surface of genus $g$. The $n$-point configura
 C_n(\Sigma_g) = \{(p_1, \ldots, p_n) \in \Sigma_g^n : p_i \neq p_j \text{ for } i \neq j\}
 \end{equation}
 
-The Fulton--MacPherson compactification $\overline{C}_n(\Sigma_g)$ (Theorem~\ref{thm:FM-functorial}) is constructed by:
-\begin{enumerate}
-\item Iteratively blowing up all diagonals $\Delta_{I} = \{p_i = p_j : i,j \in I\}$
-\item Adding exceptional divisors $D_I$ with normal crossing structure
-\item Extending to stable pointed curves when points collide
-\end{enumerate}
+The Fulton--MacPherson compactification $\overline{C}_n(\Sigma_g)$ (Theorem~\ref{thm:FM-functorial}) is constructed by iteratively blowing up all diagonals $\Delta_{I} = \{p_i = p_j : i,j \in I\}$, adding exceptional divisors $D_I$ with normal crossing structure, and extending to stable pointed curves when points collide.
 
 The boundary stratification consists of:
 \begin{itemize}
@@ -1814,12 +1763,7 @@ The moduli space $\overline{\mathcal{M}}_{g,n}$ parametrizes stable $n$-pointed 
 \begin{equation}
 [\Sigma_g; p_1, \ldots, p_n] \in \overline{\mathcal{M}}_{g,n}
 \end{equation}
-where stability requires:
-\begin{itemize}
-\item $\Sigma_g$ is a connected nodal curve
-\item Every component $C_i$ satisfies $2g_i - 2 + n_i > 0$ (where $n_i$ = marked + nodal points)
-\item Automorphism group is finite
-\end{itemize}
+where stability requires $\Sigma_g$ to be a connected nodal curve with $2g_i - 2 + n_i > 0$ on every component $C_i$ and finite automorphism group.
 \end{definition}
 
 \begin{theorem}[Structure of $\overline{\mathcal{M}}_{g,n}$ {\cite{DM69,Knu83}}; \ClaimStatusProvedElsewhere]
@@ -1875,11 +1819,7 @@ On $\overline{C}_n(\Sigma_g)$, the logarithmic forms are:
 \begin{equation}
 \eta_{ij}^{(g)} = d \log E(p_i, p_j) + \text{period corrections}
 \end{equation}
-where:
-\begin{itemize}
-\item $E(p, q)$ is the prime form on $\Sigma_g$ (generalizes $z_i - z_j$ from genus 0)
-\item Period corrections involve integrals over $H_1(\Sigma_g, \mathbb{Z})$
-\end{itemize}
+where $E(p, q)$ is the prime form on $\Sigma_g$ (generalizing $z_i - z_j$ from genus~0) and the period corrections involve integrals over $H_1(\Sigma_g, \mathbb{Z})$.
 \end{definition}
 
 The explicit form depends on the genus:
@@ -1910,12 +1850,7 @@ where $\partial_{p_i}$ differentiates in the first variable (giving a $(1,0)$-fo
 
 \begin{remark}[Physical interpretation]
 \label{rem:physical-log-forms}
-In conformal field theory, these forms encode:
-\begin{itemize}
-\item \emph{Genus 0:} Tree-level propagators $\langle \phi(z)\phi(w) \rangle_{\text{tree}} \sim \frac{1}{z-w}$
-\item \emph{Genus 1:} One-loop propagators involving theta functions
-\item \emph{Higher genus:} Multi-loop Feynman diagrams with handles
-\end{itemize}
+In CFT, $\eta_{ij}^{(0)}$ gives tree-level propagators, $\eta_{ij}^{(1)}$ gives one-loop propagators via theta functions, and $\eta_{ij}^{(g)}$ for $g \geq 2$ gives multi-loop propagators.
 \end{remark}
 
 \subsection{Arnold relations at higher genus}
@@ -1927,7 +1862,7 @@ The fundamental Arnold relation $(z_{12})(z_{23})(z_{31}) = 1$ at genus zero mus
 \label{thm:arnold-higher-genus}
 \label{thm:arnold-quantum}
 \index{Arnold relations!higher genus}
-At genus~$0$, the Arnold relation $\mathcal{A}_3^{(0)} = 0$ was the mechanism ensuring $d^2 = 0$ in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}).  At genus~$1$, the Arnold $3$-form acquires a correction proportional to the volume form; this is the geometric origin of the curvature $d^2 = \kappa \cdot \omega_1$ that we computed in~\S\ref{sec:frame-genus1}.
+At genus~$0$, the Arnold relation $\mathcal{A}_3^{(0)} = 0$ was the mechanism ensuring $\dzero^2 = 0$ in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}).  At genus~$1$, the Arnold $3$-form acquires a correction proportional to the volume form; this is the geometric origin of the fiberwise curvature $\dfib^{\,2} = \kappa \cdot \omega_1$ that we computed in~\S\ref{sec:frame-genus1}.
 
 Define the Arnold 3-form:
 \begin{equation}
@@ -2080,7 +2015,7 @@ recovering part~(b).
 \end{proof}
 
 \begin{remark}[Summary of the genus-$2$ case]\label{rem:genus2-summary}
-The genus-$2$ computation above reveals the universal pattern that persists at all genera: the holomorphic cyclic sum of propagators vanishes by the Fay trisecant identity (Step~1), the non-holomorphic correction produces the Arakelov $(1,1)$-form (Step~2), and the cross-terms between holomorphic and non-holomorphic pieces cancel by type.  The only genus-dependent input is the period matrix $\Omega \in \mathfrak{H}_g$ and the normalized abelian differentials $\omega_1, \ldots, \omega_g$.  We now verify that this pattern extends to all genera.
+The pattern is universal: the holomorphic cyclic sum vanishes by the Fay identity (Step~1), the non-holomorphic correction produces the Arakelov form (Step~2), and cross-terms cancel by type.  The only genus-dependent input is the period matrix $\Omega \in \mathfrak{H}_g$.
 \end{remark}
 
 \begin{proof}[General case $g \geq 3$]
@@ -2167,13 +2102,7 @@ recovering part~(b).
 \end{proof}
 
 \begin{remark}[Proof structure]
-The proof of part~(d) uses exactly the same ingredients as
-parts~(b) and~(c): the Fay trisecant identity (which holds
-at all genera), even parity of the Siegel $\wp$-matrix, and
-the universal formula~\eqref{eq:dbar-a-general} for the
-$\bar\partial$-derivative of the non-holomorphic correction.
-The only genus-dependent feature is the range $1 \leq \alpha, \beta \leq g$
-of the summation indices.
+Part~(d) uses the same ingredients as parts~(b) and~(c)---the Fay identity, even parity of the Siegel $\wp$-matrix, and~\eqref{eq:dbar-a-general}---with summation indices running from $1$ to~$g$.
 \end{remark}
 
 \begin{corollary}[Universal Arakelov form; \ClaimStatusProvedHere]
@@ -2391,7 +2320,7 @@ is independent of genus, ensuring compatibility of bar differentials across gene
 
 \subsection{Genus decomposition of bar complex}
 
-At genus~$0$, the Heisenberg bar complex was a genuine cochain complex with $d^2 = 0$ (\S\ref{sec:frame-bar-all}).  At genus~$1$, the curvature $d^2 = k \cdot \omega_1$ appeared (\S\ref{sec:frame-genus1}), and the Eisenstein series $E_2(\tau)$ entered through the holomorphic anomaly (\S\ref{sec:frame-holomorphic-anomaly}).  We now develop these quantum corrections systematically for arbitrary chiral algebras.
+The Heisenberg computation (Chapter~\ref{ch:heisenberg-frame}) exhibited genus-$0$ flatness ($\dzero^2 = 0$), genus-$1$ fiberwise curvature ($\dfib^{\,2} = k \cdot \omega_1$), and the holomorphic anomaly via $E_2(\tau)$.  These phenomena are universal.
 
 The full bar complex incorporates contributions from all genera:
 
@@ -2412,11 +2341,8 @@ where:
 
 \begin{remark}[String theory interpretation]
 \label{rem:string-theory-genus}
-In string theory, this is the genus expansion of amplitudes:
-\begin{equation}
-A = \sum_{g=0}^\infty g_s^{2g-2} A^{(g)}
-\end{equation}
-where $g_s$ is the string coupling constant. Each $A^{(g)}$ involves integration over $\overline{\mathcal{M}}_{g,n}$.
+This is the genus expansion of string amplitudes:
+$A = \sum_{g=0}^\infty g_s^{2g-2} A^{(g)}$, with each $A^{(g)}$ an integral over $\overline{\mathcal{M}}_{g,n}$.
 \end{remark}
 
 \subsection{The differential}
@@ -2454,39 +2380,32 @@ where $\overline{\mathcal{C}}_{g,n}$ is the relative Fulton--MacPherson compacti
 \emph{Step 3: Higher corrections.} Terms $d^{(k)}$ for $k \geq 2$ arise from the Leray filtration: $d^{(k)}$ maps $F^p \to F^{p+k}$ in the filtration by base degree. The relations ensuring $d^2 = 0$ (e.g., $\{d^{(0)}, d^{(2)}\} + (d^{(1)})^2 = 0$) follow from the associativity of the Leray filtration and the exactness of the total complex.
 \end{proof}
 
-\begin{remark}[Notation for differentials]
+\begin{remark}[Leray decomposition and Convention~\ref{conv:higher-genus-differentials}]
 \label{rem:differential-notation}
 \index{bar differential!notation}
-The superscript~$(k)$ in the decomposition
-$d_{\bar{B}} = d^{(0)} + d^{(1)} + \cdots$ of
+The superscript~$(k)$ in the Leray decomposition
+$\Dg{g} = d^{(0)} + d^{(1)} + \cdots$ of
 Theorem~\ref{thm:genus-differential} denotes the
 \emph{Leray filtration degree}---\emph{not} the genus.
 All components $d^{(k)}$ act on the bar complex
-$\bar{B}^{(g)}(\mathcal{A})$ for a single fixed genus~$g$:
+$\bar{B}^{(g)}(\cA)$ for a single fixed genus~$g$:
 \begin{itemize}
-\item $d^{(0)}$: fiberwise collision residues (Leray degree~$0$).
+\item $d^{(0)} = \dzero$: fiberwise collision residues (Leray degree~$0$).
   Squares to zero by the Borcherds identity.
 \item $d^{(1)}$: Gauss--Manin connection (Leray degree~$1$).
 \item $d^{(k)}$, $k \geq 2$: higher Leray corrections.
 \end{itemize}
-By contrast, $d^{(g)}_{\mathrm{total}}$ (or simply $d^{(g)}$
-when no confusion arises) denotes the \emph{total}
-bar differential on $\bar{B}^{(g)}(\mathcal{A})$---i.e.\
-$d^{(g)}_{\mathrm{total}} = d^{(0)} + d^{(1)} + \cdots$---which
-satisfies $(d^{(g)}_{\mathrm{total}})^2 = 0$
-(Theorem~\ref{thm:genus1-d-squared} at genus~$1$; the
-higher-genus analog follows from the Leray spectral sequence).
-
-Finally, when computing on a fixed curve $\Sigma_g$, the
-\emph{fiberwise collision differential}
-$d_{\mathrm{fib}} := \sum_{i<j} \operatorname{Res}_{D_{ij}}$
-uses the full genus-$g$ propagator and may \emph{not} square to
-zero: $(d_{\mathrm{fib}})^2 = \kappa \cdot \omega_g$, with the
-curvature valued in the center
+The total $\Dg{g} = d^{(0)} + d^{(1)} + \cdots$
+satisfies $\Dg{g}^{\,2} = 0$
+(Theorem~\ref{thm:quantum-diff-squares-zero}).
+By contrast, the fiberwise collision differential
+$\dfib := \sum_{i<j} \operatorname{Res}_{D_{ij}}$
+on a fixed $\Sigma_g$ is \emph{curved}:
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$,
+with the curvature valued in the center
 (cf.\ Example~\ref{ex:heisenberg-complementarity-explicit}).
-This curvature contributes to the Leray spectral sequence
-differentials but does not affect the nilpotency of
-$d^{(g)}_{\mathrm{total}}$.
+See Convention~\ref{conv:higher-genus-differentials} for the
+full notation system.
 \end{remark}
 
 \subsection{Explicit form of quantum corrections}
@@ -2580,12 +2499,12 @@ This is the \emph{central extension} $[J, J] = \kappa \cdot c$ emerging from gen
 
 \subsection{Motivation: where quantum corrections begin}
 
-At genus~$0$, the bar differential satisfies $d^2 = 0$ exactly,
+At genus~$0$, the bar differential satisfies $\dzero^2 = 0$ exactly,
 the propagator is the rational function $(z - w)^{-1}$, and there
 are no moduli.  At genus~$1$, all three change: the propagator
 becomes the elliptic function $\theta_1'(z-w|\tau)/\theta_1(z-w|\tau)$,
 the modular parameter $\tau$ parametrizes a one-dimensional moduli
-space, and $d^2$ acquires curvature proportional to the central
+space, and the fiberwise differential acquires curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_1$ proportional to the central
 charge.  This single step --- from genus~$0$ to genus~$1$ --- is
 the birth of the modular theory.  The central extension
 $\kappa(\cA)$ that appears here is the first characteristic number
@@ -2594,19 +2513,9 @@ controls all higher genera through the universality theorem.
 
 \begin{remark}[Physical origin of genus 1]
 \label{princ:genus-1-physical}
-In quantum field theory, the genus expansion corresponds to loop expansion:
-\begin{equation}
-Z = Z_{\text{tree}} + \hbar Z_{\text{1-loop}} + \hbar^2 Z_{\text{2-loop}} + \cdots
-\end{equation}
-
-In string theory, worldsheet topology gives:
-\begin{itemize}
-\item \emph{Genus 0} ($\mathbb{P}^1$, sphere): Tree-level amplitude, classical
-\item \emph{Genus 1} ($E_\tau$, torus): One-loop correction, first quantum effect
-\item \emph{Genus $g \geq 2$}: Multi-loop corrections
-\end{itemize}
-
-Central charges arise from genus-$1$ structure.
+The genus expansion is the loop expansion:
+$Z = Z_{\text{tree}} + \hbar Z_{\text{1-loop}} + \hbar^2 Z_{\text{2-loop}} + \cdots$.
+Genus~$0$ gives tree-level amplitudes, genus~$1$ gives one-loop corrections (where central charges arise), and $g \geq 2$ gives multi-loop corrections.
 \end{remark}
 
 \subsection{Elliptic curves and modular parameter}
@@ -2619,12 +2528,7 @@ The elliptic curve is:
 E_\tau = \mathbb{C} / \Lambda_\tau, \quad \Lambda_\tau = \mathbb{Z} \oplus \tau\mathbb{Z}
 \end{equation}
 
-Key properties:
-\begin{itemize}
-\item Complex structure: $j(\tau) = 1728\,\frac{(E_4(\tau))^3}{(E_4(\tau))^3 - (E_6(\tau))^2}$ (j-invariant)
-\item Modular group: $SL_2(\mathbb{Z})$ acts by $\tau \mapsto \frac{a\tau + b}{c\tau + d}$
-\item Volume: $\text{Vol}(E_\tau) = \text{Im}(\tau)$ (area of fundamental parallelogram)
-\end{itemize}
+The complex structure is classified by the $j$-invariant $j(\tau) = 1728\,(E_4(\tau))^3/((E_4(\tau))^3 - (E_6(\tau))^2)$, the modular group $SL_2(\mathbb{Z})$ acts by $\tau \mapsto (a\tau + b)/(c\tau + d)$, and $\text{Vol}(E_\tau) = \text{Im}(\tau)$.
 \end{definition}
 
 \subsection{Weierstrass functions}
@@ -2637,25 +2541,14 @@ The fundamental elliptic function is:
 \left(\frac{1}{(z-\omega)^2} - \frac{1}{\omega^2}\right)
 \end{equation}
 
-The Weierstrass function satisfies the following properties:
-\begin{enumerate}
-\item \emph{Elliptic}: $\wp(z + \omega) = \wp(z)$ for all $\omega \in \Lambda_\tau$
-\item \emph{Double pole}: Pole of order 2 at $z = 0$
-\item \emph{Expansion}: $\wp(z) = \frac{1}{z^2} + 3G_4(\tau) z^2 + 5G_6(\tau) z^4 + O(z^6)$
-\item \emph{Derivative}: $\wp'(z)^2 = 4\wp(z)^3 - g_2\wp(z) - g_3$ (Weierstrass equation)
-\end{enumerate}
-
-where $g_2 = 60G_4$, $g_3 = 140G_6$ with Eisenstein series $G_{2k}$.
+It is elliptic ($\wp(z + \omega) = \wp(z)$), has a double pole at $z = 0$, expansion $\wp(z) = z^{-2} + 3G_4(\tau) z^2 + 5G_6(\tau) z^4 + O(z^6)$, and satisfies $\wp'(z)^2 = 4\wp(z)^3 - g_2\wp(z) - g_3$ with $g_2 = 60G_4$, $g_3 = 140G_6$.
 \end{definition}
 
 \begin{remark}[Connection to configuration spaces]
 \label{rem:wp-config-space}
-On $E_\tau$, the configuration space $C_2(E_\tau)$ is an elliptic curve minus the diagonal.
-The chiral propagator (the meromorphic $1$-form with a simple pole at $z = w$ and residue $1$) is:
-\begin{equation}
-K(z,w|\tau) = \frac{\theta_1'(z-w|\tau)}{\theta_1(z-w|\tau)} \, dz = \left(\zeta(z-w) - (z-w)G_2(\tau)\right) dz
-\end{equation}
-where $\zeta$ is the Weierstrass zeta function. This kernel is quasi-periodic: $K(z+\tau) = K(z) - 2\pi i\, dz$, and this quasi-periodicity is the source of genus-$1$ quantum corrections.
+The chiral propagator on $E_\tau$ is
+$K(z,w|\tau) = \frac{\theta_1'(z-w|\tau)}{\theta_1(z-w|\tau)} \, dz = \left(\zeta(z-w) - (z-w)G_2(\tau)\right) dz$.
+Its quasi-periodicity $K(z+\tau) = K(z) - 2\pi i\, dz$ is the source of genus-$1$ quantum corrections.
 \end{remark}
 
 \subsection{Eisenstein series and quasi-modular forms}
@@ -2756,11 +2649,7 @@ On $E_\tau$, the logarithmic 1-form between points $z_i, z_j \in E_\tau$ is:
 \eta_{ij}^{(1)} = \frac{\vartheta_1'(z_i - z_j \mid \tau)}{\vartheta_1(z_i - z_j \mid \tau)}(dz_i - dz_j)
 \end{equation}
 
-\emph{Components}:
-\begin{enumerate}
-\item \emph{Theta part}: $\vartheta_1'/\vartheta_1$ is the elliptic analog of $1/(z_i - z_j)$
-\item \emph{Quasi-periodicity}: Under $z_i \to z_i + \tau$, the form shifts by $-2\pi i\,(dz_i - dz_j)$; this shift is the genus-1 obstruction
-\end{enumerate}
+The theta part $\vartheta_1'/\vartheta_1$ is the elliptic analog of $1/(z_i - z_j)$, while the quasi-periodicity shift $z_i \to z_i + \tau$ produces $-2\pi i\,(dz_i - dz_j)$; this shift is the genus-1 obstruction.
 \end{definition}
 
 \begin{theorem}[Properties of $\eta_{ij}^{(1)}$; \ClaimStatusProvedHere]
@@ -3066,15 +2955,7 @@ The prime form has the following properties:
 
 \begin{remark}[Computational challenge]
 \label{rem:prime-form-computation}
-Computing $E(z,w)$ explicitly requires:
-\begin{enumerate}
-\item Normalizing the holomorphic differentials $\omega_1, \omega_2$
-\item Computing the period matrix $\Omega$
-\item Evaluating theta functions (infinite sum, but converges rapidly for $\text{Im}(\Omega) \gg 0$)
-\item Taking gradients
-\end{enumerate}
-
-The computation is intensive but entirely algorithmic.
+Computing $E(z,w)$ requires normalizing holomorphic differentials, computing the period matrix, evaluating theta functions (convergent for $\text{Im}(\Omega) \gg 0$), and taking gradients.  The procedure is intensive but algorithmic.
 \end{remark}
 
 \section{Genus 3: beyond hyperelliptic}
@@ -3086,7 +2967,7 @@ The computation is intensive but entirely algorithmic.
 \label{rem:genus3-transition}
 At genus $2$, every curve is hyperelliptic. At genus $3$, the hyperelliptic locus $\mathcal{H}_3 \subset \mathcal{M}_3$ has dimension $2g-1 = 5$, while $\dim \mathcal{M}_3 = 3g-3 = 6$, so the generic genus-$3$ curve is \emph{not} hyperelliptic. By Noether's theorem, a generic genus-$3$ curve is a smooth plane quartic, canonically embedded in $\mathbb{P}^2$. For $g \geq 3$, the hyperelliptic locus has codimension $g-2$ in $\mathcal{M}_g$.
 
-This transition has consequences for the bar complex: at genus $2$, all propagators can be expressed via the Weierstrass $\wp$-function of the hyperelliptic cover, whereas at genus $3$ one must work with the full theta function machinery on the Jacobian $\operatorname{Jac}(\Sigma_3) = \mathbb{C}^3/\Lambda$.
+For the bar complex, this means genus-$2$ propagators can be expressed via the Weierstrass $\wp$-function, whereas genus~$3$ requires the full theta function machinery on $\operatorname{Jac}(\Sigma_3) = \mathbb{C}^3/\Lambda$.
 \end{remark}
 
 \subsection{\texorpdfstring{The moduli space $\mathcal{M}_3$}{The moduli space M-3}}
@@ -3140,8 +3021,7 @@ The Klein quartic has the following properties:
 \label{sec:genus-spectral-complete}
 \index{spectral sequence!genus|textbf}
 
-The preceding sections developed the bar complex genus by genus.
-We now assemble them into a single spectral sequence whose
+The genus-by-genus bar complexes assemble into a single spectral sequence whose
 $E_1$~page is the genus-stratified bar cohomology, whose
 differentials are the clutching maps along boundary divisors of
 $\overline{\mathcal{M}}_g$, and whose $E_\infty$~page computes
@@ -3154,19 +3034,7 @@ structure.
 
 \begin{remark}[Spectral sequence as loop expansion]
 \label{princ:ss-genus}
-The spectral sequence computing bar cohomology organizes contributions by genus:
-\begin{equation}
-E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}(\mathcal{A}))
-\end{equation}
-
-Interpretation:
-\begin{itemize}
-\item $E_1$ page: Tree-level (genus 0)
-\item $E_2$ page: One-loop (genus 1)
-\item $E_r$ page: $(r-1)$-loop (genus $r-1$)
-\end{itemize}
-
-This is the mathematical incarnation of Feynman diagram loop expansion.
+The spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}(\mathcal{A}))$ organizes contributions by genus: $E_1$ is tree-level (genus~$0$), $E_2$ is one-loop (genus~$1$), and $E_r$ is $(r{-}1)$-loop.
 \end{remark}
 
 \begin{definition}[Filtration by genus]
@@ -3369,11 +3237,7 @@ For a chiral algebra $\mathcal{A}$ and deformation parameter $t$, the obstructio
 \end{equation}
 where $\mathcal{Z}(\mathcal{A})$ is the center of $\mathcal{A}$ viewed as a sheaf on $\overline{\mathcal{M}}_g$.
 
-Explicitly:
-\begin{itemize}
-\item $\text{Obs}^{(1)}(\mathcal{A})$ captures central extensions
-\item $\text{Obs}^{(g)}(\mathcal{A})$ for $g \geq 2$ captures higher genus anomalies
-\end{itemize}
+Explicitly, $\text{Obs}^{(1)}(\mathcal{A})$ captures central extensions and $\text{Obs}^{(g)}(\mathcal{A})$ for $g \geq 2$ captures higher genus anomalies.
 \end{theorem}
 
 \begin{proof}
@@ -3434,10 +3298,7 @@ For W-algebras, these involve \emph{screening charges} and \emph{higher central 
 \section{Obstruction classes: explicit computation for all examples}
 \label{sec:obstruction-explicit}
 
-In this section we compute the obstruction class $\text{obs}_k \in H^2(B_g, Z(\mathcal{A}))$ 
-explicitly for the key examples: Heisenberg, Kac--Moody, and W-algebras. We provide 
-complete formulas and verify that $\text{obs}_k^2 = 0$, confirming the consistency 
-of the curved Koszul structure.
+The obstruction class $\text{obs}_k \in H^2(B_g, Z(\mathcal{A}))$ admits explicit formulas for all key examples.
 
 \subsection{Recollection: obstruction theory framework}
 \label{subsec:obstruction-framework-recall}
@@ -3451,12 +3312,15 @@ where:
 \begin{itemize}
 \item $\bar{B}_g(\mathcal{A})$ is the genus-$g$ bar complex
 \item $Z(\mathcal{A})$ is the center of $\mathcal{A}$
-\item The class $[\text{obs}_g]$ measures the failure of $d_g^2 = 0$
+\item The class $[\text{obs}_g]$ measures the failure of $\dfib^{\,2} = 0$ on a fixed $\Sigma_g$
 \end{itemize}
 The superscript ``$H^2$'' here refers to \emph{bar complex degree}~$2$ (the bar differential has degree~$+1$, so $d \circ d$ lands in degree~$2$).  Under the Leray spectral sequence for $\overline{\mathcal{C}}_{g,n} \to \overline{\mathcal{M}}_g$, this bar-degree-$2$ class maps to a class in $H^{2g}(\overline{\mathcal{M}}_g)$ (Theorem~\ref{thm:genus-universality} below), because $\lambda_g \in H^{2g}(\overline{\mathcal{M}}_g)$.  The two degrees should not be confused.
 \end{definition}
 
 \begin{theorem}[Obstruction formula; \ClaimStatusProvedHere]\label{thm:obstruction-general}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 The genus-$g$ obstruction is computed by:
 \begin{equation}
 \mathrm{obs}_g = \sum_{\substack{g_1+g_2=g \\ g_1, g_2 \geq 1}} d_{g_1} \circ d_{g_2}
@@ -3475,9 +3339,9 @@ $$d_{\text{total}} = \sum_{g=0}^{\infty} \hbar^{2g-2} d_g$$
 Each $d_g$ involves integration over $g$-loop configuration spaces:
 $$d_g = \sum_{n \geq 1} \int_{\overline{C}_n^{(g)}(X)} \text{Res}_{D} \circ \eta_g$$
 
-\emph{Step 2: Squaring the differential.}
+\emph{Step~2: Squaring the differential.}
 
-Compute $d_{\text{total}}^2$:
+Compute $d_{\mathrm{total}}^2$:
 \begin{align*}
 d_{\text{total}}^2 &= \left(\sum_{g} \hbar^{2g-2} d_g\right)^2 \\
 &= \sum_{g_1, g_2} \hbar^{2(g_1+g_2)-4} d_{g_1} \circ d_{g_2}
@@ -3541,12 +3405,12 @@ d_g(a_m) &= \sum_{k=-\infty}^{\infty} \int_{\overline{C}_2^{(g)}} a_k \otimes a_
 \left(\int_{\Sigma_g} \text{d}\log\theta_1(z_{12}; \Omega_g)\right)
 \end{align}
 
-\emph{Step 3: Squaring the differential.}
+\emph{Step 3: Squaring the fiberwise differential.}
 
-Compute $d_g^2(a_m)$:
+Compute $\dfib^{\,2}(a_m)$ on a fixed $\Sigma_g$:
 \begin{align}
-d_g^2(a_m) &= d_g\left(\sum_k \int_{\mathcal{M}_g} a_k \otimes a_{m-k} \otimes \omega_g\right) \\
-&= \sum_{k_1, k_2} \int_{\mathcal{M}_g} [a_{k_1}, a_{k_2}] \otimes a_{m-k_1-k_2} 
+\dfib^{\,2}(a_m) &= \dfib\!\left(\sum_k \int_{\mathcal{M}_g} a_k \otimes a_{m-k} \otimes \omega_g\right) \\
+&= \sum_{k_1, k_2} \int_{\mathcal{M}_g} [a_{k_1}, a_{k_2}] \otimes a_{m-k_1-k_2}
 \otimes \omega_g^2
 \end{align}
 
@@ -3560,7 +3424,7 @@ in the D-module formulation, the mode sum computes the
 first Chern class of the direct image sheaf $R^0\pi_*\omega_{\mathcal{C}/\mathcal{M}_g}$
 via the Quillen determinant anomaly formula \cite{Quillen85}.  The result is:
 \begin{equation}
-d_g^2(a_m) = \kappa \cdot a_m \otimes \lambda_g
+\dfib^{\,2}(a_m) = \kappa \cdot a_m \otimes \lambda_g
 \end{equation}
 where $\lambda_g = c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$.
 
@@ -3579,17 +3443,7 @@ This is indeed a central element (proportional to $c$), confirming the consisten
 \end{proof}
 
 \begin{remark}[Physical interpretation: anomaly]\label{rem:heisenberg-anomaly}
-In conformal field theory, the obstruction class $\text{obs}_g$ is the 
-\emph{conformal anomaly} at genus $g$. For the Heisenberg algebra:
-\begin{itemize}
-\item The central charge $\kappa$ measures the ``quantum volume'' of phase space
-\item At genus 1, this gives the one-loop correction to the partition function
-\item At higher genus, it gives multi-loop quantum corrections
-\end{itemize}
-
-The Bernoulli numbers $B_{2g}$ appearing in Mumford's formula are the same 
-Bernoulli numbers that appear in the Euler-Maclaurin formula and in zeta function 
-evaluations---the same Bernoulli numbers govern both the arithmetic of $\zeta(2g)$ and the geometry of $\overline{\mathcal{M}}_g$.
+The obstruction class $\text{obs}_g$ is the conformal anomaly at genus $g$.  The Bernoulli numbers $B_{2g}$ in Mumford's formula govern both the arithmetic of $\zeta(2g)$ and the geometry of $\overline{\mathcal{M}}_g$.
 \end{remark}
 
 \subsection{Example 2: Kac--Moody algebras -- level and dual Coxeter number}
@@ -3750,13 +3604,13 @@ d_g(W) &= \int_{\mathcal{M}_g} W \otimes W \otimes \omega_g^{(3)}
 \end{align}
 where $\omega_g^{(h)}$ is the genus-$g$ form for weight-$h$ fields.
 
-\emph{Step 3: Squaring and extracting obstruction.}
+\emph{Step 3: Squaring the fiberwise differential and extracting obstruction.}
 
-Compute $d_g^2$:
+Compute $\dfib^{\,2}$:
 \begin{align}
-d_g^2(T) &= \frac{c}{2} \cdot T \otimes \int_{\mathcal{M}_g} (\omega_g^{(2)})^2
+\dfib^{\,2}(T) &= \frac{c}{2} \cdot T \otimes \int_{\mathcal{M}_g} (\omega_g^{(2)})^2
 = \frac{c}{2} \cdot T \otimes \lambda_g^{(2)} \\
-d_g^2(W) &= \frac{c}{3} \cdot W \otimes \int_{\mathcal{M}_g} (\omega_g^{(3)})^2
+\dfib^{\,2}(W) &= \frac{c}{3} \cdot W \otimes \int_{\mathcal{M}_g} (\omega_g^{(3)})^2
 = \frac{c}{3} \cdot W \otimes \lambda_g^{(3)}
 \end{align}
 
@@ -4039,7 +3893,10 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 
 \begin{theorem}[Genus universality; \ClaimStatusProvedHere]\label{thm:genus-universality}
 \index{genus universality theorem|textbf}
-For the Heisenberg algebra, we computed $\mathrm{obs}_g(\mathcal{H}_k) = k \cdot \lambda_g$ and recognized the generating function as the $\hat{A}$-genus (\S\ref{sec:frame-genus-tower}).  The following theorem establishes that this factorization is universal: every Koszul chiral algebra has the same structure, with a single number $\kappa(\cA)$ controlling the entire genus tower.
+\textup{[Regime: curved-central on the Koszul locus; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+The Heisenberg factorization $\mathrm{obs}_g = k \cdot \lambda_g$ (\S\ref{sec:frame-genus-tower}) is universal.
 
 For every Koszul chiral algebra $\mathcal{A}$ with a single strong generator, the genus-$g$ obstruction class factors as
 \begin{equation}\label{eq:genus-universality}
@@ -4176,19 +4033,10 @@ For KM: $\kappa = (k+h^\vee)d/(2h^\vee)$, which is linear in $k$ with slope $d/(
 \end{proof}
 
 \begin{remark}[Universality principle]\label{rem:lambda-universality}
-The factorization $\mathrm{obs}_g = \kappa \cdot \lambda_g$ is an instance of Grothendieck's principle that universal constructions lead to universal formulas: the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$ is the universal source of quantum corrections, and the $\lambda$-classes generate the tautological ring $R^*(\mathcal{M}_g)$.
-
-For algebras with a single strong generator (Heisenberg, Virasoro, Kac--Moody),
-the factorization holds at the level of cohomology classes.  For multi-generator
-algebras such as $\mathcal{W}_3$ (generators $T$ and $W$ of weights $2$ and $3$),
+The factorization $\mathrm{obs}_g = \kappa \cdot \lambda_g$ holds at the cohomology-class level for single-generator algebras (Heisenberg, Virasoro, Kac--Moody).  For multi-generator algebras such as $\mathcal{W}_3$,
 the obstruction is $\mathrm{obs}_g = (c/2)\,\lambda_g^{(T)} + (c/3)\,\lambda_g^{(W)}$
-(Theorem~\ref{thm:w3-obstruction}), a sum of contributions from different
-generators that are proportional at genus~$1$ but may differ at genus~$g \geq 2$.
-The universality formula~\eqref{eq:genus-universality} and the
-free energy formula~(iii) hold at the level of
-\emph{integrated} invariants (free energies $F_g = \int \mathrm{obs}_g$),
-where all $\lambda$-class contributions collapse to a single Faber--Pandharipande
-evaluation.
+(Theorem~\ref{thm:w3-obstruction}), with contributions proportional at genus~$1$ but possibly distinct at $g \geq 2$.
+Universality~\eqref{eq:genus-universality} and the free energy formula~(iii) hold at the level of integrated invariants $F_g = \int \mathrm{obs}_g$, where all $\lambda$-class contributions collapse to a single Faber--Pandharipande evaluation.
 \end{remark}
 
 \begin{corollary}[Additivity of the obstruction coefficient; \ClaimStatusProvedHere]\label{cor:kappa-additivity}
@@ -4409,6 +4257,9 @@ at the full subcategory of algebras with $\kappa = 0$.  Objects of $\mathrm{KCA}
 \label{subsec:obstruction-deformation-connection}
 
 \begin{theorem}[Obstruction-deformation pairing; \ClaimStatusProvedHere]\label{thm:obs-def-pairing-explicit}
+\textup{[Regime: curved-central on the Koszul locus; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 \leavevmode\\
 The obstruction class
 $\text{obs}_g \in H^2(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))$
@@ -4498,29 +4349,6 @@ There is no intermediate case: the genus-$1$ obstruction determines all higher-g
 By Theorem~\ref{thm:genus-universality}, $\mathrm{obs}_g = \kappa \cdot \lambda_g$ with $\lambda_g \neq 0$ for all $g \geq 1$ (the Hodge class is nonzero).  Thus $\mathrm{obs}_g = 0$ for some $g$ iff $\kappa = 0$ iff $\mathrm{obs}_g = 0$ for all $g$.
 \end{proof}
 
-\subsection{Summary of obstruction theory}
-\label{subsec:obstruction-conclusion}
-
-We have computed the obstruction class $\text{obs}_g \in H^2(\bar{B}_g, Z(\mathcal{A}))$ 
-explicitly for:
-\begin{enumerate}
-\item \emph{Heisenberg}: $\text{obs}_g = \kappa \cdot \lambda_g$
-\item \emph{Kac--Moody}: $\text{obs}_g = \frac{(k+h^\vee) \cdot \dim(\mathfrak{g})}{2h^\vee}
-\cdot \lambda_g$
-\item \emph{$W_3$}: $\text{obs}_g = c \cdot (\frac{\lambda_g^{(2)}}{2} +
-\frac{\lambda_g^{(3)}}{3})$
-\end{enumerate}
-
-Key results:
-\begin{itemize}
-\item All obstructions are multiples of $\lambda$-classes
-\item Obstruction squares to zero: $(\text{obs}_g)^2 = 0$ for all $g$ and single-generator algebras (Theorem~\ref{thm:obstruction-nilpotent-all-genera}, via Mumford's relation $c(\mathbb{E})c(\mathbb{E}^\vee) = 1$; see Remark~\ref{rem:multi-generator-nilpotence} for the multi-generator case)
-\item Perfect pairing with deformations via Serre duality
-\item Physical interpretation as anomalies in quantum field theory
-\end{itemize}
-
-This completes the explicit computation of obstruction classes for all standard examples.
-
 \begin{remark}[$\kappa$ as Chern--Simons level]\label{rem:kappa-chern-simons}
 \index{obstruction coefficient!Chern--Simons interpretation}
 \index{Chern--Simons theory!obstruction coefficient}
@@ -4598,11 +4426,7 @@ Conjecture~\ref{conj:universal-MC}.
 \section{The complementarity theorem}
 \label{sec:complementarity-theorem}
 
-We now establish the central result on quantum complementarity in Koszul duality.
-
 \subsection{Physical and mathematical motivation}
-
-We motivate the complementarity theorem from both physical and mathematical perspectives.
 
 \begin{remark}[Physical perspective: Witten's insight]
 In conformal field theory, consider a chiral algebra $\mathcal{A}$ and compute its
@@ -4612,15 +4436,8 @@ Z_g[\mathcal{A}] = \int_{\mathcal{M}_g} \langle \mathcal{A} \rangle_{\Sigma_g}
 \cdot e^{-S[\Sigma_g]}
 \end{equation}
 
-At genus $g \geq 1$, this integral receives \emph{quantum corrections}---loop 
-contributions that modify the classical (tree-level) answer. These corrections split 
-naturally into two types:
-\begin{enumerate}
-\item \emph{Deformations}: Marginal operators that can be turned on continuously
-\item \emph{Obstructions}: Anomalies that prevent certain deformations
-\end{enumerate}
-
-The complementarity theorem asserts: \emph{what $\mathcal{A}$ sees as obstruction, 
+At genus $g \geq 1$, quantum corrections split into deformations (marginal operators) and obstructions (anomalies).
+The complementarity theorem asserts: \emph{what $\mathcal{A}$ sees as obstruction,
 its Koszul dual $\mathcal{A}^!$ sees as deformation, and vice versa}.
 
 \end{remark}
@@ -4650,24 +4467,7 @@ where each summand corresponds to quantum corrections of the respective algebra.
 \end{remark}
 
 \begin{remark}[Algebraic perspective: Grothendieck's functoriality]
-From the abstract viewpoint, Koszul duality is an \emph{involution}:
-\begin{equation}
-(\mathcal{A}^!)^! \simeq \mathcal{A}
-\end{equation}
-
-Any functor associated to Koszul duality must satisfy:
-\begin{equation}
-F(\mathcal{A}) \oplus F(\mathcal{A}^!) = \text{some universal object}
-\end{equation}
-
-The complementarity theorem identifies this universal object as 
-$H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$, showing that the decomposition is:
-\begin{enumerate}
-\item \emph{Direct}: $Q_g(\mathcal{A}) \cap Q_g(\mathcal{A}^!) = 0$
-\item \emph{Exhaustive}: $Q_g(\mathcal{A}) + Q_g(\mathcal{A}^!) = 
-H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$
-\item \emph{Functorial}: Natural in morphisms of Koszul pairs
-\end{enumerate}
+Since $(\mathcal{A}^!)^! \simeq \mathcal{A}$, any functor on Koszul pairs must satisfy $F(\mathcal{A}) \oplus F(\mathcal{A}^!) = \text{universal object}$.  The complementarity theorem identifies this universal object as $H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$: the decomposition is direct, exhaustive, and functorial.
 \end{remark}
 
 \begin{remark}[Computational perspective: Serre's examples]
@@ -4698,84 +4498,284 @@ extension in $\mathcal{H}_\kappa$ is dual to the curvature in $\mathcal{H}_\kapp
 
 \subsection{Statement of the theorem}
 
+\begin{definition}[Deformation-obstruction complexes: H-level]
+\label{def:complementarity-complexes}
+\index{deformation-obstruction complexes|textbf}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on~$X$.
+The \emph{ambient complex} at genus~$g$ is
+\[
+\mathbf{C}_g(\cA) := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA)),
+\]
+where $\mathcal{Z}(\cA)$ is the center local system.
+The Verdier involution $\sigma$ acts on $\mathbf{C}_g(\cA)$ as a
+cochain-level endomorphism with $\sigma^2 = \mathrm{id}$
+(Theorem~\ref{thm:verdier-bar-cobar}).
+Define the \emph{deformation-obstruction complexes} as homotopy eigenspaces:
+\begin{equation}\label{eq:complementarity-fiber}
+\mathbf{Q}_g(\cA) := \operatorname{fib}(\sigma - \mathrm{id}\colon
+\mathbf{C}_g \to \mathbf{C}_g), \qquad
+\mathbf{Q}_g(\cA^!) := \operatorname{fib}(\sigma + \mathrm{id}\colon
+\mathbf{C}_g \to \mathbf{C}_g).
+\end{equation}
+The \emph{cohomological shadows} (S-level) are defined by:
+\begin{align}\label{eq:shadow-spaces}
+Q_g(\cA) &:= H^*(\mathbf{Q}_g(\cA))
+= \ker(\sigma - \mathrm{id} \mid H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))),\\
+Q_g(\cA^!) &:= H^*(\mathbf{Q}_g(\cA^!))
+= \ker(\sigma + \mathrm{id} \mid H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))).
+\end{align}
+\end{definition}
+
+\begin{remark}[H/M/S layers; Convention~\ref{conv:hms-levels}]
+\label{rem:complementarity-hms}
+The homotopy fibers~\eqref{eq:complementarity-fiber} are the
+H-level objects; the explicit cochain models
+$(\bar{B}^{(g)}(\cA), \Dg{g})$ are the M-level presentations; and
+the kernel decomposition~\eqref{eq:shadow-spaces} is the S-level
+shadow.  The standard involution-splitting lemma in characteristic~$0$
+(an involution on a complex splits it into homotopy eigenspaces whose
+direct sum recovers the original) makes the passage from H to S
+automatic.
+\end{remark}
+
+\begin{lemma}[Involution splitting in characteristic~$0$; \ClaimStatusProvedHere]
+\label{lem:involution-splitting}
+\index{involution splitting lemma|textbf}
+Let $V$ be a cochain complex over a field of characteristic $\neq 2$,
+and let $\sigma \colon V \to V$ be a cochain involution
+($\sigma^2 = \mathrm{id}$, $\sigma \circ d = d \circ \sigma$).  Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The homotopy eigenspaces
+  $V^+ := \operatorname{fib}(\sigma - \mathrm{id})$ and
+  $V^- := \operatorname{fib}(\sigma + \mathrm{id})$
+  split $V$ in the homotopy category:
+  $V^+ \oplus V^- \xrightarrow{\;\sim\;} V$.
+\item On cohomology:
+  $H^*(V) = \ker(\sigma - \mathrm{id}) \oplus \ker(\sigma + \mathrm{id})$.
+\item If $\langle -,- \rangle$ is a cochain-level pairing on~$V$
+  with $\langle \sigma x, \sigma y \rangle = -\langle x, y \rangle$
+  \textup{(}anti-symmetric under $\sigma$\textup{)}, then $V^+$ and
+  $V^-$ are isotropic for $\langle -,- \rangle$; if the pairing is
+  non-degenerate, they are Lagrangian.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The projectors $p^\pm := \tfrac{1}{2}(\mathrm{id} \pm \sigma)$
+are cochain maps with $p^+ + p^- = \mathrm{id}$,
+$(p^\pm)^2 = p^\pm$, and $p^+ \circ p^- = 0$.
+Part~(a): the inclusion $\operatorname{im}(p^+) \oplus \operatorname{im}(p^-)
+\hookrightarrow V$ is a quasi-isomorphism by direct-sum decomposition,
+and $\operatorname{im}(p^\pm) \simeq \operatorname{fib}(\sigma \mp \mathrm{id})$
+via the standard cone identification.
+Part~(b) follows by applying $H^*$ to~(a).
+Part~(c): for $x, y \in V^+$ we have $\sigma x = x$, $\sigma y = y$,
+so $\langle x, y \rangle = \langle \sigma x, \sigma y \rangle
+= -\langle x, y \rangle$, hence $\langle x, y \rangle = 0$.
+Maximality is immediate from the direct-sum decomposition.
+\end{proof}
+
+\begin{definition}[Relative bar fiber complex]\label{def:relative-bar-fiber}
+\index{bar complex!relative fiber|textbf}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on~$X$, and let
+\[
+\pi_g\colon \mathcal{C}_g(\cA) \longrightarrow
+\overline{\mathcal{M}}_g
+\]
+be the family of genus-$g$ compactified configuration spaces
+carrying the relative bar complex $\bar{B}^{(g)}(\cA)$.
+Its stalk at $[\Sigma] \in \overline{\mathcal{M}}_g$ is the
+\emph{genus-$g$ fiber bar complex}
+$C^{(g)}_X(\cA)\!\mid_\Sigma$, i.e.\ the bar complex of~$\cA$
+on the fixed curve~$\Sigma$ with the fiberwise curved
+differential~$\dfib$
+\textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})}.
+\end{definition}
+
+\begin{theorem}[Fiber--center identification \textup{(Theorem~$\mathrm{C}_0$)}; \ClaimStatusProvedHere]
+\label{thm:fiber-center-identification}
+\index{fiber--center identification|textbf}
+\textup{[}Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+
+\smallskip\noindent
+Assume $\cA$ carries a modular pre-Koszul datum
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
+and that the relative bar family $\pi_{g*}\bar{B}^{(g)}(\cA)$
+is perfect over $\overline{\mathcal{M}}_g$.  Then:
+\begin{equation}\label{eq:fiber-center}
+R^q\pi_{g*}\bar{B}^{(g)}(\cA) = 0
+\quad\text{for } q \neq 0,
+\qquad
+R^0\pi_{g*}\bar{B}^{(g)}(\cA)
+\;\cong\; \mathcal{Z}_{\cA}
+\end{equation}
+as local systems/sheaves on $\overline{\mathcal{M}}_g$,
+where $\mathcal{Z}_{\cA}$ is the center local system.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds in four steps.
+
+\emph{Step~1: Filter.}
+Filter the full fiber bar complex
+$C^{(g)}_X(\cA)\!\mid_\Sigma$ by bar degree, writing
+$F_p := \bigoplus_{n \leq p} \bar{B}^{(g),n}(\cA)$.
+
+\emph{Step~2: Identify the associated graded.}
+At the associated graded level, the fiberwise curvature
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ vanishes (it lies
+in positive filtration degree), so $\operatorname{gr}_F$ sees
+only the genus-$0$ collision differential~$\dzero$.
+By genus-$0$ Koszulity (axiom~MK1), the associated graded is
+the classical Koszul/Ext complex of
+$\operatorname{gr}_F \cA$, which has cohomology concentrated
+in total degree~$0$.
+
+\emph{Step~3: Diagonal Ext vanishing.}
+Modular Koszulity (axiom~MK3) provides diagonal Ext vanishing
+at each genus: $\operatorname{Ext}^{i,j}_{\cA^{(g)}} = 0$ for
+$i \neq j$.  This ensures that only total degree~$0$ survives
+in the full fiber complex (not just at the associated graded
+level), by spectral sequence comparison.
+
+\emph{Step~4: Base change.}
+Apply the Leray spectral sequence to the family
+$\pi_g\colon \mathcal{C}_g(\cA) \to \overline{\mathcal{M}}_g$.
+The fiber-level concentration from Steps~2--3 gives
+$R^q\pi_{g*} = 0$ for $q \neq 0$ (cohomology and base change).
+The perfectness hypothesis ensures base change applies
+uniformly over $\overline{\mathcal{M}}_g$.
+The surviving $R^0\pi_{g*}$ is identified with $\mathcal{Z}_{\cA}$
+by the bar-center identification at each fiber
+(Theorem~\ref{thm:bar-concentration} applied fiberwise).
+\end{proof}
+
+\begin{remark}[Theorem~C decomposition]\label{rem:theorem-C-decomposition}
+\index{Theorem C!decomposition}
+The full complementarity theorem decomposes as:
+\begin{itemize}
+\item \emph{$\mathrm{C}_0$} \textup{(}this theorem\textup{)}:
+  fiber-center identification.  The relative bar complex has
+  cohomology concentrated in the center local system.
+\item \emph{$\mathrm{C}_1$}
+  \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main}}
+  below\textup{)}: chain-level complementarity.
+  The ambient complex
+  $\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,
+  \mathcal{Z}_{\cA})$ decomposes into complementary Lagrangians.
+\end{itemize}
+$\mathrm{C}_0$ produces the ambient complex from the bar
+family; $\mathrm{C}_1$ splits it by the Verdier involution.
+\end{remark}
+
 \begin{theorem}[Quantum complementarity as Lagrangian polarization; \ClaimStatusProvedHere]
 \label{thm:quantum-complementarity-main}
 \label{thm:quantum-complementarity}
 \index{deformation-obstruction complementarity|textbf}
 \index{Lagrangian!complementarity|textbf}
-For the Heisenberg pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$, we computed in~\S\ref{sec:frame-complementarity} that the central extension of $\mathcal{H}_\kappa$ and the curvature of its dual are complementary components of $H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$.  The following theorem --- Theorem~C of this monograph --- establishes this complementarity in full generality, revealing it as a Lagrangian polarization.
+\textup{[}Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+
+\smallskip\noindent
+The Heisenberg complementarity of~\S\ref{sec:frame-complementarity} generalizes to a Lagrangian polarization.
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair on a smooth projective
 curve $X$ over $\mathbb{C}$, with $\mathcal{A}$ a sheaf of chiral algebras in
 the sense of Beilinson--Drinfeld \cite[Chapter 3]{BD04} and $\mathcal{A}^!$
 its Koszul dual (Theorem~\ref{thm:chiral-koszul-duality}).
+Write $\mathbf{C}_g(\cA)$, $\mathbf{Q}_g(\cA)$, $\mathbf{Q}_g(\cA^!)$
+for the ambient complex and homotopy eigenspaces of
+Definition~\textup{\ref{def:complementarity-complexes}}.
 
-For each genus $g \geq 0$, define the \emph{genus-$g$ quantum correction spaces}:
-\begin{align}
-Q_g(\mathcal{A}) &:= H^*\left(\bar{B}^{(g)}(\mathcal{A}), d^{(g)}\right)
-\quad \text{(obstruction space)}\\
-Q_g(\mathcal{A}^!) &:= H^*\left(\bar{B}^{(g)}(\mathcal{A}^!), d^{(g)}\right)
-\quad \text{(deformation space)}
-\end{align}
-where $\bar{B}^{(g)}(\mathcal{A})$ denotes the genus-$g$ component of the geometric
-bar complex (Definition~\ref{def:geometric-bar-genus-stratified}).
-Set
-\[
-\mathcal{H}_g(\mathcal{A})
-:= H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A})),
-\]
-the cohomology of the Deligne--Mumford compactification
-$\overline{\mathcal{M}}_g$ with coefficients in the center local system
-$\mathcal{Z}(\mathcal{A})$.
-Then:
+\smallskip\noindent
+\textbf{H-level \textup{(}homotopy\textup{)}.}
+For each genus $g \geq 0$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Shifted-symplectic structure.}
-  Verdier duality on $\mathcal{Z}(\mathcal{A})$ induces a
-  non-degenerate bilinear pairing
-  \begin{equation}\label{eq:verdier-symplectic-pairing}
-  \langle -, - \rangle_{\mathbb{D}} \colon
-  \mathcal{H}_g(\mathcal{A}) \otimes \mathcal{H}_g(\mathcal{A})
-  \to \mathbb{C}
-  \end{equation}
-  of cohomological degree $-(3g{-}3)$, using the Koszul identification
-  $\mathbb{D}\mathcal{Z}(\mathcal{A}) \cong \mathcal{Z}(\mathcal{A})$.
-
-\item \emph{Lagrangian polarization.}
-  The Verdier involution $\sigma$ on $\mathcal{H}_g(\mathcal{A})$
-  is an anti-involution for $\langle-,-\rangle_{\mathbb{D}}$, and its
-  eigenspaces
-  \begin{equation}\label{eq:lagrangian-decomp}
-  Q_g(\mathcal{A}) = \ker(\sigma - \mathrm{id}), \qquad
-  Q_g(\mathcal{A}^!) = \ker(\sigma + \mathrm{id})
-  \end{equation}
-  are complementary Lagrangians:
-  $\langle-,-\rangle_{\mathbb{D}}$ restricts to zero on each, and
+\item \emph{Homotopy Lagrangian decomposition.}
+  Verdier duality induces a cochain-level pairing
+  $\langle -,- \rangle_{\mathbb{D}}$ on~$\mathbf{C}_g(\cA)$
+  of cohomological degree $-(3g{-}3)$, anti-symmetric under the
+  Verdier involution~$\sigma$.
+  By Lemma~\textup{\ref{lem:involution-splitting}(a,c)},
   \begin{equation}\label{eq:complementarity-decomp}
-  Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)
-  \;\cong\; \mathcal{H}_g(\mathcal{A}).
+  \mathbf{C}_g(\cA) \;\simeq\;
+  \mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!),
   \end{equation}
-  What one algebra sees as deformation, its dual sees as obstruction,
-  because both are opposite polarizations of a single ambient symplectic
-  deformation problem.
+  with each summand Lagrangian for
+  $\langle -,- \rangle_{\mathbb{D}}$.
 
 \item \emph{Perfect duality.}
-  The restriction of $\langle-,-\rangle_{\mathbb{D}}$ to
-  $Q_g(\mathcal{A}) \otimes Q_g(\mathcal{A}^!) \to \mathbb{C}$
-  is a perfect pairing\textup{:}
-  \begin{equation}\label{eq:quantum-duality}
-  Q_g(\mathcal{A}) \cong Q_g(\mathcal{A}^!)^\vee.
-  \end{equation}
+  $\langle -, - \rangle_{\mathbb{D}}$ restricts to a
+  non-degenerate pairing
+  $\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA^!) \to \mathbb{C}[-{(3g{-}3)}]$,
+  so $\mathbf{Q}_g(\cA) \simeq \mathbf{Q}_g(\cA^!)^\vee[-(3g{-}3)]$.
 
 \item \emph{Functoriality.}
   The decomposition is natural in morphisms of Koszul pairs
   and compatible with the conformal weight and
   cohomological degree gradings.
 \end{enumerate}
+
+\smallskip\noindent
+\textbf{S-level \textup{(}cohomological shadow\textup{)}.}
+Setting $\mathcal{H}_g(\cA) := H^*(\overline{\mathcal{M}}_g,
+\mathcal{Z}(\cA))$, Lemma~\textup{\ref{lem:involution-splitting}(b)}
+gives:
+\begin{equation}\label{eq:verdier-symplectic-pairing}
+\mathcal{H}_g(\cA) \;=\;
+Q_g(\cA) \;\oplus\; Q_g(\cA^!),
+\end{equation}
+where the cohomological shadows
+$Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
+$Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$
+\textup{(}Definition~\textup{\ref{def:complementarity-complexes}}\textup{)}
+are Lagrangians for the induced pairing on~$\mathcal{H}_g$, and
+\begin{equation}\label{eq:quantum-duality}
+Q_g(\cA) \cong Q_g(\cA^!)^\vee.
+\end{equation}
+\begin{equation}\label{eq:lagrangian-decomp}
+\text{What one algebra sees as deformation, its dual sees as obstruction.}
+\end{equation}
 \end{theorem}
+
+\begin{remark}[Elementary model presentation;
+Convention~\ref{conv:proof-architecture}, Step~B]
+\label{rem:complementarity-model}
+\index{complementarity!model presentation}
+The homotopy eigenspace $\mathbf{Q}_g(\cA) = \operatorname{fib}(\sigma - \mathrm{id})$
+is modeled by the mapping cone
+$\operatorname{Cone}(\sigma - \mathrm{id}\colon C_g \to C_g)[-1]$,
+where $C_g = R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
+is computed as a \v{C}ech complex for a finite cover of
+$\overline{\mathcal{M}}_g$.  The involution~$\sigma$ on~$C_g$ is
+induced by the Verdier self-duality
+$\mathcal{Z}(\cA) \xrightarrow{\sim} \mathbb{D}\mathcal{Z}(\cA)$
+composed with Poincar\'e--Verdier duality on the compact
+orbifold $\overline{\mathcal{M}}_g$.  In the projector model
+(characteristic $\neq 2$), the mapping cone is quasi-isomorphic to
+$\operatorname{im}(p^+) = \operatorname{im}(\tfrac{1}{2}(\mathrm{id} + \sigma))$,
+which is a direct summand of~$C_g$.  The pairing
+$\langle -, - \rangle_{\mathbb{D}}$ restricts to zero on this summand
+(Lemma~\ref{lem:involution-splitting}(c)), so the Lagrangian property
+is the identity $\langle p^+ x, p^+ y \rangle
+= \langle \sigma(p^+ x), \sigma(p^+ y) \rangle
+= -\langle p^+ x, p^+ y \rangle = 0$.
+The cohomological shadow $Q_g(\cA) = H^*(\operatorname{im}(p^+))
+= \ker(\sigma - \mathrm{id} \mid \mathcal{H}_g)$ recovers the classical
+eigenspace decomposition.
+
+For the Heisenberg algebra $\mathcal{H}_k$ at genus~$1$:
+$C_1 = H^*(\overline{\mathcal{M}}_1, \mathbb{C})
+= \mathbb{C} \oplus \mathbb{C}[-2]$, the involution acts by $+1$ on
+$H^0$ and $-1$ on $H^2$, so $Q_1(\mathcal{H}_k) = H^0$,
+$Q_1(\mathcal{H}_k^!) = H^2$, recovering the result of
+\S\ref{sec:frame-complementarity}.
+\end{remark}
 
 \begin{remark}[Comparison with literature]
 \begin{enumerate}
-\item \emph{Beilinson--Drinfeld} \cite[Chapter 4]{BD04}: Proved this for $g=0$ 
-(tree level) using Chevalley--Cousin resolutions. Our proof extends to all $g \geq 1$ 
+\item \emph{Beilinson--Drinfeld} \cite[Chapter 4]{BD04}: Proved this for $g=0$
+(tree level) using Chevalley--Cousin resolutions. Our proof extends to all $g \geq 1$
 by incorporating quantum corrections.
 
 \item \emph{Gui--Li--Zeng} \cite{GLZ22}: Developed curved Koszul duality for 
@@ -4787,9 +4787,47 @@ topological field theories. Our geometric bar construction computes chiral homol
 which is the holomorphic analog.
 
 \item \emph{Arakawa} \cite{Ara12}: Computed W-algebra representation theory. Our 
-complementarity theorem explains the duality between affine Kac--Moody algebras and 
+complementarity theorem explains the duality between affine Kac--Moody algebras and
 W-algebras at critical level.
 \end{enumerate}
+\end{remark}
+
+\begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-c}
+The S-level (cohomological) decomposition
+$\mathcal{H}_g(\cA) = Q_g(\cA) \oplus Q_g(\cA^!)$ is a
+cohomological shadow of a derived geometric structure.
+The homotopy-native statement involves the derived moduli stack
+$\mathcal{M}_{\cA}^{\mathrm{der}}$ of deformations of $\cA$
+over $\overline{\mathcal{M}}_g$, and takes the following form.
+
+The ambient cochain complex
+$\mathbf{C}_g(\cA) =
+R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
+carries a $(-1)$-shifted symplectic structure in the sense of
+Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}: the Verdier
+pairing on the center local system upgrades to a closed
+$2$-form of degree~$-1$ on the derived stack
+$\operatorname{Map}(\overline{\mathcal{M}}_g, B\mathcal{Z}(\cA))$.
+The Lagrangian decomposition
+$\mathbf{C}_g(\cA) \simeq
+\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
+is then a \emph{Lagrangian fibration}:
+$\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ are Lagrangian
+$\Linf$-subalgebras, and the Verdier involution $\sigma$ acts
+as an anti-symplectomorphism exchanging them.
+
+On the deformation-theoretic side, the tangent complex
+$\mathbb{T}_{\cA} \simeq \mathbf{Q}_g(\cA)[1]$ and the
+obstruction complex
+$\mathbb{L}_{\cA} \simeq \mathbf{Q}_g(\cA^!)$ are Serre dual
+(up to the shift from $\dim \overline{\mathcal{M}}_g = 3g-3$):
+a manifestation of the general principle that $(-1)$-shifted
+symplectic structures produce Serre duality between tangent and
+obstruction complexes
+\cite[Theorem~2.13]{PTVV13}.
+The cohomological decomposition~\eqref{eq:verdier-symplectic-pairing}
+is therefore the decategorification of a derived Lagrangian
+intersection.
 \end{remark}
 
 \subsection{Strategy of proof: overview}
@@ -4958,16 +4996,7 @@ triviality of the fibration. On boundary strata, it has monodromy captured by th
 \end{proof}
 
 \begin{remark}[Convergence]
-The spectral sequence converges because:
-\begin{enumerate}
-\item $\overline{\mathcal{M}}_g$ has finite cohomological dimension ($\dim 
-\overline{\mathcal{M}}_g = 3g-3$ for $g \geq 2$)
-\item The sheaves $\mathcal{H}^q_{\text{fiber}}$ are constructible (piecewise constant 
-with controlled behavior at infinity)
-\item The bar complex is conilpotent (see Theorem \ref{thm:conilpotency-bar})
-\end{enumerate}
-These ensure the spectral sequence stabilizes at a finite page $E_r$ for $r \leq 
-\dim \overline{\mathcal{M}}_g + 1$.
+The spectral sequence converges: $\overline{\mathcal{M}}_g$ has finite cohomological dimension $3g{-}3$, the fiber sheaves $\mathcal{H}^q_{\text{fiber}}$ are constructible, and the bar complex is conilpotent (Theorem \ref{thm:conilpotency-bar}).  Stabilization occurs at $E_r$ for $r \leq 3g{-}2$.
 \end{remark}
 
 \emph{Step 3: Quantum corrections are $E_\infty$ contributions.}
@@ -5071,35 +5100,54 @@ For $\mathcal{H}_\kappa$ with $Z(\mathcal{H}_\kappa) = \mathbb{C} \cdot \mathbf{
 level $\kappa$ are both central (they have regular OPE with all fields), confirming
 $H^0 = Z(\mathcal{H}_\kappa)$.
 
-\emph{Step 4: Higher vanishing.}
-For $q > 0$: the fiber complex $\bar{B}^*_{\Sigma_g}(\mathcal{A})$ computes
-$\mathrm{Ext}^*_{\mathcal{A}}(\mathbb{C}, \mathbb{C})$ via the bar resolution
-(Theorem~\ref{thm:bar-nilpotency-complete}).
-We claim that the Koszul property implies diagonal Ext concentration:
-$\mathrm{Ext}^q_{\mathcal{A}}(\mathbb{C}, \mathbb{C})_n = 0$ for $q \neq n$.
-Indeed, the Koszul complex $K = \mathcal{A} \otimes (\mathcal{A}^!)^*$ admits
-a filtration by internal degree whose associated graded computes $\mathrm{Ext}$
-via the bar resolution.  The acyclicity of the Koszul complex
-(Definition~\ref{def:chiral-koszul-pair}, condition~(iii): the augmented Koszul
-complex $K \to \mathbb{C}$ is a resolution) implies that $H^q(K_n) = 0$ for
-$q \neq n$, since the only non-trivial cohomology arises in the degree
-where the augmentation map is non-zero.  This is the chiral analog of the
-classical characterization of Koszul algebras via diagonal Ext concentration
-(cf.\ Loday--Vallette~\cite{LV12}, Theorem~3.4.4).
-The chiral analog follows from the same filtration argument applied to the
-chiral bar complex: the filtration by pole order
-(Proposition~\ref{prop:pole-decomposition}) provides the analog of the weight
-filtration in the classical Koszul complex, and the associated graded coincides
-with the classical case by the genus-0 comparison
-(Theorem~\ref{thm:geometric-equals-operadic-bar}).
-In particular, at each bar degree~$p$ the non-diagonal fiber cohomology vanishes:
+\emph{Step 4: Total fiber-cohomology concentration.}
+We prove that the \emph{total} fiber cohomology sheaf
+$\mathcal{H}^q_{\mathrm{fiber}} = 0$ for $q \neq 0$, not merely the
+degree-$0$ bar component.
+
+Filter the full fiber bar complex $\bar{B}^*_{\Sigma_g}(\mathcal{A})$
+by bar degree~$p$:
+\[
+F_p := \bigoplus_{j \leq p}
+\Gamma\bigl(\overline{C}_j(\Sigma_g),\,
+\mathcal{A}^{\boxtimes j} \otimes \Omega^*_{\log}\bigr).
+\]
+The associated graded of this filtration identifies the $E_0$ page
+with the classical Koszul/Ext complex: by
+Theorem~\ref{thm:geometric-equals-operadic-bar},
+the genus-$0$ comparison identifies $\operatorname{gr}^p_F$ with
+the $p$-th bar chain group of the operadic bar complex.  The
+$E_1$ page is therefore:
+\[
+E_1^{p,q} = H^q\bigl(\operatorname{gr}^p_F
+\bar{B}^*_{\Sigma_g}(\mathcal{A}),\, d_0\bigr)
+= \operatorname{Ext}^q_{\operatorname{gr}\mathcal{A}}(\Bbbk, \Bbbk)_p.
+\]
+By the Koszul property
+(Definition~\ref{def:chiral-koszul-pair}, criterion~1),
+the associated graded $\operatorname{gr}_F \mathcal{A}$ is classically
+Koszul, so Ext is concentrated along the diagonal:
+$E_1^{p,q} = 0$ for $q \neq p$
+(cf.\ \cite[Theorem~3.4.4]{LV12}).  Since the $E_1$ page is
+concentrated in the row $q = p$, all higher differentials
+$d_r\colon E_r^{p,q} \to E_r^{p+r, q-r+1}$ vanish for $r \geq 1$
+(they map between zero groups), so the spectral sequence
+collapses at $E_1$ and:
+\[
+H^n\bigl(\bar{B}^*_{\Sigma_g}(\mathcal{A})\bigr) \cong
+E_\infty^{n,n} = \operatorname{Ext}^n_{\operatorname{gr}\mathcal{A}}
+(\Bbbk, \Bbbk)_n.
+\]
+In particular, the total fiber cohomology is concentrated in degree~$0$:
 \begin{equation}
-H^q\bigl(\bar{B}^p_{\Sigma_g}(\mathcal{A}),\, d_{\mathrm{fiber}}\bigr) = 0
-\quad \text{for } q \neq p.
+\mathcal{H}^q_{\mathrm{fiber}}(\mathcal{A})\big|_{\mathcal{M}_g^{\mathrm{smooth}}}
+= 0 \quad\text{for } q \neq 0,
+\qquad
+\mathcal{H}^0_{\mathrm{fiber}} \cong Z(\mathcal{A}) \otimes
+\underline{\mathbb{C}}.
 \end{equation}
-Therefore $\mathcal{H}^q_{\mathrm{fiber}} = 0$ for $q > 0$ when restricted to the
-degree-$0$ bar component, confirming that the fiber cohomology sheaf is
-concentrated in degree~$0$ as claimed.
+The conclusion covers the full fiber bar complex, not merely the
+degree-$0$ bar component.
 \end{proof}
 
 This completes Step~I: the genus filtration, the associated spectral
@@ -5305,6 +5353,9 @@ between $Q_g(\mathcal{A})$ and $Q_g(\mathcal{A}^!)$.
 \begin{theorem}[Kodaira--Spencer map for chiral algebras; \ClaimStatusProvedHere]
 \label{thm:kodaira-spencer-chiral-complete}
 \index{Kodaira--Spencer map|textbf}
+\textup{[Regime: curved-central on the Koszul locus; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair and let $\pi: \mathcal{C}_g
 \to \overline{\mathcal{M}}_g$ be the universal curve.  There is a natural action:
 \begin{equation}
@@ -5875,6 +5926,9 @@ $(-1)$-shifted symplectic structure via the BV formalism.
 \label{thm:shifted-symplectic-complementarity}
 \index{shifted symplectic!(-1)-shifted|textbf}
 \index{Lagrangian!complementarity!shifted symplectic|textbf}
+\textup{[Regime: curved-central on the Koszul locus; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 The genus-$1$ complementarity $Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!) \cong H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$ that we computed in~\S\ref{sec:frame-complementarity} acquires the following structural refinement: the decomposition is not merely additive but \emph{Lagrangian} with respect to a $(-1)$-shifted symplectic structure.
 \index{BV algebra!shifted symplectic structure}
 Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth projective
@@ -6083,6 +6137,9 @@ Conjecture~\ref{conj:lagrangian-complementarity}.
 \end{remark}
 
 \begin{theorem}[Spectral sequence as genus stratification; \ClaimStatusProvedHere]\label{thm:ss-genus-stratification}
+\textup{[Regime: curved-central; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 The spectral sequence of the bar complex admits a natural genus grading:
 $$E_1^{p,q,g} = H^q\left(\bar{B}^p_g(\mathcal{A})\right)$$
 where $\bar{B}^p_g$ denotes contributions from genus-$g$ configuration spaces, converging to:
@@ -6182,6 +6239,9 @@ as a chiral Koszul pair, which is beyond the scope of this monograph.
 The first two bullet points are proved for specific examples (Heisenberg at genus~1
 in Example~\ref{ex:heisenberg-complementarity-explicit}, Kac--Moody in
 Example~\ref{ex:kac-moody-complementarity-explicit}).
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture asserts that quantum complementarity (Theorem~\ref{thm:quantum-complementarity-main}) reproduces established physics identifications (central charge duality, marginal-obstruction exchange, electric-magnetic splitting) when applied to specific CFT Koszul pairs.
 \end{remark}
 
 \begin{corollary}[Modular properties; \ClaimStatusProvedHere]
@@ -6222,8 +6282,7 @@ Q_g(\mathcal{A}^!) \cong \left(H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A})) / Q
 \end{equation}
 where the dual is taken with respect to Verdier duality.
 
-Moreover, this identification is \emph{constructive}: given explicit formulas for 
-$Q_g(\mathcal{A})$, one can compute $Q_g(\mathcal{A}^!)$ algorithmically.
+This identification is constructive.
 \end{corollary}
 
 \begin{proof}[Proof of Corollary \ref{cor:uniqueness-quantum}]
@@ -6246,17 +6305,8 @@ Q_g(\mathcal{A}^!) \cong Q_g(\mathcal{A})^\vee
 
 Combining these gives the stated formula.
 
-\emph{Constructive algorithm}:
-\begin{enumerate}
-\item Compute $H^*(\overline{\mathcal{M}}_g)$ using standard tools (Mumford classes, 
-Poincaré polynomial)
-\item Compute $Q_g(\mathcal{A})$ using the bar complex and spectral sequence
-\item Take the orthogonal complement of $Q_g(\mathcal{A})$ in $H^*(\overline{
-\mathcal{M}}_g, Z(\mathcal{A}))$ with respect to the Verdier pairing
-\item The result is $Q_g(\mathcal{A}^!)$
-\end{enumerate}
-
-See Examples \ref{ex:heisenberg-complementarity-explicit} and \ref{ex:kac-moody-complementarity-explicit} for concrete implementations.
+The algorithm is: compute $H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$, compute $Q_g(\mathcal{A})$ via the bar spectral sequence, and take the Verdier-orthogonal complement.
+See Examples \ref{ex:heisenberg-complementarity-explicit} and \ref{ex:kac-moody-complementarity-explicit}.
 \end{proof}
 
 \begin{corollary}[Vanishing results; \ClaimStatusProvedHere]
@@ -6318,6 +6368,9 @@ whenever $\kappa \neq 0$.
 
 \begin{theorem}[Self-dual halving; \ClaimStatusProvedHere]\label{thm:self-dual-halving}
 \index{quantum corrections!self-dual halving}
+\textup{[Regime: curved-central on the Koszul locus; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 Let $(\cA, \cA^!)$ be a Koszul chiral pair
 (Definition~\ref{def:chiral-koszul-pair}) with $\cA \cong \cA^!$
 as chiral algebras.  Then for all $g \geq 1$:
@@ -6418,7 +6471,9 @@ at each genus.  The Virasoro algebra at $c = 0$ and the Yangian
 $Y(\mathfrak{g})$ for simply-laced $\mathfrak{g}$
 (Theorem~\ref{thm:yangian-self-dual}), despite completely different
 algebraic structures, share the formula
-$\dim Q_g = \tfrac{1}{2}\dim H^*(\overline{\mathcal{M}}_g, Z)$.
+\[
+\dim Q_g = \tfrac{1}{2}\dim H^*(\overline{\mathcal{M}}_g, Z).
+\]
 \item \emph{Oper connection.}
 Corollary~\ref{cor:critical-uncurving} connects chiral bar-cobar
 duality at the critical level to the Feigin--Frenkel program: the
@@ -6470,12 +6525,12 @@ framework, remains an open problem in enumerative geometry.
 The mathematical content of this corollary is that Theorem~\ref{thm:quantum-complementarity-main}
 applied to the (conjectural) Koszul pair structure of topological string theory
 would yield these identifications.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture translates topological string dualities (A/B-model, large~$N$, Gopakumar--Vafa) into the language of chiral Koszul complementarity at higher genus.
 \end{remark}
 
 \subsection{Explicit examples of complementarity}
-
-We now demonstrate the complementarity theorem with complete worked examples for
-several key chiral algebras.
 
 \begin{example}[Heisenberg algebra: complete genus-1 computation]
 \label{ex:heisenberg-complementarity-explicit}
@@ -6551,13 +6606,7 @@ we have:
 Q_1(\mathcal{H}_\kappa^!) = (\mathbb{C}\lambda)^\vee = \mathbb{C} \cdot \lambda^\vee
 \end{equation}
 
-\emph{Interpretation}:
-\begin{itemize}
-\item $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$: The central extension 
-appears as an obstruction
-\item $Q_1(\mathcal{H}_\kappa^!) = \mathbb{C} \cdot \lambda$: The first Chern class 
-appears as a deformation
-\end{itemize}
+\emph{Interpretation}: $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$ (the central extension appears as an obstruction) and $Q_1(\mathcal{H}_\kappa^!) = \mathbb{C} \cdot \lambda$ (the first Chern class appears as a deformation).
 
 Together they span:
 \begin{equation}
@@ -6772,15 +6821,15 @@ Given a chiral algebra $\mathcal{A}$ on a curve $X$ of genus $g$, the quantum co
 \begin{enumerate}
 \item Compute the center $Z(\mathcal{A}) = \{z \in \mathcal{A} : [z, a] = 0 \text{ for all } a\}$.
 \item Construct the bar complex $\bar{B}^{(g)}(\mathcal{A}) = \bigoplus_n \Gamma(\overline{C}_n(X_g), \mathcal{A}^{\boxtimes n} \otimes \Omega^*_{\log})$.
-\item Compute the \emph{total} differential $d^{(g)}_{\mathrm{total}}$ on $\bar{B}^{(g)}(\mathcal{A})$
+\item Compute the total corrected differential $\Dg{g}$ on $\bar{B}^{(g)}(\mathcal{A})$
 (Theorem~\ref{thm:genus-differential}), which includes fiberwise collision
 residues, the Gauss--Manin connection, and modular corrections.
-This differential satisfies $(d^{(g)}_{\mathrm{total}})^2 = 0$.
-\item Compute the \emph{fiberwise} collision differential $d_{\mathrm{fib}}$ and verify
-that $(d_{\mathrm{fib}})^2 = \kappa \cdot \omega_g \in Z(\mathcal{A}) \otimes H^2(\overline{\mathcal{M}}_g)$;
+This differential satisfies $\Dg{g}^{\,2} = 0$ (Convention~\ref{conv:higher-genus-differentials}).
+\item Compute the fiberwise collision differential $\dfib$ and verify
+that $\dfib^{\,2} = \kappa \cdot \omega_g \in Z(\mathcal{A}) \otimes H^2(\overline{\mathcal{M}}_g)$;
 this curvature measures the obstruction coefficient $\kappa(\mathcal{A})$.
 \item Take cohomology of the total differential:
-$Q_g(\mathcal{A}) = H^*(\bar{B}^{(g)}(\mathcal{A}),\, d^{(g)}_{\mathrm{total}})$.
+$Q_g(\mathcal{A}) = H^*(\bar{B}^{(g)}(\mathcal{A}),\, \Dg{g})$.
 \item Verify complementarity: $\dim Q_g(\mathcal{A}) + \dim Q_g(\mathcal{A}^!) = \dim H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\mathcal{A}))$.
 \end{enumerate}
 \end{remark}
@@ -6811,13 +6860,10 @@ d^{(1)}_{\mathrm{total}}) = \mathbb{C} \cdot \kappa$.
 
 \begin{remark}[Connection to string theory]
 \label{rem:string-theory-complementarity}
-In topological string theory, this theorem explains why:
-\begin{itemize}
-\item Type A and Type B topological strings are complementary
-\item Mirror symmetry exchanges quantum corrections
-\item The genus expansion is constrained by modular properties
-\end{itemize}
-The complementarity theorem is the mathematical foundation for these physical dualities.
+The complementarity theorem is the mathematical foundation for the
+complementarity of Type A and Type B topological strings, the
+exchange of quantum corrections under mirror symmetry, and the
+modular constraints on genus expansions.
 \end{remark}
 
 \section{Higher genus extension: descent and acyclicity}
@@ -6826,7 +6872,7 @@ The complementarity theorem is the mathematical foundation for these physical du
 \subsection{Beilinson--Drinfeld foundations: genus zero review}
 \label{subsec:BD-genus-zero-review}
 
-Before extending to higher genus, we carefully review the Beilinson--Drinfeld construction at genus zero, ensuring every step generalizes appropriately.
+We review the Beilinson--Drinfeld construction at genus zero, identifying what generalizes.
 
 \begin{theorem}[BD 3.4.12 --- genus zero acyclicity; \ClaimStatusProvedHere]\label{thm:BD-genus-zero}
 \index{Beilinson--Drinfeld!higher genus}
@@ -6859,7 +6905,7 @@ To extend to higher genus, we must ensure:
 \item The factorization structure persists: $\mathcal{A}(U \sqcup V) \simeq \mathcal{A}(U) \otimes \mathcal{A}(V)$
 \item Normal crossings are maintained in the boundary divisors
 \item Descent data are compatible with moduli stack stratification
-\item Quantum corrections (from $H^1(\mathcal{M}_g)$) preserve acyclicity
+\item Quantum corrections (from $H^1(\Sigma_g, \C)$, the period data of the fiber curve) preserve acyclicity
 \end{enumerate}
 \end{remark}
 
@@ -6948,11 +6994,11 @@ R\Gamma(R(X), C(\mathcal{A}))
 \end{aligned}
 \]
 is a quasi-isomorphism. Here $C(\mathcal{A})$ is equipped with quantum
-corrections parameterized by
+corrections parameterized by the period data
 \[
-t_g \in H^1(\mathcal{M}_g, Z(\mathcal{A})),
+t_g \in H^0\!\bigl(\mathcal{M}_g,\, R^1\pi_* Z(\mathcal{A})\bigr),
 \]
-where $Z(\mathcal{A})$ is the center.
+where $\pi \colon \mathcal{C}_g \to \mathcal{M}_g$ is the universal curve and $Z(\mathcal{A})$ is the center.  (The parameters arise from $H^1(\Sigma_g, \C)$, not from $H^1(\mathcal{M}_g)$, which vanishes for $g \geq 2$ by Harer's theorem; see Convention~\ref{conv:higher-genus-differentials}.)
 \end{theorem}
 
 \begin{proof}
@@ -7126,34 +7172,37 @@ $$d_1 = d_0 + \tau \cdot d_{\text{elliptic}}$$
 where $\tau$ is the modulus of the torus and $d_{\text{elliptic}}$ involves elliptic functions.
 \end{definition}
 
-\begin{theorem}[Key property: $d_g^2 = 0$; \ClaimStatusProvedHere]\label{thm:quantum-diff-squares-zero}
-The quantum-corrected differential satisfies $d_g^2 = 0$.
+\begin{theorem}[Key property: $\Dg{g}^{\,2} = 0$; \ClaimStatusProvedHere]\label{thm:quantum-diff-squares-zero}
+\textup{[Regime: curved-central; all genera
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+The total corrected differential $\Dg{g}$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials}(ii))} satisfies $\Dg{g}^{\,2} = 0$.
 \end{theorem}
 
 \begin{proof}
-\emph{Step 1: Expansion of $d_g^2$.}
+\emph{Step 1: Expansion of $\Dg{g}^{\,2}$.}
 
 \begin{align*}
-d_g^2 &= \left(d_0 + \sum_k t_k d_k\right)^2 \\
-&= d_0^2 + \sum_k t_k (d_0 d_k + d_k d_0) + \sum_{k,l} t_k t_l d_k d_l
+\Dg{g}^{\,2} &= \left(\dzero + \sum_k t_k d_k\right)^2 \\
+&= \dzero^2 + \sum_k t_k (\dzero d_k + d_k \dzero) + \sum_{k,l} t_k t_l d_k d_l
 \end{align*}
 
 \emph{Step 2: Classical term vanishes.}
 
-$d_0^2 = 0$ by the genus-zero cobar nilpotency (Theorem~\ref{thm:cobar-d-squared-zero}).
+$\dzero^2 = 0$ by the genus-zero cobar nilpotency (Theorem~\ref{thm:cobar-d-squared-zero}).
 
 \emph{Step 3: Mixed terms vanish.}
 
 The correction operators $d_k$ are constructed from period integrals over the $A$-cycles $\gamma_k \subset \Sigma_g$. We claim:
-$$d_0 d_k + d_k d_0 = 0$$
+$$\dzero d_k + d_k \dzero = 0$$
 
-The residue operator $d_0 = \sum_D \operatorname{Res}_D$ computes residues at collision divisors $D_{ij} = \{z_i = z_j\} \subset \overline{C}_n(\Sigma_g)$, while $d_k = \oint_{\gamma_k}$ integrates a single variable $z_i$ over the cycle $\gamma_k$ on $\Sigma_g$.  Both compositions vanish independently:
+The residue operator $\dzero = \sum_D \operatorname{Res}_D$ computes residues at collision divisors $D_{ij} = \{z_i = z_j\} \subset \overline{C}_n(\Sigma_g)$, while $d_k = \oint_{\gamma_k}$ integrates a single variable $z_i$ over the cycle $\gamma_k$ on $\Sigma_g$.  Both compositions vanish independently:
 \[
-d_0 \circ d_k = 0 \quad \text{and} \quad d_k \circ d_0 = 0.
+\dzero \circ d_k = 0 \quad \text{and} \quad d_k \circ \dzero = 0.
 \]
-For $d_0 \circ d_k = 0$: after integrating $z_i$ over $\gamma_k$, the result is a form on a configuration space with one fewer variable.  The collision singularity $(z_i - z_j)^{-1}$ is replaced by $\oint_{\gamma_k} (z_i - z_j)^{-1} dz_i$, which is either $0$ (if $z_j \notin \gamma_k$) or $2\pi i$ (if $z_j \in \gamma_k$), in both cases producing a regular function of $z_j$ with no residue to extract.  For $d_k \circ d_0 = 0$: extracting the residue $\operatorname{Res}_{D_{ij}}$ at $z_i = z_j$ eliminates the variable $z_i$ (replacing it by the OPE coefficient at $z_j$); the subsequent period integral $\oint_{\gamma_k} dz_i$ has nothing to act on, since $z_i$ no longer appears.
+For $\dzero \circ d_k = 0$: after integrating $z_i$ over $\gamma_k$, the result is a form on a configuration space with one fewer variable.  The collision singularity $(z_i - z_j)^{-1}$ is replaced by $\oint_{\gamma_k} (z_i - z_j)^{-1} dz_i$, which is either $0$ (if $z_j \notin \gamma_k$) or $2\pi i$ (if $z_j \in \gamma_k$), in both cases producing a regular function of $z_j$ with no residue to extract.  For $d_k \circ \dzero = 0$: extracting the residue $\operatorname{Res}_{D_{ij}}$ at $z_i = z_j$ eliminates the variable $z_i$ (replacing it by the OPE coefficient at $z_j$); the subsequent period integral $\oint_{\gamma_k} dz_i$ has nothing to act on, since $z_i$ no longer appears.
 
-(Note: The full OPE contains higher-order poles $(z_i - z_j)^{-m}$ for $m \geq 2$, but these contribute to the correction operators $d_k$ with $k \geq 2$ in the expansion $d_g = d_0 + \sum_k t_k d_k$, not to $d_0$ or $d_1$.  The relation $d_0 d_k + d_k d_0 = 0$ established above involves only the residue operator $d_0$ and the period integral $d_k$; the simple-pole analysis suffices because $d_0$ extracts first-order residues by definition.)
+(Note: The full OPE contains higher-order poles $(z_i - z_j)^{-m}$ for $m \geq 2$, but these contribute to the correction operators $d_k$ with $k \geq 2$ in the expansion $\Dg{g} = \dzero + \sum_k t_k d_k$, not to $\dzero$ or $d_1$.  The relation $\dzero d_k + d_k \dzero = 0$ established above involves only the residue operator $\dzero$ and the period integral $d_k$; the simple-pole analysis suffices because $\dzero$ extracts first-order residues by definition.)
 
 \emph{Step 4: Quantum terms vanish by intersection properties.}
 
@@ -7167,20 +7216,20 @@ $$d_k d_l + d_l d_k = 0 \quad \text{for all } k, l$$
 
 This follows from the disjoint support of the $A$-cycles.  The operator $d_k$ involves period integrals $\oint_{\gamma_k} K(z_i, -)\,dz_i$ of the chiral propagator $K(z,w) = \partial_z \log E(z,w)$.  The composition $d_k \circ d_l$ (for $k \neq l$) involves iterated integrals over $\gamma_k \times \gamma_l$.  Since $\gamma_k \cap \gamma_l = \emptyset$, the propagator $K(z_i, z_j)$ is holomorphic in~$z_i$ on~$\gamma_k$ when $z_j \in \gamma_l$, so $\oint_{\gamma_k} K(z_i, z_j)\,dz_i$ is a period of a holomorphic form.  The composition $d_k d_l$ then reduces to a product of periods, each computed independently on non-intersecting handles of $\Sigma_g$.  Repeating the same decomposition, each individual period integral $\oint_{\gamma_k}$ commutes past the other, and the resulting iterated integral vanishes because $\gamma_k$ is homologous to zero in the complement of $\gamma_l$ (the $A$-cycle spans an isotropic subspace of $H_1$).
 
-\emph{(Note: The vanishing of $d_g^2$ relies on the Lagrangian property of the $A$-cycle subspace in $H_1(\Sigma_g)$, not on the cohomology of the moduli space $\mathcal{M}_g$. Recall $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by Harer's theorem, but this is not the relevant vanishing here.)}
+\emph{(Note: The vanishing of $\Dg{g}^{\,2}$ relies on the Lagrangian property of the $A$-cycle subspace in $H_1(\Sigma_g)$, not on the cohomology of the moduli space $\mathcal{M}_g$. Recall $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by Harer's theorem, but this is not the relevant vanishing here.)}
 
 For $g=1$: there is a single $A$-cycle, and $d_1 d_1 = 0$ follows from $A_1 \cdot A_1 = 0$ (self-intersection of a simple closed curve on a torus).
 
-All terms in $d_g^2$ vanish, hence $d_g^2 = 0$. \qedhere
+All terms in $\Dg{g}^{\,2}$ vanish, hence $\Dg{g}^{\,2} = 0$. \qedhere
 \end{proof}
 
 \begin{lemma}[Quantum corrections preserve acyclicity; \ClaimStatusProvedHere]\label{lem:quantum-preserves-acyclicity}
-The quantum-corrected differential $d_g$ satisfies $d_g^2 = 0$ and preserves the 
+The total corrected differential $\Dg{g}$ satisfies $\Dg{g}^{\,2} = 0$ and preserves the
 acyclicity of the Chevalley--Cousin complex.
 \end{lemma}
 
 \begin{proof}
-We have shown $d_g^2 = 0$ in Theorem \ref{thm:quantum-diff-squares-zero}. It remains to show acyclicity.
+We have shown $\Dg{g}^{\,2} = 0$ in Theorem \ref{thm:quantum-diff-squares-zero}. It remains to show acyclicity.
 
 \emph{Step 1: Spectral sequence with quantum corrections.}
 
@@ -7191,7 +7240,7 @@ Quantum corrections affect only the differentials $d_r: E_r^{p,q} \to E_r^{p+r, 
 
 \emph{Step 2: Classical acyclicity implies quantum acyclicity.}
 
-The quantum corrections $t_k d_k$ preserve the Cousin filtration and act as derivations with respect to the chiral product. Write $d_g = d_0 + \epsilon$ where $\epsilon = \sum_{k \geq 1} t_k d_k$. Since $\epsilon$ increases filtration degree, it contributes only to higher pages of the spectral sequence: the $E_1$ page is determined by $d_0$ alone. By classical BD acyclicity (Theorem~\ref{thm:chevalley-cousin}), the $E_1$ page is concentrated in a single degree, hence $E_2 = E_\infty$. The quantum corrections modify $d_r$ for $r \geq 2$, but since $E_2^{p,q} = 0$ for $q \neq 0$, these higher differentials vanish for degree reasons. Therefore acyclicity is preserved.
+The quantum corrections $t_k d_k$ preserve the Cousin filtration and act as derivations with respect to the chiral product. Write $\Dg{g} = \dzero + \epsilon$ where $\epsilon = \sum_{k \geq 1} t_k d_k$. Since $\epsilon$ increases filtration degree, it contributes only to higher pages of the spectral sequence: the $E_1$ page is determined by $\dzero$ alone. By classical BD acyclicity (Theorem~\ref{thm:chevalley-cousin}), the $E_1$ page is concentrated in a single degree, hence $E_2 = E_\infty$. The quantum corrections modify $d_r$ for $r \geq 2$, but since $E_2^{p,q} = 0$ for $q \neq 0$, these higher differentials vanish for degree reasons. Therefore acyclicity is preserved.
 
 \emph{Step 3: Explicit verification for low genus.}
 
@@ -7215,7 +7264,7 @@ This completes the extension of BD's Chevalley--Cousin acyclicity to all genera.
 \begin{enumerate}
 \item \emph{Relative Ran space:} Working over the universal curve $\mathcal{C}_g \to \mathcal{M}_g$
 \item \emph{Boundary compatibility:} Gluing formula at nodes, normal crossings preserved
-\item \emph{Quantum corrections:} $d_g = d_0 + \sum t_k d_k$ with $d_g^2 = 0$
+\item \emph{Quantum corrections:} $\Dg{g} = \dzero + \sum t_k d_k$ with $\Dg{g}^{\,2} = 0$
 \item \emph{Acyclicity preservation:} Spectral sequence argument
 \end{enumerate}
 
@@ -7259,11 +7308,7 @@ Therefore, the descent from $R(X)$ to $X$ extends to all genera with quantum cor
 \end{proof}
 
 \begin{remark}[Physical interpretation]\label{rem:physical-higher-genus-descent}
-In conformal field theory, this theorem states that the configuration space 
-integrals computing correlation functions on Riemann surfaces of any genus remain 
-well-defined and independent of the choice of propagators, provided we include the 
-appropriate quantum corrections (central charges, anomalies) parametrized by
-$H^*(\overline{\mathcal{M}}_g)$.
+The theorem states that configuration space integrals computing correlation functions on $\Sigma_g$ remain well-defined at all genera, provided the quantum corrections (central charges, anomalies) parametrized by $H^*(\overline{\mathcal{M}}_g)$ are included.
 \end{remark}
 
 \section{Verdier duality and Ayala--Francis compatibility}
@@ -7274,7 +7319,7 @@ For the Heisenberg algebra, Verdier duality exchanged the Lie-type bar coalgebra
 \subsection{Three levels of duality}
 \label{subsec:three-dualities}
 
-To establish compatibility between Verdier duality (geometric) and Ayala--Francis duality (topological), we must first clarify what each duality means and how they relate.
+We establish compatibility between Verdier duality (geometric) and Ayala--Francis duality (topological).
 
 \begin{definition}[Three duality structures]\label{def:three-dualities}
 We work with three dualities simultaneously.
@@ -7677,6 +7722,9 @@ geometrically is the same as the ``Koszul dual'' in the abstract algebraic sense
 The theorem provides the bridge: geometric duality via $D$-modules corresponds to 
 topological duality via factorization homology, both giving the same Koszul dual algebra.
 \end{remark}
+
+With Verdier duality and Ayala--Francis compatibility established, the bar-cobar adjunction at higher genus can be inverted on the Koszul locus.
+
 %================================================================
 % HIGHER GENUS QUASI-ISOMORPHISM
 %================================================================
@@ -7743,10 +7791,16 @@ quasi-isomorphism.
 
 \begin{theorem}[Higher genus inversion; \ClaimStatusProvedHere]\label{thm:higher-genus-inversion}
 \index{bar-cobar inversion!higher genus}
-At genus~$0$, bar-cobar inversion was an algebraic identity: $\Omega(\bar{B}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}).  At genus~$g \geq 1$, the inversion acquires quantum corrections controlled by $\kappa(\cA) \cdot \lambda_g$, as seen for the Heisenberg genus tower (\S\ref{sec:frame-genus-tower}).  The following theorem --- Theorem~B of this monograph --- gives the general statement.
+\textup{[}Regime: curved-central on the Koszul locus;
+filtered-complete off it
+\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
 
-Let $\cA$ be a modular Koszul chiral algebra
-\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
+\smallskip\noindent
+The genus-$0$ inversion of~\S\ref{sec:frame-inversion} extends to all genera with quantum corrections controlled by $\kappa(\cA) \cdot \lambda_g$.
+
+Let $\cA$ be a modular pre-Koszul chiral algebra
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral}},
+axioms \textup{MK1--MK3)}.
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Koszul locus.}
 For each genus $g \geq 0$, the bar-cobar counit is a
@@ -7765,9 +7819,11 @@ on the underlying complex, and the failure of inversion is
 measured by the universal Maurer--Cartan class $\Theta_{\cA}$
 \textup{(}equation~\eqref{eq:universal-MC}\textup{)}.
 In this regime, $\Omega_X \bar{B}_X(\cA)$ represents $\cA$
-faithfully in the completed coderived category in the sense of
-Positselski~\cite{Positselski}, not in the ordinary derived
-category.
+faithfully in the provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+\textup{(}Definition~\textup{\ref{def:provisional-coderived},}
+Proposition~\textup{\ref{prop:coderived-adequacy}(a))},
+not in the ordinary derived category.
 \end{enumerate}
 \end{theorem}
 
@@ -7797,6 +7853,73 @@ quasi-isomorphisms by (1)--(2), $f$ is a quasi-isomorphism.
 \end{enumerate}
 Therefore $\psi_g$ is a quasi-isomorphism on $\overline{\mathcal{M}}_g$.
 \end{proof}
+
+\begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-b}
+The quasi-isomorphism $\psi_g$ of Theorem~B is a cohomological
+shadow of a richer structure at the derived level.  The
+homotopy-native statement is that the counit
+\[
+\psi_g \colon
+\Omega_g(\bar{B}_g(\cA)) \xrightarrow{\;\sim\;}
+\cA_g
+\]
+is a quasi-isomorphism of $\Ainf$-chiral algebras, not merely
+of underlying cochain complexes.  The spectral sequence
+$E_1^{p,q}(g) \Rightarrow H^{p+q}(\Omega_g \bar{B}_g(\cA))$
+is the shadow of an exhaustive, complete filtration on the
+$\Ainf$-algebra $\Omega_g(\bar{B}_g(\cA))$, whose associated
+graded is controlled by the genus-$0$ Koszul data.
+
+At the $\infty$-categorical level, the induction over genus
+(the proof above proceeds by induction on~$g$, gluing
+lower-genus quasi-isomorphisms along boundary strata of
+$\overline{\mathcal{M}}_g$) is the shadow of a
+\emph{factorization-homology descent} statement: the
+factorization algebra $\cA$ on a genus-$g$ surface is
+reconstructed from its restrictions to lower-genus pieces by
+the Mayer--Vietoris/excision property of factorization homology
+in the sense of Ayala--Francis~\cite{AF15}.  The spectral
+sequence collapse at~$E_2$ on the Koszul locus corresponds to a
+formality statement: the filtered $\Ainf$-algebra
+$\Omega_g(\bar{B}_g(\cA))$ is formal (quasi-isomorphic to its
+cohomology with the transferred $\Ainf$-structure).
+
+Off the Koszul locus, the homotopy-native statement replaces
+the derived category by the $\infty$-categorical coderived
+category: $\Omega_g(\bar{B}_g(\cA))$ represents $\cA_g$ as an
+object of $\cat{D}^{\mathrm{co}}_\infty(\cat{Fact}_g(X))$, the
+$\infty$-categorical enhancement of the provisional coderived
+category of Definition~\ref{def:provisional-coderived}.
+\end{remark}
+
+\begin{remark}[Elementary model presentation;
+Convention~\ref{conv:proof-architecture}]
+\label{rem:theorem-b-model}
+\index{bar-cobar inversion!model presentation}
+\emph{Step~A} (H-level):
+$\boldsymbol{\Omega}_X \mathbf{B}_X(\cA) \simeq \cA$
+on the Koszul locus in
+$\operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))$.
+Off the Koszul locus, the equivalence holds in the coderived
+category $\cat{D}^{\mathrm{co}}_\infty(\cat{Fact}_g(X))$.
+
+\emph{Step~B} (M-level):
+The proof works by induction on genus.  At genus~$g$, the
+counit $\psi_g$ is a morphism of explicit dg complexes:
+$\psi_g \colon \Omega_g(\bar{B}_g(\cA)) \to \cA_g$.
+The open stratum quasi-isomorphism
+(Lemma~\ref{lem:higher-genus-open-stratum-qi}) uses genus-$0$
+Koszulity; the boundary quasi-isomorphism
+(Lemma~\ref{lem:higher-genus-boundary-qi}) uses the induction
+hypothesis on lower-genus vertices; the extension lemma
+(Lemma~\ref{lem:extension-across-boundary-qi}) assembles the two.
+
+\emph{Step~C} (S-level):
+The spectral sequence $E_1^{p,q}(g) \Rightarrow
+H^{p+q}(\Omega_g \bar{B}_g(\cA))$ collapses at $E_2$,
+yielding the higher-genus bar cohomology formulas
+(Riordan, Motzkin, etc.)\ as generating-function consequences.
+\end{remark}
 
 %================================================================
 % KOSZUL DUALITY ACROSS GENERA
@@ -7932,12 +8055,12 @@ $\barB_X^{(g)}$ for the genus-$g$ bar construction:
   \arrow[d, "(\cdot)^!"']
 & \barB_X^{(g)}(\cA)
   \arrow[d, "\mathbb{D}_{\mathrm{Ran}}"]
-  \arrow[r, phantom, "\scriptstyle d^2 = \kappa \cdot \omega_g"]
+  \arrow[r, phantom, "\scriptstyle \dfib^{\,2} = \kappa \cdot \omega_g"]
 & {}
 \\
 \cA^! \arrow[r, "\barB_X^{(g)}"']
 & \barB_X^{(g)}(\cA^!)
-  \arrow[r, phantom, "\scriptstyle d^2 = \kappa' \cdot \omega_g"]
+  \arrow[r, phantom, "\scriptstyle \dfib^{\,2} = \kappa' \cdot \omega_g"]
 & {}
 \end{tikzcd}
 \]
@@ -7955,13 +8078,118 @@ linked by the Verdier involution on the right column.
 \label{subsec:modular-koszul-definition}
 \index{modular Koszul chiral algebra|textbf}
 
-The preceding theorems converge on a single structural concept that we now
-formalize.  A \emph{modular Koszul chiral algebra} is the natural
-object for which all three main theorems hold simultaneously.
+A \emph{modular Koszul chiral algebra} is the natural
+object for which all four main theorems hold simultaneously.
+We give a homotopy-native version
+(Definition~\ref{def:modular-koszul-homotopy}) and a concrete dg model
+(Definition~\ref{def:modular-koszul-chiral}).
 
-\begin{definition}[Modular Koszul chiral algebra]\label{def:modular-koszul-chiral}
+\begin{definition}[Modular Koszul object --- homotopy form]\label{def:modular-koszul-homotopy}
+\index{modular Koszul chiral algebra!homotopy form}
+Let $X$ be a smooth projective curve over~$\mathbb{C}$.
+A \emph{modular Koszul object} on~$X$ is an augmented factorization algebra
+$\cA \in \operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))$
+equipped with:
+\begin{enumerate}[label=\textup{(D\arabic*$_\infty$)}]
+\item\label{D:bar-htpy}
+A bar object
+$\mathbf{B}_X(\cA) \in \operatorname{CoAlg}_{\mathrm{conil}}(\operatorname{Fact}(X))$
+in the homotopy category of factorization coalgebras.
+
+\item\label{D:dual-htpy}
+A dual object~$\cA^!$.
+
+\item\label{D:deformation-htpy}
+A filtered cyclic deformation object
+$\Defcyc(\cA)$
+(Definition~\ref{def:cyclic-deformation-bar}),
+and (when constructed)
+a genus-completed Maurer--Cartan datum~$\Theta_{\cA}$
+\textup{(}Conjecture~\textup{\ref{conj:universal-MC}} for the
+non-scalar part\textup{)}.
+
+\item\label{D:center-htpy}
+A \emph{center local system}
+$\mathcal{Z}_{\cA}$ on $\overline{\mathcal{M}}_{g,\bullet}$
+\textup{(}or the appropriate modular parameter stack\textup{)},
+whose global sections house the obstruction classes.
+
+\item\label{D:discriminant-htpy}
+A \emph{spectral discriminant}
+$\Delta_{\cA}(x) = \det(1 - x\, T_{\mathrm{rec}})$
+\textup{(}Theorem~\textup{\ref{thm:discriminant-spectral})}.
+
+\item\label{D:periodicity-htpy}
+A \emph{periodicity triple}
+$\Pi(\cA) = (M_{\cA},\, Q_{\cA},\, G_{\cA})$
+\textup{(}Remark~\textup{\ref{rem:periodicity-triple})}.
+\end{enumerate}
+
+\noindent satisfying the antecedent axioms:
+\begin{enumerate}[label=\textup{(MK\arabic*$_\infty$)}]
+\item\label{MK:koszul-htpy}
+\emph{(Koszulity.)}
+The weight filtration on~$\mathbf{B}_X(\cA)$ makes it Koszul on
+the associated graded.
+
+\item\label{MK:verdier-htpy}
+\emph{(Verdier intertwining.)}
+$\mathbb{D}_{\operatorname{Ran}} \mathbf{B}_X(\cA) \simeq
+\mathbf{B}_X(\cA^!)$
+as homotopy factorization coalgebras, functorially over
+$\overline{\mathcal{M}}_{g,n}$.
+
+\item\label{MK:modular-htpy}
+\emph{(Modular deformation.)}
+The genus tower arises from a filtered Maurer--Cartan deformation
+of~$\mathbf{B}_X(\cA)$, whose scalar shadow is
+$\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$
+\textup{(}Theorem~\textup{\ref{thm:genus-universality})}.
+\end{enumerate}
+
+\noindent The following are \emph{consequences} of the axioms above,
+proved by the main theorems:
+\begin{enumerate}[label=\textup{(MK\arabic*$_\infty$)},start=4]
+\item\label{MK:inversion-htpy}
+\emph{(Bar-cobar inversion --- Theorem~\textup{\ref{thm:higher-genus-inversion}}.)}
+$\boldsymbol{\Omega}_X \mathbf{B}_X(\cA) \simeq \cA$
+on the Koszul locus in
+$\operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))$.
+
+\item\label{MK:complementarity-htpy}
+\emph{(Lagrangian complementarity --- Theorem~\textup{\ref{thm:quantum-complementarity-main}}.)}
+The complementarity complex
+$\mathbf{C}_g(\cA) := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$
+decomposes as
+$\mathbf{C}_g \simeq \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$,
+where $\mathbf{Q}_g(\cA) := \operatorname{fib}(\sigma - \mathrm{id}
+\colon \mathbf{C}_g \to \mathbf{C}_g)$ and
+$\mathbf{Q}_g(\cA^!) := \operatorname{fib}(\sigma + \mathrm{id})$
+are homotopy eigenspaces of the Verdier involution~$\sigma$, each
+Lagrangian for the shifted symplectic pairing
+\textup{(}Theorem~\textup{\ref{thm:shifted-symplectic-complementarity},}
+Proposition~\textup{\ref{prop:ptvv-lagrangian})}.
+\end{enumerate}
+The cohomological shadows
+$Q_g(\cA) := H^*(\mathbf{Q}_g(\cA))$ and
+$Q_g(\cA^!) := H^*(\mathbf{Q}_g(\cA^!))$ recover the
+deformation and obstruction spaces of
+Theorem~\ref{thm:quantum-complementarity-main}.
+\end{definition}
+
+\begin{remark}[Model independence]\label{rem:model-independence}
+Any two admissible dg presentations of the same factorization
+object are connected by a contractible space of quasi-isomorphisms.
+The homotopy axioms \ref{MK:koszul-htpy}--\ref{MK:modular-htpy}
+are therefore invariants of the factorization algebra, not of a
+chosen model.  Definition~\ref{def:modular-koszul-chiral} below provides
+the explicit dg model used throughout this monograph.
+\end{remark}
+
+\begin{definition}[Modular pre-Koszul chiral algebra --- dg model of
+  Definition~\ref{def:modular-koszul-homotopy}]\label{def:modular-koszul-chiral}
 Let $X$ be a smooth projective curve over $\mathbb{C}$.
-A \emph{modular Koszul chiral algebra} on $X$ is an augmented chiral
+A \emph{modular pre-Koszul chiral algebra} on $X$ is an augmented chiral
 algebra $(\cA, \varepsilon\colon \cA \to \mathcal{O}_X)$ equipped with
 the following data and satisfying the following axioms.
 
@@ -7974,22 +8202,57 @@ $\bar{B}_X(\cA) \in \operatorname{CoAlg}_{\mathrm{conil}}(\operatorname{Fact}(X)
 Theorem~\ref{thm:bar-nilpotency-complete}).
 
 \item\label{D:dual}
-A Koszul dual chiral algebra $\cA^!$ on~$X$ with
-$\bar{B}_X(\cA) \simeq \cA^!$ as factorization coalgebras
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+A candidate Koszul dual chiral algebra $\cA^!$ on~$X$ with
+universal twisting morphism
+$\tau\colon \bar{B}_X(\cA) \to \cA^!$.  The identification
+$\bar{B}_X(\cA) \simeq \cA^!$ as factorization coalgebras is a
+\emph{consequence} of Theorem~\ref{thm:bar-cobar-isomorphism-main},
+not an input.
 
 \item\label{D:genus-tower}
 A genus tower $\{\bar{B}^{(g)}_X(\cA)\}_{g \geq 0}$ extending the
 genus-$0$ bar construction to all genera via propagators on
 $\overline{C}_n(\Sigma_g)$
 (Theorem~\ref{thm:prism-higher-genus}).
+Each genus-$g$ piece carries a degree-$1$ \emph{fiberwise
+differential}~$\dfib$ with
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g \cdot \operatorname{id}$
+(Convention~\ref{conv:higher-genus-differentials}).
+The completed total bar object
+$\bar{B}^{\mathrm{full}}_X(\cA) :=
+\prod_{g \geq 0} \hbar^g \bar{B}^{(g)}_X(\cA)$
+carries a strict total differential $\Dg{} \colon
+\bar{B}^{\mathrm{full}}_X(\cA) \to \bar{B}^{\mathrm{full}}_X(\cA)$
+with $\Dg{}^2 = 0$, whose reduction modulo $\hbar^{g+1}$ restricts
+to $\dfib$ at genus~$g$.
+
+\item\label{D:center-dg}
+A center local system $\mathcal{Z}_{\cA}$ on
+$\overline{\mathcal{M}}_{g,\bullet}$ whose fiber at a smooth
+curve~$\Sigma$ is the center $Z(\cA|_\Sigma)$.
+
+\item\label{D:discriminant-dg}
+A spectral discriminant
+$\Delta_{\cA}(x) = \det(1 - x\, T_{\mathrm{rec}})$
+(Theorem~\ref{thm:discriminant-spectral}).
+
+\item\label{D:periodicity-dg}
+A periodicity triple
+$\Pi(\cA) = (M_{\cA},\, Q_{\cA},\, G_{\cA})$
+(Remark~\ref{rem:periodicity-triple}).
 \end{enumerate}
 
 \smallskip\noindent\textbf{Axioms.}
+The axioms below are \emph{antecedent hypotheses}:
+they can be verified without invoking bar-cobar inversion
+or complementarity.  Theorems~\ref{thm:higher-genus-inversion}
+and~\ref{thm:quantum-complementarity-main} then \emph{prove}
+inversion and complementarity as consequences.
 \begin{enumerate}[label=\textup{(MK\arabic*)}]
 \item\label{MK:koszul}
 \emph{(Genus-$0$ Koszulity.)}
-The chiral algebra $\cA$ is Koszul: the bar spectral
+The pair $(\cA, \cA^!)$ is a chiral Koszul pair
+(Definition~\ref{def:chiral-koszul-pair}): the bar spectral
 sequence collapses at $E_2$, and $\bar{B}_X(\cA)$ is concentrated
 along the diagonal in the (bar degree, weight) bigrading.
 
@@ -8002,53 +8265,133 @@ $\operatorname{Ran}(X)$.
 This equivalence is functorial in families over
 $\overline{\mathcal{M}}_{g,n}$.
 
-\item\label{MK:inversion}
-\emph{(Bar-cobar inversion.)}
-The counit $\Omega_X \bar{B}_X(\cA) \xrightarrow{\sim} \cA$ is a
-quasi-isomorphism, and the unit
-$\cA^! \xrightarrow{\sim} \bar{B}_X(\Omega_X(\cA^!))$ is likewise.
-
 \item\label{MK:modular}
-\emph{(Modular Koszulity.)}
-At each genus $g \geq 1$, the genus-$g$ bar complex satisfies
-diagonal Ext vanishing:
+\emph{(Modular Koszulity / PBW degeneration.)}
+At each genus $g \geq 1$, the PBW spectral sequence of
+$(\bar{B}^{(g)}_X(\cA), \dfib)$ degenerates at $E_2$.
+Equivalently, diagonal Ext vanishing holds:
 $\operatorname{Ext}^{i,j}_{\cA^{(g)}}(\Bbbk, \Bbbk) = 0$ for $i \neq j$.
+\end{enumerate}
+
+\smallskip\noindent\textbf{Consequences (not axioms).}
+Given the axioms above, the following are \emph{proved}:
+\begin{enumerate}[label=\textup{(MK\arabic*)},start=4]
+\item\label{MK:inversion}
+\emph{(Bar-cobar inversion --- Theorem~\textup{\ref{thm:higher-genus-inversion}}.)}
+The counit $\Omega_X \bar{B}_X(\cA) \xrightarrow{\sim} \cA$ is a
+quasi-isomorphism on the Koszul locus, and an isomorphism in the
+provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+\textup{(}Appendix~\textup{\ref{sec:coderived-models})} off it.
 
 \item\label{MK:complementarity}
-\emph{(Complementarity.)}
-There is a Verdier involution $\sigma$ on
-$H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$ with
-$Q_g(\cA) = \ker(\sigma - \mathrm{id})$ and
-$Q_g(\cA^!) = \ker(\sigma + \mathrm{id})$, giving a direct-sum
-decomposition
-$Q_g(\cA) \oplus Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+\emph{(Complementarity --- Theorem~\textup{\ref{thm:quantum-complementarity-main}}.)}
+$Q_g(\cA) \oplus Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$,
+with $Q_g(\cA)$ and $Q_g(\cA^!)$ Lagrangian for the Verdier pairing.
 \end{enumerate}
+
+An algebra satisfying both the axioms and their consequences is called a
+\emph{modular Koszul chiral algebra}.
 \end{definition}
 
-\begin{remark}[Redundancy and dependence]\label{rem:mk-axiom-relations}
-The axioms are not independent.  Axioms \ref{MK:koszul}
-and~\ref{MK:inversion} together imply~\ref{MK:verdier}
-(Theorem~\ref{thm:bar-cobar-isomorphism-main} and
-Theorem~\ref{thm:verdier-bar-cobar}), and
-\ref{MK:complementarity} is a consequence of \ref{MK:verdier}
-and~\ref{MK:modular}
-(Theorem~\ref{thm:quantum-complementarity-main}).
-The definition is stated with all five axioms for clarity:
-the axioms at genus~$0$
-(\ref{MK:koszul}--\ref{MK:inversion}) carry the algebraic content,
-while the axioms at higher genus
-(\ref{MK:modular}--\ref{MK:complementarity}) carry the geometric content.
+\begin{remark}[Logical structure]\label{rem:mk-axiom-relations}
+The definition separates \emph{hypotheses} (MK1--MK3) from
+\emph{consequences} (MK4--MK5).  The hypotheses are
+checkable conditions on the chiral algebra and its genus tower;
+the consequences are theorems:
+\begin{itemize}
+\item MK4 (inversion) is proved by
+  Theorem~\ref{thm:higher-genus-inversion} from MK1--MK3.
+\item MK5 (complementarity) is proved by
+  Theorem~\ref{thm:quantum-complementarity-main} from MK1--MK3.
+\end{itemize}
+There is no circularity: the axioms are genuinely antecedent
+to the theorems.  The dg axioms MK1--MK3 present the homotopy axioms
+\ref{MK:koszul-htpy}, \ref{MK:verdier-htpy},
+and~\ref{MK:modular-htpy} of
+Definition~\ref{def:modular-koszul-homotopy}.
 \end{remark}
 
-\begin{proposition}[Standard examples are modular Koszul; \ClaimStatusProvedHere]
+\begin{remark}[Extended axioms; \ClaimStatusConjectured]
+\label{rem:extended-axiom-schema}
+\index{modular Koszul chiral algebra!extended axioms}
+The full modular homotopy package
+(Definition~\ref{def:full-modular-package}) would extend the axiom
+list with three further consequences, all following from the existence
+of the universal Maurer--Cartan class
+(Conjectures~\ref{conj:universal-MC} and~\ref{conj:universal-theta}):
+\begin{enumerate}[label=\textup{(MK\arabic*)},start=6]
+\item\label{MK:mc-control}
+\emph{(Universal MC control.)}
+$\Theta_{\cA} \in
+\operatorname{MC}(\Defcyc(\cA)
+\;\widehat{\otimes}\; \Gmod)$
+satisfies $d\Theta_{\cA} + \tfrac{1}{2}[\Theta_{\cA},\Theta_{\cA}]=0$,
+the Maurer--Cartan equation in the completed tensor product with
+the modular graph coefficient algebra
+(Definition~\ref{def:modular-graph-algebra}).
+\item\label{MK:clutching-verdier}
+\emph{(Verdier/clutching compatibility.)}
+$\xi^*(\Theta_{\cA}) = \Theta_{\cA} \star \Theta_{\cA}$ under
+clutching maps~$\xi$, and
+$\mathbb{D}(\Theta_{\cA}) = \Theta_{\cA^!}$ under Verdier duality.
+\item\label{MK:e1-face}
+\emph{($\Eone$-ordered face.)}
+If $\cA$ is $\Eone$-chiral, then the ordered factorization theory
+carries spectral $R$-matrix data and an $\Ainf$-Yang--Baxter
+twisting morphism
+(cf.\ Proposition~\textup{\ref{prop:dg-shifted-comparison}}).
+\end{enumerate}
+Axioms MK6--MK7 are the three desiderata of
+Conjecture~\ref{conj:universal-MC}; MK8 applies only to $\Eone$-chiral
+objects.  All three are programmatic: their resolution is part of
+the Stratum~II programme (Remark~\ref{rem:two-strata}).
+\end{remark}
+
+\begin{proposition}[Standard examples are modular pre-Koszul; \ClaimStatusProvedHere]
 \label{prop:standard-examples-modular-koszul}
 \index{modular Koszul chiral algebra!examples}
-The following chiral algebras are modular Koszul:
+\textup{[Regime: quadratic
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+The following chiral algebras satisfy the antecedent axioms
+\textup{MK1--MK3} of Definition~\textup{\ref{def:modular-koszul-chiral}}
+and are therefore modular Koszul
+\textup{(}by Theorems~\textup{\ref{thm:higher-genus-inversion}}
+and~\textup{\ref{thm:quantum-complementarity-main}):}
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item the Heisenberg algebra $\mathcal{H}_\kappa$ at any nonzero level
   $\kappa \neq 0$\textup{;}
 \item the free fermion algebra $\mathcal{F}$ and the $\beta\gamma$-$bc$
-  ghost systems\textup{;}
+  ghost systems.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For (a)--(b), the bar complex is explicit
+(Chapters~\ref{chap:free-fields}--\ref{chap:beta-gamma}), and the
+three antecedent axioms are verified directly:
+MK1 (genus-0 Koszulity) by
+Theorems~\ref{thm:heisenberg-bar-complete} and~\ref{thm:km-chiral-koszul};
+MK2 (Verdier) by Theorem~\ref{thm:verdier-bar-cobar};
+MK3 (modular Koszulity) by explicit genus-$g$ computation---for~(a)
+only double-pole contributions appear (Theorem~\ref{thm:heisenberg-higher-genus}),
+for~(b) the free-field genus expansion is explicit
+(\S\ref{sec:free-field-genera}).
+Inversion and complementarity then follow as consequences.
+\end{proof}
+
+\begin{proposition}[Conditional modular pre-Koszulity for interacting examples]
+\label{prop:conditional-modular-koszul}
+\index{modular Koszul chiral algebra!conditional}
+\textup{[Regime: curved-central, conditional on filtered-complete
+PBW degeneration
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+Assume that the genus-$g$ PBW spectral sequence degenerates at $E_2$
+for the given family.  Then the following satisfy the antecedent axioms
+\textup{MK1--MK3} and are therefore modular Koszul:
+\begin{enumerate}[label=\textup{(\alph*)},start=3]
 \item affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ at generic
   level \textup{(}$k \notin \mathbb{Q}_{< 0}$ minus finitely many
   points\textup{);}
@@ -8059,101 +8402,190 @@ The following chiral algebras are modular Koszul:
 \end{proposition}
 
 \begin{proof}
-In each case, we verify the five axioms:
+Axioms MK1 and MK2 hold unconditionally:
+MK1 by
+Theorems~\ref{thm:kw-bar-spectral} and~\ref{thm:bar-cobar-spectral-sequence};
+MK2 by Theorem~\ref{thm:verdier-bar-cobar}.
 
-\emph{Axiom \ref{MK:koszul}}: The bar spectral sequence collapses at
-$E_2$ for all five families.  For (a)--(b), the bar complex is explicit
-(Chapters~\ref{chap:free-fields}--\ref{chap:beta-gamma}); for
-(c), this is Theorem~\ref{thm:kw-bar-spectral}; for (d)--(e),
-this is Theorem~\ref{thm:bar-cobar-spectral-sequence}.
-
-\emph{Axiom \ref{MK:verdier}}: The Verdier compatibility is
-Theorem~\ref{thm:verdier-bar-cobar}, which is proved in full
-generality for any Koszul pair.
-
-\emph{Axiom \ref{MK:inversion}}: Bar-cobar inversion at all genera is
-Theorem~\ref{thm:higher-genus-inversion}, whose hypotheses are
-satisfied for all five families at generic parameters.
-
-\emph{Axiom \ref{MK:modular}}: Modular Koszulity (diagonal Ext vanishing
-at genus $g \geq 1$) is verified:
-for~(a), the bar complex at genus~$g$ has only double-pole contributions,
-which are scalar (Theorem~\ref{thm:heisenberg-higher-genus});
-for~(b), the free-field genus expansion is explicit
-(\S\ref{sec:free-field-genera});
-for~(c)--(e), we give the following argument at generic level.
-The PBW filtration on the genus-$g$ bar complex is defined by conformal
+For MK3: the PBW filtration on the genus-$g$ bar complex is defined by conformal
 weight, identically to genus~$0$.
-The genus-$g$ propagator deformation affects the bar differential
-only through the curvature term $\kappa \cdot \omega_g$
-(Remark~\ref{rem:differential-notation}), which lies in the center
+The fiberwise curvature $\dfib^{\,2} = \kappa \cdot \omega_g$
+(Convention~\ref{conv:higher-genus-differentials}) lies in the center
 and hence does not alter the PBW-filtered structure of the collision
 differential.
-At the associated graded level, the $E_1$ page of the PBW spectral
-sequence at genus~$g$ is therefore isomorphic (as a bigraded complex)
-to the $E_1$ page at genus~$0$.
+At the associated graded level, the $E_1$ page at genus~$g$ is isomorphic
+(as a bigraded complex) to the $E_1$ page at genus~$0$.
 Since the $E_2$ collapse at genus~$0$ is established by
 Theorem~\ref{thm:km-chiral-koszul}, the same collapse holds at
-genus~$g$ at the associated graded level, and hence at generic
-parameters where the spectral sequence degenerates.
-(At special parameters where the spectral sequence may fail to
-degenerate, the modular Koszul property remains open;
-cf.\ the discussion in \S\ref{sec:koszul-across-genera}.)
-
-\emph{Axiom \ref{MK:complementarity}}: This is
-Theorem~\ref{thm:quantum-complementarity-main}, proved for all
-Koszul pairs.
+genus~$g$ at the associated graded level.  The hypothesis that
+the spectral sequence degenerates at generic parameters then
+yields MK3.
+Inversion and complementarity then follow as consequences.
 \end{proof}
 
-\begin{definition}[Modular characteristic package; \ClaimStatusProvedHere]
+\begin{conjecture}[PBW spectral sequence degeneration at higher genus; \ClaimStatusConjectured]
+\label{conj:pbw-higher-genus-degeneration}
+\index{PBW spectral sequence!higher genus degeneration}
+For generic affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$,
+generic Virasoro $\mathrm{Vir}_c$, and generic $\mathcal{W}_N$-algebras,
+the genus-$g$ PBW spectral sequence degenerates at~$E_2$ for all
+$g \geq 1$.
+\end{conjecture}
+
+\begin{remark}[Status]\label{rem:mk4-status}
+Conjecture~\ref{conj:pbw-higher-genus-degeneration} is the
+single remaining obstruction to unconditional modular Koszulity for the
+standard interacting families.  It holds at genus~$0$ by
+Theorem~\ref{thm:km-chiral-koszul} and at the associated graded
+level at all genera by the argument above.  The difficulty is that
+degeneration of a spectral sequence is not automatic from
+degeneration of its associated graded.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I (existence of homotopy object).
+The conjecture asserts the existence of a degenerate PBW spectral sequence at all genera, which would provide the missing input for unconditional modular Koszulity.
+\end{remark}
+
+\begin{definition}[Scalar modular characteristic package; \ClaimStatusProvedHere]
 \label{def:modular-characteristic-package}
-\index{modular characteristic package|textbf}
+\label{def:scalar-modular-package}
+\index{modular characteristic package!scalar|textbf}
 Let $\cA$ be a modular Koszul chiral algebra
 (Definition~\ref{def:modular-koszul-chiral}).  The
-\emph{modular characteristic package} of~$\cA$ consists of
-the following data:
+\emph{scalar modular characteristic package} of~$\cA$ consists of:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The \emph{obstruction invariant}
   $\kappa(\cA) \in \mathbb{C}$, the scalar controlling genus-$1$
-  curvature $d^2 = \kappa(\cA) \cdot \omega_1 \cdot \operatorname{id}$
+  fiberwise curvature $\dfib^{\,2} = \kappa(\cA) \cdot \omega_1 \cdot \operatorname{id}$
   (Theorem~\ref{thm:genus-universality}).
 \item The \emph{genus tower} $\{F_g(\cA)\}_{g \geq 1}$, the sequence
   of free energies determined by the bar complex at genus~$g$
   (Theorem~\ref{thm:universal-generating-function}).
-\item The \emph{spectral discriminant}
-  $\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x) \in \mathbb{Z}[x]$,
-  encoding the generating function of bar cohomology dimensions
-  (Theorem~\ref{thm:ds-bar-gf-discriminant}).
-\item The \emph{universal Maurer--Cartan class}
-  $\Theta_{\cA}$, whose scalar shadow is $\kappa(\cA)$
-  and whose full form is a Maurer--Cartan element of the
-  cyclic deformation complex
-  (Conjecture~\ref{conj:universal-MC}).
 \end{enumerate}
-The first three components are established; the fourth is
-conjectural in its non-scalar form.  The Heisenberg specialization
+Both components are established.  The Heisenberg specialization
 appears in Chapter~\ref{ch:heisenberg-frame},
 Definition~\ref{def:frame-modular-package}.
+
+\smallskip
+\emph{The spectral discriminant}
+$\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x)$,
+encoding bar cohomology dimensions
+(Theorem~\ref{thm:ds-bar-gf-discriminant}), is a separate
+non-scalar invariant: it depends on the full quadratic OPE data,
+not on $\kappa(\cA)$ alone.
 \end{definition}
 
-\begin{remark}[The modular characteristic package]\label{rem:modular-characteristic-package}
-The modular characteristic package
-(Definition~\ref{def:modular-characteristic-package}) specializes to
-concrete invariants for each family; see the Master Table
+\begin{definition}[Full modular characteristic package; \ClaimStatusConjectured]
+\label{def:full-modular-package}
+\index{modular characteristic package!full|textbf}
+\index{universal Maurer--Cartan class|textbf}
+\index{spectral discriminant!in full package}
+\index{periodicity profile!in full package}
+For a modular Koszul chiral algebra~$\cA$
+(Definition~\ref{def:modular-koszul-chiral}), the
+\emph{full modular characteristic package} is the quintuple
+\begin{equation}\label{eq:full-package-quintuple}
+\mathcal{C}_{\cA}
+\;:=\;
+\bigl(\,\Theta_{\cA},\;\kappa(\cA),\;\Delta_{\cA},\;
+       \Pi_{\cA},\;\mathcal{H}_{\cA}\,\bigr),
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Theta_{\cA} \in
+  \operatorname{MC}\!\bigl(
+    \Defcyc(\cA) \;\widehat{\otimes}\;
+    R\Gamma(\overline{\mathcal{M}}_{g,\bullet},\, \mathbb{Q})
+  \bigr)$
+  is the \emph{universal Maurer--Cartan class}
+  (Conjecture~\ref{conj:universal-theta});
+\item $\kappa(\cA) \in \mathbb{C}$ is the
+  \emph{scalar modular characteristic}
+  (Definition~\ref{def:scalar-modular-package}),
+  the first characteristic number of~$\Theta_{\cA}$
+  under the trace map
+  $\Defcyc(\cA) \to \mathbb{C}$;
+\item $\Delta_{\cA}(x) = \prod_{i}(1 - \lambda_i x)$ is the
+  \emph{spectral discriminant}
+  (Theorem~\ref{thm:ds-bar-gf-discriminant});
+\item $\Pi_{\cA} = (M_{\cA}, Q_{\cA}, G_{\cA})$ is the
+  \emph{periodicity profile}
+  (Remark~\ref{rem:periodicity-triple});
+\item $\mathcal{H}_{\cA} := \{C_g(\cA)\}_{g \geq 0}$ is the
+  \emph{ambient modular deformation family}, the genus-graded
+  system of curved deformation complexes.
+\end{enumerate}
+
+\smallskip\noindent
+\emph{Essential characteristics.}
+The package~$\mathcal{C}_{\cA}$ has four structural properties:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Functorial}: $\mathcal{C}$ is natural in morphisms
+  of modular Koszul objects;
+\item \emph{Dualizable}: the duality $\cA \leftrightarrow \cA^!$
+  acts on each component
+  ($\kappa + \kappa' = K$, $\Delta_{\cA^!}$ determined by
+  $\Delta_{\cA}$, etc.);
+\item \emph{Modular}: compatible with clutching and
+  boundary degeneration on~$\overline{\mathcal{M}}_{g,n}$;
+\item \emph{Non-scalar}: $\kappa(\cA)$ is only the first shadow;
+  the full package contains strictly more information
+  (cf.\ the spectral data of level~(2) in
+  Remark~\ref{rem:characteristic-hierarchy}).
+\end{enumerate}
+
+\smallskip\noindent
+Constructing $\Defcyc(\cA)$ as a cyclic $L_\infty$-algebra and
+solving the MC equation is the principal open problem of the
+modular programme (Conjectures~\ref{conj:universal-MC}
+and~\ref{conj:universal-theta}).
+\end{definition}
+
+\begin{remark}[The modular characteristic hierarchy]\label{rem:modular-characteristic-package}
+\label{rem:characteristic-hierarchy}
+\index{modular characteristic!hierarchy|textbf}
+The five components of the full package~$\mathcal{C}_{\cA}$
+\eqref{eq:full-package-quintuple} arrange in a strict hierarchy
+of three levels:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Scalar data} \textup{(proved)}:
+  $\kappa(\cA)$, $\{\mathrm{obs}_g\}_{g \geq 1}$,
+  $\{F_g\}_{g \geq 1}$
+  \textup{(}Definition~\textup{\ref{def:scalar-modular-package}},
+  Theorem~\textup{\ref{thm:modular-characteristic})}.
+  Determined by a single number~$\kappa(\cA)$.
+\item \emph{Spectral/polynomial data} \textup{(proved, non-scalar)}:
+  $\Delta_{\cA}(x)$, $\Pi_{\cA}$, bar cohomology generating
+  functions
+  \textup{(}Theorem~\textup{\ref{thm:spectral-characteristic})}.
+  Depend on the full quadratic OPE data, not
+  just~$\kappa(\cA)$.
+\item \emph{Full MC data} \textup{(conjectural)}:
+  $\Theta_{\cA}$, $\Defcyc(\cA)$, and the ambient family
+  $\mathcal{H}_{\cA}$
+  \textup{(}Definition~\textup{\ref{def:full-modular-package}},
+  Conjecture~\textup{\ref{conj:universal-theta})}.
+\end{enumerate}
+The hierarchy resolves the status distinction without weakening
+the modular vision.  The scalar package specializes to concrete
+invariants for each family; see the Master Table
 (Table~\ref{tab:master-invariants}).
 \end{remark}
 
-\begin{theorem}[Modular characteristic theorem; \ClaimStatusProvedHere]
+\begin{theorem}[Modular characteristic; \ClaimStatusProvedHere]
 \label{thm:modular-characteristic}
 \index{modular characteristic theorem|textbf}
 \index{kappa@$\kappa$!as first characteristic number|textbf}
+\textup{[}Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+
+\smallskip\noindent
 The Heisenberg algebra was the atom from which all four main theorems were first visible (\S\ref{sec:frame-modular-package}): a single number $\kappa(\mathcal{H}_k) = k$ controlled the entire genus tower.  This theorem --- Theorem~D --- establishes that universality for all modular Koszul chiral algebras.
 
 Let $\cA$ be a modular Koszul chiral algebra
-(Definition~\ref{def:modular-koszul-chiral}).  The modular
+(Definition~\ref{def:modular-koszul-chiral}).  The scalar modular
 characteristic package
-(Definition~\ref{def:modular-characteristic-package}) is
-determined, as a scalar system, by a single invariant
+(Definition~\ref{def:scalar-modular-package}) is
+determined by a single invariant
 $\kappa(\cA) \in \mathbb{C}$---the genus-$1$ curvature
 coefficient---through the following properties:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -8170,7 +8602,7 @@ coefficient---through the following properties:
   \end{equation}
   recovering the $\hat{A}$-genus as topological generating function.
 \item \emph{Duality.}
-  Under Koszul duality, $\kappa$ is anti-symmetric:
+  Under Koszul duality, $\kappa$ satisfies a duality constraint:
   $\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody,
   and more generally $\kappa + \kappa' = \varrho(\mathfrak{g}) \cdot K$
   for $\mathcal{W}$-algebras under Drinfeld--Sokolov reduction.
@@ -8181,18 +8613,10 @@ coefficient---through the following properties:
   $\kappa_{\mathrm{tot}} = 0$ for a tensor product
   $\cA \otimes \cA^!_{\mathrm{ghost}}$ is the algebraic
   form of anomaly cancellation.
-\item \emph{Spectral invariance.}
-  The spectral discriminant $\Delta_{\cA}(x)$ is invariant
-  under Drinfeld--Sokolov reduction and depends only on the
-  quadratic OPE data of the Koszul pair.
 \end{enumerate}
 Together, $\kappa$ is a group homomorphism from modular Koszul
 algebras (under tensor product) to $(\mathbb{C}, +)$,
-intertwined with Koszul duality by sign reversal.  It is
-the first characteristic number of the conjectural universal
-Maurer--Cartan class $\Theta_{\cA}$
-(Conjecture~\ref{conj:universal-MC}): the genus-$1$ shadow of a
-structure that organizes the entire genus tower.
+intertwined with Koszul duality by sign reversal.
 \end{theorem}
 
 \begin{proof}
@@ -8201,27 +8625,162 @@ Part~(ii) is Theorem~\ref{thm:universal-generating-function}.
 Part~(iii) is the duality clause of
 Theorem~\ref{thm:genus-universality}(ii).
 Part~(iv) is Theorem~\ref{thm:anomaly-koszul}.
-Part~(v) is Theorem~\ref{thm:ds-bar-gf-discriminant}.
 The group homomorphism property follows from~(iv): additivity
 under tensor product and $\kappa(\mathbb{C}) = 0$ (the trivial
 algebra has no curvature) give a homomorphism to $(\mathbb{C}, +)$.
 \end{proof}
 
+\begin{remark}[Elementary model presentation;
+Convention~\ref{conv:proof-architecture}]
+\label{rem:theorem-d-model}
+\index{modular characteristic theorem!model presentation}
+\emph{Step~A} (H-level):
+There is a trace map from the cyclic deformation object
+$\Defcyc(\cA)$ to the tautological ring
+$R^*(\overline{\mathcal{M}}_g)$; the scalar component is
+controlled by $\kappa(\cA)$, the first characteristic number
+of the (conjectural) universal class~$\Theta_{\cA}$
+(Definition~\ref{def:full-modular-package}).
+
+\emph{Step~B} (M-level):
+The proof assembles four established results.
+Universality: the genus-$g$ obstruction class
+$\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$ is extracted
+from the curvature of the fiberwise differential~$\dfib$
+(Theorem~\ref{thm:genus-universality}).
+Generating function: the genus free energies assemble into
+$\sum_g F_g x^{2g} = \kappa \cdot (\tfrac{x/2}{\sin(x/2)} - 1)$
+via residue integration against Bernoulli numbers
+(Theorem~\ref{thm:universal-generating-function}).
+Duality: $\kappa + \kappa' = \varrho \cdot K$ by the
+complementarity theorem.
+Additivity: $\kappa(\cA \otimes \cB) = \kappa(\cA) + \kappa(\cB)$
+by the anomaly cancellation theorem
+(Theorem~\ref{thm:anomaly-koszul}).
+
+\emph{Step~C} (S-level):
+The Heisenberg atom: $\kappa(\mathcal{H}_k) = k$, and all genus
+free energies are Bernoulli numbers $F_g = k \cdot B_{2g}/(4g(2g-2))$
+(\S\ref{sec:frame-modular-package}).
+\end{remark}
+
+\begin{theorem}[Spectral characteristic theorem; \ClaimStatusProvedHere]
+\label{thm:spectral-characteristic}
+\index{spectral discriminant!invariance theorem|textbf}
+\textup{[}Regime: quadratic
+\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+
+\smallskip\noindent
+Let $\cA$ be a modular Koszul chiral algebra.
+The spectral discriminant
+$\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x)$
+depends only on the quadratic OPE data of the Koszul pair and is invariant
+under Drinfeld--Sokolov reduction.
+In particular, $\Delta_{\cA}$ is a separate non-scalar invariant:
+it is not determined by $\kappa(\cA)$ alone.
+\end{theorem}
+
+\begin{proof}
+This is Theorem~\ref{thm:ds-bar-gf-discriminant}.
+\end{proof}
+
+\begin{conjecture}[Universal modular Maurer--Cartan class; \ClaimStatusConjectured]
+\label{conj:universal-theta}
+\index{universal Maurer--Cartan class!conjecture|textbf}
+For every modular Koszul chiral algebra~$\cA$ there exists a
+cyclic $L_\infty$-algebra $\Defcyc(\cA)$ and a universal
+Maurer--Cartan class
+\[
+\Theta_{\cA} \in
+\operatorname{MC}\!\bigl(
+  \Defcyc(\cA) \;\widehat{\otimes}\;
+  R\Gamma(\overline{\mathcal{M}}_{g,\bullet},\, \mathbb{Q})
+\bigr)
+\]
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item its scalar trace recovers the obstruction classes:
+  $\operatorname{tr}(\Theta_{\cA})
+  = \sum_{g \geq 1} \kappa(\cA) \lambda_g$;
+\item it is compatible with clutching morphisms of stable curves;
+\item under Verdier/Koszul duality, $\Theta_{\cA}$ is sent to
+  $\Theta_{\cA^!}$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Relation to the conjectural universal class]
+\label{rem:kappa-theta-relation}
+The scalar invariant $\kappa(\cA)$ is conjecturally the first
+characteristic number of $\Theta_{\cA}$
+(Conjecture~\ref{conj:universal-theta},
+Definition~\ref{def:full-modular-package}): the genus-$1$ shadow
+of a non-scalar structure that organizes the entire genus tower.
+This enhancement is a programme-level goal, not part of the
+proved Theorem~D$_{\mathrm{scal}}$.
+The spectral discriminant $\Delta_{\cA}$
+(Theorem~\ref{thm:spectral-characteristic}) is a separately
+proved non-scalar invariant.
+\end{remark}
+
 \begin{remark}[$\kappa$ as first Chern class]
 \label{rem:kappa-first-chern}
-Properties (i)--(iv) of Theorem~\ref{thm:modular-characteristic}
-identify $\kappa$ formally as a first Chern class: a group
-homomorphism from an abelian group of geometric objects to a ring,
-controlling a universal obstruction, and intertwined with duality
-by sign reversal.  In the classical setting, $c_1(L) \in H^2(X)$
-for a line bundle $L$ satisfies: $c_1(L \otimes L') = c_1(L) +
-c_1(L')$ (additivity), $c_1(L^\vee) = -c_1(L)$ (duality), and
-$c_1$ controls the obstruction to global sections.  The invariant
-$\kappa(\cA)$ is the chiral-algebraic analogue: the modular Koszul
-algebra is the ``line bundle,'' the genus tower is the ``obstruction
-to global sections,'' and the universal class $\Theta_{\cA}$ is
-the ``Chern--Weil representative'' whose scalar trace recovers
-$\kappa \cdot \lambda_g$.
+Properties (i)--(iv) identify $\kappa$ as a first Chern class: additive under tensor products, anti-symmetric under duality, and controlling a universal obstruction.  The modular Koszul algebra is the ``line bundle,'' the genus tower is the ``obstruction to global sections,'' and $\Theta_{\cA}$ is the ``Chern--Weil representative'' with scalar trace $\kappa \cdot \lambda_g$.
+\end{remark}
+
+\begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-d}
+The scalar properties (i)--(iv) of Theorem~D are cohomological
+shadows of the family index theorem
+(Theorem~\ref{thm:family-index}) for the modular deformation
+complex.  At the derived level, the scalar structure is as follows:
+
+\smallskip\noindent
+\emph{(a) Determinant line bundle.}
+The modular deformation complex
+$\mathbf{C}_g(\cA) =
+R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
+defines a determinant line bundle
+$\mathcal{L}_{\cA} := \det R\pi_{g*}
+\bar{B}^{(g)}(\cA)$
+over $\overline{\mathcal{M}}_g$.  The scalar $\kappa(\cA)$
+is the first Chern class of $\mathcal{L}_{\cA}$: concretely,
+$c_1(\mathcal{L}_{\cA}) = \kappa(\cA) \cdot \lambda \in
+\operatorname{Pic}(\overline{\mathcal{M}}_g) \otimes \mathbb{C}$,
+where $\lambda$ is the Hodge class.
+
+\smallskip\noindent
+\emph{(b) GRR formula.}
+The generating function~\eqref{eq:modular-char-gf}
+(the $\hat{A}$-genus) arises from the
+Grothendieck--Riemann--Roch computation
+(Theorem~\ref{thm:family-index}):
+$\operatorname{ch}(\mathcal{L}_{\cA}) =
+\kappa(\cA) \cdot \pi_{g*}(\operatorname{Td}(\Omega_{\pi_g}))$,
+where $\pi_g$ is the universal curve over
+$\overline{\mathcal{M}}_g$.  The $\hat{A}$-genus appears because
+$\operatorname{Td}$ of the relative cotangent bundle of the
+universal curve, pushed forward to $\overline{\mathcal{M}}_g$,
+produces the $\hat{A}$-class in the Mumford
+formula~\cite{Mumford83}.
+
+\smallskip\noindent
+\emph{(c) Additivity and duality.}
+The additivity $\kappa(\cA \otimes \cB) = \kappa(\cA) +
+\kappa(\cB)$ is the shadow of
+$\mathcal{L}_{\cA \otimes \cB} \cong
+\mathcal{L}_{\cA} \otimes \mathcal{L}_{\cB}$
+(multiplicativity of determinants under direct sums).
+The duality $\kappa(\cA) + \kappa(\cA^!) = 0$ is the shadow
+of $\mathcal{L}_{\cA} \otimes \mathcal{L}_{\cA^!} \cong
+\mathcal{O}$, which follows from the Verdier self-duality of
+the total bar complex.
+
+\smallskip\noindent
+Constructing the full non-scalar enhancement ---
+the universal Maurer--Cartan class $\Theta_{\cA}$ of
+Definition~\ref{def:full-modular-package} and its
+Chern--Weil theory --- remains the principal open problem of
+the modular programme
+(Conjecture~\ref{conj:universal-MC}).
 \end{remark}
 
 \begin{remark}[Non-examples and boundaries]\label{rem:mk-non-examples}
@@ -8230,7 +8789,7 @@ The following are \emph{not} modular Koszul:
 \item Affine Kac--Moody algebras at \emph{admissible} levels
   $k = -h^\vee + p/q$: the bar spectral sequence has nontrivial
   higher differentials, and bar-cobar inversion fails
-  (\S\ref{sec:admissible-level-reps}).  Axiom~\ref{MK:inversion} fails.
+  (\S\ref{sec:admissible-level-reps}).  Consequence~\ref{MK:inversion} (inversion) fails.
 \item Virasoro minimal models $\mathcal{M}(p,q)$: the representation
   category is semisimple but the VOA itself is a quotient of the
   Virasoro algebra by a singular vector, which typically produces
@@ -8246,8 +8805,6 @@ framework for these singular loci; see
 \S\ref{sec:modular-koszul-programme}.
 \end{remark}
 
-\bigskip
-\noindent\textbf{What we have established.}\enspace
 The four main theorems are proved.  Theorem~A
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}): the bar-cobar
 adjunction is an equivalence for Koszul pairs, intertwined with
@@ -8261,12 +8818,18 @@ moduli cohomology $\mathcal{H}_g(\cA) =
 H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$ carries a
 shifted-symplectic pairing from Verdier duality, and the deformation
 and obstruction spaces of a Koszul pair embed as complementary
-Lagrangians.  Theorem~D
+Lagrangians.  Theorem~D$_{\mathrm{scal}}$
 (Theorem~\ref{thm:modular-characteristic}): the scalar invariants
 of the modular characteristic package are determined by a single
 number $\kappa(\cA)$, which is universal (controls all genera),
 additive (a group homomorphism under tensor product), anti-symmetric
 under duality, and whose vanishing is anomaly cancellation.
+Theorem~D$_\Delta$
+(Theorem~\ref{thm:spectral-characteristic}): the spectral
+discriminant is a separately proved non-scalar invariant.
+The full universal Maurer--Cartan class $\Theta_{\cA}$
+(Conjecture~\ref{conj:universal-theta}) remains the principal
+open problem.
 
 These are four aspects of a single object: the modular Koszul chiral
 algebra (Definition~\ref{def:modular-koszul-chiral}).  Every chiral
@@ -8274,6 +8837,9 @@ algebra in Part~II will be verified as an instance of this structure.
 The computations that follow --- bar cohomology, genus expansions,
 discriminants, complementarity sums --- are not
 isolated calculations but invariants of the modular characteristic
-package $(\kappa, \{F_g\}, \Delta)$.  What one algebra sees as
+package $\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa(\cA),
+\Delta_{\cA}, \Pi_{\cA}, \mathcal{H}_{\cA})$
+(Definition~\ref{def:full-modular-package}).
+What one algebra sees as
 deformation, its dual sees as obstruction: this is the Lagrangian
 principle at work, algebra by algebra, genus by genus.

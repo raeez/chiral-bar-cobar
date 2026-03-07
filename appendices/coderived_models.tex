@@ -1,0 +1,353 @@
+% ================================================================
+% Appendix: Coderived and contraderived categories
+% ================================================================
+
+\section{Coderived and contraderived categories}
+\label{app:coderived}
+\index{coderived category|textbf}
+\index{contraderived category|textbf}
+
+The bar-cobar adjunction at higher genus produces curved complexes
+($d^2 \neq 0$), for which the ordinary derived category is trivial.
+Positselski's theory of coderived and contraderived
+categories~\cite{Positselski11} provides the correct
+replacement.  This appendix collects the definitions and key results
+needed in this monograph; the chiral specialization appears in
+\S\ref{subsec:chiral-coderived-contraderived}.
+
+\subsection{Abstract definitions}
+\label{subsec:coderived-abstract}
+
+Let $\mathsf{A}$ be an abelian category with exact direct sums
+(for the coderived case) or exact direct products
+(for the contraderived case).
+
+\begin{definition}[CDG-algebra and CDG-coalgebra]
+\label{def:cdg-algebra-appendix}
+\index{CDG-algebra}
+\index{CDG-coalgebra}
+A \emph{curved differential graded} (CDG) \emph{algebra}
+$(A, d, h)$ consists of a graded algebra~$A$, a degree-$1$
+map $d \colon A \to A$ satisfying the graded Leibniz rule, and
+a degree-$2$ element $h \in A^2$ (the \emph{curvature}) such that
+\begin{equation}\label{eq:cdg-relations-appendix}
+d^2(a) = [h, a], \qquad d(h) = 0.
+\end{equation}
+Dually, a \emph{CDG-coalgebra} $(C, d, h)$ consists of a graded
+coalgebra~$C$, a degree-$1$ coderivation $d \colon C \to C$,
+and a degree-$2$ functional $h \colon C \to k$ such that
+$d^2 = h \ast (-)$ and $h \circ d = 0$.
+A CDG-algebra (resp.\ coalgebra) with $h = 0$ is an ordinary
+DG-algebra (resp.\ DG-coalgebra).
+\end{definition}
+
+\begin{definition}[CDG-comodules and CDG-contramodules]
+\label{def:cdg-comod-contra-appendix}
+\index{CDG-comodule}
+\index{CDG-contramodule}
+Let $(C, d, h)$ be a CDG-coalgebra.
+A \emph{left CDG-comodule} $(M, d_M)$ over~$C$ is a graded left
+$C$-comodule equipped with a degree-$1$ map $d_M \colon M \to M$
+compatible with the coaction and satisfying $d_M^2 = h \ast (-)$.
+A \emph{left CDG-contramodule} $(P, d_P)$ over~$C$ is a graded left
+$C$-contramodule with $d_P \colon P \to P$ of degree~$1$ satisfying
+the dual curvature relation $d_P^2(p) = h \cdot p$
+for all $p \in P$, where $h$ acts via the contraaction.
+\end{definition}
+
+\begin{definition}[Coacyclic and contraacyclic objects]
+\label{def:coacyclic-contraacyclic}
+\index{coacyclic object|textbf}
+\index{contraacyclic object|textbf}
+Let $(C, d, h)$ be a CDG-coalgebra.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A CDG-comodule $M$ is \emph{coacyclic} if it belongs to the
+  minimal thick subcategory of the homotopy category
+  $\mathrm{Hot}(C\text{-}\mathrm{comod})$ that contains the
+  totalizations of all short exact sequences of CDG-comodules
+  and is closed under infinite direct sums.
+\item A CDG-contramodule $P$ is \emph{contraacyclic} if it belongs
+  to the minimal thick subcategory of
+  $\mathrm{Hot}(C\text{-}\mathrm{contra})$ that contains the
+  totalizations of all short exact sequences of CDG-contramodules
+  and is closed under infinite direct products.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Coderived and contraderived categories;
+\ClaimStatusProvedElsewhere]
+\label{def:coderived-contraderived-abstract}
+\index{coderived category!abstract definition|textbf}
+\index{contraderived category!abstract definition|textbf}
+The \emph{coderived category} and \emph{contraderived category}
+of a CDG-coalgebra $(C, d, h)$ are the Verdier quotients:
+\begin{align}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+  &:= \mathrm{Hot}(C\text{-}\mathrm{comod})
+  \,\big/\, \mathrm{Acycl}^{\mathrm{co}}(C\text{-}\mathrm{comod}),
+  \label{eq:coderived-abstract}\\
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra})
+  &:= \mathrm{Hot}(C\text{-}\mathrm{contra})
+  \,\big/\,
+  \mathrm{Acycl}^{\mathrm{ctr}}(C\text{-}\mathrm{contra}).
+  \label{eq:contraderived-abstract}
+\end{align}
+These are triangulated categories.  When $h = 0$, every acyclic
+object is coacyclic (resp.\ contraacyclic), so there are natural
+functors $D^{\mathrm{co}} \to D$ and $D^{\mathrm{ctr}} \to D$
+from the exotic to the ordinary derived category.  When
+$h \neq 0$, the ordinary derived category is trivial, while
+$D^{\mathrm{co}}$ and $D^{\mathrm{ctr}}$ retain nontrivial
+structure~\cite[\S\S3--4]{Positselski11}.
+\end{definition}
+
+\begin{theorem}[Comodule-contramodule correspondence;
+\ClaimStatusProvedElsewhere]
+\label{thm:co-contra-correspondence-appendix}
+\index{comodule-contramodule correspondence}
+Let $(C, d, h)$ be a CDG-coalgebra.  There is an equivalence of
+triangulated categories
+\begin{equation}\label{eq:co-contra-equivalence}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+\;\simeq\;
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}).
+\end{equation}
+The equivalence is implemented by the functors
+$\Phi_C \colon M \mapsto \mathrm{Hom}_C(C, M)$ \textup{(}which
+sends injective comodules to projective contramodules\textup{)}
+and $\Psi_C \colon P \mapsto C \square_C P$ \textup{(}the
+contratensor product\textup{)}.
+\end{theorem}
+
+\begin{proof}[Reference]
+Positselski~\cite[Theorem~5.3]{Positselski11}.  The chiral
+specialization is Theorem~\ref{thm:chiral-co-contra-correspondence}.
+\end{proof}
+
+\begin{theorem}[Conilpotent reduction; \ClaimStatusProvedElsewhere]
+\label{thm:conilpotent-reduction}
+\index{conilpotent coalgebra!coderived reduction}
+If the CDG-coalgebra $(C, d, h)$ is \emph{conilpotent}
+\textup{(}i.e., the coaugmentation filtration on~$C$ is
+exhaustive\textup{)} and $h = 0$, then every acyclic
+CDG-comodule is coacyclic, so the coderived category coincides
+with the ordinary derived category:
+\begin{equation}\label{eq:conilpotent-reduction}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+\;\simeq\;
+D(C\text{-}\mathrm{comod}).
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Reference]
+Positselski~\cite[Corollary~4.4]{Positselski11}.  In this
+monograph, the genus-$0$ bar complex
+$\bar{B}^{(0)}(\cA)$ is a conilpotent DG-coalgebra, so
+the coderived category reduces to the ordinary derived
+category---this is the content of
+Remark~\textup{\ref{rem:exotic-vs-ordinary}}.
+\end{proof}
+
+\begin{remark}[Connection to bar-cobar duality]
+\label{rem:coderived-bar-cobar}
+\index{bar-cobar adjunction!coderived formulation}
+In the setting of this monograph, the bar complex
+$\bar{B}^{(g)}(\cA)$ is a chiral CDG-coalgebra with curvature
+$m_0^{(g)} = \kappa(\cA) \cdot \omega_g$
+(Convention~\ref{conv:higher-genus-differentials}).
+At genus~$0$, $m_0^{(0)} = 0$ and
+Theorem~\ref{thm:conilpotent-reduction} applies: the coderived
+category is the ordinary derived category, and bar-cobar
+inversion (Theorem~\ref{thm:higher-genus-inversion})
+is a statement in $D(\bar{B}^{(0)}\text{-}\mathrm{comod})$.
+At genus $g \geq 1$ with $\kappa(\cA) \neq 0$, the bar complex
+is genuinely curved, the ordinary derived category is trivial
+(Proposition~\ref{prop:curved-bar-acyclicity}), and bar-cobar
+inversion becomes a statement in the coderived category
+$D^{\mathrm{co}}(\bar{B}^{(g)}\text{-}\mathrm{comod})$.
+The Koszul duality equivalence
+$D^{\mathrm{co}}(\cA\text{-}\mathrm{CoMod})
+\simeq D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod})$
+(Theorem~\ref{thm:positselski-chiral-proved}) is the chiral
+incarnation of the comodule-contramodule correspondence
+\eqref{eq:co-contra-equivalence}.
+\end{remark}
+
+%%% ---------------------------------------------------------------
+%%% Relative curved models adequate for the present monograph
+%%% ---------------------------------------------------------------
+
+\subsection{Relative curved models}
+\label{sec:coderived-models}
+\index{coderived category!relative models|textbf}
+
+The full theory of coderived categories of factorization algebras
+on $\operatorname{Ran}(X)$ is not yet available in the literature;
+its development is part of the Stratum~II programme
+(Remark~\ref{rem:two-strata}).  Nevertheless, the off-Koszul
+statements in this monograph---where the bar-cobar counit is
+a curved equivalence rather than a quasi-isomorphism---require
+a precise ambient homotopy category.  This subsection defines the
+\emph{minimal} relative homotopy theory needed to make those
+statements mathematically honest.
+
+\begin{definition}[Filtered curved factorization model]
+\label{def:filtered-curved-model}
+A \emph{filtered curved factorization model} is a triple
+$(M, d, \mathcal{F})$ where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $M$ is a conilpotent factorization coalgebra on $\operatorname{Ran}(X)$
+  (or a dg module over such);
+\item $d \colon M \to M$ is a degree-$1$ map with
+  $d^2 = m_0 \in Z(M)$ for a central curvature element~$m_0$
+  (cf.\ the fiberwise differential $\dfib$ with $\dfib^{\,2} = \mcurv{g}$,
+  Convention~\textup{\ref{conv:higher-genus-differentials}});
+\item $\mathcal{F} = \{F^p M\}_{p \geq 0}$ is an exhaustive
+  decreasing filtration with $d(F^p) \subset F^p$,
+  $m_0 \in F^1$, and $\operatorname{gr}^0_{\mathcal{F}} d$ strict
+  ($(\operatorname{gr}^0 d)^2 = 0$).
+\end{enumerate}
+A morphism $f \colon (M, d, \mathcal{F}) \to (N, d', \mathcal{F}')$ is a
+filtration-preserving coalgebra map compatible with differentials and curvatures.
+\end{definition}
+
+\begin{definition}[Weak equivalence of curved models]
+\label{def:curved-weak-equiv}
+A morphism $f \colon M \to N$ of filtered curved factorization models
+is a \emph{weak equivalence} if it satisfies either of the following
+equivalent conditions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The associated graded map
+  $\operatorname{gr}_{\mathcal{F}} f$ is a quasi-isomorphism of the
+  strict complexes $(\operatorname{gr} M, \operatorname{gr}^0 d)
+  \xrightarrow{\sim} (\operatorname{gr} N, \operatorname{gr}^0 d')$.
+\item The induced map on coacyclic quotients
+  $M/\operatorname{coacyc}(M) \to N/\operatorname{coacyc}(N)$ is an
+  isomorphism, where $\operatorname{coacyc}(M)$ is the thick subcategory
+  generated by totalizations of short exact sequences
+  (Positselski~\cite{Positselski11}).
+\end{enumerate}
+The equivalence of (i) and (ii) holds for bounded-below filtrations
+by~\cite[Proposition~3.5]{Positselski11}.
+\end{definition}
+
+\begin{definition}[Provisional coderived category]
+\label{def:provisional-coderived}
+\index{coderived category!provisional|textbf}
+The \emph{provisional coderived category} $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+is the localization of the category of filtered curved factorization
+models (Definition~\ref{def:filtered-curved-model}) at the weak
+equivalences of Definition~\ref{def:curved-weak-equiv}.
+\end{definition}
+
+\begin{proposition}[Adequacy; \ClaimStatusProvedHere]
+\label{prop:coderived-adequacy}
+The provisional coderived category is adequate for the following
+constructions in this monograph:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The curved bar-cobar counit
+  $\Omega_X \bar{B}_X(\cA) \to \cA$ of
+  Theorem~\textup{\ref{thm:higher-genus-inversion}} is an isomorphism
+  in $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$ for every chiral
+  algebra~$\cA$ satisfying the Chevalley--Cousin condition.
+\item The genus tower $\{\bar{B}^{(g)}(\cA)\}_{g \geq 0}$ of
+  Theorem~\textup{\ref{thm:prism-higher-genus}} has compatible
+  filtrations making each genus component a filtered curved model.
+\item The Verdier involution $\sigma$ acts on filtered curved models
+  and descends to $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$,
+  so the complementarity decomposition
+  \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+  holds in the provisional coderived category.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For (a): the bar-cobar counit is a quasi-isomorphism of associated
+graded complexes by the Koszul locus argument of
+Theorem~\ref{thm:higher-genus-inversion}, hence a weak equivalence
+in the sense of Definition~\ref{def:curved-weak-equiv}(i).
+Off the Koszul locus, the counit is still a weak equivalence
+in sense~(ii) by the spectral sequence comparison argument of
+Theorem~\ref{thm:bar-cobar-spectral-sequence}: the $E_1$ pages agree
+and the filtration is bounded below in each bar degree.
+
+For (b): the PBW filtration by conformal weight is exhaustive,
+decreasing, preserved by all three components of the bar differential,
+and satisfies $m_0^{(g)} \in F^1$ because the curvature involves at
+least one OPE contraction.  At associated graded level, the
+differential reduces to $\dzero$, which is strict.
+
+For (c): Verdier duality preserves the PBW filtration
+(it exchanges weight~$n$ generators with weight~$n$ cogenerators in
+the Koszul dual) and commutes with the bar differential.  Hence it
+descends to $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$ and the
+eigenspace decomposition is well-defined.
+\end{proof}
+
+\begin{remark}[Relation to the full theory]
+\label{rem:coderived-full}
+The provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$ is expected to embed
+fully faithfully into the eventual coderived category of curved
+factorization algebras on $\operatorname{Ran}(X)$.  It is constructed
+from the same Positselski localization procedure but restricted to
+the class of filtered models appearing in this monograph.  The full
+theory would additionally handle pro-nilpotent completions, infinitely
+generated bar complexes, and curved $A_\infty$-coalgebras without
+filtrations---features needed for the Stratum~II programme but not for
+the results proved here.
+\end{remark}
+
+\subsection{Completed ambient for factorization algebras}
+\label{subsec:completed-ambient}
+
+The full modular programme requires a completed ambient---the
+factorization-algebra analogue of the pro-nilpotent/coderived
+formalism of Francis--Gaitsgory~\cite{FG12}.
+
+\begin{definition}[Completed chiral ambient; \ClaimStatusConjectured]
+\label{def:completed-chiral-ambient}
+\index{completed chiral ambient|textbf}
+\index{factorization algebra!completed ambient}
+Let $X$ be a smooth projective curve.  Define the following full
+subcategories of $\Fact(X)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Alg_{\mathrm{aug,comp}}(\Fact(X))$: the full subcategory of
+  augmented factorization algebras \emph{complete} for the
+  augmentation-ideal filtration, i.e., those $\cA$ for which the
+  canonical map
+  $\cA \to \varprojlim_n \cA / \bar{\cA}^{\chirtensor n}$
+  is an equivalence.
+\item $\CoAlg_{\mathrm{coaug,conil}}(\Fact(X))$: the full subcategory
+  of coaugmented factorization coalgebras that are \emph{conilpotent},
+  i.e., exhausted by the coradical filtration.
+\item $\mathsf{D}^{\mathrm{co}}(\Fact(X))$: the \emph{coderived
+  category of curved factorization coalgebras}, defined as the
+  localization of the homotopy category at coacyclic objects---those
+  generated by totalizations of short exact sequences and closed under
+  filtered colimits (cf.\
+  Definition~\ref{def:coacyclic-contraacyclic}).
+\end{enumerate}
+Pro-nilpotence (condition~(i)) is exactly what makes the bar/cobar
+differentials converge: the chiral bar construction of an object in
+$\Alg_{\mathrm{aug,comp}}$ lands in $\CoAlg_{\mathrm{coaug,conil}}$.
+The provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+(Definition~\ref{def:provisional-coderived}) embeds into
+$\mathsf{D}^{\mathrm{co}}(\Fact(X))$
+as the full subcategory of objects admitting a bounded-below PBW
+filtration.
+\end{definition}
+
+\begin{remark}[Status]\label{rem:completed-ambient-status}
+The $\Eone$-chiral face of this ambient is established: the
+monograph proves bar-cobar equivalence in the pro-nilpotent regime
+(Theorem~\ref{thm:higher-genus-inversion}).  The full
+$\Einf$-factorization version belongs to the Stratum~II programme
+(Remark~\ref{rem:two-strata}).  The homotopy form of the modular
+Koszul definition
+(Definition~\ref{def:modular-koszul-homotopy}) uses
+$\Alg_{\mathrm{aug}}$ rather than
+$\Alg_{\mathrm{aug,comp}}$ because all objects treated in this
+monograph are already complete (their bar complexes converge).
+\end{remark}

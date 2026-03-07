@@ -2,9 +2,7 @@
 \index{quantum Poincare duality|textbf}
 \index{modular operad!quantum}
 
-The genus expansion and Feynman transform structure observed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} extend to a modular operad framework for arbitrary Koszul chiral algebras. This chapter develops the quantum corrections to Poincar\'e duality in the modular setting.
-
-At genus zero, bar-cobar duality is an operadic fact: it follows from the formal properties of the bar and cobar functors applied to the chiral operad.  At higher genus, the situation changes qualitatively.  The modular operad of stable curves $\overline{\mathcal{M}}_{g,n}$ replaces the genus-$0$ operad, curvature classes enter through the Hodge bundle, and Koszul duality must be ``quantized'' to accommodate the genus tower.  This section develops the genus-graded framework via the Feynman transform of the modular operad and its physical interpretation through holographic duality.
+The genus expansion and Feynman transform structure computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} extend to arbitrary Koszul chiral algebras via the modular operad of stable curves $\overline{\mathcal{M}}_{g,n}$: curvature classes enter through the Hodge bundle, and Koszul duality is ``quantized'' to accommodate the genus tower.
 
 \subsection{Holographic principle: genus-graded Koszul duality}
 
@@ -20,14 +18,7 @@ are related by (a deformation of) genus-graded Koszul duality, with each genus c
 \end{remark}
 
 \begin{remark}[Genus-graded Koszul duality]
-Genus-graded Koszul duality provides a precise algebraic mechanism for exchanging:
-\begin{itemize}
-\item Generators $\leftrightarrow$ Relations at each genus level
-\item Commutative $\leftrightarrow$ Lie algebra structures with modular corrections
-\item Classical limits $\leftrightarrow$ Quantum deformations across all genera
-\item Tree-level $\leftrightarrow$ Loop corrections via genus expansion
-\end{itemize}
-The bulk gravitational theory (weakly coupled, many generators, genus expansion) is dual to the boundary gauge theory (strongly coupled, many constraints, modular forms).
+Genus-graded Koszul duality exchanges generators with relations, commutative with Lie structures (plus modular corrections), classical limits with quantum deformations, and tree-level with loop corrections --- all simultaneously across the genus tower.
 \end{remark}
 
 \subsection{Universal chiral defects and bar-cobar duality}
@@ -246,6 +237,9 @@ corrections in the twisted setting, and (ii) a demonstration that these
 corrections are captured by curving the $A_\infty$ structure on the bar
 complex.  Neither ingredient is available at present; the statement records
 the structural prediction from physics.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture asserts that $1/N$ gravitational corrections to the Koszul pairing are captured by curving the $A_\infty$ structure on the bar complex, translating AdS$_3$ backreaction into algebraic deformation data.
 \end{remark}
 
 \subsection{Physical interpretation: defects and open-closed duality}
@@ -512,8 +506,7 @@ of the corresponding vertex algebra. Our geometric bar complex provides the expl
 \subsection{The prism principle: operadic identification}%
 \label{subsec:prism-operadic}
 
-We now give the formal operadic content of the Prism Principle: the
-geometric bar-cobar duality of chiral algebras is an instance of
+The geometric bar-cobar duality of chiral algebras is an instance of
 \emph{operadic Koszul duality} in the sense of Ginzburg--Kapranov
 \cite{GK94} and Getzler \cite{Get95}.
 
@@ -590,6 +583,9 @@ to $H^*(\overline{\mathcal{M}}_{0,n+2})$ as an operad.
 
 \begin{theorem}[Prism principle --- operadic identification;
 \ClaimStatusProvedHere]\label{thm:prism-operadic}
+\textup{[Regime: quadratic at genus~$0$; curved-central at genus~$g \geq 1$
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
 The geometric bar-cobar duality of chiral algebras
 (Definition~\ref{def:geometric-bar},
 Definition~\ref{def:geom-cobar-intrinsic}) is an instance of operadic
@@ -865,6 +861,38 @@ for pure higher-genus terms combine to give
 $d_{\mathrm{bar}}^2 = 0$.
 \end{proof}
 
+\begin{definition}[Modular graph coefficient algebra; \ClaimStatusConjectured]
+\label{def:modular-graph-algebra}
+\index{modular graph coefficient algebra|textbf}
+\index{Feynman transform!coefficient algebra}
+The \emph{modular graph coefficient algebra} is the completed dg Lie
+algebra
+\begin{equation}\label{eq:gmod-def}
+\Gmod
+\;:=\;
+\mathrm{FT}_{\mathcal{M}od}\!\bigl(
+  \{R\Gamma(\overline{\mathcal{M}}_{g,n},\, \mathbb{Q})\}_{2g-2+n>0}
+\bigr),
+\end{equation}
+the Feynman transform of the modular operad
+$\mathcal{M}od = \{\overline{\mathcal{M}}_{g,n}\}$
+(Definition~\ref{def:modular-operad}) applied to the rational
+cohomology of the moduli spaces themselves.  The Lie bracket is
+induced by edge-gluing of stable graphs; the differential is induced
+by boundary stratification.  Each stable graph~$\Gamma$ contributes
+the integral over the corresponding modular stratum, weighted by the
+automorphism factor~$|\mathrm{Aut}(\Gamma)|^{-1}$.
+
+\smallskip\noindent
+\emph{Role.}
+The universal Maurer--Cartan class
+(Conjecture~\ref{conj:universal-MC}) lives in
+$\operatorname{MC}(\Defcyc(\cA) \;\widehat{\otimes}\; \Gmod)$:
+the cyclic deformation complex of~$\cA$ tensored with the modular
+graph coefficient algebra.  This is the correct target for the
+full non-scalar genus tower.
+\end{definition}
+
 \begin{example}[Heisenberg specialization]
 For the Heisenberg algebra $\mathcal{H}_k$ at level $k$, Theorem~\ref{thm:prism-higher-genus} gives: the genus-$g$ bar complex $\bar{B}^{(g)}(\mathcal{H}_k)$ is the Feynman transform of $\mathcal{H}_k$ with respect to the modular operad $\{\overline{\mathcal{M}}_{g,n}\}$.  Because $\mathcal{H}_k$ has a single generator with quadratic OPE, each stable graph $\Gamma$ of type $(g,n)$ contributes a one-dimensional integral $k^{|E(\Gamma)|}$ (one power of $k$ per propagator edge), producing the genus-$g$ obstruction $\mathrm{obs}_g = k \cdot \lambda_g \in H^1(\overline{\mathcal{M}}_g, \mathbb{E}^\vee)$ computed in \S\ref{sec:frame-genus-tower}.
 \end{example}
@@ -998,7 +1026,7 @@ $$\epsilon(i, T) + \epsilon(j-1, T/e_i) = \epsilon(j, T) + \epsilon(i, T/e_j) + 
 so that contracting in opposite order introduces a sign of $(-1)^1 = -1$, giving $d^2 = 0$.
 \end{proof}
 
-For an augmented operad $P$ with augmentation $\epsilon: P \to I$, we now define the dual cobar construction.
+The dual cobar construction is as follows.
 
 \begin{definition}[Cobar construction]
 Dually, for a coaugmented cooperad $C$ with coaugmentation $\eta : \mathbb{I} \to C$, the cobar construction $\Omega(C)$ is the free operad on the desuspension $s^{-1}\bar{C}$ (where $\bar{C} = \text{coker}(\eta)$) with differential induced by the cooperad comultiplication.
@@ -1102,4 +1130,7 @@ theorem.  Within the algebraic framework of this monograph, one can prove
 that the bar-cobar adjunction has the same formal structure as the
 holographic dictionary, but the identification of the two requires external
 physical input that we do not attempt to supply.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The conjecture identifies the bar-cobar adjunction with the holographic dictionary, mapping boundary correlators to bulk Witten diagrams via Koszul duality.
 \end{remark}

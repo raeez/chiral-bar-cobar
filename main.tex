@@ -448,6 +448,25 @@
 \newcommand{\DS}{\text{DS}}                     % Drinfeld--Sokolov  % unused
 
 % ==========================================
+% HIGHER-GENUS DIFFERENTIAL NOTATION
+% (Convention~\ref{conv:higher-genus-differentials})
+% ==========================================
+% Three mathematically distinct differentials act on genus-g bar complexes.
+% Using the same symbol for all three is the single deepest notational
+% instability in the manuscript; the macros below enforce the distinction.
+\newcommand{\dzero}{d_0}                              % genus-0 collision differential (Arnold d^2=0)
+\newcommand{\dfib}{d_{\mathrm{fib}}}                  % fiberwise differential on fixed Sigma_g (CURVED: d^2 = kappa * omega_g)
+\newcommand{\Dg}[1]{D_{#1}}                           % total corrected differential at genus g (STRICT: D_g^2 = 0)
+\newcommand{\Dtot}{D_{\mathrm{tot}}}                  % full genus-stratified total differential
+\newcommand{\mcurv}[1]{m_0^{(#1)}}                    % curvature element at genus g
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}  % cyclic deformation complex
+\newcommand{\Gmod}{\mathcal{G}^{\mathrm{mod}}}           % modular graph coefficient algebra
+\newcommand{\Perbr}{\operatorname{Per}}                   % derived scalar period
+\newcommand{\Ydg}{\mathcal{Y}^{\mathrm{dg}}}             % dg-shifted Yangian
+\newcommand{\QGspec}{\operatorname{QG}_{\mathrm{spec}}}   % spectral quantum group
+\newcommand{\Factord}{\Fact_{\Eone}^{\mathrm{ord}}}       % ordered E_1-factorization category
+
+% ==========================================
 % TYPOGRAPHY SETTINGS FOR OPTIMAL READABILITY
 % ==========================================
 
@@ -532,6 +551,9 @@
 \providecommand{\Opinfty}{\mathrm{Op}_\infty}
 \providecommand{\Tw}{\mathrm{Tw}}
 \providecommand{\CE}{\mathrm{CE}}
+\providecommand{\fib}{\operatorname{fib}}
+\providecommand{\cofib}{\operatorname{cofib}}
+\providecommand{\CoDer}{\operatorname{CoDer}}
 
 
 
@@ -551,11 +573,11 @@
 \medskip
 \noindent
 \textbf{Main Results.}
-We construct a geometric realization of the bar construction $\bar{B}_{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ for chiral algebras on an algebraic curve $X$. This construction extends the genus-zero framework of Beilinson--Drinfeld to incorporate: (i) one-loop quantum corrections via elliptic chiral homology on the formal torus $\hat{E}_\tau$, (ii) higher-genus contributions through the universal chiral homology over the moduli stack $\overline{\mathcal{M}}_{g,n}$, and (iii) quantum deformation parameters $t_g \in H^1(\mathcal{M}_g)$ controlling genus-$g$ amplitudes. The bar construction is realized through residue calculus on the Fulton--MacPherson compactification $\mathrm{Conf}_n[X]$ of configuration spaces, with the differential $d_{\text{geom}} = \sum_{D \in \partial \mathrm{Conf}_n[X]} (-1)^{|D|} \mathrm{Res}_D$ summing residues over boundary divisors. The nilpotence $d_{\text{geom}}^2 = 0$ follows from the Arnold--Orlik--Solomon relations in $H^*(\mathrm{Conf}_n[X])$, providing a geometric incarnation of the associativity of chiral operations.
+We construct a geometric realization of the bar construction $\bar{B}_{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ for chiral algebras on an algebraic curve $X$. This construction extends the genus-zero framework of Beilinson--Drinfeld to incorporate: (i) one-loop quantum corrections via elliptic chiral homology on the formal torus $\hat{E}_\tau$, (ii) higher-genus contributions through the universal chiral homology over the moduli stack $\overline{\mathcal{M}}_{g,n}$, and (iii) quantum deformation parameters $t_k \in H^1(\Sigma_g, \mathbb{C})$ (period integrals over $A$-cycles) controlling genus-$g$ amplitudes. The bar construction is realized through residue calculus on the Fulton--MacPherson compactification $\mathrm{Conf}_n[X]$ of configuration spaces, with the differential $d_{\text{geom}} = \sum_{D \in \partial \mathrm{Conf}_n[X]} (-1)^{|D|} \mathrm{Res}_D$ summing residues over boundary divisors. The nilpotence $d_{\text{geom}}^2 = 0$ follows from the Arnold--Orlik--Solomon relations in $H^*(\mathrm{Conf}_n[X])$, providing a geometric incarnation of the associativity of chiral operations.
 
 \medskip
 \noindent
-\textbf{Quantum Corrections and Higher Genus.} At genus zero, the construction recovers classical bar-cobar duality. At genus $g \geq 1$, quantum corrections enter through period integrals of logarithmic forms on moduli spaces $\mathcal{M}_g$. These corrections encode central extensions, anomalies, and the full tower of deformations---directly linking integrability obstructions with chiral operator algebra structure. At genus $g$ the differential satisfies $d_g^2 = \sum_k t_{g,k} \cdot \mathrm{obs}_k$ where $t_{g,k} \in H^1(\mathcal{M}_g)$ are modular parameters and $\mathrm{obs}_k \in Z(\mathcal{A})$ are central obstructions. The construction naturally encodes canonical $A_\infty$ and $L_\infty$ structures determined by configuration space stratifications, enabling systematic treatment of non-quadratic chiral algebras.
+\textbf{Quantum Corrections and Higher Genus.} At genus zero, the construction recovers classical bar-cobar duality. At genus $g \geq 1$, quantum corrections enter through period integrals of logarithmic forms over cycles of the curve~$\Sigma_g$. These corrections encode central extensions, anomalies, and the full tower of deformations---directly linking integrability obstructions with chiral operator algebra structure. On a fixed $\Sigma_g$, the fiberwise collision differential is curved: $\dfib^{\,2} = \kappa(\mathcal{A})\cdot\omega_g$, where $\kappa(\mathcal{A})$ is the leading OPE anomaly.  Incorporating period corrections from $A$-cycles restores strict nilpotence: the total corrected differential $\Dg{g} = \dzero + \sum_k t_k\, d_k$ satisfies $\Dg{g}^{\,2} = 0$, with $t_k = \oint_{A_k}\omega_k \in H^1(\Sigma_g, \mathbb{C})$.  The construction naturally encodes canonical $A_\infty$ and $L_\infty$ structures determined by configuration space stratifications, enabling systematic treatment of non-quadratic chiral algebras.
 
 \medskip
 \noindent
@@ -1016,6 +1038,10 @@ the entire monograph points: modular Koszul duality for factorization algebras.
 \input{appendices/computational_tables}
 \input{appendices/existence_criteria}
 \input{appendices/nilpotent_completion}
+
+% Relative curved models adequate for the present monograph.
+% Minimal coderived homotopy theory for off-Koszul statements.
+\input{appendices/coderived_models}
 
 % Complete notation summary: categories, operads, configuration spaces,
 % chiral structures, miscellaneous. Index of key definitions.
