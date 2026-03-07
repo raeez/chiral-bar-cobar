@@ -2,6 +2,11 @@
 
 Chapter~\ref{ch:heisenberg-frame} computed the bar complex of the Heisenberg algebra from its OPE\@. The algebraic template is general: Koszul duality for operads and algebras, the bar-cobar adjunction, and the factorization axioms that govern local-to-global assembly.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:algebraic-foundations-hms}
+This chapter operates at \textbf{M-level}: all constructions (quadratic algebras, Koszul complexes, operadic bar-cobar) are explicit algebraic models.  The H-level $\infty$-categorical framework (algebras over $\infty$-operads, derived Morita equivalence) is referenced but not developed here; it appears in Chapter~\ref{chap:koszul-pairs}.  S-level shadows (Hilbert series, Koszul duality of Poincar\'e series) appear in examples.
+\end{remark}
+
 \section{Classical Koszul duality}
 \label{sec:classical-koszul-foundation}
 
@@ -67,7 +72,9 @@ A pair of quadratic algebras $(A_1, A_2)$ is a \emph{Koszul pair} if:
 \noindent
 The chiral analogue is Definition~\ref{def:chiral-koszul-pair} (Chapter~\ref{chap:koszul-pairs}), previewed in \S\ref{subsec:chiral-koszul-pairs-precise} below;
 the $\Eone$-chiral version appears in
-Theorem~\ref{thm:e1-chiral-koszul-duality} (Chapter~\ref{chap:koszul-pairs}).
+Theorem~\ref{thm:e1-chiral-koszul-duality} (Chapter~\ref{chap:koszul-pairs});
+the modular (higher-genus) refinement is
+Definition~\ref{def:modular-koszul-homotopy} (Chapter~\ref{chap:higher-genus}).
 
 \begin{remark}[Two phenomena]
 \label{rem:two-phenomena}
@@ -99,15 +106,38 @@ Definition~\ref{def:koszul-pair-classical} extends to chiral algebras via a two-
 \label{def:chiral-koszul-pair-bar-cobar}%
 \label{def:chiral-koszul-pair-twisting}%
 
-Two chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ on a smooth curve $X$ form a \emph{chiral Koszul pair} (cf.\ Definition~\ref{def:chiral-koszul-pair}) if the geometric bar construction of each is quasi-isomorphic to the Koszul dual coalgebra of the other, and cobar inverts bar:
-$$\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!, \quad
-  \bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq \mathcal{A}_1^!, \quad
-  \Omega^{\text{ch}}(\mathcal{A}_i^!) \simeq \mathcal{A}_i.$$
-Equivalently, there exists a universal twisting morphism $\tau_{12}\colon \mathcal{A}_1^! \to \mathcal{A}_2$ satisfying the Maurer--Cartan equation, with geometric realization via configuration space integration kernels.
+The chiral Koszul pair structure has three layers
+(cf.\ Definition~\ref{def:chiral-koszul-pair},
+Chapter~\ref{chap:koszul-pairs}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Construction layer:} For every augmented chiral algebra
+  $\mathcal{A}$, the bar construction
+  $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ and cobar construction
+  $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ exist as
+  objects (Definition~\ref{def:chiral-twisting-datum}).
+\item \emph{Recognition layer:} A chiral twisting datum
+  $(\mathcal{A}, \mathcal{C}, \tau, F_\bullet)$ satisfying PBW
+  degeneration and acyclicity of twisted tensor products
+  provides \emph{antecedent} Koszul recognition data
+  (Definition~\ref{def:chiral-koszul-morphism}).
+\item \emph{Theorem layer:} For a chiral Koszul pair
+  $(\mathcal{A}_1, \mathcal{A}_2)$, Theorem~A
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}) proves
+  $\bar{B}^{\mathrm{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$
+  and $\Omega^{\mathrm{ch}}(\mathcal{A}_i^!) \simeq \mathcal{A}_i$
+  as \emph{consequences} of the recognition data, not as definitions.
+\end{enumerate}
+Off the Koszul locus, the bar-cobar object persists only in
+the completed coderived category
+(Appendix~\ref{sec:coderived-models}).%
 
 \begin{remark}
 \label{rem:why-definition-works}
-The bar-cobar characterization applies beyond the quadratic setting and connects to the Gui--Li--Zeng framework (\S\ref{subsec:gui-li-zeng-framework}), where Koszul duality is expressed through Maurer--Cartan elements in $\mathcal{A}_1^! \otimes \mathcal{A}_2$.
+The bar-cobar characterization applies beyond the quadratic setting
+and connects to the Gui--Li--Zeng framework
+(\S\ref{subsec:gui-li-zeng-framework}), where Koszul duality is
+expressed through Maurer--Cartan elements
+in $\mathcal{A}_1^! \otimes \mathcal{A}_2$.
 \end{remark}
 
 \begin{remark}[Twisting morphisms]

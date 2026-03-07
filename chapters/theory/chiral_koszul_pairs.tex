@@ -17,6 +17,11 @@ it is the genus-$0$ prerequisite for modular Koszulity
 (Definition~\ref{def:modular-koszul-chiral}) and structures the entire
 landscape of examples in Part~II.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:chiral-koszul-pairs-hms}
+The Koszul property is proved at \textbf{M-level} (explicit bar-cobar models, PBW spectral sequences, Hilbert series).  The main equivalence theorem (Theorem~\ref{thm:bar-cobar-isomorphism-main}) is stated at \textbf{H-level} (adjunction in factorization $\infty$-categories) and proved at M-level (Step~B).  Spectral data, Hilbert series, and the Koszul dual identification tables are \textbf{S-level} shadows.
+\end{remark}
+
 % ================================================================
 % SECTION 8.2: FROM QUADRATIC TO CHIRAL KOSZUL PAIRS
 % ================================================================
@@ -104,6 +109,84 @@ This is the chiral/factorization analogue of the fundamental
 theorem of twisting morphisms \cite[Theorem~2.3.1]{LV}.
 \end{remark}
 
+The following lemmas make the mapping-cone identifications
+explicit, as required for Theorem~\ref{thm:fundamental-twisting-morphisms}.
+
+\begin{lemma}[Left twisted tensor product as mapping cone; \ClaimStatusProvedHere]
+\label{lem:twisted-product-cone-counit}
+\index{twisted tensor product!mapping cone}
+Let $(\cA, \cC, \tau, F_\bullet)$ be a chiral twisting datum.
+There is a natural identification of chain complexes
+\[
+K_\tau^L(\cA,\cC) \;\simeq\; \operatorname{Cone}(\varepsilon_\tau)[-1]
+\]
+where $\varepsilon_\tau\colon \Omega_X(\cC) \to \cA$ is the
+canonical counit.  In particular, $K_\tau^L$ is acyclic if and
+only if $\varepsilon_\tau$ is a quasi-isomorphism.
+\end{lemma}
+
+\begin{proof}
+Decompose the total differential on $\cA \widehat{\otimes} \cC$
+as $d_\cA + d_\cC + d_\tau^L$.  The $d_\tau^L$ component acts as
+the cobar differential on the $\cC$-factor and as the
+$\varepsilon_\tau$-induced augmentation on the $\cA$-factor.
+The resulting complex is exactly the mapping cone of
+$\varepsilon_\tau\colon \Omega_X(\cC) \to \cA$ shifted by~$[-1]$:
+the rows of the double complex are
+$\cA \leftarrow \cA \otimes \cC \leftarrow \cA \otimes \cC^{\otimes 2}
+\leftarrow \cdots$, which is the bar-type resolution of the
+augmentation map.  This is the chiral analogue of
+\cite[Lemma~2.2.5]{LV12}.
+\end{proof}
+
+\begin{lemma}[Right twisted tensor product as mapping cone; \ClaimStatusProvedHere]
+\label{lem:twisted-product-cone-unit}
+\index{twisted tensor product!mapping cone}
+Under the same hypotheses, there is a natural identification
+\[
+K_\tau^R(\cC,\cA) \;\simeq\; \operatorname{Cone}(\eta_\tau)[-1]
+\]
+where $\eta_\tau\colon \cC \to \bar{B}_X(\cA)$ is the canonical
+unit.  In particular, $K_\tau^R$ is acyclic if and only if
+$\eta_\tau$ is a weak equivalence.
+\end{lemma}
+
+\begin{proof}
+Dual to Lemma~\ref{lem:twisted-product-cone-counit}: the
+$d_\tau^R$ component on $\cC \widehat{\otimes} \cA$ acts as the
+bar differential on the $\cA$-factor and as the
+$\eta_\tau$-induced augmentation on the $\cC$-factor, identifying
+$K_\tau^R$ with $\operatorname{Cone}(\eta_\tau)[-1]$.
+\end{proof}
+
+\begin{lemma}[Filtered comparison; \ClaimStatusProvedHere]
+\label{lem:filtered-comparison}
+\index{spectral sequence!filtered comparison}
+Let $(\cA, \cC, \tau, F_\bullet)$ be a chiral twisting datum
+whose filtration is exhaustive, complete, and bounded below.
+If $\varepsilon_\tau$ is a quasi-isomorphism, then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the associated graded datum
+  $(\operatorname{gr} \cA, \operatorname{gr} \cC,
+  \operatorname{gr} \tau)$ is a classical Koszul datum;
+\item both twisted tensor products $K_\tau^L$ and $K_\tau^R$ are
+  acyclic.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Filter $\varepsilon_\tau$ by $F_\bullet$.  Since the filtration
+is bounded below and complete, the spectral sequence converges
+strongly (Eilenberg--Moore).  The associated graded
+$\operatorname{gr} \varepsilon_\tau$ is a quasi-isomorphism
+between graded objects, which by \cite[Theorem~3.2.1]{LV12}
+identifies $\operatorname{gr} \tau$ as a classical Koszul
+morphism.  Classical Koszulity gives acyclicity of the
+associated graded twisted tensor products.  Strong convergence
+then lifts this to acyclicity of $K_\tau^L$ and $K_\tau^R$
+themselves.
+\end{proof}
+
 \begin{theorem}[Fundamental theorem of chiral twisting morphisms; \ClaimStatusProvedHere]
 \label{thm:fundamental-twisting-morphisms}
 \index{twisting morphism!fundamental theorem|textbf}
@@ -112,7 +195,8 @@ theorem of twisting morphisms \cite[Theorem~2.3.1]{LV}.
 
 \smallskip\noindent
 This is the chiral analogue of \cite[Theorem~2.3.1]{LV12}.
-For a chiral twisting datum $(\cA, \cC, \tau, F_\bullet)$
+For a chiral twisting datum
+$(\cA, \cC, \tau, F_\bullet)$
 \textup{(}Definition~\textup{\ref{def:chiral-twisting-datum})},
 the following are equivalent:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -144,32 +228,29 @@ By definition (Definition~\ref{def:chiral-koszul-morphism},
 condition~1).
 
 \emph{\ref{ftm:acyclic}$\Rightarrow$\ref{ftm:counit}:}
-The acyclicity of $K_\tau^L(\cA,\cC)$ means the twisted
-differential $d_\cA + d_\cC + d_\tau^L$ on $\cA \otimes \cC$
-is exact.  This implies the counit
-$\varepsilon_\tau\colon \Omega_X(\cC) \to \cA$ induces an
-isomorphism on cohomology: the twisted tensor product
-$K_\tau^L$ is precisely the mapping cone of~$\varepsilon_\tau$,
-and its acyclicity is equivalent to $\varepsilon_\tau$ being a
-quasi-isomorphism.
+By Lemma~\ref{lem:twisted-product-cone-counit},
+$K_\tau^L \simeq \operatorname{Cone}(\varepsilon_\tau)[-1]$.
+Acyclicity of $K_\tau^L$ is therefore equivalent to
+$\varepsilon_\tau$ being a quasi-isomorphism.
 
 \emph{\ref{ftm:acyclic}$\Rightarrow$\ref{ftm:unit}:}
-Dually, $K_\tau^R(\cC,\cA)$ acyclic implies
-$\eta_\tau\colon \cC \to \bar{B}_X(\cA)$ is a weak equivalence
-of coalgebras, since $K_\tau^R$ is the mapping cone of~$\eta_\tau$.
+By Lemma~\ref{lem:twisted-product-cone-unit},
+$K_\tau^R \simeq \operatorname{Cone}(\eta_\tau)[-1]$.
+Acyclicity of $K_\tau^R$ is therefore equivalent to
+$\eta_\tau$ being a weak equivalence.
 
 \emph{\ref{ftm:counit}$\Rightarrow$\ref{ftm:koszul}:}
-If $\varepsilon_\tau$ is a quasi-isomorphism, filter
-$\Omega_X(\cC)$ by cobar degree and use the convergence
+By Lemma~\ref{lem:filtered-comparison}: filter $\Omega_X(\cC)$
+by cobar degree; the quasi-isomorphism of $\varepsilon_\tau$
+implies classical Koszulity of the associated graded datum and
+acyclicity of the twisted tensor products.  The convergence
 hypothesis (Definition~\ref{def:chiral-koszul-morphism},
-condition~3) to deduce $E_2$ collapse of the associated
-spectral sequence.  The associated graded level gives
-classical Koszulity (condition~2), and the acyclicity of the
-twisted tensor products follows from the quasi-isomorphism via
-the mapping cone identification.
+condition~3) ensures the spectral sequence converges strongly.
 
 \emph{\ref{ftm:unit}$\Rightarrow$\ref{ftm:koszul}:}
-Symmetric argument applied to the unit.
+Symmetric argument applied to the unit, using
+Lemma~\ref{lem:filtered-comparison} with the bar-degree
+filtration.
 
 The key geometric input throughout is that the filtration
 $F_\bullet$ on $\bar{B}_X(\cA)$ and $\Omega_X(\cC)$ is
@@ -228,11 +309,12 @@ $\cA_1 \simeq \cA_2^!$.
 \smallskip\noindent
 These are \emph{antecedent hypotheses}: the twisting data
 (Definition~\ref{def:chiral-twisting-datum}), the Koszulness
-condition (Definition~\ref{def:chiral-koszul-morphism}), and
-Verdier compatibility can all be verified without invoking
-bar-cobar duality itself.
-Theorem~\ref{thm:bar-cobar-isomorphism-main} then \emph{proves}
-the full bar-cobar identification as a consequence.
+condition (Definition~\ref{def:chiral-koszul-morphism}),
+and Verdier compatibility can all be verified without
+invoking bar-cobar duality itself.
+Theorem~\ref{thm:bar-cobar-isomorphism-main} then
+\emph{proves} the full bar-cobar identification as a
+consequence.
 
 \smallskip\noindent
 \emph{Standard construction.}
@@ -539,8 +621,8 @@ $\widehat{\fg}_k$ is chiral Koszul.
 \begin{theorem}[Virasoro chiral Koszulness; \ClaimStatusProvedHere]
 \label{thm:virasoro-chiral-koszul}
 \index{Virasoro algebra!chiral Koszulness|textbf}
-\textup{[Regime: curved-central
-\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+\textup{[Regime: curved-central\textup{;}
+Convention~\textup{\ref{conv:regime-tags}}.]}
 
 For any central charge $c \in \bC$, the Virasoro vertex algebra
 $\mathrm{Vir}_c$ is chiral Koszul.
@@ -704,17 +786,21 @@ associated-graded level, confirming the computation.
 
 Let $(\cA_1, \cA_2)$ be a chiral Koszul pair
 \textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})}.
-Then the augmented bar complex $\bar{B}^{\mathrm{ch}}(\cA_1)$ has
-cohomology concentrated in degree~$0$:
+Then the augmented bar complex $\bar{B}^{\mathrm{ch}}(\cA_1)$,
+equipped with its bigrading by bar degree~$p$ and bar-differential
+cohomological degree~$q$, satisfies:
 \[
-H^i(\bar{B}^{\mathrm{ch}}(\cA_1)) = 0
-\quad\text{for } i \neq 0,
+H^{p,q}(\bar{B}^{\mathrm{ch}}(\cA_1)) = 0
+\quad\text{for } q \neq 0,
 \qquad
-H^0(\bar{B}^{\mathrm{ch}}(\cA_1)) \cong \cA_2^!.
+H^{p,0}(\bar{B}^{\mathrm{ch}}(\cA_1)) \cong (\cA_2^!)_p.
 \]
+Equivalently, $\bar{B}^{\mathrm{ch}}(\cA_1) \simeq \cA_2^!$ in the
+derived category of graded chiral coalgebras, where $\cA_2^!$ carries
+its internal grading concentrated in bar-differential degree~$0$.
 In particular, the natural map
 $\bar{B}^{\mathrm{ch}}(\cA_1) \to \cA_2^!$ is a
-quasi-isomorphism of chiral coalgebras.
+quasi-isomorphism of graded chiral coalgebras.
 \end{theorem}
 
 \begin{proof}
@@ -797,9 +883,13 @@ yields $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1) \simeq
 \bar{B}_X(\cA_2)$.
 Part~(3) is the same statement after naming $\cA_2$ as the Koszul
 dual~$\cA_1^!$.
-The relative/family statement follows from the compatibility of the
-bar construction with proper base change and Verdier duality in families
-(Theorem~\ref{thm:verdier-bar-cobar}).
+The relative/family statement follows from proper base change
+(Lemma~\ref{lem:pushforward-preserves-qi}): the FM compactification
+$\overline{C}_n(X)$ is proper over $\overline{\mathcal{M}}_{g,n}$,
+so the fiberwise quasi-isomorphisms lift to the family by
+Theorem~\ref{thm:bar-cobar-inversion-functorial}, and Verdier
+duality commutes with proper base change by
+Theorem~\ref{thm:verdier-bar-cobar}.
 \end{proof}
 
 \begin{remark}[Elementary model presentation;
@@ -1703,8 +1793,8 @@ $$W_3^! = \widehat{T^c(T^* \oplus W^*)}$$
 d_!(T^*) &= -\frac{c}{2} \cdot \text{(curvature)} \\
 d_!(W^*) &= -\sum_{\text{poles}} (\text{structure constants from } W \times W \text{ OPE}) \\
 &= -\frac{16}{22+5c}\,\Lambda^* - \frac{2}{(z-w)^4}\,T^* - \cdots \\
-& \quad\text{(only poles of order $\leq 2$ in the propagator $\eta_{12}$
-contribute; the $(z{-}w)^{-6}$ pole gives zero residue)}
+& \quad\text{(only poles of order $\leq 2$ in $\eta_{12}$
+contribute; $(z{-}w)^{-6}$ gives zero residue)}
 \end{align*}
 
 \medskip
@@ -2302,14 +2392,18 @@ rank~$1$), reflecting that no non-trivial higher operations arise.
 
 \begin{corollary}[$\Eone$--$\Eone$ Self-Duality; \ClaimStatusProvedHere]
 \label{cor:e1-self-duality}
-Since $(\chirAss)^! \cong \chirAss \otimes \operatorname{sgn}$
-(Proposition~\ref{prop:chirAss-self-dual}), the Koszul dual of an
-augmented pro-nilpotent $\Eone$-chiral algebra $\mathcal{A}$ is
-a conilpotent $\Eone$-chiral coalgebra
-$\mathcal{A}^! := \bar{B}^{\mathrm{ch}}(\mathcal{A})$.
-Under linear duality (when $\mathcal{A}$ has finite-dimensional
-graded components), this coalgebra dualizes to an $\Eone$-chiral
-algebra, and the double-dual map
+\tolerance=1500
+Since
+$(\chirAss)^! \cong \chirAss \otimes \operatorname{sgn}$
+(Proposition~\ref{prop:chirAss-self-dual}), the Koszul dual
+of an augmented pro-nilpotent
+$\Eone$\nobreakdash-chiral algebra~$\mathcal{A}$ is a
+conilpotent $\Eone$\nobreakdash-chiral coalgebra
+$\mathcal{A}^! \coloneqq \bar{B}^{\mathrm{ch}}(\mathcal{A})$.
+Under linear duality (when $\mathcal{A}$ has
+finite-dimensional graded components), this coalgebra
+dualizes to an $\Eone$\nobreakdash-chiral algebra, and
+the double-dual map
 \[
 \mathcal{A} \;\xrightarrow{\;\sim\;}\;
 (\mathcal{A}^!)^!
@@ -2761,6 +2855,7 @@ to DG chiral algebras, with the free fermion and $(\beta\gamma \oplus bc,
 d_{\mathrm{BRST}})$ forming a derived Koszul pair.  The M-level model
 is the derived bar-cobar adjunction for DG chiral algebras.  The shadow
 is the decomposition of the BRST complex into Koszul dual sectors.
+(Contributing to Conjecture~\ref{conj:master-infinite-generator}.)
 \end{remark}
 
 % ================================================================
@@ -2949,6 +3044,33 @@ Our geometric approach to Chiral Koszul Duality provides:
 
 \item \emph{Computational algorithms:} Verification procedures with complexity bounds
 \end{enumerate}
+
+\begin{remark}[Dependency digest]\label{rem:ckp-dependency-digest}
+\index{chiral Koszul pairs!dependency map}
+This chapter provides the following results used by later chapters:
+\begin{itemize}
+\item $\mathrm{A}_0$: Fundamental theorem of chiral twisting morphisms
+  (Theorem~\ref{thm:fundamental-twisting-morphisms}) --- used by
+  Chapters~\ref{chap:higher-genus}, \ref{chap:chiral-modules}.
+\item $\mathrm{A}_1$: Bar concentration
+  (Theorem~\ref{thm:bar-concentration}) --- used by
+  Theorem~$\mathrm{C}_0$
+  (Theorem~\ref{thm:fiber-center-identification}).
+\item $\mathrm{A}_2$: Geometric bar-cobar duality
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}) --- used
+  everywhere.
+\item Theorem~B: Higher genus inversion
+  (Theorem~\ref{thm:higher-genus-inversion}) is
+  proved in Chapter~\ref{chap:higher-genus} using the foundations
+  above.
+\item PBW Koszulness criterion
+  (Theorem~\ref{thm:pbw-koszulness-criterion}) --- used by all
+  interacting-family example chapters.
+\item $\Eone$-chiral Koszul duality
+  (Theorem~\ref{thm:e1-chiral-koszul-duality}) --- used by
+  Chapter~\ref{chap:yangians}.
+\end{itemize}
+\end{remark}
 
 The Koszul pair structure classifies the duality at the algebra level.
 But a chiral algebra without its representations is like a group without

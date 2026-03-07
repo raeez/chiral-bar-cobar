@@ -44,21 +44,21 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 ### Census (verified fresh grep, Mar 7)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **759** |
-| ProvedElsewhere | **333** |
-| Conjectured | **119** |
+| ProvedHere | **767** |
+| ProvedElsewhere | **334** |
+| Conjectured | **123** |
 | Heuristic | **27** |
 | Open | **0** |
-| **Total tagged claims** | **1238** |
+| **Total tagged claims** | **1251** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1372 pages** (converged), zero new LaTeX errors (1 pre-existing definition env mismatch), zero undefined refs, 2 undefined citations (Lurie11, Kac90), zero multiply-defined labels
+- **1396 pages** (converged in 2-3 passes), zero LaTeX errors, zero undefined refs, zero undefined citations, zero multiply-defined labels
 - 55 active .tex files + 8 stubs (+ main.tex preamble), 87K+ lines of LaTeX
-- Bibliography: 254 entries, all citations resolved
+- Bibliography: 275 entries, all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
-- Cosmetic: ~115 overfull hbox (2 severe >14pt in chiral_koszul_pairs.tex and higher_genus.tex), ~80 underfull hbox
+- Cosmetic: ~180 overfull hbox (8 at >10pt, all in deeply indented theorem envs with long cross-refs), ~172 underfull hbox
 - Build: `make` (6-pass, stamp-based idempotent), `make fast` (1-pass iteration), `make clean` (debris only, preserves stamp), `make veryclean` (force full rebuild). See "Build System — Stamp Architecture" below.
 - **CAUTION**: A hook/watcher spawns competing pdflatex on file edits; kill before manual builds
 - Subject index: 329+ entries across 37 files
@@ -152,11 +152,11 @@ The Makefile uses a `.build_stamp` sentinel file to track the last successful bu
 **CAUTION**: A hook/watcher may spawn competing pdflatex on file edits; kill before manual builds (`pkill -f pdflatex` if needed).
 
 ### Autonomous Loop (for unattended operation)
-See `notes/SESSION_PROMPT_v9.md` for the current session prompt (triple-intersection identity, audit-5 integration, research programme map). Launch with:
+See `notes/SESSION_PROMPT_v18.md` for the current session prompt (constitutional enforcement engine, raeeznotes10-14 synthesis, priority queue). Launch with:
 ```
-Read notes/SESSION_PROMPT_v9.md and execute it.
+Read notes/SESSION_PROMPT_v18.md and execute it.
 ```
-v8 and all prior prompts (v1-v7) archived in `notes/archive/`.
+v9-v17 are prior prompts (v9 = general engine, v15 = resculpting, v16 = dissemination, v17 = gap closure). v1-v8 archived in `notes/archive/`.
 
 ### Mathematical Standards (Serre/Grothendieck)
 - Every theorem gets a complete proof. "Sketch" and "the proof is similar" are temporary.

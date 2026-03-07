@@ -3,6 +3,13 @@
 
 \noindent\emph{Exhaustive degree-by-degree bar complex computations for $\mathfrak{sl}_3$, $\mathcal{W}_3$, $E_8$, and the Virasoro algebra, complementing the Heisenberg calculations of Chapter~\ref{ch:heisenberg-frame}.  Every structure constant, differential matrix, and chain-level verification that the preceding chapters deferred to ``explicit computation'' appears here.}
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:detailed-hms}
+This chapter operates entirely at \textbf{S-level}: explicit bar
+dimensions, differential matrices, BGG resolution data, and
+structure constants.  Each computation is a numerical verification
+of an M-level prediction from the preceding chapters.
+\end{remark}
 
 \section{Heisenberg computations}
 \label{sec:heisenberg-details}
@@ -419,7 +426,10 @@ All $T_{(n)}W = 0$ for $n \geq 2$.
 
 \emph{$W \times T$ (double pole).}
 By the vertex algebra skew-symmetry formula
-$b_{(n)}a = \sum_{j \geq 0} \frac{(-1)^{n+j+1}}{j!}\,\partial^j(a_{(n+j)}b)$:
+\[
+b_{(n)}a = \sum_{j \geq 0}
+\frac{(-1)^{n+j+1}}{j!}\,\partial^j(a_{(n+j)}b)\colon
+\]
 \begin{align*}
 W_{(1)}T &= T_{(1)}W = 3W, \\
 W_{(0)}T &= -T_{(0)}W + \partial(T_{(1)}W) = -\partial W + 3\partial W = 2\partial W.
@@ -612,9 +622,11 @@ d\bigl([H_{1}|E_1|E_2] \otimes \eta_{12}\wedge\eta_{13}\bigr)
 \end{equation}
 (suppressing mode indices for clarity).
 
-\emph{(ii) Serre relation element:
-$S = [E_{1,-\ell}|E_{1,-m}|E_{2,-n}] -
-2[E_{1,-\ell}|E_{2,-m}|E_{1,-n}] + [E_{2,-\ell}|E_{1,-m}|E_{1,-n}]$.}
+\emph{(ii) Serre relation element:}
+\[
+S = [E_{1,-\ell}|E_{1,-m}|E_{2,-n}] -
+2[E_{1,-\ell}|E_{2,-m}|E_{1,-n}] + [E_{2,-\ell}|E_{1,-m}|E_{1,-n}].
+\]
 
 This is the key computation.  We evaluate $d(S)$ on $\eta_{12}\wedge\eta_{13}$.
 
@@ -2054,7 +2066,8 @@ Kac--Moody algebras
 \label{comp:G2-serre}
 \index{Serre relations!G2@$G_2$}
 
-\emph{(a) Long-root Serre: $(\operatorname{ad} E_2)^2(E_1) = 0$.}
+\emph{(a) Long-root Serre:
+$(\operatorname{ad} E_2)^2(E_1) = 0$.}
 Identical in structure to the $B_2$ long-root Serre
 (Computation~\ref{comp:B2-serre}(a)).
 Bar degree: $3$.  Element:
@@ -3315,15 +3328,19 @@ $n \backslash h$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 &
 \end{tabular}
 }
 \end{center}
-The row $n = 1$ lists $\dim \bar{V}_h = p_{\geq 2}(h)$ (partitions
-into parts $\geq 2$).  The row $n = 2$ lists
-$\sum_{a+b=h} p_{\geq 2}(a) \cdot p_{\geq 2}(b) \cdot 1$
-(the form space $\Omega^1(\overline{\Conf}_2)$ is $1$-dimensional).
+The row $n = 1$ lists $\dim \bar{V}_h = p_{\geq 2}(h)$
+(partitions into parts $\geq 2$).  The row $n = 2$ lists
+$\sum_{a+b=h} p_{\geq 2}(a) \cdot p_{\geq 2}(b)$
+(the form space $\Omega^1(\overline{\Conf}_2)$ is
+$1$-dimensional).
 The row $n = k$ has entries
-$\bigl(\sum_{a_1 + \cdots + a_k = h}
-\prod_i p_{\geq 2}(a_i)\bigr) \cdot (k-1)!$
-for $h \geq 2k$, where the factor $(k-1)!
-= \dim \Omega^{k-1}(\overline{\Conf}_k)$ counts the top-degree forms.
+\[
+\Bigl(\sum_{a_1 + \cdots + a_k = h}
+\prod_i p_{\geq 2}(a_i)\Bigr) \cdot (k-1)!
+\]
+for $h \geq 2k$, where the factor
+$(k-1)! = \dim \Omega^{k-1}(\overline{\Conf}_k)$
+counts the top-degree forms.
 
 In particular:
 \begin{itemize}
@@ -3709,20 +3726,21 @@ $d([e \mid f]) = h$ and $h \cdot v_0 = 0$
 under~$h$ since $d([h \mid f]) = -2f$ provides the
 coefficient.
 
-\emph{Curvature and genus-$1$ correction.}
-The curvature terms
-$k\kappa^{ab} \cdot \mathbf{1}$ in the bar differential
+\emph{Curvature and genus-$1$ correction.}\quad
+The curvature terms $k\kappa^{ab} \cdot \mathbf{1}$
+in the bar differential
 (Computation~\ref{comp:sl2-bar-matrix}) encode the
-genus-$1$ obstruction: at genus~$0$ the bar complex is
-strict ($d^2 = 0$); at genus~$1$,
+genus-$1$ obstruction: at genus~$0$ the bar complex
+is strict ($d^2 = 0$); at genus~$1$,
 $(d^{(1)})^2 = \kappa \cdot \omega_1$ where
 $\kappa = 3(k{+}2)/4$
-(Computation~\ref{comp:sl2-genus-table}).  The level~$k$
-enters the BGG resolution only through the Shapovalov
-form (Proposition~\ref{prop:shapovalov-koszul}), not
-through the combinatorial structure of the resolution
-itself --- matching the fact that bar chain
-groups are level-independent
+(Computation~\ref{comp:sl2-genus-table}).
+The level~$k$ enters the BGG resolution only
+through the Shapovalov form
+(Proposition~\ref{prop:shapovalov-koszul}), not
+through the combinatorial structure of the
+resolution itself---matching the fact that bar
+chain groups are level-independent
 (Remark~\ref{rem:bar-dims-level-independent}).
 
 \emph{Rank and the Koszul dual.}

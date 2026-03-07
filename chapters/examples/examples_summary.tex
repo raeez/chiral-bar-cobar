@@ -3,6 +3,14 @@
 
 \noindent\emph{The Master Table below collects the invariants computed throughout Part~II.  For the Heisenberg algebra, these invariants were derived in Chapter~\ref{ch:heisenberg-frame}; for each subsequent algebra, the corresponding chapter provides the complete computation.}
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:summary-hms}
+This summary chapter is purely \textbf{S-level}: a tabulation of
+numerical invariants (central charges, curvatures, discriminants,
+bar dimensions) extracted from the M-level computations of the
+preceding chapters.
+\end{remark}
+
 \section*{Master table of computed invariants}
 \label{sec:master-table}
 \index{master table of invariants|textbf}
@@ -18,6 +26,7 @@ $h^\vee$ is the dual Coxeter number, and $t = k + h^\vee$.
 \index{Koszul duality!master table}
 \renewcommand{\arraystretch}{1.5}
 {\small
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{|l|l|c|c|c|c|}
 \hline
 \textbf{Algebra $\cA$} & \textbf{Koszul Dual $\cA^!$}
@@ -83,8 +92,9 @@ Yangian $Y(\fg)$
   & $Y_{R^{-1}}(\fg)$
   & --- & --- & --- & PH \\
 \hline
-\end{tabular}
-}
+\end{tabular}%
+}% end resizebox
+}% end small
 \end{table}
 
 \noindent\textbf{Status column}: PH = proved in this monograph
@@ -102,11 +112,17 @@ different levels of the proof architecture:
 \item[\textbf{T1.}] \emph{Unconditional} (free fields, Heisenberg):
   Koszulness is elementary ($d_{\mathrm{bracket}} = 0$ or $\dim V \le 2$).
   All invariants follow by direct computation.
-\item[\textbf{T2.}] \emph{PBW-conditional} (Kac--Moody, $\mathcal{W}$-algebras):
+\item[\textbf{T1$\frac{1}{2}$.}] \emph{Unconditional via PBW}
+  (Kac--Moody at all genera):
   Koszulness proved via the PBW spectral sequence
-  (Theorems~\ref{thm:km-chiral-koszul}, \ref{thm:virasoro-chiral-koszul}).
-  Duality and invariants follow from the main theorems once
-  Koszulness is established.
+  (Theorem~\ref{thm:km-chiral-koszul}); higher-genus degeneration
+  proved unconditionally (Theorem~\ref{thm:pbw-allgenera-km}).
+  All invariants follow from the main theorems.
+\item[\textbf{T2.}] \emph{PBW-conditional} (Virasoro, $\mathcal{W}$-algebras):
+  Koszulness proved via the PBW spectral sequence
+  (Theorem~\ref{thm:virasoro-chiral-koszul}).
+  Higher-genus degeneration for Virasoro and $\mathcal{W}_N$ remains
+  conditional on Conjecture~\ref{conj:master-pbw}.
 \item[\textbf{T3.}] \emph{$\Eone$-regime} (Yangians):
   The $\Eone$-chiral Koszul duality theorem
   (Theorem~\ref{thm:e1-chiral-koszul-duality}) applies directly; the
@@ -358,11 +374,12 @@ The explicit formulas are:
   degrees~$4$--$10$ predicted from the conjectured
   rational GF~\eqref{eq:sl3-bar-gf}.
 \item \emph{Virasoro}:
-  $\dim (\mathrm{Vir}_c^!)_n = M(n{+}1) - M(n)$ where $M(n)$ is the $n$-th
-  Motzkin number (OEIS~A001006).  This reflects the
-  associahedron structure of $\overline{M}_{0,n+2}$,
-  proved via the chiral Koszulness of $\mathrm{Vir}_c$
-  (Theorem~\ref{thm:virasoro-chiral-koszul}) and the
+  $\dim (\mathrm{Vir}_c^!)_n = M(n{+}1) - M(n)$
+  where $M(n)$ is the $n$-th Motzkin number
+  (OEIS~A001006).  This reflects the associahedron
+  structure of $\overline{M}_{0,n+2}$, proved via
+  chiral Koszulness of $\mathrm{Vir}_c$
+  (Theorem~\ref{thm:virasoro-chiral-koszul}) and
   $E_2$ collapse
   (Corollary~\ref{cor:bar-cohomology-koszul-dual}).
 \item \emph{$\mathcal{W}_3$}: computed through degree~$3$
@@ -722,7 +739,7 @@ from the fact that DS reduction preserves the reduced center
 and its Kodaira--Spencer transport.
 
 For $\mathfrak{g} = \mathfrak{sl}_3$ (assuming
-Conjecture~\ref{conj:sl3-discriminant}):
+Conjecture~\ref{conj:sl3-bar-gf}):
 the predicted discriminant
 $\Delta_{\mathfrak{sl}_3} = (1 - 8x)(1 - 3x - x^2)$
 gives a $3$-dimensional space with eigenvalues~$8 = \dim \mathfrak{sl}_3$,
@@ -746,6 +763,7 @@ The correct space $H^{\mathrm{red}}_1$ must
 therefore be a \emph{subquotient} of $H^1$, not $H^1$ itself.
 Identifying this subquotient representation-theoretically is the
 core open problem.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -861,8 +879,7 @@ contributions to $H^n$ determine those to $H^{n+1}$, should
 recover~$T_{\mathrm{rec}}$.
 \end{remark}
 
-\begin{conjecture}[$\widehat{\mathfrak{sl}}_3$ bar generating function; \ClaimStatusConjectured]\label{conj:sl3-discriminant}
-\label{conj:sl3-bar-gf}
+\begin{conjecture}[$\widehat{\mathfrak{sl}}_3$ bar generating function; \ClaimStatusConjectured]\label{conj:sl3-bar-gf}
 \index{sl3@$\mathfrak{sl}_3$!bar generating function}
 The bar cohomology generating function of $\widehat{\mathfrak{sl}}_3$ is
 the rational function
@@ -907,6 +924,7 @@ the zeros of the discriminant $\Delta = 1 - 2x - 3x^2 = (1-3x)(1+x)$.
 \end{enumerate}
 
 \emph{Scope.}  Verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$: the value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.  The computation requires the rank of a $24576 \times 786432$ matrix, which is beyond hand computation but potentially accessible to numerical linear algebra.
+(Contributing to Conjecture~\ref{conj:master-pbw}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1913,6 +1931,7 @@ of Theorem~\ref{thm:spectral-sequence-collapse} to the $\Eone$
 setting.
 The scope of this extension is discussed in
 Remark~\ref{rem:yangian-three-theorems}.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
 \section*{Cross-reference guide}

@@ -1,17 +1,18 @@
 \chapter{Explicit Kac--Moody Koszul duals}\label{chap:kac-moody-koszul}
 \label{chap:kac-moody}
 
-The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is Koszul duality.  The Koszul dual of $\widehat{\mathfrak{g}}_k$ is $\widehat{\mathfrak{g}}_{-k-2h^\vee}$, realized by the curved chiral Chevalley--Eilenberg coalgebra; the curvature $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot k / (k + h^\vee)$ controls all higher-genus corrections, and the complementarity $\kappa + \kappa' = 0$ is the antisymmetry of the Killing form.  The bar spectral sequence collapses at $E_2$.
+The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is Koszul duality.  The Koszul dual of $\widehat{\mathfrak{g}}_k$ is $\widehat{\mathfrak{g}}_{-k-2h^\vee}$, realized by the curved chiral Chevalley--Eilenberg coalgebra; the curvature $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot k / (k + h^\vee)$ controls the scalar genus tower (Theorem~D$_{\mathrm{scal}}$), and the complementarity $\kappa + \kappa' = 0$ is the antisymmetry of the Killing form.  The bar spectral sequence collapses at $E_2$.
 
 \begin{remark}[Kac--Moody as atom: functorial shadows]
 \label{rem:km-atom}
-\index{Kac--Moody algebra!as modular Koszul atom}
+\index{Kac--Moody algebra!as modular Koszul atom (unconditional)}
 In the ``atoms, not examples'' framing of
 Remark~\ref{rem:free-field-atoms}, the Kac--Moody family reveals
 what the free fields cannot: that the three invariants
 $\kappa(\cA)$, $\Delta_{\cA}(x)$, and the dual Hilbert series
 $P_{\cA^!}(x)$ are \emph{functorial} shadows of the modular
-Koszul structure, preserved by Drinfeld--Sokolov reduction.
+Koszul structure (unconditional at all genera by
+Theorem~\ref{thm:pbw-allgenera-km}), preserved by Drinfeld--Sokolov reduction.
 The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is the
 shadow of Verdier duality on the master
 diagram~\eqref{eq:master-square}, restricted to the Kac--Moody
@@ -19,6 +20,41 @@ locus.  The master functorial correspondence
 (Remark~\ref{rem:master-functorial}) gains its row
 ``DS reduction $=$ Koszul functor $=$ gauge fixing'' from this
 chapter.
+\end{remark}
+
+\begin{remark}[Status legend]
+\label{rem:km-status}
+The results in this chapter fall into three regimes:
+\begin{enumerate}
+\item[\textbf{T2a.}] \emph{Generic level} ($k \notin \bQ_{\le 0}$):
+  Koszulness proved via PBW spectral sequence
+  (Theorem~\ref{thm:km-chiral-koszul}).  Duality, $\kappa$, and
+  discriminant $\Delta$ follow unconditionally.
+  Modular Koszulity at all genera is unconditional
+  (Theorem~\ref{thm:pbw-allgenera-km}): the three-step
+  mechanism---PBW decomposition, Whitehead acyclicity, Killing-form
+  contraction---eliminates the $H^1(\Sigma_g)$ enrichment at every
+  genus.
+\item[\textbf{T2b.}] \emph{Admissible/root-of-unity level}:
+  Periodic CDG/$N$-complex structure and identification with coderived
+  categories are conjectural
+  (contributing to Conjecture~\ref{conj:master-dk-kl}).
+\item[\textbf{T2c.}] \emph{Representation category target}:
+  The Kazhdan--Lusztig target is the semisimplified tilting
+  category~$\cC(U_q(\fg))$, \emph{not} the full $\mathrm{Rep}(U_q(\fg))$.
+  Full factorization-categorical equivalence is conjectural
+  (Conjecture~\ref{conj:master-dk-kl}).
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:km-hms}
+This chapter operates at \textbf{S-level}: central charges, Riordan
+numbers, level-rank data, and discriminant polynomials.  These are
+extracted from \textbf{M-level} models (bar complexes, PBW spectral
+sequences, screening operators).  H-level structures (factorization
+categories, derived Kazhdan--Lusztig) are referenced as targets but
+not constructed here.
 \end{remark}
 
 \section{Kac--Moody algebras and Koszul duality}
@@ -1063,6 +1099,7 @@ The level-shifting Koszul duality realizes holographic duality in $\mathrm{AdS}_
 \end{center}
 
 The dictionary identifies the boundary WZW model at level $k$ with $\widehat{\mathfrak{g}}_k$, the bulk Chern--Simons theory at level $-k-2h^\vee$ with the Koszul dual $(\widehat{\mathfrak{g}}_k)^!$, and the holographic correspondence itself with the bar-cobar adjunction between boundary and bulk.
+(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1225,9 +1262,17 @@ $3$ & $L(\Lambda_0),\; L(\Lambda_1),\; L(2\Lambda_1),\;
   L(3\Lambda_1)$ & $4$ & $e^{\pi i/5}$
 \end{tabular}
 \end{center}
-At level~$k$, there are $k+1$ integrable modules, matching
-$|\mathrm{Irr}(\mathcal{C}(U_q(\mathfrak{sl}_2)))| = k+1$
-at $q = e^{\pi i/(k+2)}$ (a $(2k+4)$th root of unity).
+At level~$k$, there are $k+1$ integrable modules.
+
+\smallskip
+\textup{[Category: semisimplified tilting
+$\mathcal{C}(U_q(\mathfrak{sl}_2))$.]}
+Under the KL equivalence, this matches
+\[
+|\mathrm{Irr}(\mathcal{C}(U_q(\mathfrak{sl}_2)))| = k+1
+\quad\text{at } q = e^{\pi i/(k+2)}
+\]
+(a $(2k{+}4)$th root of unity).
 
 The fusion rules (by the Verlinde formula, or equivalently the
 tensor product rules for $U_q(\mathfrak{sl}_2)$) are:
@@ -2584,6 +2629,7 @@ periodic CDG structure with period dividing $2q$:
 \quad \text{for all } n \gg 0,
 \]
 where $q = e^{\pi i/(k+h^\vee)} = e^{\pi i q/p}$.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
 \begin{conjecture}[KL-II: coderived identification;
@@ -2612,6 +2658,7 @@ realized at chain level by the bar-cobar adjunction:
   \end{equation}
   recovering Remark~\textup{\ref{rem:bar-complex-kl-polynomials}}.
 \end{enumerate}
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
 \begin{conjecture}[KL-III: braided monoidality;
@@ -2621,6 +2668,7 @@ Assuming Conjecture~\textup{\ref{conj:kl-coderived}}, the equivalence
 modules ($\boxtimes$) maps to the quantum group tensor product
 ($\otimes_q$), and braiding maps to
 $q \mapsto q^{-1}$ under Koszul duality.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
 \begin{remark}[Categorical target]\label{rem:kl-conjecture-target}

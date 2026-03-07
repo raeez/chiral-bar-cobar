@@ -24,6 +24,17 @@ Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ have both simple and double
 poles.  The Heisenberg algebra, with its double pole alone, is the simplest
 chiral algebra where every phenomenon in this monograph is visible.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:frame-hms}
+This chapter operates at M-level (explicit bar complex computation)
+with S-level shadows (generating functions, obstruction scalars).
+The proved content is the scalar modular package
+(items~(1)--(3) of Definition~\ref{def:frame-modular-package});
+the conjectural H-level completion
+(item~(4), universal Maurer--Cartan class $\Theta_{\mathcal{H}_k}$)
+is previewed but not constructed.
+\end{remark}
+
 % ================================================================
 \section{The bar complex at degree 1}\label{sec:frame-bar-deg1}
 % ================================================================
@@ -1007,8 +1018,8 @@ generator is $1$-dimensional (abelian), so the cobar of the coLie
 coalgebra on one cogenerator recovers the original Heisenberg
 algebra.  The bar-cobar adjunction $\Omega \dashv \bar{B}$ restricts
 to an equivalence on Koszul algebras; $\mathcal{H}_k$ is Koszul
-precisely because its bar complex is formal (concentrated in
-degrees $0$ and $2$).
+precisely because its bar cohomology is concentrated in
+degrees $0$ and $2$, so the bar complex is formal.
 
 This is Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main})
 for the simplest non-trivial case.  The general theorem
@@ -1509,9 +1520,33 @@ tower, the complementarity --- assembles into a single object.
 
 \begin{definition}[Modular characteristic package for Heisenberg]
 \label{def:frame-modular-package}
-The modular characteristic package of $\mathcal{H}_k$ consists of:
+The modular characteristic package of $\mathcal{H}_k$ consists of
+the following proved and conjectural data:
 \begin{enumerate}
-\item The \emph{universal Maurer--Cartan class}
+\item The \emph{obstruction coefficient}
+  $\kappa(\mathcal{H}_k) = k$
+  (Theorem~\ref{thm:modular-characteristic}), which determines
+  the entire \emph{scalar} modular package: $\mathrm{obs}_g = k
+  \cdot \lambda_g$ for all $g \geq 1$.
+
+\item The \emph{ambient deformation complex}
+  \begin{equation}\label{eq:frame-ambient}
+  H_{\mathcal{H}_k}
+  \coloneqq R\Gamma\bigl(\overline{\mathcal{M}}_g,\,
+  \mathcal{Z}_{\mathcal{H}_k}\bigr)
+  \end{equation}
+  with Verdier duality providing the shifted\hyp{}symplectic
+  structure for complementarity
+  (Theorem~\ref{thm:quantum-complementarity-main}).
+
+\item The \emph{spectral discriminant}
+  $\Delta_{\mathcal{H}_k}(x) = 1$
+  (trivial for rank~$1$; for affine Kac--Moody algebras, the
+  discriminant acquires the form
+  $\Delta(x) = (1-3x)(1+x)$;
+  Theorem~\ref{thm:spectral-characteristic}).
+
+\item The \emph{conjectural universal Maurer--Cartan class}
   \begin{equation}\label{eq:frame-MC-class}
   \Theta_{\mathcal{H}_k} \in
   \mathrm{MC}\!\left(
@@ -1521,49 +1556,39 @@ The modular characteristic package of $\mathcal{H}_k$ consists of:
     \mathbb{Q}\right)
   \right)
   \end{equation}
-  whose image in the scalar center produces the obstruction
-  coefficients $\mathrm{obs}_g = k \cdot \lambda_g$.
-
-\item The \emph{ambient deformation complex}
-  \begin{equation}\label{eq:frame-ambient}
-  H_{\mathcal{H}_k}
-  := R\Gamma(\overline{\mathcal{M}}_g,\,
-  \mathcal{Z}_{\mathcal{H}_k})
-  \end{equation}
-  with Verdier duality providing the shifted-symplectic structure
-  for complementarity.
-
-\item The \emph{spectral discriminant}
-  $\Delta_{\mathcal{H}_k}(x) = 1$
-  (trivial for rank~$1$; for affine Kac--Moody algebras, the
-  discriminant acquires the form
-  $\Delta(x) = (1-3x)(1+x)$).
-
-\item The \emph{obstruction coefficient}
-  $\kappa(\mathcal{H}_k) = k$, the first characteristic number
-  of~$\Theta_{\mathcal{H}_k}$.
+  whose scalar trace would recover items~(1)--(3).
+  In this monograph, $\Theta_{\mathcal{H}_k}$ itself is not
+  constructed; it is the principal open problem of the
+  modular characteristic programme
+  (Conjecture~\ref{conj:universal-theta}).
 \end{enumerate}
 \end{definition}
 
-For the Heisenberg algebra, the modular characteristic package is
-fully determined by the single number $\kappa = k$.  This is an
-artifact of the abelian (rank-$1$) structure.  In
+For the Heisenberg algebra, the \emph{scalar} modular characteristic
+package is fully determined by the single number $\kappa = k$.  This
+is an artifact of the abelian (rank-$1$) structure.  In
 Chapters~\ref{chap:kac-moody-koszul}
 and~\ref{chap:w-algebras}, the
-package acquires non-trivial spectral discriminant, non-scalar
-Maurer--Cartan class, and richer ambient deformation complex.
+package acquires non-trivial spectral discriminant and richer ambient
+deformation complex.
 
-\begin{remark}[The first characteristic number is not the
-  fundamental object]\label{rem:frame-kappa-not-fundamental}
+\begin{remark}[Proved versus conjectural]%
+\label{rem:frame-kappa-not-fundamental}
+Items~(1)--(3) of Definition~\ref{def:frame-modular-package} are
+proved in this monograph: the scalar package
+(Theorem~\ref{thm:modular-characteristic}), the complementarity
+complex (Theorem~\ref{thm:quantum-complementarity-main}), and the
+spectral discriminant (Theorem~\ref{thm:spectral-characteristic}).
+Item~(4), the universal Maurer--Cartan class
+$\Theta_{\mathcal{A}}$, is the conjectural non-scalar
+completion (Conjecture~\ref{conj:universal-theta},
+Definition~\ref{def:full-modular-package}).
 The genus-$1$ obstruction coefficient $\kappa(\mathcal{A})$ ---
 which equals the level~$k$ for Heisenberg, the Sugawara central
-charge $c/2$ for Virasoro, and $(k+h^\vee)\dim(\mathfrak{g})/(2h^\vee)$
-for affine Kac--Moody --- is often treated as the primary invariant.
-It is not.  The fundamental object is the universal
-class~$\Theta_{\mathcal{A}}$, of which $\kappa$ is merely the
-first characteristic number.  The complete genus tower, the
-complementarity pairing, and the index theorem all follow from
-$\Theta_{\mathcal{A}}$, not from $\kappa$ alone.
+charge $c/2$ for Virasoro, and
+$(k+h^\vee)\dim(\mathfrak{g})/(2h^\vee)$ for affine Kac--Moody ---
+is the first characteristic number of the anticipated
+$\Theta_{\mathcal{A}}$, not the fundamental object itself.
 \end{remark}
 
 % ================================================================

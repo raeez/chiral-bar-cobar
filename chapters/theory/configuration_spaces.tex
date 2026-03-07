@@ -3,6 +3,11 @@
 
 The propagators $\eta_{ij} = d\log(z_i - z_j)$ from the Heisenberg bar complex (Chapter~\ref{ch:heisenberg-frame}) live on Fulton--MacPherson compactifications of configuration spaces.  This chapter constructs these compactifications, develops the Orlik--Solomon algebra, and proves the Arnold relations forcing $d^2 = 0$.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:config-spaces-hms}
+This chapter is \textbf{M-level} throughout: it builds the explicit geometric models (Fulton--MacPherson compactifications, log forms, Orlik--Solomon algebra, boundary stratifications) that underlie all M-level proofs in later chapters.  The H-level abstraction (factorization homology over $\operatorname{Ran}(X)$, Ayala--Francis framework) uses these spaces as its geometric input.
+\end{remark}
+
 \section{Fulton--MacPherson compactification}
 \label{sec:FM-compactification}
 
@@ -468,8 +473,6 @@ The boundary has a natural stratification:
 $$\partial\overline{C}_n(X) = \bigcup_{\pi} D_\pi$$
 where $\pi$ runs over partitions of $\{1, \ldots, n\}$ with at least one part of size $\geq 2$.
 \end{theorem}
-
-The incidence relations encode how different collision patterns interact.
 
 \subsection{Logarithmic differential forms}
 
@@ -1993,8 +1996,6 @@ Correctness follows from the residue formula in Theorem~\ref{thm:residue-operati
 \label{sec:arnold-three-proofs-comprehensive}
 \label{sec:arnold-chiral}
 
-The Arnold relations admit three independent proofs---topological (partial fractions), geometric (boundary calculus), and algebraic (Orlik--Solomon)---each revealing different structure.
-
 \subsection{Proof I: topological perspective (braid group cohomology)}
 \label{sec:arnold-proof-topological}
 
@@ -2255,13 +2256,6 @@ This is precisely the Arnold relation. \qedhere
 
 \begin{remark}[Historical context]
 Arnold~\cite{Arnold69} proved $H^*(C_n(\mathbb{C})) \cong \bigwedge^* \langle e_{ij} \rangle / (e_{ij} + e_{ji},\; e_{ij} \wedge e_{jk} + e_{jk} \wedge e_{ki} + e_{ki} \wedge e_{ij})$.  As differential forms $\omega_{ij} = \omega_{ji}$; the antisymmetry is a convention on OS generators.
-\end{remark}
-
-\begin{remark}[Geometric interpretation]
-This geometric proof makes the Arnold relations transparent: they express
-$\partial^2 = 0$.  Kontsevich's formulation of configuration space
-integrals \cite{Kontsevich03} relies on this perspective: all consistency
-conditions come from the combinatorics of boundary strata intersections.
 \end{remark}
 
 \begin{corollary}[Stokes theorem and differential; \ClaimStatusProvedHere]
@@ -2674,10 +2668,6 @@ The Arnold relations are equivalent to the associativity axiom for the chiral op
 where $\gamma$ is the operadic composition.
 \end{corollary}
 
-\begin{remark}[Summary of three proofs]
-The topological proof connects Arnold relations to braid groups, the geometric proof deduces $d^2 = 0$ from $\partial^2 = 0$ via Stokes, and the algebraic proof gives computability via the Orlik--Solomon algebra.
-\end{remark}
-
 \begin{theorem}[Arnold--Orlik--Solomon relations; \ClaimStatusProvedHere]
 For logarithmic forms on configuration space:
 $$\sum_{k \in S} (-1)^{|k|} \eta_{ik} \wedge \eta_{kj} \wedge \bigwedge_{l \in S\setminus\{k\}} \eta_{kl} = 0$$
@@ -2732,8 +2722,6 @@ This is Theorem~\ref{thm:bar-nilpotency-complete}.
 
 \section{Higher genus}
 
-At genus $g \geq 1$, new phenomena arise from the nontrivial topology.
-
 \subsection{Genus 1: elliptic functions}
 
 On a torus $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$:
@@ -2751,7 +2739,7 @@ where $\vartheta_1(z|\tau)$ is the odd Jacobi theta function.
 On a Riemann surface of genus $g \geq 2$, the prime form $E(z,w)$ is the unique $(-1/2, -1/2)$ differential with a simple zero at $z = w$, no other zeros, and appropriate normalization.
 \end{definition}
 
-The logarithmic forms at higher genus are built from prime forms and period integrals.  The next section addresses the normal crossing structure needed for residue maps.
+The logarithmic forms at higher genus are built from prime forms and period integrals.
 
 \section{Normal crossings at higher genus}
 \label{sec:normal-crossings-higher-genus}
@@ -2892,8 +2880,6 @@ Total: $1 + 1 + (k-2) + (n-k) = n$ (complex), as expected for $\overline{C}_n(X)
 \end{convention}
 
 \subsection{\texorpdfstring{The simplest case: two points ($n=2$)}{The simplest case: two points (n=2)}}
-
-We begin with the simplest nontrivial case to establish intuition.
 
 \begin{example}[Coordinates on $\overline{C}_2(X)$]\label{ex:coords-n2}
 For two points on a curve $X$, the configuration space is:
@@ -3423,18 +3409,8 @@ $(z_1, z_2) \mapsto (u = \frac{z_1+z_2}{2}, \epsilon = |z_1-z_2|, \theta = \arg(
 The OPE singularity is resolved by the blow-up introducing the $\mathbb{P}^1$ fiber.
 \end{remark}
 
-\subsection{The role of coordinates}
-
-The explicit coordinate systems on $\overline{C}_n(X)$ enable evaluation of
-integrals and residues, reveal boundary strata and normal bundles, and connect
-configuration space geometry to chiral algebra operations.
-Every calculation in the bar complex relies on these coordinate systems.
-
-
 \section{Ran space: topological and geometric structure}
 \label{sec:ran-space-complete}
-
-\subsection{Introduction}
 
 \begin{remark}[Physical interpretation]
 In quantum field theory, the Ran space parametrizes multi-particle states
@@ -3678,18 +3654,4 @@ $$H^*(\text{Ran}(\mathbb{P}^1)) = \text{colim}_n \mathbb{Z}[h]/(h^{n+1}) =
 \end{tabular}
 \end{table}
 
-The geometry of configuration spaces and Ran spaces is now in
-place.  The Fulton--MacPherson compactification provides the
-smooth manifold with normal-crossing boundary on which the bar
-differential lives; the Orlik--Solomon algebra and Arnold
-relations ensure $d^2 = 0$; the logarithmic forms provide
-conformally invariant propagators with canonical residues;
-and the Ran space furnishes the $\infty$-categorical home for
-factorization algebras.  In Chapter~\ref{chap:bar-cobar},
-these ingredients assemble: the bar differential will be the
-residue map on $\overline{C}_n(X)$, the Verdier pairing between
-logarithmic forms and distributions will produce the bar-cobar
-adjunction, and the Koszul property will be detected by the
-collapse of a spectral sequence on configuration space
-cohomology.
 

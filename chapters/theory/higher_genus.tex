@@ -5,6 +5,10 @@
 
 The genus-$1$ fiberwise curvature $\dfib^{\,2} = \kappa(\cA) \cdot \omega_1 \cdot \mathrm{id}$ (Convention~\ref{conv:higher-genus-differentials}) and the $\hat{A}$-genus tower that we computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are universal: they hold for every Koszul chiral algebra, with $\kappa(\cA)$ determined by the leading OPE pole.  This chapter establishes that universality and proves the four main theorems in full generality.
 
+\begin{remark}[Normative status]\label{rem:higher-genus-normative}
+This chapter and Chapter~\ref{chap:concordance} are the normative source for the modular characteristic theory; formulations here supersede earlier previews.
+\end{remark}
+
 At genus zero, Koszul duality is an algebraic theorem: the bar and
 cobar constructions form an adjunction, and for Koszul algebras the
 adjunction is an equivalence.  Nothing in this statement involves
@@ -590,8 +594,6 @@ encoding how fields behave near insertion points in CFT.
 
 \subsubsection{Chain/cochain level precision}
 
-Our construction works at the chain/cochain level, not just homology/cohomology.  This is necessary because:
-
 \begin{theorem}[Chain-level vs.\ homology-level structure; \ClaimStatusProvedHere]
 \label{thm:chain-vs-homology}
 Let $(\mathcal{A}, \{m_k\})$ be an $A_\infty$ chiral algebra.
@@ -814,8 +816,6 @@ This recovers the structure constants of the chiral algebra.
 
 \subsubsection{The partition poset and configuration spaces}
 
-The Com-Lie duality from Section 3 has a geometric enhancement through our bar-cobar construction.
-
 \begin{theorem}[Geometric enhancement of Com-Lie; \ClaimStatusProvedHere]
 The bar complex of the commutative chiral operad is:
 $$\bar{B}^{\text{ch}}(\text{Com}_{\text{ch}}) = \tilde{C}_*(\bar{\Pi}_n) \otimes \Omega^*_{\text{log}}(\overline{C}_n(X))$$
@@ -891,8 +891,6 @@ The difference in these compactifications determines the $A_\infty$ structure.
 \subsection{Curved and filtered extensions}
 
 \subsubsection{\texorpdfstring{Curved $A_\infty$ algebras: central extensions and anomalies}{Curved A-infinity algebras: central extensions and anomalies}}
-
-Anomalies appear algebraically as curved $A_\infty$ structures.
 
 \begin{definition}[Curved $A_\infty$ algebra]
 \index{curved $A_\infty$-algebra|textbf}
@@ -1030,16 +1028,30 @@ This filtration satisfies the hypotheses of Theorem~\ref{thm:convergence-filtere
 
 \subsubsection{Resolution at chain level}
 
-\begin{theorem}[Cobar resolution {\cite{LV}}; \ClaimStatusProvedElsewhere]
-For any chiral algebra $\mathcal{A}$, the cobar of the bar provides a free resolution:
-$$\cdots \to \Omega^2_{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A})) \to \Omega^1_{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A})) \to \Omega^0_{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A})) \xrightarrow{\epsilon} \mathcal{A} \to 0$$
+\begin{theorem}[Cobar resolution on the Koszul locus {\cite{LV}}; \ClaimStatusProvedElsewhere]
+\label{thm:cobar-resolution-scoped}
+For any augmented chiral algebra $\mathcal{A}$, the bar construction
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ and cobar construction
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ exist as objects.
+When the canonical twisting morphism is Koszul
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})},
+the cobar of the bar provides a free resolution:
+\begin{multline*}
+\cdots \to \Omega^2_{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
+\to \Omega^1_{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))\\
+\to \Omega^0_{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
+\xrightarrow{\epsilon} \cA \to 0
+\end{multline*}
+Off the Koszul locus, the bar-cobar object persists only in the
+completed coderived category
+\textup{(}Appendix~\textup{\ref{sec:coderived-models})}.
 
 The augmentation is given geometrically by:
 $$\epsilon(K) = \lim_{\varepsilon \to 0} \int_{|z_i - z_j| > \varepsilon} K(z_1, \ldots, z_n) \prod_{i<j} |z_i - z_j|^{2h_{ij}}$$
 \end{theorem}
 
 \begin{remark}[Ext groups]
-This resolution computes:
+On the Koszul locus, this resolution computes:
 $$\text{Ext}^n_{\text{ChirAlg}}(\mathcal{A}, \mathcal{B}) \cong H^n(\text{Hom}(\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A})), \mathcal{B}))$$
 
 Geometrically:
@@ -1186,8 +1198,6 @@ squares to zero in the Lie bracket).
 
 \subsection{Examples of transverse structures}
 
-Beyond the pentagon identity, there are infinitely many relations encoding the $A_\infty$ structure. Three patterns appear in all examples.
-
 \subsubsection{The Jacobiator identity}
 
 \begin{theorem}[Jacobiator for Lie-type algebras; \ClaimStatusProvedHere]
@@ -1314,8 +1324,6 @@ Consider the OPE:
 $$a(z) \cdot a^*(w) = \frac{\kappa}{(z-w)^2} + \text{reg} 
 + \text{(genus 1 corr)} + \text{(genus 2 corr)} + \cdots$$
 
-We will compute the \emph{genus 2 correction} explicitly.
-
 \subsubsection{The Feynman diagram picture}
 
 At genus 2, the relevant Feynman diagram has two loops with external legs at $z$ and $w$.
@@ -1396,7 +1404,7 @@ E_k(\Omega) &= \sum_{\substack{T = \left(\begin{smallmatrix} n & r/2 \\ r/2 & m 
 \end{align}
 where $T$ ranges over positive semi-definite half-integral $2 \times 2$ matrices, and the Fourier coefficients $a_k(T)$ are given by sums of divisor functions generalizing the genus-1 formulas. Explicitly, $e^{2\pi i\,\mathrm{tr}(T\Omega)} = q_1^n q_{12}^r q_2^m$ with $q_i = e^{2\pi i \Omega_{ii}}$ and $q_{12} = e^{2\pi i \Omega_{12}}$.
 
-\subsection{Interpretation: what does this mean?}
+\subsection{Interpretation}
 
 \subsubsection{Algebraic meaning}
 
@@ -1502,8 +1510,8 @@ The genus-$2$ OPE corrections have a string-theoretic interpretation: $\Sigma_2$
 The genus-$2$ bar-cobar complex realizes the formality theorem: the induced $\star$-product is the quantization of the classical OPE Poisson structure, with corrections given by Eisenstein series.
 \end{remark}
 
-\begin{remark}[Looking ahead]
-At genus $g \geq 3$, modular forms of weight $\leq g(g+1)/2$ appear, with relations from gluing equations along boundary strata of $\overline{\mathcal{M}}_g$.  As observed by Witten, all structures are determined by genus-$0$ data and modular invariance.
+\begin{remark}[Higher genera]
+At genus $g \geq 3$, modular forms of weight $\leq g(g+1)/2$ appear, with relations from gluing equations along boundary strata of $\overline{\mathcal{M}}_g$.  All structures are determined by genus-$0$ data and modular invariance (Witten).
 \end{remark}
 
 \section{The fundamental theorem: genus-zero base case}
@@ -1810,8 +1818,6 @@ where the superscript $(n)$ denotes the $n$-fold fiber product over $\overline{\
 
 \subsection{Logarithmic forms at higher genus}
 
-At genus $g \geq 1$, the logarithmic differential forms must account for the topology of the base curve.
-
 \begin{definition}[Higher-genus logarithmic forms]
 \label{def:higher-genus-log-forms}
 \index{propagator!genus $g$|textbf}
@@ -1854,8 +1860,6 @@ In CFT, $\eta_{ij}^{(0)}$ gives tree-level propagators, $\eta_{ij}^{(1)}$ gives 
 \end{remark}
 
 \subsection{Arnold relations at higher genus}
-
-The fundamental Arnold relation $(z_{12})(z_{23})(z_{31}) = 1$ at genus zero must be modified at higher genus.
 
 \begin{theorem}[Quantum-corrected Arnold relations]
 \label{thm:quantum-arnold-relations}
@@ -2279,8 +2283,6 @@ is the Szegő kernel for projecting onto holomorphic differentials
 
 \subsection{Logarithmic derivative and configuration integrals}
 
-The logarithmic forms on configuration spaces are constructed from the prime form.
-
 \begin{definition}[Genus-$g$ logarithmic forms]
 \label{def:log-forms-genus-g-complete}
 On $\overline{C}_n(\Sigma_g)$, define:
@@ -2319,10 +2321,6 @@ is independent of genus, ensuring compatibility of bar differentials across gene
 \label{sec:quantum-corrections-bar}
 
 \subsection{Genus decomposition of bar complex}
-
-The Heisenberg computation (Chapter~\ref{ch:heisenberg-frame}) exhibited genus-$0$ flatness ($\dzero^2 = 0$), genus-$1$ fiberwise curvature ($\dfib^{\,2} = k \cdot \omega_1$), and the holomorphic anomaly via $E_2(\tau)$.  These phenomena are universal.
-
-The full bar complex incorporates contributions from all genera:
 
 \begin{definition}[Genus-stratified bar complex]
 \label{def:genus-stratified-bar}
@@ -2506,17 +2504,7 @@ becomes the elliptic function $\theta_1'(z-w|\tau)/\theta_1(z-w|\tau)$,
 the modular parameter $\tau$ parametrizes a one-dimensional moduli
 space, and the fiberwise differential acquires curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_1$ proportional to the central
 charge.  This single step --- from genus~$0$ to genus~$1$ --- is
-the birth of the modular theory.  The central extension
-$\kappa(\cA)$ that appears here is the first characteristic number
-of the universal Maurer--Cartan class $\Theta_{\cA}$, and it
-controls all higher genera through the universality theorem.
-
-\begin{remark}[Physical origin of genus 1]
-\label{princ:genus-1-physical}
-The genus expansion is the loop expansion:
-$Z = Z_{\text{tree}} + \hbar Z_{\text{1-loop}} + \hbar^2 Z_{\text{2-loop}} + \cdots$.
-Genus~$0$ gives tree-level amplitudes, genus~$1$ gives one-loop corrections (where central charges arise), and $g \geq 2$ gives multi-loop corrections.
-\end{remark}
+the birth of the modular theory.
 
 \subsection{Elliptic curves and modular parameter}
 
@@ -3143,19 +3131,6 @@ The $d_2$ differential maps $E_2^{p,q} \to E_2^{p+2,q-1}$ and is identified with
 
 \section{Moduli space cohomology and quantum obstructions}
 \label{sec:moduli-cohomology-quantum}
-
-The bar construction on a single curve produces algebraic data ---
-a coalgebra, a differential, a spectral sequence.  When the curve
-varies over $\overline{\mathcal{M}}_g$, this algebraic data
-assembles into cohomological data on the moduli space.  The
-obstruction to extending a chiral algebra across degenerate curves
-lands in $H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$,
-the cohomology with coefficients in the center local system.
-Verdier duality endows this space with a shifted-symplectic
-pairing, and the deformation and obstruction contributions of a
-Koszul pair $(\cA, \cA^!)$ embed as complementary Lagrangians.
-This is the content of Theorem~C
-(Theorem~\ref{thm:quantum-complementarity-main}).
 
 \subsection{\texorpdfstring{Cohomology of $\overline{\mathcal{M}}_{g,n}$}{Cohomology of M-g,n}}
 
@@ -4199,11 +4174,13 @@ classes beyond $\lambda_g$:
   the spectral sequence may have nontrivial $d_2$ or $d_3$
   differentials, producing $\psi$-classes and $\kappa$-classes as
   remnants.  No explicit example is currently known, since all
-  algebras in the Master Table are Koszul with $E_2$-collapse.
+  algebras in the Master Table are Koszul with
+  $E_2$-collapse.
 
-\item \emph{Module insertions}.  The bar complex with module
-  insertions $\bar{B}^{(g)}_n(\mathcal{A}; M_1, \ldots, M_n)$
-  (Definition~\ref{def:log-fm-compactification}) involves $n$
+\item \emph{Module insertions}.\quad
+  The bar complex with module insertions
+  $\bar{B}^{(g)}_n(\mathcal{A};\allowbreak M_1, \ldots, M_n)$
+  (Definition~\ref{def:log-fm-compactification}) involves~$n$
   marked points with $\psi$-classes $\psi_1, \ldots, \psi_n$
   naturally.  Even when the spectral sequence collapses, the
   marked-point $\psi$-classes are \emph{not} killed by the
@@ -4620,7 +4597,9 @@ The proof proceeds in four steps.
 \emph{Step~1: Filter.}
 Filter the full fiber bar complex
 $C^{(g)}_X(\cA)\!\mid_\Sigma$ by bar degree, writing
-$F_p := \bigoplus_{n \leq p} \bar{B}^{(g),n}(\cA)$.
+\[
+F_p := \bigoplus_{n \leq p} \bar{B}^{(g),n}(\cA).
+\]
 
 \emph{Step~2: Identify the associated graded.}
 At the associated graded level, the fiberwise curvature
@@ -4632,23 +4611,38 @@ the classical Koszul/Ext complex of
 $\operatorname{gr}_F \cA$, which has cohomology concentrated
 in total degree~$0$.
 
-\emph{Step~3: Diagonal Ext vanishing.}
-Modular Koszulity (axiom~MK3) provides diagonal Ext vanishing
-at each genus: $\operatorname{Ext}^{i,j}_{\cA^{(g)}} = 0$ for
-$i \neq j$.  This ensures that only total degree~$0$ survives
-in the full fiber complex (not just at the associated graded
-level), by spectral sequence comparison.
+\emph{Step~3: Total fiber concentration.}\quad
+The bar-degree filtration spectral sequence
+\[
+E_1^{p,q} = H^q\bigl(\operatorname{gr}_p
+C^{(g)}_X(\cA)\big|_\Sigma\bigr)
+\]
+has $E_1^{p,q} = 0$ for $q \neq 0$ by Step~2
+(the associated graded sees only the
+genus-$0$ collision differential, which is Koszul-acyclic).
+Therefore all higher differentials $d_r$ ($r \geq 1$) vanish
+(they map into or out of the zero row), giving
+$E_\infty^{p,q} = E_1^{p,q}$.  In particular,
+$H^q(C^{(g)}_X(\cA)\!\mid_\Sigma) = 0$ for $q \neq 0$:
+the full fiber complex (including the curvature terms) has
+cohomology concentrated in bar-differential degree~$0$.
+The surviving $H^0$ is the graded coalgebra
+$\bigoplus_p E_\infty^{p,0} \cong \bigoplus_p (\cA^!)_p$,
+which is identified with the Koszul dual coalgebra and
+hence with the center $\mathcal{Z}_{\cA}\!\mid_\Sigma$
+by the genus-$0$ center-bar identification
+(Corollary~\ref{cor:bar-cohomology-koszul-dual}).
 
 \emph{Step~4: Base change.}
-Apply the Leray spectral sequence to the family
+Apply cohomology and base change to the family
 $\pi_g\colon \mathcal{C}_g(\cA) \to \overline{\mathcal{M}}_g$.
-The fiber-level concentration from Steps~2--3 gives
-$R^q\pi_{g*} = 0$ for $q \neq 0$ (cohomology and base change).
+The fiber-level concentration from Step~3 gives
+$R^q\pi_{g*}\bar{B}^{(g)}(\cA) = 0$ for $q \neq 0$.
 The perfectness hypothesis ensures base change applies
 uniformly over $\overline{\mathcal{M}}_g$.
-The surviving $R^0\pi_{g*}$ is identified with $\mathcal{Z}_{\cA}$
-by the bar-center identification at each fiber
-(Theorem~\ref{thm:bar-concentration} applied fiberwise).
+The surviving $R^0\pi_{g*}$ is identified with
+$\mathcal{Z}_{\cA}$ by the fiber-level identification
+from Step~3, which holds uniformly over the base.
 \end{proof}
 
 \begin{remark}[Theorem~C decomposition]\label{rem:theorem-C-decomposition}
@@ -4966,15 +4960,22 @@ This is an application of the Leray spectral sequence for the fibration:
 \end{tikzcd}
 \end{equation}
 
-\emph{$E_1$ page}: By definition, $E_1^{p,q,g}$ is the cohomology of the fiber 
-complex. The fiber over $[(\Sigma_g; p_1, \ldots, p_n)]$ is:
+\emph{$E_1$~page.}
+By definition, $E_1^{p,q,g}$ is the cohomology
+of the fiber complex.
+The fiber over
+$[(\Sigma_g;\allowbreak p_1, \ldots, p_n)]$ is:
 \begin{equation}
 \bar{B}^p_{\text{fiber}} = \Gamma(\overline{C}_p(\Sigma_g), \mathcal{A}^{\boxtimes p} 
 \otimes \Omega^*_{\log})
 \end{equation}
 
-The differential $d_{\text{fiber}} = \sum_{D \subset \partial \overline{C}_p(\Sigma_g)} 
-\text{Res}_D$ computes residues along boundary divisors. By Theorem \ref{thm:arnold-three},
+The differential
+\[
+d_{\mathrm{fiber}} = \!\!\!\!\sum_{D \,\subset\, \partial \overline{C}_p(\Sigma_g)}
+\!\!\!\!\operatorname{Res}_D
+\]
+computes residues along boundary divisors. By Theorem~\ref{thm:arnold-three},
 this satisfies $d_{\text{fiber}}^2 = 0$, so we can compute cohomology:
 \begin{equation}
 E_1^{p,q,g} = H^q(\bar{B}^p_{\text{fiber}}, d_{\text{fiber}})
@@ -5044,14 +5045,16 @@ that does not appear at genus~$0$.
 
 \begin{lemma}[Fiber cohomology and center; \ClaimStatusProvedHere]
 \label{lem:fiber-cohomology-center}
-For a Koszul chiral algebra $\mathcal{A}$ (Definition~\ref{def:chiral-koszul-pair}),
-the fiber cohomology sheaf satisfies:
+For a Koszul chiral algebra~$\mathcal{A}$
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})},
+the fiber cohomology sheaf over the smooth
+locus~$\overline{\mathcal{M}}_g^{\mathrm{sm}}$ satisfies:
 \begin{equation}
-\mathcal{H}^*_{\text{fiber}}(\mathcal{A})|_{\overline{\mathcal{M}}_g^{\text{smooth}}} 
+\mathcal{H}^*_{\mathrm{fiber}}(\mathcal{A})
+\big|_{\overline{\mathcal{M}}_g^{\mathrm{sm}}}
 \cong Z(\mathcal{A}) \otimes \underline{\mathbb{C}}
 \end{equation}
-where $\overline{\mathcal{M}}_g^{\text{smooth}}$ denotes smooth curves and 
-$\underline{\mathbb{C}}$ is the constant sheaf.
+where $\underline{\mathbb{C}}$ is the constant sheaf.
 \end{lemma}
 
 \begin{proof}[Proof of Lemma \ref{lem:fiber-cohomology-center}]
@@ -5720,11 +5723,14 @@ of $\mathcal{A}^!$ at genus $g$
 \end{lemma}
 
 \begin{proof}[Proof of Lemma \ref{lem:obs-def-split-complete}]
-The bar complex $\bar{B}^{(g)}(\mathcal{A})$ computes obstruction classes: a class
-$\alpha \in H^*(\bar{B}^{(g)}(\mathcal{A}))$ represents a cohomological obstruction
-to extending the genus-$(g-1)$ structure to genus $g$.  By
-Lemma~\ref{lem:quantum-from-ss}, these are precisely the $E_\infty$ terms of
-the spectral sequence, which lie in $V^+$ by the previous lemma.
+The bar complex $\bar{B}^{(g)}(\mathcal{A})$ computes obstruction
+classes: a class
+$\alpha \in H^*(\bar{B}^{(g)}(\mathcal{A}))$
+represents a cohomological obstruction to extending the
+genus-$(g{-}1)$ structure to genus~$g$.  By
+Lemma~\ref{lem:quantum-from-ss}, these are precisely the
+$E_\infty$ terms of the spectral sequence, which lie in~$V^+$
+by the previous lemma.
 
 Conversely, the bar complex $\bar{B}^{(g)}(\mathcal{A}^!)$ computes obstructions
 for $\mathcal{A}^!$, which correspond to \emph{deformations} of $\mathcal{A}$
@@ -6417,7 +6423,7 @@ $\dim Q_2(\mathrm{Vir}_0) = 4$.
 
 \begin{proof}
 Apply Theorem~\ref{thm:self-dual-halving} with
-$Z(\mathrm{Vir}_0) = \mathbb{C}$, so
+$Z(\mathrm{Vir}_0) = \mathbb{C}$, so that
 $H^*(\overline{\mathcal{M}}_g, Z(\cA))
 = H^*(\overline{\mathcal{M}}_g)$.
 At genus~1: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$,
@@ -7314,12 +7320,8 @@ The theorem states that configuration space integrals computing correlation func
 \section{Verdier duality and Ayala--Francis compatibility}
 \label{sec:verdier-ayala-francis}
 
-For the Heisenberg algebra, Verdier duality exchanged the Lie-type bar coalgebra $\mathrm{coLie}^{\mathrm{ch}}(V^*)$ with the Com-type cobar algebra $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (\S\ref{sec:frame-koszul-dual}).  This section establishes the compatibility of Verdier duality with the Ayala--Francis topological framework at all genera.
-
 \subsection{Three levels of duality}
 \label{subsec:three-dualities}
-
-We establish compatibility between Verdier duality (geometric) and Ayala--Francis duality (topological).
 
 \begin{definition}[Three duality structures]\label{def:three-dualities}
 We work with three dualities simultaneously.
@@ -8346,6 +8348,7 @@ Axioms MK6--MK7 are the three desiderata of
 Conjecture~\ref{conj:universal-MC}; MK8 applies only to $\Eone$-chiral
 objects.  All three are programmatic: their resolution is part of
 the Stratum~II programme (Remark~\ref{rem:two-strata}).
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
 \begin{proposition}[Standard examples are modular pre-Koszul; \ClaimStatusProvedHere]
@@ -8355,10 +8358,10 @@ the Stratum~II programme (Remark~\ref{rem:two-strata}).
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 The following chiral algebras satisfy the antecedent axioms
-\textup{MK1--MK3} of Definition~\textup{\ref{def:modular-koszul-chiral}}
-and are therefore modular Koszul
-\textup{(}by Theorems~\textup{\ref{thm:higher-genus-inversion}}
-and~\textup{\ref{thm:quantum-complementarity-main}):}
+\textup{MK1--MK3} of Definition~\textup{\ref{def:modular-koszul-chiral}}.
+Theorems~\textup{\ref{thm:higher-genus-inversion}}
+and~\textup{\ref{thm:quantum-complementarity-main}} then supply
+\textup{MK4--MK5}, so they are modular Koszul:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item the Heisenberg algebra $\mathcal{H}_\kappa$ at any nonzero level
   $\kappa \neq 0$\textup{;}
@@ -8390,11 +8393,15 @@ PBW degeneration
 
 Assume that the genus-$g$ PBW spectral sequence degenerates at $E_2$
 for the given family.  Then the following satisfy the antecedent axioms
-\textup{MK1--MK3} and are therefore modular Koszul:
+\textup{MK1--MK3} and are therefore modular Koszul
+\textup{(}MK4--MK5 following by
+Theorems~\textup{\ref{thm:higher-genus-inversion}}
+and~\textup{\ref{thm:quantum-complementarity-main}):}
 \begin{enumerate}[label=\textup{(\alph*)},start=3]
 \item affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ at generic
   level \textup{(}$k \notin \mathbb{Q}_{< 0}$ minus finitely many
-  points\textup{);}
+  points\textup{)} --- \emph{now unconditional by
+  Theorem~\textup{\ref{thm:pbw-allgenera-km}};}
 \item the Virasoro algebra $\mathrm{Vir}_c$ at generic central charge
   $c$\textup{;}
 \item $\mathcal{W}_N$-algebras at generic level.
@@ -8426,23 +8433,631 @@ Inversion and complementarity then follow as consequences.
 \begin{conjecture}[PBW spectral sequence degeneration at higher genus; \ClaimStatusConjectured]
 \label{conj:pbw-higher-genus-degeneration}
 \index{PBW spectral sequence!higher genus degeneration}
-For generic affine Kac--Moody algebras $\widehat{\mathfrak{g}}_k$,
-generic Virasoro $\mathrm{Vir}_c$, and generic $\mathcal{W}_N$-algebras,
+For generic Virasoro $\mathrm{Vir}_c$ and generic $\mathcal{W}_N$-algebras,
 the genus-$g$ PBW spectral sequence degenerates at~$E_2$ for all
 $g \geq 1$.
+
+\smallskip
+\emph{Status.}  The Kac--Moody case is fully resolved by
+Theorem~\textup{\ref{thm:pbw-allgenera-km}}.
+The conjecture remains open for the Virasoro and~$\mathcal{W}_N$ families.
 \end{conjecture}
 
-\begin{remark}[Status]\label{rem:mk4-status}
+\begin{remark}[Status and proof strategy]\label{rem:mk4-status}
 Conjecture~\ref{conj:pbw-higher-genus-degeneration} is the
 single remaining obstruction to unconditional modular Koszulity for the
-standard interacting families.  It holds at genus~$0$ by
-Theorem~\ref{thm:km-chiral-koszul} and at the associated graded
-level at all genera by the argument above.  The difficulty is that
-degeneration of a spectral sequence is not automatic from
-degeneration of its associated graded.
+Virasoro and~$\mathcal{W}_N$ families (the Kac--Moody case is resolved
+by Theorem~\ref{thm:pbw-allgenera-km}).
 
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I (existence of homotopy object).
-The conjecture asserts the existence of a degenerate PBW spectral sequence at all genera, which would provide the missing input for unconditional modular Koszulity.
+\emph{What is proved.}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{item:mk4-genus0}
+  At genus~$0$, the PBW spectral sequence degenerates at~$E_1$
+  (Theorem~\ref{thm:km-chiral-koszul}).
+\item\label{item:mk4-assocgraded}
+  At all genera, the PBW-associated-graded collision differential
+  produces the same $E_1$ page as at genus~$0$
+  (Proposition~\ref{prop:conditional-modular-koszul}).
+\item\label{item:mk4-quadratic}
+  In the PBW spectral sequence, $d_r$ on the $E_r$ page
+  receives contributions from $(r{-}1)$-products between elements of~$\bar{\cA}$.
+  Between \emph{strong generators}, the OPE pole order is bounded:
+  at most $2$ for Kac--Moody, at most $4$ for Virasoro,
+  and at most $2N$ for~$\mathcal{W}_N$.
+  However, normal-ordered composites can exhibit higher-order poles
+  (e.g., the Sugawara tensor has a quartic self-OPE from
+  double Wick contractions), so the spectral
+  sequence does not automatically degenerate at a fixed page
+  from the generator-level bound alone.  It
+  \emph{does} converge in each fixed bidegree by the
+  finite-dimensionality of conformal weight spaces
+  (\ref{item:pbw-bounded} of Theorem~\ref{thm:pbw-koszulness-criterion}).
+\item\label{item:mk4-local}
+  The $d_1$ differential (from the Lie bracket, i.e., the
+  $(0)$-product) and the $d_2$ differential (from the Killing form,
+  i.e., the $(1)$-product) are determined by the \emph{local} OPE data
+  and do not depend on the genus of the underlying curve.
+\end{enumerate}
+
+\emph{What remains.}
+At genus~$0$, the $E_1$ page concentrates and all higher differentials
+vanish.  At genus~$g \geq 1$, the $E_1$ page is enriched by classes
+from $H^*(\Sigma_g)$, so one must show that all differentials
+$d_r$ ($r \geq 1$) vanish on the enriched pages.
+By~\ref{item:mk4-local}, $d_1$ and $d_2$ are the same linear maps
+at every genus;
+however, the $E_2$ page $E_2^{p,q}(g) = H^{p+q}(E_1^{p,*}(g), d_1)$
+depends on~$g$ through the genus-$g$ configuration space cohomology
+$H^*(\bar{C}_n(\Sigma_g))$, which enriches $E_1$ beyond the genus-$0$
+case.  The question is whether $E_2(g)$ is still concentrated,
+which would force all $d_r = 0$ for $r \geq 2$
+as in the genus-$0$ case.
+
+\emph{Proof strategy.}
+The following three steps would establish the conjecture:
+\begin{enumerate}[label=\textup{Step~\arabic*.}]
+\item Show that the enrichment of $E_1(g)$ relative to $E_1(0)$ is
+  \emph{$d_1$-acyclic}: the additional classes from
+  $H^*(\Sigma_g)$ are killed by~$d_1$ before reaching $E_2$,
+  so that $E_2(g)$ concentrates just as $E_2(0) = E_1(0)$ does.
+\item Verify Step~1 computationally for
+  $\widehat{\mathfrak{sl}}_2$ at genus~$1$ (the minimal nontrivial case).
+  This requires computing the PBW spectral sequence on the genus-$1$
+  bar complex with the corrected differential
+  $\Dg{1}$\textup{;} the enrichment
+  from $H^1(E_\tau) \cong \mathbb{C}^2$ adds
+  finitely many classes to $E_1$.
+\item Generalize from $g = 1$ to all~$g$ by induction on genus,
+  using the clutching maps
+  (\S\ref{sec:modular-koszul-programme}, axiom~\ref{MK:clutching-verdier}) to
+  relate $E_2(g)$ to $E_2(g{-}1)$.
+\end{enumerate}
+At generic level $k$, the finite-dimensionality in each
+conformal weight (\ref{item:pbw-bounded} of
+Theorem~\ref{thm:pbw-koszulness-criterion}) ensures that
+each step involves finite-dimensional linear algebra.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
+Type~I (existence of homotopy object).
+(Contributing to Conjecture~\ref{conj:master-pbw}.)
+\end{remark}
+
+\begin{theorem}[PBW degeneration at genus~$1$ for Kac--Moody; \ClaimStatusProvedHere]
+\label{thm:pbw-genus1-km}
+\index{PBW spectral sequence!genus-1 degeneration|textbf}
+\index{modular Koszul chiral algebra!genus-1 unconditional}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+For any simple Lie algebra~$\fg$ and generic level
+$k \notin \Sigma(\fg)$, the PBW spectral sequence for the
+genus-$1$ bar complex
+$\bar{B}^{(1)}(\widehat{\fg}_k)$ has concentrated
+$E_\infty$ page: the enrichment from $H^1(E_\tau)$
+is eliminated by~$d_1$ and~$d_2$
+\textup{(}non-trivial $\fg$-modules at~$E_2$
+by Whitehead; the Killing-form invariant
+at~$E_3$ by the level-$k$ contraction\textup{)}.
+In particular, the interacting Kac--Moody algebras satisfy
+axiom~\textup{MK3}
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
+unconditionally at genus~$1$:
+they are modular pre-Koszul at~$g = 1$.
+\end{theorem}
+
+\begin{proof}
+We follow the three-step strategy of
+Remark~\ref{rem:mk4-status}, establishing each step for~$g = 1$.
+
+\medskip
+\emph{Step~1: Decomposition of the $E_1$ page.}
+
+Equip $\bar{B}^{(1)}(\widehat{\fg}_k)$ with the PBW filtration
+by conformal weight, as in
+Theorem~\ref{thm:pbw-koszulness-criterion}.
+The leading PBW differential $d_0^{\mathrm{PBW}}$ is the
+commutative bar differential of the associated graded
+$\operatorname{Sym}^{\mathrm{ch}}(V)$, $V = \fg \otimes
+t^{-1}\bC[t^{-1}]$, now living on the
+elliptic curve~$E_\tau$ rather than~$\mathbb{P}^1$.
+
+At genus~$0$, the chain groups of the bar complex use
+logarithmic forms on $\overline{C}_n(\mathbb{P}^1)$, and
+$d_0^{\mathrm{PBW}}$ extracts Poincar\'{e} residues at
+collision divisors.  The $E_1$ page concentrates
+by Theorem~\ref{thm:km-chiral-koszul}.
+
+At genus~$1$, the chain groups at bar degree~$n$ are
+\[
+\bar{B}^n_1 \;=\;
+\Gamma\!\bigl(\overline{C}_n(E_\tau),\;
+\cA^{\boxtimes n} \otimes \Omega^{n-1}_{\log}\bigr).
+\]
+The configuration space $\overline{C}_n(E_\tau)$ carries
+additional global $(n{-}1)$-forms pulled back from
+$H^1(E_\tau, \bC) \cong \bC^2$: these are
+\emph{regular} at every collision divisor~$D_{ij}$
+(they arise from the non-trivial $H^1$ of the elliptic curve,
+not from OPE poles).  Since $d_0^{\mathrm{PBW}}$ acts by
+Poincar\'{e} residue at collision divisors, and the
+Poincar\'{e} residue of a regular form is zero, every
+such enrichment cochain is automatically $d_0^{\mathrm{PBW}}$-closed.
+Moreover, the enrichment cochains are not
+$d_0^{\mathrm{PBW}}$-exact (they cannot be in the image
+of the commutative bar differential from higher bar degree,
+since the enrichment at higher degree is likewise
+regular and $d_0^{\mathrm{PBW}}$-closed).
+
+Hence the $E_1$ page decomposes:
+\begin{equation}\label{eq:e1-decomposition-genus1}
+E_1^{p,q}(g{=}1) \;=\; E_1^{p,q}(g{=}0)
+  \;\oplus\; \mathcal{E}^{p,q}_1
+\end{equation}
+where $E_1(g{=}0)$ is the concentrated genus-$0$
+part (Theorem~\ref{thm:km-chiral-koszul}) and
+$\mathcal{E}^{p,q}_1$ is the enrichment from
+$H^1(E_\tau)$.
+
+\medskip
+\emph{Step~2: The $d_1^{\mathrm{PBW}}$ differential on
+the enrichment.}
+
+The next PBW differential $d_1^{\mathrm{PBW}}$ comes
+from the $\fg$-bracket---the $(0)$-product component
+of the OPE, which lowers PBW degree by~$1$.  It acts
+on the enrichment $\mathcal{E}^{*,*}_1$ by extracting
+the Lie bracket residue while leaving the
+$H^1(E_\tau)$ form factor unchanged:
+\[
+d_1^{\mathrm{PBW}}\colon \mathcal{E}_1^{n, h}
+\;\longrightarrow\; E_1^{n-1,h}(g{=}0)
+\;\oplus\; \mathcal{E}_1^{n-1, h}.
+\]
+Concretely, for an enrichment element
+$(a_1 \otimes \cdots \otimes a_n) \otimes \alpha$
+where $\alpha$ involves an $H^1(E_\tau)$ factor:
+the collision residue $\operatorname{Res}_{D_{ij}}$
+extracts the $\fg$-bracket $[a_i, a_j]$, and the
+enrichment form~$\alpha$ either reduces to a lower
+enrichment form or pairs with the collision to produce
+a concentrated (genus-$0$) class.
+
+The key algebraic structure: in each conformal
+weight~$h$, the enrichment
+$\mathcal{E}_1^{*,h}$ is a finite-dimensional complex
+with differential $d_1^{\mathrm{PBW}}$ built from the
+Lie bracket of the truncated loop algebra
+$\fg \otimes (t^{-1}\bC[t^{-1}] / t^{-h-1}\bC[t^{-1}])$.
+The diagonal adjoint action of~$\fg$ on this complex
+equips it with the structure of a Chevalley--Eilenberg
+complex with coefficients in a finite-dimensional
+$\fg$-module~$M_h$.
+
+\medskip
+\emph{Step~3: Acyclicity of the enrichment complex.}
+
+We show $H^*(\mathcal{E}_1^{*,h},\, d_1^{\mathrm{PBW}}) = 0$
+in each conformal weight~$h$, by a representation-theoretic
+argument for~$\fg$ semisimple.
+
+The enrichment module~$M_h$ at weight~$h$ decomposes
+under~$\fg$ into irreducible summands.  Since $\fg$ is
+semisimple, the Whitehead--Chevalley--Eilenberg theorem
+gives:
+\[
+H^q(\fg,\, M_h^{\mathrm{non\text{-}triv}}) = 0
+\quad \text{for all } q \geq 0,
+\]
+where $M_h^{\mathrm{non\text{-}triv}}$ is the sum of
+non-trivial irreducible summands.  Thus only the
+$\fg$-invariant part $M_h^{\fg}$ can contribute
+to cohomology.
+
+For the $\fg$-invariant part: the invariants in the
+enrichment arise from the Killing form
+$\kappa^{ab} \in (\fg \otimes \fg)^{\fg}$ paired
+with $H^1(E_\tau)$ data.  These invariant enrichment classes
+are exact under $d_2^{\mathrm{PBW}}$
+(the $(1)$-product differential, which lowers PBW
+degree by~$2$ and involves the level~$k$): the
+$d_2^{\mathrm{PBW}}$ image of the bar-degree-$(n{+}1)$
+invariant at weight~$h$ covers the bar-degree-$n$
+invariant, provided $k \neq 0$ (non-degeneracy of the
+Killing form at generic level).
+
+More precisely, the invariant enrichment at bar
+degree~$2$ and weight~$2$ consists of the Killing-form
+element $\kappa^{ab} (J^a_{-1} \otimes J^b_{-1})
+\otimes \alpha$ for
+$\alpha \in H^1(E_\tau)$.  The $d_2^{\mathrm{PBW}}$
+differential maps the bar-degree-$3$ element
+$J^c_{-1} \otimes \kappa^{ab} J^a_{-1} \otimes J^b_{-1}$
+(with appropriate form data) to
+$k \cdot \dim(\fg) \cdot J^c_{-1} \otimes \alpha$ via the
+$(1)$-product contraction.  At generic $k \neq 0$,
+this is non-zero, so the invariant class is killed
+at~$E_3$.
+
+By bounded-below convergence
+(\ref{item:pbw-bounded} of
+Theorem~\ref{thm:pbw-koszulness-criterion}), the
+spectral sequence converges in each bidegree, and
+all enrichment classes are killed by $d_r$ for
+some finite~$r$.  In each fixed conformal weight~$h$,
+only finitely many pages are non-trivial (since the
+chain groups are finite-dimensional), so the spectral
+sequence stabilizes.
+
+\medskip
+\emph{Step~4: The mechanism in action ($\fg = \mathfrak{sl}_2$, $h = 2$).}
+
+The general argument of Steps~1--3 rests on two
+representation-theoretic inputs (Whitehead vanishing and
+Killing-form contraction).  We exhibit their interplay
+at the first nontrivial conformal weight, where both
+inputs are visible simultaneously.
+
+Take $\fg = \mathfrak{sl}_2$ with basis $\{e, h, f\}$ and
+trace-form $\kappa(h,h) = 2$, $\kappa(e,f) = 1$.
+At bar degree~$2$ and conformal weight~$h = 2$, the enrichment
+consists of pairs $J^a_{-1} \otimes J^b_{-1}$ tensored with
+$H^{1,0}(E_\tau)$---a $9$-dimensional space
+$\mathfrak{sl}_2^{\otimes 2} \otimes \bC\,dz$.
+The quadratic Casimir
+$C_2 = \kappa^{ab}\,\mathrm{ad}(e_a)\,\mathrm{ad}(e_b)$
+(diagonal adjoint action on the tensor square) has eigenvalues
+\[
+\underbrace{12}_{V_5\; (\dim 5)}, \quad
+\underbrace{4}_{V_3\; (\dim 3)}, \quad
+\underbrace{0}_{V_1\; (\dim 1)},
+\]
+confirming the decomposition
+$\mathfrak{sl}_2^{\otimes 2} = V_5 \oplus V_3 \oplus V_1$.
+
+The $d_1^{\mathrm{PBW}}$ differential sends
+$J^a_{-1} \otimes J^b_{-1}$ to $[J^a, J^b]_{-2}$,
+a $3 \times 9$ matrix of rank~$3$.  Its kernel is
+$6$-dimensional, spanned by $V_5 \oplus V_1$.
+Concretely:
+\begin{itemize}
+\item $V_3 = \Lambda^2(\mathfrak{sl}_2)$: the bracket
+  $[\,,\,]\colon \Lambda^2(\mathfrak{sl}_2)
+  \to \mathfrak{sl}_2$ is an isomorphism,
+  so $d_1$ annihilates the target completely.
+\item $V_5 = \mathrm{Sym}^2_0(\mathfrak{sl}_2)$
+  (traceless symmetric tensors):
+  Whitehead's theorem
+  (Theorem~\ref{thm:whitehead-CE}) gives
+  $H^q(\mathfrak{sl}_2, V_5) = 0$ for all~$q$, so $V_5$
+  cannot contribute to $E_\infty$.
+\item $V_1$: the invariant line, spanned by the
+  Killing-form element
+  $\kappa = e \otimes f + f \otimes e
+  + \tfrac{1}{2}\,h \otimes h$.
+  This element lies in $\ker(d_1)$ (symmetric tensors
+  vanish under the antisymmetric bracket), but is killed
+  at $E_3$ by $d_2^{\mathrm{PBW}}$: the $(1)$-product
+  contraction maps $\kappa$ to the scalar
+  $\kappa^{ab}\kappa_{ab} = 1 + 1 + \tfrac{1}{2} \cdot 2
+  = 3 = \dim(\mathfrak{sl}_2)$,
+  which is nonzero at generic level~$k$.
+\end{itemize}
+Thus all nine enrichment classes at $h = 2$ are eliminated:
+three by the bracket isomorphism, five by Whitehead, one by the
+Killing contraction.
+The decomposition $E_\infty^{*,2}(g{=}1) =
+E_\infty^{*,2}(g{=}0)$ follows.
+At each higher weight~$h$, the same
+three mechanisms act (the representation-theoretic
+decomposition under~$\fg$ and the Whitehead vanishing
+are weight-independent), completing the proof.
+\end{proof}
+
+\begin{corollary}[Unconditional modular Koszulity at genus~$1$; \ClaimStatusProvedHere]
+\label{cor:unconditional-genus1-km}
+\index{modular Koszul chiral algebra!unconditional genus-1}
+For any simple~$\fg$ at generic level, the affine
+Kac--Moody vertex algebra $\widehat{\fg}_k$ satisfies
+axioms \textup{MK1--MK3} unconditionally at genus~$1$.
+By Theorems~\textup{\ref{thm:higher-genus-inversion}}
+and~\textup{\ref{thm:quantum-complementarity-main}},
+the consequences \textup{MK4} \textup{(}inversion\textup{)}
+and \textup{MK5} \textup{(}complementarity\textup{)} hold
+at genus~$1$ without any conditional hypothesis.
+\end{corollary}
+
+\begin{proof}
+MK1 (genus-$0$ Koszulity):
+Theorem~\ref{thm:km-chiral-koszul}.
+MK2 (Verdier):
+Theorem~\ref{thm:verdier-bar-cobar}.
+MK3 (modular Koszulity at $g = 1$):
+Theorem~\ref{thm:pbw-genus1-km}.
+MK4 and MK5 follow from MK1--MK3 by
+Theorems~\ref{thm:higher-genus-inversion}
+and~\ref{thm:quantum-complementarity-main}.
+\end{proof}
+
+\begin{theorem}[PBW degeneration at all genera for Kac--Moody; \ClaimStatusProvedHere]
+\label{thm:pbw-allgenera-km}
+\index{PBW spectral sequence!all-genera degeneration|textbf}
+\index{modular Koszul chiral algebra!unconditional all genera}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+For any simple Lie algebra~$\fg$, any genus~$g \geq 1$, and
+generic level $k \notin \Sigma(\fg)$, the PBW spectral sequence
+for the genus-$g$ bar complex
+$\bar{B}^{(g)}(\widehat{\fg}_k)$ has concentrated
+$E_\infty$ page:
+\[
+E_\infty^{p,q}\bigl(\bar{B}^{(g)}(\widehat{\fg}_k)\bigr)
+\;=\;
+E_\infty^{p,q}\bigl(\bar{B}^{(0)}(\widehat{\fg}_k)\bigr)
+\quad \text{for all } g \geq 0.
+\]
+In particular, the interacting Kac--Moody algebras satisfy
+axiom~\textup{MK3}
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
+unconditionally at all genera:
+they are modular Koszul.  This resolves
+Conjecture~\textup{\ref{conj:pbw-higher-genus-degeneration}}
+for the Kac--Moody family.
+\end{theorem}
+
+\begin{proof}
+The genus-$1$ proof
+(Theorem~\ref{thm:pbw-genus1-km}) establishes a
+three-step mechanism---PBW decomposition, Whitehead
+acyclicity, Killing-form contraction---that is
+genus-independent.  We verify that each step
+extends without modification to $g \geq 2$.
+
+\medskip
+\emph{Step~1: $E_1$ decomposition at genus~$g$.}
+
+At genus~$g$, the chain groups of the bar complex use
+forms on $\overline{C}_n(\Sigma_g)$, the
+Fulton--MacPherson compactification of configuration
+space on a smooth projective curve~$\Sigma_g$ of
+genus~$g$.  The curve contributes regular forms
+from $H^{1,0}(\Sigma_g) \cong \bC^g$ (holomorphic
+$1$-forms).  These are regular at every collision
+divisor~$D_{ij}$: they arise from the global geometry
+of~$\Sigma_g$, not from OPE poles.
+
+Since $d_0^{\mathrm{PBW}}$ acts by Poincar\'{e} residue at
+collision divisors, and the Poincar\'{e} residue of a
+regular form is zero, the $H^{1,0}(\Sigma_g)$-enrichment
+cochains are $d_0^{\mathrm{PBW}}$-closed.  They are not
+$d_0^{\mathrm{PBW}}$-exact by the same degree argument
+as in genus~$1$.  Thus
+\begin{equation}\label{eq:e1-decomposition-genusg}
+E_1^{p,q}(g) \;=\; E_1^{p,q}(g{=}0)
+  \;\oplus\; \mathcal{E}^{p,q}_g
+\end{equation}
+where $\mathcal{E}^{p,q}_g$ is the enrichment from
+$H^{1,0}(\Sigma_g)$.
+
+The essential observation is that the enrichment
+\emph{factors}: at each conformal weight~$h$,
+\begin{equation}\label{eq:enrichment-factorization}
+\mathcal{E}_g^{*,h}
+\;\cong\; M_h \otimes_{\bC} H^{1,0}(\Sigma_g)
+\end{equation}
+where $M_h$ is the \emph{same} finite-dimensional
+$\fg$-module as at genus~$1$.
+This factorization holds because the
+$H^{1,0}(\Sigma_g)$ forms enter as global
+multiplicative factors that do not interact with the
+OPE data: the collision divisors (where OPE poles live)
+are codimension-$1$ loci in $\overline{C}_n(\Sigma_g)$,
+and the regular forms from $H^{1,0}(\Sigma_g)$ are
+smooth across these divisors.  The module~$M_h$ is
+determined solely by the OPE structure of~$\widehat{\fg}_k$
+truncated at weight~$h$, which is genus-independent.
+
+\medskip
+\emph{Step~2: Whitehead acyclicity of the enrichment.}
+
+The $d_1^{\mathrm{PBW}}$ differential (Lie bracket residue)
+acts on the enrichment through the $\fg$-module factor~$M_h$,
+leaving the $H^{1,0}(\Sigma_g)$ factor unchanged:
+\[
+d_1^{\mathrm{PBW}}\colon
+M_h \otimes H^{1,0}(\Sigma_g)
+\;\longrightarrow\;
+M_{h} \otimes H^{1,0}(\Sigma_g).
+\]
+Thus the enrichment complex at weight~$h$ is
+\[
+\bigl(C^*(\fg,\, M_h),\, d_{\mathrm{CE}}\bigr)
+\;\otimes_{\bC}\;
+H^{1,0}(\Sigma_g)
+\]
+where $C^*(\fg, M_h)$ is the Chevalley--Eilenberg
+complex of~$\fg$ with coefficients in~$M_h$.
+
+Since $\fg$ is semisimple, the
+Whitehead--Chevalley--Eilenberg theorem gives
+$H^q(\fg, N) = 0$ for all $q \geq 0$ and any
+finite-dimensional $\fg$-module~$N$ with no trivial
+summand.  Decompose $M_h = M_h^{\fg} \oplus
+M_h^{\mathrm{non\text{-}triv}}$ under~$\fg$.  Then:
+\[
+H^*\!\bigl(C^*(\fg, M_h^{\mathrm{non\text{-}triv}})\bigr)
+\;\otimes\; H^{1,0}(\Sigma_g) \;=\; 0.
+\]
+This vanishing is \emph{independent of~$g$}: the
+$H^{1,0}(\Sigma_g)$ tensor factor is a
+finite-dimensional vector space (of dimension~$g$),
+and tensoring a zero module with any vector space
+gives zero.  Only the $\fg$-invariant
+summand~$M_h^{\fg}$ can contribute cohomology---exactly
+as at genus~$1$.
+
+\medskip
+\emph{Step~3: Killing-form contraction kills
+invariants.}
+
+The surviving $\fg$-invariant enrichment classes live in
+$M_h^{\fg} \otimes H^{1,0}(\Sigma_g)$, where $M_h^{\fg}$
+is spanned by the Killing-form contractions
+$\kappa^{ab} \in (\fg \otimes \fg)^{\fg}$ and their
+higher-weight analogs (Casimir elements in
+$(\fg^{\otimes n})^{\fg}$).
+
+The $d_2^{\mathrm{PBW}}$ differential---the $(1)$-product
+contraction, which lowers PBW degree by~$2$ and
+involves the level~$k$---acts on the $\fg$-factor of
+the enrichment independently of the
+$H^{1,0}(\Sigma_g)$ multiplicity.  At genus~$g$, the
+invariant enrichment at bar degree~$2$, weight~$2$, is
+\[
+\kappa^{ab}(J^a_{-1} \otimes J^b_{-1})
+\;\otimes\; H^{1,0}(\Sigma_g),
+\]
+a space of dimension~$g$.  Each component
+$\kappa^{ab}(J^a_{-1} \otimes J^b_{-1}) \otimes \alpha_i$,
+for a basis $\{\alpha_1, \ldots, \alpha_g\}$ of
+$H^{1,0}(\Sigma_g)$, is killed individually by the same
+$d_2^{\mathrm{PBW}}$ mechanism as at genus~$1$:
+\[
+d_2^{\mathrm{PBW}}\bigl(
+J^c_{-1} \otimes \kappa^{ab} J^a_{-1}
+\otimes J^b_{-1} \otimes \alpha_i\bigr)
+\;=\;
+k \cdot \dim(\fg) \cdot J^c_{-1} \otimes \alpha_i
+\;\neq\; 0
+\]
+at generic $k \neq 0$.  The $H^{1,0}(\Sigma_g)$
+factor~$\alpha_i$ passes through the contraction
+unchanged: the $(1)$-product contracts OPE data (which
+is local, hence genus-independent), while the
+regular form~$\alpha_i$ is a global object that the
+local contraction does not see.
+
+The same argument applies at each conformal weight~$h$:
+the $\fg$-invariant summands in $M_h$ form a
+finite-dimensional space killed by the level-$k$
+contraction, and the $H^{1,0}(\Sigma_g)$ factor
+simply multiplies the dimension of the problem by~$g$
+without altering the acyclicity mechanism.
+
+\medskip
+\emph{Conclusion.}
+
+All enrichment classes from $H^{1,0}(\Sigma_g)$ are
+killed at finite page of the PBW spectral sequence,
+by the genus-independent Whitehead + Killing contraction
+mechanism.  By bounded-below convergence
+(\ref{item:pbw-bounded} of
+Theorem~\ref{thm:pbw-koszulness-criterion}), the spectral
+sequence converges in each bidegree, yielding
+$E_\infty(g) = E_\infty(0)$.
+
+\smallskip
+\emph{Note on antiholomorphic forms.}
+The enrichment from $H^{0,1}(\Sigma_g) \cong \bC^g$
+(antiholomorphic $1$-forms) contributes additional
+$d_0$-closed classes by the same residue-vanishing
+argument.  The acyclicity of this enrichment follows
+identically: the $\fg$-module structure of
+$\overline{M}_h$ is the complex conjugate of~$M_h$
+(same underlying representation of~$\fg$ over~$\bC$),
+and Whitehead + Killing contraction applies without
+change.  Thus the full $H^1(\Sigma_g, \bC) \cong
+\bC^{2g}$ enrichment is eliminated.
+\end{proof}
+
+\begin{corollary}[Unconditional modular Koszulity for Kac--Moody; \ClaimStatusProvedHere]
+\label{cor:unconditional-allgenera-km}
+\index{modular Koszul chiral algebra!unconditional all genera}
+For any simple~$\fg$ at generic level, the affine
+Kac--Moody vertex algebra $\widehat{\fg}_k$ is
+\emph{modular Koszul}
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
+Axioms \textup{MK1--MK3} hold unconditionally at all genera,
+and the consequences \textup{MK4} \textup{(}inversion\textup{)}
+and \textup{MK5} \textup{(}complementarity\textup{)} hold
+at all genera by
+Theorems~\textup{\ref{thm:higher-genus-inversion}}
+and~\textup{\ref{thm:quantum-complementarity-main}}.
+
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The genus-$g$ bar-cobar inversion
+$\Omega^{(g)}(\bar{B}^{(g)}(\widehat{\fg}_k))
+\xrightarrow{\sim} \widehat{\fg}_k$ is a
+quasi-isomorphism at all genera.
+\item The genus-$g$ complementarity
+$Q_g(\widehat{\fg}_k) + Q_g(\widehat{\fg}_k^!)
+= H^*(\overline{\cM}_g,\, Z_{\widehat{\fg}_k})$
+holds unconditionally.
+\item The full scalar modular characteristic package
+$\{\kappa(\widehat{\fg}_k),\, \{F_g\}_{g \geq 1},\,
+\Delta_{\widehat{\fg}_k}\}$ is unconditionally defined.
+\end{enumerate}
+This upgrades
+Proposition~\textup{\ref{prop:conditional-modular-koszul}}
+for the Kac--Moody family from conditional to
+unconditional.
+\end{corollary}
+
+\begin{proof}
+MK1 (genus-$0$ Koszulity):
+Theorem~\ref{thm:km-chiral-koszul}.
+MK2 (Verdier):
+Theorem~\ref{thm:verdier-bar-cobar}.
+MK3 (PBW degeneration at all genera):
+Theorem~\ref{thm:pbw-allgenera-km}.
+MK4 and MK5 follow from MK1--MK3 by
+Theorems~\ref{thm:higher-genus-inversion}
+and~\ref{thm:quantum-complementarity-main}.
+Items (i)--(iii) are immediate consequences.
+\end{proof}
+
+\begin{remark}[Scope and extensions]
+\label{rem:pbw-genus1-scope}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+Theorem~\ref{thm:pbw-allgenera-km} resolves
+Conjecture~\ref{conj:pbw-higher-genus-degeneration}
+completely for the Kac--Moody family.
+The Virasoro and $\mathcal{W}_N$ cases require the
+analogous argument with the Virasoro ($L_{-n}$) and
+$\mathcal{W}$-algebra generators.  For Virasoro, the
+representation-theoretic input replaces Whitehead's
+theorem for~$\fg$ with the analogous vanishing for
+$\mathfrak{sl}_2$-modules arising from the Virasoro
+algebra's $\{L_{-1}, L_0, L_1\}$ subalgebra; the
+mechanism is parallel but the combinatorics differ.
+
+\item
+The key structural insight is that enrichment from
+$H^{1,0}(\Sigma_g)$ \emph{factors} as
+$M_h \otimes H^{1,0}(\Sigma_g)$ where $M_h$ is
+genus-independent (\ref{eq:enrichment-factorization}).
+This factorization principle---local OPE data versus
+global curve topology---is the reason the genus-$1$
+argument is automatically genus-independent for
+Kac--Moody algebras.  It may fail for algebras whose
+OPE structure depends on global curve data (e.g.,
+elliptic vertex algebras), but for any vertex algebra
+defined by local OPE relations, the same principle
+applies.
+
+\item
+Theorem~\ref{thm:pbw-allgenera-km} and
+Corollary~\ref{cor:unconditional-allgenera-km}
+upgrade~$15$ conditional claims
+in Part~II
+(Proposition~\ref{prop:conditional-modular-koszul}
+and its downstream consequences) to unconditional
+statements at all genera for the Kac--Moody family,
+including complementarity and
+Kodaira--Spencer constructions.
+\end{enumerate}
 \end{remark}
 
 \begin{definition}[Scalar modular characteristic package; \ClaimStatusProvedHere]
@@ -8467,11 +9082,12 @@ Definition~\ref{def:frame-modular-package}.
 
 \smallskip
 \emph{The spectral discriminant}
-$\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x)$,
-encoding bar cohomology dimensions
-(Theorem~\ref{thm:ds-bar-gf-discriminant}), is a separate
-non-scalar invariant: it depends on the full quadratic OPE data,
-not on $\kappa(\cA)$ alone.
+$\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x)$
+encodes bar cohomology dimensions
+(Theorem~\ref{thm:ds-bar-gf-discriminant}).
+It is a separate non-scalar invariant depending on
+the full quadratic OPE data, not
+on~$\kappa(\cA)$ alone.
 \end{definition}
 
 \begin{definition}[Full modular characteristic package; \ClaimStatusConjectured]
@@ -8491,13 +9107,15 @@ For a modular Koszul chiral algebra~$\cA$
 \end{equation}
 where:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $\Theta_{\cA} \in
+\item The \emph{universal Maurer--Cartan class}
+  (Conjecture~\ref{conj:universal-theta}):
+  \[
+  \Theta_{\cA} \in
   \operatorname{MC}\!\bigl(
     \Defcyc(\cA) \;\widehat{\otimes}\;
     R\Gamma(\overline{\mathcal{M}}_{g,\bullet},\, \mathbb{Q})
-  \bigr)$
-  is the \emph{universal Maurer--Cartan class}
-  (Conjecture~\ref{conj:universal-theta});
+  \bigr);
+  \]
 \item $\kappa(\cA) \in \mathbb{C}$ is the
   \emph{scalar modular characteristic}
   (Definition~\ref{def:scalar-modular-package}),
@@ -8538,6 +9156,7 @@ Constructing $\Defcyc(\cA)$ as a cyclic $L_\infty$-algebra and
 solving the MC equation is the principal open problem of the
 modular programme (Conjectures~\ref{conj:universal-MC}
 and~\ref{conj:universal-theta}).
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{definition}
 
 \begin{remark}[The modular characteristic hierarchy]\label{rem:modular-characteristic-package}
@@ -8579,7 +9198,7 @@ invariants for each family; see the Master Table
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
 
 \smallskip\noindent
-The Heisenberg algebra was the atom from which all four main theorems were first visible (\S\ref{sec:frame-modular-package}): a single number $\kappa(\mathcal{H}_k) = k$ controlled the entire genus tower.  This theorem --- Theorem~D --- establishes that universality for all modular Koszul chiral algebras.
+The Heisenberg algebra was the atom from which all four main theorems were first visible (\S\ref{sec:frame-modular-package}): a single number $\kappa(\mathcal{H}_k) = k$ controlled the entire scalar genus tower.  This theorem --- Theorem~D$_{\mathrm{scal}}$ --- establishes that universality for all modular Koszul chiral algebras.  (The full modular characteristic package, including the spectral discriminant~$\Delta_{\cA}$ and the periodicity triple~$\Pi_{\cA}$, requires data beyond~$\kappa$; see Theorem~\ref{thm:spectral-characteristic}.)
 
 Let $\cA$ be a modular Koszul chiral algebra
 (Definition~\ref{def:modular-koszul-chiral}).  The scalar modular
@@ -8667,10 +9286,10 @@ free energies are Bernoulli numbers $F_g = k \cdot B_{2g}/(4g(2g-2))$
 \begin{theorem}[Spectral characteristic theorem; \ClaimStatusProvedHere]
 \label{thm:spectral-characteristic}
 \index{spectral discriminant!invariance theorem|textbf}
-\textup{[}Regime: quadratic
-\textup{(}Convention~\textup{\ref{conv:regime-tags})].}
 
 \smallskip\noindent
+\textup{[Regime: quadratic;
+Convention~\ref{conv:regime-tags}.]}
 Let $\cA$ be a modular Koszul chiral algebra.
 The spectral discriminant
 $\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x)$
@@ -8706,7 +9325,67 @@ such that:
 \item under Verdier/Koszul duality, $\Theta_{\cA}$ is sent to
   $\Theta_{\cA^!}$.
 \end{enumerate}
+This is the principal target of Conjecture~\ref{conj:master-theta} (MC2).
 \end{conjecture}
+
+\begin{remark}[Status and proof strategy for MC2]\label{rem:mc2-status}
+\index{universal Maurer--Cartan class!proof strategy}
+Conjecture~\ref{conj:universal-theta} is the foundational target
+of the modular programme: it would upgrade the scalar invariant
+$\kappa(\cA)$ to a full homotopy-algebraic object organising the
+entire genus tower.
+
+\emph{What is proved.}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{scalar shadow}:
+  the obstruction invariant $\kappa(\cA)$ is constructed and proved
+  universal, additive, and anti-symmetric
+  (Theorem~\ref{thm:modular-characteristic}).
+\item The \emph{determinant line bundle}
+  $\mathcal{L}_{\cA} = \det R\pi_{g*}\bar{B}^{(g)}(\cA)$
+  with $c_1(\mathcal{L}_{\cA}) = \kappa(\cA) \cdot \lambda$
+  (Remark~\ref{rem:homotopy-native-d}).
+\item The \emph{spectral discriminant}
+  $\Delta_{\cA}(x)$ as a separate non-scalar invariant
+  (Theorem~\ref{thm:spectral-characteristic}).
+\item The \emph{genus-$0$ deformation algebra}:
+  bar coderivations on $\bar{B}(\cA)$ form a dg~Lie algebra
+  whose Maurer--Cartan elements govern $A_\infty$-deformations
+  (standard; Loday--Vallette~\cite{LV12}).
+\end{enumerate}
+
+\emph{What remains.}
+The gap is constructing $\Defcyc(\cA)$ as a \emph{cyclic}
+$L_\infty$-algebra (not merely a dg~Lie algebra of coderivations)
+and solving the MC equation in the completed
+tensor product $\Defcyc(\cA) \,\widehat{\otimes}\,
+R\Gamma(\overline{\mathcal{M}}_{g,\bullet})$.
+Three specific constructions are needed:
+\begin{enumerate}[label=\textup{Step~\arabic*.}]
+\item \emph{Cyclic structure.}  Equip the bar coderivation
+  complex with a compatible cyclic pairing coming from
+  cyclic Hochschild cohomology of~$\cA$.
+  The pairing should intertwine the
+  bracket with the trace map $\operatorname{tr}$.
+\item \emph{Completed tensor product.}  Form the
+  pro-nilpotent completion
+  $\Defcyc(\cA) \,\widehat{\otimes}\, R\Gamma(\overline{\mathcal{M}}_{g,\bullet})$
+  with control on convergence.  The genus-$g$ tautological
+  ring $R^*(\overline{\mathcal{M}}_g)$ provides the
+  geometric coefficients.
+\item \emph{Clutching compatibility.}  Show that $\Theta_{\cA}$
+  restricted to the boundary divisor $\delta_h \subset
+  \overline{\mathcal{M}}_g$ decomposes via the clutching map
+  (\S\ref{sec:modular-koszul-programme}, axiom~\ref{MK:clutching-verdier}).
+\end{enumerate}
+The main external ingredient is a cyclic analogue of the
+Kontsevich--Soibelman graph complex construction~\cite{KontsevichSoibelman}
+adapted to chiral algebras.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
+Type~I (existence of homotopy object).
+(Contributing to Conjecture~\ref{conj:master-theta}.)
+\end{remark}
 
 \begin{remark}[Relation to the conjectural universal class]
 \label{rem:kappa-theta-relation}

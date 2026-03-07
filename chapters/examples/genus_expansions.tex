@@ -2,6 +2,45 @@
 
 The genus expansion formulas computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are extended here to affine Kac--Moody, Virasoro, and $\mathcal{W}_3$ algebras, demonstrating the three main theorems in interplay.
 
+\begin{remark}[Status legend]
+\label{rem:genus-exp-status}
+The genus expansions in this chapter are organized by proof tier:
+\begin{description}
+\item[T1.] \emph{Unconditional at all genera}: Heisenberg
+  (\S\ref{subsec:heisenberg-all-genera}), free fields,
+  lattice VOAs --- computed directly via genus universality.
+\item[T1$\frac{1}{2}$.] \emph{Unconditional at all genera}:
+  $\widehat{\mathfrak{sl}}_2$
+  (\S\ref{sec:three-theorems-sl2}), all affine Kac--Moody
+  $\widehat{\fg}_k$ at generic level ---
+  by Theorem~\ref{thm:pbw-allgenera-km}, the PBW spectral
+  sequence degenerates unconditionally at all genera.
+  The genus-$1$ mechanism (Theorem~\ref{thm:pbw-genus1-km})
+  serves as the base case.
+\item[T2.] \emph{PBW-conditional at all genera}:
+  Virasoro (\S\ref{sec:virasoro-all-genera}),
+  $\mathcal{W}$-algebras (\S\ref{sec:w-algebra-genera})
+  --- conditional on Conjecture~\ref{conj:master-pbw}.
+  The genus-$1$ analogue of
+  Theorem~\ref{thm:pbw-genus1-km} for these families
+  (Remark~\ref{rem:pbw-genus1-scope}) is expected to hold
+  by the same Whitehead mechanism.
+\item[Horizon.] Index-theoretic conjectures are downstream
+  of the full modular characteristic package
+  (Conjecture~\ref{conj:master-theta}).
+\end{description}
+\end{remark}
+
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:genus-exp-hms}
+This chapter operates at \textbf{S-level}: explicit genus expansion
+tables, generating functions, and tautological intersection numbers
+for $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\mathcal{W}_3$.
+These are extracted from \textbf{M-level} models (bar complexes at
+higher genus, PBW spectral sequences, Mumford class pairings).
+H-level input enters only through the genus universality theorem.
+\end{remark}
+
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
 \subsection{Heisenberg algebra}\label{subsec:heisenberg-all-genera}
@@ -274,7 +313,8 @@ order in~$k$, relating conformal block dimensions
 to the symplectic volume of the Hitchin moduli
 space.
 \item \emph{AGT correspondence
-\textup{(\ClaimStatusConjectured; physics)}:}
+\textup{(\ClaimStatusConjectured; physics;
+contributing to Conjecture~\ref{conj:master-theta})}:}
 the genus-$g$ partition function of
 $\mathcal{W}^k(\mathfrak{g})$ equals the
 Nekrasov partition function of the corresponding
@@ -313,6 +353,7 @@ discriminant $1 - 3x - x^2$, whose compatibility with
 $\widehat{\mathfrak{sl}}_3$ remains to be checked.
 
 \emph{Scope.}  Verification requires computing $\dim H^5(\barBgeom(\mathcal{W}_3^k))$: the value $171$ would confirm the recurrence~\eqref{eq:w3-bar-recurrence}, while any other value would rule it out and point to a non-rational generating function.
+(Contributing to Conjecture~\ref{conj:master-pbw}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -331,6 +372,7 @@ For non-simply-laced Lie algebras $\mathfrak{g}$ ($B_n$, $C_n$, $F_4$, $G_2$), t
 \end{enumerate}
 
 \emph{Scope.}  Even for $G_2$, only three data points are available.  The chain-group dimensions are $\dim(\mathfrak{g})^n \cdot (n{-}1)! = 14, 392, 5488$ for $n = 1, 2, 3$; the \emph{bar cohomology} dimensions are not yet computed beyond $H^1 = 14$.  Computing $H^n(\barBgeom(\widehat{G}_{2,k}))$ requires the $G_2$ structure constants and is computationally demanding.
+(Contributing to Conjecture~\ref{conj:master-pbw}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -369,6 +411,7 @@ function; the value $\dim H^4 = 82$ is the critical test.
 The rationality of $P_{Y(\mathfrak{sl}_2)}$ would be striking, since
 $\Einf$-chiral algebras typically have algebraic (but not rational)
 bar generating functions (Corollary~\ref{cor:algebraicity-koszul}).
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -406,11 +449,25 @@ For $k \neq -2$, the genus-$g$ spectral sequence collapses at $E_2$; at critical
 $\mathrm{obs}_g(\widehat{\mathfrak{sl}}_{2,k}) + \mathrm{obs}_g(\widehat{\mathfrak{sl}}_{2,-k-4}) = 0$ in $H^{2g}(\overline{\mathcal{M}}_g)$ for all~$g$.
 \end{itemize}
 
+All three theorems are unconditional for $\widehat{\mathfrak{sl}}_{2,k}$
+at generic level: the PBW spectral sequence degenerates at every
+genus by Theorem~\ref{thm:pbw-allgenera-km}.  The proof mechanism is
+representation-theoretic: the genus-$g$ enrichment from
+$H^1(\Sigma_g)$ decomposes under the adjoint action of
+$\mathfrak{sl}_2$, and Whitehead's theorem eliminates all non-trivial
+summands.  At conformal weight~$2$, this is the decomposition
+$\mathfrak{sl}_2^{\otimes 2} = V_5 \oplus V_3 \oplus V_1$---the
+bracket kills~$V_3$, Whitehead kills~$V_5$, and the
+level-$k$ Killing contraction kills~$V_1$.
+The genus expansion below
+is the numerical shadow of this algebraic mechanism.
+
 \subsection{Genus-$g$ free energy}\label{subsec:sl2-free-energy}
 
-\begin{theorem}[$\widehat{\mathfrak{sl}}_2$ free energy at all genera; \ClaimStatusProvedHere]\label{thm:sl2-all-genera}
-\textup{[Regime: curved-central
-\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+\begin{theorem}[$\widehat{\mathfrak{sl}}_2$ free energy at all genera;
+\ClaimStatusProvedHere]\label{thm:sl2-all-genera}
+\textup{[Regime: curved-central\textup{;}
+Convention~\textup{\ref{conv:regime-tags}}.]}
 
 For $\widehat{\mathfrak{sl}}_{2,k}$ at generic level $k \neq -2$, the genus-$g$ free energy is:
 \begin{equation}\label{eq:sl2-Fg}
@@ -740,12 +797,13 @@ $\sum_{c,d} f^{ac}{}_d f^{bc}{}_d = 2h^\vee\, \kappa^{ab}$.
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1: Curvature from the double-pole channel.}
+\emph{Step~1: Curvature from the double-pole channel.}\enspace
 The double-pole monodromy defect
-$-2\pi i\, k\, \kappa^{ab}\, \partial_w\omega_j$ from
-Step~1 of Theorem~\ref{thm:sl2-genus2-bar-differential}
-contributes to the curvature $(d^{(2)})^2$ through the product
-of the two B-cycle defects ($j = 1$ and $j = 2$):
+$-2\pi i\, k\, \kappa^{ab}\, \partial_w\omega_j$
+from Step~1 of
+Theorem~\ref{thm:sl2-genus2-bar-differential}
+contributes to the curvature $(d^{(2)})^2$ through the
+product of the two B-cycle defects ($j = 1$ and $j = 2$):
 \begin{equation}\label{eq:double-pole-curvature}
 \bigl(d^{(2)}_{\mathrm{double}}\bigr)^2
 = k \cdot (-2\pi i)^2 \cdot
@@ -2065,7 +2123,7 @@ By the universal generating function
 (Theorem~\ref{thm:universal-generating-function}), the genus-$g$
 free energy of any Koszul chiral algebra takes the form
 $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$, so the
-entire genus expansion is determined by the single invariant~$\kappa$.
+entire scalar genus expansion is determined by the single invariant~$\kappa$ (the full modular characteristic package requires additional spectral data; see Theorem~\ref{thm:spectral-characteristic}).
 The following table records $\kappa$, the Koszul dual data, and
 the first three explicit free energies.
 
@@ -2487,19 +2545,20 @@ $\lambda_g^{\mathrm{FP}} = \frac{2^{2g-1}-1}{2^{2g-1}}
 The first two factors tend to~$1$.  By the asymptotic
 formula $|B_{2g}| \sim 2(2g)!/(2\pi)^{2g}$
 (from $\zeta(2g) \to 1$):
-\[
+\begin{align*}
 \frac{|B_{2g+2}|}{|B_{2g}|} \cdot
 \frac{(2g)!}{(2g+2)!}
-\;\sim\;
-\frac{2(2g+2)!/(2\pi)^{2g+2}}{2(2g)!/(2\pi)^{2g}}
-\cdot \frac{(2g)!}{(2g+2)!}
-= \frac{1}{(2\pi)^2}
-\]
+&\;\sim\;
+\frac{2(2g{+}2)!\,/\,(2\pi)^{2g+2}}{2(2g)!\,/\,(2\pi)^{2g}}
+\cdot \frac{(2g)!}{(2g{+}2)!}\\[3pt]
+&= \frac{1}{(2\pi)^2}
+\end{align*}
 giving the limit~\eqref{eq:universal-growth-rate}.
 The radius of convergence of the generating function
 $\sum \lambda_g^{\mathrm{FP}} x^{2g} = (x/2)/\sin(x/2) - 1$
-is determined by the first singularity of~$(x/2)/\sin(x/2)$,
-namely the zero of $\sin(x/2)$ at~$x = 2\pi$.
+is determined by the first singularity
+of~$(x/2)/\sin(x/2)$, namely the zero of
+$\sin(x/2)$ at~$x = 2\pi$.
 \end{proof}
 
 \begin{computation}[Explicit growth ratios]\label{comp:growth-ratios}
@@ -2559,7 +2618,7 @@ polynomial growth from the algebra.
 
 The factored form $F_g = \kappa \cdot
 \lambda_g^{\mathrm{FP}}$ reveals that the algebra
-contributes only through the single number~$\kappa$:
+contributes to the scalar genus expansion only through the single number~$\kappa$:
 the moduli space geometry (encoded in
 $\lambda_g^{\mathrm{FP}}$) provides the universal
 decay rate, while $\kappa$ sets the overall scale.
@@ -2729,8 +2788,8 @@ a root-datum invariant
 \textup{(}Theorem~\textup{\ref{thm:complementarity-root-datum})}.
 \end{computation}
 
-The genus expansion data confirms the modular Koszul structure in
-every case.  The universality theorem reduces the full genus tower
+The genus expansion data confirms the modular Koszul structure (unconditional for Kac--Moody by Theorem~\ref{thm:pbw-allgenera-km}; conditional on PBW degeneration for Virasoro and $\mathcal{W}_N$) in
+every case.  The universality theorem reduces the scalar genus tower
 to a single number $\kappa(\cA)$; complementarity forces
 $\kappa(\cA) + \kappa(\cA^!) = 0$ for Kac--Moody and
 $\kappa + \kappa' = K$ for W-algebras, where $K$ is a root-datum

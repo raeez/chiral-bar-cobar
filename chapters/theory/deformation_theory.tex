@@ -5,6 +5,11 @@
 
 The fiberwise curvature $\dfib^{\,2} = \kappa \cdot \omega_1$ at genus~$1$ (Chapter~\ref{ch:heisenberg-frame}; Convention~\ref{conv:higher-genus-differentials}) makes the bar complex a curved $A_\infty$-algebra rather than a chain complex.  This chapter develops the deformation-obstruction theory organizing these quantum corrections.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:deformation-theory-hms}
+Deformation complexes and curved $A_\infty$ structures are constructed at \textbf{M-level}.  Obstruction scalars ($\kappa$), periodicity numbers, and the complementarity pairing are \textbf{S-level} shadows.  The full modular characteristic $\Theta_{\cA}$ (Conjecture~\ref{conj:universal-theta}) is a conjectured \textbf{H-level} structure; its scalar shadow $\kappa(\cA)$ is proved.
+\end{remark}
+
 \section{The deformation problem for chiral algebras}
 
 Classically, $HH^2$ parametrizes deformations and $HH^3$ carries obstructions.  For chiral algebras, $\overline{\mathcal{M}}_g$ contributes its own cohomology, splitting the theory into genus-$0$ (algebraic) and higher-genus (modular) components.
@@ -16,20 +21,8 @@ in a shifted-symplectic ambient space.  Koszul duality sends $HH^n(\cA)$ to $HH^
 
 \subsection{Origins and physical motivation}
 
-Exactly marginal CFT deformations correspond to closed Hochschild $2$-cocycles (Seiberg~\cite{Sei88}); the algebraic framework is Gerstenhaber's deformation theory~\cite{Ger63}, extended to chiral algebras via Beilinson--Drinfeld's factorization formalism~\cite{BD04}.
-
-The fundamental question is: Given a chiral algebra $\mathcal{A}$ on a smooth curve $X$, what are its infinitesimal deformations that preserve the chiral structure? In classical algebra, if we deform an associative multiplication $\mu: A \otimes A \to A$ to $\mu_t = \mu + t\phi$, the associativity constraint
-\[
-\mu_t(\mu_t \otimes \text{id}) = \mu_t(\text{id} \otimes \mu_t)
-\]
-must hold to first order in $t$. Expanding, we find $\phi$ must satisfy
-\[
-\mu \circ (\phi \otimes \mathrm{id}) + \phi \circ (\mu \otimes \mathrm{id}) - \mu \circ (\mathrm{id} \otimes \phi) - \phi \circ (\mathrm{id} \otimes \mu) = 0
-\]
-which in terms of elements reads $a\phi(b,c) - \phi(ab,c) + \phi(a,bc) - \phi(a,b)c = 0$.
-This is precisely the Hochschild 2-cocycle condition $\delta^2\phi = 0$. The obstruction to extending to second order lives in $HH^3(A,A)$.
+Exactly marginal CFT deformations correspond to closed Hochschild $2$-cocycles (Seiberg~\cite{Sei88}); the algebraic framework is Gerstenhaber's deformation theory~\cite{Ger63}, extended to chiral algebras via Beilinson--Drinfeld's factorization formalism~\cite{BD04}.  Classically, $HH^2(A,A)$ parametrizes infinitesimal deformations and $HH^3(A,A)$ carries obstructions (Chapter~\ref{ch:algebraic-foundations}).
 \index{obstruction theory|textbf}
-
 A chiral deformation must preserve the $\mathcal{D}_X$-module structure, the chiral multiplication, the diagonal singularity structure, and the OPE coefficients.
 
 \subsection{Configuration spaces in deformation theory}
@@ -489,9 +482,30 @@ is the Verdier duality functor.
 Applying this on $\overline{C}_{n+2}(X)$ with
 $\mathcal{M} = \mathrm{Hom}(\mathcal{A}^!, \mathcal{A})$:
 the Koszul pairing identifies
-$\mathbb{D}(\mathrm{Hom}(\mathcal{A}^!, \mathcal{A}))
-\cong \mathrm{Hom}(\mathcal{A}, \mathcal{A}^!) \otimes \omega_{\overline{C}_{n+2}}$.
-Since $\dim_{\mathbb{C}} \overline{C}_{n+2}(X) = n+2$ varies with bar degree~$n$, the Verdier shift on bar degree~$n$ is $n+2$.  Nevertheless, the \emph{totalized} shift is constant.  The two sources of the shift by~$2$ are as follows.  First, the desuspension $s^{-1}$ in the bar construction contributes a shift of~$1$: the bar complex $\bar{B}^{\mathrm{ch}}(\cA) = T^c(s^{-1}\bar{\cA})$ has internal grading shifted by one relative to the Hochschild grading.  Second, Serre duality on the underlying curve~$X$ ($\dim_{\mathbb{C}} X = 1$) contributes a shift of~$1$ via the canonical bundle~$\omega_X$.  The varying Verdier shift $(n+2)$ on the configuration spaces does \emph{not} contribute an additional shift because it is absorbed by the Koszul concentration: the Koszul property ensures that bar degree~$n$ contributes only to Hochschild degree~$n$, and the $\mathcal{D}$-module Verdier duality on $\overline{C}_{n+2}(X)$, combined with the Koszul pairing between~$\cA$ and~$\cA^!$, exchanges the Hom sheaf with the dual Hom sheaf while the $(n+2)$-dependent shift cancels against the identification of bar complexes on matching configuration spaces.  The net effect on the total complex is:
+\[
+\mathbb{D}(\mathrm{Hom}(\mathcal{A}^!, \mathcal{A}))
+\cong \mathrm{Hom}(\mathcal{A}, \mathcal{A}^!)
+\otimes \omega_{\overline{C}_{n+2}}.
+\]
+Since $\dim_{\mathbb{C}} \overline{C}_{n+2}(X) = n+2$ varies with bar
+degree~$n$, the Verdier shift on bar degree~$n$ is $n+2$.
+Nevertheless, the \emph{totalized} shift is constant.  The two sources
+of the shift by~$2$ are as follows.  First, the desuspension $s^{-1}$
+in the bar construction contributes a shift of~$1$: the bar complex
+$\bar{B}^{\mathrm{ch}}(\cA) = T^c(s^{-1}\bar{\cA})$ has internal
+grading shifted by one relative to the Hochschild grading.  Second,
+Serre duality on the underlying curve~$X$
+($\dim_{\mathbb{C}} X = 1$) contributes a shift of~$1$ via the
+canonical bundle~$\omega_X$.  The varying Verdier shift $(n+2)$ on the
+configuration spaces does \emph{not} contribute an additional shift
+because it is absorbed by the Koszul concentration: the Koszul property
+ensures that bar degree~$n$ contributes only to Hochschild degree~$n$,
+and the $\mathcal{D}$-module Verdier duality on
+$\overline{C}_{n+2}(X)$, combined with the Koszul pairing
+between~$\cA$ and~$\cA^!$, exchanges the Hom sheaf with the dual Hom
+sheaf while the $(n+2)$-dependent shift cancels against the
+identification of bar complexes on matching configuration spaces.
+The net effect on the total complex is:
 \[
 HH^n_{\mathrm{chiral}}(\mathcal{A})
 \cong HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
@@ -814,6 +828,7 @@ $L_\infty$-algebra over the modular operad and solving the
 Maurer--Cartan equation in the completed tensor product with
 tautological classes---is the content of
 Conjecture~\ref{conj:universal-MC}.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{definition}
 
 \begin{remark}[Why introduce $\operatorname{Def}_{\mathrm{cyc}}$
@@ -842,7 +857,7 @@ The Hochschild cohomology of chiral algebras can exhibit three types of periodic
 
 \subsubsection{The mechanism}
 
-\begin{theorem}[Modular periodicity for minimal models; \ClaimStatusProvedHere]
+\begin{conjecture}[Modular periodicity for minimal models; \ClaimStatusConjectured]
 \label{thm:modular-periodicity-minimal}
 \index{periodicity!modular!minimal models|textbf}
 Let $M(p,q)$ be a Virasoro minimal model with $2 \leq p < q$, $\gcd(p,q) = 1$,
@@ -857,10 +872,19 @@ Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \;=\;
 \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(M(p,q))).
 \]
-\end{theorem}
+(Contributing to Conjecture~\ref{conj:master-theta}.)
+\end{conjecture}
 
-\begin{proof}
-The proof proceeds in three steps: we establish $T$-matrix periodicity, deduce
+\begin{evidence}
+The following three-step argument establishes the structural
+framework; however, Step~2 contains a gap in the passage from
+theta-function periodicity to weight-space dimension periodicity
+(the convolution with $1/\eta$ does not preserve eventual
+periodicity of Fourier coefficients).
+Step~1 ($T$-matrix periodicity) is unconditional.
+
+\smallskip\noindent
+The argument proceeds in three steps: we establish $T$-matrix periodicity, deduce
 periodicity of the module decomposition data, and lift to the bar complex.
 
 \emph{Step~1: $T$-matrix periodicity.}
@@ -949,7 +973,7 @@ $\ker d$ and $\operatorname{im} d$ at weight $h+N$ are isomorphic to those at
 weight~$h$, giving
 $\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}}) = \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}})$
 for all $h$ sufficiently large.
-\end{proof}
+\end{evidence}
 
 \begin{conjecture}[Modular periodicity for general rational chiral algebras; \ClaimStatusConjectured]
 \label{conj:modular-periodicity}
@@ -967,22 +991,25 @@ Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:modular-periodicity-scope}
-Theorems~\ref{thm:modular-periodicity-minimal}
-and~\ref{thm:modular-periodicity-wzw} prove modular periodicity for
+Conjectures~\ref{thm:modular-periodicity-minimal}
+and~\ref{thm:modular-periodicity-wzw} assert modular periodicity for
 the two principal families of rational chiral algebras: Virasoro
-minimal models $M(p,q)$ (via Rocha-Caridi characters) and WZW models
-$\widehat{\mathfrak{g}}_k$ at positive integer level (via the
-Weyl--Kac character formula).  In both cases the key structural
-ingredient is that the characters are ratios of theta functions over
-eta functions, giving exact periodicity of Fourier coefficients.
-Conjecture~\ref{conj:modular-periodicity} extends this to general
-rational chiral algebras.  The main obstacle in the general case is
-that the $T$-matrix periodicity $T^N = \mathrm{Id}$ on the character
-space is known (it follows from the same argument as in Step~1 of the
-proof above), but deducing that weight-space dimensions and OPE
-coefficients are eventually $N$-periodic requires structural
-information about the characters that may not be available in full
-generality.  The conjecture is expected for all $C_2$-cofinite
+minimal models $M(p,q)$ and WZW models
+$\widehat{\mathfrak{g}}_k$ at positive integer level.
+In both cases the $T$-matrix periodicity ($T^N = \mathrm{Id}$,
+Step~1) is proved unconditionally, and the structural framework
+(finite module set, Verlinde fusion, Step~3) is sound.  The gap
+is in Step~2: the claim that the convolution of periodic
+theta-function coefficients with the partition function
+$p(\cdot) = 1/\eta$ yields eventually periodic weight-space
+dimensions is not established.  The partition function grows
+exponentially, so periodic theta-function numerator coefficients
+do not imply periodic convolution values.
+Conjecture~\ref{conj:modular-periodicity} extends the assertion to general
+rational chiral algebras.  The main obstacle in all cases is
+deducing that weight-space dimensions and OPE
+coefficients are eventually $N$-periodic from the known
+$T$-matrix periodicity.  The conjecture is expected for all $C_2$-cofinite
 rational vertex algebras, where Zhu's finiteness theorem and Huang's
 modular tensor category theory apply.  Natural next cases include
 $\mathcal{W}$-algebra minimal models (whose characters are given by
@@ -993,6 +1020,7 @@ and rational orbifolds.
 The conjecture asserts $N$-periodicity of bar cohomology dimensions
 in conformal weight for general rational chiral algebras, extending
 the proved minimal model and WZW cases.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
 \begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
@@ -1002,14 +1030,14 @@ $HH^{n+N}_{\mathrm{chiral}}(\cA) \cong HH^n_{\mathrm{chiral}}(\cA) \otimes M_N$
 where $M_N$ is a module over the ring of modular forms.  This requires
 additionally that the bar differential (which involves OPE structure
 constants, not just conformal weights) is compatible with the $T$-matrix
-shift.  For minimal models, Theorem~\ref{thm:modular-periodicity-minimal}
+shift.  For minimal models, Conjecture~\ref{thm:modular-periodicity-minimal}
 establishes this compatibility; the general rational case remains open.
 \end{remark}
 
 \subsubsection{Examples}
 
 \begin{example}[Minimal models]
-By Theorem~\ref{thm:modular-periodicity-minimal}, the Virasoro minimal models with
+By Conjecture~\ref{thm:modular-periodicity-minimal}, the Virasoro minimal models with
 \[
 c = 1 - \frac{6(p-q)^2}{pq}
 \]
@@ -1031,7 +1059,7 @@ At $k=1$: $c = 1$, period 24 (related to $j$-invariant)
 At $k=2$: $c = 3/2$, period 48
 \end{example}
 
-\begin{theorem}[Modular periodicity for WZW models; \ClaimStatusProvedHere]
+\begin{conjecture}[Modular periodicity for WZW models; \ClaimStatusConjectured]
 \label{thm:modular-periodicity-wzw}
 \index{periodicity!modular!WZW models|textbf}
 \index{WZW model!modular periodicity|textbf}
@@ -1049,11 +1077,11 @@ weight~$h$:
 \;=\;
 \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)).
 \]
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
-The proof follows the same three-step strategy as
-Theorem~\ref{thm:modular-periodicity-minimal}, using the
+\begin{evidence}
+The argument follows the same three-step strategy as
+Conjecture~\ref{thm:modular-periodicity-minimal}, using the
 Weyl--Kac character formula in place of the Rocha-Caridi formula.
 
 \emph{Step~1: $T$-matrix periodicity.}
@@ -1065,7 +1093,7 @@ is the highest root).  Their conformal weights are
 $h_\lambda = \langle \lambda, \lambda + 2\rho \rangle / 2(k + h^\vee)$.
 The $T$-eigenvalue $e^{2\pi i(h_\lambda - c/24)}$ is an $N$-th root
 of unity by the same argument as in Step~1 of
-Theorem~\ref{thm:modular-periodicity-minimal}: since
+Conjecture~\ref{thm:modular-periodicity-minimal}: since
 $h_\lambda - c/24$ is rational with denominator dividing
 $24(k + h^\vee)$, and $N$ is constructed from $c = p/q$ to ensure
 $cN/24 \in \mathbb{Z}$, one has $T^N = \mathrm{Id}$ on the
@@ -1106,14 +1134,14 @@ Since $N$ is a multiple of $\operatorname{lcm}(k + h^\vee, h^\vee)$
 with $q$ a divisor of $k + h^\vee$), the ratio
 $\mathrm{ch}_{L(\lambda)}$ has $N$-periodic Fourier coefficients
 for exponents exceeding the pole order.  By the convolution
-argument of Theorem~\ref{thm:modular-periodicity-minimal},
+argument of Conjecture~\ref{thm:modular-periodicity-minimal},
 Step~2, this gives
 $\dim L(\lambda)_{[h+N]} = \dim L(\lambda)_{[h]}$
 for all $h$ sufficiently large.
 
 \emph{Step~3: Lift to bar complex.}
 The bar complex dimension at degree~$n$, weight~$h$ decomposes as
-in Step~3 of Theorem~\ref{thm:modular-periodicity-minimal}, with
+in Step~3 of Conjecture~\ref{thm:modular-periodicity-minimal}, with
 module labels running over the finitely many integrable
 representations and fusion multiplicities given by the Verlinde
 formula for~$\widehat{\mathfrak{g}}_k$.  The OPE structure
@@ -1128,19 +1156,25 @@ Therefore the bar differential matrices at weights $h$ and $h+N$
 are identified via the canonical weight-space isomorphisms,
 and $\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}})
 = \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}})$ for all $h \gg 0$.
-\end{proof}
+\end{evidence}
 
 \begin{remark}[Scope]\label{rem:wzw-periodicity-scope}
-Theorem~\ref{thm:modular-periodicity-wzw} applies to all
+Conjecture~\ref{thm:modular-periodicity-wzw} covers all
 simple~$\mathfrak{g}$ at all positive integer levels.  Together with
-Theorem~\ref{thm:modular-periodicity-minimal}, modular periodicity
-is now established for the two main families of rational chiral
-algebras: Virasoro minimal models and WZW models.
+Conjecture~\ref{thm:modular-periodicity-minimal}, modular periodicity
+is conjectured for the two main families of rational chiral
+algebras: Virasoro minimal models and WZW models.  The $T$-matrix
+periodicity (Step~1) is unconditional in both cases; the gap
+is in Step~2, where the passage from theta-function periodicity
+to weight-space dimension periodicity requires a convolution
+argument whose validity is not established (the convolution
+with $1/\eta$ does not preserve eventual periodicity).
 Conjecture~\ref{conj:modular-periodicity} remains open for
 general rational chiral algebras (e.g., $\mathcal{W}$-algebra
 minimal models at non-integral levels, orbifolds, coset models),
 where explicit character formulas as theta-function ratios may
 not be available.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
 \subsubsection{Koszul dual behavior}
@@ -1173,7 +1207,7 @@ The relation~\eqref{eq:period-sum} is verified for the Heisenberg algebra ($c = 
 This conjecture is labeled \ClaimStatusConjectured{} because the
 formula~\eqref{eq:period-sum} assumes that the modular periods $N$, $N'$
 are given by $24q/\gcd(p,24)$ (the $T$-matrix order).  For minimal models,
-this is established by Theorem~\ref{thm:modular-periodicity-minimal};
+this is established by Conjecture~\ref{thm:modular-periodicity-minimal};
 for general rational chiral algebras it remains
 Conjecture~\ref{conj:modular-periodicity}.
 To establish the general case, one would need to:
@@ -1188,6 +1222,7 @@ for arbitrary Koszul duals.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
 The conjecture asserts that modular periods of a Koszul pair $(\cA, \cA^!)$ are related by the reciprocal-sum formula~\eqref{eq:period-sum}, reflecting duality at the level of $T$-matrix eigenvalues.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
 \subsection{Type II: quantum group periodicity}
@@ -1366,6 +1401,7 @@ The weak bound $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$ is proved unconditi
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
 The conjecture sharpens the proved geometric periodicity bound from $3g-2$ to $12(2g-2)$ using tautological relations on $\overline{\mathcal{M}}_g$.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
 \subsubsection{Examples at different genera}
@@ -1410,7 +1446,7 @@ For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central ch
 \]
 where:
 \begin{align}
-N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(Theorems~\ref{thm:modular-periodicity-minimal}, \ref{thm:modular-periodicity-wzw} for minimal/WZW; Conjecture~\ref{conj:modular-periodicity} in general)} \\
+N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(Conjectures~\ref{thm:modular-periodicity-minimal}, \ref{thm:modular-periodicity-wzw} for minimal/WZW; Conjecture~\ref{conj:modular-periodicity} in general)} \\
 N_{\text{quantum}} &= M \text{ (from quantum group; proved)} \\
 N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g \geq 2$; Conjecture~\ref{conj:geometric-periodicity})}
 \end{align}
@@ -1454,6 +1490,7 @@ content}---that the three periodicity sources combine via $\operatorname{lcm}$--
 unconditional; it is the specific values of $N_{\text{mod}}$ and
 $N_{\text{geom}}$ that are conjectural.
 The $\operatorname{lcm}$ bound is sharp when the three periodicities are genuinely independent, which holds generically.  However, for specific algebras (e.g., minimal models where the modular and quantum data are related by the Verlinde formula), cancellations between the three sources can reduce the actual period below the $\operatorname{lcm}$.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
 \begin{remark}[Periodicity triple refinement]\label{rem:periodicity-triple-deformation}
@@ -1501,7 +1538,7 @@ decreasing strength:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Unconditional stratum.}
   Minimal models: all three periodicity sources are controlled
-  (modular by Theorem~\ref{thm:modular-periodicity-minimal},
+  (modular by Conjecture~\ref{thm:modular-periodicity-minimal},
   quantum by the quantum integer periodicity, geometric by
   the Mumford relations), and the lcm bound is proved.
 \item \emph{Conditional stratum.}
@@ -1550,7 +1587,7 @@ By the quantum periodicity theorem (Type~II above), the quantum period $N_{\text
 Both $\cA$ and $\cA^!$ live on the same curve $X$.  The Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map, Theorem~\ref{thm:kodaira-spencer-chiral-complete}) depends only on the geometry of~$X$, not on the chiral algebra: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
 
 \emph{(3) Modular period of the dual.}
-The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula.  By the $T$-matrix analysis of Conjecture~\ref{conj:modular-periodicity} (applied to~$\cA^!$), the modular period is $N'_{\text{mod}} = 24q'/\gcd(p',24)$ where $c' = p'/q'$.  Since each periodicity source independently divides the total period, the lcm upper bound follows.
+The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula, giving $c' = p'/q'$ in lowest terms.  The $T$-matrix of~$\cA^!$ has eigenvalues $e^{2\pi i(h'_\lambda - c'/24)}$, and the same elementary argument as in Step~1 of the periodicity proofs (requiring only $c'N'/24 \in \mathbb{Z}$ and rationality of conformal weights) gives $T^{N'} = \mathrm{Id}$ for $N'_{\text{mod}} = 24q'/\gcd(p',24)$.  This $T$-matrix periodicity is unconditional: it depends only on rationality of~$c'$, not on any conjecture about bar cohomology.  Since each periodicity source independently divides the total period, the lcm upper bound follows.
 \end{proof}
 
 \begin{remark}[Modular period exchange]\label{rem:periodicity-exchange-harmonic}
@@ -1617,6 +1654,7 @@ This conjecture lies outside the scope of the present monograph: it is a physica
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
 The conjecture identifies the holographic bulk-boundary correspondence with Koszul duality, asserting $\cA_{\text{bulk}}^! \cong \cA_{\text{boundary}}$ as an algebraic realization of AdS$_3$/CFT$_2$.
+(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 \end{remark}
 
 The evidence is threefold: the central charges satisfy

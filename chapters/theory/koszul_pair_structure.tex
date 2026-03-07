@@ -6,11 +6,51 @@
 
 The Koszul pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ from Chapter~\ref{ch:heisenberg-frame} is the simplest instance of a general pattern.  This chapter investigates the fine structure: periodicity for affine and Virasoro algebras, the discriminant, and the interaction with representation theory.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:koszul-pair-structure-hms}
+This chapter operates at \textbf{M-level} (Hochschild complexes, explicit periodicity computations, discriminant formulas) with \textbf{S-level} shadows (periodicity numbers, the $\Pi(\cA)$ triple, Hilbert series identities).  The H-level perspective (derived Morita classes, formal moduli periodicity) is referenced where relevant.
+\end{remark}
+
 \section{Koszul duality}
 
 \subsection{First principles}
 
 The bar-cobar adjunction produces, for any augmented chiral algebra~$\cA$, a coalgebra $\barB(\cA)$ and a counit $\Omega(\barB(\cA)) \to \cA$.  The Koszul condition --- a quadratic constraint on generators and relations --- is what makes this counit a quasi-isomorphism; off the Koszul locus it persists only in the completed coderived category.  When it holds, Theorem~A gives an adjoint equivalence, Theorem~B gives $E_2$ collapse, and Theorem~C gives Lagrangian complementarity.  The Koszul condition converts formal duality into geometric duality.
+
+\begin{remark}[Three levels of Koszul pair]\label{rem:three-koszul-levels}
+\index{Koszul pair!comparison of levels}
+The notion of Koszul pair refines across three settings:
+\begin{center}\small
+\begin{tabular}{|l|l|l|l|}
+\hline
+& \textbf{Classical} & \textbf{Chiral} & \textbf{Modular} \\
+\hline
+\textbf{Definition} & Def.~\ref{def:koszul-pair-classical} &
+  Def.~\ref{def:chiral-koszul-pair} &
+  Def.~\ref{def:modular-koszul-homotopy} \\
+\textbf{Input} & Graded algebras &
+  Chiral algebras on $X$ &
+  + genus tower $g \geq 0$ \\
+\textbf{Bar object} & $\barB(A) = T^c(sA)$ &
+  $\barB_X(\cA)$ on $\overline{C}_n(X)$ &
+  $\barB_g(\cA)$ on $\overline{\mathcal{M}}_g$ \\
+\textbf{Curvature} & $m_0 = 0$ &
+  $\dzero^2 = 0$ &
+  $\dfib^2 = \kappa \cdot \omega_g$ \\
+\textbf{Main theorem} & Priddy~\cite{Priddy70} &
+  Thm~A (Thm~\ref{thm:bar-cobar-isomorphism-main}) &
+  Thms~B--D \\
+\textbf{Status} & \ClaimStatusProvedElsewhere &
+  \ClaimStatusProvedHere &
+  \ClaimStatusProvedHere \\
+\hline
+\end{tabular}
+\end{center}
+Each level strictly refines the previous: a chiral Koszul pair
+on $\bP^1$ recovers the classical pair via the operadic
+equivalence; a modular Koszul object at genus~$0$ recovers the
+chiral pair.
+\end{remark}
 
 \subsection{Operadic formulation}
 
@@ -37,87 +77,15 @@ A \emph{Koszul pair} $(A_1, A_2)$
 Definition~\ref{def:chiral-koszul-pair}) consists of two algebras
 whose bar and cobar constructions provide quasi-inverse equivalences.
 
-\section{Historical foundations: from quadratic duality to chiral structures}
+\section{From classical to chiral Koszul duality}
 
-\subsection{Koszul duality (1950)}
-
-Koszul~\cite{Koszul50}, computing $H^*(\mathfrak{g}, \mathbb{C})$ for a finite-dimensional Lie algebra $\mathfrak{g}$, observed a duality between the symmetric algebra $S(\mathfrak{g}^*)$ (polynomial functions on $\mathfrak{g}$) and the exterior algebra $\Lambda(\mathfrak{g})$ (the Chevalley--Eilenberg complex).
-
-\begin{theorem}[Koszul 1950 {\cite{Koszul50}}; \ClaimStatusProvedElsewhere]
-For a finite-dimensional Lie algebra $\mathfrak{g}$, there exists an acyclic complex (the Koszul complex):
-\[
-0 \to S(\mathfrak{g}^*) \otimes \Lambda^{\dim \mathfrak{g}}(\mathfrak{g}) \to S(\mathfrak{g}^*) \otimes \Lambda^{\dim \mathfrak{g}-1}(\mathfrak{g}) \to \cdots \to S(\mathfrak{g}^*) \to \mathbb{C} \to 0
-\]
-\end{theorem}
-
-The Koszul complex is a minimal resolution of $\mathbb{C}$ as an $S(\mathfrak{g}^*)$-module: the differential involves only linear maps.
-
-\subsection{Quadratic Koszul duality (Priddy 1970, Beilinson--Ginzburg--Soergel 1996)}
-
-Priddy~\cite{Priddy70} characterized when the bar construction gives a minimal resolution: the algebra must have quadratic relations.
-
-\begin{definition}[Quadratic algebra]
-A \emph{quadratic algebra} is $A = T(V)/(R)$ where $V$ is a vector space in degree 1 and $R \subset V \otimes V$ consists of quadratic relations.
-\end{definition}
-
-Priddy discovered that for such algebras, one could define a dual:
-
-\begin{definition}[Quadratic dual]
-For $A = T(V)/(R)$, the quadratic dual is $A^! = T(V^*)/(R^{\perp})$ where
-\[
-R^{\perp} = \{r^* \in V^* \otimes V^* : \langle r^*, r \rangle = 0 \text{ for all } r \in R\}
-\]
-\end{definition}
-
-The fundamental theorem of quadratic Koszul duality states:
-
-\begin{theorem}[Priddy 1970, BGS 1996 {\cite{Priddy70, BGS96}}; \ClaimStatusProvedElsewhere]
-A quadratic algebra $A$ is \emph{Koszul} (has a linear resolution) if and only if the Koszul complex
-\[
-\cdots \to A \otimes (A^!)_2 \to A \otimes (A^!)_1 \to A \otimes (A^!)_0 \to \mathbb{C} \to 0
-\]
-is exact.
-\end{theorem}
-
-\subsection{The chiral setting (Beilinson--Drinfeld)}
-
-The chiral algebras of Beilinson--Drinfeld~\cite{BD04} are almost never quadratic:
-
-\begin{example}[Non-quadratic examples from physics]
-\begin{enumerate}
-\item \emph{Virasoro algebra}: The stress-energy tensor $T(z)$ has OPE
-\[
-T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}
-\]
-The quartic pole makes this inherently non-quadratic.
-
-\item \emph{W-algebras}: Discovered by Alexander Zamolodchikov (1985) studying conformal field theories with extended symmetry. The $W_3$ algebra has a spin-3 current $W(z)$ with
-\[
-W(z)W(w) \sim \frac{\text{const}}{(z-w)^6} + \cdots
-\]
-involving a sixth-order pole.
-
-\item \emph{Yangian}: Vladimir Drinfeld (1985), studying quantum integrable systems and the quantum inverse scattering method of the Leningrad school (Faddeev, Sklyanin, Takhtajan), discovered deformations of universal enveloping algebras with inherently cubic relations.
-\end{enumerate}
-\end{example}
-
-This motivated our quest: \emph{Can we extend Koszul duality to the non-quadratic chiral setting?}
+Classical Koszul duality (Definition~\ref{def:koszul-pair-classical}, Chapter~\ref{ch:algebraic-foundations}) requires quadratic relations.  Chiral algebras are almost never quadratic: the Virasoro OPE has a quartic pole, $W$-algebras have sixth-order poles, and Yangians have cubic relations.  The PBW filtration (Chapter~\ref{chap:koszul-pairs}) resolves this by reducing the chiral problem to the classical one on the associated graded.
 
 % ================================================================
 % SECTION: CHIRAL HOCHSCHILD COHOMOLOGY FROM FIRST PRINCIPLES
 % ================================================================
 
 \section{Chiral Hochschild cohomology: construction from first principles}
-
-\subsection{Motivation: from classical to chiral}
-
-Gerhard Hochschild (1945) introduced Hochschild cohomology to study deformations of associative algebras. For an algebra $A$ over a field $k$, he defined:
-\[
-HH^n(A, M) = \text{Ext}^n_{A^e}(A, M)
-\]
-where $A^e = A \otimes_k A^{\text{op}}$ is the enveloping algebra and $M$ is an $A$-bimodule.
-
-Extending this to chiral algebras requires addressing three features: chiral algebras live on curves (not just at points), the multiplication involves formal parameters (the OPE), and locality conditions must be respected.
 
 \subsection{The chiral enveloping algebra}
 
@@ -126,11 +94,7 @@ For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, the \emph{chiral envel
 \[
 \mathcal{A}^e = \mathcal{A} \boxtimes_{\mathcal{D}_X} \mathcal{A}^{\text{op}}
 \]
-where:
-\begin{itemize}
-\item $\boxtimes_{\mathcal{D}_X}$ denotes the chiral tensor product over the sheaf of differential operators
-\item $\mathcal{A}^{\text{op}}$ has the opposite chiral multiplication: $Y^{\text{op}}(a,b) = Y(b,a)$
-\end{itemize}
+where $\boxtimes_{\mathcal{D}_X}$ is the chiral tensor product over the sheaf of differential operators and $\mathcal{A}^{\text{op}}$ has the opposite chiral multiplication $Y^{\text{op}}(a,b) = Y(b,a)$.
 \end{definition}
 
 \begin{definition}[Chiral bimodule]\label{def:chiral-bimodule}
@@ -282,11 +246,9 @@ Theorem~\ref{thm:bar-nilpotency-complete}). \qedhere
 
 \section{The chiral Gerstenhaber structure}
 
-\subsection{Motivation from classical theory}
+Hochschild cohomology carries a Gerstenhaber algebra structure~\cite{Ger63}: a graded commutative cup product and a degree~$-1$ Lie bracket, compatible via the Leibniz rule.  Both extend to the chiral setting.
 
-Hochschild cohomology carries more structure than a graded vector space~\cite{Ger63}: a graded commutative cup product and a graded Lie bracket of degree $-1$, compatible via a Leibniz rule (a Gerstenhaber algebra).
-
-\subsection{Construction of the cup product}
+\subsection{The cup product}
 
 \begin{definition}[Cup product on chiral Hochschild cohomology]
 For $f \in CH^p(\mathcal{A})$ and $g \in CH^q(\mathcal{A})$, define their cup product:
@@ -315,7 +277,7 @@ The cup product satisfies:
 
 \subsection{The chiral Lie bracket}
 
-The Lie bracket structure is more subtle in the chiral setting:
+The chiral Lie bracket uses residue composition:
 
 \begin{definition}[Chiral Lie bracket]
 For $f \in CH^p(\mathcal{A})$ and $g \in CH^q(\mathcal{A})$, define:
@@ -323,9 +285,13 @@ For $f \in CH^p(\mathcal{A})$ and $g \in CH^q(\mathcal{A})$, define:
 \{f, g\}_c = f \circ_c g - (-1)^{(p-1)(q-1)} g \circ_c f
 \]
 where the chiral composition $\circ_c$ is:
-\begin{align}
-(f \circ_c g)(a_0, \ldots, a_{p+q-1}) = \sum_{i=0}^{p-1} (-1)^{i(q-1)} \text{Res}_{w \to z_i} f(a_0, \ldots, a_i, g(a_{i+1}, \ldots, a_{i+q})(w), a_{i+q+1}, \ldots)
-\end{align}
+\begin{multline}
+(f \circ_c g)(a_0, \ldots, a_{p+q-1})
+= \sum_{i=0}^{p-1} (-1)^{i(q-1)}
+\operatorname{Res}_{w \to z_i}\\
+f\bigl(a_0, \ldots, a_i,\, g(a_{i+1}, \ldots, a_{i+q})(w),\,
+a_{i+q+1}, \ldots\bigr)
+\end{multline}
 \end{definition}
 
 \begin{theorem}[Chiral Gerstenhaber algebra {\cite{Ger63, Tamarkin00}}; \ClaimStatusProvedElsewhere]
@@ -536,6 +502,11 @@ continuous Lie algebra cohomology (\ClaimStatusProvedElsewhere, \cite{BD04});
 (iii)~the Gel'fand--Fuchs computation of $H^*(L_1; \mathbb{C})$
 (\ClaimStatusProvedElsewhere, \cite{Fuks86}).
 The combination is new to this work.
+For the Virasoro algebra (rank~$1$), the scalar $\mathrm{Period}(\mathrm{Vir}_c) = 2$
+captures the full periodicity data.  For higher-rank algebras,
+strict periodicity fails and the primary invariant is the
+periodicity triple $\Pi(\cA)$
+(Remark~\ref{rem:periodicity-triple}, Definition~\ref{def:derived-scalar-period}).
 \end{remark}
 
 \subsection{Periodicity for other chiral algebras}
@@ -837,6 +808,7 @@ Theorem~\ref{thm:periodicity-exchange-koszul}.  For
 higher-rank algebras where strict periodicity fails
 (Remark~\ref{rem:affine-periodicity-analysis}), the derived
 period is undefined and $\Pi_{\cA}$ is the correct invariant.
+(Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{definition}
 
 \begin{proposition}[Admissible levels are permuted under Koszul duality; \ClaimStatusProvedHere]
@@ -979,8 +951,6 @@ For a dualizable quadratic chiral algebra $\mathcal{A} = \mathcal{A}(N, P)$ with
 \]
 where $\text{MC}$ denotes the set of Maurer--Cartan elements.
 \end{theorem}
-
-Let us prove this in detail to understand what must be generalized:
 
 \begin{proof}
 \emph{Direction 1: Morphism to MC element}
@@ -1295,6 +1265,7 @@ nilpotents and Langlands dual groups requires gauge-theoretic input
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
 The conjecture posits a Koszul equivalence $D^b(\mathcal{W}^k(\mathfrak{g},f)\text{-mod}) \simeq D^b(\mathcal{W}^{k^L}(\mathfrak{g}^L,f^L)\text{-mod})$ for general nilpotent orbits and Langlands dual groups.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
 This provides a vast class of non-quadratic Koszul dual pairs.
@@ -1501,14 +1472,18 @@ $\widehat{\fg}_k$ at $k \neq -h^\vee$:
   \mathrm{Tr}(A \wedge dA + \frac{2}{3}A^3)$.
 \item \emph{Chiral Chern--Simons.}
   The bar--semi-infinite quasi-isomorphism
-  $\barB(\widehat{\fg}_k) \simeq C^*_{\infty/2}(\widehat{\fg}_k)$
-  \textup{(}Theorem~\textup{\ref{thm:bar-semi-infinite-km})}
-  identifies the bar complex with the BRST complex of the
-  WZW model at level~$k$, which is the gauge-fixed
+  \[
+  \barB(\widehat{\fg}_k) \simeq
+  C^*_{\infty/2}(\widehat{\fg}_k)
+  \]
+  (Theorem~\ref{thm:bar-semi-infinite-km})
+  identifies the bar complex with the BRST complex of
+  the WZW model at level~$k$, which is the gauge-fixed
   Chern--Simons theory on the boundary
   \textup{(}Witten~\cite{Wit89}\textup{)}.
-  The MC equation in $\barB(\widehat{\fg}_k)$ therefore
-  parametrizes flat $\fg$-connections at level~$k$.
+  The MC equation in $\barB(\widehat{\fg}_k)$
+  therefore parametrizes flat $\fg$-connections at
+  level~$k$.
 \item \emph{Curvature = CS level.}
   At genus~$1$, the bar complex has $\dfib^{\,2} = \kappa \cdot \omega_1$
   with $\kappa = k\dim(\fg)/(2(k+h^\vee))$.  This curvature is
@@ -1561,9 +1536,9 @@ flatness; \ClaimStatusProvedHere]
 For a chiral algebra $\cA$ with $A_\infty$ operations
 $\{m_n\}$ \textup{(}Theorem~\textup{\ref{thm:w-algebra-ainfty}}
 for W-algebras\textup{)}, the bar complex $\barB(\cA)$
-carries an $L_\infty$ structure with brackets
-$\ell_n$ obtained by antisymmetrizing~$m_n$.  The
-Maurer--Cartan equation
+carries an $L_\infty$ structure with brackets $\ell_n$
+obtained by antisymmetrizing~$m_n$.  The Maurer--Cartan
+equation
 \[
 d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
 + \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
@@ -1776,6 +1751,7 @@ but the general correspondence remains conjectural.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
 The conjecture identifies Yangian--quantum affine Koszul duality with the Chern--Simons/deformed Chern--Simons duality via the Witten--Reshetikhin--Turaev invariants.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
 The RTT relations in the Yangian give rise to the $\alpha^4$ term:
@@ -1832,6 +1808,7 @@ Chern--Simons theory (Witten \cite{Wit89}).
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
 The conjecture formulates the AdS$_3$/CFT$_2$ holographic correspondence as an instance of chiral Koszul duality exchanging bulk Chern--Simons theory and boundary WZW/W-algebra.
+(Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 \end{remark}
 
 Specifically:

@@ -3,18 +3,14 @@
 
 The bar-cobar machinery of the preceding chapters operates at the algebra level.  This chapter extends it to modules: for a chiral algebra $\cA$ and an $\cA$-module $\mathcal{M}$, the module bar construction $\barB_\cA(\mathcal{M})$ produces a comodule over the bar coalgebra, and the resulting functor $\Phi$ is an equivalence on appropriate categories.  For the Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}), this reduces to the classical Fock space duality; for affine Kac--Moody algebras, it produces the Feigin--Frenkel correspondence on Verma modules.
 
+\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
+\label{rem:chiral-modules-hms}
+Module categories and the module bar construction are developed at \textbf{M-level}: explicit pointed configuration spaces, module bar differentials, and representation-theoretic equivalences.  The H-level formulation (modules as factorization algebras on pointed spaces, Swiss-cheese $\infty$-operads) frames the definitions; the proofs are M-level throughout.
+\end{remark}
+
 \section{Factorization modules: definitions and categories}
 
-The bar complex of a module
-$\bar{B}(\cA, M)$ lives on \emph{pointed} configuration spaces
-(one distinguished point carrying the module, the rest carrying
-algebra data), and its Verdier dual is a comodule over
-$\bar{B}(\cA)$.  The Koszul property descends: if $\cA$ is Koszul, every module $M$
-admits a bar resolution whose $E_2$-collapse computes Ext groups.
-The resulting module Koszul duality exchanges representation categories
-under $k \leftrightarrow -k - 2h^\vee$.
-
-The key idea (Voronov~\cite{Voronov99}, Costello--Gwilliam~\cite{CG17}, Ayala--Francis~\cite{AF15}) is that a module is a factorization algebra on a pointed space, where the marked point carries the module data and the remaining points carry algebra data.
+A module over a factorization algebra is itself a factorization algebra on a pointed space: the marked point carries the module data, the remaining points carry algebra data (Voronov~\cite{Voronov99}, Costello--Gwilliam~\cite{CG17}, Ayala--Francis~\cite{AF15}).  The bar complex $\bar{B}(\cA, M)$ lives on such pointed configuration spaces, and its Verdier dual is a comodule over $\bar{B}(\cA)$.  When $\cA$ is Koszul, every module $M$ admits a bar resolution whose $E_2$-collapse computes Ext groups, and the resulting module Koszul duality exchanges representation categories under $k \leftrightarrow -k - 2h^\vee$.
 
 \begin{definition}[Factorization module]\label{def:factorization-module}
 \index{factorization module|textbf}
@@ -751,14 +747,17 @@ does not directly apply.
 
 Nonetheless, the complementarity theorem
 (Theorem~\ref{thm:quantum-complementarity-main}) gives
-$Q_g(\widehat{\mathfrak{g}}_k) +
+\[
+Q_g(\widehat{\mathfrak{g}}_k) +
 Q_g(\widehat{\mathfrak{g}}_{k'}^!)
-= H^*(\mathcal{M}_g, Z(\widehat{\mathfrak{g}}_k))$,
-constraining conformal block dimensions at level~$k'$ through
-the center.  At admissible levels the complementarity gives an
-explicit relationship between the conformal block ranks.  At
-positive integer level, the bar complex computes the Verlinde
-dimensions exactly (Theorem~\ref{thm:verlinde-bar}).
+= H^*(\mathcal{M}_g, Z(\widehat{\mathfrak{g}}_k)),
+\]
+constraining conformal block dimensions at level~$k'$
+through the center.  At admissible levels the complementarity
+gives an explicit relationship between the conformal block
+ranks.  At positive integer level, the bar complex computes
+the Verlinde dimensions exactly
+(Theorem~\ref{thm:verlinde-bar}).
 \end{remark}
 
 \subsection{Conformal block ranks under Koszul duality}
@@ -823,17 +822,19 @@ genus-$g$ ranks agree.  The $C_2$-cofiniteness of $\mathcal{A}^!$
 (Zhu~\cite{Zhu96}), and the factorization property holds for all
 $C_2$-cofinite algebras (Huang--Lepowsky--Zhang~\cite{HLZ}).
 
-For (iii): the KZB connection arises from the variation
-of the propagator $\eta_{ij}$ on~$\overline{C}_2(X)$
-(Proposition~\ref{prop:kzb-bar-complex}).  The propagator
-depends only on the curve~$X$, not on the algebra
-$\mathcal{A}$: it is the Cauchy kernel $dz/(z{-}w)$ on
-$\mathbb{P}^1$ and the Szeg\H{o} kernel on higher-genus
-curves.  The algebra enters through the Casimir insertion
-$\Omega_{ij}/(k + h^\vee)$.  Under Koszul duality,
-$\Omega$ is exchanged for the dual
-Casimir~$\Omega^!$ with level shift $k \mapsto k'$,
-and the monodromy representations are intertwined by~$\Phi$.
+For~(iii): the KZB connection arises from the
+variation of~$\eta_{ij}$ on~$\overline{C}_2(X)$
+(Proposition~\ref{prop:kzb-bar-complex}).
+The propagator depends only on~$X$, not
+on~$\mathcal{A}$: it is the Cauchy kernel
+$dz/(z{-}w)$ on~$\mathbb{P}^1$ and the Szeg\H{o}
+kernel on higher-genus curves.  The algebra
+enters through the Casimir insertion
+$\Omega_{ij}/(k + h^\vee)$.
+Under Koszul duality, $\Omega$ is exchanged
+for~$\Omega^!$ with level shift $k \mapsto k'$,
+and the monodromy representations are
+intertwined by~$\Phi$.
 \end{proof}
 
 \begin{remark}[Conformal block duality and complementarity]
@@ -932,20 +933,22 @@ space), while the Koszul t-structure corresponds to the
 filtration by \emph{internal degree} (the total conformal weight).
 
 For the Kazhdan--Lusztig equivalence
-(Theorem~\ref{thm:kazhdan-lusztig-equivalence}), the Koszul
-t-structure on $D^b(\mathrm{Rep}(U_{q^{-1}}(\mathfrak{g})))$
-corresponds to the t-structure associated with the canonical
-basis of $U_{q^{-1}}$ --- the basis elements are precisely the
-images of the simple modules under bar-cobar duality.
+(Theorem~\ref{thm:kazhdan-lusztig-equivalence}),
+\textup{[Category: full abelian root-of-unity
+$\mathrm{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))$.]}
+the Koszul t-structure on
+$D^b(\mathrm{Rep}(U_{q^{-1}}(\mathfrak{g})))$
+corresponds to the t-structure associated with the
+canonical basis of $U_{q^{-1}}$---the basis elements
+are precisely the images of the simple modules under
+bar-cobar duality.
 \end{remark}
 
 \section{Highest weight modules}\label{sec:highest-weight-modules}
 
-The chiral algebras of primary interest---affine Kac--Moody, Virasoro,
-$\mathcal{W}$-algebras---carry a conformal grading, and their module
-theory is governed by highest weight representations.  We establish the
-definitions and structural results needed for the resolution and
-character computations below.
+Affine Kac--Moody, Virasoro, and $\mathcal{W}$-algebras carry
+a conformal grading; their module theory is governed by highest
+weight representations.
 
 \begin{definition}[Weight grading and highest weight modules]
 \label{def:highest-weight-module}
@@ -1140,10 +1143,10 @@ to the $R$-matrix braiding on $\mathcal{C}(U_q(\mathfrak{g}))$.
 \end{theorem}
 
 \begin{proof}[References]
-For $\mathfrak{g} = \mathfrak{sl}_N$, this is proved by
-Kazhdan--Lusztig~\cite{KL93} via a deformation argument comparing
-the monodromy representation of the KZ connection with the
-quasi-$R$-matrix of $U_q(\mathfrak{g})$.
+For $\mathfrak{g} = \mathfrak{sl}_N$, this is proved
+by Kazhdan--Lusztig~\cite{KL93} via a deformation argument
+comparing the monodromy representation of the KZ connection
+with the quasi-$R$-matrix of $U_q(\mathfrak{g})$.
 Finkelberg~\cite{Finkelberg96} extended the result to arbitrary
 semisimple~$\mathfrak{g}$.  The braided tensor structure on
 $\mathcal{O}_k^{\mathrm{int}}$ is constructed by
@@ -1329,12 +1332,17 @@ $\widehat{\mathfrak{g}}_k$ at generic level:
   = [\mathcal{M}(\mu) : \mathcal{L}(\lambda)]$
   where the last equality is BGG reciprocity
   \textup{(}Theorem~\textup{\ref{thm:bgg-reciprocity})}.
-\item Under the Kazhdan--Lusztig equivalence
-  $\Phi_{\mathrm{KL}}\colon
+\item \textup{[Category: semisimplified tilting
+  $\mathcal{C}(U_q(\mathfrak{g}))$.]}
+  Under the Kazhdan--Lusztig equivalence
+  \[
+  \Phi_{\mathrm{KL}}\colon
   \mathcal{O}_k^{\mathrm{int}} \xrightarrow{\sim}
-  \mathcal{C}(U_q(\mathfrak{g}))$,
+  \mathcal{C}(U_q(\mathfrak{g})),
+  \]
   the tilting module $T(\Lambda)$ maps to the indecomposable
-  tilting module $T_q(\Lambda) \in \mathcal{C}(U_q(\mathfrak{g}))$.
+  tilting module
+  $T_q(\Lambda) \in \mathcal{C}(U_q(\mathfrak{g}))$.
 \item Under the module Koszul duality $\Phi$ of
   Theorem~\textup{\ref{thm:monoidal-module-koszul}},
   tilting modules are sent to tilting modules:
@@ -1561,12 +1569,15 @@ $C_2$-cofiniteness condition.  Then:
 \index{Zhu's algebra!examples}
 \leavevmode
 \begin{enumerate}[label=(\roman*)]
-\item $A(\widehat{\mathfrak{g}}_k) \cong U(\mathfrak{g})$ for all
-   levels~$k$ (Frenkel--Zhu~\cite{FZ92}).  Simple $\widehat{\mathfrak{g}}_k$-modules in
-   category~$\mathcal{O}$
-   (Definition~\ref{def:category-O}) correspond to simple
-   $U(\mathfrak{g})$-modules (i.e., finite-dimensional
-   $\mathfrak{g}$-representations for the integrable subcategory).
+\item $A(\widehat{\mathfrak{g}}_k) \cong U(\mathfrak{g})$
+   for all levels~$k$
+   (Frenkel--Zhu~\cite{FZ92}).  Simple
+   $\widehat{\mathfrak{g}}_k$\nobreakdash-modules
+   in category~$\mathcal{O}$
+   (Definition~\ref{def:category-O}) correspond to
+   simple $U(\mathfrak{g})$-modules (i.e.,
+   finite-dimensional $\mathfrak{g}$-representations for
+   the integrable subcategory).
 \item $A(\mathrm{Vir}_c) \cong \mathbb{C}[x]$ \cite{FZ92} (polynomial ring in one
    variable, with $x = [L_{-2}\mathbf{1}]$).  Simple modules are
    parameterized by $h \in \mathbb{C}$ (the $L_0$-eigenvalue on the
@@ -2190,28 +2201,7 @@ The bar complex detects non-semisimplicity:
 
 \section{Resolutions and character formulas}\label{sec:complete-calculations}
 
-\subsection{The fundamental principle of homological triviality}
-
-For a bounded cochain complex $V^\bullet$ of vector spaces, the Euler
-characteristic satisfies
-$\chi = \sum_i (-1)^i \dim V^i = \sum_i (-1)^i \dim H^i$.
-If $V^\bullet$ is a resolution of~$M$ (i.e., $H^0 = M$ and $H^i = 0$
-for $i > 0$), this gives
-$\dim M = \sum_{i \geq 0} (-1)^i \dim V^i$.
-Passing to graded characters
-$\operatorname{ch}(V) = \sum_n \dim V_n\, q^n$:
-\[
-\operatorname{ch}(M) = \sum_{i \geq 0} (-1)^i \operatorname{ch}(V^i).
-\]
-When the resolution terms $V^i$ have special structure (e.g., are free
-or induced modules), this alternating sum collapses to a closed form.
-
-\subsection{Chiral algebras}
-
-In the chiral setting, vector spaces are replaced by
-$\mathcal{D}_X$-modules, tensor products respect locality
-(singularities only on diagonals), multiplication is encoded by OPEs,
-and configuration spaces provide the geometric arena.
+For a bounded acyclic resolution $V^\bullet \to M$, the graded character satisfies $\operatorname{ch}(M) = \sum_{i \geq 0} (-1)^i \operatorname{ch}(V^i)$; when the resolution terms are free or induced modules, this alternating sum collapses to a closed form.  In the chiral setting, vector spaces are replaced by $\mathcal{D}_X$-modules, tensor products respect locality (singularities only on diagonals), and configuration spaces provide the geometric arena.
 
 \section{Deriving the chiral module resolution}\label{sec:chiral-module-resolution}
 
@@ -2786,9 +2776,6 @@ records the Weyl group orbit via the bar filtration.
 \subsection{Explicit computation: \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl(2)-hat} at level~$1$}
 \label{sec:sl2-level1-computation}
 
-We compute the Weyl--Kac character of the vacuum module for
-$\widehat{\mathfrak{sl}}_2$ at level~$1$.
-
 \begin{example}[$\widehat{\mathfrak{sl}}_2$ at level~$1$: integrable modules]
 \label{ex:sl2-level1}
 \index{sl2-hat@$\widehat{\mathfrak{sl}}_2$!level 1}
@@ -3134,12 +3121,6 @@ level-preserving functor.
 
 \subsection{Vacuum Verma module under Koszul duality}
 \label{sec:vacuum-koszul}
-
-The module Koszul duality functor
-$\Phi\colon \mathcal{O}_k(\widehat{\mathfrak{g}}) \to
-\mathrm{CoMod}(\bar{B}(\widehat{\mathfrak{g}}_k))$
-(Theorem~\ref{thm:e1-module-koszul-duality})
-has been developed above; we now apply it to specific modules.
 
 \begin{proposition}[Vacuum Verma under Koszul duality; \ClaimStatusProvedHere]
 \label{prop:vacuum-verma-koszul}
@@ -3570,8 +3551,6 @@ satisfy $Q_g(\mathrm{Vir}_c) + Q_g(\mathrm{Vir}_{26-c})
 
 \subsection{When homology is non-trivial}
 
-Now consider complexes with $H^k \neq 0$ for $k > 0$.
-
 \begin{theorem}[Character with homological corrections; \ClaimStatusProvedHere]
 If $H^k(\mathcal{P}_\bullet) \neq 0$ for some $k > 0$, the Euler characteristic of the complex still gives:
 \[
@@ -3799,17 +3778,7 @@ At critical level $k = -h^\vee$, the W-algebra $W^{-h^\vee}(\mathfrak{g})$ has a
 expressing the vacuum character of $V_k(\mathfrak{g})$ as the inverse Weyl denominator (using only the finite roots; the full affine denominator involves additional factors $(1 - q^n e^{-\alpha})$).
 \end{calculation}
 
-\begin{remark}[Summary]
-In each case, acyclicity of the bar-cobar resolution forces infinite
-alternating character sums to collapse to closed product formulas.
-When acyclicity fails (critical or admissible levels), the higher
-cohomology groups carry the obstruction data
-(Theorem~\ref{thm:deformation-acyclicity}).
-\end{remark}
-
 \section{Localization and D-modules}\label{sec:localization}
-
-Module Koszul duality has a geometric counterpart: Beilinson--Bernstein localization bridges the bar-cobar framework and the representation theory of flag varieties.
 
 \subsection{Beilinson--Bernstein localization}
 
@@ -4108,9 +4077,6 @@ the D-module approach localizes on the flag variety $G/B$.
 
 \section{Drinfeld--Sokolov reduction and module Koszul duality}
 \label{sec:ds-module-kd}
-
-We establish the compatibility of Drinfeld--Sokolov reduction
-$H^0_{\mathrm{DS}}$ with the bar-cobar framework and module Koszul duality.
 
 \begin{theorem}[DS reduction intertwines with Koszul duality; \ClaimStatusProvedHere]
 \label{thm:ds-koszul-intertwine}
@@ -4663,21 +4629,24 @@ For Kac--Moody algebras $\widehat{\fg}_k$ at integrable level:
 \end{theorem}
 
 \begin{proof}
-This is an immediate consequence of the monoidal module Koszul duality
-theorem (Theorem~\ref{thm:monoidal-module-koszul}), which proves that
+This is an immediate consequence of the monoidal module
+Koszul duality theorem
+(Theorem~\ref{thm:monoidal-module-koszul}), which proves that
 $\Phi$ is lax monoidal with respect to fusion products and that the
 structure map $\mu_{M,N}$ is a quasi-isomorphism for Koszul modules.
 Concretely:
 
 \emph{Main statement~\eqref{eq:fusion-preservation}.}\quad
-Theorem~\ref{thm:monoidal-module-koszul}, equation~\eqref{eq:monoidal-bar},
-constructs the natural transformation
-$\mu_{M_1, M_2}\colon \Phi(M_1 \boxtimes_\cA M_2) \to
-\Phi(M_1) \boxtimes_{\cA^{!,c}} \Phi(M_2)$
-via the Alexander--Whitney factorization on configuration spaces (Step~1
-of that proof), and proves it is a quasi-isomorphism when $M_1, M_2$ are
-Koszul modules (Step~2, using the K\"unneth theorem and diagonal
-concentration).
+Theorem~\ref{thm:monoidal-module-koszul},
+equation~\eqref{eq:monoidal-bar}, constructs the natural transformation
+\[
+\mu_{M_1, M_2}\colon \Phi(M_1 \boxtimes_\cA M_2) \to
+\Phi(M_1) \boxtimes_{\cA^{!,c}} \Phi(M_2)
+\]
+via the Alexander--Whitney factorization on configuration spaces
+(Step~1 of that proof), and proves it is a quasi-isomorphism when
+$M_1, M_2$ are Koszul modules (Step~2, using the K\"unneth theorem
+and diagonal concentration).
 
 \emph{Part~(i): braiding reversal.}\quad
 Step~3 of Theorem~\ref{thm:monoidal-module-koszul} proves that the
@@ -4707,23 +4676,9 @@ Theorem~\ref{thm:chain-modular-functor}(ii).
 \end{proof}
 
 \begin{remark}[Proof structure]\label{rem:fusion-scope}
-The theorem assembles three ingredients proved earlier in this chapter:
-\begin{itemize}
-\item The module-level bar-cobar adjunction
-  (Theorem~\ref{thm:e1-module-koszul-duality}), which provides
-  $\Phi$ as an exact functor.
-\item The monoidal structure on $\Phi$
-  (Theorem~\ref{thm:monoidal-module-koszul}), which closes the key gap:
-  the bar coalgebra
-  coproduct~\eqref{eq:bar-coproduct-fusion} intertwines with the
-  fusion tensor product via the Alexander--Whitney factorization.
-\item The Heisenberg fusion computation
-  (Proposition~\ref{prop:fock-fusion-product}), which verifies the
-  phase inversion in part~(ii).
-\end{itemize}
-The monoidality of $\Phi$ was previously the hardest part of the
+The monoidality of $\Phi$ was the hardest part of the
 Kazhdan--Lusztig programme~\cite{KL93}.  The configuration space
-proof via the bar complex resolves this by showing that the residue
+proof via the bar complex resolves this: residue
 maps along separating divisors of $\overline{\mathcal{M}}_{g,n}$
 are compatible with the fusion product's associativity and commutativity
 constraints (Theorem~\ref{thm:monoidal-module-koszul}, Steps~1--3).
@@ -4815,6 +4770,27 @@ and Theorem~\ref{conj:fusion-bar-cobar} for the general
 statement.
 \end{remark}
 
-The deformation-obstruction calculus underlying
-Theorem~\ref{thm:quantum-complementarity-main} is the subject of
-the next chapter.
+\begin{remark}[Status of module equivalences]%
+\label{rem:module-equivalences-summary}
+\emph{Proved:}
+geometric bar construction for modules
+(Theorem~\ref{thm:geometric-bar-module}),
+Koszul resolution for modules
+(Theorem~\ref{thm:koszul-resolution-module}),
+monoidal module Koszul equivalence
+(Theorem~\ref{thm:monoidal-module-koszul}),
+module $\Eone$-Koszul duality
+(Theorem~\ref{thm:e1-module-koszul-duality}),
+chain-level modular functor
+(Theorem~\ref{thm:chain-modular-functor}).
+\emph{Unconditional for Kac--Moody}
+(Theorem~\ref{thm:pbw-allgenera-km});
+\emph{conditional for Virasoro and $\mathcal{W}_N$}
+(Conjecture~\ref{conj:master-pbw}):
+interacting-family module Koszulness at generic level.
+\emph{Conjectural:}
+fusion-bar-cobar compatibility
+(Conjecture~\ref{conj:fusion-bar-cobar}),
+full factorization-categorical derived equivalence
+(Conjecture~\ref{conj:master-dk-kl}).
+\end{remark}
