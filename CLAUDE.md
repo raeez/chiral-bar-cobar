@@ -39,24 +39,24 @@ Configuration spaces decompose a chiral algebra into its operadic spectrum. Log 
 
 ---
 
-## Current State (Mar 2026)
+## Current State (Mar 8, 2026)
 
-### Census (verified fresh grep, Mar 7)
+### Census (verified fresh grep, Mar 8)
 | Category | Count |
 |----------|-------|
-| ProvedHere | **783** |
+| ProvedHere | **797** |
 | ProvedElsewhere | **344** |
-| Conjectured | **136** |
+| Conjectured | **153** |
 | Heuristic | **30** |
 | Open | **0** |
-| **Total tagged claims** | **1293** |
+| **Total tagged claims** | **1324** |
 
 Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and appendices/ only.
 
 ### Compilation
-- **1415 pages** (converged in 2-3 passes), zero LaTeX errors, zero undefined refs, zero undefined citations, zero multiply-defined labels
-- 55 active .tex files + 8 stubs (+ main.tex preamble), 87K+ lines of LaTeX
-- Bibliography: 275 entries, all citations resolved
+- **1417 pages** (converged in 2-3 passes), zero LaTeX errors, zero undefined refs, zero undefined citations, zero multiply-defined labels
+- 53 active .tex files + 15 stubs/small (+ main.tex preamble), 89K+ lines of LaTeX
+- Bibliography: 254 entries, all citations resolved
 - Reference library: 38 PDFs in references/ (64 MB)
 - Cosmetic: ~180 overfull hbox (8 at >10pt, all in deeply indented theorem envs with long cross-refs), ~172 underfull hbox
 - Build: `make` (6-pass, stamp-based idempotent), `make fast` (1-pass iteration), `make clean` (debris only, preserves stamp), `make veryclean` (force full rebuild). See "Build System — Stamp Architecture" below.
@@ -92,7 +92,7 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 
 *7 former sketches resolved to full proofs in this session (higher_genus ×3, bar_cobar ×2, poincare_duality ×1, poincare_duality_quantum ×1).*
 
-### What Remains — 136 Conjectured Claims (fresh census, Mar 7)
+### What Remains — 153 Conjectured Claims (fresh census, Mar 8)
 
 All have scope remarks. Classification (from comprehensive audit, this session):
 
@@ -266,7 +266,7 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 
 ## File Map
 
-### Part 1: Theory (chapters/theory/) — 35K lines, 361 PH / 150 PE / 23 CJ
+### Part 1: Theory (chapters/theory/) — 41K lines, 406 PH / 153 PE / 30 CJ
 | File | Lines | PH | PE | CJ | Notes |
 |------|------:|---:|---:|---:|-------|
 | introduction.tex | 1569 | 17 | 2 | 0 | Main results, Leitfaden, E_1/E_inf dictionary |
@@ -291,7 +291,7 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 
 *Stubs (5 lines each, placeholders): bar_cobar_quasi_isomorphism.tex, higher_genus_full.tex, higher_genus_quasi_isomorphism.tex*
 
-### Part 2: Examples (chapters/examples/) — 28.6K lines, 247 PH / 86 PE / 36 CJ
+### Part 2: Examples (chapters/examples/) — 31K lines, 275 PH / 91 PE / 57 CJ
 | File | Lines | PH | PE | CJ | Notes |
 |------|------:|---:|---:|---:|-------|
 | lattice_foundations.tex | 1501 | 17 | 3 | 0 | Lattice VOA engine |
@@ -314,7 +314,7 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 
 *Stubs (5 lines each, placeholders): kac_moody_computations.tex, obstruction_classes.tex, heisenberg_higher_genus.tex, deformation_quantization_complete.tex, w_algebras_computations.tex*
 
-### Part 3: Connections (chapters/connections/) — 5.4K lines, 26 PH / 27 PE / 33 CJ
+### Part 3: Connections (chapters/connections/) — 9.1K lines, 73 PH / 45 PE / 61 CJ
 | File | Lines | PH | PE | CJ | Notes |
 |------|------:|---:|---:|---:|-------|
 | feynman_diagrams.tex | 1264 | 6 | 3 | 0 | Feynman diagram interpretation (9 Heur) |
@@ -327,11 +327,11 @@ See MEMORY.md "Known Verified Formulas" for the complete list (~100 entries).
 | kontsevich_integral.tex | 523 | — | — | — | Kontsevich integral, Vassiliev invariants, CS bridge |
 | concordance.tex | 569 | 2 | 0 | 6 | Literature comparison, HORIZON conjectures |
 
-### Appendices (appendices/) — 6.3K lines, 35 PH / 52 PE / 1 CJ
-14 files: arnold_relations (1049), signs_and_shifts (713), existence_criteria (712), koszul_reference (596), sign_conventions (558), spectral_sequences (549), nilpotent_completion (475), homotopy_transfer (456), notation_index (428), dual_methodology (241), computational_tables (185), spectral_higher_genus (163), general_relations (136), theta_functions (78)
+### Appendices (appendices/) — 6.5K lines, 37 PH / 55 PE / 3 CJ
+15 files: arnold_relations (1049), signs_and_shifts (713), existence_criteria (712), koszul_reference (596), sign_conventions (558), spectral_sequences (549), nilpotent_completion (475), homotopy_transfer (456), notation_index (428), dual_methodology (241), coderived_models (200), computational_tables (185), spectral_higher_genus (163), general_relations (136), theta_functions (78)
 
 ### Bibliography
-bibliography/references.tex — 1243 lines, 275 entries, all citations resolved
+bibliography/references.tex — 1243 lines, 254 entries, all citations resolved
 
 ### Planning & Automation (notes/ — active files)
 SESSION_PROMPT_v9.md — Current session prompt: triple-intersection engine (supersedes v8)
