@@ -198,6 +198,72 @@ This file tracks the systematic rearchitecture pass. Status values:
 |---|---|---|---|---|
 | 21 | `scripts/integrity_gate.sh` | automation gate | extend active-include checks beyond claim-status coverage to enforce governing-question and H/M/S marker coverage automatically | `done` |
 
+## Wave 24: Analogy-to-Status Precision Pass
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 22 | `chapters/examples/kac_moody_framework.tex` | research-programme framing | replace residual “suggests” programme language with explicit conjectural-route wording and status markers | `done` |
+| 22 | `chapters/examples/w_algebras_framework.tex` | dual-level examples | replace analogy-based phrasing in dual-level interpretation with explicit conjectural extension language | `done` |
+| 22 | `chapters/examples/examples_summary.tex` | discriminant-control ledger | rewrite discriminant-principle remarks as explicit conjectural principles instead of suggestive prose | `done` |
+
+## Wave 25: Expected-Language Status Closure
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 23 | `chapters/examples/deformation_quantization.tex` | quantization scope remark | convert higher-genus “expected” wording into explicit conjectural status language | `done` |
+| 23 | `chapters/examples/yangians.tex` | shifted-Yangian scope remark | convert “expected to follow” phrasing into explicit conjectural extension language | `done` |
+| 23 | `chapters/examples/genus_expansions.tex` | evidence paragraph discipline | recast partial-fraction interpretation as an explicitly conjectural decomposition claim | `done` |
+| 23 | `chapters/examples/kac_moody_framework.tex` | nilpotent-extension remark | mark arbitrary-orbit extension as conjectural rather than expected | `done` |
+| 23 | `chapters/examples/toroidal_elliptic.tex` | toroidal existence scope | convert RTT-motivated expected wording into explicit conjectural framing | `done` |
+| 23 | `chapters/examples/detailed_computations.tex` | computational interpretation | mark degree-4 vanishing statement as conjectural status, not expectation | `done` |
+| 23 | `chapters/theory/chiral_koszul_pairs.tex` | Yangian Koszulness remark | mark general-$\mathfrak{g}$ Koszulness as explicit conjectural status | `done` |
+| 23 | `chapters/theory/deformation_theory.tex` | periodicity programme remark | replace “expected for all” wording by explicit conjectural scope statement | `done` |
+| 23 | `chapters/connections/holomorphic_topological.tex` | bridge-scope wording | convert residual expected-equivalence phrasing to explicit conjectural status wording | `done` |
+| 23 | `appendices/coderived_models.tex` | provisional coderived scope | mark full-faithful embedding statement as conjectural rather than expected | `done` |
+
+## Wave 26: Include-Graph Repair
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 24 | `main.tex` | build control graph | make `filtered_curved` input resilient with `\IfFileExists` so transient branch states do not hard-fail TeX builds | `done` |
+
+## Wave 27: QC Gate Hardening
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 25 | `scripts/manuscript_qc.py` | corpus-level QC guard | add strict detection for ambiguous status language (`suggests` / `expected` / analogy phrasing without conjectural markers) | `done` |
+| 25 | `chapters/connections/holomorphic_topological.tex` | bridge diction cleanup | clear final ambiguous “suggest” phrasing under strict QC | `done` |
+| 25 | `chapters/theory/chiral_modules.tex` | module-layer diction cleanup | replace residual analogy phrasing with explicit conjectural extension language | `done` |
+| 25 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after strict QC passes with zero structural/status-language findings | `done` |
+
+## Wave 28: Introduction Readability Segmentation
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 26 | `chapters/theory/introduction.tex` | front-door readability | split one oversized modular-programme paragraph into theorematic sub-blocks without changing mathematical content | `done` |
+| 26 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after paragraph segmentation (long-paragraph count reduced) | `done` |
+
+## Wave 29: Examples-Ledger Readability Segmentation
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 27 | `chapters/examples/examples_summary.tex` | ledger readability | split oversized bar-dimensions setup paragraph into shorter theorematic blocks | `done` |
+| 27 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after examples-ledger segmentation (long-paragraph count reduced again) | `done` |
+
+## Wave 30: Elliptic-Proof Readability Segmentation
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 28 | `chapters/examples/toroidal_elliptic.tex` | proof readability | split long Arnold/Fay proof paragraph into shorter argument blocks | `done` |
+| 28 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after elliptic-proof segmentation while preserving strict QC clean state | `done` |
+
+## Wave 31: Free-Field Proof Readability Segmentation
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 29 | `chapters/examples/free_fields.tex` | proof readability | split long Koszul-resolution proof block into shorter argument segments | `done` |
+| 29 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after free-field segmentation (long-paragraph count reduced) | `done` |
+
 ## Standing Rule
 
 Before advancing to a later wave, make sure the earlier wave compiles and

@@ -10,7 +10,9 @@ genera as a single modular deformation with explicit theorem-level control of
 curvature, complementarity, and universality.
 
 \begin{remark}[Normative status]\label{rem:higher-genus-normative}
-This chapter and Chapter~\ref{chap:concordance} are the normative source for the modular characteristic theory; formulations here supersede earlier previews.
+This chapter and Chapter~\ref{chap:concordance} fix the reference
+formulation of the modular characteristic theory used throughout the
+rest of the monograph.
 \end{remark}
 
 At genus zero, Koszul duality is an algebraic theorem: the bar and
@@ -1537,11 +1539,11 @@ Koszul locus}; off this locus it persists in the completed
 coderived category.
 \end{remark}
 
-% The following theorem block is RETAINED for equation label
-% backward compatibility only.  The canonical statement and proof
+% The following theorem block is retained only to preserve the local
+% equation labels used in this chapter.  The canonical statement and proof
 % are in chiral_koszul_pairs.tex.
 \begin{theorem}[Bar-cobar isomorphism --- retained for equation labels; \ClaimStatusProvedHere]
-\label{thm:bar-cobar-isomorphism-main-legacy}
+\label{thm:bar-cobar-isomorphism-main-equations}
 \textup{For a chiral Koszul pair $(\cA_1, \cA_2)$, the bar-cobar
 system satisfies:}
 
@@ -3898,18 +3900,19 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 
 The Heisenberg factorization $\mathrm{obs}_g = k \cdot \lambda_g$ (\S\ref{sec:frame-genus-tower}) is universal.
 
-For every Koszul chiral algebra $\mathcal{A}$ with a single strong generator, the genus-$g$ obstruction class factors as
+For every Koszul chiral algebra $\mathcal{A}$ with a single strong generator, there is a genus-independent scalar $\kappa(\mathcal{A})$, determined by the genus-$1$ curvature, such that
 \begin{equation}\label{eq:genus-universality}
 \mathrm{obs}_g(\mathcal{A}) \;=\; \kappa(\mathcal{A}) \cdot \lambda_g
 \qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g),
 \end{equation}
-where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle
-and $\kappa(\mathcal{A})$ is a genus-independent invariant determined by
-the genus-$1$ curvature.
-For algebras with multiple generators of different conformal weights,
-\eqref{eq:genus-universality} holds at the level of free energies
-$F_g = \int_{\overline{\mathcal{M}}_g} \mathrm{obs}_g$ (see the proof and
-Remark~\textup{\ref{rem:multi-generator-obs}} below).
+where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle.
+
+For algebras with generators of several conformal weights, the
+cohomological obstruction may split into several Hodge-type pieces; the
+universal scalar statement is then the free-energy formula in
+\textup{(iii)} together with
+Remark~\textup{\ref{rem:multi-generator-obs}}.
+
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Explicit values.}
 $\kappa(\mathcal{H}_\kappa) = \kappa$,\;
@@ -5140,33 +5143,25 @@ F_p := \bigoplus_{j \leq p}
 \Gamma\bigl(\overline{C}_j(\Sigma_g),\,
 \mathcal{A}^{\boxtimes j} \otimes \Omega^*_{\log}\bigr).
 \]
-The associated graded of this filtration identifies the $E_0$ page
-with the classical Koszul/Ext complex: by
-Theorem~\ref{thm:geometric-equals-operadic-bar},
-the genus-$0$ comparison identifies $\operatorname{gr}^p_F$ with
-the $p$-th bar chain group of the operadic bar complex.  The
-$E_1$ page is therefore:
+
+On the associated graded, the curved corrections disappear because they
+raise the filtration, so only the genus-$0$ collision differential
+remains.  By Theorem~\ref{thm:geometric-equals-operadic-bar}, the
+resulting complex is the operadic bar complex of
+$\operatorname{gr}\mathcal{A}$.  Since $\mathcal{A}$ is Koszul, this
+classical bar complex has cohomology concentrated in total degree~$0$
+(cf.\ \cite[Theorem~3.4.4]{LV12}).  Therefore the spectral sequence for
+$F_\bullet$ has
 \[
 E_1^{p,q} = H^q\bigl(\operatorname{gr}^p_F
 \bar{B}^*_{\Sigma_g}(\mathcal{A}),\, d_0\bigr)
-= \operatorname{Ext}^q_{\operatorname{gr}\mathcal{A}}(\Bbbk, \Bbbk)_p.
+= 0 \qquad (q \neq 0).
 \]
-By the Koszul property
-(Definition~\ref{def:chiral-koszul-pair}, criterion~1),
-the associated graded $\operatorname{gr}_F \mathcal{A}$ is classically
-Koszul, so Ext is concentrated along the diagonal:
-$E_1^{p,q} = 0$ for $q \neq p$
-(cf.\ \cite[Theorem~3.4.4]{LV12}).  Since the $E_1$ page is
-concentrated in the row $q = p$, all higher differentials
-$d_r\colon E_r^{p,q} \to E_r^{p+r, q-r+1}$ vanish for $r \geq 1$
-(they map between zero groups), so the spectral sequence
-collapses at $E_1$ and:
-\[
-H^n\bigl(\bar{B}^*_{\Sigma_g}(\mathcal{A})\bigr) \cong
-E_\infty^{n,n} = \operatorname{Ext}^n_{\operatorname{gr}\mathcal{A}}
-(\Bbbk, \Bbbk)_n.
-\]
-In particular, the total fiber cohomology is concentrated in degree~$0$:
+
+All higher differentials vanish for degree reasons, so
+$E_\infty^{p,q} = E_1^{p,q}$.  Hence the full fiber bar complex has no
+cohomology outside degree~$0$, and Steps~1--3 identify the surviving
+degree-$0$ piece with the center:
 \begin{equation}
 \mathcal{H}^q_{\mathrm{fiber}}(\mathcal{A})\big|_{\mathcal{M}_g^{\mathrm{smooth}}}
 = 0 \quad\text{for } q \neq 0,
@@ -5174,8 +5169,8 @@ In particular, the total fiber cohomology is concentrated in degree~$0$:
 \mathcal{H}^0_{\mathrm{fiber}} \cong Z(\mathcal{A}) \otimes
 \underline{\mathbb{C}}.
 \end{equation}
-The conclusion covers the full fiber bar complex, not merely the
-degree-$0$ bar component.
+This is a statement about the total fiber complex, not merely its
+bar-degree-$0$ component.
 \end{proof}
 
 This completes Step~I: the genus filtration, the associated spectral
@@ -9479,12 +9474,12 @@ invariants for each family; see the Master Table
 The Heisenberg algebra was the atom from which all four main theorems were first visible (\S\ref{sec:frame-modular-package}): a single number $\kappa(\mathcal{H}_k) = k$ controlled the entire scalar genus tower.  This theorem --- Theorem~D$_{\mathrm{scal}}$ --- establishes that universality for all modular Koszul chiral algebras.  (The full modular characteristic package, including the spectral discriminant~$\Delta_{\cA}$ and the periodicity triple~$\Pi_{\cA}$, requires data beyond~$\kappa$; see Theorem~\ref{thm:spectral-characteristic}.)
 
 Let $\cA$ be a modular Koszul chiral algebra
-(Definition~\ref{def:modular-koszul-chiral}).  The scalar modular
+(Definition~\ref{def:modular-koszul-chiral}).  Its scalar modular
 characteristic package
-(Definition~\ref{def:scalar-modular-package}) is
-determined by a single invariant
-$\kappa(\cA) \in \mathbb{C}$---the genus-$1$ curvature
-coefficient---through the following properties:
+(Definition~\ref{def:scalar-modular-package}) is controlled by one
+number, the genus-$1$ curvature coefficient
+$\kappa(\cA) \in \mathbb{C}$.  More precisely:
+
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Universality.}
   The genus-$g$ obstruction class factors as
