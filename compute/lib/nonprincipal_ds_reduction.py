@@ -24,7 +24,9 @@ from compute.lib.nonprincipal_ds_orbits import (
     STATUS_PROGRAMME,
     TRACK_FRONTIER_NONPRINCIPAL,
     Partition,
+    nonprincipal_hook_cases,
     nonprincipal_hook_case,
+    type_a_orbit_class,
 )
 
 
@@ -143,26 +145,89 @@ def sl3_subregular_bp_seed(level=Symbol("k")) -> NonprincipalDSSeed:
     )
 
 
-def first_nonselfdual_hook_seed(level=Symbol("k")) -> NonprincipalDSSeed:
-    """Seed record for the first non-self-dual type-A hook pair (A3)."""
-    n, r, pair = first_nonselfdual_type_a_hook_pair()
+def nonprincipal_hook_seed(n: int, r: int, level=Symbol("k")) -> NonprincipalDSSeed:
+    """Seed record for one type-A non-principal hook/subregular case.
+
+    For `A_2` subregular (`n=3, r=1`) this returns the proved
+    Bershadsky-Polyakov seed. Higher-rank hook/subregular cases remain frontier
+    placeholders with explicit unknown central-charge data.
+    """
     hook_case = nonprincipal_hook_case(n, r, level=level)
+    if n == 3 and r == 1:
+        return sl3_subregular_bp_seed(level)
+
     status = (
         STATUS_HOOK_EVIDENCE
         if hook_case.status == STATUS_HOOK_EVIDENCE
         else STATUS_PROGRAMME
     )
     return NonprincipalDSSeed(
-        lie_type=pair.source_type,
-        rank=pair.source_rank,
-        partition=pair.source_orbit,
-        dual_partition=pair.target_orbit,
+        lie_type=hook_case.lie_type,
+        rank=hook_case.rank,
+        partition=hook_case.partition,
+        dual_partition=hook_case.dual_partition,
         level_shift=hook_case.level_shift,
         central_charge=Symbol("unknown_nonprincipal_hook_c"),
         complementarity_sum=Symbol("unknown_nonprincipal_hook_sum"),
         track=TRACK_FRONTIER_NONPRINCIPAL,
         status=status,
     )
+
+
+def first_nonselfdual_hook_seed(level=Symbol("k")) -> NonprincipalDSSeed:
+    """Seed record for the first non-self-dual type-A hook pair (A3)."""
+    n, r, _ = first_nonselfdual_type_a_hook_pair()
+    return nonprincipal_hook_seed(n, r, level=level)
+
+
+def nonprincipal_hook_seed_catalog(max_n: int = 6, level=Symbol("k")) -> Tuple[NonprincipalDSSeed, ...]:
+    """Enumerate non-principal hook/subregular seed records in type A."""
+    return tuple(
+        nonprincipal_hook_seed(n, r, level=level)
+        for n in range(3, max_n + 1)
+        for r in range(1, n - 1)
+    )
+
+
+def verify_nonprincipal_hook_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[str, bool]:
+    """Sanity checks for the hook/subregular seed catalog."""
+    results: Dict[str, bool] = {}
+    seeds = nonprincipal_hook_seed_catalog(max_n=max_n, level=level)
+    orbit_cases = nonprincipal_hook_cases(max_n=max_n, level=level)
+
+    results["hook seed catalog is nonempty"] = bool(seeds)
+    results["hook seed catalog matches orbit catalog size"] = (len(seeds) == len(orbit_cases))
+    results["hook seed catalog stays on non-principal track"] = all(
+        seed.track == TRACK_FRONTIER_NONPRINCIPAL for seed in seeds
+    )
+    results["hook seed catalog excludes principal/trivial"] = all(
+        type_a_orbit_class(seed.partition) not in {"principal", "trivial"} for seed in seeds
+    )
+
+    for seed, orbit_case in zip(seeds, orbit_cases):
+        n = sum(seed.partition)
+        if n == 3 and seed.partition == (2, 1):
+            results["A2 subregular keeps proved status"] = (
+                seed.status == STATUS_PROVED_SUBREGULAR_SL3
+            )
+            continue
+
+        key = f"A{n-1} partition {seed.partition}"
+        expected_status = (
+            STATUS_HOOK_EVIDENCE
+            if orbit_case.status == STATUS_HOOK_EVIDENCE
+            else STATUS_PROGRAMME
+        )
+        results[f"{key} status propagates"] = (seed.status == expected_status)
+        results[f"{key} dual partition propagates"] = (seed.dual_partition == orbit_case.dual_partition)
+        results[f"{key} level shift propagates"] = (simplify(seed.level_shift - orbit_case.level_shift) == 0)
+
+    first = first_nonselfdual_hook_seed(level=level)
+    results["first non-self-dual hook remains A3"] = (
+        first.partition == (3, 1) and first.dual_partition == (2, 1, 1)
+    )
+
+    return results
 
 
 def verify_nonprincipal_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
@@ -207,5 +272,8 @@ def verify_nonprincipal_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["first non-self-dual hook status/evidence"] = (hook.status == STATUS_HOOK_EVIDENCE)
     results["first non-self-dual hook frontier track"] = (hook.track == TRACK_FRONTIER_NONPRINCIPAL)
+    results["hook seed catalog checks"] = all(
+        verify_nonprincipal_hook_seed_catalog(max_n=8, level=k).values()
+    )
 
     return results

@@ -606,6 +606,44 @@ standalone mathematical question.
   differential `d = \chi \wedge -` with symbolic `d^2=0` verification for the
   subregular `sl_3` seed, and paired seed complexes for the first non-self-dual
   hook case (`A_3`: `(3,1) \leftrightarrow (2,1,1)`).
+- **Truncated cohomology layer (Mar 8, 2026, third pass)**:
+  the DS scaffold now computes truncated cohomology dimensions explicitly;
+  the subregular specialization and both first-hook-pair specializations are
+  acyclic at this seed level.
+- **Hook-family systematization (Mar 8, 2026, fourth pass)**:
+  `compute/lib/nonprincipal_ds_reduction.py` now exposes a family API
+  (`nonprincipal_hook_seed`, `nonprincipal_hook_seed_catalog`) with
+  status/level-shift propagation checks across hook/subregular type-A cases,
+  and `compute/lib/ds_reduction.py` now mirrors this with
+  `hook_pair_ds_seed(_catalog)` plus family-level nilpotence/acyclicity checks
+  for the truncated symbolic BRST sectors. The two catalogs are now explicitly
+  cross-aligned by partition and level-shift checks.
+- **Subregular survivor identification (Mar 8, 2026, fifth pass)**:
+  `compute/lib/ds_reduction.py` now identifies the explicit `sl_3` subregular
+  `g^f` survivor sector in matrix form and verifies that its DS weight profile
+  matches the Bershadsky--Polyakov strong generators
+  `(J, G^+, G^-, T)` with weights `(1, 3/2, 3/2, 2)`.
+  The same scaffold now also exposes the canonical splitting
+  `\mathfrak{sl}_3 = [e,\mathfrak{sl}_3] \oplus \mathfrak{g}^f` and the
+  induced projection onto those surviving strong fields. The projected
+  survivor-sector bracket is also now explicit at the linear seed level:
+  `[J,G^\pm] = \pm \frac{3}{2} G^\pm`, `[G^+,G^-]=T`, with `T` central.
+- **Hook-matrix representatives (Mar 8, 2026, sixth pass)**:
+  `compute/lib/nonprincipal_ds_orbits.py` now supplies explicit standard
+  nilpotent matrices for type-A hook partitions, including the first genuine
+  non-self-dual pair `A_3: (3,1) \leftrightarrow (2,1,1)`, together with
+  matrix-level recovery of the partition and direct centralizer-dimension
+  checks against the closed partition formula. The same orbit scaffold now also
+  produces explicit traceless centralizer bases for that first pair, with
+  dimensions `5` and `9`, and standard `sl_2` triples with full `ad(h)`
+  grading multiplicities on `\mathfrak{sl}_4`. The positive graded basis labels
+  are now explicit as well, so the future DS ghost directions for that pair are
+  concrete rather than just counted. Those actual five positive directions are
+  now wired into the first hook-pair linear Koszul blocks in
+  `compute/lib/ds_reduction.py`, and the corresponding ghost conformal weights
+  are explicit on both source and target sides. The first hook-pair truncated
+  wedge seed now uses the same five directions, so the pair's linear models are
+  no longer mixed placeholder/real data.
 - **Assessment**: "The hardest pure mathematics conjecture in the manuscript."
   Arakawa-van Ekeren hook-type result covers a non-trivial class beyond principal.
 - **Scale**: 3-5 years. Requires deep representation theory.

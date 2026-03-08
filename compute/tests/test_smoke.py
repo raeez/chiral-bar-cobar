@@ -5,6 +5,7 @@ with minimal valid inputs and produces non-trivial results.
 """
 
 import pytest
+from sympy import zeros
 
 
 class TestCoreTypes:
@@ -200,6 +201,16 @@ class TestNonprincipalFrontier:
             sl3_subregular_good_grading_multiplicities,
             bp_current_presentation,
             bp_strong_presentation,
+            first_nonselfdual_hook_pair_nilpotent_matrices,
+            first_nonselfdual_hook_pair_centralizer_bases,
+            first_nonselfdual_hook_pair_sl2_triples,
+            ad_h_graded_basis_labels_sl_n,
+            ad_h_grade_multiplicities_sl_n,
+            matrix_centralizer_basis_sl_n,
+            nilpotent_partition_from_matrix,
+            type_a_hook_nilpotent_matrix,
+            nonprincipal_hook_seed_catalog,
+            verify_nonprincipal_hook_seed_catalog,
             verify_nonprincipal_ds_reduction_seed,
         )
         assert bp_dual_level(0) == -6
@@ -208,6 +219,20 @@ class TestNonprincipalFrontier:
         assert sl3_subregular_good_grading_multiplicities()[0] == 2
         assert len(bp_current_presentation()) == 5
         assert len(bp_strong_presentation()) == 4
+        assert nilpotent_partition_from_matrix(type_a_hook_nilpotent_matrix(4, 1)) == (3, 1)
+        first_source, first_target = first_nonselfdual_hook_pair_nilpotent_matrices()
+        assert len(matrix_centralizer_basis_sl_n(first_source)) == 5
+        source_centralizer, target_centralizer = first_nonselfdual_hook_pair_centralizer_bases()
+        source_triple, target_triple = first_nonselfdual_hook_pair_sl2_triples()
+        assert nilpotent_partition_from_matrix(first_source) == (3, 1)
+        assert nilpotent_partition_from_matrix(first_target) == (2, 1, 1)
+        assert len(source_centralizer) == 5
+        assert len(target_centralizer) == 9
+        assert ad_h_graded_basis_labels_sl_n(source_triple.h)[4] == ("E13",)
+        assert ad_h_grade_multiplicities_sl_n(source_triple.h)[4] == 1
+        assert ad_h_grade_multiplicities_sl_n(target_triple.h)[1] == 4
+        assert len(nonprincipal_hook_seed_catalog(5)) == 6
+        assert all(verify_nonprincipal_hook_seed_catalog(7).values())
         assert all(verify_nonprincipal_ds_reduction_seed().values())
 
     def test_bv_and_ds_seed_exports(self):
@@ -218,38 +243,97 @@ class TestNonprincipalFrontier:
             verify_nonprincipal_ds_reduction_seed,
             bp_shift_to_target_sum,
             verify_nonprincipal_ds_normalization,
+            sl3_subregular_ad_e_image_basis,
+            sl3_subregular_ad_e_image_witnesses,
+            sl3_subregular_basis_matrices,
             sl3_subregular_basis_profile,
             sl3_subregular_constraints,
             sl3_subregular_brst_blueprint,
             sl3_subregular_truncated_brst_complex,
+            sl3_subregular_linear_constraint_blocks,
+            sl3_subregular_project_basis_label_to_strong_candidates,
+            sl3_subregular_projected_strong_brackets,
+            sl3_subregular_strong_generator_candidates,
+            ds_basis_expression_matrix,
+            matrix_commutator,
+            hook_pair_ds_seed_catalog,
             first_nonselfdual_hook_pair_ds_seed,
+            verify_hook_pair_ds_seed_catalog,
+            verify_hook_pair_seed_alignment,
+            first_nonselfdual_hook_pair_ghost_profiles,
+            first_nonselfdual_hook_pair_linear_constraint_blocks,
             complex_has_nilpotent_differential,
+            chain_homology_dimensions,
+            linear_constraint_block_has_contracting_homotopy,
+            linear_constraint_block_is_positive_acyclic,
+            first_nonselfdual_hook_pair_specialized_complexes,
+            truncated_cohomology_dimensions,
+            complex_is_acyclic,
             sl3_subregular_ds_seed,
             verify_ds_reduction_seed,
         )
         n, r, pair = first_nonselfdual_type_a_hook_pair()
         seed = sl3_subregular_bp_seed()
+        ad_e_basis = sl3_subregular_ad_e_image_basis()
+        ad_e_witnesses = sl3_subregular_ad_e_image_witnesses()
+        basis_matrices = sl3_subregular_basis_matrices()
         basis = sl3_subregular_basis_profile()
         constraints = sl3_subregular_constraints()
         blueprint = sl3_subregular_brst_blueprint()
+        strong_candidates = sl3_subregular_strong_generator_candidates()
         subregular_complex = sl3_subregular_truncated_brst_complex()
+        subregular_blocks = sl3_subregular_linear_constraint_blocks(2)
+        hook_catalog = hook_pair_ds_seed_catalog(5)
         hook_pair_seed = first_nonselfdual_hook_pair_ds_seed()
+        hook_source_profile, hook_target_profile = first_nonselfdual_hook_pair_ghost_profiles()
+        hook_source_blocks, hook_target_blocks = first_nonselfdual_hook_pair_linear_constraint_blocks(2)
         ds_seed = sl3_subregular_ds_seed()
         assert n == 4 and r == 1
         assert pair.source_orbit == (3, 1) and pair.target_orbit == (2, 1, 1)
         assert seed.partition == (2, 1) and seed.dual_partition == (2, 1)
         assert len(basis) == 8
+        assert len(ad_e_basis) == 4
+        assert sorted(ad_e_witnesses) == ["E12", "E13", "F23", "H1"]
         assert len(constraints) == 2
         assert blueprint.positive_nilpotent_is_abelian
+        assert len(strong_candidates) == 4
+        assert matrix_commutator(
+            basis_matrices["F12"],
+            ds_basis_expression_matrix(strong_candidates[0].source_terms, basis_matrices),
+        ) == zeros(3, 3)
+        assert sl3_subregular_project_basis_label_to_strong_candidates("H2") == {"J": 1}
+        assert sl3_subregular_projected_strong_brackets()[("G+", "G-")] == {"T": 1}
         assert subregular_complex.source_tag == "A2_subregular_seed"
+        assert chain_homology_dimensions(subregular_blocks[0]) == {0: 1}
+        assert all(linear_constraint_block_has_contracting_homotopy(block) for block in subregular_blocks[1:])
+        assert all(linear_constraint_block_is_positive_acyclic(block) for block in subregular_blocks[1:])
         assert hook_pair_seed.source_partition == (3, 1)
         assert hook_pair_seed.target_partition == (2, 1, 1)
+        assert len(hook_source_profile) == 5
+        assert len(hook_target_profile) == 5
+        assert len(hook_catalog) == 6
         assert complex_has_nilpotent_differential(subregular_complex)
         assert complex_has_nilpotent_differential(hook_pair_seed.source_complex)
         assert complex_has_nilpotent_differential(hook_pair_seed.target_complex)
+        assert all(linear_constraint_block_has_contracting_homotopy(block) for block in hook_source_blocks[1:])
+        assert all(linear_constraint_block_has_contracting_homotopy(block) for block in hook_target_blocks[1:])
+        assert all(linear_constraint_block_is_positive_acyclic(block) for block in hook_source_blocks[1:])
+        assert all(linear_constraint_block_is_positive_acyclic(block) for block in hook_target_blocks[1:])
+        assert len(hook_source_blocks[0].ghost_labels) == 5
+        assert len(hook_target_blocks[0].ghost_labels) == 5
+        assert truncated_cohomology_dimensions(subregular_complex) == {0: 0, 1: 0, 2: 0}
+        assert complex_is_acyclic(subregular_complex)
+        source_spec, target_spec = first_nonselfdual_hook_pair_specialized_complexes(
+            source_chi=(1, 0, 0, 0, 0),
+            target_chi=(1, 0, 0, 0, 0),
+        )
+        assert complex_is_acyclic(source_spec)
+        assert complex_is_acyclic(target_spec)
         assert ds_seed.partition == (2, 1)
         assert bp_shift_to_target_sum(22) == -27
         assert all(verify_bv_duality_scaffold(7).values())
         assert all(verify_nonprincipal_ds_reduction_seed().values())
         assert all(verify_nonprincipal_ds_normalization().values())
+        assert all(verify_hook_pair_ds_seed_catalog(7).values())
+        assert all(verify_hook_pair_seed_alignment(7).values())
         assert all(verify_ds_reduction_seed().values())

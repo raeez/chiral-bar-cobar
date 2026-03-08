@@ -531,7 +531,7 @@ Koszul duality conjecture and the higher-spin holography connection.
 - Exact bar cohomology for 5 algebras with closed-form GFs (Heis, F_2, bc, sl2, Vir)
 - Closed-form GF for betagamma (OEIS A025565)
 - Partial data: sl3 (3 pts), W3 (4 pts), Y(sl2) (3 pts)
-- Python compute engine with 901 tests
+- Python compute engine with 1472 tests
 
 ### What's missing
 **Tool 9.1: Sparse linear algebra for bar cohomology.**
@@ -762,6 +762,90 @@ now explicit in compute:
 - The same module now builds paired DS seed complexes for the first
   non-self-dual type-A hook pair (`A_3`: `(3,1)` and `(2,1,1)`), again with
   symbolic `d^2=0` verification on both source and target seeds.
+
+Status update (Mar 8, 2026, third pass): the truncated BRST layer now carries
+explicit cohomology extraction and specialization:
+- `truncated_cohomology_dimensions` and `complex_is_acyclic` are now part of
+  the DS scaffold API.
+- The subregular specialization (`\chi=(1,0)`) is acyclic at the truncated
+  level (`H^0=H^1=H^2=0`).
+- Both first-hook-pair specializations (`(1,0)` / `(0,1)` assignments on
+  source/target seeds) are acyclic at the same truncated level.
+
+Status update (Mar 8, 2026, fourth pass): the non-principal DS scaffold is now
+systematic at the hook/subregular family level:
+- `compute/lib/nonprincipal_ds_reduction.py` now includes
+  `nonprincipal_hook_seed` and `nonprincipal_hook_seed_catalog`, with explicit
+  verification that orbit status tags and level shifts propagate from the
+  orbit ledger into the DS seed ledger.
+- `compute/lib/ds_reduction.py` now includes `hook_pair_ds_seed`,
+  `hook_pair_specialized_complexes`, and `hook_pair_ds_seed_catalog`, extending
+  the previous first-pair-only truncated complexes to all type-A hook cases up
+  to a chosen cutoff.
+- The DS pair catalog is now cross-checked against the DS seed catalog
+  (`verify_hook_pair_seed_alignment`) so partition/dual-level data is validated
+  across modules, not only within each module separately.
+- Catalog-level checks now verify symbolic `d^2=0` and acyclic nonzero
+  character specializations across the seeded hook/subregular family.
+
+Status update (Mar 8, 2026, fifth pass): the `sl_3` subregular survivor sector
+is now explicit:
+- `compute/lib/ds_reduction.py` now includes a matrix realization of the
+  subregular `sl_3` basis and an explicit `g^f`-based strong-generator
+  candidate list.
+- The surviving candidates are
+  `J ~ H_2 + \frac{1}{2}H_1`, `G^+ ~ E_{23}`, `G^- ~ F_{13}`, `T ~ F_{12}`.
+- Their `ad(h)`-grades are `0,-1,-1,-2`, so the induced DS conformal weights
+  are exactly `1,\frac{3}{2},\frac{3}{2},2`, matching the
+  Bershadsky--Polyakov strong presentation.
+- The candidate matrices are verified to centralize `f = F_{12}` explicitly,
+  so the subregular seed now has both the exact linear constraint sector and
+  the correct surviving strong-field profile.
+- The same module now also records the canonical splitting
+  `\mathfrak{sl}_3 = [e,\mathfrak{sl}_3] \oplus \mathfrak{g}^f` and the
+  induced projection to the strong fields. In particular,
+  `H_2 \mapsto J`, `E_{23} \mapsto G^+`, `F_{13} \mapsto G^-`,
+  `F_{12} \mapsto T`, while the chosen `[e,\mathfrak{sl}_3]` basis projects
+  to zero.
+- At the same linearized level, the projected survivor bracket is now
+  explicit:
+  `[J,G^+] = \frac{3}{2}G^+`, `[J,G^-] = -\frac{3}{2}G^-`,
+  `[G^+,G^-] = T`, and `T` is central in the projected bracket.
+
+Status update (Mar 8, 2026, sixth pass): the first genuinely non-self-dual
+hook orbit is now concrete on the matrix side:
+- `compute/lib/nonprincipal_ds_orbits.py` now includes standard Jordan
+  nilpotent representatives for type-A partitions and hook cases, plus
+  recovery of the partition from kernel dimensions of powers.
+- The first non-self-dual pair (`A_3`: `(3,1)` and `(2,1,1)`) now has explicit
+  nilpotent matrices in compute, not only partition labels.
+- Matrix centralizer dimensions are now checked directly against the partition
+  formula across the hook-family scaffold, so the orbit side of the frontier is
+  no longer purely combinatorial.
+- The same module now also constructs explicit traceless centralizer bases for
+  that first non-self-dual pair, of sizes `5` and `9` respectively, exposing
+  the first concrete asymmetry in the dual hook data beyond partition labels.
+- Standard Jacobson--Morozov triples for that pair are now also fixed in code,
+  with full `ad(h)` grading multiplicities on `\mathfrak{sl}_4`:
+  source `(3,1)` gives `{4:1, 2:4, 0:5, -2:4, -4:1}`,
+  target `(2,1,1)` gives `{2:1, 1:4, 0:5, -1:4, -2:1}`.
+- The standard traceless basis is now also grouped explicitly by `ad(h)` grade,
+  so the positive directions for the first hook pair are concrete labels:
+  source positive basis `E13` in grade `4` and
+  `E12,E14,E23,E43` in grade `2`;
+  target positive basis `E12` in grade `2` and
+  `E13,E14,E32,E42` in grade `1`.
+- `compute/lib/ds_reduction.py` now feeds those actual five positive
+  directions on each side into the linear hook-pair Koszul blocks, replacing
+  the earlier placeholder two-constraint toy model for the first
+  non-self-dual pair.
+- The same DS scaffold now attaches the actual ghost conformal weights to
+  those five directions:
+  source has one grade-4 ghost and four grade-2 ghosts;
+  target has one grade-2 ghost and four grade-1 ghosts.
+- The first non-self-dual hook pair's truncated exterior BRST seed now uses
+  those same five ghost directions as well, so the wedge and Koszul models are
+  aligned for that frontier pair.
 
 ### First concrete step
 ```

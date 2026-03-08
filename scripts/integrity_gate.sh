@@ -188,6 +188,16 @@ if [[ "$gq_missing" != "0" || "$hms_missing" != "0" ]]; then
   fail=1
 fi
 
+echo "==> Manuscript QC (active structural checks)"
+qc_log="$(mktemp)"
+if ./scripts/manuscript_qc.py --strict >"$qc_log"; then
+  sed -n '1,12p' "$qc_log"
+else
+  cat "$qc_log"
+  fail=1
+fi
+rm -f "$qc_log"
+
 if [[ "$fail" -ne 0 ]]; then
   echo "==> Integrity gate FAILED"
   exit 1

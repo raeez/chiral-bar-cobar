@@ -341,10 +341,10 @@ For each, we analyze the state of four computations:
   `compute/lib/bv_duality.py` (type-A BV dual pairs, including the first
   non-self-dual hook pair at `A_3`) and
   `compute/lib/nonprincipal_ds_reduction.py` (proved `sl_3` subregular BP
-  seed invariants + hook-pair seed records). The BP central-charge formulas
-  presently implemented there give a level-independent sum `c(k)+c(k')=76`
-  for `k'=-k-6`; reconciling this with the chapter-level `22` normalization
-  claim is now an explicit frontier consistency task.
+  seed invariants + family-level hook/subregular seed catalog records). The BP
+  central-charge formulas presently implemented there give a level-independent
+  sum `c(k)+c(k')=76` for `k'=-k-6`; reconciling this with the chapter-level
+  `22` normalization claim is now an explicit frontier consistency task.
 - The normalization bridge is now explicit in
   `compute/lib/nonprincipal_ds_normalization.py` (shift-only convention map
   from the raw `76` sum to the chapter-target `22` sum), and the chain-input
@@ -354,7 +354,43 @@ For each, we analyze the state of four computations:
   differential (`d = \chi \wedge -` on the seed ghost exterior algebra) with
   verified `d^2=0`, and the first non-self-dual hook pair (`A_3`:
   `(3,1) \leftrightarrow (2,1,1)`) now has paired DS seed complexes with
-  symbolic nilpotence checks.
+  symbolic nilpotence checks. This has now been promoted to a family catalog:
+  `compute/lib/ds_reduction.py` builds hook/subregular pair seeds for all
+  type-A `(n,r)` hook cases up to a chosen cutoff, with propagated
+  partition/level-shift checks and explicit alignment checks against the
+  non-principal DS seed catalog.
+- The truncated seed complexes now expose cohomology dimensions explicitly:
+  the subregular specialization (`\chi=(1,0)`) is acyclic
+  (`H^0=H^1=H^2=0`), and both first-hook-pair specializations
+  (`(1,0)` / `(0,1)`) are acyclic at the same truncated level. The new
+  hook-family catalog also verifies acyclic nonzero-character specializations
+  case-by-case at this truncated seed level.
+- The `sl_3` subregular seed now also has an explicit surviving `g^f`
+  strong-field profile in `compute/lib/ds_reduction.py`: the candidate basis
+  `J \sim H_2 + \frac{1}{2}H_1`, `G^+ \sim E_{23}`, `G^- \sim F_{13}`,
+  `T \sim F_{12}` centralizes `f = F_{12}` and has DS weights
+  `(1, 3/2, 3/2, 2)`, matching the Bershadsky--Polyakov strong presentation.
+  The same code now exposes the canonical splitting
+  `\mathfrak{sl}_3 = [e,\mathfrak{sl}_3] \oplus \mathfrak{g}^f` and the
+  corresponding projection from basis currents to the surviving strong fields.
+  At the same linearized level, the projected survivor bracket is now
+  explicit and matches the expected seed pattern
+  `[J,G^\pm] = \pm \frac{3}{2} G^\pm`, `[G^+,G^-]=T`, `T` central.
+- The orbit-combinatorial hook scaffold now also has matrix representatives:
+  `compute/lib/nonprincipal_ds_orbits.py` builds standard nilpotent matrices
+  for type-A hook partitions, recovers their Jordan types from kernel
+  dimensions of powers, and checks their centralizer dimensions directly. In
+  particular, the first genuine non-self-dual pair
+  `(3,1) \leftrightarrow (2,1,1)` now exists as an explicit matrix-level seed.
+  The same code now also produces explicit traceless centralizer bases for
+  that pair, with dimensions `5` and `9`, and standard `sl_2` triples with
+  explicit `ad(h)` grading multiplicities on `\mathfrak{sl}_4`. The positive
+  graded basis labels are now explicit too, so the first hook pair has
+  concrete candidate ghost directions at the orbit-data level. Those actual
+  five positive directions are now used by the first hook-pair linear
+  constraint blocks in `compute/lib/ds_reduction.py`, with explicit ghost
+  conformal weights on both sides. The first hook-pair truncated exterior BRST
+  seed now uses the same five directions as well.
 
 #### 9. W_N (General)
 
