@@ -13,6 +13,9 @@ from compute.lib.ds_reduction import (
     DSReducedFieldCandidate,
     CurrentActionTermEntry,
     SurvivorActionTermEntry,
+    SurvivorActionLiftWitness,
+    SurvivorDerivationDefectWitness,
+    FirstTransferCorrectionWitness,
     QuadraticGhostTermEntry,
     DSReductionSeed,
     DSConstraint,
@@ -20,6 +23,7 @@ from compute.lib.ds_reduction import (
     InternalSurvivorCEBlock,
     LinearConstraintBRSTBlock,
     MixedConstraintGhostBRSTBlock,
+    SemidirectSurvivorBRSTBlock,
     SurvivorCoupledBRSTBlock,
     STATUS_DS_SEED,
     TruncatedBRSTComplex,
@@ -48,15 +52,71 @@ from compute.lib.ds_reduction import (
     hook_pair_quadratic_ghost_term_support,
     hook_pair_current_action_terms,
     hook_pair_survivor_action_terms,
+    hook_pair_first_transfer_correction_terms,
+    hook_pair_corrected_survivor_action_terms,
+    partition_pair_constraints,
+    partition_pair_positive_nilpotent_brackets,
+    partition_pair_quadratic_ghost_term_support,
+    partition_pair_current_action_terms,
+    partition_pair_survivor_action_terms,
+    partition_pair_survivor_action_lift_witnesses,
+    partition_pair_constraint_current_witnesses,
+    partition_pair_survivor_derivation_defects,
+    partition_pair_first_transfer_correction_witnesses,
+    partition_pair_first_transfer_correction_terms,
+    partition_pair_corrected_survivor_action_terms,
+    partition_pair_corrected_survivor_derivation_defects,
+    partition_pair_surviving_field_candidates,
+    partition_pair_reduced_brackets,
+    partition_pair_internal_survivor_ce_blocks,
+    nonprincipal_partition_pair_mixed_constraint_ghost_blocks,
+    nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks,
+    nonprincipal_partition_pair_semidirect_survivor_blocks,
+    nonprincipal_partition_pair_corrected_semidirect_survivor_blocks,
+    nonprincipal_partition_pair_survivor_coupled_blocks,
     hook_pair_mixed_constraint_ghost_blocks,
     hook_pair_nonlinear_mixed_constraint_ghost_blocks,
     hook_pair_survivor_coupled_blocks,
+    hook_pair_corrected_semidirect_survivor_blocks,
+    nonprincipal_two_row_internal_survivor_ce_blocks,
+    nonprincipal_two_row_mixed_constraint_ghost_blocks,
+    nonprincipal_two_row_nonlinear_mixed_constraint_ghost_blocks,
+    nonprincipal_two_row_semidirect_survivor_blocks,
+    nonprincipal_two_row_corrected_semidirect_survivor_blocks,
+    nonprincipal_two_row_survivor_coupled_blocks,
+    nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap,
+    nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap,
+    nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap,
+    nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap,
     hook_pair_mixed_blocks_match_under_dual_swap,
     hook_pair_nonlinear_blocks_match_under_dual_swap,
     hook_pair_survivor_coupled_blocks_match_under_dual_swap,
+    hook_pair_corrected_semidirect_blocks_match_under_dual_swap,
+    nonprincipal_two_row_mixed_blocks_match_under_dual_swap,
+    nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap,
+    nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap,
+    nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap,
     verify_hook_pair_mixed_block_duality_catalog,
     verify_hook_pair_nonlinear_block_duality_catalog,
     verify_hook_pair_survivor_coupled_block_duality_catalog,
+    hook_pair_survivor_coupled_family_holds_via_duality,
+    verify_hook_pair_survivor_coupled_family_via_duality_catalog,
+    verify_hook_pair_first_transfer_correction_catalog,
+    verify_hook_pair_corrected_semidirect_catalog,
+    verify_hook_pair_corrected_semidirect_duality_catalog,
+    verify_hook_pair_corrected_semidirect_family_via_duality_catalog,
+    verify_nonprincipal_two_row_mixed_block_duality_catalog,
+    verify_nonprincipal_two_row_nonlinear_block_duality_catalog,
+    verify_nonprincipal_two_row_survivor_coupled_bundle,
+    verify_nonprincipal_two_row_corrected_semidirect_bundle,
+    general_nonprincipal_mixed_family_holds_via_duality,
+    verify_nonprincipal_general_mixed_family_via_duality_catalog,
+    general_nonprincipal_nonlinear_family_holds_via_duality,
+    verify_nonprincipal_general_nonlinear_family_via_duality_catalog,
+    general_nonprincipal_survivor_coupled_family_holds_via_duality,
+    verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog,
+    general_nonprincipal_corrected_semidirect_family_holds_via_duality,
+    verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog,
     hook_pair_surviving_field_candidates,
     hook_pair_reduced_brackets,
     hook_pair_specialized_complexes,
@@ -77,6 +137,16 @@ from compute.lib.ds_reduction import (
     first_nonselfdual_hook_pair_specialized_complexes,
     first_nonselfdual_hook_pair_surviving_field_candidates,
     first_nonselfdual_hook_pair_internal_survivor_ce_blocks,
+    first_nonselfdual_hook_pair_constraint_current_witnesses,
+    first_nonselfdual_hook_pair_survivor_action_lift_witnesses,
+    first_nonselfdual_hook_pair_derivation_defect_witnesses,
+    first_nonselfdual_hook_pair_first_transfer_correction_witnesses,
+    first_nonselfdual_hook_pair_first_transfer_correction_terms,
+    first_nonselfdual_hook_pair_corrected_survivor_action_terms,
+    first_nonselfdual_hook_pair_corrected_survivor_derivation_defects,
+    first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks,
+    first_nonselfdual_hook_pair_semidirect_survivor_blocks,
+    first_nonselfdual_hook_pair_survivor_derivation_defects,
     first_nonselfdual_hook_pair_mixed_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling,
@@ -84,6 +154,8 @@ from compute.lib.ds_reduction import (
     ghost_brst_differential,
     brst_ghost_weights,
     homogeneous_monomial_exponents,
+    solve_survivor_derivation_correction_for_ghost,
+    solve_survivor_derivation_correction_terms,
     linear_constraint_block_basis,
     linear_constraint_block_has_contracting_homotopy,
     linear_constraint_block_has_square_zero,
@@ -96,6 +168,7 @@ from compute.lib.ds_reduction import (
     mixed_constraint_ghost_block_homology_dimensions,
     mixed_constraint_ghost_block_is_acyclic,
     current_action_differential,
+    combine_survivor_action_terms,
     internal_survivor_action_terms,
     internal_survivor_ce_block_basis,
     internal_survivor_ce_h0_basis,
@@ -107,6 +180,7 @@ from compute.lib.ds_reduction import (
     internal_survivor_h0_monomial_labels,
     internal_survivor_linear_h0_labels,
     internal_survivor_quadratic_ghost_terms,
+    semidirect_survivor_block_has_square_zero,
     mixed_constraint_ghost_brst_differential,
     quadratic_ghost_differential,
     survivor_action_differential,
@@ -132,9 +206,18 @@ from compute.lib.ds_reduction import (
     sl3_subregular_mixed_constraint_ghost_blocks,
     sl3_subregular_nonlinear_mixed_constraint_ghost_blocks,
     sl3_subregular_internal_survivor_ce_blocks,
+    sl3_subregular_semidirect_survivor_blocks,
+    sl3_subregular_corrected_semidirect_survivor_blocks,
     sl3_subregular_positive_nilpotent_brackets,
     sl3_subregular_positive_grades,
+    sl3_subregular_corrected_survivor_action_terms,
+    sl3_subregular_corrected_survivor_derivation_defects,
+    sl3_subregular_derivation_defect_witnesses,
+    sl3_subregular_first_transfer_correction_witnesses,
+    sl3_subregular_first_transfer_correction_terms,
     sl3_subregular_survivor_action_terms,
+    sl3_subregular_survivor_action_lift_witnesses,
+    sl3_subregular_survivor_derivation_defects,
     sl3_subregular_survivor_coupled_blocks,
     sl3_subregular_project_basis_label_to_strong_candidates,
     sl3_subregular_project_expression_to_strong_candidates,
@@ -726,6 +809,21 @@ class TestSurvivorCoupledBlocks:
             5: 0,
         }
 
+    def test_first_hook_pair_survivor_coupled_blocks_higher_survivor_degree(self):
+        for survivor_total_degree in (2, 3):
+            source_blocks, target_blocks = first_nonselfdual_hook_pair_survivor_coupled_blocks(
+                1,
+                survivor_total_degree,
+            )
+            assert all(survivor_coupled_block_has_square_zero(block) for block in source_blocks)
+            assert all(survivor_coupled_block_has_square_zero(block) for block in target_blocks)
+            assert all(survivor_coupled_block_is_acyclic(block) for block in source_blocks)
+            assert all(survivor_coupled_block_is_acyclic(block) for block in target_blocks)
+            assert first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
+                1,
+                survivor_total_degree,
+            )
+
 
 class TestInternalSurvivorCEBlocks:
     def test_basis_count(self):
@@ -898,6 +996,431 @@ class TestInternalSurvivorCEBlocks:
         )
 
 
+class TestSemidirectSurvivorObstruction:
+    def test_subregular_derivation_defects(self):
+        defects = sl3_subregular_survivor_derivation_defects()
+        assert list(defects) == ["c_alpha1+alpha2"]
+        assert len(defects["c_alpha1+alpha2"]) == 8
+        assert defects["c_alpha1+alpha2"][("G+", "G-")] == {"G+": Rational(1, 2)}
+        assert defects["c_alpha1+alpha2"][("J", "T")] == {"G+": Rational(3, 2)}
+
+    def test_first_hook_pair_derivation_defects(self):
+        source_defects, target_defects = first_nonselfdual_hook_pair_survivor_derivation_defects()
+        assert {ghost: len(items) for ghost, items in source_defects.items()} == {
+            "c_source_E12": 2,
+            "c_source_E14": 8,
+            "c_source_E23": 2,
+            "c_source_E43": 8,
+        }
+        assert {ghost: len(items) for ghost, items in target_defects.items()} == {
+            "c_target_E13": 26,
+            "c_target_E14": 26,
+            "c_target_E32": 26,
+            "c_target_E42": 26,
+        }
+        assert source_defects["c_source_E12"][("source_gm2_2", "source_gm2_3")] == {
+            "source_gm2_1": Rational(-1, 2)
+        }
+        assert target_defects["c_target_E13"][("target_g0_1", "target_gm1_3")] == {
+            "target_g0_1": -1
+        }
+
+    def test_subregular_semidirect_attempt_detects_obstruction(self):
+        blocks = sl3_subregular_semidirect_survivor_blocks(
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+            max_internal_ce_degree=2,
+        )
+        assert all(isinstance(block, SemidirectSurvivorBRSTBlock) for block in blocks)
+        assert not any(semidirect_survivor_block_has_square_zero(block) for block in blocks)
+
+    def test_first_hook_pair_semidirect_attempt_detects_obstruction(self):
+        source_blocks, target_blocks = first_nonselfdual_hook_pair_semidirect_survivor_blocks(
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+        assert all(isinstance(block, SemidirectSurvivorBRSTBlock) for block in source_blocks)
+        assert all(isinstance(block, SemidirectSurvivorBRSTBlock) for block in target_blocks)
+        assert not any(semidirect_survivor_block_has_square_zero(block) for block in source_blocks)
+        assert not any(semidirect_survivor_block_has_square_zero(block) for block in target_blocks)
+
+
+class TestTransferredSubregularCorrection:
+    def test_subregular_action_lift_witnesses(self):
+        lifts = sl3_subregular_survivor_action_lift_witnesses()
+        assert all(isinstance(item, SurvivorActionLiftWitness) for item in lifts)
+        by_key = {(item.c_ghost, item.source_survivor_label): item for item in lifts}
+        assert by_key[("c_alpha1+alpha2", "J")].projected_terms == ()
+        assert by_key[("c_alpha1+alpha2", "J")].ad_e_image_terms == (
+            ("E13", Rational(-3, 2)),
+        )
+        assert by_key[("c_alpha1+alpha2", "J")].ad_e_witness_preimage == (
+            ("E23", Rational(-3, 2)),
+        )
+        assert by_key[("c_alpha1+alpha2", "G-")].projected_terms == (("J", 1),)
+        assert by_key[("c_alpha1+alpha2", "G-")].ad_e_image_terms == (
+            ("H1", Rational(1, 2)),
+        )
+        assert by_key[("c_alpha1+alpha2", "G-")].ad_e_witness_preimage == (
+            ("F12", Rational(1, 2)),
+        )
+        assert by_key[("c_alpha1", "T")].projected_terms == ()
+        assert by_key[("c_alpha1", "T")].ad_e_witness_preimage == (("F12", 1),)
+
+    def test_subregular_defect_witness_formula(self):
+        witness_entries = sl3_subregular_derivation_defect_witnesses()
+        assert all(
+            isinstance(item, SurvivorDerivationDefectWitness) for item in witness_entries
+        )
+        by_pair = {
+            (item.c_ghost, item.left_survivor_label, item.right_survivor_label): item
+            for item in witness_entries
+        }
+        jt = by_pair[("c_alpha1+alpha2", "J", "T")]
+        assert jt.left_action_witness_preimage == (("E23", Rational(-3, 2)),)
+        assert jt.right_action_witness_preimage == ()
+        assert jt.unreduced_expression == (("E23", Rational(3, 2)),)
+        assert jt.projected_defect_terms == (("G+", Rational(3, 2)),)
+        gt = by_pair[("c_alpha1+alpha2", "G-", "T")]
+        assert gt.left_action_witness_preimage == (("F12", Rational(1, 2)),)
+        assert gt.unreduced_expression == (("F12", -1),)
+        assert gt.projected_defect_terms == (("T", -1),)
+        defects = sl3_subregular_survivor_derivation_defects()["c_alpha1+alpha2"]
+        assert all(
+            dict(item.projected_defect_terms)
+            == defects[(item.left_survivor_label, item.right_survivor_label)]
+            for item in witness_entries
+        )
+
+    def test_subregular_first_transfer_correction(self):
+        naive = sl3_subregular_survivor_action_terms()
+        correction_witnesses = sl3_subregular_first_transfer_correction_witnesses()
+        correction = sl3_subregular_first_transfer_correction_terms()
+        corrected = sl3_subregular_corrected_survivor_action_terms()
+        assert all(
+            isinstance(item, FirstTransferCorrectionWitness)
+            for item in correction_witnesses
+        )
+        assert tuple(item.current_label for item in correction_witnesses) == (
+            "E13",
+            "E13",
+        )
+        assert correction_witnesses[0].current_witness_preimage == (("E23", 1),)
+        assert correction_witnesses[0].projected_action_terms == (("J", 1),)
+        assert correction_witnesses[0].correction_terms == (("J", -1),)
+        assert combine_survivor_action_terms(naive, correction) == corrected
+        assert tuple(
+            (item.c_ghost, item.source_survivor_label, item.target_survivor_label, item.coefficient)
+            for item in correction
+        ) == (
+            ("c_alpha1+alpha2", "G-", "J", -1),
+            ("c_alpha1+alpha2", "T", "G+", 1),
+        )
+        assert corrected == ()
+        assert sl3_subregular_corrected_survivor_derivation_defects() == {}
+
+    def test_subregular_corrected_semidirect_blocks_restore_square_zero(self):
+        blocks = sl3_subregular_corrected_semidirect_survivor_blocks(
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+            max_internal_ce_degree=2,
+        )
+        assert all(isinstance(block, SemidirectSurvivorBRSTBlock) for block in blocks)
+        assert all(block.survivor_action_terms == () for block in blocks)
+        assert all(semidirect_survivor_block_has_square_zero(block) for block in blocks)
+
+
+class TestTransferredHookPairCorrection:
+    def test_linear_correction_solver_on_subregular_control(self):
+        survivors = tuple(item.label for item in sl3_subregular_strong_generator_candidates())
+        correction = solve_survivor_derivation_correction_terms(
+            survivors,
+            sl3_subregular_projected_strong_brackets(),
+            sl3_subregular_survivor_derivation_defects(),
+        )
+        assert correction == sl3_subregular_first_transfer_correction_terms()
+
+    def test_first_hook_pair_action_lift_witnesses(self):
+        source_lifts, target_lifts = first_nonselfdual_hook_pair_survivor_action_lift_witnesses()
+        assert all(isinstance(item, SurvivorActionLiftWitness) for item in source_lifts)
+        assert all(isinstance(item, SurvivorActionLiftWitness) for item in target_lifts)
+        source_by_key = {
+            (item.c_ghost, item.source_survivor_label): item for item in source_lifts
+        }
+        target_by_key = {
+            (item.c_ghost, item.source_survivor_label): item for item in target_lifts
+        }
+        assert source_by_key[("c_source_E12", "source_gm4_1")].projected_terms == (
+            ("source_gm2_1", Rational(-1, 2)),
+        )
+        assert source_by_key[("c_source_E12", "source_gm4_1")].ad_e_witness_preimage == (
+            ("E31", Rational(1, 2)),
+        )
+        assert source_by_key[("c_source_E14", "source_gm2_3")].ad_e_witness_preimage == (
+            ("E21", Rational(2, 3)),
+            ("E32", Rational(1, 3)),
+        )
+        assert target_by_key[("c_target_E13", "target_gm1_3")].projected_terms == (
+            ("target_g0_3", 1),
+        )
+        assert target_by_key[("c_target_E13", "target_gm1_3")].ad_e_witness_preimage == (
+            ("E21", Rational(1, 2)),
+        )
+        assert target_by_key[("c_target_E42", "target_gm1_2")].projected_terms == (
+            ("target_g0_3", -1),
+            ("target_g0_4", -1),
+        )
+
+    def test_first_hook_pair_constraint_currents_are_ad_e_exact(self):
+        source_witnesses, target_witnesses = (
+            first_nonselfdual_hook_pair_constraint_current_witnesses()
+        )
+        assert source_witnesses == {
+            "E13": (("E12", -1),),
+            "E12": (("H1", Rational(-2, 3)), ("H2", Rational(-1, 3))),
+            "E14": (("E24", 1),),
+            "E23": (("H1", Rational(-1, 3)), ("H2", Rational(-2, 3))),
+            "E43": (("E42", -1),),
+        }
+        assert target_witnesses == {
+            "E12": (("H1", Rational(-1, 2)),),
+            "E13": (("E23", 1),),
+            "E14": (("E24", 1),),
+            "E32": (("E31", -1),),
+            "E42": (("E41", -1),),
+        }
+
+    def test_first_hook_pair_defect_witness_formula(self):
+        source_witnesses, target_witnesses = (
+            first_nonselfdual_hook_pair_derivation_defect_witnesses()
+        )
+        assert all(
+            isinstance(item, SurvivorDerivationDefectWitness)
+            for item in source_witnesses + target_witnesses
+        )
+        source_by_key = {
+            (item.c_ghost, item.left_survivor_label, item.right_survivor_label): item
+            for item in source_witnesses
+        }
+        target_by_key = {
+            (item.c_ghost, item.left_survivor_label, item.right_survivor_label): item
+            for item in target_witnesses
+        }
+        sample_source = source_by_key[
+            ("c_source_E12", "source_gm2_2", "source_gm2_3")
+        ]
+        assert sample_source.right_action_witness_preimage == (("E41", 1),)
+        assert sample_source.unreduced_expression == (("E21", -1),)
+        assert sample_source.projected_defect_terms == (
+            ("source_gm2_1", Rational(-1, 2)),
+        )
+        sample_target = target_by_key[
+            ("c_target_E13", "target_g0_1", "target_gm1_3")
+        ]
+        assert sample_target.left_action_witness_preimage == (("E24", 1),)
+        assert sample_target.right_action_witness_preimage == (
+            ("E21", Rational(1, 2)),
+        )
+        assert sample_target.unreduced_expression == (("E34", -1),)
+        assert sample_target.projected_defect_terms == (("target_g0_1", -1),)
+        source_defects, target_defects = first_nonselfdual_hook_pair_survivor_derivation_defects()
+        assert all(
+            dict(item.projected_defect_terms)
+            == source_defects[item.c_ghost][(item.left_survivor_label, item.right_survivor_label)]
+            for item in source_witnesses
+        )
+        assert all(
+            dict(item.projected_defect_terms)
+            == target_defects[item.c_ghost][(item.left_survivor_label, item.right_survivor_label)]
+            for item in target_witnesses
+        )
+
+    def test_first_hook_pair_first_transfer_correction(self):
+        source_correction_witnesses, target_correction_witnesses = (
+            first_nonselfdual_hook_pair_first_transfer_correction_witnesses()
+        )
+        source_correction, target_correction = (
+            first_nonselfdual_hook_pair_first_transfer_correction_terms()
+        )
+        source_corrected, target_corrected = (
+            first_nonselfdual_hook_pair_corrected_survivor_action_terms()
+        )
+        source_defects, target_defects = (
+            first_nonselfdual_hook_pair_corrected_survivor_derivation_defects()
+        )
+        source_labels = tuple(
+            item.label for item in first_nonselfdual_hook_pair_surviving_field_candidates()[0]
+        )
+        target_labels = tuple(
+            item.label for item in first_nonselfdual_hook_pair_surviving_field_candidates()[1]
+        )
+        source_brackets, target_brackets = first_nonselfdual_hook_pair_reduced_brackets()
+        source_raw_defects, target_raw_defects = (
+            first_nonselfdual_hook_pair_survivor_derivation_defects()
+        )
+        assert all(
+            isinstance(item, FirstTransferCorrectionWitness)
+            for item in source_correction_witnesses + target_correction_witnesses
+        )
+        assert len(source_correction) == 6
+        assert len(target_correction) == 14
+        assert len(source_correction_witnesses) == len(source_correction)
+        assert sum(
+            len(item.correction_terms) for item in target_correction_witnesses
+        ) == len(target_correction)
+        assert source_correction_witnesses[0].current_label == "E12"
+        assert source_correction_witnesses[0].current_witness_preimage == (
+            ("H1", Rational(-2, 3)),
+            ("H2", Rational(-1, 3)),
+        )
+        assert source_correction_witnesses[0].correction_terms == (
+            ("source_gm2_1", Rational(1, 2)),
+        )
+        assert target_correction_witnesses[0].current_label == "E13"
+        assert target_correction_witnesses[0].current_witness_preimage == (("E23", 1),)
+        assert target_correction_witnesses[0].correction_terms == (
+            ("target_g0_3", -1),
+        )
+        assert target_correction_witnesses[4].correction_terms == (
+            ("target_g0_3", -1),
+            ("target_g0_4", -1),
+        )
+        assert source_correction == solve_survivor_derivation_correction_terms(
+            source_labels,
+            source_brackets,
+            source_raw_defects,
+        )
+        assert target_correction == solve_survivor_derivation_correction_terms(
+            target_labels,
+            target_brackets,
+            target_raw_defects,
+        )
+        assert source_corrected == ()
+        assert target_corrected == ()
+        assert source_defects == {}
+        assert target_defects == {}
+        assert tuple(
+            (item.c_ghost, item.source_survivor_label, item.target_survivor_label, item.coefficient)
+            for item in source_correction
+        ) == (
+            ("c_source_E12", "source_gm4_1", "source_gm2_1", Rational(1, 2)),
+            ("c_source_E14", "source_gm2_3", "source_g0_1", -1),
+            ("c_source_E14", "source_gm4_1", "source_gm2_2", 1),
+            ("c_source_E23", "source_gm4_1", "source_gm2_1", Rational(-1, 2)),
+            ("c_source_E43", "source_gm2_2", "source_g0_1", 1),
+            ("c_source_E43", "source_gm4_1", "source_gm2_3", -1),
+        )
+
+    def test_hook_first_transfer_catalog_low_rank(self):
+        assert all(verify_hook_pair_first_transfer_correction_catalog(max_n=6).values())
+
+    def test_hook_first_transfer_sl7_all_orientations(self):
+        for r in range(1, 6):
+            source_action, target_action = hook_pair_survivor_action_terms(7, r)
+            source_correction, target_correction = hook_pair_first_transfer_correction_terms(
+                7, r
+            )
+            source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(
+                7, r
+            )
+            assert len(source_action) == len(source_correction)
+            assert len(target_action) == len(target_correction)
+            assert source_corrected == ()
+            assert target_corrected == ()
+
+    def test_hook_first_transfer_sl8_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(8, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(8, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(8, 1)
+        assert len(source_action) == len(source_correction) == 6
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl9_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(9, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(9, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(9, 1)
+        assert len(source_action) == len(source_correction) == 9
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl10_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(10, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(10, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(10, 1)
+        assert len(source_action) == len(source_correction) == 11
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl11_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(11, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(11, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(11, 1)
+        assert len(source_action) == len(source_correction) == 13
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl12_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(12, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(12, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(12, 1)
+        assert len(source_action) == len(source_correction) == 16
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl13_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(13, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(13, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(13, 1)
+        assert len(source_action) == len(source_correction) == 20
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_corrected_semidirect_catalog_low_rank(self):
+        assert all(verify_hook_pair_corrected_semidirect_catalog(max_n=6).values())
+
+    def test_hook_corrected_semidirect_duality_catalog_low_rank(self):
+        assert all(verify_hook_pair_corrected_semidirect_duality_catalog(max_n=6).values())
+
+    def test_first_hook_pair_corrected_semidirect_blocks_restore_square_zero(self):
+        source_blocks, target_blocks = (
+            first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+        assert all(isinstance(block, SemidirectSurvivorBRSTBlock) for block in source_blocks)
+        assert all(isinstance(block, SemidirectSurvivorBRSTBlock) for block in target_blocks)
+        assert all(block.survivor_action_terms == () for block in source_blocks)
+        assert all(block.survivor_action_terms == () for block in target_blocks)
+        assert all(semidirect_survivor_block_has_square_zero(block) for block in source_blocks)
+        assert all(semidirect_survivor_block_has_square_zero(block) for block in target_blocks)
+
+    def test_first_hook_pair_corrected_semidirect_blocks_restore_square_zero_in_higher_survivor_degree(
+        self,
+    ):
+        for survivor_total_degree in (2, 3):
+            source_blocks, target_blocks = (
+                first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
+                    max_constraint_total_degree=0,
+                    survivor_total_degree=survivor_total_degree,
+                    max_internal_ce_degree=1,
+                )
+            )
+            assert all(block.survivor_action_terms == () for block in source_blocks)
+            assert all(block.survivor_action_terms == () for block in target_blocks)
+            assert all(semidirect_survivor_block_has_square_zero(block) for block in source_blocks)
+            assert all(semidirect_survivor_block_has_square_zero(block) for block in target_blocks)
+
+
 class TestFirstNonSelfDualHookPair:
     def test_pair_seed(self):
         k = Symbol("k")
@@ -909,6 +1432,7 @@ class TestFirstNonSelfDualHookPair:
         assert pair_seed.target_partition == (2, 1, 1)
         assert simplify(pair_seed.target_level - (-k - 8)) == 0
         assert pair_seed.track == "frontier_nonprincipal_ds_orbit"
+        assert pair_seed.status == STATUS_DS_SEED
         assert len(pair_seed.source_complex.ghost_labels) == 5
         assert len(pair_seed.target_complex.ghost_labels) == 5
         assert pair_seed.source_complex.chi_vector == (0, 1, 0, 0, 0)
@@ -1048,6 +1572,7 @@ class TestHookFamilyCatalog:
         assert all(label.startswith("c_source_E") for label in seed.source_complex.ghost_labels)
         assert all(label.startswith("c_target_E") for label in seed.target_complex.ghost_labels)
         assert simplify(seed.target_level - (-k - 12)) == 0
+        assert seed.status == STATUS_DS_SEED
         assert complex_has_nilpotent_differential(seed.source_complex)
         assert complex_has_nilpotent_differential(seed.target_complex)
 
@@ -1055,6 +1580,7 @@ class TestHookFamilyCatalog:
         seed = hook_pair_ds_seed(7, 2)
         assert len(seed.source_complex.ghost_labels) == 4
         assert len(seed.target_complex.ghost_labels) == 2
+        assert seed.status == STATUS_DS_SEED
 
     def test_generic_specialization_defaults(self):
         source, target = hook_pair_specialized_complexes(
@@ -1204,6 +1730,89 @@ class TestHookFamilyCatalog:
             ).values()
         )
 
+    def test_generic_survivor_degree_three_blocks_and_catalogs(self):
+        survivor_total_degree = 3
+        source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        source_corrected_blocks, target_corrected_blocks = (
+            hook_pair_corrected_semidirect_survivor_blocks(
+                6,
+                2,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            )
+        )
+        assert all(
+            survivor_coupled_block_has_square_zero(block)
+            and survivor_coupled_block_is_acyclic(block)
+            for block in source_blocks + target_blocks
+        )
+        assert hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_corrected_blocks + target_corrected_blocks
+        )
+        assert hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
+        assert hook_pair_survivor_coupled_family_holds_via_duality(
+            6,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        assert all(
+            verify_hook_pair_survivor_coupled_family_via_duality_catalog(
+                max_n=6,
+                max_constraint_total_degree=1,
+                survivor_total_degree=survivor_total_degree,
+            ).values()
+        )
+        assert all(
+            verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
+                max_n=6,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_hook_pair_survivor_coupled_block_duality_catalog(
+                max_n=6,
+                max_constraint_total_degree=1,
+                survivor_total_degree=survivor_total_degree,
+            ).values()
+        )
+        assert all(
+            verify_hook_pair_corrected_semidirect_catalog(
+                max_n=6,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_hook_pair_corrected_semidirect_duality_catalog(
+                max_n=6,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+
     def test_generic_survivor_family_scaffold(self):
         source_candidates, target_candidates = hook_pair_surviving_field_candidates(5, 2)
         source_brackets, target_brackets = hook_pair_reduced_brackets(5, 2)
@@ -1217,12 +1826,533 @@ class TestHookFamilyCatalog:
         assert len(seeds) == 6
         assert seeds[0].source_partition == (2, 1)
         assert seeds[-1].source_partition == (2, 1, 1, 1)
+        assert all(seed.status == STATUS_DS_SEED for seed in seeds)
         assert len(seeds[0].source_complex.ghost_labels) == 2
         assert len(seeds[-1].source_complex.ghost_labels) == 1
 
     def test_catalog_verification(self):
         assert all(verify_hook_pair_ds_seed_catalog(max_n=8).values())
         assert all(verify_hook_pair_seed_alignment(max_n=8).values())
+
+
+class TestTwoRowNonHookFamilyCatalog:
+    def test_partition_pair_constraint_data_and_actions(self):
+        partition = (4, 2)
+        source_constraints, target_constraints = partition_pair_constraints(partition)
+        source_brackets, target_brackets = partition_pair_positive_nilpotent_brackets(partition)
+        source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(partition)
+        source_action, target_action = partition_pair_current_action_terms(partition)
+        source_survivor_action, target_survivor_action = partition_pair_survivor_action_terms(partition)
+        source_candidates, target_candidates = partition_pair_surviving_field_candidates(partition)
+
+        source_ghost_labels = {item.c_ghost for item in source_constraints}
+        target_ghost_labels = {item.c_ghost for item in target_constraints}
+        source_survivor_labels = {item.label for item in source_candidates}
+        target_survivor_labels = {item.label for item in target_candidates}
+
+        assert source_constraints
+        assert target_constraints
+        assert len(source_quadratic) == len(source_brackets)
+        assert len(target_quadratic) == len(target_brackets)
+        assert len(source_action) == 2 * len(source_brackets)
+        assert len(target_action) == 2 * len(target_brackets)
+        assert all(item.c_ghost in source_ghost_labels for item in source_survivor_action)
+        assert all(item.c_ghost in target_ghost_labels for item in target_survivor_action)
+        assert all(item.source_survivor_label in source_survivor_labels for item in source_survivor_action)
+        assert all(item.target_survivor_label in source_survivor_labels for item in source_survivor_action)
+        assert all(item.source_survivor_label in target_survivor_labels for item in target_survivor_action)
+        assert all(item.target_survivor_label in target_survivor_labels for item in target_survivor_action)
+
+    def test_partition_pair_survivor_counts_and_reduced_tables(self):
+        partition = (4, 2)
+        source_candidates, target_candidates = partition_pair_surviving_field_candidates(partition)
+        source_reduced, target_reduced = partition_pair_reduced_brackets(partition)
+        assert len(source_candidates) == centralizer_dimension_sl_n((4, 2))
+        assert len(target_candidates) == centralizer_dimension_sl_n((2, 2, 1, 1))
+        assert len(source_reduced) == len(source_candidates) ** 2
+        assert len(target_reduced) == len(target_candidates) ** 2
+
+    def test_two_row_builders_match_generic_partition_builder(self):
+        generic_source, generic_target = nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+            (4, 2),
+            max_constraint_total_degree=1,
+        )
+        two_row_source, two_row_target = nonprincipal_two_row_mixed_constraint_ghost_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        assert generic_source == two_row_source
+        assert generic_target == two_row_target
+
+    def test_two_row_mixed_nonlinear_and_survivor_blocks(self):
+        source_blocks, target_blocks = nonprincipal_two_row_mixed_constraint_ghost_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        nonlinear_source, nonlinear_target = nonprincipal_two_row_nonlinear_mixed_constraint_ghost_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        survivor_source, survivor_target = nonprincipal_two_row_survivor_coupled_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+
+        assert [block.constraint_total_degree for block in source_blocks] == [0, 1]
+        assert [block.constraint_total_degree for block in target_blocks] == [0, 1]
+        assert len(nonlinear_source[1].current_action_terms) >= len(source_blocks[1].current_action_terms)
+        assert len(nonlinear_target[1].current_action_terms) >= len(target_blocks[1].current_action_terms)
+        assert all(
+            mixed_constraint_ghost_block_has_square_zero(block)
+            and mixed_constraint_ghost_block_is_acyclic(block)
+            for block in source_blocks + target_blocks + nonlinear_source + nonlinear_target
+        )
+        assert all(
+            survivor_coupled_block_has_square_zero(block)
+            and survivor_coupled_block_is_acyclic(block)
+            for block in survivor_source + survivor_target
+        )
+
+    def test_two_row_dual_swap_symmetry(self):
+        assert nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+            (4, 2),
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+            (4, 2),
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+            (4, 2),
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert nonprincipal_two_row_mixed_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_two_row_mixed_block_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_nonprincipal_two_row_survivor_coupled_bundle(
+                max_n=8,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            ).values()
+        )
+
+    def test_two_row_survivor_degree_three_blocks_and_catalogs(self):
+        survivor_total_degree = 3
+        survivor_source, survivor_target = nonprincipal_two_row_survivor_coupled_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        corrected_source, corrected_target = (
+            nonprincipal_two_row_corrected_semidirect_survivor_blocks(
+                6,
+                2,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            )
+        )
+        assert all(
+            survivor_coupled_block_has_square_zero(block)
+            and survivor_coupled_block_is_acyclic(block)
+            for block in survivor_source + survivor_target
+        )
+        assert nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in corrected_source + corrected_target
+        )
+        assert nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_two_row_survivor_coupled_bundle(
+                max_n=8,
+                max_constraint_total_degree=1,
+                survivor_total_degree=survivor_total_degree,
+            ).values()
+        )
+        assert all(
+            verify_nonprincipal_two_row_corrected_semidirect_bundle(
+                max_n=7,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+
+    def test_two_row_corrected_survivor_transfer_and_semidirect_blocks(self):
+        partition = (4, 2)
+        source_action_lifts, target_action_lifts = partition_pair_survivor_action_lift_witnesses(
+            partition
+        )
+        source_current_witnesses, target_current_witnesses = partition_pair_constraint_current_witnesses(
+            partition
+        )
+        source_raw_defects, target_raw_defects = partition_pair_survivor_derivation_defects(
+            partition
+        )
+        source_correction_witnesses, target_correction_witnesses = (
+            partition_pair_first_transfer_correction_witnesses(partition)
+        )
+        source_correction, target_correction = partition_pair_first_transfer_correction_terms(
+            partition
+        )
+        source_corrected_action, target_corrected_action = (
+            partition_pair_corrected_survivor_action_terms(partition)
+        )
+        source_corrected_defects, target_corrected_defects = (
+            partition_pair_corrected_survivor_derivation_defects(partition)
+        )
+        two_row_semidirect_source, two_row_semidirect_target = (
+            nonprincipal_two_row_semidirect_survivor_blocks(
+                6,
+                2,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+        two_row_corrected_source, two_row_corrected_target = (
+            nonprincipal_two_row_corrected_semidirect_survivor_blocks(
+                6,
+                2,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+
+        assert source_action_lifts
+        assert target_action_lifts
+        assert source_current_witnesses or target_current_witnesses
+        assert source_raw_defects
+        assert target_raw_defects
+        assert source_correction_witnesses or target_correction_witnesses
+        assert source_correction or target_correction
+        assert source_corrected_defects == {}
+        assert target_corrected_defects == {}
+        assert not all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in two_row_semidirect_source + two_row_semidirect_target
+        )
+        assert all(
+            block.survivor_action_terms == source_corrected_action
+            for block in two_row_corrected_source
+        )
+        assert all(
+            block.survivor_action_terms == target_corrected_action
+            for block in two_row_corrected_target
+        )
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in two_row_corrected_source + two_row_corrected_target
+        )
+
+    def test_two_row_corrected_semidirect_duality_and_catalogs(self):
+        assert nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_two_row_corrected_semidirect_bundle(
+                max_n=7,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+
+
+class TestGeneralNonprincipalFamilyCatalog:
+    def test_partition_pair_constraint_data_and_actions(self):
+        partition = (3, 2, 1)
+        source_constraints, target_constraints = partition_pair_constraints(partition)
+        source_brackets, target_brackets = partition_pair_positive_nilpotent_brackets(partition)
+        source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(partition)
+        source_action, target_action = partition_pair_current_action_terms(partition)
+        source_survivor_action, target_survivor_action = partition_pair_survivor_action_terms(partition)
+        source_candidates, target_candidates = partition_pair_surviving_field_candidates(partition)
+
+        source_ghost_labels = {item.c_ghost for item in source_constraints}
+        target_ghost_labels = {item.c_ghost for item in target_constraints}
+        source_survivor_labels = {item.label for item in source_candidates}
+        target_survivor_labels = {item.label for item in target_candidates}
+
+        assert source_constraints
+        assert target_constraints
+        assert len(source_quadratic) == len(source_brackets)
+        assert len(target_quadratic) == len(target_brackets)
+        assert len(source_action) == 2 * len(source_brackets)
+        assert len(target_action) == 2 * len(target_brackets)
+        assert all(item.c_ghost in source_ghost_labels for item in source_survivor_action)
+        assert all(item.c_ghost in target_ghost_labels for item in target_survivor_action)
+        assert all(item.source_survivor_label in source_survivor_labels for item in source_survivor_action)
+        assert all(item.target_survivor_label in source_survivor_labels for item in source_survivor_action)
+        assert all(item.source_survivor_label in target_survivor_labels for item in target_survivor_action)
+        assert all(item.target_survivor_label in target_survivor_labels for item in target_survivor_action)
+
+    def test_partition_pair_survivor_counts_and_reduced_tables(self):
+        partition = (3, 2, 1)
+        source_candidates, target_candidates = partition_pair_surviving_field_candidates(partition)
+        source_reduced, target_reduced = partition_pair_reduced_brackets(partition)
+        assert len(source_candidates) == centralizer_dimension_sl_n((3, 2, 1))
+        assert len(target_candidates) == centralizer_dimension_sl_n((3, 2, 1))
+        assert len(source_reduced) == len(source_candidates) ** 2
+        assert len(target_reduced) == len(target_candidates) ** 2
+
+    def test_general_mixed_nonlinear_and_survivor_blocks(self):
+        partition = (3, 2, 1)
+        source_blocks, target_blocks = nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+            partition,
+            max_constraint_total_degree=1,
+        )
+        nonlinear_source, nonlinear_target = nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
+            partition,
+            max_constraint_total_degree=1,
+        )
+        survivor_source, survivor_target = nonprincipal_partition_pair_survivor_coupled_blocks(
+            partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+
+        assert [block.constraint_total_degree for block in source_blocks] == [0, 1]
+        assert [block.constraint_total_degree for block in target_blocks] == [0, 1]
+        assert len(nonlinear_source[1].current_action_terms) >= len(source_blocks[1].current_action_terms)
+        assert len(nonlinear_target[1].current_action_terms) >= len(target_blocks[1].current_action_terms)
+        assert all(
+            mixed_constraint_ghost_block_has_square_zero(block)
+            and mixed_constraint_ghost_block_is_acyclic(block)
+            for block in source_blocks + target_blocks + nonlinear_source + nonlinear_target
+        )
+        assert all(
+            survivor_coupled_block_has_square_zero(block)
+            and survivor_coupled_block_is_acyclic(block)
+            for block in survivor_source + survivor_target
+        )
+
+    def test_general_dual_swap_symmetry(self):
+        partition = (3, 2, 1)
+        assert nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+            partition,
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+            partition,
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+            partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert general_nonprincipal_mixed_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_general_mixed_family_via_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert general_nonprincipal_nonlinear_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+                max_n=8,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            ).values()
+        )
+
+    def test_general_survivor_degree_three_blocks_and_catalogs(self):
+        partition = (3, 2, 1)
+        survivor_total_degree = 3
+        survivor_source, survivor_target = nonprincipal_partition_pair_survivor_coupled_blocks(
+            partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        corrected_source, corrected_target = (
+            nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+                partition,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            )
+        )
+        assert all(
+            survivor_coupled_block_has_square_zero(block)
+            and survivor_coupled_block_is_acyclic(block)
+            for block in survivor_source + survivor_target
+        )
+        assert nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+            partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in corrected_source + corrected_target
+        )
+        assert nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
+
+    def test_general_corrected_survivor_transfer_and_semidirect_blocks(self):
+        partition = (3, 2, 1)
+        source_action_lifts, target_action_lifts = partition_pair_survivor_action_lift_witnesses(
+            partition
+        )
+        source_current_witnesses, target_current_witnesses = partition_pair_constraint_current_witnesses(
+            partition
+        )
+        source_raw_defects, target_raw_defects = partition_pair_survivor_derivation_defects(
+            partition
+        )
+        source_correction_witnesses, target_correction_witnesses = (
+            partition_pair_first_transfer_correction_witnesses(partition)
+        )
+        source_correction, target_correction = partition_pair_first_transfer_correction_terms(
+            partition
+        )
+        source_corrected_action, target_corrected_action = (
+            partition_pair_corrected_survivor_action_terms(partition)
+        )
+        source_corrected_defects, target_corrected_defects = (
+            partition_pair_corrected_survivor_derivation_defects(partition)
+        )
+        source_internal_blocks, target_internal_blocks = partition_pair_internal_survivor_ce_blocks(
+            partition,
+            max_survivor_polynomial_degree=1,
+        )
+        source_semidirect_blocks, target_semidirect_blocks = (
+            nonprincipal_partition_pair_semidirect_survivor_blocks(
+                partition,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+        source_corrected_blocks, target_corrected_blocks = (
+            nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+                partition,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+
+        assert source_action_lifts
+        assert target_action_lifts
+        assert source_current_witnesses or target_current_witnesses
+        assert source_raw_defects
+        assert target_raw_defects
+        assert source_correction_witnesses or target_correction_witnesses
+        assert source_correction or target_correction
+        assert source_corrected_defects == {}
+        assert target_corrected_defects == {}
+        assert all(
+            internal_survivor_ce_block_has_square_zero(block)
+            for block in source_internal_blocks + target_internal_blocks
+        )
+        assert not all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_semidirect_blocks + target_semidirect_blocks
+        )
+        assert all(
+            block.survivor_action_terms == source_corrected_action
+            for block in source_corrected_blocks
+        )
+        assert all(
+            block.survivor_action_terms == target_corrected_action
+            for block in target_corrected_blocks
+        )
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_corrected_blocks + target_corrected_blocks
+        )
+
+    def test_general_corrected_semidirect_duality_and_catalogs(self):
+        partition = (3, 2, 1)
+        assert nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+        assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            ).values()
+        )
 
 
 class TestVerificationBundle:

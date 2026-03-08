@@ -16,6 +16,7 @@ from sympy import Rational, Matrix
 
 from compute.lib.genus1_pbw_sl2 import (
     CASIMIR_EXACT_CUTOFF,
+    CASIMIR_MODULAR_PRIMES,
     DIM_SL2,
     lie_bracket,
     killing,
@@ -31,8 +32,11 @@ from compute.lib.genus1_pbw_sl2 import (
     adjoint_casimir_on_tensor_square,
     adjoint_casimir_on_tensor_power,
     casimir_method_for_tensor_power,
+    casimir_eigenspace_multiplicities_exact_sparse_on_tensor_power,
+    casimir_eigenspace_multiplicities_modular_on_tensor_power,
     casimir_eigenspace_multiplicities_on_tensor_power,
     expected_casimir_eigenspace_multiplicities_on_tensor_power,
+    staged_frontier_diagnostics_on_tensor_power,
     sl2_spin1_tensor_power_copy_multiplicities,
     invariant_subspace_dimension_on_tensor_power,
     ce_differential_1_to_2,
@@ -291,10 +295,10 @@ class TestCasimirDecomposition:
         assert bracket_d1_kernel_dim_on_tensor_power(6) == 486
 
     def test_casimir_auto_policy_switches_after_cutoff(self):
-        """Default policy: exact through n<=6, fast theory path for n>=7."""
+        """Default policy: exact through n<=6, modular path for n>=7."""
         assert CASIMIR_EXACT_CUTOFF == 6
         assert casimir_method_for_tensor_power(6) == "exact"
-        assert casimir_method_for_tensor_power(7) == "theory"
+        assert casimir_method_for_tensor_power(7) == "modular"
 
     def test_tensor_power_helpers_at_degree_7_staged_frontier(self):
         """n=7 uses the fast Casimir path by default; exact remains opt-in."""
@@ -315,6 +319,76 @@ class TestCasimirDecomposition:
     def test_casimir_method_validation(self):
         with pytest.raises(ValueError):
             casimir_method_for_tensor_power(3, method="unsupported")
+
+    def test_exact_sparse_method_resolution(self):
+        assert casimir_method_for_tensor_power(3, method="exact_sparse") == "exact_sparse"
+
+    def test_exact_sparse_matches_exact_on_small_power(self):
+        exact = casimir_eigenspace_multiplicities_on_tensor_power(5, method="exact")
+        exact_sparse = casimir_eigenspace_multiplicities_on_tensor_power(5, method="exact_sparse")
+        assert exact_sparse == exact
+
+    def test_exact_sparse_function_matches_expected(self):
+        exact_sparse = casimir_eigenspace_multiplicities_exact_sparse_on_tensor_power(4)
+        assert exact_sparse == expected_casimir_eigenspace_multiplicities_on_tensor_power(4)
+
+    def test_modular_path_matches_exact_on_small_power(self):
+        """Modular nullity extraction agrees with exact eigenspaces on small powers."""
+        exact = casimir_eigenspace_multiplicities_on_tensor_power(4, method="exact")
+        modular = casimir_eigenspace_multiplicities_on_tensor_power(4, method="modular")
+        assert modular == exact
+
+    def test_modular_path_at_degree_7(self):
+        """Modular n=7 path recovers the full expected eigenspace multiplicities."""
+        modular = casimir_eigenspace_multiplicities_modular_on_tensor_power(
+            7,
+            primes=CASIMIR_MODULAR_PRIMES,
+        )
+        assert modular == {
+            Rational(112): 15,
+            Rational(84): 78,
+            Rational(60): 231,
+            Rational(40): 441,
+            Rational(24): 588,
+            Rational(12): 525,
+            Rational(4): 273,
+            Rational(0): 36,
+        }
+
+    def test_staged_frontier_report_n7_without_casimir(self):
+        """n=7 staged report supports lightweight frontier checks without eigenspaces."""
+        report = staged_frontier_diagnostics_on_tensor_power(7, include_casimir=False)
+        assert report["power"] == 7
+        assert report["rank_d1"] == 728
+        assert report["kernel_dim_d1"] == 1459
+        assert report["invariant_dim"] == 36
+        assert report["equivariant"] is True
+        assert report["casimir_commutator_zero"] is True
+        assert report["casimir_mode"] == "modular"
+        assert report["casimir_eigenspaces"] is None
+        assert report["casimir_matches_expected"] is None
+        assert report["all_enabled_checks_pass"] is True
+
+    def test_staged_frontier_report_small_power_with_casimir(self):
+        """Full staged report agrees with expected eigenspaces on small powers."""
+        report = staged_frontier_diagnostics_on_tensor_power(4, include_timings=True)
+        assert report["power"] == 4
+        assert report["rank_d1"] == 27
+        assert report["kernel_dim_d1"] == 54
+        assert report["invariant_dim"] == 3
+        assert report["equivariant"] is True
+        assert report["casimir_commutator_zero"] is True
+        assert report["casimir_mode"] == "exact"
+        assert report["casimir_eigenspaces"] == {
+            Rational(40): 9,
+            Rational(24): 21,
+            Rational(12): 30,
+            Rational(4): 18,
+            Rational(0): 3,
+        }
+        assert report["casimir_matches_expected"] is True
+        assert report["all_enabled_checks_pass"] is True
+        assert report["timings"]["total"] >= 0
 
 
 class TestD1Equivariance:

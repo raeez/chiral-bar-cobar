@@ -31,7 +31,8 @@ irreducible kernel from which the full theory is visible:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The \emph{free fermion} displays the collapse regime:
   fermionic antisymmetry forces all bar cohomology above degree~$1$
-  to vanish, so the modular characteristic package is trivial.
+  to vanish, so the proved scalar and spectral shadows of the
+  modular characteristic hierarchy vanish.
 \item The \emph{Heisenberg algebra} displays the universal genus
   series~$\sum_{g \geq 1} F_g x^{2g} = \kappa(\cA)(\hat{A}(ix) - 1)$
   (Theorem~\ref{thm:universal-generating-function}), revealing the
@@ -39,7 +40,7 @@ irreducible kernel from which the full theory is visible:
 \item The \emph{$\beta\gamma$/$bc$ systems} display the shared
   discriminant $\Delta(x) = (1-3x)(1+x)$
   (Theorem~\ref{thm:ds-bar-gf-discriminant}), the first non-scalar
-  characteristic class of the modular package.
+  characteristic class in the proved modular characteristic hierarchy.
 \end{enumerate}
 Every later example --- affine Kac--Moody, Virasoro, $\mathcal{W}_N$
 --- inherits its bar-complex behavior from these atoms via Drinfeld--Sokolov
@@ -55,7 +56,8 @@ in the proof tier hierarchy of \S\ref{sec:master-table}:
 Koszulness is elementary ($d_{\mathrm{bracket}} = 0$ or $\dim V \le 2$),
 and all invariants follow by direct computation.
 Conjectures concern higher-genus or non-scalar extensions
-and are annotated with their master conjecture parent.
+and are annotated by the frontier package they feed
+\textup{(}MC2/MC4/MC5 as appropriate\textup{)}.
 \end{remark}
 
 \begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
@@ -319,11 +321,7 @@ The relations $R_{bc} \perp R_{\beta\gamma}$ under the residue pairing: the Clif
 \begin{proof}
 The generators pair via the residue pairing $\langle b, \beta \rangle = 1$, $\langle c, \gamma \rangle = 1$, $\langle b, \gamma \rangle = 0$, $\langle c, \beta \rangle = 0$ (dual bases).
 
-The quadratic relations are:
-\begin{itemize}
-\item $R_{bc} = b \otimes c + c \otimes b$ (Clifford/symmetric)
-\item $R_{\beta\gamma} = \beta \otimes \gamma - \gamma \otimes \beta$ (Weyl/antisymmetric)
-\end{itemize}
+The quadratic relations are $R_{bc} = b \otimes c + c \otimes b$ (Clifford/symmetric) and $R_{\beta\gamma} = \beta \otimes \gamma - \gamma \otimes \beta$ (Weyl/antisymmetric).
 
 Computing:
 \begin{align*}
@@ -356,11 +354,7 @@ This is a \emph{two-generator} duality: $\beta\gamma$ has $\dim V = 2$ (bosonic)
 \end{remark}
 
 \begin{proof}
-The key computation uses the Gui--Li--Zeng quadratic duality framework. The quadratic datum for $\beta\gamma$ is:
-\begin{itemize}
-\item Generators: $N = \mathbb{C}\beta \oplus \mathbb{C}\gamma$ ($\dim N = 2$, bosonic)
-\item Relation: $P = \mathrm{span}\{\beta \otimes \gamma - \gamma \otimes \beta\} \subset \Lambda^2(N)$ (antisymmetric)
-\end{itemize}
+The key computation uses the Gui--Li--Zeng quadratic duality framework.  The quadratic datum for $\beta\gamma$ has generators $N = \mathbb{C}\beta \oplus \mathbb{C}\gamma$ ($\dim N = 2$, bosonic) and relation $P = \mathrm{span}\{\beta \otimes \gamma - \gamma \otimes \beta\} \subset \Lambda^2(N)$ (antisymmetric).
 
 The dual datum $(s^{-1}N^\vee\omega^{-1}, P^\perp)$ is computed via the residue pairing:
 $$\langle P \otimes \omega_{X^2}, P^\perp \otimes s^2\omega_{X^2}\rangle = 0$$
@@ -640,18 +634,9 @@ The bracket-part $d_{\mathrm{bracket}}$ of the Heisenberg bar differential vanis
 \subsection{Setup}
  
 \begin{definition}[Heisenberg chiral algebra; cf.\ Chapter~\ref{ch:heisenberg-frame}]
-The Heisenberg algebra $\mathcal{H}_k$ at level $k$ has a current $\alpha(z)$ (also written $J(z)$ in the physics literature) of weight 1 with OPE:
-\[
-\alpha(z)\alpha(w) = \frac{k}{(z-w)^2} + \text{regular}
-\]
-The level $k$ appears through the double pole; the Virasoro central charge from the Sugawara construction is $c = 1$ (one free boson).
-\end{definition}
 \index{OPE!Heisenberg}
-
-\begin{remark}[Absence of simple poles]
-The absence of simple poles in the self-OPE implies that the factorization differential
-vanishes on degree 1 elements.
-\end{remark}
+The Heisenberg algebra $\mathcal{H}_k$ (Chapter~\ref{ch:heisenberg-frame}) has OPE $\alpha(z)\alpha(w) = k/(z-w)^2 + \mathrm{reg}$, central charge $c=1$, and no simple pole --- so the factorization differential vanishes on degree-$1$ elements.
+\end{definition}
  
 \subsection{Bar complex computation}
 \label{sec:heisenberg-bar-complex}
@@ -799,27 +784,15 @@ More explicitly, the bar complex decomposes as:
 \end{theorem}
 
 \begin{proof}
-We give two independent proofs: one via factorization envelope recognition, one via explicit bar complex computation.
-
-\medskip
 \emph{Proof~1: Via factorization envelopes.}
 The Heisenberg chiral algebra is the factorization envelope of the abelian Lie$^*$ algebra $\mathfrak{h}_k = (\mathcal{O}_X, 0)$ with trivial bracket and pairing $\langle \alpha, \alpha \rangle = k$. By the Francis--Gaitsgory theory of chiral Lie$\leftrightarrow$Com duality \cite{FG12}, for an abelian chiral Lie algebra $\mathfrak{a}$:
 $$\mathrm{Fact}(\mathfrak{a})^! \simeq C^*_{\mathrm{Lie}^*}(\mathfrak{a}) = \mathrm{Sym}^{\mathrm{ch}}(\mathfrak{a}^*[1])$$
 Since $\mathfrak{h}_k$ is abelian, the Chevalley--Eilenberg complex is formal: $C^*_{\mathrm{Lie}^*}(\mathfrak{h}_k) = \mathrm{Sym}^{\mathrm{ch}}(\mathfrak{h}_k^*[1])$, which is the chiral symmetric algebra on the dual generators.
 
 \medskip
-\emph{Proof~2: Explicit bar complex computation.}
-The current $\alpha(z)$ has OPE $\alpha(z_1)\alpha(z_2) = k/(z_1 - z_2)^2 + \mathrm{reg}$.
-
-\emph{Step 1.} In the bar complex $\bar{B}_n^{\mathrm{ch}}(\mathcal{H}_k)$, consider elements
-$\alpha(z_1) \otimes \cdots \otimes \alpha(z_n) \otimes \omega$ where $\omega \in \Omega^*_{\log}(\overline{C}_n(X))$.
-
-\emph{Step 2.} The bar differential $d_{\mathrm{bar}} = \sum_{i<j} d_{ij}$ extracts residues at the collision divisors $D_{ij} = \{z_i = z_j\}$. For the Heisenberg OPE, only the double pole contributes:
-$$d_{ij}(\alpha(z_1) \otimes \cdots \otimes \alpha(z_n) \otimes \omega) = k \cdot \mathrm{Res}_{z_i = z_j}\left[\omega \cdot \frac{1}{(z_i - z_j)^2}\right] \cdot \alpha(z_1) \otimes \cdots \widehat{\alpha(z_i)} \cdots \otimes \alpha(z_n)$$
-
-\emph{Step 3.} The double-pole residue $\mathrm{Res}_{z_i = z_j}[\omega/(z_i - z_j)^2]$ is symmetric under $z_i \leftrightarrow z_j$ (it involves $\partial_{z_i}\omega|_{z_i = z_j}$, which is symmetric in the two variables). Therefore the coproduct structure on $\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)$ is cocommutative.
-
-\emph{Step 4.} A conilpotent cocommutative coalgebra is precisely a coLie coalgebra (by the Milnor--Moore theorem). The cobar of a coLie coalgebra is the free commutative algebra, i.e., $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.
+\emph{Proof~2: Explicit bar complex computation}
+(Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-bar-all}).
+The double-pole-only OPE makes the coproduct on $\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)$ cocommutative (the residue $\mathrm{Res}_{z_i = z_j}[\omega/(z_i - z_j)^2]$ is symmetric under $z_i \leftrightarrow z_j$).  By Milnor--Moore, a conilpotent cocommutative coalgebra is a coLie coalgebra, whose cobar is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.
 
 The level $k$ determines the curvature of the Koszul dual: $m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$.  The bar differential satisfies $d^2 = 0$ (as it always does); the curvature manifests instead in the $A_\infty$ relation $m_1^2(a) = [m_0, a]_{m_2}$ on the cobar side.
 \end{proof}
@@ -1708,16 +1681,16 @@ The entries in the table above fall into three categories of mathematical certai
 
 The affine Kac--Moody entry $\widehat{\mathfrak{g}}_k \leftrightarrow \widehat{\mathfrak{g}}_{-k-2h^\vee}$ is proved in Chapter~\ref{chap:kac-moody-koszul}: the explicit computation for $\mathfrak{sl}_2$ through degree~3 (Theorem~\ref{thm:sl2-koszul-dual}) demonstrates the level shift mechanism, and the general case follows from the Serre duality argument on Fulton--MacPherson configuration spaces (Theorem~\ref{thm:universal-kac-moody-koszul}).
 
-\item \emph{Conjectural} (\ClaimStatusConjectured): The H-level realizations Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, and Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$ remain conjectures motivated by physical considerations (higher-spin holography, integrable systems) and by the structure of the bar complex computations in this manuscript.  For Virasoro, the current theorematic output is only the same-family shadow $\mathrm{Vir}_{26-c}$ used in the genus and semi-infinite calculations; a proof of the stronger infinite-generator realization would require making precise the curved completed bar theory for algebras with infinitely many generators.
+\item \emph{Conjectural} (\ClaimStatusConjectured): The H-level realizations Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, and Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$ remain conjectures motivated by physical considerations (higher-spin holography, integrable systems) and by the structure of the bar complex computations in this manuscript.  For Virasoro, the current theorematic output is only the same-family shadow $\mathrm{Vir}_{26-c}$ used in the genus and semi-infinite calculations; a proof of the stronger infinite-generator realization would require constructing the specific filtered H-level dual object and comparing it with the completed principal-stage package now available at M-level.
 
 Significant partial progress exists: the bar--semi-infinite identifications (Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w}) establish that the bar complex of any Kac--Moody or W-algebra computes semi-infinite cohomology, and the anomaly duality (Corollaries~\ref{cor:anomaly-duality-km} and~\ref{cor:anomaly-duality-w}) proves that the curvature coefficients of dual pairs cancel.  What remains is the construction of the \emph{specific} infinite-generator dual object in each case.
 \end{enumerate}
 \end{remark}
 
 \begin{remark}[Scope: conjectural table entries]
-The three conjectural Koszul duality identifications in the table above --- Virasoro $\leftrightarrow$ $W_\infty$, $\mathcal{W}_N \leftrightarrow Y(\mathfrak{gl}_N)$, and Super-Virasoro $\leftrightarrow$ Super-$W_\infty$ --- are genuine open mathematical problems.  Each involves a \emph{curved} Koszul duality ($m_0 \neq 0$) for algebras with infinitely many generators, which is beyond the scope of the exact bar complex computations in this monograph.  Two obstructions prevent a proof with existing machinery: (1) the Virasoro and $\mathcal{W}_N$ algebras are not quadratic in the chiral operadic sense (the stress tensor $T$ satisfies a non-linear OPE), so the quadratic Koszul duality framework of Chapter~\ref{chap:koszul-pairs} does not directly apply; (2) the proposed duals $W_\infty$ and $Y(\mathfrak{gl}_N)$ involve infinitely many generators, requiring a completed (pro-nilpotent) version of the bar construction whose convergence properties have not been established.  The physical motivation comes from higher-spin holography (Gaberdiel--Gopakumar for $\mathcal{W}_N \leftrightarrow Y(\mathfrak{gl}_N)$) and three-dimensional gravity (for Virasoro $\leftrightarrow$ $W_\infty$).
+The three conjectural Koszul duality identifications in the table above --- Virasoro $\leftrightarrow$ $W_\infty$, $\mathcal{W}_N \leftrightarrow Y(\mathfrak{gl}_N)$, and Super-Virasoro $\leftrightarrow$ Super-$W_\infty$ --- are genuine open mathematical problems.  Each involves a \emph{curved} Koszul duality ($m_0 \neq 0$) for algebras with infinitely many generators, which is beyond the scope of the exact bar complex computations in this monograph.  Two obstructions prevent a proof with existing machinery: (1) the Virasoro and $\mathcal{W}_N$ algebras are not quadratic in the chiral operadic sense (the stress tensor $T$ satisfies a non-linear OPE), so the quadratic Koszul duality framework of Chapter~\ref{chap:koszul-pairs} does not directly apply; (2) the proposed duals $W_\infty$ and $Y(\mathfrak{gl}_N)$ involve infinitely many generators, so one must construct filtered H-level or factorization objects whose finite quotients recover the now-theorematic completed M-level principal stages.  The physical motivation comes from higher-spin holography (Gaberdiel--Gopakumar for $\mathcal{W}_N \leftrightarrow Y(\mathfrak{gl}_N)$) and three-dimensional gravity (for Virasoro $\leftrightarrow$ $W_\infty$).
 
-The bar--semi-infinite identification (Theorem~\ref{thm:bar-semi-infinite-w}) does apply to the Virasoro and $\mathcal{W}_N$ algebras themselves, establishing that their bar cohomology equals semi-infinite cohomology.  This constrains the frontier in two layers.  First, the same-family involution $\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26-c}$ supplies the proved M/S-level complementarity shadow recorded in the genus calculations.  Second, the conjectural H-level realization asks for an actual infinite-generator dual object, expected to be $W_\infty$, whose bar cohomology matches the semi-infinite growth of $\mathrm{Vir}_{26-c}$ \textup{(}by Motzkin numbers, Theorem~\textup{\ref{thm:virasoro-chiral-koszul}}\textup{)}.  The obstruction is precisely the missing completed bar theory for $W_\infty$.
+The bar--semi-infinite identification (Theorem~\ref{thm:bar-semi-infinite-w}) does apply to the Virasoro and $\mathcal{W}_N$ algebras themselves, establishing that their bar cohomology equals semi-infinite cohomology.  This constrains the frontier in two layers.  First, the same-family involution $\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26-c}$ supplies the proved M/S-level complementarity shadow recorded in the genus calculations.  Second, the conjectural H-level realization asks for an actual infinite-generator dual object, expected to be $W_\infty$, whose bar cohomology matches the semi-infinite growth of $\mathrm{Vir}_{26-c}$ \textup{(}by Motzkin numbers, Theorem~\textup{\ref{thm:virasoro-chiral-koszul}}\textup{)}.  The remaining obstruction is the filtered H-level realization of $W_\infty$ and its comparison with the theorematic completed principal-stage quotients.
 (All three conjectural table entries contribute to Conjecture~\ref{conj:master-infinite-generator}.)
 \end{remark}
 

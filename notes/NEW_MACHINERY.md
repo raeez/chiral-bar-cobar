@@ -19,6 +19,36 @@ with explicit inputs, outputs, and verification criteria. This prevents scope cr
 
 ---
 
+## Frontier Dependency Order
+
+Use the machinery catalogue in the following order, not as a flat menu.
+This is the machinery ledger for extending the proved modular Koszul core
+to the larger modular homotopy-theory programme.
+
+1. **Resolved entry theorem already in hand**:
+   MC1 is no longer the live bottleneck for the standard finite-type
+   interacting families.
+2. **Foundational machinery first**:
+   build the three remaining MC2 packages named by the theorem
+   surface: the intrinsic cyclic `\Defcyc(\cA)` model, the geometric
+   completed tensor / clutching package, and the one-channel
+   genus-by-genus normalization problem in the simple-Lie case.
+3. **Structural comparison machinery next**:
+   then attack MC3 and MC4, especially the H-level comparison problems
+   that remain after the standard M-level completions for
+   `W_\\infty` and Yangian towers.
+4. **Physics-facing machinery last**:
+   MC5 depends on those prior layers and should not set the order of
+   attack.
+
+Auxiliary warning:
+the periodicity flank remains weak.  Treat periodicity machinery as
+containment and clarification work unless it is directly supporting a
+proved structural statement such as the lcm/profile shadow or quantum
+periodicity input.
+
+---
+
 ## M1. Derived Oper Identification (Programme I)
 
 ### What exists
@@ -61,17 +91,29 @@ unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
   remain synchronized.
 - A dedicated profiler now exists
   (`compute/scripts/profile_genus1_pbw_sl2_scaling.py`) and records the runtime
-  envelope through `n=6`; Casimir eigenspaces are the dominant scaling bottleneck
-  for pushing to `n \ge 7`.
-- Staged `n=7` probes now confirm that rank/equivariance/commutator gates remain
-  tractable (~11.7s with Casimir eigenspaces skipped), so the precise bottleneck
-  is isolated to full Casimir eigenspace extraction at `n=7`.
+  envelope through `n=6`; Casimir eigenspaces are the dominant scaling cost.
+- The `n=7` frontier lane now has a full sparse/modular eigenspace path:
+  single-prime extraction (`p=32003`) recovers the full spectrum in
+  ~`30.3s` total (`~19.3s` Casimir phase), and a two-prime consistency run
+  (`p=32003,65521`) matches exactly in ~`53.2s`.
+- The same frontier lane is now formalized behind a reusable staged API:
+  `staged_frontier_diagnostics_on_tensor_power(...)` in
+  `compute/lib/genus1_pbw_sl2.py`, which packages:
+  core rank/kernel/invariant diagnostics, optional equivariance and
+  Casimir-commutator gates, and optional eigenspace extraction
+  (`auto`/`exact`/`exact_sparse`/`modular`/`theory`) with per-stage timings.
+  The scaling profiler (`compute/scripts/profile_genus1_pbw_sl2_scaling.py`)
+  now runs through this shared API, so staged frontier checks and full frontier
+  checks use the same compute path.
 - Casimir extraction policy is now explicit in the shared API:
   `CASIMIR_EXACT_CUTOFF = 6` with mode selector
   `casimir_method_for_tensor_power(power, method="auto")`.
   Default `auto` keeps exact eigenspaces through `n<=6` and switches to
-  representation-theoretic multiplicities at `n>=7`, so default checks remain
-  full-strength on the stable window while preserving a practical frontier lane.
+  modular sparse extraction at `n>=7`, while `theory` remains available as a
+  baseline/control mode.
+  A `QQ`-exact sparse nullity backend (`exact_sparse`) was also benchmarked;
+  it is substantially slower (`n=5`: ~`26.7s` vs exact ~`1.85s`,
+  `n=6`: >`240s`), so default policy remains unchanged.
 - A first MC2 compute scaffold now exists (`compute/lib/mc2_cyclic_linf.py`):
   finite coderivation dg-Lie identities, low-arity cyclic `L_\infty` brackets,
   and a first symbolic Maurer-Cartan solver pass (solutions `{0,1}`) with tests in
@@ -80,6 +122,60 @@ unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
   seed: generator-level simple-pole brackets and normalized double-pole pairing
   are extracted from `compute/lib/bar_complex.py` (`sl2_algebra()`), giving a
   non-toy dg-Lie / cyclic-checkpoint for Step 2.
+- The same MC2 module now reaches first nontrivial Step 3 input:
+  an `\eta`-valued cyclic `l_3` seed from the Killing cocycle
+  `\phi(a,b,c)=\langle [a,b],c\rangle`, with mixed-parameter residual probe
+  `l_3(xe,yh,zf)` and CE-closure/nontriviality checks in the test lane.
+- MC2 now also has a shared transfer layer from generator seeds to the first
+  higher bracket:
+  `build_cyclic_l3_marker_extension_from_seed(...)` lifts any cyclic seed
+  (`l_2` + pairing) to an `\eta`-valued Killing `l_3` channel, and
+  `cyclic_ce_profile_from_cyclic_seed(...)` computes cyclic CE dimensions
+  directly from the same seed data.  The specialized `sl_2`, `sl_3`, and
+  `sp_4` `l_3` builders now route through this common path.
+- The MC2 module now also includes a first Step-4 completion/clutching surrogate:
+  genus-indexed completed tensor convolution as a `\widehat{\otimes}` proxy,
+  boundary clutching projection via `l_2`, and an explicit boundary-factorized
+  compatibility check (`6\omega + 22q\omega + 20q^2\omega` in the toy model),
+  together with truncated completed-series MC residual checks.
+  The same lane now verifies completed cyclicity for `l_2`/`l_3` on
+  genus-indexed series and runs a first symbolic truncated completed-MC
+  solve branch (for the toy ansatz with fixed `a_0=1`, forcing `a_1=a_2=0`).
+  It now also includes a genus-stratified obstruction extractor
+  (`O_g` from lower genera under zero genus-0 sector) and a recursive
+  branchwise solver for the same ansatz class, including explicit
+  inconsistent-branch detection (fixed `a_0=2` gives no solution branch).
+  The same lane now also has multi-basis completed-MC solvers
+  (truncated + recursive): on the toy basis `(\theta,\omega)`,
+  fixing `\theta_0=1` forces `\theta_g=0` for `g>=1` while leaving
+  `\omega_g` as explicit free completed coefficients.
+  It now also includes a suspension-shifted symmetric
+  `sl_2` `l_3` seed representative with nontrivial mixed MC channel
+  (`\eta=-2xyz` on `(e,h,f)`) and explicit nonzero positive-genus
+  obstruction outputs at genera `2` and `3` on
+  `\alpha_1=e+h+f`.
+  The same shifted-seed nontriviality lane now extends to
+  `sl_3` and `sp_4`: on `(e1,e2,f12)` the mixed residual channel is
+  `\eta=xyz` for `sl_3` and `\eta=2xyz` for `sp_4`,
+  with genus-3 obstruction outputs `\eta` and `2\eta`.
+  The same lane now exposes a direct one-channel normalization profile:
+  for `sl_2`, `sl_3`, and `sp_4`, the genus-3 `\eta` obstruction equals
+  the mixed residual value at `(1,1,1)`, so the extracted normalization
+  ratio is uniformly `1`.
+  The same profile now has a symbolic scaling law:
+  with `\alpha_1=t\sum b_i`, genus-2 obstruction terms scale as `t^2`
+  and the genus-3 `\eta` channel is exactly
+  `O_3^\eta(t)=t^3\,\eta(1,1,1)` in all three lanes.
+- The theorem surface now packages the live MC2 frontier as a reduction
+  principle rather than an undifferentiated universality slogan: the
+  remaining work is exactly the intrinsic cyclic `\Defcyc(\cA)` model,
+  the geometric completed tensor / clutching realization, and the
+  one-channel genus-by-genus normalization in the simple-Lie case.
+- The theorem surface now also hardens that last package into a named
+  pair of criteria: first show via joint clutching restrictions and
+  normalized trace that the surviving obstruction lies in the
+  tautological line, then one normalized scalar comparison with
+  `\kappa(\cA)` fixes the normalization.
 - Immediate effect: extending MC1 checks to higher conformal weights is now a representation
   data task, not a new linear-algebra scaffolding task.
 
@@ -487,10 +583,15 @@ correspondence and would partially upgrade conj:ads-cft-bar.
 ### What exists
 - Koszul duality for finitely-generated quadratic chiral algebras (complete theory)
 - Bar complexes for all finite-generator algebras in Master Table
+- Principal finite-type `W_N` higher-genus PBW / modular Koszul package theorematic at completed M-level
 - Virasoro (1 generator), W_3 (2 generators), W_N (N-1 generators) computed
 - Conjectured: Virasoro^! = W_infinity, W_N^! = Yangian Y(gl_N)
 
 ### What's missing
+The live `W` gap is not the finite-type principal stage; it is the
+infinite-generator completion and H-level comparison package beyond that
+theorematic M-level base.
+
 **Tool 8.1: Pro-nilpotent bar construction.**
 The bar complex B-bar(A) for A with infinitely many generators (e.g., W_infinity with
 generators W_2, W_3, W_4, ...) requires a completion:
@@ -510,10 +611,16 @@ where f_{st}^n are structure constants depending on c and the parameter lambda
 (triality parameter). These are known but complicated. Need to implement them.
 
 **Tool 8.3: Yangian-W_N comparison.**
-If W_N^! = Y(gl_N), then there should be a quasi-isomorphism:
-   Omega(B-bar(W_N)) -> Y(gl_N)
-Verifying this requires computing B-bar(W_N) and comparing its cobar with the known
-RTT presentation of Y(gl_N).
+After the theorematic completed M-level principal-stage package, the remaining
+Yangian problem is to construct an RTT-adapted filtered comparison whose finite
+quotients recover those principal stages and whose limit identifies the H-level
+comparison target.  In finite type this should induce a comparison map
+\[
+\Omega(B\text{-}\mathrm{bar}(W_N)) \longrightarrow Y(\mathfrak{gl}_N),
+\]
+but the frontier issue is no longer existence of the principal-stage bar data;
+it is the filtered RTT realization and the passage to the infinite-generator
+limit.
 
 For N = 2: W_2 = Virasoro, Y(gl_2) = Y(sl_2) x Heisenberg.
 Known: Virasoro bar cohomology grows as 3^n (Motzkin differences).
@@ -556,9 +663,10 @@ matrices can already be enumerated at fixed weight. The remaining gap is the
 actual higher-spin structure constants / differential data.
 
 ### Success criterion
-First explicit computation of B-bar(W_infinity) showing consistency with Y(gl_infinity)
-at small weights. This would provide computational evidence for the W_infinity
-Koszul duality conjecture and the higher-spin holography connection.
+First explicit filtered computation of B-bar(W_infinity) showing consistency
+with the principal-stage Yangian quotients and with Y(gl_infinity) at small
+weights. This would provide computational evidence for the H-level comparison
+package, not merely for the already theorematic finite-type principal stages.
 
 ---
 
@@ -722,9 +830,12 @@ to quantitative prediction.
 - Feigin-Frenkel duality k <-> -k-2h^v for principal f
 - Type-A hook/subregular orbit scaffold implemented in
   `compute/lib/nonprincipal_ds_orbits.py`: partition transpose duality,
-  orbit/centralizer dimension identities, frontier catalog, and principal-shift
-  ansatz for the non-principal level shift. Full compute suite passes against
-  this scaffold.
+  orbit/centralizer dimension identities, frontier catalog, and an
+  orbit-indexed non-principal level-shift data path. Full compute suite passes
+  against this scaffold.
+- The same module now also includes the first non-hook family scaffold:
+  type-A two-row non-hook cases `(n-s,s)` (`s\ge 2`) with dual partition
+  propagation, matrix/sl2-triple checks, and catalog-level verification.
 - BV orbit-pair seed implementation added in `compute/lib/bv_duality.py`,
   including the first genuinely non-self-dual hook pair detector
   (`A_3`: `(3,1) \leftrightarrow (2,1,1)`).
@@ -760,10 +871,20 @@ formula is expected to be:
 The "something" involves the Dynkin labels of f and the dual Coxeter number.
 Need to determine and verify this formula for subregular sl3.
 
-Status update (Mar 7, 2026): the current type-A hook/subregular code now uses
-the explicit principal formula `k' = -k - 2n` for `sl_n` directly, rather than
-depending on the finite Cartan-data registry. This removes an avoidable failure
-mode and leaves the genuinely non-principal correction as the only open piece.
+Status update (Mar 8, 2026, twelfth pass): the level-shift scaffold is now
+orbit-indexed (`nonprincipal_orbit_level_shift_type_a`) rather than a single
+hook-only ansatz callsite, with an explicit correction-data hook keyed by
+partitions. Seeded non-hook entries are now populated with nonzero
+per-orbit corrections (for example `(4,2)` in type A), while the hook/subregular
+anchors remain on `k'=-k-2n`; verifier wiring is now live for orbit-specific
+correction propagation.
+
+Status update (Mar 8, 2026, fourteenth pass): the same correction layer is now
+seeded across the broader type-A non-principal catalog, not only the two-row
+examples. The correction hook carries explicit non-hook anchors such as
+`(3,3)` and `(3,2,1)`, together with a transpose-invariant seeded fallback on
+the remaining non-principal range, and the orbit verifiers now run on the
+general `general_nonprincipal` partition catalog as well.
 
 Status update (Mar 7, 2026, second pass): the BP seed formulas currently encoded
 in `nonprincipal_ds_reduction.py` produce a level-independent
@@ -983,6 +1104,131 @@ now has an explicit reduced survivor sector:
   generators are also explicit: `T` in the subregular control case,
   `source_gm2_1` and `source_gm4_1` on the first hook source, and
   `target_gm2_1` on the first hook target.
+- The first attempt to couple that internal survivor CE sector back to the
+  positive-sector BRST layer is now also explicit, and it fails for a precise
+  reason: the projected positive action on survivors is not a derivation of the
+  reduced survivor bracket. Compute now records the derivation defects
+  directly. In the subregular control case there are already `8` nonzero
+  defects for `c_{\alpha_1+\alpha_2}`; for example,
+  `\rho([G^+,G^-])-[\rho(G^+),G^-]-[G^+,\rho(G^-)] = \frac12 G^+`. For the
+  first non-self-dual hook pair the source defects have counts
+  `2,8,2,8` on the four active positive directions, while the target defects
+  have count `26` on each active direction. Correspondingly, the naive
+  semidirect coupled blocks fail `d^2=0` already at the first tested
+  truncations.
+- The subregular control case now goes one step further: compute records the
+  discarded `[e,\mathfrak{g}]` witnesses for the positive action itself and the
+  corresponding unreduced witness formula for every derivation defect. In
+  particular, for `c_{\alpha_1+\alpha_2}` one has
+  `[E_{13},G^-] = J + [e,\frac12 F_{12}]` and
+  `[E_{13},J] = [e,-\frac32 E_{23}]`, and the defect tensor is recovered from
+  the witness identity
+  `D(a,b) = \operatorname{pr}(-[w(a),[e,b]] - [[e,a],w(b)])`. Because the
+  active positive generator is itself `ad_e`-exact, the first transferred
+  cubic BRST correction cancels the naive reduced survivor action entirely in
+  this control case, and the corrected semidirect truncation restores
+  `d^2=0`.
+- The same first-order correction mechanism now also works on the first
+  genuinely non-self-dual hook pair. Compute solves the derivation-coboundary
+  equation independently for each active positive ghost on both source and
+  target survivor sectors; in the first tested hook pair those correction terms
+  cancel the naive reduced survivor action completely on both sides. As a
+  result, the corrected source and target semidirect survivor blocks restore
+  `d^2=0` at the same low truncation where the naive quotient-level coupling
+  failed.
+- The hook-pair story now also has the first explicit unreduced witness layer:
+  compute decomposes the non-self-dual hook-pair survivor action into projected
+  terms plus chosen `[e,\mathfrak{g}]` witness preimages, and the hook-pair
+  derivation defects are now recovered from the same witness identity
+  `D(a,b)=\operatorname{pr}(-[w(a),[e,b]]-[[e,a],w(b)])` that already governs
+  the subregular control case. That upgrade is now carried through one step
+  further: the first transferred correction itself is recorded as explicit
+  witness data, not merely as a quotient-level solved coefficient vector. In
+  particular, compute now packages each first-order correction term together
+  with the exact constrained-current witness and the survivor-action lift that
+  produce it, and the first hook pair’s corrected semidirect truncation still
+  restores `d^2=0` after this witness-level repackaging.
+- This witness-driven first transfer is no longer only a single-pair fact.
+  Compute now verifies a low-rank hook catalog through `\mathfrak{sl}_7`
+  (`A_2`/`A_6` hooks) where every constrained current is `ad_e`-exact and the
+  first transferred correction cancels the reduced survivor action on both
+  source and target sides.
+- That propagation now extends one layer further at the first semidirect
+  truncation: for every hook orientation through `\mathfrak{sl}_6`, the
+  corrected semidirect survivor blocks at
+  `(constraint\ degree, survivor\ degree, internal\ CE\ degree)=(0,1,1)`
+  still satisfy `d^2=0`, and the corrected semidirect blocks now also match
+  under transpose-dual swap through the same `\mathfrak{sl}_6` range.
+- Beyond the checked `\mathfrak{sl}_6` semidirect range, the next hook rank is
+  now also controlled in a sharper form: in `\mathfrak{sl}_7`, the
+  first-transfer cancellation still holds for every hook orientation, and the
+  corrected semidirect truncation is now verified for the full hook family at
+  `(0,1,1)` by combining direct square-zero checks on the half-catalog
+  `r=1,2,3` with transpose-dual symmetry checks on the nontrivial pairs
+  `r=1,2`.
+- The exact projector bottleneck that appeared at the next rank has now been
+  removed too: compute no longer resolves survivor projections by repeated
+  `LUsolve` in ambient `n^2` coordinates, but by cached inverses in the
+  traceless standard-basis coordinate system. With that change in place,
+  `\mathfrak{sl}_8` is now computationally reachable on the same hook track:
+  the witness-driven first transfer cancels the reduced survivor action for
+  every hook orientation `r=1,\dots,6`, and the corrected semidirect
+  truncation at `(0,1,1)` is verified for the full hook family by direct
+  square-zero checks on the half-catalog `r=1,2,3` together with dual-swap
+  checks on the same three nontrivial pairs.
+- That same optimized projection layer now carries one more full semidirect
+  rank as well: `\mathfrak{sl}_9` has direct half-catalog square-zero checks
+  on `r=1,2,3,4` and transpose-dual checks on the nontrivial pairs
+  `r=1,2,3`, so the corrected semidirect truncation at `(0,1,1)` is now
+  verified for the full hook family there too. The first-transfer layer is
+  correspondingly open beyond that family boundary, with the extreme hook
+  `r=1` already positive in `\mathfrak{sl}_9`.
+- The same family argument now reaches one rank further again: in
+  `\mathfrak{sl}_{10}`, the witness-driven first transfer cancels the reduced
+  survivor action for every hook orientation `r=1,\dots,8`, and the corrected
+  semidirect truncation at `(0,1,1)` is verified for the full hook family by
+  square-zero checks on the half-catalog `r=1,2,3,4` together with
+  transpose-dual checks on the nontrivial pairs `r=1,2,3`.
+- The next rank is now open too. The apparent `\mathfrak{sl}_{11}` blocker was
+  a basis-label alias in the standard traceless basis: `E_{1,11}` and
+  `E_{11,1}` both collapsed to the same serialized key before the high-rank
+  label format was made unambiguous. With that fixed, the witness-driven first
+  transfer again cancels the reduced survivor action for every hook
+  orientation `r=1,\dots,9`, and the corrected semidirect truncation at
+  `(0,1,1)` is verified for the full hook family by square-zero checks on the
+  half-catalog `r=1,2,3,4,5` together with transpose-dual checks on the
+  nontrivial pairs `r=1,2,3,4`. The main scaling cost is now the dual-swap
+  comparison rather than survivor projection.
+- One rank beyond that family boundary is already sampled positively too:
+  in `\mathfrak{sl}_{12}`, the extreme hook `r=1` has witness-driven
+  first-transfer cancellation, corrected semidirect square-zero at `(0,1,1)`,
+  and the corresponding transpose-dual comparison; the next interior hook
+  `r=2` already has first-transfer cancellation and corrected semidirect
+  square-zero at the same truncation as well. So the current unknown is no
+  longer whether the next rank opens at all, but whether the full half-catalog
+  sweep `r=1,\dots,5` can be pushed through at acceptable cost.
+- That remaining `\mathfrak{sl}_{12}` gap is now closed too. With the
+  semidirect relabeling check rewritten to compare relabeled block data rather
+  than rebuilding full BRST matrices, the full half-catalog
+  `r=1,2,3,4,5` now passes at `(0,1,1)`: every orientation has
+  first-transfer cancellation and corrected semidirect square-zero, and the
+  transpose-dual comparisons hold on the nontrivial pairs `r=1,2,3,4,5`.
+  The live next-rank question has therefore moved on to `\mathfrak{sl}_{13}`.
+- That next rank is now open too. Three projector-path optimizations were
+  needed to reach the interior of the half-catalog: direct coordinate
+  extraction in the standard traceless basis instead of repeated exact solves,
+  one-pass pivot extraction for `[e,g]` rather than incremental rank tests,
+  and sparse coordinate-column assembly with cached basis-index maps. With
+  those changes in place, `\mathfrak{sl}_{13}` now satisfies the same
+  truncation statement: the witness-driven first transfer is positive on the
+  half-catalog `r=1,\dots,6`, corrected semidirect square-zero holds on the
+  same half-catalog at `(0,1,1)`, and transpose-dual comparison holds on the
+  nontrivial pairs `r=1,\dots,5`. The live family frontier is now
+  `\mathfrak{sl}_{14}`.
+- One step past that family boundary is already sampled positively: in
+  `\mathfrak{sl}_{14}`, the hook orientations `r=1,2,3` each satisfy
+  witness-driven first-transfer cancellation, corrected semidirect
+  square-zero at `(0,1,1)`, and transpose-dual comparison.
 - The same mixed/nonlinear `u-c-b` machinery is now generalized from the first
   hook pair to all type-A hook pairs at the seed level: compute now exposes
   family APIs for constraints, positive-sector brackets, quadratic `c c b`
@@ -991,9 +1237,37 @@ now has an explicit reduced survivor sector:
   nonlinear hook-pair blocks are compared under the dual swap
   `r \leftrightarrow n-r-1` via canonical side relabeling, and the catalog
   verifiers now run these checks systematically.
-- Survivor scaffolds are no longer first-pair-only: `compute/lib/ds_reduction.py`
-  now also exposes generic hook-pair survivor candidates and reduced-bracket
-  tables (tested at least on `A_4` self-dual hook data).
+- Survivor scaffolds are no longer first-pair-only:
+  `compute/lib/ds_reduction.py` now also exposes generic hook-pair survivor
+  candidates and reduced-bracket tables, plus family-level survivor-action and
+  survivor-coupled block builders. The same transpose-dual verification pass is
+  now available for survivor-coupled blocks via a catalog checker on a
+  tractable seeded range.
+- This family block layer now also has non-hook coverage:
+  type-A two-row non-hook partition pairs are wired into the same mixed,
+  nonlinear, and survivor-coupled builders, and the corresponding canonical
+  relabel/dual-swap verifiers now run on the seeded non-hook range; in the
+  cheaper mixed/nonlinear sector that two-row range now reaches
+  `\mathfrak{sl}_9`.
+- The next non-hook family layer is now live too:
+  the same partition-pair DS machinery now covers seeded general
+  `general_nonprincipal` type-A partitions (for example `(3,2,1)`), with
+  mixed/nonlinear/survivor-coupled block builders; for mixed and nonlinear
+  blocks the general-family verification is now reduced by transpose symmetry,
+  and the seeded range reaches size `9`.
+- The same generic partition-pair path now also reaches the first transferred
+  survivor correction on the seeded non-hook range: witness-level
+  survivor-action lifts and constrained-current preimages are recorded for
+  seeded two-row and `general_nonprincipal` partitions, the internal survivor
+  CE sector is exposed on that same family path, and the corrected semidirect
+  survivor blocks at truncation `(0,1,1)` now restore `d^2=0` with seeded
+  two-row/general dual-swap catalog checks.
+- That non-hook verification layer is now organized to scale: the seeded
+  two-row corrected semidirect checks are bundled in one pass through
+  `\mathfrak{sl}_7`, while the seeded `general_nonprincipal` corrected
+  semidirect family is reduced by transpose symmetry and now verified at the
+  first corrected semidirect truncation `(0,1,1)` on the symmetry-reduced
+  seeded range through size `9`.
 
 ### First concrete step
 ```

@@ -62,8 +62,33 @@ The results in this chapter are stratified:
   (Theorem~\ref{thm:pbw-allgenera-principal-w},
   Corollary~\ref{cor:unconditional-allgenera-principal-w}).
 \item[\textbf{Horizon.}]  \emph{$\mathcal{W}_\infty$ and infinite-generator
-  duals}: require completed bar theory
-  (Conjecture~\ref{conj:master-infinite-generator}).
+  duals}: the standard completed M-level bar-cobar package for the
+  principal-stage tower is now explicit
+  (Conjecture~\ref{conj:master-infinite-generator}).  The formal
+  reduction is now explicit:
+  Proposition~\ref{prop:mc4-reduction-principle},
+  Corollary~\ref{cor:mc4-degreewise-stabilization}, and
+  Corollary~\ref{cor:mc4-surjective-criterion}, together with
+  Proposition~\ref{prop:winfty-mc4-criterion} and
+  Corollary~\ref{cor:winfty-weight-cutoff}, reduce the standard
+  principal-stage tower to a genuine inverse-limit problem; then
+  Proposition~\ref{prop:inverse-limit-differential-continuity} and
+  Corollary~\ref{cor:winfty-standard-mc4-package} supply the completed
+  M-level bar-cobar package.  The remaining horizon is the stronger
+  H-level comparison with factorization-theoretic realizations, now
+  named concretely by
+  Definition~\ref{def:winfty-principal-stage-compatible} and
+  Conjecture~\ref{conj:winfty-factorization-package}; moreover
+  Definition~\ref{def:winfty-quotient-system} and
+  Proposition~\ref{prop:winfty-quotient-system-criterion} isolate the
+  formal descent step once the stagewise factorization quotients are in
+  hand, while
+  Proposition~\ref{prop:winfty-higher-spin-ideal-criterion} reduces the
+  first construction step to stable higher-spin factorization ideals,
+  and Proposition~\ref{prop:winfty-spin-triangular-ideals} reduces that
+  in turn to the geometric spin-triangular OPE formulas.
+  The remaining horizon is therefore not another finite-presentation or
+  stabilization theorem.
 \end{enumerate}
 \end{remark}
 
@@ -73,8 +98,9 @@ This chapter operates at \textbf{S-level}: W-algebra bar data,
 DS hierarchy of discriminants, and curvature channels.  These are
 extracted from \textbf{M-level} models (bar spectral sequences,
 Drinfeld--Sokolov reduction, curved $A_\infty$ structures).
-H-level structures (completed bar for $\mathcal{W}_\infty$,
-modular factorization) are indicated as horizon targets.
+H-level structures (factorization realizations for $\mathcal{W}_\infty$
+and modular bulk comparisons beyond the theorematic principal-stage
+package) are indicated as horizon targets.
 \end{remark}
 
 \begin{remark}[Portrait route]
@@ -83,7 +109,7 @@ This portrait is organized as structural transport:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item start from DS reduction as a functor on Kac--Moody Koszul data;
 \item track what is preserved (\,$\Delta_{\cA}$, level involution,
-  modular package shadows\,);
+  proved modular characteristic shadows\,);
 \item isolate what is genuinely new (higher-spin curvature channels and
   non-quadratic \(A_\infty\) corrections).
 \end{enumerate}
@@ -365,8 +391,20 @@ The BV dual of the hook $(n-r, 1^r)$ is $(r+1, 1^{n-r-1})$
 $\mathcal{W}^k(\mathfrak{sl}_n, f_{(n-r,1^r)})^!
 \simeq \mathcal{W}^{-k-2n}(\mathfrak{sl}_n, f_{(r+1,1^{n-r-1})})$
 has been verified at the level of central charges and
-generator spectra for $n \leq 6$.  This provides evidence for
-Conjecture~\ref{conj:w-orbit-duality} beyond the principal case.
+generator spectra for $n \leq 6$.
+
+For the first non-self-dual hook pair
+$(3,1) \leftrightarrow (2,1,1)$ in $\mathfrak{sl}_4$,
+the verification extends to the chain level: ghost
+BRST\index{BRST complex!hook-type W-algebra} complexes on
+source and target match under relabeling, the mixed-constraint,
+nonlinear, and survivor-coupled blocks are dual-invariant, and
+a witness-based transfer resolves the naive survivor-action
+derivation defect, restoring $d^2 = 0$ on the corrected
+semidirect complex.  This chain-level duality provides the
+strongest evidence for
+Conjecture~\ref{conj:w-orbit-duality} beyond the principal
+and self-dual cases.
 \end{remark}
 
 \subsection{Physical motivation from 4d gauge theory}
@@ -615,12 +653,7 @@ A generator $W^{(s)}$ of conformal weight $s$ is realized as:
 \begin{equation}
 W^{(s)} \in \Gamma\left(\overline{C}_s(X), \mathcal{L}_k^{\otimes \text{deg}(s)} \otimes \mathcal{V}_{W} \otimes \Omega^{s-1}_{\log}\right)
 \end{equation}
-where:
-\begin{itemize}
-\item $\mathcal{L}_k$: level-dependent line bundle (from affine Kac--Moody)
-\item $\mathcal{V}_W$: finite-dimensional vector space of ``internal structure''
-\item $\Omega^{s-1}_{\log}$: logarithmic $(s-1)$-forms on the configuration space
-\end{itemize}
+where $\mathcal{L}_k$ is the level-dependent line bundle (from the affine Kac--Moody structure), $\mathcal{V}_W$ is the finite-dimensional vector space of internal structure, and $\Omega^{s-1}_{\log}$ denotes logarithmic $(s-1)$-forms on the configuration space.
 \end{construction}
 
 \begin{example}[Virasoro generator on $\overline{C}_2(X)$]
@@ -765,14 +798,7 @@ At $k = -h^\vee$, the W-algebra bar complex simplifies:
 \begin{equation}
 \bar{B}(\mathcal{W}^{-h^\vee}(\mathfrak{g}, f)) = \text{Sym}[S_1, \ldots, S_r] \otimes \Omega^*_{\log}(\overline{C}_*(X))
 \end{equation}
-where:
-\begin{itemize}
-\item $S_i$: screening charges (free generators)
-\item $r = \mathrm{rank}(\mathfrak{g})$
-\item The differential is $d = \sum_i S_i \otimes d_{\text{top}}$ (topological)
-\end{itemize}
-
-The bar complex becomes that of a free commutative algebra.
+where $S_1, \ldots, S_r$ are the screening charges ($r = \operatorname{rank}(\mathfrak{g})$, free generators) and the differential is $d = \sum_i S_i \otimes d_{\text{top}}$ (topological).  The bar complex becomes that of a free commutative algebra.
 \end{theorem}
 
 \begin{proof}
@@ -1427,7 +1453,7 @@ involution $k \mapsto k' = -k - 2h^\vee = -k - 6$ gives
 $(\mathcal{W}_3^k)^! \simeq \mathcal{W}_3^{k'}$.
 \end{proof}
 
-\subsection{Genus-1 pipeline for the $\mathcal{W}_3$ algebra}
+\subsection{\texorpdfstring{Genus-1 pipeline for the $\mathcal{W}_3$ algebra}{Genus-1 pipeline for the W3 algebra}}
 \label{sec:w3-genus-one-pipeline}
 \index{genus-1 pipeline!W3@$\mathcal{W}_3$}
 
@@ -1596,7 +1622,7 @@ exact.  The next is $\mathcal{W}_3(5,3)$ with $c = -22/5$, where
 non-trivial null vectors appear.
 \end{remark}
 
-\subsubsection{Complementarity and the $c + c' = 100$ structure}
+\subsubsection{\texorpdfstring{Complementarity and the $c + c' = 100$ structure}{Complementarity and the c + c' = 100 structure}}
 
 \begin{theorem}[Genus-1 complementarity for $\mathcal{W}_3$; \ClaimStatusProvedHere]
 \label{thm:w3-genus1-complementarity}
@@ -1687,7 +1713,7 @@ Throughout this chapter, $\kappa$ (without subscript) denotes the \emph{obstruct
 This should not be confused with the \emph{Mumford--Miller--Morita kappa class} $\kappa_g = \pi_*(\psi^{g+1}) \in H^{2g}(\overline{\mathcal{M}}_g)$, which is a tautological class on the moduli space of curves (cf.\ Chapter~\ref{chap:higher-genus}).  The level of the affine algebra is denoted~$k$, not~$\kappa$.
 \end{remark}
 
-\subsection{General $\mathcal{W}_N$: obstruction coefficient formula}
+\subsection{\texorpdfstring{General $\mathcal{W}_N$: obstruction coefficient formula}{General WN: obstruction coefficient formula}}
 \label{sec:wn-obstruction}
 \index{obstruction coefficient!general W_N@general $\mathcal{W}_N$}
 
@@ -2005,12 +2031,7 @@ n=1: \quad &m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) \\
 n=2: \quad &m_1(m_2(a,b)) = m_2(m_1(a),b) + (-1)^{|a|}m_2(a,m_1(b)) + m_3(m_0,a,b) + \cdots
 \end{align}
 
-These encode:
-\begin{itemize}
-\item Curvature is a cocycle
-\item Differential squares to curvature
-\item Leibniz rule up to higher homotopy
-\end{itemize}
+These encode that curvature is a cocycle, the differential squares to curvature, and the Leibniz rule holds up to higher homotopy.
 \end{remark}
 
 \subsection{\texorpdfstring{$A_\infty$ structure on W-algebra bar complex}{A infty structure on W-algebra bar complex}}
@@ -2546,7 +2567,9 @@ and the Betti/de Rham/Dolbeault pictures?
 The W-algebra computations confirm a principle implicit in the
 theory but visible only through examples: Drinfeld--Sokolov
 reduction is not merely compatible with Koszul duality --- it
-\emph{preserves the modular characteristic package}.
+\emph{preserves the proved scalar and spectral characteristic data},
+and is compatible with the full package wherever that package is
+defined.
 The discriminant $\Delta(x)$, the complementarity sum
 $c + c' = K$, and the curvature antisymmetry $\kappa + \kappa' = 0$
 all descend from Kac--Moody to W-algebras.  The non-quadratic

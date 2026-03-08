@@ -442,7 +442,218 @@ This file tracks the systematic rearchitecture pass. Status values:
 | 48 | `chapters/theory/higher_genus.tex`, `notes/autonomous_state.md`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md` | theorem/control sync | align MC2 status remark and programme/control ledgers with the new scaffold and Casimir policy split | `done` |
 | 48 | test/build/QC lanes (`pytest`, `make fast`, strict QC) | verification | rerun focused compute tests plus manuscript gates after synchronization edits | `done` |
 
+## Wave 51: MC2 Bar-Derived `sl_2` Seed Advancement
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 49 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-2 compute layer | derive first non-toy MC2 seed from bar/OPE data (simple-pole bracket + normalized double-pole pairing) and extend regression checks/export surface | `done` |
+| 49 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | record the MC2 step advancement and tighten the status narrative around bar-derived seed evidence | `done` |
+| 49 | verification lane (`pytest`, `make fast`, strict QC) | regression gate | confirm compute tests plus manuscript build/QC remain clean after MC2 Step-2 insertions | `done` |
+
+## Wave 52: Frontier Continuation (MC1 `n=7` + MC2 Step-3)
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 50 | `compute/lib/genus1_pbw_sl2.py`, `compute/scripts/profile_genus1_pbw_sl2_scaling.py`, `compute/tests/test_genus1_pbw_sl2.py` | MC1 frontier acceleration | implement and benchmark a modular/sparse `n=7` Casimir eigenspace path to narrow the gap between `theory` and full `exact` diagnostics | `done` |
+| 50 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py` | MC2 Step-3 compute layer | extend from generator-level `sl_2` seed to first nontrivial cyclic higher bracket input and multi-parameter MC residual/solve checks | `done` |
+| 50 | `chapters/theory/higher_genus.tex`, `notes/autonomous_state.md`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md` | theorem/control sync | keep MC1/MC2 frontier narrative synchronized with newly executable Step-3 evidence | `done` |
+| 50 | verification lane (`pytest`, `make fast`, strict QC) | regression gate | enforce green compute + manuscript gates after Wave 52 frontier work | `done` |
+
+## Wave 53: MC4 `W_\infty` Specialization + Residual Typography Cleanup
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 51 | `chapters/theory/bar_cobar_construction.tex`, `chapters/examples/w_algebras_framework.tex`, `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md` | MC4 theorem/control sync | specialize the generic inverse-limit MC4 criterion to the `W_\infty` principal-stage tower and propagate the reduced frontier statement through the portrait and control ledgers | `done` |
+| 51 | `chapters/theory/poincare_duality_quantum.tex`, `chapters/examples/yangians.tex` | typography/index hygiene | shorten the two residual index labels responsible for the remaining overfull boxes in the integrity lane | `done` |
+| 51 | strict QC + `make fast` + integrity gate | verification | confirm the specialized `W_\infty` criterion compiles cleanly and the residual overfull-box debt is eliminated | `done` |
+
+## Wave 54: MC2 Completion / Clutching Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 52 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py` | MC2 completion layer | prototype completed tensor-product control (`\widehat{\otimes}` surrogate) and a first clutching-compatibility map check on boundary-factorized inputs | `done` |
+| 52 | `chapters/theory/higher_genus.tex`, `notes/autonomous_state.md`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md` | theorem/control sync | update MC2 status text from seed-level Step-3 to first completion/clutching evidence and isolate remaining graph-complex gap | `done` |
+| 52 | optional MC1 lane (`compute/lib/genus1_pbw_sl2.py`, profiler script) | exact-depth research | test whether a sparse exact rational backend can close the remaining `n=7` dense-exact performance gap without altering default policy (benchmark result: no speedup; keep default policy unchanged) | `done` |
+| 52 | verification lane (`pytest`, `make fast`, strict QC) | regression gate | keep compute/manuscript lanes green after Wave 54 continuation | `done` |
+
+## Wave 55: MC4 Surjectivity Criterion + Frontier Guardrails
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 53 | `chapters/theory/bar_cobar_construction.tex`, `chapters/examples/yangians.tex` | MC4 theorem shaping | weaken the visible sufficient MC4 input from eventual constancy to eventual surjectivity on finite-dimensional weight slices and propagate that criterion to the Yangian tower narrative | `done` |
+| 53 | `chapters/examples/w_algebras_framework.tex`, `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md` | portrait/control synchronization | restate the live `W_\infty` / Yangian frontier as a weightwise surjectivity/stabilization theorem rather than a generic convergence slogan | `done` |
+| 53 | `scripts/manuscript_qc.py`, `scripts/integrity_gate.sh` | doctrine guardrails | add automated drift detection for accidental promotion of `W_\infty` or Yangian completions to realized dual objects without MC4 frontier caveats | `done` |
+| 53 | strict QC + `make fast` + clean full build lane | verification | confirm the sharpened MC4 doctrine remains structurally clean and rebuilds after generated-state reset | `done` |
+
+## Wave 56: Standard-Tower MC4 Cutoff Formalization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 54 | `chapters/theory/bar_cobar_construction.tex` | MC4 formal reduction | prove a general weight-cutoff criterion showing that genuine truncation towers force eventual surjectivity/stabilization on fixed weight slices | `done` |
+| 54 | `chapters/theory/bar_cobar_construction.tex`, `chapters/examples/yangians.tex` | principal examples | specialize the cutoff mechanism to the standard principal-stage `W_\infty` tower and the standard RTT Yangian tower so their remaining MC4 gap is continuity plus inverse-limit identification | `done` |
+| 54 | `chapters/examples/w_algebras_framework.tex`, `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md` | control synchronization | update the frontier ledgers so they no longer list stabilization as an open input for the standard truncation towers | `done` |
+| 54 | strict QC + `make fast` + clean integrity gate | verification | confirm the cutoff formalization compiles cleanly and preserves all doctrine gates on a cold rebuild | `done` |
+
+## Wave 57: Standard-Tower MC4 Closure
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 55 | `chapters/theory/bar_cobar_construction.tex` | MC4 theorem closure | prove continuity of inverse-limit bar/cobar differentials for compatible towers and close the standard principal-stage `W_\infty` M-level package | `done` |
+| 55 | `chapters/examples/yangians.tex` | MC4 theorem closure | identify the standard RTT inverse limit with the coefficientwise RTT completion and close the standard RTT M-level package | `done` |
+| 55 | `chapters/examples/w_algebras_framework.tex`, `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md` | control synchronization | propagate the new standard-tower MC4 closure so the live frontier moves to H-level comparison rather than M-level existence | `done` |
+| 55 | `chapters/theory/poincare_duality_quantum.tex`, `chapters/examples/yangians.tex` | typography cleanup | remove the two residual overfull index entries before the next underfull-box pass | `done` |
+
+## Wave 58: MC2 Completed-Cyclicity Solver Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 56 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-4/5 compute layer | add completed-series cyclicity checks (`l_2`/`l_3`) and first symbolic genus-truncated completed-MC solve branch on single-basis ansatz; lock with regression coverage and export surface | `done` |
+| 56 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | reflect the completed-cyclicity + completed-MC solver branch evidence in theorem status remark and control ledgers | `done` |
+| 56 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests, strict QC, and fast build checks after the completion-lift insertion | `done` |
+
+## Wave 59: H-Level Comparison Criteria for MC4 Targets
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 57 | `chapters/theory/bar_cobar_construction.tex` | inverse-limit comparison formalization | prove that a separated complete H-level target is determined by compatible finite quotients and specialize that criterion to the `W_\infty` frontier | `done` |
+| 57 | `chapters/examples/yangians.tex` | Yangian H-level frontier | restate the dg-shifted/factorization comparison as a filtered finite-RTT-quotient problem and add the formal comparison criterion | `done` |
+| 57 | `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md`, `chapters/connections/holomorphic_topological.tex`, `chapters/connections/physical_origins.tex`, `chapters/connections/feynman_diagrams.tex` | control and Part III synchronization | propagate the new doctrine so the remaining bulk comparison is always stated as a filtered target with theorematic finite quotients | `done` |
+| 57 | strict QC + isolated TeX lane | verification | confirm the new theorem/corollary layer is structurally clean and rebuilds without reopening doctrine drift | `done` |
+
+## Wave 60: Explicit MC4 Construction Packages
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 58 | `chapters/theory/bar_cobar_construction.tex` | `W_\infty` construction frontier | name the H-level task as a principal-stage compatible factorization target, not a generic completion slogan | `done` |
+| 58 | `chapters/examples/yangians.tex` | dg-shifted Yangian frontier | define RTT-adapted filtration and record the finite-RTT quotient package as the precise missing input | `done` |
+| 58 | `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md`, `notes/PROGRAMMES.md`, `chapters/connections/holomorphic_topological.tex` | control synchronization | propagate the split frontier as two explicit construction packages (`W_\infty` factorization target / dg-shifted RTT filtration) | `done` |
+| 58 | strict QC + detached verification lane | verification | confirm the new conjectural package layer preserves doctrine gates and does not reopen build debt | `done` |
+
+## Wave 61: MC2 Obstruction/Recursive Solver Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 59 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-5 compute hardening | harden truncated completed-MC solving on inconsistent branches, add genus-stratified obstruction extraction, and add recursive single-basis branch solver | `done` |
+| 59 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | propagate obstruction/recursive-branch evidence and solver robustness status into MC2 narrative/control ledgers | `done` |
+| 59 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests, strict QC, and fast build checks after the recursive obstruction lift | `done` |
+
+## Wave 62: MC2 Multi-Basis Completed-Solver Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 60 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-5 compute extension | lift completed-MC solving from single-basis ans\"atze to multi-basis truncated and recursive branches, preserving inconsistent-branch detection and explicit free-direction bookkeeping | `done` |
+| 60 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | synchronize MC2 status language with the new multi-basis completed-solver evidence (`(\theta,\omega)` toy branch forcing on `\theta_g`, free completed `\omega_g` directions) | `done` |
+| 60 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests plus strict QC and fast build checks after the multi-basis solver lift | `done` |
+
+## Wave 66: MC2 Shifted-Seed Nontrivial Obstruction Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 64 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-6 seed advance | add suspension-shifted symmetric seed construction from generator-level antisymmetric data and verify nontrivial mixed MC/obstruction channels on shifted `sl_2` `l_3` seed | `done` |
+| 64 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | propagate shifted-seed nontrivial residual/obstruction evidence into MC2 status/control text | `done` |
+| 64 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests plus strict QC and fast build checks after shifted-seed insertion | `done` |
+
+## Wave 67: MC2 Shifted-Seed Universality Extension (`sl_3`, `sp_4`)
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 65 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-6 universality extension | extend shifted symmetric seed constructors/checks from `sl_2` to `sl_3` and `sp_4`, and verify explicit mixed residual / positive-genus obstruction channels in each rank/type lane | `done` |
+| 65 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | propagate shifted-seed universality evidence (`\eta=xyz` for `sl_3`, `\eta=2xyz` for `sp_4`; genus-3 obstruction channels `\eta`, `2\eta`) into MC2 status/control text | `done` |
+| 65 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests plus strict QC and fast build checks after shifted-seed universality extension | `done` |
+
+## Wave 69: MC2 One-Channel Normalization Profile Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 67 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-6 normalization advance | extract shifted-seed one-channel normalization profiles (`sl_2`, `sl_3`, `sp_4`) and verify uniform unit ratio between genus-3 `\eta` obstruction and mixed residual channel at `(1,1,1)` | `done` |
+| 67 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | propagate one-channel normalization-profile evidence into theorem and control surfaces | `done` |
+| 67 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests plus strict QC and fast build checks after one-channel normalization lift | `done` |
+
+## Wave 71: MC2 Shifted `\eta` Scaling-Law Lift
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 69 | `compute/lib/mc2_cyclic_linf.py`, `compute/tests/test_mc2_cyclic_linf.py`, `compute/lib/__init__.py` | MC2 Step-6 scaling advance | extract symbolic shifted-seed scaling profiles and verify quadratic genus-2 / cubic genus-3 (`\eta`) obstruction law across `sl_2`, `sl_3`, `sp_4` | `done` |
+| 69 | `chapters/theory/higher_genus.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `notes/autonomous_state.md` | theorem/control sync | propagate the symbolic scaling law (`O_3^\eta(t)=t^3\eta(1,1,1)`) into theorem and control surfaces | `done` |
+| 69 | verification lane (`pytest`, strict QC, `make fast`) | regression gate | rerun MC2 compute tests plus strict QC and fast build checks after shifted `\eta` scaling-law lift | `done` |
+
 ## Standing Rule
 
 Before advancing to a later wave, make sure the earlier wave compiles and
 the control documents still agree with one another.
+
+## Wave 63: Frontier Dependency-Order Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 61 | `notes/GPT54_CODEX_OPERATING_SYSTEM.md`, `notes/VISION.md`, `CLAUDE.md`, `metadata/frontier_and_gaps.md` | control doctrine | replace residual flat-frontier language by the post-MC1 dependency order (`MC2 -> MC3/MC4 -> MC5`) and demote periodicity to an orthogonal weak flank | `done` |
+| 61 | `notes/autonomous_state.md` | session ledger | record the dependency-order synchronization batch after the periodicity-control pass | `done` |
+| 61 | verification lane (`make fast`) | build gate | confirm the control-layer synchronization does not reopen TeX/build debt after auxiliary-state reset | `pending` |
+
+## Wave 64: Formal Descent Criteria for MC4 Packages
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 62 | `chapters/examples/yangians.tex` | Yangian formal frontier | prove the formal quotient criterion: once preserved RTT-level ideals and finite-stage identifications exist, the dg-shifted comparison is automatic | `done` |
+| 62 | `chapters/theory/bar_cobar_construction.tex` | `W_\infty` formal frontier | define a principal-stage quotient system and prove that it yields a principal-stage compatible target | `done` |
+| 62 | `chapters/connections/concordance.tex`, `chapters/examples/w_algebras_framework.tex`, `metadata/frontier_and_gaps.md` | control synchronization | restate the live MC4 frontier as construction of quotient systems, not further formal reduction | `done` |
+| 62 | strict QC + detached clean/full build lane | verification | confirm the new formal descent layer is doctrine-clean and converges in an isolated build | `done` |
+
+## Wave 65: Presentation-Level and Chiral-Envelope Identification
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 63 | `chapters/examples/yangians.tex` | Yangian identification frontier | add the presentation-level criterion reducing dg-quotient identification to truncated RTT relations plus evaluation-module compatibility | `done` |
+| 63 | `chapters/theory/bar_cobar_construction.tex` | `W_\infty` identification frontier | add the factorization-envelope criterion reducing stagewise factorization quotients to a principal-stage compatible chiral target | `done` |
+| 63 | `chapters/connections/concordance.tex` | control synchronization | propagate that the remaining frontier is now presentation-level / chiral-envelope identification, not formal descent | `done` |
+| 63 | strict QC + detached clean verification lane | verification | confirm the identification-level reduction remains doctrine-clean and compile-neutral | `done` |
+
+## Wave 68: Downstream Frontier Wording Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 66 | `chapters/theory/introduction.tex`, `chapters/examples/free_fields.tex`, `chapters/examples/w_algebras_framework.tex`, `chapters/connections/physical_origins.tex`, `chapters/theory/higher_genus.tex` | downstream doctrine propagation | replace residual post-MC1 drift so infinite-generator and physical frontier prose always distinguishes theorematic completed M-level packages from the remaining filtered H-level realization/comparison problem | `done` |
+| 66 | `notes/autonomous_state.md` | session ledger | record the downstream frontier synchronization batch and the current verification blocker precisely | `done` |
+| 66 | verification lane (`make fast` / isolated TeX lane) | build gate | confirm the wording pass compiles cleanly without concurrent aux-write interference; current lane still blocked by watcher-spawned `pdflatex` contention | `pending` |
+
+## Wave 200: Local Closure Theorems for MC4 Construction Packages
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 65 | `chapters/examples/yangians.tex` | Yangian local frontier | prove RTT-level preservation directly from the rational line-operator formulas and keep the quotient identification problem separated from the preservation theorem | `done` |
+| 65 | `chapters/theory/bar_cobar_construction.tex` | `W_\infty` local frontier | construct the principal-stage higher-spin ideal system from spin-triangular OPE / residue formulas | `done` |
+| 65 | `chapters/connections/concordance.tex`, `chapters/connections/holomorphic_topological.tex`, `chapters/connections/physical_origins.tex`, `chapters/connections/feynman_diagrams.tex`, `chapters/examples/w_algebras_framework.tex`, `metadata/frontier_and_gaps.md`, `notes/PROGRAMMES.md` | control synchronization | restate the live MC4 work as formula-level preservation theorems rather than abstract quotient-system existence | `done` |
+| 65 | strict QC + convergent `make` lane | verification | confirm the formula-level frontier pass is doctrine-clean and converges on the shared aux lane once it is clear | `pending` |
+
+## Wave 69: MC2 Reduction-Principle Linearization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 66 | `chapters/theory/higher_genus.tex`, `chapters/theory/deformation_theory.tex` | theorem hardening | formalize MC2 as a reduction principle and isolate the exact remaining packages on the theorem surface | `done` |
+| 66 | `chapters/theory/introduction.tex`, `chapters/connections/concordance.tex`, `notes/GPT54_CODEX_OPERATING_SYSTEM.md`, `notes/VISION.md`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`, `metadata/frontier_and_gaps.md`, `CLAUDE.md` | control synchronization | propagate the three-package MC2 frontier through the control stack and frontier ledgers | `done` |
+| 66 | `scripts/manuscript_qc.py` | doctrine gate | add an MC2 frontier-drift check so vague `construct Theta_A` control language fails strict QC unless the reduction principle is explicit | `done` |
+| 66 | verification lane (`python3 scripts/manuscript_qc.py --strict`, redirected `make fast` x2, redirected `make`) | regression gate | confirm the theorem/control linearization converges cleanly after the new proposition labels and note synchronization | `done` |
+
+## Wave 70: Residual Frontier Control Cleanup
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 68 | `AGENTS.md`, `chapters/connections/concordance.tex`, `notes/GPT54_CODEX_OPERATING_SYSTEM.md`, `metadata/frontier_and_gaps.md` | residual control sync | remove the last live phrases that still described the frontier as “four remaining conjectures” or “completed infinite-generator bar theory,” and restate the same post-MC1 dependency order everywhere | `done` |
+| 68 | `notes/autonomous_state.md` | session ledger | record the control cleanup batch together with the aux-corruption recovery and current build-lane status | `done` |
+| 68 | verification lane (`make fast`) | build gate | verify the control cleanup does not reopen TeX errors after resetting corrupted generated aux state; current status: PDF recovered after `make clean`, but fast lane still ends as first-pass / rerun-noisy rather than cleanly converged | `pending` |
+
+## Wave 72: Programme/Machinery Volume-I Frontier Harmonization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 70 | `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md` | strategic frontier maps | restate the notes stack as Volume I of modular homotopy theory and move the live `W` frontier explicitly to the infinite-generator / H-level comparison package beyond the theorematic principal finite-type stage | `done` |
+| 70 | `notes/autonomous_state.md` | session ledger | record the note-level frontier harmonization and its verification scope | `done` |
+| 70 | targeted drift sweep (`rg`, line audit) | doctrine gate | confirm the updated note surfaces now agree with the control ledger on MC2 priority, periodicity placement, and the `W` frontier; no TeX delta in this wave, so no build rerun | `done` |
+
+## Wave 73: MC2 One-Channel Normalization Criterion
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 71 | `chapters/theory/higher_genus.tex` | theorem hardening | promote MC2 package (3) from a remark-level “normalization problem” to a named criterion reducing it to tautological-line support plus one normalized scalar comparison | `done` |
+| 71 | `chapters/theory/introduction.tex`, `chapters/theory/deformation_theory.tex`, `chapters/connections/concordance.tex`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md` | control synchronization | propagate the new one-channel criterion through the front-door, constitutional roadmap, and compute-facing programme notes | `done` |
+| 71 | verification lane (`python3 scripts/manuscript_qc.py --strict`, isolated `make clean`, `make fast`, second `make fast`, `make`) | regression gate | confirm the new proposition labels converge and the theorem/control batch builds cleanly off the live aux lane | `done` |

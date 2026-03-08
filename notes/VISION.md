@@ -5,10 +5,11 @@
 
 ## The thesis in one sentence
 
-Classical Koszul duality (bar-cobar adjunction) lifts to a modular
-homotopy theory for factorization algebras on curves, where genus is
-a deformation variable internal to the duality itself, controlled by a
-single universal Maurer-Cartan class Theta_A.
+Classical Koszul duality (bar-cobar adjunction) lifts to a proved
+modular Koszul core for factorization algebras on curves, and points
+toward a modular homotopy theory programme in which genus becomes a
+deformation variable internal to the duality itself and is expected to
+be organized by a universal Maurer-Cartan class `Theta_A`.
 
 ## Four irreducible pieces (the minimal kernel)
 
@@ -21,22 +22,44 @@ single universal Maurer-Cartan class Theta_A.
 
 Everything else is a completion of these four.
 
-## The correct object
+## The correct hierarchy
 
-NOT kappa(A), NOT Q_g(A), NOT the genus-g bar complex separately.
-The correct object is the **modular characteristic package** (Theta_A, H_A, Delta_A):
+NOT `kappa(A)` alone, NOT `Q_g(A)` alone, and not the genus-`g` bar
+complex separately. The manuscript now treats the characteristic story
+as a hierarchy with distinct statuses:
 
-- **Theta_A** in MC(Def_cyc(A) hat-tensor RGamma(M-bar_{g,.}, Q))
-  Universal MC class controlling full genus tower as single deformation.
-  Manuscript: eq:universal-MC (introduction.tex:147), conj:universal-MC (concordance.tex:930)
+- **Scalar package** `(\kappa(A), \{F_g(A)\}_{g \ge 1})`
+  Proved S-level data: genus-`1` curvature and the full scalar genus
+  tower.
+  Manuscript: `thm:modular-characteristic`, `thm:genus-universality`
 
-- **H_A** := RGamma(M-bar_g, Z_A) with Verdier duality
-  Ambient modular deformation complex; home of complementarity.
-  Manuscript: thm:quantum-complementarity-main (Theorem C)
+- **Spectral layer** `(\Delta_A, \Pi_A)`
+  Separately proved non-scalar M/S-level invariants: discriminant,
+  recurrence/growth shadow, and periodicity profile.
+  Manuscript: `thm:spectral-characteristic`
 
-- **Delta_A(x)** = det(1-xT) spectral discriminant
-  First non-scalar characteristic class. Branch geometry invariant.
-  Manuscript: thm:ds-bar-gf-discriminant (examples_summary.tex)
+- **Full package** `\mathcal{C}_A = (\Theta_A, \kappa(A), \Delta_A, \Pi_A, \mathcal{H}_A)`
+  Conjectural H-level completion, where
+  `\Theta_A \in MC(Def_cyc(A) \hat{\otimes} R\Gamma(\overline{M}_{g,\bullet}, \mathbb{Q}))`
+  is the open homotopy object and `\mathcal{H}_A` is the ambient
+  genus-graded deformation family.
+  Manuscript: `def:full-modular-package`, `conj:master-theta`
+
+## Current frontier order
+
+The active route is not flat:
+
+1. the finite-type MC1 entry theorem is resolved;
+2. MC2 is the foundational next target, now reduced on the theorem
+   surface to three exact packages: the intrinsic cyclic
+   `\Defcyc(\cA)` model, the geometric completed tensor / clutching
+   package, and the one-channel genus-by-genus normalization problem in
+   the simple-Lie case;
+3. MC3 and MC4 are the structural comparison layer after the standard
+   M-level completions for `W_\infty` and Yangian towers;
+4. MC5 is downstream physics completion;
+5. periodicity is a weak orthogonal flank, not the master-conjecture
+   chain.
 
 ## Theorematic silhouette (the target)
 
@@ -59,7 +82,8 @@ Not easy examples — the irreducible kernel displaying full generality:
 
 ## The ultimate generalization principle
 
-Arnold (genus 0, additive) -> clutching + Theta_A (modular, on curves) -> Fay (elliptic, multiplicative)
+Arnold (genus 0, additive) -> clutching + conjectural `Theta_A`
+(modular, on curves) -> Fay (elliptic, multiplicative)
 
 The Fay trisecant identity replaces Arnold when base geometry becomes
 two-dimensional. Eisenstein-series corrections enter. This is the
@@ -69,15 +93,15 @@ toroidal/elliptic extension (toroidal_elliptic.tex).
 
 | Programme | Role in modular Koszul programme |
 |-----------|--------------------------------|
-| I (Langlands) | Critical-level bar = derived opers (Theta_A trivializes) |
-| II (KL) | Admissible-level bar = quantum group (N-complex periodicity of Theta_A) |
-| III (Fusion) | Monoidality of bar-cobar = modular package functoriality |
+| I (Langlands) | Critical-level bar = derived opers; the MC2 hierarchy is expected to degenerate there |
+| II (KL) | Admissible-level bar = quantum group (periodic/CDG shadow feeding the `Theta_A` programme) |
+| III (Fusion) | Monoidality of bar-cobar should act on the modular characteristic hierarchy |
 | IV (E_n) | Higher-dimensional generalization (Arnold -> Totaro -> Fay) |
-| V (Vassiliev) | Feynman transform = topological shadow of modular package |
-| VI (Physics) | bar = BRST, curvature = anomaly, Theta_A = quantum background |
-| VII (NC Hodge) | Genus variable = twistor parameter of modular package |
-| VIII (Open math) | Structural conjectures about the package itself |
-| IX (Computation) | Explicit data confirming/refuting the package predictions |
+| V (Vassiliev) | Feynman transform = topological shadow of the characteristic hierarchy |
+| VI (Physics) | bar = BRST, curvature = anomaly, `Theta_A` = quantum-background target |
+| VII (NC Hodge) | Genus variable = twistor parameter of the characteristic hierarchy |
+| VIII (Open math) | Structural conjectures about the hierarchy itself |
+| IX (Computation) | Explicit data testing scalar/spectral laws and the MC2 frontier |
 
 ## Next volume skeleton (from raeeznotes XII)
 

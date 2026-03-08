@@ -19,12 +19,19 @@ from compute.lib.nonprincipal_ds_reduction import (
     first_nonselfdual_hook_seed,
     hook_constraint_count_ansatz_type_a,
     hook_pair_constraint_counts_ansatz_type_a,
+    nonprincipal_general_seed,
+    nonprincipal_general_seed_catalog,
     nonprincipal_hook_seed,
     nonprincipal_hook_seed_catalog,
+    nonprincipal_two_row_seed,
+    nonprincipal_two_row_seed_catalog,
+    nonprincipal_type_a_seed,
     sl3_subregular_bp_seed,
     sl3_subregular_good_grading_multiplicities,
     verify_hook_constraint_count_ansatz,
+    verify_nonprincipal_general_seed_catalog,
     verify_nonprincipal_hook_seed_catalog,
+    verify_nonprincipal_two_row_seed_catalog,
     verify_nonprincipal_ds_reduction_seed,
 )
 
@@ -101,6 +108,52 @@ class TestHookSeedFamily:
 
     def test_catalog_verification(self):
         assert all(verify_nonprincipal_hook_seed_catalog(max_n=8).values())
+
+
+class TestTwoRowSeedFamily:
+    def test_generic_seed(self):
+        k = Symbol("k")
+        seed = nonprincipal_two_row_seed(6, 2, level=k)
+        assert seed.partition == (4, 2)
+        assert seed.dual_partition == (2, 2, 1, 1)
+        assert simplify(seed.level_shift - (-k - 13)) == 0
+        assert seed.status in {STATUS_HOOK_EVIDENCE, STATUS_PROGRAMME}
+
+    def test_partition_entrypoint(self):
+        seed = nonprincipal_type_a_seed((4, 2))
+        assert seed.partition == (4, 2)
+        assert seed.dual_partition == (2, 2, 1, 1)
+
+    def test_catalog(self):
+        seeds = nonprincipal_two_row_seed_catalog(max_n=7)
+        assert seeds
+        assert all(len(seed.partition) == 2 for seed in seeds)
+
+    def test_catalog_verification(self):
+        assert all(verify_nonprincipal_two_row_seed_catalog(max_n=8).values())
+
+
+class TestGeneralSeedFamily:
+    def test_generic_seed(self):
+        k = Symbol("k")
+        seed = nonprincipal_general_seed((3, 2, 1), level=k)
+        assert seed.partition == (3, 2, 1)
+        assert seed.dual_partition == (3, 2, 1)
+        assert simplify(seed.level_shift - (-k - 13)) == 0
+        assert seed.status in {STATUS_HOOK_EVIDENCE, STATUS_PROGRAMME}
+
+    def test_partition_entrypoint(self):
+        seed = nonprincipal_type_a_seed((3, 2, 1))
+        assert seed.partition == (3, 2, 1)
+        assert seed.dual_partition == (3, 2, 1)
+
+    def test_catalog(self):
+        seeds = nonprincipal_general_seed_catalog(max_n=6)
+        assert seeds
+        assert all(len(seed.partition) >= 3 for seed in seeds)
+
+    def test_catalog_verification(self):
+        assert all(verify_nonprincipal_general_seed_catalog(max_n=7).values())
 
 
 class TestConstraintCountAnsatz:

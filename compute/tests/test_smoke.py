@@ -186,16 +186,20 @@ class TestNonprincipalFrontier:
             nonprincipal_hook_cases,
             hook_orbit_pair_profile,
             hook_orbit_pair_profile_catalog,
+            nonprincipal_general_cases,
             verify_hook_orbit_pair_profile_catalog,
+            verify_nonprincipal_general_orbit_scaffold,
             verify_nonprincipal_ds_orbit_scaffold,
         )
         assert hook_partition(5, 2) == (3, 1, 1)
         assert subregular_partition(4) == (3, 1)
         assert type_a_bv_dual((3, 1)) == (2, 1, 1)
         assert nonprincipal_hook_cases(5)
+        assert nonprincipal_general_cases(6)
         assert hook_orbit_pair_profile(6, 2).source_positive_simple_root_count == 3
         assert len(hook_orbit_pair_profile_catalog(5)) == 6
         assert all(verify_hook_orbit_pair_profile_catalog(7).values())
+        assert all(verify_nonprincipal_general_orbit_scaffold(7).values())
         assert all(verify_nonprincipal_ds_orbit_scaffold(7).values())
 
     def test_nonprincipal_ds_seed_exports(self):
@@ -220,7 +224,20 @@ class TestNonprincipalFrontier:
             hook_constraint_count_ansatz_type_a,
             hook_pair_constraint_counts_ansatz_type_a,
             verify_hook_constraint_count_ansatz,
+            two_row_nonhook_partition,
+            nonprincipal_two_row_case,
+            nonprincipal_two_row_cases,
+            nonprincipal_general_cases,
+            nonprincipal_orbit_level_shift_type_a,
+            type_a_general_nonprincipal_partitions,
+            verify_nonprincipal_two_row_orbit_scaffold,
+            verify_nonprincipal_general_orbit_scaffold,
             nonprincipal_hook_seed_catalog,
+            nonprincipal_general_seed,
+            nonprincipal_general_seed_catalog,
+            nonprincipal_two_row_seed_catalog,
+            verify_nonprincipal_general_seed_catalog,
+            verify_nonprincipal_two_row_seed_catalog,
             verify_nonprincipal_hook_seed_catalog,
             verify_nonprincipal_ds_reduction_seed,
             hook_pair_constraints,
@@ -232,9 +249,28 @@ class TestNonprincipalFrontier:
             hook_pair_mixed_blocks_match_under_dual_swap,
             hook_pair_nonlinear_blocks_match_under_dual_swap,
             hook_pair_survivor_coupled_blocks_match_under_dual_swap,
+            nonprincipal_partition_pair_survivor_coupled_blocks,
+            nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap,
+            nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap,
+            nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap,
+            nonprincipal_two_row_mixed_constraint_ghost_blocks,
+            nonprincipal_two_row_nonlinear_mixed_constraint_ghost_blocks,
+            nonprincipal_two_row_survivor_coupled_blocks,
+            nonprincipal_two_row_mixed_blocks_match_under_dual_swap,
+            nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap,
+            nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap,
             verify_hook_pair_mixed_block_duality_catalog,
             verify_hook_pair_nonlinear_block_duality_catalog,
             verify_hook_pair_survivor_coupled_block_duality_catalog,
+            verify_nonprincipal_two_row_mixed_block_duality_catalog,
+            verify_nonprincipal_two_row_nonlinear_block_duality_catalog,
+            verify_nonprincipal_two_row_survivor_coupled_bundle,
+            general_nonprincipal_mixed_family_holds_via_duality,
+            verify_nonprincipal_general_mixed_family_via_duality_catalog,
+            general_nonprincipal_nonlinear_family_holds_via_duality,
+            verify_nonprincipal_general_nonlinear_family_via_duality_catalog,
+            general_nonprincipal_survivor_coupled_family_holds_via_duality,
+            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog,
             hook_pair_surviving_field_candidates,
             hook_pair_reduced_brackets,
             survivor_coupled_block_has_square_zero,
@@ -266,6 +302,15 @@ class TestNonprincipalFrontier:
         assert hook_constraint_count_ansatz_type_a(6, 2) == 3
         assert hook_pair_constraint_counts_ansatz_type_a(6, 2) == (3, 2)
         assert all(verify_hook_constraint_count_ansatz(7).values())
+        assert two_row_nonhook_partition(6, 2) == (4, 2)
+        assert nonprincipal_two_row_case(6, 2).dual_partition == (2, 2, 1, 1)
+        assert nonprincipal_two_row_cases(7)
+        assert type_a_general_nonprincipal_partitions(6)
+        assert nonprincipal_general_cases(6)
+        assert nonprincipal_orbit_level_shift_type_a((4, 2), 0) == -13
+        assert nonprincipal_orbit_level_shift_type_a((3, 2, 1), 0) == -13
+        assert all(verify_nonprincipal_two_row_orbit_scaffold(8).values())
+        assert all(verify_nonprincipal_general_orbit_scaffold(7).values())
         source_constraints, target_constraints = hook_pair_constraints(6, 2)
         assert len(source_constraints) == 3
         assert len(target_constraints) == 2
@@ -311,6 +356,117 @@ class TestNonprincipalFrontier:
                 survivor_total_degree=1,
             ).values()
         )
+        two_row_source_blocks, two_row_target_blocks = nonprincipal_two_row_mixed_constraint_ghost_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        two_row_source_nonlinear, two_row_target_nonlinear = (
+            nonprincipal_two_row_nonlinear_mixed_constraint_ghost_blocks(
+                6,
+                2,
+                max_constraint_total_degree=1,
+            )
+        )
+        two_row_source_survivor, two_row_target_survivor = (
+            nonprincipal_two_row_survivor_coupled_blocks(
+                6,
+                2,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            )
+        )
+        assert two_row_source_blocks
+        assert two_row_target_blocks
+        assert two_row_source_nonlinear
+        assert two_row_target_nonlinear
+        assert all(
+            survivor_coupled_block_has_square_zero(block) and survivor_coupled_block_is_acyclic(block)
+            for block in two_row_source_survivor + two_row_target_survivor
+        )
+        assert nonprincipal_two_row_mixed_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_two_row_mixed_block_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_nonprincipal_two_row_survivor_coupled_bundle(
+                max_n=8,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            ).values()
+        )
+        general_seed = nonprincipal_general_seed((3, 2, 1))
+        general_source_survivor, general_target_survivor = (
+            nonprincipal_partition_pair_survivor_coupled_blocks(
+                (3, 2, 1),
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            )
+        )
+        assert general_seed.dual_partition == (3, 2, 1)
+        assert all(
+            survivor_coupled_block_has_square_zero(block) and survivor_coupled_block_is_acyclic(block)
+            for block in general_source_survivor + general_target_survivor
+        )
+        assert nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+            (3, 2, 1),
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+            (3, 2, 1),
+            max_constraint_total_degree=1,
+        )
+        assert nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+            (3, 2, 1),
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert general_nonprincipal_mixed_family_holds_via_duality(9, 1)
+        assert all(
+            verify_nonprincipal_general_mixed_family_via_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert general_nonprincipal_nonlinear_family_holds_via_duality(9, 1)
+        assert all(
+            verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
+                max_n=9,
+                max_constraint_total_degree=1,
+            ).values()
+        )
+        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(8, 1, 1)
+        assert all(
+            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+                max_n=8,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            ).values()
+        )
         source_candidates, target_candidates = hook_pair_surviving_field_candidates(5, 2)
         source_reduced, target_reduced = hook_pair_reduced_brackets(5, 2)
         assert len(source_candidates) == centralizer_dimension_sl_n((3, 1, 1))
@@ -318,8 +474,86 @@ class TestNonprincipalFrontier:
         assert source_reduced
         assert target_reduced
         assert len(nonprincipal_hook_seed_catalog(5)) == 6
+        assert nonprincipal_general_seed_catalog(6)
+        assert nonprincipal_two_row_seed_catalog(7)
         assert all(verify_nonprincipal_hook_seed_catalog(7).values())
+        assert all(verify_nonprincipal_general_seed_catalog(7).values())
+        assert all(verify_nonprincipal_two_row_seed_catalog(7).values())
         assert all(verify_nonprincipal_ds_reduction_seed().values())
+
+    def test_nonprincipal_corrected_semidirect_exports(self):
+        from compute.lib import (
+            partition_pair_corrected_survivor_action_terms,
+            partition_pair_corrected_survivor_derivation_defects,
+            nonprincipal_partition_pair_corrected_semidirect_survivor_blocks,
+            nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap,
+            general_nonprincipal_mixed_family_holds_via_duality,
+            verify_nonprincipal_general_mixed_family_via_duality_catalog,
+            general_nonprincipal_nonlinear_family_holds_via_duality,
+            verify_nonprincipal_general_nonlinear_family_via_duality_catalog,
+            general_nonprincipal_survivor_coupled_family_holds_via_duality,
+            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog,
+            nonprincipal_two_row_corrected_semidirect_survivor_blocks,
+            nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap,
+            verify_nonprincipal_two_row_survivor_coupled_bundle,
+            semidirect_survivor_block_has_square_zero,
+        )
+
+        general_source_action, general_target_action = partition_pair_corrected_survivor_action_terms(
+            (3, 2, 1)
+        )
+        general_source_defects, general_target_defects = (
+            partition_pair_corrected_survivor_derivation_defects((3, 2, 1))
+        )
+        general_corrected_source, general_corrected_target = (
+            nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+                (3, 2, 1),
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+        two_row_corrected_source, two_row_corrected_target = (
+            nonprincipal_two_row_corrected_semidirect_survivor_blocks(
+                6,
+                2,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
+
+        assert general_source_action == ()
+        assert general_target_action == ()
+        assert general_source_defects == {}
+        assert general_target_defects == {}
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in general_corrected_source
+            + general_corrected_target
+            + two_row_corrected_source
+            + two_row_corrected_target
+        )
+        assert nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            (3, 2, 1),
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+        assert nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+        assert general_nonprincipal_mixed_family_holds_via_duality(9, 1)
+        assert all(verify_nonprincipal_general_mixed_family_via_duality_catalog(9, 1).values())
+        assert general_nonprincipal_nonlinear_family_holds_via_duality(9, 1)
+        assert all(verify_nonprincipal_general_nonlinear_family_via_duality_catalog(9, 1).values())
+        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(8, 1, 1)
+        assert all(verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(8, 1, 1).values())
+        assert all(verify_nonprincipal_two_row_survivor_coupled_bundle(8, 1, 1).values())
 
     def test_bv_and_ds_seed_exports(self):
         from compute.lib import (
@@ -340,7 +574,14 @@ class TestNonprincipalFrontier:
             sl3_subregular_mixed_constraint_ghost_blocks,
             sl3_subregular_nonlinear_mixed_constraint_ghost_blocks,
             sl3_subregular_survivor_action_terms,
+            sl3_subregular_survivor_action_lift_witnesses,
+            sl3_subregular_derivation_defect_witnesses,
+            sl3_subregular_first_transfer_correction_witnesses,
+            sl3_subregular_first_transfer_correction_terms,
+            sl3_subregular_corrected_survivor_action_terms,
+            sl3_subregular_corrected_survivor_derivation_defects,
             sl3_subregular_survivor_coupled_blocks,
+            sl3_subregular_corrected_semidirect_survivor_blocks,
             sl3_subregular_project_basis_label_to_strong_candidates,
             sl3_subregular_projected_strong_brackets,
             sl3_subregular_strong_generator_candidates,
@@ -356,14 +597,24 @@ class TestNonprincipalFrontier:
             survivor_action_differential,
             build_survivor_coupled_brst_block,
             build_internal_survivor_ce_block,
+            build_semidirect_survivor_brst_block,
+            combine_survivor_action_terms,
             relabel_quadratic_ghost_terms,
             relabel_current_action_terms,
             relabel_truncated_brst_complex,
             relabel_mixed_constraint_ghost_block,
             hook_pair_ds_seed_catalog,
             hook_pair_survivor_action_terms,
+            hook_pair_first_transfer_correction_witnesses,
+            hook_pair_first_transfer_correction_terms,
+            hook_pair_corrected_survivor_action_terms,
+            hook_pair_corrected_survivor_derivation_defects,
             hook_pair_survivor_coupled_blocks,
+            hook_pair_corrected_semidirect_survivor_blocks,
             hook_pair_survivor_coupled_blocks_match_under_dual_swap,
+            verify_hook_pair_first_transfer_correction_catalog,
+            verify_hook_pair_corrected_semidirect_catalog,
+            verify_hook_pair_corrected_semidirect_duality_catalog,
             verify_hook_pair_survivor_coupled_block_duality_catalog,
             first_nonselfdual_hook_pair_ds_seed,
             verify_hook_pair_ds_seed_catalog,
@@ -407,6 +658,7 @@ class TestNonprincipalFrontier:
             internal_survivor_ce_block_is_acyclic,
             internal_survivor_h0_monomial_labels,
             internal_survivor_linear_h0_labels,
+            semidirect_survivor_block_has_square_zero,
             linear_constraint_block_has_contracting_homotopy,
             linear_constraint_block_is_positive_acyclic,
             first_nonselfdual_hook_pair_specialized_complexes,
@@ -414,7 +666,18 @@ class TestNonprincipalFrontier:
             complex_is_acyclic,
             sl3_subregular_ds_seed,
             sl3_subregular_internal_survivor_ce_blocks,
+            sl3_subregular_semidirect_survivor_blocks,
+            sl3_subregular_survivor_derivation_defects,
             first_nonselfdual_hook_pair_internal_survivor_ce_blocks,
+            first_nonselfdual_hook_pair_survivor_action_lift_witnesses,
+            first_nonselfdual_hook_pair_derivation_defect_witnesses,
+            first_nonselfdual_hook_pair_first_transfer_correction_witnesses,
+            first_nonselfdual_hook_pair_first_transfer_correction_terms,
+            first_nonselfdual_hook_pair_corrected_survivor_action_terms,
+            first_nonselfdual_hook_pair_corrected_survivor_derivation_defects,
+            first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks,
+            first_nonselfdual_hook_pair_semidirect_survivor_blocks,
+            first_nonselfdual_hook_pair_survivor_derivation_defects,
             verify_ds_reduction_seed,
         )
         n, r, pair = first_nonselfdual_type_a_hook_pair()
@@ -431,11 +694,25 @@ class TestNonprincipalFrontier:
         subregular_mixed_blocks = sl3_subregular_mixed_constraint_ghost_blocks(2)
         subregular_nonlinear_mixed_blocks = sl3_subregular_nonlinear_mixed_constraint_ghost_blocks(2)
         subregular_survivor_action = sl3_subregular_survivor_action_terms()
+        subregular_action_lifts = sl3_subregular_survivor_action_lift_witnesses()
+        subregular_defect_witnesses = sl3_subregular_derivation_defect_witnesses()
+        subregular_correction_witnesses = (
+            sl3_subregular_first_transfer_correction_witnesses()
+        )
+        subregular_first_correction = sl3_subregular_first_transfer_correction_terms()
+        subregular_corrected_action = sl3_subregular_corrected_survivor_action_terms()
+        subregular_corrected_defects = sl3_subregular_corrected_survivor_derivation_defects()
         subregular_survivor_blocks = sl3_subregular_survivor_coupled_blocks(1, 1)
         subregular_internal_blocks = sl3_subregular_internal_survivor_ce_blocks(1)
+        subregular_semidirect_blocks = sl3_subregular_semidirect_survivor_blocks(0, 1, 1)
+        subregular_corrected_semidirect_blocks = sl3_subregular_corrected_semidirect_survivor_blocks(0, 1, 1)
+        subregular_derivation_defects = sl3_subregular_survivor_derivation_defects()
         hook_catalog = hook_pair_ds_seed_catalog(5)
         generic_source_survivor_action, generic_target_survivor_action = (
             hook_pair_survivor_action_terms(6, 2)
+        )
+        generic_source_correction_witnesses, generic_target_correction_witnesses = (
+            hook_pair_first_transfer_correction_witnesses(4, 1)
         )
         generic_source_survivor_blocks, generic_target_survivor_blocks = (
             hook_pair_survivor_coupled_blocks(
@@ -478,6 +755,33 @@ class TestNonprincipalFrontier:
         hook_source_internal_blocks, hook_target_internal_blocks = (
             first_nonselfdual_hook_pair_internal_survivor_ce_blocks(1)
         )
+        hook_source_semidirect_blocks, hook_target_semidirect_blocks = (
+            first_nonselfdual_hook_pair_semidirect_survivor_blocks(0, 1, 1)
+        )
+        hook_source_derivation_defects, hook_target_derivation_defects = (
+            first_nonselfdual_hook_pair_survivor_derivation_defects()
+        )
+        hook_source_action_lifts, hook_target_action_lifts = (
+            first_nonselfdual_hook_pair_survivor_action_lift_witnesses()
+        )
+        hook_source_defect_witnesses, hook_target_defect_witnesses = (
+            first_nonselfdual_hook_pair_derivation_defect_witnesses()
+        )
+        hook_source_correction_witnesses, hook_target_correction_witnesses = (
+            first_nonselfdual_hook_pair_first_transfer_correction_witnesses()
+        )
+        hook_source_first_correction, hook_target_first_correction = (
+            first_nonselfdual_hook_pair_first_transfer_correction_terms()
+        )
+        hook_source_corrected_action, hook_target_corrected_action = (
+            first_nonselfdual_hook_pair_corrected_survivor_action_terms()
+        )
+        hook_source_corrected_defects, hook_target_corrected_defects = (
+            first_nonselfdual_hook_pair_corrected_survivor_derivation_defects()
+        )
+        hook_source_corrected_semidirect_blocks, hook_target_corrected_semidirect_blocks = (
+            first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(0, 1, 1)
+        )
         ds_seed = sl3_subregular_ds_seed()
         assert n == 4 and r == 1
         assert pair.source_orbit == (3, 1) and pair.target_orbit == (2, 1, 1)
@@ -507,6 +811,32 @@ class TestNonprincipalFrontier:
         assert all(survivor_coupled_block_is_acyclic(block) for block in subregular_survivor_blocks)
         assert all(internal_survivor_ce_block_has_square_zero(block) for block in subregular_internal_blocks)
         assert not all(internal_survivor_ce_block_is_acyclic(block) for block in subregular_internal_blocks)
+        assert not any(semidirect_survivor_block_has_square_zero(block) for block in subregular_semidirect_blocks)
+        assert any(
+            item.c_ghost == "c_alpha1+alpha2"
+            and item.source_survivor_label == "G-"
+            and item.ad_e_witness_preimage == (("F12", Rational(1, 2)),)
+            for item in subregular_action_lifts
+        )
+        assert any(
+            item.c_ghost == "c_alpha1+alpha2"
+            and item.left_survivor_label == "J"
+            and item.right_survivor_label == "T"
+            and item.projected_defect_terms == (("G+", Rational(3, 2)),)
+            for item in subregular_defect_witnesses
+        )
+        assert len(subregular_correction_witnesses) == 2
+        assert combine_survivor_action_terms(
+            subregular_survivor_action,
+            subregular_first_correction,
+        ) == subregular_corrected_action
+        assert subregular_corrected_action == ()
+        assert subregular_corrected_defects == {}
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in subregular_corrected_semidirect_blocks
+        )
+        assert subregular_derivation_defects["c_alpha1+alpha2"][("G+", "G-")] == {"G+": Rational(1, 2)}
         assert hook_pair_seed.source_partition == (3, 1)
         assert hook_pair_seed.target_partition == (2, 1, 1)
         assert len(hook_source_profile) == 5
@@ -529,6 +859,7 @@ class TestNonprincipalFrontier:
         assert len(hook_target_survivor_action) == 14
         assert generic_source_survivor_action
         assert generic_target_survivor_action
+        assert generic_source_correction_witnesses or generic_target_correction_witnesses
         assert len(hook_source_quadratic) == 2
         assert len(hook_target_quadratic) == 2
         assert len(hook_source_candidates) == 5
@@ -612,6 +943,35 @@ class TestNonprincipalFrontier:
             survivor_polynomial_degree=1,
             source_tag="rebuilt_subregular_internal",
         )
+        rebuilt_subregular_semidirect = build_semidirect_survivor_brst_block(
+            shifted_current_labels=tuple(f"u_{item.root_label}" for item in constraints),
+            survivor_labels=tuple(item.label for item in strong_candidates),
+            c_ghost_labels=tuple(item.c_ghost for item in constraints),
+            b_ghost_labels=tuple(item.b_ghost for item in constraints),
+            internal_c_ghost_labels=tuple(f"c_survivor_{item.label}" for item in strong_candidates),
+            internal_b_ghost_labels=tuple(f"b_survivor_{item.label}" for item in strong_candidates),
+            chi_vector=tuple(item.character_value for item in constraints),
+            quadratic_terms=(),
+            current_action_terms=(),
+            survivor_action_terms=subregular_survivor_action,
+            internal_quadratic_terms=(
+                QuadraticGhostTermEntry("c_survivor_J", "c_survivor_G+", "b_survivor_G+", Rational(3, 2)),
+                QuadraticGhostTermEntry("c_survivor_J", "c_survivor_G-", "b_survivor_G-", Rational(-3, 2)),
+                QuadraticGhostTermEntry("c_survivor_G+", "c_survivor_G-", "b_survivor_T", 1),
+            ),
+            internal_survivor_action_terms=(
+                SurvivorActionTermEntry("c_survivor_J", "G+", "G+", Rational(3, 2)),
+                SurvivorActionTermEntry("c_survivor_J", "G-", "G-", Rational(-3, 2)),
+                SurvivorActionTermEntry("c_survivor_G+", "J", "G+", Rational(-3, 2)),
+                SurvivorActionTermEntry("c_survivor_G+", "G-", "T", 1),
+                SurvivorActionTermEntry("c_survivor_G-", "J", "G-", Rational(3, 2)),
+                SurvivorActionTermEntry("c_survivor_G-", "G+", "T", -1),
+            ),
+            constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+            source_tag="rebuilt_subregular_semidirect",
+        )
         relabeled_hook_source = relabel_truncated_brst_complex(
             hook_pair_seed.source_complex,
             hook_label_map,
@@ -690,6 +1050,7 @@ class TestNonprincipalFrontier:
             3: 2,
             4: 1,
         }
+        assert not semidirect_survivor_block_has_square_zero(rebuilt_subregular_semidirect)
         assert survivor_coupled_block_homology_dimensions(hook_source_survivor_blocks[1]) == {
             -1: 0,
             0: 0,
@@ -719,6 +1080,53 @@ class TestNonprincipalFrontier:
             8: 1,
             9: 1,
         }
+        assert not any(semidirect_survivor_block_has_square_zero(block) for block in hook_source_semidirect_blocks)
+        assert not any(semidirect_survivor_block_has_square_zero(block) for block in hook_target_semidirect_blocks)
+        assert hook_source_derivation_defects["c_source_E12"][("source_gm2_2", "source_gm2_3")] == {
+            "source_gm2_1": Rational(-1, 2)
+        }
+        assert hook_target_derivation_defects["c_target_E13"][("target_g0_1", "target_gm1_3")] == {
+            "target_g0_1": -1
+        }
+        assert any(
+            item.c_ghost == "c_source_E12"
+            and item.source_survivor_label == "source_gm4_1"
+            and item.ad_e_witness_preimage == (("E31", Rational(1, 2)),)
+            for item in hook_source_action_lifts
+        )
+        assert any(
+            item.c_ghost == "c_target_E13"
+            and item.source_survivor_label == "target_gm1_3"
+            and item.ad_e_witness_preimage == (("E21", Rational(1, 2)),)
+            for item in hook_target_action_lifts
+        )
+        assert all(
+            dict(item.projected_defect_terms)
+            == hook_source_derivation_defects[item.c_ghost][
+                (item.left_survivor_label, item.right_survivor_label)
+            ]
+            for item in hook_source_defect_witnesses
+        )
+        assert all(
+            dict(item.projected_defect_terms)
+            == hook_target_derivation_defects[item.c_ghost][
+                (item.left_survivor_label, item.right_survivor_label)
+            ]
+            for item in hook_target_defect_witnesses
+        )
+        assert hook_source_correction_witnesses
+        assert hook_target_correction_witnesses
+        assert len(hook_source_first_correction) == len(hook_source_survivor_action)
+        assert len(hook_target_first_correction) == len(hook_target_survivor_action)
+        assert hook_source_corrected_action == ()
+        assert hook_target_corrected_action == ()
+        assert hook_source_corrected_defects == {}
+        assert hook_target_corrected_defects == {}
+        assert all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in hook_source_corrected_semidirect_blocks
+            + hook_target_corrected_semidirect_blocks
+        )
         assert mixed_constraint_ghost_block_has_square_zero(hook_target_mixed_blocks[1])
         assert mixed_constraint_ghost_block_has_square_zero(hook_target_nonlinear_blocks[1])
         assert survivor_coupled_block_has_square_zero(hook_target_survivor_blocks[1])
@@ -773,4 +1181,7 @@ class TestNonprincipalFrontier:
         assert all(verify_nonprincipal_ds_normalization().values())
         assert all(verify_hook_pair_ds_seed_catalog(7).values())
         assert all(verify_hook_pair_seed_alignment(7).values())
+        assert all(verify_hook_pair_first_transfer_correction_catalog(5).values())
+        assert all(verify_hook_pair_corrected_semidirect_catalog(5).values())
+        assert all(verify_hook_pair_corrected_semidirect_duality_catalog(5).values())
         assert all(verify_ds_reduction_seed().values())

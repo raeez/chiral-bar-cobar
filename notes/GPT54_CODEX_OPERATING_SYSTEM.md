@@ -56,7 +56,9 @@ Use the following architecture as the canonical target.
 
 - The proved bridges to representation theory, geometry, and physics.
 - The resolved entry theorem on higher-genus PBW concentration together
-  with the four remaining master conjectures and their dependency order.
+  with the dependency-ordered frontier:
+  MC2 as foundational target, MC3/MC4 as structural extensions,
+  and MC5 as downstream consequence.
 - The explicit next subject: modular homotopy theory for factorization
   algebras on curves.
 
@@ -145,13 +147,22 @@ When ChatGPT 5.4 or Codex works on the book:
 Priority order for the active rewrite campaign:
 
 1. Propagate the resolved MC1 status through control notes, examples,
-   and frontier ledgers.
+   frontier ledgers, and any remaining local summaries.
 2. Keep finite-type principal `W_N` in Stratum I and isolate
-   `W_\infty` / non-principal orbit problems in Stratum II.
-3. Build completed infinite-generator bar scaffolding
-   (weight-filtered/pronilpotent infrastructure).
-4. Periodicity chapter/status propagation.
-5. Local theorem statements whose status still drifts from Chapter 34.
+   `W_\infty` / Yangian H-level comparison problems and non-principal
+   orbit duality in Stratum II.
+3. Advance MC2 first: the theorem surface now reduces the cyclic
+   deformation / universal `Theta_A` frontier to three exact packages,
+   namely the intrinsic cyclic `\Defcyc(\cA)` model, the geometric
+   completed tensor / clutching package, and the one-channel
+   genus-by-genus normalization problem in the simple-Lie case.
+4. Treat MC3 and MC4 as the next structural comparison layer after the
+   standard M-level completions, not as missing finite-type PBW input.
+5. Treat periodicity as an auxiliary weak flank: contain, clarify, and
+   never let it outrun the proved core or the MC2 -> MC3/MC4 -> MC5
+   dependency order.
+6. Repair any local theorem statements whose status still drifts from
+   Chapter 34.
 
 ## 10. Definition of Success
 

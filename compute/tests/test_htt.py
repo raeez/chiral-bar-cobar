@@ -31,6 +31,15 @@ class TestSDRConstruction:
         for name, ok in results.items():
             assert ok, f"SDR condition failed: {name}"
 
+    def test_verify_sdr_includes_side_conditions(self):
+        ce, p, iota, h, d = build_sl2_ce_sdr()
+        results = verify_sdr(p, iota, h, d)
+        assert "p∘h=0 at deg 1" in results
+        assert "p∘h=0 at deg 2" in results
+        assert "p∘h=0 at deg 3" in results
+        assert "h∘ι=0 at deg 0" in results
+        assert "h∘ι=0 at deg 3" in results
+
     def test_p_iota_identity(self):
         ce, p, iota, h, d = build_sl2_ce_sdr()
         for k in [0, 3]:

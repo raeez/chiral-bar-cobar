@@ -258,6 +258,55 @@ class TestCEComplex:
         assert d1.rank() == 3
 
 
+class TestSDR:
+    """Tests for the public SDR helper on the sl_2 CE complex."""
+
+    def test_sdr_cohomology_dimensions(self):
+        from compute.lib.chiral_bar import CEComplex, SDR, sl2_structure_constants
+
+        ce = CEComplex(3, sl2_structure_constants())
+        sdr = SDR([ce.dim(0), ce.dim(1), ce.dim(2), ce.dim(3)], [
+            ce.differential(0),
+            ce.differential(1),
+            ce.differential(2),
+        ])
+
+        assert sdr.cohom_dims == [1, 0, 0, 1]
+
+    def test_sdr_recovers_known_sl2_homotopy(self):
+        from sympy import Rational, Matrix, zeros
+        from compute.lib.chiral_bar import CEComplex, SDR, sl2_structure_constants
+
+        ce = CEComplex(3, sl2_structure_constants())
+        sdr = SDR([ce.dim(0), ce.dim(1), ce.dim(2), ce.dim(3)], [
+            ce.differential(0),
+            ce.differential(1),
+            ce.differential(2),
+        ])
+
+        assert sdr.h_matrices[1].equals(zeros(1, 3))
+        assert sdr.h_matrices[2].equals(Matrix([
+            [Rational(-1, 2), 0, 0],
+            [0, 1, 0],
+            [0, 0, Rational(-1, 2)],
+        ]))
+        assert sdr.h_matrices[3].equals(zeros(3, 1))
+
+    def test_public_verify_sdr(self):
+        from compute.lib.chiral_bar import CEComplex, SDR, sl2_structure_constants
+
+        ce = CEComplex(3, sl2_structure_constants())
+        sdr = SDR([ce.dim(0), ce.dim(1), ce.dim(2), ce.dim(3)], [
+            ce.differential(0),
+            ce.differential(1),
+            ce.differential(2),
+        ])
+
+        results = sdr.verify_sdr()
+        assert results
+        assert all(results.values())
+
+
 class TestAssociativeBarDifferential:
     """Tests for the associative bar complex with Lie bracket.
     

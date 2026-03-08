@@ -1,10 +1,10 @@
-"""Non-principal DS orbit scaffold for type-A hook/subregular families.
+"""Non-principal DS orbit scaffold for type-A families.
 
 This module is intentionally separated from the principal finite-type PBW
 modules. It records only the orbit-combinatorial data needed to launch the
 non-principal W frontier:
 
-  - hook and subregular partitions in type A;
+  - hook/subregular and first non-hook families in type A;
   - Barbasch-Vogan duality as partition transpose (type A);
   - orbit/centralizer dimension identities for sl_n nilpotent orbits;
   - a frontier case catalog with explicit status tags.
@@ -15,6 +15,7 @@ No OPE or bar differential is implemented here.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Dict, Iterable, Tuple
 
 from sympy import Matrix, Symbol, simplify, sympify, zeros
@@ -129,6 +130,40 @@ def subregular_partition(n: int) -> Partition:
     return (n - 1, 1)
 
 
+def two_row_nonhook_partition(n: int, s: int) -> Partition:
+    """Two-row non-hook partition (n-s, s) with s >= 2 in type A."""
+    if n < 4:
+        raise ValueError("two-row non-hook partitions require n >= 4")
+    if not (2 <= s <= n // 2):
+        raise ValueError("s must satisfy 2 <= s <= floor(n/2)")
+    return normalize_partition((n - s, s))
+
+
+def _partitions_of_n(n: int, max_part: int | None = None) -> Tuple[Tuple[int, ...], ...]:
+    """Enumerate nonincreasing integer partitions of n."""
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+    if n == 0:
+        return ((),)
+    upper = n if max_part is None else min(max_part, n)
+    partitions = []
+    for part in range(upper, 0, -1):
+        for tail in _partitions_of_n(n - part, part):
+            partitions.append((part,) + tail)
+    return tuple(partitions)
+
+
+def type_a_general_nonprincipal_partitions(n: int) -> Tuple[Partition, ...]:
+    """Enumerate type-A partitions of n outside the hook/two-row families."""
+    if n < 3:
+        return ()
+    return tuple(
+        partition
+        for partition in _partitions_of_n(n)
+        if type_a_orbit_class(partition) == "general_nonprincipal"
+    )
+
+
 def type_a_bv_dual(partition: Iterable[int]) -> Partition:
     """Barbasch-Vogan dual in type A (partition transpose)."""
     return transpose_partition(partition)
@@ -151,6 +186,8 @@ def type_a_orbit_class(partition: Iterable[int]) -> str:
         return "subregular"
     if is_hook_partition(lam):
         return "hook_nonprincipal"
+    if len(lam) == 2:
+        return "two_row_nonhook"
     return "general_nonprincipal"
 
 
@@ -181,11 +218,24 @@ def _matrix_unit(n: int, i: int, j: int) -> Matrix:
     return matrix
 
 
+def _standard_matrix_unit_label(n: int, i: int, j: int) -> str:
+    """Unambiguous standard label for E_{ij}; preserve legacy short form at low rank."""
+    if n < 10:
+        return f"E{i}{j}"
+    return f"E{i}_{j}"
+
+
+@lru_cache(maxsize=None)
 def standard_traceless_basis_sl_n(n: int) -> Tuple[Tuple[str, Matrix], ...]:
     """Ordered standard traceless basis of sl_n."""
     if n < 2:
         raise ValueError("n must be at least 2")
-    basis = [(f"E{i}{j}", _matrix_unit(n, i, j)) for i in range(1, n + 1) for j in range(1, n + 1) if i != j]
+    basis = [
+        (_standard_matrix_unit_label(n, i, j), _matrix_unit(n, i, j))
+        for i in range(1, n + 1)
+        for j in range(1, n + 1)
+        if i != j
+    ]
     basis += [
         (f"H{i}", _matrix_unit(n, i, i) - _matrix_unit(n, i + 1, i + 1))
         for i in range(1, n)
@@ -197,14 +247,27 @@ def matrix_to_traceless_basis_expression_sl_n(matrix: Matrix) -> MatrixBasisExpr
     """Re-expand a traceless n x n matrix in the standard sl_n basis."""
     if matrix.rows != matrix.cols:
         raise ValueError("matrix must be square")
-    basis = standard_traceless_basis_sl_n(matrix.rows)
-    basis_columns = Matrix.hstack(*[element.reshape(matrix.rows * matrix.rows, 1) for _, element in basis])
-    coefficients = basis_columns.gauss_jordan_solve(matrix.reshape(matrix.rows * matrix.rows, 1))[0]
-    return tuple(
-        (label, coefficients[index, 0])
-        for index, (label, _) in enumerate(basis)
-        if coefficients[index, 0] != 0
-    )
+    if simplify(matrix.trace()) != 0:
+        raise ValueError("matrix must be traceless")
+
+    n = matrix.rows
+    expression = []
+
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if i == j:
+                continue
+            coefficient = sympify(matrix[i - 1, j - 1])
+            if coefficient != 0:
+                expression.append((_standard_matrix_unit_label(n, i, j), coefficient))
+
+    diagonal_prefix_sum = sympify(0)
+    for i in range(1, n):
+        diagonal_prefix_sum += sympify(matrix[i - 1, i - 1])
+        if diagonal_prefix_sum != 0:
+            expression.append((f"H{i}", diagonal_prefix_sum))
+
+    return tuple(expression)
 
 
 def type_a_hook_nilpotent_matrix(n: int, r: int) -> Matrix:
@@ -233,11 +296,13 @@ def type_a_partition_sl2_triple(partition: Iterable[int]) -> MatrixSl2Triple:
     return MatrixSl2Triple(e=e, h=h, f=f)
 
 
+@lru_cache(maxsize=None)
 def type_a_hook_sl2_triple(n: int, r: int) -> MatrixSl2Triple:
     """Canonical sl_2-triple for the type-A hook orbit (n-r,1^r)."""
     return type_a_partition_sl2_triple(hook_partition(n, r))
 
 
+@lru_cache(maxsize=None)
 def type_a_hook_pair_sl2_triples(n: int, r: int) -> Tuple[MatrixSl2Triple, MatrixSl2Triple]:
     """Canonical sl_2-triples for a hook orbit and its transpose-dual hook."""
     if not (1 <= r <= n - 2):
@@ -370,25 +435,84 @@ def principal_ff_level_shift_type_a(n: int, level=Symbol("k")):
     return -k - 2 * n
 
 
-def nonprincipal_hook_level_shift_ansatz_type_a(n: int, level=Symbol("k")):
-    """Current hook/subregular ansatz for the non-principal level shift.
+_TYPE_A_ORBIT_LEVEL_SHIFT_CORRECTION_DATA: Dict[Partition, int] = {
+    # Proved/evidence anchors currently implemented in the compute layer.
+    (2, 1): 0,
+    (3, 1): 0,
+    (2, 1, 1): 0,
+    # Non-hook frontier anchors: orbit-indexed nonzero corrections.
+    (3, 2): 1,
+    (3, 3): 2,
+    (4, 2): 1,
+    (3, 2, 1): 1,
+    (4, 3): 2,
+    (4, 2, 1): 1,
+    (3, 3, 1): 2,
+    (3, 2, 2): 2,
+    (5, 3): 2,
+}
 
-    This intentionally reuses the principal Feigin-Frenkel involution as a
-    starting scaffold, while the full non-principal correction remains open.
-    """
+
+def _type_a_seed_level_shift_correction(partition: Iterable[int]) -> int:
+    """Transpose-invariant seed correction counting boxes off the first row/column."""
+    lam = normalize_partition(partition)
+    return int(sum(max(0, part - 1) for part in lam[1:]))
+
+
+def type_a_orbit_level_shift_correction_data(partition: Iterable[int]) -> int:
+    """Orbit-indexed correction term for type-A non-principal level shifts."""
+    lam = normalize_partition(partition)
+    dual = type_a_bv_dual(lam)
+    if lam in _TYPE_A_ORBIT_LEVEL_SHIFT_CORRECTION_DATA:
+        return int(_TYPE_A_ORBIT_LEVEL_SHIFT_CORRECTION_DATA[lam])
+    if dual in _TYPE_A_ORBIT_LEVEL_SHIFT_CORRECTION_DATA:
+        return int(_TYPE_A_ORBIT_LEVEL_SHIFT_CORRECTION_DATA[dual])
+    if type_a_orbit_class(lam) in {"principal", "trivial"}:
+        return 0
+    # Seeded frontier fallback until orbit-corrected theorem data is established.
+    return _type_a_seed_level_shift_correction(lam)
+
+
+def nonprincipal_orbit_level_shift_type_a(partition: Iterable[int], level=Symbol("k")):
+    """Data-driven non-principal level shift in type A."""
+    lam = normalize_partition(partition)
+    n = partition_size(lam)
+    k = sympify(level)
+    correction = sympify(type_a_orbit_level_shift_correction_data(lam))
+    return -k - 2 * n - correction
+
+
+def nonprincipal_hook_level_shift_type_a(n: int, r: int, level=Symbol("k")):
+    """Data-driven hook/subregular level shift in type A."""
+    if not (1 <= r <= n - 2):
+        raise ValueError("non-principal hook requires 1 <= r <= n-2")
+    partition = hook_partition(n, r)
+    return nonprincipal_orbit_level_shift_type_a(partition, level=level)
+
+
+def nonprincipal_hook_level_shift_ansatz_type_a(n: int, level=Symbol("k")):
+    """Backward-compatible alias for the former hook level-shift ansatz."""
     return principal_ff_level_shift_type_a(n, level=level)
 
 
-def nonprincipal_hook_case(n: int, r: int, level=Symbol("k")) -> OrbitDualityCase:
-    """Build a single non-principal hook/subregular frontier case."""
-    if not (1 <= r <= n - 2):
-        raise ValueError("non-principal hook requires 1 <= r <= n-2")
+def nonprincipal_type_a_case(partition: Iterable[int], level=Symbol("k")) -> OrbitDualityCase:
+    """Build one non-principal type-A orbit-duality case from a partition."""
+    lam = normalize_partition(partition)
+    n = partition_size(lam)
+    orbit_class = type_a_orbit_class(lam)
+    if orbit_class in {"principal", "trivial"}:
+        raise ValueError("non-principal case requires a non-principal partition")
 
-    partition = hook_partition(n, r)
-    dual = hook_dual_partition(n, r)
-    family = "subregular" if r == 1 else "hook"
+    if orbit_class == "subregular":
+        family = "subregular"
+    elif orbit_class == "hook_nonprincipal":
+        family = "hook"
+    elif orbit_class == "two_row_nonhook":
+        family = "two_row_nonhook"
+    else:
+        family = "general_nonprincipal"
 
-    if n == 3 and r == 1:
+    if lam == (2, 1):
         status = STATUS_PROVED_SUBREGULAR_SL3
     elif n <= 6:
         status = STATUS_HOOK_EVIDENCE
@@ -398,13 +522,21 @@ def nonprincipal_hook_case(n: int, r: int, level=Symbol("k")) -> OrbitDualityCas
     return OrbitDualityCase(
         lie_type="A",
         rank=n - 1,
-        partition=partition,
-        dual_partition=dual,
+        partition=lam,
+        dual_partition=type_a_bv_dual(lam),
         family=family,
-        level_shift=nonprincipal_hook_level_shift_ansatz_type_a(n, level=level),
+        level_shift=nonprincipal_orbit_level_shift_type_a(lam, level=level),
         track=TRACK_FRONTIER_NONPRINCIPAL,
         status=status,
     )
+
+
+@lru_cache(maxsize=None)
+def nonprincipal_hook_case(n: int, r: int, level=Symbol("k")) -> OrbitDualityCase:
+    """Build a single non-principal hook/subregular frontier case."""
+    if not (1 <= r <= n - 2):
+        raise ValueError("non-principal hook requires 1 <= r <= n-2")
+    return nonprincipal_type_a_case(hook_partition(n, r), level=level)
 
 
 def nonprincipal_hook_cases(max_n: int = 6, level=Symbol("k")) -> Tuple[OrbitDualityCase, ...]:
@@ -415,6 +547,37 @@ def nonprincipal_hook_cases(max_n: int = 6, level=Symbol("k")) -> Tuple[OrbitDua
     for n in range(3, max_n + 1):
         for r in range(1, n - 1):
             cases.append(nonprincipal_hook_case(n, r, level=level))
+    return tuple(cases)
+
+
+def nonprincipal_two_row_case(n: int, s: int, level=Symbol("k")) -> OrbitDualityCase:
+    """Build one non-hook two-row case (n-s,s) in type A."""
+    partition = two_row_nonhook_partition(n, s)
+    return nonprincipal_type_a_case(partition, level=level)
+
+
+def nonprincipal_two_row_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[OrbitDualityCase, ...]:
+    """Enumerate type-A two-row non-hook orbit-duality cases."""
+    if max_n < 4:
+        return ()
+    cases = []
+    for n in range(4, max_n + 1):
+        for s in range(2, (n // 2) + 1):
+            partition = two_row_nonhook_partition(n, s)
+            if type_a_orbit_class(partition) != "two_row_nonhook":
+                continue
+            cases.append(nonprincipal_type_a_case(partition, level=level))
+    return tuple(cases)
+
+
+def nonprincipal_general_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[OrbitDualityCase, ...]:
+    """Enumerate type-A non-hook non-two-row orbit-duality cases."""
+    if max_n < 3:
+        return ()
+    cases = []
+    for n in range(3, max_n + 1):
+        for partition in type_a_general_nonprincipal_partitions(n):
+            cases.append(nonprincipal_type_a_case(partition, level=level))
     return tuple(cases)
 
 
@@ -594,7 +757,10 @@ def verify_hook_orbit_pair_profile_catalog(
         results[f"{key} target level-shift propagation"] = (
             simplify(
                 profile.target_level_shift
-                - nonprincipal_hook_level_shift_ansatz_type_a(n, profile.source_level_shift)
+                - nonprincipal_orbit_level_shift_type_a(
+                    profile.source_partition,
+                    profile.source_level_shift,
+                )
             )
             == 0
         )
@@ -610,6 +776,134 @@ def verify_hook_orbit_pair_profile_catalog(
         results[f"{key} dual swap positive-label symmetry"] = (
             profile.source_positive_basis_labels == dual_profile.target_positive_basis_labels
             and profile.target_positive_basis_labels == dual_profile.source_positive_basis_labels
+        )
+
+    return results
+
+
+def verify_nonprincipal_two_row_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
+    """Sanity checks for the non-hook type-A two-row frontier scaffold."""
+    results: Dict[str, bool] = {}
+    cases = nonprincipal_two_row_cases(max_n=max_n)
+
+    results["two-row non-hook catalog is nonempty"] = bool(cases)
+    results["two-row correction data has nonzero anchor"] = (
+        type_a_orbit_level_shift_correction_data((4, 2)) != 0
+    )
+    for case in cases:
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        source_triple = type_a_partition_sl2_triple(case.partition)
+        target_triple = type_a_partition_sl2_triple(case.dual_partition)
+        source_matrix = type_a_nilpotent_matrix(case.partition)
+        target_matrix = type_a_nilpotent_matrix(case.dual_partition)
+        source_class = type_a_orbit_class(case.partition)
+        target_class = type_a_orbit_class(case.dual_partition)
+
+        results[f"{key} is non-hook"] = (source_class == "two_row_nonhook")
+        results[f"{key} dual is non-principal"] = target_class in {
+            "subregular",
+            "hook_nonprincipal",
+            "two_row_nonhook",
+            "general_nonprincipal",
+        }
+        results[f"{key} matrix partition source"] = (
+            nilpotent_partition_from_matrix(source_matrix) == case.partition
+        )
+        results[f"{key} matrix partition target"] = (
+            nilpotent_partition_from_matrix(target_matrix) == case.dual_partition
+        )
+        results[f"{key} source sl2 relations"] = (
+            source_triple.h * source_triple.e - source_triple.e * source_triple.h == 2 * source_triple.e
+            and source_triple.h * source_triple.f - source_triple.f * source_triple.h == -2 * source_triple.f
+            and source_triple.e * source_triple.f - source_triple.f * source_triple.e == source_triple.h
+        )
+        results[f"{key} target sl2 relations"] = (
+            target_triple.h * target_triple.e - target_triple.e * target_triple.h == 2 * target_triple.e
+            and target_triple.h * target_triple.f - target_triple.f * target_triple.h == -2 * target_triple.f
+            and target_triple.e * target_triple.f - target_triple.f * target_triple.e == target_triple.h
+        )
+        results[f"{key} source dimension identity"] = (
+            orbit_dimension_sl_n(case.partition) + centralizer_dimension_sl_n(case.partition) == n * n - 1
+        )
+        results[f"{key} target dimension identity"] = (
+            orbit_dimension_sl_n(case.dual_partition) + centralizer_dimension_sl_n(case.dual_partition)
+            == n * n - 1
+        )
+        results[f"{key} level-shift propagation"] = (
+            simplify(
+                case.level_shift
+                - nonprincipal_orbit_level_shift_type_a(case.partition, Symbol("k"))
+            )
+            == 0
+        )
+        results[f"{key} correction dual symmetry"] = (
+            type_a_orbit_level_shift_correction_data(case.partition)
+            == type_a_orbit_level_shift_correction_data(case.dual_partition)
+        )
+
+    return results
+
+
+def verify_nonprincipal_general_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
+    """Sanity checks for the general type-A non-principal orbit scaffold."""
+    results: Dict[str, bool] = {}
+    cases = nonprincipal_general_cases(max_n=max_n)
+
+    results["general nonprincipal catalog is nonempty"] = bool(cases)
+    results["general correction data has nonzero anchor"] = (
+        type_a_orbit_level_shift_correction_data((3, 2, 1)) != 0
+    )
+    for case in cases:
+        n = partition_size(case.partition)
+        key = f"A{n-1} general {case.partition}"
+        source_triple = type_a_partition_sl2_triple(case.partition)
+        target_triple = type_a_partition_sl2_triple(case.dual_partition)
+        source_matrix = type_a_nilpotent_matrix(case.partition)
+        target_matrix = type_a_nilpotent_matrix(case.dual_partition)
+        source_class = type_a_orbit_class(case.partition)
+        target_class = type_a_orbit_class(case.dual_partition)
+
+        results[f"{key} source class is general"] = (source_class == "general_nonprincipal")
+        results[f"{key} dual stays non-principal"] = target_class in {
+            "subregular",
+            "hook_nonprincipal",
+            "two_row_nonhook",
+            "general_nonprincipal",
+        }
+        results[f"{key} matrix partition source"] = (
+            nilpotent_partition_from_matrix(source_matrix) == case.partition
+        )
+        results[f"{key} matrix partition target"] = (
+            nilpotent_partition_from_matrix(target_matrix) == case.dual_partition
+        )
+        results[f"{key} source sl2 relations"] = (
+            source_triple.h * source_triple.e - source_triple.e * source_triple.h == 2 * source_triple.e
+            and source_triple.h * source_triple.f - source_triple.f * source_triple.h == -2 * source_triple.f
+            and source_triple.e * source_triple.f - source_triple.f * source_triple.e == source_triple.h
+        )
+        results[f"{key} target sl2 relations"] = (
+            target_triple.h * target_triple.e - target_triple.e * target_triple.h == 2 * target_triple.e
+            and target_triple.h * target_triple.f - target_triple.f * target_triple.h == -2 * target_triple.f
+            and target_triple.e * target_triple.f - target_triple.f * target_triple.e == target_triple.h
+        )
+        results[f"{key} source dimension identity"] = (
+            orbit_dimension_sl_n(case.partition) + centralizer_dimension_sl_n(case.partition) == n * n - 1
+        )
+        results[f"{key} target dimension identity"] = (
+            orbit_dimension_sl_n(case.dual_partition) + centralizer_dimension_sl_n(case.dual_partition)
+            == n * n - 1
+        )
+        results[f"{key} level-shift propagation"] = (
+            simplify(
+                case.level_shift
+                - nonprincipal_orbit_level_shift_type_a(case.partition, Symbol("k"))
+            )
+            == 0
+        )
+        results[f"{key} correction dual symmetry"] = (
+            type_a_orbit_level_shift_correction_data(case.partition)
+            == type_a_orbit_level_shift_correction_data(case.dual_partition)
         )
 
     return results
@@ -668,6 +962,13 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
             results[f"A{n-1} hook r={r} matrix centralizer dimension"] = (
                 matrix_centralizer_dimension_sl_n(hook_matrix) == centralizer_dimension_sl_n(hook)
             )
+            results[f"A{n-1} hook r={r} level-shift propagation"] = (
+                simplify(
+                    case.level_shift
+                    - nonprincipal_orbit_level_shift_type_a(hook, Symbol("k"))
+                )
+                == 0
+            )
             results[f"A{n-1} hook r={r} frontier track"] = (
                 case.track == TRACK_FRONTIER_NONPRINCIPAL
             )
@@ -678,6 +979,12 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
     )
     results["frontier catalog excludes trivial"] = all(
         type_a_orbit_class(case.partition) != "trivial" for case in cases
+    )
+    results["two-row non-hook scaffold checks"] = all(
+        verify_nonprincipal_two_row_orbit_scaffold(max_n=max_n).values()
+    )
+    results["general nonprincipal scaffold checks"] = all(
+        verify_nonprincipal_general_orbit_scaffold(max_n=max_n).values()
     )
     first_source, first_target = first_nonselfdual_hook_pair_nilpotent_matrices()
     results["first non-self-dual hook matrices recover partitions"] = (
@@ -733,6 +1040,9 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
     )
     results["hook orbit pair profile catalog checks"] = all(
         verify_hook_orbit_pair_profile_catalog(max_n=max_n).values()
+    )
+    results["two-row non-hook orbit scaffold checks"] = all(
+        verify_nonprincipal_two_row_orbit_scaffold(max_n=max_n).values()
     )
 
     return results

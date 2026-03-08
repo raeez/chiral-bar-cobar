@@ -846,9 +846,20 @@ $\operatorname{Def}_{\mathrm{cyc}}(\cA) \widehat{\otimes}
 R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})$.
 Even though the full construction of $\Theta_{\cA}$ is conjectural
 (Conjecture~\ref{conj:universal-MC}), the concrete models above
-suffice to formulate every higher-genus construction in this monograph
-as ``induced by $\Theta_{\cA}$,'' making the structural unity of the
-genus tower visible.
+already identify the exact deformation slot in which
+$\Theta_{\cA}$ would live, making the structural unity of the genus
+tower visible without pretending the H-level object is constructed.
+The formal genus-completed framework
+(Proposition~\ref{prop:genus-completed-mc-framework}) establishes that
+the genus-convolution MC equation converges and has genus-stratified
+obstructions, and Proposition~\ref{prop:mc2-reduction-principle}
+packages the remaining MC2 frontier into three tasks: the intrinsic
+cyclic model, the geometric completed tensor / clutching package, and
+the single surviving obstruction channel in the simple-Lie case.
+Propositions~\ref{prop:tautological-line-support-criterion}
+and~\ref{prop:one-channel-normalization-criterion} further reduce that
+last task to a clutching/trace isolation statement for the
+tautological line plus one normalized scalar comparison.
 \end{remark}
 
 \section{Classification of periodicity phenomena}
@@ -909,15 +920,21 @@ identification $V_{r,s} = V_{p-r,q-s}$.  Their conformal weights are
 h_{r,s} \;=\; \frac{(qr - ps)^2 - (q-p)^2}{4pq}.
 \]
 The $T$-matrix is diagonal: $T_{(r,s),(r',s')} = \delta_{(r,s),(r',s')}
-\, e^{2\pi i(h_{r,s} - c/24)}$.  For the $T$-eigenvalue
-$\lambda_{r,s} = e^{2\pi i(h_{r,s} - c/24)}$ to satisfy $\lambda_{r,s}^N = 1$,
-we need $N(h_{r,s} - c/24) \in \mathbb{Z}$.  Since $h_{r,s} - c/24$ is a
-rational number with denominator dividing $24pq$ and $N = 24q'/\gcd(p',24)$,
-a direct computation shows $T^N = \mathrm{Id}$ on the finite-dimensional
-character space (the character of $M(p,q)$ under $\tau \mapsto \tau + 1$
-acquires the phase $e^{-2\pi i c/24}$, and $cN/24 = p'N/(24q')
-= p'/\gcd(p',24) \in \mathbb{Z}$
-since $\gcd(p',24)$ divides $p'$).
+\, e^{2\pi i(h_{r,s} - c/24)}$.  Write
+\[
+\lambda_{r,s} := e^{2\pi i(h_{r,s} - c/24)}.
+\]
+Then $\lambda_{r,s}^N = 1$ is equivalent to
+$N(h_{r,s} - c/24) \in \mathbb{Z}$.  Since $h_{r,s} - c/24$ is rational
+with denominator dividing $24pq$ and
+$N = 24q'/\gcd(p',24)$, one gets $T^N = \mathrm{Id}$ on the
+finite-dimensional character space.  The reason is that
+$\tau \mapsto \tau + 1$ multiplies the character by the phase
+$e^{-2\pi i c/24}$, while
+\[
+\frac{cN}{24} = \frac{p'N}{24q'} = \frac{p'}{\gcd(p',24)} \in \mathbb{Z},
+\]
+because $\gcd(p',24)$ divides $p'$.
 
 \emph{Step~2: Periodicity of weight-space dimensions.}
 The character of each irreducible module $V_{r,s}$ is given by the
@@ -1033,7 +1050,7 @@ and rational orbifolds.
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
 The conjecture asserts $N$-periodicity of bar cohomology dimensions
 in conformal weight for general rational chiral algebras, extending
-the proved minimal model and WZW cases.
+the minimal-model and WZW conjectures.
 (Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
@@ -1451,7 +1468,10 @@ Hyperelliptic curve with 16 spin structures:
 \end{itemize}
 \end{example}
 
-\subsection{Stratified periodicity: unconditional structure, conditional values}
+\subsection{Stratified periodicity}
+
+This subsection separates the unconditional structural part of the
+periodicity story from the conditional numerical values.
 
 \begin{conjecture}[Periodicity classification (partial); \ClaimStatusConjectured]
 \label{thm:complete-periodicity-classification}
@@ -1469,7 +1489,10 @@ N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g 
 \end{align}
 \end{conjecture}
 
-\begin{proof}
+\begin{evidence}
+The lcm structure is unconditional; the conjectural content
+is the specific values of $N_{\mathrm{mod}}$ and $N_{\mathrm{geom}}$.
+
 The bar spectral sequence
 \[
 E_2^{p,q} = H^q(\overline{C}_{p+2}(X))
@@ -1531,7 +1554,7 @@ is the least common multiple of the three individual orders.  Hence
 \mathrm{Period}(\mathcal{A}) \mid \mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}}, N_{\mathrm{geom}}).
 \]
 This is the standard fact that the order of a product of commuting operators on independent factors equals the lcm of their individual orders.
-\end{proof}
+\end{evidence}
 
 \begin{remark}[Sharpness and scope]\label{rem:periodicity-classification-scope}
 This conjecture is tagged \ClaimStatusConjectured{} because two of its three
@@ -1546,14 +1569,14 @@ The $\operatorname{lcm}$ bound is sharp when the three periodicities are genuine
 (Contributing to Conjecture~\ref{conj:master-theta}.)
 \end{remark}
 
-\begin{remark}[Periodicity triple refinement]\label{rem:periodicity-triple-deformation}
-\index{periodicity!triple refinement}
+\begin{remark}[Periodicity profile refinement]\label{rem:periodicity-triple-deformation}
+\index{periodicity profile!refinement}
 The scalar $\mathrm{Period}(\mathcal{A})$ appearing in
 Conjecture~\ref{thm:complete-periodicity-classification} is the
-shadow of a richer invariant: the \emph{periodicity triple}
+shadow of a richer invariant: the \emph{periodicity profile}
 $\Pi(\mathcal{A}) = (M_{\mathcal{A}}, Q_{\mathcal{A}},
 G_{\mathcal{A}})$ of Remark~\ref{rem:periodicity-triple}.
-In the triple formulation, the three periodicity sources
+In the profile formulation, the three periodicity sources
 decompose further:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The modular periodicity $N_{\mathrm{mod}}$ controls the
@@ -1586,28 +1609,35 @@ The original aspiration of a unified periodicity doctrine---a single
 theorematic classification unifying modular, quantum, and geometric
 periodicity across all chiral algebras---is not currently realistic
 in its original form.
-What survives is a \emph{stratified} picture with three levels of
+What survives is a \emph{stratified} picture with four levels of
 decreasing strength:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Unconditional stratum.}
-  Minimal models: all three periodicity sources are controlled
-  (modular by Conjecture~\ref{thm:modular-periodicity-minimal},
-  quantum by the quantum integer periodicity, geometric by
-  the Mumford relations), and the lcm bound is proved.
-\item \emph{Conditional stratum.}
-  General rational chiral algebras: the structural lcm mechanism
-  is proved (Theorem~\ref{thm:periodicity-exchange-koszul}),
-  but the individual values of $N_{\mathrm{mod}}$ and
-  $N_{\mathrm{geom}}$ depend on
-  Conjectures~\ref{conj:modular-periodicity}
-  and~\ref{conj:geometric-periodicity}.
-  WZW models at positive integer level, whose characters
-  are ratios of theta functions, are the natural next case.
+\item \emph{Structural stratum.}
+  The lcm mechanism is proved unconditionally
+  (Theorem~\ref{thm:periodicity-exchange-koszul}).  Quantum
+  periodicity is explicit, and the geometric theory contributes at
+  least the weak proved bound of
+  Theorem~\ref{thm:geometric-periodicity-weak}; what remains open are
+  the sharp formulas for $N_{\mathrm{mod}}$ and the sharp geometric
+  term $N_{\mathrm{geom}}$.
+\item \emph{Principal rational frontier.}
+  Minimal models and WZW models are the first rational families where
+  $T$-matrix periodicity and finite fusion data are explicit, but the
+  actual bar-periodicity formulas remain conjectural
+  (Conjectures~\ref{thm:modular-periodicity-minimal}
+  and~\ref{thm:modular-periodicity-wzw}) because the missing
+  Step~2 convolution argument has not been proved.
+\item \emph{Outer rational frontier.}
+  For general rational chiral algebras, both the modular periodicity
+  bound and the sharp geometric periodicity bound remain conjectural
+  (Conjectures~\ref{conj:modular-periodicity}
+  and~\ref{conj:geometric-periodicity}).  Natural next cases include
+  $\mathcal{W}$-algebra minimal models, orbifolds, and cosets.
 \item \emph{Spectral stratum.}
   For all Koszul chiral algebras (not necessarily rational),
   the period---if it exists---divides the lcm of the
   individual factors, each determined by the modular
-  characteristic package $(\kappa(\cA), \Delta_{\cA})$.
+  scalar/spectral data $(\kappa(\cA), \Delta_{\cA})$.
   The spectral radius of $T_{\mathrm{rec}}$ provides the
   leading asymptotic growth rate, which bounds the modular
   periodicity from above via the dominant branch point

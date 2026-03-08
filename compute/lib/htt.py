@@ -151,24 +151,18 @@ def verify_sdr(p, iota, h, d):
         
         results[f"dh+hd=id-ιp at deg {k}"] = lhs.equals(rhs)
     
-    # 3. Side conditions
-    # h^2 = 0 (h_{k} ∘ h_{k+1} = 0)
-    for k in range(3):
-        if h[k].rows > 0 and h[k+1].cols > 0:
-            product = h[k] * h[k+1]
-            results[f"h²=0 at deg {k},{k+1}"] = product.equals(zeros(*product.shape))
-    
-    # p ∘ h = 0
+    # 3. Side conditions.
+    for k in range(1, 4):
+        product = h[k - 1] * h[k]
+        results[f"h²=0 at deg {k}"] = product.equals(zeros(*product.shape))
+
+    for k in range(1, 4):
+        product = p[k - 1] * h[k]
+        results[f"p∘h=0 at deg {k}"] = product.equals(zeros(*product.shape))
+
     for k in range(4):
-        if p[k].rows > 0 and h[k].cols > 0 and p[k].cols == h[k].rows:
-            # p_k-1 ∘ h_k: C^k -> C^{k-1} -> H^{k-1}
-            pass  # dimensions don't match for direct p∘h
-    
-    # h ∘ iota = 0
-    for k in [0, 3]:
-        if h[k].rows > 0 and iota[k].cols > 0 and h[k].cols == iota[k].rows:
-            product = h[k] * iota[k]
-            results[f"h∘ι=0 at deg {k}"] = product.equals(zeros(*product.shape))
+        product = h[k] * iota[k]
+        results[f"h∘ι=0 at deg {k}"] = product.equals(zeros(*product.shape))
     
     return results
 

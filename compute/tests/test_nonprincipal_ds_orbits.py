@@ -25,9 +25,15 @@ from compute.lib.nonprincipal_ds_orbits import (
     matrix_centralizer_dimension_sl_n,
     matrix_to_traceless_basis_expression_sl_n,
     nilpotent_partition_from_matrix,
+    nonprincipal_general_cases,
     nonprincipal_hook_case,
     nonprincipal_hook_cases,
+    nonprincipal_hook_level_shift_type_a,
     nonprincipal_hook_level_shift_ansatz_type_a,
+    nonprincipal_orbit_level_shift_type_a,
+    nonprincipal_two_row_case,
+    nonprincipal_two_row_cases,
+    two_row_nonhook_partition,
     orbit_dimension_sl_n,
     principal_ff_level_shift_type_a,
     standard_traceless_basis_sl_n,
@@ -37,9 +43,13 @@ from compute.lib.nonprincipal_ds_orbits import (
     type_a_hook_sl2_triple,
     type_a_hook_nilpotent_matrix,
     type_a_nilpotent_matrix,
+    type_a_general_nonprincipal_partitions,
     type_a_orbit_class,
+    type_a_orbit_level_shift_correction_data,
     type_a_partition_sl2_triple,
     verify_hook_orbit_pair_profile_catalog,
+    verify_nonprincipal_general_orbit_scaffold,
+    verify_nonprincipal_two_row_orbit_scaffold,
     verify_nonprincipal_ds_orbit_scaffold,
 )
 
@@ -67,6 +77,17 @@ class TestPartitionCombinatorics:
         assert is_hook_partition((5, 1, 1))
         assert is_hook_partition((4,))
         assert not is_hook_partition((3, 2, 1))
+
+    def test_two_row_nonhook_constructor(self):
+        assert two_row_nonhook_partition(6, 2) == (4, 2)
+        assert two_row_nonhook_partition(7, 3) == (4, 3)
+
+    def test_general_partition_catalog(self):
+        assert type_a_general_nonprincipal_partitions(6) == (
+            (3, 2, 1),
+            (2, 2, 2),
+            (2, 2, 1, 1),
+        )
 
 
 class TestOrbitClassification:
@@ -104,6 +125,17 @@ class TestDimensions:
             basis[0][1] + 2 * basis[-1][1]
         )
         assert expression == ((basis[0][0], 1), (basis[-1][0], 2))
+
+    def test_standard_basis_uses_unambiguous_labels_at_rank_10_and_above(self):
+        basis = standard_traceless_basis_sl_n(11)
+        labels = tuple(label for label, _ in basis)
+        assert len(labels) == len(set(labels))
+        assert "E1_11" in labels
+        assert "E11_1" in labels
+        expression = matrix_to_traceless_basis_expression_sl_n(
+            dict(basis)["E1_11"] + 2 * dict(basis)["E11_1"]
+        )
+        assert expression == (("E1_11", 1), ("E11_1", 2))
 
     def test_matrix_centralizer_dimensions_match_partition_formula(self):
         hook_matrix = type_a_hook_nilpotent_matrix(4, 1)
@@ -202,6 +234,21 @@ class TestFrontierCases:
         assert all(type_a_orbit_class(case.partition) != "principal" for case in cases)
         assert all(type_a_orbit_class(case.partition) != "trivial" for case in cases)
 
+    def test_two_row_frontier_cases(self):
+        case = nonprincipal_two_row_case(6, 2)
+        assert case.family == "two_row_nonhook"
+        assert case.partition == (4, 2)
+        assert case.dual_partition == (2, 2, 1, 1)
+        cases = nonprincipal_two_row_cases(max_n=7)
+        assert cases
+        assert all(type_a_orbit_class(entry.partition) == "two_row_nonhook" for entry in cases)
+
+    def test_general_frontier_cases(self):
+        cases = nonprincipal_general_cases(max_n=6)
+        assert cases
+        assert cases[0].partition == (2, 2, 1)
+        assert all(type_a_orbit_class(entry.partition) == "general_nonprincipal" for entry in cases)
+
 
 class TestHookOrbitProfiles:
     def test_single_profile(self):
@@ -231,8 +278,24 @@ class TestLevelShiftScaffold:
         assert simplify(lhs - rhs) == 0
         assert simplify(lhs - (-k - 12)) == 0
 
+    def test_data_driven_hook_shift(self):
+        k = Symbol("k")
+        assert simplify(nonprincipal_hook_level_shift_type_a(6, 2, k) - (-k - 12)) == 0
+        assert type_a_orbit_level_shift_correction_data((4, 2)) == 1
+        assert simplify(nonprincipal_orbit_level_shift_type_a((4, 2), k) - (-k - 13)) == 0
+        assert type_a_orbit_level_shift_correction_data((3, 2, 1)) == 1
+        assert simplify(nonprincipal_orbit_level_shift_type_a((3, 2, 1), k) - (-k - 13)) == 0
+
+    def test_general_seed_correction_is_dual_symmetric(self):
+        assert type_a_orbit_level_shift_correction_data((4, 2, 1)) == 1
+        assert type_a_orbit_level_shift_correction_data((3, 2, 1, 1)) == 1
+        assert type_a_orbit_level_shift_correction_data((3, 3, 1)) == 2
+        assert type_a_orbit_level_shift_correction_data((3, 2, 2)) == 2
+
 
 class TestVerificationBundle:
     def test_all_checks(self):
         assert all(verify_nonprincipal_ds_orbit_scaffold(max_n=8).values())
         assert all(verify_hook_orbit_pair_profile_catalog(max_n=8).values())
+        assert all(verify_nonprincipal_general_orbit_scaffold(max_n=7).values())
+        assert all(verify_nonprincipal_two_row_orbit_scaffold(max_n=8).values())

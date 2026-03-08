@@ -73,9 +73,9 @@ $(STAMP): $(SOURCES)
 		xattr -c $(MAIN).out 2>/dev/null; \
 		$(TEX) $(TEXFLAGS) $(MAIN).tex || true; \
 		if [ -f $(MAIN).idx ]; then makeindex -q $(MAIN).idx 2>/dev/null || true; fi; \
-		if [ $$i -ge 2 ] && ! grep -q 'Rerun to get' $(MAIN).log 2>/dev/null \
-		   && [ $$(grep -c 'Citation.*undefined' $(MAIN).log) -eq 0 ] \
-		   && [ $$(grep -c 'Reference.*undefined' $(MAIN).log) -eq 0 ]; then \
+			if [ $$i -ge 2 ] && ! grep -Eq 'Rerun to get|Label\(s\) may have changed|Package rerunfilecheck Warning' $(MAIN).log 2>/dev/null \
+			   && [ $$(grep -c 'Citation.*undefined' $(MAIN).log) -eq 0 ] \
+			   && [ $$(grep -c 'Reference.*undefined' $(MAIN).log) -eq 0 ]; then \
 			echo "  ✓  Converged after $$i passes."; \
 			break; \
 		fi; \

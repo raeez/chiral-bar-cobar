@@ -488,35 +488,56 @@ class SDR:
     def verify_sdr(self) -> Dict[str, bool]:
         """Verify all SDR conditions."""
         results = {}
-        
-        # 1. p ∘ ι = id_H at each degree
+
+        # 1. p ∘ ι = id_H at each degree.
         for k in range(self.n_degrees):
-            if self.cohom_dims[k] > 0:
-                product = self.p_matrices[k] * self.iota_matrices[k]
-                expected = eye(self.cohom_dims[k])
-                results[f"p∘ι=id at deg {k}"] = product.equals(expected)
-        
-        # 2. dh + hd = id - ι∘p at each degree
+            product = self.p_matrices[k] * self.iota_matrices[k]
+            expected = eye(self.cohom_dims[k])
+            results[f"p∘ι=id at deg {k}"] = product.equals(expected)
+
+        # 2. d_{k-1} h_k + h_{k+1} d_k = id - ι∘p at each degree.
         for k in range(self.n_degrees):
             dim_k = self.dims[k]
             lhs = zeros(dim_k, dim_k)
-            
-            # d_{k-1} ∘ h_k
+
             if k > 0 and self.h_matrices[k] is not None:
                 h_k = self.h_matrices[k]
-                d_prev = self.diffs[k-1] if k >= 2 else zeros(self.dims[0] if k==1 else 0, 0)
-                if k >= 2:
-                    lhs += self.diffs[k-2] * h_k if h_k.rows > 0 else zeros(dim_k, dim_k)
-                # Wait, d_{k-1}: C^{k-1} → C^k, h_k: C^k → C^{k-1}
-                # d_{k-1} ∘ h_k: C^k → C^k... but d_{k-1} goes the wrong way!
-                # Actually, d: C^k → C^{k+1}. So d_k: C^k → C^{k+1}.
-                # h_k: C^k → C^{k-1}.
-                # dh: d_{k-1} ∘ h_k doesn't make sense dimensionally.
-                pass
-            
-            # I realize the SDR construction is more complex than I initially coded.
-            # Let me use a simpler, correct approach.
-        
+                lhs += self.diffs[k - 1] * h_k
+
+            if k < self.n_degrees - 1 and self.h_matrices[k + 1] is not None:
+                lhs += self.h_matrices[k + 1] * self.diffs[k]
+
+            rhs = eye(dim_k) - self.iota_matrices[k] * self.p_matrices[k]
+            results[f"dh+hd=id-ιp at deg {k}"] = lhs.equals(rhs)
+
+        # 3. h² = 0.
+        for k in range(1, self.n_degrees):
+            h_prev = self.h_matrices[k - 1]
+            h_k = self.h_matrices[k]
+            if h_prev is None or h_k is None:
+                results[f"h²=0 at deg {k}"] = False
+                continue
+            product = h_prev * h_k
+            results[f"h²=0 at deg {k}"] = product.equals(zeros(product.rows, product.cols))
+
+        # 4. p ∘ h = 0.
+        for k in range(1, self.n_degrees):
+            h_k = self.h_matrices[k]
+            if h_k is None:
+                results[f"p∘h=0 at deg {k}"] = False
+                continue
+            product = self.p_matrices[k - 1] * h_k
+            results[f"p∘h=0 at deg {k}"] = product.equals(zeros(product.rows, product.cols))
+
+        # 5. h ∘ ι = 0.
+        for k in range(self.n_degrees):
+            h_k = self.h_matrices[k]
+            if h_k is None:
+                results[f"h∘ι=0 at deg {k}"] = False
+                continue
+            product = h_k * self.iota_matrices[k]
+            results[f"h∘ι=0 at deg {k}"] = product.equals(zeros(product.rows, product.cols))
+
         return results
 
 

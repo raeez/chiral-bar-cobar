@@ -1,11 +1,27 @@
 \chapter{Yangians and shifted Yangians}
 \label{chap:yangians}
 
-The Yangian $Y(\mathfrak{g})$ is an $\Eone$-chiral algebra: associative but not commutative, local but not fully local.  Its bar complex uses ordered configurations on the real line rather than on a complex curve, Fulton--MacPherson compactifications of real configuration spaces replace their complex counterparts, and Verdier duality inverts the $R$-matrix.  The resulting Koszul duals involve quantum groups $U_q(\mathfrak{g})$ rather than vertex algebras at shifted levels.
+The Yangian $Y(\mathfrak{g})$ is an $\Eone$-chiral algebra:
+associative but not commutative, local but not fully local.  Its bar
+complex uses ordered configuration spaces on a curve, rather than the
+unordered curve-configurations of the $\Einf$-chiral setting, and
+Verdier duality inverts the $R$-matrix.  The resulting Koszul duals
+involve quantum groups $U_q(\mathfrak{g})$ rather than vertex algebras
+at shifted levels.
 
 The governing question is: how much of the curve-level modular Koszul
 machine survives in the braided $\Eone$ regime at theorem level, and what
 remains contingent on the full factorization-categorical DK/KL extension.
+
+\begin{remark}[Axis convention]
+\label{rem:yangian-axis}
+In this chapter, $\Eone$-chiral means associative/nonlocal
+curve-chiral structure in the sense of
+Definition~\ref{def:e1-chiral}, not a bare topological
+$\mathsf{E}_1$-algebra on a real $1$-manifold.  Ordered versus
+unordered configuration spaces is a change of factorization regime on
+the same curve.
+\end{remark}
 
 \begin{remark}[Yangian as atom: the braided face]
 \label{rem:yangian-atom}
@@ -206,7 +222,11 @@ where $Y_{R^{-1}}$ is the RTT algebra defined by the relation:
 \begin{equation}
 R^{-1}_{12}(u-v)\, T_1^!(u)\, T_2^!(v) = T_2^!(v)\, T_1^!(u)\, R^{-1}_{12}(u-v)
 \end{equation}
-with $R^{-1}(u) = 1 + \hbar P/u + O(u^{-2})$ (note the sign change from $R(u) = 1 - \hbar P/u + \cdots$).
+with
+\[
+R^{-1}(u) = 1 + \hbar P/u + O(u^{-2}),
+\]
+so the linear term changes sign from $R(u) = 1 - \hbar P/u + \cdots$.
 
 For the Yang $R$-matrix $R(u) = 1 - \hbar P/u$, the inverse is
 $R^{-1}(u) = u/(u - \hbar P) = \sum_{n \geq 0} (\hbar P/u)^n$;
@@ -401,7 +421,7 @@ $\sigma^! = P \circ R^{-1}(u) = \sigma^{-1}$.
 
 \begin{example}[Yangian $Y(\mathfrak{sl}_2)$ fundamental modules]
 \label{ex:yangian-sl2-modules}
-\index{Yangian!sl2 modules@$\mathfrak{sl}_2$ modules}
+\index{Yangian!sl2 modules@sl2 mods}
 The Yangian $Y(\mathfrak{sl}_2)$ has evaluation modules
 $V(a) \cong \mathbb{C}^2$ for each $a \in \mathbb{C}$.  The
 $R$-matrix on $V(a) \otimes V(b)$ is:
@@ -657,12 +677,13 @@ not on the geometric origin of the Yangian structure.
 The structural comparison above does not establish a
 quasi-isomorphism $Y(\mathfrak{g})^{\mathrm{ch}}
 \simeq Y^{\mathrm{dg}}(\mathfrak{g})$: this would require
-matching the full $A_\infty$ structure (higher operations
-$m_k$ for $k \geq 3$).  Since both arise as quadratic
-$\Eone$-algebras with the same $R$-matrix, the $A_\infty$
-structures are determined by the bar complex, and
-a quasi-isomorphism would follow from the Koszul property
-(Remark~\ref{rem:yangian-collapse-conj}).
+constructing a separated complete RTT-level filtration on the
+dg-shifted target whose finite quotients recover the theorematic finite
+RTT stages.  Corollary~\ref{cor:yangian-hlevel-comparison-criterion}
+shows that once such compatible finite quotients are in place, the
+comparison with the coefficientwise RTT completion is formal.
+Koszulness (Remark~\ref{rem:yangian-collapse-conj}) remains one natural
+route to producing those compatible quotient identifications.
 \end{remark}
 
 \begin{remark}[Maurer--Cartan element as twisting morphism]
@@ -706,6 +727,236 @@ Chern--Simons perturbation theory~(\cite{DNP25}).  The missing
 input is the Koszulness of the $\Eone$-chiral bar complex
 (Remark~\ref{rem:yangian-collapse-conj}).
 \end{remark}
+
+\begin{conjecture}[Finite-RTT quotient package for dg-shifted Yangians;
+\ClaimStatusConjectured]
+\label{conj:dg-shifted-yangian-rtt-package}
+The dg-shifted Yangian $\Ydg_{\cA}$ attached to affine/Yangian-type
+modular Koszul data admits an RTT-adapted filtration in the sense of
+Definition~\ref{def:rtt-adapted-filtration}.  More precisely:
+\begin{enumerate}
+\item the filtration is separated and complete for the pole order or
+  RTT level of the line-operator expansion;
+\item the finite quotient
+  $\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}$ records exactly the modes visible up to
+  RTT level $N$;
+\item those quotients are dg quasi-isomorphic to the finite RTT
+  Yangians $Y_{\le N}$; and
+\item the comparison is compatible with evaluation modules and the
+  degree-$2$ twisting morphism $r(z)=\tau|_{\deg 2}$.
+\end{enumerate}
+Assuming this package, Corollary~\ref{cor:yangian-hlevel-comparison-criterion}
+identifies $\Ydg_{\cA}$ with the coefficientwise RTT completion
+$\widehat Y_{\mathrm{RTT}}$.
+\end{conjecture}
+
+\begin{remark}[Why line operators should control the filtration]
+\label{rem:dg-shifted-filtration-evidence}
+The finite-RTT quotient package is narrower than the full derived
+Drinfeld--Kohno bridge.  It asks only for compatible dg quotients, not
+for the full factorization-category equivalence.  The evidence from
+Dimofte--Niu--Py points in exactly this direction:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item line-operator OPEs are organized by spectral parameter and hence
+  by pole order;
+\item the non-renormalization theorem isolates the same quadratic
+  $R$-matrix data that govern the finite RTT stages; and
+\item the Maurer--Cartan element $r(z)$ already appears as the degree-$2$
+  bar twisting morphism, so compatibility with finite-stage bar-cobar
+  data is the natural first comparison problem.
+\end{enumerate}
+What remains missing is a theorem that these pole-order truncations are
+represented by genuine dg quotients recovering $Y_{\le N}$.
+\end{remark}
+
+\begin{remark}[First attack route for dg-shifted RTT quotients]
+\label{rem:dg-shifted-quotient-route}
+Conjecture~\ref{conj:dg-shifted-yangian-rtt-package} reduces to four
+stagewise checks:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item define pole-order or RTT-level ideals in the line-operator dg
+  algebra and prove that the differential, translation operator,
+  Maurer--Cartan element, and twisted coproduct preserve them;
+\item show that the quotient by level $>N$ depends only on the first
+  $N$ RTT modes of the OPE;
+\item identify that quotient with the finite RTT Yangian $Y_{\le N}$ by
+  matching quadratic $R$-matrix relations and evaluation modules; and
+\item compare the induced degree-$2$ twisting morphism with
+  $\tau|_{\deg 2}$ so the quotient bar data interleave with the proved
+  finite-stage bar-cobar package.
+\end{enumerate}
+This is the exact place where the DNP line-operator calculus must meet
+the theorematic finite RTT tower.
+Proposition~\ref{prop:dg-shifted-rtt-locality-criterion} packages the
+first two items into a concrete no-downward-propagation theorem for the
+line-operator formulas, and
+Proposition~\ref{prop:dg-shifted-rtt-formula-preservation} verifies
+that criterion for the standard rational line-operator formulas once
+they are written coefficientwise in RTT level.
+\end{remark}
+
+\begin{proposition}[Presentation-level criterion for finite RTT
+dg quotients; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-presentation-criterion}
+Let $\Ydg_{\cA}$ be a dg-shifted Yangian with preserved RTT-level ideals
+$F^{N+1}\Ydg_{\cA}$ as in
+Proposition~\ref{prop:dg-shifted-quotient-criterion}.  Fix $N \ge 0$ and
+assume that the quotient
+\[
+Q_N:=\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the underlying associative algebra of $Q_N$ is generated by the
+  images of the RTT modes $T_{ij}^{(r)}$ with $r \le N$;
+\item these generators satisfy the truncated RTT relations and no
+  further algebra relations beyond those forced by truncation; and
+\item the induced evaluation modules on $Q_N$ agree with the usual
+  evaluation modules for the finite RTT Yangian stage.
+\end{enumerate}
+Then the underlying associative algebra of $Q_N$ is canonically
+isomorphic to the finite RTT Yangian $Y_{\le N}$.  Consequently, once
+the dg structure and the degree-$2$ twisting morphism are also
+compatible, the quotient $Q_N$ supplies the $N$th stage required by
+Conjecture~\ref{conj:dg-shifted-yangian-rtt-package}.
+\end{proposition}
+
+\begin{proof}
+By assumption, the underlying algebra of $Q_N$ is presented by the same
+generators and the same truncated RTT relations as $Y_{\le N}$.  Hence
+the universal property of the quotient of the free associative algebra
+by those relations identifies the two associative algebras.
+
+The evaluation-module hypothesis ensures that this identification is the
+one compatible with the theorematic finite-stage representation theory
+used throughout the chapter.  The final sentence is then just the
+remaining compatibility requirement from
+Definition~\ref{def:rtt-adapted-filtration}.
+\end{proof}
+
+\begin{proposition}[Pole-order locality criterion for finite RTT
+quotients; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-locality-criterion}
+Assume that the dg-shifted Yangian $\Ydg_{\cA}$ is topologically
+generated by RTT modes $T_{ij}^{(r)}$, and for each $N \ge 0$ let
+$F^{N+1}\Ydg_{\cA}$ be the closed two-sided ideal generated by the
+modes with $r > N$.  Suppose the local formulas defining the
+dg-shifted Yangian structure are RTT-triangular in the following sense:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for every generator $T_{ij}^{(r)}$, each term occurring in
+  $d(T_{ij}^{(r)})$, in the translated mode $\partial(T_{ij}^{(r)})$,
+  in every twisting term contributed by the Maurer--Cartan element
+  $r(z)$, and in every coefficient of the twisted coproduct
+  $\Delta^{\mathrm{tw}}(T_{ij}^{(r)})$ contains at least one factor
+  $T_{ab}^{(s)}$ with $s \ge r$; and
+\item for every $\ell \ge 0$, the RTT-level-$\ell$ part of each such
+  structure formula depends only on modes $T_{ab}^{(s)}$ with
+  $s \le \ell$.
+\end{enumerate}
+Then each ideal $F^{N+1}\Ydg_{\cA}$ is preserved by the differential,
+translation operator, Maurer--Cartan twisting, and twisted coproduct,
+and the quotient
+\[
+\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+is determined entirely by the first $N$ RTT modes.
+
+If, in addition, the quotient satisfies the truncated RTT relations,
+evaluation-module compatibility, and the degree-$2$ twisting
+identification, then
+Propositions~\ref{prop:dg-shifted-quotient-criterion}
+and~\ref{prop:dg-shifted-rtt-presentation-criterion} identify it with
+$Y_{\le N}$, so
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion} applies.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} implies that the image of any generator of RTT
+level $>N$ under the differential, the translated mode operator, the
+twisting terms, or the twisted coproduct still contains at least one
+mode of RTT level $>N$.  Hence the closed ideal generated by such modes
+is preserved by all four pieces of structure.
+
+Condition~\textup{(ii)} says that once one passes to the quotient by
+RTT level $>N$, no coefficient of RTT level $\le N$ can depend on the
+discarded modes.  Therefore the quotient structure is determined
+entirely by the first $N$ modes.  The final sentence is then exactly
+the combined content of
+Propositions~\ref{prop:dg-shifted-quotient-criterion}
+and~\ref{prop:dg-shifted-rtt-presentation-criterion}.
+\end{proof}
+
+\begin{proposition}[RTT-level preservation from the rational
+line-operator formulas; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-formula-preservation}
+Write the dg-shifted Yangian line-operator field in RTT form
+\[
+T(z,u)=1+\hbar\sum_{r \ge 0} T^{(r)}(z)\,u^{-r-1},
+\]
+and let $F^{N+1}\Ydg_{\cA}$ be the closed two-sided ideal generated by
+the coefficients $T^{(r)}(z)$ with $r>N$.  Assume the
+dg-shifted structure is given by the standard rational line-operator
+formulas:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the untwisted differential and the translation operator act
+  coefficientwise in the spectral expansion,
+  \[
+  d_0 T(z,u)=\sum_{r \ge 0} d_0T^{(r)}(z)\,u^{-r-1},
+  \qquad
+  \partial_z T(z,u)=\sum_{r \ge 0} \partial_zT^{(r)}(z)\,u^{-r-1};
+  \]
+\item the Maurer--Cartan correction is the rational convolution coming
+  from
+  \[
+  r(u-v)=\sum_{m \ge 0} r_m\,(u-v)^{-m-1},
+  \]
+  so every coefficient of total RTT level $\ell$ in the twisted term is
+  a finite linear combination of coefficients $T^{(a)}$ with
+  $a \le \ell$; and
+\item the twisted coproduct is coefficientwise multiplication of
+  monodromy matrices,
+  \[
+  \Delta^{\mathrm{tw}}T(u)=T_1(u)\,T_2(u),
+  \]
+  possibly followed by the same rational $r$-twist, so that the
+  coefficient of $u^{-\ell-1}$ is a finite sum of tensors
+  $T^{(a)}\otimes T^{(b)}$ with $a+b=\ell$.
+\end{enumerate}
+Then the ideals $F^{N+1}\Ydg_{\cA}$ satisfy the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-locality-criterion}.  In
+particular, they are preserved by the differential, translation
+operator, Maurer--Cartan twisting, and twisted coproduct, and the
+quotient by $F^{N+1}\Ydg_{\cA}$ depends only on the modes
+$T^{(r)}$ with $r \le N$.
+\end{proposition}
+
+\begin{proof}
+Item~\textup{(i)} shows immediately that neither the untwisted
+differential nor translation changes RTT level: the coefficient of
+$u^{-r-1}$ is sent to another coefficient of the same level.  Hence
+both operations preserve the ideal generated by levels $>N$.
+
+For the Maurer--Cartan part, expand the rational kernel in either
+region $|u|>|v|$ or $|v|>|u|$.  The coefficient of any fixed total RTT
+level $\ell$ in the resulting convolution is a finite sum involving
+only the coefficients $T^{(a)}$ with $a \le \ell$, because the rational
+kernel contributes only nonnegative pole order in the spectral
+variables.  Therefore no term of RTT level $\le N$ can depend on a mode
+of level $>N$, and any term containing a generator of level $>N$
+remains in the ideal generated by such modes.
+
+For the coproduct, multiplying the two monodromy matrices gives
+\[
+\Delta^{\mathrm{tw}}T^{(\ell)}
+=\sum_{a+b=\ell} T^{(a)}\otimes T^{(b)}
+\]
+before the same rational $r$-twist is applied.  Thus the coefficient of
+RTT level $\ell$ depends only on levels $\le \ell$, and every tensor
+term containing a factor of level $>N$ lies in the tensor ideal
+generated by $F^{N+1}\Ydg_{\cA}$.  This verifies the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-locality-criterion}, and the final
+claim follows from that proposition.
+\end{proof}
 
 \section{Coulomb branch algebras}
 \label{sec:coulomb-branch}
@@ -873,7 +1124,7 @@ $A_{-\hbar} = \bC\langle x', y'\rangle / (x'y' = z^n - n\hbar z^{n-1}
 + \cdots)$, the same singularity with reversed quantization parameter.
 \end{example}
 
-\subsection{Cohomological Hall algebras as $\Eone$-chiral algebras}
+\subsection{\texorpdfstring{Cohomological Hall algebras as $\Eone$-chiral algebras}{Cohomological Hall algebras as E1-chiral algebras}}
 \label{sec:coha-structure}
 \index{CoHA!$\Eone$-chiral structure}
 \index{CoHA!factorization structure}
@@ -937,7 +1188,7 @@ The conjecture asserts a Koszul duality equivalence between the CoHA of a Dynkin
 \label{sec:yangian-bar-explicit}
 \index{Yangian!bar complex!explicit}
 
-\subsection{RTT bar complex for $Y(\mathfrak{sl}_2)$}
+\subsection{\texorpdfstring{RTT bar complex for $Y(\mathfrak{sl}_2)$}{RTT bar complex for Y(sl2)}}
 
 \begin{computation}[Yangian $Y(\mathfrak{sl}_2)$: bar complex
 through degree 3]
@@ -1410,7 +1661,7 @@ in the FM compactification.  The resolution of this singularity
 the bar complex propagator.
 \end{remark}
 
-\subsection{Yangian category $\mathcal{O}$ from bar-cobar duality}
+\subsection{\texorpdfstring{Yangian category $\mathcal{O}$ from bar-cobar duality}{Yangian category O from bar-cobar duality}}
 \label{sec:yangian-category-O}
 \index{Yangian!category O}
 
@@ -1522,7 +1773,7 @@ D^b(\mathcal{O}_{Y_{-\hbar}})$
 sending $M(\lambda, a) \mapsto M(\lambda, -a)$.
 \end{remark}
 
-\section{The derived Drinfeld--Kohno theorem}
+\section{Chain-level and evaluation-locus derived Drinfeld--Kohno}
 \label{sec:derived-dk}
 \index{Drinfeld--Kohno!derived|textbf}
 
@@ -1531,15 +1782,16 @@ identifies the monodromy representation of the KZ connection on
 $\widehat{\mathfrak{g}}_k$ conformal blocks with the $R$-matrix
 representation of $U_q(\mathfrak{g})$ at
 $q = e^{\pi i/(k + h^\vee)}$.  The constructions of this chapter
-and Part~I yield a \emph{derived} enhancement: $\Eone$-chiral Koszul
-duality provides a chain-level equivalence that reverses braiding,
-and the classical Kazhdan--Lusztig and Kazhdan equivalences
-translate this into the $q \mapsto q^{-1}$ involution on quantum
-group representations.
+and Part~I yield a \emph{derived} enhancement in two proved layers:
+$\Eone$-chiral Koszul duality provides a chain-level equivalence that
+reverses braiding, and the factorization statement is established on
+the evaluation locus.  The classical Kazhdan--Lusztig and Kazhdan
+equivalences translate the chain-level part into the
+$q \mapsto q^{-1}$ involution on quantum group representations.
 
 \subsection{The Drinfeld--Kohno square for affine algebras}
 
-\begin{theorem}[Derived Drinfeld--Kohno for affine algebras;
+\begin{theorem}[Chain-level derived Drinfeld--Kohno for affine algebras;
 \ClaimStatusProvedHere]\label{thm:derived-dk-affine}
 \index{Drinfeld--Kohno!derived!affine algebras}
 Let $k$ be a non-negative integer,
@@ -1635,9 +1887,9 @@ group involution: the algebraic operation $q \mapsto q^{-1}$
 is realized by orientation reversal on configuration spaces.
 \end{remark}
 
-\subsection{Derived Drinfeld--Kohno for Yangians}
+\subsection{Chain-level derived Drinfeld--Kohno for Yangians}
 
-\begin{theorem}[Derived Drinfeld--Kohno for Yangians;
+\begin{theorem}[Chain-level derived Drinfeld--Kohno for Yangians;
 \ClaimStatusProvedHere]\label{thm:derived-dk-yangian}
 \index{Drinfeld--Kohno!derived!Yangian}
 %
@@ -1746,9 +1998,8 @@ Corollary~\ref{cor:yangian-ext-exchange} gives
 \operatorname{Ext}^n_{Y_\hbar}(V(a), W(b))
 \cong \operatorname{Ext}^n_{Y_{-\hbar}}(V(-a), W(-b)).
 \]
-\textup{[Category: full abelian
-$\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))$
-via Kazhdan equivalence.]}
+The transport takes place via the Kazhdan equivalence in the full
+abelian category of finite-dimensional $U_q(\mathfrak{g})$-modules.
 Via $\Phi_K$, this becomes
 \[
 \operatorname{Ext}^n_{U_q}(V_q(e^a), W_q(e^b))
@@ -1936,6 +2187,75 @@ Costello--Gwilliam~\cite{CG17}.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{definition}
 
+\begin{definition}[RTT-adapted filtration on a dg-shifted Yangian;
+\ClaimStatusConjectured]
+\label{def:rtt-adapted-filtration}
+Let $\Ydg_{\cA}$ be a dg-shifted Yangian.  An
+\emph{RTT-adapted filtration} on $\Ydg_{\cA}$ is a descending
+filtration by closed dg ideals
+\[
+F^1\Ydg_{\cA} \supset F^2\Ydg_{\cA} \supset \cdots
+\]
+such that:
+\begin{enumerate}
+\item $\Ydg_{\cA} \cong
+  \varprojlim_N \Ydg_{\cA}/F^{N+1}\Ydg_{\cA}$ as a complete dg algebra;
+\item the differential, translation operator, Maurer--Cartan element
+  $r(z)$, and twisted coproduct preserve the filtration;
+\item each quotient
+  $\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}$ is dg quasi-isomorphic to the finite
+  RTT stage $Y_{\le N}$; and
+\item these quotient quasi-isomorphisms are compatible with the RTT
+  truncation maps and the finite-stage bar-cobar data.
+\end{enumerate}
+This is the exact H-level input required by
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion}.
+\end{definition}
+
+\begin{proposition}[Formal quotient criterion for dg-shifted Yangians;
+\ClaimStatusProvedHere]
+\label{prop:dg-shifted-quotient-criterion}
+Let $\Ydg_{\cA}$ be a dg algebra equipped with:
+\begin{enumerate}
+\item a translation operator;
+\item a Maurer--Cartan element $r(z)$;
+\item a twisted coproduct; and
+\item a descending sequence of closed dg ideals
+  \[
+  F^1\Ydg_{\cA} \supset F^2\Ydg_{\cA} \supset \cdots
+  \]
+  preserved by the differential, translation operator,
+  Maurer--Cartan element, and twisted coproduct.
+\end{enumerate}
+Then every finite quotient
+\[
+\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+inherits the same dg-shifted Yangian type of structure, and the quotient
+maps form an inverse system of dg-shifted objects.
+
+If, in addition, these quotients are dg quasi-isomorphic to the finite
+RTT stages $Y_{\le N}$ compatibly with RTT truncation, evaluation
+modules, and the degree-$2$ twisting morphism, then
+Definition~\ref{def:rtt-adapted-filtration} holds and
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion} applies.
+\end{proposition}
+
+\begin{proof}
+Preservation of the ideals by the differential descends the dg
+structure to each quotient.  Preservation by the translation operator,
+Maurer--Cartan element, and twisted coproduct descends those data as
+well, because each operation factors through the quotient by the same
+ideal.  Compatibility of the quotient maps with the preserved
+operations makes the family of quotients an inverse system of
+dg-shifted objects.
+
+The additional compatibility hypotheses are exactly the remaining items
+of Definition~\ref{def:rtt-adapted-filtration}.  Once they are checked,
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion} gives the
+comparison with $\widehat Y_{\mathrm{RTT}}$.
+\end{proof}
+
 \begin{conjecture}[Full derived Drinfeld--Kohno bridge;
 \ClaimStatusConjectured]
 \label{conj:full-dk-bridge}
@@ -1985,13 +2305,263 @@ $Y_{\le N}$ and a completed bar object
 \[
 \widehat{\bar B}(Y) := \varprojlim_N \bar B(Y_{\le N})
 \]
-with continuous differential and comparison maps compatible with the
-finite RTT stages.  Until that inverse-limit package is built, the
-middle term
+with comparison maps compatible with the finite RTT stages.  The
+standard RTT tower now supplies this completed M-level package
+(Corollary~\ref{cor:yangian-standard-mc4-package}), so the unresolved
+part of Hypothesis~\textup{(ii)} is no longer the existence of a
+standard completion.  What remains open is the comparison between that
+coefficientwise RTT completion and the dg-shifted/factorization target.
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion} shows that this
+comparison becomes formal once the H-level target carries a separated
+complete RTT-level filtration whose finite quotients recover the
+theorematic RTT stages.
+Accordingly, the middle term
 $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})$ should be read as
 theorem-ready target data, not as an already realized factorization
 category.
 \end{remark}
+
+\begin{remark}[What the Yangian tower still has to prove]
+\label{rem:yangian-mc4-checklist}
+By Proposition~\ref{prop:mc4-reduction-principle}, the Yangian-tower
+frontier breaks into four concrete checks rather than one undifferentiated
+completion slogan:
+\begin{enumerate}
+\item choose finite RTT truncations $Y_{\le N}$ whose bar complexes
+  remain inside the proved $\Eone$-Koszul regime;
+\item show that the finite-stage bar and cobar structures descend
+  compatibly so the completed differentials are continuous for the
+  inverse-limit topology;
+\item verify the Mittag--Leffler condition on
+  $\{H^m(\bar B(Y_{\le N}))\}_N$; and
+\item identify the inverse limit with the intended dg-shifted Yangian or
+  factorization-theoretic completion.
+\end{enumerate}
+The theorematic part of the present chapter therefore already supplies
+the finite-stage inputs.  For the standard RTT truncation tower,
+Proposition~\ref{prop:inverse-limit-differential-continuity} makes
+item~\textup{(2)} formal, Corollary~\ref{cor:yangian-weight-cutoff}
+makes item~\textup{(3)} formal, and
+Proposition~\ref{prop:yangian-rtt-completion-identification} identifies
+the inverse limit with the coefficientwise RTT completion.  Thus the
+standard RTT tower now supplies the completed M-level bar-cobar
+package.  The live Yangian frontier is the stronger H-level comparison
+with the dg-shifted Yangian or factorization-theoretic completion, not
+new local bar calculus.  By
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion}, item~\textup{(4)}
+reduces to constructing a filtered dg-shifted or factorization model
+whose finite RTT quotients match the proved stages.
+\end{remark}
+
+\begin{proposition}[Yangian tower criterion from finite RTT stages;
+\ClaimStatusProvedHere]
+\label{prop:yangian-tower-mc4-criterion}
+Let
+\[
+Y = \varprojlim_N Y_{\le N}
+\]
+be a separated complete Yangian tower assembled from finite RTT stages.
+Assume:
+\begin{enumerate}
+\item each $Y_{\le N}$ lies in the proved $\Eone$-Koszul regime of this
+  chapter;
+\item the transition maps $Y_{\le N+1} \to Y_{\le N}$ are compatible
+  with the finite-stage bar complexes and bar-cobar
+  quasi-isomorphisms;
+\item for every cohomological degree~$m$, the inverse system
+  $\{H^m(\bar B(Y_{\le N}))\}_N$ is eventually constant; and
+\item the transition maps define an inverse system of curved dg
+  coalgebras on the finite-stage bar complexes.
+\end{enumerate}
+Then the completed Yangian bar object
+\[
+\widehat{\bar B}(Y) := \varprojlim_N \bar B(Y_{\le N})
+\]
+is a separated complete pro-nilpotent curved dg coalgebra and the
+canonical comparison map
+\[
+\Omega\bigl(\widehat{\bar B}(Y)\bigr) \xrightarrow{\sim} Y
+\]
+is a quasi-isomorphism.  This gives the theorem-ready M-level completed
+bar-cobar package for the Yangian tower.  The stronger H-level
+factorization-categorical realization remains part of the MC4/MC5
+frontier.  As in the \(\mathcal{W}_\infty\) case, the eventual-constancy
+hypothesis may be weakened to eventual surjectivity on finite-dimensional
+weight slices by Corollary~\ref{cor:mc4-surjective-criterion}.
+\end{proposition}
+
+\begin{proof}
+Assumption~\textup{(iii)} is exactly the stabilization hypothesis of
+Corollary~\ref{cor:mc4-degreewise-stabilization}, and
+Assumptions~\textup{(i)}, \textup{(ii)}, and~\textup{(iv)} identify the
+Yangian tower with the general inverse-limit setting of
+Proposition~\ref{prop:mc4-reduction-principle}, while
+Proposition~\ref{prop:inverse-limit-differential-continuity} supplies
+the continuity of the completed bar and cobar differentials.
+Applying Corollary~\ref{cor:mc4-degreewise-stabilization} to the tower
+$\{\bar B(Y_{\le N})\}_N$ yields the stated completed bar-cobar
+quasi-isomorphism.
+\end{proof}
+
+\begin{corollary}[Standard RTT cutoff for Yangian towers;
+\ClaimStatusProvedHere]
+\label{cor:yangian-weight-cutoff}
+Let $Y_{\le N}$ be the standard RTT truncation retaining the generators
+$T_{ij}^{(r)}$ with $r \le N$, and let
+$Y = \varprojlim_N Y_{\le N}$ be the resulting inverse-limit tower.
+Then the tower of bar complexes $\{\bar B(Y_{\le N})\}_N$ satisfies the
+hypotheses of Proposition~\ref{prop:mc4-weight-cutoff} for the total
+RTT-level filtration.  In particular, for every cohomological degree
+$m$ and total RTT level $\ell$, the map
+\[
+H^m(\bar B(Y_{\le N+1}))_\ell \xrightarrow{\sim}
+H^m(\bar B(Y_{\le N}))_\ell
+\]
+is an isomorphism for all $N \ge \ell$.
+
+Therefore the standard RTT tower already supplies the
+surjectivity/stabilization part of MC4.  Together with
+Proposition~\ref{prop:inverse-limit-differential-continuity} and
+Proposition~\ref{prop:yangian-rtt-completion-identification}, this
+reduces the standard RTT tower to the completed M-level package of
+Corollary~\ref{cor:yangian-standard-mc4-package}.
+\end{corollary}
+
+\begin{proof}
+The RTT generators are graded by level~$r$, and the RTT relation is
+homogeneous in the total level (Theorem~\ref{thm:yangian-koszul-dual},
+Step~2a).  A bar chain of total RTT level $\ell$ can therefore involve
+only generators $T_{ij}^{(r)}$ with $r \le \ell$.  Once $N \ge \ell$,
+all such generators already lie in the truncation $Y_{\le N}$, so the
+filtered bar subcomplex of levels $\le \ell$ is identical in every
+later stage.  Proposition~\ref{prop:mc4-weight-cutoff} then gives the
+stated stabilization on cohomology slices.
+\end{proof}
+
+\begin{proposition}[Inverse-limit identification of the standard RTT
+completion; \ClaimStatusProvedHere]
+\label{prop:yangian-rtt-completion-identification}
+Let $\widehat Y_{\mathrm{RTT}}$ be the coefficientwise RTT completion:
+its elements are formal matrices
+\[
+T(u)=1+\hbar\sum_{r \ge 0} T^{(r)}u^{-r-1}
+\]
+satisfying the RTT relation coefficientwise, with topology of
+coefficientwise convergence in the modes $T_{ij}^{(r)}$.  Then the
+canonical truncation maps identify this completed RTT algebra with the
+standard inverse-limit tower:
+\[
+\widehat Y_{\mathrm{RTT}} \xrightarrow{\sim} \varprojlim_N Y_{\le N}.
+\]
+\end{proposition}
+
+\begin{proof}
+For each $N$, truncating the formal matrix after level~$N$ produces
+\[
+T_{\le N}(u)=1+\hbar\sum_{r=0}^N T^{(r)}u^{-r-1},
+\]
+which satisfies the finite RTT relations defining $Y_{\le N}$ because
+every coefficient of the RTT equation only involves finitely many modes.
+This gives compatible algebra maps
+$q_N\colon \widehat Y_{\mathrm{RTT}} \to Y_{\le N}$ and hence a map
+\[
+q\colon \widehat Y_{\mathrm{RTT}} \longrightarrow \varprojlim_N Y_{\le N}.
+\]
+
+Conversely, let $(x_N)_N$ be a compatible family in the inverse limit.
+Represent $x_N$ by a truncated RTT matrix
+$T^{(\le N)}(u)=1+\hbar\sum_{r=0}^N T_N^{(r)}u^{-r-1}$.
+Compatibility of the truncation maps implies that for each fixed
+$r \ge 0$, the coefficient $T_N^{(r)}$ is independent of $N$ once
+$N \ge r$; denote the stable value by $T^{(r)}$.  These stable
+coefficients assemble into a formal RTT matrix
+\[
+T(u)=1+\hbar\sum_{r \ge 0} T^{(r)}u^{-r-1}.
+\]
+To verify the RTT relation coefficientwise, fix a coefficient of
+$u^{-a-1}v^{-b-1}$.  That coefficient depends only on modes
+$T^{(r)}$ with $r \le \max\{a,b\}+1$, so it is already visible in every
+finite truncation $Y_{\le N}$ with $N \ge \max\{a,b\}+1$.  Since each
+$T^{(\le N)}(u)$ satisfies the finite RTT relation, the chosen
+coefficient vanishes in the limit.  Thus $T(u)$ lies in
+$\widehat Y_{\mathrm{RTT}}$.
+
+The constructions are inverse to one another: truncating the recovered
+formal RTT matrix returns the original compatible family, and taking the
+stable coefficients of a formal RTT matrix recovers it exactly.  Hence
+$q$ is an isomorphism.
+\end{proof}
+
+\begin{corollary}[Standard RTT tower satisfies the M-level MC4 package;
+\ClaimStatusProvedHere]
+\label{cor:yangian-standard-mc4-package}
+For the standard RTT truncation tower, the completed bar object
+\[
+\widehat{\bar B}(Y) := \varprojlim_N \bar B(Y_{\le N})
+\]
+has continuous bar and cobar differentials, and the canonical
+comparison map
+\[
+\Omega\bigl(\widehat{\bar B}(Y)\bigr) \xrightarrow{\sim}
+\widehat Y_{\mathrm{RTT}}
+\]
+is a quasi-isomorphism.
+Thus the standard RTT tower realizes the full M-level completed
+bar-cobar package for the coefficientwise RTT completion.  What remains
+open is the H-level comparison of $\widehat Y_{\mathrm{RTT}}$ with the
+dg-shifted Yangian or factorization-theoretic completion.
+\end{corollary}
+
+\begin{proof}
+The finite RTT stages lie in the proved $\Eone$-Koszul regime, so the
+finite-stage bar-cobar quasi-isomorphisms are already available.
+Proposition~\ref{prop:inverse-limit-differential-continuity} supplies
+continuity of the completed bar and cobar differentials, and
+Corollary~\ref{cor:yangian-weight-cutoff} supplies the
+Mittag--Leffler/stabilization input for the standard RTT tower.
+Applying Proposition~\ref{prop:mc4-reduction-principle} to that tower
+and identifying the target inverse limit by
+Proposition~\ref{prop:yangian-rtt-completion-identification} gives the
+stated quasi-isomorphism.
+\end{proof}
+
+\begin{corollary}[H-level comparison criterion for dg-shifted Yangians;
+\ClaimStatusProvedHere]
+\label{cor:yangian-hlevel-comparison-criterion}
+Let $\Ydg_{\cA}$ be a separated complete dg algebra equipped with a
+descending RTT-level filtration by closed dg ideals.  Assume:
+\begin{enumerate}
+\item $\Ydg_{\cA}$ is the inverse limit of its finite RTT-level
+  quotients;
+\item for each $N$ there is a dg algebra quasi-isomorphism
+  \[
+  \Ydg_{\cA}/F^{N+1}\Ydg_{\cA} \xrightarrow{\sim} Y_{\le N}
+  \]
+  compatible with the truncation tower; and
+\item the quotient tower inherits bar-cobar comparison maps compatible
+  with the standard RTT tower and has continuous completed bar and cobar
+  differentials.
+\end{enumerate}
+Then the induced comparison map
+\[
+\Ydg_{\cA} \xrightarrow{\sim} \widehat Y_{\mathrm{RTT}}
+\]
+is a quasi-isomorphism, and $\Ydg_{\cA}$ defines the same completed
+M-level bar-cobar object as the standard RTT completion.  Thus the
+remaining Yangian H-level frontier is to construct a filtered
+dg-shifted or factorization model with theorematic finite RTT
+quotients, not another local RTT calculation.
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:completed-target-comparison} with
+$\cA_{\le N}=Y_{\le N}$.  Since the finite RTT truncation maps are
+surjective and the quotients of $\Ydg_{\cA}$ are quasi-isomorphic to
+them, the Mittag--Leffler input required there is automatic on
+cohomology.  The bar-cobar statement then follows from the final part
+of Proposition~\ref{prop:completed-target-comparison}, together with
+Corollary~\ref{cor:yangian-standard-mc4-package}.
+\end{proof}
 
 \begin{remark}[Rational vs.\ trigonometric DK]
 \label{rem:rational-trigonometric-dk}
@@ -2022,7 +2592,7 @@ of this intertwining with bar-cobar duality.
 \end{remark}
 
 The Yangian chapter reveals the $\Eone$-chiral face of the theory.
-The derived Drinfeld--Kohno theorem
+The chain-level / evaluation-locus derived Drinfeld--Kohno theorem
 (Theorems~\ref{thm:derived-dk-affine}
 and~\ref{thm:derived-dk-yangian}) proves that bar-cobar duality
 \emph{geometrically implements} the quantum group involution

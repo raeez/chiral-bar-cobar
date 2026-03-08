@@ -21,10 +21,10 @@ to the field. The author planning next steps.
 
 ## The Modular Koszul Programme
 
-All nine programmes below are facets of a single vision: **modular Koszul duality
-for factorization algebras on curves**. The monograph proves this at genus 0 and
-establishes the genus tower via the modular operad. The programmes extend this to
-the full modular homotopy theory the framework demands.
+All nine programmes below are facets of a single subject: **modular homotopy theory
+for factorization algebras on curves**. The present monograph is Volume I of that
+subject: it proves the modular Koszul core, establishes the genus tower on the
+theorematic loci, and isolates the remaining homotopy-native packages.
 
 The **four irreducible pieces** of the theory are already proved:
 1. Arnold relation = factorization coherence (genus-0 seed)
@@ -45,19 +45,38 @@ semi-infinite growth.  The stronger H-level realization by a completed
 infinite-generator dual object (for example `W_\\infty`) remains frontier mathematics and belongs to the
 MC4 / infinite-generator programme.
 
-Each programme below advances a specific facet:
+Current frontier dependency order:
+1. **Resolved entry theorem**: MC1 is closed for the standard finite-type
+   interacting families (affine Kac-Moody, Virasoro, principal finite-type
+   `W_N`).
+2. **Foundational next target**: MC2, now reduced on the theorem surface
+   to three exact packages: the intrinsic cyclic `\Defcyc(\cA)` model,
+   the geometric completed tensor / clutching package, and the
+   one-channel genus-by-genus normalization problem in the simple-Lie
+   case.
+3. **Structural extensions**: MC3 and MC4, now interpreted as the full
+   factorization-categorical lift and the H-level comparison problem for
+   infinite-generator targets after the standard M-level completions.
+4. **Physics completion**: MC5, downstream of the previous layers.
 
-| Programme | Facet of modular Koszul duality |
+Periodicity is not part of that master-conjecture chain.  It is an
+orthogonal weak flank: the lcm/profile shadow and quantum periodicity
+inputs are theorematic, while modular bar-cohomology periodicity and
+sharp geometric factors remain conjectural.
+
+Each programme below advances a specific facet of that larger subject:
+
+| Programme | Facet of modular homotopy theory |
 |-----------|-------------------------------|
-| I (Langlands) | Critical level: Theta_A trivializes, bar = opers |
-| II (KL) | Root-of-unity: N-complex periodicity of Theta_A |
-| III (Fusion) | Monoidality: modular package is functorial |
+| I (Langlands) | Critical level: bar = opers; the MC2 hierarchy is expected to degenerate there |
+| II (KL) | Root-of-unity: quantum-group / periodic / CDG shadow feeding the MC2 programme |
+| III (Fusion) | Monoidality: the modular characteristic hierarchy should be functorial |
 | IV (E_n) | Higher dimension: Arnold -> Totaro -> Fay |
 | V (Vassiliev) | Topological: Feynman transform = topological shadow |
 | VI (Physics) | Physical: bar = BRST, curvature = anomaly |
 | VII (NC Hodge) | Twistor: genus variable = deformation parameter |
-| VIII (Open math) | Structural: conjectures about the package itself |
-| IX (Computation) | Explicit: data confirming/refuting predictions |
+| VIII (Open math) | Structural: conjectures about the hierarchy itself |
+| IX (Computation) | Explicit: data testing scalar/spectral laws and the MC2 frontier |
 
 ---
 
@@ -490,8 +509,10 @@ B-bar(g_{-h^v}) as a factorization algebra on the curve?
 
 ### Sub-programme VI-e: Infinite-Generator Duality and Higher-Spin Holography
 
-**Vision**: Virasoro^! = W_infinity and W_N^! = Y(gl_N) — infinite-generator
-Koszul duality connects higher-spin holography to the Yangian framework.
+**Vision**: Virasoro^! = W_infinity and W_N^! = Y(gl_N) at the H-level.  The
+finite-type principal `W_N` stages already belong to the proved modular Koszul
+core; the live problem is the infinite-generator / Yangian comparison beyond
+that theorematic M-level package.
 
 | Result | Label | File | Content |
 |--------|-------|------|---------|
@@ -499,13 +520,24 @@ Koszul duality connects higher-spin holography to the Yangian framework.
 | W_N/Yangian duality | (table in free_fields.tex) | free_fields.tex | Conjectured |
 | Super-Vir/Super-W_inf | (table in free_fields.tex) | free_fields.tex | Conjectured |
 
-**Gap**: The bar construction requires completion for infinitely many generators.
-The pro-nilpotent bar complex (filtered by conformal weight) makes this well-defined
-in principle. The weight-filtered completion scaffold now exists in
+**Gap**: The live gap is no longer principal finite-type `W_N`; that completed
+M-level package is already theorematic.  What remains is the infinite-generator
+completion and H-level comparison problem.  The pro-nilpotent bar complex
+(filtered by conformal weight) makes the `W_infinity` side well-defined in
+principle. The weight-filtered completion scaffold now exists in
 `compute/lib/pronilpotent_bar.py`, and a truncated structural OPE layer now
 exists in `compute/lib/w_infinity_ope.py`. What is still missing is the actual
-`W_infinity` higher-spin structure constants and the induced completed bar
-differential. See NEW_MACHINERY.md #M8.
+`W_infinity` higher-spin structure constants, the induced completed bar
+differential, and the H-level factorization target whose finite quotients
+recover the principal stages.  On the Yangian side, the parallel missing
+input is an RTT-adapted filtration on the dg-shifted Yangian whose
+finite quotients recover the theorematic RTT stages.  More precisely:
+the `W_infinity` problem is now the construction of stable higher-spin
+factorization ideals with principal-stage quotients, while the Yangian
+problem is an RTT-triangularity theorem for the line-operator formulas.
+Both are now reduced to formula-level checks: coefficientwise rational
+line-operator kernels on the Yangian side and spin-triangular OPE
+formulas on the `W_infinity` side.  See NEW_MACHINERY.md #M8.
 
 **Entry point**: Compute B-bar(W_infinity) at small total weight (h = 4, 5, 6) using
 only the generators W_2, W_3 and their OPE. Compare with Y(gl_infinity) at the same
@@ -598,14 +630,27 @@ standalone mathematical question.
 - **Gap**: DS reduction for arbitrary f; BV duality theory for non-type-A;
   level-shift formula k' = k'(k, f) for non-principal reductions.
 - **Current scaffold**: `compute/lib/nonprincipal_ds_orbits.py` now gives a clean
-  type-A hook/subregular frontier catalog, transpose BV duality in type A,
-  orbit-dimension identities, and the principal Feigin-Frenkel shift as the
-  current non-principal ansatz.
+  type-A frontier catalog with transpose BV duality, orbit-dimension
+  identities, and an orbit-indexed non-principal level-shift data API
+  (`nonprincipal_orbit_level_shift_type_a`) in place of a single hook-only
+  ansatz callsite; seeded non-hook entries now include nonzero per-orbit
+  corrections, and the seeded `general_nonprincipal` partition catalog is now
+  part of that orbit verification layer too.
 - **Compute expansion (Mar 7, 2026)**:
   `compute/lib/bv_duality.py` now isolates type-A BV pair logic
   (including first non-self-dual hook seed `A_3: (3,1) \leftrightarrow (2,1,1)`),
   and `compute/lib/nonprincipal_ds_reduction.py` adds the `sl_3` subregular BP
   seed + hook-pair DS seed records for the orbit-duality frontier.
+- **Non-hook extension (Mar 8, 2026, twelfth pass)**:
+  the orbit and DS-seed layers now include type-A two-row non-hook cases
+  (`(n-s,s), s\ge 2`) with catalog/verifier coverage and propagated
+  non-principal seed records, so frontier bookkeeping is no longer
+  hook/subregular-only.
+- **Broader non-hook extension (Mar 8, 2026, fourteenth pass)**:
+  the same orbit/seed bookkeeping now reaches the seeded general type-A
+  non-principal catalog (`general_nonprincipal` partitions such as `(2,2,1)`
+  and `(3,2,1)`), with propagated orbit-corrected level shifts and dedicated
+  seed verifiers.
 - **Chain/normalization scaffolds (Mar 7, 2026, follow-on)**:
   `compute/lib/nonprincipal_ds_normalization.py` now exposes explicit
   convention bridges for BP central-charge sums, and
@@ -722,6 +767,110 @@ standalone mathematical question.
   are square-zero and already have nonzero cohomology at survivor polynomial
   degree `1` in both the subregular `sl_3` control case and the first
   non-self-dual hook pair.
+- **Semidirect obstruction identified (Mar 8, 2026, thirteenth pass)**:
+  the next attempted coupling, namely the naive semidirect product of the
+  positive-sector BRST layer with the internal reduced-survivor CE sector, is
+  now also in compute. It fails `d^2=0` for a structural reason: the projected
+  positive action on the reduced survivor sector is not a derivation of the
+  reduced survivor bracket. Compute now records the derivation-defect tensors
+  explicitly for the subregular `sl_3` control case and for the first
+  non-self-dual hook pair. So the next missing ingredient is not “more
+  truncation”; it is the higher correction term or homotopy-transfer datum that
+  repairs this derivation defect.
+- **First transferred correction on the control case (Mar 8, 2026, fourteenth pass)**:
+  the subregular `sl_3` control case now has explicit `[e,\mathfrak{g}]`
+  witness lifts for the survivor action and explicit unreduced witness formulas
+  for every derivation defect. Because the active positive generator
+  `E_{13}` is itself `ad_e`-exact, the first transferred cubic BRST
+  correction is computable and cancels the naive reduced survivor action on the
+  control case. The corrected semidirect survivor block is now verified to
+  satisfy `d^2=0`; the next live step is to transport this witness/correction
+  mechanism to the first genuinely non-self-dual hook pair rather than working
+  only with quotient-level defect tensors.
+- **First transferred correction on the first hook pair (Mar 8, 2026, fifteenth pass)**:
+  that transport step now works at first order. For the first genuinely
+  non-self-dual hook pair, the derivation-coboundary equation is solvable for
+  every active positive ghost on both source and target survivor sectors. The
+  resulting correction terms cancel the naive reduced survivor action
+  completely on both sides, and the corrected semidirect survivor blocks
+  restore `d^2=0` at the same low truncation where the naive quotient-level
+  semidirect coupling failed.
+- **Hook witness layer extracted (Mar 8, 2026, sixteenth pass)**:
+  that explicit witness upgrade has now started on the first hook pair itself.
+  Compute now records hook-pair survivor-action lifts as projected terms plus
+  chosen `[e,\mathfrak{g}]` witness preimages, and the hook-pair derivation
+  defects are recovered from the same unreduced witness identity as in the
+  subregular control case.
+- **Witness-driven first transfer on hooks (Mar 8, 2026, seventeenth pass)**:
+  the remaining quotient-level step is now gone. The first hook-pair
+  correction is packaged as explicit witness data: each correction term carries
+  the exact constrained-current preimage in `[e,\mathfrak{g}]` together with
+  the survivor-action lift whose projected part it cancels. The same
+  witness-driven first-transfer mechanism is also checked on a low-rank hook
+  catalog through `\mathfrak{sl}_7`, where every constrained current is
+  `ad_e`-exact and the first transfer kills the reduced survivor action on both
+  sides.
+- The next family layer is now partially secured as well: at the first tested
+  semidirect truncation
+  `(constraint\ degree, survivor\ degree, internal\ CE\ degree)=(0,1,1)`,
+  the corrected semidirect hook blocks are square-zero for every hook
+  orientation through `\mathfrak{sl}_6`, and those corrected semidirect blocks
+  now satisfy the expected dual-swap symmetry through the same range.
+- The first step beyond that checked semidirect range is now sharper too:
+  `\mathfrak{sl}_7` has all-orientation first-transfer cancellation, and the
+  corrected semidirect truncation at `(0,1,1)` is now verified for the full
+  hook family by direct half-catalog square-zero checks (`r=1,2,3`) together
+  with the nontrivial transpose-dual comparisons (`r=1,2`).
+- The next rank is no longer blocked by the old exact-projection solve either:
+  compute now caches hook/partition survivor projections in traceless-basis
+  coordinates, which makes the next family step tractable. On that optimized
+  pipeline, `\mathfrak{sl}_8` now has all-orientation first-transfer
+  cancellation, and the corrected semidirect truncation at `(0,1,1)` is
+  verified for the full hook family by half-catalog square-zero checks
+  (`r=1,2,3`) plus the matching transpose-dual checks on those same pairs.
+- The same optimized semidirect pipeline now reaches one more full hook rank:
+  `\mathfrak{sl}_9` is verified at `(0,1,1)` by square-zero checks on the
+  half-catalog `r=1,2,3,4` together with the nontrivial dual-swap checks
+  `r=1,2,3`. The first-transfer frontier is therefore already open one step
+  past that family statement as well.
+- That boundary has now moved again: `\mathfrak{sl}_{10}` satisfies the same
+  symmetry-reduced semidirect check at `(0,1,1)`, with half-catalog
+  square-zero on `r=1,2,3,4` and dual-swap on the nontrivial pairs `r=1,2,3`,
+  while the first-transfer cancellation holds on every hook orientation
+  `r=1,\dots,8`.
+- The next family step is now settled too: after fixing a high-rank standard
+  basis-label alias in the orbit layer, `\mathfrak{sl}_{11}` satisfies the
+  same symmetry-reduced semidirect check at `(0,1,1)`, with half-catalog
+  square-zero on `r=1,2,3,4,5` and dual-swap on the nontrivial pairs
+  `r=1,2,3,4`, while the first-transfer cancellation holds on every hook
+  orientation `r=1,\dots,9`. The new scaling bottleneck is dual-swap
+  comparison cost, not survivor projection.
+- The next rank is not closed, but it is now open at the extreme hook:
+  `\mathfrak{sl}_{12}, r=1` already satisfies first-transfer cancellation,
+  corrected semidirect square-zero at `(0,1,1)`, and the transpose-dual
+  comparison, and `r=2` already satisfies first-transfer cancellation plus
+  corrected semidirect square-zero at the same truncation. The live
+  computational gap is therefore the rest of the `\mathfrak{sl}_{12}`
+  half-catalog, not the existence of a next-rank sample.
+- That gap is now gone. After replacing semidirect dual-swap comparison by a
+  relabeled block-spec check instead of full BRST-block reconstruction,
+  `\mathfrak{sl}_{12}` satisfies the corrected semidirect check at `(0,1,1)`
+  for the full hook family, via half-catalog square-zero on `r=1,2,3,4,5`
+  together with dual-swap on the nontrivial pairs `r=1,2,3,4,5`, and every
+  hook orientation has first-transfer cancellation as well. The live boundary
+  is now `\mathfrak{sl}_{13}`.
+- That boundary has moved again. After replacing three remaining projector-path
+  bottlenecks by direct standard-basis coordinates, one-pass `[e,g]` pivot
+  extraction, and sparse basis-column assembly, `\mathfrak{sl}_{13}`
+  satisfies the same corrected semidirect check at `(0,1,1)` for the full
+  hook half-catalog: square-zero on `r=1,2,3,4,5,6`, dual-swap on the
+  nontrivial pairs `r=1,2,3,4,5`, and first-transfer cancellation on every
+  half-catalog orientation `r=1,\dots,6`. The live boundary is now
+  `\mathfrak{sl}_{14}`.
+- One step past that written family boundary is already open on the same
+  compute track: `\mathfrak{sl}_{14}` has positive first-transfer,
+  corrected semidirect square-zero at `(0,1,1)`, and dual-swap comparison for
+  the sampled hook orientations `r=1,2,3`.
 - **Family nonlinear extension (Mar 8, 2026, eleventh pass)**:
   the hook mixed/nonlinear BRST scaffold is now family-level, not first-pair
   only: `compute/lib/ds_reduction.py` now exposes generic hook-pair APIs for
@@ -732,9 +881,40 @@ standalone mathematical question.
   mixed and nonlinear hook-pair blocks are now compared against the
   transpose-dual case (`r \leftrightarrow n-r-1`) under canonical side
   relabeling, and catalog verifiers check this symmetry across the seeded
-  type-A range. The survivor scaffold is now generalized as well via
-  `hook_pair_surviving_field_candidates` and `hook_pair_reduced_brackets`
-  (with current tests anchored at `A_4` self-dual hook data).
+  type-A range. The survivor scaffold is now generalized as well through
+  `hook_pair_surviving_field_candidates`, `hook_pair_reduced_brackets`,
+  family survivor-action terms, and family survivor-coupled blocks; the same
+  dual-swap catalog check now runs for survivor-coupled blocks on a tractable
+  seeded range.
+- **Non-hook chain lift (Mar 8, 2026, thirteenth pass)**:
+  the same chain-level DS machinery now covers type-A two-row non-hook
+  families: mixed/nonlinear/survivor-coupled block builders plus canonical
+  relabel and dual-swap catalog verifiers are now in place on the seeded
+  non-hook range.
+- **General non-hook chain lift (Mar 8, 2026, fourteenth pass)**:
+  the partition-pair DS machinery now also covers seeded general
+  `general_nonprincipal` type-A families, so mixed/nonlinear/survivor-coupled
+  block builders and dual-swap catalog verifiers are no longer restricted to
+  the two-row non-hook subcatalog.
+- **Mixed/nonlinear non-hook verification expansion (Mar 8, 2026, seventeenth pass)**:
+  the cheaper non-hook block layers now run further than the initial
+  seed: two-row mixed/nonlinear dual-swap checks reach `\mathfrak{sl}_9`,
+  while the general non-principal mixed/nonlinear families are reduced by
+  transpose symmetry and verified on the symmetry-reduced seeded range through
+  size `9`.
+- **Corrected semidirect non-hook lift (Mar 8, 2026, fifteenth pass)**:
+  the same generic partition-pair machinery now carries witness-level
+  first-transfer survivor corrections on the seeded non-hook range as well:
+  internal survivor CE blocks plus corrected semidirect survivor blocks are now
+  implemented for seeded two-row and `general_nonprincipal` type-A families,
+  and the seeded `(0,1,1)` corrected semidirect catalog is wired into the same
+  dual-swap verification layer.
+- **Corrected semidirect non-hook verification expansion (Mar 8, 2026, sixteenth pass)**:
+  the seeded two-row corrected semidirect layer now runs as a bundled check
+  through `\mathfrak{sl}_7`, and the seeded `general_nonprincipal` corrected
+  semidirect family is now verified at the first corrected semidirect
+  truncation `(0,1,1)` on a transpose-symmetry-reduced seeded range through
+  size `9`.
 - **Assessment**: "The hardest pure mathematics conjecture in the manuscript."
   Arakawa-van Ekeren hook-type result covers a non-trivial class beyond principal.
 - **Scale**: 3-5 years. Requires deep representation theory.
@@ -767,7 +947,18 @@ standalone mathematical question.
 ### VIII-f: Periodicity theorems (cluster of 5)
 - deformation_theory.tex: modular (628), reflected (701), geometric (833),
   complete classification (893), periodicity exchange (927)
-- All verified for computed examples; general proofs require tautological ring analysis
+- Frontier placement:
+  this cluster is an orthogonal weak flank, not part of the
+  MC2 -> MC3/MC4 -> MC5 dependency chain.
+- Status discipline:
+  the structural lcm/profile shadow is theorematic, the $T$-matrix and
+  quantum periodicity inputs are proved in their stated regimes, but
+  modular bar-cohomology periodicity and the sharp geometric factors
+  remain conjectural even for the flagship rational families.
+- Evidence:
+  computed examples, theta-function control, and rank-1 periodic
+  shadows support the conjectural bar-periodicity statements, but do
+  not upgrade them to theorem status.
 - **Scale**: 1-3 years depending on specific result
 
 ### VIII-g: Derived bc-betagamma duality
@@ -825,14 +1016,19 @@ standalone mathematical question.
 - **MC1 scaling profiler added** (`compute/scripts/profile_genus1_pbw_sl2_scaling.py`):
   per-power timing confirms current practical default frontier at `n=6`, with Casimir
   eigenspace computation as the dominant cost (`~5.2s` of `~7.4s` total at `n=6`).
-  Staged `n=7` probes now verify rank/equivariance/commutator gates
-  (`rank=728`, `\ker=1459`, invariants `=36`) in ~11.7s with Casimir eigenspaces
-  skipped; full `n=7` eigenspace computation remains the active bottleneck.
+  The modular/sparse `n=7` path is now executable end-to-end:
+  full eigenspaces recover as
+  `{0:36, 4:273, 12:525, 24:588, 40:441, 60:231, 84:78, 112:15}`
+  in ~`30.3s` total (`~19.3s` Casimir phase) for one prime and
+  ~`53.2s` total (`~42.0s` Casimir phase) for a two-prime consistency run.
   The profiler and library now expose explicit Casimir modes
-  (`auto`/`exact`/`theory`) with default policy `auto` = exact through `n<=6`
-  and representation-theoretic multiplicities from `n>=7`, so default diagnostics
-  stay fully rigorous on the stable window while keeping staged frontier checks live.
-- **MC2 Step-1 compute scaffold added** (`compute/lib/mc2_cyclic_linf.py`):
+  (`auto`/`exact`/`exact_sparse`/`modular`/`theory`) with default policy `auto` = exact through `n<=6`
+  and modular eigenspace extraction from `n>=7`, so default diagnostics
+  stay full-strength on the stable window while keeping frontier checks executable.
+  A `QQ`-exact sparse nullity probe (`exact_sparse`) was benchmarked and does
+  not improve the frontier (`n=5`: ~`26.7s` vs exact ~`1.85s`; `n=6`: >`240s`),
+  so it remains a research-only backend.
+- **MC2 Step-1/2/3/4(+cyclic-completed) compute scaffold advanced** (`compute/lib/mc2_cyclic_linf.py`):
   a finite-dimensional coderivation dg-Lie model and low-arity cyclic
   `L_\infty` model are now executable, including an initial symbolic
   Maurer-Cartan solver pass with nontrivial solutions `{0,1}` and regression tests
@@ -840,6 +1036,51 @@ standalone mathematical question.
   The same module now includes a first non-toy `sl_2` seed extracted from
   bar/OPE data (simple-pole bracket + normalized double-pole pairing),
   with dg-Lie/Jacobi/Leibniz and ad-invariant pairing checks.
+  Step-3 now includes a first nontrivial cyclic higher bracket:
+  an `eta`-valued `l_3` channel from the Killing 3-cocycle together with
+  a mixed three-parameter residual probe `l_3(xe,yh,zf)` and CE-closure checks.
+  Step-4 now includes a first completion/clutching surrogate:
+  genus-indexed completed tensor convolution (`\widehat{\otimes}` proxy),
+  a boundary clutching map induced by `l_2`, and an explicit factorized
+  compatibility check (`6\omega + 22q\omega + 20q^2\omega` in the toy model),
+  plus truncated completed-series MC residual checks.
+  The same completion lane now verifies completed cyclicity identities
+  for `l_2` and `l_3` genus-by-genus and includes a first symbolic
+  truncated completed-MC solver branch (`a_0=1` implies `a_1=a_2=0`
+  in the toy ansatz).
+  The same lane now also supports genus-stratified obstruction extraction
+  in the strict positive-genus regime and recursive branchwise solving,
+  with explicit inconsistent-branch detection (`a_0=2` has no branch).
+  It now also supports multi-basis completed-MC solving (truncated and
+  recursive): in the toy `(\theta,\omega)` basis, fixing `\theta_0=1`
+  forces higher `\theta_g` coefficients to vanish while retaining
+  unconstrained `\omega_g` completed directions explicitly.
+  A suspension-shifted symmetric `sl_2` `l_3` representative is now
+  executable as well, with a nontrivial mixed residual
+  (`\eta=-2xyz` on `(e,h,f)`) and explicit nonzero genus-2/genus-3
+  obstruction channels on the strict positive-genus ansatz
+  `\alpha_1=e+h+f`.
+  The same shifted-seed nontrivial lane now extends to `sl_3` and
+  `sp_4`: on `(e1,e2,f12)` the mixed residual channel is
+  `\eta=xyz` for `sl_3` and `\eta=2xyz` for `sp_4`,
+  with genus-3 obstruction channels `\eta` and `2\eta`.
+  The extracted one-channel normalization profile is now uniform:
+  in all three lanes (`sl_2`, `sl_3`, `sp_4`), the genus-3
+  `\eta` obstruction equals the mixed residual value at `(1,1,1)`,
+  giving normalization ratio `1`.
+  The same shifted lane now verifies the symbolic scaling law:
+  genus-2 obstruction is quadratic in the genus-1 seed scale, and
+  `O_3^\eta(t)=t^3\,\eta(1,1,1)` exactly across all three type/rank lanes.
+  On the theorem surface this now has a precise job description rather
+  than a generic universality slogan: construct the intrinsic cyclic
+  `\Defcyc(\cA)` model, realize the geometric completed tensor /
+  clutching package, and normalize the single surviving genus channel in
+  the simple-Lie case.
+  That last package is now reduced again on the theorem surface:
+  prove a joint clutching/trace isolation statement identifying the
+  obstruction with the tautological line, then one normalized scalar
+  comparison with the proved coefficient `\kappa(\cA)` fixes the
+  genus-$g$ normalization.
 
 ### What would unblock these
 See NEW_MACHINERY.md #M9 for detailed computational strategies.

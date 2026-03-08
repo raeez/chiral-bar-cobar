@@ -89,7 +89,10 @@
 \let\openbox\undefined
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{tikz-cd}
-\usepackage[hypertexnames=false,unicode,pdfencoding=auto,psdextra]{hyperref}
+\makeatletter
+\def\hyper@nopatch@caption{}
+\makeatother
+\usepackage[unicode,pdfencoding=auto,psdextra]{hyperref}
 %\usepackage{amsfonts}
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows.meta,calc}
@@ -97,6 +100,7 @@
 \setlength{\headheight}{28pt}
 \setlength{\emergencystretch}{3em}
 \setlength{\hfuzz}{2.5pt}
+\hbadness=10000
 \raggedbottom
 \usepackage{algorithm}
 \usepackage{algpseudocode}  % or \usepackage{algorithmic} for the older version
@@ -250,6 +254,59 @@
 \declaretheorem[style=garamonddef, name=Idea, sibling=theorem]{idea}
 \declaretheorem[style=garamonddef, name=Strategy, sibling=theorem]{strategy}
 \declaretheorem[style=garamonddef, name=Open Problem, sibling=theorem]{openproblem}
+
+% Stable hyperref anchors for theorem-like environments and floats.
+% Without explicit theH... definitions, many sibling counters reset to
+% bare values such as theorem.1 or remark.1 across chapters.
+\makeatletter
+\def\theHtheorem{\theHsection.\arabic{theorem}}
+
+\let\theHlemma\theHtheorem
+\let\theHproposition\theHtheorem
+\let\theHcorollary\theHtheorem
+\let\theHverification\theHtheorem
+\let\theHcomputation\theHtheorem
+
+\let\theHdefinition\theHtheorem
+\let\theHexample\theHtheorem
+\let\theHremark\theHtheorem
+\let\theHconjecture\theHtheorem
+\let\theHnotation\theHtheorem
+\let\theHconvention\theHtheorem
+\let\theHspectralsequence\theHtheorem
+\let\theHcalculation\theHtheorem
+\let\theHtechnique\theHtheorem
+
+\let\theHapplications\theHtheorem
+\let\theHframework\theHtheorem
+\let\theHmaintheorem\theHtheorem
+\let\theHconstruction\theHtheorem
+\let\theHperspective\theHtheorem
+\let\theHconclusion\theHtheorem
+\let\theHquestion\theHtheorem
+\let\theHsummary\theHtheorem
+\let\theHprocedure\theHtheorem
+\let\theHinterpretation\theHtheorem
+
+\let\theHhistorical\theHtheorem
+\let\theHcontext\theHtheorem
+\let\theHattribution\theHtheorem
+\let\theHreading\theHtheorem
+\let\theHapplication\theHtheorem
+\let\theHprinciple\theHtheorem
+\let\theHmotivation\theHtheorem
+\let\theHinsight\theHtheorem
+\let\theHproblem\theHtheorem
+\let\theHsetup\theHtheorem
+
+\let\theHobservation\theHtheorem
+\let\theHidea\theHtheorem
+\let\theHstrategy\theHtheorem
+\let\theHopenproblem\theHtheorem
+
+\def\theHtable{\theHchapter.\arabic{table}}
+\def\theHfigure{\theHchapter.\arabic{figure}}
+\makeatother
 
 % Evidence environment: used after conjectures in place of \begin{proof}.
 % Unnumbered, no QED box, italic header matching remark style.
@@ -639,9 +696,12 @@ Throughout this manuscript:
 \item $\barBch(\mathcal{A})$ denotes the abstract chiral bar complex (when distinction needed)
 \item $\ConfigSpace{n} = \overline{C}_n(X)$ is the compactified configuration space
 \item $\LogForm{i}{j} = d\log(z_i - z_j)$ are the logarithmic 1-forms
-\item $\Einf$-chiral, $\Eone$-chiral, $\Pinf$-chiral refer to levels of
-  chiral factorization structure (Definition~\ref{def:einf-chiral}ff.),
-  \emph{not} to homotopy-theoretic $E_n$-algebras (Remark~\ref{rem:En-terminology})
+\item $\Einf$-chiral, $\Eone$-chiral, $\Pinf$-chiral refer to
+  curve-based chiral factorization levels
+  (Definition~\ref{def:einf-chiral}ff.); bare $\En$ refers to the
+  little-disks/topological axis on real $n$-manifolds.  A complex
+  curve therefore enters the topological ladder at $n = 2$, not
+  $n = 1$ (Remark~\ref{rem:En-terminology})
 \end{itemize}
 \end{remark}
 
@@ -707,8 +767,9 @@ shifted-symplectic pairing from Verdier duality on the center local
 system (Theorem~C); and the modular characteristic theorem, which
 shows that a single scalar $\kappa(\mathcal{A})$ determines the
 scalar genus tower (Theorem~D$_{\mathrm{scal}}$); the full modular
-characteristic package $(\Delta_{\cA}, \Pi_{\cA}, \Theta_{\cA})$
-requires additional spectral data beyond~$\kappa$.
+characteristic hierarchy then separates the proved spectral data
+$(\Delta_{\cA}, \Pi_{\cA})$ from the conjectural H-level completion
+$\Theta_{\cA}$ inside the full package~$\mathcal{C}_{\cA}$.
 
 % --------------------------------------------------
 % Chapter 1: Introduction and Main Results

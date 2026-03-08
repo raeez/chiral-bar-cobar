@@ -81,9 +81,16 @@ Note: census counts occurrences (`grep -rco --include='*.tex'`) in chapters/ and
 - Adversarial audit (session 3): 35 findings from 8 parallel agents. 12 priority fixes applied: W-algebra duality σK formula, FP formula, proof integral, g=0 nilpotence, free field κ≠0, Heisenberg dual, H²(M̄_g), Yangian Ext, bosonic string gloss, KL diagram, modular periodicity downgrade, conformal block rationality caveat
 - Adversarial audit (session 4): 45+ findings from 7 parallel agents. 17 fixes applied: genus-1 d²=0 full proof, Leray fibration notation, propagator antisymmetry removal, obstruction degree clarification, nilpotent citation scope, fermionic coproduct sign, Koszul pair equivalence sketch, HH⁰/obstruction language, Heisenberg bar computation, W-algebra simplicity≠semisimplicity, Heisenberg dual table (CE→Sym^ch), Yangian bar description, boundary divisor H²|I|-2→H², MMM vs λ-class naming, W₃ obstruction Mumford isomorphism correction, ProvedElsewhere→ProvedHere tag, ℏ convention reconciliation
 - 9-programme research synthesis: BV duality error fixed (partition transpose, not identity), DS-KD proof restructured (2-stage with BV orbit identification), Frenkel-Teleman/FLE/Raskin documented, N-complex framework added, E_n/Vassiliev/BRST chain map literature integrated, hook-type W-algebra duality cited, sl₃ modular rank computation (new: Casimir anomaly at p|dim(g)), 12 new bibliography entries (287 total), weight filtration computability, Booth-Lazarev monoidal model structures
-- v16 campaign (SESSION_PROMPT_v16): 10 workstreams executed across 59 files. Homotopy-native remarks (4 main theorems), periodicity triple Pi(A), prose sculpting (-715 lines, -22 pages), physics programme branding (3 files), master table stratification (3-tier), regime tags, differential notation completion, cross-ref verification (clean), coderived appendix (enhanced). Net: 4660 insertions, 5375 deletions.
+- v16 campaign (SESSION_PROMPT_v16): 10 workstreams executed across 59 files. Homotopy-native remarks (4 main theorems), periodicity profile Pi(A), prose sculpting (-715 lines, -22 pages), physics programme branding (3 files), master table stratification (3-tier), regime tags, differential notation completion, cross-ref verification (clean), coderived appendix (enhanced). Net: 4660 insertions, 5375 deletions.
 - raeeznotes8 campaign: Five-layer architecture restructuring. Theorem A₀ (fundamental twisting morphisms, 4-way equivalence), Theorem C₀ (fiber-center identification), bigraded Hochschild definition, characteristic hierarchy, Theorem H naming, chiral dual pair definition. A₀/A₁/A₂ and C₀/C₁ decomposition references propagated to 8 example/connections files.
 - Higher-genus PBW concentration resolved for the standard finite-type interacting families: Kac-Moody, Virasoro, and principal finite-type W-algebras (including higher W_N). Concordance now treats the former MC1 as a theorem-level entry point rather than a live master conjecture.
+- Active frontier order is now explicit: MC2 is first, and the theorem
+  surface now reduces it to three exact packages (the intrinsic cyclic
+  `\Defcyc(\cA)` model, the geometric completed tensor / clutching
+  package, and the one-channel genus-by-genus normalization problem in
+  the simple-Lie case); MC3 and MC4 are next as structural H-level
+  comparison problems after the standard M-level completions; MC5 is
+  downstream. Periodicity remains an orthogonal weak flank.
 
 ### Proof Sketches: 1 REMAINING (correctly so)
 | File | Line | Context | Status |
@@ -104,9 +111,9 @@ All have scope remarks. Classification (from comprehensive audit, this session):
 | **COMPUTATIONAL** | ~5 | Explicit bar cohomology computations needed |
 | **SCOPE-REMARK REFS** | ~10 | Re-references, not independent claims |
 
-**Genuinely open**: completed infinite-generator bar / Virasoro-W_infinity duality, reflected modular periodicity, derived bc-betagamma, non-principal W-orbit duality, NC Chern-Simons
+**Genuinely open**: the three exact MC2 packages (intrinsic cyclic `\Defcyc(\cA)`, geometric completed tensor / clutching realization, one-channel normalization to the tautological shadow in the simple-Lie case), H-level `W_\infty` and dg-shifted-Yangian comparison targets, reflected modular periodicity, derived bc-betagamma, non-principal W-orbit duality, NC Chern-Simons
 
-**Upgradeable items exhausted**: All conjectures with proofs assemblable from existing finite-type PBW input have been upgraded. The remaining conjectured items require either (a) genuine new mathematics, (b) physics input, or (c) infinite-generator/computational infrastructure not yet built.
+**Upgradeable items exhausted**: All conjectures with proofs assemblable from existing finite-type PBW input have been upgraded. The remaining conjectured items require either (a) genuine new mathematics, (b) physics input, or (c) H-level infinite-generator/comparison infrastructure not yet built.
 
 **Conjectures by Part**: Theory ~25, Examples ~35, Connections ~30, Appendices ~1.
 

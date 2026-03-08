@@ -25,10 +25,17 @@ from compute.lib.nonprincipal_ds_orbits import (
     first_nonselfdual_hook_pair_sl2_triples,
     homogeneous_f_centralizer_basis_sl_n,
     matrix_to_traceless_basis_expression_sl_n,
+    nonprincipal_general_cases,
     nonprincipal_hook_case,
-    nonprincipal_hook_level_shift_ansatz_type_a,
+    nonprincipal_hook_level_shift_type_a,
+    nonprincipal_two_row_cases,
+    nonprincipal_type_a_case,
+    normalize_partition,
+    partition_size,
     standard_traceless_basis_sl_n,
     subregular_partition,
+    two_row_nonhook_partition,
+    type_a_partition_sl2_triple,
     type_a_hook_pair_sl2_triples,
     type_a_orbit_class,
 )
@@ -38,6 +45,8 @@ from compute.lib.nonprincipal_ds_reduction import (
     bp_strong_presentation,
     hook_pair_constraint_counts_ansatz_type_a,
     nonprincipal_hook_seed_catalog,
+    verify_nonprincipal_general_seed_catalog,
+    verify_nonprincipal_two_row_seed_catalog,
     sl3_subregular_good_grading_multiplicities,
 )
 
@@ -137,10 +146,12 @@ class HookPairDSComplexSeed:
     source_complex: TruncatedBRSTComplex
     target_complex: TruncatedBRSTComplex
     track: str
+    status: str
 
 
 ConstraintBasisElement = Tuple[Tuple[int, ...], Tuple[int, ...]]
 DSBasisExpression = Tuple[Tuple[str, Rational], ...]
+LabeledLinearCombination = Tuple[Tuple[str, Rational], ...]
 
 
 @dataclass(frozen=True)
@@ -186,6 +197,14 @@ InternalSurvivorBasisElement = Tuple[
     Tuple[int, ...],
 ]
 
+SemidirectSurvivorBasisElement = Tuple[
+    Tuple[int, ...],
+    Tuple[int, ...],
+    Tuple[int, ...],
+    Tuple[int, ...],
+    Tuple[int, ...],
+]
+
 
 @dataclass(frozen=True)
 class SurvivorCoupledBRSTBlock:
@@ -218,6 +237,30 @@ class InternalSurvivorCEBlock:
     survivor_action_terms: Tuple[SurvivorActionTermEntry, ...]
     survivor_polynomial_degree: int
     basis_by_ce_degree: Dict[int, Tuple[InternalSurvivorBasisElement, ...]]
+    differentials: Dict[int, Matrix]
+
+
+@dataclass(frozen=True)
+class SemidirectSurvivorBRSTBlock:
+    """Naive quotient-level BRST block coupling the positive sector to the internal survivor CE sector."""
+
+    source_tag: str
+    shifted_current_labels: Tuple[str, ...]
+    survivor_labels: Tuple[str, ...]
+    c_ghost_labels: Tuple[str, ...]
+    b_ghost_labels: Tuple[str, ...]
+    internal_c_ghost_labels: Tuple[str, ...]
+    internal_b_ghost_labels: Tuple[str, ...]
+    chi_vector: Tuple[object, ...]
+    quadratic_ghost_terms: Tuple[QuadraticGhostTermEntry, ...]
+    current_action_terms: Tuple[CurrentActionTermEntry, ...]
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...]
+    internal_quadratic_ghost_terms: Tuple[QuadraticGhostTermEntry, ...]
+    internal_survivor_action_terms: Tuple[SurvivorActionTermEntry, ...]
+    constraint_total_degree: int
+    survivor_total_degree: int
+    max_internal_ce_degree: int
+    basis_by_brst_degree: Dict[int, Tuple[SemidirectSurvivorBasisElement, ...]]
     differentials: Dict[int, Matrix]
 
 
@@ -262,6 +305,43 @@ class SurvivorActionTermEntry:
     coefficient: Rational
 
 
+@dataclass(frozen=True)
+class SurvivorActionLiftWitness:
+    """One decomposition of a positive commutator into survivor and [e,g] pieces."""
+
+    c_ghost: str
+    source_survivor_label: str
+    projected_terms: LabeledLinearCombination
+    ad_e_image_terms: DSBasisExpression
+    ad_e_witness_preimage: DSBasisExpression
+
+
+@dataclass(frozen=True)
+class SurvivorDerivationDefectWitness:
+    """Unreduced witness expression for one quotient-level derivation defect."""
+
+    c_ghost: str
+    left_survivor_label: str
+    right_survivor_label: str
+    left_action_witness_preimage: DSBasisExpression
+    right_action_witness_preimage: DSBasisExpression
+    unreduced_expression: DSBasisExpression
+    projected_defect_terms: LabeledLinearCombination
+
+
+@dataclass(frozen=True)
+class FirstTransferCorrectionWitness:
+    """Explicit first transferred correction built from exact current and action witnesses."""
+
+    c_ghost: str
+    current_label: str
+    current_witness_preimage: DSBasisExpression
+    source_survivor_label: str
+    projected_action_terms: LabeledLinearCombination
+    action_witness_preimage: DSBasisExpression
+    correction_terms: LabeledLinearCombination
+
+
 def brst_ghost_weights(ad_h_grade) -> Tuple[Rational, Rational]:
     """Ghost conformal weights from DS grading."""
     grade = sympify(ad_h_grade)
@@ -281,6 +361,30 @@ def exact_matrix_rank(matrix: Matrix | None) -> int:
         return int(DomainMatrix.from_Matrix(matrix).rank())
     except Exception:
         return int(matrix.rank())
+
+
+def _basis_expression_from_coefficients(
+    coefficients: Dict[str, object],
+    label_order: Tuple[str, ...],
+) -> DSBasisExpression:
+    """Ordered basis expression from a sparse coefficient dictionary."""
+    return tuple(
+        (label, simplify(coefficients[label]))
+        for label in label_order
+        if simplify(coefficients.get(label, 0)) != 0
+    )
+
+
+def _labeled_linear_combination(
+    coefficients: Dict[str, object],
+    label_order: Tuple[str, ...],
+) -> LabeledLinearCombination:
+    """Ordered labeled linear combination from a sparse coefficient dictionary."""
+    return tuple(
+        (label, simplify(coefficients[label]))
+        for label in label_order
+        if simplify(coefficients.get(label, 0)) != 0
+    )
 
 
 def _sl3_matrix_unit(i: int, j: int) -> Matrix:
@@ -326,11 +430,17 @@ def _ds_basis_expression_coordinates(
     basis_order: Tuple[str, ...],
 ) -> Matrix:
     """Coordinate column of a basis expression in the ordered basis."""
-    index = {label: position for position, label in enumerate(basis_order)}
+    index = _basis_order_index_map(basis_order)
     coordinates = zeros(len(basis_order), 1)
     for label, coefficient in source_terms:
         coordinates[index[label], 0] += sympify(coefficient)
     return coordinates
+
+
+@lru_cache(maxsize=None)
+def _basis_order_index_map(basis_order: Tuple[str, ...]) -> Dict[str, int]:
+    """Index lookup for a fixed basis order."""
+    return {label: position for position, label in enumerate(basis_order)}
 
 
 def _basis_expression_ad_h_grade(
@@ -457,6 +567,46 @@ def _sl3_subregular_split_basis_matrix() -> Matrix:
     return Matrix.hstack(*columns)
 
 
+def sl3_subregular_split_expression(
+    source_terms: DSBasisExpression,
+) -> Tuple[DSBasisExpression, LabeledLinearCombination]:
+    """Split one sl_3 expression into [e,sl_3] and survivor components."""
+    basis_order = tuple(item.label for item in sl3_subregular_basis_profile())
+    ad_e_basis = sl3_subregular_ad_e_image_basis()
+    strong_candidates = sl3_subregular_strong_generator_candidates()
+    coefficients = _sl3_subregular_split_basis_matrix().LUsolve(
+        _ds_basis_expression_coordinates(source_terms, basis_order)
+    )
+    ad_e_terms = tuple(
+        (item.label, simplify(coefficients[index, 0]))
+        for index, item in enumerate(ad_e_basis)
+        if simplify(coefficients[index, 0]) != 0
+    )
+    offset = len(ad_e_basis)
+    projected_terms = tuple(
+        (candidate.label, simplify(coefficients[offset + index, 0]))
+        for index, candidate in enumerate(strong_candidates)
+        if simplify(coefficients[offset + index, 0]) != 0
+    )
+    return ad_e_terms, projected_terms
+
+
+def sl3_subregular_expand_ad_e_terms_to_witness_preimage(
+    ad_e_terms: DSBasisExpression,
+) -> DSBasisExpression:
+    """Expand one [e,sl_3]-expression to chosen explicit preimages."""
+    witness_map = sl3_subregular_ad_e_image_witnesses()
+    basis_order = tuple(item.label for item in sl3_subregular_basis_profile())
+    coefficients: Dict[str, object] = {}
+    for label, coefficient in ad_e_terms:
+        for witness_label, witness_coefficient in witness_map[label]:
+            coefficients[witness_label] = simplify(
+                coefficients.get(witness_label, 0)
+                + sympify(coefficient) * sympify(witness_coefficient)
+            )
+    return _basis_expression_from_coefficients(coefficients, basis_order)
+
+
 def sl3_subregular_project_expression_to_strong_candidates(
     source_terms: DSBasisExpression,
 ) -> Dict[str, Rational]:
@@ -558,6 +708,55 @@ def hook_pair_ghost_profiles(n: int, r: int) -> Tuple[Tuple[DSGhostWeight, ...],
     return (
         _ghost_profile_from_positive_grade_labels(source_graded_basis),
         _ghost_profile_from_positive_grade_labels(target_graded_basis),
+    )
+
+
+def _positive_simple_root_count_from_h(h: Matrix) -> int:
+    """Count positive ad(h)-grades on simple roots alpha_i (i=1,...,n-1)."""
+    return sum(1 for index in range(h.rows - 1) if h[index, index] - h[index + 1, index + 1] > 0)
+
+
+def partition_pair_ghost_profiles(
+    partition: Tuple[int, ...],
+) -> Tuple[Tuple[DSGhostWeight, ...], Tuple[DSGhostWeight, ...]]:
+    """Positive-grade ghost profiles for one type-A partition and its transpose dual."""
+    case = nonprincipal_type_a_case(partition)
+    source_triple = type_a_partition_sl2_triple(case.partition)
+    target_triple = type_a_partition_sl2_triple(case.dual_partition)
+    source_graded_basis = ad_h_graded_basis_labels_sl_n(source_triple.h)
+    target_graded_basis = ad_h_graded_basis_labels_sl_n(target_triple.h)
+    return (
+        _ghost_profile_from_positive_grade_labels(source_graded_basis),
+        _ghost_profile_from_positive_grade_labels(target_graded_basis),
+    )
+
+
+def _partition_pair_default_constraint_counts(partition: Tuple[int, ...]) -> Tuple[int, int]:
+    """Default source/target truncation counts for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_triple = type_a_partition_sl2_triple(case.partition)
+    target_triple = type_a_partition_sl2_triple(case.dual_partition)
+    return (
+        max(1, _positive_simple_root_count_from_h(source_triple.h)),
+        max(1, _positive_simple_root_count_from_h(target_triple.h)),
+    )
+
+
+@lru_cache(maxsize=None)
+def _partition_pair_truncated_profiles(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[DSGhostWeight, ...], Tuple[DSGhostWeight, ...]]:
+    """Truncated source/target ghost profiles for one type-A non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_count = default_source if source_num_constraints is None else source_num_constraints
+    target_count = default_target if target_num_constraints is None else target_num_constraints
+    source_profile, target_profile = partition_pair_ghost_profiles(case.partition)
+    return (
+        _truncate_ghost_profile(source_profile, source_count, "source"),
+        _truncate_ghost_profile(target_profile, target_count, "target"),
     )
 
 
@@ -741,6 +940,7 @@ def first_nonselfdual_hook_pair_quadratic_ghost_term_support(
     )
 
 
+@lru_cache(maxsize=None)
 def _hook_pair_truncated_profiles(
     n: int,
     r: int,
@@ -777,6 +977,7 @@ def _default_constraint_character_from_brackets(
     return character
 
 
+@lru_cache(maxsize=None)
 def hook_pair_positive_nilpotent_brackets(
     n: int,
     r: int,
@@ -798,6 +999,7 @@ def hook_pair_positive_nilpotent_brackets(
     )
 
 
+@lru_cache(maxsize=None)
 def hook_pair_constraint_characters(
     n: int,
     r: int,
@@ -823,6 +1025,7 @@ def hook_pair_constraint_characters(
     )
 
 
+@lru_cache(maxsize=None)
 def hook_pair_constraints(
     n: int,
     r: int,
@@ -848,6 +1051,7 @@ def hook_pair_constraints(
     )
 
 
+@lru_cache(maxsize=None)
 def hook_pair_quadratic_ghost_term_support(
     n: int,
     r: int,
@@ -891,6 +1095,7 @@ def hook_pair_quadratic_ghost_term_support(
     )
 
 
+@lru_cache(maxsize=None)
 def hook_pair_current_action_terms(
     n: int,
     r: int,
@@ -907,6 +1112,142 @@ def hook_pair_current_action_terms(
     source_brackets, target_brackets = hook_pair_positive_nilpotent_brackets(
         n,
         r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        _current_action_terms_from_constraints_and_brackets(source_constraints, source_brackets),
+        _current_action_terms_from_constraints_and_brackets(target_constraints, target_brackets),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_positive_nilpotent_brackets(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[Tuple[str, str, str], ...], Tuple[Tuple[str, str, str], ...]]:
+    """Nonzero positive-nilpotent brackets for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_profile, target_profile = _partition_pair_truncated_profiles(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_labels = tuple(item.root_label for item in source_profile)
+    target_labels = tuple(item.root_label for item in target_profile)
+    return (
+        _positive_nilpotent_brackets_from_labels(source_labels, n=n),
+        _positive_nilpotent_brackets_from_labels(target_labels, n=n),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_constraint_characters(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Dict[str, Rational], Dict[str, Rational]]:
+    """Default DS character data for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_profile, target_profile = _partition_pair_truncated_profiles(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_brackets, target_brackets = partition_pair_positive_nilpotent_brackets(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        _default_constraint_character_from_brackets(source_profile, source_brackets),
+        _default_constraint_character_from_brackets(target_profile, target_brackets),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_constraints(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[DSConstraint, ...], Tuple[DSConstraint, ...]]:
+    """DS constraint package for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_profile, target_profile = _partition_pair_truncated_profiles(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        _constraints_from_ghost_profile(source_profile, source_character, "source"),
+        _constraints_from_ghost_profile(target_profile, target_character, "target"),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_quadratic_ghost_term_support(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[QuadraticGhostTermEntry, ...], Tuple[QuadraticGhostTermEntry, ...]]:
+    """Quadratic ghost support induced by positive brackets for one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_constraint_map = {item.root_label: item for item in source_constraints}
+    target_constraint_map = {item.root_label: item for item in target_constraints}
+    source_brackets, target_brackets = partition_pair_positive_nilpotent_brackets(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        tuple(
+            QuadraticGhostTermEntry(
+                left_c_ghost=source_constraint_map[left].c_ghost,
+                right_c_ghost=source_constraint_map[right].c_ghost,
+                target_b_ghost=source_constraint_map[target].b_ghost,
+                coefficient=Rational(1),
+            )
+            for left, right, target in source_brackets
+        ),
+        tuple(
+            QuadraticGhostTermEntry(
+                left_c_ghost=target_constraint_map[left].c_ghost,
+                right_c_ghost=target_constraint_map[right].c_ghost,
+                target_b_ghost=target_constraint_map[target].b_ghost,
+                coefficient=Rational(1),
+            )
+            for left, right, target in target_brackets
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_current_action_terms(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[CurrentActionTermEntry, ...], Tuple[CurrentActionTermEntry, ...]]:
+    """Current-action terms induced by positive brackets for one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_brackets, target_brackets = partition_pair_positive_nilpotent_brackets(
+        case.partition,
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
     )
@@ -937,12 +1278,29 @@ def _reduced_candidates_from_homogeneous_basis(
     return tuple(candidates)
 
 
+@lru_cache(maxsize=None)
 def hook_pair_surviving_field_candidates(
     n: int,
     r: int,
 ) -> Tuple[Tuple[DSReducedFieldCandidate, ...], Tuple[DSReducedFieldCandidate, ...]]:
     """Homogeneous surviving-field candidates for one hook pair."""
     source_triple, target_triple = type_a_hook_pair_sl2_triples(n, r)
+    source_basis = homogeneous_f_centralizer_basis_sl_n(source_triple.f, source_triple.h)
+    target_basis = homogeneous_f_centralizer_basis_sl_n(target_triple.f, target_triple.h)
+    return (
+        _reduced_candidates_from_homogeneous_basis("source", source_basis),
+        _reduced_candidates_from_homogeneous_basis("target", target_basis),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_surviving_field_candidates(
+    partition: Tuple[int, ...],
+) -> Tuple[Tuple[DSReducedFieldCandidate, ...], Tuple[DSReducedFieldCandidate, ...]]:
+    """Homogeneous surviving-field candidates for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_triple = type_a_partition_sl2_triple(case.partition)
+    target_triple = type_a_partition_sl2_triple(case.dual_partition)
     source_basis = homogeneous_f_centralizer_basis_sl_n(source_triple.f, source_triple.h)
     target_basis = homogeneous_f_centralizer_basis_sl_n(target_triple.f, target_triple.h)
     return (
@@ -998,6 +1356,7 @@ def first_nonselfdual_hook_pair_reduced_brackets(
     )
 
 
+@lru_cache(maxsize=None)
 def hook_pair_reduced_brackets(
     n: int,
     r: int,
@@ -1011,22 +1370,37 @@ def hook_pair_reduced_brackets(
     )
 
 
+@lru_cache(maxsize=None)
+def partition_pair_reduced_brackets(
+    partition: Tuple[int, ...],
+) -> Tuple[Dict[Tuple[str, str], Dict[str, object]], Dict[Tuple[str, str], Dict[str, object]]]:
+    """Closed reduced brackets on one non-principal partition pair survivor sector."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_candidates, target_candidates = partition_pair_surviving_field_candidates(case.partition)
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+    return (
+        _reduced_candidate_bracket_table(source_candidates, basis_matrices),
+        _reduced_candidate_bracket_table(target_candidates, basis_matrices),
+    )
+
+
 def _independent_matrix_basis(matrices: Tuple[Matrix, ...]) -> Tuple[Matrix, ...]:
     """Extract a linearly independent ordered matrix basis from a tuple of matrices."""
     if not matrices:
         return ()
     n = matrices[0].rows
-    basis: list[Matrix] = []
-    columns: list[Matrix] = []
-    for matrix in matrices:
-        if matrix == zeros(n, n):
-            continue
-        column = matrix.reshape(n * n, 1)
-        trial = columns + [column]
-        if Matrix.hstack(*trial).rank() > len(columns):
-            basis.append(matrix)
-            columns.append(column)
-    return tuple(basis)
+    filtered = tuple(
+        (matrix, matrix.reshape(n * n, 1))
+        for matrix in matrices
+        if matrix != zeros(n, n)
+    )
+    if not filtered:
+        return ()
+    if len(filtered) == 1:
+        return (filtered[0][0],)
+    pivot_columns = Matrix.hstack(*[column for _, column in filtered]).rref()[1]
+    return tuple(filtered[index][0] for index in pivot_columns)
 
 
 def _ad_e_image_basis_matrices(
@@ -1042,21 +1416,52 @@ def _ad_e_image_basis_matrices(
     )
 
 
+def _ad_e_image_basis_matrices_with_witness_preimages(
+    e_matrix: Matrix,
+    basis_matrices: Dict[str, Matrix],
+) -> Tuple[Tuple[Matrix, ...], Tuple[DSBasisExpression, ...]]:
+    """Independent [e,g] basis together with chosen standard-basis preimages."""
+    n = e_matrix.rows
+    filtered = []
+    for label, _ in standard_traceless_basis_sl_n(n):
+        image = matrix_commutator(e_matrix, basis_matrices[label])
+        if image == zeros(n, n):
+            continue
+        filtered.append((label, image, image.reshape(n * n, 1)))
+    if not filtered:
+        return (), ()
+    if len(filtered) == 1:
+        label, image, _ = filtered[0]
+        return (image,), (((label, Rational(1)),),)
+    pivot_columns = Matrix.hstack(*[column for _, _, column in filtered]).rref()[1]
+    return (
+        tuple(filtered[index][1] for index in pivot_columns),
+        tuple(((filtered[index][0], Rational(1)),) for index in pivot_columns),
+    )
+
+
 def _project_matrix_to_candidate_basis(
     matrix: Matrix,
     candidate_labels: Tuple[str, ...],
     candidate_matrices: Tuple[Matrix, ...],
     complement_matrices: Tuple[Matrix, ...],
+    decomposition_inverse: Matrix | None = None,
+    basis_order: Tuple[str, ...] | None = None,
 ) -> Dict[str, Rational]:
     """Project a matrix to a candidate basis along a chosen complement."""
     n = matrix.rows
-    combined = Matrix.hstack(
-        *[
-            entry.reshape(n * n, 1)
-            for entry in complement_matrices + candidate_matrices
-        ]
-    )
-    coefficients = combined.LUsolve(matrix.reshape(n * n, 1))
+    if decomposition_inverse is None:
+        combined = Matrix.hstack(
+            *[
+                entry.reshape(n * n, 1)
+                for entry in complement_matrices + candidate_matrices
+            ]
+        )
+        coefficients = combined.LUsolve(matrix.reshape(n * n, 1))
+    else:
+        if basis_order is None:
+            raise ValueError("basis_order is required when decomposition_inverse is provided")
+        coefficients = decomposition_inverse * _matrix_coordinate_column(matrix, basis_order)
     offset = len(complement_matrices)
     projection: Dict[str, Rational] = {}
     for index, label in enumerate(candidate_labels):
@@ -1066,10 +1471,104 @@ def _project_matrix_to_candidate_basis(
     return projection
 
 
+def _sum_scaled_basis_expressions(
+    expressions: Tuple[DSBasisExpression, ...],
+    coefficients: Tuple[object, ...],
+    basis_order: Tuple[str, ...],
+) -> DSBasisExpression:
+    """Linear combination of basis expressions collected in a fixed order."""
+    accumulated: Dict[str, object] = {}
+    for expression, coefficient in zip(expressions, coefficients):
+        scalar = sympify(coefficient)
+        if scalar == 0:
+            continue
+        for label, entry_coefficient in expression:
+            accumulated[label] = simplify(
+                accumulated.get(label, 0)
+                + scalar * sympify(entry_coefficient)
+            )
+    return _basis_expression_from_coefficients(accumulated, basis_order)
+
+
+def _basis_expression_coordinate_column(
+    expression: DSBasisExpression,
+    basis_order: Tuple[str, ...],
+) -> Matrix:
+    """Column vector of coefficients in a fixed traceless-basis order."""
+    index = _basis_order_index_map(basis_order)
+    coordinates = zeros(len(basis_order), 1)
+    for label, coefficient in expression:
+        coordinates[index[label], 0] += sympify(coefficient)
+    return coordinates
+
+
+def _matrix_coordinate_column(
+    matrix: Matrix,
+    basis_order: Tuple[str, ...],
+) -> Matrix:
+    """Column vector of a traceless matrix in the fixed standard traceless basis."""
+    return _basis_expression_coordinate_column(
+        tuple(
+            (label, sympify(coefficient))
+            for label, coefficient in matrix_to_traceless_basis_expression_sl_n(matrix)
+        ),
+        basis_order,
+    )
+
+
+def _split_matrix_to_candidate_basis_with_witnesses(
+    matrix: Matrix,
+    candidate_labels: Tuple[str, ...],
+    candidate_matrices: Tuple[Matrix, ...],
+    complement_matrices: Tuple[Matrix, ...],
+    complement_witness_preimages: Tuple[DSBasisExpression, ...],
+    basis_order: Tuple[str, ...],
+    decomposition_inverse: Matrix | None = None,
+) -> Tuple[DSBasisExpression, LabeledLinearCombination, DSBasisExpression]:
+    """Split a matrix into complement and survivor parts with a chosen witness lift."""
+    n = matrix.rows
+    if decomposition_inverse is None:
+        combined = Matrix.hstack(
+            *[
+                entry.reshape(n * n, 1)
+                for entry in complement_matrices + candidate_matrices
+            ]
+        )
+        coefficients = combined.LUsolve(matrix.reshape(n * n, 1))
+    else:
+        coefficients = decomposition_inverse * _matrix_coordinate_column(matrix, basis_order)
+    complement_coefficients = tuple(
+        simplify(coefficients[index, 0])
+        for index in range(len(complement_matrices))
+    )
+    projected_terms = tuple(
+        (label, simplify(coefficients[len(complement_matrices) + index, 0]))
+        for index, label in enumerate(candidate_labels)
+        if simplify(coefficients[len(complement_matrices) + index, 0]) != 0
+    )
+    complement_matrix = zeros(n, n)
+    for coefficient, entry in zip(complement_coefficients, complement_matrices):
+        complement_matrix += sympify(coefficient) * entry
+    return (
+        tuple(
+            (label, sympify(coefficient))
+            for label, coefficient in matrix_to_traceless_basis_expression_sl_n(
+                complement_matrix
+            )
+        ),
+        projected_terms,
+        _sum_scaled_basis_expressions(
+            complement_witness_preimages,
+            complement_coefficients,
+            basis_order,
+        ),
+    )
+
+
 @lru_cache(maxsize=None)
 def _first_nonselfdual_hook_pair_projection_data(
     side: str,
-) -> Tuple[Tuple[str, ...], Tuple[Matrix, ...], Tuple[Matrix, ...], Dict[str, Matrix], Matrix]:
+) -> Tuple[Tuple[str, ...], Tuple[Matrix, ...], Tuple[Matrix, ...], Dict[str, Matrix], Matrix, Matrix]:
     """Projection data g = [e,g] ⊕ g^f for one side of the first hook pair."""
     if side not in {"source", "target"}:
         raise ValueError("side must be 'source' or 'target'")
@@ -1078,6 +1577,7 @@ def _first_nonselfdual_hook_pair_projection_data(
     triple = source_triple if side == "source" else target_triple
     candidates = source_candidates if side == "source" else target_candidates
     basis_matrices = dict(standard_traceless_basis_sl_n(4))
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(4))
     candidate_labels = tuple(candidate.label for candidate in candidates)
     candidate_matrices = tuple(
         ds_basis_expression_matrix(candidate.source_terms, basis_matrices)
@@ -1085,17 +1585,16 @@ def _first_nonselfdual_hook_pair_projection_data(
     )
     ad_e_basis = _ad_e_image_basis_matrices(triple.e, basis_matrices)
     decomposition_matrix = Matrix.hstack(
-        *[
-            entry.reshape(16, 1)
-            for entry in ad_e_basis + candidate_matrices
-        ]
+        *[_matrix_coordinate_column(entry, basis_order) for entry in ad_e_basis + candidate_matrices]
     )
+    decomposition_inverse = decomposition_matrix.inv()
     return (
         candidate_labels,
         candidate_matrices,
         ad_e_basis,
         basis_matrices,
         decomposition_matrix,
+        decomposition_inverse,
     )
 
 
@@ -1109,18 +1608,97 @@ def _project_hook_pair_matrix_to_survivors(
     if side not in {"source", "target"}:
         raise ValueError("side must be 'source' or 'target'")
     if n == 4 and r == 1:
-        candidate_labels, candidate_matrices, ad_e_basis, _, _ = (
+        candidate_labels, candidate_matrices, ad_e_basis, _, _, decomposition_inverse = (
             _first_nonselfdual_hook_pair_projection_data(side)
         )
+        basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(4))
     else:
-        candidate_labels, candidate_matrices, ad_e_basis, _, _ = (
+        candidate_labels, candidate_matrices, ad_e_basis, _, _, decomposition_inverse = (
             _hook_pair_projection_data(n, r, side)
         )
+        basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
     return _project_matrix_to_candidate_basis(
         matrix,
         candidate_labels,
         candidate_matrices,
         ad_e_basis,
+        decomposition_inverse=decomposition_inverse,
+        basis_order=basis_order,
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_projection_witness_data(
+    n: int,
+    r: int,
+    side: str,
+) -> Tuple[
+    Tuple[str, ...],
+    Tuple[Matrix, ...],
+    Tuple[Matrix, ...],
+    Tuple[DSBasisExpression, ...],
+    Dict[str, Matrix],
+    Matrix,
+    Matrix,
+]:
+    """Projection data with chosen [e,g]-witness preimages for one hook-pair side."""
+    if side not in {"source", "target"}:
+        raise ValueError("side must be 'source' or 'target'")
+    source_triple, target_triple = type_a_hook_pair_sl2_triples(n, r)
+    source_candidates, target_candidates = hook_pair_surviving_field_candidates(n, r)
+    triple = source_triple if side == "source" else target_triple
+    candidates = source_candidates if side == "source" else target_candidates
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
+    candidate_labels = tuple(candidate.label for candidate in candidates)
+    candidate_matrices = tuple(
+        ds_basis_expression_matrix(candidate.source_terms, basis_matrices)
+        for candidate in candidates
+    )
+    ad_e_basis, ad_e_witness_preimages = _ad_e_image_basis_matrices_with_witness_preimages(
+        triple.e,
+        basis_matrices,
+    )
+    decomposition_matrix = Matrix.hstack(
+        *[_matrix_coordinate_column(entry, basis_order) for entry in ad_e_basis + candidate_matrices]
+    )
+    decomposition_inverse = decomposition_matrix.inv()
+    return (
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        ad_e_witness_preimages,
+        basis_matrices,
+        decomposition_matrix,
+        decomposition_inverse,
+    )
+
+
+def _split_hook_pair_matrix_to_survivors_with_witnesses(
+    side: str,
+    matrix: Matrix,
+    n: int = 4,
+    r: int = 1,
+) -> Tuple[DSBasisExpression, LabeledLinearCombination, DSBasisExpression]:
+    """Split a hook-pair matrix into survivor and [e,g]-witness pieces."""
+    (
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        ad_e_witness_preimages,
+        _basis_matrices,
+        _decomposition_matrix,
+        decomposition_inverse,
+    ) = _hook_pair_projection_witness_data(n, r, side)
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
+    return _split_matrix_to_candidate_basis_with_witnesses(
+        matrix,
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        ad_e_witness_preimages,
+        basis_order,
+        decomposition_inverse=decomposition_inverse,
     )
 
 
@@ -1129,7 +1707,7 @@ def _hook_pair_projection_data(
     n: int,
     r: int,
     side: str,
-) -> Tuple[Tuple[str, ...], Tuple[Matrix, ...], Tuple[Matrix, ...], Dict[str, Matrix], Matrix]:
+) -> Tuple[Tuple[str, ...], Tuple[Matrix, ...], Tuple[Matrix, ...], Dict[str, Matrix], Matrix, Matrix]:
     """Projection data g = [e,g] ⊕ g^f for one side of a hook pair."""
     if side not in {"source", "target"}:
         raise ValueError("side must be 'source' or 'target'")
@@ -1138,6 +1716,7 @@ def _hook_pair_projection_data(
     triple = source_triple if side == "source" else target_triple
     candidates = source_candidates if side == "source" else target_candidates
     basis_matrices = dict(standard_traceless_basis_sl_n(n))
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
     candidate_labels = tuple(candidate.label for candidate in candidates)
     candidate_matrices = tuple(
         ds_basis_expression_matrix(candidate.source_terms, basis_matrices)
@@ -1145,17 +1724,155 @@ def _hook_pair_projection_data(
     )
     ad_e_basis = _ad_e_image_basis_matrices(triple.e, basis_matrices)
     decomposition_matrix = Matrix.hstack(
-        *[
-            entry.reshape(n * n, 1)
-            for entry in ad_e_basis + candidate_matrices
-        ]
+        *[_matrix_coordinate_column(entry, basis_order) for entry in ad_e_basis + candidate_matrices]
     )
+    decomposition_inverse = decomposition_matrix.inv()
     return (
         candidate_labels,
         candidate_matrices,
         ad_e_basis,
         basis_matrices,
         decomposition_matrix,
+        decomposition_inverse,
+    )
+
+
+@lru_cache(maxsize=None)
+def _partition_pair_projection_data(
+    partition: Tuple[int, ...],
+    side: str,
+) -> Tuple[Tuple[str, ...], Tuple[Matrix, ...], Tuple[Matrix, ...], Dict[str, Matrix], Matrix, Matrix]:
+    """Projection data g = [e,g] ⊕ g^f for one side of a non-principal partition pair."""
+    if side not in {"source", "target"}:
+        raise ValueError("side must be 'source' or 'target'")
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_triple = type_a_partition_sl2_triple(case.partition)
+    target_triple = type_a_partition_sl2_triple(case.dual_partition)
+    source_candidates, target_candidates = partition_pair_surviving_field_candidates(case.partition)
+    triple = source_triple if side == "source" else target_triple
+    candidates = source_candidates if side == "source" else target_candidates
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
+    candidate_labels = tuple(candidate.label for candidate in candidates)
+    candidate_matrices = tuple(
+        ds_basis_expression_matrix(candidate.source_terms, basis_matrices)
+        for candidate in candidates
+    )
+    ad_e_basis = _ad_e_image_basis_matrices(triple.e, basis_matrices)
+    decomposition_matrix = Matrix.hstack(
+        *[_matrix_coordinate_column(entry, basis_order) for entry in ad_e_basis + candidate_matrices]
+    )
+    decomposition_inverse = decomposition_matrix.inv()
+    return (
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        basis_matrices,
+        decomposition_matrix,
+        decomposition_inverse,
+    )
+
+
+@lru_cache(maxsize=None)
+def _partition_pair_projection_witness_data(
+    partition: Tuple[int, ...],
+    side: str,
+) -> Tuple[
+    Tuple[str, ...],
+    Tuple[Matrix, ...],
+    Tuple[Matrix, ...],
+    Tuple[DSBasisExpression, ...],
+    Dict[str, Matrix],
+    Matrix,
+    Matrix,
+]:
+    """Projection data with chosen [e,g]-witness preimages for one partition-pair side."""
+    if side not in {"source", "target"}:
+        raise ValueError("side must be 'source' or 'target'")
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_triple = type_a_partition_sl2_triple(case.partition)
+    target_triple = type_a_partition_sl2_triple(case.dual_partition)
+    source_candidates, target_candidates = partition_pair_surviving_field_candidates(case.partition)
+    triple = source_triple if side == "source" else target_triple
+    candidates = source_candidates if side == "source" else target_candidates
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
+    candidate_labels = tuple(candidate.label for candidate in candidates)
+    candidate_matrices = tuple(
+        ds_basis_expression_matrix(candidate.source_terms, basis_matrices)
+        for candidate in candidates
+    )
+    ad_e_basis, ad_e_witness_preimages = _ad_e_image_basis_matrices_with_witness_preimages(
+        triple.e,
+        basis_matrices,
+    )
+    decomposition_matrix = Matrix.hstack(
+        *[_matrix_coordinate_column(entry, basis_order) for entry in ad_e_basis + candidate_matrices]
+    )
+    decomposition_inverse = decomposition_matrix.inv()
+    return (
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        ad_e_witness_preimages,
+        basis_matrices,
+        decomposition_matrix,
+        decomposition_inverse,
+    )
+
+
+def _split_partition_pair_matrix_to_survivors_with_witnesses(
+    partition: Tuple[int, ...],
+    side: str,
+    matrix: Matrix,
+) -> Tuple[DSBasisExpression, LabeledLinearCombination, DSBasisExpression]:
+    """Split a partition-pair matrix into survivor and [e,g]-witness pieces."""
+    normalized_partition = normalize_partition(partition)
+    (
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        ad_e_witness_preimages,
+        _basis_matrices,
+        _decomposition_matrix,
+        decomposition_inverse,
+    ) = _partition_pair_projection_witness_data(normalized_partition, side)
+    n = partition_size(normalized_partition)
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(n))
+    return _split_matrix_to_candidate_basis_with_witnesses(
+        matrix,
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        ad_e_witness_preimages,
+        basis_order,
+        decomposition_inverse=decomposition_inverse,
+    )
+
+
+def _project_partition_pair_matrix_to_survivors(
+    partition: Tuple[int, ...],
+    side: str,
+    matrix: Matrix,
+) -> Dict[str, Rational]:
+    """Project a partition-pair matrix to the survivor basis along [e,g]."""
+    if side not in {"source", "target"}:
+        raise ValueError("side must be 'source' or 'target'")
+    normalized_partition = normalize_partition(partition)
+    candidate_labels, candidate_matrices, ad_e_basis, _, _, decomposition_inverse = _partition_pair_projection_data(
+        normalized_partition,
+        side,
+    )
+    basis_order = tuple(label for label, _ in standard_traceless_basis_sl_n(partition_size(normalized_partition)))
+    return _project_matrix_to_candidate_basis(
+        matrix,
+        candidate_labels,
+        candidate_matrices,
+        ad_e_basis,
+        decomposition_inverse=decomposition_inverse,
+        basis_order=basis_order,
     )
 
 
@@ -1201,6 +1918,40 @@ def sl3_subregular_survivor_action_terms() -> Tuple[SurvivorActionTermEntry, ...
     )
 
 
+def sl3_subregular_survivor_action_lift_witnesses(
+) -> Tuple[SurvivorActionLiftWitness, ...]:
+    """Explicit survivor-action lifts into projected and [e,sl_3]-witness parts."""
+    constraints = sl3_subregular_constraints()
+    candidates = sl3_subregular_strong_generator_candidates()
+    basis_matrices = sl3_subregular_basis_matrices()
+    entries = []
+    for constraint in constraints:
+        positive_matrix = basis_matrices[constraint.current_label]
+        for candidate in candidates:
+            commutator = matrix_commutator(
+                positive_matrix,
+                ds_basis_expression_matrix(candidate.source_terms, basis_matrices),
+            )
+            if commutator == zeros(3, 3):
+                continue
+            ad_e_terms, projected_terms = sl3_subregular_split_expression(
+                _sl3_subregular_matrix_to_basis_expression(commutator)
+            )
+            entries.append(
+                SurvivorActionLiftWitness(
+                    c_ghost=constraint.c_ghost,
+                    source_survivor_label=candidate.label,
+                    projected_terms=projected_terms,
+                    ad_e_image_terms=ad_e_terms,
+                    ad_e_witness_preimage=sl3_subregular_expand_ad_e_terms_to_witness_preimage(
+                        ad_e_terms
+                    ),
+                )
+            )
+    return tuple(entries)
+
+
+@lru_cache(maxsize=None)
 def hook_pair_survivor_action_terms(
     n: int,
     r: int,
@@ -1242,11 +1993,270 @@ def hook_pair_survivor_action_terms(
     )
 
 
+@lru_cache(maxsize=None)
+def partition_pair_survivor_action_terms(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """Induced c.rho action terms on reduced survivor sectors for one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_candidates, target_candidates = partition_pair_surviving_field_candidates(case.partition)
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+    return (
+        _survivor_action_terms_from_projected_commutators(
+            source_constraints,
+            source_candidates,
+            basis_matrices,
+            lambda matrix: _project_partition_pair_matrix_to_survivors(
+                case.partition,
+                "source",
+                matrix,
+            ),
+        ),
+        _survivor_action_terms_from_projected_commutators(
+            target_constraints,
+            target_candidates,
+            basis_matrices,
+            lambda matrix: _project_partition_pair_matrix_to_survivors(
+                case.partition,
+                "target",
+                matrix,
+            ),
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_survivor_action_lift_witnesses(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionLiftWitness, ...], Tuple[SurvivorActionLiftWitness, ...]]:
+    """Explicit survivor-action lifts for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_candidates, target_candidates = partition_pair_surviving_field_candidates(case.partition)
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+
+    def build_side(
+        side: str,
+        constraints: Tuple[DSConstraint, ...],
+        candidates: Tuple[DSReducedFieldCandidate, ...],
+    ) -> Tuple[SurvivorActionLiftWitness, ...]:
+        entries = []
+        for constraint in constraints:
+            positive_matrix = basis_matrices[constraint.current_label]
+            for candidate in candidates:
+                commutator = matrix_commutator(
+                    positive_matrix,
+                    ds_basis_expression_matrix(candidate.source_terms, basis_matrices),
+                )
+                if commutator == zeros(n, n):
+                    continue
+                ad_e_terms, projected_terms, witness_preimage = (
+                    _split_partition_pair_matrix_to_survivors_with_witnesses(
+                        case.partition,
+                        side,
+                        commutator,
+                    )
+                )
+                entries.append(
+                    SurvivorActionLiftWitness(
+                        c_ghost=constraint.c_ghost,
+                        source_survivor_label=candidate.label,
+                        projected_terms=projected_terms,
+                        ad_e_image_terms=ad_e_terms,
+                        ad_e_witness_preimage=witness_preimage,
+                    )
+                )
+        return tuple(entries)
+
+    return (
+        build_side("source", source_constraints, source_candidates),
+        build_side("target", target_constraints, target_candidates),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_constraint_current_witnesses(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Dict[str, DSBasisExpression], Dict[str, DSBasisExpression]]:
+    """Chosen witness preimages for exact constrained currents in one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+
+    def build_side(
+        side: str,
+        constraints: Tuple[DSConstraint, ...],
+    ) -> Dict[str, DSBasisExpression]:
+        witnesses: Dict[str, DSBasisExpression] = {}
+        for constraint in constraints:
+            _ad_e_terms, projected_terms, witness_preimage = (
+                _split_partition_pair_matrix_to_survivors_with_witnesses(
+                    case.partition,
+                    side,
+                    basis_matrices[constraint.current_label],
+                )
+            )
+            if not projected_terms:
+                witnesses[constraint.current_label] = witness_preimage
+        return witnesses
+
+    return (
+        build_side("source", source_constraints),
+        build_side("target", target_constraints),
+    )
+
+
 def first_nonselfdual_hook_pair_survivor_action_terms(
 ) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
     """Induced c.rho action terms on the reduced survivor sectors of the first hook pair."""
     source_count, target_count = _first_nonselfdual_full_constraint_counts()
     return hook_pair_survivor_action_terms(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+@lru_cache(maxsize=None)
+def hook_pair_survivor_action_lift_witnesses(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionLiftWitness, ...], Tuple[SurvivorActionLiftWitness, ...]]:
+    """Explicit survivor-action lifts into projected and [e,g]-witness pieces for one hook pair."""
+    source_constraints, target_constraints = hook_pair_constraints(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_candidates, target_candidates = hook_pair_surviving_field_candidates(n, r)
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+
+    def build_side(
+        side: str,
+        constraints: Tuple[DSConstraint, ...],
+        candidates: Tuple[DSReducedFieldCandidate, ...],
+    ) -> Tuple[SurvivorActionLiftWitness, ...]:
+        entries = []
+        for constraint in constraints:
+            positive_matrix = basis_matrices[constraint.current_label]
+            for candidate in candidates:
+                commutator = matrix_commutator(
+                    positive_matrix,
+                    ds_basis_expression_matrix(candidate.source_terms, basis_matrices),
+                )
+                if commutator == zeros(n, n):
+                    continue
+                ad_e_terms, projected_terms, witness_preimage = (
+                    _split_hook_pair_matrix_to_survivors_with_witnesses(
+                        side,
+                        commutator,
+                        n=n,
+                        r=r,
+                    )
+                )
+                entries.append(
+                    SurvivorActionLiftWitness(
+                        c_ghost=constraint.c_ghost,
+                        source_survivor_label=candidate.label,
+                        projected_terms=projected_terms,
+                        ad_e_image_terms=ad_e_terms,
+                        ad_e_witness_preimage=witness_preimage,
+                    )
+                )
+        return tuple(entries)
+
+    return (
+        build_side("source", source_constraints, source_candidates),
+        build_side("target", target_constraints, target_candidates),
+    )
+
+
+def first_nonselfdual_hook_pair_survivor_action_lift_witnesses(
+) -> Tuple[Tuple[SurvivorActionLiftWitness, ...], Tuple[SurvivorActionLiftWitness, ...]]:
+    """Explicit survivor-action lifts for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_survivor_action_lift_witnesses(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+@lru_cache(maxsize=None)
+def hook_pair_constraint_current_witnesses(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Dict[str, DSBasisExpression], Dict[str, DSBasisExpression]]:
+    """Chosen witness preimages for constrained hook-pair currents in [e,g]."""
+    source_constraints, target_constraints = hook_pair_constraints(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+
+    def build_side(
+        side: str,
+        constraints: Tuple[DSConstraint, ...],
+    ) -> Dict[str, DSBasisExpression]:
+        witnesses: Dict[str, DSBasisExpression] = {}
+        for constraint in constraints:
+            _ad_e_terms, projected_terms, witness_preimage = (
+                _split_hook_pair_matrix_to_survivors_with_witnesses(
+                    side,
+                    basis_matrices[constraint.current_label],
+                    n=n,
+                    r=r,
+                )
+            )
+            if projected_terms:
+                raise ValueError(
+                    f"{constraint.current_label} is not purely ad_e-exact on the {side} side"
+                )
+            witnesses[constraint.current_label] = witness_preimage
+        return witnesses
+
+    return (
+        build_side("source", source_constraints),
+        build_side("target", target_constraints),
+    )
+
+
+def first_nonselfdual_hook_pair_constraint_current_witnesses(
+) -> Tuple[Dict[str, DSBasisExpression], Dict[str, DSBasisExpression]]:
+    """Chosen witness preimages for the constrained currents of the first hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_constraint_current_witnesses(
         4,
         1,
         source_num_constraints=source_count,
@@ -1307,6 +2317,859 @@ def internal_survivor_action_terms(
                     )
                 )
     return tuple(terms)
+
+
+def _add_linear_combination(
+    target: Dict[str, object],
+    source: Dict[str, object],
+    scale=1,
+) -> None:
+    """Accumulate one labeled linear combination into another."""
+    scalar = sympify(scale)
+    for label, coefficient in source.items():
+        updated = simplify(target.get(label, 0) + scalar * sympify(coefficient))
+        if updated == 0:
+            target.pop(label, None)
+        else:
+            target[label] = updated
+
+
+def _survivor_action_by_c_ghost(
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+) -> Dict[str, Dict[str, Dict[str, object]]]:
+    """Action maps grouped by external c-ghost and source survivor label."""
+    action: Dict[str, Dict[str, Dict[str, object]]] = {}
+    for item in survivor_action_terms:
+        ghost_action = action.setdefault(item.c_ghost, {})
+        image = ghost_action.setdefault(item.source_survivor_label, {})
+        image[item.target_survivor_label] = simplify(
+            image.get(item.target_survivor_label, 0) + sympify(item.coefficient)
+        )
+    return action
+
+
+def _apply_survivor_action_to_linear_combination(
+    action_by_source: Dict[str, Dict[str, object]],
+    combination: Dict[str, object],
+) -> Dict[str, object]:
+    """Apply a grouped survivor action to a labeled linear combination."""
+    result: Dict[str, object] = {}
+    for source_label, source_coefficient in combination.items():
+        _add_linear_combination(
+            result,
+            action_by_source.get(source_label, {}),
+            scale=source_coefficient,
+        )
+    return result
+
+
+def combine_survivor_action_terms(
+    *term_sets: Tuple[SurvivorActionTermEntry, ...],
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """Combine survivor-action terms with coefficient collection."""
+    coefficients: Dict[Tuple[str, str, str], object] = {}
+    ordered_keys: list[Tuple[str, str, str]] = []
+    for term_set in term_sets:
+        for item in term_set:
+            key = (
+                item.c_ghost,
+                item.source_survivor_label,
+                item.target_survivor_label,
+            )
+            if key not in coefficients:
+                ordered_keys.append(key)
+            coefficients[key] = simplify(
+                coefficients.get(key, 0) + sympify(item.coefficient)
+            )
+    return tuple(
+        SurvivorActionTermEntry(
+            c_ghost=c_ghost,
+            source_survivor_label=source_survivor_label,
+            target_survivor_label=target_survivor_label,
+            coefficient=simplify(coefficients[(c_ghost, source_survivor_label, target_survivor_label)]),
+        )
+        for c_ghost, source_survivor_label, target_survivor_label in ordered_keys
+        if simplify(coefficients[(c_ghost, source_survivor_label, target_survivor_label)]) != 0
+    )
+
+
+def first_transfer_correction_witnesses_from_exact_constraints(
+    constraints: Tuple[DSConstraint, ...],
+    survivor_action_lift_witnesses: Tuple[SurvivorActionLiftWitness, ...],
+    exact_current_witnesses: Dict[str, DSBasisExpression],
+) -> Tuple[FirstTransferCorrectionWitness, ...]:
+    """First-transfer witness package for action terms induced by ad_e-exact currents."""
+    current_label_by_ghost = {
+        item.c_ghost: item.current_label
+        for item in constraints
+        if item.current_label in exact_current_witnesses
+    }
+    return tuple(
+        FirstTransferCorrectionWitness(
+            c_ghost=item.c_ghost,
+            current_label=current_label_by_ghost[item.c_ghost],
+            current_witness_preimage=exact_current_witnesses[
+                current_label_by_ghost[item.c_ghost]
+            ],
+            source_survivor_label=item.source_survivor_label,
+            projected_action_terms=item.projected_terms,
+            action_witness_preimage=item.ad_e_witness_preimage,
+            correction_terms=tuple(
+                (label, simplify(-sympify(coefficient)))
+                for label, coefficient in item.projected_terms
+            ),
+        )
+        for item in survivor_action_lift_witnesses
+        if item.c_ghost in current_label_by_ghost and item.projected_terms
+    )
+
+
+def first_transfer_correction_terms_from_witnesses(
+    correction_witnesses: Tuple[FirstTransferCorrectionWitness, ...],
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """Flatten first-transfer witness data back to survivor-action correction terms."""
+    return tuple(
+        SurvivorActionTermEntry(
+            c_ghost=item.c_ghost,
+            source_survivor_label=item.source_survivor_label,
+            target_survivor_label=target_survivor_label,
+            coefficient=simplify(coefficient),
+        )
+        for item in correction_witnesses
+        for target_survivor_label, coefficient in item.correction_terms
+    )
+
+
+def _linear_combination_bracket(
+    left: Dict[str, object],
+    right: Dict[str, object],
+    reduced_brackets: Dict[Tuple[str, str], Dict[str, object]],
+) -> Dict[str, object]:
+    """Bracket of two labeled linear combinations in the reduced survivor algebra."""
+    result: Dict[str, object] = {}
+    for left_label, left_coefficient in left.items():
+        for right_label, right_coefficient in right.items():
+            _add_linear_combination(
+                result,
+                reduced_brackets.get((left_label, right_label), {}),
+                scale=sympify(left_coefficient) * sympify(right_coefficient),
+            )
+    return result
+
+
+def survivor_action_derivation_defects(
+    survivor_labels: Tuple[str, ...],
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    reduced_brackets: Dict[Tuple[str, str], Dict[str, object]],
+) -> Dict[str, Dict[Tuple[str, str], Dict[str, object]]]:
+    """Defect of the positive-sector survivor action from being a derivation of the reduced bracket."""
+    action_by_ghost = _survivor_action_by_c_ghost(survivor_action_terms)
+    defects: Dict[str, Dict[Tuple[str, str], Dict[str, object]]] = {}
+    for c_ghost, action_by_source in action_by_ghost.items():
+        ghost_defects: Dict[Tuple[str, str], Dict[str, object]] = {}
+        for left in survivor_labels:
+            for right in survivor_labels:
+                rho_bracket = _apply_survivor_action_to_linear_combination(
+                    action_by_source,
+                    reduced_brackets.get((left, right), {}),
+                )
+                derivation_term: Dict[str, object] = {}
+                _add_linear_combination(
+                    derivation_term,
+                    _linear_combination_bracket(
+                        action_by_source.get(left, {}),
+                        {right: 1},
+                        reduced_brackets,
+                    ),
+                )
+                _add_linear_combination(
+                    derivation_term,
+                    _linear_combination_bracket(
+                        {left: 1},
+                        action_by_source.get(right, {}),
+                        reduced_brackets,
+                    ),
+                )
+                defect = dict(rho_bracket)
+                _add_linear_combination(defect, derivation_term, scale=-1)
+                if defect:
+                    ghost_defects[(left, right)] = defect
+        if ghost_defects:
+            defects[c_ghost] = ghost_defects
+    return defects
+
+
+def sl3_subregular_derivation_defect_witnesses(
+) -> Tuple[SurvivorDerivationDefectWitness, ...]:
+    """Explicit unreduced witness formulas for the subregular derivation defects."""
+    basis_matrices = sl3_subregular_basis_matrices()
+    e_matrix = basis_matrices[sl3_subregular_sl2_triple().e]
+    candidates = sl3_subregular_strong_generator_candidates()
+    candidate_order = tuple(item.label for item in candidates)
+    candidate_matrices = {
+        item.label: ds_basis_expression_matrix(item.source_terms, basis_matrices)
+        for item in candidates
+    }
+    witness_by_ghost: Dict[str, Dict[str, DSBasisExpression]] = {}
+    for item in sl3_subregular_survivor_action_lift_witnesses():
+        ghost_map = witness_by_ghost.setdefault(item.c_ghost, {})
+        ghost_map[item.source_survivor_label] = item.ad_e_witness_preimage
+
+    entries = []
+    for c_ghost, ghost_defects in sl3_subregular_survivor_derivation_defects().items():
+        ghost_witnesses = witness_by_ghost.get(c_ghost, {})
+        for (left_label, right_label), defect_terms in ghost_defects.items():
+            left_witness = ghost_witnesses.get(left_label, ())
+            right_witness = ghost_witnesses.get(right_label, ())
+            unreduced = -matrix_commutator(
+                ds_basis_expression_matrix(left_witness, basis_matrices),
+                matrix_commutator(e_matrix, candidate_matrices[right_label]),
+            ) - matrix_commutator(
+                matrix_commutator(e_matrix, candidate_matrices[left_label]),
+                ds_basis_expression_matrix(right_witness, basis_matrices),
+            )
+            unreduced_expression = _sl3_subregular_matrix_to_basis_expression(unreduced)
+            projected_terms = _labeled_linear_combination(
+                sl3_subregular_project_expression_to_strong_candidates(
+                    unreduced_expression
+                ),
+                candidate_order,
+            )
+            entries.append(
+                SurvivorDerivationDefectWitness(
+                    c_ghost=c_ghost,
+                    left_survivor_label=left_label,
+                    right_survivor_label=right_label,
+                    left_action_witness_preimage=left_witness,
+                    right_action_witness_preimage=right_witness,
+                    unreduced_expression=unreduced_expression,
+                    projected_defect_terms=projected_terms,
+                )
+            )
+    return tuple(entries)
+
+
+def sl3_subregular_survivor_derivation_defects(
+) -> Dict[str, Dict[Tuple[str, str], Dict[str, object]]]:
+    """Derivation defects for the subregular sl_3 positive action on the reduced survivor bracket."""
+    survivors = sl3_subregular_strong_generator_candidates()
+    return survivor_action_derivation_defects(
+        tuple(item.label for item in survivors),
+        sl3_subregular_survivor_action_terms(),
+        sl3_subregular_projected_strong_brackets(),
+    )
+
+
+def sl3_subregular_first_transfer_correction_terms(
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """First transferred correction from the ad_e-exact positive generators."""
+    return first_transfer_correction_terms_from_witnesses(
+        sl3_subregular_first_transfer_correction_witnesses()
+    )
+
+
+def sl3_subregular_first_transfer_correction_witnesses(
+) -> Tuple[FirstTransferCorrectionWitness, ...]:
+    """Explicit first-transfer witnesses for the subregular control case."""
+    return first_transfer_correction_witnesses_from_exact_constraints(
+        sl3_subregular_constraints(),
+        sl3_subregular_survivor_action_lift_witnesses(),
+        sl3_subregular_ad_e_image_witnesses(),
+    )
+
+
+def sl3_subregular_corrected_survivor_action_terms(
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """Naive subregular action plus the first transferred correction."""
+    return combine_survivor_action_terms(
+        sl3_subregular_survivor_action_terms(),
+        sl3_subregular_first_transfer_correction_terms(),
+    )
+
+
+def sl3_subregular_corrected_survivor_derivation_defects(
+) -> Dict[str, Dict[Tuple[str, str], Dict[str, object]]]:
+    """Derivation defects after the first transferred subregular correction."""
+    survivors = sl3_subregular_strong_generator_candidates()
+    return survivor_action_derivation_defects(
+        tuple(item.label for item in survivors),
+        sl3_subregular_corrected_survivor_action_terms(),
+        sl3_subregular_projected_strong_brackets(),
+    )
+
+
+def solve_survivor_derivation_correction_for_ghost(
+    c_ghost: str,
+    survivor_labels: Tuple[str, ...],
+    reduced_brackets: Dict[Tuple[str, str], Dict[str, object]],
+    ghost_defects: Dict[Tuple[str, str], Dict[str, object]],
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """Solve the first-order derivation-coboundary equation for one ghost."""
+    unknown_keys = [
+        (source_label, target_label)
+        for source_label in survivor_labels
+        for target_label in survivor_labels
+    ]
+    rows = []
+    rhs = []
+    for left_label in survivor_labels:
+        for right_label in survivor_labels:
+            for target_label in survivor_labels:
+                row = []
+                for source_label, image_label in unknown_keys:
+                    coefficient = Rational(0)
+                    for bracket_label, bracket_coefficient in reduced_brackets[
+                        (left_label, right_label)
+                    ].items():
+                        if bracket_label == source_label and image_label == target_label:
+                            coefficient += sympify(bracket_coefficient)
+                    if source_label == left_label:
+                        for bracket_label, bracket_coefficient in reduced_brackets[
+                            (image_label, right_label)
+                        ].items():
+                            if bracket_label == target_label:
+                                coefficient -= sympify(bracket_coefficient)
+                    if source_label == right_label:
+                        for bracket_label, bracket_coefficient in reduced_brackets[
+                            (left_label, image_label)
+                        ].items():
+                            if bracket_label == target_label:
+                                coefficient -= sympify(bracket_coefficient)
+                    row.append(simplify(coefficient))
+                constant_term = -sympify(
+                    ghost_defects.get((left_label, right_label), {}).get(target_label, 0)
+                )
+                if any(entry != 0 for entry in row) or constant_term != 0:
+                    rows.append(row)
+                    rhs.append(constant_term)
+    if not rows:
+        return ()
+
+    matrix = Matrix(rows)
+    vector = Matrix(rhs)
+    if matrix.rank() != matrix.row_join(vector).rank():
+        raise ValueError(f"no derivation correction exists for {c_ghost}")
+    solution, parameters = matrix.gauss_jordan_solve(vector)
+    parameter_substitution = {parameter: 0 for parameter in parameters}
+    return tuple(
+        SurvivorActionTermEntry(
+            c_ghost=c_ghost,
+            source_survivor_label=source_label,
+            target_survivor_label=target_label,
+            coefficient=simplify(solution[index, 0].subs(parameter_substitution)),
+        )
+        for index, (source_label, target_label) in enumerate(unknown_keys)
+        if simplify(solution[index, 0].subs(parameter_substitution)) != 0
+    )
+
+
+def solve_survivor_derivation_correction_terms(
+    survivor_labels: Tuple[str, ...],
+    reduced_brackets: Dict[Tuple[str, str], Dict[str, object]],
+    derivation_defects: Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """Solve the first transferred survivor correction for every active ghost."""
+    return tuple(
+        item
+        for c_ghost, ghost_defects in derivation_defects.items()
+        for item in solve_survivor_derivation_correction_for_ghost(
+            c_ghost,
+            survivor_labels,
+            reduced_brackets,
+            ghost_defects,
+        )
+    )
+
+
+def hook_pair_survivor_derivation_defects(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+]:
+    """Derivation defects for the reduced survivor actions on one hook pair."""
+    source_survivors, target_survivors = hook_pair_surviving_field_candidates(n, r)
+    source_actions, target_actions = hook_pair_survivor_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_brackets, target_brackets = hook_pair_reduced_brackets(n, r)
+    return (
+        survivor_action_derivation_defects(
+            tuple(item.label for item in source_survivors),
+            source_actions,
+            source_brackets,
+        ),
+        survivor_action_derivation_defects(
+            tuple(item.label for item in target_survivors),
+            target_actions,
+            target_brackets,
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_survivor_derivation_defects(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+]:
+    """Derivation defects for reduced survivor actions on one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    source_actions, target_actions = partition_pair_survivor_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_brackets, target_brackets = partition_pair_reduced_brackets(case.partition)
+    return (
+        survivor_action_derivation_defects(
+            tuple(item.label for item in source_survivors),
+            source_actions,
+            source_brackets,
+        ),
+        survivor_action_derivation_defects(
+            tuple(item.label for item in target_survivors),
+            target_actions,
+            target_brackets,
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_first_transfer_correction_terms(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """First transferred survivor corrections for one partition pair."""
+    source_witnesses, target_witnesses = partition_pair_first_transfer_correction_witnesses(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        first_transfer_correction_terms_from_witnesses(source_witnesses),
+        first_transfer_correction_terms_from_witnesses(target_witnesses),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_first_transfer_correction_witnesses(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Tuple[FirstTransferCorrectionWitness, ...],
+    Tuple[FirstTransferCorrectionWitness, ...],
+]:
+    """Explicit first-transfer witnesses for one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_action_lifts, target_action_lifts = partition_pair_survivor_action_lift_witnesses(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_witnesses, target_current_witnesses = (
+        partition_pair_constraint_current_witnesses(
+            case.partition,
+            source_num_constraints=source_num_constraints,
+            target_num_constraints=target_num_constraints,
+        )
+    )
+    return (
+        first_transfer_correction_witnesses_from_exact_constraints(
+            source_constraints,
+            source_action_lifts,
+            source_current_witnesses,
+        ),
+        first_transfer_correction_witnesses_from_exact_constraints(
+            target_constraints,
+            target_action_lifts,
+            target_current_witnesses,
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_corrected_survivor_action_terms(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """Naive partition-pair survivor actions plus the first transferred correction."""
+    source_naive, target_naive = partition_pair_survivor_action_terms(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_correction, target_correction = partition_pair_first_transfer_correction_terms(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        combine_survivor_action_terms(source_naive, source_correction),
+        combine_survivor_action_terms(target_naive, target_correction),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_corrected_survivor_derivation_defects(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+]:
+    """Derivation defects after the first transferred correction on one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    source_brackets, target_brackets = partition_pair_reduced_brackets(case.partition)
+    source_corrected, target_corrected = partition_pair_corrected_survivor_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        survivor_action_derivation_defects(
+            tuple(item.label for item in source_survivors),
+            source_corrected,
+            source_brackets,
+        ),
+        survivor_action_derivation_defects(
+            tuple(item.label for item in target_survivors),
+            target_corrected,
+            target_brackets,
+        ),
+    )
+
+
+def first_nonselfdual_hook_pair_survivor_derivation_defects(
+) -> Tuple[
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+]:
+    """Derivation defects for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_survivor_derivation_defects(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+def hook_pair_derivation_defect_witnesses(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Tuple[SurvivorDerivationDefectWitness, ...],
+    Tuple[SurvivorDerivationDefectWitness, ...],
+]:
+    """Explicit unreduced witness formulas for hook-pair derivation defects."""
+    source_triple, target_triple = type_a_hook_pair_sl2_triples(n, r)
+    source_candidates, target_candidates = hook_pair_surviving_field_candidates(n, r)
+    source_brackets, target_brackets = hook_pair_reduced_brackets(n, r)
+    source_lifts, target_lifts = hook_pair_survivor_action_lift_witnesses(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_defects, target_defects = hook_pair_survivor_derivation_defects(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    basis_matrices = dict(standard_traceless_basis_sl_n(n))
+
+    def build_side(
+        side: str,
+        e_matrix: Matrix,
+        candidates: Tuple[DSReducedFieldCandidate, ...],
+        reduced_brackets: Dict[Tuple[str, str], Dict[str, object]],
+        action_lifts: Tuple[SurvivorActionLiftWitness, ...],
+        derivation_defects: Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    ) -> Tuple[SurvivorDerivationDefectWitness, ...]:
+        candidate_order = tuple(item.label for item in candidates)
+        candidate_matrices = {
+            item.label: ds_basis_expression_matrix(item.source_terms, basis_matrices)
+            for item in candidates
+        }
+        witness_by_ghost: Dict[str, Dict[str, DSBasisExpression]] = {}
+        for item in action_lifts:
+            ghost_map = witness_by_ghost.setdefault(item.c_ghost, {})
+            ghost_map[item.source_survivor_label] = item.ad_e_witness_preimage
+        entries = []
+        for c_ghost, ghost_defects in derivation_defects.items():
+            ghost_witnesses = witness_by_ghost.get(c_ghost, {})
+            for (left_label, right_label), _defect_terms in ghost_defects.items():
+                left_witness = ghost_witnesses.get(left_label, ())
+                right_witness = ghost_witnesses.get(right_label, ())
+                unreduced = -matrix_commutator(
+                    ds_basis_expression_matrix(left_witness, basis_matrices),
+                    matrix_commutator(e_matrix, candidate_matrices[right_label]),
+                ) - matrix_commutator(
+                    matrix_commutator(e_matrix, candidate_matrices[left_label]),
+                    ds_basis_expression_matrix(right_witness, basis_matrices),
+                )
+                unreduced_expression = tuple(
+                    (label, sympify(coefficient))
+                    for label, coefficient in matrix_to_traceless_basis_expression_sl_n(
+                        unreduced
+                    )
+                )
+                projected_defect_terms = _labeled_linear_combination(
+                    _project_hook_pair_matrix_to_survivors(
+                        side,
+                        unreduced,
+                        n=n,
+                        r=r,
+                    ),
+                    candidate_order,
+                )
+                entries.append(
+                    SurvivorDerivationDefectWitness(
+                        c_ghost=c_ghost,
+                        left_survivor_label=left_label,
+                        right_survivor_label=right_label,
+                        left_action_witness_preimage=left_witness,
+                        right_action_witness_preimage=right_witness,
+                        unreduced_expression=unreduced_expression,
+                        projected_defect_terms=projected_defect_terms,
+                    )
+                )
+        return tuple(entries)
+
+    return (
+        build_side(
+            "source",
+            source_triple.e,
+            source_candidates,
+            source_brackets,
+            source_lifts,
+            source_defects,
+        ),
+        build_side(
+            "target",
+            target_triple.e,
+            target_candidates,
+            target_brackets,
+            target_lifts,
+            target_defects,
+        ),
+    )
+
+
+def first_nonselfdual_hook_pair_derivation_defect_witnesses(
+) -> Tuple[
+    Tuple[SurvivorDerivationDefectWitness, ...],
+    Tuple[SurvivorDerivationDefectWitness, ...],
+]:
+    """Explicit unreduced witness formulas for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_derivation_defect_witnesses(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+@lru_cache(maxsize=None)
+def hook_pair_first_transfer_correction_terms(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """First transferred survivor corrections for one hook pair."""
+    source_witnesses, target_witnesses = hook_pair_first_transfer_correction_witnesses(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        first_transfer_correction_terms_from_witnesses(source_witnesses),
+        first_transfer_correction_terms_from_witnesses(target_witnesses),
+    )
+
+
+@lru_cache(maxsize=None)
+def hook_pair_first_transfer_correction_witnesses(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Tuple[FirstTransferCorrectionWitness, ...],
+    Tuple[FirstTransferCorrectionWitness, ...],
+]:
+    """Explicit first-transfer witnesses for one hook pair."""
+    source_constraints, target_constraints = hook_pair_constraints(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_action_lifts, target_action_lifts = hook_pair_survivor_action_lift_witnesses(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_witnesses, target_current_witnesses = (
+        hook_pair_constraint_current_witnesses(
+            n,
+            r,
+            source_num_constraints=source_num_constraints,
+            target_num_constraints=target_num_constraints,
+        )
+    )
+    return (
+        first_transfer_correction_witnesses_from_exact_constraints(
+            source_constraints,
+            source_action_lifts,
+            source_current_witnesses,
+        ),
+        first_transfer_correction_witnesses_from_exact_constraints(
+            target_constraints,
+            target_action_lifts,
+            target_current_witnesses,
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def hook_pair_corrected_survivor_action_terms(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """Naive hook-pair survivor actions plus the first transferred correction."""
+    source_naive, target_naive = hook_pair_survivor_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_correction, target_correction = hook_pair_first_transfer_correction_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        combine_survivor_action_terms(source_naive, source_correction),
+        combine_survivor_action_terms(target_naive, target_correction),
+    )
+
+
+def hook_pair_corrected_survivor_derivation_defects(
+    n: int,
+    r: int,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+]:
+    """Derivation defects after the first transferred hook-pair correction."""
+    source_survivors, target_survivors = hook_pair_surviving_field_candidates(n, r)
+    source_brackets, target_brackets = hook_pair_reduced_brackets(n, r)
+    source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        survivor_action_derivation_defects(
+            tuple(item.label for item in source_survivors),
+            source_corrected,
+            source_brackets,
+        ),
+        survivor_action_derivation_defects(
+            tuple(item.label for item in target_survivors),
+            target_corrected,
+            target_brackets,
+        ),
+    )
+
+
+def first_nonselfdual_hook_pair_first_transfer_correction_terms(
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """First transferred survivor corrections for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_first_transfer_correction_terms(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+def first_nonselfdual_hook_pair_first_transfer_correction_witnesses(
+) -> Tuple[
+    Tuple[FirstTransferCorrectionWitness, ...],
+    Tuple[FirstTransferCorrectionWitness, ...],
+]:
+    """Explicit first-transfer witnesses for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_first_transfer_correction_witnesses(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+def first_nonselfdual_hook_pair_corrected_survivor_action_terms(
+) -> Tuple[Tuple[SurvivorActionTermEntry, ...], Tuple[SurvivorActionTermEntry, ...]]:
+    """Corrected survivor actions for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_corrected_survivor_action_terms(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+def first_nonselfdual_hook_pair_corrected_survivor_derivation_defects(
+) -> Tuple[
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+    Dict[str, Dict[Tuple[str, str], Dict[str, object]]],
+]:
+    """Derivation defects after the first transferred correction on the first hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_corrected_survivor_derivation_defects(
+        4,
+        1,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
 
 
 def sl3_subregular_constraint_character() -> Dict[str, Rational]:
@@ -1466,6 +3329,7 @@ def first_nonselfdual_hook_pair_brst_blueprints(
     return source_blueprint, target_blueprint
 
 
+@lru_cache(maxsize=None)
 def exterior_basis_indices(num_generators: int, degree: int) -> Tuple[Tuple[int, ...], ...]:
     """Ordered exterior basis in degree `degree` on `num_generators` symbols."""
     if degree < 0 or degree > num_generators:
@@ -1473,6 +3337,7 @@ def exterior_basis_indices(num_generators: int, degree: int) -> Tuple[Tuple[int,
     return tuple(combinations(range(num_generators), degree))
 
 
+@lru_cache(maxsize=None)
 def _insert_ghost_index(
     basis: Tuple[int, ...],
     ghost_index: int,
@@ -1485,6 +3350,7 @@ def _insert_ghost_index(
     return sign, tuple(sorted(basis + (ghost_index,)))
 
 
+@lru_cache(maxsize=None)
 def _remove_ghost_index(
     basis: Tuple[int, ...],
     ghost_index: int,
@@ -1715,6 +3581,72 @@ def _relabel_survivor_action_terms(
     )
 
 
+def _relabel_internal_survivor_ghost_label(
+    label: str,
+    side_map: Dict[str, str] | None = None,
+) -> str:
+    """Relabel an internal survivor ghost label by survivor side tag."""
+    parts = label.split("_", 2)
+    if len(parts) != 3 or parts[0] not in {"b", "c"} or parts[1] != "survivor":
+        raise ValueError("internal survivor ghost label must have form c_survivor_* or b_survivor_*")
+    prefix, marker, survivor_label = parts
+    mapped_survivor = _relabel_survivor_label_with_side_map(
+        survivor_label,
+        side_map=side_map,
+    )
+    return f"{prefix}_{marker}_{mapped_survivor}"
+
+
+def _relabel_internal_quadratic_ghost_terms(
+    quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
+    side_map: Dict[str, str] | None = None,
+) -> Tuple[QuadraticGhostTermEntry, ...]:
+    """Relabel internal CE quadratic ghost terms by survivor side tag."""
+    return tuple(
+        QuadraticGhostTermEntry(
+            left_c_ghost=_relabel_internal_survivor_ghost_label(
+                item.left_c_ghost,
+                side_map=side_map,
+            ),
+            right_c_ghost=_relabel_internal_survivor_ghost_label(
+                item.right_c_ghost,
+                side_map=side_map,
+            ),
+            target_b_ghost=_relabel_internal_survivor_ghost_label(
+                item.target_b_ghost,
+                side_map=side_map,
+            ),
+            coefficient=item.coefficient,
+        )
+        for item in quadratic_terms
+    )
+
+
+def _relabel_internal_survivor_action_terms(
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    side_map: Dict[str, str] | None = None,
+) -> Tuple[SurvivorActionTermEntry, ...]:
+    """Relabel internal survivor-action terms by survivor side tag."""
+    return tuple(
+        SurvivorActionTermEntry(
+            c_ghost=_relabel_internal_survivor_ghost_label(
+                item.c_ghost,
+                side_map=side_map,
+            ),
+            source_survivor_label=_relabel_survivor_label_with_side_map(
+                item.source_survivor_label,
+                side_map=side_map,
+            ),
+            target_survivor_label=_relabel_survivor_label_with_side_map(
+                item.target_survivor_label,
+                side_map=side_map,
+            ),
+            coefficient=item.coefficient,
+        )
+        for item in survivor_action_terms
+    )
+
+
 def _relabel_survivor_coupled_block(
     block: SurvivorCoupledBRSTBlock,
     label_map: Dict[str, str],
@@ -1762,6 +3694,76 @@ def _relabel_survivor_coupled_block(
         ),
         constraint_total_degree=block.constraint_total_degree,
         survivor_total_degree=block.survivor_total_degree,
+        source_tag=tag,
+    )
+
+
+def _relabel_semidirect_survivor_block(
+    block: SemidirectSurvivorBRSTBlock,
+    label_map: Dict[str, str],
+    side_map: Dict[str, str] | None = None,
+    source_tag: str | None = None,
+) -> SemidirectSurvivorBRSTBlock:
+    """Relabel one semidirect survivor BRST block."""
+    tag = source_tag if source_tag is not None else f"{block.source_tag}_relabeled"
+    mapped_shifted_current_labels = tuple(
+        _relabel_shifted_current_label(label, label_map, side_map)
+        for label in block.shifted_current_labels
+    )
+    mapped_survivor_labels = tuple(
+        _relabel_survivor_label_with_side_map(label, side_map=side_map)
+        for label in block.survivor_labels
+    )
+    mapped_c_ghost_labels = tuple(
+        _relabel_ghost_label_with_side_map(label, label_map, side_map)
+        for label in block.c_ghost_labels
+    )
+    mapped_b_ghost_labels = tuple(
+        _relabel_ghost_label_with_side_map(label, label_map, side_map)
+        for label in block.b_ghost_labels
+    )
+    mapped_internal_c_ghost_labels = tuple(
+        _relabel_internal_survivor_ghost_label(label, side_map=side_map)
+        for label in block.internal_c_ghost_labels
+    )
+    mapped_internal_b_ghost_labels = tuple(
+        _relabel_internal_survivor_ghost_label(label, side_map=side_map)
+        for label in block.internal_b_ghost_labels
+    )
+    return build_semidirect_survivor_brst_block(
+        shifted_current_labels=mapped_shifted_current_labels,
+        survivor_labels=mapped_survivor_labels,
+        c_ghost_labels=mapped_c_ghost_labels,
+        b_ghost_labels=mapped_b_ghost_labels,
+        internal_c_ghost_labels=mapped_internal_c_ghost_labels,
+        internal_b_ghost_labels=mapped_internal_b_ghost_labels,
+        chi_vector=block.chi_vector,
+        quadratic_terms=relabel_quadratic_ghost_terms(
+            block.quadratic_ghost_terms,
+            label_map,
+            side_map=side_map,
+        ),
+        current_action_terms=relabel_current_action_terms(
+            block.current_action_terms,
+            label_map,
+            side_map=side_map,
+        ),
+        survivor_action_terms=_relabel_survivor_action_terms(
+            block.survivor_action_terms,
+            label_map,
+            side_map=side_map,
+        ),
+        internal_quadratic_terms=_relabel_internal_quadratic_ghost_terms(
+            block.internal_quadratic_ghost_terms,
+            side_map=side_map,
+        ),
+        internal_survivor_action_terms=_relabel_internal_survivor_action_terms(
+            block.internal_survivor_action_terms,
+            side_map=side_map,
+        ),
+        constraint_total_degree=block.constraint_total_degree,
+        survivor_total_degree=block.survivor_total_degree,
+        max_internal_ce_degree=block.max_internal_ce_degree,
         source_tag=tag,
     )
 
@@ -2007,6 +4009,7 @@ def hook_pair_ds_seed(
         source_complex=source_complex,
         target_complex=target_complex,
         track=TRACK_FRONTIER_NONPRINCIPAL,
+        status=STATUS_DS_SEED,
     )
 
 
@@ -2081,6 +4084,7 @@ def first_nonselfdual_hook_pair_ds_seed(level=Symbol("k")) -> HookPairDSComplexS
         source_complex=source_complex,
         target_complex=target_complex,
         track=TRACK_FRONTIER_NONPRINCIPAL,
+        status=STATUS_DS_SEED,
     )
 
 
@@ -2184,6 +4188,9 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
     results["hook DS pair catalog stays on frontier track"] = all(
         seed.track == TRACK_FRONTIER_NONPRINCIPAL for seed in seeds
     )
+    results["hook DS pair catalog keeps explicit seed status"] = all(
+        seed.status == STATUS_DS_SEED for seed in seeds
+    )
 
     for seed in seeds:
         n = seed.n
@@ -2204,7 +4211,7 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
             and seed.target_partition == case.dual_partition
         )
         results[f"{key} level shift propagation"] = (
-            simplify(seed.target_level - nonprincipal_hook_level_shift_ansatz_type_a(n, k)) == 0
+            simplify(seed.target_level - nonprincipal_hook_level_shift_type_a(n, r, k)) == 0
         )
         results[f"{key} ansatz ghost-count propagation"] = (
             len(seed.source_complex.ghost_labels) == expected_source_count
@@ -2213,6 +4220,7 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
         results[f"{key} class is non-principal hook/subregular"] = (
             type_a_orbit_class(seed.source_partition) in {"subregular", "hook_nonprincipal"}
         )
+        results[f"{key} explicit seed status tag"] = (seed.status == STATUS_DS_SEED)
         results[f"{key} source complex nilpotent"] = (
             complex_has_nilpotent_differential(seed.source_complex)
         )
@@ -2256,6 +4264,7 @@ def verify_hook_pair_seed_alignment(max_n: int = 8, level=Symbol("k")) -> Dict[s
             simplify(pair_seed.target_level - seed.level_shift) == 0
         )
         results[f"{key} track alignment"] = (pair_seed.track == seed.track)
+        results[f"{key} status alignment"] = (pair_seed.status == STATUS_DS_SEED)
         results[f"{key} ghost-count ansatz alignment"] = (
             len(pair_seed.source_complex.ghost_labels) == expected_source_count
             and len(pair_seed.target_complex.ghost_labels) == expected_target_count
@@ -2264,6 +4273,147 @@ def verify_hook_pair_seed_alignment(max_n: int = 8, level=Symbol("k")) -> Dict[s
     return results
 
 
+def verify_hook_pair_first_transfer_correction_catalog(
+    max_n: int = 6,
+) -> Dict[str, bool]:
+    """Low-rank catalog checks for witness-driven first transfer on hook pairs."""
+    results: Dict[str, bool] = {}
+    if max_n < 3:
+        results["hook first-transfer catalog is empty below rank three"] = True
+        return results
+    for n in range(3, max_n + 1):
+        for r in range(1, n - 1):
+            source_action, target_action = hook_pair_survivor_action_terms(n, r)
+            source_correction, target_correction = hook_pair_first_transfer_correction_terms(n, r)
+            source_corrected, target_corrected = (
+                combine_survivor_action_terms(source_action, source_correction),
+                combine_survivor_action_terms(target_action, target_correction),
+            )
+            key = f"A{n-1} hook r={r}"
+            results[f"{key} first transfer cancels reduced survivor action"] = (
+                len(source_action) == len(source_correction)
+                and len(target_action) == len(target_correction)
+                and source_corrected == ()
+                and target_corrected == ()
+            )
+    return results
+
+
+def verify_hook_pair_corrected_semidirect_catalog(
+    max_n: int = 6,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Low-rank catalog checks for the corrected semidirect hook truncation."""
+    results: Dict[str, bool] = {}
+    if max_n < 3:
+        results["hook corrected semidirect catalog is empty below rank three"] = True
+        return results
+    for n in range(3, max_n + 1):
+        for r in range(1, n - 1):
+            source_blocks, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
+                n,
+                r,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
+            key = f"A{n-1} hook r={r}"
+            results[f"{key} corrected semidirect blocks square to zero"] = all(
+                semidirect_survivor_block_has_square_zero(block)
+                for block in source_blocks + target_blocks
+            )
+    return results
+
+
+def verify_hook_pair_corrected_semidirect_duality_catalog(
+    max_n: int = 6,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of corrected semidirect hook blocks."""
+    results: Dict[str, bool] = {}
+    if max_n < 3:
+        results["hook corrected semidirect duality catalog is empty below rank three"] = True
+        return results
+    for n in range(3, max_n + 1):
+        for r in range(1, n - 1):
+            key = f"A{n-1} hook r={r}"
+            results[f"{key} corrected semidirect dual-swap match"] = (
+                hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+                    n,
+                    r,
+                    max_constraint_total_degree=max_constraint_total_degree,
+                    survivor_total_degree=survivor_total_degree,
+                    max_internal_ce_degree=max_internal_ce_degree,
+                )
+            )
+    return results
+
+
+def hook_pair_corrected_semidirect_family_holds_via_duality(
+    n: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Check one hook family using direct half-catalog square-zero plus transpose duality."""
+    if n < 3:
+        return True
+    for r in range(1, n - 1):
+        dual_r = n - r - 1
+        if r > dual_r:
+            continue
+        source_blocks, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+        if not all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_blocks + target_blocks
+        ):
+            return False
+        if r < dual_r and not hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        ):
+            return False
+    return True
+
+
+def verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks that recover each hook family from a half-catalog plus duality."""
+    results: Dict[str, bool] = {}
+    if max_n < 3:
+        results["hook corrected semidirect family-via-duality catalog is empty below rank three"] = True
+        return results
+    for n in range(3, max_n + 1):
+        key = f"A{n-1} hook family"
+        results[f"{key} corrected semidirect square-zero follows by duality"] = (
+            hook_pair_corrected_semidirect_family_holds_via_duality(
+                n,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
+        )
+    return results
+
+
+@lru_cache(maxsize=None)
 def homogeneous_monomial_exponents(num_variables: int, degree: int) -> Tuple[Tuple[int, ...], ...]:
     """Exponent tuples of total degree `degree` in `num_variables` commuting variables."""
     if num_variables < 0:
@@ -2282,6 +4432,7 @@ def homogeneous_monomial_exponents(num_variables: int, degree: int) -> Tuple[Tup
     return tuple(exponents)
 
 
+@lru_cache(maxsize=None)
 def linear_constraint_block_basis(
     num_constraints: int,
     total_degree: int,
@@ -2388,6 +4539,7 @@ def build_linear_constraint_koszul_block(
     )
 
 
+@lru_cache(maxsize=None)
 def _ghost_brst_images_on_basis_element(
     basis: Tuple[int, ...],
     ghost_labels: Tuple[str, ...],
@@ -2428,6 +4580,7 @@ def _ghost_brst_images_on_basis_element(
     return {target: simplify(value) for target, value in coefficients.items() if value != 0}
 
 
+@lru_cache(maxsize=None)
 def _replace_exterior_index(
     basis: Tuple[int, ...],
     source_index: int,
@@ -2516,6 +4669,7 @@ def current_action_differential(
     return matrix
 
 
+@lru_cache(maxsize=None)
 def mixed_constraint_ghost_block_basis(
     num_constraints: int,
     constraint_total_degree: int,
@@ -2667,6 +4821,7 @@ def build_mixed_constraint_ghost_brst_block(
     )
 
 
+@lru_cache(maxsize=None)
 def survivor_coupled_block_basis(
     num_constraints: int,
     num_survivors: int,
@@ -2758,6 +4913,7 @@ def survivor_action_differential(
     return matrix
 
 
+@lru_cache(maxsize=None)
 def internal_survivor_ce_block_basis(
     num_survivors: int,
     survivor_polynomial_degree: int,
@@ -2773,6 +4929,7 @@ def internal_survivor_ce_block_basis(
     return tuple((monomial, c_subset) for monomial in monomials for c_subset in c_basis)
 
 
+@lru_cache(maxsize=None)
 def internal_survivor_action_differential(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -2824,6 +4981,7 @@ def internal_survivor_action_differential(
     return matrix
 
 
+@lru_cache(maxsize=None)
 def internal_survivor_ce_differential(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -2872,6 +5030,477 @@ def internal_survivor_ce_differential(
         ce_degree,
     )
     return matrix
+
+
+@lru_cache(maxsize=None)
+def semidirect_survivor_block_basis(
+    num_constraints: int,
+    num_survivors: int,
+    constraint_total_degree: int,
+    survivor_total_degree: int,
+    max_internal_ce_degree: int,
+    brst_degree: int,
+) -> Tuple[SemidirectSurvivorBasisElement, ...]:
+    """Basis in fixed constraint degree, survivor degree, bounded internal CE degree, and BRST degree."""
+    if num_constraints < 0 or num_survivors < 0:
+        raise ValueError("constraint and survivor counts must be nonnegative")
+    if max_internal_ce_degree < 0:
+        raise ValueError("max_internal_ce_degree must be nonnegative")
+    basis: list[SemidirectSurvivorBasisElement] = []
+    max_b_degree = min(num_constraints, constraint_total_degree)
+    max_int_degree = min(num_survivors, max_internal_ce_degree)
+    survivor_monomials = homogeneous_monomial_exponents(num_survivors, survivor_total_degree)
+    internal_c_bases = {
+        degree: exterior_basis_indices(num_survivors, degree)
+        for degree in range(max_int_degree + 1)
+    }
+    for b_degree in range(max_b_degree + 1):
+        polynomial_degree = constraint_total_degree - b_degree
+        u_monomials = homogeneous_monomial_exponents(num_constraints, polynomial_degree)
+        b_basis = exterior_basis_indices(num_constraints, b_degree)
+        for internal_degree in range(max_int_degree + 1):
+            c_degree = brst_degree + b_degree - internal_degree
+            if c_degree < 0 or c_degree > num_constraints:
+                continue
+            c_basis = exterior_basis_indices(num_constraints, c_degree)
+            basis.extend(
+                (u_monomial, survivor_monomial, c_subset, b_subset, internal_c_subset)
+                for u_monomial in u_monomials
+                for survivor_monomial in survivor_monomials
+                for c_subset in c_basis
+                for b_subset in b_basis
+                for internal_c_subset in internal_c_bases[internal_degree]
+            )
+    return tuple(basis)
+
+
+def external_survivor_action_on_internal_ghosts_differential(
+    survivor_labels: Tuple[str, ...],
+    c_ghost_labels: Tuple[str, ...],
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    constraint_total_degree: int,
+    survivor_total_degree: int,
+    max_internal_ce_degree: int,
+    brst_degree: int,
+) -> Matrix:
+    """Cross term: positive-sector action on the internal survivor ghosts."""
+    num_constraints = len(c_ghost_labels)
+    num_survivors = len(survivor_labels)
+    source_basis = semidirect_survivor_block_basis(
+        num_constraints,
+        num_survivors,
+        constraint_total_degree,
+        survivor_total_degree,
+        max_internal_ce_degree,
+        brst_degree,
+    )
+    target_basis = semidirect_survivor_block_basis(
+        num_constraints,
+        num_survivors,
+        constraint_total_degree,
+        survivor_total_degree,
+        max_internal_ce_degree,
+        brst_degree + 1,
+    )
+    matrix = zeros(len(target_basis), len(source_basis))
+    if not source_basis or not target_basis or not survivor_action_terms:
+        return matrix
+
+    target_index = {basis: row for row, basis in enumerate(target_basis)}
+    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
+    internal_c_ghost_labels, _ = internal_survivor_ghost_labels(survivor_labels)
+    internal_index = {label: index for index, label in enumerate(internal_c_ghost_labels)}
+
+    for col, (u_monomial, survivor_monomial, c_subset, b_subset, internal_c_subset) in enumerate(source_basis):
+        _ = survivor_monomial
+        for item in survivor_action_terms:
+            inserted_ext = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+            if inserted_ext is None:
+                continue
+            ext_sign, target_c_subset = inserted_ext
+            target_internal_ghost = internal_index[f"c_survivor_{item.target_survivor_label}"]
+            removed = _remove_ghost_index(internal_c_subset, target_internal_ghost)
+            if removed is None:
+                continue
+            remove_sign, reduced_internal_subset = removed
+            source_internal_ghost = internal_index[f"c_survivor_{item.source_survivor_label}"]
+            inserted_internal = _insert_ghost_index(reduced_internal_subset, source_internal_ghost)
+            if inserted_internal is None:
+                continue
+            internal_sign, target_internal_subset = inserted_internal
+            target = (
+                u_monomial,
+                survivor_monomial,
+                target_c_subset,
+                b_subset,
+                target_internal_subset,
+            )
+            row = target_index[target]
+            matrix[row, col] += (
+                -ext_sign * remove_sign * internal_sign * sympify(item.coefficient)
+            )
+
+    return matrix
+
+
+def semidirect_survivor_brst_differential(
+    shifted_current_labels: Tuple[str, ...],
+    survivor_labels: Tuple[str, ...],
+    c_ghost_labels: Tuple[str, ...],
+    b_ghost_labels: Tuple[str, ...],
+    internal_c_ghost_labels: Tuple[str, ...],
+    chi_vector: Tuple[object, ...],
+    quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
+    current_action_terms: Tuple[CurrentActionTermEntry, ...],
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    internal_quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
+    internal_survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    constraint_total_degree: int,
+    survivor_total_degree: int,
+    max_internal_ce_degree: int,
+    brst_degree: int,
+) -> Matrix:
+    """Naive semidirect BRST differential with both external and internal survivor sectors.
+
+    This is the direct quotient-level coupling attempt. It need not square to
+    zero when the projected positive action fails to act by derivations on the
+    reduced survivor bracket.
+    """
+    if not (
+        len(shifted_current_labels) == len(c_ghost_labels) == len(b_ghost_labels) == len(chi_vector)
+    ):
+        raise ValueError("constraint labels and chi data must align")
+    if len(survivor_labels) != len(internal_c_ghost_labels):
+        raise ValueError("survivor labels and internal c-ghost labels must align")
+
+    num_constraints = len(c_ghost_labels)
+    num_survivors = len(survivor_labels)
+    source_basis = semidirect_survivor_block_basis(
+        num_constraints,
+        num_survivors,
+        constraint_total_degree,
+        survivor_total_degree,
+        max_internal_ce_degree,
+        brst_degree,
+    )
+    target_basis = semidirect_survivor_block_basis(
+        num_constraints,
+        num_survivors,
+        constraint_total_degree,
+        survivor_total_degree,
+        max_internal_ce_degree,
+        brst_degree + 1,
+    )
+    matrix = zeros(len(target_basis), len(source_basis))
+    if not source_basis or not target_basis:
+        return matrix
+
+    target_index = {basis: row for row, basis in enumerate(target_basis)}
+    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
+    u_index = {_label_root(label): index for index, label in enumerate(shifted_current_labels)}
+    b_index = {_label_root(label): index for index, label in enumerate(b_ghost_labels)}
+    internal_zero_character = (Rational(0),) * num_survivors
+    internal_index = {label: index for index, label in enumerate(internal_c_ghost_labels)}
+    survivor_index = {label: index for index, label in enumerate(survivor_labels)}
+
+    for col, (u_monomial, survivor_monomial, c_subset, b_subset, internal_c_subset) in enumerate(source_basis):
+        for target_c_subset, coefficient in _ghost_brst_images_on_basis_element(
+            c_subset,
+            c_ghost_labels,
+            chi_vector,
+            quadratic_terms,
+        ).items():
+            target = (
+                u_monomial,
+                survivor_monomial,
+                target_c_subset,
+                b_subset,
+                internal_c_subset,
+            )
+            row = target_index[target]
+            matrix[row, col] += coefficient
+
+        c_sign = -1 if len(c_subset) % 2 else 1
+        for position, b_var_index in enumerate(b_subset):
+            target_u_monomial = list(u_monomial)
+            target_u_monomial[b_var_index] += 1
+            target = (
+                tuple(target_u_monomial),
+                survivor_monomial,
+                c_subset,
+                b_subset[:position] + b_subset[position + 1 :],
+                internal_c_subset,
+            )
+            row = target_index[target]
+            matrix[row, col] += c_sign * (-1 if position % 2 else 1)
+
+        for item in current_action_terms:
+            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+            if inserted is None:
+                continue
+            insert_sign, target_c_subset = inserted
+
+            source_u = u_index[item.source_root_label]
+            target_u = u_index[item.target_root_label]
+            exponent = u_monomial[source_u]
+            if exponent:
+                target_u_monomial = list(u_monomial)
+                target_u_monomial[source_u] -= 1
+                target_u_monomial[target_u] += 1
+                target = (
+                    tuple(target_u_monomial),
+                    survivor_monomial,
+                    target_c_subset,
+                    b_subset,
+                    internal_c_subset,
+                )
+                row = target_index[target]
+                matrix[row, col] += insert_sign * exponent * sympify(item.coefficient)
+
+            source_b = b_index[item.source_root_label]
+            target_b = b_index[item.target_root_label]
+            replaced = _replace_exterior_index(b_subset, source_b, target_b)
+            if replaced is None:
+                continue
+            b_sign, target_b_subset = replaced
+            target = (
+                u_monomial,
+                survivor_monomial,
+                target_c_subset,
+                target_b_subset,
+                internal_c_subset,
+            )
+            row = target_index[target]
+            matrix[row, col] += insert_sign * b_sign * sympify(item.coefficient)
+
+        for item in survivor_action_terms:
+            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+            if inserted is None:
+                continue
+            insert_sign, target_c_subset = inserted
+            source_survivor = survivor_index[item.source_survivor_label]
+            target_survivor = survivor_index[item.target_survivor_label]
+            exponent = survivor_monomial[source_survivor]
+            if exponent == 0:
+                continue
+            target_survivor_monomial = list(survivor_monomial)
+            target_survivor_monomial[source_survivor] -= 1
+            target_survivor_monomial[target_survivor] += 1
+            target = (
+                u_monomial,
+                tuple(target_survivor_monomial),
+                target_c_subset,
+                b_subset,
+                internal_c_subset,
+            )
+            row = target_index[target]
+            matrix[row, col] += insert_sign * exponent * sympify(item.coefficient)
+
+        for item in survivor_action_terms:
+            inserted_ext = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+            if inserted_ext is None:
+                continue
+            ext_sign, target_c_subset = inserted_ext
+            target_internal_ghost = internal_index[f"c_survivor_{item.target_survivor_label}"]
+            removed = _remove_ghost_index(internal_c_subset, target_internal_ghost)
+            if removed is None:
+                continue
+            remove_sign, reduced_internal_subset = removed
+            source_internal_ghost = internal_index[f"c_survivor_{item.source_survivor_label}"]
+            inserted_internal = _insert_ghost_index(reduced_internal_subset, source_internal_ghost)
+            if inserted_internal is None:
+                continue
+            internal_sign, target_internal_subset = inserted_internal
+            target = (
+                u_monomial,
+                survivor_monomial,
+                target_c_subset,
+                b_subset,
+                target_internal_subset,
+            )
+            row = target_index[target]
+            matrix[row, col] += (
+                -ext_sign * remove_sign * internal_sign * sympify(item.coefficient)
+            )
+
+        internal_prefix = -1 if (len(c_subset) + len(b_subset)) % 2 else 1
+        for target_internal_subset, coefficient in _ghost_brst_images_on_basis_element(
+            internal_c_subset,
+            internal_c_ghost_labels,
+            internal_zero_character,
+            internal_quadratic_terms,
+        ).items():
+            target = (
+                u_monomial,
+                survivor_monomial,
+                c_subset,
+                b_subset,
+                target_internal_subset,
+            )
+            row = target_index.get(target)
+            if row is None:
+                continue
+            matrix[row, col] += internal_prefix * coefficient
+
+        for item in internal_survivor_action_terms:
+            inserted_internal = _insert_ghost_index(
+                internal_c_subset,
+                internal_index[item.c_ghost],
+            )
+            if inserted_internal is None:
+                continue
+            internal_sign, target_internal_subset = inserted_internal
+            source_survivor = survivor_index[item.source_survivor_label]
+            target_survivor = survivor_index[item.target_survivor_label]
+            exponent = survivor_monomial[source_survivor]
+            if exponent == 0:
+                continue
+            target_survivor_monomial = list(survivor_monomial)
+            target_survivor_monomial[source_survivor] -= 1
+            target_survivor_monomial[target_survivor] += 1
+            target = (
+                u_monomial,
+                tuple(target_survivor_monomial),
+                c_subset,
+                b_subset,
+                target_internal_subset,
+            )
+            row = target_index.get(target)
+            if row is None:
+                continue
+            matrix[row, col] += (
+                -internal_prefix * internal_sign * exponent * sympify(item.coefficient)
+            )
+
+    return matrix
+
+
+def build_semidirect_survivor_brst_block(
+    shifted_current_labels: Tuple[str, ...],
+    survivor_labels: Tuple[str, ...],
+    c_ghost_labels: Tuple[str, ...],
+    b_ghost_labels: Tuple[str, ...],
+    internal_c_ghost_labels: Tuple[str, ...],
+    internal_b_ghost_labels: Tuple[str, ...],
+    chi_vector: Tuple[object, ...],
+    quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
+    current_action_terms: Tuple[CurrentActionTermEntry, ...],
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    internal_quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
+    internal_survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+    constraint_total_degree: int,
+    survivor_total_degree: int,
+    max_internal_ce_degree: int,
+    source_tag: str,
+) -> SemidirectSurvivorBRSTBlock:
+    """Build one finite naive semidirect survivor BRST block."""
+    if not (
+        len(shifted_current_labels) == len(c_ghost_labels) == len(b_ghost_labels) == len(chi_vector)
+    ):
+        raise ValueError("constraint labels and chi data must align")
+    if not (
+        len(survivor_labels) == len(internal_c_ghost_labels) == len(internal_b_ghost_labels)
+    ):
+        raise ValueError("survivor labels and internal ghost labels must align")
+
+    num_constraints = len(c_ghost_labels)
+    num_survivors = len(survivor_labels)
+    basis_by_brst_degree: Dict[int, Tuple[SemidirectSurvivorBasisElement, ...]] = {}
+    for brst_degree in range(
+        -min(num_constraints, constraint_total_degree),
+        num_constraints + min(num_survivors, max_internal_ce_degree) + 1,
+    ):
+        basis = semidirect_survivor_block_basis(
+            num_constraints,
+            num_survivors,
+            constraint_total_degree,
+            survivor_total_degree,
+            max_internal_ce_degree,
+            brst_degree,
+        )
+        if basis:
+            basis_by_brst_degree[brst_degree] = basis
+
+    differentials = {
+        degree: semidirect_survivor_brst_differential(
+            shifted_current_labels,
+            survivor_labels,
+            c_ghost_labels,
+            b_ghost_labels,
+            internal_c_ghost_labels,
+            chi_vector,
+            quadratic_terms,
+            current_action_terms,
+            survivor_action_terms,
+            internal_quadratic_terms,
+            internal_survivor_action_terms,
+            constraint_total_degree,
+            survivor_total_degree,
+            max_internal_ce_degree,
+            degree,
+        )
+        for degree in basis_by_brst_degree
+        if semidirect_survivor_block_basis(
+            num_constraints,
+            num_survivors,
+            constraint_total_degree,
+            survivor_total_degree,
+            max_internal_ce_degree,
+            degree + 1,
+        )
+    }
+
+    return SemidirectSurvivorBRSTBlock(
+        source_tag=source_tag,
+        shifted_current_labels=shifted_current_labels,
+        survivor_labels=survivor_labels,
+        c_ghost_labels=c_ghost_labels,
+        b_ghost_labels=b_ghost_labels,
+        internal_c_ghost_labels=internal_c_ghost_labels,
+        internal_b_ghost_labels=internal_b_ghost_labels,
+        chi_vector=chi_vector,
+        quadratic_ghost_terms=quadratic_terms,
+        current_action_terms=current_action_terms,
+        survivor_action_terms=survivor_action_terms,
+        internal_quadratic_ghost_terms=internal_quadratic_terms,
+        internal_survivor_action_terms=internal_survivor_action_terms,
+        constraint_total_degree=constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        basis_by_brst_degree=basis_by_brst_degree,
+        differentials=differentials,
+    )
+
+
+def semidirect_survivor_block_homology_dimensions(
+    block: SemidirectSurvivorBRSTBlock,
+) -> Dict[int, int]:
+    """Cohomology dimensions for one semidirect survivor BRST block."""
+    dims: Dict[int, int] = {}
+    for degree in sorted(block.basis_by_brst_degree):
+        dim_c = len(block.basis_by_brst_degree[degree])
+        d_curr = block.differentials.get(degree)
+        d_prev = block.differentials.get(degree - 1)
+        rank_curr = exact_matrix_rank(d_curr)
+        rank_prev = exact_matrix_rank(d_prev)
+        dims[degree] = (dim_c - rank_curr) - rank_prev
+    return dims
+
+
+def semidirect_survivor_block_has_square_zero(block: SemidirectSurvivorBRSTBlock) -> bool:
+    """Check d^2 = 0 on a semidirect survivor BRST block."""
+    for degree, d_k in block.differentials.items():
+        d_k1 = block.differentials.get(degree + 1)
+        if d_k1 is None:
+            continue
+        if d_k1 * d_k != zeros(d_k1.rows, d_k.cols):
+            return False
+    return True
+
+
+def semidirect_survivor_block_is_acyclic(block: SemidirectSurvivorBRSTBlock) -> bool:
+    """Check whether a semidirect survivor BRST block has zero cohomology."""
+    return all(value == 0 for value in semidirect_survivor_block_homology_dimensions(block).values())
 
 
 def survivor_coupled_brst_differential(
@@ -3433,6 +6062,603 @@ def first_nonselfdual_hook_pair_linear_constraint_blocks(
     return source_blocks, target_blocks
 
 
+def nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[MixedConstraintGhostBRSTBlock, ...], Tuple[MixedConstraintGhostBRSTBlock, ...]]:
+    """Mixed current-plus-ghost BRST blocks for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    family_tag = case.family
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_mixed_constraint_ghost_brst_block(
+                shifted_current_labels=tuple(f"u_source_{item.root_label}" for item in source_constraints),
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                constraint_total_degree=total_degree,
+                source_tag=f"A{n-1}_{family_tag}_source_{partition_tag}_mixed_{total_degree}",
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_mixed_constraint_ghost_brst_block(
+                shifted_current_labels=tuple(f"u_target_{item.root_label}" for item in target_constraints),
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                constraint_total_degree=total_degree,
+                source_tag=f"A{n-1}_{family_tag}_target_{dual_tag}_mixed_{total_degree}",
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
+def nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[MixedConstraintGhostBRSTBlock, ...], Tuple[MixedConstraintGhostBRSTBlock, ...]]:
+    """Mixed blocks with nonlinear current-action terms for one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_action, target_action = partition_pair_current_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    family_tag = case.family
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_mixed_constraint_ghost_brst_block(
+                shifted_current_labels=tuple(f"u_source_{item.root_label}" for item in source_constraints),
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                current_action_terms=source_action,
+                constraint_total_degree=total_degree,
+                source_tag=f"A{n-1}_{family_tag}_source_{partition_tag}_nonlinear_{total_degree}",
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_mixed_constraint_ghost_brst_block(
+                shifted_current_labels=tuple(f"u_target_{item.root_label}" for item in target_constraints),
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                current_action_terms=target_action,
+                constraint_total_degree=total_degree,
+                source_tag=f"A{n-1}_{family_tag}_target_{dual_tag}_nonlinear_{total_degree}",
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
+def nonprincipal_partition_pair_survivor_coupled_blocks(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorCoupledBRSTBlock, ...], Tuple[SurvivorCoupledBRSTBlock, ...]]:
+    """Survivor-coupled BRST blocks for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_action, target_current_action = partition_pair_current_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivor_action, target_survivor_action = partition_pair_survivor_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    family_tag = case.family
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_survivor_coupled_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_source_{item.root_label}" for item in source_constraints
+                ),
+                survivor_labels=tuple(item.label for item in source_survivors),
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                current_action_terms=source_current_action,
+                survivor_action_terms=source_survivor_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                source_tag=(
+                    f"A{n-1}_{family_tag}_source_{partition_tag}_survivor_coupled_"
+                    f"{total_degree}_{survivor_total_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_survivor_coupled_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_target_{item.root_label}" for item in target_constraints
+                ),
+                survivor_labels=tuple(item.label for item in target_survivors),
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                current_action_terms=target_current_action,
+                survivor_action_terms=target_survivor_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                source_tag=(
+                    f"A{n-1}_{family_tag}_target_{dual_tag}_survivor_coupled_"
+                    f"{total_degree}_{survivor_total_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def partition_pair_internal_survivor_ce_blocks(
+    partition: Tuple[int, ...],
+    max_survivor_polynomial_degree: int = 2,
+) -> Tuple[Tuple[InternalSurvivorCEBlock, ...], Tuple[InternalSurvivorCEBlock, ...]]:
+    """Internal reduced-survivor CE blocks for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    source_labels = tuple(item.label for item in source_survivors)
+    target_labels = tuple(item.label for item in target_survivors)
+    source_c_ghosts, source_b_ghosts = internal_survivor_ghost_labels(source_labels)
+    target_c_ghosts, target_b_ghosts = internal_survivor_ghost_labels(target_labels)
+    source_brackets, target_brackets = partition_pair_reduced_brackets(case.partition)
+    source_quadratic = internal_survivor_quadratic_ghost_terms(source_labels, source_brackets)
+    target_quadratic = internal_survivor_quadratic_ghost_terms(target_labels, target_brackets)
+    source_action = internal_survivor_action_terms(source_labels, source_brackets)
+    target_action = internal_survivor_action_terms(target_labels, target_brackets)
+    family_tag = case.family
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_internal_survivor_ce_block(
+                survivor_labels=source_labels,
+                c_ghost_labels=source_c_ghosts,
+                b_ghost_labels=source_b_ghosts,
+                quadratic_terms=source_quadratic,
+                survivor_action_terms=source_action,
+                survivor_polynomial_degree=degree,
+                source_tag=f"A{n-1}_{family_tag}_source_{partition_tag}_internal_survivor_{degree}",
+            )
+            for degree in range(max_survivor_polynomial_degree + 1)
+        ),
+        tuple(
+            build_internal_survivor_ce_block(
+                survivor_labels=target_labels,
+                c_ghost_labels=target_c_ghosts,
+                b_ghost_labels=target_b_ghosts,
+                quadratic_terms=target_quadratic,
+                survivor_action_terms=target_action,
+                survivor_polynomial_degree=degree,
+                source_tag=f"A{n-1}_{family_tag}_target_{dual_tag}_internal_survivor_{degree}",
+            )
+            for degree in range(max_survivor_polynomial_degree + 1)
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def nonprincipal_partition_pair_semidirect_survivor_blocks(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Naive semidirect survivor BRST blocks for one non-principal partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_action, target_current_action = partition_pair_current_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivor_action, target_survivor_action = partition_pair_survivor_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    source_survivor_labels = tuple(item.label for item in source_survivors)
+    target_survivor_labels = tuple(item.label for item in target_survivors)
+    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
+        source_survivor_labels
+    )
+    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
+        target_survivor_labels
+    )
+    source_reduced_brackets, target_reduced_brackets = partition_pair_reduced_brackets(case.partition)
+    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    source_internal_action = internal_survivor_action_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_action = internal_survivor_action_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    family_tag = case.family
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_source_{item.root_label}" for item in source_constraints
+                ),
+                survivor_labels=source_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                internal_c_ghost_labels=source_internal_c_ghosts,
+                internal_b_ghost_labels=source_internal_b_ghosts,
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                current_action_terms=source_current_action,
+                survivor_action_terms=source_survivor_action,
+                internal_quadratic_terms=source_internal_quadratic,
+                internal_survivor_action_terms=source_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_{family_tag}_source_{partition_tag}_semidirect_survivor_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_target_{item.root_label}" for item in target_constraints
+                ),
+                survivor_labels=target_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                internal_c_ghost_labels=target_internal_c_ghosts,
+                internal_b_ghost_labels=target_internal_b_ghosts,
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                current_action_terms=target_current_action,
+                survivor_action_terms=target_survivor_action,
+                internal_quadratic_terms=target_internal_quadratic,
+                internal_survivor_action_terms=target_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_{family_tag}_target_{dual_tag}_semidirect_survivor_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Semidirect survivor blocks after the first transferred correction on one partition pair."""
+    case = nonprincipal_type_a_case(partition)
+    n = partition_size(case.partition)
+    source_constraints, target_constraints = partition_pair_constraints(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_action, target_current_action = partition_pair_current_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivor_action, target_survivor_action = partition_pair_corrected_survivor_action_terms(
+        case.partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    source_survivor_labels = tuple(item.label for item in source_survivors)
+    target_survivor_labels = tuple(item.label for item in target_survivors)
+    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
+        source_survivor_labels
+    )
+    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
+        target_survivor_labels
+    )
+    source_reduced_brackets, target_reduced_brackets = partition_pair_reduced_brackets(case.partition)
+    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    source_internal_action = internal_survivor_action_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_action = internal_survivor_action_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    family_tag = case.family
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_source_{item.root_label}" for item in source_constraints
+                ),
+                survivor_labels=source_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                internal_c_ghost_labels=source_internal_c_ghosts,
+                internal_b_ghost_labels=source_internal_b_ghosts,
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                current_action_terms=source_current_action,
+                survivor_action_terms=source_survivor_action,
+                internal_quadratic_terms=source_internal_quadratic,
+                internal_survivor_action_terms=source_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_{family_tag}_source_{partition_tag}_corrected_semidirect_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_target_{item.root_label}" for item in target_constraints
+                ),
+                survivor_labels=target_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                internal_c_ghost_labels=target_internal_c_ghosts,
+                internal_b_ghost_labels=target_internal_b_ghosts,
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                current_action_terms=target_current_action,
+                survivor_action_terms=target_survivor_action,
+                internal_quadratic_terms=target_internal_quadratic,
+                internal_survivor_action_terms=target_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_{family_tag}_target_{dual_tag}_corrected_semidirect_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
+def nonprincipal_two_row_mixed_constraint_ghost_blocks(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[MixedConstraintGhostBRSTBlock, ...], Tuple[MixedConstraintGhostBRSTBlock, ...]]:
+    """Mixed current-plus-ghost BRST blocks for one type-A two-row non-hook orbit."""
+    return nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_nonlinear_mixed_constraint_ghost_blocks(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[MixedConstraintGhostBRSTBlock, ...], Tuple[MixedConstraintGhostBRSTBlock, ...]]:
+    """Mixed blocks with nonlinear current terms for one type-A two-row non-hook orbit."""
+    return nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_survivor_coupled_blocks(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SurvivorCoupledBRSTBlock, ...], Tuple[SurvivorCoupledBRSTBlock, ...]]:
+    """Survivor-coupled BRST blocks for one type-A two-row non-hook orbit."""
+    return nonprincipal_partition_pair_survivor_coupled_blocks(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_internal_survivor_ce_blocks(
+    n: int,
+    s: int,
+    max_survivor_polynomial_degree: int = 2,
+) -> Tuple[Tuple[InternalSurvivorCEBlock, ...], Tuple[InternalSurvivorCEBlock, ...]]:
+    """Internal reduced-survivor CE blocks for one type-A two-row non-hook orbit."""
+    return partition_pair_internal_survivor_ce_blocks(
+        two_row_nonhook_partition(n, s),
+        max_survivor_polynomial_degree=max_survivor_polynomial_degree,
+    )
+
+
+def nonprincipal_two_row_semidirect_survivor_blocks(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Naive semidirect survivor BRST blocks for one type-A two-row non-hook orbit."""
+    return nonprincipal_partition_pair_semidirect_survivor_blocks(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_corrected_semidirect_survivor_blocks(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Corrected semidirect survivor BRST blocks for one type-A two-row non-hook orbit."""
+    return nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
 def hook_pair_mixed_constraint_ghost_blocks(
     n: int,
     r: int,
@@ -3644,6 +6870,257 @@ def hook_pair_survivor_coupled_blocks(
     )
 
 
+def hook_pair_semidirect_survivor_blocks(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Naive semidirect survivor BRST blocks for one hook pair."""
+    source_constraints, target_constraints = hook_pair_constraints(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = hook_pair_constraint_characters(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = hook_pair_quadratic_ghost_term_support(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_action, target_current_action = hook_pair_current_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivor_action, target_survivor_action = hook_pair_survivor_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivors, target_survivors = hook_pair_surviving_field_candidates(n, r)
+    source_survivor_labels = tuple(item.label for item in source_survivors)
+    target_survivor_labels = tuple(item.label for item in target_survivors)
+    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
+        source_survivor_labels
+    )
+    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
+        target_survivor_labels
+    )
+    source_reduced_brackets, target_reduced_brackets = hook_pair_reduced_brackets(n, r)
+    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    source_internal_action = internal_survivor_action_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_action = internal_survivor_action_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    case = nonprincipal_hook_case(n, r)
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_source_{item.root_label}" for item in source_constraints
+                ),
+                survivor_labels=source_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                internal_c_ghost_labels=source_internal_c_ghosts,
+                internal_b_ghost_labels=source_internal_b_ghosts,
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                current_action_terms=source_current_action,
+                survivor_action_terms=source_survivor_action,
+                internal_quadratic_terms=source_internal_quadratic,
+                internal_survivor_action_terms=source_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_hook_source_{partition_tag}_semidirect_survivor_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_target_{item.root_label}" for item in target_constraints
+                ),
+                survivor_labels=target_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                internal_c_ghost_labels=target_internal_c_ghosts,
+                internal_b_ghost_labels=target_internal_b_ghosts,
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                current_action_terms=target_current_action,
+                survivor_action_terms=target_survivor_action,
+                internal_quadratic_terms=target_internal_quadratic,
+                internal_survivor_action_terms=target_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_hook_target_{dual_tag}_semidirect_survivor_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def hook_pair_corrected_semidirect_survivor_blocks(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Hook-pair semidirect survivor blocks after the first transferred correction."""
+    source_constraints, target_constraints = hook_pair_constraints(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = hook_pair_constraint_characters(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = hook_pair_quadratic_ghost_term_support(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_action, target_current_action = hook_pair_current_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivor_action, target_survivor_action = hook_pair_corrected_survivor_action_terms(
+        n,
+        r,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_survivors, target_survivors = hook_pair_surviving_field_candidates(n, r)
+    source_survivor_labels = tuple(item.label for item in source_survivors)
+    target_survivor_labels = tuple(item.label for item in target_survivors)
+    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
+        source_survivor_labels
+    )
+    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
+        target_survivor_labels
+    )
+    source_reduced_brackets, target_reduced_brackets = hook_pair_reduced_brackets(n, r)
+    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    source_internal_action = internal_survivor_action_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_action = internal_survivor_action_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    case = nonprincipal_hook_case(n, r)
+    partition_tag = "_".join(str(part) for part in case.partition)
+    dual_tag = "_".join(str(part) for part in case.dual_partition)
+    return (
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_source_{item.root_label}" for item in source_constraints
+                ),
+                survivor_labels=source_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
+                internal_c_ghost_labels=source_internal_c_ghosts,
+                internal_b_ghost_labels=source_internal_b_ghosts,
+                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
+                quadratic_terms=source_quadratic,
+                current_action_terms=source_current_action,
+                survivor_action_terms=source_survivor_action,
+                internal_quadratic_terms=source_internal_quadratic,
+                internal_survivor_action_terms=source_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_hook_source_{partition_tag}_corrected_semidirect_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+        tuple(
+            build_semidirect_survivor_brst_block(
+                shifted_current_labels=tuple(
+                    f"u_target_{item.root_label}" for item in target_constraints
+                ),
+                survivor_labels=target_survivor_labels,
+                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
+                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
+                internal_c_ghost_labels=target_internal_c_ghosts,
+                internal_b_ghost_labels=target_internal_b_ghosts,
+                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
+                quadratic_terms=target_quadratic,
+                current_action_terms=target_current_action,
+                survivor_action_terms=target_survivor_action,
+                internal_quadratic_terms=target_internal_quadratic,
+                internal_survivor_action_terms=target_internal_action,
+                constraint_total_degree=total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_tag=(
+                    f"A{n-1}_hook_target_{dual_tag}_corrected_semidirect_"
+                    f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+                ),
+            )
+            for total_degree in range(max_constraint_total_degree + 1)
+        ),
+    )
+
+
 def _mixed_blocks_match_under_relabeling(
     source_blocks: Tuple[MixedConstraintGhostBRSTBlock, ...],
     target_blocks: Tuple[MixedConstraintGhostBRSTBlock, ...],
@@ -3702,6 +7179,320 @@ def _survivor_coupled_blocks_match_under_relabeling(
         if relabeled_source != target_block:
             return False
     return True
+
+
+def _semidirect_survivor_blocks_match_under_relabeling(
+    source_blocks: Tuple[SemidirectSurvivorBRSTBlock, ...],
+    target_blocks: Tuple[SemidirectSurvivorBRSTBlock, ...],
+    label_map: Dict[str, str],
+    side_map: Dict[str, str],
+) -> bool:
+    """Check semidirect survivor block equality after relabeling without rebuilding matrices."""
+    if len(source_blocks) != len(target_blocks):
+        return False
+    for source_block, target_block in zip(source_blocks, target_blocks):
+        effective_label_map = dict(label_map)
+        if not effective_label_map:
+            for label in (
+                source_block.shifted_current_labels
+                + source_block.c_ghost_labels
+                + source_block.b_ghost_labels
+            ):
+                root = _label_root(label)
+                effective_label_map[root] = root
+        mapped_shifted_current_labels = tuple(
+            _relabel_shifted_current_label(label, effective_label_map, side_map)
+            for label in source_block.shifted_current_labels
+        )
+        mapped_survivor_labels = tuple(
+            _relabel_survivor_label_with_side_map(label, side_map=side_map)
+            for label in source_block.survivor_labels
+        )
+        mapped_c_ghost_labels = tuple(
+            _relabel_ghost_label_with_side_map(label, effective_label_map, side_map)
+            for label in source_block.c_ghost_labels
+        )
+        mapped_b_ghost_labels = tuple(
+            _relabel_ghost_label_with_side_map(label, effective_label_map, side_map)
+            for label in source_block.b_ghost_labels
+        )
+        mapped_internal_c_ghost_labels = tuple(
+            _relabel_internal_survivor_ghost_label(label, side_map=side_map)
+            for label in source_block.internal_c_ghost_labels
+        )
+        mapped_internal_b_ghost_labels = tuple(
+            _relabel_internal_survivor_ghost_label(label, side_map=side_map)
+            for label in source_block.internal_b_ghost_labels
+        )
+        if (
+            mapped_shifted_current_labels != target_block.shifted_current_labels
+            or mapped_survivor_labels != target_block.survivor_labels
+            or mapped_c_ghost_labels != target_block.c_ghost_labels
+            or mapped_b_ghost_labels != target_block.b_ghost_labels
+            or mapped_internal_c_ghost_labels != target_block.internal_c_ghost_labels
+            or mapped_internal_b_ghost_labels != target_block.internal_b_ghost_labels
+            or source_block.chi_vector != target_block.chi_vector
+            or relabel_quadratic_ghost_terms(
+                source_block.quadratic_ghost_terms,
+                effective_label_map,
+                side_map=side_map,
+            )
+            != target_block.quadratic_ghost_terms
+            or relabel_current_action_terms(
+                source_block.current_action_terms,
+                effective_label_map,
+                side_map=side_map,
+            )
+            != target_block.current_action_terms
+            or _relabel_survivor_action_terms(
+                source_block.survivor_action_terms,
+                effective_label_map,
+                side_map=side_map,
+            )
+            != target_block.survivor_action_terms
+            or _relabel_internal_quadratic_ghost_terms(
+                source_block.internal_quadratic_ghost_terms,
+                side_map=side_map,
+            )
+            != target_block.internal_quadratic_ghost_terms
+            or _relabel_internal_survivor_action_terms(
+                source_block.internal_survivor_action_terms,
+                side_map=side_map,
+            )
+            != target_block.internal_survivor_action_terms
+            or source_block.constraint_total_degree != target_block.constraint_total_degree
+            or source_block.survivor_total_degree != target_block.survivor_total_degree
+            or source_block.max_internal_ce_degree != target_block.max_internal_ce_degree
+        ):
+            return False
+    return True
+
+
+def nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check mixed blocks for one partition against the transpose-dual case."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_count = default_source if source_num_constraints is None else source_num_constraints
+    target_count = default_target if target_num_constraints is None else target_num_constraints
+    source_blocks, target_blocks = nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+    dual_source_blocks, dual_target_blocks = nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+        case.dual_partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=target_count,
+        target_num_constraints=source_count,
+    )
+    return _mixed_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _mixed_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
+def nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check nonlinear mixed blocks for one partition against the dual case."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_count = default_source if source_num_constraints is None else source_num_constraints
+    target_count = default_target if target_num_constraints is None else target_num_constraints
+    source_blocks, target_blocks = nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+    dual_source_blocks, dual_target_blocks = (
+        nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
+            case.dual_partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            source_num_constraints=target_count,
+            target_num_constraints=source_count,
+        )
+    )
+    return _mixed_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _mixed_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
+def nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check survivor-coupled blocks for one partition against the dual case."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_count = default_source if source_num_constraints is None else source_num_constraints
+    target_count = default_target if target_num_constraints is None else target_num_constraints
+    source_blocks, target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+    dual_source_blocks, dual_target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+        case.dual_partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=target_count,
+        target_num_constraints=source_count,
+    )
+    return _survivor_coupled_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _survivor_coupled_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
+def nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check corrected semidirect blocks for one partition against the dual case."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_count = default_source if source_num_constraints is None else source_num_constraints
+    target_count = default_target if target_num_constraints is None else target_num_constraints
+    source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+    dual_source_blocks, dual_target_blocks = (
+        nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+            case.dual_partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+            source_num_constraints=target_count,
+            target_num_constraints=source_count,
+        )
+    )
+    return _semidirect_survivor_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _semidirect_survivor_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
+def nonprincipal_two_row_mixed_blocks_match_under_dual_swap(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check mixed two-row non-hook blocks against their transpose-dual case."""
+    return nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 2,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check nonlinear two-row non-hook blocks against their transpose-dual case."""
+    return nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check survivor-coupled two-row non-hook blocks against transpose duality."""
+    return nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+
+
+def nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap(
+    n: int,
+    s: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check corrected semidirect two-row non-hook blocks against transpose duality."""
+    return nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+        two_row_nonhook_partition(n, s),
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
 
 
 def hook_pair_mixed_blocks_match_under_dual_swap(
@@ -3824,6 +7615,51 @@ def hook_pair_survivor_coupled_blocks_match_under_dual_swap(
     )
 
 
+def hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> bool:
+    """Check corrected semidirect hook blocks for (n,r) against the transpose-dual case."""
+    default_source, default_target = hook_pair_constraint_counts_ansatz_type_a(n, r)
+    source_count = default_source if source_num_constraints is None else source_num_constraints
+    target_count = default_target if target_num_constraints is None else target_num_constraints
+    dual_r = n - r - 1
+    source_blocks, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+    dual_source_blocks, dual_target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
+        n,
+        dual_r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=target_count,
+        target_num_constraints=source_count,
+    )
+    return _semidirect_survivor_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _semidirect_survivor_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
 def verify_hook_pair_mixed_block_duality_catalog(
     max_n: int = 7,
     max_constraint_total_degree: int = 1,
@@ -3884,6 +7720,670 @@ def verify_hook_pair_survivor_coupled_block_duality_catalog(
                     survivor_total_degree=survivor_total_degree,
                 )
             )
+    return results
+
+
+def hook_pair_survivor_coupled_family_holds_via_duality(
+    n: int,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Check one hook family by direct half-catalog acyclicity plus transpose duality."""
+    if n < 3:
+        return True
+    for r in range(1, n - 1):
+        dual_r = n - r - 1
+        if r > dual_r:
+            continue
+        source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        )
+        if not all(
+            survivor_coupled_block_has_square_zero(block)
+            and survivor_coupled_block_is_acyclic(block)
+            for block in source_blocks + target_blocks
+        ):
+            return False
+        if r < dual_r and not hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_hook_pair_survivor_coupled_family_via_duality_catalog(
+    max_n: int = 6,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks recovering hook survivor families from half-catalog data."""
+    results: Dict[str, bool] = {}
+    if max_n < 3:
+        results["hook survivor-coupled family-via-duality catalog is empty below rank three"] = True
+        return results
+    for n in range(3, max_n + 1):
+        key = f"A{n-1} hook family"
+        results[f"{key} survivor-coupled checks follow by duality"] = (
+            hook_pair_survivor_coupled_family_holds_via_duality(
+                n,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_mixed_block_duality_catalog(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of mixed non-hook two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        results[f"{key} mixed dual-swap symmetry"] = (
+            nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of nonlinear non-hook two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        results[f"{key} nonlinear dual-swap symmetry"] = (
+            nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_survivor_coupled_block_duality_catalog(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of survivor-coupled two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        results[f"{key} survivor-coupled dual-swap symmetry"] = (
+            nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_survivor_coupled_bundle(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """One-pass square-zero and dual-swap checks for survivor-coupled two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+        source_blocks, target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            source_num_constraints=default_source,
+            target_num_constraints=default_target,
+        )
+        dual_source_blocks, dual_target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+            case.dual_partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            source_num_constraints=default_target,
+            target_num_constraints=default_source,
+        )
+        results[f"{key} survivor-coupled blocks square to zero"] = all(
+            survivor_coupled_block_has_square_zero(block)
+            for block in source_blocks + target_blocks
+        )
+        results[f"{key} survivor-coupled dual-swap symmetry"] = (
+            _survivor_coupled_blocks_match_under_relabeling(
+                source_blocks,
+                dual_target_blocks,
+                label_map={},
+                side_map={"source": "target"},
+            )
+            and _survivor_coupled_blocks_match_under_relabeling(
+                target_blocks,
+                dual_source_blocks,
+                label_map={},
+                side_map={"target": "source"},
+            )
+        )
+    return results
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Check one non-principal partition pair by square-zero plus transpose duality."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_blocks, target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=default_source,
+        target_num_constraints=default_target,
+    )
+    if not all(
+        survivor_coupled_block_has_square_zero(block)
+        for block in source_blocks + target_blocks
+    ):
+        return False
+    if case.partition == case.dual_partition:
+        return True
+    dual_source_blocks, dual_target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+        case.dual_partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=default_target,
+        target_num_constraints=default_source,
+    )
+    return _survivor_coupled_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _survivor_coupled_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
+def general_nonprincipal_survivor_coupled_family_holds_via_duality(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Recover seeded general survivor-coupled checks from square-zero plus transpose symmetry."""
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        if not _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded general survivor-coupled checks reduced by transpose duality."""
+    results: Dict[str, bool] = {}
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        n = partition_size(case.partition)
+        if case.partition == case.dual_partition:
+            key = f"A{n-1} general {case.partition}"
+        else:
+            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
+        results[f"{key} survivor-coupled checks follow by duality"] = (
+            _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_general_mixed_block_duality_catalog(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of general non-principal mixed blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_general_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} general {case.partition}"
+        results[f"{key} mixed dual-swap symmetry"] = (
+            nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            )
+        )
+    return results
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_partition_pair_mixed_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Check one seeded general mixed block representative against its transpose dual."""
+    return nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+    )
+
+
+def general_nonprincipal_mixed_family_holds_via_duality(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Recover seeded general mixed checks from one representative in each transpose pair."""
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        if not _nonprincipal_partition_pair_mixed_holds_via_duality(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_general_mixed_family_via_duality_catalog(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded general mixed checks reduced by transpose symmetry."""
+    results: Dict[str, bool] = {}
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        n = partition_size(case.partition)
+        if case.partition == case.dual_partition:
+            key = f"A{n-1} general {case.partition}"
+        else:
+            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
+        results[f"{key} mixed checks follow by duality"] = (
+            _nonprincipal_partition_pair_mixed_holds_via_duality(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_general_nonlinear_block_duality_catalog(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of general non-principal nonlinear blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_general_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} general {case.partition}"
+        results[f"{key} nonlinear dual-swap symmetry"] = (
+            nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            )
+        )
+    return results
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_partition_pair_nonlinear_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Check one seeded general nonlinear block representative against its transpose dual."""
+    return nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+    )
+
+
+def general_nonprincipal_nonlinear_family_holds_via_duality(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Recover seeded general nonlinear checks from one representative in each transpose pair."""
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        if not _nonprincipal_partition_pair_nonlinear_holds_via_duality(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded general nonlinear checks reduced by transpose symmetry."""
+    results: Dict[str, bool] = {}
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        n = partition_size(case.partition)
+        if case.partition == case.dual_partition:
+            key = f"A{n-1} general {case.partition}"
+        else:
+            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
+        results[f"{key} nonlinear checks follow by duality"] = (
+            _nonprincipal_partition_pair_nonlinear_holds_via_duality(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_general_survivor_coupled_block_duality_catalog(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of general non-principal survivor blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_general_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} general {case.partition}"
+        results[f"{key} survivor-coupled dual-swap symmetry"] = (
+            nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_corrected_semidirect_catalog(
+    max_n: int = 6,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for square-zero corrected semidirect two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+        results[f"{key} corrected semidirect blocks square to zero"] = all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_blocks + target_blocks
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_corrected_semidirect_duality_catalog(
+    max_n: int = 6,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of corrected semidirect two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        results[f"{key} corrected semidirect dual-swap symmetry"] = (
+            nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_two_row_corrected_semidirect_bundle(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """One-pass square-zero and dual-swap checks for corrected semidirect two-row blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} two-row {case.partition}"
+        default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+        source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+            source_num_constraints=default_source,
+            target_num_constraints=default_target,
+        )
+        dual_source_blocks, dual_target_blocks = (
+            nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+                case.dual_partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_num_constraints=default_target,
+                target_num_constraints=default_source,
+            )
+        )
+        results[f"{key} corrected semidirect blocks square to zero"] = all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_blocks + target_blocks
+        )
+        results[f"{key} corrected semidirect dual-swap symmetry"] = (
+            _semidirect_survivor_blocks_match_under_relabeling(
+                source_blocks,
+                dual_target_blocks,
+                label_map={},
+                side_map={"source": "target"},
+            )
+            and _semidirect_survivor_blocks_match_under_relabeling(
+                target_blocks,
+                dual_source_blocks,
+                label_map={},
+                side_map={"target": "source"},
+            )
+        )
+    return results
+
+
+def verify_nonprincipal_general_corrected_semidirect_catalog(
+    max_n: int = 5,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for square-zero corrected semidirect general non-principal blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_general_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} general {case.partition}"
+        source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+        results[f"{key} corrected semidirect blocks square to zero"] = all(
+            semidirect_survivor_block_has_square_zero(block)
+            for block in source_blocks + target_blocks
+        )
+    return results
+
+
+def verify_nonprincipal_general_corrected_semidirect_duality_catalog(
+    max_n: int = 5,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks for dual-swap symmetry of corrected semidirect general blocks."""
+    results: Dict[str, bool] = {}
+    for case in nonprincipal_general_cases(max_n=max_n):
+        n = partition_size(case.partition)
+        key = f"A{n-1} general {case.partition}"
+        results[f"{key} corrected semidirect dual-swap symmetry"] = (
+            nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
+        )
+    return results
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Check one partition pair by direct square-zero on one side plus transpose duality."""
+    case = nonprincipal_type_a_case(partition)
+    default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
+    source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=default_source,
+        target_num_constraints=default_target,
+    )
+    if not all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in source_blocks + target_blocks
+    ):
+        return False
+    if case.partition == case.dual_partition:
+        return True
+    dual_source_blocks, dual_target_blocks = (
+        nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+            case.dual_partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+            source_num_constraints=default_target,
+            target_num_constraints=default_source,
+        )
+    )
+    return _semidirect_survivor_blocks_match_under_relabeling(
+        source_blocks,
+        dual_target_blocks,
+        label_map={},
+        side_map={"source": "target"},
+    ) and _semidirect_survivor_blocks_match_under_relabeling(
+        target_blocks,
+        dual_source_blocks,
+        label_map={},
+        side_map={"target": "source"},
+    )
+
+
+def general_nonprincipal_corrected_semidirect_family_holds_via_duality(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Recover seeded general non-principal corrected semidirect checks from square-zero plus transpose duality."""
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        if not _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded general-family corrected semidirect checks reduced by transpose duality."""
+    results: Dict[str, bool] = {}
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_general_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        n = partition_size(case.partition)
+        if case.partition == case.dual_partition:
+            key = f"A{n-1} general {case.partition}"
+        else:
+            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
+        results[f"{key} corrected semidirect checks follow by duality"] = (
+            _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
+        )
     return results
 
 
@@ -4023,6 +8523,100 @@ def sl3_subregular_internal_survivor_ce_blocks(
     )
 
 
+def sl3_subregular_semidirect_survivor_blocks(
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 2,
+) -> Tuple[SemidirectSurvivorBRSTBlock, ...]:
+    """Naive semidirect survivor BRST blocks for the subregular sl_3 seed."""
+    constraints = sl3_subregular_constraints()
+    character = sl3_subregular_constraint_character()
+    survivors = sl3_subregular_strong_generator_candidates()
+    survivor_labels = tuple(item.label for item in survivors)
+    survivor_action = sl3_subregular_survivor_action_terms()
+    internal_c_ghosts, internal_b_ghosts = internal_survivor_ghost_labels(survivor_labels)
+    reduced_brackets = sl3_subregular_projected_strong_brackets()
+    internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        survivor_labels,
+        reduced_brackets,
+    )
+    internal_action = internal_survivor_action_terms(
+        survivor_labels,
+        reduced_brackets,
+    )
+    return tuple(
+        build_semidirect_survivor_brst_block(
+            shifted_current_labels=tuple(f"u_{item.root_label}" for item in constraints),
+            survivor_labels=survivor_labels,
+            c_ghost_labels=tuple(item.c_ghost for item in constraints),
+            b_ghost_labels=tuple(item.b_ghost for item in constraints),
+            internal_c_ghost_labels=internal_c_ghosts,
+            internal_b_ghost_labels=internal_b_ghosts,
+            chi_vector=tuple(character[item.root_label] for item in constraints),
+            quadratic_terms=(),
+            current_action_terms=(),
+            survivor_action_terms=survivor_action,
+            internal_quadratic_terms=internal_quadratic,
+            internal_survivor_action_terms=internal_action,
+            constraint_total_degree=total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+            source_tag=(
+                f"A2_subregular_semidirect_survivor_"
+                f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+            ),
+        )
+        for total_degree in range(max_constraint_total_degree + 1)
+    )
+
+
+def sl3_subregular_corrected_semidirect_survivor_blocks(
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 2,
+) -> Tuple[SemidirectSurvivorBRSTBlock, ...]:
+    """Subregular semidirect blocks after the first transferred survivor correction."""
+    constraints = sl3_subregular_constraints()
+    character = sl3_subregular_constraint_character()
+    survivors = sl3_subregular_strong_generator_candidates()
+    survivor_labels = tuple(item.label for item in survivors)
+    corrected_survivor_action = sl3_subregular_corrected_survivor_action_terms()
+    internal_c_ghosts, internal_b_ghosts = internal_survivor_ghost_labels(survivor_labels)
+    reduced_brackets = sl3_subregular_projected_strong_brackets()
+    internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        survivor_labels,
+        reduced_brackets,
+    )
+    internal_action = internal_survivor_action_terms(
+        survivor_labels,
+        reduced_brackets,
+    )
+    return tuple(
+        build_semidirect_survivor_brst_block(
+            shifted_current_labels=tuple(f"u_{item.root_label}" for item in constraints),
+            survivor_labels=survivor_labels,
+            c_ghost_labels=tuple(item.c_ghost for item in constraints),
+            b_ghost_labels=tuple(item.b_ghost for item in constraints),
+            internal_c_ghost_labels=internal_c_ghosts,
+            internal_b_ghost_labels=internal_b_ghosts,
+            chi_vector=tuple(character[item.root_label] for item in constraints),
+            quadratic_terms=(),
+            current_action_terms=(),
+            survivor_action_terms=corrected_survivor_action,
+            internal_quadratic_terms=internal_quadratic,
+            internal_survivor_action_terms=internal_action,
+            constraint_total_degree=total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+            source_tag=(
+                f"A2_subregular_corrected_semidirect_survivor_"
+                f"{total_degree}_{survivor_total_degree}_{max_internal_ce_degree}"
+            ),
+        )
+        for total_degree in range(max_constraint_total_degree + 1)
+    )
+
+
 def sl3_subregular_survivor_coupled_blocks(
     max_constraint_total_degree: int = 2,
     survivor_total_degree: int = 1,
@@ -4092,6 +8686,42 @@ def first_nonselfdual_hook_pair_internal_survivor_ce_blocks(
     )
 
 
+def first_nonselfdual_hook_pair_semidirect_survivor_blocks(
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Naive semidirect survivor BRST blocks for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_semidirect_survivor_blocks(
+        4,
+        1,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
+def first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Tuple[Tuple[SemidirectSurvivorBRSTBlock, ...], Tuple[SemidirectSurvivorBRSTBlock, ...]]:
+    """Corrected semidirect survivor blocks for the first non-self-dual hook pair."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_corrected_semidirect_survivor_blocks(
+        4,
+        1,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
 def first_nonselfdual_hook_pair_survivor_coupled_blocks(
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
@@ -4134,8 +8764,43 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     hook_source_action, hook_target_action = first_nonselfdual_hook_pair_current_action_terms()
     subregular_survivor_action = sl3_subregular_survivor_action_terms()
+    subregular_action_lifts = sl3_subregular_survivor_action_lift_witnesses()
+    subregular_derivation_defects = sl3_subregular_survivor_derivation_defects()
+    subregular_defect_witnesses = sl3_subregular_derivation_defect_witnesses()
+    subregular_first_correction_witnesses = (
+        sl3_subregular_first_transfer_correction_witnesses()
+    )
+    subregular_first_correction = sl3_subregular_first_transfer_correction_terms()
+    subregular_corrected_survivor_action = sl3_subregular_corrected_survivor_action_terms()
+    subregular_corrected_derivation_defects = (
+        sl3_subregular_corrected_survivor_derivation_defects()
+    )
     hook_source_survivor_action, hook_target_survivor_action = (
         first_nonselfdual_hook_pair_survivor_action_terms()
+    )
+    hook_source_action_lifts, hook_target_action_lifts = (
+        first_nonselfdual_hook_pair_survivor_action_lift_witnesses()
+    )
+    hook_source_current_witnesses, hook_target_current_witnesses = (
+        first_nonselfdual_hook_pair_constraint_current_witnesses()
+    )
+    hook_source_derivation_defects, hook_target_derivation_defects = (
+        first_nonselfdual_hook_pair_survivor_derivation_defects()
+    )
+    hook_source_defect_witnesses, hook_target_defect_witnesses = (
+        first_nonselfdual_hook_pair_derivation_defect_witnesses()
+    )
+    hook_source_first_correction_witnesses, hook_target_first_correction_witnesses = (
+        first_nonselfdual_hook_pair_first_transfer_correction_witnesses()
+    )
+    hook_source_first_correction, hook_target_first_correction = (
+        first_nonselfdual_hook_pair_first_transfer_correction_terms()
+    )
+    hook_source_corrected_action, hook_target_corrected_action = (
+        first_nonselfdual_hook_pair_corrected_survivor_action_terms()
+    )
+    hook_source_corrected_defects, hook_target_corrected_defects = (
+        first_nonselfdual_hook_pair_corrected_survivor_derivation_defects()
     )
     basis_matrices = sl3_subregular_basis_matrices()
     e_matrix = basis_matrices["E12"]
@@ -4157,6 +8822,18 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     subregular_internal_survivor_blocks = sl3_subregular_internal_survivor_ce_blocks(
         max_survivor_polynomial_degree=2
     )
+    subregular_semidirect_blocks = sl3_subregular_semidirect_survivor_blocks(
+        max_constraint_total_degree=1,
+        survivor_total_degree=1,
+        max_internal_ce_degree=2,
+    )
+    subregular_corrected_semidirect_blocks = (
+        sl3_subregular_corrected_semidirect_survivor_blocks(
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+            max_internal_ce_degree=2,
+        )
+    )
     hook_source_blocks, hook_target_blocks = first_nonselfdual_hook_pair_linear_constraint_blocks(
         max_total_degree=3
     )
@@ -4177,6 +8854,46 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     hook_source_internal_survivor_blocks, hook_target_internal_survivor_blocks = (
         first_nonselfdual_hook_pair_internal_survivor_ce_blocks(
             max_survivor_polynomial_degree=2
+        )
+    )
+    hook_source_semidirect_blocks, hook_target_semidirect_blocks = (
+        first_nonselfdual_hook_pair_semidirect_survivor_blocks(
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    hook_source_corrected_semidirect_blocks, hook_target_corrected_semidirect_blocks = (
+        first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    hook_source_survivor_blocks_deg2, hook_target_survivor_blocks_deg2 = (
+        first_nonselfdual_hook_pair_survivor_coupled_blocks(
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        )
+    )
+    hook_source_survivor_blocks_deg3, hook_target_survivor_blocks_deg3 = (
+        first_nonselfdual_hook_pair_survivor_coupled_blocks(
+            max_constraint_total_degree=1,
+            survivor_total_degree=3,
+        )
+    )
+    hook_source_corrected_semidirect_blocks_deg2, hook_target_corrected_semidirect_blocks_deg2 = (
+        first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        )
+    )
+    hook_source_corrected_semidirect_blocks_deg3, hook_target_corrected_semidirect_blocks_deg3 = (
+        first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
+            max_internal_ce_degree=1,
         )
     )
     results: Dict[str, bool] = {}
@@ -4322,6 +9039,66 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     results["subregular internal survivor linear invariant is T"] = (
         internal_survivor_linear_h0_labels(subregular_internal_survivor_blocks[1])
         == ((("T", 1),),)
+    )
+    results["subregular survivor action has derivation defects"] = (
+        len(subregular_derivation_defects["c_alpha1+alpha2"]) == 8
+        and subregular_derivation_defects["c_alpha1+alpha2"][("G+", "G-")]
+        == {"G+": Rational(1, 2)}
+    )
+    results["subregular action lifts expose explicit ad_e witnesses"] = (
+        any(
+            item.c_ghost == "c_alpha1+alpha2"
+            and item.source_survivor_label == "G-"
+            and item.projected_terms == (("J", 1),)
+            and item.ad_e_image_terms == (("H1", Rational(1, 2)),)
+            and item.ad_e_witness_preimage == (("F12", Rational(1, 2)),)
+            for item in subregular_action_lifts
+        )
+        and any(
+            item.c_ghost == "c_alpha1+alpha2"
+            and item.source_survivor_label == "J"
+            and item.projected_terms == ()
+            and item.ad_e_image_terms == (("E13", Rational(-3, 2)),)
+            and item.ad_e_witness_preimage == (("E23", Rational(-3, 2)),)
+            for item in subregular_action_lifts
+        )
+    )
+    results["subregular defect witnesses recover the projected defect"] = all(
+        dict(item.projected_defect_terms)
+        == subregular_derivation_defects[item.c_ghost][
+            (item.left_survivor_label, item.right_survivor_label)
+        ]
+        for item in subregular_defect_witnesses
+    )
+    results["subregular first transfer correction kills the naive survivor action"] = (
+        first_transfer_correction_terms_from_witnesses(subregular_first_correction_witnesses)
+        == subregular_first_correction
+        and all(
+            tuple(
+                (target_survivor_label, simplify(-sympify(coefficient)))
+                for target_survivor_label, coefficient in item.projected_action_terms
+            )
+            == item.correction_terms
+            for item in subregular_first_correction_witnesses
+        )
+        and
+        tuple(
+            (item.c_ghost, item.source_survivor_label, item.target_survivor_label, item.coefficient)
+            for item in subregular_first_correction
+        )
+        == (
+            ("c_alpha1+alpha2", "G-", "J", -1),
+            ("c_alpha1+alpha2", "T", "G+", 1),
+        )
+        and subregular_corrected_survivor_action == ()
+        and subregular_corrected_derivation_defects == {}
+    )
+    results["subregular naive semidirect coupling fails square zero"] = (
+        not any(semidirect_survivor_block_has_square_zero(block) for block in subregular_semidirect_blocks)
+    )
+    results["subregular corrected semidirect coupling restores square zero"] = all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in subregular_corrected_semidirect_blocks
     )
     results["first non-self-dual hook pair partitions"] = (
         hook_pair.source_partition == (3, 1)
@@ -4520,6 +9297,34 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             survivor_total_degree=1,
         )
     )
+    results["first hook survivor-coupled blocks square to zero in survivor degree two"] = all(
+        survivor_coupled_block_has_square_zero(block)
+        for block in hook_source_survivor_blocks_deg2 + hook_target_survivor_blocks_deg2
+    )
+    results["first hook survivor-coupled blocks acyclic in survivor degree two"] = all(
+        survivor_coupled_block_is_acyclic(block)
+        for block in hook_source_survivor_blocks_deg2 + hook_target_survivor_blocks_deg2
+    )
+    results["first hook survivor-coupled blocks match under dual swap in survivor degree two"] = (
+        first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        )
+    )
+    results["first hook survivor-coupled blocks square to zero in survivor degree three"] = all(
+        survivor_coupled_block_has_square_zero(block)
+        for block in hook_source_survivor_blocks_deg3 + hook_target_survivor_blocks_deg3
+    )
+    results["first hook survivor-coupled blocks acyclic in survivor degree three"] = all(
+        survivor_coupled_block_is_acyclic(block)
+        for block in hook_source_survivor_blocks_deg3 + hook_target_survivor_blocks_deg3
+    )
+    results["first hook survivor-coupled blocks match under dual swap in survivor degree three"] = (
+        first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
+            max_constraint_total_degree=1,
+            survivor_total_degree=3,
+        )
+    )
     results["first hook survivor feedback is nontrivial"] = (
         any(
             hook_source_survivor_blocks[1].differentials[degree]
@@ -4548,6 +9353,116 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         and internal_survivor_linear_h0_labels(hook_target_internal_survivor_blocks[1])
         == ((("target_gm2_1", 1),),)
     )
+    results["first hook survivor action has derivation defects"] = (
+        {ghost: len(items) for ghost, items in hook_source_derivation_defects.items()}
+        == {
+            "c_source_E12": 2,
+            "c_source_E14": 8,
+            "c_source_E23": 2,
+            "c_source_E43": 8,
+        }
+        and {ghost: len(items) for ghost, items in hook_target_derivation_defects.items()}
+        == {
+            "c_target_E13": 26,
+            "c_target_E14": 26,
+            "c_target_E32": 26,
+            "c_target_E42": 26,
+        }
+    )
+    results["first hook action lifts expose explicit ad_e witnesses"] = (
+        any(
+            item.c_ghost == "c_source_E12"
+            and item.source_survivor_label == "source_gm4_1"
+            and item.projected_terms == (("source_gm2_1", Rational(-1, 2)),)
+            and item.ad_e_witness_preimage == (("E31", Rational(1, 2)),)
+            for item in hook_source_action_lifts
+        )
+        and any(
+            item.c_ghost == "c_target_E13"
+            and item.source_survivor_label == "target_gm1_3"
+            and item.projected_terms == (("target_g0_3", 1),)
+            and item.ad_e_witness_preimage == (("E21", Rational(1, 2)),)
+            for item in hook_target_action_lifts
+        )
+    )
+    results["first hook constrained currents are ad_e-exact with chosen witnesses"] = (
+        hook_source_current_witnesses["E12"]
+        == (("H1", Rational(-2, 3)), ("H2", Rational(-1, 3)))
+        and hook_source_current_witnesses["E14"] == (("E24", 1),)
+        and hook_target_current_witnesses["E13"] == (("E23", 1),)
+        and hook_target_current_witnesses["E42"] == (("E41", -1),)
+    )
+    results["first hook defect witnesses recover the projected defect"] = (
+        all(
+            dict(item.projected_defect_terms)
+            == hook_source_derivation_defects[item.c_ghost][
+                (item.left_survivor_label, item.right_survivor_label)
+            ]
+            for item in hook_source_defect_witnesses
+        )
+        and all(
+            dict(item.projected_defect_terms)
+            == hook_target_derivation_defects[item.c_ghost][
+                (item.left_survivor_label, item.right_survivor_label)
+            ]
+            for item in hook_target_defect_witnesses
+        )
+    )
+    results["first hook naive semidirect coupling fails square zero"] = (
+        not any(semidirect_survivor_block_has_square_zero(block) for block in hook_source_semidirect_blocks)
+        and not any(semidirect_survivor_block_has_square_zero(block) for block in hook_target_semidirect_blocks)
+    )
+    results["first hook first transfer correction kills the naive survivor action"] = (
+        first_transfer_correction_terms_from_witnesses(
+            hook_source_first_correction_witnesses
+        )
+        == hook_source_first_correction
+        and first_transfer_correction_terms_from_witnesses(
+            hook_target_first_correction_witnesses
+        )
+        == hook_target_first_correction
+        and
+        hook_source_corrected_action == ()
+        and hook_target_corrected_action == ()
+        and hook_source_corrected_defects == {}
+        and hook_target_corrected_defects == {}
+        and len(hook_source_first_correction) == len(hook_source_survivor_action)
+        and len(hook_target_first_correction) == len(hook_target_survivor_action)
+        and hook_source_first_correction
+        == tuple(
+            SurvivorActionTermEntry(
+                c_ghost=item.c_ghost,
+                source_survivor_label=item.source_survivor_label,
+                target_survivor_label=item.target_survivor_label,
+                coefficient=simplify(-item.coefficient),
+            )
+            for item in hook_source_survivor_action
+        )
+        and hook_target_first_correction
+        == tuple(
+            SurvivorActionTermEntry(
+                c_ghost=item.c_ghost,
+                source_survivor_label=item.source_survivor_label,
+                target_survivor_label=item.target_survivor_label,
+                coefficient=simplify(-item.coefficient),
+            )
+            for item in hook_target_survivor_action
+        )
+    )
+    results["first hook corrected semidirect coupling restores square zero"] = all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in hook_source_corrected_semidirect_blocks + hook_target_corrected_semidirect_blocks
+    )
+    results["first hook corrected semidirect coupling restores square zero in survivor degree two"] = all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in hook_source_corrected_semidirect_blocks_deg2
+        + hook_target_corrected_semidirect_blocks_deg2
+    )
+    results["first hook corrected semidirect coupling restores square zero in survivor degree three"] = all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in hook_source_corrected_semidirect_blocks_deg3
+        + hook_target_corrected_semidirect_blocks_deg3
+    )
     results["first hook reduced brackets close on survivors"] = (
         hook_source_brackets[("source_gm2_2", "source_gm2_3")] == {"source_gm4_1": 1}
         and hook_source_brackets[("source_g0_1", "source_gm2_2")] == {"source_gm2_2": Rational(4, 3)}
@@ -4565,6 +9480,275 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         bool(generic_source_brackets)
         and bool(generic_target_brackets)
     )
+    two_row_partition = two_row_nonhook_partition(6, 2)
+    two_row_case = nonprincipal_type_a_case(two_row_partition, level=k)
+    two_row_source_candidates, two_row_target_candidates = partition_pair_surviving_field_candidates(
+        two_row_partition
+    )
+    two_row_source_mixed_blocks, two_row_target_mixed_blocks = (
+        nonprincipal_two_row_mixed_constraint_ghost_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+    )
+    two_row_source_nonlinear_blocks, two_row_target_nonlinear_blocks = (
+        nonprincipal_two_row_nonlinear_mixed_constraint_ghost_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+    )
+    two_row_source_survivor_blocks, two_row_target_survivor_blocks = (
+        nonprincipal_two_row_survivor_coupled_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+    )
+    two_row_source_internal_survivor_blocks, two_row_target_internal_survivor_blocks = (
+        nonprincipal_two_row_internal_survivor_ce_blocks(
+            6,
+            2,
+            max_survivor_polynomial_degree=1,
+        )
+    )
+    two_row_source_semidirect_blocks, two_row_target_semidirect_blocks = (
+        nonprincipal_two_row_semidirect_survivor_blocks(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    two_row_source_corrected_semidirect_blocks, two_row_target_corrected_semidirect_blocks = (
+        nonprincipal_two_row_corrected_semidirect_survivor_blocks(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    two_row_source_corrected_action, two_row_target_corrected_action = (
+        partition_pair_corrected_survivor_action_terms(two_row_partition)
+    )
+    two_row_source_corrected_defects, two_row_target_corrected_defects = (
+        partition_pair_corrected_survivor_derivation_defects(two_row_partition)
+    )
+    results["A5 two-row non-hook family tag is propagated"] = (
+        two_row_case.family == "two_row_nonhook"
+    )
+    results["A5 two-row survivor counts match centralizer dimensions"] = (
+        len(two_row_source_candidates) == centralizer_dimension_sl_n(two_row_case.partition)
+        and len(two_row_target_candidates) == centralizer_dimension_sl_n(two_row_case.dual_partition)
+    )
+    results["A5 two-row mixed blocks square to zero"] = all(
+        mixed_constraint_ghost_block_has_square_zero(block)
+        for block in two_row_source_mixed_blocks + two_row_target_mixed_blocks
+    )
+    results["A5 two-row mixed blocks acyclic"] = all(
+        mixed_constraint_ghost_block_is_acyclic(block)
+        for block in two_row_source_mixed_blocks + two_row_target_mixed_blocks
+    )
+    results["A5 two-row nonlinear blocks square to zero"] = all(
+        mixed_constraint_ghost_block_has_square_zero(block)
+        for block in two_row_source_nonlinear_blocks + two_row_target_nonlinear_blocks
+    )
+    results["A5 two-row nonlinear blocks acyclic"] = all(
+        mixed_constraint_ghost_block_is_acyclic(block)
+        for block in two_row_source_nonlinear_blocks + two_row_target_nonlinear_blocks
+    )
+    results["A5 two-row survivor-coupled blocks square to zero"] = all(
+        survivor_coupled_block_has_square_zero(block)
+        for block in two_row_source_survivor_blocks + two_row_target_survivor_blocks
+    )
+    results["A5 two-row survivor-coupled blocks acyclic"] = all(
+        survivor_coupled_block_is_acyclic(block)
+        for block in two_row_source_survivor_blocks + two_row_target_survivor_blocks
+    )
+    results["A5 two-row internal survivor CE blocks square to zero"] = all(
+        internal_survivor_ce_block_has_square_zero(block)
+        for block in two_row_source_internal_survivor_blocks + two_row_target_internal_survivor_blocks
+    )
+    results["A5 two-row naive semidirect coupling fails square zero"] = (
+        not any(semidirect_survivor_block_has_square_zero(block) for block in two_row_source_semidirect_blocks)
+        and not any(semidirect_survivor_block_has_square_zero(block) for block in two_row_target_semidirect_blocks)
+    )
+    results["A5 two-row first transfer kills reduced survivor action"] = (
+        two_row_source_corrected_action == ()
+        and two_row_target_corrected_action == ()
+        and two_row_source_corrected_defects == {}
+        and two_row_target_corrected_defects == {}
+    )
+    results["A5 two-row corrected semidirect coupling restores square zero"] = all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in two_row_source_corrected_semidirect_blocks
+        + two_row_target_corrected_semidirect_blocks
+    )
+    results["A5 two-row mixed blocks match under dual swap"] = (
+        nonprincipal_two_row_mixed_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+    )
+    results["A5 two-row nonlinear blocks match under dual swap"] = (
+        nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+        )
+    )
+    results["A5 two-row survivor-coupled blocks match under dual swap"] = (
+        nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+    )
+    results["A5 two-row corrected semidirect blocks match under dual swap"] = (
+        nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    general_partition = (3, 2, 1)
+    general_case = nonprincipal_type_a_case(general_partition, level=k)
+    general_source_candidates, general_target_candidates = (
+        partition_pair_surviving_field_candidates(general_partition)
+    )
+    general_source_mixed_blocks, general_target_mixed_blocks = (
+        nonprincipal_partition_pair_mixed_constraint_ghost_blocks(
+            general_partition,
+            max_constraint_total_degree=1,
+        )
+    )
+    general_source_nonlinear_blocks, general_target_nonlinear_blocks = (
+        nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
+            general_partition,
+            max_constraint_total_degree=1,
+        )
+    )
+    general_source_survivor_blocks, general_target_survivor_blocks = (
+        nonprincipal_partition_pair_survivor_coupled_blocks(
+            general_partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+    )
+    general_source_internal_survivor_blocks, general_target_internal_survivor_blocks = (
+        partition_pair_internal_survivor_ce_blocks(
+            general_partition,
+            max_survivor_polynomial_degree=1,
+        )
+    )
+    general_source_semidirect_blocks, general_target_semidirect_blocks = (
+        nonprincipal_partition_pair_semidirect_survivor_blocks(
+            general_partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    general_source_corrected_semidirect_blocks, general_target_corrected_semidirect_blocks = (
+        nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+            general_partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
+    general_source_corrected_action, general_target_corrected_action = (
+        partition_pair_corrected_survivor_action_terms(general_partition)
+    )
+    general_source_corrected_defects, general_target_corrected_defects = (
+        partition_pair_corrected_survivor_derivation_defects(general_partition)
+    )
+    results["A5 general nonprincipal family tag is propagated"] = (
+        general_case.family == "general_nonprincipal"
+    )
+    results["A5 general nonprincipal survivor counts match centralizer dimensions"] = (
+        len(general_source_candidates) == centralizer_dimension_sl_n(general_case.partition)
+        and len(general_target_candidates) == centralizer_dimension_sl_n(general_case.dual_partition)
+    )
+    results["A5 general nonprincipal mixed blocks square to zero"] = all(
+        mixed_constraint_ghost_block_has_square_zero(block)
+        for block in general_source_mixed_blocks + general_target_mixed_blocks
+    )
+    results["A5 general nonprincipal mixed blocks acyclic"] = all(
+        mixed_constraint_ghost_block_is_acyclic(block)
+        for block in general_source_mixed_blocks + general_target_mixed_blocks
+    )
+    results["A5 general nonprincipal nonlinear blocks square to zero"] = all(
+        mixed_constraint_ghost_block_has_square_zero(block)
+        for block in general_source_nonlinear_blocks + general_target_nonlinear_blocks
+    )
+    results["A5 general nonprincipal nonlinear blocks acyclic"] = all(
+        mixed_constraint_ghost_block_is_acyclic(block)
+        for block in general_source_nonlinear_blocks + general_target_nonlinear_blocks
+    )
+    results["A5 general nonprincipal survivor-coupled blocks square to zero"] = all(
+        survivor_coupled_block_has_square_zero(block)
+        for block in general_source_survivor_blocks + general_target_survivor_blocks
+    )
+    results["A5 general nonprincipal survivor-coupled blocks acyclic"] = all(
+        survivor_coupled_block_is_acyclic(block)
+        for block in general_source_survivor_blocks + general_target_survivor_blocks
+    )
+    results["A5 general nonprincipal internal survivor CE blocks square to zero"] = all(
+        internal_survivor_ce_block_has_square_zero(block)
+        for block in general_source_internal_survivor_blocks
+        + general_target_internal_survivor_blocks
+    )
+    results["A5 general nonprincipal naive semidirect coupling fails square zero"] = (
+        not any(semidirect_survivor_block_has_square_zero(block) for block in general_source_semidirect_blocks)
+        and not any(semidirect_survivor_block_has_square_zero(block) for block in general_target_semidirect_blocks)
+    )
+    results["A5 general nonprincipal first transfer kills reduced survivor action"] = (
+        general_source_corrected_action == ()
+        and general_target_corrected_action == ()
+        and general_source_corrected_defects == {}
+        and general_target_corrected_defects == {}
+    )
+    results["A5 general nonprincipal corrected semidirect coupling restores square zero"] = all(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in general_source_corrected_semidirect_blocks
+        + general_target_corrected_semidirect_blocks
+    )
+    results["A5 general nonprincipal mixed blocks match under dual swap"] = (
+        nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+            general_partition,
+            max_constraint_total_degree=1,
+        )
+    )
+    results["A5 general nonprincipal nonlinear blocks match under dual swap"] = (
+        nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
+            general_partition,
+            max_constraint_total_degree=1,
+        )
+    )
+    results["A5 general nonprincipal survivor-coupled blocks match under dual swap"] = (
+        nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+            general_partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+    )
+    results["A5 general nonprincipal corrected semidirect blocks match under dual swap"] = (
+        nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            general_partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+    )
     results["hook mixed dual-swap catalog checks"] = all(
         verify_hook_pair_mixed_block_duality_catalog(max_n=7, max_constraint_total_degree=1).values()
     )
@@ -4578,14 +9762,180 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             survivor_total_degree=1,
         ).values()
     )
+    results["hook survivor-coupled family-via-duality checks in survivor degree two"] = all(
+        verify_hook_pair_survivor_coupled_family_via_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        ).values()
+    )
+    results["hook survivor-coupled family-via-duality checks in survivor degree three"] = all(
+        verify_hook_pair_survivor_coupled_family_via_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=1,
+            survivor_total_degree=3,
+        ).values()
+    )
+    results["hook survivor-coupled dual-swap catalog checks in survivor degree two"] = all(
+        verify_hook_pair_survivor_coupled_block_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        ).values()
+    )
+    results["hook corrected semidirect catalog checks in survivor degree two"] = all(
+        verify_hook_pair_corrected_semidirect_catalog(
+            max_n=6,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["hook corrected semidirect dual-swap catalog checks in survivor degree two"] = all(
+        verify_hook_pair_corrected_semidirect_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["hook corrected semidirect family-via-duality checks in survivor degree three"] = all(
+        verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["two-row non-hook mixed dual-swap catalog checks"] = all(
+        verify_nonprincipal_two_row_mixed_block_duality_catalog(
+            max_n=9,
+            max_constraint_total_degree=1,
+        ).values()
+    )
+    results["two-row non-hook nonlinear dual-swap catalog checks"] = all(
+        verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
+            max_n=9,
+            max_constraint_total_degree=1,
+        ).values()
+    )
+    results["two-row non-hook survivor-coupled bundle checks"] = all(
+        verify_nonprincipal_two_row_survivor_coupled_bundle(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        ).values()
+    )
+    results["two-row non-hook survivor-coupled bundle checks in survivor degree two"] = all(
+        verify_nonprincipal_two_row_survivor_coupled_bundle(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        ).values()
+    )
+    results["two-row non-hook survivor-coupled bundle checks in survivor degree three"] = all(
+        verify_nonprincipal_two_row_survivor_coupled_bundle(
+            max_n=6,
+            max_constraint_total_degree=1,
+            survivor_total_degree=3,
+        ).values()
+    )
+    results["two-row non-hook corrected semidirect bundle checks"] = all(
+        verify_nonprincipal_two_row_corrected_semidirect_bundle(
+            max_n=7,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["two-row non-hook corrected semidirect bundle checks in survivor degree two"] = all(
+        verify_nonprincipal_two_row_corrected_semidirect_bundle(
+            max_n=7,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["two-row non-hook corrected semidirect bundle checks in survivor degree three"] = all(
+        verify_nonprincipal_two_row_corrected_semidirect_bundle(
+            max_n=7,
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["general nonprincipal mixed family-via-duality checks"] = all(
+        verify_nonprincipal_general_mixed_family_via_duality_catalog(
+            max_n=9,
+            max_constraint_total_degree=1,
+        ).values()
+    )
+    results["general nonprincipal nonlinear family-via-duality checks"] = all(
+        verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
+            max_n=9,
+            max_constraint_total_degree=1,
+        ).values()
+    )
+    results["general nonprincipal survivor-coupled family-via-duality checks"] = all(
+        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        ).values()
+    )
+    results["general nonprincipal survivor-coupled family-via-duality checks in survivor degree two"] = all(
+        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        ).values()
+    )
+    results["general nonprincipal survivor-coupled family-via-duality checks in survivor degree three"] = all(
+        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=1,
+            survivor_total_degree=3,
+        ).values()
+    )
+    results["general nonprincipal corrected semidirect family-via-duality checks"] = all(
+        verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+            max_n=9,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["general nonprincipal corrected semidirect family-via-duality checks in survivor degree two"] = all(
+        verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+            max_n=7,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        ).values()
+    )
+    results["general nonprincipal corrected semidirect family-via-duality checks in survivor degree three"] = all(
+        verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+            max_n=6,
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
+            max_internal_ce_degree=1,
+        ).values()
+    )
     results["hook pair catalog checks"] = all(
         verify_hook_pair_ds_seed_catalog(max_n=8, level=k).values()
     )
     results["hook pair/seed catalog alignment checks"] = all(
         verify_hook_pair_seed_alignment(max_n=8, level=k).values()
     )
+    results["two-row non-hook seed catalog checks"] = all(
+        verify_nonprincipal_two_row_seed_catalog(max_n=8, level=k).values()
+    )
+    results["general nonprincipal seed catalog checks"] = all(
+        verify_nonprincipal_general_seed_catalog(max_n=7, level=k).values()
+    )
     results["seed frontier track"] = (seed.track == TRACK_FRONTIER_NONPRINCIPAL)
     results["first hook pair frontier track"] = (hook_pair.track == TRACK_FRONTIER_NONPRINCIPAL)
     results["seed status tag"] = (seed.status == STATUS_DS_SEED)
+    results["first hook pair seed status tag"] = (hook_pair.status == STATUS_DS_SEED)
 
     return results

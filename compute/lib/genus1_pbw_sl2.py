@@ -28,7 +28,12 @@ CONVENTIONS:
 
 from __future__ import annotations
 
+from functools import lru_cache
+from time import perf_counter
+
 from sympy import Matrix, Rational, Symbol, zeros
+from sympy.polys.domains import GF, QQ
+from sympy.polys.matrices import DomainMatrix
 
 # ===========================================================================
 # sl2 structure constants and Killing form
@@ -36,6 +41,7 @@ from sympy import Matrix, Rational, Symbol, zeros
 
 DIM_SL2 = 3  # basis: e=0, h=1, f=2
 CASIMIR_EXACT_CUTOFF = 6
+CASIMIR_MODULAR_PRIMES = (32003,)
 
 # Structure constants: bracket[i,j] = {k: coeff} for [e_i, e_j] = sum coeff * e_k
 SL2_BRACKET = {
@@ -126,6 +132,142 @@ def adjoint_casimir_on_tensor_power(power: int) -> Matrix:
     return casimir
 
 
+@lru_cache(maxsize=None)
+def _casimir_integer_dok_on_tensor_power(power: int) -> tuple[tuple[int, int, int], ...]:
+    """Sparse integer DOK entries for the Casimir matrix on ``g^{\\otimes power}``."""
+    casimir = adjoint_casimir_on_tensor_power(power)
+    entries: list[tuple[int, int, int]] = []
+    for (row, col), value in casimir.todok().items():
+        ivalue = int(value)
+        if ivalue != 0:
+            entries.append((row, col, ivalue))
+    return tuple(entries)
+
+
+def _casimir_modular_nullities_for_prime(
+    power: int,
+    eigenvalues: tuple[int, ...],
+    prime: int,
+) -> dict:
+    """Compute eigenspace nullities of ``C - lambda I`` over ``GF(prime)``."""
+    if prime <= 2:
+        raise ValueError("modular primes must be odd and > 2")
+
+    field = GF(prime)
+    dim = DIM_SL2 ** power
+    base_mod: dict[tuple[int, int], object] = {}
+    for row, col, value in _casimir_integer_dok_on_tensor_power(power):
+        mod_value = value % prime
+        if mod_value != 0:
+            base_mod[(row, col)] = field(mod_value)
+
+    multiplicities: dict = {}
+    for eigenvalue in eigenvalues:
+        shifted = dict(base_mod)
+        lam = field(eigenvalue % prime)
+        zero = field.zero
+        for idx in range(dim):
+            key = (idx, idx)
+            shifted_value = shifted.get(key, zero) - lam
+            if shifted_value != 0:
+                shifted[key] = shifted_value
+            elif key in shifted:
+                shifted.pop(key)
+        rank = DomainMatrix.from_dok(shifted, (dim, dim), field).rank()
+        multiplicities[Rational(eigenvalue)] = dim - rank
+    return multiplicities
+
+
+def casimir_eigenspace_multiplicities_modular_on_tensor_power(
+    power: int,
+    primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
+) -> dict:
+    """Sparse/modular eigenspace extraction for Casimir on ``g^{\\otimes power}``.
+
+    Strategy:
+      1. Build sparse integer Casimir matrix once.
+      2. For each prime ``p``, compute nullities of ``C - lambda I`` over ``GF(p)``
+         for the expected sl2 Casimir eigenvalues.
+      3. Require agreement across primes and with representation-theoretic multiplicities.
+    """
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    if not primes:
+        raise ValueError("at least one modular prime is required")
+
+    expected = expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+    eigenvalues = tuple(sorted(int(eigenvalue) for eigenvalue in expected))
+    if len(set(primes)) != len(primes):
+        raise ValueError("modular primes must be distinct")
+
+    prime_results = []
+    for prime in primes:
+        if any((a - b) % prime == 0 for a in eigenvalues for b in eigenvalues if a != b):
+            raise ValueError(
+                f"prime {prime} causes Casimir eigenvalue collisions modulo p; "
+                "choose a larger prime"
+            )
+        prime_results.append(
+            _casimir_modular_nullities_for_prime(
+                power=power,
+                eigenvalues=eigenvalues,
+                prime=prime,
+            )
+        )
+
+    reference = prime_results[0]
+    if any(result != reference for result in prime_results[1:]):
+        raise ArithmeticError("modular eigenspace multiplicities disagree across primes")
+    if reference != expected:
+        raise ArithmeticError(
+            "modular eigenspace multiplicities disagree with representation-theoretic expectations"
+        )
+    return reference
+
+
+def casimir_eigenspace_multiplicities_exact_sparse_on_tensor_power(power: int) -> dict:
+    """Sparse exact eigenspace extraction over ``QQ`` for Casimir on ``g^{\\otimes power}``.
+
+    This keeps the computation exact (unlike finite-field runs) while avoiding
+    dense symbolic eigenvalue routines.  Since the expected Casimir spectrum is
+    known for ``sl_2``, multiplicities are recovered as nullities of
+    ``C - lambda I`` for each expected eigenvalue ``lambda`` over ``QQ``.
+    """
+    if power < 1:
+        raise ValueError("power must be >= 1")
+
+    expected = expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+    eigenvalues = tuple(sorted(expected.keys()))
+    dim = DIM_SL2 ** power
+
+    base_q: dict[tuple[int, int], object] = {}
+    for row, col, value in _casimir_integer_dok_on_tensor_power(power):
+        qv = QQ.convert(value)
+        if qv != 0:
+            base_q[(row, col)] = qv
+
+    multiplicities: dict = {}
+    zero = QQ.zero
+    for eigenvalue in eigenvalues:
+        shifted = dict(base_q)
+        lam = QQ.convert(eigenvalue)
+        for idx in range(dim):
+            key = (idx, idx)
+            shifted_value = shifted.get(key, zero) - lam
+            if shifted_value != 0:
+                shifted[key] = shifted_value
+            elif key in shifted:
+                shifted.pop(key)
+        rank = DomainMatrix.from_dok(shifted, (dim, dim), QQ).rank()
+        multiplicities[Rational(eigenvalue)] = dim - rank
+
+    if multiplicities != expected:
+        raise ArithmeticError(
+            "exact-sparse eigenspace multiplicities disagree with representation-theoretic expectations"
+        )
+    return multiplicities
+
+
 def casimir_method_for_tensor_power(
     power: int,
     method: str = "auto",
@@ -134,14 +276,16 @@ def casimir_method_for_tensor_power(
     """Resolve which Casimir multiplicity method is used at a given tensor power.
 
     Methods:
-      - ``exact``: direct eigenvalue multiplicities from the Casimir matrix
+      - ``exact``: direct dense eigenvalue multiplicities from the Casimir matrix
+      - ``exact_sparse``: exact sparse nullity extraction over ``QQ``
+      - ``modular``: sparse/modular nullity extraction over finite fields
       - ``theory``: sl2 tensor-product multiplicity recurrence
-      - ``auto``: ``exact`` for ``power <= exact_cutoff``, else ``theory``
+      - ``auto``: ``exact`` for ``power <= exact_cutoff``, else ``modular``
     """
-    if method not in {"auto", "exact", "theory"}:
-        raise ValueError("method must be one of: auto, exact, theory")
+    if method not in {"auto", "exact", "exact_sparse", "modular", "theory"}:
+        raise ValueError("method must be one of: auto, exact, exact_sparse, modular, theory")
     if method == "auto":
-        return "exact" if power <= exact_cutoff else "theory"
+        return "exact" if power <= exact_cutoff else "modular"
     return method
 
 
@@ -149,11 +293,12 @@ def casimir_eigenspace_multiplicities_on_tensor_power(
     power: int,
     method: str = "auto",
     exact_cutoff: int = CASIMIR_EXACT_CUTOFF,
+    modular_primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
 ) -> dict:
     """Return Casimir eigenspace multiplicities on ``g^{otimes power}``.
 
     The default ``method='auto'`` keeps full exact matrix-spectrum checks through
-    ``power <= 6`` and switches to the fast representation-theoretic path at
+    ``power <= 6`` and switches to the sparse/modular eigenspace path at
     higher powers.
     """
     resolved = casimir_method_for_tensor_power(
@@ -163,7 +308,124 @@ def casimir_eigenspace_multiplicities_on_tensor_power(
     )
     if resolved == "exact":
         return adjoint_casimir_on_tensor_power(power).eigenvals()
+    if resolved == "exact_sparse":
+        return casimir_eigenspace_multiplicities_exact_sparse_on_tensor_power(power)
+    if resolved == "modular":
+        return casimir_eigenspace_multiplicities_modular_on_tensor_power(
+            power=power,
+            primes=modular_primes,
+        )
     return expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+
+
+def staged_frontier_diagnostics_on_tensor_power(
+    power: int,
+    casimir_method: str = "auto",
+    exact_cutoff: int = CASIMIR_EXACT_CUTOFF,
+    modular_primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
+    include_casimir: bool = True,
+    include_equivariance: bool = True,
+    include_commutator: bool = True,
+    include_timings: bool = False,
+) -> dict:
+    """Run staged MC1 diagnostics at a fixed tensor power.
+
+    This packages the current frontier strategy in one reusable API:
+      1. Always-computable core diagnostics (`rank`, `kernel`, `invariants`).
+      2. Structural gates (`d_1` equivariance, `[C_2,d_1]=0`) as optional stages.
+      3. Casimir eigenspaces as an optional final stage (`auto`/`modular`/etc).
+
+    For the current frontier (`power=7`), this allows lightweight staged checks
+    even when full eigenspace extraction is deferred.
+    """
+    if power < 2:
+        raise ValueError("power must be >= 2")
+
+    timings: dict[str, float] = {
+        "d1_rank": 0.0,
+        "invariant_dim": 0.0,
+        "equivariance": 0.0,
+        "commutator": 0.0,
+        "casimir": 0.0,
+        "total": 0.0,
+    }
+
+    total_t0 = perf_counter()
+
+    t0 = perf_counter()
+    rank_d1 = bracket_d1_rank_on_tensor_power(power)
+    timings["d1_rank"] = perf_counter() - t0
+
+    t0 = perf_counter()
+    invariant_dim = invariant_subspace_dimension_on_tensor_power(power)
+    timings["invariant_dim"] = perf_counter() - t0
+
+    kernel_dim = DIM_SL2 ** power - rank_d1
+    casimir_mode = casimir_method_for_tensor_power(
+        power=power,
+        method=casimir_method,
+        exact_cutoff=exact_cutoff,
+    )
+    expected = expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+
+    equivariant: bool | None
+    if include_equivariance:
+        t0 = perf_counter()
+        equivariant = d1_is_equivariant_on_tensor_power(power)
+        timings["equivariance"] = perf_counter() - t0
+    else:
+        equivariant = None
+
+    casimir_commutator_zero: bool | None
+    if include_commutator:
+        t0 = perf_counter()
+        casimir_commutator_zero = casimir_d1_commutator_on_tensor_power(power).is_zero_matrix
+        timings["commutator"] = perf_counter() - t0
+    else:
+        casimir_commutator_zero = None
+
+    casimir_eigenspaces: dict | None
+    casimir_matches_expected: bool | None
+    if include_casimir:
+        t0 = perf_counter()
+        casimir_eigenspaces = casimir_eigenspace_multiplicities_on_tensor_power(
+            power=power,
+            method=casimir_method,
+            exact_cutoff=exact_cutoff,
+            modular_primes=modular_primes,
+        )
+        timings["casimir"] = perf_counter() - t0
+        casimir_matches_expected = casimir_eigenspaces == expected
+    else:
+        casimir_eigenspaces = None
+        casimir_matches_expected = None
+
+    checks: list[bool] = []
+    if equivariant is not None:
+        checks.append(equivariant)
+    if casimir_commutator_zero is not None:
+        checks.append(casimir_commutator_zero)
+    if casimir_matches_expected is not None:
+        checks.append(casimir_matches_expected)
+
+    timings["total"] = perf_counter() - total_t0
+
+    report = {
+        "power": power,
+        "rank_d1": rank_d1,
+        "kernel_dim_d1": kernel_dim,
+        "invariant_dim": invariant_dim,
+        "equivariant": equivariant,
+        "casimir_commutator_zero": casimir_commutator_zero,
+        "casimir_mode": casimir_mode,
+        "casimir_eigenspaces": casimir_eigenspaces,
+        "expected_casimir_eigenspaces": expected,
+        "casimir_matches_expected": casimir_matches_expected,
+        "all_enabled_checks_pass": all(checks),
+    }
+    if include_timings:
+        report["timings"] = timings
+    return report
 
 
 def sl2_spin1_tensor_power_copy_multiplicities(power: int) -> dict[int, int]:

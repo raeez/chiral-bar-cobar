@@ -24,9 +24,15 @@ from compute.lib.nonprincipal_ds_orbits import (
     STATUS_PROGRAMME,
     TRACK_FRONTIER_NONPRINCIPAL,
     Partition,
+    hook_partition,
     hook_orbit_pair_profile,
+    nonprincipal_general_cases,
     nonprincipal_hook_cases,
     nonprincipal_hook_case,
+    nonprincipal_two_row_cases,
+    nonprincipal_type_a_case,
+    type_a_general_nonprincipal_partitions,
+    two_row_nonhook_partition,
     type_a_orbit_class,
 )
 
@@ -203,6 +209,31 @@ def sl3_subregular_bp_seed(level=Symbol("k")) -> NonprincipalDSSeed:
     )
 
 
+def nonprincipal_type_a_seed(partition: Partition, level=Symbol("k")) -> NonprincipalDSSeed:
+    """Seed record for one non-principal type-A orbit-duality case."""
+    orbit_case = nonprincipal_type_a_case(partition, level=level)
+    if orbit_case.partition == (2, 1):
+        return sl3_subregular_bp_seed(level)
+
+    status = (
+        STATUS_HOOK_EVIDENCE
+        if orbit_case.status == STATUS_HOOK_EVIDENCE
+        else STATUS_PROGRAMME
+    )
+    family_tag = orbit_case.family
+    return NonprincipalDSSeed(
+        lie_type=orbit_case.lie_type,
+        rank=orbit_case.rank,
+        partition=orbit_case.partition,
+        dual_partition=orbit_case.dual_partition,
+        level_shift=orbit_case.level_shift,
+        central_charge=Symbol(f"unknown_nonprincipal_{family_tag}_c"),
+        complementarity_sum=Symbol(f"unknown_nonprincipal_{family_tag}_sum"),
+        track=TRACK_FRONTIER_NONPRINCIPAL,
+        status=status,
+    )
+
+
 def nonprincipal_hook_seed(n: int, r: int, level=Symbol("k")) -> NonprincipalDSSeed:
     """Seed record for one type-A non-principal hook/subregular case.
 
@@ -210,26 +241,20 @@ def nonprincipal_hook_seed(n: int, r: int, level=Symbol("k")) -> NonprincipalDSS
     Bershadsky-Polyakov seed. Higher-rank hook/subregular cases remain frontier
     placeholders with explicit unknown central-charge data.
     """
-    hook_case = nonprincipal_hook_case(n, r, level=level)
-    if n == 3 and r == 1:
-        return sl3_subregular_bp_seed(level)
+    return nonprincipal_type_a_seed(hook_partition(n, r), level=level)
 
-    status = (
-        STATUS_HOOK_EVIDENCE
-        if hook_case.status == STATUS_HOOK_EVIDENCE
-        else STATUS_PROGRAMME
-    )
-    return NonprincipalDSSeed(
-        lie_type=hook_case.lie_type,
-        rank=hook_case.rank,
-        partition=hook_case.partition,
-        dual_partition=hook_case.dual_partition,
-        level_shift=hook_case.level_shift,
-        central_charge=Symbol("unknown_nonprincipal_hook_c"),
-        complementarity_sum=Symbol("unknown_nonprincipal_hook_sum"),
-        track=TRACK_FRONTIER_NONPRINCIPAL,
-        status=status,
-    )
+
+def nonprincipal_two_row_seed(n: int, s: int, level=Symbol("k")) -> NonprincipalDSSeed:
+    """Seed record for one type-A non-hook two-row orbit case."""
+    partition = two_row_nonhook_partition(n, s)
+    return nonprincipal_type_a_seed(partition, level=level)
+
+
+def nonprincipal_general_seed(partition: Partition, level=Symbol("k")) -> NonprincipalDSSeed:
+    """Seed record for one general type-A non-principal orbit case."""
+    if type_a_orbit_class(partition) != "general_nonprincipal":
+        raise ValueError("general non-principal seed requires a general_nonprincipal partition")
+    return nonprincipal_type_a_seed(partition, level=level)
 
 
 def first_nonselfdual_hook_seed(level=Symbol("k")) -> NonprincipalDSSeed:
@@ -244,6 +269,31 @@ def nonprincipal_hook_seed_catalog(max_n: int = 6, level=Symbol("k")) -> Tuple[N
         nonprincipal_hook_seed(n, r, level=level)
         for n in range(3, max_n + 1)
         for r in range(1, n - 1)
+    )
+
+
+def nonprincipal_two_row_seed_catalog(
+    max_n: int = 8,
+    level=Symbol("k"),
+) -> Tuple[NonprincipalDSSeed, ...]:
+    """Enumerate non-principal type-A two-row seed records."""
+    return tuple(
+        nonprincipal_two_row_seed(n, s, level=level)
+        for n in range(4, max_n + 1)
+        for s in range(2, (n // 2) + 1)
+        if type_a_orbit_class(two_row_nonhook_partition(n, s)) == "two_row_nonhook"
+    )
+
+
+def nonprincipal_general_seed_catalog(
+    max_n: int = 8,
+    level=Symbol("k"),
+) -> Tuple[NonprincipalDSSeed, ...]:
+    """Enumerate general type-A non-principal seed records."""
+    return tuple(
+        nonprincipal_general_seed(partition, level=level)
+        for n in range(3, max_n + 1)
+        for partition in type_a_general_nonprincipal_partitions(n)
     )
 
 
@@ -287,6 +337,78 @@ def verify_nonprincipal_hook_seed_catalog(max_n: int = 8, level=Symbol("k")) -> 
     results["first non-self-dual hook remains A3"] = (
         first.partition == (3, 1) and first.dual_partition == (2, 1, 1)
     )
+
+    return results
+
+
+def verify_nonprincipal_two_row_seed_catalog(
+    max_n: int = 8,
+    level=Symbol("k"),
+) -> Dict[str, bool]:
+    """Sanity checks for the non-hook two-row seed catalog."""
+    results: Dict[str, bool] = {}
+    seeds = nonprincipal_two_row_seed_catalog(max_n=max_n, level=level)
+    orbit_cases = nonprincipal_two_row_cases(max_n=max_n, level=level)
+
+    results["two-row seed catalog is nonempty"] = bool(seeds)
+    results["two-row seed catalog matches orbit catalog size"] = (len(seeds) == len(orbit_cases))
+    results["two-row seed catalog stays on non-principal track"] = all(
+        seed.track == TRACK_FRONTIER_NONPRINCIPAL for seed in seeds
+    )
+    results["two-row seed catalog excludes principal/trivial"] = all(
+        type_a_orbit_class(seed.partition) not in {"principal", "trivial"} for seed in seeds
+    )
+    results["two-row seed catalog is non-hook"] = all(
+        type_a_orbit_class(seed.partition) == "two_row_nonhook" for seed in seeds
+    )
+
+    for seed, orbit_case in zip(seeds, orbit_cases):
+        n = sum(seed.partition)
+        key = f"A{n-1} two-row {seed.partition}"
+        expected_status = (
+            STATUS_HOOK_EVIDENCE
+            if orbit_case.status == STATUS_HOOK_EVIDENCE
+            else STATUS_PROGRAMME
+        )
+        results[f"{key} status propagates"] = (seed.status == expected_status)
+        results[f"{key} dual partition propagates"] = (seed.dual_partition == orbit_case.dual_partition)
+        results[f"{key} level shift propagates"] = (simplify(seed.level_shift - orbit_case.level_shift) == 0)
+
+    return results
+
+
+def verify_nonprincipal_general_seed_catalog(
+    max_n: int = 8,
+    level=Symbol("k"),
+) -> Dict[str, bool]:
+    """Sanity checks for the general non-principal seed catalog."""
+    results: Dict[str, bool] = {}
+    seeds = nonprincipal_general_seed_catalog(max_n=max_n, level=level)
+    orbit_cases = nonprincipal_general_cases(max_n=max_n, level=level)
+
+    results["general seed catalog is nonempty"] = bool(seeds)
+    results["general seed catalog matches orbit catalog size"] = (len(seeds) == len(orbit_cases))
+    results["general seed catalog stays on non-principal track"] = all(
+        seed.track == TRACK_FRONTIER_NONPRINCIPAL for seed in seeds
+    )
+    results["general seed catalog excludes principal/trivial"] = all(
+        type_a_orbit_class(seed.partition) not in {"principal", "trivial"} for seed in seeds
+    )
+    results["general seed catalog stays off hook/two-row families"] = all(
+        type_a_orbit_class(seed.partition) == "general_nonprincipal" for seed in seeds
+    )
+
+    for seed, orbit_case in zip(seeds, orbit_cases):
+        n = sum(seed.partition)
+        key = f"A{n-1} general {seed.partition}"
+        expected_status = (
+            STATUS_HOOK_EVIDENCE
+            if orbit_case.status == STATUS_HOOK_EVIDENCE
+            else STATUS_PROGRAMME
+        )
+        results[f"{key} status propagates"] = (seed.status == expected_status)
+        results[f"{key} dual partition propagates"] = (seed.dual_partition == orbit_case.dual_partition)
+        results[f"{key} level shift propagates"] = (simplify(seed.level_shift - orbit_case.level_shift) == 0)
 
     return results
 
@@ -335,6 +457,12 @@ def verify_nonprincipal_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     results["first non-self-dual hook frontier track"] = (hook.track == TRACK_FRONTIER_NONPRINCIPAL)
     results["hook seed catalog checks"] = all(
         verify_nonprincipal_hook_seed_catalog(max_n=8, level=k).values()
+    )
+    results["two-row seed catalog checks"] = all(
+        verify_nonprincipal_two_row_seed_catalog(max_n=8, level=k).values()
+    )
+    results["general nonprincipal seed catalog checks"] = all(
+        verify_nonprincipal_general_seed_catalog(max_n=7, level=k).values()
     )
     results["hook constraint-count ansatz checks"] = all(
         verify_hook_constraint_count_ansatz(max_n=8).values()
