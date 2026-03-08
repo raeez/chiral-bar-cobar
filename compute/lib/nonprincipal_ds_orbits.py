@@ -17,9 +17,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Iterable, Tuple
 
-from sympy import Matrix, Symbol, sympify, zeros
+from sympy import Matrix, Symbol, simplify, sympify, zeros
 
 Partition = Tuple[int, ...]
+MatrixBasisExpression = Tuple[Tuple[str, object], ...]
 
 TRACK_CORE_PRINCIPAL = "core_principal_finite_type_pbw"
 TRACK_FRONTIER_NONPRINCIPAL = "frontier_nonprincipal_ds_orbit"
@@ -50,6 +51,30 @@ class MatrixSl2Triple:
     e: Matrix
     h: Matrix
     f: Matrix
+
+
+@dataclass(frozen=True)
+class HookOrbitPairProfile:
+    """Concrete orbit-side profile for one hook orbit and its transpose dual."""
+
+    lie_type: str
+    rank: int
+    n: int
+    r: int
+    source_partition: Partition
+    target_partition: Partition
+    source_orbit_dimension: int
+    target_orbit_dimension: int
+    source_centralizer_dimension: int
+    target_centralizer_dimension: int
+    source_positive_simple_root_count: int
+    target_positive_simple_root_count: int
+    source_positive_basis_labels: Tuple[str, ...]
+    target_positive_basis_labels: Tuple[str, ...]
+    source_level_shift: object
+    target_level_shift: object
+    track: str
+    status: str
 
 
 def normalize_partition(parts: Iterable[int]) -> Partition:
@@ -156,9 +181,71 @@ def _matrix_unit(n: int, i: int, j: int) -> Matrix:
     return matrix
 
 
+def standard_traceless_basis_sl_n(n: int) -> Tuple[Tuple[str, Matrix], ...]:
+    """Ordered standard traceless basis of sl_n."""
+    if n < 2:
+        raise ValueError("n must be at least 2")
+    basis = [(f"E{i}{j}", _matrix_unit(n, i, j)) for i in range(1, n + 1) for j in range(1, n + 1) if i != j]
+    basis += [
+        (f"H{i}", _matrix_unit(n, i, i) - _matrix_unit(n, i + 1, i + 1))
+        for i in range(1, n)
+    ]
+    return tuple(basis)
+
+
+def matrix_to_traceless_basis_expression_sl_n(matrix: Matrix) -> MatrixBasisExpression:
+    """Re-expand a traceless n x n matrix in the standard sl_n basis."""
+    if matrix.rows != matrix.cols:
+        raise ValueError("matrix must be square")
+    basis = standard_traceless_basis_sl_n(matrix.rows)
+    basis_columns = Matrix.hstack(*[element.reshape(matrix.rows * matrix.rows, 1) for _, element in basis])
+    coefficients = basis_columns.gauss_jordan_solve(matrix.reshape(matrix.rows * matrix.rows, 1))[0]
+    return tuple(
+        (label, coefficients[index, 0])
+        for index, (label, _) in enumerate(basis)
+        if coefficients[index, 0] != 0
+    )
+
+
 def type_a_hook_nilpotent_matrix(n: int, r: int) -> Matrix:
     """Jordan nilpotent representative for the hook partition (n-r,1^r)."""
     return type_a_nilpotent_matrix(hook_partition(n, r))
+
+
+def type_a_partition_sl2_triple(partition: Iterable[int]) -> MatrixSl2Triple:
+    """Canonical block-diagonal sl_2-triple for a type-A Jordan partition."""
+    lam = normalize_partition(partition)
+    n = sum(lam)
+    e = zeros(n, n)
+    h = zeros(n, n)
+    f = zeros(n, n)
+
+    offset = 0
+    for block_size in lam:
+        for index in range(block_size):
+            h[offset + index, offset + index] = block_size - 1 - 2 * index
+        for index in range(block_size - 1):
+            e[offset + index, offset + index + 1] = 1
+            # sl_2 weight-lowering coefficient in the highest-weight basis.
+            f[offset + index + 1, offset + index] = (index + 1) * (block_size - index - 1)
+        offset += block_size
+
+    return MatrixSl2Triple(e=e, h=h, f=f)
+
+
+def type_a_hook_sl2_triple(n: int, r: int) -> MatrixSl2Triple:
+    """Canonical sl_2-triple for the type-A hook orbit (n-r,1^r)."""
+    return type_a_partition_sl2_triple(hook_partition(n, r))
+
+
+def type_a_hook_pair_sl2_triples(n: int, r: int) -> Tuple[MatrixSl2Triple, MatrixSl2Triple]:
+    """Canonical sl_2-triples for a hook orbit and its transpose-dual hook."""
+    if not (1 <= r <= n - 2):
+        raise ValueError("non-principal hook requires 1 <= r <= n-2")
+    return (
+        type_a_hook_sl2_triple(n, r),
+        type_a_hook_sl2_triple(n, n - r - 1),
+    )
 
 
 def nilpotent_partition_from_matrix(matrix: Matrix) -> Partition:
@@ -239,6 +326,32 @@ def matrix_centralizer_basis_sl_n(matrix: Matrix) -> Tuple[Matrix, ...]:
             basis_columns.append(column)
             basis.append(candidate)
     return tuple(basis)
+
+
+def homogeneous_f_centralizer_basis_sl_n(
+    f: Matrix,
+    h: Matrix,
+) -> Dict[int, Tuple[MatrixBasisExpression, ...]]:
+    """Homogeneous basis of g^f grouped by ad(h)-grade."""
+    if f.rows != f.cols or h.rows != h.cols or f.rows != h.rows:
+        raise ValueError("f and h must be square matrices of the same size")
+    n = f.rows
+    graded_basis = ad_h_graded_basis_labels_sl_n(h)
+    basis_dict = dict(standard_traceless_basis_sl_n(n))
+    homogeneous: Dict[int, Tuple[MatrixBasisExpression, ...]] = {}
+    for grade in sorted(graded_basis, reverse=True):
+        labels = graded_basis[grade]
+        columns = [((f * basis_dict[label] - basis_dict[label] * f).reshape(n * n, 1), label) for label in labels]
+        if not columns:
+            continue
+        nullspace = Matrix.hstack(*[column for column, _ in columns]).nullspace()
+        if not nullspace:
+            continue
+        homogeneous[grade] = tuple(
+            tuple((label, vector[index, 0]) for index, (_, label) in enumerate(columns) if vector[index, 0] != 0)
+            for vector in nullspace
+        )
+    return homogeneous
 
 
 def orbit_dimension_sl_n(partition: Iterable[int]) -> int:
@@ -324,17 +437,17 @@ def first_nonselfdual_hook_pair_centralizer_bases() -> Tuple[Tuple[Matrix, ...],
 
 def first_nonselfdual_hook_pair_sl2_triples() -> Tuple[MatrixSl2Triple, MatrixSl2Triple]:
     """Standard Jacobson-Morozov triples for the first non-self-dual hook pair."""
-    source = MatrixSl2Triple(
-        e=_matrix_unit(4, 1, 2) + _matrix_unit(4, 2, 3),
-        h=Matrix.diag(2, 0, -2, 0),
-        f=2 * _matrix_unit(4, 2, 1) + 2 * _matrix_unit(4, 3, 2),
+    return type_a_hook_pair_sl2_triples(4, 1)
+
+
+def first_nonselfdual_hook_pair_f_centralizer_bases(
+) -> Tuple[Dict[int, Tuple[MatrixBasisExpression, ...]], Dict[int, Tuple[MatrixBasisExpression, ...]]]:
+    """Homogeneous g^f bases for the first non-self-dual hook pair."""
+    source, target = first_nonselfdual_hook_pair_sl2_triples()
+    return (
+        homogeneous_f_centralizer_basis_sl_n(source.f, source.h),
+        homogeneous_f_centralizer_basis_sl_n(target.f, target.h),
     )
-    target = MatrixSl2Triple(
-        e=_matrix_unit(4, 1, 2),
-        h=Matrix.diag(1, -1, 0, 0),
-        f=_matrix_unit(4, 2, 1),
-    )
-    return source, target
 
 
 def ad_h_grade_multiplicities_sl_n(h: Matrix) -> Dict[int, int]:
@@ -342,11 +455,7 @@ def ad_h_grade_multiplicities_sl_n(h: Matrix) -> Dict[int, int]:
     if h.rows != h.cols:
         raise ValueError("h must be square")
     n = h.rows
-    basis = [(_matrix_unit(n, i, j), f"E{i}{j}") for i in range(1, n + 1) for j in range(1, n + 1) if i != j]
-    basis += [
-        (_matrix_unit(n, i, i) - _matrix_unit(n, i + 1, i + 1), f"H{i}")
-        for i in range(1, n)
-    ]
+    basis = [(element, label) for label, element in standard_traceless_basis_sl_n(n)]
     multiplicities: Dict[int, int] = {}
     for element, _ in basis:
         commutator = h * element - element * h
@@ -366,11 +475,7 @@ def ad_h_graded_basis_labels_sl_n(h: Matrix) -> Dict[int, Tuple[str, ...]]:
     if h.rows != h.cols:
         raise ValueError("h must be square")
     n = h.rows
-    basis = [(_matrix_unit(n, i, j), f"E{i}{j}") for i in range(1, n + 1) for j in range(1, n + 1) if i != j]
-    basis += [
-        (_matrix_unit(n, i, i) - _matrix_unit(n, i + 1, i + 1), f"H{i}")
-        for i in range(1, n)
-    ]
+    basis = [(element, label) for label, element in standard_traceless_basis_sl_n(n)]
     graded: Dict[int, list[str]] = {}
     for element, label in basis:
         commutator = h * element - element * h
@@ -383,6 +488,131 @@ def ad_h_graded_basis_labels_sl_n(h: Matrix) -> Dict[int, Tuple[str, ...]]:
             raise ValueError("basis element is not an ad(h)-eigenvector")
         graded.setdefault(eigenvalue, []).append(label)
     return {grade: tuple(labels) for grade, labels in graded.items()}
+
+
+def _positive_simple_root_grade_count(h: Matrix) -> int:
+    """Count positive ad(h)-grades on simple roots alpha_i (i=1,...,n-1)."""
+    if h.rows != h.cols:
+        raise ValueError("h must be square")
+    positive = 0
+    for index in range(h.rows - 1):
+        grade = h[index, index] - h[index + 1, index + 1]
+        if grade > 0:
+            positive += 1
+    return positive
+
+
+def _positive_basis_labels_from_h(h: Matrix) -> Tuple[str, ...]:
+    """Flatten positive-graded standard-basis labels in descending grade order."""
+    graded = ad_h_graded_basis_labels_sl_n(h)
+    labels = []
+    for grade in sorted((entry for entry in graded if entry > 0), reverse=True):
+        labels.extend(graded[grade])
+    return tuple(labels)
+
+
+def hook_orbit_pair_profile(n: int, r: int, level=Symbol("k")) -> HookOrbitPairProfile:
+    """Orbit-side profile for one hook pair, including dual orbit and grading sizes."""
+    case = nonprincipal_hook_case(n, r, level=level)
+    source_triple, target_triple = type_a_hook_pair_sl2_triples(n, r)
+    source_partition = case.partition
+    target_partition = case.dual_partition
+    return HookOrbitPairProfile(
+        lie_type=case.lie_type,
+        rank=case.rank,
+        n=n,
+        r=r,
+        source_partition=source_partition,
+        target_partition=target_partition,
+        source_orbit_dimension=orbit_dimension_sl_n(source_partition),
+        target_orbit_dimension=orbit_dimension_sl_n(target_partition),
+        source_centralizer_dimension=centralizer_dimension_sl_n(source_partition),
+        target_centralizer_dimension=centralizer_dimension_sl_n(target_partition),
+        source_positive_simple_root_count=_positive_simple_root_grade_count(source_triple.h),
+        target_positive_simple_root_count=_positive_simple_root_grade_count(target_triple.h),
+        source_positive_basis_labels=_positive_basis_labels_from_h(source_triple.h),
+        target_positive_basis_labels=_positive_basis_labels_from_h(target_triple.h),
+        source_level_shift=sympify(level),
+        target_level_shift=case.level_shift,
+        track=case.track,
+        status=case.status,
+    )
+
+
+def hook_orbit_pair_profile_catalog(
+    max_n: int = 6,
+    level=Symbol("k"),
+) -> Tuple[HookOrbitPairProfile, ...]:
+    """Enumerate hook/subregular orbit profiles in type A."""
+    if max_n < 3:
+        return ()
+    return tuple(
+        hook_orbit_pair_profile(n, r, level=level)
+        for n in range(3, max_n + 1)
+        for r in range(1, n - 1)
+    )
+
+
+def verify_hook_orbit_pair_profile_catalog(
+    max_n: int = 8,
+    level=Symbol("k"),
+) -> Dict[str, bool]:
+    """Sanity checks for the hook-orbit profile catalog."""
+    results: Dict[str, bool] = {}
+    profiles = hook_orbit_pair_profile_catalog(max_n=max_n, level=level)
+
+    results["hook orbit pair profile catalog is nonempty"] = bool(profiles)
+    for profile in profiles:
+        n = profile.n
+        r = profile.r
+        dual_r = n - r - 1
+        key = f"A{n-1} hook r={r}"
+        results[f"{key} source partition is hook/subregular"] = (
+            type_a_orbit_class(profile.source_partition) in {"subregular", "hook_nonprincipal"}
+        )
+        results[f"{key} target partition is hook/subregular"] = (
+            type_a_orbit_class(profile.target_partition) in {"subregular", "hook_nonprincipal"}
+        )
+        results[f"{key} source dimension identity"] = (
+            profile.source_orbit_dimension + profile.source_centralizer_dimension == n * n - 1
+        )
+        results[f"{key} target dimension identity"] = (
+            profile.target_orbit_dimension + profile.target_centralizer_dimension == n * n - 1
+        )
+        results[f"{key} source positive simple-root count bounded"] = (
+            1 <= profile.source_positive_simple_root_count <= n - 1
+        )
+        results[f"{key} target positive simple-root count bounded"] = (
+            1 <= profile.target_positive_simple_root_count <= n - 1
+        )
+        results[f"{key} source positive basis labels nonempty"] = bool(
+            profile.source_positive_basis_labels
+        )
+        results[f"{key} target positive basis labels nonempty"] = bool(
+            profile.target_positive_basis_labels
+        )
+        results[f"{key} target level-shift propagation"] = (
+            simplify(
+                profile.target_level_shift
+                - nonprincipal_hook_level_shift_ansatz_type_a(n, profile.source_level_shift)
+            )
+            == 0
+        )
+        dual_profile = hook_orbit_pair_profile(n, dual_r, level=profile.source_level_shift)
+        results[f"{key} dual swap partition symmetry"] = (
+            profile.source_partition == dual_profile.target_partition
+            and profile.target_partition == dual_profile.source_partition
+        )
+        results[f"{key} dual swap simple-root symmetry"] = (
+            profile.source_positive_simple_root_count == dual_profile.target_positive_simple_root_count
+            and profile.target_positive_simple_root_count == dual_profile.source_positive_simple_root_count
+        )
+        results[f"{key} dual swap positive-label symmetry"] = (
+            profile.source_positive_basis_labels == dual_profile.target_positive_basis_labels
+            and profile.target_positive_basis_labels == dual_profile.source_positive_basis_labels
+        )
+
+    return results
 
 
 def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
@@ -407,6 +637,7 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
             expected = hook_partition(n, n - r - 1)
             cls = type_a_orbit_class(hook)
             case = nonprincipal_hook_case(n, r)
+            hook_triple, dual_triple = type_a_hook_pair_sl2_triples(n, r)
 
             results[f"A{n-1} hook r={r} is hook"] = is_hook_partition(hook)
             results[f"A{n-1} hook r={r} dual formula"] = dual == expected
@@ -417,6 +648,22 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
             hook_matrix = type_a_hook_nilpotent_matrix(n, r)
             results[f"A{n-1} hook r={r} matrix partition"] = (
                 nilpotent_partition_from_matrix(hook_matrix) == hook
+            )
+            results[f"A{n-1} hook r={r} triple e partition"] = (
+                nilpotent_partition_from_matrix(hook_triple.e) == hook
+            )
+            results[f"A{n-1} hook r={r} dual triple e partition"] = (
+                nilpotent_partition_from_matrix(dual_triple.e) == dual
+            )
+            results[f"A{n-1} hook r={r} source triple sl2 relations"] = (
+                hook_triple.h * hook_triple.e - hook_triple.e * hook_triple.h == 2 * hook_triple.e
+                and hook_triple.h * hook_triple.f - hook_triple.f * hook_triple.h == -2 * hook_triple.f
+                and hook_triple.e * hook_triple.f - hook_triple.f * hook_triple.e == hook_triple.h
+            )
+            results[f"A{n-1} hook r={r} dual triple sl2 relations"] = (
+                dual_triple.h * dual_triple.e - dual_triple.e * dual_triple.h == 2 * dual_triple.e
+                and dual_triple.h * dual_triple.f - dual_triple.f * dual_triple.h == -2 * dual_triple.f
+                and dual_triple.e * dual_triple.f - dual_triple.f * dual_triple.e == dual_triple.h
             )
             results[f"A{n-1} hook r={r} matrix centralizer dimension"] = (
                 matrix_centralizer_dimension_sl_n(hook_matrix) == centralizer_dimension_sl_n(hook)
@@ -441,6 +688,11 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
     results["first non-self-dual hook centralizer basis sizes"] = (
         len(first_source_centralizer) == centralizer_dimension_sl_n((3, 1))
         and len(first_target_centralizer) == centralizer_dimension_sl_n((2, 1, 1))
+    )
+    first_source_f_centralizer, first_target_f_centralizer = first_nonselfdual_hook_pair_f_centralizer_bases()
+    results["first non-self-dual hook homogeneous f-centralizer sizes"] = (
+        sum(len(items) for items in first_source_f_centralizer.values()) == 5
+        and sum(len(items) for items in first_target_f_centralizer.values()) == 9
     )
     first_source_triple, first_target_triple = first_nonselfdual_hook_pair_sl2_triples()
     results["first non-self-dual hook sl2 relations"] = (
@@ -474,6 +726,13 @@ def verify_nonprincipal_ds_orbit_scaffold(max_n: int = 8) -> Dict[str, bool]:
         and source_graded_basis[2] == ("E12", "E14", "E23", "E43")
         and target_graded_basis[2] == ("E12",)
         and target_graded_basis[1] == ("E13", "E14", "E32", "E42")
+    )
+    results["first non-self-dual hook f-centralizer grades"] = (
+        tuple(sorted(first_source_f_centralizer, reverse=True)) == (0, -2, -4)
+        and tuple(sorted(first_target_f_centralizer, reverse=True)) == (0, -1, -2)
+    )
+    results["hook orbit pair profile catalog checks"] = all(
+        verify_hook_orbit_pair_profile_catalog(max_n=max_n).values()
     )
 
     return results

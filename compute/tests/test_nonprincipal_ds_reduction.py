@@ -2,6 +2,8 @@
 
 from sympy import Rational, Symbol, simplify
 
+from compute.lib.nonprincipal_ds_orbits import hook_orbit_pair_profile
+
 from compute.lib.nonprincipal_ds_reduction import (
     STATUS_HOOK_EVIDENCE,
     STATUS_PROGRAMME,
@@ -15,10 +17,13 @@ from compute.lib.nonprincipal_ds_reduction import (
     bp_residual_sl2_level,
     bp_strong_presentation,
     first_nonselfdual_hook_seed,
+    hook_constraint_count_ansatz_type_a,
+    hook_pair_constraint_counts_ansatz_type_a,
     nonprincipal_hook_seed,
     nonprincipal_hook_seed_catalog,
     sl3_subregular_bp_seed,
     sl3_subregular_good_grading_multiplicities,
+    verify_hook_constraint_count_ansatz,
     verify_nonprincipal_hook_seed_catalog,
     verify_nonprincipal_ds_reduction_seed,
 )
@@ -96,6 +101,31 @@ class TestHookSeedFamily:
 
     def test_catalog_verification(self):
         assert all(verify_nonprincipal_hook_seed_catalog(max_n=8).values())
+
+
+class TestConstraintCountAnsatz:
+    def test_basic_values(self):
+        assert hook_constraint_count_ansatz_type_a(3, 1) == 2
+        assert hook_constraint_count_ansatz_type_a(4, 1) == 2
+        assert hook_constraint_count_ansatz_type_a(6, 2) == 3
+        assert hook_constraint_count_ansatz_type_a(8, 3) == 4
+
+    def test_dual_pair_symmetry(self):
+        source, target = hook_pair_constraint_counts_ansatz_type_a(6, 2)
+        assert source == 3
+        assert target == 2
+        dual_source, dual_target = hook_pair_constraint_counts_ansatz_type_a(6, 6 - 2 - 1)
+        assert source == dual_target
+        assert target == dual_source
+
+    def test_ansatz_matches_orbit_profile_counts(self):
+        profile = hook_orbit_pair_profile(7, 2)
+        source, target = hook_pair_constraint_counts_ansatz_type_a(7, 2)
+        assert source == profile.source_positive_simple_root_count
+        assert target == profile.target_positive_simple_root_count
+
+    def test_verification_bundle(self):
+        assert all(verify_hook_constraint_count_ansatz(max_n=10).values())
 
 
 class TestVerificationBundle:

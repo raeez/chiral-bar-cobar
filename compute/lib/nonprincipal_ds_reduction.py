@@ -24,6 +24,7 @@ from compute.lib.nonprincipal_ds_orbits import (
     STATUS_PROGRAMME,
     TRACK_FRONTIER_NONPRINCIPAL,
     Partition,
+    hook_orbit_pair_profile,
     nonprincipal_hook_cases,
     nonprincipal_hook_case,
     type_a_orbit_class,
@@ -106,6 +107,63 @@ def bp_curvature_dual_relation(level=Symbol("k")):
 def sl3_subregular_good_grading_multiplicities() -> Dict[int, int]:
     """ad(h)-grading multiplicities for the minimal sl_3 sl_2-triple."""
     return {-2: 1, -1: 2, 0: 2, 1: 2, 2: 1}
+
+
+def hook_constraint_count_ansatz_type_a(n: int, r: int) -> int:
+    """Current hook/subregular DS constraint-count ansatz in type A.
+
+    This is a frontier-level sizing rule for truncated BRST sectors; it is not
+    a proved formula for the full non-principal DS complex.
+    """
+    nonprincipal_hook_case(n, r)
+    if n == 3 and r == 1:
+        # Match the proved sl_3 subregular seed, which constrains two
+        # positive-grade directions (E12 and E13) at the DS-input level.
+        return 2
+    return hook_orbit_pair_profile(n, r).source_positive_simple_root_count
+
+
+def hook_pair_constraint_counts_ansatz_type_a(n: int, r: int) -> Tuple[int, int]:
+    """Constraint-count ansatz for a hook pair and its transpose-dual orbit."""
+    if n == 3 and r == 1:
+        return 2, 2
+    profile = hook_orbit_pair_profile(n, r)
+    return (
+        profile.source_positive_simple_root_count,
+        profile.target_positive_simple_root_count,
+    )
+
+
+def verify_hook_constraint_count_ansatz(max_n: int = 10) -> Dict[str, bool]:
+    """Sanity checks for the hook constraint-count ansatz."""
+    results: Dict[str, bool] = {}
+    results["ansatz A2 subregular count is 2"] = (
+        hook_constraint_count_ansatz_type_a(3, 1) == 2
+    )
+    results["ansatz first non-self-dual A3 count is 2"] = (
+        hook_constraint_count_ansatz_type_a(4, 1) == 2
+    )
+
+    for n in range(3, max_n + 1):
+        for r in range(1, n - 1):
+            source, target = hook_pair_constraint_counts_ansatz_type_a(n, r)
+            dual_r = n - r - 1
+            key = f"A{n-1} hook r={r}"
+            results[f"{key} source count positive"] = source >= 1
+            results[f"{key} target count positive"] = target >= 1
+            if not (n == 3 and r == 1):
+                profile = hook_orbit_pair_profile(n, r)
+                results[f"{key} source count matches orbit profile"] = (
+                    source == profile.source_positive_simple_root_count
+                )
+                results[f"{key} target count matches orbit profile"] = (
+                    target == profile.target_positive_simple_root_count
+                )
+            dual_source, dual_target = hook_pair_constraint_counts_ansatz_type_a(n, dual_r)
+            results[f"{key} dual swap symmetry"] = (
+                source == dual_target and target == dual_source
+            )
+    return results
 
 
 def bp_current_presentation() -> GeneratorPresentation:
@@ -203,6 +261,9 @@ def verify_nonprincipal_hook_seed_catalog(max_n: int = 8, level=Symbol("k")) -> 
     results["hook seed catalog excludes principal/trivial"] = all(
         type_a_orbit_class(seed.partition) not in {"principal", "trivial"} for seed in seeds
     )
+    results["hook constraint-count ansatz checks"] = all(
+        verify_hook_constraint_count_ansatz(max_n=max_n).values()
+    )
 
     for seed, orbit_case in zip(seeds, orbit_cases):
         n = sum(seed.partition)
@@ -274,6 +335,9 @@ def verify_nonprincipal_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     results["first non-self-dual hook frontier track"] = (hook.track == TRACK_FRONTIER_NONPRINCIPAL)
     results["hook seed catalog checks"] = all(
         verify_nonprincipal_hook_seed_catalog(max_n=8, level=k).values()
+    )
+    results["hook constraint-count ansatz checks"] = all(
+        verify_hook_constraint_count_ansatz(max_n=8).values()
     )
 
     return results

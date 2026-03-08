@@ -1,9 +1,10 @@
 """Tests for the non-principal DS/orbit scaffold (hook + subregular)."""
 
-from sympy import Symbol, simplify
+from sympy import Rational, Symbol, simplify
 from sympy import zeros
 
 from compute.lib.nonprincipal_ds_orbits import (
+    HookOrbitPairProfile,
     MatrixSl2Triple,
     STATUS_HOOK_EVIDENCE,
     STATUS_PROVED_SUBREGULAR_SL3,
@@ -12,24 +13,33 @@ from compute.lib.nonprincipal_ds_orbits import (
     ad_h_grade_multiplicities_sl_n,
     centralizer_dimension_sl_n,
     first_nonselfdual_hook_pair_centralizer_bases,
+    first_nonselfdual_hook_pair_f_centralizer_bases,
     first_nonselfdual_hook_pair_nilpotent_matrices,
     first_nonselfdual_hook_pair_sl2_triples,
     hook_dual_partition,
+    hook_orbit_pair_profile,
+    hook_orbit_pair_profile_catalog,
     hook_partition,
     is_hook_partition,
     matrix_centralizer_basis_sl_n,
     matrix_centralizer_dimension_sl_n,
+    matrix_to_traceless_basis_expression_sl_n,
     nilpotent_partition_from_matrix,
     nonprincipal_hook_case,
     nonprincipal_hook_cases,
     nonprincipal_hook_level_shift_ansatz_type_a,
     orbit_dimension_sl_n,
     principal_ff_level_shift_type_a,
+    standard_traceless_basis_sl_n,
     subregular_partition,
     transpose_partition,
+    type_a_hook_pair_sl2_triples,
+    type_a_hook_sl2_triple,
     type_a_hook_nilpotent_matrix,
     type_a_nilpotent_matrix,
     type_a_orbit_class,
+    type_a_partition_sl2_triple,
+    verify_hook_orbit_pair_profile_catalog,
     verify_nonprincipal_ds_orbit_scaffold,
 )
 
@@ -87,6 +97,14 @@ class TestDimensions:
         assert nilpotent_partition_from_matrix(type_a_nilpotent_matrix((3, 1))) == (3, 1)
         assert nilpotent_partition_from_matrix(type_a_hook_nilpotent_matrix(6, 2)) == (4, 1, 1)
 
+    def test_standard_basis_and_reexpansion(self):
+        basis = standard_traceless_basis_sl_n(4)
+        assert len(basis) == 15
+        expression = matrix_to_traceless_basis_expression_sl_n(
+            basis[0][1] + 2 * basis[-1][1]
+        )
+        assert expression == ((basis[0][0], 1), (basis[-1][0], 2))
+
     def test_matrix_centralizer_dimensions_match_partition_formula(self):
         hook_matrix = type_a_hook_nilpotent_matrix(4, 1)
         dual_matrix = type_a_nilpotent_matrix((2, 1, 1))
@@ -138,6 +156,33 @@ class TestDimensions:
         assert target_labels[2] == ("E12",)
         assert target_labels[1] == ("E13", "E14", "E32", "E42")
 
+    def test_first_nonselfdual_hook_pair_f_centralizer_bases(self):
+        source_basis, target_basis = first_nonselfdual_hook_pair_f_centralizer_bases()
+        assert tuple(sorted(source_basis, reverse=True)) == (0, -2, -4)
+        assert tuple(sorted(target_basis, reverse=True)) == (0, -1, -2)
+        assert sum(len(items) for items in source_basis.values()) == 5
+        assert sum(len(items) for items in target_basis.values()) == 9
+        assert source_basis[0][0] == (
+            ("H1", Rational(1, 3)),
+            ("H2", Rational(2, 3)),
+            ("H3", Rational(1)),
+        )
+
+    def test_partition_hook_triple_builders(self):
+        partition_triple = type_a_partition_sl2_triple((3, 1))
+        hook_triple = type_a_hook_sl2_triple(4, 1)
+        source, target = type_a_hook_pair_sl2_triples(4, 1)
+        first_source, first_target = first_nonselfdual_hook_pair_sl2_triples()
+
+        assert partition_triple.e == hook_triple.e
+        assert source.e == first_source.e
+        assert target.e == first_target.e
+        assert source.h * source.e - source.e * source.h == 2 * source.e
+        assert source.h * source.f - source.f * source.h == -2 * source.f
+        assert source.e * source.f - source.f * source.e == source.h
+        assert nilpotent_partition_from_matrix(source.e) == (3, 1)
+        assert nilpotent_partition_from_matrix(target.e) == (2, 1, 1)
+
 
 class TestFrontierCases:
     def test_single_case_status_and_track(self):
@@ -158,6 +203,26 @@ class TestFrontierCases:
         assert all(type_a_orbit_class(case.partition) != "trivial" for case in cases)
 
 
+class TestHookOrbitProfiles:
+    def test_single_profile(self):
+        profile = hook_orbit_pair_profile(6, 2)
+        assert isinstance(profile, HookOrbitPairProfile)
+        assert profile.source_partition == (4, 1, 1)
+        assert profile.target_partition == (3, 1, 1, 1)
+        assert profile.source_orbit_dimension + profile.source_centralizer_dimension == 35
+        assert profile.target_orbit_dimension + profile.target_centralizer_dimension == 35
+        assert profile.source_positive_simple_root_count == 3
+        assert profile.target_positive_simple_root_count == 2
+        assert profile.source_positive_basis_labels[:3] == ("E14", "E13", "E24")
+        assert profile.target_positive_basis_labels[0] == "E13"
+
+    def test_profile_catalog(self):
+        catalog = hook_orbit_pair_profile_catalog(max_n=5)
+        assert len(catalog) == 6
+        assert catalog[0].source_partition == (2, 1)
+        assert catalog[-1].source_partition == (2, 1, 1, 1)
+
+
 class TestLevelShiftScaffold:
     def test_hook_ansatz_matches_principal_ff_shift(self):
         k = Symbol("k")
@@ -170,3 +235,4 @@ class TestLevelShiftScaffold:
 class TestVerificationBundle:
     def test_all_checks(self):
         assert all(verify_nonprincipal_ds_orbit_scaffold(max_n=8).values())
+        assert all(verify_hook_orbit_pair_profile_catalog(max_n=8).values())

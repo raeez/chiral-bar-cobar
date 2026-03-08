@@ -35,6 +35,7 @@ from sympy import Matrix, Rational, Symbol, zeros
 # ===========================================================================
 
 DIM_SL2 = 3  # basis: e=0, h=1, f=2
+CASIMIR_EXACT_CUTOFF = 6
 
 # Structure constants: bracket[i,j] = {k: coeff} for [e_i, e_j] = sum coeff * e_k
 SL2_BRACKET = {
@@ -64,6 +65,223 @@ def killing(a: int, b: int) -> Rational:
     return SL2_KILLING.get((a, b), Rational(0))
 
 
+def _decode_tensor_index(index: int, power: int) -> list[int]:
+    """Decode base-dim(g) index into tensor-factor indices."""
+    d = DIM_SL2
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    digits = [0] * power
+    value = index
+    for pos in range(power - 1, -1, -1):
+        digits[pos] = value % d
+        value //= d
+    return digits
+
+
+def _encode_tensor_index(factors: list[int]) -> int:
+    """Encode tensor-factor indices into a base-dim(g) index."""
+    d = DIM_SL2
+    index = 0
+    for value in factors:
+        index = index * d + value
+    return index
+
+
+def adjoint_on_tensor_power(power: int, x_idx: int) -> Matrix:
+    """Build diagonal ad(e_x) action on g^{otimes power}."""
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    d = DIM_SL2
+    n = d ** power
+    mat = zeros(n, n)
+    for src in range(n):
+        factors = _decode_tensor_index(src, power)
+        for slot in range(power):
+            for m, coeff in lie_bracket(x_idx, factors[slot]).items():
+                tgt_factors = list(factors)
+                tgt_factors[slot] = m
+                tgt = _encode_tensor_index(tgt_factors)
+                mat[tgt, src] += coeff
+    return mat
+
+
+def adjoint_casimir_on_tensor_power(power: int) -> Matrix:
+    """Quadratic Casimir on g^{otimes power} for the diagonal adjoint action."""
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    d = DIM_SL2
+    n = d ** power
+    inv_killing = {
+        (0, 2): Rational(1),
+        (2, 0): Rational(1),
+        (1, 1): Rational(1, 2),
+    }
+    ad_cache = {
+        idx: adjoint_on_tensor_power(power, idx)
+        for idx in range(d)
+    }
+    casimir = zeros(n, n)
+    for (a, b), coeff in inv_killing.items():
+        casimir += coeff * ad_cache[a] * ad_cache[b]
+    return casimir
+
+
+def casimir_method_for_tensor_power(
+    power: int,
+    method: str = "auto",
+    exact_cutoff: int = CASIMIR_EXACT_CUTOFF,
+) -> str:
+    """Resolve which Casimir multiplicity method is used at a given tensor power.
+
+    Methods:
+      - ``exact``: direct eigenvalue multiplicities from the Casimir matrix
+      - ``theory``: sl2 tensor-product multiplicity recurrence
+      - ``auto``: ``exact`` for ``power <= exact_cutoff``, else ``theory``
+    """
+    if method not in {"auto", "exact", "theory"}:
+        raise ValueError("method must be one of: auto, exact, theory")
+    if method == "auto":
+        return "exact" if power <= exact_cutoff else "theory"
+    return method
+
+
+def casimir_eigenspace_multiplicities_on_tensor_power(
+    power: int,
+    method: str = "auto",
+    exact_cutoff: int = CASIMIR_EXACT_CUTOFF,
+) -> dict:
+    """Return Casimir eigenspace multiplicities on ``g^{otimes power}``.
+
+    The default ``method='auto'`` keeps full exact matrix-spectrum checks through
+    ``power <= 6`` and switches to the fast representation-theoretic path at
+    higher powers.
+    """
+    resolved = casimir_method_for_tensor_power(
+        power=power,
+        method=method,
+        exact_cutoff=exact_cutoff,
+    )
+    if resolved == "exact":
+        return adjoint_casimir_on_tensor_power(power).eigenvals()
+    return expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+
+
+def sl2_spin1_tensor_power_copy_multiplicities(power: int) -> dict[int, int]:
+    """Multiplicity of spin-j irreps in (spin-1)^{otimes power} for sl2.
+
+    Returns a dictionary {j: copies}, where j is a nonnegative integer.
+    """
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    copies = {1: 1}  # power=1 is the adjoint rep V_3 (spin 1)
+    for _ in range(1, power):
+        nxt: dict[int, int] = {}
+        for j, mult in copies.items():
+            if j == 0:
+                nxt[1] = nxt.get(1, 0) + mult
+                continue
+            for jp in (j - 1, j, j + 1):
+                nxt[jp] = nxt.get(jp, 0) + mult
+        copies = nxt
+    return copies
+
+
+def expected_casimir_eigenspace_multiplicities_on_tensor_power(power: int) -> dict:
+    """Expected Casimir eigenspace dimensions from sl2 representation theory."""
+    expected = {}
+    for j, copies in sl2_spin1_tensor_power_copy_multiplicities(power).items():
+        eigen = Rational(2 * j * (j + 1))
+        rep_dim = 2 * j + 1
+        expected[eigen] = copies * rep_dim
+    return expected
+
+
+def invariant_subspace_dimension_on_tensor_power(power: int) -> int:
+    """Dimension of the sl2-invariant subspace in g^{otimes power}."""
+    return sl2_spin1_tensor_power_copy_multiplicities(power).get(0, 0)
+
+
+def bracket_d1_on_tensor_power(power: int) -> Matrix:
+    """PBW d_1 on g^{otimes power} by alternating adjacent Lie brackets.
+
+    d_1(v_1 otimes ... otimes v_n) =
+      sum_{i=1}^{n-1} (-1)^{i-1}
+      v_1 otimes ... otimes [v_i, v_{i+1}] otimes ... otimes v_n.
+    """
+    if power < 2:
+        raise ValueError("power must be >= 2")
+    d = DIM_SL2
+    src_dim = d ** power
+    tgt_dim = d ** (power - 1)
+    mat = zeros(tgt_dim, src_dim)
+    for src in range(src_dim):
+        factors = _decode_tensor_index(src, power)
+        for slot in range(power - 1):
+            sign = Rational(1) if slot % 2 == 0 else Rational(-1)
+            for m, coeff in lie_bracket(factors[slot], factors[slot + 1]).items():
+                tgt_factors = list(factors[:slot]) + [m] + list(factors[slot + 2 :])
+                tgt = _encode_tensor_index(tgt_factors)
+                mat[tgt, src] += sign * coeff
+    return mat
+
+
+def bracket_d1_rank_on_tensor_power(power: int) -> int:
+    """Rank of PBW d_1 on g^{otimes power}."""
+    return bracket_d1_on_tensor_power(power).rank()
+
+
+def bracket_d1_kernel_dim_on_tensor_power(power: int) -> int:
+    """Kernel dimension of PBW d_1 on g^{otimes power}."""
+    d = DIM_SL2
+    return d ** power - bracket_d1_rank_on_tensor_power(power)
+
+
+def d1_equivariance_residual_on_tensor_power(power: int, x_idx: int) -> Matrix:
+    """Residual of sl2-equivariance for d_1 at tensor power ``power``.
+
+    Returns ad_x(target) * d_1 - d_1 * ad_x(source).
+    """
+    if power < 2:
+        raise ValueError("power must be >= 2")
+    d1 = bracket_d1_on_tensor_power(power)
+    ad_src = adjoint_on_tensor_power(power, x_idx)
+    ad_tgt = adjoint_on_tensor_power(power - 1, x_idx)
+    return ad_tgt * d1 - d1 * ad_src
+
+
+def d1_is_equivariant_on_tensor_power(power: int) -> bool:
+    """Whether PBW d_1 is sl2-equivariant at tensor power ``power``."""
+    for x_idx in range(DIM_SL2):
+        if not d1_equivariance_residual_on_tensor_power(power, x_idx).is_zero_matrix:
+            return False
+    return True
+
+
+def casimir_d1_commutator_on_tensor_power(power: int) -> Matrix:
+    """Residual of Casimir-compatibility C_{n-1} d_1 - d_1 C_n."""
+    if power < 2:
+        raise ValueError("power must be >= 2")
+    d1 = bracket_d1_on_tensor_power(power)
+    c_src = adjoint_casimir_on_tensor_power(power)
+    c_tgt = adjoint_casimir_on_tensor_power(power - 1)
+    return c_tgt * d1 - d1 * c_src
+
+
+def structure_constant_invariant_tensor_cube() -> Matrix:
+    """Invariant f_{abc} = kappa_{ad} f^d_{bc} in g^{otimes 3}."""
+    d = DIM_SL2
+    vec = zeros(d ** 3, 1)
+    for a in range(d):
+        for b in range(d):
+            for c in range(d):
+                idx = a * d ** 2 + b * d + c
+                val = Rational(0)
+                for m in range(d):
+                    val += killing(a, m) * lie_bracket(b, c).get(m, Rational(0))
+                vec[idx] = val
+    return vec
+
+
 # ===========================================================================
 # (1)-(5): Enrichment d_1 differential (bracket on tensor square)
 # ===========================================================================
@@ -79,14 +297,7 @@ def bracket_on_tensor_square() -> Matrix:
     Returns: 3 x 9 matrix (target g = C^3, source g^{otimes 2} = C^9).
     Source index: a*3 + b for e_a otimes e_b.
     """
-    d = DIM_SL2
-    mat = zeros(d, d ** 2)
-    for a in range(d):
-        for b in range(d):
-            src = a * d + b
-            for c, coeff in lie_bracket(a, b).items():
-                mat[c, src] += coeff
-    return mat
+    return bracket_d1_on_tensor_power(2)
 
 
 def killing_form_element() -> Matrix:
@@ -130,36 +341,7 @@ def adjoint_casimir_on_tensor_square() -> Matrix:
 
     Returns: 9 x 9 matrix.
     """
-    d = DIM_SL2
-    n = d ** 2
-
-    # Build ad(e_a) on g^{otimes 2} (diagonal action)
-    def ad_on_tensor(x_idx):
-        """ad(e_x) acting on g^{otimes 2}."""
-        mat = zeros(n, n)
-        for a in range(d):
-            for b in range(d):
-                src = a * d + b
-                # [e_x, e_a] otimes e_b
-                for c, coeff in lie_bracket(x_idx, a).items():
-                    tgt = c * d + b
-                    mat[tgt, src] += coeff
-                # e_a otimes [e_x, e_b]
-                for c, coeff in lie_bracket(x_idx, b).items():
-                    tgt = a * d + c
-                    mat[tgt, src] += coeff
-        return mat
-
-    # Casimir = sum kappa^{ab} ad(a) ad(b)
-    inv_killing = {
-        (0, 2): Rational(1),
-        (2, 0): Rational(1),
-        (1, 1): Rational(1, 2),
-    }
-    casimir = zeros(n, n)
-    for (a, b), coeff in inv_killing.items():
-        casimir += coeff * ad_on_tensor(a) * ad_on_tensor(b)
-    return casimir
+    return adjoint_casimir_on_tensor_power(2)
 
 
 def verify_enrichment_claims():
@@ -409,7 +591,7 @@ def run_mc1_computation():
 
     print(f"\n  Casimir decomposition of g tensor g:")
     print(f"    Eigenvalues (multiplicity): {enr['casimir_eigenvalues']}")
-    print(f"    [expected: {{6:5, 2:3, 0:1}} = V_5+V_3+V_1] {'PASS' if enr['claim_adjoint_decomposition'] else 'FAIL'}")
+    print(f"    [expected: {{12:5, 4:3, 0:1}} = V_5+V_3+V_1] {'PASS' if enr['claim_adjoint_decomposition'] else 'FAIL'}")
 
     print(f"\n  Killing form element kappa^{{ab}}:")
     print(f"    kappa = {enr['killing_element']}")

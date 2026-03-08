@@ -15,12 +15,26 @@ import pytest
 from sympy import Rational, Matrix
 
 from compute.lib.genus1_pbw_sl2 import (
+    CASIMIR_EXACT_CUTOFF,
     DIM_SL2,
     lie_bracket,
     killing,
     bracket_on_tensor_square,
+    bracket_d1_on_tensor_power,
+    bracket_d1_rank_on_tensor_power,
+    bracket_d1_kernel_dim_on_tensor_power,
+    d1_equivariance_residual_on_tensor_power,
+    d1_is_equivariant_on_tensor_power,
+    casimir_d1_commutator_on_tensor_power,
     killing_form_element,
+    structure_constant_invariant_tensor_cube,
     adjoint_casimir_on_tensor_square,
+    adjoint_casimir_on_tensor_power,
+    casimir_method_for_tensor_power,
+    casimir_eigenspace_multiplicities_on_tensor_power,
+    expected_casimir_eigenspace_multiplicities_on_tensor_power,
+    sl2_spin1_tensor_power_copy_multiplicities,
+    invariant_subspace_dimension_on_tensor_power,
     ce_differential_1_to_2,
     ce_differential_2_to_3,
     verify_enrichment_claims,
@@ -211,6 +225,116 @@ class TestCasimirDecomposition:
         total = sum(eigenvals.values())
         assert total == 9
 
+    def test_tensor_power_helpers_at_degree_2(self):
+        """Generic tensor-power diagnostics match the degree-2 specialization."""
+        assert casimir_eigenspace_multiplicities_on_tensor_power(2) == {
+            Rational(12): 5,
+            Rational(4): 3,
+            Rational(0): 1,
+        }
+        assert bracket_d1_rank_on_tensor_power(2) == 3
+        assert bracket_d1_kernel_dim_on_tensor_power(2) == 6
+
+    def test_rep_theoretic_copy_multiplicities(self):
+        """(V_3)^{otimes n} multiplicities for n=1..6."""
+        assert sl2_spin1_tensor_power_copy_multiplicities(1) == {1: 1}
+        assert sl2_spin1_tensor_power_copy_multiplicities(2) == {2: 1, 1: 1, 0: 1}
+        assert sl2_spin1_tensor_power_copy_multiplicities(3) == {3: 1, 2: 2, 1: 3, 0: 1}
+        assert sl2_spin1_tensor_power_copy_multiplicities(4) == {4: 1, 3: 3, 2: 6, 1: 6, 0: 3}
+        assert sl2_spin1_tensor_power_copy_multiplicities(5) == {
+            5: 1, 4: 4, 3: 10, 2: 15, 1: 15, 0: 6
+        }
+        assert sl2_spin1_tensor_power_copy_multiplicities(6) == {
+            6: 1, 5: 5, 4: 15, 3: 29, 2: 40, 1: 36, 0: 15
+        }
+
+    def test_expected_vs_computed_casimir_multiplicities(self):
+        """Computed Casimir eigenspaces agree with representation-theoretic expectations."""
+        for power in range(1, 6):
+            assert casimir_eigenspace_multiplicities_on_tensor_power(power) == \
+                expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+
+    def test_invariant_dimensions(self):
+        """Dimensions of sl2-invariants in tensor powers through n=6."""
+        assert invariant_subspace_dimension_on_tensor_power(1) == 0
+        assert invariant_subspace_dimension_on_tensor_power(2) == 1
+        assert invariant_subspace_dimension_on_tensor_power(3) == 1
+        assert invariant_subspace_dimension_on_tensor_power(4) == 3
+        assert invariant_subspace_dimension_on_tensor_power(5) == 6
+        assert invariant_subspace_dimension_on_tensor_power(6) == 15
+
+    def test_tensor_power_helpers_at_degree_5(self):
+        """Explicit n=5 regression point for the generalized MC1 diagnostics."""
+        assert casimir_eigenspace_multiplicities_on_tensor_power(5) == {
+            Rational(60): 11,
+            Rational(40): 36,
+            Rational(24): 70,
+            Rational(12): 75,
+            Rational(4): 45,
+            Rational(0): 6,
+        }
+        assert bracket_d1_rank_on_tensor_power(5) == 80
+        assert bracket_d1_kernel_dim_on_tensor_power(5) == 163
+
+    def test_tensor_power_helpers_at_degree_6(self):
+        """Explicit n=6 regression point plus first performance-frontier checkpoint."""
+        assert casimir_eigenspace_multiplicities_on_tensor_power(6) == {
+            Rational(84): 13,
+            Rational(60): 55,
+            Rational(40): 135,
+            Rational(24): 203,
+            Rational(12): 200,
+            Rational(4): 108,
+            Rational(0): 15,
+        }
+        assert bracket_d1_rank_on_tensor_power(6) == 243
+        assert bracket_d1_kernel_dim_on_tensor_power(6) == 486
+
+    def test_casimir_auto_policy_switches_after_cutoff(self):
+        """Default policy: exact through n<=6, fast theory path for n>=7."""
+        assert CASIMIR_EXACT_CUTOFF == 6
+        assert casimir_method_for_tensor_power(6) == "exact"
+        assert casimir_method_for_tensor_power(7) == "theory"
+
+    def test_tensor_power_helpers_at_degree_7_staged_frontier(self):
+        """n=7 uses the fast Casimir path by default; exact remains opt-in."""
+        auto_vals = casimir_eigenspace_multiplicities_on_tensor_power(7)
+        theory_vals = expected_casimir_eigenspace_multiplicities_on_tensor_power(7)
+        assert auto_vals == theory_vals
+        assert auto_vals == {
+            Rational(112): 15,
+            Rational(84): 78,
+            Rational(60): 231,
+            Rational(40): 441,
+            Rational(24): 588,
+            Rational(12): 525,
+            Rational(4): 273,
+            Rational(0): 36,
+        }
+
+    def test_casimir_method_validation(self):
+        with pytest.raises(ValueError):
+            casimir_method_for_tensor_power(3, method="unsupported")
+
+
+class TestD1Equivariance:
+    """PBW d_1 is a morphism of sl2-modules across tensor powers."""
+
+    def test_d1_is_equivariant(self):
+        for power in range(2, 7):
+            assert d1_is_equivariant_on_tensor_power(power)
+
+    def test_d1_equivariance_residual_zero(self):
+        for power in range(2, 7):
+            for x_idx in range(DIM_SL2):
+                residual = d1_equivariance_residual_on_tensor_power(power, x_idx)
+                assert residual.is_zero_matrix
+
+    def test_d1_commutes_with_casimir(self):
+        for power in range(2, 7):
+            comm = casimir_d1_commutator_on_tensor_power(power)
+            assert comm.is_zero_matrix
+
 
 # ---------------------------------------------------------------------------
 # Chevalley-Eilenberg complex (Claims 6-8)
@@ -311,55 +435,9 @@ class TestWeightH3Enrichment:
     Invariant part: V_1 has dim 1.
     """
 
-    def _build_adjoint_on_triple(self):
-        """Build ad(e_x) on g^{otimes 3} (diagonal action)."""
-        d = DIM_SL2
-        n = d ** 3
-
-        def ad_triple(x_idx):
-            from sympy import zeros
-            mat = zeros(n, n)
-            for a in range(d):
-                for b in range(d):
-                    for c in range(d):
-                        src = a * d**2 + b * d + c
-                        # [x, e_a] tensor e_b tensor e_c
-                        for m, coeff in lie_bracket(x_idx, a).items():
-                            tgt = m * d**2 + b * d + c
-                            mat[tgt, src] += coeff
-                        # e_a tensor [x, e_b] tensor e_c
-                        for m, coeff in lie_bracket(x_idx, b).items():
-                            tgt = a * d**2 + m * d + c
-                            mat[tgt, src] += coeff
-                        # e_a tensor e_b tensor [x, e_c]
-                        for m, coeff in lie_bracket(x_idx, c).items():
-                            tgt = a * d**2 + b * d + m
-                            mat[tgt, src] += coeff
-            return mat
-
-        return ad_triple
-
-    def _build_casimir_triple(self):
-        """Build Casimir C_2 on g^{otimes 3}."""
-        from sympy import zeros
-        d = DIM_SL2
-        n = d ** 3
-        ad = self._build_adjoint_on_triple()
-
-        inv_killing = {
-            (0, 2): Rational(1),
-            (2, 0): Rational(1),
-            (1, 1): Rational(1, 2),
-        }
-        casimir = zeros(n, n)
-        for (a, b), coeff in inv_killing.items():
-            casimir += coeff * ad(a) * ad(b)
-        return casimir
-
     def test_triple_tensor_decomposition(self):
         """g^{otimes 3} = V_7 + 2*V_5 + 3*V_3 + V_1."""
-        C2 = self._build_casimir_triple()
-        eigenvals = C2.eigenvals()
+        eigenvals = casimir_eigenspace_multiplicities_on_tensor_power(3)
 
         # With normalization 2j(j+1):
         # V_7 (spin 3): 2*3*4 = 24, dim 7
@@ -376,8 +454,7 @@ class TestWeightH3Enrichment:
 
     def test_invariant_subspace_dim_1(self):
         """The g-invariant subspace of g^{otimes 3} is 1-dimensional."""
-        C2 = self._build_casimir_triple()
-        eigenvals = C2.eigenvals()
+        eigenvals = casimir_eigenspace_multiplicities_on_tensor_power(3)
         assert eigenvals.get(Rational(0), 0) == 1
 
     def test_d1_bracket_on_triple(self):
@@ -388,24 +465,8 @@ class TestWeightH3Enrichment:
         Non-trivial reps in g^{otimes 3} map to non-trivial reps in g^{otimes 2},
         and Whitehead kills them at E_2.
         """
-        from sympy import zeros
-        d = DIM_SL2
-
-        # d_1(a tensor b tensor c) = [a,b] tensor c - a tensor [b,c]
-        # Source: g^3 (dim 27), Target: g^2 (dim 9)
-        mat = zeros(d**2, d**3)
-        for a in range(d):
-            for b in range(d):
-                for c in range(d):
-                    src = a * d**2 + b * d + c
-                    # [a,b] tensor c
-                    for m, coeff in lie_bracket(a, b).items():
-                        tgt = m * d + c
-                        mat[tgt, src] += coeff
-                    # -a tensor [b,c]
-                    for m, coeff in lie_bracket(b, c).items():
-                        tgt = a * d + m
-                        mat[tgt, src] -= coeff
+        mat = bracket_d1_on_tensor_power(3)
+        assert mat.shape == (9, 27)
         # d_1 should have nontrivial rank
         rank = mat.rank()
         assert rank > 0
@@ -419,36 +480,13 @@ class TestWeightH3Enrichment:
 
         For sl2, f_{abc} = kappa_{ad} f^d_{bc} is totally antisymmetric.
         """
-        from sympy import zeros
-        d = DIM_SL2
-
-        # Build f_{abc} = kappa_{ad} f^d_{bc}
-        f_tensor = zeros(d**3, 1)
-        for a in range(d):
-            for b in range(d):
-                for c_idx in range(d):
-                    idx = a * d**2 + b * d + c_idx
-                    # kappa_{ad} f^d_{bc}
-                    val = Rational(0)
-                    for dd in range(d):
-                        kappa_ad = killing(a, dd)
-                        bracket_bc = lie_bracket(b, c_idx)
-                        val += kappa_ad * bracket_bc.get(dd, Rational(0))
-                    f_tensor[idx] = val
+        f_tensor = structure_constant_invariant_tensor_cube()
 
         # f_tensor should be nonzero
         assert not f_tensor.is_zero_matrix
 
         # Build d_1
-        mat = zeros(d**2, d**3)
-        for a in range(d):
-            for b in range(d):
-                for c in range(d):
-                    src = a * d**2 + b * d + c
-                    for m, coeff in lie_bracket(a, b).items():
-                        mat[m * d + c, src] += coeff
-                    for m, coeff in lie_bracket(b, c).items():
-                        mat[a * d + m, src] -= coeff
+        mat = bracket_d1_on_tensor_power(3)
 
         # f_{abc} should be in ker(d_1)
         result = mat * f_tensor
@@ -456,22 +494,8 @@ class TestWeightH3Enrichment:
 
     def test_triple_killing_is_invariant(self):
         """f_{abc} is g-invariant (lives in V_1)."""
-        from sympy import zeros
-        d = DIM_SL2
-        C2 = self._build_casimir_triple()
-
-        # Build f_{abc}
-        f_tensor = zeros(d**3, 1)
-        for a in range(d):
-            for b in range(d):
-                for c_idx in range(d):
-                    idx = a * d**2 + b * d + c_idx
-                    val = Rational(0)
-                    for dd in range(d):
-                        kappa_ad = killing(a, dd)
-                        bracket_bc = lie_bracket(b, c_idx)
-                        val += kappa_ad * bracket_bc.get(dd, Rational(0))
-                    f_tensor[idx] = val
+        C2 = adjoint_casimir_on_tensor_power(3)
+        f_tensor = structure_constant_invariant_tensor_cube()
 
         # C_2(f_{abc}) = 0
         assert (C2 * f_tensor).is_zero_matrix
