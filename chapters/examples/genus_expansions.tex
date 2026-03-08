@@ -582,7 +582,7 @@ For $\widehat{\mathfrak{sl}}_2$, the obstruction coefficients cancel exactly ($\
 \[
 \kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = \frac{c}{2} + \frac{26-c}{2} = 13
 \]
-so $F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c}) = 13 \cdot \lambda_g^{\mathrm{FP}}$, where $\lambda_g^{\mathrm{FP}} = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$.  The nonzero sum $\kappa + \kappa' = 13$ reflects the conformal anomaly of the $c = 26$ bosonic string: the combined obstruction of Virasoro and its dual equals half the bosonic string central charge times $\lambda_g^{\mathrm{FP}}$.
+so $F_g(\mathrm{Vir}_c) + F_g(\mathrm{Vir}_{26-c}) = 13 \cdot \lambda_g^{\mathrm{FP}}$, where $\lambda_g^{\mathrm{FP}} = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$.  The nonzero sum $\kappa + \kappa' = 13$ reflects the conformal anomaly of the $c = 26$ bosonic string: the combined obstruction of Virasoro and its same-family shadow partner equals half the bosonic string central charge times $\lambda_g^{\mathrm{FP}}$.
 
 For the $\mathcal{W}_3$ algebra (where $c + c' = 100$), the analogous computation gives $\kappa + \kappa' = 250/3$.
 \end{remark}
@@ -1384,6 +1384,7 @@ The complementarity dimension sum is $\dim Q_2 + \dim Q_2' = 8$.
 The individual dimensions are \emph{not} determined by the free
 energy alone (which is a single scalar invariant, not a dimension
 count).  However, the PBW spectral sequence constrains them.
+
 The $E_1$ page of the genus-$2$ PBW spectral sequence is:
 \[
 E_1^{p,q} = H^q(\bar{B}^{(2)}_{\mathrm{cl}}(\mathfrak{sl}_2))
@@ -1396,8 +1397,10 @@ complex.  Since $H^*(\mathfrak{sl}_2;\mathbb{C}) =
 \dim E_1 = 2 \cdot 8 = 16, \qquad
 E_1 = \bigl(H^*(\overline{\mathcal{M}}_2)\bigr)^{\oplus 2}.
 \]
+
 The $d_1$ differential is the genus-$2$ curvature correction
 $\kappa \cdot \lambda_2$, acting between the two copies.
+
 For generic $k$ (i.e., $\kappa \neq 0$), this differential
 has rank determined by the $\lambda_2$-multiplication map on
 $H^*(\overline{\mathcal{M}}_2)$, and the $E_2$ page computes
@@ -1613,6 +1616,7 @@ $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\
 $2$ & $4$ & $10$ & $20$ & $35$ & $56$ & $84$ & $120$ \\
 $3$ & $8$ & $36$ & $120$ & $329$ & $784$ & $1680$ & $3312$ \\
 $4$ & $16$ & $136$ & $800$ & $3611$ & $13328$ & $42048$ & $117072$ \\
+%
 $5$ & $32$ & $528$ & $5600$ & $42065$ & $241472$ & $1122560$ & $4411584$ \\
 $6$ & $64$ & $2080$ & $40000$ & $499955$ & $4456256$ & $30475264$ & $168816960$ \\
 $7$ & $128$ & $8256$ & $288000$ & $5980889$ & $82671232$ & $831000576$ & $6485090688$ \\
@@ -1622,7 +1626,19 @@ $8$ & $256$ & $32896$ & $2080000$ & $71698571$ & $1536025344$ & $22687006720$ & 
 }
 \end{center}
 \medskip
-At genus~1, $\dim V_{1,k} = k+1$ (the number of integrable representations).  At genus~2, $\dim V_{2,k} = \binom{k+3}{3} = (k+1)(k+2)(k+3)/6$, which follows from the identity $\sum_{j=1}^{k+1} \csc^2(j\pi/(k+2)) = (k+1)(k+3)/3$.  The polynomial growth $\dim V_{g,k} \sim C_g \cdot k^{3(g-1)}$ (Witten) is visible: the ratio $\dim V_{g,k}/k^{3(g-1)}$ stabilizes rapidly for large~$k$.
+
+At genus~1, $\dim V_{1,k} = k+1$, the number of integrable
+representations.  At genus~2,
+\[
+\dim V_{2,k} = \binom{k+3}{3} = \frac{(k+1)(k+2)(k+3)}{6},
+\]
+which follows from
+$\sum_{j=1}^{k+1} \csc^2(j\pi/(k+2)) = (k+1)(k+3)/3$.
+
+The polynomial growth
+$\dim V_{g,k} \sim C_g \cdot k^{3(g-1)}$ \textup{(}Witten\textup{)}
+is already visible in the table: the ratio
+$\dim V_{g,k}/k^{3(g-1)}$ stabilizes rapidly for large~$k$.
 \end{computation}
 
 \begin{remark}[Large-$k$ asymptotics and $F_g$]\label{rem:verlinde-asymptotics}
@@ -1633,18 +1649,32 @@ As $k \to \infty$, the Verlinde dimension grows polynomially:
 \]
 where $3(g-1) = \dim_\mathbb{C} \mathcal{M}_g(\mathrm{SU}(2))$ is the dimension of the moduli space of flat $\mathrm{SU}(2)$-bundles on $\Sigma_g$ (for $g \geq 2$), and $C_g$ is the symplectic volume $\mathrm{Vol}\,\mathcal{M}_g(\mathrm{SU}(2))$ (Witten's formula~\cite{Witten91}).
 
-The genus-$g$ free energy $F_g = \frac{3(k+2)}{4} \cdot \lambda_g^{\mathrm{FP}}$ captures the \emph{linear} part of the Verlinde dimension in~$k$: the coefficient of $k$ in $\log \dim V_{g,k}$ at leading order equals $\frac{3}{4}\lambda_g^{\mathrm{FP}}$ up to additive constants from the symplectic volume.  The higher-order terms in $\log \dim V_{g,k}$ are controlled by higher-genus corrections beyond the single-$\lambda_g$ approximation.
+The genus-$g$ free energy
+$F_g = \frac{3(k+2)}{4} \cdot \lambda_g^{\mathrm{FP}}$
+captures the linear part of the Verlinde dimension in~$k$.
+More precisely, the coefficient of $k$ in
+$\log \dim V_{g,k}$ at leading order equals
+$\frac{3}{4}\lambda_g^{\mathrm{FP}}$ up to additive constants coming
+from the symplectic volume.  The higher-order terms in
+$\log \dim V_{g,k}$ are governed by corrections beyond the
+single-$\lambda_g$ approximation.
 \end{remark}
 
 \begin{proposition}[Bar free energy and Verlinde asymptotics; \ClaimStatusProvedHere]
 \label{prop:bar-verlinde-asymptotics}
 \index{Verlinde formula!bar complex asymptotics}
 \index{conformal blocks!bar complex}
-For $\widehat{\mathfrak{g}}_k$ at level $k \to \infty$, the genus-$g$ bar free energy $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ captures the linear-in-$k$ coefficient of the Verlinde dimension:
+For $\widehat{\mathfrak{g}}_k$ at level $k \to \infty$, the genus-$g$
+bar free energy
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+captures the linear-in-$k$ coefficient of the Verlinde dimension:
 \begin{equation}\label{eq:bar-verlinde-leading}
 \log \dim V_{g,k}(G) = (g-1) \cdot \dim G \cdot \log(k + h^\vee) + \kappa(\widehat{\mathfrak{g}}_k) \cdot \lambda_g^{\mathrm{FP}} \cdot C(\mathfrak{g}) + O(1)
 \end{equation}
-where $C(\mathfrak{g})$ is a constant depending on $\mathfrak{g}$ and $g$, and the leading term $(g-1)\dim G$ is the dimension of the moduli space $\mathcal{M}_g(G)$ of flat $G$-bundles \textup{(}Witten's formula~\cite{Witten91}\textup{)}.
+where $C(\mathfrak{g})$ is a constant depending on $\mathfrak{g}$ and
+$g$, and the leading exponent $(g-1)\dim G$ is the dimension of the
+moduli space $\mathcal{M}_g(G)$ of flat $G$-bundles
+\textup{(}Witten's formula~\cite{Witten91}\textup{)}.
 \end{proposition}
 
 \begin{proof}
@@ -1695,13 +1725,18 @@ Recall from the Master Table (Table~\ref{tab:master-invariants}) and the genus-1
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{lllll}
 \toprule
-Algebra & Koszul Dual & $c(\cA)$ & $c + c'$ & $\kappa(\cA)$ \\
+Algebra & Same-family partner / dual datum & $c(\cA)$ & $c + c'$ & $\kappa(\cA)$ \\
 \midrule
-$\mathrm{Vir}_c$ & $\mathrm{Vir}_{26-c}$ & $c$ & $26$ & $c/2$ \\[4pt]
+$\mathrm{Vir}_c$ & $\mathrm{Vir}_{26-c}$\textsuperscript{$\dagger$} & $c$ & $26$ & $c/2$ \\[4pt]
 \bottomrule
 \end{tabular}
 \end{center}
 The Feigin--Frenkel involution acts as $c \mapsto 26 - c$, with fixed point $c = 13$.  The obstruction coefficient $\kappa = c/2$ is half the central charge, arising from the quartic pole $T_{(3)}T = c/2$ in the Virasoro OPE (Theorem~\ref{thm:vir-genus1-curvature}).
+\textsuperscript{$\dagger$}Here and throughout this Virasoro section,
+$\mathrm{Vir}_{26-c}$ denotes the proved same-family partner governing the
+current M/S-level complementarity and semi-infinite calculations.  The
+stronger H-level infinite-generator realization remains on the MC4
+frontier.
 
 \subsection{Genus-$g$ free energy}\label{subsec:vir-free-energy}
 
@@ -1776,9 +1811,9 @@ For the $\mathcal{W}_N$ algebra, the complementarity sum grows with~$N$: $\kappa
 The genus-0 curvature trichotomy extends to all genera
 (cf.\ Computation~\ref{comp:virasoro-curvature}):
 \begin{enumerate}
-\item \emph{$c = 0$ (uncurved).} $F_g = 0$ for all $g \geq 1$.  The bar complex $\bar{B}(\mathrm{Vir}_0)$ is a genuine cochain complex ($\dfib^{\,2} = 0$ since $\kappa = 0$) at every genus, and the Koszul duality $\mathrm{Vir}_0^! \simeq \mathrm{Vir}_0$ is of classical type.  No quantum corrections arise.
-\item \emph{$c$ generic.} $F_g = (c/2) \cdot \lambda_g^{\mathrm{FP}} \neq 0$ for all $g \geq 1$.  The bar complex is curved, and the curved $A_\infty$ structure is nontrivial at every genus.  The Koszul dual $\mathrm{Vir}_c^! \simeq \mathrm{Vir}_{26-c}$ is a \emph{different} Virasoro algebra, and the complementarity sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.
-\item \emph{$c = 26$ (maximal curvature for the uncurved dual).} $F_g(\mathrm{Vir}_{26}) = 13 \cdot \lambda_g^{\mathrm{FP}}$ for all~$g$.  The dual algebra $\mathrm{Vir}_0$ is uncurved, so $\mathrm{Vir}_{26}$ carries the entire complementarity budget.  This is the unique central charge at which the Koszul dual is uncurved.
+\item \emph{$c = 0$ (uncurved).} $F_g = 0$ for all $g \geq 1$.  The bar complex $\bar{B}(\mathrm{Vir}_0)$ is a genuine cochain complex ($\dfib^{\,2} = 0$ since $\kappa = 0$) at every genus, and the same-family involution fixes $\mathrm{Vir}_0$.  No quantum corrections arise.
+\item \emph{$c$ generic.} $F_g = (c/2) \cdot \lambda_g^{\mathrm{FP}} \neq 0$ for all $g \geq 1$.  The bar complex is curved, and the curved $A_\infty$ structure is nontrivial at every genus.  The Feigin--Frenkel involution selects the different Virasoro algebra $\mathrm{Vir}_{26-c}$ as the current M/S-level shadow partner controlling complementarity and semi-infinite calculations, while the stronger H-level infinite-generator realization remains open.  The complementarity sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.
+\item \emph{$c = 26$ (maximal curvature for the uncurved partner).} $F_g(\mathrm{Vir}_{26}) = 13 \cdot \lambda_g^{\mathrm{FP}}$ for all~$g$.  The same-family partner $\mathrm{Vir}_0$ is uncurved, so $\mathrm{Vir}_{26}$ carries the entire complementarity budget.  This is the unique central charge at which the current shadow partner is uncurved.
 \end{enumerate}
 The generating function:
 \begin{equation}\label{eq:vir-generating}
@@ -2146,7 +2181,7 @@ By the universal generating function
 free energy of any Koszul chiral algebra takes the form
 $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$, so the
 entire scalar genus expansion is determined by the single invariant~$\kappa$ (the full modular characteristic package requires additional spectral data; see Theorem~\ref{thm:spectral-characteristic}).
-The following table records $\kappa$, the Koszul dual data, and
+The following table records $\kappa$, the same-family partner / dual data, and
 the first three explicit free energies.
 
 \begin{table}[ht]
@@ -2206,7 +2241,7 @@ $\widehat{E}_{8,k}$
 \hline
 $\mathrm{Vir}_c$
   & $c$ & $\frac{c}{2}$
-  & $\mathrm{Vir}_{26-c}$
+  & $\mathrm{Vir}_{26-c}$\textsuperscript{$\dagger$}
   & $\frac{26-c}{2}$ & $13$ & (ii) \\
 \hline
 $\mathcal{W}_3^k$
@@ -2224,6 +2259,10 @@ $V_{E_8}$ lattice
 \end{tabular}
 }
 \end{table}
+\noindent\textsuperscript{$\dagger$}In Table~\ref{tab:genus-expansion-master},
+the Virasoro entry records the proved same-family shadow partner used by
+the current genus and semi-infinite calculations.  The stronger H-level
+infinite-generator realization remains on the MC4 frontier.
 
 \begin{table}[ht]
 \centering
@@ -2472,7 +2511,7 @@ Numerical values:
 $F_1 = 1/96 \approx 0.0104$,
 $F_2 = 7/23040 \approx 3.04 \times 10^{-4}$,
 $F_3 = 31/3870720 \approx 8.01 \times 10^{-6}$.
-The Koszul dual algebra is $\mathrm{Vir}_{51/2}$, with
+The same-family shadow partner is $\mathrm{Vir}_{51/2}$, with
 $\kappa' = 51/4$ and
 $F_g(\mathrm{Vir}_{51/2}) = (51/4) \cdot
 \lambda_g^{\mathrm{FP}}$.  The complementarity sum
@@ -2484,7 +2523,7 @@ Virasoro constant.
 \label{comp:vir-c25-genera}
 \index{Virasoro algebra!$c{=}25$}
 At $c = 25$, the obstruction coefficient is
-$\kappa = 25/2$.  This is the Koszul dual of
+$\kappa = 25/2$.  This is the same-family partner of
 $\mathrm{Vir}_1$ (the free boson Sugawara Virasoro,
 $\kappa' = 1/2$), with complementarity sum
 $25/2 + 1/2 = 13$.  The genus-$g$ free energy:
@@ -2505,7 +2544,7 @@ At a minimal model central charge
 $c_{p,q} = 1 - 6(p-q)^2/(pq)$ with $\gcd(p,q) = 1$ and
 $p, q \geq 2$, the genus expansion is
 $F_g = (c_{p,q}/2) \cdot \lambda_g^{\mathrm{FP}}$.
-The Virasoro Koszul dual has central charge
+The Virasoro same-family shadow partner has central charge
 $c' = 26 - c_{p,q}$, which is \emph{not} in general a
 minimal model central charge: Ising $(3,4)$ has $c = 1/2$, dual $c' = 51/2$;
 Tricritical Ising $(4,5)$ has $c = 7/10$, dual $c' = 253/10$;
