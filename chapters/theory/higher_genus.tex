@@ -1975,13 +1975,14 @@ with the form factors, exactly as in the genus-$1$ case.
 Therefore the holomorphic cyclic sum is zero.
 
 \emph{Step~2: Surviving cross-terms.}
-The non-holomorphic correction $a_{ij}$ has the form:
+The non-holomorphic correction $a_{ij}$ has the form
 \begin{equation}
 a_{ij} = \pi \sum_{\alpha,\beta=1}^{2}
   \omega_\alpha(z_i)\,(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
   \operatorname{Im}\!\Bigl(\int_{z_0}^{z_j}\!\omega_\beta\Bigr)
 \end{equation}
-Its $\bar\partial$-derivative is:
+
+Its $\bar\partial$-derivative is
 \begin{equation}\label{eq:dbar-a-g2}
 \bar\partial_{z_j}\, a_{ij}
 = \frac{\pi}{2i} \sum_{\alpha,\beta=1}^{2}
@@ -1990,13 +1991,15 @@ Its $\bar\partial$-derivative is:
 \end{equation}
 (using $\bar\partial \operatorname{Im}(\int^{z_j}\omega_\beta)
 = \frac{1}{2i}\bar\omega_\beta(z_j)$).
+
 The cross-terms
-$\sum_{\mathrm{cyc}} (h_{ij}\,a_{jk} + a_{ij}\,h_{jk})
-\,(dz_i - dz_j) \wedge (dz_j - dz_k)$
-are $(1,1)$-forms.  Summing over cyclic permutations and using
-the same cancellation mechanism as at genus~$1$
-(the holomorphic parts pair with $\bar\partial a$ to produce
-a universal $(1,1)$-form):
+\[
+\sum_{\mathrm{cyc}} (h_{ij}\,a_{jk} + a_{ij}\,h_{jk})
+\,(dz_i - dz_j) \wedge (dz_j - dz_k)
+\]
+are $(1,1)$-forms.  Summing cyclically and using the same cancellation
+mechanism as at genus~$1$, the holomorphic part pairs with
+$\bar\partial a$ to produce a universal $(1,1)$-form:
 \begin{equation}\label{eq:arnold-g2-result}
 \mathcal{A}_3^{(2)} = 2\pi i \cdot
 \frac{i}{2}\sum_{\alpha,\beta=1}^{2}
@@ -2066,15 +2069,20 @@ where $\wp_{\alpha\beta}(u|\Omega)
 = -\partial^2_{u_\alpha u_\beta}\!\log\vartheta[\delta](u|\Omega)$
 is the genus-$g$ Weierstrass matrix (for an even
 characteristic~$\delta$), and $R_g$ is symmetric in
-$(z_1, z_2, z_3)$.  Since $\wp_{\alpha\beta}(u|\Omega)$ is
-an even function of~$u$ (being the second derivative of
-$\log\vartheta[\delta]$ for even~$\delta$), and
-$(dz_i - dz_j) \wedge (dz_j - dz_k)$ is antisymmetric under
-$z_i \leftrightarrow z_j$, all terms on the right-hand side vanish
-when wedged with the form factors.  At $g = 2$, this recovers
-Step~1 of the genus-$2$ proof with $\wp_{11}$ as the sole
-diagonal entry; at $g \geq 3$ the argument is identical but with
-the full $g \times g$ Weierstrass matrix.
+$(z_1, z_2, z_3)$.
+
+To extract the bar-differential relation, wedge
+Equation~\eqref{eq:fay-general} with the cyclic form factors
+$(dz_i - dz_j) \wedge (dz_j - dz_k)$.  The matrix term drops out
+because $\wp_{\alpha\beta}(u|\Omega)$ is even in~$u$, whereas the
+wedge factor is antisymmetric under $z_i \leftrightarrow z_j$.
+The remainder $R_g$ also disappears after cyclic alternation because
+it is symmetric in the three marked points.
+
+Thus the holomorphic cyclic sum vanishes exactly as in lower genus.
+At $g = 2$, this recovers Step~1 of the genus-$2$ proof with
+$\wp_{11}$ as the only diagonal entry.  For $g \geq 3$, the same
+argument applies with the full $g \times g$ Weierstrass matrix.
 
 \emph{Step~2: Cross-terms give the Arakelov form.}
 The non-holomorphic correction has $\bar\partial$-derivative:
@@ -5466,6 +5474,7 @@ for arbitrary Koszul pairs, using three independent ingredients.
 The Verdier duality $\mathbb{D}$ on the FM compactification $\overline{C}_n(X)$
 exchanges $j_*$ and $j_!$ extensions (Lemma~\ref{lem:verdier-extension-exchange}):
 $\mathbb{D}(j_* \mathcal{F}) \cong j_!(\mathbb{D}\mathcal{F})$.
+
 The KS class $\kappa(v)$ acts on $H^*(\overline{C}_n(\Sigma_g), j_*\mathcal{A}^{\boxtimes n})$
 via the Lie derivative $\mathcal{L}_{\tilde{v}}$ along the horizontal lift $\tilde{v}$
 of $v$ to $\overline{C}_n(\Sigma_g)$.  Since Verdier duality is a contravariant functor
@@ -5478,6 +5487,7 @@ $\rho^\vee = -\rho^t$, which reverses signs):
 \begin{equation}\label{eq:verdier-lie-anticommute}
 \mathbb{D} \circ \mathcal{L}_{\tilde{v}} = -\mathcal{L}_{\tilde{v}} \circ \mathbb{D}
 \end{equation}
+
 Concretely, $\mathbb{D}$ reverses the orientation of the fibers of the FM
 compactification, and the Lie derivative reverses sign under orientation reversal.
 
@@ -5495,10 +5505,12 @@ and $\Phi$ intertwines the Koszul pairing
 self-pairing on $\mathcal{A}^!$; since the full pairing is perfect
 and $\Phi|_Z$ is an isomorphism, the restricted pairing is also perfect.  This pairing defines a transpose
 map $\kappa_Z: Z(\mathcal{A}) \to Z(\mathcal{A}^!)$ such that:
+
 \begin{equation}\label{eq:verdier-center-intertwine}
 \mathbb{D} \circ \rho(z) = \rho(\kappa_Z(z)) \circ \mathbb{D}
 \quad \text{for all } z \in Z(\mathcal{A})
 \end{equation}
+
 Indeed, for $\omega \in \bar{B}^{(g)}(\mathcal{A})$ and $\omega' \in \bar{B}^{(g)}(\mathcal{A}^!)$:
 $\langle \rho(z)\omega, \omega' \rangle_{\mathrm{Verdier}} = \langle \omega, \rho(\kappa_Z(z))\omega' \rangle_{\mathrm{Verdier}}$
 by the $Z(\mathcal{A})$-linearity of the Koszul pairing.
@@ -5697,6 +5709,7 @@ by $\bar{B}^{(g)}(\mathcal{A})$
 By the same fiber cohomology vanishing applied to the Koszul dual,
 elements of $Q_g(\mathcal{A}^!)$ also live on the $q = 0$ row of
 \emph{their own} $E_2$ page.
+
 However, the Verdier involution $\sigma$ on
 $\mathcal{H}_g(\mathcal{A})$ identifies $Q_g(\mathcal{A}^!)$ not
 through its own spectral sequence but through the $j_! \leftrightarrow j_*$
@@ -5719,8 +5732,9 @@ the anti-commutativity~\eqref{eq:verdier-ks-anticommute}.
 Therefore elements from $\bar{B}^{(g)}(\mathcal{A}^!)$ have
 eigenvalue $-1$ and contribute to~$V^-$.
 
-More precisely, the anti-commutativity~\eqref{eq:verdier-ks-anticommute} ensures
-that the KS deformation maps $V^+$ to $V^-$ and vice versa: if $\alpha \in V^+$,
+More precisely, the anti-commutativity
+\eqref{eq:verdier-ks-anticommute} ensures that the Kodaira--Spencer
+deformation maps $V^+$ to $V^-$ and vice versa.  If $\alpha \in V^+$,
 then
 \begin{equation}
 \sigma(\nabla_{\kappa(v)}^z \alpha) = -\nabla_{\kappa(v)}^z (\sigma \alpha) =
@@ -8591,11 +8605,17 @@ factorization \eqref{eq:enrichment-factorization}: local OPE data acts
 on the finite-dimensional modules~$M_h$, while
 $H^1(\Sigma_g,\bC)$ enters only as a passive multiplicity factor.
 
-What remains open in the $\mathcal{W}$ direction is no longer
-higher-genus PBW concentration for finite-type principal families,
-but rather the completed/infinite-generator regime
+Theorem~\ref{thm:pbw-universal-conformal} resolves MK3
+for \emph{every} chiral algebra with a unique weight-$2$ generator,
+subsuming the Virasoro and principal $\mathcal{W}$ theorems and
+extending to non-principal families (Bershadsky--Polyakov,
+hook-type, superconformal).
+What remains open is therefore:
+genus-$0$ Koszulness~(MK1) and Verdier~(MK2)
+for each non-principal family;
+the completed/infinite-generator regime
 $\mathcal{W}_\infty$
-\textup{(}Conjecture~\textup{\ref{conj:master-infinite-generator}}\textup{)}
+\textup{(}Conjecture~\textup{\ref{conj:master-infinite-generator}}\textup{)};
 and non-principal orbit duality
 \textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}\textup{)}.
 \end{remark}
@@ -8797,6 +8817,7 @@ The $d_1^{\mathrm{PBW}}$ differential sends
 $J^a_{-1} \otimes J^b_{-1}$ to $[J^a, J^b]_{-2}$,
 a $3 \times 9$ matrix of rank~$3$.  Its kernel is
 $6$-dimensional, spanned by $V_5 \oplus V_1$.
+
 Concretely:
 \begin{itemize}
 \item $V_3 = \Lambda^2(\mathfrak{sl}_2)$: the bracket
@@ -8820,11 +8841,40 @@ Concretely:
   = 3 = \dim(\mathfrak{sl}_2)$,
   which is nonzero at generic level~$k$.
 \end{itemize}
+
 Thus all nine enrichment classes at $h = 2$ are eliminated:
 three by the bracket isomorphism, five by Whitehead, one by the
 Killing contraction.
 The decomposition $E_\infty^{*,2}(g{=}1) =
 E_\infty^{*,2}(g{=}0)$ follows.
+
+A symbolic check of the same mechanism at the next tensor
+powers (implemented in \texttt{compute/lib/genus1\_pbw\_sl2.py})
+confirms that no new representation-theoretic obstruction
+appears.  For $\mathfrak{sl}_2^{\otimes 3}$, the diagonal
+Casimir eigenspace dimensions are
+$\{24{:}7,\;12{:}10,\;4{:}9,\;0{:}1\}$, matching the expected
+irreducible decomposition; for $\mathfrak{sl}_2^{\otimes 4}$
+they are
+$\{40{:}9,\;24{:}21,\;12{:}30,\;4{:}18,\;0{:}3\}$; and for
+$\mathfrak{sl}_2^{\otimes 5}$ they are
+$\{60{:}11,\;40{:}36,\;24{:}70,\;12{:}75,\;4{:}45,\;0{:}6\}$;
+at $\mathfrak{sl}_2^{\otimes 6}$ the same check gives
+$\{84{:}13,\;60{:}55,\;40{:}135,\;24{:}203,\;12{:}200,\;4{:}108,\;0{:}15\}$.
+
+The bracket differential has ranks
+$\operatorname{rank}(d_1)=8$ at $n=3$ and
+$\operatorname{rank}(d_1)=27$ at $n=4$ and
+$\operatorname{rank}(d_1)=80$ at $n=5$ and
+$\operatorname{rank}(d_1)=243$ at $n=6$, and the commutators
+$[\operatorname{ad}(x), d_1]$ ($x \in \mathfrak{sl}_2$) and
+$[C_2, d_1]$ vanish identically in all four cases.
+
+This verifies that the elimination pattern (nontrivial
+summands killed by Whitehead, invariant summands passed to
+higher $d_r$) is already stable at the first higher tensor
+levels.
+
 At each higher weight~$h$, the same
 three mechanisms act (the representation-theoretic
 decomposition under~$\fg$ and the Whitehead vanishing
@@ -9288,22 +9338,137 @@ and~\ref{thm:quantum-complementarity-main}.
 Items (i)--(iii) are immediate consequences.
 \end{proof}
 
-\begin{remark}[Scope and extensions]
-\label{rem:pbw-genus1-scope}
+\begin{theorem}[Universal PBW degeneration for chiral algebras with a
+  stress tensor; \ClaimStatusProvedHere]
+\label{thm:pbw-universal-conformal}
+\index{PBW spectral sequence!universal degeneration|textbf}
+\index{modular Koszul chiral algebra!universal criterion|textbf}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+Let $\cA$ be a chiral algebra defined by local OPE relations,
+admitting a PBW filtration by conformal weight, and satisfying:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the augmentation ideal $\bar{V}_\cA$ is
+  positively graded: every homogeneous state has
+  conformal weight $h \geq h_{\min} > 0$;
+\item among all generators, exactly one has conformal
+  weight~$2$, namely the stress tensor~$T$, with
+  $T_{(1)} = L_0$.
+\end{enumerate}
+Then for every genus~$g \geq 1$, the PBW spectral
+sequence for the genus-$g$ bar complex has concentrated
+$E_\infty$ page:
+\[
+E_\infty^{p,q}\bigl(\bar{B}^{(g)}(\cA)\bigr)
+\;=\;
+E_\infty^{p,q}\bigl(\bar{B}^{(0)}(\cA)\bigr)
+\quad \text{for all } g \geq 0.
+\]
+In particular, $\cA$ satisfies axiom~\textup{MK3}
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
+unconditionally at all genera.
+\end{theorem}
+
+\begin{proof}
+The enrichment factorization~\eqref{eq:enrichment-factorization}
+holds for any chiral algebra defined by local OPE relations:
+at each conformal weight~$h$,
+\[
+\mathcal{E}_g^{*,h}
+\;\cong\; M_h \otimes_{\bC} H^{1,0}(\Sigma_g),
+\]
+because the $H^{1,0}(\Sigma_g)$ forms are smooth across
+collision divisors and enter as passive multiplicative factors.
+
+The $d_2^{\mathrm{PBW}}$ differential on the enrichment is
+induced by the $(1)$-products of the generators.  A generator
+of conformal weight~$s$ has $(1)$-product shifting conformal
+weight by $s - 2$.  By hypothesis~(b), the stress tensor~$T$
+is the \emph{unique} generator with $s = 2$, so it is the
+unique generator whose $(1)$-product preserves conformal weight.
+Every other generator has $s \neq 2$ and therefore shifts the
+weight-grading: its contribution appears on a page of the PBW
+spectral sequence different from the one where the
+weight-preserving $T_{(1)}$ acts.  Concretely, generators with
+$s > 2$ contribute on earlier pages (weight-raising terms,
+already accounted for on~$E_1$), while generators with $s < 2$
+contribute on later pages (weight-lowering terms, appearing
+on~$E_3$ or beyond).
+
+Consequently, the $d_2^{\mathrm{PBW}}$ differential on the
+enrichment at conformal weight~$h$ is controlled entirely
+by~$T_{(1)} = L_0$:
+\[
+d_2^{\mathrm{PBW}}\big|_{\mathcal{E}_g^{*,h}}
+\;=\;
+h \cdot \mathrm{id}_{M_h}
+\otimes
+\mathrm{id}_{H^{1,0}(\Sigma_g)}.
+\]
+Since $h \geq h_{\min} > 0$, this map is an isomorphism,
+killing the entire genus-$g$ enrichment on the $E_3$ page.
+The weight-lowering contributions from generators with $s < 2$
+now act on zero (the enrichment is already dead) and cannot
+create new classes.
+
+The antiholomorphic factor $H^{0,1}(\Sigma_g)$ is handled
+identically.  Bounded-below convergence
+(\ref{item:pbw-bounded} of
+Theorem~\ref{thm:pbw-koszulness-criterion}) yields
+$E_\infty(g) = E_\infty(0)$.
+\end{proof}
+
+\begin{remark}[Scope of the universal PBW theorem]
+\label{rem:pbw-universal-scope}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item
-Theorems~\ref{thm:pbw-allgenera-km}
-and~\ref{thm:pbw-allgenera-virasoro}, together with
-Theorem~\ref{thm:pbw-allgenera-principal-w},
-resolve the higher-genus PBW problem completely for the standard
-finite-type interacting families: Kac--Moody, Virasoro, and principal
-finite-type $\mathcal{W}$-algebras.  The mechanisms form a strict
-hierarchy:
-Kac--Moody needs Whitehead plus Killing contraction;
-Virasoro needs only the $L_0$ scalar action;
-principal finite-type $\mathcal{W}$-algebras add higher-spin terms,
-but those terms are strictly weight-raising and therefore do not alter
-the invertible $L_0$ diagonal.
+Theorem~\ref{thm:pbw-universal-conformal} subsumes
+the Virasoro degeneration
+(Theorem~\ref{thm:pbw-allgenera-virasoro})
+and the principal finite-type $\mathcal{W}$ degeneration
+(Theorem~\ref{thm:pbw-allgenera-principal-w})
+as special cases: both satisfy hypotheses~(a)--(b).
+The Kac--Moody theorem
+(Theorem~\ref{thm:pbw-allgenera-km})
+is \emph{not} a special case, because the stress
+tensor~$T$ in a Kac--Moody algebra is the Sugawara
+construction (a composite field, not a generator);
+the Kac--Moody proof requires the independent
+Whitehead--Casimir--Killing mechanism of
+Theorem~\ref{thm:pbw-allgenera-km}.
+
+\item
+The theorem applies to every non-principal
+$\mathcal{W}$-algebra
+$\mathcal{W}^k(\mathfrak{g}, f)$, including:
+the Bershadsky--Polyakov algebra
+$\mathcal{W}^k(\mathfrak{sl}_3, f_{\mathrm{sub}})$
+(generators $J$, $G^\pm$, $T$ of weights
+$1$, $\tfrac{3}{2}$, $\tfrac{3}{2}$, $2$);
+hook-type $\mathcal{W}$-algebras in types~$A$, $D$;
+and superconformal algebras $\mathcal{N} = 1, 2$.
+In each case, the stress tensor is the unique weight-$2$
+generator, and hypotheses~(a)--(b) hold.
+This resolves the MK3 component of the non-principal orbit
+programme
+\textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}\textup{)}:
+PBW concentration is automatic; only genus-$0$ Koszulness
+\textup{(MK1)} and Verdier \textup{(MK2)} remain to be
+verified case by case.
+
+\item
+For infinite-generator algebras such as
+$\mathcal{W}_\infty$
+(one generator $W_s$ for each integer $s \geq 2$),
+hypotheses~(a)--(b) hold provided the weight
+filtration is complete (each weight-$h$ sector is
+finite-dimensional).  The pronilpotent completion
+scaffold of \S\ref{sec:modular-koszul-programme}
+ensures this.  MK3 is therefore automatic for
+$\mathcal{W}_\infty$; the remaining obstacle for
+Conjecture~\ref{conj:master-infinite-generator} is
+MK1 in the completed setting.
 
 \item
 The key structural insight is that enrichment from
@@ -9311,25 +9476,20 @@ $H^{1,0}(\Sigma_g)$ \emph{factors} as
 $M_h \otimes H^{1,0}(\Sigma_g)$ where $M_h$ is
 genus-independent (\ref{eq:enrichment-factorization}).
 This factorization principle---local OPE data versus
-global curve topology---is the reason the genus-$1$
-argument is automatically genus-independent for
-Kac--Moody, Virasoro, and principal finite-type $\mathcal{W}$.
-It may fail for algebras whose OPE structure depends on global curve
-data (e.g., elliptic vertex algebras), but for any vertex algebra
-defined by local OPE relations, the same principle applies.
+global curve topology---holds for any chiral algebra
+defined by local OPE relations but may fail for algebras
+whose structure depends on global curve data
+(e.g., elliptic vertex algebras).
 
 \item
-Theorems~\ref{thm:pbw-allgenera-km}
-and~\ref{thm:pbw-allgenera-virasoro}, together with
-Corollaries~\ref{cor:unconditional-allgenera-km}
-and~\ref{cor:unconditional-allgenera-virasoro},
-and the principal $\mathcal{W}$ upgrades
-Theorem~\ref{thm:pbw-allgenera-principal-w}
-and Corollary~\ref{cor:unconditional-allgenera-principal-w},
+Theorems~\ref{thm:pbw-allgenera-km},
+\ref{thm:pbw-allgenera-virasoro},
+\ref{thm:pbw-allgenera-principal-w},
+and~\ref{thm:pbw-universal-conformal},
+together with their corollaries,
 upgrade the interacting conditional claims in Part~II to
 unconditional statements at all genera, including complementarity,
-genus expansions, and Kodaira--Spencer constructions for higher
-$\mathcal{W}_N$.
+genus expansions, and Kodaira--Spencer constructions.
 \end{enumerate}
 \end{remark}
 
@@ -9557,6 +9717,7 @@ free energies are Bernoulli numbers $F_g = k \cdot B_{2g}/(4g(2g-2))$
 \end{remark}
 
 \begin{theorem}[Spectral characteristic theorem; \ClaimStatusProvedHere]
+\phantomsection
 \label{thm:spectral-characteristic}
 \index{spectral discriminant!invariance theorem|textbf}
 
@@ -9633,6 +9794,7 @@ $L_\infty$-algebra (not merely a dg~Lie algebra of coderivations)
 and solving the MC equation in the completed
 tensor product $\Defcyc(\cA) \,\widehat{\otimes}\,
 R\Gamma(\overline{\mathcal{M}}_{g,\bullet})$.
+
 Three specific constructions are needed:
 \begin{enumerate}[label=\textup{Step~\arabic*.}]
 \item \emph{Cyclic structure.}  Equip the bar coderivation
@@ -9651,6 +9813,7 @@ Three specific constructions are needed:
   \overline{\mathcal{M}}_g$ decomposes via the clutching map
   (\S\ref{sec:modular-koszul-programme}, axiom~\ref{MK:clutching-verdier}).
 \end{enumerate}
+
 The main external ingredient is a cyclic analogue of the
 Kontsevich--Soibelman graph complex construction~\cite{KontsevichSoibelman}
 adapted to chiral algebras.
@@ -9757,28 +9920,38 @@ framework for these singular loci; see
 \S\ref{sec:modular-koszul-programme}.
 \end{remark}
 
-The four main theorems are proved.  Theorem~A
+The four main theorems are proved.
+
+Theorem~A
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}): the bar-cobar
 adjunction is an equivalence for Koszul pairs, intertwined with
-Verdier duality on $\operatorname{Ran}(X)$.  Theorem~B
+Verdier duality on $\operatorname{Ran}(X)$.
+
+Theorem~B
 (Theorem~\ref{thm:higher-genus-inversion}): on the Koszul locus the
 counit is a quasi-isomorphism at every genus; off this locus the
 bar-cobar object persists in the coderived category with curvature
-measured by $\Theta_{\cA}$.  Theorem~C
+measured by $\Theta_{\cA}$.
+
+Theorem~C
 (Theorem~\ref{thm:quantum-complementarity-main}): the ambient
 moduli cohomology $\mathcal{H}_g(\cA) =
 H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$ carries a
 shifted-symplectic pairing from Verdier duality, and the deformation
 and obstruction spaces of a Koszul pair embed as complementary
-Lagrangians.  Theorem~D$_{\mathrm{scal}}$
+Lagrangians.
+
+Theorem~D$_{\mathrm{scal}}$
 (Theorem~\ref{thm:modular-characteristic}): the scalar invariants
 of the modular characteristic package are determined by a single
 number $\kappa(\cA)$, which is universal (controls all genera),
 additive (a group homomorphism under tensor product), anti-symmetric
 under duality, and whose vanishing is anomaly cancellation.
+
 Theorem~D$_\Delta$
 (Theorem~\ref{thm:spectral-characteristic}): the spectral
 discriminant is a separately proved non-scalar invariant.
+
 The full universal Maurer--Cartan class $\Theta_{\cA}$
 (Conjecture~\ref{conj:universal-theta}) remains the principal
 open problem.

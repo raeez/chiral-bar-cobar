@@ -1037,7 +1037,34 @@ R_{12}(u-v)\, T_1(u)\, T_2(v)
 where $R_{12}(u) = 1 - \hbar P_{12}/u$ is the Yang $R$-matrix and $P_{12}$ is the permutation on $V \otimes V$.  This relation is quadratic in $T$; since the bar complex of a quadratic algebra is determined by generators and relations (bar degrees $\leq 2$), the Koszul dual is computed from the relation space alone.
 
 \emph{Step 2: Koszul dual via $R$-matrix inversion.}
-The quadratic dual has relation space $R^\perp$ (the orthogonal complement of the RTT relations under the trace pairing on $\mathrm{End}(V)^{\otimes 2}$).  Writing the RTT relation as $\Phi_R(X) = R_{12} X - \sigma(X) R_{12}$ and its dual as $\Phi_{R^{-1}}$, direct computation shows $R^\perp = \mathrm{Im}(\Phi_{R^{-1}})$: the Koszul dual is the RTT algebra for $R^{-1}$.  For the Yang $R$-matrix, $R^{-1}(u) = (1 - \hbar P/u)^{-1}$; since $P^2 = \mathrm{id}$, the geometric series gives $R^{-1}(u) = \frac{u^2}{u^2 - \hbar^2}\,I + \frac{\hbar u}{u^2 - \hbar^2}\,P$.  At the \emph{quadratic} level (which determines the Koszul dual), the leading approximation $R^{-1}(u) \approx 1 + \hbar P/u = R(u; -\hbar)$ suffices: the higher-order corrections affect only the higher filtration, not the quadratic relations.  More precisely, the RTT relation $R_{12}T_1T_2 = T_2T_1R_{12}$ is quadratic in the generators $T_{ij}(u)$, and the Koszul dual is determined by the quadratic part of the relations (the orthogonal complement $R^\perp \subset V^{\otimes 2}$).  The matrix $R^{-1}(u)$ appears in computing $R^\perp$ via the dual RTT relation, but only the leading terms $(1 - \hbar P/u + O(\hbar^2))$ contribute to the quadratic orthogonal complement; higher-order terms in $R^{-1}$ produce relations of degree $\geq 3$ in the generators.
+The quadratic dual has relation space $R^\perp$, the orthogonal
+complement of the RTT relations under the trace pairing on
+$\mathrm{End}(V)^{\otimes 2}$.  Writing the RTT relation as
+$\Phi_R(X) = R_{12} X - \sigma(X) R_{12}$ and its dual as
+$\Phi_{R^{-1}}$, direct computation shows
+$R^\perp = \mathrm{Im}(\Phi_{R^{-1}})$.  Thus the Koszul dual is the
+RTT algebra for $R^{-1}$.
+
+For the Yang $R$-matrix, $R^{-1}(u) = (1 - \hbar P/u)^{-1}$; since
+$P^2 = \mathrm{id}$, the geometric series gives
+\[
+R^{-1}(u) = \frac{u^2}{u^2 - \hbar^2}\,I
+  + \frac{\hbar u}{u^2 - \hbar^2}\,P.
+\]
+At the quadratic level, which is all the Koszul dual sees, the leading
+approximation $R^{-1}(u) \approx 1 + \hbar P/u = R(u; -\hbar)$
+suffices: the higher-order corrections affect only the higher
+filtration, not the quadratic relations.
+
+More precisely, the RTT relation
+$R_{12}T_1T_2 = T_2T_1R_{12}$ is quadratic in the generators
+$T_{ij}(u)$, and the Koszul dual is determined by the quadratic part of
+the relations, namely the orthogonal complement
+$R^\perp \subset V^{\otimes 2}$.  The matrix $R^{-1}(u)$ enters through
+the dual RTT relation, but only the leading terms
+$(1 - \hbar P/u + O(\hbar^2))$ contribute to the quadratic orthogonal
+complement; higher-order terms in $R^{-1}$ produce relations of degree
+$\geq 3$ in the generators.
 
 \emph{Step 3: Self-duality for simply-laced $\mathfrak{g}$.}
 The automorphism $\phi\colon Y(\mathfrak{g}) \to Y(\mathfrak{g})$ defined by $T_{ij}^{(r)} \mapsto (-1)^r T_{ij}^{(r)}$ sends $\hbar \to -\hbar$ in the RTT relation (since the spectral parameter $u$ is not affected, only the mode-graded generators pick up signs).  For simply-laced $\mathfrak{g}$, where all roots have the same length, this automorphism is well-defined and gives $Y(\mathfrak{g})^{\hbar \to -\hbar} \cong Y(\mathfrak{g})$.
@@ -1556,20 +1583,39 @@ The comparison map $\Phi$ is a quasi-isomorphism; the proof uses only that $(\ma
 
 \emph{Step 3a: Construction of $\Phi$.}  The geometric bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ has underlying graded $\mathcal{D}_X$-module
 $$\bar{B}^n(\mathcal{A}) = \Gamma\!\left(\overline{C}_{n+1}(X),\; j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n_{\log}\right)$$
-(Definition~\ref{def:geometric-bar}).  For each $n \geq 0$, Verdier duality on $\overline{C}_{n+1}(X)$ provides a canonical map
+(Definition~\ref{def:geometric-bar}).
+
+For each $n \geq 0$, Verdier duality on $\overline{C}_{n+1}(X)$ provides a canonical map
 $$\Phi_n \colon \bar{B}^n(\mathcal{A}) \longrightarrow (T^c_{\mathrm{chiral}}(\mathcal{V}^{\vee}))^{(n)}$$
-defined by the residue pairing: for $\alpha = \phi_1 \otimes \cdots \otimes \phi_{n+1} \otimes \omega$ with $\omega \in \Omega^n_{\log}(\overline{C}_{n+1})$,
+defined by the residue pairing.
+
+For $\alpha = \phi_1 \otimes \cdots \otimes \phi_{n+1} \otimes \omega$ with $\omega \in \Omega^n_{\log}(\overline{C}_{n+1})$,
 \begin{equation}\label{eq:comparison-map}
 \Phi_n(\alpha)(\psi_1^*, \ldots, \psi_{n+1}^*) = \int_{\overline{C}_{n+1}(X)} \omega \wedge \prod_{i=1}^{n+1} \langle \phi_i, \psi_i^* \rangle_{\mathrm{Serre}}
 \end{equation}
-where $\langle\,\cdot\,,\,\cdot\,\rangle_{\mathrm{Serre}}$ is the Serre duality pairing $\mathcal{A} \otimes \mathcal{V}^{\vee} \to \omega_X$.  The collection $\{\Phi_n\}_{n \geq 0}$ assembles into a morphism $\Phi \colon \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \mathcal{A}^!$ of graded $\mathcal{D}_X$-modules.
+where $\langle\,\cdot\,,\,\cdot\,\rangle_{\mathrm{Serre}}$ is the Serre duality pairing $\mathcal{A} \otimes \mathcal{V}^{\vee} \to \omega_X$.
 
-\emph{Step 3b: $\Phi$ is a chain map.}  We verify $\Phi \circ d_{\mathrm{bar}} = d_! \circ \Phi$.  The bar differential has three components $d_{\mathrm{bar}} = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$ (Definition~\ref{def:bar-diff-detailed}).  Under $\Phi$:
+The collection $\{\Phi_n\}_{n \geq 0}$ assembles into a morphism $\Phi \colon \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \mathcal{A}^!$ of graded $\mathcal{D}_X$-modules.
+
+\emph{Step 3b: $\Phi$ is a chain map.}  We verify
+$\Phi \circ d_{\mathrm{bar}} = d_! \circ \Phi$.  The bar differential
+has three components
+$d_{\mathrm{bar}} = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$
+(Definition~\ref{def:bar-diff-detailed}).  Under $\Phi$:
 \begin{itemize}
 \item $d_{\mathrm{int}}$ maps to the component of $d_!$ coming from the internal differential of $\mathcal{A}$ (functoriality of Serre duality).
 \item $d_{\mathrm{res}}$ maps to the component of $d_!$ encoding OPE residues: the residue extraction along the divisor $D_{ij} \subset \overline{C}_{n+1}(X)$ via $\eta_{ij}$ corresponds, under the pairing \eqref{eq:comparison-map}, to the dual OPE coefficient $C_{ij}^{k,m}$ appearing in the definition of $d_!$ on cogenerators.
-\item $d_{\mathrm{dR}}$ maps to zero in $\mathcal{A}^!$: by Stokes' theorem on the compact manifold-with-corners $\overline{C}_{n+1}(X)$, the de~Rham differential integrates to boundary contributions, which are already accounted for by $d_{\mathrm{res}}$.  The ``leftover'' $d_{\mathrm{dR}}$ acts on the form factor $\omega$, and since $\Phi$ is defined by integration, $d_{\mathrm{dR}}\omega$ contributes $\int d\omega = \sum_{D_{ij}} \int_{D_{ij}} \mathrm{Res}_{D_{ij}} \omega$, which equals the residue term.
+\item $d_{\mathrm{dR}}$ contributes only the boundary term already
+accounted for by $d_{\mathrm{res}}$.  By Stokes' theorem on the compact
+manifold-with-corners $\overline{C}_{n+1}(X)$,
+\[
+\int_{\overline{C}_{n+1}(X)} d\omega
+= \sum_{D_{ij}} \int_{D_{ij}} \mathrm{Res}_{D_{ij}} \omega.
+\]
+Since $\Phi$ is defined by integration, this is exactly the same
+boundary contribution that defines the residue part of $d_!$.
 \end{itemize}
+
 The precise cancellation follows from Stokes' theorem on manifolds with corners applied to $\overline{C}_{n+1}(X)$ (Theorem~\ref{thm:stokes-config}).
 
 \emph{Step 3c: $\Phi$ preserves the coalgebra structure.}  The coproduct on $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is the boundary restriction map $\Delta_{\bar{B}}(\alpha) = \mathrm{Res}_{\partial}\alpha$, splitting a configuration of $(k+1)$ points into two sub-configurations.  Under the pairing \eqref{eq:comparison-map}, this corresponds to the factorisation of integration over $\overline{C}_{k+1}(X)$ into integrations over strata $\overline{C}_{|I|+1}(X) \times \overline{C}_{|J|+1}(X)$ for $I \sqcup J = \{1,\ldots,k+1\}$.  But this factorised integration is precisely how the deconcatenation coproduct on $T^c_{\mathrm{chiral}}(\mathcal{V}^{\vee})$ acts.  Hence $(\Phi \boxtimes \Phi) \circ \Delta_{\bar{B}} = \bar\Delta \circ \Phi$.
@@ -2255,15 +2301,18 @@ theory.
 filtered-complete via PBW degeneration
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-The bar-cobar adjunction (cf.\ \cite[§5.2.2]{HA} for the $E_1$-algebra bar construction
-in the $\infty$-categorical setting) restricts to an equivalence of
-$\infty$-categories:
+The bar-cobar adjunction restricts to an equivalence of
+$\infty$-categories.  For the underlying $E_1$ bar construction in the
+$\infty$-categorical setting, see \cite[§5.2.2]{HA}.
+
+The equivalence
+is
 \[
 \bar{B}^{\mathrm{ch}}:
 \chirAss\text{-}\mathrm{Alg}^{\mathrm{aug,\, pronil}}
 \;\rightleftarrows\;
 \chirAss\text{-}\mathrm{CoAlg}^{\mathrm{coaug,\, conil}}
-:\Omega^{\mathrm{ch}}
+:\Omega^{\mathrm{ch}},
 \]
 where:
 \begin{itemize}
@@ -2274,6 +2323,7 @@ where:
    is the $\infty$-category of coaugmented, conilpotent
    $\Eone$-chiral coalgebras on $X$.
 \end{itemize}
+
 The unit and counit of the adjunction are quasi-isomorphisms:
 \begin{align}
 \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
