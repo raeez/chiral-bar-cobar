@@ -227,12 +227,18 @@ class TestNonprincipalFrontier:
             hook_pair_positive_nilpotent_brackets,
             hook_pair_quadratic_ghost_term_support,
             hook_pair_current_action_terms,
+            hook_pair_survivor_action_terms,
+            hook_pair_survivor_coupled_blocks,
             hook_pair_mixed_blocks_match_under_dual_swap,
             hook_pair_nonlinear_blocks_match_under_dual_swap,
+            hook_pair_survivor_coupled_blocks_match_under_dual_swap,
             verify_hook_pair_mixed_block_duality_catalog,
             verify_hook_pair_nonlinear_block_duality_catalog,
+            verify_hook_pair_survivor_coupled_block_duality_catalog,
             hook_pair_surviving_field_candidates,
             hook_pair_reduced_brackets,
+            survivor_coupled_block_has_square_zero,
+            survivor_coupled_block_is_acyclic,
             centralizer_dimension_sl_n,
         )
         assert bp_dual_level(0) == -6
@@ -270,13 +276,39 @@ class TestNonprincipalFrontier:
         assert len(target_quad) == len(target_brackets)
         assert len(source_action) == 2 * len(source_brackets)
         assert len(target_action) == 2 * len(target_brackets)
+        source_survivor_action, target_survivor_action = hook_pair_survivor_action_terms(6, 2)
+        source_survivor_blocks, target_survivor_blocks = hook_pair_survivor_coupled_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert source_survivor_action
+        assert target_survivor_action
+        assert all(
+            survivor_coupled_block_has_square_zero(block) and survivor_coupled_block_is_acyclic(block)
+            for block in source_survivor_blocks + target_survivor_blocks
+        )
         assert hook_pair_mixed_blocks_match_under_dual_swap(6, 2, max_constraint_total_degree=1)
         assert hook_pair_nonlinear_blocks_match_under_dual_swap(6, 2, max_constraint_total_degree=1)
+        assert hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
         assert all(verify_hook_pair_mixed_block_duality_catalog(max_n=7, max_constraint_total_degree=1).values())
         assert all(
             verify_hook_pair_nonlinear_block_duality_catalog(
                 max_n=7,
                 max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_hook_pair_survivor_coupled_block_duality_catalog(
+                max_n=5,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
             ).values()
         )
         source_candidates, target_candidates = hook_pair_surviving_field_candidates(5, 2)
@@ -329,6 +361,10 @@ class TestNonprincipalFrontier:
             relabel_truncated_brst_complex,
             relabel_mixed_constraint_ghost_block,
             hook_pair_ds_seed_catalog,
+            hook_pair_survivor_action_terms,
+            hook_pair_survivor_coupled_blocks,
+            hook_pair_survivor_coupled_blocks_match_under_dual_swap,
+            verify_hook_pair_survivor_coupled_block_duality_catalog,
             first_nonselfdual_hook_pair_ds_seed,
             verify_hook_pair_ds_seed_catalog,
             verify_hook_pair_seed_alignment,
@@ -349,6 +385,7 @@ class TestNonprincipalFrontier:
             first_nonselfdual_hook_pair_mixed_blocks_match_under_relabeling,
             first_nonselfdual_hook_pair_nonlinear_mixed_constraint_ghost_blocks,
             first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling,
+            first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling,
             first_nonselfdual_hook_pair_survivor_coupled_blocks,
             first_nonselfdual_hook_pair_surviving_field_candidates,
             first_nonselfdual_hook_pair_reduced_brackets,
@@ -364,9 +401,12 @@ class TestNonprincipalFrontier:
             survivor_coupled_block_has_square_zero,
             survivor_coupled_block_is_acyclic,
             internal_survivor_ce_block_basis,
+            internal_survivor_ce_h0_basis,
             internal_survivor_ce_block_homology_dimensions,
             internal_survivor_ce_block_has_square_zero,
             internal_survivor_ce_block_is_acyclic,
+            internal_survivor_h0_monomial_labels,
+            internal_survivor_linear_h0_labels,
             linear_constraint_block_has_contracting_homotopy,
             linear_constraint_block_is_positive_acyclic,
             first_nonselfdual_hook_pair_specialized_complexes,
@@ -394,6 +434,17 @@ class TestNonprincipalFrontier:
         subregular_survivor_blocks = sl3_subregular_survivor_coupled_blocks(1, 1)
         subregular_internal_blocks = sl3_subregular_internal_survivor_ce_blocks(1)
         hook_catalog = hook_pair_ds_seed_catalog(5)
+        generic_source_survivor_action, generic_target_survivor_action = (
+            hook_pair_survivor_action_terms(6, 2)
+        )
+        generic_source_survivor_blocks, generic_target_survivor_blocks = (
+            hook_pair_survivor_coupled_blocks(
+                6,
+                2,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            )
+        )
         hook_pair_seed = first_nonselfdual_hook_pair_ds_seed()
         hook_source_basis, hook_target_basis = first_nonselfdual_hook_pair_basis_profiles()
         hook_source_blueprint, hook_target_blueprint = first_nonselfdual_hook_pair_brst_blueprints()
@@ -476,6 +527,8 @@ class TestNonprincipalFrontier:
         assert len(hook_target_action) == 4
         assert len(hook_source_survivor_action) == 6
         assert len(hook_target_survivor_action) == 14
+        assert generic_source_survivor_action
+        assert generic_target_survivor_action
         assert len(hook_source_quadratic) == 2
         assert len(hook_target_quadratic) == 2
         assert len(hook_source_candidates) == 5
@@ -623,6 +676,13 @@ class TestNonprincipalFrontier:
         }
         assert len(survivor_coupled_block_basis(5, 5, 1, 1, 0)) == 150
         assert len(internal_survivor_ce_block_basis(4, 1, 1)) == 16
+        assert internal_survivor_ce_h0_basis(rebuilt_subregular_internal) == (
+            (((0, 0, 0, 1), 1),),
+        )
+        assert internal_survivor_h0_monomial_labels(rebuilt_subregular_internal) == (
+            ((((("T", 1),), 1),)),
+        )
+        assert internal_survivor_linear_h0_labels(rebuilt_subregular_internal) == ((("T", 1),),)
         assert internal_survivor_ce_block_homology_dimensions(rebuilt_subregular_internal) == {
             0: 1,
             1: 2,
@@ -662,6 +722,10 @@ class TestNonprincipalFrontier:
         assert mixed_constraint_ghost_block_has_square_zero(hook_target_mixed_blocks[1])
         assert mixed_constraint_ghost_block_has_square_zero(hook_target_nonlinear_blocks[1])
         assert survivor_coupled_block_has_square_zero(hook_target_survivor_blocks[1])
+        assert all(
+            survivor_coupled_block_has_square_zero(block) and survivor_coupled_block_is_acyclic(block)
+            for block in generic_source_survivor_blocks + generic_target_survivor_blocks
+        )
         assert internal_survivor_ce_block_has_square_zero(hook_target_internal_blocks[1])
         assert relabeled_hook_mixed.differentials == hook_target_mixed_blocks[1].differentials
         assert relabel_current_action_terms(
@@ -672,6 +736,20 @@ class TestNonprincipalFrontier:
         assert relabeled_hook_nonlinear.differentials == hook_target_nonlinear_blocks[1].differentials
         assert first_nonselfdual_hook_pair_mixed_blocks_match_under_relabeling(1)
         assert first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling(1)
+        assert first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(1, 1)
+        assert hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        assert all(
+            verify_hook_pair_survivor_coupled_block_duality_catalog(
+                max_n=5,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+            ).values()
+        )
         assert all(linear_constraint_block_has_contracting_homotopy(block) for block in hook_source_blocks[1:])
         assert all(linear_constraint_block_has_contracting_homotopy(block) for block in hook_target_blocks[1:])
         assert all(linear_constraint_block_is_positive_acyclic(block) for block in hook_source_blocks[1:])

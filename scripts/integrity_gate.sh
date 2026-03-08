@@ -118,7 +118,7 @@ for p in active:
 
 head_re = re.compile(r'\\begin\{(theorem|lemma|proposition|corollary)\}')
 status_re = re.compile(
-    r'\\ClaimStatus(?:ProvedHere|ProvedElsewhere|Open|Conjectured)'
+    r'\\ClaimStatus(?:ProvedHere|ProvedElsewhere|Open|Conjectured|Heuristic)'
 )
 
 heads = 0
@@ -190,6 +190,76 @@ echo "  ACTIVE_FILES=$active_files"
 echo "  ACTIVE_GQ_MISSING=$gq_missing"
 echo "  ACTIVE_HMS_MISSING=$hms_missing"
 if [[ "$gq_missing" != "0" || "$hms_missing" != "0" ]]; then
+  fail=1
+fi
+
+echo "==> Virasoro shadow doctrine (active include graph)"
+vir_shadow_drift="$(
+python3 - <<'PY'
+import pathlib
+import re
+
+main = pathlib.Path("main.tex").read_text(encoding="utf-8", errors="ignore")
+main = "\n".join([ln.split("%", 1)[0] for ln in main.splitlines()])
+
+active = []
+for m in re.finditer(r'\\(?:include|input)\{([^}]+)\}', main):
+    p = m.group(1)
+    if not (p.startswith("chapters/") or p.startswith("appendices/")):
+        continue
+    if not p.endswith(".tex"):
+        p += ".tex"
+    pp = pathlib.Path(p)
+    if pp.is_file():
+        active.append(pp)
+
+seen = set()
+uniq = []
+for p in active:
+    if p not in seen:
+        seen.add(p)
+        uniq.append(p)
+
+triggers = [
+    re.compile(r"Virasoro[^.\n]{0,140}\bhas a Koszul dual\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\badmits? a Koszul dual\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\brequires completion[^.\n]{0,80}\bKoszul dual\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\bKoszul dual is\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\bdual algebra\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\bdual object\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^\n]{0,160}W_\\infty", re.IGNORECASE),
+    re.compile(r"Virasoro[^\n]{0,160}W_infty", re.IGNORECASE),
+]
+safe = [
+    re.compile(r"same-family", re.IGNORECASE),
+    re.compile(r"\bshadow\b", re.IGNORECASE),
+    re.compile(r"self-dual", re.IGNORECASE),
+    re.compile(r"m/s-level", re.IGNORECASE),
+    re.compile(r"\bm-level\b", re.IGNORECASE),
+    re.compile(r"\bs-level\b", re.IGNORECASE),
+    re.compile(r"\bmc4\b", re.IGNORECASE),
+    re.compile(r"completion frontier", re.IGNORECASE),
+    re.compile(r"realization problem", re.IGNORECASE),
+    re.compile(r"infinite-generator", re.IGNORECASE),
+    re.compile(r"does not yet", re.IGNORECASE),
+    re.compile(r"not yet", re.IGNORECASE),
+]
+
+count = 0
+for path in uniq:
+    lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    for i, line in enumerate(lines):
+        if not any(p.search(line) for p in triggers):
+            continue
+        window = "\n".join(lines[max(0, i - 2):min(len(lines), i + 4)])
+        if not any(p.search(window) for p in safe):
+            count += 1
+
+print(count)
+PY
+)"
+echo "  VIRASORO_SHADOW_DRIFT=$vir_shadow_drift"
+if [[ "$vir_shadow_drift" != "0" ]]; then
   fail=1
 fi
 

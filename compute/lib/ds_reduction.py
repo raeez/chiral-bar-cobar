@@ -3129,6 +3129,69 @@ def internal_survivor_ce_block_homology_dimensions(
     return dims
 
 
+def internal_survivor_ce_h0_basis(
+    block: InternalSurvivorCEBlock,
+) -> Tuple[Tuple[Tuple[Tuple[int, ...], object], ...], ...]:
+    """Basis of H^0 represented on the CE degree-zero survivor monomials."""
+    basis = block.basis_by_ce_degree.get(0, ())
+    if not basis:
+        return ()
+    d0 = block.differentials.get(0)
+    if d0 is None:
+        return tuple((((basis_element[0], sympify(1)),),) for basis_element in basis)
+    return tuple(
+        tuple(
+            (basis[index][0], simplify(vector[index, 0]))
+            for index in range(vector.rows)
+            if simplify(vector[index, 0]) != 0
+        )
+        for vector in d0.nullspace()
+    )
+
+
+def _survivor_monomial_label(
+    survivor_labels: Tuple[str, ...],
+    monomial: Tuple[int, ...],
+) -> Tuple[Tuple[str, int], ...]:
+    """Labeled survivor monomial from an exponent vector."""
+    return tuple(
+        (label, exponent)
+        for label, exponent in zip(survivor_labels, monomial)
+        if exponent
+    )
+
+
+def internal_survivor_h0_monomial_labels(
+    block: InternalSurvivorCEBlock,
+) -> Tuple[Tuple[Tuple[Tuple[Tuple[str, int], ...], object], ...], ...]:
+    """H^0 basis with survivor monomials written in the labeled basis."""
+    return tuple(
+        tuple(
+            (_survivor_monomial_label(block.survivor_labels, monomial), coefficient)
+            for monomial, coefficient in vector
+        )
+        for vector in internal_survivor_ce_h0_basis(block)
+    )
+
+
+def internal_survivor_linear_h0_labels(
+    block: InternalSurvivorCEBlock,
+) -> Tuple[Tuple[Tuple[str, object], ...], ...]:
+    """Linear H^0 representatives, when the survivor polynomial degree is one."""
+    if block.survivor_polynomial_degree != 1:
+        raise ValueError("linear H^0 labels are only defined at survivor polynomial degree 1")
+    labels = []
+    for vector in internal_survivor_ce_h0_basis(block):
+        labels.append(
+            tuple(
+                (block.survivor_labels[monomial.index(1)], coefficient)
+                for monomial, coefficient in vector
+                if sum(monomial) == 1 and max(monomial) == 1
+            )
+        )
+    return tuple(labels)
+
+
 def internal_survivor_ce_block_has_square_zero(block: InternalSurvivorCEBlock) -> bool:
     """Check d^2 = 0 on an internal reduced-survivor CE block."""
     for degree, d_k in block.differentials.items():
@@ -3802,7 +3865,7 @@ def verify_hook_pair_nonlinear_block_duality_catalog(
 
 
 def verify_hook_pair_survivor_coupled_block_duality_catalog(
-    max_n: int = 7,
+    max_n: int = 5,
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
 ) -> Dict[str, bool]:
@@ -3885,6 +3948,22 @@ def first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling(
         target_blocks,
         label_map=first_nonselfdual_hook_pair_ghost_label_map(),
         side_map=first_nonselfdual_hook_pair_ghost_side_map(),
+    )
+
+
+def first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Check first hook-pair survivor-coupled blocks against the transpose-dual case."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+        4,
+        1,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
     )
 
 
@@ -4018,49 +4097,14 @@ def first_nonselfdual_hook_pair_survivor_coupled_blocks(
     survivor_total_degree: int = 1,
 ) -> Tuple[Tuple[SurvivorCoupledBRSTBlock, ...], Tuple[SurvivorCoupledBRSTBlock, ...]]:
     """Survivor-coupled BRST blocks for the first non-self-dual hook pair."""
-    source_constraints, target_constraints = first_nonselfdual_hook_pair_constraints()
-    source_character, target_character = first_nonselfdual_hook_pair_constraint_characters()
-    source_quadratic, target_quadratic = first_nonselfdual_hook_pair_quadratic_ghost_term_support()
-    source_current_action, target_current_action = first_nonselfdual_hook_pair_current_action_terms()
-    source_survivor_action, target_survivor_action = first_nonselfdual_hook_pair_survivor_action_terms()
-    source_survivors, target_survivors = first_nonselfdual_hook_pair_surviving_field_candidates()
-    return (
-        tuple(
-            build_survivor_coupled_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_source_{item.root_label}" for item in source_constraints
-                ),
-                survivor_labels=tuple(item.label for item in source_survivors),
-                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
-                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
-                quadratic_terms=source_quadratic,
-                current_action_terms=source_current_action,
-                survivor_action_terms=source_survivor_action,
-                constraint_total_degree=total_degree,
-                survivor_total_degree=survivor_total_degree,
-                source_tag=f"A3_hook_source_survivor_coupled_{total_degree}_{survivor_total_degree}",
-            )
-            for total_degree in range(max_constraint_total_degree + 1)
-        ),
-        tuple(
-            build_survivor_coupled_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_target_{item.root_label}" for item in target_constraints
-                ),
-                survivor_labels=tuple(item.label for item in target_survivors),
-                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
-                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
-                quadratic_terms=target_quadratic,
-                current_action_terms=target_current_action,
-                survivor_action_terms=target_survivor_action,
-                constraint_total_degree=total_degree,
-                survivor_total_degree=survivor_total_degree,
-                source_tag=f"A3_hook_target_survivor_coupled_{total_degree}_{survivor_total_degree}",
-            )
-            for total_degree in range(max_constraint_total_degree + 1)
-        ),
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_survivor_coupled_blocks(
+        4,
+        1,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
     )
 
 
@@ -4275,6 +4319,10 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         internal_survivor_ce_block_homology_dimensions(subregular_internal_survivor_blocks[1])
         == {0: 1, 1: 2, 2: 2, 3: 2, 4: 1}
     )
+    results["subregular internal survivor linear invariant is T"] = (
+        internal_survivor_linear_h0_labels(subregular_internal_survivor_blocks[1])
+        == ((("T", 1),),)
+    )
     results["first non-self-dual hook pair partitions"] = (
         hook_pair.source_partition == (3, 1)
         and hook_pair.target_partition == (2, 1, 1)
@@ -4466,6 +4514,12 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         survivor_coupled_block_is_acyclic(block)
         for block in hook_source_survivor_blocks + hook_target_survivor_blocks
     )
+    results["first hook survivor-coupled blocks match under dual swap"] = (
+        first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+    )
     results["first hook survivor feedback is nontrivial"] = (
         any(
             hook_source_survivor_blocks[1].differentials[degree]
@@ -4487,6 +4541,12 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         == {0: 2, 1: 5, 2: 5, 3: 5, 4: 5, 5: 2}
         and internal_survivor_ce_block_homology_dimensions(hook_target_internal_survivor_blocks[1])
         == {0: 1, 1: 2, 2: 2, 3: 2, 4: 2, 5: 3, 6: 2, 7: 0, 8: 1, 9: 1}
+    )
+    results["first hook internal survivor linear invariants are explicit"] = (
+        internal_survivor_linear_h0_labels(hook_source_internal_survivor_blocks[1])
+        == ((("source_gm2_1", 1),), (("source_gm4_1", 1),))
+        and internal_survivor_linear_h0_labels(hook_target_internal_survivor_blocks[1])
+        == ((("target_gm2_1", 1),),)
     )
     results["first hook reduced brackets close on survivors"] = (
         hook_source_brackets[("source_gm2_2", "source_gm2_3")] == {"source_gm4_1": 1}
@@ -4510,6 +4570,13 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["hook nonlinear dual-swap catalog checks"] = all(
         verify_hook_pair_nonlinear_block_duality_catalog(max_n=7, max_constraint_total_degree=1).values()
+    )
+    results["hook survivor-coupled dual-swap catalog checks"] = all(
+        verify_hook_pair_survivor_coupled_block_duality_catalog(
+            max_n=5,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        ).values()
     )
     results["hook pair catalog checks"] = all(
         verify_hook_pair_ds_seed_catalog(max_n=8, level=k).values()

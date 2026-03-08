@@ -828,6 +828,18 @@ standalone mathematical question.
   Staged `n=7` probes now verify rank/equivariance/commutator gates
   (`rank=728`, `\ker=1459`, invariants `=36`) in ~11.7s with Casimir eigenspaces
   skipped; full `n=7` eigenspace computation remains the active bottleneck.
+  The profiler and library now expose explicit Casimir modes
+  (`auto`/`exact`/`theory`) with default policy `auto` = exact through `n<=6`
+  and representation-theoretic multiplicities from `n>=7`, so default diagnostics
+  stay fully rigorous on the stable window while keeping staged frontier checks live.
+- **MC2 Step-1 compute scaffold added** (`compute/lib/mc2_cyclic_linf.py`):
+  a finite-dimensional coderivation dg-Lie model and low-arity cyclic
+  `L_\infty` model are now executable, including an initial symbolic
+  Maurer-Cartan solver pass with nontrivial solutions `{0,1}` and regression tests
+  in `compute/tests/test_mc2_cyclic_linf.py`.
+  The same module now includes a first non-toy `sl_2` seed extracted from
+  bar/OPE data (simple-pole bracket + normalized double-pole pairing),
+  with dg-Lie/Jacobi/Leibniz and ad-invariant pairing checks.
 
 ### What would unblock these
 See NEW_MACHINERY.md #M9 for detailed computational strategies.

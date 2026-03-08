@@ -47,12 +47,16 @@ from compute.lib.ds_reduction import (
     hook_pair_positive_nilpotent_brackets,
     hook_pair_quadratic_ghost_term_support,
     hook_pair_current_action_terms,
+    hook_pair_survivor_action_terms,
     hook_pair_mixed_constraint_ghost_blocks,
     hook_pair_nonlinear_mixed_constraint_ghost_blocks,
+    hook_pair_survivor_coupled_blocks,
     hook_pair_mixed_blocks_match_under_dual_swap,
     hook_pair_nonlinear_blocks_match_under_dual_swap,
+    hook_pair_survivor_coupled_blocks_match_under_dual_swap,
     verify_hook_pair_mixed_block_duality_catalog,
     verify_hook_pair_nonlinear_block_duality_catalog,
+    verify_hook_pair_survivor_coupled_block_duality_catalog,
     hook_pair_surviving_field_candidates,
     hook_pair_reduced_brackets,
     hook_pair_specialized_complexes,
@@ -75,6 +79,7 @@ from compute.lib.ds_reduction import (
     first_nonselfdual_hook_pair_internal_survivor_ce_blocks,
     first_nonselfdual_hook_pair_mixed_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling,
+    first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_survivor_coupled_blocks,
     ghost_brst_differential,
     brst_ghost_weights,
@@ -93,11 +98,14 @@ from compute.lib.ds_reduction import (
     current_action_differential,
     internal_survivor_action_terms,
     internal_survivor_ce_block_basis,
+    internal_survivor_ce_h0_basis,
     internal_survivor_ce_block_homology_dimensions,
     internal_survivor_ce_block_has_square_zero,
     internal_survivor_ce_block_is_acyclic,
     internal_survivor_ce_differential,
     internal_survivor_ghost_labels,
+    internal_survivor_h0_monomial_labels,
+    internal_survivor_linear_h0_labels,
     internal_survivor_quadratic_ghost_terms,
     mixed_constraint_ghost_brst_differential,
     quadratic_ghost_differential,
@@ -707,6 +715,7 @@ class TestSurvivorCoupledBlocks:
             4: 0,
             5: 0,
         }
+        assert first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(1, 1)
         assert survivor_coupled_block_homology_dimensions(target_blocks[1]) == {
             -1: 0,
             0: 0,
@@ -797,6 +806,10 @@ class TestInternalSurvivorCEBlocks:
         assert [block.survivor_polynomial_degree for block in blocks] == [0, 1, 2]
         assert all(internal_survivor_ce_block_has_square_zero(block) for block in blocks)
         assert not all(internal_survivor_ce_block_is_acyclic(block) for block in blocks)
+        assert internal_survivor_ce_h0_basis(blocks[1]) == (
+            (((0, 0, 0, 1), 1),),
+        )
+        assert internal_survivor_linear_h0_labels(blocks[1]) == ((("T", 1),),)
         assert internal_survivor_ce_block_homology_dimensions(blocks[0]) == {
             0: 1,
             1: 1,
@@ -811,6 +824,10 @@ class TestInternalSurvivorCEBlocks:
             3: 2,
             4: 1,
         }
+        assert internal_survivor_h0_monomial_labels(blocks[2]) == (
+            (((("J", 1), ("T", 1)), Rational(2, 3)), ((("G+", 1), ("G-", 1)), 1)),
+            ((((("T", 2),), 1),)),
+        )
         assert internal_survivor_ce_block_homology_dimensions(blocks[2]) == {
             0: 2,
             1: 3,
@@ -825,6 +842,13 @@ class TestInternalSurvivorCEBlocks:
         assert [block.survivor_polynomial_degree for block in target_blocks] == [0, 1]
         assert all(internal_survivor_ce_block_has_square_zero(block) for block in source_blocks)
         assert all(internal_survivor_ce_block_has_square_zero(block) for block in target_blocks)
+        assert internal_survivor_linear_h0_labels(source_blocks[1]) == (
+            (("source_gm2_1", 1),),
+            (("source_gm4_1", 1),),
+        )
+        assert internal_survivor_linear_h0_labels(target_blocks[1]) == (
+            (("target_gm2_1", 1),),
+        )
         assert internal_survivor_ce_block_homology_dimensions(source_blocks[0]) == {
             0: 1,
             1: 2,
@@ -841,6 +865,10 @@ class TestInternalSurvivorCEBlocks:
             4: 5,
             5: 2,
         }
+        assert internal_survivor_h0_monomial_labels(source_blocks[1]) == (
+            ((((("source_gm2_1", 1),), 1),)),
+            ((((("source_gm4_1", 1),), 1),)),
+        )
         assert internal_survivor_ce_block_homology_dimensions(target_blocks[0]) == {
             0: 1,
             1: 1,
@@ -865,6 +893,9 @@ class TestInternalSurvivorCEBlocks:
             8: 1,
             9: 1,
         }
+        assert internal_survivor_h0_monomial_labels(target_blocks[1]) == (
+            ((((("target_gm2_1", 1),), 1),)),
+        )
 
 
 class TestFirstNonSelfDualHookPair:
@@ -1119,13 +1150,51 @@ class TestHookFamilyCatalog:
             for block in source_blocks + target_blocks + nonlinear_source + nonlinear_target
         )
 
+    def test_generic_survivor_action_and_blocks(self):
+        source_action, target_action = hook_pair_survivor_action_terms(6, 2)
+        source_candidates, target_candidates = hook_pair_surviving_field_candidates(6, 2)
+        source_constraints, target_constraints = hook_pair_constraints(6, 2)
+        source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
+        source_survivor_labels = {item.label for item in source_candidates}
+        target_survivor_labels = {item.label for item in target_candidates}
+        source_ghost_labels = {item.c_ghost for item in source_constraints}
+        target_ghost_labels = {item.c_ghost for item in target_constraints}
+        assert all(item.c_ghost in source_ghost_labels for item in source_action)
+        assert all(item.c_ghost in target_ghost_labels for item in target_action)
+        assert all(item.source_survivor_label in source_survivor_labels for item in source_action)
+        assert all(item.target_survivor_label in source_survivor_labels for item in source_action)
+        assert all(item.source_survivor_label in target_survivor_labels for item in target_action)
+        assert all(item.target_survivor_label in target_survivor_labels for item in target_action)
+        assert all(
+            survivor_coupled_block_has_square_zero(block) and survivor_coupled_block_is_acyclic(block)
+            for block in source_blocks + target_blocks
+        )
+
     def test_generic_dual_swap_block_symmetry(self):
         assert hook_pair_mixed_blocks_match_under_dual_swap(6, 2, max_constraint_total_degree=1)
         assert hook_pair_nonlinear_blocks_match_under_dual_swap(6, 2, max_constraint_total_degree=1)
+        assert hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+            6,
+            2,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
         assert all(
             verify_hook_pair_mixed_block_duality_catalog(
                 max_n=7,
                 max_constraint_total_degree=1,
+            ).values()
+        )
+        assert all(
+            verify_hook_pair_survivor_coupled_block_duality_catalog(
+                max_n=5,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
             ).values()
         )
         assert all(

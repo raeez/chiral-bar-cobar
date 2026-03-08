@@ -430,8 +430,17 @@ This file tracks the systematic rearchitecture pass. Status values:
 | 47 | `chapters/theory/bar_cobar_construction.tex`, `chapters/examples/yangians.tex` | theorem/conjecture shaping | turn the infinite-generator frontier into theorem-ready completed-bar statements and make the Yangian completion hypothesis read as MC4 rather than generic convergence prose | `done` |
 | 47 | `chapters/examples/w_algebras_framework.tex`, `chapters/examples/w_algebras_deep.tex`, `chapters/connections/holomorphic_topological.tex` | non-principal `W` frontier | state principal finite-type `W_N` as proved core, isolate hook/subregular theorematic seeds, and keep arbitrary orbit duality explicitly conjectural | `done` |
 | 47 | `chapters/theory/derived_langlands.tex`, `chapters/theory/deformation_theory.tex`, `chapters/connections/physical_origins.tex`, `chapters/connections/feynman_diagrams.tex` | periodicity + Part III doctrine | separate theorematic periodicity from higher-rank conjectural transport and keep the physics horizon at boundary-side/bar-side data rather than completed bulk duals | `done` |
-| 47 | `scripts/manuscript_qc.py`, `scripts/integrity_gate.sh` | regression prevention | add automatic doctrine checks so bare Virasoro dual language without shadow/MC4 caveats cannot drift back in | `in progress` |
-| 47 | strict QC lane + `make fast` + full `make` | verification | confirm the frontier synchronization compiles and the strengthened doctrine gates pass cleanly | `pending` |
+| 47 | `scripts/manuscript_qc.py`, `scripts/integrity_gate.sh` | regression prevention | add automatic doctrine checks so bare Virasoro dual language without shadow/MC4 caveats cannot drift back in | `done` |
+| 47 | strict QC lane + `make fast` + full `make` | verification | confirm the frontier synchronization compiles on the live tree via strict QC, `make fast`, and incremental full `make`; note that clean integrity rebuilds remain sensitive to concurrent auxiliary-file churn | `done` |
+
+## Wave 50: MC1 Casimir Policy + MC2 Scaffold Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 48 | `compute/lib/genus1_pbw_sl2.py`, `compute/scripts/profile_genus1_pbw_sl2_scaling.py`, `compute/tests/test_genus1_pbw_sl2.py` | MC1 frontier control | codify exact-vs-theory Casimir policy (`auto/exact/theory`, cutoff at `n=6`) and lock staged `n=7` diagnostics into test/profiler lanes | `done` |
+| 48 | `compute/lib/mc2_cyclic_linf.py`, `compute/lib/__init__.py`, `compute/tests/test_mc2_cyclic_linf.py` | MC2 Step-1 compute layer | establish executable coderivation dg-Lie + cyclic `L_\infty` scaffold with first symbolic MC solve and regression checks | `done` |
+| 48 | `chapters/theory/higher_genus.tex`, `notes/autonomous_state.md`, `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md` | theorem/control sync | align MC2 status remark and programme/control ledgers with the new scaffold and Casimir policy split | `done` |
+| 48 | test/build/QC lanes (`pytest`, `make fast`, strict QC) | verification | rerun focused compute tests plus manuscript gates after synchronization edits | `done` |
 
 ## Standing Rule
 

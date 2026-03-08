@@ -190,11 +190,64 @@ No new items added.
    - `.venv/bin/python compute/scripts/profile_genus1_pbw_sl2_scaling.py --min-power 7 --max-power 7 --skip-casimir --skip-equivariance --skip-commutator`
    - `.venv/bin/python compute/scripts/profile_genus1_pbw_sl2_scaling.py --min-power 7 --max-power 7 --skip-casimir`
 
+## Continuation Update (Mar 8, 2026, Casimir-policy + MC2 scaffold pass)
+
+1. **MC1 Casimir policy hardened for default/staged lanes**
+   - `compute/lib/genus1_pbw_sl2.py` now exposes:
+     - `CASIMIR_EXACT_CUTOFF = 6`
+     - `casimir_method_for_tensor_power(power, method="auto")`
+     - Casimir eigenspace computation modes: `auto` / `exact` / `theory`.
+   - Default `auto` policy is now explicit:
+     exact eigenspaces for `n<=6`, representation-theoretic multiplicities for `n>=7`.
+2. **Profiler synchronized to the same policy**
+   - `compute/scripts/profile_genus1_pbw_sl2_scaling.py` now supports:
+     - `--casimir-method {auto,exact,theory}`
+     - `--exact-cutoff`.
+   - `n=7` runs in `auto` and `theory` complete quickly with the same spectrum
+     `{112:15, 84:78, 60:231, 40:441, 24:588, 12:525, 4:273, 0:36}`.
+   - `n=7` in `exact` mode remains the active bottleneck (stalled/terminated).
+3. **MC2 Step-1 scaffold implemented**
+   - New module: `compute/lib/mc2_cyclic_linf.py`.
+   - Implements a finite coderivation dg-Lie layer, low-arity cyclic `L_\infty`
+     brackets, and a first symbolic Maurer--Cartan solve pass.
+   - Exposed via `compute/lib/__init__.py`; regression tests added at
+     `compute/tests/test_mc2_cyclic_linf.py`.
+   - Verification pass:
+     `.venv/bin/python -m pytest -q compute/tests/test_genus1_pbw_sl2.py compute/tests/test_mc2_cyclic_linf.py`
+     with result `54 passed`.
+4. **Build/QC lane re-stabilized**
+   - During synchronization, `main.aux` was observed in a binary-corrupted state
+     (NUL bytes), triggering invalid-character failures in `make fast`.
+   - `make clean` + fresh `make fast` restored a clean single-pass build lane:
+     `main.pdf` produced successfully (1360 pages in this pass).
+   - `./scripts/manuscript_qc.py --strict --limit 200` returned zero findings.
+
+## Continuation Update (Mar 8, 2026, MC2 Step-2 seed pass)
+
+1. **Bar-derived `sl_2` coderivation seed added**
+   - `compute/lib/mc2_cyclic_linf.py` now builds a non-toy MC2 seed directly from
+     `compute/lib/bar_complex.py::sl2_algebra()`:
+     - simple-pole OPE extraction for dg-Lie brackets,
+     - normalized double-pole extraction for cyclic pairing.
+2. **Bar-derived cyclic seed verification added**
+   - Added `build_mc2_sl2_cyclic_linf_seed()` and
+     `verify_mc2_sl2_seed_from_bar()`.
+   - Checks include dg-Lie identities, expected `sl_2` bracket constants,
+     pairing nondegeneracy, and ad-invariance against the extracted bracket.
+3. **Test lane coverage extended**
+   - `compute/tests/test_mc2_cyclic_linf.py` now includes a dedicated
+     `sl_2` seed section.
+   - Verification run:
+     `.venv/bin/python -m pytest -q compute/tests/test_genus1_pbw_sl2.py compute/tests/test_mc2_cyclic_linf.py`
+     with result `58 passed`.
+
 ## Next Session
-1. **MC1 computational depth step**: accelerate/approximate Casimir eigenspaces at `n=7`
-   (sparse/modular strategy) so full-spectrum checks can re-enter the default frontier.
-2. **MC2 construction**: cyclic L∞ from bar coderivations (Step 1 of proof strategy).
-3. **Further polish**: MC annotation propagation to remaining example chapters (minor).
+1. **MC1 computational depth step**: implement sparse/modular eigenspace extraction for
+   `n=7` so `exact` mode becomes practical again.
+2. **MC2 construction (Step 2 -> Step 3)**: lift beyond generator-level `sl_2` seed to
+   higher-weight/derived bar-coderivation data and first nontrivial cyclic `l_3` input.
+3. **MC2 completion/clutching layer**: prototype the completed tensor product and first
+   clutching-compatibility checks in compute + theorem-control text.
 4. **Depth work**: sl₃ H⁴ (blocked by 786K×24K matrix).
 
 ## Key Files

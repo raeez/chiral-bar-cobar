@@ -15,7 +15,7 @@ our gap to close.
 with explicit inputs, outputs, and verification criteria. This prevents scope creep
 (the main failure mode) while enabling deep vertical strikes (the main strength).
 
-**Last updated**: Session ~125 (Mar 6, 2026)
+**Last updated**: Session ~126 (Mar 8, 2026)
 
 ---
 
@@ -66,6 +66,20 @@ unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
 - Staged `n=7` probes now confirm that rank/equivariance/commutator gates remain
   tractable (~11.7s with Casimir eigenspaces skipped), so the precise bottleneck
   is isolated to full Casimir eigenspace extraction at `n=7`.
+- Casimir extraction policy is now explicit in the shared API:
+  `CASIMIR_EXACT_CUTOFF = 6` with mode selector
+  `casimir_method_for_tensor_power(power, method="auto")`.
+  Default `auto` keeps exact eigenspaces through `n<=6` and switches to
+  representation-theoretic multiplicities at `n>=7`, so default checks remain
+  full-strength on the stable window while preserving a practical frontier lane.
+- A first MC2 compute scaffold now exists (`compute/lib/mc2_cyclic_linf.py`):
+  finite coderivation dg-Lie identities, low-arity cyclic `L_\infty` brackets,
+  and a first symbolic Maurer-Cartan solver pass (solutions `{0,1}`) with tests in
+  `compute/tests/test_mc2_cyclic_linf.py`.
+- The MC2 scaffold now includes a first bar-derived affine `\mathfrak{sl}_2`
+  seed: generator-level simple-pole brackets and normalized double-pole pairing
+  are extracted from `compute/lib/bar_complex.py` (`sl2_algebra()`), giving a
+  non-toy dg-Lie / cyclic-checkpoint for Step 2.
 - Immediate effect: extending MC1 checks to higher conformal weights is now a representation
   data task, not a new linear-algebra scaffolding task.
 
@@ -965,7 +979,10 @@ now has an explicit reduced survivor sector:
   the subregular `sl_3` block has cohomology
   `{0:1,1:2,2:2,3:2,4:1}`, while the first non-self-dual hook pair has source
   profile `{0:2,1:5,2:5,3:5,4:5,5:2}` and target profile
-  `{0:1,1:2,2:2,3:2,4:2,5:3,6:2,7:0,8:1,9:1}`.
+  `{0:1,1:2,2:2,3:2,4:2,5:3,6:2,7:0,8:1,9:1}`. The first linear `H^0`
+  generators are also explicit: `T` in the subregular control case,
+  `source_gm2_1` and `source_gm4_1` on the first hook source, and
+  `target_gm2_1` on the first hook target.
 - The same mixed/nonlinear `u-c-b` machinery is now generalized from the first
   hook pair to all type-A hook pairs at the seed level: compute now exposes
   family APIs for constraints, positive-sector brackets, quadratic `c c b`

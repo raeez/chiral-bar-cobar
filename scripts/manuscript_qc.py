@@ -41,6 +41,30 @@ AMBIGUOUS_STATUS_PATTERNS = (
     re.compile(r"\bby analogy\b", re.IGNORECASE),
     re.compile(r"\bin precise analogy\b", re.IGNORECASE),
 )
+VIRASORO_DUAL_PATTERNS = (
+    re.compile(r"Virasoro[^.\n]{0,140}\bhas a Koszul dual\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\badmits? a Koszul dual\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\brequires completion[^.\n]{0,80}\bKoszul dual\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\bKoszul dual is\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\bdual algebra\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^.\n]{0,140}\bdual object\b", re.IGNORECASE),
+    re.compile(r"Virasoro[^\n]{0,160}W_\\infty", re.IGNORECASE),
+    re.compile(r"Virasoro[^\n]{0,160}W_infty", re.IGNORECASE),
+)
+VIRASORO_SAFE_PATTERNS = (
+    re.compile(r"same-family", re.IGNORECASE),
+    re.compile(r"\bshadow\b", re.IGNORECASE),
+    re.compile(r"self-dual", re.IGNORECASE),
+    re.compile(r"m/s-level", re.IGNORECASE),
+    re.compile(r"\bm-level\b", re.IGNORECASE),
+    re.compile(r"\bs-level\b", re.IGNORECASE),
+    re.compile(r"\bmc4\b", re.IGNORECASE),
+    re.compile(r"completion frontier", re.IGNORECASE),
+    re.compile(r"realization problem", re.IGNORECASE),
+    re.compile(r"infinite-generator", re.IGNORECASE),
+    re.compile(r"does not yet", re.IGNORECASE),
+    re.compile(r"not yet", re.IGNORECASE),
+)
 
 
 @dataclass(frozen=True)
@@ -147,6 +171,7 @@ def scan() -> dict[str, object]:
     prior_version: list[Finding] = []
     ai_tells: list[Finding] = []
     ambiguous_status: list[Finding] = []
+    virasoro_shadow_drift: list[Finding] = []
     long_paragraphs: list[Paragraph] = []
     duplicate_map: dict[str, list[Paragraph]] = collections.defaultdict(list)
 
@@ -193,6 +218,14 @@ def scan() -> dict[str, object]:
                 if not STATUS_RE.search(window):
                     untagged.append(Finding(rel, idx, line.strip()))
 
+        if is_active:
+            for idx, line in enumerate(lines, start=1):
+                if not any(pattern.search(line) for pattern in VIRASORO_DUAL_PATTERNS):
+                    continue
+                window = "\n".join(lines[max(0, idx - 3) : min(len(lines), idx + 3)])
+                if not any(pattern.search(window) for pattern in VIRASORO_SAFE_PATTERNS):
+                    virasoro_shadow_drift.append(Finding(rel, idx, line.strip()))
+
         for para in paragraph_iter(rel, lines):
             if len(para.text) > 1200:
                 long_paragraphs.append(para)
@@ -216,6 +249,7 @@ def scan() -> dict[str, object]:
         "prior_version": prior_version,
         "ai_tells": ai_tells,
         "ambiguous_status": ambiguous_status,
+        "virasoro_shadow_drift": virasoro_shadow_drift,
         "long_paragraphs": long_paragraphs,
         "duplicates": duplicates,
     }
@@ -252,6 +286,7 @@ def report(data: dict[str, object], limit: int) -> None:
     print(f"- Untagged theorem heads: `{len(data['untagged'])}`")
     print(f"- Prior-version leaks: `{len(data['prior_version'])}`")
     print(f"- Ambiguous status language: `{len(data['ambiguous_status'])}`")
+    print(f"- Virasoro shadow-doctrine drift: `{len(data['virasoro_shadow_drift'])}`")
     print(f"- AI-tell candidates: `{len(data['ai_tells'])}`")
     print(f"- Cross-file duplicate paragraphs: `{len(data['duplicates'])}`")
     print(f"- Long paragraphs (>1200 chars): `{len(data['long_paragraphs'])}`")
@@ -280,6 +315,13 @@ def report(data: dict[str, object], limit: int) -> None:
     print_section("Ambiguous Status Language")
     if data["ambiguous_status"]:
         print_findings(data["ambiguous_status"], limit)
+    else:
+        print("- none")
+    print()
+
+    print_section("Virasoro Shadow-Doctrine Drift")
+    if data["virasoro_shadow_drift"]:
+        print_findings(data["virasoro_shadow_drift"], limit)
     else:
         print("- none")
     print()
@@ -328,6 +370,7 @@ def main() -> int:
         or data["untagged"]
         or data["prior_version"]
         or data["ambiguous_status"]
+        or data["virasoro_shadow_drift"]
     ):
         return 1
     return 0
