@@ -9,7 +9,7 @@ computational infrastructure that does not yet exist.
 **Audience**: Future sessions of this project. A referee assessing the book's contribution
 to the field. The author planning next steps.
 
-**Last updated**: Session ~125 (Mar 6, 2026)
+**Last updated**: Mar 8, 2026
 
 **Relationship to other files**:
 - `HORIZON.md` — Completed. All 59 items resolved. This file begins where HORIZON ends.
@@ -36,6 +36,14 @@ The **theorematic silhouette** — the target of the full programme — consists
 A_mod (Verdier-functorial bar-cobar over M_{g,n}), B_mod (coderived persistence),
 C_mod (Lagrangian complementarity), an Index theorem (GRR for genus series),
 and Derived Drinfeld-Kohno (E1-factorization equivalence). See notes/VISION.md.
+
+Status discipline for the frontier:
+when Parts I-II exhibit a same-family partner
+(for example the Virasoro involution `c <-> 26-c`), that partner should be read as the
+proved M/S-level shadow controlling curvature, complementarity, and
+semi-infinite growth.  The stronger H-level realization by a completed
+infinite-generator dual object (for example `W_\\infty`) remains frontier mathematics and belongs to the
+MC4 / infinite-generator programme.
 
 Each programme below advances a specific facet:
 
@@ -79,6 +87,12 @@ and theoretical physics.** No discipline is subordinate. The programmes below re
 The BRST-bar identification, the holographic dictionary, the anomaly cancellation mechanism,
 and the AGT chain-level realization are all results we aim to prove, not merely conjecture.
 Programme VI is integral, not an afterthought.
+
+The sharpest current boundary is therefore not ``proved versus conjectural'' in
+the abstract, but ``proved shadow versus realized object.''  The book now has a
+stable proved modular Koszul core; what remains is to upgrade its shadows to the
+homotopy-native objects that would constitute modular homotopy theory for
+factorization algebras on curves.
 
 What remains falls into three categories:
 1. **New mathematics** (Programmes I-V, VIII): derived algebraic geometry, root-of-unity
@@ -618,6 +632,16 @@ standalone mathematical question.
   `hook_pair_ds_seed(_catalog)` plus family-level nilpotence/acyclicity checks
   for the truncated symbolic BRST sectors. The two catalogs are now explicitly
   cross-aligned by partition and level-shift checks.
+- **Constraint-count ansatz layer (Mar 8, 2026, seventh pass)**:
+  generic hook/subregular DS sectors now default to an explicit type-A sizing
+  ansatz extracted from canonical hook `sl_2` triples (positive simple-root
+  grade count, with the proved `sl_3` subregular case fixed at `2`) with
+  verification checks, and this ansatz now propagates automatically through the
+  DS pair catalogs and linear-constraint block builders.
+  The orbit module now also provides explicit hook-pair profile records
+  (`hook_orbit_pair_profile`, catalog + verifier) that package source/dual
+  partitions, orbit/centralizer dimensions, positive basis labels, and the
+  same simple-root count data used in the DS sizing layer.
 - **Subregular survivor identification (Mar 8, 2026, fifth pass)**:
   `compute/lib/ds_reduction.py` now identifies the explicit `sl_3` subregular
   `g^f` survivor sector in matrix form and verifies that its DS weight profile
@@ -644,6 +668,73 @@ standalone mathematical question.
   are explicit on both source and target sides. The first hook-pair truncated
   wedge seed now uses the same five directions, so the pair's linear models are
   no longer mixed placeholder/real data.
+- **Hook survivor algebra (Mar 8, 2026, seventh pass)**:
+  the first non-self-dual hook pair now has an explicit homogeneous
+  `\mathfrak{g}^f` survivor basis and closed reduced bracket. The source
+  survivor DS weights are `(1,2,2,2,3)`, while the target survivor DS weights
+  are `(1,1,1,1,3/2,3/2,3/2,3/2,2)`. Its positive sectors are now also known
+  to be non-abelian on both sides, so the quadratic ghost term must appear in
+  the genuine hook-pair BRST differential. The compute layer now packages this
+  as explicit BRST blueprints with `quadratic_ghost_term_present = True` on
+  both sides, and the nonzero `c c b` support entries are now explicit.
+- **Hook ghost BRST realization (Mar 8, 2026, eighth pass)**:
+  the first non-self-dual hook pair now has the actual finite ghost-sector
+  BRST complexes in compute, with differentials including both the character
+  term and the explicit quadratic `c c b` support. Both source and target
+  complexes satisfy `d^2=0` and are acyclic in every ghost degree. Moreover,
+  they match under an explicit canonical relabeling of the five positive
+  directions. The same code now also builds mixed fixed constraint-degree
+  blocks on shifted currents `u_i`, `c`-ghosts, and `b`-ghosts, and verifies
+  `d^2=0` plus vanishing cohomology through constraint degree `2` on both
+  sides. Those mixed blocks also match under the same canonical relabeling.
+  The same mixed formalism now also covers the self-dual `sl_3` subregular
+  control case through constraint degree `3`, with vanishing quadratic term and
+  acyclic tested blocks.
+- **Hook nonlinear current term (Mar 8, 2026, ninth pass)**:
+  the mixed `u-c-b` truncation for the first non-self-dual hook pair now also
+  includes the first nonlinear current/OPE correction, namely the `c \cdot \rho`
+  action of the positive sector on shifted currents and `b`-ghosts derived from
+  the explicit positive-sector brackets. This term is nontrivial on the first
+  positive constraint-degree block, but the resulting nonlinear mixed blocks
+  still satisfy `d^2=0`, remain acyclic through constraint degree `2`, and
+  continue to match source-to-target under the canonical relabeling. In the
+  self-dual `sl_3` subregular control case the same nonlinear term vanishes,
+  exactly because the constrained positive sector is abelian.
+- **Survivor-coupled truncation (Mar 8, 2026, tenth pass)**:
+  the nonlinear mixed blocks now also carry linear survivor degree, with the
+  positive sector acting on survivor variables through the induced quotient
+  action `\mathfrak{g}/[e,\mathfrak{g}] \cong \mathfrak{g}^f`. For the first
+  non-self-dual hook pair this survivor-feedback term is genuinely nonzero
+  (`6` source terms, `14` target terms), but the first tested truncation
+  (constraint degree `\le 1`, survivor degree `1`) is still square-zero and
+  acyclic on both sides. In the self-dual `sl_3` subregular control case the
+  survivor action is also explicit (`G^- \mapsto J`, `T \mapsto -G^+` under
+  `c_{\alpha_1+\alpha_2}`), and the corresponding survivor-coupled truncation
+  remains square-zero and acyclic through constraint degree `2`.
+- **Higher survivor degree and internal CE layer (Mar 8, 2026, twelfth pass)**:
+  the accelerated exact-rank path now checks the first hook-pair
+  survivor-coupled truncation at survivor degree `2` as well, and it still
+  collapses through constraint degree `1`. The first genuinely non-collapsing
+  survivor layer is instead the internal reduced `g^f` current/ghost sector:
+  `compute/lib/ds_reduction.py` now builds finite CE blocks on survivor
+  polynomials plus survivor ghosts, using the reduced survivor bracket table to
+  generate both quadratic ghost terms and adjoint-action terms. These blocks
+  are square-zero and already have nonzero cohomology at survivor polynomial
+  degree `1` in both the subregular `sl_3` control case and the first
+  non-self-dual hook pair.
+- **Family nonlinear extension (Mar 8, 2026, eleventh pass)**:
+  the hook mixed/nonlinear BRST scaffold is now family-level, not first-pair
+  only: `compute/lib/ds_reduction.py` now exposes generic hook-pair APIs for
+  constraints, positive-sector brackets, quadratic `c c b` support, and
+  current-action terms, with mixed/nonlinear block builders for general
+  type-A `(n,r)` hooks under explicit truncation controls.
+- **Family dual-swap verification (Mar 8, 2026, eleventh pass)**:
+  mixed and nonlinear hook-pair blocks are now compared against the
+  transpose-dual case (`r \leftrightarrow n-r-1`) under canonical side
+  relabeling, and catalog verifiers check this symmetry across the seeded
+  type-A range. The survivor scaffold is now generalized as well via
+  `hook_pair_surviving_field_candidates` and `hook_pair_reduced_brackets`
+  (with current tests anchored at `A_4` self-dual hook data).
 - **Assessment**: "The hardest pure mathematics conjecture in the manuscript."
   Arakawa-van Ekeren hook-type result covers a non-trivial class beyond principal.
 - **Scale**: 3-5 years. Requires deep representation theory.
@@ -720,6 +811,23 @@ standalone mathematical question.
   (rank 9 over Q, 10 over F_p for ALL primes p). Degree 4 surjective (rank 512) in all chars.
   Documented in comp:sl3-modular-rank (detailed_computations.tex).
   **Note**: This is the bracket-only differential (d²≠0), not the full bar differential.
+- **MC1 genus-1 `sl_2` PBW diagnostics generalized** (compute/lib/genus1_pbw_sl2.py):
+  tensor-power Casimir and PBW `d_1` diagnostics are now reusable beyond the hard-coded
+  tensor-square/triple cases; tests now verify the weight-2 and weight-3 elimination
+  mechanism through a shared API (compute/tests/test_genus1_pbw_sl2.py).
+  The same surface now includes explicit `sl_2`-equivariance and Casimir-commutation
+  gates for `d_1` through tensor power `n=6`.
+  These computed tensor-power diagnostics are now reflected directly in the proof text
+  of `thm:pbw-genus1-km` (Step 4, `higher_genus.tex`) with explicit `n=3,4,5,6` spectra and
+  rank/equivariance gates, keeping theorem narrative and executable evidence synchronized.
+  This closes duplication in the MC1 compute surface and provides the direct launch point
+  for higher-weight genus-1 checks.
+- **MC1 scaling profiler added** (`compute/scripts/profile_genus1_pbw_sl2_scaling.py`):
+  per-power timing confirms current practical default frontier at `n=6`, with Casimir
+  eigenspace computation as the dominant cost (`~5.2s` of `~7.4s` total at `n=6`).
+  Staged `n=7` probes now verify rank/equivariance/commutator gates
+  (`rank=728`, `\ker=1459`, invariants `=36`) in ~11.7s with Casimir eigenspaces
+  skipped; full `n=7` eigenspace computation remains the active bottleneck.
 
 ### What would unblock these
 See NEW_MACHINERY.md #M9 for detailed computational strategies.

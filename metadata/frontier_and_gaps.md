@@ -1,9 +1,9 @@
 # Frontier References and Computational Gap Analysis
 
 Generated: 2026-03-05 (base report)
-Last status refresh: 2026-03-07
+Last status refresh: 2026-03-08
 
-## Frontier Reset (March 7, 2026)
+## Frontier Reset (March 8, 2026)
 
 - The higher-genus PBW concentration entry theorem is now treated as resolved
   for the standard finite-type interacting families:
@@ -14,8 +14,22 @@ Last status refresh: 2026-03-07
 - The active `W` frontier is now split cleanly:
   infinite-generator completion (`W_\infty` / Yangian towers, MC4 infrastructure)
   and non-principal orbit duality (representation-theoretic frontier).
+- For Virasoro, the same-family partner `Vir_{26-c}` should be read as the
+  proved M/S-level complementarity shadow used in genus and semi-infinite
+  calculations.  The stronger H-level realization by an infinite-generator
+  dual object (`W_\infty`) remains part of the MC4 frontier.
 - The immediate computational infrastructure target is the completed,
   weight-filtered/pronilpotent bar scaffold for infinite-generator regimes.
+- The theorem-ready MC4 package should now be stated in input/output form:
+  separated complete weight filtrations with finite-type truncations,
+  a completed bar object
+  `\widehat{\bar B}(\cA)=\varprojlim_N \bar B(\cA_{\le N})`,
+  continuity of the completed differential, and bar-cobar comparison maps
+  compatible with the inverse system.
+- The principal examples for that package are
+  `W_\infty = \varprojlim_N W_N` and Yangian towers assembled from finite
+  RTT stages; without that inverse-limit theorem, these remain theorem-ready
+  frontier objects rather than realized duals.
 
 ---
 
@@ -313,7 +327,7 @@ For each, we analyze the state of four computations:
 |-------------|--------|---------|
 | Bar complex | **deg 1-5 explicit** | Dimensions: 1, 2, 5, 12, 30 (Catalan numbers). Full differential at degree 2 (comp:virasoro-bar-diff). Curvature element m_0 = c/2 computed. |
 | Genus pipeline | **F_g for all g** | kappa = c/2. Complete formula. Complementarity c + c' = 26. Genus-1 pipeline complete. |
-| Module category | **Moderate** | Minimal models via coset (ex:minimal-coset). Module Koszul duality for Vir not explicitly developed (only the algebra-level duality Vir_c <-> Vir_{26-c}). |
+| Module category | **Moderate** | Minimal models via coset (ex:minimal-coset). Module Koszul duality for Vir not explicitly developed; the current manuscript only fixes the same-family complementarity partner Vir_c <-> Vir_{26-c} at the model/shadow level. |
 | Spectral sequence | **E_2 collapse at generic c** | Koszul. Special values c=0 (uncurved) and c=26 (dual uncurved) analyzed. |
 
 **Gaps**:
@@ -359,6 +373,16 @@ For each, we analyze the state of four computations:
   type-A `(n,r)` hook cases up to a chosen cutoff, with propagated
   partition/level-shift checks and explicit alignment checks against the
   non-principal DS seed catalog.
+- The generic hook/subregular DS catalogs now use an explicit type-A
+  constraint-count ansatz derived from canonical hook `sl_2` triples
+  (counting positive simple-root grades, with the proved `sl_3` subregular
+  case anchored at count `2`), replacing the previous fixed-size
+  placeholder sectors.
+- The orbit layer now also carries explicit hook-pair profile records
+  (`hook_orbit_pair_profile`, catalog + verification) in
+  `compute/lib/nonprincipal_ds_orbits.py`, bundling source/dual partitions,
+  orbit/centralizer dimensions, positive graded basis labels, and the same
+  simple-root count data consumed by the DS sizing ansatz.
 - The truncated seed complexes now expose cohomology dimensions explicitly:
   the subregular specialization (`\chi=(1,0)`) is acyclic
   (`H^0=H^1=H^2=0`), and both first-hook-pair specializations
@@ -391,6 +415,70 @@ For each, we analyze the state of four computations:
   constraint blocks in `compute/lib/ds_reduction.py`, with explicit ghost
   conformal weights on both sides. The first hook-pair truncated exterior BRST
   seed now uses the same five directions as well.
+- The same first hook pair now also has an explicit homogeneous
+  `\mathfrak{g}^f` survivor basis and reduced bracket at the seed level:
+  the source survivor DS weights are `(1,2,2,2,3)`, while the target survivor
+  DS weights are `(1,1,1,1,3/2,3/2,3/2,3/2,2)`. Its positive sectors are also
+  now explicitly non-abelian, so the hook-pair BRST problem has moved past the
+  abelian toy regime: the quadratic ghost term is genuinely present. This is
+  now encoded directly in first-hook-pair BRST blueprints in
+  `compute/lib/ds_reduction.py`, together with explicit nonzero quadratic-ghost
+  support entries.
+- The first hook pair now also has the actual finite ghost-sector BRST
+  complexes in compute, including the character term and the explicit
+  quadratic `c c b` support. Both source and target satisfy `d^2=0` and are
+  acyclic in all ghost degrees, and they are matched by an explicit canonical
+  relabeling of the five positive directions.
+- Beyond the pure ghost sector, `compute/lib/ds_reduction.py` now builds mixed
+  fixed constraint-degree blocks on shifted currents `u_i`, `c`-ghosts, and
+  `b`-ghosts. For the first hook pair these mixed blocks are verified through
+  constraint degree `2`, and on both source and target they satisfy `d^2=0`
+  and have zero cohomology in every available BRST degree. They also match
+  under the same canonical source-to-target relabeling as the pure ghost
+  complexes.
+- The same mixed-block formalism now also covers the self-dual `sl_3`
+  subregular seed through constraint degree `3`: the quadratic ghost term is
+  absent there, and every tested mixed block is square-zero and acyclic.
+- The mixed/nonlinear hook machinery is now family-level as well:
+  `compute/lib/ds_reduction.py` exposes generic hook-pair APIs for constraints,
+  positive-sector brackets, quadratic `c c b` support, current-action terms,
+  and mixed/nonlinear `u-c-b` blocks for any type-A `(n,r)` hook pair (with
+  explicit truncation controls).
+- Family transpose-duality checks are now automated at block level:
+  mixed and nonlinear hook-pair blocks are compared under dual swap
+  (`r \leftrightarrow n-r-1`) via canonical side relabeling, and catalog-level
+  verifiers now check this symmetry across the seeded type-A range.
+- The first non-self-dual hook pair now also carries the first nonlinear
+  current/OPE correction on top of those mixed `u-c-b` truncations: the
+  `c \cdot \rho` action of the positive sector on shifted currents and
+  `b`-ghosts, derived directly from the explicit positive-sector brackets.
+  This current-action term is nontrivial, but through constraint degree `2`
+  the resulting nonlinear mixed blocks still satisfy `d^2=0`, have zero
+  cohomology in every available BRST degree, and match source-to-target under
+  the same canonical relabeling. In the self-dual `sl_3` subregular control
+  case the analogous nonlinear term vanishes because the constrained positive
+  sector is abelian.
+- The same truncation now also carries the first reduced survivor feedback:
+  linear survivor degree is added, and the positive sector acts on survivor
+  variables through the induced quotient action
+  `\mathfrak{g}/[e,\mathfrak{g}] \cong \mathfrak{g}^f`. For the first
+  non-self-dual hook pair this survivor-feedback term is genuinely nonzero
+  (`6` source terms and `14` target terms), but the first tested
+  survivor-coupled truncation (constraint degree `\le 1`, survivor degree `1`)
+  is still square-zero and acyclic on both sides. In the self-dual
+  `sl_3` subregular control case the survivor action is also explicit and the
+  corresponding truncation remains square-zero and acyclic through constraint
+  degree `2`.
+- With the exact-rank path accelerated, the same first hook-pair
+  survivor-coupled truncation is now checked at survivor degree `2`; it still
+  collapses through constraint degree `1`.
+- The next live obstruction is therefore the internal reduced `g^f` current /
+  ghost sector itself. That layer is now explicit in compute as finite CE
+  blocks on survivor polynomials plus survivor ghosts, built from the closed
+  reduced survivor bracket table. Unlike the earlier survivor-coupled
+  truncations, these blocks are square-zero but already have nonzero
+  cohomology at survivor polynomial degree `1` on both the subregular control
+  case and the first non-self-dual hook pair.
 
 #### 9. W_N (General)
 

@@ -46,6 +46,29 @@ algebra. For p = 0: S^q(sl2[t^-1])^{sl2} = the ring of sl2-invariant polynomials
 arc space, which is the center z. For p = 1: derivations of z. For p = 2: this is the
 unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
 
+### Status update (Mar 8, 2026)
+- The genus-1 `\mathfrak{sl}_2` PBW verification surface is now consolidated in compute:
+  `compute/lib/genus1_pbw_sl2.py` exposes tensor-power Casimir and PBW `d_1` diagnostics
+  (`adjoint_casimir_on_tensor_power`, `bracket_d1_on_tensor_power`, rank/kernel helpers).
+- The weight-3 MC1 checks now consume this shared API in
+  `compute/tests/test_genus1_pbw_sl2.py`, removing duplicated local constructions.
+- The same module now includes explicit `d_1` equivariance and Casimir-commutation
+  residual diagnostics, with tests verifying these algebraic gates through tensor
+  power `n=6`.
+- These diagnostics are now mirrored in the genus-1 PBW theorem exposition
+  (`higher_genus.tex`, Step 4 of `thm:pbw-genus1-km`) via explicit `n=3,4,5,6`
+  Casimir/rank/equivariance data, so the manuscript argument and compute API
+  remain synchronized.
+- A dedicated profiler now exists
+  (`compute/scripts/profile_genus1_pbw_sl2_scaling.py`) and records the runtime
+  envelope through `n=6`; Casimir eigenspaces are the dominant scaling bottleneck
+  for pushing to `n \ge 7`.
+- Staged `n=7` probes now confirm that rank/equivariance/commutator gates remain
+  tractable (~11.7s with Casimir eigenspaces skipped), so the precise bottleneck
+  is isolated to full Casimir eigenspace extraction at `n=7`.
+- Immediate effect: extending MC1 checks to higher conformal weights is now a representation
+  data task, not a new linear-algebra scaffolding task.
+
 ### First concrete step
 ```
 TARGET: Compute H^2(B-bar(sl2_{-2})) and compare with Omega^2(Op_{PGL2}(D)).
@@ -778,6 +801,16 @@ systematic at the hook/subregular family level:
   `nonprincipal_hook_seed` and `nonprincipal_hook_seed_catalog`, with explicit
   verification that orbit status tags and level shifts propagate from the
   orbit ledger into the DS seed ledger.
+- The same module now carries a type-A hook constraint-count ansatz
+  (`hook_constraint_count_ansatz_type_a`, pairwise form included) and
+  verification checks, so generic seed sizing is no longer hard-coded; the
+  current count rule is extracted from canonical hook `sl_2` triples via
+  positive simple-root grades, with `sl_3` subregular anchored to the proved
+  two-constraint seed.
+- The orbit module now also exposes a concrete hook-pair profile ledger
+  (`hook_orbit_pair_profile`, with catalog-level verification), so partition
+  duality, orbit/centralizer dimensions, positive graded basis labels, and the
+  simple-root count data used by the sizing ansatz are recorded in one place.
 - `compute/lib/ds_reduction.py` now includes `hook_pair_ds_seed`,
   `hook_pair_specialized_complexes`, and `hook_pair_ds_seed_catalog`, extending
   the previous first-pair-only truncated complexes to all type-A hook cases up
@@ -846,6 +879,104 @@ hook orbit is now concrete on the matrix side:
 - The first non-self-dual hook pair's truncated exterior BRST seed now uses
   those same five ghost directions as well, so the wedge and Koszul models are
   aligned for that frontier pair.
+
+Status update (Mar 8, 2026, seventh pass): the first non-self-dual hook pair
+now has an explicit reduced survivor sector:
+- `compute/lib/nonprincipal_ds_orbits.py` now computes the homogeneous
+  `\mathfrak{g}^f` basis for the first hook pair under the fixed
+  Jacobson--Morozov triples.
+- On the source `(3,1)` side, the surviving DS weights are
+  `(1,2,2,2,3)`.
+- On the target `(2,1,1)` side, the surviving DS weights are
+  `(1,1,1,1,\frac{3}{2},\frac{3}{2},\frac{3}{2},\frac{3}{2},2)`.
+- `compute/lib/ds_reduction.py` now exposes the induced reduced bracket on
+  those survivor bases; in particular, the source has a nontrivial weight-2 to
+  weight-3 bracket, while the target has a larger weight-0/weight-3/2 sector
+  acting on the rest of the survivor algebra.
+- Unlike the subregular `sl_3` seed, the first hook pair has non-abelian
+  positive sectors on both sides:
+  source brackets ` [E12,E23]=E13 ` and ` [E14,E43]=E13 `,
+  target brackets ` [E13,E32]=E12 ` and ` [E14,E42]=E12 `.
+  So the quadratic ghost term is now forced in the real BRST differential for
+  this pair.
+- `compute/lib/ds_reduction.py` now packages that data into explicit BRST
+  blueprints for the first hook pair, with full standard-basis profiles on
+  both sides and `quadratic_ghost_term_present = True`.
+- The nonzero quadratic-ghost support is now explicit as well:
+  source `c_{E12}c_{E23}b_{E13}` and `c_{E14}c_{E43}b_{E13}`,
+  target `c_{E13}c_{E32}b_{E12}` and `c_{E14}c_{E42}b_{E12}`.
+- The same module now builds the actual finite ghost-sector BRST complexes for
+  that pair, not only wedge placeholders. These differentials include both the
+  character term and the explicit quadratic `c c b` support, and both source
+  and target complexes are verified to satisfy `d^2=0` and to be acyclic in
+  all ghost degrees.
+- Those source and target ghost complexes are now identified by an explicit
+  canonical relabeling of the positive directions:
+  `E13 <-> E12`, `E12 <-> E13`, `E23 <-> E32`, `E43 <-> E42`, with `E14`
+  fixed. So the first non-self-dual hook pair now has a literal ghost-complex
+  source/target matching at the seed level.
+- Beyond the pure ghost sector, `compute/lib/ds_reduction.py` now builds mixed
+  fixed constraint-degree BRST blocks on shifted currents `u_i`, `c`-ghosts,
+  and `b`-ghosts. For the first hook pair these mixed blocks are verified
+  through constraint degree `2`; on both source and target they satisfy
+  `d^2=0` and have zero cohomology in every available BRST degree.
+- The same canonical relabeling now matches those mixed `u-c-b` blocks as
+  well, not only the pure ghost complexes. So the first hook pair has an
+  explicit seed-level source/target identification on both the ghost sector and
+  the first finite mixed current-plus-ghost truncations.
+- Beyond the purely constraint-generated mixed differential, the same
+  `u-c-b` blocks now also include the first nonlinear current/OPE correction:
+  the `c \cdot \rho` action of the positive sector on the shifted currents and
+  `b`-ghosts, derived directly from the explicit positive-sector brackets.
+- For the first non-self-dual hook pair, that nonlinear current-action term is
+  genuinely nonzero on the first positive constraint-degree block, but the
+  resulting mixed blocks still satisfy `d^2=0`, remain acyclic through
+  constraint degree `2`, and still match source-to-target under the same
+  canonical relabeling.
+- The next survivor-coupled layer is now also in compute: linear survivor
+  degree is added on top of those nonlinear mixed blocks, and the positive
+  sector acts on survivor variables through the induced quotient action
+  `\mathfrak{g}/[e,\mathfrak{g}] \cong \mathfrak{g}^f`.
+- For the first non-self-dual hook pair, that survivor-feedback term is
+  genuinely nonzero (`6` source terms and `14` target terms), but the first
+  tested survivor-coupled truncation (constraint degree `\le 1`, survivor
+  degree `1`) is still square-zero and acyclic on both sides.
+- With the exact-rank path now routed through `DomainMatrix`, the same
+  survivor-coupled hook-pair truncation is also checked at survivor degree `2`:
+  even there, both source and target remain square-zero and acyclic through
+  constraint degree `1`. So higher survivor polynomial degree alone does not
+  break the collapse.
+- The self-dual `sl_3` subregular seed is now in that same mixed formalism:
+  its mixed `u-c-b` blocks are built explicitly through constraint degree `3`,
+  the quadratic ghost term stays absent, and every tested block is square-zero
+  and acyclic. Since the constrained positive sector is abelian there, the new
+  nonlinear current-action term vanishes, so this remains the control case for
+  the nonlinear extension. The mixed-block picture now covers both the
+  self-dual control case and the first genuinely non-self-dual hook pair.
+- In the subregular control case, the survivor-feedback layer is also explicit:
+  `c_{\alpha_1+\alpha_2}` sends `G^-` to `J` and `T` to `-G^+` in the reduced
+  survivor sector, while the corresponding linear survivor-coupled truncation
+  remains square-zero and acyclic through constraint degree `2`.
+- The next frontier layer is now also in compute: the internal reduced-survivor
+  CE sector coming from the closed `g^f` bracket itself. This adds survivor
+  ghosts and the quadratic/action terms induced by the reduced bracket table.
+  Here the story finally stops collapsing: the new internal survivor CE blocks
+  are square-zero but not acyclic. Already at survivor polynomial degree `1`,
+  the subregular `sl_3` block has cohomology
+  `{0:1,1:2,2:2,3:2,4:1}`, while the first non-self-dual hook pair has source
+  profile `{0:2,1:5,2:5,3:5,4:5,5:2}` and target profile
+  `{0:1,1:2,2:2,3:2,4:2,5:3,6:2,7:0,8:1,9:1}`.
+- The same mixed/nonlinear `u-c-b` machinery is now generalized from the first
+  hook pair to all type-A hook pairs at the seed level: compute now exposes
+  family APIs for constraints, positive-sector brackets, quadratic `c c b`
+  support, and current-action terms with truncation controls.
+- Family transpose-duality is now checked at block level too: mixed and
+  nonlinear hook-pair blocks are compared under the dual swap
+  `r \leftrightarrow n-r-1` via canonical side relabeling, and the catalog
+  verifiers now run these checks systematically.
+- Survivor scaffolds are no longer first-pair-only: `compute/lib/ds_reduction.py`
+  now also exposes generic hook-pair survivor candidates and reduced-bracket
+  tables (tested at least on `A_4` self-dual hook data).
 
 ### First concrete step
 ```

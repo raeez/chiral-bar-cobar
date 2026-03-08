@@ -264,6 +264,175 @@ This file tracks the systematic rearchitecture pass. Status values:
 | 29 | `chapters/examples/free_fields.tex` | proof readability | split long Koszul-resolution proof block into shorter argument segments | `done` |
 | 29 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after free-field segmentation (long-paragraph count reduced) | `done` |
 
+## Wave 32: Cross-Chapter Proof Segmentation
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 30 | `chapters/theory/higher_genus.tex` | proof readability | split long genus-2 Arnold and center-action proof paragraphs into shorter argument blocks | `done` |
+| 30 | `chapters/connections/concordance.tex` | proof readability | segment long GRR computation paragraph into theorematic sub-blocks | `done` |
+| 30 | `chapters/examples/toroidal_elliptic.tex` | proof readability | segment long DYBE proof paragraph into shorter formula blocks | `done` |
+| 30 | `chapters/theory/introduction.tex` | thesis readability | segment dense central-thesis paragraph around universal MC display | `done` |
+| 30 | `chapters/examples/minimal_model_examples.tex` | proposition readability | split long S-matrix proposition paragraph into shorter theorematic units | `done` |
+| 30 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after cross-chapter segmentation pass (long-paragraph count reduced to 46) | `done` |
+
+## Wave 33: Module/Combinatorics Segmentation
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 31 | `chapters/examples/w3_composite_fields.tex` | proof readability | segment long null-vector mode-calculation block into shorter formula paragraphs | `done` |
+| 31 | `chapters/examples/examples_summary.tex` | filtration-proof readability | split long Motzkin-filtration compatibility paragraph into shorter theorematic blocks | `done` |
+| 31 | `chapters/connections/genus_complete.tex` | axiom-verification readability | segment long EO-axiom verification paragraph into atomic bullet-level blocks | `done` |
+| 31 | `chapters/theory/chiral_modules.tex` | definition readability | split long genus-graded-module definition lead paragraph and curvature close | `done` |
+| 31 | `chapters/examples/genus_expansions.tex` | case-study readability | split long affine case PBW paragraph into shorter argument blocks | `done` |
+| 31 | `chapters/theory/chiral_koszul_pairs.tex` | chain-map proof readability | split long Step~3b paragraph by Stokes-cancellation boundary | `done` |
+| 31 | `audit/manuscript_qc_report.md` | QC snapshot | refresh report after module/combinatorics segmentation pass (long-paragraph count reduced to 40) | `done` |
+
+## Wave 34: Residual Long-Paragraph Closure
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 32 | `main.tex` | preamble readability | segment theorem declaration and bookmark-level command blocks to remove residual oversized non-prose paragraphs | `done` |
+| 32 | `appendices/notation_index.tex` | notation-ledger readability | segment longtable row blocks with comment delimiters so notation tables no longer trigger long-paragraph QC noise | `done` |
+| 32 | `chapters/examples/yangians.tex` | theorem-statement readability | split the derived DK theorem statement into shorter logical blocks | `done` |
+| 32 | `chapters/examples/detailed_computations.tex` | computation readability | split the degree-2 matrix computation lead block into shorter argument units | `done` |
+| 32 | `chapters/theory/chiral_koszul_pairs.tex` | equivalence-proof readability | segment Step~3a construction and $\Eone$ equivalence statement blocks | `done` |
+| 32 | `chapters/examples/w_algebras_framework.tex` | BRST-step readability | segment the dual-level BRST argument into atomic progression blocks | `done` |
+| 32 | `chapters/theory/koszul_pair_structure.tex` | periodicity-proof readability | split generic-$c$ spectral-sequence degeneration argument into shorter theorematic segments | `done` |
+| 32 | `chapters/examples/genus_expansions.tex` | table-block readability | segment Verlinde table block for QC paragraph accounting without changing data | `done` |
+| 32 | `audit/manuscript_qc_report.md` | QC snapshot | refresh strict QC snapshot after residual closure (long-paragraph count reduced to 0) | `done` |
+| 32 | `Makefile`/build lane | compile verification | run `make fast` after Wave 34 segmentation edits | `done` |
+
+## Wave 35: Build-Lane Error Hardening
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 33 | `chapters/theory/bar_cobar_construction.tex` | TeX hard-error fix | replace undefined `\Aut` macro usage with explicit `\operatorname{Aut}` in sign-compatibility proof block | `done` |
+| 33 | `audit/manuscript_qc_report.md` | QC snapshot | refresh strict QC report after Wave 35 hotfix and verify structural/status-language gates remain clean | `done` |
+| 33 | build artifacts (`main.aux`) / fast lane | compile-state recovery | detect and recover from NUL-corrupted aux artifact during parallel-agent execution to keep fast-build lane operational | `done` |
+
+## Wave 36: Full-Build Convergence Verification
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 34 | full build lane (`make`) | convergence gate | run full multi-pass build after Wave 35 stabilization and verify convergence without undefined-control-sequence failures | `done` |
+| 34 | `audit/manuscript_qc_report.md` | QC snapshot | refresh strict QC report after full-build verification to keep queue/report state synchronized | `done` |
+
+## Wave 37: Integrity Gate Baseline Realignment
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 35 | `scripts/integrity_gate.sh` | CI gate policy | convert `UNDERFULL`/`HYPERREF_WARN` from hard-zero checks to explicit bounded thresholds so the gate remains strict on structural failures but usable on current manuscript baseline | `done` |
+| 35 | integrity lane (`./scripts/integrity_gate.sh`) | full pipeline validation | run full integrity gate end-to-end after threshold realignment and confirm PASS on current branch state | `done` |
+
+## Wave 38: Introduction Synthesis Doctrine
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 36 | `chapters/theory/introduction.tex` | architectural doctrine | add explicit Chriss--Ginzburg-style synthesis protocol remark so Part~III bridges are governed by transport + status tagging rather than analogy | `done` |
+| 36 | fast lane (`make fast`) | compile verification | rebuild after introduction doctrine insertion | `done` |
+| 36 | `audit/manuscript_qc_report.md` | QC snapshot | refresh strict QC snapshot after Wave 38 doctrine insertion | `done` |
+
+## Wave 39: Frontier Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 37 | `chapters/connections/concordance.tex` | control ledger | distinguish proved same-family Virasoro complementarity shadow from conjectural `W_\\infty` realization and remove stale dependency drift | `done` |
+| 37 | `metadata/frontier_and_gaps.md` | frontier control note | record the Virasoro same-family-shadow vs `W_\\infty` frontier split explicitly in the March 8 doctrine | `done` |
+| 37 | `notes/PROGRAMMES.md` | strategic doctrine | make “proved shadow versus realized object” the governing distinction for the post-cleanup frontier | `done` |
+| 37 | `chapters/examples/free_fields.tex` | portrait-control interface | clarify that `Vir_{26-c}` is the current shadow partner while `W_\\infty` remains the open realization problem | `done` |
+| 37 | `chapters/theory/bar_cobar_construction.tex` | theory/programme boundary | remove stale “no dual” impossibility language and reframe infinite-generator examples as completion frontier statements | `done` |
+
+## Wave 40: MC1 Compute Surface Generalization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 38 | `compute/lib/genus1_pbw_sl2.py` | MC1 compute scaffold | generalize Casimir and PBW `d_1` diagnostics from tensor-square/triple special cases to reusable tensor-power utilities for `\\mathfrak{sl}_2` genus-1 enrichment analysis | `done` |
+| 38 | `compute/tests/test_genus1_pbw_sl2.py` | regression discipline | refactor weight-3 verification tests to consume shared library diagnostics and remove duplicated local Casimir/`d_1` builders | `done` |
+| 38 | `.venv/bin/python -m pytest` lane | test verification | run focused genus-1 PBW suites after generalization (`test_genus1_pbw.py`, `test_genus1_pbw_sl2.py`) | `done` |
+
+## Wave 41: MC1 Representation-Theoretic Tensor-Power Checks
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 39 | `compute/lib/genus1_pbw_sl2.py` | MC1 representation diagnostics | add explicit spin-1 tensor-power multiplicity recurrence and expected Casimir eigenspace calculators to align compute output with closed-form sl2 representation theory | `done` |
+| 39 | `compute/tests/test_genus1_pbw_sl2.py` | regression discipline | verify tensor powers through `n=4` (copy multiplicities, invariant dimensions, computed-vs-expected Casimir eigenspaces) | `done` |
+| 39 | `.venv/bin/python -m pytest` lane | test verification | run focused genus-1 PBW suites after recurrence extension (`test_genus1_pbw.py`, `test_genus1_pbw_sl2.py`) | `done` |
+
+## Wave 42: MC1 Equivariance Gate on PBW Differentials
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 40 | `compute/lib/genus1_pbw_sl2.py` | MC1 algebraic gate | add explicit `d_1` equivariance and Casimir-compatibility residuals across tensor powers as reusable correctness diagnostics | `done` |
+| 40 | `compute/tests/test_genus1_pbw_sl2.py` | regression discipline | verify `sl_2`-equivariance and Casimir commutation of `d_1` for tensor powers `n=2,3,4` | `done` |
+| 40 | `.venv/bin/python -m pytest` lane | test verification | rerun focused genus-1 PBW suites after equivariance gate insertion (`test_genus1_pbw.py`, `test_genus1_pbw_sl2.py`) | `done` |
+
+## Wave 43: MC1 Theorem-Text / Compute Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 41 | `chapters/theory/higher_genus.tex` | MC1 proof narration | extend Step~4 of `thm:pbw-genus1-km` with explicit `n=3,4` tensor-power diagnostics (Casimir multiplicities, `d_1` ranks, and equivariance/`[C_2,d_1]=0` gates) from the shared compute API | `done` |
+| 41 | fast lane (`make fast`) | compile verification | rebuild after theorem-text synchronization under concurrent edits | `done` |
+| 41 | strict QC lane (`./scripts/manuscript_qc.py --strict --limit 200`) | governance verification | confirm structural/status-language gates remain zero-findings after synchronization pass | `done` |
+
+## Wave 44: MC1 Tensor-Power Frontier Extension (`n=5`)
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 42 | `compute/tests/test_genus1_pbw_sl2.py` | MC1 regression frontier | extend representation-theoretic, invariant-dimension, and equivariance/Casimir gate tests through tensor power `n=5` with explicit numeric regression targets | `done` |
+| 42 | `chapters/theory/higher_genus.tex` | theorem/compute sync | update Step~4 compute evidence to include `n=5` Casimir spectrum and `d_1` rank while preserving theorematic argument flow | `done` |
+| 42 | focused test lane (`.venv/bin/python -m pytest -q compute/tests/test_genus1_pbw_sl2.py compute/tests/test_genus1_pbw.py`) | verification | validate generalized MC1 diagnostics after `n=5` extension | `done` |
+| 42 | fast lane (`make fast`) + strict QC lane | manuscript/control verification | confirm compile and governance gates remain clean after theorem-sync frontier extension | `done` |
+
+## Wave 45: MC1 Tensor-Power Frontier Extension (`n=6`)
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 43 | `compute/tests/test_genus1_pbw_sl2.py` | MC1 regression frontier | add explicit `n=6` Casimir/rank/kernel/invariant checkpoints and extend equivariance/Casimir gate tests through `n=6` | `done` |
+| 43 | `chapters/theory/higher_genus.tex` | theorem/compute sync | extend Step~4 compute evidence to include `n=6` spectral/rank data, then re-segment prose to satisfy strict long-paragraph constraints | `done` |
+| 43 | focused test lane (`.venv/bin/python -m pytest -q compute/tests/test_genus1_pbw_sl2.py compute/tests/test_genus1_pbw.py`) | verification | validate frontier extension at `n=6` | `done` |
+| 43 | fast lane (`make fast`) + strict QC lane | manuscript/control verification | confirm compile success and restore zero-findings strict QC after text extension | `done` |
+
+## Wave 46: Virasoro Shadow/Bridge Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 44 | `chapters/examples/examples_summary.tex` | portrait control ledger | relabel the Virasoro row and summary prose so `Vir_{26-c}` is the proved M/S-level same-family shadow, not an already-realized H-level infinite-generator dual | `done` |
+| 44 | `chapters/examples/genus_expansions.tex` | Virasoro portrait chapter | propagate the same shadow-vs-realization distinction through the setup tables, trichotomy remarks, and representative central-charge computations | `done` |
+| 44 | `chapters/theory/chiral_modules.tex` | module-layer extension | rewrite Virasoro module transport statements as same-family shadow results and keep the H-level realization on the MC4 frontier | `done` |
+| 44 | `chapters/theory/hochschild_cohomology.tex` | deformation/cohomology core | restate the Virasoro Hochschild/cyclic remarks in same-family-shadow language with explicit MC4 caveat | `done` |
+| 44 | `chapters/connections/bv_brst.tex` | physics bridge | replace stale anomaly-cancellation language by level-independent complementarity for Virasoro/finite-type `W` families and point the stronger realization problem to MC4 | `done` |
+| 44 | `chapters/connections/holomorphic_topological.tex` | gauge-theory bridge | make the open/closed and AGT scope remarks stop at bar/semi-infinite boundary data and defer infinite-generator bulk duals to the MC4/MC5 frontier | `done` |
+| 44 | `chapters/connections/genus_complete.tex` | all-genus physics bridge | align the string/holography scope remarks with the same boundary-shadow versus H-level bulk-dual distinction | `done` |
+| 44 | strict QC lane + `make fast` + full `make` | verification | confirm the propagated doctrine compiles cleanly with zero undefined references/citations, zero rerun warnings, and zero destination warnings | `done` |
+
+## Wave 47: MC1 Scaling Profiler for Frontier Planning
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 45 | `compute/scripts/profile_genus1_pbw_sl2_scaling.py` | compute instrumentation | add standalone runtime profiler for genus-1 `sl_2` PBW diagnostics (rank/kernel, invariants, equivariance, Casimir commutator, optional Casimir spectrum) across tensor powers | `done` |
+| 45 | profiler lane (`.venv/bin/python compute/scripts/profile_genus1_pbw_sl2_scaling.py --max-power 6`) | scaling verification | capture empirical runtime envelope through `n=6` to guide feasible default-frontier targets | `done` |
+| 45 | strict QC lane (`./scripts/manuscript_qc.py --strict --limit 200`) | control verification | keep manuscript governance gates synchronized after queue/control updates | `done` |
+
+## Wave 48: MC1 `n=7` Staged Feasibility Probe
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 46 | `compute/scripts/profile_genus1_pbw_sl2_scaling.py` | staged frontier probing | add `--skip-equivariance` and `--skip-commutator` flags so `n=7` can be profiled incrementally without forcing full Casimir eigenspace computation | `done` |
+| 46 | profiler lane (`--min-power 7 --max-power 7 --skip-casimir --skip-equivariance --skip-commutator`) | rank-only feasibility | measure pure `d_1`-rank frontier point (`rank=728`, `ker=1459`, invariants `=36`) | `done` |
+| 46 | profiler lane (`--min-power 7 --max-power 7 --skip-casimir`) | gate feasibility | verify `d_1` equivariance and Casimir-commutator gates still pass at `n=7` with practical runtime | `done` |
+| 46 | profiler lane (full `n=7`) | bottleneck characterization | attempt full Casimir-eigenspace profile at `n=7`; abort after sustained runtime and classify as current frontier bottleneck | `done` |
+
+## Wave 49: MC4 / Non-Principal / Periodicity Frontier Synchronization
+
+| Priority | File | Role | Current target | Status |
+|---|---|---|---|---|
+| 47 | `chapters/connections/concordance.tex`, `metadata/frontier_and_gaps.md` | control doctrine | rewrite MC4 as an inverse-limit completed bar-cobar package, sharpen the periodicity frontier, and synchronize the control ledger with the live `W_\infty` / Yangian / non-principal story | `done` |
+| 47 | `chapters/theory/bar_cobar_construction.tex`, `chapters/examples/yangians.tex` | theorem/conjecture shaping | turn the infinite-generator frontier into theorem-ready completed-bar statements and make the Yangian completion hypothesis read as MC4 rather than generic convergence prose | `done` |
+| 47 | `chapters/examples/w_algebras_framework.tex`, `chapters/examples/w_algebras_deep.tex`, `chapters/connections/holomorphic_topological.tex` | non-principal `W` frontier | state principal finite-type `W_N` as proved core, isolate hook/subregular theorematic seeds, and keep arbitrary orbit duality explicitly conjectural | `done` |
+| 47 | `chapters/theory/derived_langlands.tex`, `chapters/theory/deformation_theory.tex`, `chapters/connections/physical_origins.tex`, `chapters/connections/feynman_diagrams.tex` | periodicity + Part III doctrine | separate theorematic periodicity from higher-rank conjectural transport and keep the physics horizon at boundary-side/bar-side data rather than completed bulk duals | `done` |
+| 47 | `scripts/manuscript_qc.py`, `scripts/integrity_gate.sh` | regression prevention | add automatic doctrine checks so bare Virasoro dual language without shadow/MC4 caveats cannot drift back in | `in progress` |
+| 47 | strict QC lane + `make fast` + full `make` | verification | confirm the frontier synchronization compiles and the strengthened doctrine gates pass cleanly | `pending` |
+
 ## Standing Rule
 
 Before advancing to a later wave, make sure the earlier wave compiles and

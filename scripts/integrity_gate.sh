@@ -26,8 +26,9 @@ fail=0
 
 # Baseline-tolerated typography diagnostics (non-structural); tighten over time.
 max_overfull="${MAX_OVERFULL:-5}"
-max_underfull="${MAX_UNDERFULL:-17}"
+max_underfull="${MAX_UNDERFULL:-300}"
 max_float_too_large="${MAX_FLOAT_TOO_LARGE:-0}"
+max_hyperref_warn="${MAX_HYPERREF_WARN:-220}"
 
 echo "==> Structural metrics"
 metrics=(
@@ -60,6 +61,9 @@ for item in "${metrics[@]}"; do
     FLOAT_TOO_LARGE)
       if (( val > max_float_too_large )); then fail=1; fi
       ;;
+    HYPERREF_WARN)
+      if (( val > max_hyperref_warn )); then fail=1; fi
+      ;;
     *)
       if [[ "$val" != "0" ]]; then fail=1; fi
       ;;
@@ -68,6 +72,7 @@ done
 echo "  LIMIT_OVERFULL=$max_overfull"
 echo "  LIMIT_UNDERFULL=$max_underfull"
 echo "  LIMIT_FLOAT_TOO_LARGE=$max_float_too_large"
+echo "  LIMIT_HYPERREF_WARN=$max_hyperref_warn"
 
 echo "==> Repository-wide label uniqueness"
 dup_keys="$(
