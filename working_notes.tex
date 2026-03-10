@@ -1,0 +1,1126 @@
+% Working Notes on Chiral Koszul Duality
+% Raeez Lorgat, 2024--2026
+%
+% Compile: pdflatex working_notes.tex (standalone)
+
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\frenchspacing
+
+\usepackage[cmintegrals,cmbraces,noamssymbols]{newtxmath}
+\usepackage{ebgaramond}
+
+\usepackage[
+  activate={true,nocompatibility},
+  final,
+  tracking=true,
+  kerning=true,
+  spacing=true,
+  factor=1100,
+  stretch=10,
+  shrink=10
+]{microtype}
+
+\usepackage{mleftright}
+\mleftright
+
+\let\Bbbk\undefined
+\let\openbox\undefined
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[unicode]{hyperref}
+\usepackage{tikz-cd}
+
+\setlength{\emergencystretch}{3em}
+\raggedbottom
+
+% Theorem styles
+\usepackage{thmtools}
+\declaretheoremstyle[
+  spaceabove=\topsep, spacebelow=\topsep,
+  headfont=\normalfont\scshape,
+  notefont=\normalfont\itshape,
+  bodyfont=\normalfont,
+  postheadspace=0.5em, headpunct={.}
+]{notesthm}
+\declaretheoremstyle[
+  spaceabove=\topsep, spacebelow=\topsep,
+  headfont=\normalfont\itshape,
+  notefont=\normalfont\itshape,
+  bodyfont=\normalfont,
+  postheadspace=0.5em, headpunct={.}
+]{notesdef}
+
+\declaretheorem[style=notesthm, name=Theorem, numberwithin=section]{theorem}
+\declaretheorem[style=notesthm, name=Lemma, sibling=theorem]{lemma}
+\declaretheorem[style=notesthm, name=Proposition, sibling=theorem]{proposition}
+\declaretheorem[style=notesthm, name=Corollary, sibling=theorem]{corollary}
+\declaretheorem[style=notesdef, name=Definition, sibling=theorem]{definition}
+\declaretheorem[style=notesdef, name=Example, sibling=theorem]{example}
+\declaretheorem[style=notesdef, name=Remark, sibling=theorem]{remark}
+\declaretheorem[style=notesdef, name=Observation, sibling=theorem]{observation}
+\declaretheorem[style=notesdef, name=Warning, sibling=theorem]{warning}
+\declaretheorem[style=notesdef, name=Conjecture, sibling=theorem]{conjecture}
+\declaretheorem[style=notesdef, name=Question, sibling=theorem]{question}
+
+% Macros
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\B}{\bar{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\bP}{\mathbb{P}}
+
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Lie}{\mathsf{Lie}}
+\newcommand{\Eone}{\mathsf{E}_1}
+\newcommand{\Etwo}{\mathsf{E}_2}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+\newcommand{\Linf}{\mathsf{L}_{\infty}}
+\newcommand{\Ainf}{\mathsf{A}_{\infty}}
+\newcommand{\Pinf}{\mathsf{P}_{\infty}}
+\newcommand{\chirAss}{\mathsf{Ass}^{\mathrm{ch}}}
+\newcommand{\chirCom}{\mathsf{Com}^{\mathrm{ch}}}
+\newcommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\CE}{\mathrm{CE}}
+\newcommand{\DS}{\mathrm{DS}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\ad}{\operatorname{ad}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}
+\newcommand{\dzero}{d_0}
+\newcommand{\dfib}{d_{\mathrm{fib}}}
+\newcommand{\Dg}[1]{D_{#1}}
+\newcommand{\Dtot}{D_{\mathrm{tot}}}
+\newcommand{\normord}[1]{:\!#1\!:}
+\newcommand{\Fact}{\mathsf{Fact}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\Bl}{Bl}
+\DeclareMathOperator{\Spec}{Spec}
+
+\title{\textit{Working Notes on Chiral Koszul Duality}\\[0.4em]
+\large Dead Ends, Faery Gates, and Nuclear Warheads}
+\author{Raeez Lorgat}
+\date{2024--2026}
+
+\begin{document}
+\maketitle
+
+\begin{quote}
+\small\itshape
+A differential that refuses to square to zero.  A sign audit
+across 2048 conventions that finds nothing.  A genus-one propagator
+that bends the Arnold relation by exactly one $(1,1)$-form.
+A finite-dimensional thick generation argument that dies on
+contact with an infinite-dimensional Verma module.  A cubic Casimir
+that everyone expected to contribute at genus two but sits
+in the wrong degree of the cyclic complex.
+
+These are the moments when the subject taught us what it
+actually is.  This document records them.
+\end{quote}
+
+\tableofcontents
+
+% =================================================================
+\section{On a differential that does not square to zero}
+\label{sec:the-crime}
+% =================================================================
+
+\noindent
+The crime scene is the bar complex of an affine Kac--Moody algebra.
+
+\subsection{The scene}
+
+A chiral algebra $\cA$ on a smooth curve $X$ has an operator product
+expansion with poles.  The Heisenberg current has a double pole:
+$\alpha(z)\alpha(w) = k/(z-w)^2$.  The Kac--Moody current $J^a(z)$
+has both:
+\begin{equation}\label{eq:km-ope}
+J^a(z) J^b(w) = \frac{k\kappa^{ab}}{(z-w)^2}
+  + \frac{f^{ab}{}_c\, J^c(w)}{z-w} + \text{regular}.
+\end{equation}
+The simple pole is the Lie bracket.  The double pole is the
+invariant form---the ``level.''  These are different organs of
+the same creature.
+
+The bar construction places $n$ elements of $\cA$ at $n$ points of
+$X$, dresses them with logarithmic $1$-forms
+$\eta_{ij} = d\log(z_i - z_j)$, and extracts residues at
+collisions.  Out falls a differential $d$ on the graded space
+$\B(\cA) = \bigoplus_n (s^{-1}\bar{\cA})^{\otimes n} \otimes
+\Omega^{n-1}_{\log}(\overline{C}_n(X))$.
+
+Decompose $d$ by pole order:
+\begin{align}
+d_{\mathrm{bracket}} &\colon
+  \text{extracts the simple pole } (\phi_i)_{(0)}\phi_j,
+  \label{eq:d-bracket}\\
+d_{\mathrm{curvature}} &\colon
+  \text{extracts the double pole } (\phi_i)_{(1)}\phi_j.
+  \label{eq:d-curv}
+\end{align}
+
+In classical homological algebra, the bracket differential of a
+Lie algebra $\fg$ squares to zero by the Jacobi identity.  Every
+algebraist's spinal cord expects $d_{\mathrm{bracket}}^2 = 0$.
+
+\begin{theorem}[The crime]\label{thm:the-crime}
+$d_{\mathrm{bracket}}^2 \neq 0$ for any chiral algebra with
+both a simple and a double pole in the OPE.  This was verified
+across all $2048$ sign conventions arising from eleven
+independent binary choices \textup{(}grading, suspension,
+associativity, antisymmetry, contraction, composition,
+Koszul signs\textup{)}.  Every convention fails.
+\end{theorem}
+
+This is not a sign error.  It is a theorem.
+
+\subsection{The mechanism}
+
+When $d_{\mathrm{bracket}}$ is applied twice, the composition
+passes through iterated residues at codimension-$2$ strata---the
+loci where three points collide.  The Jacobi identity cancels the
+pure bracket--bracket terms, but there are \emph{bracket--curvature
+cross-terms}: the Taylor expansion of the OPE near the triple
+collision locus $D_{ijk}$ mixes pole orders.  Concretely, the
+iterated residue
+$\Res_{D_{j\ell}} \Res_{D_{ij}}
+[(\phi_i)_{(0)}((\phi_j)_{(1)}\phi_\ell \cdot |0\rangle)]$
+does not vanish, and no choice of signs can make it vanish, because
+it is a nonzero number (proportional to the level $k$) multiplied by
+a nonzero vector.
+
+The identity that \emph{does} hold:
+\begin{equation}\label{eq:borcherds}
+d_{\mathrm{res}}^2 = (d_{\mathrm{bracket}} + d_{\mathrm{curvature}})^2
+= 0.
+\end{equation}
+Since $d_{\mathrm{curvature}}^2 = 0$ (the double-pole output is a
+scalar times the vacuum; a subsequent extraction sees
+$|0\rangle_{(n)}\phi = 0$), we get:
+\[
+d_{\mathrm{bracket}}^2
+= -\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\}.
+\]
+The bracket differential fails to square to zero by
+\emph{exactly the anticommutator with the curvature differential}.
+The pair $(d_{\mathrm{bracket}}, d_{\mathrm{curvature}})$ is not
+a bicomplex.  The level is the obstruction to
+$d_{\mathrm{bracket}}$ being a differential.
+
+\begin{remark}[The physics]
+This identity \emph{is} the conformal anomaly.  The BRST operator
+alone ($d_{\mathrm{bracket}}$) does not square to zero; the anomaly
+term ($d_{\mathrm{curvature}}$) is what prevents it; the \emph{full}
+BRST operator ($d_{\mathrm{res}}$) squares to zero because it
+includes both.  The quantum master equation
+$\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ is the same identity
+written in BV language.  The ``obstruction'' is the content.
+\end{remark}
+
+\subsection{Why geometry saves what algebra cannot}
+
+\begin{observation}[Arnold is the gatekeeper]
+The full differential $d_{\mathrm{res}}$ squares to zero because
+the geometry of the Fulton--MacPherson compactification
+$\overline{C}_n(X)$ enforces it.  The computation of $d^2$ produces
+triple residues at codimension-$2$ strata $D_{ijk}$, and the
+\emph{Arnold relation}
+\[
+\eta_{12} \wedge \eta_{23}
++ \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0
+\]
+makes these vanish.  This is Stokes' theorem on a manifold with
+corners: at the corner $D_{ij} \cap D_{jk}$, the two adjacent
+faces contribute opposite orientation signs.  The cancellation is
+topological; no algebraic sign convention can reproduce it or
+circumvent it.
+
+The Borcherds identity for vertex algebras is the algebraic shadow
+of this geometric cancellation.  It governs the full OPE
+simultaneously---all poles at once---because Stokes' theorem does
+not care about pole order.
+\end{observation}
+
+\begin{remark}[The propagator is unique]
+The form $\eta_{ij} = d\log(z_i - z_j)$ is the \emph{unique}
+meromorphic $1$-form on $C_2(X)$ satisfying three simultaneous
+constraints: conformal invariance (unchanged under $z \mapsto f(z)$),
+well-defined residues (a simple pole has a coordinate-independent
+residue; a double pole does not), and the Arnold relation (ensuring
+$d^2 = 0$).  No other $1$-form satisfies all three.  The propagator
+is not a choice.  It is the unique gate through which the OPE data of
+a chiral algebra can pass into a cochain complex.
+\end{remark}
+
+
+% =================================================================
+\section{Three differentials, three worlds}
+\label{sec:three-worlds}
+% =================================================================
+
+\noindent
+For eighteen months, the letter $d$ was used for three different
+operators.  This notational sin hid the deepest structural feature
+of the subject.
+
+\subsection{The trinity}
+
+On a genus-$g$ bar complex, three differentials act:
+
+\medskip
+\noindent
+\textbf{(i) The genus-$0$ collision differential $\dzero$.}
+Built from residues on $\bP^1$ using
+$\eta_{ij} = d\log(z_i - z_j)$.  Satisfies $\dzero^2 = 0$ by
+Arnold.  This is the differential of classical Koszul duality.
+
+\medskip
+\noindent
+\textbf{(ii) The fiberwise curved differential $\dfib$.}
+On a fixed curve $\Sigma_g$, the propagator acquires period
+corrections:
+\[
+\eta^{(g)}_{ij} = d\log E(z_i, z_j)
+  + \sum_{k=1}^g \omega_k(z_i) \oint_{A_k} \omega_k(z_j),
+\]
+where $E(z_i, z_j)$ is the prime form (a section of
+$K^{-1/2} \boxtimes K^{-1/2}$, not $K^{+1/2}$---this sign costs
+a week if wrong) and $\omega_k$ is a basis of
+$H^0(\Sigma_g, \Omega^1)$.
+
+The Arnold relation \emph{fails}.  The residual is the Arakelov
+$(1,1)$-form:
+\[
+\dfib^{\,2} = \kappa(\cA) \cdot \omega_g.
+\]
+The bar differential no longer squares to zero.  The world is curved.
+
+\medskip
+\noindent
+\textbf{(iii) The total corrected differential $\Dg{g}$.}
+$\Dg{g} = \dzero + \sum_{k=1}^g t_k\, d_k$,
+where $t_k = \oint_{A_k}\omega_k$ are $A$-period parameters from
+$H^1(\Sigma_g, \C)$.
+Satisfies $\Dg{g}^2 = 0$.
+
+\begin{theorem}[Lagrangian cancellation]
+\label{thm:lagrangian}
+The $A$-cycle subspace of $H^1(\Sigma_g, \C)$ is Lagrangian for the
+intersection pairing.  The curvature $\dfib^2$ lies in the
+symplectic complement.  The $A$-period corrections project it to
+zero.  This is why $\Dg{g}^2 = 0$: the correction terms and the
+curvature annihilate each other because they live in complementary
+Lagrangian subspaces.
+\end{theorem}
+
+\begin{warning}[The parameter-source confusion]
+\label{warn:not-moduli}
+The period parameters $t_k$ live in $H^1(\Sigma_g, \C)$---periods
+of the \emph{fixed curve}.  They are \textbf{not} classes on
+$\cM_g$.  This matters because $H^1(\cM_g, \Q) = 0$ for
+$g \geq 2$ (Harer).  There are no such classes.
+
+The scalar obstruction $\kappa(\cA) \cdot \lambda_g$ lives in the
+tautological ring of $\overline{\cM}_g$, at the end of a chain:
+\[
+H^1(\Sigma_g, \C)
+\xrightarrow{\;\MC\;}
+Z^1(\Defcyc(\cA))
+\xrightarrow{\;\text{global}\;}
+R\Gamma(\overline{\cM}_g, \cZ_\cA)
+\xrightarrow{\;\mathrm{tr}\;}
+R\Gamma(\overline{\cM}_g, \Q).
+\]
+Confusing fiber with base is the most common error in the subject.
+Three early drafts contained it.
+\end{warning}
+
+\subsection{The curvature is the content}
+
+Physicists read $\dfib^2 = \kappa \cdot \omega_g$ as a failure:
+``the theory is anomalous.''  But the anomaly \emph{is} the modular
+characteristic of the chiral algebra.  The number $\kappa(\cA)$
+controls all genus-$g$ phenomena.
+
+In the curved $\Ainf$ framework, the curvature element is
+$m_0 = \kappa(\cA) \cdot \omega_g$, and:
+\[
+m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]
+\qquad\text{(commutator, minus sign)}.
+\]
+The ``failure'' of $m_1^2 = 0$ is the assertion that the vacuum has
+a nontrivial bracket with everything.  This is the algebraic encoding
+of the anomaly.  The condition $\kappa = 0$ is simultaneously
+$\dfib^2 = 0$ (uncurvedness) and $c = 26$ (anomaly cancellation for
+the bosonic string).
+
+The generating function of the obstruction classes
+$\kappa(\cA) \cdot \lambda_g$ across all genera is
+$\kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$: the $\hat{A}$-genus of
+an abstract Dirac operator whose index is the modular characteristic.
+This is the family index theorem of Bismut--Freed, specialized to
+the Hodge bundle over $\overline{\cM}_g$.  Its appearance from OPE
+residues is not visible from the definition.  The bar construction
+knows things you did not tell it.
+
+
+% =================================================================
+\section{On the faery structure of $\Eone$-chiral algebras}
+\label{sec:e1-chiral}
+% =================================================================
+
+\noindent
+There are two axes called ``$\Eone$,'' and confusing them will
+destroy you.
+
+\subsection{Two axes, one notation, total darkness}
+
+\medskip
+\noindent
+\textbf{Axis 1: The chiral hierarchy} (fixed curve, varying
+commutativity).
+
+On a smooth curve $X$, three species of chiral algebra coexist:
+\[
+\Einf\text{-chiral}
+\;\subset\; \Pinf\text{-chiral}
+\;\subset\; \Eone\text{-chiral}.
+\]
+
+An $\Einf$-chiral algebra is a vertex algebra in the sense of
+Beilinson--Drinfeld: a $\cD_X$-module with a skew-symmetric chiral
+bracket
+$\mu\colon j_*j^*(\cA \boxtimes \cA) \to \Delta_!\cA$.
+The skew-symmetry axiom $Y(a,z)b = e^{z\partial}Y(b,-z)a$ forces
+full locality.  Configuration spaces are \emph{unordered}.
+
+An $\Eone$-chiral algebra drops skew-symmetry.  The chiral bracket
+is \emph{associative} but not commutative.  Fields satisfy
+$R$-twisted locality:
+\begin{equation}\label{eq:r-twisted}
+J_a(z) J_b(w) - R^{ab}_{cd}(z-w)\, J_d(w) J_c(z) = 0,
+\end{equation}
+where $R(u)$ is a matrix-valued rational function---the Yang
+$R$-matrix.  When $R = P$ (the permutation), this is
+skew-symmetry; we recover $\Einf$.  When $R \neq P$, it is
+strictly $\Eone$: the fields do not commute, and configuration
+spaces must be \emph{ordered}.
+
+A $\Pinf$-chiral algebra has both an $\Einf$ product and a
+$\chirLie$ bracket satisfying the Leibniz rule.  It is the chiral
+Poisson algebra, intermediate between the two extremes.
+
+\medskip
+\noindent
+\textbf{Axis 2: The topological ladder} (varying manifold dimension,
+$\Eone/\Etwo/\ldots/\mathsf{E}_n$).
+
+The little $n$-disks operad $\mathsf{E}_n$ lives on real
+$n$-manifolds.  Arnold relations (three pairwise collisions,
+$n = 2$) generalize to Totaro relations (higher codimension,
+$n \geq 3$).  A complex curve has complex dimension~$1$ but
+\emph{real} dimension~$2$: it enters the topological ladder at
+$n = 2$, not $n = 1$.
+
+\begin{warning}[The fatal confusion]
+\label{warn:e1-axes}
+An $\Eone$-\emph{chiral} algebra lives on a curve (complex
+dimension~$1$, real dimension~$2$).  It is \textbf{not} a
+topological $\Eone$-algebra (which lives on an interval, real
+dimension~$1$).  The suffix ``$\text{-chiral}$'' is
+mathematically load-bearing.  Without it, the notation is a
+death trap.
+
+The chiral bar complex on a curve is an $\Etwo$-algebraic
+object (Arnold relations from the real $2$-dimensional configuration
+space $C_n(\Sigma_g)$) enriched by holomorphic structure (the OPE
+poles are holomorphic, not just topological).  It sits at the
+$\Etwo$ level of the topological ladder with a holomorphic
+refinement.
+
+At the topological $\Eone$ level (intervals/circles), the bar
+complex reduces to the classical $\Ainf$ bar-cobar adjunction:
+no configuration space geometry, no Arnold relation, no propagator.
+The entire subject of this monograph vanishes.
+\end{warning}
+
+\subsection{Why ordered configurations are forced: a fairy tale in four acts}
+
+Here is a story.  It has the logic of a fairy tale and the payload
+of a nuclear weapon.
+
+\medskip
+\noindent
+\textsc{Act I.}
+The Kazhdan--Lusztig equivalence sends integrable
+$\widehat{\fg}_k$-modules to representations of the quantum group
+$U_q(\fg)$, where $q = e^{\pi i/(k+h^\vee)}$.  The quantum group
+has a braiding $\sigma$ given by the universal $R$-matrix.
+\emph{This braiding is not symmetric}: $R_{12} \neq P_{12}$.
+
+\medskip
+\noindent
+\textsc{Act II.}
+Bar-cobar duality on the Kac--Moody side acts by Verdier duality on
+$\overline{C}_n(X)$.  On the module category, this \emph{reverses the
+braiding}: $\sigma \mapsto \sigma^{-1}$.  Under the KL equivalence,
+the reversed braiding corresponds to $R \mapsto R^{-1}$, which is
+$q \mapsto q^{-1}$.
+
+\medskip
+\noindent
+\textsc{Act III.}
+On the quantum group side, $R$-matrix inversion is not level
+inversion.  It is a Hopf algebra involution that reverses the ordering
+of tensor factors.  To realize this geometrically on the curve, we
+must track which insertion comes first: left or right.  This forces
+\emph{ordered} configuration spaces $C_n^{\mathrm{ord}}(X)$.
+
+\medskip
+\noindent
+\textsc{Act IV.}
+Without ordering, Verdier duality acts by level inversion
+$k \mapsto -k - 2h^\vee$ (the $\Einf$ story, recovering
+Feigin--Frenkel).  \emph{With} ordering, it acts by $R$-matrix
+inversion $R \mapsto R^{-1}$ (the $\Eone$ story, recovering the
+Drinfeld--Kohno theorem).  The Yangian $Y(\fg)$, presented via the
+RTT relation
+$R_{12}(u-v)\, T_1(u)\, T_2(v) = T_2(v)\, T_1(u)\, R_{12}(u-v)$,
+is the archetypal $\Eone$-chiral algebra: its Koszul dual is
+$Y_{R^{-1}}(\fg)$, the same Yangian with inverted $R$-matrix.
+
+\begin{theorem}[$\Eone$-chiral Koszul duality]
+\label{thm:e1-koszul}
+For the Yangian $Y_\hbar(\mathfrak{sl}_N)$ in RTT presentation:
+\[
+Y_\hbar(\mathfrak{sl}_N)^{!,\mathrm{ch}}
+\cong Y_{R^{-1},\hbar}(\mathfrak{sl}_N)^{\mathrm{ch}},
+\]
+where the dual RTT relation uses the inverse Yang $R$-matrix:
+$R^{-1}(u) = 1 + \hbar P/u + O(u^{-2})$ \textup{(}sign flip in the
+linear term\textup{)}.
+\end{theorem}
+
+This is a nuclear warhead wrapped in a fairy tale.  The passage from
+$R$ to $R^{-1}$ is the $\Eone$-chiral Koszul duality, and it
+unifies:
+\begin{itemize}[nosep]
+\item the Feigin--Frenkel involution (the $\Einf$ shadow),
+\item the Drinfeld--Kohno equivalence between KZ monodromy and
+  quantum group $R$-matrices,
+\item the classical $\Ass^! \cong \Ass$ self-duality of the
+  associative operad (the point-limit shadow).
+\end{itemize}
+
+\subsection{The cocycle gate: $\Einf$ to $\Eone$ in one parameter}
+
+Lattice vertex algebras make the $\Einf \leftrightarrow \Eone$
+transition visible in a single parameter.  A $2$-cocycle
+$\varepsilon$ on an even lattice $\Lambda$ satisfying the Borcherds
+symmetry axiom
+$\varepsilon(\alpha,\beta) = (-1)^{\langle\alpha,\beta\rangle}
+\varepsilon(\beta,\alpha)$ produces a vertex algebra
+$V_\Lambda^\varepsilon$.
+
+When $\varepsilon$ is \emph{symmetric}:
+$V_\Lambda^\varepsilon$ is $\Einf$-chiral.
+When $\varepsilon$ is \emph{not symmetric}:
+$V_\Lambda^\varepsilon$ is strictly $\Eone$-chiral.
+
+An irrational twist $\varepsilon((a,b),(c,d)) = e^{2\pi i\theta \cdot ad}$
+on $\Z^2$ produces the noncommutative torus in chiral dress: a
+single irrational number $\theta$ turns a commutative algebra into a
+nonlocal one.  Koszul duality inverts it:
+$\varepsilon \mapsto \varepsilon^{-1}$.
+
+The $\Eone$ inversion principle---$\varepsilon \mapsto
+\varepsilon^{-1}$ for lattices, $R \mapsto R^{-1}$ for
+Yangians---is the same phenomenon at different levels of
+generality.  The lattice case is the abelian shadow of the Yangian
+case, just as the Heisenberg is the abelian shadow of Kac--Moody.
+
+\subsection{Coisson is not chiral Poisson}
+
+A confusion that has ruined entire papers:
+
+\begin{itemize}[nosep]
+\item A \textbf{Coisson algebra} (Beilinson--Drinfeld) $=$ a Poisson
+  vertex algebra $=$ a commutative $\cD_X$-algebra with
+  $\lambda$-bracket.  It is \textbf{not} a chiral algebra.  It lives
+  outside the chiral hierarchy.
+\item A \textbf{$\Pinf$-chiral algebra} $=$ $\chirCom + \chirLie$ with
+  Leibniz.  It \textbf{is} a chiral algebra---in fact an
+  $\Einf$-chiral algebra equipped with additional Lie structure.
+\end{itemize}
+
+The quantization levels are different:
+\[
+\text{Coisson}
+\;\xrightarrow{\text{singly quantum}}\;
+\Einf\text{-chiral}
+\;\xrightarrow{\text{doubly quantum}}\;
+\Eone\text{-chiral}.
+\]
+Coisson $\to$ $\Einf$ is the passage from Poisson to associative
+(star product).  $\Einf \to \Eone$ is the passage from commutative
+to noncommutative ($R$-matrix deformation).  These are consecutive
+floors, not the same floor.  Khan--Zeng's 3d holomorphic-topological
+gauge theories produce Poisson vertex algebras (Coisson); their
+quantization lands at the $\Einf$ level, not the $\Eone$ level.
+To reach $\Eone$ requires a further deformation: the $R$-matrix.
+
+
+% =================================================================
+\section{Holomorphic-topological descent and the 3d--2d bridge}
+\label{sec:ht}
+% =================================================================
+
+\noindent
+The relationship between $3$-dimensional theories and $2$-dimensional
+chiral algebras is a bridge with specific load-bearing capacities.
+
+\subsection{Costello--Li: 4d to 2d via holomorphic-topological twist}
+
+Start with $4$d $\mathcal{N}=2$ super Yang--Mills on $\C^2$.  After
+the holomorphic-topological twist, the fields become
+$\bar\partial$-closed forms valued in $\fg \otimes \cO_{\C^2}$, and
+the action becomes $S = \{Q_{\mathrm{BRST}}, \Psi\} + S_{\mathrm{top}}$.
+Replace $\C^2$ by $\C \times \C^*$, take $S^1$-equivariant reduction
+along $|w| = 1$.  Out falls a \emph{factorization algebra} on $\C$.
+
+Is it a chiral algebra?  Beilinson--Drinfeld says yes, under the
+equivalence between factorization algebras and chiral algebras on
+curves.  But this equivalence requires the factorization algebra to
+have prescribed pole structure along the diagonal, which is not
+automatic from the reduction.  The conditions:
+holomorphicity of the Coulomb branch, survival of conformal symmetry,
+and $\cD$-module compatibility.
+
+When these conditions hold, the Costello--Li reduction produces a
+genuine chiral algebra in the sense of BD, and the entire bar-cobar
+machinery applies.  When they fail, you have a factorization algebra
+that is not a chiral algebra, and the bar complex must be built in
+the factorization framework (Costello--Gwilliam) rather than the
+$\cD$-module framework (BD/FG/this monograph).
+
+\subsection{Paquette--Williams: boundary vertex algebras}
+
+The $4$d holomorphic-topological theory on $\C^2$ with a boundary
+at $z_2 = 0$ supports a \emph{vertex operator algebra} $V_{\cB}$
+on the boundary.  The boundary VOA has a \emph{chiral envelope}
+$\cA_{\cB}$---a genuine chiral algebra in the BD sense.
+
+The bar-cobar framework applies to the chiral envelope, not to the
+VOA directly (the VOA is an algebraic object; the chiral envelope
+is a geometric $\cD$-module object).  The distinction matters: the
+bar complex of $\cA_{\cB}$ computes factorization homology on
+$\Ran(X)$, which is the correct ``spectrum'' of the boundary theory.
+
+\subsection{The 3d holomorphic-topological zoo}
+
+Three dimensional holomorphic-topological theories produce structure
+on the first floor of the quantization elevator:
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Origin} & \textbf{Structure} & \textbf{Chiral level} \\
+\hline
+3d HT gauge (Khan--Zeng) & Poisson vertex algebra &
+  Coisson (pre-chiral) \\
+3d $\mathcal{N}=4$ boundary & VOA on boundary &
+  $\Einf$-chiral envelope \\
+3d Chern--Simons & Config.\ space integrals ($n=3$) &
+  $\mathsf{E}_3$-algebraic \\
+4d HT $\to$ 2d reduction & Factorization algebra on $\C$ &
+  $\Einf$-chiral if conditions hold
+\end{tabular}
+\end{center}
+
+\noindent
+The $\Eone$-chiral level---Yangians, quantum groups, non-symmetric
+$R$-matrices---does not arise directly from $3$d HT gauge theory.
+It requires the additional ``doubly quantum'' deformation of the
+$R$-matrix.  This is the Drinfeld--Jimbo quantization of the
+classical $r$-matrix, which is a $2$-dimensional phenomenon (KZ
+equations on a curve), not a $3$-dimensional one.
+
+\begin{remark}[Chern--Simons and the Arnold--Totaro transition]
+In $3$d Chern--Simons theory, the relevant configuration spaces
+are $C_n(M^3)$ for a $3$-manifold $M$, and the structural relations
+are \emph{Totaro relations} (generalizing Arnold from $n = 2$ to
+$n = 3$).  The bar complex on $C_n(M^3)$ computes Vassiliev
+invariants via BV integration.  The bridge to $2$d chiral algebras
+comes through the holomorphic Chern--Simons/WZW correspondence:
+the CS path integral on $\Sigma_g \times [0,1]$ produces the
+WZW chiral algebra on $\Sigma_g$.
+
+The perturbative CS expansion gives $\Ainf$ structure on the
+deformation complex of flat connections.  This is the $3$d avatar of
+the curved $\Ainf$ structure on the genus-$g$ bar complex.  The
+curvature $m_0$ in $2$d corresponds to the CS level in $3$d; the
+condition $\kappa = 0$ (anomaly cancellation) corresponds to the
+integrality of the CS level.
+\end{remark}
+
+
+% =================================================================
+\section{Chiral Koszulness is not classical Koszulness}
+\label{sec:koszulness}
+% =================================================================
+
+\noindent
+$U(\fg)$ is Koszul.  $\widehat{\fg}_k$ might not be.
+
+\subsection{The distinction}
+
+Classical Koszulness: the bar complex $\B(U(\fg))$ has cohomology
+concentrated in a single row.  This uses the associative product
+(a single binary operation).  Proved by Priddy, Backelin--Fr\"oberg,
+BGS.
+
+Chiral Koszulness: the \emph{chiral} bar complex
+$\B^{\mathrm{ch}}(\widehat{\fg}_k)$, built from the full OPE
+including all poles, has the analogous concentration.  This uses
+all pole orders simultaneously (an infinite family of operations).
+
+Classical does not imply chiral.  The higher OPE poles are not a
+perturbation; they are structural.  The Sugawara tensor
+$T = \frac{1}{2(k+h^\vee)}\sum_a \normord{J^a J^a}$ involves
+double Wick contractions producing quartic poles in $T(z)T(w)$, and
+these generate new differentials in the PBW spectral sequence with
+no classical analogue.
+
+\subsection{The circularity}
+
+To compute bar cohomology dimensions, assume chiral Koszulness (the
+spectral sequence collapses).  But the bar cohomology dimensions
+are what would verify chiral Koszulness (via
+$H_\cA(t) \cdot H_{\cA^!}(-t) = 1$).  The circle must be broken
+by an \emph{independent} collapse proof---family-specific, using:
+\begin{itemize}[nosep]
+\item \textbf{Kac--Moody}: Whitehead's theorem + Killing contraction.
+  The enrichment is $\fg \otimes \fg$ (dimension $\dim(\fg)^2$),
+  \textbf{not} $\Lambda^2(\fg)$
+  (dimension $\binom{\dim\fg}{2}$).  Getting this wrong
+  produces systematically incorrect predictions.  Several months
+  were lost to this error.
+\item \textbf{Virasoro}: The $\mathfrak{sl}_2$ subalgebra
+  $\{L_{-1}, L_0, L_1\}$ acts $c$-independently (the central term
+  $m^3 - m = 0$ for $m \in \{-1,0,1\}$).  Casimir eigenvalues at
+  weight $h$ are all positive for $h \geq 2$.
+\item \textbf{Principal $\cW_N$}: Unique weight-$2$ mechanism from
+  the stress tensor, triangular $d_2$ argument.
+\end{itemize}
+
+There is no universal collapse theorem.  The three mechanisms share
+a family resemblance but not a common proof.
+
+\subsection{What free fields teach}
+
+For free fields (Heisenberg, free fermion), the OPE has only a
+double pole: $d_{\mathrm{bracket}} = 0$, so $d = d_{\mathrm{curvature}}$,
+which squares to zero automatically.  No Borcherds identity needed.
+No PBW spectral sequence needed.  No circularity.
+
+The jump from ``one pole'' (free) to ``two poles'' (interacting) is
+not incremental.  It is a phase transition.  The entire machinery of
+the monograph---the Borcherds identity, the PBW spectral sequence,
+the Arnold--Stokes--Verdier triangle, the family-specific collapse
+proofs---exists to handle this transition.  Free-field computations
+are a warm-up in a different sport.
+
+
+% =================================================================
+\section{The Heisenberg frame atom}
+\label{sec:heisenberg-frame}
+% =================================================================
+
+\noindent
+Every theorem of the monograph is visible in the Heisenberg algebra.
+None of the pitfalls are.  This is why it is the frame atom.
+
+The OPE $\alpha(z)\alpha(w) = k/(z-w)^2$ has a double pole and
+nothing else.  The bar differential is pure curvature.  The bar
+cohomology at genus $0$ counts partitions.  The Koszul dual is
+$\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$, \textbf{not}
+$\cH_{-k}$: the Heisenberg is not self-dual.  (For Kac--Moody,
+$\widehat{\fg}_k^! \cong \widehat{\fg}_{-k-2h^\vee}$ \emph{looks}
+like a level flip, but this is specific to the KM OPE structure,
+not a general principle.)
+
+The genus-$1$ curvature is $\dfib^2 = k \cdot \omega_1$, and the
+Fourier--Mukai identification (following Polishchuk) makes the bar
+complex on $E_\tau$ literally the Fourier--Mukai kernel on
+$\mathrm{Jac}(E_\tau) \times \mathrm{Jac}(E_\tau)^\vee$.  The
+chiral bar construction \emph{is} the Fourier--Mukai transform,
+generalized from abelian (Heisenberg) to non-abelian (Kac--Moody,
+Virasoro, Yangian).
+
+Complementarity:
+$c(\cH_k) + c(\cH_k^!) = 1 + 1 = 2 = 2\dim(V)$.  For Kac--Moody:
+$c + c' = 2\dim(\fg)$.  The sum is topological.
+
+The $\hat{A}$-genus appears as the generating function of
+$\kappa(\cA) \cdot \lambda_g$ across genera.  It is the
+characteristic function of the Fourier transform---the analogue of
+$e^{-t|\xi|^2}$ for the classical heat kernel.
+
+
+% =================================================================
+\section{Scalar saturation, or: the cubic Casimir that wasn't there}
+\label{sec:saturation}
+% =================================================================
+
+\noindent
+The Maurer--Cartan element $\Theta_\cA$ was expected to be
+complicated.  It is not.
+
+For \emph{any} simple Lie algebra $\fg$, regardless of rank:
+\[
+\Theta^{\min}_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda.
+\]
+One number $\kappa(\cA)$, one universal kernel, one tautological
+class.  The higher Casimirs do not contribute.
+
+The reason: $H^2_{\mathrm{cyc}}(\fg, \fg) = H^3(\fg) = \C$
+is one-dimensional for \emph{every} simple $\fg$.  The cubic
+Casimir of $\mathfrak{sl}_3$ lives in $H^5(\fg)$ (degree~$5$ in
+cyclic cohomology)---the wrong degree for the MC equation, which
+lives at degree~$2$.
+
+Earlier versions of the manuscript contained a proposition
+claiming scalar saturation holds only for $\mathfrak{sl}_2$, and a
+remark claiming the cubic Casimir would contribute non-scalar
+corrections at higher rank.  Both were wrong.  The degree mismatch
+is absolute: higher Casimirs sit in the wrong cohomological degree
+\emph{regardless} of how large the rank is.
+
+\begin{theorem}[Genus rigidity]
+Genera $1$ and $2$ are rigid: no freedom beyond $\kappa(\cA)$.
+The first nontrivial correction appears at genus~$3$:
+\[
+l_1(\theta_3 - \kappa(\cA)\mu \otimes \lambda_3)
+= -\tfrac{1}{6}\, l_3(\theta_1, \theta_1, \theta_1),
+\]
+and this is purely in the \emph{Killing $l_3^\eta$ channel}---the
+cubic $\Linf$ operation built from the Killing $3$-cocycle.
+\end{theorem}
+
+The non-scalar data in the modular package lives in $\Delta_\cA$
+(the spectral discriminant) and $\Pi_\cA$ (the periodicity operator),
+not in $\Theta_\cA$.  The universal class is scalar.  The world is
+simpler than we feared.
+
+
+% =================================================================
+\section{The Category $\cO$ generation problem, \\
+or: a theorem that died on arrival}
+\label{sec:cat-O}
+% =================================================================
+
+\noindent
+The natural conjecture (MC3): $D^b(\cO_{Y_\hbar(\mathfrak{sl}_N)})$
+is thickly generated by finite-dimensional evaluation modules.
+
+\begin{theorem}[The obstruction]
+This is false.  Every object in
+$\mathrm{thick}\langle\text{fd evals}\rangle$ has finite-dimensional
+total cohomology.  Category $\cO$ contains Verma modules with
+infinite-dimensional cohomology.  Therefore
+$\mathrm{thick}\langle\text{fd evals}\rangle \neq D^b(\cO)$.
+\end{theorem}
+
+The failure is clean, immediate, and devastating.  It forced a
+complete rethinking of MC3.
+
+\subsection{The fork}
+
+\textbf{Fork~A: Enlarge the generators.}  Add asymptotic modules,
+prefundamental modules, or evaluation pullbacks of full BGG
+$\cO(\fg)$.
+
+\textbf{Fork~B: Enlarge the category.}  Move to
+completed/coderived/ind-completed categories where
+infinite-dimensional standards are totalizations of finite data.
+
+The monograph takes Fork~A for type~$A$: the \emph{polynomial}
+subcategory $\cO_{\mathrm{poly}}$ (modules with polynomial
+character in weight variables) is proved to be thickly generated by
+evaluation modules, via the Drinfeld classification.  The key
+insight: modules outside $\cO_{\mathrm{poly}}$ have no quantum group
+counterpart.  So factorization DK in its natural form is
+unconditionally proved for type~$A$:
+\[
+\Fact_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N))
+\simeq
+\Fact_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_N))^{\mathrm{op}}.
+\]
+
+The residual question: does $\cO = \cO_{\mathrm{poly}}$?
+
+\subsection{The shifted-envelope dream}
+
+The right ambient category may be the anti-dominantly shifted
+envelope $\cO^{\mathrm{sh} \leq 0} = \bigoplus_{\mu \leq 0} \cO_\mu$,
+where $\cO_\mu$ is Category~$\cO$ for the $\mu$-shifted Yangian
+(Brundan--Kleshchev, Finkelberg--Tsymbaliuk).  Inside it, ordinary
+$\cO$ lives at $\mu = 0$, negative prefundamental modules live at
+$\mu = -\alpha_i^\vee$, and the Baxter $TQ$-relations should
+categorify to exact triangles.  This is a fairy gate that has not
+yet been opened.
+
+
+% =================================================================
+\section{The Fourier perspective}
+\label{sec:fourier}
+% =================================================================
+
+\noindent
+The bar construction is a Fourier transform.  This is not a metaphor.
+
+The input is a chiral algebra (the ``function'').  The kernel is
+$\eta_{ij} = d\log(z_i - z_j)$ (the ``exponential'').  The output
+is a factorization coalgebra on $\Ran(X)$ (the ``spectrum'').
+Verdier duality inverts the transform.  The cobar construction
+$\Omega(\B(\cA))$ reconstructs $\cA$ from its spectrum.
+
+\begin{theorem}[The four properties of the Fourier transform]
+\label{thm:four-properties}
+\begin{enumerate}[nosep, label=\textup{(\Alph*)}]
+\item \textbf{Intertwining.}
+  $\mathbb{D}_{\Ran} \circ \B_X \simeq \B_X \circ (-)^!$.
+\item \textbf{Inversion.}
+  On the Koszul locus, $\Omega(\B(\cA)) \xrightarrow{\sim} \cA$.
+\item \textbf{Plancherel.}
+  $Q_g(\cA) \oplus Q_g(\cA^!) \simeq
+  R\Gamma(\overline{\cM}_g, \cZ_\cA)$.
+\item \textbf{Characteristic function.}
+  $\kappa(\cA)$ with $\hat{A}$-genus generating function.
+\end{enumerate}
+\end{theorem}
+
+When $X = \Spec k$: configuration spaces collapse, the propagator
+vanishes, $d_{\mathrm{dR}} = 0$, $d_{\mathrm{res}}$ reduces to the
+binary bracket, and $\B_X(\cA)$ becomes
+$T^c(s^{-1}\bar{\cA}, d_{\mathrm{bracket}})$---the classical bar
+construction of Loday--Vallette.  The entire theory of operadic
+Koszul duality is the zero-dimensional shadow of the chiral Fourier
+transform.
+
+\begin{remark}[The single deepest fact]
+Verdier duality on $\overline{C}_n(X)$ exchanges residues at
+collision divisors with inclusions of boundary strata.  The bar
+differential (residues) and the cobar differential (inclusions) are
+Verdier-dual operations.  Theorems~A--D are its consequences:
+A~(intertwining) because Verdier duality interchanges
+$\B(\cA)$ and $\B(\cA^!)$;
+B~(inversion) because Verdier duality is an involution;
+C~(complementarity) because the genus-$g$ obstructions of $\cA$ and
+$\cA^!$ are Verdier-dual;
+D~(characteristic) because the generating function of Verdier-dual
+Chern classes is the $\hat{A}$-genus, by Grothendieck--Riemann--Roch.
+
+Every computation in the monograph is an unwinding of this single
+geometric principle in specific examples.
+\end{remark}
+
+
+% =================================================================
+\section{The master conjecture hierarchy}
+\label{sec:mc-hierarchy}
+% =================================================================
+
+\noindent
+The ${\sim}100$ conjectures in the monograph reduce to five,
+organized by logical dependency.
+
+\medskip
+\noindent
+\textbf{MC1} (PBW concentration).
+\emph{Proved} for KM, Virasoro, principal $\cW_N$.  The entry
+theorem.  Without it, the interacting families remain ``conditionally
+Koszul.''
+
+\medskip
+\noindent
+\textbf{MC2} (cyclic $\Linf$ and $\Theta_\cA$).
+\emph{Proved} (full resolution: chiral graph complex + modular-operadic
+MC + tautological-line support).  The universal MC element exists,
+is scalar-saturated, and has the right Verdier and clutching
+compatibilities.
+
+\medskip
+\noindent
+\textbf{MC3} (factorization DK/KL).
+DK-0/1 proved.  DK-$1\frac{1}{2}$ (lattice) proved.
+DK-2/3 type~$A$ proved.  Polynomial $\cO$ at all $N$ proved.
+Category~$\cO$ at $N \geq 3$ open.  The lattice route bypasses
+thick generation entirely via sectorwise finiteness.
+
+\medskip
+\noindent
+\textbf{MC4} (infinite-tower comparison).
+M-level complete for $\cW_\infty$ and Yangian RTT.  H-level
+comparison open, reduced to coefficient identities:
+$\mathsf{K}^{\mathrm{line}}_{a,b}(N) = \mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$
+(Yangian, detected on the boundary strip
+$\{\Delta_{a,0}(N)\}_{0 \leq a \leq N}$) and
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N) =
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
+($\cW_\infty$, detected on the seed packet $\cI_N$).  At stage~$4$,
+the live frontier is exactly six OPE coefficients organized as three
+local blocks.
+
+\medskip
+\noindent
+\textbf{MC5} (BV/BRST = bar).
+Genus~$0$ proved.  Higher genus downstream.
+
+\begin{remark}[Three phases of understanding]
+Phase~1 (vision): ``Chiral Koszul duality lifts to curves.''  Broad
+claims, few proofs.
+Phase~2 (obstruction): literal MC3 dies, $d^2 \neq 0$ discovered,
+enrichment error invalidates months of predictions.
+Phase~3 (surgery): each MC reduced to explicit finite-detection
+criteria.  The Yangian MC4 reduces to a residue on $e_1 \otimes e_2$
+in $V \otimes V$.
+
+The most ambitious theorem is the one stated with the most precision.
+\end{remark}
+
+
+% =================================================================
+\section{Wisdom}
+\label{sec:wisdom}
+% =================================================================
+
+\noindent
+What follows is not formalized.  It is the residue of years of work,
+extracted at the collision divisor of experience and ignorance.
+
+\medskip
+\noindent
+\textit{1. The bar complex knows more than you tell it.}
+The $\hat{A}$-genus, the Feigin--Frenkel involution, the
+Kodaira--Spencer clutching compatibility---none are visible in the
+OPE data.  They emerge from the geometry of $\overline{C}_n(X)$.
+Geometric objects have richer structure than their algebraic
+presentations suggest.  Trust the geometry.
+
+\medskip
+\noindent
+\textit{2. Never decompose the differential by pole order.}
+The split $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$ is
+useful for understanding but fatal for computing.  The Borcherds
+identity governs the full OPE simultaneously.  The Jacobi identity
+governs only the simple pole.  When there is a double pole, these
+are different identities.
+
+\medskip
+\noindent
+\textit{3. The enrichment is $\fg \otimes \fg$, not $\Lambda^2(\fg)$.}
+For $\mathfrak{sl}_2$: dimension $9$ versus dimension $3$.  Getting
+this wrong makes every genus-$1$ prediction wrong by a factor that
+grows with rank.  Several months were lost here.
+
+\medskip
+\noindent
+\textit{4. ``$\Eone$-chiral'' $\neq$ ``topological $\Eone$.''}
+An $\Eone$-chiral algebra lives on a curve (real dimension $2$).
+A topological $\Eone$-algebra lives on an interval (real
+dimension $1$).  The suffix ``-chiral'' is the difference between
+the entire subject and nothing.
+
+\medskip
+\noindent
+\textit{5. The curvature is the content, not the obstruction.}
+$\dfib^2 = \kappa \cdot \omega_g$ is not a failure.  It is the
+modular characteristic.  The anomaly \emph{is} the invariant.
+$\kappa = 0$ is simultaneously uncurvedness and anomaly cancellation.
+
+\medskip
+\noindent
+\textit{6. Free fields and interacting fields are different sports.}
+The jump from one OPE pole to two is a phase transition.  Free-field
+intuition does not transfer.  The Borcherds identity, the PBW
+spectral sequence, the family-specific collapse proofs---the entire
+machinery of the monograph exists to cross this gap.
+
+\medskip
+\noindent
+\textit{7. Precision enables ambition.}
+The discovery that the literal MC3 statement was false
+\emph{strengthened} the programme by identifying the correct
+statement ($\cO_{\mathrm{poly}}$ is the natural domain).  The
+cubic Casimir error was corrected by a degree count, not a
+calculation.  The most powerful theorems come from the most honest
+accounting.
+
+\medskip
+\noindent
+\textit{8. Status governance is mathematical practice.}
+In a monograph with ${\sim}1400$ claims, bookkeeping errors are
+indistinguishable from mathematical errors.  The concordance
+(Chapter~34) is the constitution: when earlier chapters disagree,
+they are subordinate.
+
+\medskip
+\noindent
+\textit{9. The Fourier perspective unifies everything.}
+The bar construction is a non-abelian integral transform.
+Theorems A--D are its structural properties.  When $X$ degenerates
+to a point, the transform degenerates to classical Koszul duality.
+On an elliptic curve, the Heisenberg case literally reduces to
+Fourier--Mukai.  The logarithmic propagator is the kernel; Verdier
+duality is the inversion formula; the $\hat{A}$-genus is the
+characteristic function.  This is not an analogy.  It is the
+definition.
+
+\medskip
+\noindent
+\textit{10. One geometric fact underlies everything.}
+Verdier duality on $\overline{C}_n(X)$ exchanges residues at
+collision divisors with inclusions of boundary strata.  Every
+theorem, every computation, every identification in the monograph
+is an unwinding of this single principle.
+
+\bigskip
+\begin{center}
+$*\quad*\quad*$
+\end{center}
+
+\bigskip
+\noindent\textit{The theorems are the stones.  The proofs are the
+mortar.  But the building stands because of the invisible lines of
+force between them---the insights that told us which stone to place
+next, and which wall was load-bearing, and where the ground would
+give way.  These notes record the invisible lines.}
+
+\end{document}
