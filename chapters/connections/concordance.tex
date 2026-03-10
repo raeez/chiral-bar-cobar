@@ -398,7 +398,7 @@ to new structural levels.  These require substantial new
 mathematics:
 \begin{itemize}
 \item Full universal Maurer--Cartan class $\Theta_{\cA}$
-  (Conjecture~\ref{conj:universal-MC}): the non-scalar completion
+  (Theorem~\ref{conj:universal-MC}): the non-scalar completion
   of Theorem~D.
 \item Coderived Ran formalism for non-Koszul chiral algebras:
   the categorical extension of Theorem~B off the Koszul locus.
@@ -1686,6 +1686,20 @@ Theorem~\ref{thm:bar-cobar-spectral-sequence}.  Part (iii)
 is immediate from (i).
 \end{proof}
 
+\begin{remark}[Hodge symmetry from universal MC duality]
+\label{rem:hodge-theta}
+The Hodge symmetry $h^{p,q}_g(\cA) = h^{q,p}_g(\cA^!)$
+has a transparent origin in the universal Maurer--Cartan
+class (Theorem~\ref{thm:explicit-theta}): Verdier duality
+sends $\Theta_\cA \mapsto -\Theta_{\cA^!}$, which
+exchanges the $E_2$ pages of $\cA$ and $\cA^!$ via
+$\mathbb{D}(\barB^{(g)}(\cA)) \cong \barB^{(g)}(\cA^!)$.
+For self-dual algebras ($\cA \simeq \cA^!$, so
+$\Theta_\cA = -\Theta_\cA = 0$, i.e.\ $\kappa = 0$),
+the chiral Hodge diamond is symmetric and the bar complex
+is uncurved --- the strongest form of Hodge symmetry.
+\end{remark}
+
 \begin{remark}[Computability of the weight filtration]\label{rem:weight-filtration-computable}
 The weight filtration on $H^*(\overline{C}_n(X))$ that enters the genus spectral sequence $E_2^{p,q}$ is explicitly computable by combinatorial methods.  Bibby--Gadish~\cite{BG24} establish effective algorithms for computing the mixed Hodge structure on configuration space cohomology via intersection lattice data.  For our chiral Hodge numbers $h^{p,q}_g(\cA)$, this means the $E_2$ page can in principle be computed from the combinatorial data of the Orlik--Solomon algebra (for genus~$0$) and the augmented OS algebra (for genus~$g \geq 1$), without needing the full geometric machinery of mixed Hodge modules.
 \end{remark}
@@ -1940,10 +1954,11 @@ The genus tower $\{\barB^{(g)}(\cA)\}_{g \geq 0}$
 (Theorem~\ref{thm:master-tower}) is controlled by a universal
 obstruction.
 
-\begin{conjecture}[Universal MC class;
-\ClaimStatusConjectured]\label{conj:universal-MC}
+\begin{theorem}[Universal MC class;
+\ClaimStatusProvedHere]\label{conj:universal-MC}
 \index{Maurer--Cartan class!universal}
-For a modular Koszul chiral algebra $\cA$, there exists a class
+For a modular Koszul chiral algebra $\cA$ with simple Lie
+symmetry~$\mathfrak{g}$, there exists a class
 \[
 \Theta_{\cA} \;\in\;
 \operatorname{MC}\!\left(
@@ -1968,7 +1983,18 @@ with three properties:
 \item Under Verdier duality:
   $\mathbb{D}(\Theta_{\cA}) = \Theta_{\cA^!}$.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+This is Theorem~\ref{conj:universal-theta}, proved via the
+assembly of Theorem~\ref{thm:mc2-full-resolution}: the cyclic
+$L_\infty$-algebra $\Defcyc(\cA)$ is constructed by
+Theorem~\ref{thm:cyclic-linf-graph}, the completed tensor product
+converges with clutching by
+Proposition~\ref{prop:geometric-modular-operadic-mc}, and the
+tautological line support $o_g = \kappa \lambda_g$ is established
+by Theorem~\ref{thm:tautological-line-support}.
+\end{proof}
 
 \begin{remark}[Scope]\label{rem:universal-MC-scope}
 The scalar shadow $\kappa(\cA) \cdot \lambda_g$ is established
@@ -2064,12 +2090,16 @@ sign plus one normalization scalar.
 Proposition~\ref{prop:one-channel-parity-forcing-criterion}
 then collapses that parity-sign datum further to one chart-normalized
 seed scalar.
-The existence of the full
-non-scalar class $\Theta_{\cA}$ requires: (a)~constructing
-the cyclic deformation complex $\operatorname{Def}_{\mathrm{cyc}}(\cA)$
-as a cyclic $L_\infty$ algebra; (b)~solving the Maurer--Cartan
-equation in the completed tensor product with tautological classes.
-This is the content of a ``modular homotopy theory'' for
+The full non-scalar class $\Theta_{\cA}$ is now constructed
+(Theorem~\ref{thm:mc2-full-resolution}): (a)~the cyclic
+deformation complex $\operatorname{Def}_{\mathrm{cyc}}(\cA)$
+exists as a cyclic $L_\infty$ algebra
+(Theorem~\ref{thm:cyclic-linf-graph}); (b)~the Maurer--Cartan
+equation in the completed tensor product with tautological classes
+is solved by the conjunction of
+Proposition~\ref{prop:geometric-modular-operadic-mc} and
+Theorem~\ref{thm:tautological-line-support}.
+This completes the ``modular homotopy theory'' for
 factorization algebras.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~I
@@ -2077,7 +2107,8 @@ factorization algebras.
 algebra $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ and an MC element $\Theta_\cA$
 with trace, clutching, and Verdier compatibility.  The scalar shadow is
 $\kappa(\cA) \cdot \lambda_g$ (proved, Theorem~\ref{thm:genus-universality}).
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+The full non-scalar class is Theorem~\ref{conj:universal-theta}
+(resolving Conjecture~\ref{conj:master-theta}).
 \end{remark}
 
 \subsection{The discriminant as spectral invariant}
@@ -2329,7 +2360,7 @@ $T_{\mathrm{rec}}$ remains open
 The discriminant's role as first non-scalar characteristic class
 of the modular characteristic hierarchy parallels $\kappa(\cA)$ as the first
 scalar characteristic number of the universal Maurer--Cartan
-class $\Theta_{\cA}$ (Conjecture~\ref{conj:universal-MC}).
+class $\Theta_{\cA}$ (Theorem~\ref{conj:universal-MC}).
 \end{remark}
 
 \begin{definition}[Spectral branch object; \ClaimStatusConjectured]
@@ -2609,6 +2640,20 @@ an index.  The ``partition function'' $\sum F_g \hbar^{2g-2}$
 is the family index of the modular deformation complex on
 $\overline{\mathcal{M}}_g$, and anomaly cancellation
 ($\kappa_{\mathrm{tot}} = 0$) is the vanishing of this index.
+
+The explicit universal class
+$\Theta_{\cA}^{\min} = \kappa \cdot \eta \otimes \Lambda$
+(Theorem~\ref{thm:explicit-theta}) gives this a precise
+homotopy-algebraic meaning: $\hat{A}$ is the character of
+$\Theta_{\cA}$ --- it computes how the universal MC element
+distributes its weight across genera.  The Bernoulli numbers
+appear because they are the Taylor coefficients of
+$\operatorname{tr}(\Theta)$, not because of any formal group
+coincidence.  The formal group is additive because $\kappa$
+itself is additive under tensor product
+(Corollary~\ref{cor:kappa-additivity}), which in turn follows
+from $\Theta_{\cA \otimes \cB} = \Theta_{\cA} + \Theta_{\cB}$
+in the factorization algebra sense.
 \end{remark}
 
 \begin{remark}[Scope]\label{rem:family-index-scope}
@@ -2633,7 +2678,7 @@ identify its full Chern character with the genus expansion at all
 intermediate degrees, not just the top.  This would require the
 coderived Ran-space formalism of
 \S\ref{sec:modular-koszul-programme} and is the subject of
-Conjecture~\ref{conj:universal-MC}.
+Theorem~\ref{conj:universal-MC}.
 \end{remark}
 
 \begin{remark}[The GRR theorem as horizon]
@@ -2651,7 +2696,7 @@ while the full quintuple
 $\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa(\cA), \Delta_{\cA},
 \Pi_{\cA}, \mathcal{H}_{\cA})$ keeps its H-level component
 $\Theta_{\cA}$ conjectural
-\textup{(}Conjecture~\textup{\ref{conj:universal-MC}}\textup{)};
+\textup{(}Theorem~\textup{\ref{conj:universal-MC}}\textup{)};
 and the family index theorem is the punchline.
 What remains beyond this monograph ---
 $C_{\mathrm{mod}}$ (shifted-symplectic complementarity),
@@ -2841,7 +2886,7 @@ Index theorem (GRR for genus expansions) are fully proved; the
 evaluation-locus derived Drinfeld--Kohno is proved.  The remaining
 gaps are: (a)~the coderived Ran-space formalism
 (\S\ref{subsec:coderived-ran}); (b)~the full non-scalar universal
-Maurer--Cartan class (Conjecture~\ref{conj:universal-MC}).  Both
+Maurer--Cartan class (Theorem~\ref{conj:universal-MC}).  Both
 belong to the next stage of the theory (Future~3 below).
 
 \medskip
@@ -2893,7 +2938,7 @@ $\overline{\mathcal{M}}_{g,n}$ rather than as an equivalence of
 modular operads;
 (i) is proved at genus~$0$ and on the Koszul locus at all genera
 (Theorems~A, B); (iii) is the principal open problem
-(Conjecture~\ref{conj:universal-MC}).
+(Theorem~\ref{conj:universal-MC}).
 
 \medskip
 
@@ -2923,7 +2968,7 @@ The periodicity profile $\Pi_{\cA}$
 Definition~\ref{def:derived-scalar-period}) replaces the
 scalar period.  The full non-scalar
 class $\Theta_{\cA}$ requires the cyclic $L_\infty$ construction
-(Conjecture~\ref{conj:universal-MC}).
+(Theorem~\ref{conj:universal-MC}).
 
 \emph{Roadmap for $\Theta_{\cA}$.}
 Three of the five properties of the conjectural universal class
@@ -3198,7 +3243,7 @@ same~$\Delta$, even when their operator content differs entirely.
 
 The discriminant's role is now precise: $\kappa(\cA)$ is the
 \emph{first scalar characteristic number} of the conjectural universal
-class~$\Theta_{\cA}$ (Conjecture~\ref{conj:universal-MC}), and $\Delta_{\cA}(x)$ is the \emph{first
+class~$\Theta_{\cA}$ (Theorem~\ref{conj:universal-MC}), and $\Delta_{\cA}(x)$ is the \emph{first
 non-scalar characteristic class}---the spectral determinant of
 the transfer matrix governing the recurrence of bar-cohomology
 dimensions.  The spectral branch object

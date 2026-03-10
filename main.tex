@@ -643,15 +643,35 @@ $z_1, \ldots, z_n$ and extract residues of their OPE along the
 collision divisors of the Fulton--MacPherson
 compactification~$\overline{C}_n(X)$.  The Arnold relation among
 triple collisions forces the resulting differential to square to zero:
-this is the bar complex $\barB_X(\cA)$.
+this is the bar complex $\barB_X(\cA)$, a non-abelian Fourier
+transform whose kernel is the logarithmic propagator and whose
+output is a factorization coalgebra on $\Ran(X)$.
 
 \medskip
-Verdier duality on the Ran space intertwines the bar of~$\cA$ with the
-bar of its Koszul dual~$\cA^!$, realizing chiral Koszul duality as
-non-abelian Poincar\'e duality.  On the Koszul locus the cobar inverts
-the bar: $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$.  For a Koszul
-pair $(\cA, \cA^!)$ the deformation and obstruction complexes form
-complementary Lagrangians in a shifted-symplectic ambient space.
+When $X = \operatorname{Spec} k$ is a point, configuration spaces
+collapse and the transform reduces to the classical bar construction
+of Loday--Vallette: every theorem of operadic Koszul duality is the
+zero-dimensional shadow of the chiral theory.  When $\cA$ is abelian
+---the Heisenberg algebra $\mathcal{H}_1$ on an elliptic
+curve~$E_\tau$---the bar complex recovers the Poincar\'e line bundle
+on $\operatorname{Jac}(E_\tau) \times
+\widehat{\operatorname{Jac}}(E_\tau)$: the transform literally
+specializes to the Fourier--Mukai transform on the Jacobian, and
+thence to the classical Fourier transform in zero dimensions.
+
+\medskip
+In the non-abelian case, Verdier duality on the Ran space intertwines
+the bar of~$\cA$ with the bar of its Koszul dual~$\cA^!$, realizing
+chiral Koszul duality as non-abelian Poincar\'e duality.  On the
+Koszul locus the cobar inverts the bar:
+$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$.  For a Koszul pair
+$(\cA, \cA^!)$, the relative bar complex over the universal curve
+has cohomology concentrated in the center~$Z(\cA)$, which forms a
+self-dual local system~$\mathcal{Z}_{\cA}$
+on~$\overline{\mathcal{M}}_g$.  Verdier self-duality of the center
+equips $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$ with a
+shifted-symplectic structure, and the deformation and obstruction
+complexes of~$\cA$ and~$\cA^!$ embed as complementary Lagrangians.
 
 \medskip
 At genus $g \geq 1$ the propagator acquires period corrections from
@@ -664,13 +684,30 @@ the genus tower: it is additive under tensor product, anti-symmetric
 under Koszul duality, and has $\hat{A}$-genus generating series.
 Clutching along boundary divisors of $\overline{\mathcal{M}}_g$
 organizes the genus tower into a single modular deformation of the
-genus-$0$ bar differential.
+genus-$0$ bar differential, governed by a universal Maurer--Cartan
+class $\Theta_{\cA}$ valued in the cyclic deformation complex
+tensored with moduli-space cohomology.  The result is a modular
+homotopy theory for factorization algebras on curves, in which genus
+is not an external parameter but a deformation variable internal to
+Koszul duality itself.
+
+\medskip
+For lattice vertex algebras $V_\Lambda$, chiral Koszul duality
+acquires $\Eone$-monoidal structure from the braiding.
+Cocycle deformations produce quantum lattice algebras
+$V_\Lambda^{N,q}$, and the $\Eone$ bar-cobar adjunction inverts
+the quantum parameter: $\varepsilon \mapsto \varepsilon^{-1}$.
+The lattice construction bypasses thick generation problems via
+sectorwise finiteness, yielding unconditional factorization
+Drinfeld--Kohno equivalences at level~$1$ for simply-laced root
+systems.
 
 \medskip
 These constructions are carried out explicitly for the Heisenberg
 algebra, affine Kac--Moody at dual levels, the Virasoro algebra,
 principal $\mathcal{W}$-algebras via Drinfeld--Sokolov reduction,
-and Yangians on the evaluation locus.
+lattice algebras for ADE root systems, and Yangians on the
+evaluation locus.
 \end{abstract}
 
 \bigskip
@@ -708,25 +745,13 @@ Throughout this manuscript:
 
 % ======================================================================
 %
-%                       PART 0: THE HEISENBERG ALGEBRA
+%                       INTRODUCTION
 %
 % The frame chapter. The entire theory previewed through a single
 % example: bar complex, Koszul dual, curvature, genus tower, A-hat genus,
 % complementarity. Chriss--Ginzburg style: example first, theory after.
 %
 % ======================================================================
-
-\part{Frame: The Heisenberg Algebra}
-
-\noindent
-The Heisenberg chiral algebra $\mathcal{H}_k$ --- a single current
-with a double-pole OPE --- is the simplest object carrying the full
-structure of chiral Koszul duality.  In this opening chapter we build
-the bar complex by hand, watch $d^2 = 0$ emerge from the Arnold
-relation, read off the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$,
-pass to genus~$1$ where curvature appears, and recognize the
-$\hat{A}$-genus in the genus tower.  Every theorem proved in
-Parts~I--III is previewed here in concrete form.
 
 \include{chapters/frame/heisenberg_frame}
 
@@ -771,11 +796,6 @@ scalar genus tower (Theorem~D$_{\mathrm{scal}}$); the full modular
 characteristic hierarchy then separates the proved spectral data
 $(\Delta_{\cA}, \Pi_{\cA})$ from the conjectural H-level completion
 $\Theta_{\cA}$ inside the full package~$\mathcal{C}_{\cA}$.
-
-% --------------------------------------------------
-% Chapter 1: Introduction and Main Results
-% --------------------------------------------------
-\include{chapters/theory/introduction}
 
 % --------------------------------------------------
 % Chapter 2: The Fourier Seed

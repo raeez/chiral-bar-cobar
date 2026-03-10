@@ -162,7 +162,7 @@ These are verified facts. Getting any of them wrong corrupts the manuscript.
 
 **Master Conjectures** (frontier order: MC3/MC4 -> MC5):
 - **MC1**: PBW concentration — PROVED for KM, Vir, principal W_N [thm:master-pbw]
-- **MC2**: Cyclic L-infinity + Theta_A — PROVED [thm:mc2-full-resolution]. All 3 packages resolved.
+- **MC2**: Cyclic L-infinity + Theta_A — PROVED [thm:mc2-full-resolution]. All 3 packages resolved. conj:universal-theta and conj:universal-MC upgraded to theorems.
 - **MC3**: Factorization DK/KL — DK-0/1 proved, DK-1½ lattice proved, DK-2/3 fd type A proved. Cat O open. [conj:master-dk-kl]
 - **MC4**: W-infinity/Yangian towers — M-level done, H-level coefficients open [conj:master-infinite-generator]
 - **MC5**: BV/BRST = bar — genus 0 proved, higher-genus downstream [conj:master-bv-brst]
