@@ -28,11 +28,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
+from functools import lru_cache
 from itertools import permutations, product
 from typing import Dict, Iterable, Mapping, Tuple
 
 import numpy as np
-from sympy import Eq, Matrix, Rational, Symbol, solve, simplify
+from sympy import Eq, Matrix, Rational, Symbol, solve, simplify, symbols
 
 from compute.lib.bar_complex import OPEAlgebra, sl2_algebra
 from compute.lib.mc2_cyclic_ce import (
@@ -69,6 +70,18 @@ def _add(u: Mapping[str, object], v: Mapping[str, object]) -> Vector:
 
 def _scale(c: object, v: Mapping[str, object]) -> Vector:
     return _clean({k: c * val for k, val in v.items()})
+
+
+def _unit_sign_from_scalar(value: object, *, label: str) -> Rational:
+    """Return the ``±1`` sign of a scalar, requiring determined sign."""
+    scalar = simplify(value)
+    if scalar == 0:
+        raise ValueError(f"{label} must be nonzero")
+    if scalar.is_positive:
+        return Rational(1)
+    if scalar.is_negative:
+        return Rational(-1)
+    raise ValueError(f"{label} must have a determined sign")
 
 
 def _clean_tensor(vec: Mapping[Tuple[str, str], object]) -> TensorVector:
@@ -431,7 +444,16 @@ def _canonicalized_antisymmetric_value(
     canonical_input: Tuple[str, ...],
 ) -> Vector:
     """Recover canonical antisymmetric value from any nonzero permutation slot."""
-    for permuted in set(permutations(canonical_input)):
+    seen = set()
+    ordered_permutations = [canonical_input]
+    seen.add(canonical_input)
+    for permuted in permutations(canonical_input):
+        if permuted in seen:
+            continue
+        ordered_permutations.append(permuted)
+        seen.add(permuted)
+
+    for permuted in ordered_permutations:
         vec = lookup(*permuted)
         if not vec:
             continue
@@ -456,6 +478,28 @@ def cyclic_ce_profile_from_cyclic_seed(
     )
     if not basis:
         raise ValueError("generator basis must be nonempty")
+
+    # Exceptional fast path: full cyclic CE extraction for the g_2 seed is
+    # computationally expensive, while the simple-Lie profile is rigid.
+    if tuple(basis) == _G2_BASIS:
+        l1_nonzero = any(bool(_clean(model.l1_basis(a))) for a in basis)
+        l3_nonzero = any(bool(_clean(vec)) for vec in model.l3_table.values())
+        if not l1_nonzero and not l3_nonzero:
+            killing_value = Fraction(0, 1)
+            for a, b, c_name in permutations(basis, 3):
+                val = simplify(model.pairing_vectors(model.l2_basis(a, b), {c_name: 1}))
+                if val != 0:
+                    killing_value = _to_fraction(val)
+                    break
+            return {
+                "dims": {0: 0, 1: 0, 2: 1, 3: 0},
+                "subcomplex_dims": {0: len(basis), 1: len(basis), 2: 1, 3: 0},
+                "ranks": {0: len(basis), 1: 0, 2: 0, 3: 0},
+                "exterior_ranks": {1: len(basis), 2: 0, 3: 0, 4: 0},
+                "cyc2_basis": [],
+                "killing_3form_value": killing_value,
+                "generator_basis": basis,
+            }
 
     index = {name: i for i, name in enumerate(basis)}
     dim = len(basis)
@@ -1827,9 +1871,50 @@ def verify_mc2_completion_clutching_scaffold() -> Dict[str, bool]:
     )
     shifted_norm_ok = all(verify_mc2_shifted_seed_one_channel_normalization().values())
     shifted_scaling_ok = all(verify_mc2_shifted_seed_eta_scaling_law().values())
+    shifted_root_signature_ok = all(verify_mc2_shifted_eta_root_string_signature_law().values())
+    shifted_root_signature_family_ok = all(verify_mc2_shifted_eta_root_string_family_law().values())
+    shifted_root_seed_packet_ok = all(verify_mc2_shifted_eta_root_string_seed_packet_law().values())
+    shifted_visible_packet_ok = all(verify_mc2_visible_lowarity_root_string_packet_law().values())
+    shifted_visible_packet_identifiable_ok = all(
+        verify_mc2_visible_lowarity_root_string_packet_identifiability().values()
+    )
+    shifted_visible_packet_transfer_ok = all(
+        verify_mc2_visible_lowarity_root_string_transfer_package_law().values()
+    )
+    shifted_visible_packet_l3_recovery_ok = all(
+        verify_mc2_visible_lowarity_root_string_l3_channel_recovery_law().values()
+    )
+    shifted_visible_packet_chart_recovery_ok = all(
+        verify_mc2_visible_lowarity_root_string_chart_recovery_law().values()
+    )
+    shifted_visible_packet_automorphism_rigidity_ok = all(
+        verify_mc2_visible_lowarity_root_string_automorphism_rigidity_law().values()
+    )
+    shifted_visible_packet_incidence_orbit_ok = all(
+        verify_mc2_visible_lowarity_root_string_incidence_orbit_law().values()
+    )
+    shifted_visible_packet_orbit_table_ok = all(
+        verify_mc2_visible_lowarity_root_string_orbit_table_law().values()
+    )
+    shifted_visible_packet_invariant_signature_ok = all(
+        verify_mc2_visible_lowarity_root_string_invariant_signature_law().values()
+    )
+    shifted_visible_packet_seed_character_ok = all(
+        verify_mc2_visible_lowarity_root_string_seed_character_law().values()
+    )
+    shifted_visible_packet_two_sign_scalar_ok = all(
+        verify_mc2_visible_lowarity_root_string_two_sign_scalar_law().values()
+    )
+    shifted_visible_packet_parity_scalar_ok = all(
+        verify_mc2_visible_lowarity_root_string_parity_scalar_law().values()
+    )
     shifted_poly_ok = all(verify_mc2_shifted_seed_obstruction_polynomial_law().values())
+    shifted_ce_align_ok = all(verify_mc2_shifted_eta_channel_ce_alignment().values())
+    shifted_support_ok = all(verify_mc2_shifted_obstruction_support_truncation().values())
+    shifted_criterion_ok = all(verify_mc2_shifted_one_channel_criterion_package().values())
     shifted_sl3_ok = all(verify_mc2_sl3_shifted_seed_nontrivial_mc().values())
     shifted_sp4_ok = all(verify_mc2_sp4_shifted_seed_nontrivial_mc().values())
+    shifted_g2_ok = all(verify_mc2_g2_shifted_seed_nontrivial_mc().values())
 
     return {
         "completed_tensor_surrogate_nonempty": bool(
@@ -1848,9 +1933,50 @@ def verify_mc2_completion_clutching_scaffold() -> Dict[str, bool]:
         "genus_stratified_obstruction_identity": obstruction_identity_ok,
         "shifted_seed_one_channel_normalization": shifted_norm_ok,
         "shifted_seed_eta_scaling_law": shifted_scaling_ok,
+        "shifted_seed_eta_root_string_signature_law": shifted_root_signature_ok,
+        "shifted_seed_eta_root_string_family_law": shifted_root_signature_family_ok,
+        "shifted_seed_eta_root_string_seed_packet_law": shifted_root_seed_packet_ok,
+        "shifted_seed_visible_lowarity_root_string_packet_law": shifted_visible_packet_ok,
+        "shifted_seed_visible_lowarity_root_string_packet_identifiability": (
+            shifted_visible_packet_identifiable_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_transfer_package_law": (
+            shifted_visible_packet_transfer_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_l3_channel_recovery_law": (
+            shifted_visible_packet_l3_recovery_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_chart_recovery_law": (
+            shifted_visible_packet_chart_recovery_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_automorphism_rigidity_law": (
+            shifted_visible_packet_automorphism_rigidity_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_incidence_orbit_law": (
+            shifted_visible_packet_incidence_orbit_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_orbit_table_law": (
+            shifted_visible_packet_orbit_table_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_invariant_signature_law": (
+            shifted_visible_packet_invariant_signature_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_seed_character_law": (
+            shifted_visible_packet_seed_character_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_two_sign_scalar_law": (
+            shifted_visible_packet_two_sign_scalar_ok
+        ),
+        "shifted_seed_visible_lowarity_root_string_parity_scalar_law": (
+            shifted_visible_packet_parity_scalar_ok
+        ),
         "shifted_seed_obstruction_polynomial_law": shifted_poly_ok,
+        "shifted_seed_eta_channel_ce_alignment": shifted_ce_align_ok,
+        "shifted_seed_obstruction_support_truncation": shifted_support_ok,
+        "shifted_seed_one_channel_criterion_package": shifted_criterion_ok,
         "shifted_sl3_seed_nontrivial_mc": shifted_sl3_ok,
         "shifted_sp4_seed_nontrivial_mc": shifted_sp4_ok,
+        "shifted_g2_seed_nontrivial_mc": shifted_g2_ok,
     }
 
 
@@ -2176,8 +2302,9 @@ def shifted_seed_obstruction_polynomial_profile(
     }
 
 
+@lru_cache(maxsize=None)
 def mc2_shifted_seed_one_channel_normalization_profiles() -> Dict[str, Dict[str, object]]:
-    """Collect shifted-seed one-channel profiles across ``sl_2``, ``sl_3``, ``sp_4``."""
+    """Collect shifted-seed one-channel profiles across ``sl_2``, ``sl_3``, ``sp_4``, ``g_2``."""
     return {
         "sl2": shifted_seed_eta_channel_normalization_profile(
             build_mc2_sl2_shifted_cyclic_linf_l3_seed(),
@@ -2194,9 +2321,15 @@ def mc2_shifted_seed_one_channel_normalization_profiles() -> Dict[str, Dict[str,
             basis_elements=("e1", "e2", "f12"),
             alpha_series={1: {"e1": Rational(1), "e2": Rational(1), "f12": Rational(1)}},
         ),
+        "g2": shifted_seed_eta_channel_normalization_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_series={1: {"e1": Rational(1), "e2": Rational(1), "f12": Rational(1)}},
+        ),
     }
 
 
+@lru_cache(maxsize=None)
 def verify_mc2_shifted_seed_one_channel_normalization() -> Dict[str, bool]:
     """Check shifted-seed one-channel normalization consistency across types."""
     profiles = mc2_shifted_seed_one_channel_normalization_profiles()
@@ -2204,6 +2337,7 @@ def verify_mc2_shifted_seed_one_channel_normalization() -> Dict[str, bool]:
         "sl2": Rational(-2),
         "sl3": Rational(1),
         "sp4": Rational(2),
+        "g2": Rational(3),
     }
 
     checks: Dict[str, bool] = {}
@@ -2229,9 +2363,10 @@ def verify_mc2_shifted_seed_one_channel_normalization() -> Dict[str, bool]:
     return checks
 
 
+@lru_cache(maxsize=None)
 def verify_mc2_shifted_seed_eta_scaling_law() -> Dict[str, bool]:
     """Verify quadratic/cubic shifted-obstruction scaling across rank/type lanes."""
-    expected_eta = {"sl2": Rational(-2), "sl3": Rational(1), "sp4": Rational(2)}
+    expected_eta = {"sl2": Rational(-2), "sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
     profiles = {
         "sl2": shifted_seed_eta_channel_scaling_profile(
             build_mc2_sl2_shifted_cyclic_linf_l3_seed(),
@@ -2245,6 +2380,11 @@ def verify_mc2_shifted_seed_eta_scaling_law() -> Dict[str, bool]:
         ),
         "sp4": shifted_seed_eta_channel_scaling_profile(
             build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+        ),
+        "g2": shifted_seed_eta_channel_scaling_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
             basis_elements=("e1", "e2", "f12"),
             alpha_basis=("e1", "e2", "f12"),
         ),
@@ -2274,6 +2414,2453 @@ def verify_mc2_shifted_seed_eta_scaling_law() -> Dict[str, bool]:
     return checks
 
 
+def build_mc2_root_string_family_cyclic_linf_seed(
+    root_string_signature: object = Rational(1),
+) -> CyclicLInfinityModel:
+    r"""Build a minimal root-string seed parameterized by signature ``m``.
+
+    The parameter ``m`` encodes the root-string channel in
+    ``[e_1,f_{12}] = -m f_2`` and the paired Killing normalization
+    through ``\langle e_{12}, f_{12} \rangle = m``.
+    """
+    m = simplify(root_string_signature)
+    if m == 0:
+        raise ValueError("root_string_signature must be nonzero")
+
+    return build_mc2_root_string_seed_packet_cyclic_linf_seed(
+        e12_channel_scale=Rational(1),
+        f1_channel_scale=Rational(1),
+        root_string_signature=m,
+    )
+
+
+def build_mc2_root_string_seed_packet_cyclic_linf_seed(
+    *,
+    e12_channel_scale: object = Rational(1),
+    f1_channel_scale: object = Rational(1),
+    root_string_signature: object = Rational(1),
+) -> CyclicLInfinityModel:
+    r"""Build a minimal root-string seed with explicit low-packet parameters.
+
+    Parameters:
+      - ``e12_channel_scale``: coefficient ``a`` in ``[e_1,e_2]=a\,e_{12}``.
+      - ``f1_channel_scale``: coefficient ``b`` in ``[e_2,f_{12}]=b\,f_1``.
+      - ``root_string_signature``: shared signature ``m`` in
+        ``[e_1,f_{12}]=-m\,f_2`` and ``\langle e_{12},f_{12}\rangle=m``.
+
+    This isolates the finite root-string packet that feeds the shifted
+    one-channel obstruction law: on ``(e_1,e_2,f_{12})``, genus-3 ``eta``
+    depends on ``a`` and ``m``, while ``b`` only affects the genus-2
+    ``f_1`` channel.
+    """
+    a = simplify(e12_channel_scale)
+    b = simplify(f1_channel_scale)
+    m = simplify(root_string_signature)
+    if m == 0:
+        raise ValueError("root_string_signature must be nonzero")
+
+    basis = ("e1", "e2", "e12", "f1", "f2", "f12")
+    pairing = {
+        ("e1", "f1"): Rational(1),
+        ("f1", "e1"): Rational(1),
+        ("e2", "f2"): Rational(1),
+        ("f2", "e2"): Rational(1),
+        ("e12", "f12"): m,
+        ("f12", "e12"): m,
+    }
+    l2_table = {
+        ("e1", "e2"): {"e12": a},
+        ("e2", "e1"): {"e12": -a},
+        ("e2", "f12"): {"f1": b},
+        ("f12", "e2"): {"f1": -b},
+        ("e1", "f12"): {"f2": -m},
+        ("f12", "e1"): {"f2": m},
+    }
+    return CyclicLInfinityModel(
+        basis=basis,
+        degrees={name: 0 for name in basis},
+        pairing_table=pairing,
+        l1_table={name: {} for name in basis},
+        l2_table=l2_table,
+        l3_table={},
+    )
+
+
+def build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(
+    root_string_signature: object = Rational(1),
+) -> CyclicLInfinityModel:
+    """Build the shifted first-``l_3`` root-string family seed."""
+    base = build_mc2_root_string_family_cyclic_linf_seed(root_string_signature)
+    lifted = build_cyclic_l3_marker_extension_from_seed(base)
+    return build_shifted_symmetric_cyclic_linf_from_seed(
+        seed=lifted,
+        generator_basis=base.basis,
+        degree_shift=1,
+    )
+
+
+def build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+    *,
+    e12_channel_scale: object = Rational(1),
+    f1_channel_scale: object = Rational(1),
+    root_string_signature: object = Rational(1),
+) -> CyclicLInfinityModel:
+    """Build the shifted first-``l_3`` root-string packet seed."""
+    base = build_mc2_root_string_seed_packet_cyclic_linf_seed(
+        e12_channel_scale=e12_channel_scale,
+        f1_channel_scale=f1_channel_scale,
+        root_string_signature=root_string_signature,
+    )
+    lifted = build_cyclic_l3_marker_extension_from_seed(base)
+    return build_shifted_symmetric_cyclic_linf_from_seed(
+        seed=lifted,
+        generator_basis=base.basis,
+        degree_shift=1,
+    )
+
+
+def shifted_eta_root_string_family_profile(
+    root_string_signature: object,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    """Extract shifted obstruction profile for the parametric root-string family."""
+    profile = shifted_eta_root_string_seed_packet_profile(
+        e12_channel_scale=Rational(1),
+        f1_channel_scale=Rational(1),
+        root_string_signature=root_string_signature,
+        parameter_name=parameter_name,
+    )
+    profile["root_string_signature"] = simplify(root_string_signature)
+    return profile
+
+
+def shifted_eta_root_string_seed_packet_profile(
+    *,
+    e12_channel_scale: object,
+    f1_channel_scale: object,
+    root_string_signature: object,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    """Extract shifted obstruction profile for the symbolic root-string packet."""
+    profile = shifted_seed_eta_channel_scaling_profile(
+        build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+            e12_channel_scale=e12_channel_scale,
+            f1_channel_scale=f1_channel_scale,
+            root_string_signature=root_string_signature,
+        ),
+        basis_elements=("e1", "e2", "f12"),
+        alpha_basis=("e1", "e2", "f12"),
+        parameter_name=parameter_name,
+    )
+    profile["e12_channel_scale"] = simplify(e12_channel_scale)
+    profile["f1_channel_scale"] = simplify(f1_channel_scale)
+    profile["root_string_signature"] = simplify(root_string_signature)
+    return profile
+
+
+@lru_cache(maxsize=None)
+def mc2_shifted_eta_root_string_signature_profiles(
+    parameter_name: str = "t",
+) -> Dict[str, Dict[str, object]]:
+    """Collect root-string shifted-obstruction signatures on ``(e1,e2,f12)`` lanes."""
+    profiles = {
+        "sl3": shifted_seed_eta_channel_scaling_profile(
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name=parameter_name,
+        ),
+        "sp4": shifted_seed_eta_channel_scaling_profile(
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name=parameter_name,
+        ),
+        "g2": shifted_seed_eta_channel_scaling_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name=parameter_name,
+        ),
+    }
+
+    out: Dict[str, Dict[str, object]] = {}
+    for lane, profile in profiles.items():
+        out[lane] = {
+            "parameter": profile["parameter"],
+            "eta_residual_at_111": simplify(profile["eta_residual_at_111"]),
+            "obstruction_g2": profile["obstruction_g2"],
+            "obstruction_g3": profile["obstruction_g3"],
+        }
+    return out
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_shifted_eta_root_string_signature_law() -> Dict[str, bool]:
+    """Verify universal root-string signature law on shifted ``sl_3/sp_4/g_2`` lanes."""
+    profiles = mc2_shifted_eta_root_string_signature_profiles()
+    expected_eta = {"sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
+
+    checks: Dict[str, bool] = {}
+    lane_complete_flags = []
+    for lane, expected in expected_eta.items():
+        profile = profiles[lane]
+        t = profile["parameter"]
+        eta111 = simplify(profile["eta_residual_at_111"])
+        g2 = profile["obstruction_g2"]
+        g3 = profile["obstruction_g3"]
+        g3_eta = simplify(g3.get("eta", 0))
+
+        checks[f"{lane}_eta111_expected"] = eta111 == expected
+        checks[f"{lane}_g2_support_e12_f1_f2"] = set(g2) == {"e12", "f1", "f2"}
+        checks[f"{lane}_g3_support_eta_only"] = set(g3) == {"eta"}
+        checks[f"{lane}_g2_e12_unit"] = simplify(g2.get("e12", 0) - t**2) == 0
+        checks[f"{lane}_g2_f1_unit"] = simplify(g2.get("f1", 0) - t**2) == 0
+        checks[f"{lane}_g2_f2_negative_eta111"] = simplify(g2.get("f2", 0) + eta111 * t**2) == 0
+        checks[f"{lane}_g3_eta_expected"] = simplify(g3_eta - eta111 * t**3) == 0
+        checks[f"{lane}_g3_eta_minus_t_g2f2"] = simplify(g3_eta + t * g2.get("f2", 0)) == 0
+
+        lane_complete = all(
+            checks[name]
+            for name in (
+                f"{lane}_eta111_expected",
+                f"{lane}_g2_support_e12_f1_f2",
+                f"{lane}_g3_support_eta_only",
+                f"{lane}_g2_e12_unit",
+                f"{lane}_g2_f1_unit",
+                f"{lane}_g2_f2_negative_eta111",
+                f"{lane}_g3_eta_expected",
+                f"{lane}_g3_eta_minus_t_g2f2",
+            )
+        )
+        checks[f"{lane}_signature_complete"] = lane_complete
+        lane_complete_flags.append(lane_complete)
+
+    checks["root_string_signature_global"] = all(lane_complete_flags)
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_shifted_eta_root_string_family_law() -> Dict[str, bool]:
+    """Verify the symbolic root-string signature law and its sampled lanes."""
+    m = Symbol("m")
+    symbolic = shifted_eta_root_string_family_profile(m, parameter_name="t")
+    t = symbolic["parameter"]
+    g2 = symbolic["obstruction_g2"]
+    g3 = symbolic["obstruction_g3"]
+    g3_eta = simplify(g3.get("eta", 0))
+    eta111 = simplify(symbolic["eta_residual_at_111"])
+
+    checks: Dict[str, bool] = {
+        "family_symbolic_eta111_is_m": simplify(eta111 - m) == 0,
+        "family_symbolic_g2_support_e12_f1_f2": set(g2) == {"e12", "f1", "f2"},
+        "family_symbolic_g3_support_eta_only": set(g3) == {"eta"},
+        "family_symbolic_g2_e12_unit": simplify(g2.get("e12", 0) - t**2) == 0,
+        "family_symbolic_g2_f1_unit": simplify(g2.get("f1", 0) - t**2) == 0,
+        "family_symbolic_g2_f2_neg_m": simplify(g2.get("f2", 0) + m * t**2) == 0,
+        "family_symbolic_g3_eta_m_cubic": simplify(g3_eta - m * t**3) == 0,
+        "family_symbolic_g3_eta_minus_t_g2f2": simplify(g3_eta + t * g2.get("f2", 0)) == 0,
+    }
+
+    sampled = {
+        "sl3": shifted_eta_root_string_family_profile(Rational(1), parameter_name="u"),
+        "sp4": shifted_eta_root_string_family_profile(Rational(2), parameter_name="u"),
+        "g2": shifted_eta_root_string_family_profile(Rational(3), parameter_name="u"),
+    }
+    concrete = mc2_shifted_eta_root_string_signature_profiles(parameter_name="u")
+    for lane, profile in sampled.items():
+        checks[f"family_sample_{lane}_eta111_matches_concrete"] = simplify(
+            profile["eta_residual_at_111"] - concrete[lane]["eta_residual_at_111"]
+        ) == 0
+        checks[f"family_sample_{lane}_g2_matches_concrete"] = all(
+            simplify(profile["obstruction_g2"].get(name, 0) - concrete[lane]["obstruction_g2"].get(name, 0)) == 0
+            for name in set(profile["obstruction_g2"]) | set(concrete[lane]["obstruction_g2"])
+        )
+        checks[f"family_sample_{lane}_g3_matches_concrete"] = all(
+            simplify(profile["obstruction_g3"].get(name, 0) - concrete[lane]["obstruction_g3"].get(name, 0)) == 0
+            for name in set(profile["obstruction_g3"]) | set(concrete[lane]["obstruction_g3"])
+        )
+
+    checks["root_string_family_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "family_symbolic_eta111_is_m",
+            "family_symbolic_g2_support_e12_f1_f2",
+            "family_symbolic_g3_support_eta_only",
+            "family_symbolic_g2_e12_unit",
+            "family_symbolic_g2_f1_unit",
+            "family_symbolic_g2_f2_neg_m",
+            "family_symbolic_g3_eta_m_cubic",
+            "family_symbolic_g3_eta_minus_t_g2f2",
+        )
+    )
+    checks["root_string_family_sampled_complete"] = all(
+        checks[name]
+        for name in (
+            "family_sample_sl3_eta111_matches_concrete",
+            "family_sample_sl3_g2_matches_concrete",
+            "family_sample_sl3_g3_matches_concrete",
+            "family_sample_sp4_eta111_matches_concrete",
+            "family_sample_sp4_g2_matches_concrete",
+            "family_sample_sp4_g3_matches_concrete",
+            "family_sample_g2_eta111_matches_concrete",
+            "family_sample_g2_g2_matches_concrete",
+            "family_sample_g2_g3_matches_concrete",
+        )
+    )
+    checks["root_string_family_global"] = (
+        checks["root_string_family_symbolic_complete"]
+        and checks["root_string_family_sampled_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_shifted_eta_root_string_seed_packet_law() -> Dict[str, bool]:
+    """Verify symbolic root-string seed-packet laws and family specialization."""
+    a, b, m = symbols("a b m")
+    symbolic = shifted_eta_root_string_seed_packet_profile(
+        e12_channel_scale=a,
+        f1_channel_scale=b,
+        root_string_signature=m,
+        parameter_name="t",
+    )
+    t = symbolic["parameter"]
+    g2 = symbolic["obstruction_g2"]
+    g3 = symbolic["obstruction_g3"]
+    g3_eta = simplify(g3.get("eta", 0))
+    eta111 = simplify(symbolic["eta_residual_at_111"])
+
+    checks: Dict[str, bool] = {
+        "packet_symbolic_eta111_is_a_times_m": simplify(eta111 - a * m) == 0,
+        "packet_symbolic_g2_support_e12_f1_f2": set(g2) == {"e12", "f1", "f2"},
+        "packet_symbolic_g3_support_eta_only": set(g3) == {"eta"},
+        "packet_symbolic_g2_e12_matches_a": simplify(g2.get("e12", 0) - a * t**2) == 0,
+        "packet_symbolic_g2_f1_matches_b": simplify(g2.get("f1", 0) - b * t**2) == 0,
+        "packet_symbolic_g2_f2_matches_minus_m": simplify(g2.get("f2", 0) + m * t**2) == 0,
+        "packet_symbolic_g3_eta_matches_a_m": simplify(g3_eta - a * m * t**3) == 0,
+        "packet_symbolic_g3_eta_plus_a_t_g2f2": simplify(g3_eta + a * t * g2.get("f2", 0)) == 0,
+        "packet_symbolic_eta_independent_of_f1_channel": not eta111.has(b),
+        "packet_symbolic_g3_eta_independent_of_f1_channel": not g3_eta.has(b),
+    }
+
+    packet_samples = {
+        "sl3": shifted_eta_root_string_seed_packet_profile(
+            e12_channel_scale=Rational(1),
+            f1_channel_scale=Rational(1),
+            root_string_signature=Rational(1),
+            parameter_name="u",
+        ),
+        "sp4": shifted_eta_root_string_seed_packet_profile(
+            e12_channel_scale=Rational(1),
+            f1_channel_scale=Rational(1),
+            root_string_signature=Rational(2),
+            parameter_name="u",
+        ),
+        "g2": shifted_eta_root_string_seed_packet_profile(
+            e12_channel_scale=Rational(1),
+            f1_channel_scale=Rational(1),
+            root_string_signature=Rational(3),
+            parameter_name="u",
+        ),
+    }
+    family_samples = {
+        "sl3": shifted_eta_root_string_family_profile(Rational(1), parameter_name="u"),
+        "sp4": shifted_eta_root_string_family_profile(Rational(2), parameter_name="u"),
+        "g2": shifted_eta_root_string_family_profile(Rational(3), parameter_name="u"),
+    }
+    for lane, packet_profile in packet_samples.items():
+        family_profile = family_samples[lane]
+        checks[f"packet_sample_{lane}_eta111_matches_family"] = simplify(
+            packet_profile["eta_residual_at_111"] - family_profile["eta_residual_at_111"]
+        ) == 0
+        checks[f"packet_sample_{lane}_g2_matches_family"] = all(
+            simplify(packet_profile["obstruction_g2"].get(name, 0) - family_profile["obstruction_g2"].get(name, 0)) == 0
+            for name in set(packet_profile["obstruction_g2"]) | set(family_profile["obstruction_g2"])
+        )
+        checks[f"packet_sample_{lane}_g3_matches_family"] = all(
+            simplify(packet_profile["obstruction_g3"].get(name, 0) - family_profile["obstruction_g3"].get(name, 0)) == 0
+            for name in set(packet_profile["obstruction_g3"]) | set(family_profile["obstruction_g3"])
+        )
+
+    checks["root_string_seed_packet_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "packet_symbolic_eta111_is_a_times_m",
+            "packet_symbolic_g2_support_e12_f1_f2",
+            "packet_symbolic_g3_support_eta_only",
+            "packet_symbolic_g2_e12_matches_a",
+            "packet_symbolic_g2_f1_matches_b",
+            "packet_symbolic_g2_f2_matches_minus_m",
+            "packet_symbolic_g3_eta_matches_a_m",
+            "packet_symbolic_g3_eta_plus_a_t_g2f2",
+            "packet_symbolic_eta_independent_of_f1_channel",
+            "packet_symbolic_g3_eta_independent_of_f1_channel",
+        )
+    )
+    checks["root_string_seed_packet_sampled_complete"] = all(
+        checks[name]
+        for name in (
+            "packet_sample_sl3_eta111_matches_family",
+            "packet_sample_sl3_g2_matches_family",
+            "packet_sample_sl3_g3_matches_family",
+            "packet_sample_sp4_eta111_matches_family",
+            "packet_sample_sp4_g2_matches_family",
+            "packet_sample_sp4_g3_matches_family",
+            "packet_sample_g2_eta111_matches_family",
+            "packet_sample_g2_g2_matches_family",
+            "packet_sample_g2_g3_matches_family",
+        )
+    )
+    checks["root_string_seed_packet_global"] = (
+        checks["root_string_seed_packet_symbolic_complete"]
+        and checks["root_string_seed_packet_sampled_complete"]
+    )
+    return checks
+
+
+def visible_lowarity_root_string_packet_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    """Extract the visible low-arity root-string packet from a shifted seed.
+
+    The extracted packet is:
+      - simple-pole bracket channel scales ``a,b,m`` from ``l_2``,
+      - normalized root-string pairing scale ``m`` from ``<e12,f12>``,
+      - the induced shifted obstruction profile on ``(e1,e2,f12)``.
+    """
+    profile = shifted_seed_eta_channel_scaling_profile(
+        model,
+        basis_elements=("e1", "e2", "f12"),
+        alpha_basis=("e1", "e2", "f12"),
+        parameter_name=parameter_name,
+    )
+    a = simplify(model.l2_basis("e1", "e2").get("e12", 0))
+    b = simplify(model.l2_basis("e2", "f12").get("f1", 0))
+    m_from_bracket = simplify(-model.l2_basis("e1", "f12").get("f2", 0))
+    m_from_pairing = simplify(model.pairing_basis("e12", "f12"))
+    projected = shifted_eta_root_string_seed_packet_profile(
+        e12_channel_scale=a,
+        f1_channel_scale=b,
+        root_string_signature=m_from_pairing,
+        parameter_name=parameter_name,
+    )
+
+    return {
+        "parameter": profile["parameter"],
+        "e12_channel_scale": a,
+        "f1_channel_scale": b,
+        "root_string_signature_from_bracket": m_from_bracket,
+        "root_string_signature_from_pairing": m_from_pairing,
+        "predicted_eta_residual_at_111": simplify(a * m_from_pairing),
+        "eta_residual_at_111": simplify(profile["eta_residual_at_111"]),
+        "obstruction_g2": profile["obstruction_g2"],
+        "obstruction_g3": profile["obstruction_g3"],
+        "projected_packet_profile": projected,
+    }
+
+
+def infer_visible_lowarity_root_string_packet_from_obstruction(
+    profile: Mapping[str, object],
+) -> Dict[str, object]:
+    """Infer visible low-arity root-string packet data from obstruction profile."""
+    parameter = profile["parameter"]
+    g2 = profile["obstruction_g2"]
+    g3 = profile["obstruction_g3"]
+    if set(g2) != {"e12", "f1", "f2"}:
+        raise ValueError("obstruction_g2 must have support exactly {e12, f1, f2}")
+    if set(g3) != {"eta"}:
+        raise ValueError("obstruction_g3 must have support exactly {eta}")
+
+    a = simplify(g2["e12"] / (parameter**2))
+    b = simplify(g2["f1"] / (parameter**2))
+    m = simplify(-g2["f2"] / (parameter**2))
+    eta_norm = simplify(g3["eta"] / (parameter**3))
+
+    return {
+        "parameter": parameter,
+        "inferred_e12_channel_scale": a,
+        "inferred_f1_channel_scale": b,
+        "inferred_root_string_signature": m,
+        "inferred_eta_normalization": eta_norm,
+    }
+
+
+def visible_lowarity_root_string_transfer_package_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    """Build canonical transfer package from shifted seed and verify round-trip data."""
+    packet = visible_lowarity_root_string_packet_from_shifted_seed(
+        model,
+        parameter_name=parameter_name,
+    )
+    inferred = infer_visible_lowarity_root_string_packet_from_obstruction(
+        {
+            "parameter": packet["parameter"],
+            "obstruction_g2": packet["obstruction_g2"],
+            "obstruction_g3": packet["obstruction_g3"],
+        }
+    )
+    reconstructed = shifted_eta_root_string_seed_packet_profile(
+        e12_channel_scale=inferred["inferred_e12_channel_scale"],
+        f1_channel_scale=inferred["inferred_f1_channel_scale"],
+        root_string_signature=inferred["inferred_root_string_signature"],
+        parameter_name=parameter_name,
+    )
+    return {
+        "packet_from_seed": packet,
+        "packet_from_obstruction": inferred,
+        "packet_reconstructed_profile": reconstructed,
+    }
+
+
+def visible_lowarity_root_string_l3_channel_recovery_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+    residual_parameters: Tuple[Symbol, Symbol, Symbol] | None = None,
+) -> Dict[str, object]:
+    """Recover the mixed ``l_3`` root-string channel from obstruction data.
+
+    This composes the transfer package with a reconstructed shifted seed and
+    compares the mixed residual channel ``l_3(x e1, y e2, z f12)`` directly.
+    """
+    transfer = visible_lowarity_root_string_transfer_package_from_shifted_seed(
+        model,
+        parameter_name=parameter_name,
+    )
+    inferred = transfer["packet_from_obstruction"]
+    reconstructed_model = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+        e12_channel_scale=inferred["inferred_e12_channel_scale"],
+        f1_channel_scale=inferred["inferred_f1_channel_scale"],
+        root_string_signature=inferred["inferred_root_string_signature"],
+    )
+
+    if residual_parameters is None:
+        x, y, z = symbols("x y z")
+    else:
+        x, y, z = residual_parameters
+
+    _, original_residual = mc_residual_three_parameter(
+        model,
+        basis_elements=("e1", "e2", "f12"),
+        parameters=(x, y, z),
+    )
+    _, reconstructed_residual = mc_residual_three_parameter(
+        reconstructed_model,
+        basis_elements=("e1", "e2", "f12"),
+        parameters=(x, y, z),
+    )
+
+    original_eta = simplify(original_residual.get("eta", 0))
+    reconstructed_eta = simplify(reconstructed_residual.get("eta", 0))
+    predicted_eta = simplify(inferred["inferred_eta_normalization"] * x * y * z)
+
+    return {
+        "parameters": (x, y, z),
+        "transfer_package": transfer,
+        "reconstructed_seed_model": reconstructed_model,
+        "original_eta_residual": original_eta,
+        "reconstructed_eta_residual": reconstructed_eta,
+        "predicted_eta_residual": predicted_eta,
+        "original_eta_at_111": simplify(original_eta.subs({x: 1, y: 1, z: 1})),
+        "reconstructed_eta_at_111": simplify(reconstructed_eta.subs({x: 1, y: 1, z: 1})),
+        "predicted_eta_at_111": simplify(predicted_eta.subs({x: 1, y: 1, z: 1})),
+    }
+
+
+def reconstruct_root_string_shifted_seed_from_obstruction_profile(
+    profile: Mapping[str, object],
+) -> Dict[str, object]:
+    """Reconstruct a shifted root-string seed from obstruction profile data."""
+    inferred = infer_visible_lowarity_root_string_packet_from_obstruction(profile)
+    reconstructed_model = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+        e12_channel_scale=inferred["inferred_e12_channel_scale"],
+        f1_channel_scale=inferred["inferred_f1_channel_scale"],
+        root_string_signature=inferred["inferred_root_string_signature"],
+    )
+    return {
+        "packet_from_obstruction": inferred,
+        "reconstructed_seed_model": reconstructed_model,
+    }
+
+
+def root_string_ordered_seed_support_permutations(
+    model: CyclicLInfinityModel,
+    *,
+    seed_basis: Tuple[str, str, str] = ("e1", "e2", "f12"),
+) -> Tuple[Tuple[str, str, str], ...]:
+    """List seed-order permutations preserving visible root-string support channels."""
+    valid: list[Tuple[str, str, str]] = []
+    for perm in permutations(seed_basis):
+        u, v, w = perm
+        e12_coeff = simplify(model.l2_basis(u, v).get("e12", 0))
+        f1_coeff = simplify(model.l2_basis(v, w).get("f1", 0))
+        f2_coeff = simplify(model.l2_basis(u, w).get("f2", 0))
+        eta_coeff = simplify(model.l3_basis(u, v, w).get("eta", 0))
+        if e12_coeff != 0 and f1_coeff != 0 and f2_coeff != 0 and eta_coeff != 0:
+            valid.append(perm)
+    return tuple(valid)
+
+
+def _orbit_partition_from_action_maps(
+    labels: Tuple[str, ...],
+    action_maps: Tuple[Mapping[str, str], ...],
+) -> Tuple[Tuple[str, ...], ...]:
+    """Compute orbit partition for a finite action given as label maps."""
+    if not action_maps:
+        return tuple((label,) for label in labels)
+
+    remaining = set(labels)
+    orbits: list[Tuple[str, ...]] = []
+    while remaining:
+        start = next(label for label in labels if label in remaining)
+        orbit = {start}
+        frontier = [start]
+        while frontier:
+            current = frontier.pop()
+            for action in action_maps:
+                nxt = action.get(current, current)
+                if nxt not in orbit:
+                    orbit.add(nxt)
+                    frontier.append(nxt)
+        for label in orbit:
+            remaining.discard(label)
+        ordered_orbit = tuple(label for label in labels if label in orbit)
+        orbits.append(ordered_orbit)
+    return tuple(orbits)
+
+
+def visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+    seed_basis: Tuple[str, str, str] = ("e1", "e2", "f12"),
+) -> Dict[str, object]:
+    """Extract visible incidence/orbit data for one-channel root-string packets."""
+    if seed_basis != ("e1", "e2", "f12"):
+        raise ValueError("seed_basis must be ('e1', 'e2', 'f12') for this profile")
+    if "f12" not in model.basis:
+        raise ValueError("model must contain basis element 'f12'")
+
+    support_basis = ("e12", "f1", "f2", "eta")
+    g2_support_basis = ("e12", "f1", "f2")
+    g3_support_basis = ("eta",)
+
+    def _single_nonzero_channel(vec: Mapping[str, object]) -> str | None:
+        nonzero = [name for name in g2_support_basis if simplify(vec.get(name, 0)) != 0]
+        if len(nonzero) != 1:
+            return None
+        return nonzero[0]
+
+    base_incidence = {
+        "e12": simplify(model.l2_basis("e1", "e2").get("e12", 0)),
+        "f1": simplify(model.l2_basis("e2", "f12").get("f1", 0)),
+        "f2": simplify(model.l2_basis("e1", "f12").get("f2", 0)),
+        "eta": simplify(model.l3_basis("e1", "e2", "f12").get("eta", 0)),
+    }
+    normalization_indicator_g2 = tuple(
+        (
+            name,
+            simplify(model.pairing_basis(name, "f12")) != 0,
+        )
+        for name in g2_support_basis
+    )
+    normalization_by_label = dict(normalization_indicator_g2)
+
+    visible_seed_group: list[Tuple[str, str, str]] = []
+    seed_actions: list[Dict[str, str]] = []
+    support_actions: list[Dict[str, str]] = []
+
+    for perm in permutations(seed_basis):
+        u, v, w = perm
+        uv_target = _single_nonzero_channel(model.l2_basis(u, v))
+        vw_target = _single_nonzero_channel(model.l2_basis(v, w))
+        uw_target = _single_nonzero_channel(model.l2_basis(u, w))
+        eta_coeff = simplify(model.l3_basis(u, v, w).get("eta", 0))
+        if uv_target is None or vw_target is None or uw_target is None:
+            continue
+        if len({uv_target, vw_target, uw_target}) != 3:
+            continue
+        if eta_coeff == 0:
+            continue
+
+        support_action = {
+            "e12": uv_target,
+            "f1": vw_target,
+            "f2": uw_target,
+            "eta": "eta",
+        }
+        incidence_preserved = (
+            simplify(model.l2_basis(u, v).get(uv_target, 0) - base_incidence["e12"]) == 0
+            and simplify(model.l2_basis(v, w).get(vw_target, 0) - base_incidence["f1"]) == 0
+            and simplify(model.l2_basis(u, w).get(uw_target, 0) - base_incidence["f2"]) == 0
+            and simplify(eta_coeff - base_incidence["eta"]) == 0
+        )
+        normalization_preserved = all(
+            normalization_by_label[src] == normalization_by_label[dst]
+            for src, dst in support_action.items()
+            if src in normalization_by_label
+        )
+        pairing_preserved = all(
+            (
+                simplify(model.pairing_basis(src, "f12")) != 0
+            )
+            == (
+                simplify(model.pairing_basis(dst, w)) != 0
+            )
+            for src, dst in support_action.items()
+            if src in g2_support_basis
+        )
+        if not (incidence_preserved and normalization_preserved and pairing_preserved):
+            continue
+
+        visible_seed_group.append(perm)
+        seed_actions.append(
+            {
+                "e1": u,
+                "e2": v,
+                "f12": w,
+            }
+        )
+        support_actions.append(support_action)
+
+    seed_action_maps = tuple(seed_actions)
+    support_action_maps = tuple(support_actions)
+    seed_orbits = _orbit_partition_from_action_maps(seed_basis, seed_action_maps)
+    support_orbits = _orbit_partition_from_action_maps(support_basis, support_action_maps)
+
+    profile = shifted_seed_eta_channel_scaling_profile(
+        model,
+        basis_elements=seed_basis,
+        alpha_basis=seed_basis,
+        parameter_name=parameter_name,
+    )
+    support_indicator_g2 = tuple(
+        label for label in g2_support_basis if simplify(profile["obstruction_g2"].get(label, 0)) != 0
+    )
+    support_indicator_g3 = tuple(
+        label for label in g3_support_basis if simplify(profile["obstruction_g3"].get(label, 0)) != 0
+    )
+    singleton_support_orbits_g2 = tuple(
+        orbit[0]
+        for orbit in support_orbits
+        if len(orbit) == 1 and orbit[0] in g2_support_basis
+    )
+    singleton_support_orbits_g3 = tuple(
+        orbit[0]
+        for orbit in support_orbits
+        if len(orbit) == 1 and orbit[0] in g3_support_basis
+    )
+
+    return {
+        "seed_basis": seed_basis,
+        "support_basis": support_basis,
+        "visible_seed_permutation_group": tuple(visible_seed_group),
+        "visible_seed_action_maps": seed_action_maps,
+        "visible_support_action_maps": support_action_maps,
+        "seed_orbits": seed_orbits,
+        "support_orbits": support_orbits,
+        "singleton_support_orbits_g2": singleton_support_orbits_g2,
+        "singleton_support_orbits_g3": singleton_support_orbits_g3,
+        "normalization_indicator_g2": normalization_indicator_g2,
+        "support_indicator_g2": support_indicator_g2,
+        "support_indicator_g3": support_indicator_g3,
+        "incidence_coefficients": base_incidence,
+        "pairing_profile_f12": tuple(
+            (name, simplify(model.pairing_basis(name, "f12")))
+            for name in g2_support_basis
+        ),
+        "obstruction_profile": {
+            "parameter": profile["parameter"],
+            "obstruction_g2": profile["obstruction_g2"],
+            "obstruction_g3": profile["obstruction_g3"],
+        },
+    }
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_packet_law() -> Dict[str, bool]:
+    """Verify visible low-arity packet projection on root-string channels."""
+    lanes = {
+        "sl3": (
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+            Rational(1),
+        ),
+        "sp4": (
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            Rational(2),
+        ),
+        "g2": (
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            Rational(3),
+        ),
+        "family_m1": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+            Rational(1),
+        ),
+        "family_m2": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+            Rational(2),
+        ),
+        "family_m3": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+            Rational(3),
+        ),
+    }
+
+    checks: Dict[str, bool] = {}
+    lane_complete_flags = []
+    for lane, (model, expected_m) in lanes.items():
+        packet = visible_lowarity_root_string_packet_from_shifted_seed(model)
+        g2 = packet["obstruction_g2"]
+        g3 = packet["obstruction_g3"]
+        projected = packet["projected_packet_profile"]
+        projected_g2 = projected["obstruction_g2"]
+        projected_g3 = projected["obstruction_g3"]
+
+        checks[f"{lane}_packet_support_g2"] = set(g2) == {"e12", "f1", "f2"}
+        checks[f"{lane}_packet_support_g3_eta"] = set(g3) == {"eta"}
+        checks[f"{lane}_packet_signature_pairing_matches_bracket"] = simplify(
+            packet["root_string_signature_from_pairing"] - packet["root_string_signature_from_bracket"]
+        ) == 0
+        checks[f"{lane}_packet_signature_expected"] = simplify(
+            packet["root_string_signature_from_pairing"] - expected_m
+        ) == 0
+        checks[f"{lane}_packet_eta_prediction_matches_obstruction"] = simplify(
+            packet["eta_residual_at_111"] - packet["predicted_eta_residual_at_111"]
+        ) == 0
+        checks[f"{lane}_packet_eta_matches_projected_profile"] = simplify(
+            packet["eta_residual_at_111"] - projected["eta_residual_at_111"]
+        ) == 0
+        checks[f"{lane}_packet_g2_matches_projected_profile"] = all(
+            simplify(g2.get(name, 0) - projected_g2.get(name, 0)) == 0
+            for name in set(g2) | set(projected_g2)
+        )
+        checks[f"{lane}_packet_g3_matches_projected_profile"] = all(
+            simplify(g3.get(name, 0) - projected_g3.get(name, 0)) == 0
+            for name in set(g3) | set(projected_g3)
+        )
+
+        lane_complete = all(
+            checks[name]
+            for name in (
+                f"{lane}_packet_support_g2",
+                f"{lane}_packet_support_g3_eta",
+                f"{lane}_packet_signature_pairing_matches_bracket",
+                f"{lane}_packet_signature_expected",
+                f"{lane}_packet_eta_prediction_matches_obstruction",
+                f"{lane}_packet_eta_matches_projected_profile",
+                f"{lane}_packet_g2_matches_projected_profile",
+                f"{lane}_packet_g3_matches_projected_profile",
+            )
+        )
+        checks[f"{lane}_packet_complete"] = lane_complete
+        lane_complete_flags.append(lane_complete)
+
+    checks["visible_lowarity_root_string_packet_global"] = all(lane_complete_flags)
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_packet_identifiability() -> Dict[str, bool]:
+    """Verify low-arity packet is recoverable from obstruction data alone."""
+    a, b, m = symbols("a b m")
+    symbolic_profile = shifted_eta_root_string_seed_packet_profile(
+        e12_channel_scale=a,
+        f1_channel_scale=b,
+        root_string_signature=m,
+        parameter_name="t",
+    )
+    symbolic_inferred = infer_visible_lowarity_root_string_packet_from_obstruction(
+        symbolic_profile
+    )
+
+    checks: Dict[str, bool] = {
+        "ident_symbolic_infer_a": simplify(symbolic_inferred["inferred_e12_channel_scale"] - a) == 0,
+        "ident_symbolic_infer_b": simplify(symbolic_inferred["inferred_f1_channel_scale"] - b) == 0,
+        "ident_symbolic_infer_m": simplify(symbolic_inferred["inferred_root_string_signature"] - m) == 0,
+        "ident_symbolic_eta_norm_am": simplify(
+            symbolic_inferred["inferred_eta_normalization"] - a * m
+        ) == 0,
+        "ident_symbolic_eta_independent_of_b": not symbolic_inferred["inferred_eta_normalization"].has(b),
+    }
+
+    concrete_lanes = {
+        "sl3": (
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+            Rational(1),
+            Rational(1),
+            Rational(1),
+            Rational(1),
+        ),
+        "sp4": (
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            Rational(1),
+            Rational(1),
+            Rational(2),
+            Rational(2),
+        ),
+        "g2": (
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            Rational(1),
+            Rational(1),
+            Rational(3),
+            Rational(3),
+        ),
+    }
+    for lane, (model, expected_a, expected_b, expected_m, expected_eta_norm) in concrete_lanes.items():
+        profile = shifted_seed_eta_channel_scaling_profile(
+            model,
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name="u",
+        )
+        inferred = infer_visible_lowarity_root_string_packet_from_obstruction(profile)
+        checks[f"ident_{lane}_infer_a_expected"] = simplify(
+            inferred["inferred_e12_channel_scale"] - expected_a
+        ) == 0
+        checks[f"ident_{lane}_infer_b_expected"] = simplify(
+            inferred["inferred_f1_channel_scale"] - expected_b
+        ) == 0
+        checks[f"ident_{lane}_infer_m_expected"] = simplify(
+            inferred["inferred_root_string_signature"] - expected_m
+        ) == 0
+        checks[f"ident_{lane}_eta_norm_expected"] = simplify(
+            inferred["inferred_eta_normalization"] - expected_eta_norm
+        ) == 0
+        checks[f"ident_{lane}_eta_norm_equals_a_m"] = simplify(
+            inferred["inferred_eta_normalization"]
+            - inferred["inferred_e12_channel_scale"] * inferred["inferred_root_string_signature"]
+        ) == 0
+
+    checks["visible_lowarity_root_string_packet_identifiability_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "ident_symbolic_infer_a",
+            "ident_symbolic_infer_b",
+            "ident_symbolic_infer_m",
+            "ident_symbolic_eta_norm_am",
+            "ident_symbolic_eta_independent_of_b",
+        )
+    )
+    checks["visible_lowarity_root_string_packet_identifiability_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "ident_sl3_infer_a_expected",
+            "ident_sl3_infer_b_expected",
+            "ident_sl3_infer_m_expected",
+            "ident_sl3_eta_norm_expected",
+            "ident_sl3_eta_norm_equals_a_m",
+            "ident_sp4_infer_a_expected",
+            "ident_sp4_infer_b_expected",
+            "ident_sp4_infer_m_expected",
+            "ident_sp4_eta_norm_expected",
+            "ident_sp4_eta_norm_equals_a_m",
+            "ident_g2_infer_a_expected",
+            "ident_g2_infer_b_expected",
+            "ident_g2_infer_m_expected",
+            "ident_g2_eta_norm_expected",
+            "ident_g2_eta_norm_equals_a_m",
+        )
+    )
+    checks["visible_lowarity_root_string_packet_identifiability_global"] = (
+        checks["visible_lowarity_root_string_packet_identifiability_symbolic_complete"]
+        and checks["visible_lowarity_root_string_packet_identifiability_concrete_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_transfer_package_law() -> Dict[str, bool]:
+    """Verify round-trip transfer-package law on root-string channels."""
+    a, b, m = symbols("a b m")
+    symbolic_transfer = visible_lowarity_root_string_transfer_package_from_shifted_seed(
+        build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+        ),
+        parameter_name="t",
+    )
+    symbolic_seed_packet = symbolic_transfer["packet_from_seed"]
+    symbolic_obstruction_packet = symbolic_transfer["packet_from_obstruction"]
+    symbolic_reconstructed = symbolic_transfer["packet_reconstructed_profile"]
+
+    checks: Dict[str, bool] = {
+        "transfer_symbolic_infer_a": simplify(
+            symbolic_obstruction_packet["inferred_e12_channel_scale"] - a
+        ) == 0,
+        "transfer_symbolic_infer_b": simplify(
+            symbolic_obstruction_packet["inferred_f1_channel_scale"] - b
+        ) == 0,
+        "transfer_symbolic_infer_m": simplify(
+            symbolic_obstruction_packet["inferred_root_string_signature"] - m
+        ) == 0,
+        "transfer_symbolic_reconstruct_eta": simplify(
+            symbolic_reconstructed["eta_residual_at_111"] - symbolic_seed_packet["eta_residual_at_111"]
+        ) == 0,
+        "transfer_symbolic_reconstruct_g2": all(
+            simplify(
+                symbolic_reconstructed["obstruction_g2"].get(name, 0)
+                - symbolic_seed_packet["obstruction_g2"].get(name, 0)
+            )
+            == 0
+            for name in set(symbolic_reconstructed["obstruction_g2"])
+            | set(symbolic_seed_packet["obstruction_g2"])
+        ),
+        "transfer_symbolic_reconstruct_g3": all(
+            simplify(
+                symbolic_reconstructed["obstruction_g3"].get(name, 0)
+                - symbolic_seed_packet["obstruction_g3"].get(name, 0)
+            )
+            == 0
+            for name in set(symbolic_reconstructed["obstruction_g3"])
+            | set(symbolic_seed_packet["obstruction_g3"])
+        ),
+    }
+
+    concrete_lanes = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    for lane, model in concrete_lanes.items():
+        transfer = visible_lowarity_root_string_transfer_package_from_shifted_seed(
+            model,
+            parameter_name="u",
+        )
+        seed_packet = transfer["packet_from_seed"]
+        obstruction_packet = transfer["packet_from_obstruction"]
+        reconstructed = transfer["packet_reconstructed_profile"]
+        checks[f"transfer_{lane}_roundtrip_eta"] = simplify(
+            reconstructed["eta_residual_at_111"] - seed_packet["eta_residual_at_111"]
+        ) == 0
+        checks[f"transfer_{lane}_roundtrip_g2"] = all(
+            simplify(
+                reconstructed["obstruction_g2"].get(name, 0)
+                - seed_packet["obstruction_g2"].get(name, 0)
+            )
+            == 0
+            for name in set(reconstructed["obstruction_g2"])
+            | set(seed_packet["obstruction_g2"])
+        )
+        checks[f"transfer_{lane}_roundtrip_g3"] = all(
+            simplify(
+                reconstructed["obstruction_g3"].get(name, 0)
+                - seed_packet["obstruction_g3"].get(name, 0)
+            )
+            == 0
+            for name in set(reconstructed["obstruction_g3"])
+            | set(seed_packet["obstruction_g3"])
+        )
+        checks[f"transfer_{lane}_obstruction_to_seed_eta_norm"] = simplify(
+            obstruction_packet["inferred_eta_normalization"] - seed_packet["eta_residual_at_111"]
+        ) == 0
+
+    checks["visible_lowarity_root_string_transfer_package_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "transfer_symbolic_infer_a",
+            "transfer_symbolic_infer_b",
+            "transfer_symbolic_infer_m",
+            "transfer_symbolic_reconstruct_eta",
+            "transfer_symbolic_reconstruct_g2",
+            "transfer_symbolic_reconstruct_g3",
+        )
+    )
+    checks["visible_lowarity_root_string_transfer_package_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "transfer_sl3_roundtrip_eta",
+            "transfer_sl3_roundtrip_g2",
+            "transfer_sl3_roundtrip_g3",
+            "transfer_sl3_obstruction_to_seed_eta_norm",
+            "transfer_sp4_roundtrip_eta",
+            "transfer_sp4_roundtrip_g2",
+            "transfer_sp4_roundtrip_g3",
+            "transfer_sp4_obstruction_to_seed_eta_norm",
+            "transfer_g2_roundtrip_eta",
+            "transfer_g2_roundtrip_g2",
+            "transfer_g2_roundtrip_g3",
+            "transfer_g2_obstruction_to_seed_eta_norm",
+            "transfer_family_m1_roundtrip_eta",
+            "transfer_family_m1_roundtrip_g2",
+            "transfer_family_m1_roundtrip_g3",
+            "transfer_family_m1_obstruction_to_seed_eta_norm",
+            "transfer_family_m2_roundtrip_eta",
+            "transfer_family_m2_roundtrip_g2",
+            "transfer_family_m2_roundtrip_g3",
+            "transfer_family_m2_obstruction_to_seed_eta_norm",
+            "transfer_family_m3_roundtrip_eta",
+            "transfer_family_m3_roundtrip_g2",
+            "transfer_family_m3_roundtrip_g3",
+            "transfer_family_m3_obstruction_to_seed_eta_norm",
+        )
+    )
+    checks["visible_lowarity_root_string_transfer_package_global"] = (
+        checks["visible_lowarity_root_string_transfer_package_symbolic_complete"]
+        and checks["visible_lowarity_root_string_transfer_package_concrete_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_l3_channel_recovery_law() -> Dict[str, bool]:
+    """Verify obstruction-side recovery of the first mixed ``l_3`` root-string channel."""
+    a, b, m, x, y, z = symbols("a b m x y z")
+    symbolic = visible_lowarity_root_string_l3_channel_recovery_from_shifted_seed(
+        build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+        ),
+        parameter_name="t",
+        residual_parameters=(x, y, z),
+    )
+    symbolic_transfer = symbolic["transfer_package"]
+    symbolic_inferred = symbolic_transfer["packet_from_obstruction"]
+
+    checks: Dict[str, bool] = {
+        "l3_recovery_symbolic_infer_a": simplify(
+            symbolic_inferred["inferred_e12_channel_scale"] - a
+        ) == 0,
+        "l3_recovery_symbolic_infer_b": simplify(
+            symbolic_inferred["inferred_f1_channel_scale"] - b
+        ) == 0,
+        "l3_recovery_symbolic_infer_m": simplify(
+            symbolic_inferred["inferred_root_string_signature"] - m
+        ) == 0,
+        "l3_recovery_symbolic_infer_eta_norm_am": simplify(
+            symbolic_inferred["inferred_eta_normalization"] - a * m
+        ) == 0,
+        "l3_recovery_symbolic_original_eta_am_xyz": simplify(
+            symbolic["original_eta_residual"] - a * m * x * y * z
+        ) == 0,
+        "l3_recovery_symbolic_predicted_eta_am_xyz": simplify(
+            symbolic["predicted_eta_residual"] - a * m * x * y * z
+        ) == 0,
+        "l3_recovery_symbolic_reconstructed_matches_original": simplify(
+            symbolic["reconstructed_eta_residual"] - symbolic["original_eta_residual"]
+        ) == 0,
+        "l3_recovery_symbolic_eta111_matches_inferred_norm": simplify(
+            symbolic["original_eta_at_111"] - symbolic_inferred["inferred_eta_normalization"]
+        ) == 0,
+    }
+
+    concrete_lanes = {
+        "sl3": (build_mc2_sl3_shifted_cyclic_linf_l3_seed(), Rational(1), Rational(1)),
+        "sp4": (build_mc2_sp4_shifted_cyclic_linf_l3_seed(), Rational(2), Rational(2)),
+        "g2": (build_mc2_g2_shifted_cyclic_linf_l3_seed(), Rational(3), Rational(3)),
+        "family_m1": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+            Rational(1),
+            Rational(1),
+        ),
+        "family_m2": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+            Rational(2),
+            Rational(2),
+        ),
+        "family_m3": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+            Rational(3),
+            Rational(3),
+        ),
+    }
+    for lane, (model, expected_eta_norm, expected_m) in concrete_lanes.items():
+        profile = visible_lowarity_root_string_l3_channel_recovery_from_shifted_seed(
+            model,
+            parameter_name="u",
+        )
+        u, v, w = profile["parameters"]
+        transfer = profile["transfer_package"]
+        inferred = transfer["packet_from_obstruction"]
+
+        checks[f"l3_recovery_{lane}_original_eta_expected"] = simplify(
+            profile["original_eta_residual"] - expected_eta_norm * u * v * w
+        ) == 0
+        checks[f"l3_recovery_{lane}_predicted_matches_original"] = simplify(
+            profile["predicted_eta_residual"] - profile["original_eta_residual"]
+        ) == 0
+        checks[f"l3_recovery_{lane}_reconstructed_matches_original"] = simplify(
+            profile["reconstructed_eta_residual"] - profile["original_eta_residual"]
+        ) == 0
+        checks[f"l3_recovery_{lane}_eta111_expected"] = simplify(
+            profile["original_eta_at_111"] - expected_eta_norm
+        ) == 0
+        checks[f"l3_recovery_{lane}_eta111_matches_inferred_norm"] = simplify(
+            profile["original_eta_at_111"] - inferred["inferred_eta_normalization"]
+        ) == 0
+        checks[f"l3_recovery_{lane}_inferred_a_one"] = simplify(
+            inferred["inferred_e12_channel_scale"] - 1
+        ) == 0
+        checks[f"l3_recovery_{lane}_inferred_b_one"] = simplify(
+            inferred["inferred_f1_channel_scale"] - 1
+        ) == 0
+        checks[f"l3_recovery_{lane}_inferred_m_expected"] = simplify(
+            inferred["inferred_root_string_signature"] - expected_m
+        ) == 0
+
+    checks["visible_lowarity_root_string_l3_channel_recovery_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "l3_recovery_symbolic_infer_a",
+            "l3_recovery_symbolic_infer_b",
+            "l3_recovery_symbolic_infer_m",
+            "l3_recovery_symbolic_infer_eta_norm_am",
+            "l3_recovery_symbolic_original_eta_am_xyz",
+            "l3_recovery_symbolic_predicted_eta_am_xyz",
+            "l3_recovery_symbolic_reconstructed_matches_original",
+            "l3_recovery_symbolic_eta111_matches_inferred_norm",
+        )
+    )
+    checks["visible_lowarity_root_string_l3_channel_recovery_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "l3_recovery_sl3_original_eta_expected",
+            "l3_recovery_sl3_predicted_matches_original",
+            "l3_recovery_sl3_reconstructed_matches_original",
+            "l3_recovery_sl3_eta111_expected",
+            "l3_recovery_sl3_eta111_matches_inferred_norm",
+            "l3_recovery_sl3_inferred_a_one",
+            "l3_recovery_sl3_inferred_b_one",
+            "l3_recovery_sl3_inferred_m_expected",
+            "l3_recovery_sp4_original_eta_expected",
+            "l3_recovery_sp4_predicted_matches_original",
+            "l3_recovery_sp4_reconstructed_matches_original",
+            "l3_recovery_sp4_eta111_expected",
+            "l3_recovery_sp4_eta111_matches_inferred_norm",
+            "l3_recovery_sp4_inferred_a_one",
+            "l3_recovery_sp4_inferred_b_one",
+            "l3_recovery_sp4_inferred_m_expected",
+            "l3_recovery_g2_original_eta_expected",
+            "l3_recovery_g2_predicted_matches_original",
+            "l3_recovery_g2_reconstructed_matches_original",
+            "l3_recovery_g2_eta111_expected",
+            "l3_recovery_g2_eta111_matches_inferred_norm",
+            "l3_recovery_g2_inferred_a_one",
+            "l3_recovery_g2_inferred_b_one",
+            "l3_recovery_g2_inferred_m_expected",
+            "l3_recovery_family_m1_original_eta_expected",
+            "l3_recovery_family_m1_predicted_matches_original",
+            "l3_recovery_family_m1_reconstructed_matches_original",
+            "l3_recovery_family_m1_eta111_expected",
+            "l3_recovery_family_m1_eta111_matches_inferred_norm",
+            "l3_recovery_family_m1_inferred_a_one",
+            "l3_recovery_family_m1_inferred_b_one",
+            "l3_recovery_family_m1_inferred_m_expected",
+            "l3_recovery_family_m2_original_eta_expected",
+            "l3_recovery_family_m2_predicted_matches_original",
+            "l3_recovery_family_m2_reconstructed_matches_original",
+            "l3_recovery_family_m2_eta111_expected",
+            "l3_recovery_family_m2_eta111_matches_inferred_norm",
+            "l3_recovery_family_m2_inferred_a_one",
+            "l3_recovery_family_m2_inferred_b_one",
+            "l3_recovery_family_m2_inferred_m_expected",
+            "l3_recovery_family_m3_original_eta_expected",
+            "l3_recovery_family_m3_predicted_matches_original",
+            "l3_recovery_family_m3_reconstructed_matches_original",
+            "l3_recovery_family_m3_eta111_expected",
+            "l3_recovery_family_m3_eta111_matches_inferred_norm",
+            "l3_recovery_family_m3_inferred_a_one",
+            "l3_recovery_family_m3_inferred_b_one",
+            "l3_recovery_family_m3_inferred_m_expected",
+        )
+    )
+    checks["visible_lowarity_root_string_l3_channel_recovery_global"] = (
+        checks["visible_lowarity_root_string_l3_channel_recovery_symbolic_complete"]
+        and checks["visible_lowarity_root_string_l3_channel_recovery_concrete_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_chart_recovery_law() -> Dict[str, bool]:
+    """Verify chart-level root-string seed recovery from obstruction data."""
+    a, b, m = symbols("a b m")
+    source_symbolic = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+        e12_channel_scale=a,
+        f1_channel_scale=b,
+        root_string_signature=m,
+    )
+    symbolic_profile = shifted_seed_eta_channel_scaling_profile(
+        source_symbolic,
+        basis_elements=("e1", "e2", "f12"),
+        alpha_basis=("e1", "e2", "f12"),
+        parameter_name="t",
+    )
+    symbolic_recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(
+        symbolic_profile
+    )
+    symbolic_model = symbolic_recovered["reconstructed_seed_model"]
+    symbolic_packet = symbolic_recovered["packet_from_obstruction"]
+
+    checks: Dict[str, bool] = {
+        "chart_symbolic_infer_a": simplify(symbolic_packet["inferred_e12_channel_scale"] - a) == 0,
+        "chart_symbolic_infer_b": simplify(symbolic_packet["inferred_f1_channel_scale"] - b) == 0,
+        "chart_symbolic_infer_m": simplify(symbolic_packet["inferred_root_string_signature"] - m) == 0,
+        "chart_symbolic_l2_e1e2e12": simplify(
+            symbolic_model.l2_basis("e1", "e2").get("e12", 0)
+            - source_symbolic.l2_basis("e1", "e2").get("e12", 0)
+        )
+        == 0,
+        "chart_symbolic_l2_e2f12f1": simplify(
+            symbolic_model.l2_basis("e2", "f12").get("f1", 0)
+            - source_symbolic.l2_basis("e2", "f12").get("f1", 0)
+        )
+        == 0,
+        "chart_symbolic_l2_e1f12f2": simplify(
+            symbolic_model.l2_basis("e1", "f12").get("f2", 0)
+            - source_symbolic.l2_basis("e1", "f12").get("f2", 0)
+        )
+        == 0,
+        "chart_symbolic_pairing_e12f12": simplify(
+            symbolic_model.pairing_basis("e12", "f12")
+            - source_symbolic.pairing_basis("e12", "f12")
+        )
+        == 0,
+        "chart_symbolic_l3_e1e2f12_eta": simplify(
+            symbolic_model.l3_basis("e1", "e2", "f12").get("eta", 0)
+            - source_symbolic.l3_basis("e1", "e2", "f12").get("eta", 0)
+        )
+        == 0,
+    }
+
+    concrete_lanes = {
+        "sl3": (build_mc2_sl3_shifted_cyclic_linf_l3_seed(), Rational(1), Rational(1), Rational(1)),
+        "sp4": (build_mc2_sp4_shifted_cyclic_linf_l3_seed(), Rational(1), Rational(1), Rational(2)),
+        "g2": (build_mc2_g2_shifted_cyclic_linf_l3_seed(), Rational(1), Rational(1), Rational(3)),
+        "family_m1": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+            Rational(1),
+            Rational(1),
+            Rational(1),
+        ),
+        "family_m2": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+            Rational(1),
+            Rational(1),
+            Rational(2),
+        ),
+        "family_m3": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+            Rational(1),
+            Rational(1),
+            Rational(3),
+        ),
+    }
+    for lane, (source_model, expected_a, expected_b, expected_m) in concrete_lanes.items():
+        profile = shifted_seed_eta_channel_scaling_profile(
+            source_model,
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name="u",
+        )
+        recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(profile)
+        packet = recovered["packet_from_obstruction"]
+        reconstructed_model = recovered["reconstructed_seed_model"]
+
+        checks[f"chart_{lane}_infer_a_expected"] = simplify(
+            packet["inferred_e12_channel_scale"] - expected_a
+        ) == 0
+        checks[f"chart_{lane}_infer_b_expected"] = simplify(
+            packet["inferred_f1_channel_scale"] - expected_b
+        ) == 0
+        checks[f"chart_{lane}_infer_m_expected"] = simplify(
+            packet["inferred_root_string_signature"] - expected_m
+        ) == 0
+        checks[f"chart_{lane}_l2_e1e2e12"] = simplify(
+            reconstructed_model.l2_basis("e1", "e2").get("e12", 0)
+            - source_model.l2_basis("e1", "e2").get("e12", 0)
+        ) == 0
+        checks[f"chart_{lane}_l2_e2f12f1"] = simplify(
+            reconstructed_model.l2_basis("e2", "f12").get("f1", 0)
+            - source_model.l2_basis("e2", "f12").get("f1", 0)
+        ) == 0
+        checks[f"chart_{lane}_l2_e1f12f2"] = simplify(
+            reconstructed_model.l2_basis("e1", "f12").get("f2", 0)
+            - source_model.l2_basis("e1", "f12").get("f2", 0)
+        ) == 0
+        checks[f"chart_{lane}_pairing_e12f12"] = simplify(
+            reconstructed_model.pairing_basis("e12", "f12")
+            - source_model.pairing_basis("e12", "f12")
+        ) == 0
+        checks[f"chart_{lane}_l3_e1e2f12_eta"] = simplify(
+            reconstructed_model.l3_basis("e1", "e2", "f12").get("eta", 0)
+            - source_model.l3_basis("e1", "e2", "f12").get("eta", 0)
+        ) == 0
+
+    checks["visible_lowarity_root_string_chart_recovery_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "chart_symbolic_infer_a",
+            "chart_symbolic_infer_b",
+            "chart_symbolic_infer_m",
+            "chart_symbolic_l2_e1e2e12",
+            "chart_symbolic_l2_e2f12f1",
+            "chart_symbolic_l2_e1f12f2",
+            "chart_symbolic_pairing_e12f12",
+            "chart_symbolic_l3_e1e2f12_eta",
+        )
+    )
+    checks["visible_lowarity_root_string_chart_recovery_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "chart_sl3_infer_a_expected",
+            "chart_sl3_infer_b_expected",
+            "chart_sl3_infer_m_expected",
+            "chart_sl3_l2_e1e2e12",
+            "chart_sl3_l2_e2f12f1",
+            "chart_sl3_l2_e1f12f2",
+            "chart_sl3_pairing_e12f12",
+            "chart_sl3_l3_e1e2f12_eta",
+            "chart_sp4_infer_a_expected",
+            "chart_sp4_infer_b_expected",
+            "chart_sp4_infer_m_expected",
+            "chart_sp4_l2_e1e2e12",
+            "chart_sp4_l2_e2f12f1",
+            "chart_sp4_l2_e1f12f2",
+            "chart_sp4_pairing_e12f12",
+            "chart_sp4_l3_e1e2f12_eta",
+            "chart_g2_infer_a_expected",
+            "chart_g2_infer_b_expected",
+            "chart_g2_infer_m_expected",
+            "chart_g2_l2_e1e2e12",
+            "chart_g2_l2_e2f12f1",
+            "chart_g2_l2_e1f12f2",
+            "chart_g2_pairing_e12f12",
+            "chart_g2_l3_e1e2f12_eta",
+            "chart_family_m1_infer_a_expected",
+            "chart_family_m1_infer_b_expected",
+            "chart_family_m1_infer_m_expected",
+            "chart_family_m1_l2_e1e2e12",
+            "chart_family_m1_l2_e2f12f1",
+            "chart_family_m1_l2_e1f12f2",
+            "chart_family_m1_pairing_e12f12",
+            "chart_family_m1_l3_e1e2f12_eta",
+            "chart_family_m2_infer_a_expected",
+            "chart_family_m2_infer_b_expected",
+            "chart_family_m2_infer_m_expected",
+            "chart_family_m2_l2_e1e2e12",
+            "chart_family_m2_l2_e2f12f1",
+            "chart_family_m2_l2_e1f12f2",
+            "chart_family_m2_pairing_e12f12",
+            "chart_family_m2_l3_e1e2f12_eta",
+            "chart_family_m3_infer_a_expected",
+            "chart_family_m3_infer_b_expected",
+            "chart_family_m3_infer_m_expected",
+            "chart_family_m3_l2_e1e2e12",
+            "chart_family_m3_l2_e2f12f1",
+            "chart_family_m3_l2_e1f12f2",
+            "chart_family_m3_pairing_e12f12",
+            "chart_family_m3_l3_e1e2f12_eta",
+        )
+    )
+    checks["visible_lowarity_root_string_chart_recovery_global"] = (
+        checks["visible_lowarity_root_string_chart_recovery_symbolic_complete"]
+        and checks["visible_lowarity_root_string_chart_recovery_concrete_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_automorphism_rigidity_law() -> Dict[str, bool]:
+    """Verify ordered seed-line rigidity on visible root-string channels."""
+    a, b, m = symbols("a b m")
+    source_symbolic = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+        e12_channel_scale=a,
+        f1_channel_scale=b,
+        root_string_signature=m,
+    )
+    symbolic_profile = shifted_seed_eta_channel_scaling_profile(
+        source_symbolic,
+        basis_elements=("e1", "e2", "f12"),
+        alpha_basis=("e1", "e2", "f12"),
+        parameter_name="t",
+    )
+    symbolic_recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(
+        symbolic_profile
+    )
+    symbolic_model = symbolic_recovered["reconstructed_seed_model"]
+    symbolic_perms_source = root_string_ordered_seed_support_permutations(source_symbolic)
+    symbolic_perms_recovered = root_string_ordered_seed_support_permutations(symbolic_model)
+
+    checks: Dict[str, bool] = {
+        "aut_rigid_symbolic_unique_order_source": symbolic_perms_source == (("e1", "e2", "f12"),),
+        "aut_rigid_symbolic_unique_order_recovered": (
+            symbolic_perms_recovered == (("e1", "e2", "f12"),)
+        ),
+        "aut_rigid_symbolic_recovered_matches_source": (
+            symbolic_perms_recovered == symbolic_perms_source
+        ),
+    }
+
+    concrete_lanes = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    for lane, source_model in concrete_lanes.items():
+        profile = shifted_seed_eta_channel_scaling_profile(
+            source_model,
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name="u",
+        )
+        recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(profile)
+        recovered_model = recovered["reconstructed_seed_model"]
+        source_perms = root_string_ordered_seed_support_permutations(source_model)
+        recovered_perms = root_string_ordered_seed_support_permutations(recovered_model)
+
+        checks[f"aut_rigid_{lane}_unique_order_source"] = source_perms == (("e1", "e2", "f12"),)
+        checks[f"aut_rigid_{lane}_unique_order_recovered"] = (
+            recovered_perms == (("e1", "e2", "f12"),)
+        )
+        checks[f"aut_rigid_{lane}_recovered_matches_source"] = recovered_perms == source_perms
+
+    checks["visible_lowarity_root_string_automorphism_rigidity_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "aut_rigid_symbolic_unique_order_source",
+            "aut_rigid_symbolic_unique_order_recovered",
+            "aut_rigid_symbolic_recovered_matches_source",
+        )
+    )
+    checks["visible_lowarity_root_string_automorphism_rigidity_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "aut_rigid_sl3_unique_order_source",
+            "aut_rigid_sl3_unique_order_recovered",
+            "aut_rigid_sl3_recovered_matches_source",
+            "aut_rigid_sp4_unique_order_source",
+            "aut_rigid_sp4_unique_order_recovered",
+            "aut_rigid_sp4_recovered_matches_source",
+            "aut_rigid_g2_unique_order_source",
+            "aut_rigid_g2_unique_order_recovered",
+            "aut_rigid_g2_recovered_matches_source",
+            "aut_rigid_family_m1_unique_order_source",
+            "aut_rigid_family_m1_unique_order_recovered",
+            "aut_rigid_family_m1_recovered_matches_source",
+            "aut_rigid_family_m2_unique_order_source",
+            "aut_rigid_family_m2_unique_order_recovered",
+            "aut_rigid_family_m2_recovered_matches_source",
+            "aut_rigid_family_m3_unique_order_source",
+            "aut_rigid_family_m3_unique_order_recovered",
+            "aut_rigid_family_m3_recovered_matches_source",
+        )
+    )
+    checks["visible_lowarity_root_string_automorphism_rigidity_global"] = (
+        checks["visible_lowarity_root_string_automorphism_rigidity_symbolic_complete"]
+        and checks["visible_lowarity_root_string_automorphism_rigidity_concrete_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_incidence_orbit_law() -> Dict[str, bool]:
+    """Verify visible incidence/orbit singleton structure on root-string lanes."""
+    a, b, m = symbols("a b m")
+    source_symbolic = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+        e12_channel_scale=a,
+        f1_channel_scale=b,
+        root_string_signature=m,
+    )
+    symbolic_profile = visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+        source_symbolic,
+        parameter_name="t",
+    )
+    symbolic_recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(
+        symbolic_profile["obstruction_profile"]
+    )
+    symbolic_recovered_profile = (
+        visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+            symbolic_recovered["reconstructed_seed_model"],
+            parameter_name="t",
+        )
+    )
+    symbolic_inferred = symbolic_recovered["packet_from_obstruction"]
+
+    checks: Dict[str, bool] = {
+        "inc_orbit_symbolic_infer_a": simplify(
+            symbolic_inferred["inferred_e12_channel_scale"] - a
+        )
+        == 0,
+        "inc_orbit_symbolic_infer_b": simplify(
+            symbolic_inferred["inferred_f1_channel_scale"] - b
+        )
+        == 0,
+        "inc_orbit_symbolic_infer_m": simplify(
+            symbolic_inferred["inferred_root_string_signature"] - m
+        )
+        == 0,
+        "inc_orbit_symbolic_group_identity_source": (
+            symbolic_profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+        ),
+        "inc_orbit_symbolic_group_identity_recovered": (
+            symbolic_recovered_profile["visible_seed_permutation_group"]
+            == (("e1", "e2", "f12"),)
+        ),
+        "inc_orbit_symbolic_seed_orbits_singleton_source": (
+            symbolic_profile["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        ),
+        "inc_orbit_symbolic_seed_orbits_singleton_recovered": (
+            symbolic_recovered_profile["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        ),
+        "inc_orbit_symbolic_g2_singletons_source": (
+            symbolic_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        ),
+        "inc_orbit_symbolic_g2_singletons_recovered": (
+            symbolic_recovered_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        ),
+        "inc_orbit_symbolic_g3_singletons_source": (
+            symbolic_profile["singleton_support_orbits_g3"] == ("eta",)
+        ),
+        "inc_orbit_symbolic_g3_singletons_recovered": (
+            symbolic_recovered_profile["singleton_support_orbits_g3"] == ("eta",)
+        ),
+        "inc_orbit_symbolic_normalization_profile_source": (
+            symbolic_profile["normalization_indicator_g2"]
+            == (("e12", True), ("f1", False), ("f2", False))
+        ),
+        "inc_orbit_symbolic_normalization_profile_recovered": (
+            symbolic_recovered_profile["normalization_indicator_g2"]
+            == (("e12", True), ("f1", False), ("f2", False))
+        ),
+        "inc_orbit_symbolic_support_g2_source": (
+            symbolic_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        ),
+        "inc_orbit_symbolic_support_g2_recovered": (
+            symbolic_recovered_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        ),
+        "inc_orbit_symbolic_support_g3_source": (
+            symbolic_profile["support_indicator_g3"] == ("eta",)
+        ),
+        "inc_orbit_symbolic_support_g3_recovered": (
+            symbolic_recovered_profile["support_indicator_g3"] == ("eta",)
+        ),
+        "inc_orbit_symbolic_incidence_source_recovered": (
+            symbolic_profile["incidence_coefficients"]
+            == symbolic_recovered_profile["incidence_coefficients"]
+        ),
+    }
+
+    concrete_lanes = {
+        "sl3": (build_mc2_sl3_shifted_cyclic_linf_l3_seed(), Rational(1)),
+        "sp4": (build_mc2_sp4_shifted_cyclic_linf_l3_seed(), Rational(2)),
+        "g2": (build_mc2_g2_shifted_cyclic_linf_l3_seed(), Rational(3)),
+        "family_m1": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+            Rational(1),
+        ),
+        "family_m2": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+            Rational(2),
+        ),
+        "family_m3": (
+            build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+            Rational(3),
+        ),
+    }
+    for lane, (source_model, expected_m) in concrete_lanes.items():
+        source_profile = visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+            source_model,
+            parameter_name="u",
+        )
+        recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(
+            source_profile["obstruction_profile"]
+        )
+        recovered_profile = visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+            recovered["reconstructed_seed_model"],
+            parameter_name="u",
+        )
+        inferred = recovered["packet_from_obstruction"]
+
+        checks[f"inc_orbit_{lane}_infer_a_one"] = simplify(
+            inferred["inferred_e12_channel_scale"] - 1
+        ) == 0
+        checks[f"inc_orbit_{lane}_infer_b_one"] = simplify(
+            inferred["inferred_f1_channel_scale"] - 1
+        ) == 0
+        checks[f"inc_orbit_{lane}_infer_m_expected"] = simplify(
+            inferred["inferred_root_string_signature"] - expected_m
+        ) == 0
+        checks[f"inc_orbit_{lane}_group_identity_source"] = (
+            source_profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+        )
+        checks[f"inc_orbit_{lane}_group_identity_recovered"] = (
+            recovered_profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+        )
+        checks[f"inc_orbit_{lane}_seed_orbits_singleton_source"] = (
+            source_profile["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        )
+        checks[f"inc_orbit_{lane}_seed_orbits_singleton_recovered"] = (
+            recovered_profile["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        )
+        checks[f"inc_orbit_{lane}_g2_singletons_source"] = (
+            source_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"inc_orbit_{lane}_g2_singletons_recovered"] = (
+            recovered_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"inc_orbit_{lane}_g3_singletons_source"] = (
+            source_profile["singleton_support_orbits_g3"] == ("eta",)
+        )
+        checks[f"inc_orbit_{lane}_g3_singletons_recovered"] = (
+            recovered_profile["singleton_support_orbits_g3"] == ("eta",)
+        )
+        checks[f"inc_orbit_{lane}_normalization_profile_source"] = (
+            source_profile["normalization_indicator_g2"]
+            == (("e12", True), ("f1", False), ("f2", False))
+        )
+        checks[f"inc_orbit_{lane}_normalization_profile_recovered"] = (
+            recovered_profile["normalization_indicator_g2"]
+            == (("e12", True), ("f1", False), ("f2", False))
+        )
+        checks[f"inc_orbit_{lane}_support_g2_source"] = (
+            source_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"inc_orbit_{lane}_support_g2_recovered"] = (
+            recovered_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"inc_orbit_{lane}_support_g3_source"] = (
+            source_profile["support_indicator_g3"] == ("eta",)
+        )
+        checks[f"inc_orbit_{lane}_support_g3_recovered"] = (
+            recovered_profile["support_indicator_g3"] == ("eta",)
+        )
+        checks[f"inc_orbit_{lane}_incidence_source_recovered"] = (
+            source_profile["incidence_coefficients"] == recovered_profile["incidence_coefficients"]
+        )
+
+    checks["visible_lowarity_root_string_incidence_orbit_symbolic_complete"] = all(
+        checks[name]
+        for name in (
+            "inc_orbit_symbolic_infer_a",
+            "inc_orbit_symbolic_infer_b",
+            "inc_orbit_symbolic_infer_m",
+            "inc_orbit_symbolic_group_identity_source",
+            "inc_orbit_symbolic_group_identity_recovered",
+            "inc_orbit_symbolic_seed_orbits_singleton_source",
+            "inc_orbit_symbolic_seed_orbits_singleton_recovered",
+            "inc_orbit_symbolic_g2_singletons_source",
+            "inc_orbit_symbolic_g2_singletons_recovered",
+            "inc_orbit_symbolic_g3_singletons_source",
+            "inc_orbit_symbolic_g3_singletons_recovered",
+            "inc_orbit_symbolic_normalization_profile_source",
+            "inc_orbit_symbolic_normalization_profile_recovered",
+            "inc_orbit_symbolic_support_g2_source",
+            "inc_orbit_symbolic_support_g2_recovered",
+            "inc_orbit_symbolic_support_g3_source",
+            "inc_orbit_symbolic_support_g3_recovered",
+            "inc_orbit_symbolic_incidence_source_recovered",
+        )
+    )
+    checks["visible_lowarity_root_string_incidence_orbit_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "inc_orbit_sl3_infer_a_one",
+            "inc_orbit_sl3_infer_b_one",
+            "inc_orbit_sl3_infer_m_expected",
+            "inc_orbit_sl3_group_identity_source",
+            "inc_orbit_sl3_group_identity_recovered",
+            "inc_orbit_sl3_seed_orbits_singleton_source",
+            "inc_orbit_sl3_seed_orbits_singleton_recovered",
+            "inc_orbit_sl3_g2_singletons_source",
+            "inc_orbit_sl3_g2_singletons_recovered",
+            "inc_orbit_sl3_g3_singletons_source",
+            "inc_orbit_sl3_g3_singletons_recovered",
+            "inc_orbit_sl3_normalization_profile_source",
+            "inc_orbit_sl3_normalization_profile_recovered",
+            "inc_orbit_sl3_support_g2_source",
+            "inc_orbit_sl3_support_g2_recovered",
+            "inc_orbit_sl3_support_g3_source",
+            "inc_orbit_sl3_support_g3_recovered",
+            "inc_orbit_sl3_incidence_source_recovered",
+            "inc_orbit_sp4_infer_a_one",
+            "inc_orbit_sp4_infer_b_one",
+            "inc_orbit_sp4_infer_m_expected",
+            "inc_orbit_sp4_group_identity_source",
+            "inc_orbit_sp4_group_identity_recovered",
+            "inc_orbit_sp4_seed_orbits_singleton_source",
+            "inc_orbit_sp4_seed_orbits_singleton_recovered",
+            "inc_orbit_sp4_g2_singletons_source",
+            "inc_orbit_sp4_g2_singletons_recovered",
+            "inc_orbit_sp4_g3_singletons_source",
+            "inc_orbit_sp4_g3_singletons_recovered",
+            "inc_orbit_sp4_normalization_profile_source",
+            "inc_orbit_sp4_normalization_profile_recovered",
+            "inc_orbit_sp4_support_g2_source",
+            "inc_orbit_sp4_support_g2_recovered",
+            "inc_orbit_sp4_support_g3_source",
+            "inc_orbit_sp4_support_g3_recovered",
+            "inc_orbit_sp4_incidence_source_recovered",
+            "inc_orbit_g2_infer_a_one",
+            "inc_orbit_g2_infer_b_one",
+            "inc_orbit_g2_infer_m_expected",
+            "inc_orbit_g2_group_identity_source",
+            "inc_orbit_g2_group_identity_recovered",
+            "inc_orbit_g2_seed_orbits_singleton_source",
+            "inc_orbit_g2_seed_orbits_singleton_recovered",
+            "inc_orbit_g2_g2_singletons_source",
+            "inc_orbit_g2_g2_singletons_recovered",
+            "inc_orbit_g2_g3_singletons_source",
+            "inc_orbit_g2_g3_singletons_recovered",
+            "inc_orbit_g2_normalization_profile_source",
+            "inc_orbit_g2_normalization_profile_recovered",
+            "inc_orbit_g2_support_g2_source",
+            "inc_orbit_g2_support_g2_recovered",
+            "inc_orbit_g2_support_g3_source",
+            "inc_orbit_g2_support_g3_recovered",
+            "inc_orbit_g2_incidence_source_recovered",
+            "inc_orbit_family_m1_infer_a_one",
+            "inc_orbit_family_m1_infer_b_one",
+            "inc_orbit_family_m1_infer_m_expected",
+            "inc_orbit_family_m1_group_identity_source",
+            "inc_orbit_family_m1_group_identity_recovered",
+            "inc_orbit_family_m1_seed_orbits_singleton_source",
+            "inc_orbit_family_m1_seed_orbits_singleton_recovered",
+            "inc_orbit_family_m1_g2_singletons_source",
+            "inc_orbit_family_m1_g2_singletons_recovered",
+            "inc_orbit_family_m1_g3_singletons_source",
+            "inc_orbit_family_m1_g3_singletons_recovered",
+            "inc_orbit_family_m1_normalization_profile_source",
+            "inc_orbit_family_m1_normalization_profile_recovered",
+            "inc_orbit_family_m1_support_g2_source",
+            "inc_orbit_family_m1_support_g2_recovered",
+            "inc_orbit_family_m1_support_g3_source",
+            "inc_orbit_family_m1_support_g3_recovered",
+            "inc_orbit_family_m1_incidence_source_recovered",
+            "inc_orbit_family_m2_infer_a_one",
+            "inc_orbit_family_m2_infer_b_one",
+            "inc_orbit_family_m2_infer_m_expected",
+            "inc_orbit_family_m2_group_identity_source",
+            "inc_orbit_family_m2_group_identity_recovered",
+            "inc_orbit_family_m2_seed_orbits_singleton_source",
+            "inc_orbit_family_m2_seed_orbits_singleton_recovered",
+            "inc_orbit_family_m2_g2_singletons_source",
+            "inc_orbit_family_m2_g2_singletons_recovered",
+            "inc_orbit_family_m2_g3_singletons_source",
+            "inc_orbit_family_m2_g3_singletons_recovered",
+            "inc_orbit_family_m2_normalization_profile_source",
+            "inc_orbit_family_m2_normalization_profile_recovered",
+            "inc_orbit_family_m2_support_g2_source",
+            "inc_orbit_family_m2_support_g2_recovered",
+            "inc_orbit_family_m2_support_g3_source",
+            "inc_orbit_family_m2_support_g3_recovered",
+            "inc_orbit_family_m2_incidence_source_recovered",
+            "inc_orbit_family_m3_infer_a_one",
+            "inc_orbit_family_m3_infer_b_one",
+            "inc_orbit_family_m3_infer_m_expected",
+            "inc_orbit_family_m3_group_identity_source",
+            "inc_orbit_family_m3_group_identity_recovered",
+            "inc_orbit_family_m3_seed_orbits_singleton_source",
+            "inc_orbit_family_m3_seed_orbits_singleton_recovered",
+            "inc_orbit_family_m3_g2_singletons_source",
+            "inc_orbit_family_m3_g2_singletons_recovered",
+            "inc_orbit_family_m3_g3_singletons_source",
+            "inc_orbit_family_m3_g3_singletons_recovered",
+            "inc_orbit_family_m3_normalization_profile_source",
+            "inc_orbit_family_m3_normalization_profile_recovered",
+            "inc_orbit_family_m3_support_g2_source",
+            "inc_orbit_family_m3_support_g2_recovered",
+            "inc_orbit_family_m3_support_g3_source",
+            "inc_orbit_family_m3_support_g3_recovered",
+            "inc_orbit_family_m3_incidence_source_recovered",
+        )
+    )
+    checks["visible_lowarity_root_string_incidence_orbit_global"] = (
+        checks["visible_lowarity_root_string_incidence_orbit_symbolic_complete"]
+        and checks["visible_lowarity_root_string_incidence_orbit_concrete_complete"]
+    )
+    return checks
+
+
+@lru_cache(maxsize=None)
+def mc2_visible_lowarity_root_string_orbit_table_profiles(
+    parameter_name: str = "t",
+) -> Dict[str, Dict[str, object]]:
+    """Collect visible incidence/orbit profiles on concrete and family lanes."""
+    lanes = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    return {
+        lane: visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+            model,
+            parameter_name=parameter_name,
+        )
+        for lane, model in lanes.items()
+    }
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_orbit_table_law() -> Dict[str, bool]:
+    """Verify universal three-case visible orbit-table law on root-string lanes."""
+    concrete = mc2_visible_lowarity_root_string_orbit_table_profiles(parameter_name="u")
+    family = mc2_visible_lowarity_root_string_orbit_table_profiles(parameter_name="v")
+    expected_m = {"sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
+    lane_to_family = {"sl3": "family_m1", "sp4": "family_m2", "g2": "family_m3"}
+
+    checks: Dict[str, bool] = {}
+    for lane, m in expected_m.items():
+        lane_profile = concrete[lane]
+        family_profile = family[lane_to_family[lane]]
+        lane_inferred_m = simplify(-lane_profile["incidence_coefficients"]["f2"])
+        family_inferred_m = simplify(-family_profile["incidence_coefficients"]["f2"])
+
+        checks[f"orbit_table_{lane}_m_expected"] = simplify(lane_inferred_m - m) == 0
+        checks[f"orbit_table_{lane}_family_m_expected"] = simplify(family_inferred_m - m) == 0
+        checks[f"orbit_table_{lane}_group_identity"] = (
+            lane_profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+        )
+        checks[f"orbit_table_{lane}_singletons_g2"] = (
+            lane_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"orbit_table_{lane}_singletons_g3"] = (
+            lane_profile["singleton_support_orbits_g3"] == ("eta",)
+        )
+        checks[f"orbit_table_{lane}_normalization_profile"] = (
+            lane_profile["normalization_indicator_g2"]
+            == (("e12", True), ("f1", False), ("f2", False))
+        )
+        checks[f"orbit_table_{lane}_support_g2"] = (
+            lane_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"orbit_table_{lane}_support_g3"] = (
+            lane_profile["support_indicator_g3"] == ("eta",)
+        )
+        checks[f"orbit_table_{lane}_matches_family_group"] = (
+            lane_profile["visible_seed_permutation_group"]
+            == family_profile["visible_seed_permutation_group"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_seed_orbits"] = (
+            lane_profile["seed_orbits"] == family_profile["seed_orbits"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_support_orbits"] = (
+            lane_profile["support_orbits"] == family_profile["support_orbits"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_singletons_g2"] = (
+            lane_profile["singleton_support_orbits_g2"]
+            == family_profile["singleton_support_orbits_g2"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_singletons_g3"] = (
+            lane_profile["singleton_support_orbits_g3"]
+            == family_profile["singleton_support_orbits_g3"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_normalization"] = (
+            lane_profile["normalization_indicator_g2"]
+            == family_profile["normalization_indicator_g2"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_support_indicators"] = (
+            lane_profile["support_indicator_g2"] == family_profile["support_indicator_g2"]
+            and lane_profile["support_indicator_g3"] == family_profile["support_indicator_g3"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_incidence"] = (
+            lane_profile["incidence_coefficients"] == family_profile["incidence_coefficients"]
+        )
+        checks[f"orbit_table_{lane}_matches_family_pairing_profile"] = (
+            lane_profile["pairing_profile_f12"] == family_profile["pairing_profile_f12"]
+        )
+
+    checks["visible_lowarity_root_string_orbit_table_concrete_complete"] = all(
+        checks[name]
+        for name in (
+            "orbit_table_sl3_m_expected",
+            "orbit_table_sl3_family_m_expected",
+            "orbit_table_sl3_group_identity",
+            "orbit_table_sl3_singletons_g2",
+            "orbit_table_sl3_singletons_g3",
+            "orbit_table_sl3_normalization_profile",
+            "orbit_table_sl3_support_g2",
+            "orbit_table_sl3_support_g3",
+            "orbit_table_sp4_m_expected",
+            "orbit_table_sp4_family_m_expected",
+            "orbit_table_sp4_group_identity",
+            "orbit_table_sp4_singletons_g2",
+            "orbit_table_sp4_singletons_g3",
+            "orbit_table_sp4_normalization_profile",
+            "orbit_table_sp4_support_g2",
+            "orbit_table_sp4_support_g3",
+            "orbit_table_g2_m_expected",
+            "orbit_table_g2_family_m_expected",
+            "orbit_table_g2_group_identity",
+            "orbit_table_g2_singletons_g2",
+            "orbit_table_g2_singletons_g3",
+            "orbit_table_g2_normalization_profile",
+            "orbit_table_g2_support_g2",
+            "orbit_table_g2_support_g3",
+        )
+    )
+    checks["visible_lowarity_root_string_orbit_table_family_match_complete"] = all(
+        checks[name]
+        for name in (
+            "orbit_table_sl3_matches_family_group",
+            "orbit_table_sl3_matches_family_seed_orbits",
+            "orbit_table_sl3_matches_family_support_orbits",
+            "orbit_table_sl3_matches_family_singletons_g2",
+            "orbit_table_sl3_matches_family_singletons_g3",
+            "orbit_table_sl3_matches_family_normalization",
+            "orbit_table_sl3_matches_family_support_indicators",
+            "orbit_table_sl3_matches_family_incidence",
+            "orbit_table_sl3_matches_family_pairing_profile",
+            "orbit_table_sp4_matches_family_group",
+            "orbit_table_sp4_matches_family_seed_orbits",
+            "orbit_table_sp4_matches_family_support_orbits",
+            "orbit_table_sp4_matches_family_singletons_g2",
+            "orbit_table_sp4_matches_family_singletons_g3",
+            "orbit_table_sp4_matches_family_normalization",
+            "orbit_table_sp4_matches_family_support_indicators",
+            "orbit_table_sp4_matches_family_incidence",
+            "orbit_table_sp4_matches_family_pairing_profile",
+            "orbit_table_g2_matches_family_group",
+            "orbit_table_g2_matches_family_seed_orbits",
+            "orbit_table_g2_matches_family_support_orbits",
+            "orbit_table_g2_matches_family_singletons_g2",
+            "orbit_table_g2_matches_family_singletons_g3",
+            "orbit_table_g2_matches_family_normalization",
+            "orbit_table_g2_matches_family_support_indicators",
+            "orbit_table_g2_matches_family_incidence",
+            "orbit_table_g2_matches_family_pairing_profile",
+        )
+    )
+    checks["visible_lowarity_root_string_orbit_table_global"] = (
+        checks["visible_lowarity_root_string_orbit_table_concrete_complete"]
+        and checks["visible_lowarity_root_string_orbit_table_family_match_complete"]
+    )
+    return checks
+
+
+def visible_lowarity_root_string_invariant_signature_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    """Extract normalized invariant signature from visible root-string packet."""
+    profile = visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+        model,
+        parameter_name=parameter_name,
+    )
+    incidence = profile["incidence_coefficients"]
+    pairing = dict(profile["pairing_profile_f12"])
+    m = simplify(-incidence["f2"])
+    if m == 0:
+        raise ValueError("root-string signature m must be nonzero")
+
+    normalized_incidence = {
+        "e12": simplify(incidence["e12"]),
+        "f1": simplify(incidence["f1"]),
+        "f2_by_m": simplify(incidence["f2"] / m),
+        "eta_by_m": simplify(incidence["eta"] / m),
+    }
+    normalized_pairing = {
+        "e12_by_m": simplify(pairing.get("e12", 0) / m),
+        "f1_by_m": simplify(pairing.get("f1", 0) / m),
+        "f2_by_m": simplify(pairing.get("f2", 0) / m),
+    }
+    return {
+        "root_string_signature": m,
+        "seed_orbits": profile["seed_orbits"],
+        "support_orbits": profile["support_orbits"],
+        "singleton_support_orbits_g2": profile["singleton_support_orbits_g2"],
+        "singleton_support_orbits_g3": profile["singleton_support_orbits_g3"],
+        "normalization_indicator_g2": profile["normalization_indicator_g2"],
+        "support_indicator_g2": profile["support_indicator_g2"],
+        "support_indicator_g3": profile["support_indicator_g3"],
+        "normalized_incidence": normalized_incidence,
+        "normalized_pairing": normalized_pairing,
+        "raw_profile": profile,
+    }
+
+
+def visible_lowarity_root_string_signed_seed_character_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    """Extract signed seed-character from normalized invariant signature."""
+    signature = visible_lowarity_root_string_invariant_signature_from_shifted_seed(
+        model,
+        parameter_name=parameter_name,
+    )
+    normalized_incidence = signature["normalized_incidence"]
+    character = (
+        simplify(normalized_incidence["e12"]),
+        simplify(normalized_incidence["f1"]),
+        simplify(normalized_incidence["f2_by_m"]),
+        simplify(normalized_incidence["eta_by_m"]),
+    )
+    return {
+        "root_string_signature": signature["root_string_signature"],
+        "signed_seed_character": character,
+        "normalization_indicator_g2": signature["normalization_indicator_g2"],
+        "support_indicator_g2": signature["support_indicator_g2"],
+        "support_indicator_g3": signature["support_indicator_g3"],
+        "invariant_signature": signature,
+    }
+
+
+def visible_lowarity_root_string_two_sign_normalization_scalar_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    r"""Extract reduced two-sign plus normalization-scalar root-string datum.
+
+    The reduced datum is
+    ``(\epsilon_br, \epsilon_eta, \rho_nu)``, where:
+    - ``\epsilon_br`` is the bracket sign on the ordered visible seed chart,
+    - ``\epsilon_eta`` is the genus-``3``/Killing sign,
+    - ``\rho_nu`` is the normalization scalar.
+    """
+    character = visible_lowarity_root_string_signed_seed_character_from_shifted_seed(
+        model,
+        parameter_name=parameter_name,
+    )
+    signed = character["signed_seed_character"]
+    epsilon_br = _unit_sign_from_scalar(
+        signed[0],
+        label="visible root-string bracket sign",
+    )
+    epsilon_eta = _unit_sign_from_scalar(
+        signed[3],
+        label="visible root-string genus-3/Killing sign",
+    )
+    rho_nu = simplify(character["root_string_signature"])
+    recovered_signed_character = (
+        simplify(epsilon_br),
+        simplify(epsilon_br),
+        simplify(-epsilon_br),
+        simplify(epsilon_eta),
+    )
+    return {
+        "epsilon_br": epsilon_br,
+        "epsilon_eta": epsilon_eta,
+        "rho_nu": rho_nu,
+        "reduced_datum": (epsilon_br, epsilon_eta, rho_nu),
+        "recovered_signed_seed_character": recovered_signed_character,
+        "signed_seed_character": signed,
+        "normalization_indicator_g2": character["normalization_indicator_g2"],
+        "support_indicator_g2": character["support_indicator_g2"],
+        "support_indicator_g3": character["support_indicator_g3"],
+        "seed_character_profile": character,
+    }
+
+
+def visible_lowarity_root_string_parity_sign_normalization_scalar_from_shifted_seed(
+    model: CyclicLInfinityModel,
+    *,
+    parameter_name: str = "t",
+) -> Dict[str, object]:
+    r"""Extract reduced parity-sign plus normalization-scalar root-string datum.
+
+    The reduced parity datum is ``(\epsilon_par, \rho_nu)``. On the visible
+    root-string lane, transfer-law compatibility forces the genus-``3`` sign
+    from ``\epsilon_par``.
+    """
+    two_sign = visible_lowarity_root_string_two_sign_normalization_scalar_from_shifted_seed(
+        model,
+        parameter_name=parameter_name,
+    )
+    epsilon_par = simplify(two_sign["epsilon_br"])
+    forced_epsilon_eta = simplify(epsilon_par)
+    recovered_two_sign = (
+        epsilon_par,
+        forced_epsilon_eta,
+        simplify(two_sign["rho_nu"]),
+    )
+    return {
+        "epsilon_par": epsilon_par,
+        "rho_nu": simplify(two_sign["rho_nu"]),
+        "parity_datum": (epsilon_par, simplify(two_sign["rho_nu"])),
+        "forced_epsilon_eta_from_transfer": forced_epsilon_eta,
+        "recovered_two_sign_datum": recovered_two_sign,
+        "recovered_signed_seed_character": (
+            simplify(epsilon_par),
+            simplify(epsilon_par),
+            simplify(-epsilon_par),
+            simplify(forced_epsilon_eta),
+        ),
+        "two_sign_profile": two_sign,
+    }
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_invariant_signature_law() -> Dict[str, bool]:
+    """Verify normalized invariant-signature law on visible root-string lanes."""
+    concrete_models = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+    }
+    family_models = {
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    expected_m = {"sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
+    lane_to_family = {"sl3": "family_m1", "sp4": "family_m2", "g2": "family_m3"}
+
+    concrete = {
+        lane: visible_lowarity_root_string_invariant_signature_from_shifted_seed(
+            model,
+            parameter_name="u",
+        )
+        for lane, model in concrete_models.items()
+    }
+    family = {
+        lane: visible_lowarity_root_string_invariant_signature_from_shifted_seed(
+            model,
+            parameter_name="v",
+        )
+        for lane, model in family_models.items()
+    }
+
+    checks: Dict[str, bool] = {}
+    for lane, signature in concrete.items():
+        m = expected_m[lane]
+        family_signature = family[lane_to_family[lane]]
+        normalized_incidence = signature["normalized_incidence"]
+        normalized_pairing = signature["normalized_pairing"]
+
+        checks[f"invariant_signature_{lane}_m_expected"] = simplify(
+            signature["root_string_signature"] - m
+        ) == 0
+        checks[f"invariant_signature_{lane}_seed_orbits_singleton"] = (
+            signature["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        )
+        checks[f"invariant_signature_{lane}_g2_singletons"] = (
+            signature["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"invariant_signature_{lane}_g3_singletons"] = (
+            signature["singleton_support_orbits_g3"] == ("eta",)
+        )
+        checks[f"invariant_signature_{lane}_normalization_profile"] = (
+            signature["normalization_indicator_g2"] == (("e12", True), ("f1", False), ("f2", False))
+        )
+        checks[f"invariant_signature_{lane}_support_g2"] = (
+            signature["support_indicator_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"invariant_signature_{lane}_support_g3"] = (
+            signature["support_indicator_g3"] == ("eta",)
+        )
+        checks[f"invariant_signature_{lane}_normalized_incidence_e12"] = simplify(
+            normalized_incidence["e12"] - 1
+        ) == 0
+        checks[f"invariant_signature_{lane}_normalized_incidence_f1"] = simplify(
+            normalized_incidence["f1"] - 1
+        ) == 0
+        checks[f"invariant_signature_{lane}_normalized_incidence_f2"] = simplify(
+            normalized_incidence["f2_by_m"] + 1
+        ) == 0
+        checks[f"invariant_signature_{lane}_normalized_incidence_eta"] = simplify(
+            normalized_incidence["eta_by_m"] - 1
+        ) == 0
+        checks[f"invariant_signature_{lane}_normalized_pairing_e12"] = simplify(
+            normalized_pairing["e12_by_m"] - 1
+        ) == 0
+        checks[f"invariant_signature_{lane}_normalized_pairing_f1"] = simplify(
+            normalized_pairing["f1_by_m"]
+        ) == 0
+        checks[f"invariant_signature_{lane}_normalized_pairing_f2"] = simplify(
+            normalized_pairing["f2_by_m"]
+        ) == 0
+        checks[f"invariant_signature_{lane}_matches_family"] = (
+            signature["seed_orbits"] == family_signature["seed_orbits"]
+            and signature["support_orbits"] == family_signature["support_orbits"]
+            and signature["singleton_support_orbits_g2"] == family_signature["singleton_support_orbits_g2"]
+            and signature["singleton_support_orbits_g3"] == family_signature["singleton_support_orbits_g3"]
+            and signature["normalization_indicator_g2"] == family_signature["normalization_indicator_g2"]
+            and signature["support_indicator_g2"] == family_signature["support_indicator_g2"]
+            and signature["support_indicator_g3"] == family_signature["support_indicator_g3"]
+            and signature["normalized_incidence"] == family_signature["normalized_incidence"]
+            and signature["normalized_pairing"] == family_signature["normalized_pairing"]
+        )
+
+    checks["visible_lowarity_root_string_invariant_signature_global"] = all(checks.values())
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_seed_character_law() -> Dict[str, bool]:
+    """Verify signed seed-character law on visible root-string lanes."""
+    lanes = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    expected_character = (Rational(1), Rational(1), Rational(-1), Rational(1))
+    expected_m = {
+        "sl3": Rational(1),
+        "sp4": Rational(2),
+        "g2": Rational(3),
+        "family_m1": Rational(1),
+        "family_m2": Rational(2),
+        "family_m3": Rational(3),
+    }
+
+    checks: Dict[str, bool] = {}
+    for lane, model in lanes.items():
+        character = visible_lowarity_root_string_signed_seed_character_from_shifted_seed(
+            model,
+            parameter_name="u",
+        )
+        checks[f"seed_character_{lane}_m_expected"] = simplify(
+            character["root_string_signature"] - expected_m[lane]
+        ) == 0
+        checks[f"seed_character_{lane}_character_expected"] = (
+            character["signed_seed_character"] == expected_character
+        )
+        checks[f"seed_character_{lane}_normalization_profile"] = (
+            character["normalization_indicator_g2"] == (("e12", True), ("f1", False), ("f2", False))
+        )
+        checks[f"seed_character_{lane}_support_g2"] = (
+            character["support_indicator_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"seed_character_{lane}_support_g3"] = (
+            character["support_indicator_g3"] == ("eta",)
+        )
+
+    checks["visible_lowarity_root_string_seed_character_global"] = all(checks.values())
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_two_sign_scalar_law() -> Dict[str, bool]:
+    """Verify two-sign plus normalization-scalar law on visible root-string lanes."""
+    lanes = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    expected_m = {
+        "sl3": Rational(1),
+        "sp4": Rational(2),
+        "g2": Rational(3),
+        "family_m1": Rational(1),
+        "family_m2": Rational(2),
+        "family_m3": Rational(3),
+    }
+    expected_signed = (Rational(1), Rational(1), Rational(-1), Rational(1))
+
+    checks: Dict[str, bool] = {}
+    for lane, model in lanes.items():
+        reduced = visible_lowarity_root_string_two_sign_normalization_scalar_from_shifted_seed(
+            model,
+            parameter_name="u",
+        )
+        checks[f"two_sign_scalar_{lane}_epsilon_br_expected"] = (
+            simplify(reduced["epsilon_br"] - 1) == 0
+        )
+        checks[f"two_sign_scalar_{lane}_epsilon_eta_expected"] = (
+            simplify(reduced["epsilon_eta"] - 1) == 0
+        )
+        checks[f"two_sign_scalar_{lane}_rho_nu_expected"] = (
+            simplify(reduced["rho_nu"] - expected_m[lane]) == 0
+        )
+        checks[f"two_sign_scalar_{lane}_reduced_datum_expected"] = (
+            reduced["reduced_datum"] == (Rational(1), Rational(1), expected_m[lane])
+        )
+        checks[f"two_sign_scalar_{lane}_recovered_seed_character_expected"] = (
+            reduced["recovered_signed_seed_character"] == expected_signed
+        )
+        checks[f"two_sign_scalar_{lane}_matches_seed_character"] = (
+            reduced["recovered_signed_seed_character"] == reduced["signed_seed_character"]
+        )
+        checks[f"two_sign_scalar_{lane}_normalization_profile"] = (
+            reduced["normalization_indicator_g2"] == (("e12", True), ("f1", False), ("f2", False))
+        )
+        checks[f"two_sign_scalar_{lane}_support_g2"] = (
+            reduced["support_indicator_g2"] == ("e12", "f1", "f2")
+        )
+        checks[f"two_sign_scalar_{lane}_support_g3"] = (
+            reduced["support_indicator_g3"] == ("eta",)
+        )
+
+    checks["visible_lowarity_root_string_two_sign_scalar_global"] = all(checks.values())
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_visible_lowarity_root_string_parity_scalar_law() -> Dict[str, bool]:
+    """Verify parity-sign plus normalization-scalar law on visible root-string lanes."""
+    lanes = {
+        "sl3": build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+        "sp4": build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+        "g2": build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        "family_m1": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(1)),
+        "family_m2": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(2)),
+        "family_m3": build_mc2_root_string_family_shifted_cyclic_linf_l3_seed(Rational(3)),
+    }
+    expected_m = {
+        "sl3": Rational(1),
+        "sp4": Rational(2),
+        "g2": Rational(3),
+        "family_m1": Rational(1),
+        "family_m2": Rational(2),
+        "family_m3": Rational(3),
+    }
+    expected_two_sign = (Rational(1), Rational(1))
+    expected_signed = (Rational(1), Rational(1), Rational(-1), Rational(1))
+
+    checks: Dict[str, bool] = {}
+    for lane, model in lanes.items():
+        parity = visible_lowarity_root_string_parity_sign_normalization_scalar_from_shifted_seed(
+            model,
+            parameter_name="u",
+        )
+        two_sign = parity["two_sign_profile"]
+        checks[f"parity_scalar_{lane}_epsilon_par_expected"] = (
+            simplify(parity["epsilon_par"] - 1) == 0
+        )
+        checks[f"parity_scalar_{lane}_rho_nu_expected"] = (
+            simplify(parity["rho_nu"] - expected_m[lane]) == 0
+        )
+        checks[f"parity_scalar_{lane}_forced_eta_expected"] = (
+            simplify(parity["forced_epsilon_eta_from_transfer"] - parity["epsilon_par"]) == 0
+        )
+        checks[f"parity_scalar_{lane}_parity_datum_expected"] = (
+            parity["parity_datum"] == (Rational(1), expected_m[lane])
+        )
+        checks[f"parity_scalar_{lane}_recovers_two_sign"] = (
+            parity["recovered_two_sign_datum"] == (expected_two_sign[0], expected_two_sign[1], expected_m[lane])
+        )
+        checks[f"parity_scalar_{lane}_matches_two_sign_profile"] = (
+            parity["recovered_two_sign_datum"] == two_sign["reduced_datum"]
+        )
+        checks[f"parity_scalar_{lane}_recovered_seed_character_expected"] = (
+            parity["recovered_signed_seed_character"] == expected_signed
+        )
+        checks[f"parity_scalar_{lane}_matches_seed_character"] = (
+            parity["recovered_signed_seed_character"] == two_sign["signed_seed_character"]
+        )
+
+    checks["visible_lowarity_root_string_parity_scalar_global"] = all(checks.values())
+    return checks
+
+
+@lru_cache(maxsize=None)
 def verify_mc2_shifted_seed_obstruction_polynomial_law() -> Dict[str, bool]:
     """Verify symbolic polynomial obstruction identities on shifted seeds."""
     s = Symbol("s")
@@ -2288,6 +4875,10 @@ def verify_mc2_shifted_seed_obstruction_polynomial_law() -> Dict[str, bool]:
         ),
         "sp4": shifted_seed_obstruction_polynomial_profile(
             build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+        ),
+        "g2": shifted_seed_obstruction_polynomial_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
             basis_elements=("e1", "e2", "f12"),
         ),
     }
@@ -2330,6 +4921,196 @@ def verify_mc2_shifted_seed_obstruction_polynomial_law() -> Dict[str, bool]:
     return checks
 
 
+@lru_cache(maxsize=None)
+def verify_mc2_shifted_eta_channel_ce_alignment() -> Dict[str, bool]:
+    """Verify shifted ``eta`` obstruction channel aligns with cyclic CE uniqueness."""
+    lanes = {
+        "sl2": (
+            build_mc2_sl2_cyclic_linf_seed,
+            build_mc2_sl2_shifted_cyclic_linf_l3_seed,
+            ("e", "h", "f"),
+        ),
+        "sl3": (
+            build_mc2_sl3_cyclic_linf_seed,
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed,
+            ("e1", "e2", "f12"),
+        ),
+        "sp4": (
+            build_mc2_sp4_cyclic_linf_seed,
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed,
+            ("e1", "e2", "f12"),
+        ),
+        "g2": (
+            build_mc2_g2_cyclic_linf_seed,
+            build_mc2_g2_shifted_cyclic_linf_l3_seed,
+            ("e1", "e2", "f12"),
+        ),
+    }
+
+    checks: Dict[str, bool] = {}
+    for key, (seed_builder, shifted_builder, basis_elements) in lanes.items():
+        seed = seed_builder()
+        ce = cyclic_ce_profile_from_cyclic_seed(seed)
+        poly = shifted_seed_obstruction_polynomial_profile(
+            shifted_builder(),
+            basis_elements=basis_elements,
+        )
+        x, y, z = poly["parameters"]
+        g3 = poly["obstruction_g3"]
+        eta_residual = simplify(poly["eta_residual"])
+        eta111 = simplify(eta_residual.subs({x: 1, y: 1, z: 1}))
+        killing3 = simplify(
+            seed.pairing_vectors(
+                seed.l2_basis(basis_elements[0], basis_elements[1]),
+                {basis_elements[2]: 1},
+            )
+        )
+
+        checks[f"{key}_h0_cyc_zero"] = ce["dims"][0] == 0
+        checks[f"{key}_h1_cyc_zero"] = ce["dims"][1] == 0
+        checks[f"{key}_h2_cyc_one"] = ce["dims"][2] == 1
+        checks[f"{key}_h3_cyc_zero"] = ce["dims"][3] == 0
+        checks[f"{key}_g3_eta_only"] = set(g3) == {"eta"}
+        checks[f"{key}_g3_eta_nonzero"] = simplify(g3.get("eta", 0)) != 0
+        checks[f"{key}_eta_residual_nonzero"] = eta_residual != 0
+        checks[f"{key}_eta111_matches_ce_killing3"] = simplify(eta111 - killing3) == 0
+        checks[f"{key}_eta_channel_matches_unique_h2"] = (
+            ce["dims"][2] == 1 and set(g3) == {"eta"}
+        )
+
+    return checks
+
+
+def shifted_seed_obstruction_support_profile(
+    model: CyclicLInfinityModel,
+    *,
+    basis_elements: Tuple[str, str, str],
+    max_genus: int = 6,
+) -> Dict[str, object]:
+    """Compute genus-indexed obstruction support for a genus-1-only shifted seed ansatz."""
+    if max_genus < 2:
+        raise ValueError("max_genus must be at least 2")
+
+    x, y, z = symbols("x y z")
+    alpha_series = {
+        1: {
+            basis_elements[0]: x,
+            basis_elements[1]: y,
+            basis_elements[2]: z,
+        }
+    }
+
+    genus_obstruction: Dict[int, Vector] = {}
+    for genus in range(2, max_genus + 1):
+        genus_obstruction[genus] = completed_mc_obstruction_term_at_genus(
+            model=model,
+            alpha_series=alpha_series,
+            genus=genus,
+            require_zero_genus=True,
+        )
+
+    nonzero_genera = tuple(genus for genus, value in genus_obstruction.items() if value)
+    return {
+        "parameters": (x, y, z),
+        "max_genus": max_genus,
+        "obstruction_by_genus": genus_obstruction,
+        "nonzero_genera": nonzero_genera,
+    }
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_shifted_obstruction_support_truncation(max_genus: int = 6) -> Dict[str, bool]:
+    """Verify shifted genus-1-only obstruction support truncates to genera 2 and 3."""
+    profiles = {
+        "sl2": shifted_seed_obstruction_support_profile(
+            build_mc2_sl2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e", "h", "f"),
+            max_genus=max_genus,
+        ),
+        "sl3": shifted_seed_obstruction_support_profile(
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            max_genus=max_genus,
+        ),
+        "sp4": shifted_seed_obstruction_support_profile(
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            max_genus=max_genus,
+        ),
+        "g2": shifted_seed_obstruction_support_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            max_genus=max_genus,
+        ),
+    }
+
+    checks: Dict[str, bool] = {}
+    for key, profile in profiles.items():
+        nonzero = profile["nonzero_genera"]
+        obstruction_by_genus = profile["obstruction_by_genus"]
+        checks[f"{key}_nonzero_support_is_2_3"] = nonzero == (2, 3)
+        checks[f"{key}_g2_nonzero"] = bool(obstruction_by_genus.get(2, {}))
+        checks[f"{key}_g3_nonzero"] = bool(obstruction_by_genus.get(3, {}))
+        checks[f"{key}_g3_eta_only"] = set(obstruction_by_genus.get(3, {})) == {"eta"}
+        checks[f"{key}_g4plus_zero"] = all(
+            not obstruction_by_genus.get(genus, {})
+            for genus in range(4, max_genus + 1)
+        )
+
+    return checks
+
+
+@lru_cache(maxsize=None)
+def verify_mc2_shifted_one_channel_criterion_package(max_genus: int = 6) -> Dict[str, bool]:
+    """Consolidated shifted one-channel criterion checks across rank/type lanes."""
+    lanes = ("sl2", "sl3", "sp4", "g2")
+    norm = verify_mc2_shifted_seed_one_channel_normalization()
+    scaling = verify_mc2_shifted_seed_eta_scaling_law()
+    root_signature = verify_mc2_shifted_eta_root_string_signature_law()
+    poly = verify_mc2_shifted_seed_obstruction_polynomial_law()
+    ce_align = verify_mc2_shifted_eta_channel_ce_alignment()
+    support = verify_mc2_shifted_obstruction_support_truncation(max_genus=max_genus)
+
+    checks: Dict[str, bool] = {}
+    for lane in lanes:
+        checks[f"{lane}_criterion_normalization"] = norm[f"{lane}_normalization_ratio_one"]
+        checks[f"{lane}_criterion_scaling"] = (
+            scaling[f"{lane}_g2_quadratic_scaling"]
+            and scaling[f"{lane}_g3_cubic_scaling"]
+            and scaling[f"{lane}_g3_eta_matches_eta111_cubic"]
+        )
+        checks[f"{lane}_criterion_polynomial"] = (
+            poly[f"{lane}_g2_equals_half_l2"]
+            and poly[f"{lane}_g3_equals_one_sixth_l3"]
+            and poly[f"{lane}_g3_eta_equals_residual_eta"]
+        )
+        checks[f"{lane}_criterion_ce_unique"] = (
+            ce_align[f"{lane}_h2_cyc_one"]
+            and ce_align[f"{lane}_g3_eta_only"]
+            and ce_align[f"{lane}_eta111_matches_ce_killing3"]
+            and ce_align[f"{lane}_eta_channel_matches_unique_h2"]
+        )
+        checks[f"{lane}_criterion_root_signature"] = (
+            True
+            if lane == "sl2"
+            else root_signature[f"{lane}_signature_complete"]
+        )
+        checks[f"{lane}_criterion_support_truncation"] = (
+            support[f"{lane}_nonzero_support_is_2_3"] and support[f"{lane}_g4plus_zero"]
+        )
+        checks[f"{lane}_criterion_complete"] = (
+            checks[f"{lane}_criterion_normalization"]
+            and checks[f"{lane}_criterion_scaling"]
+            and checks[f"{lane}_criterion_polynomial"]
+            and checks[f"{lane}_criterion_ce_unique"]
+            and checks[f"{lane}_criterion_root_signature"]
+            and checks[f"{lane}_criterion_support_truncation"]
+        )
+
+    checks["criterion_package_global"] = all(checks[f"{lane}_criterion_complete"] for lane in lanes)
+    return checks
+
+
 def verify_mc2_sl3_shifted_seed_nontrivial_mc() -> Dict[str, bool]:
     """Shifted-seed nontrivial completed-MC checks for ``sl_3``."""
     return _verify_shifted_seed_nontrivial_mc_bundle(
@@ -2358,6 +5139,22 @@ def verify_mc2_sp4_shifted_seed_nontrivial_mc() -> Dict[str, bool]:
             "e12": Rational(1),
             "f1": Rational(1),
             "f2": Rational(-2),
+        },
+    )
+
+
+def verify_mc2_g2_shifted_seed_nontrivial_mc() -> Dict[str, bool]:
+    """Shifted-seed nontrivial completed-MC checks for ``G_2``."""
+    return _verify_shifted_seed_nontrivial_mc_bundle(
+        model=build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+        basis_elements=("e1", "e2", "f12"),
+        alpha_series={1: {"e1": Rational(1), "e2": Rational(1), "f12": Rational(1)}},
+        expected_eta_at_111=Rational(3),
+        expected_obstruction_g3={"eta": Rational(3)},
+        expected_obstruction_g2={
+            "e12": Rational(1),
+            "f1": Rational(1),
+            "f2": Rational(-3),
         },
     )
 
@@ -2913,6 +5710,15 @@ def build_mc2_g2_cyclic_linf_l3_seed() -> CyclicLInfinityModel:
         marker_name="eta",
         marker_degree=2,
         marker_pairing=Rational(1),
+    )
+
+
+def build_mc2_g2_shifted_cyclic_linf_l3_seed() -> CyclicLInfinityModel:
+    """Suspension-shifted symmetric ``G_2`` seed with nontrivial MC channels."""
+    return build_shifted_symmetric_cyclic_linf_from_seed(
+        seed=build_mc2_g2_cyclic_linf_l3_seed(),
+        generator_basis=_G2_BASIS,
+        degree_shift=1,
     )
 
 

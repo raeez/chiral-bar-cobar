@@ -1,5 +1,9 @@
 """Tests for DS reduction seed scaffold."""
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 from collections import Counter
 
 from sympy import Matrix, Rational, Symbol, simplify, zeros
@@ -92,23 +96,31 @@ from compute.lib.ds_reduction import (
     hook_pair_nonlinear_blocks_match_under_dual_swap,
     hook_pair_survivor_coupled_blocks_match_under_dual_swap,
     hook_pair_corrected_semidirect_blocks_match_under_dual_swap,
+    linear_constraint_block_invariant_summary,
+    mixed_constraint_ghost_block_invariant_summary,
     nonprincipal_two_row_mixed_blocks_match_under_dual_swap,
     nonprincipal_two_row_nonlinear_blocks_match_under_dual_swap,
     nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap,
     nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap,
-    verify_hook_pair_mixed_block_duality_catalog,
-    verify_hook_pair_nonlinear_block_duality_catalog,
-    verify_hook_pair_survivor_coupled_block_duality_catalog,
+    hook_pair_mixed_family_holds_via_duality,
+    verify_hook_pair_mixed_family_via_duality_catalog,
+    hook_pair_nonlinear_family_holds_via_duality,
+    verify_hook_pair_nonlinear_family_via_duality_catalog,
+    semidirect_survivor_block_invariant_summary,
+    survivor_coupled_block_invariant_summary,
     hook_pair_survivor_coupled_family_holds_via_duality,
     verify_hook_pair_survivor_coupled_family_via_duality_catalog,
     verify_hook_pair_first_transfer_correction_catalog,
-    verify_hook_pair_corrected_semidirect_catalog,
-    verify_hook_pair_corrected_semidirect_duality_catalog,
+    hook_pair_corrected_semidirect_family_holds_via_duality,
     verify_hook_pair_corrected_semidirect_family_via_duality_catalog,
-    verify_nonprincipal_two_row_mixed_block_duality_catalog,
-    verify_nonprincipal_two_row_nonlinear_block_duality_catalog,
-    verify_nonprincipal_two_row_survivor_coupled_bundle,
-    verify_nonprincipal_two_row_corrected_semidirect_bundle,
+    nonprincipal_two_row_mixed_family_holds_via_duality,
+    verify_nonprincipal_two_row_mixed_family_via_duality_catalog,
+    nonprincipal_two_row_nonlinear_family_holds_via_duality,
+    verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog,
+    nonprincipal_two_row_survivor_coupled_family_holds_via_duality,
+    verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog,
+    nonprincipal_two_row_corrected_semidirect_family_holds_via_duality,
+    verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog,
     general_nonprincipal_mixed_family_holds_via_duality,
     verify_nonprincipal_general_mixed_family_via_duality_catalog,
     general_nonprincipal_nonlinear_family_holds_via_duality,
@@ -181,6 +193,8 @@ from compute.lib.ds_reduction import (
     internal_survivor_linear_h0_labels,
     internal_survivor_quadratic_ghost_terms,
     semidirect_survivor_block_has_square_zero,
+    semidirect_survivor_block_homology_dimensions,
+    semidirect_survivor_block_is_acyclic,
     mixed_constraint_ghost_brst_differential,
     quadratic_ghost_differential,
     survivor_action_differential,
@@ -542,6 +556,18 @@ class TestLinearConstraintBlocks:
         assert linear_constraint_block_is_positive_acyclic(block)
         assert chain_homology_dimensions(block) == {0: 0, 1: 0, 2: 0}
 
+    def test_linear_invariant_summary_matches_public_checks(self):
+        block = build_linear_constraint_koszul_block(
+            shifted_current_labels=("u1", "u2"),
+            ghost_labels=("b1", "b2"),
+            total_degree=2,
+            source_tag="manual_linear_summary",
+        )
+        summary = linear_constraint_block_invariant_summary(block)
+        assert dict(summary.homology_dimensions) == chain_homology_dimensions(block)
+        assert summary.has_square_zero == linear_constraint_block_has_square_zero(block)
+        assert summary.is_acyclic == linear_constraint_block_is_positive_acyclic(block)
+
     def test_linear_contracting_homotopy_degree_one(self):
         h0 = linear_constraint_contracting_homotopy(2, 1, 0)
         assert h0.shape == (2, 2)
@@ -586,6 +612,21 @@ class TestMixedConstraintGhostBlocks:
         assert mixed_constraint_ghost_block_has_square_zero(block)
         assert mixed_constraint_ghost_block_homology_dimensions(block) == {-1: 0, 0: 0, 1: 0, 2: 0}
         assert mixed_constraint_ghost_block_is_acyclic(block)
+
+    def test_mixed_invariant_summary_matches_public_checks(self):
+        block = build_mixed_constraint_ghost_brst_block(
+            shifted_current_labels=("u1", "u2"),
+            c_ghost_labels=("c1", "c2"),
+            b_ghost_labels=("b1", "b2"),
+            chi_vector=(1, 0),
+            quadratic_terms=(),
+            constraint_total_degree=1,
+            source_tag="manual_mixed_summary",
+        )
+        summary = mixed_constraint_ghost_block_invariant_summary(block)
+        assert dict(summary.homology_dimensions) == mixed_constraint_ghost_block_homology_dimensions(block)
+        assert summary.has_square_zero == mixed_constraint_ghost_block_has_square_zero(block)
+        assert summary.is_acyclic == mixed_constraint_ghost_block_is_acyclic(block)
 
     def test_first_hook_pair_mixed_blocks(self):
         source_blocks, target_blocks = first_nonselfdual_hook_pair_mixed_constraint_ghost_blocks(2)
@@ -745,6 +786,13 @@ class TestSurvivorCoupledBlocks:
             1: 0,
             2: 0,
         }
+
+    def test_survivor_invariant_summary_matches_public_checks(self):
+        block = sl3_subregular_survivor_coupled_blocks(2, 1)[1]
+        summary = survivor_coupled_block_invariant_summary(block)
+        assert dict(summary.homology_dimensions) == survivor_coupled_block_homology_dimensions(block)
+        assert summary.has_square_zero == survivor_coupled_block_has_square_zero(block)
+        assert summary.is_acyclic == survivor_coupled_block_is_acyclic(block)
 
     def test_first_hook_pair_survivor_action(self):
         source_action, target_action = first_nonselfdual_hook_pair_survivor_action_terms()
@@ -1130,6 +1178,19 @@ class TestTransferredSubregularCorrection:
         assert all(block.survivor_action_terms == () for block in blocks)
         assert all(semidirect_survivor_block_has_square_zero(block) for block in blocks)
 
+    def test_semidirect_invariant_summary_matches_public_checks(self):
+        block = sl3_subregular_corrected_semidirect_survivor_blocks(
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+            max_internal_ce_degree=2,
+        )[1]
+        summary = semidirect_survivor_block_invariant_summary(block)
+        assert dict(summary.homology_dimensions) == semidirect_survivor_block_homology_dimensions(
+            block
+        )
+        assert summary.has_square_zero == semidirect_survivor_block_has_square_zero(block)
+        assert summary.is_acyclic == semidirect_survivor_block_is_acyclic(block)
+
 
 class TestTransferredHookPairCorrection:
     def test_linear_correction_solver_on_subregular_control(self):
@@ -1383,11 +1444,73 @@ class TestTransferredHookPairCorrection:
         assert source_corrected == ()
         assert target_corrected == ()
 
-    def test_hook_corrected_semidirect_catalog_low_rank(self):
-        assert all(verify_hook_pair_corrected_semidirect_catalog(max_n=6).values())
+    def test_hook_first_transfer_sl14_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(14, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(14, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(14, 1)
+        assert len(source_action) == len(source_correction) == 23
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
 
-    def test_hook_corrected_semidirect_duality_catalog_low_rank(self):
-        assert all(verify_hook_pair_corrected_semidirect_duality_catalog(max_n=6).values())
+    def test_hook_first_transfer_sl15_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(15, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(15, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(15, 1)
+        assert len(source_action) == len(source_correction) == 23
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl16_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(16, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(16, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(16, 1)
+        assert len(source_action) == len(source_correction) == 26
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl17_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(17, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(17, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(17, 1)
+        assert len(source_action) == len(source_correction) == 30
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl18_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(18, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(18, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(18, 1)
+        assert len(source_action) == len(source_correction) == 35
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl19_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(19, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(19, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(19, 1)
+        assert len(source_action) == len(source_correction) == 39
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_first_transfer_sl20_extreme_orientation(self):
+        source_action, target_action = hook_pair_survivor_action_terms(20, 1)
+        source_correction, target_correction = hook_pair_first_transfer_correction_terms(20, 1)
+        source_corrected, target_corrected = hook_pair_corrected_survivor_action_terms(20, 1)
+        assert len(source_action) == len(source_correction) == 42
+        assert len(target_action) == len(target_correction) == 0
+        assert source_corrected == ()
+        assert target_corrected == ()
+
+    def test_hook_corrected_semidirect_family_via_duality_catalog_low_rank(self):
+        assert all(
+            verify_hook_pair_corrected_semidirect_family_via_duality_catalog(max_n=6).values()
+        )
 
     def test_first_hook_pair_corrected_semidirect_blocks_restore_square_zero(self):
         source_blocks, target_blocks = (
@@ -1710,21 +1833,29 @@ class TestHookFamilyCatalog:
             max_constraint_total_degree=1,
             survivor_total_degree=1,
         )
+        assert hook_pair_mixed_family_holds_via_duality(
+            7,
+            max_constraint_total_degree=1,
+        )
         assert all(
-            verify_hook_pair_mixed_block_duality_catalog(
+            verify_hook_pair_mixed_family_via_duality_catalog(
                 max_n=7,
                 max_constraint_total_degree=1,
             ).values()
         )
         assert all(
-            verify_hook_pair_survivor_coupled_block_duality_catalog(
+            verify_hook_pair_survivor_coupled_family_via_duality_catalog(
                 max_n=5,
                 max_constraint_total_degree=1,
                 survivor_total_degree=1,
             ).values()
         )
+        assert hook_pair_nonlinear_family_holds_via_duality(
+            7,
+            max_constraint_total_degree=1,
+        )
         assert all(
-            verify_hook_pair_nonlinear_block_duality_catalog(
+            verify_hook_pair_nonlinear_family_via_duality_catalog(
                 max_n=7,
                 max_constraint_total_degree=1,
             ).values()
@@ -1774,6 +1905,12 @@ class TestHookFamilyCatalog:
             max_constraint_total_degree=1,
             survivor_total_degree=survivor_total_degree,
         )
+        assert hook_pair_corrected_semidirect_family_holds_via_duality(
+            6,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
         assert all(
             verify_hook_pair_survivor_coupled_family_via_duality_catalog(
                 max_n=6,
@@ -1783,29 +1920,6 @@ class TestHookFamilyCatalog:
         )
         assert all(
             verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
-                max_n=6,
-                max_constraint_total_degree=0,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=1,
-            ).values()
-        )
-        assert all(
-            verify_hook_pair_survivor_coupled_block_duality_catalog(
-                max_n=6,
-                max_constraint_total_degree=1,
-                survivor_total_degree=survivor_total_degree,
-            ).values()
-        )
-        assert all(
-            verify_hook_pair_corrected_semidirect_catalog(
-                max_n=6,
-                max_constraint_total_degree=0,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=1,
-            ).values()
-        )
-        assert all(
-            verify_hook_pair_corrected_semidirect_duality_catalog(
                 max_n=6,
                 max_constraint_total_degree=0,
                 survivor_total_degree=survivor_total_degree,
@@ -1833,6 +1947,17 @@ class TestHookFamilyCatalog:
     def test_catalog_verification(self):
         assert all(verify_hook_pair_ds_seed_catalog(max_n=8).values())
         assert all(verify_hook_pair_seed_alignment(max_n=8).values())
+
+    def test_seed_verification_returns_fresh_dicts(self):
+        first_catalog = verify_hook_pair_ds_seed_catalog(max_n=6)
+        first_catalog["mutated"] = False
+        second_catalog = verify_hook_pair_ds_seed_catalog(max_n=6)
+        assert "mutated" not in second_catalog
+
+        first_alignment = verify_hook_pair_seed_alignment(max_n=6)
+        first_alignment["mutated"] = False
+        second_alignment = verify_hook_pair_seed_alignment(max_n=6)
+        assert "mutated" not in second_alignment
 
 
 class TestTwoRowNonHookFamilyCatalog:
@@ -1948,20 +2073,33 @@ class TestTwoRowNonHookFamilyCatalog:
             max_constraint_total_degree=1,
             survivor_total_degree=1,
         )
+        assert nonprincipal_two_row_mixed_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=1,
+        )
         assert all(
-            verify_nonprincipal_two_row_mixed_block_duality_catalog(
+            verify_nonprincipal_two_row_mixed_family_via_duality_catalog(
                 max_n=9,
                 max_constraint_total_degree=1,
             ).values()
         )
+        assert nonprincipal_two_row_nonlinear_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=1,
+        )
         assert all(
-            verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
+            verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog(
                 max_n=9,
                 max_constraint_total_degree=1,
             ).values()
         )
+        assert nonprincipal_two_row_survivor_coupled_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
         assert all(
-            verify_nonprincipal_two_row_survivor_coupled_bundle(
+            verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
                 max_n=8,
                 max_constraint_total_degree=1,
                 survivor_total_degree=1,
@@ -2007,16 +2145,27 @@ class TestTwoRowNonHookFamilyCatalog:
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=1,
         )
+        assert nonprincipal_two_row_survivor_coupled_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
         assert all(
-            verify_nonprincipal_two_row_survivor_coupled_bundle(
+            verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
                 max_n=8,
                 max_constraint_total_degree=1,
                 survivor_total_degree=survivor_total_degree,
             ).values()
         )
+        assert nonprincipal_two_row_corrected_semidirect_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
         assert all(
-            verify_nonprincipal_two_row_corrected_semidirect_bundle(
-                max_n=7,
+            verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+                max_n=8,
                 max_constraint_total_degree=0,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=1,
@@ -2099,11 +2248,31 @@ class TestTwoRowNonHookFamilyCatalog:
             survivor_total_degree=1,
             max_internal_ce_degree=1,
         )
+        assert nonprincipal_two_row_corrected_semidirect_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
         assert all(
-            verify_nonprincipal_two_row_corrected_semidirect_bundle(
-                max_n=7,
+            verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+                max_n=8,
                 max_constraint_total_degree=0,
                 survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+        assert nonprincipal_two_row_corrected_semidirect_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+                max_n=8,
+                max_constraint_total_degree=0,
+                survivor_total_degree=2,
                 max_internal_ce_degree=1,
             ).values()
         )
@@ -2214,7 +2383,7 @@ class TestGeneralNonprincipalFamilyCatalog:
         )
         assert all(
             verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-                max_n=8,
+                max_n=12,
                 max_constraint_total_degree=1,
                 survivor_total_degree=1,
             ).values()
@@ -2255,6 +2424,32 @@ class TestGeneralNonprincipalFamilyCatalog:
             max_constraint_total_degree=0,
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=1,
+        )
+        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+        assert all(
+            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+                max_n=8,
+                max_constraint_total_degree=1,
+                survivor_total_degree=survivor_total_degree,
+            ).values()
+        )
+        assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
+            max_n=8,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+                max_n=8,
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            ).values()
         )
 
     def test_general_corrected_survivor_transfer_and_semidirect_blocks(self):
@@ -2340,17 +2535,47 @@ class TestGeneralNonprincipalFamilyCatalog:
             max_internal_ce_degree=1,
         )
         assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
-            max_n=9,
+            max_n=14,
             max_constraint_total_degree=0,
             survivor_total_degree=1,
             max_internal_ce_degree=1,
         )
         assert all(
             verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-                max_n=9,
+                max_n=14,
                 max_constraint_total_degree=0,
                 survivor_total_degree=1,
                 max_internal_ce_degree=1,
+            ).values()
+        )
+
+    def test_general_corrected_semidirect_survivor_degree_two_duality_and_catalogs(self):
+        assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
+            max_n=11,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        )
+        assert all(
+            verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+                max_n=11,
+                max_constraint_total_degree=0,
+                survivor_total_degree=2,
+                max_internal_ce_degree=1,
+            ).values()
+        )
+
+    def test_general_survivor_coupled_survivor_degree_two_duality_and_catalogs(self):
+        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
+            max_n=11,
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
+        )
+        assert all(
+            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+                max_n=11,
+                max_constraint_total_degree=1,
+                survivor_total_degree=2,
             ).values()
         )
 

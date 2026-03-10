@@ -41,7 +41,9 @@ from sympy.polys.matrices import DomainMatrix
 
 DIM_SL2 = 3  # basis: e=0, h=1, f=2
 CASIMIR_EXACT_CUTOFF = 6
-CASIMIR_MODULAR_PRIMES = (32003,)
+# Frontier default: smallest non-colliding prime at n=7 for faster modular rank lanes.
+CASIMIR_MODULAR_PRIMES = (127,)
+CASIMIR_MODULAR_STRATEGY = "auto"
 
 # Structure constants: bracket[i,j] = {k: coeff} for [e_i, e_j] = sum coeff * e_k
 SL2_BRACKET = {
@@ -178,9 +180,146 @@ def _casimir_modular_nullities_for_prime(
     return multiplicities
 
 
+def _tensor_weight_of_index(index: int, power: int) -> int:
+    """Total Cartan weight of a tensor basis index in ``g^{\\otimes power}``.
+
+    We use ad(h)-weights: ``wt(e)=+1``, ``wt(h)=0``, ``wt(f)=-1``.
+    """
+    weight = 0
+    value = index
+    for _ in range(power):
+        digit = value % DIM_SL2
+        if digit == 0:  # e
+            weight += 1
+        elif digit == 2:  # f
+            weight -= 1
+        value //= DIM_SL2
+    return weight
+
+
+@lru_cache(maxsize=None)
+def _tensor_weight_blocks_on_tensor_power(power: int) -> tuple[tuple[int, tuple[int, ...]], ...]:
+    """Weight-space basis partition of ``g^{\\otimes power}`` by ad(h)-weight."""
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    blocks: dict[int, list[int]] = {}
+    dim = DIM_SL2 ** power
+    for index in range(dim):
+        weight = _tensor_weight_of_index(index, power)
+        blocks.setdefault(weight, []).append(index)
+    return tuple(
+        (weight, tuple(indices))
+        for weight, indices in sorted(blocks.items(), key=lambda item: item[0])
+    )
+
+
+@lru_cache(maxsize=None)
+def _casimir_integer_weight_blocks_on_tensor_power(
+    power: int,
+) -> tuple[tuple[int, int, tuple[tuple[int, int, int], ...]], ...]:
+    """Sparse integer Casimir entries, restricted to ad(h)-weight blocks."""
+    blocks = _tensor_weight_blocks_on_tensor_power(power)
+    dim = DIM_SL2 ** power
+
+    block_of_index = [-1] * dim
+    local_index = [0] * dim
+    for block_id, (_, indices) in enumerate(blocks):
+        for local, global_index in enumerate(indices):
+            block_of_index[global_index] = block_id
+            local_index[global_index] = local
+
+    entries_by_block: list[list[tuple[int, int, int]]] = [[] for _ in blocks]
+    for row, col, value in _casimir_integer_dok_on_tensor_power(power):
+        block_row = block_of_index[row]
+        block_col = block_of_index[col]
+        if block_row != block_col:
+            raise ArithmeticError(
+                "Casimir matrix does not preserve ad(h)-weight blocks"
+            )
+        entries_by_block[block_row].append(
+            (local_index[row], local_index[col], value)
+        )
+
+    return tuple(
+        (weight, len(indices), tuple(entries_by_block[block_id]))
+        for block_id, (weight, indices) in enumerate(blocks)
+    )
+
+
+def _spin_from_casimir_eigenvalue(power: int, eigenvalue: int) -> int:
+    """Recover spin ``j`` from a Casimir eigenvalue ``2j(j+1)``."""
+    for j in range(power + 1):
+        if 2 * j * (j + 1) == eigenvalue:
+            return j
+    raise ValueError(f"unsupported sl2 Casimir eigenvalue at power {power}: {eigenvalue}")
+
+
+def _casimir_modular_nullities_for_prime_weight_block(
+    power: int,
+    eigenvalues: tuple[int, ...],
+    prime: int,
+) -> dict:
+    """Compute eigenspace nullities over ``GF(prime)`` by weight blocks."""
+    if prime <= 2:
+        raise ValueError("modular primes must be odd and > 2")
+
+    field = GF(prime)
+    zero = field.zero
+
+    base_blocks: list[tuple[int, int, dict[tuple[int, int], object]]] = []
+    for weight, size, entries in _casimir_integer_weight_blocks_on_tensor_power(power):
+        base: dict[tuple[int, int], object] = {}
+        for row, col, value in entries:
+            mod_value = value % prime
+            if mod_value != 0:
+                base[(row, col)] = field(mod_value)
+        base_blocks.append((weight, size, base))
+
+    multiplicities: dict = {}
+    for eigenvalue in eigenvalues:
+        lam = field(eigenvalue % prime)
+        # If lambda = 2j(j+1), the spin-j isotypic component has weights in [-j, j].
+        # Weight blocks with |w| > j contribute zero nullity and can be skipped.
+        j = _spin_from_casimir_eigenvalue(power, eigenvalue)
+        nullity = 0
+        for weight, size, base in base_blocks:
+            if abs(weight) > j:
+                continue
+            shifted = dict(base)
+            for idx in range(size):
+                key = (idx, idx)
+                shifted_value = shifted.get(key, zero) - lam
+                if shifted_value != 0:
+                    shifted[key] = shifted_value
+                elif key in shifted:
+                    shifted.pop(key)
+            rank = DomainMatrix.from_dok(shifted, (size, size), field).rank()
+            nullity += size - rank
+        multiplicities[Rational(eigenvalue)] = nullity
+    return multiplicities
+
+
+def casimir_modular_strategy_for_tensor_power(power: int, strategy: str = "auto") -> str:
+    """Resolve sparse/modular Casimir backend strategy at tensor power ``power``.
+
+    Strategies:
+      - ``global``: finite-field rank on the full matrix
+      - ``weight_block``: finite-field rank blockwise by ad(h)-weight
+      - ``auto``: ``global`` through ``n<=6``, ``weight_block`` at ``n>=7``
+    """
+    if power < 1:
+        raise ValueError("power must be >= 1")
+    if strategy not in {"auto", "global", "weight_block"}:
+        raise ValueError("strategy must be one of: auto, global, weight_block")
+    if strategy == "auto":
+        return "weight_block" if power >= CASIMIR_EXACT_CUTOFF + 1 else "global"
+    return strategy
+
+
 def casimir_eigenspace_multiplicities_modular_on_tensor_power(
     power: int,
     primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
+    strategy: str = CASIMIR_MODULAR_STRATEGY,
 ) -> dict:
     """Sparse/modular eigenspace extraction for Casimir on ``g^{\\otimes power}``.
 
@@ -199,6 +338,12 @@ def casimir_eigenspace_multiplicities_modular_on_tensor_power(
     eigenvalues = tuple(sorted(int(eigenvalue) for eigenvalue in expected))
     if len(set(primes)) != len(primes):
         raise ValueError("modular primes must be distinct")
+    resolved_strategy = casimir_modular_strategy_for_tensor_power(power, strategy)
+    modular_nullity_backend = (
+        _casimir_modular_nullities_for_prime_weight_block
+        if resolved_strategy == "weight_block"
+        else _casimir_modular_nullities_for_prime
+    )
 
     prime_results = []
     for prime in primes:
@@ -208,7 +353,7 @@ def casimir_eigenspace_multiplicities_modular_on_tensor_power(
                 "choose a larger prime"
             )
         prime_results.append(
-            _casimir_modular_nullities_for_prime(
+            modular_nullity_backend(
                 power=power,
                 eigenvalues=eigenvalues,
                 prime=prime,
@@ -223,6 +368,18 @@ def casimir_eigenspace_multiplicities_modular_on_tensor_power(
             "modular eigenspace multiplicities disagree with representation-theoretic expectations"
         )
     return reference
+
+
+def casimir_eigenspace_multiplicities_modular_weight_block_on_tensor_power(
+    power: int,
+    primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
+) -> dict:
+    """Explicit weight-block sparse/modular Casimir eigenspace extraction."""
+    return casimir_eigenspace_multiplicities_modular_on_tensor_power(
+        power=power,
+        primes=primes,
+        strategy="weight_block",
+    )
 
 
 def casimir_eigenspace_multiplicities_exact_sparse_on_tensor_power(power: int) -> dict:
@@ -294,6 +451,7 @@ def casimir_eigenspace_multiplicities_on_tensor_power(
     method: str = "auto",
     exact_cutoff: int = CASIMIR_EXACT_CUTOFF,
     modular_primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
+    modular_strategy: str = CASIMIR_MODULAR_STRATEGY,
 ) -> dict:
     """Return Casimir eigenspace multiplicities on ``g^{otimes power}``.
 
@@ -314,6 +472,7 @@ def casimir_eigenspace_multiplicities_on_tensor_power(
         return casimir_eigenspace_multiplicities_modular_on_tensor_power(
             power=power,
             primes=modular_primes,
+            strategy=modular_strategy,
         )
     return expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
 
@@ -323,6 +482,7 @@ def staged_frontier_diagnostics_on_tensor_power(
     casimir_method: str = "auto",
     exact_cutoff: int = CASIMIR_EXACT_CUTOFF,
     modular_primes: tuple[int, ...] = CASIMIR_MODULAR_PRIMES,
+    modular_strategy: str = CASIMIR_MODULAR_STRATEGY,
     include_casimir: bool = True,
     include_equivariance: bool = True,
     include_commutator: bool = True,
@@ -367,6 +527,10 @@ def staged_frontier_diagnostics_on_tensor_power(
         exact_cutoff=exact_cutoff,
     )
     expected = expected_casimir_eigenspace_multiplicities_on_tensor_power(power)
+    resolved_modular_strategy = casimir_modular_strategy_for_tensor_power(
+        power=power,
+        strategy=modular_strategy,
+    )
 
     equivariant: bool | None
     if include_equivariance:
@@ -393,6 +557,7 @@ def staged_frontier_diagnostics_on_tensor_power(
             method=casimir_method,
             exact_cutoff=exact_cutoff,
             modular_primes=modular_primes,
+            modular_strategy=modular_strategy,
         )
         timings["casimir"] = perf_counter() - t0
         casimir_matches_expected = casimir_eigenspaces == expected
@@ -418,6 +583,7 @@ def staged_frontier_diagnostics_on_tensor_power(
         "equivariant": equivariant,
         "casimir_commutator_zero": casimir_commutator_zero,
         "casimir_mode": casimir_mode,
+        "casimir_modular_strategy": resolved_modular_strategy,
         "casimir_eigenspaces": casimir_eigenspaces,
         "expected_casimir_eigenspaces": expected,
         "casimir_matches_expected": casimir_matches_expected,

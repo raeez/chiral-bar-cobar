@@ -1,5 +1,9 @@
 """Tests for the non-principal DS reduction seed layer."""
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 from sympy import Rational, Symbol, simplify
 
 from compute.lib.nonprincipal_ds_orbits import hook_orbit_pair_profile
@@ -109,6 +113,12 @@ class TestHookSeedFamily:
     def test_catalog_verification(self):
         assert all(verify_nonprincipal_hook_seed_catalog(max_n=8).values())
 
+    def test_catalog_verification_returns_fresh_dict(self):
+        first = verify_nonprincipal_hook_seed_catalog(max_n=6)
+        first["mutated"] = False
+        second = verify_nonprincipal_hook_seed_catalog(max_n=6)
+        assert "mutated" not in second
+
 
 class TestTwoRowSeedFamily:
     def test_generic_seed(self):
@@ -132,6 +142,12 @@ class TestTwoRowSeedFamily:
     def test_catalog_verification(self):
         assert all(verify_nonprincipal_two_row_seed_catalog(max_n=8).values())
 
+    def test_catalog_verification_returns_fresh_dict(self):
+        first = verify_nonprincipal_two_row_seed_catalog(max_n=6)
+        first["mutated"] = False
+        second = verify_nonprincipal_two_row_seed_catalog(max_n=6)
+        assert "mutated" not in second
+
 
 class TestGeneralSeedFamily:
     def test_generic_seed(self):
@@ -154,6 +170,12 @@ class TestGeneralSeedFamily:
 
     def test_catalog_verification(self):
         assert all(verify_nonprincipal_general_seed_catalog(max_n=7).values())
+
+    def test_catalog_verification_returns_fresh_dict(self):
+        first = verify_nonprincipal_general_seed_catalog(max_n=6)
+        first["mutated"] = False
+        second = verify_nonprincipal_general_seed_catalog(max_n=6)
+        assert "mutated" not in second
 
 
 class TestConstraintCountAnsatz:

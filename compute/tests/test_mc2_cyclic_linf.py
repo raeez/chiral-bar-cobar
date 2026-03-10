@@ -1,6 +1,10 @@
 """Tests for the MC2 cyclic L-infinity compute scaffold."""
 
-from sympy import Rational, simplify
+import pytest
+
+pytestmark = pytest.mark.slow
+
+from sympy import Rational, Symbol, simplify
 
 from compute.lib.mc2_cyclic_linf import (
     boundary_clutching_series_via_l2,
@@ -13,13 +17,31 @@ from compute.lib.mc2_cyclic_linf import (
     build_mc2_sl2_shifted_cyclic_linf_l3_seed,
     build_mc2_sl3_shifted_cyclic_linf_l3_seed,
     build_mc2_sp4_shifted_cyclic_linf_l3_seed,
+    build_mc2_g2_shifted_cyclic_linf_l3_seed,
+    build_mc2_root_string_family_cyclic_linf_seed,
+    build_mc2_root_string_seed_packet_cyclic_linf_seed,
+    build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed,
     completed_pairing_series,
     completed_mc_obstruction_term_at_genus,
     completed_tensor_product_surrogate,
     cyclic_ce_profile_from_cyclic_seed,
     mc2_shifted_seed_one_channel_normalization_profiles,
     shifted_seed_eta_channel_scaling_profile,
+    shifted_eta_root_string_family_profile,
+    shifted_eta_root_string_seed_packet_profile,
+    visible_lowarity_root_string_packet_from_shifted_seed,
+    infer_visible_lowarity_root_string_packet_from_obstruction,
+    visible_lowarity_root_string_transfer_package_from_shifted_seed,
+    visible_lowarity_root_string_l3_channel_recovery_from_shifted_seed,
+    reconstruct_root_string_shifted_seed_from_obstruction_profile,
+    root_string_ordered_seed_support_permutations,
+    visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed,
+    visible_lowarity_root_string_invariant_signature_from_shifted_seed,
+    visible_lowarity_root_string_signed_seed_character_from_shifted_seed,
+    mc2_visible_lowarity_root_string_orbit_table_profiles,
+    mc2_shifted_eta_root_string_signature_profiles,
     shifted_seed_obstruction_polynomial_profile,
+    shifted_seed_obstruction_support_profile,
     mc_residual_completed_truncated,
     mc_residual_single_parameter,
     mc_residual_three_parameter,
@@ -39,8 +61,25 @@ from compute.lib.mc2_cyclic_linf import (
     verify_mc2_sl2_shifted_seed_nontrivial_mc,
     verify_mc2_sl3_shifted_seed_nontrivial_mc,
     verify_mc2_sp4_shifted_seed_nontrivial_mc,
+    verify_mc2_g2_shifted_seed_nontrivial_mc,
     verify_mc2_shifted_seed_eta_scaling_law,
+    verify_mc2_shifted_eta_root_string_signature_law,
+    verify_mc2_shifted_eta_root_string_family_law,
+    verify_mc2_shifted_eta_root_string_seed_packet_law,
+    verify_mc2_visible_lowarity_root_string_packet_law,
+    verify_mc2_visible_lowarity_root_string_packet_identifiability,
+    verify_mc2_visible_lowarity_root_string_transfer_package_law,
+    verify_mc2_visible_lowarity_root_string_l3_channel_recovery_law,
+    verify_mc2_visible_lowarity_root_string_chart_recovery_law,
+    verify_mc2_visible_lowarity_root_string_automorphism_rigidity_law,
+    verify_mc2_visible_lowarity_root_string_incidence_orbit_law,
+    verify_mc2_visible_lowarity_root_string_orbit_table_law,
+    verify_mc2_visible_lowarity_root_string_invariant_signature_law,
+    verify_mc2_visible_lowarity_root_string_seed_character_law,
+    verify_mc2_shifted_eta_channel_ce_alignment,
     verify_mc2_shifted_seed_obstruction_polynomial_law,
+    verify_mc2_shifted_obstruction_support_truncation,
+    verify_mc2_shifted_one_channel_criterion_package,
     verify_mc2_shifted_seed_one_channel_normalization,
 )
 
@@ -256,10 +295,47 @@ class TestMC2Sp4ShiftedL3Seed:
         assert all(checks.values()), checks
 
 
+class TestMC2G2ShiftedL3Seed:
+    def test_shifted_residual_eta_channel(self):
+        model = build_mc2_g2_shifted_cyclic_linf_l3_seed()
+        (x, y, z), residual = mc_residual_three_parameter(
+            model,
+            basis_elements=("e1", "e2", "f12"),
+        )
+        assert set(residual.keys()) == {"eta"}
+        eta = simplify(residual["eta"])
+        assert simplify(eta.subs({x: 1, y: 1, z: 1}) - 3) == 0
+        assert simplify(eta.subs({x: 0})) == 0
+        assert simplify(eta.subs({y: 0})) == 0
+        assert simplify(eta.subs({z: 0})) == 0
+
+    def test_shifted_obstruction_terms(self):
+        model = build_mc2_g2_shifted_cyclic_linf_l3_seed()
+        alpha = {1: {"e1": Rational(1), "e2": Rational(1), "f12": Rational(1)}}
+        obstruction_g2 = completed_mc_obstruction_term_at_genus(
+            model=model,
+            alpha_series=alpha,
+            genus=2,
+            require_zero_genus=True,
+        )
+        obstruction_g3 = completed_mc_obstruction_term_at_genus(
+            model=model,
+            alpha_series=alpha,
+            genus=3,
+            require_zero_genus=True,
+        )
+        assert obstruction_g2 == {"e12": Rational(1), "f1": Rational(1), "f2": Rational(-3)}
+        assert obstruction_g3 == {"eta": Rational(3)}
+
+    def test_verify_shifted_seed_bundle(self):
+        checks = verify_mc2_g2_shifted_seed_nontrivial_mc()
+        assert all(checks.values()), checks
+
+
 class TestMC2ShiftedOneChannelNormalization:
     def test_profiles_match_expected_eta_channels(self):
         profiles = mc2_shifted_seed_one_channel_normalization_profiles()
-        expected = {"sl2": Rational(-2), "sl3": Rational(1), "sp4": Rational(2)}
+        expected = {"sl2": Rational(-2), "sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
         for key, expected_eta in expected.items():
             assert simplify(profiles[key]["eta_residual_at_111"] - expected_eta) == 0
             assert simplify(profiles[key]["obstruction_eta"] - expected_eta) == 0
@@ -312,9 +388,492 @@ class TestMC2ShiftedEtaScalingLaw:
         assert simplify(profile["obstruction_g2"]["f2"] + 2 * t**2) == 0
         assert simplify(profile["obstruction_g3"]["eta"] - 2 * t**3) == 0
 
+    def test_g2_scaling_profile(self):
+        profile = shifted_seed_eta_channel_scaling_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+        )
+        t = profile["parameter"]
+        assert simplify(profile["eta_residual_at_111"] - 3) == 0
+        assert simplify(profile["obstruction_g2"]["e12"] - t**2) == 0
+        assert simplify(profile["obstruction_g2"]["f1"] - t**2) == 0
+        assert simplify(profile["obstruction_g2"]["f2"] + 3 * t**2) == 0
+        assert simplify(profile["obstruction_g3"]["eta"] - 3 * t**3) == 0
+
     def test_verify_shifted_eta_scaling_bundle(self):
         checks = verify_mc2_shifted_seed_eta_scaling_law()
         assert all(checks.values()), checks
+
+
+class TestMC2ShiftedEtaRootStringSignatureLaw:
+    def test_root_string_profiles(self):
+        profiles = mc2_shifted_eta_root_string_signature_profiles()
+        expected = {"sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
+        for lane, eta111 in expected.items():
+            profile = profiles[lane]
+            t = profile["parameter"]
+            g2 = profile["obstruction_g2"]
+            g3 = profile["obstruction_g3"]
+
+            assert simplify(profile["eta_residual_at_111"] - eta111) == 0
+            assert set(g2) == {"e12", "f1", "f2"}
+            assert set(g3) == {"eta"}
+            assert simplify(g2["e12"] - t**2) == 0
+            assert simplify(g2["f1"] - t**2) == 0
+            assert simplify(g2["f2"] + eta111 * t**2) == 0
+            assert simplify(g3["eta"] - eta111 * t**3) == 0
+            assert simplify(g3["eta"] + t * g2["f2"]) == 0
+
+    def test_verify_root_string_signature_bundle(self):
+        checks = verify_mc2_shifted_eta_root_string_signature_law()
+        assert all(checks.values()), checks
+        assert checks["root_string_signature_global"]
+        for lane in ("sl3", "sp4", "g2"):
+            assert checks[f"{lane}_signature_complete"]
+
+
+class TestMC2ShiftedEtaRootStringFamilyLaw:
+    def test_root_string_family_seed_respects_signature_parameter(self):
+        m = Rational(5)
+        seed = build_mc2_root_string_family_cyclic_linf_seed(m)
+        assert simplify(seed.l2_basis("e1", "f12").get("f2", 0) + m) == 0
+        assert simplify(seed.l2_basis("f12", "e1").get("f2", 0) - m) == 0
+        assert simplify(seed.pairing_basis("e12", "f12") - m) == 0
+
+    def test_symbolic_family_profile_matches_signature_law(self):
+        m = Symbol("m")
+        profile = shifted_eta_root_string_family_profile(m, parameter_name="t")
+        t = profile["parameter"]
+        g2 = profile["obstruction_g2"]
+        g3 = profile["obstruction_g3"]
+        assert simplify(profile["eta_residual_at_111"] - m) == 0
+        assert set(g2) == {"e12", "f1", "f2"}
+        assert set(g3) == {"eta"}
+        assert simplify(g2["e12"] - t**2) == 0
+        assert simplify(g2["f1"] - t**2) == 0
+        assert simplify(g2["f2"] + m * t**2) == 0
+        assert simplify(g3["eta"] - m * t**3) == 0
+        assert simplify(g3["eta"] + t * g2["f2"]) == 0
+
+    def test_family_samples_match_concrete_lanes(self):
+        concrete = mc2_shifted_eta_root_string_signature_profiles(parameter_name="u")
+        samples = {
+            "sl3": shifted_eta_root_string_family_profile(Rational(1), parameter_name="u"),
+            "sp4": shifted_eta_root_string_family_profile(Rational(2), parameter_name="u"),
+            "g2": shifted_eta_root_string_family_profile(Rational(3), parameter_name="u"),
+        }
+        for lane, profile in samples.items():
+            assert simplify(profile["eta_residual_at_111"] - concrete[lane]["eta_residual_at_111"]) == 0
+            for name in set(profile["obstruction_g2"]) | set(concrete[lane]["obstruction_g2"]):
+                assert simplify(profile["obstruction_g2"].get(name, 0) - concrete[lane]["obstruction_g2"].get(name, 0)) == 0
+            for name in set(profile["obstruction_g3"]) | set(concrete[lane]["obstruction_g3"]):
+                assert simplify(profile["obstruction_g3"].get(name, 0) - concrete[lane]["obstruction_g3"].get(name, 0)) == 0
+
+    def test_verify_root_string_family_bundle(self):
+        checks = verify_mc2_shifted_eta_root_string_family_law()
+        assert all(checks.values()), checks
+        assert checks["root_string_family_symbolic_complete"]
+        assert checks["root_string_family_sampled_complete"]
+        assert checks["root_string_family_global"]
+
+
+class TestMC2ShiftedEtaRootStringSeedPacketLaw:
+    def test_root_string_seed_packet_seed_respects_parameters(self):
+        seed = build_mc2_root_string_seed_packet_cyclic_linf_seed(
+            e12_channel_scale=Rational(2),
+            f1_channel_scale=Rational(3),
+            root_string_signature=Rational(5),
+        )
+        assert simplify(seed.l2_basis("e1", "e2").get("e12", 0) - 2) == 0
+        assert simplify(seed.l2_basis("e2", "f12").get("f1", 0) - 3) == 0
+        assert simplify(seed.l2_basis("e1", "f12").get("f2", 0) + 5) == 0
+        assert simplify(seed.pairing_basis("e12", "f12") - 5) == 0
+
+    def test_symbolic_seed_packet_profile_law(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        profile = shifted_eta_root_string_seed_packet_profile(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+            parameter_name="t",
+        )
+        t = profile["parameter"]
+        g2 = profile["obstruction_g2"]
+        g3 = profile["obstruction_g3"]
+        assert simplify(profile["eta_residual_at_111"] - a * m) == 0
+        assert set(g2) == {"e12", "f1", "f2"}
+        assert set(g3) == {"eta"}
+        assert simplify(g2["e12"] - a * t**2) == 0
+        assert simplify(g2["f1"] - b * t**2) == 0
+        assert simplify(g2["f2"] + m * t**2) == 0
+        assert simplify(g3["eta"] - a * m * t**3) == 0
+        assert simplify(g3["eta"] + a * t * g2["f2"]) == 0
+
+    def test_seed_packet_specialization_matches_family(self):
+        packet = shifted_eta_root_string_seed_packet_profile(
+            e12_channel_scale=Rational(1),
+            f1_channel_scale=Rational(1),
+            root_string_signature=Rational(3),
+            parameter_name="u",
+        )
+        family = shifted_eta_root_string_family_profile(Rational(3), parameter_name="u")
+        assert simplify(packet["eta_residual_at_111"] - family["eta_residual_at_111"]) == 0
+        for name in set(packet["obstruction_g2"]) | set(family["obstruction_g2"]):
+            assert simplify(packet["obstruction_g2"].get(name, 0) - family["obstruction_g2"].get(name, 0)) == 0
+        for name in set(packet["obstruction_g3"]) | set(family["obstruction_g3"]):
+            assert simplify(packet["obstruction_g3"].get(name, 0) - family["obstruction_g3"].get(name, 0)) == 0
+
+    def test_verify_root_string_seed_packet_bundle(self):
+        checks = verify_mc2_shifted_eta_root_string_seed_packet_law()
+        assert all(checks.values()), checks
+        assert checks["root_string_seed_packet_symbolic_complete"]
+        assert checks["root_string_seed_packet_sampled_complete"]
+        assert checks["root_string_seed_packet_global"]
+
+
+class TestMC2VisibleLowarityRootStringPacketLaw:
+    def test_sl3_visible_packet_projection_profile(self):
+        packet = visible_lowarity_root_string_packet_from_shifted_seed(
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+            parameter_name="u",
+        )
+        assert simplify(packet["e12_channel_scale"] - 1) == 0
+        assert simplify(packet["f1_channel_scale"] - 1) == 0
+        assert simplify(packet["root_string_signature_from_pairing"] - 1) == 0
+        assert simplify(packet["root_string_signature_from_bracket"] - 1) == 0
+        assert simplify(packet["predicted_eta_residual_at_111"] - 1) == 0
+        assert simplify(packet["eta_residual_at_111"] - 1) == 0
+
+        projected = packet["projected_packet_profile"]
+        assert simplify(projected["eta_residual_at_111"] - packet["eta_residual_at_111"]) == 0
+        for name in set(packet["obstruction_g2"]) | set(projected["obstruction_g2"]):
+            assert simplify(packet["obstruction_g2"].get(name, 0) - projected["obstruction_g2"].get(name, 0)) == 0
+        for name in set(packet["obstruction_g3"]) | set(projected["obstruction_g3"]):
+            assert simplify(packet["obstruction_g3"].get(name, 0) - projected["obstruction_g3"].get(name, 0)) == 0
+
+    def test_verify_visible_lowarity_root_string_packet_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_packet_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_packet_global"]
+        for lane in ("sl3", "sp4", "g2", "family_m1", "family_m2", "family_m3"):
+            assert checks[f"{lane}_packet_complete"]
+
+
+class TestMC2VisibleLowarityRootStringPacketIdentifiability:
+    def test_symbolic_packet_identifiability(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        profile = shifted_eta_root_string_seed_packet_profile(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+            parameter_name="t",
+        )
+        inferred = infer_visible_lowarity_root_string_packet_from_obstruction(profile)
+        assert simplify(inferred["inferred_e12_channel_scale"] - a) == 0
+        assert simplify(inferred["inferred_f1_channel_scale"] - b) == 0
+        assert simplify(inferred["inferred_root_string_signature"] - m) == 0
+        assert simplify(inferred["inferred_eta_normalization"] - a * m) == 0
+
+    def test_concrete_lane_identifiability(self):
+        profile = shifted_seed_eta_channel_scaling_profile(
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name="u",
+        )
+        inferred = infer_visible_lowarity_root_string_packet_from_obstruction(profile)
+        assert simplify(inferred["inferred_e12_channel_scale"] - 1) == 0
+        assert simplify(inferred["inferred_f1_channel_scale"] - 1) == 0
+        assert simplify(inferred["inferred_root_string_signature"] - 2) == 0
+        assert simplify(inferred["inferred_eta_normalization"] - 2) == 0
+
+    def test_verify_packet_identifiability_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_packet_identifiability()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_packet_identifiability_global"]
+
+
+class TestMC2VisibleLowarityRootStringTransferPackageLaw:
+    def test_symbolic_transfer_package_roundtrip(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        transfer = visible_lowarity_root_string_transfer_package_from_shifted_seed(
+            build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+                e12_channel_scale=a,
+                f1_channel_scale=b,
+                root_string_signature=m,
+            ),
+            parameter_name="t",
+        )
+        inferred = transfer["packet_from_obstruction"]
+        reconstructed = transfer["packet_reconstructed_profile"]
+        seed_packet = transfer["packet_from_seed"]
+        assert simplify(inferred["inferred_e12_channel_scale"] - a) == 0
+        assert simplify(inferred["inferred_f1_channel_scale"] - b) == 0
+        assert simplify(inferred["inferred_root_string_signature"] - m) == 0
+        assert simplify(reconstructed["eta_residual_at_111"] - seed_packet["eta_residual_at_111"]) == 0
+
+    def test_verify_transfer_package_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_transfer_package_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_transfer_package_global"]
+
+
+class TestMC2VisibleLowarityRootStringL3ChannelRecoveryLaw:
+    def test_symbolic_l3_channel_recovery(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        x = Symbol("x")
+        y = Symbol("y")
+        z = Symbol("z")
+        profile = visible_lowarity_root_string_l3_channel_recovery_from_shifted_seed(
+            build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+                e12_channel_scale=a,
+                f1_channel_scale=b,
+                root_string_signature=m,
+            ),
+            parameter_name="t",
+            residual_parameters=(x, y, z),
+        )
+        inferred = profile["transfer_package"]["packet_from_obstruction"]
+        assert simplify(inferred["inferred_e12_channel_scale"] - a) == 0
+        assert simplify(inferred["inferred_f1_channel_scale"] - b) == 0
+        assert simplify(inferred["inferred_root_string_signature"] - m) == 0
+        assert simplify(inferred["inferred_eta_normalization"] - a * m) == 0
+        assert simplify(profile["original_eta_residual"] - a * m * x * y * z) == 0
+        assert simplify(profile["predicted_eta_residual"] - profile["original_eta_residual"]) == 0
+        assert simplify(profile["reconstructed_eta_residual"] - profile["original_eta_residual"]) == 0
+        assert simplify(profile["original_eta_at_111"] - inferred["inferred_eta_normalization"]) == 0
+
+    def test_verify_l3_channel_recovery_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_l3_channel_recovery_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_l3_channel_recovery_global"]
+
+
+class TestMC2VisibleLowarityRootStringChartRecoveryLaw:
+    def test_symbolic_chart_recovery(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        source = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+        )
+        profile = shifted_seed_eta_channel_scaling_profile(
+            source,
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name="t",
+        )
+        recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(profile)
+        inferred = recovered["packet_from_obstruction"]
+        reconstructed = recovered["reconstructed_seed_model"]
+
+        assert simplify(inferred["inferred_e12_channel_scale"] - a) == 0
+        assert simplify(inferred["inferred_f1_channel_scale"] - b) == 0
+        assert simplify(inferred["inferred_root_string_signature"] - m) == 0
+        assert simplify(
+            reconstructed.l2_basis("e1", "e2").get("e12", 0) - source.l2_basis("e1", "e2").get("e12", 0)
+        ) == 0
+        assert simplify(
+            reconstructed.l2_basis("e2", "f12").get("f1", 0) - source.l2_basis("e2", "f12").get("f1", 0)
+        ) == 0
+        assert simplify(
+            reconstructed.l2_basis("e1", "f12").get("f2", 0) - source.l2_basis("e1", "f12").get("f2", 0)
+        ) == 0
+        assert simplify(
+            reconstructed.pairing_basis("e12", "f12") - source.pairing_basis("e12", "f12")
+        ) == 0
+        assert simplify(
+            reconstructed.l3_basis("e1", "e2", "f12").get("eta", 0)
+            - source.l3_basis("e1", "e2", "f12").get("eta", 0)
+        ) == 0
+
+    def test_verify_chart_recovery_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_chart_recovery_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_chart_recovery_global"]
+
+
+class TestMC2VisibleLowarityRootStringAutomorphismRigidityLaw:
+    def test_symbolic_ordered_seed_support_rigidity(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        source = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+        )
+        source_perms = root_string_ordered_seed_support_permutations(source)
+        assert source_perms == (("e1", "e2", "f12"),)
+
+        profile = shifted_seed_eta_channel_scaling_profile(
+            source,
+            basis_elements=("e1", "e2", "f12"),
+            alpha_basis=("e1", "e2", "f12"),
+            parameter_name="t",
+        )
+        recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(profile)
+        recovered_perms = root_string_ordered_seed_support_permutations(
+            recovered["reconstructed_seed_model"]
+        )
+        assert recovered_perms == source_perms
+
+    def test_verify_automorphism_rigidity_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_automorphism_rigidity_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_automorphism_rigidity_global"]
+
+
+class TestMC2VisibleLowarityRootStringIncidenceOrbitLaw:
+    def test_symbolic_incidence_orbit_profile(self):
+        a = Symbol("a")
+        b = Symbol("b")
+        m = Symbol("m")
+        source = build_mc2_root_string_seed_packet_shifted_cyclic_linf_l3_seed(
+            e12_channel_scale=a,
+            f1_channel_scale=b,
+            root_string_signature=m,
+        )
+        profile = visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+            source,
+            parameter_name="t",
+        )
+        assert profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+        assert profile["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        assert profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        assert profile["singleton_support_orbits_g3"] == ("eta",)
+        assert profile["normalization_indicator_g2"] == (
+            ("e12", True),
+            ("f1", False),
+            ("f2", False),
+        )
+        assert profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        assert profile["support_indicator_g3"] == ("eta",)
+
+        recovered = reconstruct_root_string_shifted_seed_from_obstruction_profile(
+            profile["obstruction_profile"]
+        )
+        recovered_profile = visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
+            recovered["reconstructed_seed_model"],
+            parameter_name="t",
+        )
+        assert recovered_profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+        assert recovered_profile["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        assert recovered_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        assert recovered_profile["singleton_support_orbits_g3"] == ("eta",)
+        assert recovered_profile["normalization_indicator_g2"] == (
+            ("e12", True),
+            ("f1", False),
+            ("f2", False),
+        )
+        assert recovered_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+        assert recovered_profile["support_indicator_g3"] == ("eta",)
+
+    def test_verify_incidence_orbit_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_incidence_orbit_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_incidence_orbit_global"]
+
+
+class TestMC2VisibleLowarityRootStringOrbitTableLaw:
+    def test_orbit_table_profiles_match_family_by_signature(self):
+        profiles = mc2_visible_lowarity_root_string_orbit_table_profiles(
+            parameter_name="u"
+        )
+        lane_to_family = {"sl3": "family_m1", "sp4": "family_m2", "g2": "family_m3"}
+        for lane, family_lane in lane_to_family.items():
+            lane_profile = profiles[lane]
+            family_profile = profiles[family_lane]
+            assert lane_profile["visible_seed_permutation_group"] == (("e1", "e2", "f12"),)
+            assert lane_profile["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+            assert lane_profile["singleton_support_orbits_g3"] == ("eta",)
+            assert lane_profile["normalization_indicator_g2"] == (
+                ("e12", True),
+                ("f1", False),
+                ("f2", False),
+            )
+            assert lane_profile["support_indicator_g2"] == ("e12", "f1", "f2")
+            assert lane_profile["support_indicator_g3"] == ("eta",)
+            assert lane_profile["seed_orbits"] == family_profile["seed_orbits"]
+            assert lane_profile["support_orbits"] == family_profile["support_orbits"]
+            assert lane_profile["incidence_coefficients"] == family_profile["incidence_coefficients"]
+            assert lane_profile["pairing_profile_f12"] == family_profile["pairing_profile_f12"]
+
+    def test_verify_orbit_table_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_orbit_table_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_orbit_table_global"]
+
+
+class TestMC2VisibleLowarityRootStringInvariantSignatureLaw:
+    def test_invariant_signature_profile_on_concrete_lane(self):
+        signature = visible_lowarity_root_string_invariant_signature_from_shifted_seed(
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            parameter_name="u",
+        )
+        assert simplify(signature["root_string_signature"] - 2) == 0
+        assert signature["seed_orbits"] == (("e1",), ("e2",), ("f12",))
+        assert signature["singleton_support_orbits_g2"] == ("e12", "f1", "f2")
+        assert signature["singleton_support_orbits_g3"] == ("eta",)
+        assert signature["normalization_indicator_g2"] == (
+            ("e12", True),
+            ("f1", False),
+            ("f2", False),
+        )
+        assert signature["normalized_incidence"] == {
+            "e12": Rational(1),
+            "f1": Rational(1),
+            "f2_by_m": Rational(-1),
+            "eta_by_m": Rational(1),
+        }
+        assert signature["normalized_pairing"] == {
+            "e12_by_m": Rational(1),
+            "f1_by_m": Rational(0),
+            "f2_by_m": Rational(0),
+        }
+
+    def test_verify_invariant_signature_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_invariant_signature_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_invariant_signature_global"]
+
+
+class TestMC2VisibleLowarityRootStringSeedCharacterLaw:
+    def test_signed_seed_character_on_concrete_lane(self):
+        character = visible_lowarity_root_string_signed_seed_character_from_shifted_seed(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            parameter_name="u",
+        )
+        assert simplify(character["root_string_signature"] - 3) == 0
+        assert character["signed_seed_character"] == (
+            Rational(1),
+            Rational(1),
+            Rational(-1),
+            Rational(1),
+        )
+        assert character["normalization_indicator_g2"] == (
+            ("e12", True),
+            ("f1", False),
+            ("f2", False),
+        )
+        assert character["support_indicator_g2"] == ("e12", "f1", "f2")
+        assert character["support_indicator_g3"] == ("eta",)
+
+    def test_verify_seed_character_bundle(self):
+        checks = verify_mc2_visible_lowarity_root_string_seed_character_law()
+        assert all(checks.values()), checks
+        assert checks["visible_lowarity_root_string_seed_character_global"]
 
 
 class TestMC2ShiftedObstructionPolynomialLaw:
@@ -351,9 +910,94 @@ class TestMC2ShiftedObstructionPolynomialLaw:
         assert profile["obstruction_g3"] == profile["one_sixth_l3_alpha1_alpha1_alpha1"]
         assert simplify(profile["obstruction_g3"]["eta"] - profile["eta_residual"]) == 0
 
+    def test_g2_polynomial_profile_identities(self):
+        profile = shifted_seed_obstruction_polynomial_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+        )
+        x, y, z = profile["parameters"]
+        assert simplify(profile["eta_residual"] - 3 * x * y * z) == 0
+        assert profile["obstruction_g2"] == profile["half_l2_alpha1_alpha1"]
+        assert profile["obstruction_g3"] == profile["one_sixth_l3_alpha1_alpha1_alpha1"]
+        assert simplify(profile["obstruction_g3"]["eta"] - profile["eta_residual"]) == 0
+
     def test_verify_shifted_obstruction_polynomial_bundle(self):
         checks = verify_mc2_shifted_seed_obstruction_polynomial_law()
         assert all(checks.values()), checks
+
+
+class TestMC2ShiftedEtaChannelCEAlignment:
+    def test_verify_shifted_eta_channel_ce_alignment_bundle(self):
+        checks = verify_mc2_shifted_eta_channel_ce_alignment()
+        assert all(checks.values()), checks
+        for lane in ("sl2", "sl3", "sp4", "g2"):
+            assert checks[f"{lane}_h2_cyc_one"]
+            assert checks[f"{lane}_g3_eta_only"]
+            assert checks[f"{lane}_eta111_matches_ce_killing3"]
+            assert checks[f"{lane}_eta_channel_matches_unique_h2"]
+
+
+class TestMC2ShiftedObstructionSupportTruncation:
+    def test_sl2_support_profile(self):
+        profile = shifted_seed_obstruction_support_profile(
+            build_mc2_sl2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e", "h", "f"),
+            max_genus=6,
+        )
+        obs = profile["obstruction_by_genus"]
+        assert profile["nonzero_genera"] == (2, 3)
+        assert bool(obs[2])
+        assert set(obs[3]) == {"eta"}
+        assert all(not obs[g] for g in (4, 5, 6))
+
+    def test_sl3_support_profile(self):
+        profile = shifted_seed_obstruction_support_profile(
+            build_mc2_sl3_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            max_genus=6,
+        )
+        obs = profile["obstruction_by_genus"]
+        assert profile["nonzero_genera"] == (2, 3)
+        assert bool(obs[2])
+        assert set(obs[3]) == {"eta"}
+        assert all(not obs[g] for g in (4, 5, 6))
+
+    def test_sp4_support_profile(self):
+        profile = shifted_seed_obstruction_support_profile(
+            build_mc2_sp4_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            max_genus=6,
+        )
+        obs = profile["obstruction_by_genus"]
+        assert profile["nonzero_genera"] == (2, 3)
+        assert bool(obs[2])
+        assert set(obs[3]) == {"eta"}
+        assert all(not obs[g] for g in (4, 5, 6))
+
+    def test_g2_support_profile(self):
+        profile = shifted_seed_obstruction_support_profile(
+            build_mc2_g2_shifted_cyclic_linf_l3_seed(),
+            basis_elements=("e1", "e2", "f12"),
+            max_genus=6,
+        )
+        obs = profile["obstruction_by_genus"]
+        assert profile["nonzero_genera"] == (2, 3)
+        assert bool(obs[2])
+        assert set(obs[3]) == {"eta"}
+        assert all(not obs[g] for g in (4, 5, 6))
+
+    def test_verify_shifted_support_truncation_bundle(self):
+        checks = verify_mc2_shifted_obstruction_support_truncation(max_genus=6)
+        assert all(checks.values()), checks
+
+
+class TestMC2ShiftedOneChannelCriterionPackage:
+    def test_verify_shifted_one_channel_criterion_package(self):
+        checks = verify_mc2_shifted_one_channel_criterion_package(max_genus=6)
+        assert all(checks.values()), checks
+        assert checks["criterion_package_global"]
+        for lane in ("sl2", "sl3", "sp4", "g2"):
+            assert checks[f"{lane}_criterion_complete"]
 
 
 class TestMC2SeedTransferLayer:

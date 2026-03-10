@@ -6,17 +6,23 @@ PBW degeneration for affine KM algebras at genus 1.
 Ground truth: the enrichment from H^1(E_tau) at each weight is killed
 by the combination of:
   (a) Whitehead vanishing (non-trivial g-modules)
+
+.. note:: Marked slow — heavy symbolic computation.  Run via ``make test-full``.
   (b) Level-k Killing contraction (invariant part)
 
 Tests organized by claim number matching the computation module.
 """
 
 import pytest
+
+pytestmark = pytest.mark.slow
+
 from sympy import Rational, Matrix
 
 from compute.lib.genus1_pbw_sl2 import (
     CASIMIR_EXACT_CUTOFF,
     CASIMIR_MODULAR_PRIMES,
+    CASIMIR_MODULAR_STRATEGY,
     DIM_SL2,
     lie_bracket,
     killing,
@@ -32,8 +38,10 @@ from compute.lib.genus1_pbw_sl2 import (
     adjoint_casimir_on_tensor_square,
     adjoint_casimir_on_tensor_power,
     casimir_method_for_tensor_power,
+    casimir_modular_strategy_for_tensor_power,
     casimir_eigenspace_multiplicities_exact_sparse_on_tensor_power,
     casimir_eigenspace_multiplicities_modular_on_tensor_power,
+    casimir_eigenspace_multiplicities_modular_weight_block_on_tensor_power,
     casimir_eigenspace_multiplicities_on_tensor_power,
     expected_casimir_eigenspace_multiplicities_on_tensor_power,
     staged_frontier_diagnostics_on_tensor_power,
@@ -297,8 +305,11 @@ class TestCasimirDecomposition:
     def test_casimir_auto_policy_switches_after_cutoff(self):
         """Default policy: exact through n<=6, modular path for n>=7."""
         assert CASIMIR_EXACT_CUTOFF == 6
+        assert CASIMIR_MODULAR_STRATEGY == "auto"
         assert casimir_method_for_tensor_power(6) == "exact"
         assert casimir_method_for_tensor_power(7) == "modular"
+        assert casimir_modular_strategy_for_tensor_power(6) == "global"
+        assert casimir_modular_strategy_for_tensor_power(7) == "weight_block"
 
     def test_tensor_power_helpers_at_degree_7_staged_frontier(self):
         """n=7 uses the fast Casimir path by default; exact remains opt-in."""
@@ -338,12 +349,26 @@ class TestCasimirDecomposition:
         modular = casimir_eigenspace_multiplicities_on_tensor_power(4, method="modular")
         assert modular == exact
 
+    def test_modular_weight_block_matches_exact_on_small_power(self):
+        """Weight-block modular extraction agrees with exact eigenspaces."""
+        exact = casimir_eigenspace_multiplicities_on_tensor_power(4, method="exact")
+        modular_weight_block = casimir_eigenspace_multiplicities_modular_weight_block_on_tensor_power(
+            4,
+            primes=CASIMIR_MODULAR_PRIMES,
+        )
+        assert modular_weight_block == exact
+
     def test_modular_path_at_degree_7(self):
         """Modular n=7 path recovers the full expected eigenspace multiplicities."""
         modular = casimir_eigenspace_multiplicities_modular_on_tensor_power(
             7,
             primes=CASIMIR_MODULAR_PRIMES,
         )
+        modular_weight_block = casimir_eigenspace_multiplicities_modular_weight_block_on_tensor_power(
+            7,
+            primes=CASIMIR_MODULAR_PRIMES,
+        )
+        assert modular_weight_block == modular
         assert modular == {
             Rational(112): 15,
             Rational(84): 78,
@@ -365,6 +390,7 @@ class TestCasimirDecomposition:
         assert report["equivariant"] is True
         assert report["casimir_commutator_zero"] is True
         assert report["casimir_mode"] == "modular"
+        assert report["casimir_modular_strategy"] == "weight_block"
         assert report["casimir_eigenspaces"] is None
         assert report["casimir_matches_expected"] is None
         assert report["all_enabled_checks_pass"] is True

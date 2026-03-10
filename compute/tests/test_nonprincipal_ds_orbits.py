@@ -1,5 +1,9 @@
 """Tests for the non-principal DS/orbit scaffold (hook + subregular)."""
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 from sympy import Rational, Symbol, simplify
 from sympy import zeros
 
@@ -31,6 +35,7 @@ from compute.lib.nonprincipal_ds_orbits import (
     nonprincipal_hook_level_shift_type_a,
     nonprincipal_hook_level_shift_ansatz_type_a,
     nonprincipal_orbit_level_shift_type_a,
+    nonprincipal_type_a_case,
     nonprincipal_two_row_case,
     nonprincipal_two_row_cases,
     two_row_nonhook_partition,
@@ -248,6 +253,17 @@ class TestFrontierCases:
         assert cases
         assert cases[0].partition == (2, 2, 1)
         assert all(type_a_orbit_class(entry.partition) == "general_nonprincipal" for entry in cases)
+
+    def test_frontier_case_builders_normalize_and_cache(self):
+        tuple_case = nonprincipal_type_a_case((4, 2))
+        list_case = nonprincipal_type_a_case([4, 2])
+        assert tuple_case is list_case
+        assert nonprincipal_two_row_case(6, 2) is nonprincipal_two_row_case(6, 2)
+
+    def test_frontier_catalogs_reuse_cached_tuples(self):
+        assert nonprincipal_hook_cases(max_n=6) is nonprincipal_hook_cases(max_n=6)
+        assert nonprincipal_two_row_cases(max_n=7) is nonprincipal_two_row_cases(max_n=7)
+        assert nonprincipal_general_cases(max_n=6) is nonprincipal_general_cases(max_n=6)
 
 
 class TestHookOrbitProfiles:

@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 from compute.lib.genus1_pbw_sl2 import (
     CASIMIR_EXACT_CUTOFF,
     CASIMIR_MODULAR_PRIMES,
+    CASIMIR_MODULAR_STRATEGY,
     staged_frontier_diagnostics_on_tensor_power,
 )
 
@@ -49,6 +50,12 @@ def main():
         type=int,
         default=None,
         help="Prime used for --casimir-method=modular (repeat flag for multiple primes).",
+    )
+    parser.add_argument(
+        "--modular-strategy",
+        choices=("auto", "global", "weight_block"),
+        default=CASIMIR_MODULAR_STRATEGY,
+        help="Sparse/modular backend strategy used when Casimir mode is modular.",
     )
     parser.add_argument(
         "--skip-casimir",
@@ -79,6 +86,7 @@ def main():
     print(
         f"Casimir mode: {args.casimir_method} (auto cutoff={args.exact_cutoff})"
     )
+    print(f"Modular strategy: {args.modular_strategy}")
     print(f"Modular primes: {modular_primes}")
     print(
         "power | rank(d1) | ker(d1) | inv-dim | equivariant | [C2,d1]=0 | timings (s)"
@@ -91,6 +99,7 @@ def main():
             casimir_method=args.casimir_method,
             exact_cutoff=args.exact_cutoff,
             modular_primes=modular_primes,
+            modular_strategy=args.modular_strategy,
             include_casimir=not args.skip_casimir,
             include_equivariance=not args.skip_equivariance,
             include_commutator=not args.skip_commutator,

@@ -13,6 +13,7 @@ Scope discipline:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Dict, Tuple
 
 from sympy import Rational, Symbol, simplify, sympify
@@ -241,17 +242,36 @@ def nonprincipal_hook_seed(n: int, r: int, level=Symbol("k")) -> NonprincipalDSS
     Bershadsky-Polyakov seed. Higher-rank hook/subregular cases remain frontier
     placeholders with explicit unknown central-charge data.
     """
+    return _nonprincipal_hook_seed_cached(n, r, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_hook_seed_cached(n: int, r: int, level) -> NonprincipalDSSeed:
+    """Cached hook/subregular seed record keyed by normalized level."""
     return nonprincipal_type_a_seed(hook_partition(n, r), level=level)
 
 
 def nonprincipal_two_row_seed(n: int, s: int, level=Symbol("k")) -> NonprincipalDSSeed:
     """Seed record for one type-A non-hook two-row orbit case."""
+    return _nonprincipal_two_row_seed_cached(n, s, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_seed_cached(n: int, s: int, level) -> NonprincipalDSSeed:
+    """Cached two-row seed record keyed by normalized level."""
     partition = two_row_nonhook_partition(n, s)
     return nonprincipal_type_a_seed(partition, level=level)
 
 
 def nonprincipal_general_seed(partition: Partition, level=Symbol("k")) -> NonprincipalDSSeed:
     """Seed record for one general type-A non-principal orbit case."""
+    normalized_partition = tuple(partition)
+    return _nonprincipal_general_seed_cached(normalized_partition, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_seed_cached(partition: Partition, level) -> NonprincipalDSSeed:
+    """Cached general non-principal seed record keyed by partition and level."""
     if type_a_orbit_class(partition) != "general_nonprincipal":
         raise ValueError("general non-principal seed requires a general_nonprincipal partition")
     return nonprincipal_type_a_seed(partition, level=level)
@@ -259,12 +279,27 @@ def nonprincipal_general_seed(partition: Partition, level=Symbol("k")) -> Nonpri
 
 def first_nonselfdual_hook_seed(level=Symbol("k")) -> NonprincipalDSSeed:
     """Seed record for the first non-self-dual type-A hook pair (A3)."""
+    return _first_nonselfdual_hook_seed_cached(sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _first_nonselfdual_hook_seed_cached(level) -> NonprincipalDSSeed:
+    """Cached first non-self-dual hook seed keyed by normalized level."""
     n, r, _ = first_nonselfdual_type_a_hook_pair()
     return nonprincipal_hook_seed(n, r, level=level)
 
 
 def nonprincipal_hook_seed_catalog(max_n: int = 6, level=Symbol("k")) -> Tuple[NonprincipalDSSeed, ...]:
     """Enumerate non-principal hook/subregular seed records in type A."""
+    return _nonprincipal_hook_seed_catalog_cached(max_n, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_hook_seed_catalog_cached(
+    max_n: int,
+    level,
+) -> Tuple[NonprincipalDSSeed, ...]:
+    """Cached hook/subregular seed catalog keyed by normalized level."""
     return tuple(
         nonprincipal_hook_seed(n, r, level=level)
         for n in range(3, max_n + 1)
@@ -277,6 +312,15 @@ def nonprincipal_two_row_seed_catalog(
     level=Symbol("k"),
 ) -> Tuple[NonprincipalDSSeed, ...]:
     """Enumerate non-principal type-A two-row seed records."""
+    return _nonprincipal_two_row_seed_catalog_cached(max_n, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_seed_catalog_cached(
+    max_n: int,
+    level,
+) -> Tuple[NonprincipalDSSeed, ...]:
+    """Cached two-row seed catalog keyed by normalized level."""
     return tuple(
         nonprincipal_two_row_seed(n, s, level=level)
         for n in range(4, max_n + 1)
@@ -290,6 +334,15 @@ def nonprincipal_general_seed_catalog(
     level=Symbol("k"),
 ) -> Tuple[NonprincipalDSSeed, ...]:
     """Enumerate general type-A non-principal seed records."""
+    return _nonprincipal_general_seed_catalog_cached(max_n, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_seed_catalog_cached(
+    max_n: int,
+    level,
+) -> Tuple[NonprincipalDSSeed, ...]:
+    """Cached general non-principal seed catalog keyed by normalized level."""
     return tuple(
         nonprincipal_general_seed(partition, level=level)
         for n in range(3, max_n + 1)
@@ -299,6 +352,15 @@ def nonprincipal_general_seed_catalog(
 
 def verify_nonprincipal_hook_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[str, bool]:
     """Sanity checks for the hook/subregular seed catalog."""
+    return dict(_verify_nonprincipal_hook_seed_catalog_items(max_n, sympify(level)))
+
+
+@lru_cache(maxsize=None)
+def _verify_nonprincipal_hook_seed_catalog_items(
+    max_n: int,
+    level,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook/subregular seed catalog verification."""
     results: Dict[str, bool] = {}
     seeds = nonprincipal_hook_seed_catalog(max_n=max_n, level=level)
     orbit_cases = nonprincipal_hook_cases(max_n=max_n, level=level)
@@ -338,7 +400,7 @@ def verify_nonprincipal_hook_seed_catalog(max_n: int = 8, level=Symbol("k")) -> 
         first.partition == (3, 1) and first.dual_partition == (2, 1, 1)
     )
 
-    return results
+    return tuple(results.items())
 
 
 def verify_nonprincipal_two_row_seed_catalog(
@@ -346,6 +408,15 @@ def verify_nonprincipal_two_row_seed_catalog(
     level=Symbol("k"),
 ) -> Dict[str, bool]:
     """Sanity checks for the non-hook two-row seed catalog."""
+    return dict(_verify_nonprincipal_two_row_seed_catalog_items(max_n, sympify(level)))
+
+
+@lru_cache(maxsize=None)
+def _verify_nonprincipal_two_row_seed_catalog_items(
+    max_n: int,
+    level,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for two-row seed catalog verification."""
     results: Dict[str, bool] = {}
     seeds = nonprincipal_two_row_seed_catalog(max_n=max_n, level=level)
     orbit_cases = nonprincipal_two_row_cases(max_n=max_n, level=level)
@@ -374,7 +445,7 @@ def verify_nonprincipal_two_row_seed_catalog(
         results[f"{key} dual partition propagates"] = (seed.dual_partition == orbit_case.dual_partition)
         results[f"{key} level shift propagates"] = (simplify(seed.level_shift - orbit_case.level_shift) == 0)
 
-    return results
+    return tuple(results.items())
 
 
 def verify_nonprincipal_general_seed_catalog(
@@ -382,6 +453,15 @@ def verify_nonprincipal_general_seed_catalog(
     level=Symbol("k"),
 ) -> Dict[str, bool]:
     """Sanity checks for the general non-principal seed catalog."""
+    return dict(_verify_nonprincipal_general_seed_catalog_items(max_n, sympify(level)))
+
+
+@lru_cache(maxsize=None)
+def _verify_nonprincipal_general_seed_catalog_items(
+    max_n: int,
+    level,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for general non-principal seed catalog verification."""
     results: Dict[str, bool] = {}
     seeds = nonprincipal_general_seed_catalog(max_n=max_n, level=level)
     orbit_cases = nonprincipal_general_cases(max_n=max_n, level=level)
@@ -410,7 +490,7 @@ def verify_nonprincipal_general_seed_catalog(
         results[f"{key} dual partition propagates"] = (seed.dual_partition == orbit_case.dual_partition)
         results[f"{key} level shift propagates"] = (simplify(seed.level_shift - orbit_case.level_shift) == 0)
 
-    return results
+    return tuple(results.items())
 
 
 def verify_nonprincipal_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:

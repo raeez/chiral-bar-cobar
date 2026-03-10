@@ -12,9 +12,9 @@ from collections import Counter
 from dataclasses import dataclass
 from functools import lru_cache
 from itertools import combinations
-from typing import Dict, Tuple
+from typing import Callable, Dict, Iterable, Tuple
 
-from sympy import Matrix, Rational, Symbol, simplify, sympify, zeros
+from sympy import Matrix, Rational, SparseMatrix, Symbol, simplify, sympify, zeros
 from sympy.polys.matrices import DomainMatrix
 
 from compute.lib.bv_duality import first_nonselfdual_type_a_hook_pair
@@ -353,14 +353,175 @@ def matrix_commutator(left: Matrix, right: Matrix) -> Matrix:
     return left * right - right * left
 
 
-def exact_matrix_rank(matrix: Matrix | None) -> int:
-    """Exact matrix rank via DomainMatrix, with a dense fallback when needed."""
+def _matrix_signature(matrix: Matrix | None) -> Tuple[int, int, Tuple[object, ...]] | None:
+    """Immutable signature for caching exact matrix invariants."""
     if matrix is None or not matrix.rows or not matrix.cols:
-        return 0
+        return None
+    return (matrix.rows, matrix.cols, tuple(matrix))
+
+
+@lru_cache(maxsize=None)
+def _exact_matrix_rank_from_signature(
+    rows: int,
+    cols: int,
+    entries: Tuple[object, ...],
+) -> int:
+    """Exact matrix rank cached by immutable matrix data."""
+    matrix = Matrix(rows, cols, entries)
     try:
         return int(DomainMatrix.from_Matrix(matrix).rank())
     except Exception:
         return int(matrix.rank())
+
+
+def exact_matrix_rank(matrix: Matrix | None) -> int:
+    """Exact matrix rank via DomainMatrix, with a dense fallback when needed."""
+    signature = _matrix_signature(matrix)
+    if signature is None:
+        return 0
+    return _exact_matrix_rank_from_signature(*signature)
+
+
+@lru_cache(maxsize=None)
+def _matrix_product_is_zero_from_signatures(
+    left_rows: int,
+    left_cols: int,
+    left_entries: Tuple[object, ...],
+    right_rows: int,
+    right_cols: int,
+    right_entries: Tuple[object, ...],
+) -> bool:
+    """Whether the product of two cached matrices is the zero matrix."""
+    left = Matrix(left_rows, left_cols, left_entries)
+    right = Matrix(right_rows, right_cols, right_entries)
+    return left * right == zeros(left.rows, right.cols)
+
+
+def _matrix_product_is_zero(left: Matrix | None, right: Matrix | None) -> bool:
+    """Whether two compatible differentials compose to zero."""
+    left_signature = _matrix_signature(left)
+    right_signature = _matrix_signature(right)
+    if left_signature is None or right_signature is None:
+        return True
+    return _matrix_product_is_zero_from_signatures(*left_signature, *right_signature)
+
+
+@dataclass(frozen=True)
+class FiniteBlockInvariantSummary:
+    """One-pass finite-block invariant summary used by the DS verifier hotspots."""
+
+    homology_dimensions: Tuple[Tuple[int, int], ...]
+    has_square_zero: bool
+
+    @property
+    def is_acyclic(self) -> bool:
+        """Whether the recorded block homology vanishes in every degree."""
+        return all(value == 0 for _, value in self.homology_dimensions)
+
+
+def _cochain_block_invariant_summary(
+    basis_by_degree: Dict[int, Tuple[object, ...]],
+    differentials: Dict[int, Matrix],
+) -> FiniteBlockInvariantSummary:
+    """Compute cochain homology dimensions and d^2 = 0 in one pass."""
+    homology_dimensions = []
+    has_square_zero = True
+    for degree in sorted(basis_by_degree):
+        dim_c = len(basis_by_degree[degree])
+        d_curr = differentials.get(degree)
+        d_prev = differentials.get(degree - 1)
+        rank_curr = exact_matrix_rank(d_curr)
+        rank_prev = exact_matrix_rank(d_prev)
+        homology_dimensions.append((degree, (dim_c - rank_curr) - rank_prev))
+        if has_square_zero and d_curr is not None:
+            d_next = differentials.get(degree + 1)
+            if d_next is not None and not _matrix_product_is_zero(d_next, d_curr):
+                has_square_zero = False
+    return FiniteBlockInvariantSummary(tuple(homology_dimensions), has_square_zero)
+
+
+def _chain_block_invariant_summary(
+    basis_by_degree: Dict[int, Tuple[object, ...]],
+    differentials: Dict[int, Matrix],
+) -> FiniteBlockInvariantSummary:
+    """Compute chain homology dimensions and d^2 = 0 in one pass."""
+    homology_dimensions = []
+    has_square_zero = True
+    max_degree = max(basis_by_degree)
+    for degree in range(max_degree + 1):
+        dim_c = len(basis_by_degree[degree])
+        d_down = differentials.get(degree)
+        d_up = differentials.get(degree + 1)
+        rank_down = exact_matrix_rank(d_down)
+        rank_up = exact_matrix_rank(d_up)
+        homology_dimensions.append((degree, (dim_c - rank_down) - rank_up))
+        if has_square_zero and d_down is not None:
+            d_prev = differentials.get(degree - 1)
+            if d_prev is not None and not _matrix_product_is_zero(d_prev, d_down):
+                has_square_zero = False
+    return FiniteBlockInvariantSummary(tuple(homology_dimensions), has_square_zero)
+
+
+def mixed_constraint_ghost_block_invariant_summary(
+    block: MixedConstraintGhostBRSTBlock,
+) -> FiniteBlockInvariantSummary:
+    """One-pass homology and square-zero summary for a mixed BRST block."""
+    return _cochain_block_invariant_summary(block.basis_by_brst_degree, block.differentials)
+
+
+def survivor_coupled_block_invariant_summary(
+    block: SurvivorCoupledBRSTBlock,
+) -> FiniteBlockInvariantSummary:
+    """One-pass homology and square-zero summary for a survivor-coupled BRST block."""
+    return _cochain_block_invariant_summary(block.basis_by_brst_degree, block.differentials)
+
+
+def semidirect_survivor_block_invariant_summary(
+    block: SemidirectSurvivorBRSTBlock,
+) -> FiniteBlockInvariantSummary:
+    """One-pass homology and square-zero summary for a semidirect survivor BRST block."""
+    return _cochain_block_invariant_summary(block.basis_by_brst_degree, block.differentials)
+
+
+def linear_constraint_block_invariant_summary(
+    block: LinearConstraintBRSTBlock,
+) -> FiniteBlockInvariantSummary:
+    """One-pass homology and square-zero summary for a linear constraint block."""
+    return _chain_block_invariant_summary(block.basis_by_chain_degree, block.differentials)
+
+
+def _block_invariant_summaries(
+    blocks: Iterable[object],
+    summary_fn: Callable[[object], FiniteBlockInvariantSummary],
+) -> Tuple[FiniteBlockInvariantSummary, ...]:
+    """Materialize block summaries once when multiple invariant predicates are needed."""
+    return tuple(summary_fn(block) for block in blocks)
+
+
+def _all_block_summaries_have_square_zero(
+    summaries: Iterable[FiniteBlockInvariantSummary],
+) -> bool:
+    """Whether every block summary satisfies d^2 = 0."""
+    return all(summary.has_square_zero for summary in summaries)
+
+
+def _all_block_summaries_are_acyclic(
+    summaries: Iterable[FiniteBlockInvariantSummary],
+) -> bool:
+    """Whether every block summary has zero homology."""
+    return all(summary.is_acyclic for summary in summaries)
+
+
+def _all_blocks_have_square_zero_and_are_acyclic(
+    blocks: Iterable[object],
+    summary_fn: Callable[[object], FiniteBlockInvariantSummary],
+) -> bool:
+    """Hot-path combined invariant check that avoids a second rank pass."""
+    for block in blocks:
+        summary = summary_fn(block)
+        if not summary.has_square_zero or not summary.is_acyclic:
+            return False
+    return True
 
 
 def _basis_expression_from_coefficients(
@@ -731,6 +892,7 @@ def partition_pair_ghost_profiles(
     )
 
 
+@lru_cache(maxsize=None)
 def _partition_pair_default_constraint_counts(partition: Tuple[int, ...]) -> Tuple[int, int]:
     """Default source/target truncation counts for one non-principal partition pair."""
     case = nonprincipal_type_a_case(partition)
@@ -1327,6 +1489,8 @@ def _reduced_candidate_bracket_table(
     candidate_columns = Matrix.hstack(
         *[candidate_matrices[candidate.label].reshape(next(iter(basis_matrices.values())).rows ** 2, 1) for candidate in candidates]
     )
+    pivot_rows = tuple(int(index) for index in candidate_columns.T.rref()[1])
+    reduced_solver = candidate_columns.extract(pivot_rows, list(range(candidate_columns.cols))).inv()
     brackets: Dict[Tuple[str, str], Dict[str, object]] = {}
     labels = [candidate.label for candidate in candidates]
     n = next(iter(basis_matrices.values())).rows
@@ -1336,7 +1500,7 @@ def _reduced_candidate_bracket_table(
             if commutator == zeros(n, n):
                 brackets[(left, right)] = {}
                 continue
-            coefficients = candidate_columns.gauss_jordan_solve(commutator.reshape(n * n, 1))[0]
+            coefficients = reduced_solver * commutator.reshape(n * n, 1).extract(pivot_rows, [0])
             brackets[(left, right)] = {
                 labels[index]: simplify(coefficients[index, 0])
                 for index in range(len(labels))
@@ -2346,6 +2510,89 @@ def _survivor_action_by_c_ghost(
             image.get(item.target_survivor_label, 0) + sympify(item.coefficient)
         )
     return action
+
+
+@lru_cache(maxsize=None)
+def _indexed_survivor_action_by_source_and_c_ghost(
+    survivor_labels: Tuple[str, ...],
+    c_ghost_labels: Tuple[str, ...],
+    survivor_action_terms: Tuple[SurvivorActionTermEntry, ...],
+) -> Dict[int, Dict[int, Tuple[Tuple[int, object], ...]]]:
+    """Grouped survivor action with source/ghost/target labels resolved to indices."""
+    survivor_index = {label: index for index, label in enumerate(survivor_labels)}
+    c_index = _ghost_label_index_map(c_ghost_labels)
+    grouped: Dict[int, Dict[int, Dict[int, object]]] = {}
+    for item in survivor_action_terms:
+        source = survivor_index[item.source_survivor_label]
+        ghost = c_index[item.c_ghost]
+        target = survivor_index[item.target_survivor_label]
+        source_group = grouped.setdefault(source, {})
+        target_group = source_group.setdefault(ghost, {})
+        target_group[target] = simplify(
+            target_group.get(target, 0) + sympify(item.coefficient)
+        )
+    return {
+        source: {
+            ghost: tuple(
+                (target, coefficient)
+                for target, coefficient in sorted(target_group.items())
+                if coefficient != 0
+            )
+            for ghost, target_group in ghost_groups.items()
+        }
+        for source, ghost_groups in grouped.items()
+    }
+
+
+@lru_cache(maxsize=None)
+def _indexed_current_action_terms(
+    shifted_current_labels: Tuple[str, ...],
+    c_ghost_labels: Tuple[str, ...],
+    b_ghost_labels: Tuple[str, ...],
+    current_action_terms: Tuple[CurrentActionTermEntry, ...],
+) -> Dict[int, Tuple[Tuple[int, int, int, int, object], ...]]:
+    """Current-action terms grouped by c-ghost with root labels resolved to indices."""
+    c_index = _ghost_label_index_map(c_ghost_labels)
+    u_index = {_label_root(label): index for index, label in enumerate(shifted_current_labels)}
+    b_index = {_label_root(label): index for index, label in enumerate(b_ghost_labels)}
+    grouped: Dict[int, Dict[Tuple[int, int, int, int], object]] = {}
+    for item in current_action_terms:
+        ghost = c_index[item.c_ghost]
+        key = (
+            u_index[item.source_root_label],
+            u_index[item.target_root_label],
+            b_index[item.source_root_label],
+            b_index[item.target_root_label],
+        )
+        ghost_group = grouped.setdefault(ghost, {})
+        ghost_group[key] = simplify(ghost_group.get(key, 0) + sympify(item.coefficient))
+    return {
+        ghost: tuple(
+            (source_u, target_u, source_b, target_b, coefficient)
+            for (source_u, target_u, source_b, target_b), coefficient in sorted(action_group.items())
+            if coefficient != 0
+        )
+        for ghost, action_group in grouped.items()
+    }
+
+
+@lru_cache(maxsize=None)
+def _monomial_nonzero_entries(monomial: Tuple[int, ...]) -> Tuple[Tuple[int, int], ...]:
+    """Indices and exponents of nonzero monomial entries."""
+    return tuple((index, exponent) for index, exponent in enumerate(monomial) if exponent)
+
+
+@lru_cache(maxsize=None)
+def _retarget_monomial(
+    monomial: Tuple[int, ...],
+    source_index: int,
+    target_index: int,
+) -> Tuple[int, ...]:
+    """Move one unit of monomial weight from source to target."""
+    target = list(monomial)
+    target[source_index] -= 1
+    target[target_index] += 1
+    return tuple(target)
 
 
 def _apply_survivor_action_to_linear_combination(
@@ -3363,6 +3610,7 @@ def _remove_ghost_index(
     return sign, basis[:position] + basis[position + 1 :]
 
 
+@lru_cache(maxsize=None)
 def character_wedge_differential(
     num_ghosts: int,
     chi_vector: Tuple[object, ...],
@@ -3974,6 +4222,24 @@ def hook_pair_ds_seed(
     This remains a truncated chain-level scaffold: the source/target sectors are
     finite exterior complexes with symbolic character entries.
     """
+    return _hook_pair_ds_seed_cached(
+        n,
+        r,
+        sympify(level),
+        source_num_constraints,
+        target_num_constraints,
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_ds_seed_cached(
+    n: int,
+    r: int,
+    level,
+    source_num_constraints: int | None,
+    target_num_constraints: int | None,
+) -> HookPairDSComplexSeed:
+    """Cached paired symbolic DS complexes keyed by normalized level and truncation counts."""
     default_source, default_target = hook_pair_constraint_counts_ansatz_type_a(n, r)
     if source_num_constraints is None:
         source_num_constraints = default_source
@@ -3983,8 +4249,7 @@ def hook_pair_ds_seed(
     source_profile = _truncate_ghost_profile(source_profile, source_num_constraints, "source")
     target_profile = _truncate_ghost_profile(target_profile, target_num_constraints, "target")
 
-    k = sympify(level)
-    case = nonprincipal_hook_case(n, r, level=k)
+    case = nonprincipal_hook_case(n, r, level=level)
     partition_tag = "_".join(str(part) for part in case.partition)
     dual_tag = "_".join(str(part) for part in case.dual_partition)
 
@@ -4004,7 +4269,7 @@ def hook_pair_ds_seed(
         r=r,
         source_partition=case.partition,
         target_partition=case.dual_partition,
-        source_level=k,
+        source_level=level,
         target_level=case.level_shift,
         source_complex=source_complex,
         target_complex=target_complex,
@@ -4054,9 +4319,14 @@ def hook_pair_specialized_complexes(
 
 def first_nonselfdual_hook_pair_ds_seed(level=Symbol("k")) -> HookPairDSComplexSeed:
     """Paired DS seed complexes for the first non-self-dual type-A hook pair."""
-    k = sympify(level)
+    return _first_nonselfdual_hook_pair_ds_seed_cached(sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _first_nonselfdual_hook_pair_ds_seed_cached(level) -> HookPairDSComplexSeed:
+    """Cached first hook-pair DS seed keyed by normalized level."""
     n, r, _ = first_nonselfdual_type_a_hook_pair()
-    case = nonprincipal_hook_case(n, r, level=k)
+    case = nonprincipal_hook_case(n, r, level=level)
     source_constraints, target_constraints = first_nonselfdual_hook_pair_constraints()
     source_character, target_character = first_nonselfdual_hook_pair_constraint_characters()
     source_quadratic, target_quadratic = first_nonselfdual_hook_pair_quadratic_ghost_term_support()
@@ -4079,7 +4349,7 @@ def first_nonselfdual_hook_pair_ds_seed(level=Symbol("k")) -> HookPairDSComplexS
         r=r,
         source_partition=case.partition,
         target_partition=case.dual_partition,
-        source_level=k,
+        source_level=level,
         target_level=case.level_shift,
         source_complex=source_complex,
         target_complex=target_complex,
@@ -4163,6 +4433,22 @@ def hook_pair_ds_seed_catalog(
     target_num_constraints: int | None = None,
 ) -> Tuple[HookPairDSComplexSeed, ...]:
     """Enumerate hook/subregular DS pair seeds in type A."""
+    return _hook_pair_ds_seed_catalog_cached(
+        max_n,
+        sympify(level),
+        source_num_constraints,
+        target_num_constraints,
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_ds_seed_catalog_cached(
+    max_n: int,
+    level,
+    source_num_constraints: int | None,
+    target_num_constraints: int | None,
+) -> Tuple[HookPairDSComplexSeed, ...]:
+    """Cached hook/subregular DS pair seed catalog keyed by normalized level."""
     if max_n < 3:
         return ()
     return tuple(
@@ -4180,9 +4466,17 @@ def hook_pair_ds_seed_catalog(
 
 def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[str, bool]:
     """Sanity checks for the hook/subregular DS pair complex catalog."""
-    k = sympify(level)
+    return dict(_verify_hook_pair_ds_seed_catalog_items(max_n, sympify(level)))
+
+
+@lru_cache(maxsize=None)
+def _verify_hook_pair_ds_seed_catalog_items(
+    max_n: int,
+    level,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook/subregular DS pair catalog verification."""
     results: Dict[str, bool] = {}
-    seeds = hook_pair_ds_seed_catalog(max_n=max_n, level=k)
+    seeds = hook_pair_ds_seed_catalog(max_n=max_n, level=level)
 
     results["hook DS pair catalog is nonempty"] = bool(seeds)
     results["hook DS pair catalog stays on frontier track"] = all(
@@ -4195,13 +4489,13 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
     for seed in seeds:
         n = seed.n
         r = seed.r
-        case = nonprincipal_hook_case(n, r, level=k)
+        case = nonprincipal_hook_case(n, r, level=level)
         expected_source_count, expected_target_count = hook_pair_constraint_counts_ansatz_type_a(n, r)
         key = f"A{n-1} hook r={r}"
         source_spec, target_spec = hook_pair_specialized_complexes(
             n,
             r,
-            level=k,
+            level=level,
             source_num_constraints=len(seed.source_complex.ghost_labels),
             target_num_constraints=len(seed.target_complex.ghost_labels),
         )
@@ -4211,7 +4505,7 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
             and seed.target_partition == case.dual_partition
         )
         results[f"{key} level shift propagation"] = (
-            simplify(seed.target_level - nonprincipal_hook_level_shift_type_a(n, r, k)) == 0
+            simplify(seed.target_level - nonprincipal_hook_level_shift_type_a(n, r, level)) == 0
         )
         results[f"{key} ansatz ghost-count propagation"] = (
             len(seed.source_complex.ghost_labels) == expected_source_count
@@ -4230,22 +4524,30 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
         results[f"{key} source specialization acyclic"] = complex_is_acyclic(source_spec)
         results[f"{key} target specialization acyclic"] = complex_is_acyclic(target_spec)
 
-    first = first_nonselfdual_hook_pair_ds_seed(level=k)
+    first = first_nonselfdual_hook_pair_ds_seed(level=level)
     results["first hook DS pair remains A3"] = (
         first.n == 4
         and first.r == 1
         and first.source_partition == (3, 1)
         and first.target_partition == (2, 1, 1)
     )
-    return results
+    return tuple(results.items())
 
 
 def verify_hook_pair_seed_alignment(max_n: int = 8, level=Symbol("k")) -> Dict[str, bool]:
     """Cross-check DS pair catalog against non-principal DS seed catalog."""
-    k = sympify(level)
+    return dict(_verify_hook_pair_seed_alignment_items(max_n, sympify(level)))
+
+
+@lru_cache(maxsize=None)
+def _verify_hook_pair_seed_alignment_items(
+    max_n: int,
+    level,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook DS seed alignment checks."""
     results: Dict[str, bool] = {}
-    pair_catalog = hook_pair_ds_seed_catalog(max_n=max_n, level=k)
-    seed_catalog = nonprincipal_hook_seed_catalog(max_n=max_n, level=k)
+    pair_catalog = hook_pair_ds_seed_catalog(max_n=max_n, level=level)
+    seed_catalog = nonprincipal_hook_seed_catalog(max_n=max_n, level=level)
 
     results["hook pair catalog matches seed catalog size"] = (
         len(pair_catalog) == len(seed_catalog)
@@ -4270,7 +4572,7 @@ def verify_hook_pair_seed_alignment(max_n: int = 8, level=Symbol("k")) -> Dict[s
             and len(pair_seed.target_complex.ghost_labels) == expected_target_count
         )
 
-    return results
+    return tuple(results.items())
 
 
 def verify_hook_pair_first_transfer_correction_catalog(
@@ -4312,17 +4614,15 @@ def verify_hook_pair_corrected_semidirect_catalog(
         return results
     for n in range(3, max_n + 1):
         for r in range(1, n - 1):
-            source_blocks, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
-                n,
-                r,
-                max_constraint_total_degree=max_constraint_total_degree,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=max_internal_ce_degree,
-            )
             key = f"A{n-1} hook r={r}"
             results[f"{key} corrected semidirect blocks square to zero"] = all(
-                semidirect_survivor_block_has_square_zero(block)
-                for block in source_blocks + target_blocks
+                _hook_pair_corrected_semidirect_square_zero_flags(
+                    n,
+                    r,
+                    max_constraint_total_degree=max_constraint_total_degree,
+                    survivor_total_degree=survivor_total_degree,
+                    max_internal_ce_degree=max_internal_ce_degree,
+                )
             )
     return results
 
@@ -4353,6 +4653,7 @@ def verify_hook_pair_corrected_semidirect_duality_catalog(
     return results
 
 
+@lru_cache(maxsize=None)
 def hook_pair_corrected_semidirect_family_holds_via_duality(
     n: int,
     max_constraint_total_degree: int = 0,
@@ -4362,20 +4663,16 @@ def hook_pair_corrected_semidirect_family_holds_via_duality(
     """Check one hook family using direct half-catalog square-zero plus transpose duality."""
     if n < 3:
         return True
-    for r in range(1, n - 1):
+    for r in _hook_family_representative_rs(n):
         dual_r = n - r - 1
-        if r > dual_r:
-            continue
-        source_blocks, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
-            n,
-            r,
-            max_constraint_total_degree=max_constraint_total_degree,
-            survivor_total_degree=survivor_total_degree,
-            max_internal_ce_degree=max_internal_ce_degree,
-        )
         if not all(
-            semidirect_survivor_block_has_square_zero(block)
-            for block in source_blocks + target_blocks
+            _hook_pair_corrected_semidirect_square_zero_flags(
+                n,
+                r,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
         ):
             return False
         if r < dual_r and not hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
@@ -4396,21 +4693,38 @@ def verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
     max_internal_ce_degree: int = 1,
 ) -> Dict[str, bool]:
     """Catalog checks that recover each hook family from a half-catalog plus duality."""
-    results: Dict[str, bool] = {}
+    return dict(
+        _hook_pair_corrected_semidirect_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_corrected_semidirect_family_via_duality_catalog_items(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook corrected family-via-duality checks."""
     if max_n < 3:
-        results["hook corrected semidirect family-via-duality catalog is empty below rank three"] = True
-        return results
-    for n in range(3, max_n + 1):
-        key = f"A{n-1} hook family"
-        results[f"{key} corrected semidirect square-zero follows by duality"] = (
+        return (("hook corrected semidirect family-via-duality catalog is empty below rank three", True),)
+    return tuple(
+        (
+            f"A{n-1} hook family corrected semidirect square-zero follows by duality",
             hook_pair_corrected_semidirect_family_holds_via_duality(
                 n,
                 max_constraint_total_degree=max_constraint_total_degree,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=max_internal_ce_degree,
-            )
+            ),
         )
-    return results
+        for n in range(3, max_n + 1)
+    )
 
 
 @lru_cache(maxsize=None)
@@ -4548,7 +4862,8 @@ def _ghost_brst_images_on_basis_element(
 ) -> Dict[Tuple[int, ...], object]:
     """Image of one c-ghost exterior basis element under the ghost BRST differential."""
     coefficients: Dict[Tuple[int, ...], object] = {}
-    ghost_index = {label: index for index, label in enumerate(ghost_labels)}
+    ghost_index = _ghost_label_index_map(ghost_labels)
+    indexed_quadratic_terms = _indexed_quadratic_ghost_terms(ghost_labels, quadratic_terms)
 
     for ghost_idx, chi_value in enumerate(chi_vector):
         inserted = _insert_ghost_index(basis, ghost_idx)
@@ -4557,27 +4872,51 @@ def _ghost_brst_images_on_basis_element(
         sign, target = inserted
         coefficients[target] = coefficients.get(target, 0) + sign * sympify(chi_value)
 
-    for item in quadratic_terms:
+    for target_c_idx, left_c_idx, right_c_idx, coefficient in indexed_quadratic_terms:
         contraction = _remove_ghost_index(
             basis,
-            ghost_index[_dual_c_ghost_label(item.target_b_ghost)],
+            target_c_idx,
         )
         if contraction is None:
             continue
         sign_remove, reduced_basis = contraction
-        inserted_left = _insert_ghost_index(reduced_basis, ghost_index[item.left_c_ghost])
+        inserted_left = _insert_ghost_index(reduced_basis, left_c_idx)
         if inserted_left is None:
             continue
         sign_left, left_basis = inserted_left
-        inserted_right = _insert_ghost_index(left_basis, ghost_index[item.right_c_ghost])
+        inserted_right = _insert_ghost_index(left_basis, right_c_idx)
         if inserted_right is None:
             continue
         sign_right, target = inserted_right
         coefficients[target] = coefficients.get(target, 0) - (
-            sympify(item.coefficient) * sign_remove * sign_left * sign_right
+            sympify(coefficient) * sign_remove * sign_left * sign_right
         )
 
     return {target: simplify(value) for target, value in coefficients.items() if value != 0}
+
+
+@lru_cache(maxsize=None)
+def _ghost_label_index_map(ghost_labels: Tuple[str, ...]) -> Dict[str, int]:
+    """Index lookup for a fixed ordered ghost basis."""
+    return {label: index for index, label in enumerate(ghost_labels)}
+
+
+@lru_cache(maxsize=None)
+def _indexed_quadratic_ghost_terms(
+    ghost_labels: Tuple[str, ...],
+    quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
+) -> Tuple[Tuple[int, int, int, object], ...]:
+    """Quadratic ghost terms with labels resolved to fixed ghost indices."""
+    ghost_index = _ghost_label_index_map(ghost_labels)
+    return tuple(
+        (
+            ghost_index[_dual_c_ghost_label(item.target_b_ghost)],
+            ghost_index[item.left_c_ghost],
+            ghost_index[item.right_c_ghost],
+            item.coefficient,
+        )
+        for item in quadratic_terms
+    )
 
 
 @lru_cache(maxsize=None)
@@ -4609,6 +4948,7 @@ def _label_root(label: str) -> str:
     return parts[-1]
 
 
+@lru_cache(maxsize=None)
 def current_action_differential(
     shifted_current_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -4634,37 +4974,37 @@ def current_action_differential(
         return matrix
 
     target_index = {basis: row for row, basis in enumerate(target_basis)}
-    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
-    u_index = {_label_root(label): index for index, label in enumerate(shifted_current_labels)}
-    b_index = {_label_root(label): index for index, label in enumerate(b_ghost_labels)}
+    indexed_current_actions = _indexed_current_action_terms(
+        shifted_current_labels,
+        c_ghost_labels,
+        b_ghost_labels,
+        current_action_terms,
+    )
 
     for col, (monomial, c_subset, b_subset) in enumerate(source_basis):
-        for item in current_action_terms:
-            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+        for c_ghost_index, action_terms in indexed_current_actions.items():
+            inserted = _insert_ghost_index(c_subset, c_ghost_index)
             if inserted is None:
                 continue
             c_sign, target_c_subset = inserted
 
-            source_u = u_index[item.source_root_label]
-            target_u = u_index[item.target_root_label]
-            exponent = monomial[source_u]
-            if exponent:
-                target_monomial = list(monomial)
-                target_monomial[source_u] -= 1
-                target_monomial[target_u] += 1
-                target = (tuple(target_monomial), target_c_subset, b_subset)
-                row = target_index[target]
-                matrix[row, col] += c_sign * exponent * sympify(item.coefficient)
+            for source_u, target_u, source_b, target_b, coefficient in action_terms:
+                exponent = monomial[source_u]
+                if exponent:
+                    target_monomial = list(monomial)
+                    target_monomial[source_u] -= 1
+                    target_monomial[target_u] += 1
+                    target = (tuple(target_monomial), target_c_subset, b_subset)
+                    row = target_index[target]
+                    matrix[row, col] += c_sign * exponent * coefficient
 
-            source_b = b_index[item.source_root_label]
-            target_b = b_index[item.target_root_label]
-            replaced = _replace_exterior_index(b_subset, source_b, target_b)
-            if replaced is None:
-                continue
-            b_sign, target_b_subset = replaced
-            target = (monomial, target_c_subset, target_b_subset)
-            row = target_index[target]
-            matrix[row, col] += c_sign * b_sign * sympify(item.coefficient)
+                replaced = _replace_exterior_index(b_subset, source_b, target_b)
+                if replaced is None:
+                    continue
+                b_sign, target_b_subset = replaced
+                target = (monomial, target_c_subset, target_b_subset)
+                row = target_index[target]
+                matrix[row, col] += c_sign * b_sign * coefficient
 
     return matrix
 
@@ -4853,6 +5193,7 @@ def survivor_coupled_block_basis(
     return tuple(basis)
 
 
+@lru_cache(maxsize=None)
 def survivor_action_differential(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -4884,31 +5225,31 @@ def survivor_action_differential(
         return matrix
 
     target_index = {basis: row for row, basis in enumerate(target_basis)}
-    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
-    survivor_index = {label: index for index, label in enumerate(survivor_labels)}
+    indexed_survivor_actions = _indexed_survivor_action_by_source_and_c_ghost(
+        survivor_labels,
+        c_ghost_labels,
+        survivor_action_terms,
+    )
 
     for col, (u_monomial, survivor_monomial, c_subset, b_subset) in enumerate(source_basis):
-        for item in survivor_action_terms:
-            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
-            if inserted is None:
-                continue
-            c_sign, target_c_subset = inserted
-            source_survivor = survivor_index[item.source_survivor_label]
-            target_survivor = survivor_index[item.target_survivor_label]
-            exponent = survivor_monomial[source_survivor]
-            if exponent == 0:
-                continue
-            target_survivor_monomial = list(survivor_monomial)
-            target_survivor_monomial[source_survivor] -= 1
-            target_survivor_monomial[target_survivor] += 1
-            target = (
-                u_monomial,
-                tuple(target_survivor_monomial),
-                target_c_subset,
-                b_subset,
-            )
-            row = target_index[target]
-            matrix[row, col] += c_sign * exponent * sympify(item.coefficient)
+        for source_survivor, exponent in _monomial_nonzero_entries(survivor_monomial):
+            for c_ghost_index, target_images in indexed_survivor_actions.get(source_survivor, {}).items():
+                inserted = _insert_ghost_index(c_subset, c_ghost_index)
+                if inserted is None:
+                    continue
+                c_sign, target_c_subset = inserted
+                for target_survivor, coefficient in target_images:
+                    target_survivor_monomial = list(survivor_monomial)
+                    target_survivor_monomial[source_survivor] -= 1
+                    target_survivor_monomial[target_survivor] += 1
+                    target = (
+                        u_monomial,
+                        tuple(target_survivor_monomial),
+                        target_c_subset,
+                        b_subset,
+                    )
+                    row = target_index[target]
+                    matrix[row, col] += c_sign * exponent * sympify(coefficient)
 
     return matrix
 
@@ -4954,29 +5295,29 @@ def internal_survivor_action_differential(
         return matrix
 
     target_index = {basis: row for row, basis in enumerate(target_basis)}
-    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
-    survivor_index = {label: index for index, label in enumerate(survivor_labels)}
+    indexed_survivor_actions = _indexed_survivor_action_by_source_and_c_ghost(
+        survivor_labels,
+        c_ghost_labels,
+        survivor_action_terms,
+    )
 
     for col, (survivor_monomial, c_subset) in enumerate(source_basis):
-        for item in survivor_action_terms:
-            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
-            if inserted is None:
-                continue
-            c_sign, target_c_subset = inserted
-            source_survivor = survivor_index[item.source_survivor_label]
-            target_survivor = survivor_index[item.target_survivor_label]
-            exponent = survivor_monomial[source_survivor]
-            if exponent == 0:
-                continue
-            target_survivor_monomial = list(survivor_monomial)
-            target_survivor_monomial[source_survivor] -= 1
-            target_survivor_monomial[target_survivor] += 1
-            target = (
-                tuple(target_survivor_monomial),
-                target_c_subset,
-            )
-            row = target_index[target]
-            matrix[row, col] += -c_sign * exponent * sympify(item.coefficient)
+        for source_survivor, exponent in _monomial_nonzero_entries(survivor_monomial):
+            for c_ghost_index, target_images in indexed_survivor_actions.get(source_survivor, {}).items():
+                inserted = _insert_ghost_index(c_subset, c_ghost_index)
+                if inserted is None:
+                    continue
+                c_sign, target_c_subset = inserted
+                for target_survivor, coefficient in target_images:
+                    target_survivor_monomial = list(survivor_monomial)
+                    target_survivor_monomial[source_survivor] -= 1
+                    target_survivor_monomial[target_survivor] += 1
+                    target = (
+                        tuple(target_survivor_monomial),
+                        target_c_subset,
+                    )
+                    row = target_index[target]
+                    matrix[row, col] += -c_sign * exponent * sympify(coefficient)
 
     return matrix
 
@@ -5143,6 +5484,7 @@ def external_survivor_action_on_internal_ghosts_differential(
     return matrix
 
 
+@lru_cache(maxsize=None)
 def semidirect_survivor_brst_differential(
     shifted_current_labels: Tuple[str, ...],
     survivor_labels: Tuple[str, ...],
@@ -5191,25 +5533,61 @@ def semidirect_survivor_brst_differential(
         max_internal_ce_degree,
         brst_degree + 1,
     )
-    matrix = zeros(len(target_basis), len(source_basis))
     if not source_basis or not target_basis:
-        return matrix
+        return zeros(len(target_basis), len(source_basis))
 
     target_index = {basis: row for row, basis in enumerate(target_basis)}
-    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
-    u_index = {_label_root(label): index for index, label in enumerate(shifted_current_labels)}
-    b_index = {_label_root(label): index for index, label in enumerate(b_ghost_labels)}
+    indexed_current_actions = _indexed_current_action_terms(
+        shifted_current_labels,
+        c_ghost_labels,
+        b_ghost_labels,
+        current_action_terms,
+    )
     internal_zero_character = (Rational(0),) * num_survivors
-    internal_index = {label: index for index, label in enumerate(internal_c_ghost_labels)}
-    survivor_index = {label: index for index, label in enumerate(survivor_labels)}
-
-    for col, (u_monomial, survivor_monomial, c_subset, b_subset, internal_c_subset) in enumerate(source_basis):
-        for target_c_subset, coefficient in _ghost_brst_images_on_basis_element(
+    indexed_survivor_actions = _indexed_survivor_action_by_source_and_c_ghost(
+        survivor_labels,
+        c_ghost_labels,
+        survivor_action_terms,
+    )
+    indexed_internal_survivor_actions = _indexed_survivor_action_by_source_and_c_ghost(
+        survivor_labels,
+        internal_c_ghost_labels,
+        internal_survivor_action_terms,
+    )
+    external_ghost_images = {
+        c_subset: _ghost_brst_images_on_basis_element(
             c_subset,
             c_ghost_labels,
             chi_vector,
             quadratic_terms,
-        ).items():
+        )
+        for c_subset in {basis[2] for basis in source_basis}
+    }
+    internal_ghost_images = {
+        internal_c_subset: _ghost_brst_images_on_basis_element(
+            internal_c_subset,
+            internal_c_ghost_labels,
+            internal_zero_character,
+            internal_quadratic_terms,
+        )
+        for internal_c_subset in {basis[4] for basis in source_basis}
+        if len(internal_c_subset) < max_internal_ce_degree
+    }
+    entries: Dict[Tuple[int, int], object] = {}
+
+    def add_entry(row: int, col: int, value: object) -> None:
+        if value == 0:
+            return
+        key = (row, col)
+        updated = entries.get(key, 0) + value
+        if updated == 0:
+            entries.pop(key, None)
+            return
+        entries[key] = updated
+
+    for col, (u_monomial, survivor_monomial, c_subset, b_subset, internal_c_subset) in enumerate(source_basis):
+        internal_degree = len(internal_c_subset)
+        for target_c_subset, coefficient in external_ghost_images[c_subset].items():
             target = (
                 u_monomial,
                 survivor_monomial,
@@ -5218,7 +5596,7 @@ def semidirect_survivor_brst_differential(
                 internal_c_subset,
             )
             row = target_index[target]
-            matrix[row, col] += coefficient
+            add_entry(row, col, coefficient)
 
         c_sign = -1 if len(c_subset) % 2 else 1
         for position, b_var_index in enumerate(b_subset):
@@ -5232,147 +5610,150 @@ def semidirect_survivor_brst_differential(
                 internal_c_subset,
             )
             row = target_index[target]
-            matrix[row, col] += c_sign * (-1 if position % 2 else 1)
+            add_entry(row, col, c_sign * (-1 if position % 2 else 1))
 
-        for item in current_action_terms:
-            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+        for c_ghost_index, action_terms in indexed_current_actions.items():
+            inserted = _insert_ghost_index(c_subset, c_ghost_index)
             if inserted is None:
                 continue
             insert_sign, target_c_subset = inserted
 
-            source_u = u_index[item.source_root_label]
-            target_u = u_index[item.target_root_label]
-            exponent = u_monomial[source_u]
-            if exponent:
-                target_u_monomial = list(u_monomial)
-                target_u_monomial[source_u] -= 1
-                target_u_monomial[target_u] += 1
+            for source_u, target_u, source_b, target_b, coefficient in action_terms:
+                exponent = u_monomial[source_u]
+                if exponent:
+                    target_u_monomial = list(u_monomial)
+                    target_u_monomial[source_u] -= 1
+                    target_u_monomial[target_u] += 1
+                    target = (
+                        tuple(target_u_monomial),
+                        survivor_monomial,
+                        target_c_subset,
+                        b_subset,
+                        internal_c_subset,
+                    )
+                    row = target_index[target]
+                    add_entry(row, col, insert_sign * exponent * coefficient)
+
+                replaced = _replace_exterior_index(b_subset, source_b, target_b)
+                if replaced is None:
+                    continue
+                b_sign, target_b_subset = replaced
                 target = (
-                    tuple(target_u_monomial),
+                    u_monomial,
                     survivor_monomial,
                     target_c_subset,
-                    b_subset,
+                    target_b_subset,
                     internal_c_subset,
                 )
                 row = target_index[target]
-                matrix[row, col] += insert_sign * exponent * sympify(item.coefficient)
+                add_entry(row, col, insert_sign * b_sign * coefficient)
 
-            source_b = b_index[item.source_root_label]
-            target_b = b_index[item.target_root_label]
-            replaced = _replace_exterior_index(b_subset, source_b, target_b)
-            if replaced is None:
-                continue
-            b_sign, target_b_subset = replaced
-            target = (
-                u_monomial,
-                survivor_monomial,
-                target_c_subset,
-                target_b_subset,
-                internal_c_subset,
-            )
-            row = target_index[target]
-            matrix[row, col] += insert_sign * b_sign * sympify(item.coefficient)
+        for source_survivor, exponent in _monomial_nonzero_entries(survivor_monomial):
+            for c_ghost_index, target_images in indexed_survivor_actions.get(source_survivor, {}).items():
+                inserted = _insert_ghost_index(c_subset, c_ghost_index)
+                if inserted is None:
+                    continue
+                insert_sign, target_c_subset = inserted
+                for target_survivor, coefficient in target_images:
+                    target = (
+                        u_monomial,
+                        _retarget_monomial(
+                            survivor_monomial,
+                            source_survivor,
+                            target_survivor,
+                        ),
+                        target_c_subset,
+                        b_subset,
+                        internal_c_subset,
+                    )
+                    row = target_index[target]
+                    add_entry(row, col, insert_sign * exponent * sympify(coefficient))
 
-        for item in survivor_action_terms:
-            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
-            if inserted is None:
-                continue
-            insert_sign, target_c_subset = inserted
-            source_survivor = survivor_index[item.source_survivor_label]
-            target_survivor = survivor_index[item.target_survivor_label]
-            exponent = survivor_monomial[source_survivor]
-            if exponent == 0:
-                continue
-            target_survivor_monomial = list(survivor_monomial)
-            target_survivor_monomial[source_survivor] -= 1
-            target_survivor_monomial[target_survivor] += 1
-            target = (
-                u_monomial,
-                tuple(target_survivor_monomial),
-                target_c_subset,
-                b_subset,
-                internal_c_subset,
-            )
-            row = target_index[target]
-            matrix[row, col] += insert_sign * exponent * sympify(item.coefficient)
-
-        for item in survivor_action_terms:
-            inserted_ext = _insert_ghost_index(c_subset, c_index[item.c_ghost])
-            if inserted_ext is None:
-                continue
-            ext_sign, target_c_subset = inserted_ext
-            target_internal_ghost = internal_index[f"c_survivor_{item.target_survivor_label}"]
-            removed = _remove_ghost_index(internal_c_subset, target_internal_ghost)
-            if removed is None:
-                continue
-            remove_sign, reduced_internal_subset = removed
-            source_internal_ghost = internal_index[f"c_survivor_{item.source_survivor_label}"]
-            inserted_internal = _insert_ghost_index(reduced_internal_subset, source_internal_ghost)
-            if inserted_internal is None:
-                continue
-            internal_sign, target_internal_subset = inserted_internal
-            target = (
-                u_monomial,
-                survivor_monomial,
-                target_c_subset,
-                b_subset,
-                target_internal_subset,
-            )
-            row = target_index[target]
-            matrix[row, col] += (
-                -ext_sign * remove_sign * internal_sign * sympify(item.coefficient)
-            )
+                    removed = _remove_ghost_index(internal_c_subset, target_survivor)
+                    if removed is None:
+                        continue
+                    remove_sign, reduced_internal_subset = removed
+                    inserted_internal = _insert_ghost_index(
+                        reduced_internal_subset,
+                        source_survivor,
+                    )
+                    if inserted_internal is None:
+                        continue
+                    internal_sign, target_internal_subset = inserted_internal
+                    target = (
+                        u_monomial,
+                        survivor_monomial,
+                        target_c_subset,
+                        b_subset,
+                        target_internal_subset,
+                    )
+                    row = target_index[target]
+                    add_entry(
+                        row,
+                        col,
+                        -insert_sign
+                        * remove_sign
+                        * internal_sign
+                        * sympify(coefficient)
+                    )
 
         internal_prefix = -1 if (len(c_subset) + len(b_subset)) % 2 else 1
-        for target_internal_subset, coefficient in _ghost_brst_images_on_basis_element(
-            internal_c_subset,
-            internal_c_ghost_labels,
-            internal_zero_character,
-            internal_quadratic_terms,
-        ).items():
-            target = (
-                u_monomial,
-                survivor_monomial,
-                c_subset,
-                b_subset,
-                target_internal_subset,
-            )
-            row = target_index.get(target)
-            if row is None:
-                continue
-            matrix[row, col] += internal_prefix * coefficient
+        if internal_degree < max_internal_ce_degree:
+            for target_internal_subset, coefficient in internal_ghost_images.get(
+                internal_c_subset, {}
+            ).items():
+                target = (
+                    u_monomial,
+                    survivor_monomial,
+                    c_subset,
+                    b_subset,
+                    target_internal_subset,
+                )
+                row = target_index.get(target)
+                if row is None:
+                    continue
+                add_entry(row, col, internal_prefix * coefficient)
 
-        for item in internal_survivor_action_terms:
-            inserted_internal = _insert_ghost_index(
-                internal_c_subset,
-                internal_index[item.c_ghost],
-            )
-            if inserted_internal is None:
-                continue
-            internal_sign, target_internal_subset = inserted_internal
-            source_survivor = survivor_index[item.source_survivor_label]
-            target_survivor = survivor_index[item.target_survivor_label]
-            exponent = survivor_monomial[source_survivor]
-            if exponent == 0:
-                continue
-            target_survivor_monomial = list(survivor_monomial)
-            target_survivor_monomial[source_survivor] -= 1
-            target_survivor_monomial[target_survivor] += 1
-            target = (
-                u_monomial,
-                tuple(target_survivor_monomial),
-                c_subset,
-                b_subset,
-                target_internal_subset,
-            )
-            row = target_index.get(target)
-            if row is None:
-                continue
-            matrix[row, col] += (
-                -internal_prefix * internal_sign * exponent * sympify(item.coefficient)
-            )
+            for source_survivor, exponent in _monomial_nonzero_entries(survivor_monomial):
+                for c_ghost_index, target_images in indexed_internal_survivor_actions.get(
+                    source_survivor, {}
+                ).items():
+                    inserted_internal = _insert_ghost_index(
+                        internal_c_subset,
+                        c_ghost_index,
+                    )
+                    if inserted_internal is None:
+                        continue
+                    internal_sign, target_internal_subset = inserted_internal
+                    for target_survivor, coefficient in target_images:
+                        target = (
+                            u_monomial,
+                            _retarget_monomial(
+                                survivor_monomial,
+                                source_survivor,
+                                target_survivor,
+                            ),
+                            c_subset,
+                            b_subset,
+                            target_internal_subset,
+                        )
+                        row = target_index.get(target)
+                        if row is None:
+                            continue
+                        add_entry(
+                            row,
+                            col,
+                            -internal_prefix
+                            * internal_sign
+                            * exponent
+                            * sympify(coefficient)
+                        )
 
-    return matrix
+    return SparseMatrix(
+        len(target_basis),
+        len(source_basis),
+        {(row, col): value for (row, col), value in entries.items() if value != 0},
+    )
 
 
 def build_semidirect_survivor_brst_block(
@@ -5476,15 +5857,7 @@ def semidirect_survivor_block_homology_dimensions(
     block: SemidirectSurvivorBRSTBlock,
 ) -> Dict[int, int]:
     """Cohomology dimensions for one semidirect survivor BRST block."""
-    dims: Dict[int, int] = {}
-    for degree in sorted(block.basis_by_brst_degree):
-        dim_c = len(block.basis_by_brst_degree[degree])
-        d_curr = block.differentials.get(degree)
-        d_prev = block.differentials.get(degree - 1)
-        rank_curr = exact_matrix_rank(d_curr)
-        rank_prev = exact_matrix_rank(d_prev)
-        dims[degree] = (dim_c - rank_curr) - rank_prev
-    return dims
+    return dict(semidirect_survivor_block_invariant_summary(block).homology_dimensions)
 
 
 def semidirect_survivor_block_has_square_zero(block: SemidirectSurvivorBRSTBlock) -> bool:
@@ -5493,14 +5866,14 @@ def semidirect_survivor_block_has_square_zero(block: SemidirectSurvivorBRSTBlock
         d_k1 = block.differentials.get(degree + 1)
         if d_k1 is None:
             continue
-        if d_k1 * d_k != zeros(d_k1.rows, d_k.cols):
+        if not _matrix_product_is_zero(d_k1, d_k):
             return False
     return True
 
 
 def semidirect_survivor_block_is_acyclic(block: SemidirectSurvivorBRSTBlock) -> bool:
     """Check whether a semidirect survivor BRST block has zero cohomology."""
-    return all(value == 0 for value in semidirect_survivor_block_homology_dimensions(block).values())
+    return semidirect_survivor_block_invariant_summary(block).is_acyclic
 
 
 def survivor_coupled_brst_differential(
@@ -5543,9 +5916,12 @@ def survivor_coupled_brst_differential(
         return matrix
 
     target_index = {basis: row for row, basis in enumerate(target_basis)}
-    c_index = {label: index for index, label in enumerate(c_ghost_labels)}
-    u_index = {_label_root(label): index for index, label in enumerate(shifted_current_labels)}
-    b_index = {_label_root(label): index for index, label in enumerate(b_ghost_labels)}
+    indexed_current_actions = _indexed_current_action_terms(
+        shifted_current_labels,
+        c_ghost_labels,
+        b_ghost_labels,
+        current_action_terms,
+    )
 
     for col, (u_monomial, survivor_monomial, c_subset, b_subset) in enumerate(source_basis):
         for target_c_subset, coefficient in _ghost_brst_images_on_basis_element(
@@ -5571,37 +5947,34 @@ def survivor_coupled_brst_differential(
             row = target_index[target]
             matrix[row, col] += c_sign * (-1 if position % 2 else 1)
 
-        for item in current_action_terms:
-            inserted = _insert_ghost_index(c_subset, c_index[item.c_ghost])
+        for c_ghost_index, action_terms in indexed_current_actions.items():
+            inserted = _insert_ghost_index(c_subset, c_ghost_index)
             if inserted is None:
                 continue
             insert_sign, target_c_subset = inserted
 
-            source_u = u_index[item.source_root_label]
-            target_u = u_index[item.target_root_label]
-            exponent = u_monomial[source_u]
-            if exponent:
-                target_u_monomial = list(u_monomial)
-                target_u_monomial[source_u] -= 1
-                target_u_monomial[target_u] += 1
-                target = (
-                    tuple(target_u_monomial),
-                    survivor_monomial,
-                    target_c_subset,
-                    b_subset,
-                )
-                row = target_index[target]
-                matrix[row, col] += insert_sign * exponent * sympify(item.coefficient)
+            for source_u, target_u, source_b, target_b, coefficient in action_terms:
+                exponent = u_monomial[source_u]
+                if exponent:
+                    target_u_monomial = list(u_monomial)
+                    target_u_monomial[source_u] -= 1
+                    target_u_monomial[target_u] += 1
+                    target = (
+                        tuple(target_u_monomial),
+                        survivor_monomial,
+                        target_c_subset,
+                        b_subset,
+                    )
+                    row = target_index[target]
+                    matrix[row, col] += insert_sign * exponent * coefficient
 
-            source_b = b_index[item.source_root_label]
-            target_b = b_index[item.target_root_label]
-            replaced = _replace_exterior_index(b_subset, source_b, target_b)
-            if replaced is None:
-                continue
-            b_sign, target_b_subset = replaced
-            target = (u_monomial, survivor_monomial, target_c_subset, target_b_subset)
-            row = target_index[target]
-            matrix[row, col] += insert_sign * b_sign * sympify(item.coefficient)
+                replaced = _replace_exterior_index(b_subset, source_b, target_b)
+                if replaced is None:
+                    continue
+                b_sign, target_b_subset = replaced
+                target = (u_monomial, survivor_monomial, target_c_subset, target_b_subset)
+                row = target_index[target]
+                matrix[row, col] += insert_sign * b_sign * coefficient
 
     matrix += survivor_action_differential(
         survivor_labels,
@@ -5827,7 +6200,7 @@ def internal_survivor_ce_block_has_square_zero(block: InternalSurvivorCEBlock) -
         d_k1 = block.differentials.get(degree + 1)
         if d_k1 is None:
             continue
-        if d_k1 * d_k != zeros(d_k1.rows, d_k.cols):
+        if not _matrix_product_is_zero(d_k1, d_k):
             return False
     return True
 
@@ -5841,15 +6214,7 @@ def survivor_coupled_block_homology_dimensions(
     block: SurvivorCoupledBRSTBlock,
 ) -> Dict[int, int]:
     """Cohomology dimensions for one survivor-coupled BRST block."""
-    dims: Dict[int, int] = {}
-    for degree in sorted(block.basis_by_brst_degree):
-        dim_c = len(block.basis_by_brst_degree[degree])
-        d_curr = block.differentials.get(degree)
-        d_prev = block.differentials.get(degree - 1)
-        rank_curr = exact_matrix_rank(d_curr)
-        rank_prev = exact_matrix_rank(d_prev)
-        dims[degree] = (dim_c - rank_curr) - rank_prev
-    return dims
+    return dict(survivor_coupled_block_invariant_summary(block).homology_dimensions)
 
 
 def survivor_coupled_block_has_square_zero(block: SurvivorCoupledBRSTBlock) -> bool:
@@ -5858,7 +6223,7 @@ def survivor_coupled_block_has_square_zero(block: SurvivorCoupledBRSTBlock) -> b
         d_k1 = block.differentials.get(degree + 1)
         if d_k1 is None:
             continue
-        if d_k1 * d_k != zeros(d_k1.rows, d_k.cols):
+        if not _matrix_product_is_zero(d_k1, d_k):
             return False
     return True
 
@@ -5872,17 +6237,7 @@ def mixed_constraint_ghost_block_homology_dimensions(
     block: MixedConstraintGhostBRSTBlock,
 ) -> Dict[int, int]:
     """Cohomology dimensions for one fixed mixed current-plus-ghost block."""
-    dims: Dict[int, int] = {}
-    degrees = sorted(block.basis_by_brst_degree)
-    for degree in degrees:
-        dim_c = len(block.basis_by_brst_degree[degree])
-        d_curr = block.differentials.get(degree)
-        d_prev = block.differentials.get(degree - 1)
-        rank_curr = exact_matrix_rank(d_curr)
-        rank_prev = exact_matrix_rank(d_prev)
-        ker_dim = dim_c - rank_curr
-        dims[degree] = ker_dim - rank_prev
-    return dims
+    return dict(mixed_constraint_ghost_block_invariant_summary(block).homology_dimensions)
 
 
 def mixed_constraint_ghost_block_has_square_zero(block: MixedConstraintGhostBRSTBlock) -> bool:
@@ -5891,7 +6246,7 @@ def mixed_constraint_ghost_block_has_square_zero(block: MixedConstraintGhostBRST
         d_k1 = block.differentials.get(degree + 1)
         if d_k1 is None:
             continue
-        if d_k1 * d_k != zeros(d_k1.rows, d_k.cols):
+        if not _matrix_product_is_zero(d_k1, d_k):
             return False
     return True
 
@@ -5903,17 +6258,7 @@ def mixed_constraint_ghost_block_is_acyclic(block: MixedConstraintGhostBRSTBlock
 
 def chain_homology_dimensions(block: LinearConstraintBRSTBlock) -> Dict[int, int]:
     """Compute chain homology dimensions for a finite linear constraint block."""
-    dims: Dict[int, int] = {}
-    max_degree = max(block.basis_by_chain_degree)
-    for degree in range(max_degree + 1):
-        dim_c = len(block.basis_by_chain_degree[degree])
-        d_down = block.differentials.get(degree)
-        d_up = block.differentials.get(degree + 1)
-        rank_down = exact_matrix_rank(d_down)
-        rank_up = exact_matrix_rank(d_up)
-        ker_dim = dim_c - rank_down
-        dims[degree] = ker_dim - rank_up
-    return dims
+    return dict(linear_constraint_block_invariant_summary(block).homology_dimensions)
 
 
 def linear_constraint_block_has_square_zero(block: LinearConstraintBRSTBlock) -> bool:
@@ -5922,7 +6267,7 @@ def linear_constraint_block_has_square_zero(block: LinearConstraintBRSTBlock) ->
         d_km1 = block.differentials.get(degree - 1)
         if d_km1 is None:
             continue
-        if d_km1 * d_k != zeros(d_km1.rows, d_k.cols):
+        if not _matrix_product_is_zero(d_km1, d_k):
             return False
     return True
 
@@ -6179,6 +6524,141 @@ def nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
     )
 
 
+@lru_cache(maxsize=None)
+def _partition_pair_external_constraint_data(
+    partition: Tuple[int, ...],
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[
+    Tuple[
+        Tuple[str, ...],
+        Tuple[str, ...],
+        Tuple[str, ...],
+        Tuple[object, ...],
+        Tuple[QuadraticGhostTermEntry, ...],
+        Tuple[CurrentActionTermEntry, ...],
+    ],
+    Tuple[
+        Tuple[str, ...],
+        Tuple[str, ...],
+        Tuple[str, ...],
+        Tuple[object, ...],
+        Tuple[QuadraticGhostTermEntry, ...],
+        Tuple[CurrentActionTermEntry, ...],
+    ],
+]:
+    """Shared external constraint-sector data for one non-principal partition pair."""
+    source_constraints, target_constraints = partition_pair_constraints(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_character, target_character = partition_pair_constraint_characters(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    source_current_action, target_current_action = partition_pair_current_action_terms(
+        partition,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return (
+        (
+            tuple(f"u_source_{item.root_label}" for item in source_constraints),
+            tuple(item.c_ghost for item in source_constraints),
+            tuple(item.b_ghost for item in source_constraints),
+            tuple(source_character[item.root_label] for item in source_constraints),
+            source_quadratic,
+            source_current_action,
+        ),
+        (
+            tuple(f"u_target_{item.root_label}" for item in target_constraints),
+            tuple(item.c_ghost for item in target_constraints),
+            tuple(item.b_ghost for item in target_constraints),
+            tuple(target_character[item.root_label] for item in target_constraints),
+            target_quadratic,
+            target_current_action,
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
+def _partition_pair_survivor_labels(
+    partition: Tuple[int, ...],
+) -> Tuple[Tuple[str, ...], Tuple[str, ...]]:
+    """Survivor labels for one non-principal partition pair."""
+    source_survivors, target_survivors = partition_pair_surviving_field_candidates(partition)
+    return (
+        tuple(item.label for item in source_survivors),
+        tuple(item.label for item in target_survivors),
+    )
+
+
+@lru_cache(maxsize=None)
+def _partition_pair_internal_survivor_data(
+    partition: Tuple[int, ...],
+) -> Tuple[
+    Tuple[
+        Tuple[str, ...],
+        Tuple[str, ...],
+        Tuple[QuadraticGhostTermEntry, ...],
+        Tuple[SurvivorActionTermEntry, ...],
+    ],
+    Tuple[
+        Tuple[str, ...],
+        Tuple[str, ...],
+        Tuple[QuadraticGhostTermEntry, ...],
+        Tuple[SurvivorActionTermEntry, ...],
+    ],
+]:
+    """Shared internal survivor CE-sector data for one non-principal partition pair."""
+    source_survivor_labels, target_survivor_labels = _partition_pair_survivor_labels(partition)
+    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
+        source_survivor_labels
+    )
+    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
+        target_survivor_labels
+    )
+    source_reduced_brackets, target_reduced_brackets = partition_pair_reduced_brackets(partition)
+    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    source_internal_action = internal_survivor_action_terms(
+        source_survivor_labels,
+        source_reduced_brackets,
+    )
+    target_internal_action = internal_survivor_action_terms(
+        target_survivor_labels,
+        target_reduced_brackets,
+    )
+    return (
+        (
+            source_internal_c_ghosts,
+            source_internal_b_ghosts,
+            source_internal_quadratic,
+            source_internal_action,
+        ),
+        (
+            target_internal_c_ghosts,
+            target_internal_b_ghosts,
+            target_internal_quadratic,
+            target_internal_action,
+        ),
+    )
+
+
+@lru_cache(maxsize=None)
 def nonprincipal_partition_pair_survivor_coupled_blocks(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -6189,22 +6669,7 @@ def nonprincipal_partition_pair_survivor_coupled_blocks(
     """Survivor-coupled BRST blocks for one non-principal partition pair."""
     case = nonprincipal_type_a_case(partition)
     n = partition_size(case.partition)
-    source_constraints, target_constraints = partition_pair_constraints(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_character, target_character = partition_pair_constraint_characters(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_current_action, target_current_action = partition_pair_current_action_terms(
+    (source_data, target_data) = _partition_pair_external_constraint_data(
         case.partition,
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
@@ -6214,22 +6679,20 @@ def nonprincipal_partition_pair_survivor_coupled_blocks(
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
     )
-    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
+    source_survivor_labels, target_survivor_labels = _partition_pair_survivor_labels(case.partition)
     family_tag = case.family
     partition_tag = "_".join(str(part) for part in case.partition)
     dual_tag = "_".join(str(part) for part in case.dual_partition)
     return (
         tuple(
             build_survivor_coupled_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_source_{item.root_label}" for item in source_constraints
-                ),
-                survivor_labels=tuple(item.label for item in source_survivors),
-                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
-                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
-                quadratic_terms=source_quadratic,
-                current_action_terms=source_current_action,
+                shifted_current_labels=source_data[0],
+                survivor_labels=source_survivor_labels,
+                c_ghost_labels=source_data[1],
+                b_ghost_labels=source_data[2],
+                chi_vector=source_data[3],
+                quadratic_terms=source_data[4],
+                current_action_terms=source_data[5],
                 survivor_action_terms=source_survivor_action,
                 constraint_total_degree=total_degree,
                 survivor_total_degree=survivor_total_degree,
@@ -6242,15 +6705,13 @@ def nonprincipal_partition_pair_survivor_coupled_blocks(
         ),
         tuple(
             build_survivor_coupled_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_target_{item.root_label}" for item in target_constraints
-                ),
-                survivor_labels=tuple(item.label for item in target_survivors),
-                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
-                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
-                quadratic_terms=target_quadratic,
-                current_action_terms=target_current_action,
+                shifted_current_labels=target_data[0],
+                survivor_labels=target_survivor_labels,
+                c_ghost_labels=target_data[1],
+                b_ghost_labels=target_data[2],
+                chi_vector=target_data[3],
+                quadratic_terms=target_data[4],
+                current_action_terms=target_data[5],
                 survivor_action_terms=target_survivor_action,
                 constraint_total_degree=total_degree,
                 survivor_total_degree=survivor_total_degree,
@@ -6272,16 +6733,8 @@ def partition_pair_internal_survivor_ce_blocks(
     """Internal reduced-survivor CE blocks for one non-principal partition pair."""
     case = nonprincipal_type_a_case(partition)
     n = partition_size(case.partition)
-    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
-    source_labels = tuple(item.label for item in source_survivors)
-    target_labels = tuple(item.label for item in target_survivors)
-    source_c_ghosts, source_b_ghosts = internal_survivor_ghost_labels(source_labels)
-    target_c_ghosts, target_b_ghosts = internal_survivor_ghost_labels(target_labels)
-    source_brackets, target_brackets = partition_pair_reduced_brackets(case.partition)
-    source_quadratic = internal_survivor_quadratic_ghost_terms(source_labels, source_brackets)
-    target_quadratic = internal_survivor_quadratic_ghost_terms(target_labels, target_brackets)
-    source_action = internal_survivor_action_terms(source_labels, source_brackets)
-    target_action = internal_survivor_action_terms(target_labels, target_brackets)
+    source_labels, target_labels = _partition_pair_survivor_labels(case.partition)
+    source_data, target_data = _partition_pair_internal_survivor_data(case.partition)
     family_tag = case.family
     partition_tag = "_".join(str(part) for part in case.partition)
     dual_tag = "_".join(str(part) for part in case.dual_partition)
@@ -6289,10 +6742,10 @@ def partition_pair_internal_survivor_ce_blocks(
         tuple(
             build_internal_survivor_ce_block(
                 survivor_labels=source_labels,
-                c_ghost_labels=source_c_ghosts,
-                b_ghost_labels=source_b_ghosts,
-                quadratic_terms=source_quadratic,
-                survivor_action_terms=source_action,
+                c_ghost_labels=source_data[0],
+                b_ghost_labels=source_data[1],
+                quadratic_terms=source_data[2],
+                survivor_action_terms=source_data[3],
                 survivor_polynomial_degree=degree,
                 source_tag=f"A{n-1}_{family_tag}_source_{partition_tag}_internal_survivor_{degree}",
             )
@@ -6301,10 +6754,10 @@ def partition_pair_internal_survivor_ce_blocks(
         tuple(
             build_internal_survivor_ce_block(
                 survivor_labels=target_labels,
-                c_ghost_labels=target_c_ghosts,
-                b_ghost_labels=target_b_ghosts,
-                quadratic_terms=target_quadratic,
-                survivor_action_terms=target_action,
+                c_ghost_labels=target_data[0],
+                b_ghost_labels=target_data[1],
+                quadratic_terms=target_data[2],
+                survivor_action_terms=target_data[3],
                 survivor_polynomial_degree=degree,
                 source_tag=f"A{n-1}_{family_tag}_target_{dual_tag}_internal_survivor_{degree}",
             )
@@ -6325,22 +6778,7 @@ def nonprincipal_partition_pair_semidirect_survivor_blocks(
     """Naive semidirect survivor BRST blocks for one non-principal partition pair."""
     case = nonprincipal_type_a_case(partition)
     n = partition_size(case.partition)
-    source_constraints, target_constraints = partition_pair_constraints(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_character, target_character = partition_pair_constraint_characters(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_current_action, target_current_action = partition_pair_current_action_terms(
+    source_data, target_data = _partition_pair_external_constraint_data(
         case.partition,
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
@@ -6350,31 +6788,9 @@ def nonprincipal_partition_pair_semidirect_survivor_blocks(
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
     )
-    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
-    source_survivor_labels = tuple(item.label for item in source_survivors)
-    target_survivor_labels = tuple(item.label for item in target_survivors)
-    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
-        source_survivor_labels
-    )
-    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
-        target_survivor_labels
-    )
-    source_reduced_brackets, target_reduced_brackets = partition_pair_reduced_brackets(case.partition)
-    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
-        source_survivor_labels,
-        source_reduced_brackets,
-    )
-    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
-        target_survivor_labels,
-        target_reduced_brackets,
-    )
-    source_internal_action = internal_survivor_action_terms(
-        source_survivor_labels,
-        source_reduced_brackets,
-    )
-    target_internal_action = internal_survivor_action_terms(
-        target_survivor_labels,
-        target_reduced_brackets,
+    source_survivor_labels, target_survivor_labels = _partition_pair_survivor_labels(case.partition)
+    source_internal_data, target_internal_data = _partition_pair_internal_survivor_data(
+        case.partition
     )
     family_tag = case.family
     partition_tag = "_".join(str(part) for part in case.partition)
@@ -6382,20 +6798,18 @@ def nonprincipal_partition_pair_semidirect_survivor_blocks(
     return (
         tuple(
             build_semidirect_survivor_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_source_{item.root_label}" for item in source_constraints
-                ),
+                shifted_current_labels=source_data[0],
                 survivor_labels=source_survivor_labels,
-                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
-                internal_c_ghost_labels=source_internal_c_ghosts,
-                internal_b_ghost_labels=source_internal_b_ghosts,
-                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
-                quadratic_terms=source_quadratic,
-                current_action_terms=source_current_action,
+                c_ghost_labels=source_data[1],
+                b_ghost_labels=source_data[2],
+                internal_c_ghost_labels=source_internal_data[0],
+                internal_b_ghost_labels=source_internal_data[1],
+                chi_vector=source_data[3],
+                quadratic_terms=source_data[4],
+                current_action_terms=source_data[5],
                 survivor_action_terms=source_survivor_action,
-                internal_quadratic_terms=source_internal_quadratic,
-                internal_survivor_action_terms=source_internal_action,
+                internal_quadratic_terms=source_internal_data[2],
+                internal_survivor_action_terms=source_internal_data[3],
                 constraint_total_degree=total_degree,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=max_internal_ce_degree,
@@ -6408,20 +6822,18 @@ def nonprincipal_partition_pair_semidirect_survivor_blocks(
         ),
         tuple(
             build_semidirect_survivor_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_target_{item.root_label}" for item in target_constraints
-                ),
+                shifted_current_labels=target_data[0],
                 survivor_labels=target_survivor_labels,
-                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
-                internal_c_ghost_labels=target_internal_c_ghosts,
-                internal_b_ghost_labels=target_internal_b_ghosts,
-                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
-                quadratic_terms=target_quadratic,
-                current_action_terms=target_current_action,
+                c_ghost_labels=target_data[1],
+                b_ghost_labels=target_data[2],
+                internal_c_ghost_labels=target_internal_data[0],
+                internal_b_ghost_labels=target_internal_data[1],
+                chi_vector=target_data[3],
+                quadratic_terms=target_data[4],
+                current_action_terms=target_data[5],
                 survivor_action_terms=target_survivor_action,
-                internal_quadratic_terms=target_internal_quadratic,
-                internal_survivor_action_terms=target_internal_action,
+                internal_quadratic_terms=target_internal_data[2],
+                internal_survivor_action_terms=target_internal_data[3],
                 constraint_total_degree=total_degree,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=max_internal_ce_degree,
@@ -6447,22 +6859,7 @@ def nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
     """Semidirect survivor blocks after the first transferred correction on one partition pair."""
     case = nonprincipal_type_a_case(partition)
     n = partition_size(case.partition)
-    source_constraints, target_constraints = partition_pair_constraints(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_character, target_character = partition_pair_constraint_characters(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_quadratic, target_quadratic = partition_pair_quadratic_ghost_term_support(
-        case.partition,
-        source_num_constraints=source_num_constraints,
-        target_num_constraints=target_num_constraints,
-    )
-    source_current_action, target_current_action = partition_pair_current_action_terms(
+    source_data, target_data = _partition_pair_external_constraint_data(
         case.partition,
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
@@ -6472,31 +6869,9 @@ def nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
         source_num_constraints=source_num_constraints,
         target_num_constraints=target_num_constraints,
     )
-    source_survivors, target_survivors = partition_pair_surviving_field_candidates(case.partition)
-    source_survivor_labels = tuple(item.label for item in source_survivors)
-    target_survivor_labels = tuple(item.label for item in target_survivors)
-    source_internal_c_ghosts, source_internal_b_ghosts = internal_survivor_ghost_labels(
-        source_survivor_labels
-    )
-    target_internal_c_ghosts, target_internal_b_ghosts = internal_survivor_ghost_labels(
-        target_survivor_labels
-    )
-    source_reduced_brackets, target_reduced_brackets = partition_pair_reduced_brackets(case.partition)
-    source_internal_quadratic = internal_survivor_quadratic_ghost_terms(
-        source_survivor_labels,
-        source_reduced_brackets,
-    )
-    target_internal_quadratic = internal_survivor_quadratic_ghost_terms(
-        target_survivor_labels,
-        target_reduced_brackets,
-    )
-    source_internal_action = internal_survivor_action_terms(
-        source_survivor_labels,
-        source_reduced_brackets,
-    )
-    target_internal_action = internal_survivor_action_terms(
-        target_survivor_labels,
-        target_reduced_brackets,
+    source_survivor_labels, target_survivor_labels = _partition_pair_survivor_labels(case.partition)
+    source_internal_data, target_internal_data = _partition_pair_internal_survivor_data(
+        case.partition
     )
     family_tag = case.family
     partition_tag = "_".join(str(part) for part in case.partition)
@@ -6504,20 +6879,18 @@ def nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
     return (
         tuple(
             build_semidirect_survivor_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_source_{item.root_label}" for item in source_constraints
-                ),
+                shifted_current_labels=source_data[0],
                 survivor_labels=source_survivor_labels,
-                c_ghost_labels=tuple(item.c_ghost for item in source_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in source_constraints),
-                internal_c_ghost_labels=source_internal_c_ghosts,
-                internal_b_ghost_labels=source_internal_b_ghosts,
-                chi_vector=tuple(source_character[item.root_label] for item in source_constraints),
-                quadratic_terms=source_quadratic,
-                current_action_terms=source_current_action,
+                c_ghost_labels=source_data[1],
+                b_ghost_labels=source_data[2],
+                internal_c_ghost_labels=source_internal_data[0],
+                internal_b_ghost_labels=source_internal_data[1],
+                chi_vector=source_data[3],
+                quadratic_terms=source_data[4],
+                current_action_terms=source_data[5],
                 survivor_action_terms=source_survivor_action,
-                internal_quadratic_terms=source_internal_quadratic,
-                internal_survivor_action_terms=source_internal_action,
+                internal_quadratic_terms=source_internal_data[2],
+                internal_survivor_action_terms=source_internal_data[3],
                 constraint_total_degree=total_degree,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=max_internal_ce_degree,
@@ -6530,20 +6903,18 @@ def nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
         ),
         tuple(
             build_semidirect_survivor_brst_block(
-                shifted_current_labels=tuple(
-                    f"u_target_{item.root_label}" for item in target_constraints
-                ),
+                shifted_current_labels=target_data[0],
                 survivor_labels=target_survivor_labels,
-                c_ghost_labels=tuple(item.c_ghost for item in target_constraints),
-                b_ghost_labels=tuple(item.b_ghost for item in target_constraints),
-                internal_c_ghost_labels=target_internal_c_ghosts,
-                internal_b_ghost_labels=target_internal_b_ghosts,
-                chi_vector=tuple(target_character[item.root_label] for item in target_constraints),
-                quadratic_terms=target_quadratic,
-                current_action_terms=target_current_action,
+                c_ghost_labels=target_data[1],
+                b_ghost_labels=target_data[2],
+                internal_c_ghost_labels=target_internal_data[0],
+                internal_b_ghost_labels=target_internal_data[1],
+                chi_vector=target_data[3],
+                quadratic_terms=target_data[4],
+                current_action_terms=target_data[5],
                 survivor_action_terms=target_survivor_action,
-                internal_quadratic_terms=target_internal_quadratic,
-                internal_survivor_action_terms=target_internal_action,
+                internal_quadratic_terms=target_internal_data[2],
+                internal_survivor_action_terms=target_internal_data[3],
                 constraint_total_degree=total_degree,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=max_internal_ce_degree,
@@ -7121,6 +7492,106 @@ def hook_pair_corrected_semidirect_survivor_blocks(
     )
 
 
+@lru_cache(maxsize=None)
+def _partition_pair_semidirect_square_zero_flags(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for one naive non-principal semidirect family."""
+    source_blocks, target_blocks = nonprincipal_partition_pair_semidirect_survivor_blocks(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        for block in source_blocks + target_blocks
+    )
+
+
+@lru_cache(maxsize=None)
+def _partition_pair_corrected_semidirect_square_zero_flags(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for one corrected non-principal semidirect family."""
+    source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        for block in source_blocks + target_blocks
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_semidirect_square_zero_flags(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for one hook-pair naive semidirect family."""
+    source_blocks, target_blocks = hook_pair_semidirect_survivor_blocks(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        for block in source_blocks + target_blocks
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_corrected_semidirect_square_zero_flags(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for one hook-pair corrected semidirect family."""
+    source_blocks, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        for block in source_blocks + target_blocks
+    )
+
+
 def _mixed_blocks_match_under_relabeling(
     source_blocks: Tuple[MixedConstraintGhostBRSTBlock, ...],
     target_blocks: Tuple[MixedConstraintGhostBRSTBlock, ...],
@@ -7679,6 +8150,76 @@ def verify_hook_pair_mixed_block_duality_catalog(
     return results
 
 
+@lru_cache(maxsize=None)
+def _hook_family_representative_rs(n: int) -> Tuple[int, ...]:
+    """Canonical hook representatives for one rank, reduced by transpose duality."""
+    if n < 3:
+        return ()
+    return tuple(r for r in range(1, n - 1) if r <= n - r - 1)
+
+
+@lru_cache(maxsize=None)
+def hook_pair_mixed_family_holds_via_duality(
+    n: int,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Check one hook mixed family using direct half-catalog acyclicity plus transpose duality."""
+    if n < 3:
+        return True
+    for r in _hook_family_representative_rs(n):
+        dual_r = n - r - 1
+        source_blocks, target_blocks = hook_pair_mixed_constraint_ghost_blocks(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+        )
+        if not _all_blocks_have_square_zero_and_are_acyclic(
+            source_blocks + target_blocks,
+            mixed_constraint_ghost_block_invariant_summary,
+        ):
+            return False
+        if r < dual_r and not hook_pair_mixed_blocks_match_under_dual_swap(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_hook_pair_mixed_family_via_duality_catalog(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks that recover each hook mixed family from a half-catalog plus duality."""
+    return dict(
+        _hook_pair_mixed_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_mixed_family_via_duality_catalog_items(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook mixed family-via-duality catalog checks."""
+    if max_n < 3:
+        return (("hook mixed family-via-duality catalog is empty below rank three", True),)
+    return tuple(
+        (
+            f"A{n-1} hook family mixed acyclicity follows by duality",
+            hook_pair_mixed_family_holds_via_duality(
+                n,
+                max_constraint_total_degree=max_constraint_total_degree,
+            ),
+        )
+        for n in range(3, max_n + 1)
+    )
+
+
 def verify_hook_pair_nonlinear_block_duality_catalog(
     max_n: int = 7,
     max_constraint_total_degree: int = 1,
@@ -7695,9 +8236,71 @@ def verify_hook_pair_nonlinear_block_duality_catalog(
                     n,
                     r,
                     max_constraint_total_degree=max_constraint_total_degree,
-                )
             )
+        )
     return results
+
+
+@lru_cache(maxsize=None)
+def hook_pair_nonlinear_family_holds_via_duality(
+    n: int,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Check one hook nonlinear family using direct half-catalog acyclicity plus transpose duality."""
+    if n < 3:
+        return True
+    for r in _hook_family_representative_rs(n):
+        dual_r = n - r - 1
+        source_blocks, target_blocks = hook_pair_nonlinear_mixed_constraint_ghost_blocks(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+        )
+        if not _all_blocks_have_square_zero_and_are_acyclic(
+            source_blocks + target_blocks,
+            mixed_constraint_ghost_block_invariant_summary,
+        ):
+            return False
+        if r < dual_r and not hook_pair_nonlinear_blocks_match_under_dual_swap(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_hook_pair_nonlinear_family_via_duality_catalog(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Catalog checks that recover each hook nonlinear family from a half-catalog plus duality."""
+    return dict(
+        _hook_pair_nonlinear_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_nonlinear_family_via_duality_catalog_items(
+    max_n: int = 7,
+    max_constraint_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook nonlinear family-via-duality catalog checks."""
+    if max_n < 3:
+        return (("hook nonlinear family-via-duality catalog is empty below rank three", True),)
+    return tuple(
+        (
+            f"A{n-1} hook family nonlinear acyclicity follows by duality",
+            hook_pair_nonlinear_family_holds_via_duality(
+                n,
+                max_constraint_total_degree=max_constraint_total_degree,
+            ),
+        )
+        for n in range(3, max_n + 1)
+    )
 
 
 def verify_hook_pair_survivor_coupled_block_duality_catalog(
@@ -7723,6 +8326,7 @@ def verify_hook_pair_survivor_coupled_block_duality_catalog(
     return results
 
 
+@lru_cache(maxsize=None)
 def hook_pair_survivor_coupled_family_holds_via_duality(
     n: int,
     max_constraint_total_degree: int = 1,
@@ -7731,20 +8335,17 @@ def hook_pair_survivor_coupled_family_holds_via_duality(
     """Check one hook family by direct half-catalog acyclicity plus transpose duality."""
     if n < 3:
         return True
-    for r in range(1, n - 1):
+    for r in _hook_family_representative_rs(n):
         dual_r = n - r - 1
-        if r > dual_r:
-            continue
         source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
             n,
             r,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
         )
-        if not all(
-            survivor_coupled_block_has_square_zero(block)
-            and survivor_coupled_block_is_acyclic(block)
-            for block in source_blocks + target_blocks
+        if not _all_blocks_have_square_zero_and_are_acyclic(
+            source_blocks + target_blocks,
+            survivor_coupled_block_invariant_summary,
         ):
             return False
         if r < dual_r and not hook_pair_survivor_coupled_blocks_match_under_dual_swap(
@@ -7763,20 +8364,35 @@ def verify_hook_pair_survivor_coupled_family_via_duality_catalog(
     survivor_total_degree: int = 1,
 ) -> Dict[str, bool]:
     """Catalog checks recovering hook survivor families from half-catalog data."""
-    results: Dict[str, bool] = {}
+    return dict(
+        _hook_pair_survivor_coupled_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _hook_pair_survivor_coupled_family_via_duality_catalog_items(
+    max_n: int = 6,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for hook survivor family-via-duality catalog checks."""
     if max_n < 3:
-        results["hook survivor-coupled family-via-duality catalog is empty below rank three"] = True
-        return results
-    for n in range(3, max_n + 1):
-        key = f"A{n-1} hook family"
-        results[f"{key} survivor-coupled checks follow by duality"] = (
+        return (("hook survivor-coupled family-via-duality catalog is empty below rank three", True),)
+    return tuple(
+        (
+            f"A{n-1} hook family survivor-coupled checks follow by duality",
             hook_pair_survivor_coupled_family_holds_via_duality(
                 n,
                 max_constraint_total_degree=max_constraint_total_degree,
                 survivor_total_degree=survivor_total_degree,
-            )
+            ),
         )
-    return results
+        for n in range(3, max_n + 1)
+    )
 
 
 def verify_nonprincipal_two_row_mixed_block_duality_catalog(
@@ -7797,6 +8413,73 @@ def verify_nonprincipal_two_row_mixed_block_duality_catalog(
     return results
 
 
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_family_representative_items(
+    max_n: int = 9,
+) -> Tuple[Tuple[Tuple[int, ...], str], ...]:
+    """Cached canonical two-row family representatives with stable catalog labels."""
+    results: list[Tuple[Tuple[int, ...], str]] = []
+    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+    for case in nonprincipal_two_row_cases(max_n=max_n):
+        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
+        if canonical_pair in seen_pairs:
+            continue
+        seen_pairs.add(canonical_pair)
+        n = partition_size(case.partition)
+        if case.partition == case.dual_partition:
+            key = f"A{n-1} two-row {case.partition}"
+        else:
+            key = f"A{n-1} two-row {canonical_pair[0]}<->{canonical_pair[1]}"
+        results.append((case.partition, key))
+    return tuple(results)
+
+
+@lru_cache(maxsize=None)
+def nonprincipal_two_row_mixed_family_holds_via_duality(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Recover two-row mixed checks from one representative in each transpose pair."""
+    for partition, _ in _nonprincipal_two_row_family_representative_items(max_n=max_n):
+        if not _nonprincipal_partition_pair_mixed_holds_via_duality(
+            partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_two_row_mixed_family_via_duality_catalog(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded two-row mixed checks reduced by transpose duality."""
+    return dict(
+        _nonprincipal_two_row_mixed_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_mixed_family_via_duality_catalog_items(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for two-row mixed family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} mixed checks follow by duality",
+            _nonprincipal_partition_pair_mixed_holds_via_duality(
+                partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            ),
+        )
+        for partition, key in _nonprincipal_two_row_family_representative_items(max_n=max_n)
+    )
+
+
 def verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
     max_n: int = 8,
     max_constraint_total_degree: int = 1,
@@ -7813,6 +8496,52 @@ def verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
             )
         )
     return results
+
+
+@lru_cache(maxsize=None)
+def nonprincipal_two_row_nonlinear_family_holds_via_duality(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Recover two-row nonlinear checks from one representative in each transpose pair."""
+    for partition, _ in _nonprincipal_two_row_family_representative_items(max_n=max_n):
+        if not _nonprincipal_partition_pair_nonlinear_holds_via_duality(
+            partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded two-row nonlinear checks reduced by transpose duality."""
+    return dict(
+        _nonprincipal_two_row_nonlinear_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_nonlinear_family_via_duality_catalog_items(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for two-row nonlinear family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} nonlinear checks follow by duality",
+            _nonprincipal_partition_pair_nonlinear_holds_via_duality(
+                partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            ),
+        )
+        for partition, key in _nonprincipal_two_row_family_representative_items(max_n=max_n)
+    )
 
 
 def verify_nonprincipal_two_row_survivor_coupled_block_duality_catalog(
@@ -7882,6 +8611,58 @@ def verify_nonprincipal_two_row_survivor_coupled_bundle(
 
 
 @lru_cache(maxsize=None)
+def nonprincipal_two_row_survivor_coupled_family_holds_via_duality(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Recover two-row survivor checks from one representative in each transpose pair."""
+    for partition, _ in _nonprincipal_two_row_family_representative_items(max_n=max_n):
+        if not _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
+            partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded two-row survivor checks reduced by transpose duality."""
+    return dict(
+        _nonprincipal_two_row_survivor_coupled_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_survivor_coupled_family_via_duality_catalog_items(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for two-row survivor family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} survivor-coupled checks follow by duality",
+            _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
+                partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+            ),
+        )
+        for partition, key in _nonprincipal_two_row_family_representative_items(max_n=max_n)
+    )
+
+
+@lru_cache(maxsize=None)
 def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -7924,20 +8705,16 @@ def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     )
 
 
+@lru_cache(maxsize=None)
 def general_nonprincipal_survivor_coupled_family_holds_via_duality(
-    max_n: int = 8,
+    max_n: int = 11,
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
 ) -> bool:
     """Recover seeded general survivor-coupled checks from square-zero plus transpose symmetry."""
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
+    for partition, _ in _nonprincipal_general_family_representative_items(max_n=max_n):
         if not _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
-            case.partition,
+            partition,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
         ):
@@ -7946,31 +8723,38 @@ def general_nonprincipal_survivor_coupled_family_holds_via_duality(
 
 
 def verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-    max_n: int = 8,
+    max_n: int = 11,
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
 ) -> Dict[str, bool]:
     """Seeded general survivor-coupled checks reduced by transpose duality."""
-    results: Dict[str, bool] = {}
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
-        n = partition_size(case.partition)
-        if case.partition == case.dual_partition:
-            key = f"A{n-1} general {case.partition}"
-        else:
-            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
-        results[f"{key} survivor-coupled checks follow by duality"] = (
+    return dict(
+        _nonprincipal_general_survivor_coupled_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_survivor_coupled_family_via_duality_catalog_items(
+    max_n: int = 11,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for general survivor family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} survivor-coupled checks follow by duality",
             _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
-                case.partition,
+                partition,
                 max_constraint_total_degree=max_constraint_total_degree,
                 survivor_total_degree=survivor_total_degree,
-            )
+            ),
         )
-    return results
+        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+    )
 
 
 def verify_nonprincipal_general_mixed_block_duality_catalog(
@@ -7992,42 +8776,11 @@ def verify_nonprincipal_general_mixed_block_duality_catalog(
 
 
 @lru_cache(maxsize=None)
-def _nonprincipal_partition_pair_mixed_holds_via_duality(
-    partition: Tuple[int, ...],
-    max_constraint_total_degree: int = 1,
-) -> bool:
-    """Check one seeded general mixed block representative against its transpose dual."""
-    return nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
-        partition,
-        max_constraint_total_degree=max_constraint_total_degree,
-    )
-
-
-def general_nonprincipal_mixed_family_holds_via_duality(
+def _nonprincipal_general_family_representative_items(
     max_n: int = 9,
-    max_constraint_total_degree: int = 1,
-) -> bool:
-    """Recover seeded general mixed checks from one representative in each transpose pair."""
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
-        if not _nonprincipal_partition_pair_mixed_holds_via_duality(
-            case.partition,
-            max_constraint_total_degree=max_constraint_total_degree,
-        ):
-            return False
-    return True
-
-
-def verify_nonprincipal_general_mixed_family_via_duality_catalog(
-    max_n: int = 9,
-    max_constraint_total_degree: int = 1,
-) -> Dict[str, bool]:
-    """Seeded general mixed checks reduced by transpose symmetry."""
-    results: Dict[str, bool] = {}
+) -> Tuple[Tuple[Tuple[int, ...], str], ...]:
+    """Cached canonical general-family representatives with stable catalog labels."""
+    results: list[Tuple[Tuple[int, ...], str]] = []
     seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
     for case in nonprincipal_general_cases(max_n=max_n):
         canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
@@ -8039,13 +8792,66 @@ def verify_nonprincipal_general_mixed_family_via_duality_catalog(
             key = f"A{n-1} general {case.partition}"
         else:
             key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
-        results[f"{key} mixed checks follow by duality"] = (
-            _nonprincipal_partition_pair_mixed_holds_via_duality(
-                case.partition,
-                max_constraint_total_degree=max_constraint_total_degree,
-            )
+        results.append((case.partition, key))
+    return tuple(results)
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_partition_pair_mixed_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Check one seeded general mixed block representative against its transpose dual."""
+    return nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+    )
+
+
+@lru_cache(maxsize=None)
+def general_nonprincipal_mixed_family_holds_via_duality(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> bool:
+    """Recover seeded general mixed checks from one representative in each transpose pair."""
+    for partition, _ in _nonprincipal_general_family_representative_items(max_n=max_n):
+        if not _nonprincipal_partition_pair_mixed_holds_via_duality(
+            partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_general_mixed_family_via_duality_catalog(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded general mixed checks reduced by transpose symmetry."""
+    return dict(
+        _nonprincipal_general_mixed_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
         )
-    return results
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_mixed_family_via_duality_catalog_items(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for general mixed family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} mixed checks follow by duality",
+            _nonprincipal_partition_pair_mixed_holds_via_duality(
+                partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            ),
+        )
+        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+    )
 
 
 def verify_nonprincipal_general_nonlinear_block_duality_catalog(
@@ -8078,19 +8884,15 @@ def _nonprincipal_partition_pair_nonlinear_holds_via_duality(
     )
 
 
+@lru_cache(maxsize=None)
 def general_nonprincipal_nonlinear_family_holds_via_duality(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
 ) -> bool:
     """Recover seeded general nonlinear checks from one representative in each transpose pair."""
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
+    for partition, _ in _nonprincipal_general_family_representative_items(max_n=max_n):
         if not _nonprincipal_partition_pair_nonlinear_holds_via_duality(
-            case.partition,
+            partition,
             max_constraint_total_degree=max_constraint_total_degree,
         ):
             return False
@@ -8102,25 +8904,30 @@ def verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
     max_constraint_total_degree: int = 1,
 ) -> Dict[str, bool]:
     """Seeded general nonlinear checks reduced by transpose symmetry."""
-    results: Dict[str, bool] = {}
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
-        n = partition_size(case.partition)
-        if case.partition == case.dual_partition:
-            key = f"A{n-1} general {case.partition}"
-        else:
-            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
-        results[f"{key} nonlinear checks follow by duality"] = (
-            _nonprincipal_partition_pair_nonlinear_holds_via_duality(
-                case.partition,
-                max_constraint_total_degree=max_constraint_total_degree,
-            )
+    return dict(
+        _nonprincipal_general_nonlinear_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
         )
-    return results
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_nonlinear_family_via_duality_catalog_items(
+    max_n: int = 9,
+    max_constraint_total_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for general nonlinear family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} nonlinear checks follow by duality",
+            _nonprincipal_partition_pair_nonlinear_holds_via_duality(
+                partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+            ),
+        )
+        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+    )
 
 
 def verify_nonprincipal_general_survivor_coupled_block_duality_catalog(
@@ -8154,15 +8961,13 @@ def verify_nonprincipal_two_row_corrected_semidirect_catalog(
     for case in nonprincipal_two_row_cases(max_n=max_n):
         n = partition_size(case.partition)
         key = f"A{n-1} two-row {case.partition}"
-        source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
-            case.partition,
-            max_constraint_total_degree=max_constraint_total_degree,
-            survivor_total_degree=survivor_total_degree,
-            max_internal_ce_degree=max_internal_ce_degree,
-        )
         results[f"{key} corrected semidirect blocks square to zero"] = all(
-            semidirect_survivor_block_has_square_zero(block)
-            for block in source_blocks + target_blocks
+            _partition_pair_corrected_semidirect_square_zero_flags(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
         )
     return results
 
@@ -8220,8 +9025,14 @@ def verify_nonprincipal_two_row_corrected_semidirect_bundle(
             )
         )
         results[f"{key} corrected semidirect blocks square to zero"] = all(
-            semidirect_survivor_block_has_square_zero(block)
-            for block in source_blocks + target_blocks
+            _partition_pair_corrected_semidirect_square_zero_flags(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+                source_num_constraints=default_source,
+                target_num_constraints=default_target,
+            )
         )
         results[f"{key} corrected semidirect dual-swap symmetry"] = (
             _semidirect_survivor_blocks_match_under_relabeling(
@@ -8240,6 +9051,64 @@ def verify_nonprincipal_two_row_corrected_semidirect_bundle(
     return results
 
 
+@lru_cache(maxsize=None)
+def nonprincipal_two_row_corrected_semidirect_family_holds_via_duality(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Recover two-row corrected checks from one representative in each transpose pair."""
+    for partition, _ in _nonprincipal_two_row_family_representative_items(max_n=max_n):
+        if not _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
+            partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        ):
+            return False
+    return True
+
+
+def verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Dict[str, bool]:
+    """Seeded two-row corrected checks reduced by transpose duality."""
+    return dict(
+        _nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog_items(
+    max_n: int = 8,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for two-row corrected family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} corrected semidirect checks follow by duality",
+            _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
+                partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            ),
+        )
+        for partition, key in _nonprincipal_two_row_family_representative_items(max_n=max_n)
+    )
+
+
 def verify_nonprincipal_general_corrected_semidirect_catalog(
     max_n: int = 5,
     max_constraint_total_degree: int = 0,
@@ -8251,15 +9120,13 @@ def verify_nonprincipal_general_corrected_semidirect_catalog(
     for case in nonprincipal_general_cases(max_n=max_n):
         n = partition_size(case.partition)
         key = f"A{n-1} general {case.partition}"
-        source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
-            case.partition,
-            max_constraint_total_degree=max_constraint_total_degree,
-            survivor_total_degree=survivor_total_degree,
-            max_internal_ce_degree=max_internal_ce_degree,
-        )
         results[f"{key} corrected semidirect blocks square to zero"] = all(
-            semidirect_survivor_block_has_square_zero(block)
-            for block in source_blocks + target_blocks
+            _partition_pair_corrected_semidirect_square_zero_flags(
+                case.partition,
+                max_constraint_total_degree=max_constraint_total_degree,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=max_internal_ce_degree,
+            )
         )
     return results
 
@@ -8305,8 +9172,14 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
         target_num_constraints=default_target,
     )
     if not all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in source_blocks + target_blocks
+        _partition_pair_corrected_semidirect_square_zero_flags(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+            source_num_constraints=default_source,
+            target_num_constraints=default_target,
+        )
     ):
         return False
     if case.partition == case.dual_partition:
@@ -8334,21 +9207,17 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
     )
 
 
+@lru_cache(maxsize=None)
 def general_nonprincipal_corrected_semidirect_family_holds_via_duality(
-    max_n: int = 9,
+    max_n: int = 14,
     max_constraint_total_degree: int = 0,
     survivor_total_degree: int = 1,
     max_internal_ce_degree: int = 1,
 ) -> bool:
     """Recover seeded general non-principal corrected semidirect checks from square-zero plus transpose duality."""
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
+    for partition, _ in _nonprincipal_general_family_representative_items(max_n=max_n):
         if not _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
-            case.partition,
+            partition,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=max_internal_ce_degree,
@@ -8358,33 +9227,42 @@ def general_nonprincipal_corrected_semidirect_family_holds_via_duality(
 
 
 def verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-    max_n: int = 9,
+    max_n: int = 14,
     max_constraint_total_degree: int = 0,
     survivor_total_degree: int = 1,
     max_internal_ce_degree: int = 1,
 ) -> Dict[str, bool]:
     """Seeded general-family corrected semidirect checks reduced by transpose duality."""
-    results: Dict[str, bool] = {}
-    seen_pairs: set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
-    for case in nonprincipal_general_cases(max_n=max_n):
-        canonical_pair = tuple(sorted((case.partition, case.dual_partition)))
-        if canonical_pair in seen_pairs:
-            continue
-        seen_pairs.add(canonical_pair)
-        n = partition_size(case.partition)
-        if case.partition == case.dual_partition:
-            key = f"A{n-1} general {case.partition}"
-        else:
-            key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
-        results[f"{key} corrected semidirect checks follow by duality"] = (
+    return dict(
+        _nonprincipal_general_corrected_semidirect_family_via_duality_catalog_items(
+            max_n=max_n,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+    )
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_corrected_semidirect_family_via_duality_catalog_items(
+    max_n: int = 14,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> Tuple[Tuple[str, bool], ...]:
+    """Cached immutable items for general corrected family-via-duality checks."""
+    return tuple(
+        (
+            f"{key} corrected semidirect checks follow by duality",
             _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
-                case.partition,
+                partition,
                 max_constraint_total_degree=max_constraint_total_degree,
                 survivor_total_degree=survivor_total_degree,
                 max_internal_ce_degree=max_internal_ce_degree,
-            )
+            ),
         )
-    return results
+        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+    )
 
 
 def _first_nonselfdual_full_constraint_counts() -> Tuple[int, int]:
@@ -8822,18 +9700,6 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     subregular_internal_survivor_blocks = sl3_subregular_internal_survivor_ce_blocks(
         max_survivor_polynomial_degree=2
     )
-    subregular_semidirect_blocks = sl3_subregular_semidirect_survivor_blocks(
-        max_constraint_total_degree=1,
-        survivor_total_degree=1,
-        max_internal_ce_degree=2,
-    )
-    subregular_corrected_semidirect_blocks = (
-        sl3_subregular_corrected_semidirect_survivor_blocks(
-            max_constraint_total_degree=1,
-            survivor_total_degree=1,
-            max_internal_ce_degree=2,
-        )
-    )
     hook_source_blocks, hook_target_blocks = first_nonselfdual_hook_pair_linear_constraint_blocks(
         max_total_degree=3
     )
@@ -8856,45 +9722,51 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             max_survivor_polynomial_degree=2
         )
     )
-    hook_source_semidirect_blocks, hook_target_semidirect_blocks = (
-        first_nonselfdual_hook_pair_semidirect_survivor_blocks(
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        )
-    )
-    hook_source_corrected_semidirect_blocks, hook_target_corrected_semidirect_blocks = (
-        first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        )
-    )
     hook_source_survivor_blocks_deg2, hook_target_survivor_blocks_deg2 = (
         first_nonselfdual_hook_pair_survivor_coupled_blocks(
             max_constraint_total_degree=1,
             survivor_total_degree=2,
         )
     )
-    hook_source_survivor_blocks_deg3, hook_target_survivor_blocks_deg3 = (
-        first_nonselfdual_hook_pair_survivor_coupled_blocks(
-            max_constraint_total_degree=1,
-            survivor_total_degree=3,
-        )
+    subregular_linear_positive_summaries = _block_invariant_summaries(
+        subregular_blocks[1:],
+        linear_constraint_block_invariant_summary,
     )
-    hook_source_corrected_semidirect_blocks_deg2, hook_target_corrected_semidirect_blocks_deg2 = (
-        first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
-            max_constraint_total_degree=0,
-            survivor_total_degree=2,
-            max_internal_ce_degree=1,
-        )
+    subregular_mixed_summaries = _block_invariant_summaries(
+        subregular_mixed_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
     )
-    hook_source_corrected_semidirect_blocks_deg3, hook_target_corrected_semidirect_blocks_deg3 = (
-        first_nonselfdual_hook_pair_corrected_semidirect_survivor_blocks(
-            max_constraint_total_degree=0,
-            survivor_total_degree=3,
-            max_internal_ce_degree=1,
-        )
+    subregular_nonlinear_summaries = _block_invariant_summaries(
+        subregular_nonlinear_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    subregular_survivor_summaries = _block_invariant_summaries(
+        subregular_survivor_blocks,
+        survivor_coupled_block_invariant_summary,
+    )
+    hook_source_linear_positive_summaries = _block_invariant_summaries(
+        hook_source_blocks[1:],
+        linear_constraint_block_invariant_summary,
+    )
+    hook_target_linear_positive_summaries = _block_invariant_summaries(
+        hook_target_blocks[1:],
+        linear_constraint_block_invariant_summary,
+    )
+    hook_mixed_summaries = _block_invariant_summaries(
+        hook_source_mixed_blocks + hook_target_mixed_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    hook_nonlinear_summaries = _block_invariant_summaries(
+        hook_source_nonlinear_blocks + hook_target_nonlinear_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    hook_survivor_summaries = _block_invariant_summaries(
+        hook_source_survivor_blocks + hook_target_survivor_blocks,
+        survivor_coupled_block_invariant_summary,
+    )
+    hook_survivor_deg2_summaries = _block_invariant_summaries(
+        hook_source_survivor_blocks_deg2 + hook_target_survivor_blocks_deg2,
+        survivor_coupled_block_invariant_summary,
     )
     results: Dict[str, bool] = {}
 
@@ -8991,26 +9863,26 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     results["subregular linear block degree-0 homology is vacuum line"] = (
         chain_homology_dimensions(subregular_blocks[0]) == {0: 1}
     )
-    results["subregular linear positive blocks square to zero"] = all(
-        linear_constraint_block_has_square_zero(block) for block in subregular_blocks[1:]
+    results["subregular linear positive blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(subregular_linear_positive_summaries)
     )
     results["subregular linear positive blocks contractible"] = all(
         linear_constraint_block_has_contracting_homotopy(block) for block in subregular_blocks[1:]
     )
-    results["subregular linear positive blocks acyclic"] = all(
-        linear_constraint_block_is_positive_acyclic(block) for block in subregular_blocks[1:]
+    results["subregular linear positive blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(subregular_linear_positive_summaries)
     )
-    results["subregular mixed blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block) for block in subregular_mixed_blocks
+    results["subregular mixed blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(subregular_mixed_summaries)
     )
-    results["subregular mixed blocks acyclic"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block) for block in subregular_mixed_blocks
+    results["subregular mixed blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(subregular_mixed_summaries)
     )
-    results["subregular nonlinear mixed blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block) for block in subregular_nonlinear_blocks
+    results["subregular nonlinear mixed blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(subregular_nonlinear_summaries)
     )
-    results["subregular nonlinear mixed blocks acyclic"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block) for block in subregular_nonlinear_blocks
+    results["subregular nonlinear mixed blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(subregular_nonlinear_summaries)
     )
     results["subregular survivor action is explicit"] = (
         tuple(
@@ -9022,11 +9894,11 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             ("c_alpha1+alpha2", "T", "G+", -1),
         )
     )
-    results["subregular survivor-coupled blocks square to zero"] = all(
-        survivor_coupled_block_has_square_zero(block) for block in subregular_survivor_blocks
+    results["subregular survivor-coupled blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(subregular_survivor_summaries)
     )
-    results["subregular survivor-coupled blocks acyclic"] = all(
-        survivor_coupled_block_is_acyclic(block) for block in subregular_survivor_blocks
+    results["subregular survivor-coupled blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(subregular_survivor_summaries)
     )
     results["subregular internal survivor CE blocks square to zero"] = all(
         internal_survivor_ce_block_has_square_zero(block)
@@ -9094,11 +9966,22 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         and subregular_corrected_derivation_defects == {}
     )
     results["subregular naive semidirect coupling fails square zero"] = (
-        not any(semidirect_survivor_block_has_square_zero(block) for block in subregular_semidirect_blocks)
+        not any(
+            _partition_pair_semidirect_square_zero_flags(
+                seed.partition,
+                max_constraint_total_degree=1,
+                survivor_total_degree=1,
+                max_internal_ce_degree=2,
+            )
+        )
     )
     results["subregular corrected semidirect coupling restores square zero"] = all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in subregular_corrected_semidirect_blocks
+        _partition_pair_corrected_semidirect_square_zero_flags(
+            seed.partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+            max_internal_ce_degree=2,
+        )
     )
     results["first non-self-dual hook pair partitions"] = (
         hook_pair.source_partition == (3, 1)
@@ -9233,38 +10116,34 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     results["first hook target specialized complex acyclic"] = (
         complex_is_acyclic(hook_target_spec)
     )
-    results["first hook source linear positive blocks acyclic"] = all(
-        linear_constraint_block_is_positive_acyclic(block) for block in hook_source_blocks[1:]
+    results["first hook source linear positive blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(hook_source_linear_positive_summaries)
     )
     results["first hook source linear positive blocks contractible"] = all(
         linear_constraint_block_has_contracting_homotopy(block) for block in hook_source_blocks[1:]
     )
-    results["first hook target linear positive blocks acyclic"] = all(
-        linear_constraint_block_is_positive_acyclic(block) for block in hook_target_blocks[1:]
+    results["first hook target linear positive blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(hook_target_linear_positive_summaries)
     )
     results["first hook target linear positive blocks contractible"] = all(
         linear_constraint_block_has_contracting_homotopy(block) for block in hook_target_blocks[1:]
     )
-    results["first hook mixed blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block)
-        for block in hook_source_mixed_blocks + hook_target_mixed_blocks
+    results["first hook mixed blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(hook_mixed_summaries)
     )
-    results["first hook mixed blocks are acyclic through constraint degree two"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block)
-        for block in hook_source_mixed_blocks + hook_target_mixed_blocks
+    results["first hook mixed blocks are acyclic through constraint degree two"] = (
+        _all_block_summaries_are_acyclic(hook_mixed_summaries)
     )
     results["first hook mixed blocks match under relabeling"] = (
         first_nonselfdual_hook_pair_mixed_blocks_match_under_relabeling(
             max_constraint_total_degree=2
         )
     )
-    results["first hook nonlinear mixed blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block)
-        for block in hook_source_nonlinear_blocks + hook_target_nonlinear_blocks
+    results["first hook nonlinear mixed blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(hook_nonlinear_summaries)
     )
-    results["first hook nonlinear mixed blocks are acyclic through constraint degree two"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block)
-        for block in hook_source_nonlinear_blocks + hook_target_nonlinear_blocks
+    results["first hook nonlinear mixed blocks are acyclic through constraint degree two"] = (
+        _all_block_summaries_are_acyclic(hook_nonlinear_summaries)
     )
     results["first hook nonlinear mixed blocks match under relabeling"] = (
         first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling(
@@ -9283,13 +10162,11 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             for degree in hook_target_nonlinear_blocks[1].differentials
         )
     )
-    results["first hook survivor-coupled blocks square to zero"] = all(
-        survivor_coupled_block_has_square_zero(block)
-        for block in hook_source_survivor_blocks + hook_target_survivor_blocks
+    results["first hook survivor-coupled blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(hook_survivor_summaries)
     )
-    results["first hook survivor-coupled blocks acyclic"] = all(
-        survivor_coupled_block_is_acyclic(block)
-        for block in hook_source_survivor_blocks + hook_target_survivor_blocks
+    results["first hook survivor-coupled blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(hook_survivor_summaries)
     )
     results["first hook survivor-coupled blocks match under dual swap"] = (
         first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
@@ -9297,32 +10174,16 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             survivor_total_degree=1,
         )
     )
-    results["first hook survivor-coupled blocks square to zero in survivor degree two"] = all(
-        survivor_coupled_block_has_square_zero(block)
-        for block in hook_source_survivor_blocks_deg2 + hook_target_survivor_blocks_deg2
+    results["first hook survivor-coupled blocks square to zero in survivor degree two"] = (
+        _all_block_summaries_have_square_zero(hook_survivor_deg2_summaries)
     )
-    results["first hook survivor-coupled blocks acyclic in survivor degree two"] = all(
-        survivor_coupled_block_is_acyclic(block)
-        for block in hook_source_survivor_blocks_deg2 + hook_target_survivor_blocks_deg2
+    results["first hook survivor-coupled blocks acyclic in survivor degree two"] = (
+        _all_block_summaries_are_acyclic(hook_survivor_deg2_summaries)
     )
     results["first hook survivor-coupled blocks match under dual swap in survivor degree two"] = (
         first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
             max_constraint_total_degree=1,
             survivor_total_degree=2,
-        )
-    )
-    results["first hook survivor-coupled blocks square to zero in survivor degree three"] = all(
-        survivor_coupled_block_has_square_zero(block)
-        for block in hook_source_survivor_blocks_deg3 + hook_target_survivor_blocks_deg3
-    )
-    results["first hook survivor-coupled blocks acyclic in survivor degree three"] = all(
-        survivor_coupled_block_is_acyclic(block)
-        for block in hook_source_survivor_blocks_deg3 + hook_target_survivor_blocks_deg3
-    )
-    results["first hook survivor-coupled blocks match under dual swap in survivor degree three"] = (
-        first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
-            max_constraint_total_degree=1,
-            survivor_total_degree=3,
         )
     )
     results["first hook survivor feedback is nontrivial"] = (
@@ -9409,8 +10270,15 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         )
     )
     results["first hook naive semidirect coupling fails square zero"] = (
-        not any(semidirect_survivor_block_has_square_zero(block) for block in hook_source_semidirect_blocks)
-        and not any(semidirect_survivor_block_has_square_zero(block) for block in hook_target_semidirect_blocks)
+        not any(
+            _hook_pair_semidirect_square_zero_flags(
+                4,
+                1,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
     )
     results["first hook first transfer correction kills the naive survivor action"] = (
         first_transfer_correction_terms_from_witnesses(
@@ -9450,18 +10318,22 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         )
     )
     results["first hook corrected semidirect coupling restores square zero"] = all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in hook_source_corrected_semidirect_blocks + hook_target_corrected_semidirect_blocks
+        _hook_pair_corrected_semidirect_square_zero_flags(
+            4,
+            1,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
     )
     results["first hook corrected semidirect coupling restores square zero in survivor degree two"] = all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in hook_source_corrected_semidirect_blocks_deg2
-        + hook_target_corrected_semidirect_blocks_deg2
-    )
-    results["first hook corrected semidirect coupling restores square zero in survivor degree three"] = all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in hook_source_corrected_semidirect_blocks_deg3
-        + hook_target_corrected_semidirect_blocks_deg3
+        _hook_pair_corrected_semidirect_square_zero_flags(
+            4,
+            1,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        )
     )
     results["first hook reduced brackets close on survivors"] = (
         hook_source_brackets[("source_gm2_2", "source_gm2_3")] == {"source_gm4_1": 1}
@@ -9514,29 +10386,23 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             max_survivor_polynomial_degree=1,
         )
     )
-    two_row_source_semidirect_blocks, two_row_target_semidirect_blocks = (
-        nonprincipal_two_row_semidirect_survivor_blocks(
-            6,
-            2,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        )
-    )
-    two_row_source_corrected_semidirect_blocks, two_row_target_corrected_semidirect_blocks = (
-        nonprincipal_two_row_corrected_semidirect_survivor_blocks(
-            6,
-            2,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        )
-    )
     two_row_source_corrected_action, two_row_target_corrected_action = (
         partition_pair_corrected_survivor_action_terms(two_row_partition)
     )
     two_row_source_corrected_defects, two_row_target_corrected_defects = (
         partition_pair_corrected_survivor_derivation_defects(two_row_partition)
+    )
+    two_row_mixed_summaries = _block_invariant_summaries(
+        two_row_source_mixed_blocks + two_row_target_mixed_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    two_row_nonlinear_summaries = _block_invariant_summaries(
+        two_row_source_nonlinear_blocks + two_row_target_nonlinear_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    two_row_survivor_summaries = _block_invariant_summaries(
+        two_row_source_survivor_blocks + two_row_target_survivor_blocks,
+        survivor_coupled_block_invariant_summary,
     )
     results["A5 two-row non-hook family tag is propagated"] = (
         two_row_case.family == "two_row_nonhook"
@@ -9545,37 +10411,37 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         len(two_row_source_candidates) == centralizer_dimension_sl_n(two_row_case.partition)
         and len(two_row_target_candidates) == centralizer_dimension_sl_n(two_row_case.dual_partition)
     )
-    results["A5 two-row mixed blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block)
-        for block in two_row_source_mixed_blocks + two_row_target_mixed_blocks
+    results["A5 two-row mixed blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(two_row_mixed_summaries)
     )
-    results["A5 two-row mixed blocks acyclic"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block)
-        for block in two_row_source_mixed_blocks + two_row_target_mixed_blocks
+    results["A5 two-row mixed blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(two_row_mixed_summaries)
     )
-    results["A5 two-row nonlinear blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block)
-        for block in two_row_source_nonlinear_blocks + two_row_target_nonlinear_blocks
+    results["A5 two-row nonlinear blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(two_row_nonlinear_summaries)
     )
-    results["A5 two-row nonlinear blocks acyclic"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block)
-        for block in two_row_source_nonlinear_blocks + two_row_target_nonlinear_blocks
+    results["A5 two-row nonlinear blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(two_row_nonlinear_summaries)
     )
-    results["A5 two-row survivor-coupled blocks square to zero"] = all(
-        survivor_coupled_block_has_square_zero(block)
-        for block in two_row_source_survivor_blocks + two_row_target_survivor_blocks
+    results["A5 two-row survivor-coupled blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(two_row_survivor_summaries)
     )
-    results["A5 two-row survivor-coupled blocks acyclic"] = all(
-        survivor_coupled_block_is_acyclic(block)
-        for block in two_row_source_survivor_blocks + two_row_target_survivor_blocks
+    results["A5 two-row survivor-coupled blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(two_row_survivor_summaries)
     )
     results["A5 two-row internal survivor CE blocks square to zero"] = all(
         internal_survivor_ce_block_has_square_zero(block)
         for block in two_row_source_internal_survivor_blocks + two_row_target_internal_survivor_blocks
     )
     results["A5 two-row naive semidirect coupling fails square zero"] = (
-        not any(semidirect_survivor_block_has_square_zero(block) for block in two_row_source_semidirect_blocks)
-        and not any(semidirect_survivor_block_has_square_zero(block) for block in two_row_target_semidirect_blocks)
+        not any(
+            _partition_pair_semidirect_square_zero_flags(
+                two_row_partition,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
     )
     results["A5 two-row first transfer kills reduced survivor action"] = (
         two_row_source_corrected_action == ()
@@ -9584,9 +10450,12 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         and two_row_target_corrected_defects == {}
     )
     results["A5 two-row corrected semidirect coupling restores square zero"] = all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in two_row_source_corrected_semidirect_blocks
-        + two_row_target_corrected_semidirect_blocks
+        _partition_pair_corrected_semidirect_square_zero_flags(
+            two_row_partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
     )
     results["A5 two-row mixed blocks match under dual swap"] = (
         nonprincipal_two_row_mixed_blocks_match_under_dual_swap(
@@ -9649,27 +10518,23 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             max_survivor_polynomial_degree=1,
         )
     )
-    general_source_semidirect_blocks, general_target_semidirect_blocks = (
-        nonprincipal_partition_pair_semidirect_survivor_blocks(
-            general_partition,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        )
-    )
-    general_source_corrected_semidirect_blocks, general_target_corrected_semidirect_blocks = (
-        nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
-            general_partition,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        )
-    )
     general_source_corrected_action, general_target_corrected_action = (
         partition_pair_corrected_survivor_action_terms(general_partition)
     )
     general_source_corrected_defects, general_target_corrected_defects = (
         partition_pair_corrected_survivor_derivation_defects(general_partition)
+    )
+    general_mixed_summaries = _block_invariant_summaries(
+        general_source_mixed_blocks + general_target_mixed_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    general_nonlinear_summaries = _block_invariant_summaries(
+        general_source_nonlinear_blocks + general_target_nonlinear_blocks,
+        mixed_constraint_ghost_block_invariant_summary,
+    )
+    general_survivor_summaries = _block_invariant_summaries(
+        general_source_survivor_blocks + general_target_survivor_blocks,
+        survivor_coupled_block_invariant_summary,
     )
     results["A5 general nonprincipal family tag is propagated"] = (
         general_case.family == "general_nonprincipal"
@@ -9678,29 +10543,23 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         len(general_source_candidates) == centralizer_dimension_sl_n(general_case.partition)
         and len(general_target_candidates) == centralizer_dimension_sl_n(general_case.dual_partition)
     )
-    results["A5 general nonprincipal mixed blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block)
-        for block in general_source_mixed_blocks + general_target_mixed_blocks
+    results["A5 general nonprincipal mixed blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(general_mixed_summaries)
     )
-    results["A5 general nonprincipal mixed blocks acyclic"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block)
-        for block in general_source_mixed_blocks + general_target_mixed_blocks
+    results["A5 general nonprincipal mixed blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(general_mixed_summaries)
     )
-    results["A5 general nonprincipal nonlinear blocks square to zero"] = all(
-        mixed_constraint_ghost_block_has_square_zero(block)
-        for block in general_source_nonlinear_blocks + general_target_nonlinear_blocks
+    results["A5 general nonprincipal nonlinear blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(general_nonlinear_summaries)
     )
-    results["A5 general nonprincipal nonlinear blocks acyclic"] = all(
-        mixed_constraint_ghost_block_is_acyclic(block)
-        for block in general_source_nonlinear_blocks + general_target_nonlinear_blocks
+    results["A5 general nonprincipal nonlinear blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(general_nonlinear_summaries)
     )
-    results["A5 general nonprincipal survivor-coupled blocks square to zero"] = all(
-        survivor_coupled_block_has_square_zero(block)
-        for block in general_source_survivor_blocks + general_target_survivor_blocks
+    results["A5 general nonprincipal survivor-coupled blocks square to zero"] = (
+        _all_block_summaries_have_square_zero(general_survivor_summaries)
     )
-    results["A5 general nonprincipal survivor-coupled blocks acyclic"] = all(
-        survivor_coupled_block_is_acyclic(block)
-        for block in general_source_survivor_blocks + general_target_survivor_blocks
+    results["A5 general nonprincipal survivor-coupled blocks acyclic"] = (
+        _all_block_summaries_are_acyclic(general_survivor_summaries)
     )
     results["A5 general nonprincipal internal survivor CE blocks square to zero"] = all(
         internal_survivor_ce_block_has_square_zero(block)
@@ -9708,8 +10567,14 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         + general_target_internal_survivor_blocks
     )
     results["A5 general nonprincipal naive semidirect coupling fails square zero"] = (
-        not any(semidirect_survivor_block_has_square_zero(block) for block in general_source_semidirect_blocks)
-        and not any(semidirect_survivor_block_has_square_zero(block) for block in general_target_semidirect_blocks)
+        not any(
+            _partition_pair_semidirect_square_zero_flags(
+                general_partition,
+                max_constraint_total_degree=0,
+                survivor_total_degree=1,
+                max_internal_ce_degree=1,
+            )
+        )
     )
     results["A5 general nonprincipal first transfer kills reduced survivor action"] = (
         general_source_corrected_action == ()
@@ -9718,9 +10583,12 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         and general_target_corrected_defects == {}
     )
     results["A5 general nonprincipal corrected semidirect coupling restores square zero"] = all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in general_source_corrected_semidirect_blocks
-        + general_target_corrected_semidirect_blocks
+        _partition_pair_corrected_semidirect_square_zero_flags(
+            general_partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
     )
     results["A5 general nonprincipal mixed blocks match under dual swap"] = (
         nonprincipal_partition_pair_mixed_blocks_match_under_dual_swap(
@@ -9749,14 +10617,20 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             max_internal_ce_degree=1,
         )
     )
-    results["hook mixed dual-swap catalog checks"] = all(
-        verify_hook_pair_mixed_block_duality_catalog(max_n=7, max_constraint_total_degree=1).values()
+    results["hook mixed family-via-duality checks"] = all(
+        verify_hook_pair_mixed_family_via_duality_catalog(
+            max_n=7,
+            max_constraint_total_degree=1,
+        ).values()
     )
-    results["hook nonlinear dual-swap catalog checks"] = all(
-        verify_hook_pair_nonlinear_block_duality_catalog(max_n=7, max_constraint_total_degree=1).values()
+    results["hook nonlinear family-via-duality checks"] = all(
+        verify_hook_pair_nonlinear_family_via_duality_catalog(
+            max_n=7,
+            max_constraint_total_degree=1,
+        ).values()
     )
-    results["hook survivor-coupled dual-swap catalog checks"] = all(
-        verify_hook_pair_survivor_coupled_block_duality_catalog(
+    results["hook survivor-coupled family-via-duality checks"] = all(
+        verify_hook_pair_survivor_coupled_family_via_duality_catalog(
             max_n=5,
             max_constraint_total_degree=1,
             survivor_total_degree=1,
@@ -9776,23 +10650,16 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             survivor_total_degree=3,
         ).values()
     )
-    results["hook survivor-coupled dual-swap catalog checks in survivor degree two"] = all(
-        verify_hook_pair_survivor_coupled_block_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=1,
-            survivor_total_degree=2,
-        ).values()
-    )
-    results["hook corrected semidirect catalog checks in survivor degree two"] = all(
-        verify_hook_pair_corrected_semidirect_catalog(
+    results["hook corrected semidirect family-via-duality checks"] = all(
+        verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
             max_n=6,
             max_constraint_total_degree=0,
-            survivor_total_degree=2,
+            survivor_total_degree=1,
             max_internal_ce_degree=1,
         ).values()
     )
-    results["hook corrected semidirect dual-swap catalog checks in survivor degree two"] = all(
-        verify_hook_pair_corrected_semidirect_duality_catalog(
+    results["hook corrected semidirect family-via-duality checks in survivor degree two"] = all(
+        verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
             max_n=6,
             max_constraint_total_degree=0,
             survivor_total_degree=2,
@@ -9807,58 +10674,58 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             max_internal_ce_degree=1,
         ).values()
     )
-    results["two-row non-hook mixed dual-swap catalog checks"] = all(
-        verify_nonprincipal_two_row_mixed_block_duality_catalog(
+    results["two-row non-hook mixed family-via-duality checks"] = all(
+        verify_nonprincipal_two_row_mixed_family_via_duality_catalog(
             max_n=9,
             max_constraint_total_degree=1,
         ).values()
     )
-    results["two-row non-hook nonlinear dual-swap catalog checks"] = all(
-        verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
+    results["two-row non-hook nonlinear family-via-duality checks"] = all(
+        verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog(
             max_n=9,
             max_constraint_total_degree=1,
         ).values()
     )
-    results["two-row non-hook survivor-coupled bundle checks"] = all(
-        verify_nonprincipal_two_row_survivor_coupled_bundle(
+    results["two-row non-hook survivor-coupled family-via-duality checks"] = all(
+        verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
             max_n=8,
             max_constraint_total_degree=1,
             survivor_total_degree=1,
         ).values()
     )
-    results["two-row non-hook survivor-coupled bundle checks in survivor degree two"] = all(
-        verify_nonprincipal_two_row_survivor_coupled_bundle(
+    results["two-row non-hook survivor-coupled family-via-duality checks in survivor degree two"] = all(
+        verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
             max_n=8,
             max_constraint_total_degree=1,
             survivor_total_degree=2,
         ).values()
     )
-    results["two-row non-hook survivor-coupled bundle checks in survivor degree three"] = all(
-        verify_nonprincipal_two_row_survivor_coupled_bundle(
-            max_n=6,
+    results["two-row non-hook survivor-coupled family-via-duality checks in survivor degree three"] = all(
+        verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
+            max_n=8,
             max_constraint_total_degree=1,
             survivor_total_degree=3,
         ).values()
     )
-    results["two-row non-hook corrected semidirect bundle checks"] = all(
-        verify_nonprincipal_two_row_corrected_semidirect_bundle(
-            max_n=7,
+    results["two-row non-hook corrected semidirect family-via-duality checks"] = all(
+        verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+            max_n=8,
             max_constraint_total_degree=0,
             survivor_total_degree=1,
             max_internal_ce_degree=1,
         ).values()
     )
-    results["two-row non-hook corrected semidirect bundle checks in survivor degree two"] = all(
-        verify_nonprincipal_two_row_corrected_semidirect_bundle(
-            max_n=7,
+    results["two-row non-hook corrected semidirect family-via-duality checks in survivor degree two"] = all(
+        verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+            max_n=8,
             max_constraint_total_degree=0,
             survivor_total_degree=2,
             max_internal_ce_degree=1,
         ).values()
     )
-    results["two-row non-hook corrected semidirect bundle checks in survivor degree three"] = all(
-        verify_nonprincipal_two_row_corrected_semidirect_bundle(
-            max_n=7,
+    results["two-row non-hook corrected semidirect family-via-duality checks in survivor degree three"] = all(
+        verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
+            max_n=8,
             max_constraint_total_degree=0,
             survivor_total_degree=3,
             max_internal_ce_degree=1,
@@ -9878,14 +10745,14 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["general nonprincipal survivor-coupled family-via-duality checks"] = all(
         verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-            max_n=8,
+            max_n=12,
             max_constraint_total_degree=1,
             survivor_total_degree=1,
         ).values()
     )
     results["general nonprincipal survivor-coupled family-via-duality checks in survivor degree two"] = all(
         verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-            max_n=8,
+            max_n=11,
             max_constraint_total_degree=1,
             survivor_total_degree=2,
         ).values()
@@ -9899,7 +10766,7 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["general nonprincipal corrected semidirect family-via-duality checks"] = all(
         verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-            max_n=9,
+            max_n=14,
             max_constraint_total_degree=0,
             survivor_total_degree=1,
             max_internal_ce_degree=1,
@@ -9907,7 +10774,7 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["general nonprincipal corrected semidirect family-via-duality checks in survivor degree two"] = all(
         verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-            max_n=7,
+            max_n=11,
             max_constraint_total_degree=0,
             survivor_total_degree=2,
             max_internal_ce_degree=1,
@@ -9915,7 +10782,7 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["general nonprincipal corrected semidirect family-via-duality checks in survivor degree three"] = all(
         verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-            max_n=6,
+            max_n=5,
             max_constraint_total_degree=0,
             survivor_total_degree=3,
             max_internal_ce_degree=1,

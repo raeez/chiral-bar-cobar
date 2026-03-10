@@ -497,7 +497,13 @@ def nonprincipal_hook_level_shift_ansatz_type_a(n: int, level=Symbol("k")):
 
 def nonprincipal_type_a_case(partition: Iterable[int], level=Symbol("k")) -> OrbitDualityCase:
     """Build one non-principal type-A orbit-duality case from a partition."""
-    lam = normalize_partition(partition)
+    return _nonprincipal_type_a_case_cached(normalize_partition(partition), sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_type_a_case_cached(partition: Partition, level) -> OrbitDualityCase:
+    """Cached non-principal type-A orbit-duality case keyed by partition and level."""
+    lam = partition
     n = partition_size(lam)
     orbit_class = type_a_orbit_class(lam)
     if orbit_class in {"principal", "trivial"}:
@@ -536,11 +542,17 @@ def nonprincipal_hook_case(n: int, r: int, level=Symbol("k")) -> OrbitDualityCas
     """Build a single non-principal hook/subregular frontier case."""
     if not (1 <= r <= n - 2):
         raise ValueError("non-principal hook requires 1 <= r <= n-2")
-    return nonprincipal_type_a_case(hook_partition(n, r), level=level)
+    return nonprincipal_type_a_case(hook_partition(n, r), level=sympify(level))
 
 
 def nonprincipal_hook_cases(max_n: int = 6, level=Symbol("k")) -> Tuple[OrbitDualityCase, ...]:
     """Enumerate hook/subregular non-principal seed cases in type A."""
+    return _nonprincipal_hook_cases_cached(max_n, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_hook_cases_cached(max_n: int, level) -> Tuple[OrbitDualityCase, ...]:
+    """Cached hook/subregular frontier case catalog keyed by rank bound and level."""
     if max_n < 3:
         return ()
     cases = []
@@ -552,12 +564,24 @@ def nonprincipal_hook_cases(max_n: int = 6, level=Symbol("k")) -> Tuple[OrbitDua
 
 def nonprincipal_two_row_case(n: int, s: int, level=Symbol("k")) -> OrbitDualityCase:
     """Build one non-hook two-row case (n-s,s) in type A."""
+    return _nonprincipal_two_row_case_cached(n, s, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_case_cached(n: int, s: int, level) -> OrbitDualityCase:
+    """Cached non-hook two-row orbit-duality case keyed by n, s, and level."""
     partition = two_row_nonhook_partition(n, s)
     return nonprincipal_type_a_case(partition, level=level)
 
 
 def nonprincipal_two_row_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[OrbitDualityCase, ...]:
     """Enumerate type-A two-row non-hook orbit-duality cases."""
+    return _nonprincipal_two_row_cases_cached(max_n, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_two_row_cases_cached(max_n: int, level) -> Tuple[OrbitDualityCase, ...]:
+    """Cached two-row non-hook orbit-duality catalog keyed by rank bound and level."""
     if max_n < 4:
         return ()
     cases = []
@@ -572,6 +596,12 @@ def nonprincipal_two_row_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[Orbit
 
 def nonprincipal_general_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[OrbitDualityCase, ...]:
     """Enumerate type-A non-hook non-two-row orbit-duality cases."""
+    return _nonprincipal_general_cases_cached(max_n, sympify(level))
+
+
+@lru_cache(maxsize=None)
+def _nonprincipal_general_cases_cached(max_n: int, level) -> Tuple[OrbitDualityCase, ...]:
+    """Cached general non-principal orbit-duality catalog keyed by rank bound and level."""
     if max_n < 3:
         return ()
     cases = []

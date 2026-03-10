@@ -1,5 +1,7 @@
 """Tests for cyclic CE cohomology computation (MC2 Step 1).
 
+Marked slow — heavy symbolic matrix computations.  Run via ``make test-full``.
+
 Verifies:
   - CE cohomology H*(sl_2, sl_2) = 0 (Whitehead lemmas)
   - Cyclic subcomplex dimensions C^n_cyc
@@ -10,8 +12,11 @@ Verifies:
   - Exterior algebra cross-check
 """
 
+import pytest
 import unittest
 from fractions import Fraction
+
+pytestmark = pytest.mark.slow
 
 import numpy as np
 
