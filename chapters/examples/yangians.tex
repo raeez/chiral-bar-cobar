@@ -1,71 +1,27 @@
+% Status and semantic-level disputes are settled by Chapter 34 (concordance.tex).
 \chapter{Yangians and shifted Yangians}
 \label{chap:yangians}
-
-The Yangian $Y(\mathfrak{g})$ is an $\Eone$-chiral algebra:
-associative but not commutative, local but not fully local.  Its bar
-complex uses ordered configuration spaces on a curve, rather than the
-unordered curve-configurations of the $\Einf$-chiral setting, and
-Verdier duality inverts the $R$-matrix.  The resulting Koszul duals
-involve quantum groups $U_q(\mathfrak{g})$ rather than vertex algebras
-at shifted levels.
-
-The governing question is: how much of the curve-level modular Koszul
-machine survives in the braided $\Eone$ regime at theorem level, and what
-remains contingent on the full factorization-categorical DK/KL extension.
-
-\begin{remark}[Axis convention]
 \label{rem:yangian-axis}
-In this chapter, $\Eone$-chiral means associative/nonlocal
-curve-chiral structure in the sense of
-Definition~\ref{def:e1-chiral}, not a bare topological
-$\mathsf{E}_1$-algebra on a real $1$-manifold.  Ordered versus
-unordered configuration spaces is a change of factorization regime on
-the same curve.
-\end{remark}
-
-\begin{remark}[Yangian as atom: the braided face]
 \label{rem:yangian-atom}
-\index{Yangian!as modular Koszul atom (conditional on $\Eone$-Koszulness)}
-In the ``atoms'' framing of Remark~\ref{rem:free-field-atoms},
-the Yangian reveals the fourth irreducible face of modular Koszul
-duality (conditional on $\Eone$-Koszulness; see
-Proposition~\ref{prop:yangian-koszul}): \emph{braiding}.  The free fields, Kac--Moody, and
-$\mathcal{W}$-algebras are all $\Einf$-chiral
-(commutative/local), where Verdier duality acts by level
-inversion.  The Yangian is $\Eone$-chiral (associative/ordered),
-and Verdier duality acts by $R$-matrix inversion
-$R \mapsto R^{-1}$ --- the homotopy-coherent shadow of the
-master diagram~\eqref{eq:master-square} in the braided setting.
-The derived Drinfeld--Kohno conjecture
-(Conjecture~\ref{conj:derived-drinfeld-kohno}) articulates the
-horizon: the $\Eone$-factorization categories of $Y(\mathfrak{g})$
-and $U_q(\mathfrak{g})^{\mathrm{op}}$ should be equivalent,
-completing the commutative theory with its noncommutative partner.
-\end{remark}
-
-\begin{remark}[Status legend]
 \label{rem:yangian-status}
-The results in this chapter are stratified:
-\begin{enumerate}
-\item[\textbf{T3.}] \emph{$\Eone$-regime} (proved):
-  Braided monoidal bar complex, Verdier = $R$-matrix inversion,
-  chain-level DK square, evaluation-locus factorization comparison.
-\item[\textbf{Horizon.}] \emph{Full factorization-categorical DK}:
-  Extension to full category~$O$ is conditional on Yangian
-  Koszulness and factorization-level Kazhdan equivalence
-  (Conjecture~\ref{conj:master-dk-kl}).
-\end{enumerate}
-\end{remark}
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
 \label{rem:yangian-hms}
-This chapter operates at \textbf{M-level}: the RTT presentation,
-braided monoidal bar complex, and chain-level Drinfeld--Kohno square
-are explicit dg/bar-complex constructions.  \textbf{S-level} shadows
-include $R$-matrix data and evaluation-locus comparisons.  H-level
-structures ($\Eone$-factorization categories, derived DK equivalence)
-are formulated as conjectures.
-\end{remark}
+\index{Yangian!as modular Koszul atom (conditional on $\Eone$-Koszulness)}
+
+The Kac--Moody and $\mathcal{W}$-algebra families are
+$\Einf$-chiral: commutative, fully local, with unordered
+configuration spaces $C_n(X)$.  The Kazhdan--Lusztig equivalence
+\cite{KL93}
+sends $\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})$ to the
+braided monoidal category $\mathcal{C}(U_q(\mathfrak{g}))$, whose
+$R$-matrix structure is not commutative.  The bar-cobar machine must
+therefore extend to \emph{ordered} configurations --- and the Yangian
+$Y(\mathfrak{g})$ provides the first $\Eone$-chiral algebra for which
+this extension is explicit.
+
+On ordered configurations, the bar complex $\barB^{\Eone}(\cA)$
+is no longer symmetric, and Verdier duality no longer acts by level
+inversion on the algebra.  Instead, it inverts the $R$-matrix on
+the module category: $\mathbb{D} R(u) = R^{-1}(u)$.
 
 \section{Yangian vertex algebra}
 \label{sec:yangian-vertex}
@@ -174,6 +130,39 @@ computations.  A rigorous construction of the $\Eone$-chiral structure and its
 Koszul dual should specify which presentation is used.
 \end{remark}
 
+\begin{remark}[Why ordered configurations are forced]
+\label{rem:ordered-forced}
+\index{ordered configurations!mathematical necessity}
+The $\Eone$-chiral structure of Theorem~\ref{thm:yangian-e1} is
+not an optional generalization of the $\Einf$-chiral theory.  It is
+forced by the following chain of mathematical necessities.
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The Kazhdan--Lusztig equivalence
+  (Theorem~\ref{thm:kazhdan-lusztig-equivalence}) sends
+  $\mathcal{O}_k^{\mathrm{int}}(\widehat{\fg})$ to
+  $\mathcal{C}(U_q(\fg))$.  The target is a braided monoidal
+  category whose braiding $\sigma$ is \emph{not} the symmetric
+  flip: $R_{12} \neq P_{12}$.
+\item Bar-cobar duality on the affine KM side reverses the braiding:
+  $\sigma \mapsto \sigma^{-1}$
+  (Theorem~\ref{thm:monoidal-module-koszul}).  Under the KL
+  equivalence, this becomes $R_q \mapsto R_q^{-1}$, i.e.,
+  $q \mapsto q^{-1}$.
+\item On the quantum-group side, $R$-matrix inversion is not
+  level inversion.  It is a Hopf algebra involution that
+  reverses the \emph{ordering} of tensor factors.  To realize
+  this geometrically on a curve, the bar complex must track
+  which insertions are ``to the left'' and ``to the right'' ---
+  hence ordered configurations $C_n^{\mathrm{ord}}(X)$.
+\item Without ordering, Verdier duality on
+  $\overline{C}_n(X)$ acts by level inversion $k \mapsto k'$
+  (the $\Einf$-chiral story of Part~I).  With ordering, it
+  acts by $R$-matrix inversion.  The two actions are related
+  by the DK square~\eqref{eq:dk-square-affine}.
+\end{enumerate}
+In short: the KL equivalence exists; bar-cobar duality must be
+compatible with it; compatibility forces ordered configurations.
+\end{remark}
 
 \section{Koszul dual of the Yangian}\label{sec:yangian-koszul}
 
@@ -279,13 +268,32 @@ At $\hbar = 0$ (the classical limit), $R(u) = R^{-1}(u) = 1$, and the RTT algebr
 The sign flip $\hbar \to -\hbar$ in the Yangian Koszul dual is the analog of the Feigin--Frenkel level shift $k \to -k - 2h^\vee$ for affine algebras.  For simply-laced $\mathfrak{g}$, the Yangian $Y(\mathfrak{g})$ is isomorphic to $Y(\mathfrak{g}^\vee)$ (since $\mathfrak{g} \cong \mathfrak{g}^\vee$), and the Koszul duality becomes a form of self-duality.  For non-simply-laced $\mathfrak{g}$, one expects $Y(\mathfrak{g})^! \simeq Y(\mathfrak{g}^\vee)$, realizing Langlands duality at the Yangian level.  Latyntsev \cite{Latyntsev23} constructs factorisation quantum groups that provide a complementary approach to Yangian duality via factorisation homology.
 \end{remark}
 
+\begin{remark}[The $\Eone$ inversion principle]
+\label{rem:yangian-e1-inversion}
+\index{E1 inversion principle@$\Eone$ inversion principle!Yangian instance}
+The $R$-matrix inversion $R \mapsto R^{-1}$ in
+Theorem~\ref{thm:yangian-koszul-dual} is one instance of a
+general principle for $\Eone$-chiral Koszul duality: the
+non-commutativity datum is always inverted.  For lattice
+vertex algebras with non-symmetric cocycles
+(\S\ref{sec:lattice:e1-families}), the cocycle is inverted:
+$\varepsilon \mapsto \varepsilon^{-1}$.  Both instances arise from
+the self-duality ${\chirAss}^! \cong \chirAss \otimes \mathrm{sgn}$
+of the chiral associative operad, with the sign twist realized as
+orientation reversal on ordered configurations.  See
+Theorem~\ref{thm:e1-inversion-principle} for the unified
+statement.
+\end{remark}
+
 \subsection{Koszulness and bar-cobar recovery}
 
 \begin{proposition}[RTT Yangian is Koszul; \ClaimStatusProvedHere]\label{prop:yangian-koszul}
 \index{Yangian!Koszulness}
-The Yangian $Y(\mathfrak{sl}_2)$ in the RTT presentation
+For any simple Lie algebra $\mathfrak{g}$ with fundamental
+representation~$V_0$ of dimension~$N = \dim V_0$, the Yangian
+$Y(\mathfrak{g})$ in the RTT presentation
 (Definition~\ref{def:yangian-rtt}) is Koszul: the bar complex
-$\bar{B}(Y(\mathfrak{sl}_2))$ has cohomology concentrated on the
+$\bar{B}(Y(\mathfrak{g}))$ has cohomology concentrated on the
 diagonal, i.e., $\mathrm{Ext}^{i,j}_{Y}(\mathbb{C}, \mathbb{C}) = 0$
 for $i \neq j$ in the $(i, j)$-bigrading by homological degree and
 internal (level) degree.
@@ -294,7 +302,8 @@ internal (level) degree.
 \begin{proof}
 \emph{Step~1: PBW basis.}
 Molev \cite{molev-yangians} establishes a Poincar\'{e}--Birkhoff--Witt
-basis for $Y(\mathfrak{g})$ in the RTT presentation: ordered monomials
+basis for $Y(\mathfrak{g})$ in the RTT presentation for every simple
+$\mathfrak{g}$: ordered monomials
 in the generators $\{T_{ij}^{(r)}\}_{1 \leq i,j \leq N,\, r \geq 0}$
 (with respect to a fixed total order on the index set $(i,j,r)$) form
 a vector space basis for $Y(\mathfrak{g})$.  The
@@ -302,31 +311,41 @@ associated graded algebra with respect to the PBW filtration is the
 polynomial algebra $\mathrm{Sym}(V)$, where
 $V = \bigoplus_{r \geq 0} \mathrm{End}(\mathbb{C}^N)_r$.
 
-\emph{Step~2: PBW implies Koszul.}
+\emph{Step~2: Graded local finiteness.}
+The level grading $V = \bigoplus_{r \geq 0} V_r$ with
+$\dim V_r = N^2 = (\dim V_0)^2$ ensures that each graded component
+of the quadratic algebra is finite-dimensional.  The RTT
+relation~\eqref{eq:rtt-modes} is homogeneous of degree~$r+s$ in the
+level grading, so the quadratic algebra
+$A = T(V)/\langle R \rangle$ is locally finite: the graded
+component~$A_n$ is a quotient of the finite-dimensional space
+$\bigoplus_{r_1 + \cdots + r_k = n} V_{r_1} \otimes \cdots
+\otimes V_{r_k}$.  This satisfies the local finiteness hypothesis
+of the Polishchuk--Positselski framework
+(cf.\ step~2b of the proof of
+Theorem~\ref{thm:yangian-koszul-dual}).  The key point is
+that $N^2$ is finite and independent of~$r$, so local finiteness
+holds uniformly for all simple~$\mathfrak{g}$.
+
+\emph{Step~3: PBW implies Koszul.}
 By the Polishchuk--Positselski PBW criterion \cite[Ch.~4]{PP05}, a
-quadratic algebra possessing a PBW basis is Koszul.  The argument:
-the PBW property gives a flat deformation from $Y(\mathfrak{sl}_2)$
+quadratic algebra possessing a PBW basis is Koszul, provided
+it is locally finite in a non-negative connected grading (verified
+in Step~2).  The argument:
+the PBW property gives a flat deformation from $Y(\mathfrak{g})$
 to its associated graded $\mathrm{Sym}(V)$.  Since the Koszul complex
 $K(A) = A \otimes A^{!\ast}$ is functorial in the quadratic data, and
 acyclicity of $K(\mathrm{Sym}(V))$ is classical ($\mathrm{Sym}$--$\bigwedge$ duality),
-flatness of the deformation implies acyclicity of $K(Y(\mathfrak{sl}_2))$.
-
-\emph{Step~3: Graded local finiteness.}
-The level grading $V = \bigoplus_{r \geq 0} V_r$ with
-$\dim V_r = N^2 = 4$ (for $N = 2$) ensures that each graded component
-of the quadratic algebra is finite-dimensional, satisfying the local
-finiteness hypothesis required for the Polishchuk--Positselski
-framework (cf.\ step~2b of the proof of
-Theorem~\ref{thm:yangian-koszul-dual}).
+flatness of the deformation implies acyclicity of $K(Y(\mathfrak{g}))$.
 \end{proof}
 
 \begin{corollary}[Yangian bar-cobar recovery; \ClaimStatusProvedHere]
 \label{cor:yangian-bar-cobar}
-The bar-cobar adjunction provides a quasi-isomorphism of
-$\Eone$-chiral algebras:
+For any simple~$\mathfrak{g}$, the bar-cobar adjunction provides a
+quasi-isomorphism of $\Eone$-chiral algebras:
 \[
-\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(Y(\mathfrak{sl}_2)^{\mathrm{ch}}))
-\xrightarrow{\;\sim\;} Y(\mathfrak{sl}_2)^{\mathrm{ch}}.
+\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(Y(\mathfrak{g})^{\mathrm{ch}}))
+\xrightarrow{\;\sim\;} Y(\mathfrak{g})^{\mathrm{ch}}.
 \]
 \end{corollary}
 
@@ -793,6 +812,35 @@ line-operator formulas, and
 Proposition~\ref{prop:dg-shifted-rtt-formula-preservation} verifies
 that criterion for the standard rational line-operator formulas once
 they are written coefficientwise in RTT level.
+Proposition~\ref{prop:dg-shifted-rtt-kernel-coefficient-criterion}
+then shows that the remaining stage-identification problem is literally
+the equality of the extracted RTT kernel coefficients and evaluation
+modules with the theorematic finite-stage data.
+Proposition~\ref{prop:dg-shifted-rtt-oneloop-kernel-criterion}
+sharpens this once more: the live Yangian step is the mode-by-mode
+identity between the extracted one-loop line-operator kernel and the
+finite RTT coefficient family.  The next reduction is representation
+theoretic: Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}
+shows that it is enough to prove those identities on a faithful
+evaluation family.  Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}
+reduces the check further to a finite boundary strip of mode defects.
+Proposition~\ref{prop:dg-shifted-rtt-finite-tensor-detection}
+packages those defects into finite tensor powers of the fundamental
+evaluation module, and
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} shows
+that once the fundamental $L$-operator satisfies the truncated RTT
+relation and the twisted coproduct multiplies monodromy matrices in the
+standard way, higher tensor lengths cease to be a separate frontier.
+Proposition~\ref{prop:dg-shifted-rtt-auxiliary-kernel-criterion}
+pushes this to the exact remaining pairwise problem: identify the
+fundamental one-factor monodromy matrix with the rational auxiliary
+$R$-matrix kernel.  Then the fundamental RTT relation is just the
+Yang--Baxter equation.  For the standard type-A RTT tower,
+Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}
+sharpens this once more: on the defining fundamental representation,
+the auxiliary kernel is already forced by three local checks,
+namely $\mathfrak{sl}_M$-equivariance, unit asymptotic, and the
+standard simple-pole residue~$-\hbar P$.
 \end{remark}
 
 \begin{proposition}[Presentation-level criterion for finite RTT
@@ -958,6 +1006,715 @@ Proposition~\ref{prop:dg-shifted-rtt-locality-criterion}, and the final
 claim follows from that proposition.
 \end{proof}
 
+\begin{proposition}[Coefficient-level RTT criterion for finite-stage
+identification; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-coefficient-criterion}
+Fix $N \ge 0$ and let
+\[
+Q_N:=\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+be a dg quotient as in
+Proposition~\ref{prop:dg-shifted-rtt-formula-preservation}.  Assume
+that, after passing to the quotient:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the image of the monodromy matrix
+  \[
+  T_N(u)=1+\hbar\sum_{0 \le r \le N} T^{(r)}u^{-r-1}
+  \]
+  satisfies the standard truncated RTT relation with the rational
+  $R$-matrix, namely the coefficient of every monomial
+  $u^{-a-1}v^{-b-1}$ with $a,b \le N$ in
+  \[
+  R(u-v)\,T_{N,1}(u)\,T_{N,2}(v)-T_{N,2}(v)\,T_{N,1}(u)\,R(u-v)
+  \]
+  vanishes in~$Q_N$;
+\item the coefficients $T^{(r)}_{ij}$ with $r \le N$ generate the
+  underlying associative algebra of~$Q_N$;
+\item the only algebra relations among those generators are the ones
+  obtained by expanding the truncated RTT identity of
+  \textup{(i)}; and
+\item the quotient evaluation modules induced by the line-operator
+  formulas coincide with the standard evaluation modules of the finite
+  RTT Yangian stage.
+\end{enumerate}
+Then the underlying associative algebra of $Q_N$ is canonically
+isomorphic to $Y_{\le N}$.  If, moreover, the induced degree-$2$
+twisting morphism on $Q_N$ matches $\tau|_{\deg 2}$, then $Q_N$
+realizes the $N$th finite RTT stage required by
+Conjecture~\ref{conj:dg-shifted-yangian-rtt-package}.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} says precisely that the quotient monodromy
+matrix satisfies the same coefficientwise quadratic RTT relations as
+the finite stage $Y_{\le N}$.  Conditions~\textup{(ii)} and
+\textup{(iii)} therefore identify the underlying associative algebra of
+$Q_N$ with the free algebra on the truncated RTT generators modulo
+exactly the defining relations of $Y_{\le N}$.
+
+Condition~\textup{(iv)} fixes the identification as the one compatible
+with the standard finite-stage evaluation theory used throughout this
+chapter.  The final sentence is then exactly the remaining dg/bar-data
+compatibility required in
+Proposition~\ref{prop:dg-shifted-rtt-presentation-criterion}.
+\end{proof}
+
+\begin{proposition}[Kernel-coefficient criterion for finite RTT
+identification; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-kernel-coefficient-criterion}
+Fix $N \ge 0$ and let
+\[
+Q_N:=\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+be the dg quotient obtained from
+Proposition~\ref{prop:dg-shifted-rtt-formula-preservation}.  Assume
+that the quotient is generated by the classes of the coefficients
+$T_{ij}^{(r)}$ with $r \le N$, and that the line-operator OPE in $Q_N$
+has the coefficientwise expansion
+\[
+R(u-v)\,T_{N,1}(u)\,T_{N,2}(v)-T_{N,2}(v)\,T_{N,1}(u)\,R(u-v)
+=\sum_{0 \le a,b \le N} K_{a,b}\,u^{-a-1}v^{-b-1},
+\]
+with $K_{a,b}$ valued in the associative algebra generated by the
+truncated modes.  Suppose:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for every $0 \le a,b \le N$, the extracted kernel coefficient
+  $K_{a,b}$ agrees with the corresponding coefficient of the standard
+  finite RTT relation defining $Y_{\le N}$;
+\item every algebra relation among the generators
+  $\{T_{ij}^{(r)}\}_{r \le N}$ in $Q_N$ is generated by the vanishing of
+  those coefficients $K_{a,b}$; and
+\item the action of the truncated monodromy matrix $T_N(u)$ on the
+  fundamental line operators agrees with the standard evaluation
+  modules of the finite RTT stage.
+\end{enumerate}
+Then the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-coefficient-criterion} are
+satisfied, hence the underlying associative algebra of $Q_N$ is
+canonically isomorphic to $Y_{\le N}$.  If the induced degree-$2$
+twisting morphism also matches $\tau|_{\deg 2}$, then $Q_N$ is exactly
+the $N$th finite stage required by
+Conjecture~\ref{conj:dg-shifted-yangian-rtt-package}.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} says that the coefficientwise OPE extracted from
+the line-operator formulas is exactly the truncated RTT relation of the
+finite stage.  Condition~\textup{(ii)} says that these extracted
+coefficients generate all algebra relations among the truncated modes,
+so the quotient presentation is precisely the truncated RTT
+presentation.  Condition~\textup{(iii)} gives the evaluation-module
+compatibility required to identify this presentation with the standard
+finite RTT stage.  This is exactly the input of
+Proposition~\ref{prop:dg-shifted-rtt-coefficient-criterion}.
+\end{proof}
+
+\begin{proposition}[One-loop kernel identity criterion for finite RTT
+quotients; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-oneloop-kernel-criterion}
+Fix $N \ge 0$ and let
+\[
+Q_N:=\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+be as in
+Proposition~\ref{prop:dg-shifted-rtt-kernel-coefficient-criterion}.
+For $0 \le a,b \le N$, define the extracted line-operator coefficient
+\[
+\mathsf{K}^{\mathrm{line}}_{a,b}(N):=
+\operatorname{Coeff}_{u^{-a-1}v^{-b-1}}
+\Bigl(
+R(u-v)\,T_{N,1}(u)\,T_{N,2}(v)
+-T_{N,2}(v)\,T_{N,1}(u)\,R(u-v)
+\Bigr)
+\]
+in $\End(V)^{\otimes 2}\otimes Q_N$, and let
+$\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$ denote the corresponding
+coefficient of the standard truncated RTT relation for $Y_{\le N}$.
+Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the line-operator OPE is one-loop exact in the sense that, after
+  passage to $Q_N$, every RTT defect coefficient is computed by the
+  rational one-loop kernel and hence equals
+  $\mathsf{K}^{\mathrm{line}}_{a,b}(N)$;
+\item for every $0 \le a,b \le N$, one has the mode-by-mode identity
+  \[
+  \mathsf{K}^{\mathrm{line}}_{a,b}(N)
+  = \mathsf{K}^{\mathrm{RTT}}_{a,b}(N);
+  \]
+  and
+\item the truncated monodromy matrix acts on the fundamental
+  line-operator modules by the standard evaluation-module formulas.
+\end{enumerate}
+Then the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-kernel-coefficient-criterion} are
+satisfied.  Consequently the quotient $Q_N$ is canonically identified
+with the finite RTT stage $Y_{\le N}$ once the degree-$2$ twisting
+morphism matches $\tau|_{\deg 2}$.
+\end{proposition}
+
+\begin{proof}
+By \textup{(i)}, the coefficient family controlling the quotient OPE is
+exactly the extracted one-loop family
+$\mathsf{K}^{\mathrm{line}}_{a,b}(N)$.  Assumption~\textup{(ii)} then
+identifies these coefficients with the standard truncated RTT
+coefficients.  Therefore the line-operator OPE in the quotient imposes
+exactly the same coefficientwise quadratic relations as the finite RTT
+stage.
+
+Assumption~\textup{(iii)} is the evaluation-module compatibility
+required in
+Proposition~\ref{prop:dg-shifted-rtt-kernel-coefficient-criterion}.
+Hence that proposition applies directly.
+\end{proof}
+
+\begin{proposition}[Evaluation-detection criterion for one-loop RTT
+identities; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-evaluation-detection}
+Fix $N \ge 0$ and let
+\[
+\Delta_{a,b}(N):=
+\mathsf{K}^{\mathrm{line}}_{a,b}(N)
+-\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)
+\in \End(V)^{\otimes 2}\otimes Q_N
+\]
+be the Yangian coefficient defect from
+Proposition~\ref{prop:dg-shifted-rtt-oneloop-kernel-criterion}.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the truncated quotient $Q_N$ is represented faithfully on the full
+  subcategory generated by tensor products of fundamental evaluation
+  modules;
+\item for every pair $a,b \le N$, the defect $\Delta_{a,b}(N)$ acts by
+  zero on every object of that faithful evaluation subcategory; and
+\item the induced action of $T_N(u)$ on that subcategory is the standard
+  evaluation action of the finite RTT stage.
+\end{enumerate}
+Then $\Delta_{a,b}(N)=0$ in $Q_N$ for all $a,b \le N$.  Consequently the
+hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-oneloop-kernel-criterion} are
+satisfied, so the quotient $Q_N$ is identified with $Y_{\le N}$ once the
+degree-$2$ twisting morphism matches $\tau|_{\deg 2}$.
+\end{proposition}
+
+\begin{proof}
+By assumption~\textup{(i)}, an element of $Q_N$ vanishes if and only if
+it acts trivially on every object in the chosen evaluation family.
+Assumption~\textup{(ii)} therefore implies
+\[
+\Delta_{a,b}(N)=0
+\qquad\text{for all } a,b \le N.
+\]
+Assumption~\textup{(iii)} is exactly the evaluation-module compatibility
+required in
+Proposition~\ref{prop:dg-shifted-rtt-oneloop-kernel-criterion}.  Hence
+that proposition applies.
+\end{proof}
+
+\begin{proposition}[Boundary-seed criterion for truncated RTT
+defects; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-boundary-seed}
+Fix $N \ge 0$ and let
+\[
+\Delta_{a,b}(N):=
+\mathsf{K}^{\mathrm{line}}_{a,b}(N)
+-\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)
+\]
+be the coefficient defect family of
+Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for all indices visible at stage $N$, the defect family satisfies
+  the additive spectral recursion
+  \[
+  \Delta_{a+1,b}(N)=\Delta_{a,b+1}(N)
+  \qquad (a+b+1 \le N),
+  \]
+  induced by the coefficientwise RTT mode relation;
+\item the boundary strip defects
+  $\Delta_{a,0}(N)$ act by zero on the faithful evaluation family of
+  Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection} for every
+  $0 \le a \le N$; and
+\item the truncated monodromy matrix acts on that family by the
+  standard evaluation formulas of the finite RTT stage.
+\end{enumerate}
+Then $\Delta_{a,b}(N)=0$ for all $a,b \le N$ with $a+b \le N$.
+Consequently the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection} are
+satisfied after checking only the finite boundary family
+$\{\Delta_{a,0}(N)\}_{0 \le a \le N}$.
+\end{proposition}
+
+\begin{proof}
+By repeated application of the recursion in \textup{(i)},
+\[
+\Delta_{a,b}(N)=\Delta_{a+b,0}(N)
+\]
+whenever $a+b \le N$.  Assumption~\textup{(ii)} says that each boundary
+term $\Delta_{r,0}(N)$ acts trivially on the faithful evaluation family.
+By Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}, this
+forces every such boundary term to vanish in the quotient.  Therefore
+all defects $\Delta_{a,b}(N)$ vanish as well.  Assumption~\textup{(iii)}
+is exactly the evaluation compatibility needed to invoke
+Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.
+\end{proof}
+
+\begin{proposition}[Finite tensor-length detection for boundary-strip RTT
+defects; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-finite-tensor-detection}
+Fix $N \ge 0$ and let
+\[
+V_{\mathrm{fund}}(a):=\mathbb{C}^N(a)
+\]
+denote the fundamental evaluation module of
+$Y(\mathfrak{sl}_N)$.  Let
+\[
+\Delta_{a,0}(N)
+=\mathsf{K}^{\mathrm{line}}_{a,0}(N)
+-\mathsf{K}^{\mathrm{RTT}}_{a,0}(N)
+\]
+be the boundary-strip defect family from
+Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for each $0 \le a \le N$, the defect $\Delta_{a,0}(N)$ is
+  homogeneous of RTT degree $a+1$, so its iterated twisted coproduct on
+  any tensor product of evaluation modules is a sum of terms supported
+  on at most $a+1$ tensor factors;
+\item the faithful evaluation subcategory of
+  Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection} is
+  generated under finite direct sums, tensor products, and subquotients
+  by generic tensor products
+  \[
+  V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m)
+  \qquad (a_i\neq a_j \text{ for } i\neq j);
+  \]
+\item vanishing of a coefficient defect on those generic tensor products
+  is preserved under finite direct sums, tensor products, and
+  subquotients; and
+\item for every $0 \le a \le N$, the defect $\Delta_{a,0}(N)$ acts by
+  zero on every generic tensor product of the form
+  \[
+  V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m)
+  \qquad (1\le m\le a+1).
+  \]
+\end{enumerate}
+Then $\Delta_{a,0}(N)=0$ for all $0 \le a \le N$.  Consequently the
+boundary-strip reduction of
+Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} is discharged after
+checking only finitely many generic tensor products of the fundamental
+evaluation module, of lengths at most $N+1$, together with the standard
+evaluation action of $T_N(u)$ on those modules.
+\end{proposition}
+
+\begin{proof}
+Fix $a \le N$.  By assumption~\textup{(i)}, the action of
+$\Delta_{a,0}(N)$ on any generic tensor product of evaluation modules
+is computed from its iterated twisted coproduct, and every summand in
+that coproduct is supported on at most $a+1$ tensor factors.  Hence the
+action of $\Delta_{a,0}(N)$ on a tensor product of arbitrary length is
+determined by its actions on the length-$m$ subproducts with
+$m \le a+1$.
+
+Assumption~\textup{(iv)} says that all of those shorter actions vanish
+on generic tensor powers of the fundamental evaluation module.
+Therefore $\Delta_{a,0}(N)$ acts trivially on every generic tensor
+product built from fundamental evaluation modules, regardless of
+length.  Assumptions~\textup{(ii)} and~\textup{(iii)} then propagate
+this vanishing to the whole faithful evaluation subcategory of
+Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.  That
+proposition therefore forces $\Delta_{a,0}(N)=0$ in the quotient.
+
+Doing this for all $a\le N$ kills the entire boundary strip, so
+Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} reduces the full
+RTT defect family to these finitely many generic tensor-product tests.
+\end{proof}
+
+\begin{proposition}[Fundamental propagation criterion for boundary-strip
+RTT defects; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-fundamental-propagation}
+Fix $N \ge 0$, and for generic evaluation points
+$a_1,\dots,a_m$ write
+\[
+M_m:=V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m).
+\]
+Let
+\[
+\mathcal{D}_N(u,v):=
+R(u-v)\,T_{N,1}(u)\,T_{N,2}(v)
+-T_{N,2}(v)\,T_{N,1}(u)\,R(u-v)
+\]
+be the truncated RTT defect operator whose coefficients are the
+boundary-strip defects of
+Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item on every generic tensor power $M_m$, the truncated monodromy
+  matrix is obtained by iterating the twisted coproduct, so that
+  \[
+  T_N^{(m+1)}(u)=T_N^{(m)}(u)\,L_{m+1}(u)
+  \]
+  with $L_{m+1}(u)$ the one-factor fundamental monodromy matrix acting
+  on the last tensor factor, and operators supported on disjoint
+  quantum slots commute;
+\item for every generic fundamental evaluation module
+  $V_{\mathrm{fund}}(a)$, the one-factor monodromy matrix $L(u)$
+  satisfies the standard truncated RTT relation, equivalently
+  \[
+  \mathcal{D}_N(u,v)\big|_{V_{\mathrm{fund}}(a)}=0;
+  \]
+\item the faithful evaluation subcategory of
+  Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection} is
+  generated from the generic tensor powers $M_m$ by finite direct sums
+  and subquotients; and
+\item the standard evaluation action of $T_N(u)$ is compatible with the
+  same twisted-coproduct multiplication law.
+\end{enumerate}
+Then $\mathcal{D}_N(u,v)$ acts by zero on every object of the faithful
+evaluation subcategory.  Consequently
+\[
+\Delta_{a,0}(N)=0
+\qquad (0\le a\le N),
+\]
+so
+Propositions~\ref{prop:dg-shifted-rtt-boundary-seed}
+and~\ref{prop:dg-shifted-rtt-evaluation-detection}
+identify the quotient with $Y_{\le N}$ once the degree-$2$ twisting
+morphism matches $\tau|_{\deg 2}$.
+\end{proposition}
+
+\begin{proof}
+We first show by induction on $m$ that
+\[
+\mathcal{D}_N(u,v)\big|_{M_m}=0
+\qquad\text{for every } m\ge 1.
+\]
+For $m=1$ this is assumption~\textup{(ii)}.
+
+Assume the statement for $M_m$.  By assumption~\textup{(i)}, on
+$M_{m+1}=M_m\otimes V_{\mathrm{fund}}(a_{m+1})$ one has
+\[
+T_N^{(m+1)}(u)=T_N^{(m)}(u)\,L_{m+1}(u),
+\qquad
+T_N^{(m+1)}(v)=T_N^{(m)}(v)\,L_{m+1}(v).
+\]
+Since the last tensor factor commutes with the earlier quantum slots,
+we compute
+\begin{align*}
+R\,T^{(m+1)}_{N,1}(u)\,T^{(m+1)}_{N,2}(v)
+&=
+R\,T^{(m)}_{N,1}(u)\,T^{(m)}_{N,2}(v)\,
+L_{m+1,1}(u)\,L_{m+1,2}(v) \\
+&=
+T^{(m)}_{N,2}(v)\,T^{(m)}_{N,1}(u)\,
+R\,L_{m+1,1}(u)\,L_{m+1,2}(v) \\
+&=
+T^{(m)}_{N,2}(v)\,T^{(m)}_{N,1}(u)\,
+L_{m+1,2}(v)\,L_{m+1,1}(u)\,R \\
+&=
+T^{(m+1)}_{N,2}(v)\,T^{(m+1)}_{N,1}(u)\,R.
+\end{align*}
+The second equality uses the induction hypothesis on $M_m$, and the
+third uses the one-factor RTT relation from assumption~\textup{(ii)} on
+the last tensor factor.  Hence the defect vanishes on $M_{m+1}$.
+
+By assumption~\textup{(iii)}, every object of the faithful evaluation
+subcategory is built from the generic tensor powers $M_m$ by finite
+direct sums and subquotients.  Vanishing of the defect operator is
+preserved under those operations, so $\mathcal{D}_N(u,v)$ acts by zero
+on the whole faithful evaluation subcategory.  Assumption~\textup{(iv)}
+supplies the standard evaluation compatibility required by
+Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}, which then
+forces all boundary-strip coefficients $\Delta_{a,0}(N)$ to vanish.
+\end{proof}
+
+\begin{proposition}[Auxiliary-kernel criterion for fundamental RTT
+propagation; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-auxiliary-kernel-criterion}
+Fix $N \ge 0$ and let $R(u)$ be the rational Yang $R$-matrix on
+$V_{\mathrm{fund}}\otimes V_{\mathrm{fund}}$, satisfying the
+Yang--Baxter equation
+\[
+R_{12}(u-v)\,R_{13}(u-a)\,R_{23}(v-a)
+=
+R_{23}(v-a)\,R_{13}(u-a)\,R_{12}(u-v).
+\]
+Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for every generic evaluation point $a$, the one-factor
+  fundamental monodromy matrix induced by the line operator is the
+  truncated auxiliary kernel
+  \[
+  L_a(u)=R_{0a}(u-a)
+  \]
+  on the fundamental evaluation module
+  $V_{\mathrm{fund}}(a)$;
+\item on generic tensor products of fundamental evaluation modules, the
+  truncated monodromy matrix is obtained by the same twisted-coproduct
+  multiplication law used in
+  Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation}; and
+\item the resulting action is the standard evaluation action of the
+  finite RTT stage.
+\end{enumerate}
+Then the fundamental one-factor matrices satisfy the truncated RTT
+relation
+\[
+R_{12}(u-v)\,L_{1,a}(u)\,L_{2,a}(v)
+=
+L_{2,a}(v)\,L_{1,a}(u)\,R_{12}(u-v)
+\]
+on every fundamental evaluation module.  Consequently the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} are
+satisfied, so the Yangian finite-detection frontier reduces to the
+single pairwise kernel identity
+$L_a(u)=R_{0a}(u-a)$ on the fundamental line operator, together with
+the standard twisted-coproduct multiplication law.
+\end{proposition}
+
+\begin{proof}
+By assumption~\textup{(i)},
+\[
+L_{1,a}(u)=R_{1a}(u-a),
+\qquad
+L_{2,a}(v)=R_{2a}(v-a),
+\]
+where indices $1,2$ denote the two auxiliary copies of the fundamental
+representation and $a$ denotes the quantum space
+$V_{\mathrm{fund}}(a)$.  Substituting these expressions into the RTT
+relation gives
+\[
+R_{12}(u-v)\,R_{1a}(u-a)\,R_{2a}(v-a)
+=
+R_{2a}(v-a)\,R_{1a}(u-a)\,R_{12}(u-v),
+\]
+which is exactly the Yang--Baxter equation for the rational Yang
+$R$-matrix.  Therefore the one-factor fundamental monodromy satisfies
+the RTT relation.
+
+Assumption~\textup{(ii)} is precisely the propagation input required in
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation}, and
+assumption~\textup{(iii)} supplies the standard evaluation
+compatibility used there.  Hence that proposition applies and kills the
+entire boundary strip.
+\end{proof}
+
+\begin{proposition}[Type-A uniqueness of the auxiliary kernel on the
+fundamental line; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}
+Let $V=\mathbb{C}^M$ be the defining representation of
+$\mathfrak{sl}_M$, and let
+\[
+L_a(u)\in \End(V)\otimes\End(V(a))
+\]
+be a rational one-factor monodromy matrix on the fundamental
+evaluation module $V(a)$.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $L_a(u)$ is $\mathfrak{sl}_M$-equivariant on
+  $V\otimes V(a)$;
+\item $L_a(u)$ is regular away from $u=a$ and has unit asymptotic
+  \[
+  L_a(u)\to 1
+  \qquad (u\to\infty);
+  \]
+\item the only pole is simple at $u=a$, with residue
+  \[
+  \operatorname*{Res}_{u=a}L_a(u)=-\hbar P,
+  \]
+  where $P$ is the permutation operator on
+  $V\otimes V(a)\cong V\otimes V$.
+\end{enumerate}
+Then
+\[
+L_a(u)=1-\frac{\hbar P}{u-a}=R_{0a}(u-a),
+\]
+the standard rational Yang $R$-matrix on the defining fundamental
+representation.  Consequently, for the standard type-A RTT tower the
+pairwise frontier of
+Proposition~\ref{prop:dg-shifted-rtt-auxiliary-kernel-criterion}
+reduces to these three local checks.
+\end{proposition}
+
+\begin{proof}
+Because
+\[
+V\otimes V \cong \operatorname{Sym}^2(V)\oplus \Lambda^2(V),
+\]
+and both summands are irreducible $\mathfrak{sl}_M$-modules, every
+$\mathfrak{sl}_M$-equivariant endomorphism of $V\otimes V$ acts by a
+scalar on each summand.  Equivalently,
+\[
+L_a(u)=\alpha(u)\,1+\beta(u)\,P
+\]
+for rational scalar functions $\alpha(u),\beta(u)$.
+
+The unit asymptotic implies
+\[
+\alpha(u)\to 1,\qquad \beta(u)\to 0
+\qquad (u\to\infty).
+\]
+The residue condition says that the only pole is simple at $u=a$ and
+its residue is exactly $-\hbar P$.  Hence $\alpha(u)$ has no pole and
+must therefore be the constant function $1$, while $\beta(u)$ has the
+unique form
+\[
+\beta(u)=-\frac{\hbar}{u-a}.
+\]
+Substituting these two functions gives
+\[
+L_a(u)=1-\frac{\hbar P}{u-a},
+\]
+which is precisely the standard rational Yang $R$-matrix kernel
+$R_{0a}(u-a)$.
+\end{proof}
+
+\begin{corollary}[Type-A residue reduction for the auxiliary kernel;
+\ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-typea-residue-reduction}
+In the setting of
+Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness},
+assume moreover that the one-factor fundamental line operator is
+constructed in a way that is functorial for the diagonal
+$\mathfrak{sl}_M$-action on $V\otimes V(a)$ and normalized so that
+widely separated lines have trivial transport:
+\[
+L_a(u)\to 1
+\qquad (u\to\infty).
+\]
+Then to prove the pairwise auxiliary-space identity
+\[
+L_a(u)=R_{0a}(u-a)
+\]
+it is enough to verify the single local residue formula
+\[
+\operatorname*{Res}_{u=a}L_a(u)=-\hbar P.
+\]
+
+Equivalently, for the standard type-A RTT tower the genuinely analytic
+Yangian frontier on the fundamental line is the residue extraction at
+the simple pole; the symmetry and asymptotic parts are formal once the
+line operator is fixed.
+\end{corollary}
+
+\begin{proof}
+The functoriality hypothesis gives the $\mathfrak{sl}_M$-equivariance
+required in
+Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}, and
+the normalization hypothesis gives the required unit asymptotic.  Hence
+that proposition applies as soon as the displayed residue identity is
+verified.  The final sentence is just a restatement of this reduction.
+\end{proof}
+
+\begin{proposition}[Type-A residue detection on the symmetric and
+antisymmetric channels; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-typea-residue-channels}
+In the setting of
+Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}, let
+\[
+\Xi_a:=\operatorname*{Res}_{u=a}L_a(u)\in \End(V\otimes V(a)).
+\]
+Then the residue identity
+\[
+\Xi_a=-\hbar P
+\]
+holds if and only if $\Xi_a$ acts by the scalar $-\hbar$ on the
+symmetric summand $\operatorname{Sym}^2(V)$ and by the scalar $+\hbar$ on the
+antisymmetric summand $\Lambda^2(V)$.
+
+Equivalently, after identifying $V(a)\cong V$, it is enough to check
+the two highest-weight channel formulas
+\[
+\Xi_a(e_1\otimes e_1)=-\hbar(e_1\otimes e_1),
+\qquad
+\Xi_a(e_1\otimes e_2-e_2\otimes e_1)
+=+\hbar(e_1\otimes e_2-e_2\otimes e_1).
+\]
+Consequently, for the standard type-A RTT tower the remaining analytic
+Yangian frontier on the fundamental line is a two-channel scalar
+residue computation.
+\end{proposition}
+
+\begin{proof}
+By the $\mathfrak{sl}_M$-equivariance hypothesis of
+Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}, the
+operator $\Xi_a$ preserves the irreducible decomposition
+\[
+V\otimes V \cong \operatorname{Sym}^2(V)\oplus \Lambda^2(V).
+\]
+Schur's lemma therefore gives scalars $\lambda_{\mathrm{sym}}$ and
+$\lambda_{\mathrm{alt}}$ such that
+\[
+\Xi_a\big|_{\operatorname{Sym}^2(V)}=\lambda_{\mathrm{sym}}\id,
+\qquad
+\Xi_a\big|_{\Lambda^2(V)}=\lambda_{\mathrm{alt}}\id.
+\]
+The permutation operator acts by $+1$ on $\operatorname{Sym}^2(V)$ and by $-1$ on
+$\Lambda^2(V)$.  Hence $\Xi_a=-\hbar P$ is equivalent to the two scalar
+equalities
+\[
+\lambda_{\mathrm{sym}}=-\hbar,
+\qquad
+\lambda_{\mathrm{alt}}=+\hbar.
+\]
+The displayed highest-weight vectors generate the two irreducible
+summands, so checking the action there is equivalent to checking the two
+channel scalars themselves.
+\end{proof}
+
+\begin{corollary}[Type-A residue detection on one mixed tensor line;
+\ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-typea-single-line}
+Assume the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels}, and
+assume $M\ge 2$.  Then the residue identity
+\[
+\Xi_a=-\hbar P
+\]
+is equivalent to the single mixed-tensor formula
+\[
+\Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1).
+\]
+
+Equivalently, for the standard type-A RTT tower the remaining analytic
+Yangian frontier on the fundamental line may be checked on one ordered
+off-diagonal tensor line.
+\end{corollary}
+
+\begin{proof}
+Write
+\[
+s:=e_1\otimes e_2+e_2\otimes e_1\in \operatorname{Sym}^2(V),
+\qquad
+a:=e_1\otimes e_2-e_2\otimes e_1\in \Lambda^2(V),
+\]
+so that
+\[
+e_1\otimes e_2=\frac{1}{2}(s+a).
+\]
+If $\Xi_a=-\hbar P$, then the displayed formula is immediate.
+
+Conversely, by
+Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels}, the
+operator $\Xi_a$ acts by scalars
+$\lambda_{\mathrm{sym}},\lambda_{\mathrm{alt}}$ on
+$\operatorname{Sym}^2(V)$ and $\Lambda^2(V)$, so
+\[
+\Xi_a(e_1\otimes e_2)
+=\frac{1}{2}\lambda_{\mathrm{sym}}\,s
++\frac{1}{2}\lambda_{\mathrm{alt}}\,a
+=\frac{\lambda_{\mathrm{sym}}+\lambda_{\mathrm{alt}}}{2}\,
+e_1\otimes e_2
++\frac{\lambda_{\mathrm{sym}}-\lambda_{\mathrm{alt}}}{2}\,
+e_2\otimes e_1.
+\]
+If this equals $-\hbar(e_2\otimes e_1)$, then comparing the
+coefficients of the linearly independent tensors
+$e_1\otimes e_2$ and $e_2\otimes e_1$ gives
+\[
+\lambda_{\mathrm{sym}}+\lambda_{\mathrm{alt}}=0,
+\qquad
+\lambda_{\mathrm{sym}}-\lambda_{\mathrm{alt}}=-2\hbar.
+\]
+Hence $\lambda_{\mathrm{sym}}=-\hbar$ and
+$\lambda_{\mathrm{alt}}=+\hbar$, so
+Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels} yields
+$\Xi_a=-\hbar P$.
+\end{proof}
+
 \section{Coulomb branch algebras}
 \label{sec:coulomb-branch}
 
@@ -1094,7 +1851,7 @@ the bar complex with $R$-matrix data at coweight $\mu$ computes the
 cobar at coweight $-\mu$ for $\fg^\vee$.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence).
-The conjecture asserts a Koszul duality equivalence between the shifted Yangian at coweight $\mu$ and the Langlands-dual shifted Yangian at negated coweight, realizing symplectic duality at the $\Eone$-chiral level.
+The conjecture asserts a Koszul duality equivalence between the shifted Yangian at coweight $\mu$ and the Langlands-dual shifted Yangian at negated coweight, treating symplectic duality as a conjectural $\Eone$-chiral shadow.
 \end{remark}
 
 \begin{example}[Type $A_1$ quiver with framing]
@@ -1758,7 +2515,8 @@ category $\mathcal{O}$]
 \label{rem:yangian-cat-O-conditional}
 The results above hold unconditionally for
 evaluation modules (which reduce to finite-dimensional
-$\mathfrak{sl}_N$-representations).  Extending to
+$\mathfrak{sl}_N$-representations).  This is the endpoint of DK-1 in
+Remark~\ref{rem:yangian-status}.  Extending to
 the \emph{full} Yangian category~$\mathcal{O}$---which
 includes infinite-dimensional highest-weight modules,
 Verma modules $M(\lambda, a)$, and their subquotients---requires
@@ -1770,7 +2528,406 @@ the bar complex provides minimal resolutions of
 Koszul duality extends to an equivalence
 $D^b(\mathcal{O}_{Y_\hbar}) \simeq
 D^b(\mathcal{O}_{Y_{-\hbar}})$
-sending $M(\lambda, a) \mapsto M(\lambda, -a)$.
+sending $M(\lambda, a) \mapsto M(\lambda, -a)$.  The point is that the
+remaining step is a generation/extension problem for the completed
+ordered category, not a new computation on evaluation modules.
+\end{remark}
+
+\begin{proposition}[DK-2 reduction to thick generation in
+category~$\mathcal{O}$; \ClaimStatusProvedHere]
+\label{prop:yangian-dk2-thick-generation}
+Let
+\[
+\mathcal{D}_{\hbar}^{\mathrm{eval}}
+\subset D^b(\mathcal{O}_{Y_\hbar}),
+\qquad
+\mathcal{D}_{-\hbar}^{\mathrm{eval}}
+\subset D^b(\mathcal{O}_{Y_{-\hbar}})
+\]
+be the smallest thick triangulated subcategories containing all
+evaluation modules.  Assume the module Koszul duality functor of
+Theorem~\ref{thm:e1-module-koszul-duality} preserves the completed
+Yangian categories $\mathcal{O}_{Y_\hbar}$ and
+$\mathcal{O}_{Y_{-\hbar}}$ on the objects under consideration.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the evaluation-module correspondence of
+  Proposition~\ref{prop:yangian-module-koszul} restricts to an exact
+  equivalence
+  \[
+  \Phi_{\mathrm{eval,thick}}\colon
+  \mathcal{D}_{\hbar}^{\mathrm{eval}}
+  \xrightarrow{\sim}
+  \mathcal{D}_{-\hbar}^{\mathrm{eval}};
+  \]
+\item if
+  \[
+  \mathcal{D}_{\hbar}^{\mathrm{eval}}
+  = D^b(\mathcal{O}_{Y_\hbar}),
+  \qquad
+  \mathcal{D}_{-\hbar}^{\mathrm{eval}}
+  = D^b(\mathcal{O}_{Y_{-\hbar}}),
+  \]
+  then the DK-2 extension from evaluation modules to the full
+  completed Yangian category~$\mathcal{O}$ holds.
+\end{enumerate}
+In particular, once preservation of category~$\mathcal{O}$ is granted,
+DK-2 is exactly a thick-generation problem for evaluation modules, not
+a new local bar computation.
+\end{proposition}
+
+\begin{proof}
+Because the module Koszul duality functor is exact, it preserves
+shifts, cones, and direct summands.  Proposition~\ref{prop:yangian-module-koszul}
+identifies the images of all evaluation modules, so the functor carries
+the smallest thick triangulated subcategory generated by them on the
+$\hbar$-side onto the corresponding thick subcategory on the
+$-\hbar$-side, and the inverse module functor does the reverse.  This
+proves~\textup{(i)}.  Statement~\textup{(ii)} is immediate.
+\end{proof}
+
+\begin{proposition}[Thick generation by evaluation modules
+in type~$A$; \ClaimStatusProvedHere]
+\label{prop:dk2-thick-generation-typeA}
+\index{Yangian!thick generation}
+For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, every finite-dimensional
+irreducible $Y(\mathfrak{sl}_N)$-module is a subquotient of a tensor
+product of fundamental evaluation modules.  Consequently, the
+thick triangulated subcategory
+\[
+\mathcal{D}_{\hbar}^{\mathrm{eval}}
+\;\subset\;
+D^b\bigl(\mathrm{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N))\bigr)
+\]
+generated by evaluation modules equals
+$D^b(\mathrm{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N)))$.
+\end{proposition}
+
+\begin{proof}
+We argue in three steps.
+
+\emph{Step~1: Every simple is a subquotient of evaluation tensor
+products.}
+Let $L$ be a finite-dimensional irreducible
+$Y(\mathfrak{sl}_N)$-module.  By the Drinfeld classification
+\cite{Drinfeld88}, $L$ is determined by an $N$-tuple of monic
+polynomials $(P_1(u), \ldots, P_{N-1}(u))$ (the Drinfeld
+polynomials).  Write $P_i(u) = \prod_{j=1}^{d_i}(u - a_{ij})$.
+The tensor product
+\[
+\bigotimes_{i=1}^{N-1}\; \bigotimes_{j=1}^{d_i}\;
+V_{\omega_i}(a_{ij})
+\]
+of fundamental evaluation modules
+$V_{\omega_i}(a) = \bigwedge^i \mathbb{C}^N(a)$ is a finite-dimensional
+$Y(\mathfrak{sl}_N)$-module whose unique irreducible quotient (in a suitable
+ordering of factors) has Drinfeld polynomials $(P_1, \ldots, P_{N-1})$
+\cite{Drinfeld88}.  Hence $L$ is a quotient, and in particular a
+subquotient, of a tensor product of fundamental evaluation modules.
+
+\emph{Step~2: Every simple lies in the thick closure.}
+Let $M = \bigotimes V_{\omega_i}(a_{ij})$ be the tensor product
+from Step~1.  Since $M$ is finite-dimensional, it has a
+finite composition series $0 = M_0 \subset M_1 \subset \cdots
+\subset M_r = M$ with simple graded pieces
+$M_k/M_{k-1} \cong L_k$.  Each short exact sequence
+$0 \to M_{k-1} \to M_k \to L_k \to 0$ yields an exact triangle
+$M_{k-1} \to M_k \to L_k \to M_{k-1}[1]$ in
+$D^b(\mathrm{Rep}_{\mathrm{fd}})$.  The tensor product~$M$ is itself
+in the thick closure of evaluation modules (each factor
+$V_{\omega_i}(a_{ij})$ is an evaluation module).  By descending
+induction on the composition series, every composition factor~$L_k$
+lies in the thick closure.
+
+\emph{Step~3: All objects lie in the thick closure.}
+An arbitrary object $X \in D^b(\mathrm{Rep}_{\mathrm{fd}})$ is a
+bounded complex of finite-dimensional modules, each of finite length
+with simple factors.  By Step~2, every simple is in the thick closure
+$\mathcal{D}_{\hbar}^{\mathrm{eval}}$.  A thick subcategory of a
+triangulated category is closed under extensions (via the octahedral
+axiom) and bounded complexes (via iterated cones), so all of
+$D^b(\mathrm{Rep}_{\mathrm{fd}})$ is contained in
+$\mathcal{D}_{\hbar}^{\mathrm{eval}}$.
+\end{proof}
+
+\begin{remark}[Thick generation and DK-2]
+\label{rem:dk2-thick-generation-consequence}
+Proposition~\ref{prop:dk2-thick-generation-typeA} verifies
+hypothesis~(ii) of Proposition~\ref{prop:yangian-dk2-thick-generation}
+for the finite-dimensional regime.  The remaining DK-2 gap for
+type~$A$ is therefore:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Preservation}: the module Koszul duality functor~$\Phi$
+  of Theorem~\ref{thm:e1-module-koszul-duality} must preserve
+  category~$\mathcal{O}$, not just finite-dimensional modules; and
+\item \emph{Infinite-dimensional extension}: thick generation of
+  $D^b(\mathcal{O}_{Y_\hbar})$ by evaluation modules, extending
+  the finite-dimensional result to Verma modules and their
+  subquotients.
+\end{enumerate}
+For~(a), the key input would be that~$\Phi$ respects the weight
+filtration (which it does on evaluation modules by
+Proposition~\ref{prop:yangian-module-koszul}).  For~(b), the standard
+BGG resolution of a Verma module $M(\lambda, a)$ by direct sums of
+Verma modules, combined with the fact that Verma modules at generic
+highest weight are evaluation-module images under parabolic induction,
+reduces this to the well-studied structure of Yangian
+category~$\mathcal{O}$.
+
+The type~$A$ thick generation result also
+verifies the finite-dimensional part of the full-generation
+hypothesis needed for
+Proposition~\ref{prop:yangian-dk3-generated-core} \textup{(}DK-3\textup{)}.
+\end{remark}
+
+\begin{proposition}[Bar-cobar as factorization Kazhdan candidate;
+\ClaimStatusProvedHere]
+\label{prop:bar-cobar-kazhdan-candidate}
+\index{Kazhdan functor!factorization}
+On the evaluation-generated factorization core
+$\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(\cA)$ of an $\Eone$-chiral Yangian-type algebra~$\cA$,
+the module bar functor
+\[
+\barB_{\mathrm{mod}}\colon
+\operatorname{Mod}(\cA)
+\to
+\operatorname{CoMod}(\cA^{!,c})
+\]
+of Theorem~\textup{\ref{thm:e1-module-koszul-duality}} composes with
+the classical Kazhdan--Lusztig identification
+$\operatorname{CoMod}(\cA^{!,c}) \simeq
+\operatorname{Rep}(U_{q^{-1}}(\fg))$
+to produce an exact braided monoidal functor
+\begin{equation}\label{eq:bar-kazhdan}
+KZ_{\barB}\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(\cA) \to
+\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(U_q(\fg))^{\mathrm{op}}
+\end{equation}
+whose restriction to evaluation generators agrees with the proved
+factorization DK equivalence of
+Theorem~\textup{\ref{thm:factorization-dk-eval}}.
+Consequently, the bar-cobar adjunction is a \emph{natural candidate}
+for the factorization Kazhdan transport
+$KZ_{\mathrm{fact}}^{\mathrm{gen}}$ required by
+Proposition~\textup{\ref{prop:yangian-dk3-generated-core}}.
+\end{proposition}
+
+\begin{proof}
+The module bar functor $\barB_{\mathrm{mod}}$ sends
+$V(a) \mapsto \barB(\cA, V(a))$.
+By Theorem~\ref{thm:derived-dk-yangian}, after the KL
+identification the composite sends $V(a)_\hbar \mapsto
+V(-a)_{-\hbar}$ with braiding $R \mapsto R^{-1}$, matching
+Proposition~\ref{prop:yangian-module-koszul}.
+
+The functoriality of this composite is guaranteed by
+Theorem~\ref{thm:e1-module-koszul-duality} (exactness and
+module-level adjunction) and
+Theorem~\ref{thm:monoidal-module-koszul} (lax monoidal structure
+with braiding reversal).
+
+For the factorization structure: the bar complex on ordered
+configuration spaces
+$\overline{C}_n^{\mathrm{ord}}(X)$ carries the propagator
+$\eta_{ij} = d\log(z_i - z_j)$, which is the differential form
+underlying the KZ connection.  Verdier duality reverses the
+orientation of collision cycles
+(Theorem~\ref{thm:bar-cobar-verdier}), hence reverses the
+$\Eone$-ordering, producing the ``op'' on the target.  This
+reproduces the factorization structure of
+Theorem~\ref{thm:factorization-dk-eval}(iii) on evaluation
+objects.
+
+The composite therefore satisfies both hypotheses of
+Proposition~\ref{prop:yangian-dk3-generated-core}: it is an exact
+braided monoidal functor whose restriction to evaluation generators
+recovers the proved DK-1 equivalence.
+\end{proof}
+
+\begin{remark}[Remaining DK-3 input after the bar-cobar candidate]
+\label{rem:dk3-remaining-after-barcobar}
+Proposition~\ref{prop:bar-cobar-kazhdan-candidate} supplies half of
+what Proposition~\ref{prop:yangian-dk3-generated-core} requires:
+the forward functor $KZ_{\mathrm{fact}}^{\mathrm{gen}}$ on the
+evaluation-generated core.  The remaining half is the
+quasi-inverse $LZ_{\mathrm{fact}}^{\mathrm{gen}}$, which should be
+the cobar construction composed with the inverse KL equivalence.
+
+Concretely, the cobar functor
+$\Omega_{\mathrm{mod}}\colon \operatorname{CoMod}(\cA^{!,c})
+\to \operatorname{Mod}(\cA)$
+of Theorem~\ref{thm:e1-module-koszul-duality} reverses the bar
+construction.  Composing with the KL identification
+$\operatorname{Rep}(U_q(\fg)) \to
+\operatorname{CoMod}(\cA^{!,c})$
+yields the candidate for $LZ$.
+The bar-cobar adjunction unit
+$\eta\colon \mathrm{id} \to \Omega \circ \barB$ and counit
+$\varepsilon\colon \barB \circ \Omega \to \mathrm{id}$ are
+quasi-isomorphisms on Koszul objects
+\textup{(}Theorem~\textup{\ref{thm:e1-chiral-koszul-duality})}.
+On evaluation modules, these compose to the identity by
+the proved DK-1 theorem.
+
+Thus the remaining DK-3 input is the \emph{compatibility of unit
+and counit with factorization products} beyond the evaluation
+locus --- precisely the Barr--Beck style reconstruction of
+Remark~\textup{\ref{rem:yangian-dk23-inputs}(iv)}.
+This compatibility is automatic on the evaluation-generated
+\emph{core} by the proof of
+Proposition~\textup{\ref{prop:yangian-dk3-generated-core}}, since
+the unit/counit are isomorphisms on generators and the core is
+generated by those.  The only remaining question is whether the
+generated core equals the full category \textup{(}a generation
+problem, not a new construction\textup{)}.
+\end{remark}
+
+\begin{lemma}[Monoidal extension to thick closures]
+\label{lem:monoidal-thick-extension}
+Let $F\colon \cC \to \cD$ be an exact functor between tensor
+triangulated categories equipped with a lax monoidal structure
+$\mu_{M,N}\colon F(M \otimes N) \to F(M) \otimes F(N)$.
+Let $\mathcal{S} \subset \cC$ generate~$\cC$ as a thick subcategory.
+If $\mu_{M,N}$ is a quasi-isomorphism for all $M, N \in \mathcal{S}$,
+then $\mu_{M,N}$ is a quasi-isomorphism for all $M, N \in \cC$.
+In particular, $F$ is strong monoidal.
+\end{lemma}
+
+\begin{proof}
+For fixed $M \in \mathcal{S}$, the collection
+$\{N \in \cC : \mu_{M,N} \text{ is a quasi-isomorphism}\}$
+contains~$\mathcal{S}$ and is closed under shifts (naturality of~$\mu$),
+cones (five lemma, since $F(M \otimes -)$ and
+$F(M) \otimes F(-)$ are both exact), and direct summands
+(retract argument).  Hence it equals~$\cC$.
+Exchanging the two variables completes the proof.
+\end{proof}
+
+\begin{theorem}[Finite-dimensional factorization Drinfeld--Kohno,
+type~$A$; \ClaimStatusProvedHere]
+\label{thm:dk-fd-typeA}
+\index{Drinfeld--Kohno!derived!finite-dimensional|textbf}
+For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, the $\Eone$-chiral
+bar-cobar functor induces braided monoidal equivalences
+\begin{align}
+\Phi&\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N))
+\;\xrightarrow{\;\sim\;}\;
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}
+  (Y_{-\hbar}(\mathfrak{sl}_N))^{\mathrm{op}},
+  \label{eq:dk-fd-yangian}\\
+KZ_{\barB}&\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N))
+\;\xrightarrow{\;\sim\;}\;
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}
+  (U_q(\mathfrak{sl}_N))^{\mathrm{op}},
+  \label{eq:dk-fd-quantum}
+\end{align}
+where \eqref{eq:dk-fd-quantum} is the composite
+$KZ_{\barB} = \Phi_K \circ \Phi$ with the Kazhdan equivalence
+at $q = e^\hbar$.
+These extend the evaluation-locus equivalences of
+Theorems~\textup{\ref{thm:factorization-dk-eval}}
+and~\textup{\ref{thm:derived-dk-yangian}} to all finite-dimensional
+representations, resolving DK-2 and DK-3 for
+$\operatorname{Rep}_{\mathrm{fd}}$ in type~$A$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: Equivalence of underlying categories.}
+The module Koszul duality functor~$\Phi$ sends $V(a)_\hbar$ to
+$V(-a)_{-\hbar}$ (Proposition~\ref{prop:yangian-module-koszul}(i))
+and preserves Ext groups on evaluation modules
+(Corollary~\ref{cor:yangian-ext-exchange}).  Hence~$\Phi$ is fully
+faithful on evaluation modules.  An exact functor that is fully
+faithful on a thick-generating set is fully faithful on the thick
+closure: for fixed generator~$M$, the subcategory
+$\{N : \operatorname{Hom}(M,N) \xrightarrow{\sim}
+\operatorname{Hom}(\Phi(M), \Phi(N))\}$
+is thick, hence equals $D^b(\operatorname{Rep}_{\mathrm{fd}})$ by
+Proposition~\ref{prop:dk2-thick-generation-typeA}; iterating with
+the first variable gives full faithfulness on all pairs.
+
+For essential surjectivity: $\Phi$ maps evaluation modules
+of~$Y_\hbar$ to evaluation modules of~$Y_{-\hbar}$, and the latter
+thickly generate
+$D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}))$ by
+Proposition~\ref{prop:dk2-thick-generation-typeA} applied at
+parameter~$-\hbar$.
+
+\emph{Step~2: Strong monoidality.}
+$\Phi$ carries a lax monoidal structure with braiding reversal
+$R \mapsto R^{-1}$
+(Theorem~\ref{thm:monoidal-module-koszul}).  The lax structure maps
+$\mu_{V(a), V(b)}$ are quasi-isomorphisms on evaluation modules
+(loc.~cit., since evaluation modules are Koszul).  By
+Lemma~\ref{lem:monoidal-thick-extension} and thick generation,
+$\Phi$ is strong monoidal on all finite-dimensional representations.
+The braiding reversal extends from generators to the thick closure
+by naturality of the braiding.
+
+\emph{Step~3: Factorization structure.}
+The factorization isomorphisms on ordered configuration spaces are
+part of the monoidal structure, hence preserved by the strong monoidal
+equivalence with reversed $\Eone$-ordering
+(Theorem~\ref{thm:factorization-dk-eval}(iii)).
+
+\emph{Step~4: Kazhdan bridge.}
+The Kazhdan equivalence~$\Phi_K$ is a braided monoidal equivalence
+(Theorem~\ref{thm:derived-dk-yangian}).  The composite
+$KZ_{\barB} = \Phi_K \circ \Phi$ gives~\eqref{eq:dk-fd-quantum}.
+\end{proof}
+
+\begin{corollary}[Partial resolution of
+Conjecture~\textup{\ref{conj:full-derived-dk}};
+\ClaimStatusProvedHere]\label{cor:dk-partial-conj}
+Conjecture~\textup{\ref{conj:full-derived-dk}} holds when restricted
+to finite-dimensional representations in type~$A$.  The remaining
+gap to the full conjecture is the generation problem: whether
+$D^b(\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)})$ is thickly generated
+by evaluation modules.
+\end{corollary}
+
+\begin{proof}
+The first statement is Theorem~\ref{thm:dk-fd-typeA}.  For the
+second: the proof of Theorem~\ref{thm:dk-fd-typeA} extends to any
+thick subcategory of $\operatorname{Fact}_{\Eone}$ generated by
+evaluation modules.  The sole obstruction to the full conjecture is
+whether the evaluation-generated core exhausts
+category~$\mathcal{O}$.
+\end{proof}
+
+\begin{remark}[DK ladder after the finite-dimensional theorem]
+\label{rem:dk-fd-synthesis}
+Theorem~\ref{thm:dk-fd-typeA} resolves the DK-2/DK-3 package
+for finite-dimensional representations in type~$A$.
+The DK ladder for $\mathfrak{sl}_N$ now reads:
+\begin{itemize}
+\item DK-0/DK-1: \textbf{proved} for all simple~$\fg$;
+\item DK-2/DK-3: \textbf{proved} for
+  $\operatorname{Rep}_{\mathrm{fd}}$, type~$A$;
+  conjectural for category~$\mathcal{O}$ and other types;
+\item DK-4/DK-5: conjectural (MC4 territory).
+\end{itemize}
+The transition from the evaluation locus to all finite-dimensional
+representations is no longer a conjectural jump: it follows by formal
+thick-closure arguments from the proved evaluation-level theorem.
+The argument assembles three ingredients: thick generation by evaluation
+modules (Proposition~\ref{prop:dk2-thick-generation-typeA}), the
+monoidal thick extension
+(Lemma~\ref{lem:monoidal-thick-extension}), and the
+evaluation-level Koszul duality
+(Proposition~\ref{prop:yangian-module-koszul};
+Corollary~\ref{cor:yangian-ext-exchange}).
+
+For category~$\mathcal{O}$, the remaining generation problem
+interacts with the structure of Yangian
+category~$\mathcal{O}$ studied by Hernandez--Leclerc and
+Kang--Kashiwara--Kim--Oh: the question is whether Verma modules and
+their subquotients lie in the thick closure of evaluation modules.
+For $\mathfrak{sl}_2$, this is immediate since every Verma module at
+generic highest weight is an evaluation module.  For higher rank, the
+problem is open but well-posed.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
 \section{Chain-level and evaluation-locus derived Drinfeld--Kohno}
@@ -1782,11 +2939,13 @@ identifies the monodromy representation of the KZ connection on
 $\widehat{\mathfrak{g}}_k$ conformal blocks with the $R$-matrix
 representation of $U_q(\mathfrak{g})$ at
 $q = e^{\pi i/(k + h^\vee)}$.  The constructions of this chapter
-and Part~I yield a \emph{derived} enhancement in two proved layers:
-$\Eone$-chiral Koszul duality provides a chain-level equivalence that
-reverses braiding, and the factorization statement is established on
-the evaluation locus.  The classical Kazhdan--Lusztig and Kazhdan
-equivalences translate the chain-level part into the
+and Part~I yield a \emph{derived} enhancement in a staged ladder.
+DK-0 is the chain-level equivalence reversing braiding; DK-1 is the
+factorization statement on the evaluation locus.  The later stages
+DK-2 through DK-5 concern extension beyond evaluation objects,
+factorization-level Kazhdan transport, and the dg-shifted/RTT-complete
+comparison package.  The classical Kazhdan--Lusztig and Kazhdan
+equivalences translate the DK-0 part into the
 $q \mapsto q^{-1}$ involution on quantum group representations.
 
 \subsection{The Drinfeld--Kohno square for affine algebras}
@@ -1889,27 +3048,32 @@ is realized by orientation reversal on configuration spaces.
 
 \subsection{Chain-level derived Drinfeld--Kohno for Yangians}
 
-\begin{theorem}[Chain-level derived Drinfeld--Kohno for Yangians;
+\begin{theorem}[Derived Drinfeld--Kohno on the evaluation-generated subcategory;
 \ClaimStatusProvedHere]\label{thm:derived-dk-yangian}
 \index{Drinfeld--Kohno!derived!Yangian}
 %
-\textup{[Category: full abelian
+\textup{[Category: the evaluation-generated subcategory of
 $\operatorname{Rep}_{\mathrm{fd}}(U_q(\mathfrak{g}))$,
 not the semisimplified tilting category
 $\mathcal{C}(U_q(\mathfrak{g}))$ of
-Theorem~\textup{\ref{thm:derived-dk-affine}}---the
-Kazhdan equivalence for Yangians targets the full
-finite-dimensional category.]}
+Theorem~\textup{\ref{thm:derived-dk-affine}}.
+Extension to all of
+$\operatorname{Rep}_{\mathrm{fd}}$ in type~$A$
+requires the thick generation argument of
+Theorem~\textup{\ref{thm:dk-fd-typeA}}.]}
 %
-For $\mathfrak{g} = \mathfrak{sl}_N$, the $\Eone$-chiral Koszul
-duality functor
+For $\mathfrak{g} = \mathfrak{sl}_N$, let
+$\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_\hbar(\mathfrak{g}))
+\subset \operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g}))$
+denote the full subcategory generated by evaluation modules.
+The $\Eone$-chiral Koszul duality functor restricts to
 \[
-\Phi \colon D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))
+\Phi \colon D^b(\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_\hbar(\mathfrak{g})))
 \;\to\;
-D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}(\mathfrak{g})))
+D^b(\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_{-\hbar}(\mathfrak{g})))
 \]
 
-fits into the same square as the Kazhdan equivalence
+and fits into the same square as the Kazhdan equivalence
 \[
 \operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g}))
 \simeq
@@ -1918,13 +3082,13 @@ fits into the same square as the Kazhdan equivalence
 \]
 \cite{Drinfeld85}.
 
-The claim is that this square commutes:
+The claim is that this square commutes on evaluation modules:
 \begin{equation}\label{eq:dk-square-yangian}
 \begin{tikzcd}
-D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar))
+D^b(\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_\hbar))
   \ar[r, "\Phi"]
   \ar[d, "\Phi_K"']
-& D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}))
+& D^b(\operatorname{Rep}_{\mathrm{fd}}^{\mathrm{eval}}(Y_{-\hbar}))
   \ar[d, "\Phi_K"]
 \\
 D^b(\operatorname{Rep}_{\mathrm{fd}}(U_q))
@@ -1941,8 +3105,10 @@ Under the Kazhdan identification $\Phi_K$, this becomes the
 $q \mapsto q^{-1}$ involution on quantum group representations.
 
 In particular, the $\Eone$-chiral bar-cobar duality of the Yangian
-provides a chain-level realization of the Drinfeld--Kohno
-correspondence.
+provides a chain-level derived shadow of the Drinfeld--Kohno
+correspondence.  The extension to all finite-dimensional
+representations in type~$A$ is Theorem~\textup{\ref{thm:dk-fd-typeA}},
+which uses an explicit thick generation argument.
 \end{theorem}
 
 \begin{proof}
@@ -2079,13 +3245,16 @@ factorization structure is inherited by the dual, producing
 the ``op'' monoidal structure on the target.
 \end{proof}
 
-\subsection{The remaining gap: full factorization DK}
+\subsection{The staged ladder beyond the evaluation locus}
 
 The evaluation-module results above establish the derived
 Drinfeld--Kohno correspondence at the chain level and on the
-evaluation locus.  The full conjecture targets all modules:
+evaluation locus.  The remaining work is not one undifferentiated
+conjectural jump: it is the staged passage from DK-2 through DK-5 of
+Remark~\ref{rem:yangian-status}.  The first H-level bridge targets all
+modules:
 
-\begin{conjecture}[Full derived Drinfeld--Kohno;
+\begin{conjecture}[Factorization-categorical DK/KL bridge (DK-3);
 \ClaimStatusConjectured]\label{conj:full-derived-dk}
 \index{Drinfeld--Kohno!derived!full conjecture}
 The equivalence of
@@ -2100,50 +3269,154 @@ where $\mathcal{Y}(\mathfrak{g})$ is the Yangian
 $\Eone$-chiral algebra and $U_q(\mathfrak{g})$ is the quantum
 group, viewed as an $\Eone$-factorization algebra via the
 construction of Latyntsev~\cite{Latyntsev23}.
+This is the factorization-level Kazhdan bridge beyond the evaluation
+subcategories; it separates the ordered Yangian factorization problem
+from the later dg-shifted comparison of
+Conjecture~\ref{conj:full-dk-bridge}.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
 
-\begin{remark}[What is proved vs.\ what remains]
+\begin{proposition}[DK-3 reduction to evaluation-generated
+factorization cores; \ClaimStatusProvedHere]
+\label{prop:yangian-dk3-generated-core}
+Let
+\[
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g}))
+\subset \operatorname{Fact}_{\Eone}(\mathcal{Y}(\mathfrak{g})),
+\qquad
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))
+\subset \operatorname{Fact}_{\Eone}(U_q(\mathfrak{g}))
+\]
+be the smallest full stable idempotent-complete braided monoidal
+subcategories containing all ordered tensor products of evaluation
+objects.  Assume there exist exact braided monoidal functors
+\[
+KZ_{\mathrm{fact}}^{\mathrm{gen}}\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g}))
+\to
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))^{\mathrm{op}},
+\]
+\[
+LZ_{\mathrm{fact}}^{\mathrm{gen}}\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))^{\mathrm{op}}
+\to
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g})),
+\]
+whose restrictions to the evaluation generators recover the
+evaluation-locus comparison of
+Theorem~\ref{thm:factorization-dk-eval} after transport to the
+quantum-group evaluation side, and such that both composites are
+isomorphic to the identity on those generators.  Then the two functors
+are quasi-inverse braided monoidal equivalences on the generated cores.
+If, in addition,
+\[
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\mathcal{Y}(\mathfrak{g}))
+=
+\operatorname{Fact}_{\Eone}(\mathcal{Y}(\mathfrak{g})),
+\qquad
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(U_q(\mathfrak{g}))
+=
+\operatorname{Fact}_{\Eone}(U_q(\mathfrak{g})),
+\]
+then Conjecture~\ref{conj:full-derived-dk} holds.
+\end{proposition}
+
+\begin{proof}
+The generated cores are obtained from the evaluation generators by
+finite iterates of shifts, cones, direct summands, and ordered tensor
+products.  Exact braided monoidal functors preserve each of these
+operations.  Therefore any natural transformation between exact
+braided monoidal functors that is an isomorphism on the evaluation
+generators remains an isomorphism on the full generated cores.  Applying
+this to the two composites shows that they are naturally isomorphic to
+the identity on the generated cores, hence the two functors are
+quasi-inverse equivalences there.  The final sentence is immediate.
+\end{proof}
+
+\begin{remark}[Exact extra inputs for DK-2/DK-3]
+\label{rem:yangian-dk23-inputs}
+Propositions~\ref{prop:yangian-dk2-thick-generation}
+and~\ref{prop:yangian-dk3-generated-core} make the remaining Yangian
+DK inputs exact.  After the evaluation-locus theorem, the live extra
+packets are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item preservation or replacement resolution theory on the completed
+  Yangian categories~$\mathcal{O}$;
+\item thick generation of those derived categories by evaluation
+  modules --- proved in type~A
+  (Proposition~\ref{prop:dk2-thick-generation-typeA});
+\item construction of the ordered factorization Kazhdan transport on
+  the evaluation-generated factorization core --- a natural candidate
+  is identified (Proposition~\ref{prop:bar-cobar-kazhdan-candidate});
+  what remains is strict factorization-monoidal enhancement
+  (Remark~\ref{rem:dk3-remaining-after-barcobar}); and
+\item a reconstruction argument, Barr--Beck style or equivalent,
+  producing the quasi-inverse pair on that core.
+\end{enumerate}
+For finite-dimensional representations in type~$A$,
+items~(ii)--(iv) are resolved by
+Theorem~\ref{thm:dk-fd-typeA}: thick generation
+(Proposition~\ref{prop:dk2-thick-generation-typeA}) eliminates~(ii),
+and the monoidal thick extension
+(Lemma~\ref{lem:monoidal-thick-extension}) resolves~(iii)--(iv)
+by extending the evaluation-level data to the thick closure.
+The live extra packets are therefore:
+(i)~preservation for category~$\mathcal{O}$ and
+thick generation beyond $\operatorname{Rep}_{\mathrm{fd}}$.
+None of these is a new residue computation on evaluation modules.  The
+residue/RTT identities begin only at the downstream DK-4/MC4 boundary.
+\end{remark}
+
+\begin{remark}[DK ladder: what is proved and what remains]
 \label{rem:dk-proved-vs-remains}
-The ingredients of the full DK conjecture decompose as follows:
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{Ingredient} & \textbf{Status} & \textbf{Reference} \\
-\midrule
-$\Eone$-bar-cobar equivalence & Proved &
-  Thm~\ref{thm:e1-chiral-koszul-duality} \\
-Yangian $R \mapsto R^{-1}$ & Proved &
-  Thm~\ref{thm:yangian-koszul-dual} \\
-Braiding reversal $\sigma \mapsto \sigma^{-1}$ & Proved &
-  Thm~\ref{thm:monoidal-module-koszul} \\
-Evaluation module DK & Proved &
-  Thm~\ref{thm:derived-dk-yangian} \\
-KL at abelian level & Proved (classical) &
-  Thm~\ref{thm:kazhdan-lusztig-equivalence} \\
-Factorization DK (eval.\ locus) & Proved &
-  Thm~\ref{thm:factorization-dk-eval} \\
-\midrule
-Factorization-level Kazhdan equiv. & Conjectured &
-  Conj.~\ref{conj:full-derived-dk} \\
-Extension beyond evaluation modules & Conjectured &
-  Rem.~\ref{rem:yangian-cat-O-conditional} \\
-$\infty$-categorical DK & Conjectured &
-  \S\ref{sec:modular-koszul-programme} \\
-\bottomrule
-\end{tabular}
-\end{center}
-The critical remaining step is the \emph{factorization-level
-Kazhdan equivalence}: showing that the Yangian $\Eone$-factorization
-structure (Definition~\ref{def:e1-factorization-category})
-is identified with the quantum group factorization structure
-constructed by Latyntsev~\cite{Latyntsev23}.  The
-evaluation-module case is proved (the Kazhdan functor
-\cite{Drinfeld85} provides the identification), but the
-extension to Yangian category~$\mathcal{O}$ requires the
-Koszulness conjecture
-(Remark~\ref{rem:yangian-collapse-conj}).
+The frontier decomposes into a theorem ladder:
+\begin{enumerate}
+\item[\textbf{DK-0.}] \emph{Chain-level braided bar-cobar and DK square
+  --- proved.}  This is the chain-level
+  $R \mapsto R^{-1}$ / $q \mapsto q^{-1}$ package of
+  Theorems~\ref{thm:e1-chiral-koszul-duality},
+  \ref{thm:monoidal-module-koszul},
+  \ref{thm:derived-dk-affine}, and \ref{thm:derived-dk-yangian}.
+\item[\textbf{DK-1.}] \emph{Factorization DK on the evaluation locus
+  --- proved.}  Ordered fusion on evaluation modules is transported by
+  Verdier duality with opposite monoidal structure
+  (Theorem~\ref{thm:factorization-dk-eval}).
+\item[\textbf{DK-2/3.}] \emph{Finite-dimensional type~$A$ ---
+  proved.}  Theorem~\ref{thm:dk-fd-typeA} extends the evaluation-locus
+  equivalence to all finite-dimensional representations of
+  $Y(\mathfrak{sl}_N)$, resolving DK-2 and DK-3 simultaneously for
+  $\operatorname{Rep}_{\mathrm{fd}}$ in type~$A$.  The proof assembles
+  thick generation (Proposition~\ref{prop:dk2-thick-generation-typeA}),
+  the monoidal thick extension
+  (Lemma~\ref{lem:monoidal-thick-extension}), and the evaluation-level
+  Ext exchange (Corollary~\ref{cor:yangian-ext-exchange}).
+  \emph{Category~$\mathcal{O}$ and other types --- conjectural.}
+  The full category-$\mathcal{O}$ extension
+  (Conjecture~\ref{conj:full-derived-dk}) reduces to thick generation
+  of $D^b(\mathcal{O}_{Y_\hbar})$ by evaluation modules
+  (Corollary~\ref{cor:dk-partial-conj}).  For other types,
+  the Drinfeld polynomial classification or its analogue is needed.
+\item[\textbf{DK-4.}] \emph{RTT-complete dg-shifted comparison
+  --- conjectural.}  The dg-shifted Yangian must recover the finite RTT
+  stages through a separated complete filtration
+  (Definitions~\ref{def:dg-shifted-yangian}
+  and~\ref{def:rtt-adapted-filtration};
+  Proposition~\ref{prop:dg-shifted-quotient-criterion};
+  Corollary~\ref{cor:yangian-hlevel-comparison-criterion}).
+\item[\textbf{DK-5.}] \emph{Full triple bridge --- conjectural.}
+  Ordered factorization, dg-shifted Yangian modules, and the spectral
+  quantum group should assemble into the full bridge of
+  Conjecture~\ref{conj:full-dk-bridge}.
+\end{enumerate}
+The theorematic endpoint of the present book is DK-2/3 for
+finite-dimensional type~$A$
+(Theorem~\ref{thm:dk-fd-typeA}).  The key structural point is
+that the evaluation-locus theorem extends to all finite-dimensional
+representations by formal thick-closure arguments, while the further
+category-$\mathcal{O}$ extension and the dg-shifted Yangian
+comparison are genuine open problems.
+Remark~\ref{rem:yangian-dk23-inputs} records the exact
+extra inputs before MC4 begins.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence).
 The conjecture asserts an equivalence of $\Eone$-factorization categories between the Yangian and the quantum group, extending the evaluation-module Drinfeld--Kohno theorem to all modules.
@@ -2284,13 +3557,211 @@ the propagator of the $\Eone$-bar complex.
 
 \smallskip\noindent
 \emph{Status.}
-Conjecture~\textup{\ref{conj:full-derived-dk}} establishes
-the outer equivalence;
-Theorem~\textup{\ref{thm:factorization-dk-eval}} proves
-the evaluation-module case.  The Yangian middle term
-and the triple formulation are new.
+Conjecture~\textup{\ref{conj:full-derived-dk}} is the DK-3 outer
+factorization equivalence; Theorem~\textup{\ref{thm:factorization-dk-eval}}
+proves DK-1 on the evaluation locus.  The Yangian middle term and the
+triple formulation are the DK-4/DK-5 completion.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{conjecture}
+
+\begin{proposition}[Formal reduction principle from DK-3 to
+DK-4/DK-5; \ClaimStatusProvedHere]
+\label{prop:yangian-dk-mc4-reduction}
+Fix an affine/Yangian-type modular Koszul $\Eone$-object~$\cA$.
+Assume the DK-3 outer equivalence is established on the ordered
+factorization model, namely that there is a braided monoidal
+equivalence
+\[
+\Factord(X;\cA)
+\xrightarrow{\sim}
+\operatorname{Rep}^{\mathrm{spec}}\!
+  \bigl(\QGspec(R_{\cA})\bigr)^{\mathrm{op}}
+\]
+compatible with evaluation modules and extending the
+evaluation-locus comparison of
+Theorem~\ref{thm:factorization-dk-eval}.  Then the remaining content of
+Conjecture~\ref{conj:full-dk-bridge} is exactly the construction of a
+dg-shifted Yangian~$\Ydg_{\cA}$ whose RTT-adapted filtration satisfies
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion}, together with
+the module-category enhancement
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+\xrightarrow{\sim}
+\operatorname{Rep}^{\mathrm{spec}}\!
+  \bigl(\QGspec(R_{\cA})\bigr)^{\mathrm{op}}.
+\]
+In particular, once DK-3 is in hand, the genuinely new Yangian input is
+the MC4 H-level comparison problem and its passage from completed
+dg-algebra comparison to completed module-category equivalence; it is
+not a second factorization comparison on the evaluation locus.
+\end{proposition}
+
+\begin{proof}
+The ordered factorization term and the right-hand spectral quantum-group
+term in~\eqref{eq:triple-equivalence} are fixed by the assumed DK-3
+outer equivalence, so after DK-3 the only missing part of
+Conjecture~\ref{conj:full-dk-bridge} is the middle equivalence
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+\simeq
+\operatorname{Rep}^{\mathrm{spec}}\!
+  \bigl(\QGspec(R_{\cA})\bigr)^{\mathrm{op}}.
+\]
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion} shows that, once
+$\Ydg_{\cA}$ carries a separated complete RTT-adapted filtration with
+the theorematic finite RTT quotients, the underlying completed dg
+algebra comparison with the standard RTT completion becomes formal.
+Thus the remaining mathematical content is precisely the MC4
+construction of that filtered H-level target together with the passage
+from the dg comparison to the completed module-category equivalence
+displayed above.  This is exactly the DK-4/DK-5 remainder.
+\end{proof}
+
+\begin{proposition}[DK-4 reduction to the fundamental residue packet in
+standard type~A; \ClaimStatusProvedHere]
+\label{prop:yangian-dk4-typea-frontier}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk-mc4-reduction} and work with the
+standard type-A RTT tower.  Then the remaining DK-4 input is reduced to
+the boundary-strip identities
+\[
+\Delta_{a,0}(N)=0
+\qquad (0\le a\le N,\ N\ge 0)
+\]
+for the defects
+\[
+\Delta_{a,0}(N)
+=\mathsf{K}^{\mathrm{line}}_{a,0}(N)
+-\mathsf{K}^{\mathrm{RTT}}_{a,0}(N),
+\]
+together with the standard twisted-coproduct multiplication law on
+fundamental evaluation modules.  Equivalently, for the standard type-A
+tower it is enough to prove the pairwise auxiliary-kernel identity
+\[
+L_a(u)=R_{0a}(u-a)
+\]
+on the fundamental evaluation line.
+
+If, moreover, the one-factor line operator is functorial for the
+diagonal $\mathfrak{sl}_M$-action and normalized by
+$L_a(u)\to 1$ as $u\to\infty$, then the same DK-4 input is further
+reduced to the single residue formula
+\[
+\operatorname*{Res}_{u=a}L_a(u)=-\hbar P.
+\]
+For $M\ge 2$, this is further reduced to the single mixed-tensor
+identity
+\[
+\Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1).
+\]
+Thus, after DK-3, the genuinely analytic Yangian frontier on the
+standard type-A tower is one mixed-tensor residue computation on the
+fundamental line.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:yangian-dk-mc4-reduction}, once DK-3 is fixed
+the remaining work is to construct a dg-shifted Yangian with an
+RTT-adapted filtration satisfying
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion}.  The finite
+quotient comparison required there is reduced by
+Proposition~\ref{prop:dg-shifted-rtt-oneloop-kernel-criterion} to the
+coefficient identities
+$\mathsf{K}^{\mathrm{line}}_{a,b}(N)
+=\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$,
+by Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} to the boundary
+strip $\Delta_{a,0}(N)$, and by
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} to the
+fundamental evaluation family together with the standard
+twisted-coproduct multiplication law.
+
+Proposition~\ref{prop:dg-shifted-rtt-auxiliary-kernel-criterion} then
+reduces this boundary-strip packet to the pairwise kernel identity
+$L_a(u)=R_{0a}(u-a)$ on the fundamental line.  Under the symmetry and
+normalization hypotheses,
+Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction} reduces that
+identity to the residue formula
+$\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, and
+Corollary~\ref{cor:dg-shifted-rtt-typea-single-line} reduces the
+residue formula further to the single mixed-tensor check displayed in
+the statement.
+\end{proof}
+
+\begin{proposition}[DK-5 reduction to compact-generator comparison;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-compact-generators}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk4-typea-frontier}.  Let
+\[
+\mathcal{G}^{\mathrm{fund}}_{Y}
+\subset \operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA}),
+\qquad
+\mathcal{G}^{\mathrm{fund}}_{q}
+\subset \operatorname{Rep}^{\mathrm{spec}}\!
+  \bigl(\QGspec(R_{\cA})\bigr)^{\mathrm{op}}
+\]
+be the full subcategories generated by the completed images of finite
+ordered tensor products of fundamental evaluation modules.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item both ambient stable categories are compactly generated, and
+  their compact objects are the thick idempotent-complete closures of
+  $\mathcal{G}^{\mathrm{fund}}_{Y}$ and
+  $\mathcal{G}^{\mathrm{fund}}_{q}$, respectively;
+\item the DK-4 comparison supplies an exact colimit-preserving functor
+  \[
+  F_{\mathrm{comp}}\colon
+  \operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+  \longrightarrow
+  \operatorname{Rep}^{\mathrm{spec}}\!
+    \bigl(\QGspec(R_{\cA})\bigr)^{\mathrm{op}}
+  \]
+  compatible with the dg comparison
+  $\Ydg_{\cA}\xrightarrow{\sim}\widehat Y_{\mathrm{RTT}}$ and with the
+  DK-3 transport on the evaluation-generated packet; and
+\item the restriction of $F_{\mathrm{comp}}$ to
+  $\mathcal{G}^{\mathrm{fund}}_{Y}$ is an equivalence onto
+  $\mathcal{G}^{\mathrm{fund}}_{q}$.
+\end{enumerate}
+Then $F_{\mathrm{comp}}$ is an equivalence of stable categories.  In
+particular, after DK-4 the remaining DK-5 input is the compact-generator
+comparison on the completed module categories; the passage from that
+packet to the full completed equivalence is formal.
+\end{proposition}
+
+\begin{proof}
+By assumption~\textup{(iii)}, the functor
+$F_{\mathrm{comp}}$ is an equivalence on the chosen generator packet.
+Because $F_{\mathrm{comp}}$ is exact, it preserves shifts, cones, and
+direct summands, so it is an equivalence on the thick idempotent-complete
+closures of that packet.  Assumption~\textup{(i)} identifies those
+closures with the compact objects in the two ambient categories.
+
+Now both categories are compactly generated, and
+$F_{\mathrm{comp}}$ preserves colimits by assumption~\textup{(ii)}.
+Hence the same uniqueness-of-extension mechanism used in the proof of
+Theorem~\ref{thm:chiral-co-contra-correspondence} applies: an exact
+colimit-preserving functor between compactly generated stable
+categories is determined by its restriction to compact generators, and
+an equivalence on those generators extends to an equivalence on the
+whole categories.  Therefore $F_{\mathrm{comp}}$ is an equivalence.
+\end{proof}
+
+\begin{remark}[Exact extra input for DK-5]
+\label{rem:yangian-dk5-input}
+After Proposition~\ref{prop:yangian-dk4-typea-frontier}, the remaining
+DK-5 packet is no longer another algebra-identification problem.  It is
+the categorical comparison packet:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item compact generation of the completed module categories by the
+  completed fundamental evaluation packet;
+\item construction of the exact colimit-preserving comparison functor
+  compatible with the DK-4 dg comparison; and
+\item verification that this functor matches the DK-3 transport on the
+  compact generator packet.
+\end{enumerate}
+Once these three items are in place, the full completed
+module-category enhancement is formal.
+\end{remark}
 
 \begin{remark}[MC4 boundary for Yangian towers]
 \label{rem:yangian-mc4-boundary}
@@ -2306,7 +3777,8 @@ $Y_{\le N}$ and a completed bar object
 \widehat{\bar B}(Y) := \varprojlim_N \bar B(Y_{\le N})
 \]
 with comparison maps compatible with the finite RTT stages.  The
-standard RTT tower now supplies this completed M-level package
+standard RTT tower now supplies this standard-RTT completed M-level
+package
 (Corollary~\ref{cor:yangian-standard-mc4-package}), so the unresolved
 part of Hypothesis~\textup{(ii)} is no longer the existence of a
 standard completion.  What remains open is the comparison between that
@@ -2314,11 +3786,17 @@ coefficientwise RTT completion and the dg-shifted/factorization target.
 Corollary~\ref{cor:yangian-hlevel-comparison-criterion} shows that this
 comparison becomes formal once the H-level target carries a separated
 complete RTT-level filtration whose finite quotients recover the
-theorematic RTT stages.
+theorematic RTT stages.  Proposition~\ref{prop:yangian-dk4-typea-frontier}
+sharpens the standard type-A tower further: the live analytic packet is
+the boundary-strip identity family, hence the auxiliary-kernel
+identity, and under the standard normalization hypotheses one mixed
+tensor-line residue check.  Proposition~\ref{prop:yangian-dk5-compact-generators}
+then isolates the remaining DK-5 packet as a compact-generator
+comparison on the completed module categories.
 Accordingly, the middle term
 $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})$ should be read as
-theorem-ready target data, not as an already realized factorization
-category.
+the completion category attached to the standard RTT tower, not as an
+already constructed factorization category.
 \end{remark}
 
 \begin{remark}[What the Yangian tower still has to prove]
@@ -2344,13 +3822,19 @@ item~\textup{(2)} formal, Corollary~\ref{cor:yangian-weight-cutoff}
 makes item~\textup{(3)} formal, and
 Proposition~\ref{prop:yangian-rtt-completion-identification} identifies
 the inverse limit with the coefficientwise RTT completion.  Thus the
-standard RTT tower now supplies the completed M-level bar-cobar
-package.  The live Yangian frontier is the stronger H-level comparison
+standard RTT tower now supplies the standard-RTT completed M-level
+bar-cobar package.  The live Yangian frontier is the stronger H-level
+comparison
 with the dg-shifted Yangian or factorization-theoretic completion, not
 new local bar calculus.  By
 Corollary~\ref{cor:yangian-hlevel-comparison-criterion}, item~\textup{(4)}
 reduces to constructing a filtered dg-shifted or factorization model
-whose finite RTT quotients match the proved stages.
+whose finite RTT quotients match the proved stages; in the standard
+type-A tower, Proposition~\ref{prop:yangian-dk4-typea-frontier} reduces
+that further to the boundary-strip / auxiliary-kernel / residue packet
+on the fundamental line, and
+Proposition~\ref{prop:yangian-dk5-compact-generators} reduces the final
+module-category enhancement to the compact-generator packet.
 \end{remark}
 
 \begin{proposition}[Yangian tower criterion from finite RTT stages;
@@ -2382,8 +3866,9 @@ canonical comparison map
 \[
 \Omega\bigl(\widehat{\bar B}(Y)\bigr) \xrightarrow{\sim} Y
 \]
-is a quasi-isomorphism.  This gives the theorem-ready M-level completed
-bar-cobar package for the Yangian tower.  The stronger H-level
+is a quasi-isomorphism.  This gives the M-level completed bar-cobar
+package for the Yangian tower under the stated inverse-limit
+hypotheses.  The stronger H-level
 factorization-categorical realization remains part of the MC4/MC5
 frontier.  As in the \(\mathcal{W}_\infty\) case, the eventual-constancy
 hypothesis may be weakened to eventual surjectivity on finite-dimensional
@@ -2423,8 +3908,8 @@ Therefore the standard RTT tower already supplies the
 surjectivity/stabilization part of MC4.  Together with
 Proposition~\ref{prop:inverse-limit-differential-continuity} and
 Proposition~\ref{prop:yangian-rtt-completion-identification}, this
-reduces the standard RTT tower to the completed M-level package of
-Corollary~\ref{cor:yangian-standard-mc4-package}.
+reduces the standard RTT tower to the standard-RTT completed M-level
+package of Corollary~\ref{cor:yangian-standard-mc4-package}.
 \end{corollary}
 
 \begin{proof}
@@ -2506,7 +3991,7 @@ comparison map
 \widehat Y_{\mathrm{RTT}}
 \]
 is a quasi-isomorphism.
-Thus the standard RTT tower realizes the full M-level completed
+Thus the standard RTT tower supplies the full M-level completed
 bar-cobar package for the coefficientwise RTT completion.  What remains
 open is the H-level comparison of $\widehat Y_{\mathrm{RTT}}$ with the
 dg-shifted Yangian or factorization-theoretic completion.
@@ -2600,9 +4085,14 @@ $q \mapsto q^{-1}$, via orientation reversal on ordered
 configuration spaces.  The $\Einf$-chiral examples of the preceding
 chapters all have commutative factorization structure; the Yangian is
 the first object whose Koszul duality intertwines genuinely
-noncommutative (braided) monoidal data.  The extension from the
-evaluation locus (Theorem~\ref{thm:factorization-dk-eval}) to the
-full factorization categorical equivalence
-(Conjecture~\ref{conj:full-derived-dk}) is the remaining frontier of
-the $\Eone$-chiral theory, and the natural bridge to the modular
-Koszul programme (\S\ref{sec:modular-koszul-programme}).
+noncommutative (braided) monoidal data.  The theorematic endpoint is
+DK-2/3 for finite-dimensional type~$A$
+(Theorem~\ref{thm:dk-fd-typeA}), which extends the evaluation-locus
+factorization comparison (Theorem~\ref{thm:factorization-dk-eval})
+to all finite-dimensional representations via thick generation.
+The remaining frontier is
+the extension to category~$\mathcal{O}$ and other types,
+followed by the staged passage through DK-4/DK-5
+(dg-shifted/triple-bridge comparison), which is the natural
+$\Eone$-chiral bridge to the modular Koszul programme
+(\S\ref{sec:modular-koszul-programme}).

@@ -3,21 +3,7 @@
 
 \noindent\emph{The Master Table below collects the invariants computed throughout Part~II.  For the Heisenberg algebra, these invariants were derived in Chapter~\ref{ch:heisenberg-frame}; for each subsequent algebra, the corresponding chapter provides the complete computation.}
 
-\noindent\emph{Role in the route.} This summary is the portrait-layer
-control table: it consolidates theorematic outputs of Part~II and
-passes only stabilized invariants forward to the synthesis chapters.
-
-\noindent\emph{The governing question is which invariants are genuinely
-stabilized outputs of the portrait layer and therefore admissible as inputs to
-the synthesis/control chapters.}
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
 \label{rem:summary-hms}
-This summary chapter is purely \textbf{S-level}: a tabulation of
-numerical invariants (central charges, curvatures, discriminants,
-bar dimensions) extracted from the M-level computations of the
-preceding chapters.
-\end{remark}
 
 \section*{Master table of computed invariants}
 \label{sec:master-table}
@@ -107,6 +93,11 @@ Yangian $Y(\fg)$
   & $Y_{R^{-1}}(\fg)$
   & --- & --- & --- & PH \\
 \hline
+Quantum lattice $\Vlat_\Lambda^{N,q}$
+  & $(\Vlat_\Lambda^{N,-q})^c$
+  & $d = \operatorname{rank}(\Lambda)$ & ---
+  & --- & PH \\
+\hline
 \end{tabular}%
 }% end resizebox
 }% end small
@@ -118,8 +109,72 @@ All dualities in this table have complete proofs at the semantic level
 recorded here; in the Virasoro row, the displayed partner
 $\mathrm{Vir}_{26-c}$ is the proved M/S-level same-family shadow used in
 the complementarity and semi-infinite calculations, while the stronger
-H-level infinite-generator realization remains on the MC4 frontier.
-See Theorem~\ref{thm:yangian-koszul-dual} for the Yangian case.
+H-level infinite-generator realization is delegated to the exact
+$W_\infty$ MC4 package: construct the filtered H-level target, prove
+the residue identities
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$,
+and discharge them on the finite-detection packet $\mathcal{I}_N$.
+
+On the current theorem surface, the first live higher-spin packets are
+already explicit: stage-$3$ is a packet of fifteen primary
+coefficients, reduced by the explicit $W_3$ OPE to three nonzero
+entries and twelve forced zeros.
+
+Stage-$4$ is cut by skew-symmetry to six live coefficients with
+twenty-three forced zeros, organized as three local OPE blocks and
+reduced further on the mixed higher-spin side to the single mixed
+$(3,4)$ triple, whose $W^{(3)}$ target channel is swap-even and whose
+$W^{(2)}$ and $W^{(4)}$ target channels are swap-odd under reversing
+the mixed OPE.
+
+On the principal Drinfeld--Sokolov side, the mixed $W^{(2)}$ target
+vanishes, while the principal $W^{(4)}$-$W^{(4)}\to T$ coefficient is
+fixed to `2'.  The live stage-$4$ comparison is therefore four free
+coefficient channels
+\[
+c_{334},\qquad c_{444},\qquad
+\mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
+\]
+together with the residue-side checks
+\[
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+\]
+Proposition~\ref{prop:winfty-mc4-frontier-package} packages this
+boundary exactly: once a principal-stage compatible H-level target is
+constructed, the comparison at each finite stage reduces to the seed
+packet $\mathcal{I}_N$, and the first genuinely open higher-spin packet
+is the displayed stage-$4$ six-channel problem.
+For the Yangian row, ``PH'' records only the proved DK-0/DK-1 package:
+the chain-level bar-cobar / $R \mapsto R^{-1}$ duality
+\textup{(}Theorem~\ref{thm:yangian-koszul-dual}\textup{)} together with
+the evaluation-locus factorization comparison
+\textup{(}Theorem~\ref{thm:factorization-dk-eval}\textup{)}.  The full
+factorization categories are not being claimed in this table.
+
+The remaining Yangian frontier is the staged DK-2--DK-5 ladder.
+DK-2 is the preservation/thick-generation problem for
+$D^b(\mathcal{O}_{Y_\hbar})$
+\textup{(}Proposition~\ref{prop:yangian-dk2-thick-generation}\textup{)}.
+DK-3 is the evaluation-generated factorization-core reconstruction
+problem
+\textup{(}Proposition~\ref{prop:yangian-dk3-generated-core}\textup{)}.
+
+DK-4/DK-5 are the RTT-complete H-level comparison and completed
+module-category enhancement, detected by the identities
+\[
+\mathsf{K}^{\mathrm{line}}_{a,b}(N)
+=\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)
+\]
+on the boundary strip $\Delta_{a,0}(N)$.  For the standard type-A RTT
+tower, Proposition~\ref{prop:yangian-dk4-typea-frontier} reduces that
+analytic packet further to the auxiliary-kernel identity
+$L_a(u)=R_{0a}(u-a)$ and hence, after the standard normalization, to
+one mixed-tensor residue computation; Proposition~\ref{prop:yangian-dk5-compact-generators}
+then reduces the remaining completed module-category enhancement to the
+compact generator packet.
 Central charges, $c{+}c'$, and $\kappa$ are not defined for
 $\Eone$-chiral algebras (Yangians) in the same sense as for
 vertex algebras.
@@ -146,10 +201,16 @@ different levels of the proof architecture:
   Koszulness is proved via the PBW spectral sequence in the finite-type
   cases, and higher-genus PBW concentration is now unconditional at all
   genera by Theorem~\ref{thm:pbw-allgenera-principal-w}.
-\item[\textbf{T3.}] \emph{$\Eone$-regime} (Yangians):
-  The $\Eone$-chiral Koszul duality theorem
-  (Theorem~\ref{thm:e1-chiral-koszul-duality}) applies directly; the
-  Virasoro-based invariants ($c$, $\kappa$) are not defined.
+\item[\textbf{DK-0/1.}] \emph{$\Eone$-Yangian regime}:
+  the proved content is the chain-level $\Eone$-bar-cobar / DK square
+  and the evaluation-locus factorization comparison
+  \textup{(}Theorems~\ref{thm:e1-chiral-koszul-duality},
+  \ref{thm:derived-dk-yangian}, \ref{thm:factorization-dk-eval}\textup{)}.
+  The later DK stages remain conjectural, but they are now exact:
+  DK-2 is preservation/thick generation in category~$\mathcal{O}$,
+  DK-3 is the evaluation-generated factorization-core reconstruction
+  problem, and DK-4/DK-5 are the dg-shifted RTT-complete comparison.
+  The Virasoro-based invariants ($c$, $\kappa$) are not defined.
 \end{enumerate}
 
 \smallskip
@@ -273,7 +334,18 @@ $\mathcal{W}^k(\fg)^! \cong \mathcal{W}^{-k-2h^\vee}(\fg)$
 For the Virasoro row, the same involution supplies the proved
 same-family shadow partner $\mathrm{Vir}_{26-c}$ used by the
 genus and semi-infinite calculations; the stronger H-level
-infinite-generator realization remains on the MC4 frontier.
+infinite-generator realization is delegated to the exact
+$W_\infty$ MC4 package of filtered H-level targets, residue identities,
+and finite detection on $\mathcal{I}_N$, whose first live
+higher-spin stages are already reduced on the theorem surface to the
+stage-$3$ fifteen-coefficient packet and the stage-$4$
+six-coefficient packet organized as three local OPE blocks, sharpened
+further to the four channels
+$c_{334}$, $c_{444}$,
+$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
+residue-side checks
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
 Complete genus-$1$ pipelines for $\mathrm{Vir}_c$
 (\S\ref{sec:virasoro-genus-one-pipeline}, $c + c' = 26$, $\kappa = c/2$)
 and $\mathcal{W}_3^k$
@@ -288,8 +360,15 @@ General $\mathcal{W}_N$: $\kappa = c \cdot (H_N - 1)$
 Koszul dual uses inverse cocycle.
 \item R-twisted vertex algebras: Yang--Baxter equation ensures associativity;
 Yangians are fundamental examples.
-\item Yangians: $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$, self-dual at the classical
-level (Theorem~\ref{thm:yangian-koszul-dual}).
+\item Yangians: the proved content is DK-0/DK-1.  At chain level
+  $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$ with braiding reversal
+  \textup{(}Theorem~\ref{thm:yangian-koszul-dual}\textup{)}, and on the
+  evaluation locus the ordered factorization categories are equivalent
+  \textup{(}Theorem~\ref{thm:factorization-dk-eval}\textup{)}.  The
+  later stages to full factorization categories and the dg-shifted
+  Yangian comparison remain conjectural
+  \textup{(}Conjectures~\ref{conj:full-derived-dk}
+  and~\ref{conj:full-dk-bridge}\textup{)}.
 \item Toroidal and elliptic algebras: double affine structures with theta function OPEs.
 \end{enumerate}
 
@@ -1083,7 +1162,8 @@ $\Delta_{\cA}(x) = \det(1 - x \cdot \operatorname{KS}_{\cA}
 $\operatorname{KS}_{\cA}$ produce
 $\Delta = (1 - 3x)(1 + x)$.  This interpretation connects the
 bar cohomology generating function to the genus-$1$ piece of
-the conjectural full modular characteristic package~$\mathcal{C}_{\cA}$
+the conjectural full characteristic hierarchy, whose H-level apex is
+the package~$\mathcal{C}_{\cA}$
 (Definition~\ref{def:full-modular-package};
 Remark~\ref{rem:modular-characteristic-package}) and explains why
 DS reduction preserves $\Delta$: the Kodaira--Spencer transport

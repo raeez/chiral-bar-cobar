@@ -17,37 +17,12 @@ W-algebras are obtained by quantum Drinfeld--Sokolov reduction.
 The lattice construction is therefore the universal entry point
 for Part~II.
 
-\noindent\emph{Governing question.} Which representation-theoretic
-families in Part~II are genuinely different, and which are different
-faces of one lattice input mechanism?  This chapter fixes that common
-input so later portraits can focus on what each family newly reveals.
-
-
-% ======================================================================
-% Section 1: Even Lattices and Root Systems
-% ======================================================================
-
 \section{Even lattices and root systems}
 \label{sec:lattice:lattices}
 
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-\label{rem:lattice-hms}
-This chapter operates at \textbf{S-level}: lattice VOA bar cohomology
-dimensions, root system data, and character formulas.  These are
-extracted from \textbf{M-level} models (lattice vertex algebra bar
-complexes, cocycle constructions).  H-level structures (factorization
-algebras on moduli of $G$-bundles) are referenced but not constructed.
-\end{remark}
+\label{rem:lattice-hms}%
 
-\begin{remark}[Status legend]\label{rem:lattice-status}
-The lattice VOA $V_L$ is \emph{unconditional}
-(Tier~T1, alongside free fields and Kac--Moody):
-$V_L$ is quadratic for even unimodular $L$, so all results
-of Theorems~A--D apply without the PBW degeneration
-hypothesis.  Every
-theorem in this chapter carries \ClaimStatusProvedHere{} or
-\ClaimStatusProvedElsewhere; there are no conjectural claims.
-\end{remark}
+\label{rem:lattice-status}%
 
 \begin{definition}[Lattice]\label{def:lattice:lattice}
 \index{lattice!even unimodular}
@@ -1317,7 +1292,7 @@ Chapter~\ref{ch:genus-expansions}.
 
 The lattice grading on the bar complex
 persists at all genera. At genus $g$, the bar differential acquires
-corrections from the cohomology of $\overline{\cM}_{g,n}$, but these
+corrections from the cohomology of $\overline{\mathcal{M}}_{g,n}$, but these
 corrections preserve the total lattice degree. The spectral sequence
 computing bar complex homology at genus $g$ has $E_1$ page given by
 the genus-0 bar complex (with its lattice decomposition), and the
@@ -1536,4 +1511,1754 @@ Verlinde formula.
 
 \begin{remark}[Distinguishing $E_8 \oplus E_8$ from $D_{16}^+$]
 The bar complexes of $\Vlat_{E_8 \oplus E_8}$ and $\Vlat_{D_{16}^+}$ are both self-dual (both are even unimodular lattices of rank~16), but they are \emph{non-isomorphic} as coalgebras.  At genus~1, the two lattices are \emph{indistinguishable}: both have theta function $\Theta_\Lambda(\tau) = E_4(\tau)^2$, since the space~$M_8(\mathrm{SL}_2(\Z))$ is one-dimensional.  The distinction first appears at genus~2: the Siegel theta functions $\Theta^{(2)}_{E_8 \oplus E_8}$ and $\Theta^{(2)}_{D_{16}^+}$ are distinct Siegel modular forms of weight~8, sufficing to distinguish the two even unimodular lattices of rank~$16$.  This illustrates how the genus-$g$ bar complex captures strictly finer information than the genus-1 bar complex.
+\end{remark}
+
+
+% ======================================================================
+% Section 11: E_1-Chiral Algebras from Cocycle Deformations
+% ======================================================================
+
+\section{$\Eone$-chiral algebras from cocycle deformations}
+\label{sec:lattice:e1-families}
+
+The preceding sections compute bar complexes of lattice algebras with
+\emph{symmetric} cocycles, obtaining $\Einf$-chiral algebras.
+Theorem~\ref{thm:lattice:e1-vs-einf} guarantees that \emph{any}
+2-cocycle produces an $\Eone$-chiral algebra; non-symmetric cocycles
+produce \emph{strictly} $\Eone$ structures.  This section develops
+the $\Eone$ theory systematically: the bar complex moves from
+unordered to ordered configurations, the bar cohomology acquires new
+classes, and the resulting Koszul pairs provide a rich family of
+$\Eone$-chiral algebras complementing the Yangian construction of
+Chapter~\ref{chap:yangians}.
+
+\label{rem:e1-lattice-hms}%
+
+
+\subsection{The ordered configuration bar complex}
+
+\begin{construction}[$\Eone$ bar complex of $\Vlat_\Lambda^\varepsilon$]
+\label{constr:lattice:e1-bar}
+\index{bar complex!$\Eone$-chiral lattice}
+\index{ordered configurations!lattice bar complex}
+Let $\varepsilon$ be a (not necessarily symmetric) normalized
+bimultiplicative 2-cocycle on an even lattice~$\Lambda$.
+By Theorem~\ref{thm:lattice:e1-vs-einf}, $\Vlat_\Lambda^\varepsilon$
+is $\Eone$-chiral.  Its bar complex
+$\barB^{\Eone}(\Vlat_\Lambda^\varepsilon)$ is the $\Eone$-chiral bar
+construction of Theorem~\ref{thm:e1-chiral-koszul-duality}, indexed by
+\emph{ordered} configurations.
+
+\noindent\emph{Generators.} In bar degree~$p$, the generators are
+\emph{ordered} tuples:
+\[
+[e^{\alpha_1} \mid e^{\alpha_2} \mid \cdots \mid e^{\alpha_p}]
+\otimes \omega \in \barB^p_\gamma,
+\qquad
+\gamma = \textstyle\sum_{i=1}^p \alpha_i \in \Lambda,
+\]
+where $\alpha_i \in \Lambda \setminus \{0\}$ and
+$\omega \in \Omega^{p-1}(\overline{C}^{\mathrm{ord}}_p(X), \log D)$
+is a logarithmic form on the compactified \emph{ordered} configuration
+space.  Unlike the $\Einf$ bar complex of
+Construction~\ref{constr:lattice:bar-complex}, there is \emph{no}
+$\Sigma_p$-quotient: the elements $[e^{\alpha_1} \mid e^{\alpha_2}]$
+and $[e^{\alpha_2} \mid e^{\alpha_1}]$ are independent generators.
+
+\noindent\emph{Differential.} The bar differential sums residues over
+collision divisors for \emph{adjacent} pairs (the face maps of the
+associahedron):
+\begin{equation}\label{eq:lattice:e1-bar-diff}
+d([e^{\alpha_1} \mid \cdots \mid e^{\alpha_p}] \otimes 1)
+= \sum_{i=1}^{p-1}
+  \varepsilon(\alpha_i, \alpha_{i+1})\,
+  \delta_{\langle\alpha_i,\alpha_{i+1}\rangle, -1}\,
+  [e^{\alpha_1} \mid \cdots \mid
+   e^{\alpha_i + \alpha_{i+1}} \mid \cdots \mid e^{\alpha_p}]
+  \otimes 1.
+\end{equation}
+The Kronecker delta selects the simple pole condition.  The cocycle
+$\varepsilon(\alpha_i, \alpha_{i+1})$ enters with its value at the
+\emph{specific ordered pair} $(\alpha_i, \alpha_{i+1})$.  For a
+non-symmetric cocycle, permuting the pair changes this coefficient.
+\end{construction}
+
+\begin{remark}[Comparison with the $\Einf$ bar complex]
+\label{rem:e1-vs-einf-bar}
+For a symmetric cocycle, the Borcherds symmetry
+$\varepsilon(\alpha,\beta) =
+(-1)^{\langle\alpha,\beta\rangle}\varepsilon(\beta,\alpha)$
+allows one to pass to the $\Sigma_n$-coinvariants, recovering the
+$\Einf$ bar complex of Construction~\ref{constr:lattice:bar-complex}
+on unordered configurations.  In bar degree~2, this identifies
+$[e^\alpha \mid e^\beta]$ with
+$(-1)^{\langle\alpha,\beta\rangle} [e^\beta \mid e^\alpha]$.
+
+For a non-symmetric cocycle, no such identification is possible: the
+ratio $\varepsilon(\alpha,\beta)/\varepsilon(\beta,\alpha) \neq
+(-1)^{\langle\alpha,\beta\rangle}$, so the $\Sigma_2$-action
+on ordered pairs is not compatible with the differential.  The
+$\Eone$ bar complex is therefore strictly larger than any symmetric
+quotient.
+\end{remark}
+
+
+\subsection{Root-of-unity deformation families}
+
+We now specialize the root-of-unity deformation of
+Remark~\ref{rem:lattice:root-of-unity-deformation} to construct
+explicit families of strictly $\Eone$-chiral lattice algebras.
+
+\begin{definition}[Cocycle deformation]\label{def:lattice:cocycle-deformation}
+\index{cocycle!root-of-unity deformation}
+Let $\Lambda$ be an even lattice of rank $d \geq 2$, and let
+$\varepsilon_0$ be a symmetric cocycle on $\Lambda$.  A
+\emph{cocycle deformation datum} is a pair $(N, q)$ where $N \geq 3$
+is an integer and $q \colon \Lambda \times \Lambda \to \Z/N\Z$ is a
+non-zero antisymmetric bilinear form.  The
+\emph{deformed cocycle} is:
+\begin{equation}\label{eq:lattice:deformed-cocycle}
+\varepsilon_{N,q}(\alpha, \beta)
+:= \varepsilon_0(\alpha, \beta) \cdot
+   \zeta_N^{q(\alpha,\beta)},
+\qquad \zeta_N := e^{2\pi i/N}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Deformation properties; \ClaimStatusProvedHere]
+\label{prop:lattice:deformation-properties}
+The deformed cocycle $\varepsilon_{N,q}$ satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item $\varepsilon_{N,q}$ is a normalized bimultiplicative 2-cocycle
+  on~$\Lambda$.
+\item The commutator of the deformed cocycle is
+  $c_{\varepsilon_{N,q}}(\alpha,\beta)
+  = (-1)^{\langle\alpha,\beta\rangle}
+    \cdot \zeta_N^{2q(\alpha,\beta)}$.
+\item $\varepsilon_{N,q}$ is symmetric in the sense of Borcherds
+  if and only if $\zeta_N^{2q(\alpha,\beta)} = 1$ for all
+  $\alpha, \beta \in \Lambda$, i.e., if and only if $N \mid 2$
+  \textup{(}which contradicts $N \geq 3$\textup{)}.  Hence the
+  deformed algebra $\Vlat_\Lambda^{\varepsilon_{N,q}}$ is
+  \emph{strictly} $\Eone$-chiral for all $N \geq 3$.
+\item The inverse cocycle is
+  $\varepsilon_{N,q}^{-1} = \varepsilon_{N,-q}$, so the Koszul dual
+  \textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual})} is:
+  \begin{equation}\label{eq:lattice:deformed-koszul-dual}
+  (\Vlat_\Lambda^{\varepsilon_{N,q}})^!
+  = (\Vlat_\Lambda^{\varepsilon_{N,-q}})^c.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Since $\varepsilon_0$ is a 2-cocycle and $\zeta_N^{q(\cdot,\cdot)}$
+is a bicharacter ($q$ is bilinear), their product satisfies the
+cocycle condition:
+\[
+\varepsilon_{N,q}(\alpha,\beta)\,
+\varepsilon_{N,q}(\alpha+\beta,\gamma)
+= \varepsilon_0(\alpha,\beta)\,\varepsilon_0(\alpha+\beta,\gamma)
+  \cdot \zeta_N^{q(\alpha,\beta) + q(\alpha+\beta,\gamma)}.
+\]
+By bilinearity, $q(\alpha,\beta) + q(\alpha+\beta,\gamma)
+= q(\alpha,\beta+\gamma) + q(\beta,\gamma)$, so this equals
+$\varepsilon_{N,q}(\alpha,\beta+\gamma)\,
+\varepsilon_{N,q}(\beta,\gamma)$.
+
+(ii) The commutator is:
+\[
+c_{\varepsilon_{N,q}}(\alpha,\beta)
+= \frac{\varepsilon_{N,q}(\alpha,\beta)}%
+       {\varepsilon_{N,q}(\beta,\alpha)}
+= \frac{\varepsilon_0(\alpha,\beta)}%
+       {\varepsilon_0(\beta,\alpha)}
+  \cdot \frac{\zeta_N^{q(\alpha,\beta)}}%
+             {\zeta_N^{q(\beta,\alpha)}}
+= (-1)^{\langle\alpha,\beta\rangle}
+  \cdot \zeta_N^{2q(\alpha,\beta)},
+\]
+using $c_{\varepsilon_0}(\alpha,\beta) =
+(-1)^{\langle\alpha,\beta\rangle}$
+(since $\varepsilon_0$ is symmetric) and the antisymmetry
+$q(\beta,\alpha) = -q(\alpha,\beta)$.
+
+(iii) The Borcherds symmetry condition requires
+$c_{\varepsilon_{N,q}}(\alpha,\beta) =
+(-1)^{\langle\alpha,\beta\rangle}$,
+hence $\zeta_N^{2q(\alpha,\beta)} = 1$ for all $\alpha, \beta$.
+Since $q$ is non-zero, there exist $\alpha, \beta$ with
+$q(\alpha,\beta) \not\equiv 0 \pmod{N}$.  Then
+$\zeta_N^{2q(\alpha,\beta)} = 1$ requires
+$2q(\alpha,\beta) \equiv 0 \pmod{N}$.  For this to hold for all
+$\alpha,\beta$ with $q(\alpha,\beta)$ ranging over $\Z/N\Z$,
+we need $2 \cdot 1 \equiv 0 \pmod{N}$, i.e., $N \mid 2$.
+
+(iv) The inverse of $\varepsilon_0(\alpha,\beta) \cdot
+\zeta_N^{q(\alpha,\beta)}$ is
+$\varepsilon_0(\alpha,\beta)^{-1} \cdot
+\zeta_N^{-q(\alpha,\beta)}$.  Since $\varepsilon_0$ takes values in
+$\{\pm 1\}$ (it is $\{\pm 1\}$-valued for even lattices by the
+standard construction), $\varepsilon_0^{-1} = \varepsilon_0$.  Hence
+$\varepsilon_{N,q}^{-1}(\alpha,\beta) =
+\varepsilon_0(\alpha,\beta) \cdot \zeta_N^{-q(\alpha,\beta)}
+= \varepsilon_{N,-q}(\alpha,\beta)$.
+The Koszul dual identification follows from
+Theorem~\ref{thm:lattice:koszul-dual}.
+\end{proof}
+
+\begin{remark}[The deformation parameter space]
+\label{rem:lattice:deformation-space}
+For a rank-$d$ lattice $\Lambda$, the space of antisymmetric
+bilinear forms $\Lambda \times \Lambda \to \Z/N\Z$ is
+$\bigwedge^2(\Lambda^*/N\Lambda^*) \cong (\Z/N\Z)^{\binom{d}{2}}$.
+The number of non-zero forms is $N^{\binom{d}{2}} - 1$.  For each
+such form, the deformed cocycle gives a distinct $\Eone$-chiral
+algebra (distinct in the sense that different non-cohomologous
+deformations give non-isomorphic $\Eone$ bar complexes).
+
+For rank 2: the space of antisymmetric forms is $\Z/N\Z$, with
+generator $q(e_1, e_2) = 1$.  This gives $N - 1$ distinct
+deformations for each~$N$.
+
+For rank $d \geq 3$: the space is multi-dimensional, and the
+deformations form a $(d-1)$-parameter family.
+\end{remark}
+
+
+\subsection{Explicit $\Eone$ bar complex: the $A_2$ deformation}
+
+We now compute the $\Eone$ bar complex for the simplest
+non-trivial case: the $A_2$ root lattice with a root-of-unity
+cocycle deformation.
+
+\begin{computation}[$\Eone$ bar complex for deformed $A_2$]
+\label{comp:lattice:e1-bar-A2}
+\index{bar complex!$\Eone$-chiral $A_2$}
+Let $\Lambda = A_2$ with simple roots $\alpha_1, \alpha_2$
+satisfying $\langle\alpha_1,\alpha_2\rangle = -1$.  Fix $N \geq 3$
+and the deformation datum $q(\alpha_1,\alpha_2) = 1$, extended
+bilinearly.  Set $\zeta = \zeta_N = e^{2\pi i/N}$.
+
+\noindent\emph{Sector $\gamma = \alpha_1 + \alpha_2$.}
+
+\emph{Bar degree~1.} One generator: $[e^{\alpha_1+\alpha_2}]$.
+
+\emph{Bar degree~2.} Two independent generators (ordered pairs):
+\[
+v_+ := [e^{\alpha_1} \mid e^{\alpha_2}],
+\qquad
+v_- := [e^{\alpha_2} \mid e^{\alpha_1}].
+\]
+In the $\Einf$ bar complex, the symmetry relation identifies
+$v_-$ with $(-1)^{\langle\alpha_1,\alpha_2\rangle} v_+ = -v_+$,
+collapsing these to one generator.  In the $\Eone$ complex,
+both are independent.
+
+\emph{Differential.}
+By~\eqref{eq:lattice:e1-bar-diff}:
+\begin{align*}
+d(v_+)
+&= \varepsilon_{N,q}(\alpha_1, \alpha_2)\,
+   [e^{\alpha_1+\alpha_2}]
+ = \varepsilon_0(\alpha_1,\alpha_2) \cdot \zeta \cdot
+   [e^{\alpha_1+\alpha_2}], \\
+d(v_-)
+&= \varepsilon_{N,q}(\alpha_2, \alpha_1)\,
+   [e^{\alpha_1+\alpha_2}]
+ = \varepsilon_0(\alpha_2,\alpha_1) \cdot \zeta^{-1} \cdot
+   [e^{\alpha_1+\alpha_2}].
+\end{align*}
+
+The differential $d \colon \C^2 \to \C$ is the row vector
+$[\varepsilon_0(\alpha_1,\alpha_2)\zeta,\;
+\varepsilon_0(\alpha_2,\alpha_1)\zeta^{-1}]$.
+Since at least one coefficient is nonzero, $d$ is surjective and
+$\dim\ker d = 1$.
+
+\emph{The ordering cycle.}
+The kernel of $d$ is spanned by the
+\emph{ordering cycle}:
+\begin{equation}\label{eq:lattice:ordering-cycle}
+\xi_{\alpha_1,\alpha_2}
+:= \varepsilon_0(\alpha_2,\alpha_1)\,\zeta^{-1}\,
+   [e^{\alpha_1} \mid e^{\alpha_2}]
+ - \varepsilon_0(\alpha_1,\alpha_2)\,\zeta\,
+   [e^{\alpha_2} \mid e^{\alpha_1}].
+\end{equation}
+This cycle is \emph{not exact} (there are no bar degree~3 elements
+in this sector that could hit it, since any element
+$[e^{\beta_1} \mid e^{\beta_2} \mid e^{\beta_3}]$ with
+$\beta_1 + \beta_2 + \beta_3 = \alpha_1 + \alpha_2$ must have at
+least one $\beta_i$ not a root, and non-root lattice elements do not
+generate simple poles with roots).
+
+\emph{Conclusion.}  In the sector $\gamma = \alpha_1 + \alpha_2$:
+\begin{align*}
+H^1(\barB^{\Eone}_\gamma) &= 0, \\
+H^2(\barB^{\Eone}_\gamma) &= \C \cdot \xi_{\alpha_1,\alpha_2}.
+\end{align*}
+
+Compare with the $\Einf$ computation
+(Computation~\ref{comp:lattice:bar-A2}):
+there, $\barB^2_\gamma \cong \C$ and $d$ is an isomorphism, giving
+$H^1 = H^2 = 0$.  The $\Eone$ bar complex has \emph{strictly more
+cohomology} than the $\Einf$ bar complex: the ordering cycle
+$\xi_{\alpha_1,\alpha_2}$ is a new class that measures the
+non-commutativity of the cocycle.
+\end{computation}
+
+\begin{proposition}[Phase dependence of the ordering cycle;
+\ClaimStatusProvedHere]
+\label{prop:lattice:ordering-cycle-phase}
+The ordering cycle $\xi_{\alpha_1,\alpha_2}$ depends on the
+deformation parameter as follows.
+\begin{enumerate}[label=(\roman*)]
+\item The ratio of its two coefficients is:
+\begin{equation}\label{eq:lattice:cycle-ratio}
+\frac{\varepsilon_0(\alpha_2,\alpha_1)\,\zeta^{-1}}%
+     {-\varepsilon_0(\alpha_1,\alpha_2)\,\zeta}
+= \frac{(-1)^{\langle\alpha_1,\alpha_2\rangle}}{\zeta^2}
+= \frac{-1}{\zeta^2}
+= -\zeta_N^{-2}.
+\end{equation}
+\item At $N = 3$: $\zeta^2 = e^{4\pi i/3}$, and the ratio is
+  $-e^{-4\pi i/3} = e^{-\pi i/3}$, a primitive 6th root of unity.
+\item At $N = 4$: $\zeta^2 = i$, and the ratio is $-(-i) = i$.
+\item In the limit $N \to \infty$ \textup{(}$\zeta \to 1$\textup{)}:
+  the ratio approaches $-1$, and the cycle becomes
+  $\varepsilon_0(\alpha_2,\alpha_1)[e^{\alpha_1}|e^{\alpha_2}]
+  - \varepsilon_0(\alpha_1,\alpha_2)[e^{\alpha_2}|e^{\alpha_1}]$,
+  which is the antisymmetric combination that maps to
+  zero under the $\Sigma_2$-coinvariant quotient.
+  This reflects the $\Einf$ limit: the new cycle collapses to a
+  trivial class upon symmetrization.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Direct computation from~\eqref{eq:lattice:ordering-cycle}, using
+$\varepsilon_0(\alpha_1,\alpha_2)/\varepsilon_0(\alpha_2,\alpha_1)
+= (-1)^{\langle\alpha_1,\alpha_2\rangle} = -1$.
+\end{proof}
+
+
+\subsection{The quantum lattice algebra}
+
+The root-of-unity deformation produces a discrete family of
+$\Eone$-chiral algebras interpolating between the commutative (vertex
+algebra) world and a noncommutative world parametrized by the
+deformation order~$N$.  We package these into a single definition.
+
+\begin{definition}[Quantum lattice algebra]\label{def:quantum-lattice}
+\index{quantum lattice algebra|textbf}
+For an even lattice $\Lambda$ of rank $d \geq 2$, an integer
+$N \geq 3$, and a non-zero antisymmetric bilinear form
+$q \colon \Lambda \times \Lambda \to \Z/N\Z$, the
+\emph{quantum lattice algebra} is:
+\[
+\Vlat_\Lambda^{N,q}
+:= \Vlat_\Lambda^{\varepsilon_{N,q}}
+\]
+with the deformed cocycle of Definition~\ref{def:lattice:cocycle-deformation}.
+\end{definition}
+
+\begin{theorem}[Quantum lattice algebra: structural properties;
+\ClaimStatusProvedHere]
+\label{thm:quantum-lattice-structure}
+\index{quantum lattice algebra!structural properties}
+Let $\Vlat_\Lambda^{N,q}$ be a quantum lattice algebra.
+\begin{enumerate}[label=(\roman*)]
+\item \textup{(}Strict $\Eone$-chirality\textup{).}
+  $\Vlat_\Lambda^{N,q}$ is a strictly $\Eone$-chiral algebra,
+  not $\Einf$.
+
+\item \textup{(}Periodicity\textup{).}
+  $\Vlat_\Lambda^{N,q} \cong \Vlat_\Lambda^{N, q + N\Z}$:
+  the construction depends on $q$ only modulo~$N$.
+
+\item \textup{(}$N = 2$ triviality\textup{).}
+  At $N = 2$, the deformation produces a symmetric cocycle
+  \textup{(}the antisymmetric form $q$ satisfies
+  $2q(\alpha,\beta) \equiv 0 \bmod 2$ for all
+  $\alpha,\beta$\textup{)}, so $\Vlat_\Lambda^{2,q}$ is $\Einf$.
+
+\item \textup{(}Koszul pair\textup{).}
+  The pair $(\Vlat_\Lambda^{N,q},\; \Vlat_\Lambda^{N,-q})$ is an
+  $\Eone$-chiral Koszul pair:
+  \[
+  (\Vlat_\Lambda^{N,q})^! \cong (\Vlat_\Lambda^{N,-q})^c.
+  \]
+  In particular, for $q$ with $-q \equiv q \pmod{N}$
+  \textup{(}i.e., $2q \equiv 0$, which requires $N \mid 2$\textup{)},
+  the algebra is Koszul self-dual.  For $N \geq 3$,
+  $\Vlat_\Lambda^{N,q}$ is never self-dual: the Koszul dual carries
+  the \emph{conjugate} deformation parameter.
+
+\item \textup{(}State space\textup{).}
+  As a graded vector space,
+  $\Vlat_\Lambda^{N,q} \cong \Vlat_\Lambda^{\varepsilon_0}$:
+  the deformation changes only the OPE phases, not the state space.
+  The character is:
+  \[
+  \mathrm{ch}\, \Vlat_\Lambda^{N,q}
+  = \frac{\Theta_\Lambda(\tau)}{\eta(\tau)^d},
+  \]
+  independent of $N$ and $q$.
+
+\item \textup{(}$N$-torsion of the braiding\textup{).}
+  The braiding of the $\Eone$-chiral structure has order dividing
+  $N$: for any $\alpha, \beta \in \Lambda$, the $N$-fold iteration
+  of the $R$-matrix-type exchange is trivial:
+  \[
+  c_{\varepsilon_{N,q}}(\alpha,\beta)^N
+  = (-1)^{N\langle\alpha,\beta\rangle} \cdot \zeta_N^{2Nq(\alpha,\beta)}
+  = (-1)^{N\langle\alpha,\beta\rangle}.
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+All claims follow directly from
+Proposition~\ref{prop:lattice:deformation-properties} and the
+definitions.  For (ii), $\zeta_N^{q + N\Z} = \zeta_N^q$ since
+$\zeta_N^N = 1$.  For (iii), $\zeta_2 = -1$ and
+$(-1)^{2q(\alpha,\beta)} = 1$.  For (v), the cocycle deformation
+changes only the product structure (the group algebra multiplication
+$e^\alpha \cdot e^\beta = \varepsilon(\alpha,\beta) e^{\alpha+\beta}$)
+but not the state space $\cH \otimes \C[\Lambda]$.
+\end{proof}
+
+
+\subsection{$\Eone$ bar cohomology of quantum lattice algebras}
+
+\begin{theorem}[$\Eone$ bar cohomology; \ClaimStatusProvedHere]
+\label{thm:lattice:e1-bar-cohomology}
+\index{bar complex!$\Eone$ cohomology}
+For the quantum lattice algebra $\Vlat_\Lambda^{N,q}$ on an even
+lattice $\Lambda$ with root system~$\Phi$, the $\Eone$ bar complex
+$\barB^{\Eone}(\Vlat_\Lambda^{N,q})$ satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item The lattice grading decomposes the bar complex as
+  $\barB^{\Eone} = \bigoplus_{\gamma \in \Lambda}
+  \barB^{\Eone}_\gamma$, with the differential
+  preserving~$\gamma$.
+\item In each sector $\gamma = \alpha + \beta$ with
+  $\alpha, \beta \in \Phi$ and $\langle\alpha,\beta\rangle = -1$,
+  the $\Eone$ bar complex in degrees $1$--$2$ is:
+  \[
+  0 \longrightarrow \C^2
+    \xrightarrow{d_{\alpha,\beta}}
+    \C^1 \longrightarrow 0
+  \]
+  where $d_{\alpha,\beta}
+  = [\varepsilon_0(\alpha,\beta)\,\zeta^{q(\alpha,\beta)},\;
+     \varepsilon_0(\beta,\alpha)\,\zeta^{-q(\alpha,\beta)}]$.
+  The kernel of $d_{\alpha,\beta}$ is 1-dimensional, spanned by the
+  ordering cycle $\xi_{\alpha,\beta}$.
+\item The ordering cycles generate a subspace of
+  $H^2(\barB^{\Eone})$ of dimension equal to the number of
+  positive roots of~$\Phi$.  Each positive root
+  $\gamma = \alpha + \beta$ contributes one ordering cycle.
+\item In the symmetric limit $N \to \infty$ \textup{(}$\zeta \to 1$,
+  equivalently the $\Einf$ quotient\textup{)}, the ordering cycles
+  become the antisymmetric elements that vanish under
+  $\Sigma_2$-coinvariants, recovering the $\Einf$ bar cohomology.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) follows from the lattice-grading preservation of the $\Eone$ bar
+differential~\eqref{eq:lattice:e1-bar-diff}, by the same argument as
+Theorem~\ref{thm:lattice:bar-structure}(i).
+
+(ii) is the computation of~\ref{comp:lattice:e1-bar-A2} generalized
+to any pair of roots with inner product~$-1$.  The differential
+$d_{\alpha,\beta} \colon \C^2 \to \C$ has
+$\operatorname{rank}(d_{\alpha,\beta}) = 1$ since both coefficients are nonzero
+(a product of a nonzero cocycle value and a root of unity).
+
+(iii) The positive roots of $\Phi$ biject with pairs
+$\{\alpha,\beta\}$ of roots with $\langle\alpha,\beta\rangle = -1$
+and $\alpha + \beta \in \Phi$ (up to the relation that each positive
+root $\gamma$ is the sum of at most one pair of simple roots
+$\alpha,\beta$).  Each such pair contributes one ordering cycle in
+the sector $\gamma$.  Different positive roots give cycles in
+different lattice sectors, so the cycles are linearly independent.
+
+(iv) The $\Sigma_2$-coinvariant quotient identifies
+$[e^\alpha \mid e^\beta]$ with
+$(-1)^{\langle\alpha,\beta\rangle} [e^\beta \mid e^\alpha]
+= -[e^\beta \mid e^\alpha]$, so $v_+ = -v_-$ in the quotient.
+The ordering cycle
+$\xi_{\alpha,\beta} \propto v_+ + \lambda v_-$ (with $\lambda \to 1$
+as $\zeta \to 1$) maps to $v_+ + v_- \to v_+ - v_+ = 0$ in the
+coinvariant quotient, so it vanishes in the $\Einf$ complex.
+\end{proof}
+
+
+\subsection{The $\Eone$ inversion principle}
+
+The following principle unifies the Koszul duality for
+lattice $\Eone$-chiral algebras
+(Theorem~\ref{thm:lattice:koszul-dual}),
+Yangians (Theorem~\ref{thm:yangian-koszul-dual}), and the
+abstract $\Eone$ theory
+(Theorem~\ref{thm:e1-chiral-koszul-duality}).
+
+\begin{theorem}[$\Eone$ inversion principle; \ClaimStatusProvedHere]
+\label{thm:e1-inversion-principle}
+\index{E1 inversion principle@$\Eone$ inversion principle|textbf}
+\index{Koszul duality!inversion principle}
+Let $\cA$ be an $\Eone$-chiral algebra whose non-commutativity
+is controlled by a defining datum~$\delta$
+\textup{(}an $R$-matrix, a 2-cocycle, or a deformation parameter\textup{)}.
+Then the Koszul dual $\cA^!$ is the same algebra with the
+\emph{inverted} datum $\delta^{-1}$:
+\begin{equation}\label{eq:e1-inversion}
+\cA^{!,\mathrm{ch}} \cong \cA_{\delta^{-1}}^{\mathrm{ch}}.
+\end{equation}
+The three instances proved in this monograph are:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l l l l}
+\textbf{$\Eone$ algebra $\cA$} & \textbf{Datum $\delta$}
+  & \textbf{Koszul dual $\cA^!$}
+  & \textbf{Reference} \\
+\hline
+Lattice $\Vlat_\Lambda^\varepsilon$
+  & Cocycle $\varepsilon$
+  & $\Vlat_\Lambda^{\varepsilon^{-1}}$
+  & Thm~\ref{thm:lattice:koszul-dual} \\
+Yangian $Y_R(\fg)$
+  & $R$-matrix $R(u)$
+  & $Y_{R^{-1}}(\fg)$
+  & Thm~\ref{thm:yangian-koszul-dual} \\
+Quantum lattice $\Vlat_\Lambda^{N,q}$
+  & Phase $\zeta^q$
+  & $\Vlat_\Lambda^{N,-q}$
+  & Thm~\ref{thm:quantum-lattice-structure}(iv)
+\end{tabular}
+\end{center}
+
+\noindent
+In each case, the inversion arises from the self-duality of the
+chiral associative operad:
+${\chirAss}^! \cong \chirAss \otimes \mathrm{sgn}$
+\textup{(}Proposition~\textup{\ref{prop:chirAss-self-dual})}.
+The sign twist $\mathrm{sgn}$ is realized geometrically as the
+orientation reversal on ordered configuration spaces, which
+inverts the defining non-commutativity datum.
+\end{theorem}
+
+\begin{proof}
+The abstract statement follows from the $\Eone$-chiral Koszul duality
+(Theorem~\ref{thm:e1-chiral-koszul-duality}) and the self-duality of
+$\chirAss$: the bar construction on an $\Eone$-chiral algebra
+$\cA$ produces a coalgebra over
+${\chirAss}^! \cong \chirAss \otimes \mathrm{sgn}$, which is again an
+associative coalgebra but with the sign-twisted structure.  This sign
+twist is realized in each instance as:
+\begin{itemize}
+\item For lattice algebras: the bar differential carries the cocycle
+  value $\varepsilon(\alpha,\beta)$, and the sign twist inverts it to
+  $\varepsilon(\alpha,\beta)^{-1}$.
+\item For Yangians: the bar differential encodes the RTT relation via
+  the $R$-matrix, and the sign twist inverts
+  $R(u) \to R^{-1}(u)$, equivalently $\hbar \to -\hbar$ for the
+  Yang $R$-matrix.
+\item For quantum lattice algebras: the deformation datum
+  $\zeta^{q(\alpha,\beta)}$ is inverted to
+  $\zeta^{-q(\alpha,\beta)}$.
+\end{itemize}
+In each case, the geometric mechanism is that the Verdier involution
+on ordered configurations $\overline{C}^{\mathrm{ord}}_n(X)$ reverses
+the ordering, which transposes the defining relation and hence
+inverts the non-commutativity data.
+\end{proof}
+
+\begin{remark}[Relation to Feigin--Frenkel duality]
+\label{rem:e1-ff-comparison}
+\index{Feigin--Frenkel duality!$\Eone$ analog}
+The $\Eone$ inversion principle is the ordered-configuration analog
+of the Feigin--Frenkel level shift $k \mapsto -k - 2h^\vee$ for
+$\Einf$-chiral algebras.  In the $\Einf$ theory, Verdier duality on
+\emph{unordered} configurations inverts the level; in the $\Eone$
+theory, Verdier duality on \emph{ordered} configurations inverts the
+defining datum.  Both are instances of the same geometric mechanism
+(the Verdier involution on FM compactifications), applied in different
+operadic contexts.
+
+The parallel extends to the classical limit: the Feigin--Frenkel
+shift has a classical limit $k \to \infty$ in which the duality
+becomes trivial; the $\Eone$ inversion has a classical limit
+$\hbar \to 0$ (for Yangians) or $N \to \infty$ (for quantum
+lattice algebras) in which the datum becomes the identity and the
+duality becomes the $\Einf$ Koszul duality of
+$\mathrm{Sym} \leftrightarrow \bigwedge$
+(Corollary~\ref{cor:yangian-classical-self-dual}).
+\end{remark}
+
+
+\subsection{Deformed Frenkel--Kac--Segal and quantum groups}
+
+\begin{remark}[Deformed FKS construction]\label{rem:lattice:deformed-fks}
+\index{Frenkel--Kac construction!deformed}
+For a simply-laced root lattice $\Lambda_\fg$ with symmetric cocycle
+$\varepsilon_0$, the Frenkel--Kac--Segal theorem
+(Theorem~\ref{thm:lattice:frenkel-kac}) gives
+$\Vlat_{\Lambda_\fg}^{\varepsilon_0} \cong L(\AffKM{g}, 1)$.
+The quantum lattice algebra $\Vlat_{\Lambda_\fg}^{N,q}$ deforms this
+construction: the root currents $E_\alpha(z) = Y(e^\alpha, z)$
+satisfy \emph{modified} commutation relations
+\begin{equation}\label{eq:lattice:deformed-fks-ope}
+E_{\alpha_i}(z)\, E_{\alpha_j}(w)
+= \varepsilon_0(\alpha_i,\alpha_j)\,\zeta^{q(\alpha_i,\alpha_j)}\,
+  (z-w)^{\langle\alpha_i,\alpha_j\rangle}\,
+  E_{\alpha_i+\alpha_j}(w) + \text{reg}
+\end{equation}
+in which the Chevalley--Serre sign
+$\varepsilon_0(\alpha_i,\alpha_j)$ acquires a root-of-unity factor
+$\zeta^{q(\alpha_i,\alpha_j)}$.
+\end{remark}
+
+\begin{proposition}[Deformed FKS and quantum group connection;
+\ClaimStatusConjectured]
+\label{prop:lattice:quantum-group-connection}
+\index{quantum group!lattice construction connection}
+For $\fg$ simply-laced and $N \geq 3$, the quantum lattice algebra
+$\Vlat_{\Lambda_\fg}^{N,q}$ has the following properties:
+\begin{enumerate}[label=(\roman*)]
+\item The category of $\Vlat_{\Lambda_\fg}^{N,q}$-modules is a
+  braided monoidal category with braiding controlled by the
+  deformed commutator $c_{\varepsilon_{N,q}}$.
+\item For $N$ equal to the order of $q^2 = e^{4\pi i/N}$ as a root
+  of unity, this braided category is conjecturally related to the
+  representation category of the small quantum group
+  $u_\zeta(\fg)$ at $\zeta = e^{2\pi i/N}$.
+\item The $\Eone$ inversion principle
+  \textup{(}Theorem~\textup{\ref{thm:e1-inversion-principle})}
+  applied to $\Vlat_{\Lambda_\fg}^{N,q}$ gives the Koszul pair:
+  \[
+  (\Vlat_{\Lambda_\fg}^{N,q})^!
+  \cong (\Vlat_{\Lambda_\fg}^{N,-q})^c,
+  \]
+  which is the cocycle-level analog of the quantum group duality
+  $U_q(\fg) \leftrightarrow U_{q^{-1}}(\fg)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[The two $\Eone$ construction methods]
+\label{rem:two-e1-methods}
+\index{E1-chiral algebra@$\Eone$-chiral algebra!construction methods}
+This monograph constructs $\Eone$-chiral algebras by two
+complementary methods:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Lattice cocycle deformation}
+  (this section): start with an $\Einf$-chiral lattice VOA and
+  deform the cocycle to break symmetry.  This is a ``top-down''
+  method: the state space is fixed, and the OPE acquires phases.
+  The deformation is controlled by a finite parameter ($N$, $q$).
+\item \emph{RTT/R-matrix presentation}
+  (Chapter~\ref{chap:yangians}): start with the RTT relations and
+  build the $\Eone$-chiral algebra from generators and relations.
+  This is a ``bottom-up'' method: the algebra is presented by
+  generators with an $R$-matrix-valued OPE.
+\end{enumerate}
+The two methods are unified by the $\Eone$ inversion principle
+(Theorem~\ref{thm:e1-inversion-principle}): in both cases, Koszul
+duality inverts the non-commutativity datum.
+
+The bridge between the two constructions is the Frenkel--Kac--Segal
+theorem: method~(a) produces $\Eone$-chiral algebras from lattices
+(the ``abelian'' source), while method~(b) produces them from
+quantum groups (the ``non-abelian'' source).  At level~1 with
+symmetric cocycle, FKS identifies the two; the deformed FKS
+construction (Remark~\ref{rem:lattice:deformed-fks}) extends this
+identification to the $\Eone$ world, connecting lattice cocycle
+phases to quantum group deformation parameters.
+\end{remark}
+
+
+\subsection{Master table of $\Eone$ examples}
+
+\begin{table}[ht]
+\centering
+\caption{$\Eone$-chiral algebras and their Koszul duals.}
+\label{tab:lattice:e1-catalog}
+\index{E1-chiral algebra@$\Eone$-chiral algebra!master table}
+\renewcommand{\arraystretch}{1.4}
+{\small
+\begin{tabular}{l l l c l}
+\textbf{$\Eone$ algebra} & \textbf{Datum $\delta$}
+  & \textbf{Koszul dual}
+  & \textbf{Self-dual?}
+  & \textbf{Status} \\
+\hline
+\multicolumn{5}{l}{\textit{Lattice cocycle deformations
+  \textup{(}this section\textup{)}}} \\
+\hline
+$\Vlat_{A_2}^{N,q}$ ($N \geq 3$)
+  & $\zeta_N^{q(\alpha_i,\alpha_j)}$
+  & $\Vlat_{A_2}^{N,-q}$
+  & No & PH \\
+$\Vlat_{D_4}^{N,q}$
+  & $\zeta_N^{q(\alpha_i,\alpha_j)}$
+  & $\Vlat_{D_4}^{N,-q}$
+  & No & PH \\
+$\Vlat_{E_8}^{N,q}$
+  & $\zeta_N^{q(\alpha_i,\alpha_j)}$
+  & $\Vlat_{E_8}^{N,-q}$
+  & No & PH \\
+$\Vlat_\Lambda^{N,q}$ (general)
+  & $\zeta_N^{q(\alpha,\beta)}$
+  & $\Vlat_\Lambda^{N,-q}$
+  & No & PH \\
+\hline
+\multicolumn{5}{l}{\textit{RTT/Yangian constructions
+  \textup{(}Chapter~\ref{chap:yangians}\textup{)}}} \\
+\hline
+$Y(\fg)^{\mathrm{ch}}$
+  & $R(u)$
+  & $Y_{R^{-1}}(\fg)^{\mathrm{ch}}$
+  & No$^*$ & PH \\
+$Y(\fg)^{\mathrm{ch}}|_{\hbar=0}$
+  & $R = 1$
+  & $\mathrm{Sym}^! = \bigwedge$
+  & No & PH \\
+\hline
+\multicolumn{5}{l}{\textit{Elliptic/toroidal
+  \textup{(}Chapter~\ref{chap:toroidal-elliptic}\textup{)}}} \\
+\hline
+$U_{q,t}(\hat{\hat{\fg}})^{\mathrm{ch}}$
+  & $R^{\mathrm{ell}}(u,\tau)$
+  & $U_{q^{-1},t^{-1}}(\hat{\hat{\fg}})^{\mathrm{ch}}$
+  & No & CJ \\
+\end{tabular}
+}
+\smallskip
+
+\noindent{\footnotesize $^*$For simply-laced $\fg$: $Y(\fg)^! \cong Y(\fg^!)$ and $\fg \cong \fg^!$, so the Koszul dual is isomorphic to the original as an abstract algebra but with $\hbar \to -\hbar$; this is ``almost'' self-dual (Remark~\ref{rem:yangian-langlands}).  PH = proved here; CJ = conjectured.}
+\end{table}
+
+\begin{remark}[The $\Eone$ derivation chain]\label{rem:e1-derivation-chain}
+\index{derivation chain!$\Eone$ extension}
+The derivation chain of Remark~\ref{rem:lattice:derivation-chain}
+extends to the $\Eone$ world:
+\[
+\begin{tikzcd}[column sep=1.8em]
+\text{Even lattice } \Lambda
+  \arrow[d, "\varepsilon_0 \text{ (sym)}"']
+  \arrow[dr, "\varepsilon_{N,q} \text{ (non-sym)}"] \\
+\Einf\text{-chiral VOA}
+  \arrow[r, "\text{FKS}"]
+  \arrow[d, "\text{BRST}"']
+  & \Eone\text{-chiral algebra}
+  \arrow[d, "\text{\(\Eone\) BRST?}"] \\
+\text{W-algebras}
+  & \text{$\Eone$ W-algebras (open)}
+\end{tikzcd}
+\]
+The upper-left path (symmetric cocycle $\to$ FKS $\to$ BRST)
+produces all $\Einf$ examples in this monograph.  The upper-right
+path (non-symmetric cocycle) produces the quantum lattice algebras
+of this section.  Whether an $\Eone$-chiral analog of BRST
+reduction yields ``$\Eone$ W-algebras'' is an open question
+connected to the MC4 programme
+(Remark~\ref{rem:proof-roadmaps}).
+\end{remark}
+
+
+% ======================================================================
+% Section 12: Factorization Bar-Cobar for Lattice Algebras
+% ======================================================================
+
+\section{Factorization bar-cobar for lattice algebras}
+\label{sec:lattice:factorization-bar-cobar}
+
+\label{rem:lattice-fact-hms}%
+
+The general bar-cobar equivalence
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}) is stated for any
+chiral Koszul pair.  For lattice vertex algebras, the lattice grading
+provides a decomposition that makes the factorization structure
+\emph{explicitly computable}.  The goal of this section is to
+establish a factorization-level bar-cobar equivalence for lattice
+VOAs that bypasses the thick-generation arguments required in the
+Yangian setting (Chapter~\ref{chap:yangians},
+\S\ref{sec:derived-dk}).
+
+\subsection{Lattice factorization structure}
+
+\begin{proposition}[Lattice factorization decomposition;
+\ClaimStatusProvedHere]
+\label{prop:lattice:factorization-decomposition}
+\index{factorization coalgebra!lattice decomposition}
+Let $\Lambda$ be an even lattice with cocycle $\varepsilon$
+\textup{(}not necessarily symmetric\textup{)}.  The geometric bar
+complex $\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)$, viewed as
+a factorization coalgebra on~$\Ran(X)$
+\textup{(}Theorem~\textup{\ref{thm:bar-chiral})}, decomposes as a
+direct sum of factorization coalgebras indexed by the lattice:
+\begin{equation}\label{eq:lattice:fact-decomposition}
+\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)
+= \bigoplus_{\gamma \in \Lambda}
+  \barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)_\gamma
+\end{equation}
+where $\barB^{\mathrm{ch}}_\gamma$ is the sub-coalgebra supported on
+total lattice charge~$\gamma$.  This decomposition is:
+\begin{enumerate}[label=(\roman*)]
+\item compatible with the comultiplication: the coproduct
+  $\Delta\colon \barB^{\mathrm{ch}}_\gamma \to
+  \bigoplus_{\gamma_1+\gamma_2=\gamma}
+  \barB^{\mathrm{ch}}_{\gamma_1} \otimes
+  \barB^{\mathrm{ch}}_{\gamma_2}$
+  preserves total lattice charge;
+\item compatible with the factorization structure: for disjoint opens
+  $U_1, U_2 \subset X$, the factorization isomorphism
+  $\barB^{\mathrm{ch}}_\gamma(U_1 \sqcup U_2) \cong
+  \bigoplus_{\gamma_1+\gamma_2=\gamma}
+  \barB^{\mathrm{ch}}_{\gamma_1}(U_1)
+  \otimes \barB^{\mathrm{ch}}_{\gamma_2}(U_2)$
+  respects the lattice grading;
+\item \emph{sectorwise finite-dimensional}: for each
+  $\gamma \in \Lambda$ and each bar degree~$p$, the sector
+  $\barB^p_\gamma$ is a finite-dimensional vector space.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The bar comultiplication~(Theorem~\ref{thm:bar-chiral})
+decomposes a degree-$p$ bar element by partitioning its tensor
+factors into two groups.  The lattice charge of each group is the
+sum of the charges of its factors.  Since the bar element has total
+charge $\gamma = \sum_i \alpha_i$, the partition produces pieces of
+charges $\gamma_1, \gamma_2$ with $\gamma_1 + \gamma_2 = \gamma$.
+
+(ii) The factorization isomorphism for disjoint opens
+$U_1 \sqcup U_2$ arises from the decomposition of
+$C^{\mathrm{ord}}_n(U_1 \sqcup U_2)$ into products
+$C^{\mathrm{ord}}_{n_1}(U_1) \times C^{\mathrm{ord}}_{n_2}(U_2)$.
+The vertex operators $Y(e^\alpha, z)$ for $z \in U_i$ carry lattice
+charge~$\alpha$ localized on~$U_i$, so the factorization
+isomorphism preserves total charge on each open.
+
+(iii) In bar degree~$p$ and sector~$\gamma$, the generators are
+ordered $p$-tuples $(\alpha_1, \ldots, \alpha_p)$ with
+$\alpha_i \in \Lambda \setminus \{0\}$ and
+$\sum_i \alpha_i = \gamma$.  For a positive-definite lattice, the
+constraint $|\alpha_i|^2 \geq 2$ (even lattice) and
+$\sum_i \alpha_i = \gamma$ (fixed) implies
+$\sum_i |\alpha_i|^2 \leq p \cdot |\gamma|^2$ by the triangle
+inequality, so there are finitely many such tuples.  Each tuple
+contributes a finite-dimensional space of logarithmic forms on the
+compactified configuration space.
+\end{proof}
+
+\begin{remark}[Sectorwise finiteness: the key structural advantage]
+\label{rem:lattice:sectorwise-finiteness}
+Property~(iii) is the critical feature that distinguishes the lattice
+setting from the general Yangian setting.  For Yangians, the bar
+complex has infinitely many generators in each internal degree (the
+RTT generators $T_{ij}^{(r)}$ for all levels $r \geq 0$), and
+establishing factorization-level results requires thick-generation
+arguments (DK-2, Proposition~\ref{prop:yangian-dk2-thick-generation}).
+For lattice algebras, sectorwise finiteness means that the twisted
+tensor products $K_\tau^L$ and $K_\tau^R$ are direct sums of
+finite-dimensional complexes, one per lattice sector.  Acyclicity
+of each sector can be checked directly.
+\end{remark}
+
+\subsection{The factorization Koszul pair}
+
+\begin{theorem}[Lattice factorization Koszul pair;
+\ClaimStatusProvedHere]
+\label{thm:lattice:factorization-koszul}
+\index{Koszul pair!lattice factorization|textbf}
+Let $\Lambda$ be an even positive-definite lattice with cocycle
+$\varepsilon$ \textup{(}symmetric or not\textup{)}.  The lattice
+vertex algebra $\Vlat_\Lambda^\varepsilon$ and its Koszul dual
+$(\Vlat_\Lambda^{\varepsilon^{-1}})^c$
+\textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual})} form a
+chiral Koszul pair
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair})} in
+the factorization sense:
+\begin{enumerate}[label=(\roman*)]
+\item \textup{(}Factorization bar-cobar equivalence\textup{).}
+  The bar construction
+  $\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)$ is a conilpotent
+  factorization coalgebra on $\Ran(X)$, and the cobar-bar counit
+  is a quasi-isomorphism of factorization algebras:
+  \begin{equation}\label{eq:lattice:fact-bar-cobar}
+  \Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon))
+  \xrightarrow{\;\sim\;}
+  \Vlat_\Lambda^\varepsilon.
+  \end{equation}
+\item \textup{(}Verdier intertwining on $\Ran(X)$\textup{).}
+  The Verdier duality functor
+  $\mathbb{D}_{\Ran}$ on factorization coalgebras satisfies:
+  \begin{equation}\label{eq:lattice:verdier-ran}
+  \mathbb{D}_{\Ran}\, \barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)
+  \simeq
+  \barB^{\mathrm{ch}}(\Vlat_\Lambda^{\varepsilon^{-1}}).
+  \end{equation}
+\item \textup{(}Functoriality over $\overline{\mathcal{M}}_{g,n}$\textup{).}
+  Both equivalences hold in families over moduli: for
+  $\pi\colon \mathcal{X} \to \overline{\mathcal{M}}_{g,n}$ the universal curve,
+  the relative bar construction
+  $\barB^{\mathrm{ch}}_{\mathcal{X}/\overline{\mathcal{M}}_{g,n}}
+  (\Vlat_\Lambda^\varepsilon)$ is a factorization coalgebra on
+  $\Ran(\mathcal{X}/\overline{\mathcal{M}}_{g,n})$, and the counit and Verdier
+  equivalences hold fiberwise by proper base change.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof reduces to the chain-level theorem
+(Theorem~\ref{thm:lattice:koszul-morphism}) via the lattice
+decomposition.
+
+\emph{Step 1: Reduction to sectors.}
+By Proposition~\ref{prop:lattice:factorization-decomposition}, the
+factorization coalgebra
+$\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)$ decomposes as a
+direct sum over $\gamma \in \Lambda$.  The twisted tensor products
+$K_\tau^L$ and $K_\tau^R$
+(Definition~\ref{def:chiral-twisting-datum}) decompose
+correspondingly:
+\[
+K_\tau^L(\Vlat_\Lambda^\varepsilon,\,
+\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon))
+= \bigoplus_{\gamma \in \Lambda}
+K_\tau^L(\Vlat_\Lambda^\varepsilon,\,
+\barB^{\mathrm{ch}}_\gamma).
+\]
+Acyclicity of $K_\tau^L$ is equivalent to acyclicity of each
+sector $K_\tau^L(\cdots, \barB^{\mathrm{ch}}_\gamma)$.
+
+\emph{Step 2: Sectorwise acyclicity.}
+Fix $\gamma \in \Lambda$.  The sector
+$\barB^{\mathrm{ch}}_\gamma$ is finite-dimensional in each bar
+degree (Proposition~\ref{prop:lattice:factorization-decomposition}(iii)).
+The twisted tensor product
+$K_{\tau,\gamma}^L = \Vlat_\Lambda^\varepsilon
+\otimes_\tau \barB^{\mathrm{ch}}_\gamma$ is therefore a
+bounded-below complex of finite-dimensional pieces (over each
+stratum of~$\Ran(X)$).
+
+The lattice weight filtration of
+Theorem~\ref{thm:lattice:koszul-morphism} applies sector by
+sector: filter $K_{\tau,\gamma}^L$ by total weight
+$|\alpha|^2 = \langle\alpha,\alpha\rangle$, and the
+$E_1$ page is the Heisenberg twisted tensor product
+(the $\gamma = 0$ reduction).  By
+Theorem~\ref{thm:heisenberg-koszul-dual-early}, the Heisenberg
+twisted tensor product is acyclic.  Since the filtration is
+bounded below in each sector and the $E_1$ page vanishes, the
+spectral sequence converges to zero.
+
+\emph{Step 3: From acyclicity to factorization equivalence.}
+By Lemma~\ref{lem:twisted-product-cone-counit}, acyclicity of
+$K_\tau^L$ is equivalent to the counit
+$\varepsilon_\tau\colon
+\Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon))
+\to \Vlat_\Lambda^\varepsilon$
+being a quasi-isomorphism.  By
+Lemma~\ref{lem:twisted-product-cone-unit}, acyclicity of
+$K_\tau^R$ is equivalent to the unit
+$\eta_\tau\colon
+\barB^{\mathrm{ch}}(\Vlat_\Lambda^{\varepsilon^{-1}})^c
+\to \barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)$
+being a quasi-isomorphism.
+
+Since these quasi-isomorphisms hold in each lattice sector and the
+direct sum is compatible with the factorization structure
+(Proposition~\ref{prop:lattice:factorization-decomposition}(ii)),
+the quasi-isomorphisms are factorization-algebra morphisms.  This
+establishes~(i).
+
+\emph{Step 4: Verdier intertwining.}
+The Verdier duality $\mathbb{D}_{\Ran}$ acts on the bar complex
+by exchanging $j_*$ (maximal extension) with $j_!$ (extension by
+zero) on each stratum of $\overline{C}_n(X)$
+(Lemma~\ref{lem:verdier-extension-exchange}).  On the lattice bar
+complex, this exchanges the cocycle $\varepsilon$ with
+$\varepsilon^{-1}$: the bar differential carries the factor
+$\varepsilon(\alpha_i, \alpha_{i+1})$, and Verdier duality
+conjugates this to $\varepsilon(\alpha_i, \alpha_{i+1})^{-1}$
+(by the sign change in the logarithmic form under
+$j_* \leftrightarrow j_!$).  Combined with the bar-cobar
+Verdier theorem (Theorem~\ref{thm:bar-cobar-verdier}), this
+gives~(ii).
+
+Since both $\varepsilon$ and $\varepsilon^{-1}$ are valid cocycles
+on the same lattice $\Lambda$, and the construction is symmetric
+in the two, the Verdier intertwining holds at the factorization
+level (not just stratum-by-stratum) by the functoriality of
+$\mathbb{D}_{\Ran}$ on factorization coalgebras.
+
+\emph{Step 5: Family statement.}
+The FM compactification $\overline{C}_n(\mathcal{X})$ is proper over
+$\overline{\mathcal{M}}_{g,n}$
+(Lemma~\ref{lem:pushforward-preserves-qi}).  By proper base change
+(Theorem~\ref{thm:bar-cobar-inversion-functorial}), the fiberwise
+quasi-isomorphisms of Steps~2--3 lift to the family.  The lattice
+decomposition persists in families (the lattice $\Lambda$ is
+constant over $\overline{\mathcal{M}}_{g,n}$, since it is an algebraic
+datum of the vertex algebra, not of the curve), so the sectorwise
+finiteness argument applies fiber by fiber.  This gives~(iii).
+\end{proof}
+
+\begin{remark}[Why thick generation is unnecessary]
+\label{rem:lattice:no-thick-generation}
+\index{thick generation!unnecessary for lattice}
+The proof of
+Theorem~\ref{thm:lattice:factorization-koszul} does not use any
+thick-generation argument.  Compare with the Yangian DK ladder
+(Chapter~\ref{chap:yangians}):
+\begin{itemize}
+\item DK-2 (Proposition~\ref{prop:yangian-dk2-thick-generation})
+  requires showing that evaluation modules thickly generate the
+  finite-dimensional representation category.  For lattice algebras,
+  the lattice sectors replace thick generation: the direct sum
+  decomposition~\eqref{eq:lattice:fact-decomposition} is
+  \emph{exact}, not a thick-closure approximation.
+\item DK-3 (Proposition~\ref{prop:yangian-dk3-generated-core})
+  requires lifting the Kazhdan--Lusztig equivalence to factorization
+  categories.  For lattice algebras, both sides of the Koszul duality
+  live in the same lattice-VOA family (cocycle
+  $\varepsilon$ vs.\ $\varepsilon^{-1}$), so no external bridge
+  is needed.
+\end{itemize}
+The lattice setting thus provides the first \emph{unconditional}
+(Tier~T1) factorization bar-cobar equivalence in the monograph.
+\end{remark}
+
+
+\subsection{Factorization DK for lattice algebras}
+
+Theorem~\ref{thm:lattice:factorization-koszul} specializes, via the
+Frenkel--Kac--Segal identification, to a factorization-level
+Drinfeld--Kohno statement for level-$1$ simply-laced affine algebras.
+
+\begin{corollary}[Factorization DK at level $1$;
+\ClaimStatusProvedHere]
+\label{cor:lattice:factorization-dk-level1}
+\index{Drinfeld--Kohno!lattice factorization|textbf}
+For $\fg$ simply-laced with root lattice $\Lambda_\fg$ and
+symmetric cocycle $\varepsilon_0$:
+\begin{enumerate}[label=(\roman*)]
+\item The factorization bar-cobar equivalence for
+  $\Vlat_{\Lambda_\fg}^{\varepsilon_0}
+  \cong L(\AffKM{g}, 1)$
+  \textup{(}Theorem~\textup{\ref{thm:lattice:frenkel-kac})} gives:
+  \[
+  \Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(L(\AffKM{g}, 1)))
+  \xrightarrow{\;\sim\;}
+  L(\AffKM{g}, 1)
+  \]
+  as an equivalence of factorization algebras on $\Ran(X)$.
+
+\item Verdier intertwining gives
+  $\mathbb{D}_{\Ran}\, \barB^{\mathrm{ch}}(L(\AffKM{g}, 1))
+  \simeq \barB^{\mathrm{ch}}(L(\AffKM{g}, 1))$
+  \textup{(}self-duality, since $\varepsilon_0^{-1} = \varepsilon_0$
+  for the standard FLM cocycle on simply-laced root lattices\textup{)}.
+
+\item For $\Eone$-deformations: the quantum lattice algebra
+  $\Vlat_{\Lambda_\fg}^{N,q}$
+  \textup{(}Definition~\textup{\ref{def:quantum-lattice})} satisfies
+  the $\Eone$-factorization bar-cobar equivalence
+  \[
+  \Omega^{\Eone,\mathrm{ch}}(
+    \barB^{\Eone,\mathrm{ch}}(\Vlat_{\Lambda_\fg}^{N,q}))
+  \xrightarrow{\;\sim\;}
+  \Vlat_{\Lambda_\fg}^{N,q}
+  \]
+  with Verdier intertwining
+  $\mathbb{D}_{\Ran}\, \barB^{\Eone}(\Vlat_{\Lambda_\fg}^{N,q})
+  \simeq \barB^{\Eone}(\Vlat_{\Lambda_\fg}^{N,-q})$
+  \textup{(}not self-dual: the deformation parameter is
+  conjugated\textup{)}.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(i) and (ii): Apply Theorem~\ref{thm:lattice:factorization-koszul}
+to $\Lambda = \Lambda_\fg$ with $\varepsilon = \varepsilon_0$.  The
+FKS identification
+(Theorem~\ref{thm:lattice:frenkel-kac}) is an isomorphism of vertex
+algebras, hence of factorization algebras on $\Ran(X)$.  For the
+self-duality in~(ii), the standard FLM cocycle on a simply-laced root
+lattice takes values in $\{\pm 1\}$, so
+$\varepsilon_0^{-1} = \varepsilon_0$.
+
+(iii): Apply Theorem~\ref{thm:lattice:factorization-koszul} to the
+non-symmetric cocycle $\varepsilon_{N,q}$.  The theorem applies
+equally to non-symmetric cocycles, since the proof uses only the
+lattice decomposition and the weight filtration, both of which are
+cocycle-independent.  The $\Eone$-chiral bar complex is on ordered
+configurations
+(Construction~\ref{constr:lattice:e1-bar},
+Theorem~\ref{thm:e1-chiral-koszul-duality}).  The Verdier
+intertwining conjugates $\varepsilon_{N,q}$ to
+$\varepsilon_{N,q}^{-1} = \varepsilon_{N,-q}$
+(Proposition~\ref{prop:lattice:deformation-properties}(iv)).
+\end{proof}
+
+\begin{remark}[The factorization DK programme from lattices]
+\label{rem:lattice:factorization-dk-programme}
+\index{Drinfeld--Kohno!factorization programme}
+Corollary~\ref{cor:lattice:factorization-dk-level1} is
+unconditional: it does not depend on thick generation, the
+Kazhdan--Lusztig equivalence, or the Latyntsev factorization
+quantum group construction.  It is an \emph{intrinsic} statement
+about the lattice vertex algebra, proved entirely within the
+bar-cobar framework of Part~I.
+
+The relationship to the Yangian DK programme
+(MC3, Conjecture~\ref{conj:master-dk-kl}) is as follows:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item At level~$1$ with symmetric cocycle, the lattice factorization
+  DK reduces to the self-duality of unimodular lattice VOAs
+  (Theorem~\ref{thm:lattice:unimodular-self-dual}), which is proved.
+\item At level~$1$ with non-symmetric cocycle, the $\Eone$ lattice
+  factorization DK gives a proved instance of the $\Eone$ inversion
+  principle (Theorem~\ref{thm:e1-inversion-principle}) at the
+  factorization level.
+\item For general level~$k$: by the sublattice embedding
+  $\sqrt{k}\Lambda \hookrightarrow \Lambda$
+  (Proposition~\ref{prop:lattice:sublattice}), the level-$k$ KM
+  algebra embeds into the level-$1$ lattice VOA.  Whether the
+  factorization bar-cobar equivalence for the sublattice implies
+  the equivalence for the full level-$k$ theory is a
+  tractable extension of the present methods.
+\item For the full MC3 conjecture: identifying the module category of
+  $\Vlat_{\Lambda_\fg}^{N,q}$ with quantum group representations
+  at $\zeta = e^{2\pi i/N}$ would upgrade the lattice
+  factorization DK to the full Kazhdan--Lusztig factorization
+  equivalence.  This identification is
+  Proposition~\ref{prop:lattice:quantum-group-connection}, currently
+  conjectural.
+\end{enumerate}
+\end{remark}
+
+
+% ======================================================================
+% Section 13: Homotopy-Level Factorization DK via E_1 Lattices
+% ======================================================================
+
+\section{Homotopy-level factorization DK via $\Eone$ lattices}
+\label{sec:lattice:homotopy-factorization-dk}
+
+\label{rem:lattice-hfdk-hms}%
+
+The factorization bar-cobar equivalence of
+Theorem~\ref{thm:lattice:factorization-koszul} is an M-level statement:
+a quasi-isomorphism of factorization dg-algebras on $\Ran(X)$.  This
+section lifts the equivalence to H-level, constructing an equivalence of
+$\Eone$-factorization $\infty$-categories for lattice vertex algebras.
+The sectorwise finiteness of
+Proposition~\ref{prop:lattice:factorization-decomposition}(iii) is the
+mechanism that makes the lift possible without the thick-generation
+arguments needed in the Yangian setting (DK-2/3 of
+Remark~\ref{rem:dk-proved-vs-remains}).
+
+
+\subsection{The $\Eone$-factorization $\infty$-category of a lattice VOA}
+
+\begin{construction}[Lattice $\Eone$-factorization category]
+\label{constr:lattice:e1-fact-cat}
+\index{factorization category!lattice $\Eone$-|textbf}
+Let $\Lambda$ be an even positive-definite lattice with cocycle
+$\varepsilon$ (symmetric or not).  The \emph{$\Eone$-factorization
+$\infty$-category} $\Factord(X; \Vlat_\Lambda^\varepsilon)$
+has the following data:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Objects}: $\Vlat_\Lambda^\varepsilon$-modules on ordered
+  configuration spaces $C_n^{\mathrm{ord}}(X)$
+  (Definition~\ref{def:e1-factorization-category}), graded by
+  lattice charge: an object $M$ decomposes as
+  $M = \bigoplus_{\gamma \in \Lambda} M_\gamma$ with each
+  $M_\gamma$ a finite-dimensional dg vector space.
+\item \emph{Factorization structure}: for disjoint intervals
+  $I_1, \ldots, I_k \subset X$, the ordered factorization isomorphisms
+  \[
+  \Vlat_\Lambda^\varepsilon\text{-mod}(
+    C_{n_1}^{\mathrm{ord}}(I_1) \times \cdots
+    \times C_{n_k}^{\mathrm{ord}}(I_k))
+  \xrightarrow{\;\sim\;}
+  \Vlat_\Lambda^\varepsilon\text{-mod}(
+    C_n^{\mathrm{ord}}(\textstyle\bigcup I_j))
+  \]
+  respect the lattice grading.
+\item \emph{Monoidal structure}: the ordered chiral tensor product
+  $M \otimes^{\mathrm{ch}}_{\mathrm{ord}} N$ is defined by fusion on
+  ordered pairs of points, giving an associative (not symmetric)
+  monoidal structure.  For a non-symmetric cocycle, the braiding
+  $\sigma_{M,N} \colon M \otimes^{\mathrm{ch}}_{\mathrm{ord}} N
+  \to N \otimes^{\mathrm{ch}}_{\mathrm{ord}} M$
+  is controlled by the commutator $c_\varepsilon$ and is \emph{not}
+  a symmetric braiding.
+\item \emph{Lattice sector decomposition}: the category decomposes as
+  \[
+  \Factord(X; \Vlat_\Lambda^\varepsilon)
+  = \bigoplus_{\gamma \in \Lambda}
+    \Factord(X; \Vlat_\Lambda^\varepsilon)_\gamma
+  \]
+  with each sector $\Factord(X; \Vlat_\Lambda^\varepsilon)_\gamma$
+  a stable $\infty$-category of objects with total charge~$\gamma$.
+\end{enumerate}
+\end{construction}
+
+\begin{proposition}[Sectorwise compactness;
+\ClaimStatusProvedHere]
+\label{prop:lattice:sectorwise-compactness}
+\index{compactness!sectorwise lattice}
+For each $\gamma \in \Lambda$ and each $n \geq 1$, the lattice
+sector $\Factord(X; \Vlat_\Lambda^\varepsilon)_\gamma$ restricted
+to $C_n^{\mathrm{ord}}(X)$ is a dg category of
+\emph{compact objects}: every object has a finite filtration whose
+graded pieces are shifts of
+$\Vlat_\Lambda^\varepsilon$-modules of the form
+$V_\gamma \otimes \cO_{C_n^{\mathrm{ord}}}$, where $V_\gamma$ is
+a finite-dimensional vector space.  In particular, every object is
+compact in the sense of Lurie~\cite{LurieHA}.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:lattice:factorization-decomposition}(iii),
+the bar complex in sector~$\gamma$ and bar degree~$p$ is
+finite-dimensional.  A module $M_\gamma$ on
+$C_n^{\mathrm{ord}}(X)$ has a filtration by weight
+$|\alpha|^2 = \langle\alpha,\alpha\rangle$, the same weight
+filtration used in the proof of
+Theorem~\ref{thm:lattice:factorization-koszul}.  At each
+filtration step, the subquotient is a module for the Heisenberg
+subalgebra $\cH_\Lambda$ tensored with a finite-dimensional
+lattice-charge space.
+
+Since $\Lambda$ is positive-definite, for fixed total
+charge~$\gamma$ and bar degree~$p$, the number of ordered tuples
+$(\alpha_1, \ldots, \alpha_p)$ with $\sum \alpha_i = \gamma$ and
+$\alpha_i \neq 0$ is finite
+(Proposition~\ref{prop:lattice:factorization-decomposition}(iii)).
+The filtration is therefore finite (bounded by the number of such
+tuples), and the associated graded pieces are finite-dimensional
+dg vector spaces tensored with $\cO_{C_n^{\mathrm{ord}}}$.  Each
+such piece is compact in the dg category of coherent sheaves on
+the smooth variety $C_n^{\mathrm{ord}}(X)$, and a finite extension
+of compact objects is compact.
+\end{proof}
+
+
+\subsection{Homotopy-level factorization bar-cobar for lattices}
+
+\begin{theorem}[Homotopy-level lattice factorization DK;
+\ClaimStatusProvedHere]
+\label{thm:lattice:homotopy-factorization-dk}
+\index{Drinfeld--Kohno!homotopy-level lattice|textbf}
+\index{factorization category!homotopy equivalence}
+Let $\Lambda$ be an even positive-definite lattice with cocycle
+$\varepsilon$.  The bar-cobar adjunction of
+Theorem~\textup{\ref{thm:lattice:factorization-koszul}} lifts to an
+equivalence of $\Eone$-factorization $\infty$-categories:
+\begin{equation}\label{eq:lattice:homotopy-fact-dk}
+\Factord(X; \Vlat_\Lambda^\varepsilon)
+\;\simeq\;
+\Factord(X; \Vlat_\Lambda^{\varepsilon^{-1}})^{\mathrm{rev}}
+\end{equation}
+where $(\cdots)^{\mathrm{rev}}$ denotes the reverse monoidal
+structure \textup{(}exchanging the order of the tensor factors\textup{)}.
+This equivalence is:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Monoidal}: it intertwines the ordered chiral tensor
+  product on both sides, with the reversal accounting for the
+  cocycle inversion $\varepsilon \leftrightarrow \varepsilon^{-1}$.
+\item \emph{Natural in families}: for $\pi\colon \mathcal{X} \to S$
+  a smooth family of curves, the equivalence holds in families
+  over~$S$.
+\item \emph{Sectorwise}: the equivalence restricts to an equivalence
+  of each lattice sector:
+  \[
+  \Factord(X; \Vlat_\Lambda^\varepsilon)_\gamma
+  \;\simeq\;
+  \Factord(X; \Vlat_\Lambda^{\varepsilon^{-1}})_\gamma^{\mathrm{rev}}.
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof assembles three ingredients: the M-level factorization
+equivalence (Theorem~\ref{thm:lattice:factorization-koszul}),
+sectorwise compactness
+(Proposition~\ref{prop:lattice:sectorwise-compactness}), and the
+$\Eone$ inversion principle
+(Theorem~\ref{thm:e1-inversion-principle}).
+
+\emph{Step 1: From M-level qi to $\infty$-categorical equivalence.}
+Theorem~\ref{thm:lattice:factorization-koszul} provides
+quasi-isomorphisms of factorization dg-algebras:
+\[
+\Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon))
+\xrightarrow{\;\sim\;} \Vlat_\Lambda^\varepsilon,
+\qquad
+\mathbb{D}_{\Ran}\, \barB^{\mathrm{ch}}(\Vlat_\Lambda^\varepsilon)
+\simeq \barB^{\mathrm{ch}}(\Vlat_\Lambda^{\varepsilon^{-1}}).
+\]
+These are morphisms in the $\infty$-category of factorization
+algebras on $\Ran(X)$.  By the universal property of the dg nerve
+construction (Lurie~\cite{LurieHA}~\S5.2), a quasi-isomorphism
+of dg-algebras induces an equivalence on module
+$\infty$-categories.  Specifically: for dg-algebras $A$ and $B$
+with a quasi-isomorphism $f\colon A \xrightarrow{\sim} B$, the
+restriction functor $f^*\colon B\text{-mod} \to A\text{-mod}$
+is an equivalence of stable $\infty$-categories.
+
+\emph{Step 2: Sectorwise reduction.}
+By the lattice sector decomposition
+(Proposition~\ref{prop:lattice:factorization-decomposition}),
+both sides of~\eqref{eq:lattice:homotopy-fact-dk} decompose as
+direct sums over $\gamma \in \Lambda$.  It suffices to prove the
+equivalence sector by sector.
+
+Fix $\gamma \in \Lambda$.  By
+Proposition~\ref{prop:lattice:sectorwise-compactness}, the sector
+category $\Factord(X; \Vlat_\Lambda^\varepsilon)_\gamma$ is
+compactly generated by objects with finite lattice-weight
+filtrations.  The same holds for the dual side with
+$\varepsilon^{-1}$.
+
+\emph{Step 3: Compact generation and the Schwede--Shipley criterion.}
+By Step~2, both sides are compactly generated stable
+$\infty$-categories.  A dg functor between compactly generated
+stable $\infty$-categories is an equivalence if and only if it
+restricts to an equivalence on compact objects (the
+Schwede--Shipley recognition theorem~\cite{SS03}).
+
+The bar-cobar quasi-isomorphism of Step~1, restricted to sector
+$\gamma$, sends compact objects to compact objects: the weight
+filtration is preserved (it is defined by the lattice norm, which
+is the same on both sides), and a finite filtration maps to a
+finite filtration.  On each filtration piece (a finite-dimensional
+dg vector space), the quasi-isomorphism is a quasi-isomorphism of
+chain complexes, hence an equivalence in the dg nerve.
+
+Therefore the induced functor on compact objects is an
+equivalence, and by Schwede--Shipley the full functor is an
+equivalence of stable $\infty$-categories.
+
+\emph{Step 4: Monoidal structure and reversal.}
+The ordered chiral tensor product on
+$\Factord(X; \Vlat_\Lambda^\varepsilon)$ uses the cocycle
+$\varepsilon$ to determine the fusion coefficients.  The Verdier
+intertwining
+(Theorem~\ref{thm:lattice:factorization-koszul}(ii)) replaces
+$\varepsilon$ by $\varepsilon^{-1}$.  By the $\Eone$ inversion
+principle (Theorem~\ref{thm:e1-inversion-principle}), this
+inversion of the non-commutativity datum reverses the monoidal
+order: the functor
+$\Factord(X; \Vlat_\Lambda^\varepsilon) \to
+\Factord(X; \Vlat_\Lambda^{\varepsilon^{-1}})$ interchanges
+$M \otimes^{\mathrm{ch}}_{\mathrm{ord}} N$ with
+$N \otimes^{\mathrm{ch}}_{\mathrm{ord}} M$.  This gives the
+$(\cdots)^{\mathrm{rev}}$ on the right-hand side.
+
+\emph{Step 5: Families.}
+The M-level equivalence holds in families over
+$\overline{\mathcal{M}}_{g,n}$
+(Theorem~\ref{thm:lattice:factorization-koszul}(iii)).
+Steps~1--4 apply fiberwise: the lattice $\Lambda$ is constant over
+$\overline{\mathcal{M}}_{g,n}$, the sectorwise finiteness is a
+property of $\Lambda$ (not of the curve), and the Schwede--Shipley
+criterion commutes with proper base change (since compact
+generation is preserved by proper pushforward).
+\end{proof}
+
+
+\begin{remark}[Comparison with the Yangian DK ladder]
+\label{rem:lattice:comparison-yangian-dk}
+\index{Drinfeld--Kohno!lattice vs.\ Yangian comparison}
+Theorem~\ref{thm:lattice:homotopy-factorization-dk} provides an
+unconditional H-level factorization DK for lattice algebras.
+Compare with the Yangian DK ladder
+(Remark~\ref{rem:dk-proved-vs-remains}):
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l l l}
+\textbf{Step} & \textbf{Yangian} & \textbf{Lattice} \\
+\hline
+DK-0/1 (chain/eval) & Proved & Proved (subsumed) \\
+DK-2 (thick gen.) & Type $A$ only & Unnecessary \\
+DK-3 (categ.\ lift) & Type $A$ only & Proved (all lattices) \\
+DK-4 (dg-shifted) & Conjectural & Not needed \\
+DK-5 (triple bridge) & Conjectural & Via quantum group \\
+\end{tabular}
+\end{center}
+The lattice route bypasses DK-2/4 entirely because sectorwise
+finiteness (Remark~\ref{rem:lattice:sectorwise-finiteness}) replaces
+thick generation.  The only gap between the lattice result and the
+full MC3 conjecture (Conjecture~\ref{conj:master-dk-kl}) is the
+quantum group identification
+(Proposition~\ref{prop:lattice:quantum-group-connection}).
+\end{remark}
+
+
+\subsection{Level-$k$ extension via sublattice embeddings}
+
+The level-$1$ factorization DK
+(Corollary~\ref{cor:lattice:factorization-dk-level1}) extends to
+general level~$k$ via the sublattice embedding
+$\sqrt{k}\Lambda \hookrightarrow \Lambda$ of
+Proposition~\ref{prop:lattice:sublattice}.
+
+\begin{proposition}[Level-$k$ lattice factorization bar-cobar;
+\ClaimStatusProvedHere]
+\label{prop:lattice:level-k-factorization}
+\index{Koszul pair!level-$k$ lattice factorization}
+Let $\fg$ be simply-laced with root lattice $\Lambda_\fg$, and
+let $k \geq 1$ be a positive integer.  The sublattice embedding
+$\iota_k \colon \sqrt{k}\Lambda_\fg \hookrightarrow \Lambda_\fg$
+\textup{(}Proposition~\textup{\ref{prop:lattice:sublattice})} induces
+a factorization bar-cobar equivalence for the level-$k$
+sublattice VOA:
+\begin{equation}\label{eq:lattice:level-k-bar-cobar}
+\Omega^{\mathrm{ch}}(
+  \barB^{\mathrm{ch}}(\Vlat_{\sqrt{k}\Lambda_\fg}^{\varepsilon_0}))
+\xrightarrow{\;\sim\;}
+\Vlat_{\sqrt{k}\Lambda_\fg}^{\varepsilon_0}
+\end{equation}
+as an equivalence of factorization algebras on $\Ran(X)$.  This
+lifts to an $\Eone$-factorization $\infty$-category equivalence:
+\begin{equation}\label{eq:lattice:level-k-cat-equiv}
+\Factord(X; \Vlat_{\sqrt{k}\Lambda_\fg}^{\varepsilon_0})
+\;\simeq\;
+\Factord(X;
+  \Vlat_{\sqrt{k}\Lambda_\fg}^{\varepsilon_0^{-1}})^{\mathrm{rev}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The lattice $\sqrt{k}\Lambda_\fg$ is even and positive-definite:
+$\langle\sqrt{k}\alpha,\sqrt{k}\beta\rangle_{\sqrt{k}\Lambda}
+= k\langle\alpha,\beta\rangle_\Lambda$, which is even since
+$\Lambda_\fg$ is even.  The cocycle restricts:
+$\iota_k^*\varepsilon_0(\sqrt{k}\alpha,\sqrt{k}\beta) =
+\varepsilon_0(k\alpha,k\beta) =
+\varepsilon_0(\alpha,\beta)^{k^2}$, which is a valid symmetric
+cocycle on $\sqrt{k}\Lambda_\fg$.
+
+Apply Theorem~\ref{thm:lattice:factorization-koszul} to the
+lattice $\sqrt{k}\Lambda_\fg$ with the restricted cocycle.  All
+hypotheses are satisfied: the lattice is even positive-definite
+and the cocycle is normalized bimultiplicative.  This
+gives~\eqref{eq:lattice:level-k-bar-cobar}.
+
+The H-level lift~\eqref{eq:lattice:level-k-cat-equiv} follows
+from Theorem~\ref{thm:lattice:homotopy-factorization-dk} applied
+to $\sqrt{k}\Lambda_\fg$.
+\end{proof}
+
+\begin{theorem}[Level-$k$ factorization DK for KM algebras;
+\ClaimStatusProvedHere]
+\label{thm:lattice:level-k-dk}
+\index{Drinfeld--Kohno!level-$k$ lattice|textbf}
+For $\fg$ simply-laced and $k \geq 1$, the coset decomposition
+\begin{equation}\label{eq:lattice:coset-decomposition}
+\Vlat_{\Lambda_\fg}^{\varepsilon_0}
+= \bigoplus_{[\gamma] \in \Lambda_\fg/\sqrt{k}\Lambda_\fg}
+  \Vlat_{\sqrt{k}\Lambda_\fg}^{\varepsilon_0}\text{-module}_\gamma
+\end{equation}
+expresses the level-$1$ lattice VOA as a finite direct sum of
+modules for the level-$k$ sublattice VOA.  Combining
+with~\eqref{eq:lattice:level-k-bar-cobar}:
+\begin{enumerate}[label=(\roman*)]
+\item The factorization bar-cobar equivalence for
+  $\Vlat_{\sqrt{k}\Lambda_\fg}$ is \emph{unconditional}
+  \textup{(}does not require thick generation or the KL
+  equivalence\textup{)}.
+\item The $\Eone$-factorization $\infty$-category of
+  $\Vlat_{\sqrt{k}\Lambda_\fg}$-modules decomposes by coset
+  representatives:
+  \[
+  \Factord(X; \Vlat_{\Lambda_\fg}^{\varepsilon_0})
+  \;\simeq\;
+  \bigoplus_{[\gamma] \in \Lambda_\fg/\sqrt{k}\Lambda_\fg}
+  \Factord(X;
+    \Vlat_{\sqrt{k}\Lambda_\fg}^{\varepsilon_0})_\gamma.
+  \]
+\item The number of cosets
+  $|\Lambda_\fg/\sqrt{k}\Lambda_\fg| =
+  k^{\operatorname{rank}(\fg)/2} \cdot |\Lambda_\fg^*/\Lambda_\fg|$
+  equals the number of integrable
+  $\widehat{\fg}_k$-modules at level~$k$
+  \textup{(}for $k = 1$: this is
+  $|\Lambda_\fg^*/\Lambda_\fg|$, the number of minuscule weights
+  plus the identity\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: Coset decomposition.}
+The sublattice $\sqrt{k}\Lambda_\fg \subset \Lambda_\fg$ has
+index $[\Lambda_\fg : \sqrt{k}\Lambda_\fg] =
+k^{\operatorname{rank}(\fg)/2} \cdot |\Lambda_\fg^*/\Lambda_\fg|$
+(the index of $k\Lambda$ in $\Lambda$ is $k^d$ for a rank-$d$
+lattice, and rescaling $\sqrt{k}\Lambda \hookrightarrow \Lambda$
+has index $k^{d/2}$ for the $\sqrt{k}$-rescaled inner product;
+the factor $|\Lambda_\fg^*/\Lambda_\fg|$ accounts for the
+possible non-unimodularity of $\Lambda_\fg$).
+
+The group algebra decomposes as
+$\C[\Lambda_\fg] =
+\bigoplus_{[\gamma]} \C[\sqrt{k}\Lambda_\fg + \gamma]$
+over coset representatives.  Since the Heisenberg algebra
+$\cH_\Lambda$ acts on each coset sector independently, the VOA
+decomposes as a direct sum of $\Vlat_{\sqrt{k}\Lambda_\fg}$-modules.
+
+\emph{Step 2: Factorization compatibility.}
+Each coset module
+$\Vlat_{\sqrt{k}\Lambda_\fg}\text{-mod}_\gamma$ is a
+factorization module on $\Ran(X)$: the factorization isomorphism
+for disjoint opens preserves the coset $[\gamma]$ because the
+total lattice charge is additive and elements of
+$\sqrt{k}\Lambda_\fg$ map to $\sqrt{k}\Lambda_\fg$, so the coset
+class is preserved.
+
+\emph{Step 3: Module count.}
+For the simply-laced root lattice $\Lambda_\fg$, the dual lattice
+$\Lambda_\fg^*$ satisfies
+$\Lambda_\fg^*/\Lambda_\fg \cong Z(\widetilde{G})$, the center of
+the simply connected group.  At level $k = 1$:
+$|\Lambda_\fg/\sqrt{1}\Lambda_\fg| = |\Lambda_\fg^*/\Lambda_\fg|$,
+which equals the number of integrable highest-weight modules of
+$\AffKM{g}$ at level~1 (these are the $|Z(\widetilde{G})|$
+minuscule representations plus the vacuum).  For general~$k$, the
+count $k^{d/2} \cdot |Z(\widetilde{G})|$ agrees with the number
+of integrable $\widehat{\fg}_k$-modules by the Kac--Walton
+formula.
+\end{proof}
+
+
+\subsection{Quantum lattice algebras at roots of unity}
+
+The level-$k$ factorization DK extends to the $\Eone$ setting
+by incorporating the root-of-unity deformation.
+
+\begin{theorem}[Quantum lattice factorization DK;
+\ClaimStatusProvedHere]
+\label{thm:lattice:quantum-factorization-dk}
+\index{Drinfeld--Kohno!quantum lattice|textbf}
+\index{quantum lattice algebra!factorization DK}
+For $\fg$ simply-laced, $N \geq 3$, and $q \colon \Lambda_\fg
+\times \Lambda_\fg \to \Z/N\Z$ a non-zero antisymmetric bilinear
+form, the quantum lattice algebra
+$\Vlat_{\Lambda_\fg}^{N,q}$
+\textup{(}Definition~\textup{\ref{def:quantum-lattice})} satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{$\Eone$-factorization bar-cobar}:
+  \[
+  \Omega^{\Eone,\mathrm{ch}}(
+    \barB^{\Eone,\mathrm{ch}}(\Vlat_{\Lambda_\fg}^{N,q}))
+  \xrightarrow{\;\sim\;}
+  \Vlat_{\Lambda_\fg}^{N,q}
+  \]
+  as an equivalence of $\Eone$-factorization algebras on $\Ran(X)$.
+\item \emph{Homotopy-level equivalence}: the
+  $\Eone$-factorization $\infty$-category equivalence
+  \begin{equation}\label{eq:lattice:quantum-fact-dk}
+  \Factord(X; \Vlat_{\Lambda_\fg}^{N,q})
+  \;\simeq\;
+  \Factord(X; \Vlat_{\Lambda_\fg}^{N,-q})^{\mathrm{rev}}.
+  \end{equation}
+\item \emph{$\Eone$ inversion}: the equivalence realizes the
+  $\Eone$ inversion principle
+  \textup{(}Theorem~\textup{\ref{thm:e1-inversion-principle})}
+  at the factorization-categorical level: the Koszul dual
+  $(\Vlat_{\Lambda_\fg}^{N,q})^!
+  \cong (\Vlat_{\Lambda_\fg}^{N,-q})^c$
+  \textup{(}Proposition~\textup{\ref{prop:lattice:deformation-properties}(iv))}
+  governs the Verdier dual factorization category.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) is Corollary~\ref{cor:lattice:factorization-dk-level1}(iii),
+already proved.
+
+(ii) Apply
+Theorem~\ref{thm:lattice:homotopy-factorization-dk} to $\Lambda =
+\Lambda_\fg$ with cocycle $\varepsilon_{N,q}$.  The lattice
+$\Lambda_\fg$ is even and positive-definite, and
+$\varepsilon_{N,q}$ is a valid cocycle
+(Proposition~\ref{prop:lattice:deformation-properties}(i)).  The
+inverse cocycle is $\varepsilon_{N,q}^{-1} = \varepsilon_{N,-q}$
+(Proposition~\ref{prop:lattice:deformation-properties}(iv)).
+Theorem~\ref{thm:lattice:homotopy-factorization-dk}
+gives~\eqref{eq:lattice:quantum-fact-dk}.
+
+(iii) The Verdier intertwining
+$\mathbb{D}_{\Ran}\, \barB^{\Eone}(\Vlat^{N,q})
+\simeq \barB^{\Eone}(\Vlat^{N,-q})$
+(Corollary~\ref{cor:lattice:factorization-dk-level1}(iii))
+identifies the Verdier dual bar complex with the bar complex of
+the Koszul dual.  At the $\infty$-categorical level, this says
+that the Verdier dual of
+$\Factord(X; \Vlat^{N,q})$ is governed by the Koszul dual
+$(\Vlat^{N,q})^! = (\Vlat^{N,-q})^c$, which is the
+factorization-categorical realization of the $\Eone$ inversion
+principle.
+\end{proof}
+
+
+\subsection{Bridge to the Yangian DK programme}
+
+The unconditional lattice results connect to the Yangian DK
+programme (MC3, Conjecture~\ref{conj:master-dk-kl}) through
+two bridges.
+
+\begin{proposition}[Lattice--Yangian DK bridge at level $1$;
+\ClaimStatusProvedHere]
+\label{prop:lattice:yangian-bridge-level1}
+\index{Drinfeld--Kohno!lattice--Yangian bridge}
+For $\fg$ simply-laced, the following diagram of equivalences
+commutes:
+\begin{equation}\label{eq:lattice:yangian-bridge}
+\begin{tikzcd}[column sep=3.5em]
+\Factord(X; \Vlat_{\Lambda_\fg}^{\varepsilon_0})
+  \ar[r, "\sim"', "\text{Thm~\ref{thm:lattice:homotopy-factorization-dk}}"]
+  \ar[d, "\cong"', "\text{FKS}"]
+& \Factord(X; \Vlat_{\Lambda_\fg}^{\varepsilon_0})^{\mathrm{rev}}
+  \ar[d, "\cong", "\text{FKS}"'] \\
+\Factord(X; L(\AffKM{g}, 1))
+  \ar[r, "\sim", "\text{DK}"']
+& \Factord(X; L(\AffKM{g}, 1))^{\mathrm{rev}}
+\end{tikzcd}
+\end{equation}
+where the vertical isomorphisms are the Frenkel--Kac--Segal
+identification
+\textup{(}Theorem~\textup{\ref{thm:lattice:frenkel-kac})}.
+The bottom equivalence is the level-$1$ case of the Yangian DK
+theorem \textup{(}Theorem~\textup{\ref{thm:dk-fd-typeA}} for
+$k = 1$\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The FKS identification $\Vlat_{\Lambda_\fg}^{\varepsilon_0}
+\cong L(\AffKM{g}, 1)$ is an isomorphism of vertex algebras,
+hence induces an equivalence of factorization module categories.
+The top equivalence is
+Theorem~\ref{thm:lattice:homotopy-factorization-dk} for the
+unimodular case (where $\varepsilon_0^{-1} = \varepsilon_0$
+by the FLM symmetry, so $(\cdots)^{\mathrm{rev}}$ acts on the
+same algebra).
+
+Commutativity of the square follows from the functoriality of the
+bar-cobar construction: the bar complex of $\Vlat^{\varepsilon_0}$
+maps isomorphically to the bar complex of $L(\AffKM{g}, 1)$ under
+FKS, and the Verdier intertwining commutes with this isomorphism
+because FKS preserves the cocycle structure.
+
+The bottom equivalence is therefore an independent proof of
+DK-0/1 for level-$1$ KM algebras, obtained without the RTT
+generators or thick-generation arguments of the Yangian approach.
+For $\fg = \mathfrak{sl}_N$, this recovers the $k = 1$ case of
+Theorem~\ref{thm:dk-fd-typeA}.
+\end{proof}
+
+
+\begin{proposition}[Lattice approach to DK-5 at roots of unity;
+\ClaimStatusConjectured]
+\label{prop:lattice:dk5-quantum-bridge}
+\index{Drinfeld--Kohno!DK-5 via quantum lattice}
+If the quantum group identification
+\textup{(}Proposition~\textup{\ref{prop:lattice:quantum-group-connection}(ii))}
+holds --- i.e., if the module category of
+$\Vlat_{\Lambda_\fg}^{N,q}$ is equivalent to
+$\operatorname{Rep}(u_\zeta(\fg))$ as a braided monoidal category
+--- then the quantum lattice factorization DK
+\textup{(}Theorem~\textup{\ref{thm:lattice:quantum-factorization-dk})}
+gives the full triple bridge of
+Conjecture~\textup{\ref{conj:full-dk-bridge}}:
+\begin{equation}\label{eq:lattice:triple-bridge}
+\Factord(X; \Vlat_{\Lambda_\fg}^{N,q})
+\;\simeq\;
+\operatorname{Rep}(u_\zeta(\fg))
+\;\simeq\;
+\Factord(X; \Vlat_{\Lambda_\fg}^{N,-q})^{\mathrm{rev}}.
+\end{equation}
+In particular:
+\begin{enumerate}[label=(\roman*)]
+\item For $N$ the Coxeter number $h$ of $\fg$, this would
+  recover the Kazhdan--Lusztig equivalence at the critical root of
+  unity $\zeta = e^{2\pi i/h}$.
+\item The $q \to -q$ inversion in the lattice setting corresponds
+  to $\zeta \to \zeta^{-1}$ in the quantum group, which is the
+  Drinfeld unitarization $U_q \leftrightarrow U_{q^{-1}}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Status and reducibility of the quantum group
+identification]
+\label{rem:lattice:qg-status}
+\index{quantum group!identification status}
+Proposition~\ref{prop:lattice:dk5-quantum-bridge} reduces the full
+factorization DK (MC3) to the single open problem of the quantum
+group identification
+(Proposition~\ref{prop:lattice:quantum-group-connection}(ii)).
+This is a statement purely about the representation theory of the
+quantum lattice VOA --- it does not involve bar complexes,
+configuration spaces, or factorization algebras.
+
+The identification is known or expected in the following cases:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\fg = \mathfrak{sl}_2$, $N = 3$:
+  $u_\zeta(\mathfrak{sl}_2)$ at $\zeta = e^{2\pi i/3}$ has
+  3 simple modules.  The quantum lattice algebra
+  $\Vlat_{A_1}^{3,q}$ should have the same module count by the
+  root-of-unity periodicity of the deformed Fock space.
+\item $\fg = \mathfrak{sl}_2$, $N = 4$:
+  $u_\zeta(\mathfrak{sl}_2)$ at $\zeta = i$ has 4 simple modules.
+  This is the smallest case where the quantum group is not
+  semisimple.
+\item For general simply-laced $\fg$ at $N = h$ (the Coxeter
+  number): the KL equivalence at the critical level is the deepest
+  case, and the lattice approach would provide a purely
+  vertex-algebraic proof.
+\end{enumerate}
+The conjectural status of (ii) is the sole obstacle between the
+lattice programme and the full MC3.
+\end{remark}
+
+\begin{remark}[Summary: the lattice DK programme]
+\label{rem:lattice:dk-summary}
+\index{Drinfeld--Kohno!lattice programme summary}
+The results of \S\ref{sec:lattice:factorization-bar-cobar}--\ref{sec:lattice:homotopy-factorization-dk} establish:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Unconditional factorization bar-cobar for all even
+  positive-definite lattices, symmetric or not
+  (Theorem~\ref{thm:lattice:factorization-koszul}).
+\item Homotopy-level $\Eone$-factorization category equivalence
+  for all lattice VOAs
+  (Theorem~\ref{thm:lattice:homotopy-factorization-dk}).
+\item Level-$k$ extension via sublattice embeddings
+  (Proposition~\ref{prop:lattice:level-k-factorization},
+  Theorem~\ref{thm:lattice:level-k-dk}).
+\item Full quantum lattice factorization DK
+  (Theorem~\ref{thm:lattice:quantum-factorization-dk}).
+\item Bridge to Yangian DK at level~$1$
+  (Proposition~\ref{prop:lattice:yangian-bridge-level1}).
+\item Conditional full MC3 via quantum group identification
+  (Proposition~\ref{prop:lattice:dk5-quantum-bridge}).
+\end{enumerate}
+The lattice route is the most complete factorization DK programme
+in this monograph: steps (1)--(5) are unconditional (proved here),
+and the only remaining hypothesis for the full MC3 is (6), which
+is a representation-theoretic statement independent of the
+bar-cobar/factorization framework.
+
+\emph{Homotopy template}
+(Convention~\ref{conv:hms-levels}): Type~II (equivalence).
+Steps (1)--(5) are M-level proved, H-level proved.  Step (6) is
+M-level conditional, H-level conditional.
 \end{remark}

@@ -1,69 +1,14 @@
 \chapter{Explicit genus expansions}\label{ch:genus-expansions}
-
-This chapter is not a table catalog.  It asks a structural question:
-how do genus expansions interlock with inversion, complementarity, and
-PBW concentration across the main families once the Heisenberg frame is
-fixed?  The formulas computed in
-Chapter~\ref{ch:heisenberg-frame} are propagated here to affine
-Kac--Moody, Virasoro, and $\mathcal{W}_3$, and each propagation step is
-recorded as theorematic transport rather than as isolated numerics.
-
-The governing question is therefore to verify one common transport chain
-across families, rather than present disconnected genus tables.
-
-\begin{remark}[Status legend]
 \label{rem:genus-exp-status}
-The genus expansions in this chapter are organized by proof tier:
-\begin{description}
-\item[T1.] \emph{Unconditional at all genera}: Heisenberg
-  (\S\ref{subsec:heisenberg-all-genera}), free fields,
-  lattice VOAs --- computed directly via genus universality.
-\item[T1$\frac{1}{2}$.] \emph{Unconditional at all genera}:
-  $\widehat{\mathfrak{sl}}_2$
-  (\S\ref{sec:three-theorems-sl2}), all affine Kac--Moody
-  $\widehat{\fg}_k$ at generic level, and Virasoro
-  (\S\ref{sec:virasoro-all-genera}) ---
-  by Theorem~\ref{thm:pbw-allgenera-km}, the PBW spectral
-  sequence has concentrated $E_\infty$ page unconditionally at all genera for
-  Kac--Moody, and by Theorem~\ref{thm:pbw-allgenera-virasoro}
-  it has concentrated $E_\infty$ page unconditionally for Virasoro.
-  The genus-$1$ mechanism (Theorem~\ref{thm:pbw-genus1-km})
-  serves as the base case.
-\item[T2.] \emph{Unconditional higher-spin finite type}:
-  principal finite-type $\mathcal{W}$-algebras
-  (\S\ref{sec:w-algebra-genera}) ---
-  unconditional at all genera by
-  Theorem~\ref{thm:pbw-allgenera-principal-w}.
-  The first nontrivial higher-spin case is $\mathcal{W}_3$.
-\item[Horizon.] Index-theoretic conjectures are downstream
-  of the conjectural H-level completion of the modular characteristic
-  hierarchy (Conjecture~\ref{conj:master-theta}).
-\end{description}
-\end{remark}
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
 \label{rem:genus-exp-hms}
-This chapter operates at \textbf{S-level}: explicit genus expansion
-tables, generating functions, and tautological intersection numbers
-for $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\mathcal{W}_3$.
-These are extracted from \textbf{M-level} models (bar complexes at
-higher genus, PBW spectral sequences, Mumford class pairings).
-H-level input enters only through the genus universality theorem.
-\end{remark}
-
-\begin{remark}[Interlock route]
 \label{rem:genus-exp-route}
-Each family is presented through the same theorematic chain:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item identify \(\kappa(\cA)\) and the relevant PBW concentration input;
-\item propagate to \(F_g(\cA)\) by genus universality;
-\item compare with complementarity and discriminant data to verify
-  compatibility with the proved scalar/spectral characteristic
-  hierarchy.
-\end{enumerate}
-The chapter should be read as a synchronized verification of this
-three-step chain across families, not as independent tables.
-\end{remark}
+
+The genus universality theorem
+(Theorem~\ref{thm:genus-universality}) expresses the genus-$g$
+obstruction as $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$.
+The scalar $\kappa(\cA)$ and the resulting genus expansions are now
+computed for each family: Heisenberg, affine Kac--Moody, Virasoro,
+and $\mathcal{W}_3$.
 
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
@@ -1722,6 +1667,7 @@ The Virasoro algebra provides the second key showcase for the three main theorem
 \subsection{Setup}\label{subsec:vir-genus-setup}
 
 Recall from the Master Table (Table~\ref{tab:master-invariants}) and the genus-1 pipeline (\S\ref{sec:virasoro-genus-one-pipeline}):
+
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{lllll}
@@ -1732,12 +1678,42 @@ $\mathrm{Vir}_c$ & $\mathrm{Vir}_{26-c}$\textsuperscript{$\dagger$} & $c$ & $26$
 \bottomrule
 \end{tabular}
 \end{center}
-The Feigin--Frenkel involution acts as $c \mapsto 26 - c$, with fixed point $c = 13$.  The obstruction coefficient $\kappa = c/2$ is half the central charge, arising from the quartic pole $T_{(3)}T = c/2$ in the Virasoro OPE (Theorem~\ref{thm:vir-genus1-curvature}).
+The Feigin--Frenkel involution acts as $c \mapsto 26 - c$, with fixed
+point $c = 13$.  The obstruction coefficient $\kappa = c/2$ is half
+the central charge, arising from the quartic pole $T_{(3)}T = c/2$ in
+the Virasoro OPE (Theorem~\ref{thm:vir-genus1-curvature}).
+
 \textsuperscript{$\dagger$}Here and throughout this Virasoro section,
-$\mathrm{Vir}_{26-c}$ denotes the proved same-family partner governing the
-current M/S-level complementarity and semi-infinite calculations.  The
-stronger H-level infinite-generator realization remains on the MC4
-frontier.
+$\mathrm{Vir}_{26-c}$ denotes the proved same-family partner governing
+the current M/S-level complementarity and semi-infinite calculations.
+The stronger H-level infinite-generator realization is delegated to the
+exact $W_\infty$ MC4 package of filtered H-level targets, residue
+identities
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$,
+and finite detection on $\mathcal{I}_N$.
+
+On the present theorem surface, the first live higher-spin stages are
+already compressed to the stage-$3$ fifteen-coefficient packet and the
+stage-$4$ six-coefficient packet, organized as three explicit local OPE
+blocks.  Among those six, the only genuinely mixed higher-spin data are
+the three coefficients in the mixed $(3,4)$ block.  Within that mixed
+block, the $W^{(3)}$ target channel is swap-even and the
+$W^{(2)}$, $W^{(4)}$ target channels are swap-odd under reversing the
+mixed OPE.  On the principal Drinfeld--Sokolov side, the mixed
+$W^{(2)}$ target vanishes, while the principal
+$W^{(4)}$-$W^{(4)}\to T$ coefficient is fixed to `2'.  The live
+stage-$4$ comparison is therefore four free coefficient channels
+\[
+c_{334},\qquad c_{444},\qquad
+\mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
+\]
+together with the residue-side checks
+\[
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+\]
 
 \subsection{\texorpdfstring{Genus-$g$ free energy}{Genus-g free energy}}\label{subsec:vir-free-energy}
 
@@ -1813,7 +1789,7 @@ The genus-0 curvature trichotomy extends to all genera
 (cf.\ Computation~\ref{comp:virasoro-curvature}):
 \begin{enumerate}
 \item \emph{$c = 0$ (uncurved).} $F_g = 0$ for all $g \geq 1$.  The bar complex $\bar{B}(\mathrm{Vir}_0)$ is a genuine cochain complex ($\dfib^{\,2} = 0$ since $\kappa = 0$) at every genus, and the same-family involution fixes $\mathrm{Vir}_0$.  No quantum corrections arise.
-\item \emph{$c$ generic.} $F_g = (c/2) \cdot \lambda_g^{\mathrm{FP}} \neq 0$ for all $g \geq 1$.  The bar complex is curved, and the curved $A_\infty$ structure is nontrivial at every genus.  The Feigin--Frenkel involution selects the different Virasoro algebra $\mathrm{Vir}_{26-c}$ as the current M/S-level shadow partner controlling complementarity and semi-infinite calculations, while the stronger H-level infinite-generator realization remains open.  The complementarity sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.
+\item \emph{$c$ generic.} $F_g = (c/2) \cdot \lambda_g^{\mathrm{FP}} \neq 0$ for all $g \geq 1$.  The bar complex is curved, and the curved $A_\infty$ structure is nontrivial at every genus.  The Feigin--Frenkel involution selects the different Virasoro algebra $\mathrm{Vir}_{26-c}$ as the current M/S-level shadow partner controlling complementarity and semi-infinite calculations, while the stronger H-level infinite-generator realization is delegated to the exact $W_\infty$ MC4 package of filtered H-level targets, residue identities, and finite detection on $\mathcal{I}_N$, whose first live higher-spin stages are already reduced on the theorem surface to the stage-$3$ fifteen-coefficient packet and the stage-$4$ six-coefficient packet organized as three explicit local OPE blocks.  The complementarity sum is $13 \cdot \lambda_g^{\mathrm{FP}}$.
 \item \emph{$c = 26$ (maximal curvature for the uncurved partner).} $F_g(\mathrm{Vir}_{26}) = 13 \cdot \lambda_g^{\mathrm{FP}}$ for all~$g$.  The same-family partner $\mathrm{Vir}_0$ is uncurved, so $\mathrm{Vir}_{26}$ carries the entire complementarity budget.  This is the unique central charge at which the current shadow partner is uncurved.
 \end{enumerate}
 The generating function:
@@ -2267,7 +2243,17 @@ $V_{E_8}$ lattice
 \noindent\textsuperscript{$\dagger$}In Table~\ref{tab:genus-expansion-master},
 the Virasoro entry records the proved same-family shadow partner used by
 the current genus and semi-infinite calculations.  The stronger H-level
-infinite-generator realization remains on the MC4 frontier.
+infinite-generator realization is delegated to the exact $W_\infty$
+MC4 package of filtered H-level targets, residue identities, and finite
+detection on $\mathcal{I}_N$, whose first live higher-spin stages are
+already reduced on the theorem surface to the stage-$3$
+fifteen-coefficient packet and the exact stage-$4$ endpoint given by
+the four channels
+$c_{334}$, $c_{444}$,
+$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
+residue-side checks
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
 
 \begin{table}[ht]
 \centering
