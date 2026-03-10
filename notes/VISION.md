@@ -6,10 +6,39 @@
 ## The thesis in one sentence
 
 Classical Koszul duality (bar-cobar adjunction) lifts to a proved
-modular Koszul core for factorization algebras on curves, and points
-toward a modular homotopy theory programme in which genus becomes a
-deformation variable internal to the duality itself and is expected to
-be organized by a universal Maurer-Cartan class `Theta_A`.
+modular Koszul core for factorization algebras on curves, and must be
+completed into the definitive dimension-one modular homotopy theory in
+which genus becomes a deformation variable internal to the duality
+itself and is expected to be organized by a universal Maurer-Cartan
+class `Theta_A`.
+
+**Dual Imperative.** The work is governed by maximalist ambition
+(always push for the most powerful, general theorems — the shape of
+what the book wants to become is a research signal) and maximal
+truth-seeking (every claim processed with equal rigor, precise
+knowledge of what is proved enabling credible frontier advancement).
+These are synergistic: honest status discipline is what makes the
+ambition credible.
+
+## Definitive dimension-one mandate
+
+This project is not meant to stop at a proved core plus horizon prose.
+The book is being built as the definitive treatise of modular homotopy
+theory for factorization algebras on curves in dimension one.
+
+Accordingly, the missing modular-operadic and homotopy-theoretic
+foundations are load-bearing build targets, not optional epilogue
+material:
+
+- modular operads of stable curves as the organization of the genus tower
+- curved factorization algebras on `Ran(X)` and the coderived/contraderived ambient
+- H-level bar-cobar adjunction and Verdier compatibility over `\overline{M}_{g,n}`
+- the cyclic deformation complex `Def_cyc(A)` and the universal class `Theta_A`
+- shifted-symplectic / Lagrangian complementarity as constitutive structure
+
+Status discipline is unchanged: until these are proved, they remain
+frontier targets. But future sessions should treat them as the subject
+to be built, not as optional background machinery.
 
 ## Four irreducible pieces (the minimal kernel)
 
@@ -56,7 +85,12 @@ The active route is not flat:
    package, and the one-channel genus-by-genus normalization problem in
    the simple-Lie case;
 3. MC3 and MC4 are the structural comparison layer after the standard
-   M-level completions for `W_\infty` and Yangian towers;
+   M-level completions for `W_\infty` and Yangian towers; the active
+   MC4 ledger is now exact:
+   build the filtered H-level targets, prove
+   `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)` and
+   `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)`, and close the
+   corresponding finite-detection packages;
 4. MC5 is downstream physics completion;
 5. periodicity is a weak orthogonal flank, not the master-conjecture
    chain.
@@ -67,7 +101,7 @@ The active route is not flat:
 |-------|-----------|--------|------------|
 | A_mod | Bar-cobar intertwined with Verdier, functorial over M_{g,n} | PROVED (genus 0+g) | Theorems A, B |
 | B_mod | Inversion on Koszul locus; coderived persistence off it | PROVED + conjectured | Thm B + concordance |
-| C_mod | (-1)-shifted symplectic complementarity (Lagrangian) | Conjectured | conj:lagrangian-complementarity |
+| C_mod | (-1)-shifted symplectic complementarity (Lagrangian) | PROVED | thm:shifted-symplectic-complementarity / conj:lagrangian-complementarity |
 | Index | GRR: genus series = kappa(A) * (A-hat(ix) - 1) | Conjectured | conj:family-index |
 | DK | Derived Drinfeld-Kohno: Fact_E1(Y(g)) ~ Fact_E1(U_q(g))^op | Conjectured | conj:derived-drinfeld-kohno |
 
@@ -103,14 +137,15 @@ toroidal/elliptic extension (toroidal_elliptic.tex).
 | VIII (Open math) | Structural conjectures about the hierarchy itself |
 | IX (Computation) | Explicit data testing scalar/spectral laws and the MC2 frontier |
 
-## Next volume skeleton (from raeeznotes XII)
+## Definitive dimension-one skeleton
 
 "Modular Homotopy Theory for Factorization Algebras on Curves":
-1. Curved factorization algebras and coderived Ran categories
-2. Cyclic deformation complexes and the universal modular MC equation
-3. Shifted symplectic complementarity (PTVV theorem on M-bar_g)
-4. Grothendieck-Riemann-Roch for modular Koszul duality
-5. Derived Drinfeld-Kohno and elliptic extension (Arnold -> Fay)
+1. Modular operads of stable curves in dimension one
+2. Curved factorization algebras and coderived Ran categories
+3. Cyclic deformation complexes and the universal modular MC equation
+4. Shifted symplectic complementarity (PTVV theorem on M-bar_g)
+5. Grothendieck-Riemann-Roch for modular Koszul duality
+6. Derived Drinfeld-Kohno and elliptic extension (Arnold -> Fay)
 
 ## Gaps between raeeznotes vision and current manuscript — ALL ADDRESSED
 

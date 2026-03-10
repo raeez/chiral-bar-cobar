@@ -31,13 +31,13 @@ vantage points.
 
 When working in this repo, consult these in order:
 
-1. [notes/GPT54_CODEX_OPERATING_SYSTEM.md](/Users/raeez/chiral-bar-cobar/notes/GPT54_CODEX_OPERATING_SYSTEM.md)
-2. [notes/VISION.md](/Users/raeez/chiral-bar-cobar/notes/VISION.md)
-3. [notes/REWRITE_QUEUE.md](/Users/raeez/chiral-bar-cobar/notes/REWRITE_QUEUE.md)
-4. [chapters/theory/introduction.tex](/Users/raeez/chiral-bar-cobar/chapters/theory/introduction.tex)
-5. [chapters/connections/concordance.tex](/Users/raeez/chiral-bar-cobar/chapters/connections/concordance.tex)
-6. [main.tex](/Users/raeez/chiral-bar-cobar/main.tex)
-7. [CLAUDE.md](/Users/raeez/chiral-bar-cobar/CLAUDE.md)
+1. [CLAUDE.md](/Users/raeez/chiral-bar-cobar/CLAUDE.md) (conventions, invariants, file map)
+2. [chapters/connections/concordance.tex](/Users/raeez/chiral-bar-cobar/chapters/connections/concordance.tex) (constitution)
+3. [chapters/theory/introduction.tex](/Users/raeez/chiral-bar-cobar/chapters/theory/introduction.tex) (front door)
+4. [notes/SESSION_PROMPT_v23.md](/Users/raeez/chiral-bar-cobar/notes/SESSION_PROMPT_v23.md) (execution prompt)
+5. [notes/autonomous_state.md](/Users/raeez/chiral-bar-cobar/notes/autonomous_state.md) (session state)
+6. [notes/VISION.md](/Users/raeez/chiral-bar-cobar/notes/VISION.md) (north star)
+7. [notes/PROGRAMMES.md](/Users/raeez/chiral-bar-cobar/notes/PROGRAMMES.md) (research programmes)
 
 If two documents disagree, prefer the more recent rewrite doctrine over
 older session prompts or legacy agent notes.
@@ -59,6 +59,24 @@ Every substantial edit must preserve these distinctions:
 - Status tags:
   every important claim should read as proved, conditional,
   conjectural, or programme.
+
+## The Dual Imperative
+
+Two principles govern all work. They are synergistic.
+
+- **Maximalist ambition**: Always push for the most powerful, most
+  general theorems. The book yearns toward the shape of theorems
+  implied but not yet inked. That yearning is a research signal.
+  The target is foundational work, not a survey.
+- **Maximal truth-seeking**: Every claim — in TeX, compute scripts,
+  review notes, session prompts — is processed with equal rigor.
+  Know exactly what is proved, at what level, with what hypotheses.
+  This is not conservatism; it is what makes the ambition credible.
+
+The synthesis: precise knowledge of what is proved enables credible
+pursuit of the most powerful theorems. Frontier overreach guardrails
+exist not to be conservative but to be honest — so the frontier can
+be pushed credibly further.
 
 ## Chriss-Ginzburg Rewrite Rules
 
@@ -149,6 +167,12 @@ Route each task to the right surface before editing.
    use when theorem-level claims depend on explicit evidence,
    diagnostics, or test scaffolding. Keep compute outputs at M/S-level
    unless a theorem already promotes them.
+6. Implied-theorem task:
+   use when a structural pattern across proved cases suggests a theorem
+   that has not been stated. The book's yearning — theorems implied but
+   not yet inked — is a research signal. State the implied theorem as a
+   precise conjecture with exact hypotheses. Verify computationally in
+   known cases. Prove or mark as conjectural with honest scope remarks.
 
 ### Current Routing Facts
 
@@ -158,8 +182,10 @@ These are the non-negotiable current facts inherited from the
 - MC1 is resolved for the standard finite-type interacting families:
   affine Kac-Moody, Virasoro, and principal finite-type `W_N`.
 - Principal finite-type `W_N` belongs in the proved core.
-- `W_infty`, Yangian towers, and non-principal orbit duality do not
-  belong to that resolved finite-type PBW story.
+- `W_infty` and Yangian towers do not belong to that resolved
+  finite-type PBW story, and the distinct non-principal orbit frontier
+  now decomposes into three exact packets: dual-orbit input,
+  orbit-indexed level shift, and paired DS seed transport/globalization.
 - The principal open foundational target is MC2: cyclic deformation
   theory and the universal `Theta_A`.
 - Periodicity remains the weakest status flank and must be stated with
@@ -262,10 +288,15 @@ The active frontier wave is post-MC1 synchronization:
 - propagate the resolved higher-genus PBW theorem state through control
   notes and frontier ledgers;
 - keep principal finite-type `W_N` in the proved core;
-- push the next `W` work onto the filtered H-level comparison /
-  realization packages for `W_\infty` / Yangian towers, with the
-  theorematic completed M-level principal-stage package treated as
-  already in hand, and onto non-principal orbit duality.
+- push the next `W` work onto the exact MC4 package for
+  `W_\infty` / Yangian towers:
+  build the filtered H-level targets, prove the named identities
+  `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)` and
+  `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)`, close the finite-detection
+  packages `\mathcal{I}_N` and `\Delta_{a,0}(N)`, and keep the distinct
+  non-principal orbit frontier separate as its own three exact packets:
+  dual-orbit input, orbit-indexed level shift, and paired DS seed
+  transport/globalization.
 
 The control layer is stable; the task now is to keep the repo's
 scaffolding and frontier artefacts aligned with that stability.

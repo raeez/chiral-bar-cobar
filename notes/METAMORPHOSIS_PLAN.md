@@ -193,11 +193,15 @@ The reader begins with a classical observation — Poincaré duality exchanges h
 #### B8. w_algebras_framework.tex + w_algebras_deep.tex
 **Stays**: All 21 PH claims across both files
 **New content (Programme VIII)**:
-- New section in w_algebras_framework.tex "§W-algebras for general nilpotent orbits" (15pp):
+- New section in w_algebras_framework.tex "§W-algebras for general nilpotent data and the orbit-indexed frontier" (15pp):
   - The orbit-dependent DS reduction: W^k(g, e) for nilpotent e ∈ g
   - The duality conjecture: W^k(g, e)! ≅ W^{k'}(g∨, e∨) where e∨ is the Barbasch–Vogan dual
-  - The subregular case: write in detail, including the subregular W-algebra for sl_3
-  - Partial results toward the conjecture: principal case proved (our existing thm), subregular case partial
+  - The frontier decomposition: dual-orbit input, orbit-indexed level
+    shift, and paired DS seed transport/globalization
+  - The subregular control case: write in detail, including the
+    Bershadsky--Polyakov/sl_3 self-dual seed package
+  - The first genuinely non-self-dual test: the sl_4 hook pair
+    `(3,1) \leftrightarrow (2,1,1)`
 - New section in w_algebras_deep.tex "§W∞ and the large-N limit" (10pp):
   - W_{1+∞} as colimit of W_N
   - Bar-cobar for the colimit: define B̄(W_{1+∞}) as inverse limit
@@ -265,7 +269,7 @@ The reader begins with a classical observation — Poincaré duality exchanges h
 - §2: Literature concordance (keep, but transform tables into flowing synthesis)
 - §3: The nine programmes (fully expanded):
   - Each programme: precise mathematical formulation, proved ingredients, specific gap, research roadmap
-  - Cross-programme connections: how Programme I (Langlands) connects to Programme II (KL) via the critical → admissible deformation; how Programme V (Vassiliev) connects to Programme IV (E_n) via specialization to n=1
+  - Cross-programme connections: how Programme I (Langlands) connects to Programme II (KL) via the critical → admissible deformation; how Programme V (Vassiliev) connects to Programme IV (E_n) via the genuine topological ladder beginning with the `n=2` surface shadow of the curve-level bar complex
   - The unifying vision: modular Koszul duality for factorization algebras
 - §4: CS as Koszul duality (Programme VI-d):
   - The identification CS(M³, G) = ∫_M B̄(ĝ_k) as factorization homology

@@ -15,7 +15,11 @@ our gap to close.
 with explicit inputs, outputs, and verification criteria. This prevents scope creep
 (the main failure mode) while enabling deep vertical strikes (the main strength).
 
-**Last updated**: Session ~126 (Mar 8, 2026)
+**Dual Imperative**: Every tool below serves the most powerful theorem it can
+reach. The discipline of specifying exact inputs, outputs, and verification
+criteria is not conservatism — it is what makes ambitious targets credible.
+
+**Last updated**: Session ~126 (Mar 9, 2026)
 
 ---
 
@@ -28,11 +32,11 @@ to the larger modular homotopy-theory programme.
 1. **Resolved entry theorem already in hand**:
    MC1 is no longer the live bottleneck for the standard finite-type
    interacting families.
-2. **Foundational machinery first**:
-   build the three remaining MC2 packages named by the theorem
-   surface: the intrinsic cyclic `\Defcyc(\cA)` model, the geometric
-   completed tensor / clutching package, and the one-channel
-   genus-by-genus normalization problem in the simple-Lie case.
+2. **MC2 machinery complete**:
+   All three MC2 packages are now resolved (`thm:mc2-full-resolution`):
+   the intrinsic cyclic `\Defcyc(\cA)` model, the geometric
+   completed tensor / clutching package, and the tautological-line
+   support. The universal MC element `Theta_A` exists.
 3. **Structural comparison machinery next**:
    then attack MC3 and MC4, especially the H-level comparison problems
    that remain after the standard M-level completions for
@@ -46,6 +50,14 @@ the periodicity flank remains weak.  Treat periodicity machinery as
 containment and clarification work unless it is directly supporting a
 proved structural statement such as the lcm/profile shadow or quantum
 periodicity input.
+
+Entry-surface warning:
+keep the double entry frame explicit while using this catalogue.
+Heisenberg remains the primary commutative/modular atom.  The Yangian
+evaluation-locus Drinfeld-Kohno square is the secondary
+braided/factorization atom.  Machinery that goes beyond the evaluation
+locus must say so exactly; do not let category-`O` or dg-shifted
+targets leak backward into the evaluation-locus theorem.
 
 ---
 
@@ -93,9 +105,19 @@ unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
   (`compute/scripts/profile_genus1_pbw_sl2_scaling.py`) and records the runtime
   envelope through `n=6`; Casimir eigenspaces are the dominant scaling cost.
 - The `n=7` frontier lane now has a full sparse/modular eigenspace path:
-  single-prime extraction (`p=32003`) recovers the full spectrum in
-  ~`30.3s` total (`~19.3s` Casimir phase), and a two-prime consistency run
-  (`p=32003,65521`) matches exactly in ~`53.2s`.
+  latest single-prime extraction recovers the full spectrum with
+  identical multiplicities on both modular backends, and default
+  frontier runs now use the fast `weight_block` lane.
+- The same modular lane now has an explicit backend strategy selector:
+  `global` versus `weight_block` (ad(h)-weight decomposition), with
+  default policy `CASIMIR_MODULAR_STRATEGY="auto"` selecting
+  `weight_block` at `n>=7`.
+  This backend now also prunes impossible weight/eigenvalue pairs in the
+  finite-field rank loop (`|w|>j` for `\lambda_j=2j(j+1)`), reducing
+  rank solves on `n=7`.  The default modular prime is now the smallest
+  non-colliding frontier prime (`CASIMIR_MODULAR_PRIMES=(127,)`), so
+  default `n=7` auto runs remain exact at the eigenspace level with
+  lower practical runtime.
 - The same frontier lane is now formalized behind a reusable staged API:
   `staged_frontier_diagnostics_on_tensor_power(...)` in
   `compute/lib/genus1_pbw_sl2.py`, which packages:
@@ -155,27 +177,140 @@ unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
   obstruction outputs at genera `2` and `3` on
   `\alpha_1=e+h+f`.
   The same shifted-seed nontriviality lane now extends to
-  `sl_3` and `sp_4`: on `(e1,e2,f12)` the mixed residual channel is
-  `\eta=xyz` for `sl_3` and `\eta=2xyz` for `sp_4`,
-  with genus-3 obstruction outputs `\eta` and `2\eta`.
+  `sl_3`, `sp_4`, and `g_2`: on `(e1,e2,f12)` the mixed residual channel is
+  `\eta=xyz` for `sl_3`, `\eta=2xyz` for `sp_4`, and `\eta=3xyz` for `g_2`,
+  with genus-3 obstruction outputs `\eta`, `2\eta`, and `3\eta`.
   The same lane now exposes a direct one-channel normalization profile:
-  for `sl_2`, `sl_3`, and `sp_4`, the genus-3 `\eta` obstruction equals
+  for `sl_2`, `sl_3`, `sp_4`, and `g_2`, the genus-3 `\eta` obstruction equals
   the mixed residual value at `(1,1,1)`, so the extracted normalization
   ratio is uniformly `1`.
   The same profile now has a symbolic scaling law:
   with `\alpha_1=t\sum b_i`, genus-2 obstruction terms scale as `t^2`
   and the genus-3 `\eta` channel is exactly
-  `O_3^\eta(t)=t^3\,\eta(1,1,1)` in all three lanes.
+  `O_3^\eta(t)=t^3\,\eta(1,1,1)` in all four lanes.
+  On the root-string channel `(e1,e2,f12)` for
+  `sl_3/sp_4/g_2`, the same scaling data now satisfies the explicit
+  signature law `O_2=t^2(e12+f1-m f2)`, `O_3^\eta=m t^3\eta`,
+  equivalently `O_3^\eta=-t\,O_2^{f2}`, with `m=1,2,3`.
+  The same signature law is now lifted to a symbolic one-parameter
+  root-string family (`m` formal): the shifted obstruction identities
+  are verified as polynomial identities in `(m,t)`, and the sampled
+  specializations `m=1,2,3` coincide with the concrete
+  `sl_3/sp_4/g_2` profiles exactly.
+  The same root-string lane now also has a symbolic seed-packet lift
+  with free parameters `(a,b,m)`:
+  `[e1,e2]=a e12`, `[e2,f12]=b f1`, `[e1,f12]=-m f2`,
+  `\langle e12,f12\rangle=m`.
+  Its shifted profile is
+  `O_2=t^2(a\,e12+b\,f1-m\,f2)`, `O_3^\eta=a m t^3\eta=-a t\,O_2^{f2}`;
+  the genus-3 `\eta` obstruction is independent of the free `f1`
+  packet coefficient `b`.
+  The same packet law now has an explicit projector check:
+  on shifted `sl_3/sp_4/g_2` and family samples `m=1,2,3`,
+  extracting the visible low-arity packet
+  (simple-pole `l_2` scales + root-string pairing scale) and
+  rebuilding the packet seed reproduces
+  `\eta(1,1,1)`, genus-2 `O_2`, and genus-3 `O_3^\eta`
+  exactly.
+  The same root-string packet now also has an inverse
+  identifiability check: from obstruction data alone
+  (`O_2^{e12}`, `O_2^{f1}`, `O_2^{f2}`, `O_3^\eta`) one recovers the
+  packet coefficients `(a,b,m)` and the normalization
+  `\eta(1,1,1)=a m`, with `\eta` independent of `b`.
+  The same lane now has a canonical transfer round-trip check:
+  extracting the packet from shifted seed data, inferring it from
+  obstruction data, and reconstructing the packet profile return the
+  same `O_2` and `O_3^\eta` channels on
+  `sl_3/sp_4/g_2` and family samples `m=1,2,3`.
+  The same transfer package now also recovers the first nontrivial
+  higher-bracket channel directly: the reconstructed shifted seed
+  reproduces the same mixed residual
+  `l_3(xe1,ye2,zf12)=\eta(1,1,1)\,x y z`,
+  with `\eta(1,1,1)=a m` inferred obstruction-side.
+  The same obstruction-side recovery now also reconstructs the shifted
+  root-string seed profile at channel level: the recovered seed reproduces the
+  source coefficients in the visible channels
+  `[e1,e2]\to e12`, `[e2,f12]\to f1`, `[e1,f12]\to f2`,
+  `\langle e12,f12\rangle`, and `l_3(e1,e2,f12)\to\eta`.
+  On the same visible channels, ordered seed-line support is now
+  permutation-rigid in compute: only `(e1,e2,f12)` preserves the full
+  `(e12,f1,f2,\eta)` support incidence, both on source seeds and on
+  seeds reconstructed obstruction-side.
+  The same lane now also realizes the incidence-orbit criterion in
+  compute: the visible root-string permutation group realizes the same
+  universal three-case orbit table on the tested lanes `m=1,2,3`, and
+  the induced support orbits are singleton exactly on
+  `(e12,f1,f2,\eta)`, with `e12` the unique normalization-nonzero
+  genus-2 singleton.
+  The same packet now yields a normalized invariant signature
+  `(1,1,-1,1)` on visible incidence channels and normalized pairing
+  profile `(e12,f12)/m=1`, `(f1,f12)/m=(f2,f12)/m=0`, uniformly on
+  `sl_3/sp_4/g_2` and family `m=1,2,3`.
+  Equivalently, the signed seed-character is now one canonical tuple
+  `(1,1,-1,1)` together with the same normalization/support indicators
+  across all tested lanes.
+  It now also satisfies the full symbolic polynomial identities on the
+  tested triples: `O_2(\alpha_1)=\frac12\,l_2(\alpha_1,\alpha_1)` and
+  `O_3^\eta(\alpha_1)=\eta(x,y,z)=\frac16\,l_3^\eta(\alpha_1,\alpha_1,\alpha_1)`.
+  The same shifted `\eta` channel is now explicitly aligned with
+  cyclic CE uniqueness (`H^2_{cyc}=\mathbb{C}`) for `sl_2`, `sl_3`,
+  `sp_4`, and `g_2`; the extracted coefficient
+  `\eta(1,1,1)` also matches the seed Killing 3-cocycle normalization.
+  The same genus-1-only ansatz now has explicit support truncation:
+  obstructions are nonzero only at genera `2,3`, and vanish for all
+  `g>=4` in these shifted arity-`<=3` lanes.
+  These normalization/scaling/root-signature/polynomial/CE/support checks are now
+  bundled as one executable shifted one-channel criterion package.
 - The theorem surface now packages the live MC2 frontier as a reduction
   principle rather than an undifferentiated universality slogan: the
   remaining work is exactly the intrinsic cyclic `\Defcyc(\cA)` model,
   the geometric completed tensor / clutching realization, and the
   one-channel genus-by-genus normalization in the simple-Lie case.
 - The theorem surface now also hardens that last package into a named
-  pair of criteria: first show via joint clutching restrictions and
+  criterion chain: first show via joint clutching restrictions and
   normalized trace that the surviving obstruction lies in the
-  tautological line, then one normalized scalar comparison with
-  `\kappa(\cA)` fixes the normalization.
+  tautological line, then build the corresponding one-channel
+  Verdier/Lagrangian plane, then lift it through the one-channel PTVV /
+  anti-involution criterion on perfect projector subcomplexes, then
+  realize that lift by explicit one-channel coderivation subcomplexes
+  inside `\Defcyc(\cA)`, then reduce those subcomplexes further to
+  finite low-bar-length seed data in
+  `\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}_X(\cA))[1]`,
+  then compress that seed data to one distinguished degree-`2`
+  cocycle plus finite bar-length-`<=3` correction packets and one
+  finite pairing matrix from the minimal seed-packet criterion, then
+  identify that packet with the visible low-arity simple-pole bracket
+  sector, normalized double-pole pairing matrix, and Killing
+  `l_3^\eta` sector, then reduce that visible packet further to a
+  canonical transfer package on the one-channel seed spaces consisting
+  of one cyclic seed, one shared generator-seed lift producing the
+  Killing `l_3^\eta` sector, and one functorial normalization splitting
+  off the one-channel cocycle line, then reduce that package further to
+  the explicit root-string transfer law
+  `O_2=t^2(a e12+b f1-m f2)`, `O_3^\eta=a m t^3\eta`,
+  with obstruction-side recovery of `(a,b,m)` and the same
+  coefficient-extraction normalization, then reduce that law further to
+  a root-string chart forced on the one-channel seed spaces up to
+  rescaling of the three seed lines, then reduce that chart statement
+  further to intrinsic line detection by
+  `l_{2,sp}`, `\beta^{dp}`, `\nu^{sp}`, and the support of
+  `(O_2,O_3^\eta)`, then reduce that further to automorphism-rigidity
+  of the one-channel support graph, then reduce that further to a
+  finite stabilizer computation on the one-channel support graph, then
+  reduce that further to a bounded incidence-matrix / orbit-count
+  computation on the visible one-channel graph, then reduce that
+  further to a universal three-case orbit table for
+  `m=1,2,3` / `sl_3, sp_4, g_2`, then collapse that to direct
+  lookup/identification against one canonical universal table, then
+  collapse that further to the minimal invariant signature packet that
+  forces that table, then collapse that further to the universal
+  signed seed-character law recovering that packet, then collapse that
+  further to the universal two-sign plus normalization-scalar law
+  recovering that character, then collapse that further to the
+  root-string parity sign plus normalization scalar, then collapse
+  that further to the chart-normalized seed scalar, and
+  then one normalized scalar comparison with `\kappa(\cA)` fixes the
+  normalization.
 - Immediate effect: extending MC1 checks to higher conformal weights is now a representation
   data task, not a new linear-algebra scaffolding task.
 
@@ -578,6 +713,67 @@ correspondence and would partially upgrade conj:ads-cft-bar.
 
 ---
 
+## M7b. Factorization Drinfeld-Kohno Ladder (Programme II / VI-d interface)
+
+### What exists
+- chain-level DK shadows for affine and Yangian settings with
+  `q \mapsto q^{-1}` / `R \mapsto R^{-1}`;
+- an evaluation-locus factorization theorem in the Yangian chapter;
+- the ordered-configuration / braid-reversal viewpoint already isolated
+  in the finite RTT story; and
+- theorematic standard-RTT completed M-level packages for the standard
+  Yangian towers.
+
+### What's missing
+**Tool 7b.1: intrinsic ordered factorization category.**
+Define the ordered factorization category on the evaluation locus with
+interval-factorization descent, braid-monodromy compatibility, and the
+correct Verdier-opposite involution.
+
+**Tool 7b.2: factorization Kazhdan functor.**
+Construct `KZ_fact` on that ordered category and prove compatibility
+with ordered fusion, braid transport, and the bar-cobar involution.
+
+**Tool 7b.3: extension beyond evaluation modules.**
+Isolate the four exact extra inputs:
+Yangian Koszulness or replacement resolution theory,
+RTT-complete bar control,
+generation by evaluation objects after completion,
+and a Barr-Beck style reconstruction theorem.
+
+**Tool 7b.4: dg-shifted Yangian comparison.**
+After the factorization ladder is explicit, compare the resulting
+ordered factorization target with the dg-shifted Yangian / line-operator
+target at the intended H-level rather than collapsing them into one
+premature slogan.
+
+### First concrete step
+```
+TARGET: Rewrite the monolithic DK package as a staged theorem ladder.
+
+LADDER:
+1. DK-0: chain-level evaluation-locus shadow on standard evaluation objects;
+2. DK-1: ordered factorization category on the evaluation locus;
+3. DK-2: factorization Kazhdan functor KZ_fact;
+4. DK-3: extension beyond evaluation modules using Koszul/generator/monadic input;
+5. DK-4: full ordered E1-factorization equivalence;
+6. DK-5: dg-shifted Yangian / line-operator comparison at the H-level target.
+
+VERIFICATION:
+- each rung states exact hypotheses and output;
+- evaluation-locus results are not advertised as full category-O theorems;
+- the dg-shifted comparison is kept visibly downstream of the ordered
+  factorization lift.
+```
+
+### Success criterion
+A staged DK programme in which the evaluation-locus theorem is the
+first proved rung, the extension beyond evaluation modules is an exact
+input list rather than a slogan, and the dg-shifted Yangian comparison
+is fenced as its own downstream H-level target.
+
+---
+
 ## M8. Infinite-Generator Koszul Duality (Programme VI-d: W-infinity, Higher-Spin)
 
 ### What exists
@@ -586,87 +782,129 @@ correspondence and would partially upgrade conj:ads-cft-bar.
 - Principal finite-type `W_N` higher-genus PBW / modular Koszul package theorematic at completed M-level
 - Virasoro (1 generator), W_3 (2 generators), W_N (N-1 generators) computed
 - Conjectured: Virasoro^! = W_infinity, W_N^! = Yangian Y(gl_N)
+- The standard principal-stage `W_\infty` tower now has its theorematic
+  standard-tower completed M-level bar-cobar package.
+- The standard RTT Yangian tower now has its theorematic standard-RTT
+  completed M-level bar-cobar package.
+- Formal H-level comparison criteria are now proved: once a filtered
+  target has the correct finite quotients, comparison with the
+  corresponding standard tower is automatic.
+- The remaining finite-stage identification problems are now reduced to
+  explicit coefficient identities plus finite detection.
 
 ### What's missing
-The live `W` gap is not the finite-type principal stage; it is the
-infinite-generator completion and H-level comparison package beyond that
-theorematic M-level base.
+The live `W` gap is not finite-type principal `W_N`, and it is no
+longer the bare existence of a completed bar construction.  The live
+MC4 package is now exact:
 
-**Tool 8.1: Pro-nilpotent bar construction.**
-The bar complex B-bar(A) for A with infinitely many generators (e.g., W_infinity with
-generators W_2, W_3, W_4, ...) requires a completion:
-   B-bar(A) = prod_n (s^{-1} A-bar)^{tensor n}_Sigma_n
-(product, not direct sum). The bar differential still makes sense, but convergence
-of the infinite sum requires a pro-nilpotent filtration.
+1. build the filtered H-level targets beyond the theorematic standard
+   towers;
+2. prove the named mode identities on the finite quotients; and
+3. close the finite-detection reductions that promote those identities
+   from generator seeds or evaluation families to the full quotient
+   package.
 
-For W_infinity: filter by conformal weight. B-bar^n_h = bar elements of total weight h.
-Each B-bar^n_h is finite-dimensional (finite number of ways to partition weight h among
-n generators). The bar differential preserves the weight filtration.
+**Tool 8.1: `W_\infty` factorization target plus residue-coefficient package.**
+The remaining `W_\infty` task is to construct a principal-stage
+compatible factorization target whose finite quotients recover the
+principal Drinfeld--Sokolov stages.  The completion scaffold is already
+in place; what is missing is the actual higher-spin coefficient data
+and its exact comparison with the finite-type stages.
 
-**Tool 8.2: W_infinity OPE algebra.**
-The W_infinity algebra has OPE:
-   W_s(z) W_t(w) = sum_{n=0}^{s+t-2} f_{st}^n(c, lambda) W_{s+t-2-n}(w) / (z-w)^{n+1}
-                  + regular
-where f_{st}^n are structure constants depending on c and the parameter lambda
-(triality parameter). These are known but complicated. Need to implement them.
+Concretely, one needs:
+- explicit higher-spin structure constants for the first finite-spin
+  windows;
+- extraction of the local residue/OPE coefficients
+  `C^{res}_{s,t;u;m,n}(N)`;
+- proof of the stagewise identities
+  `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)`; and
+- generator-seed detection plus translation closure so finitely many
+  primary coefficients determine all descendants.
 
-**Tool 8.3: Yangian-W_N comparison.**
-After the theorematic completed M-level principal-stage package, the remaining
-Yangian problem is to construct an RTT-adapted filtered comparison whose finite
-quotients recover those principal stages and whose limit identifies the H-level
-comparison target.  In finite type this should induce a comparison map
-\[
-\Omega(B\text{-}\mathrm{bar}(W_N)) \longrightarrow Y(\mathfrak{gl}_N),
-\]
-but the frontier issue is no longer existence of the principal-stage bar data;
-it is the filtered RTT realization and the passage to the infinite-generator
-limit.
+**Tool 8.2: Yangian one-loop kernel package.**
+The remaining Yangian task is to construct the RTT-adapted filtered
+target and identify its finite quotients with the theorematic RTT
+stages by exact kernel comparison, not by a generic convergence slogan.
 
-For N = 2: W_2 = Virasoro, Y(gl_2) = Y(sl_2) x Heisenberg.
-Known: Virasoro bar cohomology grows as 3^n (Motzkin differences).
-Y(sl_2) bar cohomology = 3^n + 1 (conj:yangian-bar-gf).
-The "extra 1" in Y(gl_2) = Y(sl_2) x H comes from the Heisenberg factor.
-This is consistent but not a proof.
+Concretely, one needs:
+- extraction of the one-loop line-operator kernel coefficients
+  `K^{line}_{a,b}(N)` from the rational formulas;
+- comparison with the truncated RTT coefficients
+  `K^{RTT}_{a,b}(N)`;
+- compatibility with the standard evaluation-module formulas; and
+- faithful-evaluation detection so vanishing of the defect family on
+  tensor products of fundamental evaluation modules forces equality in
+  the quotient.
+
+**Tool 8.3: H-level comparison lift beyond the standard towers.**
+After the finite quotients satisfy the exact coefficient identities, the
+remaining comparison step is to build the filtered H-level targets whose
+finite quotients recover those identified stages and then apply the
+inverse-limit comparison theorem.  The frontier issue is therefore not
+principal-stage bar data; it is the actual factorization / dg-shifted
+realization carrying the already-identified finite quotients.
 
 ### First concrete step
 ```
-TARGET: Compute B-bar(W_infinity)_h for small total weight h (h = 4, 5, 6)
-        and compare with the pro-finite completion of Y(gl_infinity).
+TARGET: Verify the first nontrivial MC4 finite-detection identities on
+        small principal stages.
 
-INPUT: W_infinity OPE structure constants (from Gaberdiel-Gopakumar or
-       Prochazka-Rapcak reconstruction).
+INPUT:
+1. Principal Drinfeld--Sokolov coefficients for the first finite
+   `W_N` stages.
+2. One-loop line-operator kernels for the first truncated RTT stages.
 
 COMPUTATION:
-1. Implement W_infinity OPE for generators W_2, W_3, W_4, W_5
-   (conformal weights 2, 3, 4, 5).
-2. Compute B-bar^2 at total weight h = 4: only W_2 tensor W_2.
-   The bar differential d: B-bar^2 -> B-bar^1 should give
-   d(W_2 tensor W_2) = c/2 * |0> + 2*W_2 + W_4 + ...
-3. Compare with known Y(gl_infinity) structure at the same weight.
-4. Check: does including W_3 in the computation (weight 5 sector)
-   give results consistent with Y(gl_2) = Y(sl_2) x H?
+1. On the `W_\infty` side, extract the generator-level residue
+   coefficients `C^{res}_{s,t;u;0,n}(N)` for the first visible
+   principal stages.
+2. Compare those primary coefficients with the principal
+   Drinfeld--Sokolov coefficients `C^{DS}_{s,t;u;0,n}(N)`.
+3. Use translation closure to propagate the equality to descendant
+   coefficients `C^{res}_{s,t;u;m,n}(N)`.
+4. On the Yangian side, extract the first one-loop kernel coefficients
+   `K^{line}_{a,b}(N)` and compare them with
+   `K^{RTT}_{a,b}(N)`.
+5. Test the Yangian defect family on tensor products of fundamental
+   evaluation modules.
 
-VERIFICATION: At weight 4: B-bar^2 should have dim matching Y(gl_inf) prediction.
-              At weight 5: inclusion of W_3 should be consistent.
+VERIFICATION:
+- exact equality of the first visible `W_\infty` generator coefficients
+  with the DS coefficients;
+- exact equality of the first visible Yangian kernel coefficients with
+  the truncated RTT coefficients;
+- vanishing of the Yangian defect family on the chosen faithful
+  evaluation family.
 
-TOOLS NEEDED: w_infinity_ope.py — W_infinity OPE structure constants.
-              pronilpotent_bar.py — bar complex with weight filtration and completion.
+TOOLS NEEDED:
+- `w_infinity_ope.py` upgraded from support scaffolding to explicit
+  residue-coefficient extraction;
+- a Yangian kernel-extraction module for the one-loop rational formulas;
+- an evaluation-family verifier for the finite RTT quotients.
 ```
 
-Status update (Mar 7, 2026): Tool 8.1 is now scaffolded in
-`compute/lib/pronilpotent_bar.py`. Tool 8.2 now has a structural finite-spin
-scaffold in `compute/lib/w_infinity_ope.py`: exact stress-tensor action,
-truncated singular-support bounds, and adjacent-merge maps compatible with the
-weight filtration. A coefficient-free support complex is also available in
-`compute/lib/w_infinity_support_complex.py`, so finite target sets and support
-matrices can already be enumerated at fixed weight. The remaining gap is the
-actual higher-spin structure constants / differential data.
+Status update (Mar 9, 2026): the old pro-nilpotent completion scaffold in
+`compute/lib/pronilpotent_bar.py` is now supporting infrastructure rather than
+the live MC4 bottleneck.  On the `W_\infty` side,
+`compute/lib/w_infinity_ope.py` already provides a structural finite-spin
+scaffold: exact stress-tensor action, truncated singular-support bounds, and
+adjacent-merge maps compatible with the weight filtration, while
+`compute/lib/w_infinity_support_complex.py` enumerates finite target sets and
+support matrices at fixed weight.  What remains open is the actual
+higher-spin coefficient extraction and the comparison with the principal
+Drinfeld--Sokolov coefficients.  On the Yangian side, the missing compute
+surface is now the one-loop kernel-extraction and faithful-evaluation
+detection package, not a first completion theorem.
 
 ### Success criterion
-First explicit filtered computation of B-bar(W_infinity) showing consistency
-with the principal-stage Yangian quotients and with Y(gl_infinity) at small
-weights. This would provide computational evidence for the H-level comparison
-package, not merely for the already theorematic finite-type principal stages.
+An executable MC4 package in which:
+1. the first visible `W_\infty` residue identities and Yangian kernel
+   identities are checked exactly;
+2. the finite-detection layers are implemented concretely on
+   generator-level seeds and faithful evaluation families; and
+3. the resulting finite quotients are ready to feed into the filtered
+   H-level comparison targets beyond the already theorematic
+   standard-tower M-level packages.
 
 ---
 
@@ -845,31 +1083,52 @@ to quantitative prediction.
   seed records for the first non-self-dual case.
 
 ### What's missing
-**Tool 11.1: Non-principal DS reduction at chain level.**
-For non-principal nilpotent f, the DS reduction W^k(g, f) = H^0_BRST(g_k, f) uses a
-non-standard BRST complex. The BRST charge Q_f depends on the sl2-triple containing f,
-and the reduction is more complex:
+The live non-principal frontier is now packetized into three exact
+tasks, not one undifferentiated conjectural mass.
+
+**Packet 11.A: Paired non-principal DS seed transport/globalization.**
+For non-principal nilpotent `f`, the DS reduction `W^k(g,f)=H^0_BRST(g_k,f)`
+uses a non-standard BRST complex. The BRST charge `Q_f` depends on the
+`\mathfrak{sl}_2`-triple containing `f`, and the reduction is more complex:
 - The grading on g is by the eigenvalues of ad(h) where {e, h, f} is the sl2-triple
 - The "good" grading may differ from the Dynkin grading
 - The BRST complex has generators in degrees determined by the grading
 
-Need: explicit BRST complex for subregular f in sl3 (the simplest non-principal case).
+Current status: the `sl_3` subregular seed and the first non-self-dual
+hook pair already have explicit truncated seed complexes, survivor data,
+and witness-level transport checks.
 
-**Tool 11.2: Barbasch-Vogan duality implementation.**
+Need: extend those paired seed complexes and their transport maps beyond
+the present hook/subregular theorematic seeds, and globalize agreement of
+survivor brackets, cohomology profiles, and normalization data on dual
+orbit pairs.
+
+**Packet 11.B: Dual-orbit input.**
 For a nilpotent orbit O in g, the BV dual orbit O^D in g (or g^L for non-simply-laced)
 is defined by:
 - Take the special piece containing O
 - Take the "opposite" orbit in the Lusztig-Spaltenstein correspondence
 - For simply-laced g: O^D is in g itself. For non-simply-laced: O^D is in g^L.
 
-Need: a database of BV dual orbits for sl3, sl4, sp4, G2 (the smallest cases).
+Current status: a seeded type-A BV database is already live, including
+the first genuinely non-self-dual hook pair.
 
-**Tool 11.3: Non-principal level shift.**
+Need: extend the dual-orbit input beyond the current seeded type-A
+catalog, including the component-group compatibilities needed by the
+printed conjecture.
+
+**Packet 11.C: Orbit-indexed non-principal level shift.**
 For principal f, the dual level is k' = -k - 2h^v. For non-principal f, the
 formula is expected to be:
    k' = -k - 2h^v + (something depending on f)
 The "something" involves the Dynkin labels of f and the dual Coxeter number.
-Need to determine and verify this formula for subregular sl3.
+
+Current status: the level-shift scaffold is already orbit-indexed in
+type A, with seeded non-hook corrections and verifier wiring.
+
+Need: determine and verify the orbit-indexed rule `k'=k'(k,f)` beyond
+the current seeded correction table and align it with the normalization
+bridge used by the chapter-level statements.
 
 Status update (Mar 8, 2026, twelfth pass): the level-shift scaffold is now
 orbit-indexed (`nonprincipal_orbit_level_shift_type_a`) rather than a single
@@ -1226,9 +1485,41 @@ now has an explicit reduced survivor sector:
   nontrivial pairs `r=1,\dots,5`. The live family frontier is now
   `\mathfrak{sl}_{14}`.
 - One step past that family boundary is already sampled positively: in
-  `\mathfrak{sl}_{14}`, the hook orientations `r=1,2,3` each satisfy
+  `\mathfrak{sl}_{14}`, the full hook half-catalog `r=1,\dots,6` now satisfies
   witness-driven first-transfer cancellation, corrected semidirect
-  square-zero at `(0,1,1)`, and transpose-dual comparison.
+  square-zero at `(0,1,1)`, and transpose-dual comparison on the nontrivial
+  pairs. The live family frontier has therefore moved on to
+  `\mathfrak{sl}_{15}`.
+- The next rank is already open at low depth too: in `\mathfrak{sl}_{15}`,
+  the full hook half-catalog `r=1,\dots,7` now satisfies witness-driven
+  first-transfer cancellation, corrected semidirect square-zero at `(0,1,1)`,
+  and transpose-dual comparison on the nontrivial pairs. The live family
+  frontier has therefore moved on to `\mathfrak{sl}_{16}`.
+- The next rank is already open at low depth too: in `\mathfrak{sl}_{16}`,
+  the full hook half-catalog `r=1,\dots,7` now satisfies witness-driven
+  first-transfer cancellation, corrected semidirect square-zero at `(0,1,1)`,
+  and transpose-dual comparison on the nontrivial pairs. The live family
+  frontier has therefore moved on to `\mathfrak{sl}_{17}`.
+- The next rank is already open at low depth too: in `\mathfrak{sl}_{17}`,
+  the full hook half-catalog `r=1,\dots,8` now satisfies witness-driven
+  first-transfer cancellation, corrected semidirect square-zero at `(0,1,1)`,
+  and transpose-dual comparison on the nontrivial pairs. The live family
+  frontier has therefore moved on to `\mathfrak{sl}_{18}`.
+- One step beyond that written boundary is already open on the same compute
+  track: in `\mathfrak{sl}_{18}`, the full hook half-catalog `r=1,\dots,8`
+  now satisfies witness-driven first-transfer cancellation, corrected
+  semidirect square-zero at `(0,1,1)`, and transpose-dual comparison on the
+  nontrivial pairs. The written family boundary therefore moves on to
+  `\mathfrak{sl}_{18}` and the live family frontier to `\mathfrak{sl}_{19}`.
+- One step beyond that new written boundary is now fully closed as well: in
+  `\mathfrak{sl}_{19}`, the full hook half-catalog `r=1,\dots,9` satisfies
+  witness-driven first-transfer cancellation, corrected semidirect
+  square-zero at `(0,1,1)`, and transpose-dual comparison on the nontrivial
+  pairs. The written family boundary therefore moves on to
+  `\mathfrak{sl}_{19}` and the live family frontier to `\mathfrak{sl}_{20}`.
+- One step beyond that new written boundary is already open at the extreme
+  hook: `\mathfrak{sl}_{20}, r=1` satisfies witness-driven first-transfer
+  cancellation and corrected semidirect square-zero at `(0,1,1)`.
 - The same mixed/nonlinear `u-c-b` machinery is now generalized from the first
   hook pair to all type-A hook pairs at the seed level: compute now exposes
   family APIs for constraints, positive-sector brackets, quadratic `c c b`
@@ -1254,7 +1545,10 @@ now has an explicit reduced survivor sector:
   `general_nonprincipal` type-A partitions (for example `(3,2,1)`), with
   mixed/nonlinear/survivor-coupled block builders; for mixed and nonlinear
   blocks the general-family verification is now reduced by transpose symmetry,
-  and the seeded range reaches size `9`.
+  and the seeded range reaches size `9`. The same general
+  survivor-coupled family-via-duality layer now also remains positive through
+  size `12` in survivor degree `1` and through size `11` in survivor degree
+  `2`.
 - The same generic partition-pair path now also reaches the first transferred
   survivor correction on the seeded non-hook range: witness-level
   survivor-action lifts and constrained-current preimages are recorded for
@@ -1264,42 +1558,56 @@ now has an explicit reduced survivor sector:
   two-row/general dual-swap catalog checks.
 - That non-hook verification layer is now organized to scale: the seeded
   two-row corrected semidirect checks are bundled in one pass through
-  `\mathfrak{sl}_7`, while the seeded `general_nonprincipal` corrected
-  semidirect family is reduced by transpose symmetry and now verified at the
-  first corrected semidirect truncation `(0,1,1)` on the symmetry-reduced
-  seeded range through size `9`.
+  `\mathfrak{sl}_8` at truncation `(0,1,1)`, and the same two-row
+  family-via-duality check stays positive in survivor degree `2` through
+  `\mathfrak{sl}_8`; the seeded
+  `general_nonprincipal` corrected
+  semidirect family is reduced by transpose symmetry and now reaches size
+  `14` as a stable seeded bundle at the first corrected semidirect
+  truncation `(0,1,1)`; this step uses a fixed row-minor solver for the
+  reduced survivor-bracket layer in place of repeated tall exact solves and
+  prunes semidirect branches that cannot contribute at internal CE cutoff
+  `1`. The same
+  general family-via-duality check remains positive in survivor degree `2`
+  through size `11`.
 
 ### First concrete step
 ```
-TARGET: Compute W^k(sl3, f_sub)^! for f_sub = subregular nilpotent in sl3.
+TARGET: strengthen the self-dual sl3-subregular/Bershadsky--Polyakov
+        control case and then pass to the first genuinely non-self-dual
+        hook pair in sl4.
 
 INPUT: sl3 has two non-zero nilpotent orbits:
        - Regular (principal): dim 6, W-algebra = W_3 (2 generators T, W)
-       - Subregular: dim 4, W-algebra = sl3-hat (Kac-Moody!)
-       The subregular DS reduction of sl3_k gives sl3_{k'} for some k'.
+       - Subregular/minimal: dim 4, W-algebra = Bershadsky--Polyakov
+         W^k(sl3,f_sub) with generators (J,G^+,G^-,T).
+       The subregular orbit is self-dual under partition transpose.
 
 COMPUTATION:
 1. The subregular nilpotent in sl3 is e = E_{12} (a simple root vector).
    The sl2-triple: e = E_{12}, h = H_1, f = F_{12}.
 2. DS reduction: W^k(sl3, f_sub) = H^0_BRST(sl3_k, f_sub).
-   For subregular in sl_n: W^k(sl_n, f_sub) = sl(n-1)-hat at some level k'.
-   For n=3: W^k(sl3, f_sub) = sl2-hat at level k' = (to be determined).
+   In the printed control case this is the Bershadsky--Polyakov algebra,
+   so the immediate task is not to identify a new algebra but to verify
+   the seed-level BRST package, the normalization bridge, and the
+   self-dual transport profile on the same orbit.
 3. In type A, BV duality is partition transpose. For sl3 the subregular
    partition (2,1) is self-transpose, so the subregular orbit is self-dual.
 4. So the conjecture predicts a self-dual non-principal check:
-   (sl2-hat at level k')^! = sl2-hat at the dual level.
-   This is consistent with the known self-duality of affine sl2 and turns the
-   sl3 subregular case into a first sanity check, not yet a genuinely new dual
-   orbit pairing.
+   the BP/subregular seed must transport to itself with the correct
+   orbit-indexed level shift and normalization profile. This is a
+   sanity-check base case, not yet a genuinely new dual orbit pairing.
 5. The first genuinely non-self-dual hook test in type A therefore begins at
    sl4, where (3,1)^t = (2,1,1).
 
-VERIFICATION: For sl3-subregular, compute the affine level shift and verify the
-              expected self-duality. Then move to sl4 hook pairs and compare
-              the two distinct hook reductions.
+VERIFICATION: First close the self-dual sl3-subregular control package
+              (dual-orbit input, orbit-indexed level shift, paired seed
+              transport). Then move to sl4 hook pairs and compare the
+              two distinct dual-orbit reductions.
 
-TOOLS NEEDED: ds_reduction.py — BRST complex for non-principal nilpotents.
-              bv_duality.py — Barbasch-Vogan dual orbit database.
+TOOLS NEEDED: ds_reduction.py — paired BRST seed complexes / transport.
+              bv_duality.py — dual-orbit input package.
+              nonprincipal_ds_orbits.py — orbit-indexed level-shift data.
               w_algebra_ope.py — OPE structure constants for W(g, f).
 ```
 
@@ -1325,7 +1633,7 @@ remains the sanity-check base case for the same infrastructure.
 | M8 | Pro-nilpotent bar / W_infinity OPE | VI-d | w_infinity_ope.py + pronilpotent_bar.py | LOW |
 | M9 | Sparse modular linear algebra | IX | bar_modular.py + sparse_rank.py | HIGH |
 | M10 | BTZ dictionary | VI-b | btz_dictionary.py + genus1_comparison.py | MEDIUM |
-| M11 | Non-principal DS + BV duality | VIII-a | ds_reduction.py + bv_duality.py | MEDIUM |
+| M11 | Non-principal three-packet transport | VIII-a | ds_reduction.py + bv_duality.py + nonprincipal_ds_orbits.py | MEDIUM |
 
 ### Priority justification
 - HIGH = either (a) concrete computation yielding confirmable/refutable prediction,

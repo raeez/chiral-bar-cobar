@@ -116,7 +116,7 @@ plus a summary of the remaining ~470 by category and file.
 - file: chapters/theory/bar_cobar_construction.tex:3126
 - statement: Perfect pairing between bar and cobar via Verdier duality: <omega_bar, K_cobar> = int_{C-bar_n(X)} omega_bar ^ iota^* K_cobar.
 - hypotheses: A is a chiral algebra, C a chiral coalgebra on X; bar elements are log forms on C-bar_n(X), cobar elements are distributions on C_n(X).
-- conclusion: Non-degenerate pairing with differential compatibility <d_bar omega, K> = -<omega, d_cobar K>; realizes Omega(C) = D(B(A^!)).
+- conclusion: Non-degenerate pairing with differential compatibility <d_bar omega, K> = -<omega, d_cobar K>; identifies the cobar complex with the Verdier-dual bar complex.
 - category: STRUCTURAL
 - proof_uses: [thm:verdier-config, thm:stokes-config, thm:dual-differentials]
 
@@ -132,7 +132,7 @@ plus a summary of the remaining ~470 by category and file.
 - file: chapters/theory/bar_cobar_construction.tex:3562
 - statement: B(A) = D(Omega(A^!)) where D is Verdier duality and A^! is the Koszul dual.
 - hypotheses: A is an augmented chiral algebra on a smooth curve X.
-- conclusion: Bar-cobar duality is realized as Poincare-Verdier duality on configuration spaces: log forms (bar) are dual to distributions (cobar).
+- conclusion: Bar-cobar duality is expressed by Poincare-Verdier duality on configuration spaces: log forms (bar) are dual to distributions (cobar).
 - category: STRUCTURAL
 - proof_uses: [thm:bar-cobar-verdier, thm:verdier-config]
 
@@ -156,7 +156,7 @@ plus a summary of the remaining ~470 by category and file.
 - file: chapters/theory/bar_cobar_construction.tex:3450
 - statement: The unit of the bar-cobar adjunction eta: A -> Omega(B(A)) is geometrically realized by configuration space integrals.
 - hypotheses: A is a chiral algebra on X; convergence ensured by nilpotency/completeness.
-- conclusion: eta(phi)(z) = sum_n int_{C-bar_{n+1}(X)} phi(z) ^ ev_0^*(B_n(A)) ^ omega_n.
+- conclusion: eta(phi)(z) is given by the configuration-space integral formula sum_n int_{C-bar_{n+1}(X)} phi(z) ^ ev_0^*(B_n(A)) ^ omega_n.
 - category: STRUCTURAL
 - proof_uses: [thm:bar-cobar-verdier, thm:bar-functorial-complete]
 
@@ -578,9 +578,9 @@ plus a summary of the remaining ~470 by category and file.
 
 ### [thm:feynman-bar-cobar]
 - file: chapters/theory/chiral_koszul_pairs.tex:1393
-- statement: Feynman diagrams of genus g / symmetries = C_*(g)(A): the bar complex computes the Feynman diagram expansion.
+- statement: Feynman-diagram / modular-operad dictionary for genus-g bar complexes.
 - hypotheses: Chiral algebra A; modular operad {M-bar_{g,n}}.
-- conclusion: Feynman integrals <-> bar complex operations; loop momenta <-> config space integration; renormalization <-> homological perturbation; g-loop divergences <-> H_*^(g)(A).
+- conclusion: The chapter records a conjectural algebraic-shadow dictionary relating Feynman integrals, configuration-space operations, homological perturbation, and genus-g bar homology.
 - category: GENUS
 - proof_uses: [thm:prism-higher-genus]
 
@@ -917,7 +917,7 @@ See above.
 - file: chapters/connections/feynman_diagrams.tex:384
 - statement: A_infinity constraint formula from Feynman diagrams.
 - hypotheses: Chiral algebra A with A_infinity structure.
-- conclusion: A_infinity relations are equivalent to cancellation of Feynman diagram anomalies.
+- conclusion: The chapter presents A_infinity relations as the algebraic-shadow template for cancellation of Feynman-diagram anomalies.
 - category: STRUCTURAL
 - proof_uses: [thm:bar-ainfty-complete]
 

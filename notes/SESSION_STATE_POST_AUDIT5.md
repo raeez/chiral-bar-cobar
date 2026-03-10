@@ -116,6 +116,11 @@ Three conjectures can be upgraded immediately:
 | 3 | W-algebra integrability (classical) | Conjectured | Split: classical PE / quantum CJ | IS Drinfeld-Sokolov |
 
 Three imprecise conjectures need fixing:
+- Gaiotto-Witten / non-principal `W` duality should no longer be stored
+  as a single residual “general conjectured” bucket; the remaining
+  frontier is the three-packet non-principal problem
+  `dual-orbit input / orbit-indexed level shift / paired DS seed
+  transport-globalization`.
 - Modular anomaly formula: dim H*_BRST is infinite (needs regularization or Euler char)
 - Bulk reconstruction: Omega^n(B(O)) is a space, not a function (needs reformulation)
 - Entanglement/Koszul: "no precise formulation" -> downgrade to Heuristic

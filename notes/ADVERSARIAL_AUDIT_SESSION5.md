@@ -568,7 +568,10 @@ Dependency structure: B depends on A; C is independent of both A and B. No physi
 3. **W-algebra integrability (classical)**: IS Drinfeld-Sokolov → ProvedElsewhere (quantum A-inf remains Conjectured)
 
 ### Should Split (3)
-- Gaiotto-Witten: principal proved, general conjectured
+- Gaiotto-Witten: principal proved, hook-type proved elsewhere, and the
+  remaining non-principal case should be tracked as the three-packet
+  frontier `dual-orbit input / orbit-indexed level shift / paired DS
+  seed transport-globalization`
 - W-algebra bar complex (HT): item (1) proved, items (2-3) conjectured
 - Topological open-closed: math proved, physics interpretation conjectured
 

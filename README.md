@@ -13,17 +13,17 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-1417-a371f7?style=for-the-badge&labelColor=0d1117)
-![Theorems](https://img.shields.io/badge/theorems%20proved-797-3fb950?style=for-the-badge&labelColor=0d1117)
-![Source](https://img.shields.io/badge/source%20files-68-a371f7?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-1520-a371f7?style=for-the-badge&labelColor=0d1117)
+![Theorems](https://img.shields.io/badge/theorems%20proved-1230-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-1915-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-797-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-886-3fb950?style=flat-square&labelColor=0d1117)
 ![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-344-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-153-d29922?style=flat-square&labelColor=0d1117)
-![Heuristic](https://img.shields.io/badge/heuristic-30-8b949e?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-163-d29922?style=flat-square&labelColor=0d1117)
+![Heuristic](https://img.shields.io/badge/heuristic-31-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
 
@@ -33,40 +33,63 @@
 
 <br>
 
-## The Construction
+## Overview
 
-Classical Koszul duality&hairsp;&mdash;&hairsp;the bar-cobar adjunction&hairsp;&mdash;&hairsp;lifts from operads to chiral algebras via configuration space integrals on algebraic curves. The manuscript constructs a geometric bar functor
+This monograph constructs a geometric lift of classical Koszul duality (the bar-cobar adjunction) from operads to chiral algebras, using configuration space integrals on algebraic curves. The result is a comprehensive duality theory for vertex algebras that unifies operadic algebra, moduli space geometry, and conformal field theory.
 
-$$\bar{B}\_{\mathrm{geom}} \colon \mathsf{ChirAlg}\_X \longrightarrow \mathsf{dgCoalg}\_X$$
+**In one sentence.** &ensp; The bar complex of a chiral algebra is computed by integration over Fulton&ndash;MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus $g \geq 1$ is controlled by a single scalar invariant $\kappa(\mathcal{A})$ that organizes the quantum corrections across all genera.
 
-whose differential sums residues over boundary divisors of the Fulton&ndash;MacPherson compactification $\overline{C}\_n(X)$:
+<br>
 
-$$d\_{\mathrm{geom}} = \sum\_{D \,\in\, \partial\, \overline{C}\_n(X)} (-1)^{|D|}\, \operatorname{Res}\_D$$
+## The Double-Frame Architecture
 
-At genus zero, nilpotence $d^2 = 0$ follows from the Arnold&ndash;Orlik&ndash;Solomon relations. At genus $g \geq 1$, curvature enters:
+The theory has two complementary entry points&hairsp;&mdash;&hairsp;two "frame atoms" that together generate the full structure.
 
-$$d\_{\mathrm{fib}}^2 \;=\; \kappa(\mathcal{A}) \cdot \omega\_g \cdot \mathrm{id}$$
+| &ensp; | Frame A &ensp;(*commutative*) | Frame B &ensp;(*associative*) |
+|:---:|------|------|
+| **Atom** | Heisenberg algebra $\mathcal{H}_k$ | Yangian evaluation locus $Y(\mathfrak{g})$ |
+| **Operad** | $E_\infty$-chiral (commutative, fully local) | $E_1$-chiral (associative, ordered) |
+| **Config. spaces** | Unordered &ensp;$C_n(X)$ | Ordered &ensp;$\mathrm{Conf}_n(X)$ |
+| **Duality arrow** | Level inversion &ensp;$k \mapsto -k - 2h^\vee$ | $R$-matrix inversion &ensp;$q \mapsto q^{-1}$ |
+| **Theorems** | A, B, C, D &ensp;(scalar + spectral modular package) | Derived Drinfeld&ndash;Kohno square |
+| **Status** | **Proved** | Chain-level **proved**; factorization-categorical extension **open** |
 
-controlled by the Koszul curvature $\kappa(\mathcal{A})$ and the Hodge class $\omega\_g \in H^1(\overline{\mathcal{M}}\_g)$. A corrected total differential $D\_g$ with $D\_g^2 = 0$ is constructed explicitly via the modular operad structure.
+The two frames meet in the **derived Drinfeld&ndash;Kohno square**: a commutative diagram whose top arrow is bar-cobar duality (level inversion), whose bottom arrow is $R$-matrix inversion ($q \mapsto q^{-1}$), and whose vertical arrows are Kazhdan&ndash;Lusztig equivalences. The scalar modular characteristic $\kappa + \kappa^! = 0$ is the trace of this square.
+
+<br>
+
+### Five Irreducible Pieces
+
+Every construction in the monograph decomposes into exactly five irreducible ingredients:
+
+| # | Ingredient | Mathematical realization | Where |
+|:-:|------------|--------------------------|-------|
+| **(i)** | Arnold relation | $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$ &ensp;$\Rightarrow$&ensp; $d^2 = 0$ | Both frames |
+| **(ii)** | Verdier duality on Ran$(X)$ | $\mathbb{D}_{\mathrm{Ran}}\, \bar{B}(\mathcal{A}) \simeq \bar{B}(\mathcal{A}^!)$ | Frame A |
+| **(iii)** | Genus-1 curvature | $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ &ensp;(Hodge class obstruction) | Frame A |
+| **(iv)** | Clutching / sewing | Modular operad composition via $\partial \overline{\mathcal{M}}_g$ | Frame A |
+| **(v)** | Ordered factorization | $E_1$ structure from ordered configuration spaces | Frame B |
+
+Frame A uses (i)&ndash;(iv). Frame B uses (i), (ii), (v). The five together generate the full theory.
 
 <br>
 
 ## Main Theorems
 
-Four proved theorems form the core.
+Four proved theorems form the core, each admitting a mathematical, mathematical-physics, and physics reading.
 
 | &ensp; | Theorem | Statement |
 |:---:|---------|-----------|
 | **A** | **Geometric Bar-Cobar Duality** | Bar and cobar functors via configuration space integrals form an adjoint pair. For Koszul chiral algebras, the adjunction is an equivalence. |
-| **B** | **Bar-Cobar Inversion** | $\Omega^{\mathrm{ch}} \circ \bar{B}\_{\mathrm{geom}} \simeq \mathrm{id}$ on the Koszul locus, via spectral sequence collapse at $E\_2$. |
-| **C** | **Deformation-Obstruction Complementarity** | $Q\_g(\mathcal{A}) \oplus Q\_g(\mathcal{A}^!) \;\simeq\; H^\*(\overline{\mathcal{M}}\_g,\, Z(\mathcal{A}))$. &ensp; What one algebra sees as deformation, its dual sees as obstruction. |
-| **D** | **Modular Characteristic** | A single invariant $\kappa(\mathcal{A})$ controls the scalar modular package across all genera: universal, additive under tensor product, antisymmetric under duality ($\kappa + \kappa^! = 0$), with generating function the $\hat{A}$-genus. |
+| **B** | **Bar-Cobar Inversion** | $\Omega^{\mathrm{ch}} \circ \bar{B}\_{\mathrm{geom}} \simeq \mathrm{id}$ on the Koszul locus, via spectral sequence collapse at $E_2$. |
+| **C** | **Deformation-Obstruction Complementarity** | $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \;\simeq\; H^\*(\overline{\mathcal{M}}_g,\, Z(\mathcal{A}))$. &ensp;What one algebra sees as deformation, its dual sees as obstruction. |
+| **D** | **Modular Characteristic** | A single invariant $\kappa(\mathcal{A})$ controls the scalar modular package across all genera: universal, additive under $\otimes$, antisymmetric under duality ($\kappa + \kappa^! = 0$), with generating function the $\hat{A}$-genus. |
 
 <br>
 
 ### Theorem Architecture
 
-These decompose into a finer proved structure.
+The four main theorems decompose into a finer proved structure.
 
 | Component | Name | Content |
 |:---------:|------|---------|
@@ -74,11 +97,11 @@ These decompose into a finer proved structure.
 | **A<sub>1</sub>** | Bar concentration | $H^{p,q}(\bar{B}(\mathcal{A})) = 0$ for $q \neq 0$ on the Koszul locus |
 | **A<sub>2</sub>** | Verdier intertwining | $\mathbb{D}\_{\mathrm{Ran}}\, \bar{B}(\mathcal{A}) \simeq \bar{B}(\mathcal{A}^!)$ |
 | **B** | Higher-genus inversion | Quasi-isomorphism on Koszul locus; coderived persistence off it |
-| **C<sub>0</sub>** | Fiber-center identification | $R^q \pi\_\* \bar{B}\_g = 0$ for $q \neq 0$;&ensp; $R^0 \pi\_\* \simeq Z(\mathcal{A})$ |
+| **C<sub>0</sub>** | Fiber-center identification | $R^q \pi_\* \bar{B}_g = 0$ for $q \neq 0$;&ensp; $R^0 \pi_\* \simeq Z(\mathcal{A})$ |
 | **C<sub>1</sub>** | Complementarity | Lagrangian polarization of the genus-$g$ correction space |
 | **D<sub>scal</sub>** | Scalar characteristic | $\kappa(\mathcal{A})$ determines the full scalar modular package |
-| **D<sub>&Delta;</sub>** | Spectral characteristic | Spectral discriminant $\Delta\_{\mathcal{A}}(x)$ from quadratic OPE data |
-| **H** | Hochschild duality | $\mathrm{HH}^n(\mathcal{A}) \cong \mathrm{HH}^{2-n}(\mathcal{A}^!)^\vee \otimes \omega\_X$ |
+| **D<sub>&Delta;</sub>** | Spectral characteristic | Spectral discriminant $\Delta_{\mathcal{A}}(x)$ from quadratic OPE data |
+| **H** | Hochschild duality | $\mathrm{HH}^n(\mathcal{A}) \cong \mathrm{HH}^{2-n}(\mathcal{A}^!)^\vee \otimes \omega_X$ |
 
 <br>
 
@@ -86,23 +109,37 @@ These decompose into a finer proved structure.
 
 The monograph is a two-stratum work.
 
-> **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C, D<sub>scal</sub>, D<sub>&Delta;</sub>, chain-level Drinfeld&ndash;Kohno, all-genera PBW concentration for Kac&ndash;Moody.
-> 1,141 proved claims&ensp;(797 here&hairsp;+&hairsp;344 elsewhere).&ensp; Zero open claims.
+> **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C, D<sub>scal</sub>, D<sub>&Delta;</sub>, Hochschild duality H, chain-level Drinfeld&ndash;Kohno, all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$.
+> &ensp; 1,230 proved claims&ensp;(886 here&hairsp;+&hairsp;344 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
-> **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Full universal $\Theta\_{\mathcal{A}}$, coderived Ran extension, factorization-categorical DK, periodicity synchronization.
-> 153 precisely scoped conjectures organized under five master conjectures.
+> **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Full universal $\Theta_{\mathcal{A}}$ (Maurer&ndash;Cartan class), coderived Ran-space extension, factorization-categorical Drinfeld&ndash;Kohno / Kazhdan&ndash;Lusztig, completed bar for infinite-generator towers, BV-BRST at all genera.
+> &ensp; 163 precisely scoped conjectures organized under five master conjectures.
 
 <br>
 
-### Master Conjectures
+### Five Master Conjectures
+
+All 163 conjectured claims trace to one of five master conjectures that define the research frontier.
 
 | &ensp; | Target | Status | Impact |
 |:---:|--------|--------|--------|
-| **MC1** | Higher-genus PBW degeneration | Kac&ndash;Moody:&ensp;**proved**&ensp;(all genera). &ensp;Virasoro, $\mathcal{W}\_N$:&ensp;open. | Unconditional interacting families |
-| **MC2** | Cyclic $L\_\infty$ &hairsp;+&hairsp; universal $\Theta\_{\mathcal{A}}$ | Open | Full modular homotopy package |
+| **MC1** | Higher-genus PBW degeneration | KM / Vir / $\mathcal{W}_N$:&ensp;**proved**. | Unconditional interacting families |
+| **MC2** | Cyclic $L_\infty$ &hairsp;+&hairsp; universal $\Theta_{\mathcal{A}}$ | Open&ensp;(principal frontier) | Full modular homotopy package |
 | **MC3** | Factorization Drinfeld&ndash;Kohno / Kazhdan&ndash;Lusztig | Open | Quantum groups completion |
-| **MC4** | Completed bar for $\infty$-generators | Open | $\mathcal{W}\_\infty$ and Yangian towers |
+| **MC4** | Completed bar for $\infty$-generators | Open | $\mathcal{W}_\infty$ and Yangian towers |
 | **MC5** | BV-BRST = bar at all genera | Open&ensp;(downstream) | Physics completion |
+
+<br>
+
+### Modular Characteristic Hierarchy
+
+The modular invariants form a three-level hierarchy, each proved at its own level:
+
+| Level | Invariant | Content | Status |
+|:-----:|-----------|---------|:------:|
+| **Scalar** | $\kappa(\mathcal{A})$ | Single number: controls all genera via $\mathrm{obs}_g = \kappa \cdot \lambda_g$. Universal, additive, antisymmetric. | **Proved** |
+| **Spectral** | $\Delta_{\mathcal{A}}(x)$ | Polynomial: discriminant from quadratic OPE data. Detects non-scalar structure. | **Proved** |
+| **Full** | $\Theta_{\mathcal{A}}$ | Maurer&ndash;Cartan class in cyclic deformation complex. Recovers $\kappa$ and $\Delta$ as shadows. | **Conjectural** (MC2) |
 
 <br>
 
@@ -111,19 +148,27 @@ The monograph is a two-stratum work.
 ```mermaid
 %%{init:{'theme':'dark'}}%%
 graph TD
-    subgraph FA["Frame"]
-        F1["Heisenberg &mdash; complete structure in miniature"]
+    subgraph FA["Frame A — Commutative"]
+        F1["Heisenberg ℋ_k<br><i>complete structure in miniature</i>"]
+    end
+
+    subgraph FB["Frame B — Associative"]
+        F2["Yangian Y(𝔤)<br><i>evaluation-locus atom</i>"]
     end
 
     subgraph CB["Proved Core"]
-        C1["Theorem A &mdash; bar-cobar duality"]
-        C2["Theorem B &mdash; inversion"]
-        C3["Theorem C &mdash; complementarity"]
-        C4["Theorem D &mdash; modular characteristic"]
+        C1["Theorem A — bar-cobar duality"]
+        C2["Theorem B — inversion"]
+        C3["Theorem C — complementarity"]
+        C4["Theorem D — modular characteristic"]
+    end
+
+    subgraph DK["DK Square"]
+        D1["Derived Drinfeld–Kohno<br><i>chain-level proved</i>"]
     end
 
     subgraph PO["Portraits"]
-        P1["Kac-Moody"]
+        P1["Kac–Moody"]
         P2["W-Algebras"]
         P3["Yangians"]
         P4["Toroidal / Elliptic"]
@@ -132,20 +177,25 @@ graph TD
     subgraph SY["Synthesis"]
         S1["BV-BRST"]
         S2["Feynman Diagrams"]
-        S3["Master Conjectures MC1 &ndash; MC5"]
+        S3["Master Conjectures MC1–MC5"]
     end
 
     F1 --> C1
+    F2 --> D1
     C1 --> C2 --> C3 --> C4
+    C4 --> D1
     C4 --> P1 & P2 & P3 & P4
+    D1 --> P3
     P1 & P2 & P3 & P4 --> S3
     C4 --> S1 & S2
 
     style F1 fill:#1e1b4b,stroke:#a371f7,color:#e2d9f3
+    style F2 fill:#1e1b4b,stroke:#a371f7,color:#e2d9f3
     style C1 fill:#052e16,stroke:#3fb950,color:#aff5b4
     style C2 fill:#052e16,stroke:#3fb950,color:#aff5b4
     style C3 fill:#052e16,stroke:#3fb950,color:#aff5b4
     style C4 fill:#052e16,stroke:#3fb950,color:#aff5b4
+    style D1 fill:#0a3f2e,stroke:#3fb950,color:#aff5b4
     style P1 fill:#0c2d48,stroke:#58a6ff,color:#a5d6ff
     style P2 fill:#0c2d48,stroke:#58a6ff,color:#a5d6ff
     style P3 fill:#0c2d48,stroke:#58a6ff,color:#a5d6ff
@@ -157,84 +207,111 @@ graph TD
 
 <br>
 
+## Quick Start
+
+### Reading the manuscript
+
+```bash
+# Build the PDF (requires TeX Live 2024+ with pdflatex)
+make fast                    # quick build (≤4 passes)
+open main.pdf                # 1520 pages
+```
+
+**Entry point**: `main.tex` &rarr; `main.pdf`. Start reading at the **Introduction** (Chapter 2), which states the four main theorems and the Leitfaden. The **Heisenberg frame** (Chapter 1) shows the entire theory in a single computable example.
+
+### Suggested reading paths
+
+| Goal | Path |
+|------|------|
+| **Core theory** | Ch 1 (frame) &rarr; Ch 2 (introduction) &rarr; Ch 5 (config spaces) &rarr; Ch 6 (bar-cobar) &rarr; Ch 8 (higher genus) |
+| **Examples first** | Ch 1 &rarr; Ch 19 ($\beta\gamma$) &rarr; Ch 20 (Kac&ndash;Moody) &rarr; Ch 21 ($\mathcal{W}$-algebras) &rarr; Ch 6 (theory) |
+| **Quantum groups** | Ch 1 &rarr; Ch 24 (Yangians) &rarr; Ch 20 (KM, KL regime) &rarr; Ch 34 (concordance) |
+| **Physics** | Ch 1 &rarr; Ch 29 (Feynman) &rarr; Ch 30 (BV-BRST) &rarr; Ch 31 (holomorphic-topological) |
+| **Frontier** | Ch 34 (concordance &mdash; the "constitution") &rarr; MC1&ndash;MC5 roadmaps |
+
+<br>
+
 ## Repository Layout
 
 ```
 chiral-bar-cobar/
-├── main.tex                            entry point
+├── main.tex                            entry point (preamble + \include's)
+├── Makefile                            build system (14 targets)
 ├── chapters/
-│   ├── frame/                          Heisenberg as frame example
-│   ├── theory/                         core theory (21 files)
-│   ├── examples/                       complete portraits (22 files)
-│   └── connections/                    synthesis and programme (9 files)
-├── appendices/                         reference appendices (15 files)
+│   ├── frame/                          Heisenberg as frame example (1 file)
+│   ├── theory/                         core theory (18 files, ~44K lines)
+│   ├── examples/                       complete portraits (17 files, ~31K lines)
+│   └── connections/                    synthesis and programme (9 files, ~9K lines)
+├── appendices/                         reference appendices (15 files, ~7K lines)
 ├── bibliography/references.tex         254 entries
-└── compute/
-    ├── lib/                            verification engine (46 modules)
-    └── tests/                          1,484 tests
+├── compute/                            Python verification engine
+│   ├── lib/                            library modules
+│   ├── scripts/                        standalone scripts
+│   └── tests/                          1,915 tests
+├── metadata/                           machine-readable census, claims, dependency graph
+├── notes/                              session prompts, programmes, research notes
+├── references/                         38 source PDFs (64 MB)
+└── scripts/                            build and QC automation
 ```
 
 <details>
-<summary><b>Frame</b> &ensp; <code>chapters/frame/</code> &ensp; 1 file</summary>
+<summary><b>Frame</b> &ensp; <code>chapters/frame/</code></summary>
 
 &nbsp;
 
 | File | Subject |
 |------|---------|
-| `heisenberg_frame.tex` | Heisenberg algebra as the complete structure in miniature |
+| `heisenberg_frame.tex` | The Heisenberg algebra as the complete structure in miniature. Demonstrates all four main theorems, the modular characteristic, and the double-frame architecture in a single computable example. |
 
 </details>
 
 <details>
-<summary><b>Theory</b> &ensp; <code>chapters/theory/</code> &ensp; 21 files</summary>
+<summary><b>Theory</b> &ensp; <code>chapters/theory/</code> &ensp; 18 files</summary>
 
 &nbsp;
 
-| File | Subject |
-|------|---------|
-| `introduction.tex` | Main results, Leitfaden, dictionary |
-| `algebraic_foundations.tex` | Classical Koszul duality, operads, Weiss covers |
-| `configuration_spaces.tex` | FM compactification, Arnold&ndash;Orlik&ndash;Solomon algebra |
-| `bar_cobar_construction.tex` | Geometric bar/cobar, $d^2=0$, Verdier pairing |
-| `poincare_duality.tex` | Non-abelian Poincar&eacute; duality |
-| `poincare_duality_quantum.tex` | Quantum corrections via modular operad |
-| `higher_genus.tex` | Genus-$g$ bar complex, Theorems B and C |
-| `chiral_koszul_pairs.tex` | Koszul pair theory, chiral Koszulness criteria |
-| `koszul_pair_structure.tex` | Pair classification, periodicity |
-| `chiral_modules.tex` | Module categories, $E_1$ module Koszul duality |
-| `deformation_theory.tex` | Deformation-obstruction theory, curved $A_\infty$ |
-| `hochschild_cohomology.tex` | Chiral Hochschild and cyclic cohomology |
-| `quantum_corrections.tex` | Loop correction formulas |
-| `filtered_curved.tex` | Filtered vs. curved hierarchy |
-| `en_koszul_duality.tex` | $E_n$ Koszul duality, higher-dimensional propagators |
-| `derived_langlands.tex` | Derived Langlands, critical-level oper bar |
+| File | Lines | Subject |
+|------|------:|---------|
+| `introduction.tex` | 1,600 | Main results, Leitfaden, double-frame architecture, $E_1 / E_\infty$ dictionary |
+| `algebraic_foundations.tex` | 1,325 | Classical Koszul duality, operads, Weiss covers |
+| `configuration_spaces.tex` | 3,942 | $C_n(X)$, FM compactification, Arnold&ndash;Orlik&ndash;Solomon algebra |
+| `bar_cobar_construction.tex` | 8,131 | Geometric bar/cobar functors, $d^2=0$, Verdier pairing, coalgebra homological algebra |
+| `poincare_duality.tex` | 677 | Non-abelian Poincar&eacute; duality, bar-computes-dual |
+| `poincare_duality_quantum.tex` | 1,091 | Quantum corrections via modular operad, Feynman transform |
+| `higher_genus.tex` | 7,472 | Genus-$g$ bar complex, Theorems B + C, Kodaira&ndash;Spencer map |
+| `chiral_koszul_pairs.tex` | 2,234 | Koszul pair theory, chiral Koszulness criteria, PBW criterion |
+| `koszul_pair_structure.tex` | 1,617 | Pair classification, periodicity |
+| `chiral_modules.tex` | 4,400 | Module categories, representation theory, $E_1$ module Koszul duality |
+| `deformation_theory.tex` | 1,382 | Deformation-obstruction theory, curved $A_\infty$ |
+| `hochschild_cohomology.tex` | 702 | Chiral Hochschild and cyclic cohomology |
+| `en_koszul_duality.tex` | 915 | $E_n$ Koszul duality, higher-dimensional propagators |
+| `derived_langlands.tex` | 700 | Derived Langlands, critical-level oper bar |
 
 </details>
 
 <details>
-<summary><b>Examples</b> &ensp; <code>chapters/examples/</code> &ensp; 22 files</summary>
+<summary><b>Examples</b> &ensp; <code>chapters/examples/</code> &ensp; 17 files</summary>
 
 &nbsp;
 
-| File | Subject |
-|------|---------|
-| `lattice_foundations.tex` | Lattice VOA engine |
-| `free_fields.tex` | Heisenberg, free fermion, bc system |
-| `beta_gamma.tex` | Symplectic bosons, $\beta\gamma$ bar complex |
-| `heisenberg_eisenstein.tex` | Heisenberg genus expansion, Eisenstein series |
-| `kac_moody_framework.tex` | Affine Kac&ndash;Moody: screening, Wakimoto, admissible levels |
-| `w_algebras_framework.tex` | $\mathcal{W}$-algebra Koszul duality |
-| `w3_composite_fields.tex` | $\mathcal{W}_3$ composite $\Lambda$ field, null vectors, Kac determinant |
-| `w_algebras_deep.tex` | $\mathcal{W}_3$ bar complex, Bershadsky&ndash;Polyakov, DS hierarchy |
-| `minimal_model_fusion.tex` | Verlinde formula, fusion rules, modular tensor categories |
-| `minimal_model_examples.tex` | Ising, tricritical Ising, three-state Potts |
-| `deformation_quantization.tex` | Chiral Kontsevich formality |
-| `deformation_examples.tex` | Star products, Maurer&ndash;Cartan elements |
-| `yangians.tex` | Drinfeld Yangians, $E_1$ structure, Coulomb branches |
-| `toroidal_elliptic.tex` | Double affine algebras, elliptic R-matrix |
-| `genus_expansions.tex` | All-genera expansions for major families |
-| `detailed_computations.tex` | Degree-by-degree tables through weight 5 |
-| `examples_summary.tex` | Master Table of Computed Invariants |
+| File | Lines | Subject |
+|------|------:|---------|
+| `lattice_foundations.tex` | 1,501 | Lattice VOA engine |
+| `free_fields.tex` | 3,540 | Heisenberg, free fermion, $bc$ system |
+| `beta_gamma.tex` | 1,390 | Symplectic bosons, $\beta\gamma$ bar complex |
+| `heisenberg_eisenstein.tex` | 878 | Heisenberg genus expansion, Eisenstein series |
+| `kac_moody_framework.tex` | 2,760 | Affine Kac&ndash;Moody: screening, Wakimoto, admissible levels, Kazhdan&ndash;Lusztig |
+| `w_algebras_framework.tex` | 2,298 | $\mathcal{W}$-algebra Koszul duality, logarithmic extensions |
+| `w3_composite_fields.tex` | 1,023 | $\mathcal{W}_3$ composite $\Lambda$ field, null vectors, Kac determinant |
+| `w_algebras_deep.tex` | 999 | $\mathcal{W}_3$ bar complex, Bershadsky&ndash;Polyakov, DS hierarchy |
+| `minimal_model_fusion.tex` | 822 | Verlinde formula, fusion rules, modular tensor categories |
+| `minimal_model_examples.tex` | 677 | Ising, tricritical Ising, three-state Potts |
+| `deformation_quantization.tex` | 1,169 | Chiral Kontsevich formality, star products |
+| `yangians.tex` | 1,318 | Drinfeld Yangians, $E_1$ Koszul duality, DK square, Coulomb branches |
+| `toroidal_elliptic.tex` | 1,355 | Double affine algebras, elliptic $R$-matrix, Fay identity |
+| `genus_expansions.tex` | 2,500 | All-genera expansions: $\widehat{\mathfrak{sl}}_2$, Virasoro, $\mathcal{W}_3$, genus-2 |
+| `detailed_computations.tex` | 3,684 | Degree-by-degree tables through weight 5 |
+| `examples_summary.tex` | 1,411 | Master Table of Computed Invariants |
 
 </details>
 
@@ -243,17 +320,17 @@ chiral-bar-cobar/
 
 &nbsp;
 
-| File | Subject |
-|------|---------|
-| `poincare_computations.tex` | Non-abelian Poincar&eacute; duality computations |
-| `feynman_diagrams.tex` | Feynman diagram interpretation |
-| `feynman_connection.tex` | Feynman&ndash;configuration space bridge |
-| `bv_brst.tex` | BV-BRST formalism: bar = BRST at genus 0 |
-| `holomorphic_topological.tex` | Holomorphic-topological theories, AGT |
-| `physical_origins.tex` | 4d/2d, D-branes, non-commutative Chern&ndash;Simons |
-| `kontsevich_integral.tex` | Kontsevich integral, Vassiliev invariants |
-| `genus_complete.tex` | Universal genus tower, Eynard&ndash;Orantin recursion |
-| `concordance.tex` | Literature concordance and status ledger |
+| File | Lines | Subject |
+|------|------:|---------|
+| `poincare_computations.tex` | 310 | Non-abelian Poincar&eacute; duality computations |
+| `feynman_diagrams.tex` | 1,264 | Feynman diagram interpretation of bar differentials |
+| `feynman_connection.tex` | 447 | Feynman&ndash;configuration space bridge |
+| `bv_brst.tex` | 739 | BV-BRST formalism: bar = BRST at genus 0 |
+| `holomorphic_topological.tex` | 1,158 | Holomorphic-topological theories, AGT correspondence |
+| `physical_origins.tex` | 166 | 4d/2d, D-branes, non-commutative Chern&ndash;Simons |
+| `kontsevich_integral.tex` | 523 | Kontsevich integral, Vassiliev invariants, Chern&ndash;Simons bridge |
+| `genus_complete.tex` | 713 | Universal genus tower, Eynard&ndash;Orantin recursion |
+| `concordance.tex` | 569 | Literature concordance, status ledger, MC1&ndash;MC5 roadmaps |
 
 </details>
 
@@ -264,10 +341,10 @@ chiral-bar-cobar/
 
 | File | Subject |
 |------|---------|
-| `general_relations.tex` | $A_\infty$ relations, sign formulas |
 | `arnold_relations.tex` | Arnold relations and their consequences |
 | `signs_and_shifts.tex` | Koszul signs, suspensions, determinants |
-| `sign_conventions.tex` | Loday&ndash;Vallette vs. manuscript dictionary |
+| `sign_conventions.tex` | Loday&ndash;Vallette vs. manuscript convention dictionary |
+| `general_relations.tex` | $A_\infty$ relations, sign formulas |
 | `theta_functions.tex` | Theta functions, modular forms |
 | `spectral_sequences.tex` | Filtered complexes, convergence theorems |
 | `spectral_higher_genus.tex` | Hodge-to-de Rham at higher genus |
@@ -278,7 +355,7 @@ chiral-bar-cobar/
 | `existence_criteria.tex` | Existence criteria for duality structures |
 | `nilpotent_completion.tex` | Nilpotent and pronilpotent completion |
 | `coderived_models.tex` | Coderived and contraderived model structures |
-| `notation_index.tex` | Complete notation index |
+| `notation_index.tex` | Complete notation index (1,439 entries) |
 
 </details>
 
@@ -286,59 +363,186 @@ chiral-bar-cobar/
 
 ## Building
 
-> **Requirements**:&ensp; TeX Live 2024+ with `pdflatex`, `memoir`, `ebgaramond`, `newtxmath`, `microtype`, `tikz-cd`, `thmtools`, `mathtools`, `tcolorbox`.
+> **Requirements** &ensp; TeX Live 2024+ with `pdflatex`, `memoir`, `ebgaramond`, `newtxmath`, `microtype`, `tikz-cd`, `thmtools`, `mathtools`, `tcolorbox`.
 
 | Command | Description |
 |---------|-------------|
-| <kbd>make</kbd> | Full build&hairsp;&mdash;&hairsp;up to 6 passes with convergence detection. Stamp-based idempotent. |
-| <kbd>make fast</kbd> | Single-pass build&hairsp;&mdash;&hairsp;primary iteration tool. Same idempotency. |
-| <kbd>make test</kbd> | Run compute verification suite&hairsp;&mdash;&hairsp;1,484 tests via `pytest`. |
-| <kbd>make clean</kbd> | Remove aux/log/toc debris. Preserves PDF and build stamp. |
+| <kbd>make</kbd> | Full build (up to 6 passes with convergence detection). Stamp-based idempotent. |
+| <kbd>make fast</kbd> | Quick converging build (up to 4 passes). Primary iteration tool. Same idempotency. |
+| <kbd>make watch</kbd> | Continuous rebuild on save (requires `latexmk`). |
+| <kbd>make check</kbd> | Halt-on-error validation for CI / pre-commit. |
+| <kbd>make integrity</kbd> | Strict integrity gate: clean rebuild + diagnostics + claim-tag coverage. |
+| <kbd>make draft</kbd> | Draft mode (skips image rendering, faster). |
+| <kbd>make clean</kbd> | Remove aux/log/toc debris. **Preserves** PDF and build stamp. |
 | <kbd>make veryclean</kbd> | Remove everything including PDF and stamp. Forces full rebuild. |
-| <kbd>make count</kbd> | Manuscript statistics. |
+| <kbd>make count</kbd> | Manuscript statistics (files, lines, pages, PDF size). |
 | <kbd>make census</kbd> | Claim status census across all source files. |
+| <kbd>make metadata</kbd> | Regenerate machine-readable metadata (`metadata/`). |
+| <kbd>make verify</kbd> | Run anti-pattern verification on all `.tex` files. |
+| <kbd>make test</kbd> | Run compute verification suite (1,915 tests via `pytest`). |
+| <kbd>make help</kbd> | Print target summary. |
 
 Entry point is `main.tex`. Build produces `main.pdf`.
 
 > [!IMPORTANT]
-> A file-watcher may spawn competing `pdflatex` processes on save. Kill before manual builds:&ensp;`pkill -f pdflatex`
+> A file-watcher may spawn competing `pdflatex` processes on save. Kill before manual builds: &ensp;`pkill -f pdflatex`
 
-**Fonts.**&ensp; Default: EB Garamond (free) via `pdflatex`. For Adobe Garamond Pro, uncomment the XeLaTeX block in `main.tex` and compile with `xelatex` or `lualatex`.
+**Build stamp architecture.** &ensp; The Makefile uses a `.build_stamp` sentinel. `make clean` preserves it, so `make` after `make clean` is a no-op when sources are unchanged. Only `make veryclean` forces a full rebuild.
+
+**Fonts.** &ensp; Default: EB Garamond (free, via `pdflatex`). For Adobe Garamond Pro, uncomment the XeLaTeX block in `main.tex` and compile with `xelatex` or `lualatex`.
 
 <br>
 
 ## Compute Engine
 
-A Python verification engine independently checks the manuscript's claims.
+A Python verification engine independently checks the manuscript's mathematical claims.
 
-![Tests](https://img.shields.io/badge/tests%20passing-1484-58a6ff?style=flat-square&labelColor=0d1117)
-![Modules](https://img.shields.io/badge/modules-46-a371f7?style=flat-square&labelColor=0d1117)
-![Lines](https://img.shields.io/badge/lines-19K-a371f7?style=flat-square&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-1915-58a6ff?style=flat-square&labelColor=0d1117)
+![Python](https://img.shields.io/badge/python-54K%20lines-a371f7?style=flat-square&labelColor=0d1117)
+
+### Setup
+
+```bash
+cd compute
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt    # numpy, sympy, pytest
+```
+
+### Running tests
+
+```bash
+# From repository root:
+make test
+
+# Or directly:
+cd compute && .venv/bin/python -m pytest tests/ -q
+```
+
+### Module catalogue
 
 <details>
-<summary><b>Module catalogue</b></summary>
+<summary><b>Bar complexes</b></summary>
 
-&nbsp;
-
-| Group | Modules | Verifies |
-|-------|---------|----------|
-| **Bar complexes** | `bar_complex` `chiral_bar` `bar_comparison` `bar_modular` `bar_gf_solver` | Bar differential, $d^2 = 0$, generating functions |
-| **Kac-Moody** | `km_bar_differential` `genus1_pbw_sl2` | KM bar bicomplex, genus-1 PBW concentration |
-| **Virasoro** | `virasoro_bar` `virasoro_ainfty` `virasoro_pbw_genus1` | Virasoro bar cohomology, $A_\infty$ structure |
-| **W-algebras** | `w3_bar_extended` `w_algebra_pbw_genus1` `w_infinity_ope` `w_infinity_support_complex` | $\mathcal{W}_3$ composites, PBW, $\mathcal{W}_\infty$ OPE |
-| **Free fields** | `heisenberg_bar` `fermion_bar` `betagamma_bar` `e8_lattice_bar` | Family-specific bar cohomology |
-| **Other algebras** | `sl3_bar` `nonsimplylaced_bar` `minimal_model_bar` `toroidal_bar` | $\mathfrak{sl}_3$, non-simply-laced, minimal models, toroidal |
-| **DS reduction** | `ds_reduction` `nonprincipal_ds_reduction` `nonprincipal_ds_normalization` `nonprincipal_ds_orbits` | Drinfeld&ndash;Sokolov reduction, non-principal orbits |
-| **Genus** | `genus_bridge` `genus_expansion` `curvature_genus_bridge` `deformation_bar` | Genus tower, curvature mechanism |
-| **Koszul & spectral** | `koszul_hilbert` `koszul_pairs` `spectral_sequence` | Hilbert series, Koszul recognition |
-| **BV & specialized** | `bv_brst` `bv_duality` `pronilpotent_bar` `cross_algebra` `chiral_invariant_machine` | BV formalism, pronilpotent completion |
-| **Infrastructure** | `lie_algebra` `os_algebra` `fm_compactification` `htt` `utils` | Lie algebra data, Arnold relations, FM geometry |
+| Module | Verifies |
+|--------|----------|
+| `bar_complex` | Bar differential, $d^2 = 0$ |
+| `chiral_bar` | Chiral bar construction |
+| `bar_comparison` | Classical vs. chiral bar comparison |
+| `bar_modular` | Modular bar complex |
+| `bar_gf_solver` | Generating function solvers |
 
 </details>
 
-```bash
-cd compute && .venv/bin/python -m pytest tests/ -q
-```
+<details>
+<summary><b>Kac&ndash;Moody</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `km_bar_differential` | KM bar bicomplex |
+| `genus1_pbw_sl2` | Genus-1 PBW concentration for $\mathfrak{sl}_2$ |
+
+</details>
+
+<details>
+<summary><b>Virasoro</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `virasoro_bar` | Virasoro bar cohomology |
+| `virasoro_ainfty` | Virasoro $A_\infty$ structure |
+| `virasoro_pbw_genus1` | Virasoro PBW genus-1 concentration |
+
+</details>
+
+<details>
+<summary><b>$\mathcal{W}$-algebras</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `w3_bar_extended` | $\mathcal{W}_3$ composites, bar complex |
+| `w_algebra_pbw_genus1` | $\mathcal{W}$-algebra PBW genus-1 |
+| `w_infinity_ope` | $\mathcal{W}_\infty$ OPE verification |
+| `w_infinity_support_complex` | $\mathcal{W}_\infty$ support complex |
+
+</details>
+
+<details>
+<summary><b>Free fields</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `heisenberg_bar` | Heisenberg bar cohomology |
+| `fermion_bar` | Free fermion bar complex |
+| `betagamma_bar` | $\beta\gamma$ system bar complex |
+| `e8_lattice_bar` | $E_8$ lattice VOA bar |
+
+</details>
+
+<details>
+<summary><b>Other algebras</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `sl3_bar` | $\mathfrak{sl}_3$ bar complex |
+| `nonsimplylaced_bar` | Non-simply-laced families |
+| `minimal_model_bar` | Minimal model bar complexes |
+| `toroidal_bar` | Toroidal bar complex |
+
+</details>
+
+<details>
+<summary><b>DS reduction</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `ds_reduction` | Drinfeld&ndash;Sokolov reduction |
+| `nonprincipal_ds_reduction` | Non-principal DS orbits |
+| `nonprincipal_ds_normalization` | DS normalization |
+| `nonprincipal_ds_orbits` | Non-principal orbit classification |
+
+</details>
+
+<details>
+<summary><b>Genus &amp; modular</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `genus_bridge` | Genus tower construction |
+| `genus_expansion` | Genus expansion formulas |
+| `curvature_genus_bridge` | Curvature mechanism |
+| `deformation_bar` | Deformation bar complex |
+| `mc2_cyclic_linf` | MC2: cyclic $L_\infty$ seeds |
+
+</details>
+
+<details>
+<summary><b>Koszul &amp; spectral</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `koszul_hilbert` | Koszul Hilbert series |
+| `koszul_pairs` | Koszul pair recognition |
+| `spectral_sequence` | Spectral sequence convergence |
+
+</details>
+
+<details>
+<summary><b>BV &amp; infrastructure</b></summary>
+
+| Module | Verifies |
+|--------|----------|
+| `bv_brst` | BV-BRST formalism |
+| `bv_duality` | BV duality |
+| `pronilpotent_bar` | Pronilpotent completion |
+| `cross_algebra` | Cross algebra structures |
+| `chiral_invariant_machine` | Chiral invariant computation |
+| `lie_algebra` | Lie algebra data ($\mathfrak{sl}_2$, $\mathfrak{sl}_3$, $\mathfrak{sp}_4$, ...) |
+| `os_algebra` | Arnold&ndash;Orlik&ndash;Solomon relations |
+| `fm_compactification` | FM geometry |
+| `htt` | Homotopy transfer (SDR, tree formulas) |
+
+</details>
 
 <br>
 
@@ -351,14 +555,46 @@ cd compute && .venv/bin/python -m pytest tests/ -q
 | $\overline{C}\_n(X)$ | Fulton&ndash;MacPherson compactification |
 | $\eta\_{ij} = d\!\log(z\_i - z\_j)$ | Logarithmic 1-forms (propagators) |
 | $\mathcal{A}^!$ | Koszul dual chiral algebra |
-| $\kappa(\mathcal{A})$ | Koszul curvature invariant |
+| $\kappa(\mathcal{A})$ | Koszul curvature / scalar modular characteristic |
 | $\Delta\_{\mathcal{A}}(x)$ | Spectral discriminant |
-| $\Theta\_{\mathcal{A}}$ | Universal Maurer&ndash;Cartan class&ensp;*(conjectural)* |
+| $\Theta\_{\mathcal{A}}$ | Universal Maurer&ndash;Cartan class&ensp;*(conjectural, MC2)* |
 | $k + h^\vee$ | Shifted level (Kac&ndash;Moody) |
+| $k' = -k - 2h^\vee$ | Feigin&ndash;Frenkel dual level |
 | $\mathcal{W}\_k(\mathfrak{g})$ | $\mathcal{W}$-algebra at level $k$ |
 | $Q\_g(\mathcal{A})$ | Genus-$g$ quantum corrections |
+| $d\_{\mathrm{fib}}$ | Fiberwise curved differential &ensp;($d\_{\mathrm{fib}}^2 = \kappa \cdot \omega\_g$) |
+| $D\_g$ | Total corrected differential &ensp;($D\_g^2 = 0$) |
 
-Full notation index:&ensp;`appendices/notation_index.tex`.
+Full notation index: &ensp;`appendices/notation_index.tex` &ensp;(1,439 entries).
+
+<br>
+
+## Conventions
+
+| Convention | Choice |
+|------------|--------|
+| **Grading** | Cohomological: $\|d\| = +1$ &ensp;(Loday&ndash;Vallette uses homological) |
+| **Bar construction** | Desuspension: $B(\mathcal{A}) = T^c(s^{-1}\bar{\mathcal{A}},\, d)$ |
+| **Suspension** | $sV = V[-1]$ under $V[n]^k = V^{k+n}$ |
+| **Koszul dual** | $\mathrm{Com}^! = \mathrm{Lie}$, &ensp; $\mathrm{Sym}^! = \Lambda$ |
+| **Sugawara** | $T = \frac{1}{2(k+h^\vee)} \sum :J^a J^a:$, &ensp; $c = \frac{k \cdot \dim\mathfrak{g}}{k + h^\vee}$ |
+
+Detailed sign dictionary: &ensp;`appendices/sign_conventions.tex`.
+
+<br>
+
+## Claim Status Tags
+
+Every mathematical statement in the manuscript carries a machine-readable status tag:
+
+| Tag | Meaning | Count |
+|-----|---------|------:|
+| `\ClaimStatusProvedHere` | Proved in this manuscript | 886 |
+| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 344 |
+| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 163 |
+| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 31 |
+
+Run `make census` for a live count. Machine-readable data: `metadata/census.json`, `metadata/claims.jsonl`.
 
 <br>
 
@@ -366,11 +602,11 @@ Full notation index:&ensp;`appendices/notation_index.tex`.
 
 Familiarity assumed with:
 
-- **Operad theory** and Koszul duality&ensp;*(Loday&ndash;Vallette, Algebraic Operads)*
-- **Vertex and chiral algebras**&ensp;*(Beilinson&ndash;Drinfeld, Frenkel&ndash;Ben-Zvi)*
+- **Operad theory** and Koszul duality &ensp;*(Loday&ndash;Vallette,* Algebraic Operads*)*
+- **Vertex and chiral algebras** &ensp;*(Beilinson&ndash;Drinfeld; Frenkel&ndash;Ben-Zvi,* Vertex Algebras and Algebraic Curves*)*
 - **Configuration spaces** and Fulton&ndash;MacPherson compactifications
-- **Homological algebra**:&ensp;$A\_\infty$, $L\_\infty$, spectral sequences, derived categories
-- **Moduli of curves**&ensp;$\overline{\mathcal{M}}\_{g,n}$ and their cohomology
+- **Homological algebra**: &ensp;$A_\infty$, $L_\infty$, spectral sequences, derived categories
+- **Moduli of curves** &ensp;$\overline{\mathcal{M}}_{g,n}$ and their cohomology
 
 <br>
 
@@ -378,6 +614,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>1,417 pages&ensp;&middot;&ensp;89,000 lines of LaTeX&ensp;&middot;&ensp;68 source files&ensp;&middot;&ensp;254 references&ensp;&middot;&ensp;19,000 lines of Python</sub>
+<sub>1,520 pages &ensp;&middot;&ensp; 100,000 lines of LaTeX &ensp;&middot;&ensp; 68 source files &ensp;&middot;&ensp; 254 references &ensp;&middot;&ensp; 54,000 lines of Python &ensp;&middot;&ensp; 1,915 tests</sub>
 
 </div>

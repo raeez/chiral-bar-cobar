@@ -16,6 +16,24 @@ subject. The rewrite should make the proved modular Koszul core read as
 Stratum I of the larger theory, not as a disconnected accumulation of
 results.
 
+### The Dual Imperative
+
+Two principles govern all work. They amplify each other.
+
+- **Maximalist ambition**: Always push for the most powerful, most
+  general theorems. The book yearns toward the shape of theorems
+  implied but not yet inked — that yearning is a research signal,
+  not idle aspiration. The target is foundational work that changes
+  how the subject is understood.
+- **Maximal truth-seeking**: Every claim processed with equal rigor —
+  TeX source, compute scripts, review notes, session state. Know
+  exactly what is proved, at what level, with what hypotheses. When
+  claims outrun proofs, strengthen the proof first.
+
+The synthesis: precise knowledge of what is proved enables credible
+pursuit of the most powerful theorems. Frontier discipline is not
+conservatism — it is honesty that lets the frontier be pushed further.
+
 ## 2. Working Understanding of the Book
 
 The durable understanding from the `raeeznotes*.md` sequence is:
@@ -23,12 +41,24 @@ The durable understanding from the `raeeznotes*.md` sequence is:
 - the theorematic spine A/B/C/D is now materially stronger;
 - the former MC1 bottleneck is resolved for the standard finite-type interacting families
   (KM, Virasoro, principal finite-type `W_N`);
-- the main live mathematical weakness is the periodicity flank;
-- the live `W` frontier is now infinite-generator completion and
-  non-principal orbit duality, not finite-type PBW degeneration;
+- the foundational live mathematical frontier is now MC2, while
+  periodicity remains an orthogonal weak flank;
+- the live `W` frontier is now the filtered H-level /
+  coefficient-identification package for `W_\infty` and Yangian towers:
+  prove the named identities
+  `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)` and
+  `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)`, close the corresponding
+  finite-detection packages, and separate that work from the distinct
+  non-principal orbit-duality frontier, whose exact remaining packets are:
+  the dual-orbit input package, the orbit-indexed level-shift package,
+  and the paired DS seed-transport/globalization package;
 - the main structural weakness is backward propagation of the new status
   discipline;
 - Chapter 34 / concordance is the control ledger;
+- the Yangian evaluation-locus Drinfeld-Kohno square now functions as a
+  secondary entry atom for the braided/factorization face of the
+  subject, but the extension beyond the evaluation locus and the
+  dg-shifted comparison remain downstream frontier work;
 - the book is strongest when split into two strata:
   proved modular Koszul core and programmatic modular homotopy theory.
 
@@ -39,6 +69,10 @@ Use the following architecture as the canonical target.
 ### Layer A: Frame
 
 - Heisenberg as the smallest example carrying the whole structure.
+- Secondary entry atom for the noncommutative face: the Yangian
+  evaluation-locus Drinfeld-Kohno square, which isolates ordered
+  factorization and braid reversal without displacing Heisenberg as the
+  primary frame.
 - Purpose: inevitability, not pedagogy.
 
 ### Layer B: Proved core
@@ -61,6 +95,16 @@ Use the following architecture as the canonical target.
   and MC5 as downstream consequence.
 - The explicit next subject: modular homotopy theory for factorization
   algebras on curves.
+
+### Layer E: Implied theorems (the yearning)
+
+- The book wants to become something not yet stated. When proved
+  theorems converge on a structural pattern that no single theorem
+  captures, that pattern is a research signal.
+- State implied theorems as precise conjectures with exact hypotheses.
+  Test computationally. Prove or mark with honest scope remarks.
+- This is not speculative decoration — it is the maximalist ambition
+  made operational by the discipline of maximal truth-seeking.
 
 ## 4. Chriss-Ginzburg Lessons to Enforce
 
@@ -150,7 +194,9 @@ Priority order for the active rewrite campaign:
    frontier ledgers, and any remaining local summaries.
 2. Keep finite-type principal `W_N` in Stratum I and isolate
    `W_\infty` / Yangian H-level comparison problems and non-principal
-   orbit duality in Stratum II.
+   orbit duality in Stratum II, with the latter decomposed into
+   dual-orbit input, orbit-indexed level-shift, and paired DS
+   seed-transport packets.
 3. Advance MC2 first: the theorem surface now reduces the cyclic
    deformation / universal `Theta_A` frontier to three exact packages,
    namely the intrinsic cyclic `\Defcyc(\cA)` model, the geometric

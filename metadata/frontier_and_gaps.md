@@ -1,7 +1,11 @@
 # Frontier References and Computational Gap Analysis
 
 Generated: 2026-03-05 (base report)
-Last status refresh: 2026-03-08
+Last status refresh: 2026-03-09
+
+**Dual Imperative**: Gaps are tracked not to limit ambition but to enable it.
+Precise knowledge of what remains open makes credible the push for the most
+powerful theorems the subject admits.
 
 ## Frontier Reset (March 8, 2026)
 
@@ -20,8 +24,11 @@ Last status refresh: 2026-03-08
   locus), with `W_3` as explicit support and higher `N` tracked as a
   computation-depth gap rather than a theorem-status gap.
 - The active `W` frontier is now split cleanly:
-  infinite-generator completion (`W_\infty` / Yangian towers, MC4 infrastructure)
-  and non-principal orbit duality (representation-theoretic frontier).
+  the infinite-generator H-level comparison / coefficient-identity
+  package for `W_\infty` and Yangian towers, and non-principal orbit
+  duality (a distinct three-packet orbit-indexed frontier).  The latter is now read
+  as three exact packets: dual-orbit input, orbit-indexed level shift,
+  and paired DS seed transport/globalization.
 - For Virasoro, the same-family partner `Vir_{26-c}` should be read as the
   proved M/S-level complementarity shadow used in genus and semi-infinite
   calculations.  The stronger H-level realization by an infinite-generator
@@ -72,6 +79,12 @@ Last status refresh: 2026-03-08
   a principal-stage compatible factorization model for `W_\infty`, and
   an RTT-adapted filtration on the dg-shifted Yangian whose finite
   quotients recover the finite RTT stages.
+- The physics-facing frontier is downstream of those packages:
+  MC5 does not ask first for a bulk/bar or AGT miracle.  It asks for a
+  BV/BRST/bar, holographic, or AGT comparison only after the relevant
+  filtered H-level target with the correct finite quotients has been
+  constructed and matched coefficientwise to the theorematic finite
+  stages.
 - The formal descent layer is also separated now:
   quotient systems or preserved RTT-level ideals are enough to descend
   the relevant dg data; what remains open is constructing those
@@ -87,6 +100,99 @@ Last status refresh: 2026-03-08
   line-operator kernels are written coefficientwise in RTT level, and
   the `W_\infty` quotient system follows once the higher-spin OPE is
   spin-triangular and agrees stagewise with the principal DS formulas.
+- The remaining open input after that preservation step is now exact:
+  on the Yangian side one must match the coefficientwise truncated RTT
+  relations and evaluation modules of the dg quotient with `Y_{\le N}`,
+  while on the `W_\infty` side one must match the stagewise quotient
+  OPE coefficients and residue/bar operations with the principal
+  Drinfeld--Sokolov stages.
+- The next reduction is now also formalized:
+  the Yangian side is reduced to equality of the extracted
+  line-operator kernel coefficients with the finite truncated RTT
+  coefficients, and the `W_\infty` side is reduced to equality of the
+  extracted local OPE/residue coefficients with the principal
+  Drinfeld--Sokolov coefficients.
+- The live MC4 coefficient tasks are now named mode by mode:
+  prove `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)` on the Yangian side and
+  `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)` on the
+  `W_\infty` side.
+- The next finite reduction is now explicit:
+  detect the Yangian identities on a faithful evaluation family, and
+  detect the `W_\infty` identities from the finitely many
+  generator-level residue coefficients plus translation closure.
+- The finite checklists are now named:
+  the Yangian side reduces to the boundary strip
+  `{\Delta_{a,0}(N)}_{0\le a\le N}`, and the `W_\infty` side reduces to
+  the explicit finite primary index set `\mathcal{I}_N`.
+- The Yangian finite checklist is now sharper than that slogan:
+  at stage `N`, the boundary strip is detected on generic tensor
+  products of the fundamental evaluation module of lengths at most
+  `N+1`.
+- The Yangian reduction is now sharper still:
+  once the fundamental `L`-operator satisfies the truncated RTT
+  relation and the twisted coproduct multiplies monodromy matrices in
+  the standard way, higher tensor lengths are formal.
+- The Yangian reduction is now exact at the pairwise level:
+  the remaining fundamental check is the auxiliary-space kernel
+  identity `L_a(u)=R_{0a}(u-a)`, after which the RTT relation is just
+  the Yang--Baxter equation.
+- For the standard type-A RTT tower, that pairwise step is now reduced
+  again: the auxiliary kernel is forced by three local checks on the
+  fundamental line, namely `\mathfrak{sl}_M`-equivariance, unit
+  asymptotic, and residue `-\hbar P`.
+- In that same type-A setting, once the line-operator construction
+  fixes symmetry and asymptotic normalization, the genuinely analytic
+  Yangian task is only the residue computation at the simple pole, now
+  reduced further to the two residue eigenvalues on `\Sym^2(V)` and
+  `\Lambda^2(V)`, and in fact to the single ordered tensor-line
+  residue `e_1\otimes e_2 \mapsto -\hbar\,e_2\otimes e_1`.
+- The first nontrivial `W_\infty` seed packet is now explicit:
+  beyond the theorematic Virasoro block, stage `N=3` is exactly a list
+  of `15` primary coefficients.
+- That stage-`3` packet is now mostly discharged on the theorem
+  surface: the explicit `W_3` OPE reduces it to `3` nonzero primary
+  coefficients and `12` forced vanishing statements, so the next
+  genuinely new higher-spin packet is stage `N=4`.
+- The stage-`4` packet is now compressed as well:
+  after removing the exact stress-tensor sector and the theorematic
+  `(3,3)` `W_3` sector, the residual stage-`4` packet has exactly
+  `29` primary coefficients.
+- Primaryity first compresses that stage-`4` packet again:
+  only the `7` top-pole coefficients can be nonzero, while the
+  remaining `22` entries are forced zeros.
+- Skew-symmetry then compresses it once more:
+  the odd self-OPE coefficient `(4,4,3,5)` vanishes, leaving `6`
+  live stage-`4` coefficients and `23` forced zeros.
+- Those `6` coefficients now sit in three explicit local OPE blocks:
+  one `(3,3)\to 4` block, one mixed `(3,4)` block, and one even
+  `(4,4)` block.
+- Among those three blocks, the only genuinely mixed stage-`4`
+  higher-spin data are the three coefficients in the mixed `(3,4)`
+  block.
+- Within that mixed `(3,4)` block, the `W^{(3)}` target channel is
+  swap-even under reversing the mixed OPE order, while the
+  `W^{(2)}` and `W^{(4)}` target channels are swap-odd.
+- On the principal Drinfeld--Sokolov side, the mixed `W^{(2)}` target
+  channel vanishes by mixed-weight orthogonality plus the Virasoro Ward
+  identity, while the principal `W^{(4)}`-`W^{(4)}\to T` coefficient is
+  universally fixed to `2`.  The live stage-`4` comparison therefore
+  consists of four free coefficient channels
+  `c_{334}`, `c_{444}`, `\mathsf{C}_{3,4;3;0,4}`,
+  `\mathsf{C}_{3,4;4;0,3}`, together with the residue-side checks
+  `\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2` and
+  `\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0`.
+- This finite-detection pair is now the active repo-wide MC4
+  open-problem ledger:
+  build the filtered H-level targets, prove the exact identities
+  `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)` and
+  `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)`, and close these two
+  finite-detection packages; on the `W_\infty` side the first live
+  packets are already reduced on the theorem surface to the stage-`3`
+  fifteen-coefficient packet and the exact stage-`4` endpoint given by
+  the four channels `c_{334}`, `c_{444}`,
+  `\mathsf{C}_{3,4;3;0,4}`, `\mathsf{C}_{3,4;4;0,3}` together with the
+  residue-side checks `\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2` and
+  `\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0`.
 - Periodicity is not part of that master-conjecture chain.
   Its structural lcm/profile shadow is theorematic, but modular
   bar-cohomology periodicity and the sharp geometric factors remain a
@@ -412,7 +518,20 @@ For each, we analyze the state of four computations:
 - Module Koszul duality for W_3 modules not developed.
 - The non-principal nilpotent case (Conjecture conj:w-orbit-duality) remains open,
   but the type-A hook/subregular combinatorial frontier scaffold is now
-  implemented in `compute/lib/nonprincipal_ds_orbits.py`.
+  implemented in `compute/lib/nonprincipal_ds_orbits.py`. This scaffold
+  serves the orbit-indexed non-principal transport problem and should
+  not be conflated with the exact MC4 coefficient-identification packet
+  for `W_\infty` / Yangian towers.
+- Exact remaining packet 1: determine the dual-orbit input required by
+  Conjecture `conj:w-orbit-duality` beyond the current seeded type-A
+  catalog, including the needed component-group compatibilities.
+- Exact remaining packet 2: determine the orbit-indexed non-principal
+  level-shift rule `k' = k'(k,f)` beyond the current seeded correction
+  table.
+- Exact remaining packet 3: construct and globalize paired
+  non-principal DS seed transports so that survivor brackets,
+  cohomology profiles, and normalization data agree on dual orbit
+  pairs beyond the present hook/subregular theorematic seeds.
 - The non-principal DS seed layer is now split into
   `compute/lib/bv_duality.py` (type-A BV dual pairs, including the first
   non-self-dual hook pair at `A_3`) and
@@ -542,7 +661,10 @@ For each, we analyze the state of four computations:
   small general type-A partitions (for example `(3,2,1)`) now run through the
   same mixed/nonlinear/survivor-coupled block builders, and the general mixed
   and nonlinear verification layer is now reduced by transpose symmetry, so
-  those checks hold on a symmetry-reduced seeded range through size `9`.
+  those checks hold on a symmetry-reduced seeded range through size `9`; the
+  same general survivor-coupled family-via-duality layer now also remains
+  positive through size `12` in survivor degree `1` and through size `11`
+  in survivor degree `2`.
 - That generic partition-pair layer no longer stops at the survivor-coupled
   truncation. The same seeded two-row and `general_nonprincipal` families now
   carry witness-level survivor-action lifts, first-transfer correction data,
@@ -552,11 +674,19 @@ For each, we analyze the state of four computations:
   semidirect blocks restore `d^2=0` and satisfy the same dual-swap checks.
 - The corrected semidirect non-hook verification layer is now sharper too:
   two-row families are checked by a one-pass seeded bundle through
-  `\mathfrak{sl}_7`, and the broader seeded `general_nonprincipal` family is
+  `\mathfrak{sl}_8` at the first corrected-semidirect truncation
+  `(0,1,1)`; the same two-row family-via-duality layer now also remains
+  positive in survivor degree `2` through `\mathfrak{sl}_8`, and the
+  broader seeded `general_nonprincipal` family is
   now reduced by transpose symmetry, so at the first corrected semidirect
-  truncation `(0,1,1)` the corrected semidirect checks hold on a
-  symmetry-reduced seeded range through size `9` rather than only on the
-  first general seed.
+  truncation `(0,1,1)` explicit symmetry-reduced verification now reaches
+  size `14` in survivor degree `1`; this now also runs as the stable seeded
+  bundle after replacing repeated tall exact solves in the reduced
+  survivor-bracket layer by a fixed row-minor solver and pruning
+  semidirect branches that cannot contribute at internal CE cutoff `1`.
+  The same
+  general family-via-duality layer remains positive in survivor degree `2`
+  through size `11`, rather than only on the first general seed.
 - The first non-self-dual hook pair now also carries the first nonlinear
   current/OPE correction on top of those mixed `u-c-b` truncations: the
   `c \cdot \rho` action of the positive sector on shifted currents and
@@ -681,9 +811,44 @@ For each, we analyze the state of four computations:
   cancellation on the same half-catalog `r=1,\dots,6`. The live family
   frontier is now `\mathfrak{sl}_{14}`.
 - One step beyond that written boundary is already positive in compute:
-  `\mathfrak{sl}_{14}` has sampled hook orientations `r=1,2,3` with
-  first-transfer cancellation, corrected semidirect square-zero at `(0,1,1)`,
-  and positive transpose-dual comparison.
+  `\mathfrak{sl}_{14}` now satisfies the corrected semidirect check at
+  `(0,1,1)` on the full hook half-catalog `r=1,\dots,6`, with positive
+  transpose-dual comparison on the nontrivial pairs and first-transfer
+  cancellation on the same half-catalog. The live family frontier is now
+  `\mathfrak{sl}_{15}`.
+- The next rank is already computationally open at low depth:
+  `\mathfrak{sl}_{15}` now satisfies the corrected semidirect check at
+  `(0,1,1)` on the full hook half-catalog `r=1,\dots,7`, with positive
+  transpose-dual comparison on the nontrivial pairs and first-transfer
+  cancellation on the same half-catalog. The live family frontier is now
+  `\mathfrak{sl}_{16}`.
+- One step beyond that written boundary is already open at low depth:
+  `\mathfrak{sl}_{16}` now satisfies the corrected semidirect check at
+  `(0,1,1)` on the full hook half-catalog `r=1,\dots,7`, with positive
+  transpose-dual comparison on the nontrivial pairs and first-transfer
+  cancellation on the same half-catalog. The live family frontier is now
+  `\mathfrak{sl}_{17}`.
+- The next rank is already computationally open at low depth:
+  `\mathfrak{sl}_{17}` now satisfies the corrected semidirect check at
+  `(0,1,1)` on the full hook half-catalog `r=1,\dots,8`, with positive
+  transpose-dual comparison on the nontrivial pairs and first-transfer
+  cancellation on the same half-catalog. The next live family target is now
+  `\mathfrak{sl}_{18}`.
+- That target is now fully closed at the same truncation:
+  `\mathfrak{sl}_{18}` satisfies the corrected semidirect check at `(0,1,1)`
+  on the full hook half-catalog `r=1,\dots,8`, with positive
+  transpose-dual comparison on the nontrivial pairs and first-transfer
+  cancellation on the same half-catalog. The next live family target is now
+  `\mathfrak{sl}_{19}`.
+- One step beyond that written boundary is now fully closed too:
+  `\mathfrak{sl}_{19}` satisfies the corrected semidirect check at `(0,1,1)`
+  on the full hook half-catalog `r=1,\dots,9`, with positive
+  transpose-dual comparison on the nontrivial pairs and first-transfer
+  cancellation on the same half-catalog. The next live family target is now
+  `\mathfrak{sl}_{20}`.
+- One step beyond that new written boundary is already open at the extreme
+  hook: `\mathfrak{sl}_{20}, r=1` satisfies first-transfer cancellation and
+  corrected semidirect square-zero at `(0,1,1)`.
 
 #### 9. W_N (General)
 
@@ -697,7 +862,10 @@ For each, we analyze the state of four computations:
 **Gaps**:
 - No explicit high-degree bar differential or bar-cohomology table for `N >= 4`.
 - No module Koszul duality for principal `W_N` modules.
-- The live `W` frontier has moved to the filtered H-level / factorization realization packages for `W_\infty` and to non-principal orbit duality, not finite-type PBW degeneration; the standard completed M-level principal-stage package is already theorematic.
+- The live `W` frontier has moved to the filtered H-level / factorization realization packages for `W_\infty` and to the distinct three-packet non-principal orbit frontier (dual-orbit input, orbit-indexed level shift, paired DS seed transport/globalization), not finite-type PBW degeneration; the standard completed M-level principal-stage package is already theorematic.
+- On the `W_\infty` side, the exact MC4 task is now the residue-identity
+  package `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)`, detected from
+  the finite primary seed set and translation closure.
 
 #### 10. Yangian Y(sl_2)
 
@@ -713,6 +881,10 @@ For each, we analyze the state of four computations:
 - **Major gap**: No genus expansion at all. The E_1-chiral genus theory is undeveloped.
 - The spectral sequence collapse is conjectured, not proved, for the chiral bar complex.
 - Only sl_2 is computed; no explicit computation for Y(sl_N) with N >= 3.
+- The dg-shifted/factorization MC4 frontier is no longer generic
+  completion rhetoric: the exact open task is the kernel-identity
+  package `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)`, with finite detection on
+  tensor products of fundamental evaluation modules.
 
 #### 11. Toroidal/Elliptic Algebras
 

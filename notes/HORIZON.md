@@ -15,12 +15,21 @@ toward these targets. The exploration prompt (Section 8) is the systematic searc
 for discovering new entries.
 
 **Last updated**: Session 116 (Mar 6, 2026) — ALL items resolved. Partial results extracted from 5 PROGRAM-scale conjectures.
+
+**Archival status note (Mar 9, 2026)**:
+this file is now a historical completion ledger.  Active frontier
+doctrine lives in `notes/PROGRAMMES.md`, `notes/NEW_MACHINERY.md`,
+`latest_state_scaffold.md`, and the concordance.  In particular, any
+older periodicity-upgrade language recorded below is superseded by the
+current periodicity-containment doctrine: the lcm/profile shadow and
+stated quantum inputs are theorematic, while modular bar-cohomology
+periodicity remains conjectural.
 Session 116: Partial results extracted from PROGRAM-scale conjectures. D1 (anomaly): split into thm:anomaly-koszul (PH, κ-additivity proved) + conj:anomaly-physical (CJ, physics interpretation). D4 (NC Hodge): split into def:chiral-hodge-numbers + prop:nc-hodge-symmetry (PH) + conj:nc-hodge (CJ, twistor only). C1 (oper): split into thm:oper-bar-h0 + prop:oper-bar-h1 (PH, H⁰ and H¹ proved) + conj:oper-bar (CJ, derived identification). C3 (E_n): added prop:en-n1-recovery (PH). C10 (Vassiliev): added prop:vassiliev-genus0 (PH, genus-0 weight systems). B22 (KL): updated evidence — finite-dimensionality gap already closed by cor:bar-admissible-finiteness. Census: PH 681, PE 313, CJ 99, H 18 = 1111 total. Build: 1197 pages (2-pass), 0 multiply-defined.
 Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex.
 Session 113: Yangian bar cohomology resolved — conj:yangian-bar-gf establishes H^n=3^n+1 (rational GF). Künneth decomposition (rem:yangian-gl2-kunneth) explains H²=10 via ĝl₂=ŝl₂×Ĥ. Master Table updated with conjectured Y(sl₂) values through deg 6. Comprehensive conjecture survey (87 occurrences, 54 unique items). W₃ extended test suite (78 tests). Census: PH 660, PE 314, CJ 83, H 18. Tests: 859 passing.
 Session 112: C4 (chain-level modular functor), C5 (genera duality), C6 (tautological beyond λ), C7 (genus-graded modules). Lambda_fp formula fixed in compute/lib/utils.py. 2 CJ→H upgrades in higher_genus.tex. Census: PH 660, PE 314, CJ 83, H 18. Tests: 849 passing.
 Session 109: B15 confirmed already in manuscript (configuration_spaces.tex). B17 enhanced with rem:dnp-mc-twisting (MC=twisting morphism). B19 theorem statement added (thm:full-derived-module-equiv). New additions: Virasoro Verma Koszul duality (sec:virasoro-verma-koszul in chiral_modules.tex), Virasoro genus-2 bar (thm:virasoro-genus2-bar), W₃ genus-2 bar (prop:w3-genus2-curvature). 10 new genus-2 tests (728 total).
-Session 108: B13+B14 confirmed already proved (prop:conformal-block-duality, thm:ds-koszul-intertwine). Modular periodicity upgraded CJ→PH. MNO96 citation added. 29pt overfull fixed.
+Session 108: B13+B14 confirmed already proved (prop:conformal-block-duality, thm:ds-koszul-intertwine). A provisional modular-periodicity upgrade was recorded here, but that status was superseded by the March 8, 2026 containment pass; current doctrine keeps modular bar-periodicity conjectural. MNO96 citation added. 29pt overfull fixed.
 Session 103: Strategic Synthesis — BGG sl₂ matrix-level instantiation in detailed_computations.tex (sec:bgg-sl2-pipeline). Added prop:bar-bgg-sl2 + cor:bgg-koszul-involution. F1 now substantially closed.
 Session 102: F1 (Module Theory Orphanage) further addressed — comp:bgg-sl2-pipeline in chiral_modules.tex chains 6 proved results into full bar-to-BGG pipeline for sl₂ at generic level.
 Session 101: F6 (Lurie HA undercitation) addressed — 17 citations across 7 files. H7 (Positselski acyclicity) written as prop:curved-bar-acyclicity + rem:positselski-acyclicity in bar_cobar_construction.tex. B18 partially completed (Virasoro Zhu, cor:virasoro-zhu-koszul). F1 (BGG for sl₂) addressed: thm:bgg-sl2-bar-explicit + 2 computations in detailed_computations.tex.
@@ -252,8 +261,8 @@ Require combining manuscript machinery with theorems from reference library.
 - **Scale**: PAPER-PROGRAM (2-3 years)
 
 ### C3. Higher-dimensional chiral Koszul duality — PARTIALLY PROVED (Session 116)
-- **Written as**: conj:en-koszul-duality + prop:en-n1-recovery (PH) + rem:en-scope in concordance.tex
-- **Statement**: n=1 recovery and AF comparison proved (prop:en-n1-recovery). n ≥ 2 chain-level formulas remain conjectured.
+- **Written as**: conj:en-koszul-duality + prop:en-n2-recovery (PH; historical alias `prop:en-n1-recovery`) + rem:en-scope in concordance.tex
+- **Statement**: the `n=2` topological recovery and AF comparison are proved on a complex curve viewed as a real oriented surface (`prop:en-n2-recovery`). The chain-level formulas for genuine higher-dimensional `E_n` models beyond that surface shadow remain conjectured.
 - **Status**: Parts (ii) and (iv) proved. Parts (i) for n≥2 and (iii) remain open.
 - **Scale**: Remaining gap PROGRAM (3-5 years)
 

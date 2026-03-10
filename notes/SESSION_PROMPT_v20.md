@@ -28,7 +28,9 @@
 #                   MC1-MC5 with missing lemmas and checkpoints.
 # raeeznotes 15:    MC1 resolved. Clean split: principal finite-type
 #                   W_N theorem-level, W_infty/Yangian MC4, non-principal
-#                   orbit duality separate frontier.
+#                   orbit duality separate three-packet frontier
+#                   (dual-orbit input, orbit-indexed level shift,
+#                   paired DS seed transport/globalization).
 # raeeznotes 16:    MC2 as the genuine foundational conjecture.
 #                   "Does C_A come from a native object?" is now
 #                   THE question.
@@ -171,7 +173,8 @@ the earlier chapter is wrong.
 - **Stratum I** (SOLID): Theorems A/B/C, D_scal, D_Δ, chain-level DK,
   free-field unconditional, KM/Vir/W_N conditional→unconditional (MC1 resolved)
 - **Stratum II** (PROGRAMME): Full Θ_A, coderived Ran, factorization DK,
-  completed infinite-generator bar, BV/BRST all genera
+  filtered H-level `W_\infty` / Yangian targets with exact coefficient
+  identities and finite detection, BV/BRST all genera
 
 **Current frontier** (from raeeznotes 16):
 "The book has become strong enough that the main question is no longer
@@ -577,7 +580,7 @@ compute/tests/test_mc2_cyclic_ce.py    — 16 tests
 | **MC1** | Higher-genus PBW | **RESOLVED** (KM unconditional, Vir/W universal) | thm:pbw-allgenera-km, thm:pbw-universal-conformal |
 | **MC2** | Cyclic L∞ + Θ_A | **ACTIVE** (Steps 1-5 done, Step 6 surrogate) | rem:mc2-status (8 items) |
 | **MC3** | Full DK/KL | **ROADMAP** | rem:kl-evidence |
-| **MC4** | Completed bar ∞-gen | **ROADMAP** (inverse-limit reduction proved) | frontier_and_gaps.md |
+| **MC4** | Filtered H-level `W_\infty` / Yangian targets + exact coefficient identities | **ROADMAP** (standard M-level towers and inverse-limit comparison proved) | frontier_and_gaps.md |
 | **MC5** | BV/BRST all genera | **DOWNSTREAM** | rem:proof-roadmaps |
 
 ---
