@@ -2,42 +2,15 @@
 \label{ch:feynman}
 \index{Feynman diagram|textbf}
 
-\noindent\textsc{Programme in Mathematical Physics.}
-\emph{The results in this chapter formulate precise mathematical content
-for physical predictions.  Claims tagged \textup{\ClaimStatusProvedHere}
-are proved; those tagged \textup{\ClaimStatusConjectured} or
-\textup{\ClaimStatusHeuristic} identify specific gaps between the algebraic
-framework of Parts~I--II and the physics literature.}
-
-\medskip
-
-\noindent\emph{The propagators $\eta_{ij} = d\log(z_i - z_j)$ of the Heisenberg bar complex (Chapter~\ref{ch:heisenberg-frame}) are Feynman propagators.  This chapter makes the identification precise for all chiral algebras, following Costello~\cite{costello-renormalization}.}
-
-\noindent\emph{The governing question is which diagrammatic/bar-complex
-identifications are already proved at chain level and which physics-dictionary
-extensions remain heuristic or conjectural.}
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-This chapter operates at \textbf{M-level} (each Feynman diagram is a
-specific term in the bar complex; propagators are log forms on
-configuration spaces) and \textbf{S-level} (graph-by-graph amplitude
-evaluation yields generating-function data).  The conjectured
-renormalization-group interpretation (\S\ref{sec:bphz-ainfinity})
-is a programme item pointing toward H-level structures.  The chapter
-does not construct the completed inverse-limit bar coalgebras required
-for MC4, nor the full bulk dualities of MC5; it organizes finite-type
-and boundary-side diagrammatics that any such completion must extend.
-Any later H-level comparison must recover these theorematic finite-type
-quotients before it can be matched with the standard completed towers.
-In the current frontier language, this means graph kernels that respect
-the same RTT-level and spin filtrations isolated on the Yangian and
-$W_\infty$ sides.
-\end{remark}
+The propagator $\eta_{ij} = d\log(z_i - z_j)$ of the bar complex
+(Chapter~\ref{ch:heisenberg-frame}) is a Feynman propagator.
+Each term in the bar differential --- a residue at a collision divisor
+$D_{ij} \subset \overline{C}_n(X)$ --- is a vertex, and each monomial
+in $\barB^n(\cA)$ is a Feynman diagram with $n$ internal lines.
+The identification is made precise for all chiral algebras,
+following Costello~\cite{costello-renormalization}.
 
 \section{Feynman diagrams in chiral field theory}
-\noindent\emph{Status split.} Definitions in this section are fixed
-notation; dictionary statements relating loop expansions to homotopy
-operations are tagged \ClaimStatusHeuristic unless explicitly proved.
 
 \begin{definition}[Chiral field theory data]
 \index{propagator!Feynman}
@@ -161,7 +134,11 @@ implements three physical operations:
 
 \begin{remark}[Scope]
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture identifies bar complex elements with off-shell correlation functions, asserting that the bar differential is quasi-isomorphic to the BRST operator acting on the space of off-shell amplitudes.
+The conjecture treats bar complex elements as conjectural algebraic
+shadow data for off-shell correlation functions, with the bar
+differential playing the algebraic role expected of the BRST operator
+acting on the space of off-shell amplitudes only after additional
+physics input.
 \end{remark}
 
 \subsection{Infrared regularization via compactification}
@@ -170,13 +147,13 @@ The conjecture identifies bar complex elements with off-shell correlation functi
 Logarithmic forms on $\overline{C}_n(X)$ have controlled asymptotics near the boundary divisor, providing a natural infrared cutoff.  For example, $\overline{C}_2(\mathbb{P}^1) = \mathrm{Bl}_\Delta(\mathbb{P}^1 \times \mathbb{P}^1)$ tames the infrared divergence of $G(z_1,z_2) = -\log|z_1-z_2|^2$: the logarithmic form $\eta_{12} = d\log(z_1-z_2)$ extends to the compactification.
 \end{remark}
 
-\section{Cobar complex as on-shell propagators}
+\section{Cobar complex and on-shell propagator templates}
 
 \subsection{Distributional interpretation}
 
-\begin{conjecture}[Cobar = on-shell propagators; \ClaimStatusHeuristic]
-Elements of the cobar complex $\Omega^{\text{ch}}(\mathcal{C})$ are \emph{on-shell} 
-propagators:
+\begin{conjecture}[Cobar / on-shell propagator template; \ClaimStatusHeuristic]
+Elements of the cobar complex $\Omega^{\text{ch}}(\mathcal{C})$ should
+be read as algebraic shadows of \emph{on-shell} propagators:
 $$K(z_1,\ldots,z_n) = \sum_{\text{states}} \frac{|\text{state}\rangle 
 \langle\text{state}|}{(\text{momenta})^2}$$
 with ultraviolet regulator from the distributions $\delta(z_i-z_j)$, delta functions enforcing on-shell conditions (momentum conservation), and differential $d_{\text{cobar}}$ implementing descent from off-shell to on-shell.
@@ -194,12 +171,18 @@ The cobar differential:
 $$d_{\text{cobar}} = \sum_{i<j} \Delta_{ij} \cdot \delta(z_i-z_j)$$
 inserts delta functions, forcing particles on-shell.
 
-Before applying $d_{\text{cobar}}$, the kernel $K$ is an off-shell propagator; the cobar differential enforces the on-shell condition $\delta(p^2)$, so the cohomology computes physical on-shell scattering amplitudes.
+Before applying $d_{\text{cobar}}$, the kernel $K$ is an off-shell
+propagator; the cobar differential enforces the on-shell condition
+$\delta(p^2)$, so the cohomology should model physical on-shell
+scattering amplitudes.
 \end{evidence}
 
 \begin{remark}[Scope]
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture identifies cobar complex elements with on-shell propagators, asserting that Verdier-dual distributions on configuration spaces compute physical scattering kernels via the cobar differential.
+The conjecture treats cobar complex elements as conjectural algebraic
+shadow data for on-shell propagators, asserting that Verdier-dual
+distributions on configuration spaces should model physical scattering
+kernels via the cobar differential.
 \end{remark}
 
 \subsection{UV regularization via delta functions}
@@ -208,7 +191,7 @@ The conjecture identifies cobar complex elements with on-shell propagators, asse
 On-shell conditions require delta functions in momentum space.  The residue-distribution pairing between logarithmic forms and distributions is the content of Verdier duality.  The cobar differential enforces the on-shell condition $(\Box - m^2) G(z,w) = \delta^{(2)}(z-w)$ by inserting $\delta(z-w)$.
 \end{remark}
 
-\section{Bar-cobar duality = S-matrix computation}
+\section{Bar-cobar duality and S-matrix templates}
 
 \subsection{The pairing: residue meets distribution}
 
@@ -216,7 +199,7 @@ On-shell conditions require delta functions in momentum space.  The residue-dist
 The bar-cobar pairing:
 $$\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle = 
 \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}$$
-computes the S-matrix element:
+should model the S-matrix element:
 $$\mathcal{S}_{n \to n'} = \langle \text{in} | S | \text{out} \rangle$$
 \end{conjecture}
 
@@ -246,13 +229,16 @@ This is the Feynman path integral formulation.
 
 \begin{remark}[Scope]
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture asserts that the Verdier duality pairing between bar and cobar complexes computes S-matrix elements, identifying the configuration space integral with the sum over Feynman channels.
+The conjecture treats the Verdier duality pairing between bar and cobar
+complexes as conjectural algebraic shadow data for S-matrix elements,
+with the configuration-space integral modeling the sum over Feynman
+channels only after additional physics input.
 \end{remark}
 
 \subsection{Feynman rules from bar-cobar}
 
 \begin{conjecture}[Feynman rules dictionary; \ClaimStatusHeuristic]
-The bar-cobar construction encodes Feynman rules:
+The bar-cobar construction should model Feynman rules:
 
 \begin{center}
 \begin{tabular}{|l|l|l|}
@@ -273,7 +259,10 @@ UV cutoff & -- & Distribution singularity \\
 
 \begin{remark}[Scope]
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture provides a systematic dictionary between QFT Feynman rules and the bar-cobar formalism, asserting that each entry (propagator, vertex, loop integration, regularization) admits a precise quasi-isomorphic realization in configuration space homological algebra.
+The conjecture provides a systematic template between QFT Feynman rules
+and the bar-cobar formalism, asserting that each entry (propagator,
+vertex, loop integration, regularization) should admit a precise
+quasi-isomorphic realization in configuration-space homological algebra.
 \end{remark}
 
 \begin{example}[Free boson propagator]
@@ -331,7 +320,11 @@ The $m_3$ measures the associativity defect.  In the homotopy transfer formula, 
 
 \begin{remark}[Scope]
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture identifies the $A_\infty$ operations $m_k$ with loop-level corrections in the perturbative expansion, asserting that the $L_\infty$ algebra of homotopy transfer data on the bar complex controls the same deformation problem as the QFT loop expansion.
+The conjecture treats the $A_\infty$ operations $m_k$ as conjectural
+algebraic shadow data for loop-level corrections in the perturbative
+expansion, asserting that the $L_\infty$ algebra of homotopy transfer
+data on the bar complex should control the same deformation problem as
+the QFT loop expansion.
 \end{remark}
 
 \subsection{Explicit one-loop calculation}
@@ -1073,7 +1066,10 @@ distance cutoff), while the logarithmic singularities encode the UV behavior
 
 \begin{remark}[Scope]
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture identifies bar complex elements with worldline Feynman amplitude integrands, asserting that logarithmic forms on the FM compactification provide a rigorous realization of worldline propagators.
+The conjecture treats bar complex elements as conjectural algebraic
+shadow data for worldline Feynman amplitude integrands, asserting that
+logarithmic forms on the FM compactification should provide a rigorous
+realization of worldline propagators.
 \end{remark}
 
 \begin{remark}[Formality perspective]
