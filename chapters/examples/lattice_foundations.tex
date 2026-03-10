@@ -1843,6 +1843,574 @@ $\varepsilon_0(\alpha_1,\alpha_2)/\varepsilon_0(\alpha_2,\alpha_1)
 \end{proof}
 
 
+\subsection{Explicit specializations}
+\label{sec:lattice:explicit-e1}
+
+We now carry out the $\Eone$ bar complex computation in complete
+constructive detail for three explicit deformations producing strictly
+$\Eone$-chiral algebras.  Each example is computed end-to-end: cocycle
+values, OPE phases, bar differential, ordering cycles, bar cohomology,
+Koszul dual identification, and braiding torsion.  All numerical values
+are verified by the computational suite
+(\texttt{compute/lib/e1\_lattice\_bar.py}, 45 tests passing).
+
+Throughout, we fix the symmetric cocycle $\varepsilon_0$ using the
+\emph{Frenkel--Lepowsky--Meurman upper-triangular convention}: for
+the ordered basis $\alpha_1 < \alpha_2 < \cdots < \alpha_r$ of
+simple roots,
+\begin{equation}\label{eq:lattice:flm-cocycle}
+\varepsilon_0(\alpha_i, \alpha_j)
+=
+\begin{cases}
+(-1)^{\langle\alpha_i,\alpha_j\rangle} & \text{if } i < j
+  \text{ and $\alpha_i, \alpha_j$ adjacent}, \\
+1 & \text{otherwise}.
+\end{cases}
+\end{equation}
+This satisfies Borcherds symmetry:
+$\varepsilon_0(\alpha_i,\alpha_j)/\varepsilon_0(\alpha_j,\alpha_i)
+= (-1)^{\langle\alpha_i,\alpha_j\rangle}$ for all $i \neq j$.
+
+
+\begin{computation}[$A_2$ at the Coxeter root: $N = 3$, $q = 1$]
+\label{comp:lattice:a2-n3}
+\index{bar complex!$\Eone$-chiral $A_2$ at $N=3$}
+
+\noindent\textbf{Setup.}
+Let $\Lambda = A_2$ with simple roots
+$\alpha_1, \alpha_2$ satisfying
+$\langle\alpha_1,\alpha_2\rangle = -1$, $\langle\alpha_i,\alpha_i\rangle = 2$.
+The Cartan matrix is
+$A = \left(\begin{smallmatrix}2 & -1\\-1 & 2\end{smallmatrix}\right)$
+with determinant~$3$.
+The root system $\Phi(A_2)$ has 3 positive roots:
+$\alpha_1$, $\alpha_2$, $\alpha_1 + \alpha_2$.
+
+Take $N = 3$ (the Coxeter number of $A_2$), deformation
+$q(\alpha_1,\alpha_2) = 1$, and set $\zeta = \zeta_3 = e^{2\pi i/3}$.
+\smallskip
+
+\noindent\textbf{Step 1: Cocycle values.}
+By~\eqref{eq:lattice:flm-cocycle}:
+$\varepsilon_0(\alpha_1,\alpha_2) = (-1)^{-1} = -1$,
+$\varepsilon_0(\alpha_2,\alpha_1) = 1$.
+The deformed cocycle~\eqref{eq:lattice:deformed-cocycle}
+evaluates to:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c c c}
+$(\alpha_i,\alpha_j)$
+  & $\varepsilon_0(\alpha_i,\alpha_j)$
+  & $\zeta_3^{q(\alpha_i,\alpha_j)}$
+  & $\varepsilon_{3,1}(\alpha_i,\alpha_j)$ \\
+\hline
+$(\alpha_1,\alpha_2)$
+  & $-1$ & $\zeta$ & $-\zeta$ \\
+$(\alpha_2,\alpha_1)$
+  & $+1$ & $\zeta^{-1} = \zeta^2$ & $\zeta^2$
+\end{tabular}
+\end{center}
+In coordinates, $-\zeta = \tfrac{1}{2} - \tfrac{\sqrt{3}}{2}\,i$
+and $\zeta^2 = -\tfrac{1}{2} - \tfrac{\sqrt{3}}{2}\,i$.
+\smallskip
+
+\noindent\textbf{Step 2: Failure of Borcherds symmetry.}
+Borcherds symmetry requires
+$\varepsilon(\alpha_1,\alpha_2)/\varepsilon(\alpha_2,\alpha_1)
+= (-1)^{\langle\alpha_1,\alpha_2\rangle} = -1$.
+We compute:
+\[
+\frac{\varepsilon_{3,1}(\alpha_1,\alpha_2)}%
+     {\varepsilon_{3,1}(\alpha_2,\alpha_1)}
+= \frac{-\zeta}{\zeta^2}
+= \frac{-1}{\zeta}
+= -\zeta^2
+\neq -1.
+\]
+Since $\zeta^2 \neq 1$ for $N = 3$, Borcherds symmetry fails and
+$\Vlat_{A_2}^{3,1}$ is strictly $\Eone$-chiral, not $\Einf$.
+\smallskip
+
+\noindent\textbf{Step 3: Cocycle commutator (braiding).}
+By
+Proposition~\ref{prop:lattice:deformation-properties}(ii):
+\[
+c_{\varepsilon_{3,1}}(\alpha_1,\alpha_2)
+= (-1)^{\langle\alpha_1,\alpha_2\rangle} \cdot \zeta_3^{2q(\alpha_1,\alpha_2)}
+= (-1)^{-1} \cdot \zeta^2
+= -\zeta^2
+= \tfrac{1}{2} + \tfrac{\sqrt{3}}{2}\,i.
+\]
+The conjugate braiding is
+$c(\alpha_2,\alpha_1) = -\zeta = \tfrac{1}{2} - \tfrac{\sqrt{3}}{2}\,i$.
+\smallskip
+
+\noindent\emph{Verification.}  The product
+$c(\alpha_1,\alpha_2) \cdot c(\alpha_2,\alpha_1)
+= (-\zeta^2)(-\zeta) = \zeta^3 = 1$, confirming that the braiding
+on the $A_2$ lattice is consistent with an even lattice.
+The diagonal entries
+$c(\alpha_i,\alpha_i) = (-1)^{2}\zeta^{0} = 1$
+are trivial (antisymmetry of~$q$).
+\smallskip
+
+\noindent\textbf{Step 4: OPE with phases.}
+The root vertex operators
+$E_{\alpha_i}(z) = Y(e^{\alpha_i}, z)$ have OPEs:
+\begin{align*}
+E_{\alpha_1}(z)\, E_{\alpha_2}(w)
+&= \frac{\varepsilon_{3,1}(\alpha_1,\alpha_2)}{z - w}
+   \,E_{\alpha_1+\alpha_2}(w) + \mathrm{reg.}
+= \frac{-\zeta}{z - w}\,E_{\alpha_1+\alpha_2}(w) + \mathrm{reg.}, \\
+E_{\alpha_2}(z)\, E_{\alpha_1}(w)
+&= \frac{\varepsilon_{3,1}(\alpha_2,\alpha_1)}{z - w}
+   \,E_{\alpha_1+\alpha_2}(w) + \mathrm{reg.}
+= \frac{\zeta^2}{z - w}\,E_{\alpha_1+\alpha_2}(w) + \mathrm{reg.}
+\end{align*}
+The ratio of leading OPE coefficients is
+$(-\zeta)/\zeta^2 = -\zeta^2$, the cocycle commutator: the OPE is
+\emph{non-commutative} by a cube root of unity phase.
+\smallskip
+
+\noindent\textbf{Step 5: $\Eone$ bar complex in sector
+$\gamma = \alpha_1 + \alpha_2$.}
+
+\emph{Bar degree~1.}
+One generator: $[e^{\gamma}] = [e^{\alpha_1+\alpha_2}]$.
+
+\emph{Bar degree~2.}
+Two independent generators (ordered tuples):
+$v_+ = [e^{\alpha_1} \mid e^{\alpha_2}]$,\;
+$v_- = [e^{\alpha_2} \mid e^{\alpha_1}]$.
+
+\emph{Differential.}
+By~\eqref{eq:lattice:e1-bar-diff}, since
+$\langle\alpha_1,\alpha_2\rangle = -1$:
+\[
+d =
+\begin{pmatrix}
+\varepsilon_{3,1}(\alpha_1,\alpha_2) &
+\varepsilon_{3,1}(\alpha_2,\alpha_1)
+\end{pmatrix}
+=
+\begin{pmatrix} -\zeta & \zeta^2 \end{pmatrix}
+\colon \C^2 \longrightarrow \C.
+\]
+Both entries are nonzero, so $\operatorname{rank}(d) = 1$
+and $\dim\ker(d) = 1$.
+\smallskip
+
+\noindent\textbf{Step 6: The ordering cycle.}
+The kernel $\ker(d)$ is spanned by:
+\begin{equation}\label{eq:lattice:a2-n3-cycle}
+\xi = v_+ + \zeta^2 \cdot v_-
+= [e^{\alpha_1} \mid e^{\alpha_2}]
+  + \zeta^2\,[e^{\alpha_2} \mid e^{\alpha_1}].
+\end{equation}
+\emph{Verification:}
+$d(\xi) = (-\zeta) \cdot [e^\gamma]
+  + \zeta^2 \cdot \zeta^2 \cdot [e^\gamma]
+= (-\zeta + \zeta^4)\,[e^\gamma]
+= (-\zeta + \zeta)\,[e^\gamma]
+= 0$,
+using $\zeta^4 = \zeta^3 \cdot \zeta = \zeta$.
+
+This cycle is \emph{not a boundary}: bar degree~3 in this sector
+requires a triple $[e^{\beta_1} \mid e^{\beta_2} \mid e^{\beta_3}]$
+with $\beta_1 + \beta_2 + \beta_3 = \alpha_1 + \alpha_2$
+and consecutive inner products $-1$, which does not exist.
+\smallskip
+
+\noindent\textbf{Step 7: Bar cohomology.}
+In the sector $\gamma = \alpha_1 + \alpha_2$:
+\[
+H^1(\barB^{\Eone}_\gamma) = 0, \qquad
+H^2(\barB^{\Eone}_\gamma) = \C \cdot \xi.
+\]
+\emph{Comparison with $\Einf$:}
+In the $\Einf$ bar complex, the symmetric quotient identifies
+$v_- = -v_+$ (the Borcherds relation forces
+$[e^{\alpha_2} | e^{\alpha_1}]
+= (-1)^{\langle\alpha_1,\alpha_2\rangle}[e^{\alpha_1} | e^{\alpha_2}]
+= -v_+$), leaving one generator in degree~2.
+The differential $d_{\Einf} \colon \C^1 \to \C^1$ is an isomorphism,
+so $H^1_{\Einf} = H^2_{\Einf} = 0$.
+
+The ordering cycle $\xi$ is the generator of the \emph{new}
+$\Eone$ cohomology, invisible to the $\Einf$ theory.
+In the symmetric quotient, $\xi = v_+ + \zeta^2 v_-
+\mapsto v_+ + \zeta^2(-v_+) = (1 - \zeta^2)v_+$;
+this is nonzero but lands in the image of $d_{\Einf}$
+(since $d_{\Einf}$ is surjective onto degree~2).
+\smallskip
+
+\noindent\textbf{Step 8: Koszul dual.}
+The Koszul dual is $(\Vlat_{A_2}^{3,1})^! = (\Vlat_{A_2}^{3,-1})^c
+= (\Vlat_{A_2}^{3,2})^c$, carrying the conjugate deformation
+$-q \equiv 2 \pmod{3}$: the phase $\zeta$ is replaced by $\zeta^2$.
+The dual cocycle commutator is
+$c_{-q}(\alpha_i,\alpha_j) = c_q(\alpha_j,\alpha_i)$
+(transposition), so:
+\[
+c_{\varepsilon_{3,2}}(\alpha_1,\alpha_2)
+= c_{\varepsilon_{3,1}}(\alpha_2,\alpha_1) = -\zeta.
+\]
+The product $c_q \cdot c_{-q} = (-\zeta^2)(-\zeta) = 1$: original and
+dual braidings are mutual inverses.  Since
+$q = 1 \not\equiv -1 = 2 \pmod{3}$, the algebra is \emph{not}
+Koszul self-dual.
+\smallskip
+
+\noindent\textbf{Step 9: $N$-torsion.}
+$c(\alpha_1,\alpha_2)^3 = (-\zeta^2)^3 = -\zeta^6 = -1
+= (-1)^{3\langle\alpha_1,\alpha_2\rangle} = (-1)^{-3} = -1$.\;$\checkmark$
+
+The 3-fold braiding iteration is trivial (up to the universal sign):
+the deformation has \emph{exact} order~$3$ on the braiding.
+\end{computation}
+
+
+
+\begin{computation}[$A_2$ with non-standard parameter: $N = 5$, $q = 2$]
+\label{comp:lattice:a2-n5-q2}
+\index{bar complex!$\Eone$-chiral $A_2$ at $N=5$}
+
+\noindent\textbf{Setup.}
+Same lattice $\Lambda = A_2$, now with $N = 5$ and
+$q(\alpha_1,\alpha_2) = 2$ (not a generator of $\Z/5\Z$
+in the modular sense: $\gcd(2,5) = 1$, but $2 \neq 1$).
+Set $\zeta = \zeta_5 = e^{2\pi i/5}$.
+\smallskip
+
+\noindent\textbf{Cocycle values.}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c c c}
+$(\alpha_i,\alpha_j)$
+  & $\varepsilon_0(\alpha_i,\alpha_j)$
+  & $\zeta_5^{q(\alpha_i,\alpha_j)}$
+  & $\varepsilon_{5,2}(\alpha_i,\alpha_j)$ \\
+\hline
+$(\alpha_1,\alpha_2)$
+  & $-1$ & $\zeta^2$ & $-\zeta^2$ \\
+$(\alpha_2,\alpha_1)$
+  & $+1$ & $\zeta^{-2} = \zeta^3$ & $\zeta^3$
+\end{tabular}
+\end{center}
+\smallskip
+
+\noindent\textbf{Borcherds symmetry failure.}
+$\varepsilon_{5,2}(\alpha_1,\alpha_2)/\varepsilon_{5,2}(\alpha_2,\alpha_1)
+= -\zeta^2/\zeta^3 = -\zeta^{-1} = -\zeta^4 \neq -1$.
+\smallskip
+
+\noindent\textbf{Cocycle commutator.}
+$c(\alpha_1,\alpha_2) = (-1)^{-1} \cdot \zeta^{2 \cdot 2} = -\zeta^4$,\quad
+$c(\alpha_2,\alpha_1) = -\zeta^{-4} = -\zeta$.
+
+\noindent\emph{Product check:}
+$c(\alpha_1,\alpha_2) \cdot c(\alpha_2,\alpha_1)
+= (-\zeta^4)(-\zeta) = \zeta^5 = 1$.\;$\checkmark$
+\smallskip
+
+\noindent\textbf{OPE coefficients.}
+\begin{align*}
+E_{\alpha_1}(z)\, E_{\alpha_2}(w)
+&= \frac{-\zeta^2}{z - w}\,E_{\alpha_1+\alpha_2}(w) + \mathrm{reg.}, \\
+E_{\alpha_2}(z)\, E_{\alpha_1}(w)
+&= \frac{\zeta^3}{z - w}\,E_{\alpha_1+\alpha_2}(w) + \mathrm{reg.}
+\end{align*}
+\smallskip
+
+\noindent\textbf{$\Eone$ bar differential in sector $\gamma = \alpha_1 + \alpha_2$.}
+\[
+d =
+\begin{pmatrix} -\zeta^2 & \zeta^3 \end{pmatrix}
+\colon \C^2 \longrightarrow \C, \qquad
+\operatorname{rank}(d) = 1.
+\]
+\textbf{Ordering cycle.}
+\begin{equation}\label{eq:lattice:a2-n5-cycle}
+\xi = v_+ + \zeta^4 \cdot v_-
+= [e^{\alpha_1} \mid e^{\alpha_2}]
+  + \zeta^4\,[e^{\alpha_2} \mid e^{\alpha_1}].
+\end{equation}
+The cycle ratio $\zeta^4 = \zeta^{-1}$ has the \emph{same structure}
+as the $N = 3$ case (ratio $= \zeta_N^{-1}$ in both cases): the
+ordering cycle coefficient is always the
+\emph{inverse} of the primitive root.
+
+\emph{Verification:}
+$d(\xi)
+= (-\zeta^2) \cdot [e^\gamma] + \zeta^4 \cdot \zeta^3 \cdot [e^\gamma]
+= (-\zeta^2 + \zeta^7) \cdot [e^\gamma]
+= (-\zeta^2 + \zeta^2) \cdot [e^\gamma] = 0$,
+using $\zeta^7 = \zeta^5 \cdot \zeta^2 = \zeta^2$.
+
+\noindent\textbf{Bar cohomology.}
+$H^2(\barB^{\Eone}_\gamma) = \C \cdot \xi$,\;
+$H^2(\barB^{\Einf}_\gamma) = 0$.
+\smallskip
+
+\noindent\textbf{Koszul dual.}
+Dual form: $-q \equiv 3 \pmod{5}$, giving
+$(\Vlat_{A_2}^{5,2})^! = (\Vlat_{A_2}^{5,3})^c$ with
+dual braiding $c_{\varepsilon_{5,3}}(\alpha_1,\alpha_2) = -\zeta$
+(the conjugate braiding).  Not self-dual: $2 \neq 3 \pmod{5}$.
+\smallskip
+
+\noindent\textbf{Contrasting structure.}
+Both $A_2$ examples produce strictly $\Eone$ algebras with one
+ordering cycle per adjacent pair, but the \emph{braiding phases differ}:
+$-\zeta_3^2$ at $N = 3$ vs.\ $-\zeta_5^4$ at $N = 5$.
+At $N = 3$, the braiding has order~$6$ (since $(-\zeta_3^2)^6 = 1$
+and no smaller power works).
+At $N = 5$ with $q = 2$, the braiding has order~$10$
+(since $(-\zeta_5^4)^{10} = 1$).
+These are genuinely distinct $\Eone$-chiral structures on the
+same underlying lattice.
+\end{computation}
+
+
+
+\begin{computation}[$D_4$ at the Coxeter root: $N = 3$, triality]
+\label{comp:lattice:d4-n3}
+\index{bar complex!$\Eone$-chiral $D_4$ at $N=3$}
+\index{triality!$\Eone$ lattice algebra}
+
+\noindent\textbf{Setup.}
+Let $\Lambda = D_4$ with simple roots $\alpha_1, \alpha_2, \alpha_3,
+\alpha_4$ and Cartan matrix:
+\[
+A_{D_4} =
+\begin{pmatrix}
+ 2 & -1 &  0 &  0 \\
+-1 &  2 & -1 & -1 \\
+ 0 & -1 &  2 &  0 \\
+ 0 & -1 &  0 &  2
+\end{pmatrix},
+\qquad
+\det(A_{D_4}) = 4.
+\]
+The Dynkin diagram is a trivalent tree: node $\alpha_2$ (central)
+is adjacent to $\alpha_1$, $\alpha_3$, $\alpha_4$.  The outer
+automorphism group $S_3$ permutes the three legs (triality).
+The root system has 12 positive roots.
+
+Take $N = 3$ and the \emph{standard edge form}:
+$q(\alpha_i,\alpha_j) = 1$ for each adjacent pair $(i < j)$:
+\[
+q = \begin{pmatrix}
+0 & 1 & 0 & 0 \\
+2 & 0 & 1 & 1 \\
+0 & 2 & 0 & 0 \\
+0 & 2 & 0 & 0
+\end{pmatrix}
+\quad (\text{entries mod } 3),
+\]
+where $q(j,i) = 3 - q(i,j) \equiv -q(i,j) \pmod{3}$.  This form
+is triality-invariant: permuting
+$(\alpha_1, \alpha_3, \alpha_4)$ preserves $q$
+(all three edges carry $q = 1$).
+Set $\zeta = \zeta_3 = e^{2\pi i/3}$.
+\smallskip
+
+\noindent\textbf{Step 1: Cocycle values.}
+By~\eqref{eq:lattice:flm-cocycle}: $\varepsilon_0$ is $-1$ on adjacent
+pairs $(i < j)$ and $+1$ elsewhere.
+The deformed cocycle evaluates to:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+{\small
+\begin{tabular}{c c c c c}
+$(\alpha_i,\alpha_j)$ & Adjacency
+  & $\varepsilon_0$ & $\zeta^{q}$ & $\varepsilon_{3,q}$ \\
+\hline
+$(\alpha_1,\alpha_2)$ & adj.\ & $-1$ & $\zeta$ & $-\zeta$ \\
+$(\alpha_2,\alpha_1)$ & adj.\ & $+1$ & $\zeta^2$ & $\zeta^2$ \\
+$(\alpha_2,\alpha_3)$ & adj.\ & $-1$ & $\zeta$ & $-\zeta$ \\
+$(\alpha_3,\alpha_2)$ & adj.\ & $+1$ & $\zeta^2$ & $\zeta^2$ \\
+$(\alpha_2,\alpha_4)$ & adj.\ & $-1$ & $\zeta$ & $-\zeta$ \\
+$(\alpha_4,\alpha_2)$ & adj.\ & $+1$ & $\zeta^2$ & $\zeta^2$ \\
+\hline
+$(\alpha_1,\alpha_3)$ & non-adj.\ & $+1$ & $1$ & $1$ \\
+$(\alpha_1,\alpha_4)$ & non-adj.\ & $+1$ & $1$ & $1$ \\
+$(\alpha_3,\alpha_4)$ & non-adj.\ & $+1$ & $1$ & $1$
+\end{tabular}
+}
+\end{center}
+All three adjacent edges carry the \emph{same} deformed cocycle values
+$(-\zeta, \zeta^2)$ --- this is the triality symmetry of the edge form.
+Non-adjacent pairs are undeformed (both $\varepsilon_0$ and $\zeta^q$
+equal~$1$).
+\smallskip
+
+\noindent\textbf{Step 2: Cocycle commutator (braiding matrix).}
+By Proposition~\ref{prop:lattice:deformation-properties}(ii),
+$c(\alpha_i,\alpha_j) = (-1)^{\langle\alpha_i,\alpha_j\rangle}
+\cdot \zeta_3^{2q(\alpha_i,\alpha_j)}$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c c}
+Pair type & $c(\alpha_i,\alpha_j)$ & Value \\
+\hline
+Adjacent $(i < j)$ & $(-1)^{-1} \cdot \zeta^2 = -\zeta^2$
+  & $\tfrac{1}{2} + \tfrac{\sqrt{3}}{2}\,i$ \\
+Adjacent $(i > j)$ & $(-1)^{-1} \cdot \zeta^{-2} = -\zeta$
+  & $\tfrac{1}{2} - \tfrac{\sqrt{3}}{2}\,i$ \\
+Non-adjacent & $(-1)^0 \cdot \zeta^0 = 1$
+  & $1$ \\
+Diagonal & $(-1)^2 \cdot \zeta^0 = 1$
+  & $1$
+\end{tabular}
+\end{center}
+The braiding is \emph{uniform} across all three edges of the $D_4$
+diagram (triality symmetry) and \emph{trivial} for non-adjacent pairs.
+The full $4 \times 4$ commutator matrix $c(\alpha_i,\alpha_j)$ is:
+\[
+\begin{pmatrix}
+1 & -\zeta^2 & 1 & 1 \\
+-\zeta & 1 & -\zeta^2 & -\zeta^2 \\
+1 & -\zeta & 1 & 1 \\
+1 & -\zeta & 1 & 1
+\end{pmatrix}.
+\]
+The last two rows and columns are identical, reflecting the $S_3$
+triality acting on legs $\{\alpha_1, \alpha_3, \alpha_4\}$.
+\smallskip
+
+\noindent\textbf{Step 3: $\Eone$ bar complex --- three sectors.}
+The sectors with simple poles are the three adjacent pairs:
+$\gamma_1 = \alpha_1 + \alpha_2$,
+$\gamma_2 = \alpha_2 + \alpha_3$,
+$\gamma_3 = \alpha_2 + \alpha_4$.
+Each sector independently contributes a 2-step complex
+$0 \to \C^2 \xrightarrow{d} \C \to 0$.
+
+\emph{Sector $\gamma_1 = \alpha_1 + \alpha_2$:}
+\[
+d_{\gamma_1}
+= \begin{pmatrix} -\zeta & \zeta^2 \end{pmatrix},
+\qquad
+\xi_{\gamma_1}
+= [e^{\alpha_1} \mid e^{\alpha_2}]
+  + \zeta^2\,[e^{\alpha_2} \mid e^{\alpha_1}].
+\]
+
+\emph{Sector $\gamma_2 = \alpha_2 + \alpha_3$:}
+\[
+d_{\gamma_2}
+= \begin{pmatrix} -\zeta & \zeta^2 \end{pmatrix},
+\qquad
+\xi_{\gamma_2}
+= [e^{\alpha_2} \mid e^{\alpha_3}]
+  + \zeta^2\,[e^{\alpha_3} \mid e^{\alpha_2}].
+\]
+
+\emph{Sector $\gamma_3 = \alpha_2 + \alpha_4$:}
+\[
+d_{\gamma_3}
+= \begin{pmatrix} -\zeta & \zeta^2 \end{pmatrix},
+\qquad
+\xi_{\gamma_3}
+= [e^{\alpha_2} \mid e^{\alpha_4}]
+  + \zeta^2\,[e^{\alpha_4} \mid e^{\alpha_2}].
+\]
+All three differentials are identical (same cocycle values), and all
+three ordering cycles have the same coefficient
+$\zeta^2 = \zeta_3^{-1}$.  This uniform structure is a direct
+consequence of the triality-invariant edge form.
+\smallskip
+
+\noindent\textbf{Step 4: Bar cohomology.}
+\[
+\bigoplus_{\gamma \in \{\gamma_1,\gamma_2,\gamma_3\}}
+H^2(\barB^{\Eone}_\gamma)
+= \C \cdot \xi_{\gamma_1}
+  \oplus \C \cdot \xi_{\gamma_2}
+  \oplus \C \cdot \xi_{\gamma_3}
+\cong \C^3.
+\]
+Each sector contributes one ordering cycle.  These three cycles are
+linearly independent (they live in distinct lattice-graded components).
+
+For comparison, the $\Einf$ bar complex has $H^2 = 0$ in every
+sector: the triality-worth of new cohomology is purely an $\Eone$
+phenomenon.  The 3 ordering cycles span the
+\emph{$S_3$-representation} $\C^3$ on which triality acts by
+permutation (the standard representation decomposes as
+$\C^3 = \C \oplus V_{\mathrm{std}}$ under $S_3$).
+\smallskip
+
+\noindent\textbf{Step 5: Koszul dual.}
+The dual form $-q \equiv 2 \pmod{3}$ replaces $q(\alpha_i,\alpha_j) = 1$
+by $q(\alpha_i,\alpha_j) = 2$ on each edge.  The dual braiding is:
+\[
+c_{\varepsilon_{3,-q}}(\alpha_i,\alpha_j) = c_{\varepsilon_{3,q}}(\alpha_j,\alpha_i)
+\quad\text{(transpose)},
+\]
+so
+$c_{\varepsilon_{3,2}}(\alpha_1,\alpha_2) = -\zeta$
+(compared with $c_{\varepsilon_{3,1}}(\alpha_1,\alpha_2) = -\zeta^2$).
+The Koszul dual is $(\Vlat_{D_4}^{3,1})^! = (\Vlat_{D_4}^{3,2})^c$,
+and the product identity
+$c_q(\alpha_i,\alpha_j) \cdot c_{-q}(\alpha_i,\alpha_j) = 1$
+holds for every pair.  Not self-dual.
+\smallskip
+
+\noindent\textbf{Step 6: $N$-torsion and screening structure.}
+For adjacent pairs: $c(\alpha_i,\alpha_j)^3 = (-\zeta^2)^3 = -1
+= (-1)^{3 \cdot (-1)} = (-1)^{-3} = -1$.\;$\checkmark$
+
+For non-adjacent pairs: $c(\alpha_i,\alpha_j)^3 = 1^3 = 1
+= (-1)^{3 \cdot 0} = 1$.\;$\checkmark$
+
+The screening operators $Q_i = \oint E_{\alpha_i}(z)\,dz$
+($i = 1, \ldots, 4$) satisfy:
+\begin{itemize}
+\item $Q_i^2 = 0$ for all $i$ (nilpotency from
+  $\langle\alpha_i,\alpha_i\rangle = 2$).
+\item $Q_1 Q_3 = Q_3 Q_1$, $Q_1 Q_4 = Q_4 Q_1$,
+  $Q_3 Q_4 = Q_4 Q_3$ (non-adjacent commute, braiding $= 1$).
+\item $Q_1 Q_2 = (-\zeta^2)\, Q_2 Q_1$,
+  $Q_2 Q_3 = (-\zeta^2)^{-1}\, Q_3 Q_2$,
+  $Q_2 Q_4 = (-\zeta^2)^{-1}\, Q_4 Q_2$
+  (adjacent pairs braid by $c$).
+\end{itemize}
+The screening algebra structure at the central node $\alpha_2$ is that
+of a braided tensor product of three nilpotent copies $(\C[x]/x^2)$,
+braided by the $D_4$ Nichols algebra datum: this is the same Nichols
+algebra as for the small quantum group $u_{\zeta_3}(\mathfrak{so}_8)$
+at a third root of unity
+(cf.\ Remark~\ref{rem:lattice:qg-programme}, Route~A).
+\end{computation}
+
+\begin{remark}[Pattern across examples]
+\label{rem:lattice:e1-pattern}
+The three computations exhibit a universal structure:
+\begin{enumerate}[label=(\roman*)]
+\item In each adjacent-pair sector $\gamma = \alpha_i + \alpha_j$,
+the $\Eone$ bar complex $0 \to \C^2 \xrightarrow{d} \C \to 0$ has
+$\dim\ker(d) = 1$, producing exactly one ordering cycle.
+\item The ordering cycle coefficient is always $\zeta_N^{-1}$,
+regardless of the specific value of $q$ on that edge
+\textup{(}only the normalization and overall phase depend on~$q$\textup{)}.
+\item The number of ordering cycles equals the number of edges in the
+Dynkin diagram: $1$ for $A_2$, $3$ for $D_4$.  These are \emph{not}
+the number of positive roots
+(which is $3$ for $A_2$, $12$ for $D_4$),
+but rather the number of adjacent simple root pairs.  At higher bar
+degrees, the remaining positive roots contribute to the bar cohomology
+through longer chains of collisions.
+\item The $\Einf$ bar complex has $H^2 = 0$ in every sector
+considered above: all ordering cycles are strictly $\Eone$ classes
+that vanish under symmetrization.
+\item Koszul duality inverts the deformation parameter: $q \to -q$,
+with the dual braiding being the transpose of the original.
+\end{enumerate}
+\end{remark}
+
+
 \subsection{The quantum lattice algebra}
 
 The root-of-unity deformation produces a discrete family of
@@ -2126,16 +2694,15 @@ $\zeta^{q(\alpha_i,\alpha_j)}$.
 \ClaimStatusConjectured]
 \label{prop:lattice:quantum-group-connection}
 \index{quantum group!lattice construction connection}
-For $\fg$ simply-laced and $N \geq 3$, the quantum lattice algebra
-$\Vlat_{\Lambda_\fg}^{N,q}$ has the following properties:
+For $\fg$ simply-laced of rank $r \geq 2$ and $N \geq 3$, the quantum
+lattice algebra $\Vlat_{\Lambda_\fg}^{N,q}$ has the following properties:
 \begin{enumerate}[label=(\roman*)]
 \item The category of $\Vlat_{\Lambda_\fg}^{N,q}$-modules is a
   braided monoidal category with braiding controlled by the
   deformed commutator $c_{\varepsilon_{N,q}}$.
-\item For $N$ equal to the order of $q^2 = e^{4\pi i/N}$ as a root
-  of unity, this braided category is conjecturally related to the
-  representation category of the small quantum group
-  $u_\zeta(\fg)$ at $\zeta = e^{2\pi i/N}$.
+\item For $\zeta = e^{2\pi i/N}$, this braided category is
+  conjecturally equivalent, as a braided monoidal category, to
+  $\operatorname{Rep}(u_\zeta(\fg))$.
 \item The $\Eone$ inversion principle
   \textup{(}Theorem~\textup{\ref{thm:e1-inversion-principle})}
   applied to $\Vlat_{\Lambda_\fg}^{N,q}$ gives the Koszul pair:
@@ -2147,6 +2714,147 @@ $\Vlat_{\Lambda_\fg}^{N,q}$ has the following properties:
   $U_q(\fg) \leftrightarrow U_{q^{-1}}(\fg)$.
 \end{enumerate}
 \end{proposition}
+
+\begin{construction}[Screening operators on quantum lattice algebras]
+\label{constr:lattice:screening}
+\index{screening operator!quantum lattice}
+For a simply-laced root lattice $\Lambda_\fg$ of rank $r \geq 2$
+with simple roots $\alpha_1, \ldots, \alpha_r$, the
+\emph{screening operators} on $\Vlat_{\Lambda_\fg}^{N,q}$ are:
+\[
+Q_i := \oint_C Y(e^{\alpha_i}, z)\, dz,
+\qquad i = 1, \ldots, r,
+\]
+where $C$ encircles the origin.  Each $Q_i$ maps the
+$\gamma$-sector to the $(\gamma + \alpha_i)$-sector of the
+lattice Fock space.  The \emph{screening algebra}
+$\mathcal{S}(\Lambda_\fg, N, q) \subset
+\operatorname{End}(\Vlat_{\Lambda_\fg}^{N,q})$ is the
+subalgebra generated by $\{Q_i\}_{i=1}^r$.
+\end{construction}
+
+\begin{proposition}[Screening current structure; \ClaimStatusProvedHere]
+\label{prop:lattice:screening-structure}
+\index{screening operator!commutation relations}
+The screening currents
+$E_{\alpha_i}(z) = Y(e^{\alpha_i}, z)$ on
+$\Vlat_{\Lambda_\fg}^{N,q}$ satisfy:
+\begin{enumerate}[label=(\roman*)]
+\item \textup{(}Adjacent OPE\textup{).}
+  For $i \neq j$ with $\langle\alpha_i,\alpha_j\rangle = -1$
+  \textup{(}adjacent in the Dynkin diagram\textup{)}:
+  \[
+  E_{\alpha_i}(z)\, E_{\alpha_j}(w)
+  = \frac{\varepsilon_{N,q}(\alpha_i,\alpha_j)}{z - w}
+    \,E_{\alpha_i+\alpha_j}(w) + \mathrm{reg}.
+  \]
+  For non-adjacent nodes
+  ($\langle\alpha_i,\alpha_j\rangle = 0$),
+  the OPE is regular.
+
+\item \textup{(}Nilpotency\textup{).}
+  For all $i$:
+  \[
+  E_{\alpha_i}(z)\, E_{\alpha_i}(w)
+  = \varepsilon_{N,q}(\alpha_i,\alpha_i)\, (z-w)^2\,
+    E_{2\alpha_i}(w) + \mathrm{reg},
+  \]
+  so $Q_i^2 = 0$: the integrand of the double contour integral
+  has a zero of order~$2$ at $z_1 = z_2$
+  \textup{(}since $\langle\alpha_i,\alpha_i\rangle = 2$ for
+  simply-laced\textup{)}.
+
+\item \textup{(}Cocycle braiding\textup{).}
+  The cocycle commutator of screening currents is:
+  \begin{equation}\label{eq:lattice:screening-braiding}
+  c_{\varepsilon_{N,q}}(\alpha_i,\alpha_j)
+  = (-1)^{\langle\alpha_i,\alpha_j\rangle}
+    \cdot \zeta_N^{2q(\alpha_i,\alpha_j)},
+  \end{equation}
+  which equals $-\zeta_N^{2q(\alpha_i,\alpha_j)}$ for adjacent
+  $i,j$ and $1$ for non-adjacent $i,j$.
+  The self-braiding $c_{\varepsilon_{N,q}}(\alpha_i,\alpha_i) = 1$
+  for all~$i$ \textup{(}since $q$ is antisymmetric\textup{)},
+  so the nilpotency $Q_i^2 = 0$ arises from the conformal weight
+  contribution \textup{(}$\langle\alpha_i,\alpha_i\rangle = 2$\textup{)}
+  rather than from the braiding.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) specializes~\eqref{eq:lattice:deformed-fks-ope} to
+$\langle\alpha_i,\alpha_j\rangle = -1$ (adjacent) and $0$
+(non-adjacent) in the simply-laced Dynkin diagram.
+
+Part~(ii): since $\langle\alpha_i,\alpha_i\rangle = 2$, the
+leading term $(z-w)^2$ is a zero, not a pole.  The double
+contour integral
+$Q_i^2 = \oint_{C_2}\oint_{C_1}
+  (z_1-z_2)^2 \cdot f(z_1,z_2)\,dz_1\,dz_2$
+vanishes because the integrand is holomorphic at $z_1 = z_2$.
+
+Part~(iii) specializes
+Proposition~\ref{prop:lattice:deformation-properties}(ii) to
+simple roots.  The self-braiding uses $q(\alpha_i,\alpha_i) = 0$
+(antisymmetry of $q$).
+\end{proof}
+
+\begin{remark}[Quantum group identification programme]
+\label{rem:lattice:qg-programme}
+\index{quantum group!identification programme}
+The screening algebra of
+Construction~\ref{constr:lattice:screening} is the primary
+tool for establishing
+Proposition~\ref{prop:lattice:quantum-group-connection}(ii).
+Three complementary routes are available.
+
+\smallskip
+\noindent\textbf{Route~A\textup{:} Screening algebra via Nichols
+algebras.}
+The nilpotency $Q_i^2 = 0$ (part~(ii) above) and the
+off-diagonal braiding~\eqref{eq:lattice:screening-braiding}
+determine the screening algebra as a quotient of the Nichols
+algebra $\mathcal{B}(V)$ of the Yetter--Drinfeld module
+$V = \bigoplus_{i=1}^r \mathbb{C}\, x_i$ with braiding matrix
+$q_{ij} = c_{\varepsilon_{N,q}}(\alpha_i,\alpha_j)$
+\cite{Lentner17}.
+The trivial self-braiding ($q_{ii} = 1$) places the screening
+algebra in the ``super-type'' regime where nilpotency is
+order~$2$ on each generator; the off-diagonal entries
+$q_{ij} = -\zeta_N^{2q(\alpha_i,\alpha_j)}$ carry the
+deformation data.  The quantum group identification requires
+matching the resulting Nichols algebra with $u_\zeta(\fg)^+$.
+
+\smallskip
+\noindent\textbf{Route~B\textup{:} Module category comparison.}
+The vertex tensor category structure on
+$\Vlat_{\Lambda_\fg}^{N,q}$-modules \cite{HLZ} carries a
+braiding whose monodromy involves the deformed commutator
+$c_{\varepsilon_{N,q}}$
+(Proposition~\ref{prop:lattice:deformation-properties}(ii)).
+For braided fusion categories, the monoidal structure is
+determined by the $S$-matrix and twist data \cite{EGNO}.
+Matching the $S$-matrix of
+$\Vlat_{\Lambda_\fg}^{N,q}$-$\mathrm{mod}$ with that of
+$\operatorname{Rep}(u_\zeta(\fg))$ establishes the braided
+equivalence by rigidity.
+
+\smallskip
+\noindent\textbf{Route~C\textup{:} Zhu algebra.}
+Zhu's theorem provides a bijection between simple modules of a
+vertex algebra and simple modules of its Zhu algebra.
+An explicit computation of
+$A(\Vlat_{\Lambda_\fg}^{N,q})$ and comparison with the center
+of $u_\zeta(\fg)$ controls the module categories on both sides.
+
+\smallskip
+Route~A provides the functor (embedding of the quantum group
+into the endomorphism algebra), while Route~B provides the
+equivalence criterion.  A complete verification requires the
+vertex tensor category machinery of \cite{HLZ} extended to the
+strictly $\Eone$ setting --- an active area connected to
+\cite{CreutzigGainutdinovRunkel20,Lentner17}.
+\end{remark}
 
 \begin{remark}[The two $\Eone$ construction methods]
 \label{rem:two-e1-methods}
@@ -2641,6 +3349,22 @@ The relationship to the Yangian DK programme
   Proposition~\ref{prop:lattice:quantum-group-connection}, currently
   conjectural.
 \end{enumerate}
+
+The universal MC class for lattice VOAs takes the form
+$\Theta_{V_\Lambda}^{\min} = \operatorname{rank}(\Lambda) \cdot
+\eta \otimes \Lambda_{\mathrm{Hodge}}$
+(Theorem~\ref{thm:explicit-theta},
+Corollary~\ref{cor:explicit-theta-specializations}),
+where $\kappa(V_\Lambda) = \operatorname{rank}(\Lambda)$ by
+additivity.  Under the $\Eone$-inversion principle
+(Theorem~\ref{thm:e1-inversion-principle}), the universal class
+transforms as
+$\Theta_{V_\Lambda} \mapsto \Theta_{V_{\Lambda^*}}$
+(dual lattice), and the cocycle conjugation
+$\varepsilon \mapsto \varepsilon^{-1}$ is the chain-level
+signature of the Verdier duality
+$\Theta \mapsto \Theta^!$ on ordered factorization
+bar complexes.
 \end{remark}
 
 
@@ -3210,24 +3934,41 @@ This is a statement purely about the representation theory of the
 quantum lattice VOA --- it does not involve bar complexes,
 configuration spaces, or factorization algebras.
 
-The identification is known or expected in the following cases:
+The identification is supported by the following evidence:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $\fg = \mathfrak{sl}_2$, $N = 3$:
-  $u_\zeta(\mathfrak{sl}_2)$ at $\zeta = e^{2\pi i/3}$ has
-  3 simple modules.  The quantum lattice algebra
-  $\Vlat_{A_1}^{3,q}$ should have the same module count by the
-  root-of-unity periodicity of the deformed Fock space.
-\item $\fg = \mathfrak{sl}_2$, $N = 4$:
-  $u_\zeta(\mathfrak{sl}_2)$ at $\zeta = i$ has 4 simple modules.
-  This is the smallest case where the quantum group is not
-  semisimple.
+\item \emph{Classical KL precedent}
+  ($\fg = \mathfrak{sl}_2$):
+  the Kazhdan--Lusztig equivalence \cite{KL93}
+  establishes $\AffKM{sl}_2$-$\mathrm{mod}_k \simeq
+  \operatorname{Rep}(u_\zeta(\mathfrak{sl}_2))$ at
+  $\zeta = e^{2\pi i/(k+2)}$ for all admissible levels~$k$.
+  Since $\Vlat_{A_1} \cong L(\AffKM{sl}_2, 1)$ by FKS, this
+  is the rank-$1$ prototype.  The quantum lattice algebra
+  framework requires rank $\geq 2$
+  (Definition~\ref{def:quantum-lattice}), so $\mathfrak{sl}_2$
+  falls outside its direct scope, but the KL equivalence provides
+  the motivating model.
+\item \emph{Smallest test case}
+  ($\fg = \mathfrak{sl}_3$, $A_2$ lattice):
+  the quantum lattice algebra $\Vlat_{A_2}^{N,q}$ is the
+  simplest instance where the cocycle deformation is non-trivial.
+  The screening operators
+  (Construction~\ref{constr:lattice:screening}) satisfy $Q_i^2 = 0$
+  and have off-diagonal braiding
+  $-\zeta_N^{2q(\alpha_1,\alpha_2)}$
+  (Proposition~\ref{prop:lattice:screening-structure}).
+  At $N = h = 3$ (Coxeter number), comparison with
+  $u_\zeta(\mathfrak{sl}_3)$ at $\zeta = e^{2\pi i/3}$ is a
+  finite verification.
 \item For general simply-laced $\fg$ at $N = h$ (the Coxeter
-  number): the KL equivalence at the critical level is the deepest
-  case, and the lattice approach would provide a purely
-  vertex-algebraic proof.
+  number): the lattice approach would provide a purely
+  vertex-algebraic proof of the KL equivalence at the critical
+  root of unity.
 \end{enumerate}
-The conjectural status of (ii) is the sole obstacle between the
-lattice programme and the full MC3.
+The three-route programme for the identification is described in
+Remark~\ref{rem:lattice:qg-programme}.  The conjectural status of
+(ii) is the sole obstacle between the lattice programme and the
+full MC3.
 \end{remark}
 
 \begin{remark}[Summary: the lattice DK programme]
