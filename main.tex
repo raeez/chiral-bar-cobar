@@ -111,6 +111,8 @@
 \usepackage{newunicodechar}
 \usepackage{makeidx}
 \makeindex
+\setpnumwidth{3em}
+\setrmarg{4em}
 
 % Unicode fallbacks for pdfLaTeX compilation across imported chapter fragments.
 \newunicodechar{∞}{$\infty$}
@@ -551,7 +553,7 @@
 
 % ==========================================
 
-\title{\textit{Chiral Duality in the presence of Quantum Corrections: Geometric Realizations via Configuration Spaces}}
+\title{\textit{Modular Homotopy Theory for Factorization Algebras on Curves}\\[0.5em]\large Volume~1: Modular Koszul Duality}
 \author{Raeez Lorgat}
 \date{March 2026}
  
@@ -560,6 +562,7 @@
 % Fallback macros for imported chapter fragments.
 % Operads, categories, and D-module macros are now in the preamble;
 % \providecommand entries below supply only symbols without preamble definitions.
+\providecommand{\Aut}{\operatorname{Aut}}
 \providecommand{\mathbbm}[1]{\mathbb{#1}}
 \providecommand{\bigboxtimes}{\mathop{\boxtimes}\displaylimits}
 \providecommand{\Bbar}{\bar{B}}
@@ -632,44 +635,42 @@
 
 \medskip
 \noindent
-\textbf{Two-dimensional conformally invariant quantum field theory} on Riemann surfaces admits operator product expansions with structure constants emerging as residues of meromorphic forms.
+The logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ on the
+configuration space of a smooth algebraic curve~$X$ has a simple pole
+along the collision diagonal with unit residue.  Place elements
+$a_1, \ldots, a_n$ of a chiral algebra~$\cA$ at positions
+$z_1, \ldots, z_n$ and extract residues of their OPE along the
+collision divisors of the Fulton--MacPherson
+compactification~$\overline{C}_n(X)$.  The Arnold relation among
+triple collisions forces the resulting differential to square to zero:
+this is the bar complex $\barB_X(\cA)$.
 
 \medskip
-\noindent
-\textbf{The Prism Principle.} This fact leads to configuration spaces acting as diffracting prisms decomposing chiral algebras across their operadic spectrum. Logarithmic differential forms $d\log(z_i - z_j)$ on the Fulton--MacPherson compactification $\mathrm{Conf}_n[X]$ separate global algebraic structure into local operator product channels at collision divisors $D_{ij} \subset \partial\mathrm{Conf}_n[X]$. Residue maps $\mathrm{Res}_{D_{ij}}$ extract structure constants $C_{ij}^k$ from chiral products, while the Arnold--Orlik--Solomon relations among logarithmic forms encode associativity through $d^2 = 0$. This geometric spectroscopy transforms abstract chiral algebra operations into explicit computations on stratified spaces, providing both conceptual clarity and computational power.
+Verdier duality on the Ran space intertwines the bar of~$\cA$ with the
+bar of its Koszul dual~$\cA^!$, realizing chiral Koszul duality as
+non-abelian Poincar\'e duality.  On the Koszul locus the cobar inverts
+the bar: $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$.  For a Koszul
+pair $(\cA, \cA^!)$ the deformation and obstruction complexes form
+complementary Lagrangians in a shifted-symplectic ambient space.
 
 \medskip
-\noindent
-\textbf{Main Results.}
-We construct a geometric realization of the bar construction $\bar{B}_{\text{geom}}: \mathsf{ChirAlg}_X \to \mathsf{dgCoalg}_X$ for chiral algebras on an algebraic curve $X$. This construction extends the genus-zero framework of Beilinson--Drinfeld to incorporate: (i) one-loop quantum corrections via elliptic chiral homology on the formal torus $\hat{E}_\tau$, (ii) higher-genus contributions through the universal chiral homology over the moduli stack $\overline{\mathcal{M}}_{g,n}$, and (iii) quantum deformation parameters $t_k \in H^1(\Sigma_g, \mathbb{C})$ (period integrals over $A$-cycles) controlling genus-$g$ amplitudes. The bar construction is realized through residue calculus on the Fulton--MacPherson compactification $\mathrm{Conf}_n[X]$ of configuration spaces, with the differential $d_{\text{geom}} = \sum_{D \in \partial \mathrm{Conf}_n[X]} (-1)^{|D|} \mathrm{Res}_D$ summing residues over boundary divisors. The nilpotence $d_{\text{geom}}^2 = 0$ follows from the Arnold--Orlik--Solomon relations in $H^*(\mathrm{Conf}_n[X])$, providing a geometric incarnation of the associativity of chiral operations.
+At genus $g \geq 1$ the propagator acquires period corrections from
+the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$, and the
+fiberwise differential develops curvature
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$.  Period integrals restore
+nilpotence of the total differential.  The scalar
+$\kappa(\cA)$---determined by the leading OPE singularity---controls
+the genus tower: it is additive under tensor product, anti-symmetric
+under Koszul duality, and has $\hat{A}$-genus generating series.
+Clutching along boundary divisors of $\overline{\mathcal{M}}_g$
+organizes the genus tower into a single modular deformation of the
+genus-$0$ bar differential.
 
 \medskip
-\noindent
-\textbf{Quantum Corrections and Higher Genus.} At genus zero, the construction recovers classical bar-cobar duality. At genus $g \geq 1$, quantum corrections enter through period integrals of logarithmic forms over cycles of the curve~$\Sigma_g$. These corrections encode central extensions, anomalies, and the full tower of deformations---directly linking integrability obstructions with chiral operator algebra structure. On a fixed $\Sigma_g$, the fiberwise collision differential is curved: $\dfib^{\,2} = \kappa(\mathcal{A})\cdot\omega_g$, where $\kappa(\mathcal{A})$ is the leading OPE anomaly.  Incorporating period corrections from $A$-cycles restores strict nilpotence: the total corrected differential $\Dg{g} = \dzero + \sum_k t_k\, d_k$ satisfies $\Dg{g}^{\,2} = 0$, with $t_k = \oint_{A_k}\omega_k \in H^1(\Sigma_g, \mathbb{C})$.  The construction naturally encodes canonical $A_\infty$ and $L_\infty$ structures determined by configuration space stratifications, enabling systematic treatment of non-quadratic chiral algebras.
-
-\medskip
-\noindent
-\textbf{Koszul Duality and Quantum Complementarity.}
-For chiral Koszul pairs $(\mathcal{A}, \mathcal{A}^!)$,
-we establish deformation-obstruction complementarity:
-\[
-Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!)
-\simeq H^*(\mathcal{M}_g, Z(\mathcal{A})),
-\]
-where $Q_g(\mathcal{A})$ denotes genus-$g$ loop corrections and $Z(\mathcal{A})$
-is the center.
-This implies that what one algebra sees as deformation, its dual sees as obstruction.
-Chiral Hochschild cohomology also satisfies
-\[
-HH^n_{\mathrm{chiral}}(\mathcal{A})
-\simeq HH^{2-n}_{\mathrm{chiral}}(\mathcal{A}^!)^\vee,
-\]
-manifesting modular, quantum, and geometric periodicities whose interplay is
-essential at critical level.
-
-\medskip
-\noindent
-\textbf{Examples.} We develop chain-level algorithms rendering all constructions explicitly computable, and systematically derive a large catalog of examples via explicit presentations and lattice operations. Complete worked examples include the $\beta$-$\gamma$ system of symplectic bosons, affine Kac--Moody algebras at shifted levels $k \leftrightarrow -k - 2h^\vee$, and $W$-algebras with their non-quadratic Koszul duals computed through curved $A_\infty$ structures, alongside new objects arising from lattice constructions.
+These constructions are carried out explicitly for the Heisenberg
+algebra, affine Kac--Moody at dual levels, the Virasoro algebra,
+principal $\mathcal{W}$-algebras via Drinfeld--Sokolov reduction,
+and Yangians on the evaluation locus.
 \end{abstract}
 
 \bigskip
@@ -777,7 +778,13 @@ $\Theta_{\cA}$ inside the full package~$\mathcal{C}_{\cA}$.
 \include{chapters/theory/introduction}
 
 % --------------------------------------------------
-% Chapter 2: Algebraic Foundations
+% Chapter 2: The Fourier Seed
+% Explicit evaluations of the bar-as-Fourier-transform before general theory.
+% --------------------------------------------------
+\include{chapters/theory/fourier_seed}
+
+% --------------------------------------------------
+% Chapter 3: Algebraic Foundations
 % Classical Koszul duality recalled (not re-derived).
 % --------------------------------------------------
 \include{chapters/theory/algebraic_foundations}
@@ -1036,19 +1043,18 @@ corrections, and an index-theoretic $\hat{A}$-genus simultaneously.
 The four theorems of Part~I and the computations of Part~II establish
 chiral Koszul duality as a self-contained mathematical framework.  But the
 framework is not isolated: its constructions appear, in different guises,
-throughout modern mathematics and mathematical physics.  The BV-BRST complex
-of perturbative quantum field theory \emph{is} the bar complex, with the
-ghost fields incarnating the desuspended generators and the BRST differential
-incarnating the bar differential
-(Chapter~\ref{ch:bv-brst}).  The Kontsevich integral of knot theory \emph{is}
-the restriction of the configuration space propagator from complex curves to
-embedded circles (\S\ref{subsec:vassiliev}).  The Costello--Li construction
-of chiral algebras from four-dimensional gauge theories \emph{is} the
-factorization algebra incarnation of the bar-cobar adjunction applied to
-the four-dimensional factorization algebra
-(Chapter~\ref{ch:ht-boundary}).  Part~III is the synthesis layer of the
-book: it traces these identifications and states the larger subject they
-are converging toward.
+throughout modern mathematics and mathematical physics.  The genus-$0$
+bar/BRST comparison is proved, and the all-genera BV/BRST bridge is
+formulated as a downstream conjectural comparison in
+Chapter~\ref{ch:bv-brst}.  The Kontsevich integral of knot theory is
+treated in \S\ref{subsec:vassiliev} as a topological shadow whose
+comparison with the holomorphic propagator remains conjectural.  The
+Costello--Li construction of chiral algebras from four-dimensional
+gauge theories provides the factorization-algebra target against which
+Chapter~\ref{ch:ht-boundary} formulates boundary comparisons.  Part~III
+is the synthesis layer of the book: it traces these theorem-level and
+programme-level bridges and states the larger subject they are
+converging toward.
 
 The chapters here are more concise than those of Parts~I--II,
 indicating directions of active investigation rather than definitive

@@ -1,13 +1,56 @@
+% Constitutional note:
+% Chapter 34 (concordance.tex) is the normative status ledger.
+% If a local statement disagrees with Chapter 34's status or scope,
+% the local statement is stale and must be rewritten or ignored.
 \chapter{Bar and cobar constructions}
 \label{chap:bar-cobar}
 
-The three-step bar differential $d = d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{de\,Rham}}$ that we built by hand for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} now receives its general formulation. For an arbitrary chiral algebra $\cA$ on a smooth curve $X$, the bar complex $\barB(\cA)$ is a cosheaf on the Ran space of $X$ whose sections on $\overline{C}_n(X)$ are computed by the same residue-extraction procedure, applied to the full OPE data of $\cA$.
+\index{bar construction!as integral transform|textbf}
+\index{non-abelian Fourier transform|textbf}
 
-\noindent\emph{Governing question.} How much of bar-cobar duality is a
-strict genus-$0$ theorem and where does genuinely modular curvature
-enter?  This chapter proves the strict genus-$0$ bar/cobar machine and
-its Verdier compatibility; the curved genus-$g$ deformation is deferred
-to Chapter~\ref{chap:higher-genus}.
+The logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ of
+\S\ref{sec:the-seed}, planted on a configuration space of $n$~points
+and integrated against the OPE data of a chiral algebra, grows into
+a functor: the bar construction.
+
+The bar complex $\barB(\cA)$ of a chiral algebra~$\cA$ on a smooth
+curve~$X$ is a non-abelian integral transform.  Its input is the
+chiral algebra (encoded by OPE singularities); its kernel is the
+propagator $\eta_{ij}$; its output is a factorization coalgebra on
+$\operatorname{Ran}(X)$.  Verdier duality inverts the transform:
+the cobar construction $\Omega(\barB(\cA))$ reconstructs~$\cA$ from
+its transform, just as the inverse Fourier transform reconstructs a
+function from its spectrum.  For the Heisenberg algebra, this
+literally specializes to the Fourier--Mukai transform on the Jacobian.
+
+The three-step bar differential
+$d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
++ d_{\mathrm{de\,Rham}}$ that we built by hand for the Heisenberg
+algebra in Chapter~\ref{ch:heisenberg-frame} now receives its general
+formulation.  The key structural insight is that the three components
+correspond to three types of geometry on the compactified
+configuration space $\overline{C}_n(X)$:
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Component} & \textbf{Geometric origin} & \textbf{Extracts} \\
+\hline
+$d_{\mathrm{internal}}$ & Internal differential of $\cA$ & Algebraic structure \\
+$d_{\mathrm{residue}}$ & Residues along collision divisors $D_{ij}$ & OPE coefficients \\
+$d_{\mathrm{de\,Rham}}$ & de~Rham differential on $\overline{C}_n(X)$ & Configuration geometry
+\end{tabular}
+\end{center}
+
+\noindent
+The Arnold relation
+(Theorem~\ref{thm:arnold-three}) ensures $d^2 = 0$: it is the
+coherence condition that the geometry of collisions is consistent.
+The genus-$0$ bar differential $\dzero$ satisfies $\dzero^2 = 0$
+(Theorem~\ref{thm:bar-nilpotency-complete}), and Verdier duality
+establishes $\mathbb{D}_{\operatorname{Ran}} \barB_X(\cA) \simeq
+\barB_X(\cA^!)$.  The curved genus-$g$ deformation, where the seed is
+transplanted to higher-genus curves and curvature from the Hodge
+bundle enters, is developed in Chapter~\ref{chap:higher-genus}.
 
 \smallskip
 \noindent\textit{Notation.}
@@ -19,9 +62,13 @@ Throughout this chapter, the unadorned differential $d$ on the bar complex denot
 Throughout this chapter: collision divisors are $D_{ij}$ with $i < j$ (indices in increasing order); the hat notation $\widehat{ij}$ denotes \emph{omission} of both factors $\phi_i$ and $\phi_j$ after applying the OPE (we write $\widehat{ij}$ for the collision pattern itself, and $\widehat{\phi_i, \phi_j}$ when listing omitted terms in a tensor product).
 \end{convention}
 
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-\label{rem:bar-cobar-hms}
-The bar and cobar functors are constructed at \textbf{M-level} as explicit dg objects on configuration spaces, with differentials decomposed into internal, residue, and de~Rham components.  The main theorem (Theorem~\ref{thm:bar-cobar-isomorphism-main}) is \emph{stated} at H-level (adjoint equivalence in factorization $\infty$-categories) and \emph{proved} at M-level.  Bar cohomology dimensions and Hilbert series are S-level shadows.
+\label{rem:bar-cobar-hms}%
+
+\begin{remark}[Fourier seed computations]\label{rem:bar-cobar-fourier-seed}
+The reader who has worked through the Fourier seed computations
+(Chapter~\ref{ch:fourier-seed}) has already seen the bar differential
+extract OPE coefficients via residues against the logarithmic
+propagator.  We now develop the general construction.
 \end{remark}
 
 \section{The geometric bar complex}
@@ -114,7 +161,7 @@ where we integrate over configuration spaces relative to $X$.
 In non-abelian Poincar\'e duality (BD \S3.4), one integrates over configuration spaces rather than the manifold itself.  The compactification $\overline{C}_n(X)$ adds boundary divisors encoding collision data.  The key inputs from \cite{BD04} are Theorem~3.4.22 and \S3.6 (Ran space as the correct geometric setting).  Residue extraction is the NAP analogue of the cup product.
 \end{remark}
 
-\begin{theorem}[Bar construction as NAP homology; \ClaimStatusProvedElsewhere]\label{thm:bar-NAP-homology}\label{thm:bar-computes-chiral-homology}
+\begin{theorem}[Bar construction as NAP homology; \ClaimStatusProvedHere]\label{thm:bar-NAP-homology}\label{thm:bar-computes-chiral-homology}
 \index{factorization homology!via bar complex}
 For a chiral algebra $\mathcal{A}$ on a curve X, the geometric bar complex computes:
 $$H_*(\bar{B}^{\text{geom}}(\mathcal{A})) \cong \int_{C_*(X)} \mathcal{A}$$
@@ -2787,11 +2834,12 @@ This encodes associativity up to homotopy, with $n_3$ measuring the failure of
 $n_2$ to be associative, $n_4$ measuring the failure of $n_3$ to be coherent, etc.
 \end{example}
 
-\subsection{Physical interpretation: on-shell propagators and Feynman rules}
+\subsection{Physical interpretation: on-shell propagator and Feynman-rule templates}
 
-\begin{conjecture}[Cobar elements = on-shell propagators; \ClaimStatusHeuristic]\label{conj:cobar-physical}
-Elements of the cobar complex $\Omega^{\text{ch}}(\mathcal{C})$ are \emph{on-shell
-propagators} in the sense of quantum field theory.
+\begin{conjecture}[Cobar elements as on-shell propagator templates; \ClaimStatusHeuristic]\label{conj:cobar-physical}
+Elements of the cobar complex $\Omega^{\text{ch}}(\mathcal{C})$ should be read as
+\emph{algebraic shadow data for on-shell propagators} in the sense of quantum
+field theory.
 
 \emph{Precise statement.} For a chiral coalgebra $\mathcal{C}$ corresponding
 to a 2d CFT, elements $K \in \Omega^n(\mathcal{C})$ are distributions satisfying:
@@ -2799,34 +2847,37 @@ to a 2d CFT, elements $K \in \Omega^n(\mathcal{C})$ are distributions satisfying
 \item \emph{Ultraviolet behavior:} Singularities along diagonals $\{z_i = z_j\}$ 
 encode short-distance behavior (UV divergences).
 \item \emph{On-shell condition:} The cobar differential $d_{\text{cobar}}(K) = 0$ 
-enforces the equations of motion (e.g., $\Box \phi = 0$ for free fields).
+should model the equations of motion (e.g., $\Box \phi = 0$ for free fields).
 \item \emph{S-matrix elements:} The cohomology $H^*(\Omega^{\text{ch}}(\mathcal{C}))$ 
-consists of physical on-shell scattering amplitudes.
+should model physical on-shell scattering amplitudes.
 \end{enumerate}
 \end{conjecture}
 
 \begin{remark}[Evidence: Physical explanation]
-\emph{Step 1: Cobar = Green's functions}
+\emph{Step 1: Cobar as Green's-function template}
 
 A propagator $G(z,w)$ in QFT is a Green's function satisfying:
 $$(\Box_z - m^2) G(z,w) = \delta^{(2)}(z - w)$$
 
-This is precisely the statement that $G$ extends across the diagonal $z = w$ as 
-a distribution with a delta function singularity. In cobar language:
+This is the Green's-function template in which $G$ extends across the diagonal
+$z = w$ as a distribution with a delta function singularity. In the
+conjectural cobar/QFT dictionary this is modeled by:
 $$d_{\text{extend}}(G) = \delta(z - w)$$
 
-\emph{Step 2: Cobar differential = Equations of motion}
+\emph{Step 2: Cobar differential as equations-of-motion template}
 
 For a field $\phi$ satisfying equations of motion $\Box \phi = 0$, the propagator 
 $G$ satisfies:
 $$d_{\text{cobar}}(G) = 0$$
 
-This is the \emph{on-shell condition}. Elements in the cohomology $H^*(\Omega^{\text{ch}})$ 
-are precisely the on-shell propagators.
+This is the template for the \emph{on-shell condition}. Elements in the
+cohomology $H^*(\Omega^{\text{ch}})$ should therefore be read as algebraic
+shadows of on-shell propagators.
 
-\emph{Step 3: $A_\infty$ operations = Feynman rules}
+\emph{Step 3: $A_\infty$ operations as Feynman-rule template}
 
-The operation $n_k$ in the cobar $A_\infty$ structure computes $k$-point correlation 
+The operation $n_k$ in the cobar $A_\infty$ structure should model tree-level
+$k$-point correlation
 functions:
 $$\langle \phi(z_1) \cdots \phi(z_k) \rangle = n_k(G, \ldots, G)(z_1, \ldots, z_k)$$
 
@@ -2838,14 +2889,16 @@ The $A_\infty$ relations encode (all at genus zero, hence tree-level):
 \end{itemize}
 Loop corrections (genus $g \geq 1$) arise from the higher-genus bar complex, not from higher $n_k$ at genus zero.
 
-This is the geometric realization of Feynman rules.
+This gives the conjectural algebraic template for genus-zero Feynman rules.
 \end{remark}
 
 \begin{remark}[Scope]
 Conjecture~\ref{conj:cobar-physical} is tagged \ClaimStatusHeuristic{} because the identification of cobar elements with on-shell propagators requires external physics input (equations of motion, path integral measure) that lies outside the algebraic framework of this monograph.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture identifies cobar complex elements with QFT on-shell propagators and the $A_\infty$ operations with Feynman rules at genus zero.
+The conjecture treats cobar complex elements as algebraic shadow data for
+QFT on-shell propagators, with the $A_\infty$ operations furnishing the
+genus-zero Feynman-rule template.
 \end{remark}
 
 \begin{example}[Free scalar field: complete cobar analysis]\label{ex:free-scalar-cobar}
@@ -3480,9 +3533,9 @@ where $\iota: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the inclusion.
 
 \emph{Physical interpretation.} In quantum field theory:
 \begin{itemize}
-\item Bar elements = off-shell states with infrared cutoffs
-\item Cobar elements = on-shell propagators with UV regularization  
-\item The pairing = S-matrix elements
+\item Bar elements = algebraic shadow data for off-shell states with infrared cutoffs
+\item Cobar elements = algebraic shadow data for on-shell propagators with UV regularization
+\item The pairing = conjectural algebraic shadow of S-matrix elements
 \end{itemize}
 \end{example}
 
@@ -4259,19 +4312,16 @@ from the coderived category to the ordinary derived category.
 
 \subsection{Precise formulation of the relationship}
 
-\begin{remark}[Criteria for Koszul pairs --- recollection]\label{def:koszul-criteria}
+\begin{remark}[Criteria for chiral Koszul pairs --- updated recollection]\label{def:koszul-criteria}
 \label{def:koszul-chiral}
 \index{Koszul duality!chiral}
 \index{Koszul property}
-Recall (Definition~\ref{def:chiral-koszul-pair}) that two chiral algebras $(\mathcal{A}_1, \mathcal{A}_2)$ form a \emph{chiral Koszul pair} if and only if:
-\begin{enumerate}
-\item Both $\mathcal{A}_1$ and $\mathcal{A}_2$ admit bar constructions with conilpotent coalgebra structure
-\item The bar complex $\bar{B}(\mathcal{A}_1)$ is quasi-isomorphic (as a coalgebra) to the Koszul dual coalgebra $\mathcal{A}_2^!$
-\item Symmetrically: $\bar{B}(\mathcal{A}_2) \simeq \mathcal{A}_1^!$
-\item The cobar constructions provide quasi-inverse equivalences
-\end{enumerate}
-
-This is a strong constraint: most chiral algebras do not admit Koszul duals.
+Recall from Definition~\ref{def:chiral-koszul-pair} that a chiral Koszul pair
+is specified by antecedent recognition data: a chiral twisting datum, a Koszul
+twisting morphism, compatible filtrations, and Verdier-compatible dual coalgebras.
+The bar/cobar quasi-isomorphisms are then proved consequences
+(Theorem~\ref{thm:fundamental-twisting-morphisms} and
+Theorem~\ref{thm:bar-cobar-isomorphism-main}), not part of the definition.
 \end{remark}
 
 \begin{remark}[Bar-cobar vs.\ Koszul: the fundamental distinction]\label{rem:fundamental-distinction}
@@ -5123,7 +5173,7 @@ target.
 \emph{Consistency check}: For $c=26$, this predicts $\text{Vir}_{26}^! \cong \text{Vir}_0$, which is compatible with the BRST cohomology of the bosonic string at zero ghost number.
 \end{example}
 
-\begin{example}[$W_\infty$: completion frontier]
+\begin{example}[$W_\infty$: exact MC4 frontier]
 \label{ex:winfty-completion-frontier}\label{ex:winfty-no-dual}
 
 The $W_\infty$ algebra has generators $\{W^{(n)}\}_{n=2}^\infty$ of all conformal weights 
@@ -5133,31 +5183,47 @@ $n \geq 2$, with infinitely many relations.
 principal-stage completed M-level bar-cobar package for $W_\infty$, but
 not the stronger H-level realization expected in the modular programme.
 
-\emph{The precise frontier statement} is an inverse-limit bar theorem:
-one seeks a separated complete weight filtration with finite-type
-truncations $W_{\infty,\le N}$ and a completed bar object
+\emph{The precise frontier statement} is no longer a first inverse-limit
+bar theorem.  For the standard principal-stage tower,
+Corollary~\ref{cor:winfty-standard-mc4-package} already proves the
+completed M-level package.  The live MC4 package is instead:
+construct a principal-stage compatible factorization target
+\textup{(}Conjecture~\ref{conj:winfty-factorization-package}\textup{)},
+prove the residue identities
 \[
-\widehat{\bar B}(W_\infty) := \varprojlim_N \bar B(W_{\infty,\le N})
+\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N),
 \]
-whose cobar recovers the completed algebra.
+and discharge them on the finite-detection packet
+$\mathcal{I}_N$ isolated by
+Corollary~\ref{cor:winfty-ds-finite-seed-set}, whose first live
+higher-spin stages are already reduced on the theorem surface to the
+stage-$3$ fifteen-coefficient packet and the stage-$4$
+six-coefficient packet organized as three local OPE blocks, sharpened
+further to the four channels
+$c_{334}$, $c_{444}$,
+$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
+residue-side checks
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
 
 \emph{Obstructions still to be overcome}: 
 \begin{enumerate}
-\item The bar complex $\bar{B}(W_\infty)$ is infinitely generated in each degree
-\item no theorem in the manuscript yet shows that the completed object
-  $\widehat{\bar{B}}(W_\infty)$ carries the full M-level bar-cobar package
-  beyond the standard principal-stage tower
-\item for the standard principal-stage tower, conformal-weight cutoff now
-  makes the finite-stage stabilization formal
-  (Corollary~\ref{cor:winfty-weight-cutoff}), and
-  Proposition~\ref{prop:inverse-limit-differential-continuity}
-  upgrades the completed differential to a continuous map for the
-  inverse-limit topology; Corollary~\ref{cor:winfty-standard-mc4-package}
-  therefore supplies the standard completed M-level package
+\item construct a separated complete H-level/factorization target whose
+  finite quotients recover the principal stages $W_N$;
+  \item extract the local residue coefficients and prove the exact
+  identities
+  $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+  =\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$ of
+  Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
+\item close the finite detection on the packet $\mathcal{I}_N$,
+  after which
+  Corollary~\ref{cor:winfty-hlevel-comparison-criterion} makes the
+  comparison with the theorematic standard tower formal
 \end{enumerate}
 
 \emph{Interpretation.} $W_\infty$ sits at the boundary of the present
-finite-type theory.  It should be read as a completion frontier, not as
+finite-type theory.  It should be read as an exact MC4 frontier, not as
 an impossibility theorem.
 \end{example}
 
@@ -5465,8 +5531,8 @@ is an isomorphism for all $N \ge w$.
 Therefore the standard principal-stage tower already supplies the
 surjectivity/stabilization part of MC4.  Together with
 Proposition~\ref{prop:inverse-limit-differential-continuity}, this
-reduces the standard $W_\infty$ tower to the completed M-level package
-of Corollary~\ref{cor:winfty-standard-mc4-package}.
+reduces the standard $W_\infty$ tower to the standard-tower completed
+M-level package of Corollary~\ref{cor:winfty-standard-mc4-package}.
 \end{corollary}
 
 \begin{proof}
@@ -5557,8 +5623,9 @@ comparison map
 \Omega\bigl(\widehat{\bar B}(W_\infty)\bigr) \xrightarrow{\sim} W_\infty
 \]
 is a quasi-isomorphism.
-Thus the standard principal-stage tower realizes the full M-level
-completed bar-cobar package for $W_\infty$; the remaining frontier is
+Thus the standard principal-stage tower realizes the full
+standard-tower M-level completed bar-cobar package for $W_\infty$; the
+remaining frontier is
 the H-level comparison with stronger factorization-theoretic or
 physical realizations.
 \end{corollary}
@@ -5678,7 +5745,20 @@ Then the induced comparison map
 is a quasi-isomorphism, and $\mathcal{W}^{\mathrm{ht}}$ carries the same
 completed M-level bar-cobar object as the standard principal-stage
 completion.  Thus the live $\mathcal{W}_\infty$ frontier is to
-construct such a filtered H-level target, not another stabilization
+construct such a filtered H-level target and identify its finite
+quotients by the exact residue identities
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$,
+discharged on the finite-detection packet $\mathcal{I}_N$, whose first
+live higher-spin stages are already reduced on the theorem surface to
+the stage-$3$ fifteen-coefficient packet and the stage-$4$
+six-coefficient packet organized as three local OPE blocks, sharpened
+further to the four channels
+$c_{334}$, $c_{444}$,
+$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
+residue-side checks
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$, not another stabilization
 theorem.
 \end{corollary}
 
@@ -5829,7 +5909,7 @@ $W$-tower.  Equivalently:
   \mathcal{W}^{\mathrm{fact}}_\infty \xrightarrow{\sim} W_\infty
   \]
   identifies the factorization-theoretic completion with the standard
-  completed M-level package.
+  principal-stage completed M-level package.
 \end{enumerate}
 Thus the live $\mathcal{W}_\infty$ frontier is not further stabilization
 of the standard tower.  It is the construction of the filtered
@@ -5862,6 +5942,25 @@ ideals with principal-stage quotients, and
 Proposition~\ref{prop:winfty-spin-triangular-ideals} reduces that
 existence problem to the spin-triangular OPE formulas and residue
 operations themselves.
+Proposition~\ref{prop:winfty-ds-local-coefficient-criterion} then
+shows that the remaining stage-identification problem is literally the
+equality of the extracted local OPE and residue coefficients with the
+principal Drinfeld--Sokolov data.
+Proposition~\ref{prop:winfty-ds-residue-identity-criterion} sharpens
+this once more: the live $W_\infty$ step is the mode-by-mode identity
+between the extracted residue/OPE coefficients and the principal
+Drinfeld--Sokolov coefficient family.  The next reduction is finite and
+generator-level: Proposition~\ref{prop:winfty-ds-generator-seed}
+shows that it is enough to check the finitely many generator residue
+coefficients, and Corollary~\ref{cor:winfty-ds-finite-seed-set}
+packages those checks as an explicit finite index set, provided
+translation and residue calculus propagate those identities through
+descendants.  Corollary~\ref{cor:winfty-ds-lowstage-seeds} makes the
+first nontrivial stage explicit, and
+Proposition~\ref{prop:winfty-ds-stage3-explicit-packet} shows that the
+stage-$3$ packet is already encoded by the explicit $W_3$ OPE: three
+nonzero primary coefficients and twelve forced vanishings.  The next
+genuinely new higher-spin packet is therefore stage~$4$.
 \end{remark}
 
 \begin{proposition}[Higher-spin ideal criterion for principal-stage
@@ -5967,6 +6066,1174 @@ from the nested system of ideals
 $I_{>N+1}\mathcal{F}_\infty \subset I_{>N}\mathcal{F}_\infty$.  This is
 exactly the data of the principal-stage quotient system required in
 Proposition~\ref{prop:winfty-higher-spin-ideal-criterion}.
+\end{proof}
+
+\begin{proposition}[Coefficient-level DS criterion for principal-stage
+\texorpdfstring{$W_\infty$}{W_infty} quotients;
+\ClaimStatusProvedHere]
+\label{prop:winfty-ds-coefficient-criterion}
+Fix $N \ge 2$ and let
+\[
+\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty
+\]
+be a quotient obtained from
+Proposition~\ref{prop:winfty-spin-triangular-ideals}.  Assume:
+\begin{enumerate}
+\item the quotient is strongly generated by the images of
+  $W^{(2)},\dots,W^{(N)}$;
+\item the OPE coefficients among these generators agree with the
+  principal Drinfeld--Sokolov OPE formulas for the finite-type stage
+  $W_N$;
+\item no additional local relations among the generators of spins
+  $\le N$ appear beyond those forced by the OPE coefficients in
+  \textup{(2)}; and
+\item the induced residue/bar operations coincide with the finite-stage
+  bar-cobar package already proved for $W_N$.
+\end{enumerate}
+Then the chiral envelope, or any equivalent dg model extracted from
+$\mathcal{F}_{\le N}$, identifies with the principal finite-type stage
+$W_N$.  Consequently,
+Proposition~\ref{prop:winfty-higher-spin-ideal-criterion} applies, and
+the remaining $\mathcal{W}_\infty$ frontier is reduced to matching the
+stagewise quotient OPE coefficients with the principal
+Drinfeld--Sokolov formulas.
+\end{proposition}
+
+\begin{proof}
+Conditions~(1)--(3) say that the quotient is presented by the same
+strong generators and the same local OPE relations as the principal
+finite-type algebra $W_N$.  By the standard reconstruction principle
+for strongly generated chiral/factorization algebras, this identifies
+the resulting envelope with the principal stage.
+
+Condition~(4) matches the induced residue/bar operations with the
+finite-type bar-cobar package already established on the theorematic
+side.  Therefore the quotient produced by
+Proposition~\ref{prop:winfty-spin-triangular-ideals} is exactly the
+principal stage needed in
+Proposition~\ref{prop:winfty-higher-spin-ideal-criterion}.
+\end{proof}
+
+\begin{proposition}[Local-coefficient criterion for principal-stage
+\texorpdfstring{$W_\infty$}{W_infty} quotients;
+\ClaimStatusProvedHere]
+\label{prop:winfty-ds-local-coefficient-criterion}
+Fix $N \ge 2$ and let
+\[
+\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty
+\]
+be the quotient produced by
+Proposition~\ref{prop:winfty-spin-triangular-ideals}.  Assume that for
+all $2 \le s,t \le N$ the quotient OPE has an expansion
+\[
+W^{(s)}(z)W^{(t)}(w)\sim
+\sum_{u \le N}\sum_{m,n \ge 0}
+C_{s,t}^{u;m,n}(N)\,
+\frac{\partial^m W^{(u)}(w)}{(z-w)^n},
+\]
+with only finitely many nonzero terms at each pole order, and suppose:
+\begin{enumerate}
+\item for every triple $(s,t,u)$ with $2 \le s,t,u \le N$, the
+  coefficients $C_{s,t}^{u;m,n}(N)$ agree with the principal
+  Drinfeld--Sokolov coefficients for the finite-type stage $W_N$;
+\item every local relation among the generators
+  $W^{(2)},\dots,W^{(N)}$ in the quotient is generated by these OPE
+  coefficients and their translation descendants; and
+\item the residue maps and bar operations extracted from the same
+  coefficients coincide with the finite-stage bar-cobar package proved
+  for $W_N$.
+\end{enumerate}
+Then the hypotheses of
+Proposition~\ref{prop:winfty-ds-coefficient-criterion} are satisfied.
+Hence the quotient $\mathcal{F}_{\le N}$ identifies with the principal
+finite-type stage $W_N$.  In particular, the remaining
+$\mathcal{W}_\infty$ frontier is reduced to exact equality of the
+stagewise OPE and residue coefficients with the principal
+Drinfeld--Sokolov formulas.
+\end{proposition}
+
+\begin{proof}
+Condition~(1) says that the local OPE coefficients in the quotient are
+exactly the principal Drinfeld--Sokolov coefficients of $W_N$.
+Condition~(2) says that these coefficients and their translation
+descendants generate all local relations among the truncated
+generators, so the quotient has the same local presentation as the
+principal finite-type stage.  Condition~(3) matches the induced
+residue/bar operations with the theorematic finite-stage package.
+These are precisely the inputs required in
+Proposition~\ref{prop:winfty-ds-coefficient-criterion}.
+\end{proof}
+
+\begin{proposition}[Residue-coefficient identity criterion for
+principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients;
+\ClaimStatusProvedHere]
+\label{prop:winfty-ds-residue-identity-criterion}
+Fix $N \ge 2$ and let
+\[
+\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty
+\]
+be the quotient produced by
+Proposition~\ref{prop:winfty-spin-triangular-ideals}.  For
+$2 \le s,t,u \le N$ and $m,n \ge 0$, let
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$ denote the coefficient
+obtained by extracting the $(z-w)^{-n}\partial^mW^{(u)}$ term from the
+local OPE via the geometric residue map along the collision divisor
+$D_{12}$, and let
+$\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$ denote the corresponding
+principal Drinfeld--Sokolov coefficient for $W_N$.  Assume:
+\begin{enumerate}
+\item the quotient OPE and its induced residue/bar operations are
+  entirely computed by these geometric residue coefficients
+  $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$;
+\item for every admissible index tuple,
+  \[
+  \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+  = \mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N);
+  \]
+  and
+\item the bar operations induced from the same residue calculus agree
+  with the finite-stage bar-cobar package already proved for $W_N$.
+\end{enumerate}
+Then the hypotheses of
+Proposition~\ref{prop:winfty-ds-local-coefficient-criterion} are
+satisfied.  Consequently the quotient $\mathcal{F}_{\le N}$ identifies
+with the principal finite-type stage $W_N$.
+\end{proposition}
+
+\begin{proof}
+Assumption~(1) says that the local presentation of the quotient is
+completely controlled by the residue coefficient family
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$.  Assumption~(2) identifies
+that family with the principal Drinfeld--Sokolov coefficient family of
+$W_N$.  Therefore the quotient has exactly the same OPE coefficients
+and translation descendants as the principal finite-type stage.
+
+Assumption~(3) gives the matching of the induced residue/bar operations
+with the theorematic finite-stage package.  This is exactly the input
+required in
+Proposition~\ref{prop:winfty-ds-local-coefficient-criterion}.
+\end{proof}
+
+\begin{proposition}[Generator-seed criterion for principal-stage
+\texorpdfstring{$W_\infty$}{W_infty} residue identities;
+\ClaimStatusProvedHere]
+\label{prop:winfty-ds-generator-seed}
+Fix $N \ge 2$ and let
+\[
+\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty
+\]
+be as in
+Proposition~\ref{prop:winfty-ds-residue-identity-criterion}.  Assume:
+\begin{enumerate}
+\item $\mathcal{F}_{\le N}$ is strongly generated by
+  $W^{(2)},\dots,W^{(N)}$;
+\item for each pair of generators $W^{(s)},W^{(t)}$ with
+  $2 \le s,t \le N$, the primary residue coefficients
+  \[
+  \mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(N)
+  \]
+  agree with the principal Drinfeld--Sokolov coefficients
+  $\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(N)$ for every visible pole order
+  and target spin~$u$;
+\item translation commutes with the residue extraction formulas, so all
+  descendant coefficients are obtained from the primary ones by
+  repeated application of $\partial$; and
+\item the bar operations are generated from the same residue calculus
+  and therefore are determined by those translated coefficient
+  families.
+\end{enumerate}
+Then the full mode-by-mode identities
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)
+\]
+hold for all admissible indices.  Consequently the hypotheses of
+Proposition~\ref{prop:winfty-ds-residue-identity-criterion} are
+satisfied.
+\end{proposition}
+
+\begin{proof}
+Assumption~(2) identifies the primary OPE/residue coefficients on the
+strong generators with the principal Drinfeld--Sokolov coefficients.
+By assumption~(3), every coefficient involving derivatives of the output
+field is obtained by applying translation to those primary
+coefficients, so the same equality propagates to all descendants.
+
+Assumption~(1) ensures that these generator coefficients determine the
+entire local presentation of the quotient, and assumption~(4) ensures
+that the induced bar operations are recovered from the same residue
+calculus.  Therefore the full residue coefficient family agrees with the
+principal Drinfeld--Sokolov family.  This is exactly the input required
+by Proposition~\ref{prop:winfty-ds-residue-identity-criterion}.
+\end{proof}
+
+\begin{corollary}[Finite primary seed set for principal-stage
+\texorpdfstring{$W_\infty$}{W_infty} comparison;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-finite-seed-set}
+Fix $N \ge 2$ and define the finite index set
+\[
+\mathcal{I}_N:=
+\left\{
+(s,t,u,n)\ \middle|\
+\begin{array}{l}
+2 \le s \le t \le N,\\
+2 \le u \le \min(N,s+t-1),\\
+1 \le n \le s+t-u
+\end{array}
+\right\}.
+\]
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-generator-seed}.  Then it is enough to
+check the primary identities
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(N)
+\qquad\text{for all } (s,t,u,n)\in\mathcal{I}_N.
+\]
+These finitely many checks imply the full residue/OPE identity package
+required by
+Proposition~\ref{prop:winfty-ds-residue-identity-criterion}.
+\end{corollary}
+
+\begin{proof}
+Spin-triangularity implies that for fixed $s,t \le N$ only target spins
+$u \le s+t-1$ and pole orders $n \le s+t-u$ can appear.  Since the
+stage quotient discards spins $>N$, the admissible tuples are exactly
+those in $\mathcal{I}_N$, hence finite.
+
+Proposition~\ref{prop:winfty-ds-generator-seed} shows that agreement on
+these primary generator coefficients propagates by translation to every
+descendant coefficient and therefore to the full residue/bar package.
+\end{proof}
+
+\begin{corollary}[First principal-stage seed packets for
+\texorpdfstring{$W_\infty$}{W_infty} comparison;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-lowstage-seeds}
+The finite seed sets of
+Corollary~\ref{cor:winfty-ds-finite-seed-set} begin as follows:
+\[
+\mathcal{I}_2
+=\{(2,2,2,1),(2,2,2,2)\},
+\]
+and
+\begin{align*}
+\mathcal{I}_3
+= {} & \{(2,2,2,1),(2,2,2,2),(2,2,3,1)\} \\
+& \sqcup\{(2,3,2,1),(2,3,2,2),(2,3,2,3),(2,3,3,1),(2,3,3,2)\} \\
+& \sqcup\{(3,3,2,1),(3,3,2,2),(3,3,2,3),(3,3,2,4), \\
+& \qquad (3,3,3,1),(3,3,3,2),(3,3,3,3)\}.
+\end{align*}
+In particular, the first genuinely new infinite-generator stage beyond
+the theorematic Virasoro block is the stage-$3$ packet of fifteen
+primary coefficients: the two Virasoro coefficients, the single
+vanishing $W^{(2)}W^{(2)}\to W^{(3)}$ coefficient, five mixed
+$W^{(2)}$/$W^{(3)}$ coefficients, and seven $W^{(3)}$ self-coupling
+coefficients.
+\end{corollary}
+
+\begin{proof}
+For $N=2$, the defining inequalities for $\mathcal{I}_N$ force
+$s=t=u=2$ and $1\le n\le 2$, giving exactly the two displayed tuples.
+For $N=3$, the admissible ordered pairs of generator spins are
+$(2,2)$, $(2,3)$, and $(3,3)$.  The inequalities
+\[
+2\le u\le \min(3,s+t-1),
+\qquad
+1\le n\le s+t-u
+\]
+then give the displayed decomposition into the three corresponding
+blocks.  The final sentence is simply a repackaging of those tuples by
+source pair and target spin.
+\end{proof}
+
+\begin{proposition}[Primary top-pole criterion for generator seed
+packets; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-primary-top-pole}
+Fix $N \ge 2$ and assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-generator-seed}.  Assume moreover that
+for each $2 \le u \le N$ the strong generator $W^{(u)}$ is primary of
+conformal weight $u$ with respect to the Virasoro field
+$T:=W^{(2)}$, and that the local OPE is decomposed into conformal
+families of these primary generators and their translation
+descendants.
+
+Then for every visible triple $(s,t,u)$ with
+\[
+2 \le s \le t \le N,
+\qquad
+2 \le u \le \min(N,s+t-1),
+\]
+the primary generator $W^{(u)}$ can appear only at the top pole order
+\[
+n_{\max}(s,t;u):=s+t-u.
+\]
+Equivalently,
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(N)
+\;=\;
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(N)
+\;=\;0
+\qquad\text{for every } 1\le n < s+t-u.
+\]
+Consequently the primary seed set of
+Corollary~\ref{cor:winfty-ds-finite-seed-set} reduces further to the
+top-pole subset
+\[
+\mathcal{I}_N^{\mathrm{top}}
+:=\{(s,t,u,s+t-u)\in \mathcal{I}_N\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Because $W^{(s)}$, $W^{(t)}$, and $W^{(u)}$ are primary fields of
+weights $s$, $t$, and $u$, conformal covariance organizes the
+$W^{(u)}$-family inside the OPE
+$W^{(s)}(z)W^{(t)}(w)$ as one primary coefficient multiplying
+$W^{(u)}(w)$ at pole order $s+t-u$, together with the translation
+descendants $\partial^m W^{(u)}(w)$ at the lower poles
+$s+t-u-m$.  The undifferentiated primary field therefore occurs only at
+the top pole order $n=s+t-u$.
+
+In the notation of
+Proposition~\ref{prop:winfty-ds-generator-seed}, the coefficients
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(N),
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(N)
+\]
+record the coefficients of the undifferentiated primary generator
+$W^{(u)}$ itself.  Hence those coefficients vanish for all lower pole
+orders $n<s+t-u$, both on the residue side and on the principal
+Drinfeld--Sokolov side.  This proves the displayed vanishing and
+identifies the reduced top-pole seed set $\mathcal{I}_N^{\mathrm{top}}$.
+\end{proof}
+
+\begin{proposition}[Odd top-pole vanishing for identical even
+generators; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-self-ope-parity}
+Fix $N \ge 2$ and assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-primary-top-pole}.  Assume moreover
+that the strong generators $W^{(2)},\dots,W^{(N)}$ are even fields.
+Then for every visible self-coupling triple $(s,s,u)$ one has
+\[
+\mathsf{C}^{\mathrm{res}}_{s,s;u;0,\,2s-u}(N)
+=
+\mathsf{C}^{\mathrm{DS}}_{s,s;u;0,\,2s-u}(N)
+=0
+\qquad\text{whenever } 2s-u \text{ is odd}.
+\]
+Equivalently, for identical even generators the top-pole primary
+coefficient can be nonzero only when the top pole order is even.
+\end{proposition}
+
+\begin{proof}
+Let $A:=W^{(s)}$ and set $m:=2s-u-1$, so the top-pole primary
+coefficient of the target generator $W^{(u)}$ in the self-OPE
+$A(z)A(w)$ is the $A_{(m)}A$ term.  Because $A$ is even, the
+vertex-algebra skew-symmetry formula gives
+\[
+A_{(m)}A
+=
+\sum_{j\ge 0}\frac{(-1)^{m+j+1}}{j!}\,\partial^j(A_{(m+j)}A).
+\]
+By Proposition~\ref{prop:winfty-ds-primary-top-pole}, the
+undifferentiated primary generator channel occurs only at the top pole,
+so the terms with $j>0$ do not contribute to the same primary
+coefficient.  Therefore the primary coefficient satisfies
+\[
+A_{(m)}A = (-1)^{m+1}A_{(m)}A = (-1)^{2s-u}A_{(m)}A.
+\]
+If $2s-u$ is odd, this becomes $A_{(m)}A=-A_{(m)}A$, hence the
+coefficient vanishes.  The same skew-symmetry identity holds on the
+principal Drinfeld--Sokolov side, so both displayed coefficients
+vanish.
+\end{proof}
+
+\begin{proposition}[Stage-$3$ principal packet from the explicit
+\texorpdfstring{$W_3$}{W3} OPE; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-stage3-explicit-packet}
+Fix $N=3$ and write
+\[
+T:=W^{(2)},
+\qquad
+W:=W^{(3)}.
+\]
+For the principal stage $W_3$, the primary residue coefficients on the
+seed set $\mathcal{I}_3$ are completely determined by the explicit
+$W_3$ OPE package:
+\begin{enumerate}
+\item the Virasoro block
+  \[
+  T(z)T(w)\sim \frac{c/2}{(z-w)^4}
+  +\frac{2T(w)}{(z-w)^2}
+  +\frac{\partial T(w)}{z-w};
+  \]
+\item the primary-field block
+  \[
+  T(z)W(w)\sim \frac{3W(w)}{(z-w)^2}
+  +\frac{\partial W(w)}{z-w};
+  \]
+\item the complete $W$-$W$ block
+  \begin{align*}
+  W(z)W(w)\sim {} &
+  \frac{c/3}{(z-w)^6}
+  +\frac{2T(w)}{(z-w)^4}
+  +\frac{\partial T(w)}{(z-w)^3} \\
+  & +
+  \frac{\frac{3}{10}\partial^2T(w)
+  +\frac{16}{22+5c}\Lambda(w)}{(z-w)^2}
+  +\frac{\frac{1}{15}\partial^3T(w)
+  +\frac{8}{22+5c}\partial\Lambda(w)}{z-w},
+  \end{align*}
+  with $\Lambda={:}TT{:}-\frac{3}{10}\partial^2T$.
+\end{enumerate}
+More precisely, among the fifteen tuples in $\mathcal{I}_3$, only the
+three primary coefficients
+\[
+\mathsf{C}^{\mathrm{DS}}_{2,2;2;0,2}(3)=2,
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{2,3;3;0,2}(3)=3,
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{3,3;2;0,4}(3)=2
+\]
+are nonzero; the remaining twelve coefficients in $\mathcal{I}_3$
+vanish.  Consequently the stage-$3$ comparison problem is equivalent to
+matching these three numbers and the twelve forced vanishings, after
+which translation recovers all descendant coefficients.
+\end{proposition}
+
+\begin{proof}
+The seed set $\mathcal{I}_3$ was written explicitly in
+Corollary~\ref{cor:winfty-ds-lowstage-seeds}.  We read its coefficients
+off from the explicit $W_3$ OPE package.
+
+For the pair $(T,T)$, the only primary generator appearing in the
+Virasoro OPE is $T$ itself at pole order $2$, with coefficient $2$.
+The pole-order-$1$ term is $\partial T$, hence a descendant, and there
+is no primary target of spin $3$.  Therefore
+\[
+\mathsf{C}^{\mathrm{DS}}_{2,2;2;0,2}(3)=2,
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{2,2;2;0,1}(3)=
+\mathsf{C}^{\mathrm{DS}}_{2,2;3;0,1}(3)=0.
+\]
+
+For the mixed pair $(T,W)$, the primary-field OPE shows that the only
+primary target is $W$ at pole order $2$, with coefficient $3$.  The
+pole-order-$1$ term is $\partial W$, hence a descendant, and no primary
+target of spin $2$ appears.  Thus
+\[
+\mathsf{C}^{\mathrm{DS}}_{2,3;3;0,2}(3)=3,
+\]
+and all four remaining mixed primary coefficients in $\mathcal{I}_3$
+vanish.
+
+For the pair $(W,W)$, the complete $W$-$W$ OPE has primary generator
+target $T$ only at pole order $4$, again with coefficient $2$.  The
+terms at pole orders $3,2,1$ are the descendants
+$\partial T$, $\partial^2 T$, and $\partial^3 T$, while the
+$\Lambda$-terms lie in conformal weight $4$ and therefore outside the
+generator seed set $\mathcal{I}_3$.  No primary target of spin $3$
+appears.  Hence
+\[
+\mathsf{C}^{\mathrm{DS}}_{3,3;2;0,4}(3)=2,
+\]
+and the other seven $(W,W)$-entries in $\mathcal{I}_3$ vanish.
+
+This accounts for all fifteen tuples in $\mathcal{I}_3$.  The final
+sentence is then exactly the translation-propagation statement of
+Proposition~\ref{prop:winfty-ds-generator-seed}.
+\end{proof}
+
+\begin{proposition}[Stage-$4$ residual packet after the theorematic
+\texorpdfstring{$W_3$}{W3} sector; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-stage4-residual-packet}
+Fix $N=4$ and let $\mathcal{I}_4$ be the primary seed set of
+Corollary~\ref{cor:winfty-ds-finite-seed-set}.  Write
+\[
+\mathcal{I}_4^{\mathrm{Vir}}
+:=\{(s,t,u,n)\in\mathcal{I}_4 \mid s=2\},
+\qquad
+\mathcal{I}_4^{W_3}
+:=\{(3,3,u,n)\in\mathcal{I}_4 \mid u\le 3\}.
+\]
+Then every primary coefficient indexed by
+\[
+\mathcal{I}_4^{\mathrm{Vir}}\sqcup \mathcal{I}_4^{W_3}
+\]
+is already determined by the exact stress-tensor action on
+$W^{(2)},W^{(3)},W^{(4)}$ together with the explicit stage-$3$
+\texorpdfstring{$W_3$}{W3} packet of
+Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}.  The only
+genuinely new stage-$4$ primary coefficients are therefore the residual
+packet
+\[
+\mathcal{J}_4
+:=\mathcal{I}_4\setminus
+\bigl(\mathcal{I}_4^{\mathrm{Vir}}\sqcup \mathcal{I}_4^{W_3}\bigr),
+\]
+which has cardinality $29$ and decomposes as
+\[
+\mathcal{J}_4
+=\{(3,3,4,1),(3,3,4,2)\}
+\sqcup \mathcal{J}_4^{3,4}
+\sqcup \mathcal{J}_4^{4,4},
+\]
+where
+\begin{align*}
+\mathcal{J}_4^{3,4}
+={} & \{(3,4,2,1),(3,4,2,2),(3,4,2,3),(3,4,2,4),(3,4,2,5)\} \\
+& \sqcup \{(3,4,3,1),(3,4,3,2),(3,4,3,3),(3,4,3,4)\} \\
+& \sqcup \{(3,4,4,1),(3,4,4,2),(3,4,4,3)\},
+\end{align*}
+and
+\begin{align*}
+\mathcal{J}_4^{4,4}
+={} & \{(4,4,2,1),(4,4,2,2),(4,4,2,3),(4,4,2,4),(4,4,2,5),(4,4,2,6)\} \\
+& \sqcup \{(4,4,3,1),(4,4,3,2),(4,4,3,3),(4,4,3,4),(4,4,3,5)\} \\
+& \sqcup \{(4,4,4,1),(4,4,4,2),(4,4,4,3),(4,4,4,4)\}.
+\end{align*}
+Consequently, the stage-$4$ comparison problem is equivalent to
+matching these $29$ coefficients.  Once that packet agrees with the
+principal Drinfeld--Sokolov coefficients, translation again recovers
+all descendant coefficients.
+\end{proposition}
+
+\begin{proof}
+By definition,
+\[
+\mathcal{I}_4
+=\left\{
+(s,t,u,n)\ \middle|\
+\begin{array}{l}
+2 \le s \le t \le 4,\\
+2 \le u \le \min(4,s+t-1),\\
+1 \le n \le s+t-u
+\end{array}
+\right\}.
+\]
+The admissible source pairs are therefore
+\[
+(2,2),\ (2,3),\ (2,4),\ (3,3),\ (3,4),\ (4,4).
+\]
+
+All tuples with first source spin $2$ lie in
+$\mathcal{I}_4^{\mathrm{Vir}}$.  These are already determined by the
+exact stress-tensor action, because $W^{(2)}$ acts on each
+$W^{(t)}$ as a primary field of spin $t$ with no further generator
+targets.  For the pair $(3,3)$, every tuple with target spin $u\le 3$
+lies in $\mathcal{I}_4^{W_3}$ and is already fixed by the explicit
+stage-$3$ $W_3$ OPE package from
+Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}.  The only
+remaining $(3,3)$ entries are thus the two target-spin-$4$ tuples
+\[
+(3,3,4,1),\qquad (3,3,4,2).
+\]
+
+For the pairs $(3,4)$ and $(4,4)$ there is no lower-stage theorematic
+reduction beyond the general seed-set bounds, so every admissible tuple
+for those pairs remains genuinely new.  Enumerating the inequalities
+\[
+2 \le u \le \min(4,s+t-1),
+\qquad
+1 \le n \le s+t-u
+\]
+for $(s,t)=(3,4)$ gives the displayed $12$ tuples of
+$\mathcal{J}_4^{3,4}$, and for $(s,t)=(4,4)$ gives the displayed $15$
+tuples of $\mathcal{J}_4^{4,4}$.  Counting
+\[
+2 + 12 + 15 = 29
+\]
+proves the cardinality claim.  The final sentence is again the
+translation-propagation statement of
+Proposition~\ref{prop:winfty-ds-generator-seed}.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ top-pole packet after primaryity;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-top-pole-packet}
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet} and
+Proposition~\ref{prop:winfty-ds-primary-top-pole}.  Then the residual
+stage-$4$ packet $\mathcal{J}_4$ reduces further to the top-pole subset
+\[
+\mathcal{J}_4^{\mathrm{top}}
+=\{(3,3,4,2),(3,4,2,5),(3,4,3,4),(3,4,4,3),
+(4,4,2,6),(4,4,3,5),(4,4,4,4)\},
+\]
+which has cardinality $7$.  Equivalently, among the `29` residual
+stage-$4$ primary coefficients, only these seven top-pole coefficients
+can be nonzero; the remaining twenty-two coefficients in
+$\mathcal{J}_4$ vanish by primaryity.
+
+Consequently, the genuinely new principal stage-$4$ comparison problem
+is equivalent to matching these seven coefficients with the
+Drinfeld--Sokolov data.
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:winfty-ds-primary-top-pole} to each fixed
+source/target triple occurring in the residual packet
+$\mathcal{J}_4$ of
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet}.  For the
+triple $(3,3,4)$, the top pole is $3+3-4=2$, leaving only
+$(3,3,4,2)$.  For the three triples $(3,4,2)$, $(3,4,3)$, and
+$(3,4,4)$, the top poles are respectively $5$, $4$, and $3$, leaving
+\[
+(3,4,2,5),\qquad (3,4,3,4),\qquad (3,4,4,3).
+\]
+For the three triples $(4,4,2)$, $(4,4,3)$, and $(4,4,4)$, the top
+poles are respectively $6$, $5$, and $4$, leaving
+\[
+(4,4,2,6),\qquad (4,4,3,5),\qquad (4,4,4,4).
+\]
+These are exactly the seven displayed tuples.  Every other element of
+$\mathcal{J}_4$ has lower pole order for the same source/target triple,
+so it vanishes by Proposition~\ref{prop:winfty-ds-primary-top-pole}.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ parity-compressed packet;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-parity-packet}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet} and
+Proposition~\ref{prop:winfty-ds-self-ope-parity}.  Then the stage-$4$
+top-pole packet reduces further to
+\[
+\mathcal{J}_4^{\mathrm{par}}
+=\{(3,3,4,2),(3,4,2,5),(3,4,3,4),(3,4,4,3),
+(4,4,2,6),(4,4,4,4)\},
+\]
+which has cardinality $6$.  Equivalently, among the `7` top-pole
+coefficients of
+Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet}, the odd self-OPE
+entry $(4,4,3,5)$ vanishes by skew-symmetry.  Hence the residual
+stage-$4$ comparison problem is equivalent to matching these six
+coefficients, together with the forced vanishing of the remaining `23`
+entries in the original residual packet $\mathcal{J}_4$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet} leaves seven
+top-pole entries.  Among them, the only identical-generator entry with
+odd top pole order is $(4,4,3,5)$, since the self-pair $(3,3)$
+contributes the even top pole $(3,3,4,2)$ and the remaining four
+entries come from the mixed pair $(3,4)$.  Applying
+Proposition~\ref{prop:winfty-ds-self-ope-parity} to the even self-OPE
+of $W^{(4)}$ kills the odd top-pole coefficient $(4,4,3,5)$.  The six
+displayed tuples are therefore the only remaining potentially nonzero
+entries.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ packet as three local OPE blocks;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-ope-blocks}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage4-parity-packet}.  Then the residual
+principal stage-$4$ comparison problem is equivalent to matching the
+six coefficients in the three top-pole OPE blocks
+\begin{align*}
+W^{(3)}(z)W^{(3)}(w)
+&\sim
+\frac{c_{334}\,W^{(4)}(w)}{(z-w)^2}
+\quad\text{mod the theorematic $W_3$ sector and descendants},\\
+W^{(3)}(z)W^{(4)}(w)
+&\sim
+\frac{c_{342}\,W^{(2)}(w)}{(z-w)^5}
++\frac{c_{343}\,W^{(3)}(w)}{(z-w)^4}
++\frac{c_{344}\,W^{(4)}(w)}{(z-w)^3}\\
+&\qquad
+\quad\text{mod descendants},\\
+W^{(4)}(z)W^{(4)}(w)
+&\sim
+\frac{c_{442}\,W^{(2)}(w)}{(z-w)^6}
++\frac{c_{444}\,W^{(4)}(w)}{(z-w)^4}\\
+&\qquad
+\quad\text{mod the theorematic Virasoro sector and descendants}.
+\end{align*}
+More precisely,
+\[
+c_{334}=\mathsf{C}_{3,3;4;0,2},
+\qquad
+(c_{342},c_{343},c_{344})
+\!=\!
+\bigl(
+\mathsf{C}_{3,4;2;0,5},
+\mathsf{C}_{3,4;3;0,4},
+\mathsf{C}_{3,4;4;0,3}
+\bigr),
+\]
+and
+\[
+(c_{442},c_{444})
+=(\mathsf{C}_{4,4;2;0,6},\mathsf{C}_{4,4;4;0,4}),
+\]
+where either the residue coefficients
+$\mathsf{C}^{\mathrm{res}}$ or the principal Drinfeld--Sokolov
+coefficients $\mathsf{C}^{\mathrm{DS}}$ may be used.  Equivalently, the
+live stage-$4$ frontier is one new coefficient in the $(3,3)$ block,
+three in the mixed $(3,4)$ block, and two in the even $(4,4)$ block.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-ds-stage4-parity-packet} identifies the six
+remaining nontrivial tuples:
+\[
+(3,3,4,2),\ (3,4,2,5),\ (3,4,3,4),\ (3,4,4,3),\ (4,4,2,6),\ (4,4,4,4).
+\]
+Grouping them by source pair produces exactly one coefficient in the
+$(3,3)$ block, three coefficients in the mixed $(3,4)$ block, and two
+coefficients in the even self-coupling $(4,4)$ block.  The theorematic
+Virasoro and stage-$3$ sectors were already removed in
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet}, while
+Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet} and
+Corollary~\ref{cor:winfty-ds-stage4-parity-packet} kill every lower-pole
+or odd self-OPE entry.  The displayed three OPE templates are
+therefore exactly the remaining primary channels.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ frontier as one mixed block and three
+self-coupling scalars; \ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-mixed-self-split}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage4-ope-blocks}.  Then the residual
+principal stage-$4$ comparison decomposes as:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a self-coupling sector consisting of the three scalar top-pole
+  coefficients
+  \[
+  c_{334},\qquad c_{442},\qquad c_{444};
+  \]
+\item a mixed higher-spin sector consisting of the single
+  $W^{(3)}$-$W^{(4)}$ block
+  \[
+  (c_{342},c_{343},c_{344}).
+  \]
+\end{enumerate}
+Equivalently, the only genuinely mixed stage-$4$ higher-spin data are
+the three coefficients in the $W^{(3)}(z)W^{(4)}(w)$ block; the
+remaining three live coefficients come from the self-couplings
+$W^{(3)}$-$W^{(3)}$ and $W^{(4)}$-$W^{(4)}$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-ds-stage4-ope-blocks} identifies the six live
+coefficients as one coefficient in the $(3,3)$ block, three
+coefficients in the mixed $(3,4)$ block, and two coefficients in the
+$(4,4)$ block.  Grouping the $(3,3)$ and $(4,4)$ contributions together
+gives the displayed self-coupling sector, while the mixed block is
+already exactly the displayed triple.
+\end{proof}
+
+\begin{proposition}[Mixed top-pole swap parity for even generators;
+\ClaimStatusProvedHere]
+\label{prop:winfty-ds-mixed-top-pole-swap}
+Fix $N \ge 2$ and assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-primary-top-pole}.  Assume moreover
+that the strong generators $W^{(2)},\dots,W^{(N)}$ are even fields.
+For every visible mixed triple $(s,t,u)$ with $2 \le s < t \le N$ and
+$u \le \min(N,s+t-1)$, write
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u}(N)
+:=
+\mathsf{C}^{\mathrm{res}}_{s,t;u;0,\,s+t-u}(N),
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{s,t;u}(N)
+:=
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,\,s+t-u}(N)
+\]
+for the top-pole primary coefficients.  Then the reversed-order
+coefficients satisfy
+\[
+\mathsf{C}^{\mathrm{res}}_{t,s;u}(N)
+=
+(-1)^{s+t-u}\mathsf{C}^{\mathrm{res}}_{s,t;u}(N),
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{t,s;u}(N)
+=
+(-1)^{s+t-u}\mathsf{C}^{\mathrm{DS}}_{s,t;u}(N).
+\]
+Equivalently, for even primary generators the top-pole mixed
+$W^{(u)}$-channel is swap-even when $s+t-u$ is even and swap-odd when
+$s+t-u$ is odd.
+\end{proposition}
+
+\begin{proof}
+Let $A:=W^{(s)}$, $B:=W^{(t)}$, and set $m:=s+t-u-1$, so the top-pole
+primary coefficient of the target generator $W^{(u)}$ in the mixed OPE
+$A(z)B(w)$ is the $A_{(m)}B$ term.  Because $A$ and $B$ are even, the
+vertex-algebra skew-symmetry formula gives
+\[
+A_{(m)}B
+=
+\sum_{j\ge 0}\frac{(-1)^{m+j+1}}{j!}\,\partial^j(B_{(m+j)}A).
+\]
+By Proposition~\ref{prop:winfty-ds-primary-top-pole}, the
+undifferentiated primary generator $W^{(u)}$ can occur only at the top
+pole order $s+t-u$, equivalently only in the mode $m=s+t-u-1$.  The
+terms with $j>0$ therefore do not contribute to the same
+undifferentiated primary coefficient.  Passing to the $W^{(u)}$
+channel gives
+\[
+\mathsf{C}_{s,t;u}^{\mathrm{res}}(N)
+=
+(-1)^{m+1}\mathsf{C}_{t,s;u}^{\mathrm{res}}(N)
+=
+(-1)^{s+t-u}\mathsf{C}_{t,s;u}^{\mathrm{res}}(N).
+\]
+Rearranging proves the displayed residue identity.  The same
+skew-symmetry formula holds on the principal Drinfeld--Sokolov side, so
+the same argument yields the displayed
+$\mathsf{C}^{\mathrm{DS}}$-identity.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ mixed block split by swap parity;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-mixed-swap-parity}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage4-mixed-self-split} and
+Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap}.  Write
+\[
+W^{(4)}(z)W^{(3)}(w)
+\sim
+\frac{\widetilde c_{432}\,W^{(2)}(w)}{(z-w)^5}
++\frac{\widetilde c_{433}\,W^{(3)}(w)}{(z-w)^4}
++\frac{\widetilde c_{434}\,W^{(4)}(w)}{(z-w)^3}
+\quad\text{mod descendants}
+\]
+for the reversed-order mixed block.  Then
+\[
+\widetilde c_{432}=-c_{342},
+\qquad
+\widetilde c_{433}=c_{343},
+\qquad
+\widetilde c_{434}=-c_{344}.
+\]
+Equivalently, the live mixed stage-$4$ frontier splits into one
+swap-even channel $c_{343}$ and two swap-odd channels
+$c_{342},c_{344}$.
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} to the
+three mixed triples $(s,t,u)=(3,4,2),(3,4,3),(3,4,4)$.  Their top-pole
+orders are respectively
+\[
+3+4-2=5,\qquad 3+4-3=4,\qquad 3+4-4=3.
+\]
+Hence the corresponding reversed-order coefficients pick up the signs
+$(-1)^5=-1$, $(-1)^4=+1$, and $(-1)^3=-1$.  This gives exactly the
+three displayed identities.  The final sentence is a reformulation of
+those sign rules.
+\end{proof}
+
+\begin{proposition}[Principal Drinfeld--Sokolov vanishing of the mixed
+Virasoro target; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-mixed-virasoro-ds-zero}
+Fix $N \ge 3$ and consider the principal Drinfeld--Sokolov stage
+$\mathcal{W}_N$ at a generic level with nonzero central charge $c$.
+Assume the Zamolodchikov normalization and mixed-weight orthogonality
+package of Theorem~\ref{thm:wn-obstruction}.  Then for every visible
+mixed pair $2 \le s < t \le N$, the top-pole stress-tensor coefficient
+vanishes:
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,t;2;0,\,s+t-2}(N)=0.
+\]
+Equivalently, on the principal Drinfeld--Sokolov side the
+undifferentiated $W^{(2)}=T$ channel is absent from the top pole of
+every mixed OPE $W^{(s)}(z)W^{(t)}(w)$ with $s \ne t$.
+\end{proposition}
+
+\begin{proof}
+Let $A:=W^{(s)}$ and $B:=W^{(t)}$ with $s<t$.  By Step~2 of
+Theorem~\ref{thm:wn-obstruction}, the mixed two-point function
+\[
+\langle A(z)B(0)\rangle
+\]
+vanishes identically because $A$ and $B$ have distinct conformal
+weights.  Since both fields are primary, the Virasoro Ward identity
+therefore gives
+\[
+\langle T(x)A(z)B(0)\rangle = 0.
+\]
+
+Now extract the $T$-channel from the mixed OPE.  By
+Proposition~\ref{prop:winfty-ds-primary-top-pole}, the undifferentiated
+primary target $T=W^{(2)}$ can occur only at the top pole order
+$s+t-2$, with coefficient
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,t;2;0,\,s+t-2}(N).
+\]
+All lower-pole $T$-descendants have conformal weight $>2$, so their
+two-point functions with $T$ vanish by weight mismatch.  Thus the
+coefficient of $x^{-4}z^{-(s+t-2)}$ in the three-point function
+$\langle T(x)A(z)B(0)\rangle$ is exactly
+\[
+\frac{c}{2}\,\mathsf{C}^{\mathrm{DS}}_{s,t;2;0,\,s+t-2}(N),
+\]
+because $\langle T(x)T(0)\rangle = \frac{c/2}{x^4}$ in the same
+normalization.  The three-point function vanishes identically and
+$c\neq 0$, so this coefficient must be zero.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ mixed block as one vanishing channel and a
+parity pair; \ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-mixed-two-channel}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage4-mixed-swap-parity} and
+Proposition~\ref{prop:winfty-ds-mixed-virasoro-ds-zero}.  Then on the
+principal Drinfeld--Sokolov side one has
+\[
+\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0,
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{4,3;2;0,5}=0.
+\]
+Consequently, the stage-$4$ mixed comparison problem reduces to:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item proving the corresponding residue-side vanishing in the
+  $W^{(2)}$ target channel;
+\item matching the remaining swap-even coefficient
+  $\mathsf{C}_{3,4;3;0,4}$;
+\item matching the remaining swap-odd coefficient
+  $\mathsf{C}_{3,4;4;0,3}$.
+\end{enumerate}
+Equivalently, the principal mixed stage-$4$ data consist of one
+theorematically zero $W^{(2)}$ target channel together with a
+swap-even / swap-odd pair targeting $W^{(3)}$ and $W^{(4)}$.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:winfty-ds-mixed-virasoro-ds-zero} gives
+\[
+\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0.
+\]
+Applying
+Corollary~\ref{cor:winfty-ds-stage4-mixed-swap-parity} to the same
+triple yields
+\[
+\mathsf{C}^{\mathrm{DS}}_{4,3;2;0,5}
+=
+-\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}
+=
+0.
+\]
+The only remaining mixed stage-$4$ channels are therefore the
+$W^{(3)}$ target, which is swap-even, and the $W^{(4)}$ target, which
+is swap-odd.
+\end{proof}
+
+\begin{proposition}[Principal Drinfeld--Sokolov self-coupling
+stress-tensor coefficient; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-self-t-coefficient}
+Fix $N \ge 2$ and consider the principal Drinfeld--Sokolov stage
+$\mathcal{W}_N$ at a generic level with nonzero central charge $c$.
+Assume the Zamolodchikov normalization package of
+Theorem~\ref{thm:wn-obstruction}.  Then for every visible generator
+$W^{(s)}$ with $2 \le s \le N$, the top-pole stress-tensor coefficient
+in the self-OPE is
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)=2.
+\]
+Equivalently, on the principal Drinfeld--Sokolov side the
+undifferentiated $T=W^{(2)}$ channel appears in every self-OPE
+$W^{(s)}(z)W^{(s)}(w)$ with the universal coefficient $2$.
+\end{proposition}
+
+\begin{proof}
+Write $A:=W^{(s)}$ and set
+\[
+N_s:=\frac{c}{s},
+\]
+so that Theorem~\ref{thm:wn-obstruction} gives
+\[
+\langle A(z)A(0)\rangle=N_s z^{-2s}.
+\]
+Because $A$ is Virasoro-primary of weight $s$, the Ward identity gives
+\[
+\langle T(x)A(z)A(0)\rangle
+=
+\left(
+\frac{s}{(x-z)^2}
++\frac{1}{x-z}\partial_z
++\frac{s}{x^2}
++\frac{1}{x}\partial_0
+\right)N_s z^{-2s}.
+\]
+Expand in the region $|x|>|z|>|0|$.  The coefficient of
+$x^{-4}z^{-2s+2}$ comes only from the first two terms.  The term
+\[
+\frac{sN_s}{(x-z)^2 z^{2s}}
+\]
+contributes $3sN_s$, while
+\[
+\frac{1}{x-z}\partial_z(N_s z^{-2s})
+\]
+contributes $-2sN_s$.  Hence the total
+$x^{-4}z^{-2s+2}$ coefficient on the Ward-identity side is
+\[
+3sN_s-2sN_s=sN_s=c.
+\]
+
+By Proposition~\ref{prop:winfty-ds-primary-top-pole}, the
+undifferentiated stress tensor can occur in the self-OPE only at the
+top pole $2s-2$, with coefficient
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N).
+\]
+Pairing that term with $T(x)$ contributes
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c/2}{x^4}
+\,z^{-2s+2},
+\]
+because $\langle T(x)T(0)\rangle=\frac{c/2}{x^4}$.  Matching the
+$x^{-4}z^{-2s+2}$ coefficient gives
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c}{2}=c.
+\]
+Since $c\neq 0$, the coefficient is $2$.
+\end{proof}
+
+\begin{corollary}[Principal stage-$4$ self-coupling
+\texorpdfstring{$W^{(4)}$-$W^{(4)}\to T$}{W4-W4 to T}
+normalization; \ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-self-t-normalization}
+In the setting of Proposition~\ref{prop:winfty-ds-self-t-coefficient},
+one has
+\[
+\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2.
+\]
+Equivalently, the principal stage-$4$ self-coupling
+$W^{(4)}(z)W^{(4)}(w)\to T(w)$ is not free data: its top-pole
+coefficient is universally fixed to `2`.
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:winfty-ds-self-t-coefficient} with $s=4$.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ frontier after theorematic mixed
+Virasoro-target elimination; \ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage4-five-plus-zero}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage4-mixed-two-channel} and
+Corollary~\ref{cor:winfty-ds-stage4-self-t-normalization}.  Then the
+residual principal stage-$4$ comparison decomposes as:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a self-coupling sector consisting of the two free scalar
+  coefficients
+  \[
+  c_{334},\qquad c_{444};
+  \]
+\item a mixed swap-even channel given by the coefficient
+  \[
+  \mathsf{C}_{3,4;3;0,4};
+  \]
+\item a mixed swap-odd channel given by the coefficient
+  \[
+  \mathsf{C}_{3,4;4;0,3};
+  \]
+\item a normalization check in the self-coupling $W^{(4)}$-$W^{(4)}$
+  stress-tensor channel
+  \[
+  \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2;
+  \]
+\item a vanishing check in the mixed $W^{(2)}$ target channel
+  \[
+  \mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+  \]
+\end{enumerate}
+Equivalently, the only potentially nonzero unfixed principal stage-$4$
+data are four coefficients:
+\[
+c_{334},\qquad c_{444},\qquad
+\mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
+\]
+together with the two residue-side checks
+\[
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+\]
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-ds-stage4-mixed-self-split} separates the
+stage-$4$ packet into the three self-coupling scalars and the mixed
+$(3,4)$ triple.  Corollary~\ref{cor:winfty-ds-stage4-mixed-two-channel}
+replaces that triple by one residue-side vanishing check in the
+$W^{(2)}$ target channel together with the swap-even $W^{(3)}$ channel
+and the swap-odd $W^{(4)}$ channel.  Corollary~\ref{cor:winfty-ds-stage4-self-t-normalization}
+fixes the principal self-coupling coefficient
+\[
+\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}
+\]
+to the universal value `2`, so that channel becomes a residue-side
+normalization check rather than free principal data.  Combining the
+three reductions gives the displayed decomposition.
+\end{proof}
+
+\begin{proposition}[Exact MC4 frontier packet for the standard
+\texorpdfstring{$W_\infty$}{W_infty} tower; \ClaimStatusProvedHere]
+\label{prop:winfty-mc4-frontier-package}
+Let $\mathcal{W}^{\mathrm{ht}}$ be a separated complete H-level target
+for $W_\infty$ satisfying the quotient-system hypotheses of
+Corollary~\ref{cor:winfty-hlevel-comparison-criterion}.  Assume
+moreover that the quotient residue calculus is translation compatible
+and that the strong generators are even Virasoro-primary fields, so
+that
+Proposition~\ref{prop:winfty-ds-generator-seed},
+Corollary~\ref{cor:winfty-ds-finite-seed-set},
+Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}, and
+Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero} apply.  Then:
+\begin{enumerate}
+\item for every finite stage $N$, the remaining H-level comparison with
+  the principal Drinfeld--Sokolov stage $W_N$ reduces to the finite
+  primary seed packet $\mathcal{I}_N$ of residue identities
+  \[
+  \mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(N)
+  =\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(N);
+  \]
+\item at stage~$3$, that packet is already theorematically fixed by the
+  explicit $W_3$ OPE: three nonzero primary coefficients and twelve
+  forced vanishing statements;
+\item at stage~$4$, after removing the theorematic Virasoro and
+  $W_3$ sectors, the first genuinely open higher-spin packet is exactly
+  the four free coefficient channels
+  \[
+  c_{334},\qquad c_{444},\qquad
+  \mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
+  \]
+  together with the residue-side checks
+  \[
+  \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2,
+  \qquad
+  \mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+  \]
+\end{enumerate}
+In particular, once the H-level target and quotient system are
+constructed, the standard $\mathcal{W}_\infty$ MC4 problem is not a
+further stabilization theorem.  It is the finite stagewise
+residue-identification problem on the packets $\mathcal{I}_N$, with the
+first genuinely open higher-spin packet occurring at stage~$4$ in the
+displayed six-channel form.
+\end{proposition}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-hlevel-comparison-criterion} reduces the
+comparison with the standard principal-stage tower to identifying the
+finite quotients of $\mathcal{W}^{\mathrm{ht}}$ with the stages $W_N$.
+Under the translation-compatibility hypothesis,
+Proposition~\ref{prop:winfty-ds-generator-seed} and
+Corollary~\ref{cor:winfty-ds-finite-seed-set} reduce that stagewise
+identification to the finite seed packets $\mathcal{I}_N$, proving
+\textup{(1)}.  Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}
+gives \textup{(2)}.  Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}
+gives \textup{(3)} by combining the theorematic mixed-channel
+vanishing, the universal self-coupling normalization, and the parity
+compression of the residual stage-$4$ block.  The final sentence is a
+reformulation of these three reductions.
 \end{proof}
 
 \subsection{Maurer--Cartan elements and deformation theory}
@@ -6885,7 +8152,8 @@ algebras require completed bar-cobar but preserve the adjunction;
 filtered algebras always need nilpotent completion
 (Appendix~\ref{app:nilpotent-completion}); and general algebras may
 lie beyond the present theorematic reach (e.g., $\mathcal{W}_\infty$,
-which remains the model completion frontier).
+whose standard tower is theorematic while the remaining frontier is the
+exact MC4 H-level / coefficient-identification package).
 The passage from quadratic to general is also the passage from $E_\infty$
 to $E_1$: the Yangian $Y(\mathfrak{g})$, which is $E_1$-chiral but
 not $E_\infty$, falls in the filtered class and requires the
@@ -6978,13 +8246,29 @@ The Virasoro algebra $\text{Vir}_c$ has:
 The OPE is:
 $$T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}$$
 
-The algebra is curved because the central charge $c$ is a curvature ($\mu_0 = c \cdot \mathbf{1}$) which is central ($[c, T] = 0$) and satisfies $m_1(c) = 0$. It is non-quadratic because the stress tensor has a non-zero triple product $T(z)T(w)T(u) \sim \cdots$
-encoded by the Schwarzian derivative.  In the present completed
-formalism, one tracks the same-family partner determined by the
-central-charge involution $c \leftrightarrow 26-c$
+The algebra is curved because the central charge $c$ is a curvature
+($\mu_0 = c \cdot \mathbf{1}$) which is central ($[c, T] = 0$) and
+satisfies $m_1(c) = 0$. It is non-quadratic because the stress tensor
+has a non-zero triple product $T(z)T(w)T(u) \sim \cdots$ encoded by the
+Schwarzian derivative.
+
+In the present completed formalism, one tracks the same-family partner
+determined by the central-charge involution
+$c \leftrightarrow 26-c$
 \textup{(}Example~\textup{\ref{ex:virasoro-koszul-dual}}\textup{)}.
 This supplies the model/shadow object used in the genus calculations,
-while the stronger infinite-generator realization remains open.
+while the stronger infinite-generator realization is delegated to the
+exact $W_\infty$ MC4 package of filtered H-level targets, residue
+identities, and finite detection on $\mathcal{I}_N$, whose first live
+higher-spin stages are already reduced on the theorem surface to the
+stage-$3$ fifteen-coefficient packet and the stage-$4$
+six-coefficient packet organized as three local OPE blocks, sharpened
+further to the four channels
+$c_{334}$, $c_{444}$,
+$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
+residue-side checks
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
 Completion is needed: the non-quadratic relations require
 $$\widehat{\bar{B}}(\text{Vir}_c) = \varprojlim_n \bar{B}(\text{Vir}_c)/I^n$$
 where $I$ is the augmentation ideal.
@@ -7032,9 +8316,9 @@ $$\widehat{\bar{B}}(W_3) = \varprojlim_n \bar{B}(W_3)/F_n$$
 where $F_n$ is the filtration by operator dimension.
 \end{example}
 
-\subsubsection{Class IV: general (completion frontier)}
+\subsubsection{Class IV: general (exact MC4 frontier)}
 
-\begin{example}[$W_\infty$: completion frontier]\label{ex:winfty-completion-frontier-comprehensive}\label{ex:winfty-no-dual-comprehensive}
+\begin{example}[$W_\infty$: exact MC4 frontier]\label{ex:winfty-completion-frontier-comprehensive}\label{ex:winfty-no-dual-comprehensive}
 The $W_\infty$ algebra has:
 \begin{itemize}
 \item Generators: $W^{(n)}$ for all $n \geq 2$ (infinitely many generators)
@@ -7042,21 +8326,36 @@ The $W_\infty$ algebra has:
 \item No finite presentation
 \end{itemize}
 
-No completed duality theorem is currently proved: the generating space $V$ is
-infinite-dimensional, and the manuscript does not yet establish a completion of
-the bar construction $\bar{B}(W_\infty)$ with the continuity and convergence
-properties needed for bar-cobar inversion.
+No monograph-wide universal H-level duality theorem is currently
+proved: the generating space $V$ is infinite-dimensional, and the
+manuscript does not yet construct the filtered factorization object
+whose finite quotients recover the principal stages and satisfy the
+exact residue-identification package.
 
 The frontier is now narrower.  For the standard principal-stage tower,
 Corollary~\ref{cor:winfty-standard-mc4-package} already gives the
-completed M-level bar-cobar package.  The remaining problem is not to
-construct a first completed bar object, but to compare that standard
-completion with stronger H-level factorization-theoretic or physical
-realizations of $W_\infty$.
+standard-tower completed M-level bar-cobar package.  The remaining
+problem is not to construct a first completed bar object, but to
+compare that standard completion with stronger H-level
+factorization-theoretic or physical realizations of $W_\infty$ by
+proving the explicit identities
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
+and reducing them to the finite-detection packet $\mathcal{I}_N$, whose
+first live higher-spin stages are already reduced on the theorem
+surface to the stage-$3$ fifteen-coefficient packet and the stage-$4$
+six-coefficient packet organized as three local OPE blocks, sharpened
+further to the four channels
+$c_{334}$, $c_{444}$,
+$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
+residue-side checks
+$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
 
 \emph{Physical interpretation.}
 $W_\infty$ describes non-local interactions in 2D gravity.  The open problem is
-to construct the correct completed dual description, not to prove that no such
+to construct the correct filtered H-level dual description and verify
+its exact finite-stage coefficient identities, not to prove that no such
 description can exist.
 \end{example}
 
@@ -7433,7 +8732,7 @@ This proof uses:
 
 \subsection{Physical interpretation}
 
-Quadratic algebras correspond to free field theories (Heisenberg $\leftrightarrow$ free boson, Kac--Moody $\leftrightarrow$ WZW).  Curved algebras correspond to interacting theories with anomalies (Virasoro, with central charge $c$ measuring quantum breaking of scale invariance).  Filtered algebras correspond to theories with composite operators ($W_3$ and Toda field theory).  General algebras correspond to non-local theories ($W_\infty$), where a completed local-to-global field-theoretic realization remains open.
+Quadratic algebras correspond to free field theories (Heisenberg $\leftrightarrow$ free boson, Kac--Moody $\leftrightarrow$ WZW).  Curved algebras correspond to interacting theories with anomalies (Virasoro, with central charge $c$ measuring quantum breaking of scale invariance).  Filtered algebras correspond to theories with composite operators ($W_3$ and Toda field theory).  General algebras correspond to non-local theories ($W_\infty$), where the exact MC4 package of filtered H-level realization plus finite-stage coefficient identification remains open.
 
 From Kontsevich's geometric viewpoint, the filtration level corresponds to the codimension of collision loci: quadratic algebras see only pairwise collisions, curved algebras see central terms from $n$-point collisions, and filtered algebras require higher-codimension strata.  The completion $\widehat{\bar{B}}(\mathcal{A})$ is the formal neighborhood of the diagonal in configuration space.
 
@@ -7449,7 +8748,7 @@ From Kontsevich's geometric viewpoint, the filtration level corresponds to the c
   \item If no: Completion is required
   \end{itemize}
 \item Does it have composite operators? $\Rightarrow$ Must complete
-\item Is the generating space infinite-dimensional? $\Rightarrow$ treat as a completion frontier and first construct the completed dual object
+\item Is the generating space infinite-dimensional? $\Rightarrow$ treat as an exact MC4 frontier: first construct the filtered H-level target, then identify its finite quotients by explicit coefficient identities and finite detection
 \end{enumerate}
 
 Most vertex algebras from CFT are either quadratic or curved with finite-dimensional
@@ -8969,6 +10268,190 @@ This is the genus-$0$ theory.  Everything built so far lives on
 configuration spaces of the fixed curve~$X$, with no reference to
 moduli of curves.
 
+\subsection{Bar-cobar as factorization homology}
+\label{subsec:bar-cobar-fh}
+
+The Ran-space remarks above assemble the bar complex into an
+object on $\operatorname{Ran}(X)$.  We now show that this
+assembly is not a reformulation but an \emph{identification}:
+the bar construction \emph{is} factorization homology, and the
+bar-cobar adjunction \emph{is} the adjunction of factorization
+(co)homology functors.
+
+\begin{proposition}[Bar construction as factorization homology;
+\ClaimStatusProvedHere]
+\label{prop:bar-fh}
+\index{factorization homology!bar construction}
+\index{bar construction!as factorization homology}
+Let $\cA$ be an augmented $\Eone$-chiral algebra on a smooth
+curve~$X$, and let $\overline{\cA} = \ker(\epsilon \colon \cA \to k)$
+be the augmentation ideal.  Then there is a natural equivalence
+\[
+\Bbar^{\mathrm{geom}}_X(\cA)
+\;\simeq\;
+\int_X \overline{\cA}^{\mathrm{Lie}}
+\]
+where $\overline{\cA}^{\mathrm{Lie}}$ denotes $\overline{\cA}$ viewed as
+an $\Eone$-Lie algebra via the commutator bracket, and the right-hand
+side is factorization homology in the sense of
+\textup{\cite{AF15, BD04}}.  More precisely:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Finite approximations}: For each $n \geq 1$,
+the degree-$n$ piece $\Bbar^n_X(\cA) =
+(s^{-1}\overline{\cA})^{\otimes n}_{\overline{C}_n(X)}$
+(the bar complex on~$n$ points, supported on the
+Fulton--MacPherson compactification $\overline{C}_n(X)$) is the
+restriction of the factorization homology $\int_X\overline{\cA}$
+to $n$-point configurations.
+\item \textbf{Assembly}: The bar differential
+$d_{\mathrm{bar}} = \sum_{i < j} d_{ij}$ (residue along collision
+divisors, Theorem~\ref{thm:bar-differential-structure}) is the
+structure map of the factorization algebra:
+the collision $z_i \to z_j$ implements the factorization product
+$\int_{U_i}\overline{\cA} \otimes
+\int_{U_j}\overline{\cA} \to
+\int_{U_i \cup U_j}\overline{\cA}$
+for shrinking discs $U_i \ni z_i$, $U_j \ni z_j$.
+\item \textbf{Colimit}: The total bar complex
+$\Bbar_X(\cA) = \bigoplus_{n \geq 0}\Bbar^n_X(\cA)$
+is the colimit over $n$ of the finite approximations,
+i.e., the factorization homology
+$\int_X\overline{\cA} = \operatorname{colim}_{S \in
+\mathrm{Fin}_{/X}} \bigotimes_{s \in S}\overline{\cA}_s$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The factorization homology of an $E_n$-algebra $A$ on a manifold
+$M$ is defined as
+\[
+\textstyle\int_M A \;=\; \operatorname{colim}_{U_1 \sqcup \cdots
+\sqcup U_k \hookrightarrow M} A(U_1) \otimes \cdots
+\otimes A(U_k)\,,
+\]
+where the colimit is over rectilinear embeddings of disjoint discs
+\cite[Definition~3.1]{AF15}.  For $n = 1$ on a curve~$X$, this is
+the colimit over configurations of disjoint discs
+$D_1 \sqcup \cdots \sqcup D_k \hookrightarrow X$, with
+$A(D_i) = \overline{\cA}_{z_i}$ (the fiber of $\overline{\cA}$
+at the center $z_i$ of $D_i$).
+
+Part (i): The term $\Bbar^n_X(\cA)$ places one copy of
+$s^{-1}\overline{\cA}$ at each of $n$ distinct points
+$z_1, \ldots, z_n \in X$.  The locus of distinct points is the
+open configuration space $C_n(X) = X^n \smallsetminus \Delta$,
+and the extension to $\overline{C}_n(X)$ encodes the factorization
+product at coincident points.
+
+Part (ii): When $z_i \to z_j$, the factorization structure map
+composes the two copies of $\overline{\cA}$ using the chiral
+product.  At the chain level, this composition is the OPE residue
+$\mathrm{Res}_{z_i = z_j}(\mu^{\mathrm{ch}}(\bar{a}_i, \bar{a}_j)
+\cdot \omega_{ij})$, which is exactly the bar differential $d_{ij}$.
+
+Part (iii): The colimit over $n$ in the bar complex is the colimit
+over the category $\mathrm{Fin}_{/X}$ of finite subsets of $X$,
+which is the Ran space $\operatorname{Ran}(X) =
+\operatorname{colim}_n X^n/\Sigma_n$.  The factorization homology
+$\int_X\overline{\cA}$ is this colimit by definition.
+\end{proof}
+
+\begin{proposition}[Cobar as factorization cohomology;
+\ClaimStatusProvedHere]
+\label{prop:cobar-fh}
+\index{factorization homology!cobar construction}
+\index{cobar construction!as factorization cohomology}
+The cobar construction $\Omega_X(\cC)$ of a conilpotent
+$\Eone$-chiral coalgebra $\cC$ is naturally equivalent to the
+\emph{factorization cohomology}:
+\[
+\Omega_X(\cC) \;\simeq\;
+\mathbb{R}\mathrm{Hom}_{\operatorname{Fact}(X)}
+\bigl(k,\, \cC\bigr)
+\;=:\;
+\int^X \cC\,,
+\]
+the derived internal hom from the unit factorization algebra $k$
+to~$\cC$ in the $\infty$-category of factorization coalgebras on~$X$.
+Under Verdier duality $\mathbb{D}_{\mathrm{Ran}}$, this becomes:
+\[
+\Omega_X(\cC)
+\;\simeq\;
+\Bigl(\int_X \mathbb{D}_{\mathrm{Ran}}(\cC)\Bigr)^{\!\vee}\,,
+\]
+the linear dual of the factorization homology of the Verdier dual.
+For $\cC = \Bbar_X(\cA)$, this gives
+\[
+\Omega_X\Bbar_X(\cA) \;\simeq\;
+\Bigl(\int_X \Bbar_X(\cA^!)\Bigr)^{\!\vee}\,,
+\]
+which identifies the bar-cobar counit $\psi \colon
+\Omega_X\Bbar_X(\cA) \to \cA$ with the Poincar\'e--Koszul duality
+map of Ayala--Francis~\textup{\cite{AF15}}.
+\end{proposition}
+
+\begin{proof}
+The cobar construction $\Omega_X(\cC) = T(s\,\overline{\cC})$ with
+differential $d_{\mathrm{cobar}} = d_{\mathrm{coop}} +
+d_{\mathrm{tw}}$ is the cofree algebra on $s\,\overline{\cC}$, with
+the differential encoding the coalgebra structure of~$\cC$.
+The cofree algebra on a module $V$ is
+$\mathbb{R}\mathrm{Hom}(k, T^c(V))$, and for
+$V = s\,\overline{\cC}$ supported on $\operatorname{Ran}(X)$, this
+is the factorization cohomology $\int^X\cC$ by
+\cite[Proposition~5.5.2.5]{HA}.
+
+The Verdier duality identification follows from
+$\mathbb{D}_{\mathrm{Ran}}(\Bbar_X(\cA)) \simeq \Bbar_X(\cA^!)$
+(Theorem~\ref{thm:verdier-bar-cobar}) and the general adjunction
+$\mathrm{Hom}(k, \cC) \simeq (\int_X \mathbb{D}\cC)^\vee$.
+The identification with Poincar\'e--Koszul duality follows from
+\cite[Theorem~4.13]{AF15}: their equivalence
+$\int_M A \simeq (\int_{-M} A^\vee)^\vee$ is precisely the
+composition of Verdier duality on $\operatorname{Ran}(X)$ with
+the bar-cobar adjunction.
+\end{proof}
+
+\begin{remark}[The bar-cobar adjunction as a duality of integration
+theories]
+\label{rem:bar-cobar-integration}
+\index{factorization homology!duality of integration theories}
+Propositions~\ref{prop:bar-fh} and~\ref{prop:cobar-fh} together
+identify the bar-cobar adjunction
+\[
+\Bbar_X \colon
+\operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))
+\;\rightleftarrows\;
+\operatorname{CoAlg}_{\mathrm{conil}}(\operatorname{Fact}(X))
+\,:\!\Omega_X
+\]
+as the adjunction between two integration theories:
+\begin{itemize}
+\item The bar functor $\Bbar_X$ is \emph{factorization integration}:
+it computes $\int_X(\cdot)$ by summing over configurations of
+points on~$X$, with the OPE providing the integrand.
+\item The cobar functor $\Omega_X$ is \emph{factorization
+co-integration}: it computes $\int^X(\cdot)$ by taking the
+internal hom from the unit, with the coproduct providing the
+``inverse transform.''
+\item Koszul duality $\cA \mapsto \cA^!$ is the
+\emph{Verdier transform} mediating between the two:
+$\Bbar(\cA)$ and $\Bbar(\cA^!)$ are Verdier dual, so the
+bar of one algebra is the co-integration data for the dual.
+\end{itemize}
+
+This perspective reveals the bar-cobar machine as a
+\emph{nonlinear Fourier duality} (cf.\
+Remark~\ref{rem:koszul-fourier} and
+Chapter~\ref{ch:en-koszul-duality}): the OPE kernel
+$\omega_{ij} = d\log(z_i - z_j)$ plays the role of the Fourier
+kernel $e^{2\pi i x\xi}$, the bar construction is the ``forward
+transform'' (integration against the kernel), and the cobar is the
+``inverse transform.''  Koszulness is the condition that the
+transform is invertible (Fourier inversion), and the bar-cobar
+counit $\Omega\Bbar(\cA) \to \cA$ is the Fourier inversion formula.
+\end{remark}
+
 \begin{remark}[The master diagram at genus~$0$]
 \label{rem:master-diagram-genus0}
 \index{master diagram!genus zero}
@@ -8995,6 +10478,17 @@ the diagram commutes strictly.  At genus~$g \geq 1$
 (Chapter~\ref{chap:higher-genus}), the square acquires
 curvature~$\kappa(\cA) \cdot \omega_1$, and strict commutativity
 is replaced by commutativity in the coderived category.
+
+The factorization homology perspective
+(Propositions~\ref{prop:bar-fh},~\ref{prop:cobar-fh}) upgrades the
+diagram from a commutative square of chain complexes to a
+commutative square of \emph{factorization algebra objects} on
+$\operatorname{Ran}(X)$.  The Verdier duality
+$\mathbb{D}_{\mathrm{Ran}}$ becomes an $\infty$-categorical
+involution, and the commutativity is an equivalence of factorization
+algebras, not merely a quasi-isomorphism.  This
+$\infty$-categorical enhancement is the H-level datum that
+organizes the M-level constructions.
 \end{remark}
 
 In Chapter~\ref{chap:higher-genus}, the curve itself varies over

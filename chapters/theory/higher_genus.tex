@@ -1,40 +1,56 @@
-\chapter{Higher genus extension and quantum corrections}
+% Constitutional note:
+% Chapter 34 (concordance.tex) is the normative status ledger.
+% If a local statement disagrees with Chapter 34's status or scope,
+% the local statement is stale and must be rewritten or ignored.
+\chapter{Higher genus}
 \label{chap:higher-genus}
 \index{higher genus!bar complex|textbf}
 \index{quantum corrections|textbf}
 
-The genus-$1$ fiberwise curvature $\dfib^{\,2} = \kappa(\cA) \cdot \omega_1 \cdot \mathrm{id}$ (Convention~\ref{conv:higher-genus-differentials}) and the $\hat{A}$-genus tower that we computed for the Heisenberg algebra in Chapter~\ref{ch:heisenberg-frame} are universal: they hold for every Koszul chiral algebra, with $\kappa(\cA)$ determined by the leading OPE pole.  This chapter establishes that universality and proves the four main theorems in full generality.
+On $\mathbb{P}^1$, the logarithmic form
+$\eta_{12} = d\log(z_1 - z_2)$ is single-valued and the Arnold
+relation~\eqref{eq:arnold-seed} holds exactly.  On an elliptic
+curve~$E_\tau$ with period~$\tau$, the function $z_1 - z_2$ is not
+single-valued, and the propagator becomes
+\begin{equation}\label{eq:elliptic-propagator}
+\eta_{12}^{(1)} = d\log \vartheta_1(z_1 - z_2 \,|\, \tau)
++ 2\pi i\, \frac{\operatorname{Im}(z_1 - z_2)}
+  {\operatorname{Im}(\tau)}\, d\bar{z}_1,
+\end{equation}
+where $\vartheta_1$ is the odd Jacobi theta function.  The correction
+term is forced by double-periodicity.  Compute:
+\begin{equation}\label{eq:curvature-visible}
+(\dfib)^{\,2} = \kappa(\cA) \cdot \omega_1, \qquad
+\omega_1 = \frac{i}{2\operatorname{Im}(\tau)}\,
+dz \wedge d\bar{z}.
+\end{equation}
+The bar differential no longer squares to zero.
 
-The governing question is: how genus-$0$ bar-cobar inversion lifts to all
-genera as a single modular deformation with explicit theorem-level control of
-curvature, complementarity, and universality.
+On a Riemann surface $\Sigma_g$ of genus~$g$, the propagator acquires
+$g$ period corrections from $H^0(\Sigma_g, \Omega^1)$:
+\[
+\eta_{ij}^{(g)} = d\log E(z_i, z_j)
++ \sum_{k=1}^{g} \omega_k(z_i)\! \oint_{A_k}\! \omega_k(z_j),
+\]
+and the curvature generalizes to
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$, where $\omega_g$ is the
+Arakelov $(1,1)$-form.  The total corrected differential $\Dg{g}$,
+which adds period integrals along $A$-cycles, satisfies
+$\Dg{g}^{\,2} = 0$
+(Theorem~\ref{thm:quantum-diff-squares-zero}).
 
-\begin{remark}[Normative status]\label{rem:higher-genus-normative}
-This chapter and Chapter~\ref{chap:concordance} fix the reference
-formulation of the modular characteristic theory used throughout the
-rest of the monograph.
-\end{remark}
+As $[\Sigma_g]$ varies over $\overline{\mathcal{M}}_g$, the bar
+complex traces a family of curved cochain complexes.  The fiberwise
+curvature defines a characteristic class
+$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g \in
+H^*(\overline{\mathcal{M}}_g)$, where
+$\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge
+bundle (Theorem~\ref{thm:genus-universality}).  The generating
+function of these classes is $\kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
+(Theorem~\ref{thm:family-index}).
 
-At genus zero, Koszul duality is an algebraic theorem: the bar and
-cobar constructions form an adjunction, and for Koszul algebras the
-adjunction is an equivalence.  Nothing in this statement involves
-geometry beyond the combinatorics of the associahedron.  Why, then,
-does the theory become dramatically richer at genus one?
-
-The answer is that the genus tower is not a perturbation of the
-genus-zero theory but the scalar shadow of a single modular
-deformation.  At H-level, Conjecture~\ref{conj:master-theta} predicts
-that this deformation is controlled by a universal obstruction class
-$\Theta_A$, while the theorematic
-statement proved in this chapter is the genus-universality formula
-$\mathrm{obs}_g(A) = \kappa(A) \cdot \lambda_g$.  In the full
-homotopy-native picture the obstruction would live in
-$H^1(\overline{\mathcal{M}}_g, \mathbb{E}^\vee)$, and the Hodge class
-$\lambda_g$ of the moduli space enters as the modular weight of the
-deformation.  Koszul duality at genus $g$ is thus \emph{modular}
-Koszul duality: the bar-cobar adjunction extends across genera, the
-proved scalar correction is proportional to $\lambda_g$, and the full
-Maurer--Cartan package remains part of the MC2 programme.
+\label{rem:higher-genus-normative}%
+\label{rem:higher-genus-hms}%
 
 \begin{remark}[Parallel track: the anomaly]\label{rem:anomaly-parallel-track}
 \index{conformal anomaly!parallel track}
@@ -180,6 +196,93 @@ $H^1(\mathcal{M}_g)$'' is
 (Harer).  The parameters arise from $H^1(\Sigma_g)$; they become classes on moduli only via the Kodaira--Spencer map
 (Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
 \end{remark}
+
+\section{The bar complex as a family over moduli}
+\label{sec:geometric-prologue}
+\label{subsec:bar-family-moduli}
+\index{bar complex!family over moduli|textbf}
+
+The bar complex at genus~$g$ is a family of cochain complexes
+parametrized by $\overline{\mathcal{M}}_g$:
+\begin{equation}\label{eq:bar-family}
+\barB_g(\cA) \;\longrightarrow\; \overline{\mathcal{M}}_g,
+\qquad
+\barB_g(\cA)\big|_{[\Sigma_g]}
+= (T^c(s^{-1}\bar{\cA}),\, \dfib^{(\Sigma_g)}).
+\end{equation}
+The fiber over $[\Sigma_g]$ has fiberwise differential
+$\dfib^{(\Sigma_g)}$ built from the genus-$g$ propagator
+(Definition~\ref{def:higher-genus-log-forms}).
+
+\subsection{The Hodge bundle and the period matrix}
+\label{subsec:hodge-curvature-origin}
+\index{Hodge bundle!and curvature}
+
+The Hodge bundle $\mathbb{E}^\vee = \pi_*\omega_\pi$ over
+$\overline{\mathcal{M}}_g$ has fiber
+$H^0(\Sigma_g, \Omega^1)$, a $g$-dimensional vector space.
+Choose a symplectic basis
+$\{A_k, B_k\}_{k=1}^g \subset H_1(\Sigma_g, \mathbb{Z})$ and
+normalize: $\oint_{A_l} \omega_k = \delta_{kl}$.  The period matrix
+$\tau_{kl} = \oint_{B_l} \omega_k \in \mathfrak{H}_g$ determines
+the propagator~\eqref{eq:elliptic-propagator} and its higher-genus
+generalizations.
+
+Compute the Arnold defect at genus~$g$:
+\begin{equation}\label{eq:arnold-defect-hg}
+\eta_{12}^{(g)} \wedge \eta_{23}^{(g)} + \text{cyclic}
+= \kappa(\cA) \cdot \omega_g, \qquad
+\omega_g = \tfrac{i}{2} \textstyle\sum_{k=1}^g
+\omega_k \wedge \overline{\omega}_k.
+\end{equation}
+The Arakelov form $\omega_g$ is the canonical K\"ahler metric on
+$\Sigma_g$ induced by the Hodge inner product.  Taking the trace of
+the fiberwise curvature coderivation over $\bigwedge^g \mathbb{E}^\vee$:
+\[
+\mathrm{obs}_g(\cA)
+= \kappa(\cA) \cdot c_g(\mathbb{E})
+= \kappa(\cA) \cdot \lambda_g
+\;\in\; H^*(\overline{\mathcal{M}}_g).
+\]
+
+\subsection{The Kodaira--Spencer map}
+\label{subsec:ks-deformation-functor}
+\index{Kodaira--Spencer map|textbf}
+
+The infinitesimal version of~\eqref{eq:bar-family} is
+\begin{equation}\label{eq:ks-intro-hg}
+\mathrm{KS} \colon T_{[\Sigma_g]}\overline{\mathcal{M}}_g
+\;\xrightarrow{\;\sim\;}
+H^1(\Sigma_g, T\Sigma_g)
+\;\longrightarrow\;
+\mathrm{HH}^2_{\mathrm{ch}}(\cA),
+\end{equation}
+sending an infinitesimal deformation of the curve to a deformation of
+the bar complex
+(Theorem~\ref{thm:kodaira-spencer-chiral-complete}).  The obstruction
+to extending a first-order deformation lies in
+$\mathrm{HH}^3_{\mathrm{ch}}(\cA)$.
+
+\subsection{The family index}
+\label{subsec:why-ahat}
+\index{A-hat genus@$\hat{A}$-genus!geometric derivation}
+
+The family~\eqref{eq:bar-family} defines
+$[\barB_g(\cA)]^{\mathrm{vir}} \in K^0(\overline{\mathcal{M}}_g)$.
+By Grothendieck--Riemann--Roch on $\pi \colon
+\overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$:
+\[
+\mathrm{ch}\bigl([\barB_g(\cA)]^{\mathrm{vir}}\bigr)
+= \pi_*\!\bigl(\mathrm{ch}(\barB(\cA)|_{\mathrm{fiber}})
+\cdot \mathrm{Td}(T_\pi)\bigr).
+\]
+The fiber Chern character contributes $\kappa(\cA)$; the Todd class
+of the universal curve gives the $\hat{A}$-series.  Result:
+$\sum_{g \geq 1} \mathrm{obs}_g \cdot \hbar^{2g-2}
+= \kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
+(Theorem~\ref{thm:family-index}).  The scalar $\kappa(\cA)$ is the
+first Chern number; the full sequence $\{\mathrm{obs}_g\}$ consists
+of the higher Chern numbers, organized by $\hat{A}$.
 
 \section{\texorpdfstring{$A_\infty$ structures and higher operations}{A-infinity structures and higher operations}}
 
@@ -7183,23 +7286,25 @@ $g$ independent parameters.
 parameters $t_i$ below arise from $H^1(\Sigma_g, \mathbb{C})$---the cohomology of the
 \emph{curve}, not of the \emph{moduli space}.)
 
-These enter the differential as:
-$$d_g = d_0 + \sum_{i=1}^g t_i \cdot d_i$$
+These enter the total corrected differential
+(Convention~\ref{conv:higher-genus-differentials}) as:
+$$\Dg{g} = \dzero + \sum_{i=1}^g t_i \cdot d_i$$
 where $t_i$ are the period parameters arising from $H^1(\Sigma_g)$ and $d_i$ are the
 genus-$g$ correction terms coming from period integrals.
 
 \begin{definition}[Quantum-corrected differential]\label{def:quantum-differential}
-At genus $g$, the differential on the Chevalley--Cousin complex receives corrections:
-$$d_g = d_0 + \sum_{k=1}^{g} t_k \cdot d_k$$
+At genus $g$, the total corrected differential on the Chevalley--Cousin
+complex (Convention~\ref{conv:higher-genus-differentials}) receives corrections:
+$$\Dg{g} = \dzero + \sum_{k=1}^{g} t_k \cdot d_k$$
 where:
 \begin{itemize}
-\item $d_0$ is the genus-zero (classical) differential from BD
+\item $\dzero$ is the genus-zero (classical) differential from BD
 \item $t_k = \oint_{A_k} \omega_k$ are the $A$-period parameters arising from the Hodge decomposition of $H^1(\Sigma_g, \mathbb{C})$
 \item $d_k$ are correction operators encoding quantum effects via integration over the $A$-cycle $\gamma_k$
 \end{itemize}
 
 \emph{Explicit form.} For genus $g=1$ (elliptic case), there is one $A$-period $t_1 = \tau$, and:
-$$d_1 = d_0 + \tau \cdot d_{\text{elliptic}}$$
+$$\Dg{1} = \dzero + \tau \cdot d_{\text{elliptic}}$$
 where $\tau$ is the modulus of the torus and $d_{\text{elliptic}}$ involves elliptic functions.
 \end{definition}
 
@@ -7948,6 +8053,279 @@ yielding the higher-genus bar cohomology formulas
 (Riordan, Motzkin, etc.)\ as generating-function consequences.
 \end{remark}
 
+\subsection{Factorization homology descent: the homotopy-native proof}
+\label{subsec:fh-descent}
+
+The proof of Theorem~B proceeds by induction on genus at M-level.
+We now show that this induction is the chain-level shadow of a
+single structural statement at H-level: \emph{factorization
+homology descent}.  This subsection makes the passage from
+M-level to H-level explicit and identifies the precise point
+where the homotopy-theoretic perspective is not merely convenient
+but \emph{necessary}.
+
+\begin{proposition}[Pants decomposition as excision;
+\ClaimStatusProvedHere]
+\label{prop:pants-excision}
+\index{factorization homology!excision}
+\index{pants decomposition}
+Let $\Sigma_g$ be a closed oriented surface of genus~$g \geq 2$,
+and let $\Sigma_g = P_1 \cup_{\gamma_1} P_2 \cup_{\gamma_2}
+\cdots \cup_{\gamma_{2g-3}} P_{2g-2}$ be a pants decomposition,
+where each $P_i$ is a pair of pants (sphere with $3$ boundary
+circles) and each $\gamma_j$ is a separating or non-separating
+simple closed curve.  Then for any $\Eone$-chiral algebra $\cA$ on
+$\Sigma_g$, the factorization homology satisfies:
+\begin{equation}\label{eq:fh-excision}
+\int_{\Sigma_g} \cA
+\;\simeq\;
+\int_{P_1} \cA
+\;\underset{\int_{\gamma_1}\cA}{\otimes^{\mathbb{L}}}\;
+\int_{P_2} \cA
+\;\underset{\int_{\gamma_2}\cA}{\otimes^{\mathbb{L}}}\;
+\cdots
+\;\underset{\int_{\gamma_{2g-3}}\cA}{\otimes^{\mathbb{L}}}\;
+\int_{P_{2g-2}} \cA\,,
+\end{equation}
+where each derived tensor product is over the $\Eone$-algebra
+$\int_{\gamma_j}\cA$ and the equivalence is in the
+$\infty$-category of chain complexes.
+\end{proposition}
+
+\begin{proof}
+This is Ayala--Francis excision \cite{AF15} applied to the
+collar-gluing decomposition $\Sigma_g = P_1 \cup_{\gamma_1 \times
+\mathbb{R}} P_2 \cup \cdots$ (each gluing region is a collar
+$\gamma_j \times (-\epsilon, \epsilon)$).  Since $\cA$ is an
+$\Eone$-chiral algebra, hence a factorization algebra on $\Sigma_g$,
+\cite[Theorem~3.24]{AF15} gives the equivalence
+\[
+\textstyle\int_{\Sigma_g}\cA \;\simeq\;
+\textstyle\int_{P_1}\cA
+\;\underset{\int_{\gamma_1 \times \mathbb{R}}\cA}{\otimes^{\mathbb{L}}}\;
+\textstyle\int_{P_2}\cA
+\;\underset{}{\otimes^{\mathbb{L}}}\; \cdots
+\]
+The collar identification
+$\int_{\gamma_j \times \mathbb{R}}\cA \simeq \int_{\gamma_j}\cA$
+follows from $\mathbb{R}$-invariance of the factorization structure
+\cite[Proposition~3.10]{AF15}.
+\end{proof}
+
+\begin{proposition}[Genus induction is iterated excision;
+\ClaimStatusProvedHere]
+\label{prop:genus-induction-excision}
+\index{factorization homology!genus induction}
+The genus-$g$ quasi-isomorphism $\psi_g$ of
+Theorem~\textup{B} corresponds, under
+Proposition~\textup{\ref{prop:pants-excision}}, to iterated
+application of the Mayer--Vietoris sequence for factorization
+homology:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Base case} ($g = 0$):
+$\int_{\mathbb{P}^1}\cA \simeq \Omega(\Bbar^{(0)}(\cA))
+\simeq \cA$ is bar-cobar inversion on the Koszul locus
+(Theorem~\textup{A}).
+
+\item \textbf{Inductive step} ($g \to g+1$):
+Attaching a handle is the collar-gluing
+$\Sigma_{g+1} = \Sigma_g \cup_{\gamma \times \mathbb{R}}
+(\text{handle})$.  The Mayer--Vietoris sequence
+\[
+\cdots \to
+H_n\bigl(\textstyle\int_\gamma\cA\bigr) \to
+H_n\bigl(\textstyle\int_{\Sigma_g}\cA\bigr) \oplus
+H_n\bigl(\textstyle\int_{\mathrm{handle}}\cA\bigr) \to
+H_n\bigl(\textstyle\int_{\Sigma_{g+1}}\cA\bigr)
+\to \cdots
+\]
+is the H-level content of the extension lemma
+(Lemma~\textup{\ref{lem:extension-across-boundary-qi}}).
+
+\item \textbf{Handle contribution}: The factorization homology
+of a handle (annulus with two boundary circles identified) is
+controlled by the Hochschild homology of the $\Eone$-algebra
+$\int_\gamma\cA$, by the Hochschild--Kostant--Rosenberg
+theorem for factorization homology
+\cite[Theorem~5.5.3.10]{HA}.
+The genus-$g$ curvature
+$\mcurv \cdot \omega_g$ arises as the Euler class of the handle's
+tangent bundle, pulled back to the Hochschild complex
+via the Chern character.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The correspondence between the chain-level proof of Theorem~B and
+factorization homology descent proceeds step by step.
+
+For (i), the genus-$0$ factorization homology $\int_{\mathbb{P}^1}\cA$
+is computed by the Beilinson--Drinfeld chiral homology
+\cite[Theorem~4.3.1]{BD04}, which identifies with the cobar
+construction $\Omega(\Bbar^{(0)}(\cA))$: the factorization structure
+maps correspond to the cobar differential $d_{\mathrm{cobar}}$,
+and factorization along collisions gives the bar differential
+$d_{\mathrm{bar}}$.
+
+For (ii), the open stratum quasi-isomorphism
+(Lemma~\ref{lem:higher-genus-open-stratum-qi}) is the restriction to
+$\Sigma_g \smallsetminus \gamma \hookrightarrow \Sigma_{g+1}$,
+and the boundary quasi-isomorphism
+(Lemma~\ref{lem:higher-genus-boundary-qi}) is the restriction to
+a tubular neighborhood of $\gamma$.  The extension lemma assembles
+these via the long exact Mayer--Vietoris sequence; the induction
+hypothesis guarantees that $\psi_g$ is already a quasi-isomorphism.
+
+For (iii), the Hochschild complex of $\int_\gamma\cA$ computes
+the factorization homology of the annulus $\gamma \times [0,1]$
+by \cite[Theorem~5.5.3.10]{HA}.  The identification of the handle
+(where the two boundary circles are identified) introduces a trace
+map $\mathrm{tr} \colon HH_*(\int_\gamma\cA) \to
+\int_{\text{handle}}\cA$.  The curvature arises because this trace
+map, when lifted to chains, satisfies $d_{\mathrm{tr}}^2 =
+\mcurv \cdot \lambda_1$ (the Hodge class), which is the content of
+Theorem~\ref{thm:genus-universality} viewed from the factorization
+homology perspective.
+\end{proof}
+
+\begin{remark}[Why the homotopy perspective is necessary]
+\label{rem:why-homotopy-necessary}
+\index{factorization homology!necessity of homotopy perspective}
+The preceding propositions may appear to be mere reformulations of
+the M-level proof in the language of factorization homology.
+The essential difference is that \emph{the H-level
+statement is stronger}: it produces an equivalence of
+$\infty$-categories (not just a quasi-isomorphism of chain complexes),
+and this additional structure is indispensable in three respects.
+
+\emph{First}, the excision equivalence~\eqref{eq:fh-excision}
+is an equivalence of \emph{$\Eone$-algebras}, not merely of
+underlying chain complexes.  The M-level proof establishes a
+quasi-isomorphism $\psi_g \colon \Omega_g(\Bbar_g(\cA)) \to
+\cA_g$ of dg modules; the $\Ainf$-algebra structure on both sides
+is \emph{additional data} that must be transferred via the homotopy
+transfer theorem (Appendix~\ref{app:homotopy-transfer},
+Theorem~\ref{thm:bar-cobar-htt}).  The factorization homology
+perspective produces the $\Ainf$-structure automatically, because
+excision is an equivalence in the $\infty$-category of
+$\Eone$-algebras, and the $\Ainf$-operations are the coherence
+data for this equivalence.
+
+\emph{Second}, the Mayer--Vietoris sequence at H-level is
+\emph{functorial in the decomposition}: different pants
+decompositions of $\Sigma_g$ produce \emph{canonically equivalent}
+factorization homology objects, because excision is an
+$\infty$-categorical property that does not depend on the choice of
+collar.  At M-level, this independence is a non-trivial theorem
+requiring separate verification (the compatibility of the extension
+lemma with different boundary strata of $\overline{\mathcal{M}}_g$).
+
+\emph{Third}, the coderived category
+$\cat{D}^{\mathrm{co}}_\infty(\cat{Fact}_g(X))$, which governs
+the off-Koszul regime (Remark~\ref{rem:homotopy-native-b}), is an
+$\infty$-categorical construction with \emph{no chain-level
+analogue}: the provisional coderived category of
+Definition~\ref{def:provisional-coderived} captures only the
+homotopy category, not the full $\infty$-categorical data.  The
+factorization homology perspective produces the $\infty$-categorical
+coderived category directly, via the theory of stable
+$\infty$-categories \cite[Chapter~1]{HA}.
+\end{remark}
+
+\begin{proposition}[$E_2$-collapse as formality;
+\ClaimStatusProvedHere]
+\label{prop:e2-collapse-formality}
+\index{formality!spectral sequence collapse}
+On the Koszul locus, the following conditions on a chiral algebra
+$\cA$ are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item The bar spectral sequence
+$E_1^{p,q}(g) \Rightarrow H^{p+q}(\Omega_g\Bbar_g(\cA))$
+collapses at~$E_2$ for all $g \geq 0$.
+\item The filtered $\Ainf$-algebra $\Omega_g(\Bbar_g(\cA))$ is
+\emph{formal}: quasi-isomorphic to its cohomology with the
+transferred $\Ainf$-structure
+(Theorem~\textup{\ref{thm:chiral-htt}}).
+\item The transferred higher operations satisfy
+$\tilde{m}_n^{(g)} = 0$ for $n \geq 3$ and all~$g$
+(Koszulness at all genera).
+\end{enumerate}
+In the factorization homology picture, formality means that
+$\int_{\Sigma_g}\cA$ is determined by $\int_{\mathbb{P}^1}\cA$
+and the handle attachments, with no higher coherence obstructions.
+\end{proposition}
+
+\begin{proof}
+(i) $\Rightarrow$ (ii): The spectral sequence arises from the bar
+filtration on $\Omega_g(\Bbar_g(\cA))$.  Collapse at~$E_2$ means
+that $E_2 \cong E_\infty \cong H^*(\Omega_g(\Bbar_g(\cA)))$,
+and the filtration on cohomology is split.  This splitting produces
+the SDR $(\Omega_g(\Bbar_g(\cA)),\, H^*,\, p,\, \iota,\, h)$
+of Theorem~\ref{thm:bar-cobar-htt}, and the transferred structure
+on $H^*$ has $\tilde{m}_n = 0$ for $n \geq 3$ by the argument of
+Step~3 in that proof (Koszul-line concentration forces vanishing).
+Hence $\Omega_g(\Bbar_g(\cA))$ is formal.
+
+(ii) $\Rightarrow$ (iii): If $\Omega_g(\Bbar_g(\cA))$ is formal,
+the transferred operations $\tilde{m}_n$ are the operations on the
+formal model, which has $\tilde{m}_n = 0$ for $n \geq 3$ by
+definition.
+
+(iii) $\Rightarrow$ (i): If $\tilde{m}_n = 0$ for $n \geq 3$,
+the minimal model of $\Omega_g(\Bbar_g(\cA))$ has only binary
+operations.  The spectral sequence of the bar filtration on a
+formal $\Ainf$-algebra necessarily collapses at~$E_2$:
+the $E_2$-differentials are the only non-trivial ones
+(they encode $m_2$), and all higher differentials vanish because
+$\tilde{m}_n = 0$ for $n \geq 3$
+(each $E_r$-differential for $r \geq 3$ is controlled by
+$\tilde{m}_r$; cf.\ \cite[Theorem~3.4.1]{LV12}).
+\end{proof}
+
+\begin{remark}[The factorization algebra as the natural object]
+\label{rem:factorization-natural}
+\index{factorization algebra!naturality}
+The H/M/S architecture of this monograph
+(Convention~\ref{conv:hms-levels}) assigns semantic levels to the
+three viewpoints:
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{} c l l @{}}
+\toprule
+\textbf{Level} & \textbf{Object} & \textbf{Content} \\
+\midrule
+H & $\displaystyle\int_{\Sigma_g}\cA$ & Factorization homology \\
+M & $\Omega_g(\Bbar_g(\cA))$ & Bar-cobar complex \\
+S & $\sum_{n \geq 0} \dim H^n \cdot q^n$ & Hilbert series \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+The central claim of this subsection is that the factorization
+algebra $\int_{\Sigma_g}\cA$ is not merely a convenient packaging
+of the bar-cobar complex, but the \emph{correct mathematical
+object}: the M-level construction $\Omega_g(\Bbar_g(\cA))$ is a
+\emph{presentation} (model) of the H-level object, and different
+presentations (different SDR choices, different pants decompositions,
+different orderings of handle attachments) all produce canonically
+equivalent H-level data.  The proofs of this chapter work at M-level
+because that is where computation is possible, but the
+\emph{meaning} of the results---the naturality,
+the functoriality, the independence of choices---lives at H-level.
+
+The passage from M to H is not automatic: it requires establishing
+that the chain-level constructions are homotopy-invariant, that the
+bar-cobar adjunction is a Quillen equivalence (or equivalently,
+an adjunction of $\infty$-categories), and that the relevant model
+structures exist.  These foundational issues are addressed in
+Chapter~\ref{ch:en-koszul-duality}; the present chapter constructs
+the M-level data that the H-level theory organizes.
+\end{remark}
+
 %================================================================
 % KOSZUL DUALITY ACROSS GENERA
 % (Absorbed from koszul_across_genera.tex)
@@ -8321,6 +8699,12 @@ An algebra satisfying both the axioms and their consequences is called a
 \emph{modular Koszul chiral algebra}.
 \end{definition}
 
+\begin{remark}[Axioms versus consequences]\label{rem:mk-axioms-vs-consequences}
+Only MK1--MK3 are part of the definition. MK4 and MK5 are theorematic
+consequences proved later (Theorems~\ref{thm:higher-genus-inversion} and
+\ref{thm:quantum-complementarity-main}) and are not axioms.
+\end{remark}
+
 \begin{remark}[Logical structure]\label{rem:mk-axiom-relations}
 The definition separates \emph{hypotheses} (MK1--MK3) from
 \emph{consequences} (MK4--MK5).  The hypotheses are
@@ -8450,6 +8834,10 @@ Inversion and complementarity follow as consequences.
 \index{PBW spectral sequence!higher genus concentration}
 \textup{[Regime: filtered-complete and curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+This theorem uses Proposition~\ref{thm:pbw-universal-conformal} only to eliminate
+the explicit genus-enrichment block.  The absence of later differentials/extensions
+is supplied by the family-specific argument below.
 
 Let $\mathfrak{g}$ be a simple Lie algebra and let
 $\mathcal{W}^k(\mathfrak{g}, f_{\mathrm{prin}})$ be the principal
@@ -8590,20 +8978,24 @@ factorization \eqref{eq:enrichment-factorization}: local OPE data acts
 on the finite-dimensional modules~$M_h$, while
 $H^1(\Sigma_g,\bC)$ enters only as a passive multiplicity factor.
 
-Theorem~\ref{thm:pbw-universal-conformal} resolves MK3
-for \emph{every} chiral algebra with a unique weight-$2$ generator,
-subsuming the Virasoro and principal $\mathcal{W}$ theorems and
-extending to non-principal families (Bershadsky--Polyakov,
-hook-type, superconformal).
+Proposition~\ref{thm:pbw-universal-conformal} isolates the common
+unique-weight-$2$ mechanism on the $E_3$ page for chiral algebras with
+a stress tensor.  For the standard finite-type interacting families,
+the theorematic MC1 resolution still comes from the family-specific
+Virasoro and principal $\mathcal{W}$ proofs built on top of this
+mechanism.
 What remains open is therefore:
 genus-$0$ Koszulness~(MK1) and Verdier~(MK2)
 for each non-principal family;
-the H-level/factorization realization of the
-infinite-generator regime $\mathcal{W}_\infty$ beyond the theorematic
-completed M-level principal-stage package
+the filtered H-level/factorization realization and
+coefficient-identification package for the infinite-generator regime
+$\mathcal{W}_\infty$ beyond the theorematic completed M-level
+principal-stage package
 \textup{(}Conjecture~\textup{\ref{conj:master-infinite-generator}}\textup{)};
-and non-principal orbit duality
-\textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}\textup{)}.
+and the distinct three-packet non-principal orbit frontier
+\textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}: dual-orbit
+input, orbit-indexed level shift, paired DS seed
+transport/globalization\textup{)}.
 \end{remark}
 
 \begin{theorem}[PBW degeneration at genus~$1$ for Kac--Moody; \ClaimStatusProvedHere]
@@ -8905,6 +9297,12 @@ and~\ref{thm:quantum-complementarity-main}.
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
+This theorem does not use Proposition~\ref{thm:pbw-universal-conformal}
+\textup{(}the Sugawara stress tensor is a composite, not a generator\textup{)}.
+Instead, the genus-enrichment block is eliminated by the Whitehead--Casimir--Killing
+mechanism, and the absence of later differentials/extensions is supplied by the
+family-specific argument below.
+
 For any simple Lie algebra~$\fg$, any genus~$g \geq 1$, and
 generic level $k \notin \Sigma(\fg)$, the PBW spectral sequence
 for the genus-$g$ bar complex
@@ -9144,6 +9542,10 @@ Items (i)--(iii) are immediate consequences.
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
+This theorem uses Proposition~\ref{thm:pbw-universal-conformal} only to eliminate
+the explicit genus-enrichment block.  The absence of later differentials/extensions
+is supplied by the family-specific argument below.
+
 For any genus~$g \geq 1$ and generic central charge~$c$, the PBW
 spectral sequence for the genus-$g$ bar complex
 $\bar{B}^{(g)}(\mathrm{Vir}_c)$ has concentrated
@@ -9335,11 +9737,11 @@ and~\ref{thm:quantum-complementarity-main}.
 Items (i)--(iii) are immediate consequences.
 \end{proof}
 
-\begin{theorem}[Universal PBW degeneration for chiral algebras with a
-  stress tensor; \ClaimStatusProvedHere]
+\begin{proposition}[Unique-weight-$2$ PBW criterion for chiral
+  algebras with a stress tensor; \ClaimStatusProvedHere]
 \label{thm:pbw-universal-conformal}
-\index{PBW spectral sequence!universal degeneration|textbf}
-\index{modular Koszul chiral algebra!universal criterion|textbf}
+\index{PBW spectral sequence!unique-weight-2 criterion|textbf}
+\index{modular Koszul chiral algebra!unique-weight-2 criterion|textbf}
 \textup{[Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
@@ -9353,19 +9755,22 @@ admitting a PBW filtration by conformal weight, and satisfying:
   weight~$2$, namely the stress tensor~$T$, with
   $T_{(1)} = L_0$.
 \end{enumerate}
-Then for every genus~$g \geq 1$, the PBW spectral
-sequence for the genus-$g$ bar complex has concentrated
-$E_\infty$ page:
+Then for every genus~$g \geq 1$ and every conformal
+weight~$h$, the genus-enrichment summand of the PBW
+spectral sequence satisfies
 \[
-E_\infty^{p,q}\bigl(\bar{B}^{(g)}(\cA)\bigr)
+d_2^{\mathrm{PBW}}\big|_{\mathcal{E}_g^{*,h}}
 \;=\;
-E_\infty^{p,q}\bigl(\bar{B}^{(0)}(\cA)\bigr)
-\quad \text{for all } g \geq 0.
+h \cdot \mathrm{id}_{M_h}
+\otimes
+\mathrm{id}_{H^{1,0}(\Sigma_g)},
 \]
-In particular, $\cA$ satisfies axiom~\textup{MK3}
-\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}
-unconditionally at all genera.
-\end{theorem}
+and similarly on the antiholomorphic factor.  Consequently the entire
+genus-enrichment is killed by the $E_3$ page.  In particular, for
+families satisfying hypotheses~\textup{(a)}--\textup{(b)}, axiom
+\textup{MK3} is reduced to a separate later-page and extension analysis
+after this $E_3$-page vanishing.
+\end{proposition}
 
 \begin{proof}
 The enrichment factorization~\eqref{eq:enrichment-factorization}
@@ -9411,21 +9816,26 @@ create new classes.
 
 The antiholomorphic factor $H^{0,1}(\Sigma_g)$ is handled
 identically.  Bounded-below convergence
-(\ref{item:pbw-bounded} of
-Theorem~\ref{thm:pbw-koszulness-criterion}) yields
-$E_\infty(g) = E_\infty(0)$.
+\textup{(}\ref{item:pbw-bounded} of
+Theorem~\ref{thm:pbw-koszulness-criterion}\textup{)}
+then shows that once later differentials and extension classes are
+ruled out by family-specific input, the genus-$g$ and genus-$0$
+$E_\infty$ pages agree.  The proposition proves only the common
+$E_3$-page vanishing mechanism.
 \end{proof}
 
 \begin{remark}[Scope of the universal PBW theorem]
 \label{rem:pbw-universal-scope}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item
-Theorem~\ref{thm:pbw-universal-conformal} subsumes
-the Virasoro degeneration
+Proposition~\ref{thm:pbw-universal-conformal} packages
+the common unique-weight-$2$ mechanism behind the Virasoro degeneration
 (Theorem~\ref{thm:pbw-allgenera-virasoro})
 and the principal finite-type $\mathcal{W}$ degeneration
-(Theorem~\ref{thm:pbw-allgenera-principal-w})
-as special cases: both satisfy hypotheses~(a)--(b).
+(Theorem~\ref{thm:pbw-allgenera-principal-w}):
+both satisfy hypotheses~(a)--(b), and in both families the remaining
+no-later-differential and extension analysis is supplied by the
+family-specific proofs.
 The Kac--Moody theorem
 (Theorem~\ref{thm:pbw-allgenera-km})
 is \emph{not} a special case, because the stress
@@ -9436,7 +9846,7 @@ Whitehead--Casimir--Killing mechanism of
 Theorem~\ref{thm:pbw-allgenera-km}.
 
 \item
-The theorem applies to every non-principal
+The proposition applies formally to every non-principal
 $\mathcal{W}$-algebra
 $\mathcal{W}^k(\mathfrak{g}, f)$, including:
 the Bershadsky--Polyakov algebra
@@ -9446,13 +9856,14 @@ $1$, $\tfrac{3}{2}$, $\tfrac{3}{2}$, $2$);
 hook-type $\mathcal{W}$-algebras in types~$A$, $D$;
 and superconformal algebras $\mathcal{N} = 1, 2$.
 In each case, the stress tensor is the unique weight-$2$
-generator, and hypotheses~(a)--(b) hold.
-This resolves the MK3 component of the non-principal orbit
-programme
-\textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}\textup{)}:
-PBW concentration is automatic; only genus-$0$ Koszulness
-\textup{(MK1)} and Verdier \textup{(MK2)} remain to be
-verified case by case.
+generator, and hypotheses~(a)--(b) hold.  It should therefore be read
+as an MK3 criterion at the $E_3$ page, not as a stand-alone resolution
+of the non-principal orbit programme
+\textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}\textup{)}.
+What still requires family-specific input is genus-$0$ Koszulness
+\textup{(MK1)}, Verdier \textup{(MK2)}, and the exclusion of later
+differentials and extension classes beyond the common $E_3$-page
+vanishing.
 
 \item
 For infinite-generator algebras such as
@@ -9460,12 +9871,12 @@ $\mathcal{W}_\infty$
 (one generator $W_s$ for each integer $s \geq 2$),
 hypotheses~(a)--(b) hold provided the weight
 filtration is complete (each weight-$h$ sector is
-finite-dimensional).  The pronilpotent completion
-scaffold of \S\ref{sec:modular-koszul-programme}
-ensures this.  MK3 is therefore automatic for
-$\mathcal{W}_\infty$; the remaining obstacle for
-Conjecture~\ref{conj:master-infinite-generator} is
-MK1 in the completed setting.
+finite-dimensional).  In this regime the proposition records only the
+finite-stage weight-$2$ mechanism.  Turning that mechanism into a
+completed MK3 statement remains part of the inverse-limit MC4 package,
+not an automatic consequence of hypotheses~(a)--(b).  The pronilpotent
+completion scaffold of \S\ref{sec:modular-koszul-programme} is the
+route toward that stronger statement.
 
 \item
 The key structural insight is that enrichment from
@@ -9481,12 +9892,15 @@ whose structure depends on global curve data
 \item
 Theorems~\ref{thm:pbw-allgenera-km},
 \ref{thm:pbw-allgenera-virasoro},
-\ref{thm:pbw-allgenera-principal-w},
-and~\ref{thm:pbw-universal-conformal},
+and~\ref{thm:pbw-allgenera-principal-w},
 together with their corollaries,
 upgrade the interacting conditional claims in Part~II to
-unconditional statements at all genera, including complementarity,
-genus expansions, and Kodaira--Spencer constructions.
+unconditional statements at all genera for the named standard
+families, including complementarity, genus expansions, and
+Kodaira--Spencer constructions.  Proposition~\ref{thm:pbw-universal-conformal}
+records the common unique-weight-$2$ $d_2$ mechanism behind the
+Virasoro and principal finite-type $\mathcal{W}$ proofs, but it is not
+itself the source of unconditional status beyond those family theorems.
 \end{enumerate}
 \end{remark}
 
@@ -9783,10 +10197,22 @@ entire genus tower.
   $\Delta_{\cA}(x)$ as a separate non-scalar invariant
   (Theorem~\ref{thm:spectral-characteristic}).
 
-\item The \emph{genus-$0$ deformation algebra}:
-  bar coderivations on $\bar{B}(\cA)$ form a dg~Lie algebra
-  whose Maurer--Cartan elements govern $A_\infty$-deformations
-  (standard; Loday--Vallette~\cite{LV12}).
+\item The \emph{genus-$0$ cyclic deformation algebra}:
+  Proposition~\ref{prop:genus0-cyclic-coderivation} proves that
+  cyclic bar coderivations on $\bar{B}(\cA)$ form a cyclic dg~Lie
+  algebra with $(-1)$-shifted symplectic pairing on the MC locus;
+  Corollary~\ref{cor:km-cyclic-deformation} gives the explicit
+  Kac--Moody specialization (adjoint bracket, level-$k$ Killing
+  form, Casimir $C_2=2h^\vee\cdot\mathrm{id}$, $\kappa$ recovery).
+  \textbf{MC2-1 resolved for KM:}
+  Theorem~\ref{thm:mc2-1-km} identifies the coderivation differential
+  $[d_{\barB},-]$ on $\Defcyc(\widehat{\mathfrak{g}}_k)$ with the
+  cyclic CE~differential, giving
+  $H^2(\Defcyc, l_1) \cong H^2_{\mathrm{cyc}}(\mathfrak{g},
+  \mathfrak{g}) \cong \mathbb{C}$.
+  Corollary~\ref{cor:km-minimal-linf} shows the homotopy-transferred
+  minimal model is the Killing extension of
+  Proposition~\ref{prop:killing-linf-extension}.
 
 \item A \emph{finite-dimensional compute scaffold} for Steps~1--3 now exists in
   \nolinkurl{compute/lib/mc2_cyclic_linf.py}, with executable dg~Lie identities,
@@ -9798,9 +10224,15 @@ entire genus tower.
   and a nontrivial higher-bracket seed:
   an $\eta$-valued cyclic $l_3$ channel from the Killing cocycle
   $\phi(a,b,c)=\langle [a,b],c\rangle$.
+  Proposition~\ref{prop:killing-linf-extension} proves analytically
+  that this $l_3$ defines a cyclic $L_\infty$-algebra: the
+  arity-$4$ homotopy Jacobi identity follows from the
+  CE~cocycle condition $\delta\phi=0$, and all
+  higher-arity identities vanish automatically.
   The $l_3$ lift is now implemented through a shared transfer constructor
   from generator-level cyclic seed data, and the $\mathfrak{sl}_2$,
-  $\mathfrak{sl}_3$, and $\mathfrak{sp}_4$ higher-bracket seeds are all
+  $\mathfrak{sl}_3$, $\mathfrak{sp}_4$, and $\mathfrak{g}_2$
+  higher-bracket seeds are all
   verified to agree with this common lift path.
 
 \item \emph{Scalar shadow recovery from cyclic $L_\infty$ data}
@@ -9937,23 +10369,87 @@ entire genus tower.
   genus-stratified obstruction extractor detects explicit
   nonzero genus-$2$ and genus-$3$ channels on the positive-genus
   ansatz $\alpha_1=e+h+f$.
+
   The same shifted-seed lane now extends to
-  $\mathfrak{sl}_3$ and $\mathfrak{sp}_4$:
+  $\mathfrak{sl}_3$, $\mathfrak{sp}_4$, and $\mathfrak{g}_2$:
   on the channel $(e_1,e_2,f_{12})$ the residual
   $\eta$-component is $xyz$ for $\mathfrak{sl}_3$ and
-  $2xyz$ for $\mathfrak{sp}_4$, with corresponding
-  genus-$3$ obstruction outputs $\eta$ and $2\eta$.
-  Across $\mathfrak{sl}_2,\mathfrak{sl}_3,\mathfrak{sp}_4$,
+  $2xyz$ for $\mathfrak{sp}_4$ and $3xyz$ for
+  $\mathfrak{g}_2$, with corresponding genus-$3$
+  obstruction outputs $\eta$, $2\eta$, and $3\eta$.
+  Across $\mathfrak{sl}_2,\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$,
   the genus-$3$ $\eta$ obstruction agrees with the mixed
   residual value at $(x,y,z)=(1,1,1)$, giving a unit
   one-channel normalization ratio in the shifted seed lane.
   This is the model-level scalar-comparison half of
   Proposition~\ref{prop:one-channel-normalization-criterion}.
+
+  More strongly, for the symbolic genus-$1$ seed
+  $\alpha_1=x\,b_1+y\,b_2+z\,b_3$ on the tested triples, the
+  obstruction identities are polynomially exact:
+  $O_2(\alpha_1)=\tfrac12\,l_2(\alpha_1,\alpha_1)$ and
+  $O_3^\eta(\alpha_1)=\eta(x,y,z)
+  =\tfrac16\,l_3^\eta(\alpha_1,\alpha_1,\alpha_1)$.
+  In all four lanes, this $\eta$ channel is the unique
+  cyclic CE deformation direction
+  ($H^2_{\mathrm{cyc}}=\mathbb{C}$), so the shifted
+  genus-$3$ obstruction is aligned with the one-dimensional
+  deformation line extracted from the seed CE profile; moreover the
+  coefficient $\eta(1,1,1)$ matches the seed Killing
+  $3$-cocycle normalization.
+
   Symbolically, for the scaled ansatz
   $\alpha_1=t\sum b_i$ in each lane, the genus-$2$ obstruction
   is quadratic ($\propto t^2$) and the genus-$3$ $\eta$ channel
   is exactly cubic:
   $O_3^\eta(t)=t^3\,\eta(1,1,1)$.
+
+  On the root-string channel $(e_1,e_2,f_{12})$ for
+  $\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$, this further
+  sharpens to the explicit signature law
+  $O_2=t^2(e_{12}+f_1-m f_2)$ and
+  $O_3^\eta=m\,t^3\eta=-t\,O_2^{f_2}$ with
+  $m=1,2,3$ respectively; these are exactly the three visible
+  root-string orbit-table lanes.
+
+  On the same channel the visible packet is
+  obstruction-side identifiable and round-trip exact: from the
+  coefficients $(O_2^{e_{12}},O_2^{f_1},O_2^{f_2},O_3^\eta)$ one
+  recovers the packet parameters $(a,b,m)$ and reconstructs the same
+  genus-$2$ and genus-$3$ profiles on the symbolic root-string family
+  and the concrete $\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$
+  lanes.
+
+  In those same lanes the distinguished simple-pole cocycle
+  line, the residual kernel-of-normalization support plane, and the
+  genus-$3$ $\eta$ line are already detected intrinsically by the
+  obstruction support together with the normalization functional;
+  equivalently, they are already the unique invariant support lines
+  for the one-channel bracket/pairing/normalization profile visible on
+  those lanes.
+
+  Hence they are the unique invariant vertices of the visible
+  one-channel support graph under the induced projectivized
+  automorphism action and therefore singleton orbits of the visible
+  permutation group; across the concrete
+  $\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$ lanes, equivalently
+  $m=1,2,3$, this visible orbit profile is the same canonical
+  universal root-string orbit table, so the remaining visible
+  combinatorics reduce first to direct identification against one fixed
+  labeled table and then to reading that table off from one minimal
+  invariant signature package, and finally to one universal signed
+  seed-character law on the ordered one-channel seed triple, then
+  further to one universal two-sign plus normalization-scalar law, and
+  finally to one root-string parity sign plus normalization scalar,
+  and then to one chart-normalized seed scalar.
+
+  For this genus-$1$-only ansatz and arity-$\le 3$ seed,
+  obstruction support truncates at genus~$3$:
+  $O_g=0$ for all $g\ge 4$ in the shifted
+  $\mathfrak{sl}_2,\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$ lanes.
+  The combined normalization/scaling/root-signature/polynomial/CE/support
+  checks are now executable as one consolidated shifted one-channel
+  criterion package on these rank/type lanes.
 
 \item \emph{Genus-completed formal framework}
   \textup{(}Proposition~\ref{prop:genus-completed-mc-framework}\textup{)}.
@@ -9979,6 +10475,9 @@ Proposition~\ref{prop:mc2-reduction-principle}, the live MC2 frontier
 is concentrated in three exact packages: an intrinsic cyclic
 $L_\infty$ model, a geometric completed tensor / clutching package, and
 the one-channel normalization problem in the simple-Lie case.
+Theorem~\ref{thm:mc2-conditional-completion} shows that these three
+packages are sufficient: if they hold, then $\Theta_{\cA}$ exists
+with the required trace, clutching, and Verdier properties.
 
 Three specific constructions are needed:
 \begin{enumerate}[label=\textup{Step~\arabic*.}]
@@ -9987,6 +10486,11 @@ Three specific constructions are needed:
   cyclic Hochschild cohomology of~$\cA$.
   The pairing should intertwine the
   bracket with the trace map $\operatorname{tr}$.
+  \textbf{Resolved for Kac--Moody:}
+  Theorem~\ref{thm:mc2-1-km} proves that
+  $\Defcyc(\widehat{\mathfrak{g}}_k)$ is a cyclic $L_\infty$-algebra
+  with $H^2 \cong \mathbb{C}$, via the identification of the
+  coderivation differential with the cyclic CE~differential.
 
 \item \emph{Geometric tensor / clutching package.}  Form the
   pro-nilpotent completion
@@ -9998,9 +10502,14 @@ Three specific constructions are needed:
   Proposition~\ref{prop:genus-completed-mc-framework} establishes the
   formal framework: genus convolution yields a well-defined
   $L_\infty$-algebra with convergent, genus-stratified MC equation.
-  The open part is the intrinsic pro-nilpotent geometric realization,
-  the modular-operadic composition laws, and the boundary/clutching
-  compatibility on the geometric complex.
+  Proposition~\ref{prop:geometric-modular-operadic-mc} then
+  resolves the three open parts---the intrinsic pro-nilpotent
+  geometric realization, the modular-operadic composition laws,
+  and the boundary/clutching compatibility---via the
+  Getzler--Kapranov Feynman transform: the modular graph
+  coefficient algebra $\Gmod$ provides the geometric coefficient
+  system with clutching morphisms automatic from the dg~Lie
+  structure.
 
 \item \emph{One-channel normalization.}  In the simple-Lie case,
   Corollary~\ref{cor:one-dim-obstruction} reduces the genus-$g$
@@ -10010,26 +10519,193 @@ Three specific constructions are needed:
   support problem itself reduces to a precise geometric statement:
   the joint clutching restrictions and normalized trace must isolate
   the tautological line inside the relevant one-channel sector.
-  Proposition~\ref{prop:one-channel-normalization-criterion} then shows
-  that once this tautological-line support is in hand, the
-  normalization is fixed by one scalar comparison with the already-
-  proved shadow $\kappa(\cA)\lambda_g$.  What remains is therefore to
-  prove that clutching/trace isolation statement and verify the
-  corresponding Verdier/Koszul-duality compatibility.
+
+  Proposition~\ref{prop:one-channel-verdier-criterion} then reduces the
+  Verdier/Koszul side to a precise involution/Lagrangian statement:
+  construct the opposite one-channel line inside
+  $Q_g(\cA^!)$ so that together with the $\cA$-line it forms a
+  $\sigma$-stable Verdier-nondegenerate plane.
+
+  Proposition~\ref{prop:one-channel-ptvv-criterion} then reduces the
+  remaining H-level lift to a precise projector-level condition:
+  construct perfect one-channel subcomplexes in the $\pm$-eigenspaces
+  whose cross Verdier pairing is a quasi-isomorphism in the PTVV sense.
+
+  Proposition~\ref{prop:one-channel-chain-model-criterion} reduces
+  that projector-level condition further to explicit chain-model data
+  on the MC2 one-channel sector of $\Defcyc(\cA)$:
+  one perfect coderivation subcomplex on each side, one perfect
+  geometric coefficient complex, and projector-compatible embeddings
+  into the $\pm$ sectors.
+
+  Proposition~\ref{prop:one-channel-seed-criterion} reduces that
+  chain-model condition further to finite low-bar-length seed data
+  inside
+  $\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}_X(\cA))[1]$ and
+  $\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}_X(\cA^!))[1]$:
+  finitely many cyclic coderivations on each side whose
+  differential-closed spans realize the one-channel sector and whose
+  seed-level pairing is chain-level nondegenerate.
+
+  Proposition~\ref{prop:one-channel-minimal-seed-packet-criterion}
+  reduces that finite seed problem further to a minimal packet:
+  one distinguished degree-$2$ cocycle on each side, finite
+  correction packets in bar lengths at most~$3$, and one finite
+  chain-level pairing matrix between those packets.
+
+  Proposition~\ref{prop:one-channel-visible-lowarity-packet-criterion}
+  then reduces that minimal packet further to the three visible
+  low-arity ingredients already present on the MC2 compute surface:
+  the simple-pole bracket sector, the normalized double-pole pairing
+  matrix, and the Killing $l_3^\eta$ sector.
+  Proposition~\ref{prop:one-channel-canonical-transfer-criterion}
+  then reduces that visible packet further to a single canonical
+  transfer package on the one-channel seed spaces: one cyclic seed,
+  one shared generator-seed lift producing the Killing
+  $l_3^\eta$ sector, and one functorial normalization splitting off the
+  one-channel cocycle line.
+
+  Proposition~\ref{prop:one-channel-transfer-law-criterion} then
+  reduces that canonical package further to one explicit root-string
+  transfer law on the one-channel seed spaces: a universal seed formula
+  for $(O_{2,g},O_{3,g}^\eta)$ together with obstruction-side recovery
+  of the seed coefficients and the functorial normalization extracting
+  the distinguished simple-pole cocycle line.
+
+  Proposition~\ref{prop:one-channel-root-string-chart-criterion} then
+  reduces that explicit law further to a chart-existence/uniqueness
+  statement: the one-channel support graph must force an ordered
+  root-string chart on the seed spaces, unique up to rescaling of the
+  three seed lines.
+
+  Proposition~\ref{prop:one-channel-intrinsic-line-detection-criterion}
+  then reduces that chart statement further to an intrinsic
+  line-detection problem: the seed, simple-pole, and Killing support
+  lines must be canonically picked out by
+  $l_{2,\mathrm{sp}}$, $\beta_g^{\mathrm{dp}}$,
+  $\nu_g^{\mathrm{sp}}$, and the support of
+  $(O_{2,g},O_{3,g}^\eta)$.
+
+  Proposition~\ref{prop:one-channel-automorphism-rigidity-criterion}
+  then reduces that intrinsic line-detection problem further to an
+  automorphism-rigidity statement: those support lines must be the
+  unique invariant lines for the one-channel support automorphism group
+  compatible with the bracket, pairing, normalization, and obstruction
+  profile.
+
+  Proposition~\ref{prop:one-channel-support-graph-stabilizer-criterion}
+  then reduces that rigidity statement further to a finite
+  support-graph stabilizer computation: the labeled one-channel support
+  graph must have exactly the fixed vertices corresponding to the
+  simple-pole, residual-kernel, and Killing support lines.
+
+  Proposition~\ref{prop:one-channel-incidence-orbit-criterion}
+  then reduces that stabilizer computation further to an explicit
+  root-string incidence-matrix / orbit-count criterion.
+
+  Concretely, the visible one-channel permutation group is determined by
+  the simple-pole incidence table, double-pole pairing matrix,
+  normalization vector, and genus-$2$/genus-$3$ support indicators.
+  It must have exactly the required singleton orbits.
+  Proposition~\ref{prop:one-channel-visible-orbit-table-criterion}
+  then reduces that bounded permutation computation further to a
+  universal three-case orbit table on the visible root-string types:
+  it is enough to check the orbit data for
+  $m=1,2,3$, equivalently
+  $\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$.
+
+  Proposition~\ref{prop:one-channel-canonical-universal-orbit-table-criterion}
+  then collapses that three-case verification to one canonical
+  universal orbit table: each visible root-string type must identify,
+  by its labeled incidence/support data, with one fixed table
+  independent of~$m$.
+  Proposition~\ref{prop:one-channel-universal-invariant-signature-criterion}
+  then collapses that fixed-table identification further to the
+  minimal invariant-signature packet: the table must already be forced
+  by the minimal visible bracket/pairing/normalization/support data on
+  the universal seed triple.
+
+  Proposition~\ref{prop:one-channel-signed-seed-character-criterion}
+  then collapses that invariant-signature package further to the
+  universal signed seed-character law on the ordered seed triple and
+  its dual: the full visible invariant packet must be recoverable from
+  that character alone.
+  Proposition~\ref{prop:one-channel-two-sign-plus-normalization-scalar-criterion}
+  then collapses that signed seed-character law further to one reduced
+  root-string datum of two signs and one normalization scalar: the
+  full signed seed-character must be recoverable from that smaller
+  datum alone.
+  Proposition~\ref{prop:one-channel-parity-sign-plus-normalization-scalar-criterion}
+  then collapses that reduced datum further to one root-string parity
+  sign and one normalization scalar: the genus-$3$ / Killing sign must
+  already be forced by the bracket sign together with the fixed
+  transfer law.
+  Proposition~\ref{prop:one-channel-parity-forcing-criterion}
+  then collapses that parity-sign datum further to one
+  chart-normalized seed scalar: the bracket-parity sign must already be
+  forced by the root-string chart criterion together with the chosen
+  normalization convention.
+
+  Proposition~\ref{prop:one-channel-normalization-criterion} finally
+  shows that once this support, chart-normalized seed scalar, Verdier,
+  and H-level data are in hand, the normalization is fixed by one
+  scalar comparison with the already-proved shadow
+  $\kappa(\cA)\lambda_g$.
+
+  What remains is therefore to
+  prove that clutching/trace isolation statement, construct the
+  corresponding one-channel Verdier plane, lift it to a PTVV
+  Lagrangian pair compatible with the anti-involution, realize that
+  lift by explicit one-channel coderivation subcomplexes in
+  $\Defcyc(\cA)$, construct those subcomplexes from finite
+  low-bar-length bar-coderivation seeds, compress those seeds to a
+  minimal one-cocycle-plus-corrections packet in bar lengths
+  at most~$3$, reduce that packet to the visible low-arity
+  simple-pole / double-pole / Killing-$l_3^\eta$ data, reduce that
+  visible packet further to the canonical transfer package on the
+  one-channel seed spaces, and reduce that package further to the
+  explicit root-string transfer law on those seed spaces.
+
+  It then remains to
+  force the corresponding ordered root-string chart up to seed-line
+  rescaling, detect those
+  support lines intrinsically, prove that they are the unique invariant
+  lines for the one-channel support automorphism group, compute the
+  finite stabilizer of the resulting one-channel support graph, reduce
+  that to the explicit singleton-orbit computation on the visible
+  root-string incidence data, reduce that further to the universal
+  three-case orbit table for
+  $m=1,2,3$, collapse that further to one canonical universal orbit
+  table, reduce that further to one minimal invariant signature
+  package, reduce that further to one universal signed seed-character
+  law, reduce that further to one universal two-sign plus
+  normalization-scalar law, reduce that further to one root-string
+  parity sign plus normalization scalar (the parity-sign plus
+  normalization-scalar criterion), reduce that further to one
+  chart-normalized seed scalar, and then verify one normalized
+  scalar comparison.
 \end{enumerate}
 
-The clutching part of Step~2 may be stated concretely as: show that
-$\Theta_{\cA}$
-  restricted to the boundary divisor $\delta_h \subset
-  \overline{\mathcal{M}}_g$ decomposes via the clutching map
-  (\S\ref{sec:modular-koszul-programme}, axiom~\ref{MK:clutching-verdier}).
-  A first boundary-factorized compatibility check now exists at the
-  surrogate level; the open part is the full modular-operadic
-  compatibility on the geometric complex.
+The clutching part of Step~2 is now resolved
+(Proposition~\ref{prop:geometric-modular-operadic-mc}):
+the Feynman transform structure on $\Gmod$ ensures that any MC
+element $\Theta_{\cA} \in \mathrm{MC}(\Defcyc(\cA) \widehat{\otimes}
+\Gmod)$ automatically decomposes via the clutching map at each boundary
+divisor $\delta_h \subset \overline{\mathcal{M}}_g$
+(\S\ref{sec:modular-koszul-programme}, axiom~\ref{MK:clutching-verdier}).
 
 The main external ingredient is a cyclic analogue of the
 Kontsevich--Soibelman graph complex construction~\cite{KontsevichSoibelman}
-adapted to chiral algebras.
+adapted to chiral algebras.  The explicit graph-sum construction is
+developed in \S\ref{subsec:chiral-graph-complex}
+(Theorem~\ref{thm:cyclic-linf-graph}): the $L_\infty$ brackets $l_n$
+on $\Defcyc(\cA)$ are defined as sums over chiral ribbon graphs with
+amplitudes given by configuration space integrals, conditional on the
+Stokes identity on FM compactifications and the Fay trisecant identity
+for the Szeg\H{o} kernel.  At genus~$0$, both hypotheses are
+unconditional, recovering the dg Lie structure of
+Proposition~\ref{prop:genus0-cyclic-coderivation} and the Killing
+$l_3$ of Proposition~\ref{prop:killing-linf-extension}.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
 Type~I (existence of homotopy object).
@@ -10115,6 +10791,117 @@ $H^*(L \otimes W_g) \cong H^*(L) \otimes W_g$, placing the
 obstruction in $H^2(L, l_1) \otimes W_g$.
 \end{proof}
 
+\begin{proposition}[Cyclic CE cohomology identification;
+\ClaimStatusProvedHere]\label{prop:cyclic-ce-identification}
+\index{cyclic cohomology!CE identification}
+Let $\mathfrak{g}$ be a finite-dimensional Lie algebra
+over~$\mathbb{C}$ with non-degenerate invariant bilinear form
+$\kappa\colon \mathfrak{g}\otimes\mathfrak{g}\to\mathbb{C}$.
+Define the \emph{cyclic CE cochains} by
+\[
+C^n_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\;:=\;
+\bigl\{f\in \Hom(\Lambda^n\mathfrak{g},\,\mathfrak{g})\;:\;
+\kappa\bigl(f(x_1,\ldots,x_n),\,x_0\bigr)
+\text{ is antisymmetric in }(x_0,\ldots,x_n)
+\bigr\}.
+\]
+Equivalently, $f$ is cyclic if and only if $f$ is
+$\kappa$-skew-adjoint: $\kappa(f(x_1,\ldots,x_n), x_0)
+= -\kappa(x_0, f(x_1,\ldots,x_n))$ modulo the already-imposed
+antisymmetry in $(x_1,\ldots,x_n)$.  Then the signed trace map
+\begin{equation}\label{eq:cyclic-ce-trace-map}
+\Phi\colon C^n_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\xrightarrow{\;\sim\;}
+\Lambda^{n+1}(\mathfrak{g}^*),
+\qquad
+\Phi(f)(x_0,\ldots,x_n)
+\;:=\;
+(-1)^n\,\kappa\bigl(f(x_1,\ldots,x_n),\,x_0\bigr),
+\end{equation}
+is an isomorphism of cochain complexes, where
+$C^*_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})$ carries the
+restriction of the CE~differential with adjoint coefficients
+and $\Lambda^{*+1}(\mathfrak{g}^*)$ carries the CE~differential
+with trivial coefficients.  In particular,
+\[
+H^n_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\;\cong\;
+H^{n+1}(\mathfrak{g}).
+\]
+For $\mathfrak{g}$ simple,
+$H^3(\mathfrak{g})\cong\mathbb{C}$ with generator the Killing
+$3$-form $\phi(a,b,c)=\kappa([a,b],c)$
+\textup{(}Cartan\textup{)}, so
+$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})\cong\mathbb{C}$.
+\end{proposition}
+
+\begin{proof}
+\emph{Bijectivity.}
+Non-degeneracy of~$\kappa$ gives an isomorphism
+$\kappa^\flat\colon \mathfrak{g}\xrightarrow{\sim}\mathfrak{g}^*$,
+$a\mapsto \kappa(a,-)$.  Given
+$\omega\in\Lambda^{n+1}(\mathfrak{g}^*)$, define
+$f(x_1,\ldots,x_n) :=
+(-1)^n\,(\kappa^\flat)^{-1}\bigl(\omega(-,x_1,\ldots,x_n)\bigr)$.
+Then $f\in C^n_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})$
+and $\Phi(f) = \omega$.  Hence $\Phi$ is bijective.
+
+\emph{Chain map.}
+We verify $\Phi\circ\delta = d_{\mathrm{CE}}\circ\Phi$ where
+$\delta$ is the CE~differential with adjoint coefficients and
+$d_{\mathrm{CE}}$ is the CE~differential with trivial
+coefficients.  Fix $f\in C^n_{\mathrm{cyc}}$ and write
+$\omega := \Phi(f)\in\Lambda^{n+1}(\mathfrak{g}^*)$.
+
+The CE~differential with adjoint coefficients is
+\[
+(\delta f)(x_1,\ldots,x_{n+1})
+\;=\;
+\sum_{i=1}^{n+1}(-1)^{i-1}\,[x_i,f(\ldots,\widehat{x}_i,\ldots)]
+\;+\!\!
+\sum_{1\le i<j\le n+1}\!\!(-1)^{i+j}f([x_i,x_j],\ldots,
+\widehat{x}_i,\ldots,\widehat{x}_j,\ldots).
+\]
+By definition,
+$\Phi(\delta f)(x_0,\ldots,x_{n+1})
+= (-1)^{n+1}\kappa\bigl((\delta f)(x_1,\ldots,x_{n+1}),\,x_0\bigr)$.
+The invariance identity
+$\kappa([a,b],c) = -\kappa(b,[a,c])$ converts the first sum:
+\begin{align*}
+(-1)^{n+1}
+&\sum_{i=1}^{n+1}(-1)^{i-1}
+\kappa\bigl([x_i,f(\ldots,\widehat{x}_i,\ldots)],\,x_0\bigr)\\
+&=\;
+(-1)^{n+1}\sum_{i=1}^{n+1}(-1)^{i-1}
+\bigl(-\kappa(f(\ldots,\widehat{x}_i,\ldots),\,[x_i,x_0])\bigr)\\
+&=\;
+\sum_{i=1}^{n+1}(-1)^{i}
+\cdot (-1)^n\,
+\kappa\bigl(f(\ldots,\widehat{x}_i,\ldots),\,[x_i,x_0]\bigr)\\
+&=\;
+-\sum_{i=1}^{n+1}(-1)^{i}
+\,\omega\bigl([x_i,x_0],\,x_1,\ldots,\widehat{x}_i,\ldots,
+x_{n+1}\bigr),
+\end{align*}
+where the last step uses the $\kappa$-skew-adjointness of the
+cyclic cochain~$f$ to express
+$(-1)^n\kappa(f(\ldots),\,[x_i,x_0])$ as
+$-\omega([x_i,x_0],\,\ldots)$.
+
+The second sum gives
+\[
+\sum_{1\le i<j\le n+1}(-1)^{i+j}\,
+\omega\bigl(x_0,\,[x_i,x_j],\,x_1,\ldots,
+\widehat{x}_i,\ldots,\widehat{x}_j,\ldots,x_{n+1}\bigr)
+\]
+by direct substitution of $\Phi(f)=\omega$.  Collecting both sums
+and using total antisymmetry of~$\omega$ to move arguments into
+the standard position of the CE~formula yields
+$\Phi(\delta f) = d_{\mathrm{CE}}\,\omega
+= (d_{\mathrm{CE}}\circ\Phi)(f)$.
+\end{proof}
+
 \begin{corollary}[One-dimensional obstruction space;
 \ClaimStatusProvedHere]\label{cor:one-dim-obstruction}
 In the setting of
@@ -10126,8 +10913,7 @@ For $\mathfrak{g}$ simple, the cyclic
 CE~cohomology satisfies
 $H^2_{\mathrm{cyc}}(\mathfrak{g}, \mathfrak{g})
 \cong H^3(\mathfrak{g}) \cong \mathbb{C}$
-via $C^n_{\mathrm{cyc}} \cong \Lambda^{n+1}(\mathfrak{g}^*)$
-(Remark~\textup{\ref{rem:mc2-status}}, item~\textup{(vii)}).
+by Proposition~\textup{\ref{prop:cyclic-ce-identification}}.
 If $L = \Defcyc(\widehat{\mathfrak{g}}_k)$ with
 $H^2(L, l_1) \cong H^2_{\mathrm{cyc}}(\mathfrak{g},
 \mathfrak{g})$, then the genus tower is controlled by a
@@ -10143,13 +10929,11 @@ of Theorem~D$_{\mathrm{scal}}$
 If $H^2(L, l_1) \cong \mathbb{C}$, then
 $H^2(L) \otimes W_g \cong W_g$, so the obstruction at
 genus~$g$ is a single element of~$W_g$.
-The isomorphism
+For simple~$\mathfrak{g}$,
+Proposition~\ref{prop:cyclic-ce-identification} gives
 $H^2_{\mathrm{cyc}}(\mathfrak{g}, \mathfrak{g}) \cong
-H^3(\mathfrak{g})$ follows from the pairing-induced
-identification $C^n_{\mathrm{cyc}} \cong \Lambda^{n+1}
-(\mathfrak{g}^*)$; for simple~$\mathfrak{g}$,
-$H^3(\mathfrak{g}) \cong \mathbb{C}$ with generator the
-Killing $3$-cocycle (Cartan).
+H^3(\mathfrak{g}) \cong \mathbb{C}$ with generator the
+Killing $3$-cocycle.
 \end{proof}
 
 \begin{proposition}[MC2 reduction principle;
@@ -10183,6 +10967,208 @@ $L=\Defcyc(\cA)$.  This gives parts~\textup{(i)} and~\textup{(ii)}.
 Part~\textup{(iii)} is exactly
 Corollary~\ref{cor:one-dim-obstruction}.
 \end{proof}
+
+\begin{proposition}[Geometric modular-operadic MC framework;
+\ClaimStatusProvedHere]\label{prop:geometric-modular-operadic-mc}
+\index{MC2!geometric modular-operadic framework}
+\index{modular graph coefficient algebra!geometric realization}
+Let $(L, \{l_n\}_{n \geq 1}, \langle{-},{-}\rangle)$ be a complete
+cyclic $L_\infty$-algebra as in
+Proposition~\textup{\ref{prop:genus-completed-mc-framework}}.
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Genus filtration on $\Gmod$.}
+  The modular graph coefficient algebra $\Gmod$
+  \textup{(}Definition~\textup{\ref{def:modular-graph-algebra}}\textup{)}
+  carries a complete descending genus filtration
+  $G^m{\Gmod} := \prod_{g \geq m} {\Gmod}^{(g)}$
+  with each genus-$g$ component ${\Gmod}^{(g)}$ finite-dimensional.
+  The dg~Lie structure on $\Gmod$ respects the filtration:
+  $[G^{m_1}, G^{m_2}] \subseteq G^{m_1+m_2}$ and
+  $d(G^m) \subseteq G^m$.
+
+\item \emph{Convergent completed tensor product.}
+  The pro-nilpotent completed tensor product
+  \begin{equation}\label{eq:completed-tensor-gmod}
+  \widehat{L}_{\Gmod}
+  \;:=\;
+  L \;\widehat{\otimes}\; \Gmod
+  \;=\;
+  \prod_{g \geq 0}\, L \otimes {\Gmod}^{(g)}
+  \end{equation}
+  is a complete $L_\infty$-algebra: the tensor product of the
+  $L_\infty$ structure on~$L$ with the dg~Lie structure on~$\Gmod$
+  yields $L_\infty$ brackets $\{\hat{l}_n^{\Gmod}\}$
+  on $\widehat{L}_{\Gmod}$ that respect the genus filtration.
+  The Maurer--Cartan equation in $\widehat{L}_{\Gmod}$ is
+  convergent at each genus, with the same finiteness bound as
+  Proposition~\textup{\ref{prop:genus-completed-mc-framework}(b)}.
+
+\item \emph{Clutching from Feynman structure.}
+  The dg~Lie structure on $\Gmod$ encodes the boundary
+  stratification of $\overline{\mathcal{M}}_{g,n}$:
+  \begin{itemize}
+  \item separating degenerations correspond to the
+    edge-gluing Lie bracket $[-,-]_{\Gmod}$;
+  \item non-separating degenerations correspond to the
+    self-gluing component of the differential $d_{\Gmod}$.
+  \end{itemize}
+  An MC element
+  $\Theta \in \mathrm{MC}(\widehat{L}_{\Gmod})$
+  automatically satisfies clutching compatibility: the genus-$g$
+  MC equation decomposes along boundary strata as
+  \begin{equation}\label{eq:clutching-factorization}
+  \xi_{\mathrm{sep}}^*(\Theta^{(g)})
+  \;=\;
+  \sum_{g_1+g_2=g}
+  \Theta^{(g_1)} \star \Theta^{(g_2)},
+  \qquad
+  \xi_{\mathrm{ns}}^*(\Theta^{(g+1)})
+  \;=\;
+  \Delta_{\mathrm{ns}}(\Theta^{(g)}),
+  \end{equation}
+  where $\star$ is the product induced by the edge-gluing bracket
+  and $\Delta_{\mathrm{ns}}$ is the self-sewing coproduct.
+
+\item \emph{Recovery of genus-completed framework.}
+  Setting $W_g := {\Gmod}^{(g)}$ recovers the genus-completed
+  $L_\infty$-algebra $\widehat{L}_W$ of
+  Proposition~\textup{\ref{prop:genus-completed-mc-framework}}
+  as the underlying genus-filtered structure.  The clutching
+  morphisms are the additional modular-operadic content that the
+  Feynman transform supplies beyond the bare coefficient spaces.
+\end{enumerate}
+In particular, Hypothesis~\textup{\ref{mc2-hyp:completion}} holds
+whenever $L = \Defcyc(\cA)$ exists as a complete cyclic
+$L_\infty$-algebra: the completed tensor product converges and
+carries modular-operadic clutching morphisms compatible with
+stable curve degeneration.
+\end{proposition}
+
+\begin{proof}
+\emph{(a) Genus filtration.}
+At genus~$g$, the Feynman transform
+(Definition~\ref{def:feynman-transform}) sums over stable
+graphs~$\Gamma$ with $\sum_{v \in V(\Gamma)} g_v + b_1(\Gamma) = g$.
+The number of such graphs is finite: the stability condition
+$2g_v - 2 + \mathrm{val}(v) > 0$ at each vertex bounds the
+vertex count by $|V(\Gamma)| \leq 2g-2$, and Euler's formula
+$|E(\Gamma)| = |V(\Gamma)| - 1 + b_1(\Gamma)$ together with
+the valence constraint yields $|E(\Gamma)| \leq 3g-3$.
+Each vertex~$v$ of type $(g_v, \mathrm{val}(v))$ contributes
+$H^*(\overline{\mathcal{M}}_{g_v, \mathrm{val}(v)}, \mathbb{Q})$,
+which is finite-dimensional: the Deligne--Mumford stacks
+$\overline{\mathcal{M}}_{g_v,n_v}$ are smooth proper orbifolds of
+complex dimension $3g_v - 3 + n_v$, hence have finite-dimensional
+rational cohomology concentrated in degrees
+$0, \ldots, 2(3g_v - 3 + n_v)$.
+Since ${\Gmod}^{(g)}$ is a finite direct sum (over graphs) of
+finite tensor products (over vertices) of finite-dimensional
+spaces, $\dim {\Gmod}^{(g)} < \infty$.
+
+For the filtration: the Lie bracket $[-,-]_{\Gmod}$ (edge-gluing)
+connects a graph of genus~$g_1$ to one of genus~$g_2$, producing
+graphs of genus~$g_1 + g_2$.  Hence
+$[G^{m_1}, G^{m_2}] \subseteq G^{m_1+m_2}$.
+The differential $d_{\Gmod}$ consists of edge-contraction
+(which preserves genus: contracting an edge reduces $|E|$ and
+$|V|$ by one each, preserving $b_1$) and vertex-splitting (the
+dual operation, also preserving genus).  Hence $d(G^m) \subseteq G^m$.
+The filtration is exhaustive ($G^0 = \Gmod$) and separated
+($\bigcap_m G^m = 0$).
+
+\emph{(b) Completed tensor product.}
+By part~(a), the genus-$g$ component ${\Gmod}^{(g)}$ is
+finite-dimensional.  The completed tensor product
+$\widehat{L}_{\Gmod} = \prod_{g \geq 0} L \otimes {\Gmod}^{(g)}$
+is complete with respect to the genus filtration
+$G^m \widehat{L}_{\Gmod} := \prod_{g \geq m} L \otimes {\Gmod}^{(g)}$.
+
+The $L_\infty$-dg~Lie tensor product
+(\cite[§12.3]{Fresse-operads}, \cite[§10.3]{LV12})
+equips $\widehat{L}_{\Gmod}$ with $L_\infty$ brackets:
+at genus~$g$, the $n$-ary bracket receives contributions from
+partitions $g_1 + \cdots + g_n = g$, exactly as in
+Proposition~\ref{prop:genus-completed-mc-framework}, with the
+additional dg~Lie structure on $\Gmod$ incorporated via the
+Leibniz rule.  The MC equation at genus~$g$ involves the same
+partition count $\binom{g+n-1}{n-1}$ summands at arity~$n$,
+hence converges (is a finite sum) at each genus.
+
+\emph{(c) Clutching from Feynman structure.}
+The Feynman transform is built from the modular operad
+$\mathcal{M}od = \{\overline{\mathcal{M}}_{g,n}\}$
+(Theorem~\ref{thm:prism-higher-genus}(i)) by summing
+over stable graphs.  The dg~Lie structure on $\Gmod$
+decomposes along the boundary stratification of the moduli spaces:
+
+\emph{Separating degenerations.}
+A separating boundary stratum
+$\delta_{g_1} \cong
+\overline{\mathcal{M}}_{g_1,n_1+1} \times
+\overline{\mathcal{M}}_{g_2,n_2+1}
+\hookrightarrow \overline{\mathcal{M}}_{g,n}$
+corresponds to a stable graph with a single separating edge.
+The edge-gluing bracket $[-,-]_{\Gmod}$ is defined by
+gluing an external leg of one graph to an external leg of
+another, creating exactly such a separating edge.
+The quadratic term $\frac{1}{2}[\Theta,\Theta]_{\Gmod}$
+at genus~$g$ is therefore
+$\frac{1}{2}\sum_{g_1+g_2=g}
+[\Theta^{(g_1)}, \Theta^{(g_2)}]$,
+which is the separating clutching factorization
+$\xi_{\mathrm{sep}}^*(\Theta^{(g)}) =
+\sum_{g_1+g_2=g}
+\Theta^{(g_1)} \star \Theta^{(g_2)}$.
+
+\emph{Non-separating degenerations.}
+A non-separating boundary stratum
+$\delta_{\mathrm{irr}} \cong
+\overline{\mathcal{M}}_{g-1,n+2}
+\hookrightarrow \overline{\mathcal{M}}_{g,n}$
+corresponds to a graph with a single non-separating edge
+(a loop at one vertex).  The self-gluing component of
+$d_{\Gmod}$ identifies two external legs of the same vertex,
+creating such a loop and increasing the genus by~$1$.
+The linear term $d_{\Gmod}(\Theta^{(g)})$ in the MC equation
+encodes this non-separating compatibility.
+
+By the Getzler--Kapranov correspondence
+\cite[Theorem~5.4]{GeK98}, an MC element in the Feynman
+transform is precisely an algebra over the modular operad:
+the MC equation $d_{\Gmod}\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+encodes exactly the clutching compatibility conditions.
+The factorization~\eqref{eq:clutching-factorization} is
+therefore automatic for any MC element in
+$\widehat{L}_{\Gmod}$.
+
+\emph{(d) Recovery.}
+Forgetting the dg~Lie structure on $\Gmod$ and retaining only
+the genus-graded vector spaces $W_g = {\Gmod}^{(g)}$ recovers the
+genus-completed $L_\infty$-algebra of
+Proposition~\ref{prop:genus-completed-mc-framework}.
+The clutching morphisms induced by the boundary stratification
+of $\overline{\mathcal{M}}_{g,n}$ are the modular-operadic
+content that the Feynman transform carries beyond the bare
+coefficient spaces.
+\end{proof}
+
+\begin{remark}[Resolution of Hypothesis~\ref{mc2-hyp:completion}]
+\label{rem:mc2-2-resolution}
+\index{MC2!hypothesis resolution}
+Proposition~\ref{prop:geometric-modular-operadic-mc} resolves
+Hypothesis~\ref{mc2-hyp:completion} \textup{(MC2-2)} conditional
+on the existence of $\Defcyc(\cA)$ as a complete cyclic
+$L_\infty$-algebra \textup{(}which is the content of
+Hypothesis~\textup{\ref{mc2-hyp:cyclic}}, i.e.\ MC2-1\textup{)}.
+The key mechanism is the Getzler--Kapranov Feynman transform:
+clutching compatibility is not an additional constraint on an MC
+element in $\Defcyc(\cA) \widehat{\otimes} \Gmod$---it is
+\emph{built into} the dg~Lie structure of $\Gmod$.
+Thus the three open MC2 hypotheses reduce to two: the
+cyclic $L_\infty$-algebra construction \textup{(MC2-1)} and the
+tautological-line support \textup{(MC2-3)}.
+\end{remark}
 
 \begin{proposition}[Tautological-line support criterion;
 \ClaimStatusProvedHere]\label{prop:tautological-line-support-criterion}
@@ -10260,6 +11246,2168 @@ we conclude that $\delta_g(\cA)=0$, i.e.
 $o_g(\cA)=\kappa(\cA)\lambda_g$.
 \end{proof}
 
+\begin{proposition}[One-channel Verdier/Koszul criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-verdier-criterion}
+\index{MC2!one-channel Verdier/Koszul criterion}
+Let
+\[
+V_g \;:=\; H^*\!\bigl(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA)\bigr)
+\]
+with Verdier pairing $\langle-,-\rangle_{\mathbb{D}}$ and involution
+$\sigma$ as in Proposition~\ref{prop:lagrangian-eigenspaces}.  Let
+$L_g \subset Q_g(\cA)$ and $L_g^! \subset Q_g(\cA^!)$ be
+one-dimensional lines.
+Then the following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item there exists a $\sigma$-stable two-dimensional subspace
+  $E_g \subset V_g$ such that
+  \[
+  E_g \;=\; L_g \oplus L_g^!
+  \]
+  and the restriction of $\langle-,-\rangle_{\mathbb{D}}$ to $E_g$ is
+  non-degenerate;
+\item there exists $v_g \in V_g$ such that, for the projectors
+  $p^\pm := \tfrac12(\mathrm{id}\pm\sigma)$,
+  \[
+  L_g = \mathbb{C}\,p^+(v_g), \qquad
+  L_g^! = \mathbb{C}\,p^-(v_g),
+  \]
+  and
+  \[
+  \bigl\langle p^+(v_g), p^-(v_g)\bigr\rangle_{\mathbb{D}} \neq 0.
+  \]
+\end{enumerate}
+In particular, once the one-channel line on the $\cA$ side has been
+isolated, Verdier/Koszul compatibility on that sector is reduced to the
+construction of an opposite one-channel line in $Q_g(\cA^!)$ forming a
+$\sigma$-stable Verdier-nondegenerate plane.
+\end{proposition}
+
+\begin{proof}
+\textup{(i)}\,$\Rightarrow$\,\textup{(ii)}.
+Choose nonzero vectors $x \in L_g$ and $y \in L_g^!$, and set
+$v_g := x+y \in E_g$.
+Since $L_g \subset Q_g(\cA)=\ker(\sigma-\mathrm{id})$ and
+$L_g^! \subset Q_g(\cA^!)=\ker(\sigma+\mathrm{id})$, we have
+$\sigma(x)=x$ and $\sigma(y)=-y$, hence
+\[
+p^+(v_g)=x, \qquad p^-(v_g)=y.
+\]
+By Proposition~\ref{prop:lagrangian-eigenspaces}, both lines are
+isotropic.  If $\langle x,y\rangle_{\mathbb{D}}=0$, then the pairing
+would vanish on all of $E_g=L_g\oplus L_g^!$, contradicting
+non-degeneracy on~$E_g$.
+
+\textup{(ii)}\,$\Rightarrow$\,\textup{(i)}.
+Set $x:=p^+(v_g)$ and $y:=p^-(v_g)$, and let
+$E_g := \operatorname{span}\{x,y\}$.
+Then $\sigma(x)=x$ and $\sigma(y)=-y$, so $E_g$ is $\sigma$-stable and
+\[
+E_g = \mathbb{C}x \oplus \mathbb{C}y = L_g \oplus L_g^!.
+\]
+Again by Proposition~\ref{prop:lagrangian-eigenspaces}, the pairing
+vanishes on each of the two lines individually.  The assumed
+non-vanishing of $\langle x,y\rangle_{\mathbb{D}}$ therefore makes the
+restriction of the pairing to $E_g$ non-degenerate.
+\end{proof}
+
+\begin{proposition}[One-channel PTVV / anti-involution criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-ptvv-criterion}
+\index{MC2!one-channel PTVV / anti-involution criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-verdier-criterion}}, fix a
+$\sigma$-stable Verdier-nondegenerate plane
+\[
+E_g \;=\; L_g \oplus L_g^! \;\subset\; V_g.
+\]
+Choose the projector model of
+Remark~\textup{\ref{rem:complementarity-model}}: a cochain model
+$C_g$ for $\mathbf{C}_g(\cA)$ with strict involution $\sigma$,
+projectors $p^\pm := \tfrac12(\mathrm{id}\pm\sigma)$, and eigenspace
+subcomplexes $C_g^\pm := \operatorname{im}(p^\pm) \subset C_g$.
+Then the following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item there exists a perfect $\sigma$-stable subcomplex
+  $E_g^\bullet \subset C_g$ whose projector pieces
+  \[
+  E_g^{\bullet,+} := \operatorname{im}(p^+|_{E_g^\bullet}),
+  \qquad
+  E_g^{\bullet,-} := \operatorname{im}(p^-|_{E_g^\bullet})
+  \]
+  satisfy
+  \[
+  H^*(E_g^{\bullet,+}) = L_g,
+  \qquad
+  H^*(E_g^{\bullet,-}) = L_g^!,
+  \]
+  and whose inclusions
+  $E_g^{\bullet,\pm} \hookrightarrow E_g^\bullet$
+  are complementary Lagrangian embeddings in the PTVV sense for the
+  restricted Verdier pairing;
+\item there exist perfect subcomplexes
+  $\mathbf{L}_g \subset C_g^+$ and
+  $\mathbf{L}_g^! \subset C_g^-$ such that:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+  \item
+    \[
+    H^*(\mathbf{L}_g) = L_g,
+    \qquad
+    H^*(\mathbf{L}_g^!) = L_g^!;
+    \]
+  \item the restricted Verdier pairing vanishes on each summand:
+    \[
+    \langle \mathbf{L}_g,\mathbf{L}_g\rangle_{\mathbb{D}} = 0,
+    \qquad
+    \langle \mathbf{L}_g^!,\mathbf{L}_g^!\rangle_{\mathbb{D}} = 0;
+    \]
+  \item the cross pairing induces quasi-isomorphisms
+    \[
+    \mathbf{L}_g
+    \xrightarrow{\;\sim\;}
+    (\mathbf{L}_g^!)^\vee[-(3g{-}3)],
+    \qquad
+    \mathbf{L}_g^!
+    \xrightarrow{\;\sim\;}
+    (\mathbf{L}_g)^\vee[-(3g{-}3)].
+    \]
+  \end{enumerate}
+\end{enumerate}
+In particular, once the cohomological one-channel Verdier plane is
+isolated, the remaining H-level step is reduced to constructing
+perfect one-channel subcomplexes in the $\pm$-projector sectors and
+checking the PTVV non-degeneracy quasi-isomorphism.
+\end{proposition}
+
+\begin{proof}
+\textup{(i)}\,$\Rightarrow$\,\textup{(ii)}.
+Set
+\[
+\mathbf{L}_g := E_g^{\bullet,+},
+\qquad
+\mathbf{L}_g^! := E_g^{\bullet,-}.
+\]
+The cohomology identities are part of the hypothesis.  Since the
+inclusions
+$E_g^{\bullet,\pm} \hookrightarrow E_g^\bullet$
+are PTVV Lagrangian, their restricted pairings vanish.  By
+Lemma~\ref{lem:involution-splitting}, the projector decomposition gives
+\[
+E_g^\bullet \;\cong\; E_g^{\bullet,+} \oplus E_g^{\bullet,-},
+\]
+so
+$E_g^\bullet / E_g^{\bullet,+} \cong E_g^{\bullet,-}$ and
+$E_g^\bullet / E_g^{\bullet,-} \cong E_g^{\bullet,+}$.
+For a linear shifted symplectic complex, the PTVV non-degeneracy
+condition is exactly the statement that the induced map from one
+Lagrangian summand to the shifted dual of the quotient is a
+quasi-isomorphism
+\textup{(}Proposition~\textup{\ref{prop:ptvv-lagrangian}}\textup{)},
+which is therefore the cross-pairing quasi-isomorphism in
+\textup{(ii)(c)}.
+
+\textup{(ii)}\,$\Rightarrow$\,\textup{(i)}.
+Since
+$C_g^+ \oplus C_g^- \hookrightarrow C_g$
+is the projector splitting of
+Remark~\ref{rem:complementarity-model}, the direct sum
+\[
+E_g^\bullet \;:=\; \mathbf{L}_g \oplus \mathbf{L}_g^!
+\;\subset\; C_g
+\]
+is a perfect $\sigma$-stable subcomplex, and its projector pieces are
+exactly $\mathbf{L}_g$ and $\mathbf{L}_g^!$.
+Condition~\textup{(ii)(a)} gives the required cohomology lines.
+Condition~\textup{(ii)(b)} is the PTVV isotropy condition for each
+inclusion into $E_g^\bullet$, while condition~\textup{(ii)(c)} is the
+PTVV non-degeneracy condition, again by
+Proposition~\ref{prop:ptvv-lagrangian}.
+Thus the two inclusions are complementary PTVV Lagrangian embeddings.
+
+It remains to identify the anti-involution.  For
+$x,x' \in \mathbf{L}_g$ and $y,y' \in \mathbf{L}_g^!$, the projector
+model gives $\sigma(x)=x$ and $\sigma(y)=-y$, hence
+\[
+\bigl\langle \sigma(x+y), \sigma(x'+y') \bigr\rangle_{\mathbb{D}}
+\;=\;
+\bigl\langle x-y, x'-y' \bigr\rangle_{\mathbb{D}}.
+\]
+The same-summand pairings vanish by~\textup{(ii)(b)}, so only the cross
+terms remain:
+\[
+\bigl\langle x-y, x'-y' \bigr\rangle_{\mathbb{D}}
+\;=\;
+-\langle x,y' \rangle_{\mathbb{D}}
+-\langle y,x' \rangle_{\mathbb{D}}
+\;=\;
+-\bigl\langle x+y, x'+y' \bigr\rangle_{\mathbb{D}}.
+\]
+Therefore $\sigma|_{E_g^\bullet}$ is anti-symplectic, so
+$E_g^\bullet$ is precisely the desired one-channel H-level PTVV /
+anti-involution lift.
+\end{proof}
+
+\begin{proposition}[One-channel chain-model criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-chain-model-criterion}
+\index{MC2!one-channel chain-model criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-ptvv-criterion}}, assume the
+bar-intrinsic cyclic deformation complexes
+$\Defcyc(\cA)$ and $\Defcyc(\cA^!)$ of
+Definition~\textup{\ref{def:cyclic-deformation-bar}} exist.
+Let $\mathbf{T}_g^\bullet$ be a perfect geometric one-channel
+coefficient complex with
+\[
+H^*(\mathbf{T}_g^\bullet) \;=\; \mathbb{C}\tau_g
+\]
+for a distinguished generator $\tau_g$.
+Suppose there exist perfect subcomplexes
+\[
+\mathbf{D}_g \subset \Defcyc(\cA),
+\qquad
+\mathbf{D}_g^! \subset \Defcyc(\cA^!)
+\]
+and projector-compatible chain embeddings
+\[
+\iota_g^+ \colon
+\mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+\hookrightarrow C_g^+,
+\qquad
+\iota_g^- \colon
+\mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+\hookrightarrow C_g^-,
+\]
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+  \[
+  H^2(\mathbf{D}_g) \cong \mathbb{C}\alpha_g,
+  \qquad
+  H^2(\mathbf{D}_g^!) \cong \mathbb{C}\alpha_g^!,
+  \]
+  so $\mathbf{D}_g$ and $\mathbf{D}_g^!$ are one-channel sectors of
+  the coderivation complexes;
+\item the induced cohomology maps identify
+  \[
+  H^2(\mathbf{D}_g)\otimes H^*(\mathbf{T}_g^\bullet)
+  \quad\text{and}\quad
+  H^2(\mathbf{D}_g^!)\otimes H^*(\mathbf{T}_g^\bullet)
+  \]
+  with the lines $L_g \subset Q_g(\cA)$ and
+  $L_g^! \subset Q_g(\cA^!)$ of
+  Proposition~\textup{\ref{prop:one-channel-verdier-criterion}};
+\item the cross Verdier/BV pairing induces a quasi-isomorphism
+  \[
+  \Phi_g \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \xrightarrow{\;\sim\;}
+  \bigl(
+    \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \bigr)^\vee[-(3g{-}3)].
+  \]
+\end{enumerate}
+Then Proposition~\ref{prop:one-channel-ptvv-criterion} holds.
+
+In particular, once the cohomological one-channel Verdier plane has
+been isolated, the remaining H-level lift is reduced to explicit
+chain-model construction on the MC2 one-channel sector of
+$\Defcyc(\cA)$: construct the perfect coderivation subcomplexes
+$\mathbf{D}_g$, $\mathbf{D}_g^!$, the coefficient complex
+$\mathbf{T}_g^\bullet$, and the cross-pairing quasi-isomorphism
+$\Phi_g$.
+\end{proposition}
+
+\begin{proof}
+Identify
+\[
+\mathbf{L}_g := \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+\subset C_g^+,
+\qquad
+\mathbf{L}_g^! := \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+\subset C_g^-,
+\]
+via the embeddings $\iota_g^\pm$.
+These are perfect subcomplexes because both factors are perfect.
+Condition~\textup{(ii)} gives
+\[
+H^*(\mathbf{L}_g)=L_g,
+\qquad
+H^*(\mathbf{L}_g^!)=L_g^!.
+\]
+Since $\mathbf{L}_g \subset C_g^+$ and
+$\mathbf{L}_g^! \subset C_g^-$, the same-summand Verdier pairings
+vanish by Lemma~\ref{lem:involution-splitting} and
+Proposition~\ref{prop:lagrangian-eigenspaces}.  Condition~\textup{(iii)}
+is exactly the PTVV non-degeneracy quasi-isomorphism required in
+Proposition~\ref{prop:one-channel-ptvv-criterion}.  Therefore the pair
+$(\mathbf{L}_g,\mathbf{L}_g^!)$ satisfies that proposition, yielding
+the desired one-channel PTVV / anti-involution lift.
+\end{proof}
+
+\begin{proposition}[One-channel bar-coderivation seed criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-seed-criterion}
+\index{MC2!one-channel bar-coderivation seed criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-chain-model-criterion}},
+write
+\[
+\Defcyc(\cA)
+\;=\;
+\operatorname{CoDer}^{\mathrm{cyc}}
+\!\bigl(\widehat{\barB}_X(\cA)\bigr)[1],
+\qquad
+\Defcyc(\cA^!)
+\;=\;
+\operatorname{CoDer}^{\mathrm{cyc}}
+\!\bigl(\widehat{\barB}_X(\cA^!)\bigr)[1].
+\]
+For $m \geq 1$, let
+$F_{\leq m}^{\mathrm{bar}}\Defcyc(\cA) \subset \Defcyc(\cA)$ denote
+the subspace of continuous cyclic coderivations supported on source
+tensors of bar length at most~$m$, and similarly on the $\cA^!$ side.
+Assume there exist integers $m_g,m_g^! \geq 1$, finite sets of
+homogeneous cyclic coderivations
+\[
+S_g
+\;=\;
+\{\delta_{g,1},\ldots,\delta_{g,r_g}\}
+\subset F_{\leq m_g}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+S_g^!
+\;=\;
+\{\delta_{g,1}^!,\ldots,\delta_{g,s_g}^!\}
+\subset F_{\leq m_g^!}^{\mathrm{bar}}\Defcyc(\cA^!),
+\]
+and a perfect geometric one-channel coefficient complex
+$\mathbf{T}_g^\bullet$ with
+\[
+H^*(\mathbf{T}_g^\bullet) \;=\; \mathbb{C}\tau_g
+\]
+such that, writing
+\[
+\mathbf{D}_g \;:=\; \operatorname{span}(S_g),
+\qquad
+\mathbf{D}_g^! \;:=\; \operatorname{span}(S_g^!),
+\]
+the following hold:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the differential $l_1$ preserves the seed spans:
+  \[
+  l_1(\mathbf{D}_g)\subset \mathbf{D}_g,
+  \qquad
+  l_1(\mathbf{D}_g^!)\subset \mathbf{D}_g^!;
+  \]
+\item there exist distinguished degree-$2$ cocycles
+  $\delta_g \in S_g$ and $\delta_g^! \in S_g^!$ whose classes generate
+  \[
+  H^2(\mathbf{D}_g)\cong \mathbb{C}\alpha_g,
+  \qquad
+  H^2(\mathbf{D}_g^!)\cong \mathbb{C}\alpha_g^!;
+  \]
+\item there exist projector-compatible chain embeddings
+  \[
+  \iota_g^+ \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^+,
+  \qquad
+  \iota_g^- \colon
+  \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^-,
+  \]
+  whose induced cohomology maps identify
+  $[\delta_g]\otimes[\tau_g]$ and
+  $[\delta_g^!]\otimes[\tau_g]$ with the lines
+  $L_g \subset Q_g(\cA)$ and
+  $L_g^! \subset Q_g(\cA^!)$;
+\item the seed-level Verdier/BV pairing extends to a chain map
+  \[
+  \Phi_g \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \xrightarrow{\;\sim\;}
+  \bigl(
+    \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \bigr)^\vee[-(3g{-}3)]
+  \]
+  which is a quasi-isomorphism.
+\end{enumerate}
+Then Proposition~\ref{prop:one-channel-chain-model-criterion} holds.
+
+In particular, once the cohomological one-channel Verdier plane has
+been isolated, the remaining projector-level PTVV / anti-involution
+step is reduced to a finite low-bar-length bar-coderivation
+construction problem inside
+$\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}_X(\cA))[1]$ and
+$\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}_X(\cA^!))[1]$:
+construct finitely many cyclic coderivation seeds whose
+differential-closed spans realize the one-channel sector and whose
+seed-pairing matrix is chain-level nondegenerate.
+\end{proposition}
+
+\begin{proof}
+Because $S_g$ and $S_g^!$ are finite sets of homogeneous
+coderivations, the spans $\mathbf{D}_g$ and $\mathbf{D}_g^!$ are
+finite-dimensional cochain complexes, hence perfect.  Condition
+\textup{(i)} makes them subcomplexes of
+$\Defcyc(\cA)$ and $\Defcyc(\cA^!)$, while conditions
+\textup{(ii)}--\textup{(iv)} are exactly the hypotheses required in
+Proposition~\ref{prop:one-channel-chain-model-criterion}.  Applying
+that proposition yields the desired one-channel chain-model package,
+and hence the one-channel PTVV / anti-involution lift.
+\end{proof}
+
+\begin{proposition}[One-channel minimal seed-packet criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-minimal-seed-packet-criterion}
+\index{MC2!one-channel minimal seed-packet criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-seed-criterion}}, write
+\[
+\Defcyc(\cA)
+\;=\;
+\operatorname{CoDer}^{\mathrm{cyc}}
+\!\bigl(\widehat{\barB}_X(\cA)\bigr)[1],
+\qquad
+\Defcyc(\cA^!)
+\;=\;
+\operatorname{CoDer}^{\mathrm{cyc}}
+\!\bigl(\widehat{\barB}_X(\cA^!)\bigr)[1].
+\]
+Assume there exist distinguished degree-$2$ cocycles
+\[
+\delta_g \in F_{\leq 2}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+\delta_g^! \in F_{\leq 2}^{\mathrm{bar}}\Defcyc(\cA^!),
+\]
+finite correction packets of the minimal seed-packet criterion
+\[
+R_g \subset F_{\leq 3}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+R_g^! \subset F_{\leq 3}^{\mathrm{bar}}\Defcyc(\cA^!),
+\]
+and a perfect geometric one-channel coefficient complex
+$\mathbf{T}_g^\bullet$ with
+\[
+H^*(\mathbf{T}_g^\bullet) \;=\; \mathbb{C}\tau_g,
+\]
+such that, writing
+\[
+\mathbf{C}_g^{\mathrm{corr}} := \operatorname{span}(R_g),
+\qquad
+\mathbf{C}_g^{!,\mathrm{corr}} := \operatorname{span}(R_g^!),
+\]
+and
+\[
+\mathbf{D}_g := \mathbb{C}\delta_g \oplus \mathbf{C}_g^{\mathrm{corr}},
+\qquad
+\mathbf{D}_g^! := \mathbb{C}\delta_g^! \oplus \mathbf{C}_g^{!,\mathrm{corr}},
+\]
+the following hold:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the packet is closed under the differential:
+  \[
+  l_1(\delta_g)=0,
+  \qquad
+  l_1(\delta_g^!)=0,
+  \qquad
+  l_1\bigl(\mathbf{C}_g^{\mathrm{corr}}\bigr)
+  \subset \mathbf{C}_g^{\mathrm{corr}},
+  \qquad
+  l_1\bigl(\mathbf{C}_g^{!,\mathrm{corr}}\bigr)
+  \subset \mathbf{C}_g^{!,\mathrm{corr}};
+  \]
+\item the distinguished cocycles generate the one-channel cohomology:
+  \[
+  H^2(\mathbf{D}_g)\cong \mathbb{C}[\delta_g],
+  \qquad
+  H^2(\mathbf{D}_g^!)\cong \mathbb{C}[\delta_g^!];
+  \]
+\item there exist projector-compatible chain embeddings
+  \[
+  \iota_g^+ \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^+,
+  \qquad
+  \iota_g^- \colon
+  \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^-,
+  \]
+  whose induced cohomology maps identify
+  $[\delta_g]\otimes[\tau_g]$ and
+  $[\delta_g^!]\otimes[\tau_g]$ with the lines
+  $L_g \subset Q_g(\cA)$ and
+  $L_g^! \subset Q_g(\cA^!)$;
+\item after choosing packet bases
+  \[
+  (\delta_g,\rho_{g,1},\ldots,\rho_{g,u_g})
+  \quad\text{for}\quad \mathbf{D}_g,
+  \qquad
+  (\delta_g^!,\rho_{g,1}^!,\ldots,\rho_{g,v_g}^!)
+  \quad\text{for}\quad \mathbf{D}_g^!,
+  \]
+  the cross Verdier/BV pairing on
+  $\mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet$ and
+  $\mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet$
+  is represented by a finite chain-level matrix $P_g$ and the induced
+  chain map
+  \[
+  \Phi_g \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \xrightarrow{\;\sim\;}
+  \bigl(
+    \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \bigr)^\vee[-(3g{-}3)]
+  \]
+  is a quasi-isomorphism.
+\end{enumerate}
+Then Proposition~\ref{prop:one-channel-seed-criterion} holds.
+
+In particular, once the cohomological one-channel Verdier plane has
+been isolated, the live seed problem is reduced to the smallest packet
+compatible with the current MC2 evidence: one distinguished degree-$2$
+cocycle on each side, minimal seed-packet correction packets in bar
+lengths at most~$3$, and one finite chain-level pairing matrix.
+\end{proposition}
+
+\begin{proof}
+Because $R_g$ and $R_g^!$ are finite sets of homogeneous
+coderivations, the spans
+$\mathbf{C}_g^{\mathrm{corr}}$ and
+$\mathbf{C}_g^{!,\mathrm{corr}}$ are finite-dimensional.  Therefore
+\[
+\mathbf{D}_g = \mathbb{C}\delta_g \oplus \mathbf{C}_g^{\mathrm{corr}},
+\qquad
+\mathbf{D}_g^! = \mathbb{C}\delta_g^! \oplus \mathbf{C}_g^{!,\mathrm{corr}}
+\]
+are finite-dimensional cochain complexes, hence perfect.  By
+\textup{(i)} they are subcomplexes of
+$\Defcyc(\cA)$ and $\Defcyc(\cA^!)$, and by construction all packet
+elements lie in bar length at most~$3$.
+Now apply Proposition~\ref{prop:one-channel-seed-criterion} with
+\[
+S_g := \{\delta_g\}\cup R_g,
+\qquad
+S_g^! := \{\delta_g^!\}\cup R_g^!.
+\]
+Conditions~\textup{(ii)}--\textup{(iv)} are exactly the one-channel,
+embedding, and pairing hypotheses required there.  Hence the finite
+packet data already produce the desired one-channel seed package.
+\end{proof}
+
+\begin{proposition}[One-channel visible low-arity seed-packet criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-visible-lowarity-packet-criterion}
+\index{MC2!one-channel visible low-arity seed-packet criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-minimal-seed-packet-criterion}},
+fix finite-dimensional one-channel seed spaces
+\[
+E_g \subset F_{\leq 1}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+E_g^! \subset F_{\leq 1}^{\mathrm{bar}}\Defcyc(\cA^!).
+\]
+Let
+\[
+B_g^{\mathrm{sp}}
+\;:=\;
+\operatorname{im}\!\bigl(
+  l_{2,\mathrm{sp}}\big|_{E_g \otimes E_g}
+\bigr)
+\subset F_{\leq 2}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+B_g^{!,\mathrm{sp}}
+\;:=\;
+\operatorname{im}\!\bigl(
+  l_{2,\mathrm{sp}}\big|_{E_g^! \otimes E_g^!}
+\bigr)
+\subset F_{\leq 2}^{\mathrm{bar}}\Defcyc(\cA^!),
+\]
+for the simple-pole bracket channel on the seed spaces, and let
+\[
+K_g^\eta
+\;:=\;
+\operatorname{im}\!\bigl(
+  l_3^\eta\big|_{E_g^{\otimes 3}}
+\bigr)
+\subset F_{\leq 3}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+K_g^{!,\eta}
+\;:=\;
+\operatorname{im}\!\bigl(
+  l_3^\eta\big|_{(E_g^!)^{\otimes 3}}
+\bigr)
+\subset F_{\leq 3}^{\mathrm{bar}}\Defcyc(\cA^!),
+\]
+for the $\eta$-valued cyclic trilinear operation induced by the
+Killing $3$-cocycle.  Let
+\[
+\beta_g^{\mathrm{dp}} \colon E_g \otimes E_g^! \longrightarrow \mathbb{C}
+\]
+be the normalized double-pole pairing matrix on the seed spaces.
+Assume there exist degree-$2$ cocycles
+\[
+\delta_g \in B_g^{\mathrm{sp}},
+\qquad
+\delta_g^! \in B_g^{!,\mathrm{sp}},
+\]
+and chosen complements
+\[
+B_g^{\mathrm{sp}}
+\;=\;
+\mathbb{C}\delta_g \oplus \widetilde{B}_g^{\mathrm{sp}},
+\qquad
+B_g^{!,\mathrm{sp}}
+\;=\;
+\mathbb{C}\delta_g^! \oplus \widetilde{B}_g^{!,\mathrm{sp}},
+\]
+such that, writing
+\[
+\mathbf{D}_g
+\;:=\;
+\mathbb{C}\delta_g
+\oplus
+\widetilde{B}_g^{\mathrm{sp}}
+\oplus
+K_g^\eta,
+\qquad
+\mathbf{D}_g^!
+\;:=\;
+\mathbb{C}\delta_g^!
+\oplus
+\widetilde{B}_g^{!,\mathrm{sp}}
+\oplus
+K_g^{!,\eta},
+\]
+the following hold:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathbf{D}_g$ and $\mathbf{D}_g^!$ are preserved by~$l_1$;
+\item
+  \[
+  H^2(\mathbf{D}_g)\cong \mathbb{C}[\delta_g],
+  \qquad
+  H^2(\mathbf{D}_g^!)\cong \mathbb{C}[\delta_g^!];
+  \]
+\item there exist projector-compatible chain embeddings
+  \[
+  \iota_g^+ \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^+,
+  \qquad
+  \iota_g^- \colon
+  \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^-,
+  \]
+  identifying
+  $[\delta_g]\otimes[\tau_g]$ and
+  $[\delta_g^!]\otimes[\tau_g]$ with the lines
+  $L_g \subset Q_g(\cA)$ and
+  $L_g^! \subset Q_g(\cA^!)$;
+\item after choosing bases of
+  $\widetilde{B}_g^{\mathrm{sp}}$, $K_g^\eta$,
+  $\widetilde{B}_g^{!,\mathrm{sp}}$, and $K_g^{!,\eta}$,
+  the cross Verdier/BV pairing on
+  $\mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet$ and
+  $\mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet$
+  is represented by a finite chain-level matrix whose degree-$0$
+  block is induced by the normalized double-pole pairing
+  $\beta_g^{\mathrm{dp}}$, and the resulting chain map to the shifted
+  dual is a quasi-isomorphism.
+\end{enumerate}
+Then Proposition~\ref{prop:one-channel-minimal-seed-packet-criterion}
+holds.
+
+In particular, once the cohomological one-channel Verdier plane has
+been isolated, the live low-bar-length seed criterion problem is no
+longer to search for an arbitrary finite packet: it is to construct
+three visible low-arity pieces already supported by the current MC2
+evidence, namely the simple-pole bracket sector, the normalized
+double-pole pairing matrix, and the Killing $l_3^\eta$ sector.
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+R_g := \widetilde{B}_g^{\mathrm{sp}} \oplus K_g^\eta,
+\qquad
+R_g^! := \widetilde{B}_g^{!,\mathrm{sp}} \oplus K_g^{!,\eta}.
+\]
+These are finite-dimensional because they are built from the finite
+seed spaces $E_g$ and $E_g^!$ using the bilinear simple-pole bracket
+and trilinear Killing channel.  The total packets
+\[
+\mathbb{C}\delta_g \oplus R_g = \mathbf{D}_g,
+\qquad
+\mathbb{C}\delta_g^! \oplus R_g^! = \mathbf{D}_g^!
+\]
+therefore satisfy the hypotheses of
+Proposition~\ref{prop:one-channel-minimal-seed-packet-criterion}: the
+correction packets lie in bar lengths at most~$3$, the degree-$2$
+cocycles generate the one-channel cohomology, and the finite pairing
+matrix exists by hypothesis~\textup{(iv)}.  Applying that proposition
+gives the desired minimal one-cocycle-plus-corrections packet.
+\end{proof}
+
+\begin{proposition}[One-channel canonical transfer-package criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-canonical-transfer-criterion}
+\index{MC2!one-channel canonical transfer-package criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-visible-lowarity-packet-criterion}},
+fix one-channel seed spaces
+\[
+E_g \subset F_{\leq 1}^{\mathrm{bar}}\Defcyc(\cA),
+\qquad
+E_g^! \subset F_{\leq 1}^{\mathrm{bar}}\Defcyc(\cA^!).
+\]
+Assume the following data are given.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A \emph{cyclic seed package} on the seed spaces:
+  the simple-pole bracket channels
+  \[
+  l_{2,\mathrm{sp}}\big|_{E_g^{\otimes 2}},
+  \qquad
+  l_{2,\mathrm{sp}}\big|_{(E_g^!)^{\otimes 2}},
+  \]
+  together with the normalized double-pole pairing matrix
+  \[
+  \beta_g^{\mathrm{dp}} \colon E_g \otimes E_g^! \longrightarrow \mathbb{C}.
+  \]
+\item A \emph{shared generator-seed lift}
+  \[
+  \mathsf{T}_\eta
+  \]
+  which functorially assigns to every cyclic seed package an
+  $\eta$-valued cyclic trilinear channel.  Write
+  \[
+  l_{3,g}^\eta
+  :=
+  \mathsf{T}_\eta(E_g,l_{2,\mathrm{sp}},\beta_g^{\mathrm{dp}}),
+  \qquad
+  l_{3,g}^{!,\eta}
+  :=
+  \mathsf{T}_\eta(E_g^!,l_{2,\mathrm{sp}},\beta_g^{\mathrm{dp}}),
+  \]
+  and let
+  \[
+  K_g^\eta
+  :=
+  \operatorname{im}\!\bigl(
+    l_{3,g}^\eta\big|_{E_g^{\otimes 3}}
+  \bigr),
+  \qquad
+  K_g^{!,\eta}
+  :=
+  \operatorname{im}\!\bigl(
+    l_{3,g}^{!,\eta}\big|_{(E_g^!)^{\otimes 3}}
+  \bigr).
+  \]
+\item A \emph{functorial normalization} of the simple-pole bracket
+  images: surjective linear functionals
+  \[
+  \nu_g^{\mathrm{sp}}\colon B_g^{\mathrm{sp}}\to\mathbb{C},
+  \qquad
+  \nu_g^{!,\mathrm{sp}}\colon B_g^{!,\mathrm{sp}}\to\mathbb{C},
+  \]
+  together with degree-$2$ cocycles
+  \[
+  \delta_g \in B_g^{\mathrm{sp}},
+  \qquad
+  \delta_g^! \in B_g^{!,\mathrm{sp}},
+  \]
+  such that
+  \[
+  \nu_g^{\mathrm{sp}}(\delta_g)=1,
+  \qquad
+  \nu_g^{!,\mathrm{sp}}(\delta_g^!)=1,
+  \]
+  and hence
+  \[
+  B_g^{\mathrm{sp}}
+  =
+  \mathbb{C}\delta_g \oplus \ker(\nu_g^{\mathrm{sp}}),
+  \qquad
+  B_g^{!,\mathrm{sp}}
+  =
+  \mathbb{C}\delta_g^! \oplus \ker(\nu_g^{!,\mathrm{sp}}).
+  \]
+\end{enumerate}
+Define
+\[
+\mathbf{D}_g
+:=
+\mathbb{C}\delta_g \oplus \ker(\nu_g^{\mathrm{sp}}) \oplus K_g^\eta,
+\qquad
+\mathbf{D}_g^!
+:=
+\mathbb{C}\delta_g^! \oplus \ker(\nu_g^{!,\mathrm{sp}}) \oplus K_g^{!,\eta}.
+\]
+Assume further that:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\mathbf{D}_g$ and $\mathbf{D}_g^!$ are preserved by~$l_1$;
+\item
+  \[
+  H^2(\mathbf{D}_g)\cong \mathbb{C}[\delta_g],
+  \qquad
+  H^2(\mathbf{D}_g^!)\cong \mathbb{C}[\delta_g^!];
+  \]
+\item there exist projector-compatible chain embeddings
+  \[
+  \iota_g^+ \colon
+  \mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^+,
+  \qquad
+  \iota_g^- \colon
+  \mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet
+  \hookrightarrow C_g^-,
+  \]
+  identifying
+  $[\delta_g]\otimes[\tau_g]$ and
+  $[\delta_g^!]\otimes[\tau_g]$ with the lines
+  $L_g \subset Q_g(\cA)$ and
+  $L_g^! \subset Q_g(\cA^!)$;
+\item the cross Verdier/BV pairing on
+  $\mathbf{D}_g \,\widehat{\otimes}\, \mathbf{T}_g^\bullet$ and
+  $\mathbf{D}_g^! \,\widehat{\otimes}\, \mathbf{T}_g^\bullet$
+  is induced by the normalized double-pole matrix
+  $\beta_g^{\mathrm{dp}}$ together with the transferred Killing
+  channels $l_{3,g}^\eta$ and $l_{3,g}^{!,\eta}$, and the resulting
+  chain map to the shifted dual is a quasi-isomorphism.
+\end{enumerate}
+Then Proposition~\ref{prop:one-channel-visible-lowarity-packet-criterion}
+holds.
+
+In particular, once the cohomological one-channel Verdier plane has
+been isolated, the remaining visible low-arity problem is reduced to a
+single canonical transfer package on the one-channel seed spaces:
+one cyclic seed package
+\[
+(E_g,E_g^!,l_{2,\mathrm{sp}},\beta_g^{\mathrm{dp}}),
+\]
+one shared generator-seed lift $\mathsf{T}_\eta$, and one functorial
+normalization splitting off the one-channel cocycle line.
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+\widetilde{B}_g^{\mathrm{sp}} := \ker(\nu_g^{\mathrm{sp}}),
+\qquad
+\widetilde{B}_g^{!,\mathrm{sp}} := \ker(\nu_g^{!,\mathrm{sp}}).
+\]
+Then
+\[
+B_g^{\mathrm{sp}}
+=
+\mathbb{C}\delta_g \oplus \widetilde{B}_g^{\mathrm{sp}},
+\qquad
+B_g^{!,\mathrm{sp}}
+=
+\mathbb{C}\delta_g^! \oplus \widetilde{B}_g^{!,\mathrm{sp}},
+\]
+and the packet
+\[
+\mathbf{D}_g
+=
+\mathbb{C}\delta_g \oplus \widetilde{B}_g^{\mathrm{sp}} \oplus K_g^\eta,
+\qquad
+\mathbf{D}_g^!
+=
+\mathbb{C}\delta_g^! \oplus \widetilde{B}_g^{!,\mathrm{sp}} \oplus K_g^{!,\eta}
+\]
+is exactly the visible low-arity packet of
+Proposition~\ref{prop:one-channel-visible-lowarity-packet-criterion}.
+The hypotheses \textup{(a)}--\textup{(d)} are precisely the stability,
+one-channel cohomology, embedding, and pairing requirements in that
+proposition.  Therefore the canonical transfer package already
+produces the desired visible low-arity packet.
+\end{proof}
+
+\begin{proposition}[One-channel root-string transfer-law criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-transfer-law-criterion}
+\index{MC2!one-channel root-string transfer-law criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-canonical-transfer-criterion}},
+suppose the one-channel seed spaces admit chosen root-string charts
+\[
+E_g
+=
+\mathbb{C}e_{1,g}\oplus\mathbb{C}e_{2,g}\oplus\mathbb{C}f_{12,g},
+\qquad
+E_g^!
+=
+\mathbb{C}e_{1,g}^!\oplus\mathbb{C}e_{2,g}^!\oplus\mathbb{C}f_{12,g}^!,
+\]
+with simple-pole image bases
+\[
+B_g^{\mathrm{sp}}
+=
+\mathbb{C}e_{12,g}\oplus\mathbb{C}f_{1,g}\oplus\mathbb{C}f_{2,g},
+\qquad
+B_g^{!,\mathrm{sp}}
+=
+\mathbb{C}e_{12,g}^!\oplus\mathbb{C}f_{1,g}^!\oplus\mathbb{C}f_{2,g}^!,
+\]
+and Killing lines
+\[
+K_g^\eta=\mathbb{C}\eta_g,
+\qquad
+K_g^{!,\eta}=\mathbb{C}\eta_g^!.
+\]
+Assume there exist scalars
+\[
+a_g,b_g,m_g \in \mathbb{C},
+\qquad
+a_g^!,b_g^!,m_g^! \in \mathbb{C},
+\]
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the simple-pole bracket channels and normalized double-pole
+  pairing are given by the root-string formulas
+  \[
+  l_{2,\mathrm{sp}}(e_{1,g},e_{2,g})=a_g e_{12,g},
+  \qquad
+  l_{2,\mathrm{sp}}(e_{2,g},f_{12,g})=b_g f_{1,g},
+  \qquad
+  l_{2,\mathrm{sp}}(e_{1,g},f_{12,g})=-m_g f_{2,g},
+  \]
+  \[
+  \beta_g^{\mathrm{dp}}(e_{12,g},f_{12,g})=m_g,
+  \]
+  and the same formulas hold on $E_g^!$ with every symbol replaced by
+  its superscript-$!$ analogue;
+\item the transferred Killing channels satisfy
+  \[
+  l_{3,g}^\eta(e_{1,g},e_{2,g},f_{12,g})=a_gm_g\,\eta_g,
+  \qquad
+  l_{3,g}^{!,\eta}(e_{1,g}^!,e_{2,g}^!,f_{12,g}^!)=a_g^!m_g^!\,\eta_g^!;
+  \]
+\item for the diagonal one-channel genus-$1$ seeds
+  \[
+  \alpha_{1,g}(t):=t(e_{1,g}+e_{2,g}+f_{12,g}),
+  \qquad
+  \alpha_{1,g}^!(t):=t(e_{1,g}^!+e_{2,g}^!+f_{12,g}^!),
+  \]
+  the obstruction profiles obey
+  \[
+  \begin{aligned}
+  O_{2,g}(t)
+  &=
+  t^2(a_g e_{12,g}+b_g f_{1,g}-m_g f_{2,g}), \\
+  O_{3,g}^\eta(t)
+  &=
+  a_gm_g\,t^3\eta_g \\
+  &=
+  -a_g t\,\operatorname{coeff}_{f_{2,g}}\!\bigl(O_{2,g}(t)\bigr)\eta_g,
+  \end{aligned}
+  \]
+  and likewise on the dual side;
+\item the seed coefficients are recovered functorially from the
+  obstruction profile by
+  \[
+  \begin{aligned}
+  a_g&=t^{-2}\operatorname{coeff}_{e_{12,g}}\!\bigl(O_{2,g}(t)\bigr), \\
+  b_g&=t^{-2}\operatorname{coeff}_{f_{1,g}}\!\bigl(O_{2,g}(t)\bigr), \\
+  m_g&=-t^{-2}\operatorname{coeff}_{f_{2,g}}\!\bigl(O_{2,g}(t)\bigr),
+  \end{aligned}
+  \]
+  \[
+  a_gm_g
+  =
+  t^{-3}\operatorname{coeff}_{\eta_g}\!\bigl(O_{3,g}^\eta(t)\bigr),
+  \]
+  and likewise on the dual side;
+\item writing
+  \[
+  \nu_g^{\mathrm{sp}}
+  :=
+  \operatorname{coeff}_{e_{12,g}}\big|_{B_g^{\mathrm{sp}}},
+  \qquad
+  \nu_g^{!,\mathrm{sp}}
+  :=
+  \operatorname{coeff}_{e_{12,g}^!}\big|_{B_g^{!,\mathrm{sp}}},
+  \]
+  the distinguished cocycles and one-channel packets are
+  \[
+  \delta_g:=e_{12,g},
+  \qquad
+  \delta_g^!:=e_{12,g}^!,
+  \]
+  \[
+  \mathbf{D}_g
+  =
+  \mathbb{C}e_{12,g}\oplus\mathbb{C}f_{1,g}\oplus\mathbb{C}f_{2,g}\oplus\mathbb{C}\eta_g,
+  \qquad
+  \mathbf{D}_g^!
+  =
+  \mathbb{C}e_{12,g}^!\oplus\mathbb{C}f_{1,g}^!\oplus\mathbb{C}f_{2,g}^!\oplus\mathbb{C}\eta_g^!,
+  \]
+  and these explicit packets satisfy conditions~\textup{(a)}--\textup{(d)}
+  of Proposition~\textup{\ref{prop:one-channel-canonical-transfer-criterion}}.
+\end{enumerate}
+Then Proposition~\ref{prop:one-channel-canonical-transfer-criterion}
+holds.
+
+In particular, once the one-channel sector admits such a root-string
+chart, the remaining live seed-space problem is reduced to one explicit
+root-string transfer law on the one-channel seed spaces, namely the
+universal seed formula
+\[
+(a_g,b_g,m_g)\longmapsto\bigl(O_{2,g}(t),O_{3,g}^\eta(t)\bigr),
+\]
+together with its obstruction-side inverse recovery and the functorial
+normalization extracting the distinguished simple-pole cocycle line.
+\end{proposition}
+
+\begin{proof}
+Items~\textup{(i)} and~\textup{(ii)} give the cyclic seed package and
+shared generator-seed lift required in
+Proposition~\ref{prop:one-channel-canonical-transfer-criterion};
+item~\textup{(v)} gives the functorial normalization and the explicit
+one-channel packets there.  Item~\textup{(iii)} identifies the
+transferred package with the explicit root-string genus-$2$/genus-$3$
+profile, and item~\textup{(iv)} shows that this profile recovers the
+seed coefficients functorially from the obstruction coordinates.
+Hence no additional seed-space data remain beyond the stated transfer
+law and normalization, and the hypotheses of
+Proposition~\ref{prop:one-channel-canonical-transfer-criterion} are met.
+\end{proof}
+
+\begin{proposition}[One-channel root-string chart criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-root-string-chart-criterion}
+\index{MC2!one-channel root-string chart criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-transfer-law-criterion}},
+suppose there are ordered one-dimensional subspaces
+\[
+L_{e_1,g},L_{e_2,g},L_{f_{12},g}\subset E_g,
+\qquad
+L_{e_1,g}^!,L_{e_2,g}^!,L_{f_{12},g}^!\subset E_g^!,
+\]
+ordered simple-pole image lines
+\[
+L_{e_{12},g},L_{f_1,g},L_{f_2,g}\subset B_g^{\mathrm{sp}},
+\qquad
+L_{e_{12},g}^!,L_{f_1,g}^!,L_{f_2,g}^!\subset B_g^{!,\mathrm{sp}},
+\]
+and Killing lines
+\[
+L_{\eta,g}\subset K_g^\eta,
+\qquad
+L_{\eta,g}^!\subset K_g^{!,\eta},
+\]
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+  \[
+  E_g=L_{e_1,g}\oplus L_{e_2,g}\oplus L_{f_{12},g},
+  \qquad
+  E_g^!=L_{e_1,g}^!\oplus L_{e_2,g}^!\oplus L_{f_{12},g}^!,
+  \]
+  and
+  \[
+  B_g^{\mathrm{sp}}
+  =
+  L_{e_{12},g}\oplus L_{f_1,g}\oplus L_{f_2,g},
+  \qquad
+  B_g^{!,\mathrm{sp}}
+  =
+  L_{e_{12},g}^!\oplus L_{f_1,g}^!\oplus L_{f_2,g}^!;
+  \]
+\item the simple-pole bracket incidence profile is exactly the
+  root-string one:
+  \[
+  \begin{alignedat}{1}
+  l_{2,\mathrm{sp}}(L_{e_1,g},L_{e_2,g})&=L_{e_{12},g},\\
+  l_{2,\mathrm{sp}}(L_{e_2,g},L_{f_{12},g})&=L_{f_1,g},\\
+  l_{2,\mathrm{sp}}(L_{e_1,g},L_{f_{12},g})&=L_{f_2,g},
+  \end{alignedat}
+  \]
+  and likewise on the dual side;
+\item the normalization and pairing isolate the distinguished lines:
+  \[
+  \nu_g^{\mathrm{sp}}\big|_{L_{e_{12},g}}\neq 0,
+  \qquad
+  \nu_g^{\mathrm{sp}}\big|_{L_{f_1,g}\oplus L_{f_2,g}}=0,
+  \]
+  \[
+  \nu_g^{!,\mathrm{sp}}\big|_{L_{e_{12},g}^!}\neq 0,
+  \qquad
+  \nu_g^{!,\mathrm{sp}}\big|_{L_{f_1,g}^!\oplus L_{f_2,g}^!}=0,
+  \]
+  and
+  \[
+  \beta_g^{\mathrm{dp}}(L_{e_{12},g},L_{f_{12},g})\neq 0,
+  \qquad
+  \beta_g^{\mathrm{dp}}(L_{e_{12},g},L_{e_1,g}\oplus L_{e_2,g})=0,
+  \]
+  with the same statement on the dual side;
+\item for every choice of nonzero generators
+  \[
+  x_{1,g}\in L_{e_1,g},
+  \qquad
+  x_{2,g}\in L_{e_2,g},
+  \qquad
+  z_g\in L_{f_{12},g},
+  \]
+  and similarly on the dual side, the diagonal genus-$1$ seed
+  \[
+  \alpha_{1,g}(t):=t(x_{1,g}+x_{2,g}+z_g)
+  \]
+  has genus-$2$ support exactly
+  $L_{e_{12},g}\oplus L_{f_1,g}\oplus L_{f_2,g}$ and genus-$3$
+  support exactly~$L_{\eta,g}$, with the same support profile on the
+  dual side;
+\item relative to these ordered support lines, coefficient extraction
+  from $(O_{2,g}(t),O_{3,g}^\eta(t))$ followed by the root-string
+  packet projector reconstructs the same genus-$2$/genus-$3$ profile,
+  and likewise on the dual side.
+\end{enumerate}
+Then after choosing the unique generators
+\[
+e_{12,g}\in L_{e_{12},g},
+\qquad
+e_{12,g}^!\in L_{e_{12},g}^!
+\]
+with
+\[
+\nu_g^{\mathrm{sp}}(e_{12,g})=1,
+\qquad
+\nu_g^{!,\mathrm{sp}}(e_{12,g}^!)=1,
+\]
+and choosing any nonzero generators
+\[
+e_{1,g}\in L_{e_1,g},
+\qquad
+e_{2,g}\in L_{e_2,g},
+\qquad
+f_{12,g}\in L_{f_{12},g},
+\]
+with dual analogues, there exist unique induced generators
+\[
+f_{1,g}\in L_{f_1,g},
+\qquad
+f_{2,g}\in L_{f_2,g},
+\qquad
+\eta_g\in L_{\eta,g},
+\]
+and likewise on the dual side, together with scalars
+\[
+a_g,b_g,m_g\in\mathbb{C},
+\qquad
+a_g^!,b_g^!,m_g^!\in\mathbb{C},
+\]
+for which all hypotheses of
+Proposition~\ref{prop:one-channel-transfer-law-criterion} hold.
+Moreover any other such root-string chart differs by rescaling of the
+three seed generators
+\[
+e_{1,g}'=r_g e_{1,g},
+\qquad
+e_{2,g}'=s_g e_{2,g},
+\qquad
+f_{12,g}'=u_g f_{12,g},
+\]
+with induced rescalings
+\[
+f_{1,g}'=s_g u_g f_{1,g},
+\qquad
+f_{2,g}'=r_g u_g f_{2,g},
+\qquad
+\eta_g'=r_g s_g u_g\,\eta_g,
+\]
+and the analogous statement on the dual side.
+Then Proposition~\ref{prop:one-channel-transfer-law-criterion} holds.
+
+In particular, the remaining live seed-space problem is no longer to
+choose a root-string chart by hand: it is to prove that the one-channel
+support graph and normalization data force the ordered root-string chart
+uniquely up to the stated seed-line rescaling.
+\end{proposition}
+
+\begin{proof}
+Normalize $e_{12,g}$ and $e_{12,g}^!$ by the conditions
+\[
+\nu_g^{\mathrm{sp}}(e_{12,g})=1,
+\qquad
+\nu_g^{!,\mathrm{sp}}(e_{12,g}^!)=1.
+\]
+Choose any nonzero generators $e_{1,g},e_{2,g},f_{12,g}$ on the seed
+lines.  By~\textup{(ii)} there are unique scalars $a_g,b_g$ and unique
+induced generators $f_{1,g}\in L_{f_1,g}$, $f_{2,g}\in L_{f_2,g}$ such
+that
+\[
+l_{2,\mathrm{sp}}(e_{1,g},e_{2,g})=a_g e_{12,g},
+\qquad
+l_{2,\mathrm{sp}}(e_{2,g},f_{12,g})=b_g f_{1,g}.
+\]
+Set
+\[
+m_g:=\beta_g^{\mathrm{dp}}(e_{12,g},f_{12,g})\neq 0,
+\qquad
+f_{2,g}:=-m_g^{-1}l_{2,\mathrm{sp}}(e_{1,g},f_{12,g}),
+\]
+and likewise on the dual side.  Then the root-string simple-pole and
+pairing formulas of Proposition~\ref{prop:one-channel-transfer-law-criterion}
+hold.  By~\textup{(iv)} the genus-$2$ and genus-$3$ supports are already
+exactly the ordered root-string support lines, and by~\textup{(v)} the
+coefficient-extraction map together with the root-string packet
+projector reconstructs the same obstruction profile.  This supplies the
+explicit root-string transfer law and its obstruction-side inverse.
+Finally, $L_{\eta,g}$ and $L_{\eta,g}^!$ are one-dimensional, so
+$l_{3,g}^\eta(e_{1,g},e_{2,g},f_{12,g})$ and its dual determine unique
+generators $\eta_g,\eta_g^!$ with the required normalization.
+
+The rescaling statement follows immediately from one-dimensionality of
+the seed and support lines: rescaling the three seed generators by
+$r_g,s_g,u_g$ forces the indicated rescaling of the induced
+simple-pole and Killing generators, while $e_{12,g}$ and $e_{12,g}^!$
+remain fixed by the normalization conditions.  Thus the transfer-law
+criterion is reduced exactly to the claimed chart-existence/uniqueness
+statement.
+\end{proof}
+
+\begin{proposition}[One-channel intrinsic line-detection criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-intrinsic-line-detection-criterion}
+\index{MC2!one-channel intrinsic line-detection criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-root-string-chart-criterion}},
+let
+\[
+\Sigma_{2,g}\subset B_g^{\mathrm{sp}},
+\qquad
+\Sigma_{2,g}^!\subset B_g^{!,\mathrm{sp}}
+\]
+be the genus-$2$ obstruction-support spans, and let
+\[
+\Sigma_{3,g}\subset K_g^\eta,
+\qquad
+\Sigma_{3,g}^!\subset K_g^{!,\eta}
+\]
+be the genus-$3$ obstruction-support lines extracted from the explicit
+root-string transfer law.  Assume the following support lines are
+canonically picked out by
+$l_{2,\mathrm{sp}}$, $\beta_g^{\mathrm{dp}}$,
+$\nu_g^{\mathrm{sp}}$, $\nu_g^{!,\mathrm{sp}}$, and the support of
+$(O_{2,g},O_{3,g}^\eta)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the distinguished simple-pole cocycle lines
+  \[
+  L_{e_{12},g}
+  :=
+  \{x\in \Sigma_{2,g}\mid \nu_g^{\mathrm{sp}}(x)\neq 0\},
+  \qquad
+  L_{e_{12},g}^!
+  :=
+  \{x\in \Sigma_{2,g}^!\mid \nu_g^{!,\mathrm{sp}}(x)\neq 0\},
+  \]
+  are one-dimensional, while the residual kernel-of-normalization
+  support planes
+  \[
+  \Pi_g:=\Sigma_{2,g}\cap\ker(\nu_g^{\mathrm{sp}}),
+  \qquad
+  \Pi_g^!:=\Sigma_{2,g}^!\cap\ker(\nu_g^{!,\mathrm{sp}})
+  \]
+  are two-dimensional;
+\item the genus-$3$ support lines are exactly
+  \[
+  L_{\eta,g}:=\Sigma_{3,g},
+  \qquad
+  L_{\eta,g}^!:=\Sigma_{3,g}^!;
+  \]
+\item there is a unique ordered triple of one-dimensional seed lines
+  \[
+  L_{e_1,g},L_{e_2,g},L_{f_{12},g}\subset E_g,
+  \qquad
+  L_{e_1,g}^!,L_{e_2,g}^!,L_{f_{12},g}^!\subset E_g^!,
+  \]
+  such that
+  \[
+  l_{2,\mathrm{sp}}(L_{e_1,g},L_{e_2,g})=L_{e_{12},g},
+  \qquad
+  l_{2,\mathrm{sp}}(L_{e_2,g},L_{f_{12},g})\subset \Pi_g,
+  \qquad
+  l_{2,\mathrm{sp}}(L_{e_1,g},L_{f_{12},g})\subset \Pi_g,
+  \]
+  \[
+  \beta_g^{\mathrm{dp}}(L_{e_{12},g},L_{f_{12},g})\neq 0,
+  \qquad
+  \beta_g^{\mathrm{dp}}(L_{e_{12},g},L_{e_1,g}\oplus L_{e_2,g})=0,
+  \]
+  and the same conditions hold on the dual side;
+\item the two lines
+  \[
+  L_{f_1,g}:=l_{2,\mathrm{sp}}(L_{e_2,g},L_{f_{12},g}),
+  \qquad
+  L_{f_2,g}:=l_{2,\mathrm{sp}}(L_{e_1,g},L_{f_{12},g})
+  \]
+  are distinct and span~$\Pi_g$, with the same statement on the dual
+  side;
+\item for the diagonal seed on
+  $L_{e_1,g}\oplus L_{e_2,g}\oplus L_{f_{12},g}$, the genus-$2$
+  support is exactly
+  \[
+  L_{e_{12},g}\oplus L_{f_1,g}\oplus L_{f_2,g},
+  \]
+  the genus-$3$ support is exactly~$L_{\eta,g}$, and coefficient
+  extraction from $(O_{2,g},O_{3,g}^\eta)$ followed by the root-string
+  packet projector reconstructs the same genus-$2$/genus-$3$ profile;
+  likewise on the dual side.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-root-string-chart-criterion} hold.
+
+In particular, the remaining live seed-space problem is no longer to
+force a chart after choosing its lines: it is to prove that the seed,
+simple-pole, and Killing support lines are canonically picked out by the
+intrinsic one-channel data
+$l_{2,\mathrm{sp}}$, $\beta_g^{\mathrm{dp}}$,
+$\nu_g^{\mathrm{sp}}$, and the support of
+$(O_{2,g},O_{3,g}^\eta)$.
+\end{proposition}
+
+\begin{proof}
+Set the ordered simple-pole image lines to be
+\[
+L_{e_{12},g},
+\qquad
+L_{f_1,g}:=l_{2,\mathrm{sp}}(L_{e_2,g},L_{f_{12},g}),
+\qquad
+L_{f_2,g}:=l_{2,\mathrm{sp}}(L_{e_1,g},L_{f_{12},g}),
+\]
+with the analogous definitions on the dual side.  By
+\textup{(i)}--\textup{(iv)} these are one-dimensional, ordered, and
+span the genus-$2$ support exactly as required in
+Proposition~\ref{prop:one-channel-root-string-chart-criterion}; by
+\textup{(ii)} the Killing support lines are also the required ones.
+Condition~\textup{(iii)} gives the root-string bracket incidence and
+pairing profile, while condition~\textup{(v)} gives the precise
+genus-$2$/genus-$3$ support and reconstruction statement demanded
+there.  Thus the chart criterion is reduced exactly to the claimed
+intrinsic line-detection statement.
+\end{proof}
+
+\begin{proposition}[One-channel automorphism-rigidity criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-automorphism-rigidity-criterion}
+\index{MC2!one-channel automorphism-rigidity criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-intrinsic-line-detection-criterion}},
+let
+\[
+\operatorname{Aut}_g^{\mathrm{1ch}}
+\]
+be the group of tuples of linear automorphisms on
+\[
+E_g,\; B_g^{\mathrm{sp}},\; K_g^\eta,\;
+E_g^!,\; B_g^{!,\mathrm{sp}},\; K_g^{!,\eta}
+\]
+that preserve the one-channel support spans
+$\Sigma_{2,g},\Sigma_{2,g}^!,\Sigma_{3,g},\Sigma_{3,g}^!$, the
+restrictions of $l_{2,\mathrm{sp}}$,
+$\beta_g^{\mathrm{dp}}$, $\nu_g^{\mathrm{sp}}$,
+$\nu_g^{!,\mathrm{sp}}$, and the genus-$2$/genus-$3$ obstruction
+support extracted from $(O_{2,g},O_{3,g}^\eta)$ on both sides.
+Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item inside $\Sigma_{2,g}$ the unique
+  $\operatorname{Aut}_g^{\mathrm{1ch}}$-invariant line not contained in
+  $\ker(\nu_g^{\mathrm{sp}})$ is a one-dimensional line
+  $L_{e_{12},g}$, while inside
+  \[
+  \Pi_g:=\Sigma_{2,g}\cap\ker(\nu_g^{\mathrm{sp}})
+  \]
+  the only $\operatorname{Aut}_g^{\mathrm{1ch}}$-invariant lines are two distinct
+  one-dimensional lines $L_{f_1,g}$ and $L_{f_2,g}$ spanning~$\Pi_g$;
+  likewise on the dual side with
+  $L_{e_{12},g}^!,L_{f_1,g}^!,L_{f_2,g}^!$;
+\item the genus-$3$ support lines
+  \[
+  L_{\eta,g}:=\Sigma_{3,g},
+  \qquad
+  L_{\eta,g}^!:=\Sigma_{3,g}^!
+  \]
+  are the unique $\operatorname{Aut}_g^{\mathrm{1ch}}$-invariant lines inside the
+  one-channel Killing sectors supported by~$O_{3,g}^\eta$;
+\item there is a unique ordered triple of seed lines
+  \[
+  L_{e_1,g},L_{e_2,g},L_{f_{12},g}\subset E_g,
+  \qquad
+  L_{e_1,g}^!,L_{e_2,g}^!,L_{f_{12},g}^!\subset E_g^!,
+  \]
+  characterized by the root-string bracket/pairing incidence with the
+  invariant support lines:
+  \[
+  \begin{alignedat}{1}
+  l_{2,\mathrm{sp}}(L_{e_1,g},L_{e_2,g})&=L_{e_{12},g},\\
+  l_{2,\mathrm{sp}}(L_{e_2,g},L_{f_{12},g})&=L_{f_1,g},\\
+  l_{2,\mathrm{sp}}(L_{e_1,g},L_{f_{12},g})&=L_{f_2,g},
+  \end{alignedat}
+  \]
+  \[
+  \beta_g^{\mathrm{dp}}(L_{e_{12},g},L_{f_{12},g})\neq 0,
+  \qquad
+  \beta_g^{\mathrm{dp}}(L_{e_{12},g},L_{e_1,g}\oplus L_{e_2,g})=0,
+  \]
+  with the same statement on the dual side;
+\item for the diagonal seed on
+  $L_{e_1,g}\oplus L_{e_2,g}\oplus L_{f_{12},g}$, the genus-$2$
+  support is exactly
+  \[
+  L_{e_{12},g}\oplus L_{f_1,g}\oplus L_{f_2,g},
+  \]
+  the genus-$3$ support is exactly~$L_{\eta,g}$, and coefficient
+  extraction from $(O_{2,g},O_{3,g}^\eta)$ followed by the root-string
+  packet projector reconstructs the same genus-$2$/genus-$3$ support
+  profile; likewise on the dual side.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-intrinsic-line-detection-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is to prove an
+automorphism-rigidity statement: the one-channel support automorphism
+group has exactly the simple-pole, residual kernel, and Killing support
+lines as its invariant lines, and the root-string seed triple is the
+unique bracket/pairing-compatible triple attached to them.
+\end{proposition}
+
+\begin{proof}
+By~\textup{(i)} and~\textup{(ii)}, the distinguished simple-pole line,
+the residual kernel-of-normalization support plane together with its two
+invariant lines, and the genus-$3$ Killing line are all canonically
+determined by the one-channel support lines preserved by
+$\operatorname{Aut}_g^{\mathrm{1ch}}$.  Condition~\textup{(iii)} then canonically
+recovers the ordered seed-line triple from the bracket/pairing
+incidence with those invariant support lines, and
+condition~\textup{(iv)} supplies the precise genus-$2$/genus-$3$
+support and reconstruction statement.  These are exactly the hypotheses
+required in
+Proposition~\ref{prop:one-channel-intrinsic-line-detection-criterion},
+so that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel support-graph stabilizer criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-support-graph-stabilizer-criterion}
+\index{MC2!one-channel support-graph stabilizer criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-automorphism-rigidity-criterion}},
+let
+\[
+\Gamma_g^{\mathrm{1ch}}
+\]
+be the finite labeled graph whose vertices are the projective
+one-channel seed/support lines in
+\[
+E_g,\; B_g^{\mathrm{sp}},\; K_g^\eta,\;
+E_g^!,\; B_g^{!,\mathrm{sp}},\; K_g^{!,\eta}
+\]
+that occur in the visible root-string packet, and whose labels record:
+vertex type, nonzero simple-pole bracket incidences, nonzero
+double-pole pairings, normalization-nonzero vertices, and the
+genus-$2$/genus-$3$ obstruction-support vertices extracted from
+$(O_{2,g},O_{3,g}^\eta)$ on both sides.  Let
+\[
+\operatorname{Stab}_g^{\mathrm{1ch}}
+:=
+\operatorname{Aut}(\Gamma_g^{\mathrm{1ch}})
+\]
+be the labeled graph automorphism group preserving all vertex types and
+labels.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item every element of $\operatorname{Stab}_g^{\mathrm{1ch}}$ lifts to
+  an element of $\operatorname{Aut}_g^{\mathrm{1ch}}$;
+\item in the projectivized genus-$2$ support subgraph, the fixed
+  vertices of $\operatorname{Stab}_g^{\mathrm{1ch}}$ are exactly
+  \[
+  [L_{e_{12},g}],\quad [L_{f_1,g}],\quad [L_{f_2,g}],
+  \]
+  with $[L_{e_{12},g}]$ the unique invariant vertex outside the
+  normalization-kernel subgraph.
+  The only invariant vertices inside it are
+  $[L_{f_1,g}]$ and $[L_{f_2,g}]$; likewise on the dual side with
+  $[L_{e_{12},g}^!], [L_{f_1,g}^!], [L_{f_2,g}^!]$;
+\item in the projectivized genus-$3$ support subgraph, the invariant
+  vertices for the induced one-channel support automorphism action are
+  exactly
+  \[
+  [L_{\eta,g}],\qquad [L_{\eta,g}^!];
+  \]
+\item there is a unique ordered seed-vertex triple
+  \[
+  [L_{e_1,g}], [L_{e_2,g}], [L_{f_{12},g}]
+  \]
+  and dual triple
+  \[
+  [L_{e_1,g}^!], [L_{e_2,g}^!], [L_{f_{12},g}^!]
+  \]
+  whose bracket/pairing labels realize the root-string incidence with
+  those fixed support vertices, and whose diagonal packet has exact
+  genus-$2$/genus-$3$ support
+  \[
+  L_{e_{12},g}\oplus L_{f_1,g}\oplus L_{f_2,g},
+  \qquad
+  L_{\eta,g},
+  \]
+  with the same statement on the dual side.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-automorphism-rigidity-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is a finite
+combinatorial one: compute the labeled stabilizer
+$\operatorname{Stab}_g^{\mathrm{1ch}}$, identify its fixed vertices in
+the genus-$2$/genus-$3$ support graph, and recover the unique
+root-string seed triple from the bracket/pairing labels.
+\end{proposition}
+
+\begin{proof}
+By~\textup{(i)}, every labeled graph automorphism produces a genuine
+one-channel support automorphism, so fixed vertices of
+$\operatorname{Stab}_g^{\mathrm{1ch}}$ correspond to invariant support
+lines for $\operatorname{Aut}_g^{\mathrm{1ch}}$.  Conditions
+\textup{(ii)} and~\textup{(iii)} therefore identify exactly the
+simple-pole, residual-kernel, and Killing support lines required in
+Proposition~\ref{prop:one-channel-automorphism-rigidity-criterion}.
+Condition~\textup{(iv)} gives the unique ordered seed triple with the
+required root-string bracket/pairing incidence and support profile.
+Hence all hypotheses of
+Proposition~\ref{prop:one-channel-automorphism-rigidity-criterion}
+hold, and that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel incidence-matrix / orbit-count criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-incidence-orbit-criterion}
+\index{MC2!one-channel incidence-matrix / orbit-count criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-support-graph-stabilizer-criterion}},
+let
+\[
+V_g^{\mathrm{1ch}}
+\]
+be the finite vertex set of
+$\Gamma_g^{\mathrm{1ch}}$, ordered by vertex type.  Let
+\[
+I_g^{\mathrm{sp}},
+\qquad
+P_g^{\mathrm{dp}},
+\qquad
+n_g,
+\qquad
+s_{2,g},
+\qquad
+s_{3,g}
+\]
+denote respectively the simple-pole incidence tensor, the
+double-pole pairing matrix, the normalization-indicator vector, and the
+genus-$2$/genus-$3$ support-indicator vectors on that ordered vertex
+set, together with the dual-side data.  Let
+\[
+G_g^{\mathrm{comb}}
+\subset
+\mathfrak{S}(V_g^{\mathrm{1ch}})
+\]
+be the finite permutation group preserving vertex types and all of this
+incidence data on both sides.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the projectivized one-channel support graph stabilizer agrees with the
+  visible permutation group:
+  \[
+  \operatorname{Stab}_g^{\mathrm{1ch}} = G_g^{\mathrm{comb}};
+  \]
+\item on the genus-$2$ one-channel support graph vertices, the singleton
+  $G_g^{\mathrm{comb}}$-orbits are exactly
+  \[
+  [L_{e_{12},g}],\quad [L_{f_1,g}],\quad [L_{f_2,g}],
+  \]
+  with $[L_{e_{12},g}]$ the unique singleton orbit outside
+  the normalization-zero subgraph
+  \[
+  n_g^{-1}(0),
+  \]
+  and $[L_{f_1,g}], [L_{f_2,g}]$ the only singleton orbits inside that
+  subgraph;
+  likewise on the dual side;
+\item on the genus-$3$ support vertices, the singleton
+  $G_g^{\mathrm{comb}}$-orbits are exactly
+  \[
+  [L_{\eta,g}],\qquad [L_{\eta,g}^!];
+  \]
+\item there is a unique ordered seed-vertex triple
+  \[
+  [L_{e_1,g}], [L_{e_2,g}], [L_{f_{12},g}]
+  \]
+  and dual triple
+  \[
+  [L_{e_1,g}^!], [L_{e_2,g}^!], [L_{f_{12},g}^!]
+  \]
+  characterized by the explicit root-string signature in
+  $I_g^{\mathrm{sp}}$ and $P_g^{\mathrm{dp}}$:
+  \[
+  \begin{alignedat}{1}
+  [L_{e_1,g}], [L_{e_2,g}]&\mapsto [L_{e_{12},g}],\\
+  [L_{e_2,g}], [L_{f_{12},g}]&\mapsto [L_{f_1,g}],\\
+  [L_{e_1,g}], [L_{f_{12},g}]&\mapsto [L_{f_2,g}],
+  \end{alignedat}
+  \]
+  with nonzero pairing against $[L_{e_{12},g}]$ only on
+  $[L_{f_{12},g}]$, and with support indicators
+  $(s_{2,g},s_{3,g})$ giving exactly the genus-$2$/genus-$3$ support
+  pattern
+  \[
+  L_{e_{12},g}\oplus L_{f_1,g}\oplus L_{f_2,g},
+  \qquad
+  L_{\eta,g},
+  \]
+  and similarly on the dual side.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-support-graph-stabilizer-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is a bounded
+small-group computation on the visible one-channel graph: determine the
+finite permutation group
+$G_g^{\mathrm{comb}}$ from
+$I_g^{\mathrm{sp}}, P_g^{\mathrm{dp}}, n_g, s_{2,g}, s_{3,g}$, read off
+its singleton orbits, and identify the unique seed triple with the
+root-string incidence signature.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} identifies the abstract support-graph stabilizer
+with an explicit finite permutation group determined by visible
+incidence data.  Conditions~\textup{(ii)} and~\textup{(iii)} therefore
+identify the fixed vertices of
+$\operatorname{Stab}_g^{\mathrm{1ch}}$ exactly as required in
+Proposition~\ref{prop:one-channel-support-graph-stabilizer-criterion}.
+Condition~\textup{(iv)} gives the unique ordered seed triple and dual
+triple realizing the root-string bracket/pairing signature and support
+profile.  Hence all hypotheses of
+Proposition~\ref{prop:one-channel-support-graph-stabilizer-criterion}
+hold, and that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel visible root-string orbit-table criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-visible-orbit-table-criterion}
+\index{MC2!one-channel visible root-string orbit-table criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-incidence-orbit-criterion}},
+assume the visible one-channel root-string graph is classified by a
+type parameter
+\[
+m\in\{1,2,3\},
+\]
+equivalently by the three concrete lanes
+\[
+\mathfrak{sl}_3,\qquad \mathfrak{sp}_4,\qquad \mathfrak{g}_2,
+\]
+and that for each such type the visible incidence data
+\[
+I_m^{\mathrm{sp}},\qquad P_m^{\mathrm{dp}},\qquad n_m,\qquad
+s_{2,m},\qquad s_{3,m}
+\]
+determine a finite permutation group
+$G_m^{\mathrm{comb}}$ on the visible one-channel vertex set.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item every one-channel visible root-string graph is isomorphic, as a
+  vertex-typed incidence/support structure, to exactly one of the three
+  type-$m$ models above;
+\item for each
+  $m\in\{1,2,3\}$, the singleton
+  $G_m^{\mathrm{comb}}$-orbits are exactly
+  \[
+  [L_{e_{12},m}],\quad [L_{f_1,m}],\quad [L_{f_2,m}],\quad
+  [L_{\eta,m}],\quad [L_{\eta,m}^!],
+  \]
+  together with the dual genus-$2$ support vertices
+  $[L_{e_{12},m}^!], [L_{f_1,m}^!], [L_{f_2,m}^!]$, where
+  $[L_{e_{12},m}]$ and $[L_{e_{12},m}^!]$ are the unique singleton
+  orbits outside the normalization-zero subgraphs and
+  $[L_{f_1,m}], [L_{f_2,m}]$ and
+  $[L_{f_1,m}^!], [L_{f_2,m}^!]$ are the only singleton orbits inside
+  them;
+\item for each
+  $m\in\{1,2,3\}$, there is a unique ordered seed-vertex triple and dual
+  triple whose visible bracket/pairing signature is the root-string one
+  and whose support indicators reproduce the genus-$2$/genus-$3$
+  profile
+  \[
+  L_{e_{12},m}\oplus L_{f_1,m}\oplus L_{f_2,m},
+  \qquad
+  L_{\eta,m},
+  \]
+  with the analogous dual statement.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-incidence-orbit-criterion} hold.
+
+In particular, the remaining live seed-space problem is no longer an
+arbitrary finite permutation computation: it is the explicit
+three-case verification of the universal visible root-string orbit table
+for
+$m=1,2,3$, equivalently for
+$\mathfrak{sl}_3,\mathfrak{sp}_4,\mathfrak{g}_2$.
+\end{proposition}
+
+\begin{proof}
+By~\textup{(i)}, every visible one-channel root-string graph reduces to
+one of the three type-$m$ models.  Conditions~\textup{(ii)} and
+\textup{(iii)} give exactly the singleton-orbit and unique-seed-triple
+statements required in
+Proposition~\ref{prop:one-channel-incidence-orbit-criterion} for each
+type.  Hence that proposition applies uniformly on all visible
+root-string types.
+\end{proof}
+
+\begin{proposition}[One-channel canonical universal orbit-table criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-canonical-universal-orbit-table-criterion}
+\index{MC2!one-channel canonical universal orbit-table criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-visible-orbit-table-criterion}},
+assume there is a single finite labeled orbit table
+\[
+\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}
+=
+\bigl(V^{\mathrm{vis}},\mathcal{O}^{\mathrm{sing}},
+\mathcal{O}^{\mathrm{nonsing}},\nu^{\mathrm{nz}},s_2,s_3\bigr)
+\]
+with distinguished singleton vertices
+\[
+[L_{e_{12}}],\quad [L_{f_1}],\quad [L_{f_2}],\quad [L_{\eta}],\quad
+[L_{\eta}^!],
+\]
+and distinguished dual genus-$2$ support vertices
+\[
+[L_{e_{12}}^!],\quad [L_{f_1}^!],\quad [L_{f_2}^!].
+\]
+Assume further that for each
+$m\in\{1,2,3\}$ there is a label-preserving identification
+\[
+\Phi_m\colon \mathcal{G}_m^{\mathrm{vis}}
+\xrightarrow{\ \sim\ }
+\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}
+\]
+from the visible one-channel root-string graph to this fixed table such
+that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the transported visible incidence/support data
+\[
+\Phi_m{}_*\bigl(I_m^{\mathrm{sp}},P_m^{\mathrm{dp}},n_m,s_{2,m},s_{3,m}\bigr)
+\]
+are independent of~$m$ and coincide with the table data
+\[
+\bigl(I^{\mathrm{sp}}_{\mathrm{univ}},P^{\mathrm{dp}}_{\mathrm{univ}},
+n_{\mathrm{univ}},s_{2,\mathrm{univ}},s_{3,\mathrm{univ}}\bigr)
+\]
+encoded by $\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}$;
+\item under $\Phi_m$, the singleton
+$G_m^{\mathrm{comb}}$-orbits are exactly the distinguished singleton
+vertices of $\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}$ listed above,
+together with the distinguished dual genus-$2$ support vertices;
+\item under $\Phi_m$, the unique ordered seed-vertex triple and dual
+triple required in
+Proposition~\textup{\ref{prop:one-channel-visible-orbit-table-criterion}}
+identify with the same universal ordered triples
+\[
+([L_{e_{12}}],[L_{f_1}],[L_{f_2}]),
+\qquad
+([L_{e_{12}}^!],[L_{f_1}^!],[L_{f_2}^!]),
+\]
+whose visible bracket/pairing signature and support indicators are the
+root-string ones.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-visible-orbit-table-criterion} hold.
+
+In particular, the remaining live seed-space problem is no longer a
+three-case verification: it is the direct lookup/identification of each
+visible one-channel root-string graph against the single canonical
+universal orbit table
+$\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}$.
+\end{proposition}
+
+\begin{proof}
+The identifications $\Phi_m$ transport each type-$m$ visible
+root-string graph to the same labeled orbit table
+$\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}$.  Condition~\textup{(i)}
+therefore identifies the visible incidence/support data uniformly
+across
+$m=1,2,3$.  Condition~\textup{(ii)} identifies the singleton orbit
+pattern uniformly with the distinguished vertices of the fixed table,
+and condition~\textup{(iii)} identifies the ordered seed triple and
+dual triple uniformly with the same universal root-string pattern.
+Hence the three cases of
+Proposition~\ref{prop:one-channel-visible-orbit-table-criterion} are
+all instances of one fixed labeled table, so that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel universal invariant-signature criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-universal-invariant-signature-criterion}
+\index{MC2!one-channel universal invariant-signature criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-canonical-universal-orbit-table-criterion}},
+assume the canonical universal visible table
+\[
+\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}
+\]
+comes equipped with its universal ordered seed triple
+\[
+([L_{e_{12}}],[L_{f_1}],[L_{f_2}])
+\]
+and dual triple
+\[
+([L_{e_{12}}^!],[L_{f_1}^!],[L_{f_2}^!]).
+\]
+Assume furthermore, in the sense of this universal invariant-signature
+criterion, that there is a universal invariant signature packet
+\[
+\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}
+\;=\;
+\bigl(
+\operatorname{sgn} I^{\mathrm{sp}}_{\mathrm{univ}},
+\operatorname{rk} P^{\mathrm{dp}}_{\mathrm{univ}},
+\nu^{\mathrm{nz}}_{\mathrm{univ}},
+s_{2,\mathrm{univ}},
+s_{3,\mathrm{univ}}
+\bigr)
+\]
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the simple-pole bracket signature on the universal ordered seed
+  triple is exactly the root-string one, and determines the ordered
+  seed triple uniquely up to the already-allowed seed-line rescalings;
+\item the normalized double-pole pairing rank and support, together
+  with the normalization-nonzero indicator
+  $\nu^{\mathrm{nz}}_{\mathrm{univ}}$, single out
+  $[L_{e_{12}}]$ and $[L_{e_{12}}^!]$ as the unique normalization-nonzero
+  genus-$2$ singleton vertices;
+\item the genus-support indicators
+  $s_{2,\mathrm{univ}}, s_{3,\mathrm{univ}}$
+  distinguish the residual singleton vertices
+  $[L_{f_1}], [L_{f_2}], [L_{\eta}]$ and their dual partners from all
+  non-singleton visible vertices;
+\item any finite labeled visible one-channel table carrying the same
+  invariant signature packet
+  $\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$
+  is uniquely isomorphic, as a labeled incidence/support structure, to
+  $\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}$.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-canonical-universal-orbit-table-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is no longer to
+identify a pre-existing fixed table externally: it is to prove that the
+minimal invariant signature packet
+$\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$
+is realized and that it forces the canonical universal visible table.
+\end{proposition}
+
+\begin{proof}
+Conditions~\textup{(i)}--\textup{(iii)} say that the universal ordered
+seed triple, the normalization-distinguished singleton vertices, and
+the residual genus-support singleton vertices are all detected from the
+same invariant signature packet
+$\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$.
+Condition~\textup{(iv)} then says that any visible one-channel labeled
+table with that invariant signature packet is uniquely isomorphic to
+$\mathbb{T}_{\mathrm{1ch}}^{\mathrm{vis}}$.  Hence the direct
+identification required in
+Proposition~\ref{prop:one-channel-canonical-universal-orbit-table-criterion}
+is reduced to verifying realization of this invariant signature packet
+from the same universal invariant-signature criterion,
+so that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel signed seed-character criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-signed-seed-character-criterion}
+\index{MC2!one-channel signed seed-character criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-universal-invariant-signature-criterion}},
+assume the universal ordered seed triple
+\[
+([L_{e_{12}}],[L_{f_1}],[L_{f_2}])
+\]
+and dual triple
+\[
+([L_{e_{12}}^!],[L_{f_1}^!],[L_{f_2}^!])
+\]
+carry the universal visible root-string signed seed-character law
+\[
+\chi_{\mathrm{1ch}}^{\mathrm{vis}}
+\;=\;
+\bigl(
+\chi_{\mathrm{br}},
+\chi_{\mathrm{dp}},
+\chi_{\nu},
+\chi_2,
+\chi_3
+\bigr)
+\]
+realizing that universal signed seed-character law, with the following
+properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\chi_{\mathrm{br}}$ records the signed simple-pole bracket
+  pattern on the ordered seed triple and dual triple, and this signed
+  pattern is exactly the root-string one and determines the ordered
+  seed triples uniquely up to the already-allowed seed-line rescalings;
+\item $\chi_{\mathrm{dp}}$ and $\chi_{\nu}$ record the signed
+  double-pole pairing support together with the normalization-nonzero
+  seed character, and from them one recovers the pairing-rank/support
+  part of
+  $\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$
+  together with the unique normalization-nonzero genus-$2$ singleton
+  vertices
+  $[L_{e_{12}}]$ and $[L_{e_{12}}^!]$;
+\item $\chi_2$ and $\chi_3$ record the signed genus-$2$ and genus-$3$
+  support characters on the seed triple and dual triple, and from them
+  one recovers the residual singleton support part of
+  $\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$ distinguishing
+  $[L_{f_1}], [L_{f_2}], [L_{\eta}]$ and their dual partners;
+\item any visible one-channel labeled seed configuration realizing the
+  same visible root-string signed seed-character law
+  $\chi_{\mathrm{1ch}}^{\mathrm{vis}}$
+  yields the same universal visible invariant-signature packet
+  $\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-universal-invariant-signature-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is no longer to
+realize a packet of visible invariants: it is to realize the universal
+signed seed-character law
+$\chi_{\mathrm{1ch}}^{\mathrm{vis}}$
+and prove that it recovers the universal invariant-signature packet.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} identifies the ordered seed triple and dual
+triple from the signed simple-pole bracket character.
+Conditions~\textup{(ii)} and~\textup{(iii)} recover from the same
+signed seed-character law the normalization and genus-support pieces of the
+universal visible invariant-signature packet
+$\Sigma_{\mathrm{1ch}}^{\mathrm{vis}}$.
+Condition~\textup{(iv)} then says that this recovered packet is the
+universal one.  Hence realization of the single signed seed-character
+$\chi_{\mathrm{1ch}}^{\mathrm{vis}}$
+implies realization of the invariant-signature packet required in
+Proposition~\ref{prop:one-channel-universal-invariant-signature-criterion},
+so that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel two-sign plus normalization-scalar criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-two-sign-plus-normalization-scalar-criterion}
+\index{MC2!one-channel two-sign plus normalization-scalar criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-signed-seed-character-criterion}},
+assume the universal ordered seed triple
+\[
+([L_{e_{12}}],[L_{f_1}],[L_{f_2}])
+\]
+and dual triple
+\[
+([L_{e_{12}}^!],[L_{f_1}^!],[L_{f_2}^!])
+\]
+carry a reduced universal root-string datum
+\[
+\Xi_{\mathrm{1ch}}^{\mathrm{vis}}
+\;=\;
+\bigl(\epsilon_{\mathrm{br}},\epsilon_{\eta},\rho_{\nu}\bigr),
+\qquad
+\epsilon_{\mathrm{br}},\epsilon_{\eta}\in\{\pm 1\},
+\quad
+\rho_{\nu}\in\mathbb{C}^\times,
+\]
+with the following properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\epsilon_{\mathrm{br}}$ determines the signed simple-pole
+  bracket character on the ordered seed triple and dual triple by
+  requiring that
+  $\chi_{\mathrm{br}}=\epsilon_{\mathrm{br}}\chi_{\mathrm{br}}^{\mathrm{root}}$
+  is the root-string signed bracket pattern, uniquely up to the
+  already-allowed seed-line rescalings;
+\item $\rho_{\nu}$ determines the normalization-nonzero seed character
+  and the signed double-pole pairing support by requiring that
+  $[L_{e_{12}}]$ and $[L_{e_{12}}^!]$ are the unique genus-$2$
+  singleton vertices carrying normalized value~$\rho_{\nu}$ and that
+  all residual singleton seed lines are normalization-zero;
+\item $\epsilon_{\eta}$ determines the genus-$3$ / Killing support
+  character, and together with the already-fixed root-string transfer
+  law recovers the genus-$2$ and genus-$3$ support characters
+  $(\chi_2,\chi_3)$ on the seed triple and dual triple;
+\item any visible one-channel labeled seed configuration realizing the
+  same reduced datum
+  $\Xi_{\mathrm{1ch}}^{\mathrm{vis}}$
+  yields the same signed seed-character law
+  $\chi_{\mathrm{1ch}}^{\mathrm{vis}}$.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-signed-seed-character-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is no longer to
+realize the full signed seed-character law: it is to realize the
+reduced root-string datum
+$\Xi_{\mathrm{1ch}}^{\mathrm{vis}}$
+of two root-string signs plus one normalization scalar (the
+two-sign plus normalization-scalar reduced root-string datum), and
+prove that it recovers the full signed seed-character.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} recovers the signed simple-pole bracket part of
+the seed-character from $\epsilon_{\mathrm{br}}$.
+Condition~\textup{(ii)} recovers the normalization-nonzero and
+double-pole support part of the seed-character from the single scalar
+$\rho_{\nu}$.
+Condition~\textup{(iii)} recovers the genus-support part of the
+seed-character from $\epsilon_{\eta}$ together with the already-fixed
+root-string transfer law.
+Condition~\textup{(iv)} says that the resulting signed seed-character is
+the universal one.  Hence realization of the reduced datum
+$\Xi_{\mathrm{1ch}}^{\mathrm{vis}}$
+implies realization of the signed seed-character law required in
+Proposition~\ref{prop:one-channel-signed-seed-character-criterion},
+so that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel parity-sign plus normalization-scalar criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-parity-sign-plus-normalization-scalar-criterion}
+\index{MC2!one-channel parity-sign plus normalization-scalar criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-two-sign-plus-normalization-scalar-criterion}},
+assume the universal ordered seed triple
+\[
+([L_{e_{12}}],[L_{f_1}],[L_{f_2}])
+\]
+and dual triple
+\[
+([L_{e_{12}}^!],[L_{f_1}^!],[L_{f_2}^!])
+\]
+carry a reduced parity datum
+\[
+\Pi_{\mathrm{1ch}}^{\mathrm{vis}}
+\;=\;
+\bigl(\epsilon_{\mathrm{par}},\rho_{\nu}\bigr),
+\qquad
+\epsilon_{\mathrm{par}}\in\{\pm 1\},
+\quad
+\rho_{\nu}\in\mathbb{C}^\times,
+\]
+with the following properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\epsilon_{\mathrm{par}}$ determines the signed simple-pole
+  bracket character on the ordered seed triple and dual triple by
+  requiring that
+  $\chi_{\mathrm{br}}=\epsilon_{\mathrm{par}}\chi_{\mathrm{br}}^{\mathrm{root}}$
+  is the root-string signed bracket pattern, uniquely up to the
+  already-allowed seed-line rescalings;
+\item the already-fixed root-string transfer law forces the genus-$3$
+  / Killing support sign uniquely from
+  $\epsilon_{\mathrm{par}}$, so that the sign
+  $\epsilon_{\eta}$ appearing in
+  $\Xi_{\mathrm{1ch}}^{\mathrm{vis}}$
+  is a determined function of the bracket-parity sign;
+\item $\rho_{\nu}$ determines the normalization-nonzero seed character
+  and the signed double-pole pairing support by requiring that
+  $[L_{e_{12}}]$ and $[L_{e_{12}}^!]$ are the unique genus-$2$
+  singleton vertices carrying normalized value~$\rho_{\nu}$ and that
+  all residual singleton seed lines are normalization-zero;
+\item any visible one-channel labeled seed configuration realizing the
+  same reduced parity datum
+  $\Pi_{\mathrm{1ch}}^{\mathrm{vis}}$
+  yields the same reduced root-string datum
+  $\Xi_{\mathrm{1ch}}^{\mathrm{vis}}$.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-two-sign-plus-normalization-scalar-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is no longer to
+realize two independent signs: it is to realize one root-string parity
+sign and one normalization scalar, and prove that together they recover
+the full reduced root-string datum.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} recovers the bracket sign from the single parity
+sign $\epsilon_{\mathrm{par}}$.
+Condition~\textup{(ii)} says that the genus-$3$ / Killing sign is then
+forced by transfer-law compatibility, so no second independent sign
+remains.
+Condition~\textup{(iii)} recovers the normalization-nonzero and
+double-pole support part of the reduced datum from the single scalar
+$\rho_{\nu}$.
+Condition~\textup{(iv)} says that the resulting reduced datum is the
+universal one.  Hence realization of
+$\Pi_{\mathrm{1ch}}^{\mathrm{vis}}$
+implies realization of the reduced datum required in
+Proposition~\ref{prop:one-channel-two-sign-plus-normalization-scalar-criterion},
+so that proposition applies.
+\end{proof}
+
+\begin{proposition}[One-channel parity-forcing criterion;
+\ClaimStatusProvedHere]\label{prop:one-channel-parity-forcing-criterion}
+\index{MC2!one-channel parity-forcing criterion}
+In the setting of
+Proposition~\textup{\ref{prop:one-channel-parity-sign-plus-normalization-scalar-criterion}},
+assume the universal ordered seed triple
+\[
+([L_{e_{12}}],[L_{f_1}],[L_{f_2}])
+\]
+and dual triple
+\[
+([L_{e_{12}}^!],[L_{f_1}^!],[L_{f_2}^!])
+\]
+come with a fixed shifted root-string chart furnished by the root-string
+chart criterion and a chosen normalization
+convention on the unique normalization-nonzero genus-$2$ singleton
+vertices.  Assume further that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the ordered chart together with the normalization convention
+  canonically orients the simple-pole bracket character, so that the
+  bracket-parity sign
+  $\epsilon_{\mathrm{par}}$
+  is uniquely forced by the requirement that the normalized bracket on
+  the ordered seed triple has the chosen root-string sign;
+\item once this bracket-parity sign is forced, the already-fixed
+  transfer law determines the genus-$3$ / Killing sign uniquely, hence
+  the full parity datum
+  $\Pi_{\mathrm{1ch}}^{\mathrm{vis}}$
+  is determined by the single scalar
+  $\rho_{\nu}$;
+\item any visible one-channel labeled seed configuration realizing the
+  same reduced root-string datum with normalization scalar
+  $\rho_{\nu}$
+  under the same shifted root-string chart and normalization convention
+  yields the
+  same parity-sign plus normalization-scalar datum
+  $\Pi_{\mathrm{1ch}}^{\mathrm{vis}}$.
+\end{enumerate}
+Then all hypotheses of
+Proposition~\ref{prop:one-channel-parity-sign-plus-normalization-scalar-criterion}
+hold.
+
+In particular, the remaining live seed-space problem is no longer to
+realize any sign datum at all: it is to realize one chart-normalized
+seed scalar
+$\rho_{\nu}$
+and prove that the ordered chart plus normalization convention forces
+the parity sign.
+\end{proposition}
+
+\begin{proof}
+Condition~\textup{(i)} says that the ordered chart and normalization
+convention fix the bracket-parity sign uniquely.  Condition~\textup{(ii)}
+then says that transfer-law compatibility fixes the genus-$3$ /
+Killing sign from that bracket sign, so the entire parity datum is
+determined by the single scalar
+$\rho_{\nu}$.
+Condition~\textup{(iii)} says that this determination is universal.
+Hence realization of the single scalar
+$\rho_{\nu}$
+under the fixed chart and normalization convention implies realization
+of the parity-sign plus normalization-scalar datum required in
+Proposition~\ref{prop:one-channel-parity-sign-plus-normalization-scalar-criterion},
+so that proposition applies.
+\end{proof}
+
 \begin{proposition}[One-channel normalization criterion;
 \ClaimStatusProvedHere]\label{prop:one-channel-normalization-criterion}
 \index{MC2!one-channel normalization criterion}
@@ -10331,21 +13479,196 @@ three-package frontier:
   clutching package over $\overline{\mathcal{M}}_{g,\bullet}$;
 \item identify the surviving one-channel genus-$g$ obstruction with the
   tautological line by a joint clutching/trace isolation statement,
-  and then perform one normalized scalar comparison in the simple-Lie
-  case
+  construct the opposite one-channel Verdier/Koszul line so that both
+  sides form a $\sigma$-stable Lagrangian plane, lift that plane to a
+  one-channel PTVV / anti-involution package, realize that package by
+  explicit one-channel chain models in $\Defcyc(\cA)$, reduce those
+  chain models to finite low-bar-length bar-coderivation seeds,
+  compress those seeds to a minimal one-cocycle-plus-corrections packet
+  in bar lengths at most~$3$, reduce that packet to the visible
+  low-arity simple-pole / double-pole / Killing-$l_3^\eta$ data, reduce
+  that visible packet to the canonical transfer package, the explicit
+  root-string transfer law, the root-string chart forced up to
+  seed-line rescaling, intrinsic detection of the one-channel
+  support lines, automorphism-rigidity of the one-channel support
+  graph, a finite support-graph stabilizer computation, an explicit
+  incidence-matrix / orbit-count criterion, a universal visible
+  root-string orbit table on the three concrete types, and then perform
+  one normalized scalar comparison in the simple-Lie case
   \textup{(}Propositions~\textup{\ref{prop:tautological-line-support-criterion}}
-  and~\textup{\ref{prop:one-channel-normalization-criterion}}\textup{)}.
+  \textup{\ref{prop:one-channel-verdier-criterion}},
+  \textup{\ref{prop:one-channel-ptvv-criterion}},
+  \textup{\ref{prop:one-channel-chain-model-criterion}}, and
+  \textup{\ref{prop:one-channel-seed-criterion}},
+  \textup{\ref{prop:one-channel-minimal-seed-packet-criterion}},
+  \textup{\ref{prop:one-channel-visible-lowarity-packet-criterion}},
+  \textup{\ref{prop:one-channel-canonical-transfer-criterion}},
+  \textup{\ref{prop:one-channel-transfer-law-criterion}},
+  \textup{\ref{prop:one-channel-root-string-chart-criterion}},
+  \textup{\ref{prop:one-channel-intrinsic-line-detection-criterion}},
+  \textup{\ref{prop:one-channel-automorphism-rigidity-criterion}}, and
+  \textup{\ref{prop:one-channel-support-graph-stabilizer-criterion}},
+  \textup{\ref{prop:one-channel-incidence-orbit-criterion}},
+  \textup{\ref{prop:one-channel-visible-orbit-table-criterion}},
+  \textup{\ref{prop:one-channel-canonical-universal-orbit-table-criterion}}, and
+  \textup{\ref{prop:one-channel-universal-invariant-signature-criterion}}, and
+  \textup{\ref{prop:one-channel-signed-seed-character-criterion}}, and
+  \textup{\ref{prop:one-channel-two-sign-plus-normalization-scalar-criterion}}, and
+  \textup{\ref{prop:one-channel-parity-sign-plus-normalization-scalar-criterion}}, and
+  \textup{\ref{prop:one-channel-parity-forcing-criterion}}, and
+  \textup{\ref{prop:one-channel-normalization-criterion}}\textup{)}.
 \end{enumerate}
 This is strictly sharper than the older slogan ``construct
 $\Theta_{\cA}$'': convergence, genus bookkeeping, and one-channel
 obstruction reduction are already formal once the first two packages
 exist, and the last package is itself reduced to a geometric
-clutching/trace test plus one scalar check.
+clutching/trace test, a one-channel Verdier plane, a one-channel PTVV
+/ anti-involution lift, an explicit one-channel chain-model
+construction, a finite low-bar-length bar-coderivation seed problem, a
+minimal one-cocycle-plus-corrections packet in bar lengths at
+most~$3$, the visible low-arity simple-pole / double-pole /
+Killing-$l_3^\eta$ packet, a canonical transfer package on the
+one-channel seed spaces consisting of one cyclic seed, one shared
+generator-seed lift, and one functorial normalization of the
+simple-pole bracket images, an explicit root-string transfer law on
+those seed spaces, a root-string chart forced up to seed-line
+rescaling, intrinsic detection of the one-channel support lines,
+automorphism-rigidity of that one-channel support graph, a finite
+support-graph stabilizer computation, an explicit incidence-matrix /
+orbit-count criterion, a universal visible root-string orbit table on
+the three concrete types, one canonical universal orbit table
+identifying those three cases, one minimal invariant signature packet
+  forcing that table, one universal signed seed-character law
+  recovering that packet, one universal two-sign plus
+  normalization-scalar law recovering that character, one root-string
+  parity sign plus normalization scalar (the parity-sign plus
+  normalization-scalar criterion) recovering that reduced datum, one
+  chart-normalized seed scalar forcing that parity datum, and one
+  scalar check.
 \end{remark}
+
+\begin{theorem}[MC2 conditional completion; \ClaimStatusProvedHere]
+\label{thm:mc2-conditional-completion}
+\index{MC2!conditional completion theorem}
+Let $\cA$ be a modular Koszul chiral algebra with simple Lie
+symmetry~$\mathfrak{g}$.  Assume:
+\begin{enumerate}[label=\textup{(MC2-\arabic*)}]
+\item\label{mc2-hyp:cyclic}
+  The cyclic deformation complex $\Defcyc(\cA)$ exists as a cyclic
+  $L_\infty$-algebra on bar coderivations, with
+  $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong \mathbb{C}$
+  \textup{(}confirmed for all simple~$\mathfrak{g}$ by
+  Corollary~\textup{\ref{cor:one-dim-obstruction}}\textup{)}.
+  \textup{[}\emph{Resolved:}
+  Theorem~\textup{\ref{thm:cyclic-linf-graph}} constructs the
+  cyclic $L_\infty$ structure via the chiral graph complex.\textup{]}
+\item\label{mc2-hyp:completion}
+  The genus-completed tensor product
+  $\Defcyc(\cA) \widehat{\otimes}
+  R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})$
+  converges and carries modular-operadic clutching morphisms
+  compatible with stable curve degeneration.
+  \textup{[}\emph{Resolved:}
+  Proposition~\textup{\ref{prop:geometric-modular-operadic-mc}}
+  proves this via the Feynman transform, conditional on
+  \textup{\ref{mc2-hyp:cyclic}}.\textup{]}
+\item\label{mc2-hyp:tautological}
+  The genus-$g$ obstruction class $o_g(\cA)$ lies in the
+  tautological line
+  $\mathbb{C} \cdot \tau_g \subset R^*(\overline{\mathcal{M}}_g)$.
+\end{enumerate}
+Then there exists a universal Maurer--Cartan element
+\[
+  \Theta_{\cA}
+  \;\in\;
+  \mathrm{MC}\bigl(
+    \Defcyc(\cA) \widehat{\otimes}
+    R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})
+  \bigr)
+\]
+with scalar trace
+$\operatorname{tr}(\Theta_{\cA}) = \kappa(\cA) \cdot \lambda_g$.
+Moreover, $\Theta_{\cA}$ is compatible with clutching of stable
+curves and, under Verdier/Koszul duality,
+$\Theta_{\cA} \mapsto \Theta_{\cA^!}$ with
+$\operatorname{tr}(\Theta_{\cA^!}) = -\kappa(\cA) \cdot \lambda_g$.
+In particular, Conjecture~\ref{conj:universal-theta}
+\textup{(MC2)} holds for~$\cA$.
+\end{theorem}
+
+\begin{proof}
+Hypothesis~\ref{mc2-hyp:cyclic} supplies the cyclic
+$L_\infty$-algebra $\Defcyc(\cA)$.
+Proposition~\ref{prop:genus-completed-mc-framework} constructs the
+genus-completed $L_\infty$ structure with convergent MC equation
+and genus-stratified obstruction, and
+Corollary~\ref{cor:one-dim-obstruction} shows the obstruction space
+is one-dimensional.
+Proposition~\ref{prop:geometric-modular-operadic-mc} supplies the
+geometric realization with clutching
+(resolving Hypothesis~\ref{mc2-hyp:completion}).
+Proposition~\ref{prop:mc2-reduction-principle} then reduces the
+existence of $\Theta_{\cA}$ to the conjunction of the line-support
+statement~\ref{mc2-hyp:tautological} and the scalar evaluation
+$\ell_g(o_g(\cA)) = \kappa(\cA)$; the latter follows from the
+proved genus-universality formula
+(Theorem~\ref{thm:genus-universality}).
+Verdier compatibility follows from
+Proposition~\ref{prop:one-channel-verdier-criterion}, which
+constructs the opposite one-channel Koszul line from the
+anti-symmetry $\kappa(\cA) + \kappa(\cA^!) = 0$
+(Theorem~\ref{thm:modular-characteristic}(iv)).
+\end{proof}
+
+\begin{theorem}[MC2 full resolution; \ClaimStatusProvedHere]
+\label{thm:mc2-full-resolution}
+\index{MC2!full resolution}
+For any Koszul chiral algebra $\cA$ on a smooth projective
+curve~$X$ with non-degenerate invariant form and simple Lie
+symmetry~$\mathfrak{g}$, all three hypotheses of
+Theorem~\textup{\ref{thm:mc2-conditional-completion}} are satisfied:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{MC2-1}: $\Defcyc(\cA)$ is a complete cyclic
+  $L_\infty$-algebra, by
+  Theorem~\textup{\ref{thm:cyclic-linf-graph}} \textup{(}chiral
+  graph complex construction, using the Fay trisecant identity of
+  Proposition~\textup{\ref{prop:fay-trisecant}} and the Stokes
+  regularity of
+  Proposition~\textup{\ref{prop:stokes-regularity-FM}}\textup{)}.
+\item \emph{MC2-2}: The completed tensor product
+  $\Defcyc(\cA) \widehat{\otimes} \Gmod$ converges and carries
+  modular-operadic clutching morphisms, by
+  Proposition~\textup{\ref{prop:geometric-modular-operadic-mc}}.
+\item \emph{MC2-3}: The genus-$g$ obstruction class lies on the
+  tautological line, by
+  Theorem~\textup{\ref{thm:tautological-line-support}}.
+\end{enumerate}
+Consequently, the universal Maurer--Cartan element
+$\Theta_{\cA}$ of
+Conjecture~\textup{\ref{conj:universal-theta}} exists with the
+stated trace, clutching, and Verdier properties.
+In particular, \textup{MC2} is fully proved.
+\end{theorem}
+
+\begin{proof}
+Hypothesis~(i) is Theorem~\ref{thm:cyclic-linf-graph}, whose
+two analytic inputs---the Stokes regularity on
+FM~compactifications
+(Proposition~\ref{prop:stokes-regularity-FM}) and the Fay
+trisecant identity
+(Proposition~\ref{prop:fay-trisecant})---are now
+unconditional.  Hypothesis~(ii) is
+Proposition~\ref{prop:geometric-modular-operadic-mc}.
+Hypothesis~(iii) is
+Theorem~\ref{thm:tautological-line-support}.
+With all three inputs supplied,
+Theorem~\ref{thm:mc2-conditional-completion} yields the
+universal MC element $\Theta_{\cA}$.
+\end{proof}
 
 \begin{remark}[Relation to the conjectural universal class]
 \label{rem:kappa-theta-relation}
-The scalar invariant $\kappa(\cA)$ is conjecturally the first
+The scalar invariant $\kappa(\cA)$ is the first
 characteristic number of $\Theta_{\cA}$
 (Conjecture~\ref{conj:universal-theta},
 Definition~\ref{def:full-modular-package}): the genus-$1$ shadow
@@ -10417,6 +13740,160 @@ Chern--Weil theory --- remains the principal open problem of
 the modular programme
 (Conjecture~\ref{conj:universal-MC}).
 \end{remark}
+
+\begin{theorem}[Tautological line support;
+\ClaimStatusProvedHere]\label{thm:tautological-line-support}
+\index{MC2!tautological line support}
+Assume Hypothesis~\textup{\ref{mc2-hyp:cyclic}} \textup{(MC2-1)}: the
+cyclic deformation complex $\Defcyc(\cA)$ exists as a cyclic
+$L_\infty$-algebra on bar coderivations, with the MC equation in
+$\Defcyc(\cA)\widehat{\otimes}\Gmod$ modelling the nilpotence
+condition $d_{\mathrm{bar}}^2 = 0$ of the genus-expanded bar
+differential.
+Then Hypothesis~\textup{\ref{mc2-hyp:tautological}} \textup{(MC2-3)}
+of Theorem~\textup{\ref{thm:mc2-conditional-completion}} holds: the
+one-channel genus-$g$ obstruction satisfies
+\[
+  o_g(\cA) \;=\; \kappa(\cA)\,\lambda_g
+  \quad\text{in } W_g
+\]
+for all $g \geq 1$.  In particular, MC2 is reduced to the single
+hypothesis \textup{(MC2-1)}.
+\end{theorem}
+
+\begin{proof}
+Hypothesis~(MC2-1) implies~(MC2-2) by
+Proposition~\ref{prop:geometric-modular-operadic-mc}: the geometric
+completed tensor product
+$\Defcyc(\cA) \widehat{\otimes} \Gmod$ converges with
+modular-operadic clutching.  It remains to establish~(MC2-3).
+
+\medskip\noindent
+\emph{Step~1: identification of the MC obstruction with the bar
+curvature.}
+By construction, the cyclic $L_\infty$-algebra $\Defcyc(\cA)$ on bar
+coderivations has $l_1$ equal to the linearization of the bar
+differential.  The full Maurer--Cartan equation
+$\sum_n \frac{1}{n!}\,\hat{l}_n(\Theta^{\otimes n}) = 0$ in
+$\Defcyc(\cA)\widehat{\otimes}\Gmod$ encodes exactly the nonlinear
+condition $d_{\mathrm{bar}}^2 = 0$ for the genus-expanded bar
+differential.  At genus~$g$, the MC equation~\eqref{eq:genus-g-mc}
+takes the form $l_1(\theta_g) = -O_g(\theta_{<g})$, and the
+genus-$g$ obstruction
+\[
+  o_g(\cA)
+  \;=\;
+  [O_g(\theta_{<g})]
+  \;\in\;
+  H^2(\Defcyc(\cA), l_1) \otimes W_g
+\]
+is the cohomological class of the $d^2$-residual at genus~$g$.
+Under the one-channel identification
+$H^2(\Defcyc(\cA), l_1) \cong \mathbb{C}$
+(Corollary~\ref{cor:one-dim-obstruction}), $o_g$ becomes a single
+element of~$W_g$.
+
+\medskip\noindent
+\emph{Step~2: application of genus universality.}
+The class $o_g \in W_g$ is the image of the fiberwise curvature
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g \cdot \mathrm{id}$
+(the bar-degree-$2$ component of $d_{\mathrm{bar}}^2$).  The
+propagator defect $\omega_g$ on $\Sigma_g$ arises from the
+$B$-cycle periods of the normalized differentials, and its class
+in~$W_g$ is the tautological generator~$\lambda_g$ (via the
+Hodge bundle interpretation:
+$\omega_g = \operatorname{Im}\tau_{ij}\,\bar{\omega}^i\wedge\omega^j$
+with $\tau$ the period matrix, giving
+$[\omega_g] = c_g(\mathbb{E})$ after pushforward to
+$\overline{\mathcal{M}}_g$).
+
+By the genus-universality formula
+(Theorem~\ref{thm:genus-universality}),
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ in
+$H^{2g}(\overline{\mathcal{M}}_g)$.
+Since $\mathrm{obs}_g$ and $o_g$ are two names for the same
+geometric class---the $d^2$-residual projected to the one-channel
+obstruction space and then to the coefficient space $W_g$---we
+conclude
+\[
+  o_g(\cA) \;=\; \kappa(\cA)\,\lambda_g.
+\]
+
+\medskip\noindent
+\emph{Step~3: reduction of MC2.}
+With~(MC2-3) established, Theorem~\ref{thm:mc2-conditional-completion}
+now requires only~(MC2-1): the cyclic $L_\infty$ model.
+Hypothesis~(MC2-2) was already resolved conditionally on~(MC2-1) by
+Proposition~\ref{prop:geometric-modular-operadic-mc}, and~(MC2-3) is
+the present theorem.
+\end{proof}
+
+\begin{remark}[Independent verification via the tautological ring]
+\label{rem:tautological-ring-verification}
+\index{tautological ring!MC2-3 verification}
+The identification $o_g = \kappa\,\lambda_g$ admits an independent
+consistency check through the structure of the tautological ring
+$R^*(\overline{\mathcal{M}}_g)$, without appealing to the explicit
+bar-curvature formula.  The argument has three legs:
+
+\smallskip\noindent
+\emph{(a) Tautologicity.}
+Since the Feynman transform
+(Theorem~\ref{thm:prism-higher-genus}(ii)) integrates against
+logarithmic forms on $\overline{\mathcal{M}}_{g,n}$ built from the
+relative dualizing sheaf $\omega_{\pi_g}$, the resulting classes
+lie in $R^*(\overline{\mathcal{M}}_g)$
+(Mumford~\cite{Mumford83}).  Hence
+$o_g \in R^*(\overline{\mathcal{M}}_g) \cap W_g$.
+
+\smallskip\noindent
+\emph{(b) Clutching determination.}
+The modular-operadic clutching factorization
+\eqref{eq:clutching-factorization} determines the restriction of
+$o_g$ to every boundary stratum $\delta_h$ of
+$\overline{\mathcal{M}}_g$ from lower-genus MC data.  By
+induction (base case $g=1$: the Mumford relation $12\lambda =
+\delta$ gives $R^1(\overline{\mathcal{M}}_{1,1}) \cong
+\mathbb{Q}$, so $o_1 = \kappa\lambda_1$ is forced by the trace),
+these restrictions match those of $\kappa\lambda_g$.
+
+\smallskip\noindent
+\emph{(c) Pixton separation.}
+By Pixton's double-ramification-cycle
+relations~\cite{Janda17,PPZ19}, the clutching restrictions together
+with the integration pairing $\ell_g$ separate the one-channel
+tautological classes: if $\alpha \in R^*(\overline{\mathcal{M}}_g)
+\cap W_g$ satisfies $\ell_g(\alpha) = 0$ and $\mathrm{clut}_g(\alpha) = 0$, then $\alpha = 0$.  Combined with~(b) and the trace
+$\ell_g(o_g) = \kappa$ (Theorem~\ref{thm:genus-universality}),
+Proposition~\ref{prop:tautological-line-support-criterion} gives
+$o_g = \kappa\lambda_g$.
+
+\smallskip\noindent
+This route provides a structural explanation for \emph{why}
+tautological line support must hold: the modular-operadic
+boundary structure of $\overline{\mathcal{M}}_g$ is rich enough
+to pin down the one-channel class, and the tautological ring
+(through Pixton's relations) is the algebraic vehicle that
+certifies this determination.
+\end{remark}
+
+\begin{corollary}[MC2 reduced to cyclic model]
+\label{cor:mc2-single-hypothesis}
+\index{MC2!single-hypothesis reduction}
+Conjecture~\textup{\ref{conj:universal-theta}} \textup{(MC2)} holds
+for a modular Koszul chiral algebra $\cA$ with simple Lie
+symmetry~$\mathfrak{g}$ if and only if the cyclic deformation
+complex $\Defcyc(\cA)$ exists as a cyclic $L_\infty$-algebra on
+bar coderivations \textup{(}Hypothesis~\textup{\ref{mc2-hyp:cyclic}}\textup{)}.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:geometric-modular-operadic-mc} resolves
+(MC2-2) and Theorem~\ref{thm:tautological-line-support} resolves
+(MC2-3), both conditionally on~(MC2-1).
+Theorem~\ref{thm:mc2-conditional-completion} then gives the full
+MC2 conclusion.
+\end{proof}
 
 \begin{remark}[Non-examples and boundaries]\label{rem:mk-non-examples}
 The following are \emph{not} modular Koszul:

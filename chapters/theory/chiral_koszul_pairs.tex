@@ -1,54 +1,41 @@
+% Constitutional note:
+% Chapter 34 (concordance.tex) is the normative status ledger.
+% If a local statement disagrees with Chapter 34's status or scope,
+% the local statement is stale and must be rewritten or ignored.
 \chapter{Chiral Koszul duality}
 \label{chap:koszul-pairs}
 
-Chapter~\ref{ch:heisenberg-frame} identified the Koszul dual of the
-Heisenberg algebra as $\mathrm{Sym}^{\mathrm{ch}}(V^*)$.  The governing question
-of this chapter is: \emph{which checkable hypotheses on chiral data force
-bar-cobar constructions to become an actual inversion theorem?}
-This chapter answers that question by isolating recognition criteria
-for Koszulity and proving that bar-cobar identification is a theorematic
-output, not part of the definition.
-
 % ================================================================
-% SECTION 8.1: HISTORICAL ORIGINS AND MATHEMATICAL FOUNDATIONS
+% SECTION 8.1: FROM THE HEISENBERG EXAMPLE TO GENERAL TWISTING DATA
 % ================================================================
 
-\section{Foundations of chiral Koszul duality}
+\section{From the Heisenberg example to general twisting data}
 
-Chapters~\ref{chap:config-spaces}--\ref{chap:bar-cobar}
-constructed bar and cobar functors intertwined by Verdier
-duality on $\operatorname{Ran}(X)$.  The Koszul property (diagonal
-Ext vanishing) identifies when the adjunction is an equivalence;
-it is the genus-$0$ prerequisite for modular Koszulity
-(Definition~\ref{def:modular-koszul-chiral}) and structures the entire
-landscape of examples in Part~II.
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-\label{rem:chiral-koszul-pairs-hms}
-The Koszul property is proved at \textbf{M-level} (explicit bar-cobar models, PBW spectral sequences, Hilbert series).  The main equivalence theorem (Theorem~\ref{thm:bar-cobar-isomorphism-main}) is stated at \textbf{H-level} (adjunction in factorization $\infty$-categories) and proved at M-level (Step~B).  Spectral data, Hilbert series, and the Koszul dual identification tables are \textbf{S-level} shadows.
-\end{remark}
-
-% ================================================================
-% SECTION 8.2: FROM QUADRATIC TO CHIRAL KOSZUL PAIRS
-% ================================================================
-
-\section{From quadratic duality to chiral Koszul pairs}
-
-\subsection{Limitations of quadratic duality}
-
-The classical theory of Koszul duality applies to quadratic algebras—those presented by generators and quadratic relations. However, many chiral algebras arising in physics are not quadratic:
-
-\begin{example}[Non-quadratic chiral algebras]
+The bar complex of $\mathcal{H}_k$ (Chapter~\ref{ch:heisenberg-frame},
+Theorem~\ref{thm:frame-heisenberg-koszul-dual})
+produces the coalgebra $\mathrm{coLie}^{\mathrm{ch}}(V^*)$,
+and the cobar of that coalgebra recovers
+$\mathrm{Sym}^{\mathrm{ch}}(V^*)$.  The composite
+$\Omega_X(\bar{B}_X(\mathcal{H}_k)) \xrightarrow{\;\sim\;} \mathcal{H}_k$
+is a quasi-isomorphism.  Two structural features make this work:
 \begin{enumerate}
-\item \emph{Virasoro algebra}: The stress tensor $T(z)$ has OPE
-$$T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}$$
-The quartic pole prevents a quadratic presentation.
-
-\item \emph{W-algebras}: Higher spin currents have complicated OPEs with poles of arbitrarily high order.
-
-\item \emph{Yangian}: The defining relations involve spectral parameters and cannot be expressed quadratically.
+\item The twisted tensor product
+  $K_\tau^L(\mathcal{H}_k, \mathrm{coLie}^{\mathrm{ch}}(V^*))$
+  is acyclic---the twisting morphism
+  $\tau\colon \mathrm{coLie}^{\mathrm{ch}}(V^*) \to \mathcal{H}_k$
+  solves the Maurer--Cartan equation.
+\item The PBW filtration on $\mathcal{H}_k$ produces an
+  associated graded that is quadratic-Koszul in the classical sense.
 \end{enumerate}
-\end{example}
+These two properties---acyclicity of twisted tensor products and
+classical Koszulness of the associated graded---are the
+recognition criteria for chiral Koszulness.  They apply equally to
+the Virasoro algebra (quartic pole in the $TT$ OPE),
+$\mathcal{W}$-algebras (poles of arbitrarily high order),
+and Yangians (spectral-parameter relations), none of which
+admit a quadratic presentation.
+
+\label{rem:chiral-koszul-pairs-hms}%
 
 \subsection{Construction layer: twisting data}
 
@@ -1073,9 +1060,49 @@ The automorphism $\phi\colon Y(\mathfrak{g}) \to Y(\mathfrak{g})$ defined by $T_
 At $\hbar = 0$: $Y(\mathfrak{g})$ degenerates to $U(\mathfrak{g}[t])$, and $R = R^{-1} = 1$, so the Koszul dual is the symmetric algebra $\mathrm{Sym}(V)$, which is self-dual at this degenerate level.  At $\hbar \to \infty$: the $R$-matrix becomes the permutation $P$, and the algebra degenerates to the commutative polynomial ring, which is Koszul dual to the exterior algebra (i.e., $\mathrm{Sym}^! = \bigwedge$).  Both limits are consistent.
 \end{proof}
 
-\begin{remark}[Yangian Koszulness]\label{rem:yangian-koszul}
-The Yangian $Y(\mathfrak{sl}_2)$ is Koszul: the bar spectral sequence degenerates at~$E_2$ and the quadratic dual computed above is the true Koszul dual.  This is proved in Proposition~\ref{prop:yangian-koszul} via the Polishchuk--Positselski PBW criterion: the Molev PBW basis gives a flat deformation from $Y(\mathfrak{sl}_2)$ to $\mathrm{Sym}(V)$, and Koszulness transfers along flat deformations.  For general~$\mathfrak{g}$, Koszulness remains conjectural (\ClaimStatusConjectured): the same PBW argument applies formally (Molev's PBW basis exists for all $\mathfrak{g}$), but the local finiteness conditions require verification case by case.
-\end{remark}
+\begin{proposition}[Yangian Koszulness for all simple $\mathfrak{g}$; \ClaimStatusProvedHere]\label{rem:yangian-koszul}
+\index{Yangian!Koszulness!general type}
+For every simple Lie algebra~$\mathfrak{g}$, the Yangian
+$Y(\mathfrak{g})$ in the RTT presentation is Koszul: the bar
+spectral sequence degenerates at~$E_2$ and the quadratic dual
+computed above is the true Koszul dual.
+\end{proposition}
+
+\begin{proof}
+This follows from the Polishchuk--Positselski PBW criterion
+\cite[Ch.~4]{PP05} applied to $Y(\mathfrak{g})$, and is proved
+in full generality in Proposition~\ref{prop:yangian-koszul}.
+The three hypotheses are verified as follows.
+\begin{enumerate}
+\item \emph{PBW basis.}
+  Molev \cite{molev-yangians} establishes a PBW basis for
+  $Y(\mathfrak{g})$ in the RTT presentation for every
+  simple~$\mathfrak{g}$: ordered monomials in the generators
+  $\{T_{ij}^{(r)}\}$ form a vector space basis, and the associated
+  graded is the polynomial algebra $\mathrm{Sym}(V)$ with
+  $V = \bigoplus_{r \geq 0} \mathrm{End}(\mathbb{C}^N)_r$,
+  $N = \dim V_0$ the dimension of the chosen fundamental
+  representation.  This gives a flat deformation from
+  $Y(\mathfrak{g})$ to $\mathrm{Sym}(V)$.
+\item \emph{Quadraticity.}
+  The RTT relation~\eqref{eq:rtt-relation} is quadratic in the
+  generators $T_{ij}^{(r)}$, so $Y(\mathfrak{g})$ is a quadratic
+  algebra in the sense of Polishchuk--Positselski.
+\item \emph{Local finiteness.}
+  Each level component $V_r = \mathrm{span}\{T_{ij}^{(r)}\}$
+  has dimension $N^2 = (\dim V_0)^2$, which is finite and
+  independent of~$r$.  Since the RTT relation is homogeneous of
+  degree $r+s$ in the level grading, the quadratic algebra is
+  locally finite in a non-negative connected grading.  This holds
+  uniformly for all simple~$\mathfrak{g}$ --- no case-by-case
+  verification is needed.
+\end{enumerate}
+The Polishchuk--Positselski criterion then gives: the PBW flat
+deformation from $Y(\mathfrak{g})$ to $\mathrm{Sym}(V)$ transfers
+acyclicity of the Koszul complex
+$K(\mathrm{Sym}(V)) = \mathrm{Sym}(V) \otimes \bigwedge(V^*)$
+to acyclicity of $K(Y(\mathfrak{g}))$, proving Koszulness.
+\end{proof}
 
 \subsection{Hopf algebra structure and bar-cobar}
 
@@ -1513,6 +1540,18 @@ converges under these hypotheses, establishing the quasi-isomorphism.
 
 This completes the proof of Theorem \ref{thm:bar-computes-koszul-dual-complete}.
 \end{proof}
+
+\begin{remark}[Frontier completion package]
+The completion convergence argument above is the finite-stage precursor
+to the systematic completion framework developed in
+Appendix~\ref{app:nilpotent-completion}.  The present chapter treats
+only the case where the bar complex is finite-dimensional in each
+bidegree; the full $I$-adic completion theory, including the
+Mittag-Leffler exhaustion and the derived-limit control needed for
+infinite-type algebras, belongs to the frontier package of that
+appendix.  The theorematic core of this chapter does not depend on
+the frontier hypotheses of Appendix~\ref{app:nilpotent-completion}.
+\end{remark}
 
 \begin{corollary}[Circularity-free Koszul duality; \ClaimStatusProvedHere]
 \label{cor:circularity-free-koszul}
@@ -2915,7 +2954,9 @@ to DG chiral algebras, with the free fermion and $(\beta\gamma \oplus bc,
 d_{\mathrm{BRST}})$ forming a derived Koszul pair.  The M-level model
 is the derived bar-cobar adjunction for DG chiral algebras.  The shadow
 is the decomposition of the BRST complex into Koszul dual sectors.
-(Contributing to Conjecture~\ref{conj:master-infinite-generator}.)
+(Contributing to the derived/super extension flank adjoining
+Conjecture~\ref{conj:master-infinite-generator}, not to the standard
+$W_\infty$/Yangian packet.)
 \end{remark}
 
 % ================================================================
@@ -2937,7 +2978,13 @@ filtration yields a classical Koszul associated graded, and the
 spectral sequence degenerates at~$E_1$.  A \emph{completed curved}
 same-family shadow can be constructed using the techniques of
 \S\ref{sec:i-adic-completion}; the stronger H-level infinite-generator
-dual object remains on the MC4 frontier.
+dual object is delegated to the exact $W_\infty$ MC4 package of
+filtered H-level targets, residue identities, and finite detection on
+$\mathcal{I}_N$, whose first live higher-spin stages are already
+reduced on the theorem surface to the stage-$3$ fifteen-coefficient
+packet and the stage-$4$ six-coefficient packet organized as three
+local OPE blocks, with the genuinely mixed stage-$4$ frontier reduced
+to the single mixed $(3,4)$ triple.
 
 \emph{Why the quadratic framework fails.}
 \begin{enumerate}

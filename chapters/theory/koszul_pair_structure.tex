@@ -4,85 +4,83 @@
 
 \chapter{Chiral Koszul pairs}
 
-The Koszul pair $(\mathcal{H}_\kappa, \mathrm{Sym}^{\mathrm{ch}}(V^*))$ from Chapter~\ref{ch:heisenberg-frame} is the simplest instance of a general pattern.  This chapter investigates the fine structure: periodicity for affine and Virasoro algebras, the discriminant, and the interaction with representation theory.
-
-\noindent\emph{Governing question.} Once Koszulity is recognized, which
-secondary structures are functorial invariants of the pair itself
-(periodicity, discriminant, representation-theoretic shadows), and
-which are artifacts of particular presentations?
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-\label{rem:koszul-pair-structure-hms}
-This chapter operates at \textbf{M-level} (Hochschild complexes, explicit periodicity computations, discriminant formulas) with \textbf{S-level} shadows (periodicity numbers, the $\Pi(\cA)$ triple, Hilbert series identities).  The H-level perspective (derived Morita classes, formal moduli periodicity) is referenced where relevant.
-\end{remark}
-
 \section{Koszul duality}
 
-\subsection{First principles}
+\subsection{The classical pair on a point}
 
-The bar-cobar adjunction produces, for any augmented chiral algebra~$\cA$, a coalgebra $\barB(\cA)$ and a counit $\Omega(\barB(\cA)) \to \cA$.  The Koszul condition --- a quadratic constraint on generators and relations --- is what makes this counit a quasi-isomorphism; off the Koszul locus it persists only in the completed coderived category.  When it holds, Theorem~A gives an adjoint equivalence, Theorem~B gives $E_2$ collapse, and Theorem~C gives Lagrangian complementarity.  The Koszul condition converts formal duality into geometric duality.
+Let $V$ be a finite-dimensional vector space.  The symmetric algebra $\mathrm{Sym}(V)$ and the exterior algebra $\Lambda(V^*)$ form a Koszul pair
+(Definition~\ref{def:koszul-pair-classical}): there is a natural twisting cochain
+$\tau\colon \barB(\mathrm{Sym}(V)) \to \Lambda(V^*)$ that makes the
+twisted tensor product $\barB(\mathrm{Sym}(V)) \otimes_\tau \Lambda(V^*)$ acyclic.  The bar complex $\barB(\mathrm{Sym}(V)) = T^c(s\,V)$ is a cofree
+coalgebra with differential built from the commutative product, and
+$\tau$ identifies $\Lambda(V^*)$ as its linear dual.  Priddy's theorem \cite{Priddy70} gives the counit
+\[
+  \Omega(\barB(\mathrm{Sym}(V))) \xrightarrow{\;\sim\;} \mathrm{Sym}(V)
+\]
+as a quasi-isomorphism.  The curvature vanishes: $m_0 = 0$, so the bar
+differential satisfies $d^2 = 0$ on the nose.  All of this is a
+shadow of the $\mathrm{Com}^! = \mathrm{Lie}$ operadic duality.
+
+\subsection{The pair on a curve}
+
+Now take $X$ a smooth algebraic curve and replace
+$\mathrm{Sym}(V)$ by the chiral symmetric algebra
+$\chirCom(V \otimes \omega_X)$ --- a chiral algebra on $X$ whose fiber
+at each point is a copy of $\mathrm{Sym}(V)$, but whose
+$n$-point operations are governed by configuration spaces
+$\overline{C}_n(X)$ of colliding points rather than by tensor powers.
+The Koszul dual becomes $\chirLie(V^* \otimes \omega_X)$, and the bar
+construction $\barB_X(\cA)$ lives on the Fulton--MacPherson
+compactification $\FM_n(X)$.  The chiral twisting cochain
+(Definition~\ref{def:chiral-koszul-pair}) produces the counit
+\[
+  \Omega(\barB_X(\cA)) \xrightarrow{\;\sim\;} \cA,
+\]
+which is again a quasi-isomorphism when $\cA$ is chiral Koszul
+(Theorem~A, Theorem~\ref{thm:bar-cobar-isomorphism-main}).  Crucially:
+the genus-$0$ collision differential $\dzero$ still satisfies
+$\dzero^2 = 0$.  There is no curvature; the only new ingredient is
+the integration kernel mediating chiral operations on $X$.
+
+When $X = \bP^1$, the BD operadic equivalence recovers the classical pair from the chiral one: the category of chiral algebras on $\bP^1$ is equivalent to that of vertex algebras, and the chiral bar construction restricts to the classical bar construction on generators-and-relations data.
+
+\subsection{The pair in families: curvature from moduli}
+
+Fix a chiral Koszul pair $(\cA, \cA^!)$ on a genus-$0$ curve and deform the curve to genus~$g \geq 1$.  The bar construction
+$\barB_g(\cA)$ now lives on $\overline{\mathcal{M}}_g$, and the
+fiberwise differential $\dfib$ becomes \emph{curved}:
+\[
+  \dfib^2 = \kappa \cdot \omega_g \neq 0,
+\]
+where $\kappa$ is the level and $\omega_g \in H^2(\overline{\mathcal{M}}_g)$
+is the Hodge class.  The differential is no longer a differential; it squares to a curvature term that encodes the central charge.
+
+The total corrected differential $\Dg{g}$ absorbs the curvature into a higher-order correction --- a curved $A_\infty$-structure in which $m_0 \neq 0$ and $m_1^2(a) = [m_0, a]$ --- and satisfies $\Dg{g}^2 = 0$.  The passage from $\dzero$ to $\Dg{g}$ is the passage from classical to quantum: the quantum corrections are controlled by $H^*(\overline{\mathcal{M}}_g, Z(\cA))$, and Theorem~B (Theorem~\ref{thm:higher-genus-inversion}) shows that bar-cobar inversion persists via $E_2$~collapse of the associated spectral sequence.  Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}) identifies the obstruction and deformation spaces as Lagrangian complements.
 
 \begin{remark}[Three levels of Koszul pair]\label{rem:three-koszul-levels}
 \index{Koszul pair!comparison of levels}
-The notion of Koszul pair refines across three settings:
-\begin{center}\small
-\begin{tabular}{|l|l|l|l|}
-\hline
-& \textbf{Classical} & \textbf{Chiral} & \textbf{Modular} \\
-\hline
-\textbf{Definition} & Def.~\ref{def:koszul-pair-classical} &
-  Def.~\ref{def:chiral-koszul-pair} &
-  Def.~\ref{def:modular-koszul-homotopy} \\
-\textbf{Input} & Graded algebras &
-  Chiral algebras on $X$ &
-  + genus tower $g \geq 0$ \\
-\textbf{Bar object} & $\barB(A) = T^c(sA)$ &
-  $\barB_X(\cA)$ on $\overline{C}_n(X)$ &
-  $\barB_g(\cA)$ on $\overline{\mathcal{M}}_g$ \\
-\textbf{Curvature} & $m_0 = 0$ &
-  $\dzero^2 = 0$ &
-  $\dfib^2 = \kappa \cdot \omega_g$ \\
-\textbf{Main theorem} & Priddy~\cite{Priddy70} &
-  Thm~A (Thm~\ref{thm:bar-cobar-isomorphism-main}) &
-  Thms~B--D \\
-\textbf{Status} & \ClaimStatusProvedElsewhere &
-  \ClaimStatusProvedHere &
-  \ClaimStatusProvedHere \\
-\hline
-\end{tabular}
-\end{center}
-Each level strictly refines the previous: a chiral Koszul pair
-on $\bP^1$ recovers the classical pair via the operadic
-equivalence; a modular Koszul object at genus~$0$ recovers the
-chiral pair.
+\label{rem:koszul-pair-structure-hms}
+The construction above exhibits three levels of structure, each
+strictly refining the previous:
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Classical} (Definition~\ref{def:koszul-pair-classical}).
+  Input: graded algebras on a point.  Bar object: $\barB(A) = T^c(sA)$.
+  Curvature: $m_0 = 0$.  Main result: Priddy~\cite{Priddy70}.
+\item \textbf{Chiral} (Definition~\ref{def:chiral-koszul-pair}).
+  Input: chiral algebras on a curve~$X$.  Bar object: $\barB_X(\cA)$
+  on $\FM_n(X)$.  Curvature: $\dzero^2 = 0$.  Main result: Theorem~A
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+\item \textbf{Modular} (Definition~\ref{def:modular-koszul-homotopy}).
+  Input: chiral algebras + genus tower $g \geq 0$.  Bar object:
+  $\barB_g(\cA)$ on $\overline{\mathcal{M}}_g$.  Curvature:
+  $\dfib^2 = \kappa \cdot \omega_g$.  Main results: Theorems~B--D.
+\end{enumerate}
+Each level introduces new phenomena invisible to the previous one:
+the chiral level brings integration kernels and OPE poles; the
+modular level brings curvature, central extensions, and anomalies.
 \end{remark}
 
-\subsection{Operadic formulation}
-
-The bar-cobar exchange appears across algebra:
-
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Algebra Side} & \textbf{Coalgebra Side} & \textbf{Bridge} \\
-\hline
-Commutative algebras & Lie coalgebras & Bar-Cobar \\
-Associative algebras & Associative coalgebras & Hochschild \\
-Commutative operads & Lie cooperads & Operadic duality \\
-Vertex algebras & Vertex coalgebras & Borcherds-Kac \\
-Chiral algebras & Chiral coalgebras & \textbf{This work} \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{The Koszul condition}
-
-A \emph{Koszul pair} $(A_1, A_2)$
-(Definition~\ref{def:koszul-pair-classical},
-Definition~\ref{def:chiral-koszul-pair}) consists of two algebras
-whose bar and cobar constructions provide quasi-inverse equivalences.
-
-\section{From classical to chiral Koszul duality}
+\subsection{From classical to chiral: the PBW bridge}
 
 Classical Koszul duality (Definition~\ref{def:koszul-pair-classical}, Chapter~\ref{ch:algebraic-foundations}) requires quadratic relations.  Chiral algebras are almost never quadratic: the Virasoro OPE has a quartic pole, $W$-algebras have sixth-order poles, and Yangians have cubic relations.  The PBW filtration (Chapter~\ref{chap:koszul-pairs}) resolves this by reducing the chiral problem to the classical one on the associated graded.
 
@@ -786,7 +784,7 @@ is detected by the non-cyclic structure of $G_{\mathcal{A}}$.
 
 Under Koszul duality, the profile transforms as:
 $M_{\mathcal{A}^!}$ is the graded dual of $M_{\mathcal{A}}$
-(reflecting Theorem~\ref{thm:periodicity-exchange-koszul}),
+(reflecting Proposition~\ref{thm:periodicity-exchange-koszul}),
 $Q_{\mathcal{A}^!} \cong Q_{\mathcal{A}}$ (the exponents are
 preserved), and $G_{\mathcal{A}^!} = G_{\mathcal{A}}$ (the
 splitting field is determined by the exponents, not the level).
@@ -814,8 +812,11 @@ $\Pi_{\cA}$, not an integer.
 \smallskip\noindent
 \emph{Status.}
 For rank-$1$ algebras ($\widehat{\mathfrak{sl}}_2$, Virasoro),
-$\Perbr(\cA)$ agrees with the scalar period computed in
-Theorem~\ref{thm:periodicity-exchange-koszul}.  For
+$\Perbr(\cA)$ agrees with the scalar period appearing in the explicit
+rank-$1$ periodic calculations of
+Chapter~\ref{chap:deformation-theory}, and
+Proposition~\ref{thm:periodicity-exchange-koszul} records its transport
+under duality.  For
 higher-rank algebras where strict periodicity fails
 (Remark~\ref{rem:affine-periodicity-analysis}), the derived
 period is undefined and $\Pi_{\cA}$ is the correct invariant.
@@ -1272,10 +1273,18 @@ established the duality (see Remark~\ref{rem:hook-type-evidence}).
 The general conjecture involving non-principal
 nilpotents and Langlands dual groups requires gauge-theoretic input
 (boundary conditions for twisted $\mathcal{N}=4$ SYM, Gaiotto--Witten
-\cite{GW09}) that is beyond the scope of this monograph.
+\cite{GW09}) that is beyond the scope of this monograph.  On the
+algebraic side, the remaining non-principal packet is already split:
+one must determine the dual-orbit input, the orbit-indexed level shift,
+and the paired DS seed transport/globalization beyond the present
+hook/subregular theorematic seeds.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
-The conjecture posits a Koszul equivalence $D^b(\mathcal{W}^k(\mathfrak{g},f)\text{-mod}) \simeq D^b(\mathcal{W}^{k^L}(\mathfrak{g}^L,f^L)\text{-mod})$ for general nilpotent orbits and Langlands dual groups.
+The conjecture packages those three non-principal packets into the
+Type~II Koszul equivalence
+$D^b(\mathcal{W}^k(\mathfrak{g},f)\text{-mod}) \simeq D^b(\mathcal{W}^{k^L}(\mathfrak{g}^L,f^L)\text{-mod})$
+once the dual-orbit input, the orbit-indexed level shift, and the
+paired DS seed transport/globalization are supplied.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
@@ -1762,7 +1771,9 @@ is the Yang--Baxter equation, whose CS interpretation is established,
 but the general correspondence remains conjectural.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture identifies Yangian--quantum affine Koszul duality with the Chern--Simons/deformed Chern--Simons duality via the Witten--Reshetikhin--Turaev invariants.
+The conjecture treats Yangian--quantum affine Koszul duality as an
+algebraic shadow of the Chern--Simons/deformed Chern--Simons duality
+via the Witten--Reshetikhin--Turaev invariants.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
@@ -1800,7 +1811,11 @@ where $\Gamma$ is the orbifold group.
 \subsection{The holographic interpretation}
 
 \begin{conjecture}[AdS/CFT as Chern--Simons/Koszul duality; \ClaimStatusConjectured]
-The AdS$_3$/CFT$_2$ correspondence identifies the bulk Chern--Simons theory on AdS$_3$ with the boundary chiral algebra (WZW or W-algebra), and Koszul duality exchanges bulk and boundary descriptions.
+The AdS$_3$/CFT$_2$ correspondence should admit a
+Chern--Simons/Koszul template in which a suitable bulk Chern--Simons
+package on AdS$_3$ is compared with the boundary chiral algebra (WZW or
+W-algebra), and Koszul duality provides the algebraic shadow of that
+bulk/boundary comparison.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1816,17 +1831,24 @@ a conceptual assertion whose precise formulation requires the
 holographic dictionary.  The mathematical content --- that flat
 connections correspond to chiral algebra modules and Wilson lines to
 vertex operators --- is consistent with established results in
-Chern--Simons theory (Witten \cite{Wit89}).
+Chern--Simons theory (Witten \cite{Wit89}).  In the monograph's
+frontier order, the theorematic input here is the boundary-side
+Koszul/module package and the resulting flat-connection / Wilson-line
+dictionary; any actual bulk model and holographic comparison remain
+downstream MC5 tasks rather than missing finite-type algebraic input.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture formulates the AdS$_3$/CFT$_2$ holographic correspondence as an instance of chiral Koszul duality exchanging bulk Chern--Simons theory and boundary WZW/W-algebra.
+The conjecture treats AdS$_3$/CFT$_2$ as a
+Chern--Simons/Koszul template, with chiral Koszul duality supplying the
+algebraic shadow of the bulk/boundary comparison rather than an
+already-proved exchange.
 (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 \end{remark}
 
 Specifically:
 \[
 \begin{array}{ccc}
-\text{Chern--Simons on AdS}_3 & \longleftrightarrow & \text{CFT}_2 \text{ on } \partial(\text{AdS}_3) \\
+\text{bulk Chern--Simons package on AdS}_3 & \longleftrightarrow & \text{CFT}_2 \text{ on } \partial(\text{AdS}_3) \\
 \text{Flat connections} & \longleftrightarrow & \text{Chiral algebra modules} \\
 \text{Wilson lines} & \longleftrightarrow & \text{Vertex operators} \\
 \text{MC elements} & \longleftrightarrow & \text{Deformations}

@@ -5,16 +5,7 @@
 
 The bar construction of Chapter~\ref{chap:bar-cobar} produces a coalgebra $\bar{B}(\cA)$ from any chiral algebra $\cA$. Verdier duality on configuration spaces identifies this coalgebra with the Koszul dual $\cA^!$ intrinsically, without presupposing a definition from classical Koszul theory. The Heisenberg specialization of Chapter~\ref{ch:heisenberg-frame} is the prototypical case.
 
-\noindent\emph{Governing question.} Can the Koszul dual be constructed
-intrinsically from geometric duality, rather than postulated from
-classical orthogonality data?  This chapter resolves that circularity:
-it upgrades Verdier duality from a comparison tool to the defining
-construction of the dual cooperad in the chiral setting.
-
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
 \label{rem:poincare-duality-hms}
-Verdier duality on FM compactifications is realized at \textbf{M-level}: the exchange of log forms (bar) with distributional currents (cobar) is an explicit chain-level construction.  The H-level statement---that $\mathbb{D}_{\operatorname{Ran}}$ intertwines bar and cobar as an equivalence of factorization (co)algebras---is referenced from the abstract framework of Ayala--Francis~\cite{AF15}.
-\end{remark}
 
 \section{The circularity problem}
 
@@ -42,6 +33,60 @@ where the colimit ranges over collections of disjoint disk embeddings $\coprod_i
 
 Verdier duality exchanges integration over $\overline{C}_n(M)$ with distributions on $C_n(M)$, logarithmic forms with delta functions, and residues at collisions with singularity insertions.  Construction~\ref{const:A-dual-intrinsic} makes this precise.
 \end{remark}
+
+\section{Logarithmic forms and distributional currents}
+\label{sec:geometric-arena}
+\index{collision geometry|textbf}
+
+On $\overline{C}_k(X)$, two dual sheaf complexes live naturally.
+
+The sheaf $\Omega^*_{\log}(\overline{C}_k(X))$ consists of
+differential forms with at worst logarithmic poles along the
+boundary divisors $D_I = \{z_i = z_j : i, j \in I\}$.  The
+propagator $\eta_{ij} = d\log(z_i - z_j)$ is the simplest
+section: it has a simple pole on $D_{ij}$ and is smooth elsewhere.
+The wedge products $\bigwedge_{e \in E(T)} \eta_e$, indexed by edges
+of planar trees, are the integrands of the bar construction.
+
+The sheaf $\mathcal{D}^*_{\mathrm{dist}}(C_k(X))$ consists of
+distributional currents on the open configuration space.  The delta
+current $\delta_{ij} = \delta(z_i - z_j)\, dz_i \wedge d\bar{z}_j$,
+supported on the collision locus $D_{ij}$, is the simplest section.
+The distributional insertions $\prod_{e \in E(T)} \delta_e$ are the
+integrands of the cobar construction.
+
+Verdier duality exchanges these two sheaves: there is a canonical
+perfect pairing
+\begin{equation}\label{eq:log-dist-pairing-pd}
+\langle \cdot, \cdot \rangle \colon
+\Omega^*_{\log}(\overline{C}_k(X))
+\otimes
+\mathcal{D}^*_{\mathrm{dist}}(C_k(X))
+\longrightarrow \mathbb{C}
+\end{equation}
+given by $\langle \omega, K \rangle = \int_{\overline{C}_k(X)}
+\omega \wedge \iota^* K$, which identifies residue extraction (bar)
+with singularity insertion (cobar) as Poincar\'e--Lefschetz dual
+operations on $(\overline{C}_k(X), D)$.
+
+\begin{example}[Two points]
+For $k = 2$ on $X = \mathbb{P}^1$:
+$\langle \eta_{12}, \delta_{12} \rangle
+= \operatorname{Res}_{z_1 = z_2} \eta_{12} = 1$.
+The OPE coefficient of the identity channel is the residue of the
+propagator, paired with the delta current at collision.
+\end{example}
+
+\begin{example}[Three points and the Arnold relation]
+For $k = 3$, the three boundary divisors $D_{12}$, $D_{23}$,
+$D_{31}$ of $\overline{C}_3(\mathbb{P}^1)$ satisfy
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$
+(Theorem~\ref{thm:arnold-three}).  The pairing with the
+distributional currents $\delta_{12} \wedge \delta_{23}$, etc.,
+gives the associativity constraint: the signed sum of iterated
+residues vanishes.
+\end{example}
 
 \section{Verdier duality on configuration spaces}
 
@@ -573,9 +618,8 @@ $$\widehat{\Phi}: \widehat{\bar{B}}^{\text{ch}}(\mathcal{A}) = \varprojlim_n \ba
 as a quasi-isomorphism of completed coalgebras.
 
 \emph{Step~4: Cobar.}
-By formal smoothness (hypothesis~(3)),
-$\dim \mathrm{CH}^n(\mathcal{A}) < \infty$
-(Theorem~\ref{thm:existence-koszul}(2)), so the cobar
+By the finite-dimensionality hypothesis imposed in the completed
+setting, $\dim \mathrm{CH}^n(\mathcal{A}) < \infty$, so the cobar
 construction $\Omega^{\text{ch}}(\widehat{\mathcal{A}^!})$ is
 well-defined and carries a complete filtration compatible with
 the differential.  The bar-cobar adjunction unit
