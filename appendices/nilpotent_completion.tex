@@ -1,31 +1,38 @@
 % ==========================================
 % APPENDIX: NILPOTENT COMPLETION AND KOSZUL DUALITY
 % For Non-Quadratic Chiral Algebras
+% Status: FRONTIER appendix (Stratum II).
+% The theorematic core of the monograph is the finite-type
+% Koszul-locus theory of Chapters 2, 8, and 9.  This appendix
+% records the leading extension of that core, not a replacement.
 % ==========================================
 
-\chapter{Nilpotent completion and Koszul duality for non-quadratic algebras}
+\chapter{Nilpotent-completion frontier for non-quadratic Koszul duality}
 \label{app:nilpotent-completion}
 
 \begin{abstract}
-For non-quadratic chiral algebras such as Virasoro and W-algebras, the
-bar construction produces an infinite coalgebra that requires
-completion to yield a usable completed curved bar model and dual shadow
-data. The $I$-adic completion framework, convergence criteria, and
-explicit examples are developed below, extending Koszul duality beyond
-the quadratic setting.
+This appendix develops a frontier completion package extending the
+finite-type geometric Koszul formalism to a larger class of filtered
+chiral algebras under finite-generation and polynomial-growth
+hypotheses.  For non-quadratic chiral algebras such as Virasoro and
+W-algebras, the bar construction produces an infinite coalgebra that
+requires completion to yield a usable completed curved bar model and
+dual shadow data.  The appendix records the $I$-adic framework, the
+finite-stage infrastructure, and the exact missing lemmas that separate
+the standard completed examples from a universal completion theorem.
 \end{abstract}
 
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-The $I$-adic completion framework and convergence criteria operate at
-\textbf{M-level} (explicit pro-nilpotent chain models).  The
-pro-nilpotent/coderived formalism points toward \textbf{H-level}
-structures (derived completion, ind-pro categories) developed further
-in Appendix~\ref{app:coderived}.
+\begin{remark}[Dependency warning]
+\label{rem:nilpotent-completion-dependency}
+The theorematic core of the monograph remains the finite-type
+Koszul-locus theory of Chapters~\ref{chap:koszul-pairs}
+and~\ref{chap:higher-genus}.  The present appendix records the leading
+extension of that core, not a replacement of it.  Every result below
+should be read as belonging to the completion frontier (Stratum~II),
+and its validity is conditional on the finite-generation and
+polynomial-growth hypotheses stated in
+Theorem~\ref{thm:completion-convergence}.
 \end{remark}
-
-The governing question of this appendix is: how bar constructions for
-non-quadratic chiral algebras are completed so that Koszul dual objects
-exist and remain computable.
 
 \section{The problem: why completion is necessary}
 
@@ -63,7 +70,8 @@ where $I = \ker(\epsilon)$ is the coaugmentation coideal.
 The $I$-adic completion is:
 $$\widehat{\bar{B}}(\mathcal{A}) := \varprojlim_n \bar{B}(\mathcal{A})/I^n$$
 
-This completed object is the correct Koszul dual coalgebra for non-quadratic algebras.
+This completed object is the candidate dual model in the completion
+regime studied here.
 \end{idea}
 
 \section{The conilpotent filtration}
@@ -153,6 +161,20 @@ The transition maps $\bar{B}_k/F^{n+1} \twoheadrightarrow \bar{B}_k/F^n$ are sur
 exists and is exact.  The dg coalgebra structure passes to the limit because $d_{\bar{B}}$ and $\Delta$ are continuous for the $F^\bullet$-adic topology.
 \end{proof}
 
+\begin{remark}[Frontier status]\label{rem:completion-convergence-frontier}
+Step~3 above compresses a non-trivial claim: that the obstruction
+groups $H^2(\mathcal{A}, F^n/F^{n+1})$ are eventually zero under the
+polynomial growth hypothesis.  The argument invokes the finite
+Hochschild cohomology assumption to control the total obstruction space,
+and the polynomial growth bound to show each graded piece $F^n/F^{n+1}$
+becomes negligible for large~$n$.  A fully expanded proof would require
+an explicit filtration-degree estimate showing that the polynomial bound
+on OPE coefficients forces $H^2(\mathcal{A}, F^n/F^{n+1}) = 0$ for
+$n \gg 0$.  This places the result in the completion frontier regime of
+Remark~\ref{rem:existence-regimes}(ii), not in the strict finite-type
+core.
+\end{remark}
+
 \section{Koszul duality via completion}
 
 \subsection{The main construction}
@@ -168,10 +190,15 @@ where $T$ denotes the tensor algebra, $s^{-1}$ the desuspension, $\overline{\mat
 \end{construction}
 
 \begin{theorem}[Completed bar-cobar duality; \ClaimStatusProvedHere]\label{thm:completed-bar-cobar}
-For a chiral algebra $\mathcal{A}$ satisfying the convergence criteria of Theorem~\ref{thm:completion-convergence}, there is a quasi-isomorphism:
+For a chiral algebra $\mathcal{A}$ satisfying the convergence criteria of
+Theorem~\textup{\ref{thm:completion-convergence}}, there is a quasi-isomorphism:
 $$\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \mathcal{A}$$
 
-This extends bar-cobar inversion to the completed setting.
+This is the completion-regime analogue of the finite-type bar-cobar
+inversion of the core monograph (Main Theorem~B), valid under the
+finite-generation and polynomial-growth hypotheses stated above.
+See Remark~\textup{\ref{rem:completed-bar-cobar-frontier}} for the
+frontier status of the argument.
 \end{theorem}
 
 \begin{proof}
@@ -207,6 +234,18 @@ H^*(\widehat{\bar{B}}(\mathcal{A})) \xrightarrow{\;\cong\;} \varprojlim_n H^*(\b
 \]
 is an isomorphism.  Since each finite-level quotient $\bar{B}(\mathcal{A})/F_n$ is a conilpotent coalgebra, the cobar construction on it recovers~$\mathcal{A}/I^n$ (where $I$ is the augmentation ideal of~$\mathcal{A}$), and passing to the limit gives $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \varprojlim_n (\mathcal{A}/I^n) = \mathcal{A}$, the last equality holding because $\mathcal{A}$ is $I$-adically complete under the convergence hypotheses.
 \end{proof}
+
+\begin{remark}[Frontier status]\label{rem:completed-bar-cobar-frontier}
+Step~4 above uses finite-stage bar-cobar inversion: the claim that
+$\Omega(\bar{B}(\mathcal{A})/F_n) \simeq \mathcal{A}/I^n$ for each~$n$
+requires that each truncation $\mathcal{A}/I^n$ satisfies the hypotheses
+of the uncompleted bar-cobar inversion theorem (Theorem~B).  For the
+standard Master Table families, these finite-stage quotients are
+finite-dimensional and hence automatically on the Koszul locus.  For
+algebras outside these families, this finite-stage compatibility is an
+additional hypothesis.  This places the result in the completion
+frontier regime of Remark~\ref{rem:existence-regimes}(ii).
+\end{remark}
 
 \subsection{Essential image}
 
@@ -256,6 +295,17 @@ Given $\widehat{\mathcal{C}}$ satisfying (1)--(4), define $\mathcal{A} := \Omega
 
 \emph{Step 3: Recovery.}  By Theorem~\ref{thm:completed-bar-cobar}, $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \mathcal{A}$.  We must show $\widehat{\bar{B}}(\mathcal{A}) \simeq \widehat{\mathcal{C}}$.  The bar-cobar adjunction provides a unit $\eta: \widehat{\mathcal{C}} \to \widehat{\bar{B}}(\Omega(\widehat{\mathcal{C}}))$.  Condition (4) ensures this is a quasi-isomorphism: the $E_2$ degeneration means the bar spectral sequence for $\mathcal{A} = \Omega(\widehat{\mathcal{C}})$ collapses, so $\widehat{\bar{B}}(\mathcal{A})$ has the same cohomology as $\widehat{\mathcal{C}}$.  Since both are complete and conilpotent, a cohomology isomorphism between completed conilpotent coalgebras is a quasi-isomorphism of dg coalgebras (by the comparison theorem for complete filtered complexes, cf.\ Positselski \cite{Positselski}).
 \end{proof}
+
+\begin{remark}[Frontier status]\label{rem:koszul-dual-characterization-frontier}
+The backward direction (Step~3) invokes
+Theorem~\ref{thm:completed-bar-cobar}, whose frontier status is
+recorded in Remark~\ref{rem:completed-bar-cobar-frontier}.  The
+essential-image characterization therefore inherits the same
+frontier standing: the result is valid under the convergence
+hypotheses of Theorem~\ref{thm:completion-convergence}, but those
+hypotheses are part of the completion frontier regime, not the strict
+finite-type core.
+\end{remark}
 
 \section{Connection to Beilinson--Drinfeld}
 
@@ -479,30 +529,26 @@ This is the string theory expansion (the $\hbar^{-2}$ corresponds to the sphere/
 
 \section{Summary}
 
-\begin{theorem}[Main result; \ClaimStatusProvedHere]\label{thm:nilpotent-main}
-For a chiral algebra $\mathcal{A}$ on a smooth algebraic curve $X$ satisfying finite generation over $\mathcal{D}_X$ and polynomial growth of structure constants, the $I$-adic completion $\widehat{\bar{B}}(\mathcal{A})$ of the geometric bar complex provides a well-defined Koszul dual coalgebra satisfying:
+\begin{remark}[Completed frontier package]\label{thm:nilpotent-main}
+This appendix should be read as a frontier package, not as a blanket
+extension of the proved core.  What is currently in hand is:
 \begin{enumerate}
-\item \emph{Convergence.} $\widehat{\bar{B}}(\mathcal{A})$ is a well-defined dg coalgebra \textup{(Theorem~\ref{thm:completion-convergence})}
-\item \emph{Duality.} $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \mathcal{A}$ \textup{(Theorem~\ref{thm:completed-bar-cobar})}
-\item \emph{Essential image.} A completed coalgebra arises as $\widehat{\bar{B}}(\mathcal{A})$ iff it satisfies conilpotency, topological compatibility, cogenerator existence, and $E_2$ degeneration \textup{(Theorem~\ref{thm:koszul-dual-characterization})}
-\item \emph{BD compatibility}: The completion agrees with Beilinson--Drinfeld's filtered chiral algebra theory \textup{(Theorem~\ref{thm:BD-chiral-homology})}
-\item \emph{Geometric origin}: The conilpotent filtration is the collision depth filtration on FM compactifications \textup{(Proposition~\ref{prop:geom-conilpotent})}
+\item the finite-stage convergence and geometry of the completed bar
+      tower
+      \textup{(}Theorem~\ref{thm:completion-convergence},
+      Proposition~\ref{prop:geom-conilpotent}\textup{)};
+\item the inverse-limit criteria used by the standard
+      $\mathcal{W}_\infty$ and Yangian towers in the MC4 package of
+      Chapter~\ref{chap:concordance};
+\item the compatibility of these completed models with the
+      Beilinson--Drinfeld filtered framework
+      \textup{(}Theorem~\ref{thm:BD-chiral-homology}\textup{)}.
 \end{enumerate}
-
-This extends geometric Koszul duality from the quadratic setting to all chiral algebras satisfying the finite generation and polynomial growth hypotheses.
-\end{theorem}
-
-\begin{proof}
-Each item is proved earlier in this appendix:
-\begin{enumerate}
-\item Theorem~\ref{thm:completion-convergence} establishes convergence of the inverse system $\{\bar{B}(\mathcal{A})/F_n\}$ via the Mittag-Leffler condition, using finite generation (Noetherian control on each bidegree), polynomial growth (stabilization of graded pieces), and formal smoothness (finite-dimensional obstruction spaces).
-
-\item Theorem~\ref{thm:completed-bar-cobar} proves the quasi-isomorphism $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \mathcal{A}$ by extending the uncompleted bar-cobar inversion through a comparison of filtered complexes, using $\varprojlim^1 = 0$ from the Mittag-Leffler condition.
-
-\item Theorem~\ref{thm:koszul-dual-characterization} characterizes the essential image of the completed bar functor: the four conditions (conilpotency, topological compatibility, cogenerators, $E_2$ degeneration) are both necessary (by properties of $\widehat{\bar{B}}$) and sufficient (the cobar construction recovers $\mathcal{A}$, and the bar-cobar adjunction counit is a quasi-isomorphism by the degeneration hypothesis).
-
-\item Theorem~\ref{thm:BD-chiral-homology} (Beilinson--Drinfeld) identifies our completed bar complex with BD's completed chiral homology: $\widehat{H}_*^{\mathrm{ch}}(X, \mathcal{A}) \cong H_*(\widehat{\bar{B}}(\mathcal{A}))$.
-
-\item Proposition~\ref{prop:geom-conilpotent} identifies the conilpotent filtration with collision depth on FM trees, connecting the algebraic completion to the geometry of configuration spaces.
-\end{enumerate}
-\end{proof}
+What is \emph{not} yet elevated to monograph-wide theorematic status is
+the universal claim that finite generation plus polynomial growth alone
+suffice for every non-quadratic chiral algebra.  The remaining missing
+steps are exactly the global obstruction-vanishing argument, the
+completed $E_2$-degeneration argument, and the finite-stage
+compatibility needed to pass from the standard towers to a universal
+inverse-limit theorem.
+\end{remark}

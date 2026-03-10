@@ -21,9 +21,12 @@ TEX       := pdflatex
 TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=0 -cnf-line='buf_size=1000000'
 LATEXMK   := latexmk
 MKFLAGS   := -pdf -pdflatex="$(TEX) $(TEXFLAGS)" -interaction=nonstopmode
+BUILD_SCRIPT := ./scripts/build.sh
+LOG_DIR   := .build_logs
 
 # Number of passes for cross-references, TOC, and page numbers to stabilize.
 PASSES    := 6
+FAST_PASSES := 4
 
 # Source files: every .tex file that main.tex transitively \input's or \include's.
 SOURCES   := $(wildcard *.tex) \
@@ -61,45 +64,30 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 ##   `make clean` is still a no-op when sources are unchanged.
 all: $(STAMP)
 
-$(STAMP): $(SOURCES)
+$(STAMP): $(SOURCES) $(BUILD_SCRIPT)
 	@echo "══════════════════════════════════════════════════════════"
 	@echo "  Building: $(MAIN).tex  →  $(PDF)"
-	@echo "  Engine:   $(TEX) (up to $(PASSES) passes)"
+	@echo "  Engine:   quiet $(TEX) wrapper (up to $(PASSES) passes)"
 	@echo "══════════════════════════════════════════════════════════"
-	@for i in $$(seq 1 $(PASSES)); do \
-		echo ""; \
-		echo "  ── Pass $$i / $(PASSES) ──────────────────────────────────"; \
-		find . -name '*.aux' -exec xattr -c {} \; 2>/dev/null; \
-		xattr -c $(MAIN).out 2>/dev/null; \
-		$(TEX) $(TEXFLAGS) $(MAIN).tex || true; \
-		if [ -f $(MAIN).idx ]; then makeindex -q $(MAIN).idx 2>/dev/null || true; fi; \
-			if [ $$i -ge 2 ] && ! grep -Eq 'Rerun to get|Label\(s\) may have changed|Package rerunfilecheck Warning' $(MAIN).log 2>/dev/null \
-			   && [ $$(grep -c 'Citation.*undefined' $(MAIN).log) -eq 0 ] \
-			   && [ $$(grep -c 'Reference.*undefined' $(MAIN).log) -eq 0 ]; then \
-			echo "  ✓  Converged after $$i passes."; \
-			break; \
-		fi; \
-	done
+	@mkdir -p $(LOG_DIR)
+	@$(BUILD_SCRIPT) $(PASSES)
 	@if [ ! -f $(MAIN).pdf ]; then \
 		echo "  ✗  Build failed — no PDF produced."; exit 1; \
 	fi
 	@touch $(STAMP)
 	@echo ""
 	@echo "  ✓  $(PDF) built successfully."
+	@echo "     Logs: $(LOG_DIR)/tex-build.stdout.log and $(MAIN).log"
 	@echo ""
 
-## fast: Single-pass build for rapid iteration during writing.
-##   Tolerates font-shape warnings (newtx exit code 1) if PDF is produced.
+## fast: Bounded quick build for rapid iteration.
+##   Runs enough passes to settle references in normal editing flows, while
+##   still capping the work below the full build target.
 fast:
-	@echo "  ── Fast build (single pass) ──"
-	@find . -name '*.aux' -exec xattr -c {} \; 2>/dev/null
-	@xattr -c $(MAIN).out 2>/dev/null || true
-	@$(TEX) $(TEXFLAGS) $(MAIN).tex; rc=$$?; \
-	if [ -f $(MAIN).pdf ] && grep -q "Output written" $(MAIN).log; then \
-		exit 0; \
-	else \
-		exit $$rc; \
-	fi
+	@echo "  ── Fast build (up to $(FAST_PASSES) passes) ──"
+	@mkdir -p $(LOG_DIR)
+	@$(BUILD_SCRIPT) $(FAST_PASSES)
+	@echo "     Logs: $(LOG_DIR)/tex-build.stdout.log and $(MAIN).log"
 
 ## watch: Continuous rebuild on save (requires latexmk).
 watch:
@@ -110,8 +98,14 @@ watch:
 ## check: Halt on first error — use for CI or pre-commit validation.
 check:
 	@echo "  ── Error check (halt-on-error) ──"
-	$(TEX) -interaction=nonstopmode -halt-on-error -file-line-error $(MAIN).tex
+	@mkdir -p $(LOG_DIR)
+	@$(TEX) -interaction=nonstopmode -halt-on-error -file-line-error $(MAIN).tex >$(LOG_DIR)/check.log 2>&1 || { \
+		echo "  ✗  Check failed. See $(LOG_DIR)/check.log"; \
+		grep -aE '^! |Emergency stop|Runaway argument|Fatal error|Undefined control sequence|File ended while scanning|No pages of output' $(LOG_DIR)/check.log | head -n 20 || tail -n 40 $(LOG_DIR)/check.log; \
+		exit 1; \
+	}
 	@echo "  ✓  No fatal errors."
+	@echo "     Log: $(LOG_DIR)/check.log"
 
 ## integrity: Strict manuscript integrity gate (clean rebuild + diagnostics + claim-tag coverage).
 integrity:
@@ -124,7 +118,14 @@ phase0-index:
 ## draft: Build with draft class option (skips image rendering, faster).
 draft:
 	@echo "  ── Draft build ──"
-	$(TEX) $(TEXFLAGS) "\PassOptionsToClass{draft}{memoir}\input{$(MAIN)}"
+	@mkdir -p $(LOG_DIR)
+	@$(TEX) $(TEXFLAGS) "\PassOptionsToClass{draft}{memoir}\input{$(MAIN)}" >$(LOG_DIR)/draft.log 2>&1 || { \
+		echo "  ✗  Draft build failed. See $(LOG_DIR)/draft.log"; \
+		grep -aE '^! |Emergency stop|Runaway argument|Fatal error|Undefined control sequence|File ended while scanning|No pages of output' $(LOG_DIR)/draft.log | head -n 20 || tail -n 40 $(LOG_DIR)/draft.log; \
+		exit 1; \
+	}
+	@echo "  ✓  Draft build complete."
+	@echo "     Log: $(LOG_DIR)/draft.log"
 
 ## clean: Remove build debris (aux, log, etc.) but preserve the build stamp.
 ##   Idempotent — safe to spam. After `make clean`, `make` is a no-op if
@@ -135,6 +136,7 @@ clean:
 		rm -f $(MAIN).$$ext; \
 	done
 	@find chapters appendices bibliography -name '*.aux' -delete 2>/dev/null || true
+	@rm -rf $(LOG_DIR)
 	@rm -f texput.log
 	@echo "  ✓  Clean (stamp preserved — make will skip rebuild if sources unchanged)."
 
@@ -172,16 +174,53 @@ census: metadata
 verify:
 	@./scripts/verify_edit.sh --all
 
-## test: Run computational kernel test suite (if it exists).
+## test: Run fast test suite (excludes @pytest.mark.slow).  Use for rapid iteration.
 test:
 	@if [ -d compute/tests ] && ls compute/tests/test_*.py 1>/dev/null 2>&1; then \
-		echo "  ── Running compute test suite ──"; \
+		echo "  ── Running compute test suite (fast: excludes slow) ──"; \
+		mkdir -p $(LOG_DIR); \
 		if [ -f compute/.venv/bin/python ]; then \
-			compute/.venv/bin/python -m pytest compute/tests/ -v; \
+			PYTHON_BIN=compute/.venv/bin/python; \
 		elif [ -f .venv/bin/python ]; then \
-			.venv/bin/python -m pytest compute/tests/ -v; \
+			PYTHON_BIN=.venv/bin/python; \
 		else \
-			python3 -m pytest compute/tests/ -v; \
+			PYTHON_BIN=python3; \
+		fi; \
+		LOG_FILE=$(LOG_DIR)/pytest.log; \
+		$$PYTHON_BIN -m pytest compute/tests/ -q -ra -m "not slow" >$$LOG_FILE 2>&1; rc=$$?; \
+		if [ $$rc -eq 0 ]; then \
+			tail -n 5 $$LOG_FILE; \
+			echo "     Log: $$LOG_FILE"; \
+		else \
+			echo "  ✗  Test run failed. See $$LOG_FILE"; \
+			tail -n 120 $$LOG_FILE; \
+			exit $$rc; \
+		fi; \
+	else \
+		echo "  (no compute tests found — skipping)"; \
+	fi
+
+## test-full: Run the complete test suite including slow tests.  Use before commits.
+test-full:
+	@if [ -d compute/tests ] && ls compute/tests/test_*.py 1>/dev/null 2>&1; then \
+		echo "  ── Running FULL compute test suite (including slow) ──"; \
+		mkdir -p $(LOG_DIR); \
+		if [ -f compute/.venv/bin/python ]; then \
+			PYTHON_BIN=compute/.venv/bin/python; \
+		elif [ -f .venv/bin/python ]; then \
+			PYTHON_BIN=.venv/bin/python; \
+		else \
+			PYTHON_BIN=python3; \
+		fi; \
+		LOG_FILE=$(LOG_DIR)/pytest-full.log; \
+		$$PYTHON_BIN -m pytest compute/tests/ -q -ra >$$LOG_FILE 2>&1; rc=$$?; \
+		if [ $$rc -eq 0 ]; then \
+			tail -n 5 $$LOG_FILE; \
+			echo "     Log: $$LOG_FILE"; \
+		else \
+			echo "  ✗  Test run failed. See $$LOG_FILE"; \
+			tail -n 120 $$LOG_FILE; \
+			exit $$rc; \
 		fi; \
 	else \
 		echo "  (no compute tests found — skipping)"; \
@@ -194,7 +233,7 @@ help:
 	@echo "  ────────────────────────────────────────"
 	@echo ""
 	@echo "  make            Full build ($(PASSES) passes, stable cross-refs)"
-	@echo "  make fast       Single pass for quick iteration"
+	@echo "  make fast       Quick converging build (up to $(FAST_PASSES) passes)"
 	@echo "  make watch      Continuous rebuild on save (latexmk)"
 	@echo "  make check      Halt-on-error validation"
 	@echo "  make integrity  Strict CI-style integrity gate"
@@ -206,6 +245,7 @@ help:
 	@echo "  make metadata   Regenerate machine-readable metadata"
 	@echo "  make census     Print claim census"
 	@echo "  make verify     Run anti-pattern verification"
-	@echo "  make test       Run computational kernel tests"
+	@echo "  make test       Fast tests (excludes slow — for rapid iteration)"
+	@echo "  make test-full  Full test suite (including slow — before commits)"
 	@echo "  make help       This message"
 	@echo ""

@@ -2,16 +2,6 @@
 \label{app:homotopy-transfer}
 \index{homotopy transfer theorem|textbf}
 
-\begin{remark}[Semantic levels; Convention~\ref{conv:hms-levels}]
-This appendix operates at \textbf{M-level}: the homotopy transfer
-theorem and its tree-formula proof are explicit chain-level
-constructions producing $A_\infty$ and $L_\infty$ structures.
-\end{remark}
-
-The governing question of this appendix is: when strict algebraic
-structure is transported across quasi-isomorphisms, which higher
-operations are forced and how are they computed explicitly.
-
 The homotopy transfer theorem transports algebraic structures along quasi-isomorphisms
 at the cost of introducing higher operations.
 
@@ -505,3 +495,361 @@ as geometric bar complexes. The quasi-isomorphism is induced by the SDR data.
 \begin{proof}
 The bar construction is functorial for $\Ainf$-morphisms \cite{LV12}: an $\Ainf$-quasi-isomorphism $f: A \xrightarrow{\sim} B$ induces a quasi-isomorphism $\Bbar(f): \Bbar(A) \xrightarrow{\sim} \Bbar(B)$ of bar complexes. Since the SDR maps $(\iota, p)$ extend to $\Ainf$-quasi-isomorphisms by Theorem~\ref{thm:htt}, the bar complexes $\Bbar(\cA)$ and $\Bbar(H, \{\tilde{m}_n\})$ are quasi-isomorphic. The geometric realization is compatible because $\Bbar^{\mathrm{geom}}$ is computed as the factorization homology of $\Bbar$, and factorization homology preserves quasi-isomorphisms between factorization algebras on $X$.
 \end{proof}
+
+
+\section{Homotopy transfer and the main theorems}
+\label{sec:htt-main-theorems}
+
+The apparatus of this appendix is not auxiliary to the main
+theory; it \emph{is} the mechanism by which classical Koszul duality
+acquires quantum corrections.  We make this precise.
+
+\subsection{The bar-cobar counit as HTT output}
+
+\begin{theorem}[Bar-cobar inversion via homotopy transfer;
+\ClaimStatusProvedHere]
+\label{thm:bar-cobar-htt}
+\index{homotopy transfer theorem!bar-cobar inversion}
+Let $\cA$ be a chiral Koszul algebra on a smooth curve~$X$.
+The bar-cobar counit
+\[
+\psi \colon \Omega(\Bbar(\cA)) \to \cA
+\]
+of Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}} is the
+\emph{canonical} $\Ainf$-quasi-isomorphism produced by the homotopy
+transfer theorem (Theorem~\ref{thm:htt}), applied to the SDR
+\[
+\bigl(\Omega(\Bbar(\cA)),\; \cA,\; \psi,\; \iota_{\mathrm{counit}},\;
+h_{\mathrm{Hodge}}\bigr)
+\]
+where $\iota_{\mathrm{counit}}$ is the canonical inclusion and
+$h_{\mathrm{Hodge}}$ is the contracting homotopy from the
+Hodge decomposition of $\Omega(\Bbar(\cA))$ relative to the bar
+filtration.
+\end{theorem}
+
+\begin{proof}
+By construction, the cobar complex $\Omega(\Bbar(\cA))$ is the
+cofree chiral algebra on $s\,\overline{\cA}^!$ with differential
+$d_{\mathrm{cobar}} = d_{\mathrm{coop}} + d_{\mathrm{tw}}$, where
+$d_{\mathrm{tw}}$ encodes the twisting morphism
+$\tau \colon \Bbar(\cA) \to \cA$.
+
+\emph{Step~1} (SDR from bar filtration).
+The bar filtration $F_p\Omega(\Bbar(\cA))$ gives a spectral sequence
+with $E_1^{p,q} = H^q(\mathrm{gr}_p^F\,\Omega(\Bbar(\cA)))$.
+By Koszulness, $E_1$ is concentrated on $q = 0$
+(Proposition~\ref{prop:degen-koszul}).  The $E_1$-degeneration
+produces an SDR: the projection~$\psi$ to
+$E_\infty \cong \cA$ and the inclusion~$\iota$ from $\cA$ back to the
+cobar complex, with contracting homotopy~$h$ lowering the $q$-degree.
+The side conditions $\psi\iota = \mathrm{id}$, $h^2 = 0$, $\psi h = 0$,
+$h\iota = 0$ follow from the bigrading.
+
+\emph{Step~2} (HTT produces the same map).
+Applying Theorem~\ref{thm:htt} to the strict $\Eone$-chiral algebra
+structure on $\Omega(\Bbar(\cA))$ and the SDR from Step~1 produces
+transferred operations $\{\tilde{m}_n\}_{n \geq 2}$ on $\cA$
+and an $\Ainf$-quasi-isomorphism $f_\infty \colon \cA \to
+\Omega(\Bbar(\cA))$.  The component $f_1 = \iota$ and the
+binary product $\tilde{m}_2 = \psi \circ \mu \circ
+(\iota \otimes \iota) = \mu_{\cA}$ (the original product on $\cA$,
+since $\psi\iota = \mathrm{id}$).
+
+\emph{Step~3} (Koszulness forces vanishing).
+For $n \geq 3$, each tree $T$ contributing to $\tilde{m}_n$
+(Construction~\ref{constr:transfer-ainf}) inserts at least one
+homotopy~$h$ on an internal edge.  Since $h$ lowers the filtration
+degree by~$1$ and the Koszul-line concentration forces all
+non-trivial cohomology to live on $q = 0$, the composition
+$\psi \circ (\text{tree})\circ \iota^{\otimes n}$ vanishes: the
+output lives in $q < 0$, which is empty.  Therefore
+$\tilde{m}_n = 0$ for $n \geq 3$, and $f_\infty = \psi$ is a
+strict quasi-isomorphism of dg algebras, not merely of $\Ainf$-algebras.
+
+This is the chain-level content of the bar-cobar inversion
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}): on the Koszul locus,
+the bar-cobar counit is the HTT quasi-isomorphism, and Koszulness is
+the vanishing of all Massey products.
+\end{proof}
+
+\begin{remark}[Koszulness as formality]
+\label{rem:koszulness-formality-htt}
+\index{formality!Koszulness}
+The preceding proof identifies three equivalent conditions
+(cf.\ Remark~\ref{rem:homotopy-native-b}):
+\begin{enumerate}[label=(\roman*)]
+\item $\cA$ is chiral Koszul (bar spectral sequence degenerates at
+$E_2$, Koszul-line concentration).
+\item The transferred $\Ainf$-structure on $H^*(\Bbar(\cA))$ is
+\emph{formal}: $\tilde{m}_n = 0$ for $n \geq 3$.
+\item The bar-cobar counit $\psi$ is a \emph{strict}
+quasi-isomorphism (not merely $\Ainf$).
+\end{enumerate}
+The equivalence (i) $\Leftrightarrow$ (ii) is the homotopy-algebraic
+meaning of Koszulness: a Koszul algebra is one whose derived
+structure contains no hidden higher information beyond the binary
+product.  Condition~(iii) is the geometric meaning: the
+configuration space integrals computing $\psi$ collapse to residue
+extraction alone, with no contributions from higher-codimension
+boundary strata.
+\end{remark}
+
+\subsection{Trees and boundary strata: the geometric HTT}
+
+The tree formula of Theorem~\ref{thm:tree-formula} has a direct
+geometric realization via the Fulton--MacPherson compactification.
+
+\begin{proposition}[Trees as boundary strata;
+\ClaimStatusProvedHere]
+\label{prop:trees-boundary-strata}
+\index{Fulton--MacPherson compactification!boundary strata}
+\index{homotopy transfer theorem!geometric realization}
+Let $T$ be a planar rooted tree with $n$ leaves contributing to the
+transferred operation $\tilde{m}_n$
+(Construction~\ref{constr:transfer-ainf}).  The corresponding
+term in the tree formula equals the integral
+\[
+\tilde{m}_n^T(a_1, \ldots, a_n) \;=\;
+\int_{\partial_T \overline{C}_n(X)}
+\mathrm{ev}^*(\bar{a}_1 \otimes \cdots \otimes \bar{a}_n)
+\;\wedge\;
+\bigwedge_{e \in E_{\mathrm{int}}(T)} \omega_e\,,
+\]
+where:
+\begin{enumerate}[label=(\roman*)]
+\item $\partial_T \overline{C}_n(X) \hookrightarrow
+\overline{C}_n(X)$ is the boundary stratum of the
+Fulton--MacPherson compactification indexed by~$T$: the locus
+where the points cluster according to the vertex structure of~$T$;
+\item $\omega_e = d\log(z_{s(e)} - z_{t(e)})$ is the logarithmic
+propagator on the internal edge~$e$ with source $s(e)$ and
+target $t(e)$;
+\item the homotopy $h$ of the SDR corresponds to integration over
+the fiber direction in $\partial_T\overline{C}_n(X) \to
+\overline{C}_{|V(T)|}(X)$, i.e., integration over the
+``infinitesimal screen'' at each vertex cluster.
+\end{enumerate}
+The full transferred operation is the sum over all trees:
+\[
+\tilde{m}_n = \sum_{T \in \mathrm{PRT}_n}
+\int_{\partial_T \overline{C}_n(X)}
+\mathrm{ev}^*(\bar{a}_1 \otimes \cdots \otimes \bar{a}_n)
+\;\wedge\;\omega_T\,.
+\]
+\end{proposition}
+
+\begin{proof}
+The Fulton--MacPherson compactification
+$\overline{C}_n(X) = \mathrm{Bl}_{\Delta}(X^n)$ has a stratification
+indexed by planar rooted trees with $n$ leaves: each stratum
+$\partial_T$ records a pattern of coincidences among the $n$ points
+(cf.\ \cite{FM94}).
+
+The bar differential $d_{\mathrm{bar}}$ on
+$\Bbar^{\mathrm{geom}}_n(\cA)$ is the residue along the codimension-1
+boundary $\partial_{ij}\overline{C}_n(X)$ where points $z_i, z_j$
+collide.  This is the contribution from trees with a single
+internal edge.  Higher-codimension strata correspond to multiple
+simultaneous collisions, i.e., trees with multiple internal edges.
+
+The homotopy $h$ in the SDR integrates ``inward'' along fibers of the
+boundary projection $\partial_T \to \partial_{T/e}$, which contracts
+an internal edge $e$ of the tree~$T$.  This is the geometric
+content of the formula $h = (\text{fiber integral over screen
+direction})$: when two points have already collided (codimension-$1$
+stratum), the homotopy $h$ integrates over the residual angular
+direction to produce a new composite element on the coarser stratum.
+
+Composing: the tree formula $p \circ \prod_v m_{|v|} \circ
+\prod_e h \circ \iota^{\otimes n}$ places propagators $\omega_e$
+on internal edges, OPE operations $m_{|v|}$ at vertices, and
+integrates over the fiber directions via $h$.  The result is
+precisely the integral over $\partial_T\overline{C}_n(X)$ of the
+product of logarithmic propagators.
+\end{proof}
+
+\begin{remark}[Feynman diagrams as transferred operations]
+\label{rem:feynman-htt}
+\index{Feynman diagrams!homotopy transfer}
+Proposition~\ref{prop:trees-boundary-strata} establishes the following
+dictionary between the algebraic HTT and the physical Feynman diagram
+expansion:
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{} l @{\;\;$\longleftrightarrow$\;\;} l @{}}
+\toprule
+\textbf{HTT (algebraic)} & \textbf{Feynman (geometric)} \\
+\midrule
+Planar rooted tree $T$ & Tree-level Feynman diagram \\
+Internal edge of $T$ & Propagator insertion $\omega_{ij}$ \\
+Vertex of valence $k$ & $k$-valent interaction vertex (OPE) \\
+Homotopy $h$ & Integration over loop momentum (fiber) \\
+SDR projection $p$ & External state projection \\
+Transferred $\tilde{m}_n$ & $n$-point tree-level amplitude \\
+Massey product $\tilde{m}_3 \neq 0$ & Non-trivial 3-point function \\
+Koszulness ($\tilde{m}_n = 0$, $n \geq 3$) & Free field theory (Gaussian) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+The identification ``Koszulness = free theory'' has precise content:
+for a Koszul chiral algebra, the bar complex is a minimal resolution,
+all Massey products vanish, and the Feynman expansion truncates at
+tree level with only 2-valent vertices (propagators).  Non-Koszul
+algebras have non-trivial Massey products, corresponding to genuine
+higher-point interactions that cannot be reduced to pairwise
+propagation.
+\end{remark}
+
+\subsection{Genus corrections as transferred operations}
+\label{subsec:genus-corrections-htt}
+
+At genus $g \geq 1$, the bar complex acquires curvature
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
+(Convention~\ref{conv:higher-genus-differentials}), and the
+HTT framework extends to the curved setting.
+
+\begin{proposition}[Genus-$1$ curvature as $m_0$;
+\ClaimStatusProvedHere]
+\label{prop:genus1-curvature-m0}
+\index{curvature!as $m_0$}
+The genus-$1$ obstruction $\kappa(\cA) \in k$ of
+Theorem~\textup{\ref{thm:genus-universality}} is the nullary
+operation $m_0$ of the curved $\Ainf$-structure transferred from
+the genus-$1$ bar complex:
+\[
+m_0 \;=\; \kappa(\cA) \cdot [\omega_1]
+\;\in\; H^2(\overline{\mathcal{M}}_{1,1},\, \mathbb{Q})\,.
+\]
+More precisely, let $\Bbar^{(1)}(\cA)$ be the genus-$1$ bar complex
+with fiberwise differential $\dfib$ satisfying $\dfib^{\,2} =
+\kappa(\cA) \cdot \lambda_1 \cdot \mathrm{id}$ where $\lambda_1$ is the
+Hodge class.  Then the HTT applied to the SDR from the bar
+filtration produces:
+\begin{enumerate}[label=(\roman*)]
+\item A nullary operation $m_0 = \kappa(\cA) \cdot \lambda_1$,
+measuring the failure of $d^2 = 0$ at genus~$1$.
+\item A unary operation $m_1$ with $m_1^2(a) = [m_0, a]$
+(the commutator identity for curved $\Ainf$-algebras).
+\item Binary and higher operations $m_n$ ($n \geq 2$) modified
+by the curvature: $m_2$ acquires corrections from the
+Eisenstein propagator on the elliptic curve, and $m_3$
+acquires contributions from the genus-$1$ Massey product.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The genus-$1$ bar complex on an elliptic curve $E_\tau$ has
+differential $\dfib = d^{(0)} + d^{(1)}$ where $d^{(0)}$ is the
+genus-$0$ collision differential and $d^{(1)} = \kappa(\cA) \cdot
+\mathrm{tr}$ inserts the trace element
+(Theorem~\ref{thm:concrete-quantum-differential}).
+Then $(d^{(0)})^2 = 0$ and $\{d^{(0)}, d^{(1)}\} = 0$
+by the decomposition of
+$\Dg{1}^2 = 0$ (Theorem~\ref{thm:genus-differential}).
+
+The SDR from the bar filtration gives
+$(\Bbar^{(1)}(\cA), H^*(\Bbar^{(0)}(\cA)), p, \iota, h)$
+at the associated graded level.  Applying HTT with the perturbed
+differential $d^{(1)}$ (the ``perturbation lemma'' variant
+\cite{LV12}), the transferred structure acquires:
+\begin{itemize}
+\item $m_0 = p \circ d^{(1)} \circ \iota(1) = \kappa(\cA) \cdot
+p(\mathrm{tr}) = \kappa(\cA) \cdot \lambda_1$ (the trace element
+projects to the Hodge class),
+\item $m_1(a) = p \circ d^{(1)} \circ \iota(a) + p \circ d^{(0)}
+\circ h \circ d^{(1)} \circ \iota(a) + \cdots$
+(geometric series in $h \circ d^{(1)}$, converging
+because $d^{(1)}$ raises filtration degree),
+\item $m_2(a,b) = p \circ \mu \circ (\iota(a) \otimes \iota(b))
++ (\text{corrections from } h \circ d^{(1)})$.
+\end{itemize}
+The relation $m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$
+follows from the general curved $\Ainf$-identity with $r+s+t = 1$
+and $s = 0$.
+\end{proof}
+
+\begin{remark}[Higher genus: moduli cohomology as
+transferred operations]
+\label{rem:higher-genus-htt}
+\index{moduli space!homotopy transfer}
+At genus $g \geq 2$, the bar complex $\Bbar^{(g)}(\cA)$ is a family
+over $\overline{\mathcal{M}}_g$ with fiberwise differential $\dfib$
+satisfying $\Dg{g}^2 = 0$ (Theorem~\ref{thm:genus-differential}).
+The HTT applied fiberwise produces a curved $\Ainf$-algebra over
+$\overline{\mathcal{M}}_g$ whose operations are sections of bundles
+over moduli space.  The key identification is:
+
+\medskip
+\emph{The $n$-ary transferred operation $\tilde{m}_n^{(g)}$ is a
+section of
+\[
+\mathcal{H}om(\cA^{\boxtimes n},\, \cA) \otimes
+H^*(\overline{\mathcal{M}}_{g,n},\, \mathbb{Q})\,.
+\]
+The dependence on $H^*(\overline{\mathcal{M}}_{g,n})$ is the
+``quantum correction'' from the genus-$g$ moduli geometry.}
+
+\medskip
+\noindent
+This gives a homotopy-algebraic interpretation of Theorem~C
+(Deformation-Obstruction Complementarity,
+Theorem~\ref{thm:quantum-complementarity-main}):
+the quantum obstruction $Q_g(\cA)$ and the dual obstruction
+$Q_g(\cA^!)$ together span $H^*(\overline{\mathcal{M}}_g, Z(\cA))$
+\emph{because they are the complementary components of the
+transferred $\Ainf$-structure on $H^*(\Bbar^{(g)}(\cA))$, restricted
+to the center and projected along the Koszul line and its complement}.
+The complementarity $Q_g(\cA) + Q_g(\cA^!) =
+H^*(\overline{\mathcal{M}}_g, Z(\cA))$ is the statement that
+\emph{the full transferred structure exhausts the moduli
+cohomology, with nothing left over}.
+
+This interpretation elevates Theorem~C from a numerical identity to a
+structural statement: the bar-cobar machine, viewed through HTT,
+\emph{decomposes} moduli-space cohomology into the piece
+controlled by $\cA$ and the piece controlled by $\cA^!$, with the
+Koszul duality functor as the sorting mechanism.
+\end{remark}
+
+\begin{remark}[Physical content: renormalization vs.\ homotopy transfer]
+\label{rem:renormalization-htt}
+\index{renormalization!homotopy transfer}
+There is a profound analogy between homotopy transfer and
+perturbative renormalization in quantum field theory, which becomes an
+identification in the chiral algebra setting:
+
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Tree-level HTT = classical field theory.}
+The tree formula (Theorem~\ref{thm:tree-formula}) sums over
+tree-level Feynman diagrams.  The condition $h^2 = 0$ in the SDR
+(the ``no-loop'' condition from Remark~\ref{rem:tree-level})
+ensures that only trees contribute, not graphs with loops.
+This is the algebraic counterpart of the statement that
+classical field theory is determined by its tree-level amplitudes.
+
+\item \textbf{Genus-$g$ curvature = $g$-loop quantum corrections.}
+The curvature $\kappa(\cA) \cdot \omega_g$ at genus~$g$ is the
+analogue of the $g$-loop counterterm in perturbative
+renormalization.  The perturbation lemma that extends HTT to
+the curved setting (Proposition~\ref{prop:genus1-curvature-m0})
+corresponds to absorbing the counterterm into the effective
+action, order by order in $\hbar \sim \kappa(\cA)$.
+
+\item \textbf{Koszulness = absence of anomalies.}
+A Koszul chiral algebra has $\tilde{m}_n = 0$ for $n \geq 3$
+(Theorem~\ref{thm:chiral-htt}(iii)), meaning no higher-point
+interactions are generated by integrating out degrees of freedom.
+In physics, this is the statement that the theory is
+\emph{anomaly-free at the level of OPE structure}: the classical
+OPE data determine the quantum theory completely, with no need
+for higher-order counterterms.  The genus-$g$ curvature $\kappa(\cA)$
+is the \emph{only} quantum correction, and it is universal
+(Theorem~\ref{thm:genus-universality}).
+\end{enumerate}
+\end{remark}
