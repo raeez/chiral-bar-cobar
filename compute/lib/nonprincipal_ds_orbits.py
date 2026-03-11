@@ -225,7 +225,7 @@ def _standard_matrix_unit_label(n: int, i: int, j: int) -> str:
     return f"E{i}_{j}"
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def standard_traceless_basis_sl_n(n: int) -> Tuple[Tuple[str, Matrix], ...]:
     """Ordered standard traceless basis of sl_n."""
     if n < 2:
@@ -296,13 +296,13 @@ def type_a_partition_sl2_triple(partition: Iterable[int]) -> MatrixSl2Triple:
     return MatrixSl2Triple(e=e, h=h, f=f)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def type_a_hook_sl2_triple(n: int, r: int) -> MatrixSl2Triple:
     """Canonical sl_2-triple for the type-A hook orbit (n-r,1^r)."""
     return type_a_partition_sl2_triple(hook_partition(n, r))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def type_a_hook_pair_sl2_triples(n: int, r: int) -> Tuple[MatrixSl2Triple, MatrixSl2Triple]:
     """Canonical sl_2-triples for a hook orbit and its transpose-dual hook."""
     if not (1 <= r <= n - 2):
@@ -500,7 +500,7 @@ def nonprincipal_type_a_case(partition: Iterable[int], level=Symbol("k")) -> Orb
     return _nonprincipal_type_a_case_cached(normalize_partition(partition), sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_type_a_case_cached(partition: Partition, level) -> OrbitDualityCase:
     """Cached non-principal type-A orbit-duality case keyed by partition and level."""
     lam = partition
@@ -537,7 +537,7 @@ def _nonprincipal_type_a_case_cached(partition: Partition, level) -> OrbitDualit
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_hook_case(n: int, r: int, level=Symbol("k")) -> OrbitDualityCase:
     """Build a single non-principal hook/subregular frontier case."""
     if not (1 <= r <= n - 2):
@@ -550,7 +550,7 @@ def nonprincipal_hook_cases(max_n: int = 6, level=Symbol("k")) -> Tuple[OrbitDua
     return _nonprincipal_hook_cases_cached(max_n, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_hook_cases_cached(max_n: int, level) -> Tuple[OrbitDualityCase, ...]:
     """Cached hook/subregular frontier case catalog keyed by rank bound and level."""
     if max_n < 3:
@@ -567,7 +567,7 @@ def nonprincipal_two_row_case(n: int, s: int, level=Symbol("k")) -> OrbitDuality
     return _nonprincipal_two_row_case_cached(n, s, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_case_cached(n: int, s: int, level) -> OrbitDualityCase:
     """Cached non-hook two-row orbit-duality case keyed by n, s, and level."""
     partition = two_row_nonhook_partition(n, s)
@@ -579,7 +579,7 @@ def nonprincipal_two_row_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[Orbit
     return _nonprincipal_two_row_cases_cached(max_n, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_cases_cached(max_n: int, level) -> Tuple[OrbitDualityCase, ...]:
     """Cached two-row non-hook orbit-duality catalog keyed by rank bound and level."""
     if max_n < 4:
@@ -599,7 +599,7 @@ def nonprincipal_general_cases(max_n: int = 8, level=Symbol("k")) -> Tuple[Orbit
     return _nonprincipal_general_cases_cached(max_n, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_cases_cached(max_n: int, level) -> Tuple[OrbitDualityCase, ...]:
     """Cached general non-principal orbit-duality catalog keyed by rank bound and level."""
     if max_n < 3:

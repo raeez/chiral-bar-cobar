@@ -63,7 +63,7 @@ def w_infinity_generator_weights(total_weight: int) -> Tuple[int, ...]:
     return tuple(range(2, total_weight + 1))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=1024)
 def _ordered_weight_monomials_cached(
     total_weight: int,
     generator_weights: Tuple[int, ...],

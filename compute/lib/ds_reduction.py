@@ -360,7 +360,7 @@ def _matrix_signature(matrix: Matrix | None) -> Tuple[int, int, Tuple[object, ..
     return (matrix.rows, matrix.cols, tuple(matrix))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _exact_matrix_rank_from_signature(
     rows: int,
     cols: int,
@@ -382,7 +382,7 @@ def exact_matrix_rank(matrix: Matrix | None) -> int:
     return _exact_matrix_rank_from_signature(*signature)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _matrix_product_is_zero_from_signatures(
     left_rows: int,
     left_cols: int,
@@ -598,7 +598,7 @@ def _ds_basis_expression_coordinates(
     return coordinates
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _basis_order_index_map(basis_order: Tuple[str, ...]) -> Dict[str, int]:
     """Index lookup for a fixed basis order."""
     return {label: position for position, label in enumerate(basis_order)}
@@ -892,7 +892,7 @@ def partition_pair_ghost_profiles(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_default_constraint_counts(partition: Tuple[int, ...]) -> Tuple[int, int]:
     """Default source/target truncation counts for one non-principal partition pair."""
     case = nonprincipal_type_a_case(partition)
@@ -904,7 +904,7 @@ def _partition_pair_default_constraint_counts(partition: Tuple[int, ...]) -> Tup
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_truncated_profiles(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -1102,7 +1102,7 @@ def first_nonselfdual_hook_pair_quadratic_ghost_term_support(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_truncated_profiles(
     n: int,
     r: int,
@@ -1139,7 +1139,7 @@ def _default_constraint_character_from_brackets(
     return character
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_positive_nilpotent_brackets(
     n: int,
     r: int,
@@ -1161,7 +1161,7 @@ def hook_pair_positive_nilpotent_brackets(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_constraint_characters(
     n: int,
     r: int,
@@ -1187,7 +1187,7 @@ def hook_pair_constraint_characters(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_constraints(
     n: int,
     r: int,
@@ -1213,7 +1213,7 @@ def hook_pair_constraints(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_quadratic_ghost_term_support(
     n: int,
     r: int,
@@ -1257,7 +1257,7 @@ def hook_pair_quadratic_ghost_term_support(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_current_action_terms(
     n: int,
     r: int,
@@ -1283,7 +1283,7 @@ def hook_pair_current_action_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_positive_nilpotent_brackets(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -1305,7 +1305,7 @@ def partition_pair_positive_nilpotent_brackets(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_constraint_characters(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -1329,7 +1329,7 @@ def partition_pair_constraint_characters(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_constraints(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -1353,7 +1353,7 @@ def partition_pair_constraints(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_quadratic_ghost_term_support(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -1395,7 +1395,7 @@ def partition_pair_quadratic_ghost_term_support(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_current_action_terms(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -1440,7 +1440,7 @@ def _reduced_candidates_from_homogeneous_basis(
     return tuple(candidates)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_surviving_field_candidates(
     n: int,
     r: int,
@@ -1455,7 +1455,7 @@ def hook_pair_surviving_field_candidates(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_surviving_field_candidates(
     partition: Tuple[int, ...],
 ) -> Tuple[Tuple[DSReducedFieldCandidate, ...], Tuple[DSReducedFieldCandidate, ...]]:
@@ -1520,7 +1520,7 @@ def first_nonselfdual_hook_pair_reduced_brackets(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_reduced_brackets(
     n: int,
     r: int,
@@ -1534,7 +1534,7 @@ def hook_pair_reduced_brackets(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_reduced_brackets(
     partition: Tuple[int, ...],
 ) -> Tuple[Dict[Tuple[str, str], Dict[str, object]], Dict[Tuple[str, str], Dict[str, object]]]:
@@ -1729,7 +1729,7 @@ def _split_matrix_to_candidate_basis_with_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _first_nonselfdual_hook_pair_projection_data(
     side: str,
 ) -> Tuple[Tuple[str, ...], Tuple[Matrix, ...], Tuple[Matrix, ...], Dict[str, Matrix], Matrix, Matrix]:
@@ -1791,7 +1791,7 @@ def _project_hook_pair_matrix_to_survivors(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_projection_witness_data(
     n: int,
     r: int,
@@ -1866,7 +1866,7 @@ def _split_hook_pair_matrix_to_survivors_with_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_projection_data(
     n: int,
     r: int,
@@ -1901,7 +1901,7 @@ def _hook_pair_projection_data(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_projection_data(
     partition: Tuple[int, ...],
     side: str,
@@ -1938,7 +1938,7 @@ def _partition_pair_projection_data(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_projection_witness_data(
     partition: Tuple[int, ...],
     side: str,
@@ -2115,7 +2115,7 @@ def sl3_subregular_survivor_action_lift_witnesses(
     return tuple(entries)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_survivor_action_terms(
     n: int,
     r: int,
@@ -2157,7 +2157,7 @@ def hook_pair_survivor_action_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_survivor_action_terms(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -2197,7 +2197,7 @@ def partition_pair_survivor_action_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_survivor_action_lift_witnesses(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -2253,7 +2253,7 @@ def partition_pair_survivor_action_lift_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_constraint_current_witnesses(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -2304,7 +2304,7 @@ def first_nonselfdual_hook_pair_survivor_action_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_survivor_action_lift_witnesses(
     n: int,
     r: int,
@@ -2373,7 +2373,7 @@ def first_nonselfdual_hook_pair_survivor_action_lift_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_constraint_current_witnesses(
     n: int,
     r: int,
@@ -2512,7 +2512,7 @@ def _survivor_action_by_c_ghost(
     return action
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _indexed_survivor_action_by_source_and_c_ghost(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -2544,7 +2544,7 @@ def _indexed_survivor_action_by_source_and_c_ghost(
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _indexed_current_action_terms(
     shifted_current_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -2576,13 +2576,13 @@ def _indexed_current_action_terms(
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def _monomial_nonzero_entries(monomial: Tuple[int, ...]) -> Tuple[Tuple[int, int], ...]:
     """Indices and exponents of nonzero monomial entries."""
     return tuple((index, exponent) for index, exponent in enumerate(monomial) if exponent)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def _retarget_monomial(
     monomial: Tuple[int, ...],
     source_index: int,
@@ -2960,7 +2960,7 @@ def hook_pair_survivor_derivation_defects(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_survivor_derivation_defects(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -2992,7 +2992,7 @@ def partition_pair_survivor_derivation_defects(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_first_transfer_correction_terms(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -3010,7 +3010,7 @@ def partition_pair_first_transfer_correction_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_first_transfer_correction_witnesses(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -3052,7 +3052,7 @@ def partition_pair_first_transfer_correction_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_corrected_survivor_action_terms(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -3075,7 +3075,7 @@ def partition_pair_corrected_survivor_action_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_corrected_survivor_derivation_defects(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -3242,7 +3242,7 @@ def first_nonselfdual_hook_pair_derivation_defect_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_first_transfer_correction_terms(
     n: int,
     r: int,
@@ -3262,7 +3262,7 @@ def hook_pair_first_transfer_correction_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_first_transfer_correction_witnesses(
     n: int,
     r: int,
@@ -3307,7 +3307,7 @@ def hook_pair_first_transfer_correction_witnesses(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_corrected_survivor_action_terms(
     n: int,
     r: int,
@@ -3576,7 +3576,7 @@ def first_nonselfdual_hook_pair_brst_blueprints(
     return source_blueprint, target_blueprint
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def exterior_basis_indices(num_generators: int, degree: int) -> Tuple[Tuple[int, ...], ...]:
     """Ordered exterior basis in degree `degree` on `num_generators` symbols."""
     if degree < 0 or degree > num_generators:
@@ -3584,7 +3584,7 @@ def exterior_basis_indices(num_generators: int, degree: int) -> Tuple[Tuple[int,
     return tuple(combinations(range(num_generators), degree))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def _insert_ghost_index(
     basis: Tuple[int, ...],
     ghost_index: int,
@@ -3597,7 +3597,7 @@ def _insert_ghost_index(
     return sign, tuple(sorted(basis + (ghost_index,)))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def _remove_ghost_index(
     basis: Tuple[int, ...],
     ghost_index: int,
@@ -3610,7 +3610,7 @@ def _remove_ghost_index(
     return sign, basis[:position] + basis[position + 1 :]
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def character_wedge_differential(
     num_ghosts: int,
     chi_vector: Tuple[object, ...],
@@ -4231,7 +4231,7 @@ def hook_pair_ds_seed(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_ds_seed_cached(
     n: int,
     r: int,
@@ -4322,7 +4322,7 @@ def first_nonselfdual_hook_pair_ds_seed(level=Symbol("k")) -> HookPairDSComplexS
     return _first_nonselfdual_hook_pair_ds_seed_cached(sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _first_nonselfdual_hook_pair_ds_seed_cached(level) -> HookPairDSComplexSeed:
     """Cached first hook-pair DS seed keyed by normalized level."""
     n, r, _ = first_nonselfdual_type_a_hook_pair()
@@ -4441,7 +4441,7 @@ def hook_pair_ds_seed_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_ds_seed_catalog_cached(
     max_n: int,
     level,
@@ -4469,7 +4469,7 @@ def verify_hook_pair_ds_seed_catalog(max_n: int = 8, level=Symbol("k")) -> Dict[
     return dict(_verify_hook_pair_ds_seed_catalog_items(max_n, sympify(level)))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _verify_hook_pair_ds_seed_catalog_items(
     max_n: int,
     level,
@@ -4539,7 +4539,7 @@ def verify_hook_pair_seed_alignment(max_n: int = 8, level=Symbol("k")) -> Dict[s
     return dict(_verify_hook_pair_seed_alignment_items(max_n, sympify(level)))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _verify_hook_pair_seed_alignment_items(
     max_n: int,
     level,
@@ -4653,7 +4653,7 @@ def verify_hook_pair_corrected_semidirect_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_corrected_semidirect_family_holds_via_duality(
     n: int,
     max_constraint_total_degree: int = 0,
@@ -4703,7 +4703,7 @@ def verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_corrected_semidirect_family_via_duality_catalog_items(
     max_n: int = 7,
     max_constraint_total_degree: int = 0,
@@ -4727,7 +4727,7 @@ def _hook_pair_corrected_semidirect_family_via_duality_catalog_items(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def homogeneous_monomial_exponents(num_variables: int, degree: int) -> Tuple[Tuple[int, ...], ...]:
     """Exponent tuples of total degree `degree` in `num_variables` commuting variables."""
     if num_variables < 0:
@@ -4746,7 +4746,7 @@ def homogeneous_monomial_exponents(num_variables: int, degree: int) -> Tuple[Tup
     return tuple(exponents)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def linear_constraint_block_basis(
     num_constraints: int,
     total_degree: int,
@@ -4853,7 +4853,7 @@ def build_linear_constraint_koszul_block(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def _ghost_brst_images_on_basis_element(
     basis: Tuple[int, ...],
     ghost_labels: Tuple[str, ...],
@@ -4895,13 +4895,13 @@ def _ghost_brst_images_on_basis_element(
     return {target: simplify(value) for target, value in coefficients.items() if value != 0}
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _ghost_label_index_map(ghost_labels: Tuple[str, ...]) -> Dict[str, int]:
     """Index lookup for a fixed ordered ghost basis."""
     return {label: index for index, label in enumerate(ghost_labels)}
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def _indexed_quadratic_ghost_terms(
     ghost_labels: Tuple[str, ...],
     quadratic_terms: Tuple[QuadraticGhostTermEntry, ...],
@@ -4919,7 +4919,7 @@ def _indexed_quadratic_ghost_terms(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def _replace_exterior_index(
     basis: Tuple[int, ...],
     source_index: int,
@@ -4948,7 +4948,7 @@ def _label_root(label: str) -> str:
     return parts[-1]
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def current_action_differential(
     shifted_current_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -5009,7 +5009,7 @@ def current_action_differential(
     return matrix
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def mixed_constraint_ghost_block_basis(
     num_constraints: int,
     constraint_total_degree: int,
@@ -5161,7 +5161,7 @@ def build_mixed_constraint_ghost_brst_block(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def survivor_coupled_block_basis(
     num_constraints: int,
     num_survivors: int,
@@ -5193,7 +5193,7 @@ def survivor_coupled_block_basis(
     return tuple(basis)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def survivor_action_differential(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -5254,7 +5254,7 @@ def survivor_action_differential(
     return matrix
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def internal_survivor_ce_block_basis(
     num_survivors: int,
     survivor_polynomial_degree: int,
@@ -5270,7 +5270,7 @@ def internal_survivor_ce_block_basis(
     return tuple((monomial, c_subset) for monomial in monomials for c_subset in c_basis)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def internal_survivor_action_differential(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -5322,7 +5322,7 @@ def internal_survivor_action_differential(
     return matrix
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def internal_survivor_ce_differential(
     survivor_labels: Tuple[str, ...],
     c_ghost_labels: Tuple[str, ...],
@@ -5373,7 +5373,7 @@ def internal_survivor_ce_differential(
     return matrix
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=512)
 def semidirect_survivor_block_basis(
     num_constraints: int,
     num_survivors: int,
@@ -5484,7 +5484,7 @@ def external_survivor_action_on_internal_ghosts_differential(
     return matrix
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=256)
 def semidirect_survivor_brst_differential(
     shifted_current_labels: Tuple[str, ...],
     survivor_labels: Tuple[str, ...],
@@ -6524,7 +6524,7 @@ def nonprincipal_partition_pair_nonlinear_mixed_constraint_ghost_blocks(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_external_constraint_data(
     partition: Tuple[int, ...],
     source_num_constraints: int | None = None,
@@ -6588,7 +6588,7 @@ def _partition_pair_external_constraint_data(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_survivor_labels(
     partition: Tuple[int, ...],
 ) -> Tuple[Tuple[str, ...], Tuple[str, ...]]:
@@ -6600,7 +6600,7 @@ def _partition_pair_survivor_labels(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_internal_survivor_data(
     partition: Tuple[int, ...],
 ) -> Tuple[
@@ -6658,7 +6658,7 @@ def _partition_pair_internal_survivor_data(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_partition_pair_survivor_coupled_blocks(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -6725,7 +6725,7 @@ def nonprincipal_partition_pair_survivor_coupled_blocks(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def partition_pair_internal_survivor_ce_blocks(
     partition: Tuple[int, ...],
     max_survivor_polynomial_degree: int = 2,
@@ -6766,7 +6766,7 @@ def partition_pair_internal_survivor_ce_blocks(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_partition_pair_semidirect_survivor_blocks(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 0,
@@ -6847,7 +6847,7 @@ def nonprincipal_partition_pair_semidirect_survivor_blocks(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 0,
@@ -7366,7 +7366,7 @@ def hook_pair_semidirect_survivor_blocks(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_corrected_semidirect_survivor_blocks(
     n: int,
     r: int,
@@ -7492,7 +7492,7 @@ def hook_pair_corrected_semidirect_survivor_blocks(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_semidirect_square_zero_flags(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 0,
@@ -7516,7 +7516,7 @@ def _partition_pair_semidirect_square_zero_flags(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _partition_pair_corrected_semidirect_square_zero_flags(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 0,
@@ -7540,7 +7540,7 @@ def _partition_pair_corrected_semidirect_square_zero_flags(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_semidirect_square_zero_flags(
     n: int,
     r: int,
@@ -7566,7 +7566,7 @@ def _hook_pair_semidirect_square_zero_flags(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_corrected_semidirect_square_zero_flags(
     n: int,
     r: int,
@@ -8150,7 +8150,7 @@ def verify_hook_pair_mixed_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_family_representative_rs(n: int) -> Tuple[int, ...]:
     """Canonical hook representatives for one rank, reduced by transpose duality."""
     if n < 3:
@@ -8158,7 +8158,7 @@ def _hook_family_representative_rs(n: int) -> Tuple[int, ...]:
     return tuple(r for r in range(1, n - 1) if r <= n - r - 1)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_mixed_family_holds_via_duality(
     n: int,
     max_constraint_total_degree: int = 1,
@@ -8200,7 +8200,7 @@ def verify_hook_pair_mixed_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_mixed_family_via_duality_catalog_items(
     max_n: int = 7,
     max_constraint_total_degree: int = 1,
@@ -8241,7 +8241,7 @@ def verify_hook_pair_nonlinear_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_nonlinear_family_holds_via_duality(
     n: int,
     max_constraint_total_degree: int = 1,
@@ -8283,7 +8283,7 @@ def verify_hook_pair_nonlinear_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_nonlinear_family_via_duality_catalog_items(
     max_n: int = 7,
     max_constraint_total_degree: int = 1,
@@ -8326,7 +8326,7 @@ def verify_hook_pair_survivor_coupled_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def hook_pair_survivor_coupled_family_holds_via_duality(
     n: int,
     max_constraint_total_degree: int = 1,
@@ -8373,7 +8373,7 @@ def verify_hook_pair_survivor_coupled_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _hook_pair_survivor_coupled_family_via_duality_catalog_items(
     max_n: int = 6,
     max_constraint_total_degree: int = 1,
@@ -8413,7 +8413,7 @@ def verify_nonprincipal_two_row_mixed_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_family_representative_items(
     max_n: int = 9,
 ) -> Tuple[Tuple[Tuple[int, ...], str], ...]:
@@ -8434,7 +8434,7 @@ def _nonprincipal_two_row_family_representative_items(
     return tuple(results)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_two_row_mixed_family_holds_via_duality(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8462,7 +8462,7 @@ def verify_nonprincipal_two_row_mixed_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_mixed_family_via_duality_catalog_items(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8498,7 +8498,7 @@ def verify_nonprincipal_two_row_nonlinear_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_two_row_nonlinear_family_holds_via_duality(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8526,7 +8526,7 @@ def verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_nonlinear_family_via_duality_catalog_items(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8610,7 +8610,7 @@ def verify_nonprincipal_two_row_survivor_coupled_bundle(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_two_row_survivor_coupled_family_holds_via_duality(
     max_n: int = 8,
     max_constraint_total_degree: int = 1,
@@ -8642,7 +8642,7 @@ def verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_survivor_coupled_family_via_duality_catalog_items(
     max_n: int = 8,
     max_constraint_total_degree: int = 1,
@@ -8662,7 +8662,7 @@ def _nonprincipal_two_row_survivor_coupled_family_via_duality_catalog_items(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -8705,7 +8705,7 @@ def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def general_nonprincipal_survivor_coupled_family_holds_via_duality(
     max_n: int = 11,
     max_constraint_total_degree: int = 1,
@@ -8737,7 +8737,7 @@ def verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_survivor_coupled_family_via_duality_catalog_items(
     max_n: int = 11,
     max_constraint_total_degree: int = 1,
@@ -8775,7 +8775,7 @@ def verify_nonprincipal_general_mixed_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_family_representative_items(
     max_n: int = 9,
 ) -> Tuple[Tuple[Tuple[int, ...], str], ...]:
@@ -8796,7 +8796,7 @@ def _nonprincipal_general_family_representative_items(
     return tuple(results)
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_partition_pair_mixed_holds_via_duality(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -8808,7 +8808,7 @@ def _nonprincipal_partition_pair_mixed_holds_via_duality(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def general_nonprincipal_mixed_family_holds_via_duality(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8836,7 +8836,7 @@ def verify_nonprincipal_general_mixed_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_mixed_family_via_duality_catalog_items(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8872,7 +8872,7 @@ def verify_nonprincipal_general_nonlinear_block_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_partition_pair_nonlinear_holds_via_duality(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -8884,7 +8884,7 @@ def _nonprincipal_partition_pair_nonlinear_holds_via_duality(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def general_nonprincipal_nonlinear_family_holds_via_duality(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -8912,7 +8912,7 @@ def verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_nonlinear_family_via_duality_catalog_items(
     max_n: int = 9,
     max_constraint_total_degree: int = 1,
@@ -9051,7 +9051,7 @@ def verify_nonprincipal_two_row_corrected_semidirect_bundle(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def nonprincipal_two_row_corrected_semidirect_family_holds_via_duality(
     max_n: int = 8,
     max_constraint_total_degree: int = 0,
@@ -9087,7 +9087,7 @@ def verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog_items(
     max_n: int = 8,
     max_constraint_total_degree: int = 0,
@@ -9153,7 +9153,7 @@ def verify_nonprincipal_general_corrected_semidirect_duality_catalog(
     return results
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 0,
@@ -9207,7 +9207,7 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def general_nonprincipal_corrected_semidirect_family_holds_via_duality(
     max_n: int = 14,
     max_constraint_total_degree: int = 0,
@@ -9243,7 +9243,7 @@ def verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_corrected_semidirect_family_via_duality_catalog_items(
     max_n: int = 14,
     max_constraint_total_degree: int = 0,

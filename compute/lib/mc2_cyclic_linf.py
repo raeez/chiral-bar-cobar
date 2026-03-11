@@ -2302,7 +2302,7 @@ def shifted_seed_obstruction_polynomial_profile(
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def mc2_shifted_seed_one_channel_normalization_profiles() -> Dict[str, Dict[str, object]]:
     """Collect shifted-seed one-channel profiles across ``sl_2``, ``sl_3``, ``sp_4``, ``g_2``."""
     return {
@@ -2329,7 +2329,7 @@ def mc2_shifted_seed_one_channel_normalization_profiles() -> Dict[str, Dict[str,
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_seed_one_channel_normalization() -> Dict[str, bool]:
     """Check shifted-seed one-channel normalization consistency across types."""
     profiles = mc2_shifted_seed_one_channel_normalization_profiles()
@@ -2363,7 +2363,7 @@ def verify_mc2_shifted_seed_one_channel_normalization() -> Dict[str, bool]:
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_seed_eta_scaling_law() -> Dict[str, bool]:
     """Verify quadratic/cubic shifted-obstruction scaling across rank/type lanes."""
     expected_eta = {"sl2": Rational(-2), "sl3": Rational(1), "sp4": Rational(2), "g2": Rational(3)}
@@ -2559,7 +2559,7 @@ def shifted_eta_root_string_seed_packet_profile(
     return profile
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def mc2_shifted_eta_root_string_signature_profiles(
     parameter_name: str = "t",
 ) -> Dict[str, Dict[str, object]]:
@@ -2596,7 +2596,7 @@ def mc2_shifted_eta_root_string_signature_profiles(
     return out
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_eta_root_string_signature_law() -> Dict[str, bool]:
     """Verify universal root-string signature law on shifted ``sl_3/sp_4/g_2`` lanes."""
     profiles = mc2_shifted_eta_root_string_signature_profiles()
@@ -2641,7 +2641,7 @@ def verify_mc2_shifted_eta_root_string_signature_law() -> Dict[str, bool]:
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_eta_root_string_family_law() -> Dict[str, bool]:
     """Verify the symbolic root-string signature law and its sampled lanes."""
     m = Symbol("m")
@@ -2716,7 +2716,7 @@ def verify_mc2_shifted_eta_root_string_family_law() -> Dict[str, bool]:
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_eta_root_string_seed_packet_law() -> Dict[str, bool]:
     """Verify symbolic root-string seed-packet laws and family specialization."""
     a, b, m = symbols("a b m")
@@ -3184,7 +3184,7 @@ def visible_lowarity_root_string_incidence_orbit_profile_from_shifted_seed(
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_packet_law() -> Dict[str, bool]:
     """Verify visible low-arity packet projection on root-string channels."""
     lanes = {
@@ -3267,7 +3267,7 @@ def verify_mc2_visible_lowarity_root_string_packet_law() -> Dict[str, bool]:
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_packet_identifiability() -> Dict[str, bool]:
     """Verify low-arity packet is recoverable from obstruction data alone."""
     a, b, m = symbols("a b m")
@@ -3376,7 +3376,7 @@ def verify_mc2_visible_lowarity_root_string_packet_identifiability() -> Dict[str
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_transfer_package_law() -> Dict[str, bool]:
     """Verify round-trip transfer-package law on root-string channels."""
     a, b, m = symbols("a b m")
@@ -3513,7 +3513,7 @@ def verify_mc2_visible_lowarity_root_string_transfer_package_law() -> Dict[str, 
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_l3_channel_recovery_law() -> Dict[str, bool]:
     """Verify obstruction-side recovery of the first mixed ``l_3`` root-string channel."""
     a, b, m, x, y, z = symbols("a b m x y z")
@@ -3683,7 +3683,7 @@ def verify_mc2_visible_lowarity_root_string_l3_channel_recovery_law() -> Dict[st
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_chart_recovery_law() -> Dict[str, bool]:
     """Verify chart-level root-string seed recovery from obstruction data."""
     a, b, m = symbols("a b m")
@@ -3872,7 +3872,7 @@ def verify_mc2_visible_lowarity_root_string_chart_recovery_law() -> Dict[str, bo
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_automorphism_rigidity_law() -> Dict[str, bool]:
     """Verify ordered seed-line rigidity on visible root-string channels."""
     a, b, m = symbols("a b m")
@@ -3968,7 +3968,7 @@ def verify_mc2_visible_lowarity_root_string_automorphism_rigidity_law() -> Dict[
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_incidence_orbit_law() -> Dict[str, bool]:
     """Verify visible incidence/orbit singleton structure on root-string lanes."""
     a, b, m = symbols("a b m")
@@ -4287,7 +4287,7 @@ def verify_mc2_visible_lowarity_root_string_incidence_orbit_law() -> Dict[str, b
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def mc2_visible_lowarity_root_string_orbit_table_profiles(
     parameter_name: str = "t",
 ) -> Dict[str, Dict[str, object]]:
@@ -4309,7 +4309,7 @@ def mc2_visible_lowarity_root_string_orbit_table_profiles(
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_orbit_table_law() -> Dict[str, bool]:
     """Verify universal three-case visible orbit-table law on root-string lanes."""
     concrete = mc2_visible_lowarity_root_string_orbit_table_profiles(parameter_name="u")
@@ -4600,7 +4600,7 @@ def visible_lowarity_root_string_parity_sign_normalization_scalar_from_shifted_s
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_invariant_signature_law() -> Dict[str, bool]:
     """Verify normalized invariant-signature law on visible root-string lanes."""
     concrete_models = {
@@ -4696,7 +4696,7 @@ def verify_mc2_visible_lowarity_root_string_invariant_signature_law() -> Dict[st
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_seed_character_law() -> Dict[str, bool]:
     """Verify signed seed-character law on visible root-string lanes."""
     lanes = {
@@ -4743,7 +4743,7 @@ def verify_mc2_visible_lowarity_root_string_seed_character_law() -> Dict[str, bo
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_two_sign_scalar_law() -> Dict[str, bool]:
     """Verify two-sign plus normalization-scalar law on visible root-string lanes."""
     lanes = {
@@ -4802,7 +4802,7 @@ def verify_mc2_visible_lowarity_root_string_two_sign_scalar_law() -> Dict[str, b
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_visible_lowarity_root_string_parity_scalar_law() -> Dict[str, bool]:
     """Verify parity-sign plus normalization-scalar law on visible root-string lanes."""
     lanes = {
@@ -4860,7 +4860,7 @@ def verify_mc2_visible_lowarity_root_string_parity_scalar_law() -> Dict[str, boo
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_seed_obstruction_polynomial_law() -> Dict[str, bool]:
     """Verify symbolic polynomial obstruction identities on shifted seeds."""
     s = Symbol("s")
@@ -4921,7 +4921,7 @@ def verify_mc2_shifted_seed_obstruction_polynomial_law() -> Dict[str, bool]:
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_eta_channel_ce_alignment() -> Dict[str, bool]:
     """Verify shifted ``eta`` obstruction channel aligns with cyclic CE uniqueness."""
     lanes = {
@@ -5018,7 +5018,7 @@ def shifted_seed_obstruction_support_profile(
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_obstruction_support_truncation(max_genus: int = 6) -> Dict[str, bool]:
     """Verify shifted genus-1-only obstruction support truncates to genera 2 and 3."""
     profiles = {
@@ -5060,7 +5060,7 @@ def verify_mc2_shifted_obstruction_support_truncation(max_genus: int = 6) -> Dic
     return checks
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def verify_mc2_shifted_one_channel_criterion_package(max_genus: int = 6) -> Dict[str, bool]:
     """Consolidated shifted one-channel criterion checks across rank/type lanes."""
     lanes = ("sl2", "sl3", "sp4", "g2")

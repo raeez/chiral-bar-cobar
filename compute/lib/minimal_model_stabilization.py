@@ -47,7 +47,7 @@ from compute.lib.minimal_model_bar import minimal_model_c
 # Partition function (Euler pentagonal recurrence)
 # ---------------------------------------------------------------------------
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=1024)
 def partition(n: int) -> int:
     """Number of partitions of non-negative integer n.
 

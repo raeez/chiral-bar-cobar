@@ -448,7 +448,7 @@ _G2_ROOTS: Dict[str, Optional[Tuple[int, int]]] = {
 }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=1)
 def _g2_bracket_table() -> Dict[Tuple[str, str], Dict[str, Fraction]]:
     """Exact Chevalley table for ``G_2`` in a recursive Hall-style basis."""
 
@@ -541,7 +541,7 @@ def _g2_bracket_table() -> Dict[Tuple[str, str], Dict[str, Fraction]]:
             out = _add(out, _scale(coeff, bracket(basis_name, name)))
         return out
 
-    @lru_cache(maxsize=None)
+    @lru_cache(maxsize=256)
     def bracket(left: str, right: str) -> Dict[str, Fraction]:
         if left == right:
             return {}

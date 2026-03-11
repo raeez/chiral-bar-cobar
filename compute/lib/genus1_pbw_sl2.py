@@ -134,7 +134,7 @@ def adjoint_casimir_on_tensor_power(power: int) -> Matrix:
     return casimir
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def _casimir_integer_dok_on_tensor_power(power: int) -> tuple[tuple[int, int, int], ...]:
     """Sparse integer DOK entries for the Casimir matrix on ``g^{\\otimes power}``."""
     casimir = adjoint_casimir_on_tensor_power(power)
@@ -197,7 +197,7 @@ def _tensor_weight_of_index(index: int, power: int) -> int:
     return weight
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def _tensor_weight_blocks_on_tensor_power(power: int) -> tuple[tuple[int, tuple[int, ...]], ...]:
     """Weight-space basis partition of ``g^{\\otimes power}`` by ad(h)-weight."""
     if power < 1:
@@ -213,7 +213,7 @@ def _tensor_weight_blocks_on_tensor_power(power: int) -> tuple[tuple[int, tuple[
     )
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=32)
 def _casimir_integer_weight_blocks_on_tensor_power(
     power: int,
 ) -> tuple[tuple[int, int, tuple[tuple[int, int, int], ...]], ...]:

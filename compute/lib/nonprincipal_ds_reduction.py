@@ -245,7 +245,7 @@ def nonprincipal_hook_seed(n: int, r: int, level=Symbol("k")) -> NonprincipalDSS
     return _nonprincipal_hook_seed_cached(n, r, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_hook_seed_cached(n: int, r: int, level) -> NonprincipalDSSeed:
     """Cached hook/subregular seed record keyed by normalized level."""
     return nonprincipal_type_a_seed(hook_partition(n, r), level=level)
@@ -256,7 +256,7 @@ def nonprincipal_two_row_seed(n: int, s: int, level=Symbol("k")) -> Nonprincipal
     return _nonprincipal_two_row_seed_cached(n, s, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_seed_cached(n: int, s: int, level) -> NonprincipalDSSeed:
     """Cached two-row seed record keyed by normalized level."""
     partition = two_row_nonhook_partition(n, s)
@@ -269,7 +269,7 @@ def nonprincipal_general_seed(partition: Partition, level=Symbol("k")) -> Nonpri
     return _nonprincipal_general_seed_cached(normalized_partition, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_seed_cached(partition: Partition, level) -> NonprincipalDSSeed:
     """Cached general non-principal seed record keyed by partition and level."""
     if type_a_orbit_class(partition) != "general_nonprincipal":
@@ -282,7 +282,7 @@ def first_nonselfdual_hook_seed(level=Symbol("k")) -> NonprincipalDSSeed:
     return _first_nonselfdual_hook_seed_cached(sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _first_nonselfdual_hook_seed_cached(level) -> NonprincipalDSSeed:
     """Cached first non-self-dual hook seed keyed by normalized level."""
     n, r, _ = first_nonselfdual_type_a_hook_pair()
@@ -294,7 +294,7 @@ def nonprincipal_hook_seed_catalog(max_n: int = 6, level=Symbol("k")) -> Tuple[N
     return _nonprincipal_hook_seed_catalog_cached(max_n, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_hook_seed_catalog_cached(
     max_n: int,
     level,
@@ -315,7 +315,7 @@ def nonprincipal_two_row_seed_catalog(
     return _nonprincipal_two_row_seed_catalog_cached(max_n, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_two_row_seed_catalog_cached(
     max_n: int,
     level,
@@ -337,7 +337,7 @@ def nonprincipal_general_seed_catalog(
     return _nonprincipal_general_seed_catalog_cached(max_n, sympify(level))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _nonprincipal_general_seed_catalog_cached(
     max_n: int,
     level,
@@ -355,7 +355,7 @@ def verify_nonprincipal_hook_seed_catalog(max_n: int = 8, level=Symbol("k")) -> 
     return dict(_verify_nonprincipal_hook_seed_catalog_items(max_n, sympify(level)))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _verify_nonprincipal_hook_seed_catalog_items(
     max_n: int,
     level,
@@ -411,7 +411,7 @@ def verify_nonprincipal_two_row_seed_catalog(
     return dict(_verify_nonprincipal_two_row_seed_catalog_items(max_n, sympify(level)))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _verify_nonprincipal_two_row_seed_catalog_items(
     max_n: int,
     level,
@@ -456,7 +456,7 @@ def verify_nonprincipal_general_seed_catalog(
     return dict(_verify_nonprincipal_general_seed_catalog_items(max_n, sympify(level)))
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=64)
 def _verify_nonprincipal_general_seed_catalog_items(
     max_n: int,
     level,
