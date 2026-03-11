@@ -20,6 +20,15 @@ Computes bar cohomology dimensions for sl_N-hat via:
    P(x) = 4x(2 - 13x - 2x^2)/((1-8x)(1-3x-x^2))
    Recurrence: a(n) = 11*a(n-1) - 23*a(n-2) - 8*a(n-3).
 
+CURVATURE BARRIER (PROVED — see Part 3b documentation):
+   Direct matrix computation of bar cohomology is blocked because:
+   (a) d_bracket alone has d² ≠ 0 (proved for all sign conventions);
+   (b) d_curvature uses R^{(1)} (derivative-residue), which produces
+       forms outside the OS algebra (dw/w² terms);
+   (c) the augmented approach (V = g ⊕ k·|0⟩ with combined product)
+       fails because μ_aug violates the Jacobi identity.
+   The correct method is PBW spectral sequence (Part 1), not matrices.
+
 CONVENTIONS (CLAUDE.md):
 - Cohomological grading, |d| = +1
 - Bar degree n: chain group B-bar^n = g^{otimes n} tensor OS^{n-1}(n)
@@ -35,6 +44,7 @@ References:
   - Rem rem:bar-deg2-symmetric-square (examples_summary.tex)
   - Conjecture conj:sl3-bar-gf (examples_summary.tex)
   - Thm thm:km-chiral-koszul (chiral_koszul_pairs.tex)
+  - Prop prop:pole-decomposition (bar_cobar_construction.tex)
 """
 
 from __future__ import annotations
@@ -405,6 +415,308 @@ def chiral_bracket_rank(dim_g: int, structure_constants: Dict,
     M = chiral_bracket_differential(dim_g, structure_constants,
                                     bar_degree, sign_convention)
     return int(np.linalg.matrix_rank(M, tol=1e-8))
+
+
+# ============================================================
+# Part 3b: Curvature barrier — why direct matrix computation fails
+# ============================================================
+#
+# THE BARRIER (PROVED):
+#
+# The chiral bar differential d = d_bracket + d_curvature has two parts
+# (Prop prop:pole-decomposition):
+#
+#   d_bracket: simple-pole residue R^{(0)}, extracts [a,b] = a_{(0)}b
+#   d_curvature: derivative-residue R^{(1)}, extracts k·κ(a,b) = a_{(1)}b
+#
+# d_bracket alone does NOT square to zero (proved computationally for
+# all 2048 sign conventions). Only d = d_bracket + d_curvature has d²=0,
+# via the Borcherds identity. This is an intrinsically vertex-algebraic
+# identity, not reducible to Lie Jacobi.
+#
+# WHY R^{(1)} CANNOT BE IMPLEMENTED AS A MATRIX:
+#
+# R^{(1)} is the derivative-residue: for ω = (dε/ε)∧α(ε) + β(ε),
+# R^{(1)}(ω) = α'(0). On OS forms:
+#
+#   R^{(1)}_{12}(η₁₂ ∧ η₁₃) = -dw/w²    (NOT in OS algebra)
+#
+# The derivative-residue produces forms with double poles (dw/w²),
+# which lie OUTSIDE the OS algebra. These extended forms don't support
+# further residue operations. No finite-dimensional extension of the
+# bar complex accommodates R^{(1)} as a matrix operation.
+#
+# WHY THE AUGMENTED APPROACH FAILS:
+#
+# A natural attempt: build V = g ⊕ k·|0⟩ with total product
+# μ_aug(a,b) = [a,b] + k·κ(a,b)·|0⟩, then use standard R^{(0)} on V.
+# This FAILS because μ_aug does NOT satisfy the Jacobi identity:
+#
+#   Σ_cyc μ_aug(μ_aug(a,b),c) includes Σ_cyc κ([a,b],c)·|0⟩
+#   For sl₂ triple (e,f,h): this sum = 6k·|0⟩ ≠ 0
+#
+# The CE differential on V therefore has d² ≠ 0, and the augmented
+# complex gives wrong cohomology dimensions.
+#
+# CORRECT METHOD (CLAUDE.md):
+# PBW spectral sequence + Koszul dual Hilbert series. NOT matrix rank.
+# See Part 1 (Koszul dual Hilbert series) and genus1_pbw_sl2.py.
+#
+# The functions below are INVESTIGATORY — they document the failed
+# augmented approach. They are retained for reference but produce
+# wrong results for bar cohomology.
+
+# --- sl_2 data (used by tests and other modules) ---
+
+DIM_SL2 = 3
+
+
+def sl2_structure_constants_float() -> Dict:
+    """sl_2 structure constants as float dict. Basis: e=0, h=1, f=2."""
+    E, H, F = 0, 1, 2
+    sc = {}
+    sc[(E, F)] = {H: 1.0}
+    sc[(F, E)] = {H: -1.0}
+    sc[(H, E)] = {E: 2.0}
+    sc[(E, H)] = {E: -2.0}
+    sc[(H, F)] = {F: -2.0}
+    sc[(F, H)] = {F: 2.0}
+    return sc
+
+
+def sl2_killing_form_float() -> Dict:
+    """sl_2 Killing form as float dict. κ(e,f)=κ(f,e)=1, κ(h,h)=2."""
+    return {(0, 2): 1.0, (2, 0): 1.0, (1, 1): 2.0}
+
+
+# --- Augmented complex (INVESTIGATORY — produces wrong cohomology) ---
+
+def _augmented_structure_constants(
+    dim_g: int,
+    structure_constants: Dict,
+    killing_form: Dict,
+    level: float,
+) -> Dict:
+    """Build augmented structure constants for V = g ⊕ k·|0⟩.
+
+    WARNING: μ_aug does NOT satisfy Jacobi. The CE differential on V
+    has d² ≠ 0. This function is retained for investigation only.
+    """
+    vac = dim_g
+    sc_ext: Dict = {}
+    for (a, b), targets in structure_constants.items():
+        ext: Dict[int, float] = {}
+        for c, coeff in targets.items():
+            ext[c] = float(coeff)
+        kappa = killing_form.get((a, b), 0)
+        if kappa != 0:
+            ext[vac] = ext.get(vac, 0) + float(level) * float(kappa)
+        if ext:
+            sc_ext[(a, b)] = ext
+    for (a, b), kappa in killing_form.items():
+        if (a, b) not in sc_ext and float(kappa) != 0:
+            sc_ext[(a, b)] = {vac: float(level) * float(kappa)}
+    return sc_ext
+
+
+def chiral_full_differential(
+    dim_g: int,
+    structure_constants: Dict,
+    killing_form: Dict,
+    level: float,
+    bar_degree: int,
+    sign_convention: str = "os",
+) -> np.ndarray:
+    """INVESTIGATORY: augmented differential on V = g ⊕ k·|0⟩.
+
+    WARNING: d² ≠ 0 because μ_aug violates Jacobi. See barrier
+    documentation above. Retained for investigation only.
+    """
+    dim_V = dim_g + 1
+    sc_ext = _augmented_structure_constants(
+        dim_g, structure_constants, killing_form, level
+    )
+    return chiral_bracket_differential(dim_V, sc_ext, bar_degree, sign_convention)
+
+
+def chiral_curvature_differential(
+    dim_g: int,
+    killing_form: Dict,
+    level: float,
+    bar_degree: int,
+    sign_convention: str = "os",
+) -> np.ndarray:
+    """INVESTIGATORY: curvature-only differential using R^{(0)} on Killing.
+
+    WARNING: This uses the WRONG residue operation. The true d_curvature
+    uses R^{(1)} (derivative-residue), which produces forms outside OS.
+    Using R^{(0)} with Killing form gives a different map that does NOT
+    combine with d_bracket to give d² = 0. Retained for investigation.
+    """
+    n = bar_degree
+    if n < 2:
+        return np.zeros((1, dim_g))
+
+    d = dim_g
+    os_src_dim = os_dimension(n, n - 1)
+    os_tgt_dim = os_dimension(n - 1, n - 2)
+
+    source_dim = d ** n * os_src_dim
+    target_tensor_dim = d ** (n - 2) if n > 2 else 1
+    target_dim = target_tensor_dim * os_tgt_dim
+
+    if source_dim == 0 or target_dim == 0:
+        return np.zeros((max(target_dim, 1), max(source_dim, 1)))
+
+    M = np.zeros((target_dim, source_dim))
+
+    for i_pt in range(1, n + 1):
+        for j_pt in range(i_pt + 1, n + 1):
+            if sign_convention == "os":
+                sign = (-1) ** (i_pt + j_pt)
+            else:
+                sign = (-1) ** (j_pt - 1)
+
+            k_map = killing_pair_map_numpy(d, killing_form, n,
+                                           i_pt - 1, j_pt - 1)
+            r_map = residue_map(n, n - 1, i_pt, j_pt)
+
+            contrib = float(level) * sign * np.kron(k_map, r_map)
+            M += contrib
+
+    return M
+
+
+def _pure_g_mask(dim_g: int, n: int, os_dim: int) -> np.ndarray:
+    """Boolean mask for pure-g elements in V^{⊗n} ⊗ OS."""
+    dim_V = dim_g + 1
+    total = dim_V ** n * os_dim
+    mask = np.zeros(total, dtype=bool)
+    for tensor_flat in range(dim_V ** n):
+        indices = _flat_to_multi(tuple([dim_V] * n), tensor_flat)
+        if all(idx < dim_g for idx in indices):
+            start = tensor_flat * os_dim
+            mask[start:start + os_dim] = True
+    return mask
+
+
+def bar_cohomology_full(
+    dim_g: int,
+    structure_constants: Dict,
+    killing_form: Dict,
+    level: float,
+    bar_degree: int,
+    sign_convention: str = "os",
+) -> Dict[str, object]:
+    """INVESTIGATORY: g-sector cohomology of augmented complex.
+
+    WARNING: Produces WRONG results. d² ≠ 0 in the augmented complex
+    because μ_aug violates Jacobi. See barrier documentation above.
+    """
+    n = bar_degree
+    d = dim_g
+    dim_V = d + 1
+
+    os_n = os_dimension(n, n - 1) if n >= 1 else 1
+    os_n1 = os_dimension(n + 1, n) if n + 1 >= 2 else 0
+
+    B_n_aug_dim = dim_V ** n * os_n
+    B_n_g_dim = d ** n * os_n
+    B_n1_aug_dim = dim_V ** (n + 1) * os_n1 if os_n1 > 0 else 0
+
+    if B_n_aug_dim > 300000 or B_n1_aug_dim > 300000:
+        return {"n": n, "H_n": None, "note": "too large",
+                "B_n_aug_dim": B_n_aug_dim, "B_n1_aug_dim": B_n1_aug_dim}
+
+    g_mask_n = _pure_g_mask(d, n, os_n)
+    g_cols_n = np.where(g_mask_n)[0]
+
+    d_n = chiral_full_differential(
+        d, structure_constants, killing_form, level, n, sign_convention
+    )
+
+    d_n_g = d_n[:, g_cols_n]
+    rank_d_n_g = int(np.linalg.matrix_rank(d_n_g, tol=1e-8))
+    dim_cocycles = len(g_cols_n) - rank_d_n_g
+
+    if B_n1_aug_dim == 0:
+        dim_coboundaries = 0
+    else:
+        g_mask_n_tgt = _pure_g_mask(d, n, os_dimension(n, n - 1) if n >= 1 else 1)
+        g_rows_n = np.where(g_mask_n_tgt)[0]
+        non_g_rows_n = np.where(~g_mask_n_tgt)[0]
+
+        d_n1 = chiral_full_differential(
+            d, structure_constants, killing_form, level, n + 1, sign_convention
+        )
+
+        d_g = d_n1[g_rows_n, :]
+        d_non_g = d_n1[non_g_rows_n, :]
+
+        if len(non_g_rows_n) == 0:
+            dim_coboundaries = int(np.linalg.matrix_rank(d_g, tol=1e-8))
+        else:
+            rank_non_g = int(np.linalg.matrix_rank(d_non_g, tol=1e-8))
+            null_dim = d_non_g.shape[1] - rank_non_g
+            if null_dim == 0:
+                dim_coboundaries = 0
+            else:
+                _, S, Vt = np.linalg.svd(d_non_g, full_matrices=True)
+                tol = max(d_non_g.shape) * max(S) * 1e-10 if len(S) > 0 else 1e-10
+                rank_svd = int(np.sum(S > tol))
+                null_basis = Vt[rank_svd:, :].T
+                restricted = d_g @ null_basis
+                dim_coboundaries = int(np.linalg.matrix_rank(
+                    restricted, tol=1e-8))
+
+    H_n = dim_cocycles - dim_coboundaries
+    return {
+        "n": n,
+        "dim_B_n_g": B_n_g_dim,
+        "dim_B_n_aug": B_n_aug_dim,
+        "dim_B_n1_aug": B_n1_aug_dim,
+        "rank_d_n_g": rank_d_n_g,
+        "dim_cocycles": dim_cocycles,
+        "dim_coboundaries": dim_coboundaries,
+        "H_n": H_n,
+        "WARNING": "WRONG — augmented complex has d² ≠ 0",
+    }
+
+
+def verify_d_squared_augmented(
+    dim_g: int,
+    structure_constants: Dict,
+    killing_form: Dict,
+    level: float,
+    bar_degree: int = 3,
+    sign_convention: str = "os",
+) -> Dict[str, object]:
+    """INVESTIGATORY: verify d² for augmented differential (expected to FAIL).
+
+    Confirms that d² ≠ 0 in the augmented complex, documenting the
+    fundamental barrier.
+    """
+    n = bar_degree
+    d_n = chiral_full_differential(
+        dim_g, structure_constants, killing_form, level, n, sign_convention
+    )
+    d_nm1 = chiral_full_differential(
+        dim_g, structure_constants, killing_form, level, n - 1, sign_convention
+    )
+
+    d_sq = d_nm1 @ d_n
+    norm = float(np.max(np.abs(d_sq)))
+
+    return {
+        "bar_degree": n,
+        "sign_convention": sign_convention,
+        "level": level,
+        "d_n_shape": d_n.shape,
+        "d_{n-1}_shape": d_nm1.shape,
+        "d^2_norm": norm,
+        "d^2 = 0": norm < 1e-10,
+        "note": "Expected d² ≠ 0: μ_aug violates Jacobi",
+    }
 
 
 # ============================================================

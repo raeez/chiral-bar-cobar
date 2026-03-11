@@ -241,9 +241,16 @@ hypothesis (Definition~\ref{def:chiral-koszul-morphism},
 condition~3) ensures the spectral sequence converges strongly.
 
 \emph{\ref{ftm:unit}$\Rightarrow$\ref{ftm:koszul}:}
-Symmetric argument applied to the unit, using
-Lemma~\ref{lem:filtered-comparison} with the bar-degree
-filtration.
+Filter $\bar{B}_X(\cA)$ by bar degree.  The weak equivalence
+of $\eta_\tau$ implies, by the bar-degree analogue of
+Lemma~\ref{lem:filtered-comparison}, that the associated graded
+datum $(\operatorname{gr} \cA, \operatorname{gr} \cC,
+\operatorname{gr} \tau)$ is classically Koszul.  Strong
+convergence of the bar-degree spectral sequence (ensured by the
+completeness and bounded-below hypotheses of the filtration
+$F_\bullet$) then lifts acyclicity of the associated graded
+twisted tensor products to acyclicity of $K_\tau^L$ and
+$K_\tau^R$.
 
 The key geometric input throughout is that the filtration
 $F_\bullet$ on $\bar{B}_X(\cA)$ and $\Omega_X(\cC)$ is
@@ -748,32 +755,87 @@ E_1^{n,0} = \Lambda^n(\fg^* \otimes t\bC[t])
 is the $n$-th exterior power of the dual loop algebra
 generators (graded by conformal weight).
 
-\emph{Step~4: Collapse.}
-Since $E_1^{p,q} = 0$ for $q \neq 0$, all differentials
+\emph{Step~4: $E_2$ collapse.}
+Since $E_1^{p,q} = 0$ for $q \neq 0$, the higher differentials
 $d_r\colon E_r^{p,q} \to E_r^{p+r, q-r+1}$ vanish for
-$r \geq 1$ (they map into or out of the zero row).
-Therefore $E_2 = E_1 = E_\infty$ and:
+$r \geq 2$: the target has second index
+$q - r + 1 \leq 0 - 2 + 1 = -1 < 0$, placing it in the
+zero region.  The differential
+$d_1\colon E_1^{p,0} \to E_1^{p+1,0}$ maps \emph{within}
+the nonzero row $q = 0$ and is generally nonzero:
+it is the Chevalley--Eilenberg differential of the loop
+algebra $\fg \otimes t^{-1}\bC[t^{-1}]$ acting on
+$\Lambda^*(\fg^* \otimes t\bC[t])$ by bracket contraction
+(the leading PBW correction to the commutative bar
+differential).  Therefore $E_\infty = E_2$ and:
 \[
 H^n(\barBgeom(\cA)) \cong E_\infty^{n,0}
-= \Lambda^n(V^*) = (\cA^!)_n.
+= E_2^{n,0}
+= H^n_{\mathrm{CE}}\!\bigl(\fg \otimes t^{-1}\bC[t^{-1}],\, \bC\bigr)
+= (\cA^!)_n.
 \]
+For commutative chiral algebras (e.g.\ the Heisenberg algebra),
+the Lie bracket of $\fg$ vanishes, $d_1 = 0$,
+$E_\infty = E_2 = E_1 = \Lambda(V^*)$, and the bar cohomology
+reduces to the exterior algebra.  For non-abelian algebras
+(Kac--Moody, Virasoro), $d_1 \neq 0$ and the bar
+cohomology is computed by the CE cohomology, a proper
+subquotient of $\Lambda(V^*)$.
 
 \emph{Step~5: Verification for $\widehat{\mathfrak{sl}}_2$.}
 $V = \bC^3 \otimes t^{-1}\bC[t^{-1}]$
 (three generators $J^+, J^0, J^-$, each with modes
 $J^a_{-n}$ for $n \geq 1$).
-At conformal weight $h$ in bar degree $n$:
-\[
-\dim \Lambda^n(V^*)_h
-= \dim \Lambda^n(\bC^3 \otimes t\bC[t])_h.
-\]
-For $n=1$, $h=1$: $\Lambda^1 = V^*$, so $\dim = 3$
-(the three generators $J^{a*}_{+1}$).
-For $n=2$, $h=2$: $\dim \Lambda^2(\bC^3)_{(1,1)} = \binom{3}{2} = 3$
+The $E_1$ page has
+$\dim E_1^{n,0}_h = \dim \Lambda^n(\bC^3 \otimes t\bC[t])_h$.
+For example: $\dim E_1^{1,0}_1 = 3$ (the three weight-$1$
+generators), $\dim E_1^{2,0}_2 = \binom{3}{2} = 3$
 (wedge products $J^{a*}_{+1} \wedge J^{b*}_{+1}$, $a < b$).
-These match the known bar cohomology dimensions at the
-associated-graded level, confirming the computation.
+The $d_1$ differential is the CE differential of
+$\mathfrak{sl}_2 \otimes t^{-1}\bC[t^{-1}]$;
+the resulting $E_2$ page gives:
+$\dim H^1 = 3$ (all at weight $h = 1$; $d_1 = 0$ at this
+weight since there are no weight-$1$ chains in degree~$0$),
+and $\dim H^2 = 5$ (concentrated at weight $h = 3$:
+chain groups $\dim\Lambda^1_3 = 3$,
+$\dim\Lambda^2_3 = 9$,
+$\dim\Lambda^3_3 = 1$; differential ranks
+$3$ and $1$; cohomology
+$(9 - 1) - 3 = 5$).
+The computation is verified by checking $d_1^2 = 0$
+at each weight (Computation~\ref{comp:sl2-ce-verification}).
 \end{proof}
+
+\begin{remark}[CE cohomology vs exterior algebra dimensions]
+\label{rem:ce-vs-exterior}
+\index{bar complex!CE vs exterior algebra}
+The corrected Step~4 shows that the bar cohomology of a
+non-abelian chiral Koszul algebra is the CE cohomology of
+$\fg \otimes t^{-1}\bC[t^{-1}]$, \emph{not} the exterior
+algebra $\Lambda^n(V^*)$ directly.  This distinction is
+numerically significant: for $\widehat{\mathfrak{sl}}_2$,
+the $E_1$ (exterior algebra) totals by conformal weight are
+$1, 3, 6, 13, 24, 42, \ldots$
+$\bigl(= \prod_{m \geq 1}(1+q^m)^3\bigr)$,
+while the $E_2$ (CE cohomology) totals are $1, 3, 5, \ldots$
+by bar degree.  The CE value $\dim H^2 = 5$ arises because
+$d_1$ kills some of $\Lambda^2(V^*)$:
+$\ker(d_1^{2,3}) = 8$ and $\mathrm{im}(d_1^{1,3}) = 3$
+at weight~$3$ (the only contributing weight), giving
+$8 - 3 = 5$.
+
+Consequently, any formula for
+$\dim H^n(\barBgeom(\widehat{\fg}_k))$ must account for the
+$d_1$ differential.  Earlier versions of this proof
+contained an error in Step~4, claiming $d_1 = 0$ and hence
+$E_\infty = E_1 = \Lambda(V^*)$; the correct analysis
+gives $E_\infty = E_2 \neq E_1$ for non-abelian algebras.
+In particular, the Riordan number prediction
+$\dim(\widehat{\mathfrak{sl}}_2^!)_n = R(n{+}3)$
+(Appendix~\ref{app:combinatorial-frontier}) requires
+revision at degree~$n \geq 2$: the CE computation gives
+$\dim H^2 = 5$, not $R(5) = 6$.
+\end{remark}
 
 \begin{theorem}[Bar concentration for Koszul pairs; \ClaimStatusProvedHere]
 \label{thm:bar-concentration}
@@ -819,6 +881,23 @@ $H^0(\bar{B}^{\mathrm{ch}}(\cA_1)) \to \cA_2^!$
 that is an isomorphism because $K_\tau$ is acyclic
 (cf.\ \cite[Theorem~2.3.1]{LV12}).
 \end{proof}
+
+\begin{remark}[Bigrading convention]\label{rem:bigrading-convention}
+\index{bigrading!bar complex}
+Theorem~\ref{thm:bar-concentration} uses the bigrading $(p,q)$
+where $p$ is the bar degree (number of tensor factors minus one)
+and $q$ is the bar-differential cohomological degree within each
+bar component.  The total cohomological degree is $n = p + q$.
+Concentration at $q = 0$ means
+$H^n_{\mathrm{tot}}(\bar{B}^{\mathrm{ch}}(\cA_1))
+= H^{n,0}(\bar{B}^{\mathrm{ch}}(\cA_1)) \cong (\cA_2^!)_n$,
+recovering the dimension identity of
+Corollary~\ref{cor:bar-cohomology-koszul-dual}.
+The $E_2$ collapse of the PBW spectral sequence
+(Corollary~\ref{cor:bar-cohomology-koszul-dual}, Step~4)
+is the concentration statement in the $(p,q)$ bigrading:
+$E_1^{p,q} = 0$ for $q \neq 0$ already at the first page.
+\end{remark}
 
 \subsection{Geometric bar-cobar duality (Theorem~A)}
 \label{sec:theorem-a-statement}

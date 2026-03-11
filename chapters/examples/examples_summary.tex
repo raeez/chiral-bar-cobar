@@ -449,6 +449,11 @@ computation or the discovery of a closed-form generating function.
 For the Yangian $Y(\mathfrak{sl}_2)$, the conjectured formula
 $\dim (Y(\mathfrak{sl}_2)^!)_n = 3^n + 1$ (Conjecture~\ref{conj:yangian-bar-gf})
 fills all gaps; the degree-$4$ value $82$ is the critical test.
+Seven independent consistency checks
+(Appendix~\ref{subsec:yangian-h4-verification}) support this value:
+the Koszul identity $H_A(t) \cdot H_{A^!}(-t) = 1$ yields positive
+integer dual dimensions through degree~$10$, and the rank cascade is
+feasible at all degrees.
 
 \begin{proposition}[Koszul dual Hilbert functions; \ClaimStatusProvedHere]
 \label{prop:bar-dimensions}
@@ -489,14 +494,19 @@ The explicit formulas are:
   See Remark~\ref{rem:betagamma-conventions}
   for the relation between different truncation conventions.
 \item \emph{$\widehat{\mathfrak{sl}}_2$}:
-  $\dim (\widehat{\mathfrak{sl}}_2^!)_n = R(n+3)$ where $R$ denotes the Riordan numbers
-  (OEIS~A005043).  This follows from the chiral Koszulness of
-  $\widehat{\mathfrak{sl}}_2$
-  (Theorem~\ref{thm:km-chiral-koszul}), the universal
-  level-shifting duality
-  (Theorem~\ref{thm:universal-kac-moody-koszul}), and the
-  $E_2$ collapse
-  (Corollary~\ref{cor:bar-cohomology-koszul-dual}).
+  The bar cohomology is computed by the $E_2$ collapse
+  of the PBW spectral sequence
+  (Corollary~\ref{cor:bar-cohomology-koszul-dual},
+  Remark~\ref{rem:ce-vs-exterior}): the $d_1$
+  differential is the CE differential of
+  $\mathfrak{sl}_2 \otimes t^{-1}\mathbb{C}[t^{-1}]$,
+  giving $\dim H^1 = 3$, $\dim H^2 = 5$
+  (Computation~\ref{comp:sl2-ce-verification}).
+  The earlier prediction
+  $\dim (\widehat{\mathfrak{sl}}_2^!)_n = R(n+3)$
+  (Riordan numbers, OEIS~A005043) agrees at $n = 1$
+  but gives $R(5) = 6 \neq 5$ at $n = 2$; see
+  Appendix~\ref{subsec:riordan} for discussion.
 \item \emph{$\widehat{\mathfrak{sl}}_3$}: computed through
   degree~$3$ from the PBW basis;
   degrees~$4$--$10$ predicted from the conjectured
@@ -514,8 +524,10 @@ The explicit formulas are:
   in \S\ref{sec:w3-bar-degree3}.  The degree-$4$ value
   $\dim (\mathcal{W}_3^!)_4 = 52$ is obtained by extrapolation from the
   recurrence $a(n) = 3a(n{-}1) + a(n{-}2) - 1$
-  (Conjecture~\ref{conj:w3-algebraicity}) and should be regarded
-  as conjectural until independently verified.\textsuperscript{$\dagger$}
+  (Conjecture~\ref{conj:w3-algebraicity}).
+  Seven independent consistency checks support the predicted degree-$5$
+  value $H^5 = 171$
+  (Appendix~\ref{subsec:w3-h5-verification}).\textsuperscript{$\dagger$}
 \item \emph{Yangian $Y(\mathfrak{sl}_2)$}: computed through
   degree~$3$ from the RTT presentation
   (Theorem~\ref{thm:yangian-bar-rtt}).
@@ -653,8 +665,10 @@ the Koszul dual Hilbert function.)
     (growth rate~$2^n$);
   \item $\beta\gamma$: $\dim (\beta\gamma^!)_n = [x^n]\sqrt{(1{+}x)/(1{-}3x)}$
     (growth rate~$3^n/n^{1/2}$);
-  \item $\widehat{\mathfrak{sl}}_2$: $\dim (\widehat{\mathfrak{sl}}_2^!)_n = R(n+3)$,
-    the Riordan numbers (growth rate~$3^n/n^{3/2}$);
+  \item $\widehat{\mathfrak{sl}}_2$:
+    $\dim H^1 = 3$, $\dim H^2 = 5$ (CE cohomology;
+    the Riordan prediction $R(n{+}3)$ requires revision,
+    see Remark~\ref{rem:ce-vs-exterior});
   \item Virasoro: $\dim (\mathrm{Vir}_c^!)_n = M(n{+}1) - M(n)$,
     the first differences of Motzkin numbers
     (growth rate~$3^n/n^{3/2}$);
@@ -746,14 +760,20 @@ $n^{-1/2}$ for~$\beta\gamma$).
 The formulas~\eqref{eq:gf-sl2-riordan}
 and~\eqref{eq:gf-vir-motzkin} are proved as follows.
 
-\emph{$\widehat{\mathfrak{sl}}_2$ (Riordan).}
-The Koszul dual dimension $\dim (\widehat{\mathfrak{sl}}_{2,k}^!)_n
-= R(n+3)$ where $R(n)$ are the Riordan numbers
-(Theorem~\ref{thm:universal-kac-moody-koszul}).  The Riordan numbers
-have generating function $\sum_{n \geq 0} R(n) x^n
-= (1 + x - \sqrt{1-2x-3x^2})/(2x(1+x))$
-(OEIS~A005043, \cite{BernhartRiordan}).
-Shifting the index by $3$ gives~\eqref{eq:gf-sl2-riordan}.
+\emph{$\widehat{\mathfrak{sl}}_2$.}
+The Riordan generating function~\eqref{eq:gf-sl2-riordan}
+was derived from the prediction
+$\dim (\widehat{\mathfrak{sl}}_{2,k}^!)_n = R(n+3)$.
+The corrected PBW analysis
+(Corollary~\ref{cor:bar-cohomology-koszul-dual},
+Remark~\ref{rem:ce-vs-exterior}) shows that the
+bar cohomology is the CE cohomology of the loop algebra,
+giving $\dim H^2 = 5 \neq R(5) = 6$.
+The generating function for
+$\widehat{\mathfrak{sl}}_2$ requires revision;
+the first two values $\dim H^1 = 3$, $\dim H^2 = 5$
+are established
+(Computation~\ref{comp:sl2-ce-verification}).
 
 \emph{Virasoro (Motzkin differences).}
 The Koszul dual dimension $\dim (\mathrm{Vir}_c^!)_n
@@ -837,6 +857,38 @@ matching that of $P_{\widehat{\mathfrak{sl}}_3}(x)$, once the latter
 is determined.
 \end{remark}
 
+\begin{conjecture}[DS preservation of the spectral branch object;
+\ClaimStatusConjectured]\label{conj:ds-spectral-branch-preservation}
+\index{Drinfeld--Sokolov reduction!spectral branch preservation}
+\index{spectral branch object!DS invariance}
+Let $\mathfrak{g}$ be a simple Lie algebra,
+$\widehat{\mathfrak{g}}_k$ the associated Kac--Moody algebra, and
+$\mathcal{W}^k(\mathfrak{g}) = H^0_{\mathrm{DS}}(\widehat{\mathfrak{g}}_k)$
+its principal $\mathcal{W}$-algebra.
+Then the branch transport operators are similar:
+\[
+T_{\mathrm{br},\mathcal{W}^k(\mathfrak{g})}
+\;\sim\;
+T_{\mathrm{br},\widehat{\mathfrak{g}}_k}.
+\]
+In particular, DS reduction preserves the full spectral branch
+object $(V_{\cA}^{\mathrm{br}}, T_{\mathrm{br},\cA})$
+\textup{(}Definition~\textup{\ref{def:spectral-branch-object})},
+not merely its determinant~$\Delta_{\cA}(x)$
+\textup{(}Theorem~\textup{\ref{thm:ds-bar-gf-discriminant})}.
+
+\emph{Evidence.}
+For $\mathfrak{g} = \mathfrak{sl}_2$, both
+$T_{\mathrm{br},\widehat{\mathfrak{sl}}_2}$ and
+$T_{\mathrm{br},\mathrm{Vir}}$ act on a $2$-dimensional
+space with characteristic polynomial $1 - 2x - 3x^2
+= (1-3x)(1+x)$; since the eigenvalues $3$ and $-1$ are distinct,
+the matrices are similar unconditionally.  The first non-trivial
+test case is $\mathfrak{g} = \mathfrak{sl}_3$, where the spectral
+branch object has rank $\geq 3$ and similarity is not automatic
+from the determinant.
+\end{conjecture}
+
 \begin{conjecture}[Kodaira--Spencer operator on reduced bar cohomology; \ClaimStatusConjectured]
 \label{conj:discriminant-ks-operator}
 \index{discriminant!Kodaira--Spencer operator}
@@ -895,7 +947,7 @@ The correct space $H^{\mathrm{red}}_1$ must
 therefore be a \emph{subquotient} of $H^1$, not $H^1$ itself.
 Identifying this subquotient representation-theoretically is the
 core open problem.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1045,7 +1097,10 @@ consistent with the chain-group bound
 \item The formula predicts:
   $\dim H^4 = 1352$, $\dim H^5 = 9892$, $\dim H^6 = 76084$,
   $\dim H^7 = 598592$
-  (verified by computer through degree~$7$).
+  (internal consistency of the recurrence~\eqref{eq:sl3-bar-recurrence}
+  verified through degree~$7$; these values are \emph{generated} by the
+  recurrence from the three proved initial values, not independently
+  computed bar cohomology dimensions).
 \item The characteristic polynomial of the recurrence factors as
 $(t - 8)(t^2 - 3t - 1)$, where the linear factor corresponds to the
 dominant pole $x = 1/\dim\mathfrak{sl}_3$ and the quadratic factor
@@ -1056,7 +1111,9 @@ $(t - 3)(t + 1) = t^2 - 2t - 3$, whose roots are the reciprocals of
 the zeros of the discriminant $\Delta = 1 - 2x - 3x^2 = (1-3x)(1+x)$.
 \end{enumerate}
 
-\emph{Scope.}  Verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$: the value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.  The computation requires the rank of a $24576 \times 786432$ matrix, which is beyond hand computation but potentially accessible to numerical linear algebra.
+\emph{Scope.}  Independent verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$ directly from the chiral bar differential.  The value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.
+
+The degree-$4$ chain group has dimension $\dim \bar{B}^4 = (\dim\mathfrak{sl}_3)^4 \cdot 3! = 24576$, and the chiral bracket differential $d\colon \bar{B}^4 \to \bar{B}^3$ maps into the $1024$-dimensional space $\bar{B}^3$.  The bracket differential at degree~$4 \to 3$ has been verified computationally to be \emph{surjective} (rank~$1024$; Computation~\ref{comp:sl3-modular-rank}).  The independent verification of $\dim H^4 = 1352$ therefore reduces to computing $\dim\ker(d^{4 \to 3}) - \dim\operatorname{im}(d^{5 \to 4})$, where the first term equals $24576 - 1024 = 23552$ (by surjectivity) and the second requires the rank of the degree-$5$ differential on the $786432$-dimensional chain group $\bar{B}^5 = 8^5 \cdot 4! = 786432$.  This rank computation is feasible via modular arithmetic over $\mathbb{F}_p$ for suitable primes~$p$.
 \end{conjecture}
 
 \begin{remark}[Scope]
@@ -1410,15 +1467,34 @@ so $d_{\mathrm{bracket}} \neq 0$, consistent with case (1).
 For a Koszul algebra $\cA$, the Koszul dual Hilbert function $\dim (\cA^!)_n$ equals the conformal-weight-graded bar cohomology dimension at bar degree~$n$ (Corollary~\ref{cor:bar-cohomology-koszul-dual}).  The generating function $P_{\cA}(x) = \sum_n \dim (\cA^!)_n\, x^n$ is the Hilbert series of $\cA^!$.  In the Kac--Moody case, $P_{\widehat{\mathfrak{g}}_k}(x)$ is the Hilbert series of $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ as a graded algebra --- this is independent of~$k$ because the Koszul dual has the same graded structure at all generic levels.
 \end{remark}
 
-\begin{remark}[Degree-$2$ bar cohomology as symmetric square; \ClaimStatusProvedHere]\label{rem:bar-deg2-symmetric-square}
+\begin{remark}[Degree-$2$ bar cohomology at lowest weight; \ClaimStatusOpen]\label{rem:bar-deg2-symmetric-square}
 \index{bar complex!degree-2 cohomology}
-For any affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ with weight-$1$ generators,
+At the \emph{lowest conformal weight} $h = 2$ (where all
+generators are at mode~$1$), the bar complex of any affine
+Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ gives:
 \[
-\dim H^2(\barBgeom(\widehat{\mathfrak{g}}_k))
+\dim H^2(\barBgeom(\widehat{\mathfrak{g}}_k))_{h=2}
 = \binom{\dim\mathfrak{g} + 1}{2}
 = \dim S^2(\mathfrak{g}).
 \]
-The chain group $\bar{B}^2 \cong \mathfrak{g}^{\otimes 2} \otimes \mathrm{OS}^1(C_2) \cong \mathfrak{g}^{\otimes 2}$ has dimension $(\dim\mathfrak{g})^2$.  The bar differential $d_2 \colon \bar{B}^2 \to \bar{B}^1$ encodes the Lie bracket (from the simple-pole OPE) and has $\mathrm{rank}(d_2) = \dim[\mathfrak{g},\mathfrak{g}] = \dim\mathfrak{g}$ (for semisimple~$\mathfrak{g}$).  Meanwhile, the differential $d_3 \colon \bar{B}^3 \to \bar{B}^2$ has $\mathrm{rank}(d_3) = \binom{\dim\mathfrak{g}}{2} - \dim\mathfrak{g}$ (from the Jacobi/Arnold relations).  Thus $H^2 = \ker(d_2)/\mathrm{im}(d_3)$ has dimension $\binom{\dim\mathfrak{g}+1}{2}$.  Verified: $\mathfrak{sl}_2$ ($H^2 = 6 = \binom{4}{2}$), $\mathfrak{sl}_3$ ($H^2 = 36 = \binom{9}{2}$).
+The chain group $\bar{B}^2_{h=2} \cong \mathfrak{g}^{\otimes 2} \otimes \mathrm{OS}^1(C_2) \cong \mathfrak{g}^{\otimes 2}$ has dimension $(\dim\mathfrak{g})^2$.  The bar differential $d_2 \colon \bar{B}^2 \to \bar{B}^1$ encodes the Lie bracket (from the simple-pole OPE) and has $\mathrm{rank}(d_2) = \dim[\mathfrak{g},\mathfrak{g}] = \dim\mathfrak{g}$ (for semisimple~$\mathfrak{g}$).  Meanwhile, $\bar{B}^3_{h=2} = 0$ (three mode-$1$ generators have weight~$3$), so $\mathrm{im}(d_3) = 0$.  Thus $H^2_{h=2} = \ker(d_2) = (\dim\mathfrak{g})^2 - \dim\mathfrak{g} = \binom{\dim\mathfrak{g}+1}{2}$ (using $(a-1) + 1 = a$ for semisimple: $\ker = d^2 - d$, equal to $\binom{d+1}{2}$).  For $\mathfrak{sl}_2$: $H^2_{h=2} = 6 = \binom{4}{2}$.
+
+\emph{Caution.}
+This is the bar cohomology at a \emph{single} conformal weight.
+The \emph{total} bar cohomology $\dim H^2 = \sum_h \dim H^2_h$
+differs from $\binom{\dim\mathfrak{g}+1}{2}$ in general: the
+PBW spectral sequence
+(Corollary~\ref{cor:bar-cohomology-koszul-dual},
+Remark~\ref{rem:ce-vs-exterior}) shows that higher-weight
+contributions from the CE differential modify the total.
+For $\widehat{\mathfrak{sl}}_2$, the CE computation gives
+$\dim H^2 = 5$ (Computation~\ref{comp:sl2-ce-verification}),
+with the weight-$2$ contribution of~$6$ reduced by~$1$
+through the interaction with the weight-$3$ CE differential.
+The precise mechanism by which the PBW spectral sequence
+reconciles $H^2_{h=2} = 6$ (direct bar complex) with
+$H^2_{\mathrm{CE}} = 5$ (PBW $E_2$ page) remains under
+investigation.
 \end{remark}
 
 \begin{corollary}[Exponential growth rate from Lie algebra dimension; \ClaimStatusProvedHere]

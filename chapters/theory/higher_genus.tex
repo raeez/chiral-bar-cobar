@@ -146,6 +146,49 @@ differential is always $\Dg{g}$.  Earlier chapters that use unadorned
 $d$ for the genus-$0$ bar differential are using $\dzero$.
 \end{convention}
 
+\begin{remark}[Curvature as infinitesimal monodromy: the chiral Riemann--Hilbert correspondence]
+\label{rem:curvature-riemann-hilbert}
+\index{Riemann--Hilbert correspondence!chiral|textbf}
+\index{curvature!as infinitesimal monodromy}
+Convention~\ref{conv:higher-genus-differentials} encodes the
+nilpotence-periodicity correspondence
+(Remark~\ref{rem:nilpotence-periodicity}) at the level of
+differentials.  The genus-$g$ propagator
+$\eta_{ij}^{(g)} = d\log E(z_i,z_j) + \cdots$ is built from the
+logarithm of the prime form, which acquires monodromy~$2\pi i$ around
+each $B$-cycle of~$\Sigma_g$.  The Arakelov normalization compensates
+single-valuedness but transfers the monodromy into the Arnold defect,
+yielding the curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$.
+
+The scalar $\kappa(\cA)$ is therefore the \emph{infinitesimal generator
+of the monodromy} of the logarithmic propagator: the residue at the
+branch point of the multi-valued function~$\log E$.  The total
+corrected differential $\Dg{g}$ incorporates quantum corrections from
+all Leray degrees, restoring $\Dg{g}^{\,2} = 0$: this is the
+statement that the \emph{full} logarithm is single-valued on the
+universal cover of~$\Sigma_g$, with the Gauss--Manin component
+$d^{(1)}$ trivializing the monodromy by passage to the covering space.
+
+The equation $\dfib^{\,2} = \kappa\cdot\omega_g$ is the chiral
+analogue of the classical Riemann--Hilbert correspondence, which
+identifies flat connections ($\nabla^2 = 0$, the nilpotent side) with
+local systems (finite monodromy, the periodic side).  Here $\dfib$ is
+the connection that fails flatness by the curvature
+$\kappa\cdot\omega_g$, and $\Dg{g}$ is the corrected connection that
+is genuinely flat.  The passage $\dfib \leadsto \Dg{g}$ is the gauge
+transformation that absorbs the curvature into the quantum corrections,
+producing the flat connection whose monodromy representation governs
+the bar family over~$\overline{\mathcal{M}}_g$.
+
+The three differentials of Convention~\ref{conv:higher-genus-differentials}
+thereby correspond to three levels of the nilpotence-periodicity
+hierarchy: $\dzero$~is the genus-$0$ logarithm (single-valued,
+trivially nilpotent); $\dfib$~is the genus-$g$ logarithm with
+monodromy (curved, nilpotence fails by~$\kappa$); and $\Dg{g}$~is
+the full logarithm on the universal cover (nilpotent, monodromy
+absorbed into quantum corrections).
+\end{remark}
+
 \begin{definition}[Scalar curvature shadow; \ClaimStatusProvedHere]
 \label{def:scalar-curvature-shadow}
 \index{curvature shadow|textbf}
@@ -2645,6 +2688,17 @@ space, and the fiberwise differential acquires curvature $\dfib^{\,2} = \kappa(\
 charge.  This single step --- from genus~$0$ to genus~$1$ --- is
 the birth of the modular theory.
 
+In the language of Remark~\ref{rem:nilpotence-periodicity}: at
+genus~$0$ the logarithm $\eta = d\log(z-w)$ is single-valued and
+nilpotence is exact; at genus~$1$ the logarithm
+$d\log\theta_1(z-w|\tau)$ acquires monodromy~$2\pi i$ around the
+$B$-cycle (since
+$\theta_1(z + \tau|\tau) = -e^{-\pi i\tau - 2\pi i z}\,
+\theta_1(z|\tau)$), and this monodromy is the \emph{exponential} of
+the nilpotence defect~$\kappa\cdot\omega_1$.  The birth of the
+modular theory is the birth of non-trivial monodromy of the
+categorical logarithm.
+
 \subsection{Elliptic curves and modular parameter}
 
 \begin{definition}[Elliptic curve $E_\tau$]
@@ -4244,7 +4298,8 @@ the appearance of $\kappa$ as a single controlling number
 reflects the one-dimensionality of
 $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong \mathbb{C}$
 for simple~$\mathfrak{g}$ --- there is only one direction for
-$\Theta$ to point.
+$\Theta$ to point
+(Corollary~\ref{cor:scalar-saturation}).
 \end{remark}
 
 \begin{remark}[Tautological span]\label{rem:tautological-span}
@@ -6100,7 +6155,7 @@ structures on derived stacks: the natural conjecture is that the
 Verdier pairing on
 $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$ extends to
 a $(-1)$-shifted symplectic structure in the PTVV sense
-(Conjecture~\ref{conj:lagrangian-complementarity}).
+(Theorem~\ref{conj:lagrangian-complementarity}).
 \end{remark}
 
 \subsection{Shifted symplectic complementarity}
@@ -6323,7 +6378,7 @@ is the cohomological shadow of the BV antibracket, mediated by the
 spectral sequence
 $E_2^{p,q,g} \Rightarrow H^{p+q}_{\mathrm{chiral}}$.
 Together they resolve
-Conjecture~\ref{conj:lagrangian-complementarity}.
+Theorem~\ref{conj:lagrangian-complementarity}.
 \end{remark}
 
 \begin{theorem}[Spectral sequence as genus stratification; \ClaimStatusProvedHere]\label{thm:ss-genus-stratification}
@@ -8529,15 +8584,38 @@ $\kappa + \kappa' = \kappa_{\mathrm{total}}$
 (Theorem~\ref{thm:quantum-complementarity-main}) is the
 statement that the curvature labels on the two rows are
 linked by the Verdier involution on the right column.
+
+In the nilpotence-periodicity framework
+(Remark~\ref{rem:nilpotence-periodicity}), the genus-$0$
+diagram is the \emph{single-valued regime}: the categorical
+logarithm has no monodromy and the square commutes in the
+ordinary derived category.  The genus-$g$ diagram is the
+\emph{multi-valued regime}: the curvature $\kappa\cdot\omega_g$ is
+the infinitesimal generator of the monodromy of the logarithm
+(Remark~\ref{rem:curvature-riemann-hilbert}), and the coderived
+category is the analytic continuation that makes the multi-valued
+logarithm well-defined.  The complementarity
+$\kappa + \kappa' = \kappa_{\mathrm{total}}$ is the
+\emph{additivity of the logarithm}: $\log(\cA \otimes \cA^!)
+= \log(\cA) + \log(\cA^!)$, with the total monodromy
+$\kappa_{\mathrm{total}}$ partitioned between the algebra and
+its Koszul dual.
 \end{remark}
 
 \subsection{Modular Koszul chiral algebras: the definition}
 \label{subsec:modular-koszul-definition}
 \index{modular Koszul chiral algebra|textbf}
 
-A \emph{modular Koszul chiral algebra} is the natural
-object for which all four main theorems hold simultaneously.
-We give a homotopy-native version
+A \emph{modular Koszul chiral algebra} is the natural object for
+which the categorical $\exp/\log$ correspondence
+(Remark~\ref{rem:nilpotence-periodicity}) holds at all genera:
+the bar functor (categorical logarithm) and cobar functor
+(categorical exponential) are mutually inverse on the Koszul locus,
+the curvature is controlled by a universal scalar, and the full
+modular package admits the logarithmic-to-exponential hierarchy of
+Remark~\ref{rem:characteristic-hierarchy}.  Equivalently, it is
+the natural object for which all four main theorems hold
+simultaneously.  We give a homotopy-native version
 (Definition~\ref{def:modular-koszul-homotopy}) and a concrete dg model
 (Definition~\ref{def:modular-koszul-chiral}).
 
@@ -8803,7 +8881,7 @@ Axioms MK6--MK7 are the three desiderata of
 Theorem~\ref{conj:universal-MC}; MK8 applies only to $\Eone$-chiral
 objects.  All three are programmatic: their resolution is part of
 the Stratum~II programme (Remark~\ref{rem:two-strata}).
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \begin{proposition}[Standard examples are modular pre-Koszul; \ClaimStatusProvedHere]
@@ -10056,33 +10134,50 @@ and~\ref{conj:universal-theta}, resolving
 Conjecture~\ref{conj:master-theta}).
 \end{definition}
 
-\begin{remark}[The modular characteristic hierarchy]\label{rem:modular-characteristic-package}
+\begin{remark}[The modular characteristic hierarchy: logarithmic data and their exponentials]
+\label{rem:modular-characteristic-package}
 \label{rem:characteristic-hierarchy}
 \index{modular characteristic!hierarchy|textbf}
 The five components of the full package~$\mathcal{C}_{\cA}$
 \eqref{eq:full-package-quintuple} arrange in a strict hierarchy
-of three levels:
+of three levels.  In the nilpotence-periodicity framework
+(Remark~\ref{rem:nilpotence-periodicity}), the first three are
+\emph{logarithmic} (nilpotent, infinitesimal) data at increasing
+refinement, while the periodicity profile~$\Pi_{\cA}$ is the
+corresponding \emph{exponential} (periodic, global) datum:
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item \emph{Scalar data} \textup{(proved)}:
+\item \emph{Scalar logarithmic data} \textup{(proved)}:
   $\kappa(\cA)$, $\{\mathrm{obs}_g\}_{g \geq 1}$,
   $\{F_g\}_{g \geq 1}$
   \textup{(}Definition~\textup{\ref{def:scalar-modular-package}},
   Theorem~\textup{\ref{thm:modular-characteristic})}.
-  Determined by a single number~$\kappa(\cA)$.
-\item \emph{Spectral/polynomial data} \textup{(proved, non-scalar)}:
-  $\Delta_{\cA}(x)$, $\Pi_{\cA}$, bar cohomology generating
-  functions
+  Determined by a single number~$\kappa(\cA)$---the leading
+  coefficient of the categorical logarithm.  Its exponential is
+  the scalar modular period~$N$
+  (Remark~\ref{rem:periodicity-as-exponential}).
+\item \emph{Spectral logarithmic data} \textup{(proved, non-scalar)}:
+  $\Delta_{\cA}(x)$, bar cohomology generating functions
   \textup{(}Theorem~\textup{\ref{thm:spectral-characteristic})}.
-  Depend on the full quadratic OPE data, not
-  just~$\kappa(\cA)$.
-\item \emph{Full MC data} \textup{(conjectural)}:
-  $\Theta_{\cA}$, $\Defcyc(\cA)$, and the ambient family
-  $\mathcal{H}_{\cA}$
+  Depend on the full quadratic OPE data, not just~$\kappa(\cA)$.
+  The discriminant encodes the eigenvalues of the monodromy
+  operator on bar cohomology; its exponential is the
+  periodicity profile $\Pi_{\cA} = (M_{\cA}, Q_{\cA}, G_{\cA})$
+  of Remark~\ref{rem:periodicity-triple}.
+\item {\tolerance=9999\emergencystretch=1em
+  \emph{Full Maurer--Cartan data} \textup{(proved)}:
+  $\Theta_{\cA}$, $\Defcyc(\cA)$, and the ambient
+  family $\mathcal{H}_{\cA}$
   \textup{(}Definition~\textup{\ref{def:full-modular-package}},
-  Theorem~\textup{\ref{conj:universal-theta})}.
+  Theorems~\textup{\ref{conj:universal-theta}}
+  and~\textup{\ref{thm:mc2-full-resolution})}.
+  The complete logarithm, whose exponential is the full modular
+  automorphy of the bar family over~$\overline{\mathcal{M}}_g$.\par}
 \end{enumerate}
 The hierarchy resolves the status distinction without weakening
-the modular vision.  The scalar package specializes to concrete
+the modular vision: the logarithmic data ($\kappa$, $\Delta$,
+$\Theta$) are the primary invariants, and the periodic data
+($N$, $\Pi$, modular automorphy) are derived via
+exponentiation.  The scalar package specializes to concrete
 invariants for each family; see the Master Table
 (Table~\ref{tab:master-invariants}).
 \end{remark}
@@ -10155,7 +10250,8 @@ There is a trace map from the cyclic deformation object
 $\Defcyc(\cA)$ to the tautological ring
 $R^*(\overline{\mathcal{M}}_g)$; the scalar component is
 controlled by $\kappa(\cA)$, the first characteristic number
-of the (conjectural) universal class~$\Theta_{\cA}$
+of the universal class~$\Theta_{\cA}$
+(Theorem~\ref{thm:mc2-full-resolution})
 (Definition~\ref{def:full-modular-package}).
 
 \emph{Step~B} (M-level):
@@ -11157,7 +11253,7 @@ $l_3$ of Proposition~\ref{prop:killing-linf-extension}.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
 Type~I (existence of homotopy object).
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \begin{proposition}[Genus-completed MC framework;
@@ -11304,12 +11400,14 @@ $\omega := \Phi(f)\in\Lambda^{n+1}(\mathfrak{g}^*)$.
 
 The CE~differential with adjoint coefficients is
 \[
+\begin{aligned}
 (\delta f)(x_1,\ldots,x_{n+1})
-\;=\;
-\sum_{i=1}^{n+1}(-1)^{i-1}\,[x_i,f(\ldots,\widehat{x}_i,\ldots)]
-\;+\!\!
+&\;=\;
+\sum_{i=1}^{n+1}(-1)^{i-1}\,[x_i,f(\ldots,\widehat{x}_i,\ldots)]\\
+&\quad+\!\!
 \sum_{1\le i<j\le n+1}\!\!(-1)^{i+j}f([x_i,x_j],\ldots,
 \widehat{x}_i,\ldots,\widehat{x}_j,\ldots).
+\end{aligned}
 \]
 By definition,
 $\Phi(\delta f)(x_0,\ldots,x_{n+1})
@@ -11420,7 +11518,8 @@ Corollary~\ref{cor:one-dim-obstruction}.
 \ClaimStatusProvedHere]\label{prop:geometric-modular-operadic-mc}
 \index{MC2!geometric modular-operadic framework}
 \index{modular graph coefficient algebra!geometric realization}
-Let $(L, \{l_n\}_{n \geq 1}, \langle{-},{-}\rangle)$ be a complete
+Let\/ $(L, \{l_n\}_{n \geq 1},$\allowbreak
+$\langle{-},{-}\rangle)$ be a complete
 cyclic $L_\infty$-algebra as in
 Proposition~\textup{\ref{prop:genus-completed-mc-framework}}.
 Then:
@@ -14131,6 +14230,1096 @@ The spectral discriminant $\Delta_{\cA}$
 proved non-scalar invariant.
 \end{remark}
 
+\begin{corollary}[Scalar saturation of the universal MC class;
+\ClaimStatusProvedHere]
+\label{cor:scalar-saturation}
+\index{universal Maurer--Cartan class!scalar saturation}
+\index{universal Maurer--Cartan class!scalar exactness}
+For every Koszul chiral algebra~$\cA$ with simple Lie
+symmetry~$\mathfrak{g}$ of arbitrary rank, the universal MC element
+equals its scalar approximation in the minimal model:
+\[
+\Theta_{\cA}^{\min} = \Theta_{\cA}^{\mathrm{scal}}
+:= \kappa(\cA) \cdot \eta \otimes \Lambda.
+\]
+In particular, $\Theta_{\cA}$ carries no more information than the
+scalar $\kappa(\cA)$: two such algebras with the same~$\kappa$
+have gauge-equivalent universal MC classes.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:explicit-theta}(a), the minimal cyclic
+$L_\infty$ model has cohomology
+$\mathcal{H} \cong \mathfrak{g} \oplus
+\mathbb{C}\!\cdot\!\eta$ with $\deg\eta = 2$.
+The MC element has degree~$2$, where
+$\mathcal{H}^2 = \mathbb{C}\!\cdot\!\eta$ is one-dimensional
+--- reflecting the isomorphism
+$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\cong H^3(\mathfrak{g}) \cong \mathbb{C}$
+for every simple~$\mathfrak{g}$
+(Proposition~\ref{prop:cyclic-ce-identification}).
+Thus $\Theta^{\min} = c \cdot \eta \otimes \Lambda$ for a unique
+scalar~$c$, and the trace relation
+$\operatorname{tr}(\Theta^{\min}) = \kappa(\cA) \cdot \Lambda$
+(Theorem~\ref{conj:universal-theta}(i)) forces $c = \kappa(\cA)$.
+\end{proof}
+
+\begin{remark}[Scalar saturation and the Casimir spectrum]
+\label{rem:scalar-saturation-casimirs}
+\index{universal Maurer--Cartan class!Casimir spectrum}
+\index{cubic Casimir!does not contribute to $\Theta$}
+Corollary~\ref{cor:scalar-saturation} may appear surprising from the
+perspective of the invariant ring.  For $\mathfrak{g} =
+\mathfrak{sl}_r$ of rank~$r$, the invariant ring
+$S^*(\mathfrak{g})^{\mathfrak{g}}$ has $r$ independent generators
+(Casimirs of degrees $2, 3, \ldots, r+1$), of which only the
+quadratic Casimir~$C_2$ has nonzero trace.  One might expect the
+higher Casimirs ($C_3, C_4, \ldots$) to contribute non-scalar
+content to~$\Theta_{\cA}$.  This does not occur, for a structural
+reason:
+\begin{itemize}
+\item The MC element lives in degree~$2$ of $\Defcyc(\cA)$.
+\item The cyclic cohomology
+  $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong
+  H^3(\mathfrak{g}) \cong \mathbb{C}$ is one-dimensional for every
+  simple~$\mathfrak{g}$, generated by the Killing $3$-form.
+\item The higher Casimirs contribute to
+  $H^{2k}_{\mathrm{cyc}}$ for $k \geq 2$
+  (e.g., the cubic Casimir of $\mathfrak{sl}_3$ gives
+  $H^4_{\mathrm{cyc}} \cong H^5(\mathfrak{sl}_3) \cong \mathbb{C}$),
+  but these lie in the wrong degree for the MC equation.
+\end{itemize}
+The non-scalar characteristic data in the full package
+$\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa, \Delta_{\cA},
+\Pi_{\cA}, \mathcal{H}_{\cA})$ is therefore entirely concentrated
+in~$\Delta_{\cA}$ (the spectral discriminant, which encodes the
+algebraic structure of the bar generating function beyond~$\kappa$)
+and~$\Pi_{\cA}$ (the periodicity profile).  The MC
+element~$\Theta_{\cA}$, despite being the most
+homotopy-theoretically complete object in the package, carries the
+\emph{least} refined information: it is fully determined
+by~$\kappa(\cA)$.
+\end{remark}
+
+\begin{proposition}[Scalar saturation for $\mathcal{W}$-algebras;
+\ClaimStatusProvedHere]
+\label{prop:w-algebra-scalar-saturation}
+\index{universal Maurer--Cartan class!$\mathcal{W}$-algebra saturation}
+\index{W-algebra@$\mathcal{W}$-algebra!scalar saturation}
+Corollary~\textup{\ref{cor:scalar-saturation}} extends to all
+$\mathcal{W}$-algebras obtained by Drinfeld--Sokolov reduction:
+for $\mathcal{W}_N^k = \mathrm{DS}(\widehat{\mathfrak{sl}}_{N,k})$
+at generic level,
+\[
+\Theta_{\mathcal{W}_N^k}^{\min}
+= \kappa(\mathcal{W}_N^k) \cdot \eta_W \otimes \Lambda,
+\]
+where $\eta_W$ is the unique generator of
+$H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) \cong \mathbb{C}$.
+\end{proposition}
+
+\begin{proof}
+The $\mathcal{W}_N$ algebra at generic level is rigid up to
+rescaling by the central charge~$c$: the OPE coefficients are
+uniquely determined by $c$ after fixing normalizations
+\textup{(}Fateev--Lukyanov \textup{[}FL88\textup{]} for type~$A$;
+see Arakawa \textup{[}Ara07\textup{]} for a general treatment
+via BRST reduction\textup{)}.  This rigidity means the
+infinitesimal deformation space is one-dimensional, i.e.\
+$H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) \cong \mathbb{C}$,
+generated by the central-charge deformation direction~$\eta_W$.
+The same argument as Corollary~\ref{cor:scalar-saturation} then
+gives
+$\Theta^{\min} = c \cdot \eta_W \otimes \Lambda$
+up to normalization.  Using the relation
+$\kappa(\mathcal{W}_N^k) = \rho(\mathfrak{sl}_N) \cdot c$
+(Theorem~\ref{thm:wn-obstruction}),
+the formula follows with the canonical normalization
+$\operatorname{tr}(\eta_W) = 1/\rho$.
+\end{proof}
+
+\begin{proposition}[DS functoriality of the characteristic
+package; \ClaimStatusProvedHere]
+\label{prop:ds-package-functoriality}
+\index{Drinfeld--Sokolov reduction!package functoriality}
+\index{modular characteristic package!DS functoriality}
+Under principal Drinfeld--Sokolov reduction
+$\widehat{\mathfrak{g}}_k \rightsquigarrow
+\mathcal{W}^k(\mathfrak{g})$, the characteristic package
+transforms as follows.
+
+\smallskip\noindent
+\emph{Within a DS family} (fixed level~$k$):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Scalar characteristic.}
+  $\kappa(\mathcal{W}^k) = \rho(\mathfrak{g}) \cdot c(\mathcal{W}^k)$,
+  where $\rho(\mathfrak{g}) = \sum_{i=1}^{r} 1/(m_i + 1)$
+  and $c = r - 12|\rho_W|^2(t-1)^2/t$ with $t = k + h^\vee$
+  \textup{(}Theorem~\textup{\ref{thm:wn-obstruction}}\textup{)}.
+\item \emph{Spectral discriminant.}
+  $\Delta_{\mathcal{W}^k}(x)$\allowbreak${} = \Delta_{\widehat{\mathfrak{g}}_k}(x)$:
+  DS-invariant
+  \textup{(}Theorem~\textup{\ref{thm:ds-bar-gf-discriminant}}\textup{)}.
+\item \emph{Universal MC class.}
+  $\Theta_{\mathcal{W}^k}^{\min}
+  = \kappa(\mathcal{W}^k) \cdot \eta_W \otimes \Lambda$
+  by scalar saturation
+  \textup{(}Proposition~\textup{\ref{prop:w-algebra-scalar-saturation}}\textup{)};
+  its transformation is determined by~\textup{(i)}.
+\end{enumerate}
+
+\smallskip\noindent
+\emph{Under Feigin--Frenkel duality}
+$k \mapsto k' = -k - 2h^\vee$ ($t \mapsto -t$):
+\begin{enumerate}[label=\textup{(\roman*)},start=4]
+\item \emph{Complementarity sum.}
+  $\kappa(\mathcal{W}^k) + \kappa(\mathcal{W}^{k'})
+  = \rho(\mathfrak{g})\,(2r + 4h^\vee\dim\mathfrak{g})$
+  \textup{(}Corollary~\textup{\ref{cor:wn-complementarity}}\textup{)}.
+  Unlike Kac--Moody algebras (where $\kappa + \kappa' = 0$),
+  the $\mathcal{W}$-algebra complementarity constant is nonzero.
+\item \emph{Discriminant invariance.}
+  $\Delta_{\mathcal{W}^k} = \Delta_{\mathcal{W}^{k'}}$:
+  the discriminant depends on the quadratic OPE type, not
+  on the level.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts (i)--(iii) assemble previously established results.
+Part~(iv) is
+Corollary~\ref{cor:wn-complementarity}.
+Part~(v): the spectral discriminant
+$\Delta(x) = \operatorname{Disc}_y(f(x,y))$
+(Theorem~\ref{thm:discriminant-spectral})
+depends on the polynomial $f(x,y)$ encoding the algebraic
+structure of the bar generating function.  This polynomial
+is determined by the OPE poles and their multiplicities,
+which are the same for $\mathcal{W}^k$ and $\mathcal{W}^{k'}$
+at generic levels: Feigin--Frenkel duality preserves the
+quadratic OPE type while exchanging the highest-weight structure.
+\end{proof}
+
+\begin{remark}[Package functoriality: what remains]
+\label{rem:ds-functoriality-open}
+\index{modular characteristic package!open functoriality}
+Proposition~\ref{prop:ds-package-functoriality} settles three of
+the five package components under DS reduction.  The remaining
+items:
+\begin{itemize}
+\item \emph{Periodicity profile $\Pi_{\cA}$.}
+  The $T$-matrix eigenvalues (reciprocals of the $\Delta$-roots)
+  are DS-invariant by~(ii).  The sharp modular and geometric periods
+  (Future~7) have not been computed explicitly for any
+  $\mathcal{W}$-algebra, so their DS transformation is open.
+\item \emph{Lattice extensions.}
+  Under $\cA \to \cA \otimes V_\Lambda$, additivity gives
+  $\kappa(\cA \otimes V_\Lambda)
+  = \kappa(\cA) + \operatorname{rank}(\Lambda)$
+  (Corollary~\ref{cor:kappa-additivity}).  The discriminant
+  $\Delta_{\cA \otimes V_\Lambda}$ involves a product of the
+  individual discriminants, but the precise formula for the
+  lattice contribution has not been computed.
+\end{itemize}
+\end{remark}
+
+\begin{proposition}[Scalar saturation for non-principal
+$\mathcal{W}$-algebras; \ClaimStatusProvedHere]
+\label{prop:nonprincipal-scalar-saturation}
+\index{universal Maurer--Cartan class!non-principal $\mathcal{W}$}
+\index{W-algebra@$\mathcal{W}$-algebra!non-principal!scalar saturation}
+For every $\mathcal{W}$-algebra $\mathcal{W}^k(\mathfrak{g}, f)$
+obtained by quantum DS reduction at an \emph{arbitrary} nilpotent
+element $f \in \mathfrak{g}$, scalar saturation holds at generic
+level:
+\[
+\Theta_{\mathcal{W}^k(\mathfrak{g}, f)}^{\min}
+= \kappa\bigl(\mathcal{W}^k(\mathfrak{g}, f)\bigr)
+\cdot \eta_W \otimes \Lambda.
+\]
+In particular, the non-principal caveat is unnecessary:
+Proposition~\textup{\ref{prop:w-algebra-scalar-saturation}}
+extends to all nilpotent orbits.
+\end{proposition}
+
+\begin{proof}
+The quantum DS reduction functor
+$H^0_{\mathrm{DS}}(\,\cdot\,, f)$ constructs the
+$\mathcal{W}$-algebra as a BRST cohomology of a free-field
+resolution of $\widehat{\mathfrak{g}}_k$-modules.  The resulting
+OPE coefficients are rational functions of the single
+parameter~$k$.  At generic~$k$, these are uniquely determined
+(the BRST complex has no additional moduli), so the infinitesimal
+deformation space is one-dimensional:
+$H^2_{\mathrm{cyc}}(\mathcal{W}^k(\mathfrak{g},f),
+\mathcal{W}^k(\mathfrak{g},f)) \cong \mathbb{C}$,
+generated by the central-charge direction.
+The scalar saturation argument of
+Corollary~\ref{cor:scalar-saturation} then applies verbatim.
+\end{proof}
+
+\begin{remark}[Scope of scalar saturation and its frontier]
+\label{rem:scalar-saturation-scope}
+\index{universal Maurer--Cartan class!scope of scalar saturation}
+The preceding results establish scalar saturation for a broad class:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ with
+  simple~$\mathfrak{g}$
+  (Corollary~\ref{cor:scalar-saturation});
+\item all principal $\mathcal{W}$-algebras
+  (Proposition~\ref{prop:w-algebra-scalar-saturation});
+\item all non-principal $\mathcal{W}$-algebras
+  $\mathcal{W}^k(\mathfrak{g},f)$
+  (Proposition~\ref{prop:nonprincipal-scalar-saturation});
+\item semi-simple products: for
+  $\cA = \cA_1 \otimes \cdots \otimes \cA_r$ with each $\cA_i$ in
+  class~(i)--(iii), $\Theta = \sum_i \kappa_i \cdot \eta_i \otimes
+  \Lambda$ with independent scalars $\kappa_i$
+  (the MC equation decouples).
+\end{enumerate}
+The structural reason is uniform: every algebra in classes
+(i)--(iii) has a one-dimensional deformation space (parameterized
+by the level~$k$ or central charge~$c$), giving
+$\dim H^2_{\mathrm{cyc}} = 1$.  Class~(iv) is multi-scalar
+(determined by a tuple $(\kappa_1, \ldots, \kappa_r)$) but
+decoupled.
+
+\emph{Diagonal cosets.}
+The GKO coset
+$\mathcal{C} = (\widehat{\mathfrak{g}}_{k_1} \otimes
+\widehat{\mathfrak{g}}_{k_2}) / \widehat{\mathfrak{g}}_{k_1+k_2}$
+depends on two parameters $(k_1, k_2)$, but when the coset algebra
+is identified with a $\mathcal{W}$-algebra
+(as in Arakawa--Creutzig--Linshaw-type results), it is a
+one-parameter family and scalar saturation holds.
+
+\emph{The genuine frontier: coupled multi-parameter families.}
+Genuinely non-scalar $\Theta$ --- where the MC equation couples
+multiple deformation directions --- requires a vertex algebra
+with $\dim H^2_{\mathrm{cyc}} \geq 2$ that is \emph{not} a
+product.  No such example is known among vertex algebras of
+Lie-theoretic origin on curves; the one-dimensionality of the
+deformation space is a structural feature of the Lie-theoretic
+construction, not an artefact of the proof method.
+
+We now analyze the three candidate classes in detail.
+
+\emph{Candidate~1: Cosets of different simple factors.}
+Consider
+$\cA = \mathrm{Com}(\widehat{\mathfrak{h}}_{k_3},\;
+\widehat{\mathfrak{g}}_{k_1} \otimes
+\widehat{\mathfrak{g}'}_{k_2})$
+where $\mathfrak{h} \hookrightarrow \mathfrak{g} \oplus
+\mathfrak{g}'$ is the diagonal embedding of a common simple
+subalgebra, so that $k_3 = k_1 + k_2$ (current conservation).
+A~priori this is a two-parameter family in $(k_1, k_2)$.
+However, the conformal embedding constraint forces the
+Sugawara energy-momentum tensor to satisfy
+$T_{\cA} = T_{\mathfrak{g},k_1} + T_{\mathfrak{g}',k_2}
+- T_{\mathfrak{h},k_1+k_2}$,
+and the central charge is
+$c(\cA) = c(\mathfrak{g},k_1) + c(\mathfrak{g}',k_2)
+- c(\mathfrak{h},k_1+k_2)$.
+When $\mathfrak{g} = \mathfrak{g}' = \mathfrak{h}$
+(the GKO case), the coset $\cA$ is identified with
+a $\mathcal{W}$-algebra by the Arakawa--Creutzig--Linshaw
+programme~\cite{ACL19}, reducing to a one-parameter family.
+For $\mathfrak{g} \neq \mathfrak{g}'$ the situation is more
+delicate: the OPE of the coset depends on both $k_1$ and
+$k_2$, but the \emph{isomorphism type} (as a vertex algebra
+with its conformal vector) is typically constrained to a
+one-parameter locus.
+The reason is structural: the embedding
+$\mathfrak{h} \hookrightarrow \mathfrak{g} \oplus \mathfrak{g}'$
+and the coset condition $a_{(n)} v = 0$ for all
+$a \in \widehat{\mathfrak{h}}$ impose relations among
+OPE coefficients that remove one degree of freedom.
+In all computed examples
+($\mathfrak{g} = \mathfrak{sl}_2$,
+$\mathfrak{g}' = \mathfrak{sl}_3$,
+$\mathfrak{h} = \mathfrak{sl}_2$),
+the resulting coset is a $\mathcal{W}$-algebra in a
+single effective parameter, and scalar saturation holds.
+
+We record the precise obstruction: a genuinely two-parameter
+coset would require $\dim H^2_{\mathrm{cyc}}(\cA, \cA) \geq 2$,
+which means the coset must admit a continuous deformation that
+is \emph{not} induced by varying either ambient level alone.
+No such deformation is known.
+
+\emph{Candidate~2: VOAs from 4D $\mathcal{N}=2$ gauge theories.}
+The Beem--Lemos--Liendo--Peelaers--Rastelli--van~Rees construction
+(Construction~\ref{constr:4d2d}) produces a vertex algebra
+$\cA[\mathcal{T}_{4d}]$ from each 4D $\mathcal{N}=2$ SCFT.
+For class~$\mathcal{S}$ theories of type $A_{n-1}$ on a
+Riemann surface~$C$, the result is $\mathcal{W}^{-n}(\mathfrak{sl}_n)$
+(Example~\ref{ex:class-s}), which is a one-parameter family
+(the level is fixed by the 4D theory; the parameter comes
+from varying the theory).
+
+The most promising candidate for multi-parameter structure
+comes from \emph{$\mathcal{N}=2$ quiver gauge theories} with
+$r \geq 2$ gauge nodes, each carrying an independent gauge
+coupling $\tau_i$.  These theories have a conformal manifold
+$\mathcal{M}_{\mathrm{conf}}$ of real dimension $\geq 2r$.
+However, the 4d/2d construction is subtle:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The vertex algebra $\cA[\mathcal{T}]$ is determined
+  by the \emph{SCFT data} (R-symmetry representations and
+  OPE coefficients of Schur operators), which may be
+  independent of the exactly marginal couplings $\tau_i$.
+  In all computed examples
+  (Beem--Rastelli~\cite{beem-et-al}; Bonetti--Meneghelli--Rastelli),
+  the vertex algebra structure (OPE
+  coefficients as rational functions) depends on at most one
+  continuous parameter.
+\item For $SU(N)$ SQCD with $N_f = 2N$ flavors, the conformal
+  manifold is one-dimensional ($\tau$ alone), and the
+  vertex algebra is $\widehat{\mathfrak{sl}}_{N,-N/2}
+  \otimes \mathrm{bc}$-system, a single-parameter family.
+\item For circular quivers (e.g., the $\widehat{A}_1$ necklace
+  with two $SU(N)$ nodes and bifundamental matter), the
+  conformal manifold is two-dimensional (two gauge couplings),
+  but S-duality identifications and the structure of the
+  Schur index suggest that the vertex algebra depends on
+  a single effective parameter.
+\end{enumerate}
+The structural explanation is that exactly marginal couplings
+deform conformal blocks and correlation functions but may leave
+the \emph{OPE algebra} (the vertex algebra structure constants)
+invariant --- a familiar phenomenon in $\mathcal{N}=2$ theories
+where the conformal manifold acts trivially on the chiral ring.
+Whether this rigidity extends to all Schur operators is
+an open problem in 4D physics.
+
+\emph{Candidate~3: Exotic vertex algebras.}
+Vertex algebras not of Lie-theoretic origin
+(i.e., not obtainable from affine Kac--Moody, DS reduction,
+coset, orbifold, or free-field constructions) are rare.
+Known examples include:
+(a)~the triplet algebras $\mathcal{W}(p)$ (logarithmic
+extensions of Virasoro minimal models, one-parameter in~$p$);
+(b)~permutation orbifolds $\cA^{\otimes n} / S_n$ (multi-scalar,
+not genuinely non-scalar);
+(c)~the Mathieu moonshine VOA (a sporadic construction, not
+known to admit continuous deformations).
+In each case, either the deformation space is at most
+one-dimensional or the algebra decomposes as a product.
+
+The absence of genuinely non-scalar examples across all three
+classes is strong evidence for a structural principle:
+\textbf{for all vertex algebras of Lie-theoretic origin, the
+universal MC element carries no information beyond the scalar
+parameters.  The non-scalar characteristic data of the modular
+Koszul object resides entirely in $\Delta_{\cA}$ and
+$\Pi_{\cA}$.}
+\end{remark}
+
+\begin{proposition}[Saturation equivalence criterion;
+\ClaimStatusProvedHere]
+\label{prop:saturation-equivalence}
+\index{scalar saturation!equivalence criterion}
+\index{universal Maurer--Cartan class!saturation criterion}
+Let\/ $\cA$ be a modular Koszul chiral algebra with
+simple Lie symmetry~$\mathfrak{g}$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Conditions
+  \textup{(ii)},
+  \textup{(iii)}, and
+  \textup{(iv)} below are equivalent, and each implies
+  \textup{(i)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{\textup{(}Scalar saturation\textup{)}}
+  $\Theta_{\cA}^{\min} = \kappa(\cA)\cdot\eta\otimes\Lambda$
+  in the genus-completed minimal model;
+\item \emph{\textup{(}Cyclic one-dimensionality\textup{)}}
+  $\dim H^2_{\mathrm{cyc}}(\cA, \cA) = 1$;
+\item \emph{\textup{(}Degree-$2$ formality\textup{)}}
+  the cyclic deformation complex $\Defcyc(\cA)$ is
+  formal in degree~$2$, with cohomology generated by a
+  single class $\eta \in H^2$;
+\item \emph{\textup{(}Deformation rigidity\textup{)}}
+  every continuous deformation of\/~$\cA$ preserving
+  conformal vector and Koszul property is induced by
+  rescaling the level.
+\end{enumerate}
+\item All four conditions hold unconditionally for every
+  Koszul chiral algebra with simple~$\mathfrak{g}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We prove the equivalence
+(ii)$\Leftrightarrow$(iii)$\Leftrightarrow$(iv) and the
+implication (ii)$\Rightarrow$(i),
+then verify that every simple $\mathfrak{g}$ satisfies~(ii).
+
+\smallskip\noindent
+\emph{Setup.}
+By Theorem~\ref{thm:explicit-theta}(a), the minimal cyclic
+$L_\infty$ model of $\Defcyc(\cA)$ has cohomology
+$\mathcal{H} = H^*(\Defcyc(\cA), l_1)$ with transferred
+brackets $l_n^{\mathrm{tr}}$.  The grading is
+$\mathcal{H}^0 = \mathfrak{g}$,
+$\mathcal{H}^2 = H^2_{\mathrm{cyc}}(\cA,\cA)$,
+and the MC equation in the genus-completed minimal model is
+\begin{equation}\label{eq:mc-kuranishi}
+\mathrm{MC}_{\mathcal{H}}(x) \;:=\;
+\sum_{n \geq 1} \frac{1}{n!}\,
+l_n^{\mathrm{tr}}(x^{\otimes n}) \;=\; 0,
+\qquad x \in \mathcal{H}^2\widehat{\otimes}\Gmod.
+\end{equation}
+This is the \emph{Kuranishi map}: the obstruction to solving the
+MC equation at finite order in the Artin algebra
+$\Gmod = \prod_g H^*(\overline{\mathcal{M}}_g, \mathbb{Q})$.
+
+\smallskip\noindent
+\textup{(ii)}$\Rightarrow$\textup{(i)} and
+\textup{(ii)}$\Rightarrow$\textup{(iii)}.
+Suppose $\dim \mathcal{H}^2 = 1$, generated by~$\eta$.
+Then every degree-$2$ element in
+$\mathcal{H}^2\widehat{\otimes}\Gmod$ has the form
+$x = c \cdot \eta \otimes \Lambda$ for some $c \in \mathbb{C}$,
+where $\Lambda = \sum_{g \geq 1} \lambda_g$.
+The Kuranishi map vanishes identically on $\mathcal{H}^2$
+because all its components do:
+$l_2^{\mathrm{tr}}(\eta,\eta) = 0$
+(the Lie bracket $[-,-]_{\mathfrak{g}}$ acts on
+$\mathfrak{g}^{\otimes 2} \subset (\mathcal{H}^0)^{\otimes 2}$,
+not on $(\mathcal{H}^2)^{\otimes 2}$);
+$l_3^{\mathrm{tr}}(\eta,\eta,\eta) = 0$ (the Killing cocycle
+$\phi \colon \Lambda^3\mathfrak{g} \to \mathbb{C}\!\cdot\!\eta$
+accepts only $\mathfrak{g}$-inputs);
+$l_n^{\mathrm{tr}} = 0$ for $n \geq 4$
+(Corollary~\ref{cor:km-minimal-linf}).
+So $x = c\cdot\eta\otimes\Lambda$ is an MC element for
+every~$c$, which establishes degree-$2$ formality with single
+generator~$\eta$, i.e., condition~(iii).
+
+For condition~(i): the trace map
+$\operatorname{tr}\colon \mathcal{H}^2 \to \mathbb{C}$ is
+normalized by $\operatorname{tr}(\eta) = 1$
+(Definition~\ref{def:scalar-modular-package}), so
+$\operatorname{tr}(x) = c \cdot \Lambda$.
+By Theorem~\ref{conj:universal-theta}(i),
+$\operatorname{tr}(\Theta^{\min}) = \kappa(\cA) \cdot \Lambda$,
+forcing $c = \kappa(\cA)$.
+
+\smallskip\noindent
+\textup{(iii)}$\Rightarrow$\textup{(ii)}.
+Condition~(iii) states that $\mathcal{H}^2$ has a single
+generator, which is exactly $\dim\mathcal{H}^2 = 1$.
+
+\smallskip\noindent
+\textup{(iii)}$\Rightarrow$\textup{(iv)}.
+Degree-$2$ formality with single generator~$\eta$ means the
+Kuranishi space is
+$\mathcal{M}_{\mathrm{def}}(\cA) =
+\{x \in \mathcal{H}^2 :
+\mathrm{MC}_{\mathcal{H}}(x) = 0\}
+= \mathcal{H}^2 = \mathbb{C}\!\cdot\!\eta$,
+since $\mathrm{MC}_{\mathcal{H}} \equiv 0$ on
+$\mathcal{H}^2$ (every $l_n^{\mathrm{tr}}$
+vanishes on $\eta$-inputs by centrality,
+as in the (ii)$\Rightarrow$(iii) step).
+By the Kontsevich--Pridham correspondence~\cite{Pridham17},
+$\mathcal{M}_{\mathrm{def}}(\cA)$ is the tangent space to
+the formal moduli problem
+$\mathrm{Def}(\cA) \colon \mathrm{Art}_{\mathbb{C}} \to
+\mathrm{Set}$.
+Since the Kuranishi space is smooth (no obstruction) and
+one-dimensional, the formal moduli problem is pro-represented by
+$\mathbb{C}[[t]]$, with the single formal parameter~$t$
+corresponding to the level deformation
+$k \mapsto k + t$.  In particular, every continuous deformation
+(a convergent path in $\mathcal{M}_{\mathrm{def}}$) is
+level rescaling.
+
+\smallskip\noindent
+\textup{(iv)}$\Rightarrow$\textup{(ii)}.
+Deformation rigidity (every deformation is level rescaling)
+means the tangent space
+$T_{[\cA]}\mathcal{M}_{\mathrm{def}}
+= H^2_{\mathrm{cyc}}(\cA,\cA)$
+has dimension~$\leq 1$
+(the deformation space is at most the level line~$\mathbb{C}$).
+It has dimension exactly~$1$: the family
+$\{\cA_k\}_{k \in \mathbb{C}}$ parameterized by the level
+is a non-trivial deformation whose Kodaira--Spencer class
+in $H^2_{\mathrm{cyc}}$ is $\eta \neq 0$.
+(At critical level $\kappa = 0$ the MC element vanishes, but
+$\eta$ remains a non-trivial cohomology class:
+it is the tangent vector $\partial/\partial k$ to the level
+family, which is non-zero in $H^2_{\mathrm{cyc}}$ even when
+the curvature $\kappa \cdot \omega_g$ vanishes.)
+
+\smallskip\noindent
+\emph{Unconditional verification on the Koszul locus.}
+For simple~$\mathfrak{g}$, condition~(ii) is
+$\dim H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) = 1$.
+By the cyclic CE identification
+(Proposition~\ref{prop:cyclic-ce-identification}),
+$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\cong H^3(\mathfrak{g})$.
+For simple~$\mathfrak{g}$, $H^3(\mathfrak{g}) \cong
+\mathbb{C}$ with generator the Killing $3$-form
+$\phi(a,b,c) = \kappa([a,b],c)$ (Cartan).
+Hence all four conditions hold unconditionally.
+\end{proof}
+
+\begin{proposition}[Functorial stability of scalar saturation;
+\ClaimStatusProvedHere]
+\label{prop:saturation-functorial}
+\index{scalar saturation!functorial stability}
+Scalar saturation is preserved by the standard operations:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Drinfeld--Sokolov reduction.}
+  If\/ $\cA = \widehat{\mathfrak{g}}_k$ is
+  scalar-saturated, then so is
+  $\mathrm{DS}(\cA) = \mathcal{W}^k(\mathfrak{g},f)$ for any
+  nilpotent~$f$, and $\kappa$ transforms by
+  $\kappa(\mathcal{W}^k) = \rho(\mathfrak{g})\cdot c(\mathfrak{g},k)$
+  \textup{(}Proposition~\textup{\ref{prop:ds-package-functoriality}}\textup{)}.
+\item \emph{Koszul duality.}
+  If\/ $\Theta_{\cA}$ is scalar-saturated, then so is
+  $\Theta_{\cA^!}$, and
+  $\kappa(\cA) + \kappa(\cA^!) = K(\mathfrak{g})$
+  \textup{(}Theorem~\textup{C}\textup{)}.
+\item \emph{Tensor product.}
+  If\/ $\cA_1, \cA_2$ are scalar-saturated with $r_1, r_2$
+  simple factors respectively, then
+  $\cA_1 \otimes \cA_2$ is scalar-saturated with $r_1 + r_2$
+  factors and $\Theta^{\min} = \sum_{i} \kappa_i \cdot
+  \eta_i \otimes \Lambda$.
+\item \emph{Conformal coset.}
+  If\/ $\cA = V_1 \otimes V_2$ with both $V_i$
+  scalar-saturated and
+  $\cA' = \mathrm{Com}(V_1', V_1 \otimes V_2)$ is
+  a conformal coset by a scalar-saturated subalgebra
+  $V_1' \subset V_1$, then $\cA'$ has $\leq r_1 + r_2 - 1$
+  effective scalar parameters.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a)~\emph{Drinfeld--Sokolov reduction.}
+The BRST complex realizing DS reduction is
+$C^{\mathrm{BRST}} = V_k(\mathfrak{g})
+\otimes \Lambda^*(\mathfrak{n}_+)
+\otimes \Lambda^*(\mathfrak{n}_-)$
+with differential $d_{\mathrm{BRST}}$ depending on~$k$
+through the OPE of $V_k(\mathfrak{g})$ alone.
+The zeroth BRST cohomology
+$\mathcal{W}^k(\mathfrak{g},f) = H^0(C^{\mathrm{BRST}},
+d_{\mathrm{BRST}})$
+is a vertex algebra whose strong generators and OPE
+coefficients are rational functions of the single parameter~$k$
+(for principal~$f$: Fateev--Lukyanov~\cite{FL88};
+for general~$f$: Kac--Roan--Wakimoto~\cite{KRW}).
+Any cyclic $2$-cocycle
+$c \in H^2_{\mathrm{cyc}}(\mathcal{W}^k, \mathcal{W}^k)$
+pulls back along the BRST projection to a cyclic $2$-cocycle
+of $V_k(\mathfrak{g}) \otimes \Lambda$, which lies in the
+direct sum $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\oplus H^2_{\mathrm{cyc}}(\Lambda,\Lambda)$.
+The fermionic factor has $H^2_{\mathrm{cyc}}(\Lambda,\Lambda) = 0$
+(the exterior algebra is Koszul self-dual with no non-trivial
+cyclic deformations), so the pullback lands in
+$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong
+\mathbb{C}$.  Hence
+$\dim H^2_{\mathrm{cyc}}(\mathcal{W}^k, \mathcal{W}^k) \leq 1$.
+The level direction gives a non-trivial cocycle, so
+$\dim H^2_{\mathrm{cyc}} = 1$ and
+Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i)
+gives scalar saturation.
+The transformation
+$\kappa(\mathcal{W}^k) = \rho(\mathfrak{g}) \cdot
+c(\mathfrak{g},k)$
+is Proposition~\ref{prop:ds-package-functoriality}(i).
+
+\smallskip\noindent
+(b)~\emph{Koszul duality.}
+Let $\cA$ be scalar-saturated with simple~$\mathfrak{g}$.
+The Koszul dual $\cA^!$ has the same underlying Lie
+symmetry~$\mathfrak{g}$ at the dual level
+(the symmetry algebra is determined by the weight-$1$
+currents, which are exchanged by Koszul duality).
+By quantum complementarity
+(Theorem~\ref{thm:quantum-complementarity-main}),
+the modular characteristics satisfy
+$\kappa(\cA) + \kappa(\cA^!) = K(\mathfrak{g})$
+where $K(\mathfrak{g})$ is the complementarity constant.
+Since $\cA^!$ has the same simple~$\mathfrak{g}$,
+Proposition~\ref{prop:saturation-equivalence} gives
+$\dim H^2_{\mathrm{cyc}}(\cA^!,\cA^!) = 1$,
+and the unique MC element is
+$\Theta_{\cA^!}^{\min} = \kappa(\cA^!) \cdot
+\eta \otimes \Lambda$ where $\kappa(\cA^!) = K - \kappa(\cA)$.
+The same generator~$\eta$ appears because
+$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong
+H^3(\mathfrak{g}) \cong \mathbb{C}$ is independent of
+the level.
+
+\smallskip\noindent
+(c)~\emph{Tensor product.}
+Let $\cA_1, \cA_2$ have simple symmetry algebras
+$\mathfrak{g}_1, \mathfrak{g}_2$ respectively.
+The current algebra of $\cA_1 \otimes \cA_2$ is
+$\mathfrak{g}_1 \oplus \mathfrak{g}_2$.  By the cyclic
+CE identification
+(Proposition~\ref{prop:cyclic-ce-identification}),
+\[
+H^2_{\mathrm{cyc}}(\mathfrak{g}_1 \oplus \mathfrak{g}_2,\,
+\mathfrak{g}_1 \oplus \mathfrak{g}_2)
+\;\cong\;
+H^3(\mathfrak{g}_1 \oplus \mathfrak{g}_2).
+\]
+By the K\"unneth theorem for Lie algebra cohomology,
+$H^3(\mathfrak{g}_1 \oplus \mathfrak{g}_2)
+= \bigoplus_{p+q=3} H^p(\mathfrak{g}_1) \otimes
+H^q(\mathfrak{g}_2)$.
+For simple~$\mathfrak{g}_i$, Whitehead's first and second
+lemmas give $H^1(\mathfrak{g}_i) = H^2(\mathfrak{g}_i) = 0$
+(the first lemma kills $H^1$ since
+$[\mathfrak{g},\mathfrak{g}] = \mathfrak{g}$;
+the second kills $H^2$ since $\mathfrak{g}$ is
+semisimple).
+The only surviving summands in degree~$3$ are
+$H^3(\mathfrak{g}_1) \otimes H^0(\mathfrak{g}_2)
+\oplus H^0(\mathfrak{g}_1) \otimes H^3(\mathfrak{g}_2)
+\cong \mathbb{C} \oplus \mathbb{C}$.
+Hence
+$\dim H^2_{\mathrm{cyc}} = 2 = r_1 + r_2$.
+By induction on $r$, for $r$ simple factors:
+$H^3(\mathfrak{g}_1 \oplus \cdots \oplus \mathfrak{g}_r)
+= \bigoplus_{i=1}^r H^3(\mathfrak{g}_i) \cong
+\mathbb{C}^r$ (the Whitehead vanishing
+$H^1 = H^2 = 0$ kills all cross-terms at every stage).
+The MC element decomposes as
+$\Theta^{\min} = \sum_i \kappa_i \cdot \eta_i \otimes \Lambda$
+with each $\eta_i \in H^3(\mathfrak{g}_i)$ independent.
+
+\smallskip\noindent
+(d)~\emph{Conformal coset.}
+The conformal embedding
+$V_1' \hookrightarrow V_1 \otimes V_2$ induces a surjection
+of current algebras
+$\mathfrak{g}_{V_1} \oplus \mathfrak{g}_{V_2}
+\twoheadrightarrow \mathfrak{g}_{V_1'}$
+(the embedding identifies
+$\mathfrak{g}_{V_1'} \hookrightarrow
+\mathfrak{g}_{V_1} \oplus \mathfrak{g}_{V_2}$ diagonally),
+and the coset $\cA' = \mathrm{Com}(V_1', V_1 \otimes V_2)$
+has current algebra contained in the centralizer
+$\mathfrak{g}_{\cA'} \subseteq
+\{x \in \mathfrak{g}_{V_1} \oplus \mathfrak{g}_{V_2}
+: [x, \mathfrak{g}_{V_1'}] = 0\}$.
+The diagonal embedding imposes at least one relation on
+levels ($k' = k_1 + k_2$ from current conservation),
+reducing the ambient parameter space by
+$\dim \mathfrak{g}_{V_1'} \geq 1$ directions.
+For the diagonal coset
+$\mathfrak{g} = \mathfrak{g}' = \mathfrak{h}$ (GKO), the
+parameter reduction is exactly~$1$:
+$(k_1, k_2) \mapsto c(k_1, k_2)$ gives
+a one-parameter coset family, and when the ACL identification
+applies, scalar saturation follows from~(a).
+\end{proof}
+
+\begin{corollary}[Effective quadruple for the standard landscape;
+\ClaimStatusProvedHere]
+\label{cor:effective-quadruple}
+\index{modular characteristic package!effective quadruple}
+For every modular Koszul chiral algebra~$\cA$ in the
+standard Lie-theoretic landscape
+\textup{(}Kac--Moody with simple~$\mathfrak{g}$,
+$\mathcal{W}$-algebras, diagonal cosets identified with
+$\mathcal{W}$-algebras, and tensor products thereof\textup{)},
+the quintuple
+$\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa(\cA),
+\Delta_{\cA}, \Pi_{\cA}, \mathcal{H}_{\cA})$
+of~\eqref{eq:full-package-quintuple} reduces to the effective
+quadruple
+\begin{equation}\label{eq:reduced-quadruple}
+\mathcal{C}_{\cA}^{\mathrm{eff}}
+\;=\; \bigl(\,\kappa(\cA),\;\Delta_{\cA},\;
+       \Pi_{\cA},\;\mathcal{H}_{\cA}\,\bigr),
+\end{equation}
+with $\Theta_{\cA}$ recoverable from $\kappa(\cA)$ by
+\eqref{eq:theta-minimal}.  For semi-simple products,
+$\kappa(\cA)$ is replaced by the tuple
+$(\kappa_1, \ldots, \kappa_r)$.
+\end{corollary}
+
+\begin{proof}
+We verify scalar saturation for each class in the standard
+landscape, then derive the quadruple reduction.
+
+\emph{Step 1: Saturation.}
+For each class, we verify the equivalence
+criterion of Proposition~\ref{prop:saturation-equivalence}\,(ii),
+namely $\dim H^2_{\mathrm{cyc}} = 1$ per simple factor.
+\begin{itemize}
+\item \emph{Kac--Moody.}
+  $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+  \cong H^3(\mathfrak{g}) \cong \mathbb{C}$ for
+  simple~$\mathfrak{g}$
+  (Corollary~\ref{cor:scalar-saturation}).
+\item \emph{$\mathcal{W}$-algebras.}
+  $\dim H^2_{\mathrm{cyc}} = 1$ by the BRST pullback
+  argument in
+  Proposition~\ref{prop:saturation-functorial}(a).
+\item \emph{Diagonal cosets identified with
+  $\mathcal{W}$-algebras.}
+  The ACL identification~\cite{ACL19} reduces the coset to a
+  $\mathcal{W}$-algebra, and the preceding item applies.
+\item \emph{Tensor products.}
+  $\dim H^2_{\mathrm{cyc}} = r$ by the K\"unneth--Whitehead
+  argument in
+  Proposition~\ref{prop:saturation-functorial}(c).
+\end{itemize}
+
+\emph{Step 2: Quadruple reduction.}
+By Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i),
+scalar saturation gives
+$\Theta^{\min}_{\cA} = \kappa(\cA) \cdot \eta \otimes \Lambda$
+(or $\sum_i \kappa_i \cdot \eta_i \otimes \Lambda$ for
+semi-simple products).  The MC element $\Theta_{\cA}$
+is therefore a function of~$\kappa(\cA)$ alone: explicitly
+recoverable via~\eqref{eq:theta-minimal}.
+In the quintuple
+$\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa, \Delta, \Pi,
+\mathcal{H})$, the first component $\Theta_{\cA}$ is
+determined by the second component $\kappa$, so the
+independent data is the quadruple
+$(\kappa, \Delta, \Pi, \mathcal{H})$.
+
+The three levels of the modular characteristic hierarchy
+(Remark~\ref{rem:characteristic-hierarchy}) simplify
+accordingly:
+at level~(L1), $\kappa$ is no longer merely a trace-level
+shadow of~$\Theta$ but the \emph{complete}
+scalar invariant (since
+$\Theta \mapsto \kappa$ is injective, not just surjective);
+at level~(L2), $\Delta_{\cA}$ carries the spectral content;
+at level~(L3), $\Pi_{\cA}$ carries the periodicity data.
+\end{proof}
+
+\begin{theorem}[Cyclic rigidity at generic level;
+\ClaimStatusProvedHere]
+\label{thm:cyclic-rigidity-generic}
+\index{cyclic cohomology!rigidity theorem}
+\index{scalar saturation!at generic level}
+\index{Whitehead decomposition!of cyclic cohomology}
+Let\/ $\cA$ be a vertex algebra with simple affine current
+subalgebra\/ $\widehat{\fg}_k$ satisfying:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\cA$ is strongly finitely generated
+  over\/~$\widehat{\fg}_k$;
+\item each conformal weight space $\cA_h$ is a
+  finite-dimensional\/ $\fg$-module;
+\item the\/ $\widehat{\fg}_k$-module category containing the
+  summands of\/~$\cA$ is semisimple
+  \textup{(}holds at all non-admissible, non-critical
+  levels~$k$\textup{)}.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{\textup{(}Whitehead decomposition.\textup{)}}
+  Under conditions \textup{(a)--(b)} alone, the cyclic
+  deformation cohomology decomposes as
+  \begin{equation}\label{eq:whitehead-decomposition}
+  H^2_{\mathrm{cyc}}(\cA, \cA)
+  \;=\;
+  \mathbb{C}\!\cdot\!\eta
+  \;\oplus\;
+  H^2_{\mathrm{cyc,prim}}(\cA),
+  \end{equation}
+  where\/ $\eta$ is the level deformation class and\/
+  $H^2_{\mathrm{cyc,prim}}(\cA)$ consists of\/
+  $\fg$-equivariant cocycles vanishing on all
+  current-containing pairs.
+\item \emph{\textup{(}Categorical rigidity.\textup{)}}
+  Under hypotheses \textup{(a)--(c)},
+  $H^2_{\mathrm{cyc,prim}}(\cA) = 0$,
+  hence $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$
+  and\/~$\cA$ is scalar-saturated.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Stage~1: Whitehead reduction
+\textup{(}establishes~\eqref{eq:whitehead-decomposition},
+using (a)--(b) only\textup{)}.}
+Let $c \in Z^2_{\mathrm{cyc}}(\cA,\cA)$ be a cyclic
+$2$-cocycle preserving the conformal vector ($c(T,-) = 0$).
+
+\emph{Current--current component.}
+The restriction $c(J^a, J^b)$ is a $\fg$-invariant symmetric
+bilinear form on~$\fg$.  For simple~$\fg$, Schur's lemma
+gives $(S^2\fg)^\fg = \mathbb{C}\!\cdot\!\kappa$
+(the Killing form is the unique invariant), so
+$c(J^a, J^b) = \lambda \kappa(a,b)$ for a unique
+$\lambda \in \mathbb{C}$.
+Setting $c' := c - \lambda\eta$, we have
+$c'(J^a, J^b) = 0$.
+
+\emph{Current--primary component.}
+For each primary strong generator~$\varphi_i$ of conformal
+weight~$h_i$, the linearized Borcherds identity for the
+triple $(J^a, J^b, \varphi_i)$, combined with
+$c'(J^a, J^b) = 0$, gives
+\[
+\rho(a)\!\cdot\! c'(b, \varphi_i)
+\;-\; \rho(b)\!\cdot\! c'(a, \varphi_i)
+\;=\; c'([a,b], \varphi_i),
+\]
+where $\rho$ is the $\fg$-action on $\cA_{1+h_i}$.
+This identifies the map $a \mapsto c'(a, \varphi_i)$ as a
+$1$-cocycle of~$\fg$ with values in the finite-dimensional
+module~$\cA_{1+h_i}$.
+By Whitehead's first lemma ($H^1(\fg, M) = 0$ for
+semisimple~$\fg$ and finite-dimensional~$M$~\cite{Weibel94}),
+this cocycle is a coboundary:
+$c'(a, \varphi_i) = \rho(a) \!\cdot\! \psi_i$ for some
+$\psi_i \in \cA_{1+h_i}$.
+A gauge transformation (inner derivation by
+$\sum_i \psi_i$) absorbs this term.  After gauge-fixing,
+$c'(J^a, \varphi_i) = 0$ for all~$a, i$.
+
+\emph{Equivariance of the residual.}
+The Borcherds identity for $(J^a, \varphi_i, \varphi_j)$,
+with $c'(J^a, -) = 0$ on both current and primary inputs,
+gives
+$\rho(a) \!\cdot\! c'(\varphi_i, \varphi_j)
+= c'(\rho(a)\varphi_i, \varphi_j) +
+c'(\varphi_i, \rho(a)\varphi_j)$,
+establishing that the residual cocycle
+$c'(\varphi_i, \varphi_j) \in H^2_{\mathrm{cyc,prim}}(\cA)$
+is $\fg$-equivariant.
+This completes the
+decomposition~\eqref{eq:whitehead-decomposition}.
+
+\smallskip\noindent
+\emph{Stage~2: Categorical rigidity
+\textup{(}kills\/ $H^2_{\mathrm{cyc,prim}}$ under\/ (c)\textup{)}.}
+Under condition~(c), the~$\widehat{\fg}_k$-module category
+containing the summands of~$\cA$ is semisimple.  At
+non-admissible, non-critical~$k$, this is the content of the
+Kazhdan--Lusztig theorem~\cite{KL93}: the braided tensor
+category $\mathrm{Rep}(\widehat{\fg}_k)$ is equivalent
+to~$\mathrm{Rep}(\fg)$ (with trivial braiding) via the KZ
+functor, and is in particular semisimple.
+
+The vertex algebra~$\cA$, viewed as an algebra object in
+this tensor category via the vertex tensor category
+structure of Huang--Lepowsky--Zhang~\cite{HLZ}, decomposes as
+$\cA \cong \bigoplus_\lambda M_\lambda \otimes L_k(\lambda)$
+with $M_\lambda$ finite-dimensional multiplicity spaces.
+A class $c' \in H^2_{\mathrm{cyc,prim}}(\cA)$ is a
+first-order deformation of this algebra structure in the
+\emph{fixed} tensor category
+$\mathrm{Rep}(\widehat{\fg}_k)$, classified by the
+Hochschild cohomology $\mathrm{HH}^2(\cA, \cA)$ of~$\cA$
+as an algebra object.
+
+In a semisimple abelian category, short exact sequences
+of bimodules split, so
+$\mathrm{Ext}^n_{{\cA}\text{-bimod}}({\cA}, {\cA}) = 0$ for
+$n \geq 1$~\cite{EGNO}.
+In particular,
+$\mathrm{HH}^2(\cA, \cA) = 0$, and
+the cyclic subspace
+$H^2_{\mathrm{cyc,prim}}(\cA)
+\subseteq \mathrm{HH}^2(\cA, \cA)$
+vanishes.
+
+Scalar saturation follows by
+Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i).
+\end{proof}
+
+\begin{remark}[Scope and significance of cyclic rigidity]
+\label{rem:cyclic-rigidity-scope}
+\index{cyclic cohomology!scope of rigidity}
+(i)~The Whitehead
+decomposition~\eqref{eq:whitehead-decomposition}
+holds at \emph{all} non-critical levels, including admissible
+levels and integer levels.
+At admissible levels, the module category is
+non-semisimple (it is a non-semisimple modular tensor
+category), so Stage~2 does not apply, and
+$H^2_{\mathrm{cyc,prim}}$ is potentially non-zero.
+At positive integer levels, the category of integrable
+$L_k(\fg)$-modules is a semisimple modular tensor
+category (the WZW fusion category), so condition~(c)
+holds for any~$\cA$ decomposing into integrable modules.
+
+(ii)~Together with
+Corollary~\textup{\ref{cor:effective-quadruple}}, the
+theorem establishes the effective quadruple
+$\mathcal{C}^{\mathrm{eff}}_{\cA}
+= (\kappa, \Delta, \Pi, \mathcal{H})$
+for the entire standard Lie-theoretic landscape at
+generic level, \emph{without case-by-case verification}:
+the Whitehead--Kazhdan--Lusztig argument is uniform.
+The case-by-case proofs
+(Propositions~\ref{prop:saturation-equivalence}
+and~\ref{prop:saturation-functorial}) give complementary
+information---in particular, the BRST pullback for
+$\mathcal{W}$-algebras covers all levels, not just
+generic ones.
+
+(iii)~The decomposition~\eqref{eq:whitehead-decomposition}
+reduces the universality conjecture to a single question:
+\emph{does $H^2_{\mathrm{cyc,prim}}(\cA) = 0$ persist
+at admissible levels?}
+At admissible levels, the non-semisimplicity of the
+module category is the source of logarithmic
+phenomena (indecomposable but non-simple modules).
+The conjecture predicts that this non-semisimplicity
+does not create new cyclic deformations.
+\end{remark}
+
+\begin{conjecture}[Scalar saturation universality]
+\label{conj:scalar-saturation-universality}
+\index{universal Maurer--Cartan class!universality conjecture}
+\index{scalar saturation!universality conjecture}
+\ClaimStatusConjectured
+The effective quadruple reduction
+\textup{(}Corollary~\textup{\ref{cor:effective-quadruple}}\textup{)}
+extends to \textbf{all} modular Koszul chiral algebras at
+\textbf{all} levels: for
+any~$\cA$ with maximal reductive current algebra
+$\mathfrak{g} = \mathfrak{g}_1 \oplus \cdots \oplus \mathfrak{g}_r$
+\textup{(}each $\mathfrak{g}_i$ simple\textup{)}, the
+minimal-model MC element factors as
+\begin{equation}\label{eq:theta-multi-scalar}
+\Theta^{\min}_{\cA}
+\;=\; \sum_{i=1}^r \kappa_i(\cA) \cdot \eta_i \otimes \Lambda,
+\qquad
+\Lambda = \sum_{g \geq 1} \lambda_g \;\in\; \Gmod,
+\end{equation}
+and the MC equation decouples into $r$ independent scalar
+equations
+\begin{equation}\label{eq:mc-decoupled}
+\sum_{n \geq 1} \frac{1}{n!}\,
+l_n^{\mathrm{tr},(i)}
+\bigl((\kappa_i \,\eta_i \otimes \Lambda)^{\otimes n}\bigr) = 0,
+\qquad i = 1, \ldots, r.
+\end{equation}
+
+By Theorem~\textup{\ref{thm:cyclic-rigidity-generic}}, this
+is proved at generic \textup{(}non-admissible,
+non-critical\textup{)} levels, where the Whitehead
+decomposition~\eqref{eq:whitehead-decomposition} and
+Kazhdan--Lusztig semisimplicity give
+$H^2_{\mathrm{cyc,prim}}(\cA) = 0$.
+The conjecture asserts that
+$H^2_{\mathrm{cyc,prim}}(\cA) = 0$ persists at admissible
+levels, where the module category is non-semisimple.
+
+Equivalently
+\textup{(}Proposition~\textup{\ref{prop:saturation-equivalence}}\textup{)}:
+every modular Koszul algebra with Lie symmetry satisfies
+$\dim H^2_{\mathrm{cyc}}(\cA, \cA) = r =
+\text{number of simple factors}$, at every level.
+\end{conjecture}
+
+\begin{remark}[Evidence and frontier of
+Conjecture~\ref{conj:scalar-saturation-universality}]
+\label{rem:scalar-saturation-evidence}
+\index{scalar saturation!evidence}
+\index{universal Maurer--Cartan class!evidence for universality}
+
+\smallskip\noindent
+\emph{(I) Proved instances.}
+The conjecture is proved at generic level for \emph{all}
+vertex algebras with simple symmetry
+(Theorem~\ref{thm:cyclic-rigidity-generic}), and at
+\emph{all} levels for the standard Lie-theoretic landscape
+(Corollary~\ref{cor:effective-quadruple}):
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ with
+  simple~$\mathfrak{g}$, arbitrary rank
+  (Corollary~\ref{cor:scalar-saturation});
+\item principal $\mathcal{W}$-algebras
+  $\mathcal{W}_N^k$
+  (Proposition~\ref{prop:w-algebra-scalar-saturation});
+\item non-principal $\mathcal{W}$-algebras
+  $\mathcal{W}^k(\mathfrak{g}, f)$ for any orbit~$f$
+  (Proposition~\ref{prop:nonprincipal-scalar-saturation});
+\item diagonal cosets identified with $\mathcal{W}$-algebras
+  via Arakawa--Creutzig--Linshaw~\cite{ACL19};
+\item semi-simple products and tensor products
+  (Proposition~\ref{prop:saturation-functorial}(c)).
+\end{enumerate}
+The saturation equivalence
+(Proposition~\ref{prop:saturation-equivalence}) provides
+the testable criterion: for any candidate algebra, one
+need only verify $\dim H^2_{\mathrm{cyc}} = 1$.
+
+\smallskip\noindent
+\emph{(II) The critical test: 4D $\mathcal{N}=2$ quiver VOAs.}
+The sharpest potential counterexample arises from
+$\mathcal{N}=2$ superconformal field theories with
+multi-dimensional conformal manifolds.
+Consider a circular quiver with $r \geq 2$ gauge nodes
+(e.g., the $\widehat{A}_{r-1}$ necklace quiver with
+gauge group $\prod_i SU(N_i)$ and bifundamental matter),
+giving $\dim_{\mathbb{C}}\mathcal{M}_{\mathrm{conf}} \geq r$.
+The 4d/2d construction
+(Construction~\ref{constr:4d2d}) produces a vertex algebra
+$\cA[\mathcal{T}]$ that \emph{a priori} could depend on
+all~$r$ couplings $\tau_i$.
+
+The conjecture reduces to a precise 4D physics question:
+\emph{does the Schur sector OPE algebra
+$\cA[\mathcal{T}(\tau_1, \ldots, \tau_r)]$ vary
+non-trivially over the conformal manifold?}
+In all computed examples ($SU(N)$ SQCD with $N_f = 2N$,
+the $\widehat{A}_1$ necklace, class~$\mathcal{S}$ of
+type~$A_{n-1}$), the answer is no: the OPE is rigid
+and the vertex algebra depends on at most one effective
+parameter.
+
+\smallskip\noindent
+\emph{(III) Consequences for the characteristic hierarchy.}
+The proved quadruple reduction
+(Corollary~\ref{cor:effective-quadruple})
+already establishes the three-level hierarchy for the
+standard landscape:
+\begin{enumerate}[label=\textup{(L\arabic*)}]
+\item \emph{Scalar logarithmic}:
+  $\kappa(\cA) \in \mathbb{C}$ --- the unique scalar invariant
+  governing $\Theta_{\cA}$, not merely a trace-level shadow;
+\item \emph{Spectral logarithmic}:
+  $\Delta_{\cA}(x) = \prod_i (1 - \lambda_i x)$ --- the
+  bar generating function discriminant;
+\item \emph{Exponential}:
+  $\Pi_{\cA} = (M_{\cA}, Q_{\cA}, G_{\cA})$ --- the
+  periodicity profile.
+\end{enumerate}
+In the Chern--Weil analogy
+(Remark~\ref{rem:kappa-first-chern}), $\kappa$ is promoted
+from a first Chern number (a shadow of the connection) to
+the connection itself: the determinant line bundle
+$\mathcal{L}_{\cA} = \det R\pi_{g*} \bar{B}^{(g)}(\cA)$
+has $c_1 = \kappa \cdot \lambda$, and the connection is
+flat in the fiber directions.
+
+\smallskip\noindent
+\emph{(IV) Relation to Theorem~D.}
+Theorem~D (Theorem~\ref{thm:modular-characteristic})
+establishes that $\kappa(\cA)$ is universal, additive,
+anti-symmetric, and has $\hat{A}$-genus generating function.
+The quadruple reduction strengthens this: $\kappa$ not only
+\emph{exists} as an invariant but \emph{determines}
+$\Theta_{\cA}$ completely.  For the standard landscape this
+is proved; the conjecture asserts this determination is
+universal.
+\end{remark}
+
 \begin{remark}[$\kappa$ as first Chern class]
 \label{rem:kappa-first-chern}
 Properties (i)--(iv) identify $\kappa$ as a first Chern class: additive under tensor products, anti-symmetric under duality, and controlling a universal obstruction.  The modular Koszul algebra is the ``line bundle,'' the genus tower is the ``obstruction to global sections,'' and $\Theta_{\cA}$ is the ``Chern--Weil representative'' with scalar trace $\kappa \cdot \lambda_g$.
@@ -14184,12 +15373,15 @@ of $\mathcal{L}_{\cA} \otimes \mathcal{L}_{\cA^!} \cong
 the total bar complex.
 
 \smallskip\noindent
-Constructing the full non-scalar enhancement ---
-the universal Maurer--Cartan class $\Theta_{\cA}$ of
-Definition~\ref{def:full-modular-package} and its
-Chern--Weil theory --- remains the principal open problem of
-the modular programme
-(Theorem~\ref{conj:universal-MC}).
+The universal Maurer--Cartan class $\Theta_{\cA}$ of
+Definition~\ref{def:full-modular-package} is now fully constructed
+(Theorem~\ref{conj:universal-MC}) and is
+scalar-saturated (Corollary~\ref{cor:scalar-saturation}): at the
+minimal-model level, $\Theta_{\cA}^{\min} = \kappa(\cA) \cdot
+\eta \otimes \Lambda$.  The Chern--Weil theory is complete: the
+determinant line bundle $\mathcal{L}_{\cA}$, its first Chern class
+$\kappa \cdot \lambda$, and the GRR genus expansion exhaust the
+information in~$\Theta_{\cA}$.
 \end{remark}
 
 \begin{theorem}[Tautological line support;

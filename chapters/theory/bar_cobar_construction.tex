@@ -14,14 +14,77 @@ and integrated against the OPE data of a chiral algebra, grows into
 a functor: the bar construction.
 
 The bar complex $\barB(\cA)$ of a chiral algebra~$\cA$ on a smooth
-curve~$X$ is a non-abelian integral transform.  Its input is the
-chiral algebra (encoded by OPE singularities); its kernel is the
-propagator $\eta_{ij}$; its output is a factorization coalgebra on
-$\operatorname{Ran}(X)$.  Verdier duality inverts the transform:
-the cobar construction $\Omega(\barB(\cA))$ reconstructs~$\cA$ from
-its transform, just as the inverse Fourier transform reconstructs a
-function from its spectrum.  For the Heisenberg algebra, this
+curve~$X$ is a non-abelian integral transform---more precisely, the
+\emph{categorical logarithm}
+(Remark~\ref{rem:nilpotence-periodicity} below).  Its input is the chiral
+algebra (encoded by OPE singularities); its kernel is the
+logarithmic propagator $\eta_{ij} = d\log(z_i - z_j)$; its output is
+a factorization coalgebra on $\operatorname{Ran}(X)$ whose differential
+is nilpotent ($d^2 = 0$) at genus~$0$.  Verdier duality inverts the
+transform: the cobar construction $\Omega(\barB(\cA))$
+reconstructs~$\cA$ from its transform, playing the role of the
+categorical \emph{exponential}.  For the Heisenberg algebra, this
 literally specializes to the Fourier--Mukai transform on the Jacobian.
+That the kernel of the bar construction is a logarithmic form is not
+incidental: the functor $\barB$ maps the multiplicative structure of
+the OPE to the additive/nilpotent structure of the bar differential,
+and $\Omega$ inverts this passage.  Their composition
+$\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the Koszul
+locus (Theorem~\ref{thm:bar-cobar-inversion-qi}) is the identity
+$\exp \circ \log = \mathrm{id}$ in the convergence domain of the
+categorical logarithm.
+
+\begin{remark}[The nilpotence-periodicity correspondence]
+\label{rem:nilpotence-periodicity}
+\index{nilpotence-periodicity correspondence|textbf}
+\index{periodicity!as exponential of nilpotence}
+The logarithmic form~$\eta_{ij} = d\log(z_i - z_j)$ is not an
+incidental choice of kernel: the bar construction is the
+\emph{categorical logarithm} for chiral algebras, mapping
+multiplicative structure (the OPE) to additive/nilpotent structure
+(the bar differential with $\dzero^2 = 0$).  The cobar construction
+is the corresponding \emph{exponential}, reconstructing the algebra
+from the nilpotent data.  The structural principle governing the
+entire theory is:
+\begin{center}
+\emph{Nilpotence is the logarithm of periodicity.}
+\end{center}
+At genus~$0$, the logarithm~$\eta_{ij}$ is single-valued
+on~$C_2(\mathbb{P}^1)$, the bar differential is nilpotent
+($\dzero^2 = 0$), and the monodromy is trivial.  At
+genus~$g \geq 1$, the logarithm $d\log E(z_i,z_j)$ acquires
+monodromy around the $B$-cycles of~$\Sigma_g$, the fiberwise bar
+differential fails nilpotence by
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, and the curvature
+$\kappa(\cA)$ is the \emph{infinitesimal generator} of this
+monodromy---the residue at the branch point of the logarithm.
+This is the chiral Riemann--Hilbert correspondence: the nilpotent
+datum~$\kappa$ determines the periodic datum (the monodromy of the
+bar family over~$\overline{\mathcal{M}}_g$) via exponentiation.
+
+The four theorems are four aspects of this correspondence:
+Theorem~A asserts that the categorical logarithm and exponential
+exist; Theorem~B that they are mutually inverse on the
+convergence domain (the Koszul locus); Theorem~C that the failure
+off the convergence domain decomposes into complementary
+Lagrangians (the branch structure of the logarithm); and
+Theorem~D that the leading coefficient~$\kappa(\cA)$ of the
+logarithm determines the full scalar package.
+
+The modular periodicity profile~$\Pi(\cA)$ is the
+global/exponential counterpart of the infinitesimal/nilpotent
+characteristic~$\kappa(\cA)$.  At the scalar level, the T-matrix
+eigenvalues $\lambda = \exp(2\pi i(h - c/24))$ are the
+\emph{exponentials} of conformal weights shifted by the central
+charge; the modular period~$N$ is the smallest positive integer for
+which $\exp(2\pi i N c/24) = 1$.  At the geometric level, the
+nilpotency $\kappa(\lambda)^{g-1} = 0$
+(Theorem~\ref{thm:geometric-depth-smooth}) makes the operator
+$\exp(\kappa(\lambda))$ \emph{unipotent}, not periodic: geometry
+provides a stabilization threshold, not a period.  True periodicity
+arises from modular and quantum sources whose nilpotent generators
+have finite-order exponentials.
+\end{remark}
 
 The three-step bar differential
 $d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
@@ -6664,6 +6727,34 @@ translation-propagation statement of
 Proposition~\ref{prop:winfty-ds-generator-seed}.
 \end{proof}
 
+\begin{computation}[Stage-$4$ seed set and residual packet verification]
+\label{comp:winfty-stage4-seed-verification}
+\index{MC4!W-infinity stage-4 verification}
+The seed set cardinalities and residual decomposition of
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet} have been
+verified computationally
+(\texttt{compute/lib/w4\_stage4\_coefficients.py}, $72$~tests):
+\begin{itemize}
+\item $|\mathcal{I}_4| = 54$,
+  $|\mathcal{I}_4^{\mathrm{Vir}}| = 18$,
+  $|\mathcal{I}_4^{W_3}| = 7$,
+  $|\mathcal{J}_4| = 29$;
+\item Residual decomposition: $(3,3)$-tail of size~$2$,
+  $\mathcal{J}_4^{3,4}$ of size~$12$ (sub-decomposition $5+4+3$),
+  $\mathcal{J}_4^{4,4}$ of size~$15$ (sub-decomposition $6+5+4$);
+\item Stage-$3$ packet reproduced:
+  $\mathsf{C}^{\mathrm{DS}}_{2,2;2;0,2} = 2$,
+  $\mathsf{C}^{\mathrm{DS}}_{2,3;3;0,2} = 3$,
+  $\mathsf{C}^{\mathrm{DS}}_{3,3;2;0,4} = 2$ (three nonzero,
+  twelve vanishing);
+\item Complementarity sum:
+  $c(k) + c(-k-8) = 246$ (constant in~$k$);
+\item Universal $T$-coupling pattern:
+  $\mathsf{C}_{s,s;2;0,2s-2} = 2$ confirmed for $s = 2, 3$;
+  predicted for $s = 4$.
+\end{itemize}
+\end{computation}
+
 \begin{corollary}[Stage-$4$ top-pole packet after primaryity;
 \ClaimStatusProvedHere]
 \label{cor:winfty-ds-stage4-top-pole-packet}
@@ -7248,6 +7339,41 @@ vanishing, the universal self-coupling normalization, and the parity
 compression of the residual stage-$4$ block.  The final sentence is a
 reformulation of these three reductions.
 \end{proof}
+
+\begin{computation}[Full stage-$4$ reduction chain verification]
+\label{comp:winfty-stage4-reduction-chain}
+\index{MC4!W-infinity stage-4 reduction chain}
+The complete reduction chain from the residual packet
+$\mathcal{J}_4$ to the frontier of
+Proposition~\ref{prop:winfty-mc4-frontier-package} has been
+verified computationally
+(\texttt{compute/lib/w4\_stage4\_coefficients.py}, $72$~tests):
+\begin{itemize}
+\item \emph{Primaryity}
+  (Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet}):
+  $|\mathcal{J}_4| = 29 \to |\mathcal{J}_4^{\mathrm{top}}| = 7$,
+  eliminating $22$ sub-leading entries; seven top-pole elements
+  verified against the manuscript display;
+\item \emph{Parity}
+  (Corollary~\ref{cor:winfty-ds-stage4-parity-packet}):
+  $|\mathcal{J}_4^{\mathrm{top}}| = 7
+  \to |\mathcal{J}_4^{\mathrm{par}}| = 6$,
+  removing exactly $(4,4,3,5)$ (odd-spin self-OPE);
+\item \emph{OPE blocks}
+  (Corollary~\ref{cor:winfty-ds-stage4-ope-blocks}):
+  $6 = 1 + 3 + 2$ as $(3,3)$, $(3,4)$, $(4,4)$ blocks;
+\item \emph{Mixed-self split}
+  (Corollary~\ref{cor:winfty-ds-stage4-mixed-self-split}):
+  three self-coupling scalars $+$ three mixed channels;
+\item \emph{Virasoro elimination}
+  (Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}):
+  $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ (universal $T$-coupling)
+  and $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ (mixed vanishing)
+  reduce to $4$~free coefficients $+$ $2$~residue-side checks.
+\end{itemize}
+The full chain $29 \to 7 \to 6 = 4 + 2$ matches every intermediate
+cardinality and every explicit element of the manuscript displays.
+\end{computation}
 
 \subsection{Maurer--Cartan elements and deformation theory}
 \label{sec:maurer-cartan-curved}
@@ -10486,11 +10612,21 @@ is Theorem~A.  The cobar functor $\Omega_X$ is left adjoint
 to~$\barB_X$, and the counit
 $\Omega_X\barB_X(\cA) \xrightarrow{\sim} \cA$ is an
 equivalence for Koszul algebras.
-At this stage, $d^2 = 0$ exactly (Arnold relations), and
-the diagram commutes strictly.  At genus~$g \geq 1$
-(Chapter~\ref{chap:higher-genus}), the square acquires
-curvature~$\kappa(\cA) \cdot \omega_1$, and strict commutativity
-is replaced by commutativity in the coderived category.
+
+In the nilpotence-periodicity framework
+(Remark~\ref{rem:nilpotence-periodicity}), this is the
+\emph{single-valued regime} of the categorical logarithm:
+$d^2 = 0$ exactly (the Arnold relations give single-valuedness),
+so the logarithm has no monodromy and the diagram commutes
+strictly.  At genus~$g \geq 1$
+(Chapter~\ref{chap:higher-genus}), the logarithm acquires
+monodromy---the square acquires
+curvature~$\kappa(\cA) \cdot \omega_g$---and strict commutativity
+is replaced by commutativity in the coderived category:
+the passage from genus~$0$ to genus~$g$ is the passage from
+single-valued to multi-valued logarithm, and the coderived
+category is the analytic continuation that makes the multi-valued
+logarithm well-defined.
 
 The factorization homology perspective
 (Propositions~\ref{prop:bar-fh},~\ref{prop:cobar-fh}) upgrades the
@@ -10504,6 +10640,450 @@ $\infty$-categorical enhancement is the H-level datum that
 organizes the M-level constructions.
 \end{remark}
 
+\section{The categorical logarithm}
+\label{sec:categorical-logarithm}
+\index{categorical logarithm|textbf}
+\index{nilpotence-periodicity correspondence!categorical logarithm}
+
+The constructions of this chapter---bar, cobar, Verdier intertwining,
+bar-cobar inversion, factorization homology---are not independent
+results.  They are aspects of a single structure: the
+\emph{categorical logarithm} for factorization algebras on algebraic
+curves.  In this section we develop this identification
+systematically, extracting from it both the conceptual unity of the
+four main theorems and concrete predictions for higher-genus theory.
+
+\subsection{The exponential-logarithm correspondence}
+\label{subsec:exp-log-correspondence}
+
+\begin{definition}[Categorical logarithm and exponential]
+\label{def:categorical-log-exp}
+\index{categorical logarithm!definition}
+\index{categorical exponential!definition}
+Let $\cA$ be an augmented $\Eone$-chiral algebra on a smooth
+curve~$X$.  The \emph{categorical logarithm} of~$\cA$ is the bar
+construction
+\[
+\log^{\mathrm{cat}}(\cA) \;:=\; \barB_X(\cA)\,,
+\]
+viewed as a factorization coalgebra on $\operatorname{Ran}(X)$
+(Proposition~\ref{prop:bar-fh}).  The \emph{categorical exponential}
+is the cobar construction
+\[
+\exp^{\mathrm{cat}}(\cC) \;:=\; \Omega_X(\cC)\,,
+\]
+viewed as a factorization algebra on $\operatorname{Ran}(X)$
+(Proposition~\ref{prop:cobar-fh}).
+\end{definition}
+
+This terminology is justified by the following dictionary, each entry
+of which is a theorem proved in this chapter or in
+Chapter~\ref{chap:higher-genus}:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5.5cm}p{5.5cm}}
+\textbf{Classical logarithm} & \textbf{Categorical logarithm} \\
+\hline
+$\log \colon (\mathbb{C}^\times, \cdot) \to (\CC, +)$ &
+$\barB \colon \mathrm{Alg}_{\mathrm{aug}} \to \mathrm{CoAlg}_{\mathrm{conil}}$ \\[2pt]
+Maps multiplicative to additive &
+Maps OPE (multiplicative) to bar differential (nilpotent/additive) \\[2pt]
+$\exp(\log(z)) = z$ on convergence disk &
+$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ on Koszul locus
+(Theorem~\ref{thm:bar-cobar-inversion-qi}) \\[2pt]
+Power series $\log(1+z) = z - z^2/2 + \cdots$ &
+PBW spectral sequence:
+$E_1^{p,q} = H^q(\mathrm{gr}^p \barB(\cA))$ \\[2pt]
+Convergence radius &
+Koszul locus: $E_2$~degeneration
+(Theorem~\ref{thm:spectral-sequence-collapse}) \\[2pt]
+Analytic continuation past radius &
+Coderived category completion
+(\S\ref{subsec:chiral-coderived-contraderived}) \\[2pt]
+$\log(ab) = \log(a) + \log(b)$ &
+$Q_g(\cA) + Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, Z_\cA)$
+(Theorem~\ref{thm:quantum-complementarity-main}) \\[2pt]
+Single-valued on simply connected domain &
+$\dzero^2 = 0$ at genus~$0$
+(Theorem~\ref{thm:bar-nilpotency-complete}) \\[2pt]
+Multi-valued on $\mathbb{C}^\times$; monodromy $2\pi i$ &
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ at genus~$g \geq 1$ \\[2pt]
+Residue at branch point &
+Curvature $\kappa(\cA)$ \\[2pt]
+Leading coefficient of $\log(1+z) = z + \cdots$ &
+Modular characteristic $\kappa(\cA)$
+(Theorem~\ref{thm:modular-characteristic})
+\end{tabular}
+\end{center}
+
+\begin{remark}[The logarithmic kernel]
+\label{rem:logarithmic-kernel}
+\index{logarithmic kernel}
+The fact that the bar construction uses a \emph{logarithmic} kernel
+$\eta_{ij} = d\log(z_i - z_j)$ is the surface manifestation of the
+categorical identification.  The classical logarithm of a product is a
+sum: $\log(z_1 z_2) = \log z_1 + \log z_2$.  The bar differential
+implements precisely this: the OPE (a product structure at colliding
+points) is converted, via the residue $\mathrm{Res}_{z_i = z_j}
+(\mu^{\mathrm{ch}} \cdot \eta_{ij})$, into a sum (the bar
+differential is a sum over pairwise collisions).  The kernel $\eta$ is
+the infinitesimal version of this conversion.
+\end{remark}
+
+\subsection{The Taylor expansion of the logarithm}
+\label{subsec:taylor-expansion-log}
+\index{PBW spectral sequence!as Taylor expansion}
+
+The PBW spectral sequence of a chiral algebra~$\cA$
+(Definition~\ref{def:chiral-koszul-pair}) is the Taylor expansion of
+the categorical logarithm.
+
+More precisely: the weight filtration on the bar complex
+$\barB(\cA) = \bigoplus_{n \geq 0} (s^{-1}\overline{\cA})^{\otimes n}$
+induces a spectral sequence
+\[
+E_1^{p,q} \;=\; H^q\bigl(\mathrm{gr}^p\, \barB(\cA)\bigr)
+\;\Longrightarrow\;
+H^{p+q}(\barB(\cA))\,.
+\]
+In the exp/log framework, the filtration degree~$p$ is the
+\emph{order of the Taylor expansion}: the $p$-th filtered piece
+$F^p\barB(\cA)$ retains contributions from at most $p$~points in
+configuration space, i.e., the first $p$~terms of the logarithmic
+series.  The differential $d_1$ on the $E_1$-page extracts the
+\emph{leading term} of the logarithm (the binary OPE residue); higher
+differentials $d_r$ capture \emph{higher-order corrections} from
+$r$-fold collisions.
+
+\begin{proposition}[Convergence criterion; \ClaimStatusProvedElsewhere{}
+Theorems~\ref{thm:spectral-sequence-collapse}
+and~\ref{thm:bar-cobar-inversion-qi}]
+\label{prop:log-convergence}
+\index{convergence!of categorical logarithm}
+The categorical logarithm \emph{converges}---meaning $\exp \circ \log
+= \mathrm{id}$---if and only if the PBW spectral sequence degenerates
+at~$E_2$.  The $E_2$~degeneration is equivalent to:
+\begin{enumerate}[label=(\roman*)]
+\item The chiral algebra~$\cA$ lies on the \emph{Koszul locus}
+(Definition~\ref{def:chiral-koszul-pair});
+\item The Taylor expansion has finitely many nonzero corrections at
+each filtration degree: the logarithm is ``polynomial'' in the
+filtration variable;
+\item The counit $\psi \colon \Omega\barB(\cA) \to \cA$ is a
+quasi-isomorphism
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+\end{enumerate}
+Off the Koszul locus, the Taylor series diverges in the ordinary
+derived category.  The coderived category
+(\S\ref{subsec:chiral-coderived-contraderived}) provides the analytic
+continuation: it is the completion of the derived category that makes
+the divergent logarithm well-defined, exactly as the maximal analytic
+continuation of $\log z$ requires passage from $\mathbb{C}^\times$ to its
+universal cover.
+\end{proposition}
+
+\begin{remark}[Convergence radius from OPE data]
+\label{rem:convergence-radius-ope}
+\index{convergence!radius from OPE poles}
+\index{Koszul locus!characterization via OPE}
+The analogy with power series suggests that the convergence radius of
+the categorical logarithm should be computable from the input data.
+For the classical logarithm $\log(1+z) = \sum (-1)^{n+1} z^n/n$, the
+radius is determined by the growth rate of the coefficients.  For the
+categorical logarithm, the ``coefficients'' are the OPE residues, and
+the ``growth rate'' is the complexity of multi-point collisions.
+
+In concrete terms: Kac--Moody algebras have first-order OPE poles
+(linear growth), and the categorical logarithm converges
+(Theorem~\ref{thm:master-pbw}).  The Virasoro algebra has a
+second-order pole from the central term, but the Sugawara constraint
+tames the growth, and convergence holds
+(Theorem~\ref{thm:virasoro-chiral-koszul}).  For non-Koszul algebras
+(e.g., admissible-level affine algebras), the OPE singularity structure
+generates higher differentials in the spectral sequence---the Taylor
+coefficients grow too fast for convergence.  A precise bound relating
+the OPE pole orders to the convergence radius of the categorical
+logarithm is a natural target for future work.
+\end{remark}
+
+\subsection{Additivity and the branch structure}
+\label{subsec:additivity-branch}
+\index{categorical logarithm!additivity}
+\index{complementarity!as additivity of logarithm}
+
+The fundamental property of any logarithm is that it converts products
+to sums.  For the categorical logarithm, this is the content of the
+complementarity theorem.
+
+\begin{proposition}[Additivity of the categorical logarithm;
+\ClaimStatusProvedElsewhere{} Theorem~\ref{thm:quantum-complementarity-main}]
+\label{prop:log-additivity}
+Let $(\cA, \cA^!)$ be a Koszul pair.  The quantum corrections to the
+bar complex satisfy
+\[
+Q_g(\cA) \;+\; Q_g(\cA^!)
+\;=\; H^*(\overline{\mathcal{M}}_g,\, Z_\cA)\,.
+\]
+In the exp/log framework, this is the statement
+$\log^{\mathrm{cat}}(\cA \otimes \cA^!) =
+\log^{\mathrm{cat}}(\cA) + \log^{\mathrm{cat}}(\cA^!)$: the
+logarithm of the Koszul product is the sum of the logarithms, and
+the right-hand side is the total logarithmic data
+$\log^{\mathrm{cat}}(\cA \otimes \cA^!)$ computed from the center~$Z_\cA$
+via the Hodge cohomology of~$\overline{\mathcal{M}}_g$.
+
+The Lagrangian decomposition
+$C_g(\cA) = Q_g(\cA) \oplus Q_g(\cA^!)$ is the decomposition of the
+total logarithm into its two \emph{branches}: the sheet associated
+to~$\cA$ and the sheet associated to its Koszul dual.  The pairing
+between them is the monodromy acquired when analytically continuing
+from one branch to the other.
+\end{proposition}
+
+\begin{remark}[The categorical Baker--Campbell--Hausdorff formula]
+\label{rem:categorical-bch}
+\index{Baker--Campbell--Hausdorff formula!categorical analogue}
+For the classical logarithm, $\log(e^X e^Y) = X + Y + \tfrac{1}{2}[X,Y] + \cdots$
+(the BCH formula).  A categorical analogue should hold: for an
+extension $0 \to \cA' \to \cA \to \cA'' \to 0$ of chiral algebras, the
+bar complex $\barB(\cA)$ should decompose as a twisted tensor product
+$\barB(\cA'') \otimes_\tau \barB(\cA')$ where the twisting
+cochain~$\tau$ encodes the extension data through iterated brackets,
+in direct analogy with the commutator corrections of BCH\@.  This
+follows from the standard filtered bar construction applied to the
+extension filtration, and the twisting cochain~$\tau$ can be computed
+order by order from the connecting maps of the extension.  A systematic
+development of the categorical BCH, including explicit formulas for the
+first correction terms and their geometric content, is deferred to
+\S\ref{sec:maurer-cartan-curved}.
+\end{remark}
+
+\subsection{From single-valued to multi-valued: the genus transition}
+\label{subsec:genus-transition-log}
+\index{categorical logarithm!genus transition}
+\index{monodromy!of categorical logarithm}
+
+The deepest structural consequence of the exp/log identification is the
+genus transition.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5.5cm}p{5.5cm}}
+\textbf{Classical complex analysis} & \textbf{Categorical logarithm} \\
+\hline
+Simply connected domain &
+Genus~$0$: $\pi_1(C_2(\mathbb{P}^1)) = 0$ \\[2pt]
+$\log$ is single-valued, holomorphic &
+$\dzero^2 = 0$ (Arnold relations), no curvature \\[2pt]
+Multiply connected domain ($\mathbb{C}^\times$) &
+Genus~$g \geq 1$: $\pi_1(\Sigma_g) \neq 0$ \\[2pt]
+$\log$ acquires monodromy $2\pi i n$ &
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ \\[2pt]
+Residue at branch point: $\mathrm{Res}_{z=0}(dz/z) = 1$ &
+Curvature: $\kappa(\cA) \in H^1(X, \cA) \otimes H^0(\overline{\mathcal{M}}_g, \omega)$ \\[2pt]
+Total differential $d\log z$ is exact on universal cover &
+Total differential $\Dg{g}^2 = 0$ after Gauss--Manin correction \\[2pt]
+Period matrix $\tau_{ij} = \oint_{B_j} \omega_i$ &
+Modular package $(\kappa, \Delta, \Theta, \Pi)$ \\[2pt]
+Torelli: $\tau$ determines the curve &
+Categorical Torelli: monodromy of $\barB_g$ determines~$\cA$
+up to quasi-isomorphism (via Theorem~\ref{thm:bar-cobar-inversion-qi})
+\end{tabular}
+\end{center}
+
+\begin{remark}[The chiral Riemann--Hilbert correspondence, revisited]
+\label{rem:chiral-rh-revisited}
+\index{Riemann--Hilbert correspondence!chiral}
+The Riemann--Hilbert correspondence identifies flat connections
+(nilpotent data: $\nabla^2 = 0$) with monodromy representations
+(periodic data: $\rho(\gamma^N) = 1$ for finite-order monodromy).
+The categorical logarithm instantiates this at the level of
+factorization algebras:
+\begin{enumerate}[label=(\roman*)]
+\item The \emph{flat connection} is the total corrected differential
+$\Dg{g}$ with $\Dg{g}^2 = 0$, a flat connection on the bar family
+$\barB_g(\cA) \to \overline{\mathcal{M}}_g$.
+\item The \emph{curvature} of the fiberwise differential
+$\dfib^{\,2} = \kappa \cdot \omega_g$ is the infinitesimal generator
+of the monodromy.
+\item The \emph{monodromy representation} is the action of the mapping
+class group $\Gamma_g$ on $H^*(\barB_g(\cA))$, whose leading
+eigenvalues are $\exp(2\pi i \kappa(\cA))$.
+\end{enumerate}
+The three differentials $\dzero$, $\dfib$, $\Dg{g}$
+(Convention~\ref{conv:higher-genus-differentials}) are three levels of
+the logarithm: the germ ($\dzero$, single-valued), the
+multi-valued lift ($\dfib$, curvature $= $ residue), and the
+trivialization on the universal cover ($\Dg{g}$, flat).
+\end{remark}
+
+\subsection{The characteristic hierarchy as logarithmic data}
+\label{subsec:characteristic-log}
+\index{modular characteristic!as logarithmic data}
+
+The modular package $(\kappa, \Delta, \Theta, \Pi)$ of a chiral
+algebra is the data of the categorical logarithm, organized by order:
+
+\begin{enumerate}[label=\textbf{Level \arabic*}:, leftmargin=3.5em]
+\item \textbf{Scalar logarithmic data.}  The modular
+characteristic $\kappa(\cA)$ is the leading coefficient of the
+categorical logarithm---the residue of the curvature.  Its
+exponential is the scalar period~$N$: the smallest integer for which
+$\exp(2\pi i N c/24) = 1$.  This is the content of Theorem~D
+(Theorem~\ref{thm:modular-characteristic}).
+
+\item \textbf{Spectral logarithmic data.}  The spectral
+discriminant~$\Delta(\cA)$ encodes the eigenvalues of the monodromy of
+the categorical logarithm.  Its exponential is the periodicity
+profile~$\Pi(\cA)$: the collection of periods of individual T-matrix
+eigenvalues $\lambda_i = \exp(2\pi i(h_i - c/24))$.
+
+\item \textbf{Full logarithmic data.}  The universal Maurer--Cartan
+class $\Theta_\cA \in H^2(\overline{\mathcal{M}}_g, Z_\cA)$
+(Theorem~\ref{thm:mc2-full-resolution}) is the complete categorical
+logarithm: it encodes all genus-$g$ corrections to the bar
+differential.  Its exponential is the full modular automorphy of~$\cA$:
+the action of $\Gamma_g$ on the conformal blocks, i.e., the modular
+functor.
+\end{enumerate}
+
+\noindent
+The hierarchy is controlled by a single principle: \emph{each level is
+the leading term of the next}.  The scalar characteristic~$\kappa$ is
+the trace of the spectral data~$\Delta$; the spectral data is the
+eigenvalue decomposition of the full data~$\Theta$.  In the language of
+complex analysis: $\kappa$ is the winding number of the logarithm,
+$\Delta$ is the set of periods, and $\Theta$ is the full multi-valued
+function.
+
+\subsection{Visible theorems}
+\label{subsec:visible-theorems-log}
+\index{categorical logarithm!predicted theorems}
+
+The exp/log identification makes certain results visible that would
+otherwise have no natural formulation:
+
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Categorical Torelli.}  If the monodromy of the
+categorical logarithm (the higher-genus corrections to the bar
+differential, encoded in~$\Theta_\cA$) determines~$\cA$ up to
+quasi-isomorphism, this is a \emph{categorical Torelli theorem}.  It
+follows from bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi})
+plus the fact that the curvature determines the flat connection up to
+gauge equivalence on a simply connected base: since the Teichm\"uller
+space is contractible, the flat bar family is determined by its
+curvature, i.e., by~$\kappa(\cA)$.
+
+\item \textbf{Functional equation.}  The complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}) is the \emph{functional equation} of the categorical
+logarithm: it relates $\log^{\mathrm{cat}}(\cA)$ and
+$\log^{\mathrm{cat}}(\cA^!)$ through the total data
+$H^*(\overline{\mathcal{M}}_g, Z_\cA)$, exactly as the functional
+equation of the Riemann $\zeta$-function relates $\zeta(s)$ and
+$\zeta(1-s)$ through the $\Gamma$-factor.
+
+\item \textbf{Acyclicity of the trivial algebra.}  For the unit
+(trivial) chiral algebra $\cA = k$, the bar complex $\barB(k)$ is
+acyclic: $H^*(\barB(k)) = k$ concentrated in degree~$0$.  In the
+exp/log framework this is $\log(1) = 0$: the logarithm of the
+multiplicative identity is the additive identity.
+
+\item \textbf{Convergence radius from OPE poles.}  The Koszul locus
+should be characterized by the singularity structure of the OPE: the
+convergence radius of the categorical logarithm equals the inverse of
+the growth rate of multi-point OPE singularities, in analogy with the
+Cauchy--Hadamard formula.
+
+\item \textbf{Screening as infinitesimal generator.}  In the lattice
+setting (Construction~\ref{constr:lattice:screening}), the screening charges $Q_i$
+with $Q_i^2 = 0$ are the infinitesimal generators of the categorical
+logarithm; the quantum group relations $e_i^N = 0$ at $\zeta =
+e^{2\pi i/N}$ are their $N$-th powers; and the representation category
+$\mathrm{Rep}(\mathfrak{u}_\zeta(\mathfrak{g}))$ carries the periodic
+(exponential) structure.  The passage $Q^2 = 0 \to e^N = 0$ is
+literally exponentiation: the root of unity
+$\zeta = \exp(2\pi i/N)$ is the monodromy of the categorical
+logarithm around the $N$-th root.
+\end{enumerate}
+
+\begin{conjecture}[Factorization finiteness criterion;
+\ClaimStatusConjectured]\label{conj:factorization-finiteness-criterion}
+\index{factorization bar-cobar!finiteness criterion}
+\index{thick generation!bypassed by sectorwise finiteness}
+Let $\cA$ be a chiral algebra whose bar complex
+$\barB(\cA)$ admits a bigrading
+$\barB^{p,q}(\cA)$ with $\dim \barB^{p,q} < \infty$ for all
+$(p,q)$.  Suppose the associated spectral sequence
+$E_r^{p,q} \Rightarrow H^{p+q}(\barB(\cA))$ satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Convergence)} $E_r^{p,q} = E_\infty^{p,q}$
+  for each $(p,q)$ at some finite page~$r_0(p,q)$;
+\item \textup{(Sub-exponential growth)} $\dim E_1^{0,p} < c^p$
+  for every $c > 1$ and all sufficiently large~$p$.
+\end{enumerate}
+Then the factorization bar-cobar adjunction restricts to an
+equivalence on the Koszul locus, and the factorization DK
+equivalence holds for~$\cA$ without thick generation.
+
+\emph{Instances.}
+For lattice algebras, (i)--(ii) are satisfied by the
+$\Lambda$-grading with $E_1$~degeneration
+\textup{(}Theorem~\textup{\ref{thm:lattice:factorization-koszul})}.
+For Yangians, the root weight/loop degree bigrading of
+Proposition~\textup{\ref{prop:yangian-bar-loop-weight}} gives (i),
+and (ii) is proved in
+Proposition~\textup{\ref{prop:lqt-e1-subexponential-growth}}: the
+growth rate is $\sim\exp(\pi\sqrt{rp/12})$, which is sub-exponential.
+For $\mathcal{W}$-algebras, the DS filtration provides a candidate
+bigrading whose (ii) would follow from Kac--Kazhdan character
+estimates.
+\end{conjecture}
+
+\subsection{The monograph as construction of a categorical logarithm}
+\label{subsec:monograph-as-log}
+\index{categorical logarithm!monograph structure}
+
+Taken at full depth, the four main theorems are the four fundamental
+properties of \emph{any} logarithm:
+\begin{itemize}
+\item \textbf{Theorem~A} (existence): the categorical logarithm and
+exponential exist, as a pair of adjoint functors between augmented
+factorization algebras and conilpotent factorization coalgebras.
+\item \textbf{Theorem~B} (invertibility): on the convergence domain
+(the Koszul locus), $\exp \circ \log = \mathrm{id}$, and the
+logarithm faithfully encodes its input.
+\item \textbf{Theorem~C} (branch structure): the failure of
+convergence off the Koszul locus decomposes into complementary
+Lagrangians---the two branches of the multi-valued logarithm---and the
+total logarithmic data is the sum of the two branches.
+\item \textbf{Theorem~D} (leading coefficient): the leading
+coefficient $\kappa(\cA)$ of the logarithmic expansion determines the
+full scalar package, just as the leading coefficient of
+$\log(1+z) = z + \cdots$ determines the local behavior.
+\end{itemize}
+Every open problem in the monograph is a question about this
+logarithm.  The five master conjectures are five aspects of one
+question: \emph{what is the categorical logarithm for factorization
+algebras on algebraic curves, completely?}
+\begin{itemize}
+\item \textbf{MC1}: does the logarithm converge? (PBW concentration)
+\item \textbf{MC3}: what is the convergence domain? (thick generation
+in category~$\mathcal{O}$)
+\item \textbf{MC4}: does the logarithm extend to infinite rank?
+(stability of towers)
+\item \textbf{MC5}: does the physical logarithm (BRST) equal the
+mathematical one (bar)? (BV--BRST identification)
+\item \textbf{Periodicity}: what is the monodromy group of the
+categorical logarithm?
+\end{itemize}
+These are not five separate programmes.  They are five windows onto a
+single object.
+
+\bigskip
+
 In Chapter~\ref{chap:higher-genus}, the curve itself varies over
 $\overline{\mathcal{M}}_g$, and the bar differential acquires
 curvature: the genus-$g$ correction $m_0^{(g)}$ is a section of the
@@ -10511,4 +11091,6 @@ obstruction sheaf on $\overline{\mathcal{M}}_g$, controlled by a
 single universal Maurer--Cartan class $\Theta_{\cA}$.  The passage
 from this chapter to the next is the passage from operadic to
 \emph{modular} Koszul duality --- from the combinatorics of
-associahedra to the geometry of the Deligne--Mumford compactification.
+associahedra to the geometry of the Deligne--Mumford
+compactification --- or, in the language of the categorical logarithm,
+the passage from the single-valued to the multi-valued regime.

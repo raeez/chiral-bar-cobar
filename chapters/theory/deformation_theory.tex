@@ -27,19 +27,23 @@ identity~\cite{Bor92,BD04}:
 for sections $a,b,c$ of~$\mathcal{A}$ at pairwise distinct points
 $z_1,z_2,z_3\in X$,
 \[
-  \operatorname{Res}_{z_1\!=z_2}\!\mu_\epsilon(a(z_1),\mu_\epsilon(b(z_2),c(z_3)))
-  - \operatorname{Res}_{z_1\!=z_2}\!\mu_\epsilon(b(z_2),\mu_\epsilon(a(z_1),c(z_3)))
-  = \operatorname{Res}_{z_2\!=z_3}\!\mu_\epsilon(\mu_\epsilon(a(z_1),b(z_2)),c(z_3)).
+\begin{aligned}
+  &\operatorname{Res}_{z_1\!=z_2}\!\mu_\epsilon(a(z_1),\mu_\epsilon(b(z_2),c(z_3)))
+  - \operatorname{Res}_{z_1\!=z_2}\!\mu_\epsilon(b(z_2),\mu_\epsilon(a(z_1),c(z_3)))\\
+  &\qquad= \operatorname{Res}_{z_2\!=z_3}\!\mu_\epsilon(\mu_\epsilon(a(z_1),b(z_2)),c(z_3)).
+\end{aligned}
 \]
 Expanding modulo~$\epsilon^2$ and using the Borcherds identity for~$\mu$,
 the $\epsilon$-coefficient gives:
 \begin{equation}\label{eq:deformation-cocycle}
+\begin{split}
   \operatorname{Res}_{z_1\!=z_2}\!\bigl[\phi(a,\mu(b,c))
-  + \mu(a,\phi(b,c))
-  - \phi(b,\mu(a,c))
-  - \mu(b,\phi(a,c))\bigr]
-  = \operatorname{Res}_{z_2\!=z_3}\!\bigl[\phi(\mu(a,b),c)
+  &+ \mu(a,\phi(b,c))\\
+  &- \phi(b,\mu(a,c))
+  - \mu(b,\phi(a,c))\bigr]\\
+  &= \operatorname{Res}_{z_2\!=z_3}\!\bigl[\phi(\mu(a,b),c)
   + \mu(\phi(a,b),c)\bigr].
+\end{split}
 \end{equation}
 This is a cocycle condition: $\phi$ is closed in a complex whose
 differential is built from~$\mu$ via the residue operations above.
@@ -973,12 +977,14 @@ $l_1\circ l_3 = 0$.
 \emph{Arity~$4$.}
 The identity (with $l_1 = l_4 = 0$) reads
 \begin{equation}\label{eq:arity4-linf}
+\begin{split}
 \textstyle\sum_{\sigma \in \mathrm{Sh}(1,3)}
-  \varepsilon(\sigma)\,l_2\bigl(x_{\sigma(1)},\,
-  l_3(x_{\sigma(2)},x_{\sigma(3)},x_{\sigma(4)})\bigr)
-+ \textstyle\sum_{\sigma \in \mathrm{Sh}(2,2)}
+  &\,\varepsilon(\sigma)\,l_2\bigl(x_{\sigma(1)},\,
+  l_3(x_{\sigma(2)},x_{\sigma(3)},x_{\sigma(4)})\bigr)\\
+&{}+ \textstyle\sum_{\sigma \in \mathrm{Sh}(2,2)}
   \varepsilon(\sigma)\,l_3\bigl(l_2(x_{\sigma(1)},
   x_{\sigma(2)}),\,x_{\sigma(3)},x_{\sigma(4)}\bigr) = 0.
+\end{split}
 \end{equation}
 The first sum vanishes: $l_3$ outputs in the
 $\eta$-direction and $l_2(x,\eta) = 0$ for all
@@ -1138,7 +1144,7 @@ Theorem~\ref{thm:cyclic-linf-graph}: the chiral graph complex
 construction equips $\Defcyc(\cA)$ with a cyclic $L_\infty$
 structure for all Koszul chiral algebras with non-degenerate
 invariant form.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{definition}
 
 \begin{theorem}[MC2-1 for Kac--Moody algebras;
@@ -1150,9 +1156,11 @@ is satisfied:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Cyclic $L_\infty$ structure.}
   The bar-intrinsic cyclic deformation complex
-  $\Defcyc(\widehat{\mathfrak{g}}_k)
+  \[
+  \Defcyc(\widehat{\mathfrak{g}}_k)
   := \operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}_X
-  (\widehat{\mathfrak{g}}_k))[1]$
+  (\widehat{\mathfrak{g}}_k))[1]
+  \]
   is a well-defined complete cyclic $L_\infty$-algebra
   \textup{(}a fortiori: a cyclic dg~Lie algebra\textup{)}.
 
@@ -1893,6 +1901,37 @@ cases.
 
 \subsubsection{The mechanism}
 
+\begin{remark}[Periodicity as exponential of the scalar characteristic]
+\label{rem:periodicity-as-exponential}
+\index{nilpotence-periodicity correspondence!Type I application}
+The modular periodicity conjectures below are instances of the
+nilpotence-periodicity correspondence
+(Remark~\ref{rem:nilpotence-periodicity}).  The scalar characteristic
+$\kappa(\cA)$ is the infinitesimal (nilpotent/logarithmic) datum; the
+modular period~$N$ is the global (periodic/exponential) datum.  For a
+rational chiral algebra with central charge $c = p'/q'$ in lowest terms,
+the T-matrix eigenvalues are
+$\lambda_{r,s} = \exp\bigl(2\pi i(h_{r,s} - c/24)\bigr)$:
+literally the \emph{exponentials} of conformal weights shifted by the
+central charge.  The period $N = 24q'/\gcd(p',24)$ is the smallest
+positive integer for which $\exp(2\pi i N c/24) = 1$, i.e., for which
+$Nc/24 \in \mathbb{Z}$.  Thus the
+modular periodicity formula is the condition that the \emph{exponential
+of the nilpotent datum returns to identity}: periodicity is
+determined by the scalar characteristic via exponentiation.
+
+At the spectral level, the denominator polynomial of the Poincar\'e
+series of $CH^*(\cA)$ encodes the eigenvalues of the monodromy
+operator on bar cohomology.  The roots of this polynomial are the
+exponentials of the spectral data in~$\Delta_{\cA}$, and the period
+of bar cohomology is the order of the monodromy---the exponential of
+the spectral characteristic.  The periodicity profile
+$\Pi(\cA) = (M_{\cA}, Q_{\cA}, G_{\cA})$ of
+Remark~\ref{rem:periodicity-triple} is therefore the
+\emph{exponential package} corresponding to the \emph{logarithmic
+package} $(\kappa(\cA), \Delta_{\cA}, \Theta_{\cA})$.
+\end{remark}
+
 \begin{conjecture}[Modular periodicity for minimal models; \ClaimStatusConjectured]
 \label{thm:modular-periodicity-minimal}
 \index{periodicity!modular!minimal models|textbf}
@@ -1908,7 +1947,7 @@ Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \;=\;
 \dim H^n(\bar{B}_{[h]}^{\mathrm{ch}}(M(p,q))).
 \]
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{conjecture}
 
 \begin{evidence}
@@ -1916,7 +1955,8 @@ The following three-step argument establishes the structural
 framework; however, Step~2 contains a gap in the passage from
 theta-function periodicity to weight-space dimension periodicity
 (the convolution with $1/\eta$ does not preserve eventual
-periodicity of Fourier coefficients).
+periodicity of Fourier coefficients---confirmed computationally
+in Computation~\ref{comp:m58-weight-space-periodicity}).
 Step~1 ($T$-matrix periodicity) is unconditional.
 
 \smallskip\noindent
@@ -1978,6 +2018,58 @@ partition function, the $N$-periodicity of~$a_\Theta$ gives
 which vanishes for $k$ sufficiently large (specifically, for $k$ exceeding
 the maximal pole order of $\Theta_{r,s}/\eta$, the sum on the right is empty).
 Hence $\dim V_{r,s,\,[k+N]} = \dim V_{r,s,\,[k]}$ for all $k \gg 0$.
+
+\begin{remark}[Step~2 gap: stabilization threshold]
+\label{rem:step2-stabilization-threshold}
+The argument above claims \emph{eventual} periodicity
+($k \gg 0$), but the passage from theta-function coefficient
+periodicity to weight-space dimension periodicity is
+\emph{obstructed}: the convolution $\dim V_{r,s,[k]}
+= \sum_j a_\Theta(k-j)\, p(j)$ with the partition function
+$p(j)$ does \emph{not} preserve eventual periodicity,
+because $p(j)$ grows sub-exponentially.
+
+\begin{computation}[M(5,8) weight-space dimensions; \ClaimStatusProvedHere]
+\label{comp:m58-weight-space-periodicity}
+The first test case is $M(5,8)$
+(central charge $c = -7/20$, $14$ modules,
+$T$-matrix period $N = 480$).
+The Rocha-Caridi formula gives $\dim V_{1,1,[k]}
+= p(k) - p(k-1)$ for $k < 28$ (first null vector
+from $\delta^-(n\!=\!-1) = 28$), and in general:
+\[
+\dim V_{r,s,[k]}
+\;=\;
+\sum_{n \in \mathbb{Z}}
+\bigl[p(k - \delta^+_n) - p(k - \delta^-_n)\bigr]
+\]
+where $\delta^+_n = n(qr - ps + pqn)$,
+$\delta^-_n = rs + n(qr + ps + pqn)$.
+Computed for all $14$ modules through level $k = 80$:
+\begin{itemize}
+\item Every module dimension sequence is \emph{monotonically
+increasing} for $k \geq 3$ (growth rate $\sim p(k)$).
+\item For every candidate period $N' \in
+\{5, 8, 10, 20, 40, 480\}$ and every module $(r,s)$:
+$\dim V_{r,s,[k+N']} > \dim V_{r,s,[k]}$ for all
+$k \geq 10$.
+\item \textbf{No eventual periodicity} is detected for any
+module, at any period dividing $N = 480$ or $pq = 40$.
+\end{itemize}
+This confirms that Step~2 has a genuine gap: the numerator
+coefficient periodicity (which holds by the theta-function
+level structure) does not survive convolution with~$1/\eta$.
+\end{computation}
+
+The conjecture (Conjecture~\ref{thm:modular-periodicity-minimal})
+therefore cannot be established via the three-step strategy
+as stated.  The bar \emph{cohomology} periodicity may still
+hold through a mechanism that involves the bar differential
+(not just the chain dimensions), but this requires
+computing OPE structure constants of~$M(5,8)$ and the
+resulting bar differential matrices---a significantly harder
+computation.
+\end{remark}
 
 \emph{Step~3: Lift to bar complex.}
 The bar complex $\bar{B}^{(n)}_{[h]}(M(p,q))$ in degree~$n$ at conformal
@@ -2062,7 +2154,7 @@ and rational orbifolds.
 The conjecture asserts $N$-periodicity of bar cohomology dimensions
 in conformal weight for general rational chiral algebras, extending
 the minimal-model and WZW conjectures.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \begin{remark}[Stronger periodicity]\label{rem:modular-periodicity-stronger}
@@ -2216,7 +2308,7 @@ general rational chiral algebras (e.g., $\mathcal{W}$-algebra
 minimal models at non-integral levels, orbifolds, coset models),
 where explicit character formulas as theta-function ratios may
 not be available.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \subsubsection{Koszul dual behavior}
@@ -2264,7 +2356,7 @@ for arbitrary Koszul duals.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
 The conjecture asserts that modular periods of a Koszul pair $(\cA, \cA^!)$ are related by the reciprocal-sum formula~\eqref{eq:period-sum}, reflecting duality at the level of $T$-matrix eigenvalues.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \subsection{Type II: quantum group periodicity}
@@ -2281,7 +2373,7 @@ Let $\mathcal{W}^k(\mathfrak{g})$ be the W-algebra at admissible level $k = -h^{
 \[
 M = 2h^{\vee}pq/\gcd(p,q,h^{\vee}).
 \]
-This does \emph{not} by itself imply periodicity of every OPE coefficient or of the full bar complex: the proposition records only the Type~II quantum input to the periodicity profile $(N_{\mathrm{mod}}, N_{\mathrm{quant}}, N_{\mathrm{geom}})$.
+This does \emph{not} by itself imply periodicity of every OPE coefficient or of the full bar complex: the proposition records only the Type~II quantum input to the periodicity profile $(N_{\mathrm{mod}}, N_{\mathrm{quant}})$.
 \end{proposition}
 
 \begin{remark}[Scope]
@@ -2364,18 +2456,34 @@ the vanishing $HH^1 = 0$ reflects the rigidity of the algebra
 
 In CFT, this periodicity corresponds to fusion rules closing on a finite set (rational CFT), the Verlinde formula giving integer fusion coefficients, and the modular $S$-matrix having finite order.
 
-\subsection{Type III: geometric periodicity from higher genus}
+\subsection{Type III: geometric tautological depth}
 
-\subsubsection{Genus dependence}
+\subsubsection{Genus dependence and nilpotent depth}
 
-\begin{theorem}[Weak geometric periodicity bound; \ClaimStatusProvedHere]
+The geometric contribution to bar cohomology from higher genus is
+fundamentally different from the modular and quantum sources: it provides
+\emph{bounded tautological depth} rather than periodicity.  The
+Kodaira--Spencer operator associated to the Hodge class is
+\emph{nilpotent}, not periodic, and the geometric direction of the bar
+spectral sequence terminates after finitely many steps.
+
+\begin{theorem}[Geometric tautological depth bound; \ClaimStatusProvedHere]
 \label{thm:geometric-periodicity-weak}
-\index{periodicity!geometric!weak bound|textbf}
-For a chiral algebra $\mathcal{A}$ on a genus $g \geq 2$ curve $X$, the geometric contribution to periodicity satisfies:
+\index{periodicity!geometric!tautological depth|textbf}
+\index{tautological depth!geometric|textbf}
+For a chiral algebra $\mathcal{A}$ on a genus $g \geq 2$ curve $X$,
+the Kodaira--Spencer image of the Hodge class is nilpotent:
 \[
-\mathrm{Period}_{\mathrm{geom}} \mid (3g-2).
+\kappa(c_1(\mathbb{E}))^{3g-2} = 0
+\quad \text{in } CH^*(\mathcal{A}).
 \]
-At $g = 0$ there is no geometric periodicity; at $g = 1$ the geometric periodicity arises from the modular parameter and is absorbed into $N_{\mathrm{mod}}$.
+In particular, the geometric direction of the bar spectral sequence
+has bounded tautological depth: at most $3g - 3$ nontrivial geometric
+filtration layers can contribute.
+
+At $g = 0$, no Hodge bundle contributes; at $g = 1$, the relation
+$c_1(\mathbb{E}) = \frac{1}{12}\delta$ absorbs the Hodge
+contribution into the modular data.
 \end{theorem}
 
 \begin{proof}
@@ -2383,7 +2491,11 @@ The Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) pro
 \[
 \kappa \colon H^*(\overline{\mathcal{M}}_g, \mathbb{Q}) \longrightarrow CH^*(\mathcal{A})
 \]
-whose image controls the geometric contributions to the periodicity of the bar complex.  The geometric periodicity operator $\sigma_{\mathrm{geom}}$ acts via multiplication by $\kappa(\lambda)$, where $\lambda = c_1(\mathbb{E})$ is the first Chern class of the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$.  The order of $\sigma_{\mathrm{geom}}$ therefore divides the nilpotency index of $\kappa(\lambda)$.
+whose image controls the geometric contributions to bar cohomology.
+The geometric operator $\sigma_{\mathrm{geom}}$ acts via
+multiplication by $\kappa(\lambda)$, where
+$\lambda = c_1(\mathbb{E})$ is the first Chern class of the Hodge
+bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$.
 
 Since $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g - 3$, every cohomology class of degree exceeding $2(3g-3) = 6g - 6$ vanishes.  In particular,
 \[
@@ -2393,32 +2505,158 @@ since $2(3g-2) = 6g - 4 > 6g - 6$ for all $g \geq 2$.  Applying $\kappa$:
 \[
 \kappa(\lambda)^{3g-2} = \kappa(\lambda^{3g-2}) = \kappa(0) = 0 \quad \text{in } CH^*(\mathcal{A}).
 \]
-Therefore $\kappa(\lambda)$ is nilpotent of index at most $3g - 2$, and $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$.
+Therefore $\sigma_{\mathrm{geom}}$ is nilpotent of index at most
+$3g - 2$, giving at most $3g - 3$ nontrivial filtration steps.
 
-For the boundary cases: at $g = 0$, the moduli space $\overline{\mathcal{M}}_{0,n}$ carries no Hodge bundle, so there is no geometric periodicity.  At $g = 1$, the relation $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$ shows that the periodicity from $c_1(\mathbb{E})$ is controlled by the boundary divisor and is absorbed into the modular periodicity $N_{\mathrm{mod}}$.
+For the boundary cases: at $g = 0$, the moduli space $\overline{\mathcal{M}}_{0,n}$ carries no Hodge bundle, so there is no geometric contribution.  At $g = 1$, the relation $c_1(\mathbb{E}) = \frac{1}{12}\delta$ in $\mathrm{CH}^1(\overline{\mathcal{M}}_{1,1})$ shows that the Hodge class contribution is controlled by the boundary divisor and is absorbed into the modular periodicity $N_{\mathrm{mod}}$.
 \end{proof}
 
-\begin{conjecture}[Sharp geometric periodicity bound; \ClaimStatusConjectured]
-\label{conj:geometric-periodicity}
-\index{periodicity!geometric!sharp bound|textbf}
-Under the hypotheses of Theorem~\ref{thm:geometric-periodicity-weak}, the sharp bound holds:
+\begin{remark}[Nilpotent depth vs.\ periodicity]
+\label{rem:nilpotent-vs-periodic}
+\index{tautological depth!vs.\ periodicity}
+The operator $\sigma_{\mathrm{geom}}$ is \emph{nilpotent}
+($\sigma^N = 0$), not \emph{periodic} ($\sigma^N = \mathrm{id}$).
+These are fundamentally different: a nonzero nilpotent operator
+has no finite period.  The geometric contribution to bar cohomology
+therefore provides a \emph{stabilization threshold}---a bounded
+number of tautological correction layers---rather than a periodic
+automorphism.  Geometry naturally gives nilpotence, tautological
+truncation, and Hodge-theoretic bounds; it does not give a periodic
+operator unless one is explicitly constructed
+(cf.\ Remark~\ref{rem:stratified-periodicity}).
+\end{remark}
+
+\begin{theorem}[Sharp geometric depth on smooth moduli; \ClaimStatusProvedHere]
+\label{thm:geometric-depth-smooth}
+\index{tautological depth!sharp bound on $\mathcal{M}_g$|textbf}
+\index{Graber--Vakil vanishing}
+For a chiral algebra $\mathcal{A}$ on a smooth genus $g \geq 2$
+curve, suppose the Kodaira--Spencer map factors through the
+cohomology of the smooth moduli space:
 \[
-\mathrm{Period}_{\mathrm{geom}} \mid 12(2g-2).
+\kappa \colon H^*(\mathcal{M}_g, \mathbb{Q}) \longrightarrow
+CH^*(\mathcal{A}).
 \]
+Then the nilpotency index of $\kappa(\lambda)$ is at most~$g - 1$:
+\begin{equation}\label{eq:sharp-geometric-depth}
+\kappa(c_1(\mathbb{E}))^{g-1} = 0
+\quad \text{in } CH^*(\mathcal{A}).
+\end{equation}
+In particular:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item At genus~$2$, the Hodge class contribution vanishes entirely:
+  $\kappa(\lambda) = 0$.
+\item At genus~$3$, the geometric depth is at most~$2$
+  (compared to~$7$ from the compactified bound).
+\item In general, the sharp bound $g - 1$ improves the
+  compactified bound $3g - 2$ by a factor of approximately~$3$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The tautological ring $R^*(\mathcal{M}_g)$ of the smooth
+moduli space satisfies the Graber--Vakil vanishing
+theorem~\cite{GraVak05} (extending Looijenga~\cite{Looij95}):
+\begin{equation}\label{eq:graber-vakil-vanishing}
+R^d(\mathcal{M}_g) = 0 \quad \text{for } d > g - 2.
+\end{equation}
+The Hodge class $\lambda = c_1(\mathbb{E})$ is a
+tautological class of degree~$1$.
+On the smooth moduli space, the Mumford relation reduces to
+$\lambda|_{\mathcal{M}_g} = \kappa_1/12$
+(since the boundary class $\delta$ vanishes on
+$\mathcal{M}_g$).  Therefore
+\[
+\lambda^{g-1} \in R^{g-1}(\mathcal{M}_g) = 0
+\]
+since $g - 1 > g - 2$.  Applying $\kappa$:
+\[
+\kappa(\lambda)^{g-1} = \kappa(\lambda^{g-1}) = 0.
+\]
+
+For genus~$2$: $g - 1 = 1$, so $\lambda^1 = \lambda \in
+R^1(\mathcal{M}_2)$.  Since $R^d(\mathcal{M}_2) = 0$ for
+$d > 0$, we get $\lambda|_{\mathcal{M}_2} = 0$, hence
+$\kappa(\lambda) = 0$.
+This means the Hodge class produces no geometric correction
+to bar cohomology at genus~$2$: the genus-$2$ bar complex, at
+the level of the Hodge class contribution, is determined
+entirely by the genus-$0$ data.
+\end{proof}
+
+\begin{remark}[Factorization hypothesis]
+\label{rem:factorization-hypothesis-geom}
+The hypothesis that the Kodaira--Spencer map factors through
+$H^*(\mathcal{M}_g)$ holds at the M-level for chiral algebras
+on smooth curves that do not require factorization extensions to
+nodal curves.  When the bar complex extends to
+$\overline{\mathcal{M}}_g$ via the factorization/clutching
+structure, boundary contributions from the divisor classes
+$\delta_i$ can increase the effective nilpotent depth beyond
+$g - 1$ (but never beyond $3g - 2$, by
+Theorem~\ref{thm:geometric-periodicity-weak}).  The gap between
+the smooth bound~$g - 1$ and the compactified
+bound~$3g - 2$ is controlled entirely by the boundary
+contributions.
+\end{remark}
+
+\begin{conjecture}[Geometric amplitude on compactified moduli; \ClaimStatusConjectured]
+\label{conj:geometric-periodicity}
+\index{tautological depth!sharp bound on $\overline{\mathcal{M}}_g$|textbf}
+For a Koszul chiral algebra~$\mathcal{A}$
+on $\overline{\mathcal{M}}_g$
+with factorization extensions to the boundary, the nilpotency
+index of the geometric operator $\kappa(\lambda)$ on
+$\overline{\mathcal{M}}_g$ is controlled by the Mumford
+relation $12\lambda = \kappa_1 + \delta$:
+the boundary contribution $\kappa(\delta)$ increases the
+nilpotency index beyond the interior bound $g - 1$ by at most
+the depth of the boundary tautological ring.  Precisely, there
+exists a function $\mathrm{nil}_{\partial}(g)$, depending only
+on the genus, such that:
+\[
+\mathrm{nil}(\kappa(\lambda)) \;\leq\; (g-1) + \mathrm{nil}_{\partial}(g),
+\qquad \mathrm{nil}_{\partial}(g) \leq 2g - 1.
+\]
+The additive structure reflects the Mumford decomposition
+$12\lambda = \kappa_1 + \delta$, with the interior contributing
+at most $g - 1$ (proved) and the boundary contributing
+$\mathrm{nil}_{\partial}(g)$ additional layers.
 \end{conjecture}
 
-\begin{remark}[Scope]\label{rem:geometric-periodicity-scope}
-The weak bound $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$ is proved unconditionally in Theorem~\ref{thm:geometric-periodicity-weak}.  The sharp bound $12(2g-2)$ of Conjecture~\ref{conj:geometric-periodicity} would require a refined analysis using the full tautological ring $R^*(\overline{\mathcal{M}}_g)$.  Specifically, the Mumford relation $12\lambda = \kappa_1 + \delta$ expresses $\lambda$ in terms of the kappa class $\kappa_1$ and the boundary divisor $\delta$.  On the interior $\mathcal{M}_g$ the boundary class $\delta$ vanishes, but $\kappa_1|_{\mathcal{M}_g} \neq 0$; consequently one cannot deduce the sharp bound from vanishing of $c_1(\mathbb{E})$ on the interior alone.  A proof would need to track both $\kappa_1$ and $\delta$ contributions through the Kodaira--Spencer map and exploit the degree of the canonical class $\deg(\omega_X) = 2g - 2$.  The sharp bound is supported by all computed examples (Virasoro period~2, affine KM period $2\mathsf{h}$).
+\begin{remark}[Scope and provenance]\label{rem:geometric-periodicity-scope}
+The interior bound $g - 1$ is proved unconditionally in
+Theorem~\ref{thm:geometric-depth-smooth}, using the
+Graber--Vakil vanishing theorem for the tautological ring of
+$\mathcal{M}_g$.  The compactified bound $3g - 2$ is
+proved in Theorem~\ref{thm:geometric-periodicity-weak} by
+dimension counting on $\overline{\mathcal{M}}_g$.  The
+conjecture interpolates between these two bounds by
+decomposing the Hodge class via the Mumford relation.
 
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity).
-The conjecture sharpens the proved geometric periodicity bound from $3g-2$ to $12(2g-2)$ using tautological relations on $\overline{\mathcal{M}}_g$.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+The earlier formulation of this section used the term
+``geometric periodicity'' for what is actually a nilpotent
+depth bound.  Nilpotency ($\sigma^N = 0$) is fundamentally
+different from periodicity ($\sigma^N = \mathrm{id}$), and
+no periodic geometric operator has been constructed.  The
+mature formulation treats the geometric contribution as
+providing \emph{tautological amplitude}---a bounded number
+of correction layers indexed by $R^*(\overline{\mathcal{M}}_g)$
+---rather than a period.  True periodicity in bar cohomology
+arises from the modular (Type~I) and quantum (Type~II)
+sources only.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V (periodicity/depth).
+The sharp interior bound $g - 1$ is proved; the conjecture
+refines the boundary contribution using tautological relations
+on $\overline{\mathcal{M}}_g$.
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \subsubsection{Examples at different genera}
 
 \begin{example}[Genus $0$: the sphere]
-No geometric periodicity (simply connected, no moduli).
+No geometric tautological depth (simply connected, no moduli).
 \end{example}
 
 \begin{example}[Genus $1$: the torus]
@@ -2433,16 +2671,23 @@ Free fermion on $E_{\tau}$:
 \[
 HH^{n+8}(\mathcal{F}, E_{\tau}) \cong HH^n(\mathcal{F}, E_{\tau})
 \]
-The period 8 comes from: 4 spin structures × 2 (fermion parity).
+The period 8 comes from: 4 spin structures $\times$ 2 (fermion parity).
+The Hodge class is absorbed into the modular data via
+$c_1(\mathbb{E}) = \frac{1}{12}\delta$.
 \end{example}
 
-\begin{example}[Genus 2]
-Hyperelliptic curve with 16 spin structures:
-\begin{itemize}
-\item Canonical divisor has degree $2g-2 = 2$
-\item Period matrix is $2 \times 2$ (4 real parameters)
-\item Jacobian typically has large torsion
-\end{itemize}
+\begin{example}[Genus 2: Hodge class vanishing]
+\label{ex:genus2-hodge-vanishing}
+By Theorem~\ref{thm:geometric-depth-smooth}, the Hodge class
+contribution vanishes entirely at genus~$2$:
+$\kappa(\lambda) = 0$ in $CH^*(\mathcal{A})$.  This follows from
+the Graber--Vakil vanishing $R^d(\mathcal{M}_2) = 0$ for $d > 0$.
+The genus-$2$ bar complex receives no geometric corrections from
+$c_1(\mathbb{E})$; any higher-genus modifications at $g = 2$ must
+arise from other tautological classes or from boundary
+contributions on $\overline{\mathcal{M}}_2$ (which reduce to
+$\mathcal{M}_{1,1} \times \mathcal{M}_{1,1}$ and
+$\mathcal{M}_{1,2}$ data).
 \end{example}
 
 \subsection{Stratified periodicity}
@@ -2454,25 +2699,33 @@ periodicity story from the conditional numerical values.
 \label{thm:complete-periodicity-classification}
 \index{periodicity!classification (partial)|textbf}
 \index{periodicity!stratified}
-For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level inducing period~$M$:
+For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with
+central charge $c = p/q$ ($\gcd(p,q) = 1$) and quantum group level
+inducing period~$M$, the bar cohomology dimensions are eventually
+periodic in conformal weight:
 \[
-\text{Period}(\mathcal{A}) \mid \text{lcm}(N_{\text{modular}}, N_{\text{quantum}}, N_{\text{geometric}})
+\text{Period}(\mathcal{A}) \mid
+\text{lcm}(N_{\text{modular}}, N_{\text{quantum}})
 \]
 where:
 \begin{align}
-N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad \text{(Conjectures~\ref{thm:modular-periodicity-minimal}, \ref{thm:modular-periodicity-wzw} for minimal/WZW; Conjecture~\ref{conj:modular-periodicity} in general)} \\
-N_{\text{quantum}} &= M \text{ (from quantum group; proved)} \\
-N_{\text{geometric}} &= 12(2g-2) \quad \text{(from the canonical bundle, for $g \geq 2$; Conjecture~\ref{conj:geometric-periodicity})}
+N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad
+  \text{(Conjectures~\ref{thm:modular-periodicity-minimal},
+  \ref{thm:modular-periodicity-wzw} for minimal/WZW;
+  Conjecture~\ref{conj:modular-periodicity} in general)} \\
+N_{\text{quantum}} &= M \text{ (from quantum group; proved)}
 \end{align}
+and the conformal weight threshold beyond which this periodicity
+holds is controlled by the geometric tautological depth
+$\mathrm{nil}(\kappa(\lambda)) \leq g - 1$
+(Theorem~\ref{thm:geometric-depth-smooth}).
 \end{conjecture}
 
 \begin{evidence}
-The unconditional content here is structural rather than numerical.
-What is proved is the Type~II quantum input and the formal fact that
-commuting periodicity operators on independent grading directions
-combine by~$\operatorname{lcm}$.  What remains conjectural in the
-displayed formula is the sharp Type~I modular input and the sharp
-Type~III geometric input.
+The unconditional content is structural rather than numerical.
+What is proved is the Type~II quantum input and the tautological
+depth bound.  What remains conjectural is the sharp Type~I modular
+input.
 
 The bar spectral sequence
 \[
@@ -2485,7 +2738,7 @@ where the three indices record respectively the representation-theoretic
 weight, the fusion-theoretic degree, and the configuration-space
 cohomological degree.
 
-\emph{Step~1: Inputs at the three strata.}
+\emph{Step~1: Inputs.}
 \begin{enumerate}
 \item \emph{Modular (Type~I).}  For the rational families treated
   above, Step~1 of
@@ -2495,71 +2748,78 @@ cohomological degree.
   Upgrading that phase bound to eventual periodicity of the bar
   cohomology with order~$N_{\mathrm{mod}}$ is precisely the
   conjectural input of the Type~I modular-periodicity package.
-\item \emph{Quantum.}  The quantum-integer periodicity
+\item \emph{Quantum (Type~II).}  The quantum-integer periodicity
   $[n + 2\ell]_q = [n]_q$ is theorematic in the admissible-level
   KL/DS regime of Proposition~\ref{thm:periodicity-quantum-input}, so
   the Type~II profile contributes a proved
   $N_{\mathrm{quant}}$ factor.
-\item \emph{Geometric (Type~III).}  Theorem~\ref{thm:geometric-periodicity-weak}
-  proves only the weak geometric bound
-  $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$.
-  Replacing that weak factor by the sharp quantity
-  $12(2g-2)$ is exactly the additional conjectural input of
-  Conjecture~\ref{conj:geometric-periodicity}.
+\item \emph{Geometric (Type~III).}
+  Theorem~\ref{thm:geometric-depth-smooth} proves
+  $\kappa(\lambda)^{g-1} = 0$ on smooth moduli, giving a
+  sharp tautological depth bound.  This is a \emph{nilpotent
+  stabilization}, not a periodicity source: it bounds the
+  transient before modular/quantum periodicity takes hold,
+  rather than contributing a periodic factor to the lcm
+  (Remark~\ref{rem:nilpotent-vs-periodic}).
 \end{enumerate}
 
-\emph{Step~2: Structural $\operatorname{lcm}$ mechanism.}
-Suppose one has commuting operators
-$\sigma_{\mathrm{mod}}$, $\sigma_{\mathrm{quant}}$,
-$\sigma_{\mathrm{geom}}$ acting on the three tridegree directions with
-orders dividing the available Type~I/II/III inputs.  Then the combined
-operator
-\[
-\sigma = \sigma_{\mathrm{mod}} \otimes
-\sigma_{\mathrm{quant}} \otimes \sigma_{\mathrm{geom}}
-\]
-acts on the total tridegree, and its order divides the least common
-multiple of the three individual orders.  This is the only
-unconditional structural statement being used here.
+\emph{Step~2: Structural mechanism.}
+The genuine periodicity operators
+$\sigma_{\mathrm{mod}}$ and $\sigma_{\mathrm{quant}}$
+act on the first two tridegree directions.  Their combined order
+divides
+$\mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}})$.
+The geometric direction is \emph{bounded}, not periodic: the
+nilpotent operator $\sigma_{\mathrm{geom}} = \kappa(\lambda)$
+satisfies $\sigma_{\mathrm{geom}}^{g-1} = 0$
+(Theorem~\ref{thm:geometric-depth-smooth}), so the
+geometric spectral sequence has at most $g - 2$ nontrivial
+filtration steps.
 
 The bookkeeping separation is:
 \begin{itemize}
 \item the modular input acts on the representation-theoretic component
-  via $T$-eigenvalues / conformal weights;
+  via $T$-eigenvalues / conformal weights (periodic, conjectural);
 \item the quantum input acts on the fusion-theoretic component via
-  quantum dimensions and Clebsch--Gordan data;
+  quantum dimensions and Clebsch--Gordan data (periodic, proved);
 \item the geometric input acts on the configuration-space component via
-  tautological classes on $\overline{\mathcal{M}}_g$.
+  tautological classes on $\mathcal{M}_g$ (\emph{nilpotent}, proved).
 \end{itemize}
 
-\emph{Step~3: The conjectural numerical package.}
-If the Type~I modular bar-periodicity conjecture supplies the sharp
-factor $N_{\mathrm{mod}} = 24q/\gcd(p,24)$ and the Type~III geometric
-conjecture supplies the sharp factor $N_{\mathrm{geom}} = 12(2g-2)$,
-then the structural $\operatorname{lcm}$ mechanism of Step~2 yields the
-displayed conjectural bound
-\[
-\mathrm{Period}(\mathcal{A}) \mid
-\mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}}, N_{\mathrm{geom}}).
-\]
-If one weakens the Type~I or Type~III inputs, the same argument still
-produces the corresponding weaker profile-level upper bound.
+\emph{Step~3: Combined structure.}
+The genuine period of $\mathcal{A}$ is governed by the periodic
+operators only:
+$\mathrm{Period}(\mathcal{A}) \mid \mathrm{lcm}(N_{\mathrm{mod}},
+N_{\mathrm{quant}})$.  The geometric contribution controls
+the \emph{stabilization threshold}: bar cohomology dimensions
+become $\mathrm{Period}(\mathcal{A})$-periodic in conformal weight
+once the weight exceeds a threshold determined by the tautological
+depth.  On $\overline{\mathcal{M}}_g$ the depth is at most $3g-2$
+(Theorem~\ref{thm:geometric-periodicity-weak}); on $\mathcal{M}_g$
+the sharp bound is $g-1$
+(Theorem~\ref{thm:geometric-depth-smooth}).
 \end{evidence}
 
-\begin{remark}[Sharpness and scope]\label{rem:periodicity-classification-scope}
-This conjecture is tagged \ClaimStatusConjectured{} because two of its three
-inputs are conjectural: the modular periodicity bound
-(Conjecture~\ref{conj:modular-periodicity}) and the geometric periodicity
-bound (Conjecture~\ref{conj:geometric-periodicity}).  The quantum
-periodicity component is proved.  The \emph{structural
-content}---that the three periodicity sources combine via $\operatorname{lcm}$---is
-unconditional; it is the specific values of $N_{\text{mod}}$ and
-$N_{\text{geom}}$ that are conjectural.  More precisely, only the
-$T$-matrix phase order is currently unconditional on the modular side,
-and Theorem~\ref{thm:geometric-periodicity-weak} supplies only the weak
-geometric bound $\mathrm{Period}_{\mathrm{geom}} \mid (3g-2)$.
-The $\operatorname{lcm}$ bound is sharp when the three periodicities are genuinely independent, which holds generically.  However, for specific algebras (e.g., minimal models where the modular and quantum data are related by the Verlinde formula), cancellations between the three sources can reduce the actual period below the $\operatorname{lcm}$.
-(Contributing to Conjecture~\ref{conj:master-theta}.)
+\begin{remark}[Scope]\label{rem:periodicity-classification-scope}
+The conjecture is tagged \ClaimStatusConjectured{} because the
+modular periodicity bound
+(Conjecture~\ref{conj:modular-periodicity}) is conjectural.  The quantum
+periodicity component is proved, and the geometric contribution is now
+understood as providing nilpotent depth (proved) rather than an
+additional periodic source.
+
+The earlier formulation included a ``geometric period''
+$N_{\mathrm{geom}}$ as a third factor in the lcm formula.  This was
+based on a conflation of nilpotency ($\sigma^N = 0$) with periodicity
+($\sigma^N = \mathrm{id}$); the operator $\sigma_{\mathrm{geom}} =
+\kappa(\lambda)$ is nilpotent, not periodic.  The corrected
+formulation separates the two genuine periodicity sources (modular and
+quantum) from the geometric stabilization mechanism.
+The lcm formula $\mathrm{Period}(\mathcal{A}) \mid
+\mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}})$ is the
+correct statement; what was previously attributed to ``geometric
+periodicity'' is the threshold beyond which this periodicity holds.
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
 \begin{remark}[Periodicity profile refinement]\label{rem:periodicity-triple-deformation}
@@ -2569,30 +2829,29 @@ Conjecture~\ref{thm:complete-periodicity-classification} is the
 shadow of a richer invariant: the \emph{periodicity profile}
 $\Pi(\mathcal{A}) = (M_{\mathcal{A}}, Q_{\mathcal{A}},
 G_{\mathcal{A}})$ of Remark~\ref{rem:periodicity-triple}.
-In the profile formulation, the three periodicity sources
-decompose further:
+In the corrected formulation, the profile decomposes into periodic
+and nilpotent contributions:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The modular periodicity $N_{\mathrm{mod}}$ controls the
 $T$-eigenvalue action on $M_{\mathcal{A}}$, splitting the
 periodicity module into weight spaces indexed by
-$e^{2\pi i c/24}$.
+$e^{2\pi i c/24}$.  This is a genuine periodic automorphism
+(conjectural sharp value).
 \item The quantum periodicity $N_{\mathrm{quant}}$ is encoded in
 the exterior factor $Q_{\mathcal{A}}$: the periodicity
 generators $x_{2m_i+1}$ in the exterior algebra correspond
-to the independent quantum CG coefficient cycles.
-\item The geometric periodicity $N_{\mathrm{geom}}$ is detected
-by $G_{\mathcal{A}}$: the Galois group of the splitting field
-of the Poincar\'e series denominator governs which
-tautological classes on $\overline{\mathcal{M}}_g$ can
-contribute new periodicity phenomena.
+to the independent quantum CG coefficient cycles.  This is
+a proved periodic structure.
+\item The geometric contribution is not periodic but nilpotent:
+$G_{\mathcal{A}}$ encodes the tautological depth
+(Theorem~\ref{thm:geometric-depth-smooth}) and the Galois
+group of the Poincar\'e series denominator.  Its role is to
+bound the stabilization threshold, not to contribute a
+period to the lcm.
 \end{enumerate}
-The lcm formula
-$\mathrm{Period}(\mathcal{A}) \mid \mathrm{lcm}(N_{\mathrm{mod}},
-N_{\mathrm{quant}}, N_{\mathrm{geom}})$ is the statement that the
-exponent of the total periodicity operator on $M_{\mathcal{A}}$
-divides the lcm of the individual factor exponents.  The triple
+The triple
 $\Pi(\mathcal{A})$ retains the structural information (module
-decomposition, algebra generators, arithmetic symmetries)
+decomposition, algebra generators, tautological amplitude)
 that the scalar discards.
 \end{remark}
 
@@ -2600,19 +2859,21 @@ that the scalar discards.
 \index{periodicity!stratified reformulation}
 The original aspiration of a unified periodicity doctrine---a single
 theorematic classification unifying modular, quantum, and geometric
-periodicity across all chiral algebras---is not currently realistic
-in its original form.
-What survives is a \emph{stratified} picture with four levels of
-decreasing strength:
+periodicity across all chiral algebras---required a conceptual
+correction.  The geometric contribution is not periodic but nilpotent
+(Remark~\ref{rem:nilpotent-vs-periodic}), and the mature formulation
+reflects this:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Structural stratum.}
-  The lcm mechanism is proved unconditionally
+  The lcm mechanism for the two genuine periodic sources is proved
+  unconditionally
   (Proposition~\ref{thm:periodicity-exchange-koszul}).  Quantum
-  periodicity is explicit, and the geometric theory contributes at
-  least the weak proved bound of
-  Theorem~\ref{thm:geometric-periodicity-weak}; what remains open are
-  the sharp formulas for $N_{\mathrm{mod}}$ and the sharp geometric
-  term $N_{\mathrm{geom}}$.
+  periodicity is explicit.  The geometric theory contributes a
+  proved tautological depth bound: nilpotency index $\leq g - 1$
+  on smooth moduli (Theorem~\ref{thm:geometric-depth-smooth}),
+  $\leq 3g - 2$ on $\overline{\mathcal{M}}_g$
+  (Theorem~\ref{thm:geometric-periodicity-weak}).  What remains
+  open is the sharp modular formula $N_{\mathrm{mod}}$.
 \item \emph{Principal rational frontier.}
   Minimal models and WZW models are the first rational families where
   $T$-matrix periodicity and finite fusion data are explicit, but the
@@ -2621,23 +2882,29 @@ decreasing strength:
   and~\ref{thm:modular-periodicity-wzw}) because the missing
   Step~2 convolution argument has not been proved.
 \item \emph{Outer rational frontier.}
-  For general rational chiral algebras, both the modular periodicity
-  bound and the sharp geometric periodicity bound remain conjectural
-  (Conjectures~\ref{conj:modular-periodicity}
-  and~\ref{conj:geometric-periodicity}).  Natural next cases include
-  $\mathcal{W}$-algebra minimal models, orbifolds, and cosets.
+  For general rational chiral algebras, the modular periodicity
+  bound remains conjectural
+  (Conjecture~\ref{conj:modular-periodicity}).  The geometric
+  depth bound is now proved
+  (Theorem~\ref{thm:geometric-depth-smooth}).  Natural next cases
+  for modular periodicity include $\mathcal{W}$-algebra minimal
+  models, orbifolds, and cosets.
 \item \emph{Spectral stratum.}
   For all Koszul chiral algebras (not necessarily rational),
-  the period---if it exists---divides the lcm of the
-  individual factors, each determined by the modular
+  the period---if it exists---divides
+  $\mathrm{lcm}(N_{\mathrm{mod}}, N_{\mathrm{quant}})$,
+  with each factor determined by the modular
   scalar/spectral data $(\kappa(\cA), \Delta_{\cA})$.
   The spectral radius of $T_{\mathrm{rec}}$ provides the
   leading asymptotic growth rate, which bounds the modular
   periodicity from above via the dominant branch point
   (Theorem~\ref{thm:dominant-branch-point}).
+  The geometric depth controls when this periodicity
+  becomes visible.
 \end{enumerate}
 This stratification replaces the original unified doctrine
-with a more honest, yet still structured, account.
+with a more honest, yet structurally richer, account that
+correctly separates periodic from nilpotent contributions.
 See \S\ref{subsec:nine-futures}, Future~7 for the programme
 assessment.
 \end{remark}
@@ -2650,8 +2917,9 @@ assessment.
 \label{thm:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
 \begin{enumerate}
-\item The geometric periodicity component is unchanged:
-  $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
+\item The geometric tautological depth is unchanged:
+  $\mathrm{nil}(\kappa(\lambda))_{\cA} =
+  \mathrm{nil}(\kappa(\lambda))_{\cA^!}$.
 \item The dual modular phase bound is determined by the dual central
   charge: $N'_{\text{mod}} = 24q'/\gcd(p', 24)$ where
   $c' = c(\cA^!) = p'/q'$ in lowest terms.
@@ -2660,19 +2928,21 @@ Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~
   $N_{\text{quant}}(\cA) = N_{\text{quant}}(\cA^!)$.
 \end{enumerate}
 In particular, Koszul duality transports the periodicity \emph{profile}
-$(N_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$ component-wise; it
+$(N_{\text{mod}}, N_{\text{quant}})$ and the geometric depth
+component-wise; it
 does not assert equality of scalar periods, since the modular component
-changes with the dual central charge.  Whenever all three profile
+changes with the dual central charge.  Whenever both periodic profile
 components are defined, the total period of $\cA^!$ divides
-$\mathrm{lcm}(N'_{\text{mod}}, N_{\text{quant}}, N_{\text{geom}})$.
+$\mathrm{lcm}(N'_{\text{mod}}, N_{\text{quant}})$.
 \end{proposition}
 
 \begin{proof}
-\emph{(1) Geometric periodicity is unchanged.}
-Both $\cA$ and $\cA^!$ live on the same curve $X$.  The Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map, Theorem~\ref{thm:kodaira-spencer-chiral-complete}) depends only on the geometry of~$X$, not on the chiral algebra: $N_{\text{geom}}(\cA) = N_{\text{geom}}(\cA^!)$.
+\emph{(1) Geometric tautological depth is unchanged.}
+Both $\cA$ and $\cA^!$ live on the same curve $X$.  The Hodge bundle contribution from $\overline{\mathcal{M}}_g$ (via the Kodaira--Spencer map, Theorem~\ref{thm:kodaira-spencer-chiral-complete}) depends only on the geometry of~$X$, not on the chiral algebra.  Since $\kappa(\lambda)$ is the image of $\lambda = c_1(\mathbb{E})$ under the same ring homomorphism for both $\cA$ and $\cA^!$, the nilpotency index is preserved.
 
 \emph{(2) Modular period of the dual.}
-The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula, giving $c' = p'/q'$ in lowest terms.  The $T$-matrix of~$\cA^!$ has eigenvalues $e^{2\pi i(h'_\lambda - c'/24)}$, and the same elementary argument as in Step~1 of the periodicity proofs (requiring only $c'N'/24 \in \mathbb{Z}$ and rationality of conformal weights) gives $T^{N'} = \mathrm{Id}$ for $N'_{\text{mod}} = 24q'/\gcd(p',24)$.  This $T$-matrix periodicity is unconditional: it depends only on rationality of~$c'$, not on any conjecture about bar cohomology.  Since each periodicity source independently divides the total period, the lcm upper bound follows.
+The dual central charge $c'$ is determined by the level duality $k \mapsto k' = -k - 2h^\vee$ via the Sugawara formula, giving $c' = p'/q'$ in lowest terms.  The $T$-matrix of~$\cA^!$ has eigenvalues $e^{2\pi i(h'_\lambda - c'/24)}$, and the same elementary argument as in Step~1 of the periodicity proofs (requiring only $c'N'/24 \in \mathbb{Z}$ and rationality of conformal weights) gives $T^{N'} = \mathrm{Id}$ for $N'_{\text{mod}} = 24q'/\gcd(p',24)$.  This $T$-matrix periodicity is unconditional: it depends only on rationality of~$c'$, not on any conjecture about bar cohomology.
+
 \emph{(3) Quantum input in the admissible-level regime.}
 In the Type~II admissible-level KL/DS regime, the quantum component is
 encoded by quantum integers, quantum dimensions, and fusion data.
@@ -2685,10 +2955,10 @@ applies.
 \begin{remark}[Modular period exchange]\label{rem:periodicity-exchange-harmonic}
 \label{conj:periodicity-exchange-harmonic}%
 Proposition~\ref{thm:periodicity-exchange-koszul} establishes
-unconditionally that the geometric component is preserved and that the
-dual modular phase bound is determined by the dual central charge.  In
-the admissible-level KL/DS regime it also preserves the Type~II quantum
-input.  The sum of reciprocal modular periods is given by
+unconditionally that the geometric tautological depth is preserved and
+that the dual modular phase bound is determined by the dual central
+charge.  In the admissible-level KL/DS regime it also preserves the
+Type~II quantum input.  The sum of reciprocal modular periods is given by
 Conjecture~\ref{conj:reflected-modular-periodicity}: writing $c = p/q$
 and $c' = p'/q'$,
 \[

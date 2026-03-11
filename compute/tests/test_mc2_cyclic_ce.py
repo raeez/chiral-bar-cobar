@@ -20,7 +20,7 @@ pytestmark = pytest.mark.slow
 
 import numpy as np
 
-from lib.mc2_cyclic_ce import (
+from compute.lib.mc2_cyclic_ce import (
     _exact_rank,
     ce_cohomology,
     ce_differential_0,

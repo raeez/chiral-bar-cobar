@@ -8,7 +8,7 @@ This appendix consolidates all known enumerative data arising from the chiral ba
 For a Koszul chiral algebra~$\cA$, the bar cohomology dimensions $\dim H^n(\barBgeom(\cA))$ coincide with the Hilbert function of the Koszul dual $\cA^!$ (Corollary~\ref{cor:bar-cohomology-koszul-dual}).  These dimensions are the central enumerative invariants of the theory.  Their generating functions encode, in compact form, the full structure of the bar complex: growth rates, analytic singularities, and (conjecturally) the spectral data of a finite-rank transfer operator.
 
 \section{Master table of bar cohomology dimensions}
-\label{sec:master-table}
+\label{sec:master-table-frontier}
 
 Table~\ref{tab:frontier-bar-dims} extends Table~\ref{tab:bar-dimensions} with additional algebras and deeper commentary on the status of each entry.
 
@@ -17,8 +17,8 @@ Table~\ref{tab:frontier-bar-dims} extends Table~\ref{tab:bar-dimensions} with ad
 \caption{Bar cohomology dimensions $\dim(\cA^!)_n$ through degree~$10$.
 $\bullet$\,=\,proved, $\circ$\,=\,conjectured from GF/recurrence, blank\,=\,unknown.}
 \label{tab:frontier-bar-dims}
-\renewcommand{\arraystretch}{1.35}
-{\scriptsize
+\resizebox{\textwidth}{!}{%
+\renewcommand{\arraystretch}{1.35}%
 \begin{tabular}{|l|ccccccccccc|l|l|}
 \hline
 \textbf{Algebra $\cA$}
@@ -154,7 +154,25 @@ $R(n)$ & 1 & 0 & 1 & 1 & 3 & 6 & 15 & 36 & 91 & 232 & 603 & 1585
 \end{center}
 
 \emph{How it appears.}
-$\dim(\widehat{\mathfrak{sl}}_{2,k}^!)_n = R(n+3)$ for all $n \geq 0$ (Theorem~\ref{thm:universal-kac-moody-koszul}, Corollary~\ref{cor:bar-cohomology-koszul-dual}).  This is the first instance of a \emph{named} combinatorial sequence emerging from chiral bar cohomology.  The shift by~$3$ arises because the augmentation ideal of $\widehat{\mathfrak{sl}}_2$ starts at conformal weight~$1$, and the first three Riordan numbers $R(0) = 1$, $R(1) = 0$, $R(2) = 1$ correspond to the trivial bar degrees.
+The Riordan numbers were originally predicted to give
+$\dim(\widehat{\mathfrak{sl}}_{2,k}^!)_n = R(n+3)$ for all
+$n \geq 0$, based on the $E_1$ page of the PBW spectral
+sequence (Theorem~\ref{thm:universal-kac-moody-koszul}).
+However, the $E_2$ collapse
+(Corollary~\ref{cor:bar-cohomology-koszul-dual},
+Remark~\ref{rem:ce-vs-exterior}) shows that the bar
+cohomology is computed by the Chevalley--Eilenberg
+cohomology of $\mathfrak{sl}_2 \otimes t^{-1}\bC[t^{-1}]$,
+which gives $\dim H^1 = 3 = R(4)$ (agreement) but
+$\dim H^2 = 5 \neq 6 = R(5)$ (discrepancy at degree~$2$).
+The $E_1$ dimensions
+$\prod_{m \geq 1}(1+q^m)^3 = 1, 3, 6, 13, 24, \ldots$
+(by conformal weight) agree with $R(h+3)$ at
+$h = 0, 1, 2$ but diverge at $h \geq 3$
+($13 \neq R(6) = 15$).
+The correct bar cohomology dimensions are the CE values
+$\dim H^n = 3, 5, \ldots$ for $n = 1, 2, \ldots$;
+the Riordan identification requires revision.
 
 \emph{Combinatorial interpretation.}
 Riordan numbers count several classical objects~\cite{BernhartRiordan}: Motzkin paths of length~$n$ that never touch the $x$-axis except at endpoints; non-crossing partitions of $\{1, \ldots, n\}$ without singleton blocks; and certain classes of restricted lattice paths.  The appearance of Riordan numbers in chiral bar cohomology suggests that the bar complex of $\widehat{\mathfrak{sl}}_2$ admits a combinatorial model in terms of non-crossing structures --- an analogue of the Motzkin path model for the Virasoro algebra (Theorem~\ref{conj:motzkin-path-model}).  No such model has been constructed.
@@ -342,6 +360,14 @@ $\mathcal{W}_3$ & $x(2-3x)\,/\,\bigl((1-x)(1-3x-x^2)\bigr)$ & $(1-x)(1-3x-x^2)$ 
 \end{tabular}
 \end{center}
 
+\begin{conjecture}[$\mathcal{W}_3$ bar cohomology generating function; \ClaimStatusConjectured]\label{conj:w3-bar-gf}
+The bar cohomology generating function of the $\mathcal{W}_3$ algebra is
+\[
+P_{\mathcal{W}_3}(x) = \frac{x(2-3x)}{(1-x)(1-3x-x^2)},
+\]
+with denominator polynomial $D(x) = 1 - 4x + 2x^2 + x^3 = (1-x)(1-3x-x^2)$.  This predicts the linear recurrence $a_k = 4a_{k-1} - 2a_{k-2} - a_{k-3}$ for $k \geq 4$, with initial values $a_1 = 2$, $a_2 = 5$, $a_3 = 16$, $a_4 = 52$.
+\end{conjecture}
+
 \emph{Characteristic polynomial.}
 The recurrence $a(n) = 11a(n{-}1) - 23a(n{-}2) - 8a(n{-}3)$ for $\widehat{\mathfrak{sl}}_3$ has characteristic polynomial $t^3 - 11t^2 + 23t + 8 = (t-8)(t^2-3t-1)$.  The factorization mirrors the $\mathfrak{sl}_2$ case: the dominant root $t = 8 = \dim\mathfrak{sl}_3$ corresponds to the growth pole, while the quadratic factor $t^2 - 3t - 1$ is the reciprocal polynomial of the DS-invariant discriminant $1 - 3x - x^2$.  Its roots are $(3 \pm \sqrt{13})/2$.
 
@@ -511,6 +537,42 @@ This is the single most informative computation on the frontier.  The value $135
 
 \emph{Obstruction}: the computation requires the rank of a $24576 \times 786432$ matrix over $\mathbb{Q}$ (or a suitable finite field $\mathbb{F}_p$).  This is a $\sim 20$\,GB dense matrix, beyond naive methods but within reach of sparse or modular arithmetic.
 
+\emph{Progress} (Computation~\ref{comp:sl3-casimir-decomp}):
+the Casimir eigenspace decomposition of $\mathfrak{sl}_3^{\otimes 4}$ has been
+computed, giving $9$ eigenspaces with multiplicities
+$(8, 256, 400, 891, 1050, 768, 112, 486, 125)$
+at eigenvalues $3C_2 = (0, 18, 36, 48, 72, 90, 108, 120, 144)$.
+The CE bracket rank within each eigenspace is known
+(total rank $456$), and the tensor algebra complex is verified exact.
+The PBW approach (computing $\mathfrak{sl}_3$-invariants in
+$S^4(\mathfrak{sl}_3[t^{-1}]t^{-1})$ and the $d_1$ differential)
+remains a candidate path to $H^4$ without the full matrix rank,
+though the convergence target requires care
+(Remark~\ref{rem:pbw-convergence-target}).
+
+Additional progress:
+\begin{itemize}
+\item
+The Koszul dual dimensions from series inversion are
+$(A^!)_n = [1, 8, 28, 140, 392, 2884, \ldots]$
+with chiral excess $[0, 0, 0, 84, 322, \ldots]$
+(Remark~\ref{rem:sl3-koszul-dual}).
+All positive through degree~$7$.
+\item
+No simple quadratic relation space $R \subseteq V \otimes V$
+reproduces $H^n$ beyond degree~$2$
+(Computation~\ref{comp:sl3-koszul-dual-scan}): the closest
+candidate gives $H^3 = 120 \neq 204$.
+\item
+The Euler characteristic obstruction
+(Remark~\ref{rem:euler-chi-obstruction}) shows that neither
+$\mathfrak{g}^{\otimes n} \otimes \mathrm{OS}^{n-1}$ (fails at
+weight~$2$) nor $\bar{A}^{\otimes n} \otimes \mathrm{OS}^{n-1}$
+(fails at weight~$3$) gives a chain complex
+consistent with $H^n = [1, 8, 36, 204]$.  This is a chain-level
+manifestation of the $R^{(1)}$ barrier.
+\end{itemize}
+
 \item\label{nf:w3-h5}
 \emph{$\dim H^5(\barBgeom(\mathcal{W}_3^k)) \stackrel{?}{=} 171$.}
 Confirms the $\mathcal{W}_3$ recurrence (Conjecture~\ref{conj:w3-algebraicity}).  The computation is smaller than~\ref{nf:sl3-h4} because $\mathcal{W}_3$ has only two generators (compared to $8$ for $\mathfrak{sl}_3$), but the composite-field OPE (involving the $\Lambda = {:}TT{:}$ composite) introduces double-pole Wick contractions that prevent naive reduction.
@@ -553,6 +615,421 @@ The MC4 tower $\mathcal{W}_N$ as $N \to \infty$ should converge to $W_{1+\infty}
 \end{enumerate}
 
 
+\section{Computational verification results}
+\label{sec:computational-verification}
+\index{bar complex!computational verification}
+\index{chiral bracket differential!rank computation}
+
+We record the results of systematic computational verification of the bar
+cohomology data.  The computations use two independent methods: direct rank
+computation of the chiral bracket differential (with Orlik--Solomon forms),
+and algebraic generating function fitting (rational and holonomic recurrence
+detection).  All computations are implemented in the \texttt{compute/} module
+and validated by an automated test suite.
+
+\subsection{Chiral bracket rank verification for $\widehat{\mathfrak{sl}}_3$}
+\label{subsec:chiral-bracket-verification}
+
+The chiral bracket differential
+$d_{\mathrm{bracket}}\colon \bar{B}^n(\widehat{\mathfrak{sl}}_3) \to
+\bar{B}^{n-1}(\widehat{\mathfrak{sl}}_3)$
+acts on the full bar chain groups
+$\bar{B}^n = \mathfrak{g}^{\otimes n} \otimes \mathrm{OS}^{n-1}(n)$,
+where $\mathrm{OS}^{n-1}(n)$ is the top-degree component of the
+Orlik--Solomon algebra of $\mathrm{Conf}_n(\mathbb{C})$
+with $\dim\mathrm{OS}^{n-1}(n) = (n-1)!$.
+
+Two versions of the bracket differential were computed independently:
+the Chevalley--Eilenberg (CE) bracket on $\mathfrak{g}^{\otimes n}$
+(ignoring the OS factor, i.e., treating all generators as living at the
+same point), and the \emph{chiral} bracket incorporating the OS
+residue maps $\operatorname{Res}_{D_{ij}}\colon
+\mathrm{OS}^{n-1}(n) \to \mathrm{OS}^{n-2}(n-1)$
+with signs $(-1)^{i+j}$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|cc|cc|l}
+\toprule
+\textbf{Degree} & $\dim \bar{B}^n_{\mathrm{CE}}$ &
+  $\dim \bar{B}^n_{\mathrm{chiral}}$ &
+  $\mathrm{rk}_{\mathrm{CE}}$ & $\mathrm{rk}_{\mathrm{chiral}}$ &
+  \textbf{Status} \\
+\midrule
+$2 \to 1$ & $64$ & $64$ & $8$ & $8$ & match \\
+$3 \to 2$ & $512$ & $1024$ & $56$ & $63$ & \textbf{gap = 7} \\
+$4 \to 3$ & $4096$ & $24576$ & $456$ & $1024$ & surjective \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The CE and chiral ranks agree at degree~$2 \to 1$ because
+$\mathrm{OS}^0(2) = \mathbb{C}$ is one-dimensional.  At degree~$3 \to 2$,
+the chiral bracket has rank~$63$ (matching
+Computation~\ref{comp:sl3-modular-rank}), versus~$56$ for the
+CE bracket.  The gap of~$7$ arises from the OS residue maps: the
+seven additional kernel directions killed by the chiral
+differential correspond to configurations where the collision
+geometry (encoded by the Arnold relations
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} +
+\eta_{31} \wedge \eta_{12} = 0$) enforces cancellations absent
+in the pointwise CE complex.
+
+At degree~$4 \to 3$, the chiral bracket is \emph{surjective}:
+$\mathrm{rk} = 1024 = \dim \bar{B}^3$, consistent with the
+Koszul property that bar cohomology is concentrated in low degrees.
+
+\begin{remark}[CE vs.\ chiral: the string correction]
+\label{rem:ce-vs-chiral}
+\index{bar complex!CE vs chiral bracket}
+The difference $\mathrm{rk}_{\mathrm{chiral}} - \mathrm{rk}_{\mathrm{CE}}
+= 63 - 56 = 7$ at degree~$3$ measures the \emph{string correction}
+to the bar differential: seven additional directions in
+$\bar{B}^2$ become coboundaries when the full configuration-space
+geometry is incorporated.  This difference is entirely due to the
+non-trivial OS algebra structure at degree $\geq 3$, where the
+Arnold relations begin to impose constraints.
+
+The CE bracket is the $E_0$ page of the PBW spectral
+sequence (ignoring the conformal weight grading), while the
+chiral bracket incorporates the full Borcherds OPE data.  The
+string correction measures the contribution of the higher spectral
+sequence differentials at the level of total rank.
+\end{remark}
+
+\subsection{Near-rationality of the Virasoro bar sequence}
+\label{subsec:virasoro-near-rationality}
+\index{Virasoro algebra!near-rationality}
+\index{bar complex!generating function!near-rationality}
+
+The Virasoro bar cohomology dimensions $\dim(\mathrm{Vir}^!)_n = M(n+1) - M(n)$
+(Motzkin differences, \S\ref{subsec:motzkin}) satisfy the algebraic GF
+\begin{equation}\label{eq:virasoro-gf-algebraic}
+P_{\mathrm{Vir}}(x) = \frac{4x}{(1 - x + \sqrt{1-2x-3x^2})^2},
+\end{equation}
+which is algebraic of degree~$2$ over $\mathbb{Q}(x)$ with discriminant
+$\Delta = (1-3x)(1+x)$.  The generating function is \emph{not} rational.
+
+However, automated recurrence detection reveals a striking numerical
+coincidence: the constant-coefficient linear recurrence
+\begin{equation}\label{eq:virasoro-spurious-recurrence}
+a_k = 4\,a_{k-1} - 2\,a_{k-2} - 4\,a_{k-3}
+\end{equation}
+fits the Virasoro bar dimensions \emph{exactly} through degree~$8$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cccccccccc}
+$n$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline
+actual & 1 & 2 & 5 & 12 & 30 & 76 & 196 & 512 & 1353 & 3610 \\
+recurrence & --- & --- & --- & 12 & 30 & 76 & 196 & 512 & \textbf{1352} & \textbf{3604}
+\end{tabular}
+\end{center}
+
+The recurrence~\eqref{eq:virasoro-spurious-recurrence} predicts $a_9 = 1352$,
+while the true value is $M(10) - M(9) = 2188 - 835 = 1353$.  The discrepancy
+is~$1$.  At degree~$10$, the error grows to~$6$; at degree~$11$, to~$27$.
+
+This near-rationality is non-trivial: the spurious recurrence satisfies
+$5$ overdetermined equations ($a_4$ through $a_8$, each being a
+linear constraint on the $3$ unknowns $c_1, c_2, c_3$), then
+fails at the $6$th.  The characteristic polynomial
+$t^3 - 4t^2 + 2t + 4 = (t-2)(t^2 - 2t - 2)$ has roots
+$2$ and $1 \pm \sqrt{3}$.  The dominant root $2$ accounts for the
+rough exponential growth $\sim 2^n$, but the true growth rate is~$3^n$
+(from the algebraic GF's singularity at $x = 1/3$).
+
+\begin{conjecture}[Near-rationality as truncated Padé; \ClaimStatusOpen]
+\label{conj:virasoro-pade}
+\index{Virasoro algebra!Pad\'e approximation}
+The depth-$3$ constant-coefficient recurrence~\eqref{eq:virasoro-spurious-recurrence}
+is the $[3/3]$ Pad\'e approximant to the Motzkin difference sequence,
+truncated to its ``best rational approximation'' at 8~terms.  The
+error at degree~$9$ is minimized (equal to~$1$) because the
+Padé approximant captures the leading asymptotic behavior and the
+first correction term.  A precise formulation:
+the $[q/q]$ Padé approximant to the algebraic GF
+$P_{\mathrm{Vir}}(x)$ matches the Taylor coefficients through
+degree~$2q + O(\sqrt{q})$, with the implied constant depending
+on the algebraic degree.
+\end{conjecture}
+
+\emph{Computational consequence.}  The near-rationality means that
+automated GF solvers applied to Virasoro data with $\leq 8$ terms
+will find a spurious rational fit.  This does not occur with $\geq 9$
+terms, where the verification step detects the failure.  The lesson
+is general: \emph{any constant-coefficient recurrence hypothesis
+for an algebraic sequence must be validated against sufficiently
+many terms} --- specifically, beyond the Padé horizon.
+
+\subsection{GF type classification}
+\label{subsec:gf-type-classification}
+\index{bar complex!generating function!classification}
+
+The bar cohomology generating functions fall into a hierarchy of
+algebraic complexity.  Automated analysis confirms and refines the
+classification of \S\ref{sec:gf-hierarchy}:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llll}
+\toprule
+\textbf{Algebra} & \textbf{GF type} & \textbf{Recurrence type} &
+  \textbf{Status} \\
+\midrule
+$\mathcal{H}$, $\psi$ & transcendental & none (modular) & proved \\
+$bc$ & rational & $a_n = 2a_{n-1} + 1$ & proved \\
+$\beta\gamma$ & algebraic (deg 2) & holonomic (order 2, poly deg 1) & proved \\
+$\widehat{\mathfrak{sl}}_2$ & algebraic (deg 2) & holonomic (order 2, poly deg 1) & proved \\
+$\mathrm{Vir}_c$ & algebraic (deg 2) & holonomic (order 2, poly deg 1) & proved \\
+$\widehat{\mathfrak{sl}}_3$ & rational (conj.) & constant (depth 3) & conjectured \\
+$\mathcal{W}_3$ & rational (conj.) & constant (depth 3) & conjectured \\
+$Y(\mathfrak{sl}_2)$ & rational (conj.) & constant (depth 2) & conjectured \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The proved algebras in the $\mathfrak{sl}_2$ family all have
+\emph{holonomic} recurrences --- linear recurrences with
+\emph{polynomial} coefficients in~$n$ --- reflecting the algebraic
+degree~$2$ of their generating functions.  The conjectured algebras
+in the $\mathfrak{sl}_3$ family have constant-coefficient recurrences,
+reflecting rationality.
+
+\emph{The algebraic--rational transition.}
+The qualitative shift from algebraic (degree~$2$) to rational when passing
+from rank~$1$ ($\mathfrak{sl}_2$) to rank~$2$ ($\mathfrak{sl}_3$) is the
+central mystery of the combinatorial frontier.  If the rank-plus-one pattern
+(\S\ref{subsec:gf-sl3-family}) holds, then $\widehat{\mathfrak{sl}}_N$
+for all $N \geq 3$ should have rational bar GFs, with the $\mathfrak{sl}_2$
+family being the sole algebraic exception.  The PBW spectral sequence
+provides a heuristic: for rank~$1$, the single Casimir operator gives
+a depth-$2$ recurrence with polynomial coefficients (because the
+invariant subalgebra $S^*(\mathfrak{g}[t^{-1}]t^{-1})^{\mathfrak{g}}$ has a
+single generator); for rank~$\geq 2$, the multiple Casimir operators
+interact to produce a deeper recurrence whose polynomial coefficients
+may ``linearize'' (become constant) due to cancellations among the
+Casimir eigenvalues on different weight spaces.
+
+\subsection{Updated frontier targets}
+\label{subsec:updated-frontier}
+
+Based on the computational verification, we refine the obstruction analysis
+for the near-term targets of \S\ref{sec:open-problems}.
+
+\begin{enumerate}[label=\textbf{NF-\arabic*$'$.}, leftmargin=3em]
+\item \emph{$\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))
+\stackrel{?}{=} 1352$.}
+The chiral bracket differential at degree~$4 \to 3$ has been verified
+to be surjective (rank~$1024 = \dim \bar{B}^3$).
+This means $\dim \ker(d^{4 \to 3}) = 24576 - 1024 = 23552$.
+The value $H^4 = 1352$ would then require
+$\dim \operatorname{im}(d^{5 \to 4}) = 23552 - 1352 = 22200$.
+The degree-$5$ chain group has dimension
+$\bar{B}^5 = 8^5 \cdot 4! = 786432$.
+The rank computation of the $786432 \times 24576$ differential matrix
+is the bottleneck.  Over $\mathbb{F}_p$ for a suitable prime $p > 3$,
+this requires $\sim 786432 \times 24576 \approx 1.93 \times 10^{10}$
+field operations, feasible on modern hardware in hours.
+
+\item \emph{$\dim H^5(\barBgeom(\mathcal{W}_3^k))
+\stackrel{?}{=} 171$.}
+The $\mathcal{W}_3$ bar complex has generators $T$ (weight~$2$) and
+$W$ (weight~$3$), with the composite field $\Lambda = {:}TT{:} -
+\tfrac{3}{10}\partial^2 T$ appearing in the $W \times W$ OPE.
+The degree-$5$ chain group is smaller than for $\mathfrak{sl}_3$
+(only $2$ generators vs.~$8$), but the sixth-order pole in the
+$W \times W$ OPE introduces non-trivial complications.
+A full rank computation requires extending the \texttt{w3\_bar.py}
+module to degree~$5$.
+
+\item \emph{Alternative approach: PBW spectral sequence at degree~$4$.}
+Rather than computing the full chiral bar differential, one can
+attempt the PBW spectral sequence.  For $\widehat{\mathfrak{sl}}_3$,
+the $E_1^{p,0}$ page at total degree $p = 4$ requires enumerating
+the $\mathfrak{sl}_3$-invariants in
+$S^4(\mathfrak{sl}_3[t^{-1}]t^{-1})$, which involves the two Casimir
+invariants (degrees $2$ and $3$) and their products.  The space of
+quartic invariants has the form
+\[
+\operatorname{Inv}^4 = S^2(C_2) \oplus C_2 \cdot C_3 \oplus S^4_0,
+\]
+where $C_2$ is the quadratic Casimir, $C_3$ the cubic Casimir,
+and $S^4_0$ the ``new'' invariants at degree~$4$ (if any).
+Computing $\dim S^4_0$ and the $d_1$ differential on these invariants
+would yield $H^4$ without the large matrix rank computation.
+\end{enumerate}
+
+\subsection{Yangian $Y(\mathfrak{sl}_2)$ consistency verification}
+\label{subsec:yangian-h4-verification}
+\index{Yangian!bar cohomology!verification}
+\index{bar complex!generating function!Yangian}
+
+The conjectured Yangian bar generating function
+(Conjecture~\ref{conj:yangian-bar-gf})
+\begin{equation}\label{eq:yangian-gf-appendix}
+P_{Y(\mathfrak{sl}_2)}(x) = \frac{1 - 3x^2}{(1-x)(1-3x)}
+\end{equation}
+predicts $\dim H^n = 3^n + 1$ for $n \geq 1$, with depth-$2$ recurrence
+$a(n) = 4\,a(n{-}1) - 3\,a(n{-}2)$ for $n \geq 3$.  Seven independent
+consistency checks were performed computationally:
+
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Recurrence consistency.}
+The denominator $D(x) = (1-x)(1-3x) = 1 - 4x + 3x^2$
+and numerator $N(x) = 1 - 3x^2$ satisfy $D \cdot P = N$
+through degree~$10$.  The recurrence reproduces $H^1 = 4$,
+$H^2 = 10$, $H^3 = 28$ and predicts $H^4 = 82$.
+
+\item \emph{Koszul identity.}
+The formal product $H_A(t) \cdot H_{A^!}(-t) = 1$
+with $H_A(t) = \sum (3^n + 1)\,t^n$ yields
+Koszul dual dimensions
+\[
+H_{A^!}(t) = \frac{1 + 4t + 3t^2}{1 - 3t^2},
+\]
+with coefficients $1, 4, 6, 12, 18, 36, 54, 108, \ldots$ ---
+positive integers through degree~$10$.  The closed form
+$(A^!)_{2k} = 2 \cdot 3^k$, $(A^!)_{2k+1} = 4 \cdot 3^k$
+is consistent with the representation theory of
+$U_q(\mathfrak{sl}_2)$, the conjectured $E_1$-Koszul dual.
+
+\item \emph{K\"unneth decomposition.}
+The embedding $\mathfrak{gl}_2 = \mathfrak{sl}_2 \times
+\mathfrak{gl}_1 \hookrightarrow Y(\mathfrak{sl}_2)$
+gives a K\"unneth lower bound $H^n(\mathfrak{gl}_2) = \sum_{i+j=n}
+R(i+3)\,p(j-2)$, where $R$ are Riordan numbers and $p$
+partition numbers.  This matches $H^n(Y(\mathfrak{sl}_2))$
+at degrees $n \leq 2$ (Serre correction zero) and underestimates
+by $3, 20, 87$ at degrees $3, 4, 5$ respectively.  The Serre
+corrections are the contribution of the Yangian's additional
+(RTT-type) relations beyond the Lie algebra structure.
+
+\item \emph{Rank cascade.}
+With $4$ generators (RTT matrix entries), the chain groups
+$\dim \bar{B}^n = 4^n \cdot (n-1)!$ give chain dimensions
+$4, 16, 128, 1536, 24576$ and differential ranks
+$0, 0, 6, 94, 1360$ (all non-negative and bounded above by
+$\min(\dim \bar{B}^{n-1}, \dim \bar{B}^n)$).
+
+\item \emph{Growth rate.}
+The ratio $a(n)/a(n{-}1)$ converges to $3 = \dim\mathfrak{sl}_2$,
+confirming that the growth rate saturates the general bound
+$\dim\mathfrak{g}$ (Corollary~\ref{cor:growth-rate-dimg}).
+
+\item \emph{Denominator factorization.}
+$D(x) = (1-x)(1-3x)$ factors linearly over $\mathbb{Q}$
+with roots $x = 1$ (from the $\mathfrak{gl}_1$ center)
+and $x = 1/3$ (from the $\mathfrak{sl}_2$ factor),
+consistent with the partial fraction decomposition
+$P = -1 + 1/(1-x) + 1/(1-3x)$.
+
+\item \emph{Euler characteristic.}
+The evaluation $P(-1) = (1-3)/(2 \cdot 4) = -1/4$ gives a
+formal Euler characteristic compatible with the alternating
+dimension count.
+\end{enumerate}
+
+\noindent
+All seven checks pass.  The conjectured value $H^4 = 82$
+is \emph{strongly supported} by the consistency evidence,
+but --- as with the $\mathfrak{sl}_3$ value $H^4 = 1352$ ---
+not independently verified by direct chain-level computation.
+The principal obstruction is the curvature differential
+(double-pole OPE contributions), which is not yet implemented
+for $E_1$-chiral algebras.
+
+\emph{Distinction from $\widehat{\mathfrak{sl}}_3$.}
+NF-3 is more accessible than NF-1 in two respects:
+the chain groups are smaller ($\dim \bar{B}^4 = 1536$
+vs.\ $24576$), and the $4$ RTT generators have a more
+structured relation space than the $8$ adjoint generators
+of $\mathfrak{sl}_3$.  However, the Yangian's non-commutative
+($E_1$-chiral) structure means the bar differential includes
+spectral parameter dependence absent in the KM case.
+
+
+\subsection{$\mathcal{W}_3$ consistency verification (NF-2: $H^5 = 171$)}
+\label{subsec:w3-h5-verification}
+
+The $\mathcal{W}_3$ algebra has two strong generators $T$ (weight~$2$)
+and $W$ (weight~$3$) and conjectured bar cohomology generating function
+(Conjecture~\ref{conj:w3-bar-gf}):
+\[
+  P(x) = \frac{x(2 - 3x)}{(1-x)(1 - 3x - x^2)}, \qquad
+  D(x) = 1 - 4x + 2x^2 + x^3.
+\]
+Known values: $H^1 = 2$, $H^2 = 5$, $H^3 = 16$, $H^4 = 52$.
+The GF predicts $H^5 = 171$.
+
+Seven independent consistency checks support this value:
+
+\begin{enumerate}
+\item \textbf{Recurrence consistency.}
+  The relation $D(x) \cdot P(x) = N(x) = 2x - 3x^2$ gives
+  the recurrence $a_k = 4a_{k-1} - 2a_{k-2} - a_{k-3}$
+  for $k \ge 4$.  Applied to
+  $a_1 = 2, a_2 = 5, a_3 = 16, a_4 = 52$,
+  this yields $a_5 = 4 \cdot 52 - 2 \cdot 16 - 5 = 171$.
+
+\item \textbf{Numerator verification.}
+  The identity $D(x) \cdot P(x) = N(x)$ is verified through
+  degree~$8$: the product $D \cdot P$ vanishes at $x^k$ for
+  all $k > 2$, matching $N_k = 0$.
+
+\item \textbf{Denominator factorisation.}
+  $D(x) = (1-x)(1-3x-x^2)$.  The roots of $1-3x-x^2 = 0$
+  are $x = (-3 \pm \sqrt{13})/2$, giving dominant growth rate
+  $(3 + \sqrt{13})/2 \approx 3.303$.
+
+\item \textbf{Growth rate.}
+  The ratios $a_n / a_{n-1}$ converge to
+  $(3 + \sqrt{13})/2$: values $2.5, 3.2, 3.25, 3.288$
+  approach the limit from below.
+
+\item \textbf{Drinfeld--Sokolov discriminant invariance.}
+  The denominators of both the $\widehat{\mathfrak{sl}}_3$ and
+  $\mathcal{W}_3$ bar GFs share the quadratic factor
+  $1-3x-x^2$ with discriminant~$\Delta = 13$:
+  \[
+    D_{\mathfrak{sl}_3}(x) = (1-8x)(1-3x-x^2), \qquad
+    D_{\mathcal{W}_3}(x) = (1-x)(1-3x-x^2).
+  \]
+  This shared discriminant is a DS invariant:
+  $\mathcal{W}_3 = \mathrm{DS}(\widehat{\mathfrak{sl}}_3)$
+  at the principal orbit, and the shared factor encodes
+  the universal chiral correction from double Wick
+  contractions.  The non-shared factors
+  $(1-8x)$ and $(1-x)$ encode $\dim(\mathfrak{sl}_3) = 8$
+  and the single $\mathcal{W}$-algebra Cartan direction,
+  respectively.
+
+\item \textbf{Virasoro subalgebra bound.}
+  $\mathcal{W}_3 \supset \mathrm{Vir}$ (via~$T$), so
+  $H^n(\bar{B}(\mathcal{W}_3)) \ge H^n(\bar{B}(\mathrm{Vir}))$.
+  Verified: $2 \ge 1, \; 5 \ge 2, \; 16 \ge 5, \;
+  52 \ge 12, \; 171 \ge 30$.
+
+\item \textbf{Anti-Koszul check.}
+  The standard Koszul dual Hilbert series
+  $f_{\mathcal{A}^!}(t) = 1/f_{\mathcal{A}}(-t)$ has
+  coefficients $1, 2, -1, 4, -7, \ldots$
+  The appearance of $h_2 = -1 < 0$ confirms that
+  $\mathcal{W}_3$ is \emph{not} classically Koszul,
+  as expected from the sixth-order pole $W_{(5)}W = c/3$.
+  (A classically Koszul algebra would give all-positive
+  dual dimensions.)
+\end{enumerate}
+
+\noindent
+All seven checks pass ($\mathtt{w3\_h5\_verification.py}$, 22 tests).
+The conjectured value $H^5 = 171$ is strongly supported.
+The principal obstruction to direct chain-level verification is the
+degree-5 bar complex, where the $(n+1)$-fold tensor products of the
+$\mathcal{W}_3$ vacuum module require the full composite-field OPE
+including $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$.
+
 \section{Summary of OEIS cross-references}
 \label{sec:oeis}
 
@@ -576,7 +1053,7 @@ A132045 & $2^n - n + 1$ & 2,3,6,13,28,59 & $bc$ ghost bar cohomology \\
 \medskip
 
 \noindent
-The sequence $\dim(\mathcal{W}_3^!)_n = 2, 5, 16, 52, \ldots$ does not appear in OEIS as of this writing.  If the conjectured recurrence $a(n) = 3a(n-1) + a(n-2) - 1$ is correct, the sequence continues $171, 564, 1862, 6149, \ldots$ and would be a new entry.  Similarly, the $\widehat{\mathfrak{sl}}_3$ sequence $8, 36, 204, \ldots$ (if confirmed through higher degrees) would be new.
+The sequence $\dim H^n(\bar{B}(\mathcal{W}_3)) = 2, 5, 16, 52, \ldots$ does not appear in OEIS as of this writing.  The conjectured recurrence $a_k = 4a_{k-1} - 2a_{k-2} - a_{k-3}$ (from the rational GF $P(x) = x(2-3x)/((1-x)(1-3x-x^2))$; see \S\ref{subsec:w3-h5-verification}) gives $171, 564, 1862, 6149, \ldots$; this would be a new entry.  Similarly, the $\widehat{\mathfrak{sl}}_3$ sequence $8, 36, 204, \ldots$ (if confirmed through higher degrees) would be new.
 
 \medskip
 

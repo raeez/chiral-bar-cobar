@@ -43,7 +43,9 @@ class TestKnownSequences:
 
 class TestFindRationalGF:
     def test_virasoro_rational_gf(self):
-        """Virasoro bar dims are rational: P(x) = x(1-2x-x^2)/(1-4x+2x^2+4x^3)."""
+        """With 6 data points, Virasoro admits a spurious rational fit (depth-3).
+        This fit is coincidental (fails at degree 9) but predictions through
+        degree 8 happen to be correct.  See TestVirasoroNearRationality."""
         dims = bar_dims_virasoro(8)
         result = find_rational_gf(dims[:6])
         assert result is not None
@@ -152,6 +154,22 @@ class TestVerifyConjecturedGF:
         assert result["predictions"][1] == dims[6]  # 196
         assert result["predictions"][2] == dims[7]  # 512
 
+    def test_yangian_conjectured_gf(self):
+        """Y(sl₂) conjectured GF: P̃(x) = 2x(2-3x)/((1-x)(1-3x)).
+
+        D(x) = (1-x)(1-3x) = 1 - 4x + 3x²
+        N(x) = 4x - 6x²
+        Known: [4, 10, 28]. Predicted a_4 = 82.
+        """
+        result = verify_conjectured_gf(
+            [4, 10, 28],
+            num_coeffs=[4, -6],
+            den_coeffs=[-4, 3],
+            n_predict=3,
+        )
+        assert result["matches"] is True
+        assert result["predictions"][0] == 82
+
     def test_wrong_gf_detected(self):
         """A wrong conjectured GF should be detected."""
         result = verify_conjectured_gf(
@@ -200,3 +218,53 @@ class TestPredictNextCoefficient:
         pred_vir = predict_next_coefficient(dims_vir[:6])
         assert pred_sl2 != 0, "sl2 prediction should not be 0"
         assert pred_vir != 0, "Virasoro prediction should not be 0"
+
+
+# ---------------------------------------------------------------------------
+# Regression: Virasoro near-rationality
+# ---------------------------------------------------------------------------
+
+class TestVirasoroNearRationality:
+    """Virasoro bar dims satisfy a depth-3 constant-coefficient recurrence
+    a_k = 4a_{k-1} - 2a_{k-2} - 4a_{k-3} through degree 8, but FAIL at
+    degree 9 (predicts 1352, actual 1353).  The GF is algebraic of degree 2
+    (Motzkin differences), NOT rational.  This is a non-trivial numerical
+    coincidence that must not be mistaken for genuine rationality."""
+
+    def test_spurious_recurrence_fails_at_degree9(self):
+        """The depth-3 recurrence fails at degree 9."""
+        dims = bar_dims_virasoro(10)  # through degree 10
+        # Recurrence: a_k = 4*a_{k-1} - 2*a_{k-2} - 4*a_{k-3}
+        # Verify it works through degree 8
+        for k in range(3, 7):  # indices 3..6 = degrees 4..7
+            pred = 4 * dims[k - 1] - 2 * dims[k - 2] - 4 * dims[k - 3]
+            assert pred == dims[k], f"Recurrence should hold at degree {k+1}"
+        # But fails at degree 9 (index 8)
+        pred_9 = 4 * dims[7] - 2 * dims[6] - 4 * dims[5]
+        assert pred_9 != dims[8], f"Recurrence should FAIL at degree 9"
+        assert pred_9 == 1352 and dims[8] == 1353
+
+    def test_rational_gf_rejected_with_enough_data(self):
+        """With 10 data points, find_rational_gf should reject the spurious fit."""
+        dims = bar_dims_virasoro(10)
+        result = find_rational_gf(dims)
+        # The depth-3 fit is rejected because verification fails at degree 9.
+        # No other rational fit exists for Virasoro (it's algebraic).
+        assert result is None
+
+    def test_holonomic_works_for_virasoro(self):
+        """Virasoro satisfies holonomic recurrence (polynomial coefficients in n).
+        Need 10+ data points so the holonomic finder distinguishes the true
+        (polynomial-coefficient) recurrence from the spurious rational one."""
+        dims = bar_dims_virasoro(12)
+        result = find_holonomic_recurrence(dims[:10], a0=0)
+        assert result is not None
+        # Prediction should match the known degree 11 value
+        assert result["next_predicted"] == dims[10]
+
+    def test_predict_with_10_points_still_works(self):
+        """predict_next_coefficient should still work with 10+ data points
+        (falls through to holonomic after rational is rejected)."""
+        dims = bar_dims_virasoro(11)
+        pred = predict_next_coefficient(dims[:10])
+        assert pred == dims[10]

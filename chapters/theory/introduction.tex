@@ -86,6 +86,51 @@ of Chapter~\ref{ch:fourier-seed} exhibit this identification for the
 Heisenberg and Kac--Moody families before the general theory.
 \end{remark}
 
+\begin{remark}[The nilpotence-periodicity correspondence]
+\label{rem:nilpotence-periodicity-intro}
+\index{nilpotence-periodicity correspondence}
+The logarithmic form~$\eta_{12} = d\log(z_1 - z_2)$ is not an
+incidental choice of kernel: the bar construction is the
+\emph{categorical logarithm} for chiral algebras, mapping
+multiplicative structure (the OPE) to additive/nilpotent structure
+(the bar differential with $\dzero^2 = 0$).  The cobar construction
+is the corresponding \emph{exponential}, reconstructing the algebra
+from the nilpotent data.  The structural principle governing the
+entire theory is:
+\begin{center}
+\emph{Nilpotence is the logarithm of periodicity.}
+\end{center}
+At genus~$0$, the logarithm~$\eta_{12}$ is single-valued
+on~$C_2(\mathbb{P}^1)$, the bar differential is nilpotent
+($\dzero^2 = 0$), and the monodromy is trivial.  At
+genus~$g \geq 1$, the logarithm $d\log E(z_1,z_2)$ acquires
+monodromy around the $B$-cycles of~$\Sigma_g$, the fiberwise bar
+differential fails nilpotence by
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, and the curvature
+$\kappa(\cA)$ is the \emph{infinitesimal generator} of this
+monodromy---the residue at the branch point of the logarithm.
+This is the chiral Riemann--Hilbert correspondence: the nilpotent
+datum $\kappa$ determines the periodic datum (the monodromy of the
+bar family over~$\overline{\mathcal{M}}_g$) via exponentiation.
+
+The four theorems are four aspects of this correspondence:
+Theorem~A asserts that the categorical logarithm and exponential
+exist; Theorem~B that they are mutually inverse on the
+convergence domain (the Koszul locus); Theorem~C that the failure
+off the convergence domain decomposes into complementary
+Lagrangians (the branch structure of the logarithm); and
+Theorem~D that the leading coefficient~$\kappa(\cA)$ of the
+logarithm determines the full scalar package.  The modular
+periodicity profile~$\Pi(\cA)$ of
+Remark~\ref{rem:periodicity-triple} is the global/exponential
+counterpart of the infinitesimal/nilpotent characteristic
+$\kappa(\cA)$: the period~$N$ is the smallest positive integer
+for which $\exp(2\pi i N \kappa / 24) = 1$, recovering the
+T-matrix periodicity formula of
+Conjecture~\ref{thm:modular-periodicity-minimal} as a direct
+consequence of the nilpotence-periodicity correspondence.
+\end{remark}
+
 Now transplant the construction to genus $g \geq 1$.  On a Riemann
 surface $\Sigma_g$, the form $\eta_{12} = d\log(z_1 - z_2)$ is
 not well-defined: the function $z_1 - z_2$ has no global meaning.
@@ -215,7 +260,7 @@ are four aspects of this single structure.
 
 In addition to its Koszul dual~$\mathcal{A}^!$, such an object
 carries a \emph{characteristic hierarchy}: a proved scalar package, a
-separately proved spectral layer, and a conjectural full homotopy
+separately proved spectral layer, and a proved full homotopy
 completion encoded by a universal Maurer--Cartan class
 
 \begin{equation}\label{eq:universal-MC}
@@ -232,8 +277,8 @@ The scalar shadow of this package is the sequence of obstruction
 coefficients $\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot
 \lambda_g$ (Theorem~\ref{thm:genus-universality}).  The genus-$1$
 coefficient $\kappa(\mathcal{A})$ is not the fundamental concept; it is
-the first characteristic number of the (conjectural) universal class
-$\Theta_{\mathcal{A}}$.
+the first characteristic number of the universal class
+$\Theta_{\mathcal{A}}$ (Theorem~\ref{thm:mc2-full-resolution}).
 
 The four theorems:
 \begin{itemize}
@@ -307,10 +352,26 @@ The four theorems:
   separately proved non-scalar invariant, depending on the
   full quadratic OPE data.
 
-  The non-scalar completion via a universal
-  Maurer--Cartan class $\Theta_{\cA}$ is conjectural
+  The universal Maurer--Cartan class $\Theta_{\cA}$ is proved
   (Theorem~\ref{conj:universal-theta},
-  Definition~\ref{def:full-modular-package}).
+  Definition~\ref{def:full-modular-package}) and is
+  scalar-saturated: $\Theta_{\cA}^{\min} = \kappa(\cA) \cdot
+  \eta \otimes \Lambda$
+  (Corollary~\ref{cor:scalar-saturation}).
+  The saturation equivalence criterion
+  (Proposition~\ref{prop:saturation-equivalence}) and
+  functorial stability
+  (Proposition~\ref{prop:saturation-functorial}) reduce the
+  characteristic quintuple to an effective quadruple for
+  the entire standard Lie-theoretic landscape
+  (Corollary~\ref{cor:effective-quadruple}).
+  At generic level, cyclic rigidity
+  (Theorem~\ref{thm:cyclic-rigidity-generic}) proves the
+  quadruple reduction for \emph{all} vertex algebras with
+  simple symmetry via Whitehead's lemma and
+  Kazhdan--Lusztig semisimplicity.
+  Conjecture~\ref{conj:scalar-saturation-universality}
+  extends this to admissible levels.
 \end{itemize}
 
 \begin{remark}[Physical meaning of the four theorems]
@@ -366,7 +427,7 @@ anomaly polynomial; $\kappa = 0$ is anomaly-free string
 propagation at all genera.
 \end{remark}
 
-\begin{remark}[Construction versus resolution]
+\begin{remark}[Construction versus resolution: the convergence radius of the logarithm]
 \label{rem:construction-vs-resolution-intro}
 \label{rem:constitutional-reading-rule}
 \index{construction versus resolution}
@@ -378,13 +439,29 @@ $\Omega_X(\bar{B}_X(\cA)) \to \cA$ is a quasi-isomorphism only when
 the canonical twisting morphism is Koszul
 (Definition~\ref{def:chiral-koszul-morphism}).  Thus Theorem~A
 (duality) holds for all augmented chiral algebras, while Theorem~B
-(inversion) holds on the Koszul locus.  At higher genus, the curved
-fiberwise differential $\dfib^{\,2} = \kappa \cdot \omega_g$
-defines a family over~$\overline{\mathcal{M}}_g$ whose
-characteristic invariants---scalar ($\kappa$), spectral
-($\Delta_\cA$), and the conjectural Maurer--Cartan
-class~$\Theta_\cA$---form a hierarchy of increasing refinement
-(Remark~\ref{rem:characteristic-hierarchy}).
+(inversion) holds on the Koszul locus.
+
+In the language of Remark~\ref{rem:nilpotence-periodicity}, the
+Koszul locus is the \emph{convergence radius of the categorical
+logarithm}: the bar complex ``converges'' (the PBW spectral sequence
+degenerates at~$E_2$) precisely where the logarithm faithfully
+encodes the algebra.  Off this locus, the logarithm ``diverges'' in
+the ordinary derived category; the coderived category of
+Positselski~\cite{Positselski11} provides the analytic continuation
+that extends the bar-cobar correspondence past the convergence radius.
+At higher genus with $\kappa \neq 0$, the curved fiberwise differential
+$\dfib^{\,2} = \kappa \cdot \omega_g$ forces the logarithm into its
+multi-valued regime, and the coderived framework becomes essential:
+the underlying cochain complex of the curved bar complex is acyclic,
+but the coderived category retains the full homotopical content---just
+as the logarithm function is trivial on a simply-connected domain but
+carries non-trivial monodromy data on a multiply-connected one.
+
+The characteristic invariants---scalar ($\kappa$), spectral
+($\Delta_\cA$), and Maurer--Cartan class~$\Theta_\cA$---form a
+hierarchy of increasing refinement
+(Remark~\ref{rem:characteristic-hierarchy}), measuring the
+logarithm at successively finer levels.
 \end{remark}
 
 \noindent
@@ -426,7 +503,7 @@ universal genus generating function
 (Theorem~\ref{thm:universal-generating-function}), and the
 $\hat{A}$-genus appearance in genus expansions.
 
-Among the shadows of the conjectural~$\Theta_{\mathcal{A}}$, the \emph{spectral
+Among the shadows of~$\Theta_{\mathcal{A}}$, the \emph{spectral
 discriminant}
 \[
 \Delta_{\mathcal{A}}(x)
@@ -451,15 +528,14 @@ The full characteristic package of a modular Koszul chiral algebra is
 (\Theta_{\cA}, \kappa(\cA), \Delta_{\cA}, \Pi_{\cA}, \mathcal{H}_{\cA}),
 \]
 a hierarchy of increasing refinement: the scalar $\kappa(\cA)$,
-the spectral discriminant $\Delta_{\cA}(x)$, and the conjectural
+the spectral discriminant $\Delta_{\cA}(x)$, and the
 universal class $\Theta_{\cA}$
 \textup{(}Definition~\ref{def:full-modular-package}\textup{)}.
 
-The principal open problem is the construction of the cyclic
-$L_\infty$ deformation algebra $\Defcyc(\cA)$ and the
-Maurer--Cartan element $\Theta_\cA$ within it
-(Conjecture~\ref{conj:master-theta}).  This reduces to three
-constructions: the intrinsic cyclic model, the geometric completed
+The universal class $\Theta_\cA$ is constructed by
+Theorem~\ref{thm:mc2-full-resolution}, resolving the original
+Conjecture~\ref{conj:master-theta} (MC2) through three inputs:
+the intrinsic cyclic model, the geometric completed
 tensor product with clutching, and a one-channel normalization in the
 simple-Lie case
 \textup{(}Proposition~\ref{prop:mc2-reduction-principle},
@@ -710,6 +786,22 @@ listed in order of increasing generality:
 When a theorem's hypotheses place it in a specific regime, the regime
 tag appears in the statement.  Results without an explicit tag hold
 in all regimes where the hypotheses are satisfied.
+
+\smallskip\noindent
+\textbf{Regime hierarchy as convergence of the categorical logarithm.}
+In the language of Remark~\ref{rem:nilpotence-periodicity}, the four
+regimes correspond to increasing levels of non-trivial monodromy of the
+categorical logarithm (the bar construction).  In the quadratic regime,
+the logarithm is single-valued: $\dzero^2 = 0$ and the monodromy is
+trivial.  In the curved-central regime, the logarithm acquires
+monodromy controlled by a single scalar~$\kappa$: $\dfib^{\,2} =
+\kappa \cdot \omega_g$, but the corrected logarithm $\Dg{g}$ is
+single-valued on the universal cover.  In the filtered-complete regime,
+the logarithm converges only after filtration-completion: the PBW
+spectral sequence requires multiple pages, and the convergence domain
+(Koszul locus) is reached in the associated graded.  In the
+programmatic regime, the full monodromy structure (including
+categorical and coderived data) is not yet established.
 \end{convention}
 
 \medskip
@@ -722,6 +814,9 @@ in all regimes where the hypotheses are satisfied.
 \index{modular homotopy theory|textbf}
 \index{total space|textbf}
 
+The nilpotence-periodicity correspondence of
+Remark~\ref{rem:nilpotence-periodicity} becomes geometric in the total
+space of the universal configuration fibration over moduli.
 Consider the universal configuration space over moduli:
 \begin{equation}\label{eq:total-fibration-intro}
 \pi \colon \overline{C}_n(\mathcal{C}_g) \;\longrightarrow\;
