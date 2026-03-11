@@ -14673,6 +14673,29 @@ which means the coset must admit a continuous deformation that
 is \emph{not} induced by varying either ambient level alone.
 No such deformation is known.
 
+The reduction is visible at the level of central charges.
+For the GKO coset ($\mathfrak{g} = \mathfrak{g}' = \mathfrak{h}$),
+the Jacobian $\partial c_{\cA}/\partial(k_1, k_2)$ has
+\[
+\frac{\partial c_{\cA}}{\partial k_i}
+= \dim\mathfrak{g} \cdot h^\vee
+\Bigl[\frac{1}{(k_i + h^\vee)^2}
+- \frac{1}{(k_1 + k_2 + h^\vee)^2}\Bigr],
+\qquad i = 1, 2,
+\]
+which has rank~$1$ at all generic $(k_1, k_2)$ (both partials
+are nonzero but neither vanishes independently).
+The level set $\{(k_1', k_2') : c_{\cA}(k_1', k_2') = c_0\}$
+is a one-dimensional curve, and the VOA isomorphism type
+depends only on~$c_0$.  For non-GKO embeddings
+$\mathfrak{h} \hookrightarrow \mathfrak{g} \oplus \mathfrak{g}'$
+with Dynkin indices $j_1, j_2$, the Jacobian is
+$\partial c/\partial k_1
+= \dim\mathfrak{g}\cdot h^\vee_{\mathfrak{g}} / (k_1 + h^\vee_{\mathfrak{g}})^2
+- j_1 \dim\mathfrak{h} \cdot h^\vee_{\mathfrak{h}} / (k_3 + h^\vee_{\mathfrak{h}})^2$
+(with $k_3 = j_1 k_1 + j_2 k_2$), and remains rank~$1$ in all
+verified instances.
+
 \emph{Candidate~2: VOAs from 4D $\mathcal{N}=2$ gauge theories.}
 The Beem--Lemos--Liendo--Peelaers--Rastelli--van~Rees construction
 (Construction~\ref{constr:4d2d}) produces a vertex algebra
@@ -14718,22 +14741,50 @@ where the conformal manifold acts trivially on the chiral ring.
 Whether this rigidity extends to all Schur operators is
 an open problem in 4D physics.
 
-\emph{Candidate~3: Exotic vertex algebras.}
-Vertex algebras not of Lie-theoretic origin
-(i.e., not obtainable from affine Kac--Moody, DS reduction,
-coset, orbifold, or free-field constructions) are rare.
-Known examples include:
-(a)~the triplet algebras $\mathcal{W}(p)$ (logarithmic
-extensions of Virasoro minimal models, one-parameter in~$p$);
-(b)~permutation orbifolds $\cA^{\otimes n} / S_n$ (multi-scalar,
-not genuinely non-scalar);
-(c)~the Mathieu moonshine VOA (a sporadic construction, not
-known to admit continuous deformations).
-In each case, either the deformation space is at most
-one-dimensional or the algebra decomposes as a product.
+\emph{Candidate~3: Admissible levels and extensions.}
+The Whitehead--Kazhdan--Lusztig argument
+(Theorem~\ref{thm:cyclic-rigidity-generic}) fails at admissible
+levels because the module category is non-semisimple.
+A careful analysis of this frontier reveals a three-stratum
+structure:
+\begin{itemize}
+\item \emph{Pure Kac--Moody} at admissible levels:
+  $H^2_{\mathrm{cyc,prim}} = 0$ \emph{trivially}, because
+  the only strong generators are currents~$J^a$ and there are
+  no primary--primary pairs.  The Whitehead decomposition
+  (Stage~1 alone) gives $\dim H^2_{\mathrm{cyc}} = 1$ at
+  \emph{all} non-critical levels, without invoking
+  KL~semisimplicity.
+
+\item \emph{$\mathcal{W}$-algebras}
+  $\mathcal{W}^k(\mathfrak{g}, f)$ at admissible levels:
+  scalar saturation holds via the \emph{BRST rigidity} argument
+  (Proposition~\ref{prop:nonprincipal-scalar-saturation}).
+  The quantum DS~reduction functor produces a unique vertex
+  algebra structure at every level $k \neq -h^\vee$, including
+  admissible~$k$.  The deformation space remains one-dimensional
+  (the central charge direction), so
+  $\dim H^2_{\mathrm{cyc}} = 1$.
+
+\item \emph{Simple current extensions} at admissible levels:
+  these are the genuine frontier.  Such extensions have primary
+  strong generators beyond the currents, and are not
+  directly produced by DS reduction.  Neither the trivial
+  Kac--Moody argument nor the BRST argument applies.
+  Examples include the triplet algebras~$\mathcal{W}(p)$
+  (logarithmic extensions of Virasoro minimal models) and
+  certain extended affine VOAs.
+  In all known instances, the continuous deformation space
+  is still one-dimensional, but no uniform proof exists.
+\end{itemize}
+Thus the frontier of
+Conjecture~\ref{conj:scalar-saturation-universality} is not
+``admissible levels'' per se, but rather the specific class of
+vertex algebras at admissible levels that are obtained by
+simple current extension rather than DS reduction.
 
 The absence of genuinely non-scalar examples across all three
-classes is strong evidence for a structural principle:
+candidate classes is strong evidence for a structural principle:
 \textbf{for all vertex algebras of Lie-theoretic origin, the
 universal MC element carries no information beyond the scalar
 parameters.  The non-scalar characteristic data of the modular
@@ -15527,6 +15578,131 @@ minimal-model level, $\Theta_{\cA}^{\min} = \kappa(\cA) \cdot
 determinant line bundle $\mathcal{L}_{\cA}$, its first Chern class
 $\kappa \cdot \lambda$, and the GRR genus expansion exhaust the
 information in~$\Theta_{\cA}$.
+\end{remark}
+
+\begin{remark}[Structural origin of scalar saturation
+and the non-scalar hierarchy]
+\label{rem:structural-saturation}
+\index{scalar saturation!structural origin}
+\index{modular characteristic!K-theoretic hierarchy}
+\index{determinant line bundle!and scalar saturation}
+The full modular characteristic package
+$\mathcal{C}_{\cA} = (\Theta, \kappa, \Delta, \Pi, \mathcal{H})$
+(Definition~\ref{def:full-modular-package}) draws on two
+geometrically distinct sources of variation, which explain both
+the scalar saturation of~$\Theta_{\cA}$ and the non-scalar content
+of~$\Delta_{\cA}$ and~$\Pi_{\cA}$.
+
+\smallskip\noindent
+\emph{(a) The virtual bar family.}
+The derived pushforward of the genus-$g$ bar complex defines a
+virtual vector bundle
+\begin{equation}\label{eq:virtual-bar-family}
+\mathcal{V}_{\cA}
+\;:=\;
+[R\pi_{g*} \bar{B}^{(g)}(\cA)]
+\;\in\; K_0(\overline{\mathcal{M}}_g).
+\end{equation}
+Its determinant line
+$\mathcal{L}_{\cA} = \det \mathcal{V}_{\cA}$
+carries $c_1(\mathcal{L}_{\cA}) = \kappa(\cA) \cdot \lambda$
+(Remark~\ref{rem:kappa-first-chern}).  The MC
+class~$\Theta_{\cA}$ is a section of a twist of this
+determinant line: it lives in
+$\operatorname{MC}(\Defcyc(\cA) \widehat{\otimes} \Gmod)$,
+where the degree-$2$ deformation cohomology
+$H^2_{\mathrm{cyc}}(\cA,\cA) = \mathbb{C}\!\cdot\!\eta$
+is the fiber of a \emph{rank-one} object.  Scalar saturation
+(Corollary~\ref{cor:scalar-saturation}) is the statement
+that a rank-one object carries exactly one characteristic
+number: its first Chern class~$\kappa$.
+
+\smallskip\noindent
+\emph{(b) Two directions of variation.}
+The non-scalar invariants arise from a
+different geometric source.
+\begin{itemize}
+\item \emph{Genus direction}
+  (variation over~$\overline{\mathcal{M}}_g$):
+  produces the MC class~$\Theta_{\cA}$, the obstruction
+  classes~$o_g(\cA)$, and the genus expansion.
+  All of this data is controlled by the determinant line
+  $\mathcal{L}_{\cA} = \det\mathcal{V}_{\cA}$,
+  which is rank~$1$.  Hence
+  $\Theta = \kappa \cdot \eta \otimes \Lambda$
+  (scalar-saturated).
+\item \emph{Level direction}
+  (variation of $k \in \mathbb{C} \setminus\{-h^\vee\}$):
+  as the level varies, the bar differential deforms and
+  the bar cohomology $H^*(\bar{B}(\cA_k))$ acquires a
+  \emph{monodromy operator}~$T$ from analytic continuation
+  around the critical level.
+  The spectral discriminant
+  $\Delta_{\cA}(x) = \det(1 - xT)$
+  (Remark~\ref{rem:characteristic-hierarchy}(2))
+  is the characteristic polynomial of this monodromy,
+  encoding \emph{all} eigenvalues of~$T$---not merely
+  their sum $\operatorname{tr}(T)$, which would give only the
+  scalar invariant.
+  The periodicity profile
+  $\Pi_{\cA} = (M_{\cA}, Q_{\cA}, G_{\cA})$
+  records the multiplicative structure of these eigenvalues
+  (Remark~\ref{rem:periodicity-triple}).
+\end{itemize}
+The genus direction sees
+$\det(\mathcal{V}_{\cA})$; the level direction
+sees~$\mathcal{V}_{\cA}$ itself.
+
+\smallskip\noindent
+\emph{(c) The $K$-theoretic hierarchy.}
+The three levels of the characteristic hierarchy
+(Remark~\ref{rem:characteristic-hierarchy}) correspond to
+three layers of $K$-theoretic data extracted
+from~$\mathcal{V}_{\cA}$:
+\begin{center}\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\emph{Level} & \emph{$K$-theoretic extraction}
+  & \emph{S-level shadow} \\[2pt]
+\hline
+\\[-6pt]
+L1\;\textup{(scalar)}
+  & $c_1(\det \mathcal{V})$
+    \textup{(}first Chern class, trace\textup{)}
+  & $\kappa(\cA)$ \\
+L2\;\textup{(spectral)}
+  & $c_*(\mathcal{V})$
+    \textup{(}full Chern polynomial, determinant\textup{)}
+  & $\Delta_{\cA}(x)$ \\
+L3\;\textup{(periodic)}
+  & $\operatorname{Hol}(\mathcal{V})$
+    \textup{(}holonomy, eigenvalue structure\textup{)}
+  & $\Pi_{\cA}$
+\end{tabular}
+\end{center}
+At level~L1, $\kappa = c_1(\det\mathcal{V})$ is the
+\emph{trace} of the monodromy
+($\operatorname{tr}(T) = \sum \lambda_i$).
+At level~L2,
+$\Delta(x) = \det(1-xT) = \sum_k (-1)^k e_k(T)\,x^k$
+records the full set of
+\emph{elementary symmetric functions} of the eigenvalues,
+equivalently, all Chern classes of~$\mathcal{V}$.
+At level~L3, the multiplicative orders and
+Galois structure of the eigenvalues give~$\Pi$.
+
+\smallskip\noindent
+Scalar saturation asserts that L1 determines
+the MC class~$\Theta$ completely.
+The non-scalar content of the package---the spectral
+discriminant~$\Delta$ and the periodicity
+profile~$\Pi$---resides at L2 and~L3, encoded in the
+higher-rank structure of~$\mathcal{V}_{\cA}$ that the
+determinant line does not see.
+A line bundle has one Chern class;
+a virtual bundle of rank~$r$ has~$r$ independent classes.
+The MC element is scalar \emph{because} it inhabits a
+line; the package is non-scalar \emph{because}
+the virtual bar family has higher rank.
 \end{remark}
 
 \begin{theorem}[Tautological line support;

@@ -7375,6 +7375,88 @@ The full chain $29 \to 7 \to 6 = 4 + 2$ matches every intermediate
 cardinality and every explicit element of the manuscript displays.
 \end{computation}
 
+\begin{proposition}[Explicit $W_4$ OPE structure constants;
+\ClaimStatusProvedElsewhere]
+\label{prop:w4-ds-ope-explicit}
+In the principal Drinfeld--Sokolov reduction
+$W_4 = W(\mathfrak{sl}_4, f_{\mathrm{prin}})$ with generators
+$T$ (spin~$2$), $W^{(3)}$ (spin~$3$), $W^{(4)}$ (spin~$4$)
+normalized so that
+$\langle W^{(s)}(z)\,W^{(s)}(0)\rangle = (c/s)\,z^{-2s}$,
+the four free stage-$4$ coefficients of
+Corollary~\textup{\ref{cor:winfty-ds-stage4-five-plus-zero}} are
+given by the following rational functions of the central charge~$c$:
+\begin{align}
+c_{334}^{\,2}
+&= \frac{42\,c^2(5c+22)}{(c+24)(7c+68)(3c+46)},
+\label{eq:c334-explicit}
+\\[4pt]
+c_{444}^{\,2}
+&= \frac{112\,c^2(2c-1)(3c+46)}{(c+24)(7c+68)(10c+197)(5c+3)},
+\label{eq:c444-explicit}
+\\[4pt]
+\mathsf{C}_{3,4;3;0,4}^{\,2}
+&= \tfrac{9}{16}\,c_{334}^{\,2},
+\label{eq:c343-explicit}
+\\[4pt]
+\mathsf{C}_{3,4;4;0,3}^{\,2}
+&= \tfrac{5}{7}\,c_{334}^{\,2}.
+\label{eq:c344-explicit}
+\end{align}
+The two residue-side predictions of
+Corollary~\textup{\ref{cor:winfty-ds-stage4-five-plus-zero}} are
+confirmed:
+\begin{equation}
+\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2,
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0.
+\label{eq:w4-predictions-verified}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The structure constants follow from the vertex-algebra Jacobi
+identity (Borcherds identity) applied to the three-generator $W_4$
+algebra.  Formula~\eqref{eq:c334-explicit} is the bootstrap result
+of Hornfeck~\cite{Hornfeck93}; formula~\eqref{eq:c444-explicit}
+then follows from the $(W^{(4)}, W^{(4)}, W^{(4)})$ Jacobi identity.
+The inter-coefficient relations~\eqref{eq:c343-explicit}
+and~\eqref{eq:c344-explicit} are metric-adjoint and Borcherds-identity
+consequences of~\eqref{eq:c334-explicit}, respectively; see
+Bouwknegt--Schoutens~\cite{Bouwknegt-Schoutens}
+and Blumenhagen \textit{et al.}~\cite{BEHFH96}.
+The universal $T$-coupling
+$\mathsf{C}_{4,4;2;0,6}=2$ follows from
+Proposition~\ref{prop:winfty-ds-self-t-coefficient}, and the mixed
+Virasoro vanishing
+$\mathsf{C}_{3,4;2;0,5}=0$ from
+Proposition~\ref{prop:winfty-ds-mixed-virasoro-ds-zero}.
+\end{proof}
+
+\begin{computation}[Full $W_4$ OPE coefficient extraction]
+\label{comp:w4-ds-ope-extraction}
+\index{MC4!W4 OPE coefficient extraction}
+The explicit structure constants of
+Proposition~\ref{prop:w4-ds-ope-explicit} have been verified
+computationally
+(\texttt{compute/lib/w4\_ds\_ope\_extraction.py}, $193$~tests):
+\begin{itemize}
+\item all four squared structure constants evaluated at levels
+  $k = 0, 1, 2, -2, -3$ (avoiding poles);
+\item inter-coefficient ratios
+  $\mathsf{C}_{3,4;3;0,4}^2/c_{334}^2 = 9/16$ and
+  $\mathsf{C}_{3,4;4;0,3}^2/c_{334}^2 = 5/7$ verified symbolically;
+\item Feigin--Frenkel duality $k \leftrightarrow -k-2h^\vee$
+  checked: $c(k) + c(-k-8) = 246$;
+\item unitarity positivity ($c_{334}^2 > 0$, $c_{444}^2 > 0$)
+  confirmed at all $\mathcal{W}(N, N{+}1)$ minimal models
+  for $4 \leq N \leq 19$;
+\item both falsifiable predictions
+  $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ and
+  $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ confirmed.
+\end{itemize}
+\end{computation}
+
 \subsection{Maurer--Cartan elements and deformation theory}
 \label{sec:maurer-cartan-curved}
 

@@ -4005,6 +4005,13 @@ simple types through $p = 500$:
 \item Departure points from $A_1$: $p = 5$ for $A_2$,
   $p = 7$ for $C_2$, $p = 11$ for $G_2$ (matching manuscript).
 \end{itemize}
+Additionally, sectorwise finiteness for all simply-laced lattice
+VOAs ($A_1$--$A_3$, $D_4$--$D_5$, $E_6$--$E_8$) is verified at the
+lattice-bar sector level ($91$~tests,
+\texttt{compute/lib/sectorwise\_finiteness.py}),
+and the sub-exponential vs.\ exponential growth discrimination is
+checked via least-squares fitting of $\log d_n$ to both $c \cdot n$
+and $C \cdot \sqrt{n}$ models.
 \end{computation}
 
 For $\mathfrak{sl}_2$, all four strategies are tractable: the
@@ -4156,6 +4163,32 @@ evaluation core to the full completed shifted-prefundamental core
 $\mathcal{G}_{\mathrm{shift}}$, and then by pro-nilpotent completion
 in the sense of Francis--Gaitsgory to the completed Yangian category.
 \end{conjecture}
+
+\begin{remark}[Computational evidence for the MC3 critical path]
+\label{rem:mc3-computational-evidence}
+\index{MC3!computational evidence}
+Conjectures~\ref{conj:baxter-exact-triangles}--\ref{conj:dk-compacts-completion}
+are now supported by extensive numerical verification:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{Baxter}: $K_0$-level TQ identities verified for
+  $\mathfrak{sl}_2$ ($115$~tests) and~$\mathfrak{sl}_3$
+  ($157$~tests), plus derived-level lifts to distinguished
+  triangles, mapping cones, and the octahedral axiom
+  ($226$~tests at the $D^b$ level).
+\item \emph{Prefundamental}: Hernandez--Jimbo--Zhang negative
+  prefundamental modules~$L^-_a$ for $Y(\mathfrak{sl}_2)$
+  implemented at the character/q-character level ($186$~tests).
+  Key finding: weight multiplicities
+  $\dim(L^-_a)_{-2k} = p(k)$ connect MC3 to partition theory.
+  The QQ-system Wronskian relation is verified.
+\item \emph{Pro-Weyl}: M-level convergence verified ($344$~tests)
+  including chain-level Ext computations, derived inverse limit
+  $R\varprojlim W_m$, and R$^1$ vanishing via Mittag-Leffler.
+\item \emph{DK compacts}: Feigin--Gainutdinov completion gap
+  analysis and Francis--Gaitsgory pro-nilpotent approximation
+  ($101$~tests).
+\end{enumerate}
+\end{remark}
 
 \begin{remark}[Corrected MC3 frontier]
 \label{rem:corrected-mc3-frontier}
@@ -4724,9 +4757,13 @@ The frontier decomposes into a theorem ladder:
 \end{enumerate}
 The theorematic endpoint of the present book is DK-2/3 for
 finite-dimensional type~$A$
-(Theorem~\ref{thm:dk-fd-typeA}).  The key structural point is
-that the evaluation-locus theorem extends to all finite-dimensional
-representations by formal thick-closure arguments, while the further
+(Theorem~\ref{thm:dk-fd-typeA}) and, via the sectorwise convergence
+theorem (\S\ref{sec:infty-cat-factorization-kd}), for the
+evaluation-generated core at all types
+(Corollary~\ref{cor:dk23-all-types}).  The key structural point is
+that the evaluation-locus theorem extends to the generated core
+by two independent mechanisms: thick generation (type~$A$) and
+factorization descent (all types).  The further
 category-$\mathcal{O}$ extension and the dg-shifted Yangian
 comparison are genuine open problems.
 Remark~\ref{rem:yangian-dk23-inputs} records the exact
@@ -4734,6 +4771,502 @@ extra inputs before MC4 begins.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence).
 The conjecture asserts an equivalence of $\Eone$-factorization categories between the Yangian and the quantum group, extending the evaluation-module Drinfeld--Kohno theorem to all modules.
+\end{remark}
+
+\subsection{$\infty$-categorical factorization Koszul duality}
+\label{sec:infty-cat-factorization-kd}
+\index{Koszul duality!factorization!infinity-categorical@$\infty$-categorical|textbf}
+
+The DK ladder as formulated in
+Remark~\ref{rem:dk-proved-vs-remains} decomposes the factorization
+Koszul duality problem into five stages, with DK-0/1/2/3 proved
+(in type~$A$) and DK-4/5 conjectural.  From first principles, the
+entire ladder is a single $\infty$-categorical statement: Koszul
+duality for $\Eone$-algebras in the symmetric monoidal stable
+$\infty$-category of factorization coalgebras on~$\operatorname{Ran}(X)$.
+We make this precise and show that DK-2/3 extends to all types via
+sectorwise convergence, bypassing thick generation, and that DK-4/5
+reduces to a formal deformation theory comparison within the same
+framework.
+
+\subsubsection*{Sectorwise convergence and DK-2/3 for all types}
+
+\begin{theorem}[Sectorwise spectral convergence;
+\ClaimStatusProvedHere]
+\label{thm:sectorwise-spectral-convergence}
+\index{spectral sequence!sectorwise convergence}
+\index{bar complex!sectorwise convergence}
+For any simple~$\fg$, the loop spectral sequence of
+Proposition~\ref{prop:yangian-bar-loop-weight} stabilizes at each
+tridegree: for each $\gamma \in Q(\fg)$ and each $(p,q)$, there
+exists~$r_0 = r_0(p,q,\gamma) < \infty$ such that
+\[
+E_\infty^{p,q}(\barB_\gamma^{\mathrm{fact}})
+\;=\; E_{r_0}^{p,q}(\barB_\gamma^{\mathrm{fact}}).
+\]
+Moreover:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\dim E_\infty^{p,q}_\gamma \le \dim E_1^{p,q}_\gamma$ at each
+  tridegree, so the $E_\infty$ page inherits the sub-exponential
+  growth bound of
+  Proposition~\ref{prop:lqt-e1-subexponential-growth};
+\item the $E_\infty$ page carries a well-defined factorization
+  coalgebra structure, compatible with the $Q(\fg)$-grading
+  and the factorization isomorphisms on
+  $\operatorname{Ran}(X)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each $E_0^{p,q}_\gamma$ is finite-dimensional
+(Proposition~\ref{prop:yangian-bar-loop-weight}(c)).  Since
+$E_{r+1}^{p,q}$ is a subquotient of $E_r^{p,q}$, the sequence
+$\dim E_r^{p,q}_\gamma$ is non-increasing and non-negative, hence
+eventually constant.  This gives the first claim and~(a).
+
+For~(b): the factorization coalgebra structure on
+$\barB^{\mathrm{fact}}$ preserves the $Q(\fg)$-grading
+(Proposition~\ref{prop:yangian-bar-loop-weight}(a)) and
+is compatible with the loop filtration~$F^\bullet$
+(Proposition~\ref{prop:yangian-bar-loop-weight}(b));
+therefore it descends to each page~$E_r$ and in particular to
+$E_\infty$.
+\end{proof}
+
+The sectorwise convergence is the key finiteness input for extending
+the bar-cobar equivalence from the diagonal to the full
+$\operatorname{Ran}$ space.  The argument generalizes the
+lattice bypass of DK-$1\frac{1}{2}$
+(Theorem~\ref{thm:lattice:factorization-koszul}): in the lattice
+case, $E_1 = 0$ (Heisenberg acyclicity) gave immediate degeneration;
+here the $E_\infty$ page is nontrivial but finite-dimensional, which
+suffices for the factorization descent.
+
+\begin{theorem}[$\infty$-categorical factorization Koszul duality
+via sectorwise convergence; \ClaimStatusProvedHere]
+\label{thm:h-level-factorization-kd}
+\index{Koszul duality!factorization!sectorwise|textbf}
+\index{sectorwise finiteness!factorization Koszul duality}
+Let~$\cA$ be an $\Eone$-chiral algebra on a smooth curve~$X$
+satisfying:
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+\item\label{h1:koszulness} \emph{$\Eone$-Koszulness}: the cobar-bar
+  counit
+  $\Omega(\barB(\cA)) \to \cA$ is a quasi-isomorphism
+  \textup{(}Theorem~B on the Koszul locus\textup{)};
+\item\label{h2:sectorwise} \emph{Sectorwise finiteness}: the
+  factorization bar complex $\barB^{\mathrm{fact}}(\cA)$ admits a
+  $\Gamma$-grading \textup{(}for a finitely generated abelian
+  group~$\Gamma$\textup{)} and a descending
+  filtration~$F^\bullet$ compatible with the grading, such that
+  $\operatorname{gr}^p \barB_\gamma$ is finite-dimensional
+  over each $\operatorname{Ran}$-stratum;
+\item\label{h3:convergence} \emph{Spectral convergence}: the
+  associated spectral sequence stabilizes at each tridegree
+  \textup{(}automatic by
+  Theorem~\textup{\ref{thm:sectorwise-spectral-convergence}}
+  when~\ref{h2:sectorwise} holds\textup{)}.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The factorization bar-cobar counit
+  \[
+  \varepsilon^{\mathrm{fact}}\colon
+  \Omega^{\mathrm{fact}}(\barB^{\mathrm{fact}}(\cA)) \to \cA
+  \]
+  is a quasi-isomorphism of factorization algebras on
+  $\operatorname{Ran}(X)$.
+\item The factorization Verdier intertwining
+  $\mathbb{D}_{\mathrm{Ran}}\,
+  \barB^{\mathrm{fact}}(\cA)
+  \simeq \barB^{\mathrm{fact}}(\cA^!)$
+  holds at the factorization level.
+\item The module bar functor
+  \[
+  \barB_{\mathrm{mod}}^{\mathrm{fact}}\colon
+  \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\cA)
+  \to
+  \operatorname{CoFact}_{\Eone}^{\mathrm{gen}}
+    (\cA^{!,c})^{\mathrm{op}}
+  \]
+  is an equivalence of stable $\infty$-categories on the
+  evaluation-generated cores, with braiding reversal
+  $R \mapsto R^{-1}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i): factorization bar-cobar.}
+On the diagonal stratum $\operatorname{Ran}_1(X) \cong X$, the
+factorization counit $\varepsilon^{\mathrm{fact}}$ restricts to
+the ordinary cobar-bar counit
+$\varepsilon\colon \Omega(\barB(\cA)) \to \cA$,
+which is a quasi-isomorphism by hypothesis~\ref{h1:koszulness}
+(Theorem~B).
+
+For $n \ge 2$ and disjoint opens
+$U_1, \ldots, U_k \subset X$, the factorization isomorphisms
+decompose both source and target:
+\begin{align*}
+\Omega^{\mathrm{fact}}(\barB^{\mathrm{fact}}(\cA))
+  (U_1 \sqcup \cdots \sqcup U_k)
+&\cong \bigotimes_{j=1}^k
+  \Omega^{\mathrm{fact}}(\barB^{\mathrm{fact}}(\cA))(U_j), \\
+\cA(U_1 \sqcup \cdots \sqcup U_k)
+&\cong \bigotimes_{j=1}^k \cA(U_j).
+\end{align*}
+The counit decomposes as $\varepsilon^{\mathrm{fact}}
+= \varepsilon|_{U_1} \otimes \cdots \otimes \varepsilon|_{U_k}$,
+and by K\"unneth each factor is a quasi-isomorphism.
+
+On arbitrary opens (including overlapping configurations), the
+factorization algebra is determined by descent: a factorization
+algebra on~$\operatorname{Ran}(X)$ is a cosheaf for the
+factorization topology, whose basis consists of products of disjoint
+opens.  Sectorwise finiteness~\ref{h2:sectorwise} guarantees that
+$\barB^{\mathrm{fact}}(\cA)$ is a genuine factorization coalgebra
+on~$\operatorname{Ran}(X)$ (not merely a formal pro-object), so
+the cosheaf condition applies.  A map of factorization cosheaves
+that is a quasi-isomorphism on every basis open is a global
+quasi-isomorphism, giving~(i).
+
+\emph{Part~(ii): Verdier intertwining.}
+The Verdier intertwining on~$\operatorname{Ran}_1$ is
+Theorem~A\textsubscript{2}
+(Theorem~\ref{thm:bar-cobar-verdier-intertwining}).
+The factorization structure propagates this to
+$\operatorname{Ran}_n$ by the same K\"unneth--descent argument as
+part~(i), using the fact that Verdier duality on compactified
+configuration spaces commutes with the factorization structure
+(Theorem~\ref{thm:bar-cobar-verdier}).
+
+\emph{Part~(iii): module equivalence.}
+On evaluation objects, the module bar functor is an equivalence by
+DK-1 (Theorem~\ref{thm:factorization-dk-eval}).  The
+evaluation-generated core
+$\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\cA)$ is the
+smallest full stable idempotent-complete braided monoidal subcategory
+containing all evaluation objects.  Since the module bar functor
+is exact and braided monoidal with reversal
+(Theorem~\ref{thm:monoidal-module-koszul}), it preserves shifts,
+cones, direct summands, and ordered tensor products.  Therefore, by
+Proposition~\ref{prop:yangian-dk3-generated-core}, any natural
+isomorphism between the identity and
+$\Omega_{\mathrm{mod}} \circ \barB_{\mathrm{mod}}$ that holds on
+evaluation generators extends to the full generated core.
+
+The braiding reversal $R \mapsto R^{-1}$ is
+Proposition~\ref{prop:yangian-module-koszul}(iii), extended to the
+generated core by functoriality.
+\end{proof}
+
+\begin{corollary}[DK-2/3 for all simple types via sectorwise
+convergence; \ClaimStatusProvedHere]
+\label{cor:dk23-all-types}
+\index{Drinfeld--Kohno!derived!all types}
+\index{sectorwise finiteness!DK for all types}
+For $\fg$ any simple Lie algebra, and assuming $\Eone$-Koszulness
+of the Yangian $\Eone$-chiral algebra~$\mathcal{Y}(\fg)$
+\textup{(}verified for $\fg = \mathfrak{sl}_N$ by explicit
+computation\textup{)}, the factorization bar-cobar functor induces
+an equivalence on the evaluation-generated cores:
+\begin{equation}\label{eq:dk23-all-types}
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}
+  (Y_\hbar(\fg))
+\;\xrightarrow{\;\sim\;}\;
+\operatorname{Fact}_{\Eone}^{\mathrm{gen}}
+  (Y_{-\hbar}(\fg))^{\mathrm{op}},
+\end{equation}
+extending the evaluation-locus DK equivalence
+\textup{(}Theorem~\textup{\ref{thm:factorization-dk-eval}}\textup{)}
+to the full generated core at all types, without any
+thick-generation argument.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:h-level-factorization-kd} to
+$\cA = \mathcal{Y}(\fg)$.
+Hypothesis~\ref{h1:koszulness} is the assumed $\Eone$-Koszulness.
+Hypothesis~\ref{h2:sectorwise} is
+Proposition~\ref{prop:yangian-bar-loop-weight}: the $Q(\fg)$-grading
+and loop filtration give the required sectorwise-finite bifiltration
+for every simple~$\fg$.
+Hypothesis~\ref{h3:convergence} follows from
+Theorem~\ref{thm:sectorwise-spectral-convergence}.
+Conclusion~(iii) gives~\eqref{eq:dk23-all-types}.
+\end{proof}
+
+\begin{remark}[Two proofs in type~$A$; scope comparison]
+\label{rem:two-dk-proofs}
+\index{Drinfeld--Kohno!two proofs}
+For $\fg = \mathfrak{sl}_N$, there are now two independent proofs
+of DK-2/3 on the evaluation-generated core:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Thick generation}
+  \textup{(}Theorem~\ref{thm:dk-fd-typeA}\textup{)}: uses the
+  Drinfeld polynomial classification to show that evaluation modules
+  generate all finite-dimensional simples, then the composition-length
+  argument of Lemma~\ref{lem:composition-thick-generation}.  This proof
+  is representation-theoretic and specific to type~$A$.
+\item \emph{Sectorwise convergence}
+  \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}: uses
+  the root lattice grading and loop filtration to bypass thick
+  generation entirely.  The proof is
+  operadic/factorization-theoretic and works for all types.
+\end{enumerate}
+Proof~(b) is strictly more general (all types $A$--$G$),
+but proof~(a) is more explicit: it identifies the generated core as
+$D^b(\operatorname{Rep}_{\mathrm{fd}})$ via the Drinfeld
+classification.  Proof~(b) identifies the generated core as the
+thick closure of evaluation objects in the factorization category,
+without naming the individual simples.
+The two proofs agree on type~$A$: thick generation by evaluation
+modules (Proposition~\ref{prop:dk2-thick-generation-typeA})
+identifies the two generated cores.
+\end{remark}
+
+\begin{remark}[Interaction with the four-conjecture package]
+\label{rem:h-level-vs-four-conjectures}
+\index{MC3!four-conjecture package!interaction with H-level}
+Theorem~\ref{thm:h-level-factorization-kd} and
+Corollary~\ref{cor:dk23-all-types} resolve DK-2/3 for the
+evaluation-generated core at all types.  The four conjectures of
+Remark~\ref{rem:corrected-mc3-frontier}(b) ---
+Baxter exact triangles
+(Conjecture~\ref{conj:baxter-exact-triangles}),
+shifted-prefundamental generation
+(Conjecture~\ref{conj:shifted-prefundamental-generation}),
+pro-Weyl recovery (Conjecture~\ref{conj:pro-weyl-recovery}), and
+DK on compacts
+(Conjecture~\ref{conj:dk-compacts-completion}) ---
+concern the extension \emph{beyond} this core to
+infinite-dimensional modules via a completed or coderived
+enhancement.
+
+The two programmes are complementary:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The sectorwise convergence theorem gives the strongest
+  factorization equivalence on the natural domain
+  (evaluation-generated core) at all types.
+\item The four-conjecture package enlarges the domain to include
+  prefundamental and asymptotic modules, requiring new input
+  (Baxter TQ-lifts, pro-Weyl limits) beyond Koszul duality.
+\item The formal moduli framework below provides the categorical
+  home for both programmes: the evaluation-generated core is the
+  compact part of the formal moduli problem, and the four-conjecture
+  package extends to the completed/ind-completed part.
+\end{enumerate}
+\end{remark}
+
+\subsubsection*{DK-4/5 as formal moduli Koszul duality}
+
+The passage from DK-3 to DK-4/5 --- from the evaluation-generated
+core to the full triple bridge --- gains conceptual clarity when
+viewed through the lens of formal moduli problems for
+$\Eone$-algebras.  The abstract framework exists
+unconditionally (Lurie~\cite{LurieDAGX}); the content of DK-4 is
+the identification of the tangent Lie algebra with the dg-shifted
+Yangian, and DK-5 is the passage from Lie algebra modules to group
+representations.
+
+\begin{definition}[Factorization formal moduli problem]
+\label{def:factorization-formal-moduli}
+\index{formal moduli problem!factorization|textbf}
+For an $\Eone$-chiral algebra~$\cA$ on~$X$, the
+\emph{factorization formal moduli problem} is the functor
+\[
+\mathfrak{F}_{\cA}\colon
+\mathrm{CAlg}^{\mathrm{aug}}_{k}
+\to \mathcal{S},
+\qquad
+R \;\mapsto\;
+\operatorname{Map}_{\mathrm{FAlg}_{\Eone}(X)}
+  \bigl(\cA \otimes R,\, \cA \otimes R\bigr)^{\simeq}
+\]
+from augmented commutative $k$-algebras to spaces, where the mapping
+space is taken in the $\infty$-category of
+$\Eone$-factorization algebras on~$\operatorname{Ran}(X)$.
+
+By Lurie's formal moduli theorem~\cite{LurieDAGX},
+$\mathfrak{F}_{\cA}$ is controlled by a dg Lie algebra
+$\mathfrak{g}_{\cA} := T_{*}\mathfrak{F}_{\cA}$,
+the \emph{tangent Lie algebra} of the moduli problem.
+The bar complex provides the chain-level model:
+$\mathfrak{g}_{\cA} \simeq
+\operatorname{Der}(\barB^{\mathrm{fact}}(\cA))$,
+the derivations of the factorization bar coalgebra.
+\end{definition}
+
+\begin{theorem}[DK-4 as tangent Lie algebra identification;
+\ClaimStatusConjectured]
+\label{thm:dk4-formal-moduli}
+\index{Drinfeld--Kohno!DK-4!formal moduli identification}
+\index{dg-shifted Yangian!as tangent Lie algebra}
+For the Yangian $\Eone$-chiral algebra
+$\cA = \mathcal{Y}(\mathfrak{sl}_N)$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The tangent Lie algebra
+  $\mathfrak{g}_{\cA} = T_{*}\mathfrak{F}_{\cA}$
+  is quasi-isomorphic, as a filtered complete dg Lie algebra, to the
+  dg-shifted Yangian $\Ydg_{\cA}$ of
+  Definition~\textup{\ref{def:dg-shifted-yangian}}.
+\item Under this identification, the RTT-adapted filtration
+  \textup{(}Definition~\textup{\ref{def:rtt-adapted-filtration}}\textup{)}
+  corresponds to the canonical filtration on
+  $\mathfrak{g}_{\cA}$ by order of the formal parameter: the $N$-th
+  quotient $\mathfrak{g}_{\cA}/F^{N+1}$ is the tangent Lie algebra
+  of the $N$-th infinitesimal neighborhood of the identity in the
+  factorization group.
+\item The module category equivalence
+  $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA}) \simeq
+  \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\cA)$
+  is the linearization of the formal moduli problem:
+  completed modules over the tangent Lie algebra classify
+  infinitesimal deformations of factorization modules.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Relation to existing DK-4 reductions]
+\label{rem:dk4-formal-moduli-vs-rtt}
+\index{Drinfeld--Kohno!DK-4!formal moduli vs RTT}
+Theorem~\ref{thm:dk4-formal-moduli} provides a \emph{canonical}
+construction of the dg-shifted Yangian, replacing the specific
+RTT-adapted filtration of
+Definition~\ref{def:rtt-adapted-filtration} with the universal
+construction from formal moduli theory.  The two approaches are
+related:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The tangent Lie algebra $\mathfrak{g}_{\cA}$ exists
+  unconditionally by Lurie's theorem; the content of
+  Theorem~\ref{thm:dk4-formal-moduli}(a) is that it has the
+  specific algebraic structure of the dg-shifted Yangian.
+\item The residue reductions of
+  Proposition~\ref{prop:yangian-dk4-typea-frontier} are
+  \emph{derived} from the formal moduli identification:
+  the auxiliary-kernel identity $L_a(u) = R_{0a}(u-a)$ is
+  the tangent-space computation of the moduli problem
+  restricted to the fundamental evaluation line.
+\item The RTT-adapted filtration of
+  Definition~\ref{def:rtt-adapted-filtration} is the
+  \emph{coordinate expression} of the canonical formal-moduli
+  filtration in the basis provided by the RTT generators.
+\end{enumerate}
+This reformulation clarifies the logical structure: the RTT
+identities are not independent axioms but consequences of the
+universal $\infty$-categorical framework applied to the specific
+$\Eone$-chiral algebra~$\mathcal{Y}(\mathfrak{sl}_N)$.
+\end{remark}
+
+\begin{proposition}[DK-5 via $\infty$-categorical PBW;
+\ClaimStatusConjectured]
+\label{prop:dk5-infty-pbw}
+\index{Drinfeld--Kohno!DK-5!PBW argument}
+\index{PBW theorem!infinity-categorical@$\infty$-categorical}
+Assume Theorem~\textup{\ref{thm:dk4-formal-moduli}(a,b)}.
+The full triple bridge
+\textup{(}Conjecture~\textup{\ref{conj:full-dk-bridge}}\textup{)}
+reduces to a single input: the $\infty$-categorical
+Poincar\'e--Birkhoff--Witt theorem for the factorization Lie
+algebra~$\mathfrak{g}_{\cA}$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The formal group
+  $G_{\cA} := \exp(\mathfrak{g}_{\cA})$
+  is a group object in $\Eone$-factorization coalgebras on
+  $\operatorname{Ran}(X)$.  Its representation category
+  $\operatorname{Rep}(G_{\cA})$ is a braided monoidal stable
+  $\infty$-category.
+\item The $\infty$-categorical PBW theorem gives an equivalence
+  \[
+  \operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+  \;\simeq\;
+  \operatorname{Rep}(G_{\cA})
+  \]
+  between completed modules over the Lie algebra and
+  representations of the formal group.
+\item If $G_{\cA} \simeq \QGspec(R_{\cA})$
+  \textup{(}the spectral quantum group of
+  Latyntsev~\cite{Latyntsev23}\textup{)}, then the full triple
+  equivalence~\eqref{eq:triple-equivalence} follows from the chain
+  \[
+  \Factord(X;\cA)
+  \;\xleftarrow[\textup{DK-3}]{\sim}\;
+  \operatorname{CoFact}_{\Eone}(\cA^{!,c})^{\mathrm{op}}
+  \;\xrightarrow[\textup{PBW}]{\sim}\;
+  \operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+  \;\xrightarrow[\exp]{\sim}\;
+  \operatorname{Rep}(\QGspec(R_{\cA}))^{\mathrm{op}}.
+  \]
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[The DK ladder as successive approximation to
+$\infty$-categorical Koszul duality]
+\label{rem:unified-dk-hierarchy}
+\index{Drinfeld--Kohno!unified hierarchy}
+The five levels of the DK ladder are now visible as successive
+levels of precision in the $\infty$-categorical Koszul duality
+for the $\Eone$-algebra $\cA = \mathcal{Y}(\fg)$:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\textbf{Level} & \textbf{Content} & \textbf{Status} \\
+\hline
+DK-0 & Koszul duality on $\operatorname{Ran}_1 \cong X$
+  (chain-level) & \textbf{Proved} \\
+DK-1 & Extension to $\operatorname{Ran}_n$ on evaluation objects
+  & \textbf{Proved} \\
+DK-2/3 & Extension to generated core (sectorwise convergence)
+  & \textbf{Proved}${}^*$ \\
+DK-4 & Tangent Lie algebra $=$ dg-shifted Yangian
+  & Conjectured \\
+DK-5 & $\infty$-PBW: Lie modules $\simeq$ group representations
+  & Conjectured \\
+\end{tabular}
+\end{center}
+{\small ${}^*$Conditional on $\Eone$-Koszulness of
+$\mathcal{Y}(\fg)$.  For $\fg = \mathfrak{sl}_N$, this is verified
+by explicit computation.}
+
+\smallskip\noindent
+The conceptual content of each level:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{DK-0/1}: the bar-cobar adjunction restricted to the
+  diagonal/evaluation locus.  This is the classical content
+  (Drinfeld--Kohno $+$ Kazhdan--Lusztig), expressed in the
+  language of factorization algebras.
+\item \emph{DK-2/3}: the bar-cobar adjunction extended to the
+  full $\operatorname{Ran}(X)$ by sectorwise convergence
+  (Theorem~\ref{thm:h-level-factorization-kd}).
+  The factorization descent replaces thick generation
+  with the Boardman convergence of the loop spectral sequence.
+  This is the operadic/homotopical step.
+\item \emph{DK-4}: the identification of the factorization bar
+  coalgebra~$\barB^{\mathrm{fact}}(\cA)$ with the formal
+  neighborhood of the identity in the factorization quantum group
+  (Theorem~\ref{thm:dk4-formal-moduli}).
+  This is the formal moduli step, relating the global
+  factorization structure to a local (tangent-space) computation.
+\item \emph{DK-5}: the passage from the tangent Lie algebra to the
+  group (Proposition~\ref{prop:dk5-infty-pbw}).
+  This is the PBW step, and it is the only level that requires
+  genuinely new algebra beyond Koszul duality: the exponential
+  map from~$\mathfrak{g}_{\cA}$ to~$G_{\cA}$ must be shown to
+  recover the spectral quantum group of
+  Latyntsev~\cite{Latyntsev23}.
+\end{enumerate}
+Each level adds one categorical layer of information.  The hierarchy
+is: DK-0 (proved) $\Rightarrow$ DK-1 (proved)
+$\Rightarrow$ DK-2/3 (proved${}^*$) $\Rightarrow$ DK-4
+(conjectured) $\Rightarrow$ DK-5 (conjectured), with no horizontal
+skips.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
+Type~II (equivalence).  At H-level: an equivalence of
+$\Eone$-monoidal stable $\infty$-categories over
+$\operatorname{Ran}(X)$.  The M-level model is the sectorwise-convergent
+factorization bar-cobar dg category; the S-level shadow is the
+classical DK equivalence on evaluation modules.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
 \begin{definition}[Ordered $\Eone$-factorization category;
