@@ -10064,7 +10064,7 @@ the full quadratic OPE data, not
 on~$\kappa(\cA)$ alone.
 \end{definition}
 
-\begin{definition}[Full modular characteristic package; \ClaimStatusConjectured]
+\begin{definition}[Full modular characteristic package; \ClaimStatusProvedHere]
 \label{def:full-modular-package}
 \index{modular characteristic package!full|textbf}
 \index{universal Maurer--Cartan class|textbf}
@@ -10361,7 +10361,15 @@ the Hodge classes $\lambda_g$.
 \ClaimStatusProvedHere]\label{thm:explicit-theta}
 \index{universal Maurer--Cartan class!explicit construction}
 Let $\cA$ be a modular Koszul chiral algebra with simple Lie
-symmetry~$\mathfrak{g}$.
+symmetry~$\mathfrak{g}$ satisfying
+$\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$
+\textup{(}verified for Kac--Moody algebras by the
+CE~identification of
+Theorem~\textup{\ref{thm:mc2-1-km}}\textup{(ii)},
+and at all non-admissible, non-critical levels by
+Theorem~\textup{\ref{thm:cyclic-rigidity-generic}};
+conjectured universally in
+Conjecture~\textup{\ref{conj:scalar-saturation-universality}}\textup{)}.
 \begin{enumerate}[label=\textup{(\alph*)}]
 
 \item \emph{Minimal-model formula.}
@@ -10374,7 +10382,10 @@ symmetry~$\mathfrak{g}$.
   $l_3^{\mathrm{tr}} = \phi$
   \textup{(}the Killing $3$-cocycle\textup{)},
   $l_n^{\mathrm{tr}} = 0$ for $n \geq 4$
-  \textup{(}Corollary~\textup{\ref{cor:km-minimal-linf}}\textup{)}.
+  \textup{(}computed for Kac--Moody via the CE~identification
+  in Corollary~\textup{\ref{cor:km-minimal-linf}};
+  for the scalar saturation formula below, only the
+  one-dimensionality of\/ $H^2$ is used\textup{)}.
   In the genus-completed minimal model, the universal MC element
   is
   \begin{equation}\label{eq:theta-minimal}
@@ -10390,18 +10401,18 @@ symmetry~$\mathfrak{g}$.
 \item \emph{MC equation is trivially satisfied.}
   In the minimal model, $l_1^{\mathrm{tr}} = 0$ and all genus-$g$
   components of $\Theta^{\min}$ lie in $\mathbb{C}\!\cdot\!\eta$.
-  The obstructions vanish at every arity:
-  \begin{itemize}
-  \item $l_2^{\mathrm{tr}}(\eta,\eta) = 0$
-    \textup{(}$\eta$ is central:
-    $[-,-]_{\mathfrak{g}}$ acts on $\mathfrak{g}^{\otimes 2}$,
-    not on $\eta$\textup{)};
-  \item $l_3^{\mathrm{tr}}(\eta,\eta,\eta) = 0$
-    \textup{(}the Killing cocycle $\phi \colon
-    \Lambda^3\mathfrak{g} \to \mathbb{C}\!\cdot\!\eta$ accepts
-    only $\mathfrak{g}$-inputs\textup{)};
-  \item $l_n^{\mathrm{tr}} = 0$ for $n \geq 4$.
-  \end{itemize}
+  The obstructions vanish at every arity $n \geq 2$ by
+  graded antisymmetry of $L_\infty$-operations: in the
+  desuspension $s^{-1}\mathcal{H}$, the class
+  $s^{-1}\eta$ has degree~$1$ \textup{(}odd\textup{)}, so
+  $l_n^{\mathrm{tr}}(\eta, \ldots, \eta) = 0$ for $n \geq 2$
+  since permuting two identical odd-degree entries
+  in the bar coalgebra $T^c(s^{-1}\mathcal{H})$ introduces
+  a sign $(-1)$.
+  This argument uses \emph{only} the one-dimensionality
+  of $\mathcal{H}^2$ and the parity of $s^{-1}\eta$, not the
+  specific bracket values $l_3^{\mathrm{tr}} = \phi$ or
+  $l_n^{\mathrm{tr}} = 0$ for $n \geq 4$.
   Hence the MC equation $\sum_n \frac{1}{n!}\,
   \hat{l}_n^{\mathrm{tr}}((\Theta^{\min})^{\otimes n}) = 0$
   holds identically at every genus.
@@ -10543,6 +10554,24 @@ $\operatorname{Td}(\Omega_{\pi_g})$ on the universal curve,
 pushed forward to $\overline{\mathcal{M}}_g$, produces the
 $\hat{A}$-class by Mumford's formula.
 \end{proof}
+
+\begin{remark}[Scope of Theorem~\ref{thm:explicit-theta}]
+\label{rem:explicit-theta-scope}
+\index{universal Maurer--Cartan class!scope}
+The minimal model identification
+$\mathcal{H} \cong \fg \oplus \mathbb{C}\!\cdot\!\eta$ with
+$l_n^{\mathrm{tr}} = 0$ for $n \geq 4$ is proved in full for the
+Kac--Moody family (Corollary~\ref{cor:km-minimal-linf}) and
+extends to $\mathcal{W}$-algebras via DS~functoriality
+(Proposition~\ref{prop:ds-package-functoriality}).  For
+families not reached by DS reduction from a simple Lie
+algebra --- in particular, exotic VOAs with multi-dimensional
+$H^2_{\mathrm{cyc}}$ --- the minimal model may differ, and the
+explicit formula should be regarded as conditional on the one-dimensional
+cyclic cohomology input.  See
+Conjecture~\ref{conj:scalar-saturation-universality} for the
+universality question at admissible levels.
+\end{remark}
 
 \begin{corollary}[Explicit modular package for all families;
 \ClaimStatusProvedHere]\label{cor:explicit-theta-specializations}
@@ -14235,8 +14264,9 @@ proved non-scalar invariant.
 \label{cor:scalar-saturation}
 \index{universal Maurer--Cartan class!scalar saturation}
 \index{universal Maurer--Cartan class!scalar exactness}
-For every Koszul chiral algebra~$\cA$ with simple Lie
-symmetry~$\mathfrak{g}$ of arbitrary rank, the universal MC element
+For any Koszul chiral algebra~$\cA$ with simple Lie
+symmetry~$\mathfrak{g}$ satisfying
+$\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$, the universal MC element
 equals its scalar approximation in the minimal model:
 \[
 \Theta_{\cA}^{\min} = \Theta_{\cA}^{\mathrm{scal}}
@@ -14245,22 +14275,31 @@ equals its scalar approximation in the minimal model:
 In particular, $\Theta_{\cA}$ carries no more information than the
 scalar $\kappa(\cA)$: two such algebras with the same~$\kappa$
 have gauge-equivalent universal MC classes.
+The hypothesis $\dim H^2_{\mathrm{cyc}} = 1$ is established
+for Kac--Moody algebras
+\textup{(}Theorem~\textup{\ref{thm:mc2-1-km}}\textup{(ii)}\textup{)},
+at all non-admissible, non-critical levels
+\textup{(}Theorem~\textup{\ref{thm:cyclic-rigidity-generic}}\textup{)},
+and on the full standard Lie-theoretic landscape
+\textup{(}Corollary~\textup{\ref{cor:effective-quadruple}}\textup{)}.
+Its universal validity is
+Conjecture~\textup{\ref{conj:scalar-saturation-universality}}.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:explicit-theta}(a), the minimal cyclic
-$L_\infty$ model has cohomology
-$\mathcal{H} \cong \mathfrak{g} \oplus
-\mathbb{C}\!\cdot\!\eta$ with $\deg\eta = 2$.
-The MC element has degree~$2$, where
-$\mathcal{H}^2 = \mathbb{C}\!\cdot\!\eta$ is one-dimensional
---- reflecting the isomorphism
-$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
-\cong H^3(\mathfrak{g}) \cong \mathbb{C}$
-for every simple~$\mathfrak{g}$
-(Proposition~\ref{prop:cyclic-ce-identification}).
-Thus $\Theta^{\min} = c \cdot \eta \otimes \Lambda$ for a unique
-scalar~$c$, and the trace relation
+By hypothesis, $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$.
+The minimal cyclic $L_\infty$ model on
+$\mathcal{H} = H^*(\Defcyc(\cA), l_1)$ therefore has
+$\mathcal{H}^2 = \mathbb{C}\!\cdot\!\eta$, so every degree-$2$
+MC element has the form
+$\Theta^{\min} = c \cdot \eta \otimes \Lambda$ for a unique
+scalar~$c$.
+The MC equation is automatically satisfied: in the desuspension
+$s^{-1}\mathcal{H}$, the class $s^{-1}\eta$ has odd degree~$1$,
+so $l_n^{\mathrm{tr}}(\eta,\ldots,\eta) = 0$ for $n \geq 2$ by
+graded antisymmetry of $L_\infty$-operations, and
+$l_1^{\mathrm{tr}} = 0$ by minimality.
+The trace relation
 $\operatorname{tr}(\Theta^{\min}) = \kappa(\cA) \cdot \Lambda$
 (Theorem~\ref{conj:universal-theta}(i)) forces $c = \kappa(\cA)$.
 \end{proof}
@@ -14301,6 +14340,92 @@ homotopy-theoretically complete object in the package, carries the
 \emph{least} refined information: it is fully determined
 by~$\kappa(\cA)$.
 \end{remark}
+
+\begin{theorem}[KM strictification of the universal class;
+\ClaimStatusProvedHere]\label{thm:km-strictification}
+\index{universal Maurer--Cartan class!KM strictification}
+\index{strictification!Kac--Moody locus}
+For $\widehat{\fg}_k$ with $\fg$ simple and $k \neq -h^\vee$,
+the cyclic deformation complex $\Defcyc(\widehat{\fg}_k)$ is a
+cyclic dg Lie algebra \textup{(}not merely a filtered
+$L_\infty$-algebra\textup{)}, and the element
+\begin{equation}\label{eq:theta-strict}
+\Theta^{\mathrm{str}}_{\widehat{\fg}_k}
+\;:=\;
+\kappa(\widehat{\fg}_k) \cdot \mu \otimes \Lambda
+\;\in\;
+\Defcyc(\widehat{\fg}_k) \,\widehat{\otimes}\, \Gmod
+\end{equation}
+is a \emph{strict} chain-level Maurer--Cartan element:
+$l_1(\Theta^{\mathrm{str}}) = 0$ and
+$l_2(\Theta^{\mathrm{str}}, \Theta^{\mathrm{str}}) = 0$.
+In particular, $\Theta^{\mathrm{str}}$ coincides with
+$\Theta_{\cA}$ of
+Theorem~\textup{\ref{thm:mc2-full-resolution}} up to gauge
+equivalence, with no corrections at any genus.
+\end{theorem}
+
+\begin{proof}
+The complex $\Defcyc(\widehat{\fg}_k)$
+has strict brackets
+$l_1 = d_{\mathrm{CE}}$ and $l_2 = [-,-]$, with
+$l_n = 0$ for $n \geq 3$
+(Theorem~\ref{thm:mc2-1-km}).
+The Lie bracket
+$\mu = [-,-]_\fg \in Z^2_{\mathrm{cyc}}(\fg,\fg)$
+is a Chevalley--Eilenberg cocycle, so
+$l_1(\mu) = d_{\mathrm{CE}}(\mu) = 0$.
+The genus-$g$ component
+$\Theta^{\mathrm{str}}_g = \kappa \cdot \mu \otimes
+\lambda_g$ satisfies
+\[
+l_2(\Theta^{\mathrm{str}}_h,\,\Theta^{\mathrm{str}}_{g-h})
+= \kappa^2\,[\mu,\mu]_{\mathrm{NR}}
+  \otimes (\lambda_h \cdot \lambda_{g-h})
+= 0,
+\]
+where $[\mu,\mu]_{\mathrm{NR}} = 0$ is the Jacobi identity
+for~$\fg$
+(Theorem~\ref{thm:explicit-theta}(e)).
+Since $l_n = 0$ for $n \geq 3$ on the original complex,
+the full MC equation
+$\sum_{n \geq 1} \frac{1}{n!}\,
+\hat{l}_n((\Theta^{\mathrm{str}})^{\otimes n}) = 0$
+reduces to $l_1 + \frac{1}{2}\,l_2 = 0$, which holds at
+every genus.
+\end{proof}
+
+\begin{proposition}[One-channel gauge rigidity;
+\ClaimStatusProvedHere]\label{prop:one-channel-gauge-rigidity}
+\index{gauge rigidity!one-channel}
+\index{universal Maurer--Cartan class!gauge rigidity}
+For $\widehat{\fg}_k$ with $\fg$ simple and $k \neq -h^\vee$,
+any two MC elements in
+$\Defcyc(\widehat{\fg}_k) \,\widehat{\otimes}\, \Gmod$ with the
+same scalar trace~$\kappa$ are gauge-equivalent in the
+Deligne--Getzler--Hinich Maurer--Cartan $\infty$-groupoid.
+In particular, the one-channel $\Theta$-package is rigid:
+the gauge orbit is uniquely determined
+by~$\kappa(\widehat{\fg}_k)$.
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:scalar-saturation}, the minimal-model MC
+space $\mathrm{MC}(\mathcal{H} \,\widehat{\otimes}\, \Gmod)$
+is the affine line
+$\{c \cdot \eta \otimes \Lambda \mid c \in \mathbb{C}\}$,
+parameterized by~$c = \kappa$.
+Any MC element in the full complex
+$\Defcyc \,\widehat{\otimes}\, \Gmod$ projects to a unique point
+on this line under the quasi-isomorphism
+$\Defcyc \xrightarrow{\sim} \mathcal{H}$
+(Corollary~\ref{cor:km-minimal-linf}).
+Quasi-isomorphisms of pronilpotent $L_\infty$-algebras induce
+weak equivalences of MC $\infty$-groupoids~\cite{Get09},
+so two MC elements with the same projection
+$\kappa \cdot \eta \otimes \Lambda$ lie in the same connected
+component, hence are gauge-equivalent.
+\end{proof}
 
 \begin{proposition}[Scalar saturation for $\mathcal{W}$-algebras;
 \ClaimStatusProvedHere]
@@ -14644,8 +14769,14 @@ simple Lie symmetry~$\mathfrak{g}$.
   conformal vector and Koszul property is induced by
   rescaling the level.
 \end{enumerate}
-\item All four conditions hold unconditionally for every
-  Koszul chiral algebra with simple~$\mathfrak{g}$.
+\item All four conditions hold for every
+  Koszul chiral algebra with simple~$\mathfrak{g}$
+  at non-admissible, non-critical level
+  \textup{(}Theorem~\textup{\ref{thm:cyclic-rigidity-generic}}\textup{)},
+  and for every algebra on the standard Lie-theoretic landscape
+  \textup{(}Corollary~\textup{\ref{cor:effective-quadruple}}\textup{)}.
+  Universal validity at all levels is
+  Conjecture~\textup{\ref{conj:scalar-saturation-universality}}.
 \end{enumerate}
 \end{proposition}
 
@@ -14653,7 +14784,8 @@ simple Lie symmetry~$\mathfrak{g}$.
 We prove the equivalence
 (ii)$\Leftrightarrow$(iii)$\Leftrightarrow$(iv) and the
 implication (ii)$\Rightarrow$(i),
-then verify that every simple $\mathfrak{g}$ satisfies~(ii).
+then verify condition~(ii) on the proved regimes
+(Kac--Moody, generic level, standard landscape).
 
 \smallskip\noindent
 \emph{Setup.}
@@ -14683,16 +14815,13 @@ $\mathcal{H}^2\widehat{\otimes}\Gmod$ has the form
 $x = c \cdot \eta \otimes \Lambda$ for some $c \in \mathbb{C}$,
 where $\Lambda = \sum_{g \geq 1} \lambda_g$.
 The Kuranishi map vanishes identically on $\mathcal{H}^2$
-because all its components do:
-$l_2^{\mathrm{tr}}(\eta,\eta) = 0$
-(the Lie bracket $[-,-]_{\mathfrak{g}}$ acts on
-$\mathfrak{g}^{\otimes 2} \subset (\mathcal{H}^0)^{\otimes 2}$,
-not on $(\mathcal{H}^2)^{\otimes 2}$);
-$l_3^{\mathrm{tr}}(\eta,\eta,\eta) = 0$ (the Killing cocycle
-$\phi \colon \Lambda^3\mathfrak{g} \to \mathbb{C}\!\cdot\!\eta$
-accepts only $\mathfrak{g}$-inputs);
-$l_n^{\mathrm{tr}} = 0$ for $n \geq 4$
-(Corollary~\ref{cor:km-minimal-linf}).
+by graded antisymmetry of $L_\infty$-operations:
+$s^{-1}\eta$ has odd degree~$1$ in the desuspension
+$s^{-1}\mathcal{H}$, so
+$l_n^{\mathrm{tr}}(\eta,\ldots,\eta) = 0$ for every
+$n \geq 2$ (permuting two identical odd-degree entries
+in $T^c(s^{-1}\mathcal{H})$ introduces a sign~$(-1)$),
+and $l_1^{\mathrm{tr}} = 0$ by minimality.
 So $x = c\cdot\eta\otimes\Lambda$ is an MC element for
 every~$c$, which establishes degree-$2$ formality with single
 generator~$\eta$, i.e., condition~(iii).
@@ -14755,17 +14884,28 @@ family, which is non-zero in $H^2_{\mathrm{cyc}}$ even when
 the curvature $\kappa \cdot \omega_g$ vanishes.)
 
 \smallskip\noindent
-\emph{Unconditional verification on the Koszul locus.}
-For simple~$\mathfrak{g}$, condition~(ii) is
-$\dim H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) = 1$.
-By the cyclic CE identification
-(Proposition~\ref{prop:cyclic-ce-identification}),
-$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
-\cong H^3(\mathfrak{g})$.
-For simple~$\mathfrak{g}$, $H^3(\mathfrak{g}) \cong
-\mathbb{C}$ with generator the Killing $3$-form
-$\phi(a,b,c) = \kappa([a,b],c)$ (Cartan).
-Hence all four conditions hold unconditionally.
+\emph{Verification of condition~\textup{(ii)}.}
+For Kac--Moody algebras $\cA = \widehat{\fg}_k$,
+the CE~identification of
+Theorem~\ref{thm:mc2-1-km}(ii) gives
+$H^2_{\mathrm{cyc}}(\cA,\cA) \cong
+H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+\cong H^3(\mathfrak{g}) \cong \mathbb{C}$
+(the last step by Cartan's theorem for
+simple~$\mathfrak{g}$).
+At non-admissible, non-critical level~$k$,
+Theorem~\ref{thm:cyclic-rigidity-generic}
+proves $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$
+for \emph{every} Koszul chiral algebra with
+simple symmetry, via the Whitehead decomposition
+and Kazhdan--Lusztig semisimplicity.
+On the full standard Lie-theoretic landscape,
+Corollary~\ref{cor:effective-quadruple} verifies
+condition~(ii) by case analysis
+(Drinfeld--Sokolov reduction, tensor products, cosets).
+At admissible levels beyond these regimes,
+condition~(ii) remains open
+(Conjecture~\ref{conj:scalar-saturation-universality}).
 \end{proof}
 
 \begin{proposition}[Functorial stability of scalar saturation;
@@ -14962,10 +15102,14 @@ criterion of Proposition~\ref{prop:saturation-equivalence}\,(ii),
 namely $\dim H^2_{\mathrm{cyc}} = 1$ per simple factor.
 \begin{itemize}
 \item \emph{Kac--Moody.}
-  $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
+  The CE~identification of
+  Theorem~\ref{thm:mc2-1-km}(ii) gives
+  $H^2_{\mathrm{cyc}}(\widehat{\fg}_k, \widehat{\fg}_k)
+  \cong H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})
   \cong H^3(\mathfrak{g}) \cong \mathbb{C}$ for
   simple~$\mathfrak{g}$
-  (Corollary~\ref{cor:scalar-saturation}).
+  (Proposition~\ref{prop:cyclic-ce-identification},
+  Cartan).
 \item \emph{$\mathcal{W}$-algebras.}
   $\dim H^2_{\mathrm{cyc}} = 1$ by the BRST pullback
   argument in
@@ -15376,7 +15520,8 @@ the total bar complex.
 The universal Maurer--Cartan class $\Theta_{\cA}$ of
 Definition~\ref{def:full-modular-package} is now fully constructed
 (Theorem~\ref{conj:universal-MC}) and is
-scalar-saturated (Corollary~\ref{cor:scalar-saturation}): at the
+scalar-saturated whenever $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$
+(Corollary~\ref{cor:scalar-saturation}): at the
 minimal-model level, $\Theta_{\cA}^{\min} = \kappa(\cA) \cdot
 \eta \otimes \Lambda$.  The Chern--Weil theory is complete: the
 determinant line bundle $\mathcal{L}_{\cA}$, its first Chern class

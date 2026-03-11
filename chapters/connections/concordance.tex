@@ -884,6 +884,26 @@ so factorization DK in its natural form is
 \textbf{unconditionally proved} for type~$A$.
 The residual question is whether $\mathcal{O} = \mathcal{O}_{\mathrm{poly}}$
 (Corollary~\ref{cor:dk-partial-conj}).
+Extending DK beyond $\operatorname{Rep}_{\mathrm{fd}}$ to include
+infinite-dimensional modules (prefundamental, asymptotic) requires a
+completed/coderived enhancement, organized by four conjectural packages:
+Baxter exact triangles
+(Conjecture~\ref{conj:baxter-exact-triangles}),
+shifted-prefundamental generation
+(Conjecture~\ref{conj:shifted-prefundamental-generation}),
+pro-Weyl recovery
+(Conjecture~\ref{conj:pro-weyl-recovery}), and
+DK on compacts extended by completion
+(Conjecture~\ref{conj:dk-compacts-completion}).
+The formal reductions (heart-capture
+Proposition~\ref{prop:heart-capture-criterion}, standard-capture
+Proposition~\ref{prop:standard-capture-criterion}, sectorwise
+localizing generation
+Corollary~\ref{cor:sectorwise-localizing-generation}) convert
+the generation problem into sectorwise control of standard/Weyl
+objects in finite truncation sectors.
+See Remark~\ref{rem:corrected-mc3-frontier} for the precise
+two-layer frontier.
 On the KL side: root-of-unity periodic CDG structure
 (Conjecture~\ref{conj:kl-periodic-cdg}), coderived category
 identification (Conjecture~\ref{conj:kl-coderived}), braided
@@ -910,6 +930,18 @@ Computational verification: screening braiding matches quantum group
 parameters for $A_2$ at $N = 3, \ldots, 9$ (quantum Serre relations,
 module count $N^r$, and quantum binomial vanishing $[N]_\zeta = 0$
 all verified; $\mathtt{quantum\_serre\_verification.py}$, 37~tests).
+Three external programmes bear directly on the MC3 frontier:
+(i)~the pro-nilpotent completion formalism of
+Francis--Gaitsgory~\cite{FG12} provides the categorical framework for
+the completed/coderived environment needed beyond
+$\operatorname{Rep}_{\mathrm{fd}}$;
+(ii)~the factorisation quantum groups of
+Latyntsev~\cite{Latyntsev23}, whose spectral $R$-matrices furnish the
+target-side structure for the factorization DK equivalence; and
+(iii)~the dg-shifted Yangians of
+Dimofte--Niu--Py~\cite{DNP25}, whose line-operator construction
+connects to the MC4 tower comparison
+(Conjecture~\ref{conj:dg-shifted-yangian-rtt-package}).
 
 \emph{MC4} (filtered H-level comparison for standard infinite towers):
 What is proved: bar-cobar adjunction for every finite-type stage
@@ -1214,6 +1246,17 @@ $\mathsf{C}_{3,4;4;0,3}$ and the two residue-side checks
 remain the sharp frontier for the $\mathcal{W}_\infty$ side of MC4.
 \end{remark}
 
+\begin{remark}[Shared completed environment for MC3 and MC4]
+\label{rem:mc3-mc4-shared-completion}
+MC3 beyond $\operatorname{Rep}_{\mathrm{fd}}$ and MC4 stabilization
+both require working in completed or pro-nilpotent categories: MC3
+needs a coderived enhancement to accommodate prefundamental and
+asymptotic modules, while MC4 needs separated completions of the
+infinite-generator towers $\mathcal{W}_\infty$ and $Y(\mathfrak{sl}_\infty)$.
+The pro-nilpotent formalism of Francis--Gaitsgory~\cite{FG12} provides
+the common categorical framework for both programmes.
+\end{remark}
+
 \emph{MC5} (BV/BRST at all genera):
 What is proved: genus-$0$ BV $=$ bar identification
 (Theorem~\ref{thm:algebraic-string-dictionary}),
@@ -1229,6 +1272,133 @@ framework~\cite{CG17}; (2)~prove that the genus-$g$ BRST anomaly
 matches the bar-complex curvature $\dfib^{\,2} = \kappa \cdot \omega_g$;
 (3)~formulate path-integral/factorization correspondence.
 This is downstream of MC1--MC4 and should not be prioritized over them.
+\end{remark}
+
+\begin{remark}[Conjecture-by-conjecture attack strategies]
+\label{rem:conjecture-attack-strategies}
+\index{conjectures!attack strategies|textbf}
+Below we organize the full conjectural frontier into attack fronts,
+ordered by structural impact and tractability.
+
+\smallskip\noindent
+\textbf{Front~A\,: Scalar saturation universality.}
+Conjecture~\ref{conj:scalar-saturation-universality}: does
+$\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$ hold at all levels for all
+modular Koszul chiral algebras with simple Lie symmetry?
+Proved at generic level
+(Theorem~\ref{thm:cyclic-rigidity-generic}) and on the standard
+Lie-theoretic landscape
+(Corollary~\ref{cor:effective-quadruple}).
+The obstruction is the primitive deformation sector
+$H^2_{\mathrm{cyc,prim}}(\cA)$, which must vanish.
+\emph{Attack}: at admissible levels, compute the
+Arakawa--Frenkel--van~Ekeren primitive sector for the
+known rational $\mathcal{W}$-algebras; alternatively, reduce to
+the vanishing of a spectral-sequence differential using
+rationality/finiteness of the associated variety.
+
+\smallskip\noindent
+\textbf{Front~B\,: Generating function conjectures.}
+Conjectures~\ref{conj:w3-bar-gf}, \ref{conj:sl3-bar-gf},
+\ref{conj:yangian-bar-gf}, and~\ref{conj:non-simply-laced-discriminant}
+are self-consistency checked by $86$~tests
+(recurrence, Koszul dual positivity, growth rates, DS~discriminant
+invariance).  The critical verification computations are:
+$H^5(\overline{B}(\mathcal{W}_3)) \stackrel{?}{=} 171$,
+$H^4(\overline{B}(\widehat{\mathfrak{sl}}_3)) \stackrel{?}{=} 1352$,
+$H^4(\overline{B}(Y(\mathfrak{sl}_2))) \stackrel{?}{=} 82$.
+Direct computation is feasible for the Yangian case ($37$M-entry
+matrix); the Kac--Moody case requires chiral-bar-specific methods
+(chain groups exceed $786$K at degree~$5$).
+
+\smallskip\noindent
+\textbf{Front~C\,: MC3 critical path
+(Conjectures~\ref{conj:baxter-exact-triangles}%
+$\to$\ref{conj:shifted-prefundamental-generation}%
+$\to$\ref{conj:pro-weyl-recovery}%
+$\to$\ref{conj:dk-compacts-completion}).}
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item Baxter exact triangles: $K_0$-level TQ relations verified at
+  $458$~tests for $\mathfrak{sl}_2$ and~$\mathfrak{sl}_3$.
+  \emph{Gap}: lift to distinguished triangles in
+  $D^b(\mathcal{O}^{\mathrm{sh}}_{\leq 0})$.
+\item Shifted-prefundamental generation: no compute module;
+  \emph{critical blocker}.  Implement
+  Hernandez--Jimbo--Zhang~\cite{HJZ25} negative prefundamental
+  modules for~$\mathfrak{sl}_2$.
+\item Pro-Weyl recovery: shadow-level convergence verified
+  ($141$~tests, Mittag-Leffler, $R^1\!\varprojlim = 0$).
+  \emph{Gap}: lift to dg/M-level.
+\item DK on compacts: depends on \textup{(i)--(iii)}.
+\end{enumerate}
+Conjecture~\ref{conj:mc3-sectorwise-all-types} \textup{(}Strategy~IV
+bypass\textup{)}: $E_1$ sub-exponential growth verified for all
+simple types ($304$~tests).  \emph{Gap}: control of higher
+differentials.  The lattice route
+\textup{(}Theorem~\ref{thm:lattice:homotopy-factorization-dk}\textup{)}
+provides an unconditional alternative for simply-laced types at
+level~$1$.
+
+\smallskip\noindent
+\textbf{Front~D\,: MC4 coefficient matching.}
+$\mathcal{W}_\infty$ side: reduction chain
+$\mathcal{J}_4(29) \to 7 \to 6 \to 4\text{ free} + 2\text{ checks}$
+verified ($72$~tests).  The four free coefficients
+$c_{334}$, $c_{444}$, $\mathsf{C}_{3,4;3;0,4}$,
+$\mathsf{C}_{3,4;4;0,3}$ require explicit $W_4$ OPE extraction
+via Jacobi identity constraints on the principal Drinfeld--Sokolov
+reduction of $\widehat{\mathfrak{sl}}_4$.  Yangian side:
+auxiliary-kernel identity
+$\mathsf{K}^{\mathrm{line}}_{1,2}(N)
+= \mathsf{K}^{\mathrm{RTT}}_{1,2}(N)$ reduced to single
+residue on $e_1 \otimes e_2$
+\textup{(}Corollary~\textup{\ref{cor:dg-shifted-rtt-typea-single-line}}\textup{)}.
+
+\smallskip\noindent
+\textbf{Front~E\,: KL three-stage
+(Conjectures~\ref{conj:kl-periodic-cdg}$\to$\ref{conj:kl-coderived}%
+$\to$\ref{conj:kl-braided}).}
+Stage~1: periodic CDG structure from admissible-level specialization.
+Stage~2: coderived equivalence via bar-cobar.
+Stage~3: braided monoidal upgrade from fusion-tensor compatibility.
+The lattice route resolves all three stages unconditionally at
+level~$1$ for simply-laced types
+\textup{(}Theorems~\ref{thm:lattice:level-k-dk}
+and~\ref{thm:lattice:quantum-factorization-dk}\textup{)}.
+
+\smallskip\noindent
+\textbf{Front~F\,: Physics horizon \textup{(}MC5 children, ${\sim}20$
+conjectures\textup{)}.}
+These include BV/BRST identifications
+\textup{(}Conjecture~\ref{conj:master-bv-brst}\textup{)},
+Feynman diagram/path-integral correspondences
+\textup{(}Conjectures~\ref{conj:bar-cobar-path-integral},
+\ref{conj:string-amplitude-bar}\textup{)},
+holographic/AdS-CFT duality
+\textup{(}Conjectures~\ref{conj:ads-cft-bar},
+\ref{conj:holographic-koszul}\textup{)},
+AGT correspondences
+\textup{(}Conjectures~\ref{conj:agt-bar-cobar},
+\ref{conj:agt-w-algebra}, \ref{conj:q-agt}\textup{)},
+and Chern--Simons/topological bridges
+\textup{(}Conjectures~\ref{conj:nc-cs},
+\ref{conj:cs-factorization}\textup{)}.
+All are downstream of MC1--MC4; their resolution requires QFT input
+beyond this manuscript's scope.
+
+\smallskip\noindent
+\textbf{Front~G\,: Independent conjectures \textup{(}${\sim}8$\textup{)}.}
+Reflected modular periodicity
+\textup{(}Conjecture~\ref{conj:reflected-modular-periodicity}\textup{)},
+derived $bc$-$\beta\gamma$
+\textup{(}Conjecture~\ref{conj:derived-bc-betagamma}\textup{)},
+$\mathcal{W}$-orbit duality
+\textup{(}Conjecture~\ref{conj:w-orbit-duality}\textup{)},
+Virasoro $c = 26$ self-duality
+\textup{(}Conjecture~\ref{conj:virasoro-c26-selfdual}\textup{)},
+and the $\mathsf{E}_n$ Koszul duality
+\textup{(}Conjecture~\ref{conj:en-koszul}\textup{)} are not subsumed
+by any master conjecture and require separate investigation.
 \end{remark}
 
 \subsection{Homotopy templates for conjectures}
@@ -3137,13 +3307,19 @@ Two further structural questions are now settled:
   (Theorem~\ref{thm:explicit-theta}(c,e)).
 \item \emph{Scalar saturation}
   (Corollary~\ref{cor:scalar-saturation}).
-  $\Theta_{\cA}$ carries no more information than~$\kappa(\cA)$,
-  because
+  Whenever $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$,
+  $\Theta_{\cA}$ carries no more information than~$\kappa(\cA)$:
+  graded antisymmetry of $L_\infty$-operations forces the MC
+  equation to hold trivially on the one-dimensional space
+  $\mathcal{H}^2 = \mathbb{C}\!\cdot\!\eta$.
+  This condition is verified: for Kac--Moody
+  (CE~identification, Theorem~\ref{thm:mc2-1-km}(ii),
   $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong
-  H^3(\mathfrak{g}) \cong \mathbb{C}$ is one-dimensional for every
-  simple~$\mathfrak{g}$.  The higher Casimirs (cubic for
-  $\mathfrak{sl}_3$, etc.)\ contribute at degrees $\geq 4$ in
-  the cyclic complex --- the wrong degree for the MC equation.
+  H^3(\mathfrak{g}) \cong \mathbb{C}$);
+  at all non-admissible, non-critical levels
+  (Theorem~\ref{thm:cyclic-rigidity-generic});
+  on the standard landscape
+  (Corollary~\ref{cor:effective-quadruple}).
   Non-scalar data resides in~$\Delta_{\cA}$
   and~$\Pi_{\cA}$, not in~$\Theta_{\cA}$
   (Remark~\ref{rem:scalar-saturation-casimirs}).
@@ -3203,6 +3379,56 @@ Two further structural questions are now settled:
   multi-node 4D $\mathcal{N}=2$ quiver VOA
   (Remark~\ref{rem:scalar-saturation-evidence}).
 \end{enumerate}
+
+\emph{Strictification and gauge rigidity on the Kac--Moody locus.}
+Theorem~\ref{thm:km-strictification} establishes that for
+$\widehat{\fg}_k$ with $\fg$ simple and $k \neq -h^\vee$,
+the element $\Theta^{\mathrm{str}} = \kappa \cdot \mu \otimes
+\Lambda$ is a \emph{strict} chain-level MC element
+($l_1 = 0$ by CE cocycle, $l_2 = 0$ by Jacobi, $l_n = 0$ for
+$n \geq 3$ on the dg~Lie side).  No corrections at any genus.
+Proposition~\ref{prop:one-channel-gauge-rigidity} then gives:
+\emph{fixed $\kappa$ implies a single one-channel gauge orbit}.
+The one-channel $\Theta$-package is gauge-rigid on the
+Kac--Moody locus.
+
+\emph{Channel-refined characteristic for $\mathcal{W}_N$.}
+For Kac--Moody algebras, the double-pole/simple-pole channel
+decomposition $\kappa = \kappa_{\mathrm{dp}} + \kappa_{\mathrm{sp}}$
+(Definition~\ref{def:channel-decomposition}) transforms under
+Feigin--Frenkel duality by the shear matrix
+$\bigl(\begin{smallmatrix} -1 & -2 \\ 0 & 1
+\end{smallmatrix}\bigr)$
+(Proposition~\ref{prop:ff-channel-shear}).
+For $\mathcal{W}_N$, the scalar package
+$\kappa(\mathcal{W}_N^k) = c \cdot \sum_{s=2}^N 1/s$
+(Theorem~\ref{thm:wn-obstruction})
+decomposes along strong generators:
+the channel vector
+$\tilde{\kappa}_N = (c_2, c_3, \ldots, c_N)$ with $c_s = c/s$
+carries one entry per strong generator~$W^{(s)}$ (cross-terms
+vanish by conformal weight parity).
+The usual scalar $\kappa$ is the sum $\sum_s c_s$.
+This reveals a structural obstruction for MC4:
+$\sum_{s=2}^N 1/s \sim \log N$, so the scalar package
+\emph{diverges} as $N \to \infty$.  The $\mathcal{W}_\infty$ target
+cannot live on the scalar line; it must retain the full channel
+vector before summation.  The correct MC4 target for
+$\mathcal{W}_\infty$ is a separated complete channel target
+$H_{\mathcal{W}_\infty}$ with vector-valued universal class
+$\tilde{\Theta}_{\mathcal{W}_\infty} \sim
+\sum_{s \geq 2} c_s\, e_s \otimes \Lambda$,
+whose truncation to stage~$N$ recovers the principal
+$\mathcal{W}_N$ package; the ordinary scalar $\Theta$ is obtained
+only after a renormalized projection $\sum_s e_s \rightsquigarrow 1$.
+Under Feigin--Frenkel duality $k \mapsto -k - 2h^\vee$, the
+channel pair $(\Theta_{\mathrm{dp}}, \Theta_{\mathrm{sp}})$
+(double-pole and simple-pole contributions) transforms by the
+shear $\bigl(\begin{smallmatrix} -1 & -2 \\ 0 & 1
+\end{smallmatrix}\bigr)$, and the total class
+$\Theta = \Theta_{\mathrm{dp}} + \Theta_{\mathrm{sp}}$ is
+the $(-1)$-eigenvector.
+The analogous multichannel completion is needed on the Yangian side.
 
 \medskip
 

@@ -2485,6 +2485,34 @@ the bar complex propagator.
 \label{sec:yangian-category-O}
 \index{Yangian!category O}
 
+We first fix the ambient category.
+
+\begin{definition}[Yangian category $\mathcal{O}$]
+\label{def:yangian-category-O}
+\index{Yangian!category O!definition}
+For $\fg = \mathfrak{sl}_N$, the \emph{Yangian category~$\mathcal{O}$}
+$\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)}$ is the full subcategory of
+$Y_\hbar(\mathfrak{sl}_N)$-modules~$M$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $M$ is finitely generated over~$Y_\hbar(\mathfrak{sl}_N)$;
+\item $M$ has a weight decomposition
+  $M = \bigoplus_{\mu \in \mathfrak{h}^*} M_\mu$ with
+  finite-dimensional weight spaces;
+\item the set of weights of~$M$ is contained in a finite union
+  of cones $\{\mu \leq \lambda_i\}$ for the dominance order.
+\end{enumerate}
+The \emph{polynomial subcategory}
+$\mathcal{O}_{\mathrm{poly}} \subset \mathcal{O}_{Y_\hbar}$ is the
+full subcategory of modules whose composition factors all have
+polynomial highest $\ell$-weights in the sense of
+Drinfeld~\cite{Drinfeld88}.  For $N = 2$, every simple in
+$\mathcal{O}$ is finite-dimensional, so
+$\mathcal{O}_{\mathrm{poly}} = \mathcal{O}_{Y_\hbar}$.  For
+$N \ge 3$, it is an open question whether
+$\mathcal{O}_{\mathrm{poly}}$ exhausts $\mathcal{O}_{Y_\hbar}$
+\textup{(}Remark~\textup{\ref{rem:catO-thick-generation-verification}}\textup{)}.
+\end{definition}
+
 The module Koszul duality of
 Theorem~\ref{thm:e1-module-koszul-duality}, combined with
 the evaluation module bar complex
@@ -3760,6 +3788,75 @@ Theorem~\ref{thm:catO-thick-generation} for
 $\mathcal{O}_{\mathrm{poly}}$.
 \end{computation}
 
+\begin{proposition}[Heart-capture criterion; \ClaimStatusProvedHere]
+\label{prop:heart-capture-criterion}
+\index{thick generation!heart-capture criterion}
+Let $\cA$ be a finite-length abelian category and
+$\mathcal{T} \subset D^b(\cA)$ a thick triangulated subcategory.
+If every simple object of~$\cA$ lies in~$\mathcal{T}$, then
+$\mathcal{T} = D^b(\cA)$.
+\end{proposition}
+\begin{proof}
+By induction on Jordan--H\"older length, every object
+of~$\cA$ lies in~$\mathcal{T}$: if $0 \to K \to M \to S \to 0$
+is exact with $S$ simple and $\operatorname{length}(K) < \operatorname{length}(M)$,
+then $K \in \mathcal{T}$ by the inductive hypothesis and $S \in \mathcal{T}$
+by assumption, so the cone of $K \to M$ places $M$ in~$\mathcal{T}$.
+For the full derived category, every bounded complex
+$X^\bullet$ is built from its cohomology objects by canonical
+truncation triangles: $\tau_{\leq n-1}X \to \tau_{\leq n}X \to H^n(X)[-n]$,
+so by induction on cohomological amplitude, $X^\bullet \in \mathcal{T}$.
+\end{proof}
+
+\begin{proposition}[Standard-capture criterion; \ClaimStatusProvedHere]
+\label{prop:standard-capture-criterion}
+\index{thick generation!standard-capture criterion}
+\index{highest-weight category!standard-capture}
+Let $\cA$ be a finite-length highest-weight category with finite
+weight poset~$\Lambda$ and standard objects
+$\{\Delta(\lambda)\}_{\lambda \in \Lambda}$.
+Let $\mathcal{T} \subset D^b(\cA)$ be a thick subcategory.
+If every standard object $\Delta(\lambda) \in \mathcal{T}$, then
+$\mathcal{T} = D^b(\cA)$.
+\end{proposition}
+\begin{proof}
+Induct on the weight poset.  For a maximal $\lambda$,
+$\Delta(\lambda) = L(\lambda)$, so $L(\lambda) \in \mathcal{T}$.
+For general~$\lambda$, the quotient
+$\Delta(\lambda) \twoheadrightarrow L(\lambda)$ has kernel
+filtered by simples $L(\mu)$ with $\mu > \lambda$, all of which
+lie in~$\mathcal{T}$ by induction.
+Since $\Delta(\lambda) \in \mathcal{T}$ and the kernel is in~$\mathcal{T}$,
+the cone construction places $L(\lambda) \in \mathcal{T}$.
+Heart-capture
+(Proposition~\ref{prop:heart-capture-criterion}) then gives
+$\mathcal{T} = D^b(\cA)$.
+\end{proof}
+
+\begin{corollary}[Sectorwise localizing generation; \ClaimStatusProvedHere]
+\label{cor:sectorwise-localizing-generation}
+\index{thick generation!sectorwise localizing}
+\index{truncation sector!localizing generation}
+Suppose a completed category
+$\widehat{\mathcal{O}} = \bigcup_\sigma \mathcal{O}_\sigma^{\mathrm{trunc}}$
+is a filtered union of finite truncation sectors, each a
+finite-length highest-weight category.  If in each sector the
+evaluation objects $\mathrm{Ev}_\sigma$ generate all standard objects
+under thick closure, then
+$\operatorname{Loc}\langle \mathrm{Ev} \rangle = \widehat{\mathcal{O}}$.
+\end{corollary}
+\begin{proof}
+In each finite sector~$\mathcal{O}_\sigma^{\mathrm{trunc}}$,
+standards lie in~$\operatorname{thick}\langle \mathrm{Ev}_\sigma \rangle$
+by hypothesis, so standard-capture
+(Proposition~\ref{prop:standard-capture-criterion}) gives
+$\operatorname{thick}\langle \mathrm{Ev}_\sigma \rangle =
+D^b(\mathcal{O}_\sigma^{\mathrm{trunc}})$.
+Since every object of $\widehat{\mathcal{O}}$ belongs to some sector
+and localizing closure is closed under filtered colimits, the result
+follows.
+\end{proof}
+
 \begin{remark}[Assessment and interaction of the four strategies]
 \label{rem:cat-O-strategies-assessment}
 \index{thick generation!strategy comparison}
@@ -3979,6 +4076,87 @@ follow from the same thick-closure arguments as
 Theorem~\ref{thm:dk-fd-typeA}, now applied at general~$N$.
 \end{proof}
 
+\subsubsection*{Beyond finite dimensions: the shifted-prefundamental programme}
+
+The following four conjectures organize the extension of DK beyond
+$\operatorname{Rep}_{\mathrm{fd}}$.  They are ordered by logical
+dependence; the natural attack order is
+$\mathfrak{sl}_2 \to \mathfrak{sl}_3 \to$ type~$A$.
+
+\begin{conjecture}[Baxter exact triangles in shifted Yangian
+$\mathcal{O}^{\mathrm{sh}}$; \ClaimStatusConjectured]
+\label{conj:baxter-exact-triangles}
+\index{Baxter relation!exact triangle lift}
+\index{shifted Yangian!Baxter exact triangles}
+For $\fg = \mathfrak{sl}_N$ and anti-dominant coweight~$\mu \leq 0$,
+the three-term TQ relations of Zhang~\cite{Zhang24}
+\textup{(}decategorified Baxter identities in
+$K_0(\mathcal{O})$\textup{)} lift to distinguished triangles in
+the anti-dominant shifted envelope
+$\mathcal{O}^{\mathrm{sh}}_{\leq 0}
+:= \bigoplus_{\mu \leq 0} \mathcal{O}_\mu$.
+Concretely, for each node~$i \in I$ and finite-dimensional companion
+module $M_{k,x}^{(i)}$ \textup{(}which for generic~$k$ is
+an irreducible $\mathfrak{sl}_N$-module of highest weight
+$\varpi_i + k\,\varpi_{i+1}$\textup{)}, there is a distinguished
+triangle
+\[
+A^-_{k,x,y} \to M_{k,x}^{(i)} \otimes L(\Psi_{i,x}/\Psi_{i,y})
+\to A^+_{k,x,y} \to
+\]
+whose $K_0$-class recovers the displayed formula of Zhang~\cite{Zhang24}.
+In the finite-length heart, these should become short exact sequences.
+\end{conjecture}
+
+\begin{conjecture}[Shifted-prefundamental generation; \ClaimStatusConjectured]
+\label{conj:shifted-prefundamental-generation}
+\index{shifted Yangian!prefundamental generation}
+\index{compact generation!shifted-prefundamental}
+There exists a separated completed enhancement
+$\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0})$
+whose compact objects are the thick idempotent-complete closure of
+\[
+\mathcal{G}_{\mathrm{shift}}
+\;:=\;
+\{\text{fundamental/KR evaluation modules}\}
+\;\cup\;
+\{L^-_{i,a} \mid i \in I,\; a \in \mathbb{C}\},
+\]
+where $L^-_{i,a}$ are the negative prefundamental modules of
+Hernandez--Jimbo--Zhang~\cite{HJZ25}.  Ordinary Yangian~$\mathcal{O}_Y$ is
+recovered as a monoidal subcategory by restriction from this
+shifted envelope.
+\end{conjecture}
+
+\begin{conjecture}[Pro-Weyl recovery of ordinary standards; \ClaimStatusConjectured]
+\label{conj:pro-weyl-recovery}
+\index{Weyl module!pro-Weyl tower}
+\index{standard module!pro-Weyl recovery}
+For a rational highest $\ell$-weight~$\Psi$, let
+$\Psi_{\leq m}$ denote its truncation to finite Drinfeld divisor
+data and $W_m := W(\Psi_{\leq m})$ the local Weyl module.
+Then the ordinary standard module is recovered as a derived
+inverse limit
+\[
+M(\Psi) \;\simeq\; R\varprojlim_m\, W_m
+\]
+inside a separated completion of~$\mathcal{O}$.
+Each $W_m$ is universal finite-dimensional highest-weight, hence lies
+in $\operatorname{thick}\langle \mathrm{Ev} \rangle$ by the proved
+evaluation core (Theorem~\ref{thm:eval-core-identification}).
+\end{conjecture}
+
+\begin{conjecture}[DK on compacts, extended by completion; \ClaimStatusConjectured]
+\label{conj:dk-compacts-completion}
+\index{Drinfeld--Kohno!derived!compact extension}
+\index{Francis--Gaitsgory!pro-nilpotent completion}
+The bar-cobar Koszul duality equivalence
+$\Phi$~\eqref{eq:dk-eval-core} extends from the finite-dimensional
+evaluation core to the full completed shifted-prefundamental core
+$\mathcal{G}_{\mathrm{shift}}$, and then by pro-nilpotent completion
+in the sense of Francis--Gaitsgory to the completed Yangian category.
+\end{conjecture}
+
 \begin{remark}[Corrected MC3 frontier]
 \label{rem:corrected-mc3-frontier}
 \index{MC3!corrected frontier}
@@ -4011,20 +4189,59 @@ setting.
   directly to DK-4.
 \item If one wishes to include infinite-dimensional
   modules \textup{(}prefundamental representations, asymptotic
-  modules in the sense of Hernandez--Zhang\textup{)}, then
+  modules in the sense of Hernandez--Zhang~\cite{HJZ25}\textup{)}, then
   a completed, coderived, or ind-completed enhancement
   $\widehat{D}(\mathcal{O})$ is required
   \textup{(}Remark~\textup{\ref{rem:fd-thick-closure-implications}(b)}\textup{)},
   and the generation mechanism shifts from thick closure to
   localizing subcategories with compact generation.  The
-  Baxter-type exact triangles relating prefundamental and
-  evaluation modules would be the key structural input.
+  structural input for this extension is organized by four
+  conjectural packages:
+  \begin{enumerate}[label=\textup{(\roman*)}]
+  \item \emph{Baxter exact triangles}
+    \textup{(}Conjecture~\textup{\ref{conj:baxter-exact-triangles}}\textup{)}:
+    the decategorified TQ relations of Zhang~\cite{Zhang24}
+    lift to distinguished triangles in the anti-dominant shifted
+    envelope~$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$, with
+    finite-dimensional companion modules as the middle term;
+  \item \emph{Shifted-prefundamental generation}
+    \textup{(}Conjecture~\textup{\ref{conj:shifted-prefundamental-generation}}\textup{)}:
+    the compact objects of a completed anti-dominant shifted
+    envelope are the thick idempotent-complete closure of
+    $\{\text{KR evaluations}\} \cup \{L^-_{i,a}\}$;
+  \item \emph{Pro-Weyl recovery}
+    \textup{(}Conjecture~\textup{\ref{conj:pro-weyl-recovery}}\textup{)}:
+    ordinary standards $M(\Psi)$ are recovered as
+    $R\varprojlim_m W_m$ inside a separated completion, where
+    $W_m = W(\Psi_{\leq m})$ are local Weyl module truncations;
+  \item \emph{DK on compacts, extended by completion}
+    \textup{(}Conjecture~\textup{\ref{conj:dk-compacts-completion}}\textup{)}:
+    the bar-cobar equivalence holds on the compact shifted-prefundamental
+    core and extends to the completed category by
+    pro-nilpotent completion in the sense of
+    Francis--Gaitsgory.
+  \end{enumerate}
+  The natural attack order is
+  $\mathfrak{sl}_2$ Baxter exact sequence
+  $\to$ $\mathfrak{sl}_3$ exact triangle
+  $\to$ pro-Weyl completion for one rational highest-$\ell$-weight family
+  $\to$ compact generation
+  $\to$ factorization/KL extension.
+  The formal reductions
+  \textup{(}Propositions~\textup{\ref{prop:heart-capture-criterion}}
+  and~\textup{\ref{prop:standard-capture-criterion}},
+  Corollary~\textup{\ref{cor:sectorwise-localizing-generation}}\textup{)}
+  convert the generation problem into sectorwise control of
+  standard/Weyl objects in finite truncation sectors.
 \end{enumerate}
 For the factorization DK problem as posed in
 Conjecture~\ref{conj:full-derived-dk}, option~(a) is the natural
 reading: the $\Eone$-factorization categories are generated by
 evaluation objects, and the evaluation-generated core is the
 target of the equivalence.
+Option~(b) is the deeper programme, with the Yangian analogue
+of the Hern\'andez--Negu\c{t} ordinary/shifted bridge
+\cite{HerNeg24} as the target theorem.
 \end{remark}
 
 \section{Chain-level and evaluation-locus derived Drinfeld--Kohno}
