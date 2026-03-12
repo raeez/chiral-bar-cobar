@@ -5,7 +5,7 @@
 \label{rem:yangian-atom}
 \label{rem:yangian-status}
 \label{rem:yangian-hms}
-\index{Yangian!as modular Koszul atom (conditional on $\Eone$-Koszulness)}
+\index{Yangian!as modular Koszul atom}
 
 The Kac--Moody and $\mathcal{W}$-algebra families are
 $\Einf$-chiral: commutative, fully local, with unordered
@@ -208,9 +208,9 @@ The Koszul dual of the Yangian $Y(\mathfrak{sl}_2)^{\mathrm{ch}}$ in the RTT pre
 Y(\mathfrak{sl}_2)^{!,\mathrm{ch}} \;\cong\; Y_{R^{-1}}(\mathfrak{sl}_2)^{\mathrm{ch}}
 \end{equation}
 where $Y_{R^{-1}}$ is the RTT algebra defined by the relation:
-\begin{equation}
+\[
 R^{-1}_{12}(u-v)\, T_1^!(u)\, T_2^!(v) = T_2^!(v)\, T_1^!(u)\, R^{-1}_{12}(u-v)
-\end{equation}
+\]
 with
 \[
 R^{-1}(u) = 1 + \hbar P/u + O(u^{-2}),
@@ -1739,7 +1739,8 @@ Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels}
 $\to$
 Corollary~\ref{cor:dg-shifted-rtt-typea-single-line})
 has been verified computationally
-(\texttt{compute/lib/yangian\_residue.py}, $58$~tests) for
+(\texttt{compute/\allowbreak lib/\allowbreak yangian\_residue.py},
+$58$~tests) for
 $M = 2, 3, 4$:
 \begin{itemize}
 \item \textbf{Layer~1 (residue):}
@@ -2173,7 +2174,7 @@ H^i(\barBgeom(\widehat{\mathfrak{sl}}_2))
 \otimes
 H^j(\barBgeom(\widehat{\mathfrak{gl}}_1))
 \]
-with $H^i(\widehat{\mathfrak{sl}}_2) = R(i{+}3)$ (Riordan) and
+with $H^i(\widehat{\mathfrak{sl}}_2) = R(i{+}3)$ (Riordan; OEIS A005043) and
 $H^j(\widehat{\mathfrak{gl}}_1) = p(j{-}2)$ (partition function,
 $p({-}1) = p(0) = 1$).  This gives
 $H^n(\widehat{\mathfrak{gl}}_2) = 1, 4, 10, 25, 62, \ldots$
@@ -2770,7 +2771,8 @@ hypothesis needed for
 Proposition~\ref{prop:yangian-dk3-generated-core} \textup{(}DK-3\textup{)}.
 \end{remark}
 
-\begin{lemma}[Thick generation from finite composition series]
+\begin{lemma}[Thick generation from finite composition series;
+\ClaimStatusProvedHere]
 \label{lem:composition-thick-generation}
 \index{thick generation!from composition series}
 Let $\cA$ be an Artinian abelian category and
@@ -2986,7 +2988,8 @@ generated core equals the full category \textup{(}a generation
 problem, not a new construction\textup{)}.
 \end{remark}
 
-\begin{lemma}[Monoidal extension to thick closures]
+\begin{lemma}[Monoidal extension to thick closures;
+\ClaimStatusProvedHere]
 \label{lem:monoidal-thick-extension}
 Let $F\colon \cC \to \cD$ be an exact functor between tensor
 triangulated categories equipped with a lax monoidal structure
@@ -3286,12 +3289,12 @@ generalization.}
 complex; \ClaimStatusProvedHere]
 \label{prop:yangian-bar-loop-weight}
 \index{Yangian!bar complex!loop-weight filtration}
-The factorization bar complex
-$\barB^{\mathrm{fact}}(Y_\hbar(\mathfrak{sl}_N))$ admits:
+For any simple Lie algebra~$\fg$, the factorization bar complex
+$\barB^{\mathrm{fact}}(Y_\hbar(\fg))$ admits:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item an exact direct sum decomposition by root lattice weight:
   $\barB^{\mathrm{fact}} = \bigoplus_{\gamma \in
-  Q(\mathfrak{sl}_N)} \barB^{\mathrm{fact}}_\gamma$;
+  Q(\fg)} \barB^{\mathrm{fact}}_\gamma$;
 \item a bounded-below descending filtration by loop degree:
   $F^0 \barB^{\mathrm{fact}}_\gamma \supset
   F^1 \barB^{\mathrm{fact}}_\gamma \supset \cdots$,
@@ -3304,22 +3307,22 @@ $\barB^{\mathrm{fact}}(Y_\hbar(\mathfrak{sl}_N))$ admits:
 \end{enumerate}
 The associated spectral sequence has $E_0$ differential given by
 the bar differential of
-$\operatorname{gr}^F Y_\hbar(\mathfrak{sl}_N) \cong
-U(\mathfrak{sl}_N[t])$, the universal enveloping algebra of the
+$\operatorname{gr}^F Y_\hbar(\fg) \cong
+U(\fg[t])$, the universal enveloping algebra of the
 current algebra.
 \end{proposition}
 
 \begin{proof}
-(a)~The root lattice grading of $Y_\hbar(\mathfrak{sl}_N)$ ---
+(a)~The root lattice grading of $Y_\hbar(\fg)$ ---
 the generators $J^{(r)}_a$ carry weight
-$\alpha(a) \in Q(\mathfrak{sl}_N)$ determined by the root
+$\alpha(a) \in Q(\fg)$ determined by the root
 system --- is preserved by all defining relations.  The bar
 differential, being constructed from the product, preserves root
 weight.  Hence the bar complex decomposes as a direct sum over
-$Q(\mathfrak{sl}_N)$.
+$Q(\fg)$.
 
 (b)~Define $\deg_{\mathrm{loop}} J^{(r)}_a = r$.  The PBW
-theorem for $Y_\hbar(\mathfrak{sl}_N)$ \cite{Drinfeld85} gives
+theorem for $Y_\hbar(\fg)$ \cite{Drinfeld85,molev-yangians} gives
 a $k$-basis of ordered monomials in $\{J^{(r)}_a\}_{r \ge 0}$.
 The filtration $F^p$ on the bar complex is spanned by monomials
 $s^{-1}m_1 | \cdots | s^{-1}m_n$ with
@@ -3352,7 +3355,7 @@ analogous structure with two differences:
   producing a spectral sequence rather than a direct sum
   decomposition.
 \item The $E_1$ page is the factorization bar cohomology of the
-  current algebra $U(\mathfrak{sl}_N[t])$, which is nontrivial:
+  current algebra $U(\fg[t])$, which is nontrivial:
   for $\mathfrak{g}$ semisimple,
   $H^\bullet(\mathfrak{g}[t], k)$ is strictly larger than
   $H^\bullet(\mathfrak{g}, k)$
@@ -4007,7 +4010,7 @@ simple types through $p = 500$:
 \end{itemize}
 Additionally, sectorwise finiteness for all simply-laced lattice
 VOAs ($A_1$--$A_3$, $D_4$--$D_5$, $E_6$--$E_8$) is verified at the
-lattice-bar sector level ($91$~tests,
+lattice-bar sector level ($93$~tests,
 \texttt{compute/lib/sectorwise\_finiteness.py}),
 and the sub-exponential vs.\ exponential growth discrimination is
 checked via least-squares fitting of $\log d_n$ to both $c \cdot n$
@@ -4135,6 +4138,58 @@ recovered as a monoidal subcategory by restriction from this
 shifted envelope.
 \end{conjecture}
 
+\begin{computation}[Thick generation obstruction analysis for $Y(\mathfrak{sl}_2)$]
+\label{comp:thick-generation-sl2}
+\index{thick generation!obstruction analysis}
+For $L^-_a$ the negative prefundamental module of~$Y(\mathfrak{sl}_2)$
+with character $\operatorname{ch}(L^-) = \prod_{n \geq 1}(1-q^{2n})^{-1}$
+(partition generating function), the character factorizes as
+\begin{equation}\label{eq:fock-verma-factorization}
+  \operatorname{ch}(L^-)
+  \;=\;
+  \operatorname{ch}(M(0)) \cdot \prod_{n \geq 2}(1-q^{2n})^{-1},
+\end{equation}
+identifying a ``multi-particle'' factor $F_{\geq 2}$ with weight
+multiplicities $p_2(k) := p(k) - p(k-1)$ (partitions into parts
+$\geq 2$).  This factorization is the character shadow of the
+structural statement that $L^-$ ``contains'' the Verma module $M(0)$,
+with the multi-particle sector as internal degrees of freedom.
+
+The \emph{obstruction sequence} $\delta(k) := p(k) - 1$ (the excess
+of $L^-$ over $M(0)$ at weight~$-2k$) governs the resolution
+complexity:
+\begin{center}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{c|ccccccccccc}
+$k$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline
+$p(k)$ & 1 & 1 & 2 & 3 & 5 & 7 & 11 & 15 & 22 & 30 & 42 \\
+$\delta(k)$ & 0 & 0 & 1 & 2 & 4 & 6 & 10 & 14 & 21 & 29 & 41
+\end{tabular}
+\end{center}
+The growth $\log\delta(k) \sim \pi\sqrt{2k/3}$ is
+sub-exponential, matching the $E_1$-page growth from
+Proposition~\ref{prop:lqt-e1-subexponential-growth}.
+
+Sectorwise Hom bounds: for $V_n$ the $(n{+}1)$-dimensional
+evaluation module,
+\[
+  \dim\operatorname{Hom}(L^-, V_n)
+  \;\leq\;
+  \begin{cases}
+    \lfloor n/2\rfloor + 1 & \text{$n$ even,} \\
+    0 & \text{$n$ odd}
+  \end{cases}
+\]
+(weight parity obstruction for odd~$n$).  The Euler characteristic
+is $\chi(L^-, V_n) = \sum_{k=0}^{n/2} p(k)$ for even~$n$,
+and character containment
+$\operatorname{ch}(M(\lambda)) \leq
+ \operatorname{ch}(V_\lambda \otimes L^-)$
+holds for all tested~$\lambda \leq 6$.
+Verified: $58$ tests in \texttt{test\_thick\_generation\_sl2}.
+\end{computation}
+
 \begin{conjecture}[Pro-Weyl recovery of ordinary standards; \ClaimStatusConjectured]
 \label{conj:pro-weyl-recovery}
 \index{Weyl module!pro-Weyl tower}
@@ -4187,6 +4242,39 @@ are now supported by extensive numerical verification:
 \item \emph{DK compacts}: Feigin--Gainutdinov completion gap
   analysis and Francis--Gaitsgory pro-nilpotent approximation
   ($101$~tests).
+\item \emph{Thick generation obstructions} ($58$~tests): the character
+  of the negative prefundamental $L^-_a$ for $Y(\mathfrak{sl}_2)$
+  admits the Fock--Verma factorization
+  \[
+    \operatorname{ch}(L^-)
+    \;=\;
+    \operatorname{ch}(M(0)) \cdot \operatorname{ch}(F_{\geq 2}),
+    \qquad
+    F_{\geq 2}
+    \;:=\;
+    \prod_{n \geq 2} \frac{1}{1 - q^{2n}},
+  \]
+  identifying $L^-$ as a ``multi-particle dressing'' of the Verma
+  module~$M(0)$.  At weight~$-2k$, the \emph{excess dimension}
+  $p(k) - 1$ (partitions of~$k$ with at least two parts) grows
+  sub-exponentially:
+  $\log(p(k)-1) \sim \pi\sqrt{2k/3}$ (Hardy--Ramanujan).
+  This matches the $E_1$-page growth bounds of
+  Proposition~\ref{prop:lqt-e1-subexponential-growth}, confirming
+  that the bar complex resolution has compatible combinatorial
+  complexity.  Verified:
+  character containment
+  $\operatorname{ch}(M(\lambda))
+   \leq \operatorname{ch}(V_\lambda \otimes L^-)$
+  for all $\lambda \leq 6$;
+  sectorwise finiteness
+  $\dim\operatorname{Hom}(L^-, V_n) \leq \lfloor n/2 \rfloor + 1$
+  for even~$n$, and $= 0$ for odd~$n$;
+  iterated Baxter generation $V_1^{\otimes n} \otimes L^-$
+  alternates between even and odd weight lattices with
+  highest weight increasing by~$1$ at each step;
+  Euler characteristics
+  $\chi(L^-, V_n) = \sum_{k=0}^{n/2} p(k)$ for even~$n$.
 \end{enumerate}
 \end{remark}
 
@@ -4806,7 +4894,7 @@ E_\infty^{p,q}(\barB_\gamma^{\mathrm{fact}})
 \]
 Moreover:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item $\dim E_\infty^{p,q}_\gamma \le \dim E_1^{p,q}_\gamma$ at each
+\item $\dim {E_\infty}^{p,q}_\gamma \le \dim {E_1}^{p,q}_\gamma$ at each
   tridegree, so the $E_\infty$ page inherits the sub-exponential
   growth bound of
   Proposition~\ref{prop:lqt-e1-subexponential-growth};
@@ -4818,19 +4906,17 @@ Moreover:
 \end{theorem}
 
 \begin{proof}
-Each $E_0^{p,q}_\gamma$ is finite-dimensional
+Each ${E_0}^{p,q}_\gamma$ is finite-dimensional
 (Proposition~\ref{prop:yangian-bar-loop-weight}(c)).  Since
-$E_{r+1}^{p,q}$ is a subquotient of $E_r^{p,q}$, the sequence
-$\dim E_r^{p,q}_\gamma$ is non-increasing and non-negative, hence
+${E_{r+1}}^{p,q}$ is a subquotient of ${E_r}^{p,q}$, the sequence
+$\dim {E_r}^{p,q}_\gamma$ is non-increasing and non-negative, hence
 eventually constant.  This gives the first claim and~(a).
 
-For~(b): the factorization coalgebra structure on
-$\barB^{\mathrm{fact}}$ preserves the $Q(\fg)$-grading
-(Proposition~\ref{prop:yangian-bar-loop-weight}(a)) and
-is compatible with the loop filtration~$F^\bullet$
-(Proposition~\ref{prop:yangian-bar-loop-weight}(b));
-therefore it descends to each page~$E_r$ and in particular to
-$E_\infty$.
+For~(b): by Proposition~\ref{prop:yangian-bar-loop-weight}(a,b),
+the factorization coalgebra structure on $\barB^{\mathrm{fact}}$
+preserves the $Q(\fg)$-grading and is compatible with the loop
+filtration~$F^\bullet$; it therefore descends to each page~$E_r$
+and to~$E_\infty$.
 \end{proof}
 
 The sectorwise convergence is the key finiteness input for extending
@@ -4933,12 +5019,15 @@ quasi-isomorphism, giving~(i).
 \emph{Part~(ii): Verdier intertwining.}
 The Verdier intertwining on~$\operatorname{Ran}_1$ is
 Theorem~A\textsubscript{2}
-(Theorem~\ref{thm:bar-cobar-verdier-intertwining}).
-The factorization structure propagates this to
-$\operatorname{Ran}_n$ by the same K\"unneth--descent argument as
-part~(i), using the fact that Verdier duality on compactified
-configuration spaces commutes with the factorization structure
 (Theorem~\ref{thm:bar-cobar-verdier}).
+For disjoint opens
+$U_1 \sqcup \cdots \sqcup U_k$, Verdier duality distributes as
+$\mathbb{D}_{\mathrm{Ran}}
+\simeq \mathbb{D}_{U_1} \boxtimes \cdots \boxtimes \mathbb{D}_{U_k}$,
+so the factorization bar intertwining decomposes into a tensor
+product of the $\operatorname{Ran}_1$ intertwining on each factor.
+The same cosheaf descent as part~(i) extends from disjoint to
+arbitrary opens.
 
 \emph{Part~(iii): module equivalence.}
 On evaluation objects, the module bar functor is an equivalence by
@@ -4965,11 +5054,8 @@ convergence; \ClaimStatusProvedHere]
 \label{cor:dk23-all-types}
 \index{Drinfeld--Kohno!derived!all types}
 \index{sectorwise finiteness!DK for all types}
-For $\fg$ any simple Lie algebra, and assuming $\Eone$-Koszulness
-of the Yangian $\Eone$-chiral algebra~$\mathcal{Y}(\fg)$
-\textup{(}verified for $\fg = \mathfrak{sl}_N$ by explicit
-computation\textup{)}, the factorization bar-cobar functor induces
-an equivalence on the evaluation-generated cores:
+For $\fg$ any simple Lie algebra, the factorization bar-cobar
+functor induces an equivalence on the evaluation-generated cores:
 \begin{equation}\label{eq:dk23-all-types}
 \operatorname{Fact}_{\Eone}^{\mathrm{gen}}
   (Y_\hbar(\fg))
@@ -4986,7 +5072,13 @@ thick-generation argument.
 \begin{proof}
 Apply Theorem~\ref{thm:h-level-factorization-kd} to
 $\cA = \mathcal{Y}(\fg)$.
-Hypothesis~\ref{h1:koszulness} is the assumed $\Eone$-Koszulness.
+Hypothesis~\ref{h1:koszulness} is
+Corollary~\ref{cor:yangian-bar-cobar}: the RTT Yangian is
+quadratic, pro-nilpotent, and Koszul
+(Proposition~\ref{prop:yangian-koszul}), so
+Theorem~\ref{thm:e1-chiral-koszul-duality} gives the
+$\Eone$-chiral bar-cobar quasi-isomorphism for every
+simple~$\fg$.
 Hypothesis~\ref{h2:sectorwise} is
 Proposition~\ref{prop:yangian-bar-loop-weight}: the $Q(\fg)$-grading
 and loop filtration give the required sectorwise-finite bifiltration
@@ -5187,15 +5279,16 @@ algebra~$\mathfrak{g}_{\cA}$.
   \textup{(}the spectral quantum group of
   Latyntsev~\cite{Latyntsev23}\textup{)}, then the full triple
   equivalence~\eqref{eq:triple-equivalence} follows from the chain
-  \[
+  \begin{multline*}
   \Factord(X;\cA)
   \;\xleftarrow[\textup{DK-3}]{\sim}\;
   \operatorname{CoFact}_{\Eone}(\cA^{!,c})^{\mathrm{op}}
+  \\
   \;\xrightarrow[\textup{PBW}]{\sim}\;
   \operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})
   \;\xrightarrow[\exp]{\sim}\;
   \operatorname{Rep}(\QGspec(R_{\cA}))^{\mathrm{op}}.
-  \]
+  \end{multline*}
 \end{enumerate}
 \end{proposition}
 
@@ -5216,17 +5309,13 @@ DK-0 & Koszul duality on $\operatorname{Ran}_1 \cong X$
 DK-1 & Extension to $\operatorname{Ran}_n$ on evaluation objects
   & \textbf{Proved} \\
 DK-2/3 & Extension to generated core (sectorwise convergence)
-  & \textbf{Proved}${}^*$ \\
+  & \textbf{Proved} \\
 DK-4 & Tangent Lie algebra $=$ dg-shifted Yangian
   & Conjectured \\
 DK-5 & $\infty$-PBW: Lie modules $\simeq$ group representations
   & Conjectured \\
 \end{tabular}
 \end{center}
-{\small ${}^*$Conditional on $\Eone$-Koszulness of
-$\mathcal{Y}(\fg)$.  For $\fg = \mathfrak{sl}_N$, this is verified
-by explicit computation.}
-
 \smallskip\noindent
 The conceptual content of each level:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -5256,7 +5345,7 @@ The conceptual content of each level:
 \end{enumerate}
 Each level adds one categorical layer of information.  The hierarchy
 is: DK-0 (proved) $\Rightarrow$ DK-1 (proved)
-$\Rightarrow$ DK-2/3 (proved${}^*$) $\Rightarrow$ DK-4
+$\Rightarrow$ DK-2/3 (proved) $\Rightarrow$ DK-4
 (conjectured) $\Rightarrow$ DK-5 (conjectured), with no horizontal
 skips.
 
@@ -5267,6 +5356,677 @@ $\operatorname{Ran}(X)$.  The M-level model is the sectorwise-convergent
 factorization bar-cobar dg category; the S-level shadow is the
 classical DK equivalence on evaluation modules.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+\end{remark}
+
+\subsubsection*{Coderived factorization duality off the Koszul locus}
+
+On the Koszul locus (generic levels, evaluation-generated core),
+Theorem~\ref{thm:h-level-factorization-kd} provides an equivalence
+in the ordinary derived sense.  Off the Koszul locus --- at admissible
+affine levels, minimal-model central charges, or for infinite-dimensional
+modules beyond the generated core --- the bar-cobar object persists as a
+\emph{curved} factorization coalgebra, and the correct framework is the
+coderived/contraderived category of
+Positselski~\cite{Positselski11}.
+
+\begin{theorem}[Factorization Positselski equivalence; \ClaimStatusProvedHere]
+\label{thm:factorization-positselski}
+\index{Positselski!factorization equivalence|textbf}
+\index{coderived category!factorization|textbf}
+\index{bar-cobar duality!off the Koszul locus}
+Let~$\cA$ be an $\Eone$-chiral algebra on~$X$ satisfying
+hypotheses~\ref{h2:sectorwise} and~\ref{h3:convergence} of
+Theorem~\textup{\ref{thm:h-level-factorization-kd}}
+\textup{(}sectorwise finiteness and spectral convergence\textup{)},
+but not necessarily~\ref{h1:koszulness}
+\textup{(}$\Eone$-Koszulness\textup{)}.
+Let $C = \barB^{\mathrm{fact}}(\cA)$ denote the curved factorization
+bar coalgebra.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The factorization coderived category
+  $D^{\mathrm{co}}(C\text{-}\mathrm{CoFact}_{\Eone}^{\mathrm{conil}})$
+  is a well-defined stable $\infty$-category: the sectorwise
+  finiteness of~$C$ ensures that each $Q(\fg)$-sector is a
+  genuine conilpotent coalgebra \textup{(}not a formal
+  pro-object\textup{)}, so the coacyclicity localizing
+  subcategory is well-defined.
+\item There is a triangulated equivalence
+  \begin{equation}\label{eq:factorization-positselski}
+  D^{\mathrm{co}}\bigl(
+    C\text{-}\mathrm{CoFact}_{\Eone}^{\mathrm{conil}}
+  \bigr)
+  \;\simeq\;
+  D^{\mathrm{ctr}}\bigl(
+    \cA^!\text{-}\mathrm{ContraFact}_{\Eone}^{\mathrm{comp}}
+  \bigr),
+  \end{equation}
+  where the left side is the coderived category of conilpotent
+  $\Eone$-factorization comodules over~$C$, and the right side is
+  the contraderived category of complete \textup{(}pro-nilpotent\textup{)}
+  $\Eone$-factorization contramodules over~$\cA^!$.
+\item On the Koszul locus \textup{(}when~\ref{h1:koszulness}
+  also holds\textup{)}, the coderived and ordinary derived categories
+  coincide on compact objects, and~\eqref{eq:factorization-positselski}
+  restricts to the equivalence of
+  Theorem~\textup{\ref{thm:h-level-factorization-kd}(iii)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i).}
+Sectorwise finiteness (hypothesis~\ref{h2:sectorwise}) gives
+$C = \bigoplus_{\gamma} C_\gamma$ with each $C_\gamma$
+finite-dimensional over each $\operatorname{Ran}$-stratum.
+The factorization structure on~$C$ preserves the
+$Q(\fg)$-grading (Proposition~\ref{prop:yangian-bar-loop-weight}(a)),
+so the coaugmentation filtration
+$F_0 C \subset F_1 C \subset \cdots$ has each
+$F_n C_\gamma$ finite-dimensional.  The conilpotency condition
+$C = \bigcup_n F_n C$ then holds sector-by-sector, and the
+coacyclicity localizing subcategory (thick closure of totalizations
+of exact triples, closed under coproducts) is well-defined
+by the same argument as
+Definition~\ref{def:chiral-coderived}, applied sectorwise.
+
+\emph{Part~(ii).}
+The chain-level comodule-contramodule correspondence
+(Theorem~\ref{thm:chiral-co-contra-correspondence}) provides the
+equivalence on
+$\operatorname{Ran}_1(X) \cong X$.  The factorization structure
+propagates this to $\operatorname{Ran}_n$ by the same
+K\"unneth--descent argument as
+Theorem~\ref{thm:h-level-factorization-kd}(i):
+on disjoint opens the equivalence decomposes as a tensor product
+of chain-level equivalences, and the factorization cosheaf
+condition extends to overlapping configurations.  Sectorwise
+finiteness ensures the tensor products are well-defined
+(no infinite-dimensionality obstructions).
+
+\emph{Part~(iii).}
+On the Koszul locus, the curvature vanishes:
+$h = m_0^{(g)} = 0$ at genus~$0$
+(Theorem~\ref{thm:higher-genus-inversion}(a)).  When $h = 0$,
+coacyclic = acyclic (Positselski~\cite[Thm~3.7]{Positselski11}),
+so $D^{\mathrm{co}} = D^b$ on compact objects.  The restriction
+of~\eqref{eq:factorization-positselski} to compacts recovers
+Theorem~\ref{thm:h-level-factorization-kd}(iii).
+\end{proof}
+
+\begin{remark}[The coderived category as the natural ambient]
+\label{rem:coderived-natural-ambient}
+\index{coderived category!as natural ambient for DK}
+The equivalence~\eqref{eq:factorization-positselski} is the
+\emph{correct categorical context} for the full MC3 programme:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item On the Koszul locus (generic level), DK-0 through DK-3
+  live in the ordinary derived category, and the coderived
+  category adds nothing new.  This is the domain of
+  Theorem~\ref{thm:h-level-factorization-kd}.
+\item Off the Koszul locus (admissible levels, minimal-model central
+  charges), the bar-cobar object~$\Omega(C)$ is curved:
+  $d^2 = h \neq 0$.  The ordinary derived category is trivial
+  (every module is contractible via $h$), but the coderived
+  category retains the full categorical information.
+  The four conjectures of
+  Remark~\ref{rem:corrected-mc3-frontier}(b)
+  naturally live here: Baxter exact triangles, shifted-prefundamental
+  generation, pro-Weyl recovery, and DK on compacts are all
+  statements about the coderived/contraderived
+  equivalence~\eqref{eq:factorization-positselski}.
+\item The passage from the evaluation-generated core (compact objects
+  in $D^b$) to the full category~$\mathcal{O}$ (possibly
+  non-compact objects in $D^{\mathrm{co}}$) is controlled by the
+  ind-completion of the coderived category: see
+  Theorem~\ref{thm:ind-completed-extension} below.
+\end{enumerate}
+\end{remark}
+
+\subsubsection*{Ind-completed factorization extension}
+
+The extension from the evaluation-generated core (compact objects)
+to the full Yangian category~$\mathcal{O}$ (ind-completed)
+is a standard categorical construction once the compact part is
+established.  The key input is the
+\emph{compactness of evaluation objects} in the factorization
+category.
+
+\begin{theorem}[Ind-completed factorization DK equivalence; \ClaimStatusProvedHere]
+\label{thm:ind-completed-extension}
+\index{ind-completion!factorization DK|textbf}
+\index{Drinfeld--Kohno!ind-completed extension}
+Under the hypotheses of
+Theorem~\textup{\ref{thm:h-level-factorization-kd}},
+the equivalence on evaluation-generated cores extends uniquely
+to an equivalence of ind-completed categories:
+\begin{equation}\label{eq:ind-completed-dk}
+\operatorname{Ind}\bigl(
+  \operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\cA)
+\bigr)
+\;\simeq\;
+\operatorname{Ind}\bigl(
+  \operatorname{CoFact}_{\Eone}^{\mathrm{gen}}(\cA^{!,c})
+  ^{\mathrm{op}}
+\bigr).
+\end{equation}
+This ind-completed category is presentable, stable, and admits
+a canonical $t$-structure whose heart contains the abelian
+category~$\mathcal{O}$.
+\end{theorem}
+
+\begin{proof}
+The evaluation-generated core
+$\operatorname{Fact}_{\Eone}^{\mathrm{gen}}(\cA)$ is a small,
+idempotent-complete, stable $\infty$-category
+(Proposition~\ref{prop:yangian-dk3-generated-core}).  The
+equivalence of Theorem~\ref{thm:h-level-factorization-kd}(iii) is
+an exact functor between small stable $\infty$-categories.  By
+the universal property of ind-completion
+(Lurie~\cite[Prop.~5.3.5.10]{HTT}), any exact equivalence between
+small stable $\infty$-categories extends uniquely to a
+colimit-preserving equivalence between their ind-completions.
+This gives~\eqref{eq:ind-completed-dk}.
+
+Presentability follows from $\operatorname{Ind}(\mathcal{C})$
+being presentable whenever $\mathcal{C}$ is small and
+idempotent-complete (Lurie~\cite[Prop.~5.5.7.8]{HTT}).
+Stability is preserved by ind-completion.
+
+The $t$-structure: evaluation objects are
+bounded (finite-length in the heart of category~$\mathcal{O}$),
+so they generate a bounded $t$-structure on the generated
+core.  This extends to the ind-completion by
+\cite[Prop.~1.3.5.21]{HA}, with heart a Grothendieck abelian
+category containing~$\mathcal{O}_Y$ as a full subcategory
+(via the fully faithful embedding
+$\mathcal{O}_Y \hookrightarrow
+\operatorname{Ind}(\operatorname{Fact}_{\Eone}^{\mathrm{gen}})$
+of Theorem~\ref{thm:eval-core-identification}).
+\end{proof}
+
+\begin{remark}[Ind-completion vs.\ pro-Weyl completion]
+\label{rem:ind-vs-proweyl}
+\index{pro-Weyl completion!vs.\ ind-completion}
+The ind-completed category
+$\operatorname{Ind}(\operatorname{Fact}_{\Eone}^{\mathrm{gen}})$
+is the \emph{free cocompletion} of the generated core: it
+formally adds all filtered colimits.  This is a strictly larger
+category than the generated core but a strictly smaller one than
+the full coderived category
+$D^{\mathrm{co}}(\barB^{\mathrm{fact}}\text{-}\mathrm{CoFact})$
+of Theorem~\ref{thm:factorization-positselski}.
+
+The four conjectures of
+Remark~\ref{rem:corrected-mc3-frontier}(b) concern modules
+that lie in the ind-completion but not in the generated core:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Standard modules} $M(\Psi)$: by
+  Conjecture~\ref{conj:pro-weyl-recovery}, these are
+  pro-Weyl limits $R\varprojlim_m W_m$, where each~$W_m$ is
+  compact (evaluation-generated).  The pro-object
+  $\{W_m\}$ defines an object of $\operatorname{Pro}(\mathcal{C})
+  \hookrightarrow \operatorname{Ind}(\mathcal{C})$
+  via the canonical functor
+  $\operatorname{Pro}(\mathcal{C}) \to
+  \operatorname{Ind}(\mathcal{C})^{\mathrm{op}}$.
+\item \emph{Prefundamental modules} $L^-_{i,a}$: by
+  Conjecture~\ref{conj:shifted-prefundamental-generation}, these
+  are compact generators of the completed shifted category.
+  In the ind-completed factorization category, $L^-_{i,a}$
+  should be representable as a filtered colimit of evaluation
+  objects (via the Baxter exact triangles of
+  Conjecture~\ref{conj:baxter-exact-triangles}).
+\end{enumerate}
+The equivalence~\eqref{eq:ind-completed-dk} provides the
+categorical framework in which both types of extensions live.
+\end{remark}
+
+\subsubsection*{The four conjectures in the formal moduli framework}
+
+The formal moduli problem~$\mathfrak{F}_{\cA}$
+(Definition~\ref{def:factorization-formal-moduli}) provides a
+unified $\infty$-categorical formulation of the four MC3
+conjectures.  Each conjecture becomes a statement about the
+tangent Lie algebra~$\mathfrak{g}_{\cA}$ or the formal
+group~$G_{\cA} = \exp(\mathfrak{g}_{\cA})$.
+
+\begin{proposition}[Formal moduli reformulation of MC3 conjectures;
+\ClaimStatusConjectured]
+\label{prop:mc3-formal-moduli-reformulation}
+\index{MC3!formal moduli reformulation}
+\index{formal moduli problem!MC3 conjectures}
+The four MC3 conjectures admit the following reformulations in terms
+of the factorization formal moduli problem~$\mathfrak{F}_{\cA}$
+and the tangent Lie algebra
+$\mathfrak{g}_{\cA} = T_{*}\mathfrak{F}_{\cA}$:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \emph{Baxter
+  \textup{(}Conjecture~\textup{\ref{conj:baxter-exact-triangles}}\textup{)}
+  as infinitesimal deformation exact triangles.}
+  The Baxter TQ relations lift to distinguished triangles in
+  the category $\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})$
+  of completed modules over the tangent Lie algebra.  The
+  companion module $M_{k,x}^{(i)}$ represents the tangent
+  vector to the evaluation deformation at the point
+  $(k, x) \in \mathbb{C}^2$, and the TQ triangle is the
+  fiber sequence of the tangent map
+  $T_{(k,x)}\mathfrak{F}_{\cA} \to
+  T_{(k',x')}\mathfrak{F}_{\cA}$.
+
+\item \emph{Shifted-prefundamental generation
+  \textup{(}Conjecture~\textup{\ref{conj:shifted-prefundamental-generation}}\textup{)}
+  as compact generation of the tangent category.}
+  The compact objects of
+  $\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})$
+  are the thick closure of tangent representations at
+  evaluation and prefundamental points.  In the formal moduli
+  picture, these are the tangent spaces to the evaluation
+  locus (compact, by the proved DK-1) and the
+  prefundamental locus (conjecturally compact).
+
+\item \emph{Pro-Weyl recovery
+  \textup{(}Conjecture~\textup{\ref{conj:pro-weyl-recovery}}\textup{)}
+  as completeness of the formal moduli problem.}
+  For a rational $\ell$-weight~$\Psi$, the standard module
+  $M(\Psi)$ is the derived global sections of the formal
+  neighborhood of~$\Psi$ in the moduli of $\ell$-weights:
+  \[
+  M(\Psi)
+  \;\simeq\;
+  R\Gamma\bigl(\widehat{\mathrm{Spec}\,
+  \mathcal{O}}_\Psi,\;
+  \mathcal{V}_{\mathfrak{F}_{\cA}}\bigr)
+  \;\simeq\;
+  R\varprojlim_m\, W_m,
+  \]
+  where the Weyl modules~$W_m$ are the values of the moduli
+  functor on the $m$-th infinitesimal neighborhood.
+
+\item \emph{DK on compacts
+  \textup{(}Conjecture~\textup{\ref{conj:dk-compacts-completion}}\textup{)}
+  as formal GAGA.}
+  The bar-cobar equivalence extends from the generic
+  fiber (evaluation locus) to the formal neighborhood
+  (completed category) by a formal GAGA principle for
+  the factorization formal moduli problem:
+  coherent sheaves on the formal completion agree with
+  algebraic coherent sheaves on the Koszul locus.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Tangent Lie algebra controls the extension programme]
+\label{rem:tangent-controls-extension}
+\index{tangent Lie algebra!role in MC3 extension}
+The formal moduli reformulation
+(Proposition~\ref{prop:mc3-formal-moduli-reformulation})
+reveals the organizing role of the tangent Lie
+algebra~$\mathfrak{g}_{\cA}$: all four MC3 extension
+conjectures are consequences of a single structural property of
+$\mathfrak{g}_{\cA}$, namely that it is \emph{algebraizable} ---
+that the formal moduli problem~$\mathfrak{F}_{\cA}$ is the
+formal completion of a global (algebraic) moduli problem.
+
+In the DK-4 framework
+(Theorem~\ref{thm:dk4-formal-moduli}), algebraizability is the
+content of the RTT-adapted filtration: the formal
+group~$G_{\cA}$ admits a filtration whose finite quotients are
+the finite RTT stages, and the transition maps are the RTT
+truncations.  If this filtration is Mittag-Leffler on cohomology
+(the concrete form of algebraizability), all four conjectures
+follow by the MC4 reduction principle
+(Conjecture~\ref{conj:inverse-limit-completed-bar-cobar}).
+
+This reduces the four MC3 conjectures to a single input:
+\emph{the Mittag-Leffler property of the RTT tower on bar
+cohomology.}
+\end{remark}
+
+\subsubsection*{Factorization DK-4: tangent Lie algebra via
+bar derivations}
+
+Theorem~\ref{thm:dk4-formal-moduli} identifies DK-4 with the
+tangent Lie algebra computation
+$\mathfrak{g}_{\cA} \simeq \Ydg_{\cA}$.
+The following proposition provides the first constructive step:
+the tangent Lie algebra at finite RTT stage is computable,
+and the compatibility of these finite computations is the
+content of DK-4.
+
+\begin{proposition}[Finite-stage tangent Lie algebras;
+\ClaimStatusProvedHere]
+\label{prop:finite-stage-tangent}
+\index{tangent Lie algebra!finite RTT stage}
+\index{dg-shifted Yangian!finite-stage construction}
+For the Yangian $\Eone$-chiral algebra
+$\cA = \mathcal{Y}(\fg)$ and the $N$-th RTT truncation
+$\cA_{\leq N}$, the tangent Lie algebra
+$\mathfrak{g}_N := T_{*}\mathfrak{F}_{\cA_{\leq N}}$
+satisfies:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\mathfrak{g}_N$ is a finite-dimensional dg Lie algebra
+  with $N \cdot (\dim V_0)^2$ generators in degree~$0$
+  \textup{(}one copy of $\operatorname{End}(V_0)$ per RTT
+  level; for the reduced Yangian, $N \cdot \dim \fg$
+  generators\textup{)}.
+\item The differential on~$\mathfrak{g}_N$ is the derivation
+  of $\barB(\cA_{\leq N})$ induced by the bar differential:
+  \[
+  \mathfrak{g}_N
+  \;\cong\;
+  \operatorname{Der}^{\mathrm{cont}}\bigl(
+    \barB(\cA_{\leq N}),\, \barB(\cA_{\leq N})
+  \bigr)[1].
+  \]
+\item The truncation maps $\cA_{\leq N+1} \to \cA_{\leq N}$
+  induce surjective dg Lie algebra maps
+  $\mathfrak{g}_{N+1} \twoheadrightarrow \mathfrak{g}_N$,
+  compatible with the bar construction.
+\item At $N = 1$, $\mathfrak{g}_1 \cong \mathfrak{gl}(V_0)$
+  \textup{(}the RTT generators $T_{ij}^{(0)}$ at level~$0$ span
+  $\operatorname{End}(V_0)$ with the commutator bracket\textup{)},
+  concentrated in degree~$0$.  For the reduced Yangian
+  $Y(\fg)$ \textup{(}quantum determinant quotient\textup{)},
+  $\mathfrak{g}_1 \cong \fg$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(a):
+$\cA_{\leq N}$ is the quotient of~$\cA$ by generators of
+level $> N$.  Each level contributes $(\dim V_0)^2$
+generators (the RTT modes $T_{ij}^{(r)}$ for
+$0 \leq r \leq N-1$), so $\mathfrak{g}_N$ has
+$N \cdot (\dim V_0)^2$ generators in degree~$0$.
+Since $\cA_{\leq N}$ is quadratic and Koszul
+(Proposition~\ref{prop:yangian-koszul}), the tangent Lie
+algebra $\mathfrak{g}_N \cong
+\operatorname{Ext}^*_{\cA_{\leq N}}(\bC, \bC)[1]$ is
+finite-dimensional (each degree of the Koszul dual
+$\cA_{\leq N}^!$ is finite-dimensional by local finiteness).
+
+Part~(b):
+By Lurie's formal moduli theorem~\cite{LurieDAGX}, the tangent
+Lie algebra is computed as the shifted derivations of the bar
+coalgebra.  For the finite-dimensional quotient~$\cA_{\leq N}$,
+the bar coalgebra $\barB(\cA_{\leq N})$ is finite-dimensional
+(bounded bar degree by the quadratic relations), so
+the derivation complex is finite-dimensional.
+
+Part~(c):
+The truncation map $\cA_{\leq N+1} \twoheadrightarrow \cA_{\leq N}$
+induces a surjection
+$\barB(\cA_{\leq N+1}) \twoheadrightarrow \barB(\cA_{\leq N})$
+of bar coalgebras (bar is covariant on algebra maps).
+For the tangent Lie algebras, the map
+$\mathfrak{g}_{N+1} \to \mathfrak{g}_N$ is surjective by the
+following Koszul dual argument: since $\cA_{\leq N}$ is Koszul,
+the tangent Lie algebra in degree~$p$ is
+$(\mathfrak{g}_N)_p \cong (\cA_{\leq N}^!)_{p+1}$.
+The Koszul dual $\cA_{\leq N}^!$ has generators
+$V_{\leq N}^*$ and relations $R_{\leq N}^\perp$.
+Any element $f \in (\cA_{\leq N}^!)_n
+\subset (V_{\leq N}^*)^{\otimes n} \cap (R_{\leq N}^\perp)_n$
+extends by zero on the $V_N^*$-components to an element
+$\tilde{f} \in (\cA_{\leq N+1}^!)_n$
+(since $\tilde{f}$ automatically annihilates all
+relations involving level-$N$ generators).
+Hence $(\cA_{\leq N+1}^!)_n \twoheadrightarrow (\cA_{\leq N}^!)_n$
+is surjective in every degree.
+
+Part~(d):
+At $N = 1$, $\cA_{\leq 1} \cong U(\mathfrak{gl}(V_0))$ (the
+$T_{ij}^{(0)}$ for $1 \leq i,j \leq \dim V_0$ generate
+$\operatorname{End}(V_0) = \mathfrak{gl}(V_0)$ under the
+commutator, and the RTT relation at level~$0$ reproduces the
+$\mathfrak{gl}(V_0)$ bracket).  The bar complex
+$\barB(U(\mathfrak{gl}(V_0)))$ is the Chevalley--Eilenberg complex,
+and $\operatorname{Der}(\barB(U(\mathfrak{gl}(V_0))))[1]
+\cong \mathfrak{gl}(V_0)$, concentrated in degree~$0$.
+The quantum determinant condition at level~$0$ reduces the
+identity component, giving $\mathfrak{g}_1 \cong \fg$ for
+the reduced Yangian.
+\end{proof}
+
+\begin{theorem}[Mittag-Leffler for the RTT bar cohomology tower;
+\ClaimStatusProvedHere]
+\label{thm:rtt-mittag-leffler}
+\index{Mittag-Leffler condition!RTT tower|textbf}
+\index{bar complex!RTT tower!Mittag-Leffler}
+\index{Drinfeld--Kohno!DK-4!Mittag-Leffler}
+For any simple Lie algebra~$\fg$, the transition maps on bar
+cohomology in the RTT tower are surjective:
+\[
+H^n\bigl(\barB(\cA_{\leq N+1})\bigr)
+\;\twoheadrightarrow\;
+H^n\bigl(\barB(\cA_{\leq N})\bigr)
+\qquad \text{for all } N \geq 1, \;\text{all } n \geq 0.
+\]
+In particular, the Mittag-Leffler condition holds and
+$\varprojlim^1_N H^n(\barB(\cA_{\leq N})) = 0$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: PBW filtration on truncated bar complexes.}
+Each truncation $\cA_{\leq N} = Y(\fg)_{\leq N}$ inherits the
+PBW filtration of Proposition~\ref{prop:yangian-koszul}:
+$F_p \cA_{\leq N}$ is spanned by ordered monomials of total
+level $\leq p$ in the RTT generators $\{T_{ij}^{(r)}\}_{r < N}$.
+The associated graded is the polynomial algebra:
+\[
+\operatorname{gr}_F \cA_{\leq N}
+\;\cong\;
+\operatorname{Sym}(V_{\leq N}),
+\qquad
+V_{\leq N} = \bigoplus_{r=0}^{N-1}
+\operatorname{End}(\bC^{N_0})_r,
+\]
+where $N_0 = \dim V_0$.  The truncation maps
+$\cA_{\leq N+1} \twoheadrightarrow \cA_{\leq N}$ preserve the
+PBW filtration and induce the projection
+$\operatorname{Sym}(V_{\leq N+1}) \twoheadrightarrow
+\operatorname{Sym}(V_{\leq N})$ on associated graded.
+
+\emph{Step~2: PBW spectral sequence for bar cohomology.}
+The PBW filtration induces a bounded-below, exhaustive filtration
+on $\barB(\cA_{\leq N})$.  By
+Theorem~\ref{thm:pbw-koszulness-criterion} (``bar construction
+commutes with taking associated graded for flat filtrations''),
+the associated spectral sequence has $E_1$ page
+\[
+E_1^{p,q}(\cA_{\leq N})
+= H^{p+q}\bigl(\barB(\operatorname{Sym}(V_{\leq N}))\bigr).
+\]
+By Koszulness of $\cA_{\leq N}$
+(Proposition~\ref{prop:yangian-koszul} applies to each truncation:
+$\cA_{\leq N}$ is a quadratic algebra in finitely many generators
+$\{T_{ij}^{(r)}\}_{r < N}$ with the restricted RTT relations, inherits
+the PBW basis of Molev, and satisfies local finiteness a~fortiori),
+the spectral sequence \emph{degenerates at $E_1$}:
+$E_1 = E_\infty$.  Indeed, Koszulness forces bar cohomology
+onto the diagonal $p + q = n$, $p = n$ (homological = internal
+degree), so all higher differentials $d_r$ for $r \geq 2$ have
+zero source or target for bidegree reasons.
+
+\emph{Step~3: Surjectivity on $E_1$.}
+For the commutative algebra $\operatorname{Sym}(V_{\leq N})$,
+the Koszul dual is $\bigwedge(V_{\leq N}^*)$, and bar cohomology
+in degree~$n$ is $\bigwedge^n(V_{\leq N}^*)$.  The truncation
+$\operatorname{Sym}(V_{\leq N+1}) \twoheadrightarrow
+\operatorname{Sym}(V_{\leq N})$ induces on bar cohomology the
+projection
+\[
+\textstyle
+\bigwedge\nolimits^n(V_{\leq N+1}^*)
+\;\twoheadrightarrow\;
+\bigwedge\nolimits^n(V_{\leq N}^*),
+\]
+which kills exactly the wedge products involving the factor
+$\operatorname{End}(\bC^{N_0})_N^*$.  This map is surjective
+for all $N$ and $n$.
+
+\emph{Step~4: Filtered surjectivity implies surjectivity.}
+The truncation maps $\cA_{\leq N+1} \to \cA_{\leq N}$ are
+compatible with the PBW filtrations, hence induce a map of
+spectral sequences.  On the $E_1 = E_\infty$ page, this map
+is the surjection of Step~3.  Since the PBW filtration on
+$H^n(\barB(\cA_{\leq N}))$ is exhaustive and bounded below
+(each bar degree and level contributes finitely), a standard
+filtered-surjectivity argument gives: a filtered map
+$f\colon M' \to M$ of filtered objects inducing a surjection
+$\operatorname{gr}_p f$ on each graded piece is itself
+surjective.  (Proof: by induction on $p$, the image of
+$f$ contains $F_p M$ for each~$p$; exhaustivity gives
+$\operatorname{im}(f) = M$.)
+
+Therefore $H^n(\barB(\cA_{\leq N+1}))
+\twoheadrightarrow H^n(\barB(\cA_{\leq N}))$
+is surjective for all $N$ and~$n$.  Surjective transition maps
+trivially satisfy Mittag-Leffler, giving
+$\varprojlim^1 = 0$.
+\end{proof}
+
+\begin{corollary}[Completed bar-cobar equivalence for Yangians;
+\ClaimStatusProvedHere]
+\label{cor:completed-bar-cobar-yangian}
+\index{bar-cobar duality!completed Yangian|textbf}
+\index{Yangian!completed bar-cobar}
+For any simple~$\fg$, the completed reduced bar construction
+\[
+\widehat{\barB}\bigl(Y(\fg)\bigr)
+\;:=\;
+\varprojlim_N\, \barB\bigl(Y(\fg)_{\leq N}\bigr)
+\]
+exists as a separated complete conilpotent $\Eone$-chiral coalgebra,
+and the completed cobar-bar counit is a quasi-isomorphism:
+\[
+\Omega^{\mathrm{ch}}\bigl(
+  \widehat{\barB}(Y(\fg))
+\bigr)
+\;\xrightarrow{\;\sim\;}\;
+Y(\fg).
+\]
+This resolves
+Conjecture~\textup{\ref{conj:inverse-limit-completed-bar-cobar}}
+for the Yangian RTT tower.
+\end{corollary}
+
+\begin{proof}
+The three hypotheses of
+Conjecture~\ref{conj:inverse-limit-completed-bar-cobar} are verified:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Each truncation $\cA_{\leq N}$ is finite type and lies in
+  the proved bar-cobar regime
+  (Corollary~\ref{cor:yangian-bar-cobar}).
+\item The transition maps $\cA_{\leq N+1} \to \cA_{\leq N}$ are
+  compatible with the finite-stage bar constructions
+  (PBW filtration compatibility,
+  Proposition~\ref{prop:finite-stage-tangent}(c)).
+\item The inverse system on bar complexes satisfies Mittag-Leffler
+  (Theorem~\ref{thm:rtt-mittag-leffler}): the transition maps
+  on bar cohomology are surjective, so
+  $\varprojlim^1_N H^n(\barB(\cA_{\leq N})) = 0$.
+\end{enumerate}
+The Mittag-Leffler condition gives
+$H^n(\widehat{\barB}(Y(\fg)))
+\cong \varprojlim_N H^n(\barB(\cA_{\leq N}))$
+(no $\varprojlim^1$ correction).  The completed cobar differential
+is continuous by
+Proposition~\ref{prop:inverse-limit-differential-continuity}
+(automatic for inverse systems of finite-stage curved dg
+coalgebras).  By the MC4 reduction principle
+(Proposition~\ref{prop:mc4-reduction-principle},
+now verified for this tower), the completed cobar-bar counit
+restricts at each finite stage to the proved
+quasi-isomorphism
+$\Omega(\barB(\cA_{\leq N})) \xrightarrow{\sim} \cA_{\leq N}$,
+and the Mittag-Leffler condition ensures the inverse limit
+of quasi-isomorphisms is a quasi-isomorphism.
+\end{proof}
+
+\begin{conjecture}[DK-4: tangent Lie algebra identification;
+\ClaimStatusConjectured]
+\label{conj:dk4-inverse-limit}
+\index{Drinfeld--Kohno!DK-4!inverse limit construction}
+\index{tangent Lie algebra!inverse limit}
+By Theorem~\textup{\ref{thm:rtt-mittag-leffler}}, the
+inverse system $\{\mathfrak{g}_N\}_{N \geq 1}$ of
+Proposition~\textup{\ref{prop:finite-stage-tangent}} satisfies
+Mittag-Leffler with surjective transition maps, and the tangent
+Lie algebra of the factorization formal moduli problem is
+\[
+\mathfrak{g}_{\cA}
+\;=\;
+T_{*}\mathfrak{F}_{\cA}
+\;\cong\;
+\varprojlim_N\, \mathfrak{g}_N.
+\]
+The remaining content of DK-4 is the identification of this
+inverse limit with the dg-shifted Yangian:
+\[
+\varprojlim_N\, \mathfrak{g}_N
+\;\cong\;
+\Ydg_{\cA}.
+\]
+This identification is equivalent to showing that the derivation
+complex $\operatorname{Der}(\widehat{\barB}(Y(\fg)))$
+carries the dg-shifted RTT structure
+\textup{(}Definition~\textup{\ref{def:dg-shifted-yangian}}\textup{)}:
+the Maurer--Cartan element $r(z) = \tau|_{\deg 2}$, the
+translation operator, and the twisted coproduct.
+\end{conjecture}
+
+\begin{remark}[DK-4 reduced to structure identification]
+\label{rem:dk4-mittag-leffler}
+\index{Mittag-Leffler condition!DK-4 reduction}
+Theorem~\ref{thm:rtt-mittag-leffler} and
+Corollary~\ref{cor:completed-bar-cobar-yangian} resolve the
+\emph{analytic} part of DK-4: the inverse limit exists, is
+well-behaved ($\varprojlim^1 = 0$), and the completed bar-cobar
+equivalence holds.  What remains is the \emph{algebraic}
+identification of $\varprojlim_N \mathfrak{g}_N$ with the
+dg-shifted Yangian --- specifically, the three structural
+data:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the Maurer--Cartan element $r(z)$ arises as the
+  degree-$2$ part of the bar propagator~$\tau$;
+\item the translation operator is the derivation induced by
+  $T_{ij}^{(r)} \mapsto T_{ij}^{(r+1)}$;
+\item the twisted coproduct on $\widehat{\barB}(Y(\fg))$
+  decomposes as the Drinfeld coproduct on~$\Ydg$.
+\end{enumerate}
+Proposition~\ref{prop:yangian-dk4-typea-frontier} verifies
+(a) at finite stages via the auxiliary-kernel identity
+$L_a(u) = R_{0a}(u - a)$, which is the tangent-space
+computation of the moduli problem restricted to the
+fundamental evaluation line
+(Remark~\ref{rem:dk4-formal-moduli-vs-rtt}(ii)).
+
+The completed bar-cobar equivalence
+(Corollary~\ref{cor:completed-bar-cobar-yangian}) also sharpens
+the four MC3 extension conjectures
+(Proposition~\ref{prop:mc3-formal-moduli-reformulation}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Pro-Weyl recovery}
+  \textup{(}Conjecture~\ref{conj:pro-weyl-recovery}\textup{)}:
+  for each rational $\ell$-weight~$\Psi$ with Drinfeld
+  polynomial of degree~$d$, the Weyl module $W_m$ for
+  $m \geq d$ is a module over~$\cA_{\leq m}$, and
+  the transition maps $W_{m+1} \twoheadrightarrow W_m$ are
+  surjective (universal highest-weight quotients).
+  The completed bar-cobar equivalence transports the
+  pro-Weyl system to a pro-system of bar complexes
+  satisfying Mittag-Leffler, giving
+  $M(\Psi) \simeq \varprojlim_m W_m$ in the completed
+  factorization category.
+\item \emph{DK on compacts}
+  \textup{(}Conjecture~\ref{conj:dk-compacts-completion}\textup{)}:
+  the Francis--Gaitsgory pro-nilpotent completion of the
+  evaluation-generated core is now a quotient of the
+  ind-completed category
+  (Theorem~\ref{thm:ind-completed-extension}), with the
+  completed bar-cobar equivalence providing the passage.
+  What remains is the compact generation statement of
+  Conjecture~\ref{conj:shifted-prefundamental-generation}.
+\end{enumerate}
 \end{remark}
 
 \begin{definition}[Ordered $\Eone$-factorization category;

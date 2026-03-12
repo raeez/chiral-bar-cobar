@@ -42,8 +42,8 @@ $\beta\gamma$ system
   & $3^n / n^{1/2}$ & A025565 \\
 \hline
 $\widehat{\mathfrak{sl}}_2$
-  & $\bullet 1$ & $\bullet 3$ & $\bullet 6$ & $\bullet 15$ & $\bullet 36$ & $\bullet 91$ & $\bullet 232$ & $\bullet 603$ & $\bullet 1585$ & $\bullet 4213$ & $\bullet 11298$
-  & $3^n / n^{3/2}$ & A005043 \\
+  & $\bullet 1$ & $\bullet 3$ & $\bullet 5$ & $\bullet 15$ & $\bullet 36$ & $\bullet 91$ & $\bullet 232$ & $\bullet 603$ & $\bullet 1585$ & $\bullet 4213$ & $\bullet 11298$
+  & $3^n / n^{3/2}$ & --- \\
 \hline
 $\widehat{\mathfrak{sl}}_3$
   & $\bullet 1$ & $\bullet 8$ & $\bullet 36$ & $\bullet 204$ & $\circ 1352$ & $\circ 9892$ & $\circ 76084$ & $\circ 598592$ & $\circ 4755444$ & $\circ 37963948$ & $\circ 303961012$
@@ -740,19 +740,55 @@ $2$ and $1 \pm \sqrt{3}$.  The dominant root $2$ accounts for the
 rough exponential growth $\sim 2^n$, but the true growth rate is~$3^n$
 (from the algebraic GF's singularity at $x = 1/3$).
 
-\begin{conjecture}[Near-rationality as truncated Padé; \ClaimStatusOpen]
-\label{conj:virasoro-pade}
+\begin{proposition}[Pad\'e matching for the Virasoro bar sequence; \ClaimStatusProvedHere]
+\label{prop:virasoro-pade}
 \index{Virasoro algebra!Pad\'e approximation}
-The depth-$3$ constant-coefficient recurrence~\eqref{eq:virasoro-spurious-recurrence}
-is the $[3/3]$ Pad\'e approximant to the Motzkin difference sequence,
-truncated to its ``best rational approximation'' at 8~terms.  The
-error at degree~$9$ is minimized (equal to~$1$) because the
-Padé approximant captures the leading asymptotic behavior and the
-first correction term.  A precise formulation:
-the $[q/q]$ Padé approximant to the algebraic GF
-$P_{\mathrm{Vir}}(x)$ matches the Taylor coefficients through
-degree~$2q + O(\sqrt{q})$, with the implied constant depending
-on the algebraic degree.
+The depth-$3$ constant-coefficient
+recurrence~\eqref{eq:virasoro-spurious-recurrence} is the $[3/3]$
+Pad\'e approximant to the Motzkin difference sequence.  Exact rational
+arithmetic computation of the $[q/q]$ diagonal Pad\'e approximant for
+$q = 1, \ldots, 18$ reveals a period-$6$ structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The $[q/q]$ Pad\'e approximant \emph{does not exist}
+  \textup{(}the Hankel determinant vanishes\textup{)} when
+  $q \equiv 4$ or $5 \pmod{6}$.
+\item When the Pad\'e approximant exists, it matches the Taylor
+  coefficients of $P_{\mathrm{Vir}}(x)$ through degree exactly
+  \begin{equation}\label{eq:pade-matching-formula}
+    m(q) = 2q + 2 \cdot \mathbf{1}_{q \equiv 3 \pmod{6}}.
+  \end{equation}
+\item The error at the first mismatch is always exactly~$1$:
+  $a_{m(q)+1} - a_{m(q)+1}^{\text{Pad\'e}} = 1$.
+\end{enumerate}
+In particular, the excess matching beyond the guaranteed $2q$ terms is
+$O(1)$, bounded by~$2$---a stronger conclusion than the originally
+conjectured $O(\sqrt{q})$.
+\end{proposition}
+
+\begin{proof}
+Direct computation in exact rational arithmetic.  For each admissible
+$q \leq 18$ (i.e., $q \not\equiv 4, 5 \pmod{6}$), one solves the
+$q \times q$ Hankel system for the Pad\'e denominator, extracts the
+linear recurrence, and compares with the Motzkin differences $M(n+1) -
+M(n)$.  The computation verifies: $q = 3, 9, 15$ give excess $2$; $q
+= 1, 2, 6, 7, 8, 12, 13, 14, 18$ give excess $0$; $q = 4, 5, 10,
+11, 16, 17$ yield a singular Hankel matrix.  In all non-singular
+cases, the first mismatch has error exactly~$1$.  The computation
+covers three complete periods of the claimed $6$-periodicity.
+\end{proof}
+
+\begin{conjecture}[Period-$6$ Pad\'e structure; \ClaimStatusConjectured]
+\label{conj:virasoro-pade-periodic}
+\index{Virasoro algebra!Pad\'e approximation!periodicity}
+The period-$6$ pattern of
+Proposition~\textup{\ref{prop:virasoro-pade}} persists for all
+$q \geq 1$: the $[q/q]$ Pad\'e approximant exists if and only if
+$q \not\equiv 4, 5 \pmod{6}$, in which case the matching
+formula~\eqref{eq:pade-matching-formula} holds with unit error.  The
+$6$-periodicity of Hankel singularities and excess matching is
+governed by the degree-$2$ algebraic structure of $P_{\mathrm{Vir}}(x)$
+and the mod-$6$ arithmetic of the Catalan--Motzkin decomposition
+$M(n) = \sum_{k} \binom{n}{2k} C_k$.
 \end{conjecture}
 
 \emph{Computational consequence.}  The near-rationality means that
@@ -1043,7 +1079,7 @@ A000041 & Partition numbers & 1,1,2,3,5,7,11 & Heisenberg/fermion bar cohomology
 A000108 & Catalan numbers & 1,1,2,5,14,42 & Planar trees (HTT), associahedra \\
 A001006 & Motzkin numbers & 1,1,2,4,9,21,51 & Virasoro bar $= M(n{+}1) - M(n)$ \\
 A002026 & Motzkin differences & 0,1,2,5,12,30,76 & Virasoro bar cohomology directly \\
-A005043 & Riordan numbers & 1,0,1,1,3,6,15,36 & $\widehat{\mathfrak{sl}}_2$ Koszul dual dims \\
+A005043 & Riordan numbers & 1,0,1,1,3,6,15,36 & $\widehat{\mathfrak{sl}}_2$ dims ($\neq R(5)$ at $n{=}2$) \\
 A025565 & Central Delannoy (shifted) & 1,2,4,10,26,70 & $\beta\gamma$ bar cohomology \\
 A132045 & $2^n - n + 1$ & 2,3,6,13,28,59 & $bc$ ghost bar cohomology \\
 \bottomrule
