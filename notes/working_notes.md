@@ -233,12 +233,12 @@ For each proved theorem, the H-level (factorization-categorical) uplift status:
 | `independent_conjectures.py` | 57 | PASS | Independent |
 | `w4_ds_ope_extraction.py` | 121 | PASS | MC4 W₄ |
 | `w4_ds_ope.py` | — | LIB | MC4 W₄ Miura |
-| `w4_ope_miura.py` | 52 | PASS | MC4 W₄ Miura verification |
+| `w4_ope_miura.py` | 56 | PASS | MC4 W₄ Miura verification |
 | `pro_weyl_m_level.py` | 344 | PASS | MC3 G6 |
 | `shifted_prefundamental_sl2.py` | 83 | PASS | MC3 G5 shifted |
 | `bar_deg2_resolution.py` | 25 | PASS | MC3 deg-2 resolution |
-| `sectorwise_finiteness.py` | 91 | PASS | MC3 lattice bypass |
-| `kl_ncomplex_sl2.py` | 68 | PASS | MC3 KL N-complex |
+| `sectorwise_finiteness.py` | 93 | PASS | MC3 lattice bypass |
+| `kl_ncomplex_sl2.py` | 74 | PASS | MC3 KL N-complex |
 | `dk_compact_generation.py` | 101 | PASS | MC3 G7 |
 
 **Total new tests**: 1,268 (fast) + ~115 (slow, deselected)
@@ -252,14 +252,15 @@ The critical path G4→G5→G6→G7→G1 now has computational evidence at:
 - G5: FIRST EVIDENCE (103+83 tests, TQ for prefundamentals, partition function structure, shifted category O via `hjz_prefundamental.py` + `shifted_prefundamental_sl2.py`)
 - G6: M-level DONE (344 tests, chain-level Ext groups + derived inverse limits via `pro_weyl_m_level.py`)
 - G7: DONE (101 tests, DK ladder status + thick closure + FG completion data via `dk_compact_generation.py`)
-- G1: Downstream of G4-G7. KL N-complex verified (68 tests, d_q^N=0 + d_q²≠0 via `kl_ncomplex_sl2.py`)
-- Lattice bypass: sectorwise finiteness verified (91 tests via `sectorwise_finiteness.py`)
+- G1: Downstream of G4-G7. KL N-complex verified (74 tests, d_q^N=0 + d_q²≠0 via `kl_ncomplex_sl2.py`)
+- Lattice bypass: sectorwise finiteness verified (93 tests via `sectorwise_finiteness.py`)
 
 **The single most important mathematical question**: Does the partition function p(k) growth of L⁻ weight multiplicities allow thick generation of Verma modules with multiplicity-1 weight spaces? The "gap" p(k)-1 at each level k≥2 must be filled by exact triangles with evaluation modules. This is a question about the representation theory of Y(sl₂) that could potentially be resolved by a careful analysis of the tensor product structure.
 
-### Corrections to Manuscript Claims
+### Corrections to Manuscript Claims — ALL INSTALLED
 
-1. **c=26 self-duality**: Any claim should be reframed. c=13 is self-dual, c=26 is dual to trivial.
-2. **Classical Koszul relation**: H_A(t)·H_{A!}(-t)=1 does NOT hold in chiral setting. OS algebra structure modifies it.
-3. **Virasoro near-rationality**: Breaks at degree 9 (Padé discrepancy of 1). GF is algebraic, not rational.
-4. **O_poly is the natural DK domain**: The "full O generation problem" for MC3 is partly a phantom — O_poly is already the right target for factorization DK.
+1. **c=26 self-duality**: ✓ INSTALLED. poincare_computations.tex states c=13 is self-dual; c=26 dual to trivial.
+2. **Classical Koszul relation**: ✓ VERIFIED. H_A(t)·H_{A!}(-t)=1 NOT overclaimed in manuscript (used only as consistency check).
+3. **Virasoro near-rationality**: ✓ INSTALLED. conj:virasoro-pade upgraded to ProvedHere in combinatorial_frontier.tex.
+4. **O_poly is the natural DK domain**: ✓ INSTALLED. rem:poly-O-natural-domain in yangians.tex (lines 3139–3161).
+5. **prop:yangian-bar-loop-weight scope**: ✓ FIXED (this session). Statement generalized from sl_N to any simple g — proof is type-independent (root lattice grading, PBW theorem, finiteness at fixed weight+level). Fixes scope mismatch with cor:dk23-all-types.
