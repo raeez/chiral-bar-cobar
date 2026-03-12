@@ -28,7 +28,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from math import gcd
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -116,24 +116,18 @@ def admissible_weights_sl2(level: AdmissibleLevel) -> List[AdmissibleWeight]:
     For k = p/q - 2, the admissible weights are labeled by (r,s)
     with 1 <= r <= p-1, 1 <= s <= q.
 
-    The highest weight (sl_2 spin) for module L(r,s):
-        j_{r,s} = (r-1)/2 - (s-1) * p/(2q)
+    The highest sl_2-weight (spin) for module L(r,s):
+        j_{r,s} = ((r-1) - (s-1)*p/q) / 2
 
-    Wait, the standard parametrization: the conformal weight is
-        h_{r,s} = ((rq - sp)^2 - (p-q)^2) / (4pq)
+    For s=1 (standard modules): j_{r,1} = (r-1)/2.
 
-    which is the Kac formula for the Virasoro algebra at
-    c = 1 - 6(p-q)^2/(pq).
+    The Sugawara conformal weight (L_0 eigenvalue on h.w. vector):
+        h_{r,s} = j_{r,s}(j_{r,s}+1) / (k+2) = j_{r,s}(j_{r,s}+1) * q/p
 
-    For the sl_2 affine algebra, the highest sl_2-weight (spin) is:
-        j_{r,s} = (r-1)/2  for s=1 (standard modules)
-
-    More generally:
-        j_{r,s} = ((r-1) - (s-1)(k+2))/2 = ((r-1) - (s-1)p/q)/2
-
-    And the conformal weight:
-        h_{r,s} = j_{r,s}(j_{r,s}+1)/(k+2)
-                = j_{r,s}(j_{r,s}+1) * q/p
+    NOTE: This is the AFFINE sl_2 conformal weight, NOT the Virasoro
+    Kac formula h = ((rq-sp)^2-(p-q)^2)/(4pq). The Kac formula gives
+    conformal weights for the COSET (Virasoro) realization, which is
+    a different quantity.
     """
     p, q = level.p, level.q
     weights = []
@@ -199,20 +193,24 @@ def zhu_algebra_sl2(level: AdmissibleLevel) -> ZhuAlgebraData:
 def admissible_modular_s_matrix_sl2(level: AdmissibleLevel) -> np.ndarray:
     """Compute the modular S-matrix for admissible sl_2 representations.
 
-    For k = p/q - 2, the S-matrix entries are:
-        S_{(r,s),(r',s')} = (-1)^{(r+s)(r'+s')} * 2/sqrt(pq)
-                           * sin(pi*r*r'/p) * sin(pi*s*s'/q)
+    Two regimes with DIFFERENT formulas:
 
-    Wait, the precise formula depends on conventions. For the
-    Kac-Wakimoto S-matrix at admissible levels:
+    (A) Integrable levels (q=1): modules labeled by r=1,...,p-1.
+        Standard SU(2)_k S-matrix (k = p-2):
+            S_{r,r'} = sqrt(2/p) * sin(pi*r*r'/p)
 
-    S_{(r,s),(r',s')} = (2/sqrt(pq)) * (-1)^{...}
-                       * sin(pi*r*r'*q/p) * sin(pi*s*s'*p/q)
+    (B) Non-integrable admissible (q >= 2): modules labeled by (r,s)
+        with 1 <= r <= p-1, 1 <= s <= q.
+        Provisional formula (Kac-Wakimoto type):
+            S_{(r,s),(r',s')} = (-1)^{rs'+r's} * (2/sqrt(pq))
+                               * sin(pi*r*r'/p) * sin(pi*s*s'/q)
 
-    This is model-dependent. Let me use a simpler approach:
-    compute the S-matrix elements and check unitarity.
-
-    For the Verlinde formula: N_{ij}^k = sum_l S_{il} S_{jl} S_{kl}^* / S_{0l}
+        CAVEAT: The precise sign convention and normalization for
+        the admissible S-matrix depend on the choice of modular
+        functor. The formula above is a standard ansatz that gives
+        approximately integral Verlinde coefficients for small (p,q),
+        but is NOT rigorously verified against all Creutzig-Ridout
+        conventions. Use fusion integrality as a sanity check only.
     """
     p, q = level.p, level.q
     n = (p - 1) * q  # number of simple modules
@@ -224,15 +222,23 @@ def admissible_modular_s_matrix_sl2(level: AdmissibleLevel) -> np.ndarray:
             indices.append((r, s))
 
     S = np.zeros((n, n), dtype=complex)
-    norm = 2.0 / np.sqrt(p * q)
 
-    for i, (r, s) in enumerate(indices):
-        for j, (rp, sp) in enumerate(indices):
-            sign = (-1) ** ((r + s + rp + sp) % 2)
-            S[i, j] = sign * norm * (
-                np.sin(np.pi * r * rp / p)
-                * np.sin(np.pi * s * sp / q)
-            )
+    if q == 1:
+        # Integrable: standard SU(2)_k S-matrix
+        norm = np.sqrt(2.0 / p)
+        for i, (r, _) in enumerate(indices):
+            for j, (rp, _) in enumerate(indices):
+                S[i, j] = norm * np.sin(np.pi * r * rp / p)
+    else:
+        # Non-integrable admissible: two-index formula
+        norm = 2.0 / np.sqrt(p * q)
+        for i, (r, s) in enumerate(indices):
+            for j, (rp, sp) in enumerate(indices):
+                sign = (-1) ** ((r * sp + rp * s) % 2)
+                S[i, j] = sign * norm * (
+                    np.sin(np.pi * r * rp / p)
+                    * np.sin(np.pi * s * sp / q)
+                )
 
     return S
 
@@ -261,11 +267,17 @@ def fusion_rules_sl2(level: AdmissibleLevel) -> np.ndarray:
 
 
 def verify_fusion_integrality(level: AdmissibleLevel) -> Dict:
-    """Verify that fusion coefficients are non-negative integers.
+    """Check whether Verlinde-type coefficients are approximately integral.
 
-    For admissible levels, the fusion rules should still give
-    non-negative integer coefficients (the category is a
-    finite tensor category, possibly non-semisimple).
+    IMPORTANT DISTINCTION:
+    - At INTEGRABLE levels (q=1): the S-matrix formula is correct (standard
+      SU(2)_k), and the Verlinde coefficients ARE non-negative integers
+      (fusion multiplicities in a semisimple MTC). Tolerance: ~1e-10.
+
+    - At NON-INTEGRABLE admissible levels (q >= 2): the S-matrix formula is
+      PROVISIONAL, and the Verlinde formula computes Grothendieck ring
+      structure constants (NOT fusion multiplicities). In non-semisimple
+      categories, these CAN be negative. Use results with caution.
     """
     N_tensor = fusion_rules_sl2(level)
     n = N_tensor.shape[0]
@@ -287,6 +299,12 @@ def verify_fusion_integrality(level: AdmissibleLevel) -> Dict:
                     negative_count += 1
                 total += 1
 
+    # Use tight tolerance for integrable, loose for non-integrable
+    if level.is_integrable:
+        tol = 1e-10
+    else:
+        tol = 0.01  # provisional S-matrix; Grothendieck ring, not fusion
+
     return {
         "level": f"k = {level.k} (p={level.p}, q={level.q})",
         "n_simples": n,
@@ -294,7 +312,8 @@ def verify_fusion_integrality(level: AdmissibleLevel) -> Dict:
         "max_fractional_part": max_frac,
         "negative_coefficients": negative_count,
         "integer_up_to": max_frac,
-        "is_integral": max_frac < 0.1 and max_imag < 0.1,
+        "is_integral": max_frac < tol and max_imag < tol,
+        "integrable": level.is_integrable,
     }
 
 
@@ -354,16 +373,19 @@ def module_category_sl2_admissible(level: AdmissibleLevel) -> ModuleCategoryData
     ext1_dims: Dict[Tuple[int, int], int] = {}
 
     # For q >= 2, adjacent modules in the Kac table have extensions
+    # HEURISTIC: Ext^1 nonzero for Kac-table-adjacent pairs.
+    # This is a rough approximation — the actual Ext groups depend on
+    # the Loewy structure of projective covers (Adamovic, Creutzig-Ridout).
+    # Adjacency in the Kac table is suggestive but not rigorous.
     for i, w1 in enumerate(weights):
         for j, w2 in enumerate(weights):
             if i >= j:
                 continue
-            # Heuristic for Ext^1: adjacent in Kac table
             dr = abs(w1.r - w2.r)
             ds = abs(w1.s - w2.s)
             if (dr == 0 and ds == 1) or (dr == 1 and ds == 0):
                 extensions.append((w1.label, w2.label))
-                ext1_dims[(i, j)] = 1
+                ext1_dims[(i, j)] = 1  # heuristic
 
     return ModuleCategoryData(
         level=level,
@@ -446,25 +468,32 @@ def h2_cyc_analysis_w_algebra_admissible(
     For W-algebras, there ARE primary strong generators (W_3, ..., W_N),
     so H^2_cyc,prim is potentially nonzero.
 
-    At GENERIC level: the BRST argument applies.
-        The DS reduction functor gives a unique W-algebra structure,
-        so dim H^2_cyc = 1 at generic k.
+    TWO LOGICALLY DISTINCT ARGUMENTS:
 
-    At ADMISSIBLE level: the BRST argument STILL applies!
-        The quantum DS reduction H^0_DS(-, f) is well-defined at all
-        levels k != -h^vee. At admissible k, the reduction produces
-        a UNIQUE vertex algebra structure on the BRST cohomology.
-        There are no additional moduli (the BRST complex is rigid).
-        Therefore dim H^2_cyc(W^k(g,f), W^k(g,f)) = 1 even at
-        admissible levels.
+    (A) At GENERIC level (proved, prop:nonprincipal-scalar-saturation):
+        The OPE coefficients are rational functions of k, uniquely
+        determined by the BRST construction. Therefore the deformation
+        space is one-dimensional (the level direction).
 
-    This is the content of prop:nonprincipal-scalar-saturation:
-    "the BRST pullback for W-algebras covers all levels, not just
-    generic ones" (manuscript line 15313-15315).
+    (B) At ADMISSIBLE level (partially proved):
+        The DS reduction functor H^0_DS(-,f) is well-defined at all
+        k != -h^vee. At admissible k, the reduction still produces
+        a vertex algebra, and its OPE coefficients are obtained by
+        specializing the generic rational functions to k = k_adm.
+        Since the rational functions have no additional moduli,
+        the specialization is unique.
 
-    The remaining frontier: vertex algebras at admissible levels that
-    are NOT obtained by DS reduction. These are rare; the main candidates
-    are simple current extensions and permutation orbifolds.
+        CAVEAT: This argument assumes the rational function description
+        extends without extra poles or zeros at admissible k. At levels
+        where the BRST complex has non-trivial higher cohomology (which
+        CAN happen at admissible levels), additional moduli could
+        appear. No counterexample is known, but the argument is not
+        fully rigorous at all admissible levels.
+
+    Manuscript status (rem:cyclic-rigidity-scope, line 15313-15315):
+        "the BRST pullback for W-algebras covers all levels" — this
+        refers to the EXISTENCE of scalar saturation, not a complete
+        proof at every admissible level.
     """
     if level.is_integrable:
         kl = True
@@ -472,26 +501,31 @@ def h2_cyc_analysis_w_algebra_admissible(
             "W-algebra at integrable level: module category semisimple, "
             "KL argument applies."
         )
+        status = True
     else:
         kl = False
         mechanism = (
             f"W_{N} = DS(sl_{N}) at admissible level k = {level.k}: "
-            f"the BRST reduction functor produces a UNIQUE vertex algebra "
-            f"structure. The deformation space is one-dimensional (the level "
-            f"direction) because the BRST complex has no additional moduli. "
-            f"This holds at ALL levels k != -h^vee, including admissible."
+            f"the BRST reduction produces OPE coefficients that are "
+            f"specializations of generic rational functions of k. "
+            f"At generic k, uniqueness is proved (Fateev-Lukyanov). "
+            f"At admissible k, uniqueness holds if no extra BRST "
+            f"cohomology appears. No counterexample known, but the "
+            f"argument has a gap at levels with non-trivial H^1_DS."
         )
+        # Conservatively: proved at generic, strongly expected at admissible
+        status = True  # manuscript treats this as proved (prop:nonprincipal)
 
     return CyclicCohomologyAnalysis(
         level=level,
         h2_cyc_level_component=1,
-        h2_cyc_prim_upper_bound=0,  # BRST rigidity gives this
+        h2_cyc_prim_upper_bound=0,
         h2_cyc_prim_lower_bound=0,
         whitehead_applies=True,
         kl_semisimplicity=kl,
-        brst_rigidity=True,  # the key alternative argument
+        brst_rigidity=True,  # the alternative argument
         mechanism=mechanism,
-        scalar_saturated=True,
+        scalar_saturated=status,
     )
 
 
@@ -566,33 +600,50 @@ def frontier_analysis_sl2() -> List[CyclicCohomologyAnalysis]:
 
 
 def frontier_analysis_w_algebras() -> List[CyclicCohomologyAnalysis]:
-    """Analyze H^2_cyc for W_N at small admissible levels."""
+    """Analyze H^2_cyc for W_N at small admissible levels.
+
+    NOTE: We use sl_2-type admissible level DATA as stand-ins for the
+    level parameter. The actual admissible levels of sl_N have the form
+    k = p/q - N (h^vee = N for sl_N), not k = p/q - 2. The central
+    charge and module count in the AdmissibleLevel object are for sl_2
+    and should NOT be taken as valid for W_N. What IS valid: the
+    structural analysis (BRST rigidity argument, scalar saturation
+    conclusion) which depends on the LEVEL PARAMETER, not on sl_2-specific data.
+    """
     results = []
     for N in [2, 3, 4]:
-        # h^vee = N for sl_N, so k = p/q - N for W_N admissibility
-        # Use sl_2-type admissible levels as prototypes
         for p, q in [(3, 2), (4, 3), (5, 2), (5, 3)]:
             if gcd(p, q) == 1 and p >= 2:
-                level = admissible_level_sl2(p, q)  # repurpose for level data
+                level = admissible_level_sl2(p, q)  # stand-in for level data
                 results.append(h2_cyc_analysis_w_algebra_admissible(N, level))
     return results
 
 
 def frontier_analysis_extensions() -> List[CyclicCohomologyAnalysis]:
-    """Analyze the genuine frontier: extensions at admissible levels."""
+    """Analyze the genuine frontier: non-DS constructions at admissible levels.
+
+    These include screening-kernel algebras (e.g., triplet algebras W(p))
+    and certain extended affine VOAs. They are NOT simple current extensions
+    (triplet algebras are logarithmic, non-rational constructions).
+
+    The admissible level objects used here are stand-ins for the level
+    parameter — the actual triplet algebra W(p) has c = 1 - 6(p-1)^2/p
+    (Virasoro type), and its construction involves screening operators
+    on a lattice VOA, not the sl_2 module category.
+    """
     results = []
 
-    # Triplet algebras W(p) at admissible levels
-    # Need coprime (p_param, q) pairs for admissible_level_sl2
+    # Triplet algebras W(p): screening-kernel constructions
+    # Use sl_2 admissible levels as stand-ins for the level parameter
     triplet_levels = [
-        (2, admissible_level_sl2(3, 2)),   # W(2), k = -1/2
-        (3, admissible_level_sl2(5, 2)),   # W(3), k = 1/2
-        (5, admissible_level_sl2(7, 2)),   # W(5), k = 3/2 (not really admissible — used as prototype)
-        (7, admissible_level_sl2(5, 3)),   # W(7), k = -1/3
+        (2, admissible_level_sl2(3, 2)),   # W(2), stand-in level k = -1/2
+        (3, admissible_level_sl2(5, 2)),   # W(3), stand-in level k = 1/2
+        (5, admissible_level_sl2(7, 2)),   # W(5), stand-in level k = 3/2
+        (7, admissible_level_sl2(5, 3)),   # W(7), stand-in level k = -1/3
     ]
     for p_trip, level in triplet_levels:
         results.append(h2_cyc_analysis_extension_voa(
-            f"W({p_trip}) triplet",
+            f"W({p_trip}) triplet (screening-kernel)",
             level,
             n_extra_generators=1,  # W(p) has one extra generator
         ))
@@ -605,8 +656,8 @@ def comprehensive_saturation_analysis() -> Dict:
 
     Summarizes the status of H^2_cyc,prim for:
     1. Pure Kac-Moody at admissible levels (PROVED: trivially 0)
-    2. W-algebras at admissible levels (PROVED: BRST rigidity)
-    3. Simple current extensions (OPEN: genuine frontier)
+    2. W-algebras at admissible levels (PROVED at generic k, EXPECTED at admissible)
+    3. Screening-kernel / non-DS extensions (OPEN: genuine frontier)
     """
     km_results = frontier_analysis_sl2()
     w_results = frontier_analysis_w_algebras()
@@ -630,8 +681,8 @@ def comprehensive_saturation_analysis() -> Dict:
         "w_algebras": {
             "count": len(w_results),
             "all_saturated": w_all_saturated,
-            "mechanism": "BRST rigidity of DS reduction",
-            "status": "PROVED",
+            "mechanism": "BRST rigidity of DS reduction (generic k proved, admissible expected)",
+            "status": "PROVED_GENERIC",
         },
         "extensions": {
             "count": len(ext_results),
@@ -642,10 +693,11 @@ def comprehensive_saturation_analysis() -> Dict:
         },
         "overall": {
             "conjecture": "conj:scalar-saturation-universality",
-            "proved_classes": "Kac-Moody (all levels), W-algebras (all levels)",
-            "open_class": "Simple current extensions at admissible levels",
+            "proved_classes": "Kac-Moody (all levels), W-algebras (generic level)",
+            "open_class": "Non-DS extensions at admissible levels",
             "structural_reason": (
-                "The conjecture reduces to: do simple current extensions "
+                "The conjecture reduces to: do non-DS constructions "
+                "(screening-kernel algebras, extended affine VOAs) "
                 "at admissible levels admit continuous deformations beyond "
                 "the level? No example is known, but no proof exists."
             ),
@@ -658,21 +710,20 @@ def comprehensive_saturation_analysis() -> Dict:
 # ========================================================================
 
 def ext_bound_from_fusion(level: AdmissibleLevel) -> Dict:
-    """Bound Ext^1 dimensions from the fusion rules.
+    """Summarize Ext group structure at an admissible level.
 
-    In a braided finite tensor category, the fusion rules give
-    a lower bound on Ext groups. Specifically:
-        N_{ij}^0 = dim Hom(L_i x L_j, L_0)
-    and the failure of semisimplicity is witnessed by the
-    difference between the Grothendieck ring multiplication
-    and the actual tensor product.
+    Returns the module category data (semisimplicity, extension pairs)
+    and documents the key distinction between module Ext^1 and
+    bimodule Ext^2.
 
-    For our purposes: we need Ext^2 of the BIMODULE category,
-    not Ext^1 of the module category. These are different:
-        Ext^2_{A-bimod}(A, A) ≠ Ext^1_{A-mod}(M, N) in general
+    NOTE: This function does NOT compute bounds from the Verlinde
+    formula — it reports the heuristic Ext^1 data from the module
+    category analysis. The name is historical.
 
-    The key structural point: even when Ext^1_{mod} ≠ 0 (non-semisimple),
+    Key structural point: even when Ext^1_{mod} != 0 (non-semisimple),
     it's possible that Ext^2_{bimod} = 0 (no new deformations).
+    The relevant group for scalar saturation is Ext^2_{A-bimod}(A, A),
+    NOT Ext^1_{A-mod}(M, N).
     """
     cat = module_category_sl2_admissible(level)
 

@@ -36,6 +36,7 @@ from compute.lib.km_chiral_bar import (
     sl2_killing_form_float,
     DIM_SL2,
 )
+from compute.lib.sl3_bar import DIM_G as SL3_DIM, sl3_structure_constants
 
 
 # =========================================================================
@@ -77,13 +78,18 @@ class TestSl2BarCohomology:
         assert cohom[0] == 1
 
     def test_first_values(self):
-        """H^0=1, H^1=3, H^2=6, H^3=15, H^4=36, H^5=91."""
+        """H^0=1, H^1=3, H^2=5, H^3=15, H^4=36, H^5=91.
+
+        H^2=5 (not 6): Riordan R(5)=6 is wrong; corrected via
+        H^2_{h=2}=0 (bar_deg2_resolution) and H^2(CE)=5.
+        """
         cohom = sl2_bar_cohomology(5)
-        assert cohom == [1, 3, 6, 15, 36, 91]
+        assert cohom == [1, 3, 5, 15, 36, 91]
 
     def test_h2_matches_degree2_formula(self):
-        """H^2(sl_2) = C(4,2) = 6 from degree-2 universal formula."""
+        """H^2(sl_2) = 5 (corrected, not Riordan's 6)."""
         cohom = sl2_bar_cohomology(2)
+        assert cohom[2] == 5
         assert cohom[2] == bar_cohomology_degree2(DIM_SL2)
 
 
@@ -107,8 +113,9 @@ class TestSl3BarCohomology:
             assert cohom[n] == 11 * cohom[n-1] - 23 * cohom[n-2] - 8 * cohom[n-3]
 
     def test_h2_matches_degree2_formula(self):
-        """H^2(sl_3) = C(9,2) = 36."""
+        """H^2(sl_3) = 36 (verified by direct computation)."""
         cohom = sl3_bar_cohomology(2)
+        assert cohom[2] == 36
         assert cohom[2] == bar_cohomology_degree2(8)
 
     def test_truncated_output(self):
@@ -118,21 +125,21 @@ class TestSl3BarCohomology:
 
 
 class TestBarCohomologyDegree2:
-    """Universal formula: dim H^2 = C(dim_g + 1, 2)."""
+    """Known H^2 values (no closed-form formula)."""
 
     def test_sl2(self):
-        assert bar_cohomology_degree2(3) == 6
+        """H^2(sl_2-hat) = 5, not the old claim of 6."""
+        assert bar_cohomology_degree2(3) == 5
 
     def test_sl3(self):
+        """H^2(sl_3-hat) = 36 (prop:sl3-pbw-ss)."""
         assert bar_cohomology_degree2(8) == 36
 
-    def test_so5(self):
-        """so(5) = B_2, dim = 10."""
-        assert bar_cohomology_degree2(10) == 55
-
-    def test_dim1(self):
-        """Edge case: dim 1 gives C(2,1) = 1."""
-        assert bar_cohomology_degree2(1) == 1
+    def test_unknown_raises(self):
+        """Unknown dimensions raise NotImplementedError."""
+        import pytest
+        with pytest.raises(NotImplementedError):
+            bar_cohomology_degree2(10)
 
 
 # =========================================================================
@@ -285,6 +292,15 @@ class TestVerifySl3Known:
 
 
 class TestVerifyBracketRanks:
+    """Bracket rank verification for sl_3.
+
+    Each test calls verify_bracket_ranks_sl3(3), which internally computes
+    chiral bracket differentials up to degree 4.  The degree-4 OS
+    bracket for sl_3 (d=8) allocates ~900 MB, so the class is marked slow
+    to keep the fast suite under memory limits.
+    """
+
+    @pytest.mark.slow
     def test_all_pass(self):
         results = verify_bracket_ranks_sl3(3)
         for name, data in results.items():
@@ -294,14 +310,17 @@ class TestVerifyBracketRanks:
 
     def test_ce_rank_at_2(self):
         """CE rank at degree 2 = dim(g) = 8 for sl_3."""
-        results = verify_bracket_ranks_sl3(3)
-        assert results.get("CE rank(d: B^2 -> B^1)") == 8
+        sc = {(a, b): {c: float(v) for c, v in targets.items()}
+              for (a, b), targets in sl3_structure_constants().items()}
+        assert bracket_diff_rank(SL3_DIM, sc, 2) == 8
 
     def test_ce_rank_at_3(self):
         """CE rank at degree 3 = 56 for sl_3 (no OS forms)."""
-        results = verify_bracket_ranks_sl3(3)
-        assert results.get("CE rank(d: B^3 -> B^2)") == 56
+        sc = {(a, b): {c: float(v) for c, v in targets.items()}
+              for (a, b), targets in sl3_structure_constants().items()}
+        assert bracket_diff_rank(SL3_DIM, sc, 3) == 56
 
+    @pytest.mark.slow
     def test_os_rank_at_3(self):
         """OS rank at degree 3 = 63 (comp:sl3-modular-rank)."""
         results = verify_bracket_ranks_sl3(3)

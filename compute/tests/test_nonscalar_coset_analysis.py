@@ -29,6 +29,7 @@ from compute.lib.nonscalar_coset_analysis import (
     gko_level_set_dimension,
     gko_sl2_virasoro_central_charge,
     gko_minimal_model_identification,
+    gko_degenerate_point,
     # Non-GKO
     non_gko_coset,
     non_gko_jacobian,
@@ -228,6 +229,51 @@ class TestGKOJacobian(unittest.TestCase):
         """Systematic scan: GKO G_2 has Jacobian rank 1 everywhere."""
         result = scan_gko_jacobian_rank("G2")
         self.assertTrue(result["generic_rank_is_1"])
+
+    def test_degenerate_point_sl2(self):
+        """Degenerate point k1 = k2 = -4/3 for sl_2 (h^vee=2)."""
+        k_deg = gko_degenerate_point(2)
+        self.assertEqual(k_deg, (Fraction(-4, 3), Fraction(-4, 3)))
+        # Rank should be 0 at degenerate point
+        rank = gko_effective_parameter_rank(3, 2, k_deg[0], k_deg[1])
+        self.assertEqual(rank, 0)
+
+    def test_degenerate_point_sl3(self):
+        """Degenerate point k1 = k2 = -2 for sl_3 (h^vee=3)."""
+        k_deg = gko_degenerate_point(3)
+        self.assertEqual(k_deg, (Fraction(-2), Fraction(-2)))
+        rank = gko_effective_parameter_rank(8, 3, k_deg[0], k_deg[1])
+        self.assertEqual(rank, 0)
+
+    def test_level_set_dim_2_at_degenerate(self):
+        """Level set is 2-dimensional at the degenerate point."""
+        k_deg = gko_degenerate_point(2)
+        dim = gko_level_set_dimension(3, 2, k_deg[0], k_deg[1])
+        self.assertEqual(dim, 2)
+
+    def test_scan_finds_degenerate_for_sl2(self):
+        """Scan detects the degenerate point for sl_2."""
+        result = scan_gko_jacobian_rank("sl2")
+        self.assertTrue(result["degenerate_found"])
+
+    def test_scan_finds_degenerate_for_G2(self):
+        """Scan detects the degenerate point for G_2 (k = -8/3)."""
+        result = scan_gko_jacobian_rank("G2")
+        self.assertTrue(result["degenerate_found"])
+
+    def test_jacobian_critical_level_raises(self):
+        """Jacobian at critical level should raise ValueError."""
+        with self.assertRaises(ValueError):
+            gko_jacobian(3, 2, Fraction(-2), Fraction(1))
+
+    def test_wn_kappa_composition(self):
+        """wn_kappa(n,k) = wn_rho_factor(n) * wn_central_charge(n,k)."""
+        for n in [2, 3, 4]:
+            for k in [Fraction(0), Fraction(1), Fraction(3, 2)]:
+                kappa = wn_kappa(n, k)
+                expected = wn_rho_factor(n) * wn_central_charge(n, k)
+                self.assertEqual(kappa, expected,
+                                 f"wn_kappa mismatch at n={n}, k={k}")
 
 
 class TestMinimalModelIdentification(unittest.TestCase):

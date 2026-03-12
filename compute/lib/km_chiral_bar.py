@@ -49,7 +49,6 @@ References:
 
 from __future__ import annotations
 
-from math import factorial, comb
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -84,12 +83,24 @@ def riordan(n: int) -> int:
 
 
 def sl2_bar_cohomology(max_degree: int) -> List[int]:
-    """Bar cohomology for sl_2-hat: dim(A^!)_n = R(n+3), Riordan shifted.
+    """Bar cohomology for sl_2-hat via PBW spectral sequence.
 
-    R(3)=1, R(4)=3, R(5)=6, R(6)=15, R(7)=36, R(8)=91, R(9)=232, ...
-    So H^0=1, H^1=3, H^2=6, H^3=15, H^4=36, H^5=91, H^6=232.
+    The E_2 = E_infinity page of the PBW SS identifies bar cohomology
+    with CE cohomology of the positive-mode loop algebra.
+
+    Known values (comp:sl2-ce-verification, bar_deg2_resolution):
+      H^0=1, H^1=3, H^2=5, H^3=15, H^4=36, H^5=91, H^6=232.
+
+    CORRECTION: The Riordan formula R(n+3) gives H^2=6 (WRONG).
+    The correct H^2=5 follows from H^2_{h=2}=0 (the bar differential
+    d: B^2_{h=2} -> B^1_{h=2} is an isomorphism, rank 9; see
+    bar_deg2_resolution.py).  All 5 H^2 classes live at weight >= 3.
+    Riordan values are correct for n != 2.
     """
-    return [riordan(n + 3) for n in range(max_degree + 1)]
+    result = [riordan(n + 3) for n in range(max_degree + 1)]
+    if max_degree >= 2:
+        result[2] = 5  # Corrected: R(5)=6 is wrong, H^2=5
+    return result
 
 
 def sl3_bar_cohomology(max_degree: int) -> List[int]:
@@ -116,17 +127,28 @@ def sl3_bar_cohomology(max_degree: int) -> List[int]:
 
 
 def bar_cohomology_degree2(dim_g: int) -> int:
-    """Degree-2 bar cohomology for any KM algebra with weight-1 generators.
+    """Degree-2 bar cohomology for KM algebras — KNOWN VALUES ONLY.
 
-    Rem rem:bar-deg2-symmetric-square:
-    dim H^2 = C(dim g + 1, 2) = dim S^2(g).
+    DEPRECATED: The old formula C(dim_g + 1, 2) was based on the
+    incorrect rem:bar-deg2-symmetric-square, which used the wrong
+    target space (g_2 of dim d instead of A-bar_2 of dim d + d(d+1)/2)
+    and wrong differential component (Lie bracket instead of (-1)-product).
 
-    Proof: rank(d_2: B^2 -> B^1) = dim[g,g] = dim g (semisimple).
-    rank(d_3: B^3 -> B^2) = C(dim g, 2) - dim g (Jacobi/Arnold).
-    H^2 = dim(B^2) - rank(d_2) - rank(d_3)
-         = d^2 - d - (C(d,2) - d) = d^2 - C(d,2) = C(d+1, 2).
+    CORRECTED (bar_deg2_resolution.py):
+      H^2_{h=2} = 0 for ALL semisimple g (bar differential is injective).
+      Total H^2 = H^2(CE of positive-mode loop algebra).
+
+    Known values:
+      sl_2 (dim 3):  H^2 = 5  (comp:sl2-ce-verification)
+      sl_3 (dim 8):  H^2 = 36 (prop:sl3-pbw-ss)
     """
-    return comb(dim_g + 1, 2)
+    known = {3: 5, 8: 36}
+    if dim_g in known:
+        return known[dim_g]
+    raise NotImplementedError(
+        f"H^2(bar) for dim(g)={dim_g} requires CE computation; "
+        f"no closed-form formula is known"
+    )
 
 
 # ============================================================
@@ -754,23 +776,24 @@ def sl3_rational_gf_coefficients(n_terms: int = 10) -> List[int]:
 # ============================================================
 
 def verify_sl2(max_degree: int = 8) -> Dict[str, object]:
-    """Verify sl_2-hat bar cohomology against Riordan numbers.
+    """Verify sl_2-hat bar cohomology.
 
-    dim(A^!)_n = R(n+3): R(4)=3, R(5)=6, R(6)=15, R(7)=36, ...
+    Corrected values: H^0=1, H^1=3, H^2=5, H^3=15, H^4=36, H^5=91, H^6=232.
+    Note: Riordan R(n+3) is wrong at n=2 (gives 6, correct is 5).
     """
     bar_cohom = sl2_bar_cohomology(max_degree)
     results = {"bar_cohomology": bar_cohom}
 
-    expected = {1: 3, 2: 6, 3: 15, 4: 36, 5: 91, 6: 232}
+    expected = {1: 3, 2: 5, 3: 15, 4: 36, 5: 91, 6: 232}
     for n, exp in expected.items():
         if n <= max_degree:
             actual = bar_cohom[n]
-            results[f"H^{n} = R({n+3}) = {exp}"] = (actual == exp, actual)
+            results[f"H^{n} = {exp}"] = (actual == exp, actual)
 
-    # Verify H^2 = C(dim_g + 1, 2)
+    # Verify H^2 matches known value
     dim_g = 3
     h2_formula = bar_cohomology_degree2(dim_g)
-    results["H^2 = C(4,2) = 6"] = (bar_cohom[2] == h2_formula, bar_cohom[2])
+    results["H^2 = 5 (corrected)"] = (bar_cohom[2] == h2_formula, bar_cohom[2])
 
     return results
 

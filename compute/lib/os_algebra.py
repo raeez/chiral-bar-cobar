@@ -311,13 +311,31 @@ def _os_basis_data(n: int, k: int) -> Tuple[List[Tuple[Pair, ...]], np.ndarray]:
 
 
 def os_dimension(n: int, k: int) -> int:
-    """Dimension of OS^k(Conf_n(C))."""
+    """Dimension of OS^k(Conf_n(C)).
+
+    Uses the closed-form Poincare polynomial:
+      sum_k dim(OS^k) t^k = prod_{i=1}^{n-1} (1 + i*t)
+
+    The coefficients are unsigned Stirling numbers of the first kind
+    |s(n, n-k)|. This avoids the expensive relation-matrix computation
+    entirely.
+    """
     if k < 0 or k >= n:
         return 0 if k != 0 else 1
     if k == 0:
         return 1
-    _, _, dim = _os_relation_data(n, k)
-    return dim
+    # Compute via the Poincare polynomial prod_{i=1}^{n-1}(1 + i*t).
+    # We only need the coefficient of t^k.
+    # Use polynomial multiplication iteratively.
+    coeffs = [1]  # constant polynomial "1"
+    for i in range(1, n):
+        # Multiply by (1 + i*t)
+        new_coeffs = [0] * (len(coeffs) + 1)
+        for j, c in enumerate(coeffs):
+            new_coeffs[j] += c
+            new_coeffs[j + 1] += i * c
+        coeffs = new_coeffs
+    return int(coeffs[k]) if k < len(coeffs) else 0
 
 
 def os_basis(n: int, k: int) -> Tuple[List[Tuple[Pair, ...]], np.ndarray]:

@@ -64,6 +64,33 @@ from compute.lib.kl_ncomplex_sl2 import (
 )
 
 
+# ---------------------------------------------------------------------------
+# Shared expensive fixtures.  BarComplex(SmallQuantumSl2(N), max_degree=3)
+# allocates ~190 MB of differential matrices for N = 3.  Caching at module
+# scope avoids repeated allocation across tests.
+# ---------------------------------------------------------------------------
+
+@pytest.fixture(scope="module")
+def bar_N2_deg3():
+    """BarComplex for N=2, max_degree=3 (reused across tests)."""
+    uq = SmallQuantumSl2(2)
+    return BarComplex(uq, max_degree=3, use_reduced=True)
+
+
+@pytest.fixture(scope="module")
+def bar_N3_deg3():
+    """BarComplex for N=3, max_degree=3 (reused across tests)."""
+    uq = SmallQuantumSl2(3)
+    return BarComplex(uq, max_degree=3, use_reduced=True)
+
+
+@pytest.fixture(scope="module")
+def bar_N3_deg2():
+    """BarComplex for N=3, max_degree=2 (reused across tests)."""
+    uq = SmallQuantumSl2(3)
+    return BarComplex(uq, max_degree=2, use_reduced=True)
+
+
 # ============================================================================
 # Quantum arithmetic
 # ============================================================================
@@ -318,35 +345,29 @@ class TestBarCohomology:
             h0 = bar_cohomology_dim(bar, 0)
             assert h0 == 1, f"H^0 = {h0} != 1 at N={N}"
 
-    def test_bar_cohomology_nontrivial_N3(self):
+    def test_bar_cohomology_nontrivial_N3(self, bar_N3_deg3):
         """Bar cohomology is nontrivial in degree > 0 at N = 3.
 
         This confirms that u_q(sl_2) at q = e^{2 pi i / 3} is NOT semisimple.
         """
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        cohom = all_bar_cohomology(bar)
+        cohom = all_bar_cohomology(bar_N3_deg3)
         # At least one H^n with n > 0 should be nonzero
         higher = [cohom[n] for n in range(1, 4) if cohom[n] is not None and cohom[n] > 0]
         assert len(higher) > 0, "Bar cohomology trivial in all degrees > 0 at N=3"
 
-    def test_bar_cohomology_nontrivial_N2(self):
+    def test_bar_cohomology_nontrivial_N2(self, bar_N2_deg3):
         """Bar cohomology nontrivial at N = 2 (u_{-1}(sl_2) not semisimple)."""
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        cohom = all_bar_cohomology(bar)
+        cohom = all_bar_cohomology(bar_N2_deg3)
         higher = [cohom[n] for n in range(1, 4) if cohom[n] is not None and cohom[n] > 0]
         assert len(higher) > 0, "Bar cohomology trivial at N=2"
 
-    def test_bar_cohomology_nonnegative(self):
+    def test_bar_cohomology_nonnegative(self, bar_N2_deg3, bar_N3_deg3):
         """All cohomology dimensions are non-negative."""
-        for N in [2, 3]:
-            uq = SmallQuantumSl2(N)
-            bar = BarComplex(uq, max_degree=3, use_reduced=True)
+        for bar in [bar_N2_deg3, bar_N3_deg3]:
             cohom = all_bar_cohomology(bar)
             for n, h in cohom.items():
                 if h is not None:
-                    assert h >= 0, f"Negative H^{n} = {h} at N={N}"
+                    assert h >= 0, f"Negative H^{n} = {h}"
 
     def test_H1_is_generators(self):
         """H^1(u_q, C) counts the generators of the augmentation ideal mod I^2.
@@ -377,7 +398,7 @@ class TestN2OrdinaryDG:
     (the 2-complex is the standard case).
     """
 
-    def test_dq_proportional_to_standard_N2(self):
+    def test_dq_proportional_to_standard_N2(self, bar_N2_deg3):
         """At N = 2, d_q is proportional to d (standard) at each degree.
 
         The q-signs q^{i-1} = (-1)^{i-1} and standard signs (-1)^{i+1}
@@ -385,11 +406,9 @@ class TestN2OrdinaryDG:
         on the summation index convention. They may differ by an overall
         sign, but d_q^2 = 0 either way.
         """
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for degree in range(2, 4):
-            d_std = bar.differential(degree)
-            d_q = bar.q_differential(degree)
+            d_std = bar_N2_deg3.differential(degree)
+            d_q = bar_N2_deg3.q_differential(degree)
             # Check that d_q and d_std are proportional (differ by overall sign)
             # Either d_q = d_std or d_q = -d_std
             match_positive = np.allclose(d_q, d_std, atol=1e-10)
@@ -398,12 +417,10 @@ class TestN2OrdinaryDG:
                 f"d_q not proportional to d at N=2, degree {degree}"
             )
 
-    def test_dq_squared_zero_N2(self):
+    def test_dq_squared_zero_N2(self, bar_N2_deg3):
         """d_q^2 = 0 at N = 2 (ordinary chain complex)."""
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for degree in range(2, 4):
-            norm = bar.verify_dq_squared(degree)
+            norm = bar_N2_deg3.verify_dq_squared(degree)
             assert norm < 1e-10, f"d_q^2 != 0 at N=2, degree {degree}: {norm}"
 
 
@@ -419,7 +436,7 @@ class TestNComplexStructure:
       - d_q^N = 0 (N-complex identity from quantum binomial theorem)
     """
 
-    def test_dq_squared_nonzero_N3(self):
+    def test_dq_squared_nonzero_N3(self, bar_N3_deg3):
         """d_q^2 != 0 at N = 3 (genuine 3-complex) at degree 3.
 
         At degree 2 with reduced bar, d_q^2 is structurally zero
@@ -429,20 +446,16 @@ class TestNComplexStructure:
         NOTE: max_degree=3 (not 4) because B_4 = 26^4 ~ 457K is
         computationally infeasible.
         """
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         # Degree 3 is where d_q^2 != 0 (degree 2 is structurally zero)
-        norm = bar.verify_dq_squared(3)
+        norm = bar_N3_deg3.verify_dq_squared(3)
         assert norm > 1e-6, f"d_q^2 = 0 at degree 3 for N=3: {norm}"
 
-    def test_dq_squared_nonzero_N3_degree3(self):
+    def test_dq_squared_nonzero_N3_degree3(self, bar_N3_deg3):
         """d_q^2 != 0 at degree 3 for N = 3."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        norm = bar.verify_dq_squared(3)
+        norm = bar_N3_deg3.verify_dq_squared(3)
         assert norm > 1e-6, f"d_q^2 unexpectedly zero at N=3, degree 3: {norm}"
 
-    def test_dq_cubed_zero_N3(self):
+    def test_dq_cubed_zero_N3(self, bar_N3_deg3):
         """d_q^3 = 0 at N = 3 (the N-complex structure).
 
         This is the central prediction: the q-deformed bar differential
@@ -450,9 +463,7 @@ class TestNComplexStructure:
         The mechanism is the quantum binomial theorem: [3 choose k]_q = 0
         for k = 1, 2 when q^3 = 1.
         """
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        norm = bar.verify_dq_N(3)
+        norm = bar_N3_deg3.verify_dq_N(3)
         assert norm < 1e-8, (
             f"d_q^3 != 0 at N=3: the N-complex prediction fails. ||d_q^3|| = {norm}"
         )
@@ -504,67 +515,55 @@ class TestNComplexStructure:
 class TestNCohomologyFlavors:
     """Test the N-complex cohomology flavors H^{j, N-j}."""
 
-    def test_N2_single_flavor(self):
+    def test_N2_single_flavor(self, bar_N2_deg3):
         """At N = 2, there is exactly one cohomology flavor (j = 1)."""
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        flavors = all_cohomology_flavors(bar, 2)
+        flavors = all_cohomology_flavors(bar_N2_deg3, 2)
         assert len(flavors) == 1
         assert 1 in flavors
 
-    def test_N3_two_flavors(self):
+    def test_N3_two_flavors(self, bar_N3_deg3):
         """At N = 3, there are two cohomology flavors (j = 1, 2)."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        flavors = all_cohomology_flavors(bar, 2)
+        flavors = all_cohomology_flavors(bar_N3_deg3, 2)
         assert len(flavors) == 2
         assert 1 in flavors
         assert 2 in flavors
 
-    def test_cohomology_nonnegative_N2(self):
+    def test_cohomology_nonnegative_N2(self, bar_N2_deg3):
         """N-complex cohomology dimensions are non-negative at N = 2."""
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for n in range(1, 4):
-            flavors = all_cohomology_flavors(bar, n)
+            flavors = all_cohomology_flavors(bar_N2_deg3, n)
             for j, dim_h in flavors.items():
                 if dim_h is not None:
                     assert dim_h >= 0, (
                         f"Negative cohomology at N=2, degree {n}, j={j}: {dim_h}"
                     )
 
-    def test_cohomology_nonnegative_N3(self):
+    def test_cohomology_nonnegative_N3(self, bar_N3_deg3):
         """N-complex cohomology dimensions are non-negative at N = 3."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for n in range(1, 4):
-            flavors = all_cohomology_flavors(bar, n)
+            flavors = all_cohomology_flavors(bar_N3_deg3, n)
             for j, dim_h in flavors.items():
                 if dim_h is not None:
                     assert dim_h >= 0, (
                         f"Negative cohomology at N=3, degree {n}, j={j}: {dim_h}"
                     )
 
-    def test_invalid_flavor_j(self):
+    def test_invalid_flavor_j(self, bar_N3_deg2):
         """j outside [1, N-1] raises ValueError."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=2, use_reduced=True)
         with pytest.raises(ValueError):
-            ncomplex_cohomology_dim(bar, 2, 0)
+            ncomplex_cohomology_dim(bar_N3_deg2, 2, 0)
         with pytest.raises(ValueError):
-            ncomplex_cohomology_dim(bar, 2, 3)
+            ncomplex_cohomology_dim(bar_N3_deg2, 2, 3)
 
-    def test_N2_flavor_matches_bar_cohomology(self):
+    def test_N2_flavor_matches_bar_cohomology(self, bar_N2_deg3):
         """At N = 2, the single N-complex flavor (j=1) matches standard bar cohomology.
 
         Since d_q = d (standard) at N = 2, the N-complex flavor H^{1,1}
         should agree with the standard bar cohomology.
         """
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for n in range(1, 4):
-            h_bar = bar_cohomology_dim(bar, n)
-            h_ncomplex = ncomplex_cohomology_dim(bar, n, j=1)
+            h_bar = bar_cohomology_dim(bar_N2_deg3, n)
+            h_ncomplex = ncomplex_cohomology_dim(bar_N2_deg3, n, j=1)
             if h_bar is not None and h_ncomplex is not None:
                 assert h_bar == h_ncomplex, (
                     f"Bar H^{n} = {h_bar} != N-complex H^{{1,1}}_{n} = {h_ncomplex} at N=2"
@@ -578,23 +577,19 @@ class TestNCohomologyFlavors:
 class TestEulerCharacteristic:
     """Test Euler characteristic relations for N-complex cohomology."""
 
-    def test_euler_sum_N2(self):
+    def test_euler_sum_N2(self, bar_N2_deg3):
         """At N = 2, the Euler sum is just dim H^{1,1} (single term)."""
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for n in range(1, 4):
-            esum = euler_characteristic_sum(bar, n)
+            esum = euler_characteristic_sum(bar_N2_deg3, n)
             if esum is not None:
-                flavors = all_cohomology_flavors(bar, n)
+                flavors = all_cohomology_flavors(bar_N2_deg3, n)
                 if flavors[1] is not None:
                     assert abs(esum - flavors[1]) < 1e-10
 
-    def test_euler_sum_real_N3(self):
+    def test_euler_sum_real_N3(self, bar_N3_deg3):
         """At N = 3, the Euler sum should be real (integer-valued)."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for n in range(1, 4):
-            esum = euler_characteristic_sum(bar, n)
+            esum = euler_characteristic_sum(bar_N3_deg3, n)
             if esum is not None:
                 assert abs(esum.imag) < 1e-8, (
                     f"Euler sum has imaginary part at N=3, degree {n}: {esum}"
@@ -742,58 +737,43 @@ class TestNComplexVsOrdinary:
     The standard d always has d^2 = 0.
     """
 
-    def test_N2_dq_is_ordinary(self):
+    def test_N2_dq_is_ordinary(self, bar_N2_deg3):
         """N = 2: d_q^2 = 0 (reduces to standard chain complex)."""
-        uq = SmallQuantumSl2(2)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
         for n in range(2, 4):
-            norm = bar.verify_dq_squared(n)
+            norm = bar_N2_deg3.verify_dq_squared(n)
             assert norm < 1e-10
 
-    def test_N3_dq_not_ordinary(self):
+    def test_N3_dq_not_ordinary(self, bar_N3_deg3):
         """N = 3: d_q^2 != 0 (genuine N-complex)."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        norms = [bar.verify_dq_squared(n) for n in range(2, 4)]
+        norms = [bar_N3_deg3.verify_dq_squared(n) for n in range(2, 4)]
         assert max(norms) > 1e-6, "d_q^2 = 0 at all degrees for N=3"
 
-    def test_N3_dq_is_3complex(self):
+    def test_N3_dq_is_3complex(self, bar_N3_deg3):
         """N = 3: d_q^3 = 0 (it is a 3-complex)."""
-        uq = SmallQuantumSl2(3)
-        bar = BarComplex(uq, max_degree=3, use_reduced=True)
-        norm = bar.verify_dq_N(3)
+        norm = bar_N3_deg3.verify_dq_N(3)
         assert norm < 1e-8
 
-    def test_standard_always_ordinary(self):
+    def test_standard_always_ordinary(self, bar_N2_deg3, bar_N3_deg3):
         """The standard bar differential always satisfies d^2 = 0."""
-        for N in [2, 3]:
-            uq = SmallQuantumSl2(N)
-            bar = BarComplex(uq, max_degree=3, use_reduced=True)
+        for bar in [bar_N2_deg3, bar_N3_deg3]:
             for degree in range(2, 4):
                 norm = bar.verify_d_squared(degree)
                 assert norm < 1e-10
 
-    def test_transition_N2_to_N3(self):
+    def test_transition_N2_to_N3(self, bar_N2_deg3, bar_N3_deg3):
         """The transition from N=2 to N=3 activates N-complex structure.
 
         At N=2: d_q^2 = 0 (ordinary, since q = -1 gives standard signs).
         At N=3: d_q^2 != 0, d_q^3 = 0 (genuine 3-complex).
         Both always have standard d^2 = 0.
         """
-        # N = 2
-        uq2 = SmallQuantumSl2(2)
-        bar2 = BarComplex(uq2, max_degree=3, use_reduced=True)
-        dq2_norm_N2 = bar2.verify_dq_squared(2)
-
-        # N = 3
-        uq3 = SmallQuantumSl2(3)
-        bar3 = BarComplex(uq3, max_degree=3, use_reduced=True)
-        dq2_norm_N3 = bar3.verify_dq_squared(2)
-        dq3_norm_N3 = bar3.verify_dq_N(3)
+        dq2_norm_N2 = bar_N2_deg3.verify_dq_squared(2)
+        dq2_norm_N3 = bar_N3_deg3.verify_dq_squared(2)
+        dq3_norm_N3 = bar_N3_deg3.verify_dq_N(3)
 
         assert dq2_norm_N2 < 1e-10  # N=2: d_q^2 = 0 (always at degree 2)
         # At degree 2, d_q^2: B_2 -> B_0 is structurally zero (d_q(B_1->B_0)=0)
         # Test d_q^2 at degree 3 instead for genuine N-complex evidence
-        dq2_norm_N3_deg3 = bar3.verify_dq_squared(3)
+        dq2_norm_N3_deg3 = bar_N3_deg3.verify_dq_squared(3)
         assert dq2_norm_N3_deg3 > 1e-6   # N=3: d_q^2 != 0 at degree 3
         assert dq3_norm_N3 < 1e-8   # N=3: d_q^3 = 0

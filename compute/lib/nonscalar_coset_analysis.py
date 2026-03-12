@@ -1,21 +1,31 @@
 """Non-scalar saturation analysis: Candidate 1 — Multi-parameter cosets.
 
-Verifies that conformal embedding constraints reduce multi-parameter
-coset families to one effective parameter, establishing scalar saturation.
+Two logically independent ingredients are needed to establish
+one-parameter dependence of a coset VOA:
+
+    (A) CENTRAL CHARGE IS ONE-PARAMETER:
+        The Jacobian of the map (k1,k2) -> c_coset has rank 1
+        generically, so the central charge sweeps a 1d family.
+        This is a NECESSARY condition, proved here by exact
+        Jacobian computation.
+
+    (B) VOA ISOMORPHISM TYPE DEPENDS ONLY ON c:
+        The coset is identified with a W-algebra (ACL programme),
+        and W-algebras are rigid up to c (Fateev-Lukyanov).
+        This is a SEPARATE fact that requires the ACL identification —
+        the Jacobian alone does NOT prove it.
+
+WARNING: The Jacobian analysis proves (A) but not (B). Two cosets
+with the same c could in principle have different OPE structures.
+The full one-parameter claim requires both (A) and (B).
 
 Mathematical content:
     1. Sugawara central charge c(g,k) = k·dim(g)/(k+h^vee) for all simple g
     2. GKO coset c_coset(k1,k2) = c(g,k1) + c(g,k2) - c(g,k1+k2)
     3. Non-GKO cosets with Dynkin index constraints
     4. Jacobian analysis: rank of dc_coset/d(k1,k2) = 1 generically
-    5. Conformal embedding constraint k3 = j1*k1 + j2*k2
-    6. Effective parameter counting via VOA isomorphism classification
-    7. dim H^2_cyc = 1 for the resulting W-algebra (scalar saturation)
-
-Key theorem (manuscript rem:scalar-saturation-scope, Candidate 1):
-    For all known cosets Com(h_{k3}, g_{k1} x g'_{k2}), the conformal
-    embedding constraint reduces the apparent two-parameter family to
-    a one-parameter family, and scalar saturation holds.
+    5. Degenerate point: k1 = k2 = -2h^vee/3 (both partials vanish)
+    6. dim H^2_cyc = 1 for the resulting W-algebra REQUIRES ACL + W-rigidity
 """
 
 from __future__ import annotations
@@ -83,7 +93,9 @@ def all_lie_names() -> List[str]:
 
 
 def lie_data_type_a(n: int) -> SimpleLieData:
-    """Data for sl_{n+1} = A_n."""
+    """Data for sl_{n+1} = A_n. Requires n >= 1."""
+    if n < 1:
+        raise ValueError(f"Need n >= 1 for type A_n, got n = {n}")
     return SimpleLieData(f"sl{n+1}", "A", n, n * (n + 2), n + 1)
 
 
@@ -162,10 +174,18 @@ def gko_jacobian(
 
     dc_coset/dk1 = dim_g * h * [1/(k1+h)^2 - 1/(k1+k2+h)^2]
     dc_coset/dk2 = dim_g * h * [1/(k2+h)^2 - 1/(k1+k2+h)^2]
+
+    Raises ValueError at critical levels (k_i + h = 0 or k1+k2+h = 0).
     """
     h = Fraction(h_dual)
     d = Fraction(dim_g)
+    if k1 + h == 0:
+        raise ValueError(f"Critical level: k1 = -{h_dual}")
+    if k2 + h == 0:
+        raise ValueError(f"Critical level: k2 = -{h_dual}")
     s = k1 + k2 + h
+    if s == 0:
+        raise ValueError(f"Critical diagonal level: k1+k2 = -{h_dual}")
     dc_dk1 = d * h * (Fraction(1, 1) / (k1 + h) ** 2 - Fraction(1, 1) / s ** 2)
     dc_dk2 = d * h * (Fraction(1, 1) / (k2 + h) ** 2 - Fraction(1, 1) / s ** 2)
     return dc_dk1, dc_dk2
@@ -197,7 +217,9 @@ def gko_level_set_dimension(
 
     By the implicit function theorem, this is 2 - rank(Jacobian) = 1
     generically. The level set is a 1-dimensional curve in (k1,k2)-space.
-    Different points on this curve give ISOMORPHIC coset VOAs.
+    Different points on this curve have the SAME central charge; whether
+    they give isomorphic coset VOAs requires the ACL identification
+    (see module-level docstring, ingredient (B)).
     """
     rank = gko_effective_parameter_rank(dim_g, h_dual, k1, k2)
     return 2 - rank
@@ -313,14 +335,10 @@ def non_gko_parameter_rank(
 def gko_sl2_virasoro_central_charge(k1: Fraction, k2: Fraction) -> Fraction:
     """Central charge of the Virasoro algebra from GKO diagonal sl_2 coset.
 
-    The coset Com(sl2_{k1+k2}, sl2_{k1} x sl2_{k2}) is isomorphic
-    to the Virasoro algebra at central charge:
+    c_coset = c(sl2,k1) + c(sl2,k2) - c(sl2,k1+k2)
+            = 3[k1/(k1+2) + k2/(k2+2) - (k1+k2)/(k1+k2+2)]
 
-        c = 1 - 6/((k1+2)(k2+2))  * (k1*k2)/(k1+k2+2)
-
-    Actually, the general formula is c_coset = c(sl2,k1)+c(sl2,k2)-c(sl2,k1+k2).
-    For the GKO coset, this is a Virasoro minimal model when k1,k2 are
-    positive integers.
+    For positive integer (k1,k2), this produces a Virasoro minimal model.
     """
     return gko_coset_central_charge_formula(3, 2, k1, k2)
 
@@ -340,6 +358,9 @@ def gko_minimal_model_identification(p: int, q: int) -> Dict:
     """
     if p < 3 or q < 2:
         raise ValueError("Need p >= 3, q >= 2 for minimal model")
+    from math import gcd
+    if gcd(p, q) != 1:
+        raise ValueError(f"Need gcd(p,q) = 1, got gcd({p},{q}) = {gcd(p,q)}")
     c_mm = Fraction(1) - Fraction(6 * (p - q) ** 2, p * q)
 
     if p == q + 1:
@@ -426,6 +447,9 @@ def coset_deformation_dimension(coset_type: str) -> Dict:
             "mechanism": "No known example exists",
         }
 
+    else:
+        raise ValueError(f"Unknown coset type: {coset_type}")
+
     return results
 
 
@@ -433,26 +457,67 @@ def coset_deformation_dimension(coset_type: str) -> Dict:
 # Systematic scan: verify effective parameter count
 # ========================================================================
 
+def gko_degenerate_point(h_dual: int) -> Tuple[Fraction, Fraction]:
+    """The unique non-trivial degenerate point where both Jacobian partials vanish.
+
+    Setting dc/dk1 = 0 and dc/dk2 = 0 simultaneously:
+      1/(k1+h)^2 = 1/(k1+k2+h)^2  =>  k2 = 0 OR k1+k2+h = -(k1+h)
+      1/(k2+h)^2 = 1/(k1+k2+h)^2  =>  k1 = 0 OR k1+k2+h = -(k2+h)
+
+    The non-trivial solution (excluding k1=0 or k2=0) is:
+      k1+k2+h = -(k1+h)  AND  k1+k2+h = -(k2+h)
+      => k2 = -2k1-2h  AND  k1 = -2k2-2h
+      => k1 = k2 = -2h/3.
+
+    At this point c_coset is at a critical point of the map (k1,k2) -> c.
+    This does NOT mean the VOA depends on 2 parameters — it means the
+    parameterization by (k1,k2) is degenerate at this point.
+    """
+    h = Fraction(h_dual)
+    k_deg = Fraction(-2) * h / 3
+    return (k_deg, k_deg)
+
+
 def scan_gko_jacobian_rank(
     g_name: str,
     k_values: Optional[List[Fraction]] = None,
+    include_negative: bool = True,
 ) -> Dict:
     """Scan GKO Jacobian rank over a grid of (k1,k2) values.
 
-    Verifies that rank = 1 generically (i.e., for almost all (k1,k2)).
+    Verifies that rank = 1 generically. The ONLY non-trivial
+    rank-0 point is the degenerate point k1 = k2 = -2h^vee/3.
     """
     g = lie_data(g_name)
     if k_values is None:
-        k_values = [Fraction(n, d) for n in range(1, 8) for d in [1, 2, 3]
-                     if n != g.h_dual * d]  # avoid critical level
+        pos = [Fraction(n, d) for n in range(1, 10) for d in [1, 2, 3]
+               if n != g.h_dual * d]
+        if include_negative:
+            neg = [Fraction(-n, d) for n in range(1, 10) for d in [1, 2, 3]
+                   if n != g.h_dual * d]  # avoid critical k = -h^vee
+            k_values = neg + [Fraction(0)] + pos
+        else:
+            k_values = pos
+        # Ensure degenerate point k = -2h/3 is in the grid (if it's rational)
+        k_deg, _ = gko_degenerate_point(g.h_dual)
+        if k_deg not in k_values and k_deg + Fraction(g.h_dual) != 0:
+            k_values.append(k_deg)
 
     total = 0
     rank_1_count = 0
     rank_0_count = 0
     rank_0_points: List[Tuple[Fraction, Fraction]] = []
 
+    k_deg = gko_degenerate_point(g.h_dual)
+
     for k1 in k_values:
+        # Skip critical level for first factor
+        if k1 + Fraction(g.h_dual) == 0:
+            continue
         for k2 in k_values:
+            # Skip critical level for second factor
+            if k2 + Fraction(g.h_dual) == 0:
+                continue
             # Skip if k1+k2 = -h^vee (critical for diagonal)
             if k1 + k2 + Fraction(g.h_dual) == 0:
                 continue
@@ -464,13 +529,25 @@ def scan_gko_jacobian_rank(
                 rank_0_count += 1
                 rank_0_points.append((k1, k2))
 
+    # Classify rank-0 points
+    trivial_zeros = [(k1, k2) for k1, k2 in rank_0_points
+                     if k1 == 0 or k2 == 0]
+    degenerate_zeros = [(k1, k2) for k1, k2 in rank_0_points
+                        if (k1, k2) == k_deg]
+    unexpected_zeros = [(k1, k2) for k1, k2 in rank_0_points
+                        if k1 != 0 and k2 != 0 and (k1, k2) != k_deg]
+
     return {
         "algebra": g_name,
         "total_points": total,
         "rank_1": rank_1_count,
         "rank_0": rank_0_count,
         "rank_0_points": rank_0_points,
-        "generic_rank_is_1": rank_0_count == 0,
+        "trivial_zeros": trivial_zeros,
+        "degenerate_point": k_deg,
+        "degenerate_found": len(degenerate_zeros) > 0,
+        "unexpected_zeros": unexpected_zeros,
+        "generic_rank_is_1": len(unexpected_zeros) == 0,
     }
 
 
@@ -523,45 +600,20 @@ def scan_non_gko_parameter_rank(
 # ========================================================================
 
 def wn_central_charge(n: int, k: Fraction) -> Fraction:
-    """Central charge of W_N = DS(sl_N, k).
+    """Central charge of W_n = DS(sl_n, k) via principal DS reduction.
 
-    c(W_N, k) = (N-1) - N(N^2-1)(N+k)^2 / (N+k)
-    wait, the standard formula is:
-    c = (N-1)[1 - N(N+1)/(t)]   where t = k + N (for sl_N, h^vee = N)
+    Formula (manuscript prop:ds-package-functoriality):
+        c = r - 12 |rho|^2 (t-1)^2 / t
+    where r = n-1 (rank of sl_n), t = k + n (= k + h^vee),
+    |rho|^2 = n(n^2-1)/12 (sum of squared positive root lengths / 2).
 
-    More precisely:
-    c = (N-1) - 12 |rho_W|^2 (t-1)^2 / t
-    where |rho_W|^2 = N(N^2-1)/12 and t = k + N.
+    Simplifies to: c = (n-1) - n(n^2-1)(t-1)^2/t.
 
-    Actually: c = (N-1)[1 - N(N+1)(k+N-1)^2 / (k+N)]
+    NOTE: This is the DS W-algebra, NOT the minimal model. DS(sl_2, k=1)
+    gives c = -7 (not the Ising model c = 1/2). The minimal models come
+    from the GKO coset construction, which is a different operation.
 
-    Let me use the standard: c = rank - 12|rho|^2(t-1)^2/t
-    rank = N-1, |rho|^2 for sl_N = N(N^2-1)/12, t = k+N.
-
-    So c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
-         = (N-1) - N(N^2-1)(t-1)^2/t
-    Wait, that gives dim >> rank for large k, which is wrong.
-
-    Actually: c = (N-1) - 12 * N(N^2-1)/12 * (t-1)^2/t
-             = (N-1) - N(N^2-1)(t-1)^2/t
-
-    For W_2 = Virasoro: c = 1 - 6(t-1)^2/t = 1 - 6(k+1)^2/(k+2). Check at k=1: c=1-6*4/3=1-8=-7? No.
-    k=1, t=3: c = 1 - 6*4/3 = 1-8 = -7. But Virasoro at k=1 should give c = 1/2.
-
-    The issue is: for W_2, the DS reduction of sl_2 at level k gives the
-    Virasoro algebra at c = 1 - 6(k+1)^2/(k+2). At k=1: c = 1 - 6·4/3 = -7.
-    But the COSET gives the minimal model, not the DS reduction.
-    DS of sl_2 at k=1: c = 1-24/3 = -7. This is correct for the DS W-algebra,
-    which is different from the minimal model.
-
-    Standard formula: c(W_N^k) = (N-1) * [1 - N(N+1)(k+N-1)^2/(k+N)]
-    Hmm, let me use the manuscript formula directly.
-    Manuscript line 14483: c = r - 12|rho_W|^2(t-1)^2/t
-    with t = k + h^vee, r = rank, |rho_W|^2 = sum of 1/(m_i+1) ... no.
-
-    For sl_N: r = N-1, h^vee = N, |rho|^2 = (sum of positive root lengths^2)/2 = N(N^2-1)/12
-    So: c = (N-1) - 12 * N(N^2-1)/12 * (t-1)^2/t = (N-1) - N(N^2-1)(t-1)^2/t
-    with t = k+N.
+    Verified: W_2 at k=0: c = -2. W_2 at k=1: c = -7. W_3 at k=0: c = -30.
     """
     r = n - 1
     t = k + Fraction(n)
@@ -626,8 +678,8 @@ def verify_coset_parameter_reduction_comprehensive() -> Dict:
         results[f"gko_{g_name}"] = scan
 
     # 2. Non-GKO: sl_2 -> sl_2 x sl_3 (Dynkin indices 1, 1)
-    # Here h = sl_2 embeds into sl_2 x sl_3 via the natural + fundamental
-    # The Dynkin index of sl_2 -> sl_3 (as principal embedding) is 1.
+    # Here h = sl_2 embeds into sl_2 x sl_3 via the standard embeddings.
+    # Dynkin index of sl_2 -> sl_2 (identity) is 1; sl_2 -> sl_3 (fundamental) is 1.
     nongko = scan_non_gko_parameter_rank(
         "sl2", "sl3", "sl2",
         Fraction(1), Fraction(1),

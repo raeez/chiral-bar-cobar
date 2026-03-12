@@ -223,6 +223,40 @@ class TestFusionRules(unittest.TestCase):
         n = level.n_simples
         self.assertEqual(S.shape, (n, n))
 
+    def test_s_matrix_unitarity_integrable(self):
+        """At integrable levels, S S^dagger = I (unitarity)."""
+        import numpy as np
+        for p in range(3, 7):
+            level = admissible_level_sl2(p, 1)
+            S = admissible_modular_s_matrix_sl2(level)
+            prod = S @ S.conj().T
+            n = S.shape[0]
+            np.testing.assert_allclose(
+                prod, np.eye(n), atol=1e-10,
+                err_msg=f"S-matrix not unitary at k={level.k}")
+
+    def test_integrable_fusion_tight_integrality(self):
+        """At integrable levels, Verlinde coefficients are exactly integral."""
+        for p in range(3, 7):
+            level = admissible_level_sl2(p, 1)
+            result = verify_fusion_integrality(level)
+            self.assertLess(result["max_fractional_part"], 1e-10,
+                            f"Fusion not integral at k={level.k}")
+            self.assertEqual(result["negative_coefficients"], 0)
+
+    def test_integrable_vacuum_fusion_identity(self):
+        """Fusion with vacuum is identity: N_{0,j}^k = delta_{jk}."""
+        import numpy as np
+        level = admissible_level_sl2(4, 1)  # k=2, 3 modules
+        N_tensor = fusion_rules_sl2(level)
+        n = N_tensor.shape[0]
+        for j in range(n):
+            for k in range(n):
+                expected = 1.0 if j == k else 0.0
+                np.testing.assert_allclose(
+                    N_tensor[0, j, k].real, expected, atol=1e-10,
+                    err_msg=f"Vacuum fusion N_{{0,{j}}}^{k}")
+
 
 class TestModuleCategory(unittest.TestCase):
     """Verify module category structure at admissible levels."""
@@ -338,9 +372,9 @@ class TestComprehensiveAnalysis(unittest.TestCase):
         self.assertEqual(result["kac_moody"]["status"], "PROVED")
         self.assertTrue(result["kac_moody"]["all_saturated"])
 
-    def test_w_algebras_proved(self):
+    def test_w_algebras_proved_generic(self):
         result = comprehensive_saturation_analysis()
-        self.assertEqual(result["w_algebras"]["status"], "PROVED")
+        self.assertEqual(result["w_algebras"]["status"], "PROVED_GENERIC")
         self.assertTrue(result["w_algebras"]["all_saturated"])
 
     def test_extensions_open(self):
@@ -359,7 +393,7 @@ class TestComprehensiveAnalysis(unittest.TestCase):
         result = comprehensive_saturation_analysis()
         self.assertIn("Kac-Moody", result["overall"]["proved_classes"])
         self.assertIn("W-algebra", result["overall"]["proved_classes"])
-        self.assertIn("extension", result["overall"]["open_class"].lower())
+        self.assertIn("non-ds", result["overall"]["open_class"].lower())
 
 
 class TestExtBounds(unittest.TestCase):

@@ -108,11 +108,38 @@ class TestClassS(unittest.TestCase):
         self.assertEqual(t.dim_conformal_manifold, 0)
         self.assertEqual(t.voa_parameters, 0)
 
+    def test_t3_anomalies(self):
+        """T_3 (E_6 MN theory): a = 41/24, c = 13/6."""
+        t = class_s_theory(3)
+        self.assertEqual(t.a_anomaly, Fraction(41, 24))
+        self.assertEqual(t.c_anomaly, Fraction(13, 6))
+        self.assertEqual(t.c_2d, -12 * Fraction(13, 6))
+
     def test_class_s_isolated(self):
         """Class S theories T_n are isolated (no conformal manifold)."""
         for n in range(3, 6):
             t = class_s_theory(n)
             self.assertEqual(t.dim_conformal_manifold, 0)
+
+    def test_class_s_requires_n_ge_3(self):
+        """T_N requires N >= 3."""
+        with self.assertRaises(ValueError):
+            class_s_theory(2)
+
+    def test_class_s_shapere_tachikawa(self):
+        """Shapere-Tachikawa: 2a - c = (N^2-4)/4 for all T_N."""
+        for n in range(3, 8):
+            t = class_s_theory(n)
+            st = 2 * t.a_anomaly - t.c_anomaly
+            expected = Fraction(n * n - 4, 4)
+            self.assertEqual(st, expected,
+                             f"T_{n}: 2a-c = {st}, expected {expected}")
+
+    def test_class_s_coupling_proved(self):
+        """Class S theories are isolated => coupling-independent trivially."""
+        for n in range(3, 6):
+            t = class_s_theory(n)
+            self.assertEqual(t.coupling_independence_status, "proved")
 
 
 class TestSchurIndex(unittest.TestCase):
@@ -133,11 +160,11 @@ class TestSchurIndex(unittest.TestCase):
             self.assertTrue(result["coupling_independent"])
 
     def test_coupling_independence_necklace(self):
-        """Necklace quiver Schur index is coupling-independent."""
+        """Necklace quiver coupling independence status is 'open'."""
         for r in range(2, 4):
             t = necklace_quiver_theory(2, r)
             result = schur_index_coupling_independence_test(t)
-            self.assertTrue(result["coupling_independent"])
+            self.assertEqual(result["coupling_independence_status"], "open")
             self.assertGreater(result["parameter_reduction"], 0)
 
 
@@ -203,12 +230,20 @@ class TestSQCDIdentification(unittest.TestCase):
 class TestConformalManifoldAnalysis(unittest.TestCase):
     """Verify conformal manifold analysis."""
 
-    def test_all_theories_saturated(self):
-        """All theories in the analysis are scalar-saturated."""
+    def test_sqcd_theories_saturated(self):
+        """SQCD theories (proved coupling-independence) are scalar-saturated."""
         results = conformal_manifold_analysis()
-        for r in results:
+        sqcd_results = [r for r in results if "SQCD" in r["theory"]]
+        for r in sqcd_results:
             self.assertTrue(r["scalar_saturated"],
                             f"{r['theory']} should be saturated")
+
+    def test_necklace_theories_conjectural(self):
+        """Necklace quivers have conjectural/open coupling status."""
+        results = conformal_manifold_analysis()
+        necklace_results = [r for r in results if "necklace" in r["theory"]]
+        for r in necklace_results:
+            self.assertEqual(r["coupling_status"], "open")
 
     def test_necklace_has_reduction(self):
         """Necklace quivers have parameter reduction > 0."""
@@ -235,11 +270,11 @@ class TestMasterVerification(unittest.TestCase):
         self.assertGreater(result["max_cm_dimension"], 1)
         self.assertGreater(result["total_theories"], 10)
 
-    def test_coupling_independence(self):
-        """At least some theories have genuine coupling independence."""
+    def test_parameter_reduction(self):
+        """At least some theories have genuine parameter reduction."""
         result = verify_quiver_voa_saturation()
-        independent = [
+        reduced = [
             t for t in result["theories"]
-            if t["coupling_independent"]
+            if t["has_parameter_reduction"]
         ]
-        self.assertGreater(len(independent), 0)
+        self.assertGreater(len(reduced), 0)

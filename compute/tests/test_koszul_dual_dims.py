@@ -100,11 +100,32 @@ class TestClassicalKoszulDual:
         for n, (dim_n, expected, ok) in results.items():
             assert ok, f"n={n}: got {dim_n}, expected {expected}"
 
+    @pytest.mark.slow
     def test_sl3_classical(self):
-        """sl₃ (d=8): verify exterior algebra through degree 4."""
+        """sl₃ (d=8): verify exterior algebra through degree 4.
+
+        Marked slow: degree-4 ideal construction for d=8 allocates ~500 MB.
+        """
         results = verify_classical_koszul_dual(8)
         for n, (dim_n, expected, ok) in results.items():
             assert ok, f"n={n}: got {dim_n}, expected {expected}"
+
+    def test_sl3_classical_low_degree(self):
+        """sl₃ (d=8): verify exterior algebra through degree 3 (fast)."""
+        d = 8
+        R_basis = []
+        for a in range(d):
+            for b in range(a + 1, d):
+                rel = np.zeros(d * d)
+                rel[a * d + b] = 1.0
+                rel[b * d + a] = -1.0
+                R_basis.append(rel)
+        R_basis = np.array(R_basis)
+        R_perp = compute_R_perp(R_basis, d * d)
+        for n in range(4):
+            dim_n = koszul_dual_dim(R_perp, d, n)
+            expected = comb(d, n)
+            assert dim_n == expected, f"n={n}: got {dim_n}, expected {expected}"
 
     def test_R_dim_classical(self):
         """R = Λ²(V) has dim C(d,2)."""

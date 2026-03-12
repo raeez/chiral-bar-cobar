@@ -333,8 +333,13 @@ class TestA2SectorDimensions:
 # Sectorwise finiteness tests
 # =========================================================================
 
+@pytest.mark.slow
 class TestSectorwiseFiniteness:
-    """Test sectorwise finiteness verification for various lattices."""
+    """Test sectorwise finiteness verification for various lattices.
+
+    These tests involve computing lattice theta functions over coset
+    sectors at multiple bar degrees, which is expensive for rank ≥ 4.
+    """
 
     def test_a1_sectorwise_finite(self):
         """A₁ root lattice: sectorwise finite."""
@@ -580,6 +585,7 @@ class TestLQTAsymptoticComparison:
 # Lattice factorization DK verification tests
 # =========================================================================
 
+@pytest.mark.slow
 class TestLatticeFactorizationDK:
     """Test factorization DK verification for lattice VOAs."""
 
@@ -621,6 +627,7 @@ class TestLatticeFactorizationDK:
 # Simply-laced level 1 tests
 # =========================================================================
 
+@pytest.mark.slow
 class TestSimplyLacedLevel1:
     """Test simply-laced level-1 DK unconditional verification."""
 
@@ -710,8 +717,13 @@ class TestSimplyLacedLevel1:
 # Cross-cutting integration tests
 # =========================================================================
 
+@pytest.mark.slow
 class TestIntegration:
-    """Integration tests combining multiple components."""
+    """Integration tests combining multiple components.
+
+    Calls sectorwise_finiteness_check and lattice_factorization_dk_verification,
+    which are expensive for rank ≥ 4.
+    """
 
     def test_finiteness_implies_dk(self):
         """Sectorwise finiteness implies DK is unconditional."""

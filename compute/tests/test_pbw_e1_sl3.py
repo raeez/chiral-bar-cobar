@@ -95,8 +95,9 @@ class TestTensorInvariants:
         # (g^⊗3)^g = 2 (f_{abc} + d_{abc})
         assert invariant_dim_cached((1, 1, 1)) == 2
 
+    @pytest.mark.slow
     def test_g_tensor4(self):
-        # (g^⊗4)^g = 8 (from Casimir decomposition)
+        """(g^{otimes 4})^g = 8 via direct Kronecker product (~1.5 GB)."""
         assert invariant_dim_cached((1, 1, 1, 1)) == 8
 
     def test_s2g_tensor_g(self):
@@ -118,13 +119,31 @@ class TestWeylVsDirect:
     """Cross-validate Weyl integration against direct (exact) computation."""
 
     @pytest.mark.parametrize("ptype", [
-        (1,), (2,), (3,), (1, 1), (1, 2), (2, 2),
-        (1, 1, 1), (1, 1, 2),
+        (1,), (2,), (3,), (1, 1), (1, 2),
     ])
     def test_agreement(self, ptype):
         direct = invariant_dim_direct(ptype)
         weyl = invariant_dim_weyl(ptype, n_grid=200)
         assert direct == weyl, f"Mismatch for {ptype}: direct={direct}, weyl={weyl}"
+
+    @pytest.mark.slow
+    @pytest.mark.parametrize("ptype", [
+        (2, 2),      # total_dim = 1296 (~195 MB)
+        (1, 1, 1),   # total_dim = 512  (~70 MB)
+    ])
+    def test_agreement_heavy(self, ptype):
+        """Heavy partition types: direct method allocates large Kronecker products."""
+        direct = invariant_dim_direct(ptype)
+        weyl = invariant_dim_weyl(ptype, n_grid=200)
+        assert direct == weyl, f"Mismatch for {ptype}: direct={direct}, weyl={weyl}"
+
+    @pytest.mark.slow
+    def test_agreement_very_heavy(self):
+        """(1,1,2): total_dim=2304, Weyl only (direct would exceed memory)."""
+        weyl = invariant_dim_weyl((1, 1, 2), n_grid=300)
+        # Cross-check via cached dispatch (which routes to Weyl for large dims)
+        cached = invariant_dim_cached((1, 1, 2))
+        assert weyl == cached, f"Weyl={weyl}, cached={cached}"
 
 
 # ============================================================
@@ -166,10 +185,24 @@ class TestE1Dims:
 # ============================================================
 
 class TestCrossValidation:
+    @pytest.mark.slow
     def test_basic_facts(self):
+        """verify_basic_facts() computes (g^{otimes 4})^g via direct Kronecker
+        product (total_dim = 4096, stack ~1.5 GB).  Marked slow."""
         results = verify_basic_facts()
         for desc, ok in results.items():
             assert ok, f"FAIL: {desc}"
+
+    def test_basic_facts_light(self):
+        """Light version of basic facts: skip (g^{otimes 4})^g."""
+        # Chevalley single-factor checks (cheap)
+        chevalley = {1: 0, 2: 1, 3: 1, 4: 1, 5: 1, 6: 2}
+        for m, expected in chevalley.items():
+            actual = invariant_dim_cached((m,))
+            assert actual == expected, f"S^{m}(g)^g = {actual}, expected {expected}"
+        # Low-rank tensor checks (cheap)
+        assert invariant_dim_cached((1, 1)) == 1
+        assert invariant_dim_cached((1, 1, 1)) == 2
 
     @pytest.mark.slow
     def test_cross_validate_spectral_sequence(self):

@@ -216,9 +216,10 @@ def invariant_dim_direct(partition_type: Tuple[int, ...]) -> int:
     factor_dims = [len(sym_power_basis(DIM_G, m)) for m in partition_type]
     total_dim = prod(factor_dims)
 
-    if total_dim > 15000:
+    if total_dim > 2000:
         raise MemoryError(
-            f"Total dim {total_dim} too large for direct method. "
+            f"Total dim {total_dim} too large for direct method "
+            f"(stack would be {8*total_dim**2*8/1e9:.1f} GB). "
             f"Use invariant_dim_weyl instead."
         )
 
@@ -246,7 +247,10 @@ def invariant_dim_direct(partition_type: Tuple[int, ...]) -> int:
 # ============================================================
 
 _INVARIANT_DIM_CACHE: Dict[Tuple[int, ...], int] = {}
-_DIRECT_THRESHOLD = 10000  # max total dim for direct method
+# Memory for direct method scales as O(8 * total_dim^2 * 8 bytes).
+# At total_dim = 1500 that is ~280 MB, which is acceptable.
+# S^6(sl_3) has dim 1716, so m <= 5 uses direct; m >= 6 uses Weyl.
+_DIRECT_THRESHOLD = 1500
 
 
 def invariant_dim_partition_type(partition_type: Tuple[int, ...]) -> int:

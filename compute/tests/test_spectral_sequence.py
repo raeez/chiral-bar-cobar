@@ -50,9 +50,9 @@ class TestHeisenbergBarCoh:
 
 class TestSl2BarCoh:
     def test_first_dims(self):
-        """Riordan R(n+3): R(4)=3, R(5)=6, R(6)=15."""
+        """sl2 bar cohomology: H^1=3, H^2=5 (corrected from R(5)=6), H^3=15."""
         assert SL2_BAR_COH[1] == 3
-        assert SL2_BAR_COH[2] == 6
+        assert SL2_BAR_COH[2] == 5  # R(5)=6 is WRONG at n=2; see rem:bar-deg2-symmetric-square
         assert SL2_BAR_COH[3] == 15
 
 

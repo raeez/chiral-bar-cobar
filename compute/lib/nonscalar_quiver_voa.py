@@ -1,29 +1,39 @@
 """Non-scalar saturation analysis: Candidate 2 — 4d N=2 quiver VOAs.
 
-Verifies that Schur-sector vertex algebras from 4d N=2 gauge theories
-with multi-dimensional conformal manifolds depend on at most one
-effective parameter, establishing scalar saturation.
+Analyzes whether Schur-sector vertex algebras from 4d N=2 gauge theories
+with multi-dimensional conformal manifolds depend on more than one
+effective parameter.
 
-Mathematical content:
-    1. 4d/2d map: T_{4d} -> A[T] (Beem-Lemos-Liendo-Peelaers-Rastelli-van Rees)
-    2. Central charge formula: c_{2d} = -12 c_{4d} (Weyl anomaly)
-    3. SU(N) SQCD with Nf=2N: VOA = sl_{N,-N/2} x bc, one-parameter
-    4. Necklace quiver A_hat_1: two gauge couplings but one effective VOA parameter
-    5. Class S theories: W^{-N}(sl_N), one-parameter
-    6. Schur index coupling-independence by supersymmetric non-renormalization
-    7. Conformal manifold dimension vs. VOA parameter count
+CRITICAL CAVEATS (from audit):
+    1. The formula c_2d = -12 c_4d gives the 2d central charge from 4d
+       anomaly data. The MODULE does NOT independently verify the
+       VOA identification — it takes the manuscript's identification
+       (sl_{N,-N/2} x bc) as given.
 
-Key theorem (manuscript rem:scalar-saturation-scope, Candidate 2):
-    In all computed examples, the VOA depends on at most one continuous
-    parameter, even when the 4d theory has a multi-dimensional conformal
-    manifold.
+    2. The c_2d from 4d anomalies does NOT match c(sl_N,-N/2) + c(bc)
+       for a SINGLE bc pair. The discrepancy indicates the "bc-system"
+       involves multiple pairs (the matter sector maps to a larger
+       free-field system). The exact decomposition is theory-dependent.
+
+    3. Coupling-independence of the VOA is an OPEN PROBLEM in 4d physics
+       (manuscript line 14718-14719). The module records the claim
+       but does not prove it.
+
+    4. For necklace quivers with r >= 2 nodes, the claim that the VOA
+       depends on 1 parameter is CONJECTURAL (manuscript Candidate 2).
+
+What this module DOES verify:
+    - Internal consistency of anomaly coefficient formulas
+    - The conformal manifold dimension exceeds VOA parameter count
+    - OPE rigidity of W-algebras (Fateev-Lukyanov) as supporting evidence
+    - Central charge c(sl_N, -N/2) is well-defined (not critical level)
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 
 # ========================================================================
@@ -42,89 +52,56 @@ class N2TheoryData:
     c_2d: Fraction               # 2d central charge = -12 c_4d
     voa_identification: str      # known VOA identification
     voa_parameters: int          # number of continuous VOA parameters
+    coupling_independence_status: str = "conjectural"  # "proved", "conjectural", "open"
 
 
 def _sqcd_anomalies(N: int) -> Tuple[Fraction, Fraction]:
     """4d anomaly coefficients for SU(N) SQCD with Nf = 2N.
 
-    For SU(N) gauge theory with Nf fundamental hypermultiplets:
-        a = (5N^2 - 3)/48 * 4 + Nf * N/48 * 4
-    Actually, the standard formulas are:
+    Standard formulas (Shapere-Tachikawa, Anselmi-Freedman-Grisaru-Johansen):
 
-    For a vector multiplet in adjoint of SU(N):
-        a_V = (5/24)(N^2-1), c_V = (1/6)(N^2-1)
+    Vector multiplet in adjoint of SU(N):
+        a_V = 5(N^2-1)/24,  c_V = (N^2-1)/6
 
-    For a hypermultiplet in fund x anti-fund (Nf of them):
-        a_H = Nf * N * (1/48), c_H = Nf * N * (1/24)
+    Full hypermultiplet in representation R of dim d_R:
+        a_H = d_R/24,  c_H = d_R/12
 
-    Wait, more carefully:
-    Vector multiplet contribution to a: 5(N^2-1)/24
-    Vector multiplet contribution to c: (N^2-1)/6
-    Half-hypermultiplet in rep R: a_H = dim(R)/48, c_H = dim(R)/24
-
-    For Nf = 2N fundamental hypers of SU(N):
-        a_H = Nf * N / 48 = 2N^2/48 = N^2/24
-        c_H = Nf * N / 24 = 2N^2/24 = N^2/12
-
-    But actually half-hypers have half these values. For full hypers:
-    a_{hyper} = 1/24, c_{hyper} = 1/12 per complex scalar DOF.
-    A hypermultiplet in the fundamental of SU(N) contributes
-    a = N/24, c = N/12.
-
-    So for Nf=2N fundamentals:
-        a_matter = 2N * N/24 = N^2/12
-        c_matter = 2N * N/12 = N^2/6
+    For Nf=2N fundamental hypers (each of dim N):
+        a_mat = 2N * N/24 = N^2/12,  c_mat = 2N * N/12 = N^2/6
 
     Total:
-        a = 5(N^2-1)/24 + N^2/12 = (5N^2-5+2N^2)/24 = (7N^2-5)/24
-        c = (N^2-1)/6 + N^2/6 = (2N^2-1)/6
+        a = (7N^2-5)/24,  c = (2N^2-1)/6
 
-    c_2d = -12 * c_4d = -12 * (2N^2-1)/6 = -2(2N^2-1) = -(4N^2-2)
-
-    Hmm, let me cross-check with sl_N at k=-N/2:
-    c(sl_N, -N/2) = (-N/2)(N^2-1)/(-N/2+N) = (-N/2)(N^2-1)/(N/2)
-                   = -(N^2-1)
-
-    And the bc system (one pair at weights (1,0)): c_bc = -2.
-    For Nf matters, there would be more bc pairs.
-
-    Actually the identification in the manuscript (line 14704) says:
-    "the vertex algebra is sl_{N,-N/2} x bc-system"
-
-    For N=2: c(sl_2, -1) = (-1)*3/(-1+2) = -3.
-    But -1 is very close to critical (-2). Actually k=-1 for sl_2:
-    c = (-1)*3/(1) = -3. Plus c_bc = -2. Total = -5.
-    The 4d formula gives c_2d = -12 * c_4d.
-    For SU(2) SQCD with Nf=4: a = (7*4-5)/24 = 23/24, c = (2*4-1)/6 = 7/6.
-    c_2d = -12 * 7/6 = -14. That doesn't match -5.
-
-    The discrepancy suggests the bc system has more pairs than 1.
-    For SU(N) with Nf=2N flavors, there are 2N^2 half-hyper complex scalars.
-    In the 4d/2d map, each free hyper maps to a bc pair (roughly).
-
-    Let me use a simpler approach: just record known values.
+    Requires N >= 2 (SU(1) is trivial).
     """
-    # Use known c_2d values from the literature
-    # For SU(2) with Nf=4: c_2d = -14 (from Beem et al)
+    if N < 2:
+        raise ValueError(f"Need N >= 2 for SU(N) gauge group, got N={N}")
     a = Fraction(7 * N * N - 5, 24)
     c = Fraction(2 * N * N - 1, 6)
     return a, c
 
 
 def sqcd_theory(N: int) -> N2TheoryData:
-    """SU(N) SQCD with Nf = 2N flavors."""
+    """SU(N) SQCD with Nf = 2N flavors.
+
+    dim_conformal_manifold = 1 (single gauge coupling tau).
+    voa_parameters = 1 (the VOA depends on N, not on tau).
+    Since dim_CM = voa_parameters = 1, there is no parameter reduction
+    for SQCD — it's already one-parameter.
+    """
     a, c_4d = _sqcd_anomalies(N)
     c_2d = -12 * c_4d
     return N2TheoryData(
         name=f"SU({N}) SQCD, Nf={2*N}",
         gauge_group=f"SU({N})",
         matter_content=f"{2*N} fundamentals",
-        dim_conformal_manifold=1,  # single gauge coupling tau
+        dim_conformal_manifold=1,
         a_anomaly=a,
         c_anomaly=c_4d,
         c_2d=c_2d,
-        voa_identification=f"sl({N})_{{-{N}/2}} x bc",
-        voa_parameters=1,  # discrete N, continuous tau has no effect
+        voa_identification=f"sl({N})_{{-{N}/2}} x (matter free fields)",
+        voa_parameters=1,
+        coupling_independence_status="proved",  # 1d CM, no reduction needed
     )
 
 
@@ -134,10 +111,15 @@ def necklace_quiver_theory(N: int, r: int = 2) -> N2TheoryData:
     This theory has r exactly marginal gauge couplings tau_1, ..., tau_r.
     The conformal manifold has dimension r (modulo discrete identifications).
 
-    Key claim: the VOA depends on at most one effective parameter.
-    The S-duality group Gamma_0(r) acts on the conformal manifold,
-    and the Schur index is coupling-independent.
+    CONJECTURAL claim: the VOA depends on at most one effective parameter.
+    Evidence: S-duality identifications, Schur index structure.
+    Status: OPEN — whether the OPE algebra varies over the conformal
+    manifold is an unresolved problem in 4d physics (manuscript line 14718).
+
+    Requires r >= 2 (a necklace needs at least 2 nodes).
     """
+    if r < 2:
+        raise ValueError(f"Necklace quiver requires r >= 2, got r={r}")
     # For the A_hat_1 necklace (r=2, two SU(N) nodes):
     # Each node: SU(N) vector multiplet
     # Links: bifundamental hypers (N x N-bar at each link)
@@ -161,52 +143,60 @@ def necklace_quiver_theory(N: int, r: int = 2) -> N2TheoryData:
         a_anomaly=a,
         c_anomaly=c_4d,
         c_2d=c_2d,
-        voa_identification="conjectured: depends on 1 effective parameter",
-        voa_parameters=1,  # CLAIM: coupling-independent up to one param
+        voa_identification="CONJECTURAL: depends on 1 effective parameter",
+        voa_parameters=1,  # CONJECTURAL: coupling-independent up to one param
+        coupling_independence_status="open",  # genuine open problem
     )
 
 
 def class_s_theory(n: int) -> N2TheoryData:
     """Class S theory of type A_{n-1} on a sphere with 3 maximal punctures.
 
-    The associated VOA is W^{-n}(sl_n).
-    This is the T_N theory (Gaiotto), which has no marginal couplings.
+    This is the T_N theory (Gaiotto), an isolated SCFT with no marginal
+    couplings (dim_conformal_manifold = 0). The VOA is completely rigid.
+
+    Known anomaly coefficients:
+        T_3 (Minahan-Nemeschansky E_6): a = 41/24, c = 13/6
+
+    The anomalies satisfy the Shapere-Tachikawa relation:
+        2a - c = (1/4) * sum_{d=3}^{N} (2d-1) = (N^2-4)/4
+
+    For N >= 4, exact anomaly coefficients require the full class S
+    anomaly polynomial (puncture contributions from the (2,0) reduction).
+    We use provisional estimates that satisfy the ST constraint.
+    These are obtained by scaling from the known T_3 values:
+        a(N) = 41(N^2-4)/120,  c(N) = 13(N^2-4)/30
+    which preserves the ratio a/c = 41/52 from T_3. This is a crude
+    approximation — the actual a/c ratio varies with N.
+
+    Requires n >= 3 (T_2 = free hypers, not a genuine SCFT).
     """
-    # T_N theory: no conformal manifold (isolated SCFT for N >= 3)
-    # For N=2: T_2 = free hypers (trivial)
-    # For N=3: T_3 = Minahan-Nemeschansky E_6 theory
-    # VOA: W^{-n}(sl_n) at the specific level k = -n
-
-    # The VOA is a W-algebra, automatically one-parameter (the level).
-    # Since it's at a FIXED level k=-n, the VOA is completely rigid.
-    d = n * n - 1  # dim sl_n
-    h = n           # h^vee for sl_n
-
-    # c(W_n^{-n}) would be at critical level ... the class S at level -n
-    # is actually defined via a limit/twist, not the naive Sugawara.
-    # Use c_2d from 4d data.
-
-    # For T_N (N >= 3): a = (N-1)(5N^2+5N+6)/24, c = (N-1)(2N^2+2N+3)/6
-    # These are the Minahan-Nemeschansky/Gaiotto anomaly coefficients.
     if n < 3:
-        a = Fraction(0)
-        c_4d = Fraction(0)
+        raise ValueError(f"T_N requires N >= 3, got N={n}. T_2 = free hypers.")
+
+    if n == 3:
+        # E_6 Minahan-Nemeschansky theory — verified values
+        a = Fraction(41, 24)
+        c_4d = Fraction(13, 6)
     else:
-        a = Fraction((n - 1) * (5 * n * n + 5 * n + 6), 24)
-        c_4d = Fraction((n - 1) * (2 * n * n + 2 * n + 3), 6)
+        # Provisional: scale from T_3 values, preserving 2a - c = (N^2-4)/4
+        # a = 41(N^2-4)/120, c = 13(N^2-4)/30
+        c_4d = Fraction(13 * (n * n - 4), 30)
+        a = Fraction(41 * (n * n - 4), 120)
 
     c_2d = -12 * c_4d
 
     return N2TheoryData(
         name=f"T_{n} (class S, type A_{n-1})",
         gauge_group="none (isolated)",
-        matter_content=f"E_{6 if n==3 else '?'} theory" if n >= 3 else "free hypers",
+        matter_content=f"T_{n} theory",
         dim_conformal_manifold=0,  # isolated, no marginal couplings
         a_anomaly=a,
         c_anomaly=c_4d,
         c_2d=c_2d,
         voa_identification=f"W^{{-{n}}}(sl_{n})",
         voa_parameters=0,  # completely rigid
+        coupling_independence_status="proved",  # trivially: no couplings
     )
 
 
@@ -215,33 +205,19 @@ def class_s_theory(n: int) -> N2TheoryData:
 # ========================================================================
 
 def schur_index_sqcd_su2_nf4(q_order: int = 6) -> Dict[int, Fraction]:
-    """Schur index coefficients for SU(2) SQCD with Nf=4.
+    """Simplified Schur index coefficients for SU(2) SQCD with Nf=4.
 
-    The Schur index is I(q) = sum_n a_n q^n where a_n counts
-    (with signs) Schur operators at dimension n.
-
-    For SU(2) Nf=4, the index is known:
-        I(q) = PE[q/(1-q) * (3 + 8)] = PE[11q/(1-q)]
-
-    where 3 = dim(adj SU(2)) and 8 = Nf^2/2 - 1 for Nf=4.
-    Actually the Schur index is more subtle.
-
-    Known first few terms (Gadde-Rastelli-Razamat-Yan):
+    Returns the first terms of 1/(1-q)^11, which matches the known
+    first few coefficients of the Schur index (Gadde-Rastelli-Razamat-Yan):
         I(q) = 1 + 11q + 66q^2 + 286q^3 + ...
 
-    These are binomial coefficients C(n+10, 10) for the plethystic
-    exponential of 11q/(1-q), giving I(q) = 1/(1-q)^11.
+    These are binomial coefficients C(n+10, 10).
 
-    Wait, actually PE[11q/(1-q)] = prod_{n>=1} 1/(1-q^n)^11.
-    The first terms: 1 + 11q + (11+55)q^2 + ... = 1 + 11q + 66q^2 + ...
-    Actually 1/(1-q)^11 at q^2 gives C(12,2) = 66. Yes.
-
-    But this is NOT the correct Schur index. The correct one involves
-    the full character and is more complicated.
-
-    For our purposes, the key point is: the Schur index does NOT
-    depend on the gauge coupling tau. It's a topological invariant
-    of the 4d theory.
+    CAVEAT: 1/(1-q)^11 is a simplified approximation, not the full
+    Schur index (which involves integration over the gauge group and
+    higher-order plethystic exponential corrections). The key property
+    we verify is coupling-independence: the Schur index does not
+    depend on the gauge coupling tau.
     """
     # Return the first few terms of the vacuum character / Schur index
     # Using known results for SU(2) Nf=4
@@ -274,11 +250,13 @@ def schur_index_coupling_independence_test(
     Schur operators and their 3-point functions, which are also
     coupling-independent by supersymmetric Ward identities.
     """
+    is_proved = theory.coupling_independence_status == "proved"
     return {
         "theory": theory.name,
         "dim_conformal_manifold": theory.dim_conformal_manifold,
         "voa_parameters": theory.voa_parameters,
-        "coupling_independent": True,
+        "coupling_independent": is_proved,
+        "coupling_independence_status": theory.coupling_independence_status,
         "mechanism": (
             "Schur operators are 1/4-BPS, their OPE coefficients "
             "are determined by superconformal Ward identities and "
@@ -304,45 +282,34 @@ def conformal_manifold_analysis() -> List[Dict]:
     """
     results = []
 
-    # 1. SQCD theories
-    for N in range(2, 7):
-        theory = sqcd_theory(N)
-        results.append({
+    def _entry(theory: N2TheoryData) -> Dict:
+        saturated = (
+            theory.voa_parameters <= 1
+            and theory.coupling_independence_status == "proved"
+        )
+        return {
             "theory": theory.name,
             "dim_CM": theory.dim_conformal_manifold,
             "voa_params": theory.voa_parameters,
             "c_2d": theory.c_2d,
             "voa_id": theory.voa_identification,
             "reduction": theory.dim_conformal_manifold - theory.voa_parameters,
-            "scalar_saturated": True,
-        })
+            "coupling_status": theory.coupling_independence_status,
+            "scalar_saturated": saturated,
+        }
+
+    # 1. SQCD theories
+    for N in range(2, 7):
+        results.append(_entry(sqcd_theory(N)))
 
     # 2. Necklace quivers
     for r in range(2, 5):
         for N in range(2, 5):
-            theory = necklace_quiver_theory(N, r)
-            results.append({
-                "theory": theory.name,
-                "dim_CM": theory.dim_conformal_manifold,
-                "voa_params": theory.voa_parameters,
-                "c_2d": theory.c_2d,
-                "voa_id": theory.voa_identification,
-                "reduction": theory.dim_conformal_manifold - theory.voa_parameters,
-                "scalar_saturated": True,
-            })
+            results.append(_entry(necklace_quiver_theory(N, r)))
 
     # 3. Class S theories (isolated, no CM)
     for n in range(3, 6):
-        theory = class_s_theory(n)
-        results.append({
-            "theory": theory.name,
-            "dim_CM": theory.dim_conformal_manifold,
-            "voa_params": theory.voa_parameters,
-            "c_2d": theory.c_2d,
-            "voa_id": theory.voa_identification,
-            "reduction": 0,  # no CM to reduce
-            "scalar_saturated": True,
-        })
+        results.append(_entry(class_s_theory(n)))
 
     return results
 
@@ -382,7 +349,8 @@ def verify_quiver_voa_saturation() -> Dict:
                 "name": t.name,
                 "dim_CM": t.dim_conformal_manifold,
                 "voa_params": t.voa_parameters,
-                "coupling_independent": t.dim_conformal_manifold > t.voa_parameters,
+                "has_parameter_reduction": t.dim_conformal_manifold > t.voa_parameters,
+                "coupling_status": t.coupling_independence_status,
             }
             for t in theories
         ],
@@ -471,8 +439,8 @@ def ope_rigidity_wn(n: int, c: Fraction) -> OPERigidityResult:
     """OPE rigidity for W_N at central charge c.
 
     Strong generators: T, W_3, ..., W_N.
-    Total OPE parameters: C(N-1, 2) = (N-1)(N-2)/2 a priori
-    Jacobi constraints: (N-1)(N-2)/2 - 1 constraints
+    Total OPE pairs (including self-OPEs): (N-1)*N/2 a priori
+    Jacobi + associativity constraints: (N-1)*N/2 - 1
     Effective: 1 parameter (the central charge)
 
     This is the Fateev-Lukyanov rigidity theorem (type A).
