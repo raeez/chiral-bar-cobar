@@ -895,6 +895,27 @@ def _insert_sparse_column(column: Dict[int, complex],
     return False, 0
 
 
+def _reduce_sparse_column_against_basis(column: Dict[int, complex],
+                                        basis: Dict[int, Dict[int, complex]],
+                                        tol: float = 1e-10) -> Dict[int, complex]:
+    """Reduce a sparse column against a pivot basis without inserting it."""
+    col = dict(column)
+    while col:
+        pivot = max(col)
+        if pivot not in basis:
+            return col
+
+        factor = col[pivot]
+        for row, value in basis[pivot].items():
+            new_value = col.get(row, 0.0) - factor * value
+            if abs(new_value) > tol:
+                col[row] = new_value
+            elif row in col:
+                del col[row]
+
+    return {}
+
+
 def _sparse_rank_from_columns(columns: Iterable[Dict[int, complex]],
                               tol: float = 1e-10,
                               target_rank: Optional[int] = None) -> Tuple[int, int]:
@@ -1412,27 +1433,8 @@ def n4_degree2_partial_packet() -> Dict[str, object]:
 
 
 @lru_cache(maxsize=None)
-def n4_degree2_h13_channel_bounds() -> Dict[str, object]:
-    """Bound H^{1,3}_2 by a compressed split-form sparse image certificate.
-
-    For N = 4 we have
-
-      H^{1,3}_2 = ker(d_q^1 : B_2 -> B_1) / im(d_q^3 : B_5 -> B_2)
-               = B_2 / im(d_q^3 : B_5 -> B_2),
-
-    because the first q-bar differential out of B_2 is zero in the Kapranov
-    flavor j = 1.  The direct B_5 sweep is too large, but associativity
-    collapses d_q^3 to four split terms with coefficients
-
-      (1 + i), (1 - i), (-1 - i), (-1 + i).
-
-    We exploit that split form to certify a large image from three exact seed
-    families:
-
-      (a, b, c, K-1, K-1), (a, b, c, K-1, F), (a, b, c, K-1, E).
-
-    This yields an honest M/S-level bound rather than a full vanishing claim.
-    """
+def _n4_degree2_h13_seed_basis_data() -> Dict[str, object]:
+    """Shared seed-span data for the N = 4 degree-2 H^{1,3}_2 diagnostics."""
     tol = 1e-10
     uq = SmallQuantumSl2(4)
     bar = BarComplex(uq, max_degree=2, use_reduced=True)
@@ -1442,9 +1444,9 @@ def n4_degree2_h13_channel_bounds() -> Dict[str, object]:
     flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
 
     seed_tails = (
-        (60, 60),  # (K - 1, K - 1)
-        (60, 0),   # (K - 1, F)
-        (60, 12),  # (K - 1, E)
+        (60, 60),
+        (60, 0),
+        (60, 12),
     )
     basis: Dict[int, Dict[int, complex]] = {}
     seed_family_stats = []
@@ -1485,6 +1487,52 @@ def n4_degree2_h13_channel_bounds() -> Dict[str, object]:
         "E": sum(1 for row in missing_rows if row // dim_I == 12),
         "K-1": sum(1 for row in missing_rows if row // dim_I == 60),
     }
+
+    return {
+        "tol": tol,
+        "dim_I": dim_I,
+        "dim_b2": dim_b2,
+        "sparse_mu": sparse_mu,
+        "flat2": flat2,
+        "basis": basis,
+        "seed_family_stats": seed_family_stats,
+        "missing_rows": missing_rows,
+        "residual_left_factor_profile": residual_left_factor_profile,
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_h13_channel_bounds() -> Dict[str, object]:
+    """Bound H^{1,3}_2 by a compressed split-form sparse image certificate.
+
+    For N = 4 we have
+
+      H^{1,3}_2 = ker(d_q^1 : B_2 -> B_1) / im(d_q^3 : B_5 -> B_2)
+               = B_2 / im(d_q^3 : B_5 -> B_2),
+
+    because the first q-bar differential out of B_2 is zero in the Kapranov
+    flavor j = 1.  The direct B_5 sweep is too large, but associativity
+    collapses d_q^3 to four split terms with coefficients
+
+      (1 + i), (1 - i), (-1 - i), (-1 + i).
+
+    We exploit that split form to certify a large image from three exact seed
+    families:
+
+      (a, b, c, K-1, K-1), (a, b, c, K-1, F), (a, b, c, K-1, E).
+
+    This yields an honest M/S-level bound rather than a full vanishing claim.
+    """
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    dim_b2 = seed_data["dim_b2"]
+    sparse_mu = seed_data["sparse_mu"]
+    flat2 = seed_data["flat2"]
+    basis = {pivot: dict(column) for pivot, column in seed_data["basis"].items()}
+    seed_family_stats = seed_data["seed_family_stats"]
+    missing_rows = seed_data["missing_rows"]
+    residual_left_factor_profile = seed_data["residual_left_factor_profile"]
 
     special_basis = {pivot: dict(column) for pivot, column in basis.items()}
     generator_cube_added_rank = 0
@@ -1577,6 +1625,660 @@ def n4_degree2_h13_channel_bounds() -> Dict[str, object]:
 
 
 @lru_cache(maxsize=None)
+def n4_degree2_h13_precursor_screen() -> Dict[str, object]:
+    """Screen the later d_q^3 split stages against the residual H^{1,3}_2 quotient.
+
+    The seed families and generator cubes already probe the first split term.
+    This diagnostic checks the remaining precursor stages exactly:
+
+      ab in span{F, E, K-1},
+      abc in span{F, E, K-1},
+      abcd in span{F, E, K-1}.
+
+    In the current computation all three later stages are quotient-zero, so the
+    residual packet is concentrated entirely in the first split term.
+    """
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    sparse_mu = seed_data["sparse_mu"]
+    flat2 = seed_data["flat2"]
+    seed_basis = {pivot: dict(column) for pivot, column in seed_data["basis"].items()}
+    residual_left_factor_profile = seed_data["residual_left_factor_profile"]
+
+    residual_left_factors = (0, 12, 60)
+    residual_left_factor_names = {
+        0: "F",
+        12: "E",
+        60: "K-1",
+    }
+
+    def screen_pair_stage() -> Dict[str, object]:
+        pair_precursors = [
+            (left, right)
+            for left in range(dim_I)
+            for right in range(dim_I)
+            if any(idx in residual_left_factors for idx in sparse_mu[left][right])
+        ]
+
+        quotient_basis: Dict[int, Dict[int, complex]] = {}
+        max_support = 0
+        active_precursors = []
+        column_count = 0
+
+        for left, right in pair_precursors:
+            precursor_added_rank = 0
+            for middle_left in range(dim_I):
+                for middle_right in range(dim_I):
+                    for tail in range(dim_I):
+                        column_count += 1
+                        reduced = _reduce_sparse_column_against_basis(
+                            _n4_dq3_b5_to_b2_column(
+                                (left, right, middle_left, middle_right, tail),
+                                sparse_mu,
+                                flat2,
+                                tol=tol,
+                            ),
+                            seed_basis,
+                            tol=tol,
+                        )
+                        independent, support = _insert_sparse_column(
+                            reduced,
+                            quotient_basis,
+                            tol=tol,
+                        )
+                        if independent:
+                            precursor_added_rank += 1
+                            max_support = max(max_support, support)
+            if precursor_added_rank:
+                active_precursors.append(
+                    {
+                        "pair": (left, right),
+                        "added_rank": precursor_added_rank,
+                    }
+                )
+
+        return {
+            "precursor_count": len(pair_precursors),
+            "tuples_checked": column_count,
+            "quotient_rank": len(quotient_basis),
+            "max_support": max_support,
+            "active_precursors": active_precursors,
+        }
+
+    def screen_triple_stage() -> Dict[str, object]:
+        triple_precursors = [
+            (left, middle_left, middle_right)
+            for left in range(dim_I)
+            for middle_left in range(dim_I)
+            for middle_right in range(dim_I)
+            if any(
+                idx in residual_left_factors
+                for idx in _sparse_right_product_chain(
+                    (left, middle_left, middle_right),
+                    sparse_mu,
+                    tol=tol,
+                )
+            )
+        ]
+
+        quotient_basis: Dict[int, Dict[int, complex]] = {}
+        max_support = 0
+        active_precursors = []
+        column_count = 0
+
+        for left, middle_left, middle_right in triple_precursors:
+            precursor_added_rank = 0
+            for tail_left in range(dim_I):
+                for tail_right in range(dim_I):
+                    column_count += 1
+                    reduced = _reduce_sparse_column_against_basis(
+                        _n4_dq3_b5_to_b2_column(
+                            (left, middle_left, middle_right, tail_left, tail_right),
+                            sparse_mu,
+                            flat2,
+                            tol=tol,
+                        ),
+                        seed_basis,
+                        tol=tol,
+                    )
+                    independent, support = _insert_sparse_column(
+                        reduced,
+                        quotient_basis,
+                        tol=tol,
+                    )
+                    if independent:
+                        precursor_added_rank += 1
+                        max_support = max(max_support, support)
+            if precursor_added_rank:
+                active_precursors.append(
+                    {
+                        "triple": (left, middle_left, middle_right),
+                        "added_rank": precursor_added_rank,
+                    }
+                )
+
+        return {
+            "precursor_count": len(triple_precursors),
+            "tuples_checked": column_count,
+            "quotient_rank": len(quotient_basis),
+            "max_support": max_support,
+            "active_precursors": active_precursors,
+        }
+
+    def screen_quad_stage() -> Dict[str, object]:
+        quad_precursors = [
+            (left, middle_left, middle_right, tail_left)
+            for left in range(dim_I)
+            for middle_left in range(dim_I)
+            for middle_right in range(dim_I)
+            for tail_left in range(dim_I)
+            if any(
+                idx in residual_left_factors
+                for idx in _sparse_right_product_chain(
+                    (left, middle_left, middle_right, tail_left),
+                    sparse_mu,
+                    tol=tol,
+                )
+            )
+        ]
+
+        quotient_basis: Dict[int, Dict[int, complex]] = {}
+        max_support = 0
+        active_precursors = []
+        column_count = 0
+
+        for left, middle_left, middle_right, tail_left in quad_precursors:
+            precursor_added_rank = 0
+            for tail_right in range(dim_I):
+                column_count += 1
+                reduced = _reduce_sparse_column_against_basis(
+                    _n4_dq3_b5_to_b2_column(
+                        (left, middle_left, middle_right, tail_left, tail_right),
+                        sparse_mu,
+                        flat2,
+                        tol=tol,
+                    ),
+                    seed_basis,
+                    tol=tol,
+                )
+                independent, support = _insert_sparse_column(
+                    reduced,
+                    quotient_basis,
+                    tol=tol,
+                )
+                if independent:
+                    precursor_added_rank += 1
+                    max_support = max(max_support, support)
+            if precursor_added_rank:
+                active_precursors.append(
+                    {
+                        "quadruple": (left, middle_left, middle_right, tail_left),
+                        "added_rank": precursor_added_rank,
+                    }
+                )
+
+        return {
+            "precursor_count": len(quad_precursors),
+            "tuples_checked": column_count,
+            "quotient_rank": len(quotient_basis),
+            "max_support": max_support,
+            "active_precursors": active_precursors,
+        }
+
+    def remaining_first_factor_stage() -> Dict[str, object]:
+        counts = {}
+        total = 0
+        for left in residual_left_factors:
+            count = 0
+            for right in range(dim_I):
+                if any(idx in residual_left_factors for idx in sparse_mu[left][right]):
+                    continue
+                for middle_left in range(dim_I):
+                    if any(
+                        idx in residual_left_factors
+                        for idx in _sparse_right_product_chain(
+                            (left, right, middle_left),
+                            sparse_mu,
+                            tol=tol,
+                        )
+                    ):
+                        continue
+                    for middle_right in range(dim_I):
+                        if any(
+                            idx in residual_left_factors
+                            for idx in _sparse_right_product_chain(
+                                (left, right, middle_left, middle_right),
+                                sparse_mu,
+                                tol=tol,
+                            )
+                        ):
+                            continue
+                        count += dim_I
+            counts[residual_left_factor_names[left]] = count
+            total += count
+
+        return {
+            "left_factor_counts": counts,
+            "tuples_remaining": total,
+        }
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "residual_left_factor_profile": residual_left_factor_profile,
+        "pair_stage": screen_pair_stage(),
+        "triple_stage": screen_triple_stage(),
+        "quad_stage": screen_quad_stage(),
+        "remaining_first_factor_stage": remaining_first_factor_stage(),
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_h13_first_term_state_compression() -> Dict[str, object]:
+    """Compress the surviving first split term of the N = 4 degree-2 packet.
+
+    After the later split-form precursor stages `ab`, `abc`, and `abcd` are
+    shown quotient-zero, the remaining search space is the first split term on
+    tuples whose successive left-prefix products avoid the residual support
+    `span{F, E, K-1}`.  This diagnostic keeps the result at the M/S level: it
+    replaces the raw tuple count by the exact number of distinct right-product
+    states and measures only the standalone first-term tensor span over the
+    existing seed basis.  It does not yet identify the full image of `d_q^3`.
+    """
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    dim_b2 = seed_data["dim_b2"]
+    sparse_mu = seed_data["sparse_mu"]
+    flat2 = seed_data["flat2"]
+    seed_rank = len(seed_data["basis"])
+
+    residual_left_factors = (0, 12, 60)
+    residual_left_factor_names = {
+        0: "F",
+        12: "E",
+        60: "K-1",
+    }
+
+    state_vectors: Dict[Tuple[Tuple[int, float, float], ...], Dict[int, complex]] = {}
+    right_multiply_cache: Dict[Tuple[Tuple[Tuple[int, float, float], ...], int], Tuple[Tuple[int, float, float], ...]] = {}
+
+    def sparse_state_key(column: Dict[int, complex]) -> Tuple[Tuple[int, float, float], ...]:
+        return tuple(
+            sorted(
+                (
+                    row,
+                    round(value.real, 12),
+                    round(value.imag, 12),
+                )
+                for row, value in column.items()
+                if abs(value) > tol
+            )
+        )
+
+    def sparse_state_vector(state_key: Tuple[Tuple[int, float, float], ...]) -> Dict[int, complex]:
+        if state_key not in state_vectors:
+            state_vectors[state_key] = {
+                row: complex(real_part, imag_part)
+                for row, real_part, imag_part in state_key
+            }
+        return state_vectors[state_key]
+
+    def right_multiply_state(
+        state_key: Tuple[Tuple[int, float, float], ...],
+        factor: int,
+    ) -> Tuple[Tuple[int, float, float], ...]:
+        cache_key = (state_key, factor)
+        if cache_key in right_multiply_cache:
+            return right_multiply_cache[cache_key]
+
+        product: Dict[int, complex] = {}
+        for left, left_coeff in sparse_state_vector(state_key).items():
+            for idx, coeff in sparse_mu[left][factor].items():
+                product[idx] = product.get(idx, 0.0) + left_coeff * coeff
+
+        state_key_product = sparse_state_key(product)
+        right_multiply_cache[cache_key] = state_key_product
+        return state_key_product
+
+    def standalone_first_term_column(
+        left_factor: int,
+        state_key: Tuple[Tuple[int, float, float], ...],
+    ) -> Dict[int, complex]:
+        column: Dict[int, complex] = {}
+        for right_factor, coeff in sparse_state_vector(state_key).items():
+            row = flat2[left_factor][right_factor]
+            column[row] = column.get(row, 0.0) + coeff
+        return column
+
+    per_left_factor: Dict[str, Dict[str, int]] = {}
+    final_state_union = set()
+    remaining_first_factor_counts: Dict[str, int] = {}
+    standalone_basis = {
+        pivot: dict(column) for pivot, column in seed_data["basis"].items()
+    }
+    standalone_added_rank = 0
+
+    for left_factor in residual_left_factors:
+        stage1_pairs = {}
+        for right_factor in range(dim_I):
+            left_prefix_key = sparse_state_key(sparse_mu[left_factor][right_factor])
+            if any(idx in residual_left_factors for idx, _, _ in left_prefix_key):
+                continue
+            right_prefix_key = sparse_state_key({right_factor: 1.0 + 0.0j})
+            stage1_pairs[(left_prefix_key, right_prefix_key)] = 1
+
+        stage2_pairs: Dict[
+            Tuple[Tuple[Tuple[int, float, float], ...], Tuple[Tuple[int, float, float], ...]],
+            int,
+        ] = {}
+        for (left_prefix_key, right_prefix_key), multiplicity in stage1_pairs.items():
+            for factor in range(dim_I):
+                next_left_prefix_key = right_multiply_state(left_prefix_key, factor)
+                if any(idx in residual_left_factors for idx, _, _ in next_left_prefix_key):
+                    continue
+                next_right_prefix_key = right_multiply_state(right_prefix_key, factor)
+                pair_key = (next_left_prefix_key, next_right_prefix_key)
+                stage2_pairs[pair_key] = stage2_pairs.get(pair_key, 0) + multiplicity
+
+        stage3_pairs: Dict[
+            Tuple[Tuple[Tuple[int, float, float], ...], Tuple[Tuple[int, float, float], ...]],
+            int,
+        ] = {}
+        for (left_prefix_key, right_prefix_key), multiplicity in stage2_pairs.items():
+            for factor in range(dim_I):
+                next_left_prefix_key = right_multiply_state(left_prefix_key, factor)
+                if any(idx in residual_left_factors for idx, _, _ in next_left_prefix_key):
+                    continue
+                next_right_prefix_key = right_multiply_state(right_prefix_key, factor)
+                pair_key = (next_left_prefix_key, next_right_prefix_key)
+                stage3_pairs[pair_key] = stage3_pairs.get(pair_key, 0) + multiplicity
+
+        stage1_states = {right_prefix_key for _, right_prefix_key in stage1_pairs}
+        stage2_states = {right_prefix_key for _, right_prefix_key in stage2_pairs}
+        stage3_states = {right_prefix_key for _, right_prefix_key in stage3_pairs}
+        remaining_tuple_count = dim_I * sum(stage3_pairs.values())
+
+        final_right_product_states = set()
+        for state_key in stage3_states:
+            for factor in range(dim_I):
+                final_right_product_states.add(right_multiply_state(state_key, factor))
+
+        local_added_rank = 0
+        for state_key in final_right_product_states:
+            independent, _ = _insert_sparse_column(
+                standalone_first_term_column(left_factor, state_key),
+                standalone_basis,
+                tol=tol,
+            )
+            if independent:
+                local_added_rank += 1
+                standalone_added_rank += 1
+
+        label = residual_left_factor_names[left_factor]
+        remaining_first_factor_counts[label] = remaining_tuple_count
+        per_left_factor[label] = {
+            "left_index": left_factor,
+            "stage1_basis_count": len(stage1_states),
+            "stage2_state_count": len(stage2_states),
+            "stage3_state_count": len(stage3_states),
+            "final_right_product_state_count": len(final_right_product_states),
+            "standalone_first_term_added_rank": local_added_rank,
+        }
+        final_state_union.update(final_right_product_states)
+
+    standalone_first_term_span_rank = seed_rank + standalone_added_rank
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "status": "unresolved",
+        "method": "surviving first-term state compression",
+        "residual_left_factor_profile": seed_data["residual_left_factor_profile"],
+        "remaining_first_factor_stage": {
+            "left_factor_counts": remaining_first_factor_counts,
+            "tuples_remaining": sum(remaining_first_factor_counts.values()),
+        },
+        "per_left_factor": per_left_factor,
+        "union_final_right_product_state_count": len(final_state_union),
+        "standalone_first_term_state_packets": sum(
+            entry["final_right_product_state_count"]
+            for entry in per_left_factor.values()
+        ),
+        "seed_rank": seed_rank,
+        "standalone_first_term_added_rank": standalone_added_rank,
+        "standalone_first_term_span_rank": standalone_first_term_span_rank,
+        "standalone_first_term_gap": dim_b2 - standalone_first_term_span_rank,
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_h13_cancellation_plane() -> Dict[str, object]:
+    """Compare the surviving first-term and non-first split spans in quotient.
+
+    This keeps the calculation at the M/S level.  After the seed span and the
+    precursor-stage vanishing are fixed, the surviving degree-2 `H^{1,3}_2`
+    question is no longer about discovering new quotient directions: it is
+    about how the first split term and the remaining split contributions cancel
+    inside the same quotient plane.
+    """
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    first_term_data = n4_degree2_h13_first_term_state_compression()
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    sparse_mu = seed_data["sparse_mu"]
+    flat2 = seed_data["flat2"]
+    seed_basis = seed_data["basis"]
+    missing_rows = set(seed_data["missing_rows"])
+
+    residual_left_factors = (0, 12, 60)
+
+    full_basis = {
+        pivot: dict(column) for pivot, column in seed_basis.items()
+    }
+    for row in seed_data["missing_rows"]:
+        full_basis[row] = {row: 1.0 + 0.0j}
+
+    state_vectors: Dict[Tuple[Tuple[int, float, float], ...], Dict[int, complex]] = {}
+    right_multiply_cache: Dict[Tuple[Tuple[Tuple[int, float, float], ...], int], Tuple[Tuple[int, float, float], ...]] = {}
+
+    def sparse_state_key(column: Dict[int, complex]) -> Tuple[Tuple[int, float, float], ...]:
+        return tuple(
+            sorted(
+                (
+                    row,
+                    round(value.real, 12),
+                    round(value.imag, 12),
+                )
+                for row, value in column.items()
+                if abs(value) > tol
+            )
+        )
+
+    def sparse_state_vector(state_key: Tuple[Tuple[int, float, float], ...]) -> Dict[int, complex]:
+        if state_key not in state_vectors:
+            state_vectors[state_key] = {
+                row: complex(real_part, imag_part)
+                for row, real_part, imag_part in state_key
+            }
+        return state_vectors[state_key]
+
+    def right_multiply_state(
+        state_key: Tuple[Tuple[int, float, float], ...],
+        factor: int,
+    ) -> Tuple[Tuple[int, float, float], ...]:
+        cache_key = (state_key, factor)
+        if cache_key in right_multiply_cache:
+            return right_multiply_cache[cache_key]
+
+        product: Dict[int, complex] = {}
+        for left, left_coeff in sparse_state_vector(state_key).items():
+            for idx, coeff in sparse_mu[left][factor].items():
+                product[idx] = product.get(idx, 0.0) + left_coeff * coeff
+
+        state_key_product = sparse_state_key(product)
+        right_multiply_cache[cache_key] = state_key_product
+        return state_key_product
+
+    def quotient_coords(column: Dict[int, complex]) -> Dict[int, complex]:
+        reduced = dict(column)
+        coefficients: Dict[int, complex] = {}
+        while reduced:
+            pivot = max(reduced)
+            factor = reduced[pivot]
+            coefficients[pivot] = coefficients.get(pivot, 0.0) + factor
+            for row, value in full_basis[pivot].items():
+                new_value = reduced.get(row, 0.0) - factor * value
+                if abs(new_value) > tol:
+                    reduced[row] = new_value
+                elif row in reduced:
+                    del reduced[row]
+        return {
+            row: value
+            for row, value in coefficients.items()
+            if row in missing_rows and abs(value) > tol
+        }
+
+    quotient_row_coords = [
+        quotient_coords({row: 1.0 + 0.0j})
+        for row in range(dim_I * dim_I)
+    ]
+
+    def tensor_quotient_coords(
+        left_state_key: Tuple[Tuple[int, float, float], ...],
+        right_state_key: Tuple[Tuple[int, float, float], ...],
+    ) -> Dict[int, complex]:
+        output: Dict[int, complex] = {}
+        for left_idx, left_coeff in sparse_state_vector(left_state_key).items():
+            for right_idx, right_coeff in sparse_state_vector(right_state_key).items():
+                coeff = left_coeff * right_coeff
+                for row, value in quotient_row_coords[flat2[left_idx][right_idx]].items():
+                    output[row] = output.get(row, 0.0) + coeff * value
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    basis_keys = [
+        sparse_state_key({idx: 1.0 + 0.0j})
+        for idx in range(dim_I)
+    ]
+
+    first_term_states = {left_factor: set() for left_factor in residual_left_factors}
+    term2_pairs = set()
+    term3_pairs = set()
+    term4_left_states = set()
+
+    for left_factor in residual_left_factors:
+        for right_factor in range(dim_I):
+            left_pair_key = sparse_state_key(sparse_mu[left_factor][right_factor])
+            if any(idx in residual_left_factors for idx, _, _ in left_pair_key):
+                continue
+
+            right_prefix_key = basis_keys[right_factor]
+            for middle_left in range(dim_I):
+                left_triple_key = right_multiply_state(left_pair_key, middle_left)
+                if any(idx in residual_left_factors for idx, _, _ in left_triple_key):
+                    continue
+
+                middle_left_key = basis_keys[middle_left]
+                right_triple_key = right_multiply_state(right_prefix_key, middle_left)
+                for middle_right in range(dim_I):
+                    left_quad_key = right_multiply_state(left_triple_key, middle_right)
+                    if any(idx in residual_left_factors for idx, _, _ in left_quad_key):
+                        continue
+
+                    right_quad_key = right_multiply_state(right_triple_key, middle_right)
+                    middle_right_key = basis_keys[middle_right]
+                    term2_pairs.add((left_pair_key, right_multiply_state(middle_left_key, middle_right)))
+                    term3_pairs.add((left_triple_key, middle_right_key))
+                    term4_left_states.add(left_quad_key)
+
+                    for tail_right in range(dim_I):
+                        first_term_states[left_factor].add(
+                            right_multiply_state(right_quad_key, tail_right)
+                        )
+
+    first_basis: Dict[int, Dict[int, complex]] = {}
+    for left_factor in residual_left_factors:
+        left_key = basis_keys[left_factor]
+        for state_key in first_term_states[left_factor]:
+            _insert_sparse_column(
+                tensor_quotient_coords(left_key, state_key),
+                first_basis,
+                tol=tol,
+            )
+
+    term2_basis: Dict[int, Dict[int, complex]] = {}
+    for left_pair_key, right_pair_key in term2_pairs:
+        for tail_right in range(dim_I):
+            _insert_sparse_column(
+                tensor_quotient_coords(
+                    left_pair_key,
+                    right_multiply_state(right_pair_key, tail_right),
+                ),
+                term2_basis,
+                tol=tol,
+            )
+
+    term3_basis: Dict[int, Dict[int, complex]] = {}
+    for left_triple_key, middle_right_key in term3_pairs:
+        for tail_right in range(dim_I):
+            _insert_sparse_column(
+                tensor_quotient_coords(
+                    left_triple_key,
+                    right_multiply_state(middle_right_key, tail_right),
+                ),
+                term3_basis,
+                tol=tol,
+            )
+
+    term4_basis: Dict[int, Dict[int, complex]] = {}
+    for left_quad_key in term4_left_states:
+        for tail_right in range(dim_I):
+            _insert_sparse_column(
+                tensor_quotient_coords(left_quad_key, basis_keys[tail_right]),
+                term4_basis,
+                tol=tol,
+            )
+
+    nonfirst_basis = {pivot: dict(column) for pivot, column in term2_basis.items()}
+    for basis in (term3_basis, term4_basis):
+        for column in basis.values():
+            _insert_sparse_column(dict(column), nonfirst_basis, tol=tol)
+
+    combined_basis = {pivot: dict(column) for pivot, column in nonfirst_basis.items()}
+    first_term_extra_over_nonfirst = 0
+    for column in first_basis.values():
+        independent, _ = _insert_sparse_column(dict(column), combined_basis, tol=tol)
+        if independent:
+            first_term_extra_over_nonfirst += 1
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "status": "unresolved",
+        "method": "quotient-plane comparison of surviving split terms",
+        "quotient_dimension": len(missing_rows),
+        "common_plane_rank": len(combined_basis),
+        "first_term_rank": len(first_basis),
+        "term2_rank": len(term2_basis),
+        "term3_rank": len(term3_basis),
+        "term4_rank": len(term4_basis),
+        "nonfirst_rank": len(nonfirst_basis),
+        "first_term_extra_over_nonfirst": first_term_extra_over_nonfirst,
+        "term2_pair_count": len(term2_pairs),
+        "term3_pair_count": len(term3_pairs),
+        "term4_left_state_count": len(term4_left_states),
+        "union_final_right_product_state_count": first_term_data["union_final_right_product_state_count"],
+        "shared_plane_gap_to_full_quotient": len(missing_rows) - len(combined_basis),
+    }
+
+
+@lru_cache(maxsize=None)
 def kl_periodic_shadow_candidates() -> Dict[str, object]:
     """Compare the first resolved KL packet against elementary shadow candidates."""
     n3_packet = n3_degree4_flavor_packet()
@@ -1584,6 +2286,8 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
     n4_h13 = n4_degree1_h13_channel()
     n4_degree2 = n4_degree2_partial_packet()
     n4_degree2_h13 = n4_degree2_h13_channel_bounds()
+    n4_degree2_h13_first_term = n4_degree2_h13_first_term_state_compression()
+    n4_degree2_h13_plane = n4_degree2_h13_cancellation_plane()
     n3_report = admissible_level_flavor_report(3, max_degree=3)
 
     return {
@@ -1603,6 +2307,8 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
         "N4_degree1_h13": n4_h13,
         "N4_degree2_partial_packet": n4_degree2,
         "N4_degree2_h13_bound": n4_degree2_h13,
+        "N4_degree2_h13_first_term_compression": n4_degree2_h13_first_term,
+        "N4_degree2_h13_cancellation_plane": n4_degree2_h13_plane,
     }
 
 

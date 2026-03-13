@@ -278,7 +278,19 @@ sparse `d_q^3 : B_5 -> B_2` certificate already gives
 cokernel is supported only on the left factors `F`, `E`, and `K-1`.
 So the live gap is now this residual `66`-dimensional packet, not the
 whole `B_5 -> B_2` map. Even the full generator-prefix cube
-`{F,E,K-1}^3 x I^2` adds no new residual rank beyond that certificate.
+`{F,E,K-1}^3 x I^2` adds no new residual rank beyond that certificate,
+and the later split-form precursor stages with
+`ab`, `abc`, or `abcd` in `span{F,E,K-1}` are also quotient-zero. The
+surviving first-term sector compresses from `42,718,284` raw tuples to
+only `1493` distinct right-product states, and its standalone tensor
+span adds just `57` directions beyond the `3903`-rank seed span
+(`43` from `F`, `14` from `E`, `0` from `K-1`). So the live KL gap is
+now the cancellation/annihilator problem between that first-term
+`57`-plane and the remaining nonresidual split terms. The new quotient
+comparison shows that the combined non-first split sector already spans
+that same `57`-plane, so the next attack is an internal cancellation
+operator on a common quotient plane rather than a hunt for extra
+directions.
 
 **Key reframing (Session ~125)**: Kapranov's N-complex framework (1996) provides the right
 replacement. At q = e^{2πi/N}, the bar differential satisfies d^N = 0 (not d² = curvature).
@@ -318,7 +330,16 @@ residual `66`-dimensional `H^{1,3}_2` packet supported on left factors
 `F`, `E`, and `K-1`, rather than the full `B_5 -> B_2` continuation.
 The whole generator-prefix cube `{F,E,K-1}^3 x I^2` already lies inside
 the existing seed span, so the remaining packet is genuinely beyond the
-first generator-level probe.
+first generator-level probe. The later split-form precursor stages
+`ab`, `abc`, and `abcd` landing in that span are also quotient-zero, so
+the only live split term is the first one. That first-term sector now
+compresses to `1493` distinct right-product states and its standalone
+tensor span adds only `57` directions beyond the `3903`-rank seed span,
+so the next compute attack is an annihilator/cancellation model for
+that `57`-plane rather than another raw tuple sweep. The combined
+non-first split sector already spans the same `57`-plane, so the
+remaining work is to write the actual cancellation operator on that
+common plane.
 See NEW_MACHINERY.md #M2.
 
 ### Seeds in manuscript
@@ -707,13 +728,22 @@ uniform reduced-packet contraction under the normalized residue
 package by removing exactly the target-`2` Virasoro channels.  The
 first next reduced stage is already explicit:
 `cor:winfty-ds-stage5-reduced-packet` identifies
-`\mathcal{J}_5^{\mathrm{red}}` as an `11`-entry packet, and
-`cor:winfty-stage5-residue-eight-channel` is the first concrete
-specialization, contracting it to `8` higher-spin channels.  The exact
-missing lemma for making the stage-`4` four-channel contraction
-unconditional is now named explicitly as
-`conj:winfty-stage4-ward-inheritance`, whose open content is the
-visible pairing package isolated in
+`\mathcal{J}_5^{\mathrm{red}}` as an `11`-entry packet, while
+`cor:winfty-stage5-residue-eight-channel` and
+`cor:winfty-stage5-higher-spin-packet` identify the contracted
+`8`-channel higher-spin packet `\mathcal{J}_5^{\mathrm{hs}}`.
+`prop:winfty-stage5-higher-spin-subblocks` breaks that packet into the
+source-pair ladder `1+3+3+1`, and
+`cor:winfty-stage5-entry-transport` isolates the first two-channel
+entry packet from the six-channel mixed transport packet, and
+`prop:winfty-stage5-transport-target-ladders` splits that mixed packet
+into three fixed-target two-channel ladders, and
+`conj:winfty-stage5-higher-spin-identities` is the next finite
+bar-vs-DS identity list.  The exact missing lemma for making the
+stage-`4` four-channel contraction unconditional is now named
+explicitly as `conj:winfty-stage4-ward-inheritance`, whose open
+content splits into the visible mixed-weight orthogonality and visible
+diagonal normalization conjectures isolated in
 `prop:winfty-stage4-visible-pairing-gap`.
 See NEW_MACHINERY.md #M8.
 

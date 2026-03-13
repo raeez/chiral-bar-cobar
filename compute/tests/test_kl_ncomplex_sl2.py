@@ -61,6 +61,9 @@ from compute.lib.kl_ncomplex_sl2 import (
     n4_degree1_h13_channel,
     n4_degree2_partial_packet,
     n4_degree2_h13_channel_bounds,
+    n4_degree2_h13_precursor_screen,
+    n4_degree2_h13_first_term_state_compression,
+    n4_degree2_h13_cancellation_plane,
     kl_periodic_shadow_candidates,
     # Diagnostics
     verify_uq_relations,
@@ -795,6 +798,129 @@ class TestN4LowDegreeFlavorWindow:
             "max_support": 0,
             "active_prefixes": [],
         }
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_precursor_screen_kills_later_split_stages(self):
+        """The ab/abc/abcd precursor stages are quotient-zero, leaving only the first split term live."""
+        screen = n4_degree2_h13_precursor_screen()
+
+        assert screen["N"] == 4
+        assert screen["degree"] == 2
+        assert screen["flavor"] == (1, 3)
+        assert screen["residual_left_factor_profile"] == {
+            "F": 48,
+            "E": 15,
+            "K-1": 3,
+        }
+        assert screen["pair_stage"] == {
+            "precursor_count": 55,
+            "tuples_checked": 13752585,
+            "quotient_rank": 0,
+            "max_support": 0,
+            "active_precursors": [],
+        }
+        assert screen["triple_stage"] == {
+            "precursor_count": 712,
+            "tuples_checked": 2825928,
+            "quotient_rank": 0,
+            "max_support": 0,
+            "active_precursors": [],
+        }
+        assert screen["quad_stage"] == {
+            "precursor_count": 6820,
+            "tuples_checked": 429660,
+            "quotient_rank": 0,
+            "max_support": 0,
+            "active_precursors": [],
+        }
+        assert screen["remaining_first_factor_stage"] == {
+            "left_factor_counts": {
+                "F": 13917960,
+                "E": 14965524,
+                "K-1": 13834800,
+            },
+            "tuples_remaining": 42718284,
+        }
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_first_term_state_compression(self):
+        """The surviving first split term factors through a small state graph over the seed span."""
+        compression = n4_degree2_h13_first_term_state_compression()
+
+        assert compression["N"] == 4
+        assert compression["degree"] == 2
+        assert compression["flavor"] == (1, 3)
+        assert compression["status"] == "unresolved"
+        assert compression["method"] == "surviving first-term state compression"
+        assert compression["residual_left_factor_profile"] == {
+            "F": 48,
+            "E": 15,
+            "K-1": 3,
+        }
+        assert compression["remaining_first_factor_stage"] == {
+            "left_factor_counts": {
+                "F": 13917960,
+                "E": 14965524,
+                "K-1": 13834800,
+            },
+            "tuples_remaining": 42718284,
+        }
+        assert compression["per_left_factor"] == {
+            "F": {
+                "left_index": 0,
+                "stage1_basis_count": 56,
+                "stage2_state_count": 287,
+                "stage3_state_count": 791,
+                "final_right_product_state_count": 1405,
+                "standalone_first_term_added_rank": 43,
+            },
+            "E": {
+                "left_index": 12,
+                "stage1_basis_count": 60,
+                "stage2_state_count": 311,
+                "stage3_state_count": 849,
+                "final_right_product_state_count": 1469,
+                "standalone_first_term_added_rank": 14,
+            },
+            "K-1": {
+                "left_index": 60,
+                "stage1_basis_count": 56,
+                "stage2_state_count": 284,
+                "stage3_state_count": 782,
+                "final_right_product_state_count": 1358,
+                "standalone_first_term_added_rank": 0,
+            },
+        }
+        assert compression["union_final_right_product_state_count"] == 1493
+        assert compression["standalone_first_term_state_packets"] == 4232
+        assert compression["seed_rank"] == 3903
+        assert compression["standalone_first_term_added_rank"] == 57
+        assert compression["standalone_first_term_span_rank"] == 3960
+        assert compression["standalone_first_term_gap"] == 9
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_cancellation_plane_is_common(self):
+        """The first-term and non-first split sectors already span the same 57-plane."""
+        plane = n4_degree2_h13_cancellation_plane()
+
+        assert plane["N"] == 4
+        assert plane["degree"] == 2
+        assert plane["flavor"] == (1, 3)
+        assert plane["status"] == "unresolved"
+        assert plane["method"] == "quotient-plane comparison of surviving split terms"
+        assert plane["quotient_dimension"] == 66
+        assert plane["common_plane_rank"] == 57
+        assert plane["first_term_rank"] == 57
+        assert plane["term2_rank"] == 57
+        assert plane["term3_rank"] == 57
+        assert plane["term4_rank"] == 57
+        assert plane["nonfirst_rank"] == 57
+        assert plane["first_term_extra_over_nonfirst"] == 0
+        assert plane["term2_pair_count"] == 51813
+        assert plane["term3_pair_count"] == 35772
+        assert plane["term4_left_state_count"] == 1118
+        assert plane["union_final_right_product_state_count"] == 1493
+        assert plane["shared_plane_gap_to_full_quotient"] == 9
 
 
 # ============================================================================
