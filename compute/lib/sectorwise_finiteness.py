@@ -138,7 +138,8 @@ def is_unimodular(lie_type: str) -> bool:
 # Fock space dimension (oscillator partition function)
 # ---------------------------------------------------------------------------
 
-def _oscillator_partition_function(r: int, max_weight: int) -> List[int]:
+@lru_cache(maxsize=64)
+def _oscillator_partition_function(r: int, max_weight: int) -> Tuple[int, ...]:
     """Number of oscillator states at each conformal weight for rank-r lattice.
 
     The Fock space F for r free bosons has character:
@@ -165,7 +166,7 @@ def _oscillator_partition_function(r: int, max_weight: int) -> List[int]:
         for _ in range(r):
             for w in range(n, max_weight + 1):
                 p[w] += p[w - n]
-    return p
+    return tuple(p)
 
 
 def fock_dim_at_weight(r: int, w: int) -> int:
@@ -452,6 +453,44 @@ def _degree_three_zero_oscillator_dimensions(
     return weight_dims
 
 
+def _sector_candidates_for_budget(
+    gram: np.ndarray,
+    max_sectors: int,
+) -> Tuple[List[Tuple[int, ...]], bool]:
+    """Choose a truthful finite sector probe for the lattice finiteness check."""
+    r = gram.shape[0]
+    zero_sector = tuple(0 for _ in range(r))
+    determinant = abs(int(round(np.linalg.det(gram))))
+
+    # A unimodular lattice has a single discriminant-group coset, so the
+    # sectorwise finiteness probe only needs the zero sector.
+    if determinant == 1:
+        return [zero_sector], True
+
+    sector_candidates = [zero_sector]
+    for i in range(r):
+        e_i = [0] * r
+        e_i[i] = 1
+        sector_candidates.append(tuple(e_i))
+        e_i_neg = [0] * r
+        e_i_neg[i] = -1
+        sector_candidates.append(tuple(e_i_neg))
+    for i in range(r):
+        for j in range(i + 1, r):
+            e_ij = [0] * r
+            e_ij[i] = 1
+            e_ij[j] = 1
+            sector_candidates.append(tuple(e_ij))
+
+    def sector_norm(sector: Tuple[int, ...]) -> float:
+        vector = np.array(sector, dtype=float)
+        return float(vector @ gram @ vector)
+
+    unique_candidates = list(dict.fromkeys(sector_candidates))
+    unique_candidates.sort(key=sector_norm)
+    return unique_candidates[:max_sectors], False
+
+
 # ---------------------------------------------------------------------------
 # Sectorwise finiteness check
 # ---------------------------------------------------------------------------
@@ -497,34 +536,13 @@ def sectorwise_finiteness_check(
     # Verify even (all diagonal entries even)
     is_even = all(gram[i, i] % 2 == 0 for i in range(r))
 
-    # Enumerate sectors by increasing norm
+    # Enumerate sectors by increasing norm, but collapse to the single
+    # discriminant-group sector in the unimodular case.
     sectors_checked = []
     all_finite = True
-
-    # Use the zero sector plus simple root directions
-    sector_candidates = [tuple(0 for _ in range(r))]
-    for i in range(r):
-        e_i = [0] * r
-        e_i[i] = 1
-        sector_candidates.append(tuple(e_i))
-        e_i_neg = [0] * r
-        e_i_neg[i] = -1
-        sector_candidates.append(tuple(e_i_neg))
-    # Add sum of pairs
-    for i in range(r):
-        for j in range(i + 1, r):
-            e_ij = [0] * r
-            e_ij[i] = 1
-            e_ij[j] = 1
-            sector_candidates.append(tuple(e_ij))
-
-    # Sort by norm and take up to max_sectors
-    def sector_norm(s):
-        v = np.array(s, dtype=float)
-        return float(v @ gram @ v)
-
-    sector_candidates.sort(key=sector_norm)
-    sector_candidates = sector_candidates[:max_sectors]
+    sector_candidates, used_unimodular_single_sector_shortcut = (
+        _sector_candidates_for_budget(gram, max_sectors)
+    )
 
     lattice_data = {"gram_matrix": gram, "rank": r}
 
@@ -562,6 +580,9 @@ def sectorwise_finiteness_check(
         "is_positive_definite": is_pos_def,
         "sectors_checked": sectors_checked,
         "num_sectors_checked": len(sectors_checked),
+        "used_unimodular_single_sector_shortcut": (
+            used_unimodular_single_sector_shortcut
+        ),
     }
 
 
