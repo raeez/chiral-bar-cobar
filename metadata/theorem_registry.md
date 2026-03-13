@@ -8,8 +8,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Metric | Value |
 |---|---:|
-| ProvedHere claims | 1027 |
-| Total tagged claims | 1514 |
+| ProvedHere claims | 1070 |
+| Total tagged claims | 1562 |
 | Active files in `main.tex` | 61 |
 | Total `.tex` files scanned | 70 |
 
@@ -17,9 +17,9 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Status | Count |
 |---|---:|
-| `ProvedHere` | 1027 |
-| `ProvedElsewhere` | 323 |
-| `Conjectured` | 136 |
+| `ProvedHere` | 1070 |
+| `ProvedElsewhere` | 324 |
+| `Conjectured` | 140 |
 | `Heuristic` | 28 |
 | `Open` | 0 |
 
@@ -28,12 +28,13 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Environment | Count |
 |---|---:|
 | `theorem` | 421 |
-| `proposition` | 339 |
-| `corollary` | 155 |
-| `lemma` | 67 |
+| `proposition` | 359 |
+| `corollary` | 176 |
+| `lemma` | 68 |
 | `computation` | 34 |
 | `remark` | 7 |
 | `calculation` | 3 |
+| `conjecture` | 1 |
 | `verification` | 1 |
 
 ## ProvedHere By Part
@@ -41,18 +42,18 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Part | Count |
 |---|---:|
 | Frame | 7 |
-| Part I: Theory | 534 |
-| Part II: Examples | 400 |
-| Part III: Connections | 49 |
+| Part I: Theory | 560 |
+| Part II: Examples | 415 |
+| Part III: Connections | 51 |
 | Appendices | 37 |
 
 ## Most Populated Proved Files
 
 | File | ProvedHere claims |
 |---|---:|
+| `chapters/theory/bar_cobar_construction.tex` | 178 |
 | `chapters/theory/higher_genus.tex` | 168 |
-| `chapters/theory/bar_cobar_construction.tex` | 152 |
-| `chapters/examples/yangians.tex` | 125 |
+| `chapters/examples/yangians.tex` | 139 |
 | `chapters/examples/free_fields.tex` | 51 |
 | `chapters/theory/chiral_modules.tex` | 49 |
 | `chapters/theory/configuration_spaces.tex` | 39 |
@@ -87,7 +88,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:frame-genus2-curvature` | `theorem` | 1371 | Genus-2 curvature |
 | `thm:frame-complementarity` | `theorem` | 1567 | Quantum complementarity for Heisenberg |
 
-### Part I: Theory (534)
+### Part I: Theory (560)
 
 #### `chapters/theory/algebraic_foundations.tex` (4)
 
@@ -98,7 +99,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:orthogonal` | `proposition` | 595 | Orthogonality |
 | `__unlabeled_chapters/theory/algebraic_foundations.tex:653` | `computation` | 653 | Explicit verification |
 
-#### `chapters/theory/bar_cobar_construction.tex` (152)
+#### `chapters/theory/bar_cobar_construction.tex` (178)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
@@ -177,83 +178,109 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:winfty-hlevel-comparison-criterion` | `corollary` | 5885 | H-level comparison criterion for \texorpdfstring{$W_\infty$}{W_infty} |
 | `prop:winfty-quotient-system-criterion` | `proposition` | 5982 | Formal descent criterion for the \texorpdfstring{$W_\infty$}{W_infty} factorization target |
 | `prop:winfty-factorization-envelope-criterion` | `proposition` | 6009 | Factorization-envelope criterion for principal stages |
-| `prop:winfty-higher-spin-ideal-criterion` | `proposition` | 6127 | Higher-spin ideal criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
-| `prop:winfty-spin-triangular-ideals` | `proposition` | 6179 | Spin-triangular OPE criterion for the \texorpdfstring{$W_\infty$}{W_infty} factorization ideals |
-| `prop:winfty-ds-coefficient-criterion` | `proposition` | 6233 | Coefficient-level DS criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
-| `prop:winfty-ds-local-coefficient-criterion` | `proposition` | 6279 | Local-coefficient criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
-| `prop:winfty-ds-residue-identity-criterion` | `proposition` | 6329 | Residue-coefficient identity criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
-| `prop:winfty-ds-generator-seed` | `proposition` | 6379 | Generator-seed criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} residue identities |
-| `cor:winfty-ds-finite-seed-set` | `corollary` | 6432 | Finite primary seed set for principal-stage \texorpdfstring{$W_\infty$}{W_infty} comparison |
-| `cor:winfty-ds-lowstage-seeds` | `corollary` | 6472 | First principal-stage seed packets for \texorpdfstring{$W_\infty$}{W_infty} comparison |
-| `prop:winfty-ds-stage-growth-packet` | `proposition` | 6513 | Incremental interacting packet from stage \texorpdfstring{$N$}{N} to stage \texorpdfstring{$N{+}1$}{N+1} |
-| `cor:winfty-ds-stage-growth-top-parity` | `corollary` | 6610 | Top-pole/parity reduction of the incremental \texorpdfstring{$W_\infty$}{W_infty} stage-growth packet |
-| `cor:winfty-ds-stage5-reduced-packet` | `corollary` | 6670 | First reduced incremental packet beyond \texorpdfstring{$\mathcal{I}_4$}{I4} |
-| `prop:winfty-ds-primary-top-pole` | `proposition` | 6751 | Primary top-pole criterion for generator seed packets |
-| `prop:winfty-ds-self-ope-parity` | `proposition` | 6813 | Odd top-pole vanishing for identical even generators |
-| `prop:winfty-ds-stage3-explicit-packet` | `proposition` | 6854 | Stage-$3$ principal packet from the explicit \texorpdfstring{$W_3$}{W3} OPE |
-| `prop:winfty-ds-stage4-residual-packet` | `proposition` | 6950 | Stage-$4$ residual packet after the theorematic \texorpdfstring{$W_3$}{W3} sector |
-| `cor:winfty-ds-stage4-top-pole-packet` | `corollary` | 7083 | Stage-$4$ top-pole packet after primaryity |
-| `cor:winfty-ds-stage4-parity-packet` | `corollary` | 7126 | Stage-$4$ parity-compressed packet |
-| `cor:winfty-ds-stage4-ope-blocks` | `corollary` | 7159 | Stage-$4$ packet as three local OPE blocks |
-| `cor:winfty-ds-stage4-mixed-self-split` | `corollary` | 7226 | Stage-$4$ frontier as one mixed block and three self-coupling scalars |
-| `prop:winfty-ds-mixed-top-pole-swap` | `proposition` | 7259 | Mixed top-pole swap parity for even generators |
-| `cor:winfty-ds-stage4-mixed-swap-parity` | `corollary` | 7321 | Stage-$4$ mixed block split by swap parity |
-| `prop:winfty-formal-mixed-virasoro-zero` | `proposition` | 7361 | Formal mixed Virasoro-target vanishing under a normalized two-point package |
-| `prop:winfty-ds-mixed-virasoro-ds-zero` | `proposition` | 7426 | Principal Drinfeld--Sokolov vanishing of the mixed Virasoro target |
-| `cor:winfty-ds-stage4-mixed-two-channel` | `corollary` | 7453 | Stage-$4$ mixed block as one vanishing channel and a parity pair |
-| `prop:winfty-formal-self-t-coefficient` | `proposition` | 7499 | Formal self-coupling stress-tensor coefficient under a normalized two-point package |
-| `prop:winfty-formal-self-normalization-from-t` | `proposition` | 7594 | Formal converse: the universal self-coupling \texorpdfstring{$T$}{T}-coefficient forces the normalized two-point function |
-| `prop:winfty-ds-self-t-coefficient` | `proposition` | 7677 | Principal Drinfeld--Sokolov self-coupling stress-tensor coefficient |
-| `cor:winfty-ds-stage4-self-t-normalization` | `corollary` | 7707 | Principal stage-$4$ self-coupling \texorpdfstring{$W^{(4)}$-$W^{(4)}\to T$}{W4-W4 to T} normalization |
-| `cor:winfty-ds-stage4-five-plus-zero` | `corollary` | 7724 | Stage-$4$ principal target packet after theorematic Virasoro-target elimination |
-| `prop:winfty-mc4-frontier-package` | `proposition` | 7791 | Exact MC4 frontier packet for the standard \texorpdfstring{$W_\infty$}{W_infty} tower |
-| `cor:winfty-stage4-closure-criterion` | `corollary` | 7864 | Minimal closure criterion for the standard \texorpdfstring{$W_\infty$}{W_infty} MC4 frontier |
-| `cor:winfty-dual-candidate-construction` | `corollary` | 7903 | Constructing the completed chiral Koszul-dual candidate for \texorpdfstring{$W_\infty$}{W_infty} |
-| `cor:winfty-stage4-residue-four-channel` | `corollary` | 7950 | Stage-$4$ \texorpdfstring{$W_\infty$}{W_infty} frontier on the Ward-normalized H-level locus |
-| `prop:winfty-stage4-visible-pairing-gap` | `proposition` | 8009 | Exact missing input for the unconditional \texorpdfstring{$W_\infty$}{W_infty} stage-$4$ contraction |
-| `conj:winfty-stage4-visible-orthogonality` | `proposition` | 8127 | Stage-$4$ visible mixed-weight orthogonality from the Virasoro Ward identity |
-| `prop:winfty-stage4-visible-w3-normalization` | `proposition` | 8198 | Stage-$4$ visible \texorpdfstring{$W^{(3)}$}{W3} normalization from the theorematic \texorpdfstring{$W_3$}{W3} packet |
-| `prop:winfty-stage-growth-virasoro-target-contraction` | `proposition` | 8329 | Uniform Virasoro-target contraction of reduced incremental packets under the normalized residue package |
-| `cor:winfty-stage5-residue-eight-channel` | `corollary` | 8406 | First reduced stage beyond \texorpdfstring{$\mathcal{I}_4$}{I4} under the normalized residue package |
-| `cor:winfty-stage5-higher-spin-packet` | `corollary` | 8448 | First higher-spin packet beyond \texorpdfstring{$\mathcal{I}_4$}{I4} |
-| `prop:winfty-stage5-higher-spin-subblocks` | `proposition` | 8499 | First higher-spin packet as four exact source-pair subblocks |
-| `cor:winfty-stage5-entry-transport` | `corollary` | 8570 | Stage-$5$ entry packet and mixed transport packet |
-| `cor:winfty-stage5-entry-singletons` | `corollary` | 8629 | Entry packet as two singleton channels |
-| `prop:winfty-stage5-entry-mixed-self` | `proposition` | 8661 | Stage-$5$ entry packet as mixed-entry and self-return singletons |
-| `prop:winfty-stage5-reduced-tail-singleton` | `proposition` | 8702 | Exact reduced tail input at stage~$5$ |
-| `prop:winfty-stage5-transport-target-ladders` | `proposition` | 8732 | Stage-$5$ mixed transport packet as three fixed-target ladders |
-| `prop:winfty-stage5-higher-spin-target-blocks` | `proposition` | 8783 | Stage-$5$ higher-spin packet by target spin |
-| `cor:winfty-stage5-target5-corridor` | `corollary` | 8837 | Stage-$5$ target-$5$ corridor |
-| `cor:winfty-stage5-target5-residual` | `corollary` | 8880 | Residual target-$5$ continuation after the tail singleton |
-| `prop:winfty-stage5-transport-pole-profiles` | `proposition` | 8913 | Stage-$5$ transport ladders ordered by pole profile |
-| `thm:central-implies-strict` | `theorem` | 9447 | Centrality implies strict nilpotence |
-| `thm:mc-deformations` | `theorem` | 9776 | MC elements as quantum deformations |
-| `thm:mc-periods` | `theorem` | 9812 | MC elements via period integrals |
-| `thm:genus-zero-strict` | `theorem` | 9871 | Strict nilpotence at genus zero |
-| `thm:genus-induction-strict` | `theorem` | 9883 | Strict nilpotence at all genera |
-| `cor:genus-expansion-converges` | `corollary` | 10106 | Genus expansion convergence |
-| `thm:bar-functorial-grothendieck` | `theorem` | 10166 | Functoriality of bar construction |
-| `prop:filtered-to-curved` | `proposition` | 10528 | Filtered implies curved |
-| `thm:bar-convergence` | `theorem` | 10747 | Convergence of bar construction |
-| `lem:chiral-co-contra-adjunction` | `lemma` | 11058 | Adjunction |
-| `prop:chiral-inj-proj-resolutions` | `proposition` | 11173 | Injective and projective resolutions |
-| `prop:cdg-hom-complex` | `proposition` | 11246 | Explicit CDG Hom-complex |
-| `cor:coacyclic-injective-contractible` | `corollary` | 11290 | Contractibility of coacyclic injectives |
-| `lem:Phi-Psi-properties` | `lemma` | 11358 | Key properties of $\Phi_C^{\mathrm{ch}}$ and $\Psi_C^{\mathrm{ch}}$ |
-| `thm:chiral-co-contra-correspondence` | `theorem` | 11424 | Chiral comodule-contramodule correspondence |
-| `thm:positselski-chiral-proved` | `theorem` | 11559 | Positselski equivalence for chiral algebras |
-| `thm:full-derived-module-equiv-proved` | `theorem` | 11625 | Full derived module equivalence |
-| `thm:bar-cobar-inversion-qi` | `theorem` | 11745 | Bar-cobar inversion is quasi-isomorphism |
-| `lem:bar-cobar-associated-graded` | `lemma` | 11878 | Associated graded |
-| `thm:bar-cobar-spectral-sequence` | `theorem` | 11894 | Bar-cobar spectral sequence |
-| `thm:spectral-sequence-collapse` | `theorem` | 11950 | Collapse at $E_2$ |
-| `thm:genus-graded-convergence` | `theorem` | 11973 | Genus-graded convergence |
-| `lem:pushforward-preserves-qi` | `lemma` | 12033 | Derived pushforward preserves QI |
-| `prop:counit-qi` | `proposition` | 12078 | Counit is quasi-isomorphism |
-| `thm:bar-cobar-inversion-functorial` | `theorem` | 12090 | Functoriality |
-| `cor:derived-equivalence-bar-cobar` | `corollary` | 12125 | Derived equivalence |
-| `prop:bar-fh` | `proposition` | 12356 | Bar construction as factorization homology |
-| `prop:cobar-fh` | `proposition` | 12434 | Cobar as factorization cohomology |
+| `prop:winfty-higher-spin-ideal-criterion` | `proposition` | 6132 | Higher-spin ideal criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
+| `prop:winfty-spin-triangular-ideals` | `proposition` | 6184 | Spin-triangular OPE criterion for the \texorpdfstring{$W_\infty$}{W_infty} factorization ideals |
+| `prop:winfty-ds-coefficient-criterion` | `proposition` | 6238 | Coefficient-level DS criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
+| `prop:winfty-ds-local-coefficient-criterion` | `proposition` | 6284 | Local-coefficient criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
+| `prop:winfty-ds-residue-identity-criterion` | `proposition` | 6334 | Residue-coefficient identity criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients |
+| `prop:winfty-ds-generator-seed` | `proposition` | 6384 | Generator-seed criterion for principal-stage \texorpdfstring{$W_\infty$}{W_infty} residue identities |
+| `cor:winfty-ds-finite-seed-set` | `corollary` | 6437 | Finite primary seed set for principal-stage \texorpdfstring{$W_\infty$}{W_infty} comparison |
+| `cor:winfty-ds-lowstage-seeds` | `corollary` | 6477 | First principal-stage seed packets for \texorpdfstring{$W_\infty$}{W_infty} comparison |
+| `prop:winfty-ds-stage-growth-packet` | `proposition` | 6518 | Incremental interacting packet from stage \texorpdfstring{$N$}{N} to stage \texorpdfstring{$N{+}1$}{N+1} |
+| `cor:winfty-ds-stage-growth-top-parity` | `corollary` | 6615 | Top-pole/parity reduction of the incremental \texorpdfstring{$W_\infty$}{W_infty} stage-growth packet |
+| `cor:winfty-ds-stage5-reduced-packet` | `corollary` | 6675 | First reduced incremental packet beyond \texorpdfstring{$\mathcal{I}_4$}{I4} |
+| `prop:winfty-ds-primary-top-pole` | `proposition` | 6756 | Primary top-pole criterion for generator seed packets |
+| `prop:winfty-ds-self-ope-parity` | `proposition` | 6818 | Odd top-pole vanishing for identical even generators |
+| `prop:winfty-ds-stage3-explicit-packet` | `proposition` | 6859 | Stage-$3$ principal packet from the explicit \texorpdfstring{$W_3$}{W3} OPE |
+| `prop:winfty-ds-stage4-residual-packet` | `proposition` | 6955 | Stage-$4$ residual packet after the theorematic \texorpdfstring{$W_3$}{W3} sector |
+| `cor:winfty-ds-stage4-top-pole-packet` | `corollary` | 7088 | Stage-$4$ top-pole packet after primaryity |
+| `cor:winfty-ds-stage4-parity-packet` | `corollary` | 7131 | Stage-$4$ parity-compressed packet |
+| `cor:winfty-ds-stage4-ope-blocks` | `corollary` | 7164 | Stage-$4$ packet as three local OPE blocks |
+| `cor:winfty-ds-stage4-mixed-self-split` | `corollary` | 7231 | Stage-$4$ frontier as one mixed block and three self-coupling scalars |
+| `prop:winfty-ds-mixed-top-pole-swap` | `proposition` | 7264 | Mixed top-pole swap parity for even generators |
+| `cor:winfty-ds-stage4-mixed-swap-parity` | `corollary` | 7326 | Stage-$4$ mixed block split by swap parity |
+| `prop:winfty-formal-mixed-virasoro-zero` | `proposition` | 7366 | Formal mixed Virasoro-target vanishing under a normalized two-point package |
+| `prop:winfty-ds-mixed-virasoro-ds-zero` | `proposition` | 7431 | Principal Drinfeld--Sokolov vanishing of the mixed Virasoro target |
+| `cor:winfty-ds-stage4-mixed-two-channel` | `corollary` | 7458 | Stage-$4$ mixed block as one vanishing channel and a parity pair |
+| `prop:winfty-formal-self-t-coefficient` | `proposition` | 7504 | Formal self-coupling stress-tensor coefficient under a normalized two-point package |
+| `prop:winfty-formal-self-normalization-from-t` | `proposition` | 7599 | Formal converse: the universal self-coupling \texorpdfstring{$T$}{T}-coefficient forces the normalized two-point function |
+| `prop:winfty-ds-self-t-coefficient` | `proposition` | 7682 | Principal Drinfeld--Sokolov self-coupling stress-tensor coefficient |
+| `cor:winfty-ds-stage4-self-t-normalization` | `corollary` | 7712 | Principal stage-$4$ self-coupling \texorpdfstring{$W^{(4)}$-$W^{(4)}\to T$}{W4-W4 to T} normalization |
+| `cor:winfty-ds-stage4-five-plus-zero` | `corollary` | 7729 | Stage-$4$ principal target packet after theorematic Virasoro-target elimination |
+| `prop:winfty-mc4-frontier-package` | `proposition` | 7796 | Exact MC4 frontier packet for the standard \texorpdfstring{$W_\infty$}{W_infty} tower |
+| `cor:winfty-stage4-closure-criterion` | `corollary` | 7869 | Minimal closure criterion for the standard \texorpdfstring{$W_\infty$}{W_infty} MC4 frontier |
+| `cor:winfty-dual-candidate-construction` | `corollary` | 7908 | Constructing the completed chiral Koszul-dual candidate for \texorpdfstring{$W_\infty$}{W_infty} |
+| `cor:winfty-stage4-residue-four-channel` | `corollary` | 7955 | Stage-$4$ \texorpdfstring{$W_\infty$}{W_infty} frontier on the Ward-normalized H-level locus |
+| `prop:winfty-stage4-visible-pairing-gap` | `proposition` | 8014 | Exact missing input for the unconditional \texorpdfstring{$W_\infty$}{W_infty} stage-$4$ contraction |
+| `prop:winfty-stage4-visible-orthogonality` | `proposition` | 8132 | Stage-$4$ visible mixed-weight orthogonality from the Virasoro Ward identity |
+| `prop:winfty-stage4-visible-w3-normalization` | `proposition` | 8203 | Stage-$4$ visible \texorpdfstring{$W^{(3)}$}{W3} normalization from the theorematic \texorpdfstring{$W_3$}{W3} packet |
+| `cor:winfty-stage4-single-scalar-equivalent` | `corollary` | 8317 | Equivalent exact forms of the remaining \texorpdfstring{$W_\infty$}{W_infty} stage-$4$ input |
+| `prop:winfty-stage4-residue-pairing-reduction` | `proposition` | 8365 | Stage-$4$ swap-even residue channel from a visible invariant pairing |
+| `cor:winfty-stage4-residue-three-channel` | `corollary` | 8449 | Stage-$4$ residue packet as three higher-spin channels on the visible pairing locus |
+| `cor:winfty-stage4-primitive-transport-square-triple` | `corollary` | 8488 | Stage-$4$ higher-spin comparison as a primitive-plus-transport square triple on the visible pairing locus |
+| `cor:winfty-stage4-visible-borcherds-two-primitive` | `corollary` | 8614 | Equivalent exact forms of the remaining stage-$4$ higher-spin transport input on the visible pairing locus |
+| `prop:winfty-stage4-local-attack-order` | `proposition` | 8688 | Exact local attack order for the stage-$4$ \texorpdfstring{$W_\infty$}{W_infty} packet |
+| `prop:winfty-stage-growth-virasoro-target-contraction` | `proposition` | 8786 | Uniform Virasoro-target contraction of reduced incremental packets under the normalized residue package |
+| `cor:winfty-stage5-residue-eight-channel` | `corollary` | 8863 | First reduced stage beyond \texorpdfstring{$\mathcal{I}_4$}{I4} under the normalized residue package |
+| `cor:winfty-stage5-higher-spin-packet` | `corollary` | 8905 | First higher-spin packet beyond \texorpdfstring{$\mathcal{I}_4$}{I4} |
+| `prop:winfty-stage5-higher-spin-subblocks` | `proposition` | 8956 | First higher-spin packet as four exact source-pair subblocks |
+| `cor:winfty-stage5-entry-transport` | `corollary` | 9027 | Stage-$5$ entry packet and mixed transport packet |
+| `cor:winfty-stage5-entry-singletons` | `corollary` | 9086 | Entry packet as two singleton channels |
+| `prop:winfty-stage5-entry-mixed-self` | `proposition` | 9118 | Stage-$5$ entry packet as mixed-entry and self-return singletons |
+| `prop:winfty-stage5-reduced-tail-singleton` | `proposition` | 9159 | Exact reduced tail input at stage~$5$ |
+| `prop:winfty-stage5-tail-mechanism` | `proposition` | 9189 | Exact missing mechanism for the reduced stage-$5$ tail singleton |
+| `prop:winfty-stage5-transport-target-ladders` | `proposition` | 9223 | Stage-$5$ mixed transport packet as three fixed-target ladders |
+| `prop:winfty-stage5-higher-spin-target-blocks` | `proposition` | 9274 | Stage-$5$ higher-spin packet by target spin |
+| `cor:winfty-stage5-target5-corridor` | `corollary` | 9328 | Stage-$5$ target-$5$ corridor |
+| `cor:winfty-stage5-target5-residual` | `corollary` | 9371 | Residual target-$5$ continuation after the tail singleton |
+| `prop:winfty-stage5-target5-transport-mechanism` | `proposition` | 9404 | Residual target-$5$ continuation as mixed transport of the new generator |
+| `prop:winfty-stage5-target5-transport-singletons` | `proposition` | 9440 | Residual target-$5$ continuation as two singleton transport channels |
+| `prop:winfty-stage5-transport-pole-profiles` | `proposition` | 9491 | Stage-$5$ transport ladders ordered by pole profile |
+| `prop:winfty-stage5-visible-w5-normalization` | `proposition` | 9535 | Stage-$5$ visible \texorpdfstring{$W^{(5)}$}{W5} normalization from the theorematic \texorpdfstring{$W^{(5)}$-$W^{(5)}\to T$}{W5-W5 to T} coefficient |
+| `prop:winfty-stage5-target5-pole3-pairing-vanishing` | `proposition` | 9568 | Stage-$5$ target-$5$ pole-$3$ transport singleton vanishes on a visible \texorpdfstring{$W^{(5)}$}{W5}-pairing locus |
+| `prop:winfty-stage5-target5-pole4-from-self-return` | `proposition` | 9640 | Stage-$5$ target-$5$ pole-$4$ transport singleton from the self-return singleton on a visible \texorpdfstring{$W^{(5)}$}{W5}-pairing locus |
+| `prop:winfty-stage5-target5-pole4-w4-vanishing` | `proposition` | 9702 | Stage-$5$ target-$5$ pole-$4$ transport singleton vanishes on a visible \texorpdfstring{$W^{(4)}$}{W4}-pairing locus |
+| `cor:winfty-stage5-self-return-vanishing-on-pairing` | `corollary` | 9755 | Stage-$5$ self-return singleton vanishes on the visible \texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5} pairing locus |
+| `prop:winfty-stage5-tail-from-w3-pairing` | `proposition` | 9775 | Stage-$5$ reduced tail singleton from a visible \texorpdfstring{$W^{(3)}$}{W3}-pairing locus |
+| `prop:winfty-stage5-tail-from-w4-pairing` | `proposition` | 9850 | Stage-$5$ reduced tail singleton from a visible \texorpdfstring{$W^{(4)}$}{W4}-pairing locus |
+| `cor:winfty-stage5-tail-cross-target-reduction` | `corollary` | 9932 | Stage-$5$ tail singleton equates neighboring target-$4$ and target-$3$ transport channels on the visible \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4} pairing locus |
+| `cor:winfty-stage5-target5-corridor-to-tail` | `corollary` | 9961 | Stage-$5$ target-$5$ corridor contracts to the tail singleton on the visible \texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5} pairing locus |
+| `cor:winfty-stage5-target5-no-new-independent-data` | `corollary` | 9991 | Stage-$5$ target-$5$ corridor carries no new independent coefficient on the full visible \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5} pairing locus |
+| `prop:winfty-stage5-target4-pole5-w4-vanishing` | `proposition` | 10018 | Stage-$5$ target-$4$ pole-$5$ transport singleton vanishes on a visible \texorpdfstring{$W^{(4)}$}{W4}-pairing locus |
+| `prop:winfty-stage5-target3-pole5-w3-vanishing` | `proposition` | 10057 | Stage-$5$ target-$3$ pole-$5$ transport singleton vanishes on a visible \texorpdfstring{$W^{(3)}$}{W3}-pairing locus |
+| `prop:winfty-stage5-transport-cross-target-reduction` | `proposition` | 10096 | Stage-$5$ target-$4$/target-$3$ transport channels are paired on a visible \texorpdfstring{$W^{(5)}$}{W5}-pairing locus |
+| `cor:winfty-stage5-transport-effective-independent-frontier` | `corollary` | 10163 | Stage-$5$ mixed transport frontier carries one effective independent coefficient on the full visible pairing locus |
+| `cor:winfty-stage5-effective-independent-frontier` | `corollary` | 10197 | Stage-$5$ higher-spin packet reduces to one effective independent coefficient on the full visible pairing locus |
+| `prop:winfty-stage5-local-attack-order` | `proposition` | 10241 | Exact local attack order for the first stage-$5$ higher-spin packet |
+| `cor:w4-ds-stage4-square-class-reduction` | `corollary` | 10685 | Principal stage-$4$ higher-spin packet from two primitive square classes |
+| `thm:central-implies-strict` | `theorem` | 10916 | Centrality implies strict nilpotence |
+| `thm:mc-deformations` | `theorem` | 11245 | MC elements as quantum deformations |
+| `thm:mc-periods` | `theorem` | 11281 | MC elements via period integrals |
+| `thm:genus-zero-strict` | `theorem` | 11340 | Strict nilpotence at genus zero |
+| `thm:genus-induction-strict` | `theorem` | 11352 | Strict nilpotence at all genera |
+| `cor:genus-expansion-converges` | `corollary` | 11575 | Genus expansion convergence |
+| `thm:bar-functorial-grothendieck` | `theorem` | 11635 | Functoriality of bar construction |
+| `prop:filtered-to-curved` | `proposition` | 11997 | Filtered implies curved |
+| `thm:bar-convergence` | `theorem` | 12216 | Convergence of bar construction |
+| `lem:chiral-co-contra-adjunction` | `lemma` | 12527 | Adjunction |
+| `prop:chiral-inj-proj-resolutions` | `proposition` | 12642 | Injective and projective resolutions |
+| `prop:cdg-hom-complex` | `proposition` | 12715 | Explicit CDG Hom-complex |
+| `cor:coacyclic-injective-contractible` | `corollary` | 12759 | Contractibility of coacyclic injectives |
+| `lem:Phi-Psi-properties` | `lemma` | 12827 | Key properties of $\Phi_C^{\mathrm{ch}}$ and $\Psi_C^{\mathrm{ch}}$ |
+| `thm:chiral-co-contra-correspondence` | `theorem` | 12893 | Chiral comodule-contramodule correspondence |
+| `thm:positselski-chiral-proved` | `theorem` | 13028 | Positselski equivalence for chiral algebras |
+| `thm:full-derived-module-equiv-proved` | `theorem` | 13094 | Full derived module equivalence |
+| `thm:bar-cobar-inversion-qi` | `theorem` | 13214 | Bar-cobar inversion is quasi-isomorphism |
+| `lem:bar-cobar-associated-graded` | `lemma` | 13347 | Associated graded |
+| `thm:bar-cobar-spectral-sequence` | `theorem` | 13363 | Bar-cobar spectral sequence |
+| `thm:spectral-sequence-collapse` | `theorem` | 13419 | Collapse at $E_2$ |
+| `thm:genus-graded-convergence` | `theorem` | 13442 | Genus-graded convergence |
+| `lem:pushforward-preserves-qi` | `lemma` | 13502 | Derived pushforward preserves QI |
+| `prop:counit-qi` | `proposition` | 13547 | Counit is quasi-isomorphism |
+| `thm:bar-cobar-inversion-functorial` | `theorem` | 13559 | Functoriality |
+| `cor:derived-equivalence-bar-cobar` | `corollary` | 13594 | Derived equivalence |
+| `prop:bar-fh` | `proposition` | 13825 | Bar construction as factorization homology |
+| `prop:cobar-fh` | `proposition` | 13903 | Cobar as factorization cohomology |
 
 #### `chapters/theory/chiral_koszul_pairs.tex` (26)
 
@@ -497,7 +524,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:heisenberg-obs` | `theorem` | 3560 | Heisenberg obstruction at genus $g$ |
 | `thm:kac-moody-obs` | `theorem` | 3638 | Kac--Moody obstruction at genus $g$ |
 | `thm:w3-obstruction` | `theorem` | 3755 | $W_3$ obstruction with central charge |
-| `comp:w3-obs-explicit` | `computation` | 3826 | Explicit values for low genus |
+| `comp:w3-obs-explicit` | `computation` | 3826 | Explicit genus-$1$ value of the $W_3$ obstruction |
 | `thm:obstruction-nilpotent` | `theorem` | 3847 | Nilpotence of obstruction ($g \leq 2$) |
 | `thm:obstruction-nilpotent-all-genera` | `theorem` | 3876 | Nilpotence of obstruction (all genera) |
 | `cor:mumford-multiplicative` | `corollary` | 3978 | Mumford multiplicative relations for obstruction classes |
@@ -651,8 +678,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:central-charge-complementarity` | `theorem` | 416 | Central charge complementarity |
-| `prop:chirAss-self-dual` | `proposition` | 945 | $\chirAss$ self-duality |
+| `thm:central-charge-complementarity` | `theorem` | 612 | Central charge complementarity |
+| `prop:chirAss-self-dual` | `proposition` | 1141 | $\chirAss$ self-duality |
 
 #### `chapters/theory/koszul_pair_structure.tex` (20)
 
@@ -703,7 +730,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:prism-principle` | `corollary` | 929 | The prism principle |
 | `thm:partition` | `theorem` | 1080 | Partition complex structure |
 
-### Part II: Examples (400)
+### Part II: Examples (415)
 
 #### `chapters/examples/beta_gamma.tex` (15)
 
@@ -776,23 +803,23 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Label | Env | Line | Title |
 |---|---|---:|---|
 | `prop:paired-standard-mc4-frontier` | `proposition` | 236 | Paired standard-tower MC4 frontier packets |
-| `cor:paired-standard-mc4-closure` | `corollary` | 376 | Minimal closure conditions for the standard-tower MC4 frontier |
-| `cor:genus1-anomaly-ratio` | `corollary` | 506 | Genus-$1$ free energy and anomaly ratio |
-| `prop:bar-dimensions` | `proposition` | 715 | Koszul dual Hilbert functions |
-| `cor:subexp-free-field` | `corollary` | 947 | Sub-exponential growth characterizes free fields |
-| `cor:algebraicity-koszul` | `corollary` | 957 | Algebraicity of bar generating functions for interacting algebras |
-| `thm:ds-bar-gf-discriminant` | `theorem` | 974 | DS reduction and bar cohomology generating functions |
-| `prop:hred-sl2` | `proposition` | 1269 | Construction of $H^{\mathrm{red}}_1$ for $\mathfrak{sl}_2$ |
-| `prop:discriminant-characteristic` | `proposition` | 1469 | Discriminant as first characteristic invariant |
-| `thm:discriminant-linear-dependence` | `theorem` | 1560 | Linear dependence in the discriminant family |
-| `prop:linear-relation-functorial` | `proposition` | 1657 | Functorial origin of the linear relation |
-| `prop:pole-singularity-type` | `proposition` | 1723 | Pole decomposition and singularity type |
-| `rem:bar-deg2-symmetric-square` | `remark` | 1778 | Degree-$2$ bar cohomology at lowest weight |
-| `cor:growth-rate-dimg` | `corollary` | 1829 | Exponential growth rate from Lie algebra dimension |
-| `thm:dominant-branch-point` | `theorem` | 1844 | Dominant branch point for Kac--Moody algebras |
-| `thm:motzkin-path-model` | `theorem` | 1933 | Motzkin path model for Virasoro bar cohomology |
-| `cor:betagamma-inverse-discriminant` | `corollary` | 2122 | {$\beta\gamma$ generating function via discriminant} |
-| `prop:spectral-collapse-summary` | `proposition` | 2428 | Spectral sequence collapse |
+| `cor:paired-standard-mc4-closure` | `corollary` | 431 | Minimal closure conditions for the standard-tower MC4 frontier |
+| `cor:genus1-anomaly-ratio` | `corollary` | 561 | Genus-$1$ free energy and anomaly ratio |
+| `prop:bar-dimensions` | `proposition` | 770 | Koszul dual Hilbert functions |
+| `cor:subexp-free-field` | `corollary` | 1002 | Sub-exponential growth characterizes free fields |
+| `cor:algebraicity-koszul` | `corollary` | 1012 | Algebraicity of bar generating functions for interacting algebras |
+| `thm:ds-bar-gf-discriminant` | `theorem` | 1029 | DS reduction and bar cohomology generating functions |
+| `prop:hred-sl2` | `proposition` | 1324 | Construction of $H^{\mathrm{red}}_1$ for $\mathfrak{sl}_2$ |
+| `prop:discriminant-characteristic` | `proposition` | 1524 | Discriminant as first characteristic invariant |
+| `thm:discriminant-linear-dependence` | `theorem` | 1615 | Linear dependence in the discriminant family |
+| `prop:linear-relation-functorial` | `proposition` | 1712 | Functorial origin of the linear relation |
+| `prop:pole-singularity-type` | `proposition` | 1778 | Pole decomposition and singularity type |
+| `rem:bar-deg2-symmetric-square` | `remark` | 1833 | Degree-$2$ bar cohomology at lowest weight |
+| `cor:growth-rate-dimg` | `corollary` | 1884 | Exponential growth rate from Lie algebra dimension |
+| `thm:dominant-branch-point` | `theorem` | 1899 | Dominant branch point for Kac--Moody algebras |
+| `thm:motzkin-path-model` | `theorem` | 1988 | Motzkin path model for Virasoro bar cohomology |
+| `cor:betagamma-inverse-discriminant` | `corollary` | 2177 | {$\beta\gamma$ generating function via discriminant} |
+| `prop:spectral-collapse-summary` | `proposition` | 2483 | Spectral sequence collapse |
 
 #### `chapters/examples/free_fields.tex` (51)
 
@@ -836,19 +863,19 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:heisenberg-not-self-dual` | `theorem` | 2416 | Heisenberg is not self-dual |
 | `prop:bar-bv-free-fields` | `proposition` | 2495 | Bar complex as BV complex |
 | `thm:heisenberg-genus-g` | `theorem` | 2591 | Quantum complementarity for Heisenberg |
-| `prop:abelian-bar-factorization` | `proposition` | 2808 | Abelian factorization of the bar differential |
-| `prop:nonabelian-kernel-nonfactorization` | `proposition` | 2958 | Non-abelian kernel non-factorization |
-| `prop:en-fourier-hierarchy` | `proposition` | 3312 | $\En$ Fourier hierarchy |
-| `thm:heisenberg-bar-complete` | `theorem` | 3573 | Heisenberg bar complex: complete calculation |
-| `rem:bar-dims-partitions` | `remark` | 3620 | Bar dimensions as partition numbers |
-| `thm:heisenberg-level-inversion` | `theorem` | 3679 | Heisenberg level inversion: curved duality |
-| `thm:algebraic-string-dictionary` | `theorem` | 3756 | Algebraic string theory dictionary |
-| `cor:string-amplitude-genus0` | `corollary` | 3808 | Genus-$0$ string amplitudes from bar complex |
-| `thm:genus-g-chiral-homology` | `theorem` | 3850 | Genus-$g$ chiral homology from bar complex |
-| `thm:genus-deformation-exact` | `theorem` | 4010 | Genus expansion as curved deformation |
-| `thm:bar-string-integrand` | `theorem` | 4101 | Bar complex computes genus-$g$ string integrands |
-| `thm:modular-invariance` | `theorem` | 4273 | Modular invariance of bar complex |
-| `thm:modular-anomaly-km-w` | `theorem` | 4310 | Modular anomaly for KM and $\mathcal{W}$-algebras |
+| `prop:abelian-bar-factorization` | `proposition` | 2920 | Abelian factorization of the bar differential |
+| `prop:nonabelian-kernel-nonfactorization` | `proposition` | 3070 | Non-abelian kernel non-factorization |
+| `prop:en-fourier-hierarchy` | `proposition` | 3424 | $\En$ Fourier hierarchy |
+| `thm:heisenberg-bar-complete` | `theorem` | 3685 | Heisenberg bar complex: complete calculation |
+| `rem:bar-dims-partitions` | `remark` | 3732 | Bar dimensions as partition numbers |
+| `thm:heisenberg-level-inversion` | `theorem` | 3791 | Heisenberg level inversion: curved duality |
+| `thm:algebraic-string-dictionary` | `theorem` | 3868 | Algebraic string theory dictionary |
+| `cor:string-amplitude-genus0` | `corollary` | 3920 | Genus-$0$ string amplitudes from bar complex |
+| `thm:genus-g-chiral-homology` | `theorem` | 3962 | Genus-$g$ chiral homology from bar complex |
+| `thm:genus-deformation-exact` | `theorem` | 4122 | Genus expansion as curved deformation |
+| `thm:bar-string-integrand` | `theorem` | 4213 | Bar complex computes genus-$g$ string integrands |
+| `thm:modular-invariance` | `theorem` | 4385 | Modular invariance of bar complex |
+| `thm:modular-anomaly-km-w` | `theorem` | 4422 | Modular anomaly for KM and $\mathcal{W}$-algebras |
 
 #### `chapters/examples/genus_expansions.tex` (34)
 
@@ -1028,13 +1055,14 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `comp:kac-vanishing-level1` | `computation` | 929 | Kac determinant vanishing locus at level~1 |
 | `comp:w3-gram-level2` | `computation` | 1000 | Level-2 Gram matrix |
 
-#### `chapters/examples/w_algebras_deep.tex` (3)
+#### `chapters/examples/w_algebras_deep.tex` (4)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
 | `thm:w-bar-coalg` | `theorem` | 92 | $\mathcal{W}$-algebra bar coalgebra |
-| `prop:w3-deg3-vacuum` | `proposition` | 881 | $\mathcal{W}_3$ degree-3 vacuum cancellation |
-| `prop:ds-koszul-hierarchy` | `proposition` | 1088 | DS hierarchy and Koszul duality |
+| `thm:winfty-factorization-kd` | `theorem` | 794 | Factorization Koszul dual of $\mathcal{W}_\infty$ via DS--sectorwise convergence |
+| `prop:w3-deg3-vacuum` | `proposition` | 1313 | $\mathcal{W}_3$ degree-3 vacuum cancellation |
+| `prop:ds-koszul-hierarchy` | `proposition` | 1520 | DS hierarchy and Koszul duality |
 
 #### `chapters/examples/w_algebras_framework.tex` (19)
 
@@ -1060,7 +1088,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:w-center-langlands` | `theorem` | 1891 | $\mathcal{W}$-algebra centers and Langlands duality |
 | `thm:w-ainfty-ops` | `theorem` | 1996 | $\mathcal{W}$-algebra $A_\infty$ operations |
 
-#### `chapters/examples/yangians.tex` (125)
+#### `chapters/examples/yangians.tex` (139)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
@@ -1163,34 +1191,48 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:yangian-dk5-spectral-vector-packet` | `proposition` | 8943 | On the spectral side, the completed fundamental packet is forced by the completed vector packet |
 | `prop:yangian-dk5-spectral-vector-line` | `proposition` | 9023 | On the spectral side, ordered vector-packet transport is forced by the completed vector line |
 | `prop:quantum-fd-vector-seed-shifts` | `proposition` | 9076 | Standard quantum-loop vector seed and additive log-spectral shifts |
-| `prop:yangian-dk5-spectral-vector-seed` | `proposition` | 9127 | On the spectral side, the completed vector line is forced by one completed vector seed together with spectral shifts |
-| `prop:yangian-dk5-spectral-seed-shift-construction` | `proposition` | 9191 | On the realized spectral vector-line locus, the completed vector seed and spectral shifts are canonical |
-| `prop:yangian-dk5-spectral-core-shifts` | `proposition` | 9267 | On the realized spectral vector-line locus, loop rotation descends to the full spectral compact core |
-| `cor:yangian-dk5-spectral-seed-realization` | `corollary` | 9336 | Realization of the standard spectral vector seed-and-shift datum forces the full spectral DK-5 packet |
-| `cor:yangian-dk5-spectral-packet-ind` | `corollary` | 9451 | On the realized spectral packet locus, the ambient spectral category is the ind-completion of the spectral compact core |
-| `prop:yangian-dg-fundamental-packet-realization` | `proposition` | 9508 | Canonical completed dg fundamental packet from the theorematic finite RTT quotients |
-| `prop:yangian-dk5-dg-extension-existence` | `proposition` | 9583 | Canonical exact braided-monoidal extension of the dg packet |
-| `prop:yangian-dk5-dg-realization-formal` | `proposition` | 9641 | dg compact-core realization is formal from extension of the completed fundamental packet |
-| `cor:yangian-dk5-dg-packet-ind` | `corollary` | 9685 | Compact generation of the completed dg module category identifies the ambient dg side with the ind-completion of the dg compact core |
-| `cor:yangian-dk5-dg-half-only` | `corollary` | 9731 | Given dg compact-core realization, the remaining DK-5 input is spectral vector seed-and-shift realization |
-| `cor:yangian-dk5-core-realization` | `corollary` | 9780 | DK-5 closes once the compact cores realize the proved finite-dimensional factorization DK core |
-| `cor:yangian-typea-mc4-closure-criterion` | `corollary` | 9812 | Minimal closure criterion for the standard type-$A$ Yangian MC4 frontier |
-| `cor:yangian-typea-degree2-plus-generators` | `corollary` | 9860 | Standard type-$A$ Yangian MC4 packet under one-loop exactness |
-| `cor:yangian-typea-casimir-plus-generators` | `corollary` | 9912 | Fundamental Casimir insertion reduces the standard type-$A$ Yangian MC4 packet to compact generators |
-| `cor:yangian-typea-factorization-local-closure` | `corollary` | 9958 | Factorization-side standard type-$A$ local MC4 packet closes |
-| `prop:yangian-tower-mc4-criterion` | `proposition` | 10137 | Yangian tower criterion from finite RTT stages |
-| `cor:yangian-weight-cutoff` | `corollary` | 10188 | Standard RTT cutoff for Yangian towers |
-| `prop:yangian-rtt-completion-identification` | `proposition` | 10223 | Inverse-limit identification of the standard RTT completion |
-| `cor:yangian-standard-mc4-package` | `corollary` | 10277 | Standard RTT tower satisfies the M-level MC4 package |
-| `cor:yangian-hlevel-comparison-criterion` | `corollary` | 10310 | H-level comparison criterion for dg-shifted Yangians |
-| `prop:yangian-typea-realization-criterion` | `proposition` | 10361 | Standard type-$A$ realization criterion from shared bar seed and finite RTT quotients |
-| `cor:yangian-typea-realization-plus-compacts` | `corollary` | 10436 | Standard type-$A$ DK-4/DK-5 closure from realization and compact core |
-| `cor:yangian-typea-realization-plus-fundamental-packet` | `corollary` | 10465 | Standard type-$A$ DK-4/DK-5 closure from realization and completed fundamental packet |
-| `cor:yangian-typea-realization-plus-core-realization` | `corollary` | 10498 | Standard type-$A$ DK-4/DK-5 closure from dg-shifted realization and compact-core realization of the proved finite-dimensional factorization DK core |
-| `cor:yangian-formal-moduli-plus-core-realization` | `corollary` | 10529 | Canonical formal-moduli Yangian target closes DK-4/DK-5 once the compact cores realize the proved finite-dimensional DK core |
-| `cor:yangian-typea-realization-plus-dg-packet` | `corollary` | 10580 | Standard type-$A$ DK-4/DK-5 closure from spectral vector-line realization |
+| `lem:quantum-fd-vector-seed-schur` | `lemma` | 9126 | Quantum-loop vector seed is Schur-simple |
+| `prop:yangian-dk5-spectral-vector-seed` | `proposition` | 9152 | On the spectral side, the completed vector line is forced by one completed vector seed together with spectral shifts |
+| `prop:yangian-dk5-spectral-seed-shift-construction` | `proposition` | 9216 | On the realized spectral vector-line locus, the completed vector seed and spectral shifts are canonical |
+| `prop:yangian-dk5-spectral-core-shifts` | `proposition` | 9292 | On the realized spectral vector-line locus, loop rotation descends to the full spectral compact core |
+| `prop:yangian-dk5-spectral-factorization-shifts` | `proposition` | 9360 | Loop rotation is intrinsic on a multiplicative spectral realization of the compact core |
+| `cor:yangian-dk5-spectral-one-seed` | `corollary` | 9427 | On the multiplicative spectral realization locus, one vector seed forces the full spectral DK-5 packet |
+| `cor:yangian-dk5-spectral-seed-realization` | `corollary` | 9482 | Realization of the standard spectral vector seed-and-shift datum forces the full spectral DK-5 packet |
+| `cor:yangian-dk5-spectral-factorization-vector-line` | `corollary` | 9597 | On the multiplicative spectral realization locus, vector-line realization already closes the spectral DK-5 packet |
+| `prop:yangian-dk5-spectral-factorization-core-from-vector-line` | `proposition` | 9649 | On the multiplicative spectral factorization locus, the compact core is forced by the realized vector line |
+| `cor:yangian-dk5-spectral-factorization-ambient-vector-line` | `corollary` | 9737 | Ambient multiplicative vector-line realization forces the full spectral DK-5 side |
+| `prop:yangian-dk5-spectral-factorization-seed-line` | `proposition` | 9791 | On the multiplicative spectral factorization locus, one ambient vector seed forces the ambient vector line |
+| `cor:yangian-dk5-spectral-factorization-schur-seed-line` | `corollary` | 9912 | Schur-simple ambient seed criterion for the multiplicative spectral vector line |
+| `cor:yangian-dk5-spectral-factorization-ambient-one-seed` | `corollary` | 9962 | One ambient multiplicative vector seed closes the spectral DK-5 side |
+| `cor:yangian-dk5-spectral-factorization-ambient-schur-seed` | `corollary` | 10009 | One Schur-simple ambient multiplicative vector seed closes the spectral DK-5 side |
+| `prop:yangian-dk5-spectral-factorization-seed-mono` | `proposition` | 10043 | On the ambient dilation orbit, ordered vector-packet monodromy is determined by the seed-pair family |
+| `cor:yangian-dk5-spectral-factorization-seed-mono` | `corollary` | 10142 | After the Schur-simple ambient seed, the remaining local spectral datum is the seed-pair monodromy family |
+| `cor:yangian-dk5-spectral-packet-ind` | `corollary` | 10172 | On the realized spectral packet locus, the ambient spectral category is the ind-completion of the spectral compact core |
+| `prop:yangian-dg-fundamental-packet-realization` | `proposition` | 10262 | Canonical completed dg fundamental packet from the theorematic finite RTT quotients |
+| `prop:yangian-dk5-dg-extension-existence` | `proposition` | 10337 | Canonical exact braided-monoidal extension of the dg packet |
+| `prop:yangian-dk5-dg-realization-formal` | `proposition` | 10395 | dg compact-core realization is formal from extension of the completed fundamental packet |
+| `cor:yangian-dk5-dg-packet-ind` | `corollary` | 10439 | Compact generation of the completed dg module category identifies the ambient dg side with the ind-completion of the dg compact core |
+| `cor:yangian-dk5-dg-half-only` | `corollary` | 10485 | Given dg compact-core realization, the remaining DK-5 input is spectral vector seed-and-shift realization |
+| `cor:yangian-dk5-core-realization` | `corollary` | 10534 | DK-5 closes once the compact cores realize the proved finite-dimensional factorization DK core |
+| `cor:yangian-typea-mc4-closure-criterion` | `corollary` | 10566 | Minimal closure criterion for the standard type-$A$ Yangian MC4 frontier |
+| `cor:yangian-typea-degree2-plus-generators` | `corollary` | 10614 | Standard type-$A$ Yangian MC4 packet under one-loop exactness |
+| `cor:yangian-typea-casimir-plus-generators` | `corollary` | 10666 | Fundamental Casimir insertion reduces the standard type-$A$ Yangian MC4 packet to compact generators |
+| `cor:yangian-typea-factorization-local-closure` | `corollary` | 10712 | Factorization-side standard type-$A$ local MC4 packet closes |
+| `prop:yangian-tower-mc4-criterion` | `proposition` | 10936 | Yangian tower criterion from finite RTT stages |
+| `cor:yangian-weight-cutoff` | `corollary` | 10987 | Standard RTT cutoff for Yangian towers |
+| `prop:yangian-rtt-completion-identification` | `proposition` | 11022 | Inverse-limit identification of the standard RTT completion |
+| `cor:yangian-standard-mc4-package` | `corollary` | 11076 | Standard RTT tower satisfies the M-level MC4 package |
+| `cor:yangian-hlevel-comparison-criterion` | `corollary` | 11109 | H-level comparison criterion for dg-shifted Yangians |
+| `prop:yangian-typea-realization-criterion` | `proposition` | 11160 | Standard type-$A$ realization criterion from shared bar seed and finite RTT quotients |
+| `cor:yangian-typea-realization-plus-compacts` | `corollary` | 11235 | Standard type-$A$ DK-4/DK-5 closure from realization and compact core |
+| `cor:yangian-typea-realization-plus-fundamental-packet` | `corollary` | 11264 | Standard type-$A$ DK-4/DK-5 closure from realization and completed fundamental packet |
+| `cor:yangian-typea-realization-plus-core-realization` | `corollary` | 11297 | Standard type-$A$ DK-4/DK-5 closure from dg-shifted realization and compact-core realization of the proved finite-dimensional factorization DK core |
+| `cor:yangian-formal-moduli-plus-core-realization` | `corollary` | 11328 | Canonical formal-moduli Yangian target closes DK-4/DK-5 once the compact cores realize the proved finite-dimensional DK core |
+| `cor:yangian-typea-realization-plus-dg-packet` | `corollary` | 11379 | Standard type-$A$ DK-4/DK-5 closure from spectral vector-line realization |
+| `cor:yangian-canonical-realization-to-spectral-seed` | `corollary` | 11465 | Canonical formal-moduli Yangian target: exact remaining input after RTT-adapted realization |
+| `cor:yangian-canonical-realization-plus-vector-line` | `corollary` | 11552 | Canonical formal-moduli Yangian target closes DK-4/DK-5 from spectral vector-line realization |
 
-### Part III: Connections (49)
+### Part III: Connections (51)
 
 #### `chapters/connections/bv_brst.tex` (12)
 
@@ -1217,20 +1259,20 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:fg-from-assch` | `theorem` | 259 | FG duality from $\chirAss$ self-duality |
 | `thm:master-pbw` | `theorem` | 540 | Higher-genus PBW concentration for the standard finite-type interacting families |
 | `thm:master-theta` | `theorem` | 566 | Cyclic $L_\infty$ deformation algebra and universal $\Theta_\cA$ {\normalfont (MC2, originally conjectured)} |
-| `prop:standard-tower-mc5-reduction` | `proposition` | 739 | Standard-tower MC5 reduction after MC3 and realized MC4 |
-| `cor:standard-tower-mc5-closure` | `corollary` | 825 | Standard-tower MC5 closure on the canonical Yangian locus |
-| `prop:en-n2-recovery` | `proposition` | 2435 | $n = 2$ recovery and AF comparison |
-| `prop:vassiliev-genus0` | `proposition` | 2581 | Genus-$0$ weight systems from bar complex |
-| `thm:anomaly-koszul` | `theorem` | 2639 | Anomaly cancellation as Koszul constraint |
-| `thm:anomaly-physical-genus0` | `theorem` | 2673 | Physical anomaly cancellation, genus~$0$ |
-| `thm:anomaly-physical-km-w` | `theorem` | 2689 | Physical anomaly cancellation for KM and $\mathcal{W}$-algebras |
-| `prop:nc-hodge-symmetry` | `proposition` | 2907 | Hodge symmetry from complementarity |
-| `thm:lagrangian-complementarity` | `theorem` | 3190 | Lagrangian complementarity |
-| `thm:universal-MC` | `theorem` | 3225 | Universal MC class |
-| `thm:discriminant-spectral-verified` | `theorem` | 3404 | Discriminant as spectral determinant --- verified cases |
-| `thm:discriminant-spectral` | `theorem` | 3449 | Spectral discriminant --- general case |
-| `thm:family-index` | `theorem` | 3680 | Family index theorem for genus expansions |
-| `thm:volume-one-concrete-modular-datum` | `theorem` | 4243 | Volume~I concrete modular datum |
+| `prop:standard-tower-mc5-reduction` | `proposition` | 748 | Standard-tower MC5 reduction after MC3 and realized MC4 |
+| `cor:standard-tower-mc5-closure` | `corollary` | 836 | Standard-tower MC5 closure on the canonical Yangian locus |
+| `prop:en-n2-recovery` | `proposition` | 2707 | $n = 2$ recovery and AF comparison |
+| `prop:vassiliev-genus0` | `proposition` | 2853 | Genus-$0$ weight systems from bar complex |
+| `thm:anomaly-koszul` | `theorem` | 2911 | Anomaly cancellation as Koszul constraint |
+| `thm:anomaly-physical-genus0` | `theorem` | 2945 | Physical anomaly cancellation, genus~$0$ |
+| `thm:anomaly-physical-km-w` | `theorem` | 2961 | Physical anomaly cancellation for KM and $\mathcal{W}$-algebras |
+| `prop:nc-hodge-symmetry` | `proposition` | 3179 | Hodge symmetry from complementarity |
+| `thm:lagrangian-complementarity` | `theorem` | 3462 | Lagrangian complementarity |
+| `thm:universal-MC` | `theorem` | 3497 | Universal MC class |
+| `thm:discriminant-spectral-verified` | `theorem` | 3676 | Discriminant as spectral determinant --- verified cases |
+| `thm:discriminant-spectral` | `theorem` | 3721 | Spectral discriminant --- general case |
+| `thm:family-index` | `theorem` | 3952 | Family index theorem for genus expansions |
+| `thm:volume-one-concrete-modular-datum` | `theorem` | 4515 | Volume~I concrete modular datum |
 
 #### `chapters/connections/feynman_connection.tex` (1)
 
@@ -1238,13 +1280,15 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `thm:bar-cobar-path-integral-heisenberg` | `theorem` | 297 | Bar complex = path integral for the free boson |
 
-#### `chapters/connections/feynman_diagrams.tex` (3)
+#### `chapters/connections/feynman_diagrams.tex` (5)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
 | `thm:ainfty-constraint-formula` | `theorem` | 384 | $A_\infty$ constraint formula |
-| `thm:mk-tree-level` | `theorem` | 823 | Tree-level $m_k$ structure |
-| `thm:mk-general-structure` | `theorem` | 867 | All-genus $m_k$ Feynman expansion |
+| `prop:disk-local-binary-ternary-reduction` | `proposition` | 508 | Binary-ternary reduction for the disk-local packet |
+| `cor:disk-local-ternary-on-brstbar-locus` | `corollary` | 547 | Anomaly-free genus-$0$ collapse of the local packet |
+| `thm:mk-tree-level` | `theorem` | 926 | Tree-level $m_k$ structure |
+| `thm:mk-general-structure` | `theorem` | 970 | All-genus $m_k$ Feynman expansion |
 
 #### `chapters/connections/genus_complete.tex` (4)
 
@@ -1259,11 +1303,11 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:open-string-bar` | `theorem` | 447 | Open-string bar identification |
-| `thm:w-algebra-bar-complex` | `theorem` | 689 | $\mathcal{W}$-algebra bar complex |
-| `thm:genus-graded-bar` | `theorem` | 784 | Genus-graded bar complex |
-| `thm:w-algebra-bar-cobar` | `theorem` | 918 | $\mathcal{W}$-algebra bar-cobar duality |
-| `thm:agt-2d-bar` | `theorem` | 1130 | AGT 2D side: bar complex = semi-infinite complex |
+| `thm:open-string-bar` | `theorem` | 454 | Open-string bar identification |
+| `thm:w-algebra-bar-complex` | `theorem` | 696 | $\mathcal{W}$-algebra bar complex |
+| `thm:genus-graded-bar` | `theorem` | 791 | Genus-graded bar complex |
+| `conj:w-algebra-bar-cobar` | `conjecture` | 925 | $\mathcal{W}$-algebra bar-cobar duality |
+| `thm:agt-2d-bar` | `theorem` | 1137 | AGT 2D side: bar complex = semi-infinite complex |
 
 #### `chapters/connections/kontsevich_integral.tex` (4)
 

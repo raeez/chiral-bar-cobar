@@ -332,7 +332,12 @@ powerful theorems the subject admits.
 **would_need**:
 - A precise dictionary between GKW's Feynman diagrams and the manuscript's residue computations on FM spaces.
 - A theorem identifying the local perturbative BRST brackets with the bar differential on the standard disk/FM chart.
+- On the theorematic anomaly-free genus-0 BRST/bar locus, completion of the remaining ternary comparison on `\overline{C}_3`; the binary propagator/residue packet is already theorematic there.
 - A compactification/Stokes comparison showing that the perturbative integrands extend to the FM boundary calculus used in the manuscript.
+- After that compactification step, only two ternary boundary channels on `\overline{M}_{0,4} \cong \mathbb{P}^1` remain independent; the third is forced by the residue theorem.
+- In the standard `0,1,\infty` chart on `\overline{M}_{0,4}`, the remaining genus-0 compactified packet is exactly the residue comparison at `0` and `1`.
+- Equivalently, on that standard chart the compactified genus-0 packet is the vanishing of the two coefficients of `d\log t` and `d\log(1-t)`.
+- Equivalently again, the remaining compactified genus-0 MC5 task is the pair of named coefficient identities `\mathsf{a}_{\mathrm{pert}}=\mathsf{a}_{\mathrm{bar}}` and `\mathsf{b}_{\mathrm{pert}}=\mathsf{b}_{\mathrm{bar}}`.
 - Verification in specific examples that the local L_infinity brackets recover the manuscript's bar operations before any genuswise clutching step.
 
 ---
