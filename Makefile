@@ -218,7 +218,7 @@ test-full:
 			PYTHON_BIN=python3; \
 		fi; \
 		LOG_FILE=$(LOG_DIR)/pytest-full.log; \
-		$$PYTHON_BIN -m pytest compute/tests/ -vv -ra \
+		$$PYTHON_BIN -m pytest compute/tests/ -vv -ra --run-slow \
 			-o faulthandler_timeout=$(PYTEST_FULL_TIMEOUT) \
 			-o faulthandler_exit_on_timeout=true \
 			--durations=20 --durations-min=5.0 >$$LOG_FILE 2>&1; rc=$$?; \
