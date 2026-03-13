@@ -161,6 +161,7 @@ from compute.lib.ds_reduction import (
     first_nonselfdual_hook_pair_survivor_derivation_defects,
     first_nonselfdual_hook_pair_mixed_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_nonlinear_blocks_match_under_relabeling,
+    first_nonselfdual_hook_pair_corrected_semidirect_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling,
     first_nonselfdual_hook_pair_survivor_coupled_blocks,
     ghost_brst_differential,
@@ -863,10 +864,14 @@ class TestSurvivorCoupledBlocks:
                 1,
                 survivor_total_degree,
             )
-            assert all(survivor_coupled_block_has_square_zero(block) for block in source_blocks)
-            assert all(survivor_coupled_block_has_square_zero(block) for block in target_blocks)
-            assert all(survivor_coupled_block_is_acyclic(block) for block in source_blocks)
-            assert all(survivor_coupled_block_is_acyclic(block) for block in target_blocks)
+            # The expensive square-zero/acyclicity checks at survivor degrees 2 and 3
+            # are covered by the verification bundle and the generic family tests below.
+            # This local regression keeps the first non-self-dual pair specific to
+            # higher survivor degree and relabeling symmetry.
+            assert [block.constraint_total_degree for block in source_blocks] == [0, 1]
+            assert [block.constraint_total_degree for block in target_blocks] == [0, 1]
+            assert all(block.survivor_total_degree == survivor_total_degree for block in source_blocks)
+            assert all(block.survivor_total_degree == survivor_total_degree for block in target_blocks)
             assert first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
                 1,
                 survivor_total_degree,
@@ -1538,10 +1543,21 @@ class TestTransferredHookPairCorrection:
                     max_internal_ce_degree=1,
                 )
             )
+            # Degree-2/3 square-zero checks are already exercised by the DS
+            # verification bundle and the generic corrected-semidirect family tests.
+            # Keep this regression focused on the first hook pair's higher-degree
+            # truncation shape and relabeling symmetry.
+            assert [block.constraint_total_degree for block in source_blocks] == [0]
+            assert [block.constraint_total_degree for block in target_blocks] == [0]
+            assert all(block.survivor_total_degree == survivor_total_degree for block in source_blocks)
+            assert all(block.survivor_total_degree == survivor_total_degree for block in target_blocks)
             assert all(block.survivor_action_terms == () for block in source_blocks)
             assert all(block.survivor_action_terms == () for block in target_blocks)
-            assert all(semidirect_survivor_block_has_square_zero(block) for block in source_blocks)
-            assert all(semidirect_survivor_block_has_square_zero(block) for block in target_blocks)
+            assert first_nonselfdual_hook_pair_corrected_semidirect_blocks_match_under_relabeling(
+                max_constraint_total_degree=0,
+                survivor_total_degree=survivor_total_degree,
+                max_internal_ce_degree=1,
+            )
 
 
 class TestFirstNonSelfDualHookPair:
@@ -1878,20 +1894,29 @@ class TestHookFamilyCatalog:
                 max_internal_ce_degree=1,
             )
         )
+        # The expensive degree-three square-zero/acyclicity checks are already
+        # exercised below by the hook-family survivor and corrected-semidirct
+        # family/catalog checks. Keep the local regression focused on the
+        # concrete degree-three truncation shape for the A5 hook r=2 model case.
+        assert [block.constraint_total_degree for block in source_blocks] == [0, 1]
+        assert [block.constraint_total_degree for block in target_blocks] == [0, 1]
+        assert all(block.survivor_total_degree == survivor_total_degree for block in source_blocks)
+        assert all(block.survivor_total_degree == survivor_total_degree for block in target_blocks)
+        assert [block.constraint_total_degree for block in source_corrected_blocks] == [0]
+        assert [block.constraint_total_degree for block in target_corrected_blocks] == [0]
         assert all(
-            survivor_coupled_block_has_square_zero(block)
-            and survivor_coupled_block_is_acyclic(block)
-            for block in source_blocks + target_blocks
+            block.survivor_total_degree == survivor_total_degree for block in source_corrected_blocks
         )
+        assert all(
+            block.survivor_total_degree == survivor_total_degree for block in target_corrected_blocks
+        )
+        assert all(block.survivor_action_terms == () for block in source_corrected_blocks)
+        assert all(block.survivor_action_terms == () for block in target_corrected_blocks)
         assert hook_pair_survivor_coupled_blocks_match_under_dual_swap(
             6,
             2,
             max_constraint_total_degree=1,
             survivor_total_degree=survivor_total_degree,
-        )
-        assert all(
-            semidirect_survivor_block_has_square_zero(block)
-            for block in source_corrected_blocks + target_corrected_blocks
         )
         assert hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
             6,

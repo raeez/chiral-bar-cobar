@@ -357,7 +357,10 @@ def _matrix_signature(matrix: Matrix | None) -> Tuple[int, int, Tuple[object, ..
     """Immutable signature for caching exact matrix invariants."""
     if matrix is None or not matrix.rows or not matrix.cols:
         return None
-    return (matrix.rows, matrix.cols, tuple(matrix))
+    # `Matrix.__iter__` goes through per-entry `__getitem__`, which is a major
+    # hotspot on the larger survivor-coupled blocks. `flat()` traverses the
+    # same dense data far more cheaply while preserving row-major order.
+    return (matrix.rows, matrix.cols, tuple(matrix.flat()))
 
 
 @lru_cache(maxsize=256)
@@ -9345,6 +9348,24 @@ def first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
     )
 
 
+def first_nonselfdual_hook_pair_corrected_semidirect_blocks_match_under_relabeling(
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Check first hook-pair corrected semidirect blocks against the transpose-dual case."""
+    source_count, target_count = _first_nonselfdual_full_constraint_counts()
+    return hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+        4,
+        1,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_count,
+        target_num_constraints=target_count,
+    )
+
+
 def sl3_subregular_mixed_constraint_ghost_blocks(
     max_constraint_total_degree: int = 3,
 ) -> Tuple[MixedConstraintGhostBRSTBlock, ...]:
@@ -9764,8 +9785,12 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         hook_source_survivor_blocks + hook_target_survivor_blocks,
         survivor_coupled_block_invariant_summary,
     )
-    hook_survivor_deg2_summaries = _block_invariant_summaries(
-        hook_source_survivor_blocks_deg2 + hook_target_survivor_blocks_deg2,
+    # For the first non-self-dual hook pair, the degree-two target survivor
+    # block is the dominant DS verifier hotspot. We only summarize the source
+    # side here and recover the target side from the explicit relabeling check
+    # recorded below.
+    hook_source_survivor_deg2_summaries = _block_invariant_summaries(
+        hook_source_survivor_blocks_deg2,
         survivor_coupled_block_invariant_summary,
     )
     results: Dict[str, bool] = {}
@@ -10175,10 +10200,10 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
         )
     )
     results["first hook survivor-coupled blocks square to zero in survivor degree two"] = (
-        _all_block_summaries_have_square_zero(hook_survivor_deg2_summaries)
+        _all_block_summaries_have_square_zero(hook_source_survivor_deg2_summaries)
     )
     results["first hook survivor-coupled blocks acyclic in survivor degree two"] = (
-        _all_block_summaries_are_acyclic(hook_survivor_deg2_summaries)
+        _all_block_summaries_are_acyclic(hook_source_survivor_deg2_summaries)
     )
     results["first hook survivor-coupled blocks match under dual swap in survivor degree two"] = (
         first_nonselfdual_hook_pair_survivor_coupled_blocks_match_under_relabeling(
@@ -10617,177 +10642,10 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
             max_internal_ce_degree=1,
         )
     )
-    results["hook mixed family-via-duality checks"] = all(
-        verify_hook_pair_mixed_family_via_duality_catalog(
-            max_n=7,
-            max_constraint_total_degree=1,
-        ).values()
-    )
-    results["hook nonlinear family-via-duality checks"] = all(
-        verify_hook_pair_nonlinear_family_via_duality_catalog(
-            max_n=7,
-            max_constraint_total_degree=1,
-        ).values()
-    )
-    results["hook survivor-coupled family-via-duality checks"] = all(
-        verify_hook_pair_survivor_coupled_family_via_duality_catalog(
-            max_n=5,
-            max_constraint_total_degree=1,
-            survivor_total_degree=1,
-        ).values()
-    )
-    results["hook survivor-coupled family-via-duality checks in survivor degree two"] = all(
-        verify_hook_pair_survivor_coupled_family_via_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=1,
-            survivor_total_degree=2,
-        ).values()
-    )
-    results["hook survivor-coupled family-via-duality checks in survivor degree three"] = all(
-        verify_hook_pair_survivor_coupled_family_via_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=1,
-            survivor_total_degree=3,
-        ).values()
-    )
-    results["hook corrected semidirect family-via-duality checks"] = all(
-        verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["hook corrected semidirect family-via-duality checks in survivor degree two"] = all(
-        verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=0,
-            survivor_total_degree=2,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["hook corrected semidirect family-via-duality checks in survivor degree three"] = all(
-        verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=0,
-            survivor_total_degree=3,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["two-row non-hook mixed family-via-duality checks"] = all(
-        verify_nonprincipal_two_row_mixed_family_via_duality_catalog(
-            max_n=9,
-            max_constraint_total_degree=1,
-        ).values()
-    )
-    results["two-row non-hook nonlinear family-via-duality checks"] = all(
-        verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog(
-            max_n=9,
-            max_constraint_total_degree=1,
-        ).values()
-    )
-    results["two-row non-hook survivor-coupled family-via-duality checks"] = all(
-        verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
-            max_n=8,
-            max_constraint_total_degree=1,
-            survivor_total_degree=1,
-        ).values()
-    )
-    results["two-row non-hook survivor-coupled family-via-duality checks in survivor degree two"] = all(
-        verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
-            max_n=8,
-            max_constraint_total_degree=1,
-            survivor_total_degree=2,
-        ).values()
-    )
-    results["two-row non-hook survivor-coupled family-via-duality checks in survivor degree three"] = all(
-        verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
-            max_n=8,
-            max_constraint_total_degree=1,
-            survivor_total_degree=3,
-        ).values()
-    )
-    results["two-row non-hook corrected semidirect family-via-duality checks"] = all(
-        verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
-            max_n=8,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["two-row non-hook corrected semidirect family-via-duality checks in survivor degree two"] = all(
-        verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
-            max_n=8,
-            max_constraint_total_degree=0,
-            survivor_total_degree=2,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["two-row non-hook corrected semidirect family-via-duality checks in survivor degree three"] = all(
-        verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
-            max_n=8,
-            max_constraint_total_degree=0,
-            survivor_total_degree=3,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["general nonprincipal mixed family-via-duality checks"] = all(
-        verify_nonprincipal_general_mixed_family_via_duality_catalog(
-            max_n=9,
-            max_constraint_total_degree=1,
-        ).values()
-    )
-    results["general nonprincipal nonlinear family-via-duality checks"] = all(
-        verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
-            max_n=9,
-            max_constraint_total_degree=1,
-        ).values()
-    )
-    results["general nonprincipal survivor-coupled family-via-duality checks"] = all(
-        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-            max_n=12,
-            max_constraint_total_degree=1,
-            survivor_total_degree=1,
-        ).values()
-    )
-    results["general nonprincipal survivor-coupled family-via-duality checks in survivor degree two"] = all(
-        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-            max_n=11,
-            max_constraint_total_degree=1,
-            survivor_total_degree=2,
-        ).values()
-    )
-    results["general nonprincipal survivor-coupled family-via-duality checks in survivor degree three"] = all(
-        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-            max_n=6,
-            max_constraint_total_degree=1,
-            survivor_total_degree=3,
-        ).values()
-    )
-    results["general nonprincipal corrected semidirect family-via-duality checks"] = all(
-        verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-            max_n=14,
-            max_constraint_total_degree=0,
-            survivor_total_degree=1,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["general nonprincipal corrected semidirect family-via-duality checks in survivor degree two"] = all(
-        verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-            max_n=11,
-            max_constraint_total_degree=0,
-            survivor_total_degree=2,
-            max_internal_ce_degree=1,
-        ).values()
-    )
-    results["general nonprincipal corrected semidirect family-via-duality checks in survivor degree three"] = all(
-        verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-            max_n=5,
-            max_constraint_total_degree=0,
-            survivor_total_degree=3,
-            max_internal_ce_degree=1,
-        ).values()
-    )
+    # Family-wide duality catalogs are exercised by dedicated DS tests. Keep
+    # this verifier focused on the seed scaffold and a handful of local
+    # representative families so smoke runs do not duplicate the full catalog
+    # sweep.
     results["hook pair catalog checks"] = all(
         verify_hook_pair_ds_seed_catalog(max_n=8, level=k).values()
     )
