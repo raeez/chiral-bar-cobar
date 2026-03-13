@@ -277,7 +277,13 @@ def type_a_hook_nilpotent_matrix(n: int, r: int) -> Matrix:
 
 def type_a_partition_sl2_triple(partition: Iterable[int]) -> MatrixSl2Triple:
     """Canonical block-diagonal sl_2-triple for a type-A Jordan partition."""
-    lam = normalize_partition(partition)
+    return _type_a_partition_sl2_triple_cached(normalize_partition(partition))
+
+
+@lru_cache(maxsize=128)
+def _type_a_partition_sl2_triple_cached(partition: Partition) -> MatrixSl2Triple:
+    """Cached block-diagonal sl_2-triple for one normalized type-A partition."""
+    lam = partition
     n = sum(lam)
     e = zeros(n, n)
     h = zeros(n, n)
@@ -398,25 +404,63 @@ def homogeneous_f_centralizer_basis_sl_n(
     h: Matrix,
 ) -> Dict[int, Tuple[MatrixBasisExpression, ...]]:
     """Homogeneous basis of g^f grouped by ad(h)-grade."""
-    if f.rows != f.cols or h.rows != h.cols or f.rows != h.rows:
+    f_n, f_entries = _square_matrix_cache_key(f)
+    h_n, h_entries = _square_matrix_cache_key(h)
+    if f_n != h_n:
         raise ValueError("f and h must be square matrices of the same size")
-    n = f.rows
-    graded_basis = ad_h_graded_basis_labels_sl_n(h)
+    return dict(
+        _homogeneous_f_centralizer_basis_sl_n_cached(f_n, f_entries, h_entries)
+    )
+
+
+def _square_matrix_cache_key(matrix: Matrix) -> Tuple[int, Tuple[object, ...]]:
+    """Hashable key for one square SymPy matrix."""
+    if matrix.rows != matrix.cols:
+        raise ValueError("matrix must be square")
+    return matrix.rows, tuple(sympify(entry) for entry in matrix)
+
+
+def _matrix_from_cache_key(n: int, entries: Tuple[object, ...]) -> Matrix:
+    """Reconstruct a square matrix from a cached key."""
+    return Matrix(n, n, entries)
+
+
+@lru_cache(maxsize=128)
+def _homogeneous_f_centralizer_basis_sl_n_cached(
+    n: int,
+    f_entries: Tuple[object, ...],
+    h_entries: Tuple[object, ...],
+) -> Tuple[Tuple[int, Tuple[MatrixBasisExpression, ...]], ...]:
+    """Cached homogeneous basis of g^f grouped by ad(h)-grade."""
+    f = _matrix_from_cache_key(n, f_entries)
+    graded_basis = dict(_ad_h_graded_basis_labels_sl_n_cached(n, h_entries))
     basis_dict = dict(standard_traceless_basis_sl_n(n))
-    homogeneous: Dict[int, Tuple[MatrixBasisExpression, ...]] = {}
+    homogeneous: list[Tuple[int, Tuple[MatrixBasisExpression, ...]]] = []
     for grade in sorted(graded_basis, reverse=True):
         labels = graded_basis[grade]
-        columns = [((f * basis_dict[label] - basis_dict[label] * f).reshape(n * n, 1), label) for label in labels]
+        columns = [
+            ((f * basis_dict[label] - basis_dict[label] * f).reshape(n * n, 1), label)
+            for label in labels
+        ]
         if not columns:
             continue
         nullspace = Matrix.hstack(*[column for column, _ in columns]).nullspace()
         if not nullspace:
             continue
-        homogeneous[grade] = tuple(
-            tuple((label, vector[index, 0]) for index, (_, label) in enumerate(columns) if vector[index, 0] != 0)
-            for vector in nullspace
+        homogeneous.append(
+            (
+                grade,
+                tuple(
+                    tuple(
+                        (label, vector[index, 0])
+                        for index, (_, label) in enumerate(columns)
+                        if vector[index, 0] != 0
+                    )
+                    for vector in nullspace
+                ),
+            )
         )
-    return homogeneous
+    return tuple(homogeneous)
 
 
 def orbit_dimension_sl_n(partition: Iterable[int]) -> int:
@@ -665,9 +709,17 @@ def ad_h_grade_multiplicities_sl_n(h: Matrix) -> Dict[int, int]:
 
 def ad_h_graded_basis_labels_sl_n(h: Matrix) -> Dict[int, Tuple[str, ...]]:
     """Standard traceless basis labels grouped by ad(h)-eigenvalue."""
-    if h.rows != h.cols:
-        raise ValueError("h must be square")
-    n = h.rows
+    n, h_entries = _square_matrix_cache_key(h)
+    return dict(_ad_h_graded_basis_labels_sl_n_cached(n, h_entries))
+
+
+@lru_cache(maxsize=128)
+def _ad_h_graded_basis_labels_sl_n_cached(
+    n: int,
+    h_entries: Tuple[object, ...],
+) -> Tuple[Tuple[int, Tuple[str, ...]], ...]:
+    """Cached traceless basis labels grouped by ad(h)-eigenvalue."""
+    h = _matrix_from_cache_key(n, h_entries)
     basis = [(element, label) for label, element in standard_traceless_basis_sl_n(n)]
     graded: Dict[int, list[str]] = {}
     for element, label in basis:
@@ -680,7 +732,10 @@ def ad_h_graded_basis_labels_sl_n(h: Matrix) -> Dict[int, Tuple[str, ...]]:
         if eigenvalue is None:
             raise ValueError("basis element is not an ad(h)-eigenvector")
         graded.setdefault(eigenvalue, []).append(label)
-    return {grade: tuple(labels) for grade, labels in graded.items()}
+    return tuple(
+        (grade, tuple(labels))
+        for grade, labels in sorted(graded.items(), reverse=True)
+    )
 
 
 def _positive_simple_root_grade_count(h: Matrix) -> int:
