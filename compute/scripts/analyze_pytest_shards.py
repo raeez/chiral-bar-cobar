@@ -17,9 +17,12 @@ DURATION_RE = re.compile(r"^\s*(?P<seconds>[0-9.]+)s call\s+(?P<nodeid>compute/.
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Analyze pytest shard logs.")
+    default_log_dir = ".pytest-full-state"
+    if not (Path(default_log_dir) / "pytest-full-shards").exists():
+        default_log_dir = ".build_logs"
     parser.add_argument(
         "--log-dir",
-        default=".build_logs",
+        default=default_log_dir,
         help="Directory that contains pytest-full-shards.",
     )
     parser.add_argument(

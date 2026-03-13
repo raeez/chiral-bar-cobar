@@ -4,7 +4,9 @@
 This keeps the slow-suite lock for the whole orchestration, executes the
 collected nodeids in bounded shards, emits heartbeat lines during long
 symbolic runs, and checkpoints completed shards so an interrupted wrapper
-can resume instead of restarting from 0%.
+can resume instead of restarting from 0%. The checkpointed shard state can
+live outside the shared build-log directory so unrelated TeX/build work
+does not erase the full-suite resume surface.
 """
 
 from __future__ import annotations
@@ -49,7 +51,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--log-dir",
         required=True,
-        help="Directory that receives the runner log, state, and shard logs.",
+        help="Directory that receives the user-facing runner log and lock file.",
+    )
+    parser.add_argument(
+        "--state-dir",
+        default=None,
+        help=(
+            "Directory that receives checkpoint state, durations, and shard logs. "
+            "Defaults to --log-dir."
+        ),
     )
     parser.add_argument(
         "--faulthandler-timeout",
@@ -446,9 +456,11 @@ def main() -> int:
 
     repo_root = Path(__file__).resolve().parents[2]
     log_dir = Path(args.log_dir).resolve()
-    state_path = log_dir / "pytest-full.state.json"
-    duration_path = log_dir / "pytest-full.durations.json"
-    shard_log_dir = log_dir / "pytest-full-shards"
+    state_dir = Path(args.state_dir).resolve() if args.state_dir else log_dir
+    state_dir.mkdir(parents=True, exist_ok=True)
+    state_path = state_dir / "pytest-full.state.json"
+    duration_path = state_dir / "pytest-full.durations.json"
+    shard_log_dir = state_dir / "pytest-full-shards"
     lock_path = log_dir / "pytest-slow.lock"
     owner = SlowSuiteOwner(lock_path=lock_path, repo_root=repo_root)
 

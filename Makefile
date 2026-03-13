@@ -28,6 +28,7 @@ PYTEST_FULL_TIMEOUT ?= 300
 PYTEST_FULL_HEARTBEAT ?= 60
 PYTEST_FULL_NODEIDS_PER_SHARD ?= 10
 PYTEST_FULL_TARGET_SHARD_SECONDS ?= 60
+PYTEST_FULL_STATE_DIR ?= .pytest-full-state
 
 # Number of passes for cross-references, TOC, and page numbers to stabilize.
 PASSES    := 6
@@ -224,6 +225,7 @@ test-full:
 		$$PYTHON_BIN compute/scripts/run_full_pytest.py \
 			--python-bin $$PYTHON_BIN \
 			--log-dir $(LOG_DIR) \
+			--state-dir $(PYTEST_FULL_STATE_DIR) \
 			--faulthandler-timeout $(PYTEST_FULL_TIMEOUT) \
 			--heartbeat-seconds $(PYTEST_FULL_HEARTBEAT) \
 			--max-nodeids-per-shard $(PYTEST_FULL_NODEIDS_PER_SHARD) \
