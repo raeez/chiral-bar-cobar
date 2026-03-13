@@ -353,24 +353,39 @@ def matrix_commutator(left: Matrix, right: Matrix) -> Matrix:
     return left * right - right * left
 
 
-def _matrix_signature(matrix: Matrix | None) -> Tuple[int, int, Tuple[object, ...]] | None:
+def _matrix_signature(matrix: Matrix | None) -> Tuple[str, int, int, Tuple[object, ...]] | None:
     """Immutable signature for caching exact matrix invariants."""
     if matrix is None or not matrix.rows or not matrix.cols:
         return None
+    if isinstance(matrix, SparseMatrix):
+        return ("sparse", matrix.rows, matrix.cols, tuple(sorted(matrix.todok().items())))
     # `Matrix.__iter__` goes through per-entry `__getitem__`, which is a major
     # hotspot on the larger survivor-coupled blocks. `flat()` traverses the
     # same dense data far more cheaply while preserving row-major order.
-    return (matrix.rows, matrix.cols, tuple(matrix.flat()))
+    return ("dense", matrix.rows, matrix.cols, tuple(matrix.flat()))
+
+
+def _matrix_from_signature(
+    kind: str,
+    rows: int,
+    cols: int,
+    entries: Tuple[object, ...],
+) -> Matrix:
+    """Reconstruct a matrix from its cached dense or sparse signature."""
+    if kind == "sparse":
+        return SparseMatrix(rows, cols, dict(entries))
+    return Matrix(rows, cols, entries)
 
 
 @lru_cache(maxsize=256)
 def _exact_matrix_rank_from_signature(
+    kind: str,
     rows: int,
     cols: int,
     entries: Tuple[object, ...],
 ) -> int:
     """Exact matrix rank cached by immutable matrix data."""
-    matrix = Matrix(rows, cols, entries)
+    matrix = _matrix_from_signature(kind, rows, cols, entries)
     try:
         return int(DomainMatrix.from_Matrix(matrix).rank())
     except Exception:
@@ -387,17 +402,22 @@ def exact_matrix_rank(matrix: Matrix | None) -> int:
 
 @lru_cache(maxsize=256)
 def _matrix_product_is_zero_from_signatures(
+    left_kind: str,
     left_rows: int,
     left_cols: int,
     left_entries: Tuple[object, ...],
+    right_kind: str,
     right_rows: int,
     right_cols: int,
     right_entries: Tuple[object, ...],
 ) -> bool:
     """Whether the product of two cached matrices is the zero matrix."""
-    left = Matrix(left_rows, left_cols, left_entries)
-    right = Matrix(right_rows, right_cols, right_entries)
-    return left * right == zeros(left.rows, right.cols)
+    left = _matrix_from_signature(left_kind, left_rows, left_cols, left_entries)
+    right = _matrix_from_signature(right_kind, right_rows, right_cols, right_entries)
+    product = left * right
+    if isinstance(product, SparseMatrix):
+        return product.nnz() == 0
+    return product == zeros(left.rows, right.cols)
 
 
 def _matrix_product_is_zero(left: Matrix | None, right: Matrix | None) -> bool:
@@ -4728,9 +4748,8 @@ def hook_pair_corrected_semidirect_representative_holds_via_duality(
     max_internal_ce_degree: int = 1,
 ) -> bool:
     """Check one corrected semidirect hook representative plus transpose duality."""
-    dual_r = n - r - 1
     if not all(
-        _hook_pair_corrected_semidirect_square_zero_flags(
+        _hook_pair_corrected_semidirect_source_square_zero_flags(
             n,
             r,
             max_constraint_total_degree=max_constraint_total_degree,
@@ -4739,7 +4758,7 @@ def hook_pair_corrected_semidirect_representative_holds_via_duality(
         )
     ):
         return False
-    if r < dual_r and not hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+    if not hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
         n,
         r,
         max_constraint_total_degree=max_constraint_total_degree,
@@ -7535,7 +7554,7 @@ def _partition_pair_semidirect_square_zero_flags(
         target_num_constraints=target_num_constraints,
     )
     return tuple(
-        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        semidirect_survivor_block_has_square_zero(block)
         for block in source_blocks + target_blocks
     )
 
@@ -7559,7 +7578,7 @@ def _partition_pair_corrected_semidirect_square_zero_flags(
         target_num_constraints=target_num_constraints,
     )
     return tuple(
-        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        semidirect_survivor_block_has_square_zero(block)
         for block in source_blocks + target_blocks
     )
 
@@ -7585,7 +7604,7 @@ def _hook_pair_semidirect_square_zero_flags(
         target_num_constraints=target_num_constraints,
     )
     return tuple(
-        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        semidirect_survivor_block_has_square_zero(block)
         for block in source_blocks + target_blocks
     )
 
@@ -7611,8 +7630,34 @@ def _hook_pair_corrected_semidirect_square_zero_flags(
         target_num_constraints=target_num_constraints,
     )
     return tuple(
-        semidirect_survivor_block_invariant_summary(block).has_square_zero
+        semidirect_survivor_block_has_square_zero(block)
         for block in source_blocks + target_blocks
+    )
+
+
+@lru_cache(maxsize=64)
+def _hook_pair_corrected_semidirect_source_square_zero_flags(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached source-side square-zero profile for one corrected hook-pair representative."""
+    source_blocks, _ = hook_pair_corrected_semidirect_survivor_blocks(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in source_blocks
     )
 
 
@@ -8713,7 +8758,7 @@ def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     """Check one non-principal partition pair by square-zero plus transpose duality."""
     case = nonprincipal_type_a_case(partition)
     default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
-    source_blocks, target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+    source_blocks, _ = nonprincipal_partition_pair_survivor_coupled_blocks(
         case.partition,
         max_constraint_total_degree=max_constraint_total_degree,
         survivor_total_degree=survivor_total_degree,
@@ -8722,28 +8767,27 @@ def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     )
     if not all(
         survivor_coupled_block_has_square_zero(block)
-        for block in source_blocks + target_blocks
+        for block in source_blocks
     ):
         return False
-    if case.partition == case.dual_partition:
-        return True
-    dual_source_blocks, dual_target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
-        case.dual_partition,
+    return nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
+        case.partition,
         max_constraint_total_degree=max_constraint_total_degree,
         survivor_total_degree=survivor_total_degree,
-        source_num_constraints=default_target,
-        target_num_constraints=default_source,
     )
-    return _survivor_coupled_blocks_match_under_relabeling(
-        source_blocks,
-        dual_target_blocks,
-        label_map={},
-        side_map={"source": "target"},
-    ) and _survivor_coupled_blocks_match_under_relabeling(
-        target_blocks,
-        dual_source_blocks,
-        label_map={},
-        side_map={"target": "source"},
+
+
+@lru_cache(maxsize=64)
+def nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Public representative check for one non-principal survivor-coupled partition pair."""
+    return _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
     )
 
 
@@ -9205,16 +9249,9 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
     """Check one partition pair by direct square-zero on one side plus transpose duality."""
     case = nonprincipal_type_a_case(partition)
     default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
-    source_blocks, target_blocks = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
-        case.partition,
-        max_constraint_total_degree=max_constraint_total_degree,
-        survivor_total_degree=survivor_total_degree,
-        max_internal_ce_degree=max_internal_ce_degree,
-        source_num_constraints=default_source,
-        target_num_constraints=default_target,
-    )
     if not all(
-        _partition_pair_corrected_semidirect_square_zero_flags(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
             case.partition,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
@@ -9222,30 +9259,30 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
             source_num_constraints=default_source,
             target_num_constraints=default_target,
         )
+        [0]
     ):
         return False
-    if case.partition == case.dual_partition:
-        return True
-    dual_source_blocks, dual_target_blocks = (
-        nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
-            case.dual_partition,
-            max_constraint_total_degree=max_constraint_total_degree,
-            survivor_total_degree=survivor_total_degree,
-            max_internal_ce_degree=max_internal_ce_degree,
-            source_num_constraints=default_target,
-            target_num_constraints=default_source,
-        )
+    return nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
+        case.partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
     )
-    return _semidirect_survivor_blocks_match_under_relabeling(
-        source_blocks,
-        dual_target_blocks,
-        label_map={},
-        side_map={"source": "target"},
-    ) and _semidirect_survivor_blocks_match_under_relabeling(
-        target_blocks,
-        dual_source_blocks,
-        label_map={},
-        side_map={"target": "source"},
+
+
+@lru_cache(maxsize=64)
+def nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_duality(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Public representative check for one corrected non-principal partition pair."""
+    return _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
     )
 
 

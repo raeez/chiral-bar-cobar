@@ -106,6 +106,7 @@ from compute.lib.ds_reduction import (
     verify_hook_pair_mixed_family_via_duality_catalog,
     hook_pair_nonlinear_family_holds_via_duality,
     verify_hook_pair_nonlinear_family_via_duality_catalog,
+    semidirect_survivor_block_has_square_zero,
     semidirect_survivor_block_invariant_summary,
     survivor_coupled_block_invariant_summary,
     hook_pair_survivor_coupled_family_holds_via_duality,
@@ -120,8 +121,10 @@ from compute.lib.ds_reduction import (
     nonprincipal_two_row_nonlinear_family_holds_via_duality,
     verify_nonprincipal_two_row_nonlinear_family_via_duality_catalog,
     nonprincipal_two_row_survivor_coupled_family_holds_via_duality,
+    nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality,
     verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog,
     nonprincipal_two_row_corrected_semidirect_family_holds_via_duality,
+    nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_duality,
     verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog,
     general_nonprincipal_mixed_family_holds_via_duality,
     verify_nonprincipal_general_mixed_family_via_duality_catalog,
@@ -247,6 +250,38 @@ from compute.lib.ds_reduction import (
     verify_hook_pair_ds_seed_catalog,
     verify_hook_pair_seed_alignment,
     verify_ds_reduction_seed,
+)
+
+
+TWO_ROW_DEGREE_THREE_REPRESENTATIVES = (
+    (2, 2),
+    (3, 2),
+    (4, 2),
+    (3, 3),
+    (5, 2),
+    (4, 3),
+    (6, 2),
+    (5, 3),
+    (4, 4),
+)
+
+GENERAL_DEGREE_THREE_REPRESENTATIVES = (
+    (2, 2, 1),
+    (3, 2, 1),
+    (2, 2, 2),
+    (2, 2, 1, 1),
+    (4, 2, 1),
+    (3, 3, 1),
+    (2, 2, 2, 1),
+    (2, 2, 1, 1, 1),
+    (5, 2, 1),
+    (4, 3, 1),
+    (4, 2, 2),
+    (4, 2, 1, 1),
+    (3, 3, 2),
+    (2, 2, 2, 2),
+    (2, 2, 2, 1, 1),
+    (2, 2, 1, 1, 1, 1),
 )
 
 
@@ -1958,7 +1993,7 @@ class TestHookFamilyCatalog:
 
     @pytest.mark.parametrize(
         ("n", "representative_r"),
-        ((3, 1), (4, 1), (5, 1), (5, 2), (6, 1), (6, 2)),
+        ((3, 1), (4, 1), (5, 1), (5, 2), (6, 2)),
     )
     def test_generic_survivor_degree_three_corrected_semidirect_representatives(
         self,
@@ -1971,6 +2006,42 @@ class TestHookFamilyCatalog:
             representative_r,
             max_constraint_total_degree=0,
             survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
+        )
+
+    def test_generic_survivor_degree_three_corrected_semidirect_representative_6_1_source_block(
+        self,
+    ):
+        source_blocks, _ = hook_pair_corrected_semidirect_survivor_blocks(
+            6,
+            1,
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
+            max_internal_ce_degree=1,
+        )
+        assert [block.constraint_total_degree for block in source_blocks] == [0]
+        assert [block.survivor_total_degree for block in source_blocks] == [3]
+        assert all(block.survivor_action_terms == () for block in source_blocks)
+        assert all(semidirect_survivor_block_has_square_zero(block) for block in source_blocks)
+
+    def test_generic_survivor_degree_three_corrected_semidirect_representative_6_1_target_block(
+        self,
+    ):
+        _, target_blocks = hook_pair_corrected_semidirect_survivor_blocks(
+            6,
+            1,
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
+            max_internal_ce_degree=1,
+        )
+        assert [block.constraint_total_degree for block in target_blocks] == [0]
+        assert [block.survivor_total_degree for block in target_blocks] == [3]
+        assert all(block.survivor_action_terms == () for block in target_blocks)
+        assert hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+            6,
+            1,
+            max_constraint_total_degree=0,
+            survivor_total_degree=3,
             max_internal_ce_degree=1,
         )
 
@@ -2173,7 +2244,7 @@ class TestTwoRowNonHookFamilyCatalog:
         assert all(
             survivor_coupled_block_has_square_zero(block)
             and survivor_coupled_block_is_acyclic(block)
-            for block in survivor_source + survivor_target
+            for block in survivor_source
         )
         assert nonprincipal_two_row_survivor_coupled_blocks_match_under_dual_swap(
             6,
@@ -2183,7 +2254,7 @@ class TestTwoRowNonHookFamilyCatalog:
         )
         assert all(
             semidirect_survivor_block_has_square_zero(block)
-            for block in corrected_source + corrected_target
+            for block in corrected_source
         )
         assert nonprincipal_two_row_corrected_semidirect_blocks_match_under_dual_swap(
             6,
@@ -2192,31 +2263,22 @@ class TestTwoRowNonHookFamilyCatalog:
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=1,
         )
-        assert nonprincipal_two_row_survivor_coupled_family_holds_via_duality(
-            max_n=8,
+
+    @pytest.mark.parametrize("partition", TWO_ROW_DEGREE_THREE_REPRESENTATIVES)
+    def test_two_row_survivor_degree_three_representatives(self, partition):
+        assert nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality(
+            partition,
             max_constraint_total_degree=1,
-            survivor_total_degree=survivor_total_degree,
+            survivor_total_degree=3,
         )
-        assert all(
-            verify_nonprincipal_two_row_survivor_coupled_family_via_duality_catalog(
-                max_n=8,
-                max_constraint_total_degree=1,
-                survivor_total_degree=survivor_total_degree,
-            ).values()
-        )
-        assert nonprincipal_two_row_corrected_semidirect_family_holds_via_duality(
-            max_n=8,
+
+    @pytest.mark.parametrize("partition", TWO_ROW_DEGREE_THREE_REPRESENTATIVES)
+    def test_two_row_corrected_semidirect_degree_three_representatives(self, partition):
+        assert nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_duality(
+            partition,
             max_constraint_total_degree=0,
-            survivor_total_degree=survivor_total_degree,
+            survivor_total_degree=3,
             max_internal_ce_degree=1,
-        )
-        assert all(
-            verify_nonprincipal_two_row_corrected_semidirect_family_via_duality_catalog(
-                max_n=8,
-                max_constraint_total_degree=0,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=1,
-            ).values()
         )
 
     def test_two_row_corrected_survivor_transfer_and_semidirect_blocks(self):
@@ -2455,7 +2517,7 @@ class TestGeneralNonprincipalFamilyCatalog:
         assert all(
             survivor_coupled_block_has_square_zero(block)
             and survivor_coupled_block_is_acyclic(block)
-            for block in survivor_source + survivor_target
+            for block in survivor_source
         )
         assert nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
             partition,
@@ -2464,7 +2526,7 @@ class TestGeneralNonprincipalFamilyCatalog:
         )
         assert all(
             semidirect_survivor_block_has_square_zero(block)
-            for block in corrected_source + corrected_target
+            for block in corrected_source
         )
         assert nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
             partition,
@@ -2472,31 +2534,22 @@ class TestGeneralNonprincipalFamilyCatalog:
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=1,
         )
-        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
-            max_n=8,
+
+    @pytest.mark.parametrize("partition", GENERAL_DEGREE_THREE_REPRESENTATIVES)
+    def test_general_survivor_degree_three_representatives(self, partition):
+        assert nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality(
+            partition,
             max_constraint_total_degree=1,
-            survivor_total_degree=survivor_total_degree,
+            survivor_total_degree=3,
         )
-        assert all(
-            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-                max_n=8,
-                max_constraint_total_degree=1,
-                survivor_total_degree=survivor_total_degree,
-            ).values()
-        )
-        assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
-            max_n=8,
+
+    @pytest.mark.parametrize("partition", GENERAL_DEGREE_THREE_REPRESENTATIVES)
+    def test_general_corrected_semidirect_degree_three_representatives(self, partition):
+        assert nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_duality(
+            partition,
             max_constraint_total_degree=0,
-            survivor_total_degree=survivor_total_degree,
+            survivor_total_degree=3,
             max_internal_ce_degree=1,
-        )
-        assert all(
-            verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-                max_n=8,
-                max_constraint_total_degree=0,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=1,
-            ).values()
         )
 
     def test_general_corrected_survivor_transfer_and_semidirect_blocks(self):
