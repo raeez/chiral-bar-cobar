@@ -2,11 +2,17 @@
 \label{ch:feynman}
 
 \begin{remark}[Governing question]
-The governing question of this chapter is the mathematical role of \emph{Feynman diagram interpretation of bar-cobar duality}: how this bridge interfaces with the proved modular Koszul core without blurring theorematic content and programme.
+The bar complex is a Feynman diagram complex: the propagator is the
+logarithmic form $\eta_{ij}$, each collision residue is a vertex, and
+Verdier duality is the passage from off-shell to on-shell.  This
+chapter makes the identification precise.
 \end{remark}
 
 \begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-This chapter is mixed-level. Proved comparison statements are H-level only where theorem labels say so, explicit kernels or complexes live at M-level, and physical or numerical bridges remain S-level or programme material unless printed otherwise.
+This chapter is mixed-level.  Proved statements carry theorem labels;
+the physical identifications (bar~$=$~off-shell amplitudes,
+cobar~$=$~on-shell propagators, pairing~$=$~S-matrix) are heuristic
+physics-dictionary entries (Type~VII) unless explicitly promoted.
 \end{remark}
 \index{Feynman diagram|textbf}
 
@@ -21,280 +27,105 @@ following Costello~\cite{costello-renormalization}.
 \section{Feynman diagrams in chiral field theory}
 
 \begin{definition}[Chiral field theory data]
+\label{def:worldline-intro}
 \index{propagator!Feynman}
-A chiral field theory on a curve $X$ consists of:
-\begin{enumerate}
-\item \emph{Fields.} A chiral algebra $\mathcal{A}$ with local operators
-$\phi^a(z)$, each with conformal weight $h_a$
-
-\item \emph{Action.} A local functional
-$$S[\phi] = \int_X \left[\frac{1}{2}\phi\, \bar{\partial} \phi + V(\phi)\right]$$
-where $\bar{\partial}$ is the Dolbeault operator (giving a chiral/holomorphic theory, not the real Laplacian $\Box$) and $V$ encodes interactions
-
-\item \emph{Propagator.} The chiral (holomorphic) two-point function
-$$\langle \phi^a(z) \phi^b(w) \rangle_0 = \delta^{ab} P(z,w)$$
-where $P(z,w) = \delta_{h_a, h_b} \cdot (z-w)^{-2h_a}$ at genus~0 (nonzero only for fields of equal conformal weight, by the conformal Ward identity; e.g., $(z-w)^{-2}$ for weight-$1$ bosons, $(z-w)^{-1}$ for weight-$\frac{1}{2}$ fermions); at higher genus, these are replaced by the appropriate meromorphic propagator (prime form for bosons, Szeg\H{o} kernel for fermions).  Note: the chiral propagator is \emph{holomorphic}, not the real Green's function $-\log|z-w|^2$
-
-\item \emph{Vertices.} Interaction terms from $V(\phi)$ determining the
-chiral algebra structure
-\end{enumerate}
-\end{definition}
-
-\begin{example}[Free boson]
-The free boson has field $\alpha(z)$ with $h=1$, propagator $\langle \alpha(z)\alpha(w) \rangle = (z-w)^{-2}$, and no vertices (free theory).
-
-Denoting the free boson (Heisenberg) chiral algebra by $\mathcal{A} = \mathcal{H}_1$, the bar complex:
-$$\bar{B}^n(\mathcal{A}) = \Omega^*(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes (n+1)})$$
-encodes $n$-point off-shell correlation functions.
-\end{example}
-
-\subsection{Worldline formalism and configuration spaces}
-
-\begin{definition}[Worldline representation]\label{def:worldline-intro}
-A Feynman diagram with $V$ vertices, $E$ edges, and $L$ loops corresponds to:
-\begin{itemize}
-\item \emph{Worldline graph.} $\Gamma$ with vertex set $V$ and edge set $E$
-\item \emph{Configuration space point.} $(z_1,\ldots,z_V) \in C_V(X)$
-(positions of vertices)
-\item \emph{Propagators.} Each edge $e=(i,j)$ contributes $G(z_i,z_j)$
-\item \emph{Vertices.} Each vertex contributes an interaction term from $V(\phi)$
-\end{itemize}
-
-The amplitude is:
-$$A_\Gamma = \int_{C_V(X)} \left[\prod_{e \in E} G(z_i,z_j)\right]
-\left[\prod_{v \in V} V_v\right] \prod_i dz_i$$
-(In a full 2d CFT one integrates against $d^2z_i$; in the chiral/holomorphic theory, only the holomorphic measure $dz_i$ appears.)
-\end{definition}
-
-\begin{remark}[Connection to bar complex]
 \index{Feynman diagram!and bar complex}
-The bar complex element $\omega_\Gamma \in \bar{B}^{V-1}(\mathcal{A})$ is the Feynman integrand before integration.  The logarithmic forms $\eta_{ij} = d\log(z_i-z_j)$ encode propagator singularities.
-\end{remark}
+A \emph{chiral field theory} on a curve~$X$ consists of a chiral
+algebra~$\cA$ (the fields), the holomorphic chiral propagator
+$P(z,w) = (z-w)^{-2h}$ at genus~$0$ for a field of conformal
+weight~$h$ (replaced by the prime form at higher genus), and the
+OPE structure constants (the vertices).  The bar complex element
+$\omega_\Gamma \in \barB^{V-1}(\cA)$ is the Feynman integrand
+before integration over the configuration space.
+
+A Feynman diagram~$\Gamma$ with $V$~vertices and $E$~edges
+determines a configuration space amplitude:
+\[
+A_\Gamma = \int_{C_V(X)}
+\prod_{e=(i,j) \in E(\Gamma)} G(z_i,z_j)
+\cdot \prod_{v \in V(\Gamma)} C_v
+\cdot \prod_i dz_i,
+\]
+where $G(z_i,z_j) = 1/(z_i - z_j)$ is the chiral propagator and
+each~$C_v$ is a vertex factor from the OPE.  The logarithmic forms
+$\eta_{ij} = d\log(z_i-z_j)$ encode these propagator singularities.
+\end{definition}
 
 \subsection{Tree vs.\ loop decomposition}
 
 \begin{definition}[Loop number]
 A Feynman diagram $\Gamma$ with $V$ vertices, $E$ edges, and $C$ connected 
 components has loop number:
-$$L(\Gamma) = E - V + C$$
+\[L(\Gamma) = E - V + C\]
 
 This is the first Betti number $b_1(\Gamma)$ of the graph.
 \end{definition}
 
-\begin{conjecture}[Configuration space interpretation; \ClaimStatusHeuristic]
-The loop number has a geometric meaning:
-\begin{enumerate}
-\item \emph{Tree diagrams} ($L=0$): Integration over $C_V(X)$ with measure
-supported on boundary divisors
-\item \emph{One-loop} ($L=1$): Integration over $C_V(X)$ with measure having
-support in codimension-1
-\item \emph{$L$-loop}: Integration over $C_V(X)$ with measure in codimension-$L$
-\end{enumerate}
-\end{conjecture}
-
-\begin{evidence}
-Each loop corresponds to a \emph{free integration variable} that is not fixed by 
-external momenta or on-shell conditions. Geometrically:
-\begin{itemize}
-\item External legs fix positions $z_1,\ldots,z_n \in X$
-\item Tree-level: All internal vertices determined by momentum conservation
-\item Each loop: One additional free variable to integrate over
-\end{itemize}
-
-The bar complex encodes this: degree $k$ in $\bar{B}^k$ corresponds to $(k+1)$ field insertions with $k$ propagator contractions (logarithmic forms). This includes both tree-level graphs (which already appear at degree $k = n-1$ for $n$ external legs) and loop corrections.
-\end{evidence}
-
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture asserts a quasi-isomorphism between the $L_\infty$ algebra controlling deformations of the chiral field theory and the $L_\infty$ algebra governing configuration space integrals graded by loop number.
+\begin{remark}[Configuration space interpretation]
+Each loop in~$\Gamma$ corresponds to a free integration variable not
+fixed by external positions: tree diagrams ($L=0$) have all internal
+vertices determined by collision residues, while an $L$-loop diagram
+carries $L$ additional integrations over~$C_V(X)$.  In the bar complex,
+degree~$k$ in $\barB^k$ corresponds to $(k+1)$ field insertions with
+$k$ propagator contractions.
 \end{remark}
 
-\section{Bar complex as off-shell amplitudes}
+\section{Off-shell/on-shell duality}
 
-\subsection{Off-shell vs.\ on-shell}
-
-\begin{definition}[On-shell vs.\ off-shell]
-In QFT, \emph{on-shell} means fields satisfy equations of motion ($\Box \phi = 0$); \emph{off-shell} means they are unconstrained.  In the chiral algebra context, on-shell is BRST cohomology; off-shell is the full chain complex.
-\end{definition}
-
-\begin{conjecture}[Bar = off-shell amplitudes; \ClaimStatusHeuristic]
-Elements of the bar complex $\bar{B}^n(\mathcal{A})$ are \emph{off-shell} 
-correlation functions:
-$$\langle \phi_0(z_0) \phi_1(z_1) \cdots \phi_n(z_n) \rangle_{\text{off-shell}}$$
-with infrared regulator provided by the compactification $\overline{C}_{n+1}(X)$, logarithmic forms encoding propagator singularities at collision divisors, and differential $d$ implementing the BRST operator (equations of motion).
-\end{conjecture}
-
-\begin{evidence}
-For $\omega \in \bar{B}^n(\mathcal{A})$, write:
-$$\omega = \phi_0(z_0) \otimes \phi_1(z_1) \otimes \cdots \otimes \phi_n(z_n) 
-\otimes \bigwedge_{i<j} \eta_{ij}^{k_{ij}}$$
-
-Each $\phi_i(z_i)$ is a field insertion, each $\eta_{ij}$ a propagator from $z_i$ to $z_j$, and the differential forms ensure the proper integration measure.
-
-The bar differential $d = d_{\text{strat}} + d_{\text{int}} + d_{\text{res}}$ 
-implements three physical operations:
-\begin{enumerate}
-\item $d_{\text{strat}}$: Sends particles to boundary (infrared behavior)
-\item $d_{\text{int}}$: Applies BRST operator to fields (equations of motion)
-\item $d_{\text{res}}$: Extracts residues (on-shell projection)
-\end{enumerate}
-\end{evidence}
-
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats bar complex elements as conjectural algebraic
-shadow data for off-shell correlation functions, with the bar
-differential playing the algebraic role expected of the BRST operator
-acting on the space of off-shell amplitudes only after additional
-physics input.
-\end{remark}
-
-\subsection{Infrared regularization via compactification}
-
-\begin{remark}[Compactification as infrared regulator]
-Logarithmic forms on $\overline{C}_n(X)$ have controlled asymptotics near the boundary divisor, providing a natural infrared cutoff.  For example, $\overline{C}_2(\mathbb{P}^1) = \mathrm{Bl}_\Delta(\mathbb{P}^1 \times \mathbb{P}^1)$ tames the infrared divergence of $G(z_1,z_2) = -\log|z_1-z_2|^2$: the logarithmic form $\eta_{12} = d\log(z_1-z_2)$ extends to the compactification.
-\end{remark}
-
-\section{Cobar complex and on-shell propagator templates}
-
-\subsection{Distributional interpretation}
-
-\begin{conjecture}[Cobar / on-shell propagator template; \ClaimStatusHeuristic]
-Elements of the cobar complex $\Omega^{\text{ch}}(\mathcal{C})$ should
-be read as algebraic shadows of \emph{on-shell} propagators:
-$$K(z_1,\ldots,z_n) = \sum_{\text{states}} \frac{|\text{state}\rangle 
-\langle\text{state}|}{(\text{momenta})^2}$$
-with ultraviolet regulator from the distributions $\delta(z_i-z_j)$, delta functions enforcing on-shell conditions (momentum conservation), and differential $d_{\text{cobar}}$ implementing descent from off-shell to on-shell.
-\end{conjecture}
-
-\begin{evidence}
-The cobar complex uses distributions on the \emph{open} configuration space $C_n(X)$:
-$$\Omega^n(\mathcal{C}) = \text{Dist}(C_n(X), \mathcal{C}^{\boxtimes n})$$
-
-A typical element:
-$$K = \int_{C_n(X)} k(z_1,\ldots,z_n) \cdot c_1(z_1) \cdots c_n(z_n)$$
-where $k$ has singularities (poles) along diagonals $z_i = z_j$.
-
-The cobar differential:
-$$d_{\text{cobar}} = \sum_{i<j} \Delta_{ij} \cdot \delta(z_i-z_j)$$
-inserts delta functions, forcing particles on-shell.
-
-Before applying $d_{\text{cobar}}$, the kernel $K$ is an off-shell
-propagator; the cobar differential enforces the on-shell condition
-$\delta(p^2)$, so the cohomology should model physical on-shell
-scattering amplitudes.
-\end{evidence}
-
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats cobar complex elements as conjectural algebraic
-shadow data for on-shell propagators, asserting that Verdier-dual
-distributions on configuration spaces should model physical scattering
-kernels via the cobar differential.
-\end{remark}
-
-\subsection{UV regularization via delta functions}
-
-\begin{remark}[Distributional forms]
-On-shell conditions require delta functions in momentum space.  The residue-distribution pairing between logarithmic forms and distributions is the content of Verdier duality.  The cobar differential enforces the on-shell condition $(\Box - m^2) G(z,w) = \delta^{(2)}(z-w)$ by inserting $\delta(z-w)$.
-\end{remark}
-
-\section{Bar-cobar duality and S-matrix templates}
-
-\subsection{The pairing: residue meets distribution}
-
-\begin{conjecture}[Physical pairing; \ClaimStatusHeuristic]\label{conj:physical-pairing}
-The bar-cobar pairing:
-$$\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle = 
-\int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}$$
-should model the S-matrix element:
-$$\mathcal{S}_{n \to n'} = \langle \text{in} | S | \text{out} \rangle$$
-\end{conjecture}
-
-\begin{evidence}[Evidence: Physical interpretation]
-\noindent\emph{Bar side $\omega_{\text{bar}}$.} Represents asymptotic states
-\begin{itemize}
-\item Compactification encodes infrared behavior (states at infinity)
-\item Logarithmic forms encode off-shell wavefunctions
-\item Residues extract physical polarizations
-\end{itemize}
-
-\noindent\emph{Cobar side $K_{\text{cobar}}$.} Represents propagators
-\begin{itemize}
-\item Distributions encode on-shell intermediate states
-\item Delta functions enforce momentum conservation
-\item Poles capture particle exchanges
-\end{itemize}
-
-\noindent\emph{The pairing.} Integration over configuration space sums over all
-intermediate states:
-$$\langle \text{in} | S | \text{out} \rangle = 
-\sum_{\text{channels}} \int \text{d(phase space)} \times \text{propagators} 
-\times \text{vertices}$$
-
-This is the Feynman path integral formulation.
-\end{evidence}
-
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats the Verdier duality pairing between bar and cobar
-complexes as conjectural algebraic shadow data for S-matrix elements,
-with the configuration-space integral modeling the sum over Feynman
-channels only after additional physics input.
-\end{remark}
-
-\subsection{Feynman rules from bar-cobar}
+In QFT, \emph{off-shell} fields are unconstrained; \emph{on-shell}
+fields satisfy the equations of motion.  In the chiral algebra setting,
+this distinction becomes bar versus cobar:
 
 \begin{conjecture}[Feynman rules dictionary; \ClaimStatusHeuristic]
-The bar-cobar construction should model Feynman rules:
+\label{conj:physical-pairing}
+The bar-cobar construction models Feynman rules.  The bar complex
+carries off-shell amplitudes (logarithmic forms on the
+compactification~$\overline{C}_n(X)$ provide infrared regularization);
+the cobar complex carries on-shell propagator templates (distributions
+on the open configuration space, with delta functions enforcing on-shell
+conditions); and the bar-cobar pairing models the S-matrix:
+\[
+\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle
+= \int_{\overline{C}_n(X)}
+\omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}
+\;\sim\;
+\langle \text{in} \,|\, S \,|\, \text{out} \rangle.
+\]
 
 \begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
+\begin{tabular}{lll}
+\toprule
 \textbf{Physical Object} & \textbf{Bar Complex} & \textbf{Cobar Complex} \\
-\hline
+\midrule
 External leg & Boundary point & Marked point \\
 Internal propagator & Logarithmic form $\eta_{ij}$ & Delta function $\delta_{ij}$ \\
 Vertex & Residue extraction & Comultiplication \\
 Loop integration & Integration over $C_n$ & Trace over distributions \\
-Symmetry factor & Permutation action & $\mathfrak{S}_n$ quotient \\
 IR cutoff & Compactification & -- \\
 UV cutoff & -- & Distribution singularity \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 \end{conjecture}
 
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture provides a systematic template between QFT Feynman rules
-and the bar-cobar formalism, asserting that each entry (propagator,
-vertex, loop integration, regularization) should admit a precise
-quasi-isomorphic realization in configuration-space homological algebra.
-\end{remark}
-
 \begin{example}[Free boson propagator]
-For free boson $\alpha(z)$:
-
-\emph{Bar element:}
-$$\omega = \alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12}$$
-$$\in \Omega^1(\overline{C}_2(X), \mathcal{B}^{\boxtimes 2})$$
-
-\emph{Cobar element} (Verdier dual current):
-$$K \in H^1_{D_{12}}\left(\overline{C}_2(X), \mathcal{B}^{!\boxtimes 2}\right)$$
-represented by the local cohomology class supported on the diagonal $D_{12} = \{z_1 = z_2\}$.
-
-\emph{Pairing} (Verdier duality = residue):
-$$\langle \omega, K \rangle = \operatorname{Res}_{z_1 = z_2}\left[\frac{1}{z_1 - z_2}\right] = 1$$
-
-This is the standard boson propagator normalization: the bar element $\omega$ carries the simple pole $\eta_{12} = d\log(z_1 - z_2)$, and the cobar dual extracts the residue.
+For free boson $\alpha(z)$, the bar element
+$\omega = \alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12}
+\in \Omega^1(\overline{C}_2(X), \cA^{\boxtimes 2})$
+carries the simple pole $\eta_{12} = d\log(z_1-z_2)$.  The Verdier dual
+cobar element is the local cohomology class
+$K \in H^1_{D_{12}}(\overline{C}_2(X), \cA^{!\boxtimes 2})$
+supported on the diagonal $D_{12} = \{z_1 = z_2\}$.  The pairing
+$\langle \omega, K \rangle
+= \operatorname{Res}_{z_1 = z_2}[(z_1 - z_2)^{-1}] = 1$
+recovers the standard propagator normalization.
 \end{example}
 
 \section{Higher operations = loop corrections}
 
 \subsection{\texorpdfstring{The $A_\infty$ structure as perturbative expansion}{The A infty structure as perturbative expansion}}
 
-\begin{conjecture}[Loop expansion = $A_\infty$ operations; \ClaimStatusHeuristic]
+\begin{conjecture}[Loop expansion = \texorpdfstring{$A_\infty$}{A-infinity} operations; \ClaimStatusHeuristic]
 \index{loop expansion}
 The $A_\infty$ operations on the bar complex correspond to loop-level corrections:
 \begin{align*}
@@ -314,7 +145,7 @@ Each $m_k$ arises from a boundary stratum of $\overline{M}_{0,k+1}$:
 \end{itemize}
 
 Explicitly:
-$$m_3(\phi_1, \phi_2, \phi_3) = \sum_{D \,\in\, \partial \overline{C}_3(X)} \operatorname{Res}_D\bigl[\phi_1(z_1)\phi_2(z_2)\phi_3(z_3) \cdot \eta_{12} \wedge \eta_{23}\bigr]$$
+\[m_3(\phi_1, \phi_2, \phi_3) = \sum_{D \,\in\, \partial \overline{C}_3(X)} \operatorname{Res}_D\bigl[\phi_1(z_1)\phi_2(z_2)\phi_3(z_3) \cdot \eta_{12} \wedge \eta_{23}\bigr]\]
 
 The boundary divisors of $\overline{C}_3(X)$ give three collision channels:
 \begin{enumerate}
@@ -326,15 +157,6 @@ The boundary divisors of $\overline{C}_3(X)$ give three collision channels:
 The $m_3$ measures the associativity defect.  In the homotopy transfer formula, it involves two propagator insertions, analogous to a one-loop triangle diagram (though the underlying graphs are trees; see Theorem~\ref{thm:mk-tree-level}).
 \end{evidence}
 
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats the $A_\infty$ operations $m_k$ as conjectural
-algebraic shadow data for loop-level corrections in the perturbative
-expansion, asserting that the $L_\infty$ algebra of homotopy transfer
-data on the bar complex should control the same deformation problem as
-the QFT loop expansion.
-\end{remark}
-
 \subsection{Explicit one-loop calculation}
 
 \begin{example}[Virasoro one-loop]\label{ex:virasoro-one-loop}
@@ -342,19 +164,19 @@ For the Virasoro algebra, $m_3(T,T,T)$ computes the one-loop correction to the
 three-point function of the stress tensor.
 
 \noindent\emph{Setup.}
-$$T(z) = \sum_n L_n z^{-n-2}, \quad [L_m, L_n] = (m-n)L_{m+n} +
-\frac{c}{12}m(m^2-1)\delta_{m+n,0}$$
+\[T(z) = \sum_n L_n z^{-n-2}, \quad [L_m, L_n] = (m-n)L_{m+n} +
+\frac{c}{12}m(m^2-1)\delta_{m+n,0}\]
 
 OPE:
-$$T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + 
-\frac{\partial T(w)}{z-w} + \text{reg}$$
+\[T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + 
+\frac{\partial T(w)}{z-w} + \text{reg}\]
 
 \noindent\emph{Computation.}
 The operation $m_3$ is computed by summing residues over the three
 boundary strata of $\overline{M}_{0,4} \cong \bP^1$ (with the fourth
 point serving as output):
-$$m_3(T, T, T) = \sum_{\sigma \in \partial \overline{M}_{0,4}}
-\mathrm{Res}_\sigma\bigl[\omega(T,T,T)\bigr]$$
+\[m_3(T, T, T) = \sum_{\sigma \in \partial \overline{M}_{0,4}}
+\mathrm{Res}_\sigma\bigl[\omega(T,T,T)\bigr]\]
 
 where $\omega$ is the chiral 3-chain with logarithmic propagators.
 Concretely, we evaluate on the three boundary components:
@@ -365,7 +187,7 @@ Concretely, we evaluate on the three boundary components:
 \end{align*}
 
 Similarly for other channels. Summing all three boundary strata:
-$$m_3(T \otimes T \otimes T) = \frac{c}{12}\,\partial^3 T + (\text{lower-order derivative terms})$$
+\[m_3(T \otimes T \otimes T) = \frac{c}{12}\,\partial^3 T + (\text{lower-order derivative terms})\]
 
 This is the conformal anomaly: the central charge $c$
 is the coefficient of the one-loop correction, as expected from quantum
@@ -380,10 +202,10 @@ by the same curvature parameter $\kappa = c/2$.
 
 \subsection{Higher loops and factorization}
 
-\begin{theorem}[$A_\infty$ constraint formula; \ClaimStatusProvedHere]
+\begin{theorem}[\texorpdfstring{$A_\infty$}{A-infinity} constraint formula; \ClaimStatusProvedHere]
 \label{thm:ainfty-constraint-formula}
 The $A_\infty$ operations satisfy the recursive constraint:
-$$m_1 \circ m_n = -\sum_{\substack{r+s+t=n \\ (r,s,t) \neq (0,n,0)}} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t})$$
+\[m_1 \circ m_n = -\sum_{\substack{r+s+t=n \\ (r,s,t) \neq (0,n,0)}} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t})\]
 
 This constrains $m_1(m_n)$ (not $m_n$ itself) in terms of lower operations,
 and encodes the BPHZ renormalization recursion at the level of Ward identities.
@@ -391,8 +213,8 @@ and encodes the BPHZ renormalization recursion at the level of Ward identities.
 
 \begin{proof}
 This is a rewriting of the $A_\infty$ relations (Keller convention):
-$$\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes
-\mathrm{id}^{\otimes t}) = 0$$
+\[\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes
+\mathrm{id}^{\otimes t}) = 0\]
 
 Isolating the $r = t = 0$, $s = n$ term, which is $m_1(m_n)$, gives the result.
 Note: to \emph{define} $m_n$ recursively (e.g., via homotopy transfer), one
@@ -416,35 +238,14 @@ and unlabeled internal vertices
 \end{definition}
 
 \begin{conjecture}[Bar complex and graph complex; \ClaimStatusHeuristic]
-The bar complex admits a graphical description analogous to Kontsevich's graph complex:
-$$\bar{B}^{\text{ch}}(\mathcal{A}) \sim \text{GC}(\mathcal{A})$$
-where $\text{GC}(\mathcal{A})$ is the graph complex with vertices decorated by
-fields from $\mathcal{A}$.
+The chiral bar complex admits a quasi-isomorphism to the
+$\cA$-decorated Kontsevich graph complex:
+$\barB^{\mathrm{ch}}(\cA) \simeq \mathrm{GC}(\cA)$,
+where vertices correspond to field insertions, edges to logarithmic
+forms~$\eta_{ij}$, and the bar differential decomposes as edge
+contraction (residue), vertex splitting (boundary stratification),
+and decoration action.
 \end{conjecture}
-
-\begin{evidence}[Evidence: Sketch]
-\emph{Step~1.} Each element $\omega \in \bar{B}^n(\mathcal{A})$ corresponds to
-a graph:
-\begin{itemize}
-\item Vertices = field insertions $\phi_i$
-\item Edges = logarithmic forms $\eta_{ij}$
-\item External legs = marked points
-\end{itemize}
-
-\emph{Step~2.} The bar differential corresponds to graph operations:
-\begin{itemize}
-\item $d_{\text{res}}$ = contract edge (residue at collision)
-\item $d_{\text{strat}}$ = split vertex (boundary stratification)
-\item $d_{\text{int}}$ = act on vertex decorations
-\end{itemize}
-
-\emph{Step~3.} Show these operations match the graph complex differential.
-\end{evidence}
-
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (homotopy-category equivalence).
-The conjecture asserts a quasi-isomorphism between the chiral bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ and Kontsevich's graph complex $\mathrm{GC}(\mathcal{A})$ with $\mathcal{A}$-decorated vertices, inducing an equivalence of the corresponding homotopy categories.
-\end{remark}
 
 \subsection{Kontsevich's formality and chiral algebras}
 
@@ -452,18 +253,19 @@ The conjecture asserts a quasi-isomorphism between the chiral bar complex $\bar{
 \label{thm:kontsevich-formality-feynman}
 For a smooth manifold $M$, the $L_\infty$ algebra of polyvector fields
 $\mathcal{T}_{\text{poly}}(M)$ is formal (\cite{Kontsevich03}):
-$$\mathcal{T}_{\text{poly}}(M) \simeq_{L_\infty} H^*(\mathcal{T}_{\text{poly}}(M))$$
+\[\mathcal{T}_{\text{poly}}(M) \simeq_{L_\infty} H^*(\mathcal{T}_{\text{poly}}(M))\]
 \end{theorem}
 
-\begin{remark}[Chiral analogue]
-The bar-cobar construction on a curve $X$ provides a chiral analogue: the upper half-plane is replaced by $X$, configuration spaces by $\overline{C}_n(X)$, and the Poisson structure by the chiral algebra OPE.  The formality morphism $\mathcal{F}: H^*(\bar{B}^{\text{ch}}(\mathcal{A})) \to \mathcal{A}$ sums over Feynman graphs with configuration space integral weights (see also Remark~\ref{rem:kontsevich-graphs}).
-\end{remark}
-
-\section{Connections to other Feynman diagram frameworks}
+\begin{remark}[Chiral analogue of Kontsevich formality]
+\label{rem:kontsevich-graphs}
 \label{sec:connections-other-feynman}
-
-\begin{remark}[Relation to Kontsevich formality]\label{rem:kontsevich-graphs}
-The bar-cobar construction on a curve $X$ is a chiral analog of Kontsevich formality~\cite{Kon99}: polyvector fields become chiral algebras, angle forms $d\varphi$ become logarithmic forms $\eta$, and the $L_\infty$ quasi-isomorphism becomes bar-cobar duality.
+The bar-cobar construction on a curve~$X$ is a chiral analogue of
+Kontsevich formality~\cite{Kon99}: polyvector fields become chiral
+algebras, the upper half-plane becomes~$X$, angle forms $d\varphi$
+become logarithmic forms~$\eta$, and the $L_\infty$
+quasi-isomorphism becomes bar-cobar duality.  The formality morphism
+$\mathcal{F}\colon H^*(\barB^{\mathrm{ch}}(\cA)) \to \cA$ sums over
+Feynman graphs with configuration space integral weights.
 \end{remark}
 
 \begin{conjecture}[Disk-local perturbative/FM comparison;
@@ -543,6 +345,236 @@ are comparing the same formal relation, and there is no third
 independent local coefficient problem left to solve.
 \end{proof}
 
+\begin{corollary}[Anomaly-free genus-\texorpdfstring{$0$}{0} collapse of the local packet;
+  \ClaimStatusProvedHere]\label{cor:disk-local-ternary-on-brstbar-locus}
+On the anomaly-free genus-$0$ BRST/bar locus of
+Theorem~\ref{thm:brst-bar-genus0}, the binary comparison in
+Proposition~\ref{prop:disk-local-binary-ternary-reduction} is already
+theorematic.  Equivalently, on that theorem surface the remaining
+independent local MC5 check is the ternary comparison on
+$\overline{C}_3$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:brst-bar-genus0} identifies the genus-$0$ BRST complex
+with the genus-$0$ bar complex by a chain map
+\(\Phi\) to \(\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})\).
+Remark~\ref{rem:brst-bar-explicit} makes the low-degree content of that
+map concrete: physical vertex operators map to bar generators, and the
+ghost bilinear maps to the logarithmic propagator
+\(\eta_{12}=d\log(z_1-z_2)\).
+Thus the propagator/residue data underlying the binary local packet is
+already identified on this theorematic genus-$0$ locus.
+
+By Proposition~\ref{prop:disk-local-binary-ternary-reduction}, once the
+binary packet is in hand the only remaining independent local
+comparison is the ternary one.
+\end{proof}
+
+\begin{proposition}[Two-channel reduction after compactifying the
+  ternary packet; \ClaimStatusProvedHere]
+\label{prop:compactified-ternary-two-channel}
+Fix a holomorphic disk chart $U \subset X$, and suppose the
+compactification/Stokes upgrade has been achieved for the local ternary
+comparison in
+Conjecture~\ref{conj:disk-local-perturbative-fm}: namely, suppose the
+perturbative ternary bracket and the local bar
+$m_3$-operation are represented by logarithmic $1$-forms on
+$\overline{M}_{0,4} \cong \bP^1$ whose only poles lie at the three
+boundary points corresponding to the channels
+$(12|3)$, $(23|1)$, and $(13|2)$.
+Then comparison of the two residues in any two of those channels
+implies comparison in the third channel as well.
+Equivalently, after compactification the ternary part of
+Conjecture~\ref{conj:disk-local-perturbative-fm} has only two
+independent boundary-channel checks.
+\end{proposition}
+
+\begin{proof}
+Let $\omega_{\mathrm{pert}}$ and $\omega_{\mathrm{bar}}$ denote the two
+logarithmic $1$-forms on $\overline{M}_{0,4} \cong \bP^1$, and set
+\[
+\delta = \omega_{\mathrm{pert}} - \omega_{\mathrm{bar}}
+\in H^0\!\left(\bP^1,\,
+\Omega^1_{\bP^1}\bigl(\log\{0,1,\infty\}\bigr)\right).
+\]
+If the residues of $\delta$ agree in two channels, then two of the
+three residues of $\delta$ vanish.  By the residue theorem on~$\bP^1$,
+the sum of all three residues is zero, so the third residue vanishes as
+well.  Therefore $\delta$ has zero residue at every boundary point, so
+it is in fact a holomorphic $1$-form on~$\bP^1$.  But
+$H^0(\bP^1,\Omega^1_{\bP^1}) = 0$, hence $\delta = 0$.
+In particular, the third boundary residue is forced by the first two.
+\end{proof}
+
+\begin{corollary}[Genus-\texorpdfstring{$0$}{0} post-compactification ternary target;
+  \ClaimStatusProvedHere]
+\label{cor:genus0-compactified-ternary-two-channel}
+On the anomaly-free genus-$0$ BRST/bar locus of
+Theorem~\ref{thm:brst-bar-genus0}, once the compactification/Stokes
+upgrade has been achieved, the remaining local MC5 comparison reduces
+to two ternary boundary-channel checks on
+$\overline{M}_{0,4} \cong \bP^1$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:disk-local-ternary-on-brstbar-locus} reduces the
+local MC5 problem on this theorematic locus to the ternary comparison
+alone.  Proposition~\ref{prop:compactified-ternary-two-channel} then
+reduces that compactified ternary comparison to any two of the three
+boundary channels.
+\end{proof}
+
+\begin{corollary}[Standard-chart form of the remaining genus-\texorpdfstring{$0$}{0}
+  packet; \ClaimStatusProvedHere]
+\label{cor:genus0-standard-chart-two-residues}
+Choose the standard coordinate on
+$\overline{M}_{0,4} \cong \bP^1$ with boundary points
+$0,1,\infty$.  On the anomaly-free genus-$0$ BRST/bar locus of
+Theorem~\ref{thm:brst-bar-genus0}, after the compactification/Stokes
+upgrade the remaining local MC5 comparison is exactly the equality of
+the compactified ternary residues at $0$ and~$1$; the residue at
+$\infty$ is then forced.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:genus0-compactified-ternary-two-channel}, any two
+boundary-channel checks suffice.  On the standard
+$0,1,\infty$ compactification of $\overline{M}_{0,4}$, one may choose
+the channels at $0$ and~$1$ as the independent pair.  Then
+Proposition~\ref{prop:compactified-ternary-two-channel} forces the
+residue at~$\infty$.
+\end{proof}
+
+\begin{proposition}[Standard logarithmic basis on
+  \texorpdfstring{$\overline{M}_{0,4}$}{M_0,4}; \ClaimStatusProvedHere]
+\label{prop:m04-standard-log-basis}
+Let $t$ be the standard coordinate on
+$\overline{M}_{0,4} \cong \bP^1$ with boundary points
+$0,1,\infty$.  Then every logarithmic $1$-form on
+$\bP^1$ with poles only at $\{0,1,\infty\}$ admits a unique
+expression
+\[
+\omega = A\, d\log t + B\, d\log(1-t)
+\]
+for scalars $A,B \in \bC$.
+Equivalently, the residues at $0$ and $1$ determine the form
+uniquely, and the residue at $\infty$ equals $-A-B$.
+\end{proposition}
+
+\begin{proof}
+Write $\omega = f(t)\,dt$ with $f(t)$ a rational function on~$\bP^1$
+having at most simple poles at $0$, $1$, and $\infty$.
+Thus
+\[
+f(t)=\frac{a}{t}+\frac{b}{t-1}+c
+\]
+for some scalars $a,b,c$.  The condition that $\omega$ have at most a
+simple pole at $\infty$ forces $c=0$: in the coordinate $u=1/t$ one
+has
+\[
+dt = -u^{-2}\,du,\qquad
+\left(\frac{a}{t}+\frac{b}{t-1}+c\right)dt
+= \left(\frac{a}{u^{-1}}+\frac{b}{u^{-1}-1}+c\right)(-u^{-2}\,du),
+\]
+and a nonzero constant term $c$ would contribute a double pole at
+$u=0$.
+Hence
+\[
+\omega = a\,\frac{dt}{t}+b\,\frac{dt}{t-1}
+= a\, d\log t - b\, d\log(1-t).
+\]
+Setting $A=a$ and $B=-b$ gives existence.
+
+For uniqueness, if
+$A\, d\log t + B\, d\log(1-t)=0$, then the residues at
+$t=0$ and $t=1$ are respectively $A$ and $B$, so $A=B=0$.
+The residue at $\infty$ is minus the sum of the finite residues, hence
+$-A-B$.
+\end{proof}
+
+\begin{corollary}[Two-coefficient form of the remaining genus-\texorpdfstring{$0$}{0}
+  compactified packet; \ClaimStatusProvedHere]
+\label{cor:genus0-two-coefficient-packet}
+On the anomaly-free genus-$0$ BRST/bar locus of
+Theorem~\ref{thm:brst-bar-genus0}, after the compactification/Stokes
+upgrade the remaining local MC5 comparison is exactly the vanishing of
+two scalar coefficients.  More precisely, if
+\[
+\delta = \omega_{\mathrm{pert}} - \omega_{\mathrm{bar}}
+\in H^0\!\left(\bP^1,\,
+\Omega^1_{\bP^1}\bigl(\log\{0,1,\infty\}\bigr)\right),
+\]
+then uniquely
+\[
+\delta = A\, d\log t + B\, d\log(1-t),
+\]
+and the remaining genus-$0$ compactified MC5 task is precisely to prove
+$A=B=0$.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:genus0-standard-chart-two-residues} identifies the
+remaining task with equality of the residues at $0$ and $1$ in the
+standard chart.  Proposition~\ref{prop:m04-standard-log-basis}
+identifies those two residues with the coefficients of
+$d\log t$ and $d\log(1-t)$ respectively.
+\end{proof}
+
+\begin{definition}[Standard genus-\texorpdfstring{$0$}{0} coefficient packet]
+\label{def:genus0-mc5-coefficient-packet}
+For
+\[
+\omega \in H^0\!\left(\bP^1,\,
+\Omega^1_{\bP^1}\bigl(\log\{0,1,\infty\}\bigr)\right),
+\]
+write uniquely
+\[
+\omega=\mathsf{a}(\omega)\,d\log t+\mathsf{b}(\omega)\,d\log(1-t)
+\]
+as in Proposition~\ref{prop:m04-standard-log-basis}.  For the
+compactified ternary perturbative and bar forms, write
+\[
+\omega_{\mathrm{pert}}
+= \mathsf{a}_{\mathrm{pert}}\,d\log t
+  + \mathsf{b}_{\mathrm{pert}}\,d\log(1-t),
+\qquad
+\omega_{\mathrm{bar}}
+= \mathsf{a}_{\mathrm{bar}}\,d\log t
+  + \mathsf{b}_{\mathrm{bar}}\,d\log(1-t).
+\]
+Call the pair of equalities
+\[
+\mathsf{a}_{\mathrm{pert}}=\mathsf{a}_{\mathrm{bar}},
+\qquad
+\mathsf{b}_{\mathrm{pert}}=\mathsf{b}_{\mathrm{bar}}
+\]
+the \emph{standard genus-$0$ MC5 coefficient packet}.
+\end{definition}
+
+\begin{corollary}[Named coefficient form of the remaining genus-\texorpdfstring{$0$}{0}
+  compactified packet; \ClaimStatusProvedHere]
+\label{cor:genus0-named-coefficient-packet}
+On the anomaly-free genus-$0$ BRST/bar locus of
+Theorem~\ref{thm:brst-bar-genus0}, after the compactification/Stokes
+upgrade the remaining local MC5 comparison is exactly the standard
+genus-$0$ MC5 coefficient packet of
+Definition~\ref{def:genus0-mc5-coefficient-packet}.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:genus0-two-coefficient-packet} identifies the
+remaining compactified genus-$0$ task with the vanishing of the two
+coefficients of
+\(\delta=\omega_{\mathrm{pert}}-\omega_{\mathrm{bar}}\).
+This is equivalent to the two equalities
+\[
+\mathsf{a}_{\mathrm{pert}}=\mathsf{a}_{\mathrm{bar}},
+\qquad
+\mathsf{b}_{\mathrm{pert}}=\mathsf{b}_{\mathrm{bar}}.
+\]
+\end{proof}
+
 %===================================================================================
 % SECTION: COMPLETE m_k OPERATIONS INTERPRETATION
 %===================================================================================
@@ -552,7 +584,7 @@ independent local coefficient problem left to solve.
 
 \subsection{\texorpdfstring{Physical interpretation of each $m_k$}{Physical interpretation of each m k}}
 
-\begin{definition}[The complete $m_k$ family]
+\begin{definition}[The complete \texorpdfstring{$m_k$}{m_k} family]
 \label{def:mk-family-feynman}
 The $A_\infty$ operations $m_k: \mathcal{A}^{\otimes k} \to \mathcal{A}$ (extending to coderivations on the bar complex $\bar{B}(\mathcal{A})$, where the component induced by $m_k$ maps $\bar{B}^n \to \bar{B}^{n-k+1}$ for $n \geq k$) have the following physical interpretations in quantum field theory:
 
@@ -581,7 +613,7 @@ $m_k$ & $k$-ary operation & $(k-2)$-loop amplitude & $\leq k-2$ \\
 \label{thm:loop-genus-formula}
 For a Feynman diagram $\Gamma$ with $V$ vertices, $E$ internal edges (propagators),
 and $L$ external legs, the \emph{loop number} equals:
-$$\ell(\Gamma) = E - V + 1 = b_1(\Gamma)$$
+\[\ell(\Gamma) = E - V + 1 = b_1(\Gamma)\]
 where $b_1$ is the first Betti number of $\Gamma$ viewed as a 1-complex.
 
 When $\Gamma$ is equipped with a ribbon (fat graph) structure, it determines a surface $\Sigma$
@@ -608,28 +640,28 @@ loop number $\ell(\Gamma)$ (the number of independent cycles in $\Gamma$).
 \emph{Step~2: Ribbon graph genus vs.\ loop number.}
 
 For a ribbon graph $\Gamma$ thickened to a surface $\Sigma$ with $F$ boundary components, cap the boundary to obtain a closed surface $\bar{\Sigma}$ of genus $g$.  The CW structure on $\bar{\Sigma}$ has $V$ vertices, $E$ edges, and $F$ faces (the capping disks), so:
-$$\chi(\bar{\Sigma}) = V - E + F = 2 - 2g$$
+\[\chi(\bar{\Sigma}) = V - E + F = 2 - 2g\]
 Hence $g = 1 - (V - E + F)/2$.  Since $\ell = E - V + 1$, we have $g = (\ell + 1 - F)/2$,
 so $g \leq \ell/2$ with equality when $F = 1$ (single boundary component).
 
 The \emph{loop number} is defined as the number of independent momentum integrations:
-$$\ell = \# \text{ of independent momenta} = E - V + 1$$
+\[\ell = \# \text{ of independent momenta} = E - V + 1\]
 
 \emph{Step~3: Connection to first Betti number.}
 
 The first Betti number counts independent 1-cycles:
-$$b_1(\Gamma) = \dim H_1(\Gamma, \mathbb{Z}) = E - V + C$$
+\[b_1(\Gamma) = \dim H_1(\Gamma, \mathbb{Z}) = E - V + C\]
 where $C$ is the number of connected components.
 
 For a connected Feynman diagram ($C=1$):
-$$b_1 = E - V + 1 = \ell$$
+\[b_1 = E - V + 1 = \ell\]
 
 \emph{Step~4: Configuration space interpretation.}
 
 The operation $m_k$ is defined by integration over the fundamental chain of
 $\overline{M}_{0,k+1}$ (a genus-zero moduli space):
-$$m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \int_{\overline{M}_{0,k+1}}
-\text{Res}[\phi_1(z_1) \cdots \phi_k(z_k) \cdot \omega]$$
+\[m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \int_{\overline{M}_{0,k+1}}
+\text{Res}[\phi_1(z_1) \cdots \phi_k(z_k) \cdot \omega]\]
 
 The boundary $\partial\overline{M}_{0,k+1}$ is stratified by stable \emph{trees}
 (connected graphs with $b_1 = 0$).  Each boundary stratum corresponds to a
@@ -647,14 +679,14 @@ homotopy $h$ corresponds to a propagator insertion in the transfer graph.
 \begin{example}[Binary product = classical OPE]
 \label{ex:m2-tree-level}
 The operation $m_2: \mathcal{A} \otimes \mathcal{A} \to \mathcal{A}$ is:
-$$m_2(\phi_1 \otimes \phi_2) = \text{Res}_{z_1 \to z_2}[\phi_1(z_1)\phi_2(z_2) \cdot 
-\eta_{12}]$$
+\[m_2(\phi_1 \otimes \phi_2) = \text{Res}_{z_1 \to z_2}[\phi_1(z_1)\phi_2(z_2) \cdot 
+\eta_{12}]\]
 
 This corresponds to a 3-point vertex: two particles scatter to produce one.
 
 \emph{Amplitude (chiral):}
-$$\mathcal{A}(\phi_1, \phi_2 \to \phi_3) = g \cdot \int dz_1\, dz_2 \,
-\frac{\phi_1(z_1)\phi_2(z_2)}{(z_1-z_2)^{h_1+h_2-h_3}}$$
+\[\mathcal{A}(\phi_1, \phi_2 \to \phi_3) = g \cdot \int dz_1\, dz_2 \,
+\frac{\phi_1(z_1)\phi_2(z_2)}{(z_1-z_2)^{h_1+h_2-h_3}}\]
 
 where $g$ is the coupling constant and the exponent is determined by conformal weights.  (In a full 2d CFT the amplitude includes both holomorphic and anti-holomorphic sectors with $|z_1-z_2|^{2(\cdots)}$.)
 \end{example}
@@ -662,8 +694,8 @@ where $g$ is the coupling constant and the exponent is determined by conformal w
 \begin{remark}[OPE interpretation]\label{rem:witten-m2}
 In CFT, $m_2$ is the \emph{operator product expansion} (OPE). The residue extracts 
 the singular part as points collide:
-$$\phi_1(z)\phi_2(w) = \sum_k \frac{C_{12}^k}{(z-w)^{h_1+h_2-h_k}} \phi_k(w) + 
-\text{regular}$$
+\[\phi_1(z)\phi_2(w) = \sum_k \frac{C_{12}^k}{(z-w)^{h_1+h_2-h_k}} \phi_k(w) + 
+\text{regular}\]
 
 The coefficient $C_{12}^k$ is the 3-point structure constant, which in path integral 
 language is the tree-level 3-point amplitude.
@@ -674,24 +706,24 @@ language is the tree-level 3-point amplitude.
 \begin{example}[Ternary operation = triangle diagram]
 \label{ex:m3-one-loop}
 The operation $m_3: \mathcal{A}^{\otimes 3} \to \mathcal{A}$ is:
-$$m_3(\phi_1 \otimes \phi_2 \otimes \phi_3) = \int_{\partial\overline{M}_{0,4}} 
-\text{Res}[\phi_1(z_1)\phi_2(z_2)\phi_3(z_3) \cdot \omega_{123}]$$
+\[m_3(\phi_1 \otimes \phi_2 \otimes \phi_3) = \int_{\partial\overline{M}_{0,4}} 
+\text{Res}[\phi_1(z_1)\phi_2(z_2)\phi_3(z_3) \cdot \omega_{123}]\]
 
 Three particles scatter via a one-loop quantum correction
 (triangle diagram in QFT).  The amplitude is:
-$$\mathcal{A}^{(1)}(\phi_1,\phi_2,\phi_3) = \hbar \int dz \int dz_1\, dz_2\, dz_3
-\, G(z,z_1)\,G(z,z_2)\,G(z,z_3) \cdot \phi_1(z_1)\phi_2(z_2)\phi_3(z_3)$$
+\[\mathcal{A}^{(1)}(\phi_1,\phi_2,\phi_3) = \hbar \int dz \int dz_1\, dz_2\, dz_3
+\, G(z,z_1)\,G(z,z_2)\,G(z,z_3) \cdot \phi_1(z_1)\phi_2(z_2)\phi_3(z_3)\]
 
 where $G(z,w) = 1/(z-w)$ is the chiral propagator and we integrate over the loop variable $z$.
 \end{example}
 
-\begin{computation}[Explicit calculation: Virasoro $m_3$]
+\begin{computation}[Explicit calculation: Virasoro \texorpdfstring{$m_3$}{m_3}]
 \label{comp:virasoro-m3}
 For the Virasoro algebra with stress tensor $T(z)$:
 
 \emph{OPE:}
-$$T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}
-+ \text{reg}$$
+\[T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w}
++ \text{reg}\]
 
 \emph{Computing $m_3(T \otimes T \otimes T)$:}
 
@@ -707,12 +739,12 @@ T(z_1)T(z_2)T(z_3) \cdot \eta_{12} \wedge \eta_{23}\bigr] \\
 \end{align*}
 
 \emph{First term:} Collide $z_1 \to z_2$ first.  Setting $u = z_1 - z_2$, the integrand near $D_{12}$ has the form:
-$$T(z_2+u)\,T(z_2)\,T(z_3) \cdot \frac{du}{u} \wedge \eta_{23}$$
+\[T(z_2+u)\,T(z_2)\,T(z_3) \cdot \frac{du}{u} \wedge \eta_{23}\]
 The OPE gives $T(z_2+u)T(z_2) = c/2 \cdot u^{-4} + 2T(z_2) \cdot u^{-2} + \partial T(z_2) \cdot u^{-1} + {:}TT{:}(z_2) + \cdots$
 
 The Poincar\'e residue along $D_{12}$ extracts the $u^0$ coefficient of the OPE.
 Since $\operatorname{Res}_{u=0}[f(u)\,d\log u] = f(0)$, this gives:
-$$\operatorname{Res}_{D_{12}} = {:}TT{:}(z_2) \cdot T(z_3) \cdot \eta_{23}$$
+\[\operatorname{Res}_{D_{12}} = {:}TT{:}(z_2) \cdot T(z_3) \cdot \eta_{23}\]
 (Note: the $c/2 \cdot u^{-4}$ and $2T \cdot u^{-2}$ terms contribute
 higher-order poles in $du/u$, not log poles, and do not survive
 the Poincar\'e residue.)
@@ -720,7 +752,7 @@ the Poincar\'e residue.)
 The subsequent residue along $D_{23}$ then computes the singular part of the ${:}TT{:}(z_2) \cdot T(z_3)$ OPE, whose leading $c$-dependent term gives $\frac{c}{12}\partial^3 T$.
 
 \emph{Summing all three terms:}
-$$m_3(T \otimes T \otimes T) = \frac{c}{12}\,\partial^3 T + \text{(lower-order terms from other channels)}$$
+\[m_3(T \otimes T \otimes T) = \frac{c}{12}\,\partial^3 T + \text{(lower-order terms from other channels)}\]
 
 This is the conformal anomaly: the central charge $c$ is the coefficient of
 the one-loop quantum correction.
@@ -739,13 +771,13 @@ curves of genus~$g$.
 \begin{remark}[Connection to Lie cohomology]
 \label{rem:m3-hochschild}
 The $A_\infty$ operation $m_3$ is a \emph{homotopy} correcting the failure of strict associativity of $m_2$:
-$$m_3 \text{ satisfies } \partial(m_3) = m_2(m_2 \otimes \mathrm{id}) - m_2(\mathrm{id} \otimes m_2)$$
+\[m_3 \text{ satisfies } \partial(m_3) = m_2(m_2 \otimes \mathrm{id}) - m_2(\mathrm{id} \otimes m_2)\]
 This is distinct from, but related to, the Lie algebra $2$-cocycle underlying the central extension.  The connection is via the commutator construction: the Lie bracket $[a,b] = m_2(a,b) - (-1)^{|a||b|}m_2(b,a)$ and its homotopies descend to Lie cohomology classes.  For the Virasoro algebra, the $A_\infty$ homotopy $m_3(T,T,T)$ detects the same class as the Lie $2$-cocycle $c \in H^2_{\mathrm{Lie}}(\mathrm{Witt}, \mathbb{C})$ that classifies the central extension $\mathrm{Vir} \to \mathrm{Witt}$.
 \end{remark}
 
 \subsection{\texorpdfstring{$m_4$ and higher: multi-loop structure}{m 4 and higher: multi-loop structure}}
 
-\begin{example}[$m_4$: two distinct contributions]
+\begin{example}[\texorpdfstring{$m_4$}{m_4}: two distinct contributions]
 \label{ex:m4-two-loop}
 The operation $m_4$ receives contributions from:
 
@@ -761,7 +793,7 @@ The bar complex differential cannot distinguish these without further structure,
 $m_4$ includes both contributions. This is the origin of the $A_\infty$ complexity.
 \end{example}
 
-\begin{computation}[Explicit calculation: Virasoro $m_4$]
+\begin{computation}[Explicit calculation: Virasoro \texorpdfstring{$m_4$}{m_4}]
 \label{comp:virasoro-m4}
 \index{Virasoro algebra!$A_\infty$ operations!$m_4$}
 We compute $m_4(T^{\otimes 4})$ for $\mathrm{Vir}_c$ via
@@ -896,7 +928,7 @@ associahedra governing the higher operations
 general tree-level structure).
 \end{computation}
 
-\begin{theorem}[Tree-level $m_k$ structure; \ClaimStatusProvedHere]
+\begin{theorem}[Tree-level \texorpdfstring{$m_k$}{m_k} structure; \ClaimStatusProvedHere]
 \label{thm:mk-tree-level}
 \index{tree-level!Feynman}
 For $k \geq 2$, the $A_\infty$ operation $m_k$ arising from
@@ -940,7 +972,7 @@ Cauchy kernel---is standard and independent of the conjecture);
 The synthesis is new to this work.
 \end{remark}
 
-\begin{theorem}[All-genus $m_k$ Feynman expansion; \ClaimStatusProvedHere]
+\begin{theorem}[All-genus \texorpdfstring{$m_k$}{m_k} Feynman expansion; \ClaimStatusProvedHere]
 \label{thm:mk-general-structure}
 \index{Feynman transform|textbf}
 Including all-genus quantum corrections, the operation $m_k$ admits
@@ -1035,19 +1067,19 @@ question; see the scope remark there.
 
 \subsection{\texorpdfstring{The $A_\infty$ relations as recursion formula}{The A infty relations as recursion formula}}
 
-\begin{conjecture}[BPHZ recursion = $A_\infty$ consistency; \ClaimStatusHeuristic]
+\begin{conjecture}[BPHZ recursion = \texorpdfstring{$A_\infty$}{A-infinity} consistency; \ClaimStatusHeuristic]
 \label{conj:bphz-recursion}
 The \emph{uncurved} $A_\infty$ relations (with $m_0 = 0$, corresponding to a stable vacuum):
-$$\sum_{\substack{r+s+t=n \\ s \geq 1}} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes
-\mathrm{id}^{\otimes t}) = 0$$
+\[\sum_{\substack{r+s+t=n \\ s \geq 1}} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes
+\mathrm{id}^{\otimes t}) = 0\]
 
 are precisely the Bogoliubov--Parasiuk--Hepp--Zimmermann (BPHZ) recursion relations
 for renormalized Feynman amplitudes.  (In the curved case $m_0 \neq 0$, additional $s = 0$ terms appear corresponding to tadpole insertions; these are absent in the BPHZ framework which assumes a perturbatively stable vacuum.)
 
 \emph{Explicitly:} The $n$-th order amplitude $\mathcal{A}^{(n)}$ satisfies:
-$$\mathcal{A}^{(n)} = -\sum_{\substack{\text{proper subgraphs} \\ \Gamma' \subset \Gamma}} 
+\[\mathcal{A}^{(n)} = -\sum_{\substack{\text{proper subgraphs} \\ \Gamma' \subset \Gamma}} 
 \frac{1}{|\text{Aut}(\Gamma')|} \cdot \mathcal{A}^{(<n)}(\Gamma') \cdot 
-\mathcal{A}_{\text{reduced}}(\Gamma/\Gamma')$$
+\mathcal{A}_{\text{reduced}}(\Gamma/\Gamma')\]
 
 where the sum is over all ways to factor $\Gamma$ into a lower-order subgraph $\Gamma'$ 
 and the reduced graph $\Gamma/\Gamma'$.
@@ -1079,8 +1111,8 @@ intermediate state (factorizable contribution)
 \emph{Step~3: BPHZ interpretation.}
 
 In BPHZ renormalization, we systematically subtract divergences by writing:
-$$\mathcal{A}_{\text{ren}}(\Gamma) = \mathcal{A}_{\text{bare}}(\Gamma) - 
-\sum_{\text{subdivergences}} \mathcal{A}_{\text{counter}}(\Gamma')$$
+\[\mathcal{A}_{\text{ren}}(\Gamma) = \mathcal{A}_{\text{bare}}(\Gamma) - 
+\sum_{\text{subdivergences}} \mathcal{A}_{\text{counter}}(\Gamma')\]
 
 The $A_\infty$ relation tells us that the net contribution vanishes on-shell (i.e., 
 after applying $m_1$), which is precisely the BPHZ consistency condition.
@@ -1101,34 +1133,29 @@ The signs $(-1)^{rs+t}$ in the $A_\infty$ relation account for fermion loops (fe
 All these match precisely with the signs in BPHZ renormalization.
 \end{evidence}
 
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture asserts that the $A_\infty$ relations on the bar complex are quasi-isomorphic to the BPHZ recursion relations for renormalized amplitudes, identifying the homotopy-algebraic consistency conditions with the perturbative renormalization group structure.
-\end{remark}
-
 \begin{example}[One-loop BPHZ formula]
 \label{ex:bphz-one-loop}
 For a one-loop diagram $\Gamma$ with 3 external legs:
 
 \emph{Bare amplitude:}
-$$\mathcal{A}_{\text{bare}}(\Gamma) = \int d^4k \,
-\frac{1}{k^2(k-p_1)^2(k-p_1-p_2)^2}$$
+\[\mathcal{A}_{\text{bare}}(\Gamma) = \int d^4k \,
+\frac{1}{k^2(k-p_1)^2(k-p_1-p_2)^2}\]
 
 This diverges as $k \to \infty$ (UV divergence).
 
 \emph{BPHZ subtraction:}
-$$\mathcal{A}_{\text{ren}}(\Gamma) = \mathcal{A}_{\text{bare}}(\Gamma) - 
-\mathcal{A}_{\text{tree}}|_{\text{evaluated at loop momentum}}$$
+\[\mathcal{A}_{\text{ren}}(\Gamma) = \mathcal{A}_{\text{bare}}(\Gamma) - 
+\mathcal{A}_{\text{tree}}|_{\text{evaluated at loop momentum}}\]
 
 The tree-level contribution is:
-$$\mathcal{A}_{\text{tree}} = m_2(m_2(\phi_1 \otimes \phi_2) \otimes \phi_3)$$
+\[\mathcal{A}_{\text{tree}} = m_2(m_2(\phi_1 \otimes \phi_2) \otimes \phi_3)\]
 
 The $A_\infty$ relation:
-$$m_1(m_3(\phi_1 \otimes \phi_2 \otimes \phi_3)) + m_2(m_2(\phi_1 \otimes \phi_2) 
-\otimes \phi_3) + \cdots = 0$$
+\[m_1(m_3(\phi_1 \otimes \phi_2 \otimes \phi_3)) + m_2(m_2(\phi_1 \otimes \phi_2) 
+\otimes \phi_3) + \cdots = 0\]
 
 tells us:
-$$m_3(\phi_1 \otimes \phi_2 \otimes \phi_3) = -h\bigl(m_2(m_2(\cdots))\bigr) + \cdots$$
+\[m_3(\phi_1 \otimes \phi_2 \otimes \phi_3) = -h\bigl(m_2(m_2(\cdots))\bigr) + \cdots\]
 where $h$ is the homotopy (propagator) from a deformation retract $h m_1 + m_1 h = \mathrm{id} - \iota\pi$.
 
 This is exactly the BPHZ recursion: the renormalized one-loop amplitude equals the
@@ -1142,45 +1169,32 @@ bare amplitude minus the tree-level counterterm, with $h$ playing the role of th
 \begin{conjecture}[Bar complex and worldline integrals; \ClaimStatusHeuristic]
 \label{conj:bar-worldline}
 The bar complex element:
-$$\omega = \phi_1(z_1) \otimes \cdots \otimes \phi_k(z_k) \otimes \bigwedge_{i<j}
-\eta_{ij}$$
+\[\omega = \phi_1(z_1) \otimes \cdots \otimes \phi_k(z_k) \otimes \bigwedge_{i<j}
+\eta_{ij}\]
 
 is analogous to the integrand of the worldline Feynman amplitude before integration.
 
 The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ encode the propagator 
 singularities:
-$$\eta_{ij} \sim \frac{d(z_i - z_j)}{z_i - z_j} \sim G(z_i,z_j)^{-1} dG$$
+\[\eta_{ij} \sim \frac{d(z_i - z_j)}{z_i - z_j} \sim G(z_i,z_j)^{-1} dG\]
 \end{conjecture}
 
 \begin{evidence}
 Compare the bar complex integral:
-$$m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \int_{\overline{C}_k(X)} 
-\phi_1(z_1) \cdots \phi_k(z_k) \cdot \eta_{12} \wedge \cdots \wedge \eta_{k-1,k}$$
+\[m_k(\phi_1 \otimes \cdots \otimes \phi_k) = \int_{\overline{C}_k(X)} 
+\phi_1(z_1) \cdots \phi_k(z_k) \cdot \eta_{12} \wedge \cdots \wedge \eta_{k-1,k}\]
 
 with the worldline amplitude:
-$$\mathcal{A}(\phi_1,\ldots,\phi_k) = \int_{C_k(X)} \phi_1(z_1) \cdots \phi_k(z_k) 
-\cdot \prod_{i<j} G(z_i,z_j) \, dz_1 \cdots dz_k$$
+\[\mathcal{A}(\phi_1,\ldots,\phi_k) = \int_{C_k(X)} \phi_1(z_1) \cdots \phi_k(z_k) 
+\cdot \prod_{i<j} G(z_i,z_j) \, dz_1 \cdots dz_k\]
 
 The connection is:
-$$\eta_{ij} = d\log(z_i-z_j) = \frac{dG}{G} \quad \text{(up to normalization)}$$
+\[\eta_{ij} = d\log(z_i-z_j) = \frac{dG}{G} \quad \text{(up to normalization)}\]
 
 The compactification $\overline{C}_k(X)$ provides the IR regularization (large
 distance cutoff), while the logarithmic singularities encode the UV behavior
 (short distance).
 \end{evidence}
-
-\begin{remark}[Scope]
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats bar complex elements as conjectural algebraic
-shadow data for worldline Feynman amplitude integrands, asserting that
-logarithmic forms on the FM compactification should provide a rigorous
-realization of worldline propagators.
-\end{remark}
-
-\begin{remark}[Formality perspective]
-\label{rem:kontsevich-worldline}
-Kontsevich's deformation quantization formula $f \star g = \sum_{\Gamma} |\mathrm{Aut}(\Gamma)|^{-1} \int_{C_n(\mathbb{H})} B_\Gamma(f,g) \cdot \omega_\Gamma$ is structurally identical to the bar-cobar construction, with the Poisson manifold replaced by a chiral algebra, $\mathbb{H}$ by the curve $X$, and angle forms $d\varphi$ by logarithmic forms $\eta$ (Remark~\ref{rem:kontsevich-graphs}).
-\end{remark}
 
 %===================================================================================
 % SECTION: PHYSICAL SUMMARY AND STRUCTURAL PATTERNS
