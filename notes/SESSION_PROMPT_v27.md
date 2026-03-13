@@ -108,16 +108,18 @@ W_N), `concordance.tex` (MC4 W_∞ entries), `w_algebras_deep.tex`.
    objects (and Zhang's category O does), then fd evaluations CANNOT
    thickly generate all of D^b(O_Y).
 
-9. **Corrected MC3 target**: Move to either (a) a completed/coderived
-   enhancement where evaluation modules generate via localization, or
-   (b) enlarge generators to include asymptotic/prefundamental modules
-   in the anti-dominant shifted envelope O^sh_{≤0}.
+9. **Corrected MC3 target**: Separate the proved theorematic core from
+   the outer enlargement. DK-2/3 are already proved on the
+   evaluation-generated core. The remaining MC3 question is the
+   enlargement beyond that core: first the ordinary-derived domain
+   question (`\mathcal O = \mathcal O_{\mathrm{poly}}?` on the natural
+   type-`A` locus), then the completed/coderived extension needed for
+   prefundamental and asymptotic modules.
 
-10. **Four replacement conjectures**: (A) Baxter exact triangles in
-    shifted O, (B) asymptotic generation D^b(O_Y) = thick⟨O_Y^fd,
-    L(Ψ_{i,y}/Ψ_{i,x})⟩, (C) shifted prefundamental envelope with
-    compact generators = thick{fund evals ∪ L⁻_{i,a}}, (D) pro-Weyl
-    recovery M(Ψ) ≃ Rlim_m W_m.
+10. **Four conjectural packages for the completed/coderived
+    enlargement**: (A) Baxter exact triangles in shifted `\mathcal O`,
+    (B) shifted-prefundamental generation, (C) pro-Weyl recovery, and
+    (D) DK on compacts extended by completion.
 
 11. **KR-limit lifting lemma**: The injective KR system W_{k,0}(i) with
     maps F_{k,l} should lift functorially to the H-level RTT-complete

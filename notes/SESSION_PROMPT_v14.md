@@ -29,9 +29,16 @@ Convention `conv:higher-genus-differentials` in `higher_genus.tex:64-100` correc
 
 ### Disease 2: Proved/programmatic boundary blur
 
-The book has two strata that read as one:
-- **Stratum I** (proved): Theorems A-D on the Koszul locus, scalar modular characteristic package (κ, {F_g}, Δ_A), Lagrangian complementarity, evaluation-locus DK, free-field and conditional interacting examples.
-- **Stratum II** (programmatic): Full Θ_A as non-scalar MC class, coderived Ran-space formalism, full factorization-categorical DK, infinite-generator duals (Vir↔W_∞), BV/BRST/path-integral dictionary beyond genus 0, E_n higher-dimensional extension.
+The book has two strata that can still read as one if the boundary is
+not made explicit:
+- **Stratum I** (proved): Theorems A-D on the Koszul locus, the resolved
+  universal Maurer--Cartan package `\Theta_A`, Lagrangian complementarity,
+  and the DK ladder through DK-2/3 on the evaluation-generated core.
+- **Stratum II** (programmatic): coderived Ran-space formalism, the
+  DK/KL extension beyond the evaluation-generated core
+  (ordinary-derived/completed/coderived enlargement), filtered H-level
+  `W_\infty` / Yangian targets, the higher-genus BV/BRST = bar package,
+  and `E_n` higher-dimensional extension.
 
 The introduction (lines 140-163) already distinguishes these correctly. But:
 - Master tables in `examples_summary.tex` mix proved and conjectural dualities in the same rows

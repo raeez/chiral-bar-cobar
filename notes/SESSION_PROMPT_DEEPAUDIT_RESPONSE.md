@@ -196,14 +196,15 @@ Every hypothesis must be independently verified against source.
 
 ### Finding 4 (TIER 2): KL wrong target category
 - **Attack**: "Target should be semisimplified tilting, not full Rep(U_q)."
-- **Intel**: Manuscript uses "Rep^{fd}(U_q(g))" and flags the tensor-
-  categorical intertwining as conjectured, not proved.
-- **Critical question**: Does "Rep^{fd}" at a root of unity STILL include
-  non-semisimple modules? At roots of unity, even finite-dimensional reps
-  form a non-semisimple category. The correct target may need "tilting" or
-  "semisimplified" qualification.
-- **Likely verdict**: SCOPE (the main claim is properly attributed to KL93;
-  the bar-cobar enhancement is properly marked Conjectured).
+- **Intel**: Current control doctrine fixes the printed KL target as the
+  semisimplified tilting quotient `\mathcal C(U_q(\mathfrak g))`; the
+  bar-cobar enhancement to that target is conjectural, and any lift to
+  the full finite-dimensional non-semisimple category is a further outer
+  frontier.
+- **Critical question**: Not whether the target needs qualification, but
+  whether the note surface cleanly separates the semisimplified printed
+  target from the additional non-semisimple/completed-coderived lift.
+- **Likely verdict**: SCOPE once that separation is stated explicitly.
 
 ### Finding 5 (TIER 2): Modular periodicity — T^N=Id ≠ coefficient periodicity
 - **Attack**: "Finite order of T gives phase, not coefficient periodicity."
@@ -357,7 +358,7 @@ polynomial.
 | 7 | 12λ = κ₁ + δ (NOT 12λ = δ) | Mumford; F6 tests this |
 | 8 | Period\|N₁ ∧ Period\|N₂ ⟹ Period\|gcd | Elementary; F7 tests this |
 | 9 | T^N=Id ≠ coefficient periodicity | Analysis; F5 tests this |
-| 10 | Rep^{fd}(U_q) at root of unity ≠ fusion | Representation theory; F4 |
+| 10 | Semisimplified KL target must be separated from the outer non-semisimple lift | Representation theory; F4 |
 
 ---
 

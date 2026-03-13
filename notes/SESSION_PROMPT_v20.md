@@ -181,19 +181,23 @@ physics (Polyakov/Dirac) — as specified in CLAUDE.md.
 constitution. Every earlier chapter is subordinate. When they disagree,
 the earlier chapter is wrong.
 
-**Two-stratum architecture** (from raeeznotes 10, verified through 16):
-- **Stratum I** (SOLID): Theorems A/B/C, D_scal, D_Δ, chain-level DK,
-  free-field unconditional, KM/Vir/W_N conditional→unconditional (MC1 resolved)
-- **Stratum II** (PROGRAMME): Full Θ_A, coderived Ran, factorization DK,
-  filtered H-level `W_\infty` / Yangian targets with exact coefficient
-  identities and finite detection, BV/BRST all genera
+**Two-stratum architecture** (current control doctrine):
+- **Stratum I** (SOLID): Theorems A/B/C, `D_scal`, `D_\Delta`, chain-level DK,
+  the resolved `\Theta_A` package (MC2), and DK-2/3 on the
+  evaluation-generated core; MC1 is resolved for KM/Vir/principal `W_N`
+- **Stratum II** (PROGRAMME): coderived Ran, DK/KL beyond the
+  evaluation-generated core, filtered H-level `W_\infty` / Yangian
+  targets with exact coefficient identities and finite-detection
+  packets, BV/BRST beyond genus `0`
 
-**Current frontier** (from raeeznotes 16):
+**Current frontier** (current control doctrine):
 "The book has become strong enough that the main question is no longer
-'are the examples persuasive?' but 'does the package C_A actually
-come from a native object?'"
+'does the scalar/spectral package come from a native object?' but
+'how far beyond the theorematic DK core can the native factorization
+package be extended?'"
 
-That native object is Θ_A. Building it is the MC2 programme.
+That frontier begins at MC3: the ordinary-derived versus
+completed/coderived enlargement beyond the evaluation-generated core.
 
 ---
 

@@ -177,11 +177,13 @@ physics (Polyakov/Dirac) — as specified in CLAUDE.md.
 constitution. Every earlier chapter is subordinate. When they disagree,
 the earlier chapter is wrong.
 
-**Two-stratum architecture** (raeeznotes 10, verified through 20):
-- **Stratum I** (SOLID): Theorems A/B/C, D_scal, D_Δ, chain-level DK,
-  free-field unconditional, KM/Vir/W_N unconditional (MC1 resolved)
-- **Stratum II** (PROGRAMME): Full Θ_A, coderived Ran, factorization DK,
-  filtered H-level W_∞/Yangian targets, BV/BRST all genera
+**Two-stratum architecture** (current control doctrine):
+- **Stratum I** (SOLID): Theorems A/B/C, `D_scal`, `D_\Delta`,
+  chain-level DK, the resolved `\Theta_A` package (MC2), and DK-2/3 on
+  the evaluation-generated core; MC1 is resolved for KM/Vir/principal `W_N`
+- **Stratum II** (PROGRAMME): coderived Ran, factorization DK/KL beyond
+  the evaluation-generated core, filtered H-level `W_\infty` / Yangian
+  targets, and BV/BRST beyond genus `0`
 
 **Double-frame entry** (raeeznotes 19):
 - **Frame A**: Heisenberg — commutative/modular atom. Shows why genus
