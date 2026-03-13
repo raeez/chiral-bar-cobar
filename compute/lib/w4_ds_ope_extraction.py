@@ -1,17 +1,18 @@
-"""W_4 principal DS OPE coefficient extraction for MC4.
+"""W_4 principal DS OPE extraction for the standard MC4 stage-4 packet.
 
-Extracts the 4 free coefficients and verifies 2 predictions from
-rem:mc4-winfty-computation-target in concordance.tex.
+Extracts the four higher-spin principal targets and records the two
+theorematic Virasoro-target identities inside the exact six-entry
+stage-4 packet from rem:mc4-winfty-computation-target in concordance.tex.
 
 TARGET COEFFICIENTS (from prop:winfty-mc4-frontier-package):
-  FREE (to extract as rational functions of c):
+  HIGHER-SPIN TARGETS (to extract as rational functions of c):
     c_334 = C^DS_{3,3;4;0,2}(4)   W^3 x W^3 -> W^4 coupling
     c_444 = C^DS_{4,4;4;0,4}(4)   W^4 x W^4 -> W^4 self-coupling
     C_{3,4;3;0,4}                  W^3 x W^4 -> W^3 at pole 4
     C_{3,4;4;0,3}                  W^3 x W^4 -> W^4 at pole 3
-  PREDICTIONS (to verify):
-    C^res_{4,4;2;0,6} = 2         universal T-coupling
-    C^res_{3,4;2;0,5} = 0         mixed Virasoro vanishing
+  VIRASORO-TARGET IDENTITIES (fixed exactly on the DS side):
+    C_{4,4;2;0,6} = 2            universal T-coupling
+    C_{3,4;2;0,5} = 0            mixed Virasoro vanishing
 
 MATHEMATICAL METHOD:
 The W_4 = W(sl_4, f_prin) algebra has generators T (spin 2), W^3 (spin 3),
@@ -36,7 +37,7 @@ RESULTS:
 References:
   - concordance.tex: rem:mc4-winfty-computation-target
   - bar_cobar_construction.tex: cor:winfty-ds-stage4-ope-blocks
-  - w4_stage4_coefficients.py: structural scaffold (seed sets, predictions)
+  - w4_stage4_coefficients.py: structural scaffold (seed sets, exact packet)
   - Hornfeck, Nucl. Phys. B 407 (1993) 57
   - Blumenhagen et al., Nucl. Phys. B 461 (1996) 460
   - Bouwknegt-Schoutens, Phys. Rep. 223 (1993) 183
@@ -245,11 +246,11 @@ def c344_formula(c=None):
 
 
 # ---------------------------------------------------------------------------
-# Falsifiable predictions
+# Distinguished Virasoro-target identities
 # ---------------------------------------------------------------------------
 
-def verify_prediction_c442(c=None):
-    r"""Verify C^res_{4,4;2;0,6} = 2: universal T-coupling in W^4 x W^4.
+def verify_virasoro_target_identity_c442(c=None):
+    r"""Verify C_{4,4;2;0,6} = 2: universal T-coupling in W^4 x W^4.
 
     For any primary W^s, the T-channel coefficient at the leading T pole
     in W^s(z) W^s(w) is universally 2 (from the conformal Ward identity).
@@ -258,19 +259,21 @@ def verify_prediction_c442(c=None):
     (T_{(1)}W^s = s W^s), and the coefficient at pole 2s-2 is fixed to 2.
 
     Known values: C_{2,2;2;0,2}=2 (Virasoro), C_{3,3;2;0,4}=2 (W_3).
-    Prediction: C_{4,4;2;0,6}=2 (W_4).
+    Theorematic continuation: C_{4,4;2;0,6}=2 (W_4).
     """
     return {
-        "coefficient": "C^res_{4,4;2;0,6}",
-        "predicted_value": 2,
+        "coefficient": "C_{4,4;2;0,6}",
+        "theorematic_value": 2,
+        "verified_value": 2,
+        "predicted_value": 2,  # Legacy alias for older callers.
         "mechanism": "Universal T-coupling: conformal Ward identity",
         "verification": "Follows from T_{(1)}W^s = s*W^s for all primaries",
         "status": "VERIFIED",
     }
 
 
-def verify_prediction_c342(c=None):
-    r"""Verify C^res_{3,4;2;0,5} = 0: mixed Virasoro vanishing.
+def verify_virasoro_target_identity_c342(c=None):
+    r"""Verify C_{3,4;2;0,5} = 0: mixed Virasoro vanishing.
 
     The T coefficient at the leading T pole in the W^3 x W^4 OPE vanishes.
 
@@ -280,26 +283,43 @@ def verify_prediction_c342(c=None):
     C_{T,W^3,W^4} = 0, which implies C_{3,4;2;0,5} = 0.
     """
     return {
-        "coefficient": "C^res_{3,4;2;0,5}",
-        "predicted_value": 0,
+        "coefficient": "C_{3,4;2;0,5}",
+        "theorematic_value": 0,
+        "verified_value": 0,
+        "predicted_value": 0,  # Legacy alias for older callers.
         "mechanism": "Mixed Virasoro vanishing: <T W^3 W^4> = 0",
         "verification": "<W^3, W^4> = 0 (orthogonality of different-weight primaries)",
         "status": "VERIFIED",
     }
 
 
-def verify_falsifiable_predictions(c=None):
-    r"""Verify both falsifiable predictions from rem:mc4-winfty-computation-target.
+def verify_stage4_virasoro_target_identities(c=None):
+    r"""Verify the two distinguished stage-4 Virasoro-target identities.
 
-    1. C^res_{4,4;2;0,6} = 2  (universal T-coupling)
-    2. C^res_{3,4;2;0,5} = 0  (mixed Virasoro vanishing)
+    1. C_{4,4;2;0,6} = 2  (universal T-coupling)
+    2. C_{3,4;2;0,5} = 0  (mixed Virasoro vanishing)
 
     Both follow rigorously from conformal/Virasoro symmetry.
     """
     return {
-        "C^res_{4,4;2;0,6}": verify_prediction_c442(c),
-        "C^res_{3,4;2;0,5}": verify_prediction_c342(c),
+        "C_{4,4;2;0,6}": verify_virasoro_target_identity_c442(c),
+        "C_{3,4;2;0,5}": verify_virasoro_target_identity_c342(c),
     }
+
+
+def verify_prediction_c442(c=None):
+    """Backward-compatible wrapper for the C_{4,4;2;0,6} identity."""
+    return verify_virasoro_target_identity_c442(c)
+
+
+def verify_prediction_c342(c=None):
+    """Backward-compatible wrapper for the C_{3,4;2;0,5} identity."""
+    return verify_virasoro_target_identity_c342(c)
+
+
+def verify_falsifiable_predictions(c=None):
+    """Backward-compatible wrapper for the two Virasoro-target identities."""
+    return verify_stage4_virasoro_target_identities(c)
 
 
 # ---------------------------------------------------------------------------
@@ -316,9 +336,10 @@ def w4_full_ope_coefficients(c=None):
       C_{3,3;2;0,4} = 2.
 
     Stage 4 (new in W_4, extracted here):
-      c_334^2, c_444^2, C_{3,4;3;0,4}^2, C_{3,4;4;0,3}^2  (squared, rational in c)
-      C_{4,4;2;0,6} = 2  (universal prediction)
-      C_{3,4;2;0,5} = 0  (vanishing prediction)
+      c_334^2, c_444^2, C_{3,4;3;0,4}^2, C_{3,4;4;0,3}^2
+      (the four higher-spin principal targets, squared and rational in c)
+      C_{4,4;2;0,6} = 2, C_{3,4;2;0,5} = 0
+      (the two theorematic Virasoro-target identities)
     """
     if c is None:
         c = Symbol('c')
@@ -515,9 +536,10 @@ def classical_limit():
 # ---------------------------------------------------------------------------
 
 def extraction_report(k=None):
-    r"""Full extraction report for the MC4 W_4 stage-4 coefficients.
+    r"""Full extraction report for the MC4 W_4 stage-4 packet.
 
-    Extracts all 4 free coefficients and verifies both predictions.
+    Extracts the four higher-spin principal targets and verifies the two
+    Virasoro-target identities.
     """
     if k is None:
         k = Symbol('k')
@@ -535,7 +557,8 @@ def extraction_report(k=None):
         "C_{3,4;4;0,3}_squared": simplify(c344_formula(c)),
         "C_{4,4;2;0,6}": 2,
         "C_{3,4;2;0,5}": 0,
-        "predictions_verified": True,
+        "virasoro_target_identities_verified": True,
+        "predictions_verified": True,  # Legacy alias for older callers.
     }
 
 
@@ -560,9 +583,9 @@ if __name__ == "__main__":
     for desc, (c_val, val) in c334_squared_at_special_values().items():
         print(f"  {desc}: c_334^2 = {val}")
 
-    print("\nFalsifiable predictions:")
-    for name, result in verify_falsifiable_predictions().items():
-        print(f"  {name} = {result['predicted_value']} ({result['status']})")
+    print("\nStage-4 Virasoro-target identities:")
+    for name, result in verify_stage4_virasoro_target_identities().items():
+        print(f"  {name} = {result['theorematic_value']} ({result['status']})")
 
     for k_val in [1, 2, 5, 10]:
         c_val = w4_central_charge(k_val)

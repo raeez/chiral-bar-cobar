@@ -1,4 +1,4 @@
-"""Tests for MC4 W_4 stage-4 coefficient extraction.
+"""Tests for the MC4 W_4 stage-4 exact packet scaffold.
 
 Verifies:
   - W_4 central charge and complementarity
@@ -7,7 +7,7 @@ Verifies:
   - Stage-4 residual packet decomposition J_4
   - OPE weight bounds
   - Curvature channels and kappa
-  - Falsifiable predictions
+  - Distinct Virasoro-target identities inside the exact stage-4 packet
 """
 
 import pytest
@@ -22,12 +22,25 @@ from compute.lib.w4_stage4_coefficients import (
     virasoro_subset,
     w3_subset,
     residual_packet,
+    incremental_virasoro_new_packet,
+    incremental_interacting_packet,
+    incremental_top_pole_packet,
+    incremental_reduced_packet,
+    incremental_reduced_block_decomposition,
+    incremental_higher_spin_channels,
+    incremental_virasoro_target_channels,
+    incremental_virasoro_target_identities,
+    analyze_incremental_packet,
     stage3_ds_coefficients,
     stage3_nonzero_count,
     stage3_vanishing_count,
     stage4_residual_decomposition,
+    stage4_exact_identity_packet,
     stage4_live_targets,
-    stage4_falsifiable_predictions,
+    stage4_residual_higher_spin_channels,
+    stage4_virasoro_target_channels,
+    stage4_virasoro_target_identities,
+    stage4_virasoro_target_identity_data,
     ope_max_pole_order,
     ope_target_weight,
     primary_target_at_pole,
@@ -121,6 +134,14 @@ class TestSeedSets:
         assert len(vir & w3) == 0
         assert len(vir & J4) == 0
         assert len(w3 & J4) == 0
+
+    def test_incremental_virasoro_new_packet_stage4(self):
+        """The new stage-4 Virasoro block has 10 entries."""
+        assert len(incremental_virasoro_new_packet(4)) == 10
+
+    def test_incremental_interacting_packet_stage4_matches_J4(self):
+        """The generic stage-growth packet matches J_4 at stage 4."""
+        assert incremental_interacting_packet(4) == residual_packet(4)
 
     def test_seed_admissibility(self):
         """Every (s,t,u,n) in I_4 satisfies the admissibility conditions."""
@@ -285,18 +306,18 @@ class TestStressTensorOPE:
         assert ope[("T", "W4")][2]["W4"] == 4
 
 
-# ===== Falsifiable predictions =====
+# ===== Distinguished Virasoro-target channels =====
 
 class TestPredictions:
-    def test_two_predictions(self):
-        """Exactly two falsifiable predictions."""
-        preds = stage4_falsifiable_predictions()
+    def test_two_distinguished_channels(self):
+        """Exactly two distinguished Virasoro-target channels."""
+        preds = stage4_virasoro_target_identity_data()
         assert len(preds) == 2
 
-    def test_prediction_values(self):
-        """One prediction = 2, one = 0."""
-        preds = stage4_falsifiable_predictions()
-        values = sorted(p["predicted_value"] for p in preds.values())
+    def test_distinguished_values(self):
+        """Their theorematic values are 2 and 0."""
+        preds = stage4_virasoro_target_identity_data()
+        values = sorted(p["theorematic_value"] for p in preds.values())
         assert values == [0, 2]
 
     def test_universal_t_coupling(self):
@@ -306,12 +327,16 @@ class TestPredictions:
         assert pattern["s=3_equals_2"]
 
 
-# ===== Live targets =====
+# ===== Exact stage-4 packet =====
 
 class TestLiveTargets:
-    def test_six_targets(self):
-        """Six live target coefficients."""
+    def test_six_packet_labels(self):
+        """The exact stage-4 packet has six labels."""
         assert len(stage4_live_targets()) == 6
+
+    def test_exact_packet_channels(self):
+        """The exact stage-4 packet on I_4 has six channels."""
+        assert len(stage4_exact_identity_packet()) == 6
 
     def test_full_analysis(self):
         """Full analysis matches manuscript."""
@@ -320,6 +345,9 @@ class TestLiveTargets:
         assert analysis["tail_33_size"] == 2
         assert analysis["J4_34_size"] == 12
         assert analysis["J4_44_size"] == 15
+        assert len(analysis["exact_identity_packet"]) == 6
+        assert len(analysis["higher_spin_channels"]) == 4
+        assert len(analysis["virasoro_target_channels"]) == 2
 
 
 # ===== W_3 x W_3 OPE in W_4 =====
@@ -367,6 +395,10 @@ class TestTopPolePacket:
         """Primaryity eliminates 29 - 7 = 22 sub-leading entries."""
         assert len(residual_packet(4)) - len(top_pole_packet()) == 22
 
+    def test_generic_stage4_top_packet_matches_specific(self):
+        """The generic stage-growth top packet matches J_4^top."""
+        assert incremental_top_pole_packet(4) == top_pole_packet()
+
 
 class TestParityCompressedPacket:
     def test_size(self):
@@ -394,6 +426,10 @@ class TestParityCompressedPacket:
         s, t, u, n = removed
         assert s == t  # self-OPE
         assert u % 2 == 1  # odd target spin
+
+    def test_generic_stage4_reduced_packet_matches_specific(self):
+        """The generic stage-growth reduced packet matches J_4^par."""
+        assert incremental_reduced_packet(4) == parity_compressed_packet()
 
 
 class TestOPEBlockDecomposition:
@@ -449,37 +485,48 @@ class TestMixedSelfSplit:
 
 
 class TestFrontierPackage:
-    def test_four_free(self):
-        """Four free coefficients (cor:winfty-ds-stage4-five-plus-zero)."""
+    def test_four_higher_spin_channels(self):
+        """Four residual higher-spin channels remain inside the six-entry packet."""
         front = frontier_package()
-        assert front["n_free"] == 4
+        assert front["n_higher_spin"] == 4
 
-    def test_two_checks(self):
-        """Two residue-side checks."""
+    def test_two_virasoro_target_channels(self):
+        """Two theorematic Virasoro-target channels complement the packet."""
         front = frontier_package()
-        assert front["n_checks"] == 2
+        assert front["n_virasoro_target"] == 2
 
-    def test_free_coefficients(self):
-        """Free: c_334, c_444, C_{3,4;3;0,4}, C_{3,4;4;0,3}."""
+    def test_higher_spin_channels(self):
+        """Higher-spin channels are the four residual non-Virasoro entries."""
         expected = [(3, 3, 4, 2), (3, 4, 3, 4), (3, 4, 4, 3), (4, 4, 4, 4)]
         front = frontier_package()
-        assert sorted(front["free_coefficients"]) == sorted(expected)
+        assert sorted(front["higher_spin_channels"]) == sorted(expected)
+        assert sorted(stage4_residual_higher_spin_channels()) == sorted(expected)
 
-    def test_check_values(self):
-        """Checks: c_442 = 2 (T-coupling), c_342 = 0 (mixed vanishing)."""
+    def test_virasoro_target_values(self):
+        """Virasoro-target identities are c_442 = 2 and c_342 = 0."""
         front = frontier_package()
-        assert front["check_values"][(4, 4, 2, 6)] == 2
-        assert front["check_values"][(3, 4, 2, 5)] == 0
+        assert front["virasoro_target_values"][(4, 4, 2, 6)] == 2
+        assert front["virasoro_target_values"][(3, 4, 2, 5)] == 0
+        assert stage4_virasoro_target_identities()[(4, 4, 2, 6)] == 2
+        assert stage4_virasoro_target_identities()[(3, 4, 2, 5)] == 0
 
     def test_total_equals_six(self):
-        """4 free + 2 checks = 6 = |J_4^par|."""
+        """4 higher-spin channels + 2 Virasoro-target channels = 6."""
         front = frontier_package()
-        assert front["n_free"] + front["n_checks"] == len(parity_compressed_packet())
+        assert front["n_packet"] == len(parity_compressed_packet())
+        assert front["n_higher_spin"] + front["n_virasoro_target"] == len(parity_compressed_packet())
+
+    def test_virasoro_target_channels(self):
+        """The Virasoro-target channels are exactly the two distinguished entries."""
+        expected = [(3, 4, 2, 5), (4, 4, 2, 6)]
+        front = frontier_package()
+        assert sorted(front["virasoro_target_channels"]) == sorted(expected)
+        assert sorted(stage4_virasoro_target_channels()) == sorted(expected)
 
 
 class TestFullReductionChain:
     def test_chain_valid(self):
-        """Full chain 29 -> 7 -> 6 -> 4+2 is valid."""
+        """Full chain 29 -> 7 -> 6 = 4 + 2 is valid."""
         result = verify_full_reduction_chain()
         assert result["chain_valid"]
 
@@ -489,13 +536,14 @@ class TestFullReductionChain:
         assert result["J4_size"] == 29
         assert result["J4_top_size"] == 7
         assert result["J4_par_size"] == 6
-        assert result["n_free"] == 4
-        assert result["n_checks"] == 2
+        assert result["n_packet"] == 6
+        assert result["n_higher_spin"] == 4
+        assert result["n_virasoro_target"] == 2
         assert result["J4_top_matches"]
         assert result["J4_par_matches"]
-        assert result["free_matches"]
-        assert result["checks_match"]
-        assert result["check_values_correct"]
+        assert result["higher_spin_matches"]
+        assert result["virasoro_target_matches"]
+        assert result["virasoro_target_values_correct"]
 
     def test_primaryity_count(self):
         """Primaryity eliminates 22 of 29 entries."""
@@ -520,3 +568,51 @@ class TestFullReductionChain:
         result = verify_full_reduction_chain()
         assert result["self_coupling_size"] == 3
         assert result["mixed_size"] == 3
+
+
+# ===== First nontrivial next reduced packet: stage 5 =====
+
+class TestStage5IncrementalPacket:
+    def test_stage5_counts(self):
+        """J_5, J_5^top, J_5^red have sizes 72, 15, 11."""
+        analysis = analyze_incremental_packet(5)
+        assert analysis["J_size"] == 72
+        assert analysis["top_size"] == 15
+        assert analysis["red_size"] == 11
+
+    def test_stage5_reduced_packet_exact(self):
+        """J_5^red matches the first nontrivial next reduced packet."""
+        expected = [
+            (3, 4, 5, 2),
+            (3, 5, 2, 6), (3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3),
+            (4, 5, 2, 7), (4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4),
+            (5, 5, 2, 8), (5, 5, 4, 6),
+        ]
+        assert incremental_reduced_packet(5) == expected
+
+    def test_stage5_block_decomposition(self):
+        """J_5^red decomposes into one tail, two mixed blocks, and one self block."""
+        blocks = incremental_reduced_block_decomposition(5)
+        assert blocks[(3, 4)] == [(3, 4, 5, 2)]
+        assert blocks[(3, 5)] == [
+            (3, 5, 2, 6), (3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3),
+        ]
+        assert blocks[(4, 5)] == [
+            (4, 5, 2, 7), (4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4),
+        ]
+        assert blocks[(5, 5)] == [(5, 5, 2, 8), (5, 5, 4, 6)]
+
+    def test_stage5_higher_spin_vs_virasoro_split(self):
+        """J_5^red splits as 8 higher-spin channels plus 3 Virasoro-target channels."""
+        higher = incremental_higher_spin_channels(5)
+        vir = incremental_virasoro_target_channels(5)
+        assert len(higher) == 8
+        assert len(vir) == 3
+        assert vir == [(3, 5, 2, 6), (4, 5, 2, 7), (5, 5, 2, 8)]
+
+    def test_stage5_virasoro_target_values(self):
+        """Mixed target-2 channels vanish; the self target-2 channel equals 2."""
+        values = incremental_virasoro_target_identities(5)
+        assert values[(3, 5, 2, 6)] == 0
+        assert values[(4, 5, 2, 7)] == 0
+        assert values[(5, 5, 2, 8)] == 2

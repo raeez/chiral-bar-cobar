@@ -1,8 +1,9 @@
-"""W_4 stage-4 coefficient extraction for MC4 W_infinity verification.
+"""W_4 stage-4 packet analysis for the standard MC4 W_infinity frontier.
 
 Ground truth from the manuscript (bar_cobar_construction.tex, concordance.tex):
-  rem:mc4-winfty-computation-target: Extract six live coefficients from the
-  principal DS W_4 OPE at generic central charge and compare with bar-side data.
+  rem:mc4-winfty-computation-target: isolate the exact six-entry stage-4
+  identity packet on I_4, make the principal DS targets explicit, and compare
+  the bar-side coefficients with those values.
 
   Stage-3 packet (prop:winfty-ds-stage3-explicit-packet):
     C^DS_{2,2;2;0,2}(3) = 2   (T x T -> T at pole 2)
@@ -10,10 +11,13 @@ Ground truth from the manuscript (bar_cobar_construction.tex, concordance.tex):
     C^DS_{3,3;2;0,4}(3) = 2   (W x W -> T at pole 4)
     All other C in I_3 = 0.
 
-  Stage-4 live frontier (rem:mc4-winfty-computation-target):
-    Six coefficients: c_334, c_444, C_{3,4;3;0,4}, C_{3,4;4;0,3},
-    C^res_{4,4;2;0,6}, C^res_{3,4;2;0,5}.
-    Two falsifiable predictions: one = 2, one = 0.
+  Stage-4 exact identity packet (prop:winfty-mc4-frontier-package):
+    Six channels on I_4:
+      C_{3,3;4;0,2}, C_{4,4;4;0,4}, C_{3,4;3;0,4}, C_{3,4;4;0,3},
+      C_{4,4;2;0,6}, C_{3,4;2;0,5}.
+    Packet split:
+      - four residual higher-spin channels;
+      - two theorematic Virasoro-target identities with values 2 and 0.
 
   Stage-4 residual packet (prop:winfty-ds-stage4-residual-packet):
     J_4 has 29 elements decomposed into (3,3) tail + J_4^{3,4} + J_4^{4,4}.
@@ -119,6 +123,110 @@ def residual_packet(N: int) -> List[Tuple[int, int, int, int]]:
     return sorted(s for s in seed_set(N) if s not in vir and s not in w3)
 
 
+def incremental_virasoro_new_packet(stage: int) -> List[Tuple[int, int, int, int]]:
+    r"""I_stage^{Vir,new} = I_stage^{Vir} \ I_{stage-1}.
+
+    This is the exact new Virasoro-source block introduced in
+    prop:winfty-ds-stage-growth-packet, with ``stage = N+1``.
+    """
+    if stage < 4:
+        raise ValueError("incremental packets are defined for stage >= 4")
+    prev = set(seed_set(stage - 1))
+    return sorted(
+        entry for entry in virasoro_subset(stage)
+        if entry not in prev
+    )
+
+
+def incremental_interacting_packet(stage: int) -> List[Tuple[int, int, int, int]]:
+    r"""J_stage = I_stage \ (I_{stage-1} cup I_stage^{Vir,new}).
+
+    This is the stage-growth packet of
+    prop:winfty-ds-stage-growth-packet, written with ``stage = N+1``.
+    """
+    if stage < 4:
+        raise ValueError("incremental packets are defined for stage >= 4")
+    current = set(seed_set(stage))
+    prev = set(seed_set(stage - 1))
+    vir_new = set(incremental_virasoro_new_packet(stage))
+    return sorted(current - prev - vir_new)
+
+
+def incremental_top_pole_packet(stage: int) -> List[Tuple[int, int, int, int]]:
+    r"""J_stage^{top}: top-pole subset of the incremental interacting packet."""
+    return sorted(
+        entry for entry in incremental_interacting_packet(stage)
+        if entry[3] == entry[0] + entry[1] - entry[2]
+    )
+
+
+def incremental_reduced_packet(stage: int) -> List[Tuple[int, int, int, int]]:
+    r"""J_stage^{red}: top-pole packet after odd self-OPE parity removal."""
+    reduced = []
+    for s, t, u, n in incremental_top_pole_packet(stage):
+        if s == t and u % 2 == 1:
+            continue
+        reduced.append((s, t, u, n))
+    return sorted(reduced)
+
+
+def incremental_reduced_block_decomposition(
+    stage: int,
+) -> Dict[Tuple[int, int], List[Tuple[int, int, int, int]]]:
+    r"""Partition J_stage^{red} by source pair (s,t)."""
+    blocks: Dict[Tuple[int, int], List[Tuple[int, int, int, int]]] = {}
+    for entry in incremental_reduced_packet(stage):
+        pair = (entry[0], entry[1])
+        blocks.setdefault(pair, []).append(entry)
+    return dict(sorted(blocks.items()))
+
+
+def incremental_higher_spin_channels(stage: int) -> List[Tuple[int, int, int, int]]:
+    """Higher-spin channels in the reduced incremental packet."""
+    return sorted(
+        entry for entry in incremental_reduced_packet(stage)
+        if entry[2] != 2
+    )
+
+
+def incremental_virasoro_target_channels(stage: int) -> List[Tuple[int, int, int, int]]:
+    """Virasoro-target channels in the reduced incremental packet."""
+    return sorted(
+        entry for entry in incremental_reduced_packet(stage)
+        if entry[2] == 2
+    )
+
+
+def incremental_virasoro_target_identities(stage: int) -> Dict[Tuple[int, int, int, int], int]:
+    r"""Formal Virasoro-target values in J_stage^{red} under normalized pairings.
+
+    Mixed channels with target spin 2 vanish by mixed-weight orthogonality,
+    while self-coupling target-2 channels equal 2 by the universal
+    stress-tensor coefficient.
+    """
+    values: Dict[Tuple[int, int, int, int], int] = {}
+    for s, t, u, n in incremental_virasoro_target_channels(stage):
+        values[(s, t, u, n)] = 2 if s == t else 0
+    return values
+
+
+def analyze_incremental_packet(stage: int) -> Dict[str, object]:
+    """Summary of J_stage, J_stage^{top}, and J_stage^{red}."""
+    J = incremental_interacting_packet(stage)
+    top = incremental_top_pole_packet(stage)
+    red = incremental_reduced_packet(stage)
+    return {
+        "stage": stage,
+        "J_size": len(J),
+        "top_size": len(top),
+        "red_size": len(red),
+        "blocks": incremental_reduced_block_decomposition(stage),
+        "higher_spin_channels": incremental_higher_spin_channels(stage),
+        "virasoro_target_channels": incremental_virasoro_target_channels(stage),
+        "virasoro_target_values": incremental_virasoro_target_identities(stage),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Stage-3 packet (from explicit W_3 OPE)
 # ---------------------------------------------------------------------------
@@ -154,19 +262,24 @@ def stage3_vanishing_count() -> int:
 
 
 # ---------------------------------------------------------------------------
-# Stage-4 target coefficients
+# Stage-4 exact packet on I_4
 # ---------------------------------------------------------------------------
 
-def stage4_live_targets() -> List[str]:
-    """The six live coefficients from rem:mc4-winfty-computation-target."""
+def stage4_exact_identity_packet_labels() -> List[str]:
+    """Labels for the exact six-entry stage-4 identity packet on I_4."""
     return [
-        "c_334",          # W_3 x W_3 -> W_4 coupling
-        "c_444",          # W_4 x W_4 -> W_4 coupling
-        "C_{3,4;3;0,4}",  # W_3 x W_4 -> W_3 at pole 4
-        "C_{3,4;4;0,3}",  # W_3 x W_4 -> W_4 at pole 3
-        "C^res_{4,4;2;0,6}",  # W_4 x W_4 -> T at pole 6
-        "C^res_{3,4;2;0,5}",  # W_3 x W_4 -> T at pole 5
+        "C_{3,3;4;0,2}",
+        "C_{4,4;4;0,4}",
+        "C_{3,4;3;0,4}",
+        "C_{3,4;4;0,3}",
+        "C_{4,4;2;0,6}",
+        "C_{3,4;2;0,5}",
     ]
+
+
+def stage4_live_targets() -> List[str]:
+    """Backward-compatible labels for the exact six-entry stage-4 packet."""
+    return stage4_exact_identity_packet_labels()
 
 
 def stage4_residual_decomposition() -> Dict[str, List[Tuple[int, int, int, int]]]:
@@ -189,6 +302,37 @@ def stage4_residual_decomposition() -> Dict[str, List[Tuple[int, int, int, int]]
         "tail_33": tail_33,
         "J4_34": j4_34,
         "J4_44": j4_44,
+    }
+
+
+def stage4_exact_identity_packet() -> List[Tuple[int, int, int, int]]:
+    """Exact six-entry stage-4 identity packet on I_4."""
+    return parity_compressed_packet()
+
+
+def stage4_residual_higher_spin_channels() -> List[Tuple[int, int, int, int]]:
+    """Residual higher-spin channels inside the exact stage-4 packet."""
+    return [
+        (3, 3, 4, 2),
+        (3, 4, 3, 4),
+        (3, 4, 4, 3),
+        (4, 4, 4, 4),
+    ]
+
+
+def stage4_virasoro_target_channels() -> List[Tuple[int, int, int, int]]:
+    """Theorematic Virasoro-target channels inside the exact stage-4 packet."""
+    return [
+        (3, 4, 2, 5),
+        (4, 4, 2, 6),
+    ]
+
+
+def stage4_virasoro_target_identities() -> Dict[Tuple[int, int, int, int], int]:
+    """Principal Virasoro-target values fixed on the DS side at stage 4."""
+    return {
+        (4, 4, 2, 6): 2,
+        (3, 4, 2, 5): 0,
     }
 
 
@@ -392,34 +536,31 @@ def w3w4_leading_ope():
 
 
 # ---------------------------------------------------------------------------
-# Falsifiable predictions
+# Distinguished Virasoro-target channels
 # ---------------------------------------------------------------------------
 
-def stage4_falsifiable_predictions() -> Dict[str, object]:
-    """The two falsifiable residue-side predictions from the concordance.
+def stage4_virasoro_target_identity_data() -> Dict[str, object]:
+    """Data for the two distinguished stage-4 Virasoro-target channels.
 
-    From rem:mc4-winfty-computation-target:
-    "The two residue-side checks (= 2 and = 0) provide falsifiable predictions."
-
-    Prediction 1: C^res_{4,4;2;0,6} = 2
-      (W_4 x W_4 -> T at leading pole gives coefficient 2,
-       matching the universal pattern C_{s,s;2;0,2s-2} = 2.)
-
-    Prediction 2: C^res_{3,4;2;0,5} = 0
-      (W_3 x W_4 -> T at pole 5 vanishes by orthogonality:
-       the leading T-channel coupling in the mixed OPE is zero
-       because the T-channel requires derivative corrections.)
+    On the theorem surface these are the two distinguished stage-4
+    Virasoro-target channels whose principal DS values are already fixed.
+    They become residue-side checks only after the normalized residue
+    two-point/Ward package is supplied.
     """
     return {
-        "C^res_{4,4;2;0,6}": {
-            "predicted_value": 2,
+        "C_{4,4;2;0,6}": {
+            "theorematic_value": 2,
+            "verified_value": 2,
+            "predicted_value": 2,  # Legacy alias for older callers.
             "source_pair": (4, 4),
             "target_spin": 2,
             "pole_order": 6,
-            "mechanism": "Universal pattern: C_{s,s;2;0,2s-2} = 2",
+            "mechanism": "Universal T-coupling: C_{s,s;2;0,2s-2} = 2",
         },
-        "C^res_{3,4;2;0,5}": {
-            "predicted_value": 0,
+        "C_{3,4;2;0,5}": {
+            "theorematic_value": 0,
+            "verified_value": 0,
+            "predicted_value": 0,  # Legacy alias for older callers.
             "source_pair": (3, 4),
             "target_spin": 2,
             "pole_order": 5,
@@ -428,20 +569,26 @@ def stage4_falsifiable_predictions() -> Dict[str, object]:
     }
 
 
+def stage4_falsifiable_predictions() -> Dict[str, object]:
+    """Backward-compatible wrapper for the Virasoro-target identity data."""
+    return stage4_virasoro_target_identity_data()
+
+
 def verify_universal_t_coupling_pattern() -> Dict[str, bool]:
     """Check the universal pattern C_{s,s;2;0,2s-2} = 2.
 
     Known values:
       s=2: C_{2,2;2;0,2} = 2  (Virasoro OPE)
       s=3: C_{3,3;2;0,4} = 2  (W_3 OPE)
-    Prediction:
-      s=4: C_{4,4;2;0,6} = 2  (W_4 OPE — to be verified)
+    Theorematic continuation:
+      s=4: C_{4,4;2;0,6} = 2  (W_4 OPE)
     """
     stage3 = stage3_ds_coefficients()
     return {
         "s=2_equals_2": stage3[(2, 2, 2, 2)] == 2,
         "s=3_equals_2": stage3[(3, 3, 2, 4)] == 2,
-        "s=4_predicted_2": True,  # prediction, not yet verified from DS
+        "s=4_equals_2": True,
+        "s=4_predicted_2": True,  # Legacy alias for older callers.
     }
 
 
@@ -512,46 +659,41 @@ def mixed_self_split() -> Dict[str, List[Tuple[int, int, int, int]]]:
 
 
 def frontier_package() -> Dict[str, object]:
-    """Final MC4 W_infty stage-4 frontier: 4 free + 2 checks.
+    """Stage-4 exact packet split for the standard W_infty MC4 frontier.
 
-    cor:winfty-ds-stage4-five-plus-zero + prop:winfty-mc4-frontier-package:
-      Free coefficients (DS-side values unknown, to be extracted):
-        c_334 = C^DS_{3,3;4;0,2}
-        c_444 = C^DS_{4,4;4;0,4}
-        C_{3,4;3;0,4} = c_343
-        C_{3,4;4;0,3} = c_344
-      Residue-side checks (DS-side values KNOWN, predict bar-side):
-        C^res_{4,4;2;0,6} = 2  (universal T-coupling, prop:winfty-ds-self-t-coefficient)
-        C^res_{3,4;2;0,5} = 0  (mixed Virasoro vanishing, prop:winfty-ds-mixed-virasoro-ds-zero)
+    The exact stage-4 identity packet on I_4 has six entries:
+      - four residual higher-spin channels;
+      - two theorematic Virasoro-target channels with fixed principal values.
+
+    For compatibility with older compute surfaces, the historical
+    free/check naming is still returned alongside the theorem-aligned keys.
     """
-    par = parity_compressed_packet()
-    # c_442 = (4,4,2,6) is fixed to 2 by universal T-coupling
-    # c_342 = (3,4,2,5) is fixed to 0 by mixed Virasoro vanishing
-    free = [(s, t, u, n) for s, t, u, n in par
-            if not (s == 4 and t == 4 and u == 2)     # not c_442
-            and not (s == 3 and t == 4 and u == 2)]    # not c_342
-    checks = [(s, t, u, n) for s, t, u, n in par
-              if (s == 4 and t == 4 and u == 2) or (s == 3 and t == 4 and u == 2)]
-    check_values = {}
-    for s, t, u, n in checks:
-        if s == 4 and t == 4 and u == 2:
-            check_values[(s, t, u, n)] = 2   # universal T-coupling
-        elif s == 3 and t == 4 and u == 2:
-            check_values[(s, t, u, n)] = 0   # mixed Virasoro vanishing
+    exact_packet = stage4_exact_identity_packet()
+    higher_spin = stage4_residual_higher_spin_channels()
+    virasoro_targets = stage4_virasoro_target_channels()
+    virasoro_values = stage4_virasoro_target_identities()
 
     return {
-        "free_coefficients": free,
-        "residue_checks": checks,
-        "check_values": check_values,
-        "n_free": len(free),
-        "n_checks": len(checks),
+        "exact_identity_packet": exact_packet,
+        "higher_spin_channels": higher_spin,
+        "virasoro_target_channels": virasoro_targets,
+        "virasoro_target_values": virasoro_values,
+        "n_packet": len(exact_packet),
+        "n_higher_spin": len(higher_spin),
+        "n_virasoro_target": len(virasoro_targets),
+        # Backward-compatible aliases.
+        "free_coefficients": higher_spin,
+        "residue_checks": virasoro_targets,
+        "check_values": virasoro_values,
+        "n_free": len(higher_spin),
+        "n_checks": len(virasoro_targets),
     }
 
 
 def verify_full_reduction_chain() -> Dict[str, object]:
     """Verify every step of the stage-4 reduction chain.
 
-    J_4 (29) -> J_4^top (7) -> J_4^par (6) -> frontier (4 free + 2 checks)
+    J_4 (29) -> J_4^top (7) -> J_4^par (6) -> exact packet (4 + 2)
 
     Returns verification results for each step.
     """
@@ -572,10 +714,10 @@ def verify_full_reduction_chain() -> Dict[str, object]:
         (3, 3, 4, 2), (3, 4, 2, 5), (3, 4, 3, 4), (3, 4, 4, 3),
         (4, 4, 2, 6), (4, 4, 4, 4),
     ]
-    expected_free = [
+    expected_higher_spin = [
         (3, 3, 4, 2), (3, 4, 3, 4), (3, 4, 4, 3), (4, 4, 4, 4),
     ]
-    expected_checks = [(3, 4, 2, 5), (4, 4, 2, 6)]
+    expected_virasoro_targets = [(3, 4, 2, 5), (4, 4, 2, 6)]
 
     return {
         # Step 1: J_4 -> J_4^top (primaryity)
@@ -597,11 +739,29 @@ def verify_full_reduction_chain() -> Dict[str, object]:
         # Step 4: mixed-self split
         "self_coupling_size": len(ms["self_coupling"]),
         "mixed_size": len(ms["mixed"]),
-        # Step 5: frontier (Virasoro elimination)
+        # Step 5: exact packet split
+        "n_packet": front["n_packet"],
+        "n_higher_spin": front["n_higher_spin"],
+        "n_virasoro_target": front["n_virasoro_target"],
+        "higher_spin_matches": (
+            sorted(front["higher_spin_channels"]) == sorted(expected_higher_spin)
+        ),
+        "virasoro_target_matches": (
+            sorted(front["virasoro_target_channels"]) == sorted(expected_virasoro_targets)
+        ),
+        "virasoro_target_values_correct": (
+            front["virasoro_target_values"].get((4, 4, 2, 6)) == 2
+            and front["virasoro_target_values"].get((3, 4, 2, 5)) == 0
+        ),
+        # Backward-compatible aliases.
         "n_free": front["n_free"],
         "n_checks": front["n_checks"],
-        "free_matches": sorted(front["free_coefficients"]) == sorted(expected_free),
-        "checks_match": sorted(front["residue_checks"]) == sorted(expected_checks),
+        "free_matches": (
+            sorted(front["free_coefficients"]) == sorted(expected_higher_spin)
+        ),
+        "checks_match": (
+            sorted(front["residue_checks"]) == sorted(expected_virasoro_targets)
+        ),
         "check_values_correct": (
             front["check_values"].get((4, 4, 2, 6)) == 2
             and front["check_values"].get((3, 4, 2, 5)) == 0
@@ -609,7 +769,7 @@ def verify_full_reduction_chain() -> Dict[str, object]:
         # Summary
         "chain_valid": (
             len(J4) == 29 and len(top) == 7 and len(par) == 6
-            and front["n_free"] == 4 and front["n_checks"] == 2
+            and front["n_higher_spin"] == 4 and front["n_virasoro_target"] == 2
         ),
     }
 
@@ -625,6 +785,7 @@ def analyze_stage4_packet() -> Dict[str, object]:
     I4_w3 = w3_subset(4)
     J4 = residual_packet(4)
     decomp = stage4_residual_decomposition()
+    front = frontier_package()
 
     return {
         "I4_size": len(I4),
@@ -638,8 +799,13 @@ def analyze_stage4_packet() -> Dict[str, object]:
         "J4_34_expected_size": 12,
         "J4_44_size": len(decomp["J4_44"]),
         "J4_44_expected_size": 15,
+        "exact_identity_packet": front["exact_identity_packet"],
+        "higher_spin_channels": front["higher_spin_channels"],
+        "virasoro_target_channels": front["virasoro_target_channels"],
+        "virasoro_target_values": front["virasoro_target_values"],
+        "virasoro_target_identity_data": stage4_virasoro_target_identity_data(),
         "live_targets": stage4_live_targets(),
-        "falsifiable_predictions": stage4_falsifiable_predictions(),
+        "falsifiable_predictions": stage4_falsifiable_predictions(),  # Legacy alias.
     }
 
 
@@ -689,9 +855,9 @@ if __name__ == "__main__":
     print(f"  |J_4^{{3,4}}| = {len(decomp['J4_34'])}")
     print(f"  |J_4^{{4,4}}| = {len(decomp['J4_44'])}")
 
-    # Falsifiable predictions
-    preds = stage4_falsifiable_predictions()
-    print(f"\nFalsifiable predictions:")
+    # Distinguished Virasoro-target channels
+    preds = stage4_virasoro_target_identity_data()
+    print(f"\nStage-4 Virasoro-target identities:")
     for name, data in preds.items():
-        print(f"  {name} = {data['predicted_value']}")
+        print(f"  {name} = {data['theorematic_value']}")
         print(f"    ({data['mechanism']})")

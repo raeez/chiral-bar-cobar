@@ -1,13 +1,13 @@
-"""Tests for MC4 W_4 DS OPE coefficient extraction.
+"""Tests for the MC4 W_4 DS stage-4 packet extraction.
 
 Verifies:
   - c_334^2 formula: zeros, poles, positivity at unitary minimal models
   - c_444^2 formula: zeros, poles, positivity
   - c_343, c_344 mixed OPE coefficients and their relations to c_334
-  - Falsifiable predictions: C^res_{4,4;2;0,6} = 2 and C^res_{3,4;2;0,5} = 0
+  - Virasoro-target identities: C_{4,4;2;0,6} = 2 and C_{3,4;2;0,5} = 0
   - Feigin-Frenkel duality: behavior under k -> -k-8
   - Classical limit (c -> infinity)
-  - Consistency with w4_stage4_coefficients scaffold
+  - Consistency with the stage-4 exact packet scaffold
   - Special values and Jacobi identity checks
 
 References:
@@ -32,9 +32,9 @@ from compute.lib.w4_ds_ope_extraction import (
     w4_primary_two_point,
     w3w3_pole2_decomposition,
     w3w3_alpha_in_w4,
-    verify_prediction_c442,
-    verify_prediction_c342,
-    verify_falsifiable_predictions,
+    verify_virasoro_target_identity_c442,
+    verify_virasoro_target_identity_c342,
+    verify_stage4_virasoro_target_identities,
     w4_full_ope_coefficients,
     w4_full_ope_at_level,
     ff_duality_c334,
@@ -51,6 +51,7 @@ from compute.lib.w4_stage4_coefficients import (
     w4_central_charge,
     w4_dual_level,
     w4_complementarity_sum,
+    stage4_exact_identity_packet,
     stage4_live_targets,
     frontier_package,
 )
@@ -255,38 +256,38 @@ class TestMixedCoefficients:
         assert lim == Rational(50, 7)
 
 
-# ===== Falsifiable predictions =====
+# ===== Virasoro-target identities =====
 
 class TestFalsifiablePredictions:
-    """Verify the two falsifiable predictions from rem:mc4-winfty-computation-target."""
+    """Verify the two distinguished Virasoro-target identities."""
 
     def test_c442_equals_2(self):
         """C^res_{4,4;2;0,6} = 2 (universal T-coupling)."""
-        result = verify_prediction_c442()
-        assert result["predicted_value"] == 2
+        result = verify_virasoro_target_identity_c442()
+        assert result["theorematic_value"] == 2
         assert result["status"] == "VERIFIED"
 
     def test_c342_equals_0(self):
         """C^res_{3,4;2;0,5} = 0 (mixed Virasoro vanishing)."""
-        result = verify_prediction_c342()
-        assert result["predicted_value"] == 0
+        result = verify_virasoro_target_identity_c342()
+        assert result["theorematic_value"] == 0
         assert result["status"] == "VERIFIED"
 
-    def test_both_predictions(self):
-        """Both predictions verified."""
-        results = verify_falsifiable_predictions()
+    def test_both_identities(self):
+        """Both Virasoro-target identities are verified."""
+        results = verify_stage4_virasoro_target_identities()
         assert len(results) == 2
-        assert results["C^res_{4,4;2;0,6}"]["predicted_value"] == 2
-        assert results["C^res_{3,4;2;0,5}"]["predicted_value"] == 0
+        assert results["C_{4,4;2;0,6}"]["theorematic_value"] == 2
+        assert results["C_{3,4;2;0,5}"]["theorematic_value"] == 0
 
     def test_c442_mechanism(self):
         """C^res_{4,4;2;0,6} = 2 follows from conformal Ward identity."""
-        result = verify_prediction_c442()
+        result = verify_virasoro_target_identity_c442()
         assert "Ward" in result["mechanism"] or "universal" in result["mechanism"]
 
     def test_c342_mechanism(self):
         """C^res_{3,4;2;0,5} = 0 follows from orthogonality."""
-        result = verify_prediction_c342()
+        result = verify_virasoro_target_identity_c342()
         assert "vanish" in result["mechanism"] or "orthogonal" in result["mechanism"]
 
 
@@ -329,8 +330,8 @@ class TestFullOPE:
         assert ope["C_{2,4;4;0,2}"] == 4
         assert ope["C_{3,3;2;0,4}"] == 2
 
-    def test_predictions_in_full_ope(self):
-        """Predictions are correctly embedded in the full OPE."""
+    def test_virasoro_target_identities_in_full_ope(self):
+        """Theorematic Virasoro-target identities are embedded in the full OPE."""
         ope = w4_full_ope_coefficients()
         assert ope["C_{4,4;2;0,6}"] == 2
         assert ope["C_{3,4;2;0,5}"] == 0
@@ -346,7 +347,7 @@ class TestFullOPE:
     def test_all_coefficients_present(self):
         """All 13 OPE entries are present."""
         ope = w4_full_ope_coefficients()
-        # 3 curvatures + 4 stage-3 + 4 stage-4 squared + 2 predictions = 13
+        # 3 curvatures + 4 stage-3 + 4 stage-4 squared + 2 Virasoro-target identities = 13
         assert len(ope) == 13
 
     def test_at_specific_level(self):
@@ -506,12 +507,12 @@ class TestExtractionReport:
         assert "central_charge" in report
         assert "c_334_squared" in report
         assert "c_444_squared" in report
-        assert "predictions_verified" in report
+        assert "virasoro_target_identities_verified" in report
 
-    def test_report_predictions_verified(self):
-        """Report confirms predictions are verified."""
+    def test_report_identities_verified(self):
+        """Report confirms the Virasoro-target identities are verified."""
         report = extraction_report()
-        assert report["predictions_verified"]
+        assert report["virasoro_target_identities_verified"]
         assert report["C_{4,4;2;0,6}"] == 2
         assert report["C_{3,4;2;0,5}"] == 0
 
@@ -527,31 +528,31 @@ class TestExtractionReport:
 class TestConsistencyWithScaffold:
     """Cross-checks with the w4_stage4_coefficients module."""
 
-    def test_six_live_targets(self):
-        """Six live targets from the scaffold are addressed."""
+    def test_six_packet_labels(self):
+        """Six packet labels from the scaffold are addressed."""
         targets = stage4_live_targets()
         assert len(targets) == 6
+        assert len(stage4_exact_identity_packet()) == 6
 
-    def test_four_free_coefficients(self):
-        """Four free coefficients from the scaffold are extracted."""
+    def test_four_higher_spin_targets(self):
+        """Four higher-spin targets from the scaffold are extracted."""
         front = frontier_package()
-        assert front["n_free"] == 4
-        # Each free coefficient corresponds to a formula in this module
+        assert front["n_higher_spin"] == 4
+        # Each higher-spin target corresponds to a formula in this module
         ope = w4_full_ope_coefficients()
         assert "c_334_squared" in ope
         assert "c_444_squared" in ope
         assert "C_{3,4;3;0,4}_squared" in ope
         assert "C_{3,4;4;0,3}_squared" in ope
 
-    def test_two_checks_match(self):
-        """Two residue checks from the scaffold match our predictions."""
+    def test_two_virasoro_target_identities_match(self):
+        """The two scaffold identities match the explicit DS verification."""
         front = frontier_package()
-        assert front["check_values"][(4, 4, 2, 6)] == 2
-        assert front["check_values"][(3, 4, 2, 5)] == 0
-        # These match our verified predictions
-        preds = verify_falsifiable_predictions()
-        assert preds["C^res_{4,4;2;0,6}"]["predicted_value"] == 2
-        assert preds["C^res_{3,4;2;0,5}"]["predicted_value"] == 0
+        assert front["virasoro_target_values"][(4, 4, 2, 6)] == 2
+        assert front["virasoro_target_values"][(3, 4, 2, 5)] == 0
+        identities = verify_stage4_virasoro_target_identities()
+        assert identities["C_{4,4;2;0,6}"]["theorematic_value"] == 2
+        assert identities["C_{3,4;2;0,5}"]["theorematic_value"] == 0
 
     def test_central_charge_consistency(self):
         """Central charge formula is consistent between modules."""
