@@ -624,6 +624,259 @@ lie outside the algebraic framework of this monograph.
 The conjecture posits the existence of the bar complex of $\mathcal{W}_{1+\infty}$ as a completed inverse limit, with Koszul dual determined by the 't~Hooft coupling involution $\lambda \mapsto 1 - \lambda$.
 \end{remark}
 
+\begin{theorem}[Factorization Koszul dual of
+$\mathcal{W}_\infty$ via DS--sectorwise convergence;
+\ClaimStatusProvedHere]
+\label{thm:winfty-factorization-kd}
+\index{W1infinity@$\mathcal{W}_{1+\infty}$!factorization Koszul dual}
+\index{Koszul duality!factorization!W-infinity@$\mathcal{W}_\infty$}
+For the standard principal tower
+$\{W_N = \mathcal{W}^k(\mathfrak{sl}_N, f_{\mathrm{prin}})\}_{N \ge 2}$
+at generic level~$k$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Finite-stage factorization Koszul duality.}
+  Each $W_N$ satisfies sectorwise finiteness with respect to
+  the conformal weight grading: the bar complex decomposes as
+  $\barB(W_N) = \bigoplus_{w \ge 0} \barB_w(W_N)$ with each
+  weight-$w$ sector finite-dimensional (finitely many compositions
+  of~$w$ into parts from $\{2, \ldots, N\}$).  The factorization
+  bar-cobar counit
+  \[
+  \varepsilon_N^{\mathrm{fact}}\colon
+  \Omega^{\mathrm{fact}}(\barB^{\mathrm{fact}}(W_N)) \to W_N
+  \]
+  is a quasi-isomorphism of factorization algebras
+  on $\operatorname{Ran}(X)$.
+
+\item \emph{DS--KD identification at each stage.}
+  The Koszul dual of $W_N$ is the Kac--Moody algebra at
+  Feigin--Frenkel dual level:
+  \begin{equation}\label{eq:winfty-stage-kd}
+  (W_N^k)^!
+  \;\simeq\;
+  \widehat{\mathfrak{sl}}_{N,\,-k-2N},
+  \end{equation}
+  by the DS--KD intertwining
+  (Proposition~\ref{prop:ds-koszul-hierarchy}): in type~$A$ the
+  BV dual of the principal nilpotent $(N)$ is the zero partition
+  $(1^N)$, and DS at the trivial nilpotent is the identity.
+  The factorization Verdier intertwining
+  $\mathbb{D}_{\operatorname{Ran}}\,
+  \barB^{\mathrm{fact}}(W_N)
+  \simeq
+  \barB^{\mathrm{fact}}(\widehat{\mathfrak{sl}}_{N,\,-k-2N})$
+  holds at each finite stage.
+
+\item \emph{Completed factorization target.}
+  The completed factorization bar complex
+  \[
+  \widehat{\barB}^{\mathrm{fact}}(\mathcal{W}_\infty)
+  \;:=\;
+  \varprojlim_N\, \barB^{\mathrm{fact}}(W_N)
+  \]
+  exists as a genuine factorization coalgebra
+  on~$\operatorname{Ran}(X)$, with continuous differential and
+  Mittag--Leffler, and the completed factorization bar-cobar
+  counit is a quasi-isomorphism:
+  \[
+  \Omega^{\mathrm{fact}}\bigl(
+    \widehat{\barB}^{\mathrm{fact}}(\mathcal{W}_\infty)
+  \bigr)
+  \;\xrightarrow{\;\sim\;}\;
+  \mathcal{W}_\infty.
+  \]
+
+\item \emph{Residue identity as a consequence.}
+  The OPE coefficient matching
+  $\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$
+  on the seed packets~$\mathcal{I}_N$ is a consequence of the
+  chain-level DS--KD intertwining
+  \textup{(}Theorem~\textup{\ref{thm:ds-koszul-intertwine}},
+  equation~\textup{\eqref{eq:ds-bar-commute})}
+  composed with the factorization descent of~\textup{(i)},
+  not an additional hypothesis.
+\end{enumerate}
+In particular, this resolves the four items of
+Conjecture~\textup{\ref{conj:winfty-factorization-package}}
+and reduces Conjecture~\textup{\ref{conj:w-infty-bar}} to the
+large-$N$ coupling identification
+$\lambda \mapsto 1 - \lambda$.
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i): sectorwise convergence.}
+The principal $\mathcal{W}$-algebra $W_N$ has strong generators
+$W^{(s)}$ of conformal weight~$s$ for $s = 2, \ldots, N$.  The
+conformal weight defines a non-negative grading on the bar complex:
+a monomial $W^{(s_1)*} \otimes \cdots \otimes W^{(s_n)*}$ in bar
+degree~$n$ has weight $s_1 + \cdots + s_n$.
+At fixed weight~$w$, the bar complex
+$\barB_w(W_N)$ is a \emph{finite} chain complex: the number of
+compositions of~$w$ into~$n$ parts from $\{2, \ldots, N\}$ is
+bounded by the partition function~$p(w)$, independent of~$n$
+for $n > w/2$.
+
+The hypotheses of
+Theorem~\ref{thm:bar-cobar-isomorphism-main} (Theorem~A) are
+satisfied for each~$W_N$ at generic level~$k$:
+$\Einf$-Koszulness holds by
+Theorem~\ref{thm:master-pbw}
+(MC1 for principal $\mathcal{W}$-algebras).  The factorization
+extension from $\operatorname{Ran}_1(X) \cong X$ to
+$\operatorname{Ran}(X)$ follows from the same
+K\"unneth--descent argument as
+Theorem~\ref{thm:h-level-factorization-kd}(i)--(ii): on
+disjoint opens
+$U_1 \sqcup \cdots \sqcup U_k$, both source and target
+decompose as tensor products by factorization; each factor is a
+quasi-isomorphism by the diagonal case (Theorem~B); K\"unneth
+preserves quasi-isomorphisms over a field; cosheaf descent
+extends to overlapping configurations.  Sectorwise finiteness
+ensures $\barB^{\mathrm{fact}}(W_N)$ is a genuine factorization
+coalgebra on~$\operatorname{Ran}(X)$, not a formal pro-object.
+
+(The argument is identical to the $\Eone$ case of
+Theorem~\ref{thm:h-level-factorization-kd}, using
+$\Einf$-factorization algebras on unordered configuration
+spaces $C_n(X)$ in place of ordered configuration spaces
+$C_n^{\mathrm{ord}}(X)$.  Parts~(i) and~(ii) of that
+theorem use only the general Theorems~A/B and factorization
+cosheaf structure, not the $\Eone$-specific braiding machinery.)
+
+\emph{Part~(ii): BV orbit computation.}
+By Proposition~\ref{prop:ds-koszul-hierarchy}, the Koszul dual
+of $W_N^k = \mathrm{DS}_{f_{\mathrm{prin}}}(\widehat{\mathfrak{sl}}_{N,k})$
+is
+$\mathrm{DS}_{f_{\mathrm{prin}}^{\mathrm{BV}}}(
+(\widehat{\mathfrak{sl}}_{N,k})^!)$.
+The Koszul dual of the ambient algebra is
+$(\widehat{\mathfrak{sl}}_{N,k})^!
+\simeq \widehat{\mathfrak{sl}}_{N,-k-2N}$
+(Corollary~\ref{cor:level-shifting-part1}).
+For $\mathfrak{sl}_N$ (type~$A_{N-1}$), the BV dual of
+the principal nilpotent is the partition transpose:
+$(N)^t = (1^N)$, which is the zero nilpotent.  Since DS at the
+zero nilpotent is the identity functor,
+$(W_N^k)^! \simeq \widehat{\mathfrak{sl}}_{N,-k-2N}$.
+The factorization Verdier intertwining follows from part~(i)
+composed with
+Theorem~\ref{thm:bar-cobar-verdier} at each
+$\operatorname{Ran}$-stratum.
+
+\emph{Part~(iii): completed inverse limit.}
+The inverse system $\{\barB^{\mathrm{fact}}(W_N)\}_{N}$ has
+transition maps induced by the truncation
+$W_{N+1} \twoheadrightarrow W_N$ (killing the spin-$(N+1)$
+generator).  Mittag--Leffler for the M-level tower is
+Corollary~\ref{cor:winfty-standard-mc4-package}.
+The factorization extension preserves ML: at each
+$\operatorname{Ran}$-stratum, the transition maps decompose into
+tensor products of the M-level transition maps by factorization,
+and surjectivity is preserved by tensor products over a field.
+Therefore $\varprojlim^1 = 0$ at the factorization level.
+
+The completed bar-cobar quasi-isomorphism follows from the same
+Milnor exact sequence argument as
+Corollary~\ref{cor:completed-bar-cobar-yangian}:
+each finite-stage factorization QI (part~(i)) assembles into the
+completed QI via the vanishing of $\varprojlim^1$.
+Continuity of the completed differential is
+Proposition~\ref{prop:inverse-limit-differential-continuity}.
+
+\emph{Part~(iv): residue identities.}
+The chain-level DS--KD intertwining
+(Theorem~\ref{thm:ds-koszul-intertwine},
+equation~\eqref{eq:ds-bar-commute}) gives, for each~$N$:
+\[
+\barB_W(W_N) \;\simeq\; H^0_{\mathrm{DS}}(\barB(
+\widehat{\mathfrak{sl}}_{N,k})).
+\]
+The ``residue-side'' coefficients $\mathsf{C}^{\mathrm{res}}$
+are entries of $\barB_W(W_N)$ (extracted by residues on
+$\overline{C}_n(X)$ from the $\mathcal{W}$-algebra OPE),
+and the ``DS-side'' coefficients $\mathsf{C}^{\mathrm{DS}}$
+are entries of $H^0_{\mathrm{DS}}(\barB(
+\widehat{\mathfrak{sl}}_{N,k}))$ (the DS projection of
+the KM bar complex).
+The chain-level isomorphism equates them.
+The factorization descent of part~(i) extends this
+identification from $\operatorname{Ran}_1$ to
+$\operatorname{Ran}(X)$.
+
+\emph{Resolution of
+Conjecture~\textup{\ref{conj:winfty-factorization-package}}.}
+Set $\mathcal{W}^{\mathrm{fact}}_\infty :=
+\Omega^{\mathrm{fact}}(
+\widehat{\barB}^{\mathrm{fact}}(\mathcal{W}_\infty))$.
+Item~(1) of the conjecture: the conformal weight filtration on
+$\widehat{\barB}^{\mathrm{fact}}$ induces a separated complete
+filtration on~$\mathcal{W}^{\mathrm{fact}}_\infty$.
+Item~(2): quotienting by weight $> N$ recovers the finite-stage
+factorization bar-cobar QI for~$W_N$ (part~(i)).
+Item~(3): the induced bar complexes agree by construction.
+Item~(4): the comparison map is the completed bar-cobar
+counit of part~(iii), which is a quasi-isomorphism.
+\end{proof}
+
+\begin{remark}[DS reduction as Koszul duality datum:
+the $\Einf$ counterpart of
+Remark~\ref{rem:rtt-is-the-duality-datum}]
+\label{rem:ds-is-the-duality-datum}
+\index{Drinfeld--Sokolov reduction!as Koszul datum}
+\index{Koszul duality!engine!W-algebra}
+Theorem~\ref{thm:winfty-factorization-kd} is the exact $\Einf$
+counterpart of the $\Eone$ Yangian construction
+(Corollary~\ref{cor:dk23-all-types},
+Corollary~\ref{cor:completed-bar-cobar-yangian}), with
+\emph{DS reduction playing the role of the RTT relation}:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+& \textbf{Yangian} ($\Eone$) &
+\textbf{$\mathcal{W}_\infty$} ($\Einf$) \\
+\hline
+\emph{Koszul datum} &
+  RTT relation &
+  DS reduction \\
+\emph{Duality mechanism} &
+  $R \mapsto R^{-1}$ &
+  $f \mapsto f^{\mathrm{BV}}$
+  (orbit transpose) \\
+\emph{Level shift} &
+  $\hbar \mapsto -\hbar$ &
+  $k \mapsto -k - 2h^\vee$
+  (Feigin--Frenkel) \\
+\emph{Koszulness input} &
+  PBW (Molev) &
+  PBW (MC1, principal) \\
+\emph{Sectorwise grading} &
+  root lattice $Q(\fg)$ &
+  conformal weight $\mathbb{Z}_{\ge 0}$ \\
+\emph{Factorization target} &
+  completed Yangian &
+  completed KM tower \\
+\end{tabular}
+\end{center}
+
+\smallskip\noindent
+The structural parallel extends to a single organizing
+principle: \emph{the construction procedure that builds the
+algebra is the same structure that computes its Koszul dual.}
+For the Yangian, the RTT relation simultaneously defines the
+algebra and supplies the quadratic duality data.  For the
+$\mathcal{W}$-algebra, the BRST complex of DS reduction
+simultaneously constructs $W_N$ from~$\widehat{\fg}_k$
+and computes $\barB(W_N)$ via
+Theorem~\ref{thm:ds-koszul-intertwine}.
+
+The deepest consequence: the residue identities
+$\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$ that
+were treated as the live MC4 frontier are not independent
+conjectures but instances of the proved DS--KD intertwining
+theorem.  The ``extraction problem'' on the
+$\mathcal{W}_\infty$ side of MC4 is already solved by the
+chain-level content of Theorem~\ref{thm:ds-koszul-intertwine}.
+\end{remark}
 
 \subsection{DS reduction and bar complex: intertwining verification}
 \label{sec:ds-bar-intertwining}

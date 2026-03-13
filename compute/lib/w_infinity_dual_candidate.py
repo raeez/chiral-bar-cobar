@@ -228,6 +228,23 @@ def stage4_primitive_square_class_report(c=None) -> Dict[str, object]:
     }
 
 
+def stage4_pairing_reduction_report() -> Dict[str, object]:
+    """Residue-side stage-4 reduction under a visible invariant pairing package."""
+    return {
+        "assumption": "stage-4 Ward-normalized visible invariant pairing",
+        "forced_channel": (3, 4, 3, 4),
+        "forced_by": (3, 3, 4, 2),
+        "sign_ratio": Rational(-3, 4),
+        "square_ratio": Rational(9, 16),
+        "independent_higher_spin_channels": (
+            (3, 3, 4, 2),
+            (4, 4, 4, 4),
+            (3, 4, 4, 3),
+        ),
+        "status": "four-channel Ward-normalized residue packet contracts to three higher-spin channels under visible pairing invariance",
+    }
+
+
 def stage4_target_packet_at_level(k) -> Dict[Channel, object]:
     """Exact DS-side stage-4 target packet evaluated at a specific level."""
     from compute.lib.w4_stage4_coefficients import w4_central_charge
@@ -307,6 +324,7 @@ def standard_winfinity_dual_candidate_report(c=None) -> Dict[str, object]:
         "stage4": stage4_dual_constraint_report(c),
         "stage4_goal": stage4_dual_goal_report(c),
         "stage4_square_class": stage4_primitive_square_class_report(c),
+        "stage4_pairing_reduction": stage4_pairing_reduction_report(),
         "stage4_level_contract": "use stage4_target_packet_at_level / evaluate_stage4_dual_defects_at_level",
         "stage5_frontier": stage5_dual_frontier_report(),
     }
@@ -322,6 +340,7 @@ def verify_standard_winfinity_dual_candidate(c=None) -> Dict[str, bool]:
     stage4 = report["stage4"]
     stage4_goal = report["stage4_goal"]
     stage4_square = report["stage4_square_class"]
+    stage4_pairing = report["stage4_pairing_reduction"]
     stage5 = report["stage5_frontier"]
     descriptor = report["completed_bar_candidate"]
 
@@ -341,6 +360,9 @@ def verify_standard_winfinity_dual_candidate(c=None) -> Dict[str, bool]:
         "stage-4 Virasoro coverage": set(virasoro) == set(stage4["virasoro_target_channels"]),
         "stage-4 primitive square-class count": stage4_square["primitive_count"] == 2,
         "stage-4 forced square-class count": stage4_square["forced_count"] == 2,
+        "stage-4 pairing-reduced independent channel count": (
+            len(stage4_pairing["independent_higher_spin_channels"]) == 3
+        ),
         "stage-4 higher-spin defects are signless": all(
             stage4_goal["residue_symbols"][channel]["kind"] == "residue_square_variable"
             for channel in stage4["higher_spin_channels"]
@@ -356,6 +378,12 @@ def verify_standard_winfinity_dual_candidate(c=None) -> Dict[str, bool]:
         "stage-4 mixed W4 forced by c334": (
             stage4_square["forced_mixed_square_channels"][(3, 4, 4, 3)]["forced_by"]
             == (3, 3, 4, 2)
+        ),
+        "stage-4 pairing reduction sign ratio": (
+            stage4_pairing["sign_ratio"] == Rational(-3, 4)
+        ),
+        "stage-4 pairing reduction square ratio": (
+            stage4_pairing["square_ratio"] == Rational(9, 16)
         ),
         "stage-4 mixed W3 square relation": simplify(
             higher_spin[(3, 4, 3, 4)]["expression"]

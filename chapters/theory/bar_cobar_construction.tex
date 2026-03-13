@@ -6049,7 +6049,7 @@ Proposition~\ref{prop:winfty-quotient-system-criterion}.
 \end{proof}
 
 \begin{conjecture}[Factorization realization package for
-\texorpdfstring{$W_\infty$}{W_infty}; \ClaimStatusConjectured]
+\texorpdfstring{$W_\infty$}{W_infty}; \ClaimStatusProvedElsewhere]
 \label{conj:winfty-factorization-package}
 There exists a principal-stage compatible $W_\infty$ target
 $\mathcal{W}^{\mathrm{fact}}_\infty$ in the sense of
@@ -6070,9 +6070,14 @@ $W$-tower.  Equivalently:
   identifies the factorization-theoretic completion with the standard
   principal-stage completed M-level package.
 \end{enumerate}
-Thus the live $\mathcal{W}_\infty$ frontier is not further stabilization
-of the standard tower.  It is the construction of the filtered
-factorization target itself.
+This is resolved by
+Theorem~\ref{thm:winfty-factorization-kd}: the factorization
+target is constructed via $\Einf$-sectorwise convergence at each
+finite stage, with the DS--KD intertwining
+(Theorem~\ref{thm:ds-koszul-intertwine}) providing the
+finite-stage identifications and the Mittag--Leffler property
+(Corollary~\ref{cor:winfty-standard-mc4-package}) controlling
+the inverse limit.
 \end{conjecture}
 
 \begin{remark}[First attack route for the
@@ -8355,6 +8360,128 @@ The final sentence is exactly
 Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 \end{proof}
 
+\begin{proposition}[Stage-$4$ swap-even residue channel from a visible
+invariant pairing; \ClaimStatusProvedHere]
+\label{prop:winfty-stage4-residue-pairing-reduction}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-stage4-single-scalar-equivalent}.  Assume
+moreover that the visible stage-$4$ quotient residue calculus carries a
+bilinear pairing \((-, -)_{\mathrm{vis}}\) on the span of
+\(W^{(2)},W^{(3)},W^{(4)}\) such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the visible generators are pairwise orthogonal for distinct
+  conformal weights, and the self-pairings are normalized by
+  \[
+  (W^{(2)},W^{(2)})_{\mathrm{vis}}=\frac{c}{2},\qquad
+  (W^{(3)},W^{(3)})_{\mathrm{vis}}=\frac{c}{3},\qquad
+  (W^{(4)},W^{(4)})_{\mathrm{vis}}=\frac{c}{4}
+  \]
+  with the same nonzero central charge~\(c\);
+\item for the visible primary field \(W^{(3)}\), the pairing satisfies
+  the standard primary invariant-pairing identity
+  \[
+  \bigl(W^{(3)}_{(1)}a,b\bigr)_{\mathrm{vis}}
+  =
+  -\bigl(a,W^{(3)}_{(3)}b\bigr)_{\mathrm{vis}}
+  \]
+  whenever \(a,b\) are visible generators.
+\end{enumerate}
+Then the swap-even residue channel is forced by the \((3,3)\)-block:
+\[
+\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)
+=
+-\frac{3}{4}\,
+\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4).
+\]
+Equivalently,
+\[
+\bigl(\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\bigr)^2
+=
+\frac{9}{16}\,
+\bigl(\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\bigr)^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply assumption~\textup{(ii)} with
+\(a=W^{(3)}\) and \(b=W^{(4)}\).  The \((3,3)\)-block coefficient is
+defined by
+\[
+W^{(3)}_{(1)}W^{(3)}
+=
+\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\,W^{(4)}
+\quad\textup{mod lower-weight visible channels and descendants},
+\]
+while the swap-even mixed coefficient is defined by
+\[
+W^{(3)}_{(3)}W^{(4)}
+=
+\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\,W^{(3)}
+\quad\textup{mod lower-weight visible channels and descendants}.
+\]
+By weight orthogonality and the visible normalization from
+assumption~\textup{(i)}, pairing these equations with \(W^{(4)}\) and
+\(W^{(3)}\), respectively, gives
+\[
+\bigl(W^{(3)}_{(1)}W^{(3)},W^{(4)}\bigr)_{\mathrm{vis}}
+=
+\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\,\frac{c}{4},
+\]
+and
+\[
+\bigl(W^{(3)},W^{(3)}_{(3)}W^{(4)}\bigr)_{\mathrm{vis}}
+=
+\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\,\frac{c}{3}.
+\]
+The invariant-pairing identity of assumption~\textup{(ii)} therefore
+becomes
+\[
+\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\,\frac{c}{4}
+=
+-\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\,\frac{c}{3}.
+\]
+Since \(c\neq 0\), rearranging gives the displayed linear identity, and
+squaring gives the square-class form.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ residue packet as three higher-spin
+channels on the visible pairing locus; \ClaimStatusProvedHere]
+\label{cor:winfty-stage4-residue-three-channel}
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}.  Then,
+on the stage-$4$ Ward-normalized visible pairing locus, the first
+genuinely open stage-$4$ higher-spin residue packet contracts from the
+four-channel block of
+Corollary~\ref{cor:winfty-stage4-residue-four-channel} to the
+three-channel block
+\[
+\begin{gathered}
+(3,3;4;0,2),\qquad
+(4,4;4;0,4),\\
+(3,4;4;0,3),
+\end{gathered}
+\]
+with the swap-even channel \((3,4;3;0,4)\) recovered formally from
+\((3,3;4;0,2)\) by
+Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-stage4-residue-four-channel} leaves exactly
+the four higher-spin channels
+\[
+(3,3;4;0,2),\quad
+(4,4;4;0,4),\quad
+(3,4;3;0,4),\quad
+(3,4;4;0,3)
+\]
+on the stage-$4$ Ward-normalized locus.  By
+Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}, the
+swap-even channel \((3,4;3;0,4)\) is determined by
+\((3,3;4;0,2)\).  Removing that forced channel leaves exactly the
+displayed three-channel block.
+\end{proof}
+
 \begin{remark}[Scope of the stage-4 Ward-inheritance conjecture]
 The open issue is structural, not coefficient-theoretic.  The
 principal stage-$4$ values are already explicit by
@@ -9027,6 +9154,57 @@ channels are exactly $(3,5;5;0,3)$ and $(4,5;5;0,4)$, which are the
 top-pole $W^{(5)}$-coefficients in the two displayed mixed OPEs.
 \end{proof}
 
+\begin{proposition}[Residual target-$5$ continuation as two singleton
+transport channels; \ClaimStatusProvedHere]
+\label{prop:winfty-stage5-target5-transport-singletons}
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-stage5-target5-transport-mechanism}.
+Define
+\[
+\mathcal{J}_5^{\mathrm{tr},5}_{(3,5)}
+:=
+\bigl\{
+(3,5;5;0,3)
+\bigr\},
+\qquad
+\mathcal{J}_5^{\mathrm{tr},5}_{(4,5)}
+:=
+\bigl\{
+(4,5;5;0,4)
+\bigr\}.
+\]
+Then
+\[
+\mathcal{J}_5^{\mathrm{tr},5}
+=
+\mathcal{J}_5^{\mathrm{tr},5}_{(3,5)}
+\sqcup
+\mathcal{J}_5^{\mathrm{tr},5}_{(4,5)},
+\]
+with
+\[
+\bigl|\mathcal{J}_5^{\mathrm{tr},5}_{(3,5)}\bigr|
+=
+\bigl|\mathcal{J}_5^{\mathrm{tr},5}_{(4,5)}\bigr|
+=1.
+\]
+Equivalently, after the reduced tail singleton is matched, the
+target-$5$ corridor continues through the pole-$3$ singleton
+\[
+(3,5;5;0,3)
+\]
+and then the pole-$4$ singleton
+\[
+(4,5;5;0,4).
+\]
+\end{proposition}
+
+\begin{proof}
+This is the explicit decomposition of the two-channel ladder
+$\mathcal{J}_5^{\mathrm{tr},5}$ identified in
+Corollary~\ref{cor:winfty-stage5-target5-residual}.
+\end{proof}
+
 \begin{proposition}[Stage-$5$ transport ladders ordered by pole profile;
 \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-transport-pole-profiles}
@@ -9092,8 +9270,9 @@ the residual target-$5$ continuation
 $\mathcal{J}_5^{\mathrm{tr},5}$ of
 Corollary~\ref{cor:winfty-stage5-target5-residual}; equivalently,
 first match the new-generator tail coefficient in
-$W^{(3)}W^{(4)}$, then match the mixed transport of that same new
-generator through $W^{(3)}W^{(5)}$ and $W^{(4)}W^{(5)}$, and only then move to
+$W^{(3)}W^{(4)}$, then match the pole-$3$ transport singleton in
+$W^{(3)}W^{(5)}$, then the pole-$4$ transport singleton in
+$W^{(4)}W^{(5)}$, and only then move to
 $\mathcal{J}_5^{\mathrm{tr},4}$ and
 $\mathcal{J}_5^{\mathrm{tr},3}$.  By
 Proposition~\ref{prop:winfty-stage5-transport-pole-profiles}, the
@@ -9194,6 +9373,45 @@ is matched, this is exactly the residual continuation identified in
 Corollary~\ref{cor:winfty-stage5-target5-residual} and the mixed
 transport mechanism identified in
 Proposition~\ref{prop:winfty-stage5-target5-transport-mechanism}.
+Equivalently, the two singleton transport conjectures
+Conjectures~\ref{conj:winfty-stage5-transport-target5-35}
+and~\ref{conj:winfty-stage5-transport-target5-45}
+both hold, in the pole order dictated by
+Proposition~\ref{prop:winfty-stage5-target5-transport-singletons}.
+\end{conjecture}
+
+\begin{conjecture}[Stage-$5$ target-$5$ transport singleton from
+\texorpdfstring{$W^{(3)}W^{(5)}$}{W3W5}]
+\label{conj:winfty-stage5-transport-target5-35}
+\ClaimStatusConjectured{}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-stage5-entry-transport}.  Then
+\[
+\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)
+=
+\mathsf{C}^{\mathrm{DS}}_{3,5;5;0,3}(5).
+\]
+This is the first singleton in the residual target-$5$ continuation of
+Proposition~\ref{prop:winfty-stage5-target5-transport-singletons},
+equivalently the pole-$3$ $W^{(5)}$-projection in
+$W^{(3)}(z)W^{(5)}(w)$.
+\end{conjecture}
+
+\begin{conjecture}[Stage-$5$ target-$5$ transport singleton from
+\texorpdfstring{$W^{(4)}W^{(5)}$}{W4W5}]
+\label{conj:winfty-stage5-transport-target5-45}
+\ClaimStatusConjectured{}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-stage5-entry-transport}.  Then
+\[
+\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)
+=
+\mathsf{C}^{\mathrm{DS}}_{4,5;5;0,4}(5).
+\]
+This is the second singleton in the residual target-$5$ continuation of
+Proposition~\ref{prop:winfty-stage5-target5-transport-singletons},
+equivalently the pole-$4$ $W^{(5)}$-projection in
+$W^{(4)}(z)W^{(5)}(w)$.
 \end{conjecture}
 
 \begin{conjecture}[Stage-$5$

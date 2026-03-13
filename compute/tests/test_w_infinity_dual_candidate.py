@@ -12,6 +12,7 @@ from compute.lib.w_infinity_dual_candidate import (
     stage4_dual_defect_map,
     stage4_dual_goal_report,
     stage4_primitive_square_class_report,
+    stage4_pairing_reduction_report,
     stage4_target_packet_at_level,
     evaluate_stage4_dual_defects_at_level,
     stage4_defect_vanishing_report,
@@ -108,6 +109,14 @@ class TestStage4DualConstraints:
         assert report["forced_mixed_square_channels"][(3, 4, 3, 4)]["ratio_to_primitive"] == Rational(9, 16)
         assert report["forced_mixed_square_channels"][(3, 4, 4, 3)]["ratio_to_primitive"] == Rational(5, 7)
 
+    def test_stage4_pairing_reduction_report(self):
+        report = stage4_pairing_reduction_report()
+        assert report["forced_channel"] == (3, 4, 3, 4)
+        assert report["forced_by"] == (3, 3, 4, 2)
+        assert report["sign_ratio"] == Rational(-3, 4)
+        assert report["square_ratio"] == Rational(9, 16)
+        assert len(report["independent_higher_spin_channels"]) == 3
+
     def test_stage4_target_packet_at_level(self):
         packet = stage4_target_packet_at_level(1)
         assert set(packet) == {
@@ -151,6 +160,7 @@ class TestStandardDualCandidateReport:
             "stage4",
             "stage4_goal",
             "stage4_square_class",
+            "stage4_pairing_reduction",
             "stage4_level_contract",
             "stage5_frontier",
         }

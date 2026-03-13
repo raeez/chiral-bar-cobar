@@ -769,7 +769,10 @@ continuation after that tail input as the two-channel ladder
 `\mathcal{J}_5^{\mathrm{tr},5}`;
 `prop:winfty-stage5-target5-transport-mechanism` identifies that
 residual continuation as the comparison of the `W^{(5)}`-projection in
-`W^{(3)}(z)W^{(5)}(w)` and `W^{(4)}(z)W^{(5)}(w)`.
+`W^{(3)}(z)W^{(5)}(w)` and `W^{(4)}(z)W^{(5)}(w)`;
+`prop:winfty-stage5-target5-transport-singletons` then splits that
+residual target-`5` continuation into the pole-`3` singleton
+`(3,5;5;0,3)` and the pole-`4` singleton `(4,5;5;0,4)`.
 `prop:winfty-stage5-transport-target-ladders` splits the mixed packet
 into three fixed-target two-channel ladders,
 and `prop:winfty-stage5-transport-pole-profiles` identifies the

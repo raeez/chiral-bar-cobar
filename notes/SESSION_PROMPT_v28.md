@@ -202,8 +202,11 @@ Else                                                 -> doctrinal propagation or
   two-channel ladder `\mathcal J_5^{\mathrm{tr},5}`, and
   `prop:winfty-stage5-target5-transport-mechanism` identifies that residual continuation
   as the comparison of the `W^{(5)}`-projection in `W^{(3)}(z)W^{(5)}(w)` and
-  `W^{(4)}(z)W^{(5)}(w)`.  Next: `conj:winfty-stage5-block-34`, then
-  `conj:winfty-stage5-transport-target-5`.
+  `W^{(4)}(z)W^{(5)}(w)`, while
+  `prop:winfty-stage5-target5-transport-singletons` splits that residual continuation
+  into the pole-`3` singleton `(3,5;5;0,3)` and the pole-`4` singleton `(4,5;5;0,4)`.
+  Next: `conj:winfty-stage5-block-34`, then `conj:winfty-stage5-transport-target5-35`,
+  then `conj:winfty-stage5-transport-target5-45`.
 
 ---
 
