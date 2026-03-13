@@ -64,6 +64,23 @@ from compute.lib.w_infinity_support_complex import (
     TruncatedWinfinitySupportComplex,
     verify_w_infinity_support_complex,
 )
+from compute.lib.w_infinity_dual_candidate import (
+    completed_bar_candidate_descriptor,
+    stage3_dual_constraint_report,
+    stage4_higher_spin_constraint_map,
+    stage4_virasoro_constraint_map,
+    stage4_dual_constraint_report,
+    stage4_residue_symbol_map,
+    stage4_dual_defect_map,
+    stage4_dual_goal_report,
+    stage4_primitive_square_class_report,
+    stage4_target_packet_at_level,
+    evaluate_stage4_dual_defects_at_level,
+    stage4_defect_vanishing_report,
+    stage5_dual_frontier_report,
+    standard_winfinity_dual_candidate_report,
+    verify_standard_winfinity_dual_candidate,
+)
 
 # Genus-1 PBW generalized diagnostics (MC1 frontier)
 from compute.lib.genus1_pbw_sl2 import (
@@ -610,6 +627,22 @@ __all__ = [
     "TruncatedWinfinityOPE", "verify_truncated_w_infinity_ope",
     # Truncated W_infinity support complex
     "TruncatedWinfinitySupportComplex", "verify_w_infinity_support_complex",
+    # W_infinity dual-candidate package
+    "completed_bar_candidate_descriptor",
+    "stage3_dual_constraint_report",
+    "stage4_higher_spin_constraint_map",
+    "stage4_virasoro_constraint_map",
+    "stage4_dual_constraint_report",
+    "stage4_residue_symbol_map",
+    "stage4_dual_defect_map",
+    "stage4_dual_goal_report",
+    "stage4_primitive_square_class_report",
+    "stage4_target_packet_at_level",
+    "evaluate_stage4_dual_defects_at_level",
+    "stage4_defect_vanishing_report",
+    "stage5_dual_frontier_report",
+    "standard_winfinity_dual_candidate_report",
+    "verify_standard_winfinity_dual_candidate",
     # MC2 cyclic CE
     "sl2_structure_constants", "sl2_killing_form",
     "sl3_structure_constants", "sl3_killing_form",
