@@ -20,9 +20,11 @@ This produces Ext^1_O(V_2(c), V_0(c)) = k for all c — exactly one extension cl
 
 For dominant integral λ, iterating produces the classical BGG resolution enriched with spectral parameters, of length λ+1. For non-integral λ, the chain does not terminate: no lowest weight in the Verma module. This exhibits exactly why Strategy I succeeds on O_poly and fails outside it — consistent with Theorem thm:catO-thick-generation.
 
-### O_poly = DK-relevant O (already proved)
+### O_poly as the natural DK domain
 
-Discovered that cor:dk-poly-catO + rem:poly-O-natural-domain already prove this. The quantum group side Fact_{E_1}(U_q(g))^op has only finite-dimensional reps. Under KL, these correspond exactly to O_poly. So O_poly IS the natural DK domain and factorization DK is unconditionally proved for type A.
+cor:dk-poly-catO + rem:poly-O-natural-domain clarify the scope: the quantum group side Fact_{E_1}(U_q(g))^op has only finite-dimensional reps, which correspond under KL precisely to O_poly. So O_poly is the natural DK domain in the sense that modules outside O_poly have no quantum group counterpart. Factorization DK in this natural form is unconditionally proved for type A.
+
+**Residual question** (concordance line 893): does O = O_poly, or do simple O-modules exist outside O_poly? This is open. If O ⊋ O_poly, those modules lie outside the DK equivalence's scope — whether this means they are "irrelevant" or "indicate missing structure on the quantum group side" is unresolved.
 
 ### Fourier Seed chapter — complete (681 lines)
 
@@ -60,7 +62,7 @@ The remaining work is constructing the line operator from the bar construction �
 
 ## Key structural observations
 
-1. The DK ladder is now: DK-0/1 proved (all g), DK-1½ proved (lattice), DK-2/3 proved (fd + O_poly, type A). The "full category O" generation problem is actually a phantom — O_poly is the natural DK domain.
+1. The DK ladder is now: DK-0/1 proved (all g), DK-1½ proved (lattice), DK-2/3 proved on evaluation-generated core (all types, cor:dk23-all-types) and on O_poly (type A, cor:dk-poly-catO). Whether O = O_poly remains open (concordance line 893). Extensions beyond O_poly require the four-conjecture package G4-G7 (representation-theoretic, not merely categorical).
 
 2. Strategy IV (sectorwise finiteness via loop filtration) is the only strategy that could resolve MC3 for all types simultaneously. Its bottleneck — computing H*(g[t], k) and controlling the spectral sequence differentials — connects to the Loday-Quillen-Tsygan theorem.
 
@@ -159,8 +161,8 @@ For sl₃:
 - Motzkin-like differences: 1, 0, 0, 1, 1, 2, 4, 7, 12, ...
 - [3/3] Padé approximant of the difference sequence predicts a_9 = 1352
 - Actual value (from OEIS/computation): a_9 = 1353
-- The discrepancy of 1 at degree 9 confirms the generating function is ALGEBRAIC, not rational
-- **This resolves conj:near-rationality**: the Virasoro bar GF is algebraic (over Q(t)), not rational
+- The discrepancy of 1 at degree 9 rules out [3/3] Padé rational approximation and is consistent with the GF being ALGEBRAIC (as independently predicted by thm:ds-bar-gf-discriminant via DS reduction). The theoretical case for algebraicity rests on the discriminant theorem, not on this single numerical test.
+- **This supports conj:near-rationality**: the Virasoro bar GF is consistent with algebraic (over Q(t)), not rational. Definitive resolution requires either computing through higher degrees or proving the algebraic form directly.
 
 **Finding 4: W₃ rational GF requires H⁵=171.**
 - The conjectured W₃ GF is P(x) = x(2-3x)/((1-x)(1-3x-x²))
@@ -179,9 +181,9 @@ The proof of thm:dk-fd-typeA has four steps:
 3. **Factorization**: E₁-ordering preserved by strong monoidal equivalence
 4. **Kazhdan bridge**: Composite KZ_{B̄} = Φ_K ∘ Φ
 
-**The ONLY obstruction** between DK-2/3 (proved) and full O: lem:fd-thick-closure shows thick(fd) = D^b(fd) ⊊ D^b(O_full) when O_full has infinite-length objects. But O_poly IS the natural domain (modules outside have no quantum group counterpart).
+**Obstruction between DK-2/3 (proved on O_poly) and full O**: lem:fd-thick-closure shows thick(fd) = D^b(fd) ⊊ D^b(O_full) when O_full has infinite-length objects. O_poly is the natural DK domain in the sense that modules outside O_poly have no quantum group counterpart (rem:poly-O-natural-domain). Factorization DK in this natural form is unconditionally proved for type A.
 
-**Implication**: Factorization DK in its natural form is UNCONDITIONALLY PROVED for type A. The "extension to full O" problem is a phantom — it asks for an equivalence to a target category that doesn't exist.
+**Open question (concordance line 893)**: Does O = O_poly? If O ⊋ O_poly, the additional modules lie outside the DK equivalence's natural scope — but whether they are genuinely "outside mathematics" or indicate missing quantum group structure is unresolved. The four-conjecture package (G4-G7: Baxter exact triangles, prefundamental generation, pro-Weyl recovery, DK on compacts via completion) addresses extensions to infinite-dimensional modules through completed/coderived enhancement. These are representation-theoretic problems, not categorical formalities.
 
 **DK-4 minimal input** (from prop:yangian-dk4-typea-frontier):
 - Boundary-strip identities Δ_{a,0}(N) = 0
@@ -189,7 +191,7 @@ The proof of thm:dk-fd-typeA has four steps:
 - Further reduces to: Ξ_a(e₁⊗e₂) = -ℏ(e₂⊗e₁) — single mixed-tensor residue
 - This is now computationally verified by Track 1B
 
-**DK-5 is FORMAL after DK-4**: compact-generator comparison on completed module categories is uniqueness of colimit-preserving functor.
+**DK-5 reduces to three assumptions given DK-4** (prop:yangian-dk5-compact-generators, ProvedHere as a conditional reduction): IF (i) both completed module categories are compactly generated by fundamental evaluation packets, (ii) DK-4 supplies an exact colimit-preserving comparison functor, and (iii) restriction to generators is an equivalence, THEN the full completed module-category enhancement follows formally (uniqueness of colimit-preserving functor on compactly generated categories). All three assumptions are currently unproved; concordance lists DK-5 as conjectural. See rem:yangian-dk5-input for the precise input packet.
 
 ### Francis-Gaitsgory Completion — Gap Analysis
 
@@ -208,20 +210,23 @@ The FG completion formalism (FG12, Selecta Math 2012) is needed for G7 (conj:dk-
 
 ### Factorization Homotopy Uplifts — Status
 
-For each proved theorem, the H-level (factorization-categorical) uplift status:
+For each proved theorem, the M-level (chain/dg) and H-level (∞-categorical/factorization) status:
 
-| Theorem | M-level | H-level uplift | Gap |
+| Theorem | M-level status | H-level status | Open gaps |
 |---|---|---|---|
-| **A** (Bar-cobar adjunction) | PROVED | Functorial over M_{g,n} — PROVED | None (Theorem A is already functorial) |
-| **B** (Inversion) | PROVED (Koszul locus) | E₁ factorization qi — PROVED | E_∞ extension is Stratum II |
+| **A** (Bar-cobar) | PROVED, functorial over M̄_{g,n} | Chain-level IS the content; AF comparison (ProvedElsewhere) gives ∞-cat frame | None for M-level |
+| **B** (Inversion) | PROVED on Koszul locus | E₁ factorization qi on eval-generated core (cor:dk23-all-types) | Coderived persistence off Koszul locus (conjectural); E_∞ extension (Stratum II) |
 | **C** (Complementarity) | PROVED | Shifted symplectic — PROVED (PTVV) | None |
-| **D_scal** (Modular characteristic) | PROVED | κ(A) factorization invariant — PROVED | Additivity is built in |
+| **D_scal** (Modular char.) | PROVED | κ(A) factorization invariant — PROVED | None (additivity built in) |
 | **DK-0/1** | PROVED | DK-1 IS factorization-level | None |
-| **DK-2/3** | PROVED (fd type A) | thm:dk-fd-typeA IS factorization | None for fd |
+| **DK-2/3** | PROVED: eval core (all types), O_poly (type A) | thm:h-level-factorization-kd on eval core | Full O (G4-G7, repr-theoretic); O=O_poly? (open) |
 | **MC1** (PBW) | PROVED | SS compatible with factorization | Formal |
 | **MC2** (Θ_A) | PROVED | Clutching compatibility proved | None |
 
-**Surprising observation**: Most uplifts are ALREADY proved. The factorization structure is built into the proofs (via FM compactifications and configuration space integrals). The genuine H-level gap is only at the COMPLETION level (Stratum II: E_∞ extension and coderived/completed categories).
+**Assessment**: The M-level theorems are complete for their stated scope. H-level factorization uplifts are largely resolved on evaluation-generated cores. Three categories of genuine gap remain:
+1. **Representation-theoretic** (Stratum I): G4-G7 conjectures — Baxter triangles, prefundamental generation, pro-Weyl recovery. These are open problems in Yangian representation theory, not categorical formalities.
+2. **Completion/coderived** (Stratum II): E_∞ vs E₁ structure, coderived Ran, completed categories.
+3. **Scope** (open): Whether O = O_poly (concordance line 893).
 
 ### Summary of New Computational Infrastructure
 
@@ -257,10 +262,263 @@ The critical path G4→G5→G6→G7→G1 now has computational evidence at:
 
 **The single most important mathematical question**: Does the partition function p(k) growth of L⁻ weight multiplicities allow thick generation of Verma modules with multiplicity-1 weight spaces? The "gap" p(k)-1 at each level k≥2 must be filled by exact triangles with evaluation modules. This is a question about the representation theory of Y(sl₂) that could potentially be resolved by a careful analysis of the tensor product structure.
 
+---
+
+## Session Mar 12, 2026 — The Riordan Anomaly: Why R(n+3) Fails at n=2
+
+### The problem
+
+The Riordan numbers R(n) (OEIS A005043) satisfy:
+```
+(n+1) R(n) = (n-1)(2R(n-1) + 3R(n-2)),  R(0)=1, R(1)=0
+```
+giving 1, 0, 1, 1, 3, 6, 15, 36, 91, 232, 603, 1585, 4213, 11298, ...
+
+The prediction dim H^n(bar(sl₂-hat)) = R(n+3) yields 3, **6**, 15, 36, 91, 232, 603, 1585, 4213, 11298, ...
+
+The correct values (proved via PBW spectral sequence → CE cohomology) are 3, **5**, 15, 36, 91, 232, 603, 1585, 4213, 11298, ...
+
+The **only** discrepancy is at n=2: R(5) = 6, but H² = 5. For all verified degrees n ≥ 3 (through n=10), R(n+3) gives the correct answer.
+
+### Where the Riordan prediction comes from
+
+The PBW spectral sequence (thm:universal-kac-moody-koszul, cor:bar-cohomology-koszul-dual) works as follows.
+
+**E₀ page**: The PBW filtration on the bar complex B̄(ĝ_k) grades by "loop degree" (number of mode applications). The associated graded gr^F B̄ is the bar complex of the commutative chiral algebra Sym^ch(V), where V = g ⊗ t⁻¹C[t⁻¹] is the loop algebra as a vector space.
+
+**E₁ page**: Since Sym^ch(V) is free commutative, it is Koszul with dual the exterior coalgebra Λᶜ(V*). By Priddy's theorem (adapted to the chiral setting), the bar cohomology of Sym^ch(V) is the exterior algebra:
+```
+E₁^{n,0} = Λⁿ(g* ⊗ tC[t])
+```
+concentrated in the row q=0. The E₁ totals by conformal weight are the coefficients of ∏_{m≥1} (1+q^m)^{dim g}. For sl₂ (dim g = 3):
+```
+∏_{m≥1} (1+q^m)³ = 1 + 3q + 6q² + 13q³ + 24q⁴ + 42q⁵ + ...
+```
+
+**Important subtlety:** R(n+3) does NOT equal the E₁ page total by bar degree. The E₁ total dim Λⁿ(V*) is *infinite* for every n ≥ 1 (sum over all conformal weights diverges). The Riordan identification was originally proposed based on low-degree data matching, with the Riordan GF P_R(x) = (1+x-√(1-2x-3x²))/(2x(1+x)) as the conjectured closed form for the bar cohomology GF. The GF shares the discriminant Δ(x) = (1-3x)(1+x) with the Virasoro and βγ generating functions (proved via DS reduction). The naive assumption was that P_sl₂ = P_R exactly.
+
+**E₂ page = E∞**: The d₁ differential is NOT zero. It is the Chevalley-Eilenberg differential of the loop algebra g ⊗ t⁻¹C[t⁻¹] acting on Λ*(g* ⊗ tC[t]) by bracket contraction. For non-abelian g (like sl₂), this is nonzero.
+
+Since E₁ is concentrated in row q=0, all higher differentials d_r (r ≥ 2) vanish for degree reasons (target has second index ≤ -1 < 0). So E∞ = E₂ = H*(CE of loop algebra).
+
+The correct bar cohomology is therefore the CE cohomology H^n_CE(g ⊗ t⁻¹C[t⁻¹], C), which differs from the exterior algebra Λⁿ(V*) exactly where d₁ contributes.
+
+### Why the failure occurs precisely at n=2
+
+The weight-graded bar complex at weight h=2, bar degree 2:
+
+**Chain groups:**
+- B̄²_{h=2} = g ⊗ g (both factors at weight 1), dim = 3² = 9
+- B̄¹_{h=2} = Ā₂ = g₂ ⊕ S²(g₁) (mode-2 generators plus normally ordered pairs), dim = 3 + 6 = 9
+- B̄³_{h=2} = 0 (three weight-1 factors have total weight 3, not 2)
+
+**The bar differential d: B̄² → B̄¹ at weight 2:**
+
+The OPE J^a(z)J^b(w) ~ k·δ^{ab}/(z-w)² + f^{ab}_c J^c(w)/(z-w) has two singular terms. The bar differential accordingly has two components:
+
+1. **d_{(-1)}: B̄²_{h=2} → B̄¹_{h=2}** via the (-1)-st product (normal ordering):
+   J^a ⊗ J^b ↦ J^a_{-1}J^b_{-1}|0⟩ = :J^aJ^b:
+
+2. **d_{(0)}: B̄²_{h=2} → B̄¹_{h=1}** via the (0)-th product (Lie bracket):
+   J^a ⊗ J^b ↦ f^{ab}_c J^c
+
+An element Σ c_{ab} J^a ⊗ J^b is a cycle iff BOTH components vanish.
+
+**Bracket condition (d_{(0)} = 0):** Σ c_{ab} f^{ab}_c = 0 for all c. Since f^{ab}_c is antisymmetric in a,b, this forces c_{ab} to be *symmetric*.
+
+**Normal ordering condition (d_{(-1)} = 0 on symmetric tensors):** The normally ordered products {:J^aJ^b:}_{a≤b} are linearly independent PBW basis elements of S²(g₁). So Σ_{a≤b} c'_{ab} :J^aJ^b: = 0 implies c'_{ab} = 0.
+
+**Conclusion:** ker(d) = 0 at weight 2. Since B̄³_{h=2} = 0, we get H²_{h=2} = 0.
+
+**Explicit matrix:** The 9×9 matrix d_{(-1)}: g⊗g → Ā₂ is computed in bar_deg2_resolution.py. Using commutation [J^a_{-1}, J^b_{-1}] = f^{ab}_c J^c_{-2}, the map decomposes:
+- Symmetric part of J^a_{-1}J^b_{-1}|0⟩ → S²(g₁) basis element (a,b)
+- Antisymmetric part → f^{ab}_c J^c_{-2} ∈ g₂
+
+The map has rank 9 (verified computationally — this is the 9×9 isomorphism). Therefore ker = 0.
+
+**The Riordan formula's error:** R(5) = 6 counts as if the weight-2 contribution survives. The correct count: 6 - 1 = 5 at weight 3 (the only surviving weight for H²), since d₁ in the CE complex has im(d₁^{1,3}) = 3 and ker(d₁^{2,3}) = 8, giving 8 - 3 = 5.
+
+### Why R(n+3) remains correct for n ≥ 3 (verified through n=10)
+
+This is the deep question. There are three layers to the answer:
+
+**Layer 1: Numerical.**
+The Riordan GF P_R(x) was proposed as the closed-form bar cohomology GF based on low-degree data. It shares the discriminant Δ(x) = (1-3x)(1+x) with the Virasoro and βγ GFs (proved). The discrepancy is:
+```
+dim H^n = R(n+3) + correction(n)
+```
+where correction(2) = -1 and correction(n) = 0 for all verified n ≠ 2 (through n=10).
+
+Verified values:
+```
+n | E₂ (CE = bar coh) | R(n+3) | Match?
+1 |        3           |    3   |  ✓
+2 |        5           |    6   |  ✗ (the anomaly: diff = -1)
+3 |       15           |   15   |  ✓
+4 |       36           |   36   |  ✓
+5 |       91           |   91   |  ✓
+6 |      232           |  232   |  ✓
+7 |      603           |  603   |  ✓
+8 |     1585           | 1585   |  ✓
+9 |     4213           | 4213   |  ✓
+10|    11298           |11298   |  ✓
+```
+
+Note: the E₁ totals by bar degree are INFINITE (the exterior algebra Λⁿ(V*) of the infinite-dimensional V* has infinite total dimension for each n ≥ 1). The Riordan numbers do NOT come from E₁ — they come from a conjectured closed-form GF. The E₂ = CE cohomology is finite at each degree (Koszulness) and matches R(n+3) at all verified degrees except n=2.
+
+**Layer 2: Structural — the weight-2 anomaly is isolated.**
+The weight-2 layer of the bar complex is special because:
+1. It is the *lowest* conformal weight where the bar differential's normal-ordering component (d_{(-1)}) acts nontrivially. At weight 1, B̄¹_{h=1} = g and there are no B̄²_{h=1} contributions.
+2. At weight 2, the normal-ordering map d_{(-1)}: g⊗g → g₂ ⊕ S²(g₁) is a **square matrix** (9×9 for sl₂) and happens to be an **isomorphism**. This kills the entire weight-2 contribution to H².
+3. At weight h ≥ 3, the chain spaces grow fast enough that the CE differential's corrections no longer produce a net deficit. The image and kernel dimensions of d₁ adjust to preserve the Riordan total.
+
+The key is that the isomorphism at weight 2 is an accident of "lowest weight": the normally ordered product map from g⊗g to Ā₂ is surjective precisely because Ā₂ = g₂ ⊕ S²(g₁) is spanned by the image of normal ordering plus commutators, and these are the *only* elements at weight 2. At higher weights, the map is no longer between equal-dimensional spaces, so it cannot kill entire weight contributions.
+
+**Layer 3: The generating function perspective.**
+The Riordan GF is:
+```
+P_R(x) = (1 + x - √(1-2x-3x²)) / (2x(1+x))
+```
+This is algebraic of degree 2 over Q(x), with discriminant Δ(x) = 1-2x-3x² = (1-3x)(1+x).
+
+The correct sl₂ bar cohomology GF P(x) shares the same discriminant (proved via DS reduction: Theorem thm:ds-bar-gf-discriminant). So P(x) = P_R(x) + correction, where the correction must be an algebraic function with *no new singularities*. The simplest such correction is a polynomial (or rational function with poles only at x = 1/3 and x = -1).
+
+Since the correction is P(x) - P_R(x) = -x² + O(x³) and the verified values through n=10 show no further corrections, the actual GF may be:
+```
+P(x) = P_R(x) - x²     (corrects coefficient of x² from 6 to 5)
+```
+But this is UNPROVED. The corrected closed-form GF for sl₂ bar cohomology remains open.
+
+**If P(x) = P_R(x) - x², then** the "anomaly" has a clean explanation: the Riordan GF is a conjectured closed form for the E₂ = CE cohomology totals (NOT the E₁ totals, which are infinite at every bar degree ≥ 1), and the degree-2 correction reflects the vanishing H²_{h=2} = 0 (the CE differential kills the entire weight-2 contribution). The question is whether d₁ contributes further net corrections at higher degrees — all evidence through n=10 says no.
+
+### The DS discriminant connection
+
+The Riordan GF and Motzkin GF share the discriminant Δ(x) = (1-3x)(1+x). This is not a coincidence — it is a theorem (thm:ds-bar-gf-discriminant):
+
+- sl₂-hat has bar GF P_sl₂(x), algebraic with discriminant Δ(x)
+- Virasoro = H⁰_DS(sl₂-hat) has bar GF P_Vir(x) = Motzkin differences, algebraic with the same Δ(x)
+- βγ = Wakimoto factor has bar GF P_βγ(x) = √((1+x)/(1-3x)), algebraic with the same Δ(x)
+
+DS reduction acts on bar GFs as a *rational transformation preserving the discriminant*. The discriminant encodes:
+- Growth rate: dominant eigenvalue 3 = dim(sl₂)
+- Alternating correction: eigenvalue -1 from the central extension
+- Recurrence matrix: T_rec = ((2,3),(1,0)), det(1 - xT_rec) = Δ(x)
+
+The eigenvalue 3 = dim(g) is universal (Theorem thm:dominant-branch-point): for any simple g, the exponential growth rate of bar cohomology is (dim g)^n. This connects to the chain space bound dim B̄^n ≤ (dim g)^n · (n-1)! (rem:bar-dims-level-independent).
+
+### Universality of the anomaly across ranks
+
+For sl₃ (dim g = 8), the bar cohomology is:
+- H¹ = 8, H² = 36, H³ = 204 (proved)
+- Conjectured GF: P(x) = 4x(2-13x-2x²)/((1-8x)(1-3x-x²)), rational degree 3
+
+The sl₃ discriminant is Δ_sl₃(x) = (1-8x)(1-3x-x²), with dominant eigenvalue 8 = dim(sl₃).
+
+**Open question:** Does sl₃ have a "Riordan-like" formula that also fails at degree 2? The E₁ page for sl₃ is Λ*(sl₃* ⊗ tC[t]), with dim Λ²(V*)_2 = C(8,2) = 28. The CE differential d₁ at weight 2 would need to be analyzed to check whether H²_{h=2}(sl₃) = 0 as for sl₂. The computation bar_deg2_resolution.py proves H²_{h=2} = 0 for ALL semisimple g (both components of d must vanish; the normal-ordering argument uses PBW linear independence which holds for any g). So the weight-2 anomaly is universal.
+
+**However**: for sl₃ the E₁ total at degree 2 is C(8,2) = 28, not 36, so the Riordan-like formula wouldn't match even at E₁. The sl₃ bar cohomology has a different combinatorial structure.
+
+### Connection to H²_{h=2} = 0 for general semisimple g
+
+The proof of H²_{h=2} = 0 (rem:bar-deg2-symmetric-square) works for all semisimple g:
+
+**Claim:** For any semisimple g, H²_{h=2}(B̄(ĝ_k)) = 0.
+
+**Proof sketch:**
+- B̄²_{h=2} = g ⊗ g (dim g²)
+- B̄¹_{h=2} = g₂ ⊕ S²(g₁) (dim g + dim S²(g) = g + g(g+1)/2)
+- B̄³_{h=2} = 0
+
+The bar differential d = d_{(-1)} + d_{(0)} at weight 2:
+- d_{(0)}: bracket condition forces cycles to be symmetric (since f^{ab}_c antisymmetric)
+- d_{(-1)}: normal ordering maps symmetric tensors to S²(g₁), which has linearly independent PBW basis
+
+So ker(d) ⊆ ker(d_{(0)}) = Sym²(g), and d_{(-1)} restricted to Sym²(g) maps injectively to S²(g₁) (PBW independence). Hence ker(d) = 0.
+
+Note: For sl₂, both B̄² and B̄¹ at weight 2 have dimension 9, so d_{(-1)} alone is an isomorphism (the bracket condition is redundant). For rank ≥ 2, dim B̄² = (dim g)² > dim g + C(dim g + 1, 2) = dim B̄¹, so both conditions are needed.
+
+### Summary: three perspectives on the anomaly
+
+1. **PBW spectral sequence**: E₁ ≠ E₂ for non-abelian g. The d₁ differential (CE) produces a correction at every degree. At degree 2, it kills the weight-2 contribution entirely (H²_{h=2} = 0). At degrees ≥ 3, the corrections happen to preserve R(n+3) (verified numerically, not proved).
+
+2. **Chiral bar differential decomposition**: The bar differential at weight 2 has two components (normal ordering + bracket). The normal ordering component is an isomorphism at weight 2 because S²(g₁) and g₂ together span exactly Ā₂. This is an "accident" of lowest weight — at higher weights, the chain spaces have more structure and the isomorphism breaks.
+
+3. **Generating functions**: The correct GF is P_R(x) + correction, where the correction preserves the discriminant Δ(x) = (1-3x)(1+x). Empirically, correction = -x² (a single monomial). Whether this holds to all orders is open.
+
+### Open problems
+
+1. **Prove R(n+3) for n ≥ 3.** Show that the CE cohomology of sl₂ ⊗ t⁻¹C[t⁻¹] at degree n (n ≥ 3) equals R(n+3). This would require either:
+   - A direct CE computation (hard: the complex grows exponentially)
+   - An algebraic proof that d₁ contributes zero net correction at degree n ≥ 3
+   - A closed-form GF proof: show P(x) = P_R(x) - x²
+
+2. **Determine the correct GF for sl₂ bar cohomology.** The Riordan GF needs modification. Is P(x) = P_R(x) - x²? Or is there a cleaner closed form?
+
+3. **Generalize to other algebras.** Does every KM algebra have a "Riordan-like" formula with isolated low-degree corrections? The sl₃ case suggests different combinatorics (rational, not algebraic-degree-2).
+
+4. **Conceptual explanation.** Why does the CE correction vanish at degree ≥ 3? Is there an algebraic reason (e.g., stability of some spectral sequence) or is it a numerical coincidence? The partition-of-unity properties of the CE differential on the loop algebra might provide a structural explanation.
+
+---
+
 ### Corrections to Manuscript Claims — ALL INSTALLED
 
 1. **c=26 self-duality**: ✓ INSTALLED. poincare_computations.tex states c=13 is self-dual; c=26 dual to trivial.
-2. **Classical Koszul relation**: ✓ VERIFIED. H_A(t)·H_{A!}(-t)=1 NOT overclaimed in manuscript (used only as consistency check).
-3. **Virasoro near-rationality**: ✓ INSTALLED. conj:virasoro-pade upgraded to ProvedHere in combinatorial_frontier.tex.
-4. **O_poly is the natural DK domain**: ✓ INSTALLED. rem:poly-O-natural-domain in yangians.tex (lines 3139–3161).
+2. **Classical Koszul relation**: ✓ VERIFIED. H_A(t)·H_{A!}(-t)=1 NOT overclaimed in manuscript (used only as series-inversion consistency check, with positivity of resulting dims as the test — not as a theorem about chiral Koszulness). All 6 uses in manuscript are properly qualified (3 justified by proved Koszulness, 3 explicitly labeled as conjectural consistency checks).
+3. **Virasoro near-rationality**: ✓ INSTALLED. prop:virasoro-pade (ProvedHere) in combinatorial_frontier.tex establishes the Padé matching computation through q=18. The period-6 persistence is separately conjectured (conj:virasoro-pade-periodic, Conjectured). The algebraic GF itself is stated with an explicit formula (eq:virasoro-gf-algebraic). The Padé failure at degree 9 is a *consequence* of algebraicity, not its proof.
+4. **O_poly is the natural DK domain**: ✓ INSTALLED. rem:poly-O-natural-domain in yangians.tex (lines 3139–3161). Note: this is a scope clarification (O_poly = natural domain because quantum group side has only fd reps), NOT a resolution of the O = O_poly question.
 5. **prop:yangian-bar-loop-weight scope**: ✓ FIXED (this session). Statement generalized from sl_N to any simple g — proof is type-independent (root lattice grading, PBW theorem, finiteness at fixed weight+level). Fixes scope mismatch with cor:dk23-all-types.
+
+---
+
+## Epistemic Audit (added Mar 12, 2026)
+
+Adversarial review of all claims in these working notes, classified by epistemic status. The standard: concordance.tex (the constitution) is the authority. Working notes should never exceed concordance precision.
+
+### Claims verified as correct
+
+| Claim | Status | Basis |
+|---|---|---|
+| sl₂ bar cohomology H¹=3, H²=5, ..., H¹⁰=11298 | PROVED | bar_dim_sl2() + 10 test assertions |
+| R(n+3) matches for n≥3 (through n=10) | NUMERICALLY VERIFIED | Not proved for n≥11 |
+| H²_{h=2} = 0 for all semisimple g | PROVED | rem:bar-deg2-symmetric-square; PBW independence argument |
+| PBW SS: E₂ = E∞ (d_r=0 for r≥2) | PROVED | E₁ concentrated in row q=0 |
+| E₁ totals by bar degree infinite | CORRECT | Λⁿ(V*) of infinite-dim V* |
+| DS discriminant Δ(x) shared by sl₂, Vir, βγ | PROVED | thm:ds-bar-gf-discriminant |
+| K^line = K^RTT = Λ²(V) for N=2,3,4 | COMPUTATIONALLY VERIFIED | 156 tests, yangian_residue_extraction.py |
+| TQ relation for prefundamentals (character level) | COMPUTATIONALLY VERIFIED | 103 tests, hjz_prefundamental.py |
+| Baxter SES: 0→M(λ-1)→V₁⊗M(λ)→M(λ+1)→0 | COMPUTATIONALLY VERIFIED | 226 tests, baxter_derived_lift.py |
+| Vir_c^! ≅ Vir_{26-c}, self-dual at c=13 | PROVED | symbolic computation + manuscript installation |
+| H_A(t)·H_{A!}(-t)≠1 chirally for bc/βγ | COMPUTATIONALLY VERIFIED | independent_conjectures.py |
+| W₃ H⁵=171 is falsifiable prediction | CORRECT | Well-posed: uniquely pins [2/3] rational GF |
+
+### Claims corrected in this audit
+
+| Original claim | Problem | Correction |
+|---|---|---|
+| "O_poly IS the natural DK domain and factorization DK is unconditionally proved" | Scope inflation: drops concordance qualification "residual question: O=O_poly?" | Added qualification; O=O_poly is open |
+| "Full category O generation is a phantom" | Rhetoric exceeding concordance precision | Replaced with precise statement of what's open |
+| "DK-5 is FORMAL after DK-4" | Presents conditional reduction as resolution; 3 unproved assumptions elided | Listed all 3 assumptions; noted concordance status = conjectural |
+| "Most H-level uplifts ALREADY proved" | Conflates M-level (chain) with H-level (∞-categorical) | Restructured table with M/H distinction; listed 3 gap categories |
+| "Genuine gap only at completion level" | Understates Stratum I representation-theoretic gaps (G4-G7) | G4-G7 are repr-theoretic, not completion issues |
+| "Discrepancy confirms GF is algebraic" | Padé failure is evidence, not proof | "consistent with algebraic"; proof rests on discriminant theorem |
+| "Riordan GF gives E₁ page total" (line 387) | FACTUAL ERROR: E₁ totals are infinite | Corrected: Riordan GF is conjectured closed form for E₂ totals |
+
+### Epistemic boundaries — what is NOT proved
+
+1. **R(n+3) = H^n for n ≥ 11**: Verified only through n=10. Could fail at higher degrees.
+2. **P(x) = P_R(x) - x²**: The corrected sl₂ bar GF is conjectured, not proved.
+3. **O = O_poly**: Whether full category O equals its polynomial subcategory is open.
+4. **G4-G7 conjecture package**: Computational evidence exists but proofs are open. These are the genuine MC3 bottleneck — representation-theoretic problems in Yangian theory.
+5. **DK-4/DK-5**: Conjectural (concordance). DK-4 analytic part proved (Mittag-Leffler), algebraic identification open. DK-5 conditional on 3 unproved assumptions.
+6. **W₃ H⁵=171**: Conjectured. Falsifiable but uncomputed.
+7. **Near-rationality (Virasoro)**: The algebraicity claim rests on thm:ds-bar-gf-discriminant. The Padé failure is supporting evidence only.
+
+### Principle applied
+
+Every claim in these notes should be traceable to one of:
+- A proved theorem with label (concordance-verified)
+- A computational verification with test count (reproducible)
+- An explicit conjecture with label (honestly marked)
+- An open question (stated as such)
+
+Rhetoric ("phantom," "confirms," "UNCONDITIONALLY") is replaced by precise conditional language. The dual imperative: maximalist ambition requires maximal honesty about what remains.

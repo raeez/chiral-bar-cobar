@@ -113,5 +113,97 @@ Pattern: `Theorem \ref` → `Theorem~\ref` (and similarly for Proposition, Lemma
 
 ---
 
+## Session 2: Cross-Manuscript Mathematical Consistency (2026-03-12)
+
+**Focus**: Stale claims, cross-chapter inconsistencies, notation uniformity.
+**Method**: Systematic grep-and-verify across all chapters, not page-by-page.
+
+### A. Stale MC2 References (MC2 fully resolved → Theorem)
+
+| File | Line | Fix |
+|------|------|-----|
+| introduction.tex | 542 | `Conjecture~\ref{conj:master-theta}` → `Theorem~\ref{conj:master-theta} (originally MC2)` |
+| introduction.tex | 707 | `resolving Conjecture~\ref{conj:universal-MC}` → `resolving Theorem~\ref{conj:universal-MC}` |
+| higher_genus.tex | 10137 | Removed stale "resolving Conjecture~\ref{conj:master-theta}" |
+| higher_genus.tex | 10326 | Updated to `This is Theorem~\ref{conj:master-theta} (MC2).` |
+| higher_genus.tex | 11747 | Updated "three open MC2 hypotheses reduce to two" → both resolved |
+| higher_genus.tex | 14155 | Added missing "[Resolved]" annotation to mc2-hyp:tautological |
+| deformation_theory.tex | 1334 | "two MC2 hypotheses remain open" → all three resolved |
+| concordance.tex | 38-43 | Updated opening to state MC2 is proved |
+| concordance.tex | 557-560 | Split "Conjectures" range to separate Theorem from Conjectures |
+| concordance.tex | 2598 | `resolving Conjecture` → `Theorem` |
+| concordance.tex | 4042 | Removed "conjectural" describing Θ_A (now proved) |
+| fourier_seed.tex | 679 | Updated to `(Theorem~\ref{conj:master-theta}).` |
+
+### B. DK-2/3 Scope (now proved unconditionally for ALL simple types)
+
+| File | Line | Fix |
+|------|------|-----|
+| yangians.tex | 4819-4833 | Rewrote DK-2/3 item: "type A proved / other types conjectural" → "All types proved" by two mechanisms (thick gen + sectorwise) |
+| yangians.tex | 4846-4856 | Tightened summary: leads with unconditional all-types result |
+| lattice_foundations.tex | 3656-3657 | Table: "Type A only" → "All types" for DK-2/DK-3 |
+
+### C. E_n Koszul Duality (now proved → Theorem)
+
+| File | Line | Fix |
+|------|------|-----|
+| concordance.tex | 1431-1432 | `Conjecture~\ref{conj:en-koszul}` → `Theorem~\ref{conj:en-koszul-duality}` |
+| concordance.tex | 4097-4098 | Same update + noted as proved |
+| concordance.tex | 4398-4399 | Same update |
+| holomorphic_topological.tex | 1356 | ClaimStatusConjectured → ClaimStatusProvedElsewhere |
+| holomorphic_topological.tex | 1390 | Added resolution note citing Theorem |
+
+### D. Mathematical Exposition Improvements
+
+| File | Line | Fix |
+|------|------|-----|
+| w_algebras_deep.tex | 228 | Filled missing formula: `m_0^{(G)} = 2k'/3` (was blank) |
+| kontsevich_integral.tex | 272 | Added critical-level note: Sugawara undefined at k=-h^∨ |
+| chiral_koszul_pairs.tex | 30-36 | Clarified why non-quadratic algebras can be chiral Koszul (PBW filtration) |
+| deformation_theory.tex | 1318-1327 | Strengthened l_4^tr=0 proof: explicit transfer formula argument |
+| beta_gamma.tex | 114-117 | Clarified two-generator duality (bc, not single free fermion) |
+| yangians.tex | 1979-1980 | "Heisenberg self-duality" → correctly notes H is NOT self-dual |
+
+### E. $\mathcal{W}$-algebra Notation Uniformity
+
+Fixed plain "W-algebra" → `$\mathcal{W}$-algebra` in **34 theorem/definition/section headings** across:
+- w_algebras_framework.tex (6 environments)
+- kac_moody_framework.tex (2 environments + 1 section)
+- bv_brst.tex (2 environments + 1 section)
+- concordance.tex (1 environment)
+- w_algebras_deep.tex (3 environments)
+- free_fields.tex (7 environments)
+- holomorphic_topological.tex (3 environments)
+- hochschild_cohomology.tex (1 environment)
+- koszul_pair_structure.tex (1 environment)
+- chiral_koszul_pairs.tex (1 environment)
+- chiral_modules.tex (1 environment)
+- existence_criteria.tex (1 environment)
+
+### F. Formula Verification (all correct)
+
+Spot-checked 5 critical formula families across 40+ instances:
+- ✓ Virasoro DS: c = 1 - 6(k+1)²/(k+2) — 7 instances
+- ✓ W₃ DS: c = 2 - 24(k+2)²/(k+3) — 9 instances
+- ✓ W₃ Λ = :TT: - (3/10)∂²T — 10+ instances (minus sign correct)
+- ✓ Feigin-Frenkel: k ↔ -k-2h^∨ — 131 instances (2h^∨ correct)
+- ✓ Sugawara: T = (1/2(k+h^∨))Σ:J^a J^a: — all correct + undefined at critical
+
+### Session 2 Summary
+
+| Category | Count |
+|----------|-------|
+| Stale MC2 references fixed | 12 |
+| DK scope corrections | 3 |
+| E_n theorem upgrades | 5 |
+| Exposition improvements | 6 |
+| W-algebra notation fixes | 34 |
+| Formula verifications | 40+ |
+| **Total mathematical fixes** | **60** |
+
+Build: 1646pp, 0 undefined refs, 0 overfull boxes.
+
+---
+
 ## Continuing from page 74...
 
