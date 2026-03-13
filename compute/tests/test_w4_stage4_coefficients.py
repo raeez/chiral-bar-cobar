@@ -28,6 +28,12 @@ from compute.lib.w4_stage4_coefficients import (
     incremental_reduced_packet,
     incremental_reduced_block_decomposition,
     incremental_higher_spin_channels,
+    incremental_higher_spin_block_decomposition,
+    incremental_higher_spin_block,
+    incremental_higher_spin_singleton_blocks,
+    incremental_higher_spin_nonsingleton_blocks,
+    incremental_higher_spin_target_decomposition,
+    incremental_higher_spin_nonsingleton_target_decomposition,
     incremental_virasoro_target_channels,
     incremental_virasoro_target_identities,
     analyze_incremental_packet,
@@ -608,7 +614,55 @@ class TestStage5IncrementalPacket:
         vir = incremental_virasoro_target_channels(5)
         assert len(higher) == 8
         assert len(vir) == 3
+        assert higher == [
+            (3, 4, 5, 2),
+            (3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3),
+            (4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4),
+            (5, 5, 4, 6),
+        ]
         assert vir == [(3, 5, 2, 6), (4, 5, 2, 7), (5, 5, 2, 8)]
+
+    def test_stage5_higher_spin_block_decomposition(self):
+        """J_5^{hs} decomposes as 1 + 3 + 3 + 1 by source pair."""
+        blocks = incremental_higher_spin_block_decomposition(5)
+        assert blocks[(3, 4)] == [(3, 4, 5, 2)]
+        assert blocks[(3, 5)] == [
+            (3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3),
+        ]
+        assert blocks[(4, 5)] == [
+            (4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4),
+        ]
+        assert blocks[(5, 5)] == [(5, 5, 4, 6)]
+
+    def test_stage5_named_subblocks(self):
+        """The four stage-5 higher-spin subblocks are addressable one by one."""
+        assert incremental_higher_spin_block(5, (3, 4)) == [(3, 4, 5, 2)]
+        assert incremental_higher_spin_block(5, (3, 5)) == [
+            (3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3),
+        ]
+        assert incremental_higher_spin_block(5, (4, 5)) == [
+            (4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4),
+        ]
+        assert incremental_higher_spin_block(5, (5, 5)) == [(5, 5, 4, 6)]
+
+    def test_stage5_singleton_vs_transport_blocks(self):
+        """Stage 5 splits into singleton entry blocks and mixed transport triples."""
+        assert incremental_higher_spin_singleton_blocks(5) == {
+            (3, 4): [(3, 4, 5, 2)],
+            (5, 5): [(5, 5, 4, 6)],
+        }
+        assert incremental_higher_spin_nonsingleton_blocks(5) == {
+            (3, 5): [(3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3)],
+            (4, 5): [(4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4)],
+        }
+
+    def test_stage5_transport_target_ladders(self):
+        """The mixed transport packet splits into three fixed-target ladders."""
+        assert incremental_higher_spin_nonsingleton_target_decomposition(5) == {
+            3: [(3, 5, 3, 5), (4, 5, 3, 6)],
+            4: [(3, 5, 4, 4), (4, 5, 4, 5)],
+            5: [(3, 5, 5, 3), (4, 5, 5, 4)],
+        }
 
     def test_stage5_virasoro_target_values(self):
         """Mixed target-2 channels vanish; the self target-2 channel equals 2."""
@@ -616,3 +670,31 @@ class TestStage5IncrementalPacket:
         assert values[(3, 5, 2, 6)] == 0
         assert values[(4, 5, 2, 7)] == 0
         assert values[(5, 5, 2, 8)] == 2
+
+    def test_stage5_analysis_reports_higher_spin_blocks(self):
+        """The packet summary records the higher-spin block decomposition."""
+        analysis = analyze_incremental_packet(5)
+        assert analysis["higher_spin_blocks"] == {
+            (3, 4): [(3, 4, 5, 2)],
+            (3, 5): [(3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3)],
+            (4, 5): [(4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4)],
+            (5, 5): [(5, 5, 4, 6)],
+        }
+        assert analysis["higher_spin_singletons"] == {
+            (3, 4): [(3, 4, 5, 2)],
+            (5, 5): [(5, 5, 4, 6)],
+        }
+        assert analysis["higher_spin_nonsingletons"] == {
+            (3, 5): [(3, 5, 3, 5), (3, 5, 4, 4), (3, 5, 5, 3)],
+            (4, 5): [(4, 5, 3, 6), (4, 5, 4, 5), (4, 5, 5, 4)],
+        }
+        assert analysis["higher_spin_targets"] == {
+            3: [(3, 5, 3, 5), (4, 5, 3, 6)],
+            4: [(3, 5, 4, 4), (4, 5, 4, 5), (5, 5, 4, 6)],
+            5: [(3, 4, 5, 2), (3, 5, 5, 3), (4, 5, 5, 4)],
+        }
+        assert analysis["higher_spin_nonsingleton_targets"] == {
+            3: [(3, 5, 3, 5), (4, 5, 3, 6)],
+            4: [(3, 5, 4, 4), (4, 5, 4, 5)],
+            5: [(3, 5, 5, 3), (4, 5, 5, 4)],
+        }

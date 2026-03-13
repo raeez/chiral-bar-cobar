@@ -1,5 +1,5 @@
 # Session State — Chiral Bar-Cobar Monograph
-# Last updated: Mar 13, 2026 (git repair + MC4 reduced-packet contraction theorem)
+# Last updated: Mar 13, 2026 (git repair + MC4 higher-spin packet linearization + commit triage)
 
 > **Live state note (March 13, 2026).**
 > This is an active state file. Historical session prompts and audit
@@ -9,11 +9,11 @@
 ## Quick State
 - **Session prompt**: `notes/SESSION_PROMPT_v23.md` (live control prompt)
 - **Census**: Machine baseline Mar 13: PH 957, PE 323, CJ 125, HE 28, Open 0 = 1433 total
-- **Build**: 1736pp, 3-pass convergence (0 undef citations, 0 undef refs, 0 rerun, 0 overfull)
+- **Build**: 1742pp, 2-pass convergence (0 undef citations, 0 undef refs, 0 rerun, 0 overfull)
 - **Source**: 116,607 lines across 61 active / 70 total `.tex` files
-- **Tests**: `pytest` deselects `@slow` by default; `compute/tests/test_ds_reduction.py` now fully deselects without `--run-slow` and passes `216/216` with `--run-slow` in 15m11s; the live MC4 W-packet pair `test_w4_stage4_coefficients.py` + `test_w4_ds_ope_extraction.py` now passes `204/204`.
-- **Git integrity**: repaired by fresh `.git` metadata transplant from `origin`; `git fsck --full` now returns clean.
-- **Uncommitted delta**: 38 modified files, 2 untracked. Still needs scoped commit triage.
+- **Tests**: `pytest` deselects `@slow` by default; `compute/tests/test_ds_reduction.py` now fully deselects without `--run-slow` and passes `216/216` with `--run-slow` in 15m11s; the live MC4 W-packet pair `test_w4_stage4_coefficients.py` + `test_w4_ds_ope_extraction.py` now passes `206/206`.
+- **Git integrity**: repaired by fresh `.git` metadata transplant from `origin`; `git fsck --full --no-reflogs` now shows no dangling commits and only working-state dangling blobs.
+- **Uncommitted delta**: 0 modified files, 0 untracked after scoped commit triage.
 
 ## Governing Mandate
 - Build the book as the definitive dimension-one treatise of modular homotopy theory for factorization algebras on curves.
@@ -28,19 +28,20 @@ See concordance.tex rem:proof-roadmaps for full strategies.
 | MC1 | **PROVED** for KM, Vir, principal W_N | Complete |
 | MC2 | **PROVED** (thm:mc2-full-resolution) | Complete |
 | MC3 | DK-0/1/1½ proved; DK-2/3 on the evaluation-generated core at all simple types | Ordinary-derived/completed/coderived enlargement beyond that core; KL bridge |
-| MC4 | Standard infinite towers remain frontier after the completed M-level packages | Build `\mathcal W^{\mathrm{ht}}`, `\Ydg_{\cA}`; recover `W_N`, `Y_{\le N}`; prove packets on `\mathcal I_N`, `\Delta_{a,0}(N)` |
+| MC4 | Standard infinite towers remain frontier after the completed M-level packages | Build `\mathcal W^{\mathrm{ht}}`; on the Yangian side realize the canonical formal-moduli target `\mathfrak g_{\cA}` by `\Ydg_{\cA}`; recover `W_N`, `Y_{\le N}`; prove packets on `\mathcal I_N`, `\Delta_{a,0}(N)` |
 | MC5 | Genus 0 proved; downstream | After MC3/MC4 |
 
 Periodicity: orthogonal weak flank, not bottleneck.
 
 ## Recent Sessions (last 3)
 
-### Mar 13 — git repair + MC4 stage-5 packet linearization
-- **Git object database repaired**: the previous missing-object / invalid-reflog state was resolved by backing up the corrupt `.git`, transplanting fresh metadata from `origin`, and rebuilding the index from `HEAD` without touching the working tree; `git fsck --full` is now clean again.
-- **MC4 stage-growth sharpened**: `prop:winfty-ds-stage-growth-packet` and `cor:winfty-ds-stage-growth-top-parity` are now complemented by the uniform contraction theorem `prop:winfty-stage-growth-virasoro-target-contraction`, which removes the target-`2` Virasoro channels from every reduced incremental packet `\mathcal J_{N+1}^{\mathrm{red}}` under the normalized residue package.  The first concrete specialization remains `\mathcal J_5^{\mathrm{red}}`: `cor:winfty-ds-stage5-reduced-packet` names it explicitly as an `11`-entry block, and `cor:winfty-stage5-residue-eight-channel` contracts it to `8` higher-spin channels.
-- **Exact Ward gap isolated**: `prop:winfty-stage4-visible-pairing-gap` now states that once the visible Virasoro Ward action is fixed, the open content of `conj:winfty-stage4-ward-inheritance` is exactly inheritance of mixed-weight orthogonality and diagonal visible pairings.
-- **Build verification**: `./scripts/build.sh 4` converged at `1736pp` in `3` passes with `0` undefined citations, `0` undefined references, `0` rerun requests, and `0` overfull boxes.
-- **Compute verification**: `compute/tests/test_w4_stage4_coefficients.py` + `compute/tests/test_w4_ds_ope_extraction.py` pass `204/204`.
+### Mar 13 — git repair + MC4 higher-spin packet linearization
+- **Git object database repaired**: the previous missing-object / invalid-reflog state was resolved by backing up the corrupt `.git`, transplanting fresh metadata from `origin`, and rebuilding the index from `HEAD` without touching the working tree; the repaired checkout now has no dangling commits and only working-state dangling blobs under `git fsck --full --no-reflogs`.
+- **MC4 stage-growth sharpened**: `prop:winfty-ds-stage-growth-packet` and `cor:winfty-ds-stage-growth-top-parity` are now complemented by the uniform contraction theorem `prop:winfty-stage-growth-virasoro-target-contraction`, which removes the target-`2` Virasoro channels from every reduced incremental packet `\mathcal J_{N+1}^{\mathrm{red}}` under the normalized residue package.  The first concrete specialization remains `\mathcal J_5^{\mathrm{red}}`: `cor:winfty-ds-stage5-reduced-packet` names it explicitly as an `11`-entry block, while `cor:winfty-stage5-higher-spin-packet` identifies its contracted `8`-channel higher-spin core `\mathcal J_5^{\mathrm{hs}}`; `prop:winfty-stage5-higher-spin-subblocks` splits that first higher-spin frontier as `1+3+3+1`; `cor:winfty-stage5-entry-transport` isolates the first two-channel entry packet from the six-channel mixed transport packet; `prop:winfty-stage5-transport-target-ladders` then splits the mixed packet into three fixed-target two-channel ladders; and `conj:winfty-stage5-higher-spin-identities` names the next finite bar-vs-DS list.
+- **Exact Ward gap isolated**: `prop:winfty-stage4-visible-pairing-gap` now states that once the visible Virasoro Ward action is fixed, the open content of `conj:winfty-stage4-ward-inheritance` is exactly the visible mixed-weight orthogonality and visible diagonal normalization conjectures `conj:winfty-stage4-visible-orthogonality` and `conj:winfty-stage4-visible-diagonal-normalization`.
+- **Build verification**: `./scripts/build.sh 4` converged at `1742pp` in `2` passes with `0` undefined citations, `0` undefined references, `0` rerun requests, and `0` overfull boxes.
+- **Compute verification**: `compute/tests/test_w4_stage4_coefficients.py` + `compute/tests/test_w4_ds_ope_extraction.py` pass `206/206`.
+- **Commit hygiene restored**: the recovery snapshot was audited against `main`, the remaining dirty state was partitioned into scoped commits, and the live checkout was returned to a clean tracked state.
 
 ### Mar 13 — DS suite unblock + metadata/control sync
 - **DS-heavy suite unblocked**: the corrected-semideirect and survivor-family packets now reduce the worst target-side duplicate checks to source-side square-zero plus explicit dual-swap verification, eliminating the previous apparent hang.

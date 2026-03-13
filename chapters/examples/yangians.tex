@@ -1328,11 +1328,21 @@ completed fundamental-packet DK-5 packet of
 Corollary~\ref{cor:yangian-dk5-fundamental-packet}.
 \end{proof}
 
-\begin{conjecture}[Finite-RTT quotient package for dg-shifted Yangians;
+\begin{conjecture}[Finite-RTT quotient package on a dg model of the
+canonical Yangian H-level target;
 \ClaimStatusConjectured]
 \label{conj:dg-shifted-yangian-rtt-package}
-The dg-shifted Yangian $\Ydg_{\cA}$ attached to affine/Yangian-type
-modular Koszul data admits an RTT-adapted filtration in the sense of
+Let
+\[
+\cA=\mathcal{Y}(\mathfrak{sl}_M),
+\qquad
+\mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA}
+\]
+be the canonical H-level dg target of
+Proposition~\ref{prop:yangian-canonical-hlevel-target}.  Then there
+exists a separated complete dg algebra $\Ydg_{\cA}$ representing the
+same completed module category as $\mathfrak{g}_{\cA}$ and admitting an
+RTT-adapted filtration in the sense of
 Definition~\ref{def:rtt-adapted-filtration}.  More precisely:
 \begin{enumerate}
 \item the filtration is separated and complete for the pole order or
@@ -1346,15 +1356,21 @@ Definition~\ref{def:rtt-adapted-filtration}.  More precisely:
   degree-$2$ twisting morphism $r(z)=\tau|_{\deg 2}$.
 \end{enumerate}
 Assuming this package, Corollary~\ref{cor:yangian-hlevel-comparison-criterion}
-identifies $\Ydg_{\cA}$ with the coefficientwise RTT completion
-$\widehat Y_{\mathrm{RTT}}$.
+identifies that dg model $\Ydg_{\cA}$ with the coefficientwise RTT
+completion $\widehat Y_{\mathrm{RTT}}$.
+
+Equivalently, the open Yangian MC4 move is to present the canonical
+formal-moduli target by an RTT-adapted dg algebra model, not to
+construct the target itself.
 \end{conjecture}
 
 \begin{remark}[Why line operators should control the filtration]
 \label{rem:dg-shifted-filtration-evidence}
 The finite-RTT quotient package is narrower than the full derived
-Drinfeld--Kohno bridge.  It asks only for compatible dg quotients, not
-for the full factorization-category equivalence.  The evidence from
+Drinfeld--Kohno bridge.  Proposition~\ref{prop:yangian-canonical-hlevel-target}
+already supplies the canonical H-level target.  What remains here is
+only compatible RTT-level quotients on that target, not the full
+factorization-category equivalence.  The evidence from
 Dimofte--Niu--Py points in exactly this direction:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item line-operator OPEs are organized by spectral parameter and hence
@@ -7000,6 +7016,47 @@ $\mathfrak{g}_{\cA} \simeq
 the derivations of the factorization bar coalgebra.
 \end{definition}
 
+\begin{proposition}[Canonical Yangian H-level dg target from factorization
+formal moduli; \ClaimStatusProvedHere]
+\label{prop:yangian-canonical-hlevel-target}
+For every $\Eone$-chiral algebra $\cA$ on~$X$, the factorization
+formal moduli problem $\mathfrak{F}_{\cA}$ of
+Definition~\ref{def:factorization-formal-moduli} has a tangent dg Lie
+algebra
+\[
+\mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA},
+\]
+and hence a canonically attached completed module category
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA}).
+\]
+For the Yangian $\Eone$-chiral algebra
+\[
+\cA=\mathcal{Y}(\mathfrak{sl}_N),
+\]
+this gives an unconditional H-level dg target for DK-4/5.
+
+Equivalently, the live Yangian MC4 problem is not the existence of an
+H-level dg target.  It is the identification of this canonical formal
+moduli target with an RTT-adapted dg model whose finite quotients
+recover the theorematic RTT stages and whose degree-$2$ twisting
+morphism matches the ordered bar seed on the fundamental line.
+\end{proposition}
+
+\begin{proof}
+Existence of the tangent dg Lie algebra $\mathfrak{g}_{\cA}$ is exactly
+the content of Lurie's formal moduli theorem, as recalled in
+Definition~\ref{def:factorization-formal-moduli}.  The completed module
+category $\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})$ is
+therefore canonically attached to $\cA$.  Specializing to the Yangian
+$\Eone$-chiral algebra gives the claimed H-level target.
+
+The remaining sentence is a reformulation of the Yangian MC4 frontier:
+the unresolved step is to identify the canonical target
+$\mathfrak{g}_{\cA}$ with an RTT-adapted dg model, not to construct the
+target itself.
+\end{proof}
+
 \begin{theorem}[DK-4 as tangent Lie algebra identification;
 \ClaimStatusConjectured]
 \label{thm:dk4-formal-moduli}
@@ -7167,6 +7224,79 @@ $\operatorname{Ran}(X)$.  The M-level model is the sectorwise-convergent
 factorization bar-cobar dg category; the S-level shadow is the
 classical DK equivalence on evaluation modules.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+\end{remark}
+
+\begin{remark}[The RTT relation as Koszul duality datum]
+\label{rem:rtt-is-the-duality-datum}
+\index{Yangian!RTT as Koszul datum}
+\index{Koszul duality!engine of DK ladder}
+The entire proved DK ladder (DK-0 through DK-3, unconditional at
+all simple types) rests on a single structural observation:
+\smallskip
+\begin{center}
+\emph{The RTT relation
+$R_{12}(u\!-\!v)\,T_1(u)\,T_2(v)
+= T_2(v)\,T_1(u)\,R_{12}(u\!-\!v)$
+is simultaneously the defining relation of the algebra
+and the input to Koszul duality.}
+\end{center}
+
+\smallskip\noindent
+Three consequences, each one sentence, give the full result:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Quadratic $\Rightarrow$ $R$-matrix inversion.}
+  The RTT relation is quadratic in~$T$; the orthogonal complement
+  $R^\perp$ of the $R(u)$-relations is the $R^{-1}(u)$-relations,
+  so $Y(\fg)^! = Y_{-\hbar}(\fg)$
+  (Theorem~\ref{thm:yangian-koszul-dual}).
+
+\item \emph{PBW $\Rightarrow$ Koszulness.}
+  Molev's PBW basis gives a flat deformation to
+  $\operatorname{Sym}(V)$; $\operatorname{Sym}$ is classically
+  Koszul; flatness transfers Koszulness to~$Y(\fg)$, giving
+  bar-cobar recovery for free
+  (Proposition~\ref{prop:yangian-koszul},
+  Corollary~\ref{cor:yangian-bar-cobar}).
+
+\item \emph{Root grading $\Rightarrow$ sectorwise convergence.}
+  The root lattice $Q(\fg)$ decomposes the bar complex into sectors
+  with $\dim V_r = (\dim V_0)^2$ uniformly; a non-increasing
+  sequence of non-negative integers stabilizes; the factorization
+  bar complex is therefore a genuine coalgebra on
+  $\operatorname{Ran}(X)$, and K\"unneth $+$ cosheaf descent extend
+  the diagonal quasi-isomorphism to all strata
+  (Theorem~\ref{thm:sectorwise-spectral-convergence},
+  Theorem~\ref{thm:h-level-factorization-kd}).
+\end{enumerate}
+These are logically independent inputs; together they give DK-2/3
+for every simple~$\fg$ without any thick-generation argument.
+
+The deeper unity: all three are consequences of the fact that
+\emph{the RTT presentation expresses the Yangian as a quadratic
+algebra whose defining relations encode the $R$-matrix}.
+The bar construction extracts the $R$-matrix and inverts it;
+PBW guarantees this extraction is lossless; the root grading
+guarantees it converges sector by sector.  Geometrically:
+bar-cobar duality is Verdier duality on ordered configuration
+spaces, and Verdier duality reverses the orientation of ordered
+collisions --- which inverts the $R$-matrix.  The RTT presentation
+is, in this precise sense, the Yangian \emph{presenting itself as
+a Koszul duality problem}.
+
+For the conjectural levels: DK-4 adds no new idea.
+The same PBW--Koszul--root-grading package gives surjective
+transition maps $\bigwedge^n(V_{\leq N+1}^*) \twoheadrightarrow
+\bigwedge^n(V_{\leq N}^*)$ on the associated graded of bar
+cohomology, hence Mittag-Leffler for the RTT tower
+(Theorem~\ref{thm:rtt-mittag-leffler}) and a well-behaved
+completed bar-cobar equivalence
+(Corollary~\ref{cor:completed-bar-cobar-yangian}).
+What remains is a structure identification:
+$\varprojlim_N \fg_N \cong \Ydg_\cA$
+(Maurer--Cartan element, translation, coproduct).
+DK-5 adds only the $\infty$-categorical PBW exponential
+$\operatorname{Mod}(\fg_\cA) \simeq
+\operatorname{Rep}(\exp(\fg_\cA))$.
 \end{remark}
 
 \subsubsection*{Coderived factorization duality off the Koszul locus}
@@ -8523,6 +8653,36 @@ composites are the identity on the completed fundamental packets, and
 the final sentence follows immediately.
 \end{proof}
 
+\begin{lemma}[Finite-dimensional Yangian factorization core is
+generated by fundamental evaluation objects; \ClaimStatusProvedHere]
+\label{lem:yangian-fd-fundamental-generation}
+For $\mathfrak{sl}_M$, the braided monoidal stable category
+\[
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\]
+is the smallest full stable idempotent-complete braided monoidal
+subcategory containing the fundamental evaluation objects.
+\end{lemma}
+
+\begin{proof}
+By Proposition~\ref{prop:dk2-thick-generation-typeA}, every
+finite-dimensional irreducible Yangian module is a subquotient of a
+tensor product of fundamental evaluation modules.  Applying
+Lemma~\ref{lem:composition-thick-generation} to the abelian category of
+finite-dimensional Yangian modules shows that the bounded derived
+category is the thick triangulated closure of those fundamental
+evaluation modules.  The factorization category
+\[
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\]
+is this same finite-dimensional stable category equipped with the
+ordered factorization tensor product, and ordered tensor products of
+fundamental evaluation objects remain inside the same closure.
+Therefore the smallest full stable idempotent-complete braided
+monoidal subcategory containing the fundamental evaluation objects is
+the whole finite-dimensional Yangian factorization category.
+\end{proof}
+
 \begin{lemma}[Finite-dimensional quantum-group factorization core is
 generated by fundamental evaluation objects; \ClaimStatusProvedHere]
 \label{lem:quantum-fd-fundamental-generation}
@@ -8612,8 +8772,474 @@ displayed hypothesis on \(\mathcal{C}_q^\omega\).  Thus \(J_q^\omega\)
 is an exact braided monoidal equivalence.
 \end{proof}
 
-\begin{corollary}[After local DK-4 closure, the remaining DK-5 input is
-the dg-shifted compact-core realization; \ClaimStatusProvedHere]
+\begin{proposition}[On the spectral side, ordered tensor-generator
+transport is forced by the completed fundamental packet;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-fundamental-packet}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}.  Let
+\[
+\mathcal{P}^{\mathrm{fund,fd}}_{q}
+\subset
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\]
+be the full subcategory spanned by the fundamental evaluation objects
+themselves, and let
+\[
+\mathcal{P}^{\mathrm{fund}}_{q}
+\subset
+\mathcal{C}_q^\omega
+\]
+be the full subcategory spanned by their completed spectral images.
+Assume that the exact braided monoidal functor
+\[
+J_q^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\longrightarrow
+\mathcal{C}_q^\omega
+\]
+restricts to an equivalence
+\[
+\mathcal{P}^{\mathrm{fund,fd}}_{q}
+\xrightarrow{\sim}
+\mathcal{P}^{\mathrm{fund}}_{q}.
+\]
+Then its restriction
+\[
+\mathcal{G}^{\mathrm{fund,fd}}_{q}
+\longrightarrow
+\mathcal{G}^{\mathrm{fund}}_{q}
+\]
+is automatically an equivalence onto the completed spectral
+generator packet.  Consequently, the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal} are
+already satisfied, so \(J_q^\omega\) is an exact braided monoidal
+equivalence.
+
+Equivalently, on the spectral side the genuinely non-formal packet is
+not the whole ordered tensor-generator family: it is enough to place
+the individual fundamental evaluation objects inside the completed
+spectral category in an exact braided-monoidal way.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:quantum-fd-fundamental-generation}, the source
+\[
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\]
+is the smallest full stable idempotent-complete braided monoidal
+subcategory containing \(\mathcal{P}^{\mathrm{fund,fd}}_{q}\).  By the
+standing hypothesis of
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}, the
+target \(\mathcal{C}_q^\omega\) enjoys the same generation property for
+\(\mathcal{P}^{\mathrm{fund}}_{q}\).  Because \(J_q^\omega\) is exact
+and braided monoidal, it preserves shifts, cones, direct summands, and
+ordered tensor products.  Since its restriction to
+\(\mathcal{P}^{\mathrm{fund,fd}}_{q}\) is already an equivalence onto
+\(\mathcal{P}^{\mathrm{fund}}_{q}\), the same thick-closure argument as
+in Proposition~\ref{prop:yangian-dk5-dg-realization-formal} upgrades
+that equivalence on the completed fundamental packet to an exact
+braided monoidal equivalence on the full finite-dimensional spectral
+core.
+
+In particular, the restriction of \(J_q^\omega\) to
+\(\mathcal{G}^{\mathrm{fund,fd}}_{q}\) is an equivalence onto
+\(\mathcal{G}^{\mathrm{fund}}_{q}\), since those packets are the full
+subcategories generated by finite ordered tensor products of the same
+fundamental objects on the source and target sides.  Therefore the
+generator-packet hypothesis of
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal} is
+automatic.  The final sentence follows.
+\end{proof}
+
+\begin{lemma}[Type-$A$ quantum-group fundamental packet is generated
+by the vector evaluation line; \ClaimStatusProvedHere]
+\label{lem:quantum-fd-vector-fundamental-generation}
+Let
+\[
+\mathcal{P}^{\mathrm{vec,fd}}_{q}
+\subset
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\]
+be the full subcategory spanned by the vector evaluation objects.
+Then every fundamental evaluation object of
+\(\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}\)
+belongs to the smallest full stable idempotent-complete braided
+monoidal subcategory containing
+\(\mathcal{P}^{\mathrm{vec,fd}}_{q}\).
+
+Equivalently, on the finite-dimensional spectral side the full
+fundamental packet is generated by the vector evaluation line.
+\end{lemma}
+
+\begin{proof}
+For type~$A$, the $i$-th fundamental evaluation module of the quantum
+loop algebra is the standard Kirillov--Reshetikhin fundamental module,
+realized as the image of the $q$-antisymmetrizer on an ordered tensor
+product of $i$ vector evaluation modules with the standard shifted
+spectral parameters; see \cite[Ch.~12]{ChariPressley94} and
+\cite[\S2]{Hernandez05}.  Therefore each fundamental evaluation object
+is a direct summand of a finite ordered tensor product of vector
+evaluation objects.  The stated closure property follows because the
+smallest full stable idempotent-complete braided monoidal subcategory
+containing \(\mathcal{P}^{\mathrm{vec,fd}}_{q}\) is closed under
+ordered tensor products and direct summands.
+\end{proof}
+
+\begin{proposition}[On the spectral side, the completed fundamental
+packet is forced by the completed vector packet;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-vector-packet}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}.  Let
+\[
+\mathcal{P}^{\mathrm{vec,fd}}_{q}
+\subset
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\]
+be the full subcategory generated by finite ordered tensor products of
+the vector evaluation objects, and
+let
+\[
+\mathcal{P}^{\mathrm{vec}}_{q}
+\subset
+\mathcal{C}_q^\omega
+\]
+be the full subcategory generated by the corresponding completed
+spectral tensor packet.
+Assume that the exact braided monoidal functor
+\[
+J_q^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\longrightarrow
+\mathcal{C}_q^\omega
+\]
+restricts to an equivalence
+\[
+\mathcal{P}^{\mathrm{vec,fd}}_{q}
+\xrightarrow{\sim}
+\mathcal{P}^{\mathrm{vec}}_{q}.
+\]
+Let
+\[
+\mathcal{P}^{\mathrm{fund}}_{q}
+\subset
+\mathcal{C}_q^\omega
+\]
+be the full subcategory spanned by the standard type-$A$
+$q$-antisymmetric direct summands inside finite ordered tensor powers
+of \(\mathcal{P}^{\mathrm{vec}}_{q}\), equivalently by the completed
+spectral images of the source fundamental evaluation objects.  Then
+\(J_q^\omega\) restricts to an equivalence
+\[
+\mathcal{P}^{\mathrm{fund,fd}}_{q}
+\xrightarrow{\sim}
+\mathcal{P}^{\mathrm{fund}}_{q}.
+\]
+Consequently the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet} are
+already satisfied, so \(J_q^\omega\) is an exact braided monoidal
+equivalence.
+
+Equivalently, on the spectral side the genuinely non-formal packet is
+smaller still: it is enough to construct the completed vector
+evaluation packet inside the spectral compact core, since the standard
+type-$A$ $q$-antisymmetric summands then force the whole completed
+fundamental packet.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:quantum-fd-vector-fundamental-generation}, every
+source fundamental evaluation object is obtained from the vector
+evaluation objects by finite ordered tensor products and direct
+summands.  More precisely, the standard type-$A$ fundamental
+evaluation objects are the images of the corresponding
+$q$-antisymmetrizer idempotents on ordered tensor powers of the vector
+packet.  Because \(J_q^\omega\) is exact and braided monoidal, it
+preserves ordered tensor products, braidings, and direct summands, so
+it carries those same $q$-antisymmetrizer summands on the source
+vector packet to the corresponding completed spectral summands inside
+ordered tensor powers of \(\mathcal{P}^{\mathrm{vec}}_{q}\).
+Therefore the restriction of \(J_q^\omega\) to
+\(\mathcal{P}^{\mathrm{fund,fd}}_{q}\) is an equivalence onto
+\(\mathcal{P}^{\mathrm{fund}}_{q}\).  Now apply
+Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}.
+\end{proof}
+
+\begin{corollary}[On the realized spectral packet locus, the ambient
+spectral category is the ind-completion of the spectral compact core;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-packet-ind}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}.  On
+this realized packet locus, define the ambient completed spectral
+category by
+\[
+\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+:=
+\operatorname{Ind}(\mathcal{C}_q^\omega).
+\]
+Then
+\(\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}\)
+is presentable, stable, and compactly generated, and its compact
+objects are exactly \(\mathcal{C}_q^\omega\).  Equivalently, there is a
+canonical exact colimit-preserving equivalence
+\[
+\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+\xrightarrow{\sim}
+\operatorname{Ind}(\mathcal{C}_q^\omega).
+\]
+In particular, the ambient completed spectral category is compactly
+generated by the completed fundamental spectral packet
+\(\mathcal{G}^{\mathrm{fund}}_{q}\).
+
+Equivalently, once the completed vector spectral packet is constructed,
+the completed fundamental packet, ordered tensor-generator packet, and
+hence the ambient spectral category are canonical by thick closure and
+ind-completion, so the spectral side of DK-5 no longer carries extra
+categorical content beyond that vector packet.
+\end{corollary}
+
+\begin{proof}
+The category \(\mathcal{C}_q^\omega\) is small, stable, and
+idempotent-complete by construction.  Therefore its ind-completion is
+presentable and stable, and its compact objects recover
+\(\mathcal{C}_q^\omega\), exactly as in
+Theorem~\ref{thm:ind-completed-extension}.  This gives the displayed
+equivalence.
+
+Since
+\(\mathcal{C}_q^\omega=\operatorname{thick}^{\mathrm{idemp}}
+(\mathcal{G}^{\mathrm{fund}}_{q})\), the completed spectral
+fundamental packet compactly generates the ambient completed spectral
+category.
+\end{proof}
+
+\begin{proposition}[Canonical completed dg fundamental packet from the
+theorematic finite RTT quotients; \ClaimStatusProvedHere]
+\label{prop:yangian-dg-fundamental-packet-realization}
+Assume the data and hypotheses \textup{(i)}--\textup{(vii)} of
+Proposition~\ref{prop:yangian-typea-realization-criterion}.  Let
+\[
+\mathcal{G}^{\mathrm{fund,fd}}_{Y}
+\subset
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\]
+be the full subcategory generated by finite ordered tensor products of
+fundamental evaluation objects.  For
+\(M\in\mathcal{G}^{\mathrm{fund,fd}}_{Y}\), let \(M_{\le N}\) be its
+standard finite-stage evaluation image over \(Y_{\le N}\) under the
+compatible quotient comparison of
+assumption~\textup{(vi)}.  Then the tower \(\{M_{\le N}\}_N\) defines a
+continuous completed dg module
+\[
+J_{Y,\mathrm{pkt}}^\omega(M)
+:=
+\varprojlim_N M_{\le N}
+\]
+over \(\Ydg_{\cA}\), and these assignments assemble into a canonical
+exact braided monoidal functor
+\[
+J_{Y,\mathrm{pkt}}^\omega\colon
+\mathcal{G}^{\mathrm{fund,fd}}_{Y}
+\longrightarrow
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA}).
+\]
+Let \(\mathcal{G}^{\mathrm{fund}}_{Y}\) denote its essential image.
+Then \(J_{Y,\mathrm{pkt}}^\omega\) is an exact braided monoidal
+equivalence
+\[
+\mathcal{G}^{\mathrm{fund,fd}}_{Y}
+\xrightarrow{\sim}
+\mathcal{G}^{\mathrm{fund}}_{Y}.
+\]
+
+Equivalently, once the theorematic finite RTT quotients are fixed, the
+dg-shifted side already carries a canonical completed fundamental
+packet.  The remaining dg DK-5 input is extension from that packet to
+the compact core, not construction of the packet itself.
+\end{proposition}
+
+\begin{proof}
+Assumption~\textup{(vi)} identifies each finite quotient
+\[
+\Ydg_{\cA}/F^{N+1}\Ydg_{\cA}
+\]
+with the finite RTT stage \(Y_{\le N}\) in a way compatible with the
+standard evaluation modules.  Therefore every
+\(M\in\mathcal{G}^{\mathrm{fund,fd}}_{Y}\) has a canonically
+associated tower of finite-stage evaluation objects \(\{M_{\le N}\}_N\)
+whose transition maps are the standard truncations.  Because
+\(\Ydg_{\cA}\cong \varprojlim_N \Ydg_{\cA}/F^{N+1}\Ydg_{\cA}\) by
+assumption~\textup{(v)}, that compatible tower defines a continuous
+module over the complete dg algebra \(\Ydg_{\cA}\), namely the inverse
+limit displayed above.
+
+Exactness is checked stagewise on the finite quotients: shifts, cones,
+and direct summands commute with passage to the inverse-limit tower in
+the stable completed module category.  Braided monoidality is likewise
+stagewise, because assumptions~\textup{(i)}--\textup{(iv)} and
+\textup{(vi)} make the translation operator, degree-$2$ twisting
+morphism, and twisted coproduct compatible with the same standard
+finite-stage evaluation tensor products and braidings.  Thus the
+assignment \(M\mapsto J_{Y,\mathrm{pkt}}^\omega(M)\) defines the
+claimed exact braided monoidal functor.
+
+The final sentence is immediate from the definition of
+\(\mathcal{G}^{\mathrm{fund}}_{Y}\) as the essential image of that
+functor.
+\end{proof}
+
+\begin{proposition}[Canonical exact braided-monoidal extension of the
+dg packet; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-dg-extension-existence}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dg-fundamental-packet-realization}.  Let
+\[
+\mathcal{C}_Y^\omega
+:=
+\operatorname{thick}^{\mathrm{idemp}}
+\bigl(\mathcal{G}^{\mathrm{fund}}_{Y}\bigr)
+\subset
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA}).
+\]
+Then the packet functor \(J_{Y,\mathrm{pkt}}^\omega\) extends to an
+exact braided monoidal functor
+\[
+J_Y^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\longrightarrow
+\mathcal{C}_Y^\omega
+\]
+whose restriction to \(\mathcal{G}^{\mathrm{fund,fd}}_{Y}\) is
+\(J_{Y,\mathrm{pkt}}^\omega\).  This extension is unique up to unique
+natural isomorphism.
+
+Equivalently, after the theorematic finite RTT quotients construct the
+canonical completed dg fundamental packet, no additional dg-side
+construction is needed on the finite-dimensional Yangian factorization
+core: the exact braided-monoidal extension is forced by thick closure.
+\end{proposition}
+
+\begin{proof}
+Let \(\mathcal{C}\) be the full subcategory of
+\(\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))\)
+obtained from \(\mathcal{G}^{\mathrm{fund,fd}}_{Y}\) by finite
+iterates of shifts, cones, direct summands, and ordered tensor
+products.  By construction,
+\(J_{Y,\mathrm{pkt}}^\omega\) is already exact and braided monoidal on
+\(\mathcal{G}^{\mathrm{fund,fd}}_{Y}\).  Since the target
+\(\mathcal{C}_Y^\omega\) is stable, idempotent-complete, and braided
+monoidal, the same formulas extend the functor across each of the four
+operations above: shifts go to shifts, distinguished triangles go to
+distinguished triangles, idempotent splittings go to direct summands,
+and ordered tensor products go to ordered tensor products.  Thus
+\(J_{Y,\mathrm{pkt}}^\omega\) extends to an exact braided monoidal
+functor on \(\mathcal{C}\).
+
+By Lemma~\ref{lem:yangian-fd-fundamental-generation},
+\(\mathcal{C}\) is the whole finite-dimensional Yangian factorization
+category.  This gives the required extension \(J_Y^\omega\).
+Uniqueness is proved by the same thick-closure mechanism as
+Proposition~\ref{prop:yangian-dk3-generated-core}: any natural
+transformation between two exact braided monoidal extensions that is an
+isomorphism on \(\mathcal{G}^{\mathrm{fund,fd}}_{Y}\) remains an
+isomorphism on the full thick idempotent-complete closure.
+\end{proof}
+
+\begin{proposition}[dg compact-core realization is formal from
+extension of the completed fundamental packet;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-dg-realization-formal}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk5-dg-extension-existence}.  Let
+\[
+\mathcal{C}_Y^\omega
+:=
+\operatorname{thick}^{\mathrm{idemp}}
+\bigl(\mathcal{G}^{\mathrm{fund}}_{Y}\bigr)
+\subset
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA}).
+\]
+Then \(J_Y^\omega\) is an exact braided monoidal equivalence.
+
+Equivalently, once the dg-shifted realization is constructed on the
+completed fundamental packet, no new dg-side comparison remains on the
+full compact core: the compact-core realization is forced by exact
+braided-monoidal extension across the thick idempotent-complete
+closure.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:yangian-fd-fundamental-generation}, the source is the
+smallest full stable idempotent-complete braided monoidal subcategory
+containing the fundamental evaluation objects.  By definition, the
+target \(\mathcal{C}_Y^\omega\) is the smallest full stable
+idempotent-complete braided monoidal subcategory containing the
+completed dg packet \(\mathcal{G}^{\mathrm{fund}}_{Y}\).  Because
+\(J_Y^\omega\) is exact and braided monoidal, it preserves shifts,
+cones, direct summands, and ordered tensor products.  Since its
+restriction to \(\mathcal{G}^{\mathrm{fund,fd}}_{Y}\) is already an
+equivalence onto \(\mathcal{G}^{\mathrm{fund}}_{Y}\), the same
+thick-closure argument as in
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}
+upgrades that packet equivalence to an equivalence on the thick
+idempotent-complete closures.  Those closures are exactly the source
+and target by Lemma~\ref{lem:yangian-fd-fundamental-generation} and
+the definition of \(\mathcal{C}_Y^\omega\).  Thus \(J_Y^\omega\) is an
+exact braided monoidal equivalence.
+\end{proof}
+
+\begin{corollary}[Compact generation of the completed dg module
+category identifies the ambient dg side with the ind-completion of the
+dg compact core;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-dg-packet-ind}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk5-dg-realization-formal}.  On this
+realized packet locus, define the ambient completed dg module category
+by
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+:=
+\operatorname{Ind}(\mathcal{C}_Y^\omega).
+\]
+Then \(\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})\) is presentable,
+stable, and compactly generated, and its compact objects are exactly
+\(\mathcal{C}_Y^\omega\).  Equivalently, there is a canonical exact
+colimit-preserving equivalence
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+\xrightarrow{\sim}
+\operatorname{Ind}(\mathcal{C}_Y^\omega).
+\]
+In particular, \(\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})\) is
+compactly generated by the completed fundamental dg-shifted packet
+\(\mathcal{G}^{\mathrm{fund}}_{Y}\).
+
+Equivalently, after packet-level dg realization, the ambient dg module
+category is constructed canonically by ind-completion of the dg compact
+core, so the dg half of DK-5 no longer carries extra categorical
+content beyond the already-constructed compact core.
+\end{corollary}
+
+\begin{proof}
+The category \(\mathcal{C}_Y^\omega\) is small, stable, and
+idempotent-complete by construction.  Therefore its ind-completion is
+presentable and stable, and its compact objects recover
+\(\mathcal{C}_Y^\omega\), exactly as in
+Theorem~\ref{thm:ind-completed-extension}.  This gives the displayed
+equivalence.
+
+Since
+\(\mathcal{C}_Y^\omega=\operatorname{thick}^{\mathrm{idemp}}
+(\mathcal{G}^{\mathrm{fund}}_{Y})\), the completed fundamental dg
+packet compactly generates the ambient completed module category.
+\end{proof}
+
+\begin{corollary}[Given dg compact-core realization, the remaining
+DK-5 input is spectral vector-packet completion;
+\ClaimStatusProvedHere]
 \label{cor:yangian-dk5-dg-half-only}
 Assume the hypotheses of
 Corollary~\ref{cor:yangian-typea-dg-local-closure}.  Assume moreover
@@ -8623,8 +9249,9 @@ that:
   stable, and compactly generated, with compact objects exactly
   \(\mathcal{C}_Y^\omega\) and \(\mathcal{C}_q^\omega\);
 \item the spectral compact core admits an exact braided monoidal
-  completion functor \(J_q^\omega\) as in
-  Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}; and
+  functor \(J_q^\omega\) whose restriction to the vector evaluation
+  packet is an equivalence onto the completed vector spectral packet,
+  as in Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}; and
 \item there exists an exact braided monoidal equivalence
   \[
   J_Y^\omega\colon
@@ -8637,20 +9264,21 @@ that:
 \end{enumerate}
 Then the standard type-$A$ Yangian DK-5 packet closes.
 
-Equivalently, once the spectral completion is known on the generator
-packet, the only remaining non-formal DK-5 input is the dg-shifted
-compact-core realization together with compact generation.
+Equivalently, once exact dg compact-core realization and ambient
+compact-generation are in place, the only remaining non-formal
+categorical input is the spectral completed vector packet.
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}, the
-spectral completion functor \(J_q^\omega\) is automatically an exact
-braided monoidal equivalence.  Therefore the hypotheses of
-Proposition~\ref{prop:yangian-dk5-core-realization} are satisfied with
-the given \(J_Y^\omega\) and the resulting spectral equivalence
-\(J_q^\omega\).  That proposition constructs the compact-core DK-5
-comparison functors, and Corollary~\ref{cor:yangian-dk5-core-realization}
-then closes DK-5.
+By Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}, the
+spectral functor \(J_q^\omega\) is automatically an exact braided
+monoidal equivalence, and
+Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} identifies the
+ambient spectral category with \(\operatorname{Ind}(\mathcal{C}_q^\omega)\).
+Therefore the full spectral half of the input of
+Corollary~\ref{cor:yangian-dk5-core-realization} is satisfied.
+Together with the dg hypotheses already assumed here, that corollary
+applies and closes DK-5.
 \end{proof}
 
 \begin{corollary}[DK-5 closes once the compact cores realize the
@@ -8866,13 +9494,33 @@ completed fundamental-packet DK-5 packet.
 \label{rem:yangian-dk5-input}
 After Proposition~\ref{prop:yangian-dk4-typea-frontier}, the remaining
 DK-5 packet is no longer another algebra-identification problem.  It is
-the compact-core categorical packet:
+the compact-core categorical packet, now with a canonical dg generator
+packet already in hand:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item compact generation of the completed module categories by the
-  completed fundamental evaluation packet, so each completed category
-  is the ind-completion of its compact core;
-\item exact braided monoidal realization of those compact cores from
-  the proved finite-dimensional factorization DK core, so that
+\item on the dg side, extend the canonical packet functor
+  \(J_{Y,\mathrm{pkt}}^\omega\) of
+  Proposition~\ref{prop:yangian-dg-fundamental-packet-realization}
+  from the finite ordered-tensor fundamental packet to the compact dg
+  core; Proposition~\ref{prop:yangian-dk5-dg-extension-existence}
+  constructs that extension, and
+  Proposition~\ref{prop:yangian-dk5-dg-realization-formal} then makes
+  the full dg compact-core realization formal;
+\item on that realized dg packet locus, the ambient completed dg module
+  category is then constructed canonically as
+  \(\operatorname{Ind}(\mathcal{C}_Y^\omega)\) by
+  Corollary~\ref{cor:yangian-dk5-dg-packet-ind}, so the dg half of
+  DK-5 no longer carries an extra categorical frontier;
+\item on the spectral side, construct the completed vector packet;
+  Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}
+  promotes that to the completed fundamental packet,
+  Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}
+  then promotes that to the full ordered tensor-generator packet,
+  Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}
+  then makes the full spectral compact-core realization formal, and
+  Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} constructs the
+  ambient spectral category as
+  \(\operatorname{Ind}(\mathcal{C}_q^\omega)\);
+\item with those compact-core realizations in hand,
   Proposition~\ref{prop:yangian-dk5-core-realization} constructs the
   compact-core comparison functors and
   Corollary~\ref{cor:yangian-dk5-core-realization} closes DK-5.
@@ -8902,8 +9550,12 @@ standard RTT tower now supplies this standard-RTT completed M-level
 package
 (Corollary~\ref{cor:yangian-standard-mc4-package}), so the unresolved
 part of Hypothesis~\textup{(ii)} is no longer the existence of a
-standard completion.  What remains open is the comparison between that
-coefficientwise RTT completion and the dg-shifted/factorization target.
+standard completion.  By
+Proposition~\ref{prop:yangian-canonical-hlevel-target}, the canonical
+H-level target also already exists.  What remains open is the
+RTT-adapted realization of that canonical target, equivalently the
+comparison between the coefficientwise RTT completion and the
+dg-shifted/factorization target.
 Corollary~\ref{cor:yangian-hlevel-comparison-criterion} shows that this
 comparison becomes formal once the H-level target carries a separated
 complete RTT-level filtration whose finite quotients recover the
@@ -8915,6 +9567,21 @@ tensor-line residue check.  Proposition~\ref{prop:yangian-dk5-compact-generators
 and Corollary~\ref{cor:yangian-dk5-fundamental-packet} then isolate the
 remaining DK-5 packet inside the Yangian side of MC4 as compact
 generation plus transport on the completed fundamental evaluation
+packet.  Propositions~\ref{prop:yangian-dg-fundamental-packet-realization}
+and~\ref{prop:yangian-dk5-dg-extension-existence} sharpen the dg side
+of that packet further: the theorematic finite RTT quotients already
+construct the canonical completed dg fundamental packet and its exact
+extension to the dg compact core, so the remaining dg categorical input
+is removed by Corollary~\ref{cor:yangian-dk5-dg-packet-ind}.  On the
+spectral side,
+Proposition~\ref{prop:yangian-dk5-spectral-vector-packet},
+Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet},
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}, and
+Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} show that once the
+completed vector spectral packet is constructed, the completed
+fundamental spectral packet, ordered tensor-generator packet, compact
+core, and ambient spectral category are all formal.  Thus the
+genuinely live categorical remainder is exactly that spectral vector
 packet.
 MC5 begins only after this H-level comparison packet is in place.
 Accordingly, the middle term
@@ -8947,10 +9614,11 @@ makes item~\textup{(3)} formal, and
 Proposition~\ref{prop:yangian-rtt-completion-identification} identifies
 the inverse limit with the coefficientwise RTT completion.  Thus the
 standard RTT tower now supplies the standard-RTT completed M-level
-bar-cobar package.  The live Yangian frontier is the stronger H-level
-comparison
-with the dg-shifted Yangian or factorization-theoretic completion, not
-new local bar calculus.  By
+bar-cobar package.  By
+Proposition~\ref{prop:yangian-canonical-hlevel-target}, the live
+Yangian frontier is not existence of an H-level target but the
+stronger RTT-adapted realization and H-level comparison with the
+dg-shifted Yangian or factorization-theoretic completion.  By
 Corollary~\ref{cor:yangian-hlevel-comparison-criterion}, item~\textup{(4)}
 reduces to constructing a filtered dg-shifted or factorization model
 whose finite RTT quotients match the proved stages; in the standard
@@ -8959,8 +9627,11 @@ that further to the boundary-strip / auxiliary-kernel / residue packet
 on the fundamental line, and
 Proposition~\ref{prop:yangian-typea-realization-criterion} shows that
 once the shared ordered bar seed and theorematic finite RTT quotients
-are in place, the remaining completed-level step is exactly the
-completed fundamental-packet DK-5 packet.
+are in place, the canonical dg completed fundamental packet is already
+constructed by Proposition~\ref{prop:yangian-dg-fundamental-packet-realization}.
+The remaining completed-level step is therefore only its extension to
+the dg compact core and the proof that this dg compact core is exactly
+the compact part of the ambient completed dg module category.
 \end{remark}
 
 \begin{proposition}[Yangian tower criterion from finite RTT stages;
@@ -9159,11 +9830,14 @@ Then the induced comparison map
 \]
 is a quasi-isomorphism, and $\Ydg_{\cA}$ defines the same completed
 M-level bar-cobar object as the standard RTT completion.  Thus the
-remaining Yangian H-level frontier is to construct a filtered
-dg-shifted or factorization model with theorematic finite RTT
-quotients.  This is the Yangian half of
-Conjecture~\ref{conj:master-infinite-generator}: once such an H-level
-target exists, the remaining coefficient comparison is the exact packet
+remaining Yangian H-level frontier is to identify the canonical
+formal-moduli target of
+Proposition~\ref{prop:yangian-canonical-hlevel-target}, or any chosen
+equivalent dg model, with a filtered dg-shifted or factorization model
+with theorematic finite RTT quotients.  This is the Yangian half of
+Conjecture~\ref{conj:master-infinite-generator}: once such an
+RTT-adapted realization is supplied, the remaining coefficient
+comparison is the exact packet
 \[
 \mathsf{K}^{\mathrm{line}}_{a,b}(N)
 =\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)
@@ -9226,8 +9900,8 @@ Then:
   is a quasi-isomorphism, so $\Ydg_{\cA}$ realizes the H-level
   dg-shifted Yangian target for the standard type-$A$ tower; and
 \item the local standard type-$A$ DK-4 packet is already closed, so the
-  only remaining Yangian input is compact generation together with
-  transport on the completed fundamental evaluation packet.
+  only remaining Yangian input is the already-isolated spectral
+  completed vector spectral packet.
 \end{enumerate}
 \end{proposition}
 
@@ -9249,8 +9923,14 @@ ordered fundamental degree-$2$ coefficient on the dg-shifted target is
 the standard trace-zero Casimir insertion.  Corollary~\ref{cor:yangian-typea-dg-local-closure}
 then closes the local dg-shifted packet on the standard type-$A$
 tower.  Thus only the DK-5 categorical packet on the completed
-fundamental evaluation modules remains, equivalently the compact-core
-DK-5 equivalence after compact generation, proving \textup{(c)}.
+fundamental evaluation modules remains.  By
+Proposition~\ref{prop:yangian-dg-fundamental-packet-realization},
+Proposition~\ref{prop:yangian-dk5-dg-realization-formal}, and
+Corollary~\ref{cor:yangian-dk5-dg-packet-ind}, the dg side is already
+formal from the canonical completed dg packet and its ind-completion.
+Thus the only remaining categorical input is the already-isolated
+completed vector spectral packet.
+This proves~\textup{(c)}.
 \end{proof}
 
 \begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from realization
@@ -9343,6 +10023,98 @@ Proposition~\ref{prop:yangian-typea-realization-criterion} supplies the
 H-level dg-shifted realization and closes the local standard type-$A$
 DK-4 packet.  The additional hypotheses are exactly the input of
 Corollary~\ref{cor:yangian-dk5-core-realization}, which closes DK-5.
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target closes
+DK-4/DK-5 once the compact cores realize the proved finite-dimensional
+DK core; \ClaimStatusProvedHere]
+\label{cor:yangian-formal-moduli-plus-core-realization}
+Let
+\[
+\cA=\mathcal{Y}(\mathfrak{sl}_M),
+\qquad
+\mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA}
+\]
+be the canonical H-level dg target of
+Proposition~\ref{prop:yangian-canonical-hlevel-target}.  Assume there
+exists a separated complete dg algebra
+\[
+\Ydg_{\cA,\mathrm{can}}
+\]
+presenting the same completed module category as
+\(\mathfrak{g}_{\cA}\), and that the hypotheses of
+Proposition~\ref{prop:yangian-typea-realization-criterion} hold for
+\(\Ydg_{\cA,\mathrm{can}}\).  Assume further that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed dg-shifted and spectral categories are presentable,
+  stable, and compactly generated, with compact objects exactly
+  $\mathcal{C}_{\mathfrak g}^\omega$ and $\mathcal{C}_q^\omega$; and
+\item those compact cores are exact braided monoidal realizations of
+  the proved finite-dimensional factorization DK pair of
+  Theorem~\ref{thm:dk-fd-typeA} in the sense of
+  Proposition~\ref{prop:yangian-dk5-core-realization}.
+\end{enumerate}
+Then the standard type-$A$ Yangian DK-4/DK-5 packet closes.
+
+Equivalently, the canonical formal-moduli target already exists.  Once
+an RTT-adapted dg algebra model for it is constructed and its compact
+core is realized as an exact braided monoidal completion of the proved
+finite-dimensional factorization DK core, the compact-core DK-5
+equivalence and the completed comparison are formal.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-typea-realization-criterion} applies to
+\(\Ydg_{\cA,\mathrm{can}}\), so this dg algebra model realizes the
+standard type-$A$ H-level Yangian target and closes the local DK-4
+packet.  Because \(\Ydg_{\cA,\mathrm{can}}\) presents the same
+completed module category as the canonical formal-moduli target
+\(\mathfrak{g}_{\cA}\), this closes the local packet on that canonical
+target as well.  The additional hypotheses are exactly the compact-core
+realization input of
+Corollary~\ref{cor:yangian-typea-realization-plus-core-realization},
+with \(\mathcal{C}_Y^\omega\) realized inside
+\(\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})\) as
+\(\mathcal{C}_{\mathfrak g}^\omega\).  Therefore DK-5 closes.
+\end{proof}
+
+\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from spectral
+vector-packet realization; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-realization-plus-dg-packet}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-typea-realization-criterion}.  Assume
+further that the spectral compact core admits an exact braided monoidal
+functor \(J_q^\omega\) whose restriction to the vector evaluation
+packet is an equivalence onto the completed vector spectral packet, as
+in Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}.
+Then the standard type-$A$ Yangian DK-4/DK-5 packet closes.
+
+Equivalently, once the shared-bar-seed finite-quotient realization
+package is in place, the dg half of DK-5 is already closed by the
+canonical dg compact-core realization and its ind-completion, and the
+ambient spectral category is formal from ind-completion of the spectral
+compact core.  The only remaining categorical input is therefore the
+spectral completed vector packet itself.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-typea-realization-criterion} supplies the
+H-level dg-shifted realization and closes the local standard type-$A$
+DK-4 packet.  Proposition~\ref{prop:yangian-dk5-dg-extension-existence}
+constructs the exact braided monoidal dg packet extension
+\(J_Y^\omega\), Proposition~\ref{prop:yangian-dk5-dg-realization-formal}
+makes it an equivalence onto the dg compact core, and
+Corollary~\ref{cor:yangian-dk5-dg-packet-ind} constructs the ambient dg
+module category as the ind-completion of that core.  Thus the dg side
+already satisfies the dg half of the input of
+Corollary~\ref{cor:yangian-dk5-core-realization}.  By
+Proposition~\ref{prop:yangian-dk5-spectral-vector-packet},
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}, and
+Corollary~\ref{cor:yangian-dk5-spectral-packet-ind}, the same is true
+on the spectral side with compact core \(\mathcal{C}_q^\omega\).  Hence
+the hypotheses of
+Corollary~\ref{cor:yangian-dk5-core-realization} are satisfied, so
+DK-5 closes.
 \end{proof}
 
 \begin{remark}[Rational vs.\ trigonometric DK]

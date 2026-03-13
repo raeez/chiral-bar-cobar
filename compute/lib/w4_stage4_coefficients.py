@@ -189,6 +189,68 @@ def incremental_higher_spin_channels(stage: int) -> List[Tuple[int, int, int, in
     )
 
 
+def incremental_higher_spin_block_decomposition(
+    stage: int,
+) -> Dict[Tuple[int, int], List[Tuple[int, int, int, int]]]:
+    r"""Partition J_stage^{hs} by source pair (s,t)."""
+    blocks: Dict[Tuple[int, int], List[Tuple[int, int, int, int]]] = {}
+    for entry in incremental_higher_spin_channels(stage):
+        pair = (entry[0], entry[1])
+        blocks.setdefault(pair, []).append(entry)
+    return dict(sorted(blocks.items()))
+
+
+def incremental_higher_spin_block(
+    stage: int,
+    source_pair: Tuple[int, int],
+) -> List[Tuple[int, int, int, int]]:
+    r"""Return the source-pair block inside J_stage^{hs}."""
+    return incremental_higher_spin_block_decomposition(stage).get(source_pair, [])
+
+
+def incremental_higher_spin_singleton_blocks(
+    stage: int,
+) -> Dict[Tuple[int, int], List[Tuple[int, int, int, int]]]:
+    r"""Source-pair blocks of J_stage^{hs} having exactly one channel."""
+    return {
+        pair: block
+        for pair, block in incremental_higher_spin_block_decomposition(stage).items()
+        if len(block) == 1
+    }
+
+
+def incremental_higher_spin_nonsingleton_blocks(
+    stage: int,
+) -> Dict[Tuple[int, int], List[Tuple[int, int, int, int]]]:
+    r"""Source-pair blocks of J_stage^{hs} having more than one channel."""
+    return {
+        pair: block
+        for pair, block in incremental_higher_spin_block_decomposition(stage).items()
+        if len(block) > 1
+    }
+
+
+def incremental_higher_spin_target_decomposition(
+    stage: int,
+) -> Dict[int, List[Tuple[int, int, int, int]]]:
+    r"""Partition J_stage^{hs} by target spin u."""
+    blocks: Dict[int, List[Tuple[int, int, int, int]]] = {}
+    for entry in incremental_higher_spin_channels(stage):
+        blocks.setdefault(entry[2], []).append(entry)
+    return dict(sorted((u, sorted(block)) for u, block in blocks.items()))
+
+
+def incremental_higher_spin_nonsingleton_target_decomposition(
+    stage: int,
+) -> Dict[int, List[Tuple[int, int, int, int]]]:
+    r"""Partition the nonsingleton part of J_stage^{hs} by target spin u."""
+    blocks: Dict[int, List[Tuple[int, int, int, int]]] = {}
+    for block in incremental_higher_spin_nonsingleton_blocks(stage).values():
+        for entry in block:
+            blocks.setdefault(entry[2], []).append(entry)
+    return dict(sorted((u, sorted(block)) for u, block in blocks.items()))
+
+
 def incremental_virasoro_target_channels(stage: int) -> List[Tuple[int, int, int, int]]:
     """Virasoro-target channels in the reduced incremental packet."""
     return sorted(
@@ -222,6 +284,11 @@ def analyze_incremental_packet(stage: int) -> Dict[str, object]:
         "red_size": len(red),
         "blocks": incremental_reduced_block_decomposition(stage),
         "higher_spin_channels": incremental_higher_spin_channels(stage),
+        "higher_spin_blocks": incremental_higher_spin_block_decomposition(stage),
+        "higher_spin_singletons": incremental_higher_spin_singleton_blocks(stage),
+        "higher_spin_nonsingletons": incremental_higher_spin_nonsingleton_blocks(stage),
+        "higher_spin_targets": incremental_higher_spin_target_decomposition(stage),
+        "higher_spin_nonsingleton_targets": incremental_higher_spin_nonsingleton_target_decomposition(stage),
         "virasoro_target_channels": incremental_virasoro_target_channels(stage),
         "virasoro_target_values": incremental_virasoro_target_identities(stage),
     }
