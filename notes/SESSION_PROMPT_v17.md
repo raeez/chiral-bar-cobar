@@ -70,7 +70,7 @@ The manuscript should not frame "unified periodicity" as established or imminent
 grep -rn 'unified periodicity\|periodicity.*classif\|periodicity.*doctrine\|periodicity.*universal\|complete.*periodicity' chapters/ appendices/ --include='*.tex'
 ```
 
-For each hit: if the language implies a universal periodicity classification exists, add qualifier: "proved for minimal models and WZW; conjectural for general rational CFT." Check `deformation_theory.tex`, `concordance.tex`, `koszul_pair_structure.tex` in particular.
+For each hit: if the language implies a universal periodicity classification exists, add a containment qualifier. Current doctrine: independently proved low-rank/minimal-model/WZW periodic shadows may stand on their own mechanisms, but global modular bar-periodicity remains conjectural and is an orthogonal weak flank. Check `deformation_theory.tex`, `concordance.tex`, `koszul_pair_structure.tex` in particular.
 
 ### A4: Theta_A framing [Future 4]
 
@@ -125,11 +125,11 @@ grep -rc 'ClaimStatusProvedHere\|ClaimStatusConjectured' chapters/ appendices/ -
 
 Execute sequentially. Read all relevant proofs before writing. Only upgrade with COMPLETE proofs.
 
-### B1: Modular periodicity for WZW [Priority: HIGHEST]
+### B1: Modular periodicity for WZW [Historical research direction; superseded by weak-flank doctrine]
 
 **Location**: `conj:modular-periodicity` in `koszul_pair_structure.tex`
 
-**What exists**: `thm:modular-periodicity-minimal` proved for minimal models via theta/eta character structure.
+**What exists**: a limited periodic shadow is proved in specific low-rank/minimal-model settings; any stronger WZW/global modular bar-periodicity statement remains conjectural under the current containment doctrine.
 
 **Why WZW should work**: WZW characters are also theta/eta ratios. For sl_2 at level k, chi_j(q) = (Theta_{2j+1,k+2}(q) - Theta_{-(2j+1),k+2}(q)) / eta(q). The theta functions Theta_{m,N} have periodicity N under the relevant modular transformation. The eta function has period 24. So bar-cohomology periodicity at WZW level should be lcm(N, 24) where N depends on level and rank.
 

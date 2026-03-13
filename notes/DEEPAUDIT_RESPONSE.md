@@ -307,7 +307,9 @@ The DEEPAUDIT Task 2 articulates a vision of "Modular Koszul Duality for Factori
 
 ## Cascade Analysis
 
-The three LIVE findings (F5, F6, F7) form a chain: the unified periodicity theorem (F7) depends on both the modular periodicity theorem (F5) and the geometric periodicity theorem (F6). If F5 and F6 are both downgraded, F7 collapses entirely.
+Historical note: this cascade analysis predates the periodicity-containment pass. Current doctrine treats periodicity as an orthogonal weak flank, not as the main dependency chain, and separates the independently proved Virasoro/Kac--Moody periodic shadows from the conjectural modular/global package.
+
+In that historical frame, the three LIVE findings (F5, F6, F7) formed a chain: the unified periodicity theorem (F7) depended on both the modular periodicity theorem (F5) and the geometric periodicity theorem (F6). If F5 and F6 were both downgraded, F7 collapsed entirely.
 
 **Downstream uses of periodicity theorems**: The periodicity results are used in:
 - koszul_pair_structure.tex: Periodicity exchange under Koszul duality (thm:periodicity-exchange-koszul, line 896)
