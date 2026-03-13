@@ -7155,6 +7155,7 @@ def hook_pair_nonlinear_mixed_constraint_ghost_blocks(
     )
 
 
+@lru_cache(maxsize=64)
 def hook_pair_survivor_coupled_blocks(
     n: int,
     r: int,
@@ -9992,8 +9993,8 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["subregular naive semidirect coupling fails square zero"] = (
         not any(
-            _partition_pair_semidirect_square_zero_flags(
-                seed.partition,
+            semidirect_survivor_block_has_square_zero(block)
+            for block in sl3_subregular_semidirect_survivor_blocks(
                 max_constraint_total_degree=1,
                 survivor_total_degree=1,
                 max_internal_ce_degree=2,
@@ -10296,13 +10297,13 @@ def verify_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     )
     results["first hook naive semidirect coupling fails square zero"] = (
         not any(
-            _hook_pair_semidirect_square_zero_flags(
-                4,
-                1,
+            semidirect_survivor_block_has_square_zero(block)
+            for blocks in first_nonselfdual_hook_pair_semidirect_survivor_blocks(
                 max_constraint_total_degree=0,
                 survivor_total_degree=1,
                 max_internal_ce_degree=1,
             )
+            for block in blocks
         )
     )
     results["first hook first transfer correction kills the naive survivor action"] = (
