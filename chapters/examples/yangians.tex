@@ -769,6 +769,565 @@ input is the Koszulness of the $\Eone$-chiral bar complex
 (Remark~\ref{rem:yangian-collapse-conj}).
 \end{remark}
 
+\begin{proposition}[Degree-2 mixed-tensor criterion for dg-shifted
+local transport; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion}
+Let $\Ydg_{\cA}$ be a dg-shifted or factorization-theoretic Yangian
+candidate with one-factor fundamental line operator
+\[
+L_a^{\mathrm{dg}}(u)\in \End(V)\otimes \End(V(a)),
+\qquad V=\mathbb{C}^M,
+\]
+and residue operator
+\[
+\Xi_a^{\mathrm{dg}}
+:=
+\operatorname*{Res}_{u=a}L_a^{\mathrm{dg}}(u).
+\]
+Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the one-factor line operator is functorial for the diagonal
+  $\mathfrak{sl}_M$-action and normalized by
+  \[
+  L_a^{\mathrm{dg}}(u)\to 1
+  \qquad (u\to\infty);
+  \]
+\item the local OPE on the fundamental line is one-loop exact, and its
+  simple pole is computed by the degree-$2$ Maurer--Cartan element
+  \[
+  r(z)=\tau|_{\deg 2}
+  \]
+  from Remark~\ref{rem:dnp-mc-twisting};
+\item the resulting mixed-tensor coefficient satisfies
+  \[
+  \Xi_a^{\mathrm{dg}}(e_1\otimes e_2)
+  =-\hbar(e_2\otimes e_1).
+  \]
+\end{enumerate}
+Then
+\[
+\Xi_a^{\mathrm{dg}}=-\hbar P
+\qquad\text{and}\qquad
+L_a^{\mathrm{dg}}(u)=R_{0a}(u-a).
+\]
+If, moreover, the twisted-coproduct hypotheses of
+Corollary~\ref{cor:dg-shifted-rtt-typea-single-line-bootstrap} hold on
+universal packets and generic tensor powers, then the dg-shifted local
+Yangian packet closes: every universal packet carries the standard
+finite-stage evaluation action and
+\[
+\Delta_{r,0}(N)=0
+\qquad (0\le r\le N)
+\]
+on the evaluation-generated core.
+
+Equivalently, once the standard RTT side is fixed, the remaining local
+transport problem for the dg-shifted or factorization target is reduced
+to transporting the degree-$2$ twisting coefficient on the ordered
+mixed-tensor line $e_1\otimes e_2$ to the standard normalized residue.
+\end{proposition}
+
+\begin{proof}
+Assumption~\textup{(iii)} is exactly the ordered mixed-tensor formula of
+Proposition~\ref{prop:dg-shifted-rtt-typea-uniform-single-line}, while
+assumption~\textup{(i)} supplies the functoriality and normalization
+hypotheses used there and in
+Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction}.  Therefore
+\[
+\Xi_a^{\mathrm{dg}}=-\hbar P,
+\]
+and the residue reduction corollary gives
+\[
+L_a^{\mathrm{dg}}(u)=R_{0a}(u-a).
+\]
+This proves the first claim.
+
+If the additional twisted-coproduct hypotheses of
+Corollary~\ref{cor:dg-shifted-rtt-typea-single-line-bootstrap}
+hold, then that corollary applies verbatim to the dg-shifted target
+and yields the standard finite-stage evaluation action on every
+universal packet together with vanishing of the boundary-strip defects
+$\Delta_{r,0}(N)$ on the evaluation-generated core.
+
+The final sentence is just a restatement of assumptions
+\textup{(ii)}--\textup{(iii)} in view of the first paragraph: once the
+simple pole is one-loop exact and governed by
+$r(z)=\tau|_{\deg 2}$, the remaining local comparison is exactly the
+transport of the ordered mixed-tensor coefficient displayed in
+assumption~\textup{(iii)} to the standard normalized residue.
+\end{proof}
+
+\begin{corollary}[Seed-normalized extraction of the dg-shifted local
+coefficient; \ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-seed-normalized-coefficient}
+In the setting of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion},
+assume that the one-loop singular part of the fundamental-line OPE is
+written in the standard logarithmic normalization as
+\[
+r_a^{\mathrm{fund}}(z)\,\eta_{12},
+\qquad
+\eta_{12}=d\log(z_1-z_2)
+\]
+with $r_a^{\mathrm{fund}}(z)$ the operator-valued degree-$2$ twisting
+morphism coefficient induced by $r(z)=\tau|_{\deg 2}$ on
+$V\otimes V(a)$.  Then
+\[
+\Xi_a^{\mathrm{dg}}
+=
+r_a^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+\]
+as endomorphisms of $V\otimes V(a)$.
+
+Equivalently, on the ordered mixed tensor line one has
+\[
+\Xi_a^{\mathrm{dg}}(e_1\otimes e_2)
+=
+r_a^{\mathrm{fund}}(z)(e_1\otimes e_2),
+\]
+so the remaining dg-shifted local transport problem is exactly the
+single coefficient identity
+\[
+r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1).
+\]
+\end{corollary}
+
+\begin{proof}
+By assumption, the singular part of the local one-loop kernel is the
+operator-valued logarithmic form
+$r_a^{\mathrm{fund}}(z)\,\eta_{12}$.  The residue operator
+$\Xi_a^{\mathrm{dg}}$ is obtained by taking the residue along the
+diagonal.  Since the logarithmic seed satisfies
+\[
+\operatorname*{Res}_{z_1=z_2}\eta_{12}=1
+\]
+by \eqref{eq:the-seed}, the residue acts only on the scalar logarithmic
+factor and leaves the operator coefficient unchanged.  Therefore
+\[
+\Xi_a^{\mathrm{dg}}
+=
+r_a^{\mathrm{fund}}(z)\big|_{z_1=z_2}.
+\]
+Applying this identity to $e_1\otimes e_2$ gives the displayed
+mixed-tensor formula.  The final sentence is just the same identity
+restated as the exact remaining coefficient check.
+\end{proof}
+
+\begin{proposition}[Degree-$2$ scalar normalization removes the
+identity channel; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-degree2-scalar-normalization}
+Work in the setting of
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}, and
+assume $M\ge2$.  Write the one-loop fundamental kernel in the form
+\[
+L_a^{\mathrm{dg}}(u)
+=
+1+\hbar\frac{\Xi_a^{(1)}}{u-a}+O(\hbar^2),
+\qquad
+\Xi_a^{(1)}\in \End(V\otimes V(a)).
+\]
+Assume moreover that the diagonal $\mathfrak{sl}_M$-functoriality of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion}
+holds, so
+\[
+\Xi_a^{(1)}=\alpha_a\,\id+\beta_a\,P
+\]
+for scalars $\alpha_a,\beta_a$.
+
+Let
+\[
+s_a(u)
+=
+1+\hbar\frac{\gamma_a}{u-a}+O(\hbar^2)
+\]
+be a scalar one-loop renormalization and define
+\[
+L_a^{\mathrm{ren}}(u):=s_a(u)\,L_a^{\mathrm{dg}}(u).
+\]
+Then
+\[
+L_a^{\mathrm{ren}}(u)
+=
+1+\hbar\frac{(\alpha_a+\gamma_a)\,\id+\beta_a\,P}{u-a}+O(\hbar^2).
+\]
+In particular, the permutation coefficient $\beta_a$ is invariant under
+degree-$2$ scalar renormalization, while the identity coefficient may be
+shifted arbitrarily.  Choosing $\gamma_a=-\alpha_a$ therefore produces a
+pure-permutation normalization
+\[
+L_a^{\mathrm{ren}}(u)
+=
+1+\hbar\frac{\beta_a\,P}{u-a}+O(\hbar^2).
+\]
+
+Consequently, after fixing the standard RTT normalization at degree~$2$,
+the remaining dg-shifted local packet is the single scalar identity
+\[
+\beta_a=-1,
+\]
+equivalently
+\[
+r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1)
+\]
+in the pure-permutation normalization.
+\end{proposition}
+
+\begin{proof}
+Since $V\otimes V$ decomposes as
+\[
+V\otimes V
+\cong
+\operatorname{Sym}^2(V)\oplus \Lambda^2(V),
+\]
+the diagonal $\mathfrak{sl}_M$-equivariance implies, by Schur's lemma,
+that $\Xi_a^{(1)}$ lies in the two-dimensional algebra spanned by
+$\id$ and~$P$.  This gives the decomposition
+\[
+\Xi_a^{(1)}=\alpha_a\,\id+\beta_a\,P.
+\]
+
+Now multiply the one-loop expansion of $L_a^{\mathrm{dg}}(u)$ by the
+scalar series $s_a(u)$.  Since both series are normalized by $1$ at
+infinity,
+\[
+s_a(u)\,L_a^{\mathrm{dg}}(u)
+=
+\Bigl(1+\hbar\frac{\gamma_a}{u-a}+O(\hbar^2)\Bigr)
+\Bigl(1+\hbar\frac{\Xi_a^{(1)}}{u-a}+O(\hbar^2)\Bigr).
+\]
+Discarding terms of order $O(\hbar^2)$ gives
+\[
+L_a^{\mathrm{ren}}(u)
+=
+1+\hbar\frac{\gamma_a\,\id+\Xi_a^{(1)}}{u-a}+O(\hbar^2),
+\]
+which is exactly the displayed formula
+\[
+L_a^{\mathrm{ren}}(u)
+=
+1+\hbar\frac{(\alpha_a+\gamma_a)\,\id+\beta_a\,P}{u-a}+O(\hbar^2).
+\]
+Thus $\beta_a$ is unchanged by scalar renormalization, whereas
+$\alpha_a$ may be replaced by any scalar via the choice of $\gamma_a$.
+Taking $\gamma_a=-\alpha_a$ yields the pure-permutation normalization.
+
+In that normalization one has
+\[
+\Xi_{a,\mathrm{ren}}^{(1)}=\beta_a\,P,
+\]
+so the degree-$2$ coefficient itself satisfies
+\[
+r_a^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+\hbar\beta_a\,P
+\]
+by
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}.  The
+mixed-tensor formula on $e_1\otimes e_2$ therefore becomes
+\[
+r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+\hbar\beta_a(e_2\otimes e_1)
+\]
+and this
+equals $-\hbar(e_2\otimes e_1)$ exactly when $\beta_a=-1$.
+\end{proof}
+
+\begin{corollary}[Trace-zero Casimir convention reduces to the same
+scalar packet; \ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-degree2-casimir-normalization}
+In the setting of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization},
+suppose the degree-$2$ coefficient is written in the trace-zero
+invariant-tensor convention as
+\[
+\Xi_a^{(1)}
+=
+\lambda_a\Bigl(P-\frac{1}{M}\id\Bigr).
+\]
+Then the pure-permutation degree-$2$ normalization of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization} is
+\[
+\Xi_{a,\mathrm{ren}}^{(1)}=\lambda_a P.
+\]
+Hence the dg-shifted local packet is independent of whether one starts
+from the $\mathfrak{gl}_M$-style convention $P$ or the
+$\mathfrak{sl}_M$-style convention $P-\frac{1}{M}\id$: in either case,
+after degree-$2$ scalar normalization the remaining local input is the
+single scalar identity
+\[
+\lambda_a=-1,
+\]
+equivalently
+\[
+r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1).
+\]
+\end{corollary}
+
+\begin{proof}
+Here $\alpha_a=-\lambda_a/M$ and $\beta_a=\lambda_a$ in the notation of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization}.
+Choosing $\gamma_a=\lambda_a/M$ therefore cancels the identity channel
+and leaves the permutation coefficient unchanged.  The rest is exactly
+the final sentence of that proposition.
+\end{proof}
+
+\begin{proposition}[Fundamental Casimir insertion fixes the normalized
+one-loop scalar; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+In the setting of
+Corollary~\ref{cor:dg-shifted-rtt-degree2-casimir-normalization},
+suppose the ordered fundamental-line degree-$2$ coefficient is the
+standard trace-zero quadratic Casimir insertion:
+\[
+r_a^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar\,\Omega_{\mathfrak{sl}_M}^{\mathrm{fund}},
+\qquad
+\Omega_{\mathfrak{sl}_M}^{\mathrm{fund}}
+:=
+P-\frac{1}{M}\id.
+\]
+Then
+\[
+\lambda_a=-1,
+\qquad
+\beta_a=-1.
+\]
+Hence the pure-permutation normalized coefficient is
+\[
+\Xi_{a,\mathrm{ren}}^{(1)}=-P,
+\qquad
+r_{a,\mathrm{ren}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar P,
+\]
+and therefore
+\[
+r_{a,\mathrm{ren}}^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1).
+\]
+Equivalently, once the dg-shifted or factorization degree-$2$
+coefficient is identified with the standard fundamental Casimir
+insertion, the normalized one-loop scalar is forced to be~$-1$.
+\end{proposition}
+
+\begin{proof}
+On the defining representation,
+\[
+\Omega_{\mathfrak{gl}_M}^{\mathrm{fund}}
+:=
+\sum_{i,j=1}^M E_{ij}\otimes E_{ji}
+=
+P,
+\]
+because the matrix unit $E_{ij}$ sends $e_j$ to $e_i$ and annihilates
+the other basis vectors, which is exactly the action of the permutation
+operator on $V\otimes V$.  Passing from $\mathfrak{gl}_M$ to
+$\mathfrak{sl}_M$ removes the central scalar direction, so the
+trace-zero Casimir becomes
+\[
+\Omega_{\mathfrak{sl}_M}^{\mathrm{fund}}
+=
+\Omega_{\mathfrak{gl}_M}^{\mathrm{fund}}
+-\frac{1}{M}\id
+=
+P-\frac{1}{M}\id.
+\]
+Therefore the displayed hypothesis is exactly the trace-zero
+convention of
+Corollary~\ref{cor:dg-shifted-rtt-degree2-casimir-normalization} with
+\[
+\lambda_a=-1.
+\]
+That corollary then gives $\beta_a=\lambda_a=-1$ and yields the
+pure-permutation normalized coefficient
+\[
+\Xi_{a,\mathrm{ren}}^{(1)}=-P.
+\]
+Multiplying back by $\hbar$ gives
+\[
+r_{a,\mathrm{ren}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar P,
+\]
+and applying this to $e_1\otimes e_2$ gives the final displayed
+formula.
+\end{proof}
+
+\begin{corollary}[Factorization-side fundamental Casimir identity;
+\ClaimStatusProvedHere]
+\label{cor:factorization-fundamental-casimir-identity}
+On the ordered fundamental evaluation line of the standard type-$A$
+factorization Yangian
+$\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(Y_\hbar(\mathfrak{sl}_M))$,
+the degree-$2$ coefficient satisfies
+\[
+r_{a,\mathrm{fact}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar\Bigl(P-\frac{1}{M}\id\Bigr)
+\]
+in the trace-zero invariant-tensor convention.  Equivalently, in the
+pure-permutation normalization one has
+\[
+r_{a,\mathrm{fact,ren}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar P,
+\qquad
+r_{a,\mathrm{fact,ren}}^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1).
+\]
+Hence the normalized one-loop scalar on the factorization target is
+\[
+\beta_a=-1.
+\]
+
+Thus the factorization side of the local type-$A$ Yangian packet is
+already closed.  The next local step is therefore not another
+factorization-side coefficient calculation, but the transport of any
+dg-shifted realization presented by the same ordered bar seed to this
+already-identified Casimir coefficient.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:yangian-e1}, the standard type-$A$ Yangian already
+has its ordered $\Eone$-factorization structure controlled by the
+rational Yang $R$-matrix.  On the fundamental evaluation line,
+Proposition~\ref{prop:dg-shifted-rtt-standard-typea-local-packet}
+identifies the normalized one-factor kernel as
+\[
+L_a^{\mathrm{std}}(u)=1-\frac{\hbar P}{u-a},
+\]
+so the pure-permutation degree-$2$ coefficient is exactly
+$-\hbar P$.  Rewriting this coefficient in the trace-zero
+invariant-tensor convention is precisely the conversion of
+Corollary~\ref{cor:dg-shifted-rtt-degree2-casimir-normalization}, which
+gives
+\[
+r_{a,\mathrm{fact}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar\Bigl(P-\frac{1}{M}\id\Bigr).
+\]
+Applying
+Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+therefore yields $\beta_a=-1$ together with the displayed
+mixed-tensor formula.
+\end{proof}
+
+\begin{proposition}[Shared bar seed transports the fundamental
+degree-$2$ coefficient; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-factorization-shared-seed}
+Work in the standard type-$A$ Yangian setting, and let
+\[
+r_{a,\mathrm{dg}}^{\mathrm{fund}}(z),
+\qquad
+r_{a,\mathrm{fact}}^{\mathrm{fund}}(z)
+\]
+denote the ordered fundamental-line degree-$2$ coefficients on the
+dg-shifted and factorization targets, respectively.  Assume that on the
+evaluation-generated core both are induced by the same bar twisting
+morphism
+\[
+r(z)=\tau|_{\deg 2}
+\]
+of Remark~\ref{rem:dnp-mc-twisting}, restricted to the same ordered
+fundamental evaluation line $V\otimes V(a)$.
+
+Then
+\[
+r_{a,\mathrm{dg}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+r_{a,\mathrm{fact}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar\Bigl(P-\frac{1}{M}\id\Bigr).
+\]
+Equivalently, after degree-$2$ scalar normalization one has
+\[
+r_{a,\mathrm{dg,ren}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+r_{a,\mathrm{fact,ren}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar P,
+\]
+hence
+\[
+r_{a,\mathrm{dg,ren}}^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1).
+\]
+
+In particular, once the dg-shifted target is presented by that same
+ordered bar seed on the evaluation-generated core, the local type-$A$
+Yangian transport problem is no longer a new residue computation:
+the dg-shifted coefficient is forced to equal the already-identified
+factorization Casimir coefficient.
+\end{proposition}
+
+\begin{proof}
+By Remark~\ref{rem:dnp-mc-twisting}, the dg-shifted Maurer--Cartan
+element is the degree-$2$ bar twisting morphism
+$r(z)=\tau|_{\deg 2}$.  By the stated hypothesis, the dg-shifted and
+factorization coefficients on the ordered fundamental evaluation line
+are obtained by restricting that same operator-valued degree-$2$ seed
+to the same module $V\otimes V(a)$.  Therefore
+\[
+r_{a,\mathrm{dg}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+r_{a,\mathrm{fact}}^{\mathrm{fund}}(z)\big|_{z_1=z_2}.
+\]
+Corollary~\ref{cor:factorization-fundamental-casimir-identity}
+identifies the factorization coefficient with the standard trace-zero
+fundamental Casimir insertion, giving the first displayed formula.
+
+The pure-permutation statement is then exactly the scalar-normalized
+conversion of
+Corollary~\ref{cor:dg-shifted-rtt-degree2-casimir-normalization}, and
+Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+computes the normalized scalar as $\beta_a=-1$.  Applying the resulting
+operator $-\hbar P$ to $e_1\otimes e_2$ gives the final displayed
+formula.
+\end{proof}
+
+\begin{corollary}[Shared bar seed closes the local dg-shifted
+type-$A$ MC4 packet; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-dg-local-closure}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators} on the
+ordered dg-shifted target.  Assume moreover that the ordered
+fundamental-line degree-$2$ coefficient on that target is induced by
+the same bar twisting morphism as on the factorization target, in the
+sense of Proposition~\ref{prop:dg-shifted-factorization-shared-seed}.
+Then the local item \textup{(a)} of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators} is
+automatic.  Consequently the remaining standard type-$A$ Yangian MC4
+input on the dg-shifted target is exactly the DK-5 categorical packet:
+compact generation of the completed module categories together with
+transport on the completed fundamental evaluation packet in the sense
+of Proposition~\ref{prop:yangian-dk5-fundamental-packet}.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:dg-shifted-factorization-shared-seed} gives
+\[
+r_{a,\mathrm{dg,ren}}^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1),
+\]
+which is exactly item \textup{(a)} of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators}.  The
+conclusion of that corollary therefore leaves only the
+completed fundamental-packet DK-5 packet of
+Corollary~\ref{cor:yangian-dk5-fundamental-packet}.
+\end{proof}
+
 \begin{conjecture}[Finite-RTT quotient package for dg-shifted Yangians;
 \ClaimStatusConjectured]
 \label{conj:dg-shifted-yangian-rtt-package}
@@ -865,7 +1424,51 @@ Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}
 sharpens this once more: on the defining fundamental representation,
 the auxiliary kernel is already forced by three local checks,
 namely $\mathfrak{sl}_M$-equivariance, unit asymptotic, and the
-standard simple-pole residue~$-\hbar P$.
+standard simple-pole residue~$-\hbar P$.  For $M\ge2$,
+Corollary~\ref{cor:dg-shifted-rtt-typea-single-line}
+reduces even that transport-normalized residue packet to the ordered
+mixed-tensor check
+\[
+\Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1),
+\]
+Proposition~\ref{prop:dg-shifted-rtt-typea-uniform-single-line}
+shows that this one ordered tensor-line computation already determines
+the entire residue operator uniformly in the rank, and
+Corollary~\ref{cor:dg-shifted-rtt-typea-single-line-bootstrap}
+then shows that this one local computation forces the standard
+finite-stage evaluation action on every universal packet and kills the
+entire boundary strip on the evaluation-generated core.
+Proposition~\ref{prop:dg-shifted-rtt-standard-typea-local-packet}
+shows moreover that this local packet is already closed on the
+theorematic standard RTT side, so the remaining Yangian frontier is the
+transport of the dg-shifted or factorization one-factor line operator
+to that standard normalized kernel.
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion}
+sharpens this once more: under one-loop exactness, that transport
+problem is already reduced to the ordered mixed-tensor coefficient of
+the degree-$2$ twisting morphism $r(z)=\tau|_{\deg 2}$.
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}
+then removes the residue bookkeeping itself: in the standard
+logarithmic normalization, the live packet is exactly the ordered
+mixed-tensor coefficient of the operator-valued degree-$2$ term
+$r_a^{\mathrm{fund}}(z)$.
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization}
+then removes the remaining matrix ambiguity at one loop: after
+degree-$2$ scalar normalization only the permutation coefficient
+survives, so the live Yangian packet is a single scalar exchange
+coefficient.  Corollary~\ref{cor:dg-shifted-rtt-degree2-casimir-normalization}
+shows that the same scalar packet governs both the $\mathfrak{gl}_M$
+and trace-zero $\mathfrak{sl}_M$ invariant-tensor conventions.
+Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+then computes that scalar as $-1$ as soon as the degree-$2$ coefficient
+is identified with the standard fundamental Casimir insertion.
+Corollary~\ref{cor:factorization-fundamental-casimir-identity} shows
+that this Casimir identity already holds on the factorization target,
+and Proposition~\ref{prop:dg-shifted-factorization-shared-seed} shows
+that any dg-shifted realization presented by the same ordered bar seed
+inherits that same coefficient.  Thus the local Yangian move is no
+longer a new residue computation, but the H-level realization of the
+dg-shifted target together with the compact-generator packet.
 \end{remark}
 
 \begin{proposition}[Presentation-level criterion for finite RTT
@@ -1710,7 +2313,10 @@ product built from fundamental evaluation modules, regardless of
 length.  Assumptions~\textup{(iv)} and~\textup{(v)} then propagate
 this vanishing to the whole faithful evaluation subcategory of
 Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.  That
-proposition therefore forces $\Delta_{a,0}(N)=0$ in the quotient.
+proposition therefore forces the quotient identity
+\[
+\Delta_{a,0}(N)=0.
+\]
 
 Doing this for all $a\le N$ kills the entire boundary strip, so
 Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} reduces the full
@@ -2042,7 +2648,9 @@ twisted-coproduct multiplication law.  Then the induction step from
 packet lengths $\le a$ to the top packet $a+1$ closes.
 
 Equivalently, after the shorter universal packets are killed, the only
-remaining Yangian task is the one-factor universal packet identity
+remaining Yangian task on the universal-packet side is to transport
+the dg-shifted or factorization one-factor line operator to the
+standard auxiliary kernel
 $L_x(u)=R_{0x}(u-x)$.
 \end{corollary}
 
@@ -2443,6 +3051,250 @@ $\lambda_{\mathrm{alt}}=+\hbar$, so
 Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels} yields
 $\Xi_a=-\hbar P$.
 \end{proof}
+
+\begin{proposition}[Uniform residue extraction from one ordered tensor
+line; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-typea-uniform-single-line}
+Assume the hypotheses of
+Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction}, and assume
+$M\ge2$.  If the one-factor residue operator extracted from the
+fundamental line operator satisfies
+\[
+\Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1),
+\]
+then in fact
+\[
+\Xi_a(e_i\otimes e_j)=-\hbar(e_j\otimes e_i)
+\qquad (1\le i,j\le M).
+\]
+Equivalently,
+\[
+\Xi_a=-\hbar P
+\]
+on all of $V\otimes V(a)\cong V\otimes V$.
+
+Thus the mixed-tensor residue packet is uniform in the rank: once it is
+proved on one ordered off-diagonal tensor line, the entire residue of
+the one-factor line operator is determined.
+\end{proposition}
+
+\begin{proof}
+By the functoriality hypothesis in
+Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction}, the
+operator $\Xi_a$ is $\mathfrak{sl}_M$-equivariant.  Therefore, as in the
+proof of
+Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness},
+Schur's lemma for
+\[
+V\otimes V\cong \operatorname{Sym}^2(V)\oplus \Lambda^2(V)
+\]
+shows that
+\[
+\Xi_a=\alpha\,\id+\beta\,P
+\]
+for scalars $\alpha,\beta\in\mathbb{C}$.
+
+Applying this formula to $e_1\otimes e_2$ gives
+\[
+\Xi_a(e_1\otimes e_2)
+=
+\alpha(e_1\otimes e_2)+\beta(e_2\otimes e_1).
+\]
+By hypothesis this equals $-\hbar(e_2\otimes e_1)$.  Since
+$e_1\otimes e_2$ and $e_2\otimes e_1$ are linearly independent, one
+must have
+\[
+\alpha=0,\qquad \beta=-\hbar.
+\]
+Hence $\Xi_a=-\hbar P$, and therefore for every $i,j$,
+\[
+\Xi_a(e_i\otimes e_j)=-\hbar P(e_i\otimes e_j)
+=-\hbar(e_j\otimes e_i).
+\]
+\end{proof}
+
+\begin{corollary}[Type-A single-line bootstrap to standard evaluation
+and boundary-strip vanishing; \ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-typea-single-line-bootstrap}
+Assume the hypotheses of
+Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction}
+and
+Corollary~\ref{cor:dg-shifted-rtt-typea-single-line}.  Assume
+moreover:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item on every universal packet, the truncated monodromy matrices are
+  obtained by iterating the coefficientwise twisted-coproduct
+  multiplication law of
+  Proposition~\ref{prop:dg-shifted-rtt-universal-evaluation-rigidity};
+\item on generic tensor powers of fundamental evaluation modules, the
+  truncated monodromy matrix is obtained by the twisted-coproduct
+  multiplication law of
+  Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation};
+\item the faithful evaluation subcategory of
+  Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} is
+  generated from those generic tensor powers by finite direct sums and
+  subquotients.
+\end{enumerate}
+If
+\[
+\Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1),
+\]
+then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the one-factor fundamental kernel is the standard auxiliary
+  kernel
+  \[
+  L_a(u)=R_{0a}(u-a);
+  \]
+\item every universal packet $M_m^{\mathrm{gen}}$, and in particular
+  the top packet of
+  Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction}, carries
+  the standard finite-stage evaluation action;
+\item the truncated RTT defect
+  \[
+  \mathcal{D}_N(u,v)
+  =
+  R(u-v)\,T_{N,1}(u)\,T_{N,2}(v)
+  -
+  T_{N,2}(v)\,T_{N,1}(u)\,R(u-v)
+  \]
+  acts by zero on the faithful evaluation subcategory, so
+  \[
+  \Delta_{r,0}(N)=0
+  \qquad (0\le r\le N).
+  \]
+\end{enumerate}
+Thus, for the standard type-A Yangian tower, the universal-packet
+transport problem and the boundary-strip finite-detection packet both
+close once the dg-shifted or factorization one-factor line operator is
+shown to carry the standard normalized mixed-tensor residue on the
+fundamental line, equivalently once the displayed mixed-tensor formula
+is proved.
+\end{corollary}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-typea-uniform-single-line},
+the displayed mixed-tensor formula already forces
+\[
+\Xi_a=-\hbar P
+\]
+uniformly on $V\otimes V(a)$.  Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction}
+therefore gives the one-factor auxiliary-kernel identity
+\[
+L_a(u)=R_{0a}(u-a).
+\]
+This proves~\textup{(a)}.
+
+Now apply
+Proposition~\ref{prop:dg-shifted-rtt-universal-evaluation-rigidity}.
+Its one-factor hypothesis has just been established, and
+assumption~\textup{(i)} supplies the twisted-coproduct multiplication
+law on universal packets.  Hence every universal packet carries the
+standard finite-stage evaluation action, proving~\textup{(b)}.
+
+Specializing the universal parameters gives the same standard
+finite-stage evaluation action on every generic tensor power of
+fundamental evaluation modules.  Using assumption~\textup{(ii)},
+Proposition~\ref{prop:dg-shifted-rtt-auxiliary-kernel-criterion}
+shows that the one-factor monodromy satisfies the truncated RTT
+relation on every fundamental evaluation module.  Therefore the only
+remaining hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation}
+are exactly assumptions~\textup{(ii)} and~\textup{(iii)} above, and
+that proposition implies that
+\[
+\mathcal{D}_N(u,v)
+\]
+acts by zero on the faithful evaluation subcategory.  Its coefficients
+are precisely the boundary-strip defects
+$\Delta_{r,0}(N)$, so those defects vanish for all $0\le r\le N$.
+This is~\textup{(c)}.
+\end{proof}
+
+\begin{proposition}[Standard type-A fundamental line operator has the
+expected local residue; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-standard-typea-local-packet}
+Work in the theorematic standard type-A RTT tower, let
+$V=\mathbb{C}^M$ be the defining representation, and let $V(a)$ be the
+fundamental evaluation module at spectral parameter~$a$.  Let
+$L_a^{\mathrm{std}}(u)$ be the normalized one-factor monodromy kernel
+obtained by specializing the $R$-matrix-valued simple-pole OPE of
+Theorem~\ref{thm:yangian-e1} to the defining evaluation module via
+\eqref{eq:yangian-r-matrix}.  Then
+\[
+L_a^{\mathrm{std}}(u)=R_{0a}(u-a)=1-\frac{\hbar P}{u-a}.
+\]
+Hence
+\[
+\Xi_a^{\mathrm{std}}
+:=
+\operatorname*{Res}_{u=a}L_a^{\mathrm{std}}(u)
+=-\hbar P,
+\]
+so for every $1\le i,j\le M$ one has
+\[
+\Xi_a^{\mathrm{std}}(e_i\otimes e_j)=-\hbar(e_j\otimes e_i).
+\]
+In particular,
+\[
+\Xi_a^{\mathrm{std}}(e_1\otimes e_2)=-\hbar(e_2\otimes e_1).
+\]
+\end{proposition}
+
+\begin{proof}
+Theorem~\ref{thm:yangian-e1} identifies the one-factor OPE kernel with
+the rational Yang $R$-matrix, and
+\eqref{eq:yangian-r-matrix} specializes that kernel to the evaluation
+module at spectral parameter~$a$.  On the standard type-A defining
+representation, the rational Yang $R$-matrix is
+\[
+R(u)=1-\frac{\hbar P}{u}
+\]
+by Remark~\ref{rem:rational-trigonometric-dk}.  Shifting the additive
+spectral parameter by~$a$ gives
+\[
+L_a^{\mathrm{std}}(u)=R_{0a}(u-a)=1-\frac{\hbar P}{u-a}.
+\]
+Taking the residue at $u=a$ gives
+\[
+\Xi_a^{\mathrm{std}}=-\hbar P.
+\]
+The displayed action on basis tensors is now immediate from the action
+of the permutation operator.
+\end{proof}
+
+\begin{remark}[Where the local Yangian frontier now actually lives]
+\label{rem:yangian-standard-local-packet-closed}
+Proposition~\ref{prop:dg-shifted-rtt-standard-typea-local-packet}
+shows that the local residue packet is already closed on the
+theorematic standard RTT side.  The remaining MC4 local problem is
+therefore not to recompute
+\[
+\Xi_a^{\mathrm{std}}=-\hbar P
+\]
+inside the standard tower, but to show that the one-factor line
+operator on the dg-shifted or factorization-theoretic target carries
+this same normalized residue, equivalently the same mixed-tensor matrix
+coefficient.  Under one-loop exactness,
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion}
+reduces this further to the ordered mixed-tensor coefficient of the
+degree-$2$ twisting morphism $r(z)=\tau|_{\deg 2}$.
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient} removes
+the residue bookkeeping, and
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization}
+shows that after degree-$2$ scalar normalization the remaining local
+datum is only the scalar coefficient of the permutation operator.
+Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+shows that this scalar is forced to be $-1$ once the degree-$2$
+coefficient is the standard fundamental Casimir insertion, and
+Corollary~\ref{cor:factorization-fundamental-casimir-identity} proves
+that this is already the factorization-side coefficient.
+Proposition~\ref{prop:dg-shifted-factorization-shared-seed} then shows
+that any dg-shifted realization presented by the same ordered bar seed
+inherits that same local coefficient, so the genuinely live frontier is
+no longer a local residue computation.
+\end{remark}
 
 \begin{remark}[Normalization bridge for the fundamental-line kernel]
 \label{rem:yangian-fundamental-normalization-bridge}
@@ -5622,8 +6474,11 @@ The evaluation-module results above establish the derived
 Drinfeld--Kohno correspondence at the chain level and on the
 evaluation locus.  The remaining work is not one undifferentiated
 conjectural jump: it is the staged passage from DK-2 through DK-5 of
-Remark~\ref{rem:yangian-status}.  The first H-level bridge targets all
-modules:
+Remark~\ref{rem:yangian-status}.  First one enlarges the theorematic
+evaluation-generated core to the natural
+ordinary-derived/completed/coderived ambient; only after that
+enlargement is fixed does the standard-tower MC4 comparison begin.
+The first H-level bridge targets all modules:
 
 \begin{conjecture}[Factorization-categorical DK/KL bridge (DK-3);
 \ClaimStatusConjectured]\label{conj:full-derived-dk}
@@ -7221,18 +8076,59 @@ on the fundamental evaluation line.
 If, moreover, the one-factor line operator is functorial for the
 diagonal $\mathfrak{sl}_M$-action and normalized by
 $L_a(u)\to 1$ as $u\to\infty$, then the same DK-4 input is further
-reduced to the single residue formula
+reduced to transport of the standard residue formula
 \[
 \operatorname*{Res}_{u=a}L_a(u)=-\hbar P.
 \]
-For $M\ge 2$, this is further reduced to the single mixed-tensor
+For $M\ge 2$, this transport statement is further reduced to the
+ordered mixed-tensor
 identity
 \[
 \Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1).
 \]
+
+By
+Proposition~\ref{prop:dg-shifted-rtt-typea-uniform-single-line},
+this single ordered tensor-line computation already determines the full
+residue operator $\Xi_a=-\hbar P$ uniformly in the rank.
+Proposition~\ref{prop:dg-shifted-rtt-standard-typea-local-packet}
+shows that this residue formula already holds on the theorematic
+standard RTT tower itself.  Thus the genuinely live local input is to
+identify the dg-shifted or factorization one-factor kernel with that
+standard normalized residue, equivalently with the same mixed-tensor
+matrix coefficient on the fundamental line.
+
+Under one-loop exactness,
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion}
+reduces this transport problem further to the ordered mixed-tensor
+coefficient of the degree-$2$ twisting morphism $r(z)=\tau|_{\deg 2}$.
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}
+shows that, in the standard logarithmic normalization, this is
+equivalently the ordered mixed-tensor coefficient of the operator
+$r_a^{\mathrm{fund}}(z)$ itself.
+
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization}
+then removes the remaining one-loop matrix ambiguity: after
+degree-$2$ scalar normalization, the only genuinely live datum is the
+scalar coefficient of the permutation operator.  In particular,
+Corollary~\ref{cor:dg-shifted-rtt-degree2-casimir-normalization}
+shows that the trace-zero convention
+$P-\frac{1}{M}\id$ reduces to the same scalar packet, and
+Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+computes that scalar as $-1$ once the standard fundamental Casimir
+insertion is identified.
+Corollary~\ref{cor:factorization-fundamental-casimir-identity} proves
+that the factorization side already satisfies this identity, and
+Proposition~\ref{prop:dg-shifted-factorization-shared-seed} shows that
+any dg-shifted realization presented by the same ordered bar seed
+inherits the same coefficient.  Thus the genuinely live local step is
+no longer a new coefficient computation, but the realization of the
+dg-shifted target with that shared bar seed.
+
 Thus, after DK-3, the genuinely analytic Yangian frontier on the
-standard type-A tower is one mixed-tensor residue computation on the
-fundamental line.
+standard type-A tower is the H-level dg-shifted realization and the
+compact-core DK-5 packet, not a new residue computation inside the
+standard RTT tower.
 \end{proposition}
 
 \begin{proof}
@@ -7259,8 +8155,14 @@ Corollary~\ref{cor:dg-shifted-rtt-typea-residue-reduction} reduces that
 identity to the residue formula
 $\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, and
 Corollary~\ref{cor:dg-shifted-rtt-typea-single-line} reduces the
-residue formula further to the single mixed-tensor check displayed in
-the statement.
+transport-normalized residue formula further to the ordered
+mixed-tensor check displayed in
+the statement, while
+Proposition~\ref{prop:dg-shifted-rtt-typea-uniform-single-line}
+shows that this one check already determines the whole residue
+operator uniformly in~$M$.  Proposition~\ref{prop:dg-shifted-rtt-standard-typea-local-packet}
+then identifies that residue explicitly on the theorematic standard
+RTT side.
 \end{proof}
 
 \begin{proposition}[DK-5 reduction to compact-generator comparison;
@@ -7322,21 +8224,534 @@ an equivalence on those generators extends to an equivalence on the
 whole categories.  Therefore $F_{\mathrm{comp}}$ is an equivalence.
 \end{proof}
 
+\begin{proposition}[Compact-core comparison reduces to the completed
+fundamental packet; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-fundamental-packet}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-compact-generators}.  Write
+\[
+\mathcal{C}_Y^\omega
+:=
+\operatorname{thick}^{\mathrm{idemp}}
+\bigl(\mathcal{G}^{\mathrm{fund}}_{Y}\bigr),
+\qquad
+\mathcal{C}_q^\omega
+:=
+\operatorname{thick}^{\mathrm{idemp}}
+\bigl(\mathcal{G}^{\mathrm{fund}}_{q}\bigr)
+\]
+for the compact cores of the two completed categories, and let
+\[
+\mathcal{P}^{\mathrm{fund}}_{Y}\subset \mathcal{C}_Y^\omega,
+\qquad
+\mathcal{P}^{\mathrm{fund}}_{q}\subset \mathcal{C}_q^\omega
+\]
+be the full subcategories spanned by the completed fundamental
+evaluation modules themselves.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item each compact core is the smallest full stable
+  idempotent-complete braided monoidal subcategory containing its
+  completed fundamental packet;
+\item there exist exact braided monoidal functors
+  \[
+  KZ^\omega_{\mathrm{comp}}\colon
+  \mathcal{C}_Y^\omega \to \mathcal{C}_q^\omega,
+  \qquad
+  LZ^\omega_{\mathrm{comp}}\colon
+  \mathcal{C}_q^\omega \to \mathcal{C}_Y^\omega;
+  \]
+\item the restrictions of these functors to
+  $\mathcal{P}^{\mathrm{fund}}_{Y}$ and
+  $\mathcal{P}^{\mathrm{fund}}_{q}$ recover the DK-3 transport on the
+  completed fundamental evaluation packet; and
+\item both composites
+  \[
+  LZ^\omega_{\mathrm{comp}} \circ KZ^\omega_{\mathrm{comp}},
+  \qquad
+  KZ^\omega_{\mathrm{comp}} \circ LZ^\omega_{\mathrm{comp}}
+  \]
+  are naturally isomorphic to the identity on the completed
+  fundamental packets.
+\end{enumerate}
+Then the two functors are quasi-inverse exact braided monoidal
+equivalences
+\[
+KZ^\omega_{\mathrm{comp}}\colon
+\mathcal{C}_Y^\omega \xrightarrow{\sim} \mathcal{C}_q^\omega,
+\qquad
+LZ^\omega_{\mathrm{comp}}\colon
+\mathcal{C}_q^\omega \xrightarrow{\sim} \mathcal{C}_Y^\omega.
+\]
+
+Equivalently, once the compact cores are generated by completed
+fundamental evaluation modules, the compact-core DK-5 packet is forced
+by transport on that completed fundamental packet.
+\end{proposition}
+
+\begin{proof}
+This is the compact-core analogue of
+Proposition~\ref{prop:yangian-dk3-generated-core}.  By
+assumption~\textup{(i)}, each compact core is obtained from its
+completed fundamental packet by finite iterates of shifts, cones,
+direct summands, and ordered tensor products.  Exact braided monoidal
+functors preserve each of these operations.  Therefore any natural
+transformation between exact braided monoidal functors that is an
+isomorphism on the completed fundamental packet remains an isomorphism
+on the full compact core.
+
+Apply this to the two composites in assumption~\textup{(iv)}.  Since
+they are naturally isomorphic to the identity on the completed
+fundamental packets, they are naturally isomorphic to the identity on
+$\mathcal{C}_Y^\omega$ and $\mathcal{C}_q^\omega$.  Hence
+$KZ^\omega_{\mathrm{comp}}$ and $LZ^\omega_{\mathrm{comp}}$ are
+quasi-inverse exact braided monoidal equivalences.
+\end{proof}
+
+\begin{proposition}[DK-5 comparison functor is the ind-extension of the
+compact core; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-ind-extension}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-compact-generators}.  Write
+\[
+\mathcal{C}_Y^\omega
+:=
+\operatorname{thick}^{\mathrm{idemp}}
+\bigl(\mathcal{G}^{\mathrm{fund}}_{Y}\bigr),
+\qquad
+\mathcal{C}_q^\omega
+:=
+\operatorname{thick}^{\mathrm{idemp}}
+\bigl(\mathcal{G}^{\mathrm{fund}}_{q}\bigr)
+\]
+for the compact cores of the two completed categories.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the ambient categories
+  $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})$ and
+  $\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}$
+  are presentable, stable, and compactly generated, with compact
+  objects exactly $\mathcal{C}_Y^\omega$ and $\mathcal{C}_q^\omega$;
+\item there is an exact equivalence
+  \[
+  F^\omega\colon \mathcal{C}_Y^\omega \xrightarrow{\sim} \mathcal{C}_q^\omega
+  \]
+  whose restriction to the completed fundamental evaluation packet
+  agrees with the DK-3 transport on the evaluation-generated core.
+\end{enumerate}
+Then there exists a unique exact colimit-preserving equivalence
+\[
+\operatorname{Ind}(F^\omega)\colon
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+\xrightarrow{\sim}
+\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+\]
+extending $F^\omega$.
+
+In particular, once the compact-core equivalence is constructed, the
+comparison functor appearing in
+Proposition~\ref{prop:yangian-dk5-compact-generators} and its
+compatibility with DK-3 on the compact generator packet are formal.
+\end{proposition}
+
+\begin{proof}
+By assumption~\textup{(i)}, each ambient category is the
+ind-completion of its compact objects:
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+\simeq
+\operatorname{Ind}(\mathcal{C}_Y^\omega),
+\qquad
+\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+\simeq
+\operatorname{Ind}(\mathcal{C}_q^\omega).
+\]
+This is the same compact-generation mechanism used in
+Theorem~\ref{thm:ind-completed-extension}: a presentable stable
+compactly generated category is recovered from its compact part by
+ind-completion.
+
+Now apply the universal property of ind-completion to the exact
+equivalence $F^\omega$.  It extends uniquely to an exact
+colimit-preserving functor
+\[
+\operatorname{Ind}(F^\omega)\colon
+\operatorname{Ind}(\mathcal{C}_Y^\omega)
+\longrightarrow
+\operatorname{Ind}(\mathcal{C}_q^\omega),
+\]
+and because $F^\omega$ is already an equivalence, its ind-extension is
+an equivalence as well.  Transporting along the displayed
+identifications of the ambient categories yields the claimed functor.
+
+The final sentence is immediate: once the compact-core equivalence is
+fixed, the completed comparison functor is forced to be this unique
+ind-extension, so no separate completed-level functor construction
+remains.
+\end{proof}
+
+\begin{corollary}[DK-5 reduces to the compact-core equivalence;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-compact-core}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-dg-local-closure}.  Assume moreover
+that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed dg-shifted and spectral categories are presentable,
+  stable, and compactly generated;
+\item their compact objects are the thick idempotent-complete closures
+  of the completed fundamental evaluation packets; and
+\item those compact cores are exactly equivalent in a way compatible
+  with DK-3 on the completed fundamental packet.
+\end{enumerate}
+Then the standard type-$A$ Yangian DK-5 packet closes.
+
+Equivalently, after the local dg-shifted packet is closed, the
+remaining DK-5 input is exactly the compact-core equivalence; the
+completed comparison functor itself is formal.
+\end{corollary}
+
+\begin{proof}
+Under
+Corollary~\ref{cor:yangian-typea-dg-local-closure}, the local DK-4
+packet is already closed, so only DK-5 remains.  Assumptions
+\textup{(i)}--\textup{(iii)} are precisely the hypotheses of
+Proposition~\ref{prop:yangian-dk5-ind-extension}, which produces the
+unique exact colimit-preserving equivalence between the completed
+categories.  This is exactly the DK-5 conclusion.
+\end{proof}
+
+\begin{corollary}[DK-5 reduces to compact generation plus completed
+fundamental-packet transport; \ClaimStatusProvedHere]
+\label{cor:yangian-dk5-fundamental-packet}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-dg-local-closure}.  Assume moreover
+that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed dg-shifted and spectral categories are presentable,
+  stable, and compactly generated;
+\item their compact objects are the smallest full stable
+  idempotent-complete braided monoidal subcategories containing the
+  completed fundamental evaluation packets; and
+\item there exist exact braided monoidal functors between those compact
+  cores whose restrictions to the completed fundamental evaluation
+  packets recover the DK-3 transport and whose composites are the
+  identity on that packet.
+\end{enumerate}
+Then the standard type-$A$ Yangian DK-5 packet closes.
+
+Equivalently, once the local dg-shifted packet is closed, the remaining
+categorical input is compact generation together with transport on the
+completed fundamental evaluation packet; the compact-core equivalence
+and the ambient completed comparison functor are then formal.
+\end{corollary}
+
+\begin{proof}
+Assumption~\textup{(ii)} identifies the compact objects with the
+compact cores appearing in
+Proposition~\ref{prop:yangian-dk5-fundamental-packet}.  By
+assumption~\textup{(iii)}, that proposition yields an exact
+equivalence between the compact cores.  Now apply
+Proposition~\ref{prop:yangian-dk5-ind-extension} to extend that
+compact-core equivalence uniquely to an exact colimit-preserving
+equivalence of the ambient completed categories.  This is exactly the
+DK-5 conclusion.
+\end{proof}
+
+\begin{proposition}[Compact-core DK-5 functors from realization of the
+proved finite-dimensional factorization DK core; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-core-realization}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-fundamental-packet}.  Let
+\[
+KZ_{\mathrm{fd}}\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\xrightarrow{\sim}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\]
+\[
+LZ_{\mathrm{fd}}\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\xrightarrow{\sim}
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\]
+be quasi-inverse exact braided monoidal equivalences furnished by
+Theorem~\ref{thm:dk-fd-typeA}.  Assume there exist exact braided
+monoidal equivalences
+\[
+\quad
+J_Y^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_M))
+\xrightarrow{\sim}
+\mathcal{C}_Y^\omega,
+\qquad
+J_q^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\xrightarrow{\sim}
+\mathcal{C}_q^\omega
+\]
+whose restrictions to the evaluation generators identify them with the
+completed fundamental evaluation packets
+$\mathcal{P}^{\mathrm{fund}}_{Y}$ and
+$\mathcal{P}^{\mathrm{fund}}_{q}$.
+Then
+\[
+KZ^\omega_{\mathrm{comp}}
+:=
+J_q^\omega \circ KZ_{\mathrm{fd}} \circ (J_Y^\omega)^{-1},
+\qquad
+LZ^\omega_{\mathrm{comp}}
+:=
+J_Y^\omega \circ LZ_{\mathrm{fd}} \circ (J_q^\omega)^{-1}
+\]
+are quasi-inverse exact braided monoidal equivalences
+\[
+\mathcal{C}_Y^\omega \xrightarrow{\sim} \mathcal{C}_q^\omega
+\]
+whose restrictions to the completed fundamental evaluation packets
+recover the DK-3 transport.  In particular, the packet hypotheses of
+Proposition~\ref{prop:yangian-dk5-fundamental-packet} are automatic.
+\end{proposition}
+
+\begin{proof}
+The displayed functors are composites of exact braided monoidal
+equivalences, hence are themselves exact braided monoidal
+equivalences.  Because the completion equivalences
+$J_Y^\omega$ and $J_q^\omega$ identify the evaluation generators with
+the completed fundamental evaluation packets, the restrictions of
+$KZ^\omega_{\mathrm{comp}}$ and $LZ^\omega_{\mathrm{comp}}$ to those
+packets are exactly the DK-3 transport and its inverse.  Therefore the
+composites are the identity on the completed fundamental packets, and
+the final sentence follows immediately.
+\end{proof}
+
+\begin{corollary}[DK-5 closes once the compact cores realize the
+proved finite-dimensional factorization DK core; \ClaimStatusProvedHere]
+\label{cor:yangian-dk5-core-realization}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-dg-local-closure}.  Assume moreover
+that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed dg-shifted and spectral categories are presentable,
+  stable, and compactly generated, with compact objects exactly
+  $\mathcal{C}_Y^\omega$ and $\mathcal{C}_q^\omega$;
+\item the compact cores are exact braided monoidal realizations of the
+  proved finite-dimensional factorization DK pair of
+  Theorem~\ref{thm:dk-fd-typeA} in the sense of
+  Proposition~\ref{prop:yangian-dk5-core-realization}.
+\end{enumerate}
+Then the standard type-$A$ Yangian DK-5 packet closes.
+
+Equivalently, once the local dg-shifted packet is closed, the live
+categorical step is to identify the compact cores as exact braided
+monoidal realizations of the already-proved finite-dimensional
+factorization DK core; the compact-core comparison functors and their
+packet compatibility are then forced.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-dk5-core-realization} constructs the
+exact braided monoidal equivalence of compact cores.  Now apply
+Proposition~\ref{prop:yangian-dk5-ind-extension} to extend it uniquely
+to an exact colimit-preserving equivalence of the ambient completed
+categories.  This is exactly the DK-5 conclusion.
+\end{proof}
+
+\begin{corollary}[Minimal closure criterion for the standard type-$A$
+  Yangian MC4 frontier; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-mc4-closure-criterion}
+Assume the hypotheses of
+Propositions~\ref{prop:yangian-dk4-typea-frontier}
+and~\ref{prop:yangian-dk5-compact-generators}.  Then the standard
+type-$A$ Yangian side of MC4 closes once:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the dg-shifted or factorization one-factor kernel is identified
+  with the standard normalized RTT residue on the fundamental
+  evaluation line; under the symmetry and normalization hypotheses of
+  Proposition~\ref{prop:yangian-dk4-typea-frontier}, this is
+  equivalent to transport of the ordered mixed-tensor coefficient
+  \[
+  \Xi_a(e_1\otimes e_2)=-\hbar(e_2\otimes e_1);
+  \]
+\item the completed module-category comparison is an equivalence on the
+  compact generator packet
+  $\mathcal{G}^{\mathrm{fund}}_Y \to \mathcal{G}^{\mathrm{fund}}_q$.
+\end{enumerate}
+Consequently, after DK-3 the remaining standard type-$A$ Yangian MC4
+input, before the shared ordered bar-seed realization hypothesis is
+imposed, is one ordered mixed-tensor transport check plus one
+compact-generator comparison.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-dk4-typea-frontier} reduces the DK-4
+input to the auxiliary-kernel identity and then, under the standard
+symmetry and normalization hypotheses, to transport of the displayed
+ordered mixed-tensor coefficient on the fundamental line to the
+standard normalized residue.
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}
+rewrites this as the coefficient of the operator-valued degree-$2$
+term itself, and
+Proposition~\ref{prop:dg-shifted-rtt-degree2-scalar-normalization}
+shows that after degree-$2$ scalar normalization the only genuinely
+live local datum is the scalar coefficient of the permutation
+operator.  Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir}
+then shows that the standard fundamental Casimir insertion forces that
+scalar to be $-1$, and
+Corollary~\ref{cor:factorization-fundamental-casimir-identity} proves
+that this already happens on the factorization target.
+Proposition~\ref{prop:yangian-dk5-compact-generators} reduces the
+remaining DK-5 input to equivalence on compact generators and upgrades
+that packet formally to the full completed equivalence.
+\end{proof}
+
+\begin{corollary}[Standard type-$A$ Yangian MC4 packet under one-loop
+exactness; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-degree2-plus-generators}
+Assume the hypotheses of
+Propositions~\ref{prop:yangian-dk4-typea-frontier}
+and~\ref{prop:yangian-dk5-compact-generators}.  Assume moreover that
+the one-loop exactness and seed-normalization hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion}
+and Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}
+hold on the standard type-$A$ fundamental line.  Then the remaining
+standard type-$A$ Yangian MC4 input is exactly:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the single degree-$2$ coefficient identity
+  \[
+  r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)
+  =
+  -\hbar(e_2\otimes e_1),
+  \]
+  where $r_a^{\mathrm{fund}}(z)$ is the degree-$2$ twisting morphism
+  coefficient induced by $r(z)=\tau|_{\deg 2}$ on the ordered
+  fundamental line;
+\item the compact-generator comparison
+  \[
+  \mathcal{G}^{\mathrm{fund}}_Y
+  \xrightarrow{\sim}
+  \mathcal{G}^{\mathrm{fund}}_q.
+  \]
+\end{enumerate}
+Equivalently, on the evaluation-generated core the local
+boundary-strip packet closes once the degree-$2$ mixed-tensor
+coefficient matches the standard normalized RTT residue, and the only
+remaining categorical input is compact generation together with
+transport on the completed fundamental evaluation packet.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:dg-shifted-rtt-seed-normalized-coefficient}
+identifies the residue operator on the ordered fundamental line with
+the degree-$2$ coefficient
+$r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)$.  Under the one-loop exactness
+hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-degree2-mixed-tensor-criterion},
+that single coefficient identity therefore forces the standard local
+residue, the auxiliary-kernel identity, and the vanishing of the
+boundary-strip defects on the evaluation-generated core.  This is
+exactly the DK-4 content identified in
+Proposition~\ref{prop:yangian-dk4-typea-frontier}.  The remaining DK-5
+input is the completed fundamental-packet transport of
+Corollary~\ref{cor:yangian-dk5-fundamental-packet}.
+\end{proof}
+
+\begin{corollary}[Fundamental Casimir insertion reduces the standard
+type-$A$ Yangian MC4 packet to compact generators;
+\ClaimStatusProvedHere]
+\label{cor:yangian-typea-casimir-plus-generators}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators}.  If,
+moreover, the ordered fundamental-line degree-$2$ coefficient is the
+standard trace-zero Casimir insertion
+\[
+r_a^{\mathrm{fund}}(z)\big|_{z_1=z_2}
+=
+-\hbar\,\Omega_{\mathfrak{sl}_M}^{\mathrm{fund}}
+=
+-\hbar\Bigl(P-\frac{1}{M}\id\Bigr),
+\]
+then the local item~\textup{(a)} of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators} is automatic.
+Consequently the remaining standard type-$A$ Yangian MC4 input is
+exactly compact generation together with transport on the completed
+fundamental evaluation packet.
+
+Equivalently, after the reduction steps already printed in this
+chapter, the factorization target already carries the standard
+fundamental Casimir insertion, and
+Proposition~\ref{prop:dg-shifted-factorization-shared-seed} shows that
+the same is true for any dg-shifted realization presented by the same
+ordered bar seed.  On that local packet, only the completed
+fundamental-packet DK-5 packet of
+Corollary~\ref{cor:yangian-dk5-fundamental-packet} remains.
+\end{corollary}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-degree2-fundamental-casimir},
+the displayed Casimir identity forces the normalized one-loop scalar to
+be $\beta_a=-1$.  Equivalently,
+\[
+r_a^{\mathrm{fund}}(z)(e_1\otimes e_2)
+=
+-\hbar(e_2\otimes e_1)
+\]
+after degree-$2$ scalar normalization.  This is exactly item
+\textup{(a)} of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators}, so that
+corollary leaves only the completed fundamental-packet DK-5 packet.
+\end{proof}
+
+\begin{corollary}[Factorization-side standard type-$A$ local MC4 packet
+closes; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-factorization-local-closure}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-degree2-plus-generators} on the
+ordered factorization target.  Then
+Corollary~\ref{cor:factorization-fundamental-casimir-identity}
+supplies the additional Casimir hypothesis of
+Corollary~\ref{cor:yangian-typea-casimir-plus-generators}.  Hence the
+remaining standard type-$A$ Yangian MC4 input on the factorization side
+is exactly compact generation together with transport on the completed
+fundamental evaluation packet.
+
+Equivalently, on the factorization target the local degree-$2$ scalar
+identity is no longer frontier.  Together with
+Proposition~\ref{prop:dg-shifted-factorization-shared-seed} and
+Corollary~\ref{cor:yangian-typea-dg-local-closure}, this shows that any
+dg-shifted realization presented by the same ordered bar seed inherits
+the same local closure, so the remaining packet is exactly the
+completed fundamental-packet DK-5 packet.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:factorization-fundamental-casimir-identity} gives
+the standard trace-zero Casimir insertion on the ordered factorization
+fundamental line.  Therefore the extra hypothesis of
+Corollary~\ref{cor:yangian-typea-casimir-plus-generators} is automatic
+there, and that corollary reduces the remaining packet to the
+completed fundamental-packet DK-5 packet.
+\end{proof}
+
 \begin{remark}[Exact extra input for DK-5]
 \label{rem:yangian-dk5-input}
 After Proposition~\ref{prop:yangian-dk4-typea-frontier}, the remaining
 DK-5 packet is no longer another algebra-identification problem.  It is
-the categorical comparison packet:
+the compact-core categorical packet:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item compact generation of the completed module categories by the
-  completed fundamental evaluation packet;
-\item construction of the exact colimit-preserving comparison functor
-  compatible with the DK-4 dg comparison; and
-\item verification that this functor matches the DK-3 transport on the
-  compact generator packet.
+  completed fundamental evaluation packet, so each completed category
+  is the ind-completion of its compact core;
+\item exact braided monoidal realization of those compact cores from
+  the proved finite-dimensional factorization DK core, so that
+  Proposition~\ref{prop:yangian-dk5-core-realization} constructs the
+  compact-core comparison functors and
+  Corollary~\ref{cor:yangian-dk5-core-realization} closes DK-5.
 \end{enumerate}
-Once these three items are in place, the full completed
-module-category enhancement is formal.
+Proposition~\ref{prop:yangian-dk5-ind-extension} then makes the
+completed comparison functor formal as the unique ind-extension of the
+compact-core equivalence, and
+Corollary~\ref{cor:yangian-dk5-core-realization} packages the whole DK-5
+remainder in exactly that way.
 \end{remark}
 
 \begin{remark}[MC4 boundary for Yangian towers]
@@ -7367,8 +8782,11 @@ sharpens the standard type-A tower further: the live analytic packet is
 the boundary-strip identity family, hence the auxiliary-kernel
 identity, and under the standard normalization hypotheses one mixed
 tensor-line residue check.  Proposition~\ref{prop:yangian-dk5-compact-generators}
-then isolates the remaining DK-5 packet as a compact-generator
-comparison on the completed module categories.
+and Corollary~\ref{cor:yangian-dk5-fundamental-packet} then isolate the
+remaining DK-5 packet inside the Yangian side of MC4 as compact
+generation plus transport on the completed fundamental evaluation
+packet.
+MC5 begins only after this H-level comparison packet is in place.
 Accordingly, the middle term
 $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})$ should be read as
 the completion category attached to the standard RTT tower, not as an
@@ -7409,8 +8827,10 @@ whose finite RTT quotients match the proved stages; in the standard
 type-A tower, Proposition~\ref{prop:yangian-dk4-typea-frontier} reduces
 that further to the boundary-strip / auxiliary-kernel / residue packet
 on the fundamental line, and
-Proposition~\ref{prop:yangian-dk5-compact-generators} reduces the final
-module-category enhancement to the compact-generator packet.
+Proposition~\ref{prop:yangian-typea-realization-criterion} shows that
+once the shared ordered bar seed and theorematic finite RTT quotients
+are in place, the remaining completed-level step is exactly the
+completed fundamental-packet DK-5 packet.
 \end{remark}
 
 \begin{proposition}[Yangian tower criterion from finite RTT stages;
@@ -7445,8 +8865,8 @@ canonical comparison map
 is a quasi-isomorphism.  This gives the M-level completed bar-cobar
 package for the Yangian tower under the stated inverse-limit
 hypotheses.  The stronger H-level
-factorization-categorical realization remains part of the MC4/MC5
-frontier.  As in the \(\mathcal{W}_\infty\) case, the eventual-constancy
+higher-level factorization-categorical realization remains part of the
+MC4 frontier; MC5 is downstream of that realization.  As in the \(\mathcal{W}_\infty\) case, the eventual-constancy
 hypothesis may be weakened to eventual surjectivity on finite-dimensional
 weight slices by Corollary~\ref{cor:mc4-surjective-criterion}.
 \end{proposition}
@@ -7632,6 +9052,167 @@ them, the Mittag--Leffler input required there is automatic on
 cohomology.  The bar-cobar statement then follows from the final part
 of Proposition~\ref{prop:completed-target-comparison}, together with
 Corollary~\ref{cor:yangian-standard-mc4-package}.
+\end{proof}
+
+\begin{proposition}[Standard type-$A$ realization criterion from shared
+bar seed and finite RTT quotients; \ClaimStatusProvedHere]
+\label{prop:yangian-typea-realization-criterion}
+Let $\Ydg_{\cA}$ be a separated complete dg algebra equipped with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a translation operator;
+\item a Maurer--Cartan element $r(z)$;
+\item a twisted coproduct; and
+\item a descending RTT-level filtration by closed dg ideals
+  \[
+  F^1\Ydg_{\cA} \supset F^2\Ydg_{\cA} \supset \cdots
+  \]
+  preserved by all three structures above.
+\end{enumerate}
+Assume moreover that:
+\begin{enumerate}[label=\textup{(\roman*)},resume]
+\item $\Ydg_{\cA}\cong \varprojlim_N \Ydg_{\cA}/F^{N+1}\Ydg_{\cA}$;
+\item for every $N$ there is a dg algebra quasi-isomorphism
+  \[
+  \Ydg_{\cA}/F^{N+1}\Ydg_{\cA}\xrightarrow{\sim}Y_{\le N}
+  \]
+  compatible with the RTT truncation tower, standard evaluation
+  modules, and the induced degree-$2$ twisting morphism;
+\item the quotient tower inherits bar-cobar comparison maps compatible
+  with the standard RTT tower and has continuous completed bar and
+  cobar differentials; and
+\item on the ordered fundamental evaluation line, the degree-$2$
+  coefficient is induced by the same ordered bar twisting morphism as
+  on the factorization target, in the sense of
+  Proposition~\ref{prop:dg-shifted-factorization-shared-seed}.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the filtration on $\Ydg_{\cA}$ is RTT-adapted in the sense of
+  Definition~\ref{def:rtt-adapted-filtration};
+\item the induced comparison map
+  \[
+  \Ydg_{\cA}\xrightarrow{\sim}\widehat Y_{\mathrm{RTT}}
+  \]
+  is a quasi-isomorphism, so $\Ydg_{\cA}$ realizes the H-level
+  dg-shifted Yangian target for the standard type-$A$ tower; and
+\item the local standard type-$A$ DK-4 packet is already closed, so the
+  only remaining Yangian input is compact generation together with
+  transport on the completed fundamental evaluation packet.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Assumptions~\textup{(v)}--\textup{(vii)} are exactly the hypotheses of
+Corollary~\ref{cor:yangian-hlevel-comparison-criterion}.  Therefore the
+comparison map
+\[
+\Ydg_{\cA}\xrightarrow{\sim}\widehat Y_{\mathrm{RTT}}
+\]
+is a quasi-isomorphism, proving~\textup{(b)}.  Since
+assumptions~\textup{(i)}--\textup{(vii)} are precisely the data
+required in Definition~\ref{def:rtt-adapted-filtration}, this also
+proves~\textup{(a)}.
+
+Assumption~\textup{(viii)} is the shared-seed hypothesis of
+Proposition~\ref{prop:dg-shifted-factorization-shared-seed}, so the
+ordered fundamental degree-$2$ coefficient on the dg-shifted target is
+the standard trace-zero Casimir insertion.  Corollary~\ref{cor:yangian-typea-dg-local-closure}
+then closes the local dg-shifted packet on the standard type-$A$
+tower.  Thus only the DK-5 categorical packet on the completed
+fundamental evaluation modules remains, equivalently the compact-core
+DK-5 equivalence after compact generation, proving \textup{(c)}.
+\end{proof}
+
+\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from realization
+and compact core; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-realization-plus-compacts}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-typea-realization-criterion}.  Assume
+further that the compact cores of
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})
+\qquad\text{and}\qquad
+\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+\]
+are presentable, stable, compactly generated, and exactly equivalent in
+a way compatible with DK-3 on the completed fundamental packet.  Then
+the standard type-$A$ Yangian DK-4/DK-5 packet closes.
+
+Equivalently, once the H-level dg-shifted realization is constructed on
+the shared-bar-seed finite-quotient locus, the only remaining step is
+the compact-core equivalence, and that step closes DK-5 formally.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:yangian-typea-realization-criterion}, the
+H-level dg-shifted realization exists and the local standard type-$A$
+DK-4 packet is already closed.  The additional compact-core hypothesis
+is exactly the input of
+Corollary~\ref{cor:yangian-dk5-compact-core}, which therefore closes
+DK-5.  This proves the full DK-4/DK-5 claim.
+\end{proof}
+
+\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from realization
+and completed fundamental packet; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-realization-plus-fundamental-packet}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-typea-realization-criterion}.  Assume
+further that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed dg-shifted and spectral categories are presentable,
+  stable, and compactly generated;
+\item their compact objects are the smallest full stable
+  idempotent-complete braided monoidal subcategories containing the
+  completed fundamental evaluation packets; and
+\item there exist exact braided monoidal functors between those compact
+  cores whose restrictions to the completed fundamental evaluation
+  packets recover the DK-3 transport and whose composites are the
+  identity on that packet.
+\end{enumerate}
+Then the standard type-$A$ Yangian DK-4/DK-5 packet closes.
+
+Equivalently, once the shared-bar-seed finite-quotient realization
+package is in place, the only remaining categorical step is transport
+on the completed fundamental evaluation packet; the compact-core
+equivalence and the completed comparison functor are then formal.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-typea-realization-criterion} supplies the
+H-level dg-shifted realization and closes the local standard type-$A$
+DK-4 packet.  The additional hypotheses are exactly the input of
+Corollary~\ref{cor:yangian-dk5-fundamental-packet}, which closes DK-5.
+\end{proof}
+
+\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from dg-shifted
+realization and compact-core realization of the proved
+finite-dimensional factorization DK core; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-realization-plus-core-realization}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-typea-realization-criterion}.  Assume
+further that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the completed dg-shifted and spectral categories are presentable,
+  stable, and compactly generated, with compact objects exactly
+  $\mathcal{C}_Y^\omega$ and $\mathcal{C}_q^\omega$; and
+\item those compact cores are exact braided monoidal realizations of
+  the proved finite-dimensional factorization DK pair of
+  Theorem~\ref{thm:dk-fd-typeA} in the sense of
+  Proposition~\ref{prop:yangian-dk5-core-realization}.
+\end{enumerate}
+Then the standard type-$A$ Yangian DK-4/DK-5 packet closes.
+
+Equivalently, once the shared-bar-seed finite-quotient realization
+package is in place, the remaining categorical step is to realize the
+compact cores as exact braided monoidal completions of the already
+proved finite-dimensional factorization DK core.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-typea-realization-criterion} supplies the
+H-level dg-shifted realization and closes the local standard type-$A$
+DK-4 packet.  The additional hypotheses are exactly the input of
+Corollary~\ref{cor:yangian-dk5-core-realization}, which closes DK-5.
 \end{proof}
 
 \begin{remark}[Rational vs.\ trigonometric DK]
