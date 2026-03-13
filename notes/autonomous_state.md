@@ -1,5 +1,5 @@
 # Session State — Chiral Bar-Cobar Monograph
-# Last updated: Mar 13, 2026 (prompt/state audit + doctrinal synchronization)
+# Last updated: Mar 13, 2026 (git repair + MC4 stage-5 packet linearization)
 
 > **Live state note (March 13, 2026).**
 > This is an active state file. Historical session prompts and audit
@@ -8,11 +8,12 @@
 
 ## Quick State
 - **Session prompt**: `notes/SESSION_PROMPT_v23.md` (live control prompt)
-- **Census**: Always grep fresh. Baseline Mar 10: PH 923, PE 337, CJ 153, HE 29, Open 1 = 1443 total
-- **Build**: 1664pp, 3-pass clean (0 undef citations, 0 undef refs, 0 rerun, 0 overfull)
-- **Source**: ~104K lines across 55+ .tex files
-- **Tests**: `pytest` now deselects `@slow` by default; use `--run-slow` or `make test-full` for the heavy DS/PBW suite. Representative checks: default `test_ds_reduction.py` deselects 128 slow tests; `test_smoke.py` passes 25/25 with 4 slow deselections.
-- **Uncommitted delta**: 58 modified files, 0 untracked. Still needs commit triage.
+- **Census**: Machine baseline Mar 13: PH 957, PE 323, CJ 125, HE 28, Open 0 = 1433 total
+- **Build**: 1732pp, 3-pass clean (0 undef citations, 0 undef refs, 0 rerun, 1 overfull)
+- **Source**: 116,607 lines across 61 active / 70 total `.tex` files
+- **Tests**: `pytest` deselects `@slow` by default; `compute/tests/test_ds_reduction.py` now fully deselects without `--run-slow` and passes `216/216` with `--run-slow` in 15m11s; the live MC4 W-packet pair `test_w4_stage4_coefficients.py` + `test_w4_ds_ope_extraction.py` now passes `204/204`.
+- **Git integrity**: repaired by fresh `.git` metadata transplant from `origin`; `git fsck --full` now returns clean.
+- **Uncommitted delta**: 38 modified files, 2 untracked. Still needs scoped commit triage.
 
 ## Governing Mandate
 - Build the book as the definitive dimension-one treatise of modular homotopy theory for factorization algebras on curves.
@@ -26,16 +27,30 @@ See concordance.tex rem:proof-roadmaps for full strategies.
 |----|--------|-------------|
 | MC1 | **PROVED** for KM, Vir, principal W_N | Complete |
 | MC2 | **PROVED** (thm:mc2-full-resolution) | Complete |
-| MC3 | DK-0/1/1½ proved; DK-2/3 on the evaluation-generated core at all simple types | Ordinary-derived/completed enlargement beyond that core; KL bridge |
-| MC4 | Standard infinite towers remain frontier | Build `\mathcal W^{\mathrm{ht}}`, `\Ydg_{\cA}`; prove packets on `\mathcal I_N`, `\Delta_{a,0}(N)` |
-| MC5 | Genus 0 proved; downstream | After MC2-4 |
+| MC3 | DK-0/1/1½ proved; DK-2/3 on the evaluation-generated core at all simple types | Ordinary-derived/completed/coderived enlargement beyond that core; KL bridge |
+| MC4 | Standard infinite towers remain frontier after the completed M-level packages | Build `\mathcal W^{\mathrm{ht}}`, `\Ydg_{\cA}`; recover `W_N`, `Y_{\le N}`; prove packets on `\mathcal I_N`, `\Delta_{a,0}(N)` |
+| MC5 | Genus 0 proved; downstream | After MC3/MC4 |
 
 Periodicity: orthogonal weak flank, not bottleneck.
 
 ## Recent Sessions (last 3)
 
+### Mar 13 — git repair + MC4 stage-5 packet linearization
+- **Git object database repaired**: the previous missing-object / invalid-reflog state was resolved by backing up the corrupt `.git`, transplanting fresh metadata from `origin`, and rebuilding the index from `HEAD` without touching the working tree; `git fsck --full` is now clean again.
+- **MC4 stage-growth sharpened**: `prop:winfty-ds-stage-growth-packet` and `cor:winfty-ds-stage-growth-top-parity` are now pushed one step further on the theorem surface: `cor:winfty-ds-stage5-reduced-packet` names the first next reduced packet `\mathcal J_5^{\mathrm{red}}` explicitly as an `11`-entry block, and `cor:winfty-stage5-residue-eight-channel` contracts it under the normalized residue package to `8` higher-spin channels.
+- **Exact Ward gap isolated**: `prop:winfty-stage4-visible-pairing-gap` now states that once the visible Virasoro Ward action is fixed, the open content of `conj:winfty-stage4-ward-inheritance` is exactly inheritance of mixed-weight orthogonality and diagonal visible pairings.
+- **Build verification**: clean `./scripts/build.sh 4` convergence at `1732pp` in `3` passes.
+- **Compute verification**: `compute/tests/test_w4_stage4_coefficients.py` + `compute/tests/test_w4_ds_ope_extraction.py` pass `204/204`.
+
+### Mar 13 — DS suite unblock + metadata/control sync
+- **DS-heavy suite unblocked**: the corrected-semideirect and survivor-family packets now reduce the worst target-side duplicate checks to source-side square-zero plus explicit dual-swap verification, eliminating the previous apparent hang.
+- **Full DS verification**: `./.venv/bin/python -m pytest -q compute/tests/test_ds_reduction.py --run-slow` passes `216/216` in `911.85s`; the slowest surviving packet is the rank-9 general survivor degree-2 catalog at `61.48s`.
+- **Metadata regenerated**: `python3 scripts/generate_metadata.py` now reports `1433` tagged claims (`PH=957`, `PE=323`, `CJ=125`, `H=28`, `O=0`) and refreshes the machine registry and dependency surfaces.
+- **Theory graph refreshed**: `python3 scripts/generate_theorem_dependency_index.py` now indexes `647` active theorem-like nodes across the live theory graph.
+- **Build verification**: `make fast` converged cleanly at `1706pp` in `2` passes.
+
 ### Mar 12 — control-layer and summary synchronization
-- **Control doctrine synced**: concordance.tex and VISION.md now state MC2 as resolved and MC3/MC4/MC5 as the live frontier.
+- **Control doctrine synced**: concordance.tex and VISION.md now state MC2 as resolved, MC3/MC4 as the live structural frontier, and MC5 as downstream.
 - **Session notes rerouted**: the historical v25 prompt now records the proved `Theta_A` premise, while the live control prompt is `notes/SESSION_PROMPT_v23.md`.
 - **Summary surfaces tightened**: examples_summary.tex and genus_expansions.tex now distinguish the proved Yangian DK core, the proved characteristic hierarchy, and the still-programmatic outer comparison layers.
 - **Build verification**: `make fast` converged cleanly at 1664pp in 3 passes.
@@ -87,10 +102,9 @@ Periodicity: orthogonal weak flank, not bottleneck.
 
 ## Next Priorities
 See STRIKE LIST in this file below for P0/P1/P2 classification.
-1. **P0**: Regenerate stale metadata (census.json, claims.jsonl, theorem_registry.md).
-2. **P1**: Fix test suite (hanging on heavy DS tests — needs pytest-timeout or test refactor).
-3. **P1**: Commit triage on the still-large modified worktree.
-4. **P1**: MC3 DK ladder: lattice→quantum group identification (bridge from DK-1½ to DK-2).
+1. **P0**: Commit the DS-suite unblock and metadata/control-sync refresh as separate scoped commits.
+2. **P1**: Continue commit triage on the remaining modified worktree without disturbing unrelated theorem work.
+3. **P1**: MC3 DK ladder: lattice→quantum group identification (bridge from DK-1½ to DK-2).
+4. **P2**: MC4 target construction and coefficient identities.
 5. **P2**: Fourier Seed chapter under the live `SESSION_PROMPT_v23.md` control stack, with proved `Theta_A` premise.
-6. **P2**: MC4 target construction and coefficient identities.
-7. **P2**: Remaining control-note synchronization outside the session stack.
+6. **P2**: Remaining control-note synchronization outside the session stack.

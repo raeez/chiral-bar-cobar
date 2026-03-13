@@ -158,14 +158,14 @@ These are verified facts. Getting any of them wrong corrupts the manuscript.
 
 **Two layers** (concordance terminology: "Core (proved)" / "Extension (conjectural)"):
 - **Core (proved)**: Theorems A/B/C, D_scal, D_Delta, MC1, MC2/Theta_A on the printed simple-Lie-symmetry locus, DK-0/1/1½, DK-2/3 on the evaluation-generated core at all simple types
-- **Frontier (conjectural)**: DK/KL extension beyond the evaluation-generated core (ordinary-derived/completed/coderived enlargement), MC4 filtered H-level comparison through `\mathcal W^{\mathrm{ht}}` and `\Ydg_{\cA}` with finite-detection packets `\mathcal I_N` and `\Delta_{a,0}(N)`, MC5 (BV/BRST = bar at higher genus), periodicity sync, coderived Ran
+- **Frontier (conjectural)**: MC3 enlargement beyond the evaluation-generated core (ordinary-derived/completed/coderived enlargement), MC4 filtered H-level comparison through `\mathcal W^{\mathrm{ht}}` and `\Ydg_{\cA}` with finite-detection packets `\mathcal I_N` and `\Delta_{a,0}(N)`, MC5 downstream BV/BRST = bar at higher genus, periodicity sync, coderived Ran
 
 **Master Conjectures** (frontier order: MC3/MC4 -> MC5):
 - **MC1**: PBW concentration — PROVED for KM, Vir, principal W_N [thm:master-pbw]
 - **MC2**: Cyclic L-infinity + Theta_A — PROVED [thm:mc2-full-resolution]. All 3 packages resolved. thm:universal-theta and thm:universal-MC (formerly conjectured, now proved).
-- **MC3**: Factorization DK/KL — DK-0/1 proved, DK-1½ lattice proved, DK-2/3 proved on the evaluation-generated core at all simple types (type A also admits the thick-generation route on its natural loci, equivalently `D^b(\mathcal O_{\mathrm{poly}})` on the theorematic domain). The remaining frontier is the ordinary-derived versus completed/coderived enlargement beyond that core. [conj:master-dk-kl]
-- **MC4**: W-infinity/Yangian towers — build the filtered H-level targets `\mathcal W^{\mathrm{ht}}` and `\Ydg_{\cA}`, recover `W_N` and `Y_{\le N}` as finite quotients, and prove the exact coefficient packets `C^{res}=C^{DS}` on `\mathcal I_N` and `K^{line}=K^{RTT}` on `\Delta_{a,0}(N)`. [conj:master-infinite-generator]
-- **MC5**: BV/BRST = bar — genus 0 proved, higher-genus downstream [conj:master-bv-brst]
+- **MC3**: Factorization DK/KL — DK-0/1 proved, DK-1½ lattice proved, DK-2/3 proved on the evaluation-generated core at all simple types (type A also admits the thick-generation route on its natural loci, equivalently `D^b(\mathcal O_{\mathrm{poly}})` on the theorematic domain). The remaining frontier is the ordinary-derived/completed/coderived enlargement beyond that core. [conj:master-dk-kl]
+- **MC4**: W-infinity/Yangian towers — after the standard completed M-level packages are fixed, build the filtered H-level targets `\mathcal W^{\mathrm{ht}}` and `\Ydg_{\cA}`, recover `W_N` and `Y_{\le N}` as finite quotients, and prove the exact coefficient packets `C^{res}=C^{DS}` on `\mathcal I_N` and `K^{line}=K^{RTT}` on `\Delta_{a,0}(N)`. [conj:master-infinite-generator]
+- **MC5**: BV/BRST = bar — genus 0 proved, higher-genus strictly downstream of MC3/MC4 [conj:master-bv-brst]
 
 Periodicity is an orthogonal weak flank, not a bottleneck. See concordance.tex rem:proof-roadmaps for full strategies.
 

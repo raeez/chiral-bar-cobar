@@ -230,7 +230,7 @@ $\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
 $\mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ or larger
 completed/coderived enlargement is a separate outer MC3 problem.
 
-### What is proved (5 of 6 ingredients)
+### What is proved (6 of 6 preparatory ingredients)
 
 | Result | Label | File | Content |
 |--------|-------|------|---------|
@@ -239,6 +239,7 @@ completed/coderived enlargement is a separate outer MC3 problem.
 | KL multiplicities at generic level | Remark in KM chapter | kac_moody_framework.tex | Bar filtration recovers BGG multiplicities |
 | CH* periodicity (sl2) | Proposition in KM chapter | kac_moody_framework.tex | Period 2h = 4 for A1 |
 | Finite-dimensionality | `cor:bar-admissible-finiteness` | kac_moody_framework.tex | Bar cohomology finite-dim at admissible k |
+| Root-of-unity q-bar certificate | compute KL lane | `compute/lib/kl_ncomplex_sl2.py`, `compute/tests/test_kl_ncomplex_sl2.py` | `d_q^N = 0` computed directly at `N=2,3` and structurally certified at `N=4,5`; reduced degree-2 vanishing split from the genuine `d_q^2 \neq 0` check |
 
 ### What remains
 
@@ -247,13 +248,36 @@ completed/coderived enlargement is a separate outer MC3 problem.
 | KL semisimplified target from bar-cobar | `conj:kl-periodic-cdg` -> `conj:kl-coderived` -> `conj:kl-braided` | Periodic CDG, coderived lift to the semisimplified target, braided upgrade | 2-3 years |
 
 ### Gap analysis
-For the semisimplified KL target, the hardest gap is the
-**periodic CDG structure**. At admissible k, q = e^{pi*i/(k+h^v)}
-is a root of unity. The bar complex should satisfy
-B-bar^{n+2q} = B-bar^n as CDG modules. The passage from this
-periodic bar object to $\mathcal{C}(U_q(\mathfrak{g}))$ is the
-theorematic KL step; any lift beyond the semisimplified target is
-additional outer MC3 structure.
+For the semisimplified KL target, the hardest gap is no longer whether a
+root-of-unity bar differential exists, but how to interpret the
+admissible-level q-bar object categorically. At admissible k,
+q = e^{pi*i/(k+h^v)} is a root of unity. The M-level q-bar certificate
+is now explicit: for `u_q(sl_2)` the Kapranov differential satisfies
+`d_q^N = 0`, computed directly at `N=2,3` and discharged by the
+quantum-binomial structural route at `N=4,5` once the reduced bar
+spaces are too large to materialize densely; the reduced degree-2
+vanishing `d_q^2 = 0` is separated from the genuinely non-classical
+check `d_q^2 != 0`, which is directly witnessed at bar degree `>= 3` in
+the tractable `N=3` case. The theorematic KL gap is therefore the
+passage from this M-level `N`-complex certificate to the periodic or
+coderived KL object, and then to the semisimplified target
+$\mathcal{C}(U_q(\mathfrak{g}))`.
+The first degree-4 admissible `sl_2` packet is now also resolved:
+`dim H^{1,2}_2 = dim H^{2,1}_3 = 3` by sparse `q`-bar elimination.
+The live KL question is therefore no longer the existence of the
+`N`-complex, but the categorical meaning of this first symmetric packet.
+The first sparse `N=4` degree-1 window already vanishes in the resolved
+channels `H^{3,1}_1 = H^{2,2}_1 = 0`, and the remaining degree-1
+channel now vanishes as well: `H^{1,3}_1 = 0`. So the whole first
+`N=4` degree-1 packet is zero, and the next discriminant is a
+higher-degree `N=4` continuation. The first tractable degree-2 channels
+now vanish as well: `H^{3,1}_2 = H^{2,2}_2 = 0`, so the next
+discriminant is the unresolved `H^{1,3}_2` channel. The split-form
+sparse `d_q^3 : B_5 -> B_2` certificate already gives
+`rank(im d_q^3) >= 3903`, hence `dim H^{1,3}_2 <= 66`, and the residual
+cokernel is supported only on the left factors `F`, `E`, and `K-1`.
+So the live gap is now this residual `66`-dimensional packet, not the
+whole `B_5 -> B_2` map.
 
 **Key reframing (Session ~125)**: Kapranov's N-complex framework (1996) provides the right
 replacement. At q = e^{2πi/N}, the bar differential satisfies d^N = 0 (not d² = curvature).
@@ -261,20 +285,37 @@ Khovanov-Qi (2020) develop the homological algebra of N-complexes. This replaces
 approach entirely — see rem:n-complex-framework in kac_moody_framework.tex.
 
 Specific obstacles:
-1. **Root-of-unity truncation**: At q = root of unity, the quantum group U_q(g) has a
-   finite-dimensional quotient (Lusztig's small quantum group u_q(g)). The bar complex must
-   "see" this truncation via periodicity of its cohomology. The N-complex structure
-   d^N = 0 is the expected mechanism.
+1. **Periodic shadow extraction**: At q = root of unity, the quantum group U_q(g) has a
+   finite-dimensional quotient (Lusztig's small quantum group u_q(g)). The q-bar complex now
+   certifies `d^N = 0`, and the first admissible `sl_2` packet is
+   explicitly `dim H^{1,2}_2 = dim H^{2,1}_3 = 3`; what remains is to
+   extract the periodic or coderived shadow seen by the KL target from
+   that packet.
 2. **N-complex homological algebra**: The "cohomology" of an N-complex has N-1 flavors
-   (ker d^j / im d^{N-j} for 1 ≤ j ≤ N-1). Need to identify which flavor recovers
-   the KL categories.
+   (ker d^j / im d^{N-j} for 1 ≤ j ≤ N-1). The first admissible `sl_2`
+   packet is symmetric rather than single-flavor, so the next step is to
+   determine whether one flavor or the paired packet recovers the KL
+   categories.
 3. **Tensor structure**: The KL equivalence is monoidal. Proving this via bar-cobar
    requires Programme III (fusion preservation).
 
 ### Entry point for new work
-Compute the bar complex of sl2 at k = -2 + 1/2 (simplest admissible level for sl2,
-q = e^{pi*i*2} = 1, degenerate) and k = -2 + 2/3 (q = e^{pi*i*3/2}, next simplest).
-Look for periodicity in the cohomology. See NEW_MACHINERY.md #M2.
+Hold the q-bar certificate fixed and move to the next KL question:
+identify the categorical meaning of the first computed `sl_2` packet
+`dim H^{1,2}_2 = dim H^{2,1}_3 = 3`, deciding whether one flavor or the
+paired packet controls the semisimplified KL target. The immediate task
+is no longer to re-prove `d_q^N = 0`, but to detect the
+periodic/coderived shadow of this packet and then extend the same
+diagnostic beyond the first admissible level. The whole first sparse
+`N=4` degree-1 packet now vanishes,
+`H^{3,1}_1 = H^{2,2}_1 = H^{1,3}_1 = 0`, so the next compute target is
+the first degree-2 packet. Its tractable channels now also vanish,
+`H^{3,1}_2 = H^{2,2}_2 = 0`, and the split-form sparse image
+certificate already gives `rank(im d_q^3) >= 3903`, hence
+`dim H^{1,3}_2 <= 66`. The next compute target is therefore the
+residual `66`-dimensional `H^{1,3}_2` packet supported on left factors
+`F`, `E`, and `K-1`, rather than the full `B_5 -> B_2` continuation.
+See NEW_MACHINERY.md #M2.
 
 ### Seeds in manuscript
 - conj:kl-periodic-cdg / conj:kl-coderived / conj:kl-braided
@@ -634,8 +675,9 @@ exact stress-tensor sector and the theorematic `(3,3)` `W_3` sector,
 the residual packet has exactly `29` primary coefficients.  Primaryity
 first reduces that residual packet to `7` top-pole coefficients and
 `22` forced zeros.  Skew-symmetry then removes the odd self-OPE entry
-`(4,4,3,5)`, leaving `6` live coefficients and `23` forced zeros,
-organized as three explicit local OPE blocks.  Among those, the only
+`(4,4,3,5)`, leaving the exact six-entry stage-`4` packet on
+`\mathcal{I}_4` and `23` forced zeros, organized as three explicit
+local OPE blocks.  Among those six entries, the only
 genuinely mixed higher-spin data are the three coefficients in the
 mixed `(3,4)` block.  Within that mixed block, the `W^{(3)}` target
 channel is swap-even under reversing the mixed OPE order, while the
@@ -643,11 +685,29 @@ channel is swap-even under reversing the mixed OPE order, while the
 principal Drinfeld--Sokolov side, the mixed `W^{(2)}` target then
 vanishes by mixed-weight orthogonality plus the Virasoro Ward identity,
 while the principal `W^{(4)}`-`W^{(4)}\to T` coefficient is fixed to
-`2`.  The live stage-`4` comparison is therefore four free coefficient
-channels `c_{334}`, `c_{444}`, `\mathsf{C}_{3,4;3;0,4}`,
-`\mathsf{C}_{3,4;4;0,3}`, together with the residue-side checks
-`\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2` and
-`\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0`.
+`2`.  The live stage-`4` comparison is therefore the exact six-entry
+identity packet on `\mathcal{I}_4`,
+`\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(4)=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(4)`,
+in the channels `(3,3;4;0,2)`, `(4,4;4;0,4)`, `(3,4;3;0,4)`,
+`(3,4;4;0,3)`, `(4,4;2;0,6)`, `(3,4;2;0,5)`, split as
+`4` residual higher-spin channels plus `2` theorematic
+Virasoro-target identities.
+From there the promotion `\mathcal{I}_4 \to \mathcal{I}_N` is no
+longer a black box: Proposition
+`prop:winfty-ds-stage-growth-packet` linearizes it as repeated closure
+of the incremental packets `\mathcal{J}_{M+1}`, and Corollary
+`cor:winfty-ds-stage-growth-top-parity` reduces those further to the
+top-pole/parity packets `\mathcal{J}_{M+1}^{\mathrm{red}}`.  The first
+next reduced stage is already explicit:
+`cor:winfty-ds-stage5-reduced-packet` identifies
+`\mathcal{J}_5^{\mathrm{red}}` as an `11`-entry packet, and
+`cor:winfty-stage5-residue-eight-channel` contracts it under the
+normalized residue package to `8` higher-spin channels.  The exact
+missing lemma for making the stage-`4` four-channel contraction
+unconditional is now named explicitly as
+`conj:winfty-stage4-ward-inheritance`, whose open content is the
+visible pairing package isolated in
+`prop:winfty-stage4-visible-pairing-gap`.
 See NEW_MACHINERY.md #M8.
 
 **Entry point**: Attack the first nontrivial finite-detection lanes.
