@@ -1,5 +1,17 @@
 # STRUCTURAL AUDIT — Chiral Bar-Cobar Monograph
 
+> **Historical audit note (March 13, 2026).**
+> This file records an earlier structural audit and should not be read
+> as a live control or status surface. Active doctrine now lives in
+> `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the audit below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; non-principal,
+> toroidal/elliptic, and derived/super fronts are separate; periodicity
+> is an orthogonal weak flank.
+
 **Date**: 2026-03-06
 **Auditor**: Claude Opus 4.6 (adversarial mode)
 **Scope**: All 55 .tex files in chapters/ and appendices/, plus compute engine (901 tests)

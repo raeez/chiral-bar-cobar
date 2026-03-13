@@ -4,6 +4,18 @@
 # Expected duration: 12+ hours, non-blocking IO
 # Predecessor: SESSION_PROMPT_v8.md (operational), METAMORPHOSIS_PLAN.md (structural)
 
+> **Historical prompt note (March 13, 2026).**
+> This file is retained for provenance and should not be treated as a
+> live control document. Active doctrine is `notes/SESSION_PROMPT_v23.md`
+> together with `notes/autonomous_state.md`, `notes/VISION.md`,
+> `notes/PROGRAMMES.md`, and `chapters/connections/concordance.tex`.
+>
+> Current constitutional status: MC1 and MC2 are resolved on the
+> printed loci; the live structural frontier is MC3/MC4; the
+> non-principal orbit problem is separate from standard MC4; the
+> toroidal/elliptic and derived/super questions are extension flanks;
+> MC5 is downstream; periodicity is an orthogonal weak flank.
+
 # ======================================================================
 # DESIGN NOTES (for the model's extended thinking, not for execution)
 #

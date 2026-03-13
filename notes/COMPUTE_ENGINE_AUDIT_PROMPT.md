@@ -2,6 +2,17 @@
 # For: Claude Opus 4.6, Code Environment, Extended High Reasoning
 # Launch: "Read notes/COMPUTE_ENGINE_AUDIT_PROMPT.md and execute it."
 
+> **Historical compute prompt note (March 13, 2026).**
+> This file records an earlier compute-audit execution prompt and should
+> not be treated as a live routing surface. Active routing/state now
+> lives in `notes/autonomous_state.md` under the current control layer.
+>
+> Any compute evidence or backlog language below is subordinate to the
+> current theorem/status boundary: MC1 and MC2 are resolved; MC3 and
+> MC4 are the live structural layer; periodicity is orthogonal; compute
+> outputs remain M/S-level unless a current theorem surface promotes
+> them.
+
 # ======================================================================
 # DESIGN RATIONALE
 #

@@ -1,5 +1,15 @@
 # Compute Engine: Adversarial Audit Diagnosis
 
+> **Historical compute diagnosis note (March 13, 2026).**
+> This file records an earlier compute-engine diagnosis pass and should
+> not be read as a live state or task queue. Active routing/state now
+> lives in `notes/autonomous_state.md` under the current control layer.
+>
+> Read the diagnosis below through the current doctrine: the proved core
+> is fixed by the theorem surface, MC3/MC4 remain the live structural
+> frontier, periodicity is orthogonal, and compute evidence is
+> supportive unless explicitly promoted in the manuscript.
+
 **Phase 1 Complete** — Mar 6, 2026
 
 ---

@@ -3,6 +3,18 @@
 # Census: PH 676 / PE 310 / CJ 100 / H 18 = 1104
 # Pages: 1217 | Build: clean
 
+> **Historical critique note (March 13, 2026).**
+> This file records an earlier referee-style critique and should not be
+> read as a live doctrinal or status surface. Active doctrine now lives
+> in `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the report below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; the
+> non-principal orbit problem is separate from standard MC4; MC5 is
+> downstream; periodicity is orthogonal.
+
 ---
 
 ## Executive Summary

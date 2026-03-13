@@ -1,6 +1,19 @@
 # METAMORPHOSIS PLAN — Architecture for the Expanded Monograph
 # Written: Session 122, March 6 2026
-# Status: ACTIVE — guides all editing decisions
+# Status: HISTORICAL / PROVENANCE — not a live control document
+
+> **Historical planning note (March 13, 2026).**
+> This file records an earlier large-scale expansion plan. Active
+> doctrine now lives in `CLAUDE.md`,
+> `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read everything below through the current boundary: MC1 and MC2 are
+> resolved; the live structural frontier is MC3/MC4; the non-principal
+> orbit problem is a separate three-packet frontier; toroidal/elliptic
+> and derived/super are separate extension flanks; MC5 is downstream;
+> periodicity is an orthogonal weak flank.
 
 ---
 

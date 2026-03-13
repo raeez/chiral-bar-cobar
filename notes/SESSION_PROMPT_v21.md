@@ -737,9 +737,9 @@ compute/tests/test_mc2_cyclic_ce.py    — 56 tests
 | MC | Target | Status | Proved Foothold |
 |----|--------|--------|-----------------|
 | **1** | Higher-genus PBW | **RESOLVED** (KM unconditional, Vir/W universal) | thm:pbw-allgenera-km, thm:pbw-universal-conformal |
-| **2** | Cyclic L∞ + Θ_A | **ACTIVE** (Steps 1-6 done, 7-8 open) | prop:genus-completed-mc-framework, cor:one-dim-obstruction |
-| **3** | Full DK/KL | **ROADMAP** (DK-0 proved, DK-1–5 open) | rem:kl-evidence, DK theorem ladder (§3 Surface G) |
-| **4** | W_∞/Yangian towers | **ROADMAP** (M-level completions proved) | frontier_and_gaps.md |
+| **2** | Cyclic L∞ + Θ_A | **RESOLVED** | thm:mc2-full-resolution, thm:universal-MC |
+| **3** | DK/KL beyond the evaluation-generated core | **ROADMAP** (DK-2/3 on the evaluation-generated core proved; outer enlargement open) | rem:kl-evidence, DK theorem ladder (§3 Surface G) |
+| **4** | Filtered H-level `W_\infty` / Yangian targets + exact coefficient identities + finite-detection packets | **ROADMAP** (standard M-level towers and inverse-limit comparison proved) | frontier_and_gaps.md |
 | **5** | BV/BRST all genera | **DOWNSTREAM** | rem:proof-roadmaps |
 
 ---
@@ -828,7 +828,11 @@ These distinctions must stay sharp in all prose:
 - bar/cobar existence is broader than inversion
 - d_fib and D_tot are different objects with different notation
 - periodicity claims must not outrun the argument
-- principal W_N is resolved; W_∞ and non-principal orbit are frontier
+- principal W_N is resolved; the standard `W_\infty` / Yangian packet is
+  the MC4 frontier, the non-principal orbit problem is a separate
+  three-packet frontier (dual-orbit input, orbit-indexed level shift,
+  paired DS seed transport/globalization), and toroidal/elliptic plus
+  derived/super are distinct extension flanks
 - Heisenberg is the atom of the scalar/spectral story, not proof of
   the full package
 

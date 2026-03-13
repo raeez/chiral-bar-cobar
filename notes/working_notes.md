@@ -1,5 +1,19 @@
 # Working Notes — Session Mar 10-11, 2026
 
+> **Historical scratch note (March 13, 2026).**
+> This file records local computations and reduction heuristics from an
+> earlier working session. It is not a live control or status document.
+> Use `notes/autonomous_state.md`, `notes/VISION.md`,
+> `notes/PROGRAMMES.md`, and `chapters/connections/concordance.tex` for
+> the current doctrine.
+>
+> In particular: DK-2/3 on the evaluation-generated core are now proved;
+> MC3 means enlargement beyond that core; MC4 is the filtered H-level
+> `W_\infty` / Yangian comparison with named coefficient identities and
+> finite-detection packets; non-principal, toroidal/elliptic, and
+> derived/super questions are separate flanks; compute evidence here is
+> supportive unless the manuscript has already promoted it.
+
 ## What was done
 
 ### MC3 Category O strategies — two explicit computations added to yangians.tex

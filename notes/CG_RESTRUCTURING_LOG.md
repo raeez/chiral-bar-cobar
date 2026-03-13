@@ -1,5 +1,18 @@
 # CG Restructuring Log
 
+> **Historical log note (March 13, 2026).**
+> This file records an earlier restructuring campaign and should not be
+> treated as a live control or planning surface. Active doctrine lives
+> in `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the log below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 form the live structural layer; the
+> non-principal orbit problem is a separate three-packet frontier;
+> toroidal/elliptic and derived/super are extension flanks; MC5 is
+> downstream; periodicity is an orthogonal weak flank.
+
 ## Overview
 Chriss-Ginzburg restructuring: Example-first architecture with the Heisenberg algebra as frame example.
 

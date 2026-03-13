@@ -1,5 +1,15 @@
 # Metamorphosis TODO — Last updated: 2026-03-06 Session 124
 
+> **Historical backlog note (March 13, 2026).**
+> This file is retained as provenance for an earlier rewrite backlog and
+> should not be treated as a live task queue. Active routing now lives
+> in `notes/autonomous_state.md` under the current control layer.
+>
+> In particular: MC1 and MC2 are resolved; MC3/MC4 are the live
+> structural frontier; the non-principal orbit problem is separate from
+> standard MC4; toroidal/elliptic and derived/super are separate
+> extension flanks; MC5 is downstream; periodicity remains orthogonal.
+
 ## Phase A — Core
 - [x] introduction.tex — T1-T7 + programme foreshadowing
   - T1: Question-driven opening for §1.1 and Dictionary

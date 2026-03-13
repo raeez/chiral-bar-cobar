@@ -93,9 +93,12 @@ the explicit Θ recursion), `concordance.tex` (Future 4 entry).
    vanishing. The channel vector κ̃_N = (c/2, c/3, ..., c/N).
 
 7. **W_∞ divergence**: Σ(1/s) ~ log N diverges, so the scalar package
-   does not converge naively as N → ∞. The correct MC4 target requires
-   retaining the full channel vector before summation, with a
-   renormalized projection Σ e_s ⇝ 1.
+   does not converge naively as N → ∞. This is the scalar obstruction
+   that motivates MC4, not the whole MC4 frontier. The live task is the
+   filtered H-level comparison through `\mathcal W^{\mathrm{ht}}`
+   together with the exact residue identities
+   `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)` and finite detection on
+   `\mathcal I_N`.
 
 **Source loci to check**: `w_algebras_framework.tex` (κ computation for
 W_N), `concordance.tex` (MC4 W_∞ entries), `w_algebras_deep.tex`.

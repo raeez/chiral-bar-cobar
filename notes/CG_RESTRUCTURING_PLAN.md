@@ -1,5 +1,17 @@
 # CG Restructuring Plan — Phase 0
 
+> **Historical planning note (March 13, 2026).**
+> This file records an earlier restructuring plan and should not be read
+> as a live control document. Active doctrine lives in `CLAUDE.md`,
+> `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> In particular: MC1 and MC2 are resolved; MC3/MC4 form the live
+> structural layer; the non-principal orbit problem is separate from the
+> standard MC4 `W_\infty` / Yangian packet; toroidal/elliptic and
+> derived/super are extension flanks; MC5 is downstream.
+
 ## The Diagnosis
 
 The manuscript's Heisenberg content is scattered across **17 files**:

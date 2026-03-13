@@ -24,6 +24,11 @@ older periodicity-upgrade language recorded below is superseded by the
 current periodicity-containment doctrine: the lcm/profile shadow and
 stated quantum inputs are theorematic, while modular bar-cohomology
 periodicity remains conjectural.
+Interpret older frontier labels below through the current constitutional
+split: MC1 and MC2 are resolved; MC3 and MC4 are the live structural
+layer; the standard `W_\infty` / Yangian comparison is distinct from the
+three-packet non-principal orbit frontier and from the toroidal/elliptic
+and derived/super extension flanks; MC5 is downstream.
 Session 116: Partial results extracted from PROGRAM-scale conjectures. D1 (anomaly): split into thm:anomaly-koszul (PH, κ-additivity proved) + conj:anomaly-physical (CJ, physics interpretation). D4 (NC Hodge): split into def:chiral-hodge-numbers + prop:nc-hodge-symmetry (PH) + conj:nc-hodge (CJ, twistor only). C1 (oper): split into thm:oper-bar-h0 + prop:oper-bar-h1 (PH, H⁰ and H¹ proved) + conj:oper-bar (CJ, derived identification). C3 (E_n): added prop:en-n1-recovery (PH). C10 (Vassiliev): added prop:vassiliev-genus0 (PH, genus-0 weight systems). B22 (KL): updated evidence — finite-dimensionality gap already closed by cor:bar-admissible-finiteness. Census: PH 681, PE 313, CJ 99, H 18 = 1111 total. Build: 1197 pages (2-pass), 0 multiply-defined.
 Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-periodic-cdg + conj:kl-coderived + conj:kl-braided, together with rem:kl-evidence, in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex.
 Session 113: Yangian bar cohomology resolved — conj:yangian-bar-gf establishes H^n=3^n+1 (rational GF). Künneth decomposition (rem:yangian-gl2-kunneth) explains H²=10 via ĝl₂=ŝl₂×Ĥ. Master Table updated with conjectured Y(sl₂) values through deg 6. Comprehensive conjecture survey (87 occurrences, 54 unique items). W₃ extended test suite (78 tests). Census: PH 660, PE 314, CJ 83, H 18. Tests: 859 passing.

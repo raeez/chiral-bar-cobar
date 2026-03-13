@@ -2,6 +2,17 @@
 # Started: 2026-03-06 ~17:00 UTC
 # Last checkpoint: 2026-03-06 ~18:00 UTC
 
+> **Historical progress note (March 13, 2026).**
+> This file records an earlier synthesis pass and should not be treated
+> as a live task tracker. Active routing and state now live in
+> `notes/autonomous_state.md` under the current control layer.
+>
+> Read the tracker below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; the
+> non-principal orbit frontier is separate from standard MC4; the
+> toroidal/elliptic and derived/super questions are extension flanks;
+> MC5 is downstream; periodicity is orthogonal.
+
 ## Pass 1: Narrative Skeleton (target: hours 0-4)
 - [x] 1.1 Introduction rearchitecture — Rewrote §1 opening: now starts with "the problem" (classical Koszul duality on a point → on curves), arrives at NAP as the answer. Streamlined §2 transition.
 - [x] 1.2 Part I chapter-ending cascade — Added Device C forward shadows to chiral_koszul_pairs.tex and chiral_modules.tex (the 2 missing ones; 5/7 already had them)

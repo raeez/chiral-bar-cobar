@@ -3,6 +3,17 @@
 ## Scope: Full monograph, maximally adversarial — assume nothing correct
 ## Auditor: Claude Opus 4.6, adversarial stance; 8 parallel deep-read agents + manual investigation
 
+> **Historical audit note (March 13, 2026).**
+> This file records an earlier adversarial audit pass and should not be
+> treated as a live control or status surface. Active doctrine now
+> lives in `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the findings below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; MC5 is
+> downstream; periodicity is orthogonal.
+
 ---
 
 ## Executive Summary

@@ -3,6 +3,18 @@
 ## Scope: Full monograph re-audit after Session 3 fixes, plus previously unaudited chapters
 ## Auditor: Claude Opus 4.6; 7 parallel agents (verification + 6 deep-read) + manual investigation
 
+> **Historical audit note (March 13, 2026).**
+> This file records an earlier adversarial re-audit and should not be
+> treated as a live control or status surface. Active doctrine now
+> lives in `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the findings below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; the
+> non-principal orbit problem is separate from standard MC4; MC5 is
+> downstream; periodicity is orthogonal.
+
 ---
 
 ## Executive Summary

@@ -1,5 +1,18 @@
 # Adversarial Audit — Session 5 (March 6, 2026)
 
+> **Historical audit note (March 13, 2026).**
+> This file records an earlier adversarial audit and should not be read
+> as a live control or status surface. Active doctrine lives in
+> `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the audit below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; the
+> non-principal orbit problem is separate from standard MC4;
+> toroidal/elliptic and derived/super are extension flanks; MC5 is
+> downstream; periodicity is an orthogonal weak flank.
+
 ## Methodology
 - **Phase 1**: 10 parallel agents covering all 55+ .tex files across Theory, Examples, Connections, Appendices
 - Cross-reference integrity audit (labels, claim statuses, notation, census drift)

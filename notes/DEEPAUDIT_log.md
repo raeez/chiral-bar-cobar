@@ -1,5 +1,17 @@
 # DEEPAUDIT Execution Log — Session 117
 
+> **Historical execution log note (March 13, 2026).**
+> This file records an earlier audit-repair loop and should not be read
+> as a live status ledger. Active state/control now lives in
+> `notes/autonomous_state.md`, `notes/SESSION_PROMPT_v23.md`,
+> `notes/VISION.md`, `notes/PROGRAMMES.md`, and the concordance.
+>
+> Read the log below through the current doctrine: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; periodicity is a
+> weak orthogonal flank rather than the governing bottleneck; any
+> compute evidence recorded here remains M/S-level unless promoted by a
+> current theorem surface.
+
 **Date**: March 6, 2026
 **Operator**: Claude Opus 4.6, autonomous continuous loop
 **Mission**: Drive the monograph toward the vision articulated in DEEPAUDIT Task 2

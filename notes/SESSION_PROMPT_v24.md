@@ -190,14 +190,17 @@ grep -rn 'bar differential.*genus' chapters/ appendices/ --include='*.tex'
 
 Any ambiguous d_g should be normalized to the convention.
 
-### Strike Category S7: Yangian/W-infinity full-category overclaim (D3)
+### Strike Category S7: Yangian/W-infinity MC4 promotion overclaim (D3)
 
 ```
 grep -rn "full.*category.*equivalence\|categorical.*Koszul.*duality" chapters/examples/yangians.tex --include='*.tex'
 ```
 
-Keep evaluation-locus and chain-level statements. Flag any statement
-that claims full-category DK beyond the evaluation-generated locus
+Keep theorematic evaluation-core DK and standard M-level tower
+statements. Flag any statement that promotes the remaining filtered
+H-level comparison, the exact identities `K^{line}=K^{RTT}` /
+`C^{res}=C^{DS}`, or the finite-detection packets
+`\Delta_{a,0}(N)` / `\mathcal I_N` to realized full-category DK
 without explicit hypotheses.
 
 ### Strike Category S8: Periodicity classification overclaim (D3)

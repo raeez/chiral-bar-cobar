@@ -1,5 +1,16 @@
 # Page-by-Page Review Log
 
+> **Historical review note (March 13, 2026).**
+> This file records an earlier page-by-page review pass and should not
+> be treated as a live control or backlog surface. Active routing/state
+> now lives in `notes/autonomous_state.md` under the current control
+> layer.
+>
+> Local edits logged below are historical review outcomes, not current
+> doctrine. The current theorem/programme boundary is governed by the
+> control stack, with MC1 and MC2 resolved, MC3/MC4 live, MC5
+> downstream, and periodicity orthogonal.
+
 **Goal**: Annals-grade uniformity, harmony, and beauty.
 **Method**: Linear pass through the PDF, 3-5 fixes per page, logged here.
 **Session**: 2026-03-12
@@ -206,4 +217,3 @@ Build: 1646pp, 0 undefined refs, 0 overfull boxes.
 ---
 
 ## Continuing from page 74...
-

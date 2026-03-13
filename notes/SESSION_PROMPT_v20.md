@@ -39,10 +39,12 @@
 # raeeznotes 14:    Periodicity attack. Detailed proof dossier for
 #                   MC1-MC5 with missing lemmas and checkpoints.
 # raeeznotes 15:    MC1 resolved. Clean split: principal finite-type
-#                   W_N theorem-level, W_infty/Yangian MC4, non-principal
-#                   orbit duality separate three-packet frontier
-#                   (dual-orbit input, orbit-indexed level shift,
-#                   paired DS seed transport/globalization).
+#                   W_N theorem-level, W_infty/Yangian standard MC4,
+#                   non-principal orbit duality as a separate
+#                   three-packet frontier (dual-orbit input,
+#                   orbit-indexed level shift, paired DS seed
+#                   transport/globalization), and toroidal/elliptic
+#                   plus derived/super as distinct extension flanks.
 # raeeznotes 16:    MC2 as the genuine foundational conjecture.
 #                   "Does C_A come from a native object?" is now
 #                   THE question.

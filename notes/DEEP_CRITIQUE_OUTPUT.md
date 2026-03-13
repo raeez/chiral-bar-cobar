@@ -1,6 +1,17 @@
 # Deep Mathematical Critique & Horizon Exploration
 ## Chiral Duality in the Presence of Quantum Corrections
 
+> **Historical critique note (March 13, 2026).**
+> This file records an earlier critique/horizon pass and should not be
+> treated as a live referee-status document. Active doctrine now lives
+> in `CLAUDE.md`, `chapters/connections/concordance.tex`,
+> `chapters/theory/introduction.tex`, `notes/autonomous_state.md`,
+> `notes/VISION.md`, and `notes/PROGRAMMES.md`.
+>
+> Read the critique below through the current boundary: MC1 and MC2 are
+> resolved; MC3 and MC4 are the live structural layer; MC5 is
+> downstream; periodicity is an orthogonal weak flank.
+
 **Date**: 2026-03-05 (F1 update: Session 103)
 **Census**: PH 613 / PE 317 / CJ 84 / H 14 = 1028 tagged claims (.tex only)
 **Pages**: ~1133, zero LaTeX errors, zero undefined references

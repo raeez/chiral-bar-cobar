@@ -58,17 +58,25 @@ Chapter 34 (concordance) already gives the correct:
 
 **Every earlier chapter should be subordinate to Chapter 34.** When they disagree, the earlier chapter needs to be corrected. This is the single organizing principle.
 
-## The five master conjectures
+## The five master packets
 
-The ~119 remaining conjectures collapse to five structural ones:
+The old "~119 remaining conjectures" list has now split into two
+resolved load-bearing layers and three live frontier packets:
 
-1. **PBW degeneration at higher genus** — makes interacting families unconditional
-2. **Cyclic L∞ and universal Θ_A** — the principal open problem
-3. **Full factorization-categorical DK/KL** — quantum groups
-4. **Completed bar for infinite generators** — W∞, Yangians
-5. **BV/BRST = bar at all genera** — physics completion (downstream)
+1. **PBW degeneration at higher genus** — resolved on the printed
+   finite-type loci
+2. **Cyclic L∞ and universal Θ_A** — resolved on the printed
+   simple-Lie-symmetry locus
+3. **DK/KL beyond the evaluation-generated core** — the
+   ordinary-derived/completed/coderived enlargement
+4. **Filtered H-level W∞/Yangian comparison** — build
+   `\mathcal W^{\mathrm{ht}}` and `\Ydg_{\cA}`, prove
+   `C^{res}=C^{DS}` and `K^{line}=K^{RTT}`, and close the
+   finite-detection packets `\mathcal I_N` and `\Delta_{a,0}(N)`
+5. **BV/BRST = bar at all genera** — higher-genus downstream package
 
-These are the real theoremization targets. Don't try to prove 119 conjectures one at a time.
+These are the real structural targets. Don't try to prove 119
+conjectures one at a time.
 
 ## What this does NOT do
 

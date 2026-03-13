@@ -1,5 +1,17 @@
 # Compute Engine: Complete Next Steps Registry
 
+> **Historical compute backlog note (March 13, 2026).**
+> This file is retained as provenance for an earlier compute backlog and
+> should not be treated as a live task registry. Active compute routing
+> now lives in `notes/autonomous_state.md` under the current control
+> layer.
+>
+> In particular: MC1 and MC2 are resolved; MC3 and MC4 are the live
+> structural frontier; non-principal and extension-flank questions are
+> separate from standard MC4; periodicity is orthogonal; compute
+> outputs remain M/S-level unless the current theorem surface promotes
+> them.
+
 **Generated**: 2026-03-06, Session 117
 **Baseline**: 1080 tests, 32 live lib files (11K lines), 34 test files (6.3K lines), 59 scripts (22K lines)
 **Architecture**: Python 3.14, sympy 1.14.0, numpy 2.4.2, pytest 9.0.2, venv at `compute/.venv/`
