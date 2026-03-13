@@ -231,6 +231,7 @@ class TestInfiniteGeneratorFrontier:
             completed_bar_candidate_descriptor,
             stage4_dual_goal_report,
             stage4_primitive_square_class_report,
+            stage4_pairing_reduction_report,
             stage4_target_packet_at_level,
             stage4_defect_vanishing_report,
             standard_winfinity_dual_candidate_report,
@@ -241,6 +242,7 @@ class TestInfiniteGeneratorFrontier:
         descriptor = completed_bar_candidate_descriptor()
         goal = stage4_dual_goal_report()
         square_class = stage4_primitive_square_class_report()
+        pairing = stage4_pairing_reduction_report()
         packet = stage4_target_packet_at_level(1)
         vanishing = stage4_defect_vanishing_report(1, packet)
         report = standard_winfinity_dual_candidate_report()
@@ -249,6 +251,7 @@ class TestInfiniteGeneratorFrontier:
         assert descriptor["kind"] == "inverse_limit_bar"
         assert goal["goal"] == "vanish all six stage-4 defects"
         assert square_class["primitive_count"] == 2
+        assert pairing["sign_ratio"] == Rational(-3, 4)
         assert vanishing["all_vanish"] is True
         assert report["stage4"]["virasoro_constraints"][(4, 4, 2, 6)]["expression"] == 2
         assert all(verify_truncated_w_infinity_ope(5, 7).values())
