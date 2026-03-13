@@ -410,12 +410,13 @@ REFERENCES: Fay "Theta Functions on Riemann Surfaces" for genus-2 propagator;
 [LEVEL: B]
 [CONFIDENCE: MEDIUM]
 [SCALE: SECTION]
-STATEMENT: The Kazhdan-Lusztig equivalence O_kappa(g-hat) ≃ Rep^fd(U_q(g))
-  (for q = exp(i*pi/kappa)) can be recovered from the bar-cobar framework
-  by composing: (a) chiral module Koszul duality with (b) the identification
-  of the Koszul dual module category with quantum group representations.
-  Specifically, the bar complex of the affine KM algebra produces a coalgebra
-  whose comodule category is equivalent to U_q(g)-modules.
+STATEMENT: The semisimplified Kazhdan-Lusztig target
+  O_kappa(g-hat) ≃ C(U_q(g))
+  (for q = exp(i*pi/kappa)) should be recoverable from the bar-cobar
+  framework by composing: (a) periodic/coderived bar transport with
+  (b) the identification of the periodic bar side with the semisimplified
+  quantum-group target. Any lift to Rep^fd(U_q(g)) is an additional
+  non-semisimple frontier.
 FOLLOWS FROM: thm:e1-module-koszul-duality, KL93 (tensor structure),
   thm:km-bar-complex, BGS96 Thm 1.2.6 (Koszul duality functor on D^b)
 PROOF SKETCH: The bar complex B(g-hat_k) is a DG-coalgebra. Its comodule
@@ -423,7 +424,8 @@ PROOF SKETCH: The bar complex B(g-hat_k) is a DG-coalgebra. Its comodule
   to D^b(g-hat_k-mod). The Koszul dual algebra g-hat_k^! = g-hat_{-k-2h^dual}
   has module category equivalent (by Feigin-Frenkel) to the same category
   with quantum parameter q <-> q^{-1}. The KL equivalence identifies this
-  with Rep(U_q(g)). The composition gives the KL equivalence as a
+  with the semisimplified target C(U_q(g)). The composition gives the
+  semisimplified KL step as a
   "bar-cobar transport."
 BLOCKED BY: Proving that the bar-cobar transport preserves the tensor structure
   (not just the abelian category structure). This requires showing the
@@ -521,7 +523,7 @@ credibility at higher genus.
 - Definition of E_1-chiral modules (R-matrix-twisted locality)
 - Evaluation modules, tensor products, braiding via R-matrix
 - Module Koszul duality: V(a) -> V(-a) with R -> R^{-1}
-- Theorem: KL equivalence O_kappa ≃ Rep(U_q(g)) via bar-cobar transport
+- Theorem: semisimplified KL equivalence O_kappa ≃ C(U_q(g)) via bar-cobar transport
 
 **Section 2: Yangian Category O** (~8 pages)
 - Definition of Yangian highest-weight modules (Drinfeld polynomials)

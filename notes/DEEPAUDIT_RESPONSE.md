@@ -113,17 +113,22 @@ Actually, the correct accounting is: the Hochschild complex lives in total degre
 
 ### Finding 4: KL Wrong Target Category — STALE
 
-**The auditor claims**: Target should be semisimplified tilting category, not full Rep(U_q(g)).
+**The auditor claims**: Target should be the semisimplified tilting category, not full Rep(U_q(g)).
 
-**What the manuscript says** (kac_moody_framework.tex, line 1130):
+**What the manuscript now says**:
 
-The target is "Rep^{fd}(U_q(g))" — **finite-dimensional** representations. This is attributed to KL93 with proper citation.
+The printed KL target is the semisimplified tilting quotient
+`C(U_q(g))`, while any lift to `Rep^{fd}(U_q(g))` is fenced as a
+separate non-semisimple or completed/coderived frontier.
 
-Furthermore, the stronger claim (bar-cobar intertwining with KL as tensor equivalence) is explicitly marked as "expected but not proved here" (conjectured, not asserted).
+**Nuance**: The old wording followed a broad KL shorthand, but the
+current doctrine is sharper: the semisimplified target is the
+theorematic endpoint, and the full finite-dimensional quantum-group
+category is not the printed KL target.
 
-**Nuance**: The auditor is correct that at roots of unity, even Rep^{fd}(U_q(g)) is non-semisimple, and the precise statement of KL involves the semisimplified category (or the restricted/tilting subcategory). The manuscript's statement is the standard one from KL93 — it is the community-standard formulation, even if modern treatments would use more precise categorical language. This is a place where the manuscript follows standard attribution rather than state-of-the-art precision.
-
-**Assessment**: Not incorrect as stated (it's the KL93 statement), but could be sharpened. The bar-cobar enhancement is properly conjectured. No mathematical error.
+**Assessment**: Fixed in the current doctrine. The remaining
+bar-cobar enhancement is conjectural, but its target language is now
+correctly fenced.
 
 ---
 

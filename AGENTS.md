@@ -66,7 +66,7 @@ When working in this repo, consult these in order:
 2. [chapters/connections/concordance.tex](/Users/raeez/chiral-bar-cobar/chapters/connections/concordance.tex) (constitution)
 3. [chapters/theory/introduction.tex](/Users/raeez/chiral-bar-cobar/chapters/theory/introduction.tex) (front door)
 4. [notes/GPT54_CODEX_OPERATING_SYSTEM.md](/Users/raeez/chiral-bar-cobar/notes/GPT54_CODEX_OPERATING_SYSTEM.md) (stable cognitive scaffold)
-5. [notes/SESSION_PROMPT_v25.md](/Users/raeez/chiral-bar-cobar/notes/SESSION_PROMPT_v25.md) (current execution prompt; if `autonomous_state.md` names a newer prompt, read that instead)
+5. [notes/SESSION_PROMPT_v23.md](/Users/raeez/chiral-bar-cobar/notes/SESSION_PROMPT_v23.md) (live execution prompt)
 6. [notes/autonomous_state.md](/Users/raeez/chiral-bar-cobar/notes/autonomous_state.md) (session state)
 7. [notes/VISION.md](/Users/raeez/chiral-bar-cobar/notes/VISION.md) (north star)
 8. [notes/PROGRAMMES.md](/Users/raeez/chiral-bar-cobar/notes/PROGRAMMES.md) (research programmes)

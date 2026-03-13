@@ -26,8 +26,8 @@ See concordance.tex rem:proof-roadmaps for full strategies.
 |----|--------|-------------|
 | MC1 | **PROVED** for KM, Vir, principal W_N | Complete |
 | MC2 | **PROVED** (thm:mc2-full-resolution) | Complete |
-| MC3 | DK-0/1/1½ proved; DK-2/3 eval-generated core all simple types | Extension beyond generated core; KL/completed bridge |
-| MC4 | M-level done; H-level coefficients open | Yangian K^line=K^RTT; W-infinity 4 channels |
+| MC3 | DK-0/1/1½ proved; DK-2/3 on the evaluation-generated core at all simple types | Ordinary-derived/completed enlargement beyond that core; KL bridge |
+| MC4 | Standard infinite towers remain frontier | Build `\mathcal W^{\mathrm{ht}}`, `\Ydg_{\cA}`; prove packets on `\mathcal I_N`, `\Delta_{a,0}(N)` |
 | MC5 | Genus 0 proved; downstream | After MC2-4 |
 
 Periodicity: orthogonal weak flank, not bottleneck.
@@ -36,7 +36,7 @@ Periodicity: orthogonal weak flank, not bottleneck.
 
 ### Mar 12 — control-layer and summary synchronization
 - **Control doctrine synced**: concordance.tex and VISION.md now state MC2 as resolved and MC3/MC4/MC5 as the live frontier.
-- **Session notes rerouted**: SESSION_PROMPT_v25 now treats `Theta_A` as proved and routes active work to the outer categorical and infinite-generator layer.
+- **Session notes rerouted**: the historical v25 prompt now records the proved `Theta_A` premise, while the live control prompt is `notes/SESSION_PROMPT_v23.md`.
 - **Summary surfaces tightened**: examples_summary.tex and genus_expansions.tex now distinguish the proved Yangian DK core, the proved characteristic hierarchy, and the still-programmatic outer comparison layers.
 - **Build verification**: `make fast` converged cleanly at 1664pp in 3 passes.
 
@@ -91,6 +91,6 @@ See STRIKE LIST in this file below for P0/P1/P2 classification.
 2. **P1**: Fix test suite (hanging on heavy DS tests — needs pytest-timeout or test refactor).
 3. **P1**: Commit triage on the still-large modified worktree.
 4. **P1**: MC3 DK ladder: lattice→quantum group identification (bridge from DK-1½ to DK-2).
-5. **P2**: Fourier Seed chapter (SESSION_PROMPT_v25, now with proved `Theta_A` premise).
-6. **P2**: MC4 coefficient identities.
+5. **P2**: Fourier Seed chapter under the live `SESSION_PROMPT_v23.md` control stack, with proved `Theta_A` premise.
+6. **P2**: MC4 target construction and coefficient identities.
 7. **P2**: Remaining control-note synchronization outside the session stack.

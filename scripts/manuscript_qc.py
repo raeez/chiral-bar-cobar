@@ -16,11 +16,14 @@ SCAN_ROOTS = ("main.tex", "chapters", "appendices", "bibliography")
 CONTROL_DOCS = (
     "AGENTS.md",
     "notes/GPT54_CODEX_OPERATING_SYSTEM.md",
+    "notes/SESSION_PROMPT_v23.md",
+    "notes/autonomous_state.md",
     "notes/VISION.md",
     "notes/PROGRAMMES.md",
     "notes/HORIZON.md",
     "notes/NEW_MACHINERY.md",
     "notes/REWRITE_QUEUE.md",
+    "latest_state_scaffold.md",
     "metadata/frontier_and_gaps.md",
     "metadata/reference_theorems.md",
     "CLAUDE.md",
@@ -28,6 +31,8 @@ CONTROL_DOCS = (
 FRONTIER_PHRASE_DOCS = (
     "AGENTS.md",
     "notes/GPT54_CODEX_OPERATING_SYSTEM.md",
+    "notes/SESSION_PROMPT_v23.md",
+    "notes/autonomous_state.md",
     "notes/VISION.md",
     "notes/PROGRAMMES.md",
     "notes/HORIZON.md",
@@ -36,9 +41,36 @@ FRONTIER_PHRASE_DOCS = (
     "notes/ADVERSARIAL_AUDIT_SESSION5.md",
     "notes/SESSION_STATE_POST_AUDIT5.md",
     "notes/METAMORPHOSIS_PLAN.md",
+    "latest_state_scaffold.md",
     "metadata/frontier_and_gaps.md",
     "metadata/reference_theorems.md",
     "CLAUDE.md",
+)
+ACTIVE_META_DOCS = (
+    "AGENTS.md",
+    "CLAUDE.md",
+    "notes/GPT54_CODEX_OPERATING_SYSTEM.md",
+    "notes/PROGRAMMES.md",
+    "notes/SESSION_PROMPT_v23.md",
+    "notes/VISION.md",
+    "notes/autonomous_state.md",
+    "latest_state_scaffold.md",
+)
+ACTIVE_PROMPT_DOCS = ("notes/SESSION_PROMPT_v23.md",)
+ACTIVE_STATE_DOCS = ("notes/autonomous_state.md",)
+ARCHIVAL_PROMPT_GLOBS = (
+    "notes/SESSION_PROMPT*.md",
+    "notes/DEEP_SESSION_PROMPT*.md",
+    "notes/GPT54_AUDIT_PROMPT.md",
+)
+ARCHIVAL_STATE_GLOBS = (
+    "notes/*state*.md",
+    "notes/SESSION_STATE*.md",
+)
+LIVE_PROMPT_POINTER_DOCS = (
+    "AGENTS.md",
+    "CLAUDE.md",
+    "notes/autonomous_state.md",
 )
 THEOREM_ENVS = ("theorem", "lemma", "proposition", "corollary")
 STATUS_RE = re.compile(
@@ -561,6 +593,42 @@ FRONTIER_STALE_PHRASE_PATTERNS = (
     re.compile(r"completed infinite-generator bar", re.IGNORECASE),
     re.compile(r"Completed bar ∞-gen", re.IGNORECASE),
 )
+PROMPT_POINTER_DRIFT_PATTERNS = (
+    re.compile(r"Session prompt:\s*notes/SESSION_PROMPT_v(?:2[4-9]|[3-9]\d)\.md"),
+    re.compile(
+        r"current execution prompt[^.\n]{0,160}SESSION_PROMPT_v(?:2[4-9]|[3-9]\d)\.md",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"live control prompt[^.\n]{0,160}SESSION_PROMPT_v(?:2[4-9]|[3-9]\d)\.md",
+        re.IGNORECASE,
+    ),
+)
+MC3_WORDING_DRIFT_PATTERNS = (
+    re.compile(r"\beval-gen core\b", re.IGNORECASE),
+    re.compile(r"\bbeyond generated core\b", re.IGNORECASE),
+)
+MC3_WORDING_SAFE_PATTERNS = (
+    re.compile(r"evaluation-generated core", re.IGNORECASE),
+    re.compile(r"D\^b\(\\mathcal O_\{\\mathrm\{poly\}\}\)"),
+    re.compile(r"ordinary-derived", re.IGNORECASE),
+    re.compile(r"completed/coderived", re.IGNORECASE),
+)
+MC4_WORDING_DRIFT_PATTERNS = (
+    re.compile(r"H-level coefficients open", re.IGNORECASE),
+    re.compile(r"H-level MC4 comparison", re.IGNORECASE),
+)
+MC4_TARGET_SAFE_PATTERNS = (
+    re.compile(r"\\mathcal W\^\{\\mathrm\{ht\}\}|\\mathcal W\^\{ht\}|W\^\{ht\}"),
+    re.compile(r"\\Ydg_\{\\cA\}|Ydg_\{\\cA\}|Ydg_A|dg-shifted Yangian", re.IGNORECASE),
+    re.compile(r"filtered H-level targets", re.IGNORECASE),
+)
+MC4_PACKET_SAFE_PATTERNS = (
+    re.compile(r"\\mathcal I_N|mathcal\{I\}_N|\bI_N\b"),
+    re.compile(r"\\Delta_\{a,0\}\(N\)|Delta_\{a,0\}\(N\)"),
+    re.compile(r"K\^\{line\}|K\\\^line|C\^\{res\}|C\\\^\{res\}"),
+    re.compile(r"finite quotients", re.IGNORECASE),
+)
 PHYSICS_DICTIONARY_DRIFT_PATTERNS = (
     re.compile(r"is governed by genus-graded Koszul duality", re.IGNORECASE),
     re.compile(r"realizes open-closed string duality", re.IGNORECASE),
@@ -753,6 +821,13 @@ def iter_drift_files() -> list[pathlib.Path]:
     return sorted(dict.fromkeys(files))
 
 
+def iter_globbed_docs(patterns: tuple[str, ...]) -> list[pathlib.Path]:
+    files: list[pathlib.Path] = []
+    for pattern in patterns:
+        files.extend(sorted(ROOT.glob(pattern)))
+    return sorted(dict.fromkeys(files))
+
+
 def active_include_graph() -> set[pathlib.Path]:
     main_path = ROOT / "main.tex"
     lines = clean_lines(main_path)
@@ -861,10 +936,91 @@ def scan() -> dict[str, object]:
     en_axis_drift: list[Finding] = []
     frontier_stale_phrase_drift: list[Finding] = []
     physics_dictionary_drift: list[Finding] = []
+    active_prompt_banner_drift: list[Finding] = []
+    archival_prompt_banner_drift: list[Finding] = []
+    active_state_banner_drift: list[Finding] = []
+    archival_state_banner_drift: list[Finding] = []
+    prompt_pointer_drift: list[Finding] = []
+    mc3_wording_drift: list[Finding] = []
+    mc4_wording_drift: list[Finding] = []
     long_paragraphs: list[Paragraph] = []
     duplicate_map: dict[str, list[Paragraph]] = collections.defaultdict(list)
 
     head_re = re.compile(r"\\begin\{(" + "|".join(THEOREM_ENVS) + r")\}")
+    active_meta_docs = {
+        pathlib.Path(entry)
+        for entry in ACTIVE_META_DOCS
+        if (ROOT / entry).exists()
+    }
+    active_prompt_docs = {
+        pathlib.Path(entry)
+        for entry in ACTIVE_PROMPT_DOCS
+        if (ROOT / entry).exists()
+    }
+    active_state_docs = {
+        pathlib.Path(entry)
+        for entry in ACTIVE_STATE_DOCS
+        if (ROOT / entry).exists()
+    }
+    archival_prompt_docs = {
+        path.relative_to(ROOT)
+        for path in iter_globbed_docs(ARCHIVAL_PROMPT_GLOBS)
+    } - active_prompt_docs
+    archival_state_docs = {
+        path.relative_to(ROOT)
+        for path in iter_globbed_docs(ARCHIVAL_STATE_GLOBS)
+    } - active_state_docs
+
+    for rel in sorted(active_prompt_docs):
+        lines = clean_lines(ROOT / rel)
+        window = "\n".join(lines[:8])
+        if "Active doctrine note" not in window:
+            active_prompt_banner_drift.append(
+                Finding(rel, 1, "missing `Active doctrine note` banner near top of file")
+            )
+    for rel in sorted(archival_prompt_docs):
+        lines = clean_lines(ROOT / rel)
+        window = "\n".join(lines[:8])
+        if "Historical prompt note" not in window:
+            archival_prompt_banner_drift.append(
+                Finding(rel, 1, "missing `Historical prompt note` banner near top of file")
+            )
+    for rel in sorted(active_state_docs):
+        lines = clean_lines(ROOT / rel)
+        window = "\n".join(lines[:8])
+        if "Live state note" not in window:
+            active_state_banner_drift.append(
+                Finding(rel, 1, "missing `Live state note` banner near top of file")
+            )
+    for rel in sorted(archival_state_docs):
+        lines = clean_lines(ROOT / rel)
+        window = "\n".join(lines[:8])
+        if "Historical state note" not in window:
+            archival_state_banner_drift.append(
+                Finding(rel, 1, "missing `Historical state note` banner near top of file")
+            )
+    for rel in sorted(
+        pathlib.Path(entry)
+        for entry in LIVE_PROMPT_POINTER_DOCS
+        if (ROOT / entry).exists()
+    ):
+        lines = clean_lines(ROOT / rel)
+        for idx, line in enumerate(lines, start=1):
+            if any(pattern.search(line) for pattern in PROMPT_POINTER_DRIFT_PATTERNS):
+                prompt_pointer_drift.append(Finding(rel, idx, line.strip()))
+    for rel in sorted(active_meta_docs):
+        lines = clean_lines(ROOT / rel)
+        for idx, line in enumerate(lines, start=1):
+            if any(pattern.search(line) for pattern in MC3_WORDING_DRIFT_PATTERNS):
+                window = "\n".join(lines[max(0, idx - 3) : min(len(lines), idx + 3)])
+                if not any(pattern.search(window) for pattern in MC3_WORDING_SAFE_PATTERNS):
+                    mc3_wording_drift.append(Finding(rel, idx, line.strip()))
+            if any(pattern.search(line) for pattern in MC4_WORDING_DRIFT_PATTERNS):
+                window = "\n".join(lines[max(0, idx - 3) : min(len(lines), idx + 3)])
+                if not any(pattern.search(window) for pattern in MC4_TARGET_SAFE_PATTERNS) or not any(
+                    pattern.search(window) for pattern in MC4_PACKET_SAFE_PATTERNS
+                ):
+                    mc4_wording_drift.append(Finding(rel, idx, line.strip()))
 
     for path in files:
         rel = path.relative_to(ROOT)
@@ -1270,6 +1426,13 @@ def scan() -> dict[str, object]:
         "en_axis_drift": en_axis_drift,
         "frontier_stale_phrase_drift": frontier_stale_phrase_drift,
         "physics_dictionary_drift": physics_dictionary_drift,
+        "active_prompt_banner_drift": active_prompt_banner_drift,
+        "archival_prompt_banner_drift": archival_prompt_banner_drift,
+        "active_state_banner_drift": active_state_banner_drift,
+        "archival_state_banner_drift": archival_state_banner_drift,
+        "prompt_pointer_drift": prompt_pointer_drift,
+        "mc3_wording_drift": mc3_wording_drift,
+        "mc4_wording_drift": mc4_wording_drift,
         "long_paragraphs": long_paragraphs,
         "duplicates": duplicates,
     }
@@ -1338,6 +1501,13 @@ def report(data: dict[str, object], limit: int) -> None:
     print(f"- E_n axis drift: `{len(data['en_axis_drift'])}`")
     print(f"- Stale frontier-phrase drift: `{len(data['frontier_stale_phrase_drift'])}`")
     print(f"- Physics-dictionary drift: `{len(data['physics_dictionary_drift'])}`")
+    print(f"- Active prompt banner drift: `{len(data['active_prompt_banner_drift'])}`")
+    print(f"- Archival prompt banner drift: `{len(data['archival_prompt_banner_drift'])}`")
+    print(f"- Active state banner drift: `{len(data['active_state_banner_drift'])}`")
+    print(f"- Archival state banner drift: `{len(data['archival_state_banner_drift'])}`")
+    print(f"- Prompt-pointer drift: `{len(data['prompt_pointer_drift'])}`")
+    print(f"- MC3 wording drift: `{len(data['mc3_wording_drift'])}`")
+    print(f"- MC4 wording drift: `{len(data['mc4_wording_drift'])}`")
     print(f"- AI-tell candidates: `{len(data['ai_tells'])}`")
     print(f"- Cross-file duplicate paragraphs: `{len(data['duplicates'])}`")
     print(f"- Long paragraphs (>1200 chars): `{len(data['long_paragraphs'])}`")
@@ -1594,6 +1764,40 @@ def report(data: dict[str, object], limit: int) -> None:
         print("- none")
     print()
 
+    print_section("Prompt/State Banner Drift")
+    if data["active_prompt_banner_drift"]:
+        print_findings(data["active_prompt_banner_drift"], limit)
+    if data["archival_prompt_banner_drift"]:
+        print_findings(data["archival_prompt_banner_drift"], limit)
+    if data["active_state_banner_drift"]:
+        print_findings(data["active_state_banner_drift"], limit)
+    if data["archival_state_banner_drift"]:
+        print_findings(data["archival_state_banner_drift"], limit)
+    if (
+        not data["active_prompt_banner_drift"]
+        and not data["archival_prompt_banner_drift"]
+        and not data["active_state_banner_drift"]
+        and not data["archival_state_banner_drift"]
+    ):
+        print("- none")
+    print()
+
+    print_section("Prompt-Pointer Drift")
+    if data["prompt_pointer_drift"]:
+        print_findings(data["prompt_pointer_drift"], limit)
+    else:
+        print("- none")
+    print()
+
+    print_section("MC3/MC4 Wording Drift")
+    if data["mc3_wording_drift"]:
+        print_findings(data["mc3_wording_drift"], limit)
+    if data["mc4_wording_drift"]:
+        print_findings(data["mc4_wording_drift"], limit)
+    if not data["mc3_wording_drift"] and not data["mc4_wording_drift"]:
+        print("- none")
+    print()
+
     print_section("Duplicate Paragraphs")
     if data["duplicates"]:
         for _, paras in data["duplicates"][:limit]:
@@ -1670,6 +1874,13 @@ def main() -> int:
         or data["en_axis_drift"]
         or data["frontier_stale_phrase_drift"]
         or data["physics_dictionary_drift"]
+        or data["active_prompt_banner_drift"]
+        or data["archival_prompt_banner_drift"]
+        or data["active_state_banner_drift"]
+        or data["archival_state_banner_drift"]
+        or data["prompt_pointer_drift"]
+        or data["mc3_wording_drift"]
+        or data["mc4_wording_drift"]
     ):
         return 1
     return 0
