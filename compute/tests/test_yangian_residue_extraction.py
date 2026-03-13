@@ -52,10 +52,13 @@ from compute.lib.yangian_residue_extraction import (
     complete_homogeneous_scalar,
     fundamental_line_series_coefficients,
     fundamental_line_series_coefficients_closed_form,
+    fundamental_line_series_support_terms,
     boundary_strip_coefficient,
     boundary_strip_coefficient_closed_form,
     boundary_strip_packet,
     boundary_strip_packet_closed_form,
+    boundary_strip_top_support_from_support_terms,
+    boundary_strip_top_support_closed_form_operator,
     # Three-layer reduction
     three_layer_reduction,
     # Residue on e_1 x e_2
@@ -385,6 +388,40 @@ class TestClosedFormBoundaryStrip:
         for _, data in packet["packet"].items():
             assert data["frobenius_norm"] < 1e-9
             assert data["max_entry"] < 1e-9
+
+
+class TestTopSupportFormula:
+    """Verify the closed-form top-support operator on the top packet."""
+
+    @pytest.mark.parametrize("N,eval_points,boundary_index", [
+        (2, [0.0], 0),
+        (2, [0.0, 1.0], 1),
+        (2, [0.0, 1.0, 2.0], 2),
+        (3, [0.0], 0),
+        (3, [0.0, 1.25], 1),
+        (3, [0.0, 1.25, 2.5], 2),
+    ])
+    def test_top_support_closed_form_matches_support_enumeration(self, N, eval_points, boundary_index):
+        from_support_terms = boundary_strip_top_support_from_support_terms(
+            eval_points, N, boundary_index
+        )
+        closed_form = boundary_strip_top_support_closed_form_operator(
+            N, boundary_index
+        )
+        assert np.allclose(from_support_terms, closed_form)
+
+    @pytest.mark.parametrize("N,eval_points_a,eval_points_b,boundary_index", [
+        (2, [0.0, 1.0, 2.0], [0.3, 1.7, 4.1], 2),
+        (3, [0.0, 1.25, 2.5], [-0.5, 0.8, 2.2], 2),
+    ])
+    def test_top_support_is_independent_of_generic_points(self, N, eval_points_a, eval_points_b, boundary_index):
+        top_a = boundary_strip_top_support_from_support_terms(
+            eval_points_a, N, boundary_index
+        )
+        top_b = boundary_strip_top_support_from_support_terms(
+            eval_points_b, N, boundary_index
+        )
+        assert np.allclose(top_a, top_b)
 
 
 class TestNormalizationBridge:

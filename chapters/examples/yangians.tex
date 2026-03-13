@@ -854,10 +854,13 @@ that once the fundamental $L$-operator satisfies the truncated RTT
 relation and the twisted coproduct multiplies monodromy matrices in the
 standard way, higher tensor lengths cease to be a separate frontier.
 Proposition~\ref{prop:dg-shifted-rtt-auxiliary-kernel-criterion}
-pushes this to the exact remaining pairwise problem: identify the
+and Proposition~\ref{prop:dg-shifted-rtt-universal-evaluation-rigidity}
+push this to the exact remaining pairwise problem: identify the
 fundamental one-factor monodromy matrix with the rational auxiliary
 $R$-matrix kernel.  Then the fundamental RTT relation is just the
-Yang--Baxter equation.  For the standard type-A RTT tower,
+Yang--Baxter equation, and the standard finite-stage evaluation action
+on every universal packet follows automatically.  For the standard
+type-A RTT tower,
 Proposition~\ref{prop:dg-shifted-rtt-typea-auxiliary-uniqueness}
 sharpens this once more: on the defining fundamental representation,
 the auxiliary kernel is already forced by three local checks,
@@ -1715,6 +1718,343 @@ RTT defect family to this finite canonical family of universal generic
 packets.
 \end{proof}
 
+\begin{proposition}[Top-packet induction step on the universal family;
+\ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-top-packet-induction}
+Set $m:=a+1$ and let
+\[
+M_m^{\mathrm{gen}}
+=
+V_{\mathrm{fund}}(x_1)\otimes_{\mathbb{C}(x_1,\dots,x_m)}\cdots
+\otimes_{\mathbb{C}(x_1,\dots,x_m)}V_{\mathrm{fund}}(x_m)
+\]
+be the top universal packet for the boundary index~$a$.  Let
+\[
+\mathsf{F}_{<m}\End(V^{\otimes 2}\otimes M_m^{\mathrm{gen}})
+\]
+be the linear span of operators supported on proper subsets of the
+quantum slots $\{1,\dots,m\}$.  Assume the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-defect-support-mechanism} and that
+\[
+\Delta_{a,0}(N)
+\]
+acts by zero on the universal packets $M_r^{\mathrm{gen}}$ for every
+$1\le r\le a$.  Then
+\[
+\Delta^{(m)}_{a,0}(N)=0
+\quad\Longleftrightarrow\quad
+\bigl[\Delta^{(m)}_{a,0}(N)\bigr]=0
+\ \text{in}\ 
+\End(V^{\otimes 2}\otimes M_m^{\mathrm{gen}})/\mathsf{F}_{<m}.
+\]
+Equivalently, once the shorter universal packets are killed, the
+induction from packet lengths $\le a$ to the top packet $m=a+1$
+closes exactly on the top-support class.
+\end{proposition}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-defect-support-mechanism}, every
+summand in the action of $\Delta_{a,0}(N)$ on $M_m^{\mathrm{gen}}$ is
+supported on at most $m=a+1$ quantum slots.  Therefore modulo
+$\mathsf{F}_{<m}$ only the full-support part can survive.
+
+If a summand is supported on a proper subset
+$S\subsetneq\{1,\dots,m\}$, then it factors through the corresponding
+universal packet $M_{|S|}^{\mathrm{gen}}$ with $|S|\le a$, so it
+vanishes by hypothesis.  Hence
+$\Delta^{(m)}_{a,0}(N)$ vanishes if and only if its class in the
+quotient by $\mathsf{F}_{<m}$ vanishes.
+\end{proof}
+
+\begin{proposition}[Closed-form line-side top-support class on the top
+packet; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-top-packet-line-formula}
+In the setting of
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction}, relabel the
+two auxiliary copies by $\alpha,\beta$ and the $m=a+1$ quantum slots by
+$1,\dots,m$.  For an ordered subset
+$S=\{s_1<\cdots<s_r\}\subseteq [m]$, write
+\[
+P_{\alpha,S}:=P_{\alpha s_1}\cdots P_{\alpha s_r},
+\qquad
+P_{\beta,S}:=P_{\beta s_1}\cdots P_{\beta s_r},
+\]
+and let $S^c=[m]\setminus S$.  Then the image of the line-side boundary
+coefficient
+\[
+\mathsf{K}^{\mathrm{line},(m)}_{a,0}
+\]
+in the quotient
+\[
+\End(V^{\otimes 2}\otimes M_m^{\mathrm{gen}})/\mathsf{F}_{<m}
+\]
+is represented by the parameter-free operator
+\[
+\Omega_a^{\mathrm{line}}
+:=
+(-\hbar)^{a+2}
+\left[
+\sum_{j=1}^{m}
+\bigl(
+P_{\alpha,[m]}P_{\beta,j}-P_{\beta,j}P_{\alpha,[m]}
+\bigr)
++\sum_{S\subsetneq [m]}
+\bigl(
+P_{\alpha\beta}P_{\alpha,S}P_{\beta,S^c}
+-P_{\beta,S^c}P_{\alpha,S}P_{\alpha\beta}
+\bigr)
+\right].
+\]
+In particular, the line-side top-support class on the top packet is
+independent of the universal evaluation parameters $x_1,\dots,x_m$.
+\end{proposition}
+
+\begin{proof}
+Work modulo $\mathsf{F}_{<m}$, so only full-support terms on the
+quantum slots $[m]$ survive.  By
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-coefficient-formula},
+the full-support part of $T_\alpha^{(m)}$ is the unique term obtained
+by choosing the non-identity contribution from every factor and taking
+zero extra degree in each one:
+\[
+T_\alpha^{(m)}\equiv (-\hbar)^m P_{\alpha,[m]}
+\qquad \mod \mathsf{F}_{<m}.
+\]
+Likewise
+\[
+T_\beta^{(1)}=-\hbar\sum_{j=1}^{m}P_{\beta,j}.
+\]
+Substituting these into the commutator part of
+Proposition~\ref{prop:dg-shifted-rtt-boundary-coefficient-formula}
+gives the first displayed sum.
+
+For the $t$th term of the remaining series, a contribution survives
+modulo $\mathsf{F}_{<m}$ only when the support of $T_\alpha^{(a-t)}$
+and the support of $T_\beta^{(t+1)}$ are complementary subsets of
+$[m]$.  Since $|[m]|=a+1$, this forces the first support to have size
+$a-t$ and the second support to have size $t+1$, with zero extra
+degree on both sides.  Therefore the only surviving terms are exactly
+\[
+(-\hbar)^{a-t}P_{\alpha,S},
+\qquad
+(-\hbar)^{t+1}P_{\beta,S^c},
+\]
+for proper subsets $S\subsetneq [m]$, and substituting them into the
+boundary-strip coefficient formula yields the second displayed sum with
+overall factor $(-\hbar)^{a+2}$.
+
+All other terms are supported on proper subsets and therefore die in
+the quotient.  The final sentence follows because the surviving
+representative involves only permutation operators and~$\hbar$.
+\end{proof}
+
+\begin{corollary}[Abstract top-packet comparison;
+\ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-top-packet-comparison}
+Assume the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction}.  Let
+\[
+\Omega_a^{\mathrm{RTT}}(N)
+:=
+\bigl[\mathsf{K}^{\mathrm{RTT},(a+1)}_{a,0}(N)\bigr]
+\in
+\End(V^{\otimes 2}\otimes M_{a+1}^{\mathrm{gen}})/\mathsf{F}_{<a+1}
+\]
+be the RTT top-support class on the top packet.  Then
+\[
+\bigl[\Delta^{(a+1)}_{a,0}(N)\bigr]
+=
+\Omega_a^{\mathrm{line}}-\Omega_a^{\mathrm{RTT}}(N).
+\]
+Consequently the induction from packet lengths $\le a$ to the top
+packet $a+1$ closes if and only if
+\[
+\Omega_a^{\mathrm{RTT}}(N)=\Omega_a^{\mathrm{line}}.
+\]
+This is the exact remaining all-rank comparison on the universal
+family.
+\end{corollary}
+
+\begin{proof}
+The displayed identity is just the definition of the defect class in
+the quotient, together with
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-line-formula}.
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction} identifies
+vanishing of the defect on the top packet with vanishing of that class.
+\end{proof}
+
+\begin{proposition}[Standard-evaluation discharge of the RTT
+top-packet class; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-top-packet-standard-discharge}
+Keep $m=a+1$ and equip $M_m^{\mathrm{gen}}$ with the standard
+finite-stage evaluation action of $Y_{\le N}$, so that the monodromy
+matrix on the universal packet is
+\[
+T_N^{\mathrm{std}}(u)=L_{x_1}(u)\cdots L_{x_m}(u),
+\qquad
+L_{x_j}(u)=1-\frac{\hbar P_{0j}}{u-x_j}.
+\]
+Then in the quotient
+\[
+\End(V^{\otimes 2}\otimes M_m^{\mathrm{gen}})/\mathsf{F}_{<m}
+\]
+one has
+\[
+\Omega_a^{\mathrm{RTT}}(N)=\Omega_a^{\mathrm{line}}=0.
+\]
+Equivalently, on the standard finite-stage evaluation realization the
+top-packet comparison of
+Corollary~\ref{cor:dg-shifted-rtt-top-packet-comparison}
+is automatic.
+\end{proposition}
+
+\begin{proof}
+By definition of the standard evaluation realization, the monodromy
+matrix on $M_m^{\mathrm{gen}}$ is the universal product
+$L_{x_1}(u)\cdots L_{x_m}(u)$.  The finite RTT stage satisfies the
+exact RTT relation on this module:
+\[
+R(u-v)\,T_{N,1}^{\mathrm{std}}(u)\,T_{N,2}^{\mathrm{std}}(v)
+=
+T_{N,2}^{\mathrm{std}}(v)\,T_{N,1}^{\mathrm{std}}(u)\,R(u-v).
+\]
+Therefore the coefficient of $u^{-a-1}v^{-1}$ acts by zero.
+
+Now pass to the quotient by $\mathsf{F}_{<m}$.  The support extraction
+used in
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-line-formula}
+depends only on the explicit universal monodromy product above, so it
+applies verbatim to the standard evaluation realization.  Hence the
+class of the zero coefficient operator is represented by the same
+parameter-free operator $\Omega_a^{\mathrm{line}}$.  Therefore
+\[
+\Omega_a^{\mathrm{line}}=0
+\qquad\text{in}\qquad
+\End(V^{\otimes 2}\otimes M_m^{\mathrm{gen}})/\mathsf{F}_{<m}.
+\]
+By definition, this zero class is exactly
+$\Omega_a^{\mathrm{RTT}}(N)$ on the standard finite-stage evaluation
+module, so $\Omega_a^{\mathrm{RTT}}(N)=\Omega_a^{\mathrm{line}}=0$.
+\end{proof}
+
+\begin{corollary}[Conditional closure of the top-packet induction step;
+\ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-top-packet-conditional-closure}
+Assume the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction}, and assume
+moreover that the action of the truncated quotient on the universal top
+packet $M_{a+1}^{\mathrm{gen}}$ is the standard finite-stage evaluation
+action.  Then the induction step from packet lengths $\le a$ to the top
+packet $a+1$ closes.
+
+Equivalently, after the shorter universal packets are killed, the only
+remaining Yangian task is to identify the quotient action on
+$M_{a+1}^{\mathrm{gen}}$ with the standard finite-stage evaluation
+realization.
+\end{corollary}
+
+\begin{proof}
+Under the standard finite-stage evaluation action,
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-standard-discharge}
+gives
+\[
+\Omega_a^{\mathrm{RTT}}(N)=\Omega_a^{\mathrm{line}}.
+\]
+Corollary~\ref{cor:dg-shifted-rtt-top-packet-comparison} then shows
+that the defect class on the top packet vanishes.  Finally,
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction} identifies
+this with vanishing of $\Delta^{(a+1)}_{a,0}(N)$ on the top packet.
+\end{proof}
+
+\begin{proposition}[Universal-packet evaluation rigidity from the
+fundamental line; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-universal-evaluation-rigidity}
+Fix $N\ge0$ and, for $m\ge1$, let
+\[
+M_m^{\mathrm{gen}}
+:=
+V_{\mathrm{fund}}(x_1)\otimes_{\mathbb{C}(x_1,\dots,x_m)}\cdots
+\otimes_{\mathbb{C}(x_1,\dots,x_m)}V_{\mathrm{fund}}(x_m)
+\]
+be the universal generic packet.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item on the one-factor packet $M_1^{\mathrm{gen}}=V_{\mathrm{fund}}(x)$,
+  the truncated quotient monodromy matrix is the standard auxiliary
+  kernel
+  \[
+  L_x(u)=R_{0x}(u-x)=1-\frac{\hbar P_{0x}}{u-x};
+  \]
+\item on every universal packet, the truncated monodromy matrices are
+  obtained by iterating the coefficientwise twisted-coproduct
+  multiplication law, so that
+  \[
+  T_N^{(m+1)}(u)=T_N^{(m)}(u)\,L_{x_{m+1}}(u)
+  \]
+  after extending scalars from $\mathbb{C}(x_1,\dots,x_m)$ to
+  $\mathbb{C}(x_1,\dots,x_{m+1})$.
+\end{enumerate}
+Then for every $m\ge1$, the induced action of the truncated quotient on
+$M_m^{\mathrm{gen}}$ is exactly the standard finite-stage evaluation
+action:
+\[
+T_N^{(m)}(u)=L_{x_1}(u)\cdots L_{x_m}(u).
+\]
+In particular, the universal top packet $M_{a+1}^{\mathrm{gen}}$
+automatically carries the standard finite-stage evaluation action.
+\end{proposition}
+
+\begin{proof}
+We argue by induction on~$m$.  For $m=1$ the claim is exactly
+assumption~\textup{(i)}.
+
+Assume the claim for $m$.  By assumption~\textup{(ii)}, on
+$M_{m+1}^{\mathrm{gen}}$ one has
+\[
+T_N^{(m+1)}(u)=T_N^{(m)}(u)\,L_{x_{m+1}}(u).
+\]
+By the induction hypothesis,
+\[
+T_N^{(m)}(u)=L_{x_1}(u)\cdots L_{x_m}(u),
+\]
+so
+\[
+T_N^{(m+1)}(u)
+=
+L_{x_1}(u)\cdots L_{x_m}(u)\,L_{x_{m+1}}(u),
+\]
+which is exactly the standard finite-stage evaluation action on the
+$(m+1)$-factor packet.  This completes the induction.
+\end{proof}
+
+\begin{corollary}[Top-packet closure from the one-factor universal
+packet; \ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-top-packet-from-one-factor}
+Assume the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-top-packet-induction}, and assume
+moreover that the one-factor universal packet carries the standard
+auxiliary kernel
+\[
+L_x(u)=R_{0x}(u-x)
+\]
+and that tensor powers are governed by the coefficientwise
+twisted-coproduct multiplication law.  Then the induction step from
+packet lengths $\le a$ to the top packet $a+1$ closes.
+
+Equivalently, after the shorter universal packets are killed, the only
+remaining Yangian task is the one-factor universal packet identity
+$L_x(u)=R_{0x}(u-x)$.
+\end{corollary}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-universal-evaluation-rigidity},
+the universal top packet $M_{a+1}^{\mathrm{gen}}$ carries the standard
+finite-stage evaluation action.  Therefore
+Corollary~\ref{cor:dg-shifted-rtt-top-packet-conditional-closure}
+applies and closes the induction step.
+\end{proof}
+
 \begin{proposition}[Fundamental propagation criterion for boundary-strip
 RTT defects; \ClaimStatusProvedHere]
 \label{prop:dg-shifted-rtt-fundamental-propagation}
@@ -1836,9 +2176,7 @@ Assume:
 \item on generic tensor products of fundamental evaluation modules, the
   truncated monodromy matrix is obtained by the same twisted-coproduct
   multiplication law used in
-  Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation}; and
-\item the resulting action is the standard evaluation action of the
-  finite RTT stage.
+  Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation}.
 \end{enumerate}
 Then the fundamental one-factor matrices satisfy the truncated RTT
 relation
@@ -1875,11 +2213,13 @@ which is exactly the Yang--Baxter equation for the rational Yang
 $R$-matrix.  Therefore the one-factor fundamental monodromy satisfies
 the RTT relation.
 
-Assumption~\textup{(ii)} is precisely the propagation input required in
-Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation}, and
-assumption~\textup{(iii)} supplies the standard evaluation
-compatibility used there.  Hence that proposition applies and kills the
-entire boundary strip.
+Assumptions~\textup{(i)} and~\textup{(ii)} are exactly the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-universal-evaluation-rigidity}, so
+every universal packet carries the standard finite-stage evaluation
+action.  In particular, the standard evaluation compatibility required
+in Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} is
+automatic.  Hence that proposition applies and kills the entire
+boundary strip.
 \end{proof}
 
 \begin{proposition}[Type-A uniqueness of the auxiliary kernel on the
@@ -2202,7 +2542,7 @@ $\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, the symmetric/antisymmetric
 channel decomposition, and exact kernel computation on the mixed
 tensor line $e_1\otimes e_2$.  Computationally, this low-rank packet
 has been verified by exact and numerical kernel calculations inside the
-current Yangian residue suite \textup{(}$211$~tests\textup{)}.
+current Yangian residue suite \textup{(}$219$~tests\textup{)}.
 
 This is evidence for the Yangian side of MC4, not the full theorem.
 The live frontier remains the uniform proof of
@@ -2237,7 +2577,7 @@ Thus the twisted-coproduct propagation mechanism of
 Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} is borne
 out on the same low-rank packet as
 Computation~\ref{comp:mc4-yangian-lowrank-kernels}
-\textup{(}within the same $211$-test Yangian residue suite\textup{)}.
+\textup{(}within the same $219$-test Yangian residue suite\textup{)}.
 
 This is still only low-rank M-level evidence: it does not replace the
 theorematic propagation input required for the all-rank boundary strip.
@@ -2292,7 +2632,7 @@ in Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}: after the
 single-line residue extraction and the short tensor-power propagation,
 the first explicit boundary-strip packet itself is now verified on
 generic tensor lengths $2$ and $3$ in ranks $2,3,4$
-\textup{(}again within the current $211$-test Yangian residue
+\textup{(}again within the current $219$-test Yangian residue
 suite\textup{)}.
 \end{computation}
 
@@ -2331,7 +2671,7 @@ still M-level evidence rather than the all-rank theorem, but it shows
 that the exact finite-detection packet remains unobstructed beyond the
 first visible stage after the closed-form coefficient formula is used
 systematically.  Computationally, this stage-$6$ packet is verified in
-the current Yangian residue suite \textup{(}$211$~tests\textup{)}.
+the current Yangian residue suite \textup{(}$219$~tests\textup{)}.
 The same stage-$6$ vanishing has also been checked on a second generic
 length-$3$ sample in each of the ranks $2,3,4$, so this low-rank
 packet is not tied to a single chosen tuple of evaluation parameters.
@@ -3999,18 +4339,29 @@ $V_2^* \cong V_2$ (the adjoint is self-dual).
 \emph{Step~3: Invariants.}
 For the $E_2$ page we need
 $H^p(\mathfrak{sl}_2, \Lambda^q(\bigoplus_{r \ge 1} V_2))$.
-By the K\"unneth formula and $\dim V_2 = 3$:
-\begin{align*}
-q = 0{:}&\quad H^p(\mathfrak{sl}_2, k)
-  = \begin{cases} k & p = 0, 3 \\ 0 & \text{else} \end{cases} \\
-q = 1{:}&\quad H^p(\mathfrak{sl}_2, \bigoplus_{r \ge 1} V_2)
-  = \bigoplus_{r \ge 1} H^p(\mathfrak{sl}_2, V_2)
-  = 0 \quad \text{(all $p$, since $V_2$ is irreducible
-    nontrivial)} \\
-q = 2{:}&\quad \Lambda^2(\bigoplus_{r} V_2) \supset
-  \bigoplus_{r < s} V_2 \otimes V_2
-  \oplus \bigoplus_r \Lambda^2(V_2).
-\end{align*}
+
+By the K\"unneth formula and $\dim V_2 = 3$, the $q = 0$ line is
+\[
+H^p(\mathfrak{sl}_2, k)
+= \begin{cases} k & p = 0, 3 \\ 0 & \text{else}. \end{cases}
+\]
+
+For $q = 1$ we get
+\[
+H^p(\mathfrak{sl}_2, \bigoplus_{r \ge 1} V_2)
+= \bigoplus_{r \ge 1} H^p(\mathfrak{sl}_2, V_2)
+= 0,
+\]
+because $V_2$ is irreducible and nontrivial.
+
+For $q = 2$ we have
+\[
+\Lambda^2\Bigl(\bigoplus_r V_2\Bigr)
+\supset
+\bigoplus_{r < s} V_2 \otimes V_2
+\oplus \bigoplus_r \Lambda^2(V_2).
+\]
+
 Here $\Lambda^2(V_2) \cong V_2$ (antisymmetric square of the
 adjoint of~$\mathfrak{sl}_2$, isomorphic to the adjoint itself),
 and $V_2 \otimes V_2 \cong V_4 \oplus V_2 \oplus V_0$
@@ -4885,6 +5236,7 @@ $D^b(\operatorname{Rep}_{\mathrm{fd}})$.  Extending DK beyond
 $\operatorname{Rep}_{\mathrm{fd}}$ requires a completed or coderived
 enhancement and reopens the generation problem in that enlarged
 setting.
+
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item If the factorization DK conjecture
   \textup{(}Conjecture~\textup{\ref{conj:full-derived-dk}}\textup{)}
@@ -6360,11 +6712,13 @@ The truncation map $\cA_{\leq N+1} \twoheadrightarrow \cA_{\leq N}$
 induces a surjection
 $\barB(\cA_{\leq N+1}) \twoheadrightarrow \barB(\cA_{\leq N})$
 of bar coalgebras (bar is covariant on algebra maps).
+
 For the tangent Lie algebras, the map
 $\mathfrak{g}_{N+1} \to \mathfrak{g}_N$ is surjective by the
 following Koszul dual argument: since $\cA_{\leq N}$ is Koszul,
 the tangent Lie algebra in degree~$p$ is
 $(\mathfrak{g}_N)_p \cong (\cA_{\leq N}^!)_{p+1}$.
+
 The Koszul dual $\cA_{\leq N}^!$ has generators
 $V_{\leq N}^*$ and relations $R_{\leq N}^\perp$.
 Any element $f \in (\cA_{\leq N}^!)_n
@@ -6375,6 +6729,7 @@ $\tilde{f} \in (\cA_{\leq N+1}^!)_n$
 relations involving level-$N$ generators).
 Hence $(\cA_{\leq N+1}^!)_n \twoheadrightarrow (\cA_{\leq N}^!)_n$
 is surjective in every degree.
+
 The identification
 $(\mathfrak{g}_N)_p \cong (\cA_{\leq N}^!)_{p+1}$ is natural
 in~$N$: it arises from Lurie's formal moduli theorem (Part~(b))
@@ -6630,6 +6985,7 @@ the four MC3 extension conjectures
   satisfying Mittag-Leffler, giving
   $M(\Psi) \simeq \varprojlim_m W_m$ in the completed
   factorization category.
+
 \item \emph{DK on compacts}
   \textup{(}Conjecture~\ref{conj:dk-compacts-completion}\textup{)}:
   the Francis--Gaitsgory pro-nilpotent completion of the

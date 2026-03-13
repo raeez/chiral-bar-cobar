@@ -721,6 +721,147 @@ def fundamental_line_series_coefficients_closed_form(
     return series
 
 
+def _support_product_operator(
+    total_quantum_slots: int,
+    N: int,
+    auxiliary_slot: int,
+    support_subset: Tuple[int, ...],
+) -> np.ndarray:
+    """Ordered product of auxiliary-quantum permutations on a support subset."""
+    total_factors = total_quantum_slots + 2
+    total_dim = N ** total_factors
+    operator = np.eye(total_dim, dtype=complex)
+    for offset in support_subset:
+        operator = operator @ embed_two_factor_operator(
+            permutation_matrix_slN(N), auxiliary_slot, offset + 2, total_factors, N
+        )
+    return operator
+
+
+def fundamental_line_series_support_terms(
+    eval_points: List[complex],
+    N: int,
+    max_degree: int,
+    auxiliary_slot: int,
+    hbar: complex = 1.0,
+) -> List[Dict[Tuple[int, ...], np.ndarray]]:
+    """Closed-form monodromy coefficients, grouped by quantum support subset."""
+    total_quantum_slots = len(eval_points)
+    total_factors = total_quantum_slots + 2
+    total_dim = N ** total_factors
+    identity = np.eye(total_dim, dtype=complex)
+
+    terms = [{(): identity}] + [dict() for _ in range(max_degree)]
+
+    for degree in range(1, max_degree + 1):
+        degree_terms: Dict[Tuple[int, ...], np.ndarray] = {}
+        max_slots = min(degree, total_quantum_slots)
+        for num_slots in range(1, max_slots + 1):
+            for chosen_offsets in combinations(range(total_quantum_slots), num_slots):
+                scalar = complete_homogeneous_scalar(
+                    [eval_points[offset] for offset in chosen_offsets],
+                    degree - num_slots,
+                )
+                operator = _support_product_operator(
+                    total_quantum_slots,
+                    N,
+                    auxiliary_slot,
+                    chosen_offsets,
+                )
+                degree_terms[chosen_offsets] = (
+                    ((-hbar) ** num_slots) * scalar * operator
+                )
+        terms[degree] = degree_terms
+
+    return terms
+
+
+def boundary_strip_top_support_from_support_terms(
+    eval_points: List[complex],
+    N: int,
+    boundary_index: int,
+    hbar: complex = 1.0,
+) -> np.ndarray:
+    """Top-support extraction on the top packet m = a+1.
+
+    On the universal standard-evaluation packet this computes the same
+    top-support operator for both the line-side and RTT-side boundary
+    coefficient, because both are realized by the same monodromy
+    product L_{x_1}(u)...L_{x_m}(u).
+    """
+    total_quantum_slots = len(eval_points)
+    if total_quantum_slots != boundary_index + 1:
+        raise ValueError("top-support extraction requires tensor length boundary_index + 1")
+
+    all_slots = tuple(range(total_quantum_slots))
+    total_factors = total_quantum_slots + 2
+    total_dim = N ** total_factors
+    coefficient = np.zeros((total_dim, total_dim), dtype=complex)
+    p12 = embed_two_factor_operator(
+        permutation_matrix_slN(N), 0, 1, total_factors, N
+    )
+
+    t1_terms = fundamental_line_series_support_terms(
+        eval_points, N, boundary_index + 1, auxiliary_slot=0, hbar=hbar
+    )
+    t2_terms = fundamental_line_series_support_terms(
+        eval_points, N, boundary_index + 1, auxiliary_slot=1, hbar=hbar
+    )
+
+    for support_1, term_1 in t1_terms[boundary_index + 1].items():
+        for support_2, term_2 in t2_terms[1].items():
+            if tuple(sorted(set(support_1) | set(support_2))) == all_slots:
+                coefficient += term_1 @ term_2 - term_2 @ term_1
+
+    for t in range(boundary_index + 1):
+        for support_1, term_1 in t1_terms[boundary_index - t].items():
+            for support_2, term_2 in t2_terms[t + 1].items():
+                if tuple(sorted(set(support_1) | set(support_2))) == all_slots:
+                    coefficient -= hbar * (p12 @ term_1 @ term_2 - term_2 @ term_1 @ p12)
+
+    return coefficient
+
+
+def boundary_strip_top_support_closed_form_operator(
+    N: int,
+    boundary_index: int,
+    hbar: complex = 1.0,
+) -> np.ndarray:
+    """Parameter-free closed form for the top-support operator.
+
+    This is the explicit operator Omega_a that represents the
+    line-side top-support class and, in the standard finite-stage
+    evaluation realization, also the RTT top-support class.
+    """
+    total_quantum_slots = boundary_index + 1
+    all_slots = tuple(range(total_quantum_slots))
+    total_factors = total_quantum_slots + 2
+    total_dim = N ** total_factors
+    coefficient = np.zeros((total_dim, total_dim), dtype=complex)
+    p12 = embed_two_factor_operator(
+        permutation_matrix_slN(N), 0, 1, total_factors, N
+    )
+
+    p1_all = _support_product_operator(total_quantum_slots, N, 0, all_slots)
+    for offset in all_slots:
+        p2_single = _support_product_operator(total_quantum_slots, N, 1, (offset,))
+        coefficient += p1_all @ p2_single - p2_single @ p1_all
+
+    for subset_size in range(total_quantum_slots):
+        for support_subset in combinations(all_slots, subset_size):
+            complement = tuple(slot for slot in all_slots if slot not in support_subset)
+            p1_subset = _support_product_operator(
+                total_quantum_slots, N, 0, support_subset
+            )
+            p2_complement = _support_product_operator(
+                total_quantum_slots, N, 1, complement
+            )
+            coefficient += p12 @ p1_subset @ p2_complement
+            coefficient -= p2_complement @ p1_subset @ p12
+
+    return ((-hbar) ** (boundary_index + 2)) * coefficient
+
+
 def _boundary_strip_coefficient_from_series(
     eval_points: List[complex],
     N: int,
