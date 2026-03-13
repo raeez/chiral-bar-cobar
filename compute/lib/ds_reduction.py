@@ -377,6 +377,23 @@ def _matrix_from_signature(
     return Matrix(rows, cols, entries)
 
 
+def _matrix_product_cache_size(matrix: Matrix) -> int:
+    """Approximate signature size used to decide whether cache hashing is worth it."""
+    if isinstance(matrix, SparseMatrix):
+        return matrix.nnz()
+    return matrix.rows * matrix.cols
+
+
+def _matrix_is_zero(matrix: Matrix) -> bool:
+    """Check whether a concrete matrix is zero without forcing an extra dense reconstruction."""
+    if isinstance(matrix, SparseMatrix):
+        return matrix.nnz() == 0
+    zero_flag = matrix.is_zero_matrix
+    if zero_flag is not None:
+        return bool(zero_flag)
+    return matrix == zeros(matrix.rows, matrix.cols)
+
+
 @lru_cache(maxsize=256)
 def _exact_matrix_rank_from_signature(
     kind: str,
@@ -414,14 +431,18 @@ def _matrix_product_is_zero_from_signatures(
     """Whether the product of two cached matrices is the zero matrix."""
     left = _matrix_from_signature(left_kind, left_rows, left_cols, left_entries)
     right = _matrix_from_signature(right_kind, right_rows, right_cols, right_entries)
-    product = left * right
-    if isinstance(product, SparseMatrix):
-        return product.nnz() == 0
-    return product == zeros(left.rows, right.cols)
+    return _matrix_is_zero(left * right)
 
 
 def _matrix_product_is_zero(left: Matrix | None, right: Matrix | None) -> bool:
     """Whether two compatible differentials compose to zero."""
+    if left is None or right is None or not left.rows or not left.cols or not right.rows or not right.cols:
+        return True
+    # Large square-zero checks are faster to compute directly than to hash and
+    # reconstruct through the signature cache. Keep caching only for the small
+    # matrices that are actually reused cheaply.
+    if _matrix_product_cache_size(left) + _matrix_product_cache_size(right) > 100_000:
+        return _matrix_is_zero(left * right)
     left_signature = _matrix_signature(left)
     right_signature = _matrix_signature(right)
     if left_signature is None or right_signature is None:
@@ -6063,8 +6084,11 @@ def build_survivor_coupled_brst_block(
         if basis:
             basis_by_brst_degree[brst_degree] = basis
 
-    differentials = {
-        degree: survivor_coupled_brst_differential(
+    differentials: Dict[int, Matrix] = {}
+    for degree in basis_by_brst_degree:
+        if degree + 1 not in basis_by_brst_degree:
+            continue
+        differentials[degree] = survivor_coupled_brst_differential(
             shifted_current_labels,
             survivor_labels,
             c_ghost_labels,
@@ -6077,15 +6101,6 @@ def build_survivor_coupled_brst_block(
             survivor_total_degree,
             degree,
         )
-        for degree in basis_by_brst_degree
-        if survivor_coupled_block_basis(
-            num_constraints,
-            num_survivors,
-            constraint_total_degree,
-            survivor_total_degree,
-            degree + 1,
-        )
-    }
 
     return SurvivorCoupledBRSTBlock(
         source_tag=source_tag,
@@ -7584,6 +7599,74 @@ def _partition_pair_corrected_semidirect_square_zero_flags(
 
 
 @lru_cache(maxsize=64)
+def _partition_pair_survivor_coupled_square_zero_flags(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for one non-principal survivor-coupled family."""
+    source_blocks, target_blocks = nonprincipal_partition_pair_survivor_coupled_blocks(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        survivor_coupled_block_has_square_zero(block)
+        for block in source_blocks + target_blocks
+    )
+
+
+@lru_cache(maxsize=64)
+def _partition_pair_survivor_coupled_source_square_zero_flags(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for the source side of one survivor-coupled family."""
+    source_blocks, _ = nonprincipal_partition_pair_survivor_coupled_blocks(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        survivor_coupled_block_has_square_zero(block)
+        for block in source_blocks
+    )
+
+
+@lru_cache(maxsize=64)
+def _partition_pair_corrected_semidirect_source_square_zero_flags(
+    partition: Tuple[int, ...],
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+    source_num_constraints: int | None = None,
+    target_num_constraints: int | None = None,
+) -> Tuple[bool, ...]:
+    """Cached square-zero profile for the source side of one corrected semidirect family."""
+    source_blocks, _ = nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+        partition,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=source_num_constraints,
+        target_num_constraints=target_num_constraints,
+    )
+    return tuple(
+        semidirect_survivor_block_has_square_zero(block)
+        for block in source_blocks
+    )
+
+
+@lru_cache(maxsize=64)
 def _hook_pair_semidirect_square_zero_flags(
     n: int,
     r: int,
@@ -7882,6 +7965,7 @@ def nonprincipal_partition_pair_nonlinear_blocks_match_under_dual_swap(
     )
 
 
+@lru_cache(maxsize=64)
 def nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 1,
@@ -7921,6 +8005,7 @@ def nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
     )
 
 
+@lru_cache(maxsize=64)
 def nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
     partition: Tuple[int, ...],
     max_constraint_total_degree: int = 0,
@@ -8758,22 +8843,22 @@ def _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
     """Check one non-principal partition pair by square-zero plus transpose duality."""
     case = nonprincipal_type_a_case(partition)
     default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
-    source_blocks, _ = nonprincipal_partition_pair_survivor_coupled_blocks(
-        case.partition,
-        max_constraint_total_degree=max_constraint_total_degree,
-        survivor_total_degree=survivor_total_degree,
-        source_num_constraints=default_source,
-        target_num_constraints=default_target,
-    )
     if not all(
-        survivor_coupled_block_has_square_zero(block)
-        for block in source_blocks
+        _partition_pair_survivor_coupled_source_square_zero_flags(
+            case.partition,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            source_num_constraints=default_source,
+            target_num_constraints=default_target,
+        )
     ):
         return False
     return nonprincipal_partition_pair_survivor_coupled_blocks_match_under_dual_swap(
         case.partition,
         max_constraint_total_degree=max_constraint_total_degree,
         survivor_total_degree=survivor_total_degree,
+        source_num_constraints=default_source,
+        target_num_constraints=default_target,
     )
 
 
@@ -8793,12 +8878,16 @@ def nonprincipal_partition_pair_survivor_coupled_representative_holds_via_dualit
 
 @lru_cache(maxsize=64)
 def general_nonprincipal_survivor_coupled_family_holds_via_duality(
+    min_n: int = 5,
     max_n: int = 11,
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
 ) -> bool:
     """Recover seeded general survivor-coupled checks from square-zero plus transpose symmetry."""
-    for partition, _ in _nonprincipal_general_family_representative_items(max_n=max_n):
+    for partition, _ in _nonprincipal_general_family_representative_items_in_range(
+        min_n=min_n,
+        max_n=max_n,
+    ):
         if not _nonprincipal_partition_pair_survivor_coupled_holds_via_duality(
             partition,
             max_constraint_total_degree=max_constraint_total_degree,
@@ -8809,6 +8898,7 @@ def general_nonprincipal_survivor_coupled_family_holds_via_duality(
 
 
 def verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+    min_n: int = 5,
     max_n: int = 11,
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
@@ -8816,6 +8906,7 @@ def verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
     """Seeded general survivor-coupled checks reduced by transpose duality."""
     return dict(
         _nonprincipal_general_survivor_coupled_family_via_duality_catalog_items(
+            min_n=min_n,
             max_n=max_n,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
@@ -8825,6 +8916,7 @@ def verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
 
 @lru_cache(maxsize=64)
 def _nonprincipal_general_survivor_coupled_family_via_duality_catalog_items(
+    min_n: int = 5,
     max_n: int = 11,
     max_constraint_total_degree: int = 1,
     survivor_total_degree: int = 1,
@@ -8839,7 +8931,10 @@ def _nonprincipal_general_survivor_coupled_family_via_duality_catalog_items(
                 survivor_total_degree=survivor_total_degree,
             ),
         )
-        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+        for partition, key in _nonprincipal_general_family_representative_items_in_range(
+            min_n=min_n,
+            max_n=max_n,
+        )
     )
 
 
@@ -8880,6 +8975,19 @@ def _nonprincipal_general_family_representative_items(
             key = f"A{n-1} general {canonical_pair[0]}<->{canonical_pair[1]}"
         results.append((case.partition, key))
     return tuple(results)
+
+
+@lru_cache(maxsize=64)
+def _nonprincipal_general_family_representative_items_in_range(
+    min_n: int = 5,
+    max_n: int = 11,
+) -> Tuple[Tuple[Tuple[int, ...], str], ...]:
+    """Cached general-family representatives filtered to an inclusive rank window."""
+    return tuple(
+        (partition, key)
+        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+        if min_n <= partition_size(partition) <= max_n
+    )
 
 
 @lru_cache(maxsize=64)
@@ -9250,8 +9358,7 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
     case = nonprincipal_type_a_case(partition)
     default_source, default_target = _partition_pair_default_constraint_counts(case.partition)
     if not all(
-        semidirect_survivor_block_has_square_zero(block)
-        for block in nonprincipal_partition_pair_corrected_semidirect_survivor_blocks(
+        _partition_pair_corrected_semidirect_source_square_zero_flags(
             case.partition,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
@@ -9259,7 +9366,6 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
             source_num_constraints=default_source,
             target_num_constraints=default_target,
         )
-        [0]
     ):
         return False
     return nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
@@ -9267,6 +9373,8 @@ def _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
         max_constraint_total_degree=max_constraint_total_degree,
         survivor_total_degree=survivor_total_degree,
         max_internal_ce_degree=max_internal_ce_degree,
+        source_num_constraints=default_source,
+        target_num_constraints=default_target,
     )
 
 
@@ -9288,13 +9396,17 @@ def nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_du
 
 @lru_cache(maxsize=64)
 def general_nonprincipal_corrected_semidirect_family_holds_via_duality(
+    min_n: int = 5,
     max_n: int = 14,
     max_constraint_total_degree: int = 0,
     survivor_total_degree: int = 1,
     max_internal_ce_degree: int = 1,
 ) -> bool:
     """Recover seeded general non-principal corrected semidirect checks from square-zero plus transpose duality."""
-    for partition, _ in _nonprincipal_general_family_representative_items(max_n=max_n):
+    for partition, _ in _nonprincipal_general_family_representative_items_in_range(
+        min_n=min_n,
+        max_n=max_n,
+    ):
         if not _nonprincipal_partition_pair_corrected_semidirect_holds_via_duality(
             partition,
             max_constraint_total_degree=max_constraint_total_degree,
@@ -9306,6 +9418,7 @@ def general_nonprincipal_corrected_semidirect_family_holds_via_duality(
 
 
 def verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
+    min_n: int = 5,
     max_n: int = 14,
     max_constraint_total_degree: int = 0,
     survivor_total_degree: int = 1,
@@ -9314,6 +9427,7 @@ def verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
     """Seeded general-family corrected semidirect checks reduced by transpose duality."""
     return dict(
         _nonprincipal_general_corrected_semidirect_family_via_duality_catalog_items(
+            min_n=min_n,
             max_n=max_n,
             max_constraint_total_degree=max_constraint_total_degree,
             survivor_total_degree=survivor_total_degree,
@@ -9324,6 +9438,7 @@ def verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
 
 @lru_cache(maxsize=64)
 def _nonprincipal_general_corrected_semidirect_family_via_duality_catalog_items(
+    min_n: int = 5,
     max_n: int = 14,
     max_constraint_total_degree: int = 0,
     survivor_total_degree: int = 1,
@@ -9340,7 +9455,10 @@ def _nonprincipal_general_corrected_semidirect_family_via_duality_catalog_items(
                 max_internal_ce_degree=max_internal_ce_degree,
             ),
         )
-        for partition, key in _nonprincipal_general_family_representative_items(max_n=max_n)
+        for partition, key in _nonprincipal_general_family_representative_items_in_range(
+            min_n=min_n,
+            max_n=max_n,
+        )
     )
 
 

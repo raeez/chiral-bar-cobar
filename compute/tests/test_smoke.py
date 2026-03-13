@@ -8,6 +8,34 @@ import pytest
 from sympy import Rational, zeros
 
 
+GENERAL_SURVIVOR_COUPLED_SMOKE_RANKS = tuple(range(5, 13))
+
+
+def _assert_general_survivor_coupled_family_slice(
+    rank_n: int,
+    survivor_total_degree: int = 1,
+) -> None:
+    from compute.lib import (
+        general_nonprincipal_survivor_coupled_family_holds_via_duality,
+        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog,
+    )
+
+    assert all(
+        verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
+            min_n=rank_n,
+            max_n=rank_n,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        ).values()
+    )
+    assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
+        min_n=rank_n,
+        max_n=rank_n,
+        max_constraint_total_degree=1,
+        survivor_total_degree=survivor_total_degree,
+    )
+
+
 class TestCoreTypes:
     def test_graded_vector_space(self):
         from compute.lib import GradedVectorSpace
@@ -276,8 +304,6 @@ class TestNonprincipalFrontier:
             verify_nonprincipal_general_mixed_family_via_duality_catalog,
             general_nonprincipal_nonlinear_family_holds_via_duality,
             verify_nonprincipal_general_nonlinear_family_via_duality_catalog,
-            general_nonprincipal_survivor_coupled_family_holds_via_duality,
-            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog,
             hook_pair_surviving_field_candidates,
             hook_pair_reduced_brackets,
             survivor_coupled_block_has_square_zero,
@@ -471,27 +497,25 @@ class TestNonprincipalFrontier:
             max_constraint_total_degree=1,
             survivor_total_degree=1,
         )
-        assert general_nonprincipal_mixed_family_holds_via_duality(9, 1)
         assert all(
             verify_nonprincipal_general_mixed_family_via_duality_catalog(
                 max_n=9,
                 max_constraint_total_degree=1,
             ).values()
         )
-        assert general_nonprincipal_nonlinear_family_holds_via_duality(9, 1)
+        assert general_nonprincipal_mixed_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=1,
+        )
         assert all(
             verify_nonprincipal_general_nonlinear_family_via_duality_catalog(
                 max_n=9,
                 max_constraint_total_degree=1,
             ).values()
         )
-        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(12, 1, 1)
-        assert all(
-            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-                max_n=12,
-                max_constraint_total_degree=1,
-                survivor_total_degree=1,
-            ).values()
+        assert general_nonprincipal_nonlinear_family_holds_via_duality(
+            max_n=9,
+            max_constraint_total_degree=1,
         )
         source_candidates, target_candidates = hook_pair_surviving_field_candidates(5, 2)
         source_reduced, target_reduced = hook_pair_reduced_brackets(5, 2)
@@ -507,18 +531,19 @@ class TestNonprincipalFrontier:
         assert all(verify_nonprincipal_two_row_seed_catalog(7).values())
         assert all(verify_nonprincipal_ds_reduction_seed().values())
 
+    @pytest.mark.parametrize("rank_n", GENERAL_SURVIVOR_COUPLED_SMOKE_RANKS)
+    def test_nonprincipal_general_survivor_coupled_catalog_degree_one_by_rank(
+        self,
+        rank_n,
+    ):
+        _assert_general_survivor_coupled_family_slice(rank_n)
+
     def test_nonprincipal_corrected_semidirect_exports(self):
         from compute.lib import (
             partition_pair_corrected_survivor_action_terms,
             partition_pair_corrected_survivor_derivation_defects,
             nonprincipal_partition_pair_corrected_semidirect_survivor_blocks,
             nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap,
-            general_nonprincipal_mixed_family_holds_via_duality,
-            verify_nonprincipal_general_mixed_family_via_duality_catalog,
-            general_nonprincipal_nonlinear_family_holds_via_duality,
-            verify_nonprincipal_general_nonlinear_family_via_duality_catalog,
-            general_nonprincipal_survivor_coupled_family_holds_via_duality,
-            verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog,
             general_nonprincipal_corrected_semidirect_family_holds_via_duality,
             verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog,
             nonprincipal_two_row_survivor_coupled_family_holds_via_duality,
@@ -598,14 +623,7 @@ class TestNonprincipalFrontier:
                 1,
             ).values()
         )
-        assert general_nonprincipal_mixed_family_holds_via_duality(9, 1)
-        assert all(verify_nonprincipal_general_mixed_family_via_duality_catalog(9, 1).values())
-        assert general_nonprincipal_nonlinear_family_holds_via_duality(9, 1)
-        assert all(verify_nonprincipal_general_nonlinear_family_via_duality_catalog(9, 1).values())
-        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(12, 1, 1)
-        assert all(verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(12, 1, 1).values())
-        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(6, 1, 3)
-        assert all(verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(6, 1, 3).values())
+        _assert_general_survivor_coupled_family_slice(6, survivor_total_degree=3)
         assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(8, 0, 1, 1)
         assert all(
             verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(

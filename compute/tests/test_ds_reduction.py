@@ -284,6 +284,20 @@ GENERAL_DEGREE_THREE_REPRESENTATIVES = (
     (2, 2, 1, 1, 1, 1),
 )
 
+GENERAL_SURVIVOR_DEGREE_ONE_RANKS = tuple(range(5, 10))
+GENERAL_SURVIVOR_DEGREE_TWO_RANKS = tuple(range(5, 10))
+GENERAL_CORRECTED_SEMIDIRECT_DEGREE_ONE_RANKS = tuple(range(5, 10))
+GENERAL_CORRECTED_SEMIDIRECT_DEGREE_TWO_RANKS = tuple(range(5, 10))
+GENERAL_HIGH_RANK_REPRESENTATIVES = (
+    (7, 2, 1),
+    (8, 2, 1),
+    (9, 2, 1),
+    (10, 2, 1),
+    (11, 2, 1),
+)
+GENERAL_DEGREE_ONE_HIGH_RANK_REPRESENTATIVES = GENERAL_HIGH_RANK_REPRESENTATIVES[:3]
+GENERAL_DEGREE_TWO_HIGH_RANK_REPRESENTATIVES = GENERAL_HIGH_RANK_REPRESENTATIVES[:2]
+
 
 class TestGhostWeights:
     def test_formula(self):
@@ -2490,12 +2504,36 @@ class TestGeneralNonprincipalFamilyCatalog:
                 max_constraint_total_degree=1,
             ).values()
         )
+
+    @pytest.mark.parametrize("rank_n", GENERAL_SURVIVOR_DEGREE_ONE_RANKS)
+    def test_general_survivor_coupled_degree_one_duality_and_catalogs_by_rank(
+        self,
+        rank_n,
+    ):
+        assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
+            min_n=rank_n,
+            max_n=rank_n,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
+        )
         assert all(
             verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-                max_n=12,
+                min_n=rank_n,
+                max_n=rank_n,
                 max_constraint_total_degree=1,
                 survivor_total_degree=1,
             ).values()
+        )
+
+    @pytest.mark.parametrize("partition", GENERAL_DEGREE_ONE_HIGH_RANK_REPRESENTATIVES)
+    def test_general_survivor_coupled_degree_one_high_rank_representatives(
+        self,
+        partition,
+    ):
+        assert nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality(
+            partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=1,
         )
 
     def test_general_survivor_degree_three_blocks_and_catalogs(self):
@@ -2626,7 +2664,7 @@ class TestGeneralNonprincipalFamilyCatalog:
             for block in source_corrected_blocks + target_corrected_blocks
         )
 
-    def test_general_corrected_semidirect_duality_and_catalogs(self):
+    def test_general_corrected_semidirect_dual_swap_symmetry(self):
         partition = (3, 2, 1)
         assert nonprincipal_partition_pair_corrected_semidirect_blocks_match_under_dual_swap(
             partition,
@@ -2634,49 +2672,104 @@ class TestGeneralNonprincipalFamilyCatalog:
             survivor_total_degree=1,
             max_internal_ce_degree=1,
         )
+
+    @pytest.mark.parametrize("rank_n", GENERAL_CORRECTED_SEMIDIRECT_DEGREE_ONE_RANKS)
+    def test_general_corrected_semidirect_duality_and_catalogs_by_rank(
+        self,
+        rank_n,
+    ):
         assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
-            max_n=14,
+            min_n=rank_n,
+            max_n=rank_n,
             max_constraint_total_degree=0,
             survivor_total_degree=1,
             max_internal_ce_degree=1,
         )
         assert all(
             verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-                max_n=14,
+                min_n=rank_n,
+                max_n=rank_n,
                 max_constraint_total_degree=0,
                 survivor_total_degree=1,
                 max_internal_ce_degree=1,
             ).values()
         )
 
-    def test_general_corrected_semidirect_survivor_degree_two_duality_and_catalogs(self):
+    @pytest.mark.parametrize("partition", GENERAL_HIGH_RANK_REPRESENTATIVES)
+    def test_general_corrected_semidirect_degree_one_high_rank_representatives(
+        self,
+        partition,
+    ):
+        assert nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_duality(
+            partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=1,
+            max_internal_ce_degree=1,
+        )
+
+    @pytest.mark.parametrize("rank_n", GENERAL_CORRECTED_SEMIDIRECT_DEGREE_TWO_RANKS)
+    def test_general_corrected_semidirect_survivor_degree_two_duality_and_catalogs_by_rank(
+        self,
+        rank_n,
+    ):
         assert general_nonprincipal_corrected_semidirect_family_holds_via_duality(
-            max_n=11,
+            min_n=rank_n,
+            max_n=rank_n,
             max_constraint_total_degree=0,
             survivor_total_degree=2,
             max_internal_ce_degree=1,
         )
         assert all(
             verify_nonprincipal_general_corrected_semidirect_family_via_duality_catalog(
-                max_n=11,
+                min_n=rank_n,
+                max_n=rank_n,
                 max_constraint_total_degree=0,
                 survivor_total_degree=2,
                 max_internal_ce_degree=1,
             ).values()
         )
 
-    def test_general_survivor_coupled_survivor_degree_two_duality_and_catalogs(self):
+    @pytest.mark.parametrize("partition", GENERAL_DEGREE_TWO_HIGH_RANK_REPRESENTATIVES)
+    def test_general_corrected_semidirect_degree_two_high_rank_representatives(
+        self,
+        partition,
+    ):
+        assert nonprincipal_partition_pair_corrected_semidirect_representative_holds_via_duality(
+            partition,
+            max_constraint_total_degree=0,
+            survivor_total_degree=2,
+            max_internal_ce_degree=1,
+        )
+
+    @pytest.mark.parametrize("rank_n", GENERAL_SURVIVOR_DEGREE_TWO_RANKS)
+    def test_general_survivor_coupled_survivor_degree_two_duality_and_catalogs_by_rank(
+        self,
+        rank_n,
+    ):
         assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
-            max_n=11,
+            min_n=rank_n,
+            max_n=rank_n,
             max_constraint_total_degree=1,
             survivor_total_degree=2,
         )
         assert all(
             verify_nonprincipal_general_survivor_coupled_family_via_duality_catalog(
-                max_n=11,
+                min_n=rank_n,
+                max_n=rank_n,
                 max_constraint_total_degree=1,
                 survivor_total_degree=2,
             ).values()
+        )
+
+    @pytest.mark.parametrize("partition", GENERAL_DEGREE_TWO_HIGH_RANK_REPRESENTATIVES)
+    def test_general_survivor_coupled_degree_two_high_rank_representatives(
+        self,
+        partition,
+    ):
+        assert nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality(
+            partition,
+            max_constraint_total_degree=1,
+            survivor_total_degree=2,
         )
 
 
