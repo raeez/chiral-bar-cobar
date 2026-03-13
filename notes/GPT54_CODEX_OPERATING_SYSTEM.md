@@ -41,8 +41,8 @@ The durable understanding from the `raeeznotes*.md` sequence is:
 - the theorematic spine A/B/C/D is now materially stronger;
 - the former MC1 bottleneck is resolved for the standard finite-type interacting families
   (KM, Virasoro, principal finite-type `W_N`);
-- the foundational live mathematical frontier is now MC2, while
-  periodicity remains an orthogonal weak flank;
+- MC2 is resolved (`Theta_A` package proved), so the live mathematical
+  frontier is now MC3/MC4, while periodicity remains an orthogonal weak flank;
 - the live `W` frontier is now the filtered H-level /
   coefficient-identification package for `W_\infty` and Yangian towers:
   prove the named identities
@@ -89,10 +89,9 @@ Use the following architecture as the canonical target.
 ### Layer D: Synthesis and programme
 
 - The proved bridges to representation theory, geometry, and physics.
-- The resolved entry theorem on higher-genus PBW concentration together
-  with the dependency-ordered frontier:
-  MC2 as foundational target, MC3/MC4 as structural extensions,
-  and MC5 as downstream consequence.
+- The resolved load-bearing layers (MC1 entry theorem + MC2 universal
+  `Theta_A` package) together with the dependency-ordered frontier:
+  MC3/MC4 as structural extensions, and MC5 as downstream consequence.
 - The explicit next subject: modular homotopy theory for factorization
   algebras on curves.
 
@@ -108,24 +107,45 @@ Use the following architecture as the canonical target.
 
 ## 4. Chriss-Ginzburg Lessons to Enforce
 
-The relevant lesson is not style mimicry. It is structural discipline.
+The relevant lesson is not style mimicry. It is structural discipline
+borrowed from the introduction and preface of
+*Representation Theory and Complex Geometry*.
 
-1. Governing question:
-   every chapter should answer a mathematical question the previous
-   chapter made unavoidable.
-2. Frame example:
-   one example should make the whole theory visible before the abstract
-   machinery is unfolded.
-3. Inevitability through failure:
-   generalization should arise because the previous level breaks.
-4. Synthesis as theorem:
-   disparate subjects are connected by functors, equivalences, or named
-   conjectures, not by analogy language.
-5. Delayed payoff:
+1. Synthesis discipline:
+   treat the monograph as synthesis mathematics in Bourbaki's sense.
+   The point is not to accumulate techniques, but to show how several
+   structures clarify one subject through one mechanism.
+2. Direct path to the heart:
+   route the reader to the governing mechanism early.  Background is
+   imported when needed, not front-loaded as a wall of preliminaries.
+3. Uniform geometric engine:
+   prefer formulations and proofs that expose the common geometry or
+   functorial machine behind several results.
+4. Frame atoms before abstraction:
+   one concrete atom should reveal the whole commutative/modular face
+   before the theory unfolds; a second atom may be needed when the
+   braided face has a genuinely different operadic type.
+5. Inevitability through failure:
+   new constructions should appear because the previous level breaks:
+   point to curve, genus~0 to higher genus, unordered to ordered,
+   scalar to spectral to full package.
+6. Mosaic architecture:
+   chapters are tiles in one picture.  Each chapter should answer a
+   question inherited from earlier tiles and sharpen the question that
+   the next tile must answer.
+7. Synthesis as theorem:
+   disparate subjects are connected by functors, equivalences, exact
+   identities, or precise conjectures, not by analogy language.
+8. Geometric proof preference:
+   when multiple proofs exist, prefer the one that exposes mechanism
+   and lowers conceptual overhead, even if another proof is formally
+   more elementary.
+9. Delayed payoff:
    earlier constructions should later reappear as the solution to a
    problem the reader now genuinely has.
-6. Vocabulary discipline:
-   every sentence must do mathematical work.
+10. Vocabulary discipline:
+   every sentence must do mathematical work while staying locally
+   accessible.
 
 ## 5. Semantic and Status Matrix
 
@@ -154,7 +174,8 @@ If an edit obscures any of these three coordinates, it is a bad edit.
 ## 6. Core Boundaries That Must Stay Sharp
 
 - `kappa(A)` is the scalar shadow, not the full package.
-- `Theta_A` is the principal open homotopy object.
+- `Theta_A` is proved as the universal homotopy object on the current theorem surface;
+  open work lies in categorical extension and infinite-tower comparison.
 - bar/cobar existence is broader than inversion.
 - fiberwise curved differential and strict total differential are not
   interchangeable notation.
@@ -178,13 +199,17 @@ Any whole-book rewrite should start here.
 When ChatGPT 5.4 or Codex works on the book:
 
 1. Read the relevant control docs first.
-2. Identify the chapter's governing question.
-3. Identify its stratum, semantic level, and status mix.
-4. Rewrite the opening so the chapter enters through a question or
+2. Identify the breakage or tension that forces the target chapter to
+   exist.
+3. Identify the chapter's governing question.
+4. Identify its stratum, semantic level, and status mix.
+5. State the uniform mechanism that the chapter is supposed to expose.
+6. Rewrite the opening so the chapter enters through a question or
    tension, not a summary.
-5. Add one retrospective link and one forward shadow where appropriate.
-6. Remove empty catalogue prose.
-7. Compile after the batch.
+7. Add one retrospective link and one forward shadow where appropriate.
+8. Remove empty catalogue prose and prerequisite bulk that can be moved
+   closer to first use.
+9. Compile after the batch.
 
 ## 9. Rewrite Priorities
 
@@ -197,16 +222,13 @@ Priority order for the active rewrite campaign:
    orbit duality in Stratum II, with the latter decomposed into
    dual-orbit input, orbit-indexed level-shift, and paired DS
    seed-transport packets.
-3. Advance MC2 first: the theorem surface now reduces the cyclic
-   deformation / universal `Theta_A` frontier to three exact packages,
-   namely the intrinsic cyclic `\Defcyc(\cA)` model, the geometric
-   completed tensor / clutching package, and the one-channel
-   genus-by-genus normalization problem in the simple-Lie case.
+3. Treat MC2 as resolved doctrine: preserve its theorem boundary and
+   avoid regressing status language to "target" phrasing.
 4. Treat MC3 and MC4 as the next structural comparison layer after the
    standard M-level completions, not as missing finite-type PBW input.
 5. Treat periodicity as an auxiliary weak flank: contain, clarify, and
-   never let it outrun the proved core or the MC2 -> MC3/MC4 -> MC5
-   dependency order.
+   never let it outrun the proved core or the resolved-MC2 ->
+   MC3/MC4 -> MC5 dependency order.
 6. Repair any local theorem statements whose status still drifts from
    Chapter 34.
 

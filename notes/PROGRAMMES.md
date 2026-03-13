@@ -97,15 +97,15 @@ Each programme below advances a specific facet of that larger subject:
 
 | Programme | Facet of modular homotopy theory |
 |-----------|-------------------------------|
-| I (Langlands) | Critical level: bar = opers; the MC2 hierarchy is expected to degenerate there |
-| II (KL) | Root-of-unity: quantum-group / periodic / CDG shadow feeding the MC2 programme |
+| I (Langlands) | Critical level: bar = opers; the proved MC2 hierarchy is expected to degenerate there |
+| II (KL) | Root-of-unity: quantum-group / periodic / CDG shadow feeding the modular characteristic hierarchy |
 | III (Fusion) | Monoidality: the modular characteristic hierarchy should be functorial |
 | IV (E_n) | Higher dimension: Arnold -> Totaro -> Fay |
 | V (Vassiliev) | Topological: Feynman transform = topological shadow |
 | VI (Physics) | Physical: BRST/bar comparison, curvature = anomaly |
 | VII (NC Hodge) | Twistor: genus variable = deformation parameter |
 | VIII (Open math) | Structural: conjectures about the hierarchy itself |
-| IX (Computation) | Explicit: data testing scalar/spectral laws and the MC2 frontier |
+| IX (Computation) | Explicit: data testing scalar/spectral laws and the MC3/MC4 frontier |
 
 ---
 
@@ -371,7 +371,7 @@ known E_2-Koszul duality results. See NEW_MACHINERY.md #M4.
 - conj:en-koszul-duality (concordance.tex:323-348): full 4-part conjecture
 - prop:en-n2-recovery (concordance.tex:350-370): n = 2 topological recovery proved on a complex curve viewed as a real oriented surface
 - rem:en-scope (concordance.tex): specific obstacles for n >= 2
-- conj:en-koszul (holomorphic_topological.tex:1074-1099): alternative formulation
+- thm:en-koszul (holomorphic_topological.tex:1358): $E_n$ Koszul duality on $n$-manifolds (ProvedElsewhere)
 
 ---
 
@@ -1109,7 +1109,7 @@ standalone mathematical question.
   complete classification (893), periodicity exchange (927)
 - Frontier placement:
   this cluster is an orthogonal weak flank, not part of the
-  MC2 -> MC3/MC4 -> MC5 dependency chain.
+  resolved-MC2 / live-MC3-MC4 / downstream-MC5 dependency chain.
 - Status discipline:
   the structural lcm/profile shadow is theorematic, the $T$-matrix and
   quantum periodicity inputs are proved in their stated regimes, but

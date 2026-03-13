@@ -9,8 +9,9 @@ Classical Koszul duality (bar-cobar adjunction) lifts to a proved
 modular Koszul core for factorization algebras on curves, and must be
 completed into the definitive dimension-one modular homotopy theory in
 which genus becomes a deformation variable internal to the duality
-itself and is expected to be organized by a universal Maurer-Cartan
-class `Theta_A`.
+itself and is already organized at the resolved deformation-theoretic
+level by the universal Maurer-Cartan class `Theta_A`; the live outer
+programme is the categorical and infinite-tower comparison layer.
 
 **Dual Imperative.** The work is governed by maximalist ambition
 (always push for the most powerful, general theorems — the shape of
@@ -26,9 +27,10 @@ This project is not meant to stop at a proved core plus horizon prose.
 The book is being built as the definitive treatise of modular homotopy
 theory for factorization algebras on curves in dimension one.
 
-Accordingly, the missing modular-operadic and homotopy-theoretic
-foundations are load-bearing build targets, not optional epilogue
-material:
+Accordingly, the modular-operadic and homotopy-theoretic foundations
+are load-bearing components of the subject, not optional epilogue
+material. Some already belong to the proved core; the rest remain
+explicit frontier build targets:
 
 - modular operads of stable curves as the organization of the genus tower
 - curved factorization algebras on `Ran(X)` and the coderived/contraderived ambient
@@ -36,9 +38,12 @@ material:
 - the cyclic deformation complex `Def_cyc(A)` and the universal class `Theta_A`
 - shifted-symplectic / Lagrangian complementarity as constitutive structure
 
-Status discipline is unchanged: until these are proved, they remain
-frontier targets. But future sessions should treat them as the subject
-to be built, not as optional background machinery.
+Status discipline is unchanged: the `Def_cyc(A)` / `Theta_A` and
+shifted-symplectic layers now belong to the proved core, while the
+coderived Ran and factorization-categorical extensions remain frontier
+targets. Future sessions should treat both the proved foundation and
+the fenced frontier as parts of one subject, not as optional
+background machinery.
 
 ## Four irreducible pieces (the minimal kernel)
 
@@ -68,42 +73,49 @@ as a hierarchy with distinct statuses:
   Manuscript: `thm:spectral-characteristic`
 
 - **Full package** `\mathcal{C}_A = (\Theta_A, \kappa(A), \Delta_A, \Pi_A, \mathcal{H}_A)`
-  Conjectural H-level completion, where
+  Existence is now proved on the current theorem surface, where
   `\Theta_A \in MC(Def_cyc(A) \hat{\otimes} R\Gamma(\overline{M}_{g,\bullet}, \mathbb{Q}))`
-  is the open homotopy object and `\mathcal{H}_A` is the ambient
-  genus-graded deformation family.
-  Manuscript: `def:full-modular-package`, `conj:master-theta`
+  carries the homotopy-level deformation data, `\mathcal{H}_A` is the
+  induced genus-graded deformation family, and `\Pi_A` has a proved
+  structural framework even where sharp periodicity claims remain
+  conjectural.
+  Manuscript: `def:full-modular-package`, `thm:mc2-full-resolution`
 
 ## Current frontier order
 
 The active route is not flat:
 
 1. the finite-type MC1 entry theorem is resolved;
-2. MC2 is the foundational next target, now reduced on the theorem
-   surface to three exact packages: the intrinsic cyclic
-   `\Defcyc(\cA)` model, the geometric completed tensor / clutching
-   package, and the one-channel genus-by-genus normalization problem in
-   the simple-Lie case;
-3. MC3 and MC4 are the structural comparison layer after the standard
+2. MC2 is resolved: the intrinsic cyclic `\Defcyc(\cA)` model, the
+   geometric completed tensor / clutching package, and the resulting
+   `Theta_A` all belong to the proved foundation;
+3. MC3 and MC4, not MC2, are now the live structural comparison layer
+   after the standard
    M-level completions for `W_\infty` and Yangian towers; the active
    MC4 ledger is now exact:
    build the filtered H-level targets, prove
    `K^{line}_{a,b}(N)=K^{RTT}_{a,b}(N)` and
    `C^{res}_{s,t;u;m,n}(N)=C^{DS}_{s,t;u;m,n}(N)`, and close the
-   corresponding finite-detection packages;
+   corresponding finite-detection packages `\Delta_{a,0}(N)` and
+   `\mathcal{I}_N`;
 4. MC5 is downstream physics completion;
-5. periodicity is a weak orthogonal flank, not the master-conjecture
-   chain.
+5. the non-principal orbit frontier is separate from MC4 standard-tower
+   comparison and splits into three packets: dual-orbit input,
+   orbit-indexed level shift, and paired DS seed
+   transport/globalization;
+6. periodicity is a weak orthogonal flank, not the master-conjecture
+   chain; its geometric part is currently a nilpotent
+   depth/stabilization threshold, not a proved global period law.
 
-## Theorematic silhouette (the target)
+## Theorematic silhouette (the current control surface)
 
 | Label | Statement | Status | Manuscript |
 |-------|-----------|--------|------------|
-| A_mod | Bar-cobar intertwined with Verdier, functorial over M_{g,n} | PROVED (genus 0+g) | Theorems A, B |
-| B_mod | Inversion on Koszul locus; coderived persistence off it | PROVED + conjectured | Thm B + concordance |
-| C_mod | (-1)-shifted symplectic complementarity (Lagrangian) | PROVED | thm:shifted-symplectic-complementarity / conj:lagrangian-complementarity |
-| Index | GRR: genus series = kappa(A) * (A-hat(ix) - 1) | Conjectured | conj:family-index |
-| DK | Derived Drinfeld-Kohno: Fact_E1(Y(g)) ~ Fact_E1(U_q(g))^op | Conjectured | conj:derived-drinfeld-kohno |
+| A_mod | Bar-cobar intertwined with Verdier, functorial over M_{g,n} | PROVED | Theorems A, B |
+| B_mod | Inversion on the Koszul locus; off-locus coderived persistence explicitly fenced | PROVED on locus; frontier off locus | Thm B + concordance |
+| C_mod | (-1)-shifted symplectic complementarity (Lagrangian) | PROVED | thm:shifted-symplectic-complementarity / thm:lagrangian-complementarity |
+| Index | GRR: genus series = kappa(A) * (A-hat(ix) - 1) | PROVED | thm:family-index |
+| DK | Derived Drinfeld-Kohno ladder from evaluation locus to completed bridge | DK-0/1/1½/2/3 proved on natural loci; DK-4/5 conjectural | concordance DK ladder |
 
 ## Free fields as atoms
 
@@ -116,7 +128,7 @@ Not easy examples — the irreducible kernel displaying full generality:
 
 ## The ultimate generalization principle
 
-Arnold (genus 0, additive) -> clutching + conjectural `Theta_A`
+Arnold (genus 0, additive) -> clutching + proved `Theta_A`
 (modular, on curves) -> Fay (elliptic, multiplicative)
 
 The Fay trisecant identity replaces Arnold when base geometry becomes
@@ -127,15 +139,15 @@ toroidal/elliptic extension (toroidal_elliptic.tex).
 
 | Programme | Role in modular Koszul programme |
 |-----------|--------------------------------|
-| I (Langlands) | Critical-level bar = derived opers; the MC2 hierarchy is expected to degenerate there |
-| II (KL) | Admissible-level bar = quantum group (periodic/CDG shadow feeding the `Theta_A` programme) |
+| I (Langlands) | Critical-level bar = derived opers; the proved MC2 hierarchy is expected to degenerate there |
+| II (KL) | Admissible-level bar = quantum group (periodic/CDG shadow feeding the modular characteristic hierarchy) |
 | III (Fusion) | Monoidality of bar-cobar should act on the modular characteristic hierarchy |
 | IV (E_n) | Higher-dimensional generalization (Arnold -> Totaro -> Fay) |
 | V (Vassiliev) | Feynman transform = topological shadow of the characteristic hierarchy |
-| VI (Physics) | bar = BRST, curvature = anomaly, `Theta_A` = quantum-background target |
+| VI (Physics) | bar = BRST, curvature = anomaly, `Theta_A` = quantum-background datum |
 | VII (NC Hodge) | Genus variable = twistor parameter of the characteristic hierarchy |
 | VIII (Open math) | Structural conjectures about the hierarchy itself |
-| IX (Computation) | Explicit data testing scalar/spectral laws and the MC2 frontier |
+| IX (Computation) | Explicit data testing scalar/spectral laws and the MC3/MC4 frontier |
 
 ## Definitive dimension-one skeleton
 

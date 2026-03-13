@@ -22,7 +22,7 @@ Research collaborator for Raeez Lorgat's monograph at the triple intersection of
 
 **Architecture**: Part 1 (Theory), Part 2 (Examples — half the book), Part 3 (Connections). Entry: Heisenberg (frame atom), Yangian DK square (braided atom).
 
-**Status**: ~104K source lines, ~1443 tagged claims. Always grep fresh — never trust cached numbers. Constitution: concordance.tex (Chapter 34).
+**Status**: ~117K source lines, ~1516 tagged claims. Always grep fresh — never trust cached numbers. Constitution: concordance.tex (Chapter 34).
 
 ---
 
@@ -156,20 +156,20 @@ These are verified facts. Getting any of them wrong corrupts the manuscript.
 
 **Single source of truth**: concordance.tex (Chapter 34, the constitution). When earlier chapters disagree, the constitution is right.
 
-**Two Strata**:
-- **Stratum I (SOLID)**: Theorems A/B/C, D_scal, D_Delta, chain-level DK, MC2/Theta_A, DK-1½ lattice
-- **Stratum II (PROGRAMME)**: Coderived Ran, factorization DK (cat O thick generation), H-level MC4 comparison, periodicity sync
+**Two layers** (concordance terminology: "Core (proved)" / "Extension (conjectural)"):
+- **Core (proved)**: Theorems A/B/C, D_scal, D_Delta, MC1, MC2/Theta_A, DK-0/1/1½, DK-2/3 on the evaluation-generated core at all simple types
+- **Frontier (conjectural)**: DK/KL extension beyond eval-gen core (full O, completion), H-level MC4 comparison, MC5 (BV/BRST = bar at higher genus), periodicity sync, coderived Ran
 
 **Master Conjectures** (frontier order: MC3/MC4 -> MC5):
 - **MC1**: PBW concentration — PROVED for KM, Vir, principal W_N [thm:master-pbw]
-- **MC2**: Cyclic L-infinity + Theta_A — PROVED [thm:mc2-full-resolution]. All 3 packages resolved. conj:universal-theta and conj:universal-MC upgraded to theorems.
-- **MC3**: Factorization DK/KL — DK-0/1 proved, DK-1½ lattice proved, DK-2/3 proved for fd type A + cat O (sl_2 unconditional, O_poly at all N). Category O generation strategies developed (sec:cat-O-strategies in yangians.tex). [conj:master-dk-kl]
+- **MC2**: Cyclic L-infinity + Theta_A — PROVED [thm:mc2-full-resolution]. All 3 packages resolved. thm:universal-theta and thm:universal-MC (formerly conjectured, now proved).
+- **MC3**: Factorization DK/KL — DK-0/1 proved, DK-1½ lattice proved, DK-2/3 proved on the evaluation-generated core at all simple types (type A also admits the thick-generation route on its natural loci). The remaining frontier is the ordinary-derived versus completed/coderived enlargement beyond that core. [conj:master-dk-kl]
 - **MC4**: W-infinity/Yangian towers — M-level done, H-level coefficients open [conj:master-infinite-generator]
 - **MC5**: BV/BRST = bar — genus 0 proved, higher-genus downstream [conj:master-bv-brst]
 
 Periodicity is an orthogonal weak flank, not a bottleneck. See concordance.tex rem:proof-roadmaps for full strategies.
 
-**Theorem architecture**: A_0/A_1/A_2 (bar-cobar), B (inversion), C_0/C_1 (complementarity), D_scal/D_Delta (characteristic), H (Hochschild). See concordance.tex for details.
+**Theorem architecture**: A_0/A_1/A_2 (bar-cobar), B (inversion), C_0/C_1 (complementarity), D_scal (scalar characteristic), D_Delta (spectral characteristic), H (Hochschild). DK ladder: DK-0/1/1½ (proved), DK-2/3 (proved on eval-gen core, all types), DK-4 (ML proved, algebraic id open), DK-5 (conjectural). See concordance.tex for details.
 
 ---
 
@@ -208,6 +208,6 @@ chapters/frame/heisenberg_frame.tex — primary entry atom
 bibliography/references.tex — 254 entries
 
 ### Planning
-Session prompt: notes/SESSION_PROMPT_v23.md
+Session prompt: notes/SESSION_PROMPT_v27.md
 Session state: notes/autonomous_state.md
 Research programmes: notes/PROGRAMMES.md + notes/NEW_MACHINERY.md

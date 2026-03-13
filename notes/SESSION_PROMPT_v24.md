@@ -4,6 +4,13 @@
 # Date: March 2026
 # Trigger: raeeznotes21.md (external deep review)
 
+> **Superseded doctrine note (March 13, 2026).**
+> This prompt contains a historical pre-resolution MC2 routing frame and
+> is retained for provenance. Active execution doctrine is
+> `notes/SESSION_PROMPT_v23.md` under
+> `chapters/connections/concordance.tex`
+> (MC2 resolved; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal).
+
 ---
 
 ## PERMANENT MANDATE

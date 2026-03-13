@@ -4,6 +4,13 @@
 # Supersedes: v20 (proof forge), GPT54_CODEX_OPERATING_SYSTEM.md
 # Launch: "Read notes/SESSION_PROMPT_v21.md and execute it."
 
+> **Superseded doctrine note (March 13, 2026).**
+> This prompt preserves a historical MC2-frontier routing state and is
+> kept for provenance. Active execution doctrine is
+> `notes/SESSION_PROMPT_v23.md` plus the constitutional status ledger
+> `chapters/connections/concordance.tex`
+> (MC2 resolved; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal).
+
 # ══════════════════════════════════════════════════════════════════
 # PROVENANCE
 #
@@ -810,7 +817,7 @@ Never let periodicity claims outrun the printed proof.
 
 These distinctions must stay sharp in all prose:
 - κ(A) is the scalar shadow, not the full package
-- Θ_A is the principal open homotopy object
+- Θ_A is proved on the current theorem surface; open work is the outer categorical and infinite-tower lift
 - bar/cobar existence is broader than inversion
 - d_fib and D_tot are different objects with different notation
 - periodicity claims must not outrun the argument

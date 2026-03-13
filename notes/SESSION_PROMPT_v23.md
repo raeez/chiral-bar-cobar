@@ -12,14 +12,14 @@ homotopy theory for factorization algebras on curves, not as a proved
 core with an optional programme appendix.
 
 Therefore every session should prefer work that materially builds one
-of the load-bearing missing foundations: modular-operadic functoriality,
-curved/coderived factorization on `Ran(X)`, the H-level bar-cobar
-adjunction, the cyclic deformation complex `Def_cyc(A)`, the universal
-Maurer-Cartan class `Theta_A`, and the shifted-symplectic/Lagrangian
-package.
+of the load-bearing foundations and frontier extensions:
+modular-operadic functoriality, curved/coderived factorization on
+`Ran(X)`, the H-level bar-cobar adjunction, and the staged
+factorization / infinite-tower comparison packages.
 
-Status discipline remains absolute: these foundations are build targets
-until proved, not licenses to overclaim.
+Status discipline remains absolute: `Def_cyc(A)` and `Theta_A` are now
+proved on the theorem surface, while MC3/MC4 remain live frontier and
+MC5 remains downstream.
 
 ---
 
@@ -48,7 +48,7 @@ Each work unit falls on exactly one surface:
 | CONTROL | Constitution, MC roadmaps | concordance.tex, introduction.tex | HIGH |
 | THEOREM | Proofs in theory chapters | higher_genus, bar_cobar, chiral_koszul_pairs | HIGH |
 | PORTRAIT | Examples, computations | All examples/, detailed_computations | MEDIUM |
-| FRONTIER | Open conjectures, MC2-5 | concordance, higher_genus, yangians | HIGH |
+| FRONTIER | Open conjectures, MC3-5 (+ periodicity flank) | concordance, higher_genus, yangians | HIGH |
 | COMPUTE | Python verification | compute/lib/, compute/tests/ | LOW |
 | PROSE | Exposition, cross-refs | Any .tex file | LOW |
 
@@ -58,21 +58,21 @@ Each work unit falls on exactly one surface:
 
 ```
 Is there a CRITICAL audit finding?       → Fix it NOW
-Is MC2 actionable?                       → Work on MC2
+Is MC3/MC4 actionable?                   → Work on MC3/MC4
 Is there a Conjectured with proof ready? → Upgrade it
 Is there a proof gap in ProvedHere?      → Fix it
 Is there a cross-ref inconsistency?      → Fix it
-Else                                     → MC4 or prose
+Else                                     → doctrinal propagation or prose
 ```
 
-### MC2 Work Surfaces (foundational target)
+### MC3 Work Surfaces (live structural extension)
 
-Three exact packages remaining:
-1. **Cyclic L-infinity model**: Construct Def_cyc(A) on bar coderivations
-   - Entry: higher_genus.tex rem:mc2-status
-   - Compute: mc2_cyclic_linf.py
-2. **Geometric completed tensor**: Clutching + modular-operadic composition
-3. **One-channel normalization**: Verdier/Lagrangian plane, simple-Lie case
+1. **DK ladder beyond the proved core**: extension beyond the evaluation-generated core
+   - Entry: concordance.tex rem:corrected-mc3-frontier
+   - Targets: full category `O`, KL completion, compact-generator comparison
+2. **Category O generation routes**
+   - Entry: yangians.tex sec:cat-O-strategies
+   - Track thick generation vs sectorwise finiteness hypotheses explicitly
 
 ### MC4 Work Surfaces
 
@@ -83,6 +83,11 @@ Three exact packages remaining:
 2. **W-infinity**: 4 free channels + 2 residue checks
    - c_{334}, c_{444}, C_{3,4;3;0,4}, C_{3,4;4;0,3}
    - Checks: C^res_{4,4;2;0,6}=2, C^res_{3,4;2;0,5}=0
+3. **Finite-detection closure**
+   - W-side packet: I_N
+   - Yangian-side packet: Delta_{a,0}(N)
+4. **Separate non-principal orbit frontier**
+   - Keep distinct packets explicit: dual-orbit input, orbit-indexed level shift, paired DS seed transport/globalization
 
 ---
 

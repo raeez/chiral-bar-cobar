@@ -16,6 +16,22 @@ a point. Identify Theorems A–D as the four structural properties of this trans
 Every output is a Definition, Proposition, Computation, Theorem, or Remark — never
 a description of what should be written.
 
+## METHOD GUARDRAILS
+
+Apply the Chriss--Ginzburg method structurally, not stylistically:
+
+1. Treat the chapter as synthesis mathematics:
+   the computations are not warmups but the direct route to the
+   governing mechanism.
+2. Bring in background only at the moment the Fourier transform
+   construction requires it.
+3. Let each section arise from a failure of the previous level:
+   point to curve, genus~0 to elliptic, fixed curve to families.
+4. Use the examples as frame tiles in a mosaic of one subject, not as
+   detached illustrations.
+5. State every bridge to geometry, representation theory, or physics as
+   a theorematic identification or a precise status-tagged remark.
+
 ---
 
 ## PHASE 0: GROUND (read only, no writing)
@@ -213,17 +229,18 @@ State: "The detailed computations appear in Part 2 (Chapters~\ref{ch:...}–\ref
 
 ### §6. Genus as deformation variable (preview, ~1 page)
 
-**Remark** (\ClaimStatusConjectured, ref conj:master-theta). At genus g ≥ 1, the
+**Remark** (\ClaimStatusProvedHere, ref thm:mc2-full-resolution). At genus g ≥ 1, the
 bar complex B_g(A) is a family of curved cochain complexes over M̄_g. The proved
-invariant κ(A) is the scalar shadow of a conjectural Maurer–Cartan class
+invariant κ(A) is the scalar shadow of the proved Maurer–Cartan class
 
   Θ_A ∈ MC(Def_cyc(A) ⊗̂ RΓ(M̄_{g,•}, Q)).
 
-Constructing Θ_A — making the Fourier transform into a functor of ∞-categories —
-is the principal open problem of the subject (Conjecture~\ref{conj:master-theta},
-MC2).
+What remains open is the outer categorical and infinite-generator lift
+of this deformation package: coderived/factorization functoriality,
+the DK/KL extension, and the MC4 coefficient comparison.
 
-Tag explicitly: κ is \ClaimStatusProvedHere. Θ_A is \ClaimStatusConjectured.
+Tag explicitly: κ and Θ_A are \ClaimStatusProvedHere; the outer
+categorical lift beyond the current theorem surface is programme.
 
 ---
 

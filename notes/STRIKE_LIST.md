@@ -78,8 +78,7 @@ concordance, untracked files, git delta, and cross-consistency.
 - Should verify this is the correct remark title and environment
 
 ### P1.6 Update Stratum II assessment
-- CLAUDE.md still says "Stratum II: Full Theta_A, coderived Ran, factorization DK, periodicity sync"
-- But Theta_A is now proved (MC2 resolved). Stratum II should be: coderived Ran, factorization DK (cat O), H-level MC4 comparison, periodicity sync.
+- Resolved Mar 13: `CLAUDE.md` now treats `\Theta_A` as proved and places the live MC3 frontier at the DK/KL enlargement beyond the evaluation-generated core.
 
 ---
 

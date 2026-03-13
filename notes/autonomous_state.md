@@ -1,17 +1,17 @@
 # Session State — Chiral Bar-Cobar Monograph
-# Last updated: Mar 10, 2026 (full repo assessment + E₁ lattice programme)
+# Last updated: Mar 12, 2026 (doctrinal synchronization + clean build)
 
 ## Quick State
 - **Session prompt**: `notes/SESSION_PROMPT_v25.md`
 - **Census**: Always grep fresh. Baseline Mar 10: PH 923, PE 337, CJ 153, HE 29, Open 1 = 1443 total
-- **Build**: 1567pp, 4-pass (2 undef citations, 1 undef ref, 8 overfull — NOT fully clean)
+- **Build**: 1664pp, 3-pass clean (0 undef citations, 0 undef refs, 0 rerun, 0 overfull)
 - **Source**: ~104K lines across 55+ .tex files
 - **Tests**: Heavy DS tests timeout/hang. Smoke tests pass 26/29 before kill. Needs pytest-timeout.
-- **Uncommitted delta**: 99 modified files, 22 untracked. MASSIVE. Needs commit triage.
+- **Uncommitted delta**: 58 modified files, 0 untracked. Still needs commit triage.
 
 ## Governing Mandate
 - Build the book as the definitive dimension-one treatise of modular homotopy theory for factorization algebras on curves.
-- Treat modular operads, curved/coderived Ran formalism, H-level bar-cobar, `Def_cyc(A)`, `Theta_A`, and shifted-symplectic complementarity as load-bearing foundations to be built, not optional horizon prose.
+- Treat modular operads, curved/coderived Ran formalism, H-level bar-cobar, `Def_cyc(A)`, `Theta_A`, and shifted-symplectic complementarity as load-bearing foundations; keep the resolved pieces explicit and the remaining frontier fenced, not optional horizon prose.
 - Preserve status discipline while building that target: frontier items stay frontier until fully proved.
 
 ## MC Frontier Status
@@ -21,13 +21,19 @@ See concordance.tex rem:proof-roadmaps for full strategies.
 |----|--------|-------------|
 | MC1 | **PROVED** for KM, Vir, principal W_N | Complete |
 | MC2 | **PROVED** (thm:mc2-full-resolution) | Complete |
-| MC3 | DK-0/1 proved; DK-1½ lattice; DK-2/3 fd type A | Category O generation; lattice→quantum group |
+| MC3 | DK-0/1/1½ proved; DK-2/3 eval-generated core all simple types | Extension beyond generated core; KL/completed bridge |
 | MC4 | M-level done; H-level coefficients open | Yangian K^line=K^RTT; W-infinity 4 channels |
 | MC5 | Genus 0 proved; downstream | After MC2-4 |
 
 Periodicity: orthogonal weak flank, not bottleneck.
 
 ## Recent Sessions (last 3)
+
+### Mar 12 — control-layer and summary synchronization
+- **Control doctrine synced**: concordance.tex and VISION.md now state MC2 as resolved and MC3/MC4/MC5 as the live frontier.
+- **Session notes rerouted**: SESSION_PROMPT_v25 now treats `Theta_A` as proved and routes active work to the outer categorical and infinite-generator layer.
+- **Summary surfaces tightened**: examples_summary.tex and genus_expansions.tex now distinguish the proved Yangian DK core, the proved characteristic hierarchy, and the still-programmatic outer comparison layers.
+- **Build verification**: `make fast` converged cleanly at 1664pp in 3 passes.
 
 ### E₁ lattice + repo assessment (Mar 10) — Factorization bar-cobar for lattice VOAs
 - **E₁ chiral algebras from cocycle deformations**: lattice_foundations.tex §11 (~300 lines). Quantum lattice algebras V_Λ^{N,q}, ordering cycles, E₁ inversion principle.
@@ -76,12 +82,10 @@ Periodicity: orthogonal weak flank, not bottleneck.
 
 ## Next Priorities
 See STRIKE LIST in this file below for P0/P1/P2 classification.
-1. **P0**: Fix build (2 undef citations, 1 undef ref). Commit triage (99 modified files).
-2. **P0**: Update CLAUDE.md MC status (MC2 is PROVED, not "3 packages remaining").
-3. **P0**: Regenerate stale metadata (census.json, claims.jsonl, theorem_registry.md).
-4. **P1**: Fix test suite (hanging on heavy DS tests — needs pytest-timeout or test refactor).
-5. **P1**: Clean untracked files (9 .stdout artifacts, 4 superseded session prompts).
-6. **P1**: MC3 DK ladder: lattice→quantum group identification (bridge from DK-1½ to DK-2).
-7. **P2**: Fourier Seed chapter (SESSION_PROMPT_v25).
-8. **P2**: MC4 coefficient identities.
-9. **P2**: conj:en-koszul-duality (sole remaining Open claim).
+1. **P0**: Regenerate stale metadata (census.json, claims.jsonl, theorem_registry.md).
+2. **P1**: Fix test suite (hanging on heavy DS tests — needs pytest-timeout or test refactor).
+3. **P1**: Commit triage on the still-large modified worktree.
+4. **P1**: MC3 DK ladder: lattice→quantum group identification (bridge from DK-1½ to DK-2).
+5. **P2**: Fourier Seed chapter (SESSION_PROMPT_v25, now with proved `Theta_A` premise).
+6. **P2**: MC4 coefficient identities.
+7. **P2**: Remaining control-note synchronization outside the session stack.

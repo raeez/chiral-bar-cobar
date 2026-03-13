@@ -5,6 +5,13 @@
 #             v19 (prose surgery — exhausted, retained as style reference)
 # Launch: "Read notes/SESSION_PROMPT_v20.md and execute it."
 
+> **Superseded doctrine note (March 13, 2026).**
+> This prompt encodes a historical pre-resolution MC2 frontier state and
+> is retained for provenance only. Active execution doctrine is
+> `notes/SESSION_PROMPT_v23.md` under the constitutional ledger in
+> `chapters/connections/concordance.tex`
+> (MC2 resolved; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal).
+
 # ======================================================================
 # PROVENANCE
 #

@@ -27,6 +27,37 @@ Do not treat the book as "theory plus examples plus applications."
 Treat it as one subject seen from several mathematically precise
 vantage points.
 
+## Chriss-Ginzburg Method
+
+The operational model is the introduction and preface of
+Chriss--Ginzburg's *Representation Theory and Complex Geometry*.
+Interpret that inheritance structurally, not cosmetically.
+
+- **Synthesis before accumulation**:
+  this book belongs to the synthesis side of mathematics.  Treat
+  representation theory, geometry, physics, and computation as
+  coordinated faces of one subject governed by a common theorem graph.
+- **Heart before scaffolding**:
+  route the reader to the governing mechanism early.  Bring in
+  background only when the mechanism demands it; do not front-load an
+  encyclopedia of preliminaries.
+- **Geometry before bureaucracy**:
+  when several proofs are available, prefer the one that exposes the
+  controlling geometry or functorial mechanism and lowers conceptual
+  overhead, even if another proof is formally more elementary.
+- **Mosaic architecture**:
+  chapters are tiles in one picture.  Each chapter should answer a
+  question inherited from its neighbors and leave behind the next
+  unavoidable question.
+- **Failure forces generalization**:
+  new machinery should appear because the previous level breaks:
+  point to curve, genus~0 to higher genus, unordered to ordered,
+  scalar to spectral to full package.
+- **Accessible local texture**:
+  keep the local exposition direct and cognitively light without
+  weakening theorem-status precision.  Definitions are earned by the
+  computations or tensions that require them.
+
 ## Canonical Documents
 
 When working in this repo, consult these in order:
@@ -34,10 +65,11 @@ When working in this repo, consult these in order:
 1. [CLAUDE.md](/Users/raeez/chiral-bar-cobar/CLAUDE.md) (conventions, invariants, file map)
 2. [chapters/connections/concordance.tex](/Users/raeez/chiral-bar-cobar/chapters/connections/concordance.tex) (constitution)
 3. [chapters/theory/introduction.tex](/Users/raeez/chiral-bar-cobar/chapters/theory/introduction.tex) (front door)
-4. [notes/SESSION_PROMPT_v23.md](/Users/raeez/chiral-bar-cobar/notes/SESSION_PROMPT_v23.md) (execution prompt)
-5. [notes/autonomous_state.md](/Users/raeez/chiral-bar-cobar/notes/autonomous_state.md) (session state)
-6. [notes/VISION.md](/Users/raeez/chiral-bar-cobar/notes/VISION.md) (north star)
-7. [notes/PROGRAMMES.md](/Users/raeez/chiral-bar-cobar/notes/PROGRAMMES.md) (research programmes)
+4. [notes/GPT54_CODEX_OPERATING_SYSTEM.md](/Users/raeez/chiral-bar-cobar/notes/GPT54_CODEX_OPERATING_SYSTEM.md) (stable cognitive scaffold)
+5. [notes/SESSION_PROMPT_v25.md](/Users/raeez/chiral-bar-cobar/notes/SESSION_PROMPT_v25.md) (current execution prompt; if `autonomous_state.md` names a newer prompt, read that instead)
+6. [notes/autonomous_state.md](/Users/raeez/chiral-bar-cobar/notes/autonomous_state.md) (session state)
+7. [notes/VISION.md](/Users/raeez/chiral-bar-cobar/notes/VISION.md) (north star)
+8. [notes/PROGRAMMES.md](/Users/raeez/chiral-bar-cobar/notes/PROGRAMMES.md) (research programmes)
 
 If two documents disagree, prefer the more recent rewrite doctrine over
 older session prompts or legacy agent notes.
@@ -83,14 +115,21 @@ be pushed credibly further.
 Use these as operational rules, not as literary aspirations:
 
 1. Open chapters with a mathematical question or tension, not a file
-   summary.
-2. Use the Heisenberg chapter as the frame example whenever a general
-   mechanism needs concrete intuition.
-3. State bridges between fields as theorems or precise conjectures, not
+   summary; make that question arise from the previous chapter if at
+   all possible.
+2. Surface the governing mechanism early and import background on
+   demand, not as a prerequisite wall.
+3. Use the Heisenberg chapter as the frame example whenever a general
+   commutative/modular mechanism needs concrete intuition, and Yangian
+   when the braided/factorization face is the real entry atom.
+4. Introduce new machinery only when a precise obstruction forces it.
+5. State bridges between fields as theorems or precise conjectures, not
    as analogies.
-4. After a theorem, add at most one shadow sentence pointing to the
+6. After a theorem, add at most one shadow sentence pointing to the
    larger programme.
-5. Prefer exact mathematical nouns and verbs over evaluative prose.
+7. Treat examples as generative portraits of the theory, not as
+   decoration or verification dumps.
+8. Prefer exact mathematical nouns and verbs over evaluative prose.
 
 ## Rewrite Workflow
 
@@ -135,6 +174,9 @@ At session start, silently adopt this brief:
 
 - I am maintaining Volume I of modular homotopy theory for
   factorization algebras on curves, not polishing isolated TeX.
+- I am working in a Chriss--Ginzburg synthesis mode: direct route to
+  the heart of the subject, background on demand, one governing
+  mechanism carried across many surfaces.
 - The proved modular Koszul core is the load-bearing object; the outer
   programme must remain explicit and correctly fenced.
 - Chapter 34 is constitutional when status language drifts elsewhere.
@@ -258,7 +300,9 @@ them explicitly.
 When reasoning, prefer instructions of the following form:
 
 - classify before rewriting;
+- identify the breakage that forces the next construction;
 - determine the controlling stratum and semantic level;
+- ask which uniform mechanism governs the surfaces being connected;
 - state the exact theorem/conjecture boundary;
 - identify the parent master conjecture, if any;
 - propagate status changes through every dependent summary surface;
