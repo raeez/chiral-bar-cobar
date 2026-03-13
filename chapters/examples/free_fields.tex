@@ -2610,65 +2610,177 @@ where $\mathcal{L}_k$ is the line bundle of level $k$ theta functions.
 \end{theorem}
 
 \begin{proof}
-We compute the genus-1 case explicitly to illustrate the phenomenon, then sketch the general pattern.
+We prove the theorem for arbitrary genus~$g \geq 1$ in five steps,
+then illustrate Step~3 explicitly for genus~1.
 
-\emph{Genus~1 setup.}
-Consider a torus $T^2 = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with modular parameter $\tau \in \mathbb{H}$ (upper half-plane).
+\emph{Step~1: Abelian factorization of the bar differential.}
+The Heisenberg OPE $\alpha(z)\alpha(w) \sim k(z-w)^{-2}$ has no
+simple pole.  By
+Proposition~\ref{prop:abelian-bar-factorization}, the bar differential
+on $\mathcal{H}_k^{\boxtimes n} \otimes
+\Omega^p_{\log}(\overline{C}_n(\Sigma_g))$ decomposes as a sum of
+commuting pairwise operators $d_{\mathrm{bar}} = \sum_{i<j} d_{ij}$,
+each extracting the double-pole residue at the collision divisor
+$D_{ij}$.  In particular, the bar complex is cocommutative:
+$\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
+\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)$
+(Theorem~\ref{thm:heisenberg-koszul-dual-early}).
 
-\emph{Step~1.}
-The configuration space $C_n(T^2)$ has non-trivial topology. For $n=2$:
-$$C_2(T^2) = \{(z_1,z_2) \in T^2 \times T^2 : z_1 \neq z_2\}$$
+\emph{Step~2: Identification with Chevalley--Eilenberg cohomology.}
+On a closed Riemann surface $\Sigma_g$, the current
+$\alpha(z) = \partial\phi(z)$ has $2g$ zero modes: the
+integrals $\oint_{A_i} \alpha\, dz$ and $\oint_{B_j} \alpha\, dz$
+($i,j = 1, \ldots, g$) over a symplectic basis of
+$H_1(\Sigma_g, \mathbb{Z})$.  By Hodge theory these span
+$\mathfrak{h}_g := H^1(\Sigma_g, \mathbb{C}) \cong \mathbb{C}^{2g}$,
+an abelian Lie algebra.  The level-$k$ central extension equips
+$\mathfrak{h}_g$ with the symplectic form
+$\omega_k = k \cdot \omega$, where
+$\omega \in \Lambda^2(\mathfrak{h}_g^*)$ is the intersection pairing
+(normalized so that $\omega(A_i, B_j) = \delta_{ij}$).
 
-By the Fadell--Neuwirth fibration $C_2(T^2) \to T^2$ with fiber $T^2 \setminus \{pt\}$, the fundamental group fits in an exact sequence:
-$$1 \to \pi_1(T^2 \setminus \{pt\}) \to \pi_1(C_2(T^2)) \to \pi_1(T^2) \to 1$$
-Since $\pi_1(T^2 \setminus \{pt\}) \cong F_2$ (free on the $A$- and $B$-cycles), $\pi_1(C_2(T^2))$ is a non-trivial extension of $\mathbb{Z}^2$ by $F_2$. The key generators are:
-\begin{itemize}
-\item $\gamma_A, \gamma_B$: $z_1$ goes around the $A$- or $B$-cycle while $z_2$ is fixed
-\item $\gamma_A', \gamma_B'$: $z_2$ goes around the $A$- or $B$-cycle while $z_1$ is fixed
-\item $\sigma_{12}$: $z_1$ loops around $z_2$ (the pure braid generator)
-\end{itemize}
+Because the bar complex of $\mathcal{H}_k$ is cocommutative and
+the bar differential decomposes pairwise, the genus-$g$ bar complex
+reduces to the Chevalley--Eilenberg complex of the one-dimensional
+central extension $\hat{\mathfrak{h}}_k = \mathfrak{h}_g \oplus
+\mathbb{C} \cdot c$ with bracket $[v,w] = k\,\omega(v,w)\cdot c$:
+\[
+\bar{B}^{\mathrm{ch}}_g(\mathcal{H}_k)
+\simeq \mathrm{CE}(\hat{\mathfrak{h}}_k)
+= \bigl(\Lambda^*(\mathfrak{h}_g^* \oplus \mathbb{C}),\;
+  d_{\mathrm{CE}}\bigr),
+\quad
+d_{\mathrm{CE}}(\xi) = k\,\omega \quad
+\text{on the central generator }\xi.
+\]
+This is the content of
+Theorem~\ref{thm:heisenberg-higher-genus}: the pairwise
+factorization collapses the full configuration-space bar complex to
+a finite-dimensional cochain complex.
 
-\emph{Step~2.}
-Logarithmic forms $\eta_{12} = d\log(z_1-z_2)$ acquire phase as we move around cycles:
-$$\eta_{12} \to \eta_{12} + 2\pi i \cdot (\text{winding number})$$
+\emph{Step~3: Descent to the Jacobian.}
+The Abel--Jacobi map (Definition~\ref{def:jacobian-variety})
+\[
+\mu\colon \Sigma_g \to \mathrm{Jac}(\Sigma_g)
+= \mathbb{C}^g / (\mathbb{Z}^g + \Omega\,\mathbb{Z}^g)
+\]
+identifies the zero-mode lattice with
+$H_1(\Sigma_g, \mathbb{Z}) \cong \mathbb{Z}^{2g}$.
+The level-$k$ central extension defines a local system
+$\mathcal{L}_k$ on $\mathrm{Jac}(\Sigma_g)$ whose
+monodromy around the lattice vector $\gamma \in
+\mathbb{Z}^g \oplus \Omega\,\mathbb{Z}^g$ is
+$e^{2\pi i k\,\omega(\gamma, -)}$.
+Concretely, sections of $\mathcal{L}_k$ are functions
+$f\colon \mathbb{C}^g \to \mathbb{C}$ satisfying the
+quasi-periodicity conditions
+\begin{align}
+f(z + e_\alpha) &= f(z), \\
+f(z + \Omega\, e_\beta) &= e^{-i\pi k\,\Omega_{\beta\beta}
+  - 2\pi i k\, z_\beta}\, f(z),
+\end{align}
+which are precisely the transformation properties of
+the Riemann theta function at level~$k$
+(Theorem~\ref{thm:theta-properties}).
 
-\emph{Step~3.}
-Elements of $\bar{B}_1^{\text{geom}}(\mathcal{H}_k)$ are:
-$$a(z_1) \otimes a(z_2) \otimes f(z_1,z_2) \, \eta_{12}$$
-where $f(z_1, z_2)$ must account for monodromy.
+The CE differential $d_{\mathrm{CE}}$ on
+$\Lambda^*(\mathfrak{h}_g^*)$ maps, under this descent, to the
+Dolbeault-type differential computing
+$H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k)$.  The key
+point is that the cochain complex
+$(\Lambda^*(\mathfrak{h}_g^*),\, d_{\mathrm{CE}})$ with
+$d_{\mathrm{CE}}$ determined by $k\,\omega$ is isomorphic to
+the de~Rham complex of the flat line bundle $\mathcal{L}_k$
+on the torus $\mathrm{Jac}(\Sigma_g)$: the translation-invariant
+differential forms on $\mathbb{C}^g/\Lambda$ with coefficients
+in $\mathcal{L}_k$ form a complex
+$\Lambda^p(\mathfrak{h}_g^*) \otimes \mathcal{L}_k$, and the
+flat connection $\nabla = d + k\,\omega$ on $\mathcal{L}_k$
+induces precisely the CE differential.
+This gives the isomorphism:
+\[
+H^*(\mathrm{CE}(\hat{\mathfrak{h}}_k))
+\cong H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k).
+\]
 
-\emph{Step~4.}
-Using theta functions, we expand:
-$$f(z_1,z_2) = \sum_{n,m \in \mathbb{Z}} c_{n,m} \, e^{2\pi i(n z_1/\tau + m z_2)}$$
+Combining with Step~2:
+\[
+\bar{B}^{\mathrm{ch}}_g(\mathcal{H}_k)
+\cong \mathrm{CE}(\hat{\mathfrak{h}}_k)
+\otimes H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k).
+\]
 
-The bar differential becomes:
-$$d(a \otimes a \otimes f\eta_{12}) = k \cdot \int_{T^2} f \cdot \delta(z_1-z_2) = k \sum_{n} c_{n,n}$$
+\emph{Step~4: Modular transformation.}
+The symplectic group $\mathrm{Sp}(2g, \mathbb{Z})$ acts on
+$\mathrm{Jac}(\Sigma_g)$ via
+$\Omega \mapsto (A\Omega + B)(C\Omega + D)^{-1}$.
+For the involution $\Omega \mapsto -\Omega^{-1}$
+(corresponding to $A = D = 0$, $B = -C = I_g$),
+the $A$- and $B$-cycles are exchanged:
+$A_i \leftrightarrow B_i$.  The level-$k$ theta function
+\[
+\Theta_k(\Omega)
+= \sum_{n \in \mathbb{Z}^g} e^{i\pi k\, n^T \Omega\, n}
+\]
+transforms by Poisson summation on the lattice
+$\mathbb{Z}^g$:
+\[
+\Theta_k(-\Omega^{-1})
+= \left(\frac{\det(\Omega/i)}{k^g}\right)^{1/2}
+  \Theta_{1/k}(\Omega).
+\]
+This is the multivariable generalization of the Jacobi
+identity $\theta_3(-1/\tau) = (-i\tau)^{1/2}\,\theta_3(\tau)$.
+The $S$-transformation thus sends $k \to 1/k$ at the level
+of sections of $\mathcal{L}_k$.
 
-\emph{Step~5.}
-Under $\tau \to -1/\tau$ (S-transformation):
-- The $A$-cycle becomes the $B$-cycle
-- The winding numbers exchange
-- The level transforms: $k \to -k/\tau^2 \approx -k$ (up to normalization)
+Separately, the bar-cobar duality reverses the curvature
+$m_0 = k \cdot c$ of the Heisenberg algebra
+(Theorem~\ref{thm:heisenberg-curved-structure}), contributing
+the level negation $k \to -k$.  Together, these give the full
+modular intertwining: Koszul duality on $\mathcal{H}_k$ at
+genus~$g$ acts on the Jacobian via the symplectic involution
+of the period matrix.
 
-This is the quantum complementarity: conjugate cycles on the torus exchange under Koszul duality.
+\emph{Step~5: Geometric interpretation.}
+Taking cohomology of the bar complex and applying the
+isomorphisms of Steps~2--3:
+\[
+H^*(\bar{B}_g^{\mathrm{ch}}(\mathcal{H}_k))
+\cong H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k).
+\]
+This is precisely the cohomology of the level-$k$ line bundle
+of theta functions on the Jacobian, which is the statement of
+part~(3) of the theorem.
 
-\emph{General genus.}
-The same argument extends to genus~$g$ by replacing the torus
-$T^2 = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with the Jacobian
-$\mathrm{Jac}(\Sigma_g) = \mathbb{C}^g/(\mathbb{Z}^g + \Omega \cdot
-\mathbb{Z}^g)$, where $\Omega \in \mathbb{H}_g$ is the period matrix.
-The configuration space $C_n(\Sigma_g)$ has monodromy around $2g$ cycles,
-the logarithmic forms $\eta_{ij}$ acquire phases governed by the period
-matrix, and the bar complex elements involve theta functions on
-$\mathrm{Jac}(\Sigma_g)$ at level~$k$: the constraint on the Fourier
-coefficients $c_{n,m}$ generalizes from the $1$-dimensional lattice sum
-to a sum over $\mathbb{Z}^g$ weighted by $e^{i\pi k\, n^T \Omega\, n}$.
-The cohomology of the bar complex then computes
-$H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k)$, where $\mathcal{L}_k$ is
-the level-$k$ line bundle.  The symplectic transformation
-$\Omega \mapsto -\Omega^{-1}$ exchanges $A$- and $B$-cycles and sends
-$k \mapsto 1/k$ by Poisson summation on $\mathbb{Z}^g$, while the
-bar-cobar duality contributes the level negation $k \mapsto -k$.
+\medskip
+\emph{Genus-1 illustration.}
+For $g = 1$, the Jacobian is the elliptic curve
+$T^2 = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$ with
+$\tau \in \mathbb{H}$.
+The zero-mode lattice is $\mathfrak{h}_1 = \mathbb{C}^2$
+with symplectic basis $\{A, B\}$ and $\omega(A,B) = 1$.
+The CE complex is $\Lambda^*(\mathbb{C}^2)$ with
+$d_{\mathrm{CE}}\xi = k\, dA \wedge dB$, and the local
+system $\mathcal{L}_k$ has quasi-periodicity
+$f(z+1) = f(z)$,
+$f(z + \tau) = e^{-i\pi k\tau - 2\pi i k z}\, f(z)$.
+An element of $\bar{B}_1^{\mathrm{geom}}(\mathcal{H}_k)$ has
+the form
+$\alpha(z_1) \otimes \alpha(z_2) \otimes f(z_1,z_2)\,\eta_{12}$,
+and the Fourier expansion
+$f(z_1,z_2) = \sum_{n,m \in \mathbb{Z}}
+  c_{n,m}\, e^{2\pi i(nz_1/\tau + mz_2)}$
+gives the bar differential
+$d(\alpha \otimes \alpha \otimes f\,\eta_{12})
+= k \sum_n c_{n,n}$.
+The constraint $\sum_n c_{n,n} = 0$ defines the kernel, and the
+quotient by the image identifies with sections of $\mathcal{L}_k$
+on $T^2 = \mathrm{Jac}(\Sigma_1)$.
+Under $\tau \to -1/\tau$ the $A$- and $B$-cycles exchange,
+and the Jacobi identity
+$\theta_3(-1/\tau) = (-i\tau)^{1/2}\,\theta_3(\tau)$
+gives the modular transformation of part~(1).
 \end{proof}
 
 \begin{example}[Explicit genus-1 computation]\label{ex:heisenberg-genus1-explicit}
