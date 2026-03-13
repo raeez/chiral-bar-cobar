@@ -916,6 +916,109 @@ def _reduce_sparse_column_against_basis(column: Dict[int, complex],
     return {}
 
 
+def _fully_reduce_sparse_column_against_basis(
+    column: Dict[int, complex],
+    basis: Dict[int, Dict[int, complex]],
+    tol: float = 1e-10,
+) -> Dict[int, complex]:
+    """Reduce until the column has no remaining support on pivot rows."""
+    col = dict(column)
+    while col:
+        pivot_rows = [row for row in col if row in basis]
+        if not pivot_rows:
+            return col
+        pivot = max(pivot_rows)
+        factor = col[pivot]
+        for row, value in basis[pivot].items():
+            new_value = col.get(row, 0.0) - factor * value
+            if abs(new_value) > tol:
+                col[row] = new_value
+            elif row in col:
+                del col[row]
+    return {}
+
+
+def _row_projection_against_basis(
+    basis: Dict[int, Dict[int, complex]],
+    dim: int,
+    missing_rows: Sequence[int] | None = None,
+    tol: float = 1e-10,
+) -> Tuple[Tuple[int, ...], List[Dict[int, complex]]]:
+    """Precompute the quotient projection of each standard row vector."""
+    if missing_rows is None:
+        pivot_rows = set(basis)
+        missing = tuple(row for row in range(dim) if row not in pivot_rows)
+    else:
+        missing = tuple(int(row) for row in missing_rows)
+    missing_index = {row: idx for idx, row in enumerate(missing)}
+    row_projection: List[Dict[int, complex]] = []
+
+    for row in range(dim):
+        reduced = _fully_reduce_sparse_column_against_basis(
+            {row: 1.0 + 0.0j},
+            basis,
+            tol=tol,
+        )
+        row_projection.append(
+            {
+                missing_index[residual_row]: coeff
+                for residual_row, coeff in reduced.items()
+                if abs(coeff) > tol
+            }
+        )
+
+    return missing, row_projection
+
+
+def _project_sparse_column_with_row_projection(
+    column: Dict[int, complex],
+    row_projection: Sequence[Dict[int, complex]],
+    tol: float = 1e-10,
+) -> Dict[int, complex]:
+    """Project a sparse B_n column to quotient coordinates via row images."""
+    projected: Dict[int, complex] = {}
+    for row, coeff in column.items():
+        if abs(coeff) <= tol:
+            continue
+        for projected_row, projected_coeff in row_projection[row].items():
+            new_value = projected.get(projected_row, 0.0) + coeff * projected_coeff
+            if abs(new_value) > tol:
+                projected[projected_row] = new_value
+            elif projected_row in projected:
+                del projected[projected_row]
+    return projected
+
+
+def _coords_against_sparse_basis(
+    column: Dict[int, complex],
+    basis: Dict[int, Dict[int, complex]],
+    tol: float = 1e-10,
+) -> Tuple[Dict[int, complex], Dict[int, complex]]:
+    """Return pivot coordinates and any residual after sparse basis reduction."""
+    col = dict(column)
+    coords: Dict[int, complex] = {}
+
+    while True:
+        pivot_rows = [row for row in col if row in basis]
+        if not pivot_rows:
+            break
+
+        pivot = max(pivot_rows)
+        factor = col[pivot]
+        coords[pivot] = coords.get(pivot, 0.0) + factor
+        for row, value in basis[pivot].items():
+            new_value = col.get(row, 0.0) - factor * value
+            if abs(new_value) > tol:
+                col[row] = new_value
+            elif row in col:
+                del col[row]
+
+    return (
+        {row: value for row, value in coords.items() if abs(value) > tol},
+        {row: value for row, value in col.items() if abs(value) > tol},
+    )
+
+
 def _sparse_rank_from_columns(columns: Iterable[Dict[int, complex]],
                               tol: float = 1e-10,
                               target_rank: Optional[int] = None) -> Tuple[int, int]:
@@ -1024,6 +1127,67 @@ def _n4_dq3_b5_to_b2_column(indices: Tuple[int, int, int, int, int],
     return {
         row: value for row, value in output.items() if abs(value) > tol
     }
+
+
+_N4_H13_CANCELLATION_WITNESS_TUPLES: Tuple[Tuple[int, int, int, int, int], ...] = (
+    (0, 0, 0, 12, 0),
+    (0, 0, 0, 12, 3),
+    (0, 0, 0, 12, 12),
+    (0, 0, 0, 12, 16),
+    (0, 0, 0, 12, 20),
+    (0, 0, 0, 12, 24),
+    (0, 0, 0, 12, 28),
+    (0, 0, 0, 12, 32),
+    (0, 0, 0, 12, 36),
+    (0, 0, 0, 12, 40),
+    (0, 0, 0, 12, 60),
+    (0, 0, 0, 12, 61),
+    (0, 0, 0, 12, 62),
+    (0, 0, 0, 60, 0),
+    (0, 0, 0, 60, 12),
+    (0, 0, 0, 60, 60),
+    (0, 0, 12, 0, 12),
+    (0, 0, 12, 0, 13),
+    (0, 0, 12, 0, 16),
+    (0, 0, 12, 0, 17),
+    (0, 0, 12, 0, 28),
+    (0, 0, 12, 0, 32),
+    (0, 0, 12, 0, 44),
+    (0, 0, 12, 0, 48),
+    (0, 0, 12, 12, 12),
+    (0, 0, 12, 12, 16),
+    (0, 0, 12, 12, 60),
+    (0, 0, 12, 60, 12),
+    (0, 0, 12, 60, 60),
+    (0, 0, 60, 60, 0),
+    (0, 0, 60, 60, 12),
+    (0, 0, 60, 60, 60),
+    (0, 13, 12, 3, 12),
+    (0, 13, 12, 3, 13),
+    (0, 13, 12, 3, 16),
+    (0, 13, 12, 3, 17),
+    (0, 13, 12, 3, 28),
+    (0, 13, 12, 3, 32),
+    (0, 13, 12, 3, 44),
+    (0, 13, 12, 3, 48),
+    (0, 16, 12, 12, 60),
+    (0, 16, 12, 60, 12),
+    (0, 16, 12, 60, 60),
+    (12, 0, 12, 0, 12),
+    (12, 0, 12, 0, 13),
+    (12, 0, 12, 0, 16),
+    (12, 0, 12, 0, 17),
+    (12, 0, 12, 0, 28),
+    (12, 0, 12, 0, 32),
+    (12, 0, 12, 0, 44),
+    (12, 0, 12, 0, 48),
+    (12, 0, 60, 60, 12),
+    (12, 0, 60, 60, 60),
+    (12, 12, 12, 60, 12),
+    (12, 12, 12, 60, 60),
+    (12, 12, 60, 60, 12),
+    (12, 12, 60, 60, 60),
+)
 
 
 @lru_cache(maxsize=None)
@@ -1641,10 +1805,18 @@ def n4_degree2_h13_precursor_screen() -> Dict[str, object]:
     seed_data = _n4_degree2_h13_seed_basis_data()
     tol = seed_data["tol"]
     dim_I = seed_data["dim_I"]
+    dim_b2 = seed_data["dim_b2"]
     sparse_mu = seed_data["sparse_mu"]
     flat2 = seed_data["flat2"]
     seed_basis = {pivot: dict(column) for pivot, column in seed_data["basis"].items()}
+    missing_rows = tuple(seed_data["missing_rows"])
     residual_left_factor_profile = seed_data["residual_left_factor_profile"]
+    _, row_projection = _row_projection_against_basis(
+        seed_basis,
+        dim_b2,
+        missing_rows=missing_rows,
+        tol=tol,
+    )
 
     residual_left_factors = (0, 12, 60)
     residual_left_factor_names = {
@@ -1672,14 +1844,14 @@ def n4_degree2_h13_precursor_screen() -> Dict[str, object]:
                 for middle_right in range(dim_I):
                     for tail in range(dim_I):
                         column_count += 1
-                        reduced = _reduce_sparse_column_against_basis(
+                        reduced = _project_sparse_column_with_row_projection(
                             _n4_dq3_b5_to_b2_column(
                                 (left, right, middle_left, middle_right, tail),
                                 sparse_mu,
                                 flat2,
                                 tol=tol,
                             ),
-                            seed_basis,
+                            row_projection,
                             tol=tol,
                         )
                         independent, support = _insert_sparse_column(
@@ -1732,14 +1904,14 @@ def n4_degree2_h13_precursor_screen() -> Dict[str, object]:
             for tail_left in range(dim_I):
                 for tail_right in range(dim_I):
                     column_count += 1
-                    reduced = _reduce_sparse_column_against_basis(
+                    reduced = _project_sparse_column_with_row_projection(
                         _n4_dq3_b5_to_b2_column(
                             (left, middle_left, middle_right, tail_left, tail_right),
                             sparse_mu,
                             flat2,
                             tol=tol,
                         ),
-                        seed_basis,
+                        row_projection,
                         tol=tol,
                     )
                     independent, support = _insert_sparse_column(
@@ -1792,14 +1964,14 @@ def n4_degree2_h13_precursor_screen() -> Dict[str, object]:
             precursor_added_rank = 0
             for tail_right in range(dim_I):
                 column_count += 1
-                reduced = _reduce_sparse_column_against_basis(
+                reduced = _project_sparse_column_with_row_projection(
                     _n4_dq3_b5_to_b2_column(
                         (left, middle_left, middle_right, tail_left, tail_right),
                         sparse_mu,
                         flat2,
                         tol=tol,
                     ),
-                    seed_basis,
+                    row_projection,
                     tol=tol,
                 )
                 independent, support = _insert_sparse_column(
@@ -2279,6 +2451,248 @@ def n4_degree2_h13_cancellation_plane() -> Dict[str, object]:
 
 
 @lru_cache(maxsize=None)
+def n4_degree2_h13_cancellation_operator() -> Dict[str, object]:
+    """Extract the common-plane cancellation operator from canonical witnesses.
+
+    The witness list is the deterministic greedy basis selected by the first
+    57 surviving full split columns whose first-term projections span the
+    common quotient plane.  In that basis the surviving non-first split sector
+    defines an honest endomorphism T of the 57-plane, and the weighted full
+    surviving columns act by (1 + i) Id + T.
+    """
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    sparse_mu = seed_data["sparse_mu"]
+    flat2 = seed_data["flat2"]
+    seed_basis = seed_data["basis"]
+    missing_rows = set(seed_data["missing_rows"])
+    residual_left_factors = (0, 12, 60)
+    split = _n4_dq3_split_coefficients()
+
+    full_basis = {
+        pivot: dict(column) for pivot, column in seed_basis.items()
+    }
+    for row in seed_data["missing_rows"]:
+        full_basis[row] = {row: 1.0 + 0.0j}
+
+    state_vectors: Dict[Tuple[Tuple[int, float, float], ...], Dict[int, complex]] = {}
+    right_multiply_cache: Dict[
+        Tuple[Tuple[Tuple[int, float, float], ...], int],
+        Tuple[Tuple[int, float, float], ...],
+    ] = {}
+
+    def sparse_state_key(column: Dict[int, complex]) -> Tuple[Tuple[int, float, float], ...]:
+        return tuple(
+            sorted(
+                (
+                    row,
+                    round(value.real, 12),
+                    round(value.imag, 12),
+                )
+                for row, value in column.items()
+                if abs(value) > tol
+            )
+        )
+
+    def sparse_state_vector(state_key: Tuple[Tuple[int, float, float], ...]) -> Dict[int, complex]:
+        if state_key not in state_vectors:
+            state_vectors[state_key] = {
+                row: complex(real_part, imag_part)
+                for row, real_part, imag_part in state_key
+            }
+        return state_vectors[state_key]
+
+    def right_multiply_state(
+        state_key: Tuple[Tuple[int, float, float], ...],
+        factor: int,
+    ) -> Tuple[Tuple[int, float, float], ...]:
+        cache_key = (state_key, factor)
+        if cache_key in right_multiply_cache:
+            return right_multiply_cache[cache_key]
+
+        product: Dict[int, complex] = {}
+        for left, left_coeff in sparse_state_vector(state_key).items():
+            for idx, coeff in sparse_mu[left][factor].items():
+                product[idx] = product.get(idx, 0.0) + left_coeff * coeff
+
+        state_key_product = sparse_state_key(product)
+        right_multiply_cache[cache_key] = state_key_product
+        return state_key_product
+
+    def quotient_coords(column: Dict[int, complex]) -> Dict[int, complex]:
+        reduced = dict(column)
+        coefficients: Dict[int, complex] = {}
+        while reduced:
+            pivot = max(reduced)
+            factor = reduced[pivot]
+            coefficients[pivot] = coefficients.get(pivot, 0.0) + factor
+            for row, value in full_basis[pivot].items():
+                new_value = reduced.get(row, 0.0) - factor * value
+                if abs(new_value) > tol:
+                    reduced[row] = new_value
+                elif row in reduced:
+                    del reduced[row]
+        return {
+            row: value
+            for row, value in coefficients.items()
+            if row in missing_rows and abs(value) > tol
+        }
+
+    quotient_row_coords = [
+        quotient_coords({row: 1.0 + 0.0j})
+        for row in range(dim_I * dim_I)
+    ]
+
+    def tensor_quotient_coords(
+        left_state_key: Tuple[Tuple[int, float, float], ...],
+        right_state_key: Tuple[Tuple[int, float, float], ...],
+    ) -> Dict[int, complex]:
+        output: Dict[int, complex] = {}
+        for left_idx, left_coeff in sparse_state_vector(left_state_key).items():
+            for right_idx, right_coeff in sparse_state_vector(right_state_key).items():
+                coeff = left_coeff * right_coeff
+                for row, value in quotient_row_coords[flat2[left_idx][right_idx]].items():
+                    output[row] = output.get(row, 0.0) + coeff * value
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    basis_keys = [
+        sparse_state_key({idx: 1.0 + 0.0j})
+        for idx in range(dim_I)
+    ]
+    left_singletons = {
+        left_factor: basis_keys[left_factor]
+        for left_factor in residual_left_factors
+    }
+
+    first_basis: Dict[int, Dict[int, complex]] = {}
+    for witness in _N4_H13_CANCELLATION_WITNESS_TUPLES:
+        left_factor, b, c, d, e = witness
+        left_key = left_singletons[left_factor]
+        left_pair_key = sparse_state_key(sparse_mu[left_factor][b])
+        right_prefix_key = basis_keys[b]
+        left_triple_key = right_multiply_state(left_pair_key, c)
+        right_triple_key = right_multiply_state(right_prefix_key, c)
+        left_quad_key = right_multiply_state(left_triple_key, d)
+        right_quad_key = right_multiply_state(right_triple_key, d)
+        first_vec = tensor_quotient_coords(
+            left_key,
+            right_multiply_state(right_quad_key, e),
+        )
+        _insert_sparse_column(first_vec, first_basis, tol=tol)
+
+    pivot_order = tuple(sorted(first_basis.keys(), reverse=True))
+    basis_dim = len(pivot_order)
+    if basis_dim != len(_N4_H13_CANCELLATION_WITNESS_TUPLES):
+        raise ValueError("Canonical witness list does not span the common 57-plane")
+    pivot_index = {pivot: idx for idx, pivot in enumerate(pivot_order)}
+
+    first_matrix = np.zeros((basis_dim, basis_dim), dtype=complex)
+    nonfirst_matrix = np.zeros((basis_dim, basis_dim), dtype=complex)
+    weighted_matrix = np.zeros((basis_dim, basis_dim), dtype=complex)
+
+    for column_index, witness in enumerate(_N4_H13_CANCELLATION_WITNESS_TUPLES):
+        left_factor, b, c, d, e = witness
+        left_key = left_singletons[left_factor]
+        left_pair_key = sparse_state_key(sparse_mu[left_factor][b])
+        right_prefix_key = basis_keys[b]
+        left_triple_key = right_multiply_state(left_pair_key, c)
+        right_triple_key = right_multiply_state(right_prefix_key, c)
+        middle_left_key = basis_keys[c]
+        left_quad_key = right_multiply_state(left_triple_key, d)
+        right_quad_key = right_multiply_state(right_triple_key, d)
+        middle_right_key = basis_keys[d]
+        cd_key = right_multiply_state(middle_left_key, d)
+
+        first_vec = tensor_quotient_coords(
+            left_key,
+            right_multiply_state(right_quad_key, e),
+        )
+        term2 = tensor_quotient_coords(
+            left_pair_key,
+            right_multiply_state(cd_key, e),
+        )
+        term3 = tensor_quotient_coords(
+            left_triple_key,
+            right_multiply_state(middle_right_key, e),
+        )
+        term4 = tensor_quotient_coords(left_quad_key, basis_keys[e])
+
+        nonfirst_vec: Dict[int, complex] = {}
+        for source, coeff in (
+            (term2, split[2]),
+            (term3, split[3]),
+            (term4, split[4]),
+        ):
+            for row, value in source.items():
+                nonfirst_vec[row] = nonfirst_vec.get(row, 0.0) + coeff * value
+        nonfirst_vec = {
+            row: value for row, value in nonfirst_vec.items() if abs(value) > tol
+        }
+
+        weighted_vec: Dict[int, complex] = {}
+        for row, value in first_vec.items():
+            weighted_vec[row] = weighted_vec.get(row, 0.0) + split[1] * value
+        for row, value in nonfirst_vec.items():
+            weighted_vec[row] = weighted_vec.get(row, 0.0) + value
+        weighted_vec = {
+            row: value for row, value in weighted_vec.items() if abs(value) > tol
+        }
+
+        first_coords, first_residual = _coords_against_sparse_basis(
+            first_vec,
+            first_basis,
+            tol=tol,
+        )
+        nonfirst_coords, nonfirst_residual = _coords_against_sparse_basis(
+            nonfirst_vec,
+            first_basis,
+            tol=tol,
+        )
+        weighted_coords, weighted_residual = _coords_against_sparse_basis(
+            weighted_vec,
+            first_basis,
+            tol=tol,
+        )
+        if first_residual or nonfirst_residual or weighted_residual:
+            raise ValueError("Canonical witness column left the common quotient plane")
+
+        for pivot, value in first_coords.items():
+            first_matrix[pivot_index[pivot], column_index] = value
+        for pivot, value in nonfirst_coords.items():
+            nonfirst_matrix[pivot_index[pivot], column_index] = value
+        for pivot, value in weighted_coords.items():
+            weighted_matrix[pivot_index[pivot], column_index] = value
+
+    operator_matrix = nonfirst_matrix @ np.linalg.inv(first_matrix)
+    weighted_operator_matrix = split[1] * np.eye(basis_dim, dtype=complex) + operator_matrix
+    scalar_candidate = -split[1]
+    scalar_identity_deviation = operator_matrix - scalar_candidate * np.eye(basis_dim, dtype=complex)
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "status": "witness-basis common-plane operator",
+        "basis_dim": basis_dim,
+        "witness_tuples": _N4_H13_CANCELLATION_WITNESS_TUPLES,
+        "pivot_rows": pivot_order,
+        "split1_scalar": split[1],
+        "operator_rank": int(np.linalg.matrix_rank(operator_matrix, tol=tol)),
+        "weighted_rank": int(np.linalg.matrix_rank(weighted_operator_matrix, tol=tol)),
+        "weighted_nullity": basis_dim - int(np.linalg.matrix_rank(weighted_operator_matrix, tol=tol)),
+        "scalar_candidate": scalar_candidate,
+        "max_deviation_from_scalar_identity": float(np.max(np.abs(scalar_identity_deviation))),
+        "weighted_max_entry_abs": float(np.max(np.abs(weighted_operator_matrix))),
+        "operator_matrix": operator_matrix,
+        "weighted_operator_matrix": weighted_operator_matrix,
+        "witness_common_plane_matrix": weighted_matrix,
+    }
+
+
+@lru_cache(maxsize=None)
 def kl_periodic_shadow_candidates() -> Dict[str, object]:
     """Compare the first resolved KL packet against elementary shadow candidates."""
     n3_packet = n3_degree4_flavor_packet()
@@ -2288,6 +2702,7 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
     n4_degree2_h13 = n4_degree2_h13_channel_bounds()
     n4_degree2_h13_first_term = n4_degree2_h13_first_term_state_compression()
     n4_degree2_h13_plane = n4_degree2_h13_cancellation_plane()
+    n4_degree2_h13_operator = n4_degree2_h13_cancellation_operator()
     n3_report = admissible_level_flavor_report(3, max_degree=3)
 
     return {
@@ -2309,6 +2724,7 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
         "N4_degree2_h13_bound": n4_degree2_h13,
         "N4_degree2_h13_first_term_compression": n4_degree2_h13_first_term,
         "N4_degree2_h13_cancellation_plane": n4_degree2_h13_plane,
+        "N4_degree2_h13_cancellation_operator": n4_degree2_h13_operator,
     }
 
 

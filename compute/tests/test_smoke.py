@@ -228,13 +228,32 @@ class TestInfiniteGeneratorFrontier:
             TruncatedWinfinitySupportComplex,
             verify_truncated_w_infinity_ope,
             verify_w_infinity_support_complex,
+            completed_bar_candidate_descriptor,
+            stage4_dual_goal_report,
+            stage4_primitive_square_class_report,
+            stage4_target_packet_at_level,
+            stage4_defect_vanishing_report,
+            standard_winfinity_dual_candidate_report,
+            verify_standard_winfinity_dual_candidate,
         )
         model = TruncatedWinfinityOPE(max_spin=5)
         support = TruncatedWinfinitySupportComplex(max_spin=5)
+        descriptor = completed_bar_candidate_descriptor()
+        goal = stage4_dual_goal_report()
+        square_class = stage4_primitive_square_class_report()
+        packet = stage4_target_packet_at_level(1)
+        vanishing = stage4_defect_vanishing_report(1, packet)
+        report = standard_winfinity_dual_candidate_report()
         assert model.generator_spins == (2, 3, 4, 5)
         assert support.weight_sector_basis(4) == ((4,), (2, 2))
+        assert descriptor["kind"] == "inverse_limit_bar"
+        assert goal["goal"] == "vanish all six stage-4 defects"
+        assert square_class["primitive_count"] == 2
+        assert vanishing["all_vanish"] is True
+        assert report["stage4"]["virasoro_constraints"][(4, 4, 2, 6)]["expression"] == 2
         assert all(verify_truncated_w_infinity_ope(5, 7).values())
         assert all(verify_w_infinity_support_complex(5, 7).values())
+        assert all(verify_standard_winfinity_dual_candidate().values())
 
 
 @pytest.mark.slow

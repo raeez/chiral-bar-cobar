@@ -64,6 +64,7 @@ from compute.lib.kl_ncomplex_sl2 import (
     n4_degree2_h13_precursor_screen,
     n4_degree2_h13_first_term_state_compression,
     n4_degree2_h13_cancellation_plane,
+    n4_degree2_h13_cancellation_operator,
     kl_periodic_shadow_candidates,
     # Diagnostics
     verify_uq_relations,
@@ -921,6 +922,27 @@ class TestN4LowDegreeFlavorWindow:
         assert plane["term4_left_state_count"] == 1118
         assert plane["union_final_right_product_state_count"] == 1493
         assert plane["shared_plane_gap_to_full_quotient"] == 9
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_cancellation_operator_is_scalar(self):
+        """On the witness common plane, the surviving full split action cancels exactly."""
+        operator = n4_degree2_h13_cancellation_operator()
+
+        assert operator["N"] == 4
+        assert operator["degree"] == 2
+        assert operator["flavor"] == (1, 3)
+        assert operator["status"] == "witness-basis common-plane operator"
+        assert operator["basis_dim"] == 57
+        assert len(operator["witness_tuples"]) == 57
+        assert operator["split1_scalar"] == pytest.approx(1.0 + 1.0j)
+        assert operator["operator_rank"] == 57
+        assert operator["weighted_rank"] == 0
+        assert operator["weighted_nullity"] == 57
+        assert operator["scalar_candidate"] == pytest.approx(-1.0 - 1.0j)
+        assert operator["max_deviation_from_scalar_identity"] < 1e-12
+        assert operator["weighted_max_entry_abs"] < 1e-12
+        assert operator["operator_matrix"].shape == (57, 57)
+        assert operator["weighted_operator_matrix"].shape == (57, 57)
 
 
 # ============================================================================
