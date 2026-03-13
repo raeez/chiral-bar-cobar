@@ -216,8 +216,27 @@ Else                                                 -> doctrinal propagation or
   `W^{(4)}` / `W^{(5)}` pairing locus, and
   `cor:winfty-stage5-target5-no-new-independent-data` shows that on the full visible
   `W^{(3)}` / `W^{(4)}` / `W^{(5)}` pairing locus the whole target-`5` corridor carries
-  no new independent coefficient.
-  Next: `conj:winfty-stage5-block-34`, then `conj:winfty-stage5-transport-target5-35`,
+  no new independent coefficient.  `prop:winfty-stage5-target4-pole5-w4-vanishing`,
+  `prop:winfty-stage5-target3-pole5-w3-vanishing`, and
+  `prop:winfty-stage5-transport-cross-target-reduction` then collapse the remaining
+  target-`4` / target-`3` transport front to one effective coefficient, and
+  `cor:winfty-stage5-effective-independent-frontier` shows that on the same full visible
+  pairing locus the whole stage-`5` higher-spin packet carries one effective independent
+  coefficient, represented by `(3,5;4;0,4)`.  `conj:winfty-stage5-principal-target5-no-new-independent-data`
+  and `conj:winfty-stage5-principal-residual-front-one-coefficient`
+  then split the remaining principal-side structural input into the target-`5`
+  corridor and the residual front, and
+  `prop:winfty-stage5-principal-one-coefficient-factorization` packages
+  their conjunction as `conj:winfty-stage5-principal-one-coefficient-normal-form`;
+  `prop:winfty-stage5-one-coefficient-reduction` reduces the full visible-pairing
+  stage-`5` comparison to the single identity of
+  `conj:winfty-stage5-one-coefficient-comparison`.
+  Next on the full visible pairing locus:
+  `conj:winfty-stage5-principal-target5-no-new-independent-data`,
+  `conj:winfty-stage5-principal-residual-front-one-coefficient`,
+  then `conj:winfty-stage5-one-coefficient-comparison`.
+  Unconditionally:
+  `conj:winfty-stage5-block-34`, then `conj:winfty-stage5-transport-target5-35`,
   then `conj:winfty-stage5-transport-target5-45`.
 
 ---
