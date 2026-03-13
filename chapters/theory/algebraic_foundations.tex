@@ -1,23 +1,19 @@
-% Constitutional note:
-% Chapter 34 (concordance.tex) is the normative status ledger.
-% If a local statement disagrees with Chapter 34's status or scope,
-% the local statement is stale and must be rewritten or ignored.
+% Status and semantic-level disputes are settled by Chapter 34 (concordance.tex).
 \chapter{Algebraic foundations and bar constructions}\label{ch:algebraic-foundations}
 
 
 \begin{remark}[Governing question]
-The governing question of this chapter is which algebraic operations, adjunctions, and finiteness conventions must be fixed before the geometric bar construction and its inversion can even be stated.
+The bar transform is a functor, not just a construction: it requires operadic prerequisites (quadratic data, cofree coalgebras, twisting morphisms) that make the adjunction $\B \dashv \Omega$ precise.  This chapter fixes those prerequisites.
 \end{remark}
 
 \begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-This chapter is primarily H/M-level. It builds homotopy-native or model-level constructions explicitly, and any scalar, character, or numerical consequences are read only as S-level shadows unless the printed theorem surface says otherwise.
+H/M-level; S-level consequences promoted only where theorem labels do so.
 \end{remark}
 Chapter~\ref{ch:heisenberg-frame} computed the bar complex of the
 Heisenberg algebra from its OPE\@.  The classical algebraic
 template --- Koszul duality for quadratic algebras, the bar-cobar
 adjunction, and factorization axioms --- underlies all chiral
-constructions that follow.
-\label{rem:algebraic-foundations-hms}
+constructions that follow.\label{rem:algebraic-foundations-hms}
 
 \section{Classical Koszul duality}
 \label{sec:classical-koszul-foundation}
@@ -103,7 +99,7 @@ Conditions (1)--(2) establish \emph{Koszul duality}: bar of $A_1$ produces the d
 
 \subsection{Classical examples revisited}
 
-\begin{theorem}[Classical Koszul pairs; \ClaimStatusProvedElsewhere{} \cite{Priddy70,BGS96,LV}]
+\begin{theorem}[Classical Koszul pairs; \ClaimStatusProvedElsewhere{} \cite{Priddy70,BGS96,LV12}]
 \label{thm:quadratic-koszul}
 \index{Koszul duality!classical}
 \index{Chevalley--Eilenberg complex}
@@ -167,7 +163,7 @@ in $\mathcal{A}_1^! \otimes \mathcal{A}_2$.
 \index{twisting morphism|textbf}
 \index{Maurer--Cartan element|textbf}
 The twisting morphism $\tau_{12}\colon \mathcal{A}_1^! \to \mathcal{A}_2$ maps from the coalgebra dual to the algebra and is geometrically realized as:
-$$\tau(c \otimes d) = \int_{\overline{C}_2(X)} \text{ev}^*(c \otimes d) \wedge K(z_1, z_2)$$
+\[\tau(c \otimes d) = \int_{\overline{C}_2(X)} \text{ev}^*(c \otimes d) \wedge K(z_1, z_2)\]
 where $K$ is a universal integration kernel.  See Definition~\ref{def:chiral-koszul-pair} for the complete formulation.
 \end{remark}
 
@@ -181,22 +177,22 @@ Gui--Li--Zeng~\cite{GLZ22} define Koszul duality for chiral algebras through fou
 \emph{Chiral quadratic data.}
 A pair $(N, P)$ where $N$ is a sheaf of generators (chiral vector space) and $P \subset j_* j^* (N \boxtimes N)$ is a subsheaf of quadratic relations.
 The quadratic chiral algebra is
-$$\mathcal{A}(N, P) = \frac{\mathcal{A}(N)}{(P)}$$
+\[\mathcal{A}(N, P) = \frac{\mathcal{A}(N)}{(P)}\]
 where $\mathcal{A}(N)$ is the free chiral algebra on $N$.
 
 \emph{Dualizable quadratic data.}
 $(N, P)$ is \emph{dualizable} if $(s^{-1}N^{\vee}\omega^{-1}, P^{\perp})$ is also a chiral
 quadratic datum, where $N^{\vee}\omega^{-1}$ is the dual with twist by inverse canonical bundle and $P^{\perp}$ is the chiral annihilator defined by
-$$\mu(\langle P \otimes \omega_{X^2}, P^{\perp} \otimes s^2\omega_{X^2}\rangle) = 0$$
+\[\mu(\langle P \otimes \omega_{X^2}, P^{\perp} \otimes s^2\omega_{X^2}\rangle) = 0\]
 under the unit chiral operation $\mu$.
 
 \emph{Quadratic dual.}
 For dualizable $(N, P)$, the quadratic dual is
-$$\mathcal{A}^! = \mathcal{A}(s^{-1}N^{\vee}\omega^{-1}, P^{\perp}).$$
+\[\mathcal{A}^! = \mathcal{A}(s^{-1}N^{\vee}\omega^{-1}, P^{\perp}).\]
 
 \emph{Maurer--Cartan correspondence.}
 There is a bijection
-$$\operatorname{Hom}(\mathcal{A}, \mathcal{B}) \leftrightarrow MC(\mathcal{A}^! \otimes \mathcal{B})$$
+\[\operatorname{Hom}(\mathcal{A}, \mathcal{B}) \leftrightarrow MC(\mathcal{A}^! \otimes \mathcal{B})\]
 between morphisms of chiral algebras and Maurer--Cartan elements in the tensor product.
 \end{definition}
 
@@ -298,9 +294,9 @@ The composition product is associative up to canonical isomorphism, with unit gi
 
 \begin{remark}\label{princ:factorization-locality}
 The factorization axiom for chiral algebras,
-$$\mathcal{A}(U \sqcup V) \simeq \mathcal{A}(U) \otimes \mathcal{A}(V),$$
+\[\mathcal{A}(U \sqcup V) \simeq \mathcal{A}(U) \otimes \mathcal{A}(V),\]
 is the algebraic encoding of locality. From the NAP perspective, this is excision:
-$$\int_{M_1 \sqcup M_2} A = \int_{M_1} A \otimes \int_{M_2} A.$$
+\[\int_{M_1 \sqcup M_2} A = \int_{M_1} A \otimes \int_{M_2} A.\]
 Factorization algebras are precisely the coefficient systems for non-abelian Poincar\'e duality.
 \end{remark}
 
@@ -308,7 +304,7 @@ Factorization algebras are precisely the coefficient systems for non-abelian Poi
 
 \begin{definition}[Ran space]\label{def:ran-space}
 The Ran space of X is:
-$$\text{Ran}(X) = \varinjlim_{I \in \text{fSet}^{\text{surj}}} X^I$$
+\[\text{Ran}(X) = \varinjlim_{I \in \text{fSet}^{\text{surj}}} X^I\]
 the space of finite non-empty subsets of $X$, where the colimit is taken over the category of non-empty finite sets with surjections. The surjections $I \twoheadrightarrow J$ induce diagonal embeddings $X^J \hookrightarrow X^I$, identifying configurations where points collide.
 
 A factorization algebra on X is equivalent to a constructible sheaf on $\text{Ran}(X)$ satisfying compatibility conditions.
@@ -443,7 +439,7 @@ The differential $d = d_{\mathrm{internal}} + d_{\mathrm{decomposition}}$ combin
 \section{Cotriple resolution and configuration spaces}
 
 \begin{remark}[Configuration spaces and factorization]
-By the Ayala--Francis theorem~\cite{AF}, factorization homology $\int_X \mathcal{A}$ of a chiral algebra on a curve $X$ is computed by the colimit $\mathrm{colim}_{n} [ \mathcal{A}^{\otimes n} \otimes \Omega^*(\mathrm{Conf}_n(X)) ]$. The bar complex is the dual construction.
+By the Ayala--Francis theorem~\cite{AF15}, factorization homology $\int_X \mathcal{A}$ of a chiral algebra on a curve $X$ is computed by the colimit $\mathrm{colim}_{n} [ \mathcal{A}^{\otimes n} \otimes \Omega^*(\mathrm{Conf}_n(X)) ]$. The bar complex is the dual construction.
 \end{remark}
 
 \subsection{The genus expansion}
@@ -451,10 +447,10 @@ By the Ayala--Francis theorem~\cite{AF}, factorization homology $\int_X \mathcal
 
 The genus-$g$ bar complex $C_{\bullet}^{(g)}(\mathcal{A}) = \int_{\mathrm{Conf}_{\bullet}(\Sigma_g)} \mathcal{A}^{\boxtimes \bullet}$ (factorization homology in the sense of Ayala--Francis) extends the classical bar complex from genus $0$ to all genera. Genus $0$ gives the associative structure; genus $1$ introduces central extensions via the trace around $S^1$; genus $g \ge 2$ gives higher modular corrections. The functor $\mathcal{A} \mapsto \{ C_\bullet^{(g)}(\mathcal{A}) \}_{g \ge 0}$ is uniquely determined by functoriality under degenerations, compatibility with factorization, and genus-$0$ data. In CFT, this is the loop expansion $Z = \sum_{g} \hbar^{2g-2} \int_{\mathcal{M}_g} F_g$; the bar-cobar construction at genus $g$ computes the integrand $F_g$. The full treatment is Chapter~\ref{chap:higher-genus}.
 
-\begin{theorem}[Operadic bar complex \cite{LV}; \ClaimStatusProvedElsewhere]\label{thm:operadic-bar}
+\begin{theorem}[Operadic bar complex \cite{LV12}; \ClaimStatusProvedElsewhere]\label{thm:operadic-bar}
 \index{operadic bar construction}
 For an operad $\mathcal{P}$ and $\mathcal{P}$-algebra $A$, the bar complex is:
-$$B_{\mathcal{P}}(A) = \bigoplus_{n \geq 1} (\mathcal{P}^{\text{\raisebox{0.5ex}{\tiny !`}}}(n) \otimes_{\Sigma_n} A^{\otimes n})$$
+\[B_{\mathcal{P}}(A) = \bigoplus_{n \geq 1} (\mathcal{P}^{\text{\raisebox{0.5ex}{\tiny !`}}}(n) \otimes_{\Sigma_n} A^{\otimes n})\]
 where $\mathcal{P}^{\text{\raisebox{0.5ex}{\tiny !`}}}$ is the Koszul dual cooperad (which already incorporates the appropriate suspension), and the differential combines the cooperad cocomposition with the algebra structure maps of $A$.
 \end{theorem}
 
@@ -467,7 +463,7 @@ For the chiral operad $\mathcal{P}_{\text{ch}}$ on a curve $X$:
 \end{enumerate}
 
 This provides a canonical isomorphism:
-$$B_{\mathcal{P}_{\text{ch}}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}_{\text{geom}}(\mathcal{A})$$
+\[B_{\mathcal{P}_{\text{ch}}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}_{\text{geom}}(\mathcal{A})\]
 \end{theorem}
 
 \begin{proof}
@@ -554,11 +550,11 @@ Classical results of Björner--Wachs~\cite{BW83} and Stanley~\cite{Sta97} establ
 The geometric realization $|\barPi_n|$ is homotopy equivalent to a wedge of $(n-1)!$ spheres of dimension $n-3$, with the $S_n$-action on the top homology given by the Lie representation tensored with the sign.
 
 For Com-Lie duality, the bar construction gives:
-$$\barB(\Com)(n) \simeq s^{n-1}\tilde{C}_{*}(\barPi_n) \otimes \sgn_n$$
+\[\barB(\Com)(n) \simeq s^{n-1}\tilde{C}_{*}(\barPi_n) \otimes \sgn_n\]
 Taking homology and using that $\barPi_n$ has homology concentrated in the single degree $n-3$:
-$$H_*(\barB(\Com)(n)) \simeq s^{n-1}\tilde{H}_{n-3}(\barPi_n) \otimes \sgn_n = s^{n-1}\Lie(n) \otimes \sgn_n \otimes \sgn_n = s^{n-1}\Lie(n)$$
+\[H_*(\barB(\Com)(n)) \simeq s^{n-1}\tilde{H}_{n-3}(\barPi_n) \otimes \sgn_n = s^{n-1}\Lie(n) \otimes \sgn_n \otimes \sgn_n = s^{n-1}\Lie(n)\]
 Since this is concentrated in a single degree, the bar complex is formal and we obtain:
-$$\barB(\Com) \simeq \text{co}\Lie[1]$$
+\[\barB(\Com) \simeq \text{co}\Lie[1]\]
 as required.
  
 Since the bar complex has homology concentrated in a single degree, it follows that:
@@ -583,7 +579,7 @@ These are compositional inverses: $P_{\Lie}(-P_{\Com}(-x)) = x$. This functional
  
 For explicit computations, we need the quadratic presentations:
  
-\begin{proposition}[Quadratic presentations~\cite{LV}; \ClaimStatusProvedElsewhere]\label{prop:quadratic-presentations-com-lie}
+\begin{proposition}[Quadratic presentations~\cite{LV12}; \ClaimStatusProvedElsewhere]\label{prop:quadratic-presentations-com-lie}
 The operads $\Com$ and $\Lie$ have quadratic presentations:
 \begin{align}
 \Com &= \Free(\mu)/(R_{\Com}) \text{ where } R_{\Com} = \langle \mu_{12,3} - \mu_{1,23}, \mu_{12} - \mu_{21} \rangle \\
@@ -625,7 +621,7 @@ Similar computations for all pairs verify the orthogonality.
 In quantum field theory, locality requires that observables in spacelike separated
 regions commute (or anti-commute for fermions).  Mathematically, for disjoint
 regions $U, V \subset M$ this becomes
-$$\mathcal{F}(U \sqcup V) \cong \mathcal{F}(U) \otimes \mathcal{F}(V),$$
+\[\mathcal{F}(U \sqcup V) \cong \mathcal{F}(U) \otimes \mathcal{F}(V),\]
 which is the factorization axiom.  Factorization algebras formalize the assembly
 of local observables into a global theory.
 \end{remark}
@@ -634,7 +630,7 @@ of local observables into a global theory.
 Factorization algebras are \emph{coefficient systems} on configuration spaces.
 
 For a manifold $M$, consider the configuration space:
-$$C_n(M) = \{(x_1, \ldots, x_n) \in M^n : x_i \neq x_j \text{ for } i \neq j\}$$
+\[C_n(M) = \{(x_1, \ldots, x_n) \in M^n : x_i \neq x_j \text{ for } i \neq j\}\]
 
 A factorization algebra $\mathcal{F}$ assigns:
 \begin{itemize}
@@ -643,9 +639,9 @@ A factorization algebra $\mathcal{F}$ assigns:
 \end{itemize}
 
 The factorization property encodes:
-$$\mathcal{F}(U)= \text{colim}_{(x_1,\ldots,x_n) \in C_n(U)} 
+\[\mathcal{F}(U)= \text{colim}_{(x_1,\ldots,x_n) \in C_n(U)} 
    \mathcal{F}(\text{disk around } x_1) \otimes \cdots \otimes 
-   \mathcal{F}(\text{disk around } x_n)$$
+   \mathcal{F}(\text{disk around } x_n)\]
 
 The algebraic structure arises from the geometry of configuration spaces.
 \end{construction}
@@ -654,18 +650,18 @@ The algebraic structure arises from the geometry of configuration spaces.
 We verify the factorization axioms explicitly for:
 
 \emph{Observables in mechanics.}
-$$\mathcal{F}(U) = C^\infty(U) \quad \text{(functions on configuration space)}$$
+\[\mathcal{F}(U) = C^\infty(U) \quad \text{(functions on configuration space)}\]
 
 For disjoint $U, V$:
-$$\mathcal{F}(U \sqcup V) = C^\infty(U \sqcup V) \cong C^\infty(U) \oplus C^\infty(V)
-   = \mathcal{F}(U) \oplus \mathcal{F}(V)$$
+\[\mathcal{F}(U \sqcup V) = C^\infty(U \sqcup V) \cong C^\infty(U) \oplus C^\infty(V)
+   = \mathcal{F}(U) \oplus \mathcal{F}(V)\]
 (Note: this is a direct sum/product, not a tensor product. For the tensor factorization axiom $\mathcal{F}(U \sqcup V) \cong \mathcal{F}(U) \otimes \mathcal{F}(V)$, one instead uses the symmetric algebra $\mathcal{F}(U) = \text{Sym}(\Gamma_c(U, E))$ on compactly supported sections.)
 
 \emph{Chiral algebra (Heisenberg).}
-$$\mathcal{H}(U) = \text{Free chiral algebra generated by } U$$
+\[\mathcal{H}(U) = \text{Free chiral algebra generated by } U\]
 
 For disjoint disks $D_1, D_2 \subset \mathbb{C}$:
-$$\mathcal{H}(D_1 \sqcup D_2) = \mathcal{H}(D_1) \otimes \mathcal{H}(D_2)$$
+\[\mathcal{H}(D_1 \sqcup D_2) = \mathcal{H}(D_1) \otimes \mathcal{H}(D_2)\]
 
 (no interaction between separated regions).
 \end{computation}
@@ -725,8 +721,8 @@ consists of:
 
 \item For each finite collection of pairwise disjoint opens $U_1, \ldots, U_n \subset V$:
    a \emph{factorization map}
-   $$\mu_{U_1,\ldots,U_n}^V: \mathcal{F}(U_1) \otimes \cdots \otimes \mathcal{F}(U_n)
-      \to \mathcal{F}(V).$$
+   \[\mu_{U_1,\ldots,U_n}^V: \mathcal{F}(U_1) \otimes \cdots \otimes \mathcal{F}(U_n)
+      \to \mathcal{F}(V).\]
 \end{enumerate}
 
 \emph{Axioms.}
@@ -742,36 +738,36 @@ from $\text{Opens}(M)$ to $\mathcal{V}$:
 
 (FA2) \emph{Multiplicativity.} For disjoint opens $U_1, \ldots, U_n \subset V$,
 the factorization map is a structure map:
-$$\mu_{U_1,\ldots,U_n}^V: \mathcal{F}(U_1) \otimes \cdots \otimes \mathcal{F}(U_n)
-   \longrightarrow \mathcal{F}(V)$$
+\[\mu_{U_1,\ldots,U_n}^V: \mathcal{F}(U_1) \otimes \cdots \otimes \mathcal{F}(U_n)
+   \longrightarrow \mathcal{F}(V)\]
 This map is a quasi-isomorphism when $\{U_1, \ldots, U_n\}$ forms a
 Weiss cover of $V$ (Definition~\ref{def:weiss-cover}), but for arbitrary disjoint opens it is merely a morphism (not necessarily an equivalence).
 
 (FA3) \emph{Associativity.} For nested collections
 $U_{ij} \subset V_i \subset W$ (all disjoint), the diagram commutes:
-$$\begin{tikzcd}[column sep=large]
+\[\begin{tikzcd}[column sep=large]
 \bigotimes_{i,j} \mathcal{F}(U_{ij})
    \arrow[r, "{\otimes_i \mu_{U_{i,*}}^{V_i}}"]
    \arrow[d, "{\mu_{\{U_{ij}\}}^W}"'] &
 \bigotimes_i \mathcal{F}(V_i)
    \arrow[d, "{\mu_{\{V_i\}}^W}"] \\
 \mathcal{F}(W) \arrow[r, equal] & \mathcal{F}(W)
-\end{tikzcd}$$
+\end{tikzcd}\]
 
 (FA4) \emph{Unit.} For any open $U$:
-$$\mathcal{F}(\emptyset) = \mathbb{1}_{\mathcal{V}}
-   \quad \text{(unit object in } \mathcal{V}\text{)}$$
+\[\mathcal{F}(\emptyset) = \mathbb{1}_{\mathcal{V}}
+   \quad \text{(unit object in } \mathcal{V}\text{)}\]
 and $\mathcal{F}(\emptyset) \otimes \mathcal{F}(U) \xrightarrow{\sim} \mathcal{F}(U)$.
 
 (FA5) \emph{Symmetry.} For any permutation $\sigma \in S_n$ and opens
 $U_1, \ldots, U_n \subset V$, the diagram commutes:
-$$\begin{tikzcd}
+\[\begin{tikzcd}
 \mathcal{F}(U_1) \otimes \cdots \otimes \mathcal{F}(U_n)
    \arrow[r, "\sigma"] \arrow[d, "\mu"'] &
 \mathcal{F}(U_{\sigma(1)}) \otimes \cdots \otimes \mathcal{F}(U_{\sigma(n)})
    \arrow[d, "\mu"] \\
 \mathcal{F}(V) \arrow[r, equal] & \mathcal{F}(V)
-\end{tikzcd}$$
+\end{tikzcd}\]
 \end{definition}
 
 \begin{remark}[Interpretation of axioms]
@@ -789,8 +785,8 @@ Every chiral algebra $\mathcal{A}$ on $X$ in the sense of
 \cite[\S3.3]{BD04} determines a factorization algebra of
 $\mathcal{D}$-modules on $\operatorname{Ran}(X)$ satisfying
 axioms (FA1)--(FA5).  More precisely, the functor
-$$\mathcal{A} \;\longmapsto\; \mathcal{F}_{\mathcal{A}},
-\qquad \mathcal{F}_{\mathcal{A}}(U) = \Gamma(U, \mathcal{A}),$$
+\[\mathcal{A} \;\longmapsto\; \mathcal{F}_{\mathcal{A}},
+\qquad \mathcal{F}_{\mathcal{A}}(U) = \Gamma(U, \mathcal{A}),\]
 defines an equivalence between the category of chiral algebras
 on $X$ and the category of factorization algebras of
 $\mathcal{D}$-modules on $\operatorname{Ran}(X)$.
@@ -853,7 +849,7 @@ structure, which is not contained in~\cite{BD04}.
 
 Let $\mathcal{F}$ be a factorization algebra on $M$, and let
 $M = U \cup V$ be a \emph{Weiss cover} (i.e., every finite subset of $M$ is contained in $U$ or in $V$). Then there is a natural equivalence:
-$$\mathcal{F}(M) \simeq \mathcal{F}(U) \otimes_{\mathcal{F}(U \cap V)} \mathcal{F}(V)$$
+\[\mathcal{F}(M) \simeq \mathcal{F}(U) \otimes_{\mathcal{F}(U \cap V)} \mathcal{F}(V)\]
 where the tensor product is the derived pushout over $\mathcal{F}(U \cap V)$.
 
 For \emph{locally constant} factorization algebras ($E_n$-algebras), excision holds more generally for collar-gluing decompositions of manifolds, without the Weiss hypothesis~\cite[Theorem~5.5.3.11]{HA}.
@@ -863,10 +859,10 @@ For \emph{locally constant} factorization algebras ($E_n$-algebras), excision ho
 This is a special case of the cosheaf property for Weiss covers
 (Theorem~\ref{thm:factorization-cosheaf} below) applied to the
 two-element Weiss cover $\{U, V\}$.  The pushout diagram
-$$\begin{tikzcd}
+\[\begin{tikzcd}
 U \cap V \arrow[r] \arrow[d] & V \arrow[d] \\
 U \arrow[r] & M
-\end{tikzcd}$$
+\end{tikzcd}\]
 in $\mathrm{Opens}(M)$ is sent by $\mathcal{F}$ to a pushout in the target
 category by the descent condition for Weiss covers.
 \end{proof}
@@ -882,8 +878,8 @@ A prefactorization algebra $\mathcal{F}$ on $M$ is a factorization algebra
 if and only if it satisfies the \emph{cosheaf property for Weiss covers}:
 for every Weiss cover $\{U_i\}_{i \in I}$ of an open $V \subset M$
 (Definition~\ref{def:weiss-cover}), the natural map
-$$\operatorname{hocolim}_{\check{C}(\{U_i\})}
-   \mathcal{F} \;\xrightarrow{\;\sim\;}\; \mathcal{F}(V)$$
+\[\operatorname{hocolim}_{\check{C}(\{U_i\})}
+   \mathcal{F} \;\xrightarrow{\;\sim\;}\; \mathcal{F}(V)\]
 is an equivalence, where the homotopy colimit is taken over the
 \v{C}ech nerve of the Weiss cover.
 \end{theorem}
