@@ -261,7 +261,7 @@ where $\hat{z}_i$ denotes omission and $\mu$ is the chiral multiplication.
 
 \subsection{The resolution strategy}
 
-\begin{theorem}[Hochschild via bar-cobar; \ClaimStatusProvedHere]
+\begin{theorem}[Hochschild via bar-cobar; \ClaimStatusProvedHere]\label{thm:hochschild-bar-cobar}
 \textup{[Regime: quadratic on the Koszul locus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
@@ -299,7 +299,7 @@ The left side is precisely $HH^n_{\text{chiral}}(\mathcal{A})$ by definition.
 
 \subsection{The spectral sequence}
 
-\begin{theorem}[Hochschild spectral sequence; \ClaimStatusProvedHere]
+\begin{theorem}[Hochschild spectral sequence; \ClaimStatusProvedHere]\label{thm:hochschild-spectral-sequence}
 There exists a spectral sequence
 \[
 E_1^{n,q} = H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes (n+2)} \otimes \Omega^n_{\log}) \Rightarrow HH^{n+q}_{\text{chiral}}(\mathcal{A})
@@ -416,7 +416,7 @@ A \emph{twisting morphism} $\tau: \mathcal{A}^! \to \mathcal{A}$ is a degree 1 m
 where $\star$ denotes convolution in $\text{Hom}(\overline{B}^{\text{ch}}(\mathcal{A}^!), \Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})))$.
 \end{definition}
 
-\begin{theorem}[Existence and uniqueness {\cite{LV}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Existence and uniqueness {\cite{LV}}; \ClaimStatusProvedElsewhere]\label{thm:universal-twisting-existence}
 For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there exists a unique universal twisting morphism $\tau: \mathcal{A}^! \to \mathcal{A}$ that induces quasi-isomorphisms:
 \begin{align}
 \mathcal{A}^!_{\tau} &\simeq \overline{B}^{\text{ch}}(\mathcal{A}) \\
@@ -661,7 +661,7 @@ In modes (half-integer for Neveu--Schwarz sector):
 
 \subsection{Establishing Koszul duality}
 
-\begin{theorem}[Boson-fermion correspondence via lattice VOA; \ClaimStatusProvedElsewhere{} \cite{FK80}]
+\begin{theorem}[Boson-fermion correspondence via lattice VOA; \ClaimStatusProvedElsewhere{} \cite{FK80}]\label{thm:boson-fermion-lattice}
 The free boson $\mathcal{B}$ and free fermion $\mathcal{F}$ are related by bosonization through the rank-1 lattice vertex algebra $V_{\mathbb{Z}}$:
 \[
 V_{\mathbb{Z}} \supset \mathcal{B}, \qquad \mathcal{F} \cong V_{\mathbb{Z}} \quad \text{(as super vertex algebras)}
@@ -786,7 +786,7 @@ the $\infty$-category of cochain complexes whose Maurer--Cartan
 elements parametrize flat cyclic deformations of~$\cA$ over
 Artinian bases.  For the full construction, which requires a cyclic
 $L_\infty$ algebra over the modular operad, see
-Theorem~\ref{conj:universal-MC}.
+Theorem~\ref{thm:universal-MC}.
 
 \smallskip\noindent
 \textbf{Concrete models (M-level).}
@@ -1316,15 +1316,22 @@ Proposition~\ref{prop:killing-linf-extension}
 gives $l_3^{\mathrm{tr}} = \phi$.
 
 \emph{$l_n^{\mathrm{tr}} = 0$ for $n \geq 4$.}
-For $n = 4$: the arity-$4$ transferred bracket on
-$\mathfrak{g}^{\otimes 4}$ lands in $H^2$; the arity-$4$
-homotopy Jacobi identity forces $l_4^{\mathrm{tr}} = 0$
-(equivalently: $\delta\phi = 0$, proved in
-Proposition~\ref{prop:killing-linf-extension}(i)).
-For $n \geq 5$: every surviving term in the transfer formula
-involves composing $l_3^{\mathrm{tr}}$ with an $\eta$-input, which
-vanishes since $l_3^{\mathrm{tr}}$ is defined only on
-$\mathfrak{g}^{\otimes 3}$.
+For $n = 4$: the transfer formula
+(Loday--Vallette \cite{LV12} Theorem~10.3.1) gives
+$l_4^{\mathrm{tr}}$ as a composite of $l_2^{\mathrm{tr}}, l_3^{\mathrm{tr}}$
+and the homotopy~$h$.  Every such composite lands in
+$H^2 \cong \mathbb{C}\cdot\eta$, and composing further with
+$l_2^{\mathrm{tr}}$ on this $1$-dimensional space vanishes
+(since $\eta \notin \mathfrak{g}$).  Equivalently, the arity-$4$
+homotopy Jacobi identity $\partial l_3^{\mathrm{tr}} +
+\{l_2^{\mathrm{tr}}, l_4^{\mathrm{tr}}\} = 0$ combined with
+$\partial l_3^{\mathrm{tr}} = \delta\phi = 0$
+(Proposition~\ref{prop:killing-linf-extension}(i)) forces
+$l_4^{\mathrm{tr}} = 0$.
+For $n \geq 5$: every tree in the transfer formula with $n$ leaves
+must route at least one input through $H^2 \cong \mathbb{C}\cdot\eta$;
+since $l_3^{\mathrm{tr}}$ requires all three inputs in~$\mathfrak{g}$
+and $\eta \notin \mathfrak{g}$, the composite vanishes.
 \end{proof}
 
 \begin{remark}[Scope of Theorem~\ref{thm:mc2-1-km}]
@@ -1932,7 +1939,7 @@ package} $(\kappa(\cA), \Delta_{\cA}, \Theta_{\cA})$.
 \end{remark}
 
 \begin{conjecture}[Modular periodicity for minimal models; \ClaimStatusConjectured]
-\label{thm:modular-periodicity-minimal}
+\label{conj:modular-periodicity-minimal}
 \index{periodicity!modular!minimal models|textbf}
 Let $M(p,q)$ be a Virasoro minimal model with $2 \leq p < q$, $\gcd(p,q) = 1$,
 and central charge $c = 1 - 6(p-q)^2/(pq)$.  Write $c = p'/q'$ in lowest terms
@@ -2060,7 +2067,7 @@ coefficient periodicity (which holds by the theta-function
 level structure) does not survive convolution with~$1/\eta$.
 \end{computation}
 
-The conjecture (Conjecture~\ref{thm:modular-periodicity-minimal})
+The conjecture (Conjecture~\ref{conj:modular-periodicity-minimal})
 therefore cannot be established via the three-step strategy
 as stated.  The bar \emph{cohomology} periodicity may still
 hold through a mechanism that involves the bar differential
@@ -2124,8 +2131,8 @@ Then for all bar degrees $n$ and all sufficiently large conformal weight $h$:
 \end{conjecture}
 
 \begin{remark}[Scope]\label{rem:modular-periodicity-scope}
-Conjectures~\ref{thm:modular-periodicity-minimal}
-and~\ref{thm:modular-periodicity-wzw} assert modular periodicity for
+Conjectures~\ref{conj:modular-periodicity-minimal}
+and~\ref{conj:modular-periodicity-wzw} assert modular periodicity for
 the two principal families of rational chiral algebras: Virasoro
 minimal models $M(p,q)$ and WZW models
 $\widehat{\mathfrak{g}}_k$ at positive integer level.
@@ -2163,14 +2170,14 @@ $HH^{n+N}_{\mathrm{chiral}}(\cA) \cong HH^n_{\mathrm{chiral}}(\cA) \otimes M_N$
 where $M_N$ is a module over the ring of modular forms.  This requires
 additionally that the bar differential (which involves OPE structure
 constants, not just conformal weights) is compatible with the $T$-matrix
-shift.  For minimal models, Conjecture~\ref{thm:modular-periodicity-minimal}
+shift.  For minimal models, Conjecture~\ref{conj:modular-periodicity-minimal}
 establishes this compatibility; the general rational case remains open.
 \end{remark}
 
 \subsubsection{Examples}
 
 \begin{example}[Minimal models]
-By Conjecture~\ref{thm:modular-periodicity-minimal}, the Virasoro minimal models with
+By Conjecture~\ref{conj:modular-periodicity-minimal}, the Virasoro minimal models with
 \[
 c = 1 - \frac{6(p-q)^2}{pq}
 \]
@@ -2193,7 +2200,7 @@ At $k=2$: $c = 3/2$, period 48
 \end{example}
 
 \begin{conjecture}[Modular periodicity for WZW models; \ClaimStatusConjectured]
-\label{thm:modular-periodicity-wzw}
+\label{conj:modular-periodicity-wzw}
 \index{periodicity!modular!WZW models|textbf}
 \index{WZW model!modular periodicity|textbf}
 Let $\widehat{\mathfrak{g}}_k$ be an affine Kac--Moody algebra at
@@ -2214,7 +2221,7 @@ weight~$h$:
 
 \begin{evidence}
 The argument follows the same three-step strategy as
-Conjecture~\ref{thm:modular-periodicity-minimal}, using the
+Conjecture~\ref{conj:modular-periodicity-minimal}, using the
 Weyl--Kac character formula in place of the Rocha-Caridi formula.
 
 \emph{Step~1: $T$-matrix periodicity.}
@@ -2226,7 +2233,7 @@ is the highest root).  Their conformal weights are
 $h_\lambda = \langle \lambda, \lambda + 2\rho \rangle / 2(k + h^\vee)$.
 The $T$-eigenvalue $e^{2\pi i(h_\lambda - c/24)}$ is an $N$-th root
 of unity by the same argument as in Step~1 of
-Conjecture~\ref{thm:modular-periodicity-minimal}: since
+Conjecture~\ref{conj:modular-periodicity-minimal}: since
 $h_\lambda - c/24$ is rational with denominator dividing
 $24(k + h^\vee)$, and $N$ is constructed from $c = p/q$ to ensure
 $cN/24 \in \mathbb{Z}$, one has $T^N = \mathrm{Id}$ on the
@@ -2267,14 +2274,14 @@ Since $N$ is a multiple of $\operatorname{lcm}(k + h^\vee, h^\vee)$
 with $q$ a divisor of $k + h^\vee$), the ratio
 $\mathrm{ch}_{L(\lambda)}$ has $N$-periodic Fourier coefficients
 for exponents exceeding the pole order.  By the convolution
-argument of Conjecture~\ref{thm:modular-periodicity-minimal},
+argument of Conjecture~\ref{conj:modular-periodicity-minimal},
 Step~2, this gives
 $\dim L(\lambda)_{[h+N]} = \dim L(\lambda)_{[h]}$
 for all $h$ sufficiently large.
 
 \emph{Step~3: Lift to bar complex.}
 The bar complex dimension at degree~$n$, weight~$h$ decomposes as
-in Step~3 of Conjecture~\ref{thm:modular-periodicity-minimal}, with
+in Step~3 of Conjecture~\ref{conj:modular-periodicity-minimal}, with
 module labels running over the finitely many integrable
 representations and fusion multiplicities given by the Verlinde
 formula for~$\widehat{\mathfrak{g}}_k$.  The OPE structure
@@ -2292,9 +2299,9 @@ and $\dim H^n(\bar{B}_{[h+N]}^{\mathrm{ch}})
 \end{evidence}
 
 \begin{remark}[Scope]\label{rem:wzw-periodicity-scope}
-Conjecture~\ref{thm:modular-periodicity-wzw} covers all
+Conjecture~\ref{conj:modular-periodicity-wzw} covers all
 simple~$\mathfrak{g}$ at all positive integer levels.  Together with
-Conjecture~\ref{thm:modular-periodicity-minimal}, modular periodicity
+Conjecture~\ref{conj:modular-periodicity-minimal}, modular periodicity
 is conjectured for the two main families of rational chiral
 algebras: Virasoro minimal models and WZW models.  The $T$-matrix
 periodicity (Step~1) is unconditional in both cases; the gap
@@ -2340,7 +2347,7 @@ The relation~\eqref{eq:period-sum} is verified for the Heisenberg algebra ($c = 
 This conjecture is labeled \ClaimStatusConjectured{} because the
 formula~\eqref{eq:period-sum} assumes that the modular periods $N$, $N'$
 are given by $24q/\gcd(p,24)$ (the $T$-matrix order).  For minimal models,
-this is established by Conjecture~\ref{thm:modular-periodicity-minimal};
+this is established by Conjecture~\ref{conj:modular-periodicity-minimal};
 for general rational chiral algebras it remains
 Conjecture~\ref{conj:modular-periodicity}.
 To establish the general case, one would need to:
@@ -2366,7 +2373,7 @@ For affine Lie algebras at special levels, quantum groups at roots of unity emer
 
 \begin{proposition}[Quantum periodicity profile under admissible-level
   KL/DS transport; \ClaimStatusProvedHere]
-\label{thm:periodicity-quantum-input}
+\label{prop:periodicity-quantum-input}
 \index{periodicity!quantum|textbf}
 Let $\mathcal{W}^k(\mathfrak{g})$ be the W-algebra at admissible level $k = -h^{\vee} + p/q$ where $h^{\vee}$ is the dual Coxeter number, $p \geq h^\vee$, $q \geq h^\vee$, $\gcd(p,q) = 1$. Then the quantum integers, quantum dimensions, and fusion coefficients (the representation-theoretic combinatorics transported through the KL/DS interface) recur with period dividing
 \[
@@ -2695,7 +2702,7 @@ This subsection separates the unconditional structural part of the
 periodicity story from the conditional numerical values.
 
 \begin{conjecture}[Stratified periodicity package (partial); \ClaimStatusConjectured]
-\label{thm:complete-periodicity-classification}
+\label{conj:complete-periodicity-classification}
 \index{periodicity!classification (partial)|textbf}
 \index{periodicity!stratified}
 For a rational chiral algebra $\mathcal{A}$ on a genus~$g$ curve with
@@ -2709,8 +2716,8 @@ periodic in conformal weight:
 where:
 \begin{align}
 N_{\text{modular}} &= \frac{24q}{\gcd(p, 24)} \quad
-  \text{(Conjectures~\ref{thm:modular-periodicity-minimal},
-  \ref{thm:modular-periodicity-wzw} for minimal/WZW;
+  \text{(Conjectures~\ref{conj:modular-periodicity-minimal},
+  \ref{conj:modular-periodicity-wzw} for minimal/WZW;
   Conjecture~\ref{conj:modular-periodicity} in general)} \\
 N_{\text{quantum}} &= M \text{ (from quantum group; proved)}
 \end{align}
@@ -2741,15 +2748,15 @@ cohomological degree.
 \begin{enumerate}
 \item \emph{Modular (Type~I).}  For the rational families treated
   above, Step~1 of
-  Conjectures~\ref{thm:modular-periodicity-minimal}
-  and~\ref{thm:modular-periodicity-wzw} proves only the
+  Conjectures~\ref{conj:modular-periodicity-minimal}
+  and~\ref{conj:modular-periodicity-wzw} proves only the
   $T$-matrix phase bound on the finite-dimensional character space.
   Upgrading that phase bound to eventual periodicity of the bar
   cohomology with order~$N_{\mathrm{mod}}$ is precisely the
   conjectural input of the Type~I modular-periodicity package.
 \item \emph{Quantum (Type~II).}  The quantum-integer periodicity
   $[n + 2\ell]_q = [n]_q$ is theorematic in the admissible-level
-  KL/DS regime of Proposition~\ref{thm:periodicity-quantum-input}, so
+  KL/DS regime of Proposition~\ref{prop:periodicity-quantum-input}, so
   the Type~II profile contributes a proved
   $N_{\mathrm{quant}}$ factor.
 \item \emph{Geometric (Type~III).}
@@ -2824,7 +2831,7 @@ periodicity'' is the threshold beyond which this periodicity holds.
 \begin{remark}[Periodicity profile refinement]\label{rem:periodicity-triple-deformation}
 \index{periodicity profile!refinement}
 The scalar $\mathrm{Period}(\mathcal{A})$ appearing in
-Conjecture~\ref{thm:complete-periodicity-classification} is the
+Conjecture~\ref{conj:complete-periodicity-classification} is the
 shadow of a richer invariant: the \emph{periodicity profile}
 $\Pi(\mathcal{A}) = (M_{\mathcal{A}}, Q_{\mathcal{A}},
 G_{\mathcal{A}})$ of Remark~\ref{rem:periodicity-triple}.
@@ -2866,7 +2873,7 @@ reflects this:
 \item \emph{Structural stratum.}
   The lcm mechanism for the two genuine periodic sources is proved
   unconditionally
-  (Proposition~\ref{thm:periodicity-exchange-koszul}).  Quantum
+  (Proposition~\ref{prop:periodicity-exchange-koszul}).  Quantum
   periodicity is explicit.  The geometric theory contributes a
   proved tautological depth bound: nilpotency index $\leq g - 1$
   on smooth moduli (Theorem~\ref{thm:geometric-depth-smooth}),
@@ -2877,8 +2884,8 @@ reflects this:
   Minimal models and WZW models are the first rational families where
   $T$-matrix periodicity and finite fusion data are explicit, but the
   actual bar-periodicity formulas remain conjectural
-  (Conjectures~\ref{thm:modular-periodicity-minimal}
-  and~\ref{thm:modular-periodicity-wzw}) because the missing
+  (Conjectures~\ref{conj:modular-periodicity-minimal}
+  and~\ref{conj:modular-periodicity-wzw}) because the missing
   Step~2 convolution argument has not been proved.
 \item \emph{Outer rational frontier.}
   For general rational chiral algebras, the modular periodicity
@@ -2913,7 +2920,7 @@ assessment.
 \begin{proposition}[Periodicity-profile transport under Koszul duality;
   \ClaimStatusProvedHere]
 \index{periodicity!exchange under duality}
-\label{thm:periodicity-exchange-koszul}
+\label{prop:periodicity-exchange-koszul}
 Let $(\cA, \cA^!)$ be a Koszul dual pair of rational chiral algebras on a genus~$g$ curve~$X$. Then:
 \begin{enumerate}
 \item The geometric tautological depth is unchanged:
@@ -2952,8 +2959,8 @@ applies.
 \end{proof}
 
 \begin{remark}[Modular period exchange]\label{rem:periodicity-exchange-harmonic}
-\label{conj:periodicity-exchange-harmonic}%
-Proposition~\ref{thm:periodicity-exchange-koszul} establishes
+% backward-compatible label removed (was conj:periodicity-exchange-harmonic)
+Proposition~\ref{prop:periodicity-exchange-koszul} establishes
 unconditionally that the geometric tautological depth is preserved and
 that the dual modular phase bound is determined by the dual central
 charge.  In the admissible-level KL/DS regime it also preserves the
@@ -2985,7 +2992,7 @@ For the free boson, $HH^2 = \mathbb{C}$ gives the radius deformation; for $\math
 
 The $A_{\infty}$ structure encoded in Hochschild cohomology gives string field theory vertices:
 
-\begin{theorem}[String field theory from Hochschild {\cite{Zwi93}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[String field theory from Hochschild {\cite{Zwi93}}; \ClaimStatusProvedElsewhere]\label{thm:string-field-theory-hochschild}
 The operations $m_n: \mathcal{A}^{\otimes n} \to \mathcal{A}[2-n]$ extracted from $HH^{\bullet}_{\text{chiral}}$ satisfy:
 \[
 \sum_{\substack{r+s+t=n \\ r,t \geq 0,\; s \geq 1}} (-1)^{rs+t}\, m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0

@@ -1222,7 +1222,7 @@ Parts~1--4 verify well-definedness on objects (Theorem~\ref{thm:bar-nilpotency-c
 \end{proof}
 
 \begin{corollary}[Natural transformation property; \ClaimStatusProvedHere]\label{cor:bar-natural}
-\label{rem:why-functoriality}
+\label{cor:why-functoriality}
 A commutative diagram of chiral algebras induces a commutative diagram of bar complexes: if $k \circ f = g \circ h$ in $\mathsf{ChirAlg}_X$, then $\bar{B}(k) \circ \bar{B}(f) = \bar{B}(g) \circ \bar{B}(h)$ in $\mathsf{dgCoalg}_X$.  This is immediate from functoriality.
 \end{corollary}
 
@@ -1598,6 +1598,7 @@ the cohomological degree.
    \end{remark}
    
    \begin{lemma}[Residue properties; \ClaimStatusProvedHere]
+   \label{lem:residue-properties}
    The residue operation satisfies:
    \begin{enumerate}
    \item $\text{Res}_{D_{ij}}^2 = 0$ (extracting residue lowers pole order)
@@ -1621,6 +1622,7 @@ the cohomological degree.
    \end{proof}
  
 \begin{lemma}[Well-definedness of residue; \ClaimStatusProvedHere]
+\label{lem:residue-well-defined}
 The residue $\text{Res}_{D_{ij}}$ is well-defined on sections with logarithmic poles and satisfies:
 \[
 \text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = -\text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}
@@ -2085,6 +2087,67 @@ $\mathbb{D} \circ j_* \cong j_! \circ \mathbb{D}$
 (Lemma~\ref{lem:verdier-extension-exchange}).
 \end{remark}
 
+\begin{lemma}[Holonomicity of the bar complex; \ClaimStatusProvedHere]%
+\label{lem:bar-holonomicity}
+\index{bar complex!holonomicity}
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$,
+finitely generated over~$\mathcal{D}_X$ with regular singularities.
+Then for each $n \geq 0$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The $n$-th bar component $\bar{B}^{\mathrm{ch}}_n(\cA)$ is a
+  regular holonomic $\mathcal{D}$-module on the Fulton--MacPherson
+  compactification~$\overline{C}_n(X)$.
+\item The bar differential
+  $d_{\mathrm{bar}} \colon \bar{B}^{\mathrm{ch}}_n(\cA) \to
+  \bar{B}^{\mathrm{ch}}_{n-1}(\cA)$
+  is a morphism of holonomic $\mathcal{D}$-modules.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\emph{Step~1: External tensor product.}
+Since $\cA$ is a holonomic $\mathcal{D}_X$-module by hypothesis,
+the external tensor product $\cA^{\boxtimes n}$ is a holonomic
+$\mathcal{D}_{X^n}$-module
+\cite[Theorem~3.2.3]{HTT08}.
+
+\emph{Step~2: Pullback to the FM compactification.}
+The blowdown morphism $\pi \colon \overline{C}_n(X) \to X^n$ is
+proper and birational, so $\pi^!\cA^{\boxtimes n}$ is a holonomic
+$\mathcal{D}_{\overline{C}_n(X)}$-module
+\cite[Theorem~3.2.3]{HTT08}.
+
+\emph{Step~3: Logarithmic extension.}
+The bar sheaf on the open configuration space $C_n(X)$ is
+$j^*\pi^!\cA^{\boxtimes n} \otimes \Omega^*_{\log}(D)$,
+where $j \colon C_n(X) \hookrightarrow \overline{C}_n(X)$ is the
+inclusion and $D = \overline{C}_n(X) \setminus C_n(X)$ is a normal
+crossings divisor (Theorem~\ref{thm:FM}).
+The logarithmic differential forms $\Omega^*_{\log}(D)$ define a
+regular integrable connection on the NCD complement, so
+$j_*$ of the resulting regular holonomic module on~$C_n(X)$ is
+regular holonomic on~$\overline{C}_n(X)$ by Deligne's regularity
+theorem \cite[Theorem~5.2.17]{HTT08}.
+This identifies $\bar{B}^{\mathrm{ch}}_n(\cA)$ as a regular
+holonomic $\mathcal{D}_{\overline{C}_n(X)}$-module.
+
+\emph{Step~4: Bar differential.}
+The bar differential $d_{\mathrm{bar}} = d_{\mathrm{internal}}
++ d_{\mathrm{residue}} + d_{\mathrm{form}}$
+(Definition~\ref{def:bar-differential-complete}).
+The internal differential $d_{\mathrm{internal}}$ is induced by the
+chiral algebra structure, which is a $\mathcal{D}_X$-module morphism
+by definition.
+The form differential $d_{\mathrm{form}}$ is the de~Rham differential
+on $\Omega^*_{\log}(D)$, which is a $\mathcal{D}$-module morphism.
+The residue differential $d_{\mathrm{residue}} = \sum_D \operatorname{Res}_D$
+is the composition of restriction to a boundary divisor~$D$ followed
+by the trace map, both of which are morphisms of
+$\mathcal{D}$-modules \cite[Chapter~4]{KashiwaraSchapira}.
+Hence $d_{\mathrm{bar}}$ is a morphism of holonomic
+$\mathcal{D}$-modules.
+\end{proof}
+
 \begin{lemma}[Verdier duality exchanges extensions; \ClaimStatusProvedHere]%
 \label{lem:verdier-extension-exchange}
 Let $Y$ be a smooth variety, $U \xhookrightarrow{j} Y$ an open inclusion
@@ -2121,7 +2184,7 @@ and Verdier duality is involutive on the holonomic category
 \begin{theorem}[Distributional model of the cobar; \ClaimStatusProvedHere]%
 \label{thm:cobar-distributional-model}
 \index{cobar construction!distributional model}
-Under the standing holonomicity assumption, the intrinsic cobar
+Since each bar component is holonomic (Lemma~\ref{lem:bar-holonomicity}), the intrinsic cobar
 (Definition~\ref{def:geom-cobar-intrinsic}) admits a canonical isomorphism:
 \[
 \Omega^{\mathrm{ch}}_n(\mathcal{C})
@@ -3041,7 +3104,7 @@ open configuration space
 
 \emph{Properties of the pairing.}
 \begin{enumerate}
-\item \emph{Perfect pairing:} Non-degenerate in both arguments (by the holonomicity standing assumption: each graded piece is a holonomic $\mathcal{D}$-module on $\overline{C}_n(X)$, hence has finite-dimensional stalks, and Verdier duality for holonomic $\mathcal{D}$-modules is an involution~\cite{KashiwaraSchapira})
+\item \emph{Perfect pairing:} Non-degenerate in both arguments (by Lemma~\ref{lem:bar-holonomicity}: each graded piece is a holonomic $\mathcal{D}$-module on $\overline{C}_n(X)$, hence has finite-dimensional stalks, and Verdier duality for holonomic $\mathcal{D}$-modules is an involution~\cite{KashiwaraSchapira})
 \item \emph{Differential compatibility:} $\langle d_{\text{bar}}\omega, K \rangle 
 = -\langle \omega, d_{\text{cobar}}K \rangle$ (graded Leibniz rule)
 \item \emph{Residue-distribution duality:} $\langle \text{Res}_{D}[\omega], 
@@ -3073,9 +3136,13 @@ This is well-defined by the theory of currents (de Rham's theorem on distributio
 We verify:
 $$\langle d_{\text{bar}}\omega, K \rangle = -\langle \omega, d_{\text{cobar}}K \rangle$$
 
-At the level of $\mathcal{D}$-modules on $\overline{C}_n(X)$, the bar and cobar differentials are flat connections (the bar complex is a complex of holonomic $\mathcal{D}$-modules by the standing assumption).  Verdier duality is an exact contravariant involution on $D^b_{\mathrm{hol}}(\mathcal{D}_{\overline{C}_n(X)})$ that sends a flat connection $\nabla$ to the adjoint connection $\nabla^\dagger$ (see~\cite{KashiwaraSchapira}, Chapter~4).  In particular, $\langle \nabla(\omega), K \rangle = -\langle \omega, \nabla^\dagger(K) \rangle$ is the defining property of the adjoint.  Since $d_{\mathrm{bar}}$ is the flat connection on the bar complex and $d_{\mathrm{cobar}} = d_{\mathrm{bar}}^\dagger$ under Verdier duality, the differential compatibility
+At the level of $\mathcal{D}$-modules on $\overline{C}_n(X)$, the bar and cobar differentials are flat connections (the bar complex is a complex of holonomic $\mathcal{D}$-modules by Lemma~\ref{lem:bar-holonomicity}).  Verdier duality is an exact contravariant involution on $D^b_{\mathrm{hol}}(\mathcal{D}_{\overline{C}_n(X)})$ that sends a flat connection $\nabla$ to the adjoint connection $\nabla^\dagger$ (see~\cite{KashiwaraSchapira}, Chapter~4).
+
+We make the adjoint identity explicit.  For a holonomic $\mathcal{D}$-module $\mathcal{M}$ on a smooth variety $Y$ of dimension~$d$, the Verdier dual is $\mathbb{D}\mathcal{M} = R\mathcal{H}\!\mathit{om}_{\mathcal{D}_Y}(\mathcal{M}, \mathcal{D}_Y \otimes \Omega_Y^{-1})[d]$.  When $\mathcal{M}$ carries a flat connection $\nabla \colon \mathcal{M} \to \mathcal{M} \otimes \Omega^1_Y$, sections $m^* \in \mathbb{D}\mathcal{M}$ inherit the adjoint connection $\nabla^\dagger$ defined by
+$$\langle \nabla^\dagger m^*,\, m \rangle \;=\; -\,\langle m^*,\, \nabla m \rangle$$
+for all local sections $m \in \mathcal{M}$, where $\langle -,- \rangle$ is the canonical pairing $\mathbb{D}\mathcal{M} \otimes \mathcal{M} \to \omega_Y$.  This is the unique connection on $\mathbb{D}\mathcal{M}$ making the pairing flat, i.e., satisfying $d\langle m^*, m\rangle = \langle \nabla^\dagger m^*, m\rangle + \langle m^*, \nabla m\rangle = 0$.  Applying this to $Y = \overline{C}_n(X)$, $\mathcal{M} = \bar{B}^{\mathrm{ch}}_n(\mathcal{A})$ with $\nabla = d_{\mathrm{bar}}$, and $\mathbb{D}\mathcal{M} = \Omega^{\mathrm{ch}}_n(\mathcal{A}^!)$ (by item~(3) of the theorem), one obtains $d_{\mathrm{cobar}} = d_{\mathrm{bar}}^\dagger$ as the Verdier-adjoint connection.  The differential compatibility
 $$\langle d_{\text{bar}}\omega, K \rangle = -\langle \omega, d_{\text{cobar}}K \rangle$$
-holds by the functoriality of Verdier duality on holonomic $\mathcal{D}$-modules, without requiring a component-by-component Stokes argument.
+therefore holds by the flatness of the canonical pairing on holonomic $\mathcal{D}$-modules, without requiring a component-by-component Stokes argument.
 
 \emph{Step 3: Residue-distribution pairing}
 
@@ -3524,7 +3591,7 @@ The unit $\eta_{\mathcal{A}} \colon \mathcal{A} \to \Omega^{\mathrm{ch}}(\bar{B}
 \end{tikzcd}
 \end{center}
 
-That $\eta_{\mathcal{A}}$ is a quasi-isomorphism follows from the spectral sequence associated to the bar filtration $F^p = \bigoplus_{n \geq p} \bar{B}^n$.  At the $E_1$ page, the unit reduces to the classical Koszul resolution of $\mathcal{A}$ by $\Omega(\bar{B}(\mathcal{A}))$, which is acyclic by the Koszul hypothesis (Definition~\ref{def:koszul-chiral}).  The spectral sequence converges to $H^*(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))$ by the completeness of the filtration (Theorem~\ref{thm:completion-necessity}), so $E_1$-acyclicity implies $\eta_{\mathcal{A}}$ is a quasi-isomorphism.
+That $\eta_{\mathcal{A}}$ is a quasi-isomorphism follows from the spectral sequence associated to the bar filtration $F^p = \bigoplus_{n \geq p} \bar{B}^n$.  At the $E_1$ page, the unit reduces to the classical Koszul resolution of $\mathcal{A}$ by $\Omega(\bar{B}(\mathcal{A}))$, which is acyclic by the Koszul hypothesis (Remark~\ref{rem:koszul-chiral}).  The spectral sequence converges to $H^*(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))$ by the completeness of the filtration (Theorem~\ref{thm:completion-necessity}), so $E_1$-acyclicity implies $\eta_{\mathcal{A}}$ is a quasi-isomorphism.
 
 At the geometric level, the key identity underpinning the spectral sequence collapse is:
 \[
@@ -4094,6 +4161,7 @@ choice of torus.
 Not every genus 0 chiral algebra extends to higher genus. The obstructions live in specific cohomology groups:
 
 \begin{theorem}[Extension obstruction {\cite{BD04}}; \ClaimStatusProvedElsewhere]
+\label{thm:extension-obstruction-bar}
 Let $\mathcal{A}$ be a chiral algebra on $\mathbb{CP}^1$. The obstruction to extending $\mathcal{A}$ to genus $g$ lies in:
 \[
 \text{Obs}_g(\mathcal{A}) \in H^2(\overline{\mathcal{M}}_g, \mathcal{E}nd(\mathcal{A})_0)
@@ -4158,6 +4226,7 @@ The tower is constructed from the genus filtration on the bar complex.  By the m
 \subsection{Spectral sequence convergence}
 
 \begin{theorem}[Bar complex spectral sequence; \ClaimStatusProvedHere]
+\label{thm:bar-complex-spectral-sequence}
 \index{spectral sequence!bar-cobar|textbf}
 There exists a spectral sequence:
 $$E_2^{p,q} = H^p(\ConfigSpace{*}, H^q(\mathcal{A}^{\boxtimes *})) \Rightarrow H^{p+q}(\barBgeom(\mathcal{A}))$$
@@ -4198,6 +4267,7 @@ The convergence is strong (not just weak) when $\mathcal{A}$ has finite homologi
 \end{proof}
 
 \begin{corollary}[Degeneration {\cite{BGS96}}; \ClaimStatusProvedElsewhere]
+\label{cor:spectral-degeneration}
 \index{$E_2$ collapse}
 If $\mathcal{A}$ is Koszul, the spectral sequence degenerates at $E_2$:
 $$E_2^{p,q} = E_\infty^{p,q}$$
@@ -4209,6 +4279,7 @@ where $\mathcal{A}^!$ is the Koszul dual.
 \subsection{Essential image of the bar functor}
 
 \begin{theorem}[Complete essential image characterization; \ClaimStatusProvedHere]
+\label{thm:essential-image-bar}
 The essential image of the bar functor 
 $$\barBgeom: \ChirAlg_X \to \text{Coalg}_{\text{conilp}}^{\text{ch}}$$
 consists precisely of those conilpotent chiral coalgebras $\mathcal{C}$ satisfying:
@@ -4261,6 +4332,7 @@ This is an isomorphism by:
 \end{proof}
 
 \begin{corollary}[Recognition principle; \ClaimStatusProvedHere]
+\label{cor:recognition-principle}
 A chiral coalgebra $\mathcal{C}$ is in the essential image of $\barBgeom$ if and only if its cobar $\Omegach(\mathcal{C})$ is a chiral algebra (not just $A_\infty$).
 \end{corollary}
 \begin{proof}
@@ -4387,8 +4459,8 @@ from the coderived category to the ordinary derived category.
 
 \subsection{Precise formulation of the relationship}
 
-\begin{remark}[Criteria for chiral Koszul pairs --- updated recollection]\label{def:koszul-criteria}
-\label{def:koszul-chiral}
+\begin{remark}[Criteria for chiral Koszul pairs --- updated recollection]\label{rem:koszul-criteria}
+\label{rem:koszul-chiral}
 \index{Koszul duality!chiral}
 \index{Koszul property}
 Recall from Definition~\ref{def:chiral-koszul-pair} that a chiral Koszul pair
@@ -8206,6 +8278,7 @@ Francis--Gaitsgory~\cite{FG12} prove that factorization algebras satisfy a
 bar-cobar duality. Their result:
 
 \begin{theorem}[FG, Theorem 7.2.1; \ClaimStatusProvedElsewhere]
+\label{thm:fg-factorization-bar-cobar}
 For a factorization algebra $\mathcal{F}$ on a curve $X$:
 $$\text{Fact}(X, \Omega(B(\mathcal{F}))) \simeq \mathcal{F}$$
 \end{theorem}
@@ -8379,7 +8452,7 @@ exact MC4 H-level / coefficient-identification package).
 The passage from quadratic to general is also the passage from $E_\infty$
 to $E_1$: the Yangian $Y(\mathfrak{g})$, which is $E_1$-chiral but
 not $E_\infty$, falls in the filtered class and requires the
-completed framework of Theorem~\ref{conj:en-koszul-duality}.
+completed framework of Theorem~\ref{thm:en-koszul-duality}.
 
 \subsection{Definitions: four classes of chiral algebras}
 
@@ -9874,7 +9947,8 @@ geometry of configuration spaces in three places:
   the compact generation argument in Step~5 of the proof.
 \item \emph{Finite-dimensionality from holonomicity.}
   The holonomicity of the bar complex on each configuration space
-  stratum ensures finite-dimensional graded pieces, which is
+  stratum (Lemma~\ref{lem:bar-holonomicity}) ensures
+  finite-dimensional graded pieces, which is
   needed for the duality between contramodules and complete modules
   (Remark~\ref{rem:chiral-contramodules}).
 \end{enumerate}
@@ -10102,7 +10176,7 @@ $$E_\infty^{p,q} = \text{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A})))$$
 
 For the Heisenberg algebra, the spectral sequence collapsed trivially because $d_{\mathrm{bracket}} = 0$ (no simple poles): the bar cohomology was concentrated in degrees $0$ and $2$ without further work (\S\ref{sec:frame-bar-all}).  For non-abelian algebras, the collapse is a consequence of the Koszul property.
 
-For a Koszul chiral algebra $\mathcal{A}$ (Definition~\ref{def:koszul-chiral}), the spectral sequence from
+For a Koszul chiral algebra $\mathcal{A}$ (Remark~\ref{rem:koszul-chiral}), the spectral sequence from
 Theorem~\ref{thm:bar-cobar-spectral-sequence} collapses at the $E_2$ page:
 $$E_2^{p,q} = E_\infty^{p,q}.$$
 \end{theorem}

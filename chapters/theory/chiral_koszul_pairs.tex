@@ -29,7 +29,11 @@ is a quasi-isomorphism.  Two structural features make this work:
 \end{enumerate}
 These two properties---acyclicity of twisted tensor products and
 classical Koszulness of the associated graded---are the
-recognition criteria for chiral Koszulness.  They apply equally to
+recognition criteria for chiral Koszulness.  The point is not that
+the chiral algebra itself is quadratic (it is not), but that the PBW
+filtration by bar-length makes the leading-order structure
+quadratic-Koszul (Theorem~\ref{thm:pbw-koszulness-criterion}).
+These criteria apply equally to
 the Virasoro algebra (quartic pole in the $TT$ OPE),
 $\mathcal{W}$-algebras (poles of arbitrarily high order),
 and Yangians (spectral-parameter relations), none of which
@@ -385,7 +389,7 @@ with a cohomological shift; the differential $d_{\cA_1}$ corresponds to the code
 \end{remark}
 
 \begin{remark}[Theorem~A as a theorem about Koszul pairs]
-\label{def:chiral-dual-pair}% backward-compatible label
+\label{rem:chiral-dual-pair}% backward-compatible label
 \label{rem:theorem-a2-dual-pairs}
 Theorem~\ref{thm:bar-cobar-isomorphism-main}
 is a theorem about chiral Koszul pairs
@@ -870,16 +874,33 @@ $\operatorname{gr}_F \cA_1$, which is acyclic in positive
 degrees by hypothesis.
 Corollary~\ref{cor:bar-cohomology-koszul-dual} then gives
 $\dim H^n = \dim (\cA_2^!)_n$.
-The coalgebra structure on $H^0$ is identified with
-$\cA_2^!$ by the acyclicity of the twisted tensor products
-$K_\tau^L(\cA_1, \cC_1)$ and $K_\tau^R(\cC_1, \cA_1)$
-(Definition~\ref{def:chiral-koszul-morphism}):
-the twisting morphism
+It remains to show that $H^0(\bar{B}^{\mathrm{ch}}(\cA_1))
+\cong \cA_2^!$ as coalgebras, not merely as graded vector spaces.
+The twisting morphism
 $\tau\colon \bar{B}^{\mathrm{ch}}(\cA_1) \to \cA_2$
-induces a coalgebra map
-$H^0(\bar{B}^{\mathrm{ch}}(\cA_1)) \to \cA_2^!$
-that is an isomorphism because $K_\tau$ is acyclic
-(cf.\ \cite[Theorem~2.3.1]{LV12}).
+satisfies the Maurer--Cartan equation $\partial(\tau) + \tau \star \tau = 0$
+in the chiral convolution algebra
+$\mathrm{Hom}(\bar{B}^{\mathrm{ch}}(\cA_1), \cA_2)$
+(Definition~\ref{def:chiral-koszul-morphism}), so the
+twisted tensor products
+$K_\tau^L(\cA_1, \cC_1)$ and $K_\tau^R(\cC_1, \cA_1)$
+are well-defined chain complexes (twisted differentials square to
+zero by the MC equation).
+These are acyclic by hypothesis.
+Now $\tau$ induces a coalgebra map
+$\tau_* \colon H^0(\bar{B}^{\mathrm{ch}}(\cA_1)) \to \cA_2^!$
+that preserves comultiplication: the bar comultiplication
+$\Delta_{\bar{B}}$ on $H^0$ is intertwined with the Koszul dual
+coalgebra structure on $\cA_2^!$ via the convolution product
+defining~$\tau$.
+Acyclicity of $K_\tau^L$ and $K_\tau^R$ upgrades this map from a
+graded comparison to a coalgebra isomorphism
+(the chiral analogue of \cite[Theorem~2.3.1]{LV12}; the
+identical argument applies because acyclicity of the Koszul
+complexes is the only input beyond the MC equation, and both
+hold in the chiral setting by
+Lemma~\ref{lem:bar-holonomicity} and
+Theorem~\ref{thm:fundamental-twisting-morphisms}).
 \end{proof}
 
 \begin{remark}[Bigrading convention]\label{rem:bigrading-convention}
@@ -908,6 +929,9 @@ $E_1^{p,q} = 0$ for $q \neq 0$ already at the first page.
 \index{Theorem A|textbf}
 \textup{[}Regime: quadratic on the Koszul locus
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
+The equivalences below hold in the derived category
+$D^b(\mathrm{Fact}^{\mathrm{aug}}(X))$ of augmented
+factorization algebras on~$X$.
 
 \smallskip\noindent
 The Heisenberg instance was verified in~\S\ref{sec:frame-inversion}.
@@ -1041,7 +1065,7 @@ subject to the relations (Drinfeld's first realization):
 where $f^{abc}$ are structure constants of $\mathfrak{g}$, $A^{ab}_{cd}$ is a specific tensor determined by the Casimir, and $\{-,-\}$ denotes the symmetrized product.  The RTT presentation (Reshetikhin--Takhtajan--Faddeev) is an equivalent formulation using the matrix $T(u) = \sum_n T_n u^{-n}$ and the Yang $R$-matrix $R(u) = 1 + \hbar/u \cdot P$.
 \end{definition}
 
-\begin{theorem}[Yangian as quantization {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Yangian as quantization {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]\label{thm:yangian-quantization}
 The Yangian is a filtered deformation of the polynomial current algebra:
 $$\operatorname{gr}(Y(\mathfrak{g})) \cong U(\mathfrak{g}[t])$$
 
@@ -1070,7 +1094,7 @@ The defining relations involve:
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[Affine Yangian from W-algebras {\cite{SV13}}; \ClaimStatusProvedElsewhere]\label{thm:affine-yangian-w}
+\begin{theorem}[Affine Yangian from $\mathcal{W}$-algebras {\cite{SV13}}; \ClaimStatusProvedElsewhere]\label{thm:affine-yangian-w}
 For $\mathfrak{g} = \mathfrak{sl}_N$, there is an isomorphism:
 $$Y_{\hbar}(\widehat{\mathfrak{sl}}_N) \cong \mathcal{W}_{1+\infty}[\mathfrak{gl}_N]$$
 
@@ -1139,7 +1163,7 @@ The automorphism $\phi\colon Y(\mathfrak{g}) \to Y(\mathfrak{g})$ defined by $T_
 At $\hbar = 0$: $Y(\mathfrak{g})$ degenerates to $U(\mathfrak{g}[t])$, and $R = R^{-1} = 1$, so the Koszul dual is the symmetric algebra $\mathrm{Sym}(V)$, which is self-dual at this degenerate level.  At $\hbar \to \infty$: the $R$-matrix becomes the permutation $P$, and the algebra degenerates to the commutative polynomial ring, which is Koszul dual to the exterior algebra (i.e., $\mathrm{Sym}^! = \bigwedge$).  Both limits are consistent.
 \end{proof}
 
-\begin{proposition}[Yangian Koszulness for all simple $\mathfrak{g}$; \ClaimStatusProvedHere]\label{rem:yangian-koszul}
+\begin{proposition}[Yangian Koszulness for all simple $\mathfrak{g}$; \ClaimStatusProvedHere]\label{prop:yangian-koszul-general}
 \index{Yangian!Koszulness!general type}
 For every simple Lie algebra~$\mathfrak{g}$, the Yangian
 $Y(\mathfrak{g})$ in the RTT presentation is Koszul: the bar
@@ -1150,7 +1174,7 @@ computed above is the true Koszul dual.
 \begin{proof}
 This follows from the Polishchuk--Positselski PBW criterion
 \cite[Ch.~4]{PP05} applied to $Y(\mathfrak{g})$, and is proved
-in full generality in Proposition~\ref{prop:yangian-koszul}.
+in full generality in Proposition~\ref{prop:yangian-koszul-general}.
 The three hypotheses are verified as follows.
 \begin{enumerate}
 \item \emph{PBW basis.}
@@ -1185,7 +1209,7 @@ to acyclicity of $K(Y(\mathfrak{g}))$, proving Koszulness.
 
 \subsection{Hopf algebra structure and bar-cobar}
 
-\begin{theorem}[Yangian as Hopf algebra {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Yangian as Hopf algebra {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]\label{thm:yangian-hopf}
 The Yangian has a canonical Hopf algebra structure:
 \begin{align}
 \Delta: Y(\mathfrak{g}) &\to Y(\mathfrak{g}) \otimes Y(\mathfrak{g}) \\
@@ -1198,7 +1222,7 @@ $$\Delta(J^a(z)) = J^a(z) \otimes 1 + 1 \otimes J^a(z) + \hbar \cdot
 \sum_{b,c} f^{abc} J^b(z) \otimes J^c(z) + \mathcal{O}(\hbar^2)$$
 \end{theorem}
 
-\begin{theorem}[Bar construction for Hopf algebras {\cite{LV}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Bar construction for Hopf algebras {\cite{LV}}; \ClaimStatusProvedElsewhere]\label{thm:bar-hopf-algebras}
 For a Hopf algebra $H$, the bar construction:
 $$\bar{B}(H) = \bigoplus_{n \geq 0} H^{\otimes n}$$
 
@@ -1266,7 +1290,7 @@ is central and generates the degree-2 part of cohomology.
 
 \subsection{Connection to quantum groups}
 
-\begin{theorem}[Yangian vs.\ quantum group {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Yangian vs.\ quantum group {\cite{Drinfeld85}}; \ClaimStatusProvedElsewhere]\label{thm:yangian-vs-quantum-group}
 The Yangian $Y_\hbar(\mathfrak{g})$ and quantum group $U_q(\mathfrak{g})$ are \emph{distinct} quantum groups corresponding to different types of $R$-matrices:
 \begin{itemize}
 \item Yangian: Rational $R$-matrix (additive spectral parameter $u$)
@@ -1775,7 +1799,7 @@ When $\mathcal{A}$ is quadratic with relations $R \subset j_*j^*(\mathcal{V}^{\b
 % EXPLICIT CALCULATIONS: W-ALGEBRAS
 %================================================================
 
-\section{Explicit calculations: W-algebras and beyond}
+\section{Explicit calculations: $\mathcal{W}$-algebras and beyond}
 \label{sec:w-algebras-explicit-completion}
 
 %----------------------------------------------------------------
@@ -2048,7 +2072,7 @@ $N$ & $N-1$ & $2N$ & $\binom{N}{2}$ \\
 % SUBSECTION: BEYOND W-ALGEBRAS
 %----------------------------------------------------------------
 
-\subsection{Beyond W-algebras: other non-quadratic examples}
+\subsection{Beyond $\mathcal{W}$-algebras: other non-quadratic examples}
 
 \begin{example}[Affine Yangian]\label{ex:affine-yangian-kp}
 \label{ex:yangian-completion}
@@ -2478,18 +2502,14 @@ $\mathcal{P} = \operatorname{Ass}$.
 
 \emph{Step 2: Koszulity of $\operatorname{Ass}$ in the chiral
 tensor category.}
-The operad $\operatorname{Ass}$ is Koszul in the classical sense
-(the bar spectral sequence on the generating cooperad collapses at
-$E_2$; see~\cite[Theorem~7.4.1]{LV12}).  This Koszulity is a
-property of the combinatorics of the operad (it depends on the
-generating operations and relations, not on the ambient tensor
-category), so it transfers to the chiral tensor category:
-the bar complex $B_{\operatorname{Ass}}(k)$ is quasi-isomorphic to
-$\operatorname{Ass}^!$ in the underlying category of
-$\Sigma$-sequences, and applying the chiral tensor product
-$\otimes^{\mathrm{ch}}$ preserves this quasi-isomorphism since
-$\otimes^{\mathrm{ch}}$ is exact on the bounded-below complexes
-arising from the bar filtration.
+By Lemma~\ref{lem:operadic-koszul-transfer} below
+(applied with $\mathcal{P} = \operatorname{Ass}$ and
+$\mathcal{V} = \mathcal{D}\text{-mod}(X)$),
+the classical Koszulity of
+$\operatorname{Ass}$ \cite[Theorem~7.4.1]{LV12} transfers to the
+chiral tensor category: the operadic bar complex
+$B_{\operatorname{Ass}}(k)$ is quasi-isomorphic to
+$\operatorname{Ass}^!$ after base change to~$\mathcal{V}$.
 
 \emph{Step 3: Geometric realization via configuration spaces.}
 The bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ has an
@@ -2518,11 +2538,75 @@ Theorem~\ref{thm:bar-cobar-inversion-qi}), and the unit map is a
 quasi-isomorphism by the dual argument for conilpotent coalgebras.
 \end{proof}
 
+\begin{lemma}[Operadic Koszulness transfer \cite{LV12}; \ClaimStatusProvedElsewhere]
+\label{lem:operadic-koszul-transfer}
+\index{Koszul operad!transfer to symmetric monoidal categories}
+Let\/ $\mathcal{P}$ be a quadratic operad over a field\/~$k$, and let\/
+$\mathcal{V}$ be a stable presentably symmetric monoidal\/
+$\infty$-category over\/~$k$.  If\/ $\mathcal{P}$ is Koszul in the
+classical sense \textup{(}i.e., over the category of\/ $k$-modules\textup{)},
+then\/ $\mathcal{P}$ is Koszul as an operad internal to\/~$\mathcal{V}$:
+the operadic bar construction\/
+$B_{\mathcal{P}}(k) \xrightarrow{\;\sim\;} \mathcal{P}^!$
+is a quasi-isomorphism of cooperads in\/ $\Sigma$-objects of\/~$\mathcal{V}$.
+\end{lemma}
+
+\begin{proof}
+Koszulness of a quadratic operad $\mathcal{P} = \mathcal{F}(V)/(R)$
+is equivalent to the acyclicity of the Koszul complex
+$\mathcal{P} \circ_\kappa \mathcal{P}^!$, where $\kappa \colon
+\mathcal{P}^! \to \mathcal{P}$ is the universal twisting morphism
+\cite[Theorem~7.4.2]{LV12}.  We explain why this property, once
+established over~$k$\nobreakdash-$\mathrm{Mod}$, holds automatically
+in~$\mathcal{V}$.
+
+\emph{Step~1: The Koszul complex is built from operadic composition.}
+The Koszul complex $\mathcal{P} \circ_\kappa \mathcal{P}^!$ is
+defined as the composition product
+$\bigoplus_{n \geq 0} \mathcal{P}(n) \otimes_{\Sigma_n}
+(\mathcal{P}^!)^{\otimes n}$ equipped with a differential twisted
+by~$\kappa$.  Crucially, both the composition product and the
+twisting differential are determined by the \emph{quadratic data}
+$(V, R)$---the generators~$V$, the space of
+relations~$R \subset \mathcal{F}(V)(3)$, and the combinatorics
+of planar trees indexing operadic compositions
+\cite[§7.4]{LV12}.  No structure of the ambient symmetric monoidal
+category enters beyond the tensor product and direct sums indexed
+by these combinatorial data.
+
+\emph{Step~2: Base change preserves acyclicity.}
+Given a symmetric monoidal functor $k\text{-}\mathrm{Mod} \to
+\mathcal{V}$ (the unit functor $M \mapsto M \otimes \mathbf{1}_{\mathcal{V}}$),
+the Koszul complex over~$\mathcal{V}$ is the image
+$(\mathcal{P} \circ_\kappa \mathcal{P}^!) \otimes_k \mathbf{1}_{\mathcal{V}}$.
+Since~$\mathcal{V}$ is $k$-linear (presentably enriched over~$k$),
+this base-change functor is exact: it preserves all colimits and
+finite limits (being a left adjoint between stable categories),
+hence preserves quasi-isomorphisms.  The acyclicity of the
+Koszul complex over $k$\nobreakdash-$\mathrm{Mod}$
+\cite[Theorem~7.4.1]{LV12} therefore implies acyclicity
+over~$\mathcal{V}$.
+
+\emph{Step~3: From Koszul complex to bar-cobar resolution.}
+By \cite[Theorem~11.3.3]{LV12}, acyclicity of the Koszul complex
+is equivalent to the bar-cobar resolution being a quasi-isomorphism:
+$\Omega(\mathcal{P}^{\text{\textexclamdown}}) \xrightarrow{\sim}
+\mathcal{P}$ as operads.  This equivalence is formal
+(it holds in any abelian category where the Koszul complex is
+defined), so it transfers together with Step~2.
+The $\infty$-categorical upgrade follows from
+\cite[Theorem~11.4.1]{LV12} (see also
+\cite[§16]{Fresse-operads} for the model-categorical treatment
+of the bar-cobar adjunction for algebras over Koszul operads in
+general symmetric monoidal model categories).
+\end{proof}
+
 \begin{remark}[Verification of hypotheses]\label{rem:e1-koszul-hypotheses}
-Step~1 of the proof invokes \cite[Theorem~11.4.1]{LV12} with
+Steps~1--2 of the proof invoke \cite[Theorem~11.4.1]{LV12} and
+Lemma~\ref{lem:operadic-koszul-transfer} with
 $\mathcal{V} = \mathcal{D}\text{-mod}(X)$ equipped with the chiral
 tensor product~$\otimes^{\mathrm{ch}}$.  We verify the required
-hypotheses:
+hypotheses on~$\mathcal{V}$:
 \begin{enumerate}
 \item \emph{Stable presentable $\infty$-category.}
 The $\infty$-category $\mathcal{D}\text{-mod}(X)$ is stable and
@@ -2535,14 +2619,16 @@ $\otimes^{\mathrm{ch}}$ does not in general coincide with the
 $!$-tensor product, it does define a symmetric monoidal structure on
 the $\infty$-categorical enhancement, as established in
 \cite[Chapter~IV.5]{GR17}.
-\item \emph{Exactness in Step~2.}
-The claim that $\otimes^{\mathrm{ch}}$ is exact on bounded-below
-complexes from the bar filtration holds because
-$\mathcal{D}\text{-mod}(X)$ carries a $t$-structure for which
-$\otimes^{\mathrm{ch}}$ is right-exact on each factor
-\cite[3.4.12]{BD04}, and the bar filtration produces complexes bounded
-below (in the $t$-structure sense), so the derived tensor product
-agrees with the underived one on each filtered piece.
+\item \emph{Exactness of base change
+\textup{(}Lemma~\textup{\ref{lem:operadic-koszul-transfer}},
+Step~\textup{2)}.}
+The unit functor $k\text{-}\mathrm{Mod} \to \mathcal{D}\text{-mod}(X)$
+is exact because $\mathcal{D}\text{-mod}(X)$ is $k$-linear and
+stable.  More concretely, $\mathcal{D}\text{-mod}(X)$ carries a
+$t$-structure for which $\otimes^{\mathrm{ch}}$ is right-exact on each
+factor \cite[3.4.12]{BD04}, and the bar filtration produces complexes
+bounded below (in the $t$-structure sense), so the derived tensor
+product agrees with the underived one on each filtered piece.
 \end{enumerate}
 \end{remark}
 
@@ -3111,7 +3197,7 @@ The Virasoro case illustrates:
 \end{itemize}
 \end{remark}
 
-\subsection{Non-example 2: generic W-algebras at non-critical level}
+\subsection{Non-example 2: generic $\mathcal{W}$-algebras at non-critical level}
 
 \begin{remark}[W-algebras away from critical level]
 For $\mathcal{W}_k(\mathfrak{sl}_3)$ at generic level $k \neq -3$ (critical):

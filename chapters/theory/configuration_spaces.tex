@@ -31,7 +31,7 @@ The configuration space $C_n(\Sigma_g)$ is non-compact.  The Fulton--MacPherson 
 
 \subsubsection{Iterated blow-up construction}
 
-\begin{theorem}[Fulton--MacPherson compactification at genus $g$ \cite{FM94}; \ClaimStatusProvedHere]\label{thm:FM}
+\begin{theorem}[Fulton--MacPherson compactification at genus $g$ \cite{FM94}; \ClaimStatusProvedElsewhere]\label{thm:FM}
 \index{Fulton--MacPherson compactification|textbf}
 \index{blowup!along diagonals}
 There exists a canonical smooth compactification $\overline{C}_n(\Sigma_g)$ constructed via iterated blow-ups. More precisely:
@@ -41,7 +41,7 @@ There exists a canonical smooth compactification $\overline{C}_n(\Sigma_g)$ cons
 \[j: C_n(\Sigma_g) \hookrightarrow \overline{C}_n(\Sigma_g)\]
 with dense image.
 
-\item The compactification $\overline{C}_n(\Sigma_g)$ is smooth and proper over $\mathbb{C}$.
+\item The compactification $\overline{C}_n(\Sigma_g)$ is smooth and proper over $\mathbb{C}$; as a blow-up of the smooth projective variety~$\Sigma_g^n$ along smooth centers, it is itself a smooth projective variety.
 
 \item The complement $D = \overline{C}_n(\Sigma_g) \setminus C_n(\Sigma_g)$ is a \emph{normal crossing divisor}, i.e., locally analytically isomorphic to coordinate hyperplanes.
 
@@ -462,6 +462,7 @@ when $S_1 \subset S_2$ (nested collisions)
 \end{corollary}
 
 \begin{theorem}[Boundary stratification \cite{FM94}; \ClaimStatusProvedElsewhere]
+\label{thm:boundary-stratification}
 The boundary has a natural stratification:
 $$\partial\overline{C}_n(X) = \bigcup_{\pi} D_\pi$$
 where $\pi$ runs over partitions of $\{1, \ldots, n\}$ with at least one part of size $\geq 2$.
@@ -484,6 +485,17 @@ where $\alpha$ is a $(k-1)$-form and $\beta$ is a $k$-form, both smooth up to $D
 The sheaf of logarithmic $k$-forms is denoted:
 $$\Omega^k_{\overline{C}_n(\Sigma_g)}(\log D)$$
 \end{definition}
+
+\begin{remark}[Multi-logarithmic extension]\label{rem:multi-log-codim2}
+On codimension-$k$ strata where $k$ boundary divisors
+$D_{S_1}, \ldots, D_{S_k}$ intersect, logarithmic forms
+restrict to \emph{multi-logarithmic} forms with logarithmic
+poles along each component simultaneously.
+Since $D$ is a normal crossing divisor
+(Theorem~\ref{thm:FM}(3)), the sheaf
+$\Omega^k(\log D)$ is locally free, so multi-logarithmic
+extension across higher-codimension strata is automatic.
+\end{remark}
 
 \begin{remark}[Logarithmic condition]\label{rem:why-log}
 The logarithmic condition is precisely what is needed for well-defined residues.
@@ -1130,6 +1142,7 @@ The three components correspond to:
 % (Configuration space definition already given above in enhanced form)
  
 \begin{proposition}[Fundamental group across genera \cite{Arnold69,Brieskorn73}; \ClaimStatusProvedElsewhere]
+\label{prop:fundamental-group-genera}
 \leavevmode\\
 The fundamental group $\pi_1(C_n(\Sigma_g))$ varies with genus:
 the low-genus structure is summarized as follows.
@@ -1464,6 +1477,7 @@ where $\Lambda_\tau = \mathbb{Z} + \tau\mathbb{Z}$ is the period lattice.
 \end{definition}
 
 \begin{theorem}[Elliptic compactification; \ClaimStatusProvedHere]
+\label{thm:elliptic-compactification}
 The compactification $\overline{C_n(E_\tau)}$ is constructed via:
 \begin{enumerate}
 \item \emph{Local blow-ups}: Near collision points, use elliptic blow-up coordinates
@@ -1500,6 +1514,7 @@ where $\theta_1(z|\tau) = -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n+1/2)^2/2}e^{i\pi
 \end{definition}
 
 \begin{proposition}[Elliptic Arnold relations \cite{Fay73}; \ClaimStatusProvedElsewhere]
+\label{prop:elliptic-arnold-relations}
 The elliptic logarithmic forms satisfy modified Arnold relations:
 \[
 \eta_{ij}^{(1)} \wedge \eta_{jk}^{(1)} + \eta_{jk}^{(1)} \wedge \eta_{ki}^{(1)} + \eta_{ki}^{(1)} \wedge \eta_{ij}^{(1)} = 2\pi i \omega_\tau
@@ -1529,6 +1544,7 @@ The compactification $\overline{C_n(\Sigma_g)}$ involves:
 \end{definition}
 
 \begin{theorem}[Period integrals and bar differential \cite{BD04}; \ClaimStatusProvedElsewhere]
+\label{thm:period-integrals-bar}
 On $\overline{C_n(\Sigma_g)}$, the bar differential decomposes:
 \[
 d_{\text{bar}}^{(g)} = d_{\text{local}} + d_{\text{global}} + d_{\text{quantum}}
@@ -1622,6 +1638,7 @@ The Fulton--MacPherson compactification $\ConfigSpace{n}$ is oriented by:
 \end{definition}
 
 \begin{lemma}[Orientation compatibility; \ClaimStatusProvedHere]
+\label{lem:orientation-compatibility}
 For the stratification of $\partial\ConfigSpace{n}$:
 $$\partial\ConfigSpace{n} = \bigcup_{I \subset \{1,\ldots,n\}, |I| \geq 2} D_I$$
 The orientations satisfy:
@@ -1647,6 +1664,7 @@ with appropriate signs $\epsilon_k = \pm 1$.
 \end{proof}
 
 \begin{theorem}[Stokes on configuration spaces \cite{FM94}; \ClaimStatusProvedElsewhere]
+\label{thm:stokes-config-spaces}
 \index{Stokes theorem!on configuration spaces}
 For $\omega \in \Omega^{n-1}(\ConfigSpace{n})$:
 $$\int_{\ConfigSpace{n}} d\omega = \int_{\partial\ConfigSpace{n}} \omega = \sum_{I} \epsilon_I \int_{D_I} \omega$$
@@ -1726,6 +1744,7 @@ where:
 \end{definition}
  
 \begin{proposition}[Operadic structure; \ClaimStatusProvedHere]
+\label{prop:operadic-structure}
 $\text{End}_{\mathcal{M}}^{\text{ch}}$ forms an operad in the category of D-modules with:
 \begin{enumerate}
 \item Composition: For $f \in \text{End}_{\mathcal{M}}^{\text{ch}}(k)$ and $g_i \in \text{End}_{\mathcal{M}}^{\text{ch}}(n_i)$,
@@ -1751,6 +1770,7 @@ canonically isomorphic. The coherence follows from the coherence theorem for ope
 \end{proof}
  
 \begin{theorem}[Chiral algebras as algebra objects \cite{BD04}; \ClaimStatusProvedElsewhere]
+\label{thm:chiral-algebra-objects}
 A chiral algebra structure on $\mathcal{M}$ is equivalent to an algebra structure over the operad
 $\text{End}_{\mathcal{M}}^{\text{ch}}$ in the symmetric monoidal category of D-modules. Moreover, this 
 equivalence is functorial and preserves quasi-isomorphisms.
@@ -1766,6 +1786,7 @@ For the configuration space $C_n(X)$, an NBC basis element corresponds to a fore
 \end{definition}
  
 \begin{theorem}[NBC basis optimality; \ClaimStatusProvedHere]
+\label{thm:nbc-basis-optimality}
 The NBC basis satisfies:
 \begin{enumerate}
 \item Each basis element is $\eta_F = \bigwedge_{(i,j) \in F} \eta_{ij}$
@@ -1878,6 +1899,7 @@ For the mixed case where $|\{i,j,k\} \cap I| = 2$ (say $i,j \in I$ but $k \notin
 \subsection{Permutohedral tiling and cell complex}
  
 \begin{theorem}[Permutohedral cell complex; \ClaimStatusProvedHere]
+\label{thm:permutohedral-cell-complex}
 The real configuration space $C_n(\mathbb{R})$ admits a CW decomposition where:
 \begin{enumerate}
 \item Cells $C_\pi$ correspond to ordered partitions $\pi = B_1 < B_2 < \cdots < B_k$ of $[n]$
@@ -1912,6 +1934,7 @@ of magnitude. For $n \leq 10$, computations are feasible on standard hardware.
 \end{remark}
 
 \begin{theorem}[Complexity bounds; \ClaimStatusProvedHere]
+\label{thm:complexity-bounds}
 For the geometric bar complex in dimension $n$:
 \begin{enumerate}
 \item NBC basis size: $|\mathrm{NBC}(n)| = n!$ (for the braid arrangement $\mathcal{A}_{n-1}$, matching $\dim H^*(C_n(\mathbb{C}))$)
@@ -1967,6 +1990,7 @@ For each collision divisor $D_{ij}$, check whether $h_i + h_j - h_k = 1$ for som
 
  
 \begin{proposition}[Residue evaluation complexity; \ClaimStatusProvedHere]
+\label{prop:residue-evaluation-complexity}
 The procedure of Construction~\ref{con:residue-evaluation} computes residues with complexity $O(n^2 \cdot T_{\mathrm{OPE}})$, where $T_{\mathrm{OPE}}$ is the time to look up an OPE coefficient.
 \end{proposition}
 
@@ -2241,7 +2265,8 @@ Arnold~\cite{Arnold69} proved $H^*(C_n(\mathbb{C})) \cong \bigwedge^* \langle e_
 \end{remark}
 
 \begin{corollary}[Stokes theorem and differential; \ClaimStatusProvedHere]
-The bar differential $d = \sum_D \text{Res}_D$ satisfies $d^2 = 0$ as a consequence of 
+\label{cor:stokes-differential}
+The bar differential $d = \sum_D \text{Res}_D$ satisfies $d^2 = 0$ as a consequence of
 Stokes theorem:
 \begin{equation}
 0 = \int_{\overline{C}_n(X)} d(d\omega) = \int_{\partial^2 \overline{C}_n(X)} \omega 
@@ -2434,7 +2459,7 @@ provides an explicit algebraic model for the boundary operator, making these equ
 \end{proof}
 
 \begin{remark}[Dictionary between perspectives]
-\label{cor:arnold-dictionary}
+\label{rem:arnold-dictionary}
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -2642,6 +2667,7 @@ where $\gamma$ is the operadic composition.
 \end{corollary}
 
 \begin{theorem}[Arnold--Orlik--Solomon relations; \ClaimStatusProvedHere]
+\label{thm:arnold-orlik-solomon}
 For logarithmic forms on configuration space:
 $$\sum_{k \in S} (-1)^{|k|} \eta_{ik} \wedge \eta_{kj} \wedge \bigwedge_{l \in S\setminus\{k\}} \eta_{kl} = 0$$
 for any subset $S$ and distinct $i,j \notin S$.
@@ -2687,6 +2713,7 @@ Each face corresponds to a term in the Arnold relation.
 \end{proof}
 
 \begin{corollary}[Bar differential squares to zero; \ClaimStatusProvedHere]
+\label{cor:bar-d-squared-zero}
 The Arnold relations ensure $d^2 = 0$ for the bar differential.
 \end{corollary}
 \begin{proof}
@@ -2700,6 +2727,7 @@ This is Theorem~\ref{thm:bar-nilpotency-complete}.
 On a torus $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$:
 
 \begin{theorem}[Elliptic logarithmic forms \cite{Fay73}; \ClaimStatusProvedElsewhere]
+\label{thm:elliptic-logarithmic-forms}
 The logarithmic form becomes:
 $$\eta_{ij}^{(1)} = d\log\vartheta_1\left(\frac{z_i - z_j}{2\pi i}\Big|\tau\right) + \text{modular correction}$$
 where $\vartheta_1(z|\tau)$ is the odd Jacobi theta function.
