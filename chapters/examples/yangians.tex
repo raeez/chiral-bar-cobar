@@ -1270,6 +1270,241 @@ is exactly the evaluation compatibility needed to invoke
 Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.
 \end{proof}
 
+\begin{proposition}[Boundary-strip coefficient formula on the
+evaluation packet; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-boundary-coefficient-formula}
+Let
+\[
+T_1(u)=\sum_{r\ge 0} T_1^{(r)}u^{-r},
+\qquad
+T_2(v)=\sum_{s\ge 0} T_2^{(s)}v^{-s}
+\]
+be the normalized fundamental monodromy series on a generic tensor
+product of fundamental evaluation modules, written on the two auxiliary
+copies of~$V$.  Expand the rational Yang matrix in the standard region
+$|u|>|v|$ as
+\[
+R(u-v)=1-\hbar\sum_{t\ge 0} P_{12}\,u^{-t-1}v^t.
+\]
+Then the boundary-strip coefficient of the RTT defect is
+\[
+\operatorname{Coeff}_{u^{-a-1}v^{-1}}
+\Bigl(
+R(u-v)\,T_1(u)\,T_2(v)-T_2(v)\,T_1(u)\,R(u-v)
+\Bigr)
+\]
+\[
+=\;
+T_1^{(a+1)}T_2^{(1)}-T_2^{(1)}T_1^{(a+1)}
+-\hbar\sum_{t=0}^{a}
+\Bigl(
+P_{12}\,T_1^{(a-t)}T_2^{(t+1)}
+-T_2^{(t+1)}T_1^{(a-t)}P_{12}
+\Bigr).
+\]
+In particular, the Yangian boundary strip on the evaluation packet is
+an explicit finite polynomial expression in the monodromy coefficients
+$T_i^{(r)}$ and the auxiliary permutation~$P_{12}$.
+\end{proposition}
+
+\begin{proof}
+Write
+\[
+R(u-v)=1+\sum_{t\ge0}R^{(t)}u^{-t-1}v^t,
+\qquad
+R^{(t)}=-\hbar P_{12}.
+\]
+The identity part of $R(u-v)$ contributes exactly
+\[
+T_1^{(a+1)}T_2^{(1)}-T_2^{(1)}T_1^{(a+1)}
+\]
+to the coefficient of $u^{-a-1}v^{-1}$.  For the $t$th summand of the
+$R$-series, the $u$-power condition forces the matching monodromy
+coefficient on the first auxiliary copy to be $T_1^{(a-t)}$, while the
+$v$-power condition forces the matching coefficient on the second copy
+to be $T_2^{(t+1)}$.  Summing those contributions over $0\le t\le a$
+gives
+\[
+\sum_{t=0}^{a}R^{(t)}T_1^{(a-t)}T_2^{(t+1)}
+-\sum_{t=0}^{a}T_2^{(t+1)}T_1^{(a-t)}R^{(t)}.
+\]
+Substituting $R^{(t)}=-\hbar P_{12}$ yields the displayed formula.
+The final sentence is immediate from that expression.
+\end{proof}
+
+\begin{proposition}[Explicit coefficient formula for the fundamental
+monodromy series; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-fundamental-coefficient-formula}
+Fix generic evaluation points $a_1,\dots,a_m$ and write
+\[
+T^{(m)}(u)=L_{a_1}(u)\cdots L_{a_m}(u)
+=\sum_{r\ge0}T^{(m,r)}u^{-r},
+\qquad
+L_{a_j}(u)=1-\frac{\hbar P_{0j}}{u-a_j},
+\]
+on the tensor product
+\[
+M_m:=V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes
+V_{\mathrm{fund}}(a_m).
+\]
+Then
+\[
+T^{(m,0)}=1,
+\]
+and for every $r\ge1$ one has
+\[
+T^{(m,r)}
+=
+\sum_{s=1}^{\min(r,m)}(-\hbar)^s
+\sum_{1\le j_1<\cdots<j_s\le m}
+\sum_{\substack{n_1,\dots,n_s\ge0\\ n_1+\cdots+n_s=r-s}}
+a_{j_1}^{n_1}\cdots a_{j_s}^{n_s}\,
+P_{0j_1}\cdots P_{0j_s}.
+\]
+In particular, every summand of $T^{(m,r)}$ is supported on at most
+$r$ quantum slots.
+\end{proposition}
+
+\begin{proof}
+For each factor one has the geometric-series expansion
+\[
+L_{a_j}(u)
+=
+1-\hbar\sum_{n\ge0}a_j^n u^{-n-1}P_{0j}
+\]
+in the standard region $|u|>|a_j|$.  Multiplying the $m$ factors in the
+fixed order $j=1,\dots,m$, the coefficient of $u^{-r}$ is obtained by
+choosing the non-identity term from exactly $s$ factors
+$j_1<\cdots<j_s$ and the identity term from the rest.  If the chosen
+terms have degrees $n_1+1,\dots,n_s+1$, then the total $u$-degree
+condition is
+\[
+(n_1+1)+\cdots+(n_s+1)=r,
+\]
+equivalently $n_1+\cdots+n_s=r-s$.  The contribution of that choice is
+\[
+(-\hbar)^s a_{j_1}^{n_1}\cdots a_{j_s}^{n_s}
+P_{0j_1}\cdots P_{0j_s},
+\]
+and summing over all subsets and all nonnegative tuples
+$(n_1,\dots,n_s)$ gives the displayed formula.
+
+The final sentence is immediate: a summand with $s$ chosen factors
+acts nontrivially only on the corresponding $s$ quantum slots, and
+$s\le r$.
+\end{proof}
+
+\begin{corollary}[Line-side boundary-strip support bound on generic
+tensor powers; \ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-boundary-support-bound}
+In the setting of
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-coefficient-formula},
+let
+\[
+\mathsf{K}^{\mathrm{line},(m)}_{a,0}
+:=
+\operatorname{Coeff}_{u^{-a-1}v^{-1}}
+\Bigl(
+R(u-v)\,T_1(u)\,T_2(v)-T_2(v)\,T_1(u)\,R(u-v)
+\Bigr)
+\]
+be the line-side boundary-strip coefficient on $M_m$, with
+$T_i$ written on the $i$th auxiliary copy of~$V$.  Then every summand
+of $\mathsf{K}^{\mathrm{line},(m)}_{a,0}$ is supported on at most
+$a+1$ quantum slots.
+
+Equivalently, on the standard type-$A$ fundamental evaluation packet
+the line-side half of the finite-detection reduction is already
+compatible with the slot bound appearing in
+Proposition~\ref{prop:dg-shifted-rtt-finite-tensor-detection}.
+\end{corollary}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-boundary-coefficient-formula},
+\[
+\mathsf{K}^{\mathrm{line},(m)}_{a,0}
+=
+T_1^{(a+1)}T_2^{(1)}-T_2^{(1)}T_1^{(a+1)}
+-\hbar\sum_{t=0}^{a}
+\Bigl(
+P_{12}\,T_1^{(a-t)}T_2^{(t+1)}
+-T_2^{(t+1)}T_1^{(a-t)}P_{12}
+\Bigr).
+\]
+By
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-coefficient-formula},
+every summand of $T_1^{(a+1)}$ is supported on a subset
+$S\subset\{1,\dots,m\}$ with $|S|\le a+1$, while every summand of
+$T_2^{(1)}$ is supported on a single slot $\{k\}$.  If $k\notin S$,
+the two summands commute because they act on distinct quantum slots,
+so their contribution cancels in the commutator
+$T_1^{(a+1)}T_2^{(1)}-T_2^{(1)}T_1^{(a+1)}$.  Thus every surviving
+summand of the commutator is supported on at most $|S|\le a+1$ quantum
+slots.
+
+For the $t$th summand of the remaining series, every summand of
+$T_1^{(a-t)}$ is supported on at most $a-t$ quantum slots and every
+summand of $T_2^{(t+1)}$ is supported on at most $t+1$ quantum slots.
+Since $P_{12}$ acts only on auxiliary spaces, it does not enlarge the
+quantum support.  Therefore every summand of
+$P_{12}\,T_1^{(a-t)}T_2^{(t+1)}$ and of
+$T_2^{(t+1)}T_1^{(a-t)}P_{12}$ is supported on at most
+$(a-t)+(t+1)=a+1$ quantum slots.
+
+Combining the two cases proves the claim.
+\end{proof}
+
+\begin{proposition}[Defect-side support mechanism from RTT degree;
+\ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-defect-support-mechanism}
+Fix $N \ge 0$, $0\le a\le N$, and a generic tensor product
+\[
+M_m:=V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes
+V_{\mathrm{fund}}(a_m).
+\]
+Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the action of the truncated monodromy coefficients on $M_m$ is
+  induced by the coefficientwise twisted-coproduct multiplication law
+  of Proposition~\ref{prop:dg-shifted-rtt-formula-preservation}; and
+\item the boundary-strip defect $\Delta_{a,0}(N)$ is homogeneous of RTT
+  degree $a+1$.
+\end{enumerate}
+Then every summand in the action of $\Delta_{a,0}(N)$ on $M_m$ is
+supported on at most $a+1$ quantum slots.  Consequently the action of
+$\Delta_{a,0}(N)$ on a tensor product of arbitrary length is
+determined by its restrictions to the generic tensor subproducts of
+length at most $a+1$.
+
+In the standard type-$A$ fundamental packet, this is the defect-side
+counterpart of
+Corollary~\ref{cor:dg-shifted-rtt-boundary-support-bound}.
+\end{proposition}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-formula-preservation},
+the iterated twisted coproduct on a tensor power is obtained by
+coefficientwise multiplication of monodromy matrices.  Therefore every
+tensor summand occurring in the action of a homogeneous degree-$(a+1)$
+monomial in the coefficients $T^{(r)}$ is indexed by a decomposition
+\[
+d_1+\cdots+d_s=a+1,
+\qquad d_i\ge1,
+\]
+over the active tensor factors.  Since each active factor contributes
+positive RTT degree, one necessarily has $s\le a+1$.  Thus every such
+tensor summand is supported on at most $a+1$ quantum slots.
+
+The defect $\Delta_{a,0}(N)$ is a finite linear combination of such
+homogeneous monomials by assumption~\textup{(ii)}, so the same support
+bound holds for every summand in its action on $M_m$.  The final
+sentence is immediate: on a longer tensor product, each summand factors
+through one of the generic subproducts supported on at most $a+1$
+slots.
+\end{proof}
+
 \begin{proposition}[Finite tensor-length detection for boundary-strip RTT
 defects; \ClaimStatusProvedHere]
 \label{prop:dg-shifted-rtt-finite-tensor-detection}
@@ -1288,9 +1523,15 @@ be the boundary-strip defect family from
 Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}.  Assume:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item for each $0 \le a \le N$, the defect $\Delta_{a,0}(N)$ is
-  homogeneous of RTT degree $a+1$, so its iterated twisted coproduct on
-  any tensor product of evaluation modules is a sum of terms supported
-  on at most $a+1$ tensor factors;
+  homogeneous of RTT degree $a+1$;
+\item on each generic tensor product
+  \[
+  V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes
+  V_{\mathrm{fund}}(a_m),
+  \]
+  the action of the truncated monodromy coefficients is induced by the
+  coefficientwise twisted-coproduct multiplication law of
+  Proposition~\ref{prop:dg-shifted-rtt-formula-preservation};
 \item the faithful evaluation subcategory of
   Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection} is
   generated under finite direct sums, tensor products, and subquotients
@@ -1318,19 +1559,18 @@ evaluation action of $T_N(u)$ on those modules.
 \end{proposition}
 
 \begin{proof}
-Fix $a \le N$.  By assumption~\textup{(i)}, the action of
-$\Delta_{a,0}(N)$ on any generic tensor product of evaluation modules
-is computed from its iterated twisted coproduct, and every summand in
-that coproduct is supported on at most $a+1$ tensor factors.  Hence the
-action of $\Delta_{a,0}(N)$ on a tensor product of arbitrary length is
+Fix $a \le N$.  By
+Proposition~\ref{prop:dg-shifted-rtt-defect-support-mechanism},
+assumptions~\textup{(i)} and~\textup{(ii)} imply that the action of
+$\Delta_{a,0}(N)$ on a generic tensor product of evaluation modules is
 determined by its actions on the length-$m$ subproducts with
 $m \le a+1$.
 
-Assumption~\textup{(iv)} says that all of those shorter actions vanish
+Assumption~\textup{(v)} says that all of those shorter actions vanish
 on generic tensor powers of the fundamental evaluation module.
 Therefore $\Delta_{a,0}(N)$ acts trivially on every generic tensor
 product built from fundamental evaluation modules, regardless of
-length.  Assumptions~\textup{(ii)} and~\textup{(iii)} then propagate
+length.  Assumptions~\textup{(iii)} and~\textup{(iv)} then propagate
 this vanishing to the whole faithful evaluation subcategory of
 Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.  That
 proposition therefore forces $\Delta_{a,0}(N)=0$ in the quotient.
@@ -1826,8 +2066,8 @@ The extraction uses the normalized residue
 $\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, the symmetric/antisymmetric
 channel decomposition, and exact kernel computation on the mixed
 tensor line $e_1\otimes e_2$.  Computationally, this low-rank packet
-has been verified by exact and numerical kernel calculations
-($156$~tests).
+has been verified by exact and numerical kernel calculations inside the
+current Yangian residue suite \textup{(}$208$~tests\textup{)}.
 
 This is evidence for the Yangian side of MC4, not the full theorem.
 The live frontier remains the uniform proof of
@@ -1838,6 +2078,125 @@ The live frontier remains the uniform proof of
 \]
 on the boundary strip $\Delta_{a,0}(N)$ together with the filtered
 H-level target comparison.
+\end{computation}
+
+\begin{computation}[Low-rank tensor-power RTT propagation]
+\label{comp:mc4-yangian-lowrank-propagation}
+Let
+\[
+T^{(m)}(u)=L_{a_1}(u)\cdots L_{a_m}(u)
+\]
+be the ordered fundamental monodromy on the generic tensor power
+\[
+V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m).
+\]
+For $N=2,3,4$ and generic distinct evaluation points $a_i$, the RTT
+defect
+\[
+R_{12}(u-v)\,T^{(m)}_1(u)\,T^{(m)}_2(v)
+-
+T^{(m)}_2(v)\,T^{(m)}_1(u)\,R_{12}(u-v)
+\]
+has been verified to vanish on the short tensor packet $m=2,3$.
+Thus the twisted-coproduct propagation mechanism of
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} is borne
+out on the same low-rank packet as
+Computation~\ref{comp:mc4-yangian-lowrank-kernels}
+\textup{(}within the same $208$-test Yangian residue suite\textup{)}.
+
+This is still only low-rank M-level evidence: it does not replace the
+theorematic propagation input required for the all-rank boundary strip.
+But it shows that, in ranks $2,3,4$, no new obstruction appears
+immediately after the one-factor auxiliary-kernel extraction on short
+generic tensor powers.
+\end{computation}
+
+\begin{computation}[Low-rank stage-4 boundary-strip packet]
+\label{comp:mc4-yangian-boundary-strip-stage4}
+Fix the normalized fundamental monodromy series on a generic tensor
+power
+\[
+V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m),
+\qquad m=2,3,
+\]
+and extract the coefficient packet
+\[
+\mathsf{K}^{\mathrm{line}}_{a,0}(4)
+=
+\operatorname{Coeff}_{u^{-a-1}v^{-1}}
+\Bigl(
+R(u-v)\,T_1(u)\,T_2(v)-T_2(v)\,T_1(u)\,R(u-v)
+\Bigr)
+\qquad (0\le a\le 4).
+\]
+For the standard type-$A$ towers in ranks $M=2,3,4$, this entire
+stage-$4$ boundary strip vanishes on generic tensor lengths $2$ and
+$3$:
+\[
+\mathsf{K}^{\mathrm{line}}_{a,0}(4)=0
+\qquad (0\le a\le 4).
+\]
+Equivalently, on this short faithful-evaluation packet the first five
+coefficients in the Yangian boundary strip
+\[
+\Delta_{a,0}(4)
+=
+\mathsf{K}^{\mathrm{line}}_{a,0}(4)
+-\mathsf{K}^{\mathrm{RTT}}_{a,0}(4)
+\]
+act trivially.
+
+The extraction uses the explicit boundary-strip convolution formula of
+Proposition~\ref{prop:dg-shifted-rtt-boundary-coefficient-formula},
+applied to the normalized fundamental monodromy series on the chosen
+generic tensor powers.
+
+This does not prove the all-rank boundary-strip theorem.  It is
+low-rank M-level evidence for the exact finite-detection packet named
+in Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}: after the
+single-line residue extraction and the short tensor-power propagation,
+the first explicit boundary-strip packet itself is now verified on
+generic tensor lengths $2$ and $3$ in ranks $2,3,4$
+\textup{(}again within the current $208$-test Yangian residue
+suite\textup{)}.
+\end{computation}
+
+\begin{computation}[Low-rank stage-6 boundary-strip packet from the
+closed-form monodromy expansion]
+\label{comp:mc4-yangian-boundary-strip-stage6}
+Keep the same generic tensor powers
+\[
+V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m),
+\qquad m=2,3,
+\]
+but now combine the closed-form monodromy expansion of
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-coefficient-formula}
+with the boundary-strip coefficient formula of
+Proposition~\ref{prop:dg-shifted-rtt-boundary-coefficient-formula}.
+For the standard type-$A$ towers in ranks $M=2,3,4$, the entire
+stage-$6$ boundary strip vanishes on this same short faithful packet:
+\[
+\mathsf{K}^{\mathrm{line}}_{a,0}(6)=0
+\qquad (0\le a\le 6).
+\]
+Equivalently,
+\[
+\Delta_{a,0}(6)
+=
+\mathsf{K}^{\mathrm{line}}_{a,0}(6)
+-\mathsf{K}^{\mathrm{RTT}}_{a,0}(6)
+\]
+acts trivially on generic tensor lengths $2$ and $3$ for all
+$0\le a\le 6$.
+
+This extends
+Computation~\ref{comp:mc4-yangian-boundary-strip-stage4}
+two stages farther out on the same low-rank evaluation surface.  It is
+still M-level evidence rather than the all-rank theorem, but it shows
+that the exact finite-detection packet remains unobstructed beyond the
+first visible stage after the closed-form coefficient formula is used
+systematically.  Computationally, this stage-$6$ packet is verified in
+the current Yangian residue suite \textup{(}$208$~tests\textup{)}.
 \end{computation}
 
 \section{Coulomb branch algebras}

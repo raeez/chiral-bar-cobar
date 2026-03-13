@@ -8,8 +8,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Metric | Value |
 |---|---:|
-| ProvedHere claims | 938 |
-| Total tagged claims | 1413 |
+| ProvedHere claims | 942 |
+| Total tagged claims | 1417 |
 | Active files in `main.tex` | 61 |
 | Total `.tex` files scanned | 70 |
 
@@ -17,7 +17,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Status | Count |
 |---|---:|
-| `ProvedHere` | 938 |
+| `ProvedHere` | 942 |
 | `ProvedElsewhere` | 323 |
 | `Conjectured` | 124 |
 | `Heuristic` | 28 |
@@ -28,8 +28,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Environment | Count |
 |---|---:|
 | `theorem` | 421 |
-| `proposition` | 292 |
-| `corollary` | 116 |
+| `proposition` | 295 |
+| `corollary` | 117 |
 | `lemma` | 64 |
 | `computation` | 34 |
 | `remark` | 7 |
@@ -42,7 +42,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---:|
 | Frame | 7 |
 | Part I: Theory | 509 |
-| Part II: Examples | 338 |
+| Part II: Examples | 342 |
 | Part III: Connections | 47 |
 | Appendices | 37 |
 
@@ -52,7 +52,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---:|
 | `chapters/theory/higher_genus.tex` | 168 |
 | `chapters/theory/bar_cobar_construction.tex` | 127 |
-| `chapters/examples/yangians.tex` | 65 |
+| `chapters/examples/yangians.tex` | 69 |
 | `chapters/examples/free_fields.tex` | 51 |
 | `chapters/theory/chiral_modules.tex` | 49 |
 | `chapters/theory/configuration_spaces.tex` | 39 |
@@ -391,17 +391,17 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:oper-bar-h0-dl` | `theorem` | 170 | Zeroth bar cohomology = oper functions |
-| `prop:oper-bar-h1-dl` | `proposition` | 205 | First bar cohomology = oper $1$-forms |
-| `prop:oper-bar-h2-dl` | `proposition` | 229 | Second bar cohomology = oper $2$-forms |
-| `prop:whitehead-spectral-decomposition` | `proposition` | 266 | Whitehead spectral decomposition |
-| `prop:h3-differential-analysis` | `proposition` | 358 | Differential analysis at $n = 3$ |
-| `prop:d4-nonvanishing` | `proposition` | 438 | Non-vanishing of $d_4$ |
-| `cor:h3-oper` | `corollary` | 497 | $H^3$ at critical level |
-| `thm:oper-bar-dl` | `theorem` | 510 | Full derived identification |
-| `prop:bar-as-localization` | `proposition` | 618 | The bar complex as localization |
-| `prop:sl2-periodicity-dl` | `proposition` | 764 | $\widehat{\mathfrak{sl}}_2$ periodicity |
-| `thm:kl-bar-cobar-adjunction` | `theorem` | 840 | Chain-level KL adjunction from bar-cobar |
+| `thm:oper-bar-h0-dl` | `theorem` | 173 | Zeroth bar cohomology = oper functions |
+| `prop:oper-bar-h1-dl` | `proposition` | 208 | First bar cohomology = oper $1$-forms |
+| `prop:oper-bar-h2-dl` | `proposition` | 232 | Second bar cohomology = oper $2$-forms |
+| `prop:whitehead-spectral-decomposition` | `proposition` | 269 | Whitehead spectral decomposition |
+| `prop:h3-differential-analysis` | `proposition` | 361 | Differential analysis at $n = 3$ |
+| `prop:d4-nonvanishing` | `proposition` | 441 | Non-vanishing of $d_4$ |
+| `cor:h3-oper` | `corollary` | 500 | $H^3$ at critical level |
+| `thm:oper-bar-dl` | `theorem` | 513 | Full derived identification |
+| `prop:bar-as-localization` | `proposition` | 621 | The bar complex as localization |
+| `prop:sl2-periodicity-dl` | `proposition` | 767 | $\widehat{\mathfrak{sl}}_2$ periodicity |
+| `thm:kl-bar-cobar-adjunction` | `theorem` | 843 | Chain-level KL adjunction from bar-cobar |
 
 #### `chapters/theory/en_koszul_duality.tex` (4)
 
@@ -567,48 +567,48 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:universal-theta` | `theorem` | 10727 | Universal modular Maurer--Cartan class |
 | `thm:explicit-theta` | `theorem` | 10787 | Explicit universal MC class |
 | `cor:explicit-theta-specializations` | `corollary` | 11003 | Explicit modular package for all families |
-| `prop:genus-completed-mc-framework` | `proposition` | 11715 | Genus-completed MC framework |
-| `prop:cyclic-ce-identification` | `proposition` | 11794 | Cyclic CE cohomology identification |
-| `cor:one-dim-obstruction` | `corollary` | 11907 | One-dimensional obstruction space |
-| `prop:mc2-reduction-principle` | `proposition` | 11941 | MC2 reduction principle |
-| `prop:geometric-modular-operadic-mc` | `proposition` | 11973 | Geometric modular-operadic MC framework |
-| `prop:tautological-line-support-criterion` | `proposition` | 12178 | Tautological-line support criterion |
-| `prop:one-channel-verdier-criterion` | `proposition` | 12254 | One-channel Verdier/Koszul criterion |
-| `prop:one-channel-ptvv-criterion` | `proposition` | 12319 | One-channel PTVV / anti-involution criterion |
-| `prop:one-channel-chain-model-criterion` | `proposition` | 12454 | One-channel chain-model criterion |
-| `prop:one-channel-seed-criterion` | `proposition` | 12551 | One-channel bar-coderivation seed criterion |
-| `prop:one-channel-minimal-seed-packet-criterion` | `proposition` | 12662 | One-channel minimal seed-packet criterion |
-| `prop:one-channel-visible-lowarity-packet-criterion` | `proposition` | 12799 | One-channel visible low-arity seed-packet criterion |
-| `prop:one-channel-canonical-transfer-criterion` | `proposition` | 12951 | One-channel canonical transfer-package criterion |
-| `prop:one-channel-transfer-law-criterion` | `proposition` | 13125 | One-channel root-string transfer-law criterion |
-| `prop:one-channel-root-string-chart-criterion` | `proposition` | 13275 | One-channel root-string chart criterion |
-| `prop:one-channel-intrinsic-line-detection-criterion` | `proposition` | 13469 | One-channel intrinsic line-detection criterion |
-| `prop:one-channel-automorphism-rigidity-criterion` | `proposition` | 13589 | One-channel automorphism-rigidity criterion |
-| `prop:one-channel-support-graph-stabilizer-criterion` | `proposition` | 13688 | One-channel support-graph stabilizer criterion |
-| `prop:one-channel-incidence-orbit-criterion` | `proposition` | 13778 | One-channel incidence-matrix / orbit-count criterion |
-| `prop:one-channel-visible-orbit-table-criterion` | `proposition` | 13890 | One-channel visible root-string orbit-table criterion |
-| `prop:one-channel-canonical-universal-orbit-table-criterion` | `proposition` | 13962 | One-channel canonical universal orbit-table criterion |
-| `prop:one-channel-universal-invariant-signature-criterion` | `proposition` | 14044 | One-channel universal invariant-signature criterion |
-| `prop:one-channel-signed-seed-character-criterion` | `proposition` | 14122 | One-channel signed seed-character criterion |
-| `prop:one-channel-two-sign-plus-normalization-scalar-criterion` | `proposition` | 14199 | One-channel two-sign plus normalization-scalar criterion |
-| `prop:one-channel-parity-sign-plus-normalization-scalar-criterion` | `proposition` | 14275 | One-channel parity-sign plus normalization-scalar criterion |
-| `prop:one-channel-parity-forcing-criterion` | `proposition` | 14350 | One-channel parity-forcing criterion |
-| `prop:one-channel-normalization-criterion` | `proposition` | 14416 | One-channel normalization criterion |
-| `thm:mc2-conditional-completion` | `theorem` | 14555 | MC2 conditional completion |
-| `thm:mc2-full-resolution` | `theorem` | 14630 | MC2 full resolution |
-| `lem:mk67-from-mc2` | `lemma` | 14677 | MC2 full resolution identifies MK6--MK7 |
-| `cor:scalar-saturation` | `corollary` | 14727 | Scalar saturation of the universal MC class |
-| `thm:km-strictification` | `theorem` | 14808 | KM strictification of the universal class |
-| `prop:one-channel-gauge-rigidity` | `proposition` | 14862 | One-channel gauge rigidity |
-| `prop:w-algebra-scalar-saturation` | `proposition` | 14895 | Scalar saturation for $\mathcal{W}$-algebras |
-| `prop:ds-package-functoriality` | `proposition` | 14932 | DS functoriality of the characteristic package |
-| `prop:nonprincipal-scalar-saturation` | `proposition` | 15017 | Scalar saturation for non-principal $\mathcal{W}$-algebras |
-| `prop:saturation-equivalence` | `proposition` | 15268 | Saturation equivalence criterion |
-| `prop:saturation-functorial` | `proposition` | 15435 | Functorial stability of scalar saturation |
-| `cor:effective-quadruple` | `corollary` | 15594 | Effective quadruple for the standard landscape |
-| `thm:cyclic-rigidity-generic` | `theorem` | 15677 | Cyclic rigidity at generic level |
-| `thm:tautological-line-support` | `theorem` | 16180 | Tautological line support |
-| `cor:mc2-single-hypothesis` | `corollary` | 16317 | MC2 reduced to cyclic model |
+| `prop:genus-completed-mc-framework` | `proposition` | 11496 | Genus-completed MC framework |
+| `prop:cyclic-ce-identification` | `proposition` | 11575 | Cyclic CE cohomology identification |
+| `cor:one-dim-obstruction` | `corollary` | 11688 | One-dimensional obstruction space |
+| `prop:mc2-reduction-principle` | `proposition` | 11722 | MC2 reduction principle |
+| `prop:geometric-modular-operadic-mc` | `proposition` | 11754 | Geometric modular-operadic MC framework |
+| `prop:tautological-line-support-criterion` | `proposition` | 11959 | Tautological-line support criterion |
+| `prop:one-channel-verdier-criterion` | `proposition` | 12035 | One-channel Verdier/Koszul criterion |
+| `prop:one-channel-ptvv-criterion` | `proposition` | 12100 | One-channel PTVV / anti-involution criterion |
+| `prop:one-channel-chain-model-criterion` | `proposition` | 12235 | One-channel chain-model criterion |
+| `prop:one-channel-seed-criterion` | `proposition` | 12332 | One-channel bar-coderivation seed criterion |
+| `prop:one-channel-minimal-seed-packet-criterion` | `proposition` | 12443 | One-channel minimal seed-packet criterion |
+| `prop:one-channel-visible-lowarity-packet-criterion` | `proposition` | 12580 | One-channel visible low-arity seed-packet criterion |
+| `prop:one-channel-canonical-transfer-criterion` | `proposition` | 12732 | One-channel canonical transfer-package criterion |
+| `prop:one-channel-transfer-law-criterion` | `proposition` | 12906 | One-channel root-string transfer-law criterion |
+| `prop:one-channel-root-string-chart-criterion` | `proposition` | 13056 | One-channel root-string chart criterion |
+| `prop:one-channel-intrinsic-line-detection-criterion` | `proposition` | 13250 | One-channel intrinsic line-detection criterion |
+| `prop:one-channel-automorphism-rigidity-criterion` | `proposition` | 13370 | One-channel automorphism-rigidity criterion |
+| `prop:one-channel-support-graph-stabilizer-criterion` | `proposition` | 13469 | One-channel support-graph stabilizer criterion |
+| `prop:one-channel-incidence-orbit-criterion` | `proposition` | 13559 | One-channel incidence-matrix / orbit-count criterion |
+| `prop:one-channel-visible-orbit-table-criterion` | `proposition` | 13671 | One-channel visible root-string orbit-table criterion |
+| `prop:one-channel-canonical-universal-orbit-table-criterion` | `proposition` | 13743 | One-channel canonical universal orbit-table criterion |
+| `prop:one-channel-universal-invariant-signature-criterion` | `proposition` | 13825 | One-channel universal invariant-signature criterion |
+| `prop:one-channel-signed-seed-character-criterion` | `proposition` | 13903 | One-channel signed seed-character criterion |
+| `prop:one-channel-two-sign-plus-normalization-scalar-criterion` | `proposition` | 13980 | One-channel two-sign plus normalization-scalar criterion |
+| `prop:one-channel-parity-sign-plus-normalization-scalar-criterion` | `proposition` | 14056 | One-channel parity-sign plus normalization-scalar criterion |
+| `prop:one-channel-parity-forcing-criterion` | `proposition` | 14131 | One-channel parity-forcing criterion |
+| `prop:one-channel-normalization-criterion` | `proposition` | 14197 | One-channel normalization criterion |
+| `thm:mc2-conditional-completion` | `theorem` | 14336 | MC2 conditional completion |
+| `thm:mc2-full-resolution` | `theorem` | 14411 | MC2 full resolution |
+| `lem:mk67-from-mc2` | `lemma` | 14458 | MC2 full resolution identifies MK6--MK7 |
+| `cor:scalar-saturation` | `corollary` | 14508 | Scalar saturation of the universal MC class |
+| `thm:km-strictification` | `theorem` | 14589 | KM strictification of the universal class |
+| `prop:one-channel-gauge-rigidity` | `proposition` | 14643 | One-channel gauge rigidity |
+| `prop:w-algebra-scalar-saturation` | `proposition` | 14676 | Scalar saturation for $\mathcal{W}$-algebras |
+| `prop:ds-package-functoriality` | `proposition` | 14713 | DS functoriality of the characteristic package |
+| `prop:nonprincipal-scalar-saturation` | `proposition` | 14798 | Scalar saturation for non-principal $\mathcal{W}$-algebras |
+| `prop:saturation-equivalence` | `proposition` | 15049 | Saturation equivalence criterion |
+| `prop:saturation-functorial` | `proposition` | 15216 | Functorial stability of scalar saturation |
+| `cor:effective-quadruple` | `corollary` | 15375 | Effective quadruple for the standard landscape |
+| `thm:cyclic-rigidity-generic` | `theorem` | 15458 | Cyclic rigidity at generic level |
+| `thm:tautological-line-support` | `theorem` | 15961 | Tautological line support |
+| `cor:mc2-single-hypothesis` | `corollary` | 16098 | MC2 reduced to cyclic model |
 
 #### `chapters/theory/hochschild_cohomology.tex` (7)
 
@@ -626,8 +626,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:central-charge-complementarity` | `theorem` | 264 | Central charge complementarity |
-| `prop:chirAss-self-dual` | `proposition` | 788 | $\chirAss$ self-duality |
+| `thm:central-charge-complementarity` | `theorem` | 275 | Central charge complementarity |
+| `prop:chirAss-self-dual` | `proposition` | 801 | $\chirAss$ self-duality |
 
 #### `chapters/theory/koszul_pair_structure.tex` (20)
 
@@ -678,7 +678,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:prism-principle` | `corollary` | 921 | The prism principle |
 | `thm:partition` | `theorem` | 1072 | Partition complex structure |
 
-### Part II: Examples (338)
+### Part II: Examples (342)
 
 #### `chapters/examples/beta_gamma.tex` (15)
 
@@ -1033,7 +1033,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:w-center-langlands` | `theorem` | 1883 | $\mathcal{W}$-algebra centers and Langlands duality |
 | `thm:w-ainfty-ops` | `theorem` | 1988 | $\mathcal{W}$-algebra $A_\infty$ operations |
 
-#### `chapters/examples/yangians.tex` (65)
+#### `chapters/examples/yangians.tex` (69)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
@@ -1053,55 +1053,59 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:dg-shifted-rtt-oneloop-kernel-criterion` | `proposition` | 1128 | One-loop kernel identity criterion for finite RTT quotients |
 | `prop:dg-shifted-rtt-evaluation-detection` | `proposition` | 1186 | Evaluation-detection criterion for one-loop RTT identities |
 | `prop:dg-shifted-rtt-boundary-seed` | `proposition` | 1228 | Boundary-seed criterion for truncated RTT defects |
-| `prop:dg-shifted-rtt-finite-tensor-detection` | `proposition` | 1275 | Finite tensor-length detection for boundary-strip RTT defects |
-| `prop:dg-shifted-rtt-fundamental-propagation` | `proposition` | 1345 | Fundamental propagation criterion for boundary-strip RTT defects |
-| `prop:dg-shifted-rtt-auxiliary-kernel-criterion` | `proposition` | 1442 | Auxiliary-kernel criterion for fundamental RTT propagation |
-| `prop:dg-shifted-rtt-typea-auxiliary-uniqueness` | `proposition` | 1512 | Type-A uniqueness of the auxiliary kernel on the fundamental line |
-| `cor:dg-shifted-rtt-typea-residue-reduction` | `corollary` | 1581 | Type-A residue reduction for the auxiliary kernel |
-| `prop:dg-shifted-rtt-typea-residue-channels` | `proposition` | 1618 | Type-A residue detection on the symmetric and antisymmetric channels |
-| `cor:dg-shifted-rtt-typea-single-line` | `corollary` | 1674 | Type-A residue detection on one mixed tensor line |
-| `prop:yangian-rank-dependence` | `proposition` | 2366 | Rank dependence of Yangian bar complex |
-| `prop:eval-module-bar` | `proposition` | 2503 | Evaluation module bar complex |
-| `thm:yangian-bgg` | `theorem` | 2592 | Yangian BGG resolution |
-| `cor:yangian-ext-exchange` | `corollary` | 2648 | Ext exchange for Yangian modules |
-| `prop:yangian-dk2-thick-generation` | `proposition` | 2698 | DK-2 reduction to thick generation in category~$\mathcal{O}$ |
-| `prop:dk2-thick-generation-typeA` | `proposition` | 2750 | Thick generation by evaluation modules in type~$A$ |
-| `lem:composition-thick-generation` | `lemma` | 2844 | Thick generation from finite composition series |
-| `thm:catO-thick-generation` | `theorem` | 2875 | Thick generation of category~$\mathcal{O}$ by evaluation modules, type~$A$ |
-| `prop:bar-cobar-kazhdan-candidate` | `proposition` | 2959 | Bar-cobar as factorization Kazhdan candidate |
-| `lem:monoidal-thick-extension` | `lemma` | 3061 | Monoidal extension to thick closures |
-| `thm:dk-fd-typeA` | `theorem` | 3083 | Finite-dimensional factorization Drinfeld--Kohno, type~$A$ |
-| `cor:dk-partial-conj` | `corollary` | 3158 | Partial resolution of Conjecture~\textup{\ref{conj:full-derived-dk}} |
-| `cor:dk-poly-catO` | `corollary` | 3177 | Factorization DK for polynomial category~$\mathcal{O}$, type~$A$ |
-| `lem:fd-thick-closure` | `lemma` | 3279 | Finite-dimensional thick-closure constraint |
-| `prop:yangian-bar-loop-weight` | `proposition` | 3365 | Loop-weight filtration of the Yangian bar complex |
-| `prop:thick-gen-projective` | `proposition` | 3605 | Thick generation via projective resolutions |
-| `prop:bgg-criterion` | `proposition` | 3714 | BGG resolution criterion for thick generation |
-| `prop:heart-capture-criterion` | `proposition` | 3872 | Heart-capture criterion |
-| `prop:standard-capture-criterion` | `proposition` | 3892 | Standard-capture criterion |
-| `cor:sectorwise-localizing-generation` | `corollary` | 3917 | Sectorwise localizing generation |
-| `thm:eval-core-identification` | `theorem` | 4119 | Evaluation-generated core identification, type~$A$ |
-| `thm:derived-dk-affine` | `theorem` | 4476 | Chain-level derived Drinfeld--Kohno for affine algebras |
-| `thm:derived-dk-yangian` | `theorem` | 4574 | Derived Drinfeld--Kohno on the evaluation-generated subcategory |
-| `thm:factorization-dk-eval` | `theorem` | 4727 | Factorization DK on evaluation locus |
-| `prop:yangian-dk3-generated-core` | `proposition` | 4803 | DK-3 reduction to evaluation-generated factorization cores |
-| `thm:sectorwise-spectral-convergence` | `theorem` | 4975 | Sectorwise spectral convergence |
-| `thm:h-level-factorization-kd` | `theorem` | 5024 | $\infty$-categorical factorization Koszul duality via sectorwise convergence |
-| `cor:dk23-all-types` | `corollary` | 5161 | DK-2/3 for all simple types via sectorwise convergence |
-| `thm:factorization-positselski` | `theorem` | 5480 | Factorization Positselski equivalence |
-| `thm:ind-completed-extension` | `theorem` | 5601 | Ind-completed factorization DK equivalence |
-| `prop:finite-stage-tangent` | `proposition` | 5803 | Finite-stage tangent Lie algebras |
-| `thm:rtt-mittag-leffler` | `theorem` | 5907 | Mittag-Leffler for the RTT bar cohomology tower |
-| `cor:completed-bar-cobar-yangian` | `corollary` | 6005 | Completed bar-cobar equivalence for Yangians |
-| `prop:dg-shifted-quotient-criterion` | `proposition` | 6213 | Formal quotient criterion for dg-shifted Yangians |
-| `prop:yangian-dk-mc4-reduction` | `proposition` | 6292 | Formal reduction principle from DK-3 to DK-4/DK-5 |
-| `prop:yangian-dk4-typea-frontier` | `proposition` | 6345 | DK-4 reduction to the fundamental residue packet in standard type~A |
-| `prop:yangian-dk5-compact-generators` | `proposition` | 6415 | DK-5 reduction to compact-generator comparison |
-| `prop:yangian-tower-mc4-criterion` | `proposition` | 6565 | Yangian tower criterion from finite RTT stages |
-| `cor:yangian-weight-cutoff` | `corollary` | 6616 | Standard RTT cutoff for Yangian towers |
-| `prop:yangian-rtt-completion-identification` | `proposition` | 6651 | Inverse-limit identification of the standard RTT completion |
-| `cor:yangian-standard-mc4-package` | `corollary` | 6705 | Standard RTT tower satisfies the M-level MC4 package |
-| `cor:yangian-hlevel-comparison-criterion` | `corollary` | 6738 | H-level comparison criterion for dg-shifted Yangians |
+| `prop:dg-shifted-rtt-boundary-coefficient-formula` | `proposition` | 1275 | Boundary-strip coefficient formula on the evaluation packet |
+| `prop:dg-shifted-rtt-fundamental-coefficient-formula` | `proposition` | 1337 | Explicit coefficient formula for the fundamental monodromy series |
+| `cor:dg-shifted-rtt-boundary-support-bound` | `corollary` | 1399 | Line-side boundary-strip support bound on generic tensor powers |
+| `prop:dg-shifted-rtt-defect-support-mechanism` | `proposition` | 1460 | Defect-side support mechanism from RTT degree |
+| `prop:dg-shifted-rtt-finite-tensor-detection` | `proposition` | 1510 | Finite tensor-length detection for boundary-strip RTT defects |
+| `prop:dg-shifted-rtt-fundamental-propagation` | `proposition` | 1585 | Fundamental propagation criterion for boundary-strip RTT defects |
+| `prop:dg-shifted-rtt-auxiliary-kernel-criterion` | `proposition` | 1682 | Auxiliary-kernel criterion for fundamental RTT propagation |
+| `prop:dg-shifted-rtt-typea-auxiliary-uniqueness` | `proposition` | 1752 | Type-A uniqueness of the auxiliary kernel on the fundamental line |
+| `cor:dg-shifted-rtt-typea-residue-reduction` | `corollary` | 1821 | Type-A residue reduction for the auxiliary kernel |
+| `prop:dg-shifted-rtt-typea-residue-channels` | `proposition` | 1858 | Type-A residue detection on the symmetric and antisymmetric channels |
+| `cor:dg-shifted-rtt-typea-single-line` | `corollary` | 1914 | Type-A residue detection on one mixed tensor line |
+| `prop:yangian-rank-dependence` | `proposition` | 2687 | Rank dependence of Yangian bar complex |
+| `prop:eval-module-bar` | `proposition` | 2824 | Evaluation module bar complex |
+| `thm:yangian-bgg` | `theorem` | 2913 | Yangian BGG resolution |
+| `cor:yangian-ext-exchange` | `corollary` | 2969 | Ext exchange for Yangian modules |
+| `prop:yangian-dk2-thick-generation` | `proposition` | 3019 | DK-2 reduction to thick generation in category~$\mathcal{O}$ |
+| `prop:dk2-thick-generation-typeA` | `proposition` | 3071 | Thick generation by evaluation modules in type~$A$ |
+| `lem:composition-thick-generation` | `lemma` | 3165 | Thick generation from finite composition series |
+| `thm:catO-thick-generation` | `theorem` | 3196 | Thick generation of category~$\mathcal{O}$ by evaluation modules, type~$A$ |
+| `prop:bar-cobar-kazhdan-candidate` | `proposition` | 3280 | Bar-cobar as factorization Kazhdan candidate |
+| `lem:monoidal-thick-extension` | `lemma` | 3382 | Monoidal extension to thick closures |
+| `thm:dk-fd-typeA` | `theorem` | 3404 | Finite-dimensional factorization Drinfeld--Kohno, type~$A$ |
+| `cor:dk-partial-conj` | `corollary` | 3479 | Partial resolution of Conjecture~\textup{\ref{conj:full-derived-dk}} |
+| `cor:dk-poly-catO` | `corollary` | 3498 | Factorization DK for polynomial category~$\mathcal{O}$, type~$A$ |
+| `lem:fd-thick-closure` | `lemma` | 3600 | Finite-dimensional thick-closure constraint |
+| `prop:yangian-bar-loop-weight` | `proposition` | 3686 | Loop-weight filtration of the Yangian bar complex |
+| `prop:thick-gen-projective` | `proposition` | 3926 | Thick generation via projective resolutions |
+| `prop:bgg-criterion` | `proposition` | 4035 | BGG resolution criterion for thick generation |
+| `prop:heart-capture-criterion` | `proposition` | 4193 | Heart-capture criterion |
+| `prop:standard-capture-criterion` | `proposition` | 4213 | Standard-capture criterion |
+| `cor:sectorwise-localizing-generation` | `corollary` | 4238 | Sectorwise localizing generation |
+| `thm:eval-core-identification` | `theorem` | 4440 | Evaluation-generated core identification, type~$A$ |
+| `thm:derived-dk-affine` | `theorem` | 4797 | Chain-level derived Drinfeld--Kohno for affine algebras |
+| `thm:derived-dk-yangian` | `theorem` | 4895 | Derived Drinfeld--Kohno on the evaluation-generated subcategory |
+| `thm:factorization-dk-eval` | `theorem` | 5048 | Factorization DK on evaluation locus |
+| `prop:yangian-dk3-generated-core` | `proposition` | 5124 | DK-3 reduction to evaluation-generated factorization cores |
+| `thm:sectorwise-spectral-convergence` | `theorem` | 5296 | Sectorwise spectral convergence |
+| `thm:h-level-factorization-kd` | `theorem` | 5345 | $\infty$-categorical factorization Koszul duality via sectorwise convergence |
+| `cor:dk23-all-types` | `corollary` | 5482 | DK-2/3 for all simple types via sectorwise convergence |
+| `thm:factorization-positselski` | `theorem` | 5801 | Factorization Positselski equivalence |
+| `thm:ind-completed-extension` | `theorem` | 5922 | Ind-completed factorization DK equivalence |
+| `prop:finite-stage-tangent` | `proposition` | 6124 | Finite-stage tangent Lie algebras |
+| `thm:rtt-mittag-leffler` | `theorem` | 6228 | Mittag-Leffler for the RTT bar cohomology tower |
+| `cor:completed-bar-cobar-yangian` | `corollary` | 6326 | Completed bar-cobar equivalence for Yangians |
+| `prop:dg-shifted-quotient-criterion` | `proposition` | 6534 | Formal quotient criterion for dg-shifted Yangians |
+| `prop:yangian-dk-mc4-reduction` | `proposition` | 6613 | Formal reduction principle from DK-3 to DK-4/DK-5 |
+| `prop:yangian-dk4-typea-frontier` | `proposition` | 6666 | DK-4 reduction to the fundamental residue packet in standard type~A |
+| `prop:yangian-dk5-compact-generators` | `proposition` | 6736 | DK-5 reduction to compact-generator comparison |
+| `prop:yangian-tower-mc4-criterion` | `proposition` | 6886 | Yangian tower criterion from finite RTT stages |
+| `cor:yangian-weight-cutoff` | `corollary` | 6937 | Standard RTT cutoff for Yangian towers |
+| `prop:yangian-rtt-completion-identification` | `proposition` | 6972 | Inverse-limit identification of the standard RTT completion |
+| `cor:yangian-standard-mc4-package` | `corollary` | 7026 | Standard RTT tower satisfies the M-level MC4 package |
+| `cor:yangian-hlevel-comparison-criterion` | `corollary` | 7059 | H-level comparison criterion for dg-shifted Yangians |
 
 ### Part III: Connections (47)
 
@@ -1130,18 +1134,18 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:fg-from-assch` | `theorem` | 251 | FG duality from $\chirAss$ self-duality |
 | `thm:master-pbw` | `theorem` | 531 | Higher-genus PBW concentration for the standard finite-type interacting families |
 | `thm:master-theta` | `theorem` | 557 | Cyclic $L_\infty$ deformation algebra and universal $\Theta_\cA$ {\normalfont (MC2, originally conjectured)} |
-| `prop:en-n2-recovery` | `proposition` | 1785 | $n = 2$ recovery and AF comparison |
-| `prop:vassiliev-genus0` | `proposition` | 1931 | Genus-$0$ weight systems from bar complex |
-| `thm:anomaly-koszul` | `theorem` | 1989 | Anomaly cancellation as Koszul constraint |
-| `thm:anomaly-physical-genus0` | `theorem` | 2023 | Physical anomaly cancellation, genus~$0$ |
-| `thm:anomaly-physical-km-w` | `theorem` | 2039 | Physical anomaly cancellation for KM and $\mathcal{W}$-algebras |
-| `prop:nc-hodge-symmetry` | `proposition` | 2257 | Hodge symmetry from complementarity |
-| `thm:lagrangian-complementarity` | `theorem` | 2536 | Lagrangian complementarity |
-| `thm:universal-MC` | `theorem` | 2571 | Universal MC class |
-| `thm:discriminant-spectral-verified` | `theorem` | 2750 | Discriminant as spectral determinant --- verified cases |
-| `thm:discriminant-spectral` | `theorem` | 2795 | Spectral discriminant --- general case |
-| `thm:family-index` | `theorem` | 3026 | Family index theorem for genus expansions |
-| `thm:volume-one-concrete-modular-datum` | `theorem` | 3589 | Volume~I concrete modular datum |
+| `prop:en-n2-recovery` | `proposition` | 1814 | $n = 2$ recovery and AF comparison |
+| `prop:vassiliev-genus0` | `proposition` | 1960 | Genus-$0$ weight systems from bar complex |
+| `thm:anomaly-koszul` | `theorem` | 2018 | Anomaly cancellation as Koszul constraint |
+| `thm:anomaly-physical-genus0` | `theorem` | 2052 | Physical anomaly cancellation, genus~$0$ |
+| `thm:anomaly-physical-km-w` | `theorem` | 2068 | Physical anomaly cancellation for KM and $\mathcal{W}$-algebras |
+| `prop:nc-hodge-symmetry` | `proposition` | 2286 | Hodge symmetry from complementarity |
+| `thm:lagrangian-complementarity` | `theorem` | 2565 | Lagrangian complementarity |
+| `thm:universal-MC` | `theorem` | 2600 | Universal MC class |
+| `thm:discriminant-spectral-verified` | `theorem` | 2779 | Discriminant as spectral determinant --- verified cases |
+| `thm:discriminant-spectral` | `theorem` | 2824 | Spectral discriminant --- general case |
+| `thm:family-index` | `theorem` | 3055 | Family index theorem for genus expansions |
+| `thm:volume-one-concrete-modular-datum` | `theorem` | 3618 | Volume~I concrete modular datum |
 
 #### `chapters/connections/feynman_connection.tex` (1)
 

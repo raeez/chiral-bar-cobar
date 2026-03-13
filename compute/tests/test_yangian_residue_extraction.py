@@ -45,6 +45,17 @@ from compute.lib.yangian_residue_extraction import (
     kernel_line_12,
     kernel_rtt_12,
     verify_auxiliary_kernel_identity,
+    # Tensor-power propagation
+    embed_two_factor_operator,
+    fundamental_monodromy_operator,
+    tensor_power_rtt_defect,
+    complete_homogeneous_scalar,
+    fundamental_line_series_coefficients,
+    fundamental_line_series_coefficients_closed_form,
+    boundary_strip_coefficient,
+    boundary_strip_coefficient_closed_form,
+    boundary_strip_packet,
+    boundary_strip_packet_closed_form,
     # Three-layer reduction
     three_layer_reduction,
     # Residue on e_1 x e_2
@@ -216,6 +227,152 @@ class TestLOperator:
         P = permutation_matrix_slN(N)
         expected = (u - a) * np.eye(N * N) + P
         assert np.allclose(L, expected)
+
+
+class TestTensorPowerPropagation:
+    """Verify low-rank RTT propagation on short tensor powers."""
+
+    @pytest.mark.parametrize("N,eval_points", [
+        (2, [0.0, 1.0, 2.0]),
+        (3, [0.0, 1.25, 2.5]),
+        (4, [0.0, 1.5, 2.75]),
+    ])
+    def test_monodromy_shape(self, N, eval_points):
+        total_dim = N ** (len(eval_points) + 2)
+        T1 = fundamental_monodromy_operator(1.7, eval_points, N, auxiliary_slot=0)
+        T2 = fundamental_monodromy_operator(-0.4, eval_points, N, auxiliary_slot=1)
+        assert T1.shape == (total_dim, total_dim)
+        assert T2.shape == (total_dim, total_dim)
+
+    @pytest.mark.parametrize("N,eval_points", [
+        (2, [0.0, 1.0]),
+        (3, [0.0, 1.25, 2.5]),
+        (4, [0.0, 1.5, 2.75]),
+    ])
+    def test_embedded_rmatrix_is_involutive_at_zero(self, N, eval_points):
+        total_factors = len(eval_points) + 2
+        P12 = embed_two_factor_operator(
+            permutation_matrix_slN(N), 0, 1, total_factors, N
+        )
+        total_dim = N ** total_factors
+        assert np.allclose(P12 @ P12, np.eye(total_dim))
+
+    @pytest.mark.parametrize("N,eval_points,u,v", [
+        (2, [0.0, 1.0], 1.7, -0.4),
+        (2, [0.0, 1.0, 2.0], 1.7, -0.4),
+        (3, [0.0, 1.25], 2.1, 0.3),
+        (3, [0.0, 1.25, 2.5], 2.1, 0.3),
+        (4, [0.0, 1.5], 1.4, -0.6),
+        (4, [0.0, 1.5, 2.75], 1.4, -0.6),
+    ])
+    def test_tensor_power_rtt_defect_vanishes(self, N, eval_points, u, v):
+        defect = tensor_power_rtt_defect(u, v, eval_points, N)
+        assert defect["frobenius_norm"] < 1e-10
+        assert defect["max_entry"] < 1e-10
+
+
+class TestBoundaryStripPacket:
+    """Verify the first low-stage boundary-strip coefficients on tensor powers."""
+
+    @pytest.mark.parametrize("N,eval_points,stage", [
+        (2, [0.0, 1.0], 4),
+        (2, [0.0, 1.0, 2.0], 4),
+        (3, [0.0, 1.25], 4),
+        (3, [0.0, 1.25, 2.5], 4),
+        (4, [0.0, 1.5], 4),
+        (4, [0.0, 1.5, 2.75], 4),
+    ])
+    def test_boundary_strip_packet_vanishes(self, N, eval_points, stage):
+        packet = boundary_strip_packet(eval_points, N, stage)
+        assert packet["all_zero"]
+        for _, data in packet["packet"].items():
+            assert data["frobenius_norm"] < 1e-10
+            assert data["max_entry"] < 1e-10
+
+    @pytest.mark.parametrize("N,eval_points,max_degree", [
+        (2, [0.0, 1.0], 3),
+        (3, [0.0, 1.25], 3),
+    ])
+    def test_line_series_starts_with_identity(self, N, eval_points, max_degree):
+        coeffs = fundamental_line_series_coefficients(
+            eval_points, N, max_degree, auxiliary_slot=0
+        )
+        total_dim = N ** (len(eval_points) + 2)
+        assert np.allclose(coeffs[0], np.eye(total_dim))
+
+    @pytest.mark.parametrize("N,eval_points,boundary_index", [
+        (2, [0.0, 1.0], 0),
+        (3, [0.0, 1.25, 2.5], 1),
+        (4, [0.0, 1.5, 2.75], 2),
+    ])
+    def test_boundary_strip_single_coefficient_vanishes(self, N, eval_points, boundary_index):
+        coeff = boundary_strip_coefficient(
+            eval_points, N, boundary_index, max_degree=boundary_index + 2
+        )
+        assert np.linalg.norm(coeff) < 1e-10
+
+
+class TestFundamentalSeriesClosedForm:
+    """Match the closed-form monodromy coefficients with the iterative expansion."""
+
+    @pytest.mark.parametrize("values,degree,expected", [
+        ([2.0], 0, 1.0),
+        ([2.0], 2, 4.0),
+        ([2.0, 3.0], 1, 5.0),
+        ([2.0, 3.0], 2, 19.0),
+    ])
+    def test_complete_homogeneous_scalar(self, values, degree, expected):
+        assert complete_homogeneous_scalar(values, degree) == pytest.approx(expected)
+
+    @pytest.mark.parametrize("N,eval_points,max_degree,auxiliary_slot", [
+        (2, [0.0, 1.0], 4, 0),
+        (2, [0.0, 1.0], 4, 1),
+        (3, [0.0, 1.25, 2.5], 4, 0),
+        (3, [0.0, 1.25, 2.5], 4, 1),
+    ])
+    def test_closed_form_matches_iterative_series(self, N, eval_points, max_degree, auxiliary_slot):
+        iterative = fundamental_line_series_coefficients(
+            eval_points, N, max_degree, auxiliary_slot
+        )
+        closed_form = fundamental_line_series_coefficients_closed_form(
+            eval_points, N, max_degree, auxiliary_slot
+        )
+        assert len(iterative) == len(closed_form)
+        for iterative_coeff, closed_form_coeff in zip(iterative, closed_form):
+            assert np.allclose(iterative_coeff, closed_form_coeff)
+
+
+class TestClosedFormBoundaryStrip:
+    """Use the closed-form monodromy expansion on the next boundary packet."""
+
+    @pytest.mark.parametrize("N,eval_points,boundary_index", [
+        (2, [0.0, 1.0], 4),
+        (3, [0.0, 1.25, 2.5], 3),
+        (4, [0.0, 1.5, 2.75], 2),
+    ])
+    def test_closed_form_matches_iterative_boundary_coefficient(self, N, eval_points, boundary_index):
+        iterative = boundary_strip_coefficient(
+            eval_points, N, boundary_index, max_degree=boundary_index + 2
+        )
+        closed_form = boundary_strip_coefficient_closed_form(
+            eval_points, N, boundary_index
+        )
+        assert np.allclose(iterative, closed_form)
+
+    @pytest.mark.parametrize("N,eval_points,stage", [
+        (2, [0.0, 1.0], 6),
+        (2, [0.0, 1.0, 2.0], 6),
+        (3, [0.0, 1.25], 6),
+        (3, [0.0, 1.25, 2.5], 6),
+        (4, [0.0, 1.5], 6),
+        (4, [0.0, 1.5, 2.75], 6),
+    ])
+    def test_closed_form_stage6_packet_vanishes(self, N, eval_points, stage):
+        packet = boundary_strip_packet_closed_form(eval_points, N, stage)
+        assert packet["all_zero"]
+        for _, data in packet["packet"].items():
+            assert data["frobenius_norm"] < 1e-10
+            assert data["max_entry"] < 1e-10
 
 
 class TestNormalizationBridge:

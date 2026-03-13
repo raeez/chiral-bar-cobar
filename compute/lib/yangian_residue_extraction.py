@@ -59,6 +59,7 @@ CONVENTIONS:
 
 from __future__ import annotations
 
+from itertools import combinations
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -515,6 +516,350 @@ def verify_auxiliary_kernel_identity(N: int) -> Dict[str, object]:
         "dim_match": dim_match,
         "subspace_match": subspace_match,
         "identity_holds": dim_match and subspace_match,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Tensor-power propagation on generic fundamental evaluation modules
+# ---------------------------------------------------------------------------
+
+def _index_to_digits(index: int, total_factors: int, N: int) -> List[int]:
+    """Convert a tensor-basis index to base-N digits."""
+    digits = [0] * total_factors
+    for pos in range(total_factors - 1, -1, -1):
+        digits[pos] = index % N
+        index //= N
+    return digits
+
+
+def _digits_to_index(digits: List[int], N: int) -> int:
+    """Convert base-N digits to a tensor-basis index."""
+    index = 0
+    for digit in digits:
+        index = index * N + digit
+    return index
+
+
+def embed_two_factor_operator(local_op: np.ndarray,
+                              left: int,
+                              right: int,
+                              total_factors: int,
+                              N: int) -> np.ndarray:
+    """Embed an operator on factors (left, right) into the full tensor product."""
+    if left >= right:
+        raise ValueError("expected left < right for two-factor embedding")
+    expected_shape = (N * N, N * N)
+    if local_op.shape != expected_shape:
+        raise ValueError(f"expected local_op shape {expected_shape}, got {local_op.shape}")
+
+    total_dim = N ** total_factors
+    embedded = np.zeros((total_dim, total_dim), dtype=complex)
+
+    for in_index in range(total_dim):
+        input_digits = _index_to_digits(in_index, total_factors, N)
+        local_input = input_digits[left] * N + input_digits[right]
+
+        for local_output in range(N * N):
+            coeff = local_op[local_output, local_input]
+            if abs(coeff) < 1e-12:
+                continue
+
+            output_digits = input_digits.copy()
+            output_digits[left] = local_output // N
+            output_digits[right] = local_output % N
+            out_index = _digits_to_index(output_digits, N)
+            embedded[out_index, in_index] += coeff
+
+    return embedded
+
+
+def fundamental_monodromy_operator(u: complex,
+                                   eval_points: List[complex],
+                                   N: int,
+                                   auxiliary_slot: int) -> np.ndarray:
+    """Ordered product of fundamental L-operators on a tensor power."""
+    if auxiliary_slot not in (0, 1):
+        raise ValueError("auxiliary_slot must be 0 or 1")
+
+    total_factors = len(eval_points) + 2
+    total_dim = N ** total_factors
+    monodromy = np.eye(total_dim, dtype=complex)
+
+    for quantum_slot, a in enumerate(eval_points, start=2):
+        local_l = l_operator(u, a, N)
+        embedded_l = embed_two_factor_operator(
+            local_l, auxiliary_slot, quantum_slot, total_factors, N
+        )
+        monodromy = monodromy @ embedded_l
+
+    return monodromy
+
+
+def tensor_power_rtt_defect(u: complex,
+                            v: complex,
+                            eval_points: List[complex],
+                            N: int) -> Dict[str, object]:
+    """Compute the RTT defect on a generic tensor power of fundamental modules."""
+    total_factors = len(eval_points) + 2
+    total_dim = N ** total_factors
+
+    r12 = embed_two_factor_operator(
+        yang_r_matrix_slN(u - v, N), 0, 1, total_factors, N
+    )
+    t1 = fundamental_monodromy_operator(u, eval_points, N, auxiliary_slot=0)
+    t2 = fundamental_monodromy_operator(v, eval_points, N, auxiliary_slot=1)
+
+    defect = r12 @ t1 @ t2 - t2 @ t1 @ r12
+
+    return {
+        "N": N,
+        "tensor_length": len(eval_points),
+        "evaluation_points": list(eval_points),
+        "total_dim": total_dim,
+        "frobenius_norm": float(np.linalg.norm(defect)),
+        "max_entry": float(np.max(np.abs(defect))),
+    }
+
+
+def fundamental_line_series_coefficients(eval_points: List[complex],
+                                         N: int,
+                                         max_degree: int,
+                                         auxiliary_slot: int,
+                                         hbar: complex = 1.0) -> List[np.ndarray]:
+    """Coefficients of the normalized fundamental monodromy series.
+
+    The one-factor kernel is
+        L_a(u) = I - hbar * P / (u-a)
+               = I + sum_{r>=1} (-hbar * a^{r-1} P) u^{-r}.
+
+    On a tensor product of fundamental evaluation modules this yields
+    a coefficientwise monodromy series
+        T(u) = sum_{r>=0} T^{(r)} u^{-r}.
+    """
+    total_factors = len(eval_points) + 2
+    total_dim = N ** total_factors
+    identity = np.eye(total_dim, dtype=complex)
+
+    series = [identity] + [np.zeros((total_dim, total_dim), dtype=complex)
+                           for _ in range(max_degree)]
+
+    for quantum_slot, a in enumerate(eval_points, start=2):
+        factor = [identity] + [np.zeros((total_dim, total_dim), dtype=complex)
+                               for _ in range(max_degree)]
+        local_perm = embed_two_factor_operator(
+            permutation_matrix_slN(N), auxiliary_slot, quantum_slot, total_factors, N
+        )
+        for r in range(1, max_degree + 1):
+            factor[r] = -hbar * (a ** (r - 1)) * local_perm
+
+        updated = [np.zeros((total_dim, total_dim), dtype=complex)
+                   for _ in range(max_degree + 1)]
+        for i in range(max_degree + 1):
+            for j in range(max_degree + 1 - i):
+                updated[i + j] += series[i] @ factor[j]
+        series = updated
+
+    return series
+
+
+def complete_homogeneous_scalar(values: List[complex], degree: int) -> complex:
+    """Complete homogeneous symmetric polynomial in scalar variables."""
+    if degree < 0:
+        return 0.0
+    if degree == 0:
+        return 1.0
+    if not values:
+        return 0.0
+
+    coeffs = [0.0 + 0.0j for _ in range(degree + 1)]
+    coeffs[0] = 1.0
+    for value in values:
+        for d in range(1, degree + 1):
+            coeffs[d] += value * coeffs[d - 1]
+    return coeffs[degree]
+
+
+def fundamental_line_series_coefficients_closed_form(
+    eval_points: List[complex],
+    N: int,
+    max_degree: int,
+    auxiliary_slot: int,
+    hbar: complex = 1.0,
+) -> List[np.ndarray]:
+    """Closed-form coefficient formula for the normalized monodromy series."""
+    total_factors = len(eval_points) + 2
+    total_dim = N ** total_factors
+    identity = np.eye(total_dim, dtype=complex)
+
+    local_perms = {
+        quantum_slot: embed_two_factor_operator(
+            permutation_matrix_slN(N), auxiliary_slot, quantum_slot, total_factors, N
+        )
+        for quantum_slot in range(2, total_factors)
+    }
+
+    series = [identity] + [
+        np.zeros((total_dim, total_dim), dtype=complex)
+        for _ in range(max_degree)
+    ]
+
+    for degree in range(1, max_degree + 1):
+        coefficient = np.zeros((total_dim, total_dim), dtype=complex)
+        max_slots = min(degree, len(eval_points))
+        for num_slots in range(1, max_slots + 1):
+            for chosen_offsets in combinations(range(len(eval_points)), num_slots):
+                scalar = complete_homogeneous_scalar(
+                    [eval_points[offset] for offset in chosen_offsets],
+                    degree - num_slots,
+                )
+                operator = identity
+                for offset in chosen_offsets:
+                    operator = operator @ local_perms[offset + 2]
+                coefficient += ((-hbar) ** num_slots) * scalar * operator
+        series[degree] = coefficient
+
+    return series
+
+
+def _boundary_strip_coefficient_from_series(
+    eval_points: List[complex],
+    N: int,
+    boundary_index: int,
+    hbar: complex,
+    series_builder,
+) -> np.ndarray:
+    """Common boundary-strip extraction from a chosen monodromy-series builder."""
+    max_degree = boundary_index + 1
+    total_factors = len(eval_points) + 2
+    total_dim = N ** total_factors
+    r_series = -hbar * embed_two_factor_operator(
+        permutation_matrix_slN(N), 0, 1, total_factors, N
+    )
+
+    t1 = series_builder(eval_points, N, max_degree, auxiliary_slot=0, hbar=hbar)
+    t2 = series_builder(eval_points, N, max_degree, auxiliary_slot=1, hbar=hbar)
+
+    coefficient = t1[boundary_index + 1] @ t2[1] - t2[1] @ t1[boundary_index + 1]
+
+    for t in range(boundary_index + 1):
+        coefficient += r_series @ t1[boundary_index - t] @ t2[t + 1]
+        coefficient -= t2[t + 1] @ t1[boundary_index - t] @ r_series
+
+    return coefficient
+
+
+def boundary_strip_coefficient(eval_points: List[complex],
+                               N: int,
+                               boundary_index: int,
+                               max_degree: int,
+                               hbar: complex = 1.0) -> np.ndarray:
+    """Extract the coefficient K^{line}_{a,0} on a generic tensor power.
+
+    We expand
+        R(u-v) T_1(u) T_2(v) - T_2(v) T_1(u) R(u-v)
+    in the standard region |u| > |v|, where
+        R(u-v) = I - hbar * sum_{t>=0} P_{12} u^{-t-1} v^t.
+
+    The returned matrix is the coefficient of u^{-a-1} v^{-1}.
+    """
+    if boundary_index < 0:
+        raise ValueError("boundary_index must be nonnegative")
+    if max_degree < boundary_index + 1:
+        raise ValueError("max_degree must be at least boundary_index + 1")
+
+    return _boundary_strip_coefficient_from_series(
+        eval_points,
+        N,
+        boundary_index,
+        hbar,
+        fundamental_line_series_coefficients,
+    )
+
+def boundary_strip_coefficient_closed_form(
+    eval_points: List[complex],
+    N: int,
+    boundary_index: int,
+    hbar: complex = 1.0,
+) -> np.ndarray:
+    """Closed-form extraction of K^{line}_{a,0} on a generic tensor power."""
+    if boundary_index < 0:
+        raise ValueError("boundary_index must be nonnegative")
+
+    return _boundary_strip_coefficient_from_series(
+        eval_points,
+        N,
+        boundary_index,
+        hbar,
+        fundamental_line_series_coefficients_closed_form,
+    )
+
+
+def boundary_strip_packet(eval_points: List[complex],
+                          N: int,
+                          stage: int,
+                          hbar: complex = 1.0) -> Dict[str, object]:
+    """Compute the low-stage Yangian boundary-strip packet on a tensor power."""
+    if stage < 0:
+        raise ValueError("stage must be nonnegative")
+
+    max_degree = stage + 2
+    packet = {}
+    all_zero = True
+
+    for a in range(stage + 1):
+        coeff = boundary_strip_coefficient(
+            eval_points, N, boundary_index=a, max_degree=max_degree, hbar=hbar
+        )
+        frob = float(np.linalg.norm(coeff))
+        max_entry = float(np.max(np.abs(coeff)))
+        packet[a] = {
+            "frobenius_norm": frob,
+            "max_entry": max_entry,
+        }
+        if frob >= 1e-10 or max_entry >= 1e-10:
+            all_zero = False
+
+    return {
+        "N": N,
+        "stage": stage,
+        "tensor_length": len(eval_points),
+        "evaluation_points": list(eval_points),
+        "all_zero": all_zero,
+        "packet": packet,
+    }
+
+
+def boundary_strip_packet_closed_form(eval_points: List[complex],
+                                      N: int,
+                                      stage: int,
+                                      hbar: complex = 1.0) -> Dict[str, object]:
+    """Compute the low-stage boundary-strip packet via the closed-form series."""
+    if stage < 0:
+        raise ValueError("stage must be nonnegative")
+
+    packet = {}
+    all_zero = True
+
+    for a in range(stage + 1):
+        coeff = boundary_strip_coefficient_closed_form(
+            eval_points, N, boundary_index=a, hbar=hbar
+        )
+        frob = float(np.linalg.norm(coeff))
+        max_entry = float(np.max(np.abs(coeff)))
+        packet[a] = {
+            "frobenius_norm": frob,
+            "max_entry": max_entry,
+        }
+        if frob >= 1e-10 or max_entry >= 1e-10:
+            all_zero = False
+
+    return {
+        "N": N,
+        "stage": stage,
+        "tensor_length": len(eval_points),
+        "evaluation_points": list(eval_points),
+        "all_zero": all_zero,
+        "packet": packet,
     }
 
 
@@ -1088,6 +1433,44 @@ def verify_all(max_N: int = 4) -> Dict[str, bool]:
         # Spectral decomposition
         sd = r_matrix_spectral_decomposition(2.5, N)
         results[f"sl_{N} spectral_decomp"] = sd["spectral_matches_direct"]
+
+    # Tensor-power propagation on short generic chains
+    propagation_cases = [
+        (2, [0.0, 1.0, 2.0], 1.7, -0.4),
+        (3, [0.0, 1.25, 2.5], 2.1, 0.3),
+        (4, [0.0, 1.5, 2.75], 1.4, -0.6),
+    ]
+    for N, eval_points, u, v in propagation_cases:
+        defect = tensor_power_rtt_defect(u, v, eval_points, N)
+        results[f"sl_{N} tensor_power_propagation"] = defect["frobenius_norm"] < 1e-10
+
+    boundary_cases = [
+        (2, [0.0, 1.0, 2.0], 4),
+        (3, [0.0, 1.25, 2.5], 4),
+        (4, [0.0, 1.5, 2.75], 4),
+    ]
+    for N, eval_points, stage in boundary_cases:
+        packet = boundary_strip_packet(eval_points, N, stage)
+        results[f"sl_{N} boundary_strip_stage_{stage}"] = packet["all_zero"]
+        iterative = fundamental_line_series_coefficients(
+            eval_points, N, stage, auxiliary_slot=0
+        )
+        closed_form = fundamental_line_series_coefficients_closed_form(
+            eval_points, N, stage, auxiliary_slot=0
+        )
+        results[f"sl_{N} monodromy_closed_form_stage_{stage}"] = all(
+            np.allclose(left, right)
+            for left, right in zip(iterative, closed_form)
+        )
+
+    closed_form_boundary_cases = [
+        (2, [0.0, 1.0, 2.0], 6),
+        (3, [0.0, 1.25, 2.5], 6),
+        (4, [0.0, 1.5, 2.75], 6),
+    ]
+    for N, eval_points, stage in closed_form_boundary_cases:
+        packet = boundary_strip_packet_closed_form(eval_points, N, stage)
+        results[f"sl_{N} boundary_strip_closed_form_stage_{stage}"] = packet["all_zero"]
 
     # Exact computation (sympy) for N = 2, 3
     for N in [2, 3]:
