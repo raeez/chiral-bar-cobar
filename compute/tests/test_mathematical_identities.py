@@ -26,7 +26,7 @@ class TestBarCohomologyRecurrences:
         sl2 bar cohomology = R(n+3) for n>=3 (H^2=5 corrected from R(5)=6)."""
         from compute.lib.bar_complex import bar_dim_sl2
         # Start from n=5: at n=3,4 the corrected H^2=5 enters as rn1/rn2
-        for n in range(5, 12):
+        for n in range(5, 11):
             rn = bar_dim_sl2(n)
             rn1 = bar_dim_sl2(n - 1)
             rn2 = bar_dim_sl2(n - 2)

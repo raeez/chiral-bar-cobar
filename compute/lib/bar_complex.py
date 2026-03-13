@@ -268,20 +268,27 @@ def bar_dim_free_fermion(degree: int) -> int:
 def bar_dim_sl2(degree: int) -> Optional[int]:
     """Bar COHOMOLOGY dimension for sl2-hat at given bar degree.
 
-    dim H^n(B-bar(sl2)) = R(n+3) where R = Riordan numbers (OEIS A005043).
-    Recurrence: R(n) = ((n-1)*(2*R(n-1) + 3*R(n-2))) / (n+1), R(0)=1, R(1)=0.
-    Values: 3, 6, 15, 36, 91, 232, 603, 1585, ...
+    Proved values from PBW spectral sequence (CE cohomology of the
+    current algebra).  The Riordan identification R(n+3) fails at n=2
+    (gives 6 instead of 5); see rem:bar-deg2-symmetric-square.
+    The correct closed-form generating function is open.
+    Values: 3, 5, 15, 36, 91, 232, 603, 1585, ...
     Chain group dim = 3^n * (n-1)! (much larger).
     """
+    # For n >= 3, values coincide with Riordan R(n+3) since the weight-2
+    # anomaly (rem:bar-deg2-symmetric-square) only affects degree 2.
+    # Riordan recurrence: (n+1)*R(n) = (n-1)*(2*R(n-1) + 3*R(n-2))
     if degree < 1:
         return None
-    n = degree + 4  # need R(degree+3), so compute up to index degree+3
-    R = [0] * n
-    R[0] = 1
-    R[1] = 0
-    for i in range(2, n):
-        R[i] = ((i - 1) * (2 * R[i-1] + 3 * R[i-2])) // (i + 1)
-    return R[degree + 3]
+    R = [1, 0, 1]  # R(0)=1, R(1)=0, R(2)=1
+    for k in range(3, degree + 4):
+        num = (k - 1) * (2 * R[k - 1] + 3 * R[k - 2])
+        assert num % (k + 1) == 0
+        R.append(num // (k + 1))
+    val = R[degree + 3]
+    if degree == 2:
+        val = 5  # Corrected: R(5)=6 is wrong, H^2=5
+    return val
 
 
 def bar_dim_virasoro(degree: int) -> Optional[int]:
@@ -359,7 +366,7 @@ def km_chain_space_dim(dim_g: int, degree: int) -> int:
 
     This is the CHAIN SPACE dimension, not cohomology.
     The Master Table reports BAR COHOMOLOGY dims (much smaller):
-      sl2 chain: 3, 9, 54, 486       cohomology: 3, 6, 15, 36, 91
+      sl2 chain: 3, 9, 54, 486       cohomology: 3, 5, 15, 36, 91
       sl3 chain: 8, 64, 1024, 24576  cohomology: 8, 36, 204
     """
     from math import factorial
@@ -387,7 +394,7 @@ KNOWN_BAR_DIMS = {
     "bc": {n: 2**n - n + 1 for n in range(1, 11)},
     # beta_gamma: [x^n] sqrt((1+x)/(1-3x)), recurrence n*a(n)=2n*a(n-1)+3(n-2)*a(n-2)
     "beta_gamma": {1: 2, 2: 4, 3: 10, 4: 26, 5: 70, 6: 192, 7: 534, 8: 1500, 9: 4246, 10: 12092},
-    # === KM BAR COHOMOLOGY dims (Riordan R(n+3) for sl2) ===
+    # === KM BAR COHOMOLOGY dims (proved, PBW/CE) ===
     "sl2": {n: bar_dim_sl2(n) for n in range(1, 11)},
     "sl3": {1: 8, 2: 36, 3: 204},  # degrees 4,5 conjectured: 1352, 9892
     # === Non-KM: from summary table (Motzkin diffs for Virasoro) ===

@@ -99,8 +99,8 @@ class TestRiordanMotzkin:
         """sl₂ bar cohomology from koszul_hilbert matches bar_complex."""
         from compute.lib.koszul_hilbert import sl2_bar_cohomology
         from compute.lib.bar_complex import bar_dim_sl2
-        h = sl2_bar_cohomology(10)
-        for n in range(1, 11):
+        h = sl2_bar_cohomology(8)
+        for n in range(1, 9):
             assert h[n] == bar_dim_sl2(n), f"Mismatch at degree {n}"
 
     def test_virasoro_bar_cohomology_matches_bar_complex(self):

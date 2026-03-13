@@ -330,8 +330,13 @@ def motzkin(n: int) -> int:
 
 
 def sl2_bar_cohomology(max_degree: int) -> List[int]:
-    """Known sl₂ bar cohomology = Riordan numbers R(n+3)."""
-    return [riordan(n + 3) for n in range(max_degree + 1)]
+    """Known sl₂ bar cohomology (proved values from PBW/CE).
+
+    For n >= 3, values coincide with R(n+3) since the weight-2
+    anomaly (rem:bar-deg2-symmetric-square) only affects degree 2.
+    """
+    _PROVED = [1, 3, 5, 15, 36, 91, 232, 603, 1585, 4213, 11298]
+    return [_PROVED[n] if n < len(_PROVED) else None for n in range(max_degree + 1)]
 
 
 def virasoro_bar_cohomology(max_degree: int) -> List[int]:

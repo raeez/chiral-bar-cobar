@@ -31,7 +31,11 @@ from compute.lib.yangian_residue_extraction import (
     verify_r_matrix_unitarity,
     # L-operator
     l_operator,
+    normalized_line_operator,
     l_operator_residue,
+    normalized_line_operator_residue,
+    additive_to_normalized_line_operator,
+    additive_normalization_bridge,
     l_operator_residue_sympy,
     # Channels
     sym_antisym_projectors,
@@ -212,6 +216,32 @@ class TestLOperator:
         P = permutation_matrix_slN(N)
         expected = (u - a) * np.eye(N * N) + P
         assert np.allclose(L, expected)
+
+
+class TestNormalizationBridge:
+    """Bridge the additive collision-value package to the normalized residue package."""
+
+    @pytest.mark.parametrize("N,u,a", [
+        (2, 3.5, 1.0),
+        (3, 2.25, -0.5),
+        (4, 5.0, 1.75),
+    ])
+    def test_additive_division_gives_normalized_kernel(self, N, u, a):
+        normalized_from_add = additive_to_normalized_line_operator(u, a, N)
+        normalized_expected = normalized_line_operator(u, a, N, hbar=-1.0)
+        assert np.allclose(normalized_from_add, normalized_expected)
+
+    @pytest.mark.parametrize("N", [2, 3, 4])
+    def test_collision_value_matches_normalized_residue(self, N):
+        collision_value = l_operator_residue(0.0, N)
+        normalized_residue = normalized_line_operator_residue(N, hbar=-1.0)
+        assert np.allclose(collision_value, normalized_residue)
+
+    @pytest.mark.parametrize("N", [2, 3, 4])
+    def test_bridge_helper(self, N):
+        bridge = additive_normalization_bridge(3.5, 1.25, N)
+        assert bridge["matrix_bridge_holds"]
+        assert bridge["collision_value_matches_normalized_residue"]
 
 
 # ============================================================================
@@ -618,6 +648,19 @@ class TestConsistencyWithExisting:
         old_dim = alt_dim(N)
         new_result = kernel_line_12(N)
         assert new_result["asym_kernel_dim"] == old_dim
+
+    @pytest.mark.parametrize("N", [2, 3, 4])
+    def test_normalized_kernels_agree(self, N):
+        """The normalized bridge matches the original simple-pole module exactly."""
+        from compute.lib.yangian_residue import (
+            evaluation_line_operator as normalized_old,
+            residue_at_a as residue_old,
+        )
+        u, a = 3.0, 1.25
+        old_line = normalized_old(N, u, a, hbar=1.0)
+        new_line = normalized_line_operator(u, a, N, hbar=1.0)
+        assert np.allclose(old_line, new_line)
+        assert np.allclose(residue_old(N, hbar=1.0), normalized_line_operator_residue(N))
 
 
 # ============================================================================

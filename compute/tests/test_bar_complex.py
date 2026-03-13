@@ -137,9 +137,9 @@ class TestKnownBarDims:
     """Verify known bar dimensions from PROVED formulas."""
 
     def test_sl2_cohomology_dims(self):
-        """sl_2 bar cohomology = Riordan R(n+3) (OEIS A005043)."""
+        """sl_2 bar cohomology (proved, PBW/CE)."""
         assert bar_dim_sl2(1) == 3
-        assert bar_dim_sl2(2) == 6
+        assert bar_dim_sl2(2) == 5
         assert bar_dim_sl2(3) == 15
         assert bar_dim_sl2(4) == 36
         assert bar_dim_sl2(5) == 91
@@ -410,9 +410,10 @@ class TestSl3BarGFConjecture:
             assert bar_dim_sl3_conjectured(n) > 0
 
     def test_h2_equals_sym2(self):
-        """H² = C(d+1,2) = dim S²(g) for KM algebras."""
+        """H² vs S²(g): holds for sl₃, fails for sl₂ (bar diff kills wt-2)."""
         from math import comb
-        # sl₂: dim=3, H²=6
-        assert comb(3+1, 2) == 6 == KNOWN_BAR_DIMS["sl2"][2]
-        # sl₃: dim=8, H²=36
+        # sl₂: S²(sl₂) = C(4,2) = 6, but H² = 5 (weight-2 part killed)
+        assert comb(3+1, 2) == 6
+        assert KNOWN_BAR_DIMS["sl2"][2] == 5
+        # sl₃: dim=8, H²=36 = C(9,2)
         assert comb(8+1, 2) == 36 == KNOWN_BAR_DIMS["sl3"][2]

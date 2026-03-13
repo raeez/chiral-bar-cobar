@@ -588,7 +588,8 @@ def run_sl2_verification(max_degree: int = 4, verbose: bool = True):
         jv = verify_jacobi(d, sc)
         print(f"sl_2 Jacobi violations: {jv}")
 
-    riordan = [None, 3, 6, 15, 36, 91, 232, 603]
+    # Proved bar cohomology dims (PBW/CE); NOT the Riordan numbers
+    expected_dims = [None, 3, 5, 15, 36, 91, 232, 603]
 
     results = {}
     for n in range(1, max_degree + 1):
@@ -602,7 +603,7 @@ def run_sl2_verification(max_degree: int = 4, verbose: bool = True):
                 print(f"WARNING: d² ≠ 0 at degree {n}!")
 
         h_n = bar_cohomology_dim(d, sc, n, verbose=verbose)
-        expected = riordan[n] if n < len(riordan) else None
+        expected = expected_dims[n] if n < len(expected_dims) else None
         match = h_n == expected if expected is not None else None
         results[n] = (h_n, expected, match)
 

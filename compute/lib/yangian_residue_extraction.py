@@ -45,6 +45,12 @@ CONVENTIONS:
   - R(u) = u*I + P  (additive Yang R-matrix, NOT R = I - P/u)
     This convention matches sl2_baxter.py and the standard
     Drinfeld/RTT convention R(u) = u + hbar*P with hbar=1.
+  - Normalization bridge:
+      L_add,a(u) = (u-a)*I + P = (u-a) * L_norm,a(u) |_{hbar=-1}
+    where
+      L_norm,a(u) = I - hbar*P/(u-a).
+    Thus the additive collision value L_add,a(a) = P is exactly the
+    normalized simple-pole residue Res_{u=a} L_norm,a(u) with hbar=-1.
   - Cohomological grading (|d| = +1).
   - V = C^N, fundamental representation of sl_N.
   - P = permutation on V x V: P(v x w) = w x v.
@@ -200,22 +206,73 @@ def l_operator(u: complex, a: complex, N: int) -> np.ndarray:
     return yang_r_matrix_slN(u - a, N)
 
 
+def normalized_line_operator(u: complex, a: complex, N: int,
+                             hbar: complex = 1.0) -> np.ndarray:
+    """Normalized simple-pole kernel I - hbar*P/(u-a) on V x V.
+
+    This is the local kernel used in the theorematic residue reduction in
+    `yangians.tex`.  The additive kernel of `l_operator` is related by
+        l_operator(u, a, N) = (u-a) * normalized_line_operator(u, a, N, hbar=-1).
+    """
+    if abs(u - a) < 1e-12:
+        raise ValueError("normalized_line_operator is undefined at the pole u = a")
+    P = permutation_matrix_slN(N)
+    I = np.eye(N * N, dtype=complex)
+    return I - hbar * P / (u - a)
+
+
 def l_operator_residue(a: complex, N: int) -> np.ndarray:
-    """Residue of L_a(u) at u = a.
+    """Collision value of the additive kernel at u = a.
 
     L_a(u) = (u-a)*I + P.
-    This is regular at u = a (no pole), so the "residue" in the sense of
-    extracting the collision data is:
+    This is regular at u = a (no pole), so the relevant local datum is the
+    collision value
         L_a(a) = 0*I + P = P
 
-    More precisely: L_a(u) = (u-a)*I + P, so at u = a the identity term
-    vanishes and we are left with the permutation operator P, which
-    carries the representation-theoretic content.
+    rather than a complex-analytic residue.  After dividing by the scalar
+    factor (u-a), this becomes the normalized simple-pole kernel
+    I + P/(u-a), whose residue is again P.  In other words, this function
+    records the additive normalization of the same local tensor datum used
+    in the normalized residue computation.
 
     Returns:
         N^2 x N^2 numpy array (the permutation matrix P).
     """
     return permutation_matrix_slN(N)
+
+
+def normalized_line_operator_residue(N: int, hbar: complex = 1.0) -> np.ndarray:
+    """Residue of the normalized kernel I - hbar*P/(u-a) at u = a."""
+    return -hbar * permutation_matrix_slN(N)
+
+
+def additive_to_normalized_line_operator(u: complex, a: complex, N: int) -> np.ndarray:
+    """Divide the additive kernel by (u-a) to obtain the normalized kernel.
+
+    In the additive convention used in this file,
+        l_operator(u, a, N) / (u-a) = normalized_line_operator(u, a, N, hbar=-1).
+    """
+    if abs(u - a) < 1e-12:
+        raise ValueError("cannot renormalize the additive kernel at the collision point u = a")
+    return l_operator(u, a, N) / (u - a)
+
+
+def additive_normalization_bridge(u: complex, a: complex, N: int) -> Dict[str, object]:
+    """Record the precise bridge between additive and normalized kernels."""
+    normalized_from_additive = additive_to_normalized_line_operator(u, a, N)
+    normalized_expected = normalized_line_operator(u, a, N, hbar=-1.0)
+    collision_value = l_operator_residue(a, N)
+    normalized_residue = normalized_line_operator_residue(N, hbar=-1.0)
+    return {
+        "u": u,
+        "a": a,
+        "N": N,
+        "hbar_in_normalized_convention": -1.0,
+        "matrix_bridge_holds": np.allclose(normalized_from_additive, normalized_expected),
+        "collision_value_matches_normalized_residue": np.allclose(
+            collision_value, normalized_residue
+        ),
+    }
 
 
 def l_operator_residue_sympy(N: int) -> Matrix:
@@ -541,9 +598,9 @@ def three_layer_reduction(N: int) -> Dict[str, object]:
 # ---------------------------------------------------------------------------
 
 def mixed_tensor_residue_e1e2(N: int) -> Dict[str, object]:
-    """The single residue computation on e_1 x e_2 that determines everything.
+    """The single local tensor-line computation on e_1 x e_2 that determines everything.
 
-    For V = C^N, the residue of L_a(u) at u = a is L_a(a) = P.
+    For V = C^N, the additive collision value is L_a(a) = P.
     The action on the mixed tensor e_1 x e_2 (where e_1, e_2 are the
     first two standard basis vectors) is:
 

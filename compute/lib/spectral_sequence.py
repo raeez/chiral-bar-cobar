@@ -51,9 +51,10 @@ VIRASORO_BAR_COH = {
 HEISENBERG_BAR_COH_E2_LEADING = {n: 1 for n in range(1, 11)}
 
 # sl_2 at generic k: Koszul dual is sl_2 at -k-4
-# Values are Riordan R(n+3): R(4)=3, R(5)=6, R(6)=15 (OEIS A005043)
+# Proved values from PBW spectral sequence / CE cohomology.
+# NOT the Riordan numbers R(n+3) — that identification fails at n=2.
 SL2_BAR_COH = {
-    1: 3, 2: 6, 3: 15,
+    1: 3, 2: 5, 3: 15,
 }
 
 # Free fermion F_2 (2 generators): bar cohomology by bar degree.

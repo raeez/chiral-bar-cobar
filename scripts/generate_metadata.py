@@ -7,6 +7,7 @@ Outputs:
   metadata/census.json          — Single source of truth for all counts
   metadata/dependency_graph.dot — Machine-traversable theorem DAG
   metadata/label_index.json     — All labels with file:line locations
+  metadata/theorem_registry.md  — Auto-synchronized proved-claim registry
 
 Usage:
   python3 scripts/generate_metadata.py
@@ -75,6 +76,14 @@ BEGIN_OPT_RE = re.compile(
 # ---------------------------------------------------------------------------
 # Data classes
 # ---------------------------------------------------------------------------
+
+PART_SPECS = [
+    ("frame", "chapters/frame/", "Frame"),
+    ("theory", "chapters/theory/", "Part I: Theory"),
+    ("examples", "chapters/examples/", "Part II: Examples"),
+    ("connections", "chapters/connections/", "Part III: Connections"),
+    ("appendices", "appendices/", "Appendices"),
+]
 
 @dataclass
 class Claim:
@@ -310,6 +319,21 @@ def extract_all_refs(path: Path) -> list[tuple[str, str, int]]:
     return refs
 
 
+def classify_part(rel_path: str) -> tuple[Optional[str], Optional[str]]:
+    """Classify a repo-relative path into the manuscript part buckets."""
+    for key, prefix, title in PART_SPECS:
+        if rel_path.startswith(prefix):
+            return key, title
+    return None, None
+
+
+def escape_md_cell(text: str) -> str:
+    """Escape text for a markdown table cell."""
+    if not text:
+        return "—"
+    return " ".join(text.replace("|", "\\|").split())
+
+
 # ---------------------------------------------------------------------------
 # Output generation
 # ---------------------------------------------------------------------------
@@ -344,12 +368,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
 
     # Line counts by part
     part_lines: dict[str, int] = {}
-    for part_name, pattern in [
-        ("theory", "chapters/theory/"),
-        ("examples", "chapters/examples/"),
-        ("connections", "chapters/connections/"),
-        ("appendices", "appendices/"),
-    ]:
+    for part_name, pattern, _ in PART_SPECS:
         total = 0
         for f in all_files:
             rel = f.relative_to(ROOT).as_posix()
@@ -362,15 +381,9 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
     # Claims by part
     claims_by_part: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     for claim in claims:
-        for part_name, pattern in [
-            ("theory", "chapters/theory/"),
-            ("examples", "chapters/examples/"),
-            ("connections", "chapters/connections/"),
-            ("appendices", "appendices/"),
-        ]:
-            if claim.file.startswith(pattern):
-                claims_by_part[part_name][claim.status] += 1
-                break
+        part_name, _ = classify_part(claim.file)
+        if part_name:
+            claims_by_part[part_name][claim.status] += 1
 
     # Claims by file
     claims_by_file: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
@@ -501,6 +514,127 @@ def write_label_index(all_labels: dict[str, LabelEntry]) -> None:
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2, ensure_ascii=False)
     print(f"  label_index.json: {len(index)} labels")
+
+
+def write_theorem_registry(
+    claims: list[Claim],
+    active_files: list[Path],
+    all_tex_files: list[Path],
+) -> None:
+    """Write metadata/theorem_registry.md — synchronized proved-claim registry."""
+    proved_claims = [claim for claim in claims if claim.status == "ProvedHere"]
+    status_counts = Counter(claim.status for claim in claims)
+    env_counts = Counter(claim.env_type for claim in proved_claims)
+    part_counts = Counter()
+    file_counts = Counter()
+
+    for claim in proved_claims:
+        part_name, _ = classify_part(claim.file)
+        if part_name:
+            part_counts[part_name] += 1
+        file_counts[claim.file] += 1
+
+    grouped: dict[str, dict[str, list[Claim]]] = defaultdict(lambda: defaultdict(list))
+    for claim in sorted(proved_claims, key=lambda c: (c.file, c.line, c.label)):
+        part_name, _ = classify_part(claim.file)
+        part_key = part_name or "other"
+        grouped[part_key][claim.file].append(claim)
+
+    lines: list[str] = []
+    lines.append("# Theorem Registry")
+    lines.append("")
+    lines.append(
+        f"Auto-generated on {date.today().isoformat()} from the structured claim "
+        "extractor in `scripts/generate_metadata.py`."
+    )
+    lines.append("")
+    lines.append(
+        "This registry now tracks every `\\ClaimStatusProvedHere` block directly "
+        "from source, so the proved surface cannot silently drift behind the TeX tree."
+    )
+    lines.append("")
+    lines.append("## Snapshot")
+    lines.append("")
+    lines.append("| Metric | Value |")
+    lines.append("|---|---:|")
+    lines.append(f"| ProvedHere claims | {len(proved_claims)} |")
+    lines.append(f"| Total tagged claims | {len(claims)} |")
+    lines.append(f"| Active files in `main.tex` | {len(active_files)} |")
+    lines.append(f"| Total `.tex` files scanned | {len(all_tex_files)} |")
+    lines.append("")
+    lines.append("## Status Totals")
+    lines.append("")
+    lines.append("| Status | Count |")
+    lines.append("|---|---:|")
+    for status in ["ProvedHere", "ProvedElsewhere", "Conjectured", "Heuristic", "Open"]:
+        lines.append(f"| `{status}` | {status_counts.get(status, 0)} |")
+    lines.append("")
+    lines.append("## ProvedHere By Environment")
+    lines.append("")
+    lines.append("| Environment | Count |")
+    lines.append("|---|---:|")
+    for env_type, count in sorted(env_counts.items(), key=lambda item: (-item[1], item[0])):
+        lines.append(f"| `{env_type}` | {count} |")
+    lines.append("")
+    lines.append("## ProvedHere By Part")
+    lines.append("")
+    lines.append("| Part | Count |")
+    lines.append("|---|---:|")
+    for part_key, _, title in PART_SPECS:
+        lines.append(f"| {title} | {part_counts.get(part_key, 0)} |")
+    lines.append("")
+    lines.append("## Most Populated Proved Files")
+    lines.append("")
+    lines.append("| File | ProvedHere claims |")
+    lines.append("|---|---:|")
+    for file_name, count in sorted(file_counts.items(), key=lambda item: (-item[1], item[0]))[:20]:
+        lines.append(f"| `{file_name}` | {count} |")
+    lines.append("")
+    lines.append("## Complete Proved Registry")
+    lines.append("")
+
+    for part_key, _, title in PART_SPECS:
+        file_map = grouped.get(part_key)
+        if not file_map:
+            continue
+        lines.append(f"### {title} ({part_counts.get(part_key, 0)})")
+        lines.append("")
+        for file_name in sorted(file_map):
+            entries = file_map[file_name]
+            lines.append(f"#### `{file_name}` ({len(entries)})")
+            lines.append("")
+            lines.append("| Label | Env | Line | Title |")
+            lines.append("|---|---|---:|---|")
+            for claim in entries:
+                lines.append(
+                    f"| `{escape_md_cell(claim.label)}` | `{escape_md_cell(claim.env_type)}` | "
+                    f"{claim.line} | {escape_md_cell(claim.title)} |"
+                )
+            lines.append("")
+
+    other_files = grouped.get("other", {})
+    if other_files:
+        lines.append(f"### Other ({sum(len(entries) for entries in other_files.values())})")
+        lines.append("")
+        for file_name in sorted(other_files):
+            entries = other_files[file_name]
+            lines.append(f"#### `{file_name}` ({len(entries)})")
+            lines.append("")
+            lines.append("| Label | Env | Line | Title |")
+            lines.append("|---|---|---:|---|")
+            for claim in entries:
+                lines.append(
+                    f"| `{escape_md_cell(claim.label)}` | `{escape_md_cell(claim.env_type)}` | "
+                    f"{claim.line} | {escape_md_cell(claim.title)} |"
+                )
+            lines.append("")
+
+    out_path = METADATA_DIR / "theorem_registry.md"
+    while lines and lines[-1] == "":
+        lines.pop()
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    print(f"  theorem_registry.md: {len(proved_claims)} proved claims indexed")
 
 
 def write_verified_formulas() -> None:
@@ -650,6 +784,7 @@ def main() -> None:
     write_census_json(all_claims, all_tex_files)
     write_dependency_graph(all_claims, all_labels)
     write_label_index(all_labels)
+    write_theorem_registry(all_claims, active_files, all_tex_files)
     write_verified_formulas()
 
     print(f"\nDone. Run 'make metadata' to regenerate.")

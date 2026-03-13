@@ -63,12 +63,13 @@ class TestBarCohomology:
         assert pkg.bar_dims[3] == 1  # p(1) = 1
         assert pkg.bar_dims[4] == 2  # p(2) = 2
 
-    def test_sl2_bar_dims_riordan(self):
-        """sl₂ bar cohomology = Riordan R(n+3)."""
+    def test_sl2_bar_dims(self):
+        """sl₂ bar cohomology (proved values)."""
         pkg = ChiralInvariantMachine("sl2").compute()
-        expected = bar_dims_sl2(7)  # [3, 6, 15, 36, 91, 232, 603]
-        for i, val in enumerate(expected):
-            assert pkg.bar_dims[i + 1] == val, f"H^{i+1} mismatch"
+        expected = KNOWN_BAR_DIMS["sl2"]
+        for deg in sorted(expected):
+            if expected[deg] is not None:
+                assert pkg.bar_dims[deg] == expected[deg], f"H^{deg} mismatch"
 
     def test_virasoro_bar_dims_motzkin(self):
         """Virasoro bar cohomology = M(n+1) - M(n)."""

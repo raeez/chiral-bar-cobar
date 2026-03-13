@@ -23,6 +23,8 @@ LATEXMK   := latexmk
 MKFLAGS   := -pdf -pdflatex="$(TEX) $(TEXFLAGS)" -interaction=nonstopmode
 BUILD_SCRIPT := ./scripts/build.sh
 LOG_DIR   := .build_logs
+PYTEST_FAST_TIMEOUT ?= 120
+PYTEST_FULL_TIMEOUT ?= 300
 
 # Number of passes for cross-references, TOC, and page numbers to stabilize.
 PASSES    := 6
@@ -161,7 +163,7 @@ count:
 	fi
 	@echo ""
 
-## metadata: Regenerate all machine-readable metadata from .tex sources.
+## metadata: Regenerate metadata artefacts and the proved-claim registry from .tex sources.
 metadata:
 	@echo "  ── Generating metadata ──"
 	@python3 scripts/generate_metadata.py
@@ -187,7 +189,10 @@ test:
 			PYTHON_BIN=python3; \
 		fi; \
 		LOG_FILE=$(LOG_DIR)/pytest.log; \
-		$$PYTHON_BIN -m pytest compute/tests/ -q -ra -m "not slow" >$$LOG_FILE 2>&1; rc=$$?; \
+		$$PYTHON_BIN -m pytest compute/tests/ -q -ra -m "not slow" \
+			-o faulthandler_timeout=$(PYTEST_FAST_TIMEOUT) \
+			-o faulthandler_exit_on_timeout=true \
+			--durations=10 --durations-min=1.0 >$$LOG_FILE 2>&1; rc=$$?; \
 		if [ $$rc -eq 0 ]; then \
 			tail -n 5 $$LOG_FILE; \
 			echo "     Log: $$LOG_FILE"; \
@@ -213,7 +218,10 @@ test-full:
 			PYTHON_BIN=python3; \
 		fi; \
 		LOG_FILE=$(LOG_DIR)/pytest-full.log; \
-		$$PYTHON_BIN -m pytest compute/tests/ -q -ra >$$LOG_FILE 2>&1; rc=$$?; \
+		$$PYTHON_BIN -m pytest compute/tests/ -vv -ra \
+			-o faulthandler_timeout=$(PYTEST_FULL_TIMEOUT) \
+			-o faulthandler_exit_on_timeout=true \
+			--durations=20 --durations-min=5.0 >$$LOG_FILE 2>&1; rc=$$?; \
 		if [ $$rc -eq 0 ]; then \
 			tail -n 5 $$LOG_FILE; \
 			echo "     Log: $$LOG_FILE"; \

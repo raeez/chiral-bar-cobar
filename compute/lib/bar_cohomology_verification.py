@@ -52,6 +52,7 @@ References:
 
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Dict, List, Tuple
 
 from sympy import Matrix, zeros
@@ -229,17 +230,46 @@ def strategy_a_detail(max_degree=3, max_weight=8):
 # Strategy B: Vacuum module g-invariants
 # ============================================================
 
+
+@lru_cache(maxsize=None)
+def _strategy_b_sl2_module(max_weight: int):
+    """Build the generic-level sl_2 vacuum module once per weight cutoff.
+
+    Strategy-B checks repeatedly query the same truncated vacuum module.
+    Reusing the module preserves its internal mode-matrix cache and avoids
+    rebuilding the PBW basis for each test entrypoint.
+    """
+    from compute.lib.km_vacuum_module import KMVacuumModule
+    from sympy import Symbol
+
+    return KMVacuumModule.sl2(level=Symbol("k"), max_weight=max_weight)
+
+
+@lru_cache(maxsize=None)
+def _strategy_b_vm_dims(max_weight: int) -> Tuple[int, ...]:
+    """Cache the vacuum-module invariant dimensions through ``max_weight``."""
+    from compute.lib.km_vacuum_module import invariant_dim_at_weight
+
+    module = _strategy_b_sl2_module(max_weight)
+    return tuple(invariant_dim_at_weight(module, h) for h in range(max_weight + 1))
+
+
+@lru_cache(maxsize=None)
+def _strategy_b_ss_dims(max_weight: int) -> Tuple[int, ...]:
+    """Cache the spectral-sequence invariant dimensions through ``max_weight``."""
+    from compute.lib.km_vacuum_module import SL2_BRACKET as KM_BRACKET
+    from compute.lib.spectral_sequence import adjoint_invariant_dim
+
+    return tuple(adjoint_invariant_dim(3, KM_BRACKET, h) for h in range(max_weight + 1))
+
+
 def strategy_b_invariants(max_weight=10):
     """g-invariant dimensions in V_k(sl_2) at each weight.
 
     Uses km_vacuum_module.py for exact computation.
     Returns [dim(V_0^g), dim(V_1^g), ..., dim(V_{max_weight}^g)].
     """
-    from compute.lib.km_vacuum_module import KMVacuumModule, invariant_dim_at_weight
-    from sympy import Symbol
-
-    module = KMVacuumModule.sl2(level=Symbol("k"), max_weight=max_weight)
-    return [invariant_dim_at_weight(module, h) for h in range(max_weight + 1)]
+    return list(_strategy_b_vm_dims(max_weight))
 
 
 def strategy_b_cross_validate(max_weight=8):
@@ -251,18 +281,12 @@ def strategy_b_cross_validate(max_weight=8):
 
     Returns {h: (vm_dim, ss_dim, agree)} for h = 0,...,max_weight.
     """
-    from compute.lib.km_vacuum_module import (
-        KMVacuumModule, invariant_dim_at_weight,
-        SL2_BRACKET as KM_BRACKET,
-    )
-    from compute.lib.spectral_sequence import adjoint_invariant_dim
-    from sympy import Symbol
-
-    module = KMVacuumModule.sl2(level=Symbol("k"), max_weight=max_weight)
+    vm_dims = _strategy_b_vm_dims(max_weight)
+    ss_dims = _strategy_b_ss_dims(max_weight)
     results = {}
     for h in range(max_weight + 1):
-        vm = invariant_dim_at_weight(module, h)
-        ss = adjoint_invariant_dim(3, KM_BRACKET, h)
+        vm = vm_dims[h]
+        ss = ss_dims[h]
         results[h] = (vm, ss, vm == ss)
     return results
 
