@@ -290,11 +290,18 @@ now the cancellation/annihilator problem between that first-term
 comparison shows that the combined non-first split sector already spans
 that same `57`-plane, so the next attack is an internal cancellation
 operator on a common quotient plane rather than a hunt for extra
-directions. A canonical `57`-column witness basis now extracts that
-operator explicitly, and it is exactly `(-1-i) Id` on the common plane,
-so the weighted full split action vanishes on the witness plane. The
-honest next move is to lift that witness-basis scalar cancellation to an
-exhaustive compressed verification of the whole surviving packet.
+directions. That exhaustive compressed verification is now complete:
+all `354,668` surviving prefix signatures, covering the full
+`42,718,284` raw surviving columns, vanish in the seed quotient. So the
+seed rank `3903` is exact and
+`dim H^{1,3}_2 = 66`. The live KL question is now no longer a
+`B_5 -> B_2` elimination problem, but the categorical meaning of this
+exact `66`-dimensional `N=4` packet. That packet already carries a
+rigid support fingerprint: it splits as `F⊗48 ⊕ E⊗15 ⊕ (K-1)⊗3`, and
+its total root-weight profile is palindromic
+`1,4,8,12,16,12,8,4,1` across weights `-4,...,4`. The next shadow
+comparison should now target this exact fingerprint, not just the raw
+dimension.
 
 **Key reframing (Session ~125)**: Kapranov's N-complex framework (1996) provides the right
 replacement. At q = e^{2πi/N}, the bar differential satisfies d^N = 0 (not d² = curvature).
@@ -341,11 +348,15 @@ compresses to `1493` distinct right-product states and its standalone
 tensor span adds only `57` directions beyond the `3903`-rank seed span,
 so the next compute attack is no longer another raw tuple sweep. The
 combined non-first split sector already spans the same `57`-plane, and
-a canonical `57`-column witness basis extracts the cancellation
-operator there as exactly `(-1-i) Id`; equivalently the weighted full
-split action vanishes on the witness plane. The remaining work is to
-upgrade that witness-basis scalar cancellation to an exhaustive
-compressed verification of the whole surviving packet.
+the exhaustive compressed verification of the full surviving packet now
+shows that every weighted surviving column vanishes in the seed
+quotient. Thus the `3903`-rank seed image is exact and
+`dim H^{1,3}_2 = 66`. The remaining work is to determine the
+periodic/coderived shadow and categorical meaning of this exact
+`66`-dimensional packet. The exact packet is already structurally rigid:
+`F⊗48 ⊕ E⊗15 ⊕ (K-1)⊗3` with palindromic total root-weight profile
+`1,4,8,12,16,12,8,4,1`, so the next categorical test should try to
+recover that fingerprint.
 See NEW_MACHINERY.md #M2.
 
 ### Seeds in manuscript
@@ -742,12 +753,16 @@ top-pole/parity packets `\mathcal{J}_{M+1}^{\mathrm{red}}`.
 `prop:winfty-stage-growth-virasoro-target-contraction` then gives the
 uniform reduced-packet contraction under the normalized residue
 package by removing exactly the target-`2` Virasoro channels.  The
-first next reduced stage is already explicit:
-`cor:winfty-ds-stage5-reduced-packet` identifies
-`\mathcal{J}_5^{\mathrm{red}}` as an `11`-entry packet, while
+first next downstream reduced stage is already explicit, and it should
+now be read as a transport problem rather than as a fresh coefficient
+block: `cor:winfty-ds-stage5-reduced-packet` identifies
+`\mathcal{J}_5^{\mathrm{red}}` as an `11`-entry packet,
 `cor:winfty-stage5-residue-eight-channel` and
 `cor:winfty-stage5-higher-spin-packet` identify the contracted
-`8`-channel higher-spin packet `\mathcal{J}_5^{\mathrm{hs}}`.
+`8`-channel higher-spin packet `\mathcal{J}_5^{\mathrm{hs}}`, and
+`prop:winfty-stage5-local-attack-order` packages the local order there
+as entry packet first, then the target-`5` corridor, then the
+remaining transport ladders in targets `5`, `4`, `3`.
 `prop:winfty-stage5-higher-spin-subblocks` breaks that packet into the
 source-pair ladder `1+3+3+1`, and
 `cor:winfty-stage5-entry-transport` isolates the first two-channel
@@ -773,6 +788,24 @@ residual continuation as the comparison of the `W^{(5)}`-projection in
 `prop:winfty-stage5-target5-transport-singletons` then splits that
 residual target-`5` continuation into the pole-`3` singleton
 `(3,5;5;0,3)` and the pole-`4` singleton `(4,5;5;0,4)`.
+`prop:winfty-stage5-visible-w5-normalization` makes the visible
+`W^{(5)}` normalization theorematic under the stage-`5` Virasoro
+package.  On the visible pairing loci of
+`prop:winfty-stage5-target5-pole3-pairing-vanishing` through
+`cor:winfty-stage5-tail-cross-target-reduction`, the same target-`5`
+staircase becomes partially rigid: the pole-`3` singleton vanishes, the
+pole-`4` singleton is tied to the self-return singleton, and the tail
+singleton is tied to neighboring target-`4` / target-`3` channels.
+`cor:winfty-stage5-target5-corridor-to-tail` then kills the transport
+part on the visible `W^{(4)}` / `W^{(5)}` pairing locus, and
+`cor:winfty-stage5-target5-no-new-independent-data` shows that on the
+full visible `W^{(3)}` / `W^{(4)}` / `W^{(5)}` pairing locus the whole
+target-`5` corridor carries no new independent coefficient.
+`cor:winfty-stage5-effective-independent-frontier` then sharpens the
+stage-`5` local picture further: on that full visible pairing locus the
+effective independent attack order is the self-return singleton
+`(5,5;4;0,6)` first, then the target-`4` ladder, then the target-`3`
+ladder.
 `prop:winfty-stage5-transport-target-ladders` splits the mixed packet
 into three fixed-target two-channel ladders,
 and `prop:winfty-stage5-transport-pole-profiles` identifies the
@@ -785,7 +818,24 @@ explicitly as `conj:winfty-stage4-ward-inheritance`, whose open
 content is reduced by `prop:winfty-stage4-visible-pairing-gap` to the
 single visible weight-`4` normalization conjecture, equivalently
 `C^{res}_{4,4;2;0,6}(4)=2`, once the visible Virasoro Ward action is
-fixed.
+fixed; `cor:winfty-stage4-single-scalar-equivalent` packages that
+scalar as the exact theorematic form of the stage-`4` refinement.  On
+the additional visible pairing locus, the higher-spin comparison is now
+reduced further by
+`cor:winfty-stage4-primitive-transport-square-triple` to the signless
+square-class triple `(3,3;4;0,2)`, `(4,4;4;0,4)`, `(3,4;4;0,3)`, with
+the swap-even square channel automatic from `(3,3;4;0,2)`.  The exact
+next local stage-`4` gap after that reduction is the visible top-pole
+Borcherds transport relation isolated in
+`rem:winfty-stage4-primitive-transport-gap`: forcing the swap-odd
+`W^{(4)}` transport square from the `(3,3)` square would bring the
+residue packet down to the same two primitive self-coupling square
+classes as on the principal DS side, and
+`cor:winfty-stage4-visible-borcherds-two-primitive` now packages this
+as an exact equivalence: on the visible pairing locus, that single
+transport relation is precisely the remaining input for collapsing the
+primitive-plus-transport triple to the principal two-primitive
+square-class profile.
 See NEW_MACHINERY.md #M8.
 
 **Entry point**: Attack the first nontrivial finite-detection lanes.

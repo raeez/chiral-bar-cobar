@@ -3,10 +3,10 @@
 # Supersedes: v23 (proof forge), v27 (frontier verification). References CLAUDE.md for invariants.
 # Date: March 2026
 
-> **Active doctrine note (March 13, 2026).**
-> This is the live execution prompt. It incorporates the findings of the v41 adversarial
-> audit (notes/ADVERSARIAL_AUDIT_v41.md) and is designed for Opus 4.6 in code environment
-> at maximum reasoning depth.
+> **Historical prompt note (March 13, 2026).**
+> This is an archival prompt snapshot, not the live execution prompt. It incorporates the
+> findings of the v41 adversarial audit (notes/ADVERSARIAL_AUDIT_v41.md) and was designed
+> for Opus 4.6 in code environment at maximum reasoning depth.
 
 ---
 
@@ -205,6 +205,18 @@ Else                                                 -> doctrinal propagation or
   `W^{(4)}(z)W^{(5)}(w)`, while
   `prop:winfty-stage5-target5-transport-singletons` splits that residual continuation
   into the pole-`3` singleton `(3,5;5;0,3)` and the pole-`4` singleton `(4,5;5;0,4)`.
+  `prop:winfty-stage5-visible-w5-normalization` makes the visible `W^{(5)}`
+  normalization theorematic under the stage-`5` Virasoro package, and on the visible
+  pairing loci of `prop:winfty-stage5-target5-pole3-pairing-vanishing` through
+  `cor:winfty-stage5-tail-cross-target-reduction` the same target-`5` staircase becomes
+  partially rigid: the pole-`3` singleton vanishes, the pole-`4` singleton is tied to
+  the self-return singleton, and the tail singleton is tied to neighboring target-`4` /
+  target-`3` channels.
+  `cor:winfty-stage5-target5-corridor-to-tail` kills the transport part on the visible
+  `W^{(4)}` / `W^{(5)}` pairing locus, and
+  `cor:winfty-stage5-target5-no-new-independent-data` shows that on the full visible
+  `W^{(3)}` / `W^{(4)}` / `W^{(5)}` pairing locus the whole target-`5` corridor carries
+  no new independent coefficient.
   Next: `conj:winfty-stage5-block-34`, then `conj:winfty-stage5-transport-target5-35`,
   then `conj:winfty-stage5-transport-target5-45`.
 

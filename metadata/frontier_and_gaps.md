@@ -274,7 +274,7 @@ powerful theorems the subject admits.
 
 **main_results**:
 - The category C of line operators in a 3d HT QFT is equivalent to A!-mod (modules for the Koszul dual A!), where A is the local operator algebra.
-- **Non-renormalization Theorem 4.1**: The OPE of line operators is computed exactly at tree level (1-loop exact).
+- **Theorem 4.1**: For quasi-linear theories and line operators defined by linear MC couplings, the singular part of the line-operator OPE is given exactly by a new MC element; there are no higher bulk-insertion corrections.
 - A! carries the structure of a "dg-shifted Yangian" with Maurer-Cartan element r(z) satisfying an A_infinity Yang-Baxter equation.
 - **Theorem 7.1**: In gauge theories with matter + superpotential, A! is explicitly a dg-shifted Yangian.
 - **Conjecture 5.2**: A! is always a dg-shifted Yangian in perturbative 3d HT QFT.
@@ -287,8 +287,8 @@ powerful theorems the subject admits.
 **connection_to_manuscript**:
 - This is the most directly relevant reference. The identification C = A!-mod is precisely the module Koszul duality of Chapter chiral_modules (Theorem thm:e1-module-koszul-duality).
 - The dg-shifted Yangian structure on A! connects to the Yangian chapter (chap:yangians), where Y(g)^! = Y_{R^{-1}}(g) is proved.
-- The non-renormalization theorem parallels the spectral sequence collapse at E_2 (the Koszul property).
-- The A_infinity Yang-Baxter equation for r(z) is the E_1 analog of the curved A_infinity structure in the manuscript's framework.
+- The quasi-linear non-renormalization theorem is best read as perturbative evidence for the standard Yangian MC4 target, not as a proof of the manuscript's Koszul spectral-sequence collapse.
+- The A_infinity Yang-Baxter equation for r(z) is strong structural evidence for the twisting-morphism picture, but the identification with the manuscript's bar differential still needs a direct comparison theorem.
 
 **potential_new_examples**:
 - dg-shifted Yangians as explicit Koszul duals: compute bar complexes for specific examples (e.g., SQCD, Chern-Simons-matter theories).
@@ -319,10 +319,10 @@ powerful theorems the subject admits.
 - Relation to the BV formalism and master equation.
 
 **connection_to_manuscript**:
-- The Feynman diagram framework provides the physics realization of the bar complex differential: each Feynman diagram corresponds to a residue computation on the FM compactification.
-- The L_infinity structure from eta^2 = 0 is the same as the A_infinity structure on the bar complex (with L_infinity being the commutative/Lie version).
-- The non-renormalization theorem corresponds to the spectral sequence collapse at E_2 in the Koszul setting.
-- The operatope geometry may provide a new perspective on the FM compactification and its stratification.
+- The paper gives the closest perturbative HT source of local higher-operation data for MC5, but at present only on the flat-space BRST/factorization side.
+- Its configuration-space perspective and compactification heuristic suggest a route toward the FM boundary calculus used in the manuscript, but they do not yet identify the perturbative brackets with the curvewise bar differential.
+- The L_infinity and quadratic-axiom package should be treated as local M/S-level evidence for a bar/FM dictionary, not as an H-level proof of the all-genus BV/BRST = bar statement.
+- The operatope geometry may provide an auxiliary local model for certain compactified integration regions, but it is not yet a replacement for the FM compactification in the manuscript.
 
 **potential_new_examples**:
 - Explicit Feynman diagram computations of bar complex differentials for interacting theories (beyond free fields and Kac-Moody).
@@ -331,8 +331,9 @@ powerful theorems the subject admits.
 
 **would_need**:
 - A precise dictionary between GKW's Feynman diagrams and the manuscript's residue computations on FM spaces.
-- Verification that the L_infinity structure matches the bar complex differential in specific examples.
-- Understanding when the non-renormalization theorem (1-loop exactness) corresponds to Koszulness.
+- A theorem identifying the local perturbative BRST brackets with the bar differential on the standard disk/FM chart.
+- A compactification/Stokes comparison showing that the perturbative integrands extend to the FM boundary calculus used in the manuscript.
+- Verification in specific examples that the local L_infinity brackets recover the manuscript's bar operations before any genuswise clutching step.
 
 ---
 

@@ -2,7 +2,7 @@
 
 Verifies that the screening operator braiding data on quantum lattice VOAs
 V_Λ^{N,q} is compatible with the quantum group u_ζ(g) structure required
-for prop:lattice:quantum-group-connection(ii).
+for conj:lattice:quantum-group-connection(ii).
 
 Mathematical content:
   The screening operators Q_i = ∮ Y(e^{α_i}, z) dz on V_Λ^{N,q} satisfy:
@@ -384,7 +384,7 @@ def nichols_algebra_type(lie_type: str, N: int) -> Dict:
 def a2_n3_full_analysis(verbose: bool = False) -> Dict:
     """Complete analysis of A₂ (sl₃) at N=3.
 
-    This is the smallest genuine test case for prop:lattice:quantum-group-connection(ii).
+    This is the smallest genuine test case for conj:lattice:quantum-group-connection(ii).
     (A₁ cannot carry a non-zero antisymmetric form, so rank ≥ 2 is required.)
 
     Expected:

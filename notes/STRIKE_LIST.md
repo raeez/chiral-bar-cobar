@@ -87,7 +87,7 @@ concordance, untracked files, git delta, and cross-consistency.
 ### P2.1 DK-1½ → DK-2 bridge for lattice sector
 - Factorization bar-cobar for lattice VOAs is proved (thm:lattice:factorization-koszul)
 - The gap to factorization DK is the deformed FKS ↔ quantum group identification
-- This is prop:lattice:quantum-group-connection (conjectural)
+- This is conj:lattice:quantum-group-connection (conjectural)
 - If proved, would give unconditional factorization DK for level-1 simply-laced
 
 ### P2.2 Fourier Seed chapter

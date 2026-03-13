@@ -3,7 +3,7 @@ Quantum lattice screening algebra computations.
 
 Computes braiding matrices, screening operator relations, and
 comparison data for the quantum group identification programme
-(prop:lattice:quantum-group-connection).
+(conj:lattice:quantum-group-connection).
 
 Focused on simply-laced root lattices of rank >= 2 with
 cocycle deformation (N, q).
