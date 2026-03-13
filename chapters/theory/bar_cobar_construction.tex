@@ -1678,7 +1678,7 @@ The differences are as follows.
 
 \emph{Translation between conventions.}
 \begin{center}
-\begin{tabular}{|l|l|}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.43\textwidth}|>{\raggedright\arraybackslash}p{0.43\textwidth}|}
 \hline
 \textbf{Loday--Vallette (Operadic)} & \textbf{Ours (Geometric)} \\
 \hline
@@ -5357,14 +5357,13 @@ and discharge them on the finite-detection packet
 $\mathcal{I}_N$ isolated by
 Corollary~\ref{cor:winfty-ds-finite-seed-set}, whose first live
 higher-spin stages are already reduced on the theorem surface to the
-stage-$3$ fifteen-coefficient packet and the stage-$4$
-six-coefficient packet organized as three local OPE blocks, sharpened
-further to the four channels
-$c_{334}$, $c_{444}$,
-$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
-residue-side checks
-$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
-$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
+stage-$3$ fifteen-coefficient packet and the exact stage-$4$ six-entry
+identity packet on~$\mathcal{I}_4$, organized as three local OPE blocks
+and splitting into four higher-spin channels together with two
+Virasoro-target channels whose principal Drinfeld--Sokolov values are
+fixed by Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}; the
+residue-side contraction of those two channels is the additional input
+isolated by Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 
 \emph{Obstructions still to be overcome}: 
 \begin{enumerate}
@@ -5651,7 +5650,8 @@ canonical comparison map
 is a quasi-isomorphism.  Thus the M-level completed bar-cobar package
 for $W_\infty$ reduces to compatible inverse-system dg structure and
 stabilization of the principal finite-type tower.  The stronger H-level
-realization problems remain on the MC4/MC5 frontier.  By
+realization problem belongs to MC4; any physics-facing identification
+built on top of that realization is downstream at MC5.  By
 Corollary~\ref{cor:mc4-surjective-criterion}, the eventual-constancy
 hypothesis may be replaced by eventual surjectivity on finite-dimensional
 weight slices, and Proposition~\ref{prop:mc4-weight-cutoff} shows that
@@ -5910,15 +5910,15 @@ $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
 =\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$,
 discharged on the finite-detection packet $\mathcal{I}_N$, whose first
 live higher-spin stages are already reduced on the theorem surface to
-the stage-$3$ fifteen-coefficient packet and the stage-$4$
-six-coefficient packet organized as three local OPE blocks, sharpened
-further to the four channels
-$c_{334}$, $c_{444}$,
-$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
-residue-side checks
-$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
-$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$, not another stabilization
-theorem.
+the stage-$3$ fifteen-coefficient packet and the exact stage-$4$
+six-entry identity packet on~$\mathcal{I}_4$, organized as three local
+OPE blocks and splitting into four higher-spin channels together with
+two theorematic principal Virasoro-target values
+$\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2$ and
+$\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0$, with the corresponding
+residue-side contraction supplied only under the normalized two-point
+package of Corollary~\ref{cor:winfty-stage4-residue-four-channel}, not
+another stabilization theorem.
 \end{corollary}
 
 \begin{proof}
@@ -6507,6 +6507,245 @@ blocks.  The final sentence is simply a repackaging of those tuples by
 source pair and target spin.
 \end{proof}
 
+\begin{proposition}[Incremental interacting packet from stage
+\texorpdfstring{$N$}{N} to stage \texorpdfstring{$N{+}1$}{N+1};
+\ClaimStatusProvedHere]
+\label{prop:winfty-ds-stage-growth-packet}
+Fix $N \ge 3$ and let $\mathcal{I}_N$ and $\mathcal{I}_{N+1}$ be the
+seed packets of Corollary~\ref{cor:winfty-ds-finite-seed-set}.  Write
+\[
+\mathcal{I}_{N+1}^{\mathrm{Vir,new}}
+:=
+\mathcal{I}_{N+1}^{\mathrm{Vir}}\setminus \mathcal{I}_N
+=
+\{(2,N{+}1,u,n)\in \mathcal{I}_{N+1}\},
+\]
+and define the incremental interacting packet
+\[
+\mathcal{J}_{N+1}
+:=
+\mathcal{I}_{N+1}\setminus
+\bigl(\mathcal{I}_N\sqcup \mathcal{I}_{N+1}^{\mathrm{Vir,new}}\bigr).
+\]
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-generator-seed}.  Then:
+\begin{enumerate}
+\item the coefficients indexed by $\mathcal{I}_N$ are exactly the
+  stage-$N$ packet identities;
+\item the coefficients indexed by
+  $\mathcal{I}_{N+1}^{\mathrm{Vir,new}}$ are determined by the exact
+  stress-tensor action on the new generator $W^{(N+1)}$;
+\item the genuinely new interacting stage-$(N+1)$ packet is therefore
+  exactly $\mathcal{J}_{N+1}$, and it decomposes as the disjoint union
+  \[
+  \mathcal{J}_{N+1}
+  =
+  \mathcal{J}_{N+1}^{\mathrm{tail}}
+  \sqcup
+  \mathcal{J}_{N+1}^{\mathrm{mix}}
+  \sqcup
+  \mathcal{J}_{N+1}^{\mathrm{self}},
+  \]
+  where
+  \[
+  \mathcal{J}_{N+1}^{\mathrm{tail}}
+  :=
+  \{(s,t,N{+}1,n)\in\mathcal{I}_{N+1}\mid 3\le s\le t\le N\},
+  \]
+  \[
+  \mathcal{J}_{N+1}^{\mathrm{mix}}
+  :=
+  \{(s,N{+}1,u,n)\in\mathcal{I}_{N+1}\mid 3\le s\le N,\ 2\le u\le N{+}1\},
+  \]
+  \[
+  \mathcal{J}_{N+1}^{\mathrm{self}}
+  :=
+  \{(N{+}1,N{+}1,u,n)\in\mathcal{I}_{N+1}\mid 2\le u\le N{+}1\}.
+  \]
+\end{enumerate}
+Consequently, once the stage-$N$ packet identities on $\mathcal{I}_N$
+are known, the stage-$(N+1)$ comparison is equivalent to matching the
+coefficients on the incremental interacting packet $\mathcal{J}_{N+1}$.
+For $N=3$, this is exactly the stage-$4$ residual packet of
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet}.
+\end{proposition}
+
+\begin{proof}
+Because $\mathcal{I}_N\subset \mathcal{I}_{N+1}$, every tuple in
+$\mathcal{I}_{N+1}$ is either already present at stage~$N$ or is new
+at stage~$N{+}1$.  The new Virasoro-sector tuples are exactly those
+with source pair $(2,N{+}1)$, namely
+$\mathcal{I}_{N+1}^{\mathrm{Vir,new}}$.
+
+Under the hypotheses of
+Proposition~\ref{prop:winfty-ds-generator-seed}, the coefficients on
+$\mathcal{I}_N$ are precisely the stage-$N$ packet identities, proving
+\textup{(1)}.  The exact stress-tensor action determines the source
+pair $(2,N{+}1)$, proving \textup{(2)}.
+
+It remains to classify the tuples in the complement
+$\mathcal{J}_{N+1}$.  Let $(s,t,u,n)\in\mathcal{J}_{N+1}$.  Since it is
+not already in $\mathcal{I}_N$, at least one of $t$ or $u$ must equal
+$N{+}1$.  Because it is also not in the new Virasoro block, one has
+$s\neq 2$.  There are then exactly three possibilities:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $t\le N$ and $u=N{+}1$, which gives the tail block
+  $\mathcal{J}_{N+1}^{\mathrm{tail}}$;
+\item $t=N{+}1$ and $s\le N$, which gives the mixed block
+  $\mathcal{J}_{N+1}^{\mathrm{mix}}$;
+\item $s=t=N{+}1$, which gives the self block
+  $\mathcal{J}_{N+1}^{\mathrm{self}}$.
+\end{enumerate}
+These cases are disjoint and exhaustive, proving \textup{(3)}.  The
+final sentence is exactly
+Corollary~\ref{cor:winfty-ds-finite-seed-set} applied to
+$\mathcal{I}_{N+1}
+=\mathcal{I}_N\sqcup\mathcal{I}_{N+1}^{\mathrm{Vir,new}}
+\sqcup\mathcal{J}_{N+1}$.
+\end{proof}
+
+\begin{corollary}[Top-pole/parity reduction of the incremental
+\texorpdfstring{$W_\infty$}{W_infty} stage-growth packet;
+\ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage-growth-top-parity}
+Fix $N \ge 3$ and assume the hypotheses of
+Proposition~\ref{prop:winfty-ds-stage-growth-packet},
+Proposition~\ref{prop:winfty-ds-primary-top-pole}, and
+Proposition~\ref{prop:winfty-ds-self-ope-parity}.  Let
+\[
+\mathcal{J}_{N+1}^{\mathrm{top}}
+:=
+\{(s,t,u,s+t-u)\in \mathcal{J}_{N+1}\},
+\]
+and remove the odd self-OPE top-pole entries by setting
+\[
+\mathcal{J}_{N+1}^{\mathrm{red}}
+:=
+\mathcal{J}_{N+1}^{\mathrm{top}}
+\setminus
+\bigl\{(s,s,u,2s-u)\in\mathcal{J}_{N+1}^{\mathrm{top}}
+\mid 2s-u \text{ odd}\bigr\}.
+\]
+Then, once the stage-$N$ packet identities on $\mathcal{I}_N$ are
+known, the stage-$(N+1)$ comparison closes as soon as the identities on
+the reduced incremental packet
+$\mathcal{J}_{N+1}^{\mathrm{red}}$ are proved.
+
+For $N=3$, one has
+\[
+\mathcal{J}_4^{\mathrm{red}}
+=
+\mathcal{J}_4^{\mathrm{par}},
+\]
+so this is exactly the six-entry stage-$4$ block of
+Corollary~\ref{cor:winfty-ds-stage4-parity-packet}.  The additional
+contraction of that six-entry block to the four higher-spin channels is
+conjecturally controlled by
+Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:winfty-ds-stage-growth-packet} reduces the
+stage-$(N+1)$ problem to the incremental packet $\mathcal{J}_{N+1}$.
+Proposition~\ref{prop:winfty-ds-primary-top-pole} shows that every
+undifferentiated primary coefficient outside the top-pole subset
+$\mathcal{J}_{N+1}^{\mathrm{top}}$ vanishes on both sides.
+Proposition~\ref{prop:winfty-ds-self-ope-parity} removes the odd
+self-OPE entries inside $\mathcal{J}_{N+1}^{\mathrm{top}}$.
+Thus only the reduced packet
+$\mathcal{J}_{N+1}^{\mathrm{red}}$ remains to be matched.
+
+For $N=3$, the packet $\mathcal{J}_{N+1}$ is exactly the residual block
+$\mathcal{J}_4$ of
+Proposition~\ref{prop:winfty-ds-stage4-residual-packet}, and its
+top-pole/parity reduction is exactly
+Corollary~\ref{cor:winfty-ds-stage4-parity-packet}.  The final sentence
+is a reformulation of
+Corollary~\ref{cor:winfty-stage4-residue-four-channel} together with
+Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
+\end{proof}
+
+\begin{corollary}[First reduced incremental packet beyond
+\texorpdfstring{$\mathcal{I}_4$}{I4}; \ClaimStatusProvedHere]
+\label{cor:winfty-ds-stage5-reduced-packet}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage-growth-top-parity} with $N=4$.
+Then the first reduced incremental packet beyond the stage-$4$ block is
+\[
+\mathcal{J}_5^{\mathrm{red}}
+=
+\Bigl\{
+(3,4;5;0,2)
+\Bigr\}
+\sqcup
+\Bigl\{
+(3,5;2;0,6),\,
+(3,5;3;0,5),\,
+(3,5;4;0,4),\,
+(3,5;5;0,3)
+\Bigr\}
+\]
+\[
+\sqcup
+\Bigl\{
+(4,5;2;0,7),\,
+(4,5;3;0,6),\,
+(4,5;4;0,5),\,
+(4,5;5;0,4)
+\Bigr\}
+\sqcup
+\Bigl\{
+(5,5;2;0,8),\,
+(5,5;4;0,6)
+\Bigr\}.
+\]
+In particular,
+\[
+|\mathcal{J}_5^{\mathrm{red}}|=11,
+\]
+decomposed as one tail channel, two four-entry mixed blocks, and two
+self-coupling channels.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:winfty-ds-stage-growth-packet} identifies the
+incremental stage-$5$ packet $\mathcal{J}_5$ as the union of the tail,
+mixed, and self blocks.
+
+For the tail block, the admissible source pairs are
+$(3,3)$, $(3,4)$, and $(4,4)$.  Their top-pole entries are
+\[
+(3,3;5;0,1),\qquad
+(3,4;5;0,2),\qquad
+(4,4;5;0,3).
+\]
+Proposition~\ref{prop:winfty-ds-self-ope-parity} removes the two odd
+self-OPE entries, leaving only $(3,4;5;0,2)$.
+
+For the mixed block, the source pairs are $(3,5)$ and $(4,5)$.  The
+top-pole condition $n=s+5-u$ gives exactly the four entries
+\[
+(3,5;u;0,8-u)
+\qquad (u=2,3,4,5)
+\]
+and
+\[
+(4,5;u;0,9-u)
+\qquad (u=2,3,4,5).
+\]
+
+For the self block, the top-pole entries are
+\[
+(5,5;u;0,10-u)
+\qquad (u=2,3,4,5).
+\]
+Parity removes the odd-target entries with $u=3,5$, leaving
+$(5,5;2;0,8)$ and $(5,5;4;0,6)$.
+
+Combining the surviving tail, mixed, and self entries gives the
+displayed decomposition of $\mathcal{J}_5^{\mathrm{red}}$.
+\end{proof}
+
 \begin{proposition}[Primary top-pole criterion for generator seed
 packets; \ClaimStatusProvedHere]
 \label{prop:winfty-ds-primary-top-pole}
@@ -6817,7 +7056,7 @@ The seed set cardinalities and residual decomposition of
 Proposition~\ref{prop:winfty-ds-stage4-residual-packet} have been
 verified computationally
 (\texttt{compute/\allowbreak lib/\allowbreak w4\_stage4\_coefficients.py},
-$72$~tests):
+$74$~tests):
 \begin{itemize}
 \item $|\mathcal{I}_4| = 54$,
   $|\mathcal{I}_4^{\mathrm{Vir}}| = 18$,
@@ -7117,6 +7356,71 @@ three displayed identities.  The final sentence is a reformulation of
 those sign rules.
 \end{proof}
 
+\begin{proposition}[Formal mixed Virasoro-target vanishing under a
+normalized two-point package; \ClaimStatusProvedHere]
+\label{prop:winfty-formal-mixed-virasoro-zero}
+Fix $N \ge 3$ and consider a stage-$N$ local OPE calculus with visible
+primary generators $W^{(2)},\dots,W^{(N)}$, where
+$T:=W^{(2)}$ is the Virasoro field.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item each visible generator $W^{(u)}$ has conformal weight $u$, the
+  local OPE is decomposed into conformal families of these primary
+  generators and their translation descendants, and the Virasoro Ward
+  identity holds for insertions of $T$ against each visible generator;
+\item for every mixed pair $2 \le s < t \le N$, the vacuum two-point
+  function vanishes:
+  \[
+  \langle W^{(s)}(z)W^{(t)}(0)\rangle=0;
+  \]
+\item the stress tensor is normalized by
+  \[
+  \langle T(z)T(0)\rangle=\frac{c/2}{z^4}
+  \qquad\text{with } c\neq 0.
+  \]
+\end{enumerate}
+Let
+\[
+\mathsf{C}_{s,t;u;0,n}(N)
+\]
+denote the undifferentiated primary coefficient of the target
+$W^{(u)}$ at pole order $n$ in this local OPE calculus.  Then for every
+visible mixed pair $2 \le s < t \le N$, the top-pole stress-tensor
+coefficient vanishes:
+\[
+\mathsf{C}_{s,t;2;0,\,s+t-2}(N)=0.
+\]
+Equivalently, under this normalized two-point package the
+undifferentiated $W^{(2)}=T$ channel is absent from the top pole of
+every mixed OPE $W^{(s)}(z)W^{(t)}(w)$ with $s\ne t$.
+\end{proposition}
+
+\begin{proof}
+Let $A:=W^{(s)}$ and $B:=W^{(t)}$ with $s<t$.  By
+assumption~\textup{(ii)}, the mixed two-point function
+\[
+\langle A(z)B(0)\rangle
+\]
+vanishes identically.  Since both fields are primary,
+assumption~\textup{(i)} gives the Virasoro Ward identity
+\[
+\langle T(x)A(z)B(0)\rangle = 0.
+\]
+
+Because the local OPE is decomposed into conformal families of primary
+generators and descendants, the undifferentiated primary target
+$T=W^{(2)}$ can occur only at the top pole order $s+t-2$.  All lower
+pole $T$-descendants have conformal weight $>2$, so their two-point
+functions with $T$ vanish by weight mismatch.  Thus the coefficient of
+$x^{-4}z^{-(s+t-2)}$ in the three-point function
+$\langle T(x)A(z)B(0)\rangle$ is exactly
+\[
+\frac{c}{2}\,\mathsf{C}_{s,t;2;0,\,s+t-2}(N),
+\]
+because $\langle T(x)T(0)\rangle = \frac{c/2}{x^4}$ by
+assumption~\textup{(iii)}.  The three-point function vanishes
+identically and $c\neq 0$, so this coefficient must be zero.
+\end{proof}
+
 \begin{proposition}[Principal Drinfeld--Sokolov vanishing of the mixed
 Virasoro target; \ClaimStatusProvedHere]
 \label{prop:winfty-ds-mixed-virasoro-ds-zero}
@@ -7135,35 +7439,13 @@ every mixed OPE $W^{(s)}(z)W^{(t)}(w)$ with $s \ne t$.
 \end{proposition}
 
 \begin{proof}
-Let $A:=W^{(s)}$ and $B:=W^{(t)}$ with $s<t$.  By Step~2 of
-Theorem~\ref{thm:wn-obstruction}, the mixed two-point function
-\[
-\langle A(z)B(0)\rangle
-\]
-vanishes identically because $A$ and $B$ have distinct conformal
-weights.  Since both fields are primary, the Virasoro Ward identity
-therefore gives
-\[
-\langle T(x)A(z)B(0)\rangle = 0.
-\]
-
-Now extract the $T$-channel from the mixed OPE.  By
-Proposition~\ref{prop:winfty-ds-primary-top-pole}, the undifferentiated
-primary target $T=W^{(2)}$ can occur only at the top pole order
-$s+t-2$, with coefficient
-\[
-\mathsf{C}^{\mathrm{DS}}_{s,t;2;0,\,s+t-2}(N).
-\]
-All lower-pole $T$-descendants have conformal weight $>2$, so their
-two-point functions with $T$ vanish by weight mismatch.  Thus the
-coefficient of $x^{-4}z^{-(s+t-2)}$ in the three-point function
-$\langle T(x)A(z)B(0)\rangle$ is exactly
-\[
-\frac{c}{2}\,\mathsf{C}^{\mathrm{DS}}_{s,t;2;0,\,s+t-2}(N),
-\]
-because $\langle T(x)T(0)\rangle = \frac{c/2}{x^4}$ in the same
-normalization.  The three-point function vanishes identically and
-$c\neq 0$, so this coefficient must be zero.
+Apply Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} to the
+principal Drinfeld--Sokolov stage.  Theorem~\ref{thm:wn-obstruction}
+supplies the required normalized two-point package: the visible
+generators are primary, the mixed two-point functions vanish for
+distinct conformal weights, and
+$\langle T(z)T(0)\rangle=\frac{c/2}{z^4}$ with $c\neq 0$ at generic
+level.
 \end{proof}
 
 \begin{corollary}[Stage-$4$ mixed block as one vanishing channel and a
@@ -7212,19 +7494,40 @@ $W^{(3)}$ target, which is swap-even, and the $W^{(4)}$ target, which
 is swap-odd.
 \end{proof}
 
-\begin{proposition}[Principal Drinfeld--Sokolov self-coupling
-stress-tensor coefficient; \ClaimStatusProvedHere]
-\label{prop:winfty-ds-self-t-coefficient}
-Fix $N \ge 2$ and consider the principal Drinfeld--Sokolov stage
-$\mathcal{W}_N$ at a generic level with nonzero central charge $c$.
-Assume the Zamolodchikov normalization package of
-Theorem~\ref{thm:wn-obstruction}.  Then for every visible generator
-$W^{(s)}$ with $2 \le s \le N$, the top-pole stress-tensor coefficient
-in the self-OPE is
+\begin{proposition}[Formal self-coupling stress-tensor coefficient
+under a normalized two-point package; \ClaimStatusProvedHere]
+\label{prop:winfty-formal-self-t-coefficient}
+Fix $N \ge 2$ and consider a stage-$N$ local OPE calculus with visible
+primary generators $W^{(2)},\dots,W^{(N)}$, where
+$T:=W^{(2)}$ is the Virasoro field.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item each visible generator $W^{(u)}$ has conformal weight $u$, the
+  local OPE is decomposed into conformal families of these primary
+  generators and their translation descendants, and the Virasoro Ward
+  identity holds for insertions of $T$ against each visible generator;
+\item for every visible generator $W^{(s)}$ one has the normalized
+  two-point function
+  \[
+  \langle W^{(s)}(z)W^{(s)}(0)\rangle=\frac{c/s}{z^{2s}}
+  \qquad\text{with } c\neq 0;
+  \]
+\item the stress tensor is normalized by
+  \[
+  \langle T(z)T(0)\rangle=\frac{c/2}{z^4}.
+  \]
+\end{enumerate}
+Let
 \[
-\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)=2.
+\mathsf{C}_{s,s;u;0,n}(N)
 \]
-Equivalently, on the principal Drinfeld--Sokolov side the
+denote the undifferentiated primary coefficient of the target
+$W^{(u)}$ at pole order $n$ in this local OPE calculus.  Then for every
+visible generator $W^{(s)}$ with $2 \le s \le N$, the top-pole
+stress-tensor coefficient in the self-OPE is
+\[
+\mathsf{C}_{s,s;2;0,\,2s-2}(N)=2.
+\]
+Equivalently, under this normalized two-point package the
 undifferentiated $T=W^{(2)}$ channel appears in every self-OPE
 $W^{(s)}(z)W^{(s)}(w)$ with the universal coefficient $2$.
 \end{proposition}
@@ -7234,11 +7537,12 @@ Write $A:=W^{(s)}$ and set
 \[
 N_s:=\frac{c}{s},
 \]
-so that Theorem~\ref{thm:wn-obstruction} gives
+so that assumption~\textup{(ii)} gives
 \[
 \langle A(z)A(0)\rangle=N_s z^{-2s}.
 \]
-Because $A$ is Virasoro-primary of weight $s$, the Ward identity gives
+Because $A$ is Virasoro-primary of weight $s$,
+assumption~\textup{(i)} gives the Ward identity
 \[
 \langle T(x)A(z)A(0)\rangle
 =
@@ -7264,23 +7568,53 @@ $x^{-4}z^{-2s+2}$ coefficient on the Ward-identity side is
 3sN_s-2sN_s=sN_s=c.
 \]
 
-By Proposition~\ref{prop:winfty-ds-primary-top-pole}, the
-undifferentiated stress tensor can occur in the self-OPE only at the
-top pole $2s-2$, with coefficient
+Because the local OPE is decomposed into conformal families of primary
+generators and descendants, the undifferentiated stress tensor can
+occur in the self-OPE only at the top pole $2s-2$, with coefficient
 \[
-\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N).
+\mathsf{C}_{s,s;2;0,\,2s-2}(N).
 \]
 Pairing that term with $T(x)$ contributes
 \[
-\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c/2}{x^4}
+\mathsf{C}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c/2}{x^4}
 \,z^{-2s+2},
 \]
-because $\langle T(x)T(0)\rangle=\frac{c/2}{x^4}$.  Matching the
+because $\langle T(x)T(0)\rangle=\frac{c/2}{x^4}$ by
+assumption~\textup{(iii)}.  Matching the
 $x^{-4}z^{-2s+2}$ coefficient gives
 \[
-\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c}{2}=c.
+\mathsf{C}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c}{2}=c.
 \]
 Since $c\neq 0$, the coefficient is $2$.
+\end{proof}
+
+\begin{proposition}[Principal Drinfeld--Sokolov self-coupling
+stress-tensor coefficient; \ClaimStatusProvedHere]
+\label{prop:winfty-ds-self-t-coefficient}
+Fix $N \ge 2$ and consider the principal Drinfeld--Sokolov stage
+$\mathcal{W}_N$ at a generic level with nonzero central charge $c$.
+Assume the Zamolodchikov normalization package of
+Theorem~\ref{thm:wn-obstruction}.  Then for every visible generator
+$W^{(s)}$ with $2 \le s \le N$, the top-pole stress-tensor coefficient
+in the self-OPE is
+\[
+\mathsf{C}^{\mathrm{DS}}_{s,s;2;0,\,2s-2}(N)=2.
+\]
+Equivalently, on the principal Drinfeld--Sokolov side the
+undifferentiated $T=W^{(2)}$ channel appears in every self-OPE
+$W^{(s)}(z)W^{(s)}(w)$ with the universal coefficient $2$.
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:winfty-formal-self-t-coefficient} to the
+principal Drinfeld--Sokolov stage.  Theorem~\ref{thm:wn-obstruction}
+supplies the required normalized two-point package, with
+\[
+\langle W^{(s)}(z)W^{(s)}(0)\rangle=\frac{c/s}{z^{2s}}
+\qquad\text{and}\qquad
+\langle T(z)T(0)\rangle=\frac{c/2}{z^4}
+\]
+at generic level.
 \end{proof}
 
 \begin{corollary}[Principal stage-$4$ self-coupling
@@ -7301,49 +7635,51 @@ coefficient is universally fixed to `2`.
 Apply Proposition~\ref{prop:winfty-ds-self-t-coefficient} with $s=4$.
 \end{proof}
 
-\begin{corollary}[Stage-$4$ frontier after theorematic mixed
+\begin{corollary}[Stage-$4$ principal target packet after theorematic
 Virasoro-target elimination; \ClaimStatusProvedHere]
 \label{cor:winfty-ds-stage4-five-plus-zero}
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-ds-stage4-mixed-two-channel} and
 Corollary~\ref{cor:winfty-ds-stage4-self-t-normalization}.  Then the
-residual principal stage-$4$ comparison decomposes as:
+residual principal stage-$4$ target packet decomposes as:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item a self-coupling sector consisting of the two free scalar
-  coefficients
+\item two higher-spin self-coupling targets
   \[
   c_{334},\qquad c_{444};
   \]
-\item a mixed swap-even channel given by the coefficient
+\item the mixed swap-even higher-spin target
   \[
   \mathsf{C}_{3,4;3;0,4};
   \]
-\item a mixed swap-odd channel given by the coefficient
+\item the mixed swap-odd higher-spin target
   \[
   \mathsf{C}_{3,4;4;0,3};
   \]
-\item a normalization check in the self-coupling $W^{(4)}$-$W^{(4)}$
-  stress-tensor channel
+\item the theorematic principal Virasoro-target value
   \[
-  \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2;
+  \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2;
   \]
-\item a vanishing check in the mixed $W^{(2)}$ target channel
+\item the theorematic principal Virasoro-target value
   \[
-  \mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+  \mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0.
   \]
 \end{enumerate}
-Equivalently, the only potentially nonzero unfixed principal stage-$4$
-data are four coefficients:
+Equivalently, the standard stage-$4$ identity packet on~$\mathcal{I}_4$
+splits into four higher-spin targets
 \[
 c_{334},\qquad c_{444},\qquad
 \mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
 \]
-together with the two residue-side checks
+together with two Virasoro-target channels whose principal values are
+theorematically fixed to
 \[
-\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2,
+\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2,
 \qquad
-\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0,
 \]
+and whose residue-side contraction to four channels is the additional
+package isolated in
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 \end{corollary}
 
 \begin{proof}
@@ -7357,9 +7693,13 @@ fixes the principal self-coupling coefficient
 \[
 \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}
 \]
-to the universal value `2`, so that channel becomes a residue-side
-normalization check rather than free principal data.  Combining the
-three reductions gives the displayed decomposition.
+to the universal value `2`, so that channel becomes a theorematic
+principal Virasoro-target value rather than additional higher-spin
+target data.  Combining the three reductions gives the displayed
+principal decomposition, and therefore the six-entry identity packet
+with two Virasoro-target channels whose residue-side contraction is
+handled separately by
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 \end{proof}
 
 \begin{proposition}[Exact MC4 frontier packet for the standard
@@ -7388,24 +7728,34 @@ Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero} apply.  Then:
   forced vanishing statements;
 \item at stage~$4$, after removing the theorematic Virasoro and
   $W_3$ sectors, the first genuinely open higher-spin packet is exactly
-  the four free coefficient channels
+  the exact six-entry identity packet on~$\mathcal{I}_4$
   \[
-  c_{334},\qquad c_{444},\qquad
-  \mathsf{C}_{3,4;3;0,4},\qquad \mathsf{C}_{3,4;4;0,3},
+  \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(4)
+  =
+  \mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(4)
   \]
-  together with the residue-side checks
+  in the channels
   \[
-  \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2,
-  \qquad
-  \mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0.
+  \begin{gathered}
+  (3,3;4;0,2),\qquad
+  (4,4;4;0,4),\\
+  (3,4;3;0,4),\qquad
+  (3,4;4;0,3),\qquad
+  (4,4;2;0,6),\\
+  (3,4;2;0,5).
+  \end{gathered}
   \]
+  with the first four entries forming the residual higher-spin
+  comparison packet, while the last two are Virasoro-target channels
+  whose principal values are already fixed by
+  Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}.
 \end{enumerate}
 In particular, once the H-level target and quotient system are
 constructed, the standard $\mathcal{W}_\infty$ MC4 problem is not a
 further stabilization theorem.  It is the finite stagewise
 residue-identification problem on the packets $\mathcal{I}_N$, with the
 first genuinely open higher-spin packet occurring at stage~$4$ in the
-displayed six-channel form.
+displayed six-entry identity form on~$\mathcal{I}_4$.
 \end{proposition}
 
 \begin{proof}
@@ -7424,6 +7774,382 @@ compression of the residual stage-$4$ block.  The final sentence is a
 reformulation of these three reductions.
 \end{proof}
 
+\begin{corollary}[Minimal closure criterion for the standard
+\texorpdfstring{$W_\infty$}{W_infty} MC4 frontier;
+\ClaimStatusProvedHere]
+\label{cor:winfty-stage4-closure-criterion}
+Under the hypotheses of
+Proposition~\ref{prop:winfty-mc4-frontier-package}, the standard
+\texorpdfstring{$W_\infty$}{W_infty} H-level comparison closes once the
+stagewise packet identities on~$\mathcal{I}_N$ are proved.  The first
+genuinely open higher-spin packet is the exact six-entry stage-$4$
+identity packet on~$\mathcal{I}_4$.  Within that packet, the residual
+higher-spin channels still to be matched are
+\[
+\begin{gathered}
+(3,3;4;0,2),\qquad
+(4,4;4;0,4),\qquad
+(3,4;3;0,4),\qquad
+(3,4;4;0,3),
+\end{gathered}
+\]
+while the corresponding principal Virasoro-target values are already
+fixed to
+\[
+\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}=2,
+\qquad
+\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0.
+\]
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-hlevel-comparison-criterion} upgrades
+stagewise packet matching on~$\mathcal{I}_N$ to the H-level
+comparison, and
+Proposition~\ref{prop:winfty-mc4-frontier-package} identifies the first
+open stage as the six-entry block on~$\mathcal{I}_4$.
+Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero} fixes the two
+principal Virasoro-target values, leaving the four displayed
+higher-spin channels as the residual higher-spin packet.
+\end{proof}
+
+\begin{corollary}[Stage-$4$ \texorpdfstring{$W_\infty$}{W_infty}
+frontier on the Ward-normalized H-level locus;
+\ClaimStatusProvedHere]
+\label{cor:winfty-stage4-residue-four-channel}
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-mc4-frontier-package}.  Assume moreover
+that $\mathcal{W}^{\mathrm{ht}}$ is stage-$4$ Ward-normalized in the
+sense of Definition~\ref{def:winfty-stage4-ward-normalized}.  Then the
+two
+Virasoro-target residue channels are theorematically fixed:
+\[
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
+\]
+Consequently the first genuinely open stage-$4$
+\texorpdfstring{$W_\infty$}{W_infty} packet contracts from the six-entry
+identity packet of Proposition~\ref{prop:winfty-mc4-frontier-package} to
+the four-channel higher-spin identity packet
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;0,n}(4)
+=
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;0,n}(4)
+\]
+in the channels
+\[
+\begin{gathered}
+(3,3;4;0,2),\qquad
+(4,4;4;0,4),\\
+(3,4;3;0,4),\qquad
+(3,4;4;0,3).
+\end{gathered}
+\]
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:winfty-mc4-frontier-package} identifies the
+stage-$4$ frontier as the six-entry identity packet on~$\mathcal{I}_4$.
+Assuming the additional stage-$4$ Ward-normalized input, apply
+Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} to the
+stage-$4$ residue calculus to obtain
+\[
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0,
+\]
+and applying
+Proposition~\ref{prop:winfty-formal-self-t-coefficient} with $s=4$
+gives
+\[
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
+\]
+Removing these two theorematic Virasoro-target channels leaves exactly
+the four displayed higher-spin identities.
+\end{proof}
+
+\begin{proposition}[Exact missing input for the unconditional
+\texorpdfstring{$W_\infty$}{W_infty} stage-$4$ contraction;
+\ClaimStatusProvedHere]
+\label{prop:winfty-stage4-visible-pairing-gap}
+Assume the hypotheses of
+Proposition~\ref{prop:winfty-mc4-frontier-package}.  Assume moreover
+that the stage-$4$ quotient residue calculus on the visible generators
+$W^{(2)},W^{(3)},W^{(4)}$ is decomposed into conformal families of
+Virasoro-primary generators and that the Virasoro field $T:=W^{(2)}$
+acts on them by the standard Ward identity.  Then the only additional
+inputs from the normalized residue two-point/Ward package actually used
+to deduce
+\[
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2
+\]
+are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item mixed-weight orthogonality on the visible generators,
+  \[
+  \langle W^{(s)}(z)W^{(t)}(0)\rangle=0
+  \qquad (s\neq t,\ 2\le s,t\le 4);
+  \]
+\item diagonal visible normalization,
+  \[
+  \langle W^{(s)}(z)W^{(s)}(0)\rangle=\frac{c/s}{z^{2s}}
+  \qquad (s=2,3,4),
+  \]
+  with the same nonzero central charge $c$ as on the principal side.
+\end{enumerate}
+In particular, once the visible Virasoro Ward action is fixed, the open
+content of Conjecture~\ref{conj:winfty-stage4-ward-inheritance} is
+exactly inheritance of these visible pairing statements.
+\end{proposition}
+
+\begin{proof}
+Under the stated Ward hypothesis,
+Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} reduces the
+mixed Virasoro-target identity
+\[
+\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0
+\]
+to mixed-weight orthogonality together with the stress-tensor
+normalization.  Under the same Ward hypothesis,
+Proposition~\ref{prop:winfty-formal-self-t-coefficient} reduces the
+self-coupling identity
+\[
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2
+\]
+to the normalized visible two-point functions, again with the same
+stress-tensor normalization.
+
+But the $s=2$ case of \textup{(ii)} is exactly the stress-tensor
+normalization
+\[
+\langle T(z)T(0)\rangle=\frac{c/2}{z^4}.
+\]
+Therefore, once the visible Ward action is fixed, the only additional
+inputs used by the formal reduction lemmas are \textup{(i)} and
+\textup{(ii)}.
+\end{proof}
+
+\begin{definition}[Stage-$4$ Ward-normalized standard
+\texorpdfstring{$W_\infty$}{W_infty} H-level target;
+\ClaimStatusConjectured]
+\label{def:winfty-stage4-ward-normalized}
+Assume the setting of
+Proposition~\ref{prop:winfty-mc4-frontier-package}.  We say that the
+H-level target $\mathcal{W}^{\mathrm{ht}}$ is
+\emph{stage-$4$ Ward-normalized} if its induced stage-$4$ quotient
+residue calculus satisfies the visible Virasoro Ward action together
+with the visible pairing package isolated in
+Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}; explicitly,
+the visible generators $W^{(2)},W^{(3)},W^{(4)}$ satisfy mixed-weight
+orthogonality and the diagonal normalization
+\[
+\langle W^{(s)}(z)W^{(s)}(0)\rangle=\frac{c/s}{z^{2s}}
+\qquad (s=2,3,4)
+\]
+with the same nonzero central charge $c$ as on the principal
+Drinfeld--Sokolov stage.
+\end{definition}
+
+\begin{remark}[What is still missing for an unconditional stage-$4$
+four-channel reduction]
+\label{rem:winfty-stage4-four-channel-gap}
+Corollary~\ref{cor:winfty-stage4-residue-four-channel} is conditional
+on the additional H-level input of
+Definition~\ref{def:winfty-stage4-ward-normalized}.  The
+quotient-system hypotheses of
+Corollary~\ref{cor:winfty-hlevel-comparison-criterion} and
+Proposition~\ref{prop:winfty-mc4-frontier-package} supply compatible
+finite quotients, translation compatibility, and Virasoro-primary
+strong generators, but they do not by themselves identify the
+mixed-weight orthogonality or the diagonal visible pairings inside that
+quotient residue calculus.  Thus the first unconditional standard-tower
+MC4 packet remains the six-entry block of
+Proposition~\ref{prop:winfty-mc4-frontier-package}.  By
+Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, once the
+visible Virasoro Ward action is fixed the missing lemma is exactly
+automatic stage-$4$ Ward normalization in the sense of
+Definition~\ref{def:winfty-stage4-ward-normalized}.
+\end{remark}
+
+\begin{conjecture}[Automatic stage-$4$ Ward normalization from the
+quotient-system hypotheses]
+\label{conj:winfty-stage4-ward-inheritance}
+\ClaimStatusConjectured{}
+Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a principal-stage
+compatible factorization target in the sense of
+Conjecture~\ref{conj:winfty-factorization-package}, and let
+$\mathcal{F}_{\le 4}$ be its stage-$4$ quotient.  Assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the visible generators $W^{(2)},W^{(3)},W^{(4)}$ in
+  $\mathcal{F}_{\le 4}$ are even Virasoro-primary fields, and the local
+  OPE is decomposed into their conformal families and translation
+  descendants;
+\item the Virasoro field $T:=W^{(2)}$ acts on these visible generators
+  by the standard stage-$4$ Virasoro Ward identity;
+\item the quotient vacuum functional induces mixed-weight orthogonality
+  on the visible generators,
+  \[
+  \langle W^{(s)}(z)W^{(t)}(0)\rangle = 0
+  \qquad (s\neq t,\ 2\le s,t\le 4);
+  \]
+\item the diagonal visible pairings are normalized by
+  \[
+  \langle W^{(s)}(z)W^{(s)}(0)\rangle = \frac{c/s}{z^{2s}}
+  \qquad (s=2,3,4)
+  \]
+  with the same nonzero central charge $c$ as on the principal
+  Drinfeld--Sokolov stage.
+\end{enumerate}
+By Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, the open
+content is exactly the pairing package in \textup{(iii)}--\textup{(iv)}.
+Then the induced H-level target is stage-$4$ Ward-normalized in the
+sense of Definition~\ref{def:winfty-stage4-ward-normalized}.  Consequently
+Corollary~\ref{cor:winfty-stage4-residue-four-channel} applies, so the
+first live standard-tower stage-$4$ packet contracts from the
+unconditional six-entry block of
+Proposition~\ref{prop:winfty-mc4-frontier-package} to the four
+higher-spin channels
+\[
+(3,3;4;0,2),\qquad
+(4,4;4;0,4),\qquad
+(3,4;3;0,4),\qquad
+(3,4;4;0,3).
+\]
+\end{conjecture}
+
+\begin{remark}[Scope of the stage-4 Ward-inheritance conjecture]
+The open issue is structural, not coefficient-theoretic.  The
+principal stage-$4$ values are already explicit by
+Proposition~\ref{prop:w4-ds-ope-explicit}.  What remains unknown is
+whether the quotient-system and factorization hypotheses already force
+the mixed-weight orthogonality and diagonal visible pairings on the
+stage-$4$ residue calculus.  If they do, the four-channel refinement is
+automatic; if they do not, then
+Definition~\ref{def:winfty-stage4-ward-normalized} is the exact
+additional H-level input.
+\end{remark}
+
+\begin{proposition}[Uniform Virasoro-target contraction of reduced
+incremental packets under the normalized residue package;
+\ClaimStatusProvedHere]
+\label{prop:winfty-stage-growth-virasoro-target-contraction}
+Fix $N \ge 3$ and assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage-growth-top-parity}.  Assume
+moreover that the stage-$(N+1)$ quotient residue calculus on the
+visible generators
+$W^{(2)},\dots,W^{(N+1)}$ satisfies the hypotheses of
+Propositions~\ref{prop:winfty-formal-mixed-virasoro-zero}
+and~\ref{prop:winfty-formal-self-t-coefficient}.  Then the
+Virasoro-target channels inside
+$\mathcal{J}_{N+1}^{\mathrm{red}}$ are exactly
+\[
+\bigl\{
+(s,N{+}1;2;0,s+N-1)\mid 3\le s\le N
+\bigr\}
+\sqcup
+\bigl\{
+(N{+}1,N{+}1;2;0,2N)
+\bigr\}.
+\]
+Their residue values are theorematically fixed by
+\[
+\mathsf{C}^{\mathrm{res}}_{s,N+1;2;0,s+N-1}(N+1)=0
+\qquad (3\le s\le N),
+\]
+\[
+\mathsf{C}^{\mathrm{res}}_{N+1,N+1;2;0,2N}(N+1)=2.
+\]
+Consequently the reduced incremental packet contracts to the
+higher-spin packet
+\[
+\mathcal{J}_{N+1}^{\mathrm{hs}}
+:=
+\mathcal{J}_{N+1}^{\mathrm{red}}
+\setminus
+\Bigl(
+\bigl\{
+(s,N{+}1;2;0,s+N-1)\mid 3\le s\le N
+\bigr\}
+\sqcup
+\bigl\{
+(N{+}1,N{+}1;2;0,2N)
+\bigr\}
+\Bigr).
+\]
+For $N=3$ this recovers
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
+\end{proposition}
+
+\begin{proof}
+Corollary~\ref{cor:winfty-ds-stage-growth-top-parity} identifies the
+reduced incremental packet
+$\mathcal{J}_{N+1}^{\mathrm{red}}$.  Inside the mixed block
+$\mathcal{J}_{N+1}^{\mathrm{mix}}$, the only target-$2$ top-pole
+channel is
+\[
+(s,N{+}1;2;0,s+N-1)
+\]
+for each $3\le s\le N$.  Applying
+Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} to each such
+mixed source pair gives the displayed vanishing statements.
+
+Inside the self block
+$\mathcal{J}_{N+1}^{\mathrm{self}}$, the unique target-$2$ top-pole
+channel is
+\[
+(N{+}1,N{+}1;2;0,2N).
+\]
+Applying
+Proposition~\ref{prop:winfty-formal-self-t-coefficient} with $s=N+1$
+gives the universal value `2'.  Removing these target-$2$ channels from
+$\mathcal{J}_{N+1}^{\mathrm{red}}$ leaves exactly the displayed
+higher-spin packet.
+\end{proof}
+
+\begin{corollary}[First reduced stage beyond
+\texorpdfstring{$\mathcal{I}_4$}{I4} under the normalized residue
+package; \ClaimStatusProvedHere]
+\label{cor:winfty-stage5-residue-eight-channel}
+Assume the hypotheses of
+Corollary~\ref{cor:winfty-ds-stage5-reduced-packet}.  Assume moreover
+that the stage-$5$ quotient residue calculus on the visible generators
+$W^{(2)},W^{(3)},W^{(4)},W^{(5)}$ satisfies the hypotheses of
+Propositions~\ref{prop:winfty-formal-mixed-virasoro-zero}
+and~\ref{prop:winfty-formal-self-t-coefficient}.  Then the three
+Virasoro-target channels in $\mathcal{J}_5^{\mathrm{red}}$ are
+theorematically fixed:
+\[
+\mathsf{C}^{\mathrm{res}}_{3,5;2;0,6}(5)=0,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{4,5;2;0,7}(5)=0,
+\qquad
+\mathsf{C}^{\mathrm{res}}_{5,5;2;0,8}(5)=2.
+\]
+Consequently the first reduced stage beyond~$\mathcal{I}_4$ contracts
+to the eight higher-spin channels
+\[
+\begin{gathered}
+(3,4;5;0,2),\\
+(3,5;3;0,5),\qquad
+(3,5;4;0,4),\qquad
+(3,5;5;0,3),\\
+(4,5;3;0,6),\qquad
+(4,5;4;0,5),\qquad
+(4,5;5;0,4),\\
+(5,5;4;0,6).
+\end{gathered}
+\]
+\end{corollary}
+
+\begin{proof}
+Apply
+Proposition~\ref{prop:winfty-stage-growth-virasoro-target-contraction}
+with $N=4$, and use
+Corollary~\ref{cor:winfty-ds-stage5-reduced-packet} to identify the
+resulting packet explicitly.
+\end{proof}
+
 \begin{computation}[Full stage-$4$ reduction chain verification]
 \label{comp:winfty-stage4-reduction-chain}
 \index{MC4!W-infinity stage-4 reduction chain}
@@ -7431,7 +8157,7 @@ The complete reduction chain from the residual packet
 $\mathcal{J}_4$ to the frontier of
 Proposition~\ref{prop:winfty-mc4-frontier-package} has been
 verified computationally
-(\texttt{compute/lib/w4\_stage4\_coefficients.py}, $72$~tests):
+(\texttt{compute/lib/w4\_stage4\_coefficients.py}, $83$~tests):
 \begin{itemize}
 \item \emph{Primaryity}
   (Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet}):
@@ -7453,7 +8179,8 @@ verified computationally
   (Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}):
   $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ (universal $T$-coupling)
   and $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ (mixed vanishing)
-  reduce to $4$~free coefficients $+$ $2$~residue-side checks.
+  split the stage-$4$ packet into $4$ higher-spin channels plus
+  $2$ theorematic principal Virasoro-target values.
 \end{itemize}
 The full chain $29 \to 7 \to 6 = 4 + 2$ matches every intermediate
 cardinality and every explicit element of the manuscript displays.
@@ -7467,7 +8194,7 @@ $W_4 = W(\mathfrak{sl}_4, f_{\mathrm{prin}})$ with generators
 $T$ (spin~$2$), $W^{(3)}$ (spin~$3$), $W^{(4)}$ (spin~$4$)
 normalized so that
 $\langle W^{(s)}(z)\,W^{(s)}(0)\rangle = (c/s)\,z^{-2s}$,
-the four free stage-$4$ coefficients of
+the four higher-spin stage-$4$ principal targets of
 Corollary~\textup{\ref{cor:winfty-ds-stage4-five-plus-zero}} are
 given by the following rational functions of the central charge~$c$:
 \begin{align}
@@ -7487,14 +8214,14 @@ c_{444}^{\,2}
 &= \tfrac{5}{7}\,c_{334}^{\,2}.
 \label{eq:c344-explicit}
 \end{align}
-The two residue-side predictions of
+The two theorematic Virasoro-target identities in
 Corollary~\textup{\ref{cor:winfty-ds-stage4-five-plus-zero}} are
 confirmed:
 \begin{equation}
 \mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2,
 \qquad
 \mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0.
-\label{eq:w4-predictions-verified}
+\label{eq:w4-virasoro-target-identities-verified}
 \end{equation}
 \end{proposition}
 
@@ -7517,6 +8244,39 @@ $\mathsf{C}_{3,4;2;0,5}=0$ from
 Proposition~\ref{prop:winfty-ds-mixed-virasoro-ds-zero}.
 \end{proof}
 
+\begin{remark}[Exact stage-4 identity packet]
+\label{rem:winfty-stage4-exact-identity-packet}
+Proposition~\ref{prop:winfty-mc4-frontier-package} and
+Proposition~\ref{prop:w4-ds-ope-explicit} together show that the first
+genuinely higher-spin MC4 packet is no longer extraction of principal
+Drinfeld--Sokolov data.  That side is already explicit.  The live
+stage-$4$ task is the six bar-side identities
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(4)
+=
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(4)
+\]
+on the packet
+\[
+\Bigl\{
+\begin{gathered}
+(3,3;4;0,2),\,
+(4,4;4;0,4),\\
+(3,4;3;0,4),\,
+(3,4;4;0,3),\,
+(4,4;2;0,6),\\
+(3,4;2;0,5)
+\end{gathered}
+\Bigr\}.
+\]
+For the first four channels, the DS targets are fixed by the explicit
+formulas \eqref{eq:c334-explicit}--\eqref{eq:c344-explicit}, up to the
+chosen strong-generator signs.  The last two channels are fixed exactly
+by \eqref{eq:w4-virasoro-target-identities-verified}.  Thus the first open higher-spin
+packet is an exact six-entry identity problem on~$\mathcal{I}_4$, not a
+further principal-side extraction problem.
+\end{remark}
+
 \begin{computation}[Full $W_4$ OPE coefficient extraction]
 \label{comp:w4-ds-ope-extraction}
 \index{MC4!W4 OPE coefficient extraction}
@@ -7535,7 +8295,7 @@ computationally
 \item unitarity non-negativity ($c_{334}^2 \geq 0$, $c_{444}^2 \geq 0$)
   confirmed at all $\mathcal{W}(N, N{+}1)$ minimal models
   for $4 \leq N \leq 19$;
-\item both falsifiable predictions
+\item both theorematic principal Virasoro-target values
   $\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6} = 2$ and
   $\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5} = 0$ confirmed.
 \end{itemize}
@@ -8567,14 +9327,12 @@ while the stronger infinite-generator realization is delegated to the
 exact $W_\infty$ MC4 package of filtered H-level targets, residue
 identities, and finite detection on $\mathcal{I}_N$, whose first live
 higher-spin stages are already reduced on the theorem surface to the
-stage-$3$ fifteen-coefficient packet and the stage-$4$
-six-coefficient packet organized as three local OPE blocks, sharpened
-further to the four channels
-$c_{334}$, $c_{444}$,
-$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
-residue-side checks
-$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
-$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
+stage-$3$ fifteen-coefficient packet and the exact stage-$4$ six-entry
+identity packet on~$\mathcal{I}_4$, organized as three local OPE blocks
+and splitting into four higher-spin channels together with two
+Virasoro-target channels whose principal Drinfeld--Sokolov values are
+fixed and whose residue-side contraction is the extra input isolated by
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 Completion is needed: the non-quadratic relations require
 $$\widehat{\bar{B}}(\text{Vir}_c) = \varprojlim_n \bar{B}(\text{Vir}_c)/I^n$$
 where $I$ is the augmentation ideal.
@@ -8649,14 +9407,12 @@ $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
 =\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
 and reducing them to the finite-detection packet $\mathcal{I}_N$, whose
 first live higher-spin stages are already reduced on the theorem
-surface to the stage-$3$ fifteen-coefficient packet and the stage-$4$
-six-coefficient packet organized as three local OPE blocks, sharpened
-further to the four channels
-$c_{334}$, $c_{444}$,
-$\mathsf{C}_{3,4;3;0,4}$, $\mathsf{C}_{3,4;4;0,3}$ together with the
-residue-side checks
-$\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}=2$ and
-$\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}=0$.
+surface to the stage-$3$ fifteen-coefficient packet and the exact
+stage-$4$ six-entry identity packet on~$\mathcal{I}_4$, organized as
+three local OPE blocks and splitting into four higher-spin channels
+together with two Virasoro-target channels whose principal values are
+fixed and whose residue-side contraction is the extra input isolated by
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 
 \emph{Physical interpretation.}
 $W_\infty$ describes non-local interactions in 2D gravity.  The open problem is

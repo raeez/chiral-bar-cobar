@@ -473,8 +473,11 @@ m_0^{(s_r)})$, vanishing simultaneously if and only if $c = 0$.
 The algebra $\mathcal{W}_{1+\infty}$ is the universal W-algebra
 containing generators of all integer spins $\{1, 2, 3, \ldots\}$.
 It arises as the algebra of area-preserving diffeomorphisms of the plane
-(at the classical level) and admits a one-parameter family of central
-charges parametrized by the 't~Hooft coupling.
+(at the classical level) and admits a one-parameter family of large-$N$
+specializations.  In the present manuscript this is not the printed
+MC4 endpoint: the theorematic frontier is the filtered H-level target
+for the standard principal tower together with the exact residue
+identities on the finite packets~$\mathcal{I}_N$.
 
 \begin{definition}[$\mathcal{W}_{1+\infty}$ as colimit]
 \label{def:w-infty}
@@ -492,37 +495,56 @@ that preserve the generators $W^{(2)}, \ldots, W^{(N)}$ and add a
 new generator $W^{(N+1)}$ of spin $N+1$.
 \end{definition}
 
-\begin{conjecture}[Bar-cobar for $\mathcal{W}_{1+\infty}$;
+\begin{conjecture}[Large-N inverse-limit specialization of the
+standard W-infinity MC4 package;
 \ClaimStatusConjectured]
 \label{conj:w-infty-bar}
 \index{W1infinity@$\mathcal{W}_{1+\infty}$!bar complex}
-The bar complex of $\mathcal{W}_{1+\infty}$ is the inverse limit of
-the finite-$N$ bar complexes:
+Assume the filtered H-level package of
+Conjecture~\ref{conj:winfty-factorization-package}: a separated
+complete target whose finite quotients recover the principal stages,
+together with the exact stagewise identities
+\[
+\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=
+\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)
+\]
+on the seed packets~$\mathcal{I}_N$.  Then one expects a completed
+large-$N$ specialization in which the bar object of
+$\mathcal{W}_{1+\infty}$ is the inverse limit of the finite-$N$ bar
+complexes:
 \begin{equation}\label{eq:w-infty-bar}
 \barB(\mathcal{W}_{1+\infty}^{(k)})
 = \varprojlim_{N} \barB(\mathcal{W}^k(\mathfrak{sl}_N))
 \end{equation}
-and the curvature is:
+and the channel-refined characteristic profile is:
 \begin{equation}\label{eq:w-infty-curvature}
-m_0(\mathcal{W}_{1+\infty}) = \lim_{N \to \infty} \frac{c_N}{2},
+\widetilde{\kappa}_N
+=
+\left(\frac{c_N}{2},\frac{c_N}{3},\ldots,\frac{c_N}{N}\right),
 \qquad c_N = \frac{N(N^2-1)}{N+k},
 \end{equation}
-which at fixed 't~Hooft coupling $\lambda = N/(N+k)$ behaves as
-$m_0 \sim N^2 \lambda(1-\lambda)/2$ for $N \to \infty$.
-The bar spectral sequence collapses at $E_2$ for generic $\lambda$,
-and the Koszul dual is
+so the scalar summation diverges harmonically and the large-$N$ object
+must retain the full channel package rather than collapse to a single
+curvature scalar.  At generic 't~Hooft coupling, one further expects
+the bar spectral sequence to collapse at~$E_2$, and the Koszul dual to
+be
 $(\mathcal{W}_{1+\infty}^{(\lambda)})^!
 \simeq \mathcal{W}_{1+\infty}^{(1-\lambda)}$
 \textup{(}the 't~Hooft coupling involution\textup{)}.
+\emph{This is not the printed MC4 frontier.}  It is a downstream
+large-$N$ specialization once the filtered target and the exact finite
+identity packets are in hand.
 \textup{Master conjecture parent:}
-Conjecture~\textup{\ref{conj:master-infinite-generator}} \textup{(MC4: filtered H-level comparison for standard infinite towers).}
+Conjecture~\textup{\ref{conj:winfty-factorization-package}}
+\textup{(}hence MC4\textup{)}.
 \end{conjecture}
 
 \begin{remark}[Computational evidence for MC4 coefficient matching]
 \label{rem:mc4-computational-evidence}
 \index{MC4!computational evidence}
 The finite-stage OPE coefficients and Yangian auxiliary kernels
-that determine Conjecture~\ref{conj:w-infty-bar} are now extracted:
+that support the exact MC4 coefficient packets are now extracted:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item $\mathcal{W}_\infty$ side: all four DS OPE coefficients
   extracted as explicit rational functions of~$c$
@@ -532,14 +554,23 @@ that determine Conjecture~\ref{conj:w-infty-bar} are now extracted:
   $c_{444}^2 = 112c^2(2c-1)(3c+46)/[(c+24)(7c+68)(10c+197)(5c+3)]$,
   $\mathsf{C}_{3,4;3;0,4}^2 = (9/16)\,c_{334}^2$,
   $\mathsf{C}_{3,4;4;0,3}^2 = (5/7)\,c_{334}^2$.
-  Both falsifiable predictions verified.
+  Both theorematic Virasoro-target identities verified.
+  Thus the first higher-spin packet is no longer DS-side extraction:
+  the live stage-$4$ task is the six identities
+  $\mathsf{C}^{\mathrm{res}}=\mathsf{C}^{\mathrm{DS}}$ on the packet
+  $\mathcal{I}_4$ against these explicit targets.
   Channel-refined modular characteristic
   $\tilde{\kappa}_N = (c/2, c/3, \ldots, c/N)$ diverges as
   $c \cdot \log N$ (harmonic).
 \item Yangian side: auxiliary kernel
   $\mathsf{K}^{\mathrm{line}}_{1,2}(N) = \Lambda^2(V)$ verified for
-  $N = 2, 3, 4$ ($156$~tests); single residue
-  $P(e_1 \otimes e_2) = e_2 \otimes e_1$ determines the full structure.
+  $N = 2, 3, 4$, and the faithful-evaluation boundary-strip packets
+  $\Delta_{a,0}(4)$ and $\Delta_{a,0}(6)$ vanish on generic tensor
+  lengths $2$ and $3$ in ranks $2,3,4$
+  (\textup{$219$~tests in the current Yangian residue suite}).
+  The remaining all-rank Yangian input is therefore the one-factor
+  residue computation on the fundamental line, not the first visible
+  low-stage boundary packets.
 \end{enumerate}
 \end{remark}
 
