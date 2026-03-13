@@ -1729,6 +1729,30 @@ Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels} yields
 $\Xi_a=-\hbar P$.
 \end{proof}
 
+\begin{remark}[Normalization bridge for the fundamental-line kernel]
+\label{rem:yangian-fundamental-normalization-bridge}
+The Yangian local problem has two equivalent normalizations.  The
+residue normalization is
+\[
+L_a^{\mathrm{norm}}(u)=1-\frac{\hbar P}{u-a},
+\qquad
+\operatorname*{Res}_{u=a}L_a^{\mathrm{norm}}(u)=-\hbar P.
+\]
+The additive normalization is
+\[
+L_a^{\mathrm{add}}(u)=(u-a)\,1-\hbar P
+=(u-a)\,L_a^{\mathrm{norm}}(u).
+\]
+Thus the same local operator appears either as a residue or as a
+collision value:
+\[
+L_a^{\mathrm{add}}(a)=-\hbar P
+\]
+and this agrees with the residue of the normalized kernel.  The
+normalization therefore changes only the bookkeeping, not the local
+Yangian datum that controls the frontier packet.
+\end{remark}
+
 \begin{computation}[Three-layer reduction verification]
 \label{comp:mc4-three-layer-verification}
 \index{MC4!three-layer verification}
@@ -1738,9 +1762,8 @@ $\to$
 Proposition~\ref{prop:dg-shifted-rtt-typea-residue-channels}
 $\to$
 Corollary~\ref{cor:dg-shifted-rtt-typea-single-line})
-has been verified computationally
-(\texttt{compute/\allowbreak lib/\allowbreak yangian\_residue.py},
-$58$~tests) for
+has been verified computationally in both local normalizations of
+Remark~\ref{rem:yangian-fundamental-normalization-bridge}, for
 $M = 2, 3, 4$:
 \begin{itemize}
 \item \textbf{Layer~1 (residue):}
@@ -1773,6 +1796,48 @@ Yangian MC4 frontier.  The remaining open frontier is the
 H-level comparison
 $\mathsf{K}^{\mathrm{line}}_{a,b}(N) = \mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$
 (Conjecture~\ref{conj:master-infinite-generator}).
+\end{computation}
+
+\begin{computation}[Low-rank auxiliary-kernel extraction]
+\label{comp:mc4-yangian-lowrank-kernels}
+\index{MC4!Yangian low-rank kernel extraction}
+The first genuinely open Yangian coefficients on the standard
+type-$A$ tower can be extracted explicitly on the fundamental pair
+$(a,b)=(1,2)$ for the low-rank quotients $N=2,3,4$.  In each of these
+ranks, the line-side and RTT-side kernels coincide and are exactly the
+antisymmetric channel:
+\[
+\mathsf{K}^{\mathrm{line}}_{1,2}(N)
+=
+\mathsf{K}^{\mathrm{RTT}}_{1,2}(N)
+=
+\Lambda^2(V).
+\]
+Equivalently,
+\[
+\dim \mathsf{K}^{\mathrm{line}}_{1,2}(2)=1,\qquad
+\dim \mathsf{K}^{\mathrm{line}}_{1,2}(3)=3,\qquad
+\dim \mathsf{K}^{\mathrm{line}}_{1,2}(4)=6,
+\]
+and the same dimensions hold for
+$\mathsf{K}^{\mathrm{RTT}}_{1,2}(N)$.
+
+The extraction uses the normalized residue
+$\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, the symmetric/antisymmetric
+channel decomposition, and exact kernel computation on the mixed
+tensor line $e_1\otimes e_2$.  Computationally, this low-rank packet
+has been verified by exact and numerical kernel calculations
+($156$~tests).
+
+This is evidence for the Yangian side of MC4, not the full theorem.
+The live frontier remains the uniform proof of
+\[
+\mathsf{K}^{\mathrm{line}}_{a,b}(N)
+=
+\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)
+\]
+on the boundary strip $\Delta_{a,0}(N)$ together with the filtered
+H-level target comparison.
 \end{computation}
 
 \section{Coulomb branch algebras}
@@ -1976,9 +2041,10 @@ is isomorphic to $U(\widehat{\mathfrak{gl}}_1)^+$
 is the Yangian of $\mathfrak{gl}_1$ and
 $\widehat{\mathfrak{gl}}_1 \cong \mathcal{H}_{\mathrm{Heis}}$,
 the duality $\mathcal{H}_{\mathrm{Jordan}}^! \simeq Y(\mathfrak{gl}_1)$
-reduces to the Heisenberg self-duality phenomenon
-(up to the Sym/Lambda correction of
-Theorem~\ref{thm:heisenberg-not-self-dual}).
+reduces to the Heisenberg Koszul duality
+$\mathcal{H}_k^! \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+(Theorem~\ref{thm:heisenberg-not-self-dual}; note:
+$\mathcal{H}$ is \emph{not} self-dual).
 \item The factorization structure of the CoHA over dimension vectors
 $\mathbf{d}$ corresponds to the coproduct structure of the Yangian bar
 complex: the Hecke correspondence $\mathcal{M}_{\mathbf{d}_1}
@@ -2174,14 +2240,16 @@ H^i(\barBgeom(\widehat{\mathfrak{sl}}_2))
 \otimes
 H^j(\barBgeom(\widehat{\mathfrak{gl}}_1))
 \]
-with $H^i(\widehat{\mathfrak{sl}}_2) = R(i{+}3)$ (Riordan; OEIS A005043) and
+with $H^i(\widehat{\mathfrak{sl}}_2) = 3, 5, 15, 36, 91, \ldots$
+(Table~\ref{tab:bar-dimensions}) and
 $H^j(\widehat{\mathfrak{gl}}_1) = p(j{-}2)$ (partition function,
 $p({-}1) = p(0) = 1$).  This gives
-$H^n(\widehat{\mathfrak{gl}}_2) = 1, 4, 10, 25, 62, \ldots$
-At degrees $1$ and $2$, the Yangian bar cohomology matches
-$\widehat{\mathfrak{gl}}_2$ exactly.  At degree~$3$, the Yangian Serre
-relations (degree-$3$ bar differential) contribute $3$ additional
-classes, giving $H^3 = 25 + 3 = 28$.
+$H^n(\widehat{\mathfrak{gl}}_2) = 1, 4, 9, 24, 61, \ldots$
+At degree~$1$, the Yangian bar cohomology matches
+$\widehat{\mathfrak{gl}}_2$ exactly ($H^1 = 4$).
+At degree~$2$, the Yangian exceeds the K\"unneth prediction:
+$H^2(Y) = 10 > H^2(\widehat{\mathfrak{gl}}_2) = 9$.
+At degree~$3$, the gap widens to $28 - 24 = 4$.
 \end{remark}
 
 
@@ -3158,9 +3226,16 @@ natural domain.
 If $\mathcal{O} \supsetneq \mathcal{O}_{\mathrm{poly}}$ (i.e., if
 there exist simple modules of $\mathcal{O}$ that are \emph{not}
 finite-dimensional), then these additional modules have no quantum
-group counterpart and lie outside the scope of DK.  The factorization
-DK equivalence in its natural form is therefore
-\emph{unconditionally proved} for type~$A$.
+group counterpart under the present formulation and lie outside the
+scope of DK\@.  The factorization DK equivalence in its natural form
+is therefore \emph{unconditionally proved} for type~$A$.
+
+Whether $\mathcal{O} = \mathcal{O}_{\mathrm{poly}}$ is an open
+question; see Corollary~\ref{cor:dk-partial-conj}.
+If $\mathcal{O} \supsetneq \mathcal{O}_{\mathrm{poly}}$, the
+additional modules could either be genuinely irrelevant to DK or
+could indicate missing structure on the quantum group side---the
+present framework does not distinguish these possibilities.
 \end{remark}
 
 \begin{remark}[DK ladder after the finite-dimensional theorem]
@@ -3363,23 +3438,25 @@ analogous structure with two differences:
 \end{enumerate}
 Consequently, the spectral sequence does \emph{not} degenerate at
 $E_1$, and sectorwise finiteness alone does not immediately resolve
-the generation problem.
+the enlargement problem beyond the evaluation-generated core.
 
-Despite this, the structure provides a complexity reduction: the
-infinite-dimensional thick generation problem reduces to a countable
-family of finite-dimensional spectral sequence computations at each
-$(\gamma, p)$ bidegree.  If the differentials $d_r$ for $r \ge 1$
-can be controlled --- via Massey products in the current algebra
-cohomology or via the factorization structure on
-$\operatorname{Ran}(X)$ --- the spectral sequence may converge
-without thick generation.
+Despite this, the structure provides a complexity reduction: any
+completed/coderived enlargement controlled sectorwise reduces to a
+countable family of finite-dimensional spectral sequence
+computations at each $(\gamma, p)$ bidegree.  If the same finiteness
+and convergence package survives the prefundamental/asymptotic
+extension, then the sectorwise method may enlarge the proved
+evaluation-generated DK core without thick generation.
 
-This is the most ambitious strategy: if successful, it resolves MC3
-for \emph{all types} simultaneously, since the root lattice grading
-and loop filtration exist for any simple~$\mathfrak{g}$.  The
-bottleneck is the $E_1$ computation, which is a well-posed problem
-in the cohomology of current algebras related to the
-Loday--Quillen--Tsygan theorem.
+This is the most ambitious extension strategy: if successful, it
+would carry the proved evaluation-generated DK-2/3 equivalence to the
+full MC3 package for \emph{all types} simultaneously, since the root
+lattice grading and loop filtration exist for any
+simple~$\mathfrak{g}$.  The bottleneck is no longer convergence on
+the generated core, but the extension of that control to the enlarged
+completed/coderived domain.  The $E_1$ computation is the first
+well-posed input, and it is related to the cohomology of current
+algebras via the Loday--Quillen--Tsygan theorem.
 The abstract criterion subsuming both the lattice and Yangian
 instances is
 Conjecture~\ref{conj:factorization-finiteness-criterion}.
@@ -3514,7 +3591,7 @@ $\mathfrak{sl}_2$ at $p = 7$ (two generators vs.\ one,
 from the second exponent $e_2 = 3$).  Growth is sub-exponential
 --- in fact $\sim \exp(\pi\sqrt{rp/12})$ by
 Proposition~\ref{prop:lqt-e1-subexponential-growth} ---
-for all types; this is sufficient for
+for all types; this is the proved growth input for
 Conjecture~\textup{\ref{conj:mc3-sectorwise-all-types}}.
 \end{computation}
 
@@ -3893,29 +3970,39 @@ at $N \ge 3$ is whether the polynomial subcategory exhausts the
 DK-relevant category~$\mathcal{O}$
 (Remark~\ref{rem:infinite-dim-simples}).
 
-Strategy~IV is the most ambitious: success would bypass thick
-generation entirely and resolve MC3 for all types simultaneously.
-The bottleneck --- computing the factorization bar cohomology of
+Strategy~IV is now the proved bypass on the evaluation-generated core:
+sectorwise convergence and factorization descent resolve DK-2/3 for all
+simple types without any thick-generation input
+\textup{(}Theorem~\ref{thm:h-level-factorization-kd} and
+Corollary~\ref{cor:dk23-all-types}\textup{)}.  Its remaining rôle is
+to clarify what survives beyond that core.  The bottleneck --- computing the factorization bar cohomology of
 $U(\mathfrak{g}[t])$ --- is a well-posed problem that interacts
 with the Loday--Quillen--Tsygan theorem on cyclic homology of
 universal enveloping algebras.
 
-\begin{conjecture}[MC3 via sectorwise finiteness for all types;
+\begin{conjecture}[Completed MC3 via sectorwise finiteness for all types;
 \ClaimStatusConjectured]\label{conj:mc3-sectorwise-all-types}
 \index{thick generation!sectorwise finiteness!all types}
-For every simple~$\mathfrak{g}$, the Strategy~IV spectral
-sequence converges at each bidegree, and the
-$E_\infty$ page has sub-exponential growth in each root weight
-sector.  If so, the sectorwise finiteness argument of
-Theorem~\textup{\ref{thm:lattice:factorization-koszul}} applies
-and gives the factorization DK equivalence for~$Y(\mathfrak{g})$
-at all types, bypassing thick generation entirely.
+For every simple~$\mathfrak{g}$, the sectorwise root-weight
+decomposition and loop filtration of
+Proposition~\ref{prop:yangian-bar-loop-weight} extend from the
+evaluation-generated core to the completed/coderived enlargement
+described in Remark~\ref{rem:corrected-mc3-frontier}.  Assume that,
+on this enlarged domain, the associated spectral sequence
+stabilizes at each tridegree, retains sectorwise sub-exponential
+growth, and is compatible with factorization descent on
+$\operatorname{Ran}(X)$.  Then the sectorwise argument of
+Theorem~\textup{\ref{thm:h-level-factorization-kd}} extends the
+proved DK-2/3 equivalence from the evaluation-generated core to the
+full MC3 package at all simple types, bypassing ordinary thick
+generation.
 
-\emph{The $E_1$ page has sub-exponential growth
-$\dim E_1^{0,p} \sim \exp(\pi\sqrt{rp/12})$
-by Proposition~\textup{\ref{prop:lqt-e1-subexponential-growth}};
-the residual question is whether the higher differentials preserve
-this bound.}
+\emph{The theorematic part of Strategy~IV is already settled on the
+evaluation-generated core by
+Theorem~\textup{\ref{thm:h-level-factorization-kd}} and
+Corollary~\textup{\ref{cor:dk23-all-types}}.  The residual question
+is whether the same sectorwise control survives the
+completed/coderived enlargement.}
 \end{conjecture}
 
 \begin{proposition}[Sub-exponential growth of the $E_1$ page;
@@ -4816,21 +4903,27 @@ The frontier decomposes into a theorem ladder:
   --- proved.}  Ordered fusion on evaluation modules is transported by
   Verdier duality with opposite monoidal structure
   (Theorem~\ref{thm:factorization-dk-eval}).
-\item[\textbf{DK-2/3.}] \emph{Finite-dimensional type~$A$ ---
-  proved.}  Theorem~\ref{thm:dk-fd-typeA} extends the evaluation-locus
+\item[\textbf{DK-2/3.}] \emph{Evaluation-generated core, all simple types ---
+  proved} by two independent mechanisms.
+  \textbf{(a)}~Thick generation (type~$A$):
+  Theorem~\ref{thm:dk-fd-typeA} extends the evaluation-locus
   equivalence to all finite-dimensional representations of
-  $Y(\mathfrak{sl}_N)$, resolving DK-2 and DK-3 simultaneously for
-  $\operatorname{Rep}_{\mathrm{fd}}$ in type~$A$.  The proof assembles
+  $Y(\mathfrak{sl}_N)$, assembling
   thick generation (Proposition~\ref{prop:dk2-thick-generation-typeA}),
   the monoidal thick extension
   (Lemma~\ref{lem:monoidal-thick-extension}), and the evaluation-level
   Ext exchange (Corollary~\ref{cor:yangian-ext-exchange}).
-  \emph{Category~$\mathcal{O}$ and other types --- conjectural.}
+  \textbf{(b)}~Sectorwise convergence (all types):
+  Corollary~\ref{cor:dk23-all-types} proves DK-2/3 unconditionally
+  for the evaluation-generated core at every simple~$\fg$ via the sectorwise spectral convergence
+  theorem (Theorem~\ref{thm:sectorwise-spectral-convergence}) and
+  $\infty$-categorical factorization descent
+  (Theorem~\ref{thm:h-level-factorization-kd}).
+  \emph{Category~$\mathcal{O}$ extension --- conjectural.}
   The full category-$\mathcal{O}$ extension
   (Conjecture~\ref{conj:full-derived-dk}) reduces to thick generation
   of $D^b(\mathcal{O}_{Y_\hbar})$ by evaluation modules
-  (Corollary~\ref{cor:dk-partial-conj}).  For other types,
-  the Drinfeld polynomial classification or its analogue is needed.
+  (Corollary~\ref{cor:dk-partial-conj}).
 \item[\textbf{DK-4.}] \emph{RTT-complete dg-shifted comparison
   --- conjectural.}  The dg-shifted Yangian must recover the finite RTT
   stages through a separated complete filtration
@@ -4843,15 +4936,12 @@ The frontier decomposes into a theorem ladder:
   quantum group should assemble into the full bridge of
   Conjecture~\ref{conj:full-dk-bridge}.
 \end{enumerate}
-The theorematic endpoint of the present book is DK-2/3 for
-finite-dimensional type~$A$
-(Theorem~\ref{thm:dk-fd-typeA}) and, via the sectorwise convergence
-theorem (\S\ref{sec:infty-cat-factorization-kd}), for the
-evaluation-generated core at all types
-(Corollary~\ref{cor:dk23-all-types}).  The key structural point is
-that the evaluation-locus theorem extends to the generated core
-by two independent mechanisms: thick generation (type~$A$) and
-factorization descent (all types).  The further
+The theorematic endpoint of the present book is DK-2/3 unconditionally
+for the evaluation-generated core at all simple types
+(Corollary~\ref{cor:dk23-all-types}), established
+by two independent mechanisms: thick generation in type~$A$
+(Theorem~\ref{thm:dk-fd-typeA}) and sectorwise factorization descent
+for all types (\S\ref{sec:infty-cat-factorization-kd}).  The further
 category-$\mathcal{O}$ extension and the dg-shifted Yangian
 comparison are genuine open problems.
 Remark~\ref{rem:yangian-dk23-inputs} records the exact
@@ -4872,12 +4962,13 @@ Koszul duality problem into five stages, with DK-0/1/2/3 proved
 entire ladder is a single $\infty$-categorical statement: Koszul
 duality for $\Eone$-algebras in the symmetric monoidal stable
 $\infty$-category of factorization coalgebras on~$\operatorname{Ran}(X)$.
-We make this precise and show that DK-2/3 extends to all types via
+We make this precise and show that DK-2/3 extends to the
+evaluation-generated core at all types via
 sectorwise convergence, bypassing thick generation, and that DK-4/5
 reduces to a formal deformation theory comparison within the same
 framework.
 
-\subsubsection*{Sectorwise convergence and DK-2/3 for all types}
+\subsubsection*{Sectorwise convergence and DK-2/3 for the evaluation-generated core at all types}
 
 \begin{theorem}[Sectorwise spectral convergence;
 \ClaimStatusProvedHere]
@@ -5003,7 +5094,11 @@ decompose both source and target:
 \end{align*}
 The counit decomposes as $\varepsilon^{\mathrm{fact}}
 = \varepsilon|_{U_1} \otimes \cdots \otimes \varepsilon|_{U_k}$,
-and by K\"unneth each factor is a quasi-isomorphism.
+and each factor $\varepsilon|_{U_j}$ is a quasi-isomorphism
+by hypothesis~\ref{h1:koszulness} on the single-point stratum;
+the K\"unneth formula for derived tensor products of chain
+complexes over a field preserves quasi-isomorphisms, so the
+tensor product is a quasi-isomorphism.
 
 On arbitrary opens (including overlapping configurations), the
 factorization algebra is determined by descent: a factorization
@@ -5048,6 +5143,18 @@ The braiding reversal $R \mapsto R^{-1}$ is
 Proposition~\ref{prop:yangian-module-koszul}(iii), extended to the
 generated core by functoriality.
 \end{proof}
+
+\begin{remark}[Scope of ``unconditional'']
+\label{rem:dk23-unconditional-scope}
+\index{Drinfeld--Kohno!unconditional!scope}
+The following corollary is ``unconditional'' in the sense that it
+does not require thick generation: the sectorwise convergence
+argument works for all simple types without identifying the
+generated core with $D^b(\operatorname{Rep}_{\mathrm{fd}})$.
+It does, however, depend on the classical Koszulness of the RTT
+Yangian (Proposition~\ref{prop:yangian-koszul}), whose proof
+uses Molev's PBW theorem \cite{molev-yangians} as external input.
+\end{remark}
 
 \begin{corollary}[DK-2/3 for all simple types via sectorwise
 convergence; \ClaimStatusProvedHere]
@@ -5345,7 +5452,7 @@ The conceptual content of each level:
 \end{enumerate}
 Each level adds one categorical layer of information.  The hierarchy
 is: DK-0 (proved) $\Rightarrow$ DK-1 (proved)
-$\Rightarrow$ DK-2/3 (proved) $\Rightarrow$ DK-4
+$\Rightarrow$ DK-2/3 (proved, evaluation-generated core) $\Rightarrow$ DK-4
 (conjectured) $\Rightarrow$ DK-5 (conjectured), with no horizontal
 skips.
 
@@ -5771,6 +5878,15 @@ $\tilde{f} \in (\cA_{\leq N+1}^!)_n$
 relations involving level-$N$ generators).
 Hence $(\cA_{\leq N+1}^!)_n \twoheadrightarrow (\cA_{\leq N}^!)_n$
 is surjective in every degree.
+The identification
+$(\mathfrak{g}_N)_p \cong (\cA_{\leq N}^!)_{p+1}$ is natural
+in~$N$: it arises from Lurie's formal moduli theorem (Part~(b))
+applied to each truncation, and the truncation-compatible maps of
+bar coalgebras induce compatible maps on derivation complexes.
+Thus the surjectivity of $(\cA_{\leq N+1}^!)_n \twoheadrightarrow
+(\cA_{\leq N}^!)_n$ directly yields
+$\mathfrak{g}_{N+1} \twoheadrightarrow \mathfrak{g}_N$ in every
+internal degree.
 
 Part~(d):
 At $N = 1$, $\cA_{\leq 1} \cong U(\mathfrak{gl}(V_0))$ (the
@@ -6642,7 +6758,17 @@ is a quasi-isomorphism, and $\Ydg_{\cA}$ defines the same completed
 M-level bar-cobar object as the standard RTT completion.  Thus the
 remaining Yangian H-level frontier is to construct a filtered
 dg-shifted or factorization model with theorematic finite RTT
-quotients, not another local RTT calculation.
+quotients.  This is the Yangian half of
+Conjecture~\ref{conj:master-infinite-generator}: once such an H-level
+target exists, the remaining coefficient comparison is the exact packet
+\[
+\mathsf{K}^{\mathrm{line}}_{a,b}(N)
+=\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)
+\qquad (0\le a,b\le N),
+\]
+detected on the boundary strip
+$\{\Delta_{a,0}(N)\}_{0\le a\le N}$, not another local RTT
+calculation.
 \end{corollary}
 
 \begin{proof}
