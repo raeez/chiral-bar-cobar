@@ -75,7 +75,7 @@ Else                                     → doctrinal propagation or prose
 1. **DK ladder beyond the proved core**: extension from the evaluation-generated core to the ordinary-derived/completed/coderived enlargement
    - Entry: concordance.tex rem:corrected-mc3-frontier
    - Targets: full category `O`, KL completion, compact-generator comparison
-   - KL note: the root-of-unity `q`-bar certificate is now an M-level fact, the first admissible `sl_2` packet is computed with `dim H^{1,2}_2 = dim H^{2,1}_3 = 3`, the whole first sparse `N=4` degree-1 packet vanishes with `H^{3,1}_1 = H^{2,2}_1 = H^{1,3}_1 = 0`, and the tractable degree-2 channels also vanish with `H^{3,1}_2 = H^{2,2}_2 = 0`; the remaining `H^{1,3}_2` channel is now compressed by a split-form sparse certificate to `rank(im d_q^3) >= 3903`, hence `dim H^{1,3}_2 <= 66`, with residual cokernel supported on left factors `F`, `E`, and `K-1`; do not spend cycles re-proving `d_q^N = 0` when the live gap is deciding whether one flavor or that paired packet carries the KL periodic shadow and then resolving this residual packet
+   - KL note: the root-of-unity `q`-bar certificate is now an M-level fact, the first admissible `sl_2` packet is computed with `dim H^{1,2}_2 = dim H^{2,1}_3 = 3`, the whole first sparse `N=4` degree-1 packet vanishes with `H^{3,1}_1 = H^{2,2}_1 = H^{1,3}_1 = 0`, and the tractable degree-2 channels also vanish with `H^{3,1}_2 = H^{2,2}_2 = 0`; the remaining `H^{1,3}_2` channel is now compressed by a split-form sparse certificate to `rank(im d_q^3) >= 3903`, hence `dim H^{1,3}_2 <= 66`, with residual cokernel supported on left factors `F`, `E`, and `K-1`, and even the full generator-prefix cube `{F,E,K-1}^3 x I^2` adds no new residual rank; do not spend cycles re-proving `d_q^N = 0` when the live gap is deciding whether one flavor or that paired packet carries the KL periodic shadow and then resolving this residual packet
 2. **Category O generation routes**
    - Entry: yangians.tex sec:cat-O-strategies
    - Track thick generation vs sectorwise finiteness hypotheses explicitly
@@ -90,7 +90,8 @@ Else                                     → doctrinal propagation or prose
    - Four higher-spin channels: `c_{334}`, `c_{444}`, `C_{3,4;3;0,4}`, `C_{3,4;4;0,3}`
    - Two theorematic Virasoro-target identities: `C^{res}_{4,4;2;0,6}=2`, `C^{res}_{3,4;2;0,5}=0`
    - Promotion `\mathcal I_4 \to \mathcal I_N` is linearized by the incremental packets `\mathcal J_{N+1}` and their reduced forms `\mathcal J_{N+1}^{\mathrm{red}}`
-   - The first next reduced stage is the explicit `11`-entry packet `\mathcal J_5^{\mathrm{red}}`
+   - `prop:winfty-stage-growth-virasoro-target-contraction` gives the uniform target-`2` contraction of the reduced packets under the normalized residue package
+   - The first next reduced stage is the explicit `11`-entry packet `\mathcal J_5^{\mathrm{red}}`, with `cor:winfty-stage5-residue-eight-channel` as the first concrete specialization to `8` higher-spin channels
    - The further stage-`4` contraction to four channels is conditional on `conj:winfty-stage4-ward-inheritance`, whose open content is the visible pairing package isolated in `prop:winfty-stage4-visible-pairing-gap`
 3. **Finite-detection closure**
    - W-side packet: `I_N`

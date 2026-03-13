@@ -277,7 +277,8 @@ sparse `d_q^3 : B_5 -> B_2` certificate already gives
 `rank(im d_q^3) >= 3903`, hence `dim H^{1,3}_2 <= 66`, and the residual
 cokernel is supported only on the left factors `F`, `E`, and `K-1`.
 So the live gap is now this residual `66`-dimensional packet, not the
-whole `B_5 -> B_2` map.
+whole `B_5 -> B_2` map. Even the full generator-prefix cube
+`{F,E,K-1}^3 x I^2` adds no new residual rank beyond that certificate.
 
 **Key reframing (Session ~125)**: Kapranov's N-complex framework (1996) provides the right
 replacement. At q = e^{2πi/N}, the bar differential satisfies d^N = 0 (not d² = curvature).
@@ -315,6 +316,9 @@ certificate already gives `rank(im d_q^3) >= 3903`, hence
 `dim H^{1,3}_2 <= 66`. The next compute target is therefore the
 residual `66`-dimensional `H^{1,3}_2` packet supported on left factors
 `F`, `E`, and `K-1`, rather than the full `B_5 -> B_2` continuation.
+The whole generator-prefix cube `{F,E,K-1}^3 x I^2` already lies inside
+the existing seed span, so the remaining packet is genuinely beyond the
+first generator-level probe.
 See NEW_MACHINERY.md #M2.
 
 ### Seeds in manuscript
@@ -697,12 +701,15 @@ longer a black box: Proposition
 `prop:winfty-ds-stage-growth-packet` linearizes it as repeated closure
 of the incremental packets `\mathcal{J}_{M+1}`, and Corollary
 `cor:winfty-ds-stage-growth-top-parity` reduces those further to the
-top-pole/parity packets `\mathcal{J}_{M+1}^{\mathrm{red}}`.  The first
-next reduced stage is already explicit:
+top-pole/parity packets `\mathcal{J}_{M+1}^{\mathrm{red}}`.
+`prop:winfty-stage-growth-virasoro-target-contraction` then gives the
+uniform reduced-packet contraction under the normalized residue
+package by removing exactly the target-`2` Virasoro channels.  The
+first next reduced stage is already explicit:
 `cor:winfty-ds-stage5-reduced-packet` identifies
 `\mathcal{J}_5^{\mathrm{red}}` as an `11`-entry packet, and
-`cor:winfty-stage5-residue-eight-channel` contracts it under the
-normalized residue package to `8` higher-spin channels.  The exact
+`cor:winfty-stage5-residue-eight-channel` is the first concrete
+specialization, contracting it to `8` higher-spin channels.  The exact
 missing lemma for making the stage-`4` four-channel contraction
 unconditional is now named explicitly as
 `conj:winfty-stage4-ward-inheritance`, whose open content is the
