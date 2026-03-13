@@ -140,7 +140,7 @@ toroidal/elliptic extension (toroidal_elliptic.tex).
 | Programme | Role in modular Koszul programme |
 |-----------|--------------------------------|
 | I (Langlands) | Critical-level bar = derived opers; the proved MC2 hierarchy is expected to degenerate there |
-| II (KL) | Admissible-level bar = quantum group (periodic/CDG shadow feeding the modular characteristic hierarchy) |
+| II (KL) | Admissible-level bar should recover the semisimplified KL target; the outer non-semisimple/completed lift remains MC3 frontier (periodic/CDG shadow feeding the modular characteristic hierarchy) |
 | III (Fusion) | Monoidality of bar-cobar should act on the modular characteristic hierarchy |
 | IV (E_n) | Higher-dimensional generalization (Arnold -> Totaro -> Fay) |
 | V (Vassiliev) | Feynman transform = topological shadow of the characteristic hierarchy |

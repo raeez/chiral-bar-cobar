@@ -1,3 +1,8 @@
+> **Historical prompt note (March 13, 2026).**
+> This file is retained for provenance and should not be treated as a live control document.
+> Active doctrine is `notes/SESSION_PROMPT_v23.md` together with `notes/autonomous_state.md`, `notes/VISION.md`, `notes/PROGRAMMES.md`, and `chapters/connections/concordance.tex`.
+> Current constitutional status: MC1/MC2 resolved on the printed loci; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal.
+
 # SESSION PROMPT v15 — RESCULPTING
 
 ## Identity
@@ -115,7 +120,7 @@ Execute the **immediate resculpting** of the monograph's proof architecture. The
    - Every `\ClaimStatusProvedHere` item must have a complete proof and not contain conjectural ingredients
    - Every definition containing conjectural data must not be tagged ProvedHere
    - Every example proposition must verify hypotheses, not conclusions
-2. Fix any remaining `Rep(U_q(g))` → `C(U_q(g))` in KL contexts (propagate from chiral_modules.tex canonical version)
+2. Fix any remaining KL target drift so `C(U_q(g))` is the printed endpoint and any non-semisimple lift is fenced separately
 3. Fix any remaining "for any chiral algebra" bar-cobar statements (from Strike 3)
 4. Run fresh census and update CLAUDE.md
 

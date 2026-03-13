@@ -1,8 +1,13 @@
 # Session State — Chiral Bar-Cobar Monograph
-# Last updated: Mar 12, 2026 (doctrinal synchronization + clean build)
+# Last updated: Mar 13, 2026 (prompt/state audit + doctrinal synchronization)
+
+> **Live state note (March 13, 2026).**
+> This is an active state file. Historical session prompts and audit
+> prompts in `notes/` are provenance records unless they are explicitly
+> named by the current control layer.
 
 ## Quick State
-- **Session prompt**: `notes/SESSION_PROMPT_v25.md`
+- **Session prompt**: `notes/SESSION_PROMPT_v23.md` (live control prompt)
 - **Census**: Always grep fresh. Baseline Mar 10: PH 923, PE 337, CJ 153, HE 29, Open 1 = 1443 total
 - **Build**: 1664pp, 3-pass clean (0 undef citations, 0 undef refs, 0 rerun, 0 overfull)
 - **Source**: ~104K lines across 55+ .tex files

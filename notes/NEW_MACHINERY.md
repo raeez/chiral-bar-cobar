@@ -261,11 +261,12 @@ unknown quantity. Need to compute H^2(sl2; S^*(sl2[t^-1])) explicitly.
   `g>=4` in these shifted arity-`<=3` lanes.
   These normalization/scaling/root-signature/polynomial/CE/support checks are now
   bundled as one executable shifted one-channel criterion package.
-- The theorem surface now packages the live MC2 frontier as a reduction
-  principle rather than an undifferentiated universality slogan: the
-  remaining work is exactly the intrinsic cyclic `\Defcyc(\cA)` model,
-  the geometric completed tensor / clutching realization, and the
-  one-channel genus-by-genus normalization in the simple-Lie case.
+- The theorem surface now packages the former MC2 reduction as a
+  resolved theorem package rather than a live frontier: the intrinsic
+  cyclic `\Defcyc(\cA)` model, the geometric completed tensor /
+  clutching realization, and the one-channel normalization input are
+  assembled by the printed `MC2` theorems. The live frontier now begins
+  with MC3 and MC4, with MC5 downstream.
 - The theorem surface now also hardens that last package into a named
   criterion chain: first show via joint clutching restrictions and
   normalized trace that the surviving obstruction lies in the

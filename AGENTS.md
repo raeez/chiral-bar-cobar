@@ -228,8 +228,10 @@ These are the non-negotiable current facts inherited from the
   finite-type PBW story, and the distinct non-principal orbit frontier
   now decomposes into three exact packets: dual-orbit input,
   orbit-indexed level shift, and paired DS seed transport/globalization.
-- The principal open foundational target is MC2: cyclic deformation
-  theory and the universal `Theta_A`.
+- MC2 is resolved on the printed simple-Lie-symmetry locus: cyclic
+  deformation theory and the universal `Theta_A` belong to the proved
+  core there. The live frontier now begins with MC3 and MC4, with MC5
+  downstream.
 - Periodicity remains the weakest status flank and must be stated with
   extra caution.
 

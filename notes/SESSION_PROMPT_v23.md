@@ -3,6 +3,11 @@
 # Supersedes: v21 (unified proof forge). References CLAUDE.md for invariants.
 # Date: March 2026
 
+> **Active doctrine note (March 13, 2026).**
+> This is the live execution prompt. Older session/audit prompts in
+> `notes/` are historical provenance documents unless they are
+> explicitly promoted by the current control layer.
+
 ---
 
 ## PERMANENT MANDATE

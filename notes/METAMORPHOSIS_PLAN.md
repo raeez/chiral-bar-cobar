@@ -306,9 +306,9 @@ Full new chapter (Programmes I + II):
   - Construction of the periodic structure B̄^{n+2q} ≅ B̄^n
   - The passage to semisimplified tilting category
 - §5: "The Kazhdan-Lusztig equivalence from bar-cobar" — the full roadmap:
-  - State conj:kl-from-bar-cobar with all hypotheses
+  - State the KL-I/II/III package (`conj:kl-periodic-cdg`, `conj:kl-coderived`, `conj:kl-braided`) with all hypotheses
   - The 5 proved ingredients (list with theorem references)
-  - The 1 remaining ingredient (periodic CDG at roots of unity)
+  - The single remaining ingredient for the semisimplified KL target (periodic CDG at roots of unity)
   - Why this would be a geometric proof of KL
 - §6: "Connections to geometric Langlands" — the derived Satake:
   - Bar-cobar at critical level → opers → Hecke eigensheaves

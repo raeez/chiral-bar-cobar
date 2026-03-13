@@ -1,3 +1,8 @@
+> **Historical prompt note (March 13, 2026).**
+> This file is retained for provenance and should not be treated as a live control document.
+> Active doctrine is `notes/SESSION_PROMPT_v23.md` together with `notes/autonomous_state.md`, `notes/VISION.md`, `notes/PROGRAMMES.md`, and `chapters/connections/concordance.tex`.
+> Current constitutional status: MC1/MC2 resolved on the printed loci; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal.
+
 # SESSION PROMPT v9 — DEEPAUDIT RESPONSE ENGINE
 # For: Claude Opus 4.6, Code Environment, Extra-High Reasoning Mode
 # Date: March 2026

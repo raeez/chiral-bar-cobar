@@ -223,7 +223,12 @@ identifying H^n(B̄(ĝ_{-h^∨})) with Ω^n(Op_{ǧ}(D)) for n ≥ 2 via the PBW 
 
 ### Vision
 At admissible level k = -h^v + p/q, the bar complex acquires periodic CDG structure,
-and bar-cobar duality gives a geometric proof of O_k^int(g-hat) = Rep^fd(U_q(g)).
+and bar-cobar duality should give a geometric proof of the
+semisimplified Kazhdan--Lusztig target
+$\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})
+\simeq \mathcal{C}(U_q(\mathfrak{g}))$.  Any non-semisimple lift to
+$\mathrm{Rep}^{\mathrm{fd}}(U_q(\mathfrak{g}))$ or larger
+completed/coderived enlargement is a separate outer MC3 problem.
 
 ### What is proved (5 of 6 ingredients)
 
@@ -239,11 +244,16 @@ and bar-cobar duality gives a geometric proof of O_k^int(g-hat) = Rep^fd(U_q(g))
 
 | Conjecture | Label | Content | Scale |
 |-----------|-------|---------|-------|
-| KL from bar-cobar | `conj:kl-from-bar-cobar` | Periodic CDG structure at roots of unity | 2-3 years |
+| KL semisimplified target from bar-cobar | `conj:kl-periodic-cdg` -> `conj:kl-coderived` -> `conj:kl-braided` | Periodic CDG, coderived lift to the semisimplified target, braided upgrade | 2-3 years |
 
 ### Gap analysis
-The hardest gap is the **periodic CDG structure**. At admissible k, q = e^{pi*i/(k+h^v)}
-is a root of unity. The bar complex should satisfy B-bar^{n+2q} = B-bar^n as CDG modules.
+For the semisimplified KL target, the hardest gap is the
+**periodic CDG structure**. At admissible k, q = e^{pi*i/(k+h^v)}
+is a root of unity. The bar complex should satisfy
+B-bar^{n+2q} = B-bar^n as CDG modules. The passage from this
+periodic bar object to $\mathcal{C}(U_q(\mathfrak{g}))$ is the
+theorematic KL step; any lift beyond the semisimplified target is
+additional outer MC3 structure.
 
 **Key reframing (Session ~125)**: Kapranov's N-complex framework (1996) provides the right
 replacement. At q = e^{2πi/N}, the bar differential satisfies d^N = 0 (not d² = curvature).
@@ -267,7 +277,8 @@ q = e^{pi*i*2} = 1, degenerate) and k = -2 + 2/3 (q = e^{pi*i*3/2}, next simples
 Look for periodicity in the cohomology. See NEW_MACHINERY.md #M2.
 
 ### Seeds in manuscript
-- conj:kl-from-bar-cobar (kac_moody_framework.tex:2616-2645): full conjecture statement
+- conj:kl-periodic-cdg / conj:kl-coderived / conj:kl-braided
+  (kac_moody_framework.tex:2692-2744): staged KL conjecture package
 - rem:kl-evidence (kac_moody_framework.tex:2647-2684): 5 proved ingredients, 3 gaps
 - rem:n-complex-framework (kac_moody_framework.tex): Kapranov96 + KQ20 N-complex framework
 - cor:bar-admissible-finiteness: the finite-dimensionality gap is already closed

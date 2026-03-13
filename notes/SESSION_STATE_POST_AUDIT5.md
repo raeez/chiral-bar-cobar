@@ -1,3 +1,8 @@
+> **Historical state note (March 13, 2026).**
+> This file is retained for provenance and should not be treated as a live state/control document.
+> The active state surface is `notes/autonomous_state.md`, read under the current control layer.
+> Current constitutional status: MC1/MC2 resolved on the printed loci; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal.
+
 # Session State — Post Adversarial Audit 5
 # For: Claude Opus 4.6, Code Environment, Extended Reasoning
 # Date: March 6, 2026

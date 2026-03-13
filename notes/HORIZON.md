@@ -25,7 +25,7 @@ current periodicity-containment doctrine: the lcm/profile shadow and
 stated quantum inputs are theorematic, while modular bar-cohomology
 periodicity remains conjectural.
 Session 116: Partial results extracted from PROGRAM-scale conjectures. D1 (anomaly): split into thm:anomaly-koszul (PH, κ-additivity proved) + conj:anomaly-physical (CJ, physics interpretation). D4 (NC Hodge): split into def:chiral-hodge-numbers + prop:nc-hodge-symmetry (PH) + conj:nc-hodge (CJ, twistor only). C1 (oper): split into thm:oper-bar-h0 + prop:oper-bar-h1 (PH, H⁰ and H¹ proved) + conj:oper-bar (CJ, derived identification). C3 (E_n): added prop:en-n1-recovery (PH). C10 (Vassiliev): added prop:vassiliev-genus0 (PH, genus-0 weight systems). B22 (KL): updated evidence — finite-dimensionality gap already closed by cor:bar-admissible-finiteness. Census: PH 681, PE 313, CJ 99, H 18 = 1111 total. Build: 1197 pages (2-pass), 0 multiply-defined.
-Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-from-bar-cobar + conj:oper-bar in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex.
+Session 114: ALL remaining HORIZON items documented as precise conjectures with scope remarks. B22 (KL from bar-cobar): conj:kl-periodic-cdg + conj:kl-coderived + conj:kl-braided, together with rem:kl-evidence, in kac_moody_framework.tex. B23 (fusion preservation): conj:fusion-bar-cobar in chiral_modules.tex. C1 (geometric Langlands): conj:oper-bar in kac_moody_framework.tex. C3/C9 (higher-dim E_n): conj:en-koszul-duality in concordance.tex. C10/D5 (Vassiliev): conj:vassiliev-bar in concordance.tex. D1-D4: conj:anomaly-koszul, conj:ads-cft-bar, conj:3d-mirror, conj:nc-hodge in concordance.tex.
 Session 113: Yangian bar cohomology resolved — conj:yangian-bar-gf establishes H^n=3^n+1 (rational GF). Künneth decomposition (rem:yangian-gl2-kunneth) explains H²=10 via ĝl₂=ŝl₂×Ĥ. Master Table updated with conjectured Y(sl₂) values through deg 6. Comprehensive conjecture survey (87 occurrences, 54 unique items). W₃ extended test suite (78 tests). Census: PH 660, PE 314, CJ 83, H 18. Tests: 859 passing.
 Session 112: C4 (chain-level modular functor), C5 (genera duality), C6 (tautological beyond λ), C7 (genus-graded modules). Lambda_fp formula fixed in compute/lib/utils.py. 2 CJ→H upgrades in higher_genus.tex. Census: PH 660, PE 314, CJ 83, H 18. Tests: 849 passing.
 Session 109: B15 confirmed already in manuscript (configuration_spaces.tex). B17 enhanced with rem:dnp-mc-twisting (MC=twisting morphism). B19 theorem statement added (thm:full-derived-module-equiv). New additions: Virasoro Verma Koszul duality (sec:virasoro-verma-koszul in chiral_modules.tex), Virasoro genus-2 bar (thm:virasoro-genus2-bar), W₃ genus-2 bar (prop:w3-genus2-curvature). 10 new genus-2 tests (728 total).
@@ -227,8 +227,8 @@ Require combining manuscript machinery with theorems from reference library.
 - **Statement**: BGG resolution for evaluation modules via CE complex. Ext exchange for Yangian modules under Koszul duality. Conditional extension to full Category O noted.
 
 ### B22. KL equivalence from bar-cobar — DOCUMENTED (Session 114)
-- **Written as**: conj:kl-from-bar-cobar + rem:kl-evidence in kac_moody_framework.tex
-- **Statement**: At admissible k = -h∨+p/q, periodic CDG structure of B̄(ĝ_k) matches representation category of U_q(g). Configuration space integrals give geometric proof of KL.
+- **Written as**: conj:kl-periodic-cdg + conj:kl-coderived + conj:kl-braided, together with rem:kl-evidence, in kac_moody_framework.tex
+- **Statement**: At admissible k = -h∨+p/q, periodic CDG structure of B̄(ĝ_k) should recover the semisimplified Kazhdan--Lusztig target $\mathcal{C}(U_q(g))$. Any non-semisimple or completed/coderived lift beyond that target is a separate outer MC3 extension.
 - **Status**: Precise conjecture with full scope remark. Evidence catalogued (5 proved ingredients, 3 identified gaps).
 - **Scale**: PROGRAM (2-3 years)
 
@@ -255,7 +255,7 @@ Require combining manuscript machinery with theorems from reference library.
 ### C2. KL equivalence from bar-cobar
 - **Approach**: At admissible k = −h∨+p/q, bar curvature ~ p/q. At roots of unity (p/q rational),
   the bar complex of ĝ_k should have same homology as bar complex of U_q(g).
-- **Known problem**: KL93 equivalence O_k(ĝ) ≃ Rep^fd(U_q(g))
+- **Known problem**: KL93 identifies the semisimplified tilting target $\mathcal{C}(U_q(g))$; any lift to $\mathrm{Rep}^{\mathrm{fd}}(U_q(g))$ is additional structure.
 - **New angle**: Configuration space proof via periodic curvature
 - **BLOCKER**: Root-of-unity bar analysis not developed
 - **Scale**: PAPER-PROGRAM (2-3 years)
@@ -339,7 +339,7 @@ Level A: 20/20 COMPLETED
 
 Level B: 24/24 COMPLETED or DOCUMENTED
   B1-B21, B24: COMPLETED (written as theorems/propositions/remarks)
-  B22: DOCUMENTED (conj:kl-from-bar-cobar) — PROGRAM scale
+  B22: DOCUMENTED (conj:kl-periodic-cdg / conj:kl-coderived / conj:kl-braided) — PROGRAM scale
   B23: DOCUMENTED (conj:fusion-bar-cobar) — PROGRAM scale
 
 Level C: 10/10 COMPLETED, PARTIALLY PROVED, or MERGED

@@ -1,3 +1,8 @@
+> **Historical prompt note (March 13, 2026).**
+> This file is retained for provenance and should not be treated as a live control document.
+> Active doctrine is `notes/SESSION_PROMPT_v23.md` together with `notes/autonomous_state.md`, `notes/VISION.md`, `notes/PROGRAMMES.md`, and `chapters/connections/concordance.tex`.
+> Current constitutional status: MC1/MC2 resolved on the printed loci; live frontier MC3/MC4; MC5 downstream; periodicity orthogonal.
+
 # SESSION PROMPT v14 — Structural Rearchitecting
 
 ## Identity
@@ -30,7 +35,7 @@ The book has two strata that read as one:
 
 The introduction (lines 140-163) already distinguishes these correctly. But:
 - Master tables in `examples_summary.tex` mix proved and conjectural dualities in the same rows
-- `kac_moody_framework.tex` uses `Rep(U_q(g))` where the correct KL target is `C(U_q(g))` (semisimplified tilting quotient) — this was fixed in `chiral_modules.tex` but not propagated
+- `kac_moody_framework.tex` used `Rep(U_q(g))` where the correct KL target is `C(U_q(g))` (semisimplified tilting quotient); any non-semisimple lift beyond that target must be fenced separately
 - The concordance chapter's horizon section packages chain-level proved results alongside full categorical conjectures without visual/structural separation
 
 ### Disease 3: Cohomological where homotopy is available
