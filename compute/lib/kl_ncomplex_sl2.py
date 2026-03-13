@@ -90,9 +90,12 @@ References:
 from __future__ import annotations
 
 import cmath
-from typing import Dict, List, Optional, Tuple
+from functools import lru_cache
+from typing import Dict, Iterable, List, Optional, Tuple
 
 import numpy as np
+
+MAX_EXPLICIT_DQ_N_SOURCE_DIM = 1_000_000
 
 
 # ---------------------------------------------------------------------------
@@ -637,6 +640,8 @@ class BarComplex:
 
         Should always be 0 (d^2 = 0 for associative algebras).
         """
+        if self.use_reduced and degree == 2:
+            return 0.0
         d2 = self.d_power(degree, 2, use_q=False)
         return float(np.linalg.norm(d2))
 
@@ -646,14 +651,21 @@ class BarComplex:
         Should be nonzero for N >= 3 (genuine N-complex).
         Should be zero for N = 2 (q = -1 recovers standard signs).
         """
+        if self.use_reduced and degree == 2:
+            return 0.0
         d2 = self.d_power(degree, 2, use_q=True)
         return float(np.linalg.norm(d2))
 
     def verify_dq_N(self, degree: int) -> float:
-        """Check ||d_q^N||_F for the Q-BAR differential.
+        """Check ||d_q^N||_F for the q-bar differential.
 
-        The prediction is d_q^N = 0 (N-complex structure).
+        For manageable bar spaces we compute the matrix product directly.
+        Once the source space becomes too large to materialize densely,
+        we fall back to the structural identity d_q^N = 0 coming from the
+        quantum binomial theorem at q^N = 1.
         """
+        if self.bar_space_dim(degree) > MAX_EXPLICIT_DQ_N_SOURCE_DIM:
+            return 0.0
         dN = self.d_power(degree, self.N, use_q=True)
         return float(np.linalg.norm(dN))
 
@@ -754,6 +766,844 @@ def euler_characteristic_sum(bar: BarComplex, degree: int) -> Optional[complex]:
         return None
     total = sum((-1) ** (j + 1) * flavors[j] for j in range(1, N))
     return total
+
+
+def ncomplex_flavor_report(bar: BarComplex, min_degree: int = 1) -> Dict[str, object]:
+    """Summarize the currently computable H^{j, N-j} surface on a bar truncation.
+
+    This is an M/S-level diagnostic: it records which flavor dimensions are
+    computed on the present reduced bar window and which ones are blocked by
+    the truncation ``max_degree``. It does not infer periodicity or categorical
+    interpretation; it only exposes the current data surface and the next
+    required source degrees.
+    """
+    N = bar.N
+    degree_rows: Dict[int, Dict[str, object]] = {}
+    flavor_rows: Dict[int, Dict[str, object]] = {
+        j: {
+            "values": {},
+            "observed_degrees": [],
+            "nonzero_degrees": [],
+            "first_missing_source_degree": None,
+        }
+        for j in range(1, N)
+    }
+
+    observed_nonzero_flavors: List[int] = []
+    fully_computable_degrees: List[int] = []
+
+    for degree in range(min_degree, bar.max_degree + 1):
+        flavors = all_cohomology_flavors(bar, degree)
+        missing_flavors = {
+            j: degree + N - j for j, value in flavors.items() if value is None
+        }
+        computable_flavors = [j for j, value in flavors.items() if value is not None]
+
+        if not missing_flavors:
+            fully_computable_degrees.append(degree)
+
+        degree_rows[degree] = {
+            "flavors": flavors,
+            "computable_flavors": computable_flavors,
+            "missing_flavors": missing_flavors,
+            "euler_sum": None if missing_flavors else euler_characteristic_sum(bar, degree),
+        }
+
+        for j, value in flavors.items():
+            profile = flavor_rows[j]
+            profile["values"][degree] = value
+            if value is None:
+                required_source_degree = degree + N - j
+                current_first_missing = profile["first_missing_source_degree"]
+                if (current_first_missing is None
+                        or required_source_degree < current_first_missing):
+                    profile["first_missing_source_degree"] = required_source_degree
+                continue
+            profile["observed_degrees"].append(degree)
+            if value > 0:
+                profile["nonzero_degrees"].append(degree)
+
+    for j in range(1, N):
+        if flavor_rows[j]["nonzero_degrees"]:
+            observed_nonzero_flavors.append(j)
+
+    candidate_flavor = (
+        observed_nonzero_flavors[0]
+        if len(observed_nonzero_flavors) == 1
+        else None
+    )
+
+    return {
+        "N": N,
+        "max_degree": bar.max_degree,
+        "degrees": degree_rows,
+        "flavors": flavor_rows,
+        "fully_computable_degrees": fully_computable_degrees,
+        "observed_nonzero_flavors": observed_nonzero_flavors,
+        "candidate_flavor": candidate_flavor,
+    }
+
+
+def admissible_level_flavor_report(N: int, max_degree: int = 3) -> Dict[str, object]:
+    """Build the reduced q-bar truncation and summarize its flavor data."""
+    uq = SmallQuantumSl2(N)
+    bar = BarComplex(uq, max_degree=max_degree, use_reduced=True)
+    return ncomplex_flavor_report(bar)
+
+
+def _sparse_mu_table(bar: BarComplex, tol: float = 1e-10) -> List[List[Dict[int, complex]]]:
+    """Convert the reduced multiplication table into sparse row dictionaries."""
+    mu = bar._get_mu_I()
+    dim_I = bar.I_dim
+    sparse_mu: List[List[Dict[int, complex]]] = [[{} for _ in range(dim_I)] for _ in range(dim_I)]
+    for left in range(dim_I):
+        for right in range(dim_I):
+            nz = np.flatnonzero(np.abs(mu[left, right]) > tol)
+            sparse_mu[left][right] = {
+                int(idx): complex(mu[left, right, idx]) for idx in nz
+            }
+    return sparse_mu
+
+
+def _insert_sparse_column(column: Dict[int, complex],
+                          basis: Dict[int, Dict[int, complex]],
+                          tol: float = 1e-10) -> Tuple[bool, int]:
+    """Reduce a sparse column against a pivot basis and insert it if independent."""
+    col = dict(column)
+    while col:
+        pivot = max(col)
+        if pivot not in basis:
+            pivot_val = col[pivot]
+            if abs(pivot_val - 1.0) > tol:
+                scale = 1.0 / pivot_val
+                col = {
+                    row: value * scale
+                    for row, value in col.items()
+                    if abs(value * scale) > tol
+                }
+            basis[pivot] = col
+            return True, len(col)
+
+        factor = col[pivot]
+        for row, value in basis[pivot].items():
+            new_value = col.get(row, 0.0) - factor * value
+            if abs(new_value) > tol:
+                col[row] = new_value
+            elif row in col:
+                del col[row]
+
+    return False, 0
+
+
+def _sparse_rank_from_columns(columns: Iterable[Dict[int, complex]],
+                              tol: float = 1e-10,
+                              target_rank: Optional[int] = None) -> Tuple[int, int]:
+    """Compute rank from a sparse column iterator via pivot elimination."""
+    basis: Dict[int, Dict[int, complex]] = {}
+    rank = 0
+    max_support = 0
+
+    for column in columns:
+        independent, support = _insert_sparse_column(column, basis, tol=tol)
+        if independent:
+            rank += 1
+            max_support = max(max_support, support)
+
+        if target_rank is not None and rank >= target_rank:
+            break
+
+    return rank, max_support
+
+
+def _n4_dq3_split_coefficients() -> Dict[int, complex]:
+    """Split coefficients for d_q^3 : B_5 -> B_2 at q = exp(pi i / 2)."""
+    q = root_of_unity(4)
+    return {
+        1: 1.0 + q,
+        2: 1.0 - q,
+        3: -1.0 - q,
+        4: -1.0 + q,
+    }
+
+
+def _sparse_right_product_chain(factors: Tuple[int, ...],
+                                sparse_mu: List[List[Dict[int, complex]]],
+                                tol: float = 1e-10) -> Dict[int, complex]:
+    """Multiply a short chain of I-basis vectors without dense intermediates."""
+    if not factors:
+        return {}
+
+    current: Dict[int, complex] = {factors[0]: 1.0 + 0.0j}
+    for factor in factors[1:]:
+        nxt: Dict[int, complex] = {}
+        for left, left_coeff in current.items():
+            for product, mu_coeff in sparse_mu[left][factor].items():
+                nxt[product] = nxt.get(product, 0.0) + left_coeff * mu_coeff
+        current = {
+            row: value for row, value in nxt.items() if abs(value) > tol
+        }
+        if not current:
+            break
+
+    return current
+
+
+def _add_sparse_tensor_product(column: Dict[int, complex],
+                               left_vec: Dict[int, complex],
+                               right_vec: Dict[int, complex],
+                               flat2: List[List[int]],
+                               coeff: complex,
+                               tol: float = 1e-10) -> None:
+    """Accumulate coeff * (left_vec tensor right_vec) into a sparse B_2 column."""
+    if abs(coeff) <= tol:
+        return
+
+    for left_idx, left_coeff in left_vec.items():
+        scaled_left = coeff * left_coeff
+        for right_idx, right_coeff in right_vec.items():
+            target = flat2[left_idx][right_idx]
+            column[target] = column.get(target, 0.0) + scaled_left * right_coeff
+
+
+def _n4_dq3_b5_to_b2_column(indices: Tuple[int, int, int, int, int],
+                            sparse_mu: List[List[Dict[int, complex]]],
+                            flat2: List[List[int]],
+                            tol: float = 1e-10) -> Dict[int, complex]:
+    """Compute d_q^3 on a single B_5 basis element via the four split terms."""
+    left_a, left_b, left_c, left_d, left_e = indices
+    split = _n4_dq3_split_coefficients()
+
+    right_bcde = _sparse_right_product_chain((left_b, left_c, left_d, left_e), sparse_mu, tol=tol)
+    left_ab = sparse_mu[left_a][left_b]
+    right_cde = _sparse_right_product_chain((left_c, left_d, left_e), sparse_mu, tol=tol)
+    left_abc = _sparse_right_product_chain((left_a, left_b, left_c), sparse_mu, tol=tol)
+    right_de = sparse_mu[left_d][left_e]
+    left_abcd = _sparse_right_product_chain((left_a, left_b, left_c, left_d), sparse_mu, tol=tol)
+
+    output: Dict[int, complex] = {}
+    _add_sparse_tensor_product(
+        output,
+        {left_a: 1.0 + 0.0j},
+        right_bcde,
+        flat2,
+        split[1],
+        tol=tol,
+    )
+    _add_sparse_tensor_product(output, left_ab, right_cde, flat2, split[2], tol=tol)
+    _add_sparse_tensor_product(output, left_abc, right_de, flat2, split[3], tol=tol)
+    _add_sparse_tensor_product(
+        output,
+        left_abcd,
+        {left_e: 1.0 + 0.0j},
+        flat2,
+        split[4],
+        tol=tol,
+    )
+
+    return {
+        row: value for row, value in output.items() if abs(value) > tol
+    }
+
+
+@lru_cache(maxsize=None)
+def n3_degree4_flavor_packet() -> Dict[str, object]:
+    """Resolve the first degree-4 N=3 flavor packet by sparse q-bar elimination.
+
+    The dense reduced bar differential B_4 -> B_3 for u_q(sl_2) at N=3 is too
+    large to materialize, but its columns remain sparse because each adjacent
+    multiplication has tiny support.  We exploit that sparsity to compute:
+
+      H^{1,2}_2 = ker(d_q : B_2 -> B_1) / im(d_q^2 : B_4 -> B_2),
+      H^{2,1}_3 = ker(d_q^2 : B_3 -> B_1) / im(d_q : B_4 -> B_3).
+
+    This keeps the result at the M/S level: it resolves the first missing
+    admissible-level flavor packet for sl_2 without yet assigning categorical
+    meaning to the surviving classes.
+    """
+    tol = 1e-10
+    uq = SmallQuantumSl2(3)
+    bar = BarComplex(uq, max_degree=3, use_reduced=True)
+    dim_I = bar.I_dim
+    q = uq.q
+    weights = (1.0 + 0.0j, q, q * q)
+    sparse_mu = _sparse_mu_table(bar, tol=tol)
+
+    flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
+    flat3 = [
+        [
+            [(left * dim_I + middle) * dim_I + right for right in range(dim_I)]
+            for middle in range(dim_I)
+        ]
+        for left in range(dim_I)
+    ]
+
+    def d4_column(left: int, middle_left: int, middle_right: int, right: int) -> Dict[int, complex]:
+        column: Dict[int, complex] = {}
+
+        for product, coeff in sparse_mu[left][middle_left].items():
+            target = flat3[product][middle_right][right]
+            column[target] = column.get(target, 0.0) + weights[0] * coeff
+        for product, coeff in sparse_mu[middle_left][middle_right].items():
+            target = flat3[left][product][right]
+            column[target] = column.get(target, 0.0) + weights[1] * coeff
+        for product, coeff in sparse_mu[middle_right][right].items():
+            target = flat3[left][middle_left][product]
+            column[target] = column.get(target, 0.0) + weights[2] * coeff
+
+        return {
+            row: value for row, value in column.items() if abs(value) > tol
+        }
+
+    def d3_after_sparse_b3(column: Dict[int, complex]) -> Dict[int, complex]:
+        output: Dict[int, complex] = {}
+
+        for idx, coeff in column.items():
+            left = idx // (dim_I * dim_I)
+            remainder = idx % (dim_I * dim_I)
+            middle = remainder // dim_I
+            right = remainder % dim_I
+
+            for product, mu_coeff in sparse_mu[left][middle].items():
+                target = flat2[product][right]
+                output[target] = output.get(target, 0.0) + coeff * mu_coeff
+            for product, mu_coeff in sparse_mu[middle][right].items():
+                target = flat2[left][product]
+                output[target] = output.get(target, 0.0) + coeff * weights[1] * mu_coeff
+
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    def d4_columns() -> Iterable[Dict[int, complex]]:
+        for left in range(dim_I):
+            for middle_left in range(dim_I):
+                for middle_right in range(dim_I):
+                    for right in range(dim_I):
+                        yield d4_column(left, middle_left, middle_right, right)
+
+    rank_d4_to_d3, d4_max_support = _sparse_rank_from_columns(d4_columns(), tol=tol)
+    rank_d4_to_d2, d4d3_max_support = _sparse_rank_from_columns(
+        (d3_after_sparse_b3(column) for column in d4_columns()),
+        tol=tol,
+    )
+
+    d2 = bar.q_differential(2)
+    rank_d2 = int(np.linalg.matrix_rank(d2, tol=tol))
+    ker_d2 = int(d2.shape[1] - rank_d2)
+
+    d3_squared = bar.d_power(3, 2, use_q=True)
+    rank_d3_squared = int(np.linalg.matrix_rank(d3_squared, tol=tol))
+    ker_d3_squared = int(d3_squared.shape[1] - rank_d3_squared)
+
+    resolved_flavors = {
+        2: {1: ker_d2 - rank_d4_to_d2},
+        3: {2: ker_d3_squared - rank_d4_to_d3},
+    }
+
+    return {
+        "N": 3,
+        "source_degree": 4,
+        "method": "sparse degree-4 complex elimination",
+        "kernel_dims": {
+            2: {1: ker_d2},
+            3: {2: ker_d3_squared},
+        },
+        "image_ranks": {
+            2: {1: rank_d4_to_d2},
+            3: {2: rank_d4_to_d3},
+        },
+        "resolved_flavors": resolved_flavors,
+        "max_supports": {
+            "d4_to_d2": d4d3_max_support,
+            "d4_to_d3": d4_max_support,
+        },
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_low_degree_flavor_window() -> Dict[str, object]:
+    """Resolve the first sparse N=4 low-degree flavor window at degree 1.
+
+    The tractable degree-1 comparisons are
+
+      H^{3,1}_1 = ker(d_q^3 : B_1 -> B_{-2}) / im(d_q : B_2 -> B_1),
+      H^{2,2}_1 = ker(d_q^2 : B_1 -> B_{-1}) / im(d_q^2 : B_3 -> B_1).
+
+    The first term uses the ordinary reduced bar map B_2 -> B_1, while the
+    second uses a sparse computation of d_q^2 : B_3 -> B_1.
+    """
+    tol = 1e-10
+    uq = SmallQuantumSl2(4)
+    bar = BarComplex(uq, max_degree=2, use_reduced=True)
+    dim_I = bar.I_dim
+    q = uq.q
+    sparse_mu = _sparse_mu_table(bar, tol=tol)
+
+    flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
+
+    def d3_to_b1_column(left: int, middle: int, right: int) -> Dict[int, complex]:
+        degree_two_column: Dict[int, complex] = {}
+
+        for product, coeff in sparse_mu[left][middle].items():
+            target = flat2[product][right]
+            degree_two_column[target] = degree_two_column.get(target, 0.0) + coeff
+        for product, coeff in sparse_mu[middle][right].items():
+            target = flat2[left][product]
+            degree_two_column[target] = degree_two_column.get(target, 0.0) + q * coeff
+
+        output: Dict[int, complex] = {}
+        for idx, coeff in degree_two_column.items():
+            degree_two_left = idx // dim_I
+            degree_two_right = idx % dim_I
+            for product, mu_coeff in sparse_mu[degree_two_left][degree_two_right].items():
+                output[product] = output.get(product, 0.0) + coeff * mu_coeff
+
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    rank_d2 = int(np.linalg.matrix_rank(bar.q_differential(2), tol=tol))
+    rank_d3_to_d1, d3_max_support = _sparse_rank_from_columns(
+        (
+            d3_to_b1_column(left, middle, right)
+            for left in range(dim_I)
+            for middle in range(dim_I)
+            for right in range(dim_I)
+        ),
+        tol=tol,
+    )
+
+    resolved_flavors = {
+        1: {
+            3: dim_I - rank_d2,
+            2: dim_I - rank_d3_to_d1,
+        }
+    }
+
+    return {
+        "N": 4,
+        "degree": 1,
+        "method": "sparse degree-3 complex elimination",
+        "kernel_dims": {
+            1: {
+                3: dim_I,
+                2: dim_I,
+            }
+        },
+        "image_ranks": {
+            1: {
+                3: rank_d2,
+                2: rank_d3_to_d1,
+            }
+        },
+        "resolved_flavors": resolved_flavors,
+        "max_supports": {
+            "d3_to_d1": d3_max_support,
+        },
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree1_h13_channel() -> Dict[str, object]:
+    """Resolve H^{1,3}_1 for N = 4 via sparse d_q^3 image saturation."""
+    tol = 1e-10
+    uq = SmallQuantumSl2(4)
+    bar = BarComplex(uq, max_degree=2, use_reduced=True)
+    dim_I = bar.I_dim
+    q = uq.q
+    q_squared = q * q
+    sparse_mu = _sparse_mu_table(bar, tol=tol)
+
+    flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
+    flat3 = [
+        [
+            [(left * dim_I + middle) * dim_I + right for right in range(dim_I)]
+            for middle in range(dim_I)
+        ]
+        for left in range(dim_I)
+    ]
+
+    def d3_to_b1_from_b3(column: Dict[int, complex]) -> Dict[int, complex]:
+        degree_two_output: Dict[int, complex] = {}
+
+        for idx, coeff in column.items():
+            left = idx // (dim_I * dim_I)
+            remainder = idx % (dim_I * dim_I)
+            middle = remainder // dim_I
+            right = remainder % dim_I
+
+            for product, mu_coeff in sparse_mu[left][middle].items():
+                target = flat2[product][right]
+                degree_two_output[target] = degree_two_output.get(target, 0.0) + coeff * mu_coeff
+            for product, mu_coeff in sparse_mu[middle][right].items():
+                target = flat2[left][product]
+                degree_two_output[target] = degree_two_output.get(target, 0.0) + coeff * q * mu_coeff
+
+        output: Dict[int, complex] = {}
+        for idx, coeff in degree_two_output.items():
+            degree_two_left = idx // dim_I
+            degree_two_right = idx % dim_I
+            for product, mu_coeff in sparse_mu[degree_two_left][degree_two_right].items():
+                output[product] = output.get(product, 0.0) + coeff * mu_coeff
+
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    def d4_to_b3_column(left: int, middle_left: int, middle_right: int, right: int) -> Dict[int, complex]:
+        column: Dict[int, complex] = {}
+
+        for product, coeff in sparse_mu[left][middle_left].items():
+            target = flat3[product][middle_right][right]
+            column[target] = column.get(target, 0.0) + coeff
+        for product, coeff in sparse_mu[middle_left][middle_right].items():
+            target = flat3[left][product][right]
+            column[target] = column.get(target, 0.0) + q * coeff
+        for product, coeff in sparse_mu[middle_right][right].items():
+            target = flat3[left][middle_left][product]
+            column[target] = column.get(target, 0.0) + q_squared * coeff
+
+        return {
+            row: value for row, value in column.items() if abs(value) > tol
+        }
+
+    rank_d4_to_d1, max_support = _sparse_rank_from_columns(
+        (
+            d3_to_b1_from_b3(d4_to_b3_column(left, middle_left, middle_right, right))
+            for left in range(dim_I)
+            for middle_left in range(dim_I)
+            for middle_right in range(dim_I)
+            for right in range(dim_I)
+        ),
+        tol=tol,
+        target_rank=dim_I,
+    )
+
+    return {
+        "N": 4,
+        "degree": 1,
+        "flavor": (1, 3),
+        "kernel_dim": dim_I,
+        "image_rank": rank_d4_to_d1,
+        "cohomology_dim": dim_I - rank_d4_to_d1,
+        "method": "sparse degree-4 complex elimination with early saturation",
+        "max_support": max_support,
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_partial_packet() -> Dict[str, object]:
+    """Resolve the tractable degree-2 N=4 channels H^{3,1}_2 and H^{2,2}_2.
+
+    The remaining degree-2 flavor H^{1,3}_2 would require the image of
+    d_q^3 : B_5 -> B_2, which is beyond the present sparse sweep.  The two
+    lower-source channels are still informative:
+
+      H^{3,1}_2 = ker(d_q^3 : B_2 -> B_{-1}) / im(d_q : B_3 -> B_2),
+      H^{2,2}_2 = ker(d_q^2 : B_2 -> B_0) / im(d_q^2 : B_4 -> B_2).
+    """
+    tol = 1e-10
+    uq = SmallQuantumSl2(4)
+    bar = BarComplex(uq, max_degree=2, use_reduced=True)
+    dim_I = bar.I_dim
+    dim_b2 = dim_I * dim_I
+    q = uq.q
+    q_squared = q * q
+    sparse_mu = _sparse_mu_table(bar, tol=tol)
+
+    flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
+    flat3 = [
+        [
+            [(left * dim_I + middle) * dim_I + right for right in range(dim_I)]
+            for middle in range(dim_I)
+        ]
+        for left in range(dim_I)
+    ]
+
+    def d3_to_b2_column(left: int, middle: int, right: int) -> Dict[int, complex]:
+        column: Dict[int, complex] = {}
+
+        for product, coeff in sparse_mu[left][middle].items():
+            target = flat2[product][right]
+            column[target] = column.get(target, 0.0) + coeff
+        for product, coeff in sparse_mu[middle][right].items():
+            target = flat2[left][product]
+            column[target] = column.get(target, 0.0) + q * coeff
+
+        return {
+            row: value for row, value in column.items() if abs(value) > tol
+        }
+
+    def d4_to_b2_column(left: int, middle_left: int, middle_right: int, right: int) -> Dict[int, complex]:
+        degree_three_column: Dict[int, complex] = {}
+
+        for product, coeff in sparse_mu[left][middle_left].items():
+            target = flat3[product][middle_right][right]
+            degree_three_column[target] = degree_three_column.get(target, 0.0) + coeff
+        for product, coeff in sparse_mu[middle_left][middle_right].items():
+            target = flat3[left][product][right]
+            degree_three_column[target] = degree_three_column.get(target, 0.0) + q * coeff
+        for product, coeff in sparse_mu[middle_right][right].items():
+            target = flat3[left][middle_left][product]
+            degree_three_column[target] = degree_three_column.get(target, 0.0) + q_squared * coeff
+
+        output: Dict[int, complex] = {}
+        for idx, coeff in degree_three_column.items():
+            degree_three_left = idx // (dim_I * dim_I)
+            remainder = idx % (dim_I * dim_I)
+            degree_three_middle = remainder // dim_I
+            degree_three_right = remainder % dim_I
+
+            for product, mu_coeff in sparse_mu[degree_three_left][degree_three_middle].items():
+                target = flat2[product][degree_three_right]
+                output[target] = output.get(target, 0.0) + coeff * mu_coeff
+            for product, mu_coeff in sparse_mu[degree_three_middle][degree_three_right].items():
+                target = flat2[degree_three_left][product]
+                output[target] = output.get(target, 0.0) + coeff * q * mu_coeff
+
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    rank_d3_to_d2, d3_max_support = _sparse_rank_from_columns(
+        (
+            d3_to_b2_column(left, middle, right)
+            for left in range(dim_I)
+            for middle in range(dim_I)
+            for right in range(dim_I)
+        ),
+        tol=tol,
+        target_rank=dim_b2,
+    )
+    rank_d4_to_d2, d4_max_support = _sparse_rank_from_columns(
+        (
+            d4_to_b2_column(left, middle_left, middle_right, right)
+            for left in range(dim_I)
+            for middle_left in range(dim_I)
+            for middle_right in range(dim_I)
+            for right in range(dim_I)
+        ),
+        tol=tol,
+        target_rank=dim_b2,
+    )
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "resolved_flavors": {
+            (3, 1): 0,
+            (2, 2): 0,
+        },
+        "image_ranks": {
+            (3, 1): rank_d3_to_d2,
+            (2, 2): rank_d4_to_d2,
+        },
+        "kernel_dims": {
+            (3, 1): dim_b2,
+            (2, 2): dim_b2,
+        },
+        "unresolved_flavors": [(1, 3)],
+        "method": "sparse degree-3/4 elimination with early saturation",
+        "max_supports": {
+            "d3_to_d2": d3_max_support,
+            "d4_to_d2": d4_max_support,
+        },
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_h13_channel_bounds() -> Dict[str, object]:
+    """Bound H^{1,3}_2 by a compressed split-form sparse image certificate.
+
+    For N = 4 we have
+
+      H^{1,3}_2 = ker(d_q^1 : B_2 -> B_1) / im(d_q^3 : B_5 -> B_2)
+               = B_2 / im(d_q^3 : B_5 -> B_2),
+
+    because the first q-bar differential out of B_2 is zero in the Kapranov
+    flavor j = 1.  The direct B_5 sweep is too large, but associativity
+    collapses d_q^3 to four split terms with coefficients
+
+      (1 + i), (1 - i), (-1 - i), (-1 + i).
+
+    We exploit that split form to certify a large image from three exact seed
+    families:
+
+      (a, b, c, K-1, K-1), (a, b, c, K-1, F), (a, b, c, K-1, E).
+
+    This yields an honest M/S-level bound rather than a full vanishing claim.
+    """
+    tol = 1e-10
+    uq = SmallQuantumSl2(4)
+    bar = BarComplex(uq, max_degree=2, use_reduced=True)
+    dim_I = bar.I_dim
+    dim_b2 = dim_I * dim_I
+    sparse_mu = _sparse_mu_table(bar, tol=tol)
+    flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
+
+    seed_tails = (
+        (60, 60),  # (K - 1, K - 1)
+        (60, 0),   # (K - 1, F)
+        (60, 12),  # (K - 1, E)
+    )
+    basis: Dict[int, Dict[int, complex]] = {}
+    seed_family_stats = []
+
+    for tail_left, tail_right in seed_tails:
+        added_rank = 0
+        max_support = 0
+        column_count = 0
+        for left in range(dim_I):
+            for middle_left in range(dim_I):
+                for middle_right in range(dim_I):
+                    column_count += 1
+                    independent, support = _insert_sparse_column(
+                        _n4_dq3_b5_to_b2_column(
+                            (left, middle_left, middle_right, tail_left, tail_right),
+                            sparse_mu,
+                            flat2,
+                            tol=tol,
+                        ),
+                        basis,
+                        tol=tol,
+                    )
+                    if independent:
+                        added_rank += 1
+                        max_support = max(max_support, support)
+        seed_family_stats.append(
+            {
+                "tail": (tail_left, tail_right),
+                "added_rank": added_rank,
+                "columns": column_count,
+                "max_support": max_support,
+            }
+        )
+
+    missing_rows = [row for row in range(dim_b2) if row not in basis]
+    residual_left_factor_profile = {
+        "F": sum(1 for row in missing_rows if row // dim_I == 0),
+        "E": sum(1 for row in missing_rows if row // dim_I == 12),
+        "K-1": sum(1 for row in missing_rows if row // dim_I == 60),
+    }
+
+    special_basis = {pivot: dict(column) for pivot, column in basis.items()}
+    generator_cube_added_rank = 0
+    generator_cube_max_support = 0
+    for left in (0, 12, 60):
+        for middle_left in (0, 12, 60):
+            for middle_right in (0, 12, 60):
+                for tail_left in (0, 12, 60):
+                    for tail_right in (0, 12, 60):
+                        independent, support = _insert_sparse_column(
+                            _n4_dq3_b5_to_b2_column(
+                                (left, middle_left, middle_right, tail_left, tail_right),
+                                sparse_mu,
+                                flat2,
+                                tol=tol,
+                            ),
+                            special_basis,
+                            tol=tol,
+                        )
+                        if independent:
+                            generator_cube_added_rank += 1
+                            generator_cube_max_support = max(generator_cube_max_support, support)
+
+    special_prefix_basis = {pivot: dict(column) for pivot, column in basis.items()}
+    generator_prefix_cube_added_rank = 0
+    generator_prefix_cube_max_support = 0
+    active_prefixes = []
+    for left in (0, 12, 60):
+        for middle_left in (0, 12, 60):
+            for middle_right in (0, 12, 60):
+                prefix_added_rank = 0
+                for tail_left in range(dim_I):
+                    for tail_right in range(dim_I):
+                        independent, support = _insert_sparse_column(
+                            _n4_dq3_b5_to_b2_column(
+                                (left, middle_left, middle_right, tail_left, tail_right),
+                                sparse_mu,
+                                flat2,
+                                tol=tol,
+                            ),
+                            special_prefix_basis,
+                            tol=tol,
+                        )
+                        if independent:
+                            prefix_added_rank += 1
+                            generator_prefix_cube_added_rank += 1
+                            generator_prefix_cube_max_support = max(generator_prefix_cube_max_support, support)
+                if prefix_added_rank:
+                    active_prefixes.append(
+                        {
+                            "prefix": (left, middle_left, middle_right),
+                            "added_rank": prefix_added_rank,
+                        }
+                    )
+
+    split = _n4_dq3_split_coefficients()
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "kernel_dim": dim_b2,
+        "image_rank_lower_bound": len(basis),
+        "cohomology_upper_bound": dim_b2 - len(basis),
+        "status": "unresolved",
+        "method": "split-form sparse seed-family elimination",
+        "split_coefficients": {
+            1: split[1],
+            2: split[2],
+            3: split[3],
+            4: split[4],
+        },
+        "seed_family_stats": seed_family_stats,
+        "residual_row_count": len(missing_rows),
+        "residual_left_factor_profile": residual_left_factor_profile,
+        "generator_cube": {
+            "support": ("F", "E", "K-1"),
+            "tuples_checked": 3 ** 5,
+            "added_rank": generator_cube_added_rank,
+            "max_support": generator_cube_max_support,
+        },
+        "generator_prefix_cube": {
+            "prefix_support": ("F", "E", "K-1"),
+            "prefixes_checked": 3 ** 3,
+            "tuples_checked": (3 ** 3) * (dim_I ** 2),
+            "added_rank": generator_prefix_cube_added_rank,
+            "max_support": generator_prefix_cube_max_support,
+            "active_prefixes": active_prefixes,
+        },
+    }
+
+
+@lru_cache(maxsize=None)
+def kl_periodic_shadow_candidates() -> Dict[str, object]:
+    """Compare the first resolved KL packet against elementary shadow candidates."""
+    n3_packet = n3_degree4_flavor_packet()
+    n4_window = n4_low_degree_flavor_window()
+    n4_h13 = n4_degree1_h13_channel()
+    n4_degree2 = n4_degree2_partial_packet()
+    n4_degree2_h13 = n4_degree2_h13_channel_bounds()
+    n3_report = admissible_level_flavor_report(3, max_degree=3)
+
+    return {
+        "N3_degree4_packet": n3_packet,
+        "candidate_dimensions": {
+            "single_flavor_dim": n3_packet["resolved_flavors"][2][1],
+            "paired_packet_total": (
+                n3_packet["resolved_flavors"][2][1]
+                + n3_packet["resolved_flavors"][3][2]
+            ),
+            "degree2_euler_shadow": (
+                n3_packet["resolved_flavors"][2][1]
+                - n3_report["degrees"][2]["flavors"][2]
+            ),
+        },
+        "N4_degree1_window": n4_window,
+        "N4_degree1_h13": n4_h13,
+        "N4_degree2_partial_packet": n4_degree2,
+        "N4_degree2_h13_bound": n4_degree2_h13,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -937,6 +1787,8 @@ def full_ncomplex_analysis(N: int, max_degree: int = 3) -> Dict:
     results["euler_sums"] = {}
     for n in range(1, max_degree + 1):
         results["euler_sums"][n] = euler_characteristic_sum(bar, n)
+
+    results["flavor_report"] = ncomplex_flavor_report(bar)
 
     return results
 

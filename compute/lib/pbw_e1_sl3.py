@@ -415,7 +415,10 @@ def verify_basic_facts() -> Dict[str, bool]:
     return results
 
 
-def cross_validate_with_spectral_sequence(max_weight: int = 8) -> Dict[str, bool]:
+def cross_validate_with_spectral_sequence(
+    min_weight: int = 1,
+    max_weight: int = 8,
+) -> Dict[str, bool]:
     """Verify sum over PBW degrees matches adjoint_invariant_dim.
 
     At each weight H: Σ_p E₁^{p,0}_H should equal the total invariant dim
@@ -431,7 +434,7 @@ def cross_validate_with_spectral_sequence(max_weight: int = 8) -> Dict[str, bool
         sc_int[(a, b)] = {k: v for k, v in prods.items()}
 
     results = {}
-    for H in range(1, max_weight + 1):
+    for H in range(min_weight, max_weight + 1):
         expected = adjoint_invariant_dim(DIM_G, sc_int, H)
         # Sum over PBW degrees 1 to H
         actual = sum(e1_dim(p, H) for p in range(1, H + 1))

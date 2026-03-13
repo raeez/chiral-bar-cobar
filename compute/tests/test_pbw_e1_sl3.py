@@ -205,10 +205,14 @@ class TestCrossValidation:
         assert invariant_dim_cached((1, 1, 1)) == 2
 
     @pytest.mark.slow
-    def test_cross_validate_spectral_sequence(self):
+    @pytest.mark.parametrize("weight_h", range(1, 7))
+    def test_cross_validate_spectral_sequence(self, weight_h):
         """Σ_p E₁^{p,0}_H should equal adjoint_invariant_dim(H)."""
         from compute.lib.pbw_e1_sl3 import cross_validate_with_spectral_sequence
-        results = cross_validate_with_spectral_sequence(max_weight=6)
+        results = cross_validate_with_spectral_sequence(
+            min_weight=weight_h,
+            max_weight=weight_h,
+        )
         for desc, ok in results.items():
             assert ok, f"FAIL: {desc}"
 

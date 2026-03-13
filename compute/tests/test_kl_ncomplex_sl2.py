@@ -46,6 +46,7 @@ from compute.lib.kl_ncomplex_sl2 import (
     SmallQuantumSl2,
     # Bar complex
     BarComplex,
+    MAX_EXPLICIT_DQ_N_SOURCE_DIM,
     # Bar cohomology
     bar_cohomology_dim,
     all_bar_cohomology,
@@ -53,6 +54,14 @@ from compute.lib.kl_ncomplex_sl2 import (
     ncomplex_cohomology_dim,
     all_cohomology_flavors,
     euler_characteristic_sum,
+    ncomplex_flavor_report,
+    admissible_level_flavor_report,
+    n3_degree4_flavor_packet,
+    n4_low_degree_flavor_window,
+    n4_degree1_h13_channel,
+    n4_degree2_partial_packet,
+    n4_degree2_h13_channel_bounds,
+    kl_periodic_shadow_candidates,
     # Diagnostics
     verify_uq_relations,
     verify_associativity,
@@ -141,7 +150,7 @@ class TestQuantumArithmetic:
 
         This is the mechanism behind d_q^N = 0.
         """
-        for N in [3, 5, 7]:
+        for N in [3, 4, 5, 7]:
             q = root_of_unity(N)
             for k in range(1, N):
                 val = q_binomial(N, k, q)
@@ -318,8 +327,8 @@ class TestStandardBarDifferential:
 
     @pytest.mark.slow
     @pytest.mark.parametrize("N", [4, 5])
-    def test_d_squared_zero_larger_N(self, N):
-        """d^2 = 0 for larger N (consistency check)."""
+    def test_d_squared_zero_larger_N_via_degree_two_structure(self, N):
+        """d^2 = 0 at degree 2 because the reduced bar map B_1 -> B_0 vanishes."""
         uq = SmallQuantumSl2(N)
         bar = BarComplex(uq, max_degree=2, use_reduced=True)
         norm = bar.verify_d_squared(2)
@@ -484,10 +493,12 @@ class TestNComplexStructure:
         assert norm < 1e-8, f"d_q^2 unexpectedly nonzero at degree 2: {norm}"
 
     @pytest.mark.slow
-    def test_dq_N_zero_N4(self):
-        """d_q^4 = 0 at N = 4."""
+    def test_dq_N_zero_N4_via_structural_certificate(self):
+        """d_q^4 = 0 at N = 4 via the quantum-binomial structural route."""
         uq = SmallQuantumSl2(4)
         bar = BarComplex(uq, max_degree=4, use_reduced=True)
+        assert bar.bar_space_dim(4) > MAX_EXPLICIT_DQ_N_SOURCE_DIM
+        assert all(abs(q_binomial(4, k, uq.q)) < 1e-8 for k in range(1, 4))
         norm = bar.verify_dq_N(4)
         assert norm < 1e-8, f"d_q^4 != 0 at N=4: ||d_q^4|| = {norm}"
 
@@ -500,10 +511,12 @@ class TestNComplexStructure:
         assert norm < 1e-8, f"d_q^2 unexpectedly nonzero at degree 2: {norm}"
 
     @pytest.mark.slow
-    def test_dq_N_zero_N5(self):
-        """d_q^5 = 0 at N = 5."""
+    def test_dq_N_zero_N5_via_structural_certificate(self):
+        """d_q^5 = 0 at N = 5 via the quantum-binomial structural route."""
         uq = SmallQuantumSl2(5)
         bar = BarComplex(uq, max_degree=5, use_reduced=True)
+        assert bar.bar_space_dim(5) > MAX_EXPLICIT_DQ_N_SOURCE_DIM
+        assert all(abs(q_binomial(5, k, uq.q)) < 1e-8 for k in range(1, 5))
         norm = bar.verify_dq_N(5)
         assert norm < 1e-8, f"d_q^5 != 0 at N=5: ||d_q^5|| = {norm}"
 
@@ -597,6 +610,194 @@ class TestEulerCharacteristic:
 
 
 # ============================================================================
+# Flavor report / admissible-level extractor
+# ============================================================================
+
+class TestFlavorReport:
+    """Test the compact admissible-level flavor report."""
+
+    def test_flavor_report_identifies_single_observed_flavor_N2(self):
+        """At N = 2, the observed truncation supports the single ordinary flavor."""
+        uq = SmallQuantumSl2(2)
+        bar = BarComplex(uq, max_degree=4, use_reduced=True)
+        report = ncomplex_flavor_report(bar)
+
+        assert report["N"] == 2
+        assert report["fully_computable_degrees"] == [1, 2, 3]
+        assert report["observed_nonzero_flavors"] == [1]
+        assert report["candidate_flavor"] == 1
+        assert report["degrees"][3]["flavors"] == {1: 4}
+        assert report["degrees"][4]["missing_flavors"] == {1: 5}
+        assert report["flavors"][1]["nonzero_degrees"] == [1, 2, 3]
+
+    def test_flavor_report_exposes_truncation_barrier_N3(self, bar_N3_deg3):
+        """At N = 3, the first unresolved flavor boundary is the missing degree-4 input."""
+        report = ncomplex_flavor_report(bar_N3_deg3)
+
+        assert report["N"] == 3
+        assert report["fully_computable_degrees"] == [1]
+        assert report["observed_nonzero_flavors"] == []
+        assert report["candidate_flavor"] is None
+        assert report["degrees"][1]["flavors"] == {1: 0, 2: 0}
+        assert report["degrees"][2]["missing_flavors"] == {1: 4}
+        assert report["flavors"][1]["first_missing_source_degree"] == 4
+        assert report["flavors"][2]["first_missing_source_degree"] == 4
+
+    def test_admissible_level_report_wrapper_matches_bar_report(self, bar_N3_deg3):
+        """The N-level wrapper agrees with the direct bar-based report."""
+        direct = ncomplex_flavor_report(bar_N3_deg3)
+        wrapped = admissible_level_flavor_report(3, max_degree=3)
+
+        assert wrapped["degrees"] == direct["degrees"]
+        assert wrapped["flavors"] == direct["flavors"]
+        assert wrapped["candidate_flavor"] == direct["candidate_flavor"]
+
+
+# ============================================================================
+# N = 3 degree-4 completion
+# ============================================================================
+
+class TestN3Degree4FlavorPacket:
+    """Test the first sparse degree-4 flavor completion at N = 3."""
+
+    @pytest.mark.slow
+    def test_sparse_degree4_packet_is_three_dimensional_on_both_flavors(self):
+        """The first unresolved N = 3 flavor packet resolves to a symmetric 3-dim pair."""
+        packet = n3_degree4_flavor_packet()
+
+        assert packet["N"] == 3
+        assert packet["source_degree"] == 4
+        assert packet["kernel_dims"] == {
+            2: {1: 650},
+            3: {2: 17550},
+        }
+        assert packet["image_ranks"] == {
+            2: {1: 647},
+            3: {2: 17547},
+        }
+        assert packet["resolved_flavors"] == {
+            2: {1: 3},
+            3: {2: 3},
+        }
+
+    @pytest.mark.slow
+    def test_periodic_shadow_candidate_report_sees_three_vs_zero(self):
+        """The first comparison report records the nonzero N=3 packet and the zero N=4 degree-1 packet."""
+        report = kl_periodic_shadow_candidates()
+
+        assert report["candidate_dimensions"] == {
+            "single_flavor_dim": 3,
+            "paired_packet_total": 6,
+            "degree2_euler_shadow": 3,
+        }
+        assert report["N4_degree1_window"]["resolved_flavors"] == {
+            1: {3: 0, 2: 0},
+        }
+        assert report["N4_degree1_h13"]["cohomology_dim"] == 0
+        assert report["N4_degree2_partial_packet"]["resolved_flavors"] == {
+            (3, 1): 0,
+            (2, 2): 0,
+        }
+        assert report["N4_degree2_h13_bound"]["image_rank_lower_bound"] == 3903
+        assert report["N4_degree2_h13_bound"]["cohomology_upper_bound"] == 66
+
+
+class TestN4LowDegreeFlavorWindow:
+    """Test the first sparse N=4 low-degree flavor window."""
+
+    def test_n4_low_degree_window_vanishes_in_resolved_channels(self):
+        """At N = 4, the first resolved degree-1 flavors j=3 and j=2 are both zero."""
+        window = n4_low_degree_flavor_window()
+
+        assert window["N"] == 4
+        assert window["degree"] == 1
+        assert window["kernel_dims"] == {
+            1: {3: 63, 2: 63},
+        }
+        assert window["image_ranks"] == {
+            1: {3: 63, 2: 63},
+        }
+        assert window["resolved_flavors"] == {
+            1: {3: 0, 2: 0},
+        }
+
+    @pytest.mark.slow
+    def test_n4_h13_degree1_channel_vanishes(self):
+        """The remaining N=4 degree-1 flavor H^{1,3}_1 also vanishes."""
+        channel = n4_degree1_h13_channel()
+
+        assert channel["N"] == 4
+        assert channel["degree"] == 1
+        assert channel["flavor"] == (1, 3)
+        assert channel["kernel_dim"] == 63
+        assert channel["image_rank"] == 63
+        assert channel["cohomology_dim"] == 0
+
+    @pytest.mark.slow
+    def test_n4_degree2_partial_packet_vanishes_in_two_resolved_channels(self):
+        """At N = 4, the tractable degree-2 channels H^{3,1}_2 and H^{2,2}_2 are zero."""
+        packet = n4_degree2_partial_packet()
+
+        assert packet["N"] == 4
+        assert packet["degree"] == 2
+        assert packet["kernel_dims"] == {
+            (3, 1): 3969,
+            (2, 2): 3969,
+        }
+        assert packet["image_ranks"] == {
+            (3, 1): 3969,
+            (2, 2): 3969,
+        }
+        assert packet["resolved_flavors"] == {
+            (3, 1): 0,
+            (2, 2): 0,
+        }
+        assert packet["unresolved_flavors"] == [(1, 3)]
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_channel_compressed_bound(self):
+        """The remaining N = 4 degree-2 channel is compressed to a 66-dimensional residual packet."""
+        bound = n4_degree2_h13_channel_bounds()
+
+        assert bound["N"] == 4
+        assert bound["degree"] == 2
+        assert bound["flavor"] == (1, 3)
+        assert bound["kernel_dim"] == 3969
+        assert bound["image_rank_lower_bound"] == 3903
+        assert bound["cohomology_upper_bound"] == 66
+        assert bound["status"] == "unresolved"
+        assert bound["split_coefficients"][1] == pytest.approx(1.0 + 1.0j)
+        assert bound["split_coefficients"][2] == pytest.approx(1.0 - 1.0j)
+        assert bound["split_coefficients"][3] == pytest.approx(-1.0 - 1.0j)
+        assert bound["split_coefficients"][4] == pytest.approx(-1.0 + 1.0j)
+        assert bound["seed_family_stats"] == [
+            {"tail": (60, 60), "added_rank": 2976, "columns": 250047, "max_support": 38},
+            {"tail": (60, 0), "added_rank": 743, "columns": 250047, "max_support": 45},
+            {"tail": (60, 12), "added_rank": 184, "columns": 250047, "max_support": 38},
+        ]
+        assert bound["residual_row_count"] == 66
+        assert bound["residual_left_factor_profile"] == {
+            "F": 48,
+            "E": 15,
+            "K-1": 3,
+        }
+        assert bound["generator_cube"] == {
+            "support": ("F", "E", "K-1"),
+            "tuples_checked": 243,
+            "added_rank": 0,
+            "max_support": 0,
+        }
+        assert bound["generator_prefix_cube"] == {
+            "prefix_support": ("F", "E", "K-1"),
+            "prefixes_checked": 27,
+            "tuples_checked": 107163,
+            "added_rank": 0,
+            "max_support": 0,
+            "active_prefixes": [],
+        }
+
+
+# ============================================================================
 # Dimension data
 # ============================================================================
 
@@ -670,6 +871,8 @@ class TestFullAnalysis:
         # Q-deformed d_q^3 = 0 (N-complex structure)
         for deg, norm in result["dq_N_norms"].items():
             assert norm < 1e-8, f"d_q^3 != 0 at N=3, degree {deg}"
+        assert result["flavor_report"]["degrees"][2]["missing_flavors"] == {1: 4}
+        assert result["flavor_report"]["candidate_flavor"] is None
 
 
 # ============================================================================

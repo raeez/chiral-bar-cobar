@@ -32,6 +32,7 @@ from math import comb
 from typing import Dict, List, Tuple
 
 from sympy import Matrix, Rational, Symbol, zeros, simplify
+from sympy.polys.matrices import DomainMatrix
 
 
 # ---------------------------------------------------------------------------
@@ -556,7 +557,7 @@ def adjoint_invariant_dim(dim_g: int, structure_constants: Dict, weight: int) ->
     for m in action_mats[1:]:
         stacked = stacked.row_join(m) if False else stacked.col_join(m)
 
-    return m_dim - stacked.rank()
+    return m_dim - DomainMatrix.from_Matrix(stacked).rank()
 
 
 def pbw_e1_page(dim_g: int, structure_constants: Dict,

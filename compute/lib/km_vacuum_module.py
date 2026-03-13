@@ -154,6 +154,9 @@ class KMVacuumModule:
             h: km_pbw_basis(dim_g, h) for h in range(max_weight + 1)
         }
         self._mode_cache: Dict[Tuple[int, int, int], Matrix] = {}
+        self._casimir_cache: Dict[int, Matrix] = {}
+        self._casimir_eigen_cache: Dict[int, Dict[Rational, int]] = {}
+        self._invariant_dim_cache: Dict[int, int] = {}
 
     @classmethod
     def sl2(cls, level=Symbol("k"), max_weight: int = 8) -> "KMVacuumModule":
@@ -417,12 +420,24 @@ def invariant_dim_at_weight(module: KMVacuumModule, weight: int) -> int:
 
     Invariants = intersection of ker(J^a_0) for all a.
     """
+    cached = module._invariant_dim_cache.get(weight)
+    if cached is not None:
+        return cached
+
     if weight == 0:
+        module._invariant_dim_cache[weight] = 1
         return 1  # vacuum is always invariant
 
     d = module.weight_dim(weight)
     if d == 0:
+        module._invariant_dim_cache[weight] = 0
         return 0
+
+    if module.dim_g == 3:
+        eigenvals = casimir_eigenvalues_at_weight(module, weight)
+        multiplicity = int(eigenvals.get(Rational(0), 0))
+        module._invariant_dim_cache[weight] = multiplicity
+        return multiplicity
 
     # Stack all zero-mode matrices and find kernel
     mats = [module.adjoint_action_matrix(a, weight) for a in range(module.dim_g)]
@@ -430,7 +445,9 @@ def invariant_dim_at_weight(module: KMVacuumModule, weight: int) -> int:
     for m in mats[1:]:
         stacked = stacked.col_join(m)
 
-    return d - stacked.rank()
+    kernel_dim = d - stacked.rank()
+    module._invariant_dim_cache[weight] = kernel_dim
+    return kernel_dim
 
 
 def invariant_dims_through_weight(
@@ -463,9 +480,15 @@ def casimir_matrix_at_weight(module: KMVacuumModule, weight: int) -> Matrix:
 
     Eigenvalue on spin-j irrep: 2j(j+1) (with our normalization).
     """
+    cached = module._casimir_cache.get(weight)
+    if cached is not None:
+        return cached
+
     d = module.weight_dim(weight)
     if d == 0:
-        return zeros(0, 0)
+        empty = zeros(0, 0)
+        module._casimir_cache[weight] = empty
+        return empty
 
     # Inverse Killing form for sl_2
     inv_killing = {
@@ -480,6 +503,7 @@ def casimir_matrix_at_weight(module: KMVacuumModule, weight: int) -> Matrix:
         jb = module.adjoint_action_matrix(b, weight)
         C += coeff * ja * jb
 
+    module._casimir_cache[weight] = C
     return C
 
 
@@ -491,10 +515,18 @@ def casimir_eigenvalues_at_weight(
     Returns {eigenvalue: multiplicity}.
     For sl_2, eigenvalue 2j(j+1) corresponds to spin-j irrep (dim 2j+1).
     """
+    cached = module._casimir_eigen_cache.get(weight)
+    if cached is not None:
+        return cached
+
     C = casimir_matrix_at_weight(module, weight)
     if C.rows == 0:
+        module._casimir_eigen_cache[weight] = {}
         return {}
-    return C.eigenvals()
+
+    eigenvals = C.eigenvals()
+    module._casimir_eigen_cache[weight] = eigenvals
+    return eigenvals
 
 
 def irrep_decomposition_at_weight(

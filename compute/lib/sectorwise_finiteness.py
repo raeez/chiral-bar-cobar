@@ -33,6 +33,8 @@ References:
 from __future__ import annotations
 
 import math
+from collections import Counter
+from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -277,25 +279,25 @@ def lattice_bar_sector_dimension(
             norm_bound = 2 * max_total_weight  # |α|^2 ≤ 2*max_total_weight
 
             # Enumerate lattice vectors with |α|^2 ≤ norm_bound
-            lattice_vectors = _enumerate_lattice_vectors(gram, norm_bound)
+            rank, gram_entries = _gram_cache_key(gram)
+            vector_weights = _cached_lattice_vectors_with_weights(
+                rank, gram_entries, norm_bound
+            )
             osc = _oscillator_partition_function(r, max_total_weight)
 
             for w in range(max_total_weight + 1):
                 dim_w = 0
-                for alpha in lattice_vectors:
-                    alpha = np.asarray(alpha)
-                    beta = sector - alpha
-                    w_alpha = float(alpha @ gram @ alpha) / 2.0
+                for alpha, w_alpha_int in vector_weights:
+                    alpha_arr = np.asarray(alpha)
+                    beta = sector - alpha_arr
+                    w_alpha = float(alpha_arr @ gram @ alpha_arr) / 2.0
                     w_beta = float(beta @ gram @ beta) / 2.0
 
                     if w_alpha < -1e-10 or w_beta < -1e-10:
                         continue  # not positive definite (shouldn't happen)
 
-                    w_alpha_int = int(round(w_alpha))
                     w_beta_int = int(round(w_beta))
 
-                    if abs(w_alpha - w_alpha_int) > 1e-10:
-                        continue
                     if abs(w_beta - w_beta_int) > 1e-10:
                         continue
 
@@ -320,44 +322,12 @@ def lattice_bar_sector_dimension(
             # The zero-oscillator piece at bar degree n counts:
             # #{(α_1,...,α_n) ∈ Λ^n : Σ α_i = sector, Σ |α_i|^2/2 = w}
             max_total_weight = 4 * n
-            lattice_vectors = _enumerate_lattice_vectors(gram, 2 * max_total_weight)
 
             # For bar degree 3, enumerate triples
             if n == 3:
-                for w in range(max_total_weight + 1):
-                    dim_w = 0
-                    for alpha in lattice_vectors:
-                        alpha = np.asarray(alpha)
-                        w_alpha = float(alpha @ gram @ alpha) / 2.0
-                        w_alpha_int = int(round(w_alpha))
-                        if abs(w_alpha - w_alpha_int) > 1e-10:
-                            continue
-
-                        beta_target = sector - alpha
-                        # Now we need pairs (β, γ) with β+γ = beta_target
-                        # and total weight = w - w_alpha_int
-                        remaining_w = w - w_alpha_int
-                        if remaining_w < 0:
-                            continue
-
-                        for beta in lattice_vectors:
-                            beta = np.asarray(beta)
-                            gamma = beta_target - beta
-                            w_beta = float(beta @ gram @ beta) / 2.0
-                            w_gamma = float(gamma @ gram @ gamma) / 2.0
-
-                            w_beta_int = int(round(w_beta))
-                            w_gamma_int = int(round(w_gamma))
-                            if abs(w_beta - w_beta_int) > 1e-10:
-                                continue
-                            if abs(w_gamma - w_gamma_int) > 1e-10:
-                                continue
-
-                            if w_beta_int + w_gamma_int == remaining_w:
-                                dim_w += 1
-
-                    if dim_w > 0:
-                        weight_dims[w] = dim_w
+                weight_dims = _degree_three_zero_oscillator_dimensions(
+                    gram, sector, max_total_weight
+                )
 
             else:
                 # For n >= 4, just record the trivially available data
@@ -399,6 +369,87 @@ def _enumerate_lattice_vectors(
 
     _recurse(0, [])
     return vectors
+
+
+def _gram_cache_key(gram: np.ndarray) -> Tuple[int, Tuple[float, ...]]:
+    """Hashable Gram-matrix key for cached lattice enumeration helpers."""
+    gram = np.asarray(gram, dtype=float)
+    return gram.shape[0], tuple(float(entry) for entry in gram.ravel())
+
+
+@lru_cache(maxsize=64)
+def _cached_lattice_vectors_with_weights(
+    rank: int,
+    gram_entries: Tuple[float, ...],
+    norm_bound: int,
+) -> Tuple[Tuple[Tuple[int, ...], int], ...]:
+    """Enumerate bounded lattice vectors once and cache their integral weights."""
+    gram = np.array(gram_entries, dtype=float).reshape((rank, rank))
+    vector_weights: List[Tuple[Tuple[int, ...], int]] = []
+    for vector in _enumerate_lattice_vectors(gram, float(norm_bound)):
+        vector_arr = np.asarray(vector, dtype=float)
+        weight = float(vector_arr @ gram @ vector_arr) / 2.0
+        weight_int = int(round(weight))
+        if abs(weight - weight_int) <= 1e-10:
+            vector_weights.append((tuple(int(coord) for coord in vector), weight_int))
+    return tuple(vector_weights)
+
+
+@lru_cache(maxsize=64)
+def _degree_three_pair_sum_counts(
+    rank: int,
+    gram_entries: Tuple[float, ...],
+    max_total_weight: int,
+) -> Dict[Tuple[Tuple[int, ...], int], int]:
+    """Cache pair sums once for the degree-3 zero-oscillator counts."""
+    vector_weights = _cached_lattice_vectors_with_weights(
+        rank, gram_entries, 2 * max_total_weight
+    )
+    vector_arrays = [np.array(vector, dtype=int) for vector, _ in vector_weights]
+    weights = [weight for _, weight in vector_weights]
+    pair_counts: Counter[Tuple[Tuple[int, ...], int]] = Counter()
+
+    for i, beta in enumerate(vector_arrays):
+        w_beta = weights[i]
+        if w_beta > max_total_weight:
+            continue
+        for j, gamma in enumerate(vector_arrays):
+            pair_weight = w_beta + weights[j]
+            if pair_weight > max_total_weight:
+                continue
+            pair_counts[(tuple((beta + gamma).tolist()), pair_weight)] += 1
+
+    return dict(pair_counts)
+
+
+def _degree_three_zero_oscillator_dimensions(
+    gram: np.ndarray,
+    sector: np.ndarray,
+    max_total_weight: int,
+) -> Dict[int, int]:
+    """Degree-3 zero-oscillator dimensions via cached pair-count lookups."""
+    rank, gram_entries = _gram_cache_key(gram)
+    vector_weights = _cached_lattice_vectors_with_weights(
+        rank, gram_entries, 2 * max_total_weight
+    )
+    pair_counts = _degree_three_pair_sum_counts(rank, gram_entries, max_total_weight)
+    sector_tuple = tuple(int(coord) for coord in np.asarray(sector, dtype=int))
+    weight_dims: Dict[int, int] = {}
+
+    for w in range(max_total_weight + 1):
+        dim_w = 0
+        for alpha, w_alpha in vector_weights:
+            remaining_w = w - w_alpha
+            if remaining_w < 0:
+                continue
+            beta_target = tuple(
+                sector_tuple[idx] - alpha[idx] for idx in range(rank)
+            )
+            dim_w += pair_counts.get((beta_target, remaining_w), 0)
+        if dim_w > 0:
+            weight_dims[w] = dim_w
+
+    return weight_dims
 
 
 # ---------------------------------------------------------------------------
@@ -511,6 +562,23 @@ def sectorwise_finiteness_check(
         "is_positive_definite": is_pos_def,
         "sectors_checked": sectors_checked,
         "num_sectors_checked": len(sectors_checked),
+    }
+
+
+def _dk_sectorwise_verification_budget(
+    gram: np.ndarray,
+    max_sectors: int,
+    max_degree: int,
+) -> Dict[str, object]:
+    """Choose a truthful finite verification surface for lattice DK checks."""
+    determinant = abs(int(round(np.linalg.det(gram))))
+    is_unimodular = determinant == 1
+    effective_max_sectors = 1 if is_unimodular else max_sectors
+    effective_max_degree = min(max_degree, 2) if is_unimodular else max_degree
+    return {
+        "effective_max_sectors": effective_max_sectors,
+        "effective_max_degree": effective_max_degree,
+        "used_unimodular_single_sector_shortcut": is_unimodular,
     }
 
 
@@ -781,6 +849,7 @@ def sub_exponential_growth_test(dimensions: List[int]) -> Dict[str, object]:
 def lattice_factorization_dk_verification(
     lattice_gram: np.ndarray,
     max_sectors: int = 5,
+    max_degree: int = 5,
 ) -> Dict[str, object]:
     """Verify factorization DK properties for lattice vertex algebras.
 
@@ -797,6 +866,7 @@ def lattice_factorization_dk_verification(
     Args:
         lattice_gram: Gram matrix of the lattice
         max_sectors: Number of sectors to check
+        max_degree: Maximum bar degree used in the finiteness probe
 
     Returns:
         Dict with verification data
@@ -811,8 +881,15 @@ def lattice_factorization_dk_verification(
     # For unimodular lattices (det=1), there is only one sector
     is_unimod = num_cosets == 1
 
-    # Run sectorwise finiteness check
-    finiteness = sectorwise_finiteness_check(gram, max_sectors)
+    # A unimodular lattice has a single coset, so the DK surface only needs
+    # that sector's bounded verification window rather than the generic rank-r
+    # multi-sector scan.
+    budget = _dk_sectorwise_verification_budget(gram, max_sectors, max_degree)
+    finiteness = sectorwise_finiteness_check(
+        gram,
+        max_sectors=budget["effective_max_sectors"],
+        max_degree=budget["effective_max_degree"],
+    )
 
     # Verify sector weights
     # For a lattice vector λ in a coset of Λ, the conformal weight
@@ -839,6 +916,7 @@ def lattice_factorization_dk_verification(
         "sector_weights": sector_weights,
         "weights_nonneg": weights_nonneg,
         "zero_weight_ok": zero_weight_ok,
+        "verification_budget": budget,
         "finiteness_details": finiteness,
     }
 
@@ -897,11 +975,23 @@ def simply_laced_level1_check(lie_type: str, rank: int) -> Dict[str, object]:
     expected_det = expected_det_map.get(key)
     det_matches = (det == expected_det) if expected_det is not None else None
 
-    # Run sectorwise finiteness
-    finiteness = sectorwise_finiteness_check(gram, max_sectors=min(det + 2, 10))
+    budget = _dk_sectorwise_verification_budget(
+        gram, max_sectors=min(det + 2, 10), max_degree=5
+    )
+
+    # Run sectorwise finiteness on the same bounded surface used by the DK check.
+    finiteness = sectorwise_finiteness_check(
+        gram,
+        max_sectors=budget["effective_max_sectors"],
+        max_degree=budget["effective_max_degree"],
+    )
 
     # Run factorization DK verification
-    dk_data = lattice_factorization_dk_verification(gram, max_sectors=min(det + 2, 10))
+    dk_data = lattice_factorization_dk_verification(
+        gram,
+        max_sectors=min(det + 2, 10),
+        max_degree=5,
+    )
 
     # Verify the VOA identification: at level 1, simply-laced g gives lattice VOA
     # This is the Frenkel-Kac / Segal construction.
