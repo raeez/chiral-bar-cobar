@@ -7,8 +7,25 @@ with minimal valid inputs and produces non-trivial results.
 import pytest
 from sympy import Rational, zeros
 
+from compute.lib.ds_reduction import _nonprincipal_general_family_representative_items_in_range
 
-GENERAL_SURVIVOR_COUPLED_SMOKE_RANKS = tuple(range(5, 13))
+GENERAL_SURVIVOR_COUPLED_SMOKE_RANKS = tuple(
+    rank_n for rank_n in range(5, 13) if rank_n not in {10, 12}
+)
+GENERAL_SURVIVOR_COUPLED_RANK_10_REPRESENTATIVES = tuple(
+    partition
+    for partition, _ in _nonprincipal_general_family_representative_items_in_range(
+        min_n=10,
+        max_n=10,
+    )
+)
+GENERAL_SURVIVOR_COUPLED_RANK_12_REPRESENTATIVES = tuple(
+    partition
+    for partition, _ in _nonprincipal_general_family_representative_items_in_range(
+        min_n=12,
+        max_n=12,
+    )
+)
 
 
 def _assert_general_survivor_coupled_family_slice(
@@ -31,6 +48,21 @@ def _assert_general_survivor_coupled_family_slice(
     assert general_nonprincipal_survivor_coupled_family_holds_via_duality(
         min_n=rank_n,
         max_n=rank_n,
+        max_constraint_total_degree=1,
+        survivor_total_degree=survivor_total_degree,
+    )
+
+
+def _assert_general_survivor_coupled_representative_slice(
+    partition: tuple[int, ...],
+    survivor_total_degree: int = 1,
+) -> None:
+    from compute.lib.ds_reduction import (
+        nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality,
+    )
+
+    assert nonprincipal_partition_pair_survivor_coupled_representative_holds_via_duality(
+        partition,
         max_constraint_total_degree=1,
         survivor_total_degree=survivor_total_degree,
     )
@@ -537,6 +569,28 @@ class TestNonprincipalFrontier:
         rank_n,
     ):
         _assert_general_survivor_coupled_family_slice(rank_n)
+
+    @pytest.mark.parametrize(
+        "partition",
+        GENERAL_SURVIVOR_COUPLED_RANK_10_REPRESENTATIVES,
+        ids=lambda partition: "_".join(str(part) for part in partition),
+    )
+    def test_nonprincipal_general_survivor_coupled_catalog_degree_one_rank_10_by_partition(
+        self,
+        partition,
+    ):
+        _assert_general_survivor_coupled_representative_slice(partition)
+
+    @pytest.mark.parametrize(
+        "partition",
+        GENERAL_SURVIVOR_COUPLED_RANK_12_REPRESENTATIVES,
+        ids=lambda partition: "_".join(str(part) for part in partition),
+    )
+    def test_nonprincipal_general_survivor_coupled_catalog_degree_one_rank_12_by_partition(
+        self,
+        partition,
+    ):
+        _assert_general_survivor_coupled_representative_slice(partition)
 
     def test_nonprincipal_corrected_semidirect_exports(self):
         from compute.lib import (
