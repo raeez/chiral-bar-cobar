@@ -650,14 +650,18 @@ on~$\mathcal{I}_4$; on the additional stage-$4$ Ward-normalized
 H-level locus of
 Definition~\ref{def:winfty-stage4-ward-normalized}, its live content
 contracts to the four higher-spin channels of
-Corollary~\ref{cor:winfty-stage4-residue-four-channel}.  On the
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.}
+
+\emph{On the
 standard type-$A$ Yangian side, the local coefficient packet is already
-closed on the factorization/shared-seed locus.  The canonical
+closed on the factorization-side shared-seed locus.  The canonical
 Yangian H-level target already exists as the tangent Lie algebra of the
 factorization formal moduli problem
-\textup{(}Proposition~\textup{\ref{prop:yangian-canonical-hlevel-target}}\textup{)}.
-The live Yangian MC4 move is to equip that canonical target with the
-RTT-adapted finite-quotient/shared-seed package of
+\textup{(}Proposition~\textup{\ref{prop:yangian-canonical-hlevel-target}}\textup{)},
+and its canonical associative dg model already exists by
+Proposition~\ref{prop:yangian-canonical-envelope}.  The live Yangian
+MC4 move is to equip that canonical dg model with the RTT-adapted
+finite-quotient and shared-seed package of
 Proposition~\ref{prop:yangian-typea-realization-criterion}; once that
 is done,
 Corollary~\ref{cor:yangian-formal-moduli-plus-core-realization}
@@ -850,7 +854,8 @@ Then the standard-tower MC5 packet closes.
 
 \begin{proof}
 Assumption~\textup{(iii)} supplies the standard type-$A$ Yangian
-realized-MC4 package on the canonical formal-moduli target, by
+realized-MC4 package on the canonical formal-moduli target, via its
+canonical associative dg model, by
 Corollary~\ref{cor:yangian-formal-moduli-plus-core-realization}.
 Therefore assumptions~\textup{(i)}--\textup{(iv)} imply the hypotheses
 of Proposition~\ref{prop:standard-tower-mc5-reduction}.  That
@@ -954,9 +959,10 @@ its master parent.
   All filtered H-level comparison problems for the standard
   $\mathcal{W}_\infty$/Yangian towers: construct the principal-stage
   compatible target~$\mathcal{W}^{\mathrm{ht}}$ and, on the Yangian
-  side, realize the canonical formal-moduli target
-  $\mathfrak{g}_{\cA}$ by a separated complete RTT-filtered dg
-  model~$\Ydg_{\cA}$, identify their finite quotients with $W_N$
+  side, equip the canonical associative dg model
+  $U^{\mathrm{comp}}(\mathfrak{g}_{\cA})$ of the formal-moduli target
+  with a separated complete RTT-filtered realization
+  $\Ydg_{\cA}$, identify their finite quotients with $W_N$
   and~$Y_{\le N}$, and prove the exact mode
   identities
   $\mathsf{K}^{\mathrm{line}}_{a,b}(N)
@@ -1005,15 +1011,23 @@ its master parent.
   Proposition~\ref{prop:yangian-typea-realization-criterion} upgrades
   this to the full H-level realization.  The remaining Yangian input is
   therefore no longer a local coefficient computation, but exact
-  braided-monoidal spectral completed vector-packet transport,
+  braided-monoidal realization of the standard quantum-loop vector
+  seed-and-shift datum inside the spectral compact core,
   with the dg and ambient categorical sides already formal from the
   proved finite-dimensional factorization DK core and ind-completion.
   Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}
   reduces the spectral side to the completed fundamental packet, and
   Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}
-  sharpens that further to the completed vector packet,
-  Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}
-  then makes the spectral compact core formal, and
+  sharpens that to the ordered vector packet, while
+  Proposition~\ref{prop:quantum-fd-vector-seed-shifts} constructs the
+  standard source vector seed-and-shift datum and
+  Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction}
+  makes it canonical on any realized spectral vector line,
+  Proposition~\ref{prop:yangian-dk5-spectral-core-shifts}
+  extends it to the full spectral compact core, and
+  Corollary~\ref{cor:yangian-dk5-spectral-seed-realization}
+  packages the converse closure statement from that standard datum to
+  the full spectral side, while
   Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} constructs the
   ambient spectral category as
   \(\operatorname{Ind}(\mathcal{C}_q^\omega)\).
@@ -1024,7 +1038,7 @@ its master parent.
   Corollary~\ref{cor:yangian-dk5-dg-packet-ind} makes the ambient dg
   category into \(\operatorname{Ind}(\mathcal{C}_Y^\omega)\) on the
   realized packet locus.  Thus the only remaining categorical input is
-  the spectral completed vector packet.
+  realization of that standard spectral vector seed-and-shift datum.
   Corollary~\ref{cor:yangian-typea-degree2-plus-generators}
   packages the standard type-$A$ remainder exactly as one such
   degree-$2$ coefficient plus categorical packet, and
@@ -1427,6 +1441,36 @@ Proposition~\ref{prop:winfty-ds-generator-seed} shows that the
 $W_\infty$ identities are determined by the finitely many generator
 residue coefficients together with translation closure.
 
+\begin{remark}[Foundational route to the chiral Koszul dual of
+\texorpdfstring{$W_\infty$}{W_infty}]
+\label{rem:winfty-dual-construction-route}
+From the \texorpdfstring{$W_\infty$}{W_infty} side, one should not ask
+first for a quadratic presentation of an infinite-generator dual
+algebra.  The theorematic standard tower already singles out the
+correct completed M-level candidate:
+\[
+\widehat{\bar B}(W_\infty):=\varprojlim_N \bar B(W_N).
+\]
+What is missing is the H-level input that makes this candidate into a
+genuine chiral dual object.  Accordingly the construction problem
+factors into three exact steps:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item build a principal-stage compatible factorization/H-level target
+  whose finite quotients recover the principal stages~$W_N$;
+\item identify its local residue coefficients with the principal
+  Drinfeld--Sokolov coefficients, finitely detected on the packets
+  $\mathcal{I}_N$; and
+\item apply the inverse-limit comparison theorems so that the
+  completed bar-cobar object of that target is identified with the
+  standard principal-stage package.
+\end{enumerate}
+This is the status-safe meaning of ``construct the chiral Koszul dual
+of \texorpdfstring{$W_\infty$}{W_infty}'' in Volume~I: the missing input
+is not another completion theorem on the standard bar side, but the
+factorization realization and exact coefficient matching that promote
+the completed bar candidate to an H-level dual object.
+\end{remark}
+
 The frontier is now finite at each stage $N$.  On the Yangian side,
 Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} reduces the defect
 family to the boundary strip $\{\Delta_{a,0}(N)\}_{0 \le a \le N}$.
@@ -1728,10 +1772,36 @@ $\mathcal{J}_5^{\mathrm{hs}}$ of
 Corollary~\ref{cor:winfty-stage5-higher-spin-packet}.
 Proposition~\ref{prop:winfty-stage5-higher-spin-subblocks} then splits
 that first higher-spin packet as $1+3+3+1$ by source pair.
+
 Corollary~\ref{cor:winfty-stage5-entry-transport} isolates the
-two-channel entry packet from the six-channel mixed transport packet,
-and Proposition~\ref{prop:winfty-stage5-transport-target-ladders}
-splits that mixed packet into three fixed-target ladders.
+two-channel entry packet from the six-channel mixed transport packet.
+Proposition~\ref{prop:winfty-stage5-entry-mixed-self} then resolves the
+entry packet into the mixed-entry singleton $(3,4;5;0,2)$ and the
+self-return singleton $(5,5;4;0,6)$, while
+Proposition~\ref{prop:winfty-stage5-reduced-tail-singleton} identifies
+that mixed-entry singleton as the entire reduced tail input at stage~$5$,
+and Proposition~\ref{prop:winfty-stage5-tail-mechanism} identifies the
+exact missing comparison mechanism there as the $W^{(5)}$-projection in
+the top pole of $W^{(3)}(z)W^{(4)}(w)$.
+
+Proposition~\ref{prop:winfty-stage5-higher-spin-target-blocks}
+regroups the same higher-spin packet by target spin.
+Corollary~\ref{cor:winfty-stage5-target5-corridor} then identifies the
+first local three-channel strip as the target-$5$ corridor, whose first
+step is exactly the singleton $(3,4;5;0,2)$, and
+Corollary~\ref{cor:winfty-stage5-target5-residual} identifies the
+residual continuation after that tail input as the two-channel ladder
+$\mathcal{J}_5^{\mathrm{tr},5}$.
+Proposition~\ref{prop:winfty-stage5-target5-transport-mechanism}
+identifies the exact residual continuation as the comparison of the
+$W^{(5)}$-projection in $W^{(3)}(z)W^{(5)}(w)$ and
+$W^{(4)}(z)W^{(5)}(w)$.
+
+Proposition~\ref{prop:winfty-stage5-transport-target-ladders}
+splits the mixed packet into three fixed-target ladders.
+Proposition~\ref{prop:winfty-stage5-transport-pole-profiles} orders
+those transport ladders by pole profile and identifies
+$\mathcal{J}_5^{\mathrm{tr},5}$ as the lowest-pole next local surface.
 
 Proof route: (1)~construct the intended filtered H-level target with
 compatible finite quotients; (2)~prove the exact Yangian identities
@@ -1802,10 +1872,16 @@ two-point/Ward package.  Failure of either identity would force
 revision of the factorization-target construction.  Once the visible
 Virasoro Ward action is fixed,
 Proposition~\ref{prop:winfty-stage4-visible-pairing-gap} identifies the
-exact remaining missing input as diagonal visible pairing
-normalization.  Mixed-weight orthogonality is already forced by
-Proposition~\ref{conj:winfty-stage4-visible-orthogonality}; the
-remaining diagonal input is isolated in
+exact remaining missing input as the single visible weight-$4$
+self-pairing normalization, equivalently the scalar identity
+\[
+\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
+\]
+Mixed-weight orthogonality is already forced by
+Proposition~\ref{conj:winfty-stage4-visible-orthogonality}, and the
+visible $W^{(3)}$ self-normalization is already theorematic by
+Proposition~\ref{prop:winfty-stage4-visible-w3-normalization}.  The
+remaining weight-$4$ input is isolated in
 Conjecture~\ref{conj:winfty-stage4-visible-diagonal-normalization} and
 packaged by
 Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
@@ -2024,9 +2100,13 @@ from $K-1$\textup{)}.  So the live KL discriminant is no longer a
 brute-force $B_5 \to B_2$ sweep, but the cancellation/annihilator
 problem between that first-term $57$-plane and the remaining
 nonresidual split contributions.  In fact the combined non-first split
-sector already spans that same $57$-plane, so the next task is an
-internal cancellation operator on a common quotient plane rather than a
-search for further quotient directions.
+sector already spans that same $57$-plane, and a canonical
+$57$-column witness basis now extracts the internal cancellation
+operator there as exactly $(-1-i)\mathrm{Id}$.  Equivalently the
+weighted full split action vanishes on that witness plane.  The honest
+next task is to lift this witness-basis scalar cancellation to an
+exhaustive compressed verification of the whole surviving packet rather
+than continue a brute-force direction search.
 
 \smallskip\noindent
 \textbf{Front~D\,: MC4 coefficient matching.}
@@ -2043,7 +2123,11 @@ c_{444}^2 = \frac{112c^2(2c-1)(3c+46)}{(c+24)(7c+68)(10c+197)(5c+3)},
 
 plus inter-coefficient relations
 $\mathsf{C}_{3,4;3;0,4}^2 = \tfrac{9}{16}\,c_{334}^2$,
-$\mathsf{C}_{3,4;4;0,3}^2 = \tfrac{5}{7}\,c_{334}^2$.
+$\mathsf{C}_{3,4;4;0,3}^2 = \tfrac{5}{7}\,c_{334}^2$
+\textup{(}Corollary~\ref{cor:w4-ds-stage4-square-class-reduction}\textup{)}.
+Thus at signless square-class level the four higher-spin principal
+targets reduce to the primitive pair
+$c_{334}^2,c_{444}^2$, with the mixed squares forced by~$c_{334}^2$.
 
 Both principal Virasoro-target identities are verified.
 The live W-side packet is therefore the six identities
@@ -4553,9 +4637,16 @@ frontier is ordered rather than undifferentiated:
   Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}
   reduces the spectral side to the completed fundamental packet, and
   Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}
-  sharpens that further to the completed vector packet,
-  Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}
-  then makes the spectral compact-core realization formal, and
+  sharpens that to the ordered vector packet, while
+  Proposition~\ref{prop:quantum-fd-vector-seed-shifts} constructs the
+  standard source vector seed-and-shift datum and
+  Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction}
+  makes it canonical on any realized spectral vector line,
+  Proposition~\ref{prop:yangian-dk5-spectral-core-shifts}
+  extends it to the full spectral compact core, and
+  Corollary~\ref{cor:yangian-dk5-spectral-seed-realization}
+  packages the converse closure statement from that standard datum to
+  the full spectral side, while
   Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} constructs the
   ambient spectral category as
   \(\operatorname{Ind}(\mathcal{C}_q^\omega)\), while
@@ -4565,7 +4656,8 @@ frontier is ordered rather than undifferentiated:
   the dg compact core; Corollary~\ref{cor:yangian-dk5-dg-packet-ind}
   then constructs the dg ambient category as
   \(\operatorname{Ind}(\mathcal{C}_Y^\omega)\), so the genuinely live
-  categorical remainder is exactly the spectral vector packet;
+  categorical remainder is exactly realization of that standard
+  spectral vector seed-and-shift datum;
   the compact-core equivalence and completed comparison functor are
   then formal by ind-extension
   \textup{(}Remark~\ref{rem:yangian-dk5-input}\textup{)}.
@@ -5163,8 +5255,12 @@ $K-1$\textup{)}, so the next comparison target is the
 cancellation/annihilator problem between that first-term $57$-plane and
 the remaining nonresidual split contributions rather than the full
 $B_5 \to B_2$ map.  The combined non-first split sector already spans
-that same $57$-plane, so the live issue is now an internal
-cancellation operator on a common quotient plane.
+that same $57$-plane, and a canonical $57$-column witness basis now
+extracts the internal cancellation operator there as exactly
+$(-1-i)\mathrm{Id}$, so the weighted full split action vanishes on the
+witness plane.  The live issue is therefore to lift that witness-basis
+scalar cancellation to an exhaustive compressed verification of the
+whole surviving packet.
 
 \smallskip
 \noindent\textbf{V5: Virasoro/$\mathcal{W}_N$ PBW analog.}

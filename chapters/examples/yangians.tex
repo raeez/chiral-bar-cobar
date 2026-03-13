@@ -1339,10 +1339,15 @@ Let
 \mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA}
 \]
 be the canonical H-level dg target of
-Proposition~\ref{prop:yangian-canonical-hlevel-target}.  Then there
-exists a separated complete dg algebra $\Ydg_{\cA}$ representing the
-same completed module category as $\mathfrak{g}_{\cA}$ and admitting an
-RTT-adapted filtration in the sense of
+Proposition~\ref{prop:yangian-canonical-hlevel-target}, and let
+\[
+U^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+\]
+be its canonical associative dg model from
+Proposition~\ref{prop:yangian-canonical-envelope}.  Then there exists a
+separated complete dg algebra $\Ydg_{\cA}$ quasi-isomorphic to
+$U^{\mathrm{comp}}(\mathfrak{g}_{\cA})$ and admitting an RTT-adapted
+filtration in the sense of
 Definition~\ref{def:rtt-adapted-filtration}.  More precisely:
 \begin{enumerate}
 \item the filtration is separated and complete for the pole order or
@@ -1360,8 +1365,9 @@ identifies that dg model $\Ydg_{\cA}$ with the coefficientwise RTT
 completion $\widehat Y_{\mathrm{RTT}}$.
 
 Equivalently, the open Yangian MC4 move is to present the canonical
-formal-moduli target by an RTT-adapted dg algebra model, not to
-construct the target itself.
+formal-moduli target by an RTT-adapted dg algebra model with theorematic
+finite RTT quotients, not to construct an associative dg target in the
+first place.
 \end{conjecture}
 
 \begin{remark}[Why line operators should control the filtration]
@@ -7057,6 +7063,51 @@ $\mathfrak{g}_{\cA}$ with an RTT-adapted dg model, not to construct the
 target itself.
 \end{proof}
 
+\begin{proposition}[Canonical associative dg model of the Yangian
+formal-moduli target; \ClaimStatusProvedHere]
+\label{prop:yangian-canonical-envelope}
+Let
+\[
+\mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA}
+\]
+be the tangent dg Lie algebra of the factorization formal moduli
+problem.  Let
+\[
+U^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+\]
+denote the completion of its universal enveloping dg algebra with
+respect to the adic filtration defining complete
+$\mathfrak{g}_{\cA}$-modules.  Then
+$U^{\mathrm{comp}}(\mathfrak{g}_{\cA})$ is a canonically attached
+separated complete dg algebra, and there is a canonical equivalence
+\[
+\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+\;\simeq\;
+\operatorname{Mod}^{\mathrm{comp}}\bigl(
+  U^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+\bigr).
+\]
+For the Yangian $\Eone$-chiral algebra, this gives an unconditional
+canonical associative dg model of the H-level target.
+\end{proposition}
+
+\begin{proof}
+The universal enveloping construction extends functorially to dg Lie
+algebras.  Completing with respect to the same adic filtration that
+defines the completed module category of the formal moduli problem
+produces a separated complete dg algebra
+$U^{\mathrm{comp}}(\mathfrak{g}_{\cA})$.
+
+By the universal property of the enveloping algebra, an action of the
+dg Lie algebra $\mathfrak{g}_{\cA}$ on a complete dg module is
+equivalent to an action of
+$U^{\mathrm{comp}}(\mathfrak{g}_{\cA})$ on the same object, and the
+intertwining morphisms are identical on both sides.  Hence the
+completed module categories are canonically equivalent.  Specializing
+to the Yangian $\Eone$-chiral algebra gives the claimed canonical
+associative dg model.
+\end{proof}
+
 \begin{theorem}[DK-4 as tangent Lie algebra identification;
 \ClaimStatusConjectured]
 \label{thm:dk4-formal-moduli}
@@ -8966,6 +9017,555 @@ Therefore the restriction of \(J_q^\omega\) to
 Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}.
 \end{proof}
 
+\begin{proposition}[On the spectral side, ordered vector-packet
+transport is forced by the completed vector line;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-vector-line}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}.  Let
+\[
+\mathcal{L}^{\mathrm{vec,fd}}_{q}
+\subset
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\]
+be the full subcategory spanned by the vector evaluation objects
+themselves, and let
+\[
+\mathcal{L}^{\mathrm{vec}}_{q}
+\subset
+\mathcal{C}_q^\omega
+\]
+be the full subcategory spanned by their completed spectral images.
+Assume that the exact braided monoidal functor \(J_q^\omega\)
+restricts to an equivalence
+\[
+\mathcal{L}^{\mathrm{vec,fd}}_{q}
+\xrightarrow{\sim}
+\mathcal{L}^{\mathrm{vec}}_{q}.
+\]
+Then on every object of \(\mathcal{P}^{\mathrm{vec,fd}}_{q}\) the
+restriction of \(J_q^\omega\) is forced to be the ordered tensor
+product of the corresponding completed vector objects, and on the
+braid-group operators of the ordered vector packet it is forced to be
+the trigonometric braiding of \(\mathcal{C}_q^\omega\).
+
+Equivalently, once the completed spectral vector line is fixed inside
+the spectral compact core, the exact braided-monoidal transport on the
+whole ordered vector packet carries no additional object-level or
+braiding-level freedom.
+\end{proposition}
+
+\begin{proof}
+By definition,
+\(\mathcal{P}^{\mathrm{vec,fd}}_{q}\) consists of finite ordered
+tensor products of objects of \(\mathcal{L}^{\mathrm{vec,fd}}_{q}\).
+Because \(J_q^\omega\) is braided monoidal, its value on such an
+ordered tensor product is forced to be the ordered tensor product of
+the images of the individual vector objects in
+\(\mathcal{L}^{\mathrm{vec}}_{q}\).  Definition~\ref{def:e1-factorization-category}
+identifies the braid-group action on an ordered tensor packet with the
+braiding/monodromy of the factorization category itself.  Since
+\(J_q^\omega\) preserves braidings, the induced braid-group operators
+on the target packet are therefore exactly the trigonometric braiding
+operators of \(\mathcal{C}_q^\omega\).  This proves the stated
+uniqueness of the ordered vector-packet transport.
+\end{proof}
+
+\begin{proposition}[Standard quantum-loop vector seed and additive
+log-spectral shifts; \ClaimStatusProvedHere]
+\label{prop:quantum-fd-vector-seed-shifts}
+Let
+\[
+V(0)\in \mathcal{L}^{\mathrm{vec,fd}}_{q}
+\]
+be the vector evaluation object of the quantum loop algebra at
+multiplicative spectral parameter \(1\), viewed on the additive
+log-spectral line via the exponential coordinate \(z=e^u\).  For every
+\(a\in \mathbb{C}\), let
+\[
+\mathsf{T}^{\mathrm{fd}}_a\colon
+\mathcal{L}^{\mathrm{vec,fd}}_{q}\xrightarrow{\sim}
+\mathcal{L}^{\mathrm{vec,fd}}_{q}
+\]
+be the pullback along the loop-rotation automorphism \(z\mapsto e^a z\)
+of the quantum loop algebra.  Then each
+\(\mathsf{T}^{\mathrm{fd}}_a\) is an exact braided-monoidal
+autoequivalence, and
+\[
+\mathsf{T}^{\mathrm{fd}}_a(V(0))\cong V(a),
+\qquad
+\mathsf{T}^{\mathrm{fd}}_{a+b}\cong
+\mathsf{T}^{\mathrm{fd}}_a\circ \mathsf{T}^{\mathrm{fd}}_b,
+\qquad
+\mathsf{T}^{\mathrm{fd}}_0\cong \id .
+\]
+
+Equivalently, the finite-dimensional quantum-group vector line is the
+orbit of one vector seed under the standard additive log-spectral
+shifts.
+\end{proposition}
+
+\begin{proof}
+For the quantum loop algebra, loop rotation in the multiplicative
+spectral coordinate sends an evaluation module at parameter \(z_0\) to
+the evaluation module at parameter \(e^a z_0\); see
+\cite[Ch.~12]{ChariPressley94} and \cite[\S2]{Hernandez05}.  Passing to
+the additive logarithmic coordinate \(u\) with \(z=e^u\), this becomes
+the displayed family of shifts indexed by \(a\in\mathbb{C}\).  Because
+loop rotation is a Hopf algebra automorphism, pullback along it defines
+an exact braided-monoidal autoequivalence on the finite-dimensional
+factorization category, hence on the full vector line.  Applying the
+shift to the seed object at multiplicative parameter \(1\) gives the
+vector evaluation object at multiplicative parameter \(e^a\), denoted
+here by \(V(a)\).  The group law and unit are immediate from
+composition of loop rotations.
+\end{proof}
+
+\begin{proposition}[On the spectral side, the completed vector line is
+forced by one completed vector seed together with spectral shifts;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-vector-seed}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-spectral-vector-line}.  Fix one
+source vector evaluation object \(V(0)\in
+\mathcal{L}^{\mathrm{vec,fd}}_{q}\) and one completed spectral vector
+object \(V^\omega(0)\in \mathcal{L}^{\mathrm{vec}}_{q}\).  Assume
+moreover that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item for every \(a\in \mathbb{C}\), the source vector evaluation line
+  carries an exact braided-monoidal spectral-shift autoequivalence
+  \[
+  \mathsf{T}^{\mathrm{fd}}_a\colon
+  \mathcal{L}^{\mathrm{vec,fd}}_{q}\xrightarrow{\sim}
+  \mathcal{L}^{\mathrm{vec,fd}}_{q}
+  \]
+  with \(\mathsf{T}^{\mathrm{fd}}_a(V(0))\cong V(a)\);
+\item for every \(a\in \mathbb{C}\), the completed spectral vector line
+  carries an exact braided-monoidal spectral-shift autoequivalence
+  \[
+  \mathsf{T}^{\omega}_a\colon
+  \mathcal{L}^{\mathrm{vec}}_{q}\xrightarrow{\sim}
+  \mathcal{L}^{\mathrm{vec}}_{q}
+  \]
+  with \(\mathsf{T}^{\omega}_a(V^\omega(0))\cong V^\omega(a)\); and
+\item the exact braided monoidal functor \(J_q^\omega\) intertwines
+  these shift autoequivalences on the vector line:
+  \[
+  J_q^\omega\circ \mathsf{T}^{\mathrm{fd}}_a
+  \cong
+  \mathsf{T}^{\omega}_a\circ J_q^\omega
+  \qquad (a\in \mathbb{C}),
+  \]
+  and identifies \(V(0)\) with \(V^\omega(0)\).
+\end{enumerate}
+Then the restriction of \(J_q^\omega\) to
+\(\mathcal{L}^{\mathrm{vec,fd}}_{q}\) is uniquely determined up to
+unique natural isomorphism by the image of the single seed object
+\(V(0)\) together with the compatible spectral-shift structure.
+
+Equivalently, once one completed vector object and the standard
+spectral-shift action are fixed, the whole completed vector line carries
+no additional categorical freedom.
+\end{proposition}
+
+\begin{proof}
+For every \(a\in\mathbb{C}\), assumption~\textup{(i)} identifies the
+source vector evaluation object \(V(a)\) with
+\(\mathsf{T}^{\mathrm{fd}}_a(V(0))\), while assumption~\textup{(ii)}
+identifies the target completed vector object \(V^\omega(a)\) with
+\(\mathsf{T}^{\omega}_a(V^\omega(0))\).  By
+assumption~\textup{(iii)}, \(J_q^\omega\) carries
+\(\mathsf{T}^{\mathrm{fd}}_a(V(0))\) to
+\(\mathsf{T}^{\omega}_a(V^\omega(0))\).  Since \(J_q^\omega\) already
+identifies \(V(0)\) with \(V^\omega(0)\), the image of every
+\(V(a)\) is therefore forced to be \(V^\omega(a)\).  The same
+intertwining relation forces the restriction of \(J_q^\omega\) on the
+full vector line up to unique natural isomorphism, because every object
+of \(\mathcal{L}^{\mathrm{vec,fd}}_{q}\) is obtained from the seed by
+the exact braided-monoidal shift autoequivalences.
+\end{proof}
+
+\begin{proposition}[On the realized spectral vector-line locus, the
+completed vector seed and spectral shifts are canonical;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-seed-shift-construction}
+Work in the setting of
+Propositions~\ref{prop:quantum-fd-vector-seed-shifts}
+and~\ref{prop:yangian-dk5-spectral-vector-line}.  Assume that the exact
+braided monoidal functor
+\[
+J_q^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\longrightarrow
+\mathcal{C}_q^\omega
+\]
+restricts to an equivalence
+\[
+\mathcal{L}^{\mathrm{vec,fd}}_{q}\xrightarrow{\sim}
+\mathcal{L}^{\mathrm{vec}}_{q}.
+\]
+Define
+\[
+V^\omega(0):=J_q^\omega(V(0))
+\]
+and for each \(a\in\mathbb{C}\) define
+\[
+\mathsf{T}^{\omega}_a
+:=
+\left.J_q^\omega\right|_{\mathcal{L}^{\mathrm{vec,fd}}_{q}}
+\circ
+\mathsf{T}^{\mathrm{fd}}_a
+\circ
+\left(\left.J_q^\omega\right|_{\mathcal{L}^{\mathrm{vec,fd}}_{q}}\right)^{-1}.
+\]
+Then each \(\mathsf{T}^{\omega}_a\) is an exact braided-monoidal
+autoequivalence of \(\mathcal{L}^{\mathrm{vec}}_{q}\), and
+\[
+\mathsf{T}^{\omega}_a(V^\omega(0))\cong V^\omega(a),
+\qquad
+\mathsf{T}^{\omega}_{a+b}\cong
+\mathsf{T}^{\omega}_a\circ \mathsf{T}^{\omega}_b,
+\qquad
+\mathsf{T}^{\omega}_0\cong \id .
+\]
+In particular, the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-vector-seed} are automatic
+on any realized spectral vector-line locus.
+
+Equivalently, once the spectral vector line itself is realized, the
+completed vector seed and its spectral-shift action are not extra
+choices: they are canonically transported from the standard quantum-loop
+evaluation line.
+\end{proposition}
+
+\begin{proof}
+Because the restriction of \(J_q^\omega\) to
+\(\mathcal{L}^{\mathrm{vec,fd}}_{q}\) is an equivalence, conjugation by
+that restriction defines exact braided-monoidal autoequivalences
+\(\mathsf{T}^{\omega}_a\) on \(\mathcal{L}^{\mathrm{vec}}_{q}\).  By
+construction,
+\[
+\mathsf{T}^{\omega}_a(V^\omega(0))
+\cong
+J_q^\omega\bigl(\mathsf{T}^{\mathrm{fd}}_a(V(0))\bigr)
+\cong
+J_q^\omega(V(a))
+=
+V^\omega(a).
+\]
+The group law and unit transport verbatim from
+Proposition~\ref{prop:quantum-fd-vector-seed-shifts} by conjugation.
+Thus the target vector seed and its spectral-shift action are canonically
+inherited from the standard source vector line, and the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-vector-seed} follow
+immediately.
+\end{proof}
+
+\begin{proposition}[On the realized spectral vector-line locus, loop
+rotation descends to the full spectral compact core;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-core-shifts}
+Work in the setting of
+Propositions~\ref{prop:yangian-dk5-spectral-seed-shift-construction}
+and~\ref{prop:yangian-dk5-spectral-realization-formal}.  Assume that
+the exact braided monoidal functor \(J_q^\omega\) restricts to an
+equivalence
+\[
+\mathcal{L}^{\mathrm{vec,fd}}_{q}\xrightarrow{\sim}
+\mathcal{L}^{\mathrm{vec}}_{q}.
+\]
+Let \(\mathsf{T}^{\omega}_a\) be the induced exact braided-monoidal
+autoequivalences of the completed vector line from
+Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction}.
+Then each \(\mathsf{T}^{\omega}_a\) extends uniquely to an exact
+braided-monoidal autoequivalence, still denoted
+\[
+\mathsf{T}^{\omega}_a\colon
+\mathcal{C}_q^\omega\xrightarrow{\sim}\mathcal{C}_q^\omega,
+\]
+and these extensions preserve the completed vector packet, completed
+fundamental packet, and completed tensor-generator packet.  Moreover,
+\[
+\mathsf{T}^{\omega}_{a+b}\cong
+\mathsf{T}^{\omega}_a\circ \mathsf{T}^{\omega}_b,
+\qquad
+\mathsf{T}^{\omega}_0\cong \id
+\]
+on the full spectral compact core.
+
+Equivalently, once the spectral vector line is realized, the standard
+loop-rotation family no longer needs a separate compact-core
+construction: it descends formally from the line to all of
+\(\mathcal{C}_q^\omega\).
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction},
+each \(\mathsf{T}^{\omega}_a\) is exact and braided monoidal on the
+completed vector line.  Therefore it acts on finite ordered tensor
+products of vector objects, so it extends uniquely to the ordered
+vector packet.  Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}
+identifies the completed fundamental packet as the full subcategory of
+standard type-$A$ \(q\)-antisymmetric direct summands inside those
+ordered tensor powers, so the exact braided-monoidal
+\(\mathsf{T}^{\omega}_a\) preserves the completed fundamental packet as
+well.  Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}
+then identifies the completed tensor-generator packet as the full
+subcategory generated by finite ordered tensor products of those
+fundamental objects, so the same is true there.
+
+Finally,
+\[
+\mathcal{C}_q^\omega=
+\operatorname{thick}^{\mathrm{idemp}}(\mathcal{G}^{\mathrm{fund}}_{q})
+\]
+by Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}.  An
+exact braided-monoidal functor on
+\(\mathcal{G}^{\mathrm{fund}}_{q}\) therefore extends uniquely across
+shifts, cones, direct summands, and ordered tensor products to the
+full thick idempotent-complete closure, giving the required
+autoequivalence of \(\mathcal{C}_q^\omega\).  The group law and unit
+already hold on the completed vector line by
+Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction}, so
+uniqueness of extension transports them to the full compact core.
+\end{proof}
+
+\begin{proposition}[Loop rotation is intrinsic on a multiplicative
+spectral realization of the compact core; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-factorization-shifts}
+Work in the setting of
+Definitions~\ref{def:ordered-e1-factorization}
+and~\ref{def:spectral-quantum-group}.  Assume the spectral compact core
+\[
+\mathcal{C}_q^\omega
+\]
+is realized as a full stable idempotent-complete braided-monoidal
+subcategory of
+\[
+\Factord(\bC^\times;\QGspec(R_{\cA}))
+\]
+that is closed under pullback along the multiplicative dilations
+\[
+\rho_a\colon \bC^\times \xrightarrow{\sim}\bC^\times,
+\qquad
+z\longmapsto e^a z
+\qquad (a\in\mathbb C).
+\]
+Then pullback along \(\rho_a\) restricts to an exact
+braided-monoidal autoequivalence
+\[
+\mathsf T_a^\omega := \rho_a^*
+\colon
+\mathcal C_q^\omega\xrightarrow{\sim}\mathcal C_q^\omega
+\]
+for every \(a\in\mathbb C\), and
+\[
+\mathsf T_{a+b}^\omega \cong
+\mathsf T_a^\omega\circ \mathsf T_b^\omega,
+\qquad
+\mathsf T_0^\omega\cong \id.
+\]
+
+Equivalently, on any multiplicative spectral factorization realization
+of the compact core, the target-side loop-rotation family is intrinsic:
+it is pullback along dilations of the spectral line, not extra
+categorical data.
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:e1-factorization-category}, an ordered
+\(\Eone\)-factorization category on \(\bC^\times\) is built from
+modules on ordered configuration spaces, factorization isomorphisms on
+disjoint intervals, braid-group monodromy around the diagonals, and the
+fusion product.  Each dilation \(\rho_a\) is an automorphism of
+\(\bC^\times\), so it induces automorphisms of all ordered
+configuration spaces \(C_n^{\mathrm{ord}}(\bC^\times)\).  Pullback
+along those automorphisms therefore preserves the module categories, the
+factorization isomorphisms, the braid-group monodromy, and the fusion
+product.  Hence \(\rho_a^*\) is an exact braided-monoidal
+autoequivalence of the ambient ordered factorization category.
+
+By the stated closure hypothesis, \(\rho_a^*\) restricts to an exact
+braided-monoidal autoequivalence of the full compact core
+\(\mathcal C_q^\omega\).  The group law and unit are immediate from
+\[
+\rho_{a+b}=\rho_a\circ \rho_b,
+\qquad
+\rho_0=\id_{\bC^\times},
+\]
+and functoriality of pullback.
+\end{proof}
+
+\begin{corollary}[On the multiplicative spectral realization locus, one
+vector seed forces the full spectral DK-5 packet;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-one-seed}
+Work in the setting of
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts}
+and Corollary~\ref{cor:yangian-dk5-spectral-seed-realization}.  Assume
+moreover that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item there is a completed vector seed
+  \[
+  V^\omega(0)\in \mathcal C_q^\omega;
+  \]
+\item the exact braided-monoidal functor
+  \[
+  J_q^\omega\colon
+  \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+  \longrightarrow
+  \mathcal C_q^\omega
+  \]
+  identifies the source vector seed \(V(0)\) with \(V^\omega(0)\); and
+\item on the source vector line, \(J_q^\omega\) intertwines the
+  standard source loop-rotation family
+  \(\mathsf T_a^{\mathrm{fd}}\) with the target pullback family
+  \(\mathsf T_a^\omega=\rho_a^*\).
+\end{enumerate}
+Then the hypotheses of
+Corollary~\ref{cor:yangian-dk5-spectral-seed-realization} are
+automatic.  In particular, the completed vector line, ordered vector
+packet, completed fundamental packet, ordered tensor-generator packet,
+spectral compact core, and ambient spectral category are all formal.
+
+Equivalently, once the spectral compact core is realized on the
+multiplicative spectral line, the remaining Yangian spectral input is
+no longer an arbitrary seed-and-shift datum.  It is exactly one base
+vector seed \(V^\omega(0)\) compatible with source loop rotation.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts}
+constructs the target shift family
+\(\mathsf T_a^\omega=\rho_a^*\) intrinsically from the multiplicative
+spectral realization of \(\mathcal C_q^\omega\).  Define
+\[
+V^\omega(a):=\mathsf T_a^\omega(V^\omega(0))
+\qquad (a\in \mathbb C).
+\]
+Then assumptions~\textup{(i)}--\textup{(iii)} are exactly the
+hypotheses \textup{(i)}--\textup{(iii)} of
+Corollary~\ref{cor:yangian-dk5-spectral-seed-realization}, with the
+group law and unit for \(\mathsf T_a^\omega\) furnished by
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts}.
+Applying that corollary gives the stated formal consequences.
+\end{proof}
+
+\begin{corollary}[Realization of the standard spectral vector
+seed-and-shift datum forces the full spectral DK-5 packet;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-seed-realization}
+Work in the setting of
+Propositions~\ref{prop:quantum-fd-vector-seed-shifts}
+and~\ref{prop:yangian-dk5-spectral-realization-formal}.  Let
+\[
+J_q^\omega\colon
+\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+\longrightarrow
+\mathcal{C}_q^\omega
+\]
+be an exact braided monoidal functor.  Assume that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item there is a completed vector seed
+  \[
+  V^\omega(0)\in \mathcal{C}_q^\omega;
+  \]
+\item for every \(a\in\mathbb{C}\), there is an exact
+  braided-monoidal autoequivalence
+  \[
+  \mathsf{T}_a^\omega\colon
+  \mathcal{C}_q^\omega\xrightarrow{\sim}\mathcal{C}_q^\omega
+  \]
+  with
+  \[
+  \mathsf{T}_{a+b}^\omega\cong
+  \mathsf{T}_a^\omega\circ \mathsf{T}_b^\omega,
+  \qquad
+  \mathsf{T}_0^\omega\cong \id;
+  \]
+\item if one defines
+  \[
+  V^\omega(a):=\mathsf{T}_a^\omega(V^\omega(0))
+  \qquad (a\in\mathbb{C}),
+  \]
+  then \(J_q^\omega\) identifies \(V(0)\) with \(V^\omega(0)\) and
+  intertwines the standard source shifts with the target shifts on the
+  vector seed:
+  \[
+  J_q^\omega\circ \mathsf{T}^{\mathrm{fd}}_a
+  \cong
+  \mathsf{T}^{\omega}_a\circ J_q^\omega
+  \qquad (a\in \mathbb{C}).
+  \]
+\end{enumerate}
+Let
+\[
+\mathcal{L}^{\mathrm{vec}}_{q}
+\subset
+\mathcal{C}_q^\omega
+\]
+be the full subcategory spanned by the objects \(V^\omega(a)\).  Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the restriction
+  \[
+  \mathcal{L}^{\mathrm{vec,fd}}_{q}
+  \xrightarrow{\sim}
+  \mathcal{L}^{\mathrm{vec}}_{q}
+  \]
+  of \(J_q^\omega\) is an exact braided-monoidal equivalence;
+\item the ordered vector packet, completed fundamental packet, and
+  ordered tensor-generator packet are formal from that realized datum;
+\item \(J_q^\omega\) is an exact braided-monoidal equivalence
+  \[
+  \operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_M))^{\mathrm{op}}
+  \xrightarrow{\sim}
+  \mathcal{C}_q^\omega;
+  \]
+\item the ambient completed spectral category is canonically
+  \[
+  \operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+  \simeq
+  \operatorname{Ind}(\mathcal{C}_q^\omega).
+  \]
+\end{enumerate}
+
+Equivalently, once the standard quantum-loop vector seed-and-shift
+datum is realized inside the spectral compact core, the whole spectral
+side of DK-5 is formal.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:quantum-fd-vector-seed-shifts}, the source
+vector line is the orbit of the single seed \(V(0)\) under the
+standard additive log-spectral shifts.  Assumptions~\textup{(i)}
+--\textup{(iii)} provide the corresponding target seed-and-shift datum
+inside \(\mathcal{C}_q^\omega\).  Because
+\[
+\mathsf{T}_a^\omega(V^\omega(b))
+\cong
+V^\omega(a+b),
+\]
+the autoequivalences \(\mathsf{T}_a^\omega\) preserve the full
+subcategory \(\mathcal{L}^{\mathrm{vec}}_{q}\).  Therefore
+Proposition~\ref{prop:yangian-dk5-spectral-vector-seed} applies and
+forces the restriction of \(J_q^\omega\) to
+\(\mathcal{L}^{\mathrm{vec,fd}}_{q}\), giving \textup{(a)}.
+
+Now Proposition~\ref{prop:yangian-dk5-spectral-vector-line} makes the
+ordered vector packet formal from that vector-line realization,
+Proposition~\ref{prop:yangian-dk5-spectral-vector-packet} promotes this
+to the completed fundamental packet,
+Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}
+promotes that to the ordered tensor-generator packet, and
+Proposition~\ref{prop:yangian-dk5-spectral-realization-formal} upgrades
+the generator-packet equivalence to an exact braided-monoidal
+equivalence on the full spectral compact core.  This proves
+\textup{(b)} and \textup{(c)}.  Finally,
+Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} identifies the
+ambient spectral category with \(\operatorname{Ind}(\mathcal{C}_q^\omega)\),
+proving \textup{(d)}.
+\end{proof}
+
 \begin{corollary}[On the realized spectral packet locus, the ambient
 spectral category is the ind-completion of the spectral compact core;
 \ClaimStatusProvedHere]
@@ -8993,11 +9593,25 @@ In particular, the ambient completed spectral category is compactly
 generated by the completed fundamental spectral packet
 \(\mathcal{G}^{\mathrm{fund}}_{q}\).
 
-Equivalently, once the completed vector spectral packet is constructed,
-the completed fundamental packet, ordered tensor-generator packet, and
-hence the ambient spectral category are canonical by thick closure and
-ind-completion, so the spectral side of DK-5 no longer carries extra
-categorical content beyond that vector packet.
+Equivalently, the standard source vector seed and shifts are already
+constructed by Proposition~\ref{prop:quantum-fd-vector-seed-shifts}, and
+on any realized spectral vector-line locus they are canonically
+transported to the target by
+Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction}
+and extended to the full spectral compact core by
+Proposition~\ref{prop:yangian-dk5-spectral-core-shifts}.  Conversely,
+Corollary~\ref{cor:yangian-dk5-spectral-seed-realization} packages the
+whole reverse implication: once that standard vector seed-and-shift
+datum is realized in \(\mathcal{C}_q^\omega\), the completed vector
+line, ordered vector packet, completed fundamental packet, spectral
+compact core, and ambient spectral category are all formal.  So the
+spectral side of DK-5 no longer carries extra categorical content
+beyond realization of that standard vector seed-and-shift datum.
+\emph{More sharply}, on the multiplicative spectral realization locus
+of Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts},
+the loop-rotation family is intrinsic, and
+Corollary~\ref{cor:yangian-dk5-spectral-one-seed} reduces the remaining
+input further to one compatible base vector seed \(V^\omega(0)\).
 \end{corollary}
 
 \begin{proof}
@@ -9238,7 +9852,7 @@ packet compactly generates the ambient completed module category.
 \end{proof}
 
 \begin{corollary}[Given dg compact-core realization, the remaining
-DK-5 input is spectral vector-packet completion;
+DK-5 input is spectral vector seed-and-shift realization;
 \ClaimStatusProvedHere]
 \label{cor:yangian-dk5-dg-half-only}
 Assume the hypotheses of
@@ -9250,8 +9864,8 @@ that:
   \(\mathcal{C}_Y^\omega\) and \(\mathcal{C}_q^\omega\);
 \item the spectral compact core admits an exact braided monoidal
   functor \(J_q^\omega\) whose restriction to the vector evaluation
-  packet is an equivalence onto the completed vector spectral packet,
-  as in Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}; and
+  line is an equivalence onto the completed vector spectral line, as in
+  Proposition~\ref{prop:yangian-dk5-spectral-vector-line}; and
 \item there exists an exact braided monoidal equivalence
   \[
   J_Y^\omega\colon
@@ -9266,16 +9880,22 @@ Then the standard type-$A$ Yangian DK-5 packet closes.
 
 Equivalently, once exact dg compact-core realization and ambient
 compact-generation are in place, the only remaining non-formal
-categorical input is the spectral completed vector packet.
+categorical input is realization of the standard spectral vector
+seed-and-shift datum.
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}, the
-spectral functor \(J_q^\omega\) is automatically an exact braided
-monoidal equivalence, and
-Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} identifies the
-ambient spectral category with \(\operatorname{Ind}(\mathcal{C}_q^\omega)\).
-Therefore the full spectral half of the input of
+By Proposition~\ref{prop:quantum-fd-vector-seed-shifts}, the source
+vector line already comes with its standard seed-and-shift datum.  On
+the realized spectral vector-line locus,
+Propositions~\ref{prop:yangian-dk5-spectral-seed-shift-construction}
+and~\ref{prop:yangian-dk5-spectral-core-shifts} canonically transport
+that datum to the spectral compact core, and
+Corollary~\ref{cor:yangian-dk5-spectral-seed-realization} then closes
+the full spectral packet, including the ambient identification
+\(\operatorname{Rep}^{\mathrm{spec}}(\QGspec(R_{\cA}))^{\mathrm{op}}
+\simeq \operatorname{Ind}(\mathcal{C}_q^\omega)\).  Therefore the full
+spectral half of the input of
 Corollary~\ref{cor:yangian-dk5-core-realization} is satisfied.
 Together with the dg hypotheses already assumed here, that corollary
 applies and closes DK-5.
@@ -9510,16 +10130,23 @@ packet already in hand:
   \(\operatorname{Ind}(\mathcal{C}_Y^\omega)\) by
   Corollary~\ref{cor:yangian-dk5-dg-packet-ind}, so the dg half of
   DK-5 no longer carries an extra categorical frontier;
-\item on the spectral side, construct the completed vector packet;
-  Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}
-  promotes that to the completed fundamental packet,
-  Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet}
-  then promotes that to the full ordered tensor-generator packet,
-  Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}
-  then makes the full spectral compact-core realization formal, and
-  Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} constructs the
-  ambient spectral category as
-  \(\operatorname{Ind}(\mathcal{C}_q^\omega)\);
+\item on the spectral side, realize the standard quantum-loop vector
+  seed-and-shift datum inside the compact core; the source datum is
+  standard by
+  Proposition~\ref{prop:quantum-fd-vector-seed-shifts}, and on any
+  realized spectral vector line it is canonical by
+  Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction};
+  Proposition~\ref{prop:yangian-dk5-spectral-core-shifts}
+  descends the loop-rotation family to the whole compact core,
+  Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts}
+  makes that loop-rotation family intrinsic on any multiplicative
+  spectral realization of the compact core,
+  Corollary~\ref{cor:yangian-dk5-spectral-one-seed}
+  reduces the remaining input there to one compatible base vector seed,
+  and Corollary~\ref{cor:yangian-dk5-spectral-seed-realization}
+  then makes the completed vector line, ordered vector packet,
+  completed fundamental packet, ordered tensor-generator packet,
+  spectral compact core, and ambient spectral category formal;
 \item with those compact-core realizations in hand,
   Proposition~\ref{prop:yangian-dk5-core-realization} constructs the
   compact-core comparison functors and
@@ -9574,15 +10201,21 @@ construct the canonical completed dg fundamental packet and its exact
 extension to the dg compact core, so the remaining dg categorical input
 is removed by Corollary~\ref{cor:yangian-dk5-dg-packet-ind}.  On the
 spectral side,
-Proposition~\ref{prop:yangian-dk5-spectral-vector-packet},
-Proposition~\ref{prop:yangian-dk5-spectral-fundamental-packet},
-Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}, and
-Corollary~\ref{cor:yangian-dk5-spectral-packet-ind} show that once the
-completed vector spectral packet is constructed, the completed
-fundamental spectral packet, ordered tensor-generator packet, compact
-core, and ambient spectral category are all formal.  Thus the
-genuinely live categorical remainder is exactly that spectral vector
-packet.
+Proposition~\ref{prop:yangian-dk5-spectral-vector-seed},
+Proposition~\ref{prop:quantum-fd-vector-seed-shifts},
+Proposition~\ref{prop:yangian-dk5-spectral-seed-shift-construction},
+Proposition~\ref{prop:yangian-dk5-spectral-core-shifts},
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts},
+Corollary~\ref{cor:yangian-dk5-spectral-one-seed}, and
+Corollary~\ref{cor:yangian-dk5-spectral-seed-realization} show that
+once the standard vector seed-and-shift datum is realized in the
+spectral compact core, the completed vector line, ordered vector
+packet, completed fundamental spectral packet, ordered tensor-generator
+packet, compact core, and ambient spectral category are all formal; on
+the multiplicative spectral realization locus, the genuinely live input
+contracts further to one compatible base vector seed.
+Thus the genuinely live categorical remainder is exactly realization of
+that standard spectral vector seed-and-shift datum.
 MC5 begins only after this H-level comparison packet is in place.
 Accordingly, the middle term
 $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})$ should be read as
@@ -9901,7 +10534,7 @@ Then:
   dg-shifted Yangian target for the standard type-$A$ tower; and
 \item the local standard type-$A$ DK-4 packet is already closed, so the
   only remaining Yangian input is the already-isolated spectral
-  completed vector spectral packet.
+  realization of the standard spectral vector seed-and-shift datum.
 \end{enumerate}
 \end{proposition}
 
@@ -9929,7 +10562,7 @@ Proposition~\ref{prop:yangian-dk5-dg-realization-formal}, and
 Corollary~\ref{cor:yangian-dk5-dg-packet-ind}, the dg side is already
 formal from the canonical completed dg packet and its ind-completion.
 Thus the only remaining categorical input is the already-isolated
-completed vector spectral packet.
+realization of the standard spectral vector seed-and-shift datum.
 This proves~\textup{(c)}.
 \end{proof}
 
@@ -10036,15 +10669,15 @@ Let
 \mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA}
 \]
 be the canonical H-level dg target of
-Proposition~\ref{prop:yangian-canonical-hlevel-target}.  Assume there
-exists a separated complete dg algebra
+Proposition~\ref{prop:yangian-canonical-hlevel-target}, and let
 \[
-\Ydg_{\cA,\mathrm{can}}
+U^{\mathrm{comp}}(\mathfrak{g}_{\cA})
 \]
-presenting the same completed module category as
-\(\mathfrak{g}_{\cA}\), and that the hypotheses of
-Proposition~\ref{prop:yangian-typea-realization-criterion} hold for
-\(\Ydg_{\cA,\mathrm{can}}\).  Assume further that:
+be the canonical associative dg model of
+Proposition~\ref{prop:yangian-canonical-envelope}.  Assume that the
+hypotheses of Proposition~\ref{prop:yangian-typea-realization-criterion}
+hold for \(U^{\mathrm{comp}}(\mathfrak{g}_{\cA})\).  Assume further
+that:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the completed dg-shifted and spectral categories are presentable,
   stable, and compactly generated, with compact objects exactly
@@ -10057,21 +10690,20 @@ Proposition~\ref{prop:yangian-typea-realization-criterion} hold for
 Then the standard type-$A$ Yangian DK-4/DK-5 packet closes.
 
 Equivalently, the canonical formal-moduli target already exists.  Once
-an RTT-adapted dg algebra model for it is constructed and its compact
-core is realized as an exact braided monoidal completion of the proved
-finite-dimensional factorization DK core, the compact-core DK-5
-equivalence and the completed comparison are formal.
+its canonical completed enveloping dg algebra carries the RTT-adapted
+finite-quotient/shared-seed package and its compact core is realized as
+an exact braided monoidal completion of the proved finite-dimensional
+factorization DK core, the compact-core DK-5 equivalence and the
+completed comparison are formal.
 \end{corollary}
 
 \begin{proof}
 Proposition~\ref{prop:yangian-typea-realization-criterion} applies to
-\(\Ydg_{\cA,\mathrm{can}}\), so this dg algebra model realizes the
+\(U^{\mathrm{comp}}(\mathfrak{g}_{\cA})\), so this dg algebra model realizes the
 standard type-$A$ H-level Yangian target and closes the local DK-4
-packet.  Because \(\Ydg_{\cA,\mathrm{can}}\) presents the same
-completed module category as the canonical formal-moduli target
-\(\mathfrak{g}_{\cA}\), this closes the local packet on that canonical
-target as well.  The additional hypotheses are exactly the compact-core
-realization input of
+packet on the canonical formal-moduli target by
+Proposition~\ref{prop:yangian-canonical-envelope}.  The additional
+hypotheses are exactly the compact-core realization input of
 Corollary~\ref{cor:yangian-typea-realization-plus-core-realization},
 with \(\mathcal{C}_Y^\omega\) realized inside
 \(\operatorname{Mod}^{\mathrm{comp}}(\mathfrak{g}_{\cA})\) as
@@ -10079,14 +10711,14 @@ with \(\mathcal{C}_Y^\omega\) realized inside
 \end{proof}
 
 \begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from spectral
-vector-packet realization; \ClaimStatusProvedHere]
+vector-line realization; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-realization-plus-dg-packet}
 Assume the hypotheses of
 Proposition~\ref{prop:yangian-typea-realization-criterion}.  Assume
 further that the spectral compact core admits an exact braided monoidal
-functor \(J_q^\omega\) whose restriction to the vector evaluation
-packet is an equivalence onto the completed vector spectral packet, as
-in Proposition~\ref{prop:yangian-dk5-spectral-vector-packet}.
+functor \(J_q^\omega\) whose restriction to the vector evaluation line
+is an equivalence onto the completed vector spectral line, as in
+Proposition~\ref{prop:yangian-dk5-spectral-vector-line}.
 Then the standard type-$A$ Yangian DK-4/DK-5 packet closes.
 
 Equivalently, once the shared-bar-seed finite-quotient realization
@@ -10094,7 +10726,7 @@ package is in place, the dg half of DK-5 is already closed by the
 canonical dg compact-core realization and its ind-completion, and the
 ambient spectral category is formal from ind-completion of the spectral
 compact core.  The only remaining categorical input is therefore the
-spectral completed vector packet itself.
+realization of the standard spectral vector seed-and-shift datum.
 \end{corollary}
 
 \begin{proof}
@@ -10108,13 +10740,52 @@ Corollary~\ref{cor:yangian-dk5-dg-packet-ind} constructs the ambient dg
 module category as the ind-completion of that core.  Thus the dg side
 already satisfies the dg half of the input of
 Corollary~\ref{cor:yangian-dk5-core-realization}.  By
-Proposition~\ref{prop:yangian-dk5-spectral-vector-packet},
-Proposition~\ref{prop:yangian-dk5-spectral-realization-formal}, and
-Corollary~\ref{cor:yangian-dk5-spectral-packet-ind}, the same is true
-on the spectral side with compact core \(\mathcal{C}_q^\omega\).  Hence
-the hypotheses of
+Proposition~\ref{prop:quantum-fd-vector-seed-shifts},
+Propositions~\ref{prop:yangian-dk5-spectral-seed-shift-construction}
+and~\ref{prop:yangian-dk5-spectral-core-shifts}, together with
+Corollary~\ref{cor:yangian-dk5-spectral-seed-realization}, the same is
+true on the spectral side with compact core \(\mathcal{C}_q^\omega\).
+Hence the hypotheses of
 Corollary~\ref{cor:yangian-dk5-core-realization} are satisfied, so
 DK-5 closes.
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target: exact
+remaining input after RTT-adapted realization;
+\ClaimStatusProvedHere]
+\label{cor:yangian-canonical-realization-to-spectral-seed}
+Let
+\[
+\cA=\mathcal{Y}(\mathfrak{sl}_M),
+\qquad
+\mathfrak{g}_{\cA}:=T_*\mathfrak{F}_{\cA}
+\]
+be the canonical H-level dg target of
+Proposition~\ref{prop:yangian-canonical-hlevel-target}, and let
+\[
+U^{\mathrm{comp}}(\mathfrak{g}_{\cA})
+\]
+be its canonical associative dg model of
+Proposition~\ref{prop:yangian-canonical-envelope}.  Assume that the
+hypotheses of Proposition~\ref{prop:yangian-typea-realization-criterion}
+hold for \(U^{\mathrm{comp}}(\mathfrak{g}_{\cA})\).  Then the canonical
+formal-moduli target already carries the standard type-$A$ H-level
+dg realization, the local DK-4 packet is closed, and the dg
+compact-core side of DK-5 is formal.
+
+Equivalently, on the canonical Yangian target the only remaining
+standard type-$A$ input is realization of the standard spectral vector
+seed-and-shift datum in the spectral compact core.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:yangian-typea-realization-criterion} applied to
+\(U^{\mathrm{comp}}(\mathfrak{g}_{\cA})\) gives the standard type-$A$
+RTT-adapted dg realization, closes the local DK-4 packet, and reduces
+the remaining input to the standard spectral vector seed-and-shift
+datum.  Proposition~\ref{prop:yangian-canonical-envelope} identifies
+this dg model with the canonical formal-moduli target.  The final
+sentence is exactly this reformulation on the canonical target.
 \end{proof}
 
 \begin{remark}[Rational vs.\ trigonometric DK]

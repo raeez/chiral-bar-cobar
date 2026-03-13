@@ -290,7 +290,11 @@ now the cancellation/annihilator problem between that first-term
 comparison shows that the combined non-first split sector already spans
 that same `57`-plane, so the next attack is an internal cancellation
 operator on a common quotient plane rather than a hunt for extra
-directions.
+directions. A canonical `57`-column witness basis now extracts that
+operator explicitly, and it is exactly `(-1-i) Id` on the common plane,
+so the weighted full split action vanishes on the witness plane. The
+honest next move is to lift that witness-basis scalar cancellation to an
+exhaustive compressed verification of the whole surviving packet.
 
 **Key reframing (Session ~125)**: Kapranov's N-complex framework (1996) provides the right
 replacement. At q = e^{2πi/N}, the bar differential satisfies d^N = 0 (not d² = curvature).
@@ -335,11 +339,13 @@ first generator-level probe. The later split-form precursor stages
 the only live split term is the first one. That first-term sector now
 compresses to `1493` distinct right-product states and its standalone
 tensor span adds only `57` directions beyond the `3903`-rank seed span,
-so the next compute attack is an annihilator/cancellation model for
-that `57`-plane rather than another raw tuple sweep. The combined
-non-first split sector already spans the same `57`-plane, so the
-remaining work is to write the actual cancellation operator on that
-common plane.
+so the next compute attack is no longer another raw tuple sweep. The
+combined non-first split sector already spans the same `57`-plane, and
+a canonical `57`-column witness basis extracts the cancellation
+operator there as exactly `(-1-i) Id`; equivalently the weighted full
+split action vanishes on the witness plane. The remaining work is to
+upgrade that witness-basis scalar cancellation to an exhaustive
+compressed verification of the whole surviving packet.
 See NEW_MACHINERY.md #M2.
 
 ### Seeds in manuscript
@@ -662,6 +668,16 @@ Those identities are no longer a vague comparison slogan; they are
 detected on the finitely many generator-level primary coefficients,
 after which translation propagates them to all descendants.
 
+Foundationally, one should not first search for a closed
+infinite-generator presentation of `W_\infty^!`.  The standard
+principal tower already determines the completed M-level candidate
+`\varprojlim_N \bar B(W_N)`.  The open work is to realize a compatible
+H-level/factorization target with quotients `W_N`, prove the finite
+packet identities on `\mathcal I_N`, and then apply the inverse-limit
+comparison theorem.  In other words: the missing step is promotion of
+the standard completed bar candidate to an H-level dual object, not a
+new completion theorem on the bar side itself.
+
 On the Yangian side the parallel task is:
 construct an RTT-adapted filtration on the dg-shifted/factorization
 target, extract the one-loop line-operator kernel coefficients, and
@@ -735,16 +751,38 @@ first next reduced stage is already explicit:
 `prop:winfty-stage5-higher-spin-subblocks` breaks that packet into the
 source-pair ladder `1+3+3+1`, and
 `cor:winfty-stage5-entry-transport` isolates the first two-channel
-entry packet from the six-channel mixed transport packet, and
-`prop:winfty-stage5-transport-target-ladders` splits that mixed packet
-into three fixed-target two-channel ladders, and
+entry packet from the six-channel mixed transport packet.
+`prop:winfty-stage5-entry-mixed-self` then resolves that entry packet
+into the mixed-entry singleton `(3,4;5;0,2)` and the self-return
+singleton `(5,5;4;0,6)`.  `prop:winfty-stage5-higher-spin-target-blocks`
+also regroups the packet by target spin, and
+`cor:winfty-stage5-target5-corridor` identifies the first local
+three-channel strip as the target-`5` corridor
+`(3,4;5;0,2)`, `(3,5;5;0,3)`, `(4,5;5;0,4)`.
+`prop:winfty-stage5-reduced-tail-singleton` identifies
+`(3,4;5;0,2)` as the entire reduced tail input at stage `5`;
+`prop:winfty-stage5-tail-mechanism` identifies the exact missing
+comparison mechanism there as the `W^{(5)}`-projection in the top pole
+of `W^{(3)}(z)W^{(4)}(w)`; and
+`cor:winfty-stage5-target5-residual` identifies the residual
+continuation after that tail input as the two-channel ladder
+`\mathcal{J}_5^{\mathrm{tr},5}`;
+`prop:winfty-stage5-target5-transport-mechanism` identifies that
+residual continuation as the comparison of the `W^{(5)}`-projection in
+`W^{(3)}(z)W^{(5)}(w)` and `W^{(4)}(z)W^{(5)}(w)`.
+`prop:winfty-stage5-transport-target-ladders` splits the mixed packet
+into three fixed-target two-channel ladders,
+and `prop:winfty-stage5-transport-pole-profiles` identifies the
+target-`5` ladder as the lowest-pole transport lane and therefore the
+softest next local proof surface.
 `conj:winfty-stage5-higher-spin-identities` is the next finite
 bar-vs-DS identity list.  The exact missing lemma for making the
 stage-`4` four-channel contraction unconditional is now named
 explicitly as `conj:winfty-stage4-ward-inheritance`, whose open
-content splits into the visible mixed-weight orthogonality and visible
-diagonal normalization conjectures isolated in
-`prop:winfty-stage4-visible-pairing-gap`.
+content is reduced by `prop:winfty-stage4-visible-pairing-gap` to the
+single visible weight-`4` normalization conjecture, equivalently
+`C^{res}_{4,4;2;0,6}(4)=2`, once the visible Virasoro Ward action is
+fixed.
 See NEW_MACHINERY.md #M8.
 
 **Entry point**: Attack the first nontrivial finite-detection lanes.
