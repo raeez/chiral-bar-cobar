@@ -2,21 +2,15 @@
 \chapter{Explicit Kac--Moody Koszul duals}\label{chap:kac-moody-koszul}
 \label{chap:kac-moody}
 
-\label{rem:km-model-chapter}
-
-
 \begin{remark}[Governing question]
-The governing question of this chapter is how explicit Kac--Moody bar complexes realize level inversion, PBW concentration, and same-family Koszul duality at the chain level.
+The Feigin--Frenkel involution $k \leftrightarrow -k-2h^\vee$ is the level-shifting mechanism behind Kac--Moody Koszul duality.  This chapter makes it explicit: the bar complex of $\widehat{\fg}_k$ concentrates via PBW, and the cobar of that concentration recovers $\widehat{\fg}_{-k-2h^\vee}$.
 \end{remark}
 
 \begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-This chapter is primarily M-level portrait and computation. Printed theorem packets promote selected statements to H-level, while characters, generating functions, and other numerical outputs remain S-level shadows unless explicitly upgraded.
+M-level; H-level only where theorem labels promote.
 \end{remark}
-\section{The Kac--Moody bar complex}
-\label{rem:km-atom}
-\label{rem:km-status}
-\label{rem:km-hms}
-\label{rem:km-route}
+\section{The Kac--Moody bar complex}%
+\label{sec:km-bar-complex}
 
 Let $\mathfrak{g}$ be a finite-dimensional simple Lie algebra with
 Killing form $(\cdot,\cdot)$ and dual Coxeter number~$h^\vee$.
@@ -305,7 +299,7 @@ At critical level, the Koszul self-duality of $\widehat{\mathfrak{g}}_{-h^\vee}$
 
 For $\mathfrak{g} = \mathfrak{sl}_2$, the data are: $h^\vee = 2$, $\dim(\mathfrak{sl}_2) = 3$, with the standard basis $\{e, f, h\}$ satisfying $[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$.  The normalized invariant form is $(h,h) = 2$, $(e,f) = 1$ (the Killing form for $\mathfrak{sl}_2$ is $\kappa = 4 \cdot \text{tr}_{\text{fund}}$, but we use the standard normalization $(\theta|\theta) = 2$).
 
-\begin{definition}[$\widehat{\mathfrak{sl}}_2$ at level $k$]
+\begin{definition}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} at level \texorpdfstring{$k$}{k}]
 The affine $\mathfrak{sl}_2$ vertex algebra has generators:
 \begin{align}
 e(z) &= \sum_n e_n z^{-n-1}, \quad \text{conformal weight } h_e = 1 \\
@@ -323,7 +317,7 @@ h(z) h(w) &\sim \frac{2k}{(z-w)^2}
 
 \subsection{\texorpdfstring{Critical level: $k = -2$}{Critical level: k = -2}}
 
-\begin{theorem}[Critical level simplification for $\mathfrak{sl}_2$ \cite{Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{thm:sl2-critical}
+\begin{theorem}[Critical level simplification for \texorpdfstring{$\mathfrak{sl}_2$}{sl_2} \cite{Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{thm:sl2-critical}
 At $k = -h^\vee = -2$:
 \begin{enumerate}
 \item The Sugawara construction is \emph{undefined} ($k + h^\vee = 0$): no Virasoro subalgebra exists. The center of the completed enveloping algebra enlarges to the Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{g}})$
@@ -341,7 +335,7 @@ with vanishing Poisson bracket in the central direction
 
 \subsection{Koszul dual computation}
 
-\begin{theorem}[Koszul dual of $\widehat{\mathfrak{sl}}_{2,k}$; \ClaimStatusProvedHere]\label{thm:sl2-koszul-dual}
+\begin{theorem}[Koszul dual of \texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k}; \ClaimStatusProvedHere]\label{thm:sl2-koszul-dual}
 For $k \neq -2$, the Koszul dual is:
 \begin{equation}
 (\widehat{\mathfrak{sl}}_{2,k})^! \simeq \widehat{\mathfrak{sl}}_{2,-k-4}
@@ -424,6 +418,15 @@ The simple pole comes from $\beta(z)$ contracting with $\gamma(w)^2$; the double
 By the Feigin--Frenkel theorem, the center of the completed enveloping algebra at the critical level is isomorphic to the algebra of functions on ${}^L\mathfrak{g}$-opers.
 \end{verification}
 
+\begin{remark}[What \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} reveals]\label{rem:sl2-portrait}
+The $\mathfrak{sl}_2$ computation exhibits all three structural features of Kac--Moody Koszul duality in their simplest form:
+\begin{enumerate}
+\item \emph{Level shift as curvature.}  The double pole $k/(z-w)^2$ in $e(z)f(w)$ creates curvature $m_0 \propto (k+h^\vee)\kappa$ in the bar complex.  The cobar construction inverts this curvature, producing the dual level $-k-2h^\vee = -k-4$.  This is the chain-level mechanism behind the Feigin--Frenkel involution.
+\item \emph{Critical level as curvature-free locus.}  At $k=-2$, the curvature vanishes ($m_0 = 0$), the bar complex becomes an honest dg coalgebra, and the Koszul dual is $\widehat{\mathfrak{sl}}_{2,-2}$ itself --- self-duality.  Simultaneously, the Sugawara construction degenerates and the center enlarges to the oper algebra.
+\item \emph{Central charge non-cancellation.}  Unlike the $\beta\gamma$/$bc$ pair (Proposition~\ref{thm:betagamma-bc-koszul-detailed}), the central charges satisfy $c(k) + c(-k-4) = c_{\mathrm{crit}}$ rather than zero: curvature prevents cancellation.
+\end{enumerate}
+\end{remark}
+
 \section{\texorpdfstring{Explicit computation: $\widehat{\mathfrak{sl}}_3$}{Explicit computation: sl-3}}
 \label{sec:sl3-computation}
 
@@ -431,7 +434,7 @@ By the Feigin--Frenkel theorem, the center of the completed enveloping algebra a
 
 For $\mathfrak{sl}_3$, the data are: $h^\vee = 3$, $\dim(\mathfrak{sl}_3) = 8$, Cartan subalgebra $\mathfrak{h} = \mathrm{span}\{h_1, h_2\}$, simple roots $\alpha_1, \alpha_2$, and positive roots $\Delta_+ = \{\alpha_1, \alpha_2, \alpha_1+\alpha_2\}$.
 
-\begin{definition}[$\widehat{\mathfrak{sl}}_3$ generators]
+\begin{definition}[\texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl-hat_3} generators]
 Current generators:
 \begin{itemize}
 \item Cartan currents: $h_1(z), h_2(z)$
@@ -442,7 +445,7 @@ with OPEs determined by the $\mathfrak{sl}_3$ structure constants and level $k$.
 
 \subsection{\texorpdfstring{Critical level: $k = -3$}{Critical level: k = -3}}
 
-\begin{theorem}[Wakimoto for $\mathfrak{sl}_3$ \cite{FF-wakimoto}; \ClaimStatusProvedElsewhere]\label{thm:w3-wakimoto-sl3}
+\begin{theorem}[Wakimoto for \texorpdfstring{$\mathfrak{sl}_3$}{sl_3} \cite{FF-wakimoto}; \ClaimStatusProvedElsewhere]\label{thm:w3-wakimoto-sl3}
 At $k = -3$, the Wakimoto module uses:
 \begin{itemize}
 \item $(\beta_{\alpha_1}, \gamma_{\alpha_1})$: $\beta$-$\gamma$ system for root $\alpha_1$
@@ -461,7 +464,7 @@ h_i(z) &= -\alpha_i(\phi)(z) + \text{screening charge corrections}
 
 \subsection{Level-shifting duality}
 
-\begin{theorem}[Koszul dual of $\widehat{\mathfrak{sl}}_{3,k}$; \ClaimStatusProvedHere]\label{thm:sl3-koszul-dual}
+\begin{theorem}[Koszul dual of \texorpdfstring{$\widehat{\mathfrak{sl}}_{3,k}$}{sl-hat_3,k}; \ClaimStatusProvedHere]\label{thm:sl3-koszul-dual}
 \begin{equation}
 (\widehat{\mathfrak{sl}}_{3,k})^! \simeq \widehat{\mathfrak{sl}}_{3,-k-6}
 \end{equation}
@@ -952,7 +955,7 @@ The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ associated to a nilpotent element
 where $\mathcal{F}_{\mathrm{gh}}$ is the ghost $bc$-system for the nilpotent subalgebra $\mathfrak{n}_f = \bigoplus_{\alpha(h_f)>0} \mathfrak{g}_\alpha$, and $Q_{\mathrm{DS}}$ is the BRST differential implementing constraints from~$f$.  The cohomology is concentrated in degree~$0$ for the principal nilpotent.
 \end{definition}
 
-\begin{theorem}[$\mathcal{W}$-algebra Koszul duality at critical level; \ClaimStatusProvedHere]\label{thm:w-algebra-koszul}
+\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra Koszul duality at critical level; \ClaimStatusProvedHere]\label{thm:w-algebra-koszul}
 Let $\mathfrak{g}$ be a simple simply-laced Lie algebra (types $A$, $D$, $E$), and let $f = f_{\mathrm{prin}}$ be the principal nilpotent element.  At critical level $k = -h^\vee$:
 \begin{equation}
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}^\vee, f^\vee_{\mathrm{prin}})
@@ -1010,7 +1013,7 @@ The principal case of Theorem~\ref{thm:w-algebra-koszul} is a manifestation of g
 
 \subsection{Principal $\mathcal{W}$-algebra example}
 
-\begin{theorem}[Principal $\mathcal{W}$-algebra structure \cite{FF, Ara07}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Principal \texorpdfstring{$\mathcal{W}$}{W}-algebra structure \cite{FF, Ara07}; \ClaimStatusProvedElsewhere]
 \label{thm:principal-w-algebra-structure}
 \begin{equation}
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}}) = \text{Universal enveloping of } \{\text{generators of spin } d_1+1, \ldots, d_r+1\}
@@ -1026,7 +1029,7 @@ For $\mathfrak{sl}_3$: exponents $\{1,2\}$, so we get $\mathcal{W}_3$ with gener
 
 \subsection{\texorpdfstring{$A_\infty$ structure}{A- structure}}
 
-\begin{theorem}[$A_\infty$ operations on Kac--Moody; \ClaimStatusProvedHere]\label{thm:kac-moody-ainfty}
+\begin{theorem}[\texorpdfstring{$A_\infty$}{A-infinity} operations on Kac--Moody; \ClaimStatusProvedHere]\label{thm:kac-moody-ainfty}
 \index{$A_\infty$-structure!Kac--Moody}
 The chiral algebra $\widehat{\mathfrak{g}}_k$ carries a canonical curved $A_\infty$ structure $(m_0, m_1, m_2, m_3, \ldots)$:
 \begin{align}
@@ -1313,7 +1316,7 @@ that the KL functor preserves the bar-cobar adjunction structure.  This is
 expected but not proved here.
 \end{remark}
 
-\begin{example}[Integrable modules for $\widehat{\mathfrak{sl}}_2$
+\begin{example}[Integrable modules for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2}
 at low levels]\label{ex:integrable-low-levels}
 \index{integrable module!low level examples}
 We list the integrable module categories
@@ -1442,8 +1445,8 @@ follows.  For a Koszul pair $(\widehat{\mathfrak{g}}_k,\,
 \subsection{Conformal blocks via the bar complex}
 \label{sec:km-conformal-blocks}
 
-\begin{example}[Conformal blocks for $\widehat{\mathfrak{sl}}_2$
-on $\mathbb{P}^1$]\label{ex:conformal-blocks-sl2}
+\begin{example}[Conformal blocks for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2}
+on \texorpdfstring{$\mathbb{P}^1$}{P1}]\label{ex:conformal-blocks-sl2}
 \index{conformal blocks!sl2@$\widehat{\mathfrak{sl}}_2$}
 \index{Verlinde formula!bar complex derivation}
 By Proposition~\ref{prop:conformal-blocks-bar}, the space of
@@ -1660,8 +1663,8 @@ For~(ii): Proposition~\ref{prop:bar-admissible}(i) establishes that the spectral
 For~(iii): since the spectral sequence has finitely many pages with finite-dimensional entries, the abutment is finite-dimensional.
 \end{proof}
 
-\begin{example}[$\widehat{\mathfrak{sl}}_2$ at admissible level
-$k = -1/2$]
+\begin{example}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} at admissible level
+\texorpdfstring{$k = -1/2$}{k = -1/2}]
 \label{ex:sl2-admissible}
 \index{sl2-hat@$\widehat{\mathfrak{sl}}_2$!admissible level}
 The simplest non-trivial admissible level for
@@ -1845,7 +1848,7 @@ $\mathcal{W}_{\mathrm{adm}}$ (of size~$q$), divided by the same
 universal denominator.
 \end{remark}
 
-\begin{theorem}[KW formula via bar complex: general simple $\mathfrak{g}$;
+\begin{theorem}[KW formula via bar complex: general simple \texorpdfstring{$\mathfrak{g}$}{g};
 \ClaimStatusProvedHere]
 \label{thm:kw-bar-general-rank}
 \index{Kac--Wakimoto character formula!general rank}
@@ -2250,7 +2253,7 @@ For $\widehat{\mathfrak{sl}}_{2,k}$, the residue extracts both the double-pole (
 
 \subsection{Curvature decomposition}
 
-\begin{theorem}[Genus-1 curvature for $\widehat{\mathfrak{sl}}_{2,k}$; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 curvature for \texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k}; \ClaimStatusProvedHere]
 \label{thm:sl2-genus1-curvature}
 The genus-$1$ fiberwise differential
 $\dfib$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} satisfies:
@@ -2315,7 +2318,7 @@ every genus.
 
 \subsection{Spectral sequence and bar-cobar inversion}
 
-\begin{theorem}[Genus-1 bar-cobar inversion for $\widehat{\mathfrak{sl}}_{2,k}$; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 bar-cobar inversion for \texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k}; \ClaimStatusProvedHere]
 \label{thm:sl2-genus1-inversion}
 For generic level $k$ (i.e., $k \notin \mathbb{Q}_{\leq 0}$, avoiding the admissible levels where null vectors appear), the genus-1 bar-cobar adjunction map:
 \begin{equation}
@@ -2367,7 +2370,7 @@ At admissible levels $k = -2 + p/q$ with $p, q \in \mathbb{Z}_{>0}$ coprime, the
 
 \subsection{Kodaira--Spencer map and complementarity}
 
-\begin{theorem}[Genus-1 complementarity for $\widehat{\mathfrak{sl}}_{2,k}$ at generic level; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 complementarity for \texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k} at generic level; \ClaimStatusProvedHere]
 \label{thm:sl2-genus1-complementarity}
 For generic $k \neq -2$, the quantum corrections at genus $1$ satisfy:
 \begin{align}
@@ -2467,7 +2470,7 @@ The quasi-modularity of $E_2$ (it transforms as $E_2(-1/\tau) = \tau^2 E_2(\tau)
 
 \subsection{The three theorems for affine Kac--Moody algebras}
 
-\begin{remark}[Verification for $\widehat{\mathfrak{sl}}_{2,k}$ at genus 1]
+\begin{remark}[Verification for \texorpdfstring{$\widehat{\mathfrak{sl}}_{2,k}$}{sl-hat_2,k} at genus 1]
 \label{rem:sl2-three-theorems}
 \index{main theorems!genus-1 verification}
 The computation of this section provides a complete non-abelian verification of all three main theorems at genus~1:
@@ -2506,7 +2509,7 @@ The genus-1 bar complex is given by~\eqref{eq:sl2-genus1-bar} with $\mathfrak{sl
 \end{equation}
 with the same genus-1 propagator~\eqref{eq:genus1-propagator} and differential~\eqref{eq:genus1-diff}.
 
-\begin{theorem}[Genus-1 curvature for $\widehat{\mathfrak{sl}}_{3,k}$; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 curvature for \texorpdfstring{$\widehat{\mathfrak{sl}}_{3,k}$}{sl-hat_3,k}; \ClaimStatusProvedHere]
 \label{thm:sl3-genus1-curvature}
 The genus-$1$ fiberwise differential
 $\dfib$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} satisfies:
@@ -2546,13 +2549,13 @@ k \cdot \kappa_{\mathrm{level}} + \tfrac{1}{2}C_2^{\mathrm{ad}} = k + h^\vee = k
 giving $(d^{(1)})^2 = (k+3) \cdot \omega_1 \cdot \operatorname{id}_{\mathfrak{sl}_3}$.
 \end{proof}
 
-\begin{remark}[Critical level for $\mathfrak{sl}_3$]
+\begin{remark}[Critical level for \texorpdfstring{$\mathfrak{sl}_3$}{sl_3}]
 At $k = -h^\vee = -3$, the curvature vanishes.  The Feigin--Frenkel center $\mathfrak{z}(\widehat{\mathfrak{sl}}_{3,-3})$ is a polynomial algebra in $2$ generators (corresponding to the $2$ fundamental invariants of $\mathfrak{sl}_3$, of degrees $2$ and $3$), consistent with the Wakimoto realization (Theorem~\ref{thm:w3-wakimoto-sl3}).
 \end{remark}
 
 \subsection{Spectral sequence collapse}
 
-\begin{theorem}[Genus-1 bar-cobar inversion for $\widehat{\mathfrak{sl}}_{3,k}$; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 bar-cobar inversion for \texorpdfstring{$\widehat{\mathfrak{sl}}_{3,k}$}{sl-hat_3,k}; \ClaimStatusProvedHere]
 \label{thm:sl3-genus1-inversion}
 For generic level $k$ (i.e., $k+3 \notin \mathbb{Q}_{\leq 0}$), the genus-1 bar-cobar adjunction:
 \begin{equation}
@@ -2591,7 +2594,7 @@ The 8-dimensional $\mathfrak{sl}_3^*$ factor (versus 3-dimensional for $\mathfra
 
 \subsection{Complementarity and partition function}
 
-\begin{theorem}[Genus-1 complementarity for $\widehat{\mathfrak{sl}}_{3,k}$; \ClaimStatusProvedHere]
+\begin{theorem}[Genus-1 complementarity for \texorpdfstring{$\widehat{\mathfrak{sl}}_{3,k}$}{sl-hat_3,k}; \ClaimStatusProvedHere]
 \label{thm:sl3-genus1-complementarity}
 For generic $k \neq -3$:
 \begin{align}
@@ -2628,7 +2631,7 @@ The Verdier involution $\sigma\colon H^0 \xrightarrow{\sim} H^2$ sends $(k+3) \m
 \end{enumerate}
 \end{proof}
 
-\begin{proposition}[Partition function for $\widehat{\mathfrak{sl}}_{3,k}$ at genus 1; \ClaimStatusProvedHere]
+\begin{proposition}[Partition function for \texorpdfstring{$\widehat{\mathfrak{sl}}_{3,k}$}{sl-hat_3,k} at genus 1; \ClaimStatusProvedHere]
 \label{prop:sl3-genus1-partition}
 \index{partition function!genus-1!sl3@$\mathfrak{sl}_3$}
 \begin{equation}\label{eq:sl3-genus1-partition}
@@ -2880,7 +2883,7 @@ constitutes the monoidal component of the KL programme.
 \label{subsec:geom-langlands-bar}
 \index{geometric Langlands!from bar complex}
 
-\begin{theorem}[Oper space from bar complex at $H^0$;
+\begin{theorem}[Oper space from bar complex at \texorpdfstring{$H^0$}{H0};
 \ClaimStatusProvedHere]\label{thm:oper-bar-h0}
 \index{oper!from bar complex}
 At the critical level $k = -h^\vee$, the bar complex
@@ -2910,7 +2913,7 @@ $\mathfrak{z} \cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ is
 \ClaimStatusProvedElsewhere{} \cite{Feigin-Frenkel, FG06}.
 \end{proof}
 
-\begin{proposition}[$H^1$ at critical level;
+\begin{proposition}[\texorpdfstring{$H^1$}{H1} at critical level;
 \ClaimStatusProvedHere]\label{prop:oper-bar-h1}
 \index{oper!$H^1$ at critical level}
 At $k = -h^\vee$, the first bar cohomology is the module of

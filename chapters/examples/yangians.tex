@@ -1,10 +1,7 @@
 % Status and semantic-level disputes are settled by Chapter 34 (concordance.tex).
 \chapter{Yangians and shifted Yangians}
 \label{chap:yangians}
-\label{rem:yangian-axis}
-\label{rem:yangian-atom}
 \label{rem:yangian-status}
-\label{rem:yangian-hms}
 
 \begin{remark}[Governing question]
 The governing question of this chapter is how the Yangian realizes the ordered-factorization face of modular Koszul duality, and exactly where the theorematic DK core stops and the completion frontier begins.
@@ -30,6 +27,42 @@ On ordered configurations, the bar complex $\barB^{\Eone}(\cA)$
 is no longer symmetric, and Verdier duality no longer acts by level
 inversion on the algebra.  Instead, it inverts the $R$-matrix on
 the module category: $\mathbb{D} R(u) = R^{-1}(u)$.
+
+\begin{remark}[Three levels of Yangian structure]
+\label{rem:yangian-three-levels}
+\index{Yangian!three levels of structure}
+The word ``Yangian'' carries three distinct meanings in the
+literature, corresponding to three levels of structure that this
+chapter carefully separates:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Algebraic Yangian $Y(\fg)$.}
+  The associative algebra in the RTT presentation
+  (Definition~\ref{def:yangian-rtt}) or the Drinfeld presentation
+  (Definition~\ref{def:yangian}).  The spectral parameter~$u$ is a
+  formal variable.  The defining relation is
+  quadratic-linear (filtered quadratic via RTT);
+  the associated graded
+  $\operatorname{gr} Y(\fg) \cong U(\fg[z])$ is
+  quadratic~\cite{Drinfeld85,molev-yangians}.
+\item \emph{$\Eone$-chiral Yangian on a curve~$X$.}
+  The algebraic Yangian equipped with $\Eone$-factorization structure
+  (Theorem~\ref{thm:yangian-e1}): vertex operators on~$X$ with
+  the spectral parameter identified as the coordinate difference
+  $u = z_1 - z_2$ on the curve, and the $R$-matrix providing the
+  braided locality constraint~\eqref{eq:r-twisted-locality}.
+\item \emph{QFT realization.}
+  In 4d Chern--Simons theory (Costello--Witten--Yamazaki~\cite{CWY18}),
+  boundary operators form a chiral algebra and line operators form
+  a monoidal category controlled by the Yangian.  The spectral
+  parameter is the holomorphic coordinate of the 4d theory,
+  restricted to the 2d boundary.
+\end{enumerate}
+Level~(A) is purely algebraic and level-free.
+Level~(B), developed in this chapter, geometrizes the spectral
+parameter and produces the $\Eone$-bar-cobar duality and the DK
+ladder.  Level~(C) is a physical realization of~(B) and is
+discussed in Chapter~\ref{ch:bv-brst}.
+\end{remark}
 
 \section{Yangian vertex algebra}
 \label{sec:yangian-vertex}
@@ -108,7 +141,7 @@ J_a(z) J_b(w) = \frac{f_{ab}^c J_c(w)}{z - w} + \frac{\alpha_{ab}^{cd} {:}J_c(w)
 with higher poles from the quadratic Serre relations.
 \end{construction}
 
-\begin{theorem}[Yangian as $\Eone$-chiral; \ClaimStatusProvedHere]\label{thm:yangian-e1}
+\begin{theorem}[Yangian as \texorpdfstring{$\Eone$}{E1}-chiral; \ClaimStatusProvedHere]\label{thm:yangian-e1}
 In the RTT presentation, the Yangian $Y(\mathfrak{g})^{\mathrm{ch}}$ carries the structure of a quadratic $\Eone$-chiral algebra (Definition~\ref{def:e1-chiral}; cf.\ \cite[§4.1]{HA}).  The $\Eone$-locality axiom is $R$-twisted commutativity:
 \begin{equation}\label{eq:r-twisted-locality}
 J_a(z) J_b(w) - R^{ab}_{cd}(z-w)\, J_d(w) J_c(z) = 0.
@@ -137,6 +170,23 @@ The two presentations yield isomorphic algebras but different Koszul dual
 computations.  A rigorous construction of the $\Eone$-chiral structure and its
 Koszul dual should specify which presentation is used.
 \end{remark}
+
+\begin{definition}[\texorpdfstring{$\Eone$}{E1}-chiral Yangian]
+\label{def:e1-chiral-yangian}
+\index{Yangian!$\Eone$-chiral|textbf}
+An \emph{$\Eone$-chiral Yangian} on a smooth algebraic curve~$X$
+is an $\Eone$-factorization algebra on $\operatorname{Ran}(X)$
+(Definition~\ref{def:e1-chiral}) whose local operator algebra, in
+the RTT presentation, reproduces the Yangian $R(u)$-matrix
+relations~\eqref{eq:rtt-relation} with the spectral parameter
+identified as the coordinate difference of ordered insertion points:
+$u = z_1 - z_2$.  Concretely, its bar complex
+$\barB^{\Eone}_X(Y(\fg)^{\mathrm{ch}})$ uses \emph{ordered}
+configuration spaces $\operatorname{Conf}^{\mathrm{ord}}_n(X)$,
+and Verdier duality acts by $R$-matrix inversion
+$R(u) \mapsto R(u)^{-1}$
+(Theorem~\ref{thm:yangian-koszul-dual}), not by type exchange.
+\end{definition}
 
 \begin{remark}[Why ordered configurations are forced]
 \label{rem:ordered-forced}
@@ -276,7 +326,7 @@ At $\hbar = 0$ (the classical limit), $R(u) = R^{-1}(u) = 1$, and the RTT algebr
 The sign flip $\hbar \to -\hbar$ in the Yangian Koszul dual is the analog of the Feigin--Frenkel level shift $k \to -k - 2h^\vee$ for affine algebras.  For simply-laced $\mathfrak{g}$, the Yangian $Y(\mathfrak{g})$ is isomorphic to $Y(\mathfrak{g}^\vee)$ (since $\mathfrak{g} \cong \mathfrak{g}^\vee$), and the Koszul duality becomes a form of self-duality.  For non-simply-laced $\mathfrak{g}$, one expects $Y(\mathfrak{g})^! \simeq Y(\mathfrak{g}^\vee)$, realizing Langlands duality at the Yangian level.  Latyntsev \cite{Latyntsev23} constructs factorisation quantum groups that provide a complementary approach to Yangian duality via factorisation homology.
 \end{remark}
 
-\begin{remark}[The $\Eone$ inversion principle and the nilpotence-periodicity correspondence]
+\begin{remark}[The \texorpdfstring{$\Eone$}{E1} inversion principle and the nilpotence-periodicity correspondence]
 \label{rem:yangian-e1-inversion}
 \index{E1 inversion principle@$\Eone$ inversion principle!Yangian instance}
 \index{nilpotence-periodicity correspondence!Yangian instance}
@@ -460,7 +510,7 @@ dual algebra (Theorem~\ref{thm:yangian-koszul-dual}, Step~4), so
 $\sigma^! = P \circ R^{-1}(u) = \sigma^{-1}$.
 \end{proof}
 
-\begin{example}[Yangian $Y(\mathfrak{sl}_2)$ fundamental modules]
+\begin{example}[Yangian \texorpdfstring{$Y(\mathfrak{sl}_2)$}{Y(sl_2)} fundamental modules]
 \label{ex:yangian-sl2-modules}
 \index{Yangian!sl2 modules@sl2 mods}
 The Yangian $Y(\mathfrak{sl}_2)$ has evaluation modules
@@ -529,7 +579,7 @@ $\Eone$ genus theory remains an important open direction.
 \end{remark}
 
 
-\begin{conjecture}[$\Eone$ genus theory;
+\begin{conjecture}[\texorpdfstring{$\Eone$}{E1} genus theory;
 \ClaimStatusConjectured]\label{conj:e1-genus-theory}
 \index{E1-chiral algebra@$\Eone$-chiral algebra!genus theory}
 For an $\Eone$-chiral algebra $\cA$ on $\bR$
@@ -626,7 +676,7 @@ H_i(u) = \frac{\prod_{j=1}^{\mu_i^+}(u - a_j^{(i)})}{\prod_{j=1}^{\mu_i^-}(u - b
 where $\mu_i^\pm = \langle \alpha_i, \mu^\pm \rangle$ and $\mu = \mu^+ - \mu^-$ decomposes the coweight into dominant parts. The parameters $a_j^{(i)}, b_j^{(i)}$ are complex numbers.
 \end{definition}
 
-\begin{conjecture}[Shifted Yangian as $\Eone$-chiral; \ClaimStatusConjectured]\label{conj:shifted-yangian-e1}
+\begin{conjecture}[Shifted Yangian as \texorpdfstring{$\Eone$}{E1}-chiral; \ClaimStatusConjectured]\label{conj:shifted-yangian-e1}
 The shifted Yangian admits a chiral algebra structure $Y_\mu(\mathfrak{g})^{\mathrm{ch}}$
 that is $\Eone$-chiral.  The shift $\mu$ modifies the central terms in the OPE,
 and the rational constraint on $H_i(u)$ introduces additional poles in the vertex
@@ -915,7 +965,7 @@ mixed-tensor formula.  The final sentence is just the same identity
 restated as the exact remaining coefficient check.
 \end{proof}
 
-\begin{proposition}[Degree-$2$ scalar normalization removes the
+\begin{proposition}[Degree-\texorpdfstring{$2$}{2} scalar normalization removes the
 identity channel; \ClaimStatusProvedHere]
 \label{prop:dg-shifted-rtt-degree2-scalar-normalization}
 Work in the setting of
@@ -1223,7 +1273,7 @@ mixed-tensor formula.
 \end{proof}
 
 \begin{proposition}[Shared bar seed transports the fundamental
-degree-$2$ coefficient; \ClaimStatusProvedHere]
+degree-\texorpdfstring{$2$}{2} coefficient; \ClaimStatusProvedHere]
 \label{prop:dg-shifted-factorization-shared-seed}
 Work in the standard type-$A$ Yangian setting, and let
 \[
@@ -1297,7 +1347,7 @@ formula.
 \end{proof}
 
 \begin{corollary}[Shared bar seed closes the local dg-shifted
-type-$A$ MC4 packet; \ClaimStatusProvedHere]
+type-\texorpdfstring{$A$}{A} MC4 packet; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-dg-local-closure}
 Assume the hypotheses of
 Corollary~\ref{cor:yangian-typea-degree2-plus-generators} on the
@@ -3574,7 +3624,7 @@ truncated shifted Yangian.
 the equivariant Borel--Moore homology of the space of triples $\mathcal{R}(G, N)$.
 \end{theorem}
 
-\begin{example}[Quiver of type $A_n$]\label{ex:coulomb-an}
+\begin{example}[Quiver of type \texorpdfstring{$A_n$}{A_n}]\label{ex:coulomb-an}
 For the $A_n$ quiver with dimension vector $(1, 2, \ldots, n)$:
 \[
 \mathcal{A} = Y_{(n-1, n-2, \ldots, 1, 0)}(\mathfrak{sl}_n)
@@ -3602,7 +3652,7 @@ The product is defined via the Hecke correspondence:
 as $a \star b = q_* p^*(a \boxtimes b)$.
 \end{definition}
 
-\begin{conjecture}[CoHA as $\Eone$-chiral; \ClaimStatusConjectured]\label{conj:coha-e1}
+\begin{conjecture}[CoHA as \texorpdfstring{$\Eone$}{E1}-chiral; \ClaimStatusConjectured]\label{conj:coha-e1}
 The CoHA $\mathcal{H}_Q$ carries an $\Eone$-chiral algebra structure.  The evidence:
 \begin{enumerate}[label=(\roman*)]
 \item The Hecke product is associative but not commutative.
@@ -3690,7 +3740,7 @@ cobar at coweight $-\mu$ for $\fg^\vee$.
 The conjecture asserts a Koszul duality equivalence between the shifted Yangian at coweight $\mu$ and the Langlands-dual shifted Yangian at negated coweight, treating symplectic duality as a conjectural $\Eone$-chiral shadow.
 \end{remark}
 
-\begin{example}[Type $A_1$ quiver with framing]
+\begin{example}[Type \texorpdfstring{$A_1$}{A_1} quiver with framing]
 \label{ex:coulomb-a1-framing}
 \index{Coulomb branch!type $A_1$}
 For the $A_1$ quiver with gauge group $G = GL_1$ and framing
@@ -3784,7 +3834,7 @@ The conjecture asserts a Koszul duality equivalence between the CoHA of a Dynkin
 
 \subsection{\texorpdfstring{RTT bar complex for $Y(\mathfrak{sl}_2)$}{RTT bar complex for Y(sl2)}}
 
-\begin{computation}[Yangian $Y(\mathfrak{sl}_2)$: bar complex
+\begin{computation}[Yangian \texorpdfstring{$Y(\mathfrak{sl}_2)$}{Y(sl_2)}: bar complex
 through degree 3]
 \label{comp:yangian-sl2-bar}
 \index{Yangian!sl2@$\mathfrak{sl}_2$!bar complex}
@@ -3881,7 +3931,7 @@ $4$ independent generators only (Remark~\ref{rem:yangian-gl2-kunneth}).
 
 \subsection{Yangian Koszul dual: explicit verification}
 
-\begin{computation}[Yangian duality: $R(u) \mapsto R(u)^{-1}$]
+\begin{computation}[Yangian duality: \texorpdfstring{$R(u) \mapsto R(u)^{-1}$}{R(u) R(u)^-1}]
 \label{comp:yangian-dual-explicit}
 \index{Yangian!Koszul dual!explicit}
 
@@ -3931,7 +3981,7 @@ apply directly.  The $\Eone$ analog of complementarity
 developed in full generality.
 \end{computation}
 
-\begin{remark}[K\"unneth decomposition for $\widehat{\mathfrak{gl}}_2$]
+\begin{remark}[K\"unneth decomposition for \texorpdfstring{$\widehat{\mathfrak{gl}}_2$}{gl_2}]
 \label{rem:yangian-gl2-kunneth}
 \index{Yangian!Kunneth decomposition@K\"unneth decomposition}
 In the chiral bar complex, the level-$1$ generators
@@ -4018,7 +4068,7 @@ $z_1 = z_2$ in the symmetric product.
 
 \subsection{\texorpdfstring{Yangian $Y(\mathfrak{sl}_3)$: bar complex}{Yangian Y(sl3): bar complex}}
 
-\begin{computation}[$Y(\mathfrak{sl}_3)$ bar complex through degree 2]
+\begin{computation}[\texorpdfstring{$Y(\mathfrak{sl}_3)$}{Y(sl_3)} bar complex through degree 2]
 \label{comp:yangian-sl3-bar}
 \index{Yangian!sl3@$\mathfrak{sl}_3$!bar complex}
 
@@ -4267,7 +4317,7 @@ the bar complex propagator.
 
 We first fix the ambient category.
 
-\begin{definition}[Yangian category $\mathcal{O}$]
+\begin{definition}[Yangian category \texorpdfstring{$\mathcal{O}$}{O}]
 \label{def:yangian-category-O}
 \index{Yangian!category O!definition}
 For $\fg = \mathfrak{sl}_N$, the \emph{Yangian category~$\mathcal{O}$}
@@ -4382,7 +4432,7 @@ the stated isomorphism.
 \end{proof}
 
 \begin{remark}[Conditional extension to full Yangian
-category $\mathcal{O}$]
+category \texorpdfstring{$\mathcal{O}$}{O}]
 \label{rem:yangian-cat-O-conditional}
 The results above hold unconditionally for
 evaluation modules (which reduce to finite-dimensional
@@ -4405,7 +4455,7 @@ ordered category, not a new computation on evaluation modules.
 \end{remark}
 
 \begin{proposition}[DK-2 reduction to thick generation in
-category~$\mathcal{O}$; \ClaimStatusProvedHere]
+category~\texorpdfstring{$\mathcal{O}$}{O}; \ClaimStatusProvedHere]
 \label{prop:yangian-dk2-thick-generation}
 Let
 \[
@@ -4457,7 +4507,7 @@ proves~\textup{(i)}.  Statement~\textup{(ii)} is immediate.
 \end{proof}
 
 \begin{proposition}[Thick generation by evaluation modules
-in type~$A$; \ClaimStatusProvedHere]
+in type~\texorpdfstring{$A$}{A}; \ClaimStatusProvedHere]
 \label{prop:dk2-thick-generation-typeA}
 \index{Yangian!thick generation}
 For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, every finite-dimensional
@@ -4581,8 +4631,8 @@ $\sigma_{\ge a+1}C \to C \to C^a[-a] \xrightarrow{+1}$
 and induction on the amplitude $b - a$ give $C \in \cC$.
 \end{proof}
 
-\begin{theorem}[Thick generation of category~$\mathcal{O}$ by
-evaluation modules, type~$A$; \ClaimStatusProvedHere]
+\begin{theorem}[Thick generation of category~\texorpdfstring{$\mathcal{O}$}{O} by
+evaluation modules, type~\texorpdfstring{$A$}{A}; \ClaimStatusProvedHere]
 \label{thm:catO-thick-generation}
 \index{thick generation!Category O@Category $\mathcal{O}$|textbf}
 \index{Drinfeld--Kohno!derived!Category O@Category $\mathcal{O}$}
@@ -4790,7 +4840,7 @@ Exchanging the two variables completes the proof.
 \end{proof}
 
 \begin{theorem}[Finite-dimensional factorization Drinfeld--Kohno,
-type~$A$; \ClaimStatusProvedHere]
+type~\texorpdfstring{$A$}{A}; \ClaimStatusProvedHere]
 \label{thm:dk-fd-typeA}
 \index{Drinfeld--Kohno!derived!finite-dimensional|textbf}
 For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, the $\Eone$-chiral
@@ -4884,7 +4934,7 @@ category~$\mathcal{O}$.
 \end{proof}
 
 \begin{corollary}[Factorization DK for polynomial
-category~$\mathcal{O}$, type~$A$; \ClaimStatusProvedHere]
+category~\texorpdfstring{$\mathcal{O}$}{O}, type~\texorpdfstring{$A$}{A}; \ClaimStatusProvedHere]
 \label{cor:dk-poly-catO}
 \index{Drinfeld--Kohno!derived!polynomial Category O@polynomial Category $\mathcal{O}$}
 For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, the bar-cobar
@@ -4918,7 +4968,7 @@ correspond to Drinfeld polynomials, which classify finite-dimensional
 irreducible representations \cite{Drinfeld88}.
 \end{proof}
 
-\begin{remark}[Polynomial category~$\mathcal{O}$ is the natural DK domain]
+\begin{remark}[Polynomial category~\texorpdfstring{$\mathcal{O}$}{O} is the natural DK domain]
 \label{rem:poly-O-natural-domain}
 Corollary~\ref{cor:dk-poly-catO} is the natural statement of
 factorization DK for the Yangian, for the following reason.
@@ -4958,11 +5008,12 @@ subcategory of category~$\mathcal{O}$ at all~$N$.
 The DK ladder for $\mathfrak{sl}_N$ now reads:
 \begin{itemize}
 \item DK-0/DK-1: \textbf{proved} for all simple~$\fg$;
-\item DK-2/DK-3: \textbf{proved} for
-  $\operatorname{Rep}_{\mathrm{fd}}$ and
-  $\mathcal{O}_{\mathrm{poly}}$, type~$A$
-  (Corollary~\ref{cor:dk-poly-catO});
-  conjectural for full category~$\mathcal{O}$ and other types;
+\item DK-2/DK-3: \textbf{proved} on the evaluation-generated core
+  at all simple types, via two independent routes: thick generation
+  in type~$A$ (Corollary~\ref{cor:dk-poly-catO}) and sectorwise
+  convergence for all types (Corollary~\ref{cor:dk23-all-types});
+  conjectural beyond the evaluation-generated core
+  (full category~$\mathcal{O}$);
 \item DK-4/DK-5: conjectural (MC4 territory).
 \end{itemize}
 The transition from the evaluation locus to all finite-dimensional
@@ -5173,7 +5224,7 @@ instances is
 Conjecture~\ref{conj:factorization-finiteness-criterion}.
 \end{remark}
 
-\begin{computation}[The $E_1$ page for $\mathfrak{sl}_2{[t]}$]
+\begin{computation}[The \texorpdfstring{$E_1$}{E_1} page for \texorpdfstring{$\mathfrak{sl}_2{[t]}$}{sl_2[t]}]
 \label{comp:current-algebra-E1}
 \index{current algebra!cohomology}
 \index{Loday--Quillen--Tsygan theorem}
@@ -5272,7 +5323,7 @@ complexity reduction claimed in
 Remark~\ref{rem:sectorwise-vs-lattice}.
 \end{computation}
 
-\begin{computation}[The $E_1$ page for $\mathfrak{sp}_4{[t]}$ and
+\begin{computation}[The \texorpdfstring{$E_1$}{E_1} page for \texorpdfstring{$\mathfrak{sp}_4{[t]}$}{sp_4[t]} and
   all types via LQT]
 \label{comp:current-algebra-E1-all-types}
 \index{current algebra!cohomology!all types}
@@ -5357,7 +5408,7 @@ $\mathcal{O}$, hence lies in $\mathcal{C}_{\mathrm{eval}}$.
 \end{proof}
 
 \begin{remark}[Kazhdan--Lusztig input for Yangian
-category~$\mathcal{O}$]
+category~\texorpdfstring{$\mathcal{O}$}{O}]
 \label{rem:kl-input-yangian}
 \index{Kazhdan--Lusztig!Yangian thick generation}
 For $Y_\hbar(\mathfrak{sl}_N)$,
@@ -5403,7 +5454,7 @@ which holds unconditionally for $\mathfrak{sl}_2$ and for
 the polynomial subcategory $\mathcal{O}_{\mathrm{poly}}$ at all~$N$.
 
 \begin{remark}[Residual obstruction beyond polynomial
-category~$\mathcal{O}$]
+category~\texorpdfstring{$\mathcal{O}$}{O}]
 \label{rem:infinite-dim-simples}
 \index{Category O@Category $\mathcal{O}$!infinite-dimensional simples}
 The remaining question at $N \ge 3$
@@ -5498,7 +5549,7 @@ from eventual vanishing of these Ext groups at large spectral
 parameter separation $|a - b|$.
 \end{remark}
 
-\begin{computation}[R-matrix extensions for $Y(\mathfrak{sl}_2)$]
+\begin{computation}[R-matrix extensions for \texorpdfstring{$Y(\mathfrak{sl}_2)$}{Y(sl_2)}]
 \label{comp:sl2-rmatrix-ext}
 \index{R-matrix!extensions for sl2@extensions for $\mathfrak{sl}_2$}
 \index{Yangian!sl2 R-matrix@$\mathfrak{sl}_2$ $R$-matrix}
@@ -5727,7 +5778,7 @@ is whether the same sectorwise control survives the
 completed/coderived enlargement.}
 \end{conjecture}
 
-\begin{proposition}[Sub-exponential growth of the $E_1$ page;
+\begin{proposition}[Sub-exponential growth of the \texorpdfstring{$E_1$}{E_1} page;
 \ClaimStatusProvedHere]
 \label{prop:lqt-e1-subexponential-growth}
 \index{Loday--Quillen--Tsygan theorem!$E_1$ growth rate}
@@ -5836,7 +5887,7 @@ category~$\mathcal{O}$ the natural test case.
 
 \subsubsection*{Resolution: the evaluation-generated core}
 
-\begin{theorem}[Evaluation-generated core identification, type~$A$;
+\begin{theorem}[Evaluation-generated core identification, type~\texorpdfstring{$A$}{A};
 \ClaimStatusProvedHere]
 \label{thm:eval-core-identification}
 \index{thick generation!evaluation-generated core|textbf}
@@ -5903,7 +5954,7 @@ dependence; the natural attack order is
 $\mathfrak{sl}_2 \to \mathfrak{sl}_3 \to$ type~$A$.
 
 \begin{conjecture}[Baxter exact triangles in shifted Yangian
-$\mathcal{O}^{\mathrm{sh}}$; \ClaimStatusConjectured]
+\texorpdfstring{$\mathcal{O}^{\mathrm{sh}}$}{Osh}; \ClaimStatusConjectured]
 \label{conj:baxter-exact-triangles}
 \index{Baxter relation!exact triangle lift}
 \index{shifted Yangian!Baxter exact triangles}
@@ -5947,7 +5998,7 @@ recovered as a monoidal subcategory by restriction from this
 shifted envelope.
 \end{conjecture}
 
-\begin{computation}[Thick generation obstruction analysis for $Y(\mathfrak{sl}_2)$]
+\begin{computation}[Thick generation obstruction analysis for \texorpdfstring{$Y(\mathfrak{sl}_2)$}{Y(sl_2)}]
 \label{comp:thick-generation-sl2}
 \index{thick generation!obstruction analysis}
 For $L^-_a$ the negative prefundamental module of~$Y(\mathfrak{sl}_2)$
@@ -6193,6 +6244,60 @@ comparison package.  The classical Kazhdan--Lusztig and Kazhdan
 equivalences translate the DK-0 part into the
 $q \mapsto q^{-1}$ involution on quantum group representations.
 
+\begin{remark}[Three-layer Yangian triage]
+\label{rem:yangian-triage}
+\index{Yangian!three-layer triage}
+The Yangian content of this chapter separates into three layers of
+decreasing certainty:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Proved.}
+  Chain-level $\Eone$ bar-cobar duality
+  (Theorem~\ref{thm:yangian-koszul-dual}),
+  evaluation-locus factorization comparison
+  (Theorem~\ref{thm:factorization-dk-eval}),
+  DK-2/3 on the evaluation-generated core at all simple types
+  (Corollary~\ref{cor:dk23-all-types}),
+  and finite-stage packet reductions.
+\item \emph{Conjectural but well-posed.}
+  The filtered H-level dg target
+  $\mathcal{W}^{\mathrm{ht}}$, RTT-adapted finite-quotient
+  package, coefficientwise RTT completion comparison,
+  and compact-generator packet
+  (Conjecture~\ref{conj:master-infinite-generator}).
+\item \emph{Downstream physics.}
+  The dg-shifted Yangian realization, full DK-4/5 bridge,
+  and module-category enhancement
+  (Chapter~\ref{ch:bv-brst}).
+\end{enumerate}
+Layer~(A) is the proved DK core.  Layer~(B) is the live
+algebraic frontier.  Layer~(C) is downstream of~(B) and of
+MC5.
+\end{remark}
+
+\begin{remark}[DK as genus-\texorpdfstring{$0$}{0} \texorpdfstring{$\Eone$}{E1}-factorization theorem]
+\label{rem:dk-e1-factorization}
+\index{Drinfeld--Kohno!as E1 factorization theorem@as $\Eone$-factorization theorem}
+The correct ontological ladder for the DK comparison is not
+``$\Eone \to \Etwo$'' as if $\Etwo$ were ``more commutative
+Yangian.''  Rather:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{$\Eone$-chiral Yangian}: ordered fusion, $R$-matrix,
+  DK monodromy.  This is Layers~(A)--(B) above.
+\item \emph{Associator/GT layer}: the coherence upgrade problem
+  from $\Eone$ to $\Etwo$ requires a Drinfeld associator
+  (Remark~\ref{rem:e1-e2-obstruction}).
+\item \emph{Modular layer}: genus and periods deform the entire
+  $\Eone$-factorization package.  This is the content of modular
+  homotopy theory (Definition~\ref{def:modular-homotopy-theory-intro}).
+\end{enumerate}
+DK compares geometric braid monodromy (from KZ/configuration
+space) with algebraic braid data (from $R$-matrix/quantum group).
+Both are realizations of the same $\Eone$-factorization transport
+on ordered configurations.  DK is the genus-$0$ face; modular
+homotopy theory asks what happens when the curve acquires genuine
+moduli.
+\end{remark}
+
 \subsection{The Drinfeld--Kohno square for affine algebras}
 
 \begin{theorem}[Chain-level derived Drinfeld--Kohno for affine algebras;
@@ -6422,7 +6527,7 @@ the derived enhancement of the classical DK identification.
 
 \subsection{The factorization-level statement}
 
-\begin{definition}[$\Eone$-factorization category]
+\begin{definition}[\texorpdfstring{$\Eone$}{E1}-factorization category]
 \label{def:e1-factorization-category}
 \index{E1-factorization category@$\Eone$-factorization category|textbf}
 For an $\Eone$-chiral algebra $\cA$ on a curve $X$, the
@@ -6683,8 +6788,8 @@ The conjecture asserts an equivalence of $\Eone$-factorization categories betwee
 
 The DK ladder as formulated in
 Remark~\ref{rem:dk-proved-vs-remains} decomposes the factorization
-Koszul duality problem into five stages, with DK-0/1/2/3 proved
-(in type~$A$) and DK-4/5 conjectural.  From first principles, the
+Koszul duality problem into five stages, with DK-0/1/2/3 proved on the evaluation-generated
+core at all simple types and DK-4/5 conjectural.  From first principles, the
 entire ladder is a single $\infty$-categorical statement: Koszul
 duality for $\Eone$-algebras in the symmetric monoidal stable
 $\infty$-category of factorization coalgebras on~$\operatorname{Ran}(X)$.
@@ -6745,7 +6850,7 @@ case, $E_1 = 0$ (Heisenberg acyclicity) gave immediate degeneration;
 here the $E_\infty$ page is nontrivial but finite-dimensional, which
 suffices for the factorization descent.
 
-\begin{theorem}[$\infty$-categorical factorization Koszul duality
+\begin{theorem}[\texorpdfstring{$\infty$}{infinity}-categorical factorization Koszul duality
 via sectorwise convergence; \ClaimStatusProvedHere]
 \label{thm:h-level-factorization-kd}
 \index{Koszul duality!factorization!sectorwise|textbf}
@@ -6921,7 +7026,7 @@ Theorem~\ref{thm:sectorwise-spectral-convergence}.
 Conclusion~(iii) gives~\eqref{eq:dk23-all-types}.
 \end{proof}
 
-\begin{remark}[Two proofs in type~$A$; scope comparison]
+\begin{remark}[Two proofs in type~\texorpdfstring{$A$}{A}; scope comparison]
 \label{rem:two-dk-proofs}
 \index{Drinfeld--Kohno!two proofs}
 For $\fg = \mathfrak{sl}_N$, there are now two independent proofs
@@ -7168,7 +7273,7 @@ universal $\infty$-categorical framework applied to the specific
 $\Eone$-chiral algebra~$\mathcal{Y}(\mathfrak{sl}_N)$.
 \end{remark}
 
-\begin{conjecture}[DK-5 via $\infty$-categorical PBW;
+\begin{conjecture}[DK-5 via \texorpdfstring{$\infty$}{infinity}-categorical PBW;
 \ClaimStatusConjectured]
 \label{conj:dk5-infty-pbw}
 \index{Drinfeld--Kohno!DK-5!PBW argument}
@@ -7212,7 +7317,7 @@ algebra~$\mathfrak{g}_{\cA}$.
 \end{conjecture}
 
 \begin{remark}[The DK ladder as successive approximation to
-$\infty$-categorical Koszul duality]
+\texorpdfstring{$\infty$}{infinity}-categorical Koszul duality]
 \label{rem:unified-dk-hierarchy}
 \index{Drinfeld--Kohno!unified hierarchy}
 The five levels of the DK ladder are now visible as successive
@@ -8034,7 +8139,9 @@ the four MC3 extension conjectures
 \end{enumerate}
 \end{remark}
 
-\begin{definition}[Ordered $\Eone$-factorization category;
+The four MC3 extension conjectures center on the completed bar-cobar equivalence beyond the evaluation-generated core.  To state them precisely in formal moduli language, we introduce four auxiliary structures: the receptacle for bar-cobar equivalence, the H-level target on the dual side, the H-level target on the original side, and the filtration ensuring finite quotients exist.
+
+\begin{definition}[Ordered \texorpdfstring{$\Eone$}{E1}-factorization category;
 \ClaimStatusConjectured]
 \label{def:ordered-e1-factorization}
 \index{factorization category!ordered $\Eone$-|textbf}
@@ -8903,7 +9010,7 @@ Proposition~\ref{prop:yangian-dk5-spectral-realization-formal} is
 automatic.  The final sentence follows.
 \end{proof}
 
-\begin{lemma}[Type-$A$ quantum-group fundamental packet is generated
+\begin{lemma}[Type-\texorpdfstring{$A$}{A} quantum-group fundamental packet is generated
 by the vector evaluation line; \ClaimStatusProvedHere]
 \label{lem:quantum-fd-vector-fundamental-generation}
 Let
@@ -9885,6 +9992,7 @@ and
 \Hom_{\mathcal L_q^{\mathrm{vec,mult}}}
 \bigl(V^{\mathrm{mult}}(0),V^{\mathrm{mult}}(b-a)\bigr).
 \]
+
 Applying the intertwining relation of assumption~\textup{(ii)} once
 more identifies the target Hom space with
 \[
@@ -10036,6 +10144,690 @@ so that corollary gives the stated closure of the full spectral DK-5
 side.
 \end{proof}
 
+\begin{proposition}[On the ambient dilation orbit, ordered vector-packet
+monodromy is determined by the seed-pair family;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-factorization-seed-mono}
+Work in the setting of
+Definitions~\ref{def:ordered-e1-factorization}
+and~\ref{def:spectral-quantum-group}.  Fix one ambient object
+\[
+V^{\mathrm{mult}}(0)\in \Factord(\bC^\times;\QGspec(R_{\cA}))
+\]
+and define its dilation orbit by
+\[
+V^{\mathrm{mult}}(a):=\rho_a^*V^{\mathrm{mult}}(0)
+\qquad (a\in\mathbb C).
+\]
+Let
+\[
+\mathcal P_q^{\mathrm{vec,mult}}
+\subset
+\Factord(\bC^\times;\QGspec(R_{\cA}))
+\]
+be the full subcategory generated by finite ordered tensor products of
+the objects \(V^{\mathrm{mult}}(a)\).  For \(a,b\in\mathbb C\), write
+\[
+\mathsf B_{a,b}^{\mathrm{mult}}\colon
+V^{\mathrm{mult}}(a)\boxtimes V^{\mathrm{mult}}(b)
+\xrightarrow{\sim}
+V^{\mathrm{mult}}(b)\boxtimes V^{\mathrm{mult}}(a)
+\]
+for the ambient two-point braid monodromy operator.
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item after the canonical identification
+  \[
+  V^{\mathrm{mult}}(a)\boxtimes V^{\mathrm{mult}}(b)
+  \cong
+  \rho_a^*\bigl(
+  V^{\mathrm{mult}}(0)\boxtimes V^{\mathrm{mult}}(b-a)\bigr),
+  \]
+  one has
+  \[
+  \mathsf B_{a,b}^{\mathrm{mult}}
+  \cong
+  \rho_a^*(\mathsf B_{0,b-a}^{\mathrm{mult}});
+  \]
+\item on every ordered tensor product
+  \[
+  V^{\mathrm{mult}}(a_1)\boxtimes\cdots\boxtimes V^{\mathrm{mult}}(a_n),
+  \]
+  the full braid-group action is generated by the adjacent operators
+  obtained from the one-parameter family
+  \(\{\mathsf B_{0,c}^{\mathrm{mult}}\}_{c\in\mathbb C}\) by tensoring
+  with identities and applying the dilation pullbacks \(\rho_a^*\).
+\end{enumerate}
+
+Equivalently, once the ambient vector seed orbit is fixed, the ordered
+vector-packet monodromy carries no freedom beyond the seed-pair
+one-parameter family \(\mathsf B_{0,c}^{\mathrm{mult}}\).
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:yangian-dk5-spectral-factorization-shifts},
+each dilation pullback \(\rho_a^*\) is an exact braided-monoidal
+autoequivalence of the ambient ordered factorization category.  Since
+\[
+V^{\mathrm{mult}}(a)=\rho_a^*V^{\mathrm{mult}}(0),
+\qquad
+V^{\mathrm{mult}}(b)=\rho_a^*V^{\mathrm{mult}}(b-a),
+\]
+the displayed object identification in \textup{(a)} is immediate.
+Functoriality of pullback then transports the braid monodromy operator
+on the ordered pair \((0,b-a)\) to the ordered pair \((a,b)\), giving
+the identity
+\[
+\mathsf B_{a,b}^{\mathrm{mult}}
+\cong
+\rho_a^*(\mathsf B_{0,b-a}^{\mathrm{mult}}).
+\]
+This proves \textup{(a)}.
+
+For \textup{(b)}, the ordered factorization category furnishes a
+braid-group action on every ordered configuration space by monodromy
+around the diagonals (Definition~\ref{def:e1-factorization-category}).
+The braid group \(B_n\) is generated by the adjacent generators
+\(\sigma_1,\ldots,\sigma_{n-1}\).  On the ordered tensor product
+\[
+V^{\mathrm{mult}}(a_1)\boxtimes\cdots\boxtimes V^{\mathrm{mult}}(a_n),
+\]
+the operator corresponding to \(\sigma_i\) is the identity on all
+factors except the \(i\)-th and \((i+1)\)-st, where it is the
+two-point monodromy
+\(\mathsf B_{a_i,a_{i+1}}^{\mathrm{mult}}\).  By part~\textup{(a)},
+each such adjacent operator is obtained from the seed-pair family
+\(\mathsf B_{0,a_{i+1}-a_i}^{\mathrm{mult}}\) by dilation pullback.
+Hence the full braid-group action on every ordered tensor product is
+generated by that one-parameter family together with tensoring by
+identities.  This proves \textup{(b)}.
+\end{proof}
+
+\begin{corollary}[After the Schur-simple ambient seed, the remaining
+local spectral datum is the seed-pair monodromy family;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-factorization-seed-mono}
+Work in the setting of
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
+and Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-mono}.
+Once the Schur-simple ambient vector seed \(V^{\mathrm{mult}}(0)\) is
+placed, the only remaining explicit local geometric quantity on the
+ambient ordered vector packet is the one-parameter seed-pair monodromy
+family
+\[
+\{\mathsf B_{0,c}^{\mathrm{mult}}\}_{c\in\mathbb C}.
+\]
+Equivalently, after the ambient Schur-simple seed is constructed, the
+ordered vector-packet geometry is no longer a many-object problem: it
+reduces to computing the two-point monodromy along the seed and its
+dilation orbit.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
+reduces the multiplicative spectral DK-5 side to the ambient
+Schur-simple vector seed and its dilation orbit.  Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-mono}
+then shows that, on that orbit, every ordered vector-packet braid
+operator is generated from the one-parameter family
+\(\{\mathsf B_{0,c}^{\mathrm{mult}}\}_{c\in\mathbb C}\).  This is
+exactly the stated reduction of the remaining local geometric datum.
+\end{proof}
+
+\begin{proposition}[On the ambient dilation orbit, standard ordered
+vector-packet braiding is equivalent to the seed-pair trigonometric
+identity; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-factorization-seed-trig}
+Work in the setting of
+Proposition~\ref{prop:quantum-fd-vector-seed-shifts}
+and
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-mono}.
+For \(a,b\in\mathbb C\), write
+\[
+\mathsf B_{a,b}^{\mathrm{fd}}\colon
+V(a)\boxtimes V(b)
+\xrightarrow{\sim}
+V(b)\boxtimes V(a)
+\]
+for the source two-point trigonometric braid operator on the standard
+quantum-loop vector line.  Then the following are equivalent:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item after the parameter-preserving identification of ordered tensor
+  products
+  \[
+  V(a_1)\boxtimes\cdots\boxtimes V(a_n)
+  \longleftrightarrow
+  V^{\mathrm{mult}}(a_1)\boxtimes\cdots\boxtimes V^{\mathrm{mult}}(a_n),
+  \]
+  the braid-group action on every ordered tensor product of the
+  ambient vector packet agrees with the standard source trigonometric
+  braid-group action;
+\item for every \(c\in\mathbb C\),
+  \[
+  \mathsf B_{0,c}^{\mathrm{mult}}
+  \cong
+  \mathsf B_{0,c}^{\mathrm{fd}}.
+  \]
+\end{enumerate}
+
+Equivalently, once the ambient vector seed orbit is fixed, the full
+ordered vector-packet braiding is standard if and only if the
+one-parameter seed-pair monodromy family is the standard trigonometric
+one.
+\end{proposition}
+
+\begin{proof}
+Apply the same argument as in the proof of
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-mono},
+but with the source shift autoequivalences
+\(\mathsf T_a^{\mathrm{fd}}\) from
+Proposition~\ref{prop:quantum-fd-vector-seed-shifts}
+in place of the ambient dilation pullbacks \(\rho_a^*\).
+It follows that after the canonical identification
+\[
+V(a)\boxtimes V(b)
+\cong
+\mathsf T_a^{\mathrm{fd}}\bigl(V(0)\boxtimes V(b-a)\bigr),
+\]
+one has
+\[
+\mathsf B_{a,b}^{\mathrm{fd}}
+\cong
+\mathsf T_a^{\mathrm{fd}}(\mathsf B_{0,b-a}^{\mathrm{fd}}),
+\]
+and the full source braid-group action on every ordered tensor product
+is generated by the adjacent operators obtained from the one-parameter
+family \(\{\mathsf B_{0,c}^{\mathrm{fd}}\}_{c\in\mathbb C}\) by
+tensoring with identities and shifting the parameter labels.  By
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-mono},
+the ambient ordered vector-packet braid-group action is generated in
+the same way from
+\(\{\mathsf B_{0,c}^{\mathrm{mult}}\}_{c\in\mathbb C}\).
+
+Therefore the full labelled two-point families
+\(\{\mathsf B_{a,b}^{\mathrm{fd}}\}\) and
+\(\{\mathsf B_{a,b}^{\mathrm{mult}}\}\) agree if and only if the
+seed-pair families \(\{\mathsf B_{0,c}^{\mathrm{fd}}\}\) and
+\(\{\mathsf B_{0,c}^{\mathrm{mult}}\}\) agree.  Since the braid-group
+action on every ordered tensor product is generated by those adjacent
+two-point operators on both sides, the same equivalence holds for the
+full ordered vector-packet braid-group actions.  This proves the
+equivalence of \textup{(a)} and \textup{(b)}.
+\end{proof}
+
+\begin{corollary}[After the Schur-simple ambient seed, the live local
+spectral check is the trigonometric seed-pair identity;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-factorization-seed-trig}
+Work in the setting of
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
+and
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-trig}.
+Once the Schur-simple ambient vector seed \(V^{\mathrm{mult}}(0)\) is
+placed, the ordered vector packet carries the standard source
+trigonometric braiding if and only if the one-parameter identity
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+\cong
+\mathsf B_{0,c}^{\mathrm{fd}}
+\qquad (c\in\mathbb C)
+\]
+holds on the seed pair and its dilation orbit.
+
+Equivalently, after the ambient Schur-simple seed is constructed, the
+remaining explicit local spectral computation is the standard
+trigonometric seed-pair monodromy identity.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
+fixes the ambient vector seed and its dilation orbit as the full
+object-level spectral input.  Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-trig}
+then identifies the remaining braiding-level comparison exactly with
+the displayed one-parameter seed-pair identity.
+\end{proof}
+
+\begin{proposition}[Type-\texorpdfstring{$A$}{A} seed-pair comparison reduces to the
+symmetric and antisymmetric channels; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-factorization-seed-channels}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-trig}.
+Assume moreover that for every \(c\in\mathbb C\), after the standard
+identifications
+\[
+V(0)\boxtimes V(c)\cong V\otimes V
+\cong
+V^{\mathrm{mult}}(0)\boxtimes V^{\mathrm{mult}}(c)
+\]
+and
+\[
+V(c)\boxtimes V(0)\cong V\otimes V
+\cong
+V^{\mathrm{mult}}(c)\boxtimes V^{\mathrm{mult}}(0),
+\]
+both seed-pair operators
+\[
+\mathsf B_{0,c}^{\mathrm{fd}},
+\mathsf B_{0,c}^{\mathrm{mult}}\in \End(V\otimes V)
+\]
+intertwine the diagonal \(\mathfrak{sl}_M\)-action.  Then the
+one-parameter trigonometric seed-pair identity
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+\cong
+\mathsf B_{0,c}^{\mathrm{fd}}
+\qquad (c\in\mathbb C)
+\]
+holds if and only if, for every \(c\in\mathbb C\), the two operators
+act by the same scalar on \(\operatorname{Sym}^2(V)\) and on
+\(\Lambda^2(V)\).
+
+Equivalently, it is enough to check for every \(c\in\mathbb C\) the
+two highest-weight channel identities
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}(e_1\otimes e_1)
+=
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_1)
+\]
+and
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+(e_1\otimes e_2-e_2\otimes e_1)
+=
+\mathsf B_{0,c}^{\mathrm{fd}}
+(e_1\otimes e_2-e_2\otimes e_1).
+\]
+\end{proposition}
+
+\begin{proof}
+For each fixed \(c\in\mathbb C\), the diagonal
+\(\mathfrak{sl}_M\)-equivariance hypothesis implies that both
+\(\mathsf B_{0,c}^{\mathrm{fd}}\) and
+\(\mathsf B_{0,c}^{\mathrm{mult}}\) preserve the irreducible
+decomposition
+\[
+V\otimes V\cong \operatorname{Sym}^2(V)\oplus \Lambda^2(V).
+\]
+Schur's lemma therefore gives scalars
+\(\lambda_{\mathrm{sym}}^{\mathrm{fd}}(c)\),
+\(\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c)\),
+\(\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)\), and
+\(\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)\) such that
+\[
+\mathsf B_{0,c}^{\mathrm{fd}}\big|_{\operatorname{Sym}^2(V)}
+=
+\lambda_{\mathrm{sym}}^{\mathrm{fd}}(c)\id,
+\qquad
+\mathsf B_{0,c}^{\mathrm{fd}}\big|_{\Lambda^2(V)}
+=
+\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c)\id,
+\]
+and similarly for \(\mathsf B_{0,c}^{\mathrm{mult}}\).
+Therefore
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+\cong
+\mathsf B_{0,c}^{\mathrm{fd}}
+\]
+is equivalent to the pair of scalar equalities
+\[
+\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)
+=
+\lambda_{\mathrm{sym}}^{\mathrm{fd}}(c),
+\qquad
+\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)
+=
+\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c).
+\]
+This proves the first equivalence.
+
+The vectors \(e_1\otimes e_1\) and
+\(e_1\otimes e_2-e_2\otimes e_1\) generate
+\(\operatorname{Sym}^2(V)\) and \(\Lambda^2(V)\), respectively, as
+irreducible \(\mathfrak{sl}_M\)-modules.  Hence equality of the two
+operators on those vectors is equivalent to equality of the two channel
+scalars.  This proves the final statement.
+\end{proof}
+
+\begin{corollary}[Under highest-weight normalization, the seed-pair
+trigonometric identity reduces to one mixed tensor line;
+\ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-factorization-seed-single-line}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-channels},
+and assume \(M\ge 2\).  Assume moreover that for every \(c\in\mathbb C\)
+the source and ambient seed-pair operators agree on the highest-weight
+line:
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}(e_1\otimes e_1)
+=
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_1).
+\]
+Then the one-parameter trigonometric seed-pair identity
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+\cong
+\mathsf B_{0,c}^{\mathrm{fd}}
+\qquad (c\in\mathbb C)
+\]
+holds if and only if the single mixed-tensor identity
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}(e_1\otimes e_2)
+=
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)
+\qquad (c\in\mathbb C)
+\]
+holds.
+
+Equivalently, under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization, the remaining explicit local spectral
+comparison on the seed pair is one ordered off-diagonal tensor line.
+\end{corollary}
+
+\begin{proof}
+If
+\(\mathsf B_{0,c}^{\mathrm{mult}}\cong \mathsf B_{0,c}^{\mathrm{fd}}\)
+for every \(c\), then the mixed-tensor identity is immediate.
+
+Conversely, fix \(c\in\mathbb C\).  By
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-channels},
+there are channel scalars
+\(\lambda_{\mathrm{sym}}^{\mathrm{fd}}(c)\),
+\(\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c)\),
+\(\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)\), and
+\(\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)\).  The highest-weight
+normalization hypothesis gives
+\[
+\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)
+=
+\lambda_{\mathrm{sym}}^{\mathrm{fd}}(c).
+\]
+
+Write
+\[
+s:=e_1\otimes e_2+e_2\otimes e_1\in \operatorname{Sym}^2(V),
+\qquad
+a:=e_1\otimes e_2-e_2\otimes e_1\in \Lambda^2(V),
+\]
+so that \(e_1\otimes e_2=\frac12(s+a)\).  Then
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}(e_1\otimes e_2)
+=
+\frac{\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)
++\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)}{2}\,e_1\otimes e_2
++
+\frac{\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)
+-\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)}{2}\,e_2\otimes e_1,
+\]
+and the same formula holds for
+\(\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)\) with the superscript
+\(\mathrm{fd}\).  If the mixed-tensor outputs agree and the symmetric
+channel scalars already agree, then linear independence of
+\(e_1\otimes e_2\) and \(e_2\otimes e_1\) forces
+\[
+\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)
+=
+\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c).
+\]
+Hence both channel scalars agree, and
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-channels}
+gives
+\(\mathsf B_{0,c}^{\mathrm{mult}}\cong \mathsf B_{0,c}^{\mathrm{fd}}\).
+Since \(c\) was arbitrary, the full one-parameter family identity
+follows.
+\end{proof}
+
+\begin{proposition}[Under highest-weight normalization, the seed-pair
+local packet is one scalar exchange coefficient family;
+\ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-factorization-seed-exchange}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line},
+and assume \(M\ge 2\).  For every \(c\in\mathbb C\), write uniquely
+\[
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)
+=
+\alpha^{\mathrm{fd}}(c)\,e_1\otimes e_2
++\beta^{\mathrm{fd}}(c)\,e_2\otimes e_1
+\]
+and
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}(e_1\otimes e_2)
+=
+\alpha^{\mathrm{mult}}(c)\,e_1\otimes e_2
++\beta^{\mathrm{mult}}(c)\,e_2\otimes e_1.
+\]
+Then the one-parameter trigonometric seed-pair identity
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+\cong
+\mathsf B_{0,c}^{\mathrm{fd}}
+\qquad (c\in\mathbb C)
+\]
+holds if and only if the single scalar identity
+\[
+\beta^{\mathrm{mult}}(c)=\beta^{\mathrm{fd}}(c)
+\qquad (c\in\mathbb C)
+\]
+holds.
+
+Equivalently, under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization, the remaining explicit local spectral
+comparison on the seed pair is one scalar exchange coefficient family.
+\end{proposition}
+
+\begin{proof}
+By
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line},
+it is enough to compare the mixed-tensor outputs
+\(\mathsf B_{0,c}^{\mathrm{mult}}(e_1\otimes e_2)\) and
+\(\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)\).  Fix
+\(c\in\mathbb C\).  In the notation of the proof of
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line},
+the highest-weight normalization hypothesis gives a common symmetric
+channel scalar
+\[
+\lambda_{\mathrm{sym}}(c):=
+\lambda_{\mathrm{sym}}^{\mathrm{mult}}(c)
+=
+\lambda_{\mathrm{sym}}^{\mathrm{fd}}(c).
+\]
+The same proof then gives
+\[
+\alpha^{\mathrm{mult}}(c)
+=
+\frac{\lambda_{\mathrm{sym}}(c)
++\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)}{2},
+\qquad
+\beta^{\mathrm{mult}}(c)
+=
+\frac{\lambda_{\mathrm{sym}}(c)
+-\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)}{2},
+\]
+and likewise
+\[
+\alpha^{\mathrm{fd}}(c)
+=
+\frac{\lambda_{\mathrm{sym}}(c)
++\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c)}{2},
+\qquad
+\beta^{\mathrm{fd}}(c)
+=
+\frac{\lambda_{\mathrm{sym}}(c)
+-\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c)}{2}.
+\]
+Therefore
+\[
+\beta^{\mathrm{mult}}(c)=\beta^{\mathrm{fd}}(c)
+\]
+is equivalent to
+\[
+\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)
+=
+\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c),
+\]
+which is equivalent to
+\[
+\alpha^{\mathrm{mult}}(c)=\alpha^{\mathrm{fd}}(c).
+\]
+Hence equality of the exchange coefficients is equivalent to equality
+of the whole mixed-tensor outputs, and
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line}
+finishes the argument.
+\end{proof}
+
+\begin{corollary}[The exchange coefficient descends to the
+multiplicative spectral ratio; \ClaimStatusProvedHere]
+\label{cor:yangian-dk5-spectral-factorization-seed-exchange-mult}
+Assume the hypotheses of
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}.
+Then the source and ambient exchange coefficient families satisfy
+\[
+\beta^{\mathrm{fd}}(c+2\pi i)=\beta^{\mathrm{fd}}(c),
+\qquad
+\beta^{\mathrm{mult}}(c+2\pi i)=\beta^{\mathrm{mult}}(c)
+\qquad (c\in\mathbb C).
+\]
+Hence they descend uniquely to scalar functions of the multiplicative
+spectral ratio
+\[
+\beta_\times^{\mathrm{fd}},\beta_\times^{\mathrm{mult}}
+\]
+with
+\[
+\beta^{\mathrm{fd}}(c)=\beta_\times^{\mathrm{fd}}(e^c),
+\qquad
+\beta^{\mathrm{mult}}(c)=\beta_\times^{\mathrm{mult}}(e^c).
+\]
+In particular, the one-parameter trigonometric seed-pair identity is
+equivalent to the multiplicative-ratio identity
+\[
+\beta_\times^{\mathrm{mult}}=\beta_\times^{\mathrm{fd}}.
+\]
+
+Equivalently, under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization, the remaining explicit local spectral
+comparison on the seed pair is one scalar function of the
+multiplicative spectral ratio, not of the additive logarithmic lift.
+\end{corollary}
+
+\begin{proof}
+For the source line, Proposition~\ref{prop:quantum-fd-vector-seed-shifts}
+identifies \(V(c)\) with the vector evaluation object at multiplicative
+parameter \(e^c\).  Therefore
+\[
+V(c+2\pi i)\cong V(c),
+\]
+and the same ordered pair of source vector objects determines
+\(\mathsf B_{0,c+2\pi i}^{\mathrm{fd}}\) and
+\(\mathsf B_{0,c}^{\mathrm{fd}}\).  By uniqueness of the coefficients of
+\(e_1\otimes e_2\) and \(e_2\otimes e_1\), this gives
+\[
+\beta^{\mathrm{fd}}(c+2\pi i)=\beta^{\mathrm{fd}}(c).
+\]
+
+For the ambient line,
+\[
+V^{\mathrm{mult}}(c)=\rho_c^*V^{\mathrm{mult}}(0)
+\]
+by Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-mono},
+and
+\[
+\rho_{c+2\pi i}(z)=e^{c+2\pi i}z=e^c z=\rho_c(z).
+\]
+Hence
+\[
+V^{\mathrm{mult}}(c+2\pi i)=V^{\mathrm{mult}}(c)
+\]
+and likewise
+\[
+\mathsf B_{0,c+2\pi i}^{\mathrm{mult}}
+=
+\mathsf B_{0,c}^{\mathrm{mult}},
+\]
+so
+\[
+\beta^{\mathrm{mult}}(c+2\pi i)=\beta^{\mathrm{mult}}(c).
+\]
+The descent to functions of \(e^c\) is exactly this periodicity.  The
+final equivalence is
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}
+rewritten on the multiplicative ratio line.
+\end{proof}
+
+\begin{proposition}[The multiplicative-ratio local packet is the
+antisymmetric-channel character; \ClaimStatusProvedHere]
+\label{prop:yangian-dk5-spectral-factorization-seed-alt-mult}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult},
+and assume \(M\ge 2\).  Then there exist unique scalar functions
+\[
+\lambda_{\mathrm{alt},\times}^{\mathrm{fd}},
+\lambda_{\mathrm{alt},\times}^{\mathrm{mult}}
+\]
+of the multiplicative spectral ratio such that
+\[
+\mathsf B_{0,c}^{\mathrm{fd}}
+(e_1\otimes e_2-e_2\otimes e_1)
+=
+\lambda_{\mathrm{alt},\times}^{\mathrm{fd}}(e^c)
+(e_1\otimes e_2-e_2\otimes e_1)
+\]
+and
+\[
+\mathsf B_{0,c}^{\mathrm{mult}}
+(e_1\otimes e_2-e_2\otimes e_1)
+=
+\lambda_{\mathrm{alt},\times}^{\mathrm{mult}}(e^c)
+(e_1\otimes e_2-e_2\otimes e_1).
+\]
+Then the one-parameter trigonometric seed-pair identity is equivalent
+to the multiplicative-ratio antisymmetric-channel identity
+\[
+\lambda_{\mathrm{alt},\times}^{\mathrm{mult}}
+=
+\lambda_{\mathrm{alt},\times}^{\mathrm{fd}}.
+\]
+
+Equivalently, under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization, the remaining explicit local spectral
+comparison on the seed pair is one scalar character on the highest-weight
+antisymmetric channel over the multiplicative spectral line.
+\end{proposition}
+
+\begin{proof}
+By
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-channels},
+for each \(c\in\mathbb C\) the source and ambient seed-pair operators
+act on \(\Lambda^2(V)\) by scalars
+\(\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c)\) and
+\(\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c)\).  Since
+\(e_1\otimes e_2-e_2\otimes e_1\) is a highest-weight generator of
+\(\Lambda^2(V)\), these are exactly the scalars in the two displayed
+formulas.  The same periodicity argument as in
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult}
+shows
+\[
+\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c+2\pi i)
+=
+\lambda_{\mathrm{alt}}^{\mathrm{fd}}(c),
+\qquad
+\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c+2\pi i)
+=
+\lambda_{\mathrm{alt}}^{\mathrm{mult}}(c),
+\]
+so they descend uniquely to the multiplicative-ratio functions
+\(\lambda_{\mathrm{alt},\times}^{\mathrm{fd}}\) and
+\(\lambda_{\mathrm{alt},\times}^{\mathrm{mult}}\).
+
+The highest-weight normalization hypothesis identifies the symmetric
+channel scalars on the two sides.  Therefore the proof of
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}
+shows that equality of the exchange-coefficient functions is equivalent
+to equality of the antisymmetric-channel scalars.  Rewriting that
+equivalence on the multiplicative spectral line gives the displayed
+identity.
+\end{proof}
+
 \begin{corollary}[On the realized spectral packet locus, the ambient
 spectral category is the ind-completion of the spectral compact core;
 \ClaimStatusProvedHere]
@@ -10090,8 +10882,9 @@ that line,
 and
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-vector-line}
 packages the resulting full spectral DK-5 closure directly from that
-ambient vector-line realization,
-while
+ambient vector-line realization.
+
+While
 Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-line}
 shows that this ambient vector-line realization is itself forced by one
 ambient vector seed compatible with source loop rotation,
@@ -10102,6 +10895,15 @@ single ambient seed,
 while
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
 sharpens this further to one Schur-simple ambient vector seed,
+while
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-mono}
+isolates the remaining local geometric quantity on that ambient route
+as the seed-pair monodromy family, and
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-trig}
+and
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-trig}
+sharpen the remaining explicit comparison there to the one-parameter
+trigonometric seed-pair identity,
 while Corollary~\ref{cor:yangian-dk5-spectral-one-seed} packages an
 alternate seed-level route there via one compatible base vector seed
 \(V^\omega(0)\).
@@ -10426,7 +11228,7 @@ to an exact colimit-preserving equivalence of the ambient completed
 categories.  This is exactly the DK-5 conclusion.
 \end{proof}
 
-\begin{corollary}[Minimal closure criterion for the standard type-$A$
+\begin{corollary}[Minimal closure criterion for the standard type-\texorpdfstring{$A$}{A}
   Yangian MC4 frontier; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-mc4-closure-criterion}
 Assume the hypotheses of
@@ -10474,7 +11276,7 @@ remaining DK-5 input to equivalence on compact generators and upgrades
 that packet formally to the full completed equivalence.
 \end{proof}
 
-\begin{corollary}[Standard type-$A$ Yangian MC4 packet under one-loop
+\begin{corollary}[Standard type-\texorpdfstring{$A$}{A} Yangian MC4 packet under one-loop
 exactness; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-degree2-plus-generators}
 Assume the hypotheses of
@@ -10526,7 +11328,7 @@ Corollary~\ref{cor:yangian-dk5-fundamental-packet}.
 \end{proof}
 
 \begin{corollary}[Fundamental Casimir insertion reduces the standard
-type-$A$ Yangian MC4 packet to compact generators;
+type-\texorpdfstring{$A$}{A} Yangian MC4 packet to compact generators;
 \ClaimStatusProvedHere]
 \label{cor:yangian-typea-casimir-plus-generators}
 Assume the hypotheses of
@@ -10572,7 +11374,7 @@ Corollary~\ref{cor:yangian-typea-degree2-plus-generators}, so that
 corollary leaves only the completed fundamental-packet DK-5 packet.
 \end{proof}
 
-\begin{corollary}[Factorization-side standard type-$A$ local MC4 packet
+\begin{corollary}[Factorization-side standard type-\texorpdfstring{$A$}{A} local MC4 packet
 closes; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-factorization-local-closure}
 Assume the hypotheses of
@@ -10601,6 +11403,41 @@ fundamental line.  Therefore the extra hypothesis of
 Corollary~\ref{cor:yangian-typea-casimir-plus-generators} is automatic
 there, and that corollary reduces the remaining packet to the
 completed fundamental-packet DK-5 packet.
+\end{proof}
+
+\begin{corollary}[Shared ordered bar seed reduces the standard type-\texorpdfstring{$A$}{A}
+Yangian MC4 packet to compact generators; \ClaimStatusProvedHere]
+\label{cor:yangian-typea-shared-seed-plus-generators}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-typea-factorization-local-closure}
+on the ordered factorization target and of
+Corollary~\ref{cor:yangian-typea-dg-local-closure}
+on an ordered dg-shifted target presented by the same ordered bar seed.
+Then the local standard type-$A$ Yangian MC4 packet is automatic on the
+dg-shifted target as well as on the factorization target.
+Consequently the remaining standard type-$A$ Yangian MC4 input is
+exactly the compact-generator comparison
+\[
+\mathcal{G}^{\mathrm{fund}}_Y
+\xrightarrow{\sim}
+\mathcal{G}^{\mathrm{fund}}_q.
+\]
+Equivalently, once the standard normalized residue is transported along
+the shared ordered bar seed, the standard type-$A$ Yangian side of MC4
+is no longer a new local residue computation but only the completed
+module-category comparison on compact generators.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:yangian-typea-factorization-local-closure} shows
+that the ordered factorization target already carries the standard
+local type-$A$ closure, and
+Corollary~\ref{cor:yangian-typea-dg-local-closure} transports that same
+local closure to any dg-shifted realization presented by the same
+ordered bar seed.  In both cases the only remaining packet is the
+completed fundamental-packet DK-5 packet.  Proposition~\ref{prop:yangian-dk5-compact-generators}
+reduces that packet to equivalence on compact generators and upgrades it
+formally to the full completed comparison.
 \end{proof}
 
 \begin{remark}[Exact extra input for DK-5]
@@ -10657,6 +11494,23 @@ packet already in hand:
   while
   Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
   sharpens this further to one Schur-simple ambient vector seed,
+  while
+  Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-trig}
+  sharpens the remaining local spectral comparison there to the
+  one-parameter trigonometric seed-pair identity,
+  while
+  Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line}
+  shows that under diagonal \(\mathfrak{sl}_M\)-equivariance and
+  highest-weight normalization this contracts further to one ordered
+  mixed-tensor line, and
+  Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}
+  sharpens that line to one scalar exchange coefficient family, while
+  Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult}
+  descends that family to one scalar function of the multiplicative
+  spectral ratio, and
+  Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-alt-mult}
+  rewrites the same packet as one antisymmetric-channel character on
+  that multiplicative spectral line,
   while Corollary~\ref{cor:yangian-dk5-spectral-one-seed}
   packages the parallel compact-core seed route via one compatible base
   vector seed inside the realized spectral compact core,
@@ -10744,7 +11598,17 @@ Corollary~\ref{cor:yangian-dk5-spectral-one-seed}.  Thus the genuinely
 live categorical remainder is exactly realization of that standard
 spectral vector seed-and-shift datum, with the multiplicative spectral
 factorization locus reducing it to one ambient seed plus its dilation
-orbit.
+orbit together with the one-parameter trigonometric seed-pair
+identity; under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization of that seed pair, this contracts further
+to one ordered mixed-tensor line and then to one scalar exchange
+coefficient family, which
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult}
+descends to one scalar function of the multiplicative spectral ratio;
+equivalently,
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-alt-mult}
+rewrites it as one antisymmetric-channel character on that
+multiplicative spectral line.
 MC5 begins only after this H-level comparison packet is in place.
 Accordingly, the middle term
 $\operatorname{Mod}^{\mathrm{comp}}(\Ydg_{\cA})$ should be read as
@@ -11020,7 +11884,7 @@ of Proposition~\ref{prop:completed-target-comparison}, together with
 Corollary~\ref{cor:yangian-standard-mc4-package}.
 \end{proof}
 
-\begin{proposition}[Standard type-$A$ realization criterion from shared
+\begin{proposition}[Standard type-\texorpdfstring{$A$}{A} realization criterion from shared
 bar seed and finite RTT quotients; \ClaimStatusProvedHere]
 \label{prop:yangian-typea-realization-criterion}
 Let $\Ydg_{\cA}$ be a separated complete dg algebra equipped with:
@@ -11095,7 +11959,7 @@ realization of the standard spectral vector seed-and-shift datum.
 This proves~\textup{(c)}.
 \end{proof}
 
-\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from realization
+\begin{corollary}[Standard type-\texorpdfstring{$A$}{A} DK-4/DK-5 closure from realization
 and compact core; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-realization-plus-compacts}
 Assume the hypotheses of
@@ -11124,7 +11988,7 @@ Corollary~\ref{cor:yangian-dk5-compact-core}, which therefore closes
 DK-5.  This proves the full DK-4/DK-5 claim.
 \end{proof}
 
-\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from realization
+\begin{corollary}[Standard type-\texorpdfstring{$A$}{A} DK-4/DK-5 closure from realization
 and completed fundamental packet; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-realization-plus-fundamental-packet}
 Assume the hypotheses of
@@ -11156,7 +12020,7 @@ DK-4 packet.  The additional hypotheses are exactly the input of
 Corollary~\ref{cor:yangian-dk5-fundamental-packet}, which closes DK-5.
 \end{proof}
 
-\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from dg-shifted
+\begin{corollary}[Standard type-\texorpdfstring{$A$}{A} DK-4/DK-5 closure from dg-shifted
 realization and compact-core realization of the proved
 finite-dimensional factorization DK core; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-realization-plus-core-realization}
@@ -11239,7 +12103,7 @@ with \(\mathcal{C}_Y^\omega\) realized inside
 \(\mathcal{C}_{\mathfrak g}^\omega\).  Therefore DK-5 closes.
 \end{proof}
 
-\begin{corollary}[Standard type-$A$ DK-4/DK-5 closure from spectral
+\begin{corollary}[Standard type-\texorpdfstring{$A$}{A} DK-4/DK-5 closure from spectral
 vector-line realization; \ClaimStatusProvedHere]
 \label{cor:yangian-typea-realization-plus-dg-packet}
 Assume the hypotheses of
@@ -11254,7 +12118,9 @@ Equivalently, once the shared-bar-seed finite-quotient realization
 package is in place, the dg half of DK-5 is already closed by the
 canonical dg compact-core realization and its ind-completion, and the
 ambient spectral category is formal from ind-completion of the spectral
-compact core.  The only remaining categorical input is therefore the
+compact core.
+
+The only remaining categorical input is therefore the
 realization of the standard spectral vector seed-and-shift datum; on
 the multiplicative spectral realization locus,
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-vector-line}
@@ -11265,14 +12131,21 @@ braided-monoidal closure of that line inside the ambient ordered
 factorization category, and
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-vector-line}
 packages the resulting spectral DK-5 closure directly from that ambient
-vector-line realization, while
+vector-line realization.
+
+While
 Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-line}
 and
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-one-seed}
 and
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
-sharpen this further to one Schur-simple ambient vector seed plus its
-dilation orbit, while on the
+sharpen this further to one Schur-simple ambient vector seed together
+with the one-parameter trigonometric seed-pair identity on its
+dilation orbit, and
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line}
+shows that under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization this local packet contracts to one ordered
+mixed-tensor line, while on the
 equivariant multiplicative spectral realization locus of
 Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed},
 the seed and shift data are intrinsic.
@@ -11309,8 +12182,22 @@ and
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-one-seed}
 and
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
-show that, more sharply, one Schur-simple ambient vector seed and its
-dilation orbit already supply that whole ambient route;
+show that, more sharply, one Schur-simple ambient vector seed already
+supplies the whole object-level ambient route, while
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-trig}
+identifies the remaining explicit local comparison there with the
+one-parameter trigonometric seed-pair identity on its dilation orbit,
+and Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line}
+shows that under diagonal \(\mathfrak{sl}_M\)-equivariance and
+highest-weight normalization this contracts further to one ordered
+mixed-tensor line, and
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}
+sharpens that line to one scalar exchange coefficient family;
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult}
+shows that this scalar family already descends to the multiplicative
+spectral ratio; equivalently,
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-alt-mult}
+rewrites it as one antisymmetric-channel character there;
 and on the sharper equivariant multiplicative spectral
 realization locus,
 Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed}
@@ -11376,13 +12263,25 @@ seed-and-shift datum in the spectral compact core; on the equivariant
 multiplicative spectral realization locus, this contracts further to
 the realization functor together with one ambient compatible
 Schur-simple vector seed whose dilation orbit gives the spectral
-vector line, and once that ambient seed is placed
+vector line together with the one-parameter trigonometric seed-pair
+identity on that orbit, and under diagonal
+\(\mathfrak{sl}_M\)-equivariance and highest-weight normalization even
+that local packet contracts first to one ordered mixed-tensor line and
+then to one scalar exchange coefficient family.
+
+Once
+that ambient seed is placed
 Corollary~\ref{cor:yangian-dk5-spectral-factorization-vector-line}
 and Proposition~\ref{prop:yangian-dk5-spectral-factorization-core-from-vector-line}
 and Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-vector-line}
 and Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-line}
 and Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-one-seed}
 and Corollary~\ref{cor:yangian-dk5-spectral-factorization-ambient-schur-seed}
+and Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-trig}
+and Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line}
+and Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}
+and Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult}
+and Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-alt-mult}
 make the rest formal.
 \end{corollary}
 
@@ -11405,6 +12304,250 @@ Corollary~\ref{cor:yangian-dk5-spectral-one-seed}.  Therefore that
 corollary applies and removes any separate seed-and-shift choice on the
 canonical target.  The final sentence is exactly this reformulation on
 the canonical target.
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target: the local
+spectral packet contracts to one mixed-tensor line on the equivariant
+multiplicative locus; \ClaimStatusProvedHere]
+\label{cor:yangian-canonical-realization-to-single-line}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed}.
+For \(c\in\mathbb C\), define
+\[
+V^\omega(c):=\rho_c^*V^\omega(0),
+\]
+and let
+\[
+\mathsf B_{0,c}^{\omega}\colon
+V^\omega(0)\boxtimes V^\omega(c)
+\xrightarrow{\sim}
+V^\omega(c)\boxtimes V^\omega(0)
+\]
+be the associated ambient seed-pair braid operator on the realized
+spectral compact core.  Assume moreover that for every \(c\in\mathbb C\):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \(\mathsf B_{0,c}^{\omega}\) intertwines the diagonal
+  \(\mathfrak{sl}_M\)-action;
+\item \(\mathsf B_{0,c}^{\omega}\) agrees with the standard source
+  operator on the highest-weight line:
+  \[
+  \mathsf B_{0,c}^{\omega}(e_1\otimes e_1)
+  =
+  \mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_1).
+  \]
+\end{enumerate}
+Then the remaining explicit local spectral comparison on the canonical
+target is exactly the one-parameter mixed-tensor identity
+\[
+\mathsf B_{0,c}^{\omega}(e_1\otimes e_2)
+=
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)
+\qquad (c\in\mathbb C).
+\]
+
+Equivalently, on the equivariant multiplicative spectral realization
+locus of the canonical target, once the seed and shift data are
+canonical and the diagonal symmetry/highest-weight normalization are in
+place, the local spectral packet is no longer a whole trigonometric
+family: it contracts to one ordered mixed-tensor line family.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed}
+constructs the canonical seed \(V^\omega(0)\) and the intrinsic shift
+family \(\rho_c^*\) on the equivariant multiplicative spectral
+realization locus.  Therefore the ambient seed-pair operators
+\(\mathsf B_{0,c}^{\omega}\) are exactly the operators to which
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-single-line}
+applies, with \(V^{\mathrm{mult}}(0)=V^\omega(0)\).  The two extra
+hypotheses here are precisely the diagonal
+\(\mathfrak{sl}_M\)-equivariance and highest-weight normalization
+hypotheses required there.  Hence that corollary identifies the
+remaining local spectral comparison with the displayed mixed-tensor
+family.
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target: the local
+spectral packet contracts to one exchange coefficient family on the
+equivariant multiplicative locus; \ClaimStatusProvedHere]
+\label{cor:yangian-canonical-realization-to-exchange}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-canonical-realization-to-single-line}, and
+assume \(M\ge 2\).  For every \(c\in\mathbb C\), write uniquely
+\[
+\mathsf B_{0,c}^{\omega}(e_1\otimes e_2)
+=
+\alpha^\omega(c)\,e_1\otimes e_2
++\beta^\omega(c)\,e_2\otimes e_1
+\]
+and
+\[
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)
+=
+\alpha^{\mathrm{fd}}(c)\,e_1\otimes e_2
++\beta^{\mathrm{fd}}(c)\,e_2\otimes e_1.
+\]
+Then the remaining explicit local spectral comparison on the canonical
+target is exactly the scalar identity
+\[
+\beta^\omega(c)=\beta^{\mathrm{fd}}(c)
+\qquad (c\in\mathbb C).
+\]
+
+Equivalently, on the equivariant multiplicative spectral realization
+locus of the canonical target, once the seed and shift data are
+canonical and the diagonal symmetry/highest-weight normalization are in
+place, the local spectral packet contracts from one ordered
+mixed-tensor line family to one scalar exchange coefficient family.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:yangian-canonical-realization-to-single-line}
+identifies the remaining local spectral comparison on the canonical
+target with the mixed-tensor family
+\[
+\mathsf B_{0,c}^{\omega}(e_1\otimes e_2)
+=
+\mathsf B_{0,c}^{\mathrm{fd}}(e_1\otimes e_2)
+\qquad (c\in\mathbb C).
+\]
+Now apply
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-exchange}
+with \(V^{\mathrm{mult}}(0)=V^\omega(0)\) and
+\(\mathsf B_{0,c}^{\mathrm{mult}}=\mathsf B_{0,c}^{\omega}\).
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target: the local
+spectral packet descends to one multiplicative-ratio scalar family;
+\ClaimStatusProvedHere]
+\label{cor:yangian-canonical-realization-to-exchange-mult}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-canonical-realization-to-exchange}.  Then
+\[
+\beta^\omega(c+2\pi i)=\beta^\omega(c)
+\qquad (c\in\mathbb C),
+\]
+so the canonical-target exchange coefficient descends uniquely to a
+scalar function
+\[
+\beta_\times^\omega
+\]
+of the multiplicative spectral ratio with
+\[
+\beta^\omega(c)=\beta_\times^\omega(e^c).
+\]
+The remaining explicit local spectral comparison on the canonical
+target is therefore exactly
+\[
+\beta_\times^\omega=\beta_\times^{\mathrm{fd}}.
+\]
+
+Equivalently, on the equivariant multiplicative spectral realization
+locus of the canonical target, the local spectral packet is one scalar
+function on the multiplicative spectral line, not a family on its
+additive logarithmic cover.
+\end{corollary}
+
+\begin{proof}
+By
+Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed},
+the canonical target shift family is the ambient dilation pullback
+family \(\rho_c^*\), so
+\[
+V^\omega(c)=\rho_c^*V^\omega(0).
+\]
+Since \(\rho_{c+2\pi i}=\rho_c\), one has
+\[
+V^\omega(c+2\pi i)=V^\omega(c)
+\]
+and therefore
+\[
+\mathsf B_{0,c+2\pi i}^{\omega}
+=
+\mathsf B_{0,c}^{\omega}.
+\]
+Taking the coefficient of \(e_2\otimes e_1\) in the expansion of
+\(\mathsf B_{0,c}^{\omega}(e_1\otimes e_2)\) gives the displayed
+periodicity of \(\beta^\omega(c)\).  The source side already descends
+by
+Corollary~\ref{cor:yangian-dk5-spectral-factorization-seed-exchange-mult},
+so the final identity is just
+Corollary~\ref{cor:yangian-canonical-realization-to-exchange}
+rewritten on the multiplicative ratio line.
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target: the local
+spectral packet is the antisymmetric-channel character on the
+multiplicative spectral line; \ClaimStatusProvedHere]
+\label{cor:yangian-canonical-realization-to-alt-mult}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-canonical-realization-to-exchange-mult}, and
+assume \(M\ge 2\).  Then there exists a unique scalar function
+\[
+\lambda_{\mathrm{alt},\times}^{\omega}
+\]
+of the multiplicative spectral ratio such that
+\[
+\mathsf B_{0,c}^{\omega}
+(e_1\otimes e_2-e_2\otimes e_1)
+=
+\lambda_{\mathrm{alt},\times}^{\omega}(e^c)
+(e_1\otimes e_2-e_2\otimes e_1).
+\]
+The remaining explicit local spectral comparison on the canonical
+target is exactly
+\[
+\lambda_{\mathrm{alt},\times}^{\omega}
+=
+\lambda_{\mathrm{alt},\times}^{\mathrm{fd}}.
+\]
+
+Equivalently, on the equivariant multiplicative spectral realization
+locus of the canonical target, the local spectral packet is one scalar
+character on the highest-weight antisymmetric channel over the
+multiplicative spectral line.
+\end{corollary}
+
+\begin{proof}
+Apply
+Proposition~\ref{prop:yangian-dk5-spectral-factorization-seed-alt-mult}
+with \(V^{\mathrm{mult}}(0)=V^\omega(0)\) and
+\(\mathsf B_{0,c}^{\mathrm{mult}}=\mathsf B_{0,c}^{\omega}\).  The
+hypotheses needed there are exactly those supplied by
+Corollary~\ref{cor:yangian-canonical-realization-to-exchange-mult}.
+\end{proof}
+
+\begin{corollary}[Canonical formal-moduli Yangian target closes
+DK-4/DK-5 from one canonical spectral seed on the equivariant
+multiplicative locus; \ClaimStatusProvedHere]
+\label{cor:yangian-canonical-realization-plus-one-seed}
+Assume the hypotheses of
+Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed}.
+Then the standard type-$A$ Yangian DK-4/DK-5 packet closes on the
+canonical formal-moduli target.
+
+Equivalently, once the canonical completed enveloping dg algebra
+\(U^{\mathrm{comp}}(\mathfrak{g}_{\cA})\) carries the RTT-adapted
+finite-quotient/shared-seed package and the spectral compact core is
+realized equivariantly for multiplicative dilations, it is enough to
+place the single canonical spectral seed
+\[
+V^\omega(0):=J_q^\omega(V(0)).
+\]
+The shift family is then intrinsic, the full spectral vector packet is
+forced, and DK-4/DK-5 closes on the canonical target.
+\end{corollary}
+
+\begin{proof}
+Corollary~\ref{cor:yangian-canonical-realization-to-spectral-seed}
+makes the hypotheses of
+Corollary~\ref{cor:yangian-dk5-spectral-one-seed} automatic on the
+canonical target.  Therefore the completed vector line, ordered vector
+packet, completed fundamental packet, ordered tensor-generator packet,
+spectral compact core, and ambient spectral category are all formal.
+In particular, the vector-line hypothesis of
+Corollary~\ref{cor:yangian-canonical-realization-plus-vector-line} is
+satisfied.  Applying that corollary closes DK-4/DK-5.
 \end{proof}
 
 \begin{corollary}[Canonical formal-moduli Yangian target closes
