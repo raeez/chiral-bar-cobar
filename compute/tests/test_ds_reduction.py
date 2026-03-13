@@ -109,8 +109,10 @@ from compute.lib.ds_reduction import (
     semidirect_survivor_block_invariant_summary,
     survivor_coupled_block_invariant_summary,
     hook_pair_survivor_coupled_family_holds_via_duality,
+    hook_pair_survivor_coupled_representative_holds_via_duality,
     verify_hook_pair_survivor_coupled_family_via_duality_catalog,
     verify_hook_pair_first_transfer_correction_catalog,
+    hook_pair_corrected_semidirect_representative_holds_via_duality,
     hook_pair_corrected_semidirect_family_holds_via_duality,
     verify_hook_pair_corrected_semidirect_family_via_duality_catalog,
     nonprincipal_two_row_mixed_family_holds_via_duality,
@@ -1926,6 +1928,19 @@ class TestHookFamilyCatalog:
             max_internal_ce_degree=1,
         )
 
+    @pytest.mark.parametrize("representative_r", (1, 2))
+    def test_generic_survivor_degree_three_survivor_family_representatives(
+        self,
+        representative_r,
+    ):
+        survivor_total_degree = 3
+        assert hook_pair_survivor_coupled_representative_holds_via_duality(
+            6,
+            representative_r,
+            max_constraint_total_degree=1,
+            survivor_total_degree=survivor_total_degree,
+        )
+
     def test_generic_survivor_degree_three_survivor_family_and_catalogs(self):
         survivor_total_degree = 3
         assert hook_pair_survivor_coupled_family_holds_via_duality(
@@ -1941,21 +1956,22 @@ class TestHookFamilyCatalog:
             ).values()
         )
 
-    def test_generic_survivor_degree_three_corrected_semidirect_family_and_catalogs(self):
+    @pytest.mark.parametrize(
+        ("n", "representative_r"),
+        ((3, 1), (4, 1), (5, 1), (5, 2), (6, 1), (6, 2)),
+    )
+    def test_generic_survivor_degree_three_corrected_semidirect_representatives(
+        self,
+        n,
+        representative_r,
+    ):
         survivor_total_degree = 3
-        assert hook_pair_corrected_semidirect_family_holds_via_duality(
-            6,
+        assert hook_pair_corrected_semidirect_representative_holds_via_duality(
+            n,
+            representative_r,
             max_constraint_total_degree=0,
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=1,
-        )
-        assert all(
-            verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
-                max_n=6,
-                max_constraint_total_degree=0,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=1,
-            ).values()
         )
 
     def test_generic_survivor_family_scaffold(self):

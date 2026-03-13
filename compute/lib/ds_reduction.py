@@ -4667,18 +4667,7 @@ def hook_pair_corrected_semidirect_family_holds_via_duality(
     if n < 3:
         return True
     for r in _hook_family_representative_rs(n):
-        dual_r = n - r - 1
-        if not all(
-            _hook_pair_corrected_semidirect_square_zero_flags(
-                n,
-                r,
-                max_constraint_total_degree=max_constraint_total_degree,
-                survivor_total_degree=survivor_total_degree,
-                max_internal_ce_degree=max_internal_ce_degree,
-            )
-        ):
-            return False
-        if r < dual_r and not hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+        if not hook_pair_corrected_semidirect_representative_holds_via_duality(
             n,
             r,
             max_constraint_total_degree=max_constraint_total_degree,
@@ -4728,6 +4717,37 @@ def _hook_pair_corrected_semidirect_family_via_duality_catalog_items(
         )
         for n in range(3, max_n + 1)
     )
+
+
+@lru_cache(maxsize=128)
+def hook_pair_corrected_semidirect_representative_holds_via_duality(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 0,
+    survivor_total_degree: int = 1,
+    max_internal_ce_degree: int = 1,
+) -> bool:
+    """Check one corrected semidirect hook representative plus transpose duality."""
+    dual_r = n - r - 1
+    if not all(
+        _hook_pair_corrected_semidirect_square_zero_flags(
+            n,
+            r,
+            max_constraint_total_degree=max_constraint_total_degree,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=max_internal_ce_degree,
+        )
+    ):
+        return False
+    if r < dual_r and not hook_pair_corrected_semidirect_blocks_match_under_dual_swap(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+        max_internal_ce_degree=max_internal_ce_degree,
+    ):
+        return False
+    return True
 
 
 @lru_cache(maxsize=512)
@@ -8162,6 +8182,36 @@ def _hook_family_representative_rs(n: int) -> Tuple[int, ...]:
     return tuple(r for r in range(1, n - 1) if r <= n - r - 1)
 
 
+@lru_cache(maxsize=128)
+def hook_pair_survivor_coupled_representative_holds_via_duality(
+    n: int,
+    r: int,
+    max_constraint_total_degree: int = 1,
+    survivor_total_degree: int = 1,
+) -> bool:
+    """Check one hook representative by survivor invariants plus transpose duality."""
+    dual_r = n - r - 1
+    source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+    )
+    if not _all_blocks_have_square_zero_and_are_acyclic(
+        source_blocks + target_blocks,
+        survivor_coupled_block_invariant_summary,
+    ):
+        return False
+    if r < dual_r and not hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+        n,
+        r,
+        max_constraint_total_degree=max_constraint_total_degree,
+        survivor_total_degree=survivor_total_degree,
+    ):
+        return False
+    return True
+
+
 @lru_cache(maxsize=64)
 def hook_pair_mixed_family_holds_via_duality(
     n: int,
@@ -8340,19 +8390,7 @@ def hook_pair_survivor_coupled_family_holds_via_duality(
     if n < 3:
         return True
     for r in _hook_family_representative_rs(n):
-        dual_r = n - r - 1
-        source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
-            n,
-            r,
-            max_constraint_total_degree=max_constraint_total_degree,
-            survivor_total_degree=survivor_total_degree,
-        )
-        if not _all_blocks_have_square_zero_and_are_acyclic(
-            source_blocks + target_blocks,
-            survivor_coupled_block_invariant_summary,
-        ):
-            return False
-        if r < dual_r and not hook_pair_survivor_coupled_blocks_match_under_dual_swap(
+        if not hook_pair_survivor_coupled_representative_holds_via_duality(
             n,
             r,
             max_constraint_total_degree=max_constraint_total_degree,
