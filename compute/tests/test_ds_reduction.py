@@ -1877,7 +1877,7 @@ class TestHookFamilyCatalog:
             ).values()
         )
 
-    def test_generic_survivor_degree_three_blocks_and_catalogs(self):
+    def test_generic_survivor_degree_three_block_shapes(self):
         survivor_total_degree = 3
         source_blocks, target_blocks = hook_pair_survivor_coupled_blocks(
             6,
@@ -1895,7 +1895,7 @@ class TestHookFamilyCatalog:
             )
         )
         # The expensive degree-three square-zero/acyclicity checks are already
-        # exercised below by the hook-family survivor and corrected-semidirct
+        # exercised below by the hook-family survivor and corrected-semidirect
         # family/catalog checks. Keep the local regression focused on the
         # concrete degree-three truncation shape for the A5 hook r=2 model case.
         assert [block.constraint_total_degree for block in source_blocks] == [0, 1]
@@ -1925,16 +1925,13 @@ class TestHookFamilyCatalog:
             survivor_total_degree=survivor_total_degree,
             max_internal_ce_degree=1,
         )
+
+    def test_generic_survivor_degree_three_survivor_family_and_catalogs(self):
+        survivor_total_degree = 3
         assert hook_pair_survivor_coupled_family_holds_via_duality(
             6,
             max_constraint_total_degree=1,
             survivor_total_degree=survivor_total_degree,
-        )
-        assert hook_pair_corrected_semidirect_family_holds_via_duality(
-            6,
-            max_constraint_total_degree=0,
-            survivor_total_degree=survivor_total_degree,
-            max_internal_ce_degree=1,
         )
         assert all(
             verify_hook_pair_survivor_coupled_family_via_duality_catalog(
@@ -1942,6 +1939,15 @@ class TestHookFamilyCatalog:
                 max_constraint_total_degree=1,
                 survivor_total_degree=survivor_total_degree,
             ).values()
+        )
+
+    def test_generic_survivor_degree_three_corrected_semidirect_family_and_catalogs(self):
+        survivor_total_degree = 3
+        assert hook_pair_corrected_semidirect_family_holds_via_duality(
+            6,
+            max_constraint_total_degree=0,
+            survivor_total_degree=survivor_total_degree,
+            max_internal_ce_degree=1,
         )
         assert all(
             verify_hook_pair_corrected_semidirect_family_via_duality_catalog(
