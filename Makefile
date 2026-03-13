@@ -25,6 +25,9 @@ BUILD_SCRIPT := ./scripts/build.sh
 LOG_DIR   := .build_logs
 PYTEST_FAST_TIMEOUT ?= 120
 PYTEST_FULL_TIMEOUT ?= 300
+PYTEST_FULL_HEARTBEAT ?= 60
+PYTEST_FULL_NODEIDS_PER_SHARD ?= 10
+PYTEST_FULL_TARGET_SHARD_SECONDS ?= 60
 
 # Number of passes for cross-references, TOC, and page numbers to stabilize.
 PASSES    := 6
@@ -218,10 +221,14 @@ test-full:
 			PYTHON_BIN=python3; \
 		fi; \
 		LOG_FILE=$(LOG_DIR)/pytest-full.log; \
-		$$PYTHON_BIN -m pytest compute/tests/ -vv -ra --run-slow \
-			-o faulthandler_timeout=$(PYTEST_FULL_TIMEOUT) \
-			-o faulthandler_exit_on_timeout=true \
-			--durations=20 --durations-min=5.0 >$$LOG_FILE 2>&1; rc=$$?; \
+		$$PYTHON_BIN compute/scripts/run_full_pytest.py \
+			--python-bin $$PYTHON_BIN \
+			--log-dir $(LOG_DIR) \
+			--faulthandler-timeout $(PYTEST_FULL_TIMEOUT) \
+			--heartbeat-seconds $(PYTEST_FULL_HEARTBEAT) \
+			--max-nodeids-per-shard $(PYTEST_FULL_NODEIDS_PER_SHARD) \
+			--target-seconds-per-shard $(PYTEST_FULL_TARGET_SHARD_SECONDS) \
+			compute/tests/; rc=$$?; \
 		if [ $$rc -eq 0 ]; then \
 			tail -n 5 $$LOG_FILE; \
 			echo "     Log: $$LOG_FILE"; \

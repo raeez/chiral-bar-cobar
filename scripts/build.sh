@@ -11,8 +11,30 @@ TEX="pdflatex"
 TEXFLAGS="-interaction=batchmode -file-line-error -synctex=0 -cnf-line=buf_size=1000000"
 LOG_DIR=".build_logs"
 RUN_LOG="$LOG_DIR/tex-build.stdout.log"
+LOCK_DIR="$LOG_DIR/.build.lock"
 
 mkdir -p "$LOG_DIR"
+
+acquire_lock() {
+    local announced=0
+    while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+        if [ -f "$LOCK_DIR/pid" ]; then
+            local lock_pid
+            lock_pid=$(cat "$LOCK_DIR/pid" 2>/dev/null || true)
+            if [ -n "${lock_pid:-}" ] && ! kill -0 "$lock_pid" 2>/dev/null; then
+                rm -rf "$LOCK_DIR"
+                continue
+            fi
+        fi
+        if [ "$announced" -eq 0 ]; then
+            echo "Waiting for existing build lock: $LOCK_DIR"
+            announced=1
+        fi
+        sleep 1
+    done
+    printf '%s\n' "$$" > "$LOCK_DIR/pid"
+    trap 'rm -rf "$LOCK_DIR"' EXIT INT TERM HUP
+}
 
 count_matches() {
     local pattern=$1
@@ -36,9 +58,7 @@ show_failure_summary() {
     fi
 }
 
-# Kill any competing pdflatex processes on main.tex
-pkill -f 'pdflatex.*main.tex' 2>/dev/null || true
-sleep 1
+acquire_lock
 
 echo "Building main.tex (up to $MAX_PASSES passes)"
 for i in $(seq 1 $MAX_PASSES); do
