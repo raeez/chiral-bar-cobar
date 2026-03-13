@@ -11,7 +11,7 @@
 - **Census**: Always grep fresh. Baseline Mar 10: PH 923, PE 337, CJ 153, HE 29, Open 1 = 1443 total
 - **Build**: 1664pp, 3-pass clean (0 undef citations, 0 undef refs, 0 rerun, 0 overfull)
 - **Source**: ~104K lines across 55+ .tex files
-- **Tests**: Heavy DS tests timeout/hang. Smoke tests pass 26/29 before kill. Needs pytest-timeout.
+- **Tests**: `pytest` now deselects `@slow` by default; use `--run-slow` or `make test-full` for the heavy DS/PBW suite. Representative checks: default `test_ds_reduction.py` deselects 128 slow tests; `test_smoke.py` passes 25/25 with 4 slow deselections.
 - **Uncommitted delta**: 58 modified files, 0 untracked. Still needs commit triage.
 
 ## Governing Mandate
