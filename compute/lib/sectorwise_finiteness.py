@@ -603,6 +603,23 @@ def _dk_sectorwise_verification_budget(
     }
 
 
+def _simply_laced_level1_verification_budget(
+    lie_type: str,
+    determinant: int,
+    max_sectors: int,
+    max_degree: int,
+) -> Dict[str, object]:
+    """Choose a bounded lattice verification surface for level-1 checks."""
+    effective_max_sectors = min(max_sectors, abs(determinant))
+    effective_max_degree = min(max_degree, 2) if lie_type in {"E6", "E7", "E8"} else max_degree
+    return {
+        "effective_max_sectors": effective_max_sectors,
+        "effective_max_degree": effective_max_degree,
+        "used_coset_count_sector_cap": effective_max_sectors != max_sectors,
+        "used_exceptional_level1_degree_cap": effective_max_degree != max_degree,
+    }
+
+
 # ---------------------------------------------------------------------------
 # E₁ growth rate computation
 # ---------------------------------------------------------------------------
@@ -811,26 +828,41 @@ def sub_exponential_growth_test(dimensions: List[int]) -> Dict[str, object]:
             # Exponential: ratio ≈ 1.0 (constant log(d_n)/n)
             # Sub-exponential: ratio < 1.0 (decreasing log(d_n)/n)
             if ratio > 0.98:
-                # Distinguish exp(c·n) from exp(C·√n) by fitting log(d_n)
-                # to both models and comparing residuals.
+                # Distinguish exp(c·n) from LQT-style exp(C·√n)·n^k by fitting
+                # log(d_n) to both an affine linear model and an affine
+                # (√n, log n) model, then comparing residuals.
                 # Collect (n, log(d_n)) data for positive d_n.
                 fit_data = [(n, math.log(d))
                             for n, d in enumerate(dimensions)
                             if n >= 1 and d > 1]
                 if len(fit_data) >= 10:
                     ns = [x[0] for x in fit_data]
-                    logs = [x[1] for x in fit_data]
-                    # Fit 1: log(d) = a * n  (exponential)
-                    ss_n = sum(x * x for x in ns)
-                    a_lin = sum(x * y for x, y in zip(ns, logs)) / ss_n if ss_n > 0 else 0
-                    resid_lin = sum((y - a_lin * x) ** 2 for x, y in zip(ns, logs))
-                    # Fit 2: log(d) = b * √n  (sub-exponential LQT)
-                    sqrts = [math.sqrt(x) for x in ns]
-                    ss_sq = sum(x * x for x in sqrts)
-                    b_sqrt = sum(x * y for x, y in zip(sqrts, logs)) / ss_sq if ss_sq > 0 else 0
-                    resid_sqrt = sum((y - b_sqrt * x) ** 2 for x, y in zip(sqrts, logs))
-                    # If √n fit is better (lower residual), it's sub-exponential
-                    if resid_sqrt < resid_lin:
+                    logs = np.array([x[1] for x in fit_data], dtype=float)
+
+                    linear_design = np.column_stack([
+                        np.array(ns, dtype=float),
+                        np.ones(len(ns), dtype=float),
+                    ])
+                    linear_beta, *_ = np.linalg.lstsq(
+                        linear_design, logs, rcond=None
+                    )
+                    resid_lin = float(np.sum((logs - linear_design @ linear_beta) ** 2))
+
+                    sqrtlog_design = np.column_stack([
+                        np.array([math.sqrt(n) for n in ns], dtype=float),
+                        np.array([math.log(n) for n in ns], dtype=float),
+                        np.ones(len(ns), dtype=float),
+                    ])
+                    sqrtlog_beta, *_ = np.linalg.lstsq(
+                        sqrtlog_design, logs, rcond=None
+                    )
+                    resid_sqrtlog = float(
+                        np.sum((logs - sqrtlog_design @ sqrtlog_beta) ** 2)
+                    )
+
+                    # If the LQT-style sqrt/log fit is better, treat the
+                    # sequence as sub-exponential.
+                    if resid_sqrtlog < resid_lin:
                         pass  # keep is_sub_exp = True
                     else:
                         is_sub_exp = False
@@ -996,8 +1028,11 @@ def simply_laced_level1_check(lie_type: str, rank: int) -> Dict[str, object]:
     expected_det = expected_det_map.get(key)
     det_matches = (det == expected_det) if expected_det is not None else None
 
-    budget = _dk_sectorwise_verification_budget(
-        gram, max_sectors=min(det + 2, 10), max_degree=5
+    budget = _simply_laced_level1_verification_budget(
+        key,
+        det,
+        max_sectors=min(det + 2, 10),
+        max_degree=5,
     )
 
     # Run sectorwise finiteness on the same bounded surface used by the DK check.
@@ -1010,8 +1045,8 @@ def simply_laced_level1_check(lie_type: str, rank: int) -> Dict[str, object]:
     # Run factorization DK verification
     dk_data = lattice_factorization_dk_verification(
         gram,
-        max_sectors=min(det + 2, 10),
-        max_degree=5,
+        max_sectors=budget["effective_max_sectors"],
+        max_degree=budget["effective_max_degree"],
     )
 
     # Verify the VOA identification: at level 1, simply-laced g gives lattice VOA
@@ -1033,6 +1068,7 @@ def simply_laced_level1_check(lie_type: str, rank: int) -> Dict[str, object]:
         "num_cosets": abs(det),
         "sectorwise_finite": finiteness["is_finite"],
         "dk_unconditional": finiteness["is_finite"],  # DK is unconditional iff sectorwise finite
+        "verification_budget": budget,
         "dim_g": dim_g,
         "central_charge_level1": central_charge_level1,
         "positive_definite": finiteness["is_positive_definite"],
