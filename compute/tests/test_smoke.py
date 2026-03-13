@@ -232,8 +232,14 @@ class TestInfiniteGeneratorFrontier:
             stage4_dual_goal_report,
             stage4_primitive_square_class_report,
             stage4_pairing_reduction_report,
+            stage4_primitive_transport_report,
+            stage4_borcherds_transport_report,
+            stage4_two_primitive_square_closure_report,
+            stage4_local_attack_order_report,
             stage4_target_packet_at_level,
             stage4_defect_vanishing_report,
+            stage5_dual_frontier_report,
+            stage5_local_attack_order_report,
             standard_winfinity_dual_candidate_report,
             verify_standard_winfinity_dual_candidate,
         )
@@ -243,8 +249,14 @@ class TestInfiniteGeneratorFrontier:
         goal = stage4_dual_goal_report()
         square_class = stage4_primitive_square_class_report()
         pairing = stage4_pairing_reduction_report()
+        primitive_transport = stage4_primitive_transport_report()
+        borcherds = stage4_borcherds_transport_report()
+        two_primitive = stage4_two_primitive_square_closure_report()
+        attack_order = stage4_local_attack_order_report()
         packet = stage4_target_packet_at_level(1)
         vanishing = stage4_defect_vanishing_report(1, packet)
+        stage5 = stage5_dual_frontier_report()
+        stage5_attack = stage5_local_attack_order_report()
         report = standard_winfinity_dual_candidate_report()
         assert model.generator_spins == (2, 3, 4, 5)
         assert support.weight_sector_basis(4) == ((4,), (2, 2))
@@ -252,7 +264,14 @@ class TestInfiniteGeneratorFrontier:
         assert goal["goal"] == "vanish all six stage-4 defects"
         assert square_class["primitive_count"] == 2
         assert pairing["sign_ratio"] == Rational(-3, 4)
+        assert primitive_transport["transport_square_channel"]["ratio_to_c334"] == Rational(5, 7)
+        assert borcherds["target_square_ratio"] == Rational(5, 7)
+        assert len(two_primitive["independent_square_identity_channels"]) == 2
+        assert attack_order["step_2"]["report"]["relation_channel"] == (3, 4, 4, 3)
         assert vanishing["all_vanish"] is True
+        assert stage5["prerequisite_goal"] == "vanish all six stage-4 defects"
+        assert stage5["reduced_packet_size"] == 11
+        assert stage5_attack["visible_pairing_refinement"]["effective_transport_attack_order"] == (4, 3)
         assert report["stage4"]["virasoro_constraints"][(4, 4, 2, 6)]["expression"] == 2
         assert all(verify_truncated_w_infinity_ope(5, 7).values())
         assert all(verify_w_infinity_support_complex(5, 7).values())

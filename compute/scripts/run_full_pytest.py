@@ -114,11 +114,13 @@ class RunnerLog:
         self.path.parent.mkdir(parents=True, exist_ok=True)
 
     def reset(self) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         self.path.write_text("", encoding="utf-8")
 
     def write(self, message: str) -> None:
         text = message.rstrip()
         print(text, flush=True)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.path.open("a", encoding="utf-8") as handle:
             handle.write(text + "\n")
 

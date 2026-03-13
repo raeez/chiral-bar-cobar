@@ -17,9 +17,9 @@ class TestW3Conjectural:
 
     def test_w3_h4(self):
         """H⁴(B̄(W₃)) = 52.
-        Provenance: UNKNOWN — no documented derivation.
-        First appears in Master Table (examples_summary.tex).
-        See COMPUTE_NEXT_STEPS.md item M11."""
+        Provenance: unique depth-2 recurrence a(n) = 3a(n-1) + a(n-2) - 1
+        fitted to four computed values {0, 2, 5, 16}.
+        See rem:w3-h4-status in examples_summary.tex:890."""
         from compute.lib.bar_complex import KNOWN_BAR_DIMS
         assert KNOWN_BAR_DIMS["W3"][4] == 52
 

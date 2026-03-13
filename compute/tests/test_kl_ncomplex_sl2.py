@@ -57,6 +57,7 @@ from compute.lib.kl_ncomplex_sl2 import (
     ncomplex_flavor_report,
     admissible_level_flavor_report,
     n3_degree4_flavor_packet,
+    n3_degree4_exact_packet_profile,
     n4_low_degree_flavor_window,
     n4_degree1_h13_channel,
     n4_degree2_partial_packet,
@@ -65,6 +66,8 @@ from compute.lib.kl_ncomplex_sl2 import (
     n4_degree2_h13_first_term_state_compression,
     n4_degree2_h13_cancellation_plane,
     n4_degree2_h13_cancellation_operator,
+    n4_degree2_h13_exact_channel,
+    n4_degree2_h13_exact_packet_profile,
     kl_periodic_shadow_candidates,
     # Diagnostics
     verify_uq_relations,
@@ -686,13 +689,23 @@ class TestN3Degree4FlavorPacket:
 
     @pytest.mark.slow
     def test_periodic_shadow_candidate_report_sees_three_vs_zero(self):
-        """The first comparison report records the nonzero N=3 packet and the zero N=4 degree-1 packet."""
+        """The comparison report records the exact first resolved N=4 degree-2 packet."""
         report = kl_periodic_shadow_candidates()
 
         assert report["candidate_dimensions"] == {
             "single_flavor_dim": 3,
             "paired_packet_total": 6,
             "degree2_euler_shadow": 3,
+        }
+        assert report["N3_degree4_profile"]["flavors"][2][1]["total_root_weight_profile"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
+        }
+        assert report["N3_degree4_profile"]["flavors"][3][2]["total_root_weight_profile"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
         }
         assert report["N4_degree1_window"]["resolved_flavors"] == {
             1: {3: 0, 2: 0},
@@ -704,6 +717,19 @@ class TestN3Degree4FlavorPacket:
         }
         assert report["N4_degree2_h13_bound"]["image_rank_lower_bound"] == 3903
         assert report["N4_degree2_h13_bound"]["cohomology_upper_bound"] == 66
+        assert report["N4_degree2_h13_exact"]["image_rank"] == 3903
+        assert report["N4_degree2_h13_exact"]["cohomology_dim"] == 66
+        assert report["N4_degree2_h13_profile"]["total_root_weight_profile"] == {
+            -4: 1,
+            -3: 4,
+            -2: 8,
+            -1: 12,
+            0: 16,
+            1: 12,
+            2: 8,
+            3: 4,
+            4: 1,
+        }
 
 
 class TestN4LowDegreeFlavorWindow:
@@ -943,6 +969,207 @@ class TestN4LowDegreeFlavorWindow:
         assert operator["weighted_max_entry_abs"] < 1e-12
         assert operator["operator_matrix"].shape == (57, 57)
         assert operator["weighted_operator_matrix"].shape == (57, 57)
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_exact_channel_is_66_dimensional(self):
+        """The full surviving packet adds no rank beyond the 3903-dimensional seed span."""
+        channel = n4_degree2_h13_exact_channel()
+
+        assert channel["N"] == 4
+        assert channel["degree"] == 2
+        assert channel["flavor"] == (1, 3)
+        assert channel["status"] == "resolved"
+        assert channel["method"] == "exhaustive compressed prefix verification of the surviving packet"
+        assert channel["kernel_dim"] == 3969
+        assert channel["seed_rank"] == 3903
+        assert channel["common_plane_basis_dim"] == 57
+        assert channel["residual_seed_quotient_dim"] == 66
+        assert channel["compressed_prefix_signature_count"] == 354668
+        assert channel["raw_prefix_count"] == 678068
+        assert channel["compressed_columns_checked"] == 22344084
+        assert channel["raw_columns_covered"] == 42718284
+        assert channel["compressed_common_nonzero_columns"] == 0
+        assert channel["compressed_residual_nonzero_columns"] == 0
+        assert channel["raw_common_nonzero_columns"] == 0
+        assert channel["raw_residual_nonzero_columns"] == 0
+        assert channel["weighted_common_plane_rank"] == 0
+        assert channel["weighted_residual_rank"] == 0
+        assert channel["image_rank"] == 3903
+        assert channel["cohomology_dim"] == 66
+        assert channel["first_common_counterexample"] is None
+        assert channel["first_residual_counterexample"] is None
+
+    @pytest.mark.slow
+    def test_n4_degree2_h13_exact_packet_profile_has_palindromic_weights(self):
+        """The exact 66-dimensional packet has a rigid left-factor split and palindromic weight profile."""
+        profile = n4_degree2_h13_exact_packet_profile()
+
+        assert profile["N"] == 4
+        assert profile["degree"] == 2
+        assert profile["flavor"] == (1, 3)
+        assert profile["status"] == "resolved support profile"
+        assert profile["cohomology_dim"] == 66
+        assert profile["basis_row_count"] == 66
+        assert profile["left_factor_profile"] == {
+            "F": 48,
+            "E": 15,
+            "K-1": 3,
+        }
+        assert profile["right_kind_profile"] == {
+            "Kminus1": 7,
+            "pbw": 59,
+        }
+        assert profile["right_root_weight_profile"] == {
+            -3: 1,
+            -2: 4,
+            -1: 12,
+            0: 15,
+            1: 17,
+            2: 12,
+            3: 5,
+        }
+        assert profile["total_root_weight_profile"] == {
+            -4: 1,
+            -3: 4,
+            -2: 8,
+            -1: 12,
+            0: 16,
+            1: 12,
+            2: 8,
+            3: 4,
+            4: 1,
+        }
+        assert profile["support_by_left_factor"]["F"]["right_kind_profile"] == {
+            "Kminus1": 3,
+            "pbw": 45,
+        }
+        assert profile["support_by_left_factor"]["E"]["right_kind_profile"] == {
+            "Kminus1": 3,
+            "pbw": 12,
+        }
+        assert profile["support_by_left_factor"]["K-1"]["right_kind_profile"] == {
+            "Kminus1": 1,
+            "pbw": 2,
+        }
+        assert profile["support_by_left_factor"]["F"]["right_ac_profile"] == {
+            ("Kminus1", 1): 1,
+            ("Kminus1", 2): 1,
+            ("Kminus1", 3): 1,
+            (0, 1): 4,
+            (0, 2): 4,
+            (0, 3): 1,
+            (1, 0): 4,
+            (1, 1): 4,
+            (1, 2): 4,
+            (2, 0): 4,
+            (2, 1): 4,
+            (2, 2): 4,
+            (3, 0): 4,
+            (3, 1): 4,
+            (3, 2): 4,
+        }
+        assert profile["support_by_left_factor"]["E"]["right_ac_profile"] == {
+            ("Kminus1", 1): 1,
+            ("Kminus1", 2): 1,
+            ("Kminus1", 3): 1,
+            (0, 1): 3,
+            (1, 0): 4,
+            (2, 0): 4,
+            (3, 0): 1,
+        }
+        assert profile["support_by_left_factor"]["K-1"]["right_ac_profile"] == {
+            ("Kminus1", 1): 1,
+            (0, 1): 1,
+            (1, 0): 1,
+        }
+
+
+class TestN3ExactPacketProfile:
+    """Test exact support profiles for the first admissible N=3 packet."""
+
+    @pytest.mark.slow
+    def test_n3_degree4_exact_packet_profile(self):
+        """Both N=3 flavors have the same extremal/neutral class-weight pattern."""
+        profile = n3_degree4_exact_packet_profile()
+
+        assert profile["N"] == 3
+        assert profile["source_degree"] == 4
+        assert profile["status"] == "resolved support profile"
+        assert profile["quotient_dims"] == {
+            2: {1: 29},
+            3: {2: 29},
+        }
+        assert profile["cohomology_dims"] == {
+            2: {1: 3},
+            3: {2: 3},
+        }
+
+        flavor_12 = profile["flavors"][2][1]
+        flavor_21 = profile["flavors"][3][2]
+
+        assert flavor_12["total_root_weight_profile"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
+        }
+        assert flavor_21["total_root_weight_profile"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
+        }
+        assert flavor_12["class_support_sizes"] == (1, 6, 1)
+        assert flavor_21["class_support_sizes"] == (1, 6, 1)
+
+        assert flavor_12["classes"][0]["entries"] == (
+            {
+                "quotient_row": 1,
+                "coeff": (1.0, 0.0),
+                "left_label": ("pbw", (0, 0, 1)),
+                "right_label": ("pbw", (0, 0, 2)),
+                "left_root_weight": -1,
+                "right_root_weight": -2,
+                "total_root_weight": -3,
+            },
+        )
+        assert flavor_12["classes"][2]["entries"] == (
+            {
+                "quotient_row": 171,
+                "coeff": (1.0, 0.0),
+                "left_label": ("pbw", (1, 0, 0)),
+                "right_label": ("pbw", (2, 0, 0)),
+                "left_root_weight": 1,
+                "right_root_weight": 2,
+                "total_root_weight": 3,
+            },
+        )
+        assert flavor_21["classes"][0]["entries"] == (
+            {
+                "quotient_row": 0,
+                "coeff": (1.0, 0.0),
+                "left_label": ("pbw", (0, 0, 1)),
+                "middle_label": ("pbw", (0, 0, 1)),
+                "right_label": ("pbw", (0, 0, 1)),
+                "left_root_weight": -1,
+                "middle_root_weight": -1,
+                "right_root_weight": -1,
+                "total_root_weight": -3,
+            },
+        )
+        assert flavor_21["classes"][2]["entries"] == (
+            {
+                "quotient_row": 4218,
+                "coeff": (1.0, 0.0),
+                "left_label": ("pbw", (1, 0, 0)),
+                "middle_label": ("pbw", (1, 0, 0)),
+                "right_label": ("pbw", (1, 0, 0)),
+                "left_root_weight": 1,
+                "middle_root_weight": 1,
+                "right_root_weight": 1,
+                "total_root_weight": 3,
+            },
+        )
+        assert tuple(entry["total_root_weight"] for entry in flavor_12["classes"]) == (-3, 0, 3)
+        assert tuple(entry["total_root_weight"] for entry in flavor_21["classes"]) == (-3, 0, 3)
 
 
 # ============================================================================

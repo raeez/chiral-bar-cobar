@@ -1019,6 +1019,83 @@ def _coords_against_sparse_basis(
     )
 
 
+def _kernel_basis_rref(matrix: np.ndarray, tol: float = 1e-10) -> Dict[str, object]:
+    """Compute a canonical kernel basis via dense row reduction."""
+    rref = matrix.astype(complex).copy()
+    rows, cols = rref.shape
+    pivot_cols: List[int] = []
+    pivot_rows: List[int] = []
+    row = 0
+
+    for col in range(cols):
+        pivot = None
+        for candidate in range(row, rows):
+            if abs(rref[candidate, col]) > tol:
+                pivot = candidate
+                break
+        if pivot is None:
+            continue
+
+        if pivot != row:
+            rref[[row, pivot]] = rref[[pivot, row]]
+        rref[row] = rref[row] / rref[row, col]
+        for candidate in range(rows):
+            if candidate == row:
+                continue
+            factor = rref[candidate, col]
+            if abs(factor) > tol:
+                rref[candidate] -= factor * rref[row]
+        pivot_cols.append(col)
+        pivot_rows.append(row)
+        row += 1
+        if row == rows:
+            break
+
+    free_cols = [col for col in range(cols) if col not in pivot_cols]
+    basis: List[np.ndarray] = []
+    for free_col in free_cols:
+        vector = np.zeros(cols, dtype=complex)
+        vector[free_col] = 1.0 + 0.0j
+        for pivot_row, pivot_col in zip(pivot_rows, pivot_cols):
+            vector[pivot_col] = -rref[pivot_row, free_col]
+        basis.append(vector)
+
+    return {
+        "rank": len(pivot_cols),
+        "pivot_cols": tuple(pivot_cols),
+        "free_cols": tuple(free_cols),
+        "basis": tuple(basis),
+    }
+
+
+def _reduced_basis_label(uq: SmallQuantumSl2, idx: int) -> Tuple[str, Tuple[int, ...] | int]:
+    """Label a reduced augmentation-ideal basis vector in human terms."""
+    N = uq.N
+    pbw_count = uq.dim - N
+    if idx < 0 or idx >= uq.dim - 1:
+        raise IndexError(f"Reduced basis index out of range: {idx}")
+    if idx < pbw_count:
+        cursor = 0
+        for a in range(N):
+            for b in range(N):
+                for c in range(N):
+                    if a == 0 and c == 0:
+                        continue
+                    if cursor == idx:
+                        return ("pbw", (a, b, c))
+                    cursor += 1
+    return ("Kminus1", idx - pbw_count + 1)
+
+
+def _reduced_basis_root_weight(label: Tuple[str, Tuple[int, ...] | int]) -> int:
+    """Root-weight proxy a-c for a reduced PBW label, zero on K^b-1."""
+    kind, data = label
+    if kind == "pbw":
+        a, _b, c = data
+        return int(a - c)
+    return 0
+
+
 def _sparse_rank_from_columns(columns: Iterable[Dict[int, complex]],
                               tol: float = 1e-10,
                               target_rank: Optional[int] = None) -> Tuple[int, int]:
@@ -2686,6 +2763,7 @@ def n4_degree2_h13_cancellation_operator() -> Dict[str, object]:
         "scalar_candidate": scalar_candidate,
         "max_deviation_from_scalar_identity": float(np.max(np.abs(scalar_identity_deviation))),
         "weighted_max_entry_abs": float(np.max(np.abs(weighted_operator_matrix))),
+        "common_plane_basis": first_basis,
         "operator_matrix": operator_matrix,
         "weighted_operator_matrix": weighted_operator_matrix,
         "witness_common_plane_matrix": weighted_matrix,
@@ -2693,9 +2771,642 @@ def n4_degree2_h13_cancellation_operator() -> Dict[str, object]:
 
 
 @lru_cache(maxsize=None)
+def _n4_degree2_h13_surviving_prefix_multiplicities() -> Dict[Tuple[object, ...], int]:
+    """Compress the surviving H^{1,3}_2 packet to unique length-4 prefix signatures."""
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    sparse_mu = seed_data["sparse_mu"]
+    residual_left_factors = (0, 12, 60)
+
+    state_vectors: Dict[Tuple[Tuple[int, float, float], ...], Dict[int, complex]] = {}
+    right_multiply_cache: Dict[
+        Tuple[Tuple[Tuple[int, float, float], ...], int],
+        Tuple[Tuple[int, float, float], ...],
+    ] = {}
+
+    def sparse_state_key(column: Dict[int, complex]) -> Tuple[Tuple[int, float, float], ...]:
+        return tuple(
+            sorted(
+                (
+                    row,
+                    round(value.real, 12),
+                    round(value.imag, 12),
+                )
+                for row, value in column.items()
+                if abs(value) > tol
+            )
+        )
+
+    def sparse_state_vector(state_key: Tuple[Tuple[int, float, float], ...]) -> Dict[int, complex]:
+        if state_key not in state_vectors:
+            state_vectors[state_key] = {
+                row: complex(real_part, imag_part)
+                for row, real_part, imag_part in state_key
+            }
+        return state_vectors[state_key]
+
+    def right_multiply_state(
+        state_key: Tuple[Tuple[int, float, float], ...],
+        factor: int,
+    ) -> Tuple[Tuple[int, float, float], ...]:
+        cache_key = (state_key, factor)
+        if cache_key in right_multiply_cache:
+            return right_multiply_cache[cache_key]
+
+        product: Dict[int, complex] = {}
+        for left, left_coeff in sparse_state_vector(state_key).items():
+            for idx, coeff in sparse_mu[left][factor].items():
+                product[idx] = product.get(idx, 0.0) + left_coeff * coeff
+
+        state_key_product = sparse_state_key(product)
+        right_multiply_cache[cache_key] = state_key_product
+        return state_key_product
+
+    basis_keys = [
+        sparse_state_key({idx: 1.0 + 0.0j})
+        for idx in range(dim_I)
+    ]
+
+    prefix_multiplicities: Dict[Tuple[object, ...], int] = {}
+    for left_factor in residual_left_factors:
+        for right_factor in range(dim_I):
+            left_pair_key = sparse_state_key(sparse_mu[left_factor][right_factor])
+            if any(idx in residual_left_factors for idx, _, _ in left_pair_key):
+                continue
+
+            right_prefix_key = basis_keys[right_factor]
+            for middle_left in range(dim_I):
+                left_triple_key = right_multiply_state(left_pair_key, middle_left)
+                if any(idx in residual_left_factors for idx, _, _ in left_triple_key):
+                    continue
+
+                right_triple_key = right_multiply_state(right_prefix_key, middle_left)
+                middle_left_key = basis_keys[middle_left]
+                for middle_right in range(dim_I):
+                    left_quad_key = right_multiply_state(left_triple_key, middle_right)
+                    if any(idx in residual_left_factors for idx, _, _ in left_quad_key):
+                        continue
+
+                    signature = (
+                        left_factor,
+                        left_pair_key,
+                        left_triple_key,
+                        left_quad_key,
+                        right_multiply_state(right_triple_key, middle_right),
+                        right_multiply_state(middle_left_key, middle_right),
+                        basis_keys[middle_right],
+                    )
+                    prefix_multiplicities[signature] = prefix_multiplicities.get(signature, 0) + 1
+
+    return prefix_multiplicities
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_h13_exact_channel() -> Dict[str, object]:
+    """Resolve H^{1,3}_2 exactly by exhaustive compressed verification.
+
+    The surviving packet factors through 354,668 unique prefix signatures.
+    Each signature determines the entire 63-column tail family.  Exhaustively
+    checking those compressed families shows that every weighted surviving
+    column vanishes in the seed quotient, so the seed rank 3903 is exact.
+    """
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    operator_data = n4_degree2_h13_cancellation_operator()
+    prefix_multiplicities = _n4_degree2_h13_surviving_prefix_multiplicities()
+
+    tol = seed_data["tol"]
+    dim_I = seed_data["dim_I"]
+    dim_b2 = seed_data["dim_b2"]
+    sparse_mu = seed_data["sparse_mu"]
+    flat2 = seed_data["flat2"]
+    seed_basis = seed_data["basis"]
+    missing_rows = set(seed_data["missing_rows"])
+    residual_left_factors = (0, 12, 60)
+    split = _n4_dq3_split_coefficients()
+    common_plane_basis = operator_data["common_plane_basis"]
+
+    full_basis = {
+        pivot: dict(column) for pivot, column in seed_basis.items()
+    }
+    for row in seed_data["missing_rows"]:
+        full_basis[row] = {row: 1.0 + 0.0j}
+
+    state_vectors: Dict[Tuple[Tuple[int, float, float], ...], Dict[int, complex]] = {}
+    right_multiply_cache: Dict[
+        Tuple[Tuple[Tuple[int, float, float], ...], int],
+        Tuple[Tuple[int, float, float], ...],
+    ] = {}
+
+    def sparse_state_key(column: Dict[int, complex]) -> Tuple[Tuple[int, float, float], ...]:
+        return tuple(
+            sorted(
+                (
+                    row,
+                    round(value.real, 12),
+                    round(value.imag, 12),
+                )
+                for row, value in column.items()
+                if abs(value) > tol
+            )
+        )
+
+    def sparse_state_vector(state_key: Tuple[Tuple[int, float, float], ...]) -> Dict[int, complex]:
+        if state_key not in state_vectors:
+            state_vectors[state_key] = {
+                row: complex(real_part, imag_part)
+                for row, real_part, imag_part in state_key
+            }
+        return state_vectors[state_key]
+
+    def right_multiply_state(
+        state_key: Tuple[Tuple[int, float, float], ...],
+        factor: int,
+    ) -> Tuple[Tuple[int, float, float], ...]:
+        cache_key = (state_key, factor)
+        if cache_key in right_multiply_cache:
+            return right_multiply_cache[cache_key]
+
+        product: Dict[int, complex] = {}
+        for left, left_coeff in sparse_state_vector(state_key).items():
+            for idx, coeff in sparse_mu[left][factor].items():
+                product[idx] = product.get(idx, 0.0) + left_coeff * coeff
+
+        state_key_product = sparse_state_key(product)
+        right_multiply_cache[cache_key] = state_key_product
+        return state_key_product
+
+    def quotient_coords(column: Dict[int, complex]) -> Dict[int, complex]:
+        reduced = dict(column)
+        coefficients: Dict[int, complex] = {}
+        while reduced:
+            pivot = max(reduced)
+            factor = reduced[pivot]
+            coefficients[pivot] = coefficients.get(pivot, 0.0) + factor
+            for row, value in full_basis[pivot].items():
+                new_value = reduced.get(row, 0.0) - factor * value
+                if abs(new_value) > tol:
+                    reduced[row] = new_value
+                elif row in reduced:
+                    del reduced[row]
+        return {
+            row: value
+            for row, value in coefficients.items()
+            if row in missing_rows and abs(value) > tol
+        }
+
+    quotient_row_coords = [
+        quotient_coords({row: 1.0 + 0.0j})
+        for row in range(dim_b2)
+    ]
+
+    def tensor_quotient_coords(
+        left_state_key: Tuple[Tuple[int, float, float], ...],
+        right_state_key: Tuple[Tuple[int, float, float], ...],
+    ) -> Dict[int, complex]:
+        output: Dict[int, complex] = {}
+        for left_idx, left_coeff in sparse_state_vector(left_state_key).items():
+            for right_idx, right_coeff in sparse_state_vector(right_state_key).items():
+                coeff = left_coeff * right_coeff
+                for row, value in quotient_row_coords[flat2[left_idx][right_idx]].items():
+                    output[row] = output.get(row, 0.0) + coeff * value
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    basis_keys = [
+        sparse_state_key({idx: 1.0 + 0.0j})
+        for idx in range(dim_I)
+    ]
+    left_singletons = {
+        left_factor: basis_keys[left_factor]
+        for left_factor in residual_left_factors
+    }
+
+    common_basis: Dict[int, Dict[int, complex]] = {}
+    residual_basis: Dict[int, Dict[int, complex]] = {}
+    compressed_common_nonzero_columns = 0
+    compressed_residual_nonzero_columns = 0
+    raw_common_nonzero_columns = 0
+    raw_residual_nonzero_columns = 0
+    first_common_counterexample = None
+    first_residual_counterexample = None
+
+    for signature, multiplicity in prefix_multiplicities.items():
+        (
+            left_factor,
+            left_pair_key,
+            left_triple_key,
+            left_quad_key,
+            right_quad_key,
+            cd_key,
+            middle_right_key,
+        ) = signature
+        left_key = left_singletons[left_factor]
+
+        for tail_right in range(dim_I):
+            first_vec = tensor_quotient_coords(
+                left_key,
+                right_multiply_state(right_quad_key, tail_right),
+            )
+            term2 = tensor_quotient_coords(
+                left_pair_key,
+                right_multiply_state(cd_key, tail_right),
+            )
+            term3 = tensor_quotient_coords(
+                left_triple_key,
+                right_multiply_state(middle_right_key, tail_right),
+            )
+            term4 = tensor_quotient_coords(left_quad_key, basis_keys[tail_right])
+
+            weighted_vec: Dict[int, complex] = {}
+            for row, value in first_vec.items():
+                weighted_vec[row] = weighted_vec.get(row, 0.0) + split[1] * value
+            for source, coeff in (
+                (term2, split[2]),
+                (term3, split[3]),
+                (term4, split[4]),
+            ):
+                for row, value in source.items():
+                    weighted_vec[row] = weighted_vec.get(row, 0.0) + coeff * value
+            weighted_vec = {
+                row: value for row, value in weighted_vec.items() if abs(value) > tol
+            }
+
+            common_coords, residual = _coords_against_sparse_basis(
+                weighted_vec,
+                common_plane_basis,
+                tol=tol,
+            )
+
+            if common_coords:
+                compressed_common_nonzero_columns += 1
+                raw_common_nonzero_columns += multiplicity
+                _insert_sparse_column(common_coords, common_basis, tol=tol)
+                if first_common_counterexample is None:
+                    first_common_counterexample = {
+                        "signature": signature,
+                        "tail_right": tail_right,
+                        "support_size": len(common_coords),
+                    }
+
+            if residual:
+                compressed_residual_nonzero_columns += 1
+                raw_residual_nonzero_columns += multiplicity
+                _insert_sparse_column(residual, residual_basis, tol=tol)
+                if first_residual_counterexample is None:
+                    first_residual_counterexample = {
+                        "signature": signature,
+                        "tail_right": tail_right,
+                        "support_size": len(residual),
+                    }
+
+    seed_rank = len(seed_basis)
+    exact_image_rank = seed_rank + len(common_basis) + len(residual_basis)
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "status": "resolved",
+        "method": "exhaustive compressed prefix verification of the surviving packet",
+        "kernel_dim": dim_b2,
+        "seed_rank": seed_rank,
+        "common_plane_basis_dim": operator_data["basis_dim"],
+        "residual_seed_quotient_dim": len(seed_data["missing_rows"]),
+        "compressed_prefix_signature_count": len(prefix_multiplicities),
+        "raw_prefix_count": sum(prefix_multiplicities.values()),
+        "compressed_columns_checked": len(prefix_multiplicities) * dim_I,
+        "raw_columns_covered": sum(prefix_multiplicities.values()) * dim_I,
+        "compressed_common_nonzero_columns": compressed_common_nonzero_columns,
+        "compressed_residual_nonzero_columns": compressed_residual_nonzero_columns,
+        "raw_common_nonzero_columns": raw_common_nonzero_columns,
+        "raw_residual_nonzero_columns": raw_residual_nonzero_columns,
+        "weighted_common_plane_rank": len(common_basis),
+        "weighted_residual_rank": len(residual_basis),
+        "image_rank": exact_image_rank,
+        "cohomology_dim": dim_b2 - exact_image_rank,
+        "first_common_counterexample": first_common_counterexample,
+        "first_residual_counterexample": first_residual_counterexample,
+    }
+
+
+@lru_cache(maxsize=None)
+def n4_degree2_h13_exact_packet_profile() -> Dict[str, object]:
+    """Describe the exact 66-dimensional H^{1,3}_2 packet by basis support."""
+    uq = SmallQuantumSl2(4)
+    seed_data = _n4_degree2_h13_seed_basis_data()
+    exact_channel = n4_degree2_h13_exact_channel()
+    dim_I = seed_data["dim_I"]
+
+    left_factor_names = {
+        ("pbw", (0, 0, 1)): "F",
+        ("pbw", (1, 0, 0)): "E",
+        ("Kminus1", 1): "K-1",
+    }
+
+    def sort_key(label: Tuple[str, Tuple[int, ...] | int]) -> Tuple[int, int, int, int]:
+        kind, data = label
+        if kind == "pbw":
+            a, b, c = data
+            return (0, a, b, c)
+        return (1, int(data), 0, 0)
+
+    rows = []
+    for row in seed_data["missing_rows"]:
+        left_idx = row // dim_I
+        right_idx = row % dim_I
+        left_label = _reduced_basis_label(uq, left_idx)
+        right_label = _reduced_basis_label(uq, right_idx)
+        rows.append((left_label, right_label))
+
+    left_factor_profile: Dict[str, int] = {}
+    right_kind_profile: Dict[str, int] = {}
+    right_root_weight_profile: Dict[int, int] = {}
+    total_root_weight_profile: Dict[int, int] = {}
+    support_by_left_factor: Dict[str, Dict[str, object]] = {}
+
+    by_left: Dict[str, List[Tuple[str, Tuple[int, ...] | int]]] = {}
+    for left_label, right_label in rows:
+        left_name = left_factor_names[left_label]
+        by_left.setdefault(left_name, []).append(right_label)
+
+    for left_name, rights in by_left.items():
+        left_label = next(label for label, name in left_factor_names.items() if name == left_name)
+        left_factor_profile[left_name] = len(rights)
+        local_kind_profile: Dict[str, int] = {}
+        local_right_weight_profile: Dict[int, int] = {}
+        local_total_weight_profile: Dict[int, int] = {}
+        local_ac_profile: Dict[Tuple[int, int] | Tuple[str, int], int] = {}
+        sorted_rights = sorted(rights, key=sort_key)
+
+        for right_label in sorted_rights:
+            kind, data = right_label
+            local_kind_profile[kind] = local_kind_profile.get(kind, 0) + 1
+            right_weight = _reduced_basis_root_weight(right_label)
+            total_weight = _reduced_basis_root_weight(left_label) + right_weight
+            local_right_weight_profile[right_weight] = local_right_weight_profile.get(right_weight, 0) + 1
+            local_total_weight_profile[total_weight] = local_total_weight_profile.get(total_weight, 0) + 1
+            right_kind_profile[kind] = right_kind_profile.get(kind, 0) + 1
+            right_root_weight_profile[right_weight] = right_root_weight_profile.get(right_weight, 0) + 1
+            total_root_weight_profile[total_weight] = total_root_weight_profile.get(total_weight, 0) + 1
+
+            if kind == "pbw":
+                a, _b, c = data
+                ac_key: Tuple[int, int] | Tuple[str, int] = (a, c)
+            else:
+                ac_key = ("Kminus1", int(data))
+            local_ac_profile[ac_key] = local_ac_profile.get(ac_key, 0) + 1
+
+        if left_name == "F":
+            staircase_summary = (
+                "K^b-1 for b=1,2,3; all PBW (a,b,c) with c<=2 and (a,c)!=(0,0); plus the corner (0,0,3)"
+            )
+        elif left_name == "E":
+            staircase_summary = (
+                "K^b-1 for b=1,2,3; the F-strip (0,b,1) for b=0,1,2; the E-strip (1,b,0),(2,b,0) for all b; plus the corner (3,0,0)"
+            )
+        else:
+            staircase_summary = "{K-1, F, E} on the right"
+
+        support_by_left_factor[left_name] = {
+            "left_label": left_label,
+            "row_count": len(rights),
+            "right_support_count": len(sorted_rights),
+            "right_support": sorted_rights,
+            "right_kind_profile": dict(sorted(local_kind_profile.items())),
+            "right_root_weight_profile": dict(sorted(local_right_weight_profile.items())),
+            "total_root_weight_profile": dict(sorted(local_total_weight_profile.items())),
+            "right_ac_profile": dict(sorted(local_ac_profile.items(), key=lambda item: str(item[0]))),
+            "staircase_summary": staircase_summary,
+        }
+
+    return {
+        "N": 4,
+        "degree": 2,
+        "flavor": (1, 3),
+        "status": "resolved support profile",
+        "cohomology_dim": exact_channel["cohomology_dim"],
+        "basis_row_count": len(rows),
+        "left_factor_profile": left_factor_profile,
+        "right_kind_profile": dict(sorted(right_kind_profile.items())),
+        "right_root_weight_profile": dict(sorted(right_root_weight_profile.items())),
+        "total_root_weight_profile": dict(sorted(total_root_weight_profile.items())),
+        "support_by_left_factor": support_by_left_factor,
+    }
+
+
+@lru_cache(maxsize=None)
+def n3_degree4_exact_packet_profile() -> Dict[str, object]:
+    """Describe the first exact N=3 packet by canonical quotient-class supports."""
+    tol = 1e-10
+    uq = SmallQuantumSl2(3)
+    bar = BarComplex(uq, max_degree=3, use_reduced=True)
+    dim_I = bar.I_dim
+    q = uq.q
+    weights = (1.0 + 0.0j, q, q * q)
+    sparse_mu = _sparse_mu_table(bar, tol=tol)
+
+    flat2 = [[left * dim_I + right for right in range(dim_I)] for left in range(dim_I)]
+    flat3 = [
+        [
+            [(left * dim_I + middle) * dim_I + right for right in range(dim_I)]
+            for middle in range(dim_I)
+        ]
+        for left in range(dim_I)
+    ]
+
+    def d4_column(left: int, middle_left: int, middle_right: int, right: int) -> Dict[int, complex]:
+        column: Dict[int, complex] = {}
+
+        for product, coeff in sparse_mu[left][middle_left].items():
+            target = flat3[product][middle_right][right]
+            column[target] = column.get(target, 0.0) + weights[0] * coeff
+        for product, coeff in sparse_mu[middle_left][middle_right].items():
+            target = flat3[left][product][right]
+            column[target] = column.get(target, 0.0) + weights[1] * coeff
+        for product, coeff in sparse_mu[middle_right][right].items():
+            target = flat3[left][middle_left][product]
+            column[target] = column.get(target, 0.0) + weights[2] * coeff
+
+        return {
+            row: value for row, value in column.items() if abs(value) > tol
+        }
+
+    def d3_after_sparse_b3(column: Dict[int, complex]) -> Dict[int, complex]:
+        output: Dict[int, complex] = {}
+
+        for idx, coeff in column.items():
+            left = idx // (dim_I * dim_I)
+            remainder = idx % (dim_I * dim_I)
+            middle = remainder // dim_I
+            right = remainder % dim_I
+
+            for product, mu_coeff in sparse_mu[left][middle].items():
+                target = flat2[product][right]
+                output[target] = output.get(target, 0.0) + coeff * mu_coeff
+            for product, mu_coeff in sparse_mu[middle][right].items():
+                target = flat2[left][product]
+                output[target] = output.get(target, 0.0) + coeff * weights[1] * mu_coeff
+
+        return {
+            row: value for row, value in output.items() if abs(value) > tol
+        }
+
+    image_b2: Dict[int, Dict[int, complex]] = {}
+    image_b3: Dict[int, Dict[int, complex]] = {}
+    for left in range(dim_I):
+        for middle_left in range(dim_I):
+            for middle_right in range(dim_I):
+                for right in range(dim_I):
+                    source_column = d4_column(left, middle_left, middle_right, right)
+                    _insert_sparse_column(source_column, image_b3, tol=tol)
+                    _insert_sparse_column(d3_after_sparse_b3(source_column), image_b2, tol=tol)
+
+    missing_b2, _ = _row_projection_against_basis(image_b2, dim_I * dim_I, tol=tol)
+    missing_b3, _ = _row_projection_against_basis(image_b3, dim_I ** 3, tol=tol)
+
+    kernel_model_b2 = _kernel_basis_rref(
+        bar.q_differential(2)[:, list(missing_b2)],
+        tol=tol,
+    )
+    kernel_model_b3 = _kernel_basis_rref(
+        bar.d_power(3, 2, use_q=True)[:, list(missing_b3)],
+        tol=tol,
+    )
+
+    def rounded_complex(value: complex) -> Tuple[float, float]:
+        return (round(float(value.real), 12), round(float(value.imag), 12))
+
+    def class_weight_from_entries(entries: List[Dict[str, object]]) -> int:
+        weights_present = {
+            entry["total_root_weight"]
+            for entry in entries
+        }
+        if len(weights_present) != 1:
+            raise ValueError(f"Class is not weight-pure: {weights_present}")
+        return next(iter(weights_present))
+
+    def support_entry_b2(row: int, coeff: complex) -> Dict[str, object]:
+        left_idx = row // dim_I
+        right_idx = row % dim_I
+        left_label = _reduced_basis_label(uq, left_idx)
+        right_label = _reduced_basis_label(uq, right_idx)
+        return {
+            "quotient_row": row,
+            "coeff": rounded_complex(coeff),
+            "left_label": left_label,
+            "right_label": right_label,
+            "left_root_weight": _reduced_basis_root_weight(left_label),
+            "right_root_weight": _reduced_basis_root_weight(right_label),
+            "total_root_weight": (
+                _reduced_basis_root_weight(left_label)
+                + _reduced_basis_root_weight(right_label)
+            ),
+        }
+
+    def support_entry_b3(row: int, coeff: complex) -> Dict[str, object]:
+        left_idx = row // (dim_I * dim_I)
+        remainder = row % (dim_I * dim_I)
+        middle_idx = remainder // dim_I
+        right_idx = remainder % dim_I
+        left_label = _reduced_basis_label(uq, left_idx)
+        middle_label = _reduced_basis_label(uq, middle_idx)
+        right_label = _reduced_basis_label(uq, right_idx)
+        return {
+            "quotient_row": row,
+            "coeff": rounded_complex(coeff),
+            "left_label": left_label,
+            "middle_label": middle_label,
+            "right_label": right_label,
+            "left_root_weight": _reduced_basis_root_weight(left_label),
+            "middle_root_weight": _reduced_basis_root_weight(middle_label),
+            "right_root_weight": _reduced_basis_root_weight(right_label),
+            "total_root_weight": (
+                _reduced_basis_root_weight(left_label)
+                + _reduced_basis_root_weight(middle_label)
+                + _reduced_basis_root_weight(right_label)
+            ),
+        }
+
+    classes_b2 = []
+    total_root_weight_profile_b2: Dict[int, int] = {}
+    for basis_vector in kernel_model_b2["basis"]:
+        entries = [
+            support_entry_b2(missing_b2[coord], coeff)
+            for coord, coeff in enumerate(basis_vector)
+            if abs(coeff) > tol
+        ]
+        class_weight = class_weight_from_entries(entries)
+        total_root_weight_profile_b2[class_weight] = total_root_weight_profile_b2.get(class_weight, 0) + 1
+        classes_b2.append(
+            {
+                "support_size": len(entries),
+                "total_root_weight": class_weight,
+                "entries": tuple(entries),
+            }
+        )
+
+    classes_b3 = []
+    total_root_weight_profile_b3: Dict[int, int] = {}
+    for basis_vector in kernel_model_b3["basis"]:
+        entries = [
+            support_entry_b3(missing_b3[coord], coeff)
+            for coord, coeff in enumerate(basis_vector)
+            if abs(coeff) > tol
+        ]
+        class_weight = class_weight_from_entries(entries)
+        total_root_weight_profile_b3[class_weight] = total_root_weight_profile_b3.get(class_weight, 0) + 1
+        classes_b3.append(
+            {
+                "support_size": len(entries),
+                "total_root_weight": class_weight,
+                "entries": tuple(entries),
+            }
+        )
+
+    return {
+        "N": 3,
+        "source_degree": 4,
+        "status": "resolved support profile",
+        "quotient_dims": {
+            2: {1: len(missing_b2)},
+            3: {2: len(missing_b3)},
+        },
+        "cohomology_dims": {
+            2: {1: len(classes_b2)},
+            3: {2: len(classes_b3)},
+        },
+        "flavors": {
+            2: {
+                1: {
+                    "quotient_rows": tuple(missing_b2),
+                    "pivot_cols": kernel_model_b2["pivot_cols"],
+                    "free_cols": kernel_model_b2["free_cols"],
+                    "total_root_weight_profile": dict(sorted(total_root_weight_profile_b2.items())),
+                    "class_support_sizes": tuple(entry["support_size"] for entry in classes_b2),
+                    "classes": tuple(classes_b2),
+                }
+            },
+            3: {
+                2: {
+                    "quotient_rows": tuple(missing_b3),
+                    "pivot_cols": kernel_model_b3["pivot_cols"],
+                    "free_cols": kernel_model_b3["free_cols"],
+                    "total_root_weight_profile": dict(sorted(total_root_weight_profile_b3.items())),
+                    "class_support_sizes": tuple(entry["support_size"] for entry in classes_b3),
+                    "classes": tuple(classes_b3),
+                }
+            },
+        },
+    }
+
+
+@lru_cache(maxsize=None)
 def kl_periodic_shadow_candidates() -> Dict[str, object]:
     """Compare the first resolved KL packet against elementary shadow candidates."""
     n3_packet = n3_degree4_flavor_packet()
+    n3_profile = n3_degree4_exact_packet_profile()
     n4_window = n4_low_degree_flavor_window()
     n4_h13 = n4_degree1_h13_channel()
     n4_degree2 = n4_degree2_partial_packet()
@@ -2703,10 +3414,13 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
     n4_degree2_h13_first_term = n4_degree2_h13_first_term_state_compression()
     n4_degree2_h13_plane = n4_degree2_h13_cancellation_plane()
     n4_degree2_h13_operator = n4_degree2_h13_cancellation_operator()
+    n4_degree2_h13_exact = n4_degree2_h13_exact_channel()
+    n4_degree2_h13_profile = n4_degree2_h13_exact_packet_profile()
     n3_report = admissible_level_flavor_report(3, max_degree=3)
 
     return {
         "N3_degree4_packet": n3_packet,
+        "N3_degree4_profile": n3_profile,
         "candidate_dimensions": {
             "single_flavor_dim": n3_packet["resolved_flavors"][2][1],
             "paired_packet_total": (
@@ -2725,6 +3439,8 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
         "N4_degree2_h13_first_term_compression": n4_degree2_h13_first_term,
         "N4_degree2_h13_cancellation_plane": n4_degree2_h13_plane,
         "N4_degree2_h13_cancellation_operator": n4_degree2_h13_operator,
+        "N4_degree2_h13_exact": n4_degree2_h13_exact,
+        "N4_degree2_h13_profile": n4_degree2_h13_profile,
     }
 
 
