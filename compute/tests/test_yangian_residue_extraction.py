@@ -374,6 +374,18 @@ class TestClosedFormBoundaryStrip:
             assert data["frobenius_norm"] < 1e-10
             assert data["max_entry"] < 1e-10
 
+    @pytest.mark.parametrize("N,eval_points,stage", [
+        (2, [0.3, 1.7, 4.1], 6),
+        (3, [-0.5, 0.8, 2.2], 6),
+        (4, [0.25, 1.1, 3.6], 6),
+    ])
+    def test_closed_form_stage6_packet_vanishes_for_alternate_generic_points(self, N, eval_points, stage):
+        packet = boundary_strip_packet_closed_form(eval_points, N, stage)
+        assert packet["all_zero"]
+        for _, data in packet["packet"].items():
+            assert data["frobenius_norm"] < 1e-9
+            assert data["max_entry"] < 1e-9
+
 
 class TestNormalizationBridge:
     """Bridge the additive collision-value package to the normalized residue package."""

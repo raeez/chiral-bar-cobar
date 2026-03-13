@@ -5,6 +5,14 @@
 \label{rem:yangian-atom}
 \label{rem:yangian-status}
 \label{rem:yangian-hms}
+
+\begin{remark}[Governing question]
+The governing question of this chapter is how the Yangian realizes the ordered-factorization face of modular Koszul duality, and exactly where the theorematic DK core stops and the completion frontier begins.
+\end{remark}
+
+\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
+This chapter is primarily M-level portrait and comparison. The proved evaluation-generated DK packet is recorded as the H-level theorematic core, while characters, kernels, and coefficient packets remain S-level or frontier data unless explicitly upgraded.
+\end{remark}
 \index{Yangian!as modular Koszul atom}
 
 The Kac--Moody and $\mathcal{W}$-algebra families are
@@ -839,8 +847,8 @@ shows that it is enough to prove those identities on a faithful
 evaluation family.  Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}
 reduces the check further to a finite boundary strip of mode defects.
 Proposition~\ref{prop:dg-shifted-rtt-finite-tensor-detection}
-packages those defects into finite tensor powers of the fundamental
-evaluation module, and
+packages those defects into the canonical universal generic packets of
+the fundamental evaluation module of bounded tensor length, and
 Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} shows
 that once the fundamental $L$-operator satisfies the truncated RTT
 relation and the twisted coproduct multiplies monodromy matrices in the
@@ -1505,6 +1513,130 @@ through one of the generic subproducts supported on at most $a+1$
 slots.
 \end{proof}
 
+\begin{proposition}[Universal generic packet reduction for the
+boundary strip; \ClaimStatusProvedHere]
+\label{prop:dg-shifted-rtt-universal-generic-packets}
+Fix $m\ge1$ and algebraically independent parameters
+$x_1,\dots,x_m$.  Write
+\[
+K_m:=\mathbb{C}(x_1,\dots,x_m),
+\qquad
+M_m^{\mathrm{gen}}
+:=
+V_{\mathrm{fund}}(x_1)\otimes_{K_m}\cdots\otimes_{K_m}
+V_{\mathrm{fund}}(x_m).
+\]
+Assume the line-side monodromy on $M_m^{\mathrm{gen}}$ is given by the
+fundamental product
+\[
+L_{x_1}(u)\cdots L_{x_m}(u),
+\qquad
+L_{x_j}(u)=1-\frac{\hbar P_{0j}}{u-x_j},
+\]
+and that the truncated quotient acts by the standard evaluation
+formulas of Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.
+Then for every $a\le N$, the matrix entries of the operators
+\[
+\mathsf{K}^{\mathrm{line},(m)}_{a,0},
+\qquad
+\mathsf{K}^{\mathrm{RTT},(m)}_{a,0},
+\qquad
+\Delta^{(m)}_{a,0}(N)
+:=
+\mathsf{K}^{\mathrm{line},(m)}_{a,0}
+-\mathsf{K}^{\mathrm{RTT},(m)}_{a,0}
+\]
+on $M_m^{\mathrm{gen}}$ lie in the polynomial ring
+$\mathbb{C}[x_1,\dots,x_m]$.
+
+For any generic specialization
+\[
+x_i\mapsto \alpha_i
+\qquad (\alpha_i\neq \alpha_j \text{ for } i\neq j),
+\]
+the specialized operator is exactly the action of the same boundary
+coefficient on
+\[
+V_{\mathrm{fund}}(\alpha_1)\otimes\cdots\otimes
+V_{\mathrm{fund}}(\alpha_m).
+\]
+Consequently $\Delta_{a,0}(N)$ vanishes on every generic tensor product
+of length $m$ if and only if it vanishes on the single universal
+generic packet $M_m^{\mathrm{gen}}$.
+\end{proposition}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-fundamental-coefficient-formula},
+each monodromy coefficient on the line side is a finite sum of terms
+\[
+(-\hbar)^s x_{j_1}^{n_1}\cdots x_{j_s}^{n_s} P_{0j_1}\cdots P_{0j_s},
+\]
+so its matrix entries lie in $\mathbb{C}[x_1,\dots,x_m]$.  The
+boundary-strip formula of
+Proposition~\ref{prop:dg-shifted-rtt-boundary-coefficient-formula}
+expresses $\mathsf{K}^{\mathrm{line},(m)}_{a,0}$ as a finite
+polynomial combination of those coefficients, hence its matrix entries
+also lie in $\mathbb{C}[x_1,\dots,x_m]$.
+
+On the RTT side, the standard evaluation action uses the same
+coefficientwise monodromy formulas at finite stage, so the matrix
+entries of $\mathsf{K}^{\mathrm{RTT},(m)}_{a,0}$ are polynomial in the
+same parameters.  Therefore the same is true for the defect
+$\Delta^{(m)}_{a,0}(N)$.
+
+Specializing $x_i\mapsto\alpha_i$ simply evaluates those polynomial
+matrix entries at the chosen distinct parameters, which is exactly the
+generic tensor product
+$V_{\mathrm{fund}}(\alpha_1)\otimes\cdots\otimes
+V_{\mathrm{fund}}(\alpha_m)$.  If the operator on
+$M_m^{\mathrm{gen}}$ is zero, then all of its polynomial matrix entries
+are zero, so every generic specialization is zero as well.  The
+converse follows because a polynomial matrix entry that vanishes on
+every point of the open set $\{\alpha_i\neq\alpha_j\}$ must vanish
+identically.
+\end{proof}
+
+\begin{corollary}[Minimal canonical family from the boundary-strip
+induction; \ClaimStatusProvedHere]
+\label{cor:dg-shifted-rtt-minimal-canonical-family}
+Fix $0\le a\le N$.  Under the hypotheses of
+Proposition~\ref{prop:dg-shifted-rtt-defect-support-mechanism} and
+Proposition~\ref{prop:dg-shifted-rtt-universal-generic-packets}, to
+prove
+\[
+\Delta_{a,0}(N)=0
+\]
+it is enough to verify vanishing on the canonical universal packets
+\[
+M_m^{\mathrm{gen}}
+\qquad (1\le m\le a+1).
+\]
+Conversely, any all-rank induction proving $\Delta_{a,0}(N)=0$ must in
+particular kill these packets.  Hence this family is the minimal
+canonical subproduct family furnished by the present boundary-strip
+reduction.
+\end{corollary}
+
+\begin{proof}
+By
+Proposition~\ref{prop:dg-shifted-rtt-defect-support-mechanism},
+the action of $\Delta_{a,0}(N)$ on an arbitrary generic tensor product
+is determined by its restrictions to the subproducts of lengths at most
+$a+1$.  By
+Proposition~\ref{prop:dg-shifted-rtt-universal-generic-packets}, each
+fixed tensor length contributes only one universal generic packet up to
+specialization.  Therefore vanishing on the displayed family forces
+vanishing on every generic tensor product relevant to the
+finite-detection argument.
+
+The converse is tautological: if $\Delta_{a,0}(N)$ vanishes on every
+generic tensor product, then it vanishes on these particular universal
+ones.  This is the smallest family produced by combining the
+length-$(a+1)$ support reduction with the collapse of each fixed tensor
+length to one universal generic packet.
+\end{proof}
+
 \begin{proposition}[Finite tensor-length detection for boundary-strip RTT
 defects; \ClaimStatusProvedHere]
 \label{prop:dg-shifted-rtt-finite-tensor-detection}
@@ -1532,6 +1664,9 @@ Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}.  Assume:
   the action of the truncated monodromy coefficients is induced by the
   coefficientwise twisted-coproduct multiplication law of
   Proposition~\ref{prop:dg-shifted-rtt-formula-preservation};
+\item on those same generic tensor products, the truncated quotient
+  acts by the standard evaluation formulas of
+  Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection};
 \item the faithful evaluation subcategory of
   Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection} is
   generated under finite direct sums, tensor products, and subquotients
@@ -1544,40 +1679,40 @@ Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}.  Assume:
   is preserved under finite direct sums, tensor products, and
   subquotients; and
 \item for every $0 \le a \le N$, the defect $\Delta_{a,0}(N)$ acts by
-  zero on every generic tensor product of the form
+  zero on each canonical universal generic packet
   \[
-  V_{\mathrm{fund}}(a_1)\otimes\cdots\otimes V_{\mathrm{fund}}(a_m)
+  M_m^{\mathrm{gen}}
+  :=
+  V_{\mathrm{fund}}(x_1)\otimes_{\mathbb{C}(x_1,\dots,x_m)}\cdots
+  \otimes_{\mathbb{C}(x_1,\dots,x_m)}V_{\mathrm{fund}}(x_m)
   \qquad (1\le m\le a+1).
   \]
 \end{enumerate}
 Then $\Delta_{a,0}(N)=0$ for all $0 \le a \le N$.  Consequently the
 boundary-strip reduction of
 Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} is discharged after
-checking only finitely many generic tensor products of the fundamental
-evaluation module, of lengths at most $N+1$, together with the standard
-evaluation action of $T_N(u)$ on those modules.
+checking only the canonical universal generic packets of lengths at
+most $N+1$, together with the standard evaluation action of $T_N(u)$ on
+those packets.
 \end{proposition}
 
 \begin{proof}
 Fix $a \le N$.  By
-Proposition~\ref{prop:dg-shifted-rtt-defect-support-mechanism},
-assumptions~\textup{(i)} and~\textup{(ii)} imply that the action of
-$\Delta_{a,0}(N)$ on a generic tensor product of evaluation modules is
-determined by its actions on the length-$m$ subproducts with
-$m \le a+1$.
-
-Assumption~\textup{(v)} says that all of those shorter actions vanish
-on generic tensor powers of the fundamental evaluation module.
+Corollary~\ref{cor:dg-shifted-rtt-minimal-canonical-family},
+assumptions~\textup{(i)}, \textup{(ii)}, \textup{(iii)},
+and~\textup{(vi)} imply that all generic tensor-product actions of
+$\Delta_{a,0}(N)$ vanish.
 Therefore $\Delta_{a,0}(N)$ acts trivially on every generic tensor
 product built from fundamental evaluation modules, regardless of
-length.  Assumptions~\textup{(iii)} and~\textup{(iv)} then propagate
+length.  Assumptions~\textup{(iv)} and~\textup{(v)} then propagate
 this vanishing to the whole faithful evaluation subcategory of
 Proposition~\ref{prop:dg-shifted-rtt-evaluation-detection}.  That
 proposition therefore forces $\Delta_{a,0}(N)=0$ in the quotient.
 
 Doing this for all $a\le N$ kills the entire boundary strip, so
 Proposition~\ref{prop:dg-shifted-rtt-boundary-seed} reduces the full
-RTT defect family to these finitely many generic tensor-product tests.
+RTT defect family to this finite canonical family of universal generic
+packets.
 \end{proof}
 
 \begin{proposition}[Fundamental propagation criterion for boundary-strip
@@ -2067,7 +2202,7 @@ $\operatorname*{Res}_{u=a}L_a(u)=-\hbar P$, the symmetric/antisymmetric
 channel decomposition, and exact kernel computation on the mixed
 tensor line $e_1\otimes e_2$.  Computationally, this low-rank packet
 has been verified by exact and numerical kernel calculations inside the
-current Yangian residue suite \textup{(}$208$~tests\textup{)}.
+current Yangian residue suite \textup{(}$211$~tests\textup{)}.
 
 This is evidence for the Yangian side of MC4, not the full theorem.
 The live frontier remains the uniform proof of
@@ -2102,7 +2237,7 @@ Thus the twisted-coproduct propagation mechanism of
 Proposition~\ref{prop:dg-shifted-rtt-fundamental-propagation} is borne
 out on the same low-rank packet as
 Computation~\ref{comp:mc4-yangian-lowrank-kernels}
-\textup{(}within the same $208$-test Yangian residue suite\textup{)}.
+\textup{(}within the same $211$-test Yangian residue suite\textup{)}.
 
 This is still only low-rank M-level evidence: it does not replace the
 theorematic propagation input required for the all-rank boundary strip.
@@ -2157,7 +2292,7 @@ in Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}: after the
 single-line residue extraction and the short tensor-power propagation,
 the first explicit boundary-strip packet itself is now verified on
 generic tensor lengths $2$ and $3$ in ranks $2,3,4$
-\textup{(}again within the current $208$-test Yangian residue
+\textup{(}again within the current $211$-test Yangian residue
 suite\textup{)}.
 \end{computation}
 
@@ -2196,7 +2331,10 @@ still M-level evidence rather than the all-rank theorem, but it shows
 that the exact finite-detection packet remains unobstructed beyond the
 first visible stage after the closed-form coefficient formula is used
 systematically.  Computationally, this stage-$6$ packet is verified in
-the current Yangian residue suite \textup{(}$208$~tests\textup{)}.
+the current Yangian residue suite \textup{(}$211$~tests\textup{)}.
+The same stage-$6$ vanishing has also been checked on a second generic
+length-$3$ sample in each of the ranks $2,3,4$, so this low-rank
+packet is not tied to a single chosen tuple of evaluation parameters.
 \end{computation}
 
 \section{Coulomb branch algebras}
