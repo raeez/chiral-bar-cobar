@@ -32,6 +32,7 @@ References:
 """
 
 import cmath
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -68,6 +69,9 @@ from compute.lib.kl_ncomplex_sl2 import (
     n4_degree2_h13_cancellation_operator,
     n4_degree2_h13_exact_channel,
     n4_degree2_h13_exact_packet_profile,
+    kl_shadow_transport_convolution_obstruction,
+    kl_shadow_transport_schrodinger_ansatz,
+    kl_exact_packet_profile_comparison,
     kl_periodic_shadow_candidates,
     # Diagnostics
     verify_uq_relations,
@@ -689,7 +693,7 @@ class TestN3Degree4FlavorPacket:
 
     @pytest.mark.slow
     def test_periodic_shadow_candidate_report_sees_three_vs_zero(self):
-        """The comparison report records the exact first resolved N=4 degree-2 packet."""
+        """The candidate report records the first resolved N=3 vs N=4 shadow mismatch."""
         report = kl_periodic_shadow_candidates()
 
         assert report["candidate_dimensions"] == {
@@ -709,26 +713,6 @@ class TestN3Degree4FlavorPacket:
         }
         assert report["N4_degree1_window"]["resolved_flavors"] == {
             1: {3: 0, 2: 0},
-        }
-        assert report["N4_degree1_h13"]["cohomology_dim"] == 0
-        assert report["N4_degree2_partial_packet"]["resolved_flavors"] == {
-            (3, 1): 0,
-            (2, 2): 0,
-        }
-        assert report["N4_degree2_h13_bound"]["image_rank_lower_bound"] == 3903
-        assert report["N4_degree2_h13_bound"]["cohomology_upper_bound"] == 66
-        assert report["N4_degree2_h13_exact"]["image_rank"] == 3903
-        assert report["N4_degree2_h13_exact"]["cohomology_dim"] == 66
-        assert report["N4_degree2_h13_profile"]["total_root_weight_profile"] == {
-            -4: 1,
-            -3: 4,
-            -2: 8,
-            -1: 12,
-            0: 16,
-            1: 12,
-            2: 8,
-            3: 4,
-            4: 1,
         }
 
 
@@ -1170,6 +1154,239 @@ class TestN3ExactPacketProfile:
         )
         assert tuple(entry["total_root_weight"] for entry in flavor_12["classes"]) == (-3, 0, 3)
         assert tuple(entry["total_root_weight"] for entry in flavor_21["classes"]) == (-3, 0, 3)
+
+    @pytest.mark.slow
+    def test_exact_profile_comparison_detects_staircase_only_at_n4(self):
+        """The first N=3 packet is not yet a unit-step character staircase, but N=4 is."""
+        report = kl_exact_packet_profile_comparison()
+
+        assert report["status"] == "exact profile comparison"
+        assert report["N3_flavors_match"] is True
+        assert report["N3_single_flavor_profile"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
+        }
+        assert report["N3_paired_profile"] == {
+            -3: 2,
+            0: 2,
+            3: 2,
+        }
+        assert report["N3_single_character_test"]["is_character_profile"] is False
+        assert report["N3_single_character_test"]["obstruction_kind"] == "negative multiplicity"
+        assert report["N3_single_character_test"]["first_obstruction_weight"] == 2
+        assert report["N3_paired_character_test"]["is_character_profile"] is False
+        assert report["N3_paired_character_test"]["obstruction_kind"] == "negative multiplicity"
+        assert report["N3_paired_character_test"]["first_obstruction_weight"] == 2
+        assert report["N4_profile"] == {
+            -4: 1,
+            -3: 4,
+            -2: 8,
+            -1: 12,
+            0: 16,
+            1: 12,
+            2: 8,
+            3: 4,
+            4: 1,
+        }
+        assert report["N4_character_test"]["is_character_profile"] is True
+        assert report["N4_character_test"]["character_multiplicities"] == {
+            0: 4,
+            1: 4,
+            2: 4,
+            3: 3,
+            4: 1,
+        }
+        assert report["N4_vs_paired_N3_dimension_ratio"] == 11
+
+    @pytest.mark.slow
+    def test_convolution_obstruction_rules_out_nonnegative_transport(self):
+        """There is no exact symmetric convolution transport from the first N=3 packet to N=4."""
+        report = kl_shadow_transport_convolution_obstruction()
+
+        assert report["status"] == "exact convolution obstruction"
+        assert report["source_profiles"]["single"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
+        }
+        assert report["source_profiles"]["paired"] == {
+            -3: 2,
+            0: 2,
+            3: 2,
+        }
+        assert report["target_profile"] == {
+            -4: 1,
+            -3: 4,
+            -2: 8,
+            -1: 12,
+            0: 16,
+            1: 12,
+            2: 8,
+            3: 4,
+            4: 1,
+        }
+        assert report["exact_transport_possible"] is False
+        assert report["nonnegative_transport_possible"] is False
+        assert report["full_single_flavor_radius_solutions"] == {
+            0: None,
+            1: None,
+            2: None,
+            3: None,
+            4: None,
+        }
+        assert report["full_paired_radius_solutions"] == {
+            0: None,
+            1: None,
+            2: None,
+            3: None,
+            4: None,
+        }
+        assert report["window_single_flavor_radius_solutions"] == {
+            0: None,
+            1: None,
+            2: None,
+            3: None,
+            4: {
+                "status": "unique",
+                "radius": 4,
+                "full_support": False,
+                "kernel": {
+                    -4: Fraction(4, 1),
+                    -3: Fraction(12, 1),
+                    -2: Fraction(11, 1),
+                    -1: Fraction(-3, 1),
+                    0: Fraction(-8, 1),
+                    1: Fraction(-3, 1),
+                    2: Fraction(11, 1),
+                    3: Fraction(12, 1),
+                    4: Fraction(4, 1),
+                },
+                "nonnegative": False,
+            },
+        }
+
+    @pytest.mark.slow
+    def test_schrodinger_ansatz_finds_first_structured_transport(self):
+        """The first structured finite-window transport is Dirichlet Laplacian plus sextic potential."""
+        report = kl_shadow_transport_schrodinger_ansatz()
+
+        assert report["status"] == "structured non-convolutional finite-window transport"
+        assert report["single_source_profile"] == {
+            -3: 1,
+            0: 1,
+            3: 1,
+        }
+        assert report["paired_source_profile"] == {
+            -3: 2,
+            0: 2,
+            3: 2,
+        }
+        assert report["target_profile"] == {
+            -4: 1,
+            -3: 4,
+            -2: 8,
+            -1: 12,
+            0: 16,
+            1: 12,
+            2: 8,
+            3: 4,
+            4: 1,
+        }
+        assert report["paired_schrodinger"] == {
+            "status": "resolved",
+            "include_laplacian": True,
+            "minimal_potential_degree": 6,
+            "laplacian_coeff": Fraction(-3, 140),
+            "potential_coeffs": {
+                0: Fraction(4, 35),
+                2: Fraction(-2519, 16800),
+                4: Fraction(503, 13440),
+                6: Fraction(-17, 9600),
+            },
+            "output_profile": {
+                -4: Fraction(0, 1),
+                -3: Fraction(2, 1),
+                -2: Fraction(0, 1),
+                -1: Fraction(0, 1),
+                0: Fraction(2, 1),
+                1: Fraction(0, 1),
+                2: Fraction(0, 1),
+                3: Fraction(2, 1),
+                4: Fraction(0, 1),
+            },
+        }
+        assert report["single_schrodinger"] == {
+            "status": "resolved",
+            "include_laplacian": True,
+            "minimal_potential_degree": 6,
+            "laplacian_coeff": Fraction(-3, 280),
+            "potential_coeffs": {
+                0: Fraction(2, 35),
+                2: Fraction(-2519, 33600),
+                4: Fraction(503, 26880),
+                6: Fraction(-17, 19200),
+            },
+            "output_profile": {
+                -4: Fraction(0, 1),
+                -3: Fraction(1, 1),
+                -2: Fraction(0, 1),
+                -1: Fraction(0, 1),
+                0: Fraction(1, 1),
+                1: Fraction(0, 1),
+                2: Fraction(0, 1),
+                3: Fraction(1, 1),
+                4: Fraction(0, 1),
+            },
+        }
+        assert report["paired_pure_potential"] == {
+            "status": "resolved",
+            "include_laplacian": False,
+            "minimal_potential_degree": 8,
+            "laplacian_coeff": Fraction(0, 1),
+            "potential_coeffs": {
+                0: Fraction(1, 8),
+                2: Fraction(-2221, 13440),
+                4: Fraction(109, 2560),
+                6: Fraction(-3, 1280),
+                8: Fraction(1, 53760),
+            },
+            "output_profile": {
+                -4: Fraction(0, 1),
+                -3: Fraction(2, 1),
+                -2: Fraction(0, 1),
+                -1: Fraction(0, 1),
+                0: Fraction(2, 1),
+                1: Fraction(0, 1),
+                2: Fraction(0, 1),
+                3: Fraction(2, 1),
+                4: Fraction(0, 1),
+            },
+        }
+        obstruction = kl_shadow_transport_convolution_obstruction()
+        assert obstruction["window_paired_radius_solutions"] == {
+            0: None,
+            1: None,
+            2: None,
+            3: None,
+            4: {
+                "status": "unique",
+                "radius": 4,
+                "full_support": False,
+                "kernel": {
+                    -4: Fraction(2, 1),
+                    -3: Fraction(6, 1),
+                    -2: Fraction(11, 2),
+                    -1: Fraction(-3, 2),
+                    0: Fraction(-4, 1),
+                    1: Fraction(-3, 2),
+                    2: Fraction(11, 2),
+                    3: Fraction(6, 1),
+                    4: Fraction(2, 1),
+                },
+                "nonnegative": False,
+            },
+        }
 
 
 # ============================================================================

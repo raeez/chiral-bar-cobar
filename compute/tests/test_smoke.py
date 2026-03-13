@@ -240,6 +240,18 @@ class TestInfiniteGeneratorFrontier:
             stage4_defect_vanishing_report,
             stage5_dual_frontier_report,
             stage5_local_attack_order_report,
+            stage5_visible_pairing_normal_form_report,
+            stage5_principal_one_coefficient_normal_form_report,
+            stage5_principal_target5_no_new_independent_data_report,
+            stage5_principal_residual_front_one_coefficient_report,
+            stage5_principal_one_coefficient_factorization_report,
+            stage5_effective_independent_frontier_report,
+            stage5_one_coefficient_reduction_report,
+            stage5_one_defect_family_report,
+            stage5_conjecture_defect_dictionary_report,
+            stage5_exact_remaining_input_report,
+            stage5_visible_conjecture_network_collapse_report,
+            stage5_one_coefficient_comparison_report,
             standard_winfinity_dual_candidate_report,
             verify_standard_winfinity_dual_candidate,
         )
@@ -257,6 +269,18 @@ class TestInfiniteGeneratorFrontier:
         vanishing = stage4_defect_vanishing_report(1, packet)
         stage5 = stage5_dual_frontier_report()
         stage5_attack = stage5_local_attack_order_report()
+        stage5_normal_form = stage5_visible_pairing_normal_form_report()
+        stage5_principal_normal_form = stage5_principal_one_coefficient_normal_form_report()
+        stage5_principal_target5 = stage5_principal_target5_no_new_independent_data_report()
+        stage5_principal_residual = stage5_principal_residual_front_one_coefficient_report()
+        stage5_principal_factorization = stage5_principal_one_coefficient_factorization_report()
+        stage5_effective = stage5_effective_independent_frontier_report()
+        stage5_reduction = stage5_one_coefficient_reduction_report()
+        stage5_defect_family = stage5_one_defect_family_report()
+        stage5_defect_dictionary = stage5_conjecture_defect_dictionary_report()
+        stage5_exact = stage5_exact_remaining_input_report()
+        stage5_network_collapse = stage5_visible_conjecture_network_collapse_report()
+        stage5_one = stage5_one_coefficient_comparison_report()
         report = standard_winfinity_dual_candidate_report()
         assert model.generator_spins == (2, 3, 4, 5)
         assert support.weight_sector_basis(4) == ((4,), (2, 2))
@@ -272,6 +296,39 @@ class TestInfiniteGeneratorFrontier:
         assert stage5["prerequisite_goal"] == "vanish all six stage-4 defects"
         assert stage5["reduced_packet_size"] == 11
         assert stage5_attack["visible_pairing_refinement"]["effective_transport_attack_order"] == (4, 3)
+        assert stage5_normal_form["parameter"]["channel"] == (3, 5, 4, 4)
+        assert stage5_normal_form["channel_normal_form"][(3, 4, 5, 2)]["ratio_to_A5"] == Rational(-5, 4)
+        assert stage5_principal_normal_form["parameter"]["channel"] == (3, 5, 4, 4)
+        assert stage5_principal_normal_form["channel_normal_form"][(4, 5, 3, 6)]["ratio_to_A5_DS"] == Rational(-3, 4)
+        assert stage5_principal_target5["tail_ratio_to_target3"] == Rational(5, 3)
+        assert stage5_principal_residual["determined_nonzero_channel"]["channel"] == (4, 5, 3, 6)
+        assert stage5_principal_factorization["representative_channel"] == (3, 5, 4, 4)
+        assert stage5_effective["representative_channel"] == (3, 5, 4, 4)
+        assert stage5_reduction["reduction_goal"]["channel"] == (3, 5, 4, 4)
+        assert stage5_defect_family["representative_defect"]["channel"] == (3, 5, 4, 4)
+        assert stage5_defect_family["channel_defects"][(3, 4, 5, 2)]["ratio_to_D5"] == Rational(-5, 4)
+        assert stage5_defect_dictionary["equivalent_surfaces"][
+            "conj:winfty-stage5-block-45"
+        ]["ratio_to_D5"] == Rational(-3, 4)
+        assert stage5_defect_dictionary["automatic_surfaces"][
+            "conj:winfty-stage5-transport-target-5"
+        ]["defect_expression"] == 0
+        assert stage5_exact["singleton_identity"]["channel"] == (3, 5, 4, 4)
+        assert stage5_exact["principal_target5_corridor"]["representative_channel"] == (3, 5, 4, 4)
+        assert stage5_network_collapse["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        assert stage5_network_collapse["automatic_surfaces"]["conj:winfty-stage5-block-55"]["channel"] == (
+            5,
+            5,
+            4,
+            6,
+        )
+        assert stage5_one["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        assert stage5_one["conjecture_defect_dictionary"]["representative_channel"] == (
+            3,
+            5,
+            4,
+            4,
+        )
         assert report["stage4"]["virasoro_constraints"][(4, 4, 2, 6)]["expression"] == 2
         assert all(verify_truncated_w_infinity_ope(5, 7).values())
         assert all(verify_w_infinity_support_complex(5, 7).values())

@@ -125,6 +125,23 @@ class RunnerLog:
             handle.write(text + "\n")
 
 
+class ShardFailure(RuntimeError):
+    """Structured shard failure so the runner can salvage partial progress."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        returncode: int,
+        shard_log_path: Path,
+        nodeids: Sequence[str],
+    ) -> None:
+        super().__init__(message)
+        self.returncode = returncode
+        self.shard_log_path = shard_log_path
+        self.nodeids = tuple(nodeids)
+
+
 class SlowSuiteOwner:
     """Acquire the repo-wide slow-suite lock for the whole shard runner."""
 
@@ -430,8 +447,11 @@ def run_shard(
             )
             for line in tail_lines(shard_log_path, 120):
                 log.write(line)
-            raise RuntimeError(
-                f"pytest shard {shard_index}/{shard_count} failed; see {shard_log_path}"
+            raise ShardFailure(
+                f"pytest shard {shard_index}/{shard_count} failed; see {shard_log_path}",
+                returncode=returncode,
+                shard_log_path=shard_log_path,
+                nodeids=nodeids,
             )
         now = time.monotonic()
         if now >= next_heartbeat:
@@ -517,22 +537,64 @@ def main() -> int:
             runner_log.write(f"Shard logs: {shard_log_dir}")
             return 0
 
-        for index, shard in enumerate(shards, start=1):
-            shard_log_path = shard_log_dir / f"shard-{index:03d}.log"
-            run_shard(
-                shard_index=index,
-                shard_count=len(shards),
-                nodeids=shard,
-                args=args,
-                env=child_env,
-                repo_root=repo_root,
-                shard_log_path=shard_log_path,
-                log=runner_log,
-            )
+        shard_queue = [list(shard) for shard in shards]
+        shard_index = 0
+        while shard_index < len(shard_queue):
+            shard = shard_queue[shard_index]
+            display_index = shard_index + 1
+            shard_log_path = shard_log_dir / f"shard-{display_index:03d}.log"
+            try:
+                run_shard(
+                    shard_index=display_index,
+                    shard_count=len(shard_queue),
+                    nodeids=shard,
+                    args=args,
+                    env=child_env,
+                    repo_root=repo_root,
+                    shard_log_path=shard_log_path,
+                    log=runner_log,
+                )
+            except ShardFailure as exc:
+                duration_estimates.update(extract_nodeid_durations(exc.shard_log_path))
+                save_duration_estimates(duration_path, duration_estimates)
+
+                passed_nodeids = extract_passed_nodeids(exc.shard_log_path)
+                if passed_nodeids:
+                    completed_nodeids.update(passed_nodeids)
+                    save_completed_nodeids(state_path, nodeids_hash, completed_nodeids)
+                    runner_log.write(
+                        f"[shard {display_index}/{len(shard_queue)}] salvaged "
+                        f"{len(passed_nodeids)} passed nodeids before failure"
+                    )
+
+                remaining_nodeids = [
+                    nodeid for nodeid in shard if nodeid not in completed_nodeids
+                ]
+                if not remaining_nodeids:
+                    runner_log.write(
+                        f"[shard {display_index}/{len(shard_queue)}] no nodeids remain after salvage; continuing"
+                    )
+                    shard_index += 1
+                    continue
+
+                if exc.returncode < 0 and len(remaining_nodeids) > 1:
+                    midpoint = max(1, len(remaining_nodeids) // 2)
+                    left = remaining_nodeids[:midpoint]
+                    right = remaining_nodeids[midpoint:]
+                    runner_log.write(
+                        f"[shard {display_index}/{len(shard_queue)}] hard failure exit {exc.returncode}; "
+                        f"splitting remaining {len(remaining_nodeids)} nodeids into "
+                        f"{len(left)} and {len(right)}"
+                    )
+                    shard_queue[shard_index : shard_index + 1] = [left, right]
+                    continue
+                raise
+
             duration_estimates.update(extract_nodeid_durations(shard_log_path))
             save_duration_estimates(duration_path, duration_estimates)
             completed_nodeids.update(shard)
             save_completed_nodeids(state_path, nodeids_hash, completed_nodeids)
+            shard_index += 1
 
         if state_path.exists():
             state_path.unlink()

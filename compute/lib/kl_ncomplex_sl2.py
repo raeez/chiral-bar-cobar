@@ -90,6 +90,7 @@ References:
 from __future__ import annotations
 
 import cmath
+from fractions import Fraction
 from functools import lru_cache
 from typing import Dict, Iterable, List, Optional, Tuple
 
@@ -844,11 +845,23 @@ def ncomplex_flavor_report(bar: BarComplex, min_degree: int = 1) -> Dict[str, ob
     }
 
 
+@lru_cache(maxsize=None)
 def admissible_level_flavor_report(N: int, max_degree: int = 3) -> Dict[str, object]:
     """Build the reduced q-bar truncation and summarize its flavor data."""
     uq = SmallQuantumSl2(N)
     bar = BarComplex(uq, max_degree=max_degree, use_reduced=True)
     return ncomplex_flavor_report(bar)
+
+
+@lru_cache(maxsize=None)
+def n3_degree2_flavor2_dim() -> int:
+    """Exact low-degree N=3 flavor dimension used in the first shadow comparison."""
+    uq = SmallQuantumSl2(3)
+    bar = BarComplex(uq, max_degree=3, use_reduced=True)
+    value = ncomplex_cohomology_dim(bar, 2, 2)
+    if value is None:
+        raise RuntimeError("N=3 degree-2 flavor (j=2) should be computable on max_degree=3")
+    return int(value)
 
 
 def _sparse_mu_table(bar: BarComplex, tol: float = 1e-10) -> List[List[Dict[int, complex]]]:
@@ -3402,21 +3415,623 @@ def n3_degree4_exact_packet_profile() -> Dict[str, object]:
     }
 
 
+def _unit_step_character_decomposition(
+    weight_profile: Dict[int, int],
+) -> Dict[str, object]:
+    """Test whether a symmetric profile is a sum of unit-step interval characters."""
+    if not weight_profile:
+        return {
+            "is_character_profile": True,
+            "highest_weight": 0,
+            "character_multiplicities": {},
+            "reconstructed_profile": {},
+            "first_obstruction_weight": None,
+        }
+
+    max_abs_weight = max(abs(weight) for weight in weight_profile)
+    completed = {
+        weight: int(weight_profile.get(weight, 0))
+        for weight in range(-max_abs_weight, max_abs_weight + 1)
+    }
+
+    for weight in range(max_abs_weight + 1):
+        if completed[weight] != completed[-weight]:
+            return {
+                "is_character_profile": False,
+                "highest_weight": max_abs_weight,
+                "character_multiplicities": {},
+                "reconstructed_profile": completed,
+                "first_obstruction_weight": weight,
+                "obstruction_kind": "asymmetry",
+            }
+
+    multiplicities: Dict[int, int] = {}
+    tail = {weight: completed[weight] for weight in range(max_abs_weight + 1)}
+    for weight in range(max_abs_weight, -1, -1):
+        next_value = tail.get(weight + 1, 0)
+        multiplicity = tail[weight] - next_value
+        if multiplicity < 0:
+            return {
+                "is_character_profile": False,
+                "highest_weight": max_abs_weight,
+                "character_multiplicities": dict(sorted(multiplicities.items())),
+                "reconstructed_profile": completed,
+                "first_obstruction_weight": weight,
+                "obstruction_kind": "negative multiplicity",
+                "obstruction_value": multiplicity,
+            }
+        if multiplicity:
+            multiplicities[weight] = multiplicity
+
+    reconstructed = {weight: 0 for weight in range(-max_abs_weight, max_abs_weight + 1)}
+    for highest_weight, multiplicity in multiplicities.items():
+        for weight in range(-highest_weight, highest_weight + 1):
+            reconstructed[weight] += multiplicity
+
+    is_exact = reconstructed == completed
+    return {
+        "is_character_profile": is_exact,
+        "highest_weight": max_abs_weight,
+        "character_multiplicities": dict(sorted(multiplicities.items())),
+        "reconstructed_profile": dict(sorted(reconstructed.items())),
+        "first_obstruction_weight": None if is_exact else max_abs_weight,
+    }
+
+
+def _solve_symmetric_convolution_kernel(
+    source_profile: Dict[int, int],
+    target_profile: Dict[int, int],
+    radius: int,
+    full_support: bool = False,
+) -> Optional[Dict[str, object]]:
+    """Solve for a symmetric exact convolution kernel on weights -radius..radius."""
+    if full_support:
+        max_source_weight = max(abs(weight) for weight in source_profile)
+        weights = list(range(-(max_source_weight + radius), max_source_weight + radius + 1))
+    else:
+        weights = list(range(min(target_profile), max(target_profile) + 1))
+    positive_support = list(range(radius + 1))
+
+    matrix: List[List[Fraction]] = []
+    rhs: List[Fraction] = []
+    for weight in weights:
+        row: List[Fraction] = []
+        for offset in positive_support:
+            if offset == 0:
+                coeff = source_profile.get(weight, 0)
+            else:
+                coeff = (
+                    source_profile.get(weight - offset, 0)
+                    + source_profile.get(weight + offset, 0)
+                )
+            row.append(Fraction(coeff))
+        matrix.append(row)
+        rhs.append(Fraction(target_profile.get(weight, 0)))
+
+    rows = len(matrix)
+    cols = len(positive_support)
+    row = 0
+    pivot_cols: List[int] = []
+    pivot_rows: List[int] = []
+
+    for col in range(cols):
+        pivot = None
+        for candidate in range(row, rows):
+            if matrix[candidate][col]:
+                pivot = candidate
+                break
+        if pivot is None:
+            continue
+
+        matrix[row], matrix[pivot] = matrix[pivot], matrix[row]
+        rhs[row], rhs[pivot] = rhs[pivot], rhs[row]
+        factor = matrix[row][col]
+        matrix[row] = [value / factor for value in matrix[row]]
+        rhs[row] /= factor
+        for candidate in range(rows):
+            if candidate == row:
+                continue
+            factor = matrix[candidate][col]
+            if factor:
+                matrix[candidate] = [
+                    value - factor * pivot_value
+                    for value, pivot_value in zip(matrix[candidate], matrix[row])
+                ]
+                rhs[candidate] -= factor * rhs[row]
+        pivot_cols.append(col)
+        pivot_rows.append(row)
+        row += 1
+        if row == rows:
+            break
+
+    for candidate in range(rows):
+        if any(matrix[candidate]) or rhs[candidate] == 0:
+            continue
+        return None
+
+    free_cols = [col for col in range(cols) if col not in pivot_cols]
+    if free_cols:
+        return {
+            "status": "family",
+            "radius": radius,
+            "full_support": full_support,
+            "free_offsets": tuple(free_cols),
+        }
+
+    kernel_values = [Fraction(0) for _ in positive_support]
+    for pivot_row, pivot_col in zip(pivot_rows, pivot_cols):
+        kernel_values[pivot_col] = rhs[pivot_row]
+
+    kernel = {0: kernel_values[0]}
+    for offset in range(1, radius + 1):
+        kernel[-offset] = kernel_values[offset]
+        kernel[offset] = kernel_values[offset]
+
+    return {
+        "status": "unique",
+        "radius": radius,
+        "full_support": full_support,
+        "kernel": dict(sorted(kernel.items())),
+        "nonnegative": all(value >= 0 for value in kernel.values()),
+    }
+
+
+def _solve_fraction_linear_system(
+    matrix: List[List[Fraction]],
+    rhs: List[Fraction],
+) -> Dict[str, object]:
+    """Solve a linear system over Q by Gauss-Jordan elimination."""
+    rows = len(matrix)
+    cols = len(matrix[0]) if matrix else 0
+    reduced = [row[:] for row in matrix]
+    output = rhs[:]
+    row = 0
+    pivot_cols: List[int] = []
+    pivot_rows: List[int] = []
+
+    for col in range(cols):
+        pivot = None
+        for candidate in range(row, rows):
+            if reduced[candidate][col]:
+                pivot = candidate
+                break
+        if pivot is None:
+            continue
+
+        reduced[row], reduced[pivot] = reduced[pivot], reduced[row]
+        output[row], output[pivot] = output[pivot], output[row]
+        factor = reduced[row][col]
+        reduced[row] = [value / factor for value in reduced[row]]
+        output[row] /= factor
+        for candidate in range(rows):
+            if candidate == row:
+                continue
+            factor = reduced[candidate][col]
+            if factor:
+                reduced[candidate] = [
+                    value - factor * pivot_value
+                    for value, pivot_value in zip(reduced[candidate], reduced[row])
+                ]
+                output[candidate] -= factor * output[row]
+        pivot_cols.append(col)
+        pivot_rows.append(row)
+        row += 1
+        if row == rows:
+            break
+
+    inconsistent = any(
+        all(value == 0 for value in reduced[candidate]) and output[candidate] != 0
+        for candidate in range(rows)
+    )
+    free_cols = tuple(col for col in range(cols) if col not in pivot_cols)
+
+    solution = [Fraction(0) for _ in range(cols)]
+    if not inconsistent and not free_cols:
+        for pivot_row, pivot_col in zip(pivot_rows, pivot_cols):
+            solution[pivot_col] = output[pivot_row]
+
+    return {
+        "inconsistent": inconsistent,
+        "free_cols": free_cols,
+        "solution": tuple(solution),
+    }
+
+
+@lru_cache(maxsize=None)
+def kl_shadow_transport_convolution_obstruction() -> Dict[str, object]:
+    """Diagnose simple symmetric convolution transports from the first N=3 packet to N=4."""
+    comparison = kl_exact_packet_profile_comparison()
+    n4_profile = comparison["N4_profile"]
+    n3_single = comparison["N3_single_flavor_profile"]
+    n3_paired = comparison["N3_paired_profile"]
+
+    full_single_radii = {
+        radius: _solve_symmetric_convolution_kernel(
+            n3_single,
+            n4_profile,
+            radius,
+            full_support=True,
+        )
+        for radius in range(5)
+    }
+    full_paired_radii = {
+        radius: _solve_symmetric_convolution_kernel(
+            n3_paired,
+            n4_profile,
+            radius,
+            full_support=True,
+        )
+        for radius in range(5)
+    }
+    window_single_radii = {
+        radius: _solve_symmetric_convolution_kernel(
+            n3_single,
+            n4_profile,
+            radius,
+            full_support=False,
+        )
+        for radius in range(5)
+    }
+    window_paired_radii = {
+        radius: _solve_symmetric_convolution_kernel(
+            n3_paired,
+            n4_profile,
+            radius,
+            full_support=False,
+        )
+        for radius in range(5)
+    }
+
+    return {
+        "status": "exact convolution obstruction",
+        "source_profiles": {
+            "single": n3_single,
+            "paired": n3_paired,
+        },
+        "target_profile": n4_profile,
+        "support_obstruction": (
+            "Any exact symmetric convolution transport would have to be supported on "
+            "[-1,1], because the N=3 source already reaches weights ±3 while the N=4 "
+            "target stops at ±4, so the edge weights ±(3+R) force the outer kernel "
+            "coefficients at ±R to vanish for every R >= 2."
+        ),
+        "full_single_flavor_radius_solutions": full_single_radii,
+        "full_paired_radius_solutions": full_paired_radii,
+        "window_single_flavor_radius_solutions": window_single_radii,
+        "window_paired_radius_solutions": window_paired_radii,
+        "exact_transport_possible": False,
+        "exact_transport_reason": (
+            "The full-support exact systems are inconsistent in radii 0 through 4 for both "
+            "the single and paired N=3 profiles. Equivalently, support reduces any exact "
+            "transport to the radius-1 case, and that exact system is already inconsistent."
+        ),
+        "nonnegative_transport_possible": False,
+        "nonnegative_transport_reason": (
+            "A fortiori, no nonnegative symmetric convolution transport exists."
+        ),
+        "minimal_window_single_kernel": window_single_radii[4],
+        "minimal_window_paired_kernel": window_paired_radii[4],
+    }
+
+
+def _search_even_potential_transport(
+    source_profile: Dict[int, int],
+    target_profile: Dict[int, int],
+    include_laplacian: bool,
+    max_degree: int = 8,
+) -> Dict[str, object]:
+    """Find the minimal even-potential transport on the finite weight window."""
+    max_weight = max(abs(weight) for weight in target_profile)
+    target = {
+        weight: Fraction(target_profile.get(weight, 0))
+        for weight in range(-max_weight, max_weight + 1)
+    }
+    source = {
+        weight: Fraction(source_profile.get(weight, 0))
+        for weight in range(-max_weight, max_weight + 1)
+    }
+
+    for degree in range(0, max_degree + 1, 2):
+        variable_labels: List[Tuple[str, int] | str] = []
+        if include_laplacian:
+            variable_labels.append("laplacian")
+        variable_labels.extend(("potential", power) for power in range(0, degree + 1, 2))
+
+        matrix: List[List[Fraction]] = []
+        rhs: List[Fraction] = []
+        for weight in range(0, max_weight + 1):
+            row: List[Fraction] = []
+            if include_laplacian:
+                laplacian_value = (
+                    target.get(weight - 1, 0)
+                    - 2 * target[weight]
+                    + target.get(weight + 1, 0)
+                )
+                row.append(laplacian_value)
+            row.extend(Fraction((weight ** power) * target[weight]) for power in range(0, degree + 1, 2))
+            matrix.append(row)
+            rhs.append(source[weight])
+
+        solved = _solve_fraction_linear_system(matrix, rhs)
+        if solved["inconsistent"] or solved["free_cols"]:
+            continue
+
+        laplacian_coeff = Fraction(0)
+        potential_coeffs: Dict[int, Fraction] = {}
+        solution = solved["solution"]
+        cursor = 0
+        if include_laplacian:
+            laplacian_coeff = solution[cursor]
+            cursor += 1
+        for power in range(0, degree + 1, 2):
+            potential_coeffs[power] = solution[cursor]
+            cursor += 1
+
+        output_profile: Dict[int, Fraction] = {}
+        for weight in range(-max_weight, max_weight + 1):
+            laplacian_term = Fraction(0)
+            if include_laplacian:
+                laplacian_term = laplacian_coeff * (
+                    target.get(weight - 1, 0)
+                    - 2 * target[weight]
+                    + target.get(weight + 1, 0)
+                )
+            potential_term = sum(
+                coeff * Fraction(weight ** power) * target[weight]
+                for power, coeff in potential_coeffs.items()
+            )
+            output_profile[weight] = laplacian_term + potential_term
+
+        if output_profile != source:
+            continue
+
+        return {
+            "status": "resolved",
+            "include_laplacian": include_laplacian,
+            "minimal_potential_degree": degree,
+            "laplacian_coeff": laplacian_coeff,
+            "potential_coeffs": dict(sorted(potential_coeffs.items())),
+            "output_profile": dict(sorted(output_profile.items())),
+        }
+
+    return {
+        "status": "unresolved",
+        "include_laplacian": include_laplacian,
+        "minimal_potential_degree": None,
+        "laplacian_coeff": None,
+        "potential_coeffs": {},
+        "output_profile": {},
+    }
+
+
+@lru_cache(maxsize=None)
+def kl_shadow_transport_schrodinger_ansatz() -> Dict[str, object]:
+    """Find the first structured non-convolutional finite-window transport candidate."""
+    comparison = kl_exact_packet_profile_comparison()
+    single_source = comparison["N3_single_flavor_profile"]
+    paired_source = comparison["N3_paired_profile"]
+    target = comparison["N4_profile"]
+
+    paired_schrodinger = _search_even_potential_transport(
+        paired_source,
+        target,
+        include_laplacian=True,
+    )
+    single_schrodinger = _search_even_potential_transport(
+        single_source,
+        target,
+        include_laplacian=True,
+    )
+    paired_pure_potential = _search_even_potential_transport(
+        paired_source,
+        target,
+        include_laplacian=False,
+    )
+
+    return {
+        "status": "structured non-convolutional finite-window transport",
+        "single_source_profile": single_source,
+        "paired_source_profile": paired_source,
+        "target_profile": target,
+        "paired_schrodinger": paired_schrodinger,
+        "single_schrodinger": single_schrodinger,
+        "paired_pure_potential": paired_pure_potential,
+        "comparison_summary": (
+            "The first structured finite-window transport candidate is a Dirichlet "
+            "discrete Laplacian plus an even sextic potential; pure multiplication "
+            "requires degree 8."
+        ),
+    }
+
+
+@lru_cache(maxsize=None)
+def kl_shadow_transport_schrodinger_spectral_signature() -> Dict[str, object]:
+    """Describe the exact parity-split spectral data of the paired Schrödinger candidate."""
+    from sympy import Matrix, Rational as SymRational, Symbol
+
+    ansatz = kl_shadow_transport_schrodinger_ansatz()["paired_schrodinger"]
+    laplacian_coeff: Fraction = ansatz["laplacian_coeff"]
+    potential_coeffs: Dict[int, Fraction] = ansatz["potential_coeffs"]
+    weights = tuple(range(-4, 5))
+
+    standard_matrix: List[List[Fraction]] = []
+    diagonal_profile: Dict[int, Fraction] = {}
+    for weight in weights:
+        row: List[Fraction] = []
+        diagonal_entry = (
+            -2 * laplacian_coeff
+            + sum(coeff * Fraction(weight ** power) for power, coeff in potential_coeffs.items())
+        )
+        diagonal_profile[weight] = diagonal_entry
+        for target_weight in weights:
+            value = Fraction(0)
+            if target_weight == weight:
+                value += diagonal_entry
+            elif target_weight in (weight - 1, weight + 1):
+                value += laplacian_coeff
+            row.append(value)
+        standard_matrix.append(row)
+
+    weight_to_index = {weight: idx for idx, weight in enumerate(weights)}
+
+    def standard_basis_vector(weight: int) -> List[Fraction]:
+        vector = [Fraction(0) for _ in weights]
+        vector[weight_to_index[weight]] = Fraction(1)
+        return vector
+
+    even_basis: List[List[Fraction]] = [standard_basis_vector(0)]
+    for weight in range(1, 5):
+        vector = standard_basis_vector(weight)
+        vector[weight_to_index[-weight]] = Fraction(1)
+        even_basis.append(vector)
+
+    odd_basis: List[List[Fraction]] = []
+    for weight in range(1, 5):
+        vector = standard_basis_vector(weight)
+        vector[weight_to_index[-weight]] = Fraction(-1)
+        odd_basis.append(vector)
+
+    def image_in_basis(basis: List[List[Fraction]], basis_index_weights: Tuple[int, ...]) -> Tuple[Tuple[Fraction, ...], ...]:
+        rows: List[Tuple[Fraction, ...]] = []
+        for basis_vector in basis:
+            image = [
+                sum(standard_matrix[row][col] * basis_vector[col] for col in range(len(weights)))
+                for row in range(len(weights))
+            ]
+            coords = []
+            for basis_weight in basis_index_weights:
+                coords.append(image[weight_to_index[basis_weight]])
+            rows.append(tuple(coords))
+        return tuple(rows)
+
+    even_block = image_in_basis(even_basis, (0, 1, 2, 3, 4))
+    odd_block = image_in_basis(odd_basis, (1, 2, 3, 4))
+    even_green_vector = (Fraction(16), Fraction(12), Fraction(8), Fraction(4), Fraction(1))
+    even_source_vector = (Fraction(2), Fraction(0), Fraction(0), Fraction(2), Fraction(0))
+
+    even_image = tuple(
+        sum(even_block[row][col] * even_green_vector[col] for col in range(len(even_green_vector)))
+        for row in range(len(even_green_vector))
+    )
+
+    def to_sympy_matrix(matrix: Tuple[Tuple[Fraction, ...], ...]) -> Matrix:
+        return Matrix(
+            [
+                [SymRational(entry.numerator, entry.denominator) for entry in row]
+                for row in matrix
+            ]
+        )
+
+    standard_sympy = to_sympy_matrix(tuple(tuple(row) for row in standard_matrix))
+    even_sympy = to_sympy_matrix(even_block)
+    odd_sympy = to_sympy_matrix(odd_block)
+    symbol = Symbol("x")
+
+    def monic_coeffs(matrix: Matrix) -> Tuple[Fraction, ...]:
+        coeffs = []
+        for coeff in matrix.charpoly(symbol).all_coeffs():
+            coeffs.append(Fraction(int(coeff.p), int(coeff.q)))
+        return tuple(coeffs)
+
+    def principal_minors(matrix: Matrix) -> Tuple[Fraction, ...]:
+        minors = []
+        for size in range(1, matrix.rows + 1):
+            det = matrix[:size, :size].det()
+            minors.append(Fraction(int(det.p), int(det.q)))
+        return tuple(minors)
+
+    eigenvalue_approximations = tuple(
+        sorted(float(value.evalf(30)) for value in standard_sympy.eigenvals().keys())
+    )
+    even_eigenvalue_approximations = tuple(
+        sorted(float(value.evalf(30)) for value in even_sympy.eigenvals().keys())
+    )
+    odd_eigenvalue_approximations = tuple(
+        sorted(float(value.evalf(30)) for value in odd_sympy.eigenvals().keys())
+    )
+
+    return {
+        "status": "positive parity-split Green operator",
+        "weight_window": (-4, 4),
+        "laplacian_coeff": laplacian_coeff,
+        "potential_coeffs": dict(sorted(potential_coeffs.items())),
+        "diagonal_profile": diagonal_profile,
+        "standard_matrix": tuple(tuple(row) for row in standard_matrix),
+        "even_pair_basis_labels": ("u0", "u1", "u2", "u3", "u4"),
+        "odd_pair_basis_labels": ("v1", "v2", "v3", "v4"),
+        "even_pair_block": even_block,
+        "odd_pair_block": odd_block,
+        "even_green_vector": even_green_vector,
+        "even_source_vector": even_source_vector,
+        "even_green_relation": even_image == even_source_vector,
+        "even_source_support": (0, 3),
+        "full_principal_minors": principal_minors(standard_sympy),
+        "even_principal_minors": principal_minors(even_sympy),
+        "odd_principal_minors": principal_minors(odd_sympy),
+        "positive_definite": all(minor > 0 for minor in principal_minors(standard_sympy)),
+        "even_characteristic_coeffs": monic_coeffs(even_sympy),
+        "odd_characteristic_coeffs": monic_coeffs(odd_sympy),
+        "eigenvalue_approximations": eigenvalue_approximations,
+        "even_eigenvalue_approximations": even_eigenvalue_approximations,
+        "odd_eigenvalue_approximations": odd_eigenvalue_approximations,
+        "spectral_condition_number_approx": (
+            eigenvalue_approximations[-1] / eigenvalue_approximations[0]
+        ),
+    }
+
+
+@lru_cache(maxsize=None)
+def kl_exact_packet_profile_comparison() -> Dict[str, object]:
+    """Compare the exact first admissible N=3 packet with the resolved N=4 packet."""
+    n3_profile = n3_degree4_exact_packet_profile()
+    n4_profile = n4_degree2_h13_exact_packet_profile()
+
+    n3_single = n3_profile["flavors"][2][1]["total_root_weight_profile"]
+    n3_partner = n3_profile["flavors"][3][2]["total_root_weight_profile"]
+    n3_paired: Dict[int, int] = {}
+    for profile in (n3_single, n3_partner):
+        for weight, multiplicity in profile.items():
+            n3_paired[weight] = n3_paired.get(weight, 0) + multiplicity
+
+    n3_single_character = _unit_step_character_decomposition(n3_single)
+    n3_paired_character = _unit_step_character_decomposition(n3_paired)
+    n4_character = _unit_step_character_decomposition(
+        n4_profile["total_root_weight_profile"]
+    )
+
+    return {
+        "status": "exact profile comparison",
+        "N3_single_flavor_profile": dict(sorted(n3_single.items())),
+        "N3_partner_flavor_profile": dict(sorted(n3_partner.items())),
+        "N3_paired_profile": dict(sorted(n3_paired.items())),
+        "N3_single_character_test": n3_single_character,
+        "N3_paired_character_test": n3_paired_character,
+        "N4_profile": n4_profile["total_root_weight_profile"],
+        "N4_character_test": n4_character,
+        "N3_flavors_match": n3_single == n3_partner,
+        "N4_vs_paired_N3_dimension_ratio": (
+            n4_profile["cohomology_dim"] // sum(n3_paired.values())
+        ),
+        "comparison_summary": (
+            "The first N=3 packet is a sparse three-point profile, while the exact N=4 "
+            "66-packet is already a unit-step character staircase."
+        ),
+    }
+
+
 @lru_cache(maxsize=None)
 def kl_periodic_shadow_candidates() -> Dict[str, object]:
-    """Compare the first resolved KL packet against elementary shadow candidates."""
+    """Summarize the first resolved KL packet against the initial shadow window.
+
+    This report stays on the first candidate surface: the resolved N=3 packet,
+    the low-degree N=4 window, and the resulting dimension mismatch.  Deeper
+    exact N=4 packet analysis and transport diagnostics live on their dedicated
+    helpers and tests, rather than being recomputed here.
+    """
     n3_packet = n3_degree4_flavor_packet()
     n3_profile = n3_degree4_exact_packet_profile()
     n4_window = n4_low_degree_flavor_window()
-    n4_h13 = n4_degree1_h13_channel()
-    n4_degree2 = n4_degree2_partial_packet()
-    n4_degree2_h13 = n4_degree2_h13_channel_bounds()
-    n4_degree2_h13_first_term = n4_degree2_h13_first_term_state_compression()
-    n4_degree2_h13_plane = n4_degree2_h13_cancellation_plane()
-    n4_degree2_h13_operator = n4_degree2_h13_cancellation_operator()
-    n4_degree2_h13_exact = n4_degree2_h13_exact_channel()
-    n4_degree2_h13_profile = n4_degree2_h13_exact_packet_profile()
-    n3_report = admissible_level_flavor_report(3, max_degree=3)
+    n3_degree2_flavor = n3_degree2_flavor2_dim()
 
     return {
         "N3_degree4_packet": n3_packet,
@@ -3427,20 +4042,9 @@ def kl_periodic_shadow_candidates() -> Dict[str, object]:
                 n3_packet["resolved_flavors"][2][1]
                 + n3_packet["resolved_flavors"][3][2]
             ),
-            "degree2_euler_shadow": (
-                n3_packet["resolved_flavors"][2][1]
-                - n3_report["degrees"][2]["flavors"][2]
-            ),
+            "degree2_euler_shadow": n3_packet["resolved_flavors"][2][1] - n3_degree2_flavor,
         },
         "N4_degree1_window": n4_window,
-        "N4_degree1_h13": n4_h13,
-        "N4_degree2_partial_packet": n4_degree2,
-        "N4_degree2_h13_bound": n4_degree2_h13,
-        "N4_degree2_h13_first_term_compression": n4_degree2_h13_first_term,
-        "N4_degree2_h13_cancellation_plane": n4_degree2_h13_plane,
-        "N4_degree2_h13_cancellation_operator": n4_degree2_h13_operator,
-        "N4_degree2_h13_exact": n4_degree2_h13_exact,
-        "N4_degree2_h13_profile": n4_degree2_h13_profile,
     }
 
 

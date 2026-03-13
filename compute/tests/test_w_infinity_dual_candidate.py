@@ -18,7 +18,18 @@ from compute.lib.w_infinity_dual_candidate import (
     stage4_two_primitive_square_closure_report,
     stage4_local_attack_order_report,
     stage5_local_attack_order_report,
+    stage5_visible_pairing_normal_form_report,
+    stage5_principal_one_coefficient_normal_form_report,
+    stage5_principal_target5_no_new_independent_data_report,
+    stage5_principal_residual_front_one_coefficient_report,
+    stage5_principal_one_coefficient_factorization_report,
     stage5_effective_independent_frontier_report,
+    stage5_one_coefficient_reduction_report,
+    stage5_one_defect_family_report,
+    stage5_conjecture_defect_dictionary_report,
+    stage5_exact_remaining_input_report,
+    stage5_visible_conjecture_network_collapse_report,
+    stage5_one_coefficient_comparison_report,
     stage4_target_packet_at_level,
     evaluate_stage4_dual_defects_at_level,
     stage4_defect_vanishing_report,
@@ -258,10 +269,248 @@ class TestStage5Frontier:
     def test_stage5_effective_independent_frontier_report(self):
         report = stage5_effective_independent_frontier_report()
         assert report["stage"] == 5
+        assert report["effective_independent_count"] == 1
+        assert report["parameter"]["channel"] == (3, 5, 4, 4)
+        assert report["representative_channel"] == (3, 5, 4, 4)
         assert report["independent_entry_channel"] == (5, 5, 4, 6)
         assert report["independent_order"] == ((5, 5, 4, 6), "target4_ladder", "target3_ladder")
         assert report["effective_transport_attack_order"] == (4, 3)
         assert report["eliminated_target5_corridor"] == ((3, 4, 5, 2), (3, 5, 5, 3), (4, 5, 5, 4))
+        assert set(report["vanishing_channels"]) == {
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+            (5, 5, 4, 6),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+        }
+        determined = report["determined_nonzero_channels"]
+        assert determined[(3, 4, 5, 2)]["forced_by"] == (3, 5, 4, 4)
+        assert determined[(3, 4, 5, 2)]["ratio"] == Rational(-5, 4)
+        assert determined[(4, 5, 3, 6)]["forced_by"] == (3, 5, 4, 4)
+        assert determined[(4, 5, 3, 6)]["ratio"] == Rational(-3, 4)
+        assert report["channel_normal_form"][(3, 5, 4, 4)]["expression"] == Symbol("A_5")
+
+    def test_stage5_visible_pairing_normal_form_report(self):
+        report = stage5_visible_pairing_normal_form_report()
+        assert report["stage"] == 5
+        assert report["parameter"]["name"] == "A_5"
+        assert report["parameter"]["channel"] == (3, 5, 4, 4)
+        normal_form = report["channel_normal_form"]
+        assert set(normal_form) == {
+            (3, 4, 5, 2),
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+            (5, 5, 4, 6),
+            (3, 5, 4, 4),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+            (4, 5, 3, 6),
+        }
+        assert normal_form[(3, 5, 4, 4)]["kind"] == "parameter"
+        assert normal_form[(3, 5, 4, 4)]["expression"] == Symbol("A_5")
+        assert normal_form[(3, 4, 5, 2)]["ratio_to_A5"] == Rational(-5, 4)
+        assert normal_form[(3, 4, 5, 2)]["expression"] == Rational(-5, 4) * Symbol("A_5")
+        assert normal_form[(4, 5, 3, 6)]["ratio_to_A5"] == Rational(-3, 4)
+        assert normal_form[(4, 5, 3, 6)]["expression"] == Rational(-3, 4) * Symbol("A_5")
+        assert normal_form[(5, 5, 4, 6)]["expression"] == 0
+        assert normal_form[(4, 5, 4, 5)]["expression"] == 0
+        assert normal_form[(3, 5, 3, 5)]["expression"] == 0
+
+    def test_stage5_principal_one_coefficient_normal_form_report(self):
+        report = stage5_principal_one_coefficient_normal_form_report()
+        assert report["stage"] == 5
+        assert report["parameter"]["name"] == "A_5_DS"
+        assert report["parameter"]["channel"] == (3, 5, 4, 4)
+        normal_form = report["channel_normal_form"]
+        assert normal_form[(3, 5, 4, 4)]["kind"] == "parameter"
+        assert normal_form[(3, 5, 4, 4)]["expression"] == Symbol("A_5_DS")
+        assert normal_form[(3, 4, 5, 2)]["ratio_to_A5_DS"] == Rational(-5, 4)
+        assert normal_form[(4, 5, 3, 6)]["ratio_to_A5_DS"] == Rational(-3, 4)
+        assert normal_form[(3, 5, 5, 3)]["expression"] == 0
+        assert normal_form[(5, 5, 4, 6)]["expression"] == 0
+
+    def test_stage5_principal_target5_no_new_independent_data_report(self):
+        report = stage5_principal_target5_no_new_independent_data_report()
+        assert report["stage"] == 5
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert report["corridor_channels"] == ((3, 4, 5, 2), (3, 5, 5, 3), (4, 5, 5, 4))
+        assert report["neighboring_target3_channel"] == (4, 5, 3, 6)
+        assert report["tail_ratio_to_representative"] == Rational(-5, 4)
+        assert report["tail_ratio_to_target3"] == Rational(5, 3)
+
+    def test_stage5_principal_residual_front_one_coefficient_report(self):
+        report = stage5_principal_residual_front_one_coefficient_report()
+        assert report["stage"] == 5
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert set(report["residual_front_channels"]) == {
+            (5, 5, 4, 6),
+            (3, 5, 4, 4),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+            (4, 5, 3, 6),
+        }
+        assert set(report["vanishing_channels"]) == {
+            (5, 5, 4, 6),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+        }
+        assert report["determined_nonzero_channel"]["channel"] == (4, 5, 3, 6)
+        assert report["determined_nonzero_channel"]["ratio_to_representative"] == Rational(-3, 4)
+
+    def test_stage5_principal_one_coefficient_factorization_report(self):
+        report = stage5_principal_one_coefficient_factorization_report()
+        assert report["stage"] == 5
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert report["factorization_inputs"] == (
+            "principal_target5_no_new_independent_data",
+            "principal_residual_front_one_coefficient",
+        )
+        assert report["principal_target5_corridor"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["principal_residual_front"]["representative_channel"] == (3, 5, 4, 4)
+
+    def test_stage5_one_coefficient_reduction_report(self):
+        report = stage5_one_coefficient_reduction_report()
+        assert report["stage"] == 5
+        assert set(report["higher_spin_packet"]) == {
+            (3, 4, 5, 2),
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+            (5, 5, 4, 6),
+            (3, 5, 4, 4),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+            (4, 5, 3, 6),
+        }
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert report["residue_parameter"]["channel"] == (3, 5, 4, 4)
+        assert report["principal_parameter"]["channel"] == (3, 5, 4, 4)
+        assert report["reduction_goal"]["channel"] == (3, 5, 4, 4)
+        ratios = report["shared_channel_ratios"]
+        assert ratios[(3, 4, 5, 2)] == {
+            "residue_ratio": Rational(-5, 4),
+            "principal_ratio": Rational(-5, 4),
+        }
+        assert ratios[(4, 5, 3, 6)] == {
+            "residue_ratio": Rational(-3, 4),
+            "principal_ratio": Rational(-3, 4),
+        }
+        assert ratios[(3, 5, 5, 3)] == {
+            "residue_ratio": Rational(0),
+            "principal_ratio": Rational(0),
+        }
+
+    def test_stage5_one_defect_family_report(self):
+        report = stage5_one_defect_family_report()
+        assert report["stage"] == 5
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert report["representative_defect"]["name"] == "D_5"
+        assert report["representative_defect"]["expression"] == Symbol("D_5")
+        defects = report["channel_defects"]
+        assert set(defects) == {
+            (3, 4, 5, 2),
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+            (5, 5, 4, 6),
+            (3, 5, 4, 4),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+            (4, 5, 3, 6),
+        }
+        assert defects[(3, 5, 4, 4)]["ratio_to_D5"] == 1
+        assert defects[(3, 5, 4, 4)]["defect_expression"] == Symbol("D_5")
+        assert defects[(3, 4, 5, 2)]["ratio_to_D5"] == Rational(-5, 4)
+        assert defects[(3, 4, 5, 2)]["defect_expression"] == Rational(-5, 4) * Symbol("D_5")
+        assert defects[(4, 5, 3, 6)]["ratio_to_D5"] == Rational(-3, 4)
+        assert defects[(4, 5, 3, 6)]["defect_expression"] == Rational(-3, 4) * Symbol("D_5")
+        assert defects[(3, 5, 5, 3)]["defect_expression"] == 0
+        assert defects[(5, 5, 4, 6)]["defect_expression"] == 0
+
+    def test_stage5_visible_conjecture_network_collapse_report(self):
+        report = stage5_visible_conjecture_network_collapse_report()
+        assert report["stage"] == 5
+        assert report["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        assert report["equivalent_surfaces"]["conj:winfty-stage5-entry-identities"][
+            "nontrivial_channel"
+        ] == (3, 4, 5, 2)
+        assert report["equivalent_surfaces"]["conj:winfty-stage5-block-45"][
+            "ratio_to_representative"
+        ] == Rational(-3, 4)
+        assert report["automatic_surfaces"]["conj:winfty-stage5-block-55"]["channel"] == (
+            5,
+            5,
+            4,
+            6,
+        )
+
+    def test_stage5_conjecture_defect_dictionary_report(self):
+        report = stage5_conjecture_defect_dictionary_report()
+        assert report["stage"] == 5
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert report["representative_defect"]["expression"] == Symbol("D_5")
+        equivalent = report["equivalent_surfaces"]
+        automatic = report["automatic_surfaces"]
+        assert equivalent["conj:winfty-stage5-higher-spin-identities"]["defect_channel"] == (
+            3,
+            5,
+            4,
+            4,
+        )
+        assert equivalent["conj:winfty-stage5-entry-identities"]["ratio_to_D5"] == Rational(-5, 4)
+        assert equivalent["conj:winfty-stage5-entry-identities"]["defect_expression"] == (
+            Rational(-5, 4) * Symbol("D_5")
+        )
+        assert equivalent["conj:winfty-stage5-block-45"]["ratio_to_D5"] == Rational(-3, 4)
+        assert automatic["conj:winfty-stage5-transport-target-5"]["defect_expression"] == 0
+        assert automatic["conj:winfty-stage5-block-55"]["ratio_to_D5"] == 0
+
+    def test_stage5_exact_remaining_input_report(self):
+        report = stage5_exact_remaining_input_report()
+        assert report["stage"] == 5
+        assert set(report["higher_spin_packet"]) == {
+            (3, 4, 5, 2),
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+            (5, 5, 4, 6),
+            (3, 5, 4, 4),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+            (4, 5, 3, 6),
+        }
+        assert report["principal_target5_corridor"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["principal_residual_front"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["principal_factorization"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["singleton_identity"]["channel"] == (3, 5, 4, 4)
+        assert report["remaining_input_package"] == (
+            "principal_target5_no_new_independent_data",
+            "principal_residual_front_one_coefficient",
+            "singleton_identity",
+        )
+
+    def test_stage5_one_coefficient_comparison_report(self):
+        report = stage5_one_coefficient_comparison_report()
+        assert report["stage"] == 5
+        assert report["representative_channel"] == (3, 5, 4, 4)
+        assert report["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        assert (
+            report["comparison_goal"]["identity"]
+            == "C^res_{3,5;4;0,4}(5) = C^DS_{3,5;4;0,4}(5)"
+        )
+        assert report["residue_normal_form"]["parameter"]["channel"] == (3, 5, 4, 4)
+        assert report["principal_normal_form"]["parameter"]["channel"] == (3, 5, 4, 4)
+        assert report["principal_target5_corridor"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["principal_residual_front"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["principal_factorization"]["representative_channel"] == (3, 5, 4, 4)
+        assert report["comparison_reduction"]["reduction_goal"]["channel"] == (3, 5, 4, 4)
+        assert report["defect_family"]["representative_defect"]["channel"] == (3, 5, 4, 4)
+        assert report["conjecture_defect_dictionary"]["representative_defect"]["channel"] == (
+            3,
+            5,
+            4,
+            4,
+        )
+        assert report["exact_remaining_input"]["singleton_identity"]["channel"] == (3, 5, 4, 4)
+        assert report["conjecture_network_collapse"]["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        assert report["effective_residue_frontier"]["effective_independent_count"] == 1
 
 
 class TestStandardDualCandidateReport:
@@ -281,7 +530,18 @@ class TestStandardDualCandidateReport:
             "stage4_level_contract",
             "stage5_frontier",
             "stage5_local_attack_order",
+            "stage5_visible_pairing_normal_form",
+            "stage5_principal_one_coefficient_normal_form",
+            "stage5_principal_target5_no_new_independent_data",
+            "stage5_principal_residual_front_one_coefficient",
+            "stage5_principal_one_coefficient_factorization",
             "stage5_effective_independent_frontier",
+            "stage5_one_coefficient_reduction",
+            "stage5_one_defect_family",
+            "stage5_conjecture_defect_dictionary",
+            "stage5_exact_remaining_input",
+            "stage5_visible_conjecture_network_collapse",
+            "stage5_one_coefficient_comparison",
         }
 
     def test_verification_bundle(self):

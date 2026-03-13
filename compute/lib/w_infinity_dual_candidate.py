@@ -552,13 +552,250 @@ def stage5_local_attack_order_report() -> Dict[str, object]:
     }
 
 
+def stage5_visible_pairing_normal_form_report() -> Dict[str, object]:
+    """Exact one-parameter normal form for the stage-5 packet on the full visible pairing locus."""
+    a5 = Symbol("A_5")
+    representative = (3, 5, 4, 4)
+    channel_normal_form = {
+        (3, 4, 5, 2): {
+            "kind": "forced_nonzero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(-5, 4),
+            "expression": Rational(-5, 4) * a5,
+        },
+        (3, 5, 5, 3): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(0),
+            "expression": 0,
+        },
+        (4, 5, 5, 4): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(0),
+            "expression": 0,
+        },
+        (5, 5, 4, 6): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(0),
+            "expression": 0,
+        },
+        representative: {
+            "kind": "parameter",
+            "ratio_to_A5": Rational(1),
+            "expression": a5,
+        },
+        (4, 5, 4, 5): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(0),
+            "expression": 0,
+        },
+        (3, 5, 3, 5): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(0),
+            "expression": 0,
+        },
+        (4, 5, 3, 6): {
+            "kind": "forced_nonzero",
+            "forced_by": representative,
+            "ratio_to_A5": Rational(-3, 4),
+            "expression": Rational(-3, 4) * a5,
+        },
+    }
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "parameter": {
+            "name": "A_5",
+            "channel": representative,
+            "expression": a5,
+        },
+        "representative_channel": representative,
+        "channel_normal_form": channel_normal_form,
+        "status": (
+            "on the full visible pairing locus, every stage-5 higher-spin "
+            "channel is either zero or a fixed rational multiple of A_5 = "
+            "C^res_{3,5;4;0,4}(5)"
+        ),
+    }
+
+
+def stage5_principal_one_coefficient_normal_form_report() -> Dict[str, object]:
+    """Conjectural principal DS one-parameter normal form on the full visible pairing locus."""
+    a5_ds = Symbol("A_5_DS")
+    representative = (3, 5, 4, 4)
+    channel_normal_form = {
+        (3, 4, 5, 2): {
+            "kind": "forced_nonzero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(-5, 4),
+            "expression": Rational(-5, 4) * a5_ds,
+        },
+        (3, 5, 5, 3): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(0),
+            "expression": 0,
+        },
+        (4, 5, 5, 4): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(0),
+            "expression": 0,
+        },
+        (5, 5, 4, 6): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(0),
+            "expression": 0,
+        },
+        representative: {
+            "kind": "parameter",
+            "ratio_to_A5_DS": Rational(1),
+            "expression": a5_ds,
+        },
+        (4, 5, 4, 5): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(0),
+            "expression": 0,
+        },
+        (3, 5, 3, 5): {
+            "kind": "forced_zero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(0),
+            "expression": 0,
+        },
+        (4, 5, 3, 6): {
+            "kind": "forced_nonzero",
+            "forced_by": representative,
+            "ratio_to_A5_DS": Rational(-3, 4),
+            "expression": Rational(-3, 4) * a5_ds,
+        },
+    }
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "parameter": {
+            "name": "A_5_DS",
+            "channel": representative,
+            "expression": a5_ds,
+        },
+        "representative_channel": representative,
+        "channel_normal_form": channel_normal_form,
+        "status": (
+            "conjectural principal stage-5 target normal form: every DS higher-spin "
+            "channel is zero or a fixed rational multiple of A_5_DS = "
+            "C^DS_{3,5;4;0,4}(5)"
+        ),
+    }
+
+
+def stage5_principal_target5_no_new_independent_data_report() -> Dict[str, object]:
+    """Conjectural principal target-5 corridor normal form on the full visible pairing locus."""
+    principal = stage5_principal_one_coefficient_normal_form_report()
+    representative = principal["representative_channel"]
+    corridor = (
+        (3, 4, 5, 2),
+        (3, 5, 5, 3),
+        (4, 5, 5, 4),
+    )
+    target3 = (4, 5, 3, 6)
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "representative_channel": representative,
+        "corridor_channels": corridor,
+        "neighboring_target3_channel": target3,
+        "tail_ratio_to_representative": principal["channel_normal_form"][(3, 4, 5, 2)][
+            "ratio_to_A5_DS"
+        ],
+        "tail_ratio_to_target3": Rational(5, 3),
+        "vanishing_corridor_channels": (
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+        ),
+        "status": (
+            "conjectural principal target-5 corridor normal form: the tail channel "
+            "is forced from the target-4 representative and the neighboring "
+            "target-3 channel, and the two transport singleton channels vanish"
+        ),
+    }
+
+
+def stage5_principal_residual_front_one_coefficient_report() -> Dict[str, object]:
+    """Conjectural principal residual-front normal form on the full visible pairing locus."""
+    principal = stage5_principal_one_coefficient_normal_form_report()
+    representative = principal["representative_channel"]
+    target3 = (4, 5, 3, 6)
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "representative_channel": representative,
+        "residual_front_channels": (
+            (5, 5, 4, 6),
+            representative,
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+            target3,
+        ),
+        "vanishing_channels": (
+            (5, 5, 4, 6),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+        ),
+        "determined_nonzero_channel": {
+            "channel": target3,
+            "ratio_to_representative": principal["channel_normal_form"][target3][
+                "ratio_to_A5_DS"
+            ],
+        },
+        "status": (
+            "conjectural principal residual-front normal form: outside the target-5 "
+            "corridor, the stage-5 higher-spin packet is controlled by the "
+            "target-4 representative, with one target-3 channel determined and "
+            "the remaining residual channels vanishing"
+        ),
+    }
+
+
+def stage5_principal_one_coefficient_factorization_report() -> Dict[str, object]:
+    """Factorization of the principal stage-5 one-coefficient normal form."""
+    target5 = stage5_principal_target5_no_new_independent_data_report()
+    residual = stage5_principal_residual_front_one_coefficient_report()
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "principal_target5_corridor": target5,
+        "principal_residual_front": residual,
+        "factorization_inputs": (
+            "principal_target5_no_new_independent_data",
+            "principal_residual_front_one_coefficient",
+        ),
+        "equivalent_principal_normal_form": "principal_one_coefficient_normal_form",
+        "representative_channel": (3, 5, 4, 4),
+        "status": (
+            "proved factorization of the principal stage-5 one-coefficient normal "
+            "form through the target-5 corridor packet and the residual front"
+        ),
+    }
+
+
 def stage5_effective_independent_frontier_report() -> Dict[str, object]:
     """Effective independent stage-5 frontier on the full visible pairing locus."""
     local = stage5_local_attack_order_report()
     refinement = local["visible_pairing_refinement"]
+    normal_form = stage5_visible_pairing_normal_form_report()
     return {
         "stage": 5,
         "assumption": "full visible W3/W4/W5 pairing locus",
+        "effective_independent_count": 1,
+        "representative_channel": (3, 5, 4, 4),
+        "parameter": normal_form["parameter"],
+        "channel_normal_form": normal_form["channel_normal_form"],
         "eliminated_target5_corridor": (
             (3, 4, 5, 2),
             (3, 5, 5, 3),
@@ -567,6 +804,23 @@ def stage5_effective_independent_frontier_report() -> Dict[str, object]:
         "independent_entry_channel": refinement["independent_entry_channel"],
         "independent_order": refinement["effective_independent_order"],
         "effective_transport_attack_order": refinement["effective_transport_attack_order"],
+        "vanishing_channels": (
+            (3, 5, 5, 3),
+            (4, 5, 5, 4),
+            (5, 5, 4, 6),
+            (4, 5, 4, 5),
+            (3, 5, 3, 5),
+        ),
+        "determined_nonzero_channels": {
+            (3, 4, 5, 2): {
+                "forced_by": (3, 5, 4, 4),
+                "ratio": Rational(-5, 4),
+            },
+            (4, 5, 3, 6): {
+                "forced_by": (3, 5, 4, 4),
+                "ratio": Rational(-3, 4),
+            },
+        },
         "remaining_transport_ladders": {
             "target4": (
                 (3, 5, 4, 4),
@@ -578,9 +832,296 @@ def stage5_effective_independent_frontier_report() -> Dict[str, object]:
             ),
         },
         "status": (
-            "on the full visible pairing locus, the target-5 corridor contributes "
-            "no new independent coefficient; the effective independent frontier is "
-            "the self-return singleton followed by the target-4 and target-3 ladders"
+            "on the full visible pairing locus, the entire stage-5 higher-spin "
+            "packet is controlled by the single target-4 singleton (3,5;4;0,4); "
+            "the target-5 corridor contributes no new independent coefficient, "
+            "the self-return and upper transport channels vanish, and the "
+            "remaining nonzero channels are forced by fixed rational ratios"
+        ),
+    }
+
+
+def stage5_one_coefficient_reduction_report() -> Dict[str, object]:
+    """Reduction of the full stage-5 comparison to one channel under matching normal forms."""
+    residue = stage5_visible_pairing_normal_form_report()
+    principal = stage5_principal_one_coefficient_normal_form_report()
+    factorization = stage5_principal_one_coefficient_factorization_report()
+    representative = residue["representative_channel"]
+    shared_ratios = {
+        channel: {
+            "residue_ratio": data["ratio_to_A5"],
+            "principal_ratio": principal["channel_normal_form"][channel]["ratio_to_A5_DS"],
+        }
+        for channel, data in residue["channel_normal_form"].items()
+    }
+    return {
+        "stage": 5,
+        "assumption": (
+            "full visible W3/W4/W5 pairing locus plus principal target-5 corridor "
+            "and residual-front one-coefficient conjectures"
+        ),
+        "higher_spin_packet": tuple(incremental_higher_spin_channels(5)),
+        "representative_channel": representative,
+        "residue_parameter": residue["parameter"],
+        "principal_parameter": principal["parameter"],
+        "principal_factorization": factorization,
+        "shared_channel_ratios": shared_ratios,
+        "reduction_goal": {
+            "channel": representative,
+            "identity": "C^res_{3,5;4;0,4}(5) = C^DS_{3,5;4;0,4}(5)",
+        },
+        "status": (
+            "under the conjectural principal target-5 corridor and residual-front "
+            "normal forms, the full stage-5 higher-spin comparison on J_5^hs is "
+            "equivalent to the single target-4 singleton identity"
+        ),
+    }
+
+
+def stage5_one_defect_family_report() -> Dict[str, object]:
+    """Exact one-defect family induced by the residue/DS one-parameter normal forms."""
+    residue = stage5_visible_pairing_normal_form_report()
+    principal = stage5_principal_one_coefficient_normal_form_report()
+    representative = residue["representative_channel"]
+    d5 = Symbol("D_5")
+    defect_map = {}
+    for channel, residue_data in residue["channel_normal_form"].items():
+        principal_data = principal["channel_normal_form"][channel]
+        residue_ratio = residue_data["ratio_to_A5"]
+        principal_ratio = principal_data["ratio_to_A5_DS"]
+        defect_map[channel] = {
+            "kind": "defect",
+            "residue_expression": residue_data["expression"],
+            "principal_expression": principal_data["expression"],
+            "ratio_to_D5": residue_ratio,
+            "defect_expression": simplify(residue_ratio * d5),
+        }
+    return {
+        "stage": 5,
+        "assumption": (
+            "full visible W3/W4/W5 pairing locus plus principal stage-5 "
+            "one-coefficient normal form"
+        ),
+        "representative_channel": representative,
+        "representative_defect": {
+            "name": "D_5",
+            "channel": representative,
+            "expression": d5,
+        },
+        "channel_defects": defect_map,
+        "status": (
+            "under the matching one-parameter normal forms, every stage-5 higher-spin "
+            "comparison defect is a fixed rational multiple of the single defect "
+            "D_5 = C^res_{3,5;4;0,4}(5) - C^DS_{3,5;4;0,4}(5)"
+        ),
+    }
+
+
+def stage5_visible_conjecture_network_collapse_report() -> Dict[str, object]:
+    """Visible stage-5 local conjecture network under the principal one-coefficient normal form."""
+    representative = (3, 5, 4, 4)
+    return {
+        "stage": 5,
+        "assumption": (
+            "full visible W3/W4/W5 pairing locus plus principal stage-5 "
+            "one-coefficient normal form"
+        ),
+        "comparison_goal": {
+            "channel": representative,
+            "identity": "C^res_{3,5;4;0,4}(5) = C^DS_{3,5;4;0,4}(5)",
+        },
+        "equivalent_surfaces": {
+            "conj:winfty-stage5-higher-spin-identities": {
+                "kind": "full_packet",
+                "channels": tuple(incremental_higher_spin_channels(5)),
+                "nontrivial_channel": representative,
+            },
+            "conj:winfty-stage5-entry-identities": {
+                "kind": "entry_packet",
+                "channels": ((3, 4, 5, 2), (5, 5, 4, 6)),
+                "nontrivial_channel": (3, 4, 5, 2),
+                "ratio_to_representative": Rational(-5, 4),
+            },
+            "conj:winfty-stage5-transport-identities": {
+                "kind": "transport_packet",
+                "channels": (
+                    (3, 5, 5, 3),
+                    (4, 5, 5, 4),
+                    (3, 5, 4, 4),
+                    (4, 5, 4, 5),
+                    (3, 5, 3, 5),
+                    (4, 5, 3, 6),
+                ),
+                "nontrivial_channel": representative,
+            },
+            "conj:winfty-stage5-transport-target-3": {
+                "kind": "target3_ladder",
+                "channels": ((3, 5, 3, 5), (4, 5, 3, 6)),
+                "nontrivial_channel": (4, 5, 3, 6),
+                "ratio_to_representative": Rational(-3, 4),
+            },
+            "conj:winfty-stage5-transport-target-4": {
+                "kind": "target4_ladder",
+                "channels": ((3, 5, 4, 4), (4, 5, 4, 5)),
+                "nontrivial_channel": representative,
+                "ratio_to_representative": Rational(1),
+            },
+            "conj:winfty-stage5-block-34": {
+                "kind": "block",
+                "channels": ((3, 4, 5, 2),),
+                "nontrivial_channel": (3, 4, 5, 2),
+                "ratio_to_representative": Rational(-5, 4),
+            },
+            "conj:winfty-stage5-block-35": {
+                "kind": "block",
+                "channels": ((3, 5, 5, 3), (3, 5, 4, 4), (3, 5, 3, 5)),
+                "nontrivial_channel": representative,
+                "ratio_to_representative": Rational(1),
+            },
+            "conj:winfty-stage5-block-45": {
+                "kind": "block",
+                "channels": ((4, 5, 5, 4), (4, 5, 4, 5), (4, 5, 3, 6)),
+                "nontrivial_channel": (4, 5, 3, 6),
+                "ratio_to_representative": Rational(-3, 4),
+            },
+        },
+        "automatic_surfaces": {
+            "conj:winfty-stage5-transport-target-5": {
+                "kind": "target5_ladder",
+                "channels": ((3, 5, 5, 3), (4, 5, 5, 4)),
+            },
+            "conj:winfty-stage5-transport-target5-35": {
+                "kind": "singleton",
+                "channel": (3, 5, 5, 3),
+            },
+            "conj:winfty-stage5-transport-target5-45": {
+                "kind": "singleton",
+                "channel": (4, 5, 5, 4),
+            },
+            "conj:winfty-stage5-block-55": {
+                "kind": "self_block",
+                "channel": (5, 5, 4, 6),
+            },
+        },
+        "status": (
+            "under the conjectural principal one-coefficient normal form, every "
+            "local stage-5 conjectural surface is either automatic or equivalent "
+            "to the single target-4 singleton identity"
+        ),
+    }
+
+
+def stage5_conjecture_defect_dictionary_report() -> Dict[str, object]:
+    """Labeled stage-5 conjecture surfaces as exact multiples of the representative defect."""
+    defect_family = stage5_one_defect_family_report()
+    network = stage5_visible_conjecture_network_collapse_report()
+    d5 = defect_family["representative_defect"]["expression"]
+    representative = defect_family["representative_channel"]
+
+    equivalent = {}
+    for label, surface in network["equivalent_surfaces"].items():
+        nontrivial_channel = surface["nontrivial_channel"]
+        defect_ratio = surface.get("ratio_to_representative", Rational(1))
+        equivalent[label] = {
+            **surface,
+            "defect_channel": nontrivial_channel,
+            "ratio_to_D5": defect_ratio,
+            "defect_expression": simplify(defect_ratio * d5),
+        }
+
+    automatic = {}
+    for label, surface in network["automatic_surfaces"].items():
+        automatic[label] = {
+            **surface,
+            "ratio_to_D5": Rational(0),
+            "defect_expression": Rational(0),
+        }
+
+    return {
+        "stage": 5,
+        "assumption": defect_family["assumption"],
+        "representative_channel": representative,
+        "representative_defect": defect_family["representative_defect"],
+        "equivalent_surfaces": equivalent,
+        "automatic_surfaces": automatic,
+        "status": (
+            "under the principal stage-5 one-coefficient normal form, every labeled "
+            "local stage-5 conjecture surface has defect either 0 or a fixed rational "
+            "multiple of D_5"
+        ),
+    }
+
+
+def stage5_exact_remaining_input_report() -> Dict[str, object]:
+    """Exact remaining stage-5 visible-pairing input package."""
+    target5 = stage5_principal_target5_no_new_independent_data_report()
+    residual = stage5_principal_residual_front_one_coefficient_report()
+    factorization = stage5_principal_one_coefficient_factorization_report()
+    reduction = stage5_one_coefficient_reduction_report()
+    singleton = reduction["reduction_goal"]
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "higher_spin_packet": reduction["higher_spin_packet"],
+        "principal_target5_corridor": target5,
+        "principal_residual_front": residual,
+        "principal_factorization": factorization,
+        "singleton_identity": singleton,
+        "remaining_input_package": (
+            "principal_target5_no_new_independent_data",
+            "principal_residual_front_one_coefficient",
+            "singleton_identity",
+        ),
+        "closure_equivalence": (
+            "full stage-5 higher-spin comparison on J_5^hs closes iff the "
+            "principal target-5 corridor carries no new independent data, the "
+            "principal residual front carries one effective coefficient, and the "
+            "singleton identity "
+            "C^res_{3,5;4;0,4}(5) = C^DS_{3,5;4;0,4}(5) holds"
+        ),
+        "status": (
+            "proved packaging of the exact remaining local stage-5 "
+            "visible-pairing input: principal target-5 corridor packet, "
+            "principal residual-front packet, and the target-4 singleton identity"
+        ),
+    }
+
+
+def stage5_one_coefficient_comparison_report() -> Dict[str, object]:
+    """Exact next local stage-5 comparison frontier on the full visible pairing locus."""
+    frontier = stage5_effective_independent_frontier_report()
+    normal_form = stage5_visible_pairing_normal_form_report()
+    principal_normal_form = stage5_principal_one_coefficient_normal_form_report()
+    principal_target5 = stage5_principal_target5_no_new_independent_data_report()
+    principal_residual = stage5_principal_residual_front_one_coefficient_report()
+    principal_factorization = stage5_principal_one_coefficient_factorization_report()
+    reduction = stage5_one_coefficient_reduction_report()
+    defect_family = stage5_one_defect_family_report()
+    defect_dictionary = stage5_conjecture_defect_dictionary_report()
+    remaining_input = stage5_exact_remaining_input_report()
+    network_collapse = stage5_visible_conjecture_network_collapse_report()
+    return {
+        "stage": 5,
+        "assumption": "full visible W3/W4/W5 pairing locus",
+        "representative_channel": frontier["representative_channel"],
+        "comparison_goal": {
+            "channel": frontier["representative_channel"],
+            "identity": "C^res_{3,5;4;0,4}(5) = C^DS_{3,5;4;0,4}(5)",
+        },
+        "residue_normal_form": normal_form,
+        "principal_normal_form": principal_normal_form,
+        "principal_target5_corridor": principal_target5,
+        "principal_residual_front": principal_residual,
+        "principal_factorization": principal_factorization,
+        "comparison_reduction": reduction,
+        "defect_family": defect_family,
+        "conjecture_defect_dictionary": defect_dictionary,
+        "exact_remaining_input": remaining_input,
+        "conjecture_network_collapse": network_collapse,
+        "effective_residue_frontier": frontier,
+        "status": (
+            "conjectural single-coefficient closure of the stage-5 higher-spin "
+            "comparison on the full visible pairing locus"
         ),
     }
 
@@ -601,7 +1142,28 @@ def standard_winfinity_dual_candidate_report(c=None) -> Dict[str, object]:
         "stage4_level_contract": "use stage4_target_packet_at_level / evaluate_stage4_dual_defects_at_level",
         "stage5_frontier": stage5_dual_frontier_report(),
         "stage5_local_attack_order": stage5_local_attack_order_report(),
+        "stage5_visible_pairing_normal_form": stage5_visible_pairing_normal_form_report(),
+        "stage5_principal_one_coefficient_normal_form": (
+            stage5_principal_one_coefficient_normal_form_report()
+        ),
+        "stage5_principal_target5_no_new_independent_data": (
+            stage5_principal_target5_no_new_independent_data_report()
+        ),
+        "stage5_principal_residual_front_one_coefficient": (
+            stage5_principal_residual_front_one_coefficient_report()
+        ),
+        "stage5_principal_one_coefficient_factorization": (
+            stage5_principal_one_coefficient_factorization_report()
+        ),
         "stage5_effective_independent_frontier": stage5_effective_independent_frontier_report(),
+        "stage5_one_coefficient_reduction": stage5_one_coefficient_reduction_report(),
+        "stage5_one_defect_family": stage5_one_defect_family_report(),
+        "stage5_conjecture_defect_dictionary": stage5_conjecture_defect_dictionary_report(),
+        "stage5_exact_remaining_input": stage5_exact_remaining_input_report(),
+        "stage5_visible_conjecture_network_collapse": (
+            stage5_visible_conjecture_network_collapse_report()
+        ),
+        "stage5_one_coefficient_comparison": stage5_one_coefficient_comparison_report(),
     }
 
 
@@ -622,7 +1184,18 @@ def verify_standard_winfinity_dual_candidate(c=None) -> Dict[str, bool]:
     stage4_attack_order = report["stage4_local_attack_order"]
     stage5 = report["stage5_frontier"]
     stage5_attack_order = report["stage5_local_attack_order"]
+    stage5_normal_form = report["stage5_visible_pairing_normal_form"]
+    stage5_principal_normal_form = report["stage5_principal_one_coefficient_normal_form"]
+    stage5_principal_target5 = report["stage5_principal_target5_no_new_independent_data"]
+    stage5_principal_residual = report["stage5_principal_residual_front_one_coefficient"]
+    stage5_principal_factorization = report["stage5_principal_one_coefficient_factorization"]
     stage5_effective = report["stage5_effective_independent_frontier"]
+    stage5_reduction = report["stage5_one_coefficient_reduction"]
+    stage5_defect_family = report["stage5_one_defect_family"]
+    stage5_defect_dictionary = report["stage5_conjecture_defect_dictionary"]
+    stage5_exact = report["stage5_exact_remaining_input"]
+    stage5_network_collapse = report["stage5_visible_conjecture_network_collapse"]
+    stage5_one = report["stage5_one_coefficient_comparison"]
     descriptor = report["completed_bar_candidate"]
 
     higher_spin = stage4["higher_spin_constraints"]
@@ -665,9 +1238,59 @@ def verify_standard_winfinity_dual_candidate(c=None) -> Dict[str, bool]:
         "stage-5 local attack order has three steps": (
             set(stage5_attack_order) >= {"stage", "step_1", "step_2", "step_3", "status"}
         ),
+        "stage-5 visible normal form covers higher-spin packet": (
+            set(stage5_normal_form["channel_normal_form"]) == set(stage5["higher_spin_channels"])
+        ),
+        "stage-5 visible normal form parameter channel": (
+            stage5_normal_form["parameter"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 visible normal form mixed-entry ratio": (
+            stage5_normal_form["channel_normal_form"][(3, 4, 5, 2)]["ratio_to_A5"]
+            == Rational(-5, 4)
+        ),
+        "stage-5 visible normal form target-3 ratio": (
+            stage5_normal_form["channel_normal_form"][(4, 5, 3, 6)]["ratio_to_A5"]
+            == Rational(-3, 4)
+        ),
+        "stage-5 principal normal form representative": (
+            stage5_principal_normal_form["representative_channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 principal normal form target-3 ratio": (
+            stage5_principal_normal_form["channel_normal_form"][(4, 5, 3, 6)]["ratio_to_A5_DS"]
+            == Rational(-3, 4)
+        ),
+        "stage-5 principal target5 representative": (
+            stage5_principal_target5["representative_channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 principal target5 tail ratio": (
+            stage5_principal_target5["tail_ratio_to_target3"] == Rational(5, 3)
+        ),
+        "stage-5 principal residual representative": (
+            stage5_principal_residual["representative_channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 principal residual target3 ratio": (
+            stage5_principal_residual["determined_nonzero_channel"]["ratio_to_representative"]
+            == Rational(-3, 4)
+        ),
+        "stage-5 principal factorization has two packets": (
+            stage5_principal_factorization["factorization_inputs"]
+            == (
+                "principal_target5_no_new_independent_data",
+                "principal_residual_front_one_coefficient",
+            )
+        ),
         "stage-5 effective frontier order": (
             stage5_effective["independent_order"]
             == ((5, 5, 4, 6), "target4_ladder", "target3_ladder")
+        ),
+        "stage-5 effective frontier count": (
+            stage5_effective["effective_independent_count"] == 1
+        ),
+        "stage-5 effective frontier representative": (
+            stage5_effective["representative_channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 effective frontier matches visible normal form": (
+            stage5_effective["channel_normal_form"] == stage5_normal_form["channel_normal_form"]
         ),
         "stage-4 higher-spin defects are signless": all(
             stage4_goal["residue_symbols"][channel]["kind"] == "residue_square_variable"
@@ -740,5 +1363,96 @@ def verify_standard_winfinity_dual_candidate(c=None) -> Dict[str, bool]:
         "stage-5 effective frontier removes target-5 corridor": (
             stage5_effective["eliminated_target5_corridor"]
             == ((3, 4, 5, 2), (3, 5, 5, 3), (4, 5, 5, 4))
+        ),
+        "stage-5 one-coefficient comparison representative": (
+            stage5_one["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 reduction representative": (
+            stage5_reduction["reduction_goal"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 reduction covers higher-spin packet": (
+            set(stage5_reduction["higher_spin_packet"]) == set(stage5["higher_spin_channels"])
+        ),
+        "stage-5 exact remaining input representative": (
+            stage5_exact["singleton_identity"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 exact remaining input has three factors": (
+            stage5_exact["remaining_input_package"]
+            == (
+                "principal_target5_no_new_independent_data",
+                "principal_residual_front_one_coefficient",
+                "singleton_identity",
+            )
+        ),
+        "stage-5 reduction matches shared target5 vanishing": (
+            stage5_reduction["shared_channel_ratios"][(3, 5, 5, 3)]
+            == {"residue_ratio": Rational(0), "principal_ratio": Rational(0)}
+        ),
+        "stage-5 defect family representative": (
+            stage5_defect_family["representative_defect"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 defect family covers higher-spin packet": (
+            set(stage5_defect_family["channel_defects"]) == set(stage5["higher_spin_channels"])
+        ),
+        "stage-5 defect family mixed-entry ratio": (
+            stage5_defect_family["channel_defects"][(3, 4, 5, 2)]["ratio_to_D5"]
+            == Rational(-5, 4)
+        ),
+        "stage-5 defect family target-3 ratio": (
+            stage5_defect_family["channel_defects"][(4, 5, 3, 6)]["ratio_to_D5"]
+            == Rational(-3, 4)
+        ),
+        "stage-5 defect dictionary full packet representative": (
+            stage5_defect_dictionary["equivalent_surfaces"][
+                "conj:winfty-stage5-higher-spin-identities"
+            ]["defect_channel"]
+            == (3, 5, 4, 4)
+        ),
+        "stage-5 defect dictionary entry ratio": (
+            stage5_defect_dictionary["equivalent_surfaces"][
+                "conj:winfty-stage5-entry-identities"
+            ]["ratio_to_D5"]
+            == Rational(-5, 4)
+        ),
+        "stage-5 defect dictionary target-5 is automatic": (
+            stage5_defect_dictionary["automatic_surfaces"][
+                "conj:winfty-stage5-transport-target-5"
+            ]["defect_expression"]
+            == 0
+        ),
+        "stage-5 network collapse representative": (
+            stage5_network_collapse["comparison_goal"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 network collapse block-45 ratio": (
+            stage5_network_collapse["equivalent_surfaces"]["conj:winfty-stage5-block-45"][
+                "ratio_to_representative"
+            ]
+            == Rational(-3, 4)
+        ),
+        "stage-5 network collapse target5 singleton automatic": (
+            stage5_network_collapse["automatic_surfaces"][
+                "conj:winfty-stage5-transport-target5-35"
+            ]["channel"]
+            == (3, 5, 5, 3)
+        ),
+        "stage-5 one-coefficient comparison uses visible normal form": (
+            stage5_one["residue_normal_form"]["parameter"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 one-coefficient comparison includes principal normal form": (
+            stage5_one["principal_normal_form"]["parameter"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 one-coefficient comparison includes defect family": (
+            stage5_one["defect_family"]["representative_defect"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 one-coefficient comparison includes defect dictionary": (
+            stage5_one["conjecture_defect_dictionary"]["representative_defect"]["channel"]
+            == (3, 5, 4, 4)
+        ),
+        "stage-5 one-coefficient comparison includes exact remaining input": (
+            stage5_one["exact_remaining_input"]["singleton_identity"]["channel"] == (3, 5, 4, 4)
+        ),
+        "stage-5 one-coefficient comparison includes network collapse": (
+            stage5_one["conjecture_network_collapse"]["comparison_goal"]["channel"]
+            == (3, 5, 4, 4)
         ),
     }
