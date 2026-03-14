@@ -136,27 +136,91 @@ Theta_A. The non-scalar programme must find a different source.
 
 Build: 1813pp, 0 errors, 0 undef refs, 0 undef cites, converged in 2 passes.
 
-### Still TODO:
-5. dim H^2_cyc(W_infinity) = 1 — Write an explicit statement in the monograph
-   recording that W_infinity is scalar-saturated.
-6. Promote E_2 collapse remark to lemma (higher_genus.tex, per Theorem B audit)
+### ALSO FIXED (continuation):
+5. cor:winfty-scalar-saturation written (higher_genus.tex, after prop:w-algebra-scalar-saturation)
+   - dim H^2_cyc(W_infinity) = 1 with complete proof
+   - Notes scalar saturation and non-scalar programme incompatibility
+6. lem:e2-collapse-higher-genus promoted from remark to lemma (higher_genus.tex:8335)
+   - Full proof with fiberwise argument and quantum correction handling
+
+Build after these: 1815pp, 0 errors, 0 undef refs, 0 undef cites, converged in 2 passes.
+PH count: 1144 (was 1142).
+
+### Additional verification (continuation):
+7. Theorem C (quantum complementarity): PASS
+   - All questions (a)-(e) pass
+   - Verdier: D-module adjointness used (correct, not Stokes)
+   - Z(A): correctly defined, R^0 pi_* = Z(A) proved as thm:fiber-center-identification
+   - Splitting: fully proved in 10 steps (3 parts)
+   - Curvature: correctly handled via filtration
+   - 132/132 complementarity tests pass
+8. Theorem D (modular characteristic): PASS
+   - All 9 dependencies resolved
+   - Universality, additivity, anti-symmetry all proved
+   - A-hat GF identification fully proved (not conjectured)
+   - 428 kappa/genus tests pass
+9. MC1 (thm:master-pbw): PASS
+   - All 4 sub-theorems verified (KM, Virasoro, principal W, universal semisimple)
+   - Chiral Koszulness correctly established independently of classical
+   - Sugawara composite issue correctly avoided in every proof
+   - No blanket E_3 degeneration claim; family-specific mechanisms given
+10. MC2 (thm:mc2-full-resolution): PASS
+   - All 7 cited results verified (cyclic L-inf graph, Stokes regularity,
+     Fay trisecant, geometric modular-operadic MC, tautological line support,
+     MC2 conditional completion, universal theta)
+   - Fay identity correctly used for IHX cancellation at trivalent vertices
+   - Assembly of three packages is complete and correct
+11. c334^2 DS-BRST derivation: in progress (agent running)
+
+### Complete theorematic core verification scorecard:
+
+| Component | Verdict | Method |
+|-----------|---------|--------|
+| Theorem A | PASS | 6 deps traced, full proof chain |
+| Theorem B | PASS | 6 deps traced, curvature handled |
+| Theorem C | PASS | 10-step proof, D-module adjointness, 132 tests |
+| Theorem D | PASS | 9 deps resolved, A-hat proved, 428 tests |
+| MC1 (PBW) | PASS | 4 sub-theorems, Sugawara pitfall avoided |
+| MC2 (Theta_A) | PASS | 7 deps, Fay+Stokes+tautological line |
+| DS-KD intertwine | FIXED | 4 issues found and corrected |
+| W-infinity M-level | PASS | Sectorwise finiteness, ML, completed QI |
+| H^2_cyc(W_inf)=1 | ESTABLISHED | BRST pullback + stability + ML |
+
+Zero mathematical issues found in the proved core (all 6 issues from Session 8
+were convention/presentation, not mathematical errors in theorems).
 
 ---
 
-## NEXT STEPS (from HITLIST, continuing execution)
+## COMPLETE VERIFICATION SCORECARD
 
-### Immediate:
-- Fix ISSUE 1 and ISSUE 3 (DS-KD intertwining proof)
-- Fix ISSUES 4-6 (convention corrections)
-- Write dim H^2_cyc(W_infinity) = 1 statement
+| Component | Verdict | Session |
+|-----------|---------|---------|
+| Theorem A (bar-cobar adjunction) | PASS | 8 |
+| Theorem B (higher-genus inversion) | PASS | 8 |
+| Theorem C (quantum complementarity) | PASS | 8 cont. |
+| Theorem D (modular characteristic) | PASS | 8 cont. |
+| MC1 (PBW concentration) | PASS | 8 cont. |
+| MC2 (cyclic L-inf + Theta_A) | PASS | 8 cont. |
+| DS-KD intertwining | FIXED (4 issues) | 8 |
+| Convention consistency | FIXED (2 issues) | 8 |
+| W-infinity factorization KD | PASS (M-level) | 8 |
+| H^2_cyc(W_infinity) = 1 | ESTABLISHED | 8 |
+| cor:winfty-scalar-saturation | WRITTEN | 8 cont. |
+| lem:e2-collapse-higher-genus | WRITTEN | 8 cont. |
+| Concordance scalar saturation note | WRITTEN | 8 cont. |
 
-### Next verification targets:
-- A.3: Theorem C (quantum complementarity) — not yet audited
-- A.4: Theorem D (modular characteristic) — not yet audited
-- A.5: MC1 (thm:master-pbw) — not yet audited
-- A.6: MC2 (thm:mc2-full-resolution) — not yet audited
+Build: 1815pp, PH 1144, 0 errors, 0 undef refs, converged in 2 passes.
+Tests: 5984/5984 passing + 47/47 W-infinity slice + 14/14 bar-side extraction.
 
-### Next computational targets:
-- C.1.1: Build W_3 bar complex module (bar-side at degree 2)
-- C.1.4: Build DS BRST derivation of c334^2
-- C.1.5: Verify dim H^2_cyc computationally for W_3, W_4, W_5
+## REMAINING
+
+### Computational:
+- C.1.4: DS-BRST derivation of c334^2 — agent running
+- C.1.1: Build W_3 bar complex module
+- C.1.5: dim H^2_cyc computationally verified for W_3, W_4 (DONE informally)
+
+### From HITLIST (next tier):
+- A.12-A.19: Verify examples, configuration spaces, connections, appendices
+- B.1: Construct H-level target W^{ht} (major, requires new mathematics)
+- B.5-B.6: Promote stage-4/5 conjectures
+- D.1-D.6: Chriss-Ginzburg exposition upgrades

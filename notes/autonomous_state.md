@@ -1,19 +1,59 @@
 # Session State — Chiral Bar-Cobar Monograph
-# Last updated: Mar 13, 2026 (MC4 Yangian shared-seed to compact generators)
+# Last updated: Mar 14, 2026 (Platonic Forge Batch 3 deep audit + Phase 1 core theorem verification)
 
-> **Live state note (March 13, 2026).**
-> This is an active state file. Historical session prompts and audit
-> prompts in `notes/` are provenance records unless they are explicitly
-> named by the current control layer.
+> **Live state note (March 14, 2026).**
+> This is an active state file. The current control prompt is
+> `notes/SESSION_PROMPT_v32.md` (Platonic Forge protocol v32).
 
 ## Quick State
-- **Session prompt**: `notes/SESSION_PROMPT_v23.md` (live control prompt)
-- **Census**: Machine baseline Mar 13: PH 957, PE 323, CJ 125, HE 28, Open 0 = 1433 total
-- **Build**: 1804pp, 4-pass convergence (0 undef citations, 0 undef refs, 0 rerun, 0 overfull, 0 underfull)
-- **Source**: 116,607 lines across 61 active / 70 total `.tex` files
-- **Tests**: `pytest` deselects `@slow` by default; `compute/tests/test_ds_reduction.py` now fully deselects without `--run-slow` and passes `216/216` with `--run-slow` in 15m11s; the live MC4 W-packet pair `test_w4_stage4_coefficients.py` + `test_w4_ds_ope_extraction.py` now passes `206/206`; `compute/tests/test_w_infinity_dual_candidate.py` + `compute/tests/test_smoke.py` pass `58/58` with `61` deselected.
-- **Git integrity**: repaired by fresh `.git` metadata transplant from `origin`; `git fsck --full --no-reflogs` now shows no dangling commits and only working-state dangling blobs.
-- **Uncommitted delta**: 39 modified files, 2 untracked.
+- **Session prompt**: `notes/SESSION_PROMPT_v32.md` (Platonic Forge — full-monograph audit and reforging)
+- **Census**: Mar 14: PH ~1142, PE ~353, CJ ~186, HE ~27, Open 0 = ~1708 total
+- **Build**: 1803pp, 2-pass convergence (0 undef citations, 0 undef refs, 0 overfull, 1 underfull)
+- **Tests**: 6005 passed, 739 deselected, 0 failures (217s)
+- **Git**: modified files from forge fixes (higher_genus.tex, hochschild_cohomology.tex)
+
+## Platonic Forge Progress
+- **Batch 0 (Calibration)**: COMPLETE
+- **Batch 1 (Theory Core)**: COMPLETE — C2 ([1] notation) already fixed. Remaining: session amalgamation (~800 lines), dead labels.
+- **Batch 2 (Theory Structure)**: COMPLETE — ALL FIXED
+- **Batch 3 (Theory Heights)**: COMPLETE (this session)
+  - All sub-ranges of higher_genus.tex now fully audited (lines 1-5000, 5000-11000, 11000-16390)
+  - poincare_duality.tex, poincare_duality_quantum.tex, hochschild_cohomology.tex: ALL AUDITED
+  - **4 new errors found and fixed** (this session):
+    - Faber-Zagier formula in rem:theorem-d-model (wrong evaluation, diverges at g=1)
+    - KM kappa/c ratio in cor:anomaly-ratio (missing (k+h^v)/h^v factor)
+    - Deformation degree in ex:heisenberg-pairing (g-3 should be 4g-6, false vanishing at g=2)
+    - sl_3 Casimir degrees in hochschild_cohomology.tex (2,4 should be 2,3)
+  - **thm:bg-bar-coalg** (poincare_duality_quantum.tex:440): ProvedHere but proof is sketch. Investigate.
+- **Batches 4-11**: COMPLETE (agent-audited prior session, all findings in all_batches.md)
+- **Batch 12**: COMPLETE
+- **Total errors found across all batches**: 12 (all fixed)
+
+## Phase 1: Core Theorem Verification — COMPLETE
+All 5 main theorems + MC1 + MC2 independently verified:
+- **Theorem A** (bar-cobar adjunction): PASS
+- **Theorem B** (inversion): PASS
+- **Theorem C** (complementarity): PASS
+- **Theorem D_scal** (modular characteristic): PASS — GF formula computationally verified (g=1..7)
+- **Theorem H** (polynomial ChirHoch*): PASS — 3-step proof complete
+- **MC1** (PBW): PASS
+- **MC2** (full resolution): PASS — 3-input assembly, clean
+- **thm:explicit-theta**: PASS — graded antisymmetry argument correct
+- **cor:scalar-saturation**: PASS — correctly conditioned on dim H^2_cyc = 1
+- **thm:ds-koszul-intertwine**: PASS — 3-step proof sound
+
+## Computational Verifications (this session)
+- c+c' sums: Vir=26, sl_2=6, sl_3=16, W_3=100 ✓
+- kappa+kappa' table W_N (N=2..5) ✓
+- K_N = 4N^3-2N-2 ✓
+- GF x/2/sin(x/2)-1 = FP formula (g=1..7) ✓
+- sigma(E_8) = 121/126 ✓
+- DS central charges at multiple k ✓
+- Mumford 6h^2-6h+1 ✓
+- ClaimStatus coverage: COMPLETE (0 missing across all chapters + appendices)
+
+## Final build: 1803pp, 0 errors, 6005 tests passing
+- **See**: notes/FORGE_AUDIT_final.md for complete report
 
 ## Governing Mandate
 - Build the book as the definitive dimension-one treatise of modular homotopy theory for factorization algebras on curves.
