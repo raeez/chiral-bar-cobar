@@ -2,13 +2,6 @@
 \chapter{The Fourier seed}\label{ch:fourier-seed}
 
 
-\begin{remark}[Governing question]
-The governing question of this chapter is how the bar construction already appears as a non-abelian Fourier transform in the smallest explicit kernels and test cases.
-\end{remark}
-
-\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-H/M-level; S-level consequences promoted only where theorem labels do so.
-\end{remark}
 \index{Fourier transform!non-abelian|textbf}
 \index{propagator!logarithmic|textbf}
 \index{bar construction!as Fourier transform}
@@ -443,6 +436,308 @@ Polishchuk~\cite{Pol03} for the Fourier--Mukai formalism on abelian
 varieties and Frenkel--Ben-Zvi~\cite{FBZ04} for the vertex algebra
 connection.
 \end{proof}
+
+\subsection*{Degeneration to the classical Fourier transform}
+\label{subsec:fourier-degeneration}
+\index{Fourier transform!recovery from bar-cobar}
+\index{Fourier--Mukai transform!degeneration to Fourier}
+\index{Poincar\'e line bundle!degeneration}
+
+\begin{proposition}[Degeneration of the propagator;
+  \ClaimStatusProvedHere]
+\label{prop:fourier-propagator-degeneration}
+Write $q = e^{2\pi i\tau}$.
+The Jacobi triple product
+\[
+\theta_1(z|\tau)
+= 2q^{1/4}\sin(\pi z)
+  \prod_{n=1}^{\infty}
+  (1-q^n)(1-q^n e^{2\pi iz})(1-q^n e^{-2\pi iz})
+\]
+gives the propagator on $E_\tau$ by logarithmic differentiation:
+\begin{equation}\label{eq:fourier-theta-product}
+d_z\log\theta_1(z|\tau)
+= \pi\cot(\pi z)\,dz
+  + 4\pi\sum_{n=1}^{\infty}
+  \frac{q^n}{1-q^n}\sin(2\pi n z)\,dz.
+\end{equation}
+Three successive degenerations:
+\begin{enumerate}
+\item \emph{$q \to 0$ \textup{(}$B$-cycle collapse\textup{)}.}
+  Every factor $(1 - q^n\,\cdot) \to 1$, and
+  \begin{equation}\label{eq:fourier-propagator-degen}
+  d_z\log\theta_1(z|\tau)
+  \;\xrightarrow{\;q \to 0\;}\;
+  \pi\cot(\pi z)\,dz
+  = d\log\sin(\pi z).
+  \end{equation}
+\item \emph{Mittag-Leffler \textup{(}real locus of $\mathbb{C}^*$\textup{)}.}
+  On $x \in \mathbb{R}/\mathbb{Z}$,
+  \begin{equation}\label{eq:fourier-propagator-real}
+  \pi\cot(\pi x)\,dx
+  = \operatorname{p.v.}\!\sum_{n=-\infty}^{\infty}
+    \frac{dx}{x - n}.
+  \end{equation}
+\item \emph{Universal cover \textup{(}$\mathbb{R} \to \mathbb{R}/\mathbb{Z}$\textup{)}.}
+  Drop the $n \neq 0$ translates:
+  \begin{equation}\label{eq:fourier-propagator-R}
+  \frac{dx}{x} = d\log x.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Differentiate $\log\theta_1$
+term by term using $\frac{d}{dz}\log(1-q^ne^{2\pi iz})
+= -\frac{2\pi i\,q^n e^{2\pi iz}}{1-q^n e^{2\pi iz}}$
+and combine geometric series
+(Whittaker--Watson~\cite[\S21.3]{WW27}).
+The Mittag-Leffler expansion
+$\pi\cot(\pi x)
+= \lim_{N\to\infty}\sum_{n=-N}^{N}(x-n)^{-1}$
+follows from the Weierstrass product
+$\sin(\pi x) = \pi x\prod_{n=1}^{\infty}(1-x^2/n^2)$
+by logarithmic differentiation
+(Ahlfors~\cite[\S5.2]{Ahlfors79}).
+\end{proof}
+
+\begin{proposition}[Degeneration of the Poincar\'e line bundle;
+  \ClaimStatusProvedHere]
+\label{prop:fourier-poincare-degeneration}
+\index{Poincar\'e line bundle!degeneration to character}
+The Poincar\'e line bundle on
+$E_\tau \times \widehat{E}_\tau$
+\textup{(}$\widehat{E}_\tau \cong E_\tau$ via the principal
+polarization\textup{)} has fiber
+\begin{equation}\label{eq:fourier-poincare-fiber}
+\mathcal{P}_{(z,\,\hat{w})}
+= \frac{\theta_1(z - \hat{w}|\tau)\;\theta_1'(0|\tau)}
+       {\theta_1(z|\tau)\;\theta_1(\hat{w}|\tau)}
+\end{equation}
+\textup{(}Mumford~\textup{\cite[\S I.2]{Mum70}}\textup{)}.
+Three degenerations:
+\begin{enumerate}
+\item \emph{$q \to 0$.}
+  The triple products cancel:
+  \begin{equation}\label{eq:fourier-poincare-degen-Gm}
+  \mathcal{P}_{(z,\hat{w})}
+  \;\xrightarrow{\;q \to 0\;}\;
+  \frac{\sin\pi(z - \hat{w})}
+       {\sin(\pi z)\;\sin(\pi\hat{w})}.
+  \end{equation}
+
+\item \emph{Real torus.}
+  Set $z = x$, $\hat{w} = \xi$ with
+  $x,\xi \in \mathbb{R}/\mathbb{Z}$.  Logarithmic differentiation
+  of $\sin(\pi u) = \pi u\prod(1-u^2/n^2)$ gives
+  \begin{equation}\label{eq:fourier-sine-product}
+  \frac{\sin\pi(x - \xi)}{\sin(\pi x)\sin(\pi\xi)}
+  = \cot(\pi\xi) - \cot(\pi x)
+  = \sum_{n \in \mathbb{Z}}
+    \!\left(\frac{1}{\xi - n} - \frac{1}{x - n}\right).
+  \end{equation}
+  Compute the Fourier coefficients of the right-hand side as a
+  distribution in $x$:
+  \[
+  \int_0^1
+    \left(\frac{1}{\xi - n} - \frac{1}{x - n}\right)
+    e^{-2\pi i mx}\,dx
+  = \frac{e^{-2\pi i m\xi}}{\xi - n}
+    \quad (m \neq 0).
+  \]
+  Summing over $n$ and applying Poisson summation kills every term
+  except $m = n$, leaving the $n$-th Fourier coefficient
+  $e^{-2\pi in\xi}$.  The Fourier--Mukai integral becomes
+  Fourier series:
+  \begin{equation}\label{eq:fourier-series-from-FM}
+  \int_{\mathbb{R}/\mathbb{Z}} f(x)\,
+    \mathcal{P}_{(x,\xi)}\,dx
+  = \sum_{n \in \mathbb{Z}} \hat{f}(n)\,e^{2\pi i n\xi}.
+  \end{equation}
+
+\item \emph{Universal cover.}
+  $\widehat{\mathbb{R}/\mathbb{Z}} = \mathbb{Z}$;
+  $\widehat{\mathbb{R}} = \mathbb{R}$.  The characters
+  $e^{2\pi inx}$ for $n \in \mathbb{Z}$ extend to
+  $e^{2\pi i\xi x}$ for $\xi \in \mathbb{R}$
+  \textup{(}Pontryagin~\textup{\cite{Pont66})}, and
+  \begin{equation}\label{eq:fourier-integral-from-FM}
+  \hat{f}(\xi)
+  = \int_{\mathbb{R}} f(x)\,e^{-2\pi i\xi x}\,dx.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The $q \to 0$ limit applies the Jacobi triple product to each
+theta factor in~\eqref{eq:fourier-poincare-fiber}
+(Polishchuk~\cite[\S16.2]{Pol03}).  The Fourier coefficient
+computation uses $\int_0^1 (x-n)^{-1}\,e^{-2\pi imx}\,dx
+= -\pi i\,\operatorname{sgn}(m)\,e^{-2\pi imn}$ for
+$m \neq 0$ (residue calculus on the strip
+$\{0 \le \operatorname{Re} z \le 1\}$).
+Pontryagin duality for locally compact abelian groups
+(Rudin~\cite[\S1.7]{Rudin62})
+gives item~(3).
+\end{proof}
+
+\begin{theorem}[Recovery of the Fourier transform;
+  \ClaimStatusProvedHere]
+\label{thm:fourier-recovery}
+\index{Fourier transform!recovery from chiral bar}
+\begin{equation}\label{eq:fourier-degeneration-chain}
+\begin{tikzcd}[column sep=2.8em, row sep=2.8em]
+\barB_{E_\tau}(\mathcal{H}_1)
+  \arrow[r, "q \to 0"]
+  \arrow[d, "\text{\footnotesize Prop.\
+    \ref{prop:fourier-mukai-identification}}"', "\simeq"]
+& \barB_{\mathbb{C}^*}(\mathcal{H}_1)
+  \arrow[r, "\mathbb{R}\text{-locus}"]
+& \barB_{S^1}(\mathcal{H}_1)
+  \arrow[r, "\widetilde{\phantom{xx}}"]
+& \barB_{\mathbb{R}}(\mathcal{H}_1)
+  \arrow[d, "\text{\footnotesize coalgebra exp}",
+    "\simeq"']
+\\
+\mathcal{P}\;\text{on}\;
+  E_\tau \times \widehat{E}_\tau
+  \arrow[r, "q \to 0"']
+& \dfrac{\sin\pi(x{-}\xi)}
+        {\sin\pi x\;\sin\pi\xi}
+  \arrow[r, "\text{Fourier}"']
+& e^{2\pi inx}
+  \arrow[r, "n \to \xi"']
+& e^{-2\pi i\xi x}
+\end{tikzcd}
+\end{equation}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{llll}
+\textbf{Stage}
+  & \textbf{Curve}
+  & \textbf{Propagator}
+  & \textbf{Kernel} \\
+\hline
+Chiral
+  & $E_\tau$
+  & $d\log\theta_1(z|\tau)$
+  & $\mathcal{P}$ \\
+Multiplicative
+  & $\mathbb{C}^*$
+  & $\pi\cot(\pi z)\,dz$
+  & $\sin\pi(x{-}\xi)/(\sin\pi x\;\sin\pi\xi)$ \\
+Compact real
+  & $S^1$
+  & $\operatorname{p.v.}\sum(x{-}n)^{-1}\,dx$
+  & $e^{2\pi inx}$ \\
+Real line
+  & $\mathbb{R}$
+  & $dx/x$
+  & $e^{-2\pi i\xi x}$
+\end{tabular}
+\end{center}
+The left column degenerates by
+Proposition~\textup{\ref{prop:fourier-propagator-degeneration}};
+the right column, by
+Proposition~\textup{\ref{prop:fourier-poincare-degeneration}}.
+The passage from left to right at each stage is the coalgebra
+exponential.
+\end{theorem}
+
+\begin{proof}
+The bar-cobar pairing
+$\langle\eta,\delta\rangle = 1$
+(Theorem~\ref{thm:bar-cobar-verdier}) at each stage:
+\begin{alignat}{2}
+&E_\tau\colon\quad
+&&\textstyle\int_{\overline{C}_2(E_\tau)}\!
+  d\log\theta_1(z|\tau) \wedge \delta(z) = 1,
+\label{eq:pairing-Etau}
+\\
+&\mathbb{C}^*\colon\quad
+&&\textstyle\oint \pi\cot(\pi z)\,\delta(z)\,dz = 1,
+\label{eq:pairing-Gm}
+\\
+&\mathbb{R}\colon\quad
+&&\textstyle\operatorname{p.v.}\!\int_{\mathbb{R}}
+  \frac{\delta(x)}{x}\,dx = 1.
+\label{eq:pairing-R}
+\end{alignat}
+Each of these is the $n = 1$ value.  The coalgebra exponential
+produces the full kernel from this seed.  Concretely: the bar complex
+$\barB(\mathcal{H}_1)$ is the symmetric coalgebra
+$\operatorname{Sym}^c(s^{-1}V^*)$ with $V = \langle\alpha\rangle$
+one-dimensional
+(Theorem~\ref{thm:fourier-heisenberg-bar}).  Write $\xi = s^{-1}\alpha^*$
+for the cogenerator and $x$ for the dual generator of
+$\Omega(\barB(\mathcal{H}_1))$.
+The comultiplication
+$\Delta(\xi^n) = \sum_{p+q=n}\binom{n}{p}\xi^p \otimes \xi^q$
+is the binomial coproduct, so the pairing extends multiplicatively:
+\begin{equation}\label{eq:pairing-symmetric-powers}
+\bigl\langle \xi^n,\, x^m\bigr\rangle
+= n!\,\delta_{nm}.
+\end{equation}
+The generating function of the
+pairing is
+\begin{equation}\label{eq:pairing-exponential}
+\sum_{n=0}^{\infty}
+  \frac{\langle\xi^n,\, x^n\rangle}{(n!)^2}\,t^n
+= \sum_{n=0}^{\infty}\frac{t^n}{n!}
+= e^t.
+\end{equation}
+Set $t = x\xi$.  On~$\mathbb{R}$, this is $e^{x\xi}$.  On~$E_\tau$,
+the same coalgebra exponential applied to the theta-function seed
+$\langle d\log\theta_1, \delta\rangle = 1$ produces the Poincar\'e
+line bundle $\mathcal{P}_{(z,\hat w)}$: the
+$q$-expansion~\eqref{eq:fourier-poincare-fiber} is the multiplicative
+lift of the exponential from $\mathbb{Z}$ to
+$\mathbb{Z}[\![q]\!]$.
+\end{proof}
+
+\begin{remark}[Connection and holonomy]\label{rem:propagator-vs-kernel}
+The propagator $d\log(z-w)$ is a flat connection on the trivial line
+bundle over $C_2(X)$.  The kernel $e^{x\xi}$ is its holonomy: the
+parallel transport operator $\exp\!\bigl(\int_\gamma d\log(z-w)\bigr)$
+along a path from $(0,0)$ to $(x,\xi)$ in $\mathbb{R} \times
+\widehat{\mathbb{R}}$.  The passage from propagator to kernel is the
+passage from a Lie algebra element to its group element via the
+exponential map; the coalgebra structure of $\barB(\mathcal{H}_1)$
+makes this exponential explicit at each bar degree.
+\end{remark}
+
+\begin{remark}[Four incarnations]\label{rem:four-transforms}
+\index{Fourier transform!four incarnations}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llll}
+\textbf{Transform}
+  & \textbf{Domain}
+  & \textbf{Kernel}
+  & \textbf{Source} \\
+\hline
+Chiral bar
+  & $\cA \mapsto \barB_X(\cA)$
+  & $d\log E(z,w)$
+  & this monograph \\
+Fourier--Mukai
+  & $D^b(A) \to D^b(\hat{A})$
+  & $\mathcal{P}$
+  & Mukai~\cite{Muk81} \\
+Fourier series
+  & $L^2(S^1) \to \ell^2(\mathbb{Z})$
+  & $e^{2\pi inx}$
+  & Fourier \\
+Fourier integral
+  & $L^2(\mathbb{R}) \to L^2(\mathbb{R})$
+  & $e^{-2\pi i\xi x}$
+  & Fourier
+\end{tabular}
+\end{center}
+Each row is the degeneration of the row above it.
+\end{remark}
 
 \subsection*{Computation~(d): $X = \mathbb{P}^1$,
   $\cA = \widehat{\mathfrak{g}}_k$}
