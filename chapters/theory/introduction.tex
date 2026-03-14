@@ -115,8 +115,9 @@ The bar construction is a categorical logarithm: it maps the
 multiplicative structure of the OPE to the nilpotent structure
 of the bar differential ($\dzero^2 = 0$).  The cobar construction
 $\Omega(\barB(\cA))$ is the corresponding exponential.
-When~$\cA$ is Koszul, the cohomology $H^*(\barB_X(\cA))$ is the Koszul dual
-$\cA^! = T(V^*)/R^\perp$.  Verdier duality on
+When~$\cA$ is Koszul, the bar coalgebra $\barB_X(\cA)$ has cohomology
+concentrated in bar degree~$1$, and its linear dual is the Koszul dual
+algebra $\cA^! = T(V^*)/R^\perp$.  Verdier duality on
 $\operatorname{Ran}(X)$ intertwines the bar of~$\cA$ with the bar
 of~$\cA^!$:
 \begin{equation}\label{eq:NAP-intro}
@@ -185,6 +186,130 @@ their tensor factors carry positions $z_i \in X$, and the
 Fulton--MacPherson compactification~$\overline{C}_n(X)$ enters the
 construction.  The passage from point to curve is the content of
 this monograph.
+
+
+\section{The selection principle}
+\label{sec:selection-principle}
+\index{selection principle|textbf}
+\index{Borcherds identity!as selection criterion}
+
+The bar construction of \S\ref{sec:the-seed} is a
+\emph{geometric} machine.  Take a $\mathcal{D}_X$-module~$V$
+equipped with a meromorphic pairing
+$\mu \colon j_* j^*(V \boxtimes V) \to \Delta_!(V)$
+(the OPE), place sections at points of the Fulton--MacPherson
+compactification~$\overline{C}_n(X)$, and extract residues along
+boundary divisors.  The output is a graded object
+$\barB_X(V, \mu)$ with a candidate differential
+$d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
++ d_{\mathrm{dR}}$.
+
+The question that governs the theory is:
+\begin{center}
+\emph{For which algebraic inputs $(V, \mu)$ does
+the FM bar construction produce $d^2 = 0$?}
+\end{center}
+
+\noindent
+The answer is not ``all of them.''  The nine cross-terms in
+$(d_1 + d_2 + d_3)^2$ impose precise algebraic conditions
+on~$\mu$.  The diagonal terms $d_1^2 = 0$ and $d_3^2 = 0$ are
+automatic (cochain complex and de~Rham); the mixed
+anticommutators vanish by the residue exact sequence and the
+derivation property.  All the content is in $d_2^2 = 0$, the
+nilpotency of the residue extraction
+(Theorem~\ref{thm:bar-nilpotency-complete}).
+
+The double sum
+$d_2^2 = \sum_{i<j}\sum_{k<\ell}
+\Res_{D_{k\ell}} \circ \Res_{D_{ij}}$
+decomposes into three cases by index overlap:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Disjoint indices}
+  ($\{i,j\} \cap \{k,\ell\} = \emptyset$).
+  Residue operations commute; cancellation is by the
+  Koszul sign rule.  No condition on~$\mu$.
+
+\item \emph{One shared index} (say $j = k$).
+  Three boundary strata meet at the codimension-$2$ locus
+  $D_{ij\ell}$ of triple collision.  The cyclic sum of
+  iterated residues
+  \[
+  \sum_{\textup{cyclic}}
+    \Res_{D_{j\ell}} \circ \Res_{D_{ij}}
+    \bigl[\mu(\mu(\phi_i, \phi_j), \phi_\ell)
+    \otimes \omega\bigr]
+  = 0
+  \]
+  holds if and only if $\mu$ satisfies the
+  Borcherds identity---the associativity of the chiral
+  product, coupling all OPE pole orders simultaneously.
+
+\item \emph{Same pair}
+  ($\{i,j\} = \{k,\ell\}$).
+  $\Res_{D_{ij}}^2 = 0$ automatically.
+\end{enumerate}
+Cases~(i) and~(iii) impose no condition on the algebra.
+Case~(ii) imposes exactly one: the Borcherds identity.
+This identity is the defining axiom of a chiral algebra.
+
+The selection is already visible in the two examples of
+Chapter~\ref{ch:heisenberg-frame}.  For the Heisenberg
+algebra~$\mathcal{H}_k$, whose OPE
+$\alpha(z)\alpha(w) \sim k/(z-w)^2$ has only a double pole,
+the bracket component of the bar differential vanishes
+identically: $d_{\mathrm{bracket}} = 0$
+(\S\ref{sec:frame-bar-deg1}).  The residue differential reduces
+to $d_{\mathrm{curvature}}$, which produces scalars, and
+$d_{\mathrm{curvature}}^2 = 0$ is automatic
+(Proposition~\ref{prop:pole-decomposition}(2)).  The Arnold
+relation handles the geometry; no algebraic input beyond the
+OPE is needed.
+
+For affine $\widehat{\mathfrak{sl}}_2$ at level~$k$, simple
+poles appear: $h(z)\,e(w) \sim 2e(w)/(z-w)$ activates the
+bracket component $d_{\mathrm{bracket}}$.  This component alone
+does not square to zero.  The failure is computed explicitly:
+all $2048$ sign conventions give
+$d_{\mathrm{bracket}}^2 \neq 0$
+(\S\ref{subsec:frame-sl2-bar-low-degree},
+Remark~\ref{rem:frame-why-dbracket-fails}).  The residual term
+is proportional to the level~$k$: it is precisely the
+double-pole data that $d_{\mathrm{bracket}}$ ignores.  The full
+differential $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
+satisfies $d^2 = 0$ because the Borcherds identity intertwines
+both pole orders:
+\[
+d_{\mathrm{bracket}}^2
+= -\{d_{\mathrm{bracket}},\, d_{\mathrm{curvature}}\}.
+\]
+The curvature is the obstruction to the Lie-bracket differential
+being nilpotent; the Borcherds identity is the integrability
+condition that absorbs the obstruction into the full differential
+(Proposition~\ref{prop:pole-decomposition}).
+
+\begin{remark}[Classical vs.\ chiral selection]
+\label{rem:classical-vs-chiral-selection}
+\index{Koszul duality!classical vs.\ chiral}
+Classical Koszul duality asks the same question on a point:
+for which pairings on a graded vector space does the tensor
+coalgebra carry $d^2 = 0$?  The answer is the Jacobi
+identity; the selected objects are Lie algebras.  Chiral Koszul
+duality asks it on a curve: for which
+$\mathcal{D}_X$-linear pairings does the FM bar construction
+carry $d^2 = 0$?  The answer is the Borcherds identity; the
+selected objects are chiral algebras.
+
+The passage from Jacobi to Borcherds is not a generalization
+by analogy.  It is forced by the boundary stratification of
+$\overline{C}_n(X)$.  The Jacobi identity handles triple
+collisions when all poles are simple.  On a curve, OPEs carry
+multiple pole orders---the level, the central charge---and
+the codimension-$2$ strata of $\overline{C}_n(X)$ mix them.
+The Borcherds identity is the unique condition that makes
+this mixing consistent.  Chiral algebras are what
+configuration space geometry accepts.
+\end{remark}
 
 
 \section{The four theorems}

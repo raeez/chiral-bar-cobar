@@ -725,7 +725,7 @@ The level $k$ determines the curvature of the Koszul dual: $m_0 = -k \cdot \omeg
 \end{proof}
 
 \begin{remark}[Level-shifting vs Koszul duality]
-Two distinct phenomena must be distinguished. \emph{Koszul duality} sends $\mathcal{H}_k \xleftrightarrow{\text{bar-cobar}} \text{Sym}(V^*)$ (relating different algebras), while \emph{level-shifting} gives $\text{Rep}(\mathcal{H}_k) \simeq \text{Rep}(\mathcal{H}_{-k})$ (an equivalence of representation categories). The former is algebraic; the latter is representation-theoretic.
+Two distinct phenomena must be distinguished. \emph{Koszul duality}: the bar coalgebra $\bar{B}(\mathcal{H}_k)$, dualized, gives $\mathcal{H}_k^! = \mathrm{Sym}(V^*)$ (relating different algebras). \emph{Level-shifting}: $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})$ (an equivalence of representation categories). The former is algebraic; the latter is representation-theoretic.
 \end{remark}
 
 \begin{corollary}[Heisenberg module-comodule equivalence; \ClaimStatusProvedHere]
@@ -1123,30 +1123,7 @@ to dual characters.
 \begin{remark}[Ext algebra and the genus universality invariant]
 \label{rem:ext-genus-universality}
 \index{genus universality!Ext algebra}
-The Euler characteristic $\chi(\mathrm{Ext}^*) =
-\sum_i (-1)^i \dim \mathrm{Ext}^i_j$ computes the
-graded character of the Ext algebra at $t = -1$, which
-equals $\prod(1 - q^n)^d = q^{-d/24}\,\eta(\tau)^d$.
-The Heisenberg partition function is
-$Z(\mathcal{H}_k; \tau) =
-1/\prod(1-q^n)^d = q^{d/24}/\eta(\tau)^d$,
-so $\chi(\mathrm{Ext}^*) \cdot Z(\mathcal{H}_k)
-= q^0 = 1$ (the vacuum contribution).
-
-The factor $q^{d/24}$ in $Z$ is the conformal anomaly
-$e^{2\pi i \tau \cdot c/24}$ with $c = d$ (Heisenberg
-central charge).  The genus universality invariant
-$\kappa(\mathcal{H}_k) = k$
-(Theorem~\ref{thm:genus-universality}) governs the
-genus-$g$ obstruction
-$\mathrm{obs}_g = k \cdot \lambda_g$.
-At genus~$1$,
-$F_1(\mathcal{H}_k) = k/24 = c/24$
-(since $\kappa(\mathcal{H}_k) = k$ and $c = d$ for the rank-$d$ Heisenberg at level $k$; for the standard rank-$1$ Heisenberg at level $k = 1$, we have $\kappa = k = 1$ and $c = d = 1$, so $F_1 = 1/24$), which
-appears as the modular anomaly in the Ext
-generating function.  This is the ``horizontal''
-(module Ext) manifestation of the ``vertical''
-(genus) invariant~$\kappa(\mathcal{H}_k)$.
+The Euler characteristic $\chi(\mathrm{Ext}^*) = \prod(1 - q^n)^d = q^{-d/24}\,\eta(\tau)^d$ satisfies $\chi(\mathrm{Ext}^*) \cdot Z(\mathcal{H}_k) = 1$, where $Z = q^{d/24}/\eta(\tau)^d$ is the Heisenberg partition function.  The conformal anomaly $q^{d/24}$ reflects $c = d$; the genus universality invariant $\kappa(\mathcal{H}_k) = k$ (Theorem~\ref{thm:genus-universality}) governs the genus-$g$ obstruction $\mathrm{obs}_g = k \cdot \lambda_g$, with genus-$1$ value $F_1 = k/24 = c/24$.  This is the ``horizontal'' (module Ext) manifestation of the ``vertical'' (genus) invariant~$\kappa(\mathcal{H}_k)$.
 \end{remark}
 
 \subsection{Twisted modules: Ramond and Neveu--Schwarz sectors}
@@ -1604,85 +1581,13 @@ exact self-duality
 \textup{(}Corollary~\textup{\ref{cor:yangian-classical-self-dual})}.
 
 \begin{remark}[Status of Koszul duality identifications]\label{rem:koszul-table-status}
-The entries in the table above fall into three categories of mathematical certainty:
-\begin{enumerate}
-\item \emph{Proved in this monograph} (\ClaimStatusProvedHere{} or \ClaimStatusProvedElsewhere): The first four entries (free fermion $\leftrightarrow$ free boson, $bc \leftrightarrow \beta\gamma$, Heisenberg, free boson $\leftrightarrow$ symplectic bosons) are instances of classical Koszul duality for quadratic algebras ($\mathrm{Sym} \leftrightarrow \Lambda$) lifted to the chiral setting. The free fermion $\leftrightarrow$ free boson duality and the $bc \leftrightarrow \beta\gamma$ duality are proved by explicit bar-cobar computation in Chapter~\ref{sec:betagamma-koszul-dual}; the Heisenberg Koszul dual is computed in Theorem~\ref{thm:heisenberg-koszul-dual-early}.
-
-The affine Kac--Moody entry $\widehat{\mathfrak{g}}_k \leftrightarrow \widehat{\mathfrak{g}}_{-k-2h^\vee}$ is proved in Chapter~\ref{chap:kac-moody-koszul}: the explicit computation for $\mathfrak{sl}_2$ through degree~3 (Theorem~\ref{thm:sl2-koszul-dual}) demonstrates the level shift mechanism, and the general case follows from the Serre duality argument on Fulton--MacPherson configuration spaces (Theorem~\ref{thm:universal-kac-moody-koszul}).
-
-\item \emph{Conjectural H-level realization} (\ClaimStatusConjectured): The H-level infinite-generator realizations Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, and Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$ remain conjectures.  The underlying M-level bar complex, bar-cobar quasi-isomorphism, Koszulness (Theorem~\ref{thm:master-pbw}), and complementarity (Theorem~\ref{thm:quantum-complementarity-main}) are all proved for the principal $\mathcal{W}_N$ family at generic level.  The remaining frontier is the filtered H-level target construction and finite-packet coefficient identities, motivated by higher-spin holography and integrable systems.
-
-For the Virasoro and principal $\mathcal{W}_N$ rows, the live frontier is no longer a vague infinite-generator existence problem: the standard principal-stage completed M-level packages are theorematic, and the remaining MC4 package is to build the filtered H-level targets and prove the exact finite-stage identities
-$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
-and
-$\mathsf{K}^{\mathrm{line}}_{a,b}(N)=\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$,
-detected on the finite packets $\mathcal{I}_N$ and
-$\Delta_{a,0}(N)$ (see
-Corollary~\ref{cor:winfty-hlevel-comparison-criterion},
-Proposition~\ref{prop:winfty-ds-residue-identity-criterion},
-Corollary~\ref{cor:winfty-ds-finite-seed-set},
-Corollary~\ref{cor:yangian-hlevel-comparison-criterion}, and
-Proposition~\ref{prop:dg-shifted-rtt-boundary-seed}).
-
-For Virasoro, the M-level theorematic output is complete: the bar
-complex is constructed
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}), bar-cobar inversion
-holds at every genus
-(Theorem~\ref{thm:higher-genus-inversion}), and complementarity is
-proved (Theorem~\ref{thm:quantum-complementarity-main}).  The
-Koszul dual partner at M-level is the same-family shadow
-$\mathrm{Vir}_{26-c}$; the stronger H-level $W_\infty$ realization
-remains part of the MC4 package.  The super analogue has not yet been
-reduced to finite packets analogous to $\mathcal{I}_N$ or
-$\Delta_{a,0}(N)$.
-
-Significant partial progress exists: the bar--semi-infinite identifications (Theorems~\ref{thm:bar-semi-infinite-km} and~\ref{thm:bar-semi-infinite-w}) establish that the bar complex of any Kac--Moody or W-algebra computes semi-infinite cohomology, and the anomaly duality (Corollaries~\ref{cor:anomaly-duality-km} and~\ref{cor:anomaly-duality-w}) proves that the curvature coefficients of dual pairs cancel.  For the Virasoro / principal-$\mathcal{W}_N$ frontier, what remains is not an unspecified infinite-generator object, but the exact MC4 factorization and coefficient-identification package.
-\end{enumerate}
+The entries fall into two categories.
+\emph{Proved}: the free-field and Heisenberg dualities (Chapter~\ref{sec:betagamma-koszul-dual}, Theorem~\ref{thm:heisenberg-koszul-dual-early}); the Kac--Moody level shift $\widehat{\mathfrak{g}}_k \leftrightarrow \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorems~\ref{thm:sl2-koszul-dual} and~\ref{thm:universal-kac-moody-koszul}).
+\emph{Conjectural H-level}: the infinite-generator identifications Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$.  The M-level theory (bar complex, inversion, Koszulness, complementarity) is proved for all principal $\mathcal{W}_N$ at generic level; the remaining MC4 frontier is the filtered H-level target construction and the finite-packet coefficient identities $\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$ on $\mathcal{I}_N$ and $\mathsf{K}^{\mathrm{line}} = \mathsf{K}^{\mathrm{RTT}}$ on $\Delta_{a,0}(N)$.
 \end{remark}
 
 \begin{remark}[Scope: conjectural table entries]
-The three conjectural Koszul duality identifications in the table above --- Virasoro $\leftrightarrow$ $W_\infty$, $\mathcal{W}_N \leftrightarrow Y(\mathfrak{gl}_N)$, and Super-Virasoro $\leftrightarrow$ Super-$W_\infty$ --- are genuine open mathematical problems.  Each involves a \emph{curved} Koszul duality ($m_0 \neq 0$) for algebras with infinitely many generators, which is beyond the scope of the exact bar complex computations in this monograph.  Two obstructions prevent a proof with existing machinery: (1) the Virasoro and $\mathcal{W}_N$ algebras are not quadratic in the chiral operadic sense (the stress tensor $T$ satisfies a non-linear OPE), so the quadratic Koszul duality framework of Chapter~\ref{chap:koszul-pairs} does not directly apply; (2) on the Virasoro / principal-$\mathcal{W}_N$ side, the infinite-generator flank now takes exact MC4 form: construct filtered H-level or factorization objects whose finite quotients recover the theorematic standard principal stages, then prove the mode identities
-$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
-and
-$\mathsf{K}^{\mathrm{line}}_{a,b}(N)=\mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$,
-discharged on the finite packets $\mathcal{I}_N$ and
-$\Delta_{a,0}(N)$.  The physical motivation comes from higher-spin
-holography (Gaberdiel--Gopakumar for
-$\mathcal{W}_N \leftrightarrow Y(\mathfrak{gl}_N)$) and
-three-dimensional gravity
-\textup{(}for the conjectural infinite-generator MC4 H-level
-Virasoro-to-$W_\infty$
-extension beyond the proved same-family shadow
-$\mathrm{Vir}_{26-c}$\textup{)}.
-
-The bar--semi-infinite identification (Theorem~\ref{thm:bar-semi-infinite-w})
-does apply to the Virasoro and $\mathcal{W}_N$ algebras themselves,
-establishing that their bar cohomology equals semi-infinite cohomology.
-This constrains the frontier in two layers.
-
-First, the same-family involution
-$\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26-c}$ supplies the proved
-M/S-level complementarity shadow recorded in the genus calculations.
-
-Second, the conjectural H-level realization asks for an actual
-infinite-generator dual object, expected to be $W_\infty$, whose bar
-cohomology matches the semi-infinite growth of $\mathrm{Vir}_{26-c}$
-\textup{(}by Motzkin numbers,
-Theorem~\textup{\ref{thm:virasoro-chiral-koszul}}\textup{)}.
-
-The remaining obstruction is now exact rather than generic:
-build the filtered H-level realization of $W_\infty$, prove the residue
-identities
-$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$,
-and discharge them on the finite seed sets $\mathcal{I}_N$ from which
-translation recovers all descendants, with the first live higher-spin
-stages already reduced on the theorem surface to the stage-$3$
-fifteen-coefficient packet and the stage-$4$ six-coefficient packet,
-organized as three explicit local OPE blocks.
-The Virasoro and principal-$\mathcal{W}_N$ rows belong to the exact
-standard MC4 package, while the super row remains a separate
-derived/super extension flank adjoining
-Conjecture~\ref{conj:master-infinite-generator}.
+The three conjectural identifications each involve curved Koszul duality ($m_0 \neq 0$) with infinitely many generators.  Two obstructions: (1)~non-quadratic OPE prevents the quadratic framework of Chapter~\ref{chap:koszul-pairs} from applying directly; (2)~the infinite-generator flank requires the exact MC4 coefficient-identification package.  The bar--semi-infinite identification (Theorem~\ref{thm:bar-semi-infinite-w}) constrains the frontier: the same-family involution $\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26-c}$ gives the proved M/S-level shadow, while the H-level realization asks for an infinite-generator dual whose bar cohomology matches the semi-infinite growth (Motzkin numbers, Theorem~\ref{thm:virasoro-chiral-koszul}).  The super row remains a separate extension flank adjoining Conjecture~\ref{conj:master-infinite-generator}.
 \end{remark}
 
 \begin{remark}[Heisenberg vs Yangian: self-duality contrast]\label{rem:heisenberg-yangian-contrast}
@@ -2339,60 +2244,10 @@ Geometric complexity correlates inversely with algebraic simplicity: the free fe
 \begin{remark}[Main theorems for free fields]
 \label{rem:free-field-three-theorems}
 \index{main theorems!free field verification}
-The free-field examples verify all three main theorems of Part~1 in the
-abelian (single-generator) case:
-
-\begin{enumerate}
-\item \emph{Theorem~A} (Geometric Bar-Cobar Duality,
-  Theorem~\ref{thm:bar-cobar-isomorphism-main};
-  $\mathrm{A}_0/\mathrm{A}_1/\mathrm{A}_2$ decomposition in
-  Remark~\ref{rem:theorem-A-decomposition}):
-  The bar-cobar adjunction produces:
-  fermion$^! = \operatorname{Sym}^{\mathrm{ch}}(\gamma)$ (free boson, \S\ref{sec:fermion-boson-koszul},
-  Lie--Com duality),
-  $(bc)^! = \beta\gamma$ and vice versa (two-generator duality,
-  Example~\ref{ex:bc-betagamma-koszul}),
-  $\mathcal{H}_k^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$ with
-  curvature $m_0 = -k\,\omega$
-  (Theorem~\ref{thm:heisenberg-koszul-dual-early}).
-  The free-field dualities are exact (uncurved) because free
-  fields have $c + c' = 0$
-  (Table~\ref{tab:master-invariants}).
-
-\item \emph{Theorem~B} (Bar-Cobar Inversion,
-  Theorem~\ref{thm:higher-genus-inversion}):
-  At genus~0, the counit $\Omega(\barB(\psi)) \xrightarrow{\sim} \psi$
-  is verified by the explicit resolution in
-  Theorem~\ref{thm:bar-cobar-inversion-qi}.
-  At genus~1, the elliptic bar complex
-  (Theorem~\ref{thm:elliptic-fermion-bar}) and the Heisenberg
-  genus-$g$ extension
-  (Theorem~\ref{thm:heisenberg-genus-g}) provide
-  the spectral sequence inputs.
-
-\item \emph{Theorem~C} (Complementarity,
-  Theorem~\ref{thm:quantum-complementarity-main};
-  $\mathrm{C}_0/\mathrm{C}_1$ decomposition in
-  Remark~\ref{rem:theorem-C-decomposition}):
-  The Heisenberg algebra verifies quantum complementarity
-  (\S\ref{sec:heisenberg-koszul}):
-  $\operatorname{obs}_g(\mathcal{H}_k)
-    = k \cdot \lambda_g$
-  with $\kappa(\mathcal{H}_k) = k$.
-  The genus universality theorem
-  (Theorem~\ref{thm:genus-universality}) predicts
-  $\kappa(\mathcal{H}_k) + \kappa((\mathcal{H}_k)^!) = 0$
-  (since the duality is exact), confirmed by
-  $c + c' = 0$ for all free fields.
-\end{enumerate}
-
-Free fields are the base case for the general theory: the abelian
-OPE structure makes bar complexes explicitly computable, curvature arises
-only from the Heisenberg central extension, and Koszul duality reduces to
-classical Lie--Com or exterior--symmetric duality. The key test of the
-framework is that it recovers these classical dualities as genus-0
-special cases, then extends them to higher genus via the propagator
-mechanism of Part~1.
+Free fields verify all three main theorems in the abelian case.
+\emph{Theorem~A}: fermion$^! = \operatorname{Sym}^{\mathrm{ch}}(\gamma)$, $(bc)^! = \beta\gamma$, $\mathcal{H}_k^! = \operatorname{Sym}^{\mathrm{ch}}(V^*)$ with $m_0 = -k\,\omega$; dualities are exact ($c + c' = 0$).
+\emph{Theorem~B}: genus-$0$ inversion via Theorem~\ref{thm:bar-cobar-inversion-qi}; genus-$1$ inputs from Theorems~\ref{thm:elliptic-fermion-bar} and~\ref{thm:heisenberg-genus-g}.
+\emph{Theorem~C}: $\operatorname{obs}_g(\mathcal{H}_k) = k \cdot \lambda_g$ with $\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!) = 0$.
 \end{remark}
 
 \section{Heisenberg algebra: higher-genus quantum complementarity}
@@ -2507,29 +2362,7 @@ for Gaussian path integrals, which compute the BV complex.
 
 \begin{remark}[Curvature and one-loop determinants]
 \label{rem:curvature-one-loop}
-The identification makes the bar curvature $m_0$ physically transparent:
-\begin{enumerate}
-\item \emph{Heisenberg at level $k$.}
-  The curvature $m_0 = k/2$ is the one-loop determinant of a free boson
-  with target~$\mathbb{R}$.
-\item \emph{$bc$ ghost system at $c = -26$.}
-  The curvature $m_0 = -13$.  Theorem~\ref{thm:anomaly-koszul}
-  (anomaly cancellation) states that
-  $\bar{B}^{\mathrm{ch}}(\mathcal{H}^{26} \otimes bc)$
-  is \emph{uncurved}: the total curvature
-  $m_0 = 26 \cdot \tfrac{1}{2} + (-13) = 0$.
-  This uncurved bar complex \emph{is} the BV quantization of the
-  bosonic string.
-\item \emph{QME coefficient.}
-  The Sugawara construction $T = \frac{1}{2(k+h^{\vee})} \sum_a {:}J^a J^a{:}$
-  reduces, for free fields ($h^{\vee} = 0$), to $T = \frac{1}{2k}\sum_a {:}J^a J^a{:}$.
-  The bar curvature $m_0 = k/2$ matches the quantum master equation
-  coefficient: $\hbar \Delta S + \tfrac{1}{2}\{S,S\} = 0$.
-  This numerical coincidence is not accidental --- it reflects
-  the universal formula $m_0 = \kappa/2$ from
-  Proposition~\ref{prop:pole-decomposition}, applied with
-  $\kappa = k$ for the Heisenberg algebra.
-\end{enumerate}
+The bar curvature $m_0$ is the one-loop determinant: $m_0 = k/2$ for $\cH_k$, $m_0 = -13$ for $bc$.  Anomaly cancellation (Theorem~\ref{thm:anomaly-koszul}): $\barB^{\mathrm{ch}}(\cH^{26} \otimes bc)$ is uncurved ($26 \cdot \tfrac{1}{2} - 13 = 0$), yielding the BV quantization of the bosonic string.  The formula $m_0 = \kappa/2$ (Proposition~\ref{prop:pole-decomposition}) matches the QME coefficient.
 \end{remark}
 
 
@@ -2805,90 +2638,20 @@ This is the manifestation of Koszul duality at genus 1.
 \end{example}
 
 \begin{remark}[Physical interpretation: quantum complementarity]\label{rem:heisenberg-physics}
-The genus-1 Koszul duality has a concrete physical interpretation:
-
-From the QFT perspective:
-\begin{itemize}
-\item The A-cycle winding corresponds to position; B-cycle winding to momentum.
-\item The Heisenberg uncertainty relation $[\hat{x}, \hat{p}] = i\hbar$ manifests as non-commutativity of cycle holonomies.
-\item For $U(1)$ gauge theory on $T^2$, electromagnetic duality exchanges electric charges (A-cycle) with magnetic charges (B-cycle).
-\end{itemize}
-
-From Kontsevich's geometric viewpoint:
-\begin{itemize}
-\item The period matrix $\Omega$ parametrizes complex structures on $T^2$
-\item Modular group $SL(2,\mathbb{Z})$ acts via $\Omega \to \frac{a\Omega+b}{c\Omega+d}$
-\item S-transformation $\Omega \to -1/\Omega$ is Fourier transform on $\text{Jac}(T^2)$
-\end{itemize}
-
-The level shift $k \to -k$ is the quantum manifestation of this classical symplectic duality.
+At genus~$1$, Koszul duality is electromagnetic duality on $T^2$: A-cycle winding (position) exchanges with B-cycle winding (momentum), and the S-transformation $\Omega \to -1/\Omega$ acts as Fourier transform on $\mathrm{Jac}(T^2)$.  The level shift $k \to -k$ is the quantum manifestation of this classical symplectic duality.
 \end{remark}
 
 \begin{remark}[Koszul duality as higher-dimensional Fourier transform]
 \label{rem:koszul-fourier}
-The preceding observation is an instance of a general principle:
-chiral Koszul duality on curves is a higher-dimensional Fourier
-transform, and the classical Fourier transform is the abelian
-specialization.
-
-The classical Fourier transform is the integral transform
-$\hat{f}(\xi) = \int f(x)\, e^{i\langle x,\xi\rangle}\, dx$
-with kernel $e^{i\langle x,\xi\rangle}$.
-The chiral bar construction is the integral transform
+Chiral Koszul duality is a higher-dimensional Fourier transform: the bar construction
 \[
 \bar{B}(\cA) \;=\; \bigoplus_n
   \int_{C_n(X)} \cA^{\boxtimes n}
   \otimes \Omega^*_{\log}(\overline{C}_n(X))
 \]
-with kernel $\eta_{ij} = d\log(z_i - z_j)$.
-Both transforms exchange an object with its dual ($V \leftrightarrow V^*$
-in the linear case, $\cA \leftrightarrow \cA^!$ in the chiral case),
-and both admit inversion formulae: Fourier inversion
-$f(x) = \int \hat{f}(\xi)\, e^{-i\langle x,\xi\rangle}\, d\xi$
-corresponds to Verdier duality
-$\mathbb{D}_{\operatorname{Ran}}\, \bar{B}(\cA) \simeq \bar{B}(\cA^!)$
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+with kernel $\eta_{ij} = d\log(z_i - z_j)$ exchanges $\cA \leftrightarrow \cA^!$, with Verdier duality $\mathbb{D}_{\operatorname{Ran}}\, \bar{B}(\cA) \simeq \bar{B}(\cA^!)$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}) as the inversion formula.  For commutative algebras, the $n$-point contributions factor pairwise, recovering a linear integral transform.
 
-The passage from the linear to the higher-dimensional transform is
-governed by the number of points: the Fourier kernel is a
-\emph{two-point} function $e^{i\langle x,\xi\rangle}$, while the bar
-construction integrates over $n$-point configuration spaces with the
-$n$-point propagator $\prod_{i<j} \eta_{ij}$.  For a commutative
-algebra, the $n$-point contributions factor through pairwise terms and
-one recovers a linear integral transform; for a noncommutative chiral
-algebra, the higher-point terms encode genuine nonlinear data.
-
-\emph{Reduction to the classical Fourier transform.}
-For the Heisenberg algebra $\cH_k$ on a curve $\Sigma_g$ of genus
-$g \geq 1$, this reduction is literal.  By the computation preceding
-this remark, the bar complex cohomology computes
-$H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k)$ and the Koszul duality
-map acts on the Jacobian via the symplectic involution
-$\Omega \mapsto -\Omega^{-1}$ of the period matrix.  By Poisson
-summation on $\mathbb{Z}^g$, this is the Fourier transform on the
-lattice $H_1(\Sigma_g, \mathbb{Z})$.  Concretely:
-
-\begin{itemize}
-\item \emph{Genus~$1$}: the Jacobian is $T^2$, Poisson summation on
-  $\mathbb{Z}$ gives the S-transformation $\tau \mapsto -1/\tau$, and
-  the theta function identity
-  $\theta_3(-1/\tau) = (-i\tau)^{1/2}\, \theta_3(\tau)$
-  is Fourier inversion.
-\item \emph{Genus~$g$}: the Jacobian is a $g$-dimensional abelian
-  variety, Poisson summation on $\mathbb{Z}^g$ gives the Siegel
-  modular involution $\Omega \mapsto -\Omega^{-1}$, and the
-  Riemann theta function identity
-  $\Theta(-\Omega^{-1}, \Omega^{-1}z) =
-    (\det(-i\Omega))^{1/2}\, e^{i\pi z^T \Omega^{-1} z}\,
-    \Theta(\Omega, z)$
-  is the higher-dimensional Fourier inversion formula.
-\end{itemize}
-
-Thus chiral Koszul duality for the Heisenberg algebra is precisely
-the Fourier transform on the Jacobian, and the general
-construction---with its nonlinear $n$-point kernel and
-configuration space integrals---is the extension of this transform
-from abelian to nonabelian chiral algebras.
+For $\cH_k$ on $\Sigma_g$, this reduction is literal: bar cohomology computes $H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k)$, the Koszul duality map acts via $\Omega \mapsto -\Omega^{-1}$, and Poisson summation on $\mathbb{Z}^g$ gives Fourier inversion.  At genus~$1$: $\tau \mapsto -1/\tau$ and $\theta_3(-1/\tau) = (-i\tau)^{1/2}\,\theta_3(\tau)$.  At genus~$g$: $\Theta(-\Omega^{-1}, \Omega^{-1}z) = (\det(-i\Omega))^{1/2}\, e^{i\pi z^T \Omega^{-1} z}\, \Theta(\Omega, z)$.
 \end{remark}
 
 \subsection{From Fourier duality to chiral Koszul duality}
@@ -2955,56 +2718,20 @@ $\overline{C}_n(X)$, so they commute.
 
 \begin{remark}[From pairwise decomposition to classical Fourier analysis]
 \label{rem:pairwise-to-fourier}
-The pairwise decomposition of
-Proposition~\ref{prop:abelian-bar-factorization} is the structural
-reason that abelian chiral algebras produce \emph{linear} integral
-transforms.  In the classical Fourier transform on $\R^g$, the
-kernel $e^{i \langle x, \xi \rangle}
-= \prod_{j=1}^g e^{i x_j \xi_j}$ factors as a product of
-one-dimensional kernels, and the multivariate transform decomposes:
-\[
-\hat{f}(\xi_1, \ldots, \xi_g)
-= \int_{\R^g} f(x_1, \ldots, x_g)\,
-  \prod_{j=1}^g e^{i x_j \xi_j}\, dx_j
-= \hat{f}_1(\xi_1) \cdots \hat{f}_g(\xi_g)
-\]
-whenever $f = f_1 \otimes \cdots \otimes f_g$.  This pairwise
-factorization is the classical shadow of
-Proposition~\ref{prop:abelian-bar-factorization}: the chiral bar
-differential on the Heisenberg algebra reduces to iterated pairwise
-residue extraction, which on a genus-$g$ curve becomes iterated
-Fourier coefficient extraction on
-$\mathrm{Jac}(\Sigma_g) \cong \C^g / (\Z^g + \Omega\Z^g)$.
+The pairwise decomposition (Proposition~\ref{prop:abelian-bar-factorization}) is why abelian chiral algebras produce linear integral transforms: the multivariate Fourier kernel factors as $e^{i\langle x,\xi\rangle} = \prod_j e^{ix_j\xi_j}$, and the chiral bar differential on $\cH_k$ reduces to iterated pairwise residue extraction, which on $\Sigma_g$ becomes Fourier coefficient extraction on $\mathrm{Jac}(\Sigma_g)$.
 \end{remark}
 
 \begin{remark}[Convolution--multiplication exchange]
 \label{rem:convolution-exchange}
 \index{convolution!chiral bar construction}
-The classical convolution theorem
-$\widehat{f * g} = \hat{f} \cdot \hat{g}$ states that the Fourier
-transform exchanges convolution with pointwise multiplication.
-The bar construction satisfies an analogous exchange: the chiral
-product $\mu\colon \cA \boxtimes \cA \to \Delta_* \cA$ maps under
-the bar functor to the coproduct
+The bar functor exchanges the chiral product $\mu\colon \cA \boxtimes \cA \to \Delta_* \cA$ with the coproduct
 \[
 \Delta\colon \bar{B}^{\mathrm{ch}}_n(\cA)
 \;\longrightarrow\;
 \bigoplus_{p+q=n} \bar{B}^{\mathrm{ch}}_p(\cA)
   \otimes \bar{B}^{\mathrm{ch}}_q(\cA),
 \]
-defined by restriction to the codimension-$1$ boundary strata of
-$\overline{C}_n(X)$: each stratum $D_{S,T}$ indexed by a partition
-$[n] = S \sqcup T$ contributes a tensor factor.  The bar functor
-sends the OPE data of $\cA$ (algebra structure) to the splitting
-data of $\bar{B}(\cA)$ (coalgebra structure).
-
-For the Heisenberg algebra on a genus-$g$ curve, this exchange
-specializes to the classical identity: the bar complex cohomology
-$H^*(\bar{B}_g(\cH_k))
-\cong H^*(\mathrm{Jac}(\Sigma_g), \mathcal{L}_k)$
-(Theorem~\ref{thm:heisenberg-genus-g}) identifies the chiral
-product with convolution on the Jacobian and the coproduct with the
-diagonal embedding of the dual lattice.
+defined by restriction to the boundary strata $D_{S,T}$ of $\overline{C}_n(X)$---the chiral analogue of $\widehat{f * g} = \hat{f} \cdot \hat{g}$.  For $\cH_k$ on $\Sigma_g$, this identifies the chiral product with convolution on the Jacobian (Theorem~\ref{thm:heisenberg-genus-g}).
 \end{remark}
 
 The parallel between classical Fourier duality and chiral bar-cobar
@@ -3499,46 +3226,15 @@ For $\En$-Koszul algebras, $\tilde{m}_k = 0$ for $k \geq 3$ (Theorem~\ref{thm:ch
 \label{rem:curved-fourier}
 \index{coderived category!Fourier interpretation}
 \index{curved bar complex!Fourier duality}
-At genus $g \geq 1$, the bar complex acquires curvature
-$\mcurv{g} = \kappa(\cA) \cdot \omega_g$
-(Convention~\ref{conv:higher-genus-differentials}): the
-fiberwise differential satisfies $\dfib^{\,2}
-= \kappa(\cA) \cdot \omega_g \neq 0$, and the bar complex is
-a \emph{curved} dg-coalgebra rather than an ordinary chain complex.
-
-In the Fourier-analytic language, the curvature is a
-\emph{mass term}: it prevents the Fourier modes from being
-exact eigenstates of the differential, introducing mixing
-between frequency channels.  The corrected differential
-$\Dg{g} = \dfib + \text{correction}$ with $\Dg{g}^2 = 0$
-restores the chain complex structure, at the cost of modifying
-the ``Fourier basis'' in a genus-dependent way.
-
-The correct categorical framework for this curved setting
-is the \emph{coderived category}
-$D^{\mathrm{co}}(\barB_g(\cA))$ of Positselski, in which
-the bar-cobar adjunction extends to an equivalence on the
-full curved coalgebra (not just the Koszul locus).  The
-derived Fourier inversion formula
-\eqref{eq:pk-duality-fourier} then holds in the coderived
-category:
+At genus $g \geq 1$, $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g \neq 0$ makes the bar complex a curved dg-coalgebra.  The correct framework is Positselski's coderived category $D^{\mathrm{co}}(\barB_g(\cA))$, in which the derived Fourier inversion~\eqref{eq:pk-duality-fourier} holds:
 \[
 \int_{\Sigma_g} \cA
 \;\simeq\;
 \int_{\Sigma_g} \cA^![-2]
 \quad
-\text{in } D^{\mathrm{co}},
+\text{in } D^{\mathrm{co}}.
 \]
-with the curvature $\kappa(\cA) \cdot \omega_g$ encoding the
-failure of the naive bar complex to compute the factorization
-homology.  The complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main}) is the
-statement that the curvatures on both sides add to a universal
-class:
-$\kappa(\cA) + \kappa(\cA^!) = [\omega_g] \in H^*(\overline{\mathcal{M}}_g)$---the
-non-abelian analogue of the constraint
-$\|f\|^2 + \|\hat{f}\|^2 = \text{const}$ in the uncertainty
-principle.
+Complementarity (Theorem~\ref{thm:quantum-complementarity-main}) states $\kappa(\cA) + \kappa(\cA^!) = [\omega_g] \in H^*(\overline{\mathcal{M}}_g)$---the non-abelian analogue of the uncertainty principle constraint $\|f\|^2 + \|\hat{f}\|^2 = \text{const}$.
 \end{remark}
 
 \subsection{Explicit bar complex calculation}

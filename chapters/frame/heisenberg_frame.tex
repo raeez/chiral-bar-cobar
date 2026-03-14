@@ -104,29 +104,11 @@ enters the braided $\Eone$ face.
 
 \begin{remark}[The four theorems for Heisenberg]%
 \label{rem:frame-governing-picture}
-The computations in this chapter instantiate all four main theorems
-for~$\mathcal{H}_k$ before the general theory of Part~I:
-\begin{enumerate}
-\item[\textbf{A.}] \emph{Duality}
-  (\S\ref{sec:frame-koszul-dual}):
-  $\barB(\mathcal{H}_k) \simeq
-  \mathrm{coLie}^{\mathrm{ch}}(V^*)$;\quad
-  $\mathcal{H}_k^! =
-  \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\; m_0 = -k\omega\bigr)$.
-\item[\textbf{B.}] \emph{Inversion}
-  (\S\ref{sec:frame-inversion}):
-  $\Omega\barB(\mathcal{H}_k) \xrightarrow{\sim}
-  \mathcal{H}_k$ (formality: $H^*$ in degrees $0, 2$).
-\item[\textbf{C.}] \emph{Complementarity}
-  (\S\ref{sec:frame-complementarity}):
-  $Q_g(\mathcal{H}_k) \oplus Q_g(\mathcal{H}_k^!) =
-  H^*(\overline{\mathcal{M}}_g, \mathcal{Z}_{\mathcal{H}_k})$.
-\item[\textbf{D.}] \emph{Characteristic}
-  (\S\ref{sec:frame-genus-tower}):
-  $\kappa(\mathcal{H}_k) = k$;\quad
-  $\sum_{g \geq 1} F_g\, x^{2g} =
-  k\bigl(\tfrac{x/2}{\sin(x/2)} - 1\bigr)$.
-\end{enumerate}
+This chapter instantiates all four main theorems for~$\mathcal{H}_k$:
+\textbf{A}~(\S\ref{sec:frame-koszul-dual}): $\mathcal{H}_k^! = (\mathrm{Sym}^{\mathrm{ch}}(V^*), m_0 = -k\omega)$.
+\textbf{B}~(\S\ref{sec:frame-inversion}): $\Omega\barB(\mathcal{H}_k) \xrightarrow{\sim} \mathcal{H}_k$.
+\textbf{C}~(\S\ref{sec:frame-complementarity}): $Q_g(\mathcal{H}_k) \oplus Q_g(\mathcal{H}_k^!) = H^*(\overline{\mathcal{M}}_g, \mathcal{Z}_{\mathcal{H}_k})$.
+\textbf{D}~(\S\ref{sec:frame-genus-tower}): $\kappa(\mathcal{H}_k) = k$; $\sum_{g \geq 1} F_g\, x^{2g} = k(\tfrac{x/2}{\sin(x/2)} - 1)$.
 \end{remark}
 
 \medskip
@@ -520,22 +502,7 @@ forms.
 
 \begin{remark}[The Arnold relation as factorization coherence]
 \label{rem:frame-arnold-factorization}
-The identity~\eqref{eq:frame-arnold} is the fundamental coherence
-relation of factorization algebras on algebraic curves.  It governs
-how the chiral algebra structure extends from pairwise OPE data
-(degree~$1$) to triple collisions (degree~$2$) and beyond.  Every
-construction in this monograph rests on this identity: the bar complex
-is well-defined because Arnold holds; Verdier duality exchanges bar
-and cobar because Arnold is self-dual; the genus tower extends the
-bar complex over $\overline{\mathcal{M}}_g$ because Arnold lifts to
-the boundary strata of the Fulton--MacPherson operad.
-
-In the language of operads, the Arnold relation is the quadratic
-relation defining the \emph{gravity operad} $\mathrm{Grav}$
-(the Koszul dual of the hypercommutative operad $\mathrm{HyCom}$),
-which governs genus-$0$ chiral algebra structure.  The genus-$0$
-bar-cobar adjunction is operadic Koszul duality:
-$\mathrm{HyCom} \leftrightarrow \mathrm{Grav}$.
+The identity~\eqref{eq:frame-arnold} is the fundamental coherence relation of factorization algebras: the bar complex is well-defined because Arnold holds, Verdier duality exchanges bar and cobar because Arnold is self-dual, and the genus tower extends over $\overline{\mathcal{M}}_g$ because Arnold lifts to boundary strata of the FM operad.  In the operadic language,~\eqref{eq:frame-arnold} defines the gravity operad $\mathrm{Grav} = \mathrm{HyCom}^!$, and the genus-$0$ bar-cobar adjunction is operadic Koszul duality.
 \end{remark}
 
 % ================================================================
@@ -1016,13 +983,19 @@ is a coLie coalgebra.  The bar complex is therefore:
 the conilpotent chiral Lie coalgebra on the single cogenerator
 $V^* = \mathrm{Span}\{\alpha^*\}$.
 
-Apply the cobar functor.  The cobar of a coLie coalgebra is the
-free commutative algebra (this is the dual statement to
-$\mathrm{Com}^! = \mathrm{Lie}$ in the Koszul duality of operads):
-\begin{equation}\label{eq:frame-cobar}
-\Omega^{\mathrm{ch}}\bigl(\mathrm{coLie}^{\mathrm{ch}}(V^*)\bigr)
-\simeq \mathrm{Sym}^{\mathrm{ch}}(V^*).
+Dualize.  The graded linear dual of a cofree cocommutative
+coalgebra on~$V^*$ is the free commutative algebra
+on~$V^*$ (this is the algebra-coalgebra duality
+underlying $\mathrm{Com}^! = \mathrm{Lie}$):
+\begin{equation}\label{eq:frame-koszul-dual-coalgebra-to-algebra}
+\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)^\vee
+\;=\; \mathrm{coLie}^{\mathrm{ch}}(V^*)^\vee
+\;\cong\; \mathrm{Sym}^{\mathrm{ch}}(V^*).
 \end{equation}
+This is the Koszul dual \emph{algebra}, obtained by dualizing
+the bar coalgebra --- not by applying the cobar functor, which
+would instead recover~$\mathcal{H}_k$ itself
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
 
 The level $k$ determines a curvature element
 $m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$, encoding the
@@ -1057,30 +1030,20 @@ Lie-type & Com-type
 \end{center}
 
 The construction we have just performed for $\mathcal{H}_k$
-is an instance of a general pattern: the bar complex of any
-augmented chiral algebra is a coalgebra, and the cobar of
-that coalgebra produces the Koszul dual.  The general
-bar-cobar adjunction is developed in
+is an instance of a general pattern: the bar complex
+$\bar{B}(\cA)$ of any augmented chiral algebra~$\cA$ is a
+coalgebra --- the Koszul dual \emph{coalgebra}.  The Koszul dual
+\emph{algebra}~$\cA^!$ is obtained by dualizing this coalgebra
+(Verdier duality on $\operatorname{Ran}(X)$; see
+Theorem~\ref{thm:bar-cobar-verdier}).  The cobar of the bar
+recovers~$\cA$ itself: $\Omega(\bar{B}(\cA)) \simeq \cA$
+on the Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}).
+The general bar-cobar adjunction is developed in
 Chapter~\ref{chap:bar-cobar}.
 
 \begin{remark}[Three different ``dualities'']
 \label{rem:frame-three-dualities}
-The literature contains three distinct duality operations
-on the Heisenberg algebra, which must not be confused:
-\begin{enumerate}
-\item \emph{Bar-cobar Koszul duality} (this chapter):
-  $\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$.
-  Exchanges Lie-type and Com-type structure.
-\item \emph{Level-shifting duality}:
-  $\mathrm{Rep}(\mathcal{H}_k)
-  \simeq \mathrm{Rep}(\mathcal{H}_{-k})$.
-  An equivalence of representation categories.
-\item \emph{Boson-fermion correspondence}:
-  $\mathrm{Rep}(\mathcal{H}_k)
-  \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})$.
-  Relates Heisenberg modules to free-fermion modules.
-\end{enumerate}
-Only~(1) is the subject of this monograph.
+Three distinct operations must not be confused: (1)~Koszul duality $\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$, where the bar coalgebra $\bar{B}(\mathcal{H}_k)$ is dualized to produce the Koszul dual algebra (this chapter); (2)~level-shifting $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})$; (3)~boson-fermion correspondence $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})$.  Only~(1) is the subject of this monograph.
 \end{remark}
 
 % ================================================================
@@ -1299,17 +1262,7 @@ $k = 0$, where the Heisenberg algebra degenerates.
 
 \begin{remark}[Physical meaning of curvature]
 \label{rem:frame-curvature-physics}
-In conformal field theory, the curvature $\dfib^{\,2} = k \cdot \omega_1$
-is the \emph{conformal anomaly} at one loop.  The level $k$
-controls the strength of the central extension; the Hodge class
-$\omega_1$ is the gravitational coupling.  The product $k \cdot
-\omega_1$ measures the obstruction to defining the chiral algebra
-consistently on all elliptic curves simultaneously: it is the
-first Chern class of the \emph{determinant line bundle}
-$\det(R\pi_*\mathcal{F}_k)$ on $\overline{\mathcal{M}}_1$,
-where $\pi\colon \mathcal{E} \to \overline{\mathcal{M}}_1$
-is the universal elliptic curve and $\mathcal{F}_k$ is the
-Fock space sheaf.
+The curvature $\dfib^{\,2} = k \cdot \omega_1$ is the conformal anomaly: $k$ controls the central extension strength, $\omega_1$ is the gravitational coupling, and $k \cdot \omega_1 = c_1(\det(R\pi_*\mathcal{F}_k))$ on $\overline{\mathcal{M}}_1$ measures the obstruction to consistent definition on all elliptic curves.
 \end{remark}
 
 % ================================================================
@@ -1573,31 +1526,13 @@ This confirms equation~\eqref{eq:frame-full-generating}.
 
 \begin{remark}[The family index theorem]
 \label{rem:frame-family-index}
-The appearance of the $\hat{A}$-genus admits a conceptual explanation
-via Grothendieck--Riemann--Roch (Theorem~\ref{thm:family-index}).
-For $\mathcal{A} = \mathcal{H}_k$, the modular deformation complex
-is $\mathcal{D}_{\mathcal{H}_k}^{(g)} = k \cdot \mathbb{E}$
-($k$ copies of the Hodge bundle).  The GRR formula applied to the
-forgetful morphism $\pi \colon \overline{\mathcal{M}}_{g,1}
-\to \overline{\mathcal{M}}_g$ gives
+The $\hat{A}$-genus arises from Grothendieck--Riemann--Roch (Theorem~\ref{thm:family-index}).  For $\mathcal{H}_k$, the modular deformation complex is $k \cdot \mathbb{E}$; the GRR formula
 \begin{equation}\label{eq:frame-grr}
 \mathrm{ch}(\pi_!\, \omega_{\mathcal{C}})
 = \pi_*\!\left(\mathrm{ch}(\omega_{\mathcal{C}}) \cdot
 \mathrm{Td}(T_\pi)\right)
 \end{equation}
-where $T_\pi$ is the relative tangent bundle.  Since
-$\omega_{\mathcal{C}} = T_\pi^*$, the pushforward~\eqref{eq:frame-grr}
-produces the Chern character of $\mathbb{E}$ in terms of
-$\kappa$-classes, recovering the Mumford formula
-$\mathrm{ch}_g(\mathbb{E}) = B_{2g} \cdot \kappa_{2g-1}/(2g)!$.
-Combining with the bar-complex obstruction
-$\mathrm{obs}_g = k \cdot \lambda_g$
-and integrating recovers~\eqref{eq:frame-generating-function}
-directly.
-
-The genus expansion of \emph{every} Koszul chiral algebra is an index:
-the $\hat{A}$-class pushforward of the Hodge bundle scaled by the
-bar-complex curvature.
+applied to $\pi\colon \overline{\mathcal{M}}_{g,1} \to \overline{\mathcal{M}}_g$ recovers the Mumford formula $\mathrm{ch}_g(\mathbb{E}) = B_{2g} \cdot \kappa_{2g-1}/(2g)!$, which combined with $\mathrm{obs}_g = k \cdot \lambda_g$ yields~\eqref{eq:frame-generating-function}.  The genus expansion of every Koszul chiral algebra is an index: the $\hat{A}$-class pushforward of the Hodge bundle scaled by bar-complex curvature.
 \end{remark}
 
 \begin{table}[ht]
@@ -1746,22 +1681,7 @@ discriminant and richer ambient deformation data.
 
 \begin{remark}[Hierarchy and status]%
 \label{rem:frame-kappa-not-fundamental}
-Definition~\ref{def:frame-modular-package} is a hierarchy, not a flat
-theorematic package.  Items~(1)--(3) are proved in this monograph: the
-scalar package
-(Theorem~\ref{thm:modular-characteristic}), the complementarity
-complex (Theorem~\ref{thm:quantum-complementarity-main}), and the
-spectral discriminant (Theorem~\ref{thm:spectral-characteristic}).
-Item~(4), the universal Maurer--Cartan class
-$\Theta_{\mathcal{A}}$, is now constructed
-(Theorem~\ref{thm:universal-theta},
-Definition~\ref{def:full-modular-package}).
-The genus-$1$ obstruction coefficient $\kappa(\mathcal{A})$ ---
-which equals the level~$k$ for Heisenberg, the Sugawara central
-charge $c/2$ for Virasoro, and
-$(k+h^\vee)\dim(\mathfrak{g})/(2h^\vee)$ for affine Kac--Moody ---
-is the first characteristic number of the anticipated
-$\Theta_{\mathcal{A}}$, not the fundamental object itself.
+Definition~\ref{def:frame-modular-package} is a hierarchy: items~(1)--(3) are proved (Theorems~\ref{thm:modular-characteristic}, \ref{thm:quantum-complementarity-main}, \ref{thm:spectral-characteristic}); item~(4), the universal Maurer--Cartan class $\Theta_{\mathcal{A}}$, is now constructed (Theorem~\ref{thm:universal-theta}).  The genus-$1$ coefficient $\kappa(\mathcal{A})$ ($= k$ for Heisenberg, $c/2$ for Virasoro, $(k+h^\vee)\dim(\mathfrak{g})/(2h^\vee)$ for KM) is the first characteristic number of~$\Theta_{\mathcal{A}}$, not the fundamental object.
 \end{remark}
 
 % ================================================================
@@ -1837,23 +1757,7 @@ $H^*(\barB)$ & $\mathbb{C}[0] \oplus \mathbb{C}[2]$
 \end{center}
 
 \begin{remark}[Three dualities]\label{rem:frame-three-dualities-intro}
-The free fermion participates in three distinct dualities, which must
-not be conflated:
-\begin{enumerate}
-\item \emph{Koszul duality}: $\mathcal{F}^! = \beta\gamma$.  This is
-  the chiral bar-cobar duality, proved via acyclicity of
-  $\barB(\mathcal{F})$.
-\item \emph{Bosonization}: the fermion $\psi(z)$ can be written as
-  $:\!e^{i\phi(z)}\!:$ for a free boson $\phi$.  This is a
-  representation-theoretic equivalence, not a Koszul duality.
-\item \emph{Level-shifting}: the Heisenberg algebra at level~$k$
-  and level~$-k$ are related by $\alpha \mapsto -\alpha$.  This is
-  an automorphism, not a duality.
-\end{enumerate}
-The bc system (conformal weights $(\lambda, 1{-}\lambda)$) and the
-$\beta\gamma$ system (weights $(1,0)$) form a two-generator Koszul
-pair with $\dim V = 2$, realizing $\chirLie \leftrightarrow \chirCom$
-in the two-dimensional case.
+The free fermion participates in three distinct dualities: (1)~Koszul duality $\mathcal{F}^! = \beta\gamma$; (2)~bosonization $\psi(z) = {:\!}e^{i\phi(z)}{:\!}$ (representation-theoretic, not Koszul); (3)~level-shifting $\mathcal{H}_k \cong \mathcal{H}_{-k}$ via $\alpha \mapsto -\alpha$ (automorphism).  The $bc$/$\beta\gamma$ pair realizes $\chirLie \leftrightarrow \chirCom$ with $\dim V = 2$.
 \end{remark}
 
 The free field example reveals a clean structural dichotomy.  The
@@ -2012,7 +1916,8 @@ The full differential $d = d_{\mathrm{bracket}} + d_{\mathrm{residue}}$
 satisfies $d^2 = 0$ via the complete Borcherds identity, which
 intertwines both pole orders.  This is the chiral Koszul phenomenon:
 the two components of $d$ are individually \emph{not} differentials;
-they form a differential only in combination.
+they form a differential only in combination
+(\S\ref{sec:selection-principle}).
 \end{remark}
 
 \subsection{\texorpdfstring{$d_{\mathrm{bracket}}^2 \neq 0$}{d bracket squared is not zero}}
