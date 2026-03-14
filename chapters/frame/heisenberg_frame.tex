@@ -963,39 +963,191 @@ sign cancellations (Type~II), as detailed in
 \S\ref{subsec:frame-degree3}.
 
 % ================================================================
+\section{The twisting morphism: the propagator as algebraic map}
+\label{sec:frame-twisting-morphism}
+% ================================================================
+
+The bar complex $\bar{B}(\mathcal{H}_k)$ is not merely an
+abstract coalgebra attached to $\mathcal{H}_k$.  It carries a
+canonical map back to $\mathcal{H}_k$ --- the \emph{universal
+twisting morphism}
+\begin{equation}\label{eq:frame-twisting-morphism}
+\tau\colon \bar{B}(\mathcal{H}_k) \longrightarrow \mathcal{H}_k,
+\end{equation}
+defined by projecting a bar element to its single-insertion
+(cogenerator) component.  Concretely, for a bar element
+$\phi_1 \otimes \cdots \otimes \phi_n \otimes \omega
+\in \bar{B}^n(\mathcal{H}_k)$:
+\begin{equation}\label{eq:frame-tau-formula}
+\tau(\phi_1 \otimes \cdots \otimes \phi_n \otimes \omega)
+= \begin{cases}
+  \phi_1 & n = 1,\;\omega = 1, \\[2pt]
+  0 & n \geq 2.
+\end{cases}
+\end{equation}
+The twisting morphism has degree~$+1$
+(bar desuspension shifts degree by~$-1$).
+
+\begin{proposition}[Maurer--Cartan equation for Heisenberg;
+\ClaimStatusProvedHere]
+\label{prop:frame-twisting-MC}
+The twisting morphism~$\tau$ satisfies
+\begin{equation}\label{eq:frame-MC}
+d\tau + \tau \star \tau = 0
+\end{equation}
+in the convolution dg~Lie algebra
+$\operatorname{Hom}(\bar{B}(\mathcal{H}_k), \mathcal{H}_k)$,
+where $(\tau \star \tau)(x)
+= \mu \circ (\tau \otimes \tau) \circ \Delta(x)$.
+\end{proposition}
+
+\begin{proof}
+\emph{Degree~$1$.}
+For $x = \alpha^* \in \bar{B}^1$:
+$\Delta(\alpha^*) = \alpha^* \otimes 1
++ 1 \otimes \alpha^*$ (primitive), so
+$(\tau \star \tau)(\alpha^*) = 0$ (since $\tau(1) = 0$).
+Also $d\tau(\alpha^*) = d(\alpha) = 0$.
+
+\emph{Degree~$2$.}
+For $x = \alpha^*(z_1) \otimes \alpha^*(z_2) \otimes \eta_{12}
+\in \bar{B}^2$: the coproduct splits the pair, giving
+$(\tau \star \tau)(x)
+= \operatorname{Res}_{z_1 = z_2}
+  [\alpha(z_1)\,\alpha(z_2)\,\eta_{12}]
+= k$
+(the OPE residue).
+The bar differential gives
+$d\tau(x) = \tau(d_{\mathrm{bar}}\,x) = -k$ by
+equation~\eqref{eq:frame-dres-deg1}.
+Hence $d\tau + \tau \star \tau = -k + k = 0$.
+\end{proof}
+
+\emph{What this means geometrically.}
+The Maurer--Cartan equation is not an axiom imposed on~$\tau$
+--- it \emph{is the Arnold relation in algebraic disguise}.
+The convolution $\tau \star \tau$ computes the residue of the
+propagator $\eta_{12} = d\log(z_1 - z_2)$ at the collision
+divisor $D_{12} \subset \overline{C}_2(\mathbb{P}^1)$.
+The bar differential $d$ computes the boundary of this
+residue.  The equation $d\tau + \tau \star \tau = 0$ says:
+\emph{the boundary of a single collision cancels the
+propagator residue} --- which is precisely Stokes' theorem
+on $\overline{C}_2(\mathbb{P}^1)$.  At three points, this
+becomes the Arnold relation.  At~$n$ points,
+$d_{\mathrm{bar}}^2 = 0$.
+
+\begin{definition}[Koszul complex for Heisenberg]
+\label{def:frame-koszul-complex}
+\index{Koszul complex!Heisenberg}
+The \emph{Koszul complex} (twisted tensor product) of~$\tau$ is
+\begin{equation}\label{eq:frame-koszul-complex}
+K(\tau) := \mathcal{H}_k \otimes_\tau \bar{B}(\mathcal{H}_k)
+= \bigl(\mathcal{H}_k \otimes \bar{B}(\mathcal{H}_k),\;
+  d_{\mathcal{H}} + d_{\bar{B}} + d_\tau\bigr),
+\end{equation}
+where $d_\tau(\phi \otimes x) = \mu(\phi \otimes \tau(x_{(1)}))
+\otimes x_{(2)}$ inserts $\tau$ of the first coproduct factor
+into the algebra.
+\end{definition}
+
+By the fundamental theorem of twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}):
+$\mathcal{H}_k$ is Koszul if and only if $K(\tau)$ is acyclic.
+The bar cohomology of
+Theorem~\ref{thm:frame-heisenberg-bar} (concentrated in
+degrees~$0$ and~$2$) is exactly the obstruction to acyclicity
+of $K(\tau)$; the unique class in degree~$2$ is the central
+extension, and it is the twisting morphism that detects it.
+
+The twisting morphism~$\tau$ determines everything computed in
+this chapter: bar differential, Koszul complex, bar cohomology,
+and Koszul dual (Corollary~\ref{cor:three-bijections}).
+In the next section, the three bijections for $\tau$ become the
+distinction between the Koszul dual \emph{coalgebra}, the Koszul
+dual \emph{algebra}, and the bar-cobar \emph{resolution}.
+
+\begin{remark}[The twisting morphism at higher genus]
+\label{rem:frame-twisting-higher-genus}
+At genus~$0$, the MC equation $d\tau + \tau\star\tau = 0$ holds
+exactly: the propagator $\eta_{12} = d\log(z_1 - z_2)$ on
+$\mathbb{P}^1$ is single-valued and the Arnold relation is exact.
+At genus~$g \geq 1$, the propagator acquires monodromy and the
+Arnold relation develops a defect
+(Theorem~\ref{thm:quantum-arnold-relations}):
+\[
+d\tau_g + \tau_g \star \tau_g = \kappa(\mathcal{H}_k) \cdot \omega_g.
+\]
+The twisting morphism becomes \emph{curved}: the curvature
+$\kappa \cdot \omega_g$ is the Arakelov form weighted by the level.
+The corrected differential $\Dg{g}$ restores flatness by passing
+to the holomorphic propagator
+(Theorem~\ref{thm:quantum-diff-squares-zero};
+Remark~\ref{rem:curved-twisting-higher-genus}).
+\end{remark}
+
+% ================================================================
 \section{Reading off the Koszul dual}\label{sec:frame-koszul-dual}
 % ================================================================
 
-The bar complex of $\mathcal{H}_k$ is a coalgebra.  Its coproduct
-structure is determined by the OPE.  Because the double-pole
-residue $\mathrm{Res}_{z_i = z_j}[\omega/(z_i - z_j)^2]
-= \partial_{z_i}\omega|_{z_i = z_j}$ is symmetric under
-$z_i \leftrightarrow z_j$, the coproduct is \emph{cocommutative}:
+The bar coalgebra $\bar{B}(\mathcal{H}_k)$ carries a coproduct
+determined by the OPE.  On the single cogenerator
+$\alpha^* \in \bar{B}^1$, there is nothing to decompose:
 \begin{equation}\label{eq:frame-primitive}
-\Delta(\alpha) = \alpha \otimes 1 + 1 \otimes \alpha.
+\Delta(\alpha^*) = \alpha^* \otimes 1 + 1 \otimes \alpha^*.
 \end{equation}
-By the Milnor--Moore theorem, a conilpotent cocommutative coalgebra
-is a coLie coalgebra.  The bar complex is therefore:
+This is the definition of a \emph{primitive} element.
+Every element of $\bar{B}^1$ is primitive, and the
+double-pole residue is symmetric under $z_i \leftrightarrow z_j$,
+so the coproduct is cocommutative at all degrees.
+The bar coalgebra is also conilpotent
+(Theorem~\ref{thm:bar-nilpotency-complete}): every element
+is eventually annihilated by iterated reduced coproducts.
+By the Milnor--Moore theorem
+(characteristic zero, conilpotent, cocommutative), such a
+coalgebra is the universal enveloping coalgebra of its
+primitives.  For $\mathcal{H}_k$ the space of primitives is
+one-dimensional, so:
 \begin{equation}\label{eq:frame-bar-coalgebra}
 \bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
-\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)
+\simeq \mathrm{coLie}^{\mathrm{ch}}(V^*),
+\qquad V^* = \mathrm{Span}\{\alpha^*\}.
 \end{equation}
-the conilpotent chiral Lie coalgebra on the single cogenerator
-$V^* = \mathrm{Span}\{\alpha^*\}$.
 
-Dualize.  The graded linear dual of a cofree cocommutative
-coalgebra on~$V^*$ is the free commutative algebra
-on~$V^*$ (this is the algebra-coalgebra duality
-underlying $\mathrm{Com}^! = \mathrm{Lie}$):
+\medskip
+\noindent\textbf{Two constructions, two targets.}
+From the coalgebra $\bar{B}(\mathcal{H}_k)$, two different
+operations produce two different algebras:
+\begin{enumerate}
+\item \emph{Dualize} (graded linear dual):
+$\mathrm{coLie}^{\mathrm{ch}}(V^*)^\vee
+\cong \mathrm{Sym}^{\mathrm{ch}}(V^*)$,
+the free commutative algebra in one generator ---
+the \emph{Koszul dual algebra} $\mathcal{H}_k^!$.
+\item \emph{Cobar} (free algebra on the desuspended coalgebra):
+$\Omega(\bar{B}(\mathcal{H}_k))
+\xrightarrow{\sim} \mathcal{H}_k$,
+a quasi-isomorphism recovering the \emph{original} algebra
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+\end{enumerate}
+In display:
 \begin{equation}\label{eq:frame-koszul-dual-coalgebra-to-algebra}
 \bar{B}^{\mathrm{ch}}(\mathcal{H}_k)^\vee
-\;=\; \mathrm{coLie}^{\mathrm{ch}}(V^*)^\vee
-\;\cong\; \mathrm{Sym}^{\mathrm{ch}}(V^*).
+\;\cong\; \mathrm{Sym}^{\mathrm{ch}}(V^*)
+= \mathcal{H}_k^!
 \end{equation}
-This is the Koszul dual \emph{algebra}, obtained by dualizing
-the bar coalgebra --- not by applying the cobar functor, which
-would instead recover~$\mathcal{H}_k$ itself
-(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+versus
+\[
+\Omega\bigl(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)\bigr)
+= \Omega\bigl(\mathrm{coLie}^{\mathrm{ch}}(V^*)\bigr)
+\xrightarrow{\;\sim\;} \mathcal{H}_k.
+\]
+Dualizing changes the category (coalgebra $\to$ algebra,
+coLie $\to$ Sym); cobar stays in the algebra category and
+produces a resolution.  Both originate from
+$\bar{B}(\mathcal{H}_k)$, but they point in opposite
+algebraic directions --- and this is the $\mathrm{Com}^!
+= \mathrm{Lie}$ duality made concrete.
 
 The level $k$ determines a curvature element
 $m_0 = -k \cdot \omega \in \mathrm{Sym}^2(V^*)$, encoding the
@@ -1029,21 +1181,36 @@ Lie-type & Com-type
 \end{tabular}
 \end{center}
 
-The construction we have just performed for $\mathcal{H}_k$
-is an instance of a general pattern: the bar complex
-$\bar{B}(\cA)$ of any augmented chiral algebra~$\cA$ is a
-coalgebra --- the Koszul dual \emph{coalgebra}.  The Koszul dual
-\emph{algebra}~$\cA^!$ is obtained by dualizing this coalgebra
-(Verdier duality on $\operatorname{Ran}(X)$; see
-Theorem~\ref{thm:bar-cobar-verdier}).  The cobar of the bar
-recovers~$\cA$ itself: $\Omega(\bar{B}(\cA)) \simeq \cA$
-on the Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}).
-The general bar-cobar adjunction is developed in
+For a general augmented chiral algebra~$\cA$, the same
+two-arrow pattern holds: the bar $\bar{B}(\cA)$ is a coalgebra
+(the Koszul dual \emph{coalgebra}), its linear dual
+$\bar{B}(\cA)^\vee = \cA^!$ is the Koszul dual \emph{algebra}
+(realized via Verdier duality on $\operatorname{Ran}(X)$;
+Theorem~\ref{thm:bar-cobar-verdier}), and the cobar recovers
+the original: $\Omega(\bar{B}(\cA)) \simeq \cA$ on the Koszul
+locus (Theorem~\ref{thm:bar-cobar-inversion-qi}).  The general
+bar-cobar adjunction is developed in
 Chapter~\ref{chap:bar-cobar}.
+
+\begin{remark}[The canonical twisting morphism for Heisenberg]
+\label{rem:frame-twisting-morphism}
+\index{twisting morphism!Heisenberg example}
+The Koszul duality above is witnessed by the twisting morphism
+$\tau_{\mathcal{H}} \colon \mathrm{coLie}^{\mathrm{ch}}(V^*)
+\to \mathcal{H}_k$,
+$v^* \mapsto J_v$.
+It solves $\partial\tau + \tau \star \tau = 0$
+because the only OPE pole is the double pole:
+$\tau \star \tau$ extracts the level $k\omega(v,w)$,
+which lies in the center and is killed by the augmentation.
+The counit $\varepsilon_\tau$ is bar-cobar inversion
+(\S\ref{sec:frame-inversion}); the unit $\eta_\tau$ is
+bar concentration (Theorem~\ref{thm:frame-heisenberg-bar}).
+\end{remark}
 
 \begin{remark}[Three different ``dualities'']
 \label{rem:frame-three-dualities}
-Three distinct operations must not be confused: (1)~Koszul duality $\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$, where the bar coalgebra $\bar{B}(\mathcal{H}_k)$ is dualized to produce the Koszul dual algebra (this chapter); (2)~level-shifting $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})$; (3)~boson-fermion correspondence $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})$.  Only~(1) is the subject of this monograph.
+Three distinct operations must not be confused: (1)~Koszul duality $\mathcal{H}_k \leftrightarrow \mathrm{Sym}^{\mathrm{ch}}(V^*)$, where the bar coalgebra $\bar{B}(\mathcal{H}_k)$ \emph{is} the Koszul dual coalgebra and its linear dual is the Koszul dual algebra~$\mathcal{H}_k^!$ (this chapter); (2)~level-shifting $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})$; (3)~boson-fermion correspondence $\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})$.  Only~(1) is the subject of this monograph.
 \end{remark}
 
 % ================================================================
@@ -1689,19 +1856,44 @@ Definition~\ref{def:frame-modular-package} is a hierarchy: items~(1)--(3) are pr
 \label{sec:frame-free-fields}
 % ================================================================
 
-The Heisenberg algebra has a single current with a \emph{double} pole.
-The free fermion has a single current with a \emph{simple} pole:
+The Heisenberg algebra has a single bosonic current with a
+\emph{double} pole.  The free fermion has a single
+\emph{fermionic} current with a \emph{simple} pole:
 \begin{equation}\label{eq:frame-fermion-ope}
 \psi(z)\,\psi(w) = \frac{1}{z-w} + \text{regular}.
 \end{equation}
-No double pole, no curvature component: the bar differential
-$d = d_{\mathrm{bracket}}$ is entirely bracket-type.
-At degree~$1$, it extracts the simple-pole residue
-$\operatorname{Res}_{z=w} \psi(z)\psi(w) = 1$,
-which is a scalar.  At degree~$2$, the Arnold relation gives
-$d^2 = 0$ exactly as for Heisenberg, but now the mechanism is the
-antisymmetry of the wedge product $\psi \wedge \psi$
-rather than the vanishing of a bracket.
+Two differences from Heisenberg: the pole order drops from~$2$
+to~$1$, and the statistics change from bosonic to fermionic.
+Each has an independent algebraic consequence.
+
+\emph{Pole order.}
+The simple pole means the bar differential
+$d = d_{\mathrm{bracket}}$ has no curvature component ---
+it is entirely bracket-type.  At degree~$1$, it extracts the
+simple-pole residue
+$\operatorname{Res}_{z=w} \psi(z)\psi(w) = 1$, a scalar.
+
+\emph{Statistics.}
+The Koszul sign rule acts on the bar complex: when
+$\psi$ is fermionic ($|\psi| = 1$), two desuspended
+cogenerators in $\bar{B}^2$ satisfy
+$\psi^* \otimes \psi^* = -\psi^* \otimes \psi^*$
+under transposition, forcing \emph{antisymmetry}.
+The coproduct on $\bar{B}(\mathcal{F})$ is therefore
+\emph{co-antisymmetric}: the bar coalgebra is a coLie
+coalgebra, and the Koszul dual algebra is the
+\emph{commutative} algebra $\mathrm{Com}$.  This is
+$\mathrm{Lie}^! = \mathrm{Com}$, visible in the OPE:
+the self-pairing $\psi(z)\psi(w) \sim 1/(z-w)$ is
+antisymmetric under $z \leftrightarrow w$ (fermionic),
+encoding Lie structure.
+
+Contrast with Heisenberg: $\alpha$ is bosonic ($|\alpha| = 0$),
+so the desuspended cogenerators commute, the bar coalgebra
+is cocommutative (coLie $\to$ Sym), and the Koszul dual is
+$\mathrm{Sym}^{\mathrm{ch}}(V^*)$.  The
+\emph{statistics of the generators}, not the pole order,
+determine the operadic type.
 
 \begin{theorem}[Free fermion bar complex; see
 Theorem~\ref{thm:fermion-bar-complex-genus-0}; \ClaimStatusProvedElsewhere]
@@ -1711,31 +1903,40 @@ $H^n(\barB(\mathcal{F})) = 0$ for $n \geq 1$, with
 $H^0 = \mathbb{C}$.  In particular, $\mathcal{F}$ is chiral Koszul.
 \end{theorem}
 
-Acyclicity of the bar complex is the strongest possible form of
-the Koszul property.  Compare with Heisenberg, where
+Acyclicity is the strongest form of the Koszul property: no
+cohomological obstruction at any degree.  For Heisenberg,
 $H^2(\barB(\mathcal{H}_k)) = \mathbb{C} \cdot c_k \neq 0$
-(Theorem~\ref{thm:frame-heisenberg-bar}): the double-pole curvature
-obstructs acyclicity.  The free fermion, having no double pole,
-has no such obstruction.
+(Theorem~\ref{thm:frame-heisenberg-bar}) --- the double-pole
+curvature creates a class that obstructs acyclicity.  The free
+fermion, having only a simple pole, has no such obstruction.
 
 \medskip
 \noindent\textbf{The Koszul dual: the $\beta\gamma$ system.}
 The Koszul dual of the free fermion is the $\beta\gamma$ system,
-a chiral algebra with two generators $\beta(z)$ of weight~$1$ and
-$\gamma(z)$ of weight~$0$, with OPE
+a chiral algebra with two bosonic generators $\beta(z)$ of
+weight~$1$ and $\gamma(z)$ of weight~$0$.  Compute the OPE
+directly:
 \begin{equation}\label{eq:frame-betagamma-ope}
-\beta(z)\,\gamma(w) = \frac{1}{(z-w)^2} + \text{regular},
+\beta(z)\,\gamma(w) = \frac{1}{z-w} + \text{regular},
 \qquad
-\gamma(z)\,\beta(w) = \frac{-1}{(z-w)^2} + \text{regular}.
+\gamma(z)\,\beta(w) = \frac{-1}{z-w} + \text{regular}.
 \end{equation}
+The pole order is $1$ --- the same as the fermion.  But the
+generators $\beta, \gamma$ are bosonic: the sign flip in the
+second OPE comes from the \emph{symplectic pairing}
+$\langle \beta, \gamma \rangle = -\langle \gamma, \beta \rangle$,
+not from fermionic statistics.  The bar coalgebra of the
+$\beta\gamma$ system is cocommutative (bosonic generators),
+and its coproduct encodes the commutative (symmetric) product
+structure.  Dualizing gives $(\beta\gamma)^! = \mathcal{F}$:
+Koszul duality exchanges
+$\mathrm{Com} \leftrightarrow \mathrm{Lie}$
+by exchanging statistics.
 
-The $\beta\gamma$ system is a commutative chiral algebra (its OPE has
-double poles only, no simple pole); the free fermion is a Lie-type
-chiral algebra (simple pole only).  The Koszul duality
-$\mathcal{F}^! \cong \beta\gamma$
-(Theorem~\ref{thm:betagamma-fermion-koszul})
-is the chiral incarnation of the classical operadic duality
-$\mathrm{Lie}^! = \mathrm{Com}$:
+The following table records the data governing the bar complex
+and the Koszul dual for all three free-field systems.  The
+operadic type is determined by the row ``Statistics,'' not by
+``OPE poles'':
 \begin{center}
 \small
 \begin{tabular}{c|c|c|c}
@@ -1743,16 +1944,18 @@ $\mathrm{Lie}^! = \mathrm{Com}$:
 \textbf{Free fermion} $\mathcal{F}$ &
 \textbf{$\beta\gamma$ system} \\
 \hline
-OPE poles & Double only & Simple only & Double only \\
+Generators & $1$ (bosonic) & $1$ (fermionic) & $2$ (bosonic) \\
+Statistics & bosonic & fermionic & bosonic \\
+OPE poles & double ($1/(z{-}w)^2$) & simple ($1/(z{-}w)$) &
+  simple ($1/(z{-}w)$) \\
+Bar coalgebra & cocommutative & co-antisymmetric &
+  cocommutative \\
+Operadic type & $\chirCom$ & $\chirLie$ & $\chirCom$ \\
 Bar differential & $d_{\mathrm{residue}}$ only
   & $d_{\mathrm{bracket}}$ only
-  & $d_{\mathrm{residue}}$ only \\
-Operadic type & $\chirCom$ & $\chirLie$ & $\chirCom$ \\
+  & $d_{\mathrm{bracket}}$ (mixed pairs) \\
 Koszul dual & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
   & $\beta\gamma$ & $\mathcal{F}$ \\
-$H^*(\barB)$ & $\mathbb{C}[0] \oplus \mathbb{C}[2]$
-  & $\mathbb{C}[0]$ (acyclic)
-  & $\mathbb{C}[0]$ (acyclic)
 \end{tabular}
 \end{center}
 
@@ -1760,14 +1963,15 @@ $H^*(\barB)$ & $\mathbb{C}[0] \oplus \mathbb{C}[2]$
 The free fermion participates in three distinct dualities: (1)~Koszul duality $\mathcal{F}^! = \beta\gamma$; (2)~bosonization $\psi(z) = {:\!}e^{i\phi(z)}{:\!}$ (representation-theoretic, not Koszul); (3)~level-shifting $\mathcal{H}_k \cong \mathcal{H}_{-k}$ via $\alpha \mapsto -\alpha$ (automorphism).  The $bc$/$\beta\gamma$ pair realizes $\chirLie \leftrightarrow \chirCom$ with $\dim V = 2$.
 \end{remark}
 
-The free field example reveals a clean structural dichotomy.  The
-bar differential of any chiral algebra decomposes as
-$d = d_{\mathrm{bracket}} + d_{\mathrm{residue}}$: the bracket
-component from simple poles and the curvature component from double
-poles.  Heisenberg has $d_{\mathrm{bracket}} = 0$; the free fermion
-has $d_{\mathrm{residue}} = 0$.  The general case --- affine
-Kac--Moody algebras --- has both, and neither is individually a
-differential.
+The free-field examples expose the two independent axes of the
+bar complex.  The bar differential of any augmented chiral
+algebra decomposes as
+$d = d_{\mathrm{bracket}} + d_{\mathrm{residue}}$: the
+bracket component from simple poles, the curvature component
+from double poles.  Heisenberg has $d_{\mathrm{bracket}} = 0$;
+the free fermion has $d_{\mathrm{residue}} = 0$.
+The general case --- affine Kac--Moody algebras --- has both,
+and neither is individually a differential.
 
 % ================================================================
 \section{\texorpdfstring{The non-abelian world: affine $\widehat{\mathfrak{sl}}_2$}{The non-abelian world: affine sl2}}
@@ -2003,7 +2207,7 @@ complex recovers the Langlands dual.
 The Feigin--Frenkel involution $k \leftrightarrow -k - 2h^\vee$
 is not a representation-theoretic accident: it is Koszul duality
 in the chiral algebra sense, proved in
-Theorem~\ref{thm:universal-kac-moody-koszul} via Serre duality
+Theorem~\ref{thm:universal-kac-moody-koszul} via Verdier duality
 on Fulton--MacPherson configuration spaces.
 
 % ================================================================
@@ -2329,10 +2533,24 @@ These instantiate the main theorems of the monograph:
   see Remark~\ref{rem:theorem-A-decomposition}):
   \emph{Geometric bar-cobar duality.}
   What we saw as ``the bar complex produces a commutative Koszul
-  dual'' generalizes to: the bar functor on augmented chiral
-  algebras is intertwined with Verdier duality on
-  $\mathrm{Ran}(X)$, and produces the Koszul dual coalgebra
-  functorially over $\overline{\mathcal{M}}_{g,n}$.
+  dual'' generalizes to: the bar construction $\bar{B}(\cA)$ on an augmented chiral
+  algebra \emph{is} the Koszul dual coalgebra---a dg factorization
+  coalgebra on $\mathrm{Ran}(X)$, intertwined with Verdier duality
+  and defined functorially over $\overline{\mathcal{M}}_{g,n}$.
+  On the Koszul locus, $H^*(\bar{B}(\cA))$ is concentrated
+  and equals the Koszul dual \emph{coalgebra}; the bar construction
+  is its derived enhancement (off this locus, bar cohomology is
+  not concentrated and there is no classical Koszul dual).  The Koszul dual \emph{algebra}~$\cA^!$ is obtained
+  from this coalgebra by Verdier duality
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The cobar
+  of the bar recovers~$\cA$ itself, not~$\cA^!$:
+  $\Omega(\bar{B}(\cA)) \xrightarrow{\sim} \cA$ on the Koszul locus.
+  The convolution Lie algebra
+  $\mathrm{Hom}(\bar{B}(\cA), \cA)$
+  (Convention~\ref{conv:bar-coalgebra-identity})
+  mediates the adjunction: its Maurer--Cartan elements are the
+  twisting morphisms, and the canonical MC element is the
+  bar-cobar counit.
 
 \item \textbf{Theorem~B}
   (Theorem~\ref{thm:higher-genus-inversion}):
