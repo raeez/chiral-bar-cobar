@@ -1154,10 +1154,12 @@ H^q(\bar{B}(\mathrm{gr}\,\mathcal{A})_p) \Longrightarrow
 H^{p+q}(\bar{B}(\mathcal{A}))\]
 Since $E_1 = H^*(\bar{B}(\mathrm{gr}\,\mathcal{A}))$ and the spectral sequence for
 $\mathrm{gr}\,\mathcal{A}$ collapses at $E_2$, this spectral sequence also collapses
-at $E_2$.  By the complete filtered Comparison Theorem (Boardman
-\cite{Boardman-conditional}), convergence of the $\mathrm{gr}$ spectral sequence
-implies convergence of the filtered spectral sequence, and the cobar-bar map
-$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \to \mathcal{A}$ is a
+at $E_2$.  Boardman's Comparison Theorem \cite{Boardman-conditional}
+requires completeness ($\cA = \varprojlim \cA/F_k$, $\bigcap F_k = 0$)
+and exhaustiveness ($\bigcup F_k = \cA$), both of which hold by
+hypothesis.  The convergence of the $\mathrm{gr}$ spectral sequence
+therefore implies convergence of the filtered one, and the cobar-bar
+map $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA)) \to \cA$ is a
 filtered quasi-isomorphism.  This proves (2) and (3).
 
 \emph{Step 5: Filtered Koszul dual.}
@@ -3200,7 +3202,7 @@ associated graded); $E_2$ for Virasoro and $\mathcal{W}$-algebras
 (the DS reduction of the $E_1$-collapsed KM spectral sequence
 introduces one additional differential from the BRST operator
 $Q_{\mathrm{DS}}$, shifting the collapse by one page;
-see Theorem~\ref{thm:ds-koszul-commute}).
+see Theorem~\ref{thm:ds-koszul-intertwine}).
 
 \subsection{Spectral sequence = genus expansion}
 
@@ -4108,8 +4110,12 @@ Theorem~\ref{thm:heisenberg-obs}:
 the propagator $\omega_g$ on the genus-$g$ surface acquires a $B$-cycle defect
 equal to $\lambda_g$, and the algebra-specific contribution collapses to
 the genus-$1$ curvature coefficient $\kappa(\mathcal{A})$.
-For algebras with a single strong generator (Heisenberg, Kac--Moody,
-Virasoro), $\kappa$ is a single scalar and the factorization is immediate.
+For algebras with generators of uniform conformal weight---that is, with
+scalar curvature---the factorization is immediate and $\kappa$ is a single
+scalar.  (This includes single-generator algebras such as
+Heisenberg and Virasoro, and also Kac--Moody algebras where all
+currents $J^a$ have weight~$1$; it excludes $\mathcal{W}$-algebras
+with generators of different weights.)
 For algebras with multiple generators of different conformal weights
 (e.g.\ $\mathcal{W}_3$ with generators of weights~$2$ and~$3$),
 the genus-$g$ obstruction is \emph{a priori} a sum
@@ -5141,7 +5147,14 @@ where $\mathcal{H}^q_{\text{fiber}}(\mathcal{A})$ is the sheaf of fiber cohomolo
 \end{theorem}
 
 \begin{proof}[Proof of Theorem~\ref{thm:ss-quantum}]
-This is an application of the Leray spectral sequence for the fibration:
+For each genus~$g$, the Leray spectral sequence for the fibration
+below converges to $H^{p+q}(\bar{B}^{(g)}(\mathcal{A}))$;
+the genus filtration on the total bar complex
+$\bar{B}(\mathcal{A}) = \bigoplus_g \bar{B}^{(g)}(\mathcal{A})$
+then assembles these into the stated spectral sequence
+with target~$H^{p+q}(\bar{B}(\mathcal{A}), d_{\mathrm{total}})$.
+
+The Leray spectral sequence is applied to the fibration:
 \begin{equation}
 \begin{tikzcd}
 \overline{C}_n(X) \times \overline{\mathcal{M}}_g \arrow[d, "\pi"] \\
@@ -5280,6 +5293,10 @@ from genus-$g$ contributions but not from lower genus. Thus:
 \begin{equation}
 Q_g(\mathcal{A}) := \text{gr}^g H^*(\bar{B}(\mathcal{A})) = E_\infty^{*,*,g}
 \end{equation}
+We use the same notation $Q_g(\mathcal{A})$ for this graded piece,
+anticipating Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}),
+which identifies it with the eigenspace defined in
+Definition~\ref{def:complementarity-complexes}.
 
 \emph{Explicit description.} An element of $Q_g(\mathcal{A})$ is represented by a closed form $\omega \in \bar{B}^{(g)}(\mathcal{A})$ (i.e., $d\omega = 0$) that is not exact modulo lower genus contributions.
 
@@ -5475,6 +5492,8 @@ proper, we have:
 \begin{equation}
 \omega_{\overline{C}_n(X)} = K_{\overline{C}_n(X)} = \Omega^{n}_{\overline{C}_n(X)}
 \end{equation}
+Here $\Omega^n_{\overline{C}_n(X)} = \bigwedge^n \Omega^1_{\overline{C}_n(X)}$ denotes the holomorphic line bundle of top-degree holomorphic forms (the canonical bundle), not the sheaf of smooth $n$-forms.
+Since $\overline{C}_n(X)$ is a smooth proper variety over~$\mathbb{C}$, the algebraic and analytic canonical bundles coincide by~GAGA.
 
 The duality pairing is given by integration:
 \begin{equation}
@@ -5502,7 +5521,12 @@ given by:
 \end{equation}
 where $\text{Res}$ denotes the Poincaré residue map.
 
-This pairing is also perfect, by the logarithmic Poincaré lemma.
+This pairing is also perfect, by the logarithmic Poincar\'e lemma
+(Deligne~\cite{Deligne71}, Hodge~II, Proposition~3.1.8), which
+identifies $H^*(\Omega^*_{\log}(\overline{C}_n(X) \setminus D))
+\cong H^*(C_n(X))$; the perfectness then follows from
+Poincar\'e--Lefschetz duality for the smooth quasi-projective
+variety~$C_n(X)$.
 \end{proof}
 
 \begin{corollary}[Duality for bar complexes; \ClaimStatusProvedHere]
@@ -5979,6 +6003,17 @@ the anti-commutativity~\eqref{eq:verdier-ks-anticommute}.
 Therefore elements from $\bar{B}^{(g)}(\mathcal{A}^!)$ have
 eigenvalue $-1$ and contribute to~$V^-$.
 
+In summary: the identification of the $+1$-eigenspace with
+$Q_g(\mathcal{A})$ and the $-1$-eigenspace with
+$Q_g(\mathcal{A}^!)$ follows from the Verdier intertwining
+$\mathbb{D}_{\mathrm{Ran}}\, \bar{B}(\mathcal{A}) \simeq
+\bar{B}(\mathcal{A}^!)$ (Theorem~\ref{thm:verdier-bar-cobar}),
+which at the level of centers gives
+$\sigma(\mathcal{Z}(\mathcal{A})) = \mathcal{Z}(\mathcal{A}^!)$,
+so that $\sigma$ acts as $+1$ on the $\mathcal{A}$-contribution
+(via $j_*$-extension) and as $-1$ on the
+$\mathcal{A}^!$-contribution (via $j_!$-extension).
+
 More precisely, the anti-commutativity
 \eqref{eq:verdier-ks-anticommute} ensures that the Kodaira--Spencer
 deformation maps $V^+$ to $V^-$ and vice versa.  If $\alpha \in V^+$,
@@ -6450,7 +6485,7 @@ Costello--Gwilliam~\cite{CG17}) is here made precise for chiral algebras.
 \end{remark}
 
 \begin{remark}[Connection to genus expansion]\label{rem:genus-spectral-connection}
-The genus expansion in string theory $\mathcal{F} = \sum_{g \geq 0} \hbar^{2g-2} \mathcal{F}_g$ is recovered from the spectral sequence as follows: each differential $d_r \colon E_r^{p,q} \to E_r^{p+r, q-r+1}$ corresponds to integrating over $\overline{\mathcal{M}}_r$, so the convergence $E_\infty$ computes the full quantum partition function with convergence controlled by the central charge and conformal weights (compare Costello--Gwilliam~\cite{CG17}, Volume~2, Chapter~5).
+The genus expansion in string theory $\mathcal{F} = \sum_{g \geq 0} \hbar^{2g-2} \mathcal{F}_g$ is recovered from the spectral sequence as follows: the $d_r$ differential shifts genus by~$r$ in the genus filtration, and the $E_\infty$~page captures the genus-graded partition function.  (The physical identification of $d_r$ with literal integration over $\overline{\mathcal{M}}_r$ is heuristic: the actual $d_r$ is a derived-functor differential, not a pushforward integral.)  Convergence is controlled by the finite cohomological dimension of $\overline{\mathcal{M}}_g$ (Lemma~\ref{lem:quantum-ss-convergence}) (compare Costello--Gwilliam~\cite{CG17}, Volume~2, Chapter~5).
 \end{remark}
 
 \subsection{Corollaries and physical interpretation}
@@ -7411,7 +7446,7 @@ The residue operator $\dzero = \sum_D \operatorname{Res}_D$ computes residues at
 \]
 For $\dzero \circ d_k = 0$: after integrating $z_i$ over $\gamma_k$, the result is a form on a configuration space with one fewer variable.  The collision singularity $(z_i - z_j)^{-1}$ is replaced by $\oint_{\gamma_k} (z_i - z_j)^{-1} dz_i$, which is either $0$ (if $z_j \notin \gamma_k$) or $2\pi i$ (if $z_j \in \gamma_k$), in both cases producing a regular function of $z_j$ with no residue to extract.  For $d_k \circ \dzero = 0$: extracting the residue $\operatorname{Res}_{D_{ij}}$ at $z_i = z_j$ eliminates the variable $z_i$ (replacing it by the OPE coefficient at $z_j$); the subsequent period integral $\oint_{\gamma_k} dz_i$ has nothing to act on, since $z_i$ no longer appears.
 
-(Note: The full OPE contains higher-order poles $(z_i - z_j)^{-m}$ for $m \geq 2$, but these contribute to the correction operators $d_k$ with $k \geq 2$ in the expansion $\Dg{g} = \dzero + \sum_k t_k d_k$, not to $\dzero$ or $d_1$.  The relation $\dzero d_k + d_k \dzero = 0$ established above involves only the residue operator $\dzero$ and the period integral $d_k$; the simple-pole analysis suffices because $\dzero$ extracts first-order residues by definition.)
+\emph{Pole-order separation.}  The full OPE contains higher-order poles $(z_i - z_j)^{-m}$ for $m \geq 2$, but these contribute to the correction operators $d_k$ with $k \geq 2$ in the expansion $\Dg{g} = \dzero + \sum_k t_k d_k$, not to $\dzero$ or $d_1$.  The relation $\dzero d_k + d_k \dzero = 0$ established above involves only the residue operator $\dzero$ and the period integral $d_k$; the simple-pole analysis suffices because $\dzero$ extracts first-order residues by definition (Definition~\ref{def:bar-differential-complete}).
 
 \emph{Step 4: Quantum terms vanish by intersection properties.}
 
@@ -7951,9 +7986,15 @@ dual diagonal-distribution differential. Fiberwise this is exactly the Verdier
 duality pairing used in Theorem~\ref{thm:verdier-bar-cobar}, so each geometric
 fiber of $j_g^*\psi_g$ is a quasi-isomorphism.
 
-By construction, both sides are complexes of sheaves obtained from the same
-factorization package on the smooth universal curve, hence fiberwise quasi-isomorphism
-implies quasi-isomorphism on $U_g$.
+The cone $C = \operatorname{Cone}(j_g^*\psi_g)$ is therefore a complex of
+constructible sheaves on~$U_g$ whose stalk cohomology vanishes at every
+geometric point (by the fiberwise quasi-isomorphism just established).
+Since $U_g$ is a smooth Deligne--Mumford stack, a constructible complex
+with universally acyclic stalks is globally acyclic
+(proper base change for the structure map $U_g \to \operatorname{Spec} k$,
+or equivalently the constancy of fiber cohomology over the smooth locus;
+see~\cite[Expos\'e~XVI]{SGA4}).  Hence $C$ is acyclic and $j_g^*\psi_g$
+is a quasi-isomorphism on~$U_g$.
 \end{proof}
 
 \begin{lemma}[Boundary-stratum compatibility of \texorpdfstring{$\psi_g$}{psi-g}; \ClaimStatusProvedHere]\label{lem:higher-genus-boundary-qi}
@@ -7975,7 +8016,11 @@ $\psi_g|_{D_\Gamma}$ with the corresponding tensor product of lower-genus invers
 
 Every vertex genus in $\Gamma$ is strictly smaller than $g$: in the separating case,
 $g=g_1+g_2$ with $g_1,g_2 \geq 0$ and each $g_i < g$ (note: one component may have genus~$0$, which is the base case of the induction); in the non-separating case, the single vertex has genus $g-1 < g$.  In either case, the induction hypothesis applies to each vertex. Tensor products of quasi-isomorphisms
-are quasi-isomorphisms (by the K\"unneth formula for DG modules over a field), yielding the claim.
+are quasi-isomorphisms by the K\"unneth formula for factorization
+algebras at nodes: the factorization tensor product at a node is
+computed fiberwise over the normalization, reducing to the plain
+tensor product of chain complexes over the ground field, which
+preserves quasi-isomorphisms by K\"unneth.  This yields the claim.
 \end{proof}
 
 \begin{lemma}[Extension across boundary; \ClaimStatusProvedHere]\label{lem:extension-across-boundary-qi}
@@ -8051,7 +8096,14 @@ quasi-isomorphism.
 \item By Lemma~\ref{lem:higher-genus-boundary-qi} and the induction hypothesis
 on the lower-genus vertices of each stable graph $\Gamma$ indexing a boundary
 stratum $D_\Gamma$, $\psi_g|_{D_\Gamma}$ is a quasi-isomorphism for every
-$D_\Gamma$. Hence $i^*\psi_g$ is a quasi-isomorphism.
+$D_\Gamma$. The passage from ``quasi-isomorphism on each~$D_\Gamma$''
+to ``quasi-isomorphism on all of~$\partial\overline{\mathcal{M}}_g$''
+follows by a Mayer--Vietoris argument on the normal crossing boundary:
+the boundary strata form a simple normal crossing divisor, so the
+cone of~$i^*\psi_g$ is computed by iterated extensions along the
+pairwise intersections $D_\Gamma \cap D_{\Gamma'}$, each of which
+is a deeper boundary stratum where the same inductive hypothesis
+applies.  Hence $i^*\psi_g$ is a quasi-isomorphism.
 \item Apply Lemma~\ref{lem:extension-across-boundary-qi} to
 $X=U_g\sqcup\partial X$ and $f=\psi_g$. Since $j^*f$ and $i^*f$ are
 quasi-isomorphisms by (1)--(2), $f$ is a quasi-isomorphism.

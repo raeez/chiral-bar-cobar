@@ -194,17 +194,69 @@ This reflects the general principle that Koszul duality
 exchanges a braided tensor category with its reverse braiding.
 \end{remark}
 
-\begin{remark}[Koszul duality for module categories]
-\label{rem:koszul-module-categories}
-For a Koszul dual pair $(\mathcal{A}, \mathcal{A}^!)$,
-the bar-cobar adjunction induces an equivalence
+\begin{definition}[Module Koszul duality functor]
+\label{def:module-koszul-functor}
+\label{rem:koszul-module-categories}% backward-compatible label
+\index{Koszul duality!module functor|textbf}
+For a Koszul dual pair $(\cA, \cA^!)$, the \emph{module Koszul
+duality functor}
+$\Phi\colon \mathrm{Mod}^{\mathrm{compl}}_{\cA}
+\to \mathrm{CoMod}^{\mathrm{conil}}_{\bar{B}(\cA)}$
+is:
+
+\emph{On objects.}  For an $\cA$-module $\mathcal{M}$, the module
+bar complex
+$\Phi(\mathcal{M}) := \bar{B}(\cA; \mathcal{M})
+= \bigoplus_{n \ge 0}
+(s^{-1}\bar{\cA})^{\otimes n} \otimes \mathcal{M}
+\otimes \Omega^n_{\log}(\overline{C}_{n,1}(X))$
+with the module bar differential
+$d = d_{\mathrm{alg\text{-}alg}} + d_{\mathrm{alg\text{-}mod}}$
+(residues at algebra--algebra and algebra--module collisions).
+The coalgebra $\bar{B}(\cA)$ coacts on $\Phi(\mathcal{M})$ via
+the deconcatenation coproduct on the algebra tensor factors.
+
+\emph{On morphisms.}  For $f\colon \mathcal{M} \to \mathcal{N}$
+an $\cA$-module map, $\Phi(f) = \mathrm{id}_{\bar{B}} \otimes f$:
+the bar resolution is natural in the module slot, and
+$\mathrm{id} \otimes f$ is a comodule map because $f$ commutes
+with the $\cA$-action.
+
+\emph{Functoriality.}  $\Phi(\mathrm{id}) = \mathrm{id}$ and
+$\Phi(g \circ f) = \Phi(g) \circ \Phi(f)$ by naturality of the
+tensor product.  The functor is exact because the bar resolution
+is levelwise flat (free $\cA$-modules in each bar degree).
+\end{definition}
+
+\begin{proposition}[Module Koszul equivalence; \ClaimStatusProvedHere]
+\label{prop:module-koszul-equivalence}
+When $\cA$ is Koszul, $\Phi$ is an equivalence of dg categories:
 \[
-\mathrm{Mod}^{\mathrm{compl}}_{\mathcal{A}}
-\;\simeq\;
-\mathrm{CoMod}^{\mathrm{conil}}_{\mathcal{A}^!}
+\Phi\colon
+\mathrm{Mod}^{\mathrm{compl}}_{\cA}
+\;\xrightarrow{\;\sim\;}
+\mathrm{CoMod}^{\mathrm{conil}}_{\bar{B}(\cA)}.
 \]
-(see Appendix~\ref{app:existence-criteria}).  When $\mathcal{A}^!$ is finite-type graded, one further obtains $\mathrm{Mod}^{\mathrm{compl}}_{\mathcal{A}} \simeq \mathrm{Mod}^{\mathrm{compl}}_{\mathcal{A}^!}$; without finite-type, the intermediate comodule step is essential.  See \S\ref{sec:complete-calculations} for explicit character computations.
-\end{remark}
+The quasi-inverse is the cobar functor
+$\Psi(\mathcal{N}) = \Omega(\bar{B}(\cA); \mathcal{N})$.
+When $\cA^! = \bar{B}(\cA)^\vee$ is finite-type graded, one further
+obtains
+$\mathrm{Mod}^{\mathrm{compl}}_{\cA}
+\simeq \mathrm{Mod}^{\mathrm{compl}}_{\cA^!}$; without finite-type,
+the intermediate comodule step is essential (Positselski~\cite[\S4]{Positselski11}).
+\end{proposition}
+
+\begin{proof}
+The unit $\eta\colon \mathrm{id} \to \Psi \circ \Phi$ sends
+$\mathcal{M}$ to the cobar-bar augmentation
+$\Omega(\bar{B}(\cA; \mathcal{M})) \to \mathcal{M}$, which is a
+quasi-isomorphism by the module-level bar-cobar inversion
+(Koszul hypothesis plus the module spectral sequence collapse at
+$E_2$, paralleling Theorem~\ref{thm:bar-cobar-inversion-qi}).
+The counit $\epsilon\colon \Phi \circ \Psi \to \mathrm{id}$ is
+the bar-cobar counit on the comodule side, which is a
+quasi-isomorphism by the dual argument.
+\end{proof}
 
 \begin{theorem}[Monoidal module Koszul duality; \ClaimStatusProvedHere]
 \label{thm:monoidal-module-koszul}
@@ -502,6 +554,19 @@ duality~(\cite{Beauville}, \cite{NakanishiTsuchiya}).  The
 full module-level Verdier intertwining is
 Theorem~\ref{thm:module-bar-verdier}.
 \end{remark}
+
+\begin{definition}[Koszul module pair]\label{def:koszul-module-pair}
+\index{Koszul duality!module pair|textbf}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair
+(Definition~\ref{def:chiral-koszul-pair}).  A \emph{Koszul module pair}
+$(\mathcal{M}, \mathcal{M}^!)$ consists of a Koszul $\cA$-module~$\mathcal{M}$
+and a Koszul $\cA^!$-module~$\mathcal{M}^!$ such that the module bar
+complex satisfies
+$H^*(\bar{B}(\cA;\, \mathcal{M})) \cong \mathcal{M}^!$
+as a $\bar{B}(\cA)$-comodule; equivalently, the module Koszul
+duality functor (Definition~\ref{def:module-koszul-functor}) sends
+$\mathcal{M}$ to~$\mathcal{M}^!$ up to quasi-isomorphism.
+\end{definition}
 
 \begin{theorem}[Module-level Verdier intertwining; \ClaimStatusProvedHere]
 \label{thm:module-bar-verdier}
@@ -970,7 +1035,7 @@ models), the conformal block spaces are finite-dimensional and
 computed by the Feigin--Fuchs resolution, which the bar spectral
 sequence recovers: the $E_1$ page is the Verma module coinvariant,
 and the $d_1$ differential implements the BGG resolution
-(Proposition~\ref{prop:virasoro-bgg-bar}).  The surviving $E_2 = E_\infty$
+(Theorem~\ref{thm:bgg-from-bar}).  The surviving $E_2 = E_\infty$
 gives the finite-dimensional conformal block.
 
 \subsubsection{$\mathcal{W}$-algebras via Drinfeld--Sokolov}
@@ -997,7 +1062,7 @@ For $\fg = \mathfrak{sl}_2$, this gives Virasoro conformal blocks
 at $c = 1 - 6(k+1)^2/(k+2)$; for $\fg = \mathfrak{sl}_N$, it
 gives $\mathcal{W}_N$ conformal blocks.  The Koszul dual level
 shift $k \mapsto -k - 2h^\vee$ commutes with DS
-(Theorem~\ref{thm:ds-koszul-commute}), so the conformal block
+(Theorem~\ref{thm:ds-koszul-intertwine}), so the conformal block
 duality of Proposition~\ref{prop:conformal-block-duality} descends
 through the BRST reduction.
 
