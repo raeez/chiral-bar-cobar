@@ -149,7 +149,7 @@ The blow-up records collision rates $|z_i - z_j| \sim \epsilon(t)$, approach ang
 
 At genus $g \geq 1$, the boundary has additional structure beyond just point collisions:
 
-\begin{theorem}[Boundary strata of \texorpdfstring{$\overline{\mathcal{M}}_{g,n}$}{M-bar(g,n)} {\cite{DeligneM69,Knu83}}; \ClaimStatusProvedElsewhere]\label{thm:boundary-higher-genus}
+\begin{theorem}[Boundary strata of \texorpdfstring{$\overline{\mathcal{M}}_{g,n}$}{M-bar(g,n)} {\cite{DeligneM69,Knudsen83}}; \ClaimStatusProvedElsewhere]\label{thm:boundary-higher-genus}
 \index{Deligne--Mumford compactification}
 \index{boundary stratum}
 For the Deligne--Mumford--Knudsen moduli space $\overline{\mathcal{M}}_{g,n}$ (which serves as the universal compactified configuration space), the boundary $\partial\overline{\mathcal{M}}_{g,n}$ consists of:
@@ -180,7 +180,7 @@ D_\Gamma \cong \prod_{v \in V(\Gamma)} \overline{\mathcal{M}}_{g(v), n(v)} \bigg
 where $n(v)$ counts the half-edges and tails at vertex $v$.  Each edge $e \in E(\Gamma)$ corresponds to a node of the degenerate curve, with local model $xy = t_e$ for a smoothing parameter $t_e$.  When the curve has a fixed complex structure with period matrix $\tau \in \mathbb{H}_g$, the degeneration strata $D_{\Gamma,\tau}$ record how $\tau$ approaches the boundary of the Satake compactification of $\mathbb{H}_g / \mathrm{Sp}_{2g}(\mathbb{Z})$.
 
 \emph{Exhaustiveness.}
-Every point of $\partial\overline{C}_n(\Sigma_g) = \overline{C}_n(\Sigma_g) \setminus C_n(\Sigma_g)$ belongs to at least one stratum: either some subset of marked points has collided (type 1), or the underlying curve has degenerated (type 2), or both.  This follows from the properness of $\overline{\mathcal{M}}_{g,n}$ (Deligne--Mumford--Knudsen \cite{DeligneM69,Knu83}): every sequence in $C_n(\Sigma_g)$ has a subsequence converging to a stable $n$-pointed curve, and the limit is classified by its dual graph and the collision data of the marked points.
+Every point of $\partial\overline{C}_n(\Sigma_g) = \overline{C}_n(\Sigma_g) \setminus C_n(\Sigma_g)$ belongs to at least one stratum: either some subset of marked points has collided (type 1), or the underlying curve has degenerated (type 2), or both.  This follows from the properness of $\overline{\mathcal{M}}_{g,n}$ (Deligne--Mumford--Knudsen \cite{DeligneM69,Knudsen83}): every sequence in $C_n(\Sigma_g)$ has a subsequence converging to a stable $n$-pointed curve, and the limit is classified by its dual graph and the collision data of the marked points.
 \end{proof}
 
 \begin{definition}[Stable graph]\label{def:stable-graph}
@@ -1277,7 +1277,7 @@ H^*(C_n(\C)) \cong \text{OS}(A_{n-1})
 \]
 where $\text{OS}(A_{n-1})$ is the Orlik--Solomon algebra of the braid arrangement $A_{n-1}$. The Poincaré polynomial is:
 \[
-\sum_{k=0}^{n-1} \dim H^k(\barC_n(\C)) \cdot t^k = \prod_{i=1}^{n-1}(1 + it)
+\sum_{k=0}^{n-1} \dim H^k(C_n(\C)) \cdot t^k = \prod_{i=1}^{n-1}(1 + it)
 \]
 \end{theorem}
 
@@ -1567,16 +1567,14 @@ where:
 \end{theorem}
 
 \begin{proof}[Sketch]
-The decomposition follows from the Leray spectral sequence for the fibration:
-\[
-\overline{C_n(\Sigma_g)} \to \overline{\mathcal{M}}_{g,n} \to \overline{\mathcal{M}}_g
-\]
-
+The decomposition follows from the Leray spectral sequence for the forgetful map
+$\pi\colon \overline{\mathcal{M}}_{g,n} \to \overline{\mathcal{M}}_g$,
+whose fiber over a smooth curve~$\Sigma_g$ is~$\overline{C}_n(\Sigma_g)$.
 Each term contributes differently:
 \begin{itemize}
-\item Local: Fiberwise residues give the standard chiral multiplication
-\item Global: Integration over the $2g$ cycles of $H_1(\Sigma_g, \mathbb{Z})$
-\item Quantum: Contributions from varying complex structure
+\item Local: Fiberwise residues along collision divisors in~$\overline{C}_n(\Sigma_g)$
+\item Global: Period integrals over the $2g$ cycles of $H_1(\Sigma_g, \mathbb{Z})$
+\item Quantum: Variation of the fiberwise data over~$\overline{\mathcal{M}}_g$
 \end{itemize}
 \end{proof}
 
@@ -3056,9 +3054,8 @@ where $\tilde{z}_i \in \mathbb{P}^1$ are the rescaled positions satisfying:
 \[D_S = \{\epsilon_S = 0\} \cong X \times \text{Conf}_{k-1}(\mathbb{P}^1) \times X^{n-k}\]
 
 \emph{4. Normal bundle.}
-\[N_{D_S/\overline{C}_n(X)} = \mathcal{O}(-1) \otimes \mathcal{L}_S\]
-where $\mathcal{L}_S$ is a line bundle on $D_S$ (with transition functions determined
-by rescaling).
+\[N_{D_S/\overline{C}_n(X)} \cong \mathcal{O}_{D_S}(-1)\]
+(Theorem~\ref{thm:normal-bundle-formula}).
 
 The first Chern class:
 \[c_1(N_{D_S}) = -[D_S] \in H^2(\overline{C}_n(X))\]
