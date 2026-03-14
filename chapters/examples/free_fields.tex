@@ -291,6 +291,46 @@ means antisymmetric ($\beta\gamma - \gamma\beta = 1$), while ``Clifford'' means 
 See Section~\ref{subsec:NAP-betagamma} for the full NAP perspective.
 \end{proof}
  
+\begin{remark}[The twisting morphism for free-field dualities]
+\label{rem:free-field-twisting}
+\index{twisting morphism!free fields}
+The Koszul duality $(\beta\gamma)^! \cong bc$ is mediated by the
+universal twisting morphism
+$\tau\colon \bar{B}(\beta\gamma) \to \beta\gamma$,
+which takes a concrete form for free fields.
+
+For the $\beta\gamma$ system, $\tau$ acts on a single-insertion
+bar element by returning the corresponding current:
+$\tau([\beta^*]) = \beta$, $\tau([\gamma^*]) = \gamma$.
+The Maurer--Cartan equation $d\tau + \tau \star \tau = 0$
+encodes the free-field OPE: the convolution
+$(\tau \star \tau)([\beta^* \otimes \gamma^* \otimes \eta_{12}])
+= \operatorname{Res}_{z_1 = z_2}[\beta(z_1)\,\gamma(z_2)\,\eta_{12}]
+= 1$
+recovers the contraction $\beta(z)\gamma(w) \sim 1/(z-w)$,
+and the MC equation states that this is the \emph{only}
+obstruction to exactness of the bar complex.
+
+Dually, the twisting morphism for the $bc$ system
+$\tau_{bc}\colon \bar{B}(bc) \to bc$ satisfies the
+\emph{same} MC equation with the Clifford
+OPE $b(z)c(w) \sim 1/(z-w)$.  Verdier duality on
+$\overline{C}_2(X)$ exchanges the two: the propagator
+$\eta_{12} = d\log(z_1 - z_2)$ is Verdier self-dual, so
+$\mathbb{D}_{\mathrm{Ran}}(\tau_{\beta\gamma})
+= \tau_{bc}$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main},
+Theorem~A$_2$).
+The Koszul duality $(\beta\gamma)^! \cong bc$ is the
+\emph{statement that Verdier duality intertwines the two
+twisting morphisms}.  Acyclicity of the twisted tensor product
+$K(\tau) = \beta\gamma \otimes_\tau \bar{B}(\beta\gamma)$
+follows from the quadratic Koszulness of the antisymmetric
+relation $\beta\gamma - \gamma\beta = 1$, confirming the
+Koszul property via the fundamental theorem
+(Theorem~\ref{thm:fundamental-twisting-morphisms}).
+\end{remark}
+
 \section{\texorpdfstring{The $bc$ ghosts}{The bc ghosts}}
 \index{$bc$ system|textbf}
 
@@ -2283,25 +2323,46 @@ By Theorem~\ref{thm:heisenberg-bar}, the bar complex $\bar{B}^{\mathrm{ch}}(\mat
 
 \subsection{Three different ``dualities'' for Heisenberg}\label{rem:three-dualities-compared}
 
-Three separate mathematical structures:
+Three separate mathematical structures govern Heisenberg, and
+confusing them is a reliable source of error.
 
 \begin{enumerate}
-\item \emph{Bar-cobar Koszul duality} (algebra $\leftrightarrow$ coalgebra).
-   \[\mathcal{H}_k \xrightarrow{\bar{B}} \bar{B}^{\mathrm{ch}}(\mathcal{H}_k) \xrightarrow{(-)^\vee} \mathrm{Sym}^{\mathrm{ch}}(V^*)\]
+\item \emph{Koszul duality} (algebra $\to$ dual coalgebra $\to$ dual algebra).
+   \[\mathcal{H}_k \xrightarrow{\;\bar{B}\;} \bar{B}^{\mathrm{ch}}(\mathcal{H}_k) \xrightarrow{\;(-)^\vee\;} \mathrm{Sym}^{\mathrm{ch}}(V^*)\]
+   The first arrow is the bar construction: extraction of OPE residues
+   along collision divisors in~$\overline{C}_n(X)$ produces the Koszul
+   dual \emph{coalgebra}~$\mathrm{coLie}^{\mathrm{ch}}(V^*)$, a
+   conilpotent factorization coalgebra on~$\mathrm{Ran}(X)$.  The
+   second arrow is Verdier/linear duality, producing the Koszul dual
+   \emph{algebra}~$\mathrm{Sym}^{\mathrm{ch}}(V^*)$.  The cobar
+   construction is \emph{not involved}: $\Omega(\bar{B}(\mathcal{H}_k))
+   \simeq \mathcal{H}_k$ recovers the original algebra, not its dual
+   (Theorem~\ref{thm:bar-cobar-inversion-qi}).
+
+   The distinction is mediated by the convolution Lie algebra
+   $\mathrm{Hom}(\bar{B}(\mathcal{H}_k), \mathcal{H}_k)$: the
+   canonical twisting morphism
+   $\tau \colon \mathrm{coLie}^{\mathrm{ch}}(V^*) \to \mathcal{H}_k$,
+   $v^* \mapsto J_v$, is its Maurer--Cartan element.  The convolution
+   product $\tau \star \tau = 0$ because the cogenerator~$v^*$ is
+   primitive ($\bar{\Delta}(v^*) = 0$), so the MC equation
+   $\partial\tau + \tau \star \tau = 0$ holds on generators for
+   degree reasons
+   (cf.~Remark~\ref{rem:frame-twisting-morphism}).
 
    Level behavior: $k$ appears as curvature $m_0 \propto k$; it does not change the duality type.
 
    Structure exchanged: Lie (non-commutative) $\leftrightarrow$ Com (commutative).
 
 \item \emph{Level-shifting/rank-level duality} (representation categories).
-   \[\text{Rep}(\mathcal{H}_k) \simeq \text{Rep}(\mathcal{H}_{-k})\]
+   \[\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{H}_{-k})\]
 
    Level behavior: $k \leftrightarrow -k$ (for Heisenberg, $h^{\vee} = 0$).
 
    Structure exchanged: Representation categories (not algebras themselves).
 
 \item \emph{Boson-fermion correspondence} (categorical equivalence).
-   \[\text{Rep}(\mathcal{H}_k) \simeq \text{Rep}(\mathcal{F}^{\otimes 2})\]
+   \[\mathrm{Rep}(\mathcal{H}_k) \simeq \mathrm{Rep}(\mathcal{F}^{\otimes 2})\]
    where $\mathcal{F}$ is the free fermion algebra.
 
    Level behavior: Relates Heisenberg to fermions, not to itself.
@@ -2309,7 +2370,12 @@ Three separate mathematical structures:
    Structure exchanged: Module categories have equivalent structure.
 \end{enumerate}
 
-Only (1) is the subject of this manuscript.
+Only~(1) is the subject of this manuscript.  The three dualities
+act on different mathematical categories: (1)~on algebras and
+coalgebras (via the bar-cobar adjunction on~$\mathrm{Ran}(X)$),
+(2)~on representation categories (via autoequivalences),
+(3)~on module categories (via bosonization).  The bar construction
+is the engine of~(1); it has no direct role in~(2) or~(3).
 
 \subsection{Costello--Gwilliam's construction}
 
@@ -2351,7 +2417,7 @@ By the Prism Principle (Theorem~\ref{thm:bar-cobar-isomorphism-main}),
 the genus-$0$ bar complex is computed by configuration space integrals
 on $\overline{C}_n(X)$ with the Fulton--MacPherson propagator.
 For free fields, the only nonvanishing OPE poles are of order~$\leq 2$
-(double poles for Heisenberg and $\beta\gamma$; simple poles for fermions
+(double poles for Heisenberg; simple poles for $\beta\gamma$, fermions,
 and $bc$ ghosts), so the bar differential decomposes as
 $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
 (Proposition~\ref{prop:pole-decomposition}).
@@ -2393,8 +2459,9 @@ yields a contribution that is symmetric in the exchange $z_1 \leftrightarrow z_2
 This symmetry produces a commutative coproduct structure on $\bar{B}^{\text{ch}}(\mathcal{H})$.
 
 \emph{Step~3.}
-The cobar construction $\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{H}))$ rebuilds an algebra from this coalgebraic data. Since the coproduct is symmetric/commutative, the reconstructed algebra is the symmetric algebra:
-\[\Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{H})) \simeq \text{Sym}^{\text{ch}}(V^*)\]
+Dualizing the bar coalgebra $\bar{B}^{\mathrm{ch}}(\mathcal{H})^\vee$ gives the Koszul dual algebra.  Since the coproduct is cocommutative, the dual algebra is commutative:
+\[\mathcal{H}^! = \bar{B}^{\mathrm{ch}}(\mathcal{H})^\vee \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)\]
+(Bar-cobar inversion $\Omega(\bar{B}(\mathcal{H})) \simeq \mathcal{H}$ recovers the Heisenberg itself, not its dual.)
 
 \emph{Step~4.}
 The quasi-isomorphism is given by:
@@ -2425,7 +2492,7 @@ The Koszul duality intertwines with the modular action on period matrices:
 (The level $k$ scales the quadratic form, not the characteristic.)
 Under $\Omega \to -\Omega^{-1}$, Poisson summation gives:
 \[\Theta_k(-\Omega^{-1}) = \left(\frac{\det(\Omega/i)}{k^g}\right)^{1/2} \cdot \Theta_{1/k}(\Omega)\]
-The modular $S$-transformation thus sends $k \to 1/k$, while level \emph{negation} $k \to -k$ arises instead from the bar-cobar duality (which reverses the curvature $m_0 = k \cdot c$).
+The modular $S$-transformation thus sends $k \to 1/k$, while level \emph{negation} $k \to -k$ arises instead from Koszul duality: the dual algebra~$\mathcal{H}_k^!$ has curvature $-m_0 = -k \cdot c$.
 
 \item \emph{Geometric interpretation.} The bar complex computes:
 \[H^*(\bar{B}_g^{\text{ch}}(\mathcal{H}_k)) \cong H^*(\text{Jac}(\Sigma_g), \mathcal{L}_k)\]
@@ -2558,8 +2625,8 @@ identity $\theta_3(-1/\tau) = (-i\tau)^{1/2}\,\theta_3(\tau)$.
 The $S$-transformation thus sends $k \to 1/k$ at the level
 of sections of $\mathcal{L}_k$.
 
-Separately, the bar-cobar duality reverses the curvature
-$m_0 = k \cdot c$ of the Heisenberg algebra
+Separately, Koszul duality reverses the curvature:
+the dual algebra~$\mathcal{H}_k^!$ has $m_0 = -k \cdot c$
 (Theorem~\ref{thm:heisenberg-curved-structure}), contributing
 the level negation $k \to -k$.  Together, these give the full
 modular intertwining: Koszul duality on $\mathcal{H}_k$ at
@@ -3029,29 +3096,14 @@ governed by the representation theory of~$\mathfrak{g}$).
 \label{rem:weyl-nonabelian-fourier}
 \index{Weyl group!as Fourier symmetry}
 \index{Poisson summation!non-abelian analogue}
-Classical Poisson summation relates sums over $\Lambda$ to sums over $\Lambda^*$.
-For $\AffKM{g}_k$, the Weyl--Kac character formula (Theorem~\ref{thm:kw-bar-spectral})
-\[
-\operatorname{ch}(L_k(\lambda))
-= \frac{\displaystyle\sum_{w \in W_{\mathrm{aff}}}
-  (-1)^{\ell(w)}\,
-  \Theta_{w(\lambda+\rho)}}
-  {\displaystyle\sum_{w \in W_{\mathrm{aff}}}
-  (-1)^{\ell(w)}\, \Theta_{w(\rho)}}
-\]
-replaces the dual-lattice sum with an alternating sum over $W_{\mathrm{aff}} = W \ltimes Q^\vee$.  The bar spectral sequence realizes this: the $E_1$ page is indexed by Verma modules $\mathcal{M}(w \cdot \lambda)$, and its Euler characteristic recovers the numerator.  At generic level $d_1 = 0$ and $E_1 = E_\infty$; at admissible level $k = -h^\vee + p/q$, the differentials cancel all but a finite Weyl orbit.
+The Weyl--Kac character formula (Theorem~\ref{thm:kw-bar-spectral}) replaces the dual-lattice sum in classical Poisson summation with an alternating sum over $W_{\mathrm{aff}} = W \ltimes Q^\vee$.  The bar spectral sequence realizes this: $E_1$ is indexed by Verma modules $\mathcal{M}(w \cdot \lambda)$, collapsing at generic level and reducing to a finite Weyl orbit at admissible level $k = -h^\vee + p/q$.
 \end{remark}
 
 \begin{remark}[Spectral discriminant as Plancherel density]
 \label{rem:spectral-plancherel}
 \index{spectral discriminant!Plancherel density}
 \index{Plancherel measure!chiral analogue}
-The spectral discriminant $\Delta_\cA(x) = \prod_i (1 - \lambda_i x)$ (Theorem~\ref{thm:ds-bar-gf-discriminant}) is the chiral analogue of the Plancherel density.  Three regimes:
-\begin{itemize}
-\item \emph{Heisenberg} ($\Delta_\cH = 1$): uniform density, bar dimensions grow as partition numbers (Lemma~\ref{lem:bar-dims-partitions}).
-\item \emph{$\beta\gamma$} ($\Delta_{\beta\gamma} = (1 - 3x)(1 + x)$): zeros produce oscillatory growth, preserved under DS reduction.
-\item \emph{$\AffKM{sl}_2$ at level~$k$}: zeros of $\Delta_{\AffKM{sl}_2}(x)$ detect singular vectors and non-semisimplicity.
-\end{itemize}
+The spectral discriminant $\Delta_\cA(x) = \prod_i (1 - \lambda_i x)$ (Theorem~\ref{thm:ds-bar-gf-discriminant}) is the chiral Plancherel density: $\Delta_\cH = 1$ (uniform, partition growth), $\Delta_{\beta\gamma} = (1 - 3x)(1 + x)$ (oscillatory, DS-stable), and zeros of $\Delta_{\AffKM{sl}_2}(x)$ detect singular vectors.
 \end{remark}
 
 \subsubsection{Stage~IV: the homotopy-theoretic uplift}
@@ -3202,39 +3254,10 @@ Let $A$ be an $\En$-algebra in chain complexes.
 \end{enumerate}
 \end{theorem}
 
-\begin{remark}[Factorization homology as nonlinear Fourier integral]
-\label{rem:fh-fourier}
-\index{factorization homology!as Fourier integral}
-The derived Fourier transform of Theorem~\ref{thm:derived-fourier} replaces the classical integral $\int_G f\, e^{i\langle\cdot,\cdot\rangle}$ with factorization homology $\int_M A$ over an $\En$-algebra $A$, the $\En$ propagator serving as the kernel.  For $\Einf$-algebras this reduces to ordinary homology; for non-trivial $\mu_k$ ($k \geq 3$), the FM boundary strata encode higher correlations.
-\end{remark}
-
-\begin{remark}[Homotopy transfer as higher Fourier data]
-\label{rem:htt-fourier}
-\index{homotopy transfer!Fourier interpretation}
-\index{Massey product!as higher Fourier coefficient}
-Homotopy transfer (Theorem~\ref{thm:htt}) produces an $\Ainf$-structure on $H^*(\barB(\cA))$.  The transferred $\tilde{m}_2$ is the leading spectral data; $\tilde{m}_k$ for $k \geq 3$ are higher corrections given by the tree formula (Theorem~\ref{thm:tree-formula}):
-  \[
-  \tilde{m}_k(a_1, \ldots, a_k)
-  = \sum_{T \in \mathrm{PRT}_k}
-    \pm\, \pi \circ m_T \circ \iota^{\otimes k}
-    (a_1, \ldots, a_k).
-  \]
-For $\En$-Koszul algebras, $\tilde{m}_k = 0$ for $k \geq 3$ (Theorem~\ref{thm:chiral-htt}): Koszulness means the linear transform captures all spectral data.
-\end{remark}
-
-\begin{remark}[Curved Fourier duality and coderived categories]
-\label{rem:curved-fourier}
-\index{coderived category!Fourier interpretation}
-\index{curved bar complex!Fourier duality}
-At genus $g \geq 1$, $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g \neq 0$ makes the bar complex a curved dg-coalgebra.  The correct framework is Positselski's coderived category $D^{\mathrm{co}}(\barB_g(\cA))$, in which the derived Fourier inversion~\eqref{eq:pk-duality-fourier} holds:
-\[
-\int_{\Sigma_g} \cA
-\;\simeq\;
-\int_{\Sigma_g} \cA^![-2]
-\quad
-\text{in } D^{\mathrm{co}}.
-\]
-Complementarity (Theorem~\ref{thm:quantum-complementarity-main}) states $\kappa(\cA) + \kappa(\cA^!) = [\omega_g] \in H^*(\overline{\mathcal{M}}_g)$---the non-abelian analogue of the uncertainty principle constraint $\|f\|^2 + \|\hat{f}\|^2 = \text{const}$.
+\begin{remark}[Nonlinear Fourier interpretation]
+\label{rem:fh-fourier}\label{rem:htt-fourier}\label{rem:curved-fourier}
+\index{factorization homology!as Fourier integral}\index{homotopy transfer!Fourier interpretation}\index{coderived category!Fourier interpretation}
+The derived Fourier transform (Theorem~\ref{thm:derived-fourier}) replaces $\int_G f\, e^{i\langle\cdot,\cdot\rangle}$ with factorization homology $\int_M A$, the $\En$ propagator serving as kernel.  Homotopy transfer (Theorem~\ref{thm:htt}) yields an $\Ainf$-structure via the tree formula (Theorem~\ref{thm:tree-formula}); for Koszul algebras $\tilde{m}_k = 0$ for $k \geq 3$ (Theorem~\ref{thm:chiral-htt}).  At genus $g \geq 1$, curvature forces passage to $D^{\mathrm{co}}(\barB_g(\cA))$, where the derived inversion~\eqref{eq:pk-duality-fourier} holds and complementarity (Theorem~\ref{thm:quantum-complementarity-main}) gives $\kappa(\cA) + \kappa(\cA^!) = [\omega_g]$.
 \end{remark}
 
 \subsection{Explicit bar complex calculation}
@@ -3991,9 +4014,9 @@ The bar differential uses the simple pole OPE:
 Since $\psi$ is fermionic ($|\psi| = 1$), the bar complex carries the signs of an \emph{exterior coalgebra}:
 \[\bar{B}^{\text{ch}}(\mathcal{F}) \simeq \Lambda^{\text{co}}(\psi)\]
 
-\emph{Koszul dual.} The cobar of this exterior coalgebra is the symmetric (bosonic) algebra on one generator:
-\[\mathcal{F}^! = \Omega(\bar{B}(\mathcal{F})) \simeq \mathrm{Sym}^{\mathrm{ch}}(\gamma)\]
-the free boson (single generator~$\gamma$).  This recovers the operadic duality $\mathrm{Lie}^! = \mathrm{Com}$ at the level of single-generator chiral algebras: the free fermion (governed by the Lie operad via antisymmetry of the Clifford product) is Koszul dual to the free boson (governed by the commutative operad via the symmetric product).
+\emph{Koszul dual.} Dualizing this exterior coalgebra gives the Koszul dual algebra:
+\[\mathcal{F}^! = \bar{B}^{\mathrm{ch}}(\mathcal{F})^\vee \simeq \mathrm{Sym}^{\mathrm{ch}}(\gamma)\]
+the free boson (single generator~$\gamma$), recovering $\mathrm{Lie}^! = \mathrm{Com}$.  (By contrast, bar-cobar inversion gives $\Omega(\bar{B}(\mathcal{F})) \simeq \mathcal{F}$, recovering the fermion itself.)
 
 This is the \emph{single-generator} duality (Theorem~\ref{thm:single-fermion-boson-duality}).  The \emph{two-generator} analogue is $(\beta\gamma)^! \cong bc$ (Theorem~\ref{thm:betagamma-bc-koszul}).
 
