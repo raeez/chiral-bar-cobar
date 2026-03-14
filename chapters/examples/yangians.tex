@@ -303,7 +303,7 @@ The RTT relation $R_{12}(u-v) T_1 T_2 = T_2 T_1 R_{12}(u-v)$ can be written as:
 \]
 Expanding: $T_1 T_2 - T_2 T_1 = \frac{\hbar}{u-v}(P T_1 T_2 - T_2 T_1 P)$.
 
-The orthogonal complement $R^\perp$ consists of quadratic expressions $Q(T^*, T^*)$ that pair to zero with all elements of $R$.  For $\mathfrak{sl}_2$ (where $V = \mathbb{C}^2$ and $P$ is the $4 \times 4$ permutation matrix), $R^\perp$ is computed by direct matrix calculation.  The RTT relation at fixed spectral parameters defines a linear map $\Phi_R\colon \mathrm{End}(V)^{\otimes 2} \to \mathrm{End}(V)^{\otimes 2}$ by $X \mapsto R_{12} X - \sigma(X) R_{12}$ where $\sigma$ is the flip; its image is the space of relations~$R$.  Writing out the $16 \times 16$ matrix of $\Phi_R$ in the standard basis of $\mathrm{End}(\mathbb{C}^2)^{\otimes 2}$ and computing its orthogonal complement with respect to the trace pairing, one verifies that $R^\perp$ coincides with the image of $\Phi_{R^{-1}}$, i.e., the space of $R^{-1}$-RTT relations.
+The orthogonal complement $R^\perp$ consists of quadratic expressions $Q(T^*, T^*)$ that pair to zero with all elements of $R$.  For $\mathfrak{sl}_2$ (where $V = \mathbb{C}^2$ and $P$ is the $4 \times 4$ permutation matrix), $R^\perp$ is computed by direct matrix calculation.  The RTT relation at fixed spectral parameters defines a linear map $\Phi_R\colon \mathrm{End}(V)^{\otimes 2} \to \mathrm{End}(V)^{\otimes 2}$ by $X \mapsto R_{12} X - \sigma(X) R_{12}$ where $\sigma$ is the flip; its image is the space of relations~$R$.  Writing out the $16 \times 16$ matrix of $\Phi_R$ in the standard basis of $\mathrm{End}(\mathbb{C}^2)^{\otimes 2}$ and computing its orthogonal complement with respect to the trace pairing, $R^\perp$ coincides with the image of $\Phi_{R^{-1}}$, i.e., the space of $R^{-1}$-RTT relations (Computation~\ref{comp:koszul-dual-dims}, verified in the \texttt{compute\_R\_perp} test suite).
 
 \emph{Step~2a: Local finiteness.}
 The Yangian has infinitely many generators $\{T_{ij}^{(r)}\}_{r \geq 0}$ graded by level~$r$, but each graded component $V_r = \mathrm{span}\{T_{ij}^{(r)} : 1 \leq i,j \leq \dim V\}$ is finite-dimensional: $\dim V_r = (\dim V)^2 = 4$ for $\mathfrak{sl}_2$.  The RTT relation~\eqref{eq:rtt-modes} is homogeneous of degree $r + s$ in the level grading (relating generators of levels $r, s$ on both sides), so the quadratic algebra $A = T(V)/\langle R \rangle$ is locally finite: each graded component $A_n = \bigoplus_{r_1 + \cdots + r_k = n} V_{r_1} \cdots V_{r_k} / R_n$ is a quotient of a finite-dimensional space.
@@ -691,7 +691,7 @@ the rational constraint on $H_i(u)$; (2)~verification of the Borcherds
 identity (weak associativity of the OPE) in the presence of the additional
 poles introduced by the shift.  For the unshifted case ($\mu = 0$), the
 $\Eone$-chiral structure is established in Theorem~\ref{thm:yangian-e1}.
-A conjectural extension (\ClaimStatusConjectured) is that the shifted case follows by an analogous argument using the
+A conjectural extension is that the shifted case follows by an analogous argument using the
 BFN construction (Theorem~\ref{thm:bfn}), which realizes the shifted
 Yangian as equivariant homology and thus provides a natural source of
 vertex operators.  Dimofte--Niu--Py \cite{DNP25} construct dg-shifted Yangians
@@ -810,14 +810,20 @@ Explicitly:
   the quadratic ($R$-matrix) data.
 \end{enumerate}
 
-The bridge claim is \ClaimStatusConjectured: the
-$\Eone$-chiral Yangian and the dg-shifted Yangian are two
+The bridge claim (Conjecture~\ref{conj:chiral-dg-shifted-qi}) is:
+the $\Eone$-chiral Yangian and the dg-shifted Yangian are two
 presentations of one object, one via configuration-space
 integrals (this manuscript) and one via holomorphic
 Chern--Simons perturbation theory~(\cite{DNP25}).  The missing
 input is the Koszulness of the $\Eone$-chiral bar complex
 (Remark~\ref{rem:yangian-collapse-conj}).
 \end{remark}
+
+\begin{conjecture}[Chiral--dg-shifted quasi-isomorphism; \ClaimStatusConjectured]\label{conj:chiral-dg-shifted-qi}
+The $\Eone$-chiral Yangian $Y(\fg)^{\mathrm{ch}}$ of this monograph and the
+dg-shifted Yangian $Y^{\mathrm{dg}}(\fg)$ of Dimofte--Niu--Py~\cite{DNP25}
+are quasi-isomorphic as $\Eone$-algebras.
+\end{conjecture}
 
 \begin{proposition}[Degree-2 mixed-tensor criterion for dg-shifted
 local transport; \ClaimStatusProvedHere]
@@ -3963,13 +3969,21 @@ d^!([t_{ij}^{(r)} | t_{kl}^{(s)}])
 $u = 0 \mapsto u = 1$).
 
 \emph{Self-duality at the level of bar complexes.}
-The Yangian $Y(\fg)$ is conjectured to be \emph{self-dual}
-(Theorem~\ref{thm:yangian-koszul-dual}): $Y(\fg)^! \simeq Y(\fg)$
-after the spectral parameter shift $u \mapsto u + 1$.  At the level
-of bar complexes, this is the statement that the bar complex with
-$R$-matrix $R(u)^{-1}$ is quasi-isomorphic to that with
-$R$-matrix $R(u-1)$, which by the translation invariance
+Theorem~\ref{thm:yangian-koszul-dual} proves $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$
+($R$-matrix inversion).  It is further expected---but not proved---that
+$Y(\fg)$ is \emph{self-dual} after the spectral parameter shift
+$u \mapsto u + 1$ (Conjecture~\ref{conj:yangian-spectral-selfdual}).
+At the level of bar complexes, this amounts to the statement that the
+bar complex with $R$-matrix $R(u)^{-1}$ is quasi-isomorphic to that
+with $R$-matrix $R(u-1)$, which by the translation invariance
 of the RTT relation is isomorphic to the original bar complex.
+
+\begin{conjecture}[Spectral-shift self-duality; \ClaimStatusConjectured]\label{conj:yangian-spectral-selfdual}
+For simply-laced $\fg$, the Koszul dual $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$
+\textup{(}Theorem~\textup{\ref{thm:yangian-koszul-dual}}\textup{)} is
+isomorphic to $Y(\fg)$ itself after the spectral parameter shift
+$u \mapsto u + 1$.
+\end{conjecture}
 
 \emph{Central charge.}
 The Yangian has no central extension in the usual sense
@@ -8189,8 +8203,7 @@ the four MC3 extension conjectures
 
 The four MC3 extension conjectures center on the completed bar-cobar equivalence beyond the evaluation-generated core.  To state them precisely in formal moduli language, we introduce four auxiliary structures: the receptacle for bar-cobar equivalence, the H-level target on the dual side, the H-level target on the original side, and the filtration ensuring finite quotients exist.
 
-\begin{definition}[Ordered \texorpdfstring{$\Eone$}{E1}-factorization category;
-\ClaimStatusConjectured]
+\begin{definition}[Ordered \texorpdfstring{$\Eone$}{E1}-factorization category]
 \label{def:ordered-e1-factorization}
 \index{factorization category!ordered $\Eone$-|textbf}
 For an $\Eone$-chiral algebra~$\cA$ on a curve~$X$,
@@ -8203,8 +8216,7 @@ by the $\Eone$-operad action
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{definition}
 
-\begin{definition}[Spectral quantum group;
-\ClaimStatusConjectured]
+\begin{definition}[Spectral quantum group]
 \label{def:spectral-quantum-group}
 \index{quantum group!spectral|textbf}
 For a Koszul dual~$\cA^!$ with spectral $R$-matrix~$R_{\cA}$,
@@ -8215,7 +8227,7 @@ Latyntsev~\cite{Latyntsev23}.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{definition}
 
-\begin{definition}[dg-shifted Yangian; \ClaimStatusConjectured]
+\begin{definition}[dg-shifted Yangian]
 \label{def:dg-shifted-yangian}
 \index{Yangian!dg-shifted|textbf}
 For a Koszul dual~$\cA^!$, the \emph{dg-shifted Yangian}
@@ -8227,8 +8239,7 @@ Costello--Gwilliam~\cite{CG17}.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{definition}
 
-\begin{definition}[RTT-adapted filtration on a dg-shifted Yangian;
-\ClaimStatusConjectured]
+\begin{definition}[RTT-adapted filtration on a dg-shifted Yangian]
 \label{def:rtt-adapted-filtration}
 Let $\Ydg_{\cA}$ be a dg-shifted Yangian.  An
 \emph{RTT-adapted filtration} on $\Ydg_{\cA}$ is a descending
@@ -12410,6 +12421,8 @@ Hence the hypotheses of
 Corollary~\ref{cor:yangian-dk5-core-realization} are satisfied, so
 DK-5 closes.
 \end{proof}
+\fi
+%% --- end of first \iffalse block (closures i--v) ---
 
 \begin{corollary}[Canonical formal-moduli Yangian target: exact
 remaining input after RTT-adapted realization;
@@ -12721,6 +12734,8 @@ hypotheses needed there are exactly those supplied by
 Corollary~\ref{cor:yangian-canonical-realization-to-exchange-mult}.
 \end{proof}
 
+%% --- second \iffalse block (closures vi--vii) ---
+\iffalse
 \begin{corollary}[Canonical formal-moduli Yangian target closes
 DK-4/DK-5 from one canonical spectral seed on the equivariant
 multiplicative locus; \ClaimStatusProvedHere]
@@ -12809,6 +12824,8 @@ corollary applies and closes DK-4/DK-5 on the canonical target.  The
 final sentence is the multiplicative factorization refinement supplied
 by Proposition~\ref{prop:yangian-dk5-spectral-factorization-core-from-vector-line}.
 \end{proof}
+\fi
+%% --- end of second \iffalse block (closures vi--vii) ---
 
 \begin{remark}[Rational vs.\ trigonometric DK]
 \label{rem:rational-trigonometric-dk}

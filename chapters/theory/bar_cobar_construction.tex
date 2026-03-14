@@ -336,7 +336,6 @@ This grows rapidly with $n$.
 
 \begin{definition}[Bar differential]\label{def:bar-differential-complete}%
 \label{def:geometric-bar}\label{def:geometric-bar-definition}\label{def:bar-geometric}%
-\label{thm:bar-differential}\label{thm:bar-differential-structure}%
 \label{def:bar-diff-detailed}\label{def:diff-total}%
 \index{bar complex!differential|textbf}
 The differential $d: \bar{B}^n(\mathcal{A}) \to \bar{B}^{n+1}(\mathcal{A})$ has three components (in the cohomological grading convention $|d|=+1$; the bar degree decreases by one while the form degree increases, giving net cohomological degree $+1$):
@@ -2014,7 +2013,7 @@ The \emph{cobar differential} is:
 d_{\mathrm{cobar}} := \mathbb{D}(d_{\mathrm{bar}})
 \]
 the Verdier dual of the bar differential
-(Theorem~\ref{thm:bar-differential}).
+(Definition~\ref{def:bar-differential-complete}).
 \end{definition}
 
 \begin{remark}\label{rem:cobar-intrinsic-meaning}
@@ -4485,7 +4484,7 @@ Bar-cobar inversion gives $\Omega(\bar{B}(\mathcal{H}_k)) \simeq \mathcal{H}_k$ 
 \section{Curved Koszul duality and quantum obstructions}
 \label{sec:curved-koszul-quantum}
 
-\begin{theorem}[Quantum deformation-obstruction complementarity; \ClaimStatusProvedHere]\label{thm:deformation-obstruction}
+\begin{theorem}[Quantum deformation-obstruction complementarity; \ClaimStatusProvedElsewhere]\label{thm:deformation-obstruction}
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
@@ -4830,16 +4829,28 @@ which is the obstruction class.
 The genus-$g$ bar differential receives quantum corrections from the
 period matrix of the curve
 (Theorem~\ref{thm:quantum-diff-squares-zero}).  When $\mathcal{A}$ has
-nonzero curvature $\mu_0$, the correction class $\omega_g$ lives in
+nonzero curvature $m_0 = \mu_0(1) \in \mathcal{A}^2$, the correction
+class $\omega_g$ lives in
 $H^*(\mathcal{M}_g, \mathcal{Z}(\mathcal{A}))$ by
-Theorem~\ref{thm:quantum-complementarity-main}.  The formula
-$\dfib^{\,2} = [\mu_0, -] \otimes \int_{\mathcal{M}_g} \omega_g^2$ follows
-from expanding
-$(\dzero + \mu_0 \otimes \omega_g)^2
-= \dzero^2 + \dzero(\mu_0 \otimes \omega_g)
-+ (\mu_0 \otimes \omega_g)\dzero + \mu_0^2 \otimes \omega_g^2$
-and using $\dzero^2 = 0$, $\dzero \mu_0 = 0$ (Maurer--Cartan), and
-$\mu_0^2 = [\mu_0, -]$ (curvature squaring).
+Theorem~\ref{thm:quantum-complementarity-main}.  Write
+$\dfib = \dzero + m_0 \otimes \omega_g$, where the second term acts
+via the inner derivation $[m_0, -]_{m_2}$ tensored with the modular
+class.  Squaring:
+\[
+\dfib^{\,2}
+= \underbrace{\dzero^2}_{=\,0}
++ \dzero(m_0 \otimes \omega_g)
++ (m_0 \otimes \omega_g)\dzero
++ (m_0 \otimes \omega_g)^2.
+\]
+The cross terms vanish: $\dzero(m_0) = m_1(m_0) = 0$ by the curved
+$A_\infty$ relation at $n = 0$
+(Theorem~\ref{thm:curvature-central}(1)), and
+$(m_0 \otimes \omega_g) \circ \dzero$ vanishes on cocycles by the
+same centrality.  The surviving term
+$(m_0 \otimes \omega_g)^2 = [m_0, -]_{m_2} \otimes \omega_g^2$
+uses the $n = 1$ curved $A_\infty$ relation $m_1^2 = [m_0, -]_{m_2}$
+(Theorem~\ref{thm:curvature-central}(2)).
 \end{proof}
 
 \section{Curved Koszul duality and I-adic completion}
@@ -4869,7 +4880,7 @@ A \emph{curved $A_\infty$ algebra} is a graded vector space $A$ with operations:
 \{\mu_n: A^{\otimes n} \to A\}_{n \geq 0}
 \end{equation}
 of degree $2-n$, satisfying the \emph{curved $A_\infty$ relations}:
-\begin{equation}
+\begin{equation}\label{eq:curved-ainfty-relations}
 \sum_{\substack{r+s+t=n \\ r,t \geq 0,\; s \geq 0}} (-1)^{rs+t}\, \mu_{r+1+t}(\mathrm{id}^{\otimes r} \otimes \mu_s \otimes \mathrm{id}^{\otimes t}) = 0
 \end{equation}
 
@@ -4937,7 +4948,7 @@ a = a_0 + a_1 + a_2 + \cdots \quad \text{where } a_n \in I^n/I^{n+1}
 \end{equation}
 \end{definition}
 
-\begin{theorem}[When completion is necessary; \ClaimStatusProvedHere]
+\begin{theorem}[When completion is necessary; \ClaimStatusProvedElsewhere]
 \label{thm:completion-necessity}
 Completion $A \to \hat{A}$ is necessary when:
 \begin{enumerate}
@@ -5862,7 +5873,7 @@ Proposition~\ref{prop:completed-target-comparison}.
 \end{proof}
 
 \begin{definition}[Principal-stage compatible
-\texorpdfstring{$W_\infty$}{W_infty} target; \ClaimStatusConjectured]
+\texorpdfstring{$W_\infty$}{W_infty} target]
 \label{def:winfty-principal-stage-compatible}
 A separated complete dg algebra $\mathcal{W}^{\mathrm{ht}}$ is called a
 \emph{principal-stage compatible $W_\infty$ target} if it is equipped
@@ -5884,7 +5895,7 @@ Corollary~\ref{cor:winfty-hlevel-comparison-criterion}.
 \end{definition}
 
 \begin{definition}[Principal-stage quotient system for a factorization
-\texorpdfstring{$W_\infty$}{W_infty} completion; \ClaimStatusConjectured]
+\texorpdfstring{$W_\infty$}{W_infty} completion]
 \label{def:winfty-quotient-system}
 Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a separated complete
 factorization-theoretic completion of the principal $W$-tower.  A
@@ -8008,8 +8019,7 @@ weight-$4$ normalization.
 \end{proof}
 
 \begin{definition}[Stage-\texorpdfstring{$4$}{4} Ward-normalized standard
-\texorpdfstring{$W_\infty$}{W_infty} H-level target;
-\ClaimStatusConjectured]
+\texorpdfstring{$W_\infty$}{W_infty} H-level target]
 \label{def:winfty-stage4-ward-normalized}
 Assume the setting of
 Proposition~\ref{prop:winfty-mc4-frontier-package}.  We say that the
@@ -11357,7 +11367,14 @@ by commutativity of partial derivatives.
 
 \subsubsection{\texorpdfstring{Regime II: curved differential ($m_1^2 = [\mu_0, -]$, central curvature)}{Regime II: curved differential (m1 squared = commutator with mu0, central curvature)}}
 
-\begin{definition}[Curved \texorpdfstring{$A_\infty$}{A_infinity} algebra]\label{def:curved-ainfty-complete}
+% Duplicate curved A-infinity definition commented out.
+% Canonical version: Definition~\ref{def:curved-ainfty} (line ~4866).
+% Alias label preserved for any stale external references.
+\label{def:curved-ainfty-complete}
+\iffalse
+%%% BEGIN COMMENTED-OUT BLOCK 4: duplicate curved A-infinity definition
+%%% Canonical version lives at def:curved-ainfty (~line 4866).
+\begin{definition}[Curved \texorpdfstring{$A_\infty$}{A_infinity} algebra]\label{def:curved-ainfty-complete-DISABLED}
 A \emph{curved $A_\infty$ algebra} $(\mathcal{A}, \{m_k\}_{k \geq 0}, \mu_0)$ consists of:
 \begin{enumerate}
 \item A $\mathbb{Z}$-graded vector space $\mathcal{A} = \bigoplus_{n} \mathcal{A}^n$
@@ -11365,7 +11382,7 @@ A \emph{curved $A_\infty$ algebra} $(\mathcal{A}, \{m_k\}_{k \geq 0}, \mu_0)$ co
 \item A \emph{curvature element} $\mu_0 \in \mathcal{A}^2$
 \end{enumerate}
 satisfying the \emph{curved $A_\infty$ relations}:
-\begin{equation}\label{eq:curved-ainfty-relations}
+\begin{equation}\label{eq:curved-ainfty-relations-DISABLED}
 \sum_{\substack{r+s+t=n \\ r,t \geq 0, \, s \geq 0}} (-1)^{rs+t} m_{r+1+t}
 (\text{id}^{\otimes r} \otimes m_s \otimes \text{id}^{\otimes t}) = 0
 \end{equation}
@@ -11378,6 +11395,8 @@ The special cases of low degree are:
 \item $n = 2$: Higher coherences involving $\mu_0$
 \end{itemize}
 \end{definition}
+%%% END COMMENTED-OUT BLOCK 4
+\fi
 
 \begin{theorem}[Centrality implies strict nilpotence; \ClaimStatusProvedHere]\label{thm:central-implies-strict}
 For the Heisenberg algebra on an elliptic curve (\S\ref{sec:frame-genus1}), the curvature $d^2 = k \cdot \omega_1$ was scalar, hence central.  Centrality of the curvature is the general mechanism ensuring $d^2 = 0$ strictly in the curved setting.
@@ -11695,20 +11714,32 @@ where $I$ is the augmentation ideal.
 But once completed, $d_{\text{bar}}^2 = 0$ strictly on the completed complex.
 \end{example}
 
+% Duplicate MC subsection commented out.
+% Canonical MC definition: def:mc-element-curved (~line 11255).
+% Canonical twisting theorem: thm:twisting-mc (~line 11263).
+% Alias labels preserved for external references (koszul_reference.tex).
+\label{def:maurer-cartan}%
+\label{eq:mc-equation}%
+\label{thm:mc-deformations}%
+\label{thm:mc-periods}%
+\iffalse
+%%% BEGIN COMMENTED-OUT BLOCK 1: duplicate MC definition and deformation theory
+%%% Canonical MC definition lives at def:mc-element-curved (~line 11255).
+%%% Canonical twisting theorem lives at thm:twisting-mc (~line 11263).
 \subsection{Maurer--Cartan elements and deformations}
 
 \subsubsection{Maurer--Cartan equation}
 
-\begin{definition}[Maurer--Cartan element]\label{def:maurer-cartan}
+\begin{definition}[Maurer--Cartan element]\label{def:maurer-cartan-DISABLED}
 \index{Maurer--Cartan!chiral}
 An element $\alpha \in \mathcal{A}^1$ is a \emph{Maurer--Cartan (MC) element} if it satisfies:
-\begin{equation}\label{eq:mc-equation}
-m_1(\alpha) + \frac{1}{2} m_2(\alpha \otimes \alpha) + \frac{1}{3!} m_3(\alpha \otimes \alpha 
+\begin{equation}\label{eq:mc-equation-DISABLED}
+m_1(\alpha) + \frac{1}{2} m_2(\alpha \otimes \alpha) + \frac{1}{3!} m_3(\alpha \otimes \alpha
 \otimes \alpha) + \cdots + \mu_0 = 0
 \end{equation}
 \end{definition}
 
-\begin{theorem}[MC elements as quantum deformations; \ClaimStatusProvedHere]\label{thm:mc-deformations}
+\begin{theorem}[MC elements as quantum deformations; \ClaimStatusProvedHere]\label{thm:mc-deformations-DISABLED}
 Maurer--Cartan elements in $\bar{B}^1(\mathcal{A})$ correspond to:
 \begin{enumerate}
 \item \emph{Physically:} Quantum deformations of the classical algebra
@@ -11744,7 +11775,7 @@ Therefore $d_\alpha^2 = 0$ strict if and only if $\mu_0^\alpha$ is central.
 
 \subsubsection{Geometric realization of MC elements}
 
-\begin{theorem}[MC elements via period integrals; \ClaimStatusProvedHere]\label{thm:mc-periods}
+\begin{theorem}[MC elements via period integrals; \ClaimStatusProvedHere]\label{thm:mc-periods-DISABLED}
 For a chiral algebra $\mathcal{A}$ on a curve $X$ of genus $g$, Maurer--Cartan elements arise
 from period integrals:
 \begin{equation}
@@ -11800,6 +11831,8 @@ since $m_1(\alpha_1) = 0$ by the conservation law $dJ = 0$.
 
 The MC equation \emph{fails}: the curvature $\mu_0 = k$ is a cohomologically non-trivial obstruction.  No MC element can ``untwist'' it to zero.  This is consistent with the fact that the Heisenberg bar differential satisfies $d_{\mathrm{bar}}^2 = 0$ strict (Theorem~\ref{thm:central-implies-strict}), but the \emph{curvature itself is essential} and cannot be removed by twisting.
 \end{example}
+%%% END COMMENTED-OUT BLOCK 1
+\fi
 
 \subsection{Obstruction theory: genus-by-genus analysis}
 
@@ -11956,17 +11989,17 @@ Requires full $A_\infty$ or $L_\infty$ framework \\
 The distinction between strict and homotopy nilpotence has significant consequences:
 
 \emph{Computations.}
-Strict nilpotence allows direct cohomology computation; homotopy nilpotence requires spectral sequences that may not degenerate.
+Strict nilpotence allows direct cohomology computation (Theorem~\ref{thm:genus-induction-strict}); homotopy nilpotence requires spectral sequences that may not degenerate.
 
 \emph{Convergence.}
-Strict nilpotence ensures the bar-cobar adjunction works without completion (for quadratic algebras); homotopy nilpotence necessitates completion, with attendant convergence issues.
+Strict nilpotence ensures the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) works without completion (for quadratic algebras); homotopy nilpotence necessitates completion (Theorem~\ref{thm:completion-necessity}), with attendant convergence issues.
 
 \emph{Physics.}
-Strict nilpotence means quantum corrections are controlled by central charges; homotopy nilpotence requires full renormalization group analysis.
+Strict nilpotence means quantum corrections are controlled by central charges (Theorem~\ref{thm:deformation-obstruction}); homotopy nilpotence requires full renormalization group analysis.
 
 \emph{Good news.} Vertex operator algebras (with the standard vacuum axiom) and
 chiral algebras arising from unitary CFT have \emph{central curvature}
-(Remark~\ref{rem:voa-central-curvature}), so we are in the strict regime.
+(Remark~\ref{rem:voa-central-curvature}; see also Theorem~\ref{thm:genus-induction-strict}), so we are in the strict regime.
 \end{remark}
 
 \subsection{Connection to literature}
@@ -11999,7 +12032,7 @@ For a factorization algebra $\mathcal{F}$ on a curve $X$:
 \[\text{Fact}(X, \Omega(B(\mathcal{F}))) \simeq \mathcal{F}\]
 \end{theorem}
 
-Combined with our explicit bar construction (Theorem~\ref{def:geometric-bar}), this confirms 
+Combined with our explicit bar construction (Definition~\ref{def:geometric-bar}), this confirms 
 that our geometric bar differential has the correct homological properties.
 
 \subsubsection{Costello--Gwilliam}
@@ -12147,10 +12180,21 @@ This covers all standard examples (Heisenberg, Kac--Moody, Virasoro, $W$-algebra
 \section{Non-quadratic chiral algebras}
 \label{sec:filtered-vs-curved-comprehensive}
 
-The most interesting chiral algebras ---
-$\mathcal{W}$-algebras, non-simply-laced Kac--Moody algebras,
-the Virasoro algebra at irrational central charge --- are not
-quadratic.  Four increasingly general classes form a hierarchy
+\label{thm:bar-convergence}% alias: canonical theorem inside commented-out block below
+The four-regime hierarchy (Convention~\ref{conv:regime-tags})
+classifies chiral algebras by their bar-complex behavior:
+quadratic (strict $d^2=0$), curved-central ($\dfib^2 = \kappa\cdot\omega_g$
+with central curvature), filtered-complete (requiring I-adic completion),
+and programmatic (infinite generators, MC4 frontier).
+The examples of each regime are given in
+\S\ref{subsec:three-regimes} above.
+
+\iffalse
+%%% BEGIN COMMENTED-OUT: Four-class exposition (~600 lines)
+%%% This section duplicated the three-regime classification at
+%%% \S\ref{subsec:three-regimes} with a fourth "general" class.
+%%% The canonical classification is Convention~\ref{conv:regime-tags}.
+Four increasingly general classes form a hierarchy
 \begin{equation}
 \text{Quadratic} \subset \text{Curved} \subset \text{Filtered} \subset \text{General},
 \end{equation}
@@ -12760,10 +12804,8 @@ $\bar{B}^1$, so Koszul duality applies.
 \end{remark}
 
 The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a chiral coalgebra; when the curvature is nonzero, it is a \emph{curved} coalgebra requiring Positselski's coderived categories for its homological algebra.
-
-%================================================================
-% SECTION: CHIRAL COALGEBRA HOMOLOGICAL ALGEBRA
-%================================================================
+\fi
+%%% END COMMENTED-OUT: Four-class exposition
 
 \section{Chiral coalgebra homological algebra}
 \label{sec:chiral-coalgebra-homalg}
@@ -14176,7 +14218,7 @@ The bar complex $\bar{B}(\cA) = \bigoplus_n \bar{B}^n(\cA)$, with
 $\bar{B}^n(\cA)$ living on $\overline{C}_n(X)$, assembles into a
 single object on $\operatorname{Ran}(X)$.  The bar differential,
 given by residues at collision divisors
-(Theorem~\ref{thm:bar-differential-structure}), becomes the
+(Definition~\ref{def:bar-differential-complete}), becomes the
 factorization structure map: when two points collide, the OPE
 produces the ``fusion'' of the corresponding tensor factors.
 
@@ -14310,7 +14352,7 @@ restriction of the factorization homology $\int_X\overline{\cA}$
 to $n$-point configurations.
 \item \textbf{Assembly}: The bar differential
 $d_{\mathrm{bar}} = \sum_{i < j} d_{ij}$ (residue along collision
-divisors, Theorem~\ref{thm:bar-differential-structure}) is the
+divisors, Definition~\ref{def:bar-differential-complete}) is the
 structure map of the factorization algebra:
 the collision $z_i \to z_j$ implements the factorization product
 $\int_{U_i}\overline{\cA} \otimes
