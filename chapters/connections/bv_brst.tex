@@ -40,10 +40,26 @@ The generators are operator insertions $\phi_i \in \mathcal{A}$ at marked points
 
 \emph{Step~2: BV Bracket.}
 
-The BV bracket is realized geometrically:
-\[\{\phi(z_i), \eta_{jk}\} = \delta_{ij} \frac{\partial \phi}{\partial z_i} 
-\frac{1}{z_i - z_k} + \delta_{ik} \frac{\partial \phi}{\partial z_i} 
-\frac{1}{z_i - z_j}\]
+The BV bracket is a residue operation on the log-de~Rham complex
+of~$\overline{C}_{n+1}(X)$.  In local coordinates near the divisor
+$D_{ij} = \{z_i = z_j\}$, with $\epsilon = z_i - z_j$:
+\[\{\phi(z_i), \eta_{jk}\}
+= \delta_{ij}\,\Res_{\epsilon = 0}
+\Bigl[\frac{\partial\phi}{\partial z_i}\,
+\frac{d\epsilon}{\epsilon(z_i - z_k)}\Bigr]
++ \delta_{ik}\,\Res_{\epsilon = 0}
+\Bigl[\frac{\partial\phi}{\partial z_i}\,
+\frac{d\epsilon}{\epsilon(z_i - z_j)}\Bigr].\]
+No regularization is needed: both terms are residues of logarithmic
+forms along normal-crossing divisors of the smooth
+variety~$\overline{C}_{n+1}(X)$, and the Poincar\'e residue map
+$\Res_{D_{ij}}\colon \Omega^k_{\log}(\overline{C}_{n+1})
+\to \Omega^{k-1}_{D_{ij}}$ is a well-defined morphism of sheaves
+(no distributional extension required).  The apparent
+singularity $1/(z_i - z_k)$ at $z_i = z_k$ is a pole along
+the \emph{different} divisor $D_{ik}$, which is transverse
+to~$D_{ij}$ by the normal-crossing property of the FM
+compactification (Theorem~\ref{thm:FM}(3)).
 
 The logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ generate
 $H^1(C_n(X); \mathbb{C})$ by the Arnold--Brieskorn theorem;
@@ -1429,7 +1445,26 @@ preserving tensor products up to quasi-isomorphism (lax monoidal structure) and 
 \[
 \bar{B}^{\mathrm{ch}}(\mathcal{A}_1 \otimes \mathcal{A}_2) \xrightarrow{\sim} \bar{B}^{\mathrm{ch}}(\mathcal{A}_1) \otimes \bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
 \]
-via the shuffle map.  This is \emph{not} an isomorphism at the chain level: the bar construction involves iterated tensor powers over a single configuration space $\overline{C}_n(X)$, which does not factor as a product.  However, the shuffle quasi-isomorphism is compatible with the BV structures: the BV Laplacian satisfies $\Delta_{\otimes} = \Delta_1 \otimes \mathrm{id} + \mathrm{id} \otimes \Delta_2$ on the target, and the BV bracket satisfies the Leibniz rule with respect to the tensor product, so the functor $\mathrm{BV}$ is lax monoidal.
+via the shuffle map.  This is \emph{not} an isomorphism at the chain level: the bar construction involves iterated tensor powers over a single configuration space $\overline{C}_n(X)$, which does not factor as a product.  The shuffle quasi-isomorphism is compatible with the BV structures
+in the following sense.  On the target, the BV Laplacian satisfies
+$\Delta_{\otimes} = \Delta_1 \otimes \mathrm{id}
++ \mathrm{id} \otimes \Delta_2$
+(the Laplacian distributes over the tensor product because it acts
+by contraction against the diagonal, which factors).
+The BV bracket
+$\{a_1 \otimes a_2,\, b_1 \otimes b_2\}
+= \{a_1, b_1\} \otimes a_2 b_2
+\pm a_1 b_1 \otimes \{a_2, b_2\}$
+satisfies the Leibniz rule by definition of the Gerstenhaber bracket
+on a tensor product of BV algebras.  The shuffle map intertwines
+these structures because it is a coalgebra map (it respects the
+deconcatenation coproduct, which determines the Laplacian) and an
+algebra map up to homotopy (the Eilenberg--Zilber theorem).
+Explicitly, the failure of strict compatibility is controlled by
+higher homotopies in the $E_\infty$-structure on the bar complex
+(Berger--Fresse~\cite[\S11]{BerFres04}), which do not affect the
+lax monoidal structure at the derived level.  The functor
+$\mathrm{BV}$ is therefore lax monoidal.
 
 \emph{Verdier duality.}  Verdier duality $\mathbb{D}$ on $\overline{C}_n(X)$ exchanges logarithmic forms (bar data) with distributional sections (cobar data).  Specifically, $\mathbb{D}(\bar{B}^n(\mathcal{A})) = \mathrm{Dist}(C_n(X), (\mathcal{A}^*)^{\boxtimes n}) \cong \Omega^n(\mathcal{A}^!)$ (the cobar complex of the Koszul dual coalgebra), where the isomorphism uses the residue pairing between forms and distributions.  Under this identification, the bar differential becomes the cobar differential of $\mathcal{A}^!$, and the BV Laplacian becomes the cobar product, establishing $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$ as BV algebras.  This is the BV-algebraic manifestation of the bar-cobar Verdier duality proved in Theorem~\ref{thm:verdier-bar-cobar}.
 \end{proof}
