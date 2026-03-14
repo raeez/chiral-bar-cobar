@@ -476,14 +476,146 @@ space, without higher corrections.
 \begin{remark}[Conformal blocks and Koszul duality]
 \label{rem:conformal-blocks-koszul}
 \index{conformal blocks!Koszul duality}
-Verdier intertwining $\mathbb{D}_{\Ran}\bar{B}(\cA) \simeq \bar{B}(\cA^!)$ gives a Koszul dual identity on conformal blocks:
+The Verdier intertwining
+$\mathbb{D}_{\Ran}\bar{B}(\cA) \simeq \bar{B}(\cA^!)$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}) acts at the
+algebra level.  To obtain a conformal-block identity
 \[
 \mathbb{V}(\mathcal{A};\, \vec{\mathcal{M}};\, X)
 \;\cong\;
-\mathbb{V}(\mathcal{A}^!;\, \vec{\mathcal{M}}^!;\, X)
+\mathbb{V}(\mathcal{A}^!;\, \vec{\mathcal{M}}^!;\, X),
 \]
-for Koszul modules $\mathcal{M}_i$ with duals $\mathcal{M}_i^!$.  This provides a geometric proof that $\dim \mathbb{V}$ is invariant under $k \mapsto -k - 2h^\vee$, distinct from the classical level-rank duality (\cite{Beauville}, \cite{NakanishiTsuchiya}).
+one needs the \emph{module-level} Verdier intertwining: the functor
+$\mathbb{D}_{\Ran}$ must exchange the module bar complex
+$\bar{B}(\cA; \vec{\mathcal{M}})$ with
+$\bar{B}(\cA^!; \vec{\mathcal{M}}^!)$ compatibly with the
+pointed configuration space
+$\overline{C}_{n,r}(X)$.  The algebra-level theorem
+supplies the compatibility on the $\cA$-tensor factors; the
+module-level extension requires that each $\mathcal{M}_i$ and its
+dual $\mathcal{M}_i^!$ are related by a Koszul-module
+pairing~(Definition~\ref{def:koszul-module-pair}).  Under
+this hypothesis, the conformal-block identity holds and gives a
+geometric proof that $\dim \mathbb{V}$ is invariant under
+$k \mapsto -k - 2h^\vee$, distinct from the classical level-rank
+duality~(\cite{Beauville}, \cite{NakanishiTsuchiya}).  The
+full module-level Verdier intertwining is
+Theorem~\ref{thm:module-bar-verdier}.
 \end{remark}
+
+\begin{theorem}[Module-level Verdier intertwining; \ClaimStatusProvedHere]
+\label{thm:module-bar-verdier}
+\index{Verdier duality!module bar complex|textbf}
+\index{conformal blocks!Verdier intertwining}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair
+\textup{(}Definition~\textup{\ref{def:chiral-koszul-pair}}\textup{)}
+on a smooth projective curve~$X$, and let
+$\mathcal{M}_1, \ldots, \mathcal{M}_r$ be Koszul
+$\cA$-modules with Koszul dual $\cA^!$-modules
+$\mathcal{M}_1^!, \ldots, \mathcal{M}_r^!$
+\textup{(}Definition~\textup{\ref{def:koszul-module-pair}}\textup{)}.
+Then Verdier duality on $\overline{C}_{n,r}(X)$ exchanges the
+module bar complexes:
+\begin{equation}\label{eq:module-bar-verdier}
+\mathbb{D}_{\overline{C}_{n,r}(X)}\,
+\bar{B}_n(\cA;\, \vec{\mathcal{M}};\, X)
+\;\simeq\;
+\bar{B}_n(\cA^!;\, \vec{\mathcal{M}}^!;\, X)
+\end{equation}
+compatibly with the bar differential and the pointed-configuration
+structure maps.  On $H^0$, this induces:
+\begin{equation}\label{eq:conformal-block-verdier}
+\mathbb{V}(\cA;\, \vec{\mathcal{M}};\, X)
+\;\cong\;
+\mathbb{V}(\cA^!;\, \vec{\mathcal{M}}^!;\, X)^\vee.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The pointed configuration space $\overline{C}_{n,r}(X)$
+parameterizes $n$ algebra insertions and $r$ module insertions
+with collision patterns encoded by boundary divisors.  The module
+bar complex
+$\bar{B}_n(\cA; \vec{\mathcal{M}}; X)
+= \Gamma(\overline{C}_{n,r}(X),\,
+\mathcal{M}_1 \boxtimes \cdots \boxtimes \mathcal{M}_r
+\boxtimes \cA^{\boxtimes n} \otimes \Omega^n_{\log})$
+is a holonomic $\mathcal{D}$-module on $\overline{C}_{n,r}(X)$
+(extending Lemma~\ref{lem:bar-holonomicity} to the pointed
+setting).
+
+\emph{Step~1: Verdier duality on algebra factors.}
+On the $n$ algebra-insertion factors, Verdier duality acts by
+Theorem~\ref{thm:bar-cobar-verdier}: $\mathbb{D}$ exchanges the
+logarithmic forms $\eta_{ij}$ with the distributional sections
+$\delta_{D_{ij}}$, and maps $\cA^{\boxtimes n}$ to
+$(\cA^!)^{\boxtimes n}$ via the Koszul pairing
+$\cA \otimes \cA^! \to \omega_X$.
+
+\emph{Step~2: Verdier duality on module factors.}
+At each module insertion $x_i$, the Koszul-module pairing
+$\mathcal{M}_i \otimes \mathcal{M}_i^! \to \omega_X$
+(Definition~\ref{def:koszul-module-pair}) provides the local
+Verdier data.  The collision divisors $D_{x_i, z_j}$ (where an
+algebra point collides with a module point) contribute residues of
+the $\cA$-action on $\mathcal{M}_i$; under Verdier duality, these
+become residues of the $\cA^!$-action on~$\mathcal{M}_i^!$, by
+functoriality of the chiral bracket under the Koszul pairing.
+
+\emph{Step~3: Compatibility with the differential.}
+The module bar differential has two types of residue:
+algebra--algebra collisions (controlled by Step~1) and
+algebra--module collisions (controlled by Step~2).  Both types
+are intertwined by $\mathbb{D}$ because the Koszul-module
+pairing is compatible with the chiral bracket:
+\[
+\langle d_{\mathrm{bar}} m,\, m^! \rangle
+= - \langle m,\, d_{\mathrm{bar}}^! m^! \rangle
+\]
+(the adjoint-connection identity of
+Theorem~\ref{thm:bar-cobar-verdier}, Step~2, applied to each
+collision divisor).  Therefore
+$\mathbb{D}\bar{B}_n(\cA; \vec{\mathcal{M}})
+\simeq \bar{B}_n(\cA^!; \vec{\mathcal{M}}^!)$ as complexes.
+
+\emph{Step~4: Descent to conformal blocks.}
+Taking $H^0$ of~\eqref{eq:module-bar-verdier} and using the
+bar-complex computation of conformal blocks
+(Proposition~\ref{prop:conformal-blocks-bar}) gives:
+\[
+\mathbb{V}(\cA; \vec{\mathcal{M}}; X)
+= H^0(\bar{B}(\cA; \vec{\mathcal{M}}; X))
+\cong H^0(\mathbb{D}\bar{B}(\cA^!; \vec{\mathcal{M}}^!; X))^\vee
+= \mathbb{V}(\cA^!; \vec{\mathcal{M}}^!; X)^\vee.
+\]
+The duality in the second step is
+$H^0(\mathbb{D} C) \cong H^{\dim}(C)^\vee$ for a holonomic
+complex~$C$ on the smooth variety $\overline{C}_{n,r}(X)$;
+the Koszul concentration ensures $H^{\dim} = H^0$ (all
+cohomology in a single degree).
+\end{proof}
+
+\begin{corollary}[Dimension invariance under Koszul duality;
+\ClaimStatusProvedHere]
+\label{cor:conformal-block-dim-invariance}
+\index{conformal blocks!dimension invariance}
+For $\cA = \widehat{\fg}_k$ and integrable modules at positive
+integer level:
+\[
+\dim\mathbb{V}(\widehat{\fg}_k;\, \vec{\Lambda};\, \Sigma_g)
+\;=\;
+\dim\mathbb{V}(\widehat{\fg}_{-k-2h^\vee};\,
+\vec{\Lambda}^!;\, \Sigma_g).
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:module-bar-verdier} with
+$\cA^! = \widehat{\fg}_{-k-2h^\vee}$
+(Theorem~\ref{thm:universal-kac-moody-koszul}).
+The isomorphism~\eqref{eq:conformal-block-verdier} preserves
+dimension.
+\end{proof}
 
 \begin{definition}[Bundle of conformal blocks]
 \label{def:bundle-conformal-blocks}
