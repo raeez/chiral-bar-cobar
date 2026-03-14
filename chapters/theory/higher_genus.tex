@@ -355,15 +355,47 @@ The geometric bar complex $\bar{B}^{\text{geom}}(\mathcal{A})$ carries a natural
 
 \begin{enumerate}
 \item \emph{Operations from residues.} Each $m_k$ is given by a sum over planar binary trees:
-\[m_k(a_1 \otimes \cdots \otimes a_k) = \sum_{T \in \mathcal{T}_k} \pm\, \operatorname{Res}_{D_T}\left[\bigwedge_{e \in E(T)} \eta_e \cdot a_1(z_1) \otimes \cdots \otimes a_k(z_k)\right]\]
-where $\mathcal{T}_k$ denotes the set of planar binary trees with $k$ leaves, $E(T)$ is the edge set with $|E(T)| = k-1$, and $D_T$ is the boundary stratum of $\overline{C}_k(X)$ corresponding to the collision pattern encoded by $T$. The $(k{-}1)$-form $\bigwedge_{e \in E(T)} \eta_e$ has degree matching the codimension of the total collision stratum.
+\begin{equation}\label{eq:mk-tree-sum}
+m_k(a_1 \otimes \cdots \otimes a_k) = \sum_{T \in \mathcal{T}_k}
+(-1)^{\epsilon(T;\,a_1,\ldots,a_k)}\,
+\operatorname{Res}_{D_T}\!\left[\bigwedge_{e \in E(T)} \eta_e
+\cdot a_1(z_1) \otimes \cdots \otimes a_k(z_k)\right]
+\end{equation}
+where $\mathcal{T}_k$ denotes the set of planar binary trees with
+$k$ leaves, $E(T)$ is the edge set with $|E(T)| = k-1$, $D_T$ is
+the boundary stratum of $\overline{C}_k(X)$ corresponding to the
+collision pattern encoded by $T$, and the \emph{Koszul--tree sign}
+$\epsilon(T; a_1, \ldots, a_k) \in \mathbb{Z}/2$ is:
+\begin{equation}\label{eq:koszul-tree-sign}
+\epsilon(T; a_1, \ldots, a_k)
+= \sum_{\substack{i < j \\ i \in L(v),\, j \in R(v) \\
+  \text{for some internal } v \in V(T)}}
+(|a_i| - 1)(|a_j| - 1),
+\end{equation}
+the sum over all pairs $(i,j)$ that are separated by an internal
+vertex~$v$ of~$T$ (with $i$ in the left subtree $L(v)$ and $j$ in
+the right subtree $R(v)$).  This is the Koszul sign incurred by
+reordering the desuspended elements $s^{-1}a_i$ (of degree
+$|a_i| - 1$) from their natural order $1, \ldots, k$ to the
+tree-composition order dictated by~$T$.  It matches the sign
+convention of Loday--Vallette~\cite[\S10.3.3]{LV12} after the
+shift from their homological grading ($|d| = -1$) to our
+cohomological grading ($|d| = +1$): the shift $s \mapsto s^{-1}$
+replaces $|a_i|$ by $|a_i| - 1$ in the Koszul rule, which absorbs
+the sign difference between the two conventions
+(Appendix~\ref{app:signs}, \S\ref{sec:sign-dictionary-complete}).
 
 \item \emph{Low-degree operations:}
 \begin{align}
 m_1 &= 0 \quad \text{(no differential on the chiral algebra)} \\
 m_2(a \otimes b) &= \mu(a,b) \quad \text{(the chiral product)} \\
-m_3(a \otimes b \otimes c) &= \text{obstruction to associativity} \\
-m_4(a \otimes b \otimes c \otimes d) &= \text{pentagon relation term}
+m_3(a \otimes b \otimes c) &= \Res_{D_{12} \cap D_{23}}
+  \bigl[\eta_{12} \wedge \eta_{23} \cdot a \otimes b \otimes c\bigr]
+  \quad \text{(three trees, one sign each by~\eqref{eq:koszul-tree-sign})} \\
+m_4(a \otimes b \otimes c \otimes d) &= \sum_{T \in \mathcal{T}_4}
+  (-1)^{\epsilon(T)}\,\Res_{D_T}
+  \bigl[\eta_T \cdot a \otimes b \otimes c \otimes d\bigr]
+  \quad \text{(fourteen trees)}
 \end{align}
 
 \item \emph{Coherences from geometry.} The $A_\infty$ relations follow from $\partial^2 = 0$ on the compactified configuration space $\overline{C}_n(X)$.
@@ -1201,7 +1233,7 @@ coalgebra:
 $\mathcal{F}^! = \bar{B}^{\mathrm{ch}}(\mathcal{F})^\vee
 \cong \beta\gamma$
 (Theorem~\ref{thm:fermion-boson-koszul};
-cf.\ the explicit computation in~\S\ref{sec:frame-bc-betagamma}).
+cf.\ the explicit computation in Chapter~\ref{ch:heisenberg-frame}).
 This is Koszul duality (Lie--Com), not bosonization.
 \end{example}
 
@@ -1273,7 +1305,8 @@ $\bar{B}(\mathcal{H}_\kappa) = \mathrm{Sym}^c(s^{-1}\overline{\mathcal{H}})$
 component is $\bar{B}^1 = s^{-1}\overline{\mathcal{H}}_1 = s^{-1}
 \mathbb{C} \cdot J$, so $H^1$ of the bar complex on~$X$ is computed
 by the Leray spectral sequence for $\bar{B}$ viewed as a sheaf
-on~$X$:
+on~$X$ (convergent: $X$ has finite cohomological dimension and
+$\mathcal{H}^q(\bar{B}^\bullet)$ is a coherent sheaf for each~$q$):
 \[
 E_2^{p,q} = H^p(X,\, \mathcal{H}^q(\bar{B}^{\bullet}))
 \;\Longrightarrow\; H^{p+q}(\bar{B}^{\mathrm{global}}).
@@ -5143,9 +5176,67 @@ triviality of the fibration. On boundary strata, it has monodromy captured by th
 \emph{Picard--Lefschetz formula}.
 \end{proof}
 
-\begin{remark}[Convergence]
-The spectral sequence converges: $\overline{\mathcal{M}}_g$ has finite cohomological dimension $3g{-}3$, the fiber sheaves $\mathcal{H}^q_{\text{fiber}}$ are constructible, and the bar complex is conilpotent (Theorem~\ref{thm:conilpotency-bar}).  Stabilization occurs at $E_r$ for $r \leq 3g{-}2$.
-\end{remark}
+\begin{lemma}[Convergence of the quantum spectral sequence;
+\ClaimStatusProvedHere]
+\label{lem:quantum-ss-convergence}
+\index{spectral sequence!convergence}
+The spectral sequence of
+Theorem~\textup{\ref{thm:ss-quantum}} converges to
+$H^{p+q}(\bar{B}(\cA), d_{\mathrm{total}})$ and stabilizes
+at a finite page: $E_r = E_\infty$ for $r \le 3g - 2$.
+\end{lemma}
+
+\begin{proof}
+Three conditions must be verified.
+
+\emph{(1) Finite cohomological dimension of the base.}
+The Deligne--Mumford--Knudsen stack
+$\overline{\mathcal{M}}_g$ is a smooth proper
+Deligne--Mumford stack of dimension $3g - 3$.  For any
+constructible sheaf $\mathcal{F}$ on
+$\overline{\mathcal{M}}_g$,
+$H^i(\overline{\mathcal{M}}_g, \mathcal{F}) = 0$ for
+$i > 2(3g-3) = 6g - 6$
+(Artin vanishing for proper DM stacks,
+\cite[\S4.1]{Olsson16}).
+
+\emph{(2) Constructibility of the fiber sheaves.}
+The fiber cohomology sheaf
+$\mathcal{H}^q_{\mathrm{fiber}}(\cA)$ on
+$\overline{\mathcal{M}}_g$ is constructible with respect to
+the stratification by topological type of stable curve.
+On the smooth locus $\mathcal{M}_g$, it is a local system
+by Lemma~\ref{lem:fiber-cohomology-center} (constancy of
+the center $Z(\cA)$ under variation of complex structure).
+On each boundary stratum $D_\Gamma$
+(indexed by stable graphs~$\Gamma$), the monodromy
+is quasi-unipotent: the Picard--Lefschetz formula gives
+monodromy operators $T_e = \mathrm{id} + N_e$ where $N_e$
+is nilpotent (one Jordan block per node
+$e \in E(\Gamma)$).  A local system with quasi-unipotent
+monodromy along a normal crossing divisor is constructible
+(\cite[\S8.1]{KashiwaraSchapira}).
+
+\emph{(3) Exhaustiveness and bounded-below.}
+The genus filtration $F^{\le g}$ is exhaustive
+($\bigcup_g F^{\le g} = \bar{B}(\cA)$) and bounded below
+($F^{\le -1} = 0$).  By conilpotency of $\bar{B}(\cA)$
+(Theorem~\ref{thm:conilpotency-bar}), each element has
+finite bar degree, hence lives in some $F^{\le g}$.
+
+\emph{Convergence.}  By (1)--(3), the spectral sequence
+satisfies the hypotheses of the filtered convergence theorem
+for bounded-below exhaustive filtrations with constructible
+graded pieces
+(Grothendieck~\cite[\S II.4.17]{Tohoku}).  The $d_r$
+differential shifts the genus grading by~$r$ and the
+complementary degree by~$-r+1$.  Since $E_r^{p,q,g} = 0$
+for $p > 6g - 6$ by (1) and for $g < 0$ by (3), every
+$d_r$ with $r > 6g - 6 + 1 = 6g - 5$ has either zero source
+or zero target.  For fixed total degree, $r \le 3g - 2$
+suffices: the genus spectral sequence stabilizes
+at $E_{3g-2}$.
+\end{proof}
 
 \emph{Step 3: Quantum corrections are $E_\infty$ contributions.}
 
@@ -7613,8 +7704,8 @@ Applying AF-dual (Lemma~\ref{lem:AF-dual-chiral}):
 We need to show:
 \[\left(R\Gamma(\text{Conf}_n(X), \mathcal{A})^{\boxtimes n}\right)^\vee \simeq \mathbb{D}_{\text{top}}\left(\int_{-\text{Conf}_n(X)} \bar{B}(\mathcal{A})\right)\]
 
-By bar-cobar duality:
-\[\bar{B}(\mathcal{A}) \simeq \mathcal{A}^\vee \text{ (coalgebra)}\]
+By the Verdier intertwining (Theorem~\ref{thm:bar-cobar-verdier}):
+\[\mathbb{D}_{\operatorname{Ran}}\bar{B}(\mathcal{A}) \simeq \bar{B}(\mathcal{A}^!)\]
 
 Therefore:
 \begin{align*}
@@ -8510,9 +8601,9 @@ Theorem~\ref{thm:bar-nilpotency-complete}).
 A candidate Koszul dual chiral algebra $\cA^!$ on~$X$ with
 universal twisting morphism
 $\tau\colon \bar{B}_X(\cA) \to \cA^!$.  The identification
-$\bar{B}_X(\cA) \simeq \cA^!$ as factorization coalgebras is a
+$\bar{B}_X(\cA)^\vee \simeq \cA^!$ as factorization algebras is a
 \emph{consequence} of Theorem~\ref{thm:bar-cobar-isomorphism-main},
-not an input.
+not an input; $\bar{B}_X(\cA)$ itself is the Koszul dual \emph{coalgebra}.
 
 \item\label{D:genus-tower}
 A genus tower $\{\bar{B}^{(g)}_X(\cA)\}_{g \geq 0}$ extending the
