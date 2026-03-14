@@ -63,13 +63,12 @@ def w4_dual_level(k):
 
 
 def w4_complementarity_sum(k=None):
-    """c(k) + c(k') for the W_4 algebra.
+    r"""c(k) + c(k') for the W_4 algebra.
 
-    For the principal W_N algebra from sl_N, the complementarity sum is:
-    sigma = (N-1)(N-1 + N(N+1)) = (N-1)(N^2+N+N-1) ... actually let me compute.
+    For the principal W_N algebra from sl_N, the complementarity sum is
+    sigma_N = 2(N-1)(2N^2+2N+1), independent of k.
 
-    For W_3: c(k) + c(-k-6) = 100.
-    For W_4: c(k) + c(-k-8) should be a constant.
+    sigma_2 = 26, sigma_3 = 100, sigma_4 = 246.
     """
     if k is None:
         k = Symbol('k')
@@ -618,7 +617,6 @@ def stage4_virasoro_target_identity_data() -> Dict[str, object]:
         "C_{4,4;2;0,6}": {
             "theorematic_value": 2,
             "verified_value": 2,
-            "predicted_value": 2,  # Legacy alias for older callers.
             "source_pair": (4, 4),
             "target_spin": 2,
             "pole_order": 6,
@@ -627,7 +625,6 @@ def stage4_virasoro_target_identity_data() -> Dict[str, object]:
         "C_{3,4;2;0,5}": {
             "theorematic_value": 0,
             "verified_value": 0,
-            "predicted_value": 0,  # Legacy alias for older callers.
             "source_pair": (3, 4),
             "target_spin": 2,
             "pole_order": 5,
@@ -635,10 +632,6 @@ def stage4_virasoro_target_identity_data() -> Dict[str, object]:
         },
     }
 
-
-def stage4_falsifiable_predictions() -> Dict[str, object]:
-    """Backward-compatible wrapper for the Virasoro-target identity data."""
-    return stage4_virasoro_target_identity_data()
 
 
 def verify_universal_t_coupling_pattern() -> Dict[str, bool]:
@@ -655,7 +648,6 @@ def verify_universal_t_coupling_pattern() -> Dict[str, bool]:
         "s=2_equals_2": stage3[(2, 2, 2, 2)] == 2,
         "s=3_equals_2": stage3[(3, 3, 2, 4)] == 2,
         "s=4_equals_2": True,
-        "s=4_predicted_2": True,  # Legacy alias for older callers.
     }
 
 
@@ -872,7 +864,6 @@ def analyze_stage4_packet() -> Dict[str, object]:
         "virasoro_target_values": front["virasoro_target_values"],
         "virasoro_target_identity_data": stage4_virasoro_target_identity_data(),
         "live_targets": stage4_live_targets(),
-        "falsifiable_predictions": stage4_falsifiable_predictions(),  # Legacy alias.
     }
 
 

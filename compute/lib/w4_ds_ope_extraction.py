@@ -265,7 +265,6 @@ def verify_virasoro_target_identity_c442(c=None):
         "coefficient": "C_{4,4;2;0,6}",
         "theorematic_value": 2,
         "verified_value": 2,
-        "predicted_value": 2,  # Legacy alias for older callers.
         "mechanism": "Universal T-coupling: conformal Ward identity",
         "verification": "Follows from T_{(1)}W^s = s*W^s for all primaries",
         "status": "VERIFIED",
@@ -286,7 +285,6 @@ def verify_virasoro_target_identity_c342(c=None):
         "coefficient": "C_{3,4;2;0,5}",
         "theorematic_value": 0,
         "verified_value": 0,
-        "predicted_value": 0,  # Legacy alias for older callers.
         "mechanism": "Mixed Virasoro vanishing: <T W^3 W^4> = 0",
         "verification": "<W^3, W^4> = 0 (orthogonality of different-weight primaries)",
         "status": "VERIFIED",
@@ -545,7 +543,6 @@ def extraction_report(k=None):
         "C_{4,4;2;0,6}": 2,
         "C_{3,4;2;0,5}": 0,
         "virasoro_target_identities_verified": True,
-        "predictions_verified": True,  # Legacy alias for older callers.
     }
 
 
