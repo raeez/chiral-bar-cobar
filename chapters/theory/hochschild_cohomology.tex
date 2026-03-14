@@ -117,7 +117,7 @@ For $\widehat{\mathfrak{g}}_k$ at critical level $k = \critLevel$, the chiral Ho
 with $\deg P_i = 2m_i + 1$ and $\deg \Theta_i = 2(m_i+1)$, where $m_1,\ldots,m_r$ are the exponents of~$\mathfrak{g}$ (Fuks--Feigin--Tsygan~\cite{FT87}, via BD comparison~\cite{BD04}).  For rank~$1$ ($\mathfrak{sl}_2$): $\ChirHoch^{n+4} \cong \ChirHoch^n$ (strict periodicity).  For rank $r > 1$: polynomial growth $O(n^{r-1})$ without strict periodicity (Theorem~\ref{thm:affine-periodicity-critical}).
 \end{theorem}
 
-The exterior-polynomial structure arises from the Coxeter element $w_{\mathrm{Cox}} \in W$ acting on the center at critical level (Feigin--Frenkel~\cite{FF92}).  For simply-laced~$\mathfrak{g}$, $\mathsf{h} = h^\vee$; for non-simply-laced~$\mathfrak{g}$, $\mathsf{h} \neq h^\vee$ in general.
+The exterior-polynomial structure arises from the Coxeter element $w_{\mathrm{Cox}} \in W$ acting on the center at critical level (Feigin--Frenkel~\cite{Feigin-Frenkel}).  For simply-laced~$\mathfrak{g}$, $\mathsf{h} = h^\vee$; for non-simply-laced~$\mathfrak{g}$, $\mathsf{h} \neq h^\vee$ in general.
 
 \subsection{W-algebra periodicity}
 
@@ -217,6 +217,61 @@ generic level (\ClaimStatusProvedElsewhere, \cite{Ara07});
 multiple generators (\ClaimStatusProvedElsewhere, \cite{Fuks86}).  For
 non-principal nilpotent orbits (Remark below), the simplicity hypothesis
 requires case-by-case verification.
+\end{remark}
+
+\begin{remark}[Elementary model presentation;
+Convention~\ref{conv:proof-architecture}]
+\label{rem:theorem-h-model}
+\index{chiral Hochschild cohomology!model presentation}
+\emph{Step~A} (H-level):
+$\ChirHoch^*(\cA)$ is the endomorphism algebra of the
+identity functor on factorization $\cA$-modules: it classifies
+$A_\infty$-deformations of the chiral algebra~$\cA$.
+The polynomial structure
+$\ChirHoch^*(\Walg^k(\fg)) \cong \bC[\Theta_1,\ldots,\Theta_r]$
+asserts that the formal moduli space of deformations is a smooth
+affine space of dimension~$r = \operatorname{rank}(\fg)$.
+Each generator~$\Theta_i$ is the universal deformation class
+of the $i$-th $\Walg$-generator $W^{(h_i)}$; the polynomial
+ring structure says all deformations are unobstructed.
+
+\emph{Step~B} (M-level):
+The proof is a chain-level computation: the bar filtration
+induces a spectral sequence
+$E_2^{p,q} \Rightarrow \ChirHoch^{p+q}(\Walg^k(\fg))$
+that collapses at~$E_2$ by generic Ext-vanishing (Arakawa
+simplicity~\cite{Ara07}), and the surviving $E_2^{n,0}$ page
+computes the continuous Gel'fand--Fuchs cohomology of the
+$\Walg$-Lie algebra with~$r$ generating currents
+(Fuchs~\cite{Fuks86}).
+
+\emph{Reduction B$\to$A} (M-level $\to$ H-level):
+The M-level bar complex
+$\bar{B}_{\mathrm{HH}}(\cA) = (\cA \otimes T^c(s^{-1}\bar\cA)
+\otimes \cA,\, d)$ is a dg model for the derived endomorphism
+object $R\!\operatorname{End}_{\cA\text{-}\cA}(\cA)$.
+By Proposition~\ref{prop:model-independence}, the H-level
+endomorphism algebra is recovered from the M-level bar complex
+up to contractible ambiguity, so the M-level spectral sequence
+collapse determines the H-level polynomial structure.
+
+\emph{Step~C} (S-level):
+The Hilbert function
+$\dim \ChirHoch^n(\Walg^k(\fg))
+= \#\{(a_1,\ldots,a_r) : \sum a_i h_i = n\}$
+grows as $n^{r-1}/(h_1 \cdots h_r)$ and is quasi-polynomial of
+period $d = \operatorname{lcm}(h_1,\ldots,h_r)$.
+For $\fg = \mathfrak{sl}_2$: literal period~$2$.
+For $\fg = \mathfrak{sl}_3$: $1,0,1,1,1,1,2,1,2,2,\ldots$
+with quasi-period~$6$.
+
+\emph{Reduction B$\to$C} (M-level $\to$ S-level):
+The S-level Hilbert function is extracted from the M-level
+spectral sequence by taking the Euler characteristic of
+$E_2^{n,0}$: the collapse at~$E_2$ ensures
+$\dim \ChirHoch^n = \dim E_2^{n,0}$, and the Gel'fand--Fuchs
+computation identifies~$E_2^{n,0}$ with the partition function
+of~$r$ generators of weights~$h_1,\ldots,h_r$.
 \end{remark}
 
 \begin{remark}[Non-principal nilpotent orbits]
@@ -618,15 +673,15 @@ For $\widehat{\mathfrak{sl}}_3$ at generic level~$k$:
 \emph{Step~1: Hochschild homology.}
 By the continuous cohomology of current algebras, $\mathrm{HH}_*^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)$ is determined by the Lie algebra cohomology $H^*(\mathfrak{sl}_3; \mathbb{C}) = \Lambda(x_3, x_5)$ (exterior algebra on generators of degrees $3$ and $5$, corresponding to the exponents $m_1 = 1$, $m_2 = 2$ of $\mathfrak{sl}_3$) tensored with the polynomial algebra from the loop direction.  This gives:
 \[\mathrm{HH}_*^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)
-= \mathbb{C}[\Theta_2, \Theta_4] \otimes \Lambda(\sigma_3, \sigma_5)\]
-where $|\Theta_{2i}| = 2i$ (from the Casimir operators of degrees $2$ and $4$) and $|\sigma_{2i+1}| = 2i+1$ (from $H^*(\mathfrak{sl}_3)$).
+= \mathbb{C}[\Theta_2, \Theta_3] \otimes \Lambda(\sigma_3, \sigma_5)\]
+where $|\Theta_j| = j$ (from the Casimir operators of degrees $2$ and $3$, corresponding to the exponents $m_1 = 1$, $m_2 = 2$) and $|\sigma_{2i+1}| = 2i+1$ (from $H^*(\mathfrak{sl}_3)$).
 
 \emph{Step~2: $S^1$-action and $E_2$ page.}
 The $S^1$-action on the polynomial part is trivial (Casimirs are invariant).
 The exterior generators $\sigma_3, \sigma_5$ lie in odd degrees and are
 $S^1$-coinvariants:
-\[E_2^{0,*} = \mathbb{C}[\Theta_2, \Theta_4], \qquad
-E_2^{1,*} = \mathbb{C}[\Theta_2, \Theta_4].\]
+\[E_2^{0,*} = \mathbb{C}[\Theta_2, \Theta_3], \qquad
+E_2^{1,*} = \mathbb{C}[\Theta_2, \Theta_3].\]
 
 \emph{Step~3: Degeneration.}
 At generic~$k$, $\widehat{\mathfrak{sl}}_3$ is simple (Ext-vanishing in
@@ -634,7 +689,7 @@ category~$\mathcal{O}$), so the spectral sequence degenerates at~$E_2$ by
 the same argument as for $\widehat{\mathfrak{sl}}_2$.  The Hilbert function
 of $\mathrm{HC}_n = E_2^{0,n} \oplus E_2^{1,n-1}$ gives:
 \[\dim \mathrm{HC}_n^{\mathrm{ch}}(\widehat{\mathfrak{sl}}_3)
-= \#\{(a,b) : 2a + 4b = n\} + \#\{(a,b) : 2a + 4b = n-1\}\]
+= \#\{(a,b) : 2a + 3b = n\} + \#\{(a,b) : 2a + 3b = n-1\}\]
 which grows linearly in~$n$ (rank~$2$), in contrast to the constant
 $\dim \mathrm{HC}_n = 1$ for $\widehat{\mathfrak{sl}}_2$ (rank~$1$).
 \end{example}
@@ -697,7 +752,7 @@ Yes (at $E_2$, generic $c$) \\
 \hline
 $\widehat{\mathfrak{sl}}_2$ level $k$ & $\mathbb{C}[c]$ & $\mathbb{C}[c]$ & Yes (at $E_2$) \\
 \hline
-$\widehat{\mathfrak{sl}}_3$ level $k$ & $\mathbb{C}[\Theta_2, \Theta_4]$ & $\mathbb{C}[\Theta_2, \Theta_4]$ & Yes (at $E_2$, generic $k$) \\
+$\widehat{\mathfrak{sl}}_3$ level $k$ & $\mathbb{C}[\Theta_2, \Theta_3]$ & $\mathbb{C}[\Theta_2, \Theta_3]$ & Yes (at $E_2$, generic $k$) \\
 \hline
 $W_3$ algebra & $\mathbb{C}[\Theta_2, \Theta_3]$ & $\mathbb{C}[\Theta_2]$ & Depends on $c$ \\
 \hline

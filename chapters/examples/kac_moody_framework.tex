@@ -494,8 +494,9 @@ see Computation~\ref{comp:sl3-bar}):
 The cubic growth $\dim(\bar{B}^n) \sim 8^n$ reflects the $8$-dimensional adjoint representation of $\mathfrak{sl}_3$; the Orlik--Solomon factor $(n-1)!$ accounts for independent logarithmic forms on $\overline{C}_n$.
 \end{computation}
 
-\begin{remark}[Bar chain groups are level-independent; \ClaimStatusProvedHere]%
-\label{rem:bar-dims-level-independent}
+\begin{lemma}[Bar chain groups are level-independent; \ClaimStatusProvedHere]%
+\label{lem:bar-dims-level-independent}
+\label{rem:bar-dims-level-independent}% backward-compatible label
 \index{bar complex!level-independence}
 The dimensions $\dim(\bar{B}^n(\widehat{\mathfrak{g}}_k))$ depend on
 $\mathfrak{g}$ but are \emph{independent of the level~$k$}.  This is
@@ -528,7 +529,7 @@ groups do not.  The bar cohomology dimensions
 (Table~\ref{tab:bar-dimensions}) are significantly smaller
 than the chain-group dimensions and exhibit polynomial growth
 for Koszul algebras.
-\end{remark}
+\end{lemma}
 
 \subsection{Level decomposition of the bar differential}
 
@@ -612,14 +613,14 @@ by $d_{\mathrm{crit}}$.
 \begin{proof}
 Standard spectral sequence theory for a bicomplex
 \cite[Ch.~5]{Weibel94}.  The convergence follows from
-the finite-dimensionality of $\bar{B}^n$ (Remark~\ref{rem:bar-dims-level-independent}).
+the finite-dimensionality of $\bar{B}^n$ (Lemma~\ref{lem:bar-dims-level-independent}).
 \end{proof}
 
 \begin{remark}[Interpretation of the bicomplex]
 \label{rem:bicomplex-interpretation}
 \index{bar complex!bicomplex!interpretation}
 The decomposition~\eqref{eq:bar-level-decomp} makes precise the
-observation (Remark~\ref{rem:bar-dims-level-independent}) that bar
+observation (Lemma~\ref{lem:bar-dims-level-independent}) that bar
 chain groups are level-independent while the differential is not.
 The critical-level differential $d_{\mathrm{crit}}$ encodes the
 Lie-algebraic structure of $\mathfrak{g}$ (structure constants),
@@ -669,7 +670,7 @@ generic level equal those at every other generic level.
 
 \begin{proof}
 Since $\bar{B}^n$ is finite-dimensional for each~$n$
-(Remark~\ref{rem:bar-dims-level-independent}),
+(Lemma~\ref{lem:bar-dims-level-independent}),
 the differential $d_\lambda = d_{\mathrm{crit}} + \lambda\delta
 \colon \bar{B}^n \to \bar{B}^{n-1}$
 is a matrix whose entries are affine-linear functions of~$\lambda$.
@@ -692,7 +693,7 @@ where $r_n^{\mathrm{gen}}$ is the generic rank.  Then
 = \dim \bar{B}^n - r_n(\lambda) - r_{n+1}(\lambda),
 \]
 where $\dim\bar{B}^n$ is independent of~$\lambda$
-(Remark~\ref{rem:bar-dims-level-independent}).  For
+(Lemma~\ref{lem:bar-dims-level-independent}).  For
 $\lambda \notin \Sigma_n \cup \Sigma_{n+1}$,
 both $r_n$ and $r_{n+1}$ attain their generic values,
 so $\dim H^n$ is constant.
@@ -982,7 +983,7 @@ This spectral sequence argument uses the fact that the Wakimoto realization give
 \]
 
 \emph{Step~3: Feigin--Frenkel duality and Langlands exchange.}
-By the Feigin--Frenkel theorem \cite{FF92}, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))$.  The principal DS reduction restricts the oper variety to the full space (no sub-variety constraint for the principal nilpotent), and by the Feigin--Frenkel isomorphism this corresponds to the full principal DS reduction of $\widehat{\mathfrak{g}^\vee}_{-h^{\vee,\vee}}$.  For simply-laced $\mathfrak{g}$ (types $A$, $D$, $E$), $h^{\vee,\vee} = h^\vee$ and $\mathfrak{g}^\vee \cong \mathfrak{g}$, so:
+By the Feigin--Frenkel theorem \cite{Feigin-Frenkel}, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))$.  The principal DS reduction restricts the oper variety to the full space (no sub-variety constraint for the principal nilpotent), and by the Feigin--Frenkel isomorphism this corresponds to the full principal DS reduction of $\widehat{\mathfrak{g}^\vee}_{-h^{\vee,\vee}}$.  For simply-laced $\mathfrak{g}$ (types $A$, $D$, $E$), $h^{\vee,\vee} = h^\vee$ and $\mathfrak{g}^\vee \cong \mathfrak{g}$, so:
 \[
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}^\vee, f^\vee_{\mathrm{prin}}). \qedhere
 \]
@@ -1312,8 +1313,9 @@ D^b(\mathcal{C}(U_{q^{-1}}(\mathfrak{g})))
 \end{tikzcd}
 \]
 commutes as an equivalence of tensor categories --- would require verifying
-that the KL functor preserves the bar-cobar adjunction structure.  This is
-expected but not proved here.
+that the KL functor preserves the bar-cobar adjunction structure.  This
+compatibility is a natural conjecture within the quantum Langlands
+programme but is not proved here.
 \end{remark}
 
 \begin{example}[Integrable modules for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2}
@@ -3139,7 +3141,7 @@ How does the bar-cobar framework interact with the quantum geometric
 Langlands program?  The critical-level bar complex provides a
 chain-level oper resolution
 (Theorem~\ref{thm:oper-bar}), and the admissible-level bar
-complex should recover the KL equivalence
+complex is conjectured to recover the KL equivalence
 (Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}).  Does the full genus-graded
 bar complex (Theorem~\ref{thm:genus-graded-bar}) provide a
 chain-level refinement of the quantum Langlands kernel?
