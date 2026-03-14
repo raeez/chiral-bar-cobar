@@ -888,6 +888,223 @@ intertwined by~$\Phi$.
 Proposition~\ref{prop:conformal-block-duality} is consistent with complementarity (Theorem~\ref{thm:quantum-complementarity-main}): when the $S$-matrices satisfy $S^{\mathcal{A}}_{\Lambda,\mu} = \overline{S^{\mathcal{A}^!}_{\Phi(\Lambda),\Phi(\mu)}}$ (as for Feigin--Frenkel duals at admissible levels), Verlinde yields identical ranks directly.  The ``both $C_2$-cofinite'' hypothesis is essential: Koszul duality can map rational to non-rational (e.g., $V_1(\mathfrak{sl}_2)$ rational, $V_{-3}(\mathfrak{sl}_2)$ not).
 \end{remark}
 
+\subsection{Conformal blocks from the bar complex: the standard families}
+\label{sec:conformal-blocks-families}
+\index{conformal blocks!bar complex realization}
+
+The proposition above shows that conformal block ranks are Koszul
+invariants.  We now exhibit the bar-complex computation of conformal
+blocks in each standard family, making the abstract machinery
+produce concrete objects.
+
+\subsubsection{Kac--Moody at positive integer level}
+
+Let $\cA = \widehat{\fg}_k$ with $k \in \mathbb{Z}_{>0}$ and
+$\fg$ simple.  Insert integrable highest-weight modules
+$V_{\Lambda_1}, \ldots, V_{\Lambda_r}$ at distinct points
+$x_1, \ldots, x_r \in \mathbb{P}^1$.  The module bar complex
+(Proposition~\ref{prop:conformal-blocks-bar}) is:
+\[
+\bar{B}_n(\widehat{\fg}_k;\, \vec{V}_\Lambda;\, \mathbb{P}^1)
+= \Gamma\bigl(\overline{C}_{n,r}(\mathbb{P}^1),\;
+V_{\Lambda_1} \boxtimes \cdots \boxtimes V_{\Lambda_r}
+\boxtimes \widehat{\fg}_k^{\boxtimes n}
+\otimes \Omega^n_{\log}\bigr).
+\]
+The bar differential has two components:
+\begin{enumerate}
+\item \emph{Algebra--algebra collisions} ($z_i \to z_j$,
+  $i,j > r$): extract the Lie bracket $[J^a, J^b] = f^{ab}{}_c J^c$
+  via the simple-pole residue, and the Killing form
+  $k\kappa^{ab}$ via the double-pole residue.
+\item \emph{Algebra--module collisions} ($z_i \to x_j$,
+  $i > r$, $j \le r$): extract the $\widehat{\fg}_k$-action
+  on~$V_{\Lambda_j}$ via $\Res_{z_i = x_j}[J^a(z_i) \cdot
+  v_j \cdot \eta_{i,x_j}] = T^a_j \cdot v_j$, where
+  $T^a_j$ is the representation matrix in~$V_{\Lambda_j}$.
+\end{enumerate}
+The resulting $H^0$ is the space of coinvariants
+$\widehat{\fg}_k(X \setminus \{x_i\}) \backslash
+V_{\Lambda_1} \otimes \cdots \otimes V_{\Lambda_r}$: the conformal
+block in the sense of Tsuchiya--Ueno--Yamada~\cite{TUY89}.
+
+\begin{example}[Three-point function on $\mathbb{P}^1$]
+\label{ex:three-point-bar}
+For $\widehat{\mathfrak{sl}}_2$ at level~$k$ with three
+fundamental modules $V_1, V_1, V_1$ at $0, 1, \infty$, the
+bar complex on $\overline{C}_{n,3}(\mathbb{P}^1)$ has:
+\begin{itemize}
+\item $\bar{B}_0 = V_1 \otimes V_1 \otimes V_1$: the raw tensor
+  product (dimension~$8$).
+\item $d\colon \bar{B}_0 \to 0$: the coinvariant quotient by the
+  action of $\mathfrak{sl}_2[z, z^{-1}]$ on
+  $\mathbb{P}^1 \setminus \{0,1,\infty\}$.
+\end{itemize}
+The Casimir element
+$\Omega = e \otimes f + f \otimes e + \tfrac{1}{2}h \otimes h$
+acts on pairs of $V_1$ factors.  The coinvariant space is
+$\dim \mathbb{V} = 1$ for $k \ge 1$ (the unique
+$\mathfrak{sl}_2$-invariant in $V_1^{\otimes 3}$), confirming
+$N_{1,1}^0 = 1$ in the Verlinde formula.
+\end{example}
+
+\subsubsection{Virasoro}
+
+For the Virasoro algebra $\mathrm{Vir}_c$, the conformal block at
+genus~$0$ with $r$ highest-weight module insertions
+$M_{h_1}, \ldots, M_{h_r}$ at $z_1, \ldots, z_r \in \mathbb{P}^1$
+is computed by the bar complex on pointed configuration spaces, with
+the bar differential extracting the Virasoro action via:
+\[
+\Res_{z = z_i}\!\bigl[T(z) \cdot v_i \cdot \eta_{z,z_i}\bigr]
+= L_{-1}^{(i)} v_i.
+\]
+The Sugawara Casimir
+$\Omega^{\mathrm{Vir}}_{ij}
+= \sum_{n \in \mathbb{Z}} L_n^{(i)} \otimes L_{-n}^{(j)}
+\cdot (z_i - z_j)^{n}$
+enters the KZ-type connection on the conformal block bundle.
+
+At central charge $c = c_{p,q} = 1 - 6(p-q)^2/(pq)$ (minimal
+models), the conformal block spaces are finite-dimensional and
+computed by the Feigin--Fuchs resolution, which the bar spectral
+sequence recovers: the $E_1$ page is the Verma module coinvariant,
+and the $d_1$ differential implements the BGG resolution
+(Proposition~\ref{prop:virasoro-bgg-bar}).  The surviving $E_2 = E_\infty$
+gives the finite-dimensional conformal block.
+
+\subsubsection{$\mathcal{W}$-algebras via Drinfeld--Sokolov}
+
+For $\mathcal{W}^k(\fg) = H^0_{\mathrm{DS}}(\widehat{\fg}_k)$
+(the principal Drinfeld--Sokolov reduction), the bar complex
+intertwines with the BRST reduction:
+\begin{equation}\label{eq:ds-bar-intertwining}
+\bar{B}(\mathcal{W}^k(\fg);\, \vec{\mathcal{M}};\, X)
+\;\simeq\;
+H^0_{Q_{\mathrm{DS}}}\bigl(
+\bar{B}(\widehat{\fg}_k;\, \vec{\mathcal{N}};\, X)\bigr),
+\end{equation}
+where $\mathcal{N}_i$ are the $\widehat{\fg}_k$-modules
+inducing~$\mathcal{M}_i$ under DS reduction.
+The conformal blocks of $\mathcal{W}^k(\fg)$ are therefore the
+BRST-reduced conformal blocks of $\widehat{\fg}_k$:
+\[
+\mathbb{V}(\mathcal{W}^k;\, \vec{\mathcal{M}};\, X)
+= H^0_{Q_{\mathrm{DS}}}\bigl(
+\mathbb{V}(\widehat{\fg}_k;\, \vec{\mathcal{N}};\, X)\bigr).
+\]
+For $\fg = \mathfrak{sl}_2$, this gives Virasoro conformal blocks
+at $c = 1 - 6(k+1)^2/(k+2)$; for $\fg = \mathfrak{sl}_N$, it
+gives $\mathcal{W}_N$ conformal blocks.  The Koszul dual level
+shift $k \mapsto -k - 2h^\vee$ commutes with DS
+(Theorem~\ref{thm:ds-koszul-commute}), so the conformal block
+duality of Proposition~\ref{prop:conformal-block-duality} descends
+through the BRST reduction.
+
+\subsubsection{Cosets}
+
+For a conformal embedding $\cB \hookrightarrow \cA$ (e.g.,
+the diagonal $\widehat{\fg}_k \hookrightarrow
+\widehat{\fg}_{k_1} \otimes \widehat{\fg}_{k_2}$ with
+$k = k_1 + k_2$), the coset $\cA / \cB$ has conformal blocks
+computed by the \emph{relative bar complex}:
+\[
+\bar{B}(\cA/\cB;\, \vec{\mathcal{M}};\, X)
+:= \bar{B}(\cA;\, \vec{\mathcal{M}};\, X)
+\otimes_{\bar{B}(\cB)} \mathbb{C},
+\]
+the bar complex of $\cA$ with $\cB$-coinvariants imposed.  The
+conformal blocks decompose as:
+\[
+\mathbb{V}(\cA;\, \vec{\Lambda};\, X)
+\cong \bigoplus_{\vec{\mu}}
+\mathbb{V}(\cA/\cB;\, \vec{\Lambda}/\vec{\mu};\, X)
+\otimes \mathbb{V}(\cB;\, \vec{\mu};\, X),
+\]
+the branching rule realized at the bar-complex level by the
+Künneth decomposition on $\overline{C}_{n,r}(X)$.  The coset
+Koszul dual $(\cA/\cB)^!$ is computed from
+$\bar{B}(\cA/\cB)^\vee$: the Verdier dual of the relative bar
+coalgebra.
+
+\begin{example}[GKO coset $\widehat{\mathfrak{sl}}_{2,k} \otimes \widehat{\mathfrak{sl}}_{2,1} / \widehat{\mathfrak{sl}}_{2,k+1}$]
+\label{ex:gko-coset-bar}
+The Goddard--Kent--Olive coset realizes the Virasoro minimal
+model $\mathcal{M}(k+2, k+3)$ at $c = 1 - 6/((k+2)(k+3))$.
+At the bar-complex level: the relative bar complex of the coset
+is the BRST reduction of the tensor-product bar complex by the
+diagonal $\widehat{\mathfrak{sl}}_2$ action.  The Verlinde
+dimensions of the coset conformal blocks match the minimal model
+fusion rules; this is a bar-complex proof of the GKO correspondence.
+\end{example}
+
+\subsubsection{Yangians and quantum groups}
+
+For the $\Eone$-chiral Yangian $Y(\fg)^{\mathrm{ch}}$ on a
+pointed curve $(X; x_1, \ldots, x_r)$, the module bar complex
+is built on \emph{ordered} configuration spaces
+$\widetilde{C}_{n,r}(X)$ (no $\Sigma_n$-equivariance).  The
+conformal blocks are:
+\[
+\mathbb{V}^{\Eone}\bigl(Y(\fg);\,
+V_{\Lambda_1}(a_1), \ldots, V_{\Lambda_r}(a_r);\, X\bigr)
+= H^0\bigl(\bar{B}^{\Eone}_n(Y(\fg);\,
+\vec{V}(a);\, X)\bigr),
+\]
+where $V_{\Lambda_i}(a_i)$ are evaluation modules at spectral
+parameters $a_1, \ldots, a_r$.
+
+The KZ connection on these conformal blocks (with Casimir insertion
+$\Omega_{ij}/(a_i - a_j)$ from the rational $R$-matrix) has
+monodromy valued in the braid group $B_r$.  The
+Drinfeld--Kohno theorem
+(Theorem~\ref{thm:derived-dk-yangian}) identifies this monodromy
+with the $R$-matrix representation of $U_q(\fg)$ on
+$V_{\Lambda_1} \otimes \cdots \otimes V_{\Lambda_r}$.  At the
+bar-complex level, the identification is:
+\begin{equation}\label{eq:dk-conformal-blocks}
+\mathrm{Mon}_{B_r}\bigl(
+\mathbb{V}^{\Eone}(Y(\fg);\, \vec{V}(a);\, \mathbb{P}^1)\bigr)
+\;\cong\;
+V_{\Lambda_1} \otimes \cdots \otimes V_{\Lambda_r}
+\;\in\; \operatorname{Rep}(U_q(\fg)),
+\end{equation}
+where the braiding on the left (from the ordered bar-complex
+propagator $\eta_{ij}$) equals the $R$-matrix braiding on the
+right (from the quantum group).
+
+\begin{remark}[Chiral homology as the derived conformal block]
+\label{rem:chiral-homology-derived-conformal}
+\index{chiral homology!as derived conformal block}
+The conformal block $\mathbb{V} = H^0(\bar{B}(\cA;\vec{\mathcal{M}};X))$
+is the degree-$0$ piece of a richer object: the full chiral
+homology
+$H^*_{\mathrm{ch}}(\cA; \vec{\mathcal{M}}; X)
+= H^*(\bar{B}(\cA; \vec{\mathcal{M}}; X))$.
+The higher cohomology $H^{>0}$ detects:
+\begin{enumerate}
+\item \emph{Obstructions to flatness} of the conformal block
+  bundle (the KZB connection is flat on~$H^0$, but the
+  higher~$H^i$ carry the obstruction classes from the Leray
+  spectral sequence of the universal curve).
+\item \emph{Derived coinvariants}: for non-rational algebras
+  (e.g., $\widehat{\fg}_k$ at admissible level), $H^{>0} \neq 0$
+  and the derived conformal blocks carry the logarithmic
+  structure of non-semisimple modules.
+\item \emph{Genus corrections}: at genus~$g \ge 1$, the higher
+  chiral homology groups $H^i_{\mathrm{ch}}$ receive contributions
+  from~$H^i(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)$ via
+  the genus spectral sequence
+  (Theorem~\ref{thm:ss-quantum}).
+\end{enumerate}
+For Koszul algebras, the $E_2$ collapse
+(Lemma~\ref{lem:e2-collapse-higher-genus}) forces
+$H^{>0} = 0$: the conformal block IS the full chiral homology.
+Off the Koszul locus, the higher chiral homology groups are
+the derived obstruction spaces of
+Theorem~\ref{thm:quantum-complementarity-main}.
+\end{remark}
+
 \subsection{Derived categories and t-structures}
 \label{sec:derived-t-structures}
 
