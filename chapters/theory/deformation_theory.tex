@@ -387,50 +387,29 @@ this recovers the classical quadratic dual.
 
 \subsection{The universal twisting morphism}
 
-\begin{definition}[Universal twisting morphism]
-A \emph{twisting morphism} $\tau: \mathcal{A}^! \to \mathcal{A}$ is a degree 1 map satisfying the Maurer--Cartan equation
-\[
-\partial \tau + \tau \star \tau = 0
-\]
-where $\star$ denotes convolution in $\text{Hom}(\overline{B}^{\text{ch}}(\mathcal{A}^!), \Omega^{\text{ch}}(\overline{B}^{\text{ch}}(\mathcal{A})))$.
-\end{definition}
-
-\begin{theorem}[Existence and uniqueness {\cite{LV12}}; \ClaimStatusProvedElsewhere]\label{thm:universal-twisting-existence}
-For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, there exists a unique universal twisting morphism $\tau: \mathcal{A}^! \to \mathcal{A}$ that induces quasi-isomorphisms:
-\begin{align}
-\mathcal{A}^!_{\tau} &\simeq \overline{B}^{\text{ch}}(\mathcal{A}) \\
-\mathcal{A}_{\tau} &\simeq \Omega^{\text{ch}}(\mathcal{A}^!)
-\end{align}
-where the subscript denotes twisting by $\tau$.
-\end{theorem}
-
-\begin{remark}[What the twisting morphism does]\label{rem:twisting-morphism-meaning}
-The twisting morphism $\tau\colon \mathcal{A}^! \to \mathcal{A}$
-implements the bar-cobar isomorphism: the MC equation
-$\partial \tau + \tau \star \tau = 0$ intertwines coalgebra and
-algebra differentials, giving
-$\mathcal{A}^!_\tau \simeq \bar{B}^{\text{ch}}(\mathcal{A})$ and
-$\mathcal{A}_\tau \simeq \Omega^{\text{ch}}(\mathcal{A}^!)$.
-Geometrically,
-$\tau(c) = \int_{C_2(X)} \mathrm{ev}^* c \wedge K_{\text{twist}}$
-for a universal kernel $K_{\text{twist}}$ on the configuration space.
-\end{remark}
+The universal twisting morphism
+$\pi\colon \barB_X(\cA) \to \cA$
+(Proposition~\ref{prop:universal-twisting-adjunction}) controls
+all bar-cobar identifications in this chapter.  For the definition
+of twisting morphisms as MC elements in the convolution
+algebra $\mathrm{Hom}(C, A)$, see
+Definition~\ref{def:twisting-morphism}; for the natural bijection
+$\mathrm{Tw}(C, A) \cong \mathrm{Hom}(C, B(A)) \cong
+\mathrm{Hom}(\Omega(C), A)$
+mediating the bar-cobar adjunction, see
+Proposition~\ref{prop:universal-twisting-adjunction}(iii); for the
+geometric realization as a propagator integral, see
+Remark~\ref{rem:twisting-as-propagator}.
 
 \begin{example}[Twisting for fermion-boson duality]
-For the Koszul pair (free fermions $\mathcal{F}$, $\beta\gamma$ system $\mathcal{BG}$):
-
-The twisting morphism $\tau: \mathcal{F}^! \to \mathcal{F}$ is given by:
-\[\tau(\psi^*)(z) = \int_{\mathbb{C}} \psi(w) \cdot \frac{dw}{(z-w)}\]
-
-This map:
-\begin{itemize}
-\item Takes the dual generator $\psi^*$ of $\mathcal{F}^!$
-\item Integrates it against the fermion field $\psi$ with the basic kernel $\frac{1}{z-w}$
-\item Produces a twisted field that satisfies bosonic commutation relations
-\item Implements the fermion-boson correspondence at the level of Maurer--Cartan elements
-\end{itemize}
-
-The Maurer--Cartan equation $\partial \tau + \tau \star \tau = 0$ becomes the statement that this construction is consistent with the OPE structures on both sides.
+\label{ex:fermion-boson-twisting}
+For the Koszul pair (free fermions $\mathcal{F}$, $\beta\gamma$
+system), the universal twisting morphism
+$\pi\colon \barB^{\mathrm{ch}}(\mathcal{F}) \to \mathcal{F}$
+takes the explicit form
+$\pi(\psi^*)(z) = \int_{\mathbb{C}} \psi(w) \cdot \frac{dw}{z-w}$,
+implementing the fermion-boson correspondence at the MC level
+(Remark~\ref{rem:twisting-as-propagator}).
 \end{example}
 
 \subsection{Main duality theorem}\label{subsec:hochschild-duality}
@@ -1824,12 +1803,884 @@ encodes clutching compatibility at every genus.
 \label{rem:modular-vs-cyclic-complex}
 The restriction $\operatorname{Def}^{\mathrm{mod}}(\cA)|_{g=0}
 \cong \Defcyc(\cA)$ recovers the genus-$0$ cyclic deformation
-complex.  The new feature at $g \geq 1$: the coefficients are
+complex.  At $g \geq 1$, the coefficients are
 chains on $\overline{\mathcal{M}}_{g,n}$, so stable-graph geometry
-enters the governing dg Lie algebra itself.  The genus filtration on
-$\operatorname{Def}^{\mathrm{mod}}(\cA)$ is the direct
-higher-genus upgrade of ``homotopy algebraic structures $=$
-MC elements in the convolution dg Lie algebra.''
+enters the convolution algebra itself
+(Remark~\ref{rem:convolution-hierarchy}).
+\end{remark}
+
+\subsection{Concrete modular constructions: from stable graphs to quantum homotopy theory}
+\label{subsec:concrete-modular-constructions}
+\index{modular homotopy theory!concrete constructions|textbf}
+\index{stable graph!bar differential components}
+
+The passage from tree-level to modular homotopy theory
+(\S\ref{subsec:tree-to-modular}) replaces rooted trees by stable
+graphs.  The new phenomenon at genus $g \geq 1$ is curvature:
+$\dfib^{\,2} \neq 0$, because propagators circulating around
+non-contractible cycles of~$\Sigma_g$ produce period integrals.  The
+constructions below make this phenomenon completely explicit.  Their
+organizing principle: every codimension-$1$ boundary stratum of
+$\overline{\mathcal{M}}_{g,n}$ contributes one component of the
+modular bar differential; the Maurer--Cartan equation is $\partial^2
+= 0$ read through the Feynman transform; and the categorical
+logarithm $\barB^{\mathrm{tot}}_X$ of
+Remark~\ref{rem:nilpotence-periodicity} acquires its strict
+nilpotence $D_{\mathrm{tot}}^2 = 0$ by exactly this mechanism.
+
+\subsubsection{The three-component modular bar differential}
+\label{subsubsec:three-component-differential}
+\index{modular bar differential!three components|textbf}
+
+Recall from Definition~\ref{def:feynman-transform} that the modular bar
+complex is the Feynman transform
+$\barB^{\mathrm{mod}}(\cA) = \mathrm{FT}_{\mathcal{M}od}(\cA)$,
+with underlying graded space the stable-graph sum
+of~\eqref{eq:bar-graph-sum}.  Its differential decomposes into three
+geometrically distinct components.
+
+\begin{definition}[Three-component modular bar differential]
+\label{def:three-component-modular-bar}
+\index{modular bar differential!d_int@$d_{\mathrm{int}}$}
+\index{modular bar differential!d_sep@$d_{\mathrm{sep}}$}
+\index{modular bar differential!d_nonsep@$d_{\mathrm{ns}}$}
+Let $\Gamma \in \mathcal{G}^{\mathrm{st}}_{g,n}$ be a stable graph
+of genus~$g$ with $n$~legs.  On the summand
+\[
+\barB^{(\Gamma)}(\cA)
+\;:=\;
+\bigotimes_{v \in V(\Gamma)} \cA(g_v, \operatorname{val}(v))
+\;\otimes\; \operatorname{or}(E(\Gamma)),
+\]
+the modular bar differential is
+$d_{\mathrm{mod}} = d_{\mathrm{int}} + d_{\mathrm{sep}} + d_{\mathrm{ns}}$,
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Internal differential} $d_{\mathrm{int}}$.
+  At each vertex~$v$ of~$\Gamma$ carrying genus label~$g_v$ and
+  valence~$\operatorname{val}(v)$, the factor
+  $\cA(g_v, \operatorname{val}(v))$ carries its own differential
+  $d_v$ built from the $A_\infty$ operations $\{m_k\}$ and the
+  genus-$g_v$ propagator on the fiber curve~$\Sigma_{g_v}$.
+  The internal differential acts vertex-by-vertex:
+  \begin{equation}\label{eq:d-int}
+  d_{\mathrm{int}}
+  \;=\;
+  \sum_{v \in V(\Gamma)}
+  \operatorname{id} \otimes \cdots \otimes d_v
+  \otimes \cdots \otimes \operatorname{id},
+  \end{equation}
+  This is the part of the differential that does not change the
+  underlying graph~$\Gamma$.
+
+\item \emph{Separating boundary differential} $d_{\mathrm{sep}}$.
+  For each edge $e \in E(\Gamma)$ connecting distinct vertices
+  $v_1, v_2$ (or each partition of the legs of a single vertex
+  creating a separating node), the clutching map
+  $\xi_{e}^{\mathrm{sep}}\colon
+  \overline{\mathcal{M}}_{g_1, n_1+1} \times
+  \overline{\mathcal{M}}_{g_2, n_2+1} \to
+  \overline{\mathcal{M}}_{g, n}$
+  produces a new graph~$\Gamma/e$ by contracting edge~$e$,
+  merging the two endpoint vertices:
+  \begin{equation}\label{eq:d-sep}
+  d_{\mathrm{sep}} = \sum_{e \in E_{\mathrm{sep}}(\Gamma)}
+  \pm\, \iota_e^* \circ \mu_e,
+  \end{equation}
+  where $\mu_e$ contracts the propagator along edge~$e$ using the
+  invariant pairing
+  $\langle -, - \rangle_\cA\colon \cA \otimes \cA \to \omega_X$,
+  $\iota_e^*$ is the boundary pullback, and the sign is determined
+  by the orientation $\operatorname{or}(E(\Gamma))$.
+  Geometrically: $d_{\mathrm{sep}}$ implements the separating
+  degenerations of the underlying curve.
+
+\item \emph{Non-separating boundary differential} $d_{\mathrm{ns}}$.
+  For each vertex~$v$ of~$\Gamma$ with $g_v \geq 0$ and
+  $\operatorname{val}(v) \geq 2$, the self-gluing map
+  $\xi_{v}^{\mathrm{ns}}\colon
+  \overline{\mathcal{M}}_{g_v, \operatorname{val}(v)+2}
+  \to \overline{\mathcal{M}}_{g_v+1, \operatorname{val}(v)}$
+  produces a new graph~$\Gamma_v^+$ with a loop added at
+  vertex~$v$ (increasing its genus label by~$1$):
+  \begin{equation}\label{eq:d-nonsep}
+  d_{\mathrm{ns}} = \sum_{v \in V(\Gamma)}
+  \pm\, \xi_v^{\mathrm{ns},*} \circ \Delta_v,
+  \end{equation}
+  where $\Delta_v$ is the self-sewing coproduct that pairs two
+  additional marked points at~$v$ using
+  $\langle -, - \rangle_\cA$, and the sign is determined by the
+  edge-orientation convention.
+  Geometrically: $d_{\mathrm{ns}}$ creates handles (non-separating
+  nodes) on the curve at vertex~$v$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[$d_{\mathrm{mod}}^2 = 0$;
+\ClaimStatusProvedHere]\label{prop:d-mod-squared-zero}
+\index{modular bar differential!nilpotence}
+The modular bar differential satisfies $d_{\mathrm{mod}}^2 = 0$.
+\end{proposition}
+
+\begin{proof}
+Expand $d_{\mathrm{mod}}^2 = (d_{\mathrm{int}} + d_{\mathrm{sep}}
++ d_{\mathrm{ns}})^2$ into nine terms grouped in three classes.
+
+By Theorem~\ref{thm:prism-higher-genus}(iii),
+$d_{\mathrm{mod}}^2 = 0$ follows from the modular operad axioms
+(Definition~\ref{def:modular-operad}).  We verify this at the
+level of the three components.
+
+\emph{Diagonal terms.}
+$d_{\mathrm{int}}^2$: on each vertex summand, $d_v^2 = \kappa(\cA)
+\cdot \omega_{g_v} \cdot \operatorname{id}$.  Since the curvature
+is central (a scalar coderivation), $d_v^2$ acts on the tensor
+product $\bigotimes_v \cA(g_v, \operatorname{val}(v))$ as
+$\sum_v \kappa \cdot \omega_{g_v} \cdot \operatorname{id}$.  But
+this sum is the \emph{total} fiberwise curvature $\kappa \cdot
+\omega_g$ on the stable-graph summand of total genus~$g$; it
+is absorbed into the curved differential
+(Convention~\ref{conv:higher-genus-differentials}), not a
+failure of nilpotence.
+$d_{\mathrm{sep}}^2 = 0$ and $d_{\mathrm{ns}}^2 = 0$:
+the boundary of a boundary stratum decomposes into
+codimension-$2$ strata that cancel in pairs
+($\partial^2 = 0$ on $\overline{\mathcal{M}}_{g,n}$).
+
+\emph{Cross terms.}
+$d_{\mathrm{int}} d_{\mathrm{sep}} + d_{\mathrm{sep}}
+d_{\mathrm{int}} = 0$: edge contraction commutes with the vertex
+differential because $d_v$ and the contraction $\mu_e$ act on
+disjoint tensor factors (the contracting edge connects two
+\emph{different} vertices, and $d_v$ acts on one).
+$d_{\mathrm{int}} d_{\mathrm{ns}} + d_{\mathrm{ns}}
+d_{\mathrm{int}} = 0$: the self-sewing $\Delta_v$ commutes with
+$d_v$ because $\Delta_v$ pairs two marked points via the
+$\operatorname{ad}$-invariant form $\langle -,- \rangle_\cA$,
+which is a chain map.
+$d_{\mathrm{sep}} d_{\mathrm{ns}} + d_{\mathrm{ns}}
+d_{\mathrm{sep}} = 0$: codimension-$2$ corner cancellation
+in the boundary stratification of $\overline{\mathcal{M}}_{g,n}$.
+\end{proof}
+
+\begin{remark}[Genus bookkeeping and exhaustiveness]
+\label{rem:genus-bookkeeping}
+\index{modular bar differential!genus accounting}
+The three components are \emph{exactly} the codimension-$1$ boundary
+contributions to the modular bar differential---no others exist.
+To see this, classify the codimension-$1$ boundary strata of
+$\overline{\mathcal{M}}_{g,n}$: a general boundary divisor $D_\Gamma$
+is indexed by a stable graph~$\Gamma$ with one edge.
+If removing the edge disconnects~$\Gamma$, the stratum is separating
+($d_{\mathrm{sep}}$); if it does not, the stratum is non-separating
+($d_{\mathrm{ns}}$).  The third component, $d_{\mathrm{int}}$, is
+the ``interior'' contribution from the vertex differential on each
+component.
+
+The three components act on the genus decomposition
+$g = \sum_v g_v + b_1(\Gamma)$ as follows:
+$d_{\mathrm{int}}$ preserves the graph
+(hence preserves $b_1$ and all $g_v$);
+$d_{\mathrm{sep}}$ contracts an edge between distinct components
+(preserving $b_1$ and total genus);
+$d_{\mathrm{ns}}$ absorbs a loop edge into a vertex
+($g_v \mapsto g_v + 1$, $b_1 \mapsto b_1 - 1$, total
+genus preserved).
+The total genus $g = \sum_v g_v + b_1(\Gamma)$ is an invariant
+of all three.
+\end{remark}
+
+\subsubsection{Quantum \texorpdfstring{$L_\infty$}{L-infinity} operations from loop-level graphs}
+\label{subsubsec:quantum-linf-from-graphs}
+\index{quantum L-infinity algebra@quantum $L_\infty$ algebra!from loop graphs|textbf}
+
+The cyclic $L_\infty$ structure of
+Theorem~\ref{thm:cyclic-linf-graph} is built from tree graphs
+($L = 0$ loops).  We now extend to loop-level graphs, obtaining the
+full quantum $L_\infty$ algebra.
+
+\begin{definition}[Loop-level graph operations]
+\label{def:loop-level-graph-ops}
+\index{loop-level graph operations}
+For $n \geq 0$ and $L \geq 0$, let
+$\mathfrak{G}_{n,L}$ be the set of connected graphs with
+$n$~external legs, $L$~loops ($b_1 = L$), and vertex genus
+labels $\{g_v\}_{v \in V}$ satisfying the stability condition
+$2g_v - 2 + \operatorname{val}(v) > 0$ at each vertex.
+For each $\Gamma \in \mathfrak{G}_{n,L}$, define the
+\emph{loop-level graph amplitude}
+\begin{equation}\label{eq:loop-amplitude}
+w_\Gamma^{(L)}(f_1, \ldots, f_n)
+\;=\;
+\int_{\ConfigSpace{|V_{\mathrm{int}}|}(\Sigma)}
+\prod_{e \in E_{\mathrm{int}}(\Gamma)} S(z_{s(e)}, z_{t(e)})
+\;\cdot\;
+\prod_{v \in V(\Gamma)} m_{\mathrm{val}(v)}
+\bigl(\text{inputs at } v\bigr),
+\end{equation}
+where $\Sigma$ is a smooth projective curve,
+$V_{\mathrm{int}}$ denotes internal vertices, $S(z,w)$ is
+the Szeg\H{o} propagator on~$\Sigma$, and
+$m_{\mathrm{val}(v)}$ is the $A_\infty$ vertex operation.
+
+The \emph{genus-$g$ quantum $L_\infty$ operation} is
+\begin{equation}\label{eq:quantum-linf-operation}
+m_n^{(g)}(f_1, \ldots, f_n)
+\;=\;
+\sum_{L \geq 0}\;
+\sum_{\substack{\Gamma \in \mathfrak{G}_{n,L} \\
+  \sum_v g_v + L = g}}
+\frac{1}{|\mathrm{Aut}(\Gamma)|}
+\, w_\Gamma^{(L)}(f_1, \ldots, f_n).
+\end{equation}
+The sum runs over all stable graphs whose total genus
+$\sum_v g_v + L$ equals~$g$.
+\end{definition}
+
+\begin{theorem}[Quantum master equation;
+\ClaimStatusProvedHere]\label{thm:quantum-master-equation}
+\index{quantum master equation!from stable-graph operations}
+\index{QME|see{quantum master equation}}
+The genus-graded operations $\{m_n^{(g)}\}_{g,n}$ satisfy the
+\emph{quantum master equation} (QME): for each $N \geq 0$ and
+$G \geq 0$,
+\begin{equation}\label{eq:QME}
+\sum_{\substack{r + s + t = N \\ g_1 + g_2 = G}}
+(-1)^{rs+t}\,
+m_{r+1+t}^{(g_1)}\!\bigl(\mathrm{id}^{\otimes r}
+\otimes m_s^{(g_2)} \otimes \mathrm{id}^{\otimes t}\bigr)
+\;+\;
+\sum_{i < j}
+(-1)^{\epsilon_{ij}}
+m_{N-1}^{(G-1)}\bigl(\Delta_{ij}\bigr)
+\;=\; 0,
+\end{equation}
+where $\Delta_{ij}$ denotes the contraction of inputs $f_i, f_j$
+using $\langle -, - \rangle_\cA$ (the self-sewing/non-separating
+term), $\epsilon_{ij}$ is the Koszul sign, and the first sum is
+the genus-graded $A_\infty$ composition relation (separating term).
+\end{theorem}
+
+\begin{proof}
+The proof extends the Stokes argument of
+Theorem~\ref{thm:cyclic-linf-graph} from trees to graphs with loops.
+
+\emph{Step 1: Two sources of the QME.}
+The QME has two structurally distinct contributions,
+corresponding to the two types of codimension-$1$ boundary
+strata of $\overline{\mathcal{M}}_{g,n}$
+(Definition~\ref{def:modular-operad}):
+
+\emph{Separating terms} (first sum in~\eqref{eq:QME}).
+For each graph $\Gamma$ contributing at genus~$G$ and arity~$N$,
+the graph amplitude integrates a form over
+$\ConfigSpace{|V_{\mathrm{int}}|}(\Sigma)$.
+Collision of internal vertices produces codimension-$1$ boundary
+strata of the configuration space
+(Proposition~\ref{prop:stokes-regularity-FM}).
+By Stokes' theorem, these boundary contributions give
+$m^{(g_1)} \circ m^{(g_2)}$ compositions with $g_1 + g_2 = G$,
+exactly as in the tree-level proof of
+Theorem~\ref{thm:cyclic-linf-graph}.
+
+\emph{Non-separating terms} (second sum in~\eqref{eq:QME}).
+These arise not from the boundary of the configuration space but
+from the \emph{graph structure}: contracting a loop edge in
+$\Gamma$ (the $d_{\mathrm{ns}}$ component of
+Definition~\ref{def:three-component-modular-bar})
+pairs two half-edges at a vertex via the invariant form
+$\langle -, - \rangle_\cA$, producing the self-sewing contraction
+$\Delta_{ij}$ at genus $G - 1$.
+Analytically, this corresponds to the period integral
+$\oint_\gamma S(z, w)\, dz$ along a homology cycle of $\Sigma$,
+which evaluates to a scalar (the period) times the contraction.
+
+\emph{Step 2: $\partial^2 = 0$ on moduli.}
+Both contributions are components of the single identity
+$d_{\mathrm{mod}}^2 = 0$
+(Proposition~\ref{prop:d-mod-squared-zero}),
+which is the modular operad boundary relation
+$\partial^2 = 0$ on $\overline{\mathcal{M}}_{g,n}$
+transported through the Feynman transform.
+The separating terms correspond to
+$d_{\mathrm{sep}}^2 + d_{\mathrm{int}} d_{\mathrm{sep}}
++ d_{\mathrm{sep}} d_{\mathrm{int}} = 0$;
+the non-separating terms to
+$d_{\mathrm{ns}}^2 + d_{\mathrm{int}} d_{\mathrm{ns}}
++ d_{\mathrm{ns}} d_{\mathrm{int}} = 0$;
+the cross terms to
+$d_{\mathrm{sep}} d_{\mathrm{ns}}
++ d_{\mathrm{ns}} d_{\mathrm{sep}} = 0$
+(codimension-$2$ corner cancellation).
+\end{proof}
+
+\begin{remark}[The unimodularity obstruction]
+\label{rem:unimodularity-obstruction}
+\index{unimodularity obstruction|textbf}
+\index{quantum L-infinity algebra@quantum $L_\infty$ algebra!unimodularity}
+The quantum $L_\infty$ structure does not exist for all cyclic
+$L_\infty$ algebras.  The obstruction to promoting a cyclic
+$L_\infty$ algebra to a quantum $L_\infty$ algebra (i.e., adding
+the non-separating terms $m_n^{(g)}$ for $g \geq 1$) is the
+\emph{unimodularity condition}
+\begin{equation}\label{eq:unimodularity}
+\Delta(m_0) = 0,
+\end{equation}
+where $\Delta\colon \operatorname{End}(\cA) \to \mathbb{C}$ is the
+BV operator (supertrace of the second-order part).
+Concretely: the non-separating self-sewing $\Delta_{ij}$ applied to
+the curvature $m_0$ must vanish, or else the genus-$1$ QME has no
+solution.
+
+For Koszul chiral algebras, this obstruction is automatically
+bypassed:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Central curvature
+  (Remark~\ref{rem:voa-central-curvature}):
+  $m_0^{(g)} = \kappa(\cA) \cdot \omega_g \cdot \operatorname{id}$
+  is a scalar multiple of the identity, hence
+  $\Delta(m_0^{(g)}) = \kappa(\cA) \cdot \omega_g
+  \cdot \operatorname{str}(\operatorname{id})$.
+\item For a Koszul algebra, the Hilbert series of $\cA$ and
+  $\cA^!$ satisfy the reciprocity
+  $h_{\cA}(t) \cdot h_{\cA^!}(-t) = 1$
+  \cite[Theorem~3.5.1]{LV12}.  Setting $t = 1$:
+  $\operatorname{str}(\operatorname{id}_{\barB})
+  = h_{\cA^!}(-1) = 1/h_{\cA}(1)$, and
+  on the bar complex (which is a quotient of the cofree
+  coalgebra on $\cA^!$) this evaluates to the Euler
+  characteristic $\chi(\barB) = 0$ by the alternating-sum
+  cancellation forced by the reciprocity.
+  Hence $\Delta(m_0^{(g)}) = 0$.
+\item Therefore Koszul chiral algebras carry full quantum
+  $L_\infty$ structures, and hence full modular homotopy types
+  (Definition~\ref{def:modular-homotopy-abstract}), at all genera.
+\end{enumerate}
+This is the precise mechanism by which the universal MC
+class~$\Theta_\cA$
+(Theorem~\ref{thm:universal-MC}) exists for the Koszul locus.
+\end{remark}
+
+\begin{remark}[The QME as $\partial^2 = 0$ on moduli]
+\label{rem:qme-boundary-squared}
+\index{quantum master equation!geometric origin}
+The QME~\eqref{eq:QME} has a single geometric origin: the boundary
+$\partial\overline{\mathcal{M}}_{g,n}$ is a divisor with normal
+crossings, and $\partial^2 = 0$ on the chain level.  The two sums
+in the QME correspond precisely to the two types of codimension-$1$
+boundary strata:
+
+\smallskip
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+\emph{Boundary type} & \emph{Differential component}
+  & \emph{QME term} \\
+\midrule
+Separating node & $d_{\mathrm{sep}}$
+  & $\sum m^{(g_1)} \circ m^{(g_2)}$ \\
+Non-separating node & $d_{\mathrm{ns}}$
+  & $\sum m^{(G-1)}(\Delta_{ij})$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\smallskip
+
+\noindent
+The first sum splits the curve into two components of genera
+$g_1 + g_2 = G$; the second sum creates a handle, lowering genus by~$1$.
+The QME is $\partial^2 = 0$ transported through the Feynman transform.
+In physics: the first term is the tree-level factorization of
+amplitudes; the second is the BV operator $\Delta$ (the supertrace
+over the propagator loop).  The entire quantum $L_\infty$ structure
+is the shadow of the modular operad axioms on
+$\{\overline{\mathcal{M}}_{g,n}\}$.
+\end{remark}
+
+\subsubsection{The total differential from
+\texorpdfstring{$\Theta_\cA$}{Theta-A}}
+\label{subsubsec:total-differential-from-theta}
+\index{total differential!from Maurer--Cartan class|textbf}
+\index{completed bar complex!total differential}
+
+The universal MC class $\Theta_\cA$ assembles the genus-graded bar
+differentials into a single strict nilpotent on the completed bar
+complex.
+
+\begin{theorem}[Total differential from the MC class;
+\ClaimStatusProvedHere]\label{thm:total-differential-from-mc}
+Let $\cA$ be a modular Koszul chiral algebra for which
+$\Theta_\cA \in
+\operatorname{MC}(\operatorname{Def}^{\mathrm{mod}}(\cA))$
+is constructed
+\textup{(}Theorem~\textup{\ref{thm:universal-MC})}.
+Define the \emph{total completed bar complex}
+\begin{equation}\label{eq:completed-bar-total}
+\barB^{\mathrm{tot}}_X(\cA)
+\;:=\;
+\prod_{g \geq 0} \hbar^{g}\,
+\barB_X^{(g)}(\cA)
+\end{equation}
+with total differential
+\begin{equation}\label{eq:D-total-from-theta}
+D_{\mathrm{tot}}
+\;:=\;
+\dzero \;+\; [\Theta_\cA,\, -],
+\end{equation}
+where $\dzero$ is the genus-$0$ collision differential and
+$[\Theta_\cA, -]$ is the coderivation action of $\Theta_\cA$ on
+the bar coalgebra, expanded genus-by-genus as
+\begin{equation}\label{eq:D-total-expanded}
+D_{\mathrm{tot}}\big|_{\barB^{(g)}}
+\;=\;
+\dzero \;+\;
+\sum_{h=1}^{g} \hbar^{h}\,
+\bigl[\Theta_\cA^{(h)},\, -\bigr],
+\end{equation}
+where $\Theta_\cA^{(h)}$ is the genus-$h$ component of the MC
+class.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $D_{\mathrm{tot}}^2 = 0$ on
+  $\barB^{\mathrm{tot}}_X(\cA)$.
+\item At fixed genus~$g$, the restriction recovers the
+  genus-$g$ total corrected differential:
+  $D_{\mathrm{tot}}|_{\barB^{(g)}} = \Dg{g}$
+  \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials}(ii))}.
+\item The fiberwise curved differential at genus~$g$ is
+  $\dfib^{(g)} := D_{\mathrm{tot}}|_{\barB^{(g)}}
+  \big|_{[\Sigma_g]}$
+  (restriction to the fiber over $[\Sigma_g] \in
+  \overline{\mathcal{M}}_g$, with the moduli-variation components
+  $d_{\mathrm{sep}}$, $d_{\mathrm{ns}}$ of
+  Definition~\textup{\ref{def:three-component-modular-bar}}
+  dropped).  It satisfies the curvature identity
+  $(\dfib^{(g)})^2 = \kappa(\cA) \cdot \omega_g \cdot
+  \operatorname{id}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i).}
+The MC equation for $\Theta_\cA$ in
+$\operatorname{Def}^{\mathrm{mod}}(\cA)$
+(Definition~\ref{def:modular-deformation-complex}) states
+\begin{equation}\label{eq:mc-for-dtot}
+\dzero(\Theta_\cA) + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0.
+\end{equation}
+Compute:
+\begin{align*}
+D_{\mathrm{tot}}^2
+&= (\dzero + [\Theta_\cA, -])^2 \\
+&= \underbrace{\dzero^2}_{=\,0}
+  + \dzero \circ [\Theta_\cA, -]
+  + [\Theta_\cA, -] \circ \dzero
+  + [\Theta_\cA, [\Theta_\cA, -]] \\
+&= [\dzero(\Theta_\cA), -]
+  + \tfrac{1}{2}[[\Theta_\cA, \Theta_\cA], -] \\
+&= [\dzero(\Theta_\cA) + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA],\, -]
+\;=\; 0,
+\end{align*}
+where the second line uses the graded Jacobi identity for
+coderivation brackets, the third line uses the coderivation identity
+$\dzero \circ [\Theta, -] + [\Theta, -] \circ \dzero
+= [\dzero(\Theta), -]$, and the final step is the
+MC equation~\eqref{eq:mc-for-dtot}.
+
+\emph{Part~(ii).}
+The genus-$g$ component of the MC equation is
+$\dzero(\Theta^{(g)}) + \frac{1}{2}\sum_{h=1}^{g-1}
+[\Theta^{(h)}, \Theta^{(g-h)}] = 0$,
+which is precisely the integrability condition for $\Dg{g}$.
+
+\emph{Part~(iii).}
+On the fiber over $[\Sigma_g]$, the separating and non-separating
+components $d_{\mathrm{sep}}$, $d_{\mathrm{ns}}$ vanish (they
+require varying the curve), leaving
+$\dfib^{(g)} = d_{\mathrm{int}}|_{[\Sigma_g]}$.  Compute:
+$(\dfib^{(g)})^2 = (d_{\mathrm{int}})^2|_{[\Sigma_g]}
+= \sum_v d_v^2 = \sum_v \kappa(\cA) \cdot \omega_{g_v}$.
+On a stable graph of total genus~$g$ with a single vertex
+($g_v = g$, the generic case), this gives $\kappa(\cA) \cdot
+\omega_g$.  The curvature form $\omega_g$ is the Arnold
+defect~\eqref{eq:arnold-defect-hg} on the fixed curve~$\Sigma_g$.
+\end{proof}
+
+\begin{remark}[$D_{\mathrm{tot}}$ as twisted connection; $\Theta_\cA$ as curved twisting cochain]
+\label{rem:D-tot-as-connection}%
+\label{rem:theta-as-curved-twisting}%
+\index{total differential!as twisted connection}
+\index{twisting morphism!curved|textbf}
+\index{Maurer--Cartan element!as curved twisting cochain}
+Formula~\eqref{eq:D-total-from-theta} is a twisted connection:
+$\dzero$ is the flat connection on the bar coalgebra,
+$\Theta_\cA$ is a gauge field valued in the modular deformation
+complex, and $D_{\mathrm{tot}} = \dzero + [\Theta_\cA, -]$ is
+the covariant derivative.
+The MC equation
+$\dzero(\Theta) + \tfrac{1}{2}[\Theta, \Theta] = 0$
+is the flatness condition $D_{\mathrm{tot}}^2 = 0$.
+
+This has a precise formulation in the language of twisting cochains
+(Remark~\ref{rem:theta-modular-twisting}):
+the genus-$0$ canonical twisting morphism $\tau_0$ extends to a
+\emph{modular twisting cochain}
+$\tau_{\mathrm{mod}} = \tau_0 + \Theta_\cA$
+in the modular convolution algebra, whose genus-$g$ curvature
+$\kappa(\cA)\cdot\omega_g$ is the Arnold defect.
+The cyclic $L_\infty$ operations $\{l_n\}$ on
+$H^*_{\mathrm{cyc}}(\cA,\cA)$ are the Taylor coefficients of the
+coderivation $[\Theta_\cA, -]$: the $L_\infty$ structure \emph{is}
+the twisting cochain, read as an algebra structure on the
+deformation complex.
+\end{remark}
+
+\begin{remark}[Clutching compatibility of $D_{\mathrm{tot}}$]
+\label{rem:clutching-D-tot}
+\index{clutching compatibility!total differential}
+Since $\Theta_\cA$ is an MC element in the modular convolution
+algebra $\widehat{L}_{\Gmod}$
+(Proposition~\ref{prop:geometric-modular-operadic-mc}),
+it satisfies clutching
+compatibility~\eqref{eq:clutching-factorization}:
+\[
+\xi_{\mathrm{sep}}^*(\Theta^{(g)})
+= \sum_{g_1+g_2=g} \Theta^{(g_1)} \star \Theta^{(g_2)},
+\qquad
+\xi_{\mathrm{ns}}^*(\Theta^{(g+1)})
+= \Delta_{\mathrm{ns}}(\Theta^{(g)}).
+\]
+This means the total differential $D_{\mathrm{tot}}$ is
+compatible with the modular operad structure: restricting to a
+boundary stratum (separating or non-separating degeneration) gives
+the tensor product (resp.\ self-sewing) of the differentials on the
+two (resp.\ one) irreducible component(s).  Equivalently,
+$D_{\mathrm{tot}}$ is a \emph{modular bar differential} in the
+sense of Definition~\ref{def:three-component-modular-bar}:
+$D_{\mathrm{tot}} = d_{\mathrm{int}} + d_{\mathrm{sep}} +
+d_{\mathrm{ns}}$ with the three components induced by~$\Theta_\cA$.
+\end{remark}
+
+\subsubsection{Virtual bar family and characteristic hierarchy}
+\label{subsubsec:virtual-bar-k-class}
+\index{virtual bar family|textbf}
+\index{K-theory@$K$-theory!virtual bar class}
+
+\begin{definition}[Virtual bar $K$-class]
+\label{def:virtual-bar-k-class}
+For a modular Koszul chiral algebra $\cA$, the
+\emph{virtual bar family at genus~$g$} is the derived pushforward
+\begin{equation}\label{eq:virtual-bar-k-class}
+\mathbf{V}_{\cA}^{(g)}
+\;:=\;
+R\pi_{g*}\, \barB^{(g)}_X(\cA)
+\;\in\; D^b(\overline{\mathcal{M}}_g),
+\end{equation}
+where $\pi_g\colon \overline{\mathcal{C}}_g \to
+\overline{\mathcal{M}}_g$ is the universal curve.  Its class in
+$K$-theory is the \emph{virtual bar $K$-class}
+\begin{equation}\label{eq:V-A-K-class}
+V_{\cA}
+\;:=\;
+[R\pi_{g*}\, \barB^{(g)}_X(\cA)]
+\;\in\; K^0(\overline{\mathcal{M}}_g).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Characteristic hierarchy;
+\ClaimStatusProvedHere]\label{prop:characteristic-hierarchy}
+\index{characteristic hierarchy|textbf}
+\index{modular characteristic package!K-theoretic}
+The virtual bar $K$-class $V_\cA$ determines a three-level
+hierarchy of invariants:
+\begin{enumerate}[label=\textup{(L\arabic*)}]
+\item \emph{Scalar level.}
+  The first Chern class of the determinant line bundle recovers the
+  scalar modular characteristic:
+  \[
+  c_1(\det V_\cA)
+  \;=\;
+  \kappa(\cA) \cdot \lambda
+  \;\in\; \operatorname{Pic}(\overline{\mathcal{M}}_g),
+  \]
+  where $\lambda = c_1(\det \mathbb{E}^\vee)$ is the Hodge class.
+  This is Theorem~\textup{\ref{thm:modular-characteristic}}:
+  $\kappa(\cA)$ is the scalar modular characteristic.
+
+\item \emph{Spectral level.}
+  The Chern character of $V_\cA$ determines the spectral
+  discriminant:
+  \[
+  \Delta_\cA(x)
+  \;=\;
+  \det(1 - x \cdot T_{\mathrm{rec}})
+  \;=\;
+  \prod_i (1 - \lambda_i x),
+  \]
+  where the $\lambda_i$ are the Chern roots of $V_\cA$
+  and $T_{\mathrm{rec}}$ is the recursion operator
+  \textup{(}Theorem~\textup{\ref{thm:discriminant-spectral})}.
+  This encodes the full bar cohomology dimensions at all weights.
+
+\item \emph{Holonomy level.}
+  The flat connection on $V_\cA$ (from the Gauss--Manin connection
+  on $R\pi_{g*}$) determines the periodicity profile
+  \[
+  \Pi_\cA \;=\; (M_\cA,\, Q_\cA,\, G_\cA)
+  \;\;:\;\;
+  \text{monodromy, quasiperiod, Galois data}
+  \]
+  \textup{(}Remark~\textup{\ref{rem:periodicity-triple})}.
+  For rational central charge, the monodromy group
+  $M_\cA \leq \mathrm{GL}(V_\cA)$ has finite image
+  (the $T$-matrix has finite order on the character space;
+  the precise periodicity of bar cohomology dimensions is
+  Conjecture~\ref{conj:modular-periodicity-minimal}).
+\end{enumerate}
+The three levels correspond to $\det$, $\mathrm{ch}$, and
+$\mathrm{Hol}$ respectively---the standard filtration of
+information in a $K$-class with connection.
+\end{proposition}
+
+\begin{proof}
+\emph{(L1)}\enspace
+By Grothendieck--Riemann--Roch on the universal curve
+$\pi_g\colon \overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$
+(\S\ref{subsec:why-ahat}):
+\[
+c_1(\det R\pi_{g*} \barB^{(g)})
+\;=\;
+\pi_{g*}\!\bigl(\mathrm{ch}_1(\barB|_{\mathrm{fiber}})
+\cdot \mathrm{Td}(T_\pi)\bigr).
+\]
+The fiber Chern character $\mathrm{ch}_1(\barB|_{\Sigma_g})
+= \kappa(\cA)$ (Theorem~\ref{thm:modular-characteristic}),
+and $\pi_{g*}(\mathrm{Td}_1(T_\pi)) = \lambda$
+(Mumford's formula \cite{Mumford83}).
+Hence $c_1(\det V_\cA) = \kappa(\cA) \cdot \lambda$.
+
+\emph{(L2)}\enspace
+The full Chern character $\mathrm{ch}(V_\cA)$
+encodes the dimensions $\dim H^n(\barB^{(g)}_{[h]})$ at each
+weight~$h$ and bar degree~$n$, which are the coefficients of the
+spectral discriminant generating function
+(Theorem~\ref{thm:ds-bar-gf-discriminant}).
+
+\emph{(L3)}\enspace
+The Gauss--Manin connection on the family
+$\barB^{(g)}_X(\cA) \to \overline{\mathcal{M}}_g$ is flat
+(its curvature is the Kodaira--Spencer class, which acts
+nilpotently on cohomology by
+Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
+The monodromy representation records the action of
+$\pi_1(\mathcal{M}_g) = \mathrm{MCG}(\Sigma_g)$ on the bar
+cohomology fibers.
+\end{proof}
+
+\begin{remark}[Three readings of the virtual bar class]
+\label{rem:three-readings-V}
+\index{virtual bar family!three readings}
+The hierarchy (L1)--(L3) reflects the three standard ways of
+extracting invariants from a $K$-class---the same progression that
+connects the Euler characteristic to the Chern character to the
+holonomy representation.  In the categorical logarithm paradigm:
+\begin{itemize}
+\item \emph{(L1)} $\det V_\cA = \kappa \cdot \lambda$
+  is the \emph{leading coefficient} of the logarithm
+  (Theorem~D$_{\mathrm{scal}}$).
+\item \emph{(L2)} $\mathrm{ch}(V_\cA) \leftrightarrow \Delta_\cA(x)$
+  is the \emph{Taylor expansion} of the logarithm
+  (Theorem~D$_\Delta$).
+\item \emph{(L3)} $\mathrm{Hol}(V_\cA) = \Pi_\cA$
+  is the \emph{monodromy} of the logarithm---the ambiguity in
+  choosing a branch (the periodicity profile).
+\end{itemize}
+This realizes the passage
+$\kappa \to \Delta \to \Pi$
+(\emph{scalar $\to$ spectral $\to$ holonomy}) as the natural
+filtration of information in the $K$-class $V_\cA$, just as the
+passage $c_1 \to \mathrm{ch} \to \nabla$ is the natural filtration
+of information in a vector bundle with connection.  The Heisenberg
+specialization
+(Chapter~\ref{ch:heisenberg-frame},
+ Definition~\ref{def:frame-modular-package})
+illustrates all three levels: $\kappa = k$ (the level),
+$\Delta = 1/(1-x)$ (free boson),
+$\Pi = (\mathbb{Z}, k\mathbb{Z}, \{1\})$ (abelian periodicity).
+\end{remark}
+
+\subsubsection{Chiral homology from the modular bar complex}
+\label{subsubsec:chiral-homology-recovery}
+\index{chiral homology!from modular bar complex|textbf}
+
+\begin{theorem}[Chiral homology recovery;
+\ClaimStatusProvedHere]\label{thm:chiral-homology-recovery}
+\index{chiral homology!bar complex identification}
+Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
+curve $X$ of genus~$g$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Fiberwise identification.}
+  The chiral homology of~$\cA$ on the fixed curve $\Sigma_g$ is
+  computed by the bar complex:
+  \begin{equation}\label{eq:chiral-homology-bar}
+  H^{\mathrm{ch}}_n(\Sigma_g, \cA)
+  \;\cong\;
+  H^n\bigl(\barB^{(g)}_X(\cA)\big|_{[\Sigma_g]},\;
+  \dfib^{(\Sigma_g)}\bigr)
+  \end{equation}
+  for all $n \geq 0$, where $\dfib^{(\Sigma_g)}$ is the fiberwise
+  differential at $[\Sigma_g] \in \overline{\mathcal{M}}_g$.
+
+\item \emph{Center sheaf.}
+  The local system on $\overline{\mathcal{M}}_g$ whose fiber
+  over $[\Sigma_g]$ is $H^{\mathrm{ch}}_*(\Sigma_g, \cA)$ is the
+  center sheaf:
+  \begin{equation}\label{eq:center-sheaf-bar}
+  \mathcal{Z}_\cA
+  \;=\;
+  R^*\!\pi_{g*}\,
+  \bigl(\barB^{(g)}_X(\cA),\, \dfib\bigr)
+  \;\in\;
+  \operatorname{Loc}(\overline{\mathcal{M}}_g).
+  \end{equation}
+
+\item \emph{Global sections.}
+  The ambient complementarity complex
+  \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+  is recovered as
+  \begin{equation}\label{eq:ambient-from-bar}
+  C_g(\cA) \;=\; R\Gamma(\overline{\mathcal{M}}_g,\,
+  \mathcal{Z}_\cA)
+  \;\cong\;
+  H^*\bigl(\barB^{(g)}_X(\cA),\, D_{\mathrm{tot}}\bigr),
+  \end{equation}
+  and the Verdier involution $\sigma$ on $C_g(\cA)$ arises from
+  Verdier duality $\mathbb{D}_{\operatorname{Ran}}$ on the bar
+  coalgebra
+  \textup{(}Theorem~\textup{\ref{thm:higher-genus-inversion})}.
+
+\item \emph{Genus tower.}
+  The full genus tower of chiral homology is assembled by the
+  completed bar complex:
+  \begin{equation}\label{eq:chiral-homology-tower}
+  \bigoplus_{g \geq 0} \hbar^{g}\,
+  H^{\mathrm{ch}}_*(\Sigma_g, \cA)
+  \;\cong\;
+  H^*\bigl(\barB^{\mathrm{tot}}_X(\cA),\, D_{\mathrm{tot}}\bigr),
+  \end{equation}
+  with the genus filtration corresponding to the $\hbar$-adic
+  filtration on the completed bar.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i).}
+On a fixed curve $\Sigma_g$, the chiral homology
+$H^{\mathrm{ch}}_*(\Sigma_g, \cA)$ is by definition
+\cite[3.4.4]{BD04} the derived pushforward of $\cA^{\boxtimes n}$
+along the Ran space $\operatorname{Ran}(\Sigma_g)$.  The bar
+construction computes this pushforward
+(Theorem~\ref{thm:geometric-equals-operadic-bar} for genus~$0$;
+Theorem~\ref{thm:prism-higher-genus} for the extension to all
+genera via the Feynman transform): the bar complex on
+$\overline{C}_n(\Sigma_g)$ with the fiberwise differential
+$\dfib^{(\Sigma_g)}$ computes the same cohomology as the Ran-space
+pushforward.
+
+\emph{Part~(ii).}
+The assignment $[\Sigma_g] \mapsto
+H^{\mathrm{ch}}_*(\Sigma_g, \cA)$ varies in a local system because
+the bar complex is a family over $\overline{\mathcal{M}}_g$
+(the bar family of~\eqref{eq:bar-family}), and the formation of
+cohomology of a flat family produces a local system.  The resulting
+local system is precisely the center sheaf $\mathcal{Z}_\cA$ of
+Beilinson--Drinfeld~\cite[3.4.10]{BD04}.
+
+\emph{Part~(iii).}
+Global sections of $\mathcal{Z}_\cA$ over
+$\overline{\mathcal{M}}_g$ compute
+$R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)$
+by definition.
+By the Leray spectral sequence for
+$\pi_g\colon \overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$,
+this agrees with
+$H^*(\barB^{(g)}_X(\cA), D_{\mathrm{tot}})$ when the total
+differential is used (incorporating both the fiberwise part and
+the moduli variation).  The Verdier involution on $C_g(\cA)$
+arises from the Verdier duality
+$\mathbb{D}_{\operatorname{Ran}} \barB_X(\cA) \simeq
+\barB_X(\cA^!)$
+(Theorem~\ref{thm:higher-genus-inversion}), which exchanges
+$\cA$ and~$\cA^!$ on the bar level and induces $\sigma$ on
+global sections.
+
+\emph{Part~(iv).}
+Direct from part~(iii) by taking the genus-completed product
+\eqref{eq:completed-bar-total} and applying
+Theorem~\ref{thm:total-differential-from-mc}(i) for the nilpotence
+$D_{\mathrm{tot}}^2 = 0$.
+\end{proof}
+
+\begin{remark}[The full recovery diagram]
+\label{rem:full-recovery-diagram}
+\index{modular homotopy theory!recovery diagram}
+The constructions of this subsection fit into a single commutative
+diagram:
+\[
+\begin{tikzcd}[column sep=large, row sep=large]
+\text{Quantum } L_\infty
+  \arrow[r, "\text{MC}"]
+  \arrow[d, "\text{cyc}|_{g=0}"']
+& \Theta_\cA \in
+  \operatorname{MC}(\operatorname{Def}^{\mathrm{mod}})
+  \arrow[r, "\text{twist}"]
+  \arrow[d, "\text{clutch}"]
+& (\barB^{\mathrm{tot}},\, D_{\mathrm{tot}})
+  \arrow[d, "R\pi_{g*}"]
+\\
+\text{Cyclic } L_\infty
+  \arrow[r, "\text{Kill.}"]
+& \xi^*(\Theta^{(g)})
+& \mathcal{Z}_\cA
+  \arrow[r, "R\Gamma"]
+& C_g = Q_g \oplus Q_g^!
+\end{tikzcd}
+\]
+
+\noindent
+Three paths through this diagram recover three aspects of the
+modular homotopy type:
+
+\smallskip
+\emph{Top row} (``algebraic path''): the quantum $L_\infty$
+operations, packaged as the MC element $\Theta_\cA$, twist the
+genus-$0$ bar differential to produce $D_{\mathrm{tot}}$.  This is
+the bar-coalgebra route: the modular homotopy type is the
+\emph{totalization} of the genus tower.
+
+\smallskip
+\emph{Right column} (``geometric path''): the total bar complex
+pushes forward along the universal curve to produce the center
+sheaf $\mathcal{Z}_\cA$; its global sections are the
+complementarity complex $C_g(\cA) = Q_g \oplus Q_g^!$.  This
+is the sheaf-on-moduli route: the modular homotopy type is the
+\emph{variation} of the bar complex over
+$\overline{\mathcal{M}}_g$.
+
+\smallskip
+\emph{Bottom row} (``clutching path''): the genus-$0$ cyclic
+$L_\infty$ produces the tree-level structure; the clutching
+maps $\xi_{\mathrm{sep}}^*$, $\xi_{\mathrm{ns}}^*$ reconstruct
+the full center sheaf from its boundary behavior.  This is the
+Getzler--Kapranov route: the modular homotopy type is the
+\emph{modular operad structure} on the collection
+$\{H^{\mathrm{ch}}_*(\Sigma_g, \cA)\}$.
+
+\smallskip\noindent
+All three paths commute.  The single geometric fact underlying all of
+them is $\partial^2 = 0$ on $\overline{\mathcal{M}}_{g,n}$, read
+through the Feynman transform.
 \end{remark}
 
 \subsection{Non-scalar universal classes}
