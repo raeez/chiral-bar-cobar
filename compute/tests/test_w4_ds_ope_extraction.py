@@ -143,9 +143,10 @@ class TestC334ClassicalLimit:
         assert lim == 10
 
     def test_classical_limit_function(self):
-        """classical_limit() returns correct c_334 limit."""
+        """classical_limit() returns correct classical structure constants."""
         cl = classical_limit()
-        assert cl["c_334_sq_over_c_sq_limit"] == 0  # c_334^2/c^2 -> 0
+        assert cl["c_334_sq_limit"] == 10
+        assert cl["c_444_sq_limit"] == Rational(48, 25)
 
     def test_c334_approaches_constant(self):
         """c_334^2 -> 10 as c -> infinity (degree 3 / degree 3 = constant).
@@ -628,6 +629,71 @@ class TestStructureConstantRelations:
         assert g444.subs(c, 0) == 0
         # Both blow up at c=-24 and c=-68/7
         # (verified via pole test above)
+
+
+# ===== Virasoro Gram matrix at weight 4 =====
+
+class TestVirasoroGramMatrix:
+    """The weight-4 Gram matrix explains the (5c+22) factor in c_334^2.
+
+    Basis: {|1> = L_{-4}|0>, |2> = L_{-2}^2|0>}.
+    Gram entries from [L_m, L_n] = (m-n)L_{m+n} + c/12 * m(m^2-1) * delta.
+
+    The quasi-primary Lambda = L_{-2}^2 - (3/5)L_{-4} has norm c(5c+22)/10.
+    The factor (5c+22) appears in the c_334^2 numerator because c_334^2 is
+    proportional to the Gram determinant: no room for a new primary at weight 4
+    when det G = 0, i.e. when 5c+22 = 0.
+    """
+
+    def _gram(self, c_val):
+        G11 = 5 * c_val                # <0|L_4 L_{-4}|0>
+        G12 = 3 * c_val                # <0|L_4 L_{-2}^2|0> = <0|L_2^2 L_{-4}|0>
+        G22 = c_val * (c_val + 8) / 2  # <0|L_2^2 L_{-2}^2|0>
+        return G11, G12, G22
+
+    def test_gram_determinant(self):
+        """det G_4 = c^2(5c+22)/2."""
+        c = Symbol('c')
+        G11, G12, G22 = self._gram(c)
+        assert simplify(G11 * G22 - G12**2 - c**2 * (5*c + 22) / 2) == 0
+
+    def test_gram_positive_definite_large_c(self):
+        G11, G12, G22 = self._gram(100)
+        assert G11 > 0
+        assert G11 * G22 - G12**2 > 0
+
+    def test_gram_degenerate_at_minus_22_over_5(self):
+        """Gram determinant vanishes at c = -22/5 (null vector at weight 4)."""
+        c_val = Rational(-22, 5)
+        G11, G12, G22 = self._gram(c_val)
+        assert G11 * G22 - G12**2 == 0
+
+    def test_l1_annihilates_lambda(self):
+        """L_1(L_{-2}^2 - 3/5 L_{-4})|0> = 0 (quasi-primary condition).
+
+        L_1 L_{-2}^2|0> = 3 L_{-3}|0>; L_1 L_{-4}|0> = 5 L_{-3}|0>.
+        Coefficient: 3 - (3/5)*5 = 0.
+        """
+        assert 3 - Rational(3, 5) * 5 == 0
+
+    def test_lambda_norm(self):
+        """<Lambda|Lambda> = c(5c+22)/10."""
+        c = Symbol('c')
+        G11, G12, G22 = self._gram(c)
+        a = Rational(-3, 5)
+        norm = G22 + 2 * a * G12 + a**2 * G11
+        assert simplify(norm - c * (5*c + 22) / 10) == 0
+
+    def test_c334_vanishes_where_gram_det_zero(self):
+        """c_334^2 = 0 where det G_4 = 0 (no room for a primary W^4)."""
+        assert c334_squared_formula(Rational(-22, 5)) == 0
+
+    def test_c334_numerator_contains_gram_factor(self):
+        """The factor (5c+22) in the c_334^2 numerator is the Gram factor."""
+        c = Symbol('c')
+        num, _ = factor(c334_squared_formula(c)).as_numer_denom()
+        # (5c+22) divides the numerator
+        assert simplify(num.subs(c, Rational(-22, 5))) == 0
 
 
 # ===== Numerical consistency =====

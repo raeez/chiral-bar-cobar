@@ -307,19 +307,6 @@ def verify_stage4_virasoro_target_identities(c=None):
     }
 
 
-def verify_prediction_c442(c=None):
-    """Backward-compatible wrapper for the C_{4,4;2;0,6} identity."""
-    return verify_virasoro_target_identity_c442(c)
-
-
-def verify_prediction_c342(c=None):
-    """Backward-compatible wrapper for the C_{3,4;2;0,5} identity."""
-    return verify_virasoro_target_identity_c342(c)
-
-
-def verify_falsifiable_predictions(c=None):
-    """Backward-compatible wrapper for the two Virasoro-target identities."""
-    return verify_stage4_virasoro_target_identities(c)
 
 
 # ---------------------------------------------------------------------------
@@ -526,8 +513,8 @@ def classical_limit():
     from sympy import limit, oo
 
     return {
-        "c_334_sq_over_c_sq_limit": limit(c334_squared_formula(c) / c**2, c, oo),
-        "c_444_sq_over_c_sq_limit": limit(c444_squared_formula(c) / c**2, c, oo),
+        "c_334_sq_limit": limit(c334_squared_formula(c), c, oo),
+        "c_444_sq_limit": limit(c444_squared_formula(c), c, oo),
     }
 
 
@@ -597,5 +584,5 @@ if __name__ == "__main__":
 
     cl = classical_limit()
     print(f"\nClassical limit:")
-    print(f"  c_334^2/c^2 -> {cl['c_334_sq_over_c_sq_limit']}")
-    print(f"  c_444^2/c^2 -> {cl['c_444_sq_over_c_sq_limit']}")
+    print(f"  c_334^2 -> {cl['c_334_sq_limit']}")
+    print(f"  c_444^2 -> {cl['c_444_sq_limit']}")
