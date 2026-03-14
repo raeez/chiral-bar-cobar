@@ -913,12 +913,9 @@ where $d_{\mathrm{bar}}\colon C^2 \xrightarrow{\sim} B^2$
 is the OPE residue map.  The homotopy
 $h_2 = (d_1)^{-1}\colon B^2 \to C^2$ is the inverse of the
 bar differential restricted to its image.  In the Chevalley--Eilenberg
-model for $\mathfrak{sl}_2$ (Killing form
-$\kappa = \mathrm{diag}(-2, 1, -2)$ in the basis
-$\{e^*, h^*, f^*\}$), the homotopy is:
-\[
-h_2 = \kappa^{-1} = \mathrm{diag}(-\tfrac{1}{2},\, 1,\, -\tfrac{1}{2}).
-\]
+model for $\mathfrak{sl}_2$, the Killing form in the basis
+$\{e^*, h^*, f^*\}$ pairs $e^*$ with $f^*$ (off-diagonal):
+the homotopy $h_2 = \kappa^{-1}$ acts by the inverse of this pairing.
 Since $\mathfrak{sl}_2$ is semisimple, the CE complex is formal:
 all transferred $L_\infty$ operations $\tilde{l}_n$ for $n \geq 2$
 vanish for degree reasons (cohomology concentrated in
@@ -1956,7 +1953,7 @@ The moduli space $\overline{\mathcal{M}}_{g,n}$ parametrizes stable $n$-pointed 
 where stability requires $\Sigma_g$ to be a connected nodal curve with $2g_i - 2 + n_i > 0$ on every component $C_i$ and finite automorphism group.
 \end{definition}
 
-\begin{theorem}[Structure of \texorpdfstring{$\overline{\mathcal{M}}_{g,n}$}{M-bar(g,n)} {\cite{DeligneM69,Knu83}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Structure of \texorpdfstring{$\overline{\mathcal{M}}_{g,n}$}{M-bar(g,n)} {\cite{DeligneM69,Knudsen83}}; \ClaimStatusProvedElsewhere]
 \label{thm:moduli-structure}
 \index{normal crossing!boundary}
 The Deligne--Mumford compactification satisfies:
@@ -4308,7 +4305,7 @@ For any $\mathcal{W}$-algebra $\mathcal{W}^k(\mathfrak{g})$, the obstruction coe
 \end{equation}
 where $m_1, \ldots, m_r$ are the exponents of $\mathfrak{g}$.  The ratio $\varrho(\mathfrak{g})$ is a root-system invariant independent of the level~$k$.
 
-For Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ (before DS reduction), $\kappa/c = (k+h^\vee)/(2k) = t/(2(t - h^\vee))$, which depends on the level.  The level-independence of $\kappa/c$ is specific to $\mathcal{W}$-algebras and reflects the DS reduction.
+For Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ (before DS reduction), $\kappa/c = (k+h^\vee)^2/(2h^\vee k)$, which depends on the level.  The level-independence of $\kappa/c$ is specific to $\mathcal{W}$-algebras and reflects the DS reduction.
 \end{corollary}
 
 \begin{proof}
@@ -4364,7 +4361,7 @@ $N$ & $\varrho = H_N - 1$ & $K_N$ & $\kappa + \kappa'$ \\
 $2$ & $1/2$ & $26$ & $13$ \\
 $3$ & $5/6$ & $100$ & $250/3$ \\
 $4$ & $13/12$ & $246$ & $533/2$ \\
-$5$ & $77/60$ & $488$ & $6259/10$
+$5$ & $77/60$ & $488$ & $9394/15$
 \end{tabular}
 \end{center}
 \end{corollary}
@@ -4624,7 +4621,14 @@ For the Heisenberg algebra $\mathcal{H}_\kappa$:
 
 The degrees are complementary under Poincar\'e duality: $\dim_{\mathbb{R}}(\overline{\mathcal{M}}_g) = 6g - 6$, so $H^{2g}$ pairs with $H^{6g-6-2g} = H^{4g-6}$.
 
-\emph{Note:} For $g \leq 3$, the deformation degree $g - 3 \leq 0$. At $g = 3$, $\text{def}_3 \in H^0(\mathcal{M}_3) = \mathbb{C}$, so the deformation is a scalar. For $g \leq 2$, the degree is negative, so $\text{def}_g = 0$: there are no Heisenberg deformations at genus $\leq 2$, and the obstruction is ``free'' (uncompensated by a dual deformation). The Serre duality pairing is non-trivial only for $g \geq 4$:
+\emph{Note:} The deformation degree is $4g - 6$.
+At $g = 1$, $4g - 6 = -2 < 0$, so $\text{def}_1 = 0$:
+the genus-$1$ obstruction is uncompensated.
+At $g = 2$, $\text{def}_2 \in H^2(\overline{\mathcal{M}}_2)$
+(a $3$-dimensional space).
+At $g = 3$, $\text{def}_3 \in H^6(\overline{\mathcal{M}}_3) = H^{\mathrm{top}} \cong \mathbb{C}$, so the deformation is a scalar.
+For $g \geq 2$, the Poincar\'e duality pairing couples
+$\text{obs}_g$ with $\text{def}_g$:
 \begin{align}
 \langle \text{obs}_g, \text{def}_g \rangle &= \int_{\mathcal{M}_g} (\kappa \cdot \lambda_g)
 \cup (\kappa^{-1} \cdot \lambda_{g-3}^*) \\
@@ -5174,9 +5178,13 @@ Q_g(\cA) \cong Q_g(\cA^!)^\vee.
 \end{theorem}
 
 \begin{remark}[Elementary model presentation;
-Convention~\ref{conv:proof-architecture}, Step~B]
-\label{rem:complementarity-model}
+Convention~\ref{conv:proof-architecture}]
+\label{rem:theorem-c-model}
+\label{rem:complementarity-model}% backward-compatible label
 \index{complementarity!model presentation}
+Steps~A and~C (H-level homotopy Lagrangian decomposition and
+S-level cohomological shadow) are stated directly in the theorem
+above.  \emph{Step~B} (M-level) follows.
 The homotopy eigenspace $\mathbf{Q}_g(\cA) = \operatorname{fib}(\sigma - \mathrm{id})$
 is modeled by the mapping cone
 $\operatorname{Cone}(\sigma - \mathrm{id}\colon C_g \to C_g)[-1]$,
@@ -5198,6 +5206,24 @@ is the identity $\langle p^+ x, p^+ y \rangle
 The cohomological shadow $Q_g(\cA) = H^*(\operatorname{im}(p^+))
 = \ker(\sigma - \mathrm{id} \mid \mathcal{H}_g)$ recovers the classical
 eigenspace decomposition.
+
+\emph{Reduction B$\to$A} (M-level $\to$ H-level):
+The M-level mapping cone
+$\operatorname{Cone}(\sigma - \mathrm{id})[-1]$ is a dg model for
+the H-level homotopy fiber
+$\operatorname{fib}(\sigma - \mathrm{id})$.  Model independence
+(Proposition~\ref{prop:model-independence}) ensures the M-level
+Lagrangian property ($\langle p^+x, p^+y\rangle = 0$)
+determines the H-level shifted-symplectic Lagrangian structure
+up to contractible ambiguity.
+
+\emph{Reduction B$\to$C} (M-level $\to$ S-level):
+Taking cohomology of the M-level projector $p^+$ yields the
+S-level eigenspace decomposition
+$\mathcal{H}_g(\cA) = Q_g(\cA) \oplus Q_g(\cA^!)$
+with $\dim Q_g(\cA) = \dim Q_g(\cA^!)$ by perfect duality.
+For the Heisenberg atom this extraction gives $Q_1 = H^0$,
+$Q_1^! = H^2$.
 
 For the Heisenberg algebra $\mathcal{H}_k$ at genus~$1$:
 $C_1 = H^*(\overline{\mathcal{M}}_1, \mathbb{C})
@@ -6928,7 +6954,7 @@ H^*\!\bigl(\overline{\mathcal{M}}_g,\,
 \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D))\bigr)
 \end{equation}
 where $\mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D))$ is the
-Feigin--Frenkel center (Remark~\ref{rem:feigin-frenkel-center}; \cite{FF92}).
+Feigin--Frenkel center (Remark~\ref{rem:feigin-frenkel-center}; \cite{Feigin-Frenkel}).
 \end{corollary}
 
 \begin{proof}
@@ -8332,21 +8358,31 @@ quasi-isomorphisms by (1)--(2), $f$ is a quasi-isomorphism.
 Therefore $\psi_g$ is a quasi-isomorphism on $\overline{\mathcal{M}}_g$.
 \end{proof}
 
-\begin{remark}[\texorpdfstring{$E_2$}{E2} collapse mechanism]\label{rem:e2-collapse-mechanism}
-\index{spectral sequence!E2 collapse@$E_2$ collapse}
-The $E_2$ collapse of the spectral sequence
+\begin{lemma}[\texorpdfstring{$E_2$}{E2} collapse at higher genus;
+\ClaimStatusProvedHere]\label{lem:e2-collapse-higher-genus}
+\index{spectral sequence!E2 collapse@$E_2$ collapse!higher genus}
+For a Koszul chiral algebra~$\cA$ on a genus-$g$ curve, the PBW
+spectral sequence
 $E_1^{p,q}(g) \Rightarrow H^{p+q}(\Omega_g \bar{B}_g(\cA))$
-holds for the same structural reason as in genus~$0$: the PBW
-filtration is a filtration by chiral algebras, and the Koszulness
-hypothesis ensures that the associated graded is a Koszul complex
-in the classical sense.  The $d_r$ differential for $r \geq 2$
-maps between PBW-graded components separated by $r$ steps, and
-the Koszul concentration (all bar cohomology is in bar-degree~$0$
-on the associated graded) forces these maps to have zero source
-or zero target.  This is
+degenerates at~$E_2$.
+\end{lemma}
+
+\begin{proof}
+The PBW filtration is a filtration by chiral algebras, and the
+Koszulness hypothesis ensures that the associated graded is a
+Koszul complex in the classical sense.  The $d_r$ differential
+for $r \geq 2$ maps between PBW-graded components separated
+by~$r$ steps, and the Koszul concentration (all bar cohomology
+is in bar-degree~$0$ on the associated graded) forces these maps
+to have zero source or zero target.  This is
 Corollary~\ref{cor:bar-cohomology-koszul-dual}, Step~4, applied
-fiberwise over~$\overline{\mathcal{M}}_g$.
-\end{remark}
+fiberwise over~$\overline{\mathcal{M}}_g$: on each geometric
+fiber (a fixed smooth or stable curve), the collision differential
+is genus-$0$ type, and the genus-$g$ quantum corrections live in
+higher Leray degrees, contributing only to $d_r$ for $r \geq 2$;
+since~$E_2$ is already concentrated on the diagonal by Koszul
+concentration, these higher differentials vanish.
+\end{proof}
 
 \begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-b}
 The quasi-isomorphism $\psi_g$ of Theorem~B is a cohomological
@@ -8408,11 +8444,31 @@ Koszulity; the boundary quasi-isomorphism
 hypothesis on lower-genus vertices; the extension lemma
 (Lemma~\ref{lem:extension-across-boundary-qi}) assembles the two.
 
+\emph{Reduction B$\to$A} (M-level $\to$ H-level):
+The M-level induction is the chain-level shadow of
+factorization-homology descent
+(Remark~\ref{rem:homotopy-native-b}): the excision property of
+factorization homology in the sense of
+Ayala--Francis~\cite{AF15} reconstructs the factorization algebra
+on a genus-$g$ surface from its restrictions to lower-genus
+pieces, and the M-level quasi-isomorphism~$\psi_g$ lifts to the
+H-level equivalence by model independence
+(Proposition~\ref{prop:model-independence}).
+
 \emph{Step~C} (S-level):
 The spectral sequence $E_1^{p,q}(g) \Rightarrow
 H^{p+q}(\Omega_g \bar{B}_g(\cA))$ collapses at $E_2$,
 yielding the higher-genus bar cohomology formulas
 (Riordan, Motzkin, etc.)\ as generating-function consequences.
+
+\emph{Reduction B$\to$C} (M-level $\to$ S-level):
+The S-level generating functions are extracted from the M-level
+dg model via the PBW spectral sequence: its $E_2$ collapse on
+the Koszul locus (Lemma~\ref{lem:e2-collapse-higher-genus})
+gives
+$\dim H^n(\Omega_g \bar{B}_g(\cA)) = \dim E_2^{n,0}(g)$,
+and the bar cohomology dimensions are the Taylor coefficients
+of the Hilbert series of~$\cA^!$.
 \end{remark}
 
 \begin{remark}[Scope boundary at admissible levels]
@@ -9987,7 +10043,11 @@ Theorem~\ref{thm:pbw-allgenera-km}.
 MK4 and MK5 follow from MK1--MK3 by
 Theorems~\ref{thm:higher-genus-inversion}
 and~\ref{thm:quantum-complementarity-main}.
-Items (i)--(iii) are immediate consequences.
+Item~(i) is MK4 applied to~$\widehat{\fg}_k$;
+item~(ii) is MK5;
+item~(iii) follows from~(i) and the
+scalar characteristic
+(Theorem~\ref{thm:modular-characteristic}).
 \end{proof}
 
 \begin{theorem}[PBW degeneration at all genera for Virasoro; \ClaimStatusProvedHere]
@@ -10133,7 +10193,11 @@ Theorem~\ref{thm:pbw-allgenera-virasoro}.
 MK4 and MK5 follow from MK1--MK3 by
 Theorems~\ref{thm:higher-genus-inversion}
 and~\ref{thm:quantum-complementarity-main}.
-Items (i)--(iii) are immediate consequences.
+Item~(i) is MK4 applied to~$\mathrm{Vir}_c$;
+item~(ii) is MK5;
+item~(iii) follows from~(i) and the
+scalar characteristic
+(Theorem~\ref{thm:modular-characteristic}).
 \end{proof}
 
 \begin{corollary}[Unconditional modular Koszulity for principal finite-type \texorpdfstring{$\mathcal{W}$}{W}-algebras; \ClaimStatusProvedHere]
@@ -10189,7 +10253,12 @@ Theorem~\ref{thm:pbw-allgenera-principal-w}.
 MK4 and MK5 follow from MK1--MK3 by
 Theorems~\ref{thm:higher-genus-inversion}
 and~\ref{thm:quantum-complementarity-main}.
-Items (i)--(iii) are immediate consequences.
+Item~(i) is MK4 applied to the principal
+$\mathcal{W}$-algebra;
+item~(ii) is MK5;
+item~(iii) follows from~(i) and the
+scalar characteristic
+(Theorem~\ref{thm:modular-characteristic}).
 \end{proof}
 
 \begin{theorem}[Universal PBW enrichment-killing for chiral
@@ -10758,10 +10827,30 @@ Additivity: $\kappa(\cA \otimes \cB) = \kappa(\cA) + \kappa(\cB)$
 by the anomaly cancellation theorem
 (Theorem~\ref{thm:anomaly-koszul}).
 
+\emph{Reduction B$\to$A} (M-level $\to$ H-level):
+The M-level curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$
+determines the H-level obstruction class in the tautological ring
+via the Grothendieck--Riemann--Roch formula
+(Theorem~\ref{thm:family-index}): the Chern character of the
+bar family $[\barB^{(g)}(\cA)] \in K_0(\overline{\mathcal{M}}_g)$
+maps to $\kappa(\cA) \cdot (\hat{A}(ix) - 1)$ under
+$\operatorname{ch}\colon K_0 \to H^*$.
+
 \emph{Step~C} (S-level):
 The Heisenberg atom: $\kappa(\mathcal{H}_k) = k$, and all genus
-free energies are Bernoulli numbers $F_g = k \cdot B_{2g}/(4g(2g-2))$
+free energies are
+$F_g = k \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
+\frac{|B_{2g}|}{(2g)!}$
 (\S\ref{sec:frame-modular-package}).
+
+\emph{Reduction B$\to$C} (M-level $\to$ S-level):
+The S-level free energies are extracted from the M-level curvature
+via the Faber--Pandharipande evaluation
+$F_g(\cA) = \kappa(\cA) \cdot
+\frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$,
+which follows from integrating $\mathrm{obs}_g$ against
+$\psi$-classes on~$\overline{\mathcal{M}}_{g,1}$
+(Theorem~\ref{thm:genus-universality}\textup{(iii)}).
 \end{remark}
 
 \begin{theorem}[Spectral characteristic theorem; \ClaimStatusProvedHere]
@@ -11297,7 +11386,29 @@ below.
   Corollary~\ref{cor:km-minimal-linf} shows the homotopy-transferred
   minimal model is the Killing extension of
   Proposition~\ref{prop:killing-linf-extension}.
+\end{enumerate}
 
+All three inputs have been computationally verified for
+$\mathfrak{sl}_2$, $\mathfrak{sl}_3$, $\mathfrak{sp}_4$, and
+$\mathfrak{g}_2$, with cyclic $L_\infty$ brackets, Casimir recovery,
+$\kappa$-extraction, complementarity, and critical-level vanishing all
+confirmed by the module
+\texttt{compute/lib/mc2\_cyclic\_linf.py}.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
+Type~I (existence of homotopy object).
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
+\end{remark}
+
+% ================================================================
+% COMMENTED OUT: Detailed computational session notes (items v-ix)
+% that formerly occupied ~270 lines. The mathematical content is
+% captured in the four items above; the computational verification
+% details are in compute/lib/mc2_cyclic_linf.py and
+% compute/lib/mc2_cyclic_ce.py.
+% ================================================================
+
+\iffalse  % BEGIN COMMENTED-OUT SESSION NOTES
 \item A \emph{finite-dimensional compute scaffold} for Steps~1--3 now exists in
   \nolinkurl{compute/lib/mc2_cyclic_linf.py}, with executable dg~Lie identities,
   low-arity cyclic $L_\infty$ brackets, and a first symbolic MC solver pass
@@ -11571,11 +11682,7 @@ read as the foundational live target of the monograph.  What remains
 after this layer is the next dependency chain recorded in
 Chapter~\ref{chap:concordance}: MC3, then MC4, then MC5; periodicity
 remains orthogonal to that chain.
-
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}):
-Type~I (existence of homotopy object).
-(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
-\end{remark}
+\fi  % END COMMENTED-OUT SESSION NOTES
 
 \begin{proposition}[Genus-completed MC framework;
 \ClaimStatusProvedHere]\label{prop:genus-completed-mc-framework}
@@ -14791,6 +14898,60 @@ $\kappa(\mathcal{W}_N^k) = \rho(\mathfrak{sl}_N) \cdot c$
 (Theorem~\ref{thm:wn-obstruction}),
 the formula follows with the canonical normalization
 $\operatorname{tr}(\eta_W) = 1/\rho$.
+\end{proof}
+
+\begin{corollary}[Scalar saturation persists in the
+\texorpdfstring{$\mathcal{W}_\infty$}{W-infinity} limit;
+\ClaimStatusProvedHere]
+\label{cor:winfty-scalar-saturation}
+\index{W1infinity@$\mathcal{W}_{1+\infty}$!scalar saturation}
+\index{universal Maurer--Cartan class!$\mathcal{W}_\infty$ saturation}
+The standard principal tower
+$\mathcal{W}_\infty = \varprojlim_N \mathcal{W}_N$ satisfies
+\[
+\dim H^2_{\mathrm{cyc}}(\mathcal{W}_\infty, \mathcal{W}_\infty)
+= 1.
+\]
+In particular, $\mathcal{W}_\infty$ is scalar-saturated:
+$\Theta_{\mathcal{W}_\infty}^{\min}
+= \kappa(\mathcal{W}_\infty) \cdot \eta \otimes \Lambda$.
+The non-scalar modular characteristic package
+\textup{(}Construction~\textup{\ref{constr:non-scalar-hpt})}
+cannot be realized via the principal
+$\mathcal{W}_\infty$ tower alone.
+\end{corollary}
+
+\begin{proof}
+Three inputs.
+\emph{Finite-stage saturation}:
+Proposition~\ref{prop:w-algebra-scalar-saturation} gives
+$\dim H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) = 1$
+for each finite~$N$.
+\emph{Isomorphic transitions}:
+the truncation $\mathcal{W}_{N+1} \twoheadrightarrow \mathcal{W}_N$
+preserves the unique central-charge deformation direction, so the
+induced maps
+$H^2_{\mathrm{cyc}}(\mathcal{W}_{N+1})
+\xrightarrow{\sim}
+H^2_{\mathrm{cyc}}(\mathcal{W}_N)$
+are isomorphisms.
+\emph{Mittag--Leffler}:
+the Mittag--Leffler property for the tower
+$\{\mathcal{W}_N\}_N$ is
+Corollary~\ref{cor:winfty-standard-mc4-package}, so
+$\varprojlim^1 = 0$ and the inverse limit commutes with
+cohomology.
+Therefore
+$H^2_{\mathrm{cyc}}(\mathcal{W}_\infty)
+= \varprojlim_N H^2_{\mathrm{cyc}}(\mathcal{W}_N)
+= \mathbb{C}$.
+As a cross-check: the BRST pullback target
+$H^3(\mathfrak{sl}_\infty) = \mathbb{C}$
+by stability of Lie algebra cohomology
+(the primitive generators $x_5, x_7, \ldots$ of
+$H^*(\mathfrak{sl}_\infty)
+= \bigwedge(x_3, x_5, x_7, \ldots)$
+lie in degrees strictly above~$3$).
 \end{proof}
 
 \begin{proposition}[DS functoriality of the characteristic
