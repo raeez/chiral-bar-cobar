@@ -25,15 +25,25 @@ dz \wedge d\bar{z}.
 The bar differential no longer squares to zero.
 
 On a Riemann surface $\Sigma_g$ of genus~$g$, the propagator acquires
-$g$ period corrections from $H^0(\Sigma_g, \Omega^1)$:
+period corrections from $H^0(\Sigma_g, \Omega^1)$.
+The single-valued (Arakelov-normalized) propagator is
 \[
-\eta_{ij}^{(g)} = d\log E(z_i, z_j)
-+ \sum_{k=1}^{g} \omega_k(z_i)\! \oint_{A_k}\! \omega_k(z_j),
+\eta_{ij}^{(g)} = \Bigl[\partial_{z_i}\!\log E(z_i, z_j)
+  + \pi \sum_{\alpha,\beta=1}^{g}
+  \omega_\alpha(z_i)\,(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+  \operatorname{Im}\!\Bigl(\int_{z_0}^{z_j}\!\omega_\beta\Bigr)
+\Bigr](dz_i - dz_j),
 \]
-and the curvature generalizes to
+where $\Omega$ is the period matrix, $\omega_1,\ldots,\omega_g$ the
+normalized abelian differentials, and $E(z,w)$ the prime form
+(Definition~\ref{def:higher-genus-log-forms}).
+The non-holomorphic correction restores double periodicity but
+introduces curvature:
 $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$, where $\omega_g$ is the
-Arakelov $(1,1)$-form.  The total corrected differential $\Dg{g}$,
-which adds period integrals along $A$-cycles, satisfies
+Arakelov $(1,1)$-form
+(Theorem~\ref{thm:quantum-arnold-relations}).
+The total corrected differential $\Dg{g}$, built from the
+\emph{holomorphic} part $\partial_z\!\log E$ alone, satisfies
 $\Dg{g}^{\,2} = 0$
 (Theorem~\ref{thm:quantum-diff-squares-zero}).
 
@@ -389,13 +399,22 @@ the sign difference between the two conventions
 \begin{align}
 m_1 &= 0 \quad \text{(no differential on the chiral algebra)} \\
 m_2(a \otimes b) &= \mu(a,b) \quad \text{(the chiral product)} \\
-m_3(a \otimes b \otimes c) &= \Res_{D_{12} \cap D_{23}}
-  \bigl[\eta_{12} \wedge \eta_{23} \cdot a \otimes b \otimes c\bigr]
-  \quad \text{(three trees, one sign each by~\eqref{eq:koszul-tree-sign})} \\
+m_3(a \otimes b \otimes c) &=
+  (-1)^{(|a|-1)(|b|-1)}
+  \Res_{D_{(ab)c}}\bigl[\eta_{12} \wedge \eta_{23}
+    \cdot a \otimes b \otimes c\bigr]
+  \notag \\ &\quad
+  + (-1)^{(|a|-1)(|c|-1)}
+  \Res_{D_{a(bc)}}\bigl[\eta_{23} \wedge \eta_{13}
+    \cdot a \otimes b \otimes c\bigr]
+  \notag \\ &\quad
+  + (-1)^{(|b|-1)(|c|-1)}
+  \Res_{D_{(ac)b}}\bigl[\eta_{13} \wedge \eta_{12}
+    \cdot a \otimes b \otimes c\bigr] \\
 m_4(a \otimes b \otimes c \otimes d) &= \sum_{T \in \mathcal{T}_4}
   (-1)^{\epsilon(T)}\,\Res_{D_T}
   \bigl[\eta_T \cdot a \otimes b \otimes c \otimes d\bigr]
-  \quad \text{(fourteen trees)}
+  \quad \text{($14$ trees, $5$ topologies)}
 \end{align}
 
 \item \emph{Coherences from geometry.} The $A_\infty$ relations follow from $\partial^2 = 0$ on the compactified configuration space $\overline{C}_n(X)$.
@@ -3830,7 +3849,7 @@ For $g \geq 2$, the structural formula $\operatorname{obs}_g^{W_3} = (c/2)\lambd
 \label{subsec:obstruction-squares-zero}
 
 \begin{theorem}[Nilpotence of obstruction (\texorpdfstring{$g \leq 2$}{g <= 2}); \ClaimStatusProvedHere]\label{thm:obstruction-nilpotent}
-For any chiral algebra $\mathcal{A}$ and genus $g \leq 2$, the genus-$g$ obstruction satisfies:
+For any augmented chiral algebra $\mathcal{A}$ and genus $g \leq 2$, the genus-$g$ obstruction satisfies:
 \begin{equation}
 (\text{obs}_g)^2 = 0 \quad \text{in } H^4(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))
 \end{equation}
@@ -7448,23 +7467,72 @@ For $\dzero \circ d_k = 0$: after integrating $z_i$ over $\gamma_k$, the result 
 
 \emph{Pole-order separation.}  The full OPE contains higher-order poles $(z_i - z_j)^{-m}$ for $m \geq 2$, but these contribute to the correction operators $d_k$ with $k \geq 2$ in the expansion $\Dg{g} = \dzero + \sum_k t_k d_k$, not to $\dzero$ or $d_1$.  The relation $\dzero d_k + d_k \dzero = 0$ established above involves only the residue operator $\dzero$ and the period integral $d_k$; the simple-pole analysis suffices because $\dzero$ extracts first-order residues by definition (Definition~\ref{def:bar-differential-complete}).
 
-\emph{Step 4: Quantum terms vanish by intersection properties.}
+\emph{Step 4: Quantum terms vanish by the Fay trisecant identity.}
 
-The correction operators $d_k$ ($k = 1, \ldots, g$) arise from integration over the $A$-cycles $\gamma_k$ of a standard symplectic basis $\{A_1, \ldots, A_g, B_1, \ldots, B_g\}$ of $H_1(\Sigma_g, \mathbb{Z})$. The key topological input is that the $A$-cycles have trivial mutual intersection:
-\[\gamma_k \cdot \gamma_l = 0 \quad \text{for all } 1 \leq k, l \leq g\]
-(The intersection pairing is non-trivial only between $A$-cycles and $B$-cycles: $A_k \cdot B_l = \delta_{kl}$.)
-We choose geometric representatives $\gamma_1, \ldots, \gamma_g$ with pairwise disjoint support, which is possible on a surface of genus $g \geq 2$ by realizing each $A$-cycle as the waist curve of a distinct handle (for $g = 1$ there is a single $A$-cycle and the issue is vacuous).
+The vanishing of the quantum contribution
+$\sum_{k,l} t_k\,t_l\, d_k d_l$ follows from a global argument
+that avoids checking the component anticommutations
+$\{d_k, d_l\} = 0$ directly.
 
-Consequently, the composition $d_k d_l$ involves iterated integration over disjoint cycles, yielding:
-\[d_k d_l + d_l d_k = 0 \quad \text{for all } k, l\]
+The total corrected differential $\Dg{g}$ is the bar differential
+computed using the \emph{holomorphic} propagator
+$h_{ij} = \partial_{z_i}\!\log E(z_i, z_j)$ of the prime form
+(Definition~\ref{def:higher-genus-log-forms}).  The holomorphic
+cyclic sum
+\[
+  h_{12}\,h_{23} + h_{23}\,h_{31} + h_{31}\,h_{12}
+\]
+vanishes identically when wedged with the antisymmetric form
+factors $(dz_i - dz_j) \wedge (dz_j - dz_k)$, by the
+Fay trisecant identity for the prime form---this is exactly
+the content proved genus-by-genus in
+Theorem~\ref{thm:quantum-arnold-relations}: the holomorphic
+part of the Arnold $3$-form is zero at every genus
+(genus~$1$: the $\zeta\zeta + \mathrm{cyc} =
+\frac{1}{2}[\wp + \cdots]$ identity;
+genus~$\geq 2$: the Fay identity for the Siegel
+$\wp$-matrix).  The non-holomorphic Arakelov correction
+produces $\mathcal{A}_3^{(g)} = 2\pi i\,\omega_{\mathrm{Ar}}
+\neq 0$ only because it departs from the holomorphic
+propagator.
 
-This follows from the disjoint support of the $A$-cycles.  The operator $d_k$ involves period integrals $\oint_{\gamma_k} K(z_i, -)\,dz_i$ of the chiral propagator $K(z,w) = \partial_z \log E(z,w)$.  The composition $d_k \circ d_l$ (for $k \neq l$) involves iterated integrals over $\gamma_k \times \gamma_l$.  Since $\gamma_k \cap \gamma_l = \emptyset$, the propagator $K(z_i, z_j)$ is holomorphic in~$z_i$ on~$\gamma_k$ when $z_j \in \gamma_l$, so $\oint_{\gamma_k} K(z_i, z_j)\,dz_i$ is a period of a holomorphic form.  The composition $d_k d_l$ then reduces to a product of periods, each computed independently on non-intersecting handles of $\Sigma_g$.  Repeating the same decomposition, each individual period integral $\oint_{\gamma_k}$ commutes past the other, and the resulting iterated integral vanishes because $\gamma_k$ is homologous to zero in the complement of $\gamma_l$ (the $A$-cycle spans an isotropic subspace of $H_1$).
+Since the holomorphic propagator satisfies the exact Arnold
+relation, the bar differential $\Dg{g}$ built from it satisfies
+$\Dg{g}^{\,2} = 0$ by the same nine-term verification as the
+genus-$0$ case (Theorem~\ref{thm:cobar-d-squared-zero}),
+with the Fay identity replacing the classical Arnold relation
+at each three-point interaction.
 
-\emph{(Note: The vanishing of $\Dg{g}^{\,2}$ relies on the Lagrangian property of the $A$-cycle subspace in $H_1(\Sigma_g)$, not on the cohomology of the moduli space $\mathcal{M}_g$. Recall $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by Harer's theorem, but this is not the relevant vanishing here.)}
+\emph{Component-level consequence.}
+From $\Dg{g}^{\,2} = 0$ and the independently-proved identities
+$\dzero^2 = 0$ (Step~2) and
+$\dzero\, d_k + d_k\,\dzero = 0$ (Step~3), we obtain:
+\[
+  \sum_{k,l} t_k\,t_l\, d_k d_l
+  = \Dg{g}^{\,2} - \dzero^2
+    - \sum_k t_k(\dzero\,d_k + d_k\,\dzero)
+  = 0.
+\]
+Since the $A$-period parameters $t_k$ are independently
+variable as the complex structure of~$\Sigma_g$ varies
+over the period domain, we deduce
+$d_k d_l + d_l d_k = 0$ for all~$k, l$.
+This is the operator-level manifestation of the Lagrangian
+isotropicity $\gamma_k \cdot \gamma_l = 0$ of the $A$-cycle
+subspace in $H_1(\Sigma_g, \mathbb{Z})$: the Riemann bilinear
+relations connect iterated period integrals of the Cauchy
+kernel to the intersection pairing, and restricting to a
+Lagrangian subspace forces all anticommutators to vanish.
 
-For $g=1$: there is a single $A$-cycle, and $d_1 d_1 = 0$ follows from $A_1 \cdot A_1 = 0$ (self-intersection of a simple closed curve on a torus).
-
-All terms in $\Dg{g}^{\,2}$ vanish, hence $\Dg{g}^{\,2} = 0$. \qedhere
+\emph{(Note: The vanishing of $\Dg{g}^{\,2}$ relies on the
+holomorphic Arnold relation (Fay identity) for the prime form,
+not on the cohomology of the moduli space $\mathcal{M}_g$.
+Recall $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by
+Harer's theorem, but this is not the relevant vanishing here.
+The corrected differential $\Dg{g}$ is the flat gauge of the
+curved connection $\dfib$---the chiral Riemann--Hilbert
+correspondence of
+Remark~\textup{\ref{rem:curvature-riemann-hilbert}}.)} \qedhere
 \end{proof}
 
 \begin{lemma}[Quantum corrections preserve acyclicity; \ClaimStatusProvedHere]\label{lem:quantum-preserves-acyclicity}
