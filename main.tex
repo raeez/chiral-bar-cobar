@@ -634,84 +634,213 @@
 \itshape
 
 \noindent
-The logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ on the
-configuration space of a smooth algebraic curve~$X$ has a simple pole
-along the collision diagonal with unit residue.  Place elements
-$a_1, \ldots, a_n$ of a chiral algebra~$\cA$ at positions
-$z_1, \ldots, z_n$ and extract residues of their OPE along the
-collision divisors of the Fulton--MacPherson
-compactification~$\overline{C}_n(X)$.  The Arnold relation among
-triple collisions forces the resulting differential to square to zero:
-this is the bar complex $\barB_X(\cA)$, a non-abelian Fourier
-transform whose kernel is the logarithmic propagator and whose
-output is a factorization coalgebra on $\Ran(X)$.
+Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.  Place
+sections $a_1, \ldots, a_n \in \cA$ at distinct points
+$z_1, \ldots, z_n \in X$, wedge the tensor
+$a_1(z_1) \otimes \cdots \otimes a_n(z_n)$ against the logarithmic
+$n$-form
+$\eta = \bigwedge_{i < j} d\log(z_i - z_j)$
+on the Fulton--MacPherson compactification~$\overline{C}_n(X)$, and
+extract residues at each collision divisor~$D_{ij}$ where $z_i = z_j$.
+The result is a differential~$d$ on
+$\barB_X(\cA) := \bigoplus_{n \ge 0}
+\Gamma(\overline{C}_n(X),\, \cA^{\boxtimes n} \otimes
+\Omega^*_{\log})$.
+The Arnold relation
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$,
+which holds because
+$(z_3{-}z_1)+(z_1{-}z_2)+(z_2{-}z_3)=0$,
+forces $d^2 = 0$: three boundary strata meet at every triple-collision
+locus of $\overline{C}_n(X)$, and their residue contributions cancel
+cyclically.
 
 \medskip
 When $X = \operatorname{Spec} k$ is a point, configuration spaces
-collapse and the transform reduces to the classical bar construction
-of Loday--Vallette: every theorem of operadic Koszul duality is the
-zero-dimensional shadow of the chiral theory.  When $\cA$ is abelian
---- the Heisenberg algebra $\mathcal{H}_1$ on an elliptic
-curve~$E_\tau$ --- the bar complex recovers the Poincar\'e line bundle
-on $\operatorname{Jac}(E_\tau) \times
-\widehat{\operatorname{Jac}}(E_\tau)$: the transform literally
-specializes to the Fourier--Mukai transform on the Jacobian, and
-thence to the classical Fourier transform in zero dimensions.
+collapse and the construction reduces to the bar complex
+$T^c(s^{-1}\bar{\cA})$ of Loday--Vallette.  When $\cA$ is the
+Heisenberg algebra $\mathcal{H}_1$ on an elliptic curve~$E_\tau$,
+the transform recovers the Poincar\'e line bundle on
+$\operatorname{Jac}(E_\tau) \times
+\widehat{\operatorname{Jac}}(E_\tau)$: the bar complex specializes to the Fourier--Mukai kernel on the Jacobian.  The
+classical Fourier transform on~$\mathbb{R}$, the Fourier--Mukai
+transform on an abelian variety, and the chiral bar transform on a
+curve are three incarnations of the same logarithmic integral
+$\int \exp(xy)\,dy$,
+$\int \mathcal{P}\,d\mu$,
+$\int \cA^{\boxtimes n} \wedge \eta$,
+at dimension $0$, $1$ (abelian), and $1$ (non-abelian).
 
 \medskip
-In the non-abelian case, Verdier duality on the Ran space intertwines
-the bar of~$\cA$ with the bar of its Koszul dual~$\cA^!$, realizing
-chiral Koszul duality as non-abelian Poincar\'e duality.  On the
-Koszul locus the cobar inverts the bar:
-$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$.  For a Koszul pair
-$(\cA, \cA^!)$, the relative bar complex over the universal curve
-has cohomology concentrated in the center~$Z(\cA)$, which forms a
-self-dual local system~$\mathcal{Z}_{\cA}$
-on~$\overline{\mathcal{M}}_g$.  Verdier self-duality of the center
-equips $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$ with a
-shifted-symplectic structure, and the deformation and obstruction
-complexes of~$\cA$ and~$\cA^!$ embed as complementary Lagrangians.
+The Verdier dualizing functor
+$\mathbb{D}_{\Ran}\colon
+\mathcal{D}^b(\overline{C}_n(X)) \to
+\mathcal{D}^b(\overline{C}_n(X))$
+exchanges the bar complex of $\cA$ with the bar complex of a second
+chiral algebra~$\cA^!$:
+\[
+\mathbb{D}_{\Ran}\,\barB_X(\cA)
+\;\simeq\; \barB_X(\cA^!).
+\]
+Both sides are factorization coalgebras on $\operatorname{Ran}(X)$;
+$\cA^!$ is the \emph{chiral Koszul dual}.
+Concretely, $\mathbb{D}_{\Ran}$ pairs the logarithmic $n$-form
+$\eta = \bigwedge d\log(z_i - z_j)$ against the distributional
+$n$-current $\delta_\Delta$ supported on the collision diagonal:
+$\langle \eta,\, \delta_\Delta \rangle = 1$.
+For affine Kac--Moody, $\widehat{\fg}_k^! =
+\mathrm{CE}^{\mathrm{ch}}(\widehat{\fg}_{-k-2h^\vee})$.  On
+the Koszul locus --- where $\barB_X(\cA)$ has cohomology concentrated
+in a single degree --- the cobar inverts the bar:
+\[
+\Omega_X(\barB_X(\cA)) \xrightarrow{\;\sim\;} \cA,
+\]
+with the bar-cobar spectral sequence collapsing at~$E_2$.  For
+$\widehat{\fg}_k$ this produces
+$\widehat{\fg}_{-k-2h^\vee}$: the Feigin--Frenkel involution is the
+shadow of Verdier duality on configuration spaces.  At critical level
+$k = -h^\vee$, the bar complex is uncurved, and
+$H^0(\barB(\widehat{\fg}_{-h^\vee}))$ recovers the Feigin--Frenkel
+center --- the algebra of functions on the space of
+$\fg^\vee$-opers on the formal disc.  The full derived identification
+$H^*(\barB(\widehat{\fg}_{-h^\vee})) \cong \Omega^*(\Op_{\fg^\vee})$
+gives a vertex-algebraic construction of a central object in the
+geometric Langlands programme.
 
 \medskip
-At genus $g \geq 1$ the propagator acquires period corrections from
-the Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_g$, and the
-fiberwise differential develops curvature
-$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$: the curvature~$\kappa$ is
-the infinitesimal generator of the monodromy of the logarithmic
-propagator, and period integrals restore nilpotence of the total
-differential.  Nilpotence is the logarithm of periodicity: the
-scalar~$\kappa(\cA)$ --- determined by the leading OPE
-singularity --- is the nilpotent (logarithmic) datum whose exponential
-governs the periodic structure of bar cohomology.  It controls
-the genus tower: it is additive under tensor product, anti-symmetric
-under Koszul duality, and has $\hat{A}$-genus generating series.
+At genus $g \geq 1$ the logarithmic propagator $d\log(z_i - z_j)$ is
+replaced by $d\log E(z_i, z_j)$, where $E$ is the prime form.  The
+prime form has monodromy around $B$-cycles of~$\Sigma_g$, and this
+monodromy enters the bar differential as a curvature: the fiberwise
+differential satisfies
+\[
+\dfib^{\,2} = \kappa(\cA) \cdot \omega_g
+\]
+where $\kappa(\cA) \in \mathbb{C}$ is determined by the leading OPE
+singularity and $\omega_g \in H^{2g}(\overline{\mathcal{M}}_g)$ is a
+tautological class on moduli.  Genus-$0$ nilpotence $d^2 = 0$ fails by
+an amount proportional to one number.  Period integrals along $A$-cycles
+of the fiber curves supply the correction terms that restore strict
+nilpotence:
+$\Dg{g}^{\,2} = 0$.
 
-Clutching along boundary divisors of $\overline{\mathcal{M}}_g$
-organizes the genus tower into a single modular deformation of the
-genus-$0$ bar differential, governed by a universal Maurer--Cartan
-class $\Theta_{\cA}$ valued in the cyclic deformation complex
-tensored with moduli-space cohomology.  The result is a modular
-homotopy theory for factorization algebras on curves, in which genus
-is not an external parameter but a deformation variable internal to
-Koszul duality itself.
+The scalar $\kappa(\cA)$ controls the entire genus tower.
+For affine Kac--Moody:
+$\kappa(\widehat{\fg}_k) = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
+The genus free energies assemble as
+\[
+\sum_{g=1}^{\infty} F_g(\cA)\, x^{2g}
+\;=\; \kappa(\cA) \cdot
+\biggl(\frac{x/2}{\sin(x/2)} - 1\biggr),
+\]
+recovering the $\hat{A}$-genus: it appears because it is the
+multiplicative genus of the additive formal group law, and the genus
+expansion is additive in~$\kappa$.  Under Koszul duality,
+$\kappa(\cA) + \kappa(\cA^!) = 0$
+for Kac--Moody, and more generally the complementarity sum
+$\kappa + \kappa'$ is a root-datum invariant.  Anomaly cancellation in
+string theory is $\kappa_{\mathrm{tot}} = 0$: the condition under
+which the curvature vanishes and the bar complex at every genus is an
+honest cochain complex.
 
 \medskip
-For lattice vertex algebras $V_\Lambda$, chiral Koszul duality
-acquires $\Eone$-monoidal structure from the braiding.
-Cocycle deformations produce quantum lattice algebras
-$V_\Lambda^{N,q}$, and the $\Eone$ bar-cobar adjunction inverts
-the quantum parameter: $\varepsilon \mapsto \varepsilon^{-1}$.
-The lattice construction bypasses thick generation problems via
-sectorwise finiteness, yielding unconditional factorization
-Drinfeld--Kohno equivalences at level~$1$ for simply-laced root
-systems.
+The relative bar complex over the universal curve
+$\pi\colon \overline{\mathcal{M}}_{g,1} \to \overline{\mathcal{M}}_g$
+has fiber cohomology concentrated in the center~$Z(\cA)$: the
+Koszul property forces all higher fiber cohomology to vanish, and
+the degree-zero identification $H^0 = Z(\cA)$ holds because a
+bar-degree-$0$ cocycle is an element whose OPE with every field is
+regular --- the defining property of a central element.  The center
+forms a local system~$\mathcal{Z}_\cA$ on~$\overline{\mathcal{M}}_g$.
+Verdier self-duality of the center equips
+$R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)$ with a
+$(-1)$-shifted symplectic structure in the sense of
+Pantev--To\"en--Vaqui\'e--Vezzosi, and Verdier duality
+$\cA \leftrightarrow \cA^!$ splits the ambient complex into
+complementary Lagrangian halves:
+\[
+R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA)
+\;\simeq\;
+\mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!),
+\]
+the deformation complex of~$\cA$ and the obstruction complex of its
+dual.  The Lagrangian condition
+$\langle \mathbf{Q}_g(\cA),\, \mathbf{Q}_g(\cA^!) \rangle = 0$
+means that every first-order deformation of $\cA$ at genus~$g$ is
+annihilated by the obstruction map of~$\cA^!$.
+
+Clutching along the boundary divisors of
+$\overline{\mathcal{M}}_g$ --- the stable-graph strata where the
+curve degenerates --- organizes the genus tower into a single modular
+deformation.  A cyclic $L_\infty$-algebra structure on the deformation
+complex~$\Defcyc(\cA)$, constructed from the Fay trisecant identity
+on FM compactifications, supports a universal Maurer--Cartan element
+\[
+\Theta_\cA \;\in\;
+\operatorname{MC}\bigl(
+\Defcyc(\cA) \,\widehat{\otimes}\,
+R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})\bigr)
+\]
+whose scalar trace recovers $\kappa(\cA) \cdot \lambda_g$, whose
+clutching compatibility encodes the sewing axiom, and whose Verdier
+duality gives $\Theta_\cA \mapsto \Theta_{\cA^!}$.
 
 \medskip
-These constructions are carried out explicitly for the Heisenberg
-algebra, affine Kac--Moody at dual levels, the Virasoro algebra,
-principal $\mathcal{W}$-algebras via Drinfeld--Sokolov reduction,
-lattice algebras for ADE root systems, and Yangians on the
-evaluation locus.
+The chiral Hochschild cohomology
+$\ChirHoch^*(\mathcal{W}^k(\fg))$ of a principal $\mathcal{W}$-algebra
+at generic level is polynomial:
+$\mathbb{C}[\Theta_1, \ldots, \Theta_r]$
+with $\deg \Theta_i = m_i + 1$ where $m_1, \ldots, m_r$ are the
+exponents of~$\fg$.  At critical level~$k = -h^\vee$, the exterior
+generators of Chevalley--Eilenberg cohomology reappear:
+$\Lambda^*(P_1, \ldots, P_r) \otimes \mathbb{C}[\Theta_1, \ldots,
+\Theta_r]$.  The Koszul duality functor acts on Hochschild cohomology
+via the Connes periodicity operator~$S$.
+
+\medskip
+The construction has two genuinely different specializations because
+the logarithmic propagator on a curve interacts with two distinct
+algebraic structures.
+
+On the commutative ($\Einf$-chiral) side, the Heisenberg
+algebra~$\mathcal{H}_k$ is the first nontrivial example.  The current
+$J(z)$ with OPE $J(z)J(w) = k/(z{-}w)^2$ gives a bar element
+$J \otimes J \otimes \eta_{12} \in \barB^1$; the bar differential
+produces $\Res_{\epsilon=0}[\epsilon^{-3}\,d\epsilon] = 0$ (triple
+pole, no residue).  The level~$k$ is invisible at genus~$0$ and appears
+at genus~$1$ as curvature $\kappa = k$.  Every feature of the general
+theory --- Arnold nilpotence, Verdier duality, complementarity,
+the $\hat{A}$-genus, the Hodge bundle correction --- is already
+present and computable.
+
+On the braided ($\Eone$-chiral) side, the Yangian $Y(\fg)$ is the
+first nontrivial example.  The RTT presentation
+$R_{12}(u{-}v)\,T_1(u)\,T_2(v) = T_2(v)\,T_1(u)\,R_{12}(u{-}v)$
+replaces commutativity with the Yang--Baxter equation, and the bar
+differential acts on ordered configuration spaces.  Koszul duality
+inverts the $R$-matrix: $Y(\fg)^! \cong Y_{R^{-1}}(\fg)$.  The
+derived Drinfeld--Kohno theorem --- that $\Eone$-factorization
+categories of Yangians and quantum groups are equivalent on the
+evaluation locus --- is proved for the evaluation-generated core at
+all simple Lie types.  For lattice vertex algebras $V_\Lambda$,
+sectorwise finiteness of the $\Lambda$-graded bar complex bypasses
+thick generation entirely, yielding unconditional factorization
+equivalences for all even positive-definite lattices.
+
+\medskip
+Explicit computations, occupying half this volume, cover the
+Heisenberg algebra (the $\Einf$ atom), free fermions and the
+$bc$-$\beta\gamma$ Koszul pair (Com-Lie duality incarnate), affine
+Kac--Moody at Feigin--Frenkel dual levels with the oper space emerging
+at critical level, the Virasoro algebra with its
+$c \leftrightarrow 26 - c$ complementarity, principal
+$\mathcal{W}$-algebras through Drinfeld--Sokolov reduction with
+complete stage-$4$ OPE structure constants for~$W_4$, ADE lattice
+algebras with their quantum deformations, and Yangians with
+Mittag-Leffler stabilization of the RTT bar-cohomology tower.
+Bar cohomology dimensions, genus free energies through $g = 10$,
+Koszul dual Hilbert series, and modular characteristics are computed
+for every family and checked against a suite of six thousand tests.
 \end{abstract}
 
 \bigskip
