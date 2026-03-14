@@ -47,8 +47,9 @@ Delta is expected: grep counts inline mentions in proofs/remarks, not just theor
 
 | Metric | Value |
 |--------|-------|
-| Fast tests | ~5,973-6,005 (pending recount) |
-| Slow tests (deselected) | ~737 |
+| Fast tests | 6,005 passed |
+| Slow tests (deselected) | 739 |
+| Failures | 0 |
 
 ## Volume II: A-infinity Chiral Hochschild Cohomology
 
@@ -75,10 +76,9 @@ Delta is expected: grep counts inline mentions in proofs/remarks, not just theor
 | G10 (Phantom-Ref) | **0 findings** — build log fully clean |
 | Build warnings | 0 undefined references, 0 undefined citations, 0 multiply-defined labels |
 
-## Agents Launched (Phase 1)
+## Final Results
 
-- G1 (Untagged theorem envs): running
-- G4 (Label/env prefix mismatch): running
-- G5 (Unlabeled theorem envs): running
-- G6+G10 (Display mismatch + phantom refs — deep agent): running
-- G12 (Cross-volume bridge audit): running
+All 11 agents completed. See `FRONTIER_CARTOGRAPHY_catalogue.md` for full findings.
+
+**84 total findings**: 0 CRITICAL, 2 HIGH, 38 MEDIUM, 44 LOW.
+Zero mathematical errors — all findings are control-plane hygiene.
