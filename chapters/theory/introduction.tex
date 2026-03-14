@@ -211,19 +211,15 @@ the FM bar construction produce $d^2 = 0$?}
 \end{center}
 
 \noindent
-The answer is not ``all of them.''  The nine cross-terms in
-$(d_1 + d_2 + d_3)^2$ impose precise algebraic conditions
-on~$\mu$.  The diagonal terms $d_1^2 = 0$ and $d_3^2 = 0$ are
-automatic (cochain complex and de~Rham); the mixed
-anticommutators vanish by the residue exact sequence and the
-derivation property.  All the content is in $d_2^2 = 0$, the
-nilpotency of the residue extraction
+Expand $(d_1 + d_2 + d_3)^2$.  The terms
+$d_1^2$, $d_3^2$, and all mixed anticommutators vanish
+for formal reasons (cochain complex, de~Rham,
+residue exact sequence).  The entire content is
+$d_2^2 = 0$: the residue extraction must be nilpotent
 (Theorem~\ref{thm:bar-nilpotency-complete}).
-
-The double sum
+Three cases arise from index overlap in
 $d_2^2 = \sum_{i<j}\sum_{k<\ell}
-\Res_{D_{k\ell}} \circ \Res_{D_{ij}}$
-decomposes into three cases by index overlap:
+\Res_{D_{k\ell}} \circ \Res_{D_{ij}}$:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Disjoint indices}
   ($\{i,j\} \cap \{k,\ell\} = \emptyset$).
@@ -253,62 +249,59 @@ Cases~(i) and~(iii) impose no condition on the algebra.
 Case~(ii) imposes exactly one: the Borcherds identity.
 This identity is the defining axiom of a chiral algebra.
 
-The selection is already visible in the two examples of
-Chapter~\ref{ch:heisenberg-frame}.  For the Heisenberg
-algebra~$\mathcal{H}_k$, whose OPE
-$\alpha(z)\alpha(w) \sim k/(z-w)^2$ has only a double pole,
-the bracket component of the bar differential vanishes
-identically: $d_{\mathrm{bracket}} = 0$
-(\S\ref{sec:frame-bar-deg1}).  The residue differential reduces
-to $d_{\mathrm{curvature}}$, which produces scalars, and
-$d_{\mathrm{curvature}}^2 = 0$ is automatic
-(Proposition~\ref{prop:pole-decomposition}(2)).  The Arnold
-relation handles the geometry; no algebraic input beyond the
-OPE is needed.
+Two witnesses from Chapter~\ref{ch:heisenberg-frame}:
 
-For affine $\widehat{\mathfrak{sl}}_2$ at level~$k$, simple
-poles appear: $h(z)\,e(w) \sim 2e(w)/(z-w)$ activates the
-bracket component $d_{\mathrm{bracket}}$.  This component alone
-does not square to zero.  The failure is computed explicitly:
-all $2048$ sign conventions give
-$d_{\mathrm{bracket}}^2 \neq 0$
+\smallskip\noindent\textbf{Heisenberg} ($\alpha(z)\alpha(w) \sim
+k/(z-w)^2$, double pole only).  No simple pole, so
+$d_{\mathrm{bracket}} = 0$.  The full differential reduces to
+$d_{\mathrm{curvature}}$, which produces scalars:
+$d_{\mathrm{curvature}}^2 = 0$ automatically.  The Arnold
+relation handles all of case~(ii).  No algebraic input needed.
+
+\smallskip\noindent\textbf{Kac--Moody} ($h(z)\,e(w) \sim
+2e(w)/(z-w) + \cdots$, simple \emph{and} double poles).
+The bracket component $d_{\mathrm{bracket}}$ is now nonzero, and
+$d_{\mathrm{bracket}}^2 \neq 0$ --- computed explicitly for all
+$2048$ sign conventions
 (\S\ref{subsec:frame-sl2-bar-low-degree},
-Remark~\ref{rem:frame-why-dbracket-fails}).  The residual term
-is proportional to the level~$k$: it is precisely the
-double-pole data that $d_{\mathrm{bracket}}$ ignores.  The full
-differential $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
-satisfies $d^2 = 0$ because the Borcherds identity intertwines
-both pole orders:
+Remark~\ref{rem:frame-why-dbracket-fails}).  The obstruction is
+proportional to the level~$k$: it is the double-pole data that
+$d_{\mathrm{bracket}}$ ignores.  The Borcherds identity absorbs
+this obstruction:
 \[
 d_{\mathrm{bracket}}^2
 = -\{d_{\mathrm{bracket}},\, d_{\mathrm{curvature}}\}.
 \]
-The curvature is the obstruction to the Lie-bracket differential
-being nilpotent; the Borcherds identity is the integrability
-condition that absorbs the obstruction into the full differential
+The curvature is the obstruction; the Borcherds identity is the
+integrability condition
 (Proposition~\ref{prop:pole-decomposition}).
 
 \begin{remark}[Classical vs.\ chiral selection]
 \label{rem:classical-vs-chiral-selection}
 \index{Koszul duality!classical vs.\ chiral}
-Classical Koszul duality asks the same question on a point:
-for which pairings on a graded vector space does the tensor
-coalgebra carry $d^2 = 0$?  The answer is the Jacobi
-identity; the selected objects are Lie algebras.  Chiral Koszul
-duality asks it on a curve: for which
-$\mathcal{D}_X$-linear pairings does the FM bar construction
-carry $d^2 = 0$?  The answer is the Borcherds identity; the
-selected objects are chiral algebras.
-
-The passage from Jacobi to Borcherds is not a generalization
-by analogy.  It is forced by the boundary stratification of
-$\overline{C}_n(X)$.  The Jacobi identity handles triple
-collisions when all poles are simple.  On a curve, OPEs carry
-multiple pole orders---the level, the central charge---and
-the codimension-$2$ strata of $\overline{C}_n(X)$ mix them.
-The Borcherds identity is the unique condition that makes
-this mixing consistent.  Chiral algebras are what
-configuration space geometry accepts.
+The bar construction asks the same question at every level
+of geometry:
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Base} & \textbf{Condition for $d^2 = 0$}
+  & \textbf{Selected objects} \\
+\hline
+Point & Jacobi identity & Lie algebras \\
+Curve $X$ & Borcherds identity & Chiral algebras \\
+$X$ over $\overline{\mathcal{M}}_g$ & $+$ period corrections
+  & Modular Koszul algebras
+\end{tabular}
+\end{center}
+Each row is forced by the geometry of the next: the Jacobi
+identity handles triple collisions when all poles are simple;
+on a curve, multiple pole orders mix at the codimension-$2$
+strata of $\overline{C}_n(X)$, and the Borcherds identity is
+the unique condition that makes this mixing consistent; at
+higher genus, period corrections from the Hodge bundle restore
+$\Dg{g}^{\,2} = 0$.  Chiral algebras are what configuration
+space geometry accepts; modular Koszul algebras are what the
+genus tower accepts.
 \end{remark}
 
 
