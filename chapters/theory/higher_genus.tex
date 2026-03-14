@@ -45,7 +45,10 @@ Arakelov $(1,1)$-form
 The total corrected differential $\Dg{g}$, built from the
 \emph{holomorphic} part $\partial_z\!\log E$ alone, satisfies
 $\Dg{g}^{\,2} = 0$
-(Theorem~\ref{thm:quantum-diff-squares-zero}).
+(Theorem~\ref{thm:quantum-diff-squares-zero}):
+the holomorphic propagator obeys the exact Arnold relation
+by the Fay trisecant identity, so the nine-term verification
+of nilpotence goes through verbatim from genus~$0$.
 
 As $[\Sigma_g]$ varies over $\overline{\mathcal{M}}_g$, the bar
 complex traces a family of curved cochain complexes.  The fiberwise
@@ -4129,10 +4132,19 @@ Theorem~\ref{thm:heisenberg-obs}:
 the propagator $\omega_g$ on the genus-$g$ surface acquires a $B$-cycle defect
 equal to $\lambda_g$, and the algebra-specific contribution collapses to
 the genus-$1$ curvature coefficient $\kappa(\mathcal{A})$.
-For algebras with generators of uniform conformal weight---that is, with
-scalar curvature---the factorization is immediate and $\kappa$ is a single
-scalar.  (This includes single-generator algebras such as
-Heisenberg and Virasoro, and also Kac--Moody algebras where all
+For algebras with generators of uniform conformal weight~$h$, the
+factorization is immediate and $\kappa$ is a single scalar.
+The reason is that the fiberwise curvature coderivation
+$\dfib^{\,2} = \kappa \cdot \omega_g$ acts on the space of generators~$V$;
+when all generators have weight~$h$, the Hodge bundle contributes
+$h \cdot \lambda_g$ on each generator, so the total curvature is
+$\kappa \cdot \lambda_g$ with $\kappa$ a \emph{scalar}.
+When generators have different weights $h_1, \ldots, h_r$, the curvature
+is instead a diagonal matrix $\operatorname{diag}(\kappa_{h_1}, \ldots,
+\kappa_{h_r})$ tensored with weight-dependent Hodge classes---a
+\emph{matrix-valued} class on~$\overline{\mathcal{M}}_g$.
+(Uniform weight holds for single-generator algebras such as
+Heisenberg and Virasoro, and also for Kac--Moody algebras where all
 currents $J^a$ have weight~$1$; it excludes $\mathcal{W}$-algebras
 with generators of different weights.)
 For algebras with multiple generators of different conformal weights
@@ -5314,8 +5326,18 @@ Q_g(\mathcal{A}) := \text{gr}^g H^*(\bar{B}(\mathcal{A})) = E_\infty^{*,*,g}
 \end{equation}
 We use the same notation $Q_g(\mathcal{A})$ for this graded piece,
 anticipating Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}),
-which identifies it with the eigenspace defined in
-Definition~\ref{def:complementarity-complexes}.
+which identifies it with the $+1$-eigenspace of the Verdier involution
+(Definition~\ref{def:complementarity-complexes}).
+The two characterizations should agree because the filtration graded
+piece captures ``the part of bar cohomology that comes from genus~$g$,''
+while the eigenspace captures ``the part that transforms as the
+$\mathcal{A}$-sector under Verdier involution.''
+These coincide because the Verdier involution \emph{acts as genus
+decomposition}: it sorts contributions according to whether they arise
+from $j_*$-extended bar cochains of~$\mathcal{A}$ (eigenvalue~$+1$) or
+from $j_!$-extended bar cochains of~$\mathcal{A}^!$ (eigenvalue~$-1$),
+and the genus filtration separates precisely these two sources
+(Lemma~\ref{lem:eigenspace-decomposition-complete}).
 
 \emph{Explicit description.} An element of $Q_g(\mathcal{A})$ is represented by a closed form $\omega \in \bar{B}^{(g)}(\mathcal{A})$ (i.e., $d\omega = 0$) that is not exact modulo lower genus contributions.
 
@@ -6022,16 +6044,30 @@ the anti-commutativity~\eqref{eq:verdier-ks-anticommute}.
 Therefore elements from $\bar{B}^{(g)}(\mathcal{A}^!)$ have
 eigenvalue $-1$ and contribute to~$V^-$.
 
-In summary: the identification of the $+1$-eigenspace with
+In summary: the geometric content of the eigenspace decomposition
+is the $j_*/j_!$ dichotomy.
+Bar cochains of~$\mathcal{A}$ on the FM compactification
+$\overline{C}_n(X)$ are sections of
+$j_*j^*\mathcal{A}^{\boxtimes n}$: they \emph{extend across the
+boundary} with logarithmic poles (the $j_*$-extension, which
+permits growth along boundary divisors).
+Cobar cochains of~$\mathcal{A}$---equivalently, bar cochains
+of~$\mathcal{A}^!$---are sections of
+$j_!j^*(\mathcal{A}^!)^{\boxtimes n}$: they have \emph{compact
+support} away from the boundary (the $j_!$-extension, which
+forces vanishing along boundary divisors).
+The Verdier involution exchanges $j_*$ and $j_!$
+(Lemma~\ref{lem:verdier-extension-exchange}), hence exchanges
+$\mathcal{A}$-contributions and $\mathcal{A}^!$-contributions.
+The identification of the $+1$-eigenspace with
 $Q_g(\mathcal{A})$ and the $-1$-eigenspace with
-$Q_g(\mathcal{A}^!)$ follows from the Verdier intertwining
+$Q_g(\mathcal{A}^!)$ then follows from the Verdier intertwining
 $\mathbb{D}_{\mathrm{Ran}}\, \bar{B}(\mathcal{A}) \simeq
-\bar{B}(\mathcal{A}^!)$ (Theorem~\ref{thm:verdier-bar-cobar}),
-which at the level of centers gives
+\bar{B}(\mathcal{A}^!)$ (Theorem~\ref{thm:verdier-bar-cobar}):
+at the level of centers,
 $\sigma(\mathcal{Z}(\mathcal{A})) = \mathcal{Z}(\mathcal{A}^!)$,
-so that $\sigma$ acts as $+1$ on the $\mathcal{A}$-contribution
-(via $j_*$-extension) and as $-1$ on the
-$\mathcal{A}^!$-contribution (via $j_!$-extension).
+so $\sigma$ acts as $+1$ on $j_*$-extended classes from~$\mathcal{A}$
+and as $-1$ on $j_!$-extended classes from~$\mathcal{A}^!$.
 
 More precisely, the anti-commutativity
 \eqref{eq:verdier-ks-anticommute} ensures that the Kodaira--Spencer
@@ -7467,73 +7503,146 @@ For $\dzero \circ d_k = 0$: after integrating $z_i$ over $\gamma_k$, the result 
 
 \emph{Pole-order separation.}  The full OPE contains higher-order poles $(z_i - z_j)^{-m}$ for $m \geq 2$, but these contribute to the correction operators $d_k$ with $k \geq 2$ in the expansion $\Dg{g} = \dzero + \sum_k t_k d_k$, not to $\dzero$ or $d_1$.  The relation $\dzero d_k + d_k \dzero = 0$ established above involves only the residue operator $\dzero$ and the period integral $d_k$; the simple-pole analysis suffices because $\dzero$ extracts first-order residues by definition (Definition~\ref{def:bar-differential-complete}).
 
-\emph{Step 4: Quantum terms vanish by the Fay trisecant identity.}
+\emph{Step 4: Quantum terms vanish---the Fay trisecant identity
+is the higher-genus Borcherds identity.}
 
-The vanishing of the quantum contribution
-$\sum_{k,l} t_k\,t_l\, d_k d_l$ follows from a global argument
-that avoids checking the component anticommutations
-$\{d_k, d_l\} = 0$ directly.
+Three propagators control the bar differential at genus~$g$:
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Propagator} & \textbf{Arnold 3-form} & \textbf{Differential} \\[2pt]
+$(z_i - z_j)^{-1}\,dz_i$ \,(genus $0$) &
+  $\mathcal{A}_3^{(0)} = 0$ &
+  $\dzero^2 = 0$ \\[2pt]
+$\partial_{z_i}\!\log E(z_i,z_j)$ \,(holomorphic) &
+  $\mathcal{A}_3^{\mathrm{hol}} = 0$ &
+  $\Dg{g}^{\,2} = 0$ \\[2pt]
+$\eta_{ij}^{(g)}$ \,(Arakelov-normalized) &
+  $\mathcal{A}_3^{(g)} = 2\pi i\,\omega_{\mathrm{Ar}}$ &
+  $\dfib^{\,2} = \kappa\cdot\omega_g$
+\end{tabular}
+\end{center}
+The first line is the classical Arnold relation
+(Theorem~\ref{thm:arnold-three}).
+The third line is the quantum-corrected Arnold relation
+(Theorem~\ref{thm:quantum-arnold-relations}):
+the non-holomorphic correction in the Arakelov propagator
+breaks the Arnold relation by exactly
+$2\pi i\,\omega_{\mathrm{Ar}}$, producing the curvature
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$.
+The middle line is the key:
 
-The total corrected differential $\Dg{g}$ is the bar differential
-computed using the \emph{holomorphic} propagator
-$h_{ij} = \partial_{z_i}\!\log E(z_i, z_j)$ of the prime form
-(Definition~\ref{def:higher-genus-log-forms}).  The holomorphic
-cyclic sum
-\[
-  h_{12}\,h_{23} + h_{23}\,h_{31} + h_{31}\,h_{12}
-\]
-vanishes identically when wedged with the antisymmetric form
-factors $(dz_i - dz_j) \wedge (dz_j - dz_k)$, by the
-Fay trisecant identity for the prime form---this is exactly
-the content proved genus-by-genus in
-Theorem~\ref{thm:quantum-arnold-relations}: the holomorphic
-part of the Arnold $3$-form is zero at every genus
-(genus~$1$: the $\zeta\zeta + \mathrm{cyc} =
-\frac{1}{2}[\wp + \cdots]$ identity;
-genus~$\geq 2$: the Fay identity for the Siegel
-$\wp$-matrix).  The non-holomorphic Arakelov correction
-produces $\mathcal{A}_3^{(g)} = 2\pi i\,\omega_{\mathrm{Ar}}
-\neq 0$ only because it departs from the holomorphic
-propagator.
+\emph{The holomorphic propagator satisfies the exact Arnold
+relation at every genus.}  This was established
+genus-by-genus in the proof of
+Theorem~\ref{thm:quantum-arnold-relations}:
+at genus~$1$, the holomorphic cyclic sum
+$\zeta(z_{12})\zeta(z_{23}) + \mathrm{cyc}
+= \frac{1}{2}[\wp(z_{12}) + \wp(z_{23}) + \wp(z_{31})]$
+is symmetric, hence killed by wedge with antisymmetric
+form factors; at genus~$\geq 2$, the same vanishing
+follows from the Fay trisecant identity for the Siegel
+$\wp$-matrix (equation~\eqref{eq:fay-g2} and its
+generalization).
 
-Since the holomorphic propagator satisfies the exact Arnold
-relation, the bar differential $\Dg{g}$ built from it satisfies
-$\Dg{g}^{\,2} = 0$ by the same nine-term verification as the
-genus-$0$ case (Theorem~\ref{thm:cobar-d-squared-zero}),
-with the Fay identity replacing the classical Arnold relation
-at each three-point interaction.
+The total corrected differential $\Dg{g}$ is the bar
+differential built from the holomorphic propagator
+$h_{ij} = \partial_{z_i}\!\log E(z_i, z_j)$
+(Definition~\ref{def:higher-genus-log-forms}).
+Since $\mathcal{A}_3^{\mathrm{hol}} = 0$, the nine-term
+verification of $\Dg{g}^{\,2} = 0$ proceeds exactly as at
+genus~$0$ (Theorem~\ref{thm:cobar-d-squared-zero}),
+with the Fay identity replacing the classical Arnold
+relation at each three-point interaction.
+The Fay trisecant identity is the higher-genus
+Borcherds identity.
 
 \emph{Component-level consequence.}
-From $\Dg{g}^{\,2} = 0$ and the independently-proved identities
-$\dzero^2 = 0$ (Step~2) and
-$\dzero\, d_k + d_k\,\dzero = 0$ (Step~3), we obtain:
+From $\Dg{g}^{\,2} = 0$ together with the
+independently-proved $\dzero^2 = 0$ (Step~2) and
+$\dzero\, d_k + d_k\,\dzero = 0$ (Step~3):
 \[
   \sum_{k,l} t_k\,t_l\, d_k d_l
   = \Dg{g}^{\,2} - \dzero^2
-    - \sum_k t_k(\dzero\,d_k + d_k\,\dzero)
+    - \sum_k t_k\bigl(\dzero\,d_k + d_k\,\dzero\bigr)
   = 0.
 \]
-Since the $A$-period parameters $t_k$ are independently
-variable as the complex structure of~$\Sigma_g$ varies
-over the period domain, we deduce
-$d_k d_l + d_l d_k = 0$ for all~$k, l$.
+The parameters $t_k$ vary independently as
+$[\Sigma_g]$ moves in the Siegel upper half-space
+$\mathfrak{H}_g$, so the vanishing holds coefficient-by-coefficient:
+\[
+  d_k\,d_l + d_l\,d_k = 0
+  \quad\text{for all } 1 \le k,l \le g.
+\]
 This is the operator-level manifestation of the Lagrangian
-isotropicity $\gamma_k \cdot \gamma_l = 0$ of the $A$-cycle
-subspace in $H_1(\Sigma_g, \mathbb{Z})$: the Riemann bilinear
-relations connect iterated period integrals of the Cauchy
-kernel to the intersection pairing, and restricting to a
-Lagrangian subspace forces all anticommutators to vanish.
+isotropicity $\gamma_k \cdot \gamma_l = 0$
+of the $A$-cycle subspace in $H_1(\Sigma_g, \mathbb{Z})$:
+the Riemann bilinear relations connect iterated period
+integrals of the Cauchy kernel to the symplectic
+intersection pairing, and restricting to a Lagrangian
+subspace forces all anticommutators to vanish.
 
-\emph{(Note: The vanishing of $\Dg{g}^{\,2}$ relies on the
-holomorphic Arnold relation (Fay identity) for the prime form,
-not on the cohomology of the moduli space $\mathcal{M}_g$.
-Recall $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by
-Harer's theorem, but this is not the relevant vanishing here.
-The corrected differential $\Dg{g}$ is the flat gauge of the
-curved connection $\dfib$---the chiral Riemann--Hilbert
-correspondence of
-Remark~\textup{\ref{rem:curvature-riemann-hilbert}}.)} \qedhere
+\emph{(Note: The two vanishings $\Dg{g}^{\,2} = 0$ and
+$\dfib^{\,2} \neq 0$ are not in tension; they are the two
+faces of the chiral Riemann--Hilbert correspondence
+(Remark~\textup{\ref{rem:curvature-riemann-hilbert}}).
+The holomorphic propagator defines a flat connection on
+the universal cover of $\Sigma_g$.  The Arakelov
+propagator defines the single-valued but curved
+projection to $\Sigma_g$ itself.  The total corrected
+differential $\Dg{g}$ lives in the flat gauge; the
+fiberwise differential $\dfib$ lives in the curved gauge.
+The passage $\dfib \leadsto \Dg{g}$ is the chiral
+exponential map.)} \qedhere
 \end{proof}
+
+\begin{remark}[Curved twisting morphisms at higher genus]
+\label{rem:curved-twisting-higher-genus}
+\index{twisting morphism!curved|textbf}
+\index{Maurer--Cartan equation!curved}
+At genus~$0$, the universal twisting morphism
+$\tau\colon \bar{B}(\cA) \to \cA$ satisfies the flat
+Maurer--Cartan equation $d\tau + \tau \star \tau = 0$
+(Corollary~\ref{cor:three-bijections},
+Remark~\ref{rem:MC-is-Stokes}).
+At genus~$g \geq 1$, the propagator acquires monodromy and the
+twisting morphism becomes \emph{curved}:
+\begin{equation}\label{eq:curved-MC-higher-genus}
+d\tau_g + \tau_g \star \tau_g = \kappa(\cA) \cdot \omega_g.
+\end{equation}
+The curvature $\kappa(\cA) \cdot \omega_g$ is the Arakelov
+$(1,1)$-form weighted by the modular characteristic
+(Theorem~\ref{thm:quantum-arnold-relations}): it measures
+the failure of the single-valued propagator to satisfy the
+Arnold relation at genus~$g$.
+
+The three propagators in the table of Step~4 above correspond
+to three twisting morphisms: $\tau_0$ (classical, flat MC),
+$\tau_g^{\mathrm{hol}}$ (holomorphic, flat MC via the Fay
+identity), and $\tau_g^{\mathrm{Ar}}$ (Arakelov, curved MC
+with curvature~$\kappa \cdot \omega_g$).
+The total corrected differential $\Dg{g}$ corresponds to
+$\tau_g^{\mathrm{hol}}$; the fiberwise differential $\dfib$
+corresponds to $\tau_g^{\mathrm{Ar}}$.
+The passage between them is the chiral exponential map.
+
+The three incarnations descend through the H/M/S hierarchy:
+\begin{itemize}
+\item \emph{H-level.}  The universal MC class
+  $\Theta_\cA \in
+  \mathrm{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$
+  assembles all genera into a single modular twisting cochain
+  (Remark~\ref{rem:theta-modular-twisting}).
+\item \emph{M-level.}  At each genus, the three twisting
+  morphisms in the table above are explicit dg maps,
+  with the curved MC equation~\eqref{eq:curved-MC-higher-genus}
+  encoding the Arakelov defect.
+\item \emph{S-level.}  The scalar shadow is
+  $\kappa(\cA) \cdot \lambda_g \in H^*(\overline{\mathcal{M}}_g)$
+  (Theorem~\ref{thm:genus-universality}): one number per genus,
+  determined by the genus-$1$ curvature alone.
+\end{itemize}
+\end{remark}
 
 \begin{lemma}[Quantum corrections preserve acyclicity; \ClaimStatusProvedHere]\label{lem:quantum-preserves-acyclicity}
 The total corrected differential $\Dg{g}$ satisfies $\Dg{g}^{\,2} = 0$ and preserves the
@@ -8057,12 +8166,19 @@ fiber of $j_g^*\psi_g$ is a quasi-isomorphism.
 The cone $C = \operatorname{Cone}(j_g^*\psi_g)$ is therefore a complex of
 constructible sheaves on~$U_g$ whose stalk cohomology vanishes at every
 geometric point (by the fiberwise quasi-isomorphism just established).
-Since $U_g$ is a smooth Deligne--Mumford stack, a constructible complex
-with universally acyclic stalks is globally acyclic
-(proper base change for the structure map $U_g \to \operatorname{Spec} k$,
-or equivalently the constancy of fiber cohomology over the smooth locus;
-see~\cite[Expos\'e~XVI]{SGA4}).  Hence $C$ is acyclic and $j_g^*\psi_g$
-is a quasi-isomorphism on~$U_g$.
+Constructibility of~$C$ is inherited from that of the fiber
+cohomology sheaves on~$U_g$
+(established in the proof of Theorem~\ref{thm:ss-quantum},
+Step~2).
+The cohomology sheaves $\mathcal{H}^q(C)$ are therefore
+constructible sheaves on the smooth connected stack~$U_g$
+whose stalks $\mathcal{H}^q(C)_s = H^q(C_s) = 0$ vanish at
+every geometric point~$s$.
+A constructible sheaf on a connected base whose stalks are all
+zero is the zero sheaf
+(see~\cite[Expos\'e~IX, Th\'eor\`eme~2.14]{SGA4});
+hence $\mathcal{H}^q(C) = 0$ for all~$q$, which means $C$ is
+acyclic and $j_g^*\psi_g$ is a quasi-isomorphism on~$U_g$.
 \end{proof}
 
 \begin{lemma}[Boundary-stratum compatibility of \texorpdfstring{$\psi_g$}{psi-g}; \ClaimStatusProvedHere]\label{lem:higher-genus-boundary-qi}
@@ -10360,6 +10476,65 @@ Proposition~\ref{prop:one-channel-verdier-criterion}.
 See Theorem~\ref{thm:mc2-full-resolution} for the detailed
 assembly.
 \end{proof}
+
+\begin{remark}[The universal class as modular twisting cochain]
+\label{rem:theta-modular-twisting}
+\index{twisting morphism!modular|textbf}
+\index{modular twisting cochain|textbf}
+Theorem~\ref{thm:universal-theta} is the higher-genus extension
+of the canonical twisting morphism $\pi \colon \barB_X(\cA) \to \cA$
+that governs genus-$0$ bar-cobar duality
+(Proposition~\ref{prop:universal-twisting-adjunction}).
+The passage from tree-level to modular is a single algebraic step:
+\emph{promoting the twisting morphism from flat to curved, and from
+the convolution algebra $\mathrm{Hom}(\barB, \cA)$ to the modular
+convolution algebra
+$\operatorname{Def}^{\mathrm{mod}}(\cA) =
+\prod_{g,n} \mathrm{Hom}_{\Sigma_n}(C_*(\overline{\mathcal{M}}_{g,n}),
+\operatorname{End}_\cA(g,n))$
+\textup{(}Definition~\textup{\ref{def:modular-deformation-complex})}.}
+
+\emph{Precise formulation.}
+Define the \emph{modular twisting cochain}
+\begin{equation}\label{eq:modular-twisting-cochain}
+\tau_{\mathrm{mod}}
+\;:=\;
+\pi \;+\; \sum_{g \geq 1} \hbar^{g}\,
+\Theta_\cA^{(g)}
+\;\in\;
+\operatorname{Def}^{\mathrm{mod}}(\cA),
+\end{equation}
+where $\pi$ is the genus-$0$ universal twisting morphism and
+$\Theta_\cA^{(g)}$ is the genus-$g$ component of the universal MC
+class.  Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item At genus~$0$: $\pi$ satisfies the flat MC equation
+  $\partial\pi + \pi \star \pi = 0$
+  (Proposition~\ref{prop:universal-twisting-adjunction}); the
+  twisted tensor product $\barB_X(\cA) \otimes_\pi \cA$ is acyclic
+  (Theorem~\ref{thm:fundamental-twisting-morphisms}).
+\item At genus~$g \geq 1$: $\tau_{\mathrm{mod}}$ satisfies the
+  \emph{curved} MC equation
+  $\partial\tau_{\mathrm{mod}} +
+  \tau_{\mathrm{mod}} \star \tau_{\mathrm{mod}} =
+  \kappa(\cA) \cdot \omega_g$,
+  where $\omega_g$ is the fiberwise canonical $(1,1)$-form
+  on~$\Sigma_g$ (the Arnold defect~\eqref{eq:arnold-defect-hg}).
+  The curvature $\kappa(\cA) \cdot \omega_g$ is the
+  obstruction to flatness of $\tau_{\mathrm{mod}}$ at genus~$g$.
+\item The total differential $D_{\mathrm{tot}} =
+  \dzero + [\tau_{\mathrm{mod}}, -]$
+  (Theorem~\ref{thm:total-differential-from-mc}) is the
+  \emph{twisted differential} associated to
+  $\tau_{\mathrm{mod}}$.  Its nilpotence $D_{\mathrm{tot}}^2 = 0$
+  is the MC equation for $\tau_{\mathrm{mod}}$ in the modular
+  convolution algebra.
+\end{enumerate}
+In the categorical logarithm paradigm: $\pi$ is the tree-level
+logarithm; $\tau_{\mathrm{mod}}$ is the genus-completed logarithm;
+and the curvature $\kappa \cdot \omega_g$ is the infinitesimal
+obstruction to extending the tree-level logarithm to genus~$g$.
+\end{remark}
 
 \subsubsection*{Explicit construction of the universal class}
 
