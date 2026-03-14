@@ -1,15 +1,8 @@
 \chapter{BV-BRST formalism and Gaiotto's perspective}
 \label{ch:bv-brst}
 
-\begin{remark}[Governing question]
-The bar complex is the BRST complex: its differential is the BRST operator, its cohomology is the space of physical states, and the BV antibracket is Verdier duality on configuration spaces.
-\end{remark}
-
-\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-Mixed-level; physical identifications are programme material unless theorem-labeled.
-\end{remark}
-\index{Batalin--Vilkovisky|see{BV algebra}}
 \label{rem:programme-bv}
+\index{Batalin--Vilkovisky|see{BV algebra}}
 
 \section{BV formalism for chiral algebras}
 
@@ -38,13 +31,12 @@ The precise statement and proof appear in the Costello--Gwilliam framework \cite
 \end{theorem}
 
 \begin{proof}[Geometric construction]
-\emph{Step~1: Field-Antifield Correspondence.}
+\emph{Step~1: Bar generators.}
 
-In the bar complex:
+The degree-$n$ bar complex is:
 \[\bar{B}^n(\mathcal{A}) = \Omega^*(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes (n+1)})\]
 
-The logarithmic differential forms $\eta_{ij} = d\log(z_i - z_j)$ play the role of
-\emph{antifields}: the fields $\phi_i \in \mathcal{A}$ are operator insertions at marked points, while the logarithmic forms $\eta_{ij}$ are propagator contractions encoding pairings between insertion points.
+The generators are operator insertions $\phi_i \in \mathcal{A}$ at marked points, paired with logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ dual to the collision divisors.
 
 \emph{Step~2: BV Bracket.}
 
@@ -53,7 +45,6 @@ The BV bracket is realized geometrically:
 \frac{1}{z_i - z_k} + \delta_{ik} \frac{\partial \phi}{\partial z_i} 
 \frac{1}{z_i - z_j}\]
 
-This arises from the symplectic pairing on configuration space: the log forms $\eta_{jk}$ play the role of antifields in the chiral BV formalism, replacing the standard field-antifield pairing with the geometric pairing between functions and logarithmic $1$-forms on $C_n(X)$.
 The logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ generate
 $H^1(C_n(X); \mathbb{C})$ by the Arnold--Brieskorn theorem;
 for $X = \mathbb{C}$, all $\binom{n}{2}$ classes are linearly independent in degree~$1$
@@ -65,8 +56,6 @@ $\dim H^1(C_n(\mathbb{C})) = \binom{n}{2}$.  (For a curve of genus~$g > 0$, addi
 The classical master equation $\{S, S\} = 0$ is equivalent to $\dzero^2 = 0$ for the
 genus-$0$ bar differential:
 \[d = d_{\text{strat}} + d_{\text{int}} + d_{\text{res}}\]
-
-Each component corresponds to a gauge symmetry: $d_{\text{strat}}$ to diffeomorphism invariance, $d_{\text{int}}$ to internal BRST symmetry for $\mathcal{A}$, and $d_{\text{res}}$ to residual OPE consistency.
 \end{proof}
 
 \subsection{Quantum master equation}
@@ -105,7 +94,7 @@ Setting this to zero and using $\{S_0, S_0\} = 0$ (classical master equation for
 This is precisely the condition that $S_{\text{int}}$ defines a Maurer--Cartan
 element in the bar-cobar dg Lie algebra.
 
-Geometrically, $\{S_{\text{int}}, S_{\text{int}}\}$ is the bar differential (residues at collision divisors), $\Delta_{\text{BV}} S_{\text{int}}$ is the cobar differential (delta functions at diagonals), and the quantum master equation asserts their Verdier duality.
+Under the BV = bar dictionary, $\{S_{\text{int}}, S_{\text{int}}\}$ is the bar differential and $\Delta_{\text{BV}} S_{\text{int}}$ the cobar differential.
 
 \emph{Stage~2 (Functor-level naturality).}
 The BV functor $\mathrm{BV}: \mathrm{ChirAlg}_X \to \mathrm{BV\text{-}Alg}$
@@ -146,7 +135,7 @@ identification of the QME with the functorial expression of bar-cobar
 Verdier compatibility is Theorem~\ref{thm:qme-bar-cobar} above.
 \end{remark}
 
-\subsection{The BV = bar identification: from analogy to theorem}
+\subsection{The BV--bar dictionary}
 \label{subsec:bv-bar-identification}
 \index{BV algebra!bar complex identification}
 
@@ -208,71 +197,13 @@ $\overline{\mathcal{M}}_{0,n}$, and integration of the
 top-degree component is the Euler characteristic.
 \end{proof}
 
-\begin{remark}[Genus-\texorpdfstring{$1$}{1} partition function]\label{rem:genus1-bv}
-At genus~$1$, the partition function
-$Z_1 = \exp(F_1)$ with $F_1 = \kappa/24$ is computed by the
-bar complex (Theorem~\ref{thm:genus-universality}).  For
-$\cA = \mathrm{Vir}_c$, one obtains
-$F_1(\mathrm{Vir}_c) = c/24$, which is the conformal anomaly
-$c/12$ on a torus divided by the orbifold factor of~$2$
-(the elliptic involution).  This is exactly the content of the
-Mumford isomorphism $\det(\pi_* \omega_\pi)^{\otimes 12}
-\cong \lambda^{\otimes c}$, already proved as
-Theorem~\ref{thm:genus-universality}(ii).
-In the language of the universal Maurer--Cartan class
-(Theorem~\ref{thm:explicit-theta}), this $F_1$ is the scalar
-trace of the genus-$1$ component:
-$F_1 = \operatorname{tr}(\Theta_{\mathrm{Vir}_c}^{(1)})
-= \kappa(\mathrm{Vir}_c) \cdot \lambda_1 = (c/2) \cdot (1/12)
-= c/24$.  The full $\Theta_{\mathrm{Vir}_c}$ assembles these
-partition functions across all genera into a single
-Maurer--Cartan element in the cyclic deformation complex.
+\begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
+At genus~$1$, Theorem~\ref{thm:genus-universality} gives $F_1 = \kappa/24$.  For $\cA = \mathrm{Vir}_c$, $F_1 = c/24 = \operatorname{tr}(\Theta_{\mathrm{Vir}_c}^{(1)}) = (c/2)\cdot(1/12)$, encoding the Mumford isomorphism.
 \end{remark}
 
 \begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
 \index{anomaly!curvature identification}
-Theorem~\ref{thm:anomaly-koszul} gives the definitive
-statement: the bar complex of the matter-ghost system
-$\cA_{\mathrm{tot}} = \cA_{\mathrm{matter}} \otimes
-\cA_{\mathrm{ghost}}$ is uncurved if and only if
-$\kappa_{\mathrm{tot}} = 0$.  For the bosonic string,
-$\cA_{\mathrm{matter}} = \mathcal{H}^{26}$ (26 free bosons)
-and $\cA_{\mathrm{ghost}} = bc$, with
-$\kappa(\mathcal{H}^{26}) = 26/2 = 13$ and
-$\kappa(bc) = -26/2 = -13$, so $\kappa_{\mathrm{tot}} = 0$.
-In BV language, the quantum master equation
-$\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ holds, and
-$d_{\mathrm{bar}}^2 = 0$: this \emph{is} anomaly
-cancellation.  For $c \neq 26$, the bar complex is curved
-with $m_0 = (c - 26)/2$, the QME fails, and the conformal
-anomaly is non-vanishing --- all three descriptions are
-equivalent via the BV = bar identification.
-The universal Maurer--Cartan class $\Theta_\cA$
-(Theorem~\ref{thm:explicit-theta}) organizes both the
-genus-$0$ curvature $m_0$ and the higher-genus
-obstructions into a single object: at anomaly-free
-levels ($c = 26$ for the bosonic string, $c = 0$ for
-the free theory), $\Theta_\cA$ vanishes; away from
-these, $\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$
-curves the bar complex at every genus simultaneously.
-\end{remark}
-
-\begin{remark}[Costello--Gwilliam framework]\label{rem:cg-framework}
-\index{factorization algebra!BV quantization}
-Costello--Gwilliam~\cite{CG17} develop BV quantization in the
-language of factorization algebras: the quantum observables of a
-field theory on a manifold $M$ form a factorization algebra
-$\mathrm{Obs}^q(M)$, and the BV formalism provides its
-construction via renormalization.  The bar complex
-$\bar{B}^{\mathrm{ch}}(\cA)$ is a chain-level model within
-their framework: it computes the same factorization homology
-as $\mathrm{Obs}^q$, but via explicit configuration space
-integrals rather than the abstract renormalization group flow.
-The advantage of the bar complex model is computability:
-the spectral sequence of
-Theorem~\ref{thm:bar-cobar-isomorphism-main} reduces the
-computation of $H^*(\mathrm{Obs}^q)$ to Koszul dual Hilbert
-series, which are accessible by algebraic means.
+By Theorem~\ref{thm:anomaly-koszul}, $d_{\mathrm{bar}}^2 = 0$ for $\cA_{\mathrm{tot}} = \cA_{\mathrm{matter}} \otimes \cA_{\mathrm{ghost}}$ if and only if $\kappa_{\mathrm{tot}} = 0$ (equivalently, $c = 26$ for the bosonic string).  When $\kappa_{\mathrm{tot}} \neq 0$, the universal MC class $\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$ (Theorem~\ref{thm:explicit-theta}) curves the bar complex at every genus.
 \end{remark}
 
 \section{Gauge fixing and BRST}
@@ -312,10 +243,6 @@ extracting residues at collision divisors.
 \end{example}
 
 \subsection{Coupling to topological gravity}
-
-\begin{remark}[Holomorphic vs.\ topological BRST]
-Gaiotto observed two natural BRST structures: \emph{holomorphic BRST} from holomorphic gauge symmetries, and \emph{topological BRST} from diffeomorphism + Weyl symmetry.  The passage between them is exactly the A-twist (or B-twist) procedure.
-\end{remark}
 
 \begin{theorem}[Ghost transformation law for log forms;
 \ClaimStatusProvedHere]
@@ -438,25 +365,10 @@ if and only if $c = 26$\textup{;}
 on the full complex, $Q_{\mathrm{BRST}}^2 = 0$ if and only if $c = 26$.
 \end{lemma}
 
-\begin{remark}[BRST nilpotence as the logarithmic condition]
+\begin{remark}[BRST nilpotence and the bar construction]
 \label{rem:brst-nilpotence-periodicity}
 \index{nilpotence-periodicity correspondence!BRST instance}
-The nilpotence condition $Q_{\mathrm{BRST}}^2 = 0$ is the physical
-manifestation of the nilpotence-periodicity correspondence
-(Remark~\ref{rem:nilpotence-periodicity}).  The BRST charge is the
-\emph{logarithmic} (nilpotent, infinitesimal) datum of gauge symmetry:
-it encodes the infinitesimal gauge transformations.  The physical state
-space $H^{\infty/2+\bullet}(\cA)$ carries the \emph{periodic} (global)
-structure: modular invariance, factorization over moduli, string
-amplitudes.  The condition $c = 26$ (or more generally
-$\kappa_{\mathrm{tot}} = 0$) is the condition that the logarithm is
-\emph{single-valued}: the categorical logarithm (bar construction) has
-trivial monodromy, and the periodic structure of physical states is
-faithfully encoded by the nilpotent BRST data.  When
-$\kappa_{\mathrm{tot}} \neq 0$, the BRST charge fails nilpotence
-by $Q^2 = \frac{c-26}{12}\,c_0$---the curvature of the
-logarithm---and the anomaly $(c-26)/12$ is the infinitesimal
-generator of the monodromy obstruction.
+The condition $Q_{\mathrm{BRST}}^2 = 0$ is the BRST instance of the nilpotence-periodicity correspondence (Remark~\ref{rem:nilpotence-periodicity}): $\kappa_{\mathrm{tot}} = 0$ ensures $d_{\mathrm{bar}}^2 = 0$, so the bar construction (categorical logarithm) is well-defined.  When $\kappa_{\mathrm{tot}} \neq 0$, the curvature $Q^2 = \frac{c-26}{12}\,c_0$ obstructs nilpotence.
 \end{remark}
 
 The \emph{semi-infinite cohomology} $H^{\infty/2+\bullet}(\cA)$
@@ -591,33 +503,10 @@ isomorphism on $E_1$ pages.  By the Eilenberg--Moore comparison
 theorem, $\Phi$ is a quasi-isomorphism.
 \end{proof}
 
-\begin{remark}[Convergence of the parallel tracks]
+\begin{remark}[BV/BRST reading of the master square]
 \label{rem:bv-convergence}
 \index{BV complex!convergence with bar complex}
-This theorem is the convergence point announced in the parallel-track
-remarks of Chapters~\ref{chap:bar-cobar}
-and~\ref{chap:higher-genus}
-(Remarks~\ref{rem:bv-parallel-track}
-and~\ref{rem:anomaly-parallel-track}).  The bar differential
-\emph{is} the BRST operator; the logarithmic form \emph{is} the
-propagator; the Arnold relation \emph{is} the quantum master
-equation.  These were presented as parallel readings; they are now
-a single theorem.  The master
-diagram~\eqref{eq:master-square} acquires physical labels:
-\begin{center}
-\small
-\begin{tabular}{ll}
-\textbf{Algebraic-geometric} & \textbf{BV/BRST} \\ \hline
-$\barB_X(\cA)$ & BV complex \\
-$\barB_X(\cA^!)$ & Ghost complex \\
-$\mathbb{D}_{\mathrm{Ran}}$ & CPT / field--antifield exchange \\
-$\dfib^{\,2} = \kappa \cdot \omega_1$ & Conformal anomaly \\
-$\kappa = 0$ & Anomaly cancellation ($c = 26$)
-\end{tabular}
-\end{center}
-\noindent
-The square commutes in the derived category precisely when
-$\kappa = 0$, i.e., when the physical theory is anomaly-free.
+Theorem~\ref{thm:brst-bar-genus0} realizes the parallel-track identifications of Remarks~\ref{rem:bv-parallel-track} and~\ref{rem:anomaly-parallel-track}: in~\eqref{eq:master-square}, $\barB_X(\cA)$ is the BV complex, $\barB_X(\cA^!)$ the ghost complex, $\mathbb{D}_{\mathrm{Ran}}$ the field--antifield exchange, and $\dfib^{\,2} = \kappa \cdot \omega_1$ the conformal anomaly.  The square commutes precisely when $\kappa = 0$.
 \end{remark}
 
 \begin{remark}[Explicit form of \texorpdfstring{$\Phi$}{math}]\label{rem:brst-bar-explicit}
@@ -993,18 +882,7 @@ Theorem~\ref{thm:quantum-complementarity-main}.
 \begin{remark}[The Master Table, revisited]
 \label{rem:master-table-brst}
 \index{master table of invariants!BRST interpretation}
-Corollary~\ref{cor:anomaly-duality-km} gives every entry in the
-Master Table (Table~\ref{tab:master-invariants}) a physical
-reading.  The obstruction coefficient~$\kappa$ is the
-semi-infinite anomaly; the complementarity sum
-$c + c' = 2\dim\fg$ is the total anomaly of the Feigin--Frenkel
-pair; the Faber--Pandharipande formula
-$F_g = \kappa \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
-\frac{|B_{2g}|}{(2g)!}$
-is the genus-$g$ free energy of the corresponding WZW model.
-The mathematical content of the Master Table is therefore: a
-complete catalogue of semi-infinite anomaly coefficients for
-Koszul chiral algebras.
+Via Corollary~\ref{cor:anomaly-duality-km}, every entry in the Master Table (Table~\ref{tab:master-invariants}) is a semi-infinite anomaly coefficient: $\kappa$ is the semi-infinite anomaly, $c + c' = 2\dim\fg$ the total Feigin--Frenkel anomaly, and $F_g$ the genus-$g$ WZW free energy.
 \end{remark}
 
 \subsection{Extension to $\mathcal{W}$-algebras via Drinfeld--Sokolov reduction}
@@ -1176,30 +1054,6 @@ Part~(c): specialize to $\fg = \mathfrak{sl}_2$ with $h^\vee = 2$,
 for which $c + c' = 26$ and $\varrho(\mathfrak{sl}_2)=1/2$.
 \end{proof}
 
-\begin{remark}[The full Master Table under semi-infinite identification]
-\label{rem:master-table-full-brst}
-\index{master table of invariants!complete BRST interpretation}
-Theorems~\ref{thm:bar-semi-infinite-km}
-and~\ref{thm:bar-semi-infinite-w} together cover every entry in the
-Master Table (Table~\ref{tab:master-invariants}) that arises from
-a Kac--Moody algebra or principal W-algebra.  For these entries:
-\begin{itemize}
-\item The bar cohomology IS semi-infinite cohomology;
-\item The obstruction coefficient $\kappa$ IS the semi-infinite
-  anomaly;
-\item The complementarity relation in $\kappa$ IS the semi-infinite
-  anomaly relation: exact cancellation in affine/free-field cases,
-  and a level-independent same-family budget for Virasoro and
-  principal finite-type $\mathcal{W}$-families;
-\item The genus-$g$ free energy $F_g$ IS the genus-$g$ contribution
-  to the WZW/W-model partition function.
-\end{itemize}
-The remaining entries (free fields, $\beta\gamma$) have trivial or
-abelian bar differentials, for which the semi-infinite identification
-is immediate (the semi-infinite complex of an abelian Lie algebra
-is its exterior algebra, which is the bar complex).
-\end{remark}
-
 \section{Holomorphic-topological field theories}
 
 \subsection{Gaiotto's framework: from 4d to 2d}
@@ -1333,9 +1187,6 @@ The bar and cobar complexes should arise as the two boundary conditions (logarit
 \end{remark}
 
 \section{$\mathcal{W}$-algebras from Higgs branches}
-\noindent\emph{Status split.} The 4d gauge-theory origin of the
-W-algebra package is \ClaimStatusConjectured, while central-charge
-identities used downstream are \ClaimStatusProvedElsewhere.
 
 \subsection{\texorpdfstring{4d gauge theory $\to$ 2d $\mathcal{W}$-algebra}{4d gauge theory -> 2d $\mathcal{W}$-algebra}}
 
@@ -1415,10 +1266,6 @@ The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ obtained by DS reduction has a di
 \end{theorem}
 
 \section{Quantum observables and BV integration}
-\noindent\emph{Status split.} This section separates proved BRST
-cohomology statements \textup{(}\ClaimStatusProvedElsewhere\textup{)}
-from the still-heuristic BV integration dictionary
-\textup{(}\ClaimStatusHeuristic\textup{)}.
 
 \subsection{BV path integral}
 

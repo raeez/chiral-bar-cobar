@@ -1,24 +1,15 @@
 \chapter{Introduction}\label{ch:heisenberg-frame}
 
 
-\begin{remark}[Governing question]
-The governing question of this chapter is why the Heisenberg algebra is the minimal commutative/modular atom of the theory, and how much of the full modular bar-cobar mechanism it already displays in computable form.
-\end{remark}
-
-\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-This frame chapter is mixed H/M/S. Heisenberg is computed explicitly at M-level, its scalar and spectral outputs are read at S-level, and only the printed comparison theorems are used as H-level input.
-\end{remark}
-\begin{remark}[The first example]\label{rem:frame-entry-role}
-One should begin with the smallest object in which the geometry is
-already complete.  For modular Koszul duality on curves, that object is
-the Heisenberg algebra.  The bar differential can be written down
-explicitly, Verdier duality is visible without auxiliary generators,
-the genus-$1$ defect is scalar, and the genus tower closes to the
-$\hat{A}$-series.  What Heisenberg cannot see is ordered
-factorization: there is no nontrivial braid reversal and no $R$-matrix
-to invert.  That omission is structural.  The Yangian supplies the
-first genuinely braided example on the $\Eone$ side.
-\end{remark}
+The Heisenberg algebra is the minimal commutative atom that already
+displays the full modular bar-cobar mechanism in computable form: the
+bar differential can be written down explicitly, Verdier duality is
+visible without auxiliary generators, the genus-$1$ defect is scalar,
+and the genus tower closes to the $\hat{A}$-series.  What Heisenberg
+cannot see is ordered factorization: there is no nontrivial braid
+reversal and no $R$-matrix to invert.  That omission is structural.
+The Yangian supplies the first genuinely braided example on the
+$\Eone$ side.
 
 The subject of this monograph is the bar construction for chiral
 algebras on algebraic curves.  The starting point is a simple geometric
@@ -111,6 +102,33 @@ enters the braided $\Eone$ face.
   monodromy and quantum group representations.
 \end{itemize}
 
+\begin{remark}[The four theorems for Heisenberg]%
+\label{rem:frame-governing-picture}
+The computations in this chapter instantiate all four main theorems
+for~$\mathcal{H}_k$ before the general theory of Part~I:
+\begin{enumerate}
+\item[\textbf{A.}] \emph{Duality}
+  (\S\ref{sec:frame-koszul-dual}):
+  $\barB(\mathcal{H}_k) \simeq
+  \mathrm{coLie}^{\mathrm{ch}}(V^*)$;\quad
+  $\mathcal{H}_k^! =
+  \bigl(\mathrm{Sym}^{\mathrm{ch}}(V^*),\; m_0 = -k\omega\bigr)$.
+\item[\textbf{B.}] \emph{Inversion}
+  (\S\ref{sec:frame-inversion}):
+  $\Omega\barB(\mathcal{H}_k) \xrightarrow{\sim}
+  \mathcal{H}_k$ (formality: $H^*$ in degrees $0, 2$).
+\item[\textbf{C.}] \emph{Complementarity}
+  (\S\ref{sec:frame-complementarity}):
+  $Q_g(\mathcal{H}_k) \oplus Q_g(\mathcal{H}_k^!) =
+  H^*(\overline{\mathcal{M}}_g, \mathcal{Z}_{\mathcal{H}_k})$.
+\item[\textbf{D.}] \emph{Characteristic}
+  (\S\ref{sec:frame-genus-tower}):
+  $\kappa(\mathcal{H}_k) = k$;\quad
+  $\sum_{g \geq 1} F_g\, x^{2g} =
+  k\bigl(\tfrac{x/2}{\sin(x/2)} - 1\bigr)$.
+\end{enumerate}
+\end{remark}
+
 \medskip
 
 We begin with the Heisenberg algebra, the smallest $\Einf$-chiral
@@ -141,8 +159,6 @@ Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ have both simple and double
 poles.  The Heisenberg algebra, with its double pole alone, isolates the
 role of the curvature (double-pole) sector, free from the complications
 of the bracket (simple-pole) sector.
-
-\label{rem:frame-hms}
 
 \begin{remark}[Fourier identification]\label{rem:frame-fourier-identification}
 The bar complex $\barB(\mathcal{H}_k)$ is the abelian one-dimensional
@@ -1068,51 +1084,110 @@ Only~(1) is the subject of this monograph.
 \end{remark}
 
 % ================================================================
-\section{Bar-cobar inversion --- Theorem A in action}
+\section{Bar-cobar inversion --- Theorem B in action}
 \label{sec:frame-inversion}
 % ================================================================
 
-The cobar construction recovers the original algebra:
+The bar construction and the cobar construction form an adjoint
+pair $\Omega \dashv \barB$ between augmented chiral algebras
+and conilpotent chiral coalgebras
+(Chapter~\ref{chap:bar-cobar}).  The counit of this adjunction
 \begin{equation}\label{eq:frame-bar-cobar-inversion}
+\varepsilon\colon
 \Omega^{\mathrm{ch}}\bigl(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)\bigr)
-\xrightarrow{\;\sim\;} \mathcal{H}_k.
+\xrightarrow{\;\sim\;} \mathcal{H}_k
 \end{equation}
+is a quasi-isomorphism: the bar-cobar round trip recovers the
+original algebra.
 
-The chain of identifications is:
+\subsection{The data flow}
+
+The double-pole coefficient~$k$ passes through the bar-cobar
+cycle without loss:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lll@{}}
+\textbf{Stage} & \textbf{Data} & \textbf{Form} \\
+\hline
+$\mathcal{H}_k$ &
+  $\alpha(z)\alpha(w) \sim k/(z{-}w)^2$ &
+  OPE \\
+$\barB$ &
+  $d_{\mathrm{res}}(\alpha{\otimes}\alpha{\otimes}\eta_{12})
+  = k$ &
+  Residue \\
+$H^*(\barB)$ &
+  $c_k \in H^2\bigl(\barB(\mathcal{H}_k)\bigr)$ &
+  Central class \\
+$\Omega$ &
+  $m_0 = -k\omega$ in $\Omega\barB(\mathcal{H}_k)$ &
+  Curvature \\
+$\varepsilon$ &
+  $s\alpha^* \mapsto \alpha$ &
+  OPE recovered
+\end{tabular}
+\end{center}
+\noindent
+The bar differential extracts~$k$ as a residue
+(\S\ref{sec:frame-bar-deg1}); the bar cohomology stores it
+in the central class~$c_k$
+(Theorem~\ref{thm:frame-heisenberg-bar}); the cobar functor
+reads the coalgebra structure of~$\barB(\mathcal{H}_k)$
+and installs it as the differential of a free chiral
+algebra on the cogenerator~$s\alpha^*$; the counit projects
+to~$\mathcal{H}_k$.  Bar is a lossless encoding.
+
+\subsection{The Koszul property}
+
+$\mathcal{H}_k$ is Koszul: the bar cohomology
+\[
+H^n\bigl(\barB(\mathcal{H}_k)\bigr) =
+\begin{cases}
+\mathbb{C} & n = 0, \\
+\mathbb{C} \cdot c_k & n = 2, \\
+0 & \text{otherwise}
+\end{cases}
+\]
+is concentrated in the minimal degrees consistent with the
+central extension, so the bar complex is formal
+(quasi-isomorphic to its cohomology as a coalgebra).
+Formality forces the counit~$\varepsilon$ to be
+a quasi-isomorphism: the resolution carries no higher
+obstructions.
+
+The chain of identifications underlying the duality:
 \[
 \bar{B}^{\mathrm{ch}}(\mathcal{H}_k)
 \simeq \mathrm{coLie}^{\mathrm{ch}}(V^*)
-\quad\Longrightarrow\quad
-\Omega^{\mathrm{ch}}(\mathrm{coLie}^{\mathrm{ch}}(V^*))
-\simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)
-\]
-and applying bar again:
-\[
-\bar{B}^{\mathrm{ch}}(\mathrm{Sym}^{\mathrm{ch}}(V^*))
+\;\xrightarrow{\;\Omega\;}\;
+\mathrm{Sym}^{\mathrm{ch}}(V^*)
+= \mathcal{H}_k^!,
+\qquad
+\bar{B}^{\mathrm{ch}}(\mathcal{H}_k^!)
 \simeq \mathrm{coLie}^{\mathrm{ch}}(V)
-\xrightarrow{\;\Omega\;}
+\;\xrightarrow{\;\Omega\;}\;
 \mathcal{H}_k.
 \]
-
 The last step uses the fact that the free Lie algebra on a single
-generator is $1$-dimensional (abelian), so the cobar of the coLie
-coalgebra on one cogenerator recovers the original Heisenberg
-algebra.  The bar-cobar adjunction $\Omega \dashv \bar{B}$ restricts
-to an equivalence on Koszul algebras; $\mathcal{H}_k$ is Koszul
-precisely because its bar cohomology is concentrated in
-degrees $0$ and $2$, so the bar complex is formal.
+generator is abelian ($\mathrm{Lie}(V) \cong V$ for
+$\dim V = 1$).  The bar-cobar adjunction restricts to an
+equivalence on the Koszul locus
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}):
+$\mathcal{H}_k$ and $\mathcal{H}_k^!$ mutually determine
+each other.
 
-This is Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main})
+This is Theorem~B
+(Theorem~\ref{thm:higher-genus-inversion})
 for the simplest non-trivial case.  The general theorem
-(which decomposes into three layers
-$\mathrm{A}_0/\mathrm{A}_1/\mathrm{A}_2$; see
-Remark~\ref{rem:theorem-A-decomposition}) establishes
+(with the $\mathrm{A}_0/\mathrm{A}_1/\mathrm{A}_2$ decomposition
+of Remark~\ref{rem:theorem-A-decomposition}) establishes
 bar-cobar duality for all augmented chiral algebras, with the
-quasi-isomorphism $\Omega \bar{B}(\mathcal{A}) \xrightarrow{\sim}
-\mathcal{A}$ holding on the Koszul locus.  We will see in
-Chapter~\ref{chap:bar-cobar} that this locus includes
-all affine Kac--Moody algebras and $\mathcal{W}$-algebras whose
-PBW spectral sequence collapses.
+quasi-isomorphism $\Omega\barB(\cA) \xrightarrow{\sim}
+\cA$ holding on the Koszul locus.  The PBW spectral sequence
+(Chapter~\ref{chap:bar-cobar}) controls convergence:
+affine Kac--Moody algebras and $\mathcal{W}$-algebras with
+collapsing PBW sequence are all Koszul.
 
 % ================================================================
 \section{The passage to genus~1 --- curvature appears}

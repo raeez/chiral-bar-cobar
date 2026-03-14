@@ -6,30 +6,7 @@
 \label{chap:toroidal-elliptic}
 
 
-\begin{remark}[Governing question]
-The governing question of this chapter is which parts of the curve-based modular theory survive for toroidal and elliptic algebras, and which new phenomena belong only to the frontier beyond Volume~I.
-\end{remark}
-
-\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-M-level; H-level only where theorem labels promote.
-\end{remark}
-All examples so far live on a single algebraic curve.  The toroidal and
-elliptic frontier splits into two directions that must not be
-conflated.  First, one can keep the base a curve and replace the
-logarithmic propagator by an elliptic one, leading to BD-style
-$\Eone$-chiral or nonlocal structures on an elliptic curve $E_\tau$.
-Second, one can seek genuine surface-factorization or double-affine
-objects on spaces such as $\bC^* \times \bC^*$.  Both directions are
-developed below, but only the first fits directly inside the
-curve-based chiral hierarchy.  The
-resulting structures --- double affine algebras
-$U_{q,t}(\hat{\hat{\mathfrak{g}}})$, elliptic quantum groups,
-Feigin--Odesskii shuffle algebras --- are among the richest in
-representation theory, and they provide the most stringent test of our
-framework.  The bar complex acquires Eisenstein-series corrections
-controlled by the modular parameter $\tau$, and the Fay trisecant
-identity replaces the Arnold relation as the mechanism ensuring
-$d^2 = 0$.
+Two directions extend the curve-based theory: (a)~replacing the logarithmic propagator by an elliptic one on $E_\tau$, yielding $\Eone$-chiral structures; (b)~seeking surface-factorization or double-affine objects on $\bC^* \times \bC^*$.  Only direction~(a) fits the curve-chiral hierarchy.  The bar complex acquires Eisenstein-series corrections controlled by $\tau$, and the Fay trisecant identity replaces the Arnold relation.
 
 \begin{remark}[Two programme tracks]
 \label{rem:toroidal-two-tracks}
@@ -1319,36 +1296,13 @@ recovers the quantum affine algebra.
 
 \begin{computation}[First generators]\label{comp:shuffle-generators}
 \index{shuffle algebra!explicit products}
-Let $e_1 = 1 \in \mathcal{S}_1 = \bC(z)$ (the constant function).
-The shuffle product of $e_1$ with itself is:
-\begin{align}\label{eq:shuffle-e1e1}
-(e_1 \star e_1)(z_1, z_2)
-&= \zeta(z_1 - z_2) + \zeta(z_2 - z_1) \notag \\
-&= \frac{\theta(z_1 - z_2 + \eta)}{\theta(z_1 - z_2)}
-+ \frac{\theta(z_2 - z_1 + \eta)}{\theta(z_2 - z_1)}.
-\end{align}
-Using the oddness $\theta(-u) = -\theta(u)$:
-\begin{equation}\label{eq:shuffle-e1e1-simplified}
-(e_1 \star e_1)(z_1, z_2)
-= \frac{\theta(z_{12} + \eta)\,\theta(-z_{12})
-- \theta(-z_{12} + \eta)\,\theta(z_{12})}
-{\theta(z_{12})\,\theta(-z_{12})}
-\end{equation}
-where $z_{12} = z_1 - z_2$.  Applying the Fay identity
-(Theorem~\ref{thm:fay}) with $u_1 = z_{12}+\eta$,
-$u_2 = -z_{12}+\eta$, $u_3 = z_{12}$, $u_4 = -z_{12}$,
-the numerator simplifies to a ratio of theta functions
-evaluable in terms of $\theta(\eta)$ and $\theta(2\eta)$.
-Explicitly, using the addition formula
-$\theta(a)\theta(b) - \theta(-a)\theta(-b) = 0$ (since $\theta$
-is odd), we obtain:
+Let $e_1 = 1 \in \mathcal{S}_1 = \bC(z)$.  By the Fay identity (Theorem~\ref{thm:fay}) and oddness of $\theta$:
 \begin{equation}\label{eq:e1e1-result}
 (e_1 \star e_1)(z_1, z_2)
 = \frac{\theta(z_{12}+\eta) + \theta(\eta-z_{12})}
-{\theta(z_{12})}.
+{\theta(z_{12})},
 \end{equation}
-
-The triple shuffle product is:
+where $z_{12} = z_1 - z_2$.  The triple product is
 \begin{equation}\label{eq:shuffle-e1e1e1}
 (e_1 \star e_1 \star e_1)(z_1, z_2, z_3)
 = \sum_{\sigma \in S_3}
@@ -1356,37 +1310,12 @@ The triple shuffle product is:
 \zeta(z_{\sigma(1)} - z_{\sigma(3)})\,
 \zeta(z_{\sigma(2)} - z_{\sigma(3)}).
 \end{equation}
-Associativity of the shuffle product
-(a formal consequence of the Yang--Baxter equation
-for $\zeta$, which itself follows from the Fay identity)
-ensures $(e_1 \star e_1) \star e_1
-= e_1 \star (e_1 \star e_1)$.
+Associativity follows from the Yang--Baxter equation for $\zeta$.
 \end{computation}
 
 \begin{remark}[Shuffle--bar isomorphism]\label{rem:shuffle-bar}
 \index{shuffle algebra!bar complex connection}
-The shuffle algebra $\mathcal{S}_\zeta$ and the bar complex
-$\B(\cA)$ of the corresponding chiral algebra $\cA$ are related
-by an isomorphism of graded vector spaces:
-\begin{equation}\label{eq:shuffle-bar-iso}
-\mathcal{S}_n \;\cong\; \B_n(\cA)^*, \quad
-f \;\mapsto\; \bigl([a_{i_1}|\cdots|a_{i_n}] \otimes
-\omega \;\mapsto\; \Res\, f \cdot \omega \bigr),
-\end{equation}
-where the bar complex is dualized via the residue pairing.
-Under this isomorphism, the shuffle product on
-$\mathcal{S}_\zeta$ corresponds to the deshuffle
-\emph{coproduct} on $\B(\cA)$:
-\[
-\Delta_{\mathrm{desh}}([a_1|\cdots|a_n])
-= \sum_{\sigma \in \mathrm{Sh}(p,q)}
-\sgn(\sigma)\,[a_{\sigma(1)}|\cdots|a_{\sigma(p)}]
-\otimes [a_{\sigma(p+1)}|\cdots|a_{\sigma(n)}].
-\]
-This duality is the elliptic analog of the classical
-bar--cobar duality between the shuffle algebra
-$\mathrm{Sh}(V)$ and the tensor coalgebra $T^c(V)$
-(Corollary~\ref{cor:bar-is-dgcoalg}).
+The residue pairing gives an isomorphism $\mathcal{S}_n \cong \B_n(\cA)^*$ under which the shuffle product corresponds to the deshuffle coproduct on $\B(\cA)$ (Corollary~\ref{cor:bar-is-dgcoalg}).
 \end{remark}
 
 
@@ -1465,40 +1394,11 @@ $\mathrm{Sh}(V)$ and the tensor coalgebra $T^c(V)$
 
 \begin{remark}[Degeneration limits]\label{rem:degeneration-limits}
 \index{degeneration!elliptic to trigonometric to rational}
-The three regimes are related by degeneration:
+The three regimes degenerate via
 \begin{equation}\label{eq:degeneration-chain}
 \text{Elliptic} \;\xrightarrow{\;\tau \to i\infty\;}
 \text{Trigonometric} \;\xrightarrow{\;q \to 1\;}
 \text{Rational}.
 \end{equation}
-At each step, the propagator, $R$-matrix, and Arnold identity
-degenerate consistently:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Elliptic $\to$ trigonometric.}
-As $\tau \to i\infty$, the nome $p = e^{2\pi i\tau} \to 0$.
-The theta function degenerates:
-$\theta_1(z|\tau) \to 2\sin(\pi z) \to
-(e^{\pi iz} - e^{-\pi iz})/i$, and the elliptic
-propagator becomes $d\log\theta_1(z|\tau) \to
-\pi\cot(\pi z)\,dz = d\log(1 - e^{2\pi iz})$
-(up to an additive constant), which is the trigonometric
-propagator.  The Eisenstein series $E_2(\tau) \to 1$ and
-$E_{2k}(\tau) \to 1$ for all $k$, so the elliptic
-corrections collapse to constants.  The dynamical parameter
-$\lambda$ decouples (the $B$-cycle shrinks to zero).
-\item \emph{Trigonometric $\to$ rational.}
-As $q = e^{2\pi i z} \to 1$ (i.e., $z \to 0$),
-$\cot(\pi z) \to 1/(\pi z)$, and the trigonometric
-propagator becomes $dz/z$, the rational propagator.
-The $q$-deformed $R$-matrix $R_q(u) \to 1 - \hbar P/u$,
-recovering the Yang $R$-matrix.
-\end{enumerate}
-The bar complex degenerates accordingly:
-$\B^{\mathrm{ell}}(\cA) \to \B^{\mathrm{trig}}(\cA)
-\to \B^{\mathrm{rat}}(\cA)$, with the Eisenstein corrections
-of Proposition~\ref{prop:ell-bar-decomposition} collapsing
-to constants at each step.  This is consistent with
-the spectral sequence of Theorem~\ref{thm:elliptic-vs-rational}:
-the higher pages ($E_r$ for $r \geq 2$) degenerate in the
-trigonometric and rational limits.
+As $\tau \to i\infty$, $\theta_1(z|\tau) \to 2\sin(\pi z)$ and the Eisenstein corrections collapse to constants; as $q \to 1$, the trigonometric propagator becomes $dz/z$ and $R_q(u) \to 1 - \hbar P/u$.  The bar complex degenerates accordingly: $\B^{\mathrm{ell}}(\cA) \to \B^{\mathrm{trig}}(\cA) \to \B^{\mathrm{rat}}(\cA)$, consistent with the spectral sequence of Theorem~\ref{thm:elliptic-vs-rational}.
 \end{remark}

@@ -3,42 +3,20 @@
 \label{chap:bar-cobar}
 
 
-\begin{remark}[Governing question]
-The governing question of this chapter is how the logarithmic kernel on configuration spaces produces the bar transform, and why Verdier duality gives the correct inverse on the Koszul locus.
-\end{remark}
-
-\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-This chapter is primarily H/M-level. It builds the model-level bar and cobar constructions explicitly and promotes inversion to H-level only on the printed Koszul locus, while scalar and numerical consequences remain S-level shadows.
-\end{remark}
+% [Governing question and H/M/S route remarks removed — content subsumed by introduction.]
 \index{bar construction!as integral transform|textbf}
 \index{non-abelian Fourier transform|textbf}
 
-The logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ of
-\S\ref{sec:the-seed}, planted on a configuration space of $n$~points
-and integrated against the OPE data of a chiral algebra, grows into
-a functor: the bar construction.
-
 The bar complex $\barB(\cA)$ of a chiral algebra~$\cA$ on a smooth
-curve~$X$ is a non-abelian integral transform---more precisely, the
-\emph{categorical logarithm}
-(Remark~\ref{rem:nilpotence-periodicity} below).  Its input is the chiral
-algebra (encoded by OPE singularities); its kernel is the
-logarithmic propagator $\eta_{ij} = d\log(z_i - z_j)$; its output is
-a factorization coalgebra on $\operatorname{Ran}(X)$ whose differential
-is nilpotent ($d^2 = 0$) at genus~$0$.  Verdier duality inverts the
-transform: the cobar construction $\Omega(\barB(\cA))$
-reconstructs~$\cA$ from its transform, playing the role of the
-categorical \emph{exponential}.  For the Heisenberg algebra, this
-literally specializes to the Fourier--Mukai transform on the Jacobian.
-
-That the kernel of the bar construction is a logarithmic form is not
-incidental: the functor $\barB$ maps the multiplicative structure of
-the OPE to the additive/nilpotent structure of the bar differential,
-and $\Omega$ inverts this passage.  Their composition
-$\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the Koszul
-locus (Theorem~\ref{thm:bar-cobar-inversion-qi}) is the identity
-$\exp \circ \log = \mathrm{id}$ in the convergence domain of the
-categorical logarithm.
+curve~$X$ is an integral transform whose kernel is the logarithmic
+1-form $\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed},
+integrated against the OPE data on configuration spaces.  Its output
+is a factorization coalgebra on $\operatorname{Ran}(X)$ with nilpotent
+differential ($d^2 = 0$) at genus~$0$.  Verdier duality inverts the
+transform: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the
+Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}), the
+categorical logarithm--exponential correspondence of
+Remark~\ref{rem:nilpotence-periodicity}.
 
 \begin{remark}[The nilpotence-periodicity correspondence]
 \label{rem:nilpotence-periodicity}
@@ -5029,21 +5007,13 @@ $h = m_0^{(g)}$, and the acyclicity follows.
 
 \begin{remark}[Necessity of exotic derived categories at higher genus]
 \label{rem:positselski-acyclicity}
-Proposition~\ref{prop:curved-bar-acyclicity} explains a fundamental
-structural point: at genus $g \geq 1$ with $\kappa \neq 0$,
-the ordinary derived category of $\bar{B}^{(g)}(\mathcal{A})$-comodules
-is \emph{trivial} (since the bar complex itself is acyclic).
-The correct framework is Positselski's \emph{coderived category}
-$D^{\mathrm{co}}(\bar{B}^{(g)}\text{-}\mathrm{CoMod})$, which
-retains nontrivial information by localizing at a different class of
-acyclic objects~\cite[\S\S3--4]{Positselski11}.
-
-This is the precise reason why the module Koszul duality at
-higher genus (Theorem~\ref{thm:positselski-chiral}) requires
-the coderived/contraderived framework rather than the standard
-derived category.  At genus~$0$, $m_0 = 0$ and the bar complex
-is an honest DG-coalgebra with meaningful cohomology; at genus~$g \geq 1$,
-curving forces the passage to exotic derived categories.
+At genus $g \geq 1$ with $\kappa \neq 0$, acyclicity of
+$\bar{B}^{(g)}(\mathcal{A})$ makes the ordinary derived category of
+its comodules trivial.  The correct framework is Positselski's
+coderived category
+$D^{\mathrm{co}}(\bar{B}^{(g)}\text{-}\mathrm{CoMod})$~\cite[\S\S3--4]{Positselski11},
+which is why Theorem~\ref{thm:positselski-chiral} requires the
+coderived/contraderived setting.
 \end{remark}
 
 \subsection{Filtered versus curved structures}
@@ -5232,100 +5202,29 @@ Thus $\bar{B}(\text{Vir})$ is not conilpotent, requiring completion.
 \begin{example}[Virasoro: completed same-family partner]
 \label{ex:virasoro-koszul-dual}
 
-\emph{Setup}: Virasoro algebra with generators $\{L_n\}_{n \in \mathbb{Z}}$ and 
-central charge $c$.
-
-\emph{Step 1: Compute bar complex.}
+Since $\bar{B}(\mathrm{Vir})$ is not conilpotent (Example~\ref{ex:virasoro-not-conilpotent}), one forms the completed bar complex $\widehat{\bar{B}}(\mathrm{Vir}) = \varprojlim_k \bar{B}(\mathrm{Vir}) / I^k$ and takes continuous linear dual.  Writing $\mathrm{Vir}_c = \mathcal{W}^k(\mathfrak{sl}_2)$ with $h^\vee = 2$, level-shifting duality (Corollary~\ref{cor:level-shifting-part1}) gives $k' = -k - 2h^\vee = -k-4$, so
 \begin{equation}
-\bar{B}(\text{Vir}) = \bigoplus_n \text{Vir}^{\otimes n} \otimes \Omega^n
+\mathrm{Vir}_c^! \cong \mathrm{Vir}_{26-c},
 \end{equation}
+since $c(k) + c(k') = 2\dim\mathfrak{sl}_2 = 26$ by Theorem~\ref{thm:central-charge-complementarity}.  Physically, this is matter--ghost duality: a matter system at central charge~$c$ couples to ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
 
-This is NOT conilpotent (Example~\ref{ex:virasoro-not-conilpotent}), so we must complete:
-\begin{equation}
-\widehat{\bar{B}}(\text{Vir}) = \varprojlim_k \bar{B}(\text{Vir}) / I^k
-\end{equation}
-
-\emph{Step 2: Compute cobar.}
-\begin{equation}
-\Omega(\widehat{\bar{B}}(\text{Vir})) = \text{Hom}_{\text{cont}}(\widehat{\bar{B}}(
-\text{Vir}), \mathcal{O}_X)
-\end{equation}
-
-The continuous homomorphisms ensure convergence.
-
-\emph{Step 3: Identify the current completed shadow.}
-
-Since $\mathrm{Vir}_c = \mathcal{W}^k(\mathfrak{sl}_2)$ with $h^\vee = 2$, the level-shifting duality (Corollary~\ref{cor:level-shifting-part1}) gives dual level $k' = -k - 2h^\vee = -k-4$.  The completed formalism therefore singles out the same-family partner
-\[
-\mathrm{Vir}_{26-c},
-\]
-which is the partner used in the scalar and complementarity calculations of
-Part~II:
-\begin{equation}
-\text{Vir}_c^! \cong \text{Vir}_{26-c}
-\end{equation}
-Indeed, $c(k) + c(k') = 2\dim\mathfrak{sl}_2 = 26$ by Theorem~\ref{thm:central-charge-complementarity} (see Part~II for the W-algebra generalization). The physical interpretation is matter-ghost duality in bosonic string theory: a matter system at central charge $c$ couples to a ghost system at $c_{\text{ghost}} = 26 - c$.
-
-\emph{Scope.} This is the current M/S-level shadow inside the manuscript's
-completed calculus.  It does \emph{not} yet solve the stronger H-level
-realization problem of constructing an infinite-generator dual object;
-that frontier is recorded under MC4, where $W_\infty$ is the conjectural
-target.
-
-\emph{Consistency check}: For $c=26$, this predicts $\text{Vir}_{26}^! \cong \text{Vir}_0$, which is compatible with the BRST cohomology of the bosonic string at zero ghost number.
+This is the M/S-level completed shadow; the stronger H-level realization via an infinite-generator dual is the MC4 frontier (Example~\ref{ex:winfty-completion-frontier}).
 \end{example}
 
 \begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: exact MC4 frontier]
 \label{ex:winfty-completion-frontier}
 
-The $W_\infty$ algebra has generators $\{W^{(n)}\}_{n=2}^\infty$ of all conformal weights 
-$n \geq 2$, with infinitely many relations.
-
-\emph{Current status}: the monograph now proves the standard
-principal-stage completed M-level bar-cobar package for $W_\infty$, but
-not the stronger H-level realization expected in the modular programme.
-
-\emph{The precise frontier statement} is no longer a first inverse-limit
-bar theorem.  For the standard principal-stage tower,
-Corollary~\ref{cor:winfty-standard-mc4-package} already proves the
-completed M-level package.  The live MC4 package is instead:
-construct a principal-stage compatible factorization target
-\textup{(}Proposition~\ref{prop:winfty-factorization-package}\textup{)},
-prove the residue identities
+The standard principal-stage completed M-level bar-cobar package for $W_\infty = \varprojlim_N W_N$ is proved (Corollary~\ref{cor:winfty-standard-mc4-package}).  The live MC4 frontier is to construct a factorization target (Proposition~\ref{prop:winfty-factorization-package}) and prove the residue identities
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
-=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N),
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)
 \]
-and discharge them on the finite-detection packet
-$\mathcal{I}_N$ isolated by
-Corollary~\ref{cor:winfty-ds-finite-seed-set}, whose first live
-higher-spin stages are already reduced on the theorem surface to the
-stage-$3$ fifteen-coefficient packet and the exact stage-$4$ six-entry
-identity packet on~$\mathcal{I}_4$, organized as three local OPE blocks
-and splitting into four higher-spin channels together with two
-Virasoro-target channels whose principal Drinfeld--Sokolov values are
-fixed by Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}; the
-residue-side contraction of those two channels is the additional input
-isolated by Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
-
-\emph{Obstructions still to be overcome}: 
+on the finite-detection packet $\mathcal{I}_N$ (Corollary~\ref{cor:winfty-ds-finite-seed-set}).  Three obstructions remain:
 \begin{enumerate}
-\item construct a separated complete H-level/factorization target whose
-  finite quotients recover the principal stages $W_N$;
-  \item extract the local residue coefficients and prove the exact
-  identities
-  $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
-  =\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$ of
-  Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
-\item close the finite detection on the packet $\mathcal{I}_N$,
-  after which
-  Corollary~\ref{cor:winfty-hlevel-comparison-criterion} makes the
-  comparison with the theorematic standard tower formal
+\item construct a separated complete H-level/factorization target whose finite quotients recover $W_N$;
+\item prove the exact residue identities of Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
+\item close finite detection on $\mathcal{I}_N$, after which Corollary~\ref{cor:winfty-hlevel-comparison-criterion} makes the comparison formal.
 \end{enumerate}
-
-\emph{Interpretation.} $W_\infty$ sits at the boundary of the present
-finite-type theory.  It should be read as an exact MC4 frontier, not as
-an impossibility theorem.
 \end{example}
 
 \begin{conjecture}[Inverse-limit completed bar-cobar package; \ClaimStatusConjectured]
@@ -5418,26 +5317,7 @@ differential is well defined, so $\widehat{\epsilon}$ is a
 quasi-isomorphism.
 \end{proof}
 
-\begin{remark}[What remains for concrete towers]
-\label{rem:mc4-concrete-checklist}
-Proposition~\ref{prop:mc4-reduction-principle} isolates the actual
-tower-specific work:
-\begin{enumerate}
-\item construct a separated complete filtration whose truncations are
-  still in the finite-type theorematic regime;
-\item prove that the finite-stage differentials and coproducts descend
-  compatibly along the tower, so the inverse-limit bar and cobar
-  differentials are continuous;
-\item verify the Mittag--Leffler condition on the bar cohomology
-  inverse system; and
-\item identify the limit object with the intended completed target
-  ($W_\infty$, a Yangian tower, or a related infinite-generator
-  algebra).
-\end{enumerate}
-Thus MC4 is not a single opaque obstruction.  It is a four-part
-convergence problem built on top of already proved finite-stage
-bar-cobar duality.
-\end{remark}
+% \label{rem:mc4-concrete-checklist} — removed (echo of Proposition~\ref{prop:mc4-reduction-principle})
 
 \begin{corollary}[Degreewise stabilization criterion for MC4;
 \ClaimStatusProvedHere]
@@ -5936,15 +5816,7 @@ applies to $\mathcal{W}^{\mathrm{fact}}_\infty$.
 \end{proposition}
 
 \begin{proof}
-The kernels of the quotient maps provide the required descending
-complete filtration, and the quotient objects supply the finite-stage dg
-models.  The compatibility with the principal-stage truncation tower is
-exactly item~\textup{(3)} of
-Definition~\ref{def:winfty-principal-stage-compatible}, while the
-finite-stage bar agreement gives item~\textup{(4)}.  Thus the quotient
-system packages precisely the data required for a principal-stage
-compatible target.  The final claim is then immediate from
-Corollary~\ref{cor:winfty-hlevel-comparison-criterion}.
+The quotient-system data package precisely the inputs of Definition~\ref{def:winfty-principal-stage-compatible}; the final claim follows from Corollary~\ref{cor:winfty-hlevel-comparison-criterion}.
 \end{proof}
 
 \begin{proposition}[Factorization-envelope criterion for principal
@@ -5975,20 +5847,7 @@ Corollary~\ref{cor:winfty-hlevel-comparison-criterion} apply.
 \end{proposition}
 
 \begin{proof}
-On curves, the Beilinson--Drinfeld equivalence identifies chiral
-algebras with factorization algebras carrying the requisite
-$\mathcal{D}$-module structure.  Applying the chiral-envelope functor to
-the compatible quotient system therefore produces a system of chiral
-quotients whose kernels inherit the same descending complete
-conformal-weight filtration.
-
-Assumption~\textup{(2)} identifies the resulting quotient chiral
-algebras with the principal stages $W_N$, while
-Assumption~\textup{(3)} provides compatibility with the principal-stage
-truncation tower.  This is precisely the data required in
-Definition~\ref{def:winfty-principal-stage-compatible}.  The final
-claim follows by combining this with
-Proposition~\ref{prop:winfty-quotient-system-criterion}.
+The BD equivalence and the chiral-envelope functor produce compatible quotients recovering the principal stages; Proposition~\ref{prop:winfty-quotient-system-criterion} applies.
 \end{proof}
 
 \begin{proposition}[Factorization realization package for
@@ -6023,51 +5882,25 @@ finite-stage identifications and the Mittag--Leffler property
 the inverse limit.
 \end{proposition}
 
-\begin{remark}[First attack route for the
+\begin{remark}[Attack route for the
 \texorpdfstring{$W_\infty$}{W_infty} factorization target]
 \label{rem:winfty-factorization-route}
-Proposition~\ref{prop:winfty-factorization-package} breaks into four
-local construction problems:
-\begin{enumerate}
-\item build a factorization-theoretic completion
-  $\mathcal{W}^{\mathrm{fact}}_\infty$ carrying a separated conformal-weight
-  filtration;
-\item show that quotienting by weight $>N$ produces a dg model whose
-  homology or chiral envelope recovers the principal stage $W_N$;
-\item verify that the induced bar complexes on those quotients agree
-  with the finite-type bar-cobar package already proved in the
-  principal regime; and
-\item prove that the quotient maps are compatible with the principal-stage
-  tower, so Corollary~\ref{cor:winfty-hlevel-comparison-criterion}
-  applies.
-\end{enumerate}
-The open input is therefore stagewise descent of a factorization model,
-not new infinite-weight stabilization on the standard bar side.
-Proposition~\ref{prop:winfty-higher-spin-ideal-criterion} sharpens the
-first two items to the existence of stable higher-spin factorization
-ideals with principal-stage quotients, and
-Proposition~\ref{prop:winfty-spin-triangular-ideals} reduces that
-existence problem to the spin-triangular OPE formulas and residue
-operations themselves.
-Proposition~\ref{prop:winfty-ds-local-coefficient-criterion} then
-shows that the remaining stage-identification problem is literally the
-equality of the extracted local OPE and residue coefficients with the
-principal Drinfeld--Sokolov data.
-Proposition~\ref{prop:winfty-ds-residue-identity-criterion} sharpens
-this once more: the live $W_\infty$ step is the mode-by-mode identity
-between the extracted residue/OPE coefficients and the principal
-Drinfeld--Sokolov coefficient family.  The next reduction is finite and
-generator-level: Proposition~\ref{prop:winfty-ds-generator-seed}
-shows that it is enough to check the finitely many generator residue
-coefficients, and Corollary~\ref{cor:winfty-ds-finite-seed-set}
-packages those checks as an explicit finite index set, provided
-translation and residue calculus propagate those identities through
-descendants.  Corollary~\ref{cor:winfty-ds-lowstage-seeds} makes the
-first nontrivial stage explicit, and
-Proposition~\ref{prop:winfty-ds-stage3-explicit-packet} shows that the
-stage-$3$ packet is already encoded by the explicit $W_3$ OPE: three
-nonzero primary coefficients and twelve forced vanishings.  The next
-genuinely new higher-spin packet is therefore stage~$4$.
+The reduction chain from
+Proposition~\ref{prop:winfty-factorization-package} proceeds through
+higher-spin ideals
+(Proposition~\ref{prop:winfty-higher-spin-ideal-criterion}),
+spin-triangular OPE closure
+(Proposition~\ref{prop:winfty-spin-triangular-ideals}),
+coefficient-level DS matching
+(Proposition~\ref{prop:winfty-ds-local-coefficient-criterion}),
+residue identity
+(Proposition~\ref{prop:winfty-ds-residue-identity-criterion}),
+generator seeds
+(Proposition~\ref{prop:winfty-ds-generator-seed},
+Corollary~\ref{cor:winfty-ds-finite-seed-set}),
+and the explicit stage-$3$ $W_3$ packet
+(Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}).
+The first genuinely new higher-spin packet is stage~$4$.
 \end{remark}
 
 \begin{proposition}[Higher-spin ideal criterion for principal-stage
@@ -6105,14 +5938,8 @@ principal stages.
 \end{proposition}
 
 \begin{proof}
-Assumption~\textup{(1)} ensures that each
-$I_{>N}\mathcal{F}_\infty$ is a genuine closed factorization ideal, so
-the quotient $\mathcal{F}_{\le N}$ inherits a factorization algebra
-structure.  Assumption~\textup{(2)} identifies this quotient as the
-stage obtained by discarding the higher-spin generators.
-
-Assumption~\textup{(3)} supplies the finite-stage identification with
-$W_N$, while Assumption~\textup{(4)} provides compatibility with the
+Assumptions~\textup{(1)--(4)} supply closed factorization ideals, closed OPE, finite-stage identification with
+$W_N$, and compatibility with the
 principal-stage tower.  This is exactly the data required by
 Definition~\ref{def:winfty-quotient-system}.  The stated comparison
 results then follow from
@@ -6153,26 +5980,7 @@ the resulting quotients recover the principal finite-type stages.
 \end{proposition}
 
 \begin{proof}
-By construction, $I_{>N}\mathcal{F}_\infty$ is the closed
-factorization ideal generated by the higher-spin fields.  Item~(1)
-implies that the OPE of two generators of spins $\le N$ can only
-produce fields of spin $\le N$ together with terms of spin $>N$, and
-the latter lie in $I_{>N}\mathcal{F}_\infty$ by definition.  Hence the
-quotient by $I_{>N}\mathcal{F}_\infty$ closes on the generators
-$W^{(2)},\dots,W^{(N)}$.
-
-Item~(2) shows that translation and the residue/bar operations defining
-the factorization products and higher operations do not increase the
-maximal spin.  Therefore they preserve the ideal generated by fields of
-spin $>N$.  The quotient $\mathcal{F}_{\le N}$ consequently inherits
-the same factorization and residue structure.
-
-Item~(3) identifies that induced quotient structure with the principal
-finite-type stage $W_N$.  Compatibility for varying $N$ is immediate
-from the nested system of ideals
-$I_{>N+1}\mathcal{F}_\infty \subset I_{>N}\mathcal{F}_\infty$.  This is
-exactly the data of the principal-stage quotient system required in
-Proposition~\ref{prop:winfty-higher-spin-ideal-criterion}.
+Spin-triangularity (1) closes the quotient OPE on generators $\le N$; (2) preserves the ideal under all operations; (3) identifies the quotient with $W_N$.  Nesting of ideals gives compatibility for varying $N$.
 \end{proof}
 
 \begin{proposition}[Coefficient-level DS criterion for principal-stage
@@ -6207,18 +6015,7 @@ Drinfeld--Sokolov formulas.
 \end{proposition}
 
 \begin{proof}
-Conditions~(1)--(3) say that the quotient is presented by the same
-strong generators and the same local OPE relations as the principal
-finite-type algebra $W_N$.  By the standard reconstruction principle
-for strongly generated chiral/factorization algebras, this identifies
-the resulting envelope with the principal stage.
-
-Condition~(4) matches the induced residue/bar operations with the
-finite-type bar-cobar package already established on the theorematic
-side.  Therefore the quotient produced by
-Proposition~\ref{prop:winfty-spin-triangular-ideals} is exactly the
-principal stage needed in
-Proposition~\ref{prop:winfty-higher-spin-ideal-criterion}.
+Conditions~(1)--(3) give the same strong generators, OPE relations, and bar operations as $W_N$; the standard reconstruction principle identifies the quotient with the principal stage.
 \end{proof}
 
 \begin{proposition}[Local-coefficient criterion for principal-stage
@@ -6226,9 +6023,7 @@ Proposition~\ref{prop:winfty-higher-spin-ideal-criterion}.
 \ClaimStatusProvedHere]
 \label{prop:winfty-ds-local-coefficient-criterion}
 Fix $N \ge 2$ and let
-\[
-\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty
-\]
+$\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty$
 be the quotient produced by
 Proposition~\ref{prop:winfty-spin-triangular-ideals}.  Assume that for
 all $2 \le s,t \le N$ the quotient OPE has an expansion
@@ -6238,37 +6033,15 @@ W^{(s)}(z)W^{(t)}(w)\sim
 C_{s,t}^{u;m,n}(N)\,
 \frac{\partial^m W^{(u)}(w)}{(z-w)^n},
 \]
-with only finitely many nonzero terms at each pole order, and suppose:
-\begin{enumerate}
-\item for every triple $(s,t,u)$ with $2 \le s,t,u \le N$, the
-  coefficients $C_{s,t}^{u;m,n}(N)$ agree with the principal
-  Drinfeld--Sokolov coefficients for the finite-type stage $W_N$;
-\item every local relation among the generators
-  $W^{(2)},\dots,W^{(N)}$ in the quotient is generated by these OPE
-  coefficients and their translation descendants; and
-\item the residue maps and bar operations extracted from the same
-  coefficients coincide with the finite-stage bar-cobar package proved
-  for $W_N$.
-\end{enumerate}
-Then the hypotheses of
-Proposition~\ref{prop:winfty-ds-coefficient-criterion} are satisfied.
-Hence the quotient $\mathcal{F}_{\le N}$ identifies with the principal
-finite-type stage $W_N$.  In particular, the remaining
-$\mathcal{W}_\infty$ frontier is reduced to exact equality of the
-stagewise OPE and residue coefficients with the principal
-Drinfeld--Sokolov formulas.
+and suppose the coefficients agree with the principal
+Drinfeld--Sokolov data, translation descendants generate all local
+relations, and the induced bar operations match the finite-stage package.
+Then Proposition~\ref{prop:winfty-ds-coefficient-criterion} applies
+and the quotient identifies with $W_N$.
 \end{proposition}
 
 \begin{proof}
-Condition~(1) says that the local OPE coefficients in the quotient are
-exactly the principal Drinfeld--Sokolov coefficients of $W_N$.
-Condition~(2) says that these coefficients and their translation
-descendants generate all local relations among the truncated
-generators, so the quotient has the same local presentation as the
-principal finite-type stage.  Condition~(3) matches the induced
-residue/bar operations with the theorematic finite-stage package.
-These are precisely the inputs required in
-Proposition~\ref{prop:winfty-ds-coefficient-criterion}.
+The three conditions are exactly the inputs of Proposition~\ref{prop:winfty-ds-coefficient-criterion}.
 \end{proof}
 
 \begin{proposition}[Residue-coefficient identity criterion for
@@ -6276,49 +6049,21 @@ principal-stage \texorpdfstring{$W_\infty$}{W_infty} quotients;
 \ClaimStatusProvedHere]
 \label{prop:winfty-ds-residue-identity-criterion}
 Fix $N \ge 2$ and let
-\[
-\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty
-\]
-be the quotient produced by
-Proposition~\ref{prop:winfty-spin-triangular-ideals}.  For
-$2 \le s,t,u \le N$ and $m,n \ge 0$, let
-$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$ denote the coefficient
-obtained by extracting the $(z-w)^{-n}\partial^mW^{(u)}$ term from the
-local OPE via the geometric residue map along the collision divisor
-$D_{12}$, and let
-$\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$ denote the corresponding
-principal Drinfeld--Sokolov coefficient for $W_N$.  Assume:
-\begin{enumerate}
-\item the quotient OPE and its induced residue/bar operations are
-  entirely computed by these geometric residue coefficients
-  $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$;
-\item for every admissible index tuple,
-  \[
-  \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
-  = \mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N);
-  \]
-  and
-\item the bar operations induced from the same residue calculus agree
-  with the finite-stage bar-cobar package already proved for $W_N$.
-\end{enumerate}
-Then the hypotheses of
-Proposition~\ref{prop:winfty-ds-local-coefficient-criterion} are
-satisfied.  Consequently the quotient $\mathcal{F}_{\le N}$ identifies
-with the principal finite-type stage $W_N$.
+$\mathcal{F}_{\le N}:=\mathcal{F}_\infty/I_{>N}\mathcal{F}_\infty$
+be as in Proposition~\ref{prop:winfty-spin-triangular-ideals}.
+Let $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$ and
+$\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$ denote the residue and
+principal DS coefficients.  Assume the quotient OPE and bar operations
+are entirely computed by the residue coefficients, and
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+= \mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
+for every admissible tuple.
+Then Proposition~\ref{prop:winfty-ds-local-coefficient-criterion} applies
+and the quotient identifies with $W_N$.
 \end{proposition}
 
 \begin{proof}
-Assumption~(1) says that the local presentation of the quotient is
-completely controlled by the residue coefficient family
-$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)$.  Assumption~(2) identifies
-that family with the principal Drinfeld--Sokolov coefficient family of
-$W_N$.  Therefore the quotient has exactly the same OPE coefficients
-and translation descendants as the principal finite-type stage.
-
-Assumption~(3) gives the matching of the induced residue/bar operations
-with the theorematic finite-stage package.  This is exactly the input
-required in
-Proposition~\ref{prop:winfty-ds-local-coefficient-criterion}.
+The residue-coefficient equality and bar matching are exactly the inputs of Proposition~\ref{prop:winfty-ds-local-coefficient-criterion}.
 \end{proof}
 
 \begin{proposition}[Generator-seed criterion for principal-stage
@@ -6360,18 +6105,7 @@ satisfied.
 \end{proposition}
 
 \begin{proof}
-Assumption~(2) identifies the primary OPE/residue coefficients on the
-strong generators with the principal Drinfeld--Sokolov coefficients.
-By assumption~(3), every coefficient involving derivatives of the output
-field is obtained by applying translation to those primary
-coefficients, so the same equality propagates to all descendants.
-
-Assumption~(1) ensures that these generator coefficients determine the
-entire local presentation of the quotient, and assumption~(4) ensures
-that the induced bar operations are recovered from the same residue
-calculus.  Therefore the full residue coefficient family agrees with the
-principal Drinfeld--Sokolov family.  This is exactly the input required
-by Proposition~\ref{prop:winfty-ds-residue-identity-criterion}.
+Primary generator agreement propagates to all descendants by translation (assumption~(3)), and strong generation (assumption~(1)) plus bar recovery (assumption~(4)) identify the full coefficient family, verifying Proposition~\ref{prop:winfty-ds-residue-identity-criterion}.
 \end{proof}
 
 \begin{corollary}[Finite primary seed set for principal-stage
@@ -6519,37 +6253,7 @@ Proposition~\ref{prop:winfty-ds-stage4-residual-packet}.
 \end{proposition}
 
 \begin{proof}
-Because $\mathcal{I}_N\subset \mathcal{I}_{N+1}$, every tuple in
-$\mathcal{I}_{N+1}$ is either already present at stage~$N$ or is new
-at stage~$N{+}1$.  The new Virasoro-sector tuples are exactly those
-with source pair $(2,N{+}1)$, namely
-$\mathcal{I}_{N+1}^{\mathrm{Vir,new}}$.
-
-Under the hypotheses of
-Proposition~\ref{prop:winfty-ds-generator-seed}, the coefficients on
-$\mathcal{I}_N$ are precisely the stage-$N$ packet identities, proving
-\textup{(1)}.  The exact stress-tensor action determines the source
-pair $(2,N{+}1)$, proving \textup{(2)}.
-
-It remains to classify the tuples in the complement
-$\mathcal{J}_{N+1}$.  Let $(s,t,u,n)\in\mathcal{J}_{N+1}$.  Since it is
-not already in $\mathcal{I}_N$, at least one of $t$ or $u$ must equal
-$N{+}1$.  Because it is also not in the new Virasoro block, one has
-$s\neq 2$.  There are then exactly three possibilities:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $t\le N$ and $u=N{+}1$, which gives the tail block
-  $\mathcal{J}_{N+1}^{\mathrm{tail}}$;
-\item $t=N{+}1$ and $s\le N$, which gives the mixed block
-  $\mathcal{J}_{N+1}^{\mathrm{mix}}$;
-\item $s=t=N{+}1$, which gives the self block
-  $\mathcal{J}_{N+1}^{\mathrm{self}}$.
-\end{enumerate}
-These cases are disjoint and exhaustive, proving \textup{(3)}.  The
-final sentence is exactly
-Corollary~\ref{cor:winfty-ds-finite-seed-set} applied to
-$\mathcal{I}_{N+1}
-=\mathcal{I}_N\sqcup\mathcal{I}_{N+1}^{\mathrm{Vir,new}}
-\sqcup\mathcal{J}_{N+1}$.
+Since $\mathcal{I}_N\subset \mathcal{I}_{N+1}$, new tuples have at least one index equal to $N{+}1$.  Those with $s=2$ form $\mathcal{I}_{N+1}^{\mathrm{Vir,new}}$; the complement $\mathcal{J}_{N+1}$ (with $s\geq 3$) splits exhaustively into the three displayed blocks by whether the new index appears in $u$, $t$, or both.
 \end{proof}
 
 \begin{corollary}[Top-pole/parity reduction of the incremental
@@ -6593,24 +6297,7 @@ Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:winfty-ds-stage-growth-packet} reduces the
-stage-$(N+1)$ problem to the incremental packet $\mathcal{J}_{N+1}$.
-Proposition~\ref{prop:winfty-ds-primary-top-pole} shows that every
-undifferentiated primary coefficient outside the top-pole subset
-$\mathcal{J}_{N+1}^{\mathrm{top}}$ vanishes on both sides.
-Proposition~\ref{prop:winfty-ds-self-ope-parity} removes the odd
-self-OPE entries inside $\mathcal{J}_{N+1}^{\mathrm{top}}$.
-Thus only the reduced packet
-$\mathcal{J}_{N+1}^{\mathrm{red}}$ remains to be matched.
-
-For $N=3$, the packet $\mathcal{J}_{N+1}$ is exactly the residual block
-$\mathcal{J}_4$ of
-Proposition~\ref{prop:winfty-ds-stage4-residual-packet}, and its
-top-pole/parity reduction is exactly
-Corollary~\ref{cor:winfty-ds-stage4-parity-packet}.  The final sentence
-is a reformulation of
-Corollary~\ref{cor:winfty-stage4-residue-four-channel} together with
-Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
+Top-pole primaryity (Proposition~\ref{prop:winfty-ds-primary-top-pole}) and odd self-OPE parity (Proposition~\ref{prop:winfty-ds-self-ope-parity}) reduce $\mathcal{J}_{N+1}$ to $\mathcal{J}_{N+1}^{\mathrm{red}}$.  For $N=3$ this recovers the stage-$4$ parity packet.
 \end{proof}
 
 \begin{corollary}[First reduced incremental packet beyond
@@ -6656,42 +6343,7 @@ self-coupling channels.
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:winfty-ds-stage-growth-packet} identifies the
-incremental stage-$5$ packet $\mathcal{J}_5$ as the union of the tail,
-mixed, and self blocks.
-
-For the tail block, the admissible source pairs are
-$(3,3)$, $(3,4)$, and $(4,4)$.  Their top-pole entries are
-\[
-(3,3;5;0,1),\qquad
-(3,4;5;0,2),\qquad
-(4,4;5;0,3).
-\]
-Proposition~\ref{prop:winfty-ds-self-ope-parity} removes the two odd
-self-OPE entries, leaving only $(3,4;5;0,2)$.
-
-For the mixed block, the source pairs are $(3,5)$ and $(4,5)$.  The
-top-pole condition $n=s+5-u$ gives exactly the four entries
-\[
-(3,5;u;0,8-u)
-\qquad (u=2,3,4,5)
-\]
-and
-\[
-(4,5;u;0,9-u)
-\qquad (u=2,3,4,5).
-\]
-
-For the self block, the top-pole entries are
-\[
-(5,5;u;0,10-u)
-\qquad (u=2,3,4,5).
-\]
-Parity removes the odd-target entries with $u=3,5$, leaving
-$(5,5;2;0,8)$ and $(5,5;4;0,6)$.
-
-Combining the surviving tail, mixed, and self entries gives the
-displayed decomposition of $\mathcal{J}_5^{\mathrm{red}}$.
+Enumerate the tail, mixed, and self blocks of $\mathcal{J}_5$ from Proposition~\ref{prop:winfty-ds-stage-growth-packet}; apply top-pole primaryity and odd self-OPE parity to each.  The surviving entries are exactly the displayed eleven tuples.
 \end{proof}
 
 \begin{proposition}[Primary top-pole criterion for generator seed
@@ -6948,53 +6600,7 @@ all descendant coefficients.
 \end{proposition}
 
 \begin{proof}
-By definition,
-\[
-\mathcal{I}_4
-=\left\{
-(s,t,u,n)\ \middle|\
-\begin{array}{l}
-2 \le s \le t \le 4,\\
-2 \le u \le \min(4,s+t-1),\\
-1 \le n \le s+t-u
-\end{array}
-\right\}.
-\]
-The admissible source pairs are therefore
-\[
-(2,2),\ (2,3),\ (2,4),\ (3,3),\ (3,4),\ (4,4).
-\]
-
-All tuples with first source spin $2$ lie in
-$\mathcal{I}_4^{\mathrm{Vir}}$.  These are already determined by the
-exact stress-tensor action, because $W^{(2)}$ acts on each
-$W^{(t)}$ as a primary field of spin $t$ with no further generator
-targets.  For the pair $(3,3)$, every tuple with target spin $u\le 3$
-lies in $\mathcal{I}_4^{W_3}$ and is already fixed by the explicit
-stage-$3$ $W_3$ OPE package from
-Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}.  The only
-remaining $(3,3)$ entries are thus the two target-spin-$4$ tuples
-\[
-(3,3,4,1),\qquad (3,3,4,2).
-\]
-
-For the pairs $(3,4)$ and $(4,4)$ there is no lower-stage theorematic
-reduction beyond the general seed-set bounds, so every admissible tuple
-for those pairs remains genuinely new.  Enumerating the inequalities
-\[
-2 \le u \le \min(4,s+t-1),
-\qquad
-1 \le n \le s+t-u
-\]
-for $(s,t)=(3,4)$ gives the displayed $12$ tuples of
-$\mathcal{J}_4^{3,4}$, and for $(s,t)=(4,4)$ gives the displayed $15$
-tuples of $\mathcal{J}_4^{4,4}$.  Counting
-\[
-2 + 12 + 15 = 29
-\]
-proves the cardinality claim.  The final sentence is again the
-translation-propagation statement of
-Proposition~\ref{prop:winfty-ds-generator-seed}.
+All source-$2$ tuples lie in $\mathcal{I}_4^{\mathrm{Vir}}$ (stress-tensor action); the $(3,3)$ tuples with $u\le 3$ lie in $\mathcal{I}_4^{W_3}$ (stage-$3$ packet).  Enumerating the remaining admissible tuples for $(3,3,4)$, $(3,4)$, and $(4,4)$ gives the displayed decomposition with cardinality $2+12+15=29$.
 \end{proof}
 
 \begin{computation}[Stage-\texorpdfstring{$4$}{4} seed set and residual packet verification]
@@ -7049,24 +6655,7 @@ Drinfeld--Sokolov data.
 \end{corollary}
 
 \begin{proof}
-Apply Proposition~\ref{prop:winfty-ds-primary-top-pole} to each fixed
-source/target triple occurring in the residual packet
-$\mathcal{J}_4$ of
-Proposition~\ref{prop:winfty-ds-stage4-residual-packet}.  For the
-triple $(3,3,4)$, the top pole is $3+3-4=2$, leaving only
-$(3,3,4,2)$.  For the three triples $(3,4,2)$, $(3,4,3)$, and
-$(3,4,4)$, the top poles are respectively $5$, $4$, and $3$, leaving
-\[
-(3,4,2,5),\qquad (3,4,3,4),\qquad (3,4,4,3).
-\]
-For the three triples $(4,4,2)$, $(4,4,3)$, and $(4,4,4)$, the top
-poles are respectively $6$, $5$, and $4$, leaving
-\[
-(4,4,2,6),\qquad (4,4,3,5),\qquad (4,4,4,4).
-\]
-These are exactly the seven displayed tuples.  Every other element of
-$\mathcal{J}_4$ has lower pole order for the same source/target triple,
-so it vanishes by Proposition~\ref{prop:winfty-ds-primary-top-pole}.
+Proposition~\ref{prop:winfty-ds-primary-top-pole} retains only the top pole $n=s+t-u$ for each triple, giving the seven displayed tuples; all lower-pole entries vanish.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} parity-compressed packet;
@@ -7091,15 +6680,7 @@ entries in the original residual packet $\mathcal{J}_4$.
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet} leaves seven
-top-pole entries.  Among them, the only identical-generator entry with
-odd top pole order is $(4,4,3,5)$, since the self-pair $(3,3)$
-contributes the even top pole $(3,3,4,2)$ and the remaining four
-entries come from the mixed pair $(3,4)$.  Applying
-Proposition~\ref{prop:winfty-ds-self-ope-parity} to the even self-OPE
-of $W^{(4)}$ kills the odd top-pole coefficient $(4,4,3,5)$.  The six
-displayed tuples are therefore the only remaining potentially nonzero
-entries.
+Among the seven top-pole entries, the only odd self-OPE top pole is $(4,4,3,5)$; Proposition~\ref{prop:winfty-ds-self-ope-parity} kills it, leaving six.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} packet as three local OPE blocks;
@@ -7153,20 +6734,7 @@ three in the mixed $(3,4)$ block, and two in the even $(4,4)$ block.
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-ds-stage4-parity-packet} identifies the six
-remaining nontrivial tuples:
-\[
-(3,3,4,2),\ (3,4,2,5),\ (3,4,3,4),\ (3,4,4,3),\ (4,4,2,6),\ (4,4,4,4).
-\]
-Grouping them by source pair produces exactly one coefficient in the
-$(3,3)$ block, three coefficients in the mixed $(3,4)$ block, and two
-coefficients in the even self-coupling $(4,4)$ block.  The theorematic
-Virasoro and stage-$3$ sectors were already removed in
-Proposition~\ref{prop:winfty-ds-stage4-residual-packet}, while
-Corollary~\ref{cor:winfty-ds-stage4-top-pole-packet} and
-Corollary~\ref{cor:winfty-ds-stage4-parity-packet} kill every lower-pole
-or odd self-OPE entry.  The displayed three OPE templates are
-therefore exactly the remaining primary channels.
+Group the six parity-compressed tuples by source pair: $(3,3)$ contributes one, $(3,4)$ three, $(4,4)$ two.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} frontier as one mixed block and three
@@ -7194,12 +6762,7 @@ $W^{(3)}$-$W^{(3)}$ and $W^{(4)}$-$W^{(4)}$.
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-ds-stage4-ope-blocks} identifies the six live
-coefficients as one coefficient in the $(3,3)$ block, three
-coefficients in the mixed $(3,4)$ block, and two coefficients in the
-$(4,4)$ block.  Grouping the $(3,3)$ and $(4,4)$ contributions together
-gives the displayed self-coupling sector, while the mixed block is
-already exactly the displayed triple.
+Regroup: $(3,3)$ and $(4,4)$ give the self-coupling sector; $(3,4)$ is the mixed sector.
 \end{proof}
 
 \begin{proposition}[Mixed top-pole swap parity for even generators;
@@ -7236,32 +6799,7 @@ $s+t-u$ is odd.
 \end{proposition}
 
 \begin{proof}
-Let $A:=W^{(s)}$, $B:=W^{(t)}$, and set $m:=s+t-u-1$, so the top-pole
-primary coefficient of the target generator $W^{(u)}$ in the mixed OPE
-$A(z)B(w)$ is the $A_{(m)}B$ term.  Because $A$ and $B$ are even, the
-vertex-algebra skew-symmetry formula gives
-\[
-A_{(m)}B
-=
-\sum_{j\ge 0}\frac{(-1)^{m+j+1}}{j!}\,\partial^j(B_{(m+j)}A).
-\]
-By Proposition~\ref{prop:winfty-ds-primary-top-pole}, the
-undifferentiated primary generator $W^{(u)}$ can occur only at the top
-pole order $s+t-u$, equivalently only in the mode $m=s+t-u-1$.  The
-terms with $j>0$ therefore do not contribute to the same
-undifferentiated primary coefficient.  Passing to the $W^{(u)}$
-channel gives
-\[
-\mathsf{C}_{s,t;u}^{\mathrm{res}}(N)
-=
-(-1)^{m+1}\mathsf{C}_{t,s;u}^{\mathrm{res}}(N)
-=
-(-1)^{s+t-u}\mathsf{C}_{t,s;u}^{\mathrm{res}}(N).
-\]
-Rearranging proves the displayed residue identity.  The same
-skew-symmetry formula holds on the principal Drinfeld--Sokolov side, so
-the same argument yields the displayed
-$\mathsf{C}^{\mathrm{DS}}$-identity.
+The vertex-algebra skew-symmetry formula for even fields, combined with top-pole primaryity (Proposition~\ref{prop:winfty-ds-primary-top-pole}) to eliminate $j>0$ terms, gives $\mathsf{C}_{s,t;u}^{\mathrm{res}}=(-1)^{s+t-u}\mathsf{C}_{t,s;u}^{\mathrm{res}}$.  The same holds on the DS side.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} mixed block split by swap parity;
@@ -7292,16 +6830,7 @@ $c_{342},c_{344}$.
 \end{corollary}
 
 \begin{proof}
-Apply Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} to the
-three mixed triples $(s,t,u)=(3,4,2),(3,4,3),(3,4,4)$.  Their top-pole
-orders are respectively
-\[
-3+4-2=5,\qquad 3+4-3=4,\qquad 3+4-4=3.
-\]
-Hence the corresponding reversed-order coefficients pick up the signs
-$(-1)^5=-1$, $(-1)^4=+1$, and $(-1)^3=-1$.  This gives exactly the
-three displayed identities.  The final sentence is a reformulation of
-those sign rules.
+Apply Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} to $(3,4,u)$ for $u=2,3,4$; the signs $(-1)^{7-u}$ give the displayed identities.
 \end{proof}
 
 \begin{proposition}[Formal mixed Virasoro-target vanishing under a
@@ -7343,30 +6872,7 @@ every mixed OPE $W^{(s)}(z)W^{(t)}(w)$ with $s\ne t$.
 \end{proposition}
 
 \begin{proof}
-Let $A:=W^{(s)}$ and $B:=W^{(t)}$ with $s<t$.  By
-assumption~\textup{(ii)}, the mixed two-point function
-\[
-\langle A(z)B(0)\rangle
-\]
-vanishes identically.  Since both fields are primary,
-assumption~\textup{(i)} gives the Virasoro Ward identity
-\[
-\langle T(x)A(z)B(0)\rangle = 0.
-\]
-
-Because the local OPE is decomposed into conformal families of primary
-generators and descendants, the undifferentiated primary target
-$T=W^{(2)}$ can occur only at the top pole order $s+t-2$.  All lower
-pole $T$-descendants have conformal weight $>2$, so their two-point
-functions with $T$ vanish by weight mismatch.  Thus the coefficient of
-$x^{-4}z^{-(s+t-2)}$ in the three-point function
-$\langle T(x)A(z)B(0)\rangle$ is exactly
-\[
-\frac{c}{2}\,\mathsf{C}_{s,t;2;0,\,s+t-2}(N),
-\]
-because $\langle T(x)T(0)\rangle = \frac{c/2}{x^4}$ by
-assumption~\textup{(iii)}.  The three-point function vanishes
-identically and $c\neq 0$, so this coefficient must be zero.
+Mixed-weight orthogonality (assumption~\textup{(ii)}) makes $\langle T(x)A(z)B(0)\rangle = 0$.  The top-pole $T$-channel contributes $\frac{c}{2}\mathsf{C}_{s,t;2;0,s+t-2}$ to the $x^{-4}z^{-(s+t-2)}$ coefficient; since $c\neq 0$, the coefficient vanishes.
 \end{proof}
 
 \begin{proposition}[Principal Drinfeld--Sokolov vanishing of the mixed
@@ -7423,23 +6929,7 @@ swap-even / swap-odd pair targeting $W^{(3)}$ and $W^{(4)}$.
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:winfty-ds-mixed-virasoro-ds-zero} gives
-\[
-\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}=0.
-\]
-Applying
-Corollary~\ref{cor:winfty-ds-stage4-mixed-swap-parity} to the same
-triple yields
-\[
-\mathsf{C}^{\mathrm{DS}}_{4,3;2;0,5}
-=
--\mathsf{C}^{\mathrm{DS}}_{3,4;2;0,5}
-=
-0.
-\]
-The only remaining mixed stage-$4$ channels are therefore the
-$W^{(3)}$ target, which is swap-even, and the $W^{(4)}$ target, which
-is swap-odd.
+Proposition~\ref{prop:winfty-ds-mixed-virasoro-ds-zero} gives the first vanishing; swap parity (Corollary~\ref{cor:winfty-ds-stage4-mixed-swap-parity}) gives the second.
 \end{proof}
 
 \begin{proposition}[Formal self-coupling stress-tensor coefficient
@@ -7481,59 +6971,7 @@ $W^{(s)}(z)W^{(s)}(w)$ with the universal coefficient $2$.
 \end{proposition}
 
 \begin{proof}
-Write $A:=W^{(s)}$ and set
-\[
-N_s:=\frac{c}{s},
-\]
-so that assumption~\textup{(ii)} gives
-\[
-\langle A(z)A(0)\rangle=N_s z^{-2s}.
-\]
-Because $A$ is Virasoro-primary of weight $s$,
-assumption~\textup{(i)} gives the Ward identity
-\[
-\langle T(x)A(z)A(0)\rangle
-=
-\left(
-\frac{s}{(x-z)^2}
-+\frac{1}{x-z}\partial_z
-+\frac{s}{x^2}
-+\frac{1}{x}\partial_0
-\right)N_s z^{-2s}.
-\]
-Expand in the region $|x|>|z|>|0|$.  The coefficient of
-$x^{-4}z^{-2s+2}$ comes only from the first two terms.  The term
-\[
-\frac{sN_s}{(x-z)^2 z^{2s}}
-\]
-contributes $3sN_s$, while
-\[
-\frac{1}{x-z}\partial_z(N_s z^{-2s})
-\]
-contributes $-2sN_s$.  Hence the total
-$x^{-4}z^{-2s+2}$ coefficient on the Ward-identity side is
-\[
-3sN_s-2sN_s=sN_s=c.
-\]
-
-Because the local OPE is decomposed into conformal families of primary
-generators and descendants, the undifferentiated stress tensor can
-occur in the self-OPE only at the top pole $2s-2$, with coefficient
-\[
-\mathsf{C}_{s,s;2;0,\,2s-2}(N).
-\]
-Pairing that term with $T(x)$ contributes
-\[
-\mathsf{C}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c/2}{x^4}
-\,z^{-2s+2},
-\]
-because $\langle T(x)T(0)\rangle=\frac{c/2}{x^4}$ by
-assumption~\textup{(iii)}.  Matching the
-$x^{-4}z^{-2s+2}$ coefficient gives
-\[
-\mathsf{C}_{s,s;2;0,\,2s-2}(N)\cdot \frac{c}{2}=c.
-\]
-Since $c\neq 0$, the coefficient is $2$.
+Write $N_s:=c/s$.  The Virasoro Ward identity for $\langle T(x)A(z)A(0)\rangle$ with $A:=W^{(s)}$ has $x^{-4}z^{-2s+2}$ coefficient equal to $sN_s=c$.  The only undifferentiated $T$-contribution at the top pole $2s-2$ gives $\mathsf{C}_{s,s;2;0,2s-2}\cdot c/2$.  Matching and dividing by $c\neq 0$ yields $\mathsf{C}_{s,s;2;0,2s-2}=2$.
 \end{proof}
 
 \begin{proposition}[Formal converse: the universal self-coupling
@@ -7569,55 +7007,7 @@ $W^{(s)}$ are equivalent.
 \end{proposition}
 
 \begin{proof}
-Write $A:=W^{(s)}$ and set
-\[
-F(z,w):=\langle A(z)A(w)\rangle.
-\]
-Because $A$ is Virasoro-primary of weight $s$ and $T$ acts by the
-standard Ward identity, the same global conformal equations used in
-Proposition~\ref{prop:winfty-stage4-visible-orthogonality} with
-$s=t$ imply
-\[
-F(z,w)=N_s(z-w)^{-2s}
-\]
-for some scalar $N_s$.  Setting $w=0$, one has
-\[
-\langle A(z)A(0)\rangle=N_s z^{-2s}.
-\]
-
-Applying the Virasoro Ward identity to
-\(
-\langle T(x)A(z)A(0)\rangle
-\)
-and expanding in the region $|x|>|z|>|0|$, exactly as in the proof of
-Proposition~\ref{prop:winfty-formal-self-t-coefficient}, shows that the
-coefficient of $x^{-4}z^{-2s+2}$ on the Ward-identity side is
-\[
-sN_s.
-\]
-
-Because the local OPE is decomposed into conformal families of primary
-generators and descendants, the only undifferentiated stress-tensor
-contribution comes from the top pole, with coefficient
-\[
-\mathsf{C}_{s,s;2;0,\,2s-2}(N)=2.
-\]
-Pairing that term with $T(x)$ contributes
-\[
-2\cdot \frac{c/2}{x^4}\,z^{-2s+2}
-=
-\frac{c}{x^4}\,z^{-2s+2},
-\]
-because $\langle T(x)T(0)\rangle=\frac{c/2}{x^4}$ by
-assumption~\textup{(ii)}.  Matching coefficients gives
-\[
-sN_s=c.
-\]
-Since $s\neq 0$, this yields
-\[
-N_s=\frac{c}{s},
-\]
-which is the claimed normalization.
+Global conformal invariance forces $\langle A(z)A(0)\rangle = N_s z^{-2s}$.  The Ward-identity computation of Proposition~\ref{prop:winfty-formal-self-t-coefficient} gives $x^{-4}z^{-2s+2}$ coefficient $sN_s$ on one side and $\mathsf{C}_{s,s;2;0,2s-2}\cdot c/2 = c$ on the other.  Matching gives $N_s = c/s$.
 \end{proof}
 
 \begin{proposition}[Principal Drinfeld--Sokolov self-coupling
@@ -7715,23 +7105,7 @@ Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-ds-stage4-mixed-self-split} separates the
-stage-$4$ packet into the three self-coupling scalars and the mixed
-$(3,4)$ triple.  Corollary~\ref{cor:winfty-ds-stage4-mixed-two-channel}
-replaces that triple by one residue-side vanishing check in the
-$W^{(2)}$ target channel together with the swap-even $W^{(3)}$ channel
-and the swap-odd $W^{(4)}$ channel.  Corollary~\ref{cor:winfty-ds-stage4-self-t-normalization}
-fixes the principal self-coupling coefficient
-\[
-\mathsf{C}^{\mathrm{DS}}_{4,4;2;0,6}
-\]
-to the universal value `2`, so that channel becomes a theorematic
-principal Virasoro-target value rather than additional higher-spin
-target data.  Combining the three reductions gives the displayed
-principal decomposition, and therefore the six-entry identity packet
-with two Virasoro-target channels whose residue-side contraction is
-handled separately by
-Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
+Combine the mixed-self split (Corollary~\ref{cor:winfty-ds-stage4-mixed-self-split}), the mixed two-channel reduction (Corollary~\ref{cor:winfty-ds-stage4-mixed-two-channel}), and the universal $T$-coupling normalization (Corollary~\ref{cor:winfty-ds-stage4-self-t-normalization}).
 \end{proof}
 
 \begin{proposition}[Exact MC4 frontier packet for the standard
@@ -7791,19 +7165,7 @@ displayed six-entry identity form on~$\mathcal{I}_4$.
 \end{proposition}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-hlevel-comparison-criterion} reduces the
-comparison with the standard principal-stage tower to identifying the
-finite quotients of $\mathcal{W}^{\mathrm{ht}}$ with the stages $W_N$.
-Under the translation-compatibility hypothesis,
-Proposition~\ref{prop:winfty-ds-generator-seed} and
-Corollary~\ref{cor:winfty-ds-finite-seed-set} reduce that stagewise
-identification to the finite seed packets $\mathcal{I}_N$, proving
-\textup{(1)}.  Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}
-gives \textup{(2)}.  Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}
-gives \textup{(3)} by combining the theorematic mixed-channel
-vanishing, the universal self-coupling normalization, and the parity
-compression of the residual stage-$4$ block.  The final sentence is a
-reformulation of these three reductions.
+\textup{(1)}: Corollary~\ref{cor:winfty-hlevel-comparison-criterion} plus Proposition~\ref{prop:winfty-ds-generator-seed} and Corollary~\ref{cor:winfty-ds-finite-seed-set}.  \textup{(2)}: Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}.  \textup{(3)}: Corollary~\ref{cor:winfty-ds-stage4-five-plus-zero}.
 \end{proof}
 
 \begin{corollary}[Minimal closure criterion for the standard
@@ -7928,27 +7290,7 @@ in the channels
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:winfty-mc4-frontier-package} identifies the
-stage-$4$ frontier as the six-entry identity packet on~$\mathcal{I}_4$.
-Assuming the additional stage-$4$ Ward-normalized input,
-Proposition~\ref{prop:winfty-stage4-visible-orthogonality} gives the
-required mixed-weight orthogonality on the visible generators, and
-Proposition~\ref{prop:winfty-stage4-visible-w3-normalization} supplies
-the theorematic $W^{(3)}$ self-normalization.  Thus the visible
-stage-$4$ quotient residue calculus satisfies the hypotheses of
-Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero}.  Applying
-that proposition to the stage-$4$ residue calculus gives
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0,
-\]
-and applying
-Proposition~\ref{prop:winfty-formal-self-t-coefficient} with $s=4$
-gives
-\[
-\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
-\]
-Removing these two theorematic Virasoro-target channels leaves exactly
-the four displayed higher-spin identities.
+The Ward-normalized input supplies the hypotheses of Propositions~\ref{prop:winfty-formal-mixed-virasoro-zero} and~\ref{prop:winfty-formal-self-t-coefficient}, fixing the two Virasoro-target channels; removing them leaves four higher-spin identities.
 \end{proof}
 
 \begin{proposition}[Exact missing input for the unconditional
@@ -7983,39 +7325,7 @@ single scalar identity
 \end{proposition}
 
 \begin{proof}
-By Proposition~\ref{prop:winfty-stage4-visible-orthogonality},
-mixed-weight orthogonality on the visible generators already follows
-from the stated Virasoro-primary/Ward hypotheses.
-
-By Proposition~\ref{prop:winfty-stage4-visible-w3-normalization}, the
-visible stage-$4$ residue calculus already satisfies
-\[
-\langle W^{(3)}(z)W^{(3)}(0)\rangle=\frac{c/3}{z^{6}}.
-\]
-The standard Virasoro Ward action on $T=W^{(2)}$ also fixes the stress
-tensor normalization
-\[
-\langle T(z)T(0)\rangle=\frac{c/2}{z^4}.
-\]
-
-Under the stated Ward hypothesis,
-Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} reduces the
-mixed Virasoro-target identity
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;2;0,5}(4)=0
-\]
-to mixed-weight orthogonality together with the stress-tensor
-normalization.  Under the same Ward hypothesis,
-Proposition~\ref{prop:winfty-formal-self-t-coefficient} reduces the
-self-coupling identity
-\[
-\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2
-\]
-to the displayed weight-$4$ self-pairing normalization, with the same
-stress-tensor normalization already built into the visible Virasoro
-package.  Therefore, once the visible Ward action is fixed, the only
-additional input used by the formal reduction lemmas is the displayed
-weight-$4$ normalization.
+Mixed-weight orthogonality and $W^{(3)}$ normalization are already forced (Propositions~\ref{prop:winfty-stage4-visible-orthogonality} and~\ref{prop:winfty-stage4-visible-w3-normalization}).  The mixed vanishing follows from Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero}; the self-coupling identity reduces via Proposition~\ref{prop:winfty-formal-self-t-coefficient} to the weight-$4$ normalization.
 \end{proof}
 
 \begin{definition}[Stage-\texorpdfstring{$4$}{4} Ward-normalized standard
@@ -8093,50 +7403,10 @@ visible generators:
 \end{proposition}
 
 \begin{proof}
-For $2\le s,t\le4$, write
-\[
-F_{s,t}(z,w):=
-\langle W^{(s)}(z)W^{(t)}(w)\rangle.
-\]
-Because the visible generators are Virasoro-primary and $T$ acts by the
-standard Ward identity, the coefficients of $x^{-1}$, $x^{-2}$, and
-$x^{-3}$ in the three-point function
-\(
-\langle T(x)W^{(s)}(z)W^{(t)}(w)\rangle
-\)
-vanish.  Equivalently, the two-point function satisfies the global
-conformal equations
-\[
-(\partial_z+\partial_w)F_{s,t}=0,
-\]
-\[
-(z\partial_z+w\partial_w+s+t)F_{s,t}=0,
-\]
-\[
-(z^2\partial_z+w^2\partial_w+2sz+2tw)F_{s,t}=0.
-\]
-The translation equation gives
-\(
-F_{s,t}(z,w)=f_{s,t}(z-w)
-\)
-for some meromorphic function $f_{s,t}$.  Setting $w=0$, the dilation
-equation becomes
-\[
-u f'_{s,t}(u)+(s+t)f_{s,t}(u)=0,
-\qquad u:=z-w,
-\]
-so
-\[
-f_{s,t}(u)=C_{s,t}u^{-(s+t)}.
-\]
-Substituting this into the special-conformal equation with $w=0$ gives
-\[
-0=
-u^2 f'_{s,t}(u)+2s u f_{s,t}(u)
-=(s-t)C_{s,t}u^{-s-t+1}.
-\]
-Hence $C_{s,t}=0$ whenever $s\neq t$, proving the claimed
-mixed-weight orthogonality.
+The global conformal Ward identities force
+$\langle W^{(s)}(z)W^{(t)}(w)\rangle = C_{s,t}(z-w)^{-(s+t)}$;
+the special conformal equation gives $(s-t)C_{s,t}=0$,
+so $C_{s,t}=0$ whenever $s\neq t$.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible
@@ -8160,38 +7430,7 @@ is already theorematic, and hence
 \end{proposition}
 
 \begin{proof}
-The tuple
-\[
-(3,3,2,4)
-\]
-lies in the stage-$4$ seed subset
-\[
-\mathcal{I}_4^{W_3}
-=
-\{(3,3,u,n)\in\mathcal{I}_4 \mid u\le 3\}
-\]
-from Proposition~\ref{prop:winfty-ds-stage4-residual-packet}.  That
-proposition states that every coefficient indexed by
-\(\mathcal{I}_4^{W_3}\) is already determined by the explicit
-stage-$3$ \(W_3\) packet of
-Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}.  Under
-Proposition~\ref{prop:winfty-mc4-frontier-package}, the stage-$3$
-packet is theorematically fixed, and
-Proposition~\ref{prop:winfty-ds-stage3-explicit-packet} gives the
-explicit value
-\[
-\mathsf{C}^{\mathrm{DS}}_{3,3;2;0,4}(3)=2.
-\]
-Hence the corresponding visible stage-$4$ residue coefficient is
-\[
-\mathsf{C}^{\mathrm{res}}_{3,3;2;0,4}(4)=2.
-\]
-Applying
-Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with
-$s=3$ and the standard stage-$4$ Virasoro Ward package then gives
-\[
-\langle W^{(3)}(z)W^{(3)}(0)\rangle=\frac{c/3}{z^6}.
-\]
+The tuple $(3,3,2,4)\in\mathcal{I}_4^{W_3}$ is fixed by the theorematic stage-$3$ packet (Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}): $\mathsf{C}^{\mathrm{res}}_{3,3;2;0,4}(4)=2$.  Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with $s=3$ then gives the displayed normalization.
 \end{proof}
 
 \begin{conjecture}[Stage-\texorpdfstring{$4$}{4} visible weight-\texorpdfstring{$4$}{4} normalization]
@@ -8345,45 +7584,7 @@ Equivalently,
 \end{proposition}
 
 \begin{proof}
-Apply assumption~\textup{(ii)} with
-\(a=W^{(3)}\) and \(b=W^{(4)}\).  The \((3,3)\)-block coefficient is
-defined by
-\[
-W^{(3)}_{(1)}W^{(3)}
-=
-\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\,W^{(4)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-while the swap-even mixed coefficient is defined by
-\[
-W^{(3)}_{(3)}W^{(4)}
-=
-\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\,W^{(3)}
-\quad\textup{mod lower-weight visible channels and descendants}.
-\]
-By weight orthogonality and the visible normalization from
-assumption~\textup{(i)}, pairing these equations with \(W^{(4)}\) and
-\(W^{(3)}\), respectively, gives
-\[
-\bigl(W^{(3)}_{(1)}W^{(3)},W^{(4)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\,\frac{c}{4},
-\]
-and
-\[
-\bigl(W^{(3)},W^{(3)}_{(3)}W^{(4)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\,\frac{c}{3}.
-\]
-The invariant-pairing identity of assumption~\textup{(ii)} therefore
-becomes
-\[
-\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\,\frac{c}{4}
-=
--\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\,\frac{c}{3}.
-\]
-Since \(c\neq 0\), rearranging gives the displayed linear identity, and
-squaring gives the square-class form.
+Apply the $W^{(3)}$ invariant-pairing identity with $a=W^{(3)}$, $b=W^{(4)}$: mode $1$ produces $\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}\cdot c/4$, the complementary mode $3$ produces $\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}\cdot c/3$, and the sign is negative ($W^{(3)}$ odd weight).  Since $c\neq 0$, rearranging gives the displayed identity.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} residue packet as three higher-spin
@@ -8409,19 +7610,7 @@ Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}.
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage4-residue-four-channel} leaves exactly
-the four higher-spin channels
-\[
-(3,3;4;0,2),\quad
-(4,4;4;0,4),\quad
-(3,4;3;0,4),\quad
-(3,4;4;0,3)
-\]
-on the stage-$4$ Ward-normalized locus.  By
-Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}, the
-swap-even channel \((3,4;3;0,4)\) is determined by
-\((3,3;4;0,2)\).  Removing that forced channel leaves exactly the
-displayed three-channel block.
+Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction} forces $(3,4;3;0,4)$ from $(3,3;4;0,2)$; removing it leaves three channels.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} higher-spin comparison as a
@@ -8469,15 +7658,8 @@ together with the swap-odd \(W^{(4)}\)-transport square
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage4-residue-four-channel} identifies the
-four higher-spin stage-$4$ identities.  On the visible pairing locus,
-Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction} gives
-\[
-\bigl(\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4}(4)\bigr)^2
-=
-\tfrac{9}{16}\,
-\bigl(\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\bigr)^2.
-\]
+On the visible pairing locus, Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction} gives
+$(\mathsf{C}^{\mathrm{res}}_{3,4;3;0,4})^2 = \tfrac{9}{16}(\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2})^2$.
 On the principal side,
 Corollary~\ref{cor:w4-ds-stage4-square-class-reduction} gives
 \[
@@ -8587,42 +7769,7 @@ Drinfeld--Sokolov side.
 \end{corollary}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple}
-reduces the stage-$4$ higher-spin comparison on the visible pairing
-locus to the primitive-plus-transport triple
-\[
-(3,3;4;0,2),\qquad
-(4,4;4;0,4),\qquad
-(3,4;4;0,3).
-\]
-\textup{(i)} identifies the remaining transport square with the
-\((3,3)\)-square.  Since
-Corollary~\ref{cor:w4-ds-stage4-square-class-reduction} gives the same
-\(\tfrac{5}{7}\)-ratio on the principal side, the transport square
-identity in
-Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple}
-becomes automatic once
-\[
-\bigl(\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\bigr)^2
-=
-c_{334}^{\,2}
-\]
-holds.  Thus \textup{(i)} implies \textup{(ii)}.
-
-Conversely, if \textup{(ii)} holds, then the transport square identity
-of
-Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple}
-must already follow from the displayed primitive pair alone.  Using the
-first primitive identity together with the principal target formula
-\[
-\mathsf{C}_{3,4;4;0,3}^{\,2}
-=
-\tfrac{5}{7}\,c_{334}^{\,2}
-\]
-from
-Corollary~\ref{cor:w4-ds-stage4-square-class-reduction} recovers
-\textup{(i)}.  The final sentence is a reformulation of either
-equivalent condition.
+\textup{(i)}$\Rightarrow$\textup{(ii)}: the $\tfrac{5}{7}$-ratio from Corollary~\ref{cor:w4-ds-stage4-square-class-reduction} makes the transport square automatic once the $(3,3)$ primitive identity holds.  \textup{(ii)}$\Rightarrow$\textup{(i)}: the same principal formula recovers the transport relation.
 \end{proof}
 
 \begin{proposition}[Exact local attack order for the stage-\texorpdfstring{$4$}{4}
@@ -8664,62 +7811,11 @@ transport problem.
 \end{proposition}
 
 \begin{proof}
-By Corollary~\ref{cor:winfty-stage4-single-scalar-equivalent}, under
-the stated visible Virasoro package the exact remaining input for the
-four-channel refinement is the single scalar identity
-\[
-\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2,
-\]
-equivalently the visible weight-$4$ normalization.  This proves
-\textup{(i)}.
-
-Assume now the additional visible pairing hypotheses of
-Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}.  Then
-Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple}
-reduces the higher-spin square comparison to the primitive-plus-transport
-triple
-\[
-(3,3;4;0,2),\qquad
-(4,4;4;0,4),\qquad
-(3,4;4;0,3),
-\]
-and
-Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive}
-shows that the displayed transport relation is exactly equivalent to
-closing that triple to the principal two-primitive square profile. This
-proves \textup{(ii)} and the final sentence.
+\textup{(i)}: Corollary~\ref{cor:winfty-stage4-single-scalar-equivalent}.  \textup{(ii)}: Corollary~\ref{cor:winfty-stage4-primitive-transport-square-triple} reduces to the primitive-plus-transport triple; Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive} closes it.
 \end{proof}
 
 \begin{remark}[Scope of the stage-4 Ward-inheritance conjecture]
-The open issue is structural, not coefficient-theoretic.  The
-principal stage-$4$ values are already explicit by
-Proposition~\ref{prop:w4-ds-ope-explicit}.  What remains unknown is
-whether the quotient-system and factorization hypotheses already force
-the visible weight-$4$ normalization of
-Conjecture~\ref{conj:winfty-stage4-visible-diagonal-normalization}.
-Mixed-weight orthogonality is formal from the Virasoro-primary/Ward
-hypotheses by
-Proposition~\ref{prop:winfty-stage4-visible-orthogonality}.  If the
-visible weight-$4$ normalization is forced as well, then
-Conjecture~\ref{conj:winfty-stage4-ward-inheritance} makes the
-four-channel refinement automatic; if it is not, then
-Definition~\ref{def:winfty-stage4-ward-normalized} is the exact
-additional H-level input.
-
-This normalization gap is distinct from the higher-spin transport gap
-isolated in
-Remark~\ref{rem:winfty-stage4-primitive-transport-gap} and packaged by
-Conjecture~\ref{conj:winfty-stage4-visible-borcherds-transport}.  The
-Ward-inheritance conjecture concerns the Virasoro-target normalization
-\[
-\mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2,
-\]
-while the visible Borcherds transport conjecture concerns the
-swap-odd \(W^{(4)}\)-transport square inside the higher-spin sector.
-If both are forced, then
-Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive}
-brings the stage-$4$ residue comparison down to the principal
-two-primitive square-class profile.
+The principal values are already explicit (Proposition~\ref{prop:w4-ds-ope-explicit}).  The open issue is whether the quotient-system hypotheses force the visible weight-$4$ normalization (Conjecture~\ref{conj:winfty-stage4-visible-diagonal-normalization}).  This is distinct from the higher-spin Borcherds transport gap (Conjecture~\ref{conj:winfty-stage4-visible-borcherds-transport}); if both are forced, the stage-$4$ comparison reduces to two primitive square classes (Corollary~\ref{cor:winfty-stage4-visible-borcherds-two-primitive}).
 \end{remark}
 
 \begin{proposition}[Uniform Virasoro-target contraction of reduced
@@ -8774,29 +7870,7 @@ Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 \end{proposition}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-ds-stage-growth-top-parity} identifies the
-reduced incremental packet
-$\mathcal{J}_{N+1}^{\mathrm{red}}$.  Inside the mixed block
-$\mathcal{J}_{N+1}^{\mathrm{mix}}$, the only target-$2$ top-pole
-channel is
-\[
-(s,N{+}1;2;0,s+N-1)
-\]
-for each $3\le s\le N$.  Applying
-Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} to each such
-mixed source pair gives the displayed vanishing statements.
-
-Inside the self block
-$\mathcal{J}_{N+1}^{\mathrm{self}}$, the unique target-$2$ top-pole
-channel is
-\[
-(N{+}1,N{+}1;2;0,2N).
-\]
-Applying
-Proposition~\ref{prop:winfty-formal-self-t-coefficient} with $s=N+1$
-gives the universal value `2'.  Removing these target-$2$ channels from
-$\mathcal{J}_{N+1}^{\mathrm{red}}$ leaves exactly the displayed
-higher-spin packet.
+Proposition~\ref{prop:winfty-formal-mixed-virasoro-zero} kills each mixed target-$2$ channel $(s,N{+}1;2;0,s+N-1)$; Proposition~\ref{prop:winfty-formal-self-t-coefficient} fixes the self target-$2$ channel to $2$.  Removing these leaves $\mathcal{J}_{N+1}^{\mathrm{hs}}$.
 \end{proof}
 
 \begin{corollary}[First reduced stage beyond
@@ -8954,211 +8028,46 @@ This is a regrouping of the explicit packet displayed in
 Corollary~\ref{cor:winfty-stage5-higher-spin-packet} by source pair.
 \end{proof}
 
-\begin{remark}[First local subproblems inside
-\texorpdfstring{$\mathcal{J}_5^{\mathrm{hs}}$}{J5 hs}]
+% Singleton blocks $(3,4)$ and $(5,5)$ are smallest; new transport content is in $(3,5)$ and $(4,5)$.
 \label{rem:winfty-stage5-first-subproblems}
-The singleton source-pair blocks
-$\mathcal{J}_5^{(3,4)}$ and $\mathcal{J}_5^{(5,5)}$ are the smallest
-stage-$5$ higher-spin subproblems.  The genuinely new mixed transport
-content sits in the two three-channel blocks
-$\mathcal{J}_5^{(3,5)}$ and $\mathcal{J}_5^{(4,5)}$.
-\end{remark}
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} entry packet and mixed transport packet;
 \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-entry-transport}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-higher-spin-subblocks}.  Define
-\[
-\mathcal{J}_5^{\mathrm{entry}}
-:=
-\mathcal{J}_5^{(3,4)}
-\sqcup
-\mathcal{J}_5^{(5,5)},
-\qquad
-\mathcal{J}_5^{\mathrm{tr}}
-:=
-\mathcal{J}_5^{(3,5)}
-\sqcup
-\mathcal{J}_5^{(4,5)}.
-\]
-Then
-\[
-\mathcal{J}_5^{\mathrm{hs}}
-=
-\mathcal{J}_5^{\mathrm{entry}}
-\sqcup
-\mathcal{J}_5^{\mathrm{tr}},
-\qquad
-|\mathcal{J}_5^{\mathrm{entry}}|=2,
-\qquad
-|\mathcal{J}_5^{\mathrm{tr}}|=6.
-\]
-Explicitly,
-\[
-\mathcal{J}_5^{\mathrm{entry}}
-=
-\bigl\{
-(3,4;5;0,2),\,
-(5,5;4;0,6)
-\bigr\},
-\]
-\[
-\mathcal{J}_5^{\mathrm{tr}}
-=
-\bigl\{
-(3,5;3;0,5),\,
-(3,5;4;0,4),\,
-(3,5;5;0,3),\,
-(4,5;3;0,6),\,
-(4,5;4;0,5),\,
-(4,5;5;0,4)
-\bigr\}.
-\]
+Define $\mathcal{J}_5^{\mathrm{entry}}:=\mathcal{J}_5^{(3,4)}\sqcup\mathcal{J}_5^{(5,5)}$ and $\mathcal{J}_5^{\mathrm{tr}}:=\mathcal{J}_5^{(3,5)}\sqcup\mathcal{J}_5^{(4,5)}$.
+Then $\mathcal{J}_5^{\mathrm{hs}}=\mathcal{J}_5^{\mathrm{entry}}\sqcup\mathcal{J}_5^{\mathrm{tr}}$
+with $|\mathcal{J}_5^{\mathrm{entry}}|=2$ and $|\mathcal{J}_5^{\mathrm{tr}}|=6$.
 \end{corollary}
-
-\begin{proof}
-This is the regrouping of
-Proposition~\ref{prop:winfty-stage5-higher-spin-subblocks} into the
-singleton subblocks and the two mixed triples.
-\end{proof}
 
 \begin{corollary}[Entry packet as two singleton channels;
 \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-entry-singletons}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-entry-transport}.  Then
 \[
 \mathcal{J}_5^{\mathrm{entry}}
-=
-\bigl\{
-(3,4;5;0,2),\,
-(5,5;4;0,6)
-\bigr\},
-\]
-so the stage-$5$ entry-packet conjecture is exactly the conjunction of
-the singleton channel identities
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
-=
-\mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5),
-\qquad
-\mathsf{C}^{\mathrm{res}}_{5,5;4;0,6}(5)
-=
-\mathsf{C}^{\mathrm{DS}}_{5,5;4;0,6}(5).
+=\bigl\{(3,4;5;0,2),\,(5,5;4;0,6)\bigr\}.
 \]
 \end{corollary}
-
-\begin{proof}
-This is the explicit description of
-$\mathcal{J}_5^{\mathrm{entry}}$ already displayed in
-Corollary~\ref{cor:winfty-stage5-entry-transport}.
-\end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} entry packet as mixed-entry and
 self-return singletons; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-entry-mixed-self}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-entry-singletons}.  Define
-\[
-\mathcal{J}_5^{\mathrm{ent,mix}}
-:=
-\bigl\{
-(3,4;5;0,2)
-\bigr\},
-\qquad
-\mathcal{J}_5^{\mathrm{ent,self}}
-:=
-\bigl\{
-(5,5;4;0,6)
-\bigr\}.
-\]
-Then
-\[
-\mathcal{J}_5^{\mathrm{entry}}
-=
-\mathcal{J}_5^{\mathrm{ent,mix}}
-\sqcup
-\mathcal{J}_5^{\mathrm{ent,self}},
-\qquad
-|\mathcal{J}_5^{\mathrm{ent,mix}}|
-=
-|\mathcal{J}_5^{\mathrm{ent,self}}|
-=
-1.
-\]
+Define $\mathcal{J}_5^{\mathrm{ent,mix}}:=\bigl\{(3,4;5;0,2)\bigr\}$ and
+$\mathcal{J}_5^{\mathrm{ent,self}}:=\bigl\{(5,5;4;0,6)\bigr\}$.
+Then $\mathcal{J}_5^{\mathrm{entry}}=\mathcal{J}_5^{\mathrm{ent,mix}}\sqcup\mathcal{J}_5^{\mathrm{ent,self}}$.
 \end{proposition}
-
-\begin{proof}
-This is the explicit description of
-$\mathcal{J}_5^{\mathrm{entry}}$ from
-Corollary~\ref{cor:winfty-stage5-entry-singletons}, regrouped into its
-mixed and self singleton channels.
-\end{proof}
 
 \begin{proposition}[Exact reduced tail input at stage~\texorpdfstring{$5$}{5};
 \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-reduced-tail-singleton}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-ds-stage5-reduced-packet}.  Define
-\[
-\mathcal{J}_5^{\mathrm{tail,red}}
-:=
-\bigl\{
-(3,4;5;0,2)
-\bigr\}.
-\]
-Then $\mathcal{J}_5^{\mathrm{tail,red}}$ is exactly the reduced tail
-block inside $\mathcal{J}_5^{\mathrm{red}}$.  Equivalently, once the
-stage-$4$ packet identities on~$\mathcal{I}_4$ are fixed, the exact new
-tail comparison input at stage~$5$ is the single identity
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
-=
-\mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5).
-\]
+The reduced tail block $\mathcal{J}_5^{\mathrm{tail,red}}:=\bigl\{(3,4;5;0,2)\bigr\}$ is the unique tail entry surviving top-pole/parity reduction in $\mathcal{J}_5^{\mathrm{red}}$.
 \end{proposition}
-
-\begin{proof}
-Corollary~\ref{cor:winfty-ds-stage5-reduced-packet} identifies the
-reduced stage-$5$ packet explicitly and shows that the tail part
-surviving top-pole/parity reduction is precisely the singleton
-$(3,4;5;0,2)$.
-\end{proof}
 
 \begin{proposition}[Exact missing mechanism for the reduced stage-\texorpdfstring{$5$}{5}
 tail singleton; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-tail-mechanism}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-reduced-tail-singleton}.  Then,
-once the stage-$4$ packet identities on~$\mathcal{I}_4$ are fixed, the
-exact missing comparison mechanism for the reduced tail block is the
-comparison of the new generator $W^{(5)}$ inside the old-generator
-mixed OPE
-\[
-W^{(3)}(z)W^{(4)}(w),
-\]
-namely the single top-pole primary coefficient
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
-=
-\mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5).
-\]
-Equivalently, the stage-$5$ reduced tail problem is exactly the problem
-of matching the $W^{(5)}$-projection in the top pole of the
-$W^{(3)}$-$W^{(4)}$ OPE.
+Once the stage-$4$ packet is fixed, the reduced tail problem is matching the $W^{(5)}$-projection in the top pole of $W^{(3)}(z)W^{(4)}(w)$:
+$\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)=\mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5)$.
 \end{proposition}
-
-\begin{proof}
-By Proposition~\ref{prop:winfty-ds-stage-growth-packet}, the tail block
-at stage~$5$ is the part of the new interacting packet with old source
-pairs and target spin $5$.  Corollary~\ref{cor:winfty-ds-stage5-reduced-packet}
-and Proposition~\ref{prop:winfty-stage5-reduced-tail-singleton} show
-that after top-pole/parity reduction only the single mixed coefficient
-$(3,4;5;0,2)$ survives in that block.  This is exactly the displayed
-$W^{(5)}$-projection in the top pole of
-$W^{(3)}(z)W^{(4)}(w)$.
-\end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} mixed transport packet as three
 fixed-target ladders; \ClaimStatusProvedHere]
@@ -9207,153 +8116,81 @@ with
 \end{proposition}
 
 \begin{proof}
-This is the regrouping of the six-channel packet
-$\mathcal{J}_5^{\mathrm{tr}}$ by target spin.
+Regroup $\mathcal{J}_5^{\mathrm{tr}}$ by target spin.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} higher-spin packet by target spin;
 \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-higher-spin-target-blocks}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-higher-spin-packet}.  Define
-\[
+Under the hypotheses of
+Corollary~\ref{cor:winfty-stage5-higher-spin-packet}, define
+\begin{gather*}
 \mathcal{J}_5^{u=3}
 :=
-\bigl\{
-(3,5;3;0,5),\,
-(4,5;3;0,6)
-\bigr\},
-\]
-\[
+\bigl\{(3,5;3;0,5),\,(4,5;3;0,6)\bigr\},\quad
 \mathcal{J}_5^{u=4}
 :=
-\bigl\{
-(3,5;4;0,4),\,
-(4,5;4;0,5),\,
-(5,5;4;0,6)
-\bigr\},
-\]
-\[
+\bigl\{(3,5;4;0,4),\,(4,5;4;0,5),\,(5,5;4;0,6)\bigr\},\\
 \mathcal{J}_5^{u=5}
 :=
-\bigl\{
-(3,4;5;0,2),\,
-(3,5;5;0,3),\,
-(4,5;5;0,4)
-\bigr\}.
-\]
+\bigl\{(3,4;5;0,2),\,(3,5;5;0,3),\,(4,5;5;0,4)\bigr\}.
+\end{gather*}
 Then
-\[
-\mathcal{J}_5^{\mathrm{hs}}
+$\mathcal{J}_5^{\mathrm{hs}}
 =
 \mathcal{J}_5^{u=3}
 \sqcup
 \mathcal{J}_5^{u=4}
 \sqcup
-\mathcal{J}_5^{u=5},
-\]
-with
-\[
-|\mathcal{J}_5^{u=3}|=2,\qquad
-|\mathcal{J}_5^{u=4}|=3,\qquad
-|\mathcal{J}_5^{u=5}|=3.
-\]
+\mathcal{J}_5^{u=5}$,
+with cardinalities $2$, $3$, $3$.
 \end{proposition}
 
 \begin{proof}
-This is the regrouping of the explicit packet
-$\mathcal{J}_5^{\mathrm{hs}}$ by target spin.
+Regroup $\mathcal{J}_5^{\mathrm{hs}}$ by target spin.
 \end{proof}
+
+The target-$5$ corridor, residual continuation, and singleton decompositions
+follow by straightforward set-theoretic regrouping.
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor;
 \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-target5-corridor}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-higher-spin-target-blocks},
-Proposition~\ref{prop:winfty-stage5-reduced-tail-singleton}, and
-Proposition~\ref{prop:winfty-stage5-transport-target-ladders}.  Then
-\[
-\mathcal{J}_5^{u=5}
+$\mathcal{J}_5^{u=5}
 =
 \mathcal{J}_5^{\mathrm{tail,red}}
 \sqcup
-\mathcal{J}_5^{\mathrm{tr},5}.
-\]
-Explicitly,
-\[
-\mathcal{J}_5^{u=5}
+\mathcal{J}_5^{\mathrm{tr},5}
 =
 \bigl\{
 (3,4;5;0,2),\,
 (3,5;5;0,3),\,
 (4,5;5;0,4)
-\bigr\},
-\]
-so the target-$5$ corridor has cardinality
-\[
-|\mathcal{J}_5^{u=5}|=1+2
-\]
-and is supported at the consecutive pole orders
-\[
-2,\qquad 3,\qquad 4.
-\]
+\bigr\}$,
+supported at consecutive pole orders $2,3,4$.
 \end{corollary}
-
-\begin{proof}
-The definition of $\mathcal{J}_5^{u=5}$ in
-Proposition~\ref{prop:winfty-stage5-higher-spin-target-blocks}
-contains exactly the mixed-entry singleton of
-Proposition~\ref{prop:winfty-stage5-entry-mixed-self} together with the
-two channels of the target-$5$ ladder in
-Proposition~\ref{prop:winfty-stage5-transport-target-ladders}.
-\end{proof}
 
 \begin{corollary}[Residual target-\texorpdfstring{$5$}{5} continuation after the tail
 singleton; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-target5-residual}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-target5-corridor}.  Then
-\[
-\mathcal{J}_5^{u=5}\setminus \mathcal{J}_5^{\mathrm{tail,red}}
+After matching the tail singleton,
+$\mathcal{J}_5^{u=5}\setminus \mathcal{J}_5^{\mathrm{tail,red}}
 =
-\mathcal{J}_5^{\mathrm{tr},5}.
-\]
-Equivalently, after the singleton comparison input
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
-=
-\mathsf{C}^{\mathrm{DS}}_{3,4;5;0,2}(5)
-\]
-is matched, the residual target-$5$ comparison problem is exactly the
-two-channel ladder
-\[
 \mathcal{J}_5^{\mathrm{tr},5}
 =
 \bigl\{
 (3,5;5;0,3),\,
 (4,5;5;0,4)
-\bigr\}.
-\]
+\bigr\}$.
 \end{corollary}
-
-\begin{proof}
-This is the set-theoretic complement statement inside the decomposition
-of Corollary~\ref{cor:winfty-stage5-target5-corridor}.
-\end{proof}
 
 \begin{proposition}[Residual target-\texorpdfstring{$5$}{5} continuation as mixed transport
 of the new generator; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-target5-transport-mechanism}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-target5-residual}.  Then the residual
-continuation after the tail singleton is exactly the comparison of the
-new generator $W^{(5)}$ inside the two mixed OPEs
-\[
-W^{(3)}(z)W^{(5)}(w),
-\qquad
-W^{(4)}(z)W^{(5)}(w),
-\]
-namely the pair of top-pole primary coefficients
+Under the hypotheses of
+Corollary~\ref{cor:winfty-stage5-target5-residual}, the residual
+target-$5$ corridor is the comparison of $W^{(5)}$ inside
+$W^{(3)}(z)W^{(5)}(w)$ and $W^{(4)}(z)W^{(5)}(w)$:
 \[
 \mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)
 =
@@ -9363,112 +8200,42 @@ namely the pair of top-pole primary coefficients
 =
 \mathsf{C}^{\mathrm{DS}}_{4,5;5;0,4}(5).
 \]
-Equivalently, after the reduced tail singleton is matched, the residual
-target-$5$ corridor is exactly the mixed transport of the new generator
-$W^{(5)}$ against the old generators $W^{(3)}$ and $W^{(4)}$.
 \end{proposition}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage5-target5-residual} identifies the
-residual target-$5$ comparison problem with the two-channel ladder
-$\mathcal{J}_5^{\mathrm{tr},5}$.  By the definition of
-Proposition~\ref{prop:winfty-stage5-transport-target-ladders}, those two
-channels are exactly $(3,5;5;0,3)$ and $(4,5;5;0,4)$, which are the
-top-pole $W^{(5)}$-coefficients in the two displayed mixed OPEs.
+These are the top-pole $W^{(5)}$-coefficients in
+$\mathcal{J}_5^{\mathrm{tr},5}$.
 \end{proof}
 
 \begin{proposition}[Residual target-\texorpdfstring{$5$}{5} continuation as two singleton
 transport channels; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-target5-transport-singletons}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-target5-transport-mechanism}.
 Define
-\[
-{\mathcal{J}_5^{\mathrm{tr},5}}_{(3,5)}
+${\mathcal{J}_5^{\mathrm{tr},5}}_{(3,5)}
 :=
-\bigl\{
-(3,5;5;0,3)
-\bigr\},
-\qquad
-{\mathcal{J}_5^{\mathrm{tr},5}}_{(4,5)}
+\bigl\{(3,5;5;0,3)\bigr\}$ and
+${\mathcal{J}_5^{\mathrm{tr},5}}_{(4,5)}
 :=
-\bigl\{
-(4,5;5;0,4)
-\bigr\}.
-\]
+\bigl\{(4,5;5;0,4)\bigr\}$.
 Then
-\[
-\mathcal{J}_5^{\mathrm{tr},5}
+$\mathcal{J}_5^{\mathrm{tr},5}
 =
 {\mathcal{J}_5^{\mathrm{tr},5}}_{(3,5)}
 \sqcup
-{\mathcal{J}_5^{\mathrm{tr},5}}_{(4,5)},
-\]
-with
-\[
-\bigl|{\mathcal{J}_5^{\mathrm{tr},5}}_{(3,5)}\bigr|
-=
-\bigl|{\mathcal{J}_5^{\mathrm{tr},5}}_{(4,5)}\bigr|
-=1.
-\]
-Equivalently, after the reduced tail singleton is matched, the
-target-$5$ corridor continues through the pole-$3$ singleton
-\[
-(3,5;5;0,3)
-\]
-and then the pole-$4$ singleton
-\[
-(4,5;5;0,4).
-\]
+{\mathcal{J}_5^{\mathrm{tr},5}}_{(4,5)}$.
 \end{proposition}
-
-\begin{proof}
-This is the explicit decomposition of the two-channel ladder
-$\mathcal{J}_5^{\mathrm{tr},5}$ identified in
-Corollary~\ref{cor:winfty-stage5-target5-residual}.
-\end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} transport ladders ordered by pole profile;
 \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-transport-pole-profiles}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-transport-target-ladders}.  Then
-the three fixed-target ladders have the following pole-order profiles:
-\[
-\mathcal{J}_5^{\mathrm{tr},5}
-=
-\bigl\{
-(3,5;5;0,3),\,
-(4,5;5;0,4)
-\bigr\},
-\]
-\[
-\mathcal{J}_5^{\mathrm{tr},4}
-=
-\bigl\{
-(3,5;4;0,4),\,
-(4,5;4;0,5)
-\bigr\},
-\]
-\[
-\mathcal{J}_5^{\mathrm{tr},3}
-=
-\bigl\{
-(3,5;3;0,5),\,
-(4,5;3;0,6)
-\bigr\}.
-\]
-In particular, $\mathcal{J}_5^{\mathrm{tr},5}$ is the unique
-fixed-target ladder supported at the two smallest pole orders appearing
-in $\mathcal{J}_5^{\mathrm{tr}}$.
+The three fixed-target ladders of
+Proposition~\ref{prop:winfty-stage5-transport-target-ladders}
+have pole-order profiles
+$\mathcal{J}_5^{\mathrm{tr},5}:\{3,4\}$,
+$\mathcal{J}_5^{\mathrm{tr},4}:\{4,5\}$,
+$\mathcal{J}_5^{\mathrm{tr},3}:\{5,6\}$.
+In particular, $\mathcal{J}_5^{\mathrm{tr},5}$ is supported at the two smallest pole orders.
 \end{proposition}
-
-\begin{proof}
-This is a restatement of
-Proposition~\ref{prop:winfty-stage5-transport-target-ladders} using the
-explicit pole orders already displayed in each channel of the three
-fixed-target ladders.
-\end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} visible
 \texorpdfstring{$W^{(5)}$}{W5} normalization from the theorematic
@@ -9493,15 +8260,7 @@ is already theorematic, and hence
 \end{proposition}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage5-residue-eight-channel} gives the
-theorematic value
-\[
-\mathsf{C}^{\mathrm{res}}_{5,5;2;0,8}(5)=2.
-\]
-Applying
-Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with
-$s=5$ and the standard stage-$5$ Virasoro Ward package then gives the
-displayed normalization of the visible $W^{(5)}$ self-pairing.
+Apply Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with $s=5$.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} pole-\texorpdfstring{$3$}{3} transport singleton
@@ -9540,40 +8299,7 @@ vanishes:
 \end{proposition}
 
 \begin{proof}
-Apply assumption~\textup{(ii)} with \(n=2\), \(a=W^{(3)}\), and
-\(b=W^{(5)}\).  The left-hand side involves the reversed-order
-coefficient
-\[
-W^{(5)}_{(2)}W^{(3)}
-=
-\mathsf{C}^{\mathrm{res}}_{5,3;5;0,3}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants}.
-\]
-By Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap},
-\[
-\mathsf{C}^{\mathrm{res}}_{5,3;5;0,3}(5)
-=
--\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5),
-\]
-since \(3+5-5=3\) is odd.  Pairing with \(W^{(5)}\) and using
-assumption~\textup{(i)} therefore gives
-\[
-\bigl(W^{(5)}_{(2)}W^{(3)},W^{(5)}\bigr)_{\mathrm{vis}}
-=
--\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)\,\frac{c}{5}.
-\]
-
-On the right-hand side of the invariant-pairing identity, the mode
-\(8-2=6\) gives
-\[
-W^{(5)}_{(6)}W^{(5)}
-=
-\mathsf{C}^{\mathrm{res}}_{5,5;3;0,7}(5)\,W^{(3)}
-\quad\textup{mod lower-weight visible channels and descendants}.
-\]
-But Proposition~\ref{prop:winfty-ds-self-ope-parity} kills the odd
-self-OPE top-pole coefficient \((5,5;3;0,7)\), so the right-hand side
-vanishes.  Since \(c\neq 0\), the displayed identity follows.
+The invariant-pairing identity of assumption~\textup{(ii)} with \(n=2\), \(a=W^{(3)}\), \(b=W^{(5)}\) relates the reversed-order coefficient \(\mathsf{C}^{\mathrm{res}}_{5,3;5;0,3}=-\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}\) (swap parity, \(3+5-5=3\) odd, by Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap}) to the complementary mode \(8-2=6\) self-OPE coefficient \((5,5;3;0,7)\), which vanishes by Proposition~\ref{prop:winfty-ds-self-ope-parity} (odd self-OPE).  Since \(c\neq 0\), the displayed vanishing follows.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} pole-\texorpdfstring{$4$}{4} transport singleton
@@ -9593,49 +8319,7 @@ Then
 \end{proposition}
 
 \begin{proof}
-Apply the invariant-pairing identity of
-Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
-with \(n=3\), \(a=W^{(4)}\), and \(b=W^{(5)}\).  The left-hand side
-involves
-\[
-W^{(5)}_{(3)}W^{(4)}
-=
-\mathsf{C}^{\mathrm{res}}_{5,4;5;0,4}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants}.
-\]
-By Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap},
-\[
-\mathsf{C}^{\mathrm{res}}_{5,4;5;0,4}(5)
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5),
-\]
-since \(4+5-5=4\) is even.  Pairing with \(W^{(5)}\) gives
-\[
-\bigl(W^{(5)}_{(3)}W^{(4)},W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)\,\frac{c}{5}.
-\]
-On the right-hand side, the complementary mode \(8-3=5\) gives
-\[
-W^{(5)}_{(5)}W^{(5)}
-=
-\mathsf{C}^{\mathrm{res}}_{5,5;4;0,6}(5)\,W^{(4)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-so pairing with \(W^{(4)}\) yields
-\[
-\bigl(W^{(4)},W^{(5)}_{(5)}W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{5,5;4;0,6}(5)\,\frac{c}{4}.
-\]
-The sign in the invariant-pairing identity is negative because
-\(W^{(5)}\) has odd weight, so
-\[
-\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)\,\frac{c}{5}
-=
--\mathsf{C}^{\mathrm{res}}_{5,5;4;0,6}(5)\,\frac{c}{4}.
-\]
-Since \(c\neq 0\), this is the displayed identity.
+Apply the invariant-pairing technique of Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing} with \(n=3\), \(a=W^{(4)}\), \(b=W^{(5)}\).  The swap symmetry of Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} (\(4+5-5=4\) even) gives \(\mathsf{C}^{\mathrm{res}}_{5,4;5;0,4}=\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}\); the complementary mode \(8-3=5\) produces \(\mathsf{C}^{\mathrm{res}}_{5,5;4;0,6}\); the sign is negative (\(W^{(5)}\) odd weight).  Weight orthogonality and \(c\neq 0\) yield the displayed identity.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} pole-\texorpdfstring{$4$}{4} transport singleton
@@ -9673,22 +8357,7 @@ Then
 \end{proposition}
 
 \begin{proof}
-Apply assumption~\textup{(ii)} with \(n=3\), \(a=W^{(4)}\), and
-\(b=W^{(5)}\).  The left-hand side involves
-\[
-W^{(4)}_{(3)}W^{(4)}
-=
-\mathsf{C}^{\mathrm{res}}_{4,4;5;0,3}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-and Proposition~\ref{prop:winfty-ds-self-ope-parity} kills this odd
-self-OPE top-pole coefficient.  The right-hand side is
-\[
-\bigl(W^{(4)},W^{(4)}_{(3)}W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)\,\frac{c}{4}.
-\]
-Since \(c\neq 0\), the displayed vanishing follows.
+The invariant-pairing identity with \(n=3\), \(a=W^{(4)}\), \(b=W^{(5)}\) relates \(\mathsf{C}^{\mathrm{res}}_{4,4;5;0,3}\) (killed by odd self-OPE parity, Proposition~\ref{prop:winfty-ds-self-ope-parity}) to \(\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}\cdot c/4\).  Since \(c\neq 0\), the vanishing follows.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} self-return singleton vanishes on the
@@ -9705,42 +8374,21 @@ Then
 \end{corollary}
 
 \begin{proof}
-Combine the vanishing of
-\(\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)\) from
-Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing} with
-the linear identity of
+Combine Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing} with
 Proposition~\ref{prop:winfty-stage5-target5-pole4-from-self-return}.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} reduced tail singleton from a visible
 \texorpdfstring{$W^{(3)}$}{W3}-pairing locus; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-tail-from-w3-pairing}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-tail-mechanism}.  Assume moreover
-that the visible stage-$5$ quotient residue calculus carries a
-bilinear pairing \((-, -)_{\mathrm{vis}}\) on the span of
-\(W^{(2)},W^{(3)},W^{(4)},W^{(5)}\) such that:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item the visible generators are even Virasoro-primary fields,
-  pairwise orthogonal for distinct conformal weights, and their
-  self-pairings are normalized by
-  \[
-  (W^{(u)},W^{(u)})_{\mathrm{vis}}=\frac{c}{u}
-  \qquad (2\le u\le 5)
-  \]
-  with the same nonzero central charge \(c\);
-\item for the visible primary field \(W^{(3)}\), the pairing satisfies
-  the standard primary invariant-pairing identity
-  \[
-  \bigl(W^{(3)}_{(n)}a,b\bigr)_{\mathrm{vis}}
-  =
-  -\bigl(a,W^{(3)}_{(4-n)}b\bigr)_{\mathrm{vis}}
-  \]
-  whenever \(a,b\) are visible generators and the displayed modes are
-  defined.
-\end{enumerate}
-Then the reduced tail singleton is determined by the target-$4$
-transport channel in the \((3,5)\)-block:
+Under the hypotheses of
+Proposition~\ref{prop:winfty-stage5-tail-mechanism}, assume moreover
+the visible stage-$5$ pairing package of
+Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
+with the $W^{(3)}$ invariant-pairing identity
+$\bigl(W^{(3)}_{(n)}a,b\bigr)_{\mathrm{vis}}
+=-\bigl(a,W^{(3)}_{(4-n)}b\bigr)_{\mathrm{vis}}$.
+Then:
 \[
 \mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
 =
@@ -9750,72 +8398,19 @@ transport channel in the \((3,5)\)-block:
 \end{proposition}
 
 \begin{proof}
-Apply assumption~\textup{(ii)} with \(n=1\), \(a=W^{(4)}\), and
-\(b=W^{(5)}\).  The left-hand side gives
-\[
-W^{(3)}_{(1)}W^{(4)}
-=
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-so pairing with \(W^{(5)}\) yields
-\[
-\bigl(W^{(3)}_{(1)}W^{(4)},W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)\,\frac{c}{5}.
-\]
-On the right-hand side, the complementary mode \(4-1=3\) gives
-\[
-W^{(3)}_{(3)}W^{(5)}
-=
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\,W^{(4)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-so pairing with \(W^{(4)}\) yields
-\[
-\bigl(W^{(4)},W^{(3)}_{(3)}W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\,\frac{c}{4}.
-\]
-The sign in the invariant-pairing identity is negative because
-\(W^{(3)}\) has odd weight, so
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)\,\frac{c}{5}
-=
--\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\,\frac{c}{4}.
-\]
-Since \(c\neq 0\), this is the displayed identity.
+Apply the $W^{(3)}$ invariant-pairing identity with \(n=1\), \(a=W^{(4)}\), \(b=W^{(5)}\); the complementary mode \(4-1=3\) produces \(\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}\cdot c/4\).  The sign is negative (\(W^{(3)}\) odd weight).  Since \(c\neq 0\), rearranging gives the displayed identity.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} reduced tail singleton from a visible
 \texorpdfstring{$W^{(4)}$}{W4}-pairing locus; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-tail-from-w4-pairing}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-tail-mechanism}.  Assume moreover
-that the visible stage-$5$ quotient residue calculus carries a
-bilinear pairing \((-, -)_{\mathrm{vis}}\) on the span of
-\(W^{(2)},W^{(3)},W^{(4)},W^{(5)}\) such that:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item the visible generators are even Virasoro-primary fields,
-  pairwise orthogonal for distinct conformal weights, and their
-  self-pairings are normalized by
-  \[
-  (W^{(u)},W^{(u)})_{\mathrm{vis}}=\frac{c}{u}
-  \qquad (2\le u\le 5)
-  \]
-  with the same nonzero central charge \(c\);
-\item for the visible primary field \(W^{(4)}\), the pairing satisfies
-  the standard primary invariant-pairing identity
-  \[
-  \bigl(W^{(4)}_{(n)}a,b\bigr)_{\mathrm{vis}}
-  =
-  \bigl(a,W^{(4)}_{(6-n)}b\bigr)_{\mathrm{vis}}
-  \]
-  whenever \(a,b\) are visible generators and the displayed modes are
-  defined.
-\end{enumerate}
-Then the reduced tail singleton is determined by the target-$3$
-transport channel in the \((4,5)\)-block:
+Under the hypotheses of
+Proposition~\ref{prop:winfty-stage5-tail-mechanism}, assume the visible stage-$5$ pairing package of
+Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
+with the $W^{(4)}$ invariant-pairing identity
+$\bigl(W^{(4)}_{(n)}a,b\bigr)_{\mathrm{vis}}
+=\bigl(a,W^{(4)}_{(6-n)}b\bigr)_{\mathrm{vis}}$.
+Then:
 \[
 \mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
 =
@@ -9825,118 +8420,41 @@ transport channel in the \((4,5)\)-block:
 \end{proposition}
 
 \begin{proof}
-Apply assumption~\textup{(ii)} with \(n=1\), \(a=W^{(3)}\), and
-\(b=W^{(5)}\).  The left-hand side gives
-\[
-W^{(4)}_{(1)}W^{(3)}
-=
-\mathsf{C}^{\mathrm{res}}_{4,3;5;0,2}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants}.
-\]
-By Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap},
-\[
-\mathsf{C}^{\mathrm{res}}_{4,3;5;0,2}(5)
-=
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5),
-\]
-since \(3+4-5=2\) is even.  Pairing with \(W^{(5)}\) therefore gives
-\[
-\bigl(W^{(4)}_{(1)}W^{(3)},W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)\,\frac{c}{5}.
-\]
-On the right-hand side, the complementary mode \(6-1=5\) gives
-\[
-W^{(4)}_{(5)}W^{(5)}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)\,W^{(3)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-so pairing with \(W^{(3)}\) yields
-\[
-\bigl(W^{(3)},W^{(4)}_{(5)}W^{(5)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)\,\frac{c}{3}.
-\]
-Since \(W^{(4)}\) has even weight, the invariant-pairing identity gives
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)\,\frac{c}{5}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)\,\frac{c}{3}.
-\]
-Since \(c\neq 0\), this is the displayed identity.
+Apply the $W^{(4)}$ invariant-pairing identity with \(n=1\), \(a=W^{(3)}\), \(b=W^{(5)}\).  The swap symmetry of Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} (\(3+4-5=2\) even) gives \(\mathsf{C}^{\mathrm{res}}_{4,3;5;0,2}=\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}\); the complementary mode \(6-1=5\) produces \(\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}\cdot c/3\).  The sign is positive (\(W^{(4)}\) even weight).  Since \(c\neq 0\), rearranging gives the displayed identity.
 \end{proof}
 
-\begin{corollary}[Stage-\texorpdfstring{$5$}{5} tail singleton equates neighboring target-\texorpdfstring{$4$}{4}
-and target-\texorpdfstring{$3$}{3} transport channels on the visible
-\texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}
-pairing locus; \ClaimStatusProvedHere]
+\begin{corollary}[Stage-\texorpdfstring{$5$}{5} tail singleton equates neighboring transport channels;
+\ClaimStatusProvedHere]
 \label{cor:winfty-stage5-tail-cross-target-reduction}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-tail-from-w3-pairing} and
-Proposition~\ref{prop:winfty-stage5-tail-from-w4-pairing}.  Then
-\[
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)
+Under the hypotheses of
+Propositions~\ref{prop:winfty-stage5-tail-from-w3-pairing}
+and~\ref{prop:winfty-stage5-tail-from-w4-pairing}:
+$\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)
 =
 -\frac{4}{3}\,
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5).
-\]
-Equivalently, on this visible pairing locus the reduced tail singleton
-adds no new independent coefficient beyond the neighboring
-target-$4$/target-$3$ transport channels.
+\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)$.
 \end{corollary}
 
 \begin{proof}
-Eliminate
-\(
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
-\)
-between the identities of
-Propositions~\ref{prop:winfty-stage5-tail-from-w3-pairing}
-and~\ref{prop:winfty-stage5-tail-from-w4-pairing}.
+Eliminate \(\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)\) between the two propositions.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor contracts to the tail
-singleton on the visible
-\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
-pairing locus; \ClaimStatusProvedHere]
+singleton; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-target5-corridor-to-tail}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
-and Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing}.
-Then the target-$5$ corridor contributes no residual transport
-coefficient:
-\[
-\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)=0.
-\]
-Equivalently, on this visible pairing locus the full target-$5$
-corridor of Corollary~\ref{cor:winfty-stage5-target5-corridor}
-contracts to the single tail coefficient
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5).
-\]
+Under the hypotheses of
+Propositions~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
+and~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing}:
+$\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)=0$ and
+$\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)=0$.
 \end{corollary}
 
-\begin{proof}
-Combine Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
-with Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing}
-inside the corridor decomposition of
-Corollary~\ref{cor:winfty-stage5-target5-corridor}.
-\end{proof}
-
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor carries no new
-independent coefficient on the full visible
-\texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
-pairing locus; \ClaimStatusProvedHere]
+independent coefficient; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-target5-no-new-independent-data}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-target5-corridor-to-tail} and
-Corollary~\ref{cor:winfty-stage5-tail-cross-target-reduction}.  Then
-the entire target-$5$ corridor contributes no new independent residue
-coefficient beyond the neighboring target-$4$/target-$3$ transport
-channels.  Equivalently,
+Under the hypotheses of
+Corollaries~\ref{cor:winfty-stage5-target5-corridor-to-tail}
+and~\ref{cor:winfty-stage5-tail-cross-target-reduction}:
 \[
 \mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
 =
@@ -9944,92 +8462,31 @@ channels.  Equivalently,
 =
 \frac{5}{3}\,\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5),
 \]
-while the two transport coefficients in the target-$5$ corridor vanish.
+while the two target-$5$ transport coefficients vanish.
 \end{corollary}
 
-\begin{proof}
-Combine
-Corollary~\ref{cor:winfty-stage5-target5-corridor-to-tail} with
-Propositions~\ref{prop:winfty-stage5-tail-from-w3-pairing}
-and~\ref{prop:winfty-stage5-tail-from-w4-pairing}.
-\end{proof}
-
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$4$}{4} pole-\texorpdfstring{$5$}{5} transport singleton
-vanishes on a visible \texorpdfstring{$W^{(4)}$}{W4}-pairing locus;
-\ClaimStatusProvedHere]
+vanishes; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-target4-pole5-w4-vanishing}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing}.  Then
-\[
-\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)=0.
-\]
+Under the hypotheses of
+Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing}:
+$\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)=0$.
 \end{proposition}
 
 \begin{proof}
-Apply the invariant-pairing identity of
-Proposition~\ref{prop:winfty-stage5-target5-pole4-w4-vanishing} with
-\(n=4\), \(a=W^{(5)}\), and \(b=W^{(4)}\).  The left-hand side involves
-\[
-W^{(4)}_{(4)}W^{(5)}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)\,W^{(4)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-so pairing with \(W^{(4)}\) yields
-\[
-\bigl(W^{(4)}_{(4)}W^{(5)},W^{(4)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)\,\frac{c}{4}.
-\]
-On the right-hand side, the complementary mode \(6-4=2\) gives
-\[
-W^{(4)}_{(2)}W^{(4)}
-=
-\mathsf{C}^{\mathrm{res}}_{4,4;5;0,3}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-and Proposition~\ref{prop:winfty-ds-self-ope-parity} kills this odd
-self-OPE top-pole coefficient.  Since \(c\neq 0\), the displayed
-vanishing follows.
+The $W^{(4)}$ invariant-pairing identity with \(n=4\), \(a=W^{(5)}\), \(b=W^{(4)}\) relates \(\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}\cdot c/4\) to the complementary mode \(6-4=2\) self-OPE coefficient \((4,4;5;0,3)\), which vanishes by odd self-OPE parity (Proposition~\ref{prop:winfty-ds-self-ope-parity}).
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$3$}{3} pole-\texorpdfstring{$5$}{5} transport singleton
-vanishes on a visible \texorpdfstring{$W^{(3)}$}{W3}-pairing locus;
-\ClaimStatusProvedHere]
+vanishes; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-target3-pole5-w3-vanishing}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-tail-from-w3-pairing}.  Then
-\[
-\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)=0.
-\]
+Under the hypotheses of
+Proposition~\ref{prop:winfty-stage5-tail-from-w3-pairing}:
+$\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)=0$.
 \end{proposition}
 
 \begin{proof}
-Apply the invariant-pairing identity of
-Proposition~\ref{prop:winfty-stage5-tail-from-w3-pairing} with \(n=4\),
-\(a=W^{(5)}\), and \(b=W^{(3)}\).  The left-hand side involves
-\[
-W^{(3)}_{(4)}W^{(5)}
-=
-\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)\,W^{(3)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-so pairing with \(W^{(3)}\) yields
-\[
-\bigl(W^{(3)}_{(4)}W^{(5)},W^{(3)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)\,\frac{c}{3}.
-\]
-On the right-hand side, the complementary mode \(4-4=0\) gives
-\[
-W^{(3)}_{(0)}W^{(3)}
-=
-\mathsf{C}^{\mathrm{res}}_{3,3;5;0,1}(5)\,W^{(5)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-and Proposition~\ref{prop:winfty-ds-self-ope-parity} kills this odd
-self-OPE top-pole coefficient.  Since \(c\neq 0\), the displayed
-vanishing follows.
+The $W^{(3)}$ invariant-pairing identity with \(n=4\), \(a=W^{(5)}\), \(b=W^{(3)}\) relates \(\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}\cdot c/3\) to the complementary mode \(4-4=0\) self-OPE coefficient \((3,3;5;0,1)\), which vanishes by odd self-OPE parity (Proposition~\ref{prop:winfty-ds-self-ope-parity}).
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$4$}{4}/target-\texorpdfstring{$3$}{3} transport channels
@@ -10048,135 +8505,42 @@ Then
 \end{proposition}
 
 \begin{proof}
-Apply the invariant-pairing identity of
-Proposition~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
-with \(n=3\), \(a=W^{(3)}\), and \(b=W^{(4)}\).  The left-hand side
-involves
-\[
-W^{(5)}_{(3)}W^{(3)}
-=
-\mathsf{C}^{\mathrm{res}}_{5,3;4;0,4}(5)\,W^{(4)}
-\quad\textup{mod lower-weight visible channels and descendants}.
-\]
-By Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap},
-\[
-\mathsf{C}^{\mathrm{res}}_{5,3;4;0,4}(5)
-=
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5),
-\]
-since \(3+5-4=4\) is even.  Pairing with \(W^{(4)}\) gives
-\[
-\bigl(W^{(5)}_{(3)}W^{(3)},W^{(4)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\,\frac{c}{4}.
-\]
-On the right-hand side, the complementary mode \(8-3=5\) gives
-\[
-W^{(5)}_{(5)}W^{(4)}
-=
-\mathsf{C}^{\mathrm{res}}_{5,4;3;0,6}(5)\,W^{(3)}
-\quad\textup{mod lower-weight visible channels and descendants},
-\]
-and again Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} gives
-\[
-\mathsf{C}^{\mathrm{res}}_{5,4;3;0,6}(5)
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5),
-\]
-since \(4+5-3=6\) is even.  Pairing with \(W^{(3)}\) therefore yields
-\[
-\bigl(W^{(3)},W^{(5)}_{(5)}W^{(4)}\bigr)_{\mathrm{vis}}
-=
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)\,\frac{c}{3}.
-\]
-The invariant-pairing identity contributes a minus sign because
-\(W^{(5)}\) has odd weight, so
-\[
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\,\frac{c}{4}
-=
--\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)\,\frac{c}{3}.
-\]
-Since \(c\neq 0\), this is the displayed identity.
+Apply the $W^{(5)}$ invariant-pairing identity with \(n=3\), \(a=W^{(3)}\), \(b=W^{(4)}\).  The swap symmetry of Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} gives \(\mathsf{C}^{\mathrm{res}}_{5,3;4;0,4}=\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}\) (\(3+5-4=4\) even) and \(\mathsf{C}^{\mathrm{res}}_{5,4;3;0,6}=\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}\) (\(4+5-3=6\) even).  The sign is negative (\(W^{(5)}\) odd weight).  Weight orthogonality and \(c\neq 0\) yield the displayed identity.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} mixed transport frontier carries one
-effective independent coefficient on the full visible pairing locus;
-\ClaimStatusProvedHere]
+effective independent coefficient; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-transport-effective-independent-frontier}
-Assume the hypotheses of
-Proposition~\ref{prop:winfty-stage5-target4-pole5-w4-vanishing},
-Proposition~\ref{prop:winfty-stage5-target3-pole5-w3-vanishing}, and
-Proposition~\ref{prop:winfty-stage5-transport-cross-target-reduction}.
-Then the four channels in
-\[
-\mathcal{J}_5^{\mathrm{tr},4}
-\sqcup
-\mathcal{J}_5^{\mathrm{tr},3}
-\]
-contribute only one effective independent coefficient.  Equivalently,
-\[
-\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)
+Under the hypotheses of
+Propositions~\ref{prop:winfty-stage5-target4-pole5-w4-vanishing},
+\ref{prop:winfty-stage5-target3-pole5-w3-vanishing}, and
+\ref{prop:winfty-stage5-transport-cross-target-reduction}:
+$\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)=0$,
+$\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)=0$, and
+$\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)
 =
 -\frac{3}{4}\,
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5).
-\]
+\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)$.
 \end{corollary}
-
-\begin{proof}
-Combine
-Proposition~\ref{prop:winfty-stage5-target4-pole5-w4-vanishing},
-Proposition~\ref{prop:winfty-stage5-target3-pole5-w3-vanishing}, and
-Proposition~\ref{prop:winfty-stage5-transport-cross-target-reduction}.
-\end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} higher-spin packet reduces to one effective
-independent coefficient on the full visible pairing locus;
-\ClaimStatusProvedHere]
+independent coefficient; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-effective-independent-frontier}
-Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-self-return-vanishing-on-pairing},
-Corollary~\ref{cor:winfty-stage5-target5-no-new-independent-data}, and
-Corollary~\ref{cor:winfty-stage5-transport-effective-independent-frontier}.
-Set
+Under the hypotheses of
+Corollaries~\ref{cor:winfty-stage5-self-return-vanishing-on-pairing},
+\ref{cor:winfty-stage5-target5-no-new-independent-data}, and
+\ref{cor:winfty-stage5-transport-effective-independent-frontier},
+set $A_5:=\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)$.
+Then every coefficient in $\mathcal{J}_5^{\mathrm{hs}}$ is either zero or determined by $A_5$:
 \[
-A_5:=\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5).
+\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)=-\tfrac{5}{4}\,A_5,
+\quad
+\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)=-\tfrac{3}{4}\,A_5,
 \]
-Then every coefficient in the stage-$5$ higher-spin packet
-\(\mathcal{J}_5^{\mathrm{hs}}\) is either zero or determined by \(A_5\).
-Explicitly,
-\[
-\mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)=-\frac{5}{4}\,A_5,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{3,5;5;0,3}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{4,5;5;0,4}(5)=0,
-\]
-\[
-\mathsf{C}^{\mathrm{res}}_{5,5;4;0,6}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{4,5;4;0,5}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{3,5;3;0,5}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)=-\frac{3}{4}\,A_5.
-\]
-Equivalently, on the full visible
-\texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
-pairing locus the whole stage-$5$ higher-spin frontier carries one
-effective independent coefficient, represented by the target-$4$
+with all other channels vanishing.
+The effective independent coefficient is the target-$4$
 singleton \((3,5;4;0,4)\).
 \end{corollary}
-
-\begin{proof}
-Combine
-Corollary~\ref{cor:winfty-stage5-target5-no-new-independent-data},
-Corollary~\ref{cor:winfty-stage5-self-return-vanishing-on-pairing}, and
-Corollary~\ref{cor:winfty-stage5-transport-effective-independent-frontier}.
-\end{proof}
 
 \begin{proposition}[Exact local attack order for the first stage-\texorpdfstring{$5$}{5}
 higher-spin packet; \ClaimStatusProvedHere]
@@ -10236,37 +8600,13 @@ higher-spin channel either zero or determined by it.
 \end{proposition}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage5-entry-transport} splits the first
-stage-$5$ higher-spin packet into the entry packet
-\(\mathcal{J}_5^{\mathrm{entry}}\) and the mixed transport packet
-\(\mathcal{J}_5^{\mathrm{tr}}\).  Proposition~\ref{prop:winfty-stage5-entry-mixed-self}
-orders the entry packet into the mixed-entry singleton
-\((3,4;5;0,2)\) and the self-return singleton \((5,5;4;0,6)\), proving
-\textup{(i)}.
-
-Corollary~\ref{cor:winfty-stage5-target5-corridor} identifies the first
-local strip as the target-$5$ corridor, and
-Corollary~\ref{cor:winfty-stage5-target5-residual} together with
-Proposition~\ref{prop:winfty-stage5-target5-transport-singletons}
-shows that after the tail singleton \((3,4;5;0,2)\) is matched, the
-residual continuation is exactly the pole-$3$ and pole-$4$ singleton
-transport channels \((3,5;5;0,3)\) and \((4,5;5;0,4)\).  This proves
-\textup{(ii)}.
-
-Proposition~\ref{prop:winfty-stage5-transport-pole-profiles} orders the
-transport ladders by increasing pole profile as
-\(\mathcal{J}_5^{\mathrm{tr},5}\),
-\(\mathcal{J}_5^{\mathrm{tr},4}\),
-\(\mathcal{J}_5^{\mathrm{tr},3}\), proving \textup{(iii)}.
-
-The visible-pairing refinement is exactly the content of
-Propositions~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}
---\ref{cor:winfty-stage5-tail-cross-target-reduction},
-Corollary~\ref{cor:winfty-stage5-target5-no-new-independent-data},
-Proposition~\ref{prop:winfty-stage5-target4-pole5-w4-vanishing},
-Proposition~\ref{prop:winfty-stage5-target3-pole5-w3-vanishing},
-Proposition~\ref{prop:winfty-stage5-transport-cross-target-reduction},
-and Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}.
+Parts \textup{(i)}--\textup{(iii)} follow from the packet decompositions already established:
+Corollary~\ref{cor:winfty-stage5-entry-transport} for the entry/transport split,
+Corollary~\ref{cor:winfty-stage5-target5-corridor} for the target-$5$ corridor,
+and Proposition~\ref{prop:winfty-stage5-transport-pole-profiles} for the transport ladder ordering.
+The visible-pairing refinement combines
+Propositions~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}--\ref{prop:winfty-stage5-transport-cross-target-reduction}
+with Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}.
 \end{proof}
 
 \begin{conjecture}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor carries no
@@ -10343,18 +8683,7 @@ hold.
 \end{proposition}
 
 \begin{proof}
-Conjecture~\ref{conj:winfty-stage5-principal-target5-no-new-independent-data}
-asserts exactly the two target-$5$ transport vanishings
-\[
-\mathsf{C}^{\mathrm{DS}}_{3,5;5;0,3}(5)=0,
-\qquad
-\mathsf{C}^{\mathrm{DS}}_{4,5;5;0,4}(5)=0,
-\]
-together with the displayed linear identities tying the tail singleton
-\((3,4;5;0,2)\) to the neighboring target-$4$/target-$3$ channels.
-These are precisely the statements of
-Conjectures~\ref{conj:winfty-stage5-principal-target5-transport-vanishing}
-and~\ref{conj:winfty-stage5-principal-tail-cross-target-reduction}.
+The conjunction of the two transport vanishings and the tail cross-target relation is exactly the content of the two sub-conjectures.
 \end{proof}
 
 \begin{conjecture}[Principal residual stage-\texorpdfstring{$5$}{5} vanishings on the full
@@ -10427,13 +8756,7 @@ hold.
 \end{proposition}
 
 \begin{proof}
-Conjecture~\ref{conj:winfty-stage5-principal-residual-front-one-coefficient}
-asserts exactly the three displayed vanishing conditions for the
-self-return and pole-$5$ residual channels, together with the displayed
-linear identity tying the residual target-$3$ channel to the target-$4$
-singleton.  These are precisely the statements of
-Conjectures~\ref{conj:winfty-stage5-principal-residual-front-vanishings}
-and~\ref{conj:winfty-stage5-principal-residual-cross-target-reduction}.
+The conjunction of the three vanishings and the residual cross-target relation is exactly the content of the two sub-conjectures.
 \end{proof}
 
 \begin{conjecture}[Principal stage-\texorpdfstring{$5$}{5} one-coefficient normal form on the
@@ -10489,16 +8812,7 @@ hold.
 \end{proposition}
 
 \begin{proof}
-By
-Proposition~\ref{prop:winfty-stage5-principal-target5-factorization},
-the target-$5$ corridor conjecture is equivalent to the conjunction of
-its transport-vanishing packet and its tail cross-target relation.  By
-Proposition~\ref{prop:winfty-stage5-principal-residual-front-factorization},
-the residual-front conjecture is equivalent to the conjunction of its
-vanishing packet and its residual cross-target relation.  Together
-these are exactly the seven displayed identities in
-Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form},
-and no further channel in \(\mathcal{J}_5^{\mathrm{hs}}\) remains.
+Combine Propositions~\ref{prop:winfty-stage5-principal-target5-factorization} and~\ref{prop:winfty-stage5-principal-residual-front-factorization}; together they account for all seven identities in the normal form.
 \end{proof}
 
 \begin{proposition}[Stage-\texorpdfstring{$5$}{5} higher-spin comparison reduces to one
@@ -10518,16 +8832,7 @@ Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison},
 \end{proposition}
 
 \begin{proof}
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}
-expresses every residue coefficient in \(\mathcal{J}_5^{\mathrm{hs}}\)
-as either zero or a fixed linear multiple of
-\(
-\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)
-\).
-Therefore the principal packet satisfies the same linear coefficients
-and the same vanishing pattern as the residue packet, and every channel
-in \(\mathcal{J}_5^{\mathrm{hs}}\) matches if and only if the target-$4$
-singleton \((3,5;4;0,4)\) matches.
+Corollary~\ref{cor:winfty-stage5-effective-independent-frontier} expresses every residue coefficient as a fixed multiple of \(\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\); matching this singleton matches all channels.
 \end{proof}
 
 \begin{conjecture}[Stage-\texorpdfstring{$5$}{5} one-coefficient comparison on the full
@@ -10583,22 +8888,7 @@ together with the singleton identity.
 \end{corollary}
 
 \begin{proof}
-If the full stage-$5$ higher-spin comparison closes, then every
-principal coefficient in \(\mathcal{J}_5^{\mathrm{hs}}\) agrees with the
-corresponding residue coefficient.  Since
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}
-already puts the residue packet in one-coefficient normal form, the
-principal packet must satisfy the same one-coefficient normal form,
-proving \textup{(i)}.  The singleton identity in \textup{(ii)} is one
-of the matched channels.
-
-Conversely, \textup{(i)} is exactly the packaged hypothesis of
-Proposition~\ref{prop:winfty-stage5-one-coefficient-reduction}, and
-\textup{(ii)} is exactly the single identity to which that proposition
-reduces the whole comparison.  Therefore \textup{(i)}--\textup{(ii)}
-together imply that the full stage-$5$ higher-spin comparison closes.
-The final reformulation is exactly
-Proposition~\ref{prop:winfty-stage5-principal-one-coefficient-factorization}.
+Necessity: the one-coefficient normal form of Corollary~\ref{cor:winfty-stage5-effective-independent-frontier} on the residue side forces the same on the principal side; the singleton identity is one matched channel.  Sufficiency: \textup{(i)} supplies the hypothesis of Proposition~\ref{prop:winfty-stage5-one-coefficient-reduction}, and \textup{(ii)} is the single identity to which it reduces.  The reformulation is Proposition~\ref{prop:winfty-stage5-principal-one-coefficient-factorization}.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$5$}{5} higher-spin defect family collapses to one
@@ -10665,15 +8955,7 @@ if and only if \(D_5=0\).
 \end{corollary}
 
 \begin{proof}
-Subtract the residue-side formulas of
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier} from
-the principal-side formulas of
-Conjecture~\ref{conj:winfty-stage5-principal-target5-no-new-independent-data}
-and
-Conjecture~\ref{conj:winfty-stage5-principal-residual-front-one-coefficient}.
-The displayed identities are exactly the resulting defect formulas.  The
-final equivalence follows because the representative channel
-\((3,5;4;0,4)\) belongs to \(\mathcal{J}_5^{\mathrm{hs}}\).
+Subtract the residue-side one-coefficient normal form from the principal-side normal form.
 \end{proof}
 
 \begin{conjecture}[Stage-\texorpdfstring{$5$}{5} entry-packet identities]
@@ -10945,49 +9227,7 @@ input, namely the target-$4$ singleton \((3,5;4;0,4)\).
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:winfty-stage5-one-coefficient-reduction} already
-shows that the full packet conjecture
-Conjecture~\ref{conj:winfty-stage5-higher-spin-identities} is
-equivalent to the singleton identity of
-Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison}.
-
-Under
-Corollary~\ref{cor:winfty-stage5-effective-independent-frontier},
-and
-Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form},
-the channel \((3,4;5;0,2)\) is the fixed multiple
-\(-\tfrac54\,(3,5;4;0,4)\) on both sides, so
-Conjecture~\ref{conj:winfty-stage5-block-34} is equivalent to the
-singleton identity.  The block
-\(\mathcal{J}_5^{(3,5)}\) consists of the representative channel
-\((3,5;4;0,4)\) together with two zero channels, so
-Conjecture~\ref{conj:winfty-stage5-block-35} is again equivalent to the
-singleton identity.  The block \(\mathcal{J}_5^{(4,5)}\) consists of
-two zero channels together with
-\((4,5;3;0,6)=-\tfrac34\,(3,5;4;0,4)\) on both sides, so
-Conjecture~\ref{conj:winfty-stage5-block-45} is likewise equivalent to
-the singleton identity.  The self-block
-Conjecture~\ref{conj:winfty-stage5-block-55} is automatic because
-\((5,5;4;0,6)=0\) on both sides.
-
-The entry-packet conjecture is the conjunction of the nontrivial block
-Conjecture~\ref{conj:winfty-stage5-block-34} with the automatic
-self-block
-Conjecture~\ref{conj:winfty-stage5-block-55}, so
-Conjecture~\ref{conj:winfty-stage5-entry-identities} is equivalent to
-the singleton identity.  The target-$3$ ladder conjecture is
-equivalent to the singleton identity because it consists of one zero
-channel and the channel
-\((4,5;3;0,6)=-\tfrac34\,(3,5;4;0,4)\); the target-$4$ ladder
-conjecture is equivalent because it consists of the representative
-channel together with one zero channel.  The target-$5$ ladder and its
-two singleton refinements are automatic because both target-$5$
-transport channels vanish on both sides.  Therefore the mixed transport
-conjecture
-Conjecture~\ref{conj:winfty-stage5-transport-identities} is equivalent
-to the singleton identity, and every local conjectural surface below
-\(\mathcal{J}_5^{\mathrm{hs}}\) either becomes automatic or reduces to
-that one remaining nontrivial scalar comparison.
+Under the one-coefficient normal form on both sides, each block conjecture is either automatic (self-block, target-$5$ ladder: all channels vanish on both sides) or equivalent to the singleton identity \(\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}=\mathsf{C}^{\mathrm{DS}}_{3,5;4;0,4}\) via the fixed rational multiples \(-\tfrac54\) (mixed-entry), \(1\) (representative), and \(-\tfrac34\) (target-$3$).  The entry, transport, and packet conjectures are conjunctions of these, hence each equivalent to the singleton identity.
 \end{proof}
 
 \begin{corollary}[Visible stage-\texorpdfstring{$5$}{5} local defect classes under principal
@@ -11050,18 +9290,7 @@ surface lies in one of the three exact defect classes
 \end{corollary}
 
 \begin{proof}
-The proof of
-Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse}
-already identifies the nonautomatic visible stage-$5$ surfaces and
-their fixed ratios to the target-$4$ singleton
-\((3,5;4;0,4)\): the mixed-entry channel
-\((3,4;5;0,2)\) is \(-\tfrac54\,(3,5;4;0,4)\) on both sides, while the
-target-$3$ channel \((4,5;3;0,6)\) is
-\(-\tfrac34\,(3,5;4;0,4)\) on both sides.  Subtracting the principal
-value from the residue value therefore gives the displayed defect
-relations.  The target-$5$ ladder, its singleton refinements, and the
-self-block were already shown there to be automatic, hence their
-defects vanish.
+The fixed ratios from Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse} give defects \(-\tfrac54 D_5\), \(D_5\), and \(-\tfrac34 D_5\); automatic channels have zero defect.
 \end{proof}
 
 \begin{computation}[Full stage-\texorpdfstring{$4$}{4} reduction chain verification]

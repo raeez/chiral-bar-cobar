@@ -10,13 +10,6 @@
 \label{app:existence-criteria}
 
 
-\begin{remark}[Governing question]
-The governing question of this appendix is the mathematical role of \emph{Comparison of existence paradigms for Koszul duals}: which auxiliary input it supplies to the modular bar-cobar theory on curves, and how it should be used without inflating reference material into new theorematic claims.
-\end{remark}
-
-\begin{remark}[H/M/S route; Convention~\ref{conv:hms-levels}]
-M/S-level reference; no new H-level inversion statements.
-\end{remark}
 \begin{abstract}
 This appendix compares the strict finite-type existence theorems of the
 core monograph with the frontier completion package of
@@ -28,17 +21,6 @@ literature, not to legislate a single monograph-wide ``if and only if''
 criterion.
 \end{abstract}
 
-\begin{remark}[Comparison role]
-\label{rem:existence-comparison-role}
-This appendix is a comparison surface, not a constitutional one.  The
-strict theorematic core is controlled by
-Chapters~\ref{chap:koszul-pairs} and~\ref{chap:higher-genus}; the
-completion frontier is recorded in
-Appendix~\ref{app:nilpotent-completion} and the MC4 package of
-Chapter~\ref{chap:concordance}.  Statements here should therefore be
-read regime by regime rather than as one monolithic existence theorem.
-\end{remark}
-
 %================================================================
 % SECTION 1: STATEMENT OF THE PROBLEM
 %================================================================
@@ -49,28 +31,18 @@ read regime by regime rather than as one monolithic existence theorem.
 \subsection{Motivation and setup}
 
 \begin{question}[Central question]\label{q:existence-central}
-Given a chiral algebra $\mathcal{A}$ on $X$, when does there exist a chiral 
+Given a chiral algebra $\mathcal{A}$ on $X$, when does there exist a chiral
 coalgebra $\mathcal{A}^!$ such that:
 \begin{enumerate}
 \item $\mathcal{A}^!$ is the \emph{Koszul dual} of $\mathcal{A}$
 \item The bar-cobar constructions are quasi-inverse:
-      \[\Omega(\mathcal{A}^!) \simeq \mathcal{A} \quad \text{and} \quad 
+      \[\Omega(\mathcal{A}^!) \simeq \mathcal{A} \quad \text{and} \quad
       \bar{B}(\mathcal{A}) \simeq \mathcal{A}^!\]
 \item The module and comodule categories are equivalent (with completeness/conilpotence conditions):
       \[\mathrm{Mod}^{\mathrm{compl}}(\mathcal{A}) \simeq
       \mathrm{CoMod}^{\mathrm{conil}}(\mathcal{A}^!)\]
 \end{enumerate}
 \end{question}
-
-\begin{remark}[Consequences of existence]\label{rem:why-existence-matters}
-The existence of $\mathcal{A}^!$ determines whether bar-cobar duality applies, whether the representation theory has nice properties, and whether Koszul duality computations are possible.
-The range of outcomes is illustrated by standard examples: Heisenberg
-lies in the strict regime, generic Kac--Moody algebras lie in the
-finite-type interacting core, Virasoro forces completion, and
-$\mathcal{W}_\infty$ lies beyond the finite-type theorem surface and
-must be treated through inverse-limit criteria rather than by a blanket
-strict duality statement.
-\end{remark}
 
 \subsection{Preliminary definitions}
 
@@ -109,9 +81,14 @@ No knowledge of $\mathcal{A}^!$ is required to define $\bar{B}(\mathcal{A})$.
 
 The \emph{Koszulness condition} (Definition~\ref{def:koszul-property-existence}
 below) is precisely the statement that the natural projection
-$\bar{B}(\mathcal{A}) \twoheadrightarrow \mathcal{A}^!$ is a quasi-isomorphism.
-Thus the bar construction provides an equivalent \emph{characterization} of
-$\mathcal{A}^!$, not its definition.
+$\bar{B}(\mathcal{A}) \twoheadrightarrow \mathcal{A}^!$ is a quasi-isomorphism
+of dg coalgebras.
+Thus the bar construction provides a dg coalgebra \emph{resolution} of
+$\mathcal{A}^!$ when $\mathcal{A}$ is Koszul, not its definition.
+To obtain the Koszul dual algebra from the coalgebra~$\mathcal{A}^!$,
+one takes the graded linear dual $(\mathcal{A}^!)^{\vee}$; this
+requires finite-dimensionality of each graded component
+of~$\mathcal{A}^!$.
 \end{remark}
 
 \begin{definition}[Koszul property]\label{def:koszul-property-existence}
@@ -250,11 +227,11 @@ This has comultiplication:
 
 (These are primitive.)
 
-\emph{Verification.} The bar-cobar constructions give:
-\[\Omega(\mathcal{H}^!) \simeq \mathcal{H} \quad \text{and} \quad 
-\bar{B}(\mathcal{H}) \simeq \mathcal{H}^!\]
-
-as expected for Koszul duality.
+\emph{Verification.} The bar-cobar constructions give
+(as dg coalgebras for the first, as chiral algebras for the second):
+\[\bar{B}(\mathcal{H}) \simeq \mathcal{H}^!
+\quad \text{and} \quad
+\Omega(\mathcal{H}^!) \simeq \mathcal{H}.\]
 \end{example}
 
 \subsection{Regularity conditions}
@@ -297,24 +274,7 @@ If $\mathcal{A} = \text{Free}(V) / (R)$ is quadratic and regular (Definition
 \subsection{Necessity of completion}
 
 \begin{remark}[Obstructions in non-quadratic case]\label{rem:non-quadratic-obstructions}
-When $\mathcal{A}$ has higher-order relations (cubic, quartic, etc.), direct 
-dualization fails because:
-
-\emph{Problem 1: Dual relations not closed.}
-Higher relations $r \in V^{\otimes n}$ for $n \geq 3$ give dual relations 
-$r^\perp \in (V^*)^{\otimes n}$, but these may not form an ideal in the cofree 
-coalgebra.
-
-\emph{Problem 2: Infinite-dimensional kernel.}
-The map:
-\[\mathcal{A} \to \mathcal{A}^{\vee\vee} = \text{Hom}(\text{Hom}(\mathcal{A}, \mathbb{C}), \mathbb{C})\]
-may have infinite-dimensional kernel.
-
-\emph{Problem 3: No natural coalgebra structure.}
-Even if we define $\mathcal{A}^* = \text{Hom}(\mathcal{A}, \mathbb{C})$, there is 
-no natural comultiplication.
-
-\emph{Solution.} Work with completions.
+For higher-order relations ($n \ge 3$), the dual relations $r^\perp \in (V^*)^{\otimes n}$ need not form a coalgebra ideal, the bidual map may have infinite-dimensional kernel, and $\mathcal{A}^*$ lacks a natural comultiplication.  All three obstructions are resolved by working with filtered completions.
 \end{remark}
 
 \begin{definition}[Filtered completion]\label{def:filtered-completion}
