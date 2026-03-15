@@ -1,0 +1,1835 @@
+\chapter{The geometric bar complex}
+\label{chap:bar-cobar}
+\label{chap:bar-construction}
+
+
+% [Governing question and H/M/S route remarks removed — content subsumed by introduction.]
+\index{bar construction!as integral transform|textbf}
+\index{non-abelian Fourier transform|textbf}
+
+In conformal field theory, the operator product expansion encodes how local operators fuse when brought together on a Riemann surface.  The bar complex geometrizes this fusion: it replaces the algebraic OPE data with an integral transform over Fulton--MacPherson compactifications of configuration spaces, whose kernel is the logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed}.  The output is a factorization coalgebra $\barB(\cA)$ on $\operatorname{Ran}(X)$ with nilpotent differential ($d^2 = 0$) at genus~$0$: the additive shadow of the multiplicative OPE.  Verdier duality inverts the transform: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}), recovering the algebra from its nilpotent image---the categorical logarithm--exponential correspondence of Remark~\ref{rem:nilpotence-periodicity}.
+
+The three-step bar differential
+$d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
++ d_{\mathrm{de\,Rham}}$ that we built by hand for the Heisenberg
+algebra in Chapter~\ref{ch:heisenberg-frame} now receives its general
+formulation.  The key structural insight is that the three components
+correspond to three types of geometry on the compactified
+configuration space $\overline{C}_n(X)$:
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Component} & \textbf{Geometric origin} & \textbf{Extracts} \\
+\hline
+$d_{\mathrm{internal}}$ & Internal differential of $\cA$ & Algebraic structure \\
+$d_{\mathrm{residue}}$ & Residues along collision divisors $D_{ij}$ & OPE coefficients \\
+$d_{\mathrm{de\,Rham}}$ & de~Rham differential on $\overline{C}_n(X)$ & Configuration geometry
+\end{tabular}
+\end{center}
+
+\noindent
+The Arnold relation
+(Theorem~\ref{thm:arnold-three}) ensures $d^2 = 0$: it is the
+coherence condition that the geometry of collisions is consistent.
+The genus-$0$ bar differential $\dzero$ satisfies $\dzero^2 = 0$
+(Theorem~\ref{thm:bar-nilpotency-complete}), and Verdier duality
+establishes $\mathbb{D}_{\operatorname{Ran}} \barB_X(\cA) \simeq
+\barB_X(\cA^!)$.  The curved genus-$g$ deformation, where the seed is
+transplanted to higher-genus curves and curvature from the Hodge
+bundle enters, is developed in Chapter~\ref{chap:higher-genus}.
+
+\smallskip
+\noindent\textit{Notation.}
+Throughout this chapter, the unadorned differential $d$ on the bar complex denotes the genus-$0$ collision differential $\dzero$ of Convention~\ref{conv:higher-genus-differentials}; it satisfies $\dzero^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}).  The fiberwise curved differential $\dfib$ and the total corrected differential $\Dg{g}$ appear only in Chapter~\ref{chap:higher-genus}.
+
+\medskip
+
+\begin{convention}[Set notation and ordering]\label{conv:set-notation}
+Throughout this chapter: collision divisors are $D_{ij}$ with $i < j$ (indices in increasing order); the hat notation $\widehat{ij}$ denotes \emph{omission} of both factors $\phi_i$ and $\phi_j$ after applying the OPE (we write $\widehat{ij}$ for the collision pattern itself, and $\widehat{\phi_i, \phi_j}$ when listing omitted terms in a tensor product).
+\end{convention}
+
+\begin{convention}[Bar coalgebra and Koszul dual algebra]
+\label{conv:bar-coalgebra-identity}
+\index{bar construction!as Koszul dual coalgebra|textbf}
+\index{Koszul dual!coalgebra vs.\ algebra|textbf}
+The bar construction $\barB_X(\cA)$ of an augmented chiral
+algebra~$\cA$ is a dg factorization \emph{coalgebra} on
+$\operatorname{Ran}(X)$.  It is the Koszul dual \emph{coalgebra}
+of~$\cA$: the bar complex is not a tool for computing the dual,
+it \emph{is} the dual.
+
+When $\cA$ is Koszul, the bar coalgebra has cohomology concentrated
+in bar degree~$1$.  The Koszul dual \emph{algebra}~$\cA^!$ is a
+separate object: it has generators $\mathcal{V}^\vee =
+\mathcal{H}om_{\mathcal{O}_X}(\mathcal{V}, \omega_X)$
+($\mathcal{D}_X$-module dual of the generators of~$\cA$) and
+relations~$R^\perp$ (orthogonal complement under the residue
+pairing).  In the classical setting (algebras on a point),
+$\cA^!$ is the graded linear dual of the concentrated bar
+coalgebra.  In the chiral setting, $\cA^!$ is characterized by
+Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main}):
+Verdier duality on $\operatorname{Ran}(X)$ intertwines the bar
+\emph{coalgebras},
+\[
+\mathbb{D}_{\operatorname{Ran}}\, \barB_X(\cA)
+\;\simeq\; \barB_X(\cA^!),
+\]
+and the cobar--bar counit
+$\Omega_X(\barB_X(\cA)) \xrightarrow{\sim} \cA$
+(Theorem~\ref{thm:bar-cobar-inversion-qi})
+is a \emph{resolution} of~$\cA$: the cobar of the bar coalgebra
+recovers~$\cA$ itself, not its dual.
+
+The bar-dual identity has a precise witness: the \emph{canonical
+twisting morphism}
+$\tau \colon \barB_X(\cA) \to \cA$,
+the degree-$+1$ map projecting bar generators to their algebra
+images.  The graded vector space
+$\mathfrak{g}_\tau := \Hom(\barB_X(\cA),\, \cA)$ carries a
+natural dg Lie structure---the \emph{convolution Lie algebra}---whose
+bracket is $[f, g] = \mu_\cA \circ (f \otimes g) \circ
+\Delta_{\barB}$ and whose differential is
+$\partial f = d_\cA \circ f - (-1)^{|f|} f \circ d_{\barB}$.
+The twisting morphism~$\tau$ is a \emph{Maurer--Cartan element}
+of this Lie algebra:
+\[
+\partial\tau + \tfrac{1}{2}[\tau, \tau] = 0
+\qquad
+\bigl(\text{equivalently: } \partial\tau + \tau \star \tau = 0\bigr),
+\]
+and the bar-cobar adjunction is the pair
+$(\varepsilon_\tau,\, \eta_\tau)$ it determines.
+At higher genus, $\tau$ extends to a curved MC element
+$\tau_{\mathrm{mod}} = \tau + \Theta_\cA$
+in the modular convolution algebra
+$\mathfrak{g}_\tau \widehat{\otimes} R\Gamma(\overline{\mathcal{M}}_{g,\bullet})$
+(Remark~\ref{rem:theta-modular-twisting}), whose curvature
+$\kappa(\cA)\cdot\omega_g$ controls the genus tower.
+The four main theorems are four properties of~$\tau$:
+existence~(A), invertibility~(B), branch structure~(C),
+leading coefficient~(D).
+
+\smallskip\noindent
+In summary:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Object} & \textbf{Type} & \textbf{Relationship} \\
+\hline
+$\barB_X(\cA)$ & factorization coalgebra
+  & the Koszul dual coalgebra \\[2pt]
+$\cA^!$ & chiral algebra
+  & generators $= \mathcal{V}^\vee$,
+    relations $= R^\perp$ \\[2pt]
+$\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$
+  & factorization coalgebra
+  & $\simeq \barB_X(\cA^!)$ (Theorem~A) \\[2pt]
+$\Omega_X(\barB_X(\cA))$ & chiral algebra
+  & $\simeq \cA$ (resolution, not $\cA^!$)
+\end{tabular}
+\end{center}
+\end{convention}
+
+\begin{convention}[Chiral product vs.\ chiral bracket]
+\label{conv:product-vs-bracket}
+\index{chiral product|textbf}
+\index{chiral bracket|textbf}
+The \emph{chiral product}
+$\mu \colon j_* j^*(\cA \boxtimes \cA) \to \Delta_!(\cA)$
+(Definition~\ref{def:chiral-algebra}) encodes all OPE pole
+orders simultaneously.  The \emph{chiral bracket}
+$\{a,b\} = a_{(0)}b$ extracts the simple-pole residue of~$\mu$;
+the \emph{invariant pairing} $\kappa(a,b) = a_{(1)}b$ extracts
+the double-pole residue.  The bar differential
+$d_{\mathrm{res}}$ uses the full product~$\mu$
+(Proposition~\ref{prop:pole-decomposition}), which decomposes as
+$d_{\mathrm{res}} = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$:
+the bracket component uses $\{,\}$; the curvature component
+uses~$\kappa$.  Neither component is individually a differential
+(\S\ref{sec:selection-principle}).
+\end{convention}
+
+\label{rem:bar-cobar-hms}%
+
+\begin{remark}[Fourier seed computations]\label{rem:bar-cobar-fourier-seed}
+The reader who has worked through the Fourier seed computations
+(Chapter~\ref{ch:fourier-seed}) has already seen the bar differential
+extract OPE coefficients via residues against the logarithmic
+propagator.  We now develop the general construction.
+\end{remark}
+
+\section{The geometric bar complex}
+\label{sec:bar-cobar}
+
+\subsection{OPE coefficients as residues}
+
+\begin{remark}[Physical origin]\label{rem:physical-genesis}
+In 2D conformal field theory, the operator product expansion (OPE)
+\[\phi_i(z)\phi_j(w) = \sum_{k} \frac{C_{ij}^k}{(z-w)^{h_i+h_j-h_k}} \phi_k(w) + \text{(less singular)}\]
+encodes the structure constants $C_{ij}^k$ (fusion rules) and conformal weights $h_i$ of the theory; associativity of multiple OPEs constrains the $C_{ij}^k$.
+The bar construction geometrizes this: $\overline{C}_n(X)$ parametrizes insertion points, $D_{ij}$ encodes the limit $z_i \to z_j$, $\eta_{ij} = d\log(z_i - z_j)$ carries the singularities, and $\operatorname{Res}_{D_{ij}}$ extracts the OPE coefficients.
+\end{remark}
+
+\begin{remark}[Parallel track: the BV complex]\label{rem:bv-parallel-track}
+\index{BV complex!parallel track}
+The bar complex developed in this chapter has a second life as the
+BV complex of a chiral field theory.  In the BV formalism
+(Costello--Gwilliam~\cite{CG17}), a chiral algebra~$\cA$ determines a
+classical field theory whose fields are generators of~$\cA$ and whose
+\emph{antifields} are cogenerators of~$\cA^!$; the BV bracket arises from
+the residue pairing on configuration spaces.  The identification
+\[
+\text{bar complex of } \cA
+\;=\; \text{BV complex of the chiral field theory of } \cA
+\]
+is made precise in Theorem~\ref{thm:brst-bar-genus0}.  The reader
+may therefore read each construction in this chapter with dual vision:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\textbf{This chapter} & \textbf{BV reading} \\ \hline
+Bar differential $d_{\mathrm{res}}$ & BRST operator \\
+Logarithmic form $\eta_{ij}$ & Propagator \\
+Arnold relation $\Rightarrow d^2 = 0$ & Quantum master equation \\
+Bar cohomology $H^*(\bar{B}(\cA))$ & Physical observables \\
+Curvature $m_0$ (Chapter~\ref{chap:higher-genus}) & Conformal anomaly
+\end{tabular}
+\end{center}
+\noindent
+This parallel track is not an analogy; it is a theorem
+(Chapter~\ref{ch:bv-brst}).  We develop the algebraic-geometric
+side first because it is the side that admits complete proofs.
+\end{remark}
+
+\begin{example}[OPE as residue: the Heisenberg current]\label{ex:ope-to-residue}
+The Heisenberg current $J(z)$ with OPE $J(z)J(w) = k/(z-w)^2 + \text{reg.}$ gives the bar element $J(z_1) \otimes J(z_2) \otimes \eta_{12} \in \bar{B}^2(\mathcal{H})$, where $\eta_{12} = d\log(z_1 - z_2)$.  The bar differential extracts a residue: setting $\epsilon = z_1 - z_2$, the OPE double pole combined with $\eta_{12}$ produces $\operatorname{Res}_{\epsilon=0}[\epsilon^{-3}d\epsilon] = 0$ (triple pole, no residue).  The central charge $k$ is invisible at genus~$0$; it appears at genus~$1$ as the curvature $m_0$ (Example~\ref{ex:heisenberg-d-deg1}).
+\end{example}
+
+\begin{remark}[Logarithmic forms are forced]\label{rem:why-log-forced}
+Logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$ are distinguished among meromorphic 1-forms with poles along diagonals by three requirements, which together determine them uniquely.
+
+\emph{Conformal invariance.}
+Under a conformal transformation $z \mapsto f(z)$, a direct computation gives
+$d\log(f(z_i) - f(z_j)) = \frac{f'(z_i)dz_i - f'(z_j)dz_j}{f(z_i) - f(z_j)}$,
+which near the diagonal $z_i \approx z_j$ reduces to $(dz_i - dz_j)/(z_i - z_j)$
+by cancellation of $f'$.  Thus $\eta_{ij}$ is conformally invariant up to regular terms.
+
+\emph{Well-defined residues.}
+The residue $\operatorname{Res}_{D_{ij}}$ requires a \emph{simple pole} along $D_{ij}$: forms with higher-order poles (e.g.\ $dz_i/(z_i - z_j)^2$) do not admit canonical residues.  A logarithmic form $\omega = \frac{df}{f} \wedge \alpha + \beta$ with $f = z_i - z_j$ has $\operatorname{Res}_{D_{ij}}(\omega) = \alpha|_{D_{ij}}$, which is canonical.
+
+\emph{Arnold relations.}
+The cyclic identity
+$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$
+is the form-level expression of $d^2 = 0$ on configuration spaces; it holds for $d\log$ forms and fails for other meromorphic 1-forms with simple poles.
+
+Logarithmic forms are therefore the unique solution to the constraints of conformal invariance, canonical residues, and differential nilpotence.
+\end{remark}
+
+\subsection{Non-abelian Poincaré perspective on bar construction}
+
+\begin{definition}[Bar as factorization homology]\label{def:bar-fh}
+The geometric bar construction is factorization homology of the
+chiral algebra, following the Beilinson--Drinfeld factorization
+framework~\cite[\S3.4]{BD04}:
+\[\bar{B}^{\text{geom}}_n(\mathcal{A}) = \int_{\overline{C}_{n+1}(X)/X} \mathcal{A}\]
+where we integrate over configuration spaces relative to $X$.
+\end{definition}
+
+\begin{remark}[Configuration spaces]\label{rem:why-config-NAP}
+In non-abelian Poincar\'e duality~\cite[\S3.4]{BD04}, one integrates
+over configuration spaces rather than the manifold itself.  The
+compactification $\overline{C}_n(X)$ adds boundary divisors encoding
+collision data; the key inputs are~\cite[Theorem~3.4.22, \S3.6]{BD04}
+(Ran space as the correct geometric setting).  Residue extraction is
+the NAP analogue of the cup product.
+\end{remark}
+
+\begin{theorem}[Bar construction as NAP homology; \ClaimStatusProvedHere]\label{thm:bar-NAP-homology}\label{thm:bar-computes-chiral-homology}
+\index{factorization homology!via bar complex}
+Let $\mathcal{A}$ be a chiral algebra on a smooth curve $X$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Holonomicity}: $\mathcal{A}$ is a holonomic
+  $\mathcal{D}_X$-module (equivalently, locally finitely generated
+  with regular singularities).  Concretely, the solution space of the
+  $\mathcal{D}_X$-equations on any disk is finite-dimensional---the
+  algebraic counterpart of finite-dimensional state spaces at each
+  point.
+\item \emph{Excision}: the factorization algebra associated
+  to~$\mathcal{A}$ satisfies the Weiss cosheaf condition
+  (Definition~\ref{def:weiss-cover}), i.e., the
+  factorization structure glues over Weiss covers.  This
+  provides the descent data for factorization homology.
+\end{enumerate}
+Then the geometric bar complex computes factorization homology:
+\[H_*(\bar{B}^{\text{geom}}(\mathcal{A})) \cong \int_{C_*(X)} \mathcal{A}\]
+
+This is factorization homology of $X$ with coefficients in $\mathcal{A}$ in the sense of Ayala--Francis~\cite{AF15}.  Holonomicity guarantees finite-dimensionality of stalks, which is needed for the Ayala--Francis identification~\cite[Theorem~5.1]{AF15}; excision provides the descent data.
+
+The coalgebra structure on $\bar{B}^{\text{geom}}(\mathcal{A})$ arises from the coproduct in factorization homology:
+\[\int_X A \to \int_{X_1} A \otimes \int_{X_2} A\]
+when X decomposes as $X = X_1 \sqcup X_2$.
+\end{theorem}
+
+\begin{proof}
+The identification follows from \cite{AF15} (for the factorization homology framework) and \cite{BD04} (Section~3.4, for the chiral algebra case).  The bar differential $d = d_{\text{int}} + d_{\text{res}} + d_{dR}$ corresponds to the three components of the factorization structure:
+\begin{itemize}
+\item $d_{\text{int}}$: Internal operations in $\mathcal{A}$ (factorization algebra structure)
+\item $d_{\text{res}}$: Residues at collisions (the chiral bracket, realizing the NAP cup product)
+\item $d_{dR}$: de Rham differential on logarithmic forms
+\end{itemize}
+The key verification is that Weiss covers of $C_n(X)$ compute factorization homology (\cite{AF15}, Theorem~5.1), and the FM compactification provides a canonical system of Weiss covers whose \v{C}ech complex is precisely the bar complex (Definition~\ref{def:weiss-cover}).
+\end{proof}
+
+With the bar and cobar constructions in hand, we can articulate the organizing principle of this monograph.
+
+\begin{remark}[The nilpotence-periodicity correspondence]
+\label{rem:nilpotence-periodicity}
+\index{nilpotence-periodicity correspondence|textbf}
+\index{periodicity!as exponential of nilpotence}
+The logarithmic form~$\eta_{ij} = d\log(z_i - z_j)$ is not an
+incidental choice of kernel: the bar construction is the
+\emph{categorical logarithm} for chiral algebras, mapping
+multiplicative structure (the OPE) to additive/nilpotent structure
+(the bar differential with $\dzero^2 = 0$).  The cobar construction
+is the corresponding \emph{exponential}, reconstructing the algebra
+from the nilpotent data.  The structural principle governing the
+entire theory is:
+\begin{center}
+\emph{Nilpotence is the logarithm of periodicity.}
+\end{center}
+At genus~$0$, the logarithm~$\eta_{ij}$ is single-valued
+on~$C_2(\mathbb{P}^1)$, the bar differential is nilpotent
+($\dzero^2 = 0$), and the monodromy is trivial.  At
+genus~$g \geq 1$, the logarithm $d\log E(z_i,z_j)$ acquires
+monodromy around the $B$-cycles of~$\Sigma_g$, the fiberwise bar
+differential fails nilpotence by
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, and the curvature
+$\kappa(\cA)$ is the \emph{infinitesimal generator} of this
+monodromy---the residue at the branch point of the logarithm.
+This is the chiral Riemann--Hilbert correspondence: the nilpotent
+datum~$\kappa$ determines the periodic datum (the monodromy of the
+bar family over~$\overline{\mathcal{M}}_g$) via exponentiation.
+
+The four theorems are four aspects of this correspondence:
+Theorem~A asserts that the categorical logarithm and exponential
+exist; Theorem~B that they are mutually inverse on the
+convergence domain (the Koszul locus); Theorem~C that the failure
+off the convergence domain decomposes into complementary
+Lagrangians (the branch structure of the logarithm); and
+Theorem~D that the leading coefficient~$\kappa(\cA)$ of the
+logarithm determines the full scalar package.
+
+The modular periodicity profile~$\Pi(\cA)$ is the
+global/exponential counterpart of the infinitesimal/nilpotent
+characteristic~$\kappa(\cA)$.  At the scalar level, the T-matrix
+eigenvalues $\lambda = \exp(2\pi i(h - c/24))$ are the
+\emph{exponentials} of conformal weights shifted by the central
+charge; the modular period~$N$ is the smallest positive integer for
+which $\exp(2\pi i N c/24) = 1$.  At the geometric level, the
+nilpotency $\kappa(\lambda)^{g-1} = 0$
+(Theorem~\ref{thm:geometric-depth-smooth}) makes the operator
+$\exp(\kappa(\lambda))$ \emph{unipotent}, not periodic: geometry
+provides a stabilization threshold, not a period.  True periodicity
+arises from modular and quantum sources whose nilpotent generators
+have finite-order exponentials.
+\end{remark}
+
+\subsection{Precise construction of the bar complex}
+
+\begin{definition}[Genus-graded geometric bar complex]
+The bar complex at genus $g$ is:
+\[\bar{B}^{(g),n}(\mathcal{A}) = \Gamma\left(\overline{C}_{n+1}^{(g)}(\Sigma_g), j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n(\log D^{(g)})\right)\]
+
+The total bar complex is:
+\[\bar{B}(\mathcal{A}) = \bigoplus_{g=0}^{\infty} \bar{B}^{(g)}(\mathcal{A})\]
+\end{definition}
+
+\begin{convention}[Global sections vs.\ derived global sections]\label{conv:gamma-vs-rgamma}
+\index{global sections!underived vs.\ derived}
+Throughout this chapter, $\Gamma(-)$ denotes \emph{underived} global sections:
+for a sheaf $\mathcal{F}$ on a variety $Y$, the symbol $\Gamma(Y, \mathcal{F})$
+is the vector space $H^0(Y, \mathcal{F})$.  When derived global sections are
+needed (e.g., over moduli stacks or in derived $\mathcal{D}$-module arguments),
+we write $R\Gamma$ explicitly.  In particular, the bar complex definition above
+uses honest global sections of a coherent sheaf on the smooth variety
+$\overline{C}_{n+1}^{(g)}(\Sigma_g)$.
+\end{convention}
+
+\begin{remark}[Components of the definition]\label{rem:unpacking-bar-def}
+The FM compactification $\overline{C}_{n+1}^{(g)}(\Sigma_g)$ parametrizes $(n+1)$ points on $\Sigma_g$ with collision patterns (Chapter~\ref{chap:config-spaces}).  The degree-$n$ bar complex has $(n+1)$ insertions $\phi_0(z_0) \otimes \cdots \otimes \phi_n(z_n)$, where $\phi_0$ is the ``output'' (operadic structure).
+
+The external tensor product $j_*j^*\mathcal{A}^{\boxtimes(n+1)}$ extends $\mathcal{A}^{\boxtimes(n+1)}$ from the open locus of distinct points across collisions, with the OPE controlling the singularity structure (BD~\cite[\S3.4.14--3.4.22]{BD04}).
+
+The logarithmic forms $\Omega^n(\log D^{(g)})$ are spanned at genus~$0$ by wedge products of $\eta_{ij} = d\log(z_i - z_j)$; at genus $g \geq 1$, theta functions ($g=1$) and prime forms ($g \geq 2$) contribute.
+
+A global section $\alpha \in \bar{B}^{(g),n}(\mathcal{A})$ is a ``correlation function'':
+\[\alpha = \sum_I a_I(z_0, \ldots, z_n) \cdot \phi_{i_0}(z_0) \otimes \cdots \otimes \phi_{i_n}(z_n) \otimes \omega_I(z_0, \ldots, z_n)\]
+the geometric incarnation of an $(n+1)$-point function.
+\end{remark}
+
+\begin{example}[Genus zero, degree 1]\label{ex:bar-genus0-deg1}
+At genus 0, degree 1:
+\[\bar{B}^{(0),1}(\mathcal{A}) = \Gamma\left(\overline{C}_2(\mathbb{P}^1), j_*j^*(\mathcal{A} \boxtimes \mathcal{A}) \otimes \Omega^1(\log D_{12})\right)\]
+
+\emph{Configuration space.} $C_2(\mathbb{P}^1) \subset (\mathbb{P}^1)^2$ has $\dim_\mathbb{C} = 2$.  The $\text{PSL}_2$ action is transitive on ordered pairs of distinct points, so the quotient $C_2(\mathbb{P}^1)/\text{PSL}_2$ is a point.  After fixing the $\text{PSL}_2$ gauge (e.g., $z_2 = \infty$), the residual coordinate is $z_1 \in \mathbb{C}$.
+
+\emph{Boundary divisor.} $D_{12} = \{z_1 = z_2\}$ is a single point in $\overline{C}_2(\mathbb{P}^1)$.
+
+\emph{Logarithmic 1-forms.} $\Omega^1(\log D_{12})$ consists of forms:
+\[\omega = f(z_1, z_2) \cdot \eta_{12}\]
+where $\eta_{12} = \frac{dz_1 - dz_2}{z_1 - z_2}$ and $f$ is a meromorphic function.
+
+\emph{Elements.} Typical element is:
+\[\phi_i(z_1) \otimes \phi_j(z_2) \otimes \eta_{12}\]
+
+\emph{Dimension.} If $\mathcal{A}$ has $N$ generators, then:
+\[\dim \bar{B}^{(0),1}(\mathcal{A}) = N^2 \cdot \dim H^0(\overline{C}_2(\mathbb{P}^1), \Omega^1(\log D_{12}))\]
+
+For $\mathbb{P}^1$, $\dim H^0(\overline{C}_2, \Omega^1(\log D)) = 1$ (only constant coefficient functions after fixing $\text{PSL}_2$).
+
+Hence $\dim \bar{B}^{(0),1}(\mathcal{A}) = N^2$.
+\end{example}
+
+\begin{example}[Genus zero, degree 2]\label{ex:bar-genus0-deg2}
+At genus 0, degree 2:
+\[\bar{B}^{(0),2}(\mathcal{A}) = \Gamma\left(\overline{C}_3(\mathbb{P}^1), j_*j^*(\mathcal{A}^{\boxtimes 3}) \otimes \Omega^2(\log D)\right)\]
+
+\emph{Configuration space.} $\overline{C}_3(\mathbb{P}^1)$ has $\dim_\mathbb{C} = 3$.  Fixing the $\text{PSL}_2$ gauge (e.g., $z_3 = 0, z_2 = 1, z_1 = \infty$ for the normalization), the quotient $\overline{C}_3(\mathbb{P}^1)/\text{PSL}_2 \cong \overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$ has $\dim_\mathbb{C} = 1$.  The $\text{PSL}_2$-reduced configuration has one free cross-ratio parameter.
+
+\emph{Boundary divisor.} $D = D_{12} \cup D_{23} \cup D_{13}$ (three divisors, one for each pair of points colliding).
+
+\emph{Logarithmic 2-forms.} $\Omega^2(\log D)$ is spanned by:
+\[\eta_{12} \wedge \eta_{23}, \quad \eta_{23} \wedge \eta_{31}, \quad \eta_{31} \wedge \eta_{12}\]
+subject to Arnold relation:
+\[\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0\]
+
+So the space of 2-forms is 2-dimensional (three generators, one relation).
+
+\emph{Elements.} Typical element is:
+\[\sum_{i,j,k} c_{ijk} \cdot \phi_i(z_1) \otimes \phi_j(z_2) \otimes \phi_k(z_3) \otimes (\eta_{12} \wedge \eta_{23})\]
+
+\emph{Dimension.} 
+\[\dim \bar{B}^{(0),2}(\mathcal{A}) = N^3 \cdot 2\]
+
+This grows rapidly with $n$.
+\end{example}
+
+\subsubsection{The bar differential}
+
+\begin{definition}[Bar differential]\label{def:bar-differential-complete}%
+\label{def:geometric-bar}\label{def:geometric-bar-definition}\label{def:bar-geometric}%
+\label{def:bar-diff-detailed}\label{def:diff-total}%
+\index{bar complex!differential|textbf}
+The differential $d: \bar{B}^n(\mathcal{A}) \to \bar{B}^{n+1}(\mathcal{A})$ has three components (in the cohomological grading convention $|d|=+1$; the residue component collapses two tensor factors, decreasing the tensor arity by one, while simultaneously increasing the form degree, so that the net cohomological degree is $+1$):
+\[d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}\]
+
+\emph{Component 1: Internal differential $d_{\text{internal}}$.}
+
+If $\mathcal{A}$ has an internal differential $d_\mathcal{A}: \mathcal{A} \to \mathcal{A}$ (e.g., from a BRST complex or de Rham differential), we apply it to each tensor factor:
+\[d_{\text{internal}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right) = \sum_{i=0}^n (-1)^{\epsilon_i} \left(\phi_0 \otimes \cdots \otimes d_\mathcal{A}(\phi_i) \otimes \cdots \otimes \phi_n \otimes \omega\right)\]
+where $\epsilon_i$ is the Koszul sign:
+\[\epsilon_i = \sum_{j=0}^{i-1} |\phi_j| + \sum_{j=0}^{i-1} 1 = \text{(total degree before } \phi_i\text{)}\]
+
+\emph{Component 2: Residue differential $d_{\text{residue}}$.}
+
+The main geometric operation extracts OPE coefficients via residues at collision divisors.
+\[d_{\text{residue}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right) = \sum_{0 \leq i < j \leq n} (-1)^{\sigma_{ij}} \text{Res}_{D_{ij}}\left[\mu(\phi_i, \phi_j) \otimes \text{(other factors)} \otimes \omega\right]\]
+where:
+\begin{itemize}
+\item $\mu: \mathcal{A} \otimes \mathcal{A} \to \mathcal{A}$ is the OPE (chiral product)
+\item $D_{ij} \subset \overline{C}_{n+1}(\Sigma_g)$ is the divisor where $z_i = z_j$
+\item $\text{Res}_{D_{ij}}$ is the residue along $D_{ij}$ (see \S\ref{sec:residue-calculus} below)
+\item $\sigma_{ij}$ is a sign determined by:
+  \begin{enumerate}
+  \item Position of $i,j$ in the tensor product (Koszul sign)
+  \item Orientation of $D_{ij}$ as boundary (geometric sign)
+  \item Grading of fields $\phi_i, \phi_j$ (super sign)
+  \end{enumerate}
+\end{itemize}
+
+The explicit formula for the sign is:
+\[\sigma_{ij} = \left(\sum_{k=0}^{i-1} |\phi_k|\right) + \left(\sum_{k=i+1}^{j-1} |\phi_k|\right) + |\phi_i| + \epsilon_{\text{geom}}(D_{ij})\]
+where $\epsilon_{\text{geom}}(D_{ij}) = 0$ or $1$ depending on orientation convention (see Convention \ref{conv:orientations-enhanced}).
+
+\emph{Component 3: Form differential $d_{\text{form}}$.}
+
+Apply the de Rham differential to the form component:
+\[d_{\text{form}}\left(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega\right) = (-1)^{\sum_{i=0}^n |\phi_i|} \left(\phi_0 \otimes \cdots \otimes \phi_n \otimes d_{\text{dR}}(\omega)\right)\]
+where $d_{\text{dR}}: \Omega^n \to \Omega^{n+1}$ is the de Rham differential on forms.
+
+\end{definition}
+
+\begin{remark}[Three components]\label{rem:three-components}
+\index{boundary divisor!in bar differential}
+The component $d_{\text{internal}}$ encodes the differential on $\mathcal{A}$ (BRST symmetry); $d_{\text{residue}}$ extracts OPE data via residues at $D_{ij}$; $d_{\text{form}}$ is the de Rham differential on configuration space (Ward identities).
+
+Nilpotency $d^2 = 0$ is \emph{not} automatic and requires the Borcherds identity ($d_{\text{residue}}^2 = 0$; Jacobi alone is insufficient---Proposition~\ref{prop:pole-decomposition}), Stokes' theorem ($\{d_{\text{form}}, d_{\text{residue}}\} = 0$), and the derivation property ($d_{\text{internal}}$ commutes with both).
+\end{remark}
+
+\begin{example}[Heisenberg degree-\texorpdfstring{$1$}{1} bar differential]\label{ex:heisenberg-d-deg1}
+\label{ex:free-boson-d-deg1}
+The Heisenberg algebra $\mathcal{H}_k$ with OPE $J(z)J(w) = k/(z-w)^2 + \text{regular}$ has
+vanishing bar differential on $\alpha = J \otimes J \otimes \eta_{12} \in \bar{B}^1$: the OPE combined with $\eta_{12}$ produces a triple pole $\epsilon^{-3}\,d\epsilon$, whose residue is zero.  The element $\alpha$ is a non-trivial cocycle.  The level $k$ is invisible at genus $0$ and appears only as a genus-$1$ quantum correction.  See Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1} for the full computation.
+\end{example}
+
+\begin{definition}[Orientation bundle across genera]
+For the configuration space $C_{p+1}^{(g)}(\Sigma_g)$, the orientation bundle includes genus-dependent factors:
+
+\[\text{or}_{p+1}^{(g)} = \det(TC_{p+1}^{(g)}(\Sigma_g)) \otimes \text{sgn}_{p+1} \otimes \mathcal{L}_g\]
+
+where:
+\begin{enumerate}
+\item $\det(TC_{p+1}^{(g)}(\Sigma_g))$ is the top exterior power of the tangent bundle
+\item $\text{sgn}_{p+1}$ is the sign representation of $S_{p+1}$
+\item $\mathcal{L}_g$ encodes the genus-dependent orientation from the period matrix
+\end{enumerate}
+
+This ensures $d^2 = 0$ with consistent signs across all face maps, compatibility with $\mathfrak{S}_{p+1}$, correct genus-graded $A_\infty$ signs, and $\text{Sp}(2g, \mathbb{Z})$-covariance.
+\end{definition}
+
+\begin{remark}[Orientation convention]
+We fix orientations at each genus by complexifying the orientation sheaf of the real blow-up $\widetilde{C}_{p+1}^{(g)}(\mathbb{R})$, tensoring with $\text{sgn}_{p+1}$ so that $\sigma^* \text{or}_{p+1}^{(g)} = \text{sign}(\sigma) \cdot \text{or}_{p+1}^{(g)}$ for $\sigma \in S_{p+1}$, and at genus $g \geq 1$ including the period matrix orientation $\mathcal{L}_g$.
+\end{remark}
+
+\subsection{Sign conventions}\label{sec:sign-conventions}
+
+\begin{convention}[Enhanced sign system]\label{conv:orientations-enhanced}
+The bar complex requires three types of sign conventions:
+
+\emph{Type 1: Koszul signs (algebraic).}
+
+The standard Koszul sign rule (Appendix~\ref{app:signs}, \S\ref{app:sign-conventions}; see also \S\ref{sec:sign-dictionary-complete}) applies with total degree $|\phi| + k$ for a field $\phi \in \mathcal{A}$ tensored with a form in $\Omega^k$.
+
+\emph{Type 2: Orientation signs (geometric).}
+
+Configuration spaces and their boundary divisors carry orientations:
+
+\begin{enumerate}
+\item \emph{Configuration space orientation:} $\overline{C}_{n+1}(\Sigma_g)$ is oriented via the complex structure:
+\[\text{or}(\overline{C}_{n+1}) = dz_1 \wedge d\bar{z}_1 \wedge \cdots \wedge dz_n \wedge d\bar{z}_n\]
+(after modding out by automorphisms; see \S\ref{sec:sign-conventions} below)
+
+\item \emph{Divisor orientation:} Each boundary divisor $D_{ij}$ is oriented by the \emph{outward normal} convention:
+\[\text{or}(D_{ij}) = d\epsilon_{ij} \wedge \text{or}(\text{tangent to } D_{ij})\]
+where $\epsilon_{ij} = |z_i - z_j|$ points outward (into the interior).
+
+\item \emph{Codimension-2 strata:} At intersections $D_{ij} \cap D_{jk} = D_{ijk}$:
+\[\text{or}(D_{ijk}) = d\epsilon_{ij} \wedge d\epsilon_{jk} \wedge \text{or}(\text{tangent})\]
+
+The key identity (Lemma~\ref{lem:orientation}, item~(3)):
+\[\text{or}(D_{ijk})|_{D_{ij}} = -\text{or}(D_{ijk})|_{D_{jk}}\]
+This sign difference ensures Stokes' theorem holds with correct cancellations.
+
+\item \emph{Residue orientation:} When computing $\text{Res}_{D_{ij}}$, we use:
+\[\text{Res}_{D_{ij}}\left(\frac{d\epsilon_{ij}}{\epsilon_{ij}} \wedge \alpha\right) = (+1) \cdot \alpha|_{D_{ij}}\]
+(no extra sign for residue extraction)
+\end{enumerate}
+
+\emph{Type 3: Operadic signs.}
+
+The bar complex has an operadic structure (composition of operations). When composing two operations, the sign arises from three sources: \emph{grafting trees} (reordering edges when attaching one tree to another), \emph{shuffle signs} (permuting tensor factors to bring colliding fields together), and the \emph{Koszul sign} (moving differential forms past fields).
+
+The formula (for operads): if we compose operations of arity $m$ and $n$ at the $i$-th input:
+\[\text{sign} = (-1)^{\epsilon}\]
+where:
+\[\epsilon = \sum_{j=1}^{i-1} |p_j| \cdot |q|\]
+($|p_j|$ are degrees of inputs before position $i$, $|q|$ is degree of the composed operation)
+
+\emph{Compatibility condition.}
+
+These three types of signs must be compatible to ensure $d^2 = 0$. The key relations are:
+
+\begin{enumerate}
+\item \emph{Koszul-Orientation compatibility:}
+\[\text{sign}_{\text{Koszul}}(\phi_i \leftrightarrow \phi_j) \cdot \text{sign}_{\text{orient}}(D_{ij} \leftrightarrow D_{ji}) = (-1)^{1}\]
+(fields anticommute up to orientation sign)
+
+\item \emph{Orientation-Residue compatibility:}
+\[\text{Res}_{D_{ij}} \circ \text{Res}_{D_{jk}} + \text{Res}_{D_{jk}} \circ \text{Res}_{D_{ij}} = 0 \quad \text{(with correct signs)}\]
+(residues anticommute at codimension-2 strata)
+
+\item \emph{Koszul-Operadic compatibility:}
+\[\text{sign}_{\text{Koszul}}(\text{reorder}) = \text{sign}_{\text{operadic}}(\text{compose})\]
+(both give the same sign for the same operation)
+\end{enumerate}
+
+\end{convention}
+
+\begin{lemma}[Sign compatibility; \ClaimStatusProvedHere]\label{lem:sign-compatibility}
+The three types of signs (Koszul, orientation, operadic) are mutually compatible in the sense required for $d^2 = 0$.
+\end{lemma}
+
+\begin{proof}
+We verify each compatibility relation:
+
+\emph{Relation 1: Koszul-Orientation.}
+
+Consider swapping two fields $\phi_i \otimes \phi_j \to \phi_j \otimes \phi_i$:
+- Koszul sign: $(-1)^{|\phi_i| \cdot |\phi_j|}$
+- This corresponds to swapping collision divisors $D_{ij} \leftrightarrow D_{ji}$
+- Orientation sign: $\text{or}(D_{ji}) = -\text{or}(D_{ij})$ (from antisymmetry of differentials)
+
+The product:
+\[(-1)^{|\phi_i| \cdot |\phi_j|} \cdot (-1) = (-1)^{|\phi_i| \cdot |\phi_j| + 1}\]
+
+For bosonic fields ($|\phi_i|, |\phi_j|$ even), this is $(-1)^{0+1} = -1$.
+For fermionic fields ($|\phi_i|, |\phi_j|$ odd), this is $(-1)^{1+1} = +1$.
+
+This yields the correct commutation and anticommutation relations for super-objects.
+
+\emph{Relation 2: Orientation-Residue.}
+
+At a codimension-2 stratum $D_{ijk} = D_{ij} \cap D_{jk}$:
+
+Approach from $D_{ij}$ side:
+\[\text{or}(D_{ijk})|_{D_{ij}} = d\epsilon_{jk} \wedge \text{or}(D_{ij})\]
+
+Approach from $D_{jk}$ side:
+\[\text{or}(D_{ijk})|_{D_{jk}} = d\epsilon_{ij} \wedge \text{or}(D_{jk})\]
+
+By Lemma~\ref{lem:orientation}(3), these differ by a sign: $\text{or}(D_{ijk})|_{D_{ij}} = -\text{or}(D_{ijk})|_{D_{jk}}$.
+
+Now compute double residue:
+\begin{align*}
+\text{Res}_{D_{ij}} \text{Res}_{D_{jk}}(\omega) + \text{Res}_{D_{jk}} \text{Res}_{D_{ij}}(\omega) &= \int_{D_{ijk}} \omega|_{D_{ijk}} \text{ (from }\text{or}(D_{ijk})|_{D_{ij}}\text{)} \\
+&\quad + \int_{D_{ijk}} \omega|_{D_{ijk}} \text{ (from }\text{or}(D_{ijk})|_{D_{jk}}\text{)} \\
+&= (+1) \int + (-1) \int = 0
+\end{align*}
+
+The orientations differ by exactly the sign needed for cancellation.
+
+\emph{Relation 3: Koszul-Operadic.}
+
+Consider composing two operations $\mu_1: V_1 \otimes V_2 \to W_1$ and $\mu_2: W_1 \otimes V_3 \to W_2$.
+
+Koszul sign for moving $V_2$ past $W_1$:
+\[(-1)^{|V_2| \cdot |W_1|}\]
+
+Operadic sign for grafting:
+\[(-1)^{\epsilon}\] where $\epsilon = |V_1| + |V_2|$ (degrees of inputs before the graft point)
+
+These match when we account for the suspension in the bar construction ($W_1$ has degree shifted by 1).  More precisely, the sign convention on the desuspension $s^{-1}\bar{\mathcal{A}}$ is \emph{chosen} so that the Koszul and operadic signs are compatible; we now verify that this choice is consistent.
+
+\emph{General case.}
+Let $T$ be the rooted tree labeling the given bar element.  Each of
+the three sign sources defines a parity character on $\operatorname{Aut}(T)$:
+Koszul signs come from permuting tensor factors, orientation signs
+come from permuting configuration-space coordinates, and operadic
+signs come from grafting odd inputs through the operad composition.
+
+The key identity is checked on an adjacent transposition of two inputs
+$\phi_i,\phi_j$.  On the desuspension $s^{-1}\bar{\mathcal{A}}$, that
+transposition contributes
+\[
+(-1)^{(|\phi_i|-1)(|\phi_j|-1)}
+= (-1)^{|\phi_i||\phi_j|}
+  (-1)^{|\phi_i|+|\phi_j|}
+  (-1).
+\]
+The first factor is the Koszul sign, the second is the operadic sign,
+and the last factor is the orientation sign from swapping the two
+coordinates.  Hence the combined action on
+$s^{-1}\bar{\mathcal{A}}$ already contains all three sign sources.
+
+Because every tree automorphism is generated by adjacent
+transpositions, compatibility for generators implies
+\[
+\epsilon_{\mathrm{Koszul}} \cdot
+\epsilon_{\mathrm{orient}} \cdot
+\epsilon_{\mathrm{operad}} = +1
+\]
+for every rooted tree~$T$.  The arity-$2$ computation above supplies
+the base case, and induction on tree depth propagates the identity to
+all graftings.
+\end{proof}
+
+\subsection{\texorpdfstring{Proof that $d^2 = 0$: nine-term verification}{Proof that d2 = 0: nine-term verification}}\label{sec:bar-nilpotency-nine-terms-complete}\label{sec:bar-nilpotency}
+
+\begin{theorem}[Nilpotency of bar differential; \ClaimStatusProvedHere]\label{thm:bar-nilpotency-complete}
+\index{bar differential!nilpotence}
+\textup{[Regime: quadratic, genus-$0$
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+The differential $d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}$ on the bar complex satisfies:
+\[d^2 = 0\]
+
+More precisely, all nine cross-terms arising from $(d_1 + d_2 + d_3)^2$ cancel.
+\end{theorem}
+
+\begin{proof}
+Write $d = d_1 + d_2 + d_3$ where $d_1 = d_{\text{int}}$ is the internal differential on $\mathcal{A}$, $d_2 = d_{\text{res}}$ extracts residues at collision divisors, and $d_3 = d_{\text{dR}}$ is the de Rham differential on forms. Expanding $(d_1 + d_2 + d_3)^2$, we obtain six terms (three diagonal and three anticommutators) which we verify separately.
+
+\emph{Diagonal terms.} The identity $d_1^2 = 0$ holds because $d_\mathcal{A}^2 = 0$ on $\mathcal{A}$: diagonal terms vanish by hypothesis, and cross-terms (where $d_1$ hits two different tensor factors $\phi_i$ and $\phi_j$) cancel in pairs by the Koszul sign rule. The identity $d_3^2 = 0$ is the standard relation $d_{\text{dR}}^2 = 0$ for differential forms.
+
+The identity $d_2^2 = 0$ is the most substantial. In the double sum
+\[d_2^2 = \sum_{i<j}\sum_{k<\ell} (-1)^{\sigma_{ij} + \sigma_{k\ell}'}\, \text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}},\]
+three cases arise according to how the index sets $\{i,j\}$ and $\{k,\ell\}$ overlap.
+
+\emph{Case (i): Disjoint pairs} ($\{i,j\} \cap \{k,\ell\} = \emptyset$). The divisors $D_{ij}$ and $D_{k\ell}$ intersect transversally in $\partial\overline{C}_{n+1}(X)$. Since the divisors are disjoint (no shared indices), the residue operations themselves commute:
+\[\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = \text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}.\]
+The cancellation comes from the signed sum in $d_2$: the ordered pairs $(i,j),(k,\ell)$ and $(k,\ell),(i,j)$ contribute with opposite signs $(-1)^{\sigma_{ij}+\sigma_{k\ell}'}$ and $(-1)^{\sigma_{k\ell}+\sigma_{ij}'}$ (Lemma~\ref{lem:sign-compatibility}), and these signs differ by $(-1)$, so the two terms cancel.
+
+\emph{Case (ii): One overlap} (say $j = k$).  This is the case that produced the Arnold relation in the Heisenberg degree-$2$ computation (\S\ref{sec:frame-bar-deg2}): three boundary strata meet at a triple collision, and their contributions cancel cyclically.  In general: the composition approaches the codimension-2 stratum $D_{ij\ell}$ (triple collision). Three terms contribute, corresponding to the three codimension-1 strata meeting $D_{ij\ell}$:
+\begin{align*}
+&\text{Res}_{D_{j\ell}} \circ \text{Res}_{D_{ij}}\bigl[\mu(\mu(\phi_i, \phi_j), \phi_\ell)\bigr] + \text{Res}_{D_{ij}} \circ \text{Res}_{D_{j\ell}}\bigl[\mu(\phi_i, \mu(\phi_j, \phi_\ell))\bigr] \\
+&\qquad + \text{Res}_{D_{i\ell}} \circ \text{Res}_{D_{ij}}\bigl[\mu(\mu(\phi_i, \phi_\ell), \phi_j)\bigr].
+\end{align*}
+These cancel by the associativity constraint on the chiral product $\mu$---equivalently, by the Borcherds identity for $\mathcal{A}$---which asserts that the sum of these three iterated-residue terms vanishes for any triple of sections.
+
+\emph{Case (iii): Same pair} ($\{i,j\} = \{k,\ell\}$). Since $\text{Res}_{D_{ij}}$ extracts a simple pole along $D_{ij}$, applying it once produces a section regular along $D_{ij}$, and a second application yields zero: $\text{Res}_{D_{ij}}^2 = 0$.
+
+\emph{Mixed terms.} The anticommutator $\{d_1, d_2\} = 0$ follows from the fact that $d_\mathcal{A}$ is a derivation of $\mathcal{A}$. Since $\mu$ is a morphism of $\mathcal{D}_X$-modules, the internal differential commutes with residue extraction: $d_1 \circ \text{Res}_{D_{ij}} = \text{Res}_{D_{ij}} \circ d_1$.
+
+For $\{d_1, d_3\} = 0$: the operators $d_1$ and $d_3$ act on the algebra and form tensor factors respectively. The Koszul sign accompanying $d_3$ includes a factor $(-1)^{\sum_i |\phi_i|}$ from passing the de Rham differential past the algebra elements. After $d_1$ increases one algebra degree by $1$, the sign acquires an extra factor of $(-1)$. Thus $d_3 \circ d_1 = -d_1 \circ d_3$, and the anticommutator vanishes.
+
+For $\{d_2, d_3\} = 0$: this follows from the residue exact sequence for logarithmic forms.  On a normal crossing divisor $D = \bigcup D_{ij} \subset \overline{C}_{n+1}(X)$, the residue map fits into the exact sequence $0 \to \Omega^k \to \Omega^k(\log D) \xrightarrow{\text{Res}} \bigoplus_{D_{ij}} \Omega^{k-1}_{D_{ij}}(\log D') \to 0$, and the de Rham differential is compatible with the residue map: $\text{Res}_{D_{ij}} \circ d_{\text{dR}} = d_{\text{dR}}|_{D_{ij}} \circ \text{Res}_{D_{ij}}$.  Since $d_2$ is a signed sum of residues and $d_3 = d_{\text{dR}}$, they anticommute (with signs from Convention~\ref{conv:orientations-enhanced}).
+\end{proof}
+
+\begin{remark}[Sign-level verification]\label{rem:sign-bridge}
+For a complete sign-by-sign verification of $d^2 = 0$ at low degrees
+(including the explicit computation for degree-3 elements $[a|b|c]$ in a
+graded associative algebra), see Verification~\ref{ver:d2-degree3} and
+Proposition~\ref{prop:master-sign} in Appendix~\ref{app:signs}.
+\end{remark}
+
+\begin{remark}[Synthesis]\label{rem:d-squared-synthesis}\label{rem:geometric-miracle}
+The three mechanisms entering the proof of $d^2 = 0$ ---
+the Borcherds identity (algebra), Stokes' theorem (topology), and
+residue calculus (analysis) --- all arise from the boundary
+stratification of $\overline{C}_n(X)$.  For the Heisenberg algebra,
+this reduced to the Arnold relation
+(\S\ref{sec:frame-bar-deg2}); in general, the factorization structure
+on $\operatorname{Ran}(X)$ forces the compatibility
+(Beilinson--Drinfeld~\cite{BD04};
+see \S\ref{sec:selection-principle} for the selection principle).
+\end{remark}
+
+\begin{proposition}[Pole decomposition of the bar differential; \ClaimStatusProvedHere]\label{prop:pole-decomposition}
+\index{bar differential!pole decomposition}
+\index{bar differential!bracket component}
+\index{bar differential!curvature component}
+The residue differential $d_{\mathrm{res}}$ decomposes according to OPE pole order:
+\begin{equation}\label{eq:pole-decomposition}
+d_{\mathrm{res}} = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}
+\end{equation}
+where $d_{\mathrm{bracket}}$ extracts residues from simple poles (Lie bracket terms $a_{(0)}b$) and $d_{\mathrm{curvature}}$ extracts residues from double poles (metric/level terms $\kappa(a,b)|0\rangle$).
+
+This decomposition has the following properties:
+\begin{enumerate}
+\item $d_{\mathrm{bracket}}^2 \neq 0$ in general: the obstruction is the Borcherds associator, which involves iterated residues mixing both pole orders.
+\item $d_{\mathrm{curvature}}^2 = 0$: double-pole residues produce scalars (vacuum vectors), and a second residue applied to a scalar vanishes.
+\item $d_{\mathrm{res}}^2 = d_{\mathrm{bracket}}^2 + \{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\} + d_{\mathrm{curvature}}^2 = 0$, so the cross-term $\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\}$ exactly compensates the failure of $d_{\mathrm{bracket}}^2 = 0$.
+\end{enumerate}
+
+In particular, the Lie-bracket Jacobi identity (which would give $d_{\mathrm{bracket}}^2 = 0$ for a Lie algebra) is \emph{insufficient} for nilpotency of the chiral bar differential.  The full Borcherds identity (associativity of the chiral product $\mu$, involving all pole orders simultaneously) is required.
+\end{proposition}
+
+\begin{proof}
+For a chiral algebra $\cA$ with OPE $a(z)b(w) \sim \sum_{n \geq 0} a_{(n)}b \cdot (z-w)^{-n-1}$, the residue differential at the divisor $D_{ij}$ extracts:
+\[
+\mathrm{Res}_{D_{ij}}[\mu(\phi_i, \phi_j) \otimes \omega]
+  = \mathrm{Res}_{\epsilon=0}\Bigl[\sum_{n \geq 0}
+    \frac{(\phi_i)_{(n)}\phi_j}{\epsilon^{n+1}} \otimes \omega\Bigr]
+\]
+where $\epsilon = z_i - z_j$ is the local coordinate normal to $D_{ij}$.
+
+The simple-pole contribution ($n = 0$) gives:
+\[
+d_{\mathrm{bracket}}(\cdots) = \sum_{i < j} (-1)^{\sigma_{ij}}
+  \mathrm{Res}_{\epsilon=0}\Bigl[\frac{(\phi_i)_{(0)}\phi_j}{\epsilon}
+    \otimes \omega\Bigr],
+\]
+which extracts the Lie bracket $[\phi_i, \phi_j] = (\phi_i)_{(0)}\phi_j$ via the simple-pole residue of $\omega$.
+
+The double-pole contribution ($n = 1$) gives:
+\[
+d_{\mathrm{curvature}}(\cdots) = \sum_{i < j} (-1)^{\sigma_{ij}}
+  \mathrm{Res}_{\epsilon=0}\Bigl[\frac{(\phi_i)_{(1)}\phi_j}{\epsilon^2}
+    \otimes \omega\Bigr],
+\]
+which extracts the invariant bilinear form $(\phi_i)_{(1)}\phi_j = \kappa(\phi_i, \phi_j)|0\rangle$.  For Kac--Moody algebras, this is the level: $(J^a)_{(1)}J^b = k\,\delta^{ab}|0\rangle$.
+
+\emph{Property~(2).}  Since $d_{\mathrm{curvature}}$ replaces a pair $(\phi_i, \phi_j)$ by a scalar multiple of the vacuum $|0\rangle$, the output of $d_{\mathrm{curvature}}$ at position $i$ is proportional to $|0\rangle$.  A subsequent application of $d_{\mathrm{curvature}}$ (or $d_{\mathrm{bracket}}$) involving this vacuum position produces $|0\rangle_{(n)}\phi_k = 0$ for $n \geq 0$, hence $d_{\mathrm{curvature}}^2 = 0$.
+
+\emph{Property~(1).}  In the double sum $d_{\mathrm{bracket}}^2$, the one-overlap terms (Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}) produce iterated residues $\mathrm{Res}_{D_{j\ell}}\mathrm{Res}_{D_{ij}}[(\phi_i)_{(0)}(\phi_j)_{(0)}\phi_\ell \otimes \omega]$.  The Borcherds identity for the chiral product asserts:
+\begin{equation}\label{eq:borcherds-pole-mix}
+\sum_{\text{cyclic}} \mathrm{Res}_{D_{j\ell}} \circ \mathrm{Res}_{D_{ij}}
+  \bigl[\mu(\mu(\phi_i, \phi_j), \phi_\ell) \otimes \omega\bigr] = 0.
+\end{equation}
+Decomposing $\mu$ by pole order, the bracket--bracket contributions $(\phi_i)_{(0)}((\phi_j)_{(0)}\phi_\ell)$ give the Jacobi identity, but there are additional bracket--curvature cross-terms $(\phi_i)_{(0)}((\phi_j)_{(1)}\phi_\ell \cdot |0\rangle)$ and curvature--bracket terms that arise from the Taylor expansion of the OPE near the triple collision locus $D_{ij\ell}$.  The Jacobi identity cancels only the pure bracket terms; the cross-terms remain, giving $d_{\mathrm{bracket}}^2 \neq 0$.
+
+\emph{Property~(3).}  The full Borcherds identity~\eqref{eq:borcherds-pole-mix} cancels \emph{all} iterated residue terms simultaneously, regardless of pole decomposition.  Since $d_{\mathrm{res}} = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$, the identity $d_{\mathrm{res}}^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) together with $d_{\mathrm{curvature}}^2 = 0$ gives $d_{\mathrm{bracket}}^2 = -\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\}$.
+\end{proof}
+
+\begin{remark}[Bicomplex obstruction]\label{rem:bicomplex-obstruction}
+\index{bar complex!bicomplex structure}
+Proposition~\ref{prop:pole-decomposition} shows that the pair $(d_{\mathrm{bracket}}, d_{\mathrm{curvature}})$ does \emph{not} form a bicomplex (which would require $d_{\mathrm{bracket}}^2 = d_{\mathrm{curvature}}^2 = \{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\} = 0$).  Instead, $d_{\mathrm{bracket}}^2 = -\{d_{\mathrm{bracket}}, d_{\mathrm{curvature}}\} \neq 0$: the curvature (level/central charge) is the \emph{obstruction} to the Lie-bracket differential being nilpotent.
+
+For \emph{free fields} (Heisenberg, free fermion), the OPE has only a double pole ($a_{(0)}b = 0$), so $d_{\mathrm{bracket}} = 0$ and $d_{\mathrm{res}} = d_{\mathrm{curvature}}$, which squares to zero automatically.  This explains the simpler algebraic structure of free-field bar complexes (Corollary~\ref{cor:subexp-free-field}).
+
+For Kac--Moody algebras, the failure of $d_{\mathrm{bracket}}^2 = 0$ is controlled by the curvature $m_0 = k \cdot \kappa \cdot |0\rangle$, linking the pole decomposition to the curved $A_\infty$ structure (Chapter~\ref{chap:deformation-theory}).
+\end{remark}
+
+\begin{corollary}[Bar complex is functorial; \ClaimStatusProvedHere]\label{cor:bar-functorial}
+The bar construction $\bar{B}^{\bullet}(-)$ is a functor from chiral algebras to differential graded vector spaces:
+\[\bar{B}^{\bullet}: \mathsf{ChiralAlg}(\Sigma_g) \to \mathsf{dgVect}\]
+
+Moreover:
+\begin{enumerate}
+\item A morphism $f: \mathcal{A} \to \mathcal{A}'$ of chiral algebras induces a chain map $\bar{B}^{\bullet}(f): \bar{B}^{\bullet}(\mathcal{A}) \to \bar{B}^{\bullet}(\mathcal{A}')$
+\item The bar construction preserves quasi-isomorphisms: a quasi-isomorphism $f$ induces a quasi-isomorphism $\bar{B}(f)$ by the filtration spectral sequence argument of Theorem~\ref{thm:bar-nilpotency-complete}
+\item Composition is preserved: $\bar{B}^{\bullet}(g \circ f) = \bar{B}^{\bullet}(g) \circ \bar{B}^{\bullet}(f)$
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Since $d^2 = 0$, the bar complex $(\bar{B}^{\bullet}(\mathcal{A}), d)$ is a genuine chain complex.
+
+For a morphism $f: \mathcal{A} \to \mathcal{A}'$, define:
+\[\bar{B}^n(f)(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega) = f(\phi_0) \otimes \cdots \otimes f(\phi_n) \otimes \omega\]
+
+This commutes with the differential:
+\[d \circ \bar{B}^n(f) = \bar{B}^n(f) \circ d\]
+
+because $f$ is a morphism of chiral algebras (preserves the chiral product $\mu$).
+
+The remaining properties (functoriality in morphisms, compatibility with composition) follow from the universal property of the cofree coalgebra \cite[Section~1.2]{LV12}.
+\end{proof}
+
+\subsection{Stokes' theorem on configuration spaces}
+
+\begin{theorem}[Stokes' theorem on configuration spaces; \ClaimStatusProvedHere]\label{thm:stokes-config}
+For the Fulton--MacPherson compactification $\overline{C}_{n+1}(\Sigma_g)$ with boundary divisor $D = \bigcup_{i<j} D_{ij}$:
+
+For any $\omega \in \Omega^k(\overline{C}_{n+1}(\Sigma_g))$ (a smooth $k$-form):
+\[\int_{\overline{C}_{n+1}(\Sigma_g)} d_{\text{dR}}(\omega) = \sum_{i<j} \epsilon_{ij} \int_{D_{ij}} \omega|_{D_{ij}}\]
+where $\epsilon_{ij} = \pm 1$ is the orientation sign.
+
+For logarithmic forms $\omega \in \Omega^k(\log D)$:
+\[\int_{\overline{C}_{n+1}} d_{\text{dR}}(\omega) = \sum_{i<j} \epsilon_{ij} \int_{D_{ij}} \text{Res}_{D_{ij}}(\omega)\]
+\end{theorem}
+
+\begin{proof}
+The configuration space $\overline{C}_{n+1}(\Sigma_g)$ is a \emph{manifold with corners}. The boundary consists of multiple smooth divisors $D_{ij}$ meeting transversely along higher codimension strata.
+
+Stokes' theorem for manifolds with corners (Theorem of Melrose, Mazzeo, et al.) states:
+\[\int_M d\omega = \sum_{\text{faces } F} \epsilon_F \int_F \omega|_F\]
+where faces are the codimension-1 boundary components.
+
+\emph{Step 1: Identify faces}
+
+The faces of $\overline{C}_{n+1}(\Sigma_g)$ are precisely the divisors $D_{ij}$ for $i < j$.
+
+Codimension: Each $D_{ij}$ has codimension 1 in $\overline{C}_{n+1}$:
+\[\dim_{\mathbb{C}} D_{ij} = \dim_{\mathbb{C}} \overline{C}_{n+1} - 1 = (n+1) - 1 = n\]
+
+\emph{Step 2: Orientation of faces}
+
+Each face $D_{ij}$ inherits an orientation from the \emph{outward normal} convention (Convention \ref{conv:orientations-enhanced}):
+\[\text{or}(D_{ij}) = d\epsilon_{ij} \wedge \text{or}_{\text{tangent}}\]
+where $\epsilon_{ij} = |z_i - z_j|$ increases towards the interior.
+
+The sign $\epsilon_{ij}$ in Stokes' theorem is:
+\[\epsilon_{ij} = +1 \quad \text{if } \text{or}(D_{ij}) = \text{outward normal orientation}\]
+\[\epsilon_{ij} = -1 \quad \text{if opposite}\]
+
+With our conventions: $\epsilon_{ij} = +1$ for all $i < j$.
+
+\emph{Step 3: Corners}
+
+The divisors $D_{ij}$ and $D_{k\ell}$ (for distinct pairs) intersect along codimension-2 strata:
+\[D_{ij} \cap D_{k\ell} = D_{ijk\ell}\]
+
+At these corners, we must verify that contributions from different faces cancel appropriately.
+
+Consider the corner $D_{ijk} = D_{ij} \cap D_{jk}$ (where three points collide). Approaching from different faces:
+
+From $D_{ij}$:
+\[\text{contribution} = \int_{D_{ijk}} \omega|_{D_{ij}}|_{D_{ijk}} \cdot \epsilon_{jk|D_{ij}}\]
+
+From $D_{jk}$:
+\[\text{contribution} = \int_{D_{ijk}} \omega|_{D_{jk}}|_{D_{ijk}} \cdot \epsilon_{ij|D_{jk}}\]
+
+By Lemma~\ref{lem:orientation} (orientation consistency), these have opposite signs:
+\[\epsilon_{jk|D_{ij}} = -\epsilon_{ij|D_{jk}}\]
+
+So the corner contributions cancel.
+
+\emph{Step 4: Apply Stokes' theorem}
+
+With corners handled correctly:
+\[\int_{\overline{C}_{n+1}} d_{\text{dR}}(\omega) = \sum_{i<j} \int_{D_{ij}} \omega|_{D_{ij}}\]
+
+For logarithmic forms, $\omega|_{D_{ij}}$ is not well-defined (it has a pole), but $\text{Res}_{D_{ij}}(\omega)$ is:
+\[\int_{\overline{C}_{n+1}} d_{\text{dR}}(\omega) = \sum_{i<j} \int_{D_{ij}} \text{Res}_{D_{ij}}(\omega)\]
+\end{proof}
+
+\begin{example}[Stokes for three points]\label{ex:stokes-three-points}
+Consider $\overline{C}_3(\mathbb{C})$ (three points on the complex plane, compactified).
+
+\emph{Boundary.} $D = D_{12} \cup D_{23} \cup D_{13}$ (three divisors)
+
+\emph{2-form.} $\omega = \eta_{12} \wedge \eta_{23}$ (logarithmic 2-form)
+
+\emph{Differential.} 
+\begin{align*}
+d_{\text{dR}}(\eta_{12} \wedge \eta_{23}) &= d(\eta_{12}) \wedge \eta_{23} - \eta_{12} \wedge d(\eta_{23}) \\
+&= 0
+\end{align*}
+(since $d(\eta_{ij}) = 0$ for logarithmic 1-forms)
+
+\emph{Stokes.}
+\[\int_{\overline{C}_3} d_{\text{dR}}(\omega) = 0 = \int_{D_{12}} \text{Res}_{D_{12}}(\omega) + \int_{D_{23}} \text{Res}_{D_{23}}(\omega) + \int_{D_{13}} \text{Res}_{D_{13}}(\omega)\]
+
+\emph{Residues.}
+- $\text{Res}_{D_{12}}(\eta_{12} \wedge \eta_{23}) = \eta_{23}|_{D_{12}}$
+- $\text{Res}_{D_{23}}(\eta_{12} \wedge \eta_{23}) = -\eta_{12}|_{D_{23}}$ (sign from wedge order)
+- $\text{Res}_{D_{13}}(\eta_{12} \wedge \eta_{23}) = 0$ (no pole along $D_{13}$)
+
+Therefore
+\[0 = \int_{D_{12}} \eta_{23} - \int_{D_{23}} \eta_{12} + 0\]
+
+This is the \emph{Arnold relation}:
+\[\eta_{12} \wedge \eta_{23} \text{ integrates to zero around boundaries}\]
+\end{example}
+
+\begin{corollary}[Residues anticommute at corners; \ClaimStatusProvedHere]\label{cor:residues-anticommute}
+For transverse divisors $D_{ij}$ and $D_{k\ell}$ meeting at a codimension-2 stratum:
+\[\text{Res}_{D_{ij}} \text{Res}_{D_{k\ell}} + \text{Res}_{D_{k\ell}} \text{Res}_{D_{ij}} = 0\]
+(up to sign)
+\end{corollary}
+
+\begin{proof}
+Since $D_{ij}$ and $D_{k\ell}$ meet transversally at the codimension-2 stratum $D_{ij} \cap D_{k\ell}$, we may choose local coordinates $(u,v, \ldots)$ near the intersection with $D_{ij} = \{u = 0\}$ and $D_{k\ell} = \{v = 0\}$.  For a logarithmic form $\omega$ with at most simple poles along both divisors, the iterated residue $\mathrm{Res}_{v=0}\,\mathrm{Res}_{u=0}\,\omega$ extracts the coefficient of $d\log u \wedge d\log v$, while $\mathrm{Res}_{u=0}\,\mathrm{Res}_{v=0}\,\omega$ extracts the coefficient of $d\log v \wedge d\log u = -d\log u \wedge d\log v$.  Hence $\mathrm{Res}_{D_{ij}} \circ \mathrm{Res}_{D_{k\ell}} = -\mathrm{Res}_{D_{k\ell}} \circ \mathrm{Res}_{D_{ij}}$.
+\end{proof}
+
+\subsection{Arnold relations: proofs from three perspectives}
+
+\begin{convention}[Set ordering and position notation]\label{conv:set-ordering-arnold}
+Throughout this manuscript, we adopt the following conventions for ordered sets:
+
+\begin{enumerate}
+\item \emph{Natural Ordering:} For any finite subset $S \subseteq \mathbb{N}$, 
+we always use the ordering inherited from $\mathbb{N}$:
+\[S = \{k_1, k_2, \ldots, k_m\} \quad \text{where} \quad k_1 < k_2 < \cdots < k_m\]
+
+\item \emph{Position Function:} For $k \in S$, we denote by $|k|_S$ (or simply $|k|$ 
+when $S$ is clear from context) the \emph{position} of $k$ in this ordering:
+\[k = k_{|k|} \quad \iff \quad |k| = i \text{ where } k \text{ is the } i\text{-th smallest element of } S\]
+
+\item \emph{Sign Convention:} Signs arising from reordering are computed via the 
+Koszul rule. Moving an element $k$ past position $|k|$ introduces sign $(-1)^{|k|-1}$.
+
+\item \emph{Multi-indices:} For multi-index sets (e.g., in partitions), we use 
+lexicographic ordering.
+\end{enumerate}
+
+\emph{Example.} For $S = \{2, 5, 7\}$:
+\begin{itemize}
+\item $|2|_S = 1$ (first position)
+\item $|5|_S = 2$ (second position)  
+\item $|7|_S = 3$ (third position)
+\end{itemize}
+
+In Arnold relations, the notation $(-1)^{|k|}$ means $(-1)^{|k|_S}$ where $S$ is the 
+index set of the collision divisor under consideration.
+\end{convention}
+
+\begin{theorem}[Arnold relations; \ClaimStatusProvedHere]\label{thm:arnold-three}
+\index{Arnold relations|textbf}
+We encountered these relations concretely in the Heisenberg bar complex (\S\ref{sec:frame-bar-deg2}), where they appeared as the identity forcing $d^2 = 0$ at degree~$2$.  In full generality:
+
+For distinct indices $i, j, k \in \{1, \ldots, n\}$, the logarithmic 1-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy:
+
+\emph{Formulation 1 (basic).}
+\[\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0\]
+
+\emph{Formulation 2 (Orlik--Solomon).}
+The algebra $H^*(C_n(\mathbb{C}); \mathbb{Q})$ is the quotient of the exterior algebra $\bigwedge\langle \eta_{ij} \mid 1 \le i < j \le n \rangle$ by the ideal generated by the three-term Arnold relations of Formulation~1.  All higher-degree relations in the Orlik--Solomon algebra follow from these by repeated application; there is no independent ``general Arnold relation'' beyond the three-term version.
+
+\emph{Formulation 3 (cohomological).}
+The cohomology ring $H^*(\overline{C}_n(X); \mathbb{Q})$ is generated by classes $[\eta_{ij}]$ subject to the Arnold relations.
+\end{theorem}
+
+\begin{proof}
+See Theorem~\ref{thm:arnold-relations} for the partial-fractions proof.
+The topological, combinatorial, and operadic perspectives are developed in \S\ref{sec:arnold-three-proofs-comprehensive}.
+\end{proof}
+
+\begin{remark}[Arnold relations = Jacobi identity]\label{rem:arnold-jacobi-geometric}
+The geometric content of $\dzero^2 = 0$ at degree~$3$ is precisely the Jacobi identity: the three boundary strata of $\overline{C}_4(\mathbb{P}^1)$ that contribute to $\dzero^2$ correspond to the three terms of the Jacobi identity for the chiral bracket.  Concretely, the Arnold relation $\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} + \eta_{31} \wedge \eta_{12} = 0$ forces
+\[
+{f^{ab}}_d\,{f^{dc}}_e + {f^{bc}}_d\,{f^{da}}_e + {f^{ca}}_d\,{f^{db}}_e = 0,
+\]
+which is the Jacobi identity for the structure constants extracted by residues.  The implication is bidirectional: the Arnold relations \emph{are} the Jacobi identity via the residue dictionary.  See Computation~\ref{comp:geom-alg-comparison-deg3} for the complete term-by-term verification in $\widehat{\mathfrak{sl}}_{2,k}$ and Theorem~\ref{thm:arnold-jacobi} for the general CFT formulation.
+\end{remark}
+
+\begin{corollary}[Cohomology of configuration spaces; \ClaimStatusProvedElsewhere]\label{cor:cohomology-config}
+The cohomology ring $H^*(C_n(\mathbb{C}); \mathbb{Q})$ of the open configuration space is:
+\[H^*(C_n(\mathbb{C})) \cong \mathbb{Q}[\eta_{ij} : 1 \leq i < j \leq n] / \mathcal{I}_{\text{Arnold}}\]
+where $\mathcal{I}_{\text{Arnold}}$ is the ideal generated by Arnold relations.
+\end{corollary}
+
+\begin{proof}
+By Arnol'd~\cite{Arnold69}, the 1-forms $\eta_{ij} = d\log(z_i - z_j)$ generate $H^*(C_n(\mathbb{C}); \mathbb{Q})$ and satisfy the Arnold relations $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$.  That these generate \emph{all} relations follows from Cohen's computation of $H^*(C_n(\mathbb{C}))$ as the cohomology of the Arnol'd--Brieskorn braid arrangement complement~\cite{Coh76}.  See also Appendix~\ref{app:arnold-relations} for the three proofs of the Arnold relations used in this monograph.
+\end{proof}
+
+\subsection{Low-degree explicit computations}
+
+\subsubsection{Degree 0: the vacuum}
+
+\begin{computation}[Degree 0; \ClaimStatusProvedHere]\label{comp:deg0}
+In degree 0:
+\[\bar{B}^0(\mathcal{A}) = \Gamma\left(\overline{C}_1(\Sigma_g), \mathcal{A} \otimes \Omega^0(\log D)\right)\]
+
+But $\overline{C}_1(\Sigma_g) = \Sigma_g$ (single point, no collisions), and $\Omega^0(\log D) = \mathcal{O}_{\Sigma_g}$ (functions).
+
+Therefore
+\[\bar{B}^0(\mathcal{A}) = \Gamma(\Sigma_g, \mathcal{A}) = H^0(\Sigma_g, \mathcal{A})\]
+
+This is the space of global sections of the chiral algebra.
+
+\emph{Physical interpretation.} This is the vacuum sector---states with no operator insertions.
+
+\emph{Differential.} $d: \bar{B}^0 \to \bar{B}^{-1}$. But there is no $\bar{B}^{-1}$ (negative degree), so $d|_{\bar{B}^0} = 0$.
+\end{computation}
+
+\subsubsection{Degree 1: two-point functions}
+
+\begin{computation}[Degree 1; \ClaimStatusProvedHere]\label{comp:deg1-general}
+In degree 1:
+\[\bar{B}^1(\mathcal{A}) = \Gamma\left(\overline{C}_2(\Sigma_g), j_*j^*(\mathcal{A} \boxtimes \mathcal{A}) \otimes \Omega^1(\log D_{12})\right)\]
+
+\emph{Configuration space.} $\overline{C}_2(\Sigma_g)$ parametrizes two points on $\Sigma_g$.
+- At genus 0: After modding out $\text{PSL}_2$, $\overline{C}_2(\mathbb{P}^1) \cong \mathbb{P}^1$
+- At genus $g \geq 1$: $\overline{C}_2(\Sigma_g)$ is more complex (includes period matrix data)
+
+\emph{Logarithmic 1-forms.} $\Omega^1(\log D_{12})$ is 1-dimensional, spanned by:
+\[\eta_{12} = \frac{dz_1 - dz_2}{z_1 - z_2} = d\log(z_1 - z_2)\]
+
+\emph{Basis.} A basis for $\bar{B}^1(\mathcal{A})$ is:
+\[\{\phi_i(z_1) \otimes \phi_j(z_2) \otimes \eta_{12} : \phi_i, \phi_j \in \mathcal{A}\}\]
+
+If $\mathcal{A}$ has $N$ generators, then:
+\[\dim \bar{B}^1(\mathcal{A}) = N^2\]
+
+\emph{Differential.} $d: \bar{B}^1 \to \bar{B}^0$
+\[d(\phi_i \otimes \phi_j \otimes \eta_{12}) = \text{Res}_{D_{12}}[\mu(\phi_i, \phi_j) \otimes \eta_{12}]\]
+
+where $\mu$ is the chiral product (OPE).
+
+If the OPE is:
+\[\phi_i(z)\phi_j(w) = \sum_k \frac{C_{ij}^k}{(z-w)^{\Delta_k}} \phi_k(w) + \text{regular}\]
+
+then the bar differential acts by extracting the chiral product $\mu$:
+\[d_{\mathrm{res}}(\phi_i \otimes \phi_j \otimes \eta_{12}) = \mu(\phi_i, \phi_j) = \operatorname{Res}_{z=w}\left[\phi_i(z)\phi_j(w)\,dz\right]\]
+The Cauchy residue picks out the coefficient of the simple pole $(z-w)^{-1}$ in the OPE.  For a term $C_{ij}^k \phi_k(w)/(z-w)^{\Delta_k}$:
+\begin{itemize}
+\item $\Delta_k = 1$ (simple pole): $\operatorname{Res}_{z=w}[C_{ij}^k \phi_k/(z{-}w) \cdot dz] = C_{ij}^k \phi_k$
+\item $\Delta_k \geq 2$ (higher pole): $\operatorname{Res}$ gives derivatives of $\phi_k$, contributing to secondary operations
+\item $\Delta_k = 0$ (regular): no pole, zero contribution
+\end{itemize}
+\emph{Warning.} One must \emph{not} multiply the OPE pole by the propagator $\eta_{12} = d\epsilon/\epsilon$ and take the combined residue; the logarithmic form $\eta_{12}$ accounts for the \emph{degree} in the bar complex, not an additional pole (see Part~II for the careful calculation).
+\end{computation}
+
+\begin{example}[Heisenberg at degree 1]\label{ex:heisenberg-deg1-complete}
+The Heisenberg bar differential vanishes at degree~$1$
+(Example~\ref{ex:heisenberg-d-deg1}):
+$d_{\mathrm{res}}(J \otimes J \otimes \eta_{12}) = 0$
+because the double pole produces a triple-pole residue.
+The class
+$[J \otimes J \otimes \eta_{12}]
+\in H^1(\bar{B}^{\bullet}(\mathcal{H}))$
+is non-trivial; the central charge~$k$ appears only at
+genus~$1$.
+\end{example}
+
+\begin{example}[\texorpdfstring{$\beta\gamma$}{beta-gamma} system at degree 1]\label{ex:betagamma-deg1}
+For the $\beta\gamma$ system with generators $\beta(z), \gamma(z)$ and OPE:
+\[\beta(z)\gamma(w) = \frac{1}{z-w} + \text{regular}, \quad \beta(z)\beta(w) = 0, \quad \gamma(z)\gamma(w) = 0\]
+
+\emph{Bar degree 1.}
+\[\bar{B}^1(\mathcal{FG}) = \text{span}\{\beta \otimes \beta \otimes \eta, \beta \otimes \gamma \otimes \eta, \gamma \otimes \beta \otimes \eta, \gamma \otimes \gamma \otimes \eta\}\]
+
+\emph{Differential.} Only the $\beta \otimes \gamma$ term contributes:
+\begin{align*}
+d(\beta \otimes \gamma \otimes \eta_{12}) &= \text{Res}_{D_{12}}\bigl[\mu(\beta, \gamma) \otimes \eta_{12}\bigr] \\
+&= \bigl[\text{Res}_{\epsilon=0}\,\eta_{12}\bigr] \cdot \mu(\beta, \gamma)\big|_{z_1=z_2}
+\end{align*}
+Setting $\epsilon = z_1 - z_2$, the propagator is $\eta_{12} = d\epsilon/\epsilon$, which has $\text{Res}_{\epsilon=0}[d\epsilon/\epsilon] = 1$. The chiral product $\mu(\beta, \gamma)$ extracts the simple-pole OPE coefficient $\beta(z)\gamma(w) \sim 1/(z-w)$, giving $\mathbb{1}$ (the unit element). Hence $d(\beta \otimes \gamma \otimes \eta_{12}) = \mathbb{1}$.
+
+(Note: the residue is of the \emph{logarithmic} 1-form $d\epsilon/\epsilon$, not of $d\epsilon/\epsilon^2$; one must not multiply the OPE pole by the propagator pole.)
+
+Similarly: $d(\gamma \otimes \beta \otimes \eta_{12}) = -\mathbb{1}$ (the sign arises from the OPE $\gamma(z)\beta(w) \sim -1/(z-w)$, which carries a sign relative to $\beta(z)\gamma(w) \sim +1/(z-w)$ from the ordering convention for the chiral product, not from any fermionic anticommutativity---the $\beta\gamma$ system is bosonic).
+
+\emph{Cohomology.} $H^1(\bar{B}^{\bullet}(\mathcal{FG})) = \text{span}\{\beta \otimes \beta, \gamma \otimes \gamma\}$ (2-dimensional).
+\end{example}
+
+\begin{remark}[Intuition \`{a} la Witten across genera]
+In 2d CFT, correlation functions of chiral operators $\phi_1(z_1), \ldots, \phi_n(z_n)$ are computed by the genus expansion:
+\[
+\langle \phi_1(z_1) \cdots \phi_n(z_n) \rangle = \sum_{g=0}^{\infty} \lambda^{2g-2} \int_{\text{field space}} \mathcal{D}\phi \, e^{-S[\phi]} \phi_1(z_1) \cdots \phi_n(z_n)
+\]
+The singularities as $z_i \to z_j$ encode the operator algebra structure at each genus. Mathematically, the configuration space $C_n(\Sigma_g) = \Sigma_g^n \setminus \{\text{diagonals}\}$ parametrizes non-colliding insertion points; its FM compactification $\overline{C}_n(\Sigma_g)$ adds collision strata and degenerating cycles; logarithmic forms $d\log(z_i - z_j)$ carry OPE singularities with genus corrections; and the bar differential computes quantum corrections via residues and period integrals, each genus contributing specific modular forms.
+\end{remark}
+
+\begin{definition}[Orientation line bundle]\label{def:orientation}
+The \emph{orientation line bundle} $\text{or}_{p+1}^{(g)}$ on $\overline{C}_{p+1}(\Sigma_g)$ is defined as:
+\[
+\text{or}_{p+1}^{(g)} = \det(T\overline{C}_{p+1}(\Sigma_g)) \otimes \text{sgn}_{p+1} \otimes \mathcal{L}_g
+\]
+where:
+\begin{itemize}
+\item $\det(T\overline{C}_{p+1}(\Sigma_g))$ is the top exterior power of the tangent bundle
+\item $\text{sgn}_{p+1}$ is the sign representation of $\mathfrak{S}_{p+1}$
+\item $\mathcal{L}_g$ is the genus-dependent orientation bundle from period matrix
+\item The tensor product ensures that exchanging two points introduces a sign and modular covariance
+\end{itemize}
+This ensures $d^2 = 0$ with consistent signs across all face maps and genus levels.
+\end{definition}
+
+\subsection{Explicit low-degree terms}
+
+\begin{example}[Bar complex in low degrees]
+\begin{align}
+\bar{B}^0(\mathcal{A}) &= \mathcal{A} \\
+\bar{B}^1(\mathcal{A}) &= \Gamma(C_2(X), \mathcal{A} \boxtimes \mathcal{A} \otimes \eta_{12}) \\
+\bar{B}^2(\mathcal{A}) &= \Gamma(\overline{C}_3(X), \mathcal{A}^{\boxtimes 3} \otimes \Omega^2_{\log})
+\end{align}
+
+The bar differential lowers bar degree.  Here bar degree~$n$ uses sections over $C_{n+1}(X)$; the display above shows the \emph{unreduced} complex with $\bar{B}^0 = \mathcal{A}$.  The \emph{reduced} bar complex, used from \S\ref{subsec:bar-functoriality} onward, replaces $\mathcal{A}$ by its augmentation ideal $\bar{\mathcal{A}} = \ker(\varepsilon \colon \mathcal{A} \to \omega_X)$ and starts at $\bar{B}^0 = \mathbb{C}$.  Augmentation separates generators from scalars: the map~$\varepsilon$ extracts the component of each operator proportional to the identity---the vacuum expectation value---and the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$ tensors together only the non-scalar modes.  Without this splitting, the reduced coproduct on the bar coalgebra would not be conilpotent, and the cofree coalgebra structure that drives the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) would be unavailable.
+\begin{align}
+d: \bar{B}^1 &\to \bar{B}^0 \\
+a_1 \otimes a_2 \otimes \eta_{12} &\mapsto \text{Res}_{z_1=z_2}[a_1(z_1) \cdot a_2(z_2) \cdot \eta_{12}]
+\end{align}
+This residue extraction computes the OPE product, contracting two operator insertions via the singular part of their operator product.
+\end{example}
+
+\subsection{Functoriality of the bar construction}
+\label{subsec:bar-functoriality}
+\index{bar-cobar!functoriality}
+
+\begin{theorem}[Bar construction is functorial; \ClaimStatusProvedHere]\label{thm:bar-functorial-complete}
+\label{thm:bar-functorial}
+The geometric bar construction defines a functor:
+\[\bar{B}^{\text{geom}}: \mathsf{ChirAlg}_X^{\mathrm{aug}} \to \mathsf{dgCoalg}_X\]
+from augmented chiral algebras to dg coalgebras, that is:
+\begin{enumerate}
+\item \emph{Well-defined on objects:} For each augmented chiral algebra $\mathcal{A}$, $\bar{B}^{\text{geom}}(\mathcal{A})$ is a differential graded coalgebra
+\item \emph{Well-defined on morphisms:} For each morphism $f: \mathcal{A} \to \mathcal{B}$ of augmented chiral algebras, there is an induced coalgebra morphism $\bar{B}^{\text{geom}}(f): \bar{B}^{\text{geom}}(\mathcal{A}) \to \bar{B}^{\text{geom}}(\mathcal{B})$
+\item \emph{Preserves identities:} $\bar{B}^{\text{geom}}(\text{id}_\mathcal{A}) = \text{id}_{\bar{B}^{\text{geom}}(\mathcal{A})}$
+\item \emph{Preserves composition:} $\bar{B}^{\text{geom}}(g \circ f) = \bar{B}^{\text{geom}}(g) \circ \bar{B}^{\text{geom}}(f)$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Well-definedness on objects is
+Theorem~\ref{thm:bar-nilpotency-complete}.
+For a morphism $f\colon \cA \to \cB$ of augmented chiral
+algebras, define
+$\bar{B}^{\mathrm{geom}}(f)(a_0 \otimes \cdots \otimes a_n
+\otimes \omega) = f(a_0) \otimes \cdots \otimes f(a_n) \otimes
+\omega$\label{def:bar-induced-map}
+(apply $f$ to algebra factors, leave forms unchanged).
+
+\emph{Chain map property.}\label{lem:bar-induced-chain-map}
+Since $f$ commutes with the internal differential ($f$ is a
+$\mathcal{D}$-module map), with the residue differential ($f$
+preserves the chiral product), and does not affect the de~Rham
+component, $\bar{B}^{\mathrm{geom}}(f)$ commutes with
+$d = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$.
+
+\emph{Coalgebra morphism.}\label{lem:bar-induced-coalgebra}
+The coproduct $\Delta$ is defined by restricting to collision
+divisors; since $f$ acts on algebra factors and $\Delta$ acts
+on the indexing set,
+$\Delta \circ \bar{B}(f) = (\bar{B}(f) \otimes \bar{B}(f))
+\circ \Delta$.  The counit compatibility and preservation of
+identities and composition are immediate from the definition.
+\end{proof}
+
+\begin{corollary}[Natural transformation property; \ClaimStatusProvedHere]\label{cor:bar-natural}
+\label{cor:why-functoriality}
+A commutative diagram of chiral algebras induces a commutative diagram of bar complexes: if $k \circ f = g \circ h$ in $\mathsf{ChirAlg}_X$, then $\bar{B}(k) \circ \bar{B}(f) = \bar{B}(g) \circ \bar{B}(h)$ in $\mathsf{dgCoalg}_X$.  This is immediate from functoriality.
+\end{corollary}
+
+\begin{proposition}[Model independence; \ClaimStatusProvedHere]
+\label{prop:model-independence}
+\index{model independence}
+Let $\cA$ be a chiral algebra on~$X$.
+Any two admissible\footnote{An admissible presentation is a
+dg factorization coalgebra computing $\bar{B}_X(\cA)$ in the homotopy
+category: it is built from sections of $\cA^{\boxtimes(n+1)}$ over
+open substacks of $\operatorname{Ran}(X)$ and its differential restricts
+to the collision-residue map on each boundary stratum.}
+dg presentations of the bar object
+$\mathcal{B}_X(\cA)$ are connected by a contractible space of
+quasi-isomorphisms.  In particular, any two such models give
+canonically isomorphic cohomology, spectral sequences, and generating
+functions.
+\end{proposition}
+
+\begin{proof}
+Both presentations are cofibrant-fibrant objects in the model structure
+on conilpotent dg coalgebras over $\operatorname{Ran}(X)$
+(Positselski~\cite{Positselski11}, Theorem~8.1).  Cofibrant-fibrant
+replacements in this model structure are unique up to a contractible
+space of weak equivalences: the mapping space
+$\operatorname{Map}(B_1, B_2)$ between two such replacements is
+contractible whenever both compute the same homotopy object.
+The configuration-space model $\bar{B}_X(\cA)$ is cofibrant by
+freeness of the coalgebra generators and fibrant by the Cousin
+filtration (Theorem~\ref{thm:chevalley-cousin}).  Any other admissible
+model shares these properties by the same arguments, whence the
+mapping space between them is contractible.
+\end{proof}
+
+\subsection{Coalgebra structure}
+
+\begin{theorem}[Bar coalgebra; \ClaimStatusProvedHere]\label{thm:bar-coalgebra}
+The bar complex carries a natural coalgebra structure:
+\[\Delta: \bar{B}^{\text{geom}}(\mathcal{A}) \to \bar{B}^{\text{geom}}(\mathcal{A}) \otimes \bar{B}^{\text{geom}}(\mathcal{A})\]
+induced by the diagonal map $X \to X \times X$.
+\end{theorem}
+
+\begin{proof}
+Define $\Delta$ on tensors by summing over ordered bipartitions of the input
+index set and restricting the logarithmic form to the corresponding boundary
+factorization stratum, as in the explicit formula used in
+Theorem~\ref{thm:coassociativity-complete}. This defines a morphism
+$\bar{B}^{\mathrm{geom}}(\mathcal{A})\to
+\bar{B}^{\mathrm{geom}}(\mathcal{A})\otimes\bar{B}^{\mathrm{geom}}(\mathcal{A})$.
+
+Coassociativity of this coproduct is proved in
+Theorem~\ref{thm:coassociativity-complete}; counit compatibility is proved in
+Theorem~\ref{thm:counit-axioms}. Hence the stated coproduct gives a coalgebra
+structure on $\bar{B}^{\mathrm{geom}}(\mathcal{A})$.
+\end{proof}
+
+\subsection{Coalgebra axioms: verification}
+\label{subsec:coalgebra-axioms-complete}
+
+\begin{theorem}[Coassociativity; \ClaimStatusProvedHere]\label{thm:coassociativity-complete}
+\index{coassociativity}
+The coproduct $\Delta: \bar{B}_n(\mathcal{A}) \to \bigoplus_{p+q=n} \bar{B}_p(\mathcal{A}) \otimes \bar{B}_q(\mathcal{A})$ is coassociative:
+\[(\Delta \otimes \text{id}) \circ \Delta = (\text{id} \otimes \Delta) \circ \Delta\]
+\end{theorem}
+
+\begin{proof}
+
+\subsection*{Step 1: definition of coproduct}
+
+Recall from Theorem~\ref{thm:bar-coalgebra} that for $(a_0 \otimes \cdots \otimes a_n \otimes \omega) \in \bar{B}_n(\mathcal{A})$:
+\[\Delta(a_0 \otimes \cdots \otimes a_n \otimes \omega) = \sum_{I \sqcup J = [0,n]} (a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\]
+where:
+\begin{itemize}
+\item $I, J \subseteq [0,n]$ partition the index set
+\item $a_I = a_{i_0} \otimes \cdots \otimes a_{i_p}$ for $I = \{i_0, \ldots, i_p\}$
+\item $\omega_I$ is the restriction of $\omega$ to the configuration space $\overline{C}_{|I|}(X)$
+\end{itemize}
+
+\subsection*{Step 2: left side - $(\Delta \otimes \text{id}) \circ \Delta$}
+
+Apply $\Delta$ first:
+\[\Delta(a_0 \otimes \cdots \otimes a_n \otimes \omega) = \sum_{I \sqcup J = [0,n]} (a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\]
+
+Now apply $\Delta \otimes \text{id}$ to each term:
+\begin{align*}
+&(\Delta \otimes \text{id})\left((a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\right) \\
+&= \Delta(a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J) \\
+&= \left(\sum_{I' \sqcup I'' = I} (a_{I'} \otimes \omega_{I'}) \otimes (a_{I''} \otimes \omega_{I''})\right) \otimes (a_J \otimes \omega_J) \\
+&= \sum_{I' \sqcup I'' = I} (a_{I'} \otimes \omega_{I'}) \otimes (a_{I''} \otimes \omega_{I''}) \otimes (a_J \otimes \omega_J)
+\end{align*}
+
+Summing over all partitions $I \sqcup J = [0,n]$:
+\[(\Delta \otimes \text{id}) \circ \Delta = \sum_{I' \sqcup I'' \sqcup J = [0,n]} (a_{I'} \otimes \omega_{I'}) \otimes (a_{I''} \otimes \omega_{I''}) \otimes (a_J \otimes \omega_J)\]
+
+\subsection*{Step 3: right side - $(\text{id} \otimes \Delta) \circ \Delta$}
+
+Apply $\Delta$ first (same as before):
+\[\Delta(a_0 \otimes \cdots \otimes a_n \otimes \omega) = \sum_{I \sqcup J = [0,n]} (a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\]
+
+Now apply $\text{id} \otimes \Delta$:
+\begin{align*}
+&(\text{id} \otimes \Delta)\left((a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\right) \\
+&= (a_I \otimes \omega_I) \otimes \Delta(a_J \otimes \omega_J) \\
+&= (a_I \otimes \omega_I) \otimes \left(\sum_{J' \sqcup J'' = J} (a_{J'} \otimes \omega_{J'}) \otimes (a_{J''} \otimes \omega_{J''})\right) \\
+&= \sum_{J' \sqcup J'' = J} (a_I \otimes \omega_I) \otimes (a_{J'} \otimes \omega_{J'}) \otimes (a_{J''} \otimes \omega_{J''})
+\end{align*}
+
+Summing over all partitions $I \sqcup J = [0,n]$:
+\[(\text{id} \otimes \Delta) \circ \Delta = \sum_{I \sqcup J' \sqcup J'' = [0,n]} (a_I \otimes \omega_I) \otimes (a_{J'} \otimes \omega_{J'}) \otimes (a_{J''} \otimes \omega_{J''})\]
+
+\subsection*{Step 4: comparison}
+
+\emph{LHS.} Sum over ordered partitions $(I', I'', J)$ with $I' \sqcup I'' \sqcup J = [0,n]$
+
+\emph{RHS.} Sum over ordered partitions $(I, J', J'')$ with $I \sqcup J' \sqcup J'' = [0,n]$
+
+These are the same set of ordered triples, in different notation.
+
+Relabeling $I' \to K_1$, $I'' \to K_2$, $J \to K_3$ on LHS and $I \to K_1$, $J' \to K_2$, $J'' \to K_3$ on RHS:
+
+Both sides equal:
+\[\sum_{K_1 \sqcup K_2 \sqcup K_3 = [0,n]} (a_{K_1} \otimes \omega_{K_1}) \otimes (a_{K_2} \otimes \omega_{K_2}) \otimes (a_{K_3} \otimes \omega_{K_3})\]
+
+Therefore: $(\Delta \otimes \text{id}) \circ \Delta = (\text{id} \otimes \Delta) \circ \Delta$.
+\end{proof}
+
+\begin{theorem}[Counit axioms; \ClaimStatusProvedHere]\label{thm:counit-axioms}
+The counit $\epsilon: \bar{B}_n(\mathcal{A}) \to \mathbb{C}$ satisfies:
+\begin{enumerate}
+\item \emph{Left counit:} $(\epsilon \otimes \text{id}) \circ \Delta = \text{id}$
+\item \emph{Right counit:} $(\text{id} \otimes \epsilon) \circ \Delta = \text{id}$
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+
+The counit $\epsilon$ is:
+\[\epsilon(a_0 \otimes \cdots \otimes a_n \otimes \omega) =
+\begin{cases}
+\langle a_0, 1 \rangle & n = 0 \\
+0 & n > 0
+\end{cases}\]
+
+\subsection*{Left counit axiom}
+
+For $(a_0 \otimes \cdots \otimes a_n \otimes \omega) \in \bar{B}_n(\mathcal{A})$:
+\begin{align*}
+&(\epsilon \otimes \text{id})(\Delta(a_0 \otimes \cdots \otimes a_n \otimes \omega)) \\
+&= (\epsilon \otimes \text{id})\left(\sum_{I \sqcup J = [0,n]} (a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\right) \\
+&= \sum_{I \sqcup J = [0,n]} \epsilon(a_I \otimes \omega_I) \cdot (a_J \otimes \omega_J)
+\end{align*}
+
+Now $\epsilon(a_I \otimes \omega_I) = 0$ unless $|I| = 0$ (i.e., $I = \emptyset$).
+
+When $I = \emptyset$, we have $J = [0,n]$ and:
+\[\epsilon(1 \otimes \omega_{\emptyset}) \cdot (a_0 \otimes \cdots \otimes a_n \otimes \omega) = 1 \cdot (a_0 \otimes \cdots \otimes a_n \otimes \omega)\]
+
+Therefore:
+\[(\epsilon \otimes \text{id}) \circ \Delta = \text{id}\]
+
+\subsection*{Right counit axiom}
+
+Similarly:
+\begin{align*}
+&(\text{id} \otimes \epsilon)(\Delta(a_0 \otimes \cdots \otimes a_n \otimes \omega)) \\
+&= \sum_{I \sqcup J = [0,n]} (a_I \otimes \omega_I) \cdot \epsilon(a_J \otimes \omega_J)
+\end{align*}
+
+$\epsilon(a_J \otimes \omega_J) = 0$ unless $|J| = 0$ (i.e., $J = \emptyset$).
+
+When $J = \emptyset$, we have $I = [0,n]$ and:
+\[(a_0 \otimes \cdots \otimes a_n \otimes \omega) \cdot \epsilon(1 \otimes \omega_{\emptyset}) = (a_0 \otimes \cdots \otimes a_n \otimes \omega) \cdot 1\]
+
+Therefore:
+\[(\text{id} \otimes \epsilon) \circ \Delta = \text{id}\]
+\end{proof}
+
+\begin{corollary}[Bar complex is DG-coalgebra; \ClaimStatusProvedHere]\label{cor:bar-is-dgcoalg}
+The bar complex $\bar{B}^{\text{geom}}(\mathcal{A})$ with:
+\begin{itemize}
+\item Differential $d = d_{\text{int}} + d_{\text{res}} + d_{\text{dR}}$ (satisfying $d^2 = 0$)
+\item Coproduct $\Delta$ (coassociative)
+\item Counit $\epsilon$ (satisfying counit axioms)
+\end{itemize}
+is a differential graded coalgebra.
+\end{corollary}
+\begin{proof}
+This assembles Theorem~\ref{thm:bar-nilpotency-complete} ($d^2 = 0$), Theorem~\ref{thm:coassociativity-complete} (coassociativity of $\Delta$), and Theorem~\ref{thm:counit-axioms} (counit axioms).  The compatibility $d \circ \Delta = \Delta \circ d$ is Theorem~\ref{thm:bar-coalgebra}.
+\end{proof}
+
+\begin{remark}[Geometric meaning of coassociativity]\label{rem:coassoc-geometric}
+Coassociativity says the order of splitting does not matter: $(\Delta \otimes \text{id}) \circ \Delta$ (split, then split left) equals $(\text{id} \otimes \Delta) \circ \Delta$ (split, then split right).  Geometrically, corners of $\overline{C}_n(X)$ where multiple divisors intersect can be approached from different directions, giving consistent boundary data.
+\end{remark}
+
+\begin{theorem}[Differential is coderivation; \ClaimStatusProvedHere]\label{thm:diff-is-coderivation}
+The differential $d$ on $\bar{B}(\mathcal{A})$ is a coderivation:
+\[\Delta \circ d = (d \otimes \text{id} + \text{id} \otimes d) \circ \Delta\]
+\end{theorem}
+
+\begin{proof}
+The coderivation identity $\Delta \circ d = (d \otimes \mathrm{id} + \mathrm{id} \otimes d) \circ \Delta$ is verified for each component of $d = d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}$ separately.
+
+For $d_{\mathrm{int}}$: the internal differential acts on each tensor factor $\phi_i$ independently, and the deconcatenation coproduct $\Delta([a_1|\cdots|a_n]) = \sum_{i=0}^{n}[a_1|\cdots|a_i] \otimes [a_{i+1}|\cdots|a_n]$ splits the tensor factors.  The Leibniz rule $\Delta \circ d_{\mathrm{int}} = (d_{\mathrm{int}} \otimes \mathrm{id} + \mathrm{id} \otimes d_{\mathrm{int}}) \circ \Delta$ follows because $d_{\mathrm{int}}$ acts within each factor and commutes with the splitting.
+
+For $d_{\mathrm{res}}$: the residue at $D_{ij}$ (collision of points $i$ and $j$) produces a term in bar degree $n-1$.  The coproduct restricts to boundary strata: $\Delta|_{D_{ij}}$ splits the remaining points into two groups, and the residue extraction commutes with this splitting because the divisor $D_{ij}$ lies entirely within the factor containing both $i$ and $j$.
+
+For $d_{\mathrm{dR}}$: the exterior derivative satisfies $d_{\mathrm{dR}}(\omega_I \wedge \omega_J) = d_{\mathrm{dR}}\omega_I \wedge \omega_J + (-1)^{|\omega_I|}\omega_I \wedge d_{\mathrm{dR}}\omega_J$, which is the Leibniz rule with respect to the K\"unneth decomposition $\Omega^*(C_{n+1}(X)) \cong \bigoplus_{I \sqcup J} \Omega^*(C_{|I|}(X)) \otimes \Omega^*(C_{|J|}(X))$ used by $\Delta$.
+
+This is the standard coderivation property for bar differentials; see~\cite{LV12}, Proposition~2.2.1 for the algebraic version.
+\end{proof}
+
+\begin{definition}[Genus-graded geometric bar complex]\label{def:geom-bar}
+For a chiral algebra $\mathcal{A}$ on a Riemann surface $\Sigma_g$ of genus $g$, the \emph{genus-graded geometric bar complex} is the bigraded complex:
+\[
+\bar{B}^{(g)}_{p,q}(\mathcal{A}) = \Gamma\left(\overline{C}_{p+1}(\Sigma_g), j_*j^*\mathcal{A}^{\boxtimes(p+1)} \otimes \Omega^q_{\overline{C}_{p+1}(\Sigma_g)}(\log D^{(g)}) \otimes \text{or}_{p+1}^{(g)}\right)
+\]
+where:
+\begin{itemize}
+\item $\overline{C}_{p+1}(\Sigma_g)$ is the Fulton--MacPherson compactification at genus $g$
+\item $D^{(g)} = \overline{C}_{p+1}(\Sigma_g) \setminus C_{p+1}(\Sigma_g)$ is the boundary divisor with genus-dependent stratification
+\item $j: C_{p+1}(\Sigma_g) \hookrightarrow \overline{C}_{p+1}(\Sigma_g)$ is the open inclusion
+\item $\Omega^q_{\overline{C}_{p+1}(\Sigma_g)}(\log D^{(g)})$ includes logarithmic forms and period integrals
+\item $\text{or}_{p+1}^{(g)}$ is the genus-graded orientation bundle
+\end{itemize}
+
+The total bar complex is:
+\[\bar{B}(\mathcal{A}) = \bigoplus_{g=0}^{\infty} \bar{B}^{(g)}(\mathcal{A})\]
+\end{definition}
+ 
+\begin{remark}[Orientation bundle]
+The orientation bundle $\text{or}_{p+1}^{(g)}$ is necessary because configuration spaces are not naturally 
+oriented at each genus. It is the determinant line of $T_{C_{p+1}(\Sigma_g)}$ with genus-dependent corrections, ensuring that our differential squares to zero across all genera and maintains modular covariance.
+\end{remark}
+ 
+\subsection{The differential -- detailed components}
+
+The three-component decomposition $d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}$
+of Definition~\ref{def:bar-differential-complete} is now expanded at genus~$g$.
+ 
+\subsubsection{Internal differential}
+ 
+\begin{definition}[Internal differential]
+For $\alpha = \alpha_1 \otimes \cdots \otimes \alpha_{n+1} \otimes \omega \otimes \theta \in 
+\bar{B}^{n,q}_{\text{geom}}(\mathcal{A})$ where $\theta \in \text{or}_{n+1}$:
+\[
+d_{\text{int}}(\alpha) = \sum_{i=1}^{n+1} (-1)^{|\alpha_1| + \cdots + |\alpha_{i-1}|} 
+\alpha_1 \otimes \cdots \otimes d_{\mathcal{A}}(\alpha_i) \otimes \cdots \otimes \alpha_{n+1} \otimes \omega \otimes \theta
+\]
+where $d_{\mathcal{A}}$ is the internal differential on $\mathcal{A}$ (if present) and $|\alpha_i|$ denotes 
+the cohomological degree.
+\end{definition}
+ 
+\subsubsection{Factorization differential}
+ 
+\begin{definition}[Factorization differential]\label{def:diff-fact}
+   The factorization differential encodes the chiral algebra structure:
+   \[
+   d_{\text{fact}} = \sum_{1 \leq i < j \leq n+1} (-1)^{\sigma(i,j)} \text{Res}_{D_{ij}} \left(\mu_{ij} \otimes (\eta_{ij} \wedge -)\right)
+   \]
+   where the sign is:
+   \[\sigma(i,j) = i + j + \left(\sum_{k=1}^{i-1} |\alpha_k|\right) \cdot |\eta_{ij}|\]
+   (Here $|\alpha_k|$ denotes the cohomological degree of the $k$-th element and $|\eta_{ij}| = 1$ for the logarithmic 1-form.)
+   
+   \emph{Geometric meaning.} This extracts the ``color'' $C_{ij}^k$ from the ``composite light'' of $\mathcal{A}$:
+   \begin{center}
+   \begin{tikzcd}
+   \phi_i \otimes \phi_j \otimes \eta_{ij} \arrow[r, "d_{\text{fact}}"] & 
+   \text{Res}_{D_{ij}}[\text{OPE}(\phi_i, \phi_j)] = \sum_k C_{ij}^k \phi_k
+   \end{tikzcd}
+   \end{center}
+   
+   Each residue reveals one structure coefficient, with the totality forming the complete ``spectrum.''
+   
+   This accounts for:
+   \begin{itemize}
+   \item Koszul sign from moving $\eta_{ij}$ past the fields $\alpha_k$
+   \item Orientation of the divisor $D_{ij}$  
+   \item Parity of the permutation after collision
+   \end{itemize}
+   \end{definition}
+   
+   \begin{lemma}[Orientation convention; \ClaimStatusProvedHere]\label{lem:orientation}
+   Fix orientations on boundary divisors by:
+   \begin{enumerate}
+   \item For $D_{ij}$ where $z_i = z_j$:
+      \[\text{or}_{D_{ij}} = dz_1 \wedge \cdots \wedge \widehat{dz_i} \wedge \cdots \wedge dz_{n+1}\]
+      (omit $dz_i$, keep others including $dz_j$)
+      
+   \item For codimension-2 strata $D_{ijk} = D_{ij} \cap D_{jk}$:
+      \[\text{or}_{D_{ijk}} = \text{or}_{D_{ij}} \wedge \text{or}_{D_{jk}}\]
+      
+   \item This implies the relation:
+      \[\text{or}_{D_{ijk}} = -\text{or}_{D_{ik}} \wedge \text{or}_{D_{jk}} = \text{or}_{D_{jk}} \wedge \text{or}_{D_{ik}}\]
+   \end{enumerate}
+   
+   These choices ensure $\partial^2 = 0$ for the boundary operator on $\overline{C}_{n+1}(X)$.
+   \end{lemma}
+   
+   \begin{proof}
+   The FM compactification $\overline{C}_{n+1}(X)$ is constructed by iterated real blow-up along diagonals (\cite{FM94}, \S2).  After blow-up, each codimension-1 boundary stratum $D_S$ (indexed by subsets $S \subset [n+1]$ with $|S| \geq 2$) is a smooth divisor, and distinct divisors $D_S, D_T$ meet transversally when $S \subset T$ or $T \subset S$ (nested), and are disjoint otherwise.  A codimension-2 stratum therefore arises as $D_S \cap D_T$ where $S \subsetneq T$ (a two-step degeneration), and the two orderings of the iterated boundary---first collapse $S$, then collapse $T/S$, versus directly collapsing $T$ and then refining to $S$---yield opposite orientations by the antisymmetry of the normal bundle orientations (Corollary~\ref{cor:residues-anticommute}).
+   \end{proof}
+   
+   \begin{remark}[Significance of signs]
+   The sign conventions are forced by $d^2 = 0$, following Kontsevich's principle: ``signs should be determined by geometry, not combinatorics.''
+   \end{remark}
+   
+   \begin{lemma}[Residue properties; \ClaimStatusProvedHere]
+   \label{lem:residue-properties}
+   The residue operation satisfies:
+   \begin{enumerate}
+   \item $\text{Res}_{D_{ij}}^2 = 0$ (extracting residue lowers pole order)
+   \item For disjoint pairs: $\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = -\text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}$
+   \item For overlapping pairs with $j = k$: contributions combine via Jacobi identity
+   \end{enumerate}
+   \end{lemma}
+   
+   \begin{proof}
+   Part~(1): A section $\omega \in \Omega^*_{\log}(\overline{C}_{n+1}(X))$ has at most a simple pole along $D_{ij}$.  In a local coordinate $u$ with $D_{ij} = \{u = 0\}$, write
+   $\omega = f(u)\,d\log u + g(u)\,(\text{terms regular in }u)$
+   where $f(0) = \mathrm{Res}_{D_{ij}}\omega$.  The residue $\mathrm{Res}_{D_{ij}}\omega = f(0)$ is a section on $D_{ij}$ with no pole along $D_{ij}$, so $\mathrm{Res}_{D_{ij}}^2\omega = \mathrm{Res}_{D_{ij}}(f(0)) = 0$.
+
+   Part~(2): This is Corollary~\ref{cor:residues-anticommute}: for disjoint index pairs, the divisors $D_{ij}$ and $D_{k\ell}$ are transverse, and the anticommutativity follows from the antisymmetry of $d\log u \wedge d\log v$.
+
+   Part~(3): For overlapping pairs with $j = k$, three codimension-1 strata $D_{ij}$, $D_{jk}$, and $D_{ik}$ meet at the triple collision stratum $D_{ijk}$.  The sum of iterated residues:
+   \[
+   \mathrm{Res}_{D_{jk}} \circ \mathrm{Res}_{D_{ij}} + \mathrm{Res}_{D_{ij}} \circ \mathrm{Res}_{D_{jk}} + \mathrm{Res}_{D_{ik}} \circ \mathrm{Res}_{D_{ij}}
+   \]
+   vanishes by the associativity of the chiral product, as verified in Case~(ii) of Theorem~\ref{thm:bar-nilpotency-complete}.
+   \end{proof}
+ 
+\begin{lemma}[Well-definedness of residue; \ClaimStatusProvedHere]
+\label{lem:residue-well-defined}
+The residue $\text{Res}_{D_{ij}}$ is well-defined on sections with logarithmic poles and satisfies:
+\[
+\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = -\text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}
+\]
+when $\{i,j\} \cap \{k,\ell\} = \emptyset$, and
+\[
+\text{Res}_{D_{ij}} \circ \text{Res}_{D_{ij}} = 0
+\]
+\end{lemma}
+ 
+\begin{proof}
+For anticommutativity: when $\{i,j\} \cap \{k,\ell\} = \emptyset$, the divisors $D_{ij}$ and $D_{k\ell}$ are transverse, and the result is Corollary~\ref{cor:residues-anticommute}.
+
+For idempotency: in a local coordinate $u$ with $D_{ij} = \{u = 0\}$, any section $\omega \in \Omega^*_{\log}$ has the form $\omega = f\,d\log u + g$ where $g$ is regular along $D_{ij}$.  Then $\mathrm{Res}_{D_{ij}}\omega = f|_{u=0}$, which is regular along $D_{ij}$ (no $d\log u$ term), so $\mathrm{Res}_{D_{ij}}(f|_{u=0}) = 0$.
+\end{proof}
+ 
+\subsubsection{Configuration differential}
+ 
+\begin{definition}[Configuration differential]
+   The configuration differential is the de Rham differential on forms:
+   \[d_{\text{config}} = d_{\text{config}}^{\text{dR}} + d_{\text{config}}^{\text{Lie*}}\]
+   where the de~Rham component $d_{\text{config}}^{\text{dR}} = \text{id}_{\mathcal{A}^{\boxtimes(n+1)}} \otimes d_{\text{dR}} \otimes \text{id}_{\text{or}}$ acts on the differential forms, and the Lie$^*$ component $d_{\text{config}}^{\text{Lie*}} = \sum_{I \subset [n+1]} (-1)^{\epsilon(I)} d_{\text{Lie}}^{(I)} \otimes \text{id}_{\Omega^*}$ acts via the Lie$^*$ algebra structure (when present).
+   
+   For general chiral algebras without Lie* structure, $d_{\text{config}}^{\text{Lie*}} = 0$.
+   \end{definition}
+   
+\begin{remark}[Geometric meaning]
+   The configuration differential captures how $\mathcal{A}$ varies over configuration space: $d_{\text{dR}}$ measures variation of insertion points, $d_{\text{Lie*}}$ encodes infinitesimal symmetries.  This parallels the Cartan model for equivariant cohomology.
+   \end{remark}
+
+\subsection{Explicit residue computations}\label{sec:residue-calculus}
+
+\begin{remark}[Sign conventions: comparison with Loday--Vallette]\label{rem:LV-signs}
+Our sign conventions for the bar construction follow the geometric approach, which differs slightly from the operadic conventions in Loday--Vallette~\cite{LV12}.
+
+The differences are as follows.
+\begin{enumerate}
+\item \emph{Koszul sign rule}: We use the \emph{geometric} Koszul rule where moving a differential form of degree $p$ past an operator of degree $q$ introduces $(-1)^{pq}$.
+
+\item \emph{Residue orientation}: Our residues include an orientation factor from the normal bundle to collision divisors. This introduces signs when collision divisors intersect.
+
+\item \emph{Suspension}: Loday--Vallette use operadic suspension $s: V \to sV$ with $|s| = 1$. We work with geometric forms directly, so suspension is implicit in the degree shift of $\Omega^n(\log D)$.
+\end{enumerate}
+
+\emph{Translation between conventions.}
+\begin{center}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.43\textwidth}|>{\raggedright\arraybackslash}p{0.43\textwidth}|}
+\hline
+\textbf{Loday--Vallette (Operadic)} & \textbf{Ours (Geometric)} \\
+\hline
+$d_{op}(s a_1 \otimes \cdots \otimes s a_n)$ & $d_{geom}(a_1 \otimes \cdots \otimes a_n \otimes \omega_n)$ \\
+Sign: $(-1)^{|a_1| + \cdots + |a_{i-1}|}$ & Sign: $(-1)^{\epsilon_i}$ (from form degree) \\
+Suspension degree $|s a_i| = |a_i| + 1$ & Form degree $|\omega| = n$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The two conventions agree up to an overall normalization constant (which can be absorbed into the definition of the pairing).
+
+The nine-term proof of $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) uses geometric signs throughout. Translating to operadic conventions via the dictionary above preserves $d^2 = 0$.
+\end{remark}
+
+\begin{theorem}[Geometric bar \texorpdfstring{$=$}{=} operadic bar; \ClaimStatusProvedHere]
+\label{thm:geometric-equals-operadic-bar}
+\index{geometric equals operadic bar}
+\index{bar construction!algebraic}
+\index{twisting morphism!chiral}
+Let $\mathcal{P}^{\mathrm{ch}}$ be a chiral operad on $X$ (either
+$\chirCom$ or $\chirAss$) and let $\mathcal{A}$ be an augmented
+$\mathcal{P}^{\mathrm{ch}}$-algebra.  Then the geometric bar complex
+$\bar{B}_{\mathrm{geom}}(\mathcal{A})$
+(Definition~\ref{def:geometric-bar}) is naturally quasi-isomorphic
+to the operadic bar construction
+$B_{\mathcal{P}^{\mathrm{ch}}}(\mathcal{A})$ in the sense of
+\cite[\S6.5]{LV12}:
+\[
+\bar{B}_{\mathrm{geom}}(\mathcal{A})
+\;\xrightarrow{\;\sim\;}\;
+B_{\mathcal{P}^{\mathrm{ch}}}(\mathcal{A}).
+\]
+The quasi-isomorphism is natural in $\mathcal{A}$ and compatible
+with the coalgebra structures on both sides.
+\end{theorem}
+
+\begin{proof}
+The operadic bar construction
+$B_{\mathcal{P}}(\mathcal{A}) =
+(\mathcal{P}^{!,c} \circ \bar{\mathcal{A}}, d_B)$
+is a cofree $\mathcal{P}^!$-coalgebra on the augmentation ideal
+$\bar{\mathcal{A}} = \ker(\varepsilon)$, with differential $d_B$
+encoding the algebra structure of $\mathcal{A}$ via the twisting
+morphism $\kappa: \mathcal{P}^{!,c} \to \mathcal{P}$
+\cite[Theorem~6.5.7]{LV12}.
+
+\emph{Step 1} (Geometric realization of $\mathcal{P}^{!,c}$).
+For $\mathcal{P} = \operatorname{Com}$ (the $\Einf$-chiral case),
+$\mathcal{P}^{!,c} = \operatorname{Lie}^c$, and the cooperad
+$\operatorname{Lie}^c(n)$ is computed by the cohomology of the
+Fulton--MacPherson compactification $\overline{C}_n(X)$: the Arnold
+relations on $H^*(\overline{C}_n)$ generate the Lie cooperad.
+For $\mathcal{P} = \operatorname{Ass}$,
+$\mathcal{P}^{!,c} = \operatorname{Ass}^c$ (the associative
+cooperad), realized by ordered configurations.
+
+\emph{Step 2} (Identification of differentials).
+The operadic differential $d_B$ decomposes into $d_1$ (the cooperadic cocomposition $\mathcal{P}^{!,c}(n)
+\xrightarrow{\Delta} \mathcal{P}^{!,c}(k)
+\otimes \mathcal{P}^{!,c}(n_1) \otimes \cdots
+\otimes \mathcal{P}^{!,c}(n_k)$) and $d_2$ (the twisting morphism applied to pairs of consecutive inputs).
+Under the geometric realization, $d_1$ corresponds to the de~Rham
+differential $d_{\mathrm{dR}}$ on $\Omega^*(\log D)$ (which detects
+the codimension-one boundary strata of $\overline{C}_n(X)$), and
+$d_2$ corresponds to the residue differential $d_{\mathrm{res}}$
+(which extracts OPE data at collision divisors).  The sign
+comparison of Remark~\ref{rem:LV-signs} shows these agree up to
+the suspension isomorphism
+$s\bar{\mathcal{A}} \cong \bar{\mathcal{A}} \otimes
+\Omega^1(\log D)|_{\text{codim-1}}$.
+
+\emph{Step 3} (Quasi-isomorphism).
+The comparison map sends a geometric bar element
+$a_1 \otimes \cdots \otimes a_n \otimes \omega
+\in \bar{B}_{\mathrm{geom}}^n(\mathcal{A})$
+to the operadic bar element
+$[sa_1 | \cdots | sa_n] \in B_{\mathcal{P}}(\mathcal{A})_n$
+by evaluating the logarithmic form $\omega$ at the fundamental class
+of the fiber.  This evaluation is a chain map by Stokes's theorem
+(boundary terms match the residue differential by Step~2).
+It is a quasi-isomorphism by the logarithmic comparison theorem:
+the complex $\Omega^*_{\overline{C}_{n+1}(X)}(\log D)$ computes
+$H^*(C_{n+1}(X); \mathbb{C})$ (the cohomology of the open configuration
+space), and the operadic bar differential encodes precisely the
+combinatorics of the boundary divisor stratification of
+$\overline{C}_{n+1}(X)$---both are controlled by the operad structure
+on $\{C_{n+1}(X)\}_{n \geq 0}$
+(cf.\ \cite[Theorem~3.7.4]{BD04}, \cite[Theorem~5.1]{Get95}).
+\end{proof}
+
+\begin{theorem}[Residue formula; \ClaimStatusProvedHere]\label{thm:residue-formula}
+\index{residue!iterated}
+Following Beilinson--Drinfeld \cite[§3.7.4, p.228]{BD04}, 
+let $\mathcal{A}$ be generated by fields $\phi_\alpha(z)$ with conformal weights $h_\alpha$ and OPE:
+
+\footnote{The distributional nature of operator products requires care in defining 
+products of distributions. We follow Hörmander's theory of wavefront sets: the OPE 
+is well-defined when wavefront sets are in general position. See Hörmander, 
+\textit{Analysis of Linear Partial Differential Operators I}, Theorem 8.2.10, or 
+Costello--Gwilliam Vol. 1, \S2.4 for the QFT perspective.}
+
+\[
+\phi_\alpha(z)\phi_\beta(w) \sim \sum_{\gamma} \sum_{n=0}^{N_{\alpha\beta}} 
+\frac{C^{\gamma,n}_{\alpha\beta} \partial^n\phi_\gamma(w)}{(z-w)^{h_\alpha + h_\beta - h_\gamma - n}}
++ \text{regular}
+\]
+where the sum is finite (quasi-finite OPE). Then:
+\[
+\text{Res}_{D_{ij}}[\phi_{\alpha_1}(z_1) \otimes \cdots \otimes \phi_{\alpha_{n+1}}(z_{n+1}) 
+\otimes \eta_{i_1j_1} \wedge \cdots \wedge \eta_{i_kj_k}]
+\]
+equals:
+\begin{itemize}
+\item If $(i,j) \notin \{(i_r, j_r)\}_{r=1}^k$: zero (no pole along $D_{ij}$)
+\item If $(i,j) = (i_r, j_r)$ for unique $r$ and $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$:
+\[
+(-1)^r C^{\gamma,n}_{\alpha_i\alpha_j} \phi_{\alpha_1} \otimes \cdots \otimes \partial^n\phi_\gamma \otimes \cdots 
+\otimes \widehat{\phi_{\alpha_j}} \otimes \cdots \otimes \eta_{i_1j_1} \wedge \cdots \wedge \widehat{\eta_{ij}} \wedge \cdots
+\]
+where the hat denotes omission
+\item Otherwise: zero (wrong pole order)
+\end{itemize}
+
+The \emph{criticality condition} $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$ is essential: only simple poles contribute to the residue (BD~\cite[\S3.7.4]{BD04}).
+\end{theorem}
+ 
+\begin{proof}
+Near $D_{ij}$, we use blow-up coordinates $(u, \epsilon, \theta)$ where:
+\[
+z_i = u + \frac{\epsilon}{2}e^{i\theta}, \quad z_j = u - \frac{\epsilon}{2}e^{i\theta}
+\]
+The logarithmic form becomes:
+\[
+\eta_{ij} = d\log(\epsilon e^{i\theta}) = d\log\epsilon + id\theta
+\]
+The OPE gives:
+\[
+\phi_{\alpha_i}(z_i)\phi_{\alpha_j}(z_j) = \sum_{\gamma,n} 
+\frac{C^{\gamma,n}_{\alpha_i\alpha_j} \partial^n\phi_\gamma(u)}{(\epsilon e^{i\theta})^{h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n}}
++ O(\epsilon^0)
+\]
+The residue $\text{Res}_{D_{ij}}$ extracts the coefficient of
+$\frac{d\log\epsilon}{\epsilon}$, which is nonzero only when the pole
+order equals~$1$, i.e., when
+$h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$. This is the 
+\emph{criticality condition} for the residue pairing. The sign $(-1)^r$ comes from 
+moving $\eta_{ij}$ past $r-1$ other 1-forms via the Koszul rule for graded
+commutativity.
+\end{proof}
+ 
+\subsection{Uniqueness and functoriality}
+ 
+\begin{theorem}[Uniqueness and functoriality; \ClaimStatusProvedHere]\label{thm:bar-uniqueness-functoriality}
+The geometric bar construction is the unique functor 
+\[\bar{B}_{geom}: \text{ChirAlg}_X \to \text{dgCoalg}\]
+satisfying:
+\begin{enumerate}
+\item \emph{Locality:} For $j: U \hookrightarrow X$ open, $j^*\bar{B}_{geom}(\mathcal{A}) \cong \bar{B}_{geom}(j^*\mathcal{A})$
+\item \emph{External product:} $\bar{B}_{geom}(\mathcal{A} \boxtimes \mathcal{B}) \cong \bar{B}_{geom}(\mathcal{A}) \boxtimes \bar{B}_{geom}(\mathcal{B})$
+\item \emph{Normalization:} $\bar{B}_{geom}(\mathcal{O}_X) = \Omega^*(\overline{\mathcal{C}}_{*+1}(X))$
+\end{enumerate}
+up to unique natural isomorphism.
+
+It defines a functor from chiral algebras to filtered conilpotent chiral coalgebras, with essential image the coalgebras having logarithmic coderivations supported on collision divisors.
+\end{theorem}
+
+ 
+\begin{definition}[Conilpotent chiral coalgebra]
+A chiral coalgebra $C$ is \emph{filtered conilpotent} if the iterated comultiplication 
+$\Delta^{(n)} : C \to C^{\otimes(n+1)}$ satisfies: For each $c \in C$, there exists 
+$N$ such that $\Delta^{(n)}(c) = 0$ for all $n \geq N$. This ensures the cobar 
+construction $\Omega^{\text{ch}}(C)$ is well-defined without completion.
+\end{definition}
+
+
+
+\begin{proof}
+\emph{Step 1: Existence.} We verify each axiom explicitly:
+\begin{itemize}
+\item \emph{Locality:} For $j: U \hookrightarrow X$ open,
+we have $C_n(U) = j^{-1}(C_n(X))$.
+The maximal extension $j_*j^*$ commutes with sections over
+configuration spaces:
+\begin{align*}
+j^*\bar{B}_{\text{geom}}(A)
+&= j^*\Gamma(\overline{C}_{n+1}(X), \cdots) \\
+&= \Gamma(\overline{C}_{n+1}(U), \cdots)
+= \bar{B}_{\text{geom}}(j^*A)
+\end{align*}
+
+\item \emph{External product:} For disjoint open subsets
+$U_1, U_2 \subset X$, the identification
+$C_n(U_1 \sqcup U_2) \cong
+\bigsqcup_{k+l=n} C_k(U_1) \times C_l(U_2)$
+induces a natural isomorphism
+\[
+\bar{B}_{\mathrm{geom}}(\mathcal{A}|_{U_1 \sqcup U_2})
+\cong \bigoplus_{k+l=n}
+\bar{B}_k(\mathcal{A}|_{U_1}) \otimes
+\bar{B}_l(\mathcal{A}|_{U_2}),
+\]
+compatible with boundary stratifications.
+
+\item \emph{Normalization:} For $A = \mathcal{O}_X$, there are no nontrivial OPEs, so 
+$d_{\text{fact}} = 0$, and we are left with just the de Rham complex on configuration spaces.
+\end{itemize}
+
+\emph{Step 2: Uniqueness.} Let $F, G$ be two such functors. 
+
+For the structure sheaf: By normalization, 
+\[F(\mathcal{O}_X) = G(\mathcal{O}_X) = \Omega^*(\overline{\mathcal{C}}_{*+1}(X))\]
+
+For free chiral algebra $\text{Free}_{ch}(V)$ on a vector bundle $V$:
+The locality and external product axioms determine:
+\[F(\text{Free}^{\text{ch}}(V)) \cong \text{Sym}^*(V[1]) \otimes \Omega^*(\overline{C}_{*+1}(X))\]
+and similarly for $G$, giving canonical isomorphism $\eta_V: F(\text{Free}^{\text{ch}}(V)) \xrightarrow{\sim} G(\text{Free}^{\text{ch}}(V))$.
+
+
+\begin{align}
+F(\text{Free}_{ch}(V)) &= F(V^{\otimes_{ch} \bullet})\\
+&\cong F(V)^{\otimes \bullet} \quad \text{(external product)}\\
+&\cong (V[1] \otimes F(\mathcal{O}_X))^{\otimes \bullet} \quad \text{(locality)}\\
+&\cong \text{Sym}^*(V[1]) \otimes \Omega^*(\overline{\mathcal{C}}_{*+1}(X))
+\end{align}
+
+Similarly for $G$, giving canonical isomorphism $\eta_{V}: F(\text{Free}_{ch}(V)) \xrightarrow{\sim} G(\text{Free}_{ch}(V))$.
+
+For general $\mathcal{A} = \text{Free}_{ch}(V)/R$:
+The relations $R$ determine boundaries via the same residue formulas in both $F(A)$ and $G(A)$:
+\begin{itemize}
+\item Each relation $r \in R$ maps to $d_{\text{fact}}(r)$ computed via residues
+\item The residue formula is determined by the OPE structure
+\item Locality ensures these agree on all affine charts
+\end{itemize}
+
+\emph{Step 3: Natural isomorphism.} 
+For morphism $\phi: \mathcal{A} \to \mathcal{B}$, the diagram
+\[
+\begin{tikzcd}
+F(\mathcal{A}) \arrow[r, "\eta_\mathcal{A}"] \arrow[d, "F(\phi)"] & G(\mathcal{A}) \arrow[d, "G(\phi)"]\\
+F(\mathcal{B}) \arrow[r, "\eta_\mathcal{B}"] & G(\mathcal{B})
+\end{tikzcd}
+\]
+commutes by construction of $\eta$ using universal properties.
+
+\emph{Verification that relations map to boundaries}: Let $r \in R \subset \text{Free}^{\text{ch}}(V) \otimes \text{Free}^{\text{ch}}(V)$.
+Under $F$, we have:
+\[F(r) \in F(\text{Free}^{\text{ch}}(V) \otimes \text{Free}^{\text{ch}}(V)) = F(\text{Free}^{\text{ch}}(V))^{\otimes 2}\]
+\[ = (V[1] \otimes \Omega^*(C_{*+1}(X)))^{\otimes 2}\]
+The differential $d_F$ maps $r$ to the boundary because:
+\[d_F(r) = d_{\text{fact}}(r) + d_{\text{config}}(r) + d_{\text{int}}(r)\]
+where $d_{\text{fact}}$ implements the relation via residue extraction. Similarly for $G$.
+The agreement $F(r) = G(r)$ in cohomology follows from the universal property
+of free chiral algebras and the uniqueness of residue extraction.
+
+\emph{Step 4: Uniqueness of isomorphism.}
+Any other natural isomorphism $\eta': F \Rightarrow G$ must agree on $\mathcal{O}_X$ by normalization,
+hence on free algebras by external product, hence on all algebras by locality.
+\end{proof}
+
+\subsection{Bar complex as chiral coalgebra}
+
+\begin{theorem}[Bar complex is chiral; \ClaimStatusProvedHere]\label{thm:bar-chiral}
+\index{factorization coalgebra|textbf}
+The geometric bar complex $\bar{B}^{\text{ch}}(\mathcal{A})$ naturally carries the structure of a differential graded chiral coalgebra.
+\end{theorem}
+
+\begin{proof}
+We construct the chiral coalgebra structure explicitly:
+
+\emph{Comultiplication.} The map $\Delta: \bar{B}^{\text{ch}}(\mathcal{A}) \to \bar{B}^{\text{ch}}(\mathcal{A}) \otimes \bar{B}^{\text{ch}}(\mathcal{A})$ is induced by:
+\[
+\Delta: \overline{C}_{n+1}(X) \to \bigcup_{I \sqcup J = [n+1]} \overline{C}_{|I|}(X) \times \overline{C}_{|J|}(X)
+\]
+where the union is over ordered partitions with $0 \in I$. Explicitly:
+\[
+\Delta(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega) = \sum_{I \sqcup J} \pm \left(\bigotimes_{i \in I} \phi_i \otimes \omega|_I\right) \otimes \left(\bigotimes_{j \in J} \phi_j \otimes \omega|_J\right)
+\]
+
+\emph{Counit.} $\epsilon: \bar{B}^{\text{ch}}(\mathcal{A}) \to \mathbb{C}$ is given by projection onto degree 0:
+\[
+\epsilon(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega) = \begin{cases}
+\int_X \phi_0 & \text{if } n = 0 \\
+0 & \text{if } n > 0
+\end{cases}
+\]
+
+\emph{Coassociativity.} Follows from the associativity of configuration space stratifications
+(the stratification $\overline{C}_{n_1+n_2}(X) \supset C_{n_1}(X) \times C_{n_2}(X)$ is associative in the sense that iterated boundary extraction $(I_1, I_2, I_3) \mapsto (I_1 \mid I_2 \mid I_3)$ is independent of the order of extraction, by the transversality of the strata):
+\[
+(\Delta \otimes \text{id}) \circ \Delta = (\text{id} \otimes \Delta) \circ \Delta
+\]
+
+\emph{Compatibility with differential.} The comultiplication is a chain map:
+\[
+\Delta \circ d = (d \otimes \text{id} + \text{id} \otimes d) \circ \Delta
+\]
+This follows from the compatibility of residues with the stratification of configuration spaces
+(the residue of $d\omega$ along a boundary stratum equals the residue of $\omega$ on the induced stratum, by the compatibility of the Leray residue with the boundary map in the long exact sequence of the pair).
+\end{proof}
+
