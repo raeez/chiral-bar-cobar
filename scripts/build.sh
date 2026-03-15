@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 
 MAX_PASSES=${1:-7}
 TEX="pdflatex"
-TEXFLAGS="-interaction=batchmode -file-line-error -synctex=0 -cnf-line=buf_size=1000000"
+TEXFLAGS="-interaction=batchmode -file-line-error -synctex=0 -cnf-line=buf_size=1000000 -cnf-line=stack_size=20000"
 LOG_DIR=".build_logs"
 RUN_LOG="$LOG_DIR/tex-build.stdout.log"
 LOCK_DIR="$LOG_DIR/.build.lock"

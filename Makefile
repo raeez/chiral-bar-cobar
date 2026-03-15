@@ -18,7 +18,7 @@
 
 MAIN      := main
 TEX       := pdflatex
-TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=0 -cnf-line='buf_size=1000000'
+TEXFLAGS  := -interaction=nonstopmode -file-line-error -synctex=0 -cnf-line='buf_size=1000000' -cnf-line='stack_size=20000'
 LATEXMK   := latexmk
 MKFLAGS   := -pdf -pdflatex="$(TEX) $(TEXFLAGS)" -interaction=nonstopmode
 BUILD_SCRIPT := ./scripts/build.sh
