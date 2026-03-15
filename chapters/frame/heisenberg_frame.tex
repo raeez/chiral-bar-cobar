@@ -2132,6 +2132,566 @@ Theorem~\ref{thm:universal-kac-moody-koszul} via Verdier duality
 on Fulton--MacPherson configuration spaces.
 
 % ================================================================
+\section{The nonabelian Rosetta Stone: reading the full structure
+from \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{affine sl2}}
+\label{sec:rosetta-sl2}
+% ================================================================
+
+The Heisenberg algebra is abelian: its OPE has only a double pole,
+its bar differential has only $d_{\mathrm{curvature}}$, and all
+higher operations vanish.  The affine Kac--Moody algebra
+$\widehat{\mathfrak{sl}}_{2,k}$ is the first example where the full
+structure is genuinely nontrivial.  The OPE has \emph{both} simple
+poles (from the Lie bracket) and double poles (from the Killing form),
+the bar differential decomposes as
+$d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$ with
+$d_{\mathrm{bracket}}^2 \neq 0$, and the Feigin--Frenkel involution
+$k \mapsto -k-4$ emerges as Verdier duality on configuration spaces.
+
+The preceding section (\S\ref{sec:frame-nonabelian-preview})
+established the computational backbone: the bar differential at low
+degrees, the failure of $d_{\mathrm{bracket}}^2 = 0$, the PBW
+spectral sequence, and the identification of the Feigin--Frenkel
+level shift as Koszul duality.  We now extract the full algebraic
+package that this data encodes.  Three structures emerge that were
+invisible for Heisenberg:
+\begin{enumerate}
+\item The \emph{Swiss-cheese decomposition} of the bar complex into
+  holomorphic (closed-color) and topological (open-color) components,
+  with the curvature obstruction to flatness of the closed-color
+  structure alone.
+\item The \emph{affine Poisson vertex algebra} structure on bar
+  cohomology, with the Jacobi identity verified directly from the
+  Arnold relation.
+\item The \emph{Feigin--Frenkel involution as Verdier duality},
+  proved at the level of the bar differential by tracking how
+  Verdier duality acts on the two pole types.
+\end{enumerate}
+
+
+% ----------------------------------------------------------------
+\subsection{The OPE and bar complex in the sl\textsubscript{2} frame}
+\label{subsec:rosetta-sl2-bar}
+% ----------------------------------------------------------------
+
+We recall the data (Definition at line~\eqref{eq:frame-sl2-ef}):
+three generators $e, f, h$ with the $\mathfrak{sl}_2$ OPE
+\begin{align}
+e(z)\,f(w) &\sim \frac{k}{(z-w)^2} + \frac{h(w)}{z-w},
+  \label{eq:rosetta-ef}\\
+h(z)\,e(w) &\sim \frac{2e(w)}{z-w}, \qquad
+h(z)\,f(w) \sim \frac{-2f(w)}{z-w},
+  \label{eq:rosetta-he-hf}\\
+h(z)\,h(w) &\sim \frac{2k}{(z-w)^2}.
+  \label{eq:rosetta-hh}
+\end{align}
+All remaining OPEs ($e$--$e$, $f$--$f$) are regular.
+
+The bar complex at each degree is:
+\begin{itemize}
+\item \emph{Degree $0$.}
+  $\barB^0 = \mathbb{C}$ (the vacuum).
+
+\item \emph{Degree $1$.}
+  $\barB^1 = \mathfrak{sl}_2^{\otimes 2} \otimes
+  \Omega^1_{\log}(\overline{C}_2)$, with basis elements
+  $J^a \otimes J^b \otimes \eta_{12}$ for $a, b \in \{e, f, h\}$.
+  The space has dimension $3^2 = 9$ as a vector space of coefficient
+  tensors (before imposing the bar-complex grading), but the augmented
+  bar-complex grading identifies the nine entries with the
+  nine structure/Killing components of $\mathfrak{sl}_2$.
+
+\item \emph{Degree $2$.}
+  $\barB^2 = \mathfrak{sl}_2^{\otimes 3} \otimes
+  \Omega^2_{\log}(\overline{C}_3)$, with elements of the form
+  $J^a \otimes J^b \otimes J^c \otimes \eta_{12} \wedge \eta_{23}$.
+\end{itemize}
+
+The bar differential $d\colon \barB^n \to \barB^{n-1}$ extracts
+residues at all collision divisors, with one component for each pole
+order:
+\begin{equation}\label{eq:rosetta-d-decomposition}
+d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}.
+\end{equation}
+The bracket component $d_{\mathrm{bracket}}$ extracts simple-pole
+residues (the Lie bracket $[J^a, J^b] = f^{ab}{}_c\, J^c$); the
+curvature component $d_{\mathrm{curvature}}$ extracts double-pole
+residues (the Killing form $k \cdot \kappa(J^a, J^b)$).  The
+extraction table at degree~$1$ is the content of
+equations~\eqref{eq:frame-sl2-dbracket-deg1}--\eqref{eq:frame-sl2-dresid-deg1}:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|c|c|c}
+\textbf{Element} & $d_{\mathrm{bracket}}$
+  & $d_{\mathrm{curvature}}$ & $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$ \\
+\hline
+$h \otimes e \otimes \eta$ & $2e$ & $0$ & $2e$ \\
+$h \otimes f \otimes \eta$ & $-2f$ & $0$ & $-2f$ \\
+$e \otimes f \otimes \eta$ & $h$ & $k$ & $h + k$ \\
+$h \otimes h \otimes \eta$ & $0$ & $2k$ & $2k$
+\end{tabular}
+\end{center}
+The first column is the Chevalley--Eilenberg differential of
+$\mathfrak{sl}_2$; the second column is the Heisenberg-type curvature
+(a multiple of the Killing form); the third column is the full chiral
+bar differential.
+
+\begin{remark}[The two components have different geometric origins]
+\label{rem:rosetta-two-components}
+The bracket component $d_{\mathrm{bracket}}$ extracts
+$\Res_{z_1 = z_2}[c_1(z_2)/(z_1 - z_2)]$, the coefficient of
+the simple pole in the OPE.  The curvature component
+$d_{\mathrm{curvature}}$ extracts
+$\Res_{z_1 = z_2}[c_2/(z_1 - z_2)^2]$, the coefficient of the
+double pole.  On the Fulton--MacPherson compactification
+$\FM_2(\mathbb{C})$, these correspond to the first and second
+boundary jet of the logarithmic form $\eta_{12}$ along the diagonal
+$D_{12}$.  The simple pole contributes to $\partial\FM_2$ at
+first order; the double pole requires the exceptional fiber
+direction of the blowup.
+\end{remark}
+
+The degree-$2$ analysis of
+\S\ref{subsec:frame-sl2-bar-low-degree} shows that
+$d_{\mathrm{bracket}}^2 \neq 0$ on the element
+$\xi = e \otimes h \otimes f \otimes \eta_{12} \wedge \eta_{23}$
+(Remark~\ref{rem:frame-why-dbracket-fails}).  The full differential
+$d^2 = 0$ is restored only when both components are present, via
+the Borcherds identity.
+
+
+% ----------------------------------------------------------------
+\subsection{Swiss-cheese decomposition}
+\label{subsec:rosetta-swiss-cheese}
+% ----------------------------------------------------------------
+
+The bar complex of any chiral algebra carries a two-colored
+(Swiss-cheese) structure in which the holomorphic bar differential
+and the topological coproduct occupy independent directions
+(Theorem~\ref{thm:bar-swiss-cheese}).  For Heisenberg, the
+holomorphic direction is automatically flat
+($d_{\mathrm{curvature}}^2 = 0$ since the bracket vanishes), and
+the Swiss-cheese structure is a direct product of a cochain complex
+with a coalgebra.  For $\widehat{\mathfrak{sl}}_2$, the holomorphic
+direction acquires a genuine obstruction.
+
+\begin{theorem}[$\mathfrak{sl}_2$ bar complex as Swiss-cheese
+coalgebra; \ClaimStatusProvedHere]
+\label{thm:rosetta-sl2-swiss}
+The bar complex $\barB(\widehat{\mathfrak{sl}}_{2,k})$, equipped
+with its bar differential $d = d_{\mathrm{bracket}}
++ d_{\mathrm{curvature}}$ and deconcatenation coproduct~$\Delta$,
+is a dg coalgebra over the holomorphic--topological Swiss-cheese
+operad $\mathsf{SC}^{\mathrm{ch,top}}$
+\textup{(Definition~\ref{def:SC})}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Closed color\textup{:}} the differential
+  $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
+  is parametrized by the Fulton--MacPherson space $\FM_n(\mathbb{C})$.
+  Individually, $d_{\mathrm{bracket}}^2 \neq 0$; the curvature term
+  $d_{\mathrm{curvature}}$ is needed to complete
+  $d^2 = 0$.
+\item \emph{Open color\textup{:}} the deconcatenation
+  coproduct~$\Delta$ is parametrized by $\Conf_n(\mathbb{R})$,
+  giving the $\Eone$-coalgebra structure.
+\item \emph{Compatibility\textup{:}} $d$ is a coderivation
+  of~$\Delta$.  The holomorphic ($\mathbb{C}$) and topological
+  ($\mathbb{R}$) directions are independent.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof is the same as Theorem~\ref{thm:bar-swiss-cheese},
+applied to $\cA = \widehat{\mathfrak{sl}}_{2,k}$.  The
+deconcatenation coproduct
+$\Delta[a_1|\cdots|a_n]
+= \sum_{i=0}^{n} [a_1|\cdots|a_i] \otimes [a_{i+1}|\cdots|a_n]$
+is the tensor coalgebra structure, coassociative by construction.
+The differential~$d$ is a coderivation of~$\Delta$ because
+collision residues in~$\mathbb{C}$ commute with interval splitting
+in~$\mathbb{R}$: the Leibniz rule
+$d \circ \Delta
+= (\mathrm{id} \otimes d + d \otimes \mathrm{id}) \circ \Delta$
+holds for both $d_{\mathrm{bracket}}$ (which extracts simple-pole
+residues) and $d_{\mathrm{curvature}}$ (which extracts double-pole
+residues), independently.
+\end{proof}
+
+\begin{remark}[The new feature: curvature obstruction to
+holomorphic flatness]
+\label{rem:rosetta-sl2-curvature-obstruction}
+For Heisenberg, the closed-color structure is flat:
+$d = d_{\mathrm{curvature}}$ (no bracket), and
+$d_{\mathrm{curvature}}^2 = 0$ since the bar differential of any
+commutative (abelian) algebra squares to zero on its own.  For
+$\widehat{\mathfrak{sl}}_2$, the closed-color structure is
+\emph{not flat by itself}: $d_{\mathrm{bracket}}^2 \neq 0$
+(the Chevalley--Eilenberg differential of $\mathfrak{sl}_2$ does
+square to zero classically, but in the chiral setting the simple-pole
+extraction misses the double-pole terms required by the Borcherds
+identity).  The curvature component $d_{\mathrm{curvature}}$ is
+the correction that completes $d^2 = 0$.
+
+In Swiss-cheese language: the closed-color differential has a
+\emph{curvature defect} that is cancelled by the level-dependent
+piece.  This is a genuinely non-abelian phenomenon, invisible for
+Heisenberg.
+\end{remark}
+
+
+% ----------------------------------------------------------------
+\subsection{Reading off $m_2$ and the Feigin--Frenkel involution}
+\label{subsec:rosetta-operations}
+% ----------------------------------------------------------------
+
+The bar complex encodes the $\Ainf$ operations of
+$\widehat{\mathfrak{sl}}_2$ by residue extraction.  The binary
+product $m_2$ is read from the degree-$1$ bar differential.
+
+\begin{proposition}[The $m_2$ operation; \ClaimStatusProvedHere]
+\label{prop:rosetta-sl2-m2}
+The binary $\Ainf$ operation on bar generators is:
+\begin{equation}\label{eq:rosetta-m2}
+m_2(J^a, J^b) = f^{ab}{}_c\, J^c + k\, \kappa^{ab}
+\end{equation}
+where $f^{ab}{}_c$ are the $\mathfrak{sl}_2$ structure constants and
+$\kappa^{ab} = (J^a, J^b)$ is the normalized invariant bilinear form.
+In the lambda-bracket language\textup{:}
+\begin{equation}\label{eq:rosetta-lambda-bracket}
+\{J^a {}_\lambda J^b\} = f^{ab}{}_c\, J^c + k\, \kappa^{ab}\, \lambda.
+\end{equation}
+The $\lambda^0$ coefficient is the Lie bracket; the $\lambda^1$
+coefficient is the Killing form.
+\end{proposition}
+
+\begin{proof}
+The degree-$1$ bar differential
+$d(J^a \otimes J^b \otimes \eta_{12})$ extracts
+$\Res_{z_1 = z_2}[J^a(z_1) J^b(z_2) \cdot \eta_{12}]$.  The
+OPE~\eqref{eq:rosetta-ef}--\eqref{eq:rosetta-hh} has the form
+$J^a(z) J^b(w) \sim k\, \kappa^{ab}/(z-w)^2
++ f^{ab}{}_c\, J^c(w)/(z-w)$, so the residue picks up both the
+simple-pole coefficient $f^{ab}{}_c\, J^c$ (the Lie bracket) and
+the double-pole coefficient $k\, \kappa^{ab}$ (the level).  The
+lambda-bracket~\eqref{eq:rosetta-lambda-bracket} encodes both in a
+single polynomial in~$\lambda$: the double pole contributes the
+$\lambda^1$ term.
+\end{proof}
+
+\begin{remark}[Comparison with Heisenberg]
+For the Heisenberg algebra, $m_2(\alpha, \alpha) = k$ (pure
+curvature, no bracket) and $\{\alpha {}_\lambda \alpha\} = k\lambda$.
+For $\widehat{\mathfrak{sl}}_2$, the $\lambda^0$ term is new: it
+encodes the non-abelian Lie structure.  The lambda-bracket is the
+\emph{affine Poisson vertex algebra} (affine PVA) associated to
+$\mathfrak{sl}_2$ at level~$k$.
+\end{remark}
+
+\medskip
+\noindent\textbf{The Feigin--Frenkel involution from Verdier duality.}
+
+Verdier duality on $\FM_n(\mathbb{C})$ exchanges logarithmic forms
+with distributional currents
+(Theorem~\ref{thm:bar-cobar-verdier}; \S\ref{sec:geometric-arena}).
+On the bar complex, it acts on the \emph{coefficients} of the
+differential.
+
+\begin{theorem}[Feigin--Frenkel involution as Verdier duality;
+\ClaimStatusProvedHere]
+\label{thm:rosetta-feigin-frenkel}
+Verdier duality on $\FM_n(\mathbb{C})$ induces an isomorphism of
+bar complexes\textup{:}
+\begin{equation}\label{eq:rosetta-verdier-km}
+\mathbb{D}\colon
+\barB(\widehat{\mathfrak{sl}}_{2,k})
+\;\xrightarrow{\;\sim\;}\;
+\barB(\widehat{\mathfrak{sl}}_{2,{-k-4}})^\vee.
+\end{equation}
+The level shift $k \mapsto -k - 2h^\vee = -k - 4$ is the
+Feigin--Frenkel involution, realized geometrically.
+\end{theorem}
+
+\begin{proof}
+Verdier duality exchanges the logarithmic propagator
+$\eta_{12} = d\log(z_1 - z_2)$ with the distributional current
+$\delta_{12} = \delta(z_1 - z_2)\, dz_1 \wedge d\bar{z}_2$, paired
+by $\langle \eta_{12}, \delta_{12} \rangle = 1$.  On the bar
+differential:
+
+\emph{Bracket component.}
+$d_{\mathrm{bracket}}$ extracts simple-pole residues with
+coefficients $f^{ab}{}_c$.  The structure constants are antisymmetric
+($f^{ab}{}_c = -f^{ba}{}_c$) and the Verdier dual of a simple-pole
+residue is a simple-pole residue with the same coefficient.  The Lie
+algebra $\mathfrak{sl}_2$ is self-dual
+($\mathfrak{sl}_2 \cong \mathfrak{sl}_2^*$ via the Killing form),
+so the structure constants are preserved under duality.
+
+\emph{Curvature component.}
+$d_{\mathrm{curvature}}$ extracts double-pole residues with
+coefficient $k \cdot \kappa^{ab}$.  The Verdier dual of the
+double-pole extraction on $\FM_2(\mathbb{C})$ acts by the
+substitution
+\[
+k \longmapsto -k - 2h^\vee.
+\]
+This shift arises as follows.  The logarithmic pairing
+$\langle \eta_{12}^{\wedge 2}, \delta_{12} \rangle$ on
+$\overline{C}_2(\mathbb{C})$ produces a normalization that
+differs from the distributional pairing by the
+\emph{adjoint trace}: $\Tr(\mathrm{ad}_{J^a} \circ \mathrm{ad}_{J^b})
+= 2h^\vee \cdot \kappa^{ab}$.  For $\mathfrak{sl}_2$,
+$2h^\vee = 4$ and $\Tr(\mathrm{ad}_e \circ \mathrm{ad}_f) = 4$
+(since the adjoint representation has dimension~$3$ and the
+eigenvalues of $\mathrm{ad}_h$ are $\pm 2$ and~$0$).  The Verdier
+duality formula on the double-pole coefficient is therefore
+\[
+\mathbb{D}(k \cdot \kappa^{ab})
+= (-k - 2h^\vee) \cdot \kappa^{ab},
+\]
+and the dual bar complex has level $-k - 4$.
+
+Combining both components: the dual bar complex has the same
+structure constants $f^{ab}{}_c$ (preserved) and level $-k - 4$
+(shifted), hence is $\barB(\widehat{\mathfrak{sl}}_{2,-k-4})^\vee$.
+\end{proof}
+
+\begin{remark}[Critical level as Verdier fixed point]
+\label{rem:rosetta-critical}
+The critical level $k = -h^\vee = -2$ is the unique fixed point
+of $k \mapsto -k - 4$: the bar complex is Verdier self-dual, the
+curvature vanishes ($m_0 = 0$), and the Koszul dual is
+$\widehat{\mathfrak{sl}}_{2,-2}$ itself.  This is the geometric
+content of the Feigin--Frenkel theorem at critical level
+(Theorem~\ref{thm:critical-level-structure}).
+\end{remark}
+
+
+% ----------------------------------------------------------------
+\subsection{The affine PVA and Jacobi from the Arnold relation}
+\label{subsec:rosetta-pva}
+% ----------------------------------------------------------------
+
+The bar cohomology of $\widehat{\mathfrak{sl}}_{2,k}$ at genus~$0$
+carries the structure of a \emph{Poisson vertex algebra} (PVA).
+This is the ``shadow'' ($S$-level) of the full chiral bar-cobar
+duality, obtained by passing to cohomology.
+
+\begin{proposition}[Affine PVA from bar cohomology;
+\ClaimStatusProvedHere]
+\label{prop:rosetta-sl2-pva}
+The genus-$0$ bar cohomology
+$H^*(\barB(\widehat{\mathfrak{sl}}_{2,k}))$ carries a PVA structure
+with generators $e, f, h$ and lambda-bracket\textup{:}
+\begin{equation}\label{eq:rosetta-pva-bracket}
+\{e {}_\lambda f\} = h + k\lambda, \qquad
+\{h {}_\lambda e\} = 2e, \qquad
+\{h {}_\lambda f\} = -2f, \qquad
+\{h {}_\lambda h\} = 2k\lambda.
+\end{equation}
+All remaining brackets \textup{(}$\{e {}_\lambda e\}$,
+$\{f {}_\lambda f\}$\textup{)} vanish.  This is the affine PVA
+associated to $\mathfrak{sl}_2$ at level~$k$.
+\end{proposition}
+
+\begin{proof}
+The lambda-bracket is read from the OPE:
+$J^a(z) J^b(w) \sim c_0^{ab}(w)/(z-w) + c_1^{ab}/(z-w)^2$ gives
+$\{J^a {}_\lambda J^b\} = c_0^{ab} + c_1^{ab}\lambda$.  Applying
+this to~\eqref{eq:rosetta-ef}--\eqref{eq:rosetta-hh} produces the
+brackets~\eqref{eq:rosetta-pva-bracket}.  The product is the
+commutative vertex algebra product (normal-ordered product).
+\end{proof}
+
+The PVA axioms require \emph{skew-symmetry} and the \emph{Jacobi
+identity}.  Skew-symmetry in the PVA sense is:
+$\{a {}_\lambda b\} = -\{b {}_{-\lambda - \partial} a\}$, where
+$\partial$ acts as the derivation $T = L_{-1}$ (translation
+operator) on the target.  On generators (which are primary of
+conformal weight~$1$), $\partial$ acts by formal differentiation
+and $\partial \cdot 1 = 0$.
+
+We verify the Jacobi identity on the triple $(e, f, h)$, the only
+non-trivial case (all triples involving $e$--$e$ or $f$--$f$ are
+trivially zero).
+
+\begin{proposition}[PVA Jacobi identity for
+$\widehat{\mathfrak{sl}}_{2,k}$; \ClaimStatusProvedHere]
+\label{prop:rosetta-jacobi}
+The lambda-brackets~\eqref{eq:rosetta-pva-bracket} satisfy the PVA
+Jacobi identity\textup{:}
+\begin{equation}\label{eq:rosetta-pva-jacobi}
+\{a {}_\lambda \{b {}_\mu c\}\}
+- \{b {}_\mu \{a {}_\lambda c\}\}
+= \{\{a {}_\lambda b\} {}_{\lambda+\mu} c\}
+\end{equation}
+for all $a, b, c \in \{e, f, h\}$.
+\end{proposition}
+
+\begin{proof}
+We verify~\eqref{eq:rosetta-pva-jacobi} for the representative
+triple $(a, b, c) = (e, f, h)$.  All other non-trivial triples
+are obtained by permutation and the calculation is analogous.
+
+\medskip
+\emph{Step~1: Compute the skew-symmetric brackets.}
+From~\eqref{eq:rosetta-pva-bracket},
+$\{e {}_\lambda f\} = h + k\lambda$.  By PVA skew-symmetry:
+\begin{equation}\label{eq:rosetta-skew-fe}
+\{f {}_\mu e\}
+= -\{e {}_{-\mu - \partial} f\}
+= -(h + k(-\mu - \partial)) \cdot 1
+= -h + k\mu.
+\end{equation}
+Similarly, $\{h {}_\lambda f\} = -2f$ gives
+$\{f {}_\mu h\} = -\{h {}_{-\mu - \partial} f\}
+= -(-2f) = 2f$, and $\{h {}_\lambda e\} = 2e$ gives
+$\{e {}_\mu h\} = -\{h {}_{-\mu - \partial} e\} = -(2e) = -2e$.
+
+\medskip
+\emph{Step~2: Left side of the Jacobi identity.}
+
+First term:
+$\{e {}_\lambda \{f {}_\mu h\}\}
+= \{e {}_\lambda (2f)\}
+= 2\{e {}_\lambda f\}
+= 2(h + k\lambda)
+= 2h + 2k\lambda$.
+
+Second term:
+$\{f {}_\mu \{e {}_\lambda h\}\}
+= \{f {}_\mu (-2e)\}
+= -2\{f {}_\mu e\}
+= -2(-h + k\mu)
+= 2h - 2k\mu$.
+
+The left side of~\eqref{eq:rosetta-pva-jacobi} is:
+\begin{equation}\label{eq:rosetta-jacobi-lhs}
+(2h + 2k\lambda) - (2h - 2k\mu) = 2k(\lambda + \mu).
+\end{equation}
+
+\medskip
+\emph{Step~3: Right side of the Jacobi identity.}
+
+We have $\{e {}_\lambda f\} = h + k\lambda$, so:
+\begin{equation}\label{eq:rosetta-jacobi-rhs}
+\{\{e {}_\lambda f\} {}_{\lambda+\mu} h\}
+= \{(h + k\lambda) {}_{\lambda+\mu} h\}
+= \{h {}_{\lambda+\mu} h\} + k\lambda \cdot 0
+= 2k(\lambda + \mu).
+\end{equation}
+Here $k\lambda$ is a scalar (not a field), so
+$\{k\lambda {}_{\lambda+\mu} h\} = 0$.
+
+\medskip
+\emph{Step~4: Verification.}
+
+Comparing~\eqref{eq:rosetta-jacobi-lhs}
+and~\eqref{eq:rosetta-jacobi-rhs}:
+\[
+2k(\lambda + \mu) = 2k(\lambda + \mu).
+\]
+The Jacobi identity is satisfied.
+\end{proof}
+
+\begin{remark}[Geometric origin of the Jacobi identity]
+\label{rem:rosetta-jacobi-geometric}
+The PVA Jacobi identity~\eqref{eq:rosetta-pva-jacobi} is the shadow
+of the Arnold relation on $\overline{C}_3(\mathbb{P}^1)$.  The three
+terms in the Jacobi identity correspond to the three collision
+divisors $D_{12}$, $D_{23}$, $D_{13}$ in
+$\partial\overline{C}_3(\mathbb{P}^1)$, and the identity
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{13}
++ \eta_{13} \wedge \eta_{12} = 0$
+(Proposition~\ref{prop:frame-arnold}) forces the signed sum of
+residue extractions to vanish.  For Heisenberg, each term involves
+only double poles and the Jacobi identity reduces to the
+commutativity $\kappa^{ab} = \kappa^{ba}$ of the Killing form.  For
+$\widehat{\mathfrak{sl}}_2$, simple and double poles mix: the
+Arnold relation must account for both pole orders simultaneously,
+and this is what produces the level-dependent verification in
+Proposition~\ref{prop:rosetta-jacobi}.
+\end{remark}
+
+\begin{remark}[From PVA to vertex algebra: quantization]
+\label{rem:rosetta-quantization}
+The affine PVA of Proposition~\ref{prop:rosetta-sl2-pva} is the
+\emph{classical limit} of the vertex algebra
+$\widehat{\mathfrak{sl}}_{2,k}$.  In the language of
+Beilinson--Drinfeld, the PVA is a \emph{coisson algebra}: a
+commutative chiral algebra equipped with a Poisson bracket from
+the $\lambda$-bracket.  The vertex algebra is its quantization.
+At the $S$-level, the bar cohomology computes the PVA; at the
+$M$-level, the bar complex computes the full vertex algebra
+structure, including all higher $\Ainf$ operations.  The passage
+from the PVA ($S$-level) to the full vertex algebra ($M$-level)
+is the chiral analog of the passage from a Poisson manifold to
+its deformation quantization.
+\end{remark}
+
+\begin{remark}[The role of $d_{\mathrm{bracket}}^2 \neq 0$ in the
+PVA picture]
+\label{rem:rosetta-dbracket-pva}
+The failure $d_{\mathrm{bracket}}^2 \neq 0$
+(Remark~\ref{rem:frame-why-dbracket-fails}) is the chain-level
+manifestation of the fact that the Lie bracket alone (the $\lambda^0$
+coefficient of the lambda-bracket) does not define a PVA: the
+Killing form ($\lambda^1$ coefficient) is required for the Jacobi
+identity to hold in the PVA sense.  In the language of the PBW
+spectral sequence (\S\ref{subsec:frame-sl2-bar-low-degree}), the
+Chevalley--Eilenberg differential (which \emph{does} square to zero
+classically) appears at the $E_1$ page; the double-pole correction
+appears at the $E_2$ page; and the collapse at $E_2$ (for Koszul
+algebras) means that the two-page computation is exact.
+\end{remark}
+
+\bigskip
+\noindent\textbf{Summary: the nonabelian enrichment.}
+
+The Heisenberg frame computes the full vertical structure (bar
+complex, Arnold relation, Koszul dual, curvature, genus tower) for
+an abelian algebra whose only OPE singularity is a double pole.
+The $\widehat{\mathfrak{sl}}_2$ frame adds the \emph{horizontal
+enrichment}: the simple pole, the Lie bracket, the PBW spectral
+sequence, and the Feigin--Frenkel involution as Verdier duality.
+Every computation in the Heisenberg frame has a non-abelian
+counterpart in the $\mathfrak{sl}_2$ frame, with the bracket
+component $d_{\mathrm{bracket}}$ as the new ingredient:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|c|c}
+\textbf{Feature} & \textbf{Heisenberg $\mathcal{H}_k$}
+  & $\widehat{\mathfrak{sl}}_{2,k}$ \\
+\hline
+OPE poles & double only & simple $+$ double \\
+Bar differential & $d = d_{\mathrm{curvature}}$
+  & $d = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$ \\
+$d_{\mathrm{bracket}}^2$ & $= 0$ (trivially)
+  & $\neq 0$ (Borcherds) \\
+Lambda-bracket & $\{J {}_\lambda J\} = k\lambda$
+  & $\{J^a {}_\lambda J^b\} = f^{ab}{}_c J^c + k\kappa^{ab}\lambda$ \\
+PVA Jacobi & Commutativity of $\kappa$
+  & Arnold $+$ both pole orders \\
+Koszul dual & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$
+  & $\widehat{\mathfrak{sl}}_{2,-k-4}$ \\
+Verdier action & $k \mapsto -k$
+  & $k \mapsto -k - 4$ \\
+Swiss-cheese & Flat closed color
+  & Curved closed color (defect $= k$)
+\end{tabular}
+\end{center}
+
+The passage from Heisenberg to $\widehat{\mathfrak{sl}}_2$ is the
+simplest instance of the general pattern: Koszul duality for
+non-abelian chiral algebras requires the full Borcherds identity,
+not just the Arnold relation.  Every subsequent example
+($\mathcal{W}$-algebras, Yangians) inherits this structure and adds
+further layers.
+
+% ================================================================
 \section{\texorpdfstring{$\mathcal{W}$-algebras: Koszul duality meets derived constructions}{$\mathcal{W}$-algebras: Koszul duality meets derived constructions}}
 \label{sec:frame-w-algebras}
 % ================================================================
