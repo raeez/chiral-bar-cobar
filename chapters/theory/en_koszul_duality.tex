@@ -842,6 +842,165 @@ developed.  (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 % SECTION 8: SUMMARY
 %================================================================
 
+%================================================================
+% SECTION: THE SWISS-CHEESE CASE (2,1)
+%================================================================
+
+\section{The Swiss-cheese case: holomorphic--topological
+factorization}
+\label{sec:swiss-cheese}
+\index{Swiss-cheese operad|textbf}
+\index{bar complex!Swiss-cheese structure|textbf}
+\index{holomorphic--topological!factorization|textbf}
+
+The dimensional ladder has so far been one-dimensional: $n = 1$
+(associative), $n = 2$ (chiral), $n = 3$ (Chern--Simons).  But the
+bar complex of this monograph already carries a \emph{mixed}
+structure that does not fit on this line.  The differential
+$d_{\barB}$ lives on $\FM_k(\bC)$ (the $n = 2$ slot); the
+coassociative coproduct~$\Delta$ lives on $\Conf_k(\bR)$ (the
+$n = 1$ slot).  Together, a bar element of degree~$k$ is
+parametrized by
+\begin{equation}\label{eq:bar-product-space}
+\FM_k(\bC) \times \Conf_k(\bR),
+\end{equation}
+the product of holomorphic and topological configuration spaces.
+This product structure is the operadic fingerprint of a
+\emph{two-colored} operad: the Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$.
+
+\begin{definition}[Holomorphic--topological Swiss-cheese operad]
+\label{def:SC}
+\index{Swiss-cheese operad!definition}
+Define the two-colored topological operad $\mathsf{SC}^{\mathrm{ch,top}}$
+with colors $\{\mathsf{ch}, \mathsf{top}\}$ (closed/holomorphic
+and open/topological) by:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Closed output, closed inputs only:}
+  $\mathsf{SC}^{\mathrm{ch,top}}
+  ((\mathsf{ch},\ldots,\mathsf{ch});\, \mathsf{ch})
+  := \FM_k(\bC)$.
+\item \emph{Open output, mixed inputs:}
+  $\mathsf{SC}^{\mathrm{ch,top}}
+  ((\underbrace{\mathsf{ch},\ldots}_{k},
+    \underbrace{\mathsf{top},\ldots}_{m});\, \mathsf{top})
+  := \FM_k(\bC) \times E_1(m)$.
+\item \emph{No open-to-closed:}
+  $\mathsf{SC}^{\mathrm{ch,top}}
+  (\ldots,\mathsf{top},\ldots;\, \mathsf{ch})
+  = \varnothing$.
+\end{enumerate}
+Composition is componentwise: FM insertion in~$\bC$, interval
+insertion in~$E_1$.  The no-open-to-closed rule ensures that
+the closed color is an operadic retract: it receives no information
+from the open color.
+\end{definition}
+
+\begin{theorem}[Bar complex as Swiss-cheese coalgebra;
+\ClaimStatusProvedHere]
+\label{thm:bar-swiss-cheese}
+\index{bar complex!Swiss-cheese coalgebra}
+Let $\cA$ be an augmented chiral algebra on a curve~$X$.  The bar
+complex $\barB^{\mathrm{ch}}(\cA)$, equipped with its bar
+differential~$d_{\barB}$ and deconcatenation coproduct~$\Delta$,
+is a dg coalgebra over
+$\mathsf{SC}^{\mathrm{ch,top}}$:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Bar structure} & \textbf{SC color} &
+  \textbf{Configuration space} \\
+\hline
+Differential $d_{\barB}$
+  & closed (holomorphic)
+  & $\FM_k(\bC)$: collision residues \\[2pt]
+Coproduct $\Delta$
+  & open (topological)
+  & $\Conf_k(\bR)$: interval splitting \\[2pt]
+Coderivation: $d_{\barB} \circ \Delta
+  = \Delta \circ d_{\barB}$
+  & compatibility
+  & product structure~\eqref{eq:bar-product-space}
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+The coproduct is the deconcatenation
+$\Delta[a_1|\cdots|a_n] =
+\sum_{i=0}^{n} [a_1|\cdots|a_i] \otimes [a_{i+1}|\cdots|a_n]$,
+which is coassociative by construction (tensor coalgebra).  The
+ordering of tensor factors corresponds to the ordering of points
+$t_1 < \cdots < t_n$ on~$\bR$; the splitting at~$i$ corresponds to
+cutting the interval at $t_i$.  This is the $E_1$ coalgebra
+structure.
+
+The differential $d_{\barB}$ extracts residues along collision
+divisors $D_S \subset \partial\FM_k(\bC)$
+(Theorem~\ref{thm:bar-nilpotency-complete}).  It is a coderivation
+of~$\Delta$: the Leibniz rule
+$d_{\barB} \circ \Delta = (\id \otimes d_{\barB}
+  + d_{\barB} \otimes \id) \circ \Delta$
+holds because collision residues in~$\bC$ commute with interval
+splitting in~$\bR$.  This is the content of the product structure:
+$\FM_k(\bC)$ and $\Conf_k(\bR)$ contribute independently.
+
+The no-open-to-closed constraint is automatic: the coproduct
+(open-color structure) does not appear in the differential
+(closed-color structure).  The bar differential $d_{\barB}$ is
+built purely from the chiral product~$\mu$ and the FM boundary
+strata, with no reference to the tensor ordering.
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+\label{rem:sc-physical}
+A three-dimensional holomorphic--topological (HT) quantum field
+theory on $\bC_z \times \bR_t$ produces local observables that
+factorize holomorphically in~$z$ and associatively in~$t$.  The BV
+quantization of such a theory produces an algebra over
+$W(\mathsf{SC}^{\mathrm{ch,top}})$ (the Boardman--Vogt resolution),
+and the resulting higher operations $m_k$ are realized by
+configuration-space integrals on
+$\FM_k(\bC) \times \Conf_k(\bR)$ --- the same spaces that
+parametrize bar elements of degree~$k$.  Volume~II develops this
+identification in full.
+\end{remark}
+
+\begin{remark}[Curved Swiss-cheese at higher genus]
+\label{rem:sc-higher-genus}
+\index{Swiss-cheese operad!curved|textbf}
+At genus~$g \geq 1$, the bar complex $\barB^{(g)}(\cA)$ is a
+\emph{curved} Swiss-cheese coalgebra: the coproduct~$\Delta$
+remains coassociative (it is the tensor coalgebra structure,
+independent of genus), but the differential is curved:
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$.  The curvature is
+\emph{scalar} (Theorem~\ref{thm:modular-characteristic}), hence
+central in the coalgebra, hence a scalar coderivation: the product
+structure~\eqref{eq:bar-product-space} persists.  The corrected
+differential $\Dg{g}$ (Theorem~\ref{thm:quantum-diff-squares-zero})
+restores flatness over $\overline{\mathcal{M}}_g$ by incorporating
+period integrals that couple the $\bR$-ordering to the Hodge
+bundle~$\mathbb{E}$.  The genus tower of curved Swiss-cheese
+algebras is controlled by the modular characteristic $\kappa(\cA)$
+and the $\hat{A}$-genus generating function
+(Theorem~\ref{thm:modular-characteristic}).
+\end{remark}
+
+\begin{remark}[Position in the dimensional ladder]
+\label{rem:sc-dimensional-ladder}
+The Swiss-cheese operad $\mathsf{SC}^{\mathrm{ch,top}}$ is the
+$(n_{\mathrm{hol}}, n_{\mathrm{top}}) = (2, 1)$ entry in a
+two-parameter family of mixed operads.  The one-parameter diagonal
+$n_{\mathrm{hol}} = n$, $n_{\mathrm{top}} = 0$ recovers the $\En$
+ladder of this chapter.  The off-diagonal entries mix holomorphic
+and topological factorization in different dimensions.  The
+classical Swiss-cheese of Voronov~\cite{Voronov99} is the
+$(n, n-1)$ case; ours is the holomorphic refinement at $(2, 1)$.
+\end{remark}
+
+%================================================================
+
 \section{Summary and the dimensional ladder}
 \label{sec:en-summary}
 
@@ -864,6 +1023,12 @@ developed.  (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
   (Theorem~\ref{thm:en-koszul-duality},
   Theorem~\ref{thm:knudsen-higher-enveloping},
   Proposition~\ref{prop:en-formality}).
+\item The bar complex is a Swiss-cheese coalgebra over
+  $\mathsf{SC}^{\mathrm{ch,top}}$: the differential is the
+  closed $(n=2)$ color, the coproduct is the open $(n=1)$ color
+  (Theorem~\ref{thm:bar-swiss-cheese}).  At higher genus the
+  structure is curved, with curvature controlled by $\kappa(\cA)$
+  (Remark~\ref{rem:sc-higher-genus}).
 \end{enumerate}
 
 \noindent
