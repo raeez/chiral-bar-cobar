@@ -1,0 +1,148 @@
+
+\section{Spectral sequences for higher genus}
+
+\subsection{The Leray spectral sequence for the universal curve}
+\index{Leray spectral sequence!for universal curve|textbf}
+\index{Gauss--Manin connection!in Leray spectral sequence}
+
+For the universal curve $\pi: \mathcal{C}_g \to \mathcal{M}_g$, the Leray spectral sequence reads:
+\[E_2^{p,q} = H^p\bigl(\mathcal{M}_g,\, R^q\pi_*\mathbb{C}\bigr) \;\Longrightarrow\; H^{p+q}(\mathcal{C}_g,\, \mathbb{C})\]
+The local systems $R^q\pi_*\mathbb{C}$ carry the Gauss--Manin connection, and the differentials encode:
+\begin{itemize}
+\item $d_2$: Gauss--Manin connection (first obstruction to local-to-global extension)
+\item $d_3$: Massey products / Kodaira--Spencer class
+\item $d_r$ ($r \geq 4$): Higher deformation data
+\end{itemize}
+
+\subsection{The bar complex spectral sequence}
+
+$E_2^{p,q} = H^p(\overline{\mathcal{M}}_{g,n}, \underline{H}^q(\bar{B}^{(g)}(\mathcal{A}))) \Rightarrow H^{p+q}(\bar{B}^{\text{total}}(\mathcal{A}))$
+
+where $\underline{H}^q$ denotes the local system of bar cohomology groups.
+
+\subsection{Convergence and degeneration}
+
+\begin{theorem}[Convergence criterion; \ClaimStatusProvedHere]\label{thm:convergence-criterion-spectral}
+\index{spectral sequence!bar complex convergence|textbf}
+The spectral sequence
+\[
+E_2^{p,q} = H^p(\overline{\mathcal{M}}_{g,n}, \underline{H}^q(\bar{B}^{(g)}(\mathcal{A}))) \Rightarrow H^{p+q}(\bar{B}^{\mathrm{total}}(\mathcal{A}))
+\]
+converges if:
+\begin{enumerate}
+\item The chiral algebra $\mathcal{A}$ is rational (finitely many irreducible modules)
+\item The moduli space $\overline{\mathcal{M}}_{g,n}$ is replaced by its Deligne--Mumford compactification
+\end{enumerate}
+These conditions ensure convergence of the spectral sequence at each \emph{fixed} genus $g$ (by bounded filtration, see Step~2 below).
+\end{theorem}
+
+\begin{proof}
+We verify convergence using the bounded filtration criterion for spectral sequences of sheaf cohomology on proper varieties.
+
+\emph{Step~1: Finite-dimensionality of $E_2$.}
+Condition (1) (rationality) implies that $\mathcal{A}$ has finitely many irreducible modules $\{V_1, \ldots, V_N\}$.  The bar complex $\bar{B}^{(g)}(\mathcal{A})$ decomposes as a direct sum over fusion channels: $\bar{B}^{(g)}_n(\mathcal{A}) = \bigoplus_{\vec{i}} \bar{B}^{(g)}_n(\mathcal{A})_{\vec{i}}$ where $\vec{i} = (i_1, \ldots, i_{n+1}) \in \{1, \ldots, N\}^{n+1}$.  The local system $\underline{H}^q(\bar{B}^{(g)}(\mathcal{A}))$ on $\overline{\mathcal{M}}_{g,n}$ therefore has finite-dimensional stalks (bounded by $N^{n+1} \cdot \dim \bar{B}^{(g)}_n$ in each fusion channel).
+
+Condition (2) (DM compactification) ensures that $\overline{\mathcal{M}}_{g,n}$ is a proper Deligne--Mumford stack of finite type.  By properness, $H^p(\overline{\mathcal{M}}_{g,n}, \mathcal{L})$ is finite-dimensional for any constructible local system $\mathcal{L}$.  Therefore each $E_2^{p,q}$ is finite-dimensional.
+
+\emph{Step~2: Bounded filtration.}
+The $E_2$ page is bounded: $E_2^{p,q} = 0$ for $p > \dim_{\mathbb{R}}(\overline{\mathcal{M}}_{g,n}) = 6g - 6 + 2n$ (by dimension of the moduli space) and for $p < 0$.  In the $q$-direction, rationality gives $\underline{H}^q = 0$ for $q$ outside a finite range (the bar complex at each genus has bounded cohomological amplitude, determined by the conformal weights of the finitely many irreducibles).  A spectral sequence with $E_2$ page bounded in a finite rectangle necessarily converges: all differentials $d_r$ for $r$ exceeding the width of the rectangle are zero.
+
+\end{proof}
+
+\begin{remark}[Genus summation]\label{rem:genus-summation}
+The convergence established above is at each \emph{fixed} genus~$g$.  The convergence of the full genus sum $\bar{B}^{\mathrm{total}}(\mathcal{A}) = \bigoplus_{g \geq 0} g_s^{2g-2} \bar{B}^{(g)}(\mathcal{A})$ is a separate question.  For a rational algebra with $N$ irreducible modules, the factorization structure gives the heuristic bound $\dim E_2^{p,q}|_{\text{genus } g} \leq C \cdot N^{2g}$ (from $N$ fusion channels on a genus-$g$ surface with $2g$ independent cycles), suggesting that $|g_s| < N^{-1}$ suffices for absolute convergence.  However, a rigorous bound on the growth of $\dim H^*(\bar{B}^{(g)})$ requires control of the geometry of $\overline{\mathcal{M}}_{g,n}$ (where $\mathrm{Vol}(\overline{\mathcal{M}}_g) \sim (2g)!$ by Mirzakhani), which may compete with the exponential bound from fusion channels.
+\end{remark}
+
+\begin{theorem}[Degeneration at \texorpdfstring{$E_2$}{E2} \cite{FLM88, FBZ04}; \ClaimStatusProvedElsewhere]\label{thm:degeneration-special-c}
+For special values of central charge:
+\begin{itemize}
+\item $c = 0$: Topological theory, degenerates at $E_1$ (the bar complex carries no quantum corrections).
+\item $c = 26$: Critical bosonic string, degenerates at $E_2$ (by the no-ghost theorem of Frenkel--Garland--Zuckerman).
+\end{itemize}
+\end{theorem}
+
+\begin{conjecture}[Superstring degeneration; \ClaimStatusConjectured]\label{conj:superstring-degeneration}
+For $c = 15$ (critical superstring, matter sector), the bar spectral sequence degenerates at $E_2$.  This would follow from a ``no-ghost theorem'' in the superstring setting, which remains open.
+\textup{Master conjecture parent:}
+Conjecture~\textup{\ref{conj:master-bv-brst}} \textup{(MC5: BV/BRST = bar).}
+\end{conjecture}
+
+\subsection{Connection to genus expansion and Feynman diagrams}
+
+\begin{remark}[Spectral sequence and genus expansion]\label{rem:ss-genus}
+Heuristically, the spectral sequence page $E_r$ captures contributions from graphs with at most $r-1$ loops: $E_1$ encodes tree-level data (genus~$0$), $E_2$ includes one-loop corrections (genus~$1$), and $E_\infty$ subsumes all genera.  This analogy is suggestive but is not a theorem; the precise relationship between spectral sequence differentials and loop order requires the graph complex technology of Chapter~\ref{ch:feynman}.
+
+The differentials $d_r \colon E_r^{p,q} \to E_r^{p+r,q-r+1}$ are in principle computed by integrating correlators over moduli spaces of curves, but the identification of $d_r$ with the genus-$(r-1)$ contribution has not been established in general.  Making this page-genus dictionary precise would require an explicit comparison between the pole-order filtration on the bar complex and the genus grading in the Feynman transform of the modular operad $\{\overline{\mathcal{M}}_{g,n}\}$.  See Remark~\ref{rem:ss-genus-scope} for the scope of what has been proved.
+\end{remark}
+
+\begin{remark}[Scope and relation to established results]\label{rem:ss-genus-scope}
+The page-by-page genus correspondence stated above is a heuristic physical interpretation, not a theorem.  What has been proved rigorously in this monograph is the following:
+\begin{enumerate}
+\item The Prism Principle (Corollary~\ref{cor:prism-principle}) establishes that the bar complex decomposes a chiral algebra into its operadic spectrum, with genus-0 structure governed by $\mathrm{HyCom} \leftrightarrow \mathrm{Grav}$ Koszul duality and higher-genus structure by the Feynman transform of the modular operad $\{\overline{\mathcal{M}}_{g,n}\}$ (Theorem~\ref{thm:prism-higher-genus}).
+\item The genus filtration (Theorem~\ref{thm:genus-induction-strict}) ensures $\Dg{g}^{\,2} = 0$ (the total corrected differential, Convention~\ref{conv:higher-genus-differentials}) at all genera via the modular operad axioms.
+\item The Koszul complementarity theorem (Theorem~\ref{thm:quantum-complementarity-main}) gives the precise decomposition $Q_g(\mathcal{A}) \oplus Q_g(\mathcal{A}^!) \cong H^*(\overline{\mathcal{M}}_g, Z(\mathcal{A}))$ of quantum corrections at each genus.
+\end{enumerate}
+What remains conjectural is the \emph{identification of the spectral sequence page $E_r$ with genus-$(r-1)$ contributions specifically}.  The rigorous Feynman transform framework organizes all genera simultaneously rather than page-by-page; making the page-genus dictionary precise would require an explicit comparison between the pole-order filtration and the genus grading in the Feynman transform, which has not been carried out in general.
+\end{remark}
+
+\subsection{Computational tools}
+
+The differentials can be computed via:
+\begin{enumerate}
+\item \emph{\v{C}ech cohomology.} Cover $\overline{\mathcal{M}}_{g,n}$ by affine opens
+\item \emph{Dolbeault cohomology.} Use $\bar{\partial}$-operator techniques
+\item \emph{Combinatorial models.} Jenkins--Strebel differentials
+\item \emph{Topological recursion.} Eynard--Orantin formalism
+\end{enumerate}
+
+\subsection{Spectral sequence for bar complex}
+
+\begin{theorem}[Bar spectral sequence \cite{BD04}; \ClaimStatusProvedElsewhere]
+\label{thm:bar-spectral-sequence-config}
+The filtration by configuration degree yields a spectral sequence:
+\[E_1^{p,q} = H^q(\overline{C}_{p+1}(X), j_*j^*\mathcal{A}^{\boxtimes(p+1)}) \Rightarrow H^{p+q}(\bar{B}^{\text{ch}}(\mathcal{A}))\]
+
+The spectral sequence has the following properties:
+\begin{enumerate}
+\item $E_2$ page: Computed by residues at boundary divisors
+\item Convergence: Always for finite-type chiral algebras
+\item Degeneration: At $E_2$ for Koszul algebras (quadratic with no higher relations)
+\item Differential $d_r$: Encodes $(r+1)$-fold collisions
+\end{enumerate}
+
+\emph{Application to Free Fermions.}
+\begin{itemize}
+\item $E_1^{p,0} = \wedge^p(\mathcal{F} \otimes H^0(X, \omega_X))$ 
+\item $d_1 = 0$ (no relations beyond anticommutativity)
+\item Collapses at $E_1 = E_{\infty}$
+\item Recovers $\bar{B}^{\text{ch}}(\mathcal{F}) = \wedge^{\bullet}(\mathcal{F}[1])$
+\end{itemize}
+
+\emph{Application to W-algebras.}
+For $\mathcal{W}_k(\mathfrak{g}, f)$ at admissible level:
+\begin{itemize}
+\item $E_1$: Free generators from W-currents
+\item $E_2$: Normal ordered products and null fields
+\item $E_3$: Quantum corrections from BRST cohomology
+\item Convergence requires careful analysis of Virasoro representations
+\end{itemize}
+\end{theorem}
+
+\begin{example}[Computing the \texorpdfstring{$E_2$}{E2} page]
+For a chiral algebra with generators $\phi_i$ of conformal weight $h_i$:
+
+\[E_2^{p,q} = \frac{\text{Ker}(d_1: E_1^{p,q} \to E_1^{p+1,q})}{\text{Im}(d_1: E_1^{p-1,q} \to E_1^{p,q})}\]
+
+where $d_1$ is computed from OPE residues:
+\[d_1(\phi_{i_1} \otimes \cdots \otimes \phi_{i_p}) = \sum_{j<k} \sum_\ell C_{i_j i_k}^\ell \phi_{i_1} \otimes \cdots \widehat{i_j} \cdots \widehat{i_k} \cdots \otimes \phi_\ell\]
+\end{example}
+
+\begin{remark}[Physical interpretation]
+In string theory:
+\begin{itemize}
+\item $E_1$: Off-shell string states
+\item $d_1$: BRST operator
+\item $E_2$: Physical (on-shell) states
+\item Higher pages: Quantum corrections and anomalies
+\end{itemize}
+\end{remark}

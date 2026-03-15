@@ -1,0 +1,1490 @@
+\chapter{BV-BRST formalism and Gaiotto's perspective}
+\label{ch:bv-brst}
+
+\label{rem:programme-bv}
+\index{Batalin--Vilkovisky|see{BV algebra}}
+
+\section{BV formalism for chiral algebras}
+
+Let $\cA$ be a chiral algebra on a smooth curve~$X$.
+
+\begin{definition}[BV data for chiral algebra]
+\index{antibracket}
+The BV formalism associates to~$\cA$ the following data:
+\begin{enumerate}
+\item \emph{Fields.} $\phi \in \mathcal{A}$ (fields of the theory)
+\item \emph{Antifields.} $\phi^+ \in \mathcal{A}^*[1]$ (dual shifted by 1)
+\item \emph{BV bracket.} $\{\cdot, \cdot\}$ of degree $+1$ (odd Poisson structure)
+\item \emph{Action.} $S[\phi, \phi^+]$ satisfying classical master equation
+$\{S, S\} = 0$
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[BV complex = geometric bar complex; \ClaimStatusProvedElsewhere]
+\label{thm:bv-bar-geometric}
+The BV complex $(C_{\text{BV}}(\mathcal{A}), Q_{\text{BV}})$ is isomorphic to
+the geometric bar complex:
+\[C_{\text{BV}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}(\mathcal{A})\]
+
+The BV differential $Q_{\text{BV}} = \{S, -\}$ corresponds to the bar differential.
+The precise statement and proof appear in the Costello--Gwilliam framework \cite{CG17}; we give the geometric construction below.
+\end{theorem}
+
+\begin{proof}[Geometric construction]
+\emph{Step~1: Bar generators.}
+
+The degree-$n$ bar complex is:
+\[\bar{B}^n(\mathcal{A}) = \Omega^*(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes (n+1)})\]
+
+The generators are operator insertions $\phi_i \in \mathcal{A}$ at marked points, paired with logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ dual to the collision divisors.
+
+\emph{Step~2: BV Bracket.}
+
+The BV bracket is a residue operation on the log-de~Rham complex
+of~$\overline{C}_{n+1}(X)$.  In local coordinates near the divisor
+$D_{ij} = \{z_i = z_j\}$, with $\epsilon = z_i - z_j$:
+\[\{\phi(z_i), \eta_{jk}\}
+= \delta_{ij}\,\Res_{\epsilon = 0}
+\Bigl[\frac{\partial\phi}{\partial z_i}\,
+\frac{d\epsilon}{\epsilon(z_i - z_k)}\Bigr]
++ \delta_{ik}\,\Res_{\epsilon = 0}
+\Bigl[\frac{\partial\phi}{\partial z_i}\,
+\frac{d\epsilon}{\epsilon(z_i - z_j)}\Bigr].\]
+Both terms are Poincar\'e residues of logarithmic forms along
+normal-crossing divisors of the smooth
+variety~$\overline{C}_{n+1}(X)$: the residue map
+$\Res_{D_{ij}}\colon \Omega^k_{\log}(\overline{C}_{n+1})
+\to \Omega^{k-1}_{D_{ij}}$ is an algebraic morphism of sheaves
+on a smooth variety.  The factor $1/(z_i - z_k)$ is a pole along
+the transverse divisor $D_{ik}$ (Theorem~\ref{thm:FM}(3):
+$D_{ij} \cap D_{ik}$ has normal crossings), so on~$D_{ij}$
+it restricts to a regular meromorphic function with poles only
+along~$D_{ij} \cap D_{ik}$ --- a codimension-$2$ stratum.
+The FM compactification resolves all coincidence singularities
+into normal-crossing divisors, and the log-de~Rham complex on
+this resolution is the correct algebraic framework: it replaces
+distributional regularization with algebraic residues.
+
+The logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ generate
+$H^1(C_n(X); \mathbb{C})$ by the Arnold--Brieskorn theorem;
+for $X = \mathbb{C}$, all $\binom{n}{2}$ classes are linearly independent in degree~$1$
+(the Arnold relations constrain products in degree~$\geq 2$), giving
+$\dim H^1(C_n(\mathbb{C})) = \binom{n}{2}$.  (For a curve of genus~$g > 0$, additional generators from $H^1(X)$ contribute $2gn$ classes.)
+
+\emph{Step~3: Master Equation.}
+
+The classical master equation $\{S, S\} = 0$ is equivalent to $\dzero^2 = 0$ for the
+genus-$0$ bar differential:
+\[d = d_{\text{strat}} + d_{\text{int}} + d_{\text{res}}\]
+\end{proof}
+
+\subsection{Quantum master equation}
+
+\begin{definition}[BV Laplacian]
+The BV Laplacian $\Delta_{\text{BV}}$ is the second-order operator:
+\[\Delta_{\text{BV}} = \sum_i \frac{\partial^2}{\partial \phi_i \partial \phi_i^+}\]
+
+In the geometric realization:
+\[\Delta_{\text{BV}} = \sum_{i<j} \int \delta(z_i - z_j) 
+\frac{\partial}{\partial \eta_{ij}}\]
+
+This inserts delta functions along diagonals—exactly the cobar differential.
+\end{definition}
+
+\begin{theorem}[Quantum master equation as Maurer--Cartan equation; \ClaimStatusProvedHere]
+\label{thm:qme-bar-cobar}
+\index{quantum master equation|textbf}
+The quantum master equation
+\[\Delta_{\text{BV}} e^{S/\hbar} = 0\]
+is equivalent to the Maurer--Cartan equation in the dg Lie algebra
+$(\bar{B}^{\ge 1}(\cA),\, \delta,\, [-,-])$: it encodes the
+compatibility of bar and cobar differentials under Verdier duality.
+This equivalence is natural: it holds functorially for morphisms of
+chiral algebras via the BV functor of Theorem~\ref{thm:bv-functor}.
+\end{theorem}
+
+\begin{proof}
+\emph{Stage~1 (Algebraic equivalence).}
+Write $S = S_0 + S_{\text{int}}$ with $S_0$ the free (quadratic) action and $S_{\text{int}}$ the interactions.  Then:
+\[\Delta_{\text{BV}} e^{S/\hbar} = \frac{1}{\hbar}\left(\Delta_{\text{BV}} S +
+\frac{1}{2\hbar}\{S, S\}\right) e^{S/\hbar}\]
+
+Setting this to zero and using $\{S_0, S_0\} = 0$ (classical master equation for the free theory), $\Delta S_0 = 0$ (no quantum anomaly for quadratic actions), and absorbing $\{S_0, S_{\text{int}}\}$ into a total BV differential $\delta = \Delta_{\text{BV}} + \frac{1}{\hbar}\{S_0, -\}$ gives:
+\[\hbar\,\delta\, S_{\text{int}} + \frac{1}{2}\{S_{\text{int}}, S_{\text{int}}\} = 0\]
+
+This is precisely the Maurer--Cartan equation in the dg Lie algebra
+$(\bar{B}^{\ge 1}(\cA), \delta, [-,-])$.  The identification of each
+term with a bar/cobar operation is provided by Stage~2.
+
+\emph{Stage~2 (Identification of terms via the BV functor).}
+The BV functor $\mathrm{BV}: \mathrm{ChirAlg}_X \to \mathrm{BV\text{-}Alg}$
+of Theorem~\ref{thm:bv-functor} assigns to each chiral algebra~$\cA$ the BV algebra
+$\mathrm{BV}(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), \cdot, \Delta, \{-,-\})$.
+Its Verdier duality compatibility (Theorem~\ref{thm:bv-functor}, last part)
+establishes that $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$ as BV algebras,
+naturally in~$\cA$.
+
+Under this identification, each BV operation matches a concrete
+bar-cobar operation:
+\begin{itemize}
+\item The bar differential $d_{\bar{B}} = \{S, -\}$ on $\bar{B}(\cA)$ becomes
+the cobar differential $d_\Omega$ on $\Omega(\cA^!)$.
+\item The BV Laplacian $\Delta$ on $\bar{B}(\cA)$ becomes the cobar product on $\Omega(\cA^!)$.
+\item The QME $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$ is the condition ensuring
+that both differentials square to zero \emph{simultaneously}, i.e.,
+that the BV algebra $(d_{\bar{B}}, \Delta)$ is consistent.
+\end{itemize}
+
+Now let $f\colon \cA \to \cB$ be a morphism of chiral algebras.
+Functoriality gives a BV morphism
+$\mathrm{BV}(f)\colon \mathrm{BV}(\cA) \to \mathrm{BV}(\cB)$
+preserving the product, Laplacian, and bracket, while Verdier
+duality transports this morphism to the corresponding cobar map on
+duals.  Therefore the identification between the quantum master
+equation and the bar-cobar compatibility is functorial in~$\cA$; it is
+a natural equivalence, not merely a pointwise comparison.
+\end{proof}
+
+\begin{remark}[Scope]
+Stage~1 uses standard BV algebra manipulations (\ClaimStatusProvedElsewhere,
+see Costello--Gwilliam~\cite{CG17}).  Stage~2 assembles the BV
+functor (Theorem~\ref{thm:bv-functor}, \ClaimStatusProvedHere) with
+the Verdier duality isomorphism $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$
+(Theorem~\ref{thm:verdier-bar-cobar}, \ClaimStatusProvedHere).  The
+identification of the QME with the functorial expression of bar-cobar
+Verdier compatibility is Theorem~\ref{thm:qme-bar-cobar} above.
+\end{remark}
+
+\subsection{The BV--bar dictionary}
+\label{subsec:bv-bar-identification}
+\index{BV algebra!bar complex identification}
+
+The dictionary is:
+\begin{center}
+\begin{tabular}{lcl}
+\textbf{BV side} && \textbf{Bar complex side} \\[2pt]
+fields $\phi \in \cA$ && bar generators $s^{-1}\bar{\cA}$ \\
+antibracket $\{-,-\}$ && bracket from simple-pole OPE residue \\
+QME: $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$
+  && curved $A_\infty$ relation: $m_1^2 = [m_0, -]$ \\
+factor $\tfrac{1}{2}$ in QME && Sugawara normalization $m_0 = \kappa/2$
+\end{tabular}
+\end{center}
+The first three entries are reformulations of
+Theorem~\ref{thm:config-space-bv} and the proof of
+Theorem~\ref{thm:qme-bar-cobar}.  The fourth is the observation
+that the QME coefficient $\tfrac{1}{2}$ matches the Sugawara
+normalization: the curvature $m_0 = \kappa \cdot \mathbf{1}$ arises
+from the double-pole OPE residue, and the factor $\kappa = c/2$ for
+the Virasoro algebra (Computation~\ref{comp:virasoro-curvature})
+is precisely the $\tfrac{1}{2}$ in the QME applied to the central
+charge.
+
+\begin{theorem}[Genus-\texorpdfstring{$0$}{0} amplitudes from bar complex;
+\ClaimStatusProvedHere]\label{thm:genus0-amplitude-bar}
+\index{string amplitude!bar complex}
+Let $\cA$ be a chiral algebra on $\mathbb{P}^1$, and let
+$\omega_1, \ldots, \omega_n$ be cocycles in
+$\bar{B}^1(\cA)$.  Then the genus-$0$ string amplitude
+\[
+\mathcal{A}_0(\omega_1, \ldots, \omega_n)
+\;=\;
+\int_{\overline{\mathcal{M}}_{0,n}}
+  \omega_1 \wedge \cdots \wedge \omega_n
+\]
+equals the bar complex Euler characteristic
+$\chi(\bar{B}^n_0(\cA))$, where $\bar{B}^n_0$ denotes the
+genus-$0$ component of the degree-$n$ bar complex.
+\end{theorem}
+
+\begin{proof}
+Both sides compute the same configuration space integral.
+The bar complex is realized on
+$\overline{C}_n(\mathbb{P}^1) = \overline{\mathcal{M}}_{0,n+1}$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}),
+with the bar differential given by residues of the FM propagator
+$\omega_{ij} = d\log(z_i - z_j)$ along collision divisors.
+The string amplitude $\mathcal{A}_0$ inserts vertex operators
+at marked points and integrates the resulting form over the
+compactification; this is precisely the definition of the bar
+complex pairing.  The Euler characteristic
+$\chi(\bar{B}^n_0) = \sum_k (-1)^k \dim H^k(\bar{B}^n_0)$
+equals the integral by the Gauss--Bonnet--Chern theorem on
+$\overline{\mathcal{M}}_{0,n}$ applied to the logarithmic
+de~Rham complex: the logarithmic forms $\eta_{ij}$ provide
+a resolution of the constant sheaf on
+$\overline{\mathcal{M}}_{0,n}$, and integration of the
+top-degree component is the Euler characteristic.
+\end{proof}
+
+\begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
+At genus~$1$, Theorem~\ref{thm:genus-universality} gives $F_1 = \kappa/24$.  For $\cA = \mathrm{Vir}_c$, $F_1 = c/24 = \operatorname{tr}(\Theta_{\mathrm{Vir}_c}^{(1)}) = (c/2)\cdot(1/12)$, encoding the Mumford isomorphism.
+\end{remark}
+
+\begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
+\index{anomaly!curvature identification}
+By Theorem~\ref{thm:anomaly-koszul}, $d_{\mathrm{bar}}^2 = 0$ for $\cA_{\mathrm{tot}} = \cA_{\mathrm{matter}} \otimes \cA_{\mathrm{ghost}}$ if and only if $\kappa_{\mathrm{tot}} = 0$ (equivalently, $c = 26$ for the bosonic string).  When $\kappa_{\mathrm{tot}} \neq 0$, the universal MC class $\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$ (Theorem~\ref{thm:explicit-theta}) curves the bar complex at every genus.
+\end{remark}
+
+\section{Gauge fixing and BRST}
+
+\subsection{BRST from BV}
+
+\begin{definition}[BRST operator]
+\index{BRST cohomology|textbf}
+The BRST operator $Q_{\text{BRST}}$ arises from gauge fixing the BV action. 
+Choose a Lagrangian submanifold $\mathcal{L} \subset$ (fields + antifields):
+\[Q_{\text{BRST}} = Q_{\text{BV}}|_{\mathcal{L}}\]
+
+In the chiral algebra context:
+\[Q_{\text{BRST}} = Q_0 + Q_1 + Q_2 + \cdots\]
+where the decomposition is by \emph{antighost number} (not ghost number): $Q_k$ has antighost number~$k$ and operator dimension~$k-1$.  The total BRST charge has definite ghost number~$+1$.
+\end{definition}
+
+\begin{theorem}[BRST cohomology = physical states; \ClaimStatusProvedElsewhere{} \cite{CG17}]
+\label{thm:brst-physical-states}
+The cohomology of $Q_{\text{BRST}}$ computes physical on-shell states:
+\[H^*(Q_{\text{BRST}}) \cong \mathcal{A}_{\text{phys}}\]
+\end{theorem}
+
+\begin{example}[Free \texorpdfstring{$bc$}{bc} ghost system]
+The $bc$ system has fields $b(z)$ of weight $\lambda$ and $c(z)$ of weight $1-\lambda$, OPE $b(z)c(w) \sim (z-w)^{-1}$, central charge $c_{bc} = 1 - 3(2\lambda - 1)^2$, and BRST operator $Q = \oint c(z) \bigl(T_{\text{matter}}(z) + \tfrac{1}{2}T_{\text{ghost}}(z)\bigr) dz$.
+
+For the bosonic string, $\lambda = 2$ (so $b$ has weight~$2$ and $c$ has weight~$-1$), giving $c_{\text{ghost}} = 1 - 3(3)^2 = -26$ and ghost stress tensor $T_{\text{ghost}} = -2b\,\partial c - (\partial b)\,c$.
+
+The BRST nilpotence condition:
+\[Q^2 = 0 \iff c_{\text{matter}} + c_{\text{ghost}} = 0, \quad \text{i.e., } c_{\text{matter}} = 26\]
+
+In the bar-cobar framework, this corresponds to:
+\[Q_{\text{BRST}} = d_{\text{res}} : \bar{B}^{\text{ch}}(\mathcal{A}) 
+\to \bar{B}^{\text{ch}}(\mathcal{A})\]
+
+extracting residues at collision divisors.
+\end{example}
+
+\subsection{Coupling to topological gravity}
+
+\begin{theorem}[Ghost transformation law for log forms;
+\ClaimStatusProvedHere]
+\label{thm:log-form-ghost-law}
+\index{ghost!transformation law}
+\index{logarithmic form!ghost transformation}
+The logarithmic forms $\eta_{ij} = d\log(z_i - z_j)$
+on the configuration space $C_n(X)$ transform under
+coordinate changes $z \to w(z)$ exactly as BRST ghosts
+for diffeomorphisms:
+\[
+\eta_{ij} \;\mapsto\; \eta_{ij}
++ d\log\!\left(\frac{w(z_i) - w(z_j)}{z_i - z_j}\right).
+\]
+Near the diagonal $z_i \to z_j$, the correction term
+approaches $d\log w'(z_i)$, which is the standard ghost
+cocycle for $\mathrm{Diff}(X)$.  Moreover, the Arnold
+relations
+$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
++ \eta_{ki} \wedge \eta_{ij} = 0$
+in the Orlik--Solomon algebra provide the quadratic
+structure shared by the BRST ghost algebra
+($Q_{\mathrm{BRST}}(c) = c\,\partial c$).
+\end{theorem}
+
+\begin{proof}
+Direct computation: $\eta_{ij} = d\log(z_i - z_j)$
+maps to $d\log(w(z_i) - w(z_j))$ under $z \to w(z)$.
+Factoring:
+\[
+d\log(w(z_i) - w(z_j)) = d\log(z_i - z_j)
++ d\log\!\left(\frac{w(z_i) - w(z_j)}{z_i - z_j}\right)
+\]
+and near the diagonal, L'H\^opital gives
+$(w(z_i) - w(z_j))/(z_i - z_j) \to w'(z_i)$, so
+the correction approaches $d\log w'(z_i)$.  This is
+the BRST ghost 1-cocycle for the Lie algebra
+$\mathrm{Vect}(X)$: if $c(z)$ is the ghost field for
+$v(z)\partial_z \in \mathrm{Vect}(X)$, then the
+infinitesimal version
+$\delta_v \eta_{ij} = d(v'(z_i)/(z_i - z_j))$ matches
+the BRST variation $\delta c = c\,\partial c$ at leading
+order.  The Arnold relations are verified in
+Theorem~\ref{thm:arnold-relations}.
+\end{proof}
+
+\begin{conjecture}[Bar complex \texorpdfstring{$=$}{=} topological BRST;
+\ClaimStatusConjectured]
+\label{conj:bar-topological-brst}
+The ghost transformation law
+(Theorem~\ref{thm:log-form-ghost-law}) extends to a dg
+algebra isomorphism:
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{A}) \cong
+C^*_{\mathrm{top}\text{-}\mathrm{BRST}}(\mathcal{A}
+\otimes \mathrm{Diff}(X)).
+\]
+\end{conjecture}
+
+\begin{remark}[Scope and relation to proved results]
+\label{rem:topological-brst-scope}
+The holomorphic (semi-infinite) BRST identification is proved: bar $=$ holomorphic BRST for KM and W-algebras (Theorems~\ref{thm:bar-semi-infinite-km}, \ref{thm:bar-semi-infinite-w}), and bar $\simeq$ string BRST at $c = 26$ (Theorem~\ref{thm:brst-bar-genus0}).  The topological BRST conjecture is stronger: it claims the bar complex also incorporates diffeomorphism ghosts from $\mathrm{Diff}(X)$.  The key difficulty is that $\mathrm{Diff}(X)$ is infinite-dimensional, so neither PBW filtration nor the semi-infinite approach directly applies.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+\end{remark}
+
+\section{The genus-\texorpdfstring{$0$}{0} BRST-bar chain map}
+\label{sec:brst-bar-chain-map}
+\index{BRST!bar complex chain map|textbf}
+
+\subsection{Semi-infinite cohomology and the BRST complex}
+
+Let $\cA$ be a conformal vertex algebra of central charge~$c$ on
+$X = \mathbb{P}^1$, and let $\cA_{\mathrm{gh}} = bc$ denote the
+$bc$-ghost system of weights $(2, -1)$ with $c_{\mathrm{gh}} = -26$.
+The \emph{BRST complex} of~$\cA$ is the vertex algebra
+$\cA_{\mathrm{tot}} = \cA \otimes \cA_{\mathrm{gh}}$ equipped with
+the BRST differential:
+\begin{equation}\label{eq:brst-differential}
+Q_{\mathrm{BRST}}
+= \oint \! c(z)\Bigl(T_{\cA}(z) + \tfrac{1}{2}\,T_{\mathrm{gh}}(z)\Bigr)\,dz
+= \sum_{n \in \mathbb{Z}} \Bigl(
+  \sum_m L^{\cA}_m\, c_{n-m}
+  + \tfrac{1}{2}\sum_{p+q=n}(p-q)\, {:}b_p\, c_q\, c_{n-p-q}{:}
+\Bigr)
+\end{equation}
+where $L^{\cA}_n$ are the Virasoro modes of~$\cA$ and $b_n, c_n$ are
+the ghost modes with $\{b_m, c_n\} = \delta_{m+n,0}$.
+
+\begin{lemma}[BRST nilpotence; \ClaimStatusProvedElsewhere{} \cite{FGZ86}]
+\label{lem:brst-nilpotence}
+$Q_{\mathrm{BRST}}^2 = \frac{c - 26}{12}\,c_0$\textup{.}
+In particular, $Q_{\mathrm{BRST}}^2 = 0$ on the relative complex
+$\cA_{\mathrm{tot}}^{\mathrm{rel}} = \ker(b_0) \cap \ker(L_0^{\mathrm{tot}})$
+if and only if $c = 26$\textup{;}
+on the full complex, $Q_{\mathrm{BRST}}^2 = 0$ if and only if $c = 26$.
+\end{lemma}
+
+\begin{remark}[BRST nilpotence and the bar construction]
+\label{rem:brst-nilpotence-periodicity}
+\index{nilpotence-periodicity correspondence!BRST instance}
+The condition $Q_{\mathrm{BRST}}^2 = 0$ is the BRST instance of the nilpotence-periodicity correspondence (Remark~\ref{rem:nilpotence-periodicity}): $\kappa_{\mathrm{tot}} = 0$ ensures $d_{\mathrm{bar}}^2 = 0$, so the bar construction (categorical logarithm) is well-defined.  When $\kappa_{\mathrm{tot}} \neq 0$, the curvature $Q^2 = \frac{c-26}{12}\,c_0$ obstructs nilpotence.
+\end{remark}
+
+The \emph{semi-infinite cohomology} $H^{\infty/2+\bullet}(\cA)$
+is the cohomology of $(\cA_{\mathrm{tot}}, Q_{\mathrm{BRST}})$, graded
+by ghost number.  For the bosonic string ($\cA = \mathcal{H}^{26}$,
+$c = 26$), this computes the physical state space.
+
+\subsection{The chain map}
+
+\begin{theorem}[Genus-\texorpdfstring{$0$}{0} BRST-bar quasi-isomorphism;
+\ClaimStatusProvedHere]
+\label{thm:brst-bar-genus0}
+\index{BRST!bar complex quasi-isomorphism}
+For the Heisenberg algebra, the bar differential extracted OPE data at collision divisors (\S\ref{sec:frame-bar-deg1}); in the BV language, this is precisely the BRST differential acting on fields and antifields.  The following theorem makes this identification a quasi-isomorphism.
+
+Let $\cA$ be a conformal vertex algebra on $\mathbb{P}^1$ with
+$c(\cA) = 26$ \textup{(}so that
+$\cA_{\mathrm{tot}} = \cA \otimes bc$ satisfies
+$\kappa_{\mathrm{tot}} = 0$\textup{)}.  There exists a chain map
+\[
+\Phi \colon
+  \bigl(\cA_{\mathrm{tot}}^{\mathrm{rel}},\, Q_{\mathrm{BRST}}\bigr)
+  \longrightarrow
+  \bigl(\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}}),\, d_{\mathrm{bar}}\bigr)
+\]
+from the relative BRST complex to the genus-$0$ bar complex, which is a
+quasi-isomorphism of cochain complexes.
+\end{theorem}
+
+\begin{proof}
+The proof uses a PBW filtration on both complexes, reducing the
+comparison to the classical (finite-dimensional) setting where the
+result is known.
+
+\emph{Step~1: Conformal weight filtration.}
+Both complexes carry a $\mathbb{Z}_{\geq 0}$-filtration by
+\emph{total conformal weight}:
+\begin{align}
+F^{\leq N}\cA_{\mathrm{tot}}^{\mathrm{rel}}
+  &= \bigoplus_{\substack{\text{states of total}\\\text{weight } \leq N}}
+     \cA_{\mathrm{tot}}^{\mathrm{rel}}, \\
+F^{\leq N}\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})
+  &= \bigoplus_{\substack{n \geq 0}}
+     \Omega^{\leq N}\!\bigl(
+       \overline{C}_{n+1}(\mathbb{P}^1),\,
+       \cA_{\mathrm{tot}}^{\boxtimes(n+1)}
+     \bigr),
+\end{align}
+where the filtration on bar generators counts the sum of conformal
+weights of inserted operators plus the form degree on the
+configuration space.  Both differentials respect this filtration:
+$Q_{\mathrm{BRST}}$ preserves conformal weight (the BRST current
+has weight~$1$ and the contour integral lowers by~$1$), and the bar
+differential $d_{\mathrm{bar}}$ is computed by OPE residues at
+collision divisors, which preserve the total weight.
+
+\emph{Step~2: Associated graded.}
+On the associated graded $\mathrm{gr}\,F^{\bullet}$, both complexes
+degenerate to classical constructions.  For
+$\mathrm{gr}\,\cA_{\mathrm{tot}}^{\mathrm{rel}}$: only the
+weight-$0$ part of $Q_{\mathrm{BRST}}$ survives, which is the
+Chevalley--Eilenberg differential of the finite-dimensional Lie algebra
+$\mathfrak{g}_0 = \cA_{(1)}$ (the weight-$1$ subspace, viewed as a Lie
+algebra via the zero-mode bracket $[a, b] = a_{(0)} b$).
+For $\mathrm{gr}\,\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})$: only
+the leading OPE pole contributes to the bar differential, giving
+the classical bar complex $\barB(\mathfrak{g}_0)$ of the
+finite-dimensional Lie algebra~$\mathfrak{g}_0$.
+
+In both cases, the associated graded complex is the
+Chevalley--Eilenberg / bar complex of a finite-dimensional Lie algebra.
+By Arkhipov~\cite{Arkhipov97}, there is a natural quasi-isomorphism
+\begin{equation}\label{eq:arkhipov-classical}
+\Phi_0 \colon C^{\bullet}_{\mathrm{CE}}(\mathfrak{g}_0)
+  \xrightarrow{\;\sim\;}
+  \barB(\mathfrak{g}_0)
+\end{equation}
+given by the bar-CE comparison map: on generators,
+$\Phi_0(x_1 \wedge \cdots \wedge x_n)
+= [x_1 | \cdots | x_n]_{\mathrm{bar}}$
+(the corresponding bar element), extended by the shuffle product
+to all degrees.  This is a classical result in homological algebra
+(e.g., Loday--Vallette~\cite{LV12}, \S2.2): the bar complex and
+the Chevalley--Eilenberg complex of a Lie algebra are naturally
+quasi-isomorphic via the antisymmetrization map.
+
+\emph{Step~3: Spectral sequence comparison.}
+The conformal weight filtration induces convergent spectral sequences:
+\begin{align}
+{}^{\mathrm{BRST}}E_1^{p,q}
+  &= H^{p+q}\bigl(\mathrm{gr}^p\, \cA_{\mathrm{tot}}^{\mathrm{rel}}\bigr)
+  \;\Longrightarrow\;
+  H^{p+q}(Q_{\mathrm{BRST}}), \\
+{}^{\mathrm{bar}}E_1^{p,q}
+  &= H^{p+q}\bigl(\mathrm{gr}^p\, \barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})\bigr)
+  \;\Longrightarrow\;
+  H^{p+q}(d_{\mathrm{bar}}).
+\end{align}
+Both spectral sequences converge because the filtrations are bounded
+below (conformal weight $\geq 0$) and exhaustive (every element has
+finite weight), and the complexes are complete with respect to the
+filtration (the vertex algebra is $\mathbb{Z}_{\geq 0}$-graded by
+conformal weight with finite-dimensional graded pieces).
+
+The map $\Phi_0$ of Step~2 defines an isomorphism
+${}^{\mathrm{BRST}}E_1^{p,q} \xrightarrow{\sim}
+{}^{\mathrm{bar}}E_1^{p,q}$ at the $E_1$ page: at each conformal
+weight~$p$, the associated graded complexes are identified by~$\Phi_0$,
+which is a quasi-isomorphism.
+
+\emph{Step~4: Lifting to a chain map.}
+The isomorphism at the $E_1$ level lifts to a chain map on the full
+complexes by the standard spectral sequence comparison theorem
+(Eilenberg--Moore~\cite{EM66}; see also
+Weibel~\cite[Theorem~5.2.12]{Weibel94}): given two filtered complexes
+with a map of $E_1$ pages that is an isomorphism, there exists a chain
+map between the unfiltered complexes inducing this isomorphism, and any
+such chain map is a quasi-isomorphism.
+
+Concretely, $\Phi$ is constructed inductively on filtration degree.
+At level $N = 0$, $\Phi$ is the classical map~$\Phi_0$.  At level~$N$,
+given $\Phi|_{F^{\leq N-1}}$, one extends to $F^{\leq N}$ by solving
+a lifting problem:  the obstruction to extending lies in
+$H^{n+1}(\mathrm{gr}^N\,\barB^{\mathrm{ch}}_0)$, which is the
+$(n+1)$-st cohomology of the classical bar complex at weight~$N$.
+Since the classical bar complex of a Lie algebra is acyclic in
+sufficiently high degree (by the Koszul resolution), the obstructions
+vanish degree by degree, and the induction proceeds.
+
+The map $\Phi$ so constructed is a filtered chain map inducing an
+isomorphism on $E_1$ pages.  By the Eilenberg--Moore comparison
+theorem, $\Phi$ is a quasi-isomorphism.
+\end{proof}
+
+\begin{remark}[BV/BRST reading of the master square]
+\label{rem:bv-convergence}
+\index{BV complex!convergence with bar complex}
+Theorem~\ref{thm:brst-bar-genus0} realizes the parallel-track identifications of Remarks~\ref{rem:bv-parallel-track} and~\ref{rem:anomaly-parallel-track}: in~\eqref{eq:master-square}, $\barB_X(\cA)$ is the BV complex, $\barB_X(\cA^!)$ the ghost complex, $\mathbb{D}_{\mathrm{Ran}}$ the field--antifield exchange, and $\dfib^{\,2} = \kappa \cdot \omega_1$ the conformal anomaly.  The square commutes precisely when $\kappa = 0$.
+\end{remark}
+
+\begin{remark}[Explicit form of \texorpdfstring{$\Phi$}{math}]\label{rem:brst-bar-explicit}
+For the bosonic string $\cA = \mathcal{H}^{26}$, the chain map
+$\Phi$ can be described concretely in low degrees:
+\begin{itemize}
+\item \emph{Degree~$0$}: $\Phi(|0\rangle) = 1 \in \barB^0$.
+  A BRST-closed state of ghost number~$0$ maps to the unit in
+  the bar complex.
+\item \emph{Degree~$1$}: $\Phi(c_1 \alpha_{-1}^i |0\rangle)
+  = [\alpha^i] \in \barB^1$, where $\alpha^i$ are the Heisenberg
+  generators.  The physical vertex operators (momentum eigenstates)
+  map to bar generators.
+\item \emph{Degree~$2$}: $\Phi(c_0 c_1 |0\rangle) = \eta_{12}$,
+  where $\eta_{12} = d\log(z_1 - z_2)$ is the FM propagator.
+  The ghost bilinear maps to the logarithmic form on the
+  configuration space.  This is the ghost--propagator identification.
+\end{itemize}
+In general, ghost insertions $c_{n_1} \cdots c_{n_k}$ map to
+products of logarithmic forms $\eta_{i_1 j_1} \wedge \cdots \wedge
+\eta_{i_r j_r}$ on the configuration space, with the precise
+correspondence determined by the residue map of the FM propagator.
+\end{remark}
+
+\begin{remark}[Scope and relation to literature]
+\label{rem:brst-bar-scope}
+The theorem synthesizes: Arkhipov~\cite{Arkhipov97} (classical bar--CE comparison $\Phi_0$), the Eilenberg--Moore comparison theorem (Weibel~\cite[Theorem~5.2.12]{Weibel94}), the conformal weight filtration (Frenkel--Ben-Zvi~\cite{FBZ04}), and our geometric realization of $\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})$ on $\overline{C}_n(\mathbb{P}^1)$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The contribution is the PBW filtration lift of $\Phi_0$ to the chiral setting; $c = 26$ ensures $d_{\mathrm{bar}}^2 = 0$.
+\end{remark}
+
+\begin{corollary}[Physical anomaly cancellation at genus \texorpdfstring{$0$}{0};
+\ClaimStatusProvedHere]
+\label{cor:anomaly-physical-genus0}
+\index{anomaly cancellation!BRST proof}
+The mathematical condition $\kappa_{\mathrm{tot}} = 0$
+\textup{(}Theorem~\textup{\ref{thm:anomaly-koszul})} is equivalent,
+at genus~$0$, to the BRST anomaly cancellation
+$c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$.  Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $Q_{\mathrm{BRST}}^2 = 0$ on $\cA_{\mathrm{tot}}^{\mathrm{rel}}$
+  if and only if $c(\cA) = 26$ \textup{(}Lemma~\textup{\ref{lem:brst-nilpotence})}.
+\item $d_{\mathrm{bar}}^2 = 0$ on $\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})$
+  if and only if $\kappa_{\mathrm{tot}} = 0$, i.e., $c(\cA) = 26$
+  \textup{(}Theorem~\textup{\ref{thm:anomaly-koszul})}.
+\item The chain map $\Phi$ of Theorem~\textup{\ref{thm:brst-bar-genus0}}
+  identifies both anomaly cancellation conditions: both sides are well-defined
+  cochain complexes precisely when $c = 26$, and $\Phi$ is a quasi-isomorphism
+  relating their cohomologies.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Parts (i) and (ii) are the cited results.  Part (iii):
+Theorem~\ref{thm:brst-bar-genus0} constructs $\Phi$ under
+the hypothesis $c = 26$, giving a quasi-isomorphism that
+identifies $H^*(Q_{\mathrm{BRST}}) \cong H^*(d_{\mathrm{bar}})$.
+If $c \neq 26$, the BRST side has $Q^2 = \frac{c-26}{12}\,c_0 \neq 0$
+and the bar side has $\dfib^{\,2} = \kappa_{\mathrm{tot}} \cdot \omega_1
+\cdot \mathrm{id} \neq 0$: neither is a cochain complex,
+and both obstructions are controlled by the same numerical invariant
+$c - 26$ (with the dictionary $\kappa_{\mathrm{tot}} = (c-26)/2$
+from Computation~\ref{comp:virasoro-curvature}).
+\end{proof}
+
+\begin{remark}[Higher genus]
+\label{rem:brst-bar-higher-genus}
+At genus $g \geq 1$, the BRST complex requires additional data:
+the path integral measure on $\overline{\mathcal{M}}_g$ and the
+Costello renormalization framework~\cite{costello-renormalization} for handling
+ultraviolet divergences.  The bar complex side is well-defined at
+all genera via configuration spaces on $\Sigma_g$
+(Chapter~\ref{chap:higher-genus}).  The chain map $\Phi$ should
+extend to a map of genus-graded complexes, with the genus-$g$
+component involving Costello's counterterm expansion.  This
+extension is the subject of Programme~VI-a in
+\S\ref{sec:modular-koszul-programme}.
+\end{remark}
+
+\section{Semi-infinite cohomology and the bar complex}
+\label{sec:semi-infinite-bar}
+\index{semi-infinite cohomology|textbf}
+
+\subsection{Semi-infinite cohomology}
+
+\begin{definition}[Semi-infinite cohomology {\cite{FGZ86}}]
+\label{def:semi-infinite-cohomology}
+\index{semi-infinite cohomology!definition}
+Let $\widehat{L} = \bigoplus_{n \in \mathbb{Z}} L_n$ be a
+$\mathbb{Z}$-graded Lie algebra with $\dim L_n < \infty$, and let
+$M$ be a $\widehat{L}$-module.  Write
+$\widehat{L} = L_- \oplus L_0 \oplus L_+$ for the decomposition
+into negative, zero, and positive modes.  The \emph{semi-infinite
+complex} is:
+\[
+C^{\infty/2+n}(\widehat{L}, M)
+= M \otimes \textstyle\bigwedge\nolimits^{\infty/2+n}\! \widehat{L}^*
+\]
+where $\bigwedge^{\infty/2+n}$ denotes the semi-infinite wedge
+power: the ``Dirac sea'' vacuum is the semi-infinite form
+$\xi_0^* \wedge \xi_{-1}^* \wedge \xi_{-2}^* \wedge \cdots$
+(wedging all negative-mode duals), and degree $n$ is measured
+relative to this vacuum.  The semi-infinite differential
+$Q_{\mathrm{si}}$ combines the Chevalley--Eilenberg differential
+with a ``charge anomaly'' correction term that ensures
+$Q_{\mathrm{si}}^2 = 0$ without any restriction on the central charge.
+The \emph{semi-infinite cohomology} is
+$H^{\infty/2+\bullet}(\widehat{L}, M) =
+H^*(C^{\infty/2+\bullet}(\widehat{L}, M), Q_{\mathrm{si}})$.
+\end{definition}
+
+\begin{remark}[Semi-infinite vs.\ string BRST]
+\label{rem:semi-infinite-vs-brst}
+The string BRST complex of \S\ref{sec:brst-bar-chain-map} couples
+$\cA$ to $bc$-ghosts and requires $c = 26$ for $Q^2 = 0$
+(Lemma~\ref{lem:brst-nilpotence}).  Semi-infinite cohomology is
+different: it is defined for any $\mathbb{Z}$-graded Lie algebra
+$\widehat{L}$ and any module $M$, with $Q_{\mathrm{si}}^2 = 0$
+unconditionally.  The ghosts are ``built in'' to the semi-infinite
+wedge product rather than introduced as an external $bc$-system.
+For the string ($\widehat{L} = \mathrm{Vir}$, $M = \cA$),
+semi-infinite cohomology of the Virasoro algebra \emph{does}
+reduce to string BRST cohomology when $c = 26$~\cite{FGZ86}.
+\end{remark}
+
+\subsection{The bar--semi-infinite identification for Kac--Moody algebras}
+
+\begin{theorem}[Bar complex = semi-infinite complex for KM;
+\ClaimStatusProvedHere]
+\label{thm:bar-semi-infinite-km}
+\index{semi-infinite cohomology!bar complex identification}
+\index{BRST!semi-infinite identification}
+Let $\widehat{\fg}_k$ be the universal affine vertex algebra at level
+$k \neq -h^\vee$.  There is a quasi-isomorphism of filtered cochain
+complexes:
+\begin{equation}\label{eq:bar-semi-infinite}
+\Psi \colon
+  \bigl(\barB^{\mathrm{ch}}(\widehat{\fg}_k),\, d_{\mathrm{bar}}\bigr)
+  \xrightarrow{\;\sim\;}
+  \bigl(C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k),\, Q_{\mathrm{si}}\bigr)
+\end{equation}
+identifying the chiral bar complex with the semi-infinite complex
+\textup{(}with coefficients in the vacuum module $V_k$\textup{)}.
+In particular:
+\begin{equation}\label{eq:bar-equals-semi-infinite}
+H^*(\barB^{\mathrm{ch}}(\widehat{\fg}_k))
+\;\cong\;
+H^{\infty/2+*}(\widehat{\fg}_k,\, V_k).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The proof parallels that of
+Theorem~\ref{thm:brst-bar-genus0}, replacing the string BRST
+complex with the semi-infinite complex and removing the
+$c = 26$ hypothesis.
+
+\emph{Step~1: Conformal weight filtration.}
+Both complexes carry bounded-below, exhaustive
+$\mathbb{Z}_{\geq 0}$-filtrations by total conformal weight.
+On the bar side, this is the PBW filtration of
+Theorem~\ref{thm:brst-bar-genus0}, Step~1.  On the semi-infinite
+side, the conformal weight filtration arises from the
+$L_0$-grading on $V_k$ and the mode grading on
+$\bigwedge^{\infty/2+\bullet}\!\widehat{\fg}^*_k$.  Both
+differentials ($d_{\mathrm{bar}}$ and $Q_{\mathrm{si}}$) respect
+these filtrations: $d_{\mathrm{bar}}$ preserves total conformal
+weight (OPE residues preserve weight), and $Q_{\mathrm{si}}$
+preserves it by construction~\cite{FGZ86}.
+
+\emph{Step~2: Associated graded.}
+On the associated graded $\mathrm{gr}\,F^\bullet$,
+$\mathrm{gr}\,\barB^{\mathrm{ch}}(\widehat{\fg}_k)$ reduces
+to the classical bar complex $\barB(\fg)$ of the
+finite-dimensional Lie algebra $\fg$
+(only the leading OPE pole survives, giving the Lie bracket),
+while $\mathrm{gr}\,C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)$
+reduces to the Chevalley--Eilenberg complex
+$C^*_{\mathrm{CE}}(\fg, \mathbb{C})$
+(the semi-infinite vacuum collapses to $\bigwedge^*\!\fg^*$
+when mode corrections are dropped;
+see~\cite{FGZ86}, Proposition~2.1).
+Both associated graded complexes compute the Lie algebra cohomology
+$H^*(\fg, \mathbb{C})$.  The classical bar--CE comparison map
+$\Phi_0$ of Arkhipov~\cite{Arkhipov97}
+(cf.\ \eqref{eq:arkhipov-classical}) provides a natural
+quasi-isomorphism $\barB(\fg) \xrightarrow{\sim}
+C^*_{\mathrm{CE}}(\fg, \mathbb{C})$.
+
+\emph{Step~3: Spectral sequence comparison.}
+The conformal weight filtrations induce convergent spectral sequences
+on both sides (bounded below, exhaustive, finite-dimensional
+graded pieces).  The map $\Phi_0$ induces an isomorphism at the
+$E_1$ page.  By the Eilenberg--Moore comparison theorem
+(\cite{EM66}; cf.\ \cite[Theorem~5.2.12]{Weibel94}), $\Phi_0$ lifts
+to a filtered chain map
+$\Psi \colon \barB^{\mathrm{ch}}(\widehat{\fg}_k) \to
+C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)$
+that is a quasi-isomorphism.
+
+\emph{Step~4: No anomaly obstruction.}
+Unlike Theorem~\ref{thm:brst-bar-genus0}, no central charge
+condition is needed.  On the bar side, $d_{\mathrm{bar}}^2 = 0$
+by the Arnold relations
+(Theorem~\ref{thm:arnold-three}); the curvature
+$m_0 = \kappa \cdot \mathbf{1}$ contributes to the $A_\infty$
+structure but does not obstruct the bar differential.  On the
+semi-infinite side, $Q_{\mathrm{si}}^2 = 0$ by
+construction~\cite{FGZ86}: the semi-infinite wedge product
+absorbs the charge anomaly that would otherwise require
+$c = 26$.  Both differentials square to zero at every level
+$k \neq -h^\vee$, and the spectral sequence comparison
+applies without restriction.
+
+The condition $k \neq -h^\vee$ ensures that the Sugawara
+construction is well-defined, providing the $L_0$-grading
+that drives the filtration.  At critical level
+$k = -h^\vee$, the Sugawara stress tensor is undefined, but the
+semi-infinite complex is still defined using the loop rotation
+grading; the identification at critical level follows from the
+Feigin--Frenkel theorem~\cite{Feigin-Frenkel}
+(cf.\ Theorem~\ref{thm:critical-level-structure}).
+\end{proof}
+
+\begin{remark}[Scope and attribution]
+\label{rem:bar-semi-infinite-scope}
+The theorem synthesizes Arkhipov~\cite{Arkhipov97} (classical bar--CE and semi-infinite duality for $\mathbb{Z}$-graded algebras), Frenkel--Garland--Zuckerman~\cite{FGZ86} (semi-infinite cohomology), and our PBW spectral sequence (Theorems~\ref{thm:pbw-koszulness-criterion}, \ref{thm:km-chiral-koszul}).  The contribution is the lift from $\mathbb{Z}$-graded associative to chiral algebras via PBW, using the geometric bar complex realization (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+\end{remark}
+
+\begin{remark}[String BRST as a special case]
+\label{rem:string-brst-special-case}
+Theorem~\ref{thm:brst-bar-genus0} is a corollary: for $\cA_{\mathrm{tot}} = \mathcal{H}^{26} \otimes bc$ with $c_{\mathrm{tot}} = 0$, the string BRST complex is a special case of semi-infinite cohomology with $\widehat{L} = \mathrm{Vir}$~\cite{FGZ86}, and Theorem~\ref{thm:bar-semi-infinite-km} recovers the chain map~$\Phi$.  The condition $c = 26$ ensures $Q_{\mathrm{BRST}}^2 = Q_{\mathrm{si}}^2$ (mismatch: $\frac{c-26}{12}\,c_0$).
+\end{remark}
+
+\subsection{Anomaly duality from complementarity}
+
+\begin{corollary}[Anomaly duality for Kac--Moody pairs;
+\ClaimStatusProvedHere]
+\label{cor:anomaly-duality-km}
+\index{anomaly cancellation!Kac--Moody duality}
+\index{Feigin--Frenkel duality!anomaly interpretation}
+Let $\widehat{\fg}_k$ be an affine Kac--Moody algebra at generic
+level $k$, with Feigin--Frenkel dual
+$\widehat{\fg}_{k'} = \widehat{\fg}_{-k-2h^\vee}$.  Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Bar cohomology = semi-infinite cohomology.}
+The bar cohomology computations of
+Part~\textup{II} \textup{(}Riordan numbers for
+$\widehat{\mathfrak{sl}}_2$, the Hilbert series of
+Theorem~\textup{\ref{thm:bar-cohomology-level-independence})}
+are semi-infinite cohomology computations:
+\[
+\dim H^n(\barB^{\mathrm{ch}}(\widehat{\fg}_k))
+= \dim H^{\infty/2+n}(\widehat{\fg}_k, V_k).
+\]
+
+\item \emph{Curvature = conformal anomaly.}
+The genus-$1$ curvature coefficient
+$\kappa(\widehat{\fg}_k) = (k+h^\vee)\dim\fg/(2h^\vee)$
+\textup{(}Theorem~\textup{\ref{thm:genus-universality}(i))} equals
+the semi-infinite anomaly coefficient.  The duality
+$\kappa + \kappa' = 0$ of
+Theorem~\textup{\ref{thm:genus-universality}(ii)} is the
+anomaly cancellation for the Feigin--Frenkel pair: the
+conformal anomalies of $\widehat{\fg}_k$ and
+$\widehat{\fg}_{-k-2h^\vee}$ cancel.
+
+\item \emph{Complementarity = anomaly duality.}
+The quantum complementarity theorem
+\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+applied to the Koszul pair
+$(\widehat{\fg}_k, \widehat{\fg}_{-k-2h^\vee})$ gives:
+\[
+Q_g(\widehat{\fg}_k) \oplus Q_g(\widehat{\fg}_{-k-2h^\vee})
+= H^*(\overline{\mathcal{M}}_g,\, Z(\widehat{\fg}_k)).
+\]
+Via the bar--semi-infinite identification, the left side is a
+direct sum of semi-infinite cohomology spaces on
+$\overline{\mathcal{M}}_g$: the genus-$g$ quantum corrections
+of the WZW model at level~$k$ and its Feigin--Frenkel dual sum to
+the full moduli space cohomology.  This is the mathematical
+content of anomaly cancellation for Kac--Moody pairs at all genera.
+
+\item \emph{Universal MC duality.}
+The universal Maurer--Cartan classes satisfy
+$\Theta_{\widehat{\fg}_k} + \Theta_{\widehat{\fg}_{-k-2h^\vee}}
+= 0$ (Theorem~\ref{thm:explicit-theta}), since
+$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{-k-2h^\vee}) = 0$
+by Theorem~\ref{thm:genus-universality}(ii).
+This is the chain-level mechanism underlying~(c):
+the Verdier involution exchanges
+$\Theta_{\widehat{\fg}_k}$ and $-\Theta_{\widehat{\fg}_{k'}}$,
+producing the Lagrangian splitting of
+Theorem~\ref{thm:quantum-complementarity-main}.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Part~(a) is the cohomology-level consequence of
+Theorem~\ref{thm:bar-semi-infinite-km}.  Part~(b): the
+curvature $m_0 = \kappa \cdot \mathbf{1}$ in the bar complex
+corresponds, under the quasi-isomorphism~$\Psi$, to the
+semi-infinite anomaly (the failure of the naive CE differential
+to square to zero, corrected by the semi-infinite charge).
+The genus universality theorem identifies this with the
+conformal anomaly coefficient.  The duality $\kappa + \kappa' = 0$
+follows from the Feigin--Frenkel level shift and the formula
+$\kappa = (k+h^\vee)\dim\fg/(2h^\vee)$: replacing $k$ by
+$-k - 2h^\vee$ negates~$\kappa$.
+Part~(c): combine the bar--semi-infinite identification with
+Theorem~\ref{thm:quantum-complementarity-main}.  The genus-$g$
+obstruction space $Q_g(\widehat{\fg}_k)$ is the associated
+graded of $H^*(\barB^{(g)}(\widehat{\fg}_k))$, which by
+Theorem~\ref{thm:bar-semi-infinite-km} is the genus-$g$
+semi-infinite cohomology.  The complementarity sum equals
+$H^*(\overline{\mathcal{M}}_g, Z(\widehat{\fg}_k))$ by
+Theorem~\ref{thm:quantum-complementarity-main}.
+\end{proof}
+
+\begin{remark}[The Master Table, revisited]
+\label{rem:master-table-brst}
+\index{master table of invariants!BRST interpretation}
+Via Corollary~\ref{cor:anomaly-duality-km}, every entry in the Master Table (Table~\ref{tab:master-invariants}) is a semi-infinite anomaly coefficient: $\kappa$ is the semi-infinite anomaly, $c + c' = 2\dim\fg$ the total Feigin--Frenkel anomaly, and $F_g$ the genus-$g$ WZW free energy.
+\end{remark}
+
+\subsection{Extension to $\mathcal{W}$-algebras via Drinfeld--Sokolov reduction}
+
+\begin{theorem}[Bar complex = semi-infinite complex for \texorpdfstring{$\mathcal{W}$}{W}-algebras;
+\ClaimStatusProvedHere]
+\label{thm:bar-semi-infinite-w}
+\index{semi-infinite cohomology!W-algebra identification}
+\index{Drinfeld--Sokolov reduction!semi-infinite cohomology}
+Let $\mathcal{W}^k(\fg, f_{\mathrm{prin}})$ be the principal
+W-algebra at level $k \neq -h^\vee$.  There is a quasi-isomorphism:
+\begin{equation}\label{eq:bar-semi-infinite-w}
+\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))
+\;\xrightarrow{\;\sim\;}\;
+C^{\infty/2+\bullet}(\mathcal{W}^k(\fg),\, M_k)
+\end{equation}
+where $M_k$ is the vacuum module for $\mathcal{W}^k(\fg)$ and the
+right side is the semi-infinite complex defined with respect to the
+conformal weight grading.  In particular:
+\[
+H^*(\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg)))
+\;\cong\;
+H^{\infty/2+*}(\mathcal{W}^k(\fg),\, M_k).
+\]
+\end{theorem}
+
+\begin{proof}
+The W-algebra is obtained from the Kac--Moody algebra by BRST
+reduction (Definition~\ref{def:quantum-ds}):
+$\mathcal{W}^k(\fg) = H^0(
+\widehat{\fg}_k \otimes \mathcal{F}_{\mathrm{gh}},\,
+Q_{\mathrm{DS}})$.
+We compose Theorem~\ref{thm:bar-semi-infinite-km} with the exactness
+of DS reduction on the relevant filtered complexes.
+
+\emph{Step~1: Functoriality of the bar construction under DS.}
+The bar functor sends $\widehat{\fg}_k$ to
+$\barB^{\mathrm{ch}}(\widehat{\fg}_k)$, and the DS differential
+$Q_{\mathrm{DS}}$ acts on the bar complex (since $Q_{\mathrm{DS}}$
+is a derivation of the vertex algebra structure; the bar construction
+preserves this action as it is functorial for $A_\infty$ morphisms).
+By the proof of Theorem~\ref{thm:w-algebra-koszul-main}, Step~2,
+the bar functor is exact on the homotopy category and:
+\[
+\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))
+\;\simeq\;
+H^*_{Q_{\mathrm{DS}}}\!\bigl(
+\barB^{\mathrm{ch}}(\widehat{\fg}_k)
+\otimes \barB(\mathcal{F}_{\mathrm{gh}})\bigr).
+\]
+
+\emph{Step~2: DS reduction of the semi-infinite complex.}
+On the semi-infinite side, DS reduction of
+$C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)$ yields
+$C^{\infty/2+\bullet}(\mathcal{W}^k(\fg), M_k)$:
+the semi-infinite complex of the W-algebra is the BRST
+reduction of the semi-infinite complex of $\widehat{\fg}_k$.
+This is the content of Feigin--Frenkel's construction of
+W-algebra BRST cohomology~\cite{Feigin-Frenkel}: the
+semi-infinite differential $Q_{\mathrm{si}}$ commutes with
+$Q_{\mathrm{DS}}$ (both are BRST differentials for different
+symmetries; their commutator vanishes by the standard double
+complex argument).
+
+\emph{Step~3: Comparison.}
+The quasi-isomorphism $\Psi$ of
+Theorem~\ref{thm:bar-semi-infinite-km} intertwines the
+$Q_{\mathrm{DS}}$-action on both sides (since $\Psi$ is
+constructed via the PBW spectral sequence, which respects the
+adjoint action of $\widehat{\fg}_k$ on itself and hence the
+DS differential).  Passing to $Q_{\mathrm{DS}}$-cohomology:
+\[
+H^*_{Q_{\mathrm{DS}}}(\Psi) \colon
+H^*_{Q_{\mathrm{DS}}}(\barB^{\mathrm{ch}}(\widehat{\fg}_k)
+\otimes \barB(\mathcal{F}_{\mathrm{gh}}))
+\;\xrightarrow{\;\sim\;}\;
+H^*_{Q_{\mathrm{DS}}}(
+C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)
+\otimes C^*(\mathcal{F}_{\mathrm{gh}}))
+\]
+is a quasi-isomorphism (a quasi-isomorphism of filtered complexes
+remains a quasi-isomorphism after applying an exact functor on the
+derived category, which $H^*_{Q_{\mathrm{DS}}}$ is for
+$k \neq -h^\vee$ by Arakawa's vanishing theorem
+\cite{Ara15}).  The left side is
+$\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))$ (Step~1); the right
+side is
+$C^{\infty/2+\bullet}(\mathcal{W}^k(\fg), M_k)$ (Step~2).
+\end{proof}
+
+\begin{corollary}[Virasoro bar complex = semi-infinite complex;
+\ClaimStatusProvedHere]
+\label{cor:virasoro-semi-infinite}
+\index{semi-infinite cohomology!Virasoro}
+\index{Virasoro algebra!semi-infinite cohomology}
+For the Virasoro algebra $\mathrm{Vir}_c$ at central charge
+$c = 1 - 6(k+1)^2/(k+2)$ \textup{(}obtained as
+$\mathcal{W}^k(\mathfrak{sl}_2)$\textup{)}:
+\[
+H^*(\barB^{\mathrm{ch}}(\mathrm{Vir}_c))
+\;\cong\;
+H^{\infty/2+*}(\mathrm{Vir}_c,\, M_c)
+\]
+where $M_c$ is the vacuum Virasoro module.  The Motzkin-number
+bar cohomology dimensions of
+Theorem~\textup{\ref{thm:virasoro-chiral-koszul}} are therefore
+semi-infinite cohomology dimensions.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:bar-semi-infinite-w} with
+$\fg = \mathfrak{sl}_2$, $f = f_{\mathrm{prin}}$.
+\end{proof}
+
+\begin{corollary}[Anomaly complementarity for \texorpdfstring{$\mathcal{W}$}{W}-algebra pairs;
+\ClaimStatusProvedHere]
+\label{cor:anomaly-duality-w}
+\index{anomaly cancellation!W-algebra duality}
+Let $\mathcal{W}^k(\fg)$ be the principal W-algebra, with
+Feigin--Frenkel same-family partner
+$\mathcal{W}^{k'}(\fg) = \mathcal{W}^{-k-2h^\vee}(\fg)$.
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The semi-infinite anomaly coefficients satisfy the same
+level-independent complementarity law as the bar curvature
+coefficients.  For principal finite-type $\mathcal{W}$-algebras,
+\[
+\kappa(\mathcal{W}^k(\fg)) + \kappa(\mathcal{W}^{k'}(\fg))
+= \bigl(c(\mathcal{W}^k(\fg)) + c(\mathcal{W}^{k'}(\fg))\bigr)
+\varrho(\fg),
+\]
+where $\varrho(\fg) = \sum_{i=1}^r \frac{1}{m_i+1}$ is the anomaly
+ratio from Theorem~\ref{thm:wn-obstruction}.  Thus the sum is a
+level-independent constant: $13$ for Virasoro and $250/3$ for
+$\mathcal{W}_3$.
+
+\item The quantum complementarity theorem
+\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+applied to the W-algebra Koszul pair
+\textup{(}Theorem~\textup{\ref{thm:w-algebra-koszul-main})} gives:
+\[
+Q_g(\mathcal{W}^k) \oplus Q_g(\mathcal{W}^{-k-2h^\vee})
+= H^*(\overline{\mathcal{M}}_g,\, Z(\mathcal{W}^k)).
+\]
+Via the bar--semi-infinite identification, this is anomaly duality
+for W-algebra pairs at all genera.
+
+\item For $\fg = \mathfrak{sl}_2$
+\textup{(}Virasoro\textup{)}: the Virasoro at
+$c$ and its same-family shadow partner at $c' = 26 - c$ have
+semi-infinite anomaly coefficients adding to~$13$, and their
+genus-$g$ quantum corrections sum to
+  $H^*(\overline{\mathcal{M}}_g, Z(\mathrm{Vir}_c))$.  Here
+  $\mathrm{Vir}_{26-c}$ is the proved M/S-level shadow partner used in
+  the semi-infinite calculation; the stronger H-level
+  infinite-generator realization belongs to MC4
+  (Chapter~\ref{chap:concordance}).
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Combine Theorem~\ref{thm:bar-semi-infinite-w} with
+Theorem~\ref{thm:wn-obstruction} and
+Theorem~\ref{thm:central-charge-complementarity}: the DS reduction
+preserves the anomaly data, and the principal finite-type
+$\mathcal{W}$-obstruction is $\kappa = c\,\varrho(\fg)$.
+Part~(b) then follows from the quantum complementarity theorem.
+Part~(c): specialize to $\fg = \mathfrak{sl}_2$ with $h^\vee = 2$,
+for which $c + c' = 26$ and $\varrho(\mathfrak{sl}_2)=1/2$.
+\end{proof}
+
+\section{Holomorphic-topological field theories}
+
+\subsection{Gaiotto's framework: from 4d to 2d}
+
+\begin{definition}[Holomorphic-topological (HT) theory]
+A holomorphic-topological field theory on a complex surface $\Sigma$ is holomorphic in one complex direction and topological in the other.  Fields are sections of $\mathcal{O}$-modules satisfying $\bar{\partial}_{\bar{z}} \phi = 0$ (holomorphic) and $Q_{\text{top}} \phi = 0$ (topologically BRST-closed).
+\end{definition}
+
+\begin{theorem}[HT theory from 4d \texorpdfstring{$\mathcal{N}=4$}{N=4} SYM; \ClaimStatusProvedElsewhere]
+\label{thm:ht-from-n4-sym}
+Starting with 4d $\mathcal{N}=4$ super Yang--Mills with gauge group $G$, one applies the holomorphic twist (Costello~\cite{costello-gaiotto}), localizes to $\bar{\partial}$-connections on a Riemann surface $\Sigma$, and obtains holomorphic BF theory (the dimensional reduction of holomorphic Chern--Simons to $\Sigma$).
+
+The action is:
+\[S_{\text{BF}} = \int_{\Sigma} \operatorname{Tr}\!\left(B \wedge \bar{\partial} \mathbf{A} + B \wedge \mathbf{A} \wedge \mathbf{A}\right)\]
+
+where $\mathbf{A} = c + A + \cdots$ denotes the full BV field with $c \in \Omega^{0,0}(\Sigma, \mathfrak{g})$ (ghost) and $A \in \Omega^{0,1}(\Sigma, \mathfrak{g})$ (connection), and $B \in \Omega^{1,0}(\Sigma, \mathfrak{g})$ is the adjoint-valued Lagrange multiplier.
+On a Riemann surface, $\Omega^{0,2}(\Sigma) = 0$, so the classical fields
+$A \in \Omega^{0,1}$ satisfy $\bar{\partial}A = 0$ and $A \wedge A = 0$ identically.  The non-trivial
+content of the action arises from the BV extension: the ghost component $c \in \Omega^{0,0}$ has
+$\bar{\partial}c \in \Omega^{0,1}$, giving $B \wedge \bar{\partial}c \in \Omega^{1,1}$ (the volume form).
+The full holomorphic Chern--Simons action $\int \Omega \wedge \operatorname{CS}(\mathcal{A})$ lives on a
+complex $3$-fold with $(3,0)$-form $\Omega$; on $\Sigma$ only the holomorphic BF action above survives the dimensional reduction.
+\end{theorem}
+
+\begin{proof}[From Costello--Gaiotto]
+\emph{Step~1: The Holomorphic Twist.}
+
+Start with $\mathcal{N}=4$ SYM on $\mathbb{R}^4 \cong \mathbb{C}^2$. The field 
+content includes the gauge field $A_\mu$, scalars $\Phi^I$ in the adjoint ($I=1,\ldots,6$), and fermions $\psi, \bar{\psi}$.  The twist redefines the Lorentz group action by mixing with R-symmetry:
+\[\text{Spin}(4) \times \text{Spin}(6)_R \to \text{Spin}(4)_{\text{new}}\]
+
+After twisting, some bosons become fermions (ghosts), some fermions become bosons (matter), and a nilpotent supercharge $Q$ becomes scalar.
+
+\emph{Step~2: Localization.}
+
+The twisted action has $Q^2 = 0$ and:
+\[S_{\text{twisted}} = \{Q, \Lambda\} + S_0\]
+
+By localization, path integral reduces to:
+\[Z = \int_{\text{Q-fixed locus}} \mathcal{O}(fields)\]
+
+The Q-fixed locus consists of holomorphic data:
+\[\bar{\partial}_A = 0, \qquad \bar{\partial}_A \Phi = 0\]
+
+These are the equations for a holomorphic bundle with holomorphic Higgs field (the Hitchin equations in the holomorphic sector).
+
+\emph{Step~3: Volume Form.}
+
+The holomorphic volume form $\Omega$ arises from the topological twist. On
+$\mathbb{C}^2$ with holomorphic coordinates $(z,w)$:
+\[\Omega = dz \wedge dw\]
+
+On the deformed conifold $Y_\mu = \{u_1 w_2 - u_2 w_1 = \mu\} \subset \mathbb{C}^4$ (a Calabi--Yau 3-fold), $\Omega$ is the unique holomorphic $(3,0)$-form obtained via the Poincar\'{e} residue:
+\[\Omega = \operatorname{Res}_{Y_\mu}\frac{du_1 \wedge du_2 \wedge dw_1 \wedge dw_2}{u_1 w_2 - u_2 w_1 - \mu}\]
+\end{proof}
+
+\subsection{Boundary conditions and chiral algebras}
+
+\begin{theorem}[Boundary chiral algebra; \ClaimStatusProvedElsewhere{} \cite{CDG20,CG17}]
+\label{thm:boundary-chiral-algebra-bv}
+A boundary condition for holomorphic Chern--Simons theory supports a chiral
+algebra $\mathcal{A}_{\text{bdy}}$ whose generators are local operators at the boundary, whose OPE comes from bulk-to-boundary correlation functions, and whose central charge is determined by the level of HCS theory.
+\end{theorem}
+
+\begin{example}[Kac--Moody from HCS]
+Holomorphic Chern--Simons with gauge group $G$ at level $k$ produces:
+\[\mathcal{A}_{\text{bdy}} = \widehat{\mathfrak{g}}_k\]
+
+the affine Kac--Moody algebra at level $k$.
+
+The currents:
+\[J^a(z) = \text{Tr}(T^a A(z))\]
+
+satisfy:
+\[J^a(z) J^b(w) \sim \frac{k \delta^{ab}}{(z-w)^2} + 
+\frac{f^{abc} J^c(w)}{z-w}\]
+
+This OPE is computed via the holomorphic Chern--Simons path integral with
+boundary insertions.
+\end{example}
+
+\subsection{The holomorphic-topological boundary condition}
+
+\begin{definition}[HT boundary condition]
+For holomorphic Chern--Simons on a surface $\Sigma$ with boundary $\partial \Sigma$, 
+the \emph{holomorphic-topological boundary condition} requires:
+\begin{enumerate}
+\item Fields extend holomorphically to a compactification $\bar{\Sigma}$
+\item At the boundary divisor $D = \bar{\Sigma} \setminus \Sigma$, fields have 
+a simple zero: $A \in \Omega^{0,*}(\bar{\Sigma}, \mathcal{O}_{\bar{\Sigma}}(-D))$
+\item The volume form $\Omega$ has compatible pole: $\Omega \in K_{\bar{\Sigma}}(kD)$ 
+for cubic interaction $(k=3)$
+\end{enumerate}
+\end{definition}
+
+\begin{conjecture}[Bar-cobar from HT boundary; \ClaimStatusHeuristic]
+\label{conj:bar-cobar-ht-boundary}
+The holomorphic-topological boundary condition realizes bar-cobar duality:
+\begin{itemize}
+\item \emph{Bar side.} Fields with prescribed asymptotics near $D$ (logarithmic
+forms)
+\item \emph{Cobar side.} Distributional fields on $\Sigma$ (delta functions at $D$)
+\item \emph{Duality.} Perfect pairing via residue-distribution integral
+\end{itemize}
+\end{conjecture}
+
+\begin{evidence}[Evidence: Geometric realization]
+The key is the volume form behavior. If $\Omega$ has a pole of order $k$ along 
+$D$:
+\[\Omega \sim \frac{dz \wedge dw}{(z-w)^k}\]
+
+then the action term:
+\[\int_{\Sigma} \Omega \cdot A^k\]
+
+is finite if and only if $A$ vanishes to order 1 along $D$.
+
+This pole-zero compatibility is exactly the bar-cobar relationship: the logarithmic form $\eta = d\log(z-w)$ (bar) has a logarithmic singularity whose residue is the distribution $\delta(z-w)$ (cobar).
+
+The holomorphic-topological boundary condition enforces this duality at the
+geometric level.
+\end{evidence}
+
+\begin{remark}[Scope]
+This conjecture is labeled \ClaimStatusHeuristic{} because it proposes a geometric
+realization of bar-cobar duality via holomorphic-topological boundary conditions,
+which requires input from extended field theory (boundary conditions for HT theories)
+beyond the algebraic framework of this monograph.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The bar and cobar complexes should arise as the two boundary conditions (logarithmic forms vs.\ distributional fields) of a holomorphic-topological theory on~$\Sigma$, with the bar-cobar pairing realized by the residue-distribution integral across the boundary divisor~$D$.
+\end{remark}
+
+\section{$\mathcal{W}$-algebras from Higgs branches}
+
+\subsection{\texorpdfstring{4d gauge theory $\to$ 2d $\mathcal{W}$-algebra}{4d gauge theory -> 2d $\mathcal{W}$-algebra}}
+
+\begin{conjecture}[Costello--Gaiotto AGT; \ClaimStatusConjectured]
+\label{conj:costello-gaiotto-agt}
+Starting with 4d $\mathcal{N}=2$ gauge theory with gauge group $G$, compactify on $\Sigma_g$, apply the topological twist, and take the infrared limit.  The result is a 2d CFT with W-algebra symmetry $\mathcal{W}(G)$.
+
+For $G = SU(N)$, this gives the $\mathcal{W}_N$ algebra.
+\end{conjecture}
+
+\begin{evidence}[Evidence: Via bar-cobar]
+\emph{Step~1: Higgs Moduli Space.}
+
+The 4d theory has Higgs branch moduli space:
+\[\mathcal{M}_{\text{Higgs}} = \text{Higgs}(\Sigma_g, G)\]
+
+consisting of $G$-Higgs bundles on $\Sigma_g$.
+
+\emph{Step~2: Chiral Algebra.}
+
+The Higgs moduli space supports a chiral algebra via:
+\[\mathcal{A} = \text{LocalObs}(\mathcal{M}_{\text{Higgs}})\]
+
+Local operators on the moduli space form a factorization algebra, which extends 
+to a chiral algebra.
+
+\emph{Step~3: W-Algebra Identification.}
+
+For $G = SU(N)$ and $\Sigma_g = \mathbb{C}$, the local operators --- the stress tensor $T(z)$ from diffeomorphisms and higher spin currents $W^{(s)}(z)$ for $s = 2, \ldots, N$ --- generate the $\mathcal{W}_N$ algebra.
+
+\emph{Step~4: Bar-Cobar Realization.}
+
+The bar complex:
+\[\bar{B}^{\text{ch}}(\mathcal{W}_N) = \Omega^*(\overline{C}_n(\Sigma_g), 
+\mathcal{W}_N^{\boxtimes n})\]
+
+computes the boundary W-algebra correlators on the 2d side.  The
+conjectural gauge-theory statement is that these same correlators arise
+from partition functions of the 4d theory:
+\[\langle W^{(s_1)}(z_1) \cdots W^{(s_n)}(z_n) \rangle =
+Z_{4d}[\Sigma_g; z_1, \ldots, z_n]\]
+\end{evidence}
+
+\begin{remark}[Scope]
+\ClaimStatusConjectured{} because the 4d gauge theory origin of W-algebras (Costello--Gaiotto) requires the holomorphic twist and infrared localization, which are physics inputs beyond the scope of this monograph.  The bar complex computing W-algebra conformal blocks follows from Part~I; the live task is the gauge-theoretic comparison.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+\end{remark}
+
+\subsection{Quantum corrections and central charge}
+
+\begin{remark}[Quantum vs.\ classical]
+The 4d $\to$ 2d reduction involves two types of quantum corrections: \emph{loop corrections} from integrating out massive modes (captured by $m_3, m_4, \ldots$ in the $A_\infty$ structure), and \emph{instanton corrections} from non-perturbative effects (not visible in the bar complex, requiring full QFT).
+\end{remark}
+
+\begin{theorem}[Central charge from 4d; \ClaimStatusProvedElsewhere]
+\label{thm:central-charge-from-4d}
+The Sugawara central charge of the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$ is:
+\[c_{\mathrm{Sug}} = \frac{k \dim \mathfrak{g}}{k + h^\vee}\]
+
+The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ obtained by DS reduction has a different central charge, determined by $c_{\mathrm{Sug}}$ minus the ghost contribution (which depends on the nilpotent orbit of $f$), where $k$ is the level and $h^\vee$ the dual Coxeter number.  This matches the Feigin--Frenkel formula~\cite{Feigin-Frenkel}.
+\end{theorem}
+
+\section{Quantum observables and BV integration}
+
+\subsection{BV path integral}
+
+\begin{definition}[BV partition function]
+The BV partition function is:
+\[Z_{\text{BV}} = \int_{\mathcal{L}} [D\phi] \, e^{S[\phi]/\hbar}\]
+
+where $\mathcal{L}$ is a Lagrangian submanifold (gauge fixing), $S[\phi]$ satisfies the quantum master equation $\Delta_{\text{BV}} e^{S/\hbar} = 0$, and the integration uses the BV measure (Berezinian).
+\end{definition}
+
+\begin{conjecture}[BV integration = bar-cobar pairing; \ClaimStatusHeuristic]
+\label{conj:bv-integration-bar-cobar}
+The BV path integral is realized by the bar-cobar pairing:
+\[Z_{\text{BV}} = \langle \bar{B}^{\text{ch}}(\mathcal{A}), 
+\Omega^{\text{ch}}(\mathcal{C}) \rangle\]
+
+Explicitly:
+\[Z = \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}\]
+\end{conjecture}
+
+\begin{evidence}
+\emph{Step~1: Gauge Fixing as Lagrangian.}
+
+Choose gauge fixing Lagrangian $\mathcal{L}$ corresponding to:
+\[\mathcal{L} = \{(\phi, \phi^+) : \phi^+ = F(\phi)\}\]
+
+for some gauge fermion $F$.
+
+In geometric terms, this corresponds to choosing a regularization prescription 
+for the configuration space integrals.
+
+\emph{Step~2: BV Measure.}
+
+The BV measure on $\mathcal{L}$ is:
+\[\mu_{\text{BV}} = \text{Ber}(\mathcal{L}) \cdot d\phi\]
+
+Geometrically, this is the measure on configuration space:
+\[\mu_{\text{geom}} = \prod_{i<j} |z_i - z_j|^2 \prod_{i=1}^n d^2z_i\]
+
+with appropriate gauge fixing factors.
+
+\emph{Step~3: Action and Pairing.}
+
+The action:
+\[e^{S/\hbar} = \prod_{\text{interactions}} e^{V_k(z_1, \ldots, z_k)/\hbar}\]
+
+corresponds to the cobar element:
+\[K_{\text{cobar}} = \sum_n K_n(z_1, \ldots, z_n)\]
+
+The pairing:
+\[\int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge K_{\text{cobar}}\]
+
+is exactly the BV path integral with gauge fixing determined by the choice of
+regularization.
+\end{evidence}
+
+\begin{remark}[Scope]
+This conjecture is labeled \ClaimStatusHeuristic{} because the identification of the
+BV path integral with the bar-cobar pairing requires a rigorous measure-theoretic
+framework for configuration space integrals with BV gauge-fixing data, which goes
+beyond the algebraic constructions of Part~I.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The BV partition function $Z_{\mathrm{BV}}$ should equal the bar-cobar pairing $\langle \bar{B}^{\mathrm{ch}}(\cA), \Omega^{\mathrm{ch}}(\mathcal{C}) \rangle$ as a configuration space integral, with gauge-fixing Lagrangian corresponding to the choice of regularization of the FM compactification.
+\end{remark}
+
+\subsection{Observables and correlation functions}
+
+\begin{theorem}[Observables = cohomology; \ClaimStatusProvedElsewhere{} \cite{CG17}]
+\label{thm:observables-brst-cohomology}
+Physical observables are:
+\[\mathcal{O}_{\text{phys}} = H^0(Q_{\text{BRST}}) = 
+\ker(Q_{\text{BRST}})/\text{im}(Q_{\text{BRST}})\]
+
+In the bar-cobar framework:
+\[\mathcal{O}_{\text{phys}} \cong H^0(\bar{B}^{\text{ch}}(\mathcal{A}))\]
+\end{theorem}
+
+\begin{example}[Correlation functions]
+An $n$-point correlation function:
+\[\langle \mathcal{O}_1(z_1) \cdots \mathcal{O}_n(z_n) \rangle = 
+\int_{\overline{C}_n(X)} [\mathcal{O}_1 \otimes \cdots \otimes \mathcal{O}_n] 
+\cdot e^{S_{\text{int}}}\]
+
+is computed by representing each $\mathcal{O}_i$ as a cocycle in $\bar{B}^{\text{ch}}(\mathcal{A})$ and applying the bar-cobar pairing with $e^{S_{\text{int}}}$ --- Gaiotto's prescription for holomorphic-topological observables.
+\end{example}
+
+\section{Dictionary}
+
+\begin{remark}[Dictionary]
+The BV-BRST formalism connects:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Physics} & \textbf{Math (Bar-Cobar)} & \textbf{Geometry} \\
+\hline
+BV complex & Bar complex & Log forms on $\overline{C}_n$ \\
+BV bracket & Configuration space symplectic & Poisson structure \\
+Master equation & $\dzero^2 = 0$ & Stokes / boundary residues \\
+BV Laplacian & Cobar differential & Delta functions \\
+Quantum master eq & Bar-cobar duality & Verdier duality \\
+BRST operator & Residue extraction & OPE singularities \\
+Gauge fixing & Lagrangian choice & Regularization \\
+Observables & Cohomology & Physical states \\
+Path integral & Bar-cobar pairing & Configuration integrals \\
+4d $\to$ 2d reduction & Factorization & Dimensional analysis \\
+W-algebra & Boundary chiral algebra & Higgs moduli \\
+\hline
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{remark}[Gaiotto's contribution]
+Gaiotto's contribution was recognizing a physical pattern: holomorphic-topological theories naturally produce chiral algebras, boundary conditions for these theories are modules over the chiral algebra, the open-closed correspondence should be modeled by bar-cobar duality, and suitable 4d gauge theory reductions should produce W-algebras via this mechanism.  The geometric bar-cobar construction supplies the theorematic boundary algebraic package on which these physical comparison statements are built.
+\end{remark}
+
+
+\section{The BV algebra structure}
+\label{sec:complete-bv-structure}
+
+\subsection{BV algebra definition}
+
+\begin{definition}[BV algebra]
+\label{def:bv-algebra-complete}
+\index{BV algebra|textbf}
+A \emph{Batalin--Vilkovisky algebra} is a graded commutative algebra $(A, \cdot)$ equipped with:
+\begin{enumerate}
+\item \emph{BV bracket.} $\{\cdot, \cdot\}: A \otimes A \to A$ of degree $+1$, satisfying:
+\begin{itemize}
+\item Graded skew-symmetry: $\{a, b\} = -(-1)^{(|a|+1)(|b|+1)} \{b, a\}$
+\item Graded Leibniz: $\{a, bc\} = \{a, b\}c + (-1)^{(|a|+1)|b|} b\{a, c\}$
+\item Graded Jacobi: $\{a, \{b, c\}\} = \{\{a, b\}, c\} + (-1)^{(|a|+1)(|b|+1)} \{b, \{a, c\}\}$
+\end{itemize}
+
+\item \emph{BV Laplacian.} $\Delta: A \to A$ of degree $+1$, satisfying:
+\begin{itemize}
+\item Nilpotency: $\Delta^2 = 0$
+\item Second-order: $\Delta(ab) = \Delta(a)b + (-1)^{|a|}a\Delta(b) + (-1)^{|a|}\{a, b\}$
+\end{itemize}
+
+\item \emph{Compatibility.} $\{a, b\} = (-1)^{|a|} [\Delta(ab) - \Delta(a)b - (-1)^{|a|}a\Delta(b)]$
+\end{enumerate}
+\end{definition}
+
+\subsection{BV structure from configuration spaces}
+
+\begin{theorem}[Configuration space BV structure; \ClaimStatusProvedHere]
+\label{thm:config-space-bv}
+The bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ carries a natural BV algebra structure where:
+
+\emph{(1) Algebra structure.} Wedge product of logarithmic forms
+
+\emph{(2) BV bracket.} Derived from symplectic structure on $T^*C_n(X)$
+
+\emph{(3) BV Laplacian.} Integration against diagonal (cobar differential)
+\[\Delta(\omega) = \sum_{i < j} \int_{\Delta_{ij}} \omega \cdot \delta(z_i - z_j)\]
+\end{theorem}
+
+\begin{proof}
+We verify the three BV algebra axioms (Definition~\ref{def:bv-algebra-complete}).
+
+\emph{(1) Commutative algebra structure.}
+The bar complex $\bar{B}^n(\mathcal{A}) = \Gamma(\overline{C}_{n+1}(X), \mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^*_{\log})$ carries a natural commutative product: the wedge product of logarithmic forms.  For $\omega \in \bar{B}^p$ and $\eta \in \bar{B}^q$, define:
+\[
+(\omega \cdot \eta)(z_0, \ldots, z_{p+q+1}) = \omega(z_0, \ldots, z_p) \wedge \eta(z_{p+1}, \ldots, z_{p+q+1})
+\]
+extended to $\overline{C}_{p+q+2}(X)$ via the inclusion $\overline{C}_{p+1}(X) \times \overline{C}_{q+1}(X) \hookrightarrow \overline{C}_{p+q+2}(X)$.  This is graded commutative: $\omega \cdot \eta = (-1)^{|\omega||\eta|}\, \eta \cdot \omega$ by the sign rule for wedge products of forms.
+
+\emph{(2) BV Laplacian.}
+Define $\Delta: \bar{B}^n \to \bar{B}^{n-1}$ by contraction with the diagonal:
+\[
+\Delta(\omega) = \sum_{i < j} \int_{\Delta_{ij}} \omega \cdot \delta(z_i - z_j) = \sum_{i < j} \operatorname{Res}_{z_i = z_j}[\omega]
+\]
+This has degree $+1$ (reduces bar degree by 1, increases cohomological degree by 1 via the residue).
+
+\emph{Nilpotency} ($\Delta^2 = 0$): Applying $\Delta$ twice gives a double residue $\operatorname{Res}_{z_i = z_j} \circ \operatorname{Res}_{z_k = z_l}$.  For $\{i,j\} \cap \{k,l\} = \emptyset$, the two residues commute and $\Delta^2 = 0$ is immediate.  For $\{i,j\} \cap \{k,l\} \neq \emptyset$, say $j = k$, the iterated residue $\operatorname{Res}_{z_i = z_j}\operatorname{Res}_{z_j = z_l}$ picks out the coefficient of $(z_i - z_j)^{-1}(z_j - z_l)^{-1}$ in $\omega$, but the Arnold relation $\eta_{ij} \wedge \eta_{jl} + \eta_{jl} \wedge \eta_{li} + \eta_{li} \wedge \eta_{ij} = 0$ ensures these contributions cancel in pairs: the terms from triples $(i,j,l)$ with different orderings of the iterated residue sum to zero.
+
+\emph{Second-order property}: We verify $\Delta(\omega \cdot \eta) = \Delta(\omega) \cdot \eta + (-1)^{|\omega|}\omega \cdot \Delta(\eta) + (-1)^{|\omega|}\{\omega, \eta\}$ by computing the residue of a product.  When $\operatorname{Res}_{z_i = z_j}$ acts on $\omega(z_0, \ldots, z_p) \wedge \eta(z_{p+1}, \ldots, z_{p+q+1})$, the residue localizes to three cases: (a) both $i, j \leq p$, contributing $\Delta(\omega) \cdot \eta$; (b) both $i, j > p$, contributing $\omega \cdot \Delta(\eta)$; (c) $i \leq p < j$ or $j \leq p < i$, contributing the bracket $\{\omega, \eta\}$.  This decomposition is the BV second-order property.
+
+\emph{(3) BV bracket.}
+The bracket is defined as the failure of $\Delta$ to be a derivation:
+\[
+\{\omega, \eta\} = (-1)^{|\omega|}[\Delta(\omega \cdot \eta) - \Delta(\omega) \cdot \eta - (-1)^{|\omega|}\omega \cdot \Delta(\eta)]
+\]
+Geometrically, $\{\omega, \eta\}$ extracts the residue across the interface between the two factors — this is the contraction pairing between $\omega$ and $\eta$ mediated by the symplectic form on $T^*C_n(X)$.  The Jacobi identity for $\{-,-\}$ follows from $\Delta^2 = 0$ by the standard BV$\to$Lie derivation (the ``7-term identity'').
+
+Thus $(\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$ is a BV algebra.
+\end{proof}
+
+\subsection{Quantum master equation}
+
+\begin{conjecture}[Quantum master equation; \ClaimStatusHeuristic]
+\label{conj:quantum-master-complete}
+The \emph{quantum master equation}
+\[\hbar \Delta S + \frac{1}{2}\{S, S\} = 0\]
+or equivalently $\Delta e^{S/\hbar} = 0$
+is solved by the bar-cobar pairing.
+\end{conjecture}
+
+\begin{remark}[Scope]
+This conjecture is labeled \ClaimStatusHeuristic{} because the solution $S$ of
+the QME must be constructed from the bar-cobar pairing data, which requires
+controlling the $\hbar$-expansion of configuration space integrals and verifying
+the second-order BV identity at each order.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
+The bar-cobar pairing element $S = \langle \bar{B}^{\mathrm{ch}}(\cA), \Omega^{\mathrm{ch}}(\cA^!) \rangle$ should satisfy the quantum master equation $\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ in the BV algebra of Theorem~\ref{thm:config-space-bv}.
+\end{remark}
+
+\begin{conjecture}[BV quantization = bar-cobar duality; \ClaimStatusHeuristic]
+\label{conj:bv-equals-bar-cobar}
+The BV quantization of a chiral algebra $\mathcal{A}$ is equivalent to computing the
+bar-cobar homology:
+\[H^*_{\text{BV}}(\mathcal{A}) \cong H^*(\bar{B}(\mathcal{A}), \Omega(\mathcal{A}^!))\]
+where $\mathcal{A}^!$ is the Koszul dual.
+
+For affine Kac--Moody algebras, this is proved:
+Theorem~\ref{thm:bar-semi-infinite-km} identifies the bar complex
+with the semi-infinite \textup{(}BRST\textup{)} complex, and the
+bar-cobar quasi-isomorphism
+\textup{(}Theorem~\ref{thm:bar-cobar-isomorphism-main}\textup{)}
+computes the BV homology as $H^*(\barB(\widehat{\fg}_k),
+\Omega(\widehat{\fg}_{-k-2h^\vee}))$.
+The conjecture remains heuristic for general chiral algebras,
+where the semi-infinite complex may not admit a PBW filtration.
+\end{conjecture}
+
+\begin{remark}[Scope]
+For Kac--Moody algebras, both ingredients are proved: the bar-BRST identification
+(Theorem~\ref{thm:bar-semi-infinite-km}) and the bar-cobar quasi-isomorphism
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The conjecture extends this to
+general chiral algebras where a PBW filtration is unavailable.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
+The BV cohomology $H^*_{\mathrm{BV}}(\cA)$ and the bar-cobar cohomology $H^*(\bar{B}(\cA), \Omega(\cA^!))$ should be isomorphic as graded vector spaces for every Koszul chiral algebra, induced by a quasi-isomorphism of the underlying cochain complexes.
+\end{remark}
+
+\subsection{Summary: BV as functor}
+
+\begin{theorem}[BV functor; \ClaimStatusProvedHere]
+\label{thm:bv-functor}
+\index{BV functor}
+The BV quantization defines a functor:
+\[\mathrm{BV}: \mathrm{ChirAlg}_X \longrightarrow \mathrm{BV\text{-}Alg}\]
+
+preserving tensor products up to quasi-isomorphism (lax monoidal structure) and Verdier duality for Koszul $\mathcal{A}$: $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$.
+\end{theorem}
+
+\begin{proof}
+\emph{Objects.}  For a chiral algebra $\mathcal{A}$ on $X$, define $\mathrm{BV}(\mathcal{A}) = (\bar{B}^{\mathrm{ch}}(\mathcal{A}), \cdot, \Delta, \{-,-\})$, the BV algebra structure of Theorem~\ref{thm:config-space-bv}.  This assignment is well-defined: the bar complex, wedge product, and BV Laplacian depend only on the chiral algebra structure of~$\mathcal{A}$.
+
+\emph{Morphisms.}  A morphism $f: \mathcal{A} \to \mathcal{B}$ of chiral algebras induces $\bar{B}(f): \bar{B}^{\mathrm{ch}}(\mathcal{A}) \to \bar{B}^{\mathrm{ch}}(\mathcal{B})$ via $f^{\boxtimes(n+1)}$ on each bar degree.  This map preserves the wedge product (it acts on coefficients, not on forms) and commutes with the BV Laplacian (which is defined by residues, and $f$ preserves OPE data).  Therefore $\bar{B}(f)$ is a morphism of BV algebras.  Functoriality ($\bar{B}(g \circ f) = \bar{B}(g) \circ \bar{B}(f)$ and $\bar{B}(\mathrm{id}) = \mathrm{id}$) is inherited from the functoriality of $\bar{B}^{\mathrm{ch}}$.
+
+\emph{Monoidal structure.}  For chiral algebras $\mathcal{A}_1, \mathcal{A}_2$, the Eilenberg--Zilber theorem provides a quasi-isomorphism
+\[
+\bar{B}^{\mathrm{ch}}(\mathcal{A}_1 \otimes \mathcal{A}_2) \xrightarrow{\sim} \bar{B}^{\mathrm{ch}}(\mathcal{A}_1) \otimes \bar{B}^{\mathrm{ch}}(\mathcal{A}_2)
+\]
+via the shuffle map.  This is \emph{not} an isomorphism at the chain level: the bar construction involves iterated tensor powers over a single configuration space $\overline{C}_n(X)$, which does not factor as a product.  The shuffle quasi-isomorphism is compatible with the BV structures
+in the following sense.  On the target, the BV Laplacian satisfies
+$\Delta_{\otimes} = \Delta_1 \otimes \mathrm{id}
++ \mathrm{id} \otimes \Delta_2$
+(the Laplacian distributes over the tensor product because it acts
+by contraction against the diagonal, which factors).
+The BV bracket
+$\{a_1 \otimes a_2,\, b_1 \otimes b_2\}
+= \{a_1, b_1\} \otimes a_2 b_2
+\pm a_1 b_1 \otimes \{a_2, b_2\}$
+satisfies the Leibniz rule by definition of the Gerstenhaber bracket
+on a tensor product of BV algebras.  The shuffle map intertwines
+these structures because it is a coalgebra map (it respects the
+deconcatenation coproduct, which determines the Laplacian) and an
+algebra map up to homotopy (the Eilenberg--Zilber theorem).
+Explicitly, the failure of strict compatibility is controlled by
+higher homotopies in the $E_\infty$-structure on the bar complex
+(Berger--Fresse~\cite[\S11]{BerFres04}), which do not affect the
+lax monoidal structure at the derived level.  The functor
+$\mathrm{BV}$ is therefore lax monoidal.
+
+\emph{Verdier duality.}  Verdier duality $\mathbb{D}$ on $\overline{C}_n(X)$ exchanges logarithmic forms (bar data) with distributional sections (cobar data).  Specifically, $\mathbb{D}(\bar{B}^n(\mathcal{A})) = \mathrm{Dist}(C_n(X), (\mathcal{A}^*)^{\boxtimes n}) \cong \Omega^n(\mathcal{A}^!)$ (the cobar complex of the Koszul dual coalgebra), where the isomorphism uses the residue pairing between forms and distributions.  Under this identification, the bar differential becomes the cobar differential of $\mathcal{A}^!$, and the BV Laplacian becomes the cobar product, establishing $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$ as BV algebras.  This is the BV-algebraic manifestation of the bar-cobar Verdier duality proved in Theorem~\ref{thm:verdier-bar-cobar}.
+\end{proof}
+
+\begin{remark}[Shifted symplectic structure from BV]\label{rem:bv-shifted-symplectic}
+\index{shifted symplectic!from BV}
+The BV bracket $\{-,-\}$ (degree~$+1$) on $\barB^{\mathrm{ch}}(\cA)$
+is a $(-1)$-shifted Poisson structure; the Verdier duality
+identification $\mathbb{D}(\barB(\cA)) \cong \Omega(\cA^!)$
+provides non-degeneracy.  By the equivalence between non-degenerate
+shifted Poisson and shifted symplectic structures
+\cite{CPTVV17}, this makes the formal moduli problem
+$\mathrm{Def}_g(\cA)$ a $(-1)$-shifted symplectic derived stack.
+The deformation-obstruction decomposition
+$Q_g(\cA) \oplus Q_g(\cA^!)$ is a Lagrangian polarization.
+This is the content of
+Theorem~\ref{thm:shifted-symplectic-complementarity}.
+\end{remark}

@@ -1,0 +1,1082 @@
+\chapter{Derived structures and the geometric Langlands correspondence}
+\label{ch:derived-langlands}
+
+\index{geometric Langlands!derived structures|textbf}
+\index{oper|textbf}
+\index{bar complex!critical level|textbf}
+
+At generic level~$k$, the bar complex $\barB(\widehat{\fg}_k)$ is
+\emph{curved}: the curvature $m_0 = \kappa(\widehat{\fg}_k)$
+measures the failure of $d^2 = 0$ on the reduced complex, and its
+shadow is the central extension.  At the critical level
+$k = -h^\vee$, the curvature vanishes, the bar complex becomes
+an honest chain complex, and its cohomology acquires geometric
+meaning: it computes functions on the space of
+$\fg^\vee$-opers.  This identification---the bar complex at
+critical level \emph{is} the derived oper space---is the entry
+point of the geometric Langlands programme into bar-cobar duality.
+Moving away from the critical level to admissible levels
+$k = -h^\vee + p/q$, the bar complex acquires a periodic CDG
+structure indexed by the root of unity
+$q = e^{\pi i/(k + h^\vee)}$, and bar-cobar duality should
+recover the Kazhdan--Lusztig equivalence between
+$\widehat{\fg}_k$-modules and the semisimplified tilting
+quotient $\mathcal{C}(U_q(\fg))$ of the quantum group.  Any lift
+to the full finite-dimensional quantum-group category, or to a
+completed/coderived enlargement beyond the semisimplified target, is
+a separate outer MC3 problem.
+
+\begin{remark}[Periodicity frontier]
+The theorematic core of this chapter is asymmetric.  The critical-level
+bar/oper identification is proved, and the manuscript isolates a
+rank-$1$ periodic shadow in
+Proposition~\ref{prop:sl2-periodicity-dl}.  The stronger admissible-level
+statement that the full bar complex carries a periodic CDG structure,
+especially in the higher-rank form needed for Kazhdan--Lusztig
+transport, remains conjectural and belongs to the MC3/periodicity
+frontier.  Even on the KL side, the ordinary semisimplified target
+$\mathcal{C}(U_q(\fg))$ and any larger non-semisimple or
+completed/coderived lift must be kept separate.
+\end{remark}
+
+%================================================================
+% SECTION 1: DERIVED ALGEBRAIC GEOMETRY PREREQUISITES
+%================================================================
+
+\section{Derived algebraic geometry: prerequisites}
+\label{sec:dag-prerequisites}
+\index{derived algebraic geometry}
+
+The exposition follows
+Lurie~\cite{HA} and To\"en--Vezzosi.
+
+\begin{definition}[Derived stack]
+\label{def:derived-stack}
+\index{derived stack|textbf}
+A \emph{derived stack} (over a field~$k$ of characteristic zero) is
+a functor
+$X\colon \mathrm{cdga}_k^{\mathrm{op}} \to \mathcal{S}$
+from commutative dg-algebras to the $\infty$-category of spaces,
+satisfying \'etale descent.  A derived stack~$X$ has:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A \emph{classical truncation} $t_0(X)$, which is an ordinary
+  algebraic stack obtained by restricting to ordinary (non-dg)
+  commutative algebras.
+\item A \emph{cotangent complex} $\mathbb{L}_X \in \mathrm{QCoh}(X)$,
+  a quasi-coherent sheaf on~$X$ (in the derived sense) controlling
+  deformations and obstructions.  For a smooth classical
+  scheme~$Y$ viewed as a derived stack, $\mathbb{L}_Y = \Omega^1_Y[0]$
+  is the ordinary sheaf of differentials.
+\item A \emph{derived structure sheaf} $\cO_X^{\mathrm{der}}$,
+  a sheaf of cdga's whose cohomology sheaves
+  $\mathcal{H}^i(\cO_X^{\mathrm{der}})$ encode the derived
+  information beyond the classical truncation.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Formal smoothness]
+\label{def:formal-smoothness}
+\index{formal smoothness}
+A derived stack~$X$ is \emph{formally smooth} if its cotangent
+complex $\mathbb{L}_X$ is concentrated in cohomological degree~$0$
+(i.e., $\mathbb{L}_X \simeq \Omega^1_{t_0(X)}[0]$).  Equivalently,
+$X$ has no higher obstructions: every infinitesimal deformation
+extends.
+\end{definition}
+
+\begin{remark}[Formal smoothness vs.\ derived richness]
+\label{rem:formal-smooth-derived}
+The oper space $\mathrm{Op}_{\fg^\vee}(D)$ on a formal disk is
+formally smooth (Frenkel--Gaitsgory~\cite{FG06}), so its cotangent
+complex is classical.  Nevertheless, the bar complex
+$\barB(\widehat{\fg}_{-h^\vee})$ naturally produces a chain complex
+computing $\cO(\mathrm{Op}_{\fg^\vee}(D))$---the derived structure
+is in the bar complex, not in the oper space.  The bar complex is the
+\emph{derived enhancement} of the (classically smooth) oper space.
+\end{remark}
+
+
+%================================================================
+% SECTION 2: THE OPER SPACE
+%================================================================
+
+\section{The oper space}
+\label{sec:oper-space}
+\index{oper!definition|textbf}
+
+\begin{definition}[Opers; Beilinson--Drinfeld]
+\label{def:opers}
+\index{oper!Beilinson--Drinfeld}
+Let $G^\vee$ be the Langlands dual group of~$G$, with
+Lie algebra $\fg^\vee$, Borel subalgebra
+$\mathfrak{b}^\vee \subset \fg^\vee$, and nilpotent radical
+$\mathfrak{n}^\vee \subset \mathfrak{b}^\vee$.  Let $X$ be a smooth algebraic
+curve.  A \emph{$G^\vee$-oper} on~$X$ is a triple
+$(F_{G^\vee}, F_{B^\vee}, \nabla)$ where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $F_{G^\vee}$ is a principal $G^\vee$-bundle on~$X$;
+\item $F_{B^\vee} \subset F_{G^\vee}$ is a reduction to the Borel
+  subgroup~$B^\vee$;
+\item $\nabla$ is a connection on $F_{G^\vee}$ satisfying the
+  \emph{oper condition}: the induced map
+  $TX \to F_{G^\vee}/F_{B^\vee} = F_{G^\vee} \times_{G^\vee} (G^\vee/B^\vee)$
+  given by the connection lies in the open $B^\vee$-orbit.
+\end{enumerate}
+The moduli space of $G^\vee$-opers on~$X$ is denoted
+$\mathrm{Op}_{G^\vee}(X)$.
+\end{definition}
+
+\begin{example}[SL2 opers as projective connections]
+\label{ex:sl2-opers}
+\index{oper!$\mathrm{SL}_2$}
+For $G = \mathrm{SL}_2$, opers on a curve~$X$ are
+\emph{projective connections}: second-order differential operators
+$\partial_z^2 + t(z)$ on~$X$.  On a formal disk $D = \mathrm{Spec}\, k[[z]]$, the space of
+$\mathrm{PGL}_2$-opers is $\mathrm{Op}_{\mathrm{PGL}_2}(D) \cong k[[z]]$,
+parametrized by the ``projective connection'' $t(z) = \sum_{n \geq 0} t_n z^n$.
+In general, $\mathrm{Op}_{G^\vee}(D) \cong k[[z]]^{\mathrm{rank}(\fg)}$
+is a formal power series space of dimension $\mathrm{rank}(\fg)$.
+\end{example}
+
+\begin{theorem}[Feigin--Frenkel center; \ClaimStatusProvedElsewhere]
+\label{thm:ff-center-dl}
+\index{Feigin--Frenkel center|textbf}
+\textup{(}Feigin--Frenkel~\cite{Feigin-Frenkel},
+\cite{FG06}\textup{)}\quad
+The center of the completed enveloping algebra of
+$\widehat{\fg}$ at the critical level $k = -h^\vee$ is
+canonically isomorphic to the algebra of functions on
+$\fg^\vee$-opers:
+\begin{equation}\label{eq:ff-center}
+Z(\widehat{\fg}_{-h^\vee})
+\;\cong\;
+\mathrm{Fun}\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\end{equation}
+Moreover, the center $Z(\widehat{\fg}_{-h^\vee})$ is a polynomial
+algebra on generators in conformal weights
+$d_1, d_2, \ldots, d_r$ \textup{(}the exponents of $\fg$
+plus~$1$\textup{)}.
+\end{theorem}
+
+
+%================================================================
+% SECTION 3: BAR COMPLEX AT CRITICAL LEVEL
+%================================================================
+
+\section{Bar complex at critical level = derived oper functions}
+\label{sec:bar-critical}
+\index{bar complex!critical level}
+
+\begin{theorem}[Zeroth bar cohomology = oper functions;
+\ClaimStatusProvedHere]
+\label{thm:oper-bar-h0-dl}
+\index{bar complex!$H^0 = \mathrm{Fun}(\mathrm{Op})$}
+For $\fg$ a simple finite-dimensional Lie algebra, the zeroth
+cohomology of the reduced bar complex at critical level is:
+\begin{equation}\label{eq:h0-oper}
+H^0\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+\;\cong\;
+\mathrm{Fun}\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+At the critical level, the curvature vanishes
+($\kappa(\widehat{\fg}_{-h^\vee}) = 0$,
+Corollary~\ref{cor:critical-level-universality}), so the bar
+complex is an honest chain complex.
+The PBW spectral sequence
+(Theorem~\ref{thm:pbw-koszulness-criterion}) has
+\[
+E_1^{p,q}
+= H^q\bigl(\fg;\, S^p(\fg[t^{-1}]t^{-1})\bigr)
+\;\Longrightarrow\;
+H^{p+q}\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr).
+\]
+At $p + q = 0$: the Whitehead lemma gives
+$H^0(\fg; S^*(\fg[t^{-1}]t^{-1})) = S^*(\fg[t^{-1}]t^{-1})^\fg$,
+the invariant subalgebra.  By the Feigin--Frenkel theorem
+(Theorem~\ref{thm:ff-center-dl}), this invariant subalgebra is exactly
+$\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$.  The higher
+differentials $d_r$ for $r \geq 1$ vanish on total degree~$0$
+by degree considerations, so $E_\infty^{0,0} = E_1^{0,0}$.
+\end{proof}
+
+\begin{proposition}[First bar cohomology as oper one-forms;
+\ClaimStatusProvedHere]
+\label{prop:oper-bar-h1-dl}
+\index{bar complex!$H^1 = \Omega^1(\mathrm{Op})$}
+\begin{equation}\label{eq:h1-oper}
+H^1\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+\;\cong\;
+\Omega^1\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On the $E_1$ page of the PBW spectral sequence, the total degree-$1$
+component is $E_1^{1,0} \oplus E_1^{0,1}$.  The term
+$E_1^{0,1} = H^1(\fg; S^*(\fg[t^{-1}]t^{-1}))$ vanishes by the
+Whitehead lemma ($H^1(\fg; M) = 0$ for any finite-dimensional
+$\fg$-module~$M$ when $\fg$ is semisimple).  The surviving term
+$E_1^{1,0} = \Omega^1(S^*(\fg[t^{-1}]t^{-1})^\fg)$ is the module of
+K\"ahler differentials of the invariant subalgebra.  By formal
+smoothness of the oper space (Frenkel--Gaitsgory~\cite{FG06}),
+this is $\Omega^1(\mathrm{Op}_{\fg^\vee}(D))$.  Again, higher
+differentials vanish by degree.
+\end{proof}
+
+\begin{proposition}[Second bar cohomology as oper two-forms;
+\ClaimStatusProvedHere]
+\label{prop:oper-bar-h2-dl}
+\index{bar complex!$H^2 = \Omega^2(\mathrm{Op})$}
+\begin{equation}\label{eq:h2-oper}
+H^2\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+\;\cong\;
+\Omega^2\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On the $E_1$ page of the PBW spectral sequence, the total
+degree-$2$ component is
+$E_1^{2,0} \oplus E_1^{1,1} \oplus E_1^{0,2}$.
+
+The coefficient module $S^p(\fg[t^{-1}]t^{-1})$ decomposes as a
+direct sum of finite-dimensional $\fg$-modules, graded by conformal
+weight: each component
+$S^p(\fg[t^{-1}]t^{-1})_w$ is a finite-dimensional representation
+of the semisimple Lie algebra~$\fg$.  By Whitehead's first and
+second lemmas, $H^q(\fg; V) = 0$ for $q = 1, 2$ and any
+finite-dimensional $\fg$-module~$V$ when $\fg$ is semisimple.
+Since Lie algebra cohomology commutes with direct sums:
+\begin{align*}
+E_1^{1,1} &= H^1\bigl(\fg;\, S^1(\fg[t^{-1}]t^{-1})\bigr) = 0, \\
+E_1^{0,2} &= H^2\bigl(\fg;\, S^0(\fg[t^{-1}]t^{-1})\bigr)
+           = H^2(\fg; k) = 0.
+\end{align*}
+The surviving term is $E_1^{2,0} = \Omega^2(S^*(\fg[t^{-1}]t^{-1})^\fg)
+= \Omega^2(\mathrm{Op}_{\fg^\vee}(D))$ by formal smoothness.
+Higher differentials $d_r$ ($r \geq 2$) on $E_r^{2,0}$ land in
+$E_r^{2+r, 1-r}$ where $1 - r < 0$, hence vanish; differentials
+$d_r\colon E_r^{2-r, r-1} \to E_r^{2,0}$ originate from terms with
+$q = r - 1 \geq 1$, which are zero by the Whitehead vanishing above.
+\end{proof}
+
+\begin{proposition}[Whitehead spectral decomposition;
+\ClaimStatusProvedHere]
+\label{prop:whitehead-spectral-decomposition}
+\index{bar complex!Whitehead decomposition|textbf}
+\index{Whitehead lemma!spectral decomposition}
+On the PBW spectral sequence for~$\barB(\widehat{\fg}_{-h^\vee})$,
+the $E_1$ page decomposes as a tensor product:
+\begin{multline}\label{eq:whitehead-spectral-decomposition}
+E_1^{p,q}
+= H^q\bigl(\fg;\, S^p(\fg[t^{-1}]t^{-1})\bigr)
+\cong
+S^p(\fg[t^{-1}]t^{-1})^{\fg}
+\otimes
+H^q(\fg;\, k)\\
+\cong
+\mathrm{Fun}^p\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+\otimes H^q(\fg;\, k).
+\end{multline}
+In particular, $E_1^{p,q} = 0$ unless~$q$ belongs to the
+set of degrees of the exterior algebra
+$\Lambda(\omega_{2d_1-1},\allowbreak \ldots,\allowbreak \omega_{2d_r-1})$,
+where $d_1, \ldots, d_r$ are the exponents of~$\fg$
+incremented by~$1$.  For
+$\fg = \mathfrak{sl}_2$ ($r = 1$, $d_1 = 2$),
+the only nonzero rows are $q = 0$ and $q = 3$.
+\end{proposition}
+
+\begin{proof}
+The coefficient module $S^p(\fg[t^{-1}]t^{-1})$ decomposes
+as a $\fg$-module into a direct sum of finite-dimensional
+representations, graded by conformal weight.  By the
+\emph{generalized Whitehead lemma}: for any simple~$\fg$ and any
+nontrivial finite-dimensional irreducible $\fg$-module~$V$,
+$H^q(\fg;\, V) = 0$ for \emph{all}~$q$.  \textup{(}Proof: the
+Casimir element~$C$ acts on~$V$ by the nonzero scalar
+$\langle \lambda,\, \lambda + 2\rho\rangle$ but trivially on
+cohomology, forcing $H^q(\fg;\, V) = 0$.\textup{)}
+
+Decompose $S^p(\fg[t^{-1}]t^{-1})
+= M^{\mathrm{triv}} \oplus M^{\mathrm{nontriv}}$
+into trivial and nontrivial isotypic components.  Since Lie
+algebra cohomology commutes with direct sums:
+\[
+H^q\bigl(\fg;\, S^p(\fg[t^{-1}]t^{-1})\bigr)
+= H^q(\fg;\, M^{\mathrm{triv}})
+= S^p(\fg[t^{-1}]t^{-1})^{\fg} \otimes H^q(\fg;\, k).
+\]
+The identification
+$S^*(\fg[t^{-1}]t^{-1})^{\fg}
+\cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+is the Feigin--Frenkel theorem~\textup{(}Theorem~\ref{thm:ff-center-dl}\textup{)}.
+By Chevalley's theorem,
+$H^*(\fg;\, k) \cong
+\Lambda(\omega_{2d_1-1}, \ldots, \omega_{2d_r-1})$, which is
+nonzero precisely in degrees that are sums of distinct elements
+from $\{2d_1 - 1, \ldots, 2d_r - 1\}$.
+
+\emph{Remark on earlier proofs.}
+The Whitehead vanishing results used in the proofs of
+Propositions~\ref{prop:oper-bar-h1-dl}
+and~\ref{prop:oper-bar-h2-dl} ($H^1 = H^2 = 0$ with
+coefficients) are special cases of this decomposition: the
+classical Whitehead lemmas ($q = 1, 2$) follow from the
+generalized version, and the vanishing of $E_1^{p,q}$ for
+$q = 1, 2$ is immediate from $H^1(\fg; k) = H^2(\fg; k) = 0$.
+\end{proof}
+
+\begin{remark}[Spectral consequences by rank]
+\label{rem:spectral-by-rank}
+\index{bar complex!rank dependence}
+The Whitehead decomposition gives $2^r$ nonzero rows on the $E_1$
+page for rank~$r$: $\mathfrak{sl}_2$ has $2$ rows ($d_4$ only),
+$\mathfrak{sl}_3$ has $4$ rows ($d_4$, $d_6$, composites).
+Degeneration occurs after $\leq 2d_r$ steps ($d_r$ the largest
+exponent), with the abutment controlled by transgression
+differentials
+$d_{2d_i}\colon \omega_{2d_i-1} \mapsto \tau_i \in
+\mathrm{Fun}^{2d_i}(\mathrm{Op})$.
+\end{remark}
+
+
+\begin{proposition}[Differential analysis at arity 3;
+\ClaimStatusProvedHere]
+\label{prop:h3-differential-analysis}
+\index{bar complex!$H^3$ obstruction}
+On the PBW spectral sequence for~$\barB(\widehat{\fg}_{-h^\vee})$,
+the total degree-$3$ terms on the $E_1$ page are:
+\begin{align*}
+E_1^{3,0} &= S^3(\fg[t^{-1}]t^{-1})^{\fg}
+  \;\cong\; \Omega^3(\mathrm{Op}_{\fg^\vee}(D))
+  \quad\text{(formal smoothness)}, \\
+E_1^{2,1} &= H^1(\fg;\, S^2(\fg[t^{-1}]t^{-1})) = 0
+  \quad\text{(Whitehead)}, \\
+E_1^{1,2} &= H^2(\fg;\, S^1(\fg[t^{-1}]t^{-1})) = 0
+  \quad\text{(Whitehead)}, \\
+E_1^{0,3} &= H^3(\fg; k) \cong k
+  \quad\text{(Cartan)}.
+\end{align*}
+The differentials $d_r\colon E_r^{0,3} \to E_r^{r, 4-r}$
+vanish for $r = 1, 2, 3$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $d_1\colon E_1^{0,3} \to E_1^{1,3}
+  = H^3(\fg;\, \fg[t^{-1}]t^{-1})
+  = \bigoplus_{n \geq 1} H^3(\fg;\, \fg)$.
+  By Poincar\'e duality for Lie algebra cohomology,
+  $H^3(\fg;\, \fg) \cong H^{\dim\fg - 3}(\fg;\, \fg)^*$
+  \textup{(}using $\fg \cong \fg^*$ via the Killing form\textup{)}.
+  For $\fg = \mathfrak{sl}_2$, this gives
+  $H^3(\mathfrak{sl}_2;\, \mathfrak{sl}_2) \cong H^0(\mathfrak{sl}_2;\, \mathfrak{sl}_2)^*
+  = (\mathfrak{sl}_2^{\mathfrak{sl}_2})^* = 0$.
+  More generally, $H^q(\fg;\, \fg) = 0$ for \emph{all}~$q$
+  and all simple~$\fg$, since $\fg$ is a nontrivial irreducible
+  $\fg$-module and the Casimir element acts by a nonzero scalar
+  on~$\fg$ but trivially on cohomology
+  \textup{(}generalized Whitehead lemma\textup{)}.
+  Hence $d_1 = 0$.
+\item $d_2\colon E_2^{0,3} \to E_2^{2,2}$: the target satisfies
+  $E_2^{2,2} \leq E_1^{2,2} = H^2(\fg;\, S^2(\cdots)) = 0$
+  \textup{(}Whitehead\textup{)}, so $d_2 = 0$.
+\item $d_3\colon E_3^{0,3} \to E_3^{3,1}$: similarly
+  $E_3^{3,1} \leq E_1^{3,1} = H^1(\fg;\, S^3(\cdots)) = 0$
+  \textup{(}Whitehead\textup{)}, so $d_3 = 0$.
+\end{enumerate}
+The first potentially nonzero differential is
+\begin{equation}\label{eq:d4-obstruction}
+d_4\colon E_4^{0,3} = k
+\;\longrightarrow\;
+E_4^{4,0} \subset S^4(\fg[t^{-1}]t^{-1})^{\fg},
+\end{equation}
+which maps the Cartan $3$-cocycle
+$\omega_3(a,b,c) = \kappa(a,[b,c])$ to the degree-$4$ invariant
+subalgebra of the loop modes.
+\end{proposition}
+
+\begin{proof}
+The identification of $E_1^{p,q}$ follows from the PBW filtration
+as in the proofs of Theorem~\ref{thm:oper-bar-h0-dl} and
+Propositions~\ref{prop:oper-bar-h1-dl}--\ref{prop:oper-bar-h2-dl}.
+The Whitehead vanishing at $q = 1, 2$ and the Cartan theorem
+$H^3(\fg; k) = k$ are classical.  For the vanishing
+$H^3(\fg;\, \fg) = 0$: by Poincar\'e duality,
+$H^n(\fg; V) \cong H^{\dim\fg - n}(\fg; V^*)^*$ for any
+finite-dimensional $\fg$-module~$V$ when $\fg$ is semisimple
+(using the Killing form to identify
+$\Lambda^{\dim\fg}(\fg^*) \cong k$).  Taking $V = \fg \cong \fg^*$
+gives $H^3(\fg;\, \fg) \cong H^{\dim\fg - 3}(\fg;\, \fg)^*$.
+For $\mathfrak{sl}_2$ ($\dim = 3$), this reduces to $H^0(\mathfrak{sl}_2;\, \mathfrak{sl}_2)^* = 0$.
+For general simple~$\fg$, the generalized Whitehead lemma gives
+$H^q(\fg;\, V) = 0$ for \emph{all}~$q$ when~$V$ is a
+nontrivial irreducible finite-dimensional $\fg$-module:
+the Casimir $C \in Z(U\fg)$ acts on~$V$ by the nonzero scalar
+$\langle \lambda, \lambda + 2\rho\rangle$ (where $\lambda$ is the
+highest weight of~$V$), but acts trivially on cohomology
+since it lies in the center; thus
+$\langle \lambda, \lambda + 2\rho\rangle \cdot H^q(\fg; V)
+= 0$ forces $H^q(\fg; V) = 0$.  For $V = \fg$ (the adjoint,
+with highest weight~$\theta$), this gives the claim.
+
+The vanishing of $d_1$, $d_2$, $d_3$ then follows because each
+differential maps into a subquotient of the indicated~$E_1$ term.
+\end{proof}
+
+\begin{proposition}[Non-vanishing of \texorpdfstring{$d_4$}{d4}; \ClaimStatusProvedHere]
+\label{prop:d4-nonvanishing}
+\index{bar complex!$d_4$ obstruction}
+\index{Cartan transgression}
+In the PBW spectral sequence for $\barB(\widehat{\fg}_{-h^\vee})$,
+the differential
+$d_4\colon E_4^{0,3} = k \to E_4^{4,0}$
+of~\eqref{eq:d4-obstruction} satisfies $d_4(\omega_3) \neq 0$.
+Consequently $E_5^{0,3} = 0$.
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:bar-computes-ext}, the bar cohomology
+computes module self-extensions:
+$H^n(\barB(\widehat{\fg}_{-h^\vee})) \cong
+\mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}(V_{\mathrm{crit}},
+V_{\mathrm{crit}})$.
+Frenkel and Teleman~\cite{FT06} proved
+$\mathrm{Ext}^3_{\widehat{\fg}_{-h^\vee}}(V_{\mathrm{crit}},
+V_{\mathrm{crit}}) \cong \Omega^3(\mathrm{Op}_{\fg^\vee}(D))$
+(\ClaimStatusProvedElsewhere).
+Since $\mathrm{Op}_{\fg^\vee}(D)$ is formally smooth
+\cite{FG06}, the cotangent complex is classical,
+$\mathbb{L}_{\mathrm{Op}} = \Omega^1[0]$, and
+$\Omega^3(\mathrm{Op})$ is concentrated in the summand
+$E_\infty^{3,0}$.  In particular
+$E_\infty^{0,3} = 0$.
+
+Now $E_4^{0,3} = E_1^{0,3} = H^3(\fg; k) = k$ (the Cartan
+$3$-cocycle class), since the differentials $d_1, d_2, d_3$
+vanish on $E_r^{0,3}$ by
+Proposition~\ref{prop:h3-differential-analysis}.  The only
+differential out of $E_4^{0,3}$ is $d_4$, and subsequent
+differentials from $E_r^{0,3}$ vanish for degree reasons
+(targets lie in $E_r^{r, 3-r+1}$ with $3 - r + 1 < 0$ for
+$r \geq 5$).  Thus $E_\infty^{0,3} = \ker d_4|_{E_4^{0,3}}$.
+Since $E_\infty^{0,3} = 0$ and $E_4^{0,3} = k$ is one-dimensional,
+$d_4(\omega_3) \neq 0$.
+\end{proof}
+
+\begin{remark}[Transgression interpretation]
+\label{rem:d4-transgression}
+The non-vanishing of $d_4$ is the chain-level incarnation of the
+\emph{transgression} of the Cartan $3$-cocycle
+$\omega_3(a,b,c) = \kappa(a,[b,c])$ through the loop algebra:
+$\omega_3$ transgresses to a $1$-cocycle on $L\fg$ valued in the
+Feigin--Frenkel center~$\mathfrak{z}$, and $d_4$ captures this
+transgression in the PBW spectral sequence.
+\end{remark}
+
+\begin{remark}[H3 obstruction]\label{rem:h3-obstruction}
+The $d_4$ differential~\eqref{eq:d4-obstruction} is the unique
+obstruction to extending the oper identification beyond~$H^2$.
+Its non-vanishing (Proposition~\ref{prop:d4-nonvanishing}) shows
+that $H^3(\barB(\widehat{\fg}_{-h^\vee}))$ is \emph{not} simply
+$S^3$-invariants modulo the Cartan class, but requires the
+Frenkel--Teleman computation to resolve.
+\end{remark}
+
+\begin{corollary}[Third cohomology at critical level; \ClaimStatusProvedHere]
+\label{cor:h3-oper}
+\index{oper!$H^3$ identification}
+$H^3(\barB(\widehat{\fg}_{-h^\vee})) \cong
+\Omega^3(\mathrm{Op}_{\fg^\vee}(D))$.
+\end{corollary}
+
+\begin{proof}
+Combine Corollary~\ref{cor:bar-computes-ext} with
+Frenkel--Teleman~\cite{FT06}.
+\end{proof}
+
+\begin{theorem}[Full derived identification;
+\ClaimStatusProvedHere]
+\label{thm:oper-bar-dl}
+\index{oper!derived identification}
+For all $n \geq 0$:
+\begin{equation}\label{eq:hn-oper}
+H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+\;\cong\;
+\bigwedge\nolimits^n
+\mathbb{L}_{\mathrm{Op}_{\fg^\vee}(D)}
+\;=\;
+\Omega^n\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\end{equation}
+In other words, the bar complex at critical level computes the
+derived structure sheaf of the oper space:
+\[
+\barB(\widehat{\fg}_{-h^\vee})
+\;\simeq\;
+\cO^{\mathrm{der}}\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+The argument combines two results, each proved independently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bar computes Ext.}\quad
+  Corollary~\ref{cor:bar-computes-ext}: for the chiral algebra
+  $\widehat{\fg}_{-h^\vee}$ (whose curvature vanishes at critical
+  level by Corollary~\ref{cor:critical-level-universality}), the
+  bar cohomology computes vacuum self-extensions:
+  \[
+  H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+  \;\cong\;
+  \mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}
+  (V_{\mathrm{crit}},\, V_{\mathrm{crit}})
+  \qquad \text{for all } n \geq 0.
+  \]
+  This is the chiral analogue of the standard bar-resolution
+  identification (Loday--Vallette~\cite{LV12}), validated in the
+  chiral setting by Main Theorem~A
+  (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+\item \emph{Ext computes oper forms.}\quad
+  Frenkel--Teleman~\cite{FT06} (\ClaimStatusProvedElsewhere):
+  \[
+  \mathrm{Ext}^n_{\widehat{\fg}_{-h^\vee}}
+  (V_{\mathrm{crit}},\, V_{\mathrm{crit}})
+  \;\cong\;
+  \Omega^n\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+  \qquad \text{for all } n \geq 0.
+  \]
+\end{enumerate}
+Composing (i) and (ii) gives $H^n(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all~$n$.
+The second statement (dg-algebra quasi-isomorphism with
+$\cO^{\mathrm{der}}(\mathrm{Op})$) follows since the oper space
+is formally smooth (Frenkel--Gaitsgory~\cite{FG06}), so
+$\bigwedge^n \mathbb{L}_{\mathrm{Op}} = \Omega^n$ and the
+derived structure sheaf is the de~Rham algebra.
+
+This is the same argument used in the proof of
+Corollary~\ref{cor:h3-oper} at $n = 3$; the key observation is
+that it is $n$-independent.
+\end{proof}
+
+\begin{remark}[Proof structure and independent confirmation]
+\label{rem:oper-evidence}
+\index{oper!proof structure}
+The proof combines bar-Ext (Corollary~\ref{cor:bar-computes-ext})
+with Frenkel--Teleman~\cite{FT06}.  Independent PBW spectral
+sequence confirmation is available for $n \leq 3$
+(Theorem~\ref{thm:oper-bar-h0-dl},
+Propositions~\ref{prop:oper-bar-h1-dl}--\ref{prop:oper-bar-h2-dl},
+Corollary~\ref{cor:h3-oper}).  The Whitehead spectral decomposition
+(Proposition~\ref{prop:whitehead-spectral-decomposition}) extends
+to all~$n$, giving
+$E_1^{p,q} = \mathrm{Fun}^p(\mathrm{Op}) \otimes H^q(\fg; k)$
+and reducing the spectral sequence to transgression differentials.
+The result refines the Frenkel--Gaitsgory localization functor
+$\Delta\colon D(\widehat{\fg}_{-h^\vee}\text{-}\mathrm{mod})
+\to D(\mathrm{QCoh}(\mathrm{Op}))$
+at the chain level; see Theorem~\ref{thm:oper-bar}.
+\end{remark}
+
+\begin{proposition}[The bar complex as localization;
+\ClaimStatusProvedHere]
+\label{prop:bar-as-localization}
+\index{localization functor!bar complex}
+The map
+\[
+\barB(\widehat{\fg}_{-h^\vee})
+\;\longrightarrow\;
+\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))
+\]
+given by projecting to $H^0$ is a map of algebras: the bar
+complex at critical level is a dg-algebra (since the curvature
+vanishes), and the projection to cohomology respects
+multiplication.  This map is the chain-level incarnation of the
+Frenkel--Gaitsgory localization functor~$\Delta$ applied to the
+vacuum module $V_{-h^\vee}(\fg)$.
+\end{proposition}
+
+\begin{proof}
+The bar complex $\barB(\widehat{\fg}_{-h^\vee})$ carries a product
+from the coproduct on the bar coalgebra (dual to the algebra
+structure on the cobar construction).  At critical level, the
+curvature vanishes and the bar complex is a genuine dg-algebra.
+The PBW filtration is compatible with the product, and the
+identification $H^0 = \mathrm{Fun}(\mathrm{Op})$ is an algebra
+isomorphism by the Feigin--Frenkel theorem.  The claim that this
+coincides with the Frenkel--Gaitsgory functor follows from
+\cite{FG06}, Theorem~9.5: the localization of the vacuum module
+is $\cO_{\mathrm{Op}}$, and our bar complex provides a specific
+chain-level model.
+\end{proof}
+
+
+%================================================================
+% SECTION 4: ROOT-OF-UNITY BAR COMPLEXES
+%================================================================
+
+\section{Root-of-unity bar complexes}
+\label{sec:root-of-unity}
+\index{root of unity!bar complex|textbf}
+\index{CDG algebra!periodic}
+
+\subsection{Admissible levels and the quantum group parameter}
+
+\begin{definition}[Admissible level]
+\label{def:admissible-level-dl}
+A level $k$ is \emph{admissible} if
+$k = -h^\vee + p/q$ where $p, q \in \bZ_{> 0}$, $\gcd(p, q) = 1$,
+and $p \geq h^\vee$ (for simply-laced~$\fg$; the condition is more
+involved for non-simply-laced types).  The associated quantum group
+parameter is $q_{\mathrm{QG}} = e^{\pi i/(k + h^\vee)} = e^{\pi i q/p}$.
+\end{definition}
+
+At admissible level, the bar complex has curvature
+$m_0 = k \cdot \kappa \cdot |0\rangle$
+(where $\kappa$ is the normalized Killing form),
+which is non-zero but \emph{rational}.
+This curvature arises directly from the level-$k$ central extension:
+the bilinear form $k\kappa(a, b)$ appears as the double-pole residue
+$a_{(1)}b = k\kappa(a,b)|0\rangle$ in the OPE, and obstructs
+$d^2 = 0$ on the unreduced bar complex
+(Remark~\ref{rem:bicomplex-obstruction}).
+The related Sugawara central charge $c = k\dim(\fg)/(k+h^\vee)$
+is a derived quantity, not the direct source of curvature.
+Meanwhile, the representation category $\cO_k^{\mathrm{int}}(\widehat{\fg})$
+is semisimple with $|\mathrm{Adm}_k|$ simple objects
+(Theorem~\ref{thm:admissible-rep-theory}).
+
+\subsection{The periodic CDG structure}
+
+\begin{definition}[Curved dg-algebra (CDG)]
+\label{def:cdg-algebra}
+\index{CDG algebra|textbf}
+A \emph{curved differential graded algebra} (CDG-algebra) is a
+triple $(A, d, h)$ where $A$ is a graded algebra,
+$d\colon A \to A[1]$ is a derivation, and $h \in A^2$ is the
+\emph{curvature element}, satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $d^2(a) = [h, a]$ for all $a \in A$;
+\item $dh = 0$ (the curvature is closed).
+\end{enumerate}
+The bar complex $\barB(\widehat{\fg}_k)$ at non-critical level is
+a CDG-coalgebra: the curvature $m_0 = \kappa$ satisfies $d(m_0) = 0$
+and $d^2 = [m_0, -]$
+(Proposition~\ref{prop:pole-decomposition}).
+\end{definition}
+
+\begin{conjecture}[Periodic CDG structure at admissible level;
+\ClaimStatusConjectured]
+\label{conj:periodic-cdg}
+\index{CDG algebra!periodicity}
+At admissible level $k = -h^\vee + p/q$, the bar complex
+$\barB(\widehat{\fg}_k)$ admits a \emph{periodic CDG structure}:
+there exists a natural isomorphism of CDG-coalgebras
+\begin{equation}\label{eq:periodic-cdg}
+\barB^{n + 2s}(\widehat{\fg}_k)
+\;\cong\;
+\barB^n(\widehat{\fg}_k)
+\end{equation}
+where $s = p$ \textup{(}the numerator of
+$k + h^\vee = p/q$\textup{)}, so the bar complex is $2p$-periodic
+in bar degree.
+\end{conjecture}
+
+\begin{remark}[Positselski's framework]
+\label{rem:positselski}
+\index{Positselski!CDG algebras}
+Positselski~\cite{Positselski11} develops CDG-algebras whose
+Koszul duality exchanges coderived and contraderived categories:
+$D^{\mathrm{co}}(A) \simeq D^{\mathrm{ctr}}(B)$.  For periodic
+CDG-algebras, the coderived category reduces to the stable category
+of a finite-dimensional quotient (the passage from $U_q(\fg)$ to
+$u_q(\fg)$).  Conjecture~\ref{conj:periodic-cdg} asserts that the
+bar complex at admissible level is periodic in this sense; upgrading
+it requires understanding the quantum group center action on the bar
+complex at a root of unity.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+\end{remark}
+
+
+\subsection{Evidence for periodicity}
+
+\begin{proposition}[Affine sl2 periodicity;
+\ClaimStatusProvedHere]
+\label{prop:sl2-periodicity-dl}
+\index{periodicity!$\widehat{\mathfrak{sl}}_2$}
+For $\fg = \mathfrak{sl}_2$, the bar cohomology
+$H^n(\barB(\widehat{\mathfrak{sl}}_{2,k}))$ at generic level
+satisfies the periodicity
+\begin{equation}\label{eq:sl2-periodicity}
+\dim H^{n+4}(\barB)
+= \dim H^n(\barB)
+\quad
+\text{for all } n \geq 1,
+\end{equation}
+with period $2h = 4$ \textup{(}$h = 2$ for $\mathfrak{sl}_2$\textup{)}.
+\end{proposition}
+
+\begin{proof}
+See the proof in Chapter~\ref{chap:kac-moody}
+(Theorem~\ref{thm:affine-periodicity-critical}): the periodicity follows from
+the rank-$1$ structure of the weight lattice and the $4$-periodicity
+of the Riordan numbers (the bar cohomology dimensions for
+$\mathfrak{sl}_2$; see Theorem~\ref{thm:sl2-koszul-dual}).
+\end{proof}
+
+\begin{remark}[Periodicity and quantum group]
+\label{rem:periodicity-quantum}
+\index{quantum group!from periodicity}
+At admissible level $k = -2 + p/q$, the period $2h = 4$ divides
+$2p$ when $p$ is even.  The $4$-periodicity of the bar cohomology
+dimensions is a shadow of the representation-theoretic periodicity
+of the quantum group $U_q(\mathfrak{sl}_2)$ at
+$q = e^{\pi i q/p}$.  For the small quantum group $u_q$, the
+representation category is $2p$-periodic, and Conjecture~\ref{conj:periodic-cdg} asserts
+that the bar complex ``sees'' this periodicity via CDG structure.
+\end{remark}
+
+\begin{remark}[Scope boundary for periodicity]
+\label{rem:periodicity-scope-boundary-dl}
+Only rank-$1$ strict periodicity is proved in this chapter
+\textup{(}Proposition~\ref{prop:sl2-periodicity-dl}\textup{)}.
+For higher-rank affine algebras, strict periodicity is not established and
+can fail; the active statement remains the periodic CDG conjecture
+\textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)} together with
+growth/profile control.
+In particular, periodicity does not transfer automatically across Koszul
+duality or level-shift involutions without additional rank-sensitive input.
+\end{remark}
+
+
+%================================================================
+% SECTION 5: THE KAZHDAN-LUSZTIG EQUIVALENCE FROM BAR-COBAR
+%================================================================
+
+\section{Kazhdan--Lusztig from bar-cobar: chain-level adjunction and periodic frontier}
+\label{sec:kl-from-bar-cobar}
+\index{Kazhdan--Lusztig equivalence!from bar-cobar|textbf}
+
+\begin{theorem}[Kazhdan--Lusztig equivalence on the semisimplified target;
+\ClaimStatusProvedElsewhere]
+\label{thm:kl-equivalence}
+\index{Kazhdan--Lusztig equivalence}
+\textup{(}Kazhdan--Lusztig~\cite{KL93}\textup{)}\quad
+For $\fg$ simply-laced and $k = -h^\vee + p/q$ admissible with
+$p \geq h^\vee$, there is an equivalence of braided monoidal
+categories:
+\begin{equation}\label{eq:kl-equivalence-dl}
+\cO_k^{\mathrm{int}}(\widehat{\fg})
+\;\simeq\;
+\mathcal{C}(U_q(\fg)),
+\end{equation}
+where $q = e^{\pi i q/p}$ and $\mathcal{C}(U_q(\fg))$ denotes the
+semisimplified tilting quotient on the admissible alcove.  The larger
+category $\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ is a non-semisimple
+lift, not the theorematic target used in this monograph.
+\end{theorem}
+
+\begin{theorem}[Chain-level KL adjunction from bar-cobar;
+\ClaimStatusProvedHere]
+\label{thm:kl-bar-cobar-adjunction}
+\index{Kazhdan--Lusztig equivalence!bar-cobar adjunction}
+Let $\fg$ be simply-laced and $k = -h^\vee + p/q$ admissible with
+$p \geq h^\vee$.  There exists a chain-level adjunction
+\begin{equation}\label{eq:kl-bar-cobar-adjunction}
+\Phi_k\colon
+D\bigl(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\widehat{\fg}_k}\bigr)
+\;\rightleftarrows\;
+D\bigl(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\widehat{\fg}_{-k-2h^\vee}}\bigr)
+\;\colon \Psi_k
+\end{equation}
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item On integrable highest-weight modules $M(\lambda) \in
+  \cO_k^{\mathrm{int}}(\widehat{\fg})$, the functor $\Phi_k$
+  produces a finite-dimensional comodule over the Koszul dual
+  $\widehat{\fg}_{-k-2h^\vee}^!$.
+\item The induced map on Ext groups recovers BGG multiplicities:
+  \[
+  \mathrm{Ext}^n_{\widehat{\fg}_k}(\omega_X, M(\lambda))
+  \cong
+  \mathrm{Coext}^n_{\widehat{\fg}_{-k-2h^\vee}}\!\bigl(\Phi_k(M(\lambda)),
+  \Phi_k(\omega_X)\bigr).
+  \]
+\item The composition $\Psi_k \circ \Phi_k$ is quasi-isomorphic
+  to the identity on $\cO_k^{\mathrm{int}}(\widehat{\fg})$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof assembles five ingredients, each proved elsewhere in this
+monograph, into a single chain-level construction.
+
+\emph{Step 1: Koszul dual identification.}
+By Theorem~\ref{thm:universal-kac-moody-koszul}, the chiral Koszul
+dual of $\widehat{\fg}_k$ is $\widehat{\fg}_{-k-2h^\vee}$.
+Setting $\cA = \widehat{\fg}_k$ and
+$\cA^! = \widehat{\fg}_{-k-2h^\vee}$, we are in the framework of
+$\Eone$-chiral Koszul duality.
+
+\emph{Step 2: Module bar-cobar adjunction.}
+By Theorem~\ref{thm:e1-module-koszul-duality}, the $\Eone$-chiral
+bar-cobar adjunction gives an equivalence
+\[
+D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\cA})
+\;\simeq\;
+D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\cA^!}).
+\]
+Define $\Phi_k := \mathrm{Ind}$ and $\Psi_k := \mathrm{Res}$ from
+that theorem.  The unit and counit are quasi-isomorphisms on the
+relevant subcategories, giving~(iii).
+
+\emph{Step 3: PBW filtration and chain map.}
+Equip $\widehat{\fg}_k$ with the PBW filtration by conformal weight.
+This filtration is compatible with the bar construction
+(Theorem~\ref{thm:bar-cobar-spectral-sequence}): the associated
+graded of the bar complex $\barB(\widehat{\fg}_k)$ is the
+\emph{classical} bar complex $\barB(U(\fg[t^{-1}]t^{-1}))$, which
+is a dg-coalgebra (not curved).  For a highest-weight module
+$M(\lambda)$, the PBW filtration induces a filtration on the
+relative bar complex
+$\barB(\cA, M(\lambda)) := \barB(\cA) \otimes_{\cA} M(\lambda)$.
+
+\emph{Step 4: Spectral sequence comparison.}
+The PBW filtration gives a spectral sequence
+\[
+E_1^{p,q} = H^{p+q}(\mathrm{gr}^p \barB(\cA, M(\lambda)))
+\;\Longrightarrow\;
+H^{p+q}(\barB(\cA, M(\lambda))).
+\]
+On the associated graded, the bar complex reduces to the classical
+Chevalley--Eilenberg complex of $\fg[t^{-1}]t^{-1}$ with
+coefficients in $\mathrm{gr}\, M(\lambda)$.  At $E_1$, the
+cohomology is computed by the BGG resolution
+(Corollary~\ref{cor:bgg-koszul-involution}).
+By Corollary~\ref{cor:bar-admissible-finiteness}, the bar cohomology
+is finite-dimensional at admissible levels, so the spectral sequence
+converges.  Since $M(\lambda) \in \cO_k^{\mathrm{int}}$ is
+integrable, the $E_1$ page is concentrated in finitely many degrees
+(bounded by the Weyl group), and the spectral sequence degenerates at
+$E_2$ by the Koszul purity of $\cA$
+(Theorem~\ref{thm:km-chiral-koszul}).  This establishes that
+$\Phi_k(M(\lambda))$ is a finite-dimensional $\cA^!$-comodule,
+proving~(i).
+
+\emph{Step 5: Ext recovery.}
+The Ext--Coext exchange~(ii) is
+Theorem~\ref{thm:e1-module-koszul-duality}(ii) applied to
+$\cA = \widehat{\fg}_k$: the bar-cobar adjunction interchanges
+Ext and Coext by construction.
+\end{proof}
+
+\begin{conjecture}[KL equivalence from periodic CDG bar-cobar;
+\ClaimStatusConjectured]
+\label{conj:kl-bar-cobar-dl}
+\index{Kazhdan--Lusztig equivalence!bar-cobar proof}
+The chain-level adjunction of
+Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} refines to the
+programme-level Kazhdan--Lusztig recovery on the semisimplified target
+\begin{equation}\label{eq:kl-bar-cobar-dl}
+\barB_{\Eone}\bigl(\widehat{\fg}_k\text{-}\mathrm{mod}\bigr)
+\;\simeq\;
+\Omega_{\Eone}\bigl(U_q(\fg)\text{-}\mathrm{comod}\bigr),
+\end{equation}
+identifying
+$\cO_k^{\mathrm{int}}(\widehat{\fg}) \simeq
+\mathcal{C}(U_q(\fg))$
+as braided monoidal categories, where $\mathcal{C}(U_q(\fg))$ is the
+semisimplified tilting quotient (not the full representation category
+$\mathrm{Rep}(U_q(\fg))$; see Remark~\ref{rem:kl-target-category}).
+Any non-semisimple lift to
+$\mathrm{Rep}^{\mathrm{fd}}(U_q(\fg))$ is an additional frontier,
+not part of the theorematic endpoint used elsewhere in the manuscript;
+the completed/coderived MC3 enlargement lies further out still.
+The remaining ingredient beyond
+Theorem~\textup{\ref{thm:kl-bar-cobar-adjunction}} is the periodic
+CDG structure of the bar complex
+\textup{(}Conjecture~\textup{\ref{conj:periodic-cdg}):} given
+$2p$-periodicity, Positselski's Koszul duality for periodic
+CDG-algebras~\cite{Positselski11} identifies the coderived category
+of the bar complex with the stable module category of the small
+quantum group $u_q(\fg)$, which maps to
+$\mathcal{C}(U_q(\fg))$ via Lusztig's theorem.
+\end{conjecture}
+
+\begin{remark}[KL target category]\label{rem:kl-target-category}
+\index{Kazhdan--Lusztig equivalence!target category}
+The correct KL target is the semisimplified tilting quotient
+$\mathcal{C}(U_q(\fg))$ ($|P_k^+|$ simple objects), not the full
+$\mathrm{Rep}(U_q(\fg))$; see~\cite{BK01} and~\cite{EGNO},
+Remark~11.7.10.  The coderived category enters only as the ambient
+bar-side formalism for the conjectural lift, not as the printed KL
+endpoint.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+\end{remark}
+
+\begin{remark}[Scope]\label{rem:kl-bar-cobar-scope}
+Theorem~\ref{thm:kl-bar-cobar-adjunction} constructs the chain-level
+adjunction on integrable modules.  Two further passages are separate:
+(a)~identifying the bar functor target with $\mathcal{C}(U_q(\fg))$
+requires the periodic CDG structure
+(Conjecture~\ref{conj:periodic-cdg}); (b)~any lift beyond the
+semisimplified target is an outer MC3 problem.  Without periodicity,
+$\Phi_k$ lands in $\widehat{\fg}_{-k-2h^\vee}$-comodules, not
+$U_q(\fg)$-comodules.
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+\end{remark}
+
+\begin{remark}[Why this would be a geometric proof]
+\label{rem:geometric-proof-kl}
+\index{Kazhdan--Lusztig equivalence!geometric proof}
+The original KL proof~\cite{KL93} uses analytic continuation.
+A bar-cobar proof would be geometric: (1)~configuration space
+integrals build the bar complex; (2)~Verdier duality on FM
+compactifications realizes
+$\widehat{\fg}_k^! = \widehat{\fg}_{-k-2h^\vee}$; (3)~bar curvature
+interacts with $q = e^{\pi i/(k+h^\vee)}$ to produce periodic CDG
+structure; (4)~Positselski's CDG Koszul duality plus Lusztig's
+stable-to-tilting comparison reach the semisimplified target.
+\end{remark}
+
+
+\subsection{Roadmap: from critical level to KL}
+
+\begin{remark}[The critical-admissible deformation]
+\label{rem:critical-admissible}
+\index{critical level!deformation to admissible}
+As $k$ deforms from $-h^\vee$ to $-h^\vee + p/q$, the bar complex
+interpolates: uncurved at critical level (computes oper functions,
+Theorem~\ref{thm:oper-bar-h0-dl}); CDG-coalgebra at generic
+perturbation; conjecturally periodic CDG at rational $p/q$
+(recovering the semisimplified KL target).  This connects geometric
+Langlands (opers) to representation-theoretic Langlands (quantum
+groups) through bar-cobar duality.
+\end{remark}
+
+
+%================================================================
+% SECTION 6: CONNECTIONS TO GEOMETRIC LANGLANDS
+%================================================================
+
+\section{Connections to the geometric Langlands programme}
+\label{sec:langlands-connections}
+\index{geometric Langlands!connections}
+
+\subsection{The Frenkel--Gaitsgory programme}
+
+\begin{theorem}[Frenkel--Gaitsgory localization;
+\ClaimStatusProvedElsewhere]
+\label{thm:fg-localization}
+\index{Frenkel--Gaitsgory!localization}
+\textup{(}Frenkel--Gaitsgory~\cite{FG06}\textup{)}\quad
+There is a localization functor
+\[
+\Delta\colon
+D\bigl(\widehat{\fg}_{-h^\vee}\text{-mod}\bigr)
+\;\longrightarrow\;
+D\bigl(\mathrm{QCoh}(\mathrm{Op}_{\fg^\vee}(D))\bigr)
+\]
+that is an equivalence on the subcategory of modules on which the
+center $Z(\widehat{\fg}_{-h^\vee})$ acts locally finitely.
+\end{theorem}
+
+\begin{remark}[Bar-cobar as localization]
+\label{rem:bar-as-localization}
+The bar complex is a chain-level model for the localization
+functor~$\Delta$: the vacuum module maps to $\cO_{\mathrm{Op}}$
+(Theorem~\ref{thm:oper-bar-h0-dl}), a Verma module $M_\lambda$ maps
+to the skyscraper at the corresponding oper, and the full derived
+structure is computed by Theorem~\ref{thm:oper-bar-dl}.
+\end{remark}
+
+\subsection{From opers to Hecke eigensheaves}
+
+\begin{remark}[The Langlands path]
+\label{rem:langlands-path}
+\index{geometric Langlands!path from bar complex}
+The Frenkel--Gaitsgory programme factors geometric Langlands through
+opers:
+\[
+\begin{tikzcd}
+D(\widehat{\fg}_{-h^\vee}\text{-mod})
+  \arrow[r, "\Delta"]
+  \arrow[dr, "\text{Langlands}"']
+& D(\mathrm{QCoh}(\mathrm{Op}))
+  \arrow[d, "\text{forget reduction}"] \\
+& D(\mathrm{QCoh}(\mathrm{Loc}_{G^\vee}))
+\end{tikzcd}
+\]
+Our bar complex computes the top arrow $\Delta$ at the chain level
+(Theorem~\ref{thm:oper-bar-dl}).  The vertical arrow is the
+$G^\vee/B^\vee$-fibration forgetting the Borel reduction.
+\end{remark}
+
+
+%================================================================
+% SECTION 7: SUMMARY
+%================================================================
+
+\section{Summary}
+\label{sec:derived-langlands-summary}
+
+\noindent
+\textbf{What is proved.}
+
+\begin{enumerate}
+\item \emph{Full derived oper identification}
+  (Theorem~\ref{thm:oper-bar-dl}):
+  $H^n(\barB(\widehat{\fg}_{-h^\vee})) \cong
+  \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all $n \geq 0$.
+  Proof: bar-Ext (Corollary~\ref{cor:bar-computes-ext}) $+$
+  Frenkel--Teleman~\cite{FT06}.
+  Independent PBW confirmation at $n = 0$
+  (Theorem~\ref{thm:oper-bar-h0-dl}), $n = 1$
+  (Proposition~\ref{prop:oper-bar-h1-dl}), $n = 2$
+  (Proposition~\ref{prop:oper-bar-h2-dl}), $n = 3$
+  (Corollary~\ref{cor:h3-oper}).
+\item The bar complex at critical level is a chain-level model for
+  the Frenkel--Gaitsgory localization functor
+  (Proposition~\ref{prop:bar-as-localization}).
+\item Five of six ingredients for the semisimplified
+  KL-from-bar-cobar conjecture are proved
+  (Conjecture~\ref{conj:kl-bar-cobar-dl}).
+\item Bar cohomology periodicity at rank~$1$
+  (Proposition~\ref{prop:sl2-periodicity-dl}).
+\item Whitehead spectral decomposition
+  (Proposition~\ref{prop:whitehead-spectral-decomposition}):
+  the $E_1$ page factors as
+  $\mathrm{Fun}(\mathrm{Op}) \otimes H^*(\fg; k)$,
+  reducing the PBW spectral sequence to finitely many
+  transgression differentials.
+\item The PBW spectral sequence analysis at $n = 3$ identifies the
+  $d_4$ transgression differential
+  (Proposition~\ref{prop:h3-differential-analysis},
+  Proposition~\ref{prop:d4-nonvanishing}).
+\end{enumerate}
+
+\noindent
+\textbf{What remains.}
+\begin{enumerate}
+\item The periodic CDG structure at admissible levels
+  (Conjecture~\ref{conj:periodic-cdg}): this is the single
+  remaining ingredient for a bar-cobar proof of the semisimplified
+  KL target.
+\item The semisimplified KL equivalence from bar-cobar
+  (Conjecture~\ref{conj:kl-bar-cobar-dl}): depends on the periodic
+  CDG structure.
+\item Any non-semisimple or completed/coderived KL lift beyond
+  $\mathcal{C}(U_q(\fg))$: this is a separate outer MC3 extension and
+  is not implied by the semisimplified KL step.
+\item Higher-rank periodicity: extending
+  Proposition~\ref{prop:sl2-periodicity-dl} beyond rank~$1$
+  to establish periodicity for general $\fg$.
+\end{enumerate}
+
+The critical-level bar complex sits at the intersection of three
+programmes: geometric Langlands (Programme~I), the KL equivalence
+(Programme~II), and fusion product preservation (Programme~III).
+Bar-cobar duality provides a single algebraic object---the bar
+complex---that unifies these apparently disparate research
+directions.

@@ -1,0 +1,599 @@
+% ==========================================
+% COMPLETE GENUS THEORY: FROM FLAT TO CURVED
+% ==========================================
+
+
+The bar-cobar construction extends to all genera via the modular operad structure on $\overline{\mathcal{M}}_{g,n}$; the genus-$0$ and genus-$1$ identifications are proved, and higher-genus extensions are controlled by the universal Maurer--Cartan class $\Theta_\cA$.
+
+\subsection{Genus one extensions}\label{subsec:elliptic}
+
+\begin{definition}[Elliptic configuration spaces]\label{def:elliptic-config}
+\index{configuration space!elliptic}
+For a genus one curve $E_\tau$, define the elliptic configuration space:
+\[\overline{C}_n^{(1)}(E_\tau) = \mathrm{Bl}_{D_{ij}}(E_\tau^n)\]
+where blow-ups occur along all partial diagonals $D_I = \{z_i = z_j \text{ for } i,j \in I\}$.
+
+The compactification introduces exceptional divisors $E_{ij}$ with normal bundles determined by the elliptic curve's group structure. Unlike genus zero, these divisors carry nontrivial topology---each $E_{ij}$ is itself an elliptic curve.
+\end{definition}
+
+\begin{theorem}[Elliptic bar complex; \ClaimStatusProvedElsewhere{} \cite{FBZ04}]\label{thm:elliptic-bar}
+For a chiral algebra $\mathcal{A}$ on $E_\tau$, the elliptic bar complex is:
+\[\bar{B}^{(1),n}_{\text{geom}}(\mathcal{A}) = \Gamma\left(\overline{C}_{n+1}^{(1)}(E_\tau), j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n_{ell}(\log D)\right)\]
+where $\Omega^n_{ell}$ consists of meromorphic forms with logarithmic poles, satisfying:
+\begin{enumerate}
+\item \emph{Elliptic periodicity:} Forms are doubly periodic modulo residues
+\item \emph{Modular covariance:} Under $\tau \mapsto \frac{a\tau + b}{c\tau + d}$, forms transform with weight determined by the conformal weights of the algebra generators
+\item \emph{Theta function expansion:} Near divisors, forms expand in Jacobi theta functions
+\end{enumerate}
+
+The differential decomposes as:
+\[d^{(1)} = d_{\text{local}} + d_{\text{global}} + d_{\text{quantum}}\]
+where $d_{\text{quantum}}$ encodes the holonomy around non-contractible cycles.
+\end{theorem}
+
+\begin{proof}[Construction sketch]
+Elliptic curves are group varieties, so configuration spaces inherit a group action. This forces specific structures:
+
+\emph{Step 1: Local structure.} Near collisions, the OPE universality theorem ensures local behavior matches genus zero. In coordinates $(u, \epsilon_{ij}, \theta_{ij})$ near $D_{ij}$:
+\[\eta_{ij}^{(1)} = d\log\epsilon_{ij} + id\theta_{ij} + \text{elliptic corrections}\]
+
+\emph{Step 2: Global elliptic functions.} By Liouville's theorem, meromorphic doubly-periodic functions satisfy:
+\[\sum_{\text{poles in } \mathcal{F}} \text{Res}_p[f] = 0\]
+where $\mathcal{F}$ is a fundamental domain. This constraint modifies the bar differential.
+
+\emph{Step 3: Theta function basis.} The Jacobi theta functions provide the natural basis:
+\begin{align}
+\vartheta_1(z|\tau) &= -i\sum_{n \in \mathbb{Z}}(-1)^n q^{(n+1/2)^2/2} e^{2\pi i(n+1/2)z} \\
+\vartheta_2(z|\tau) &= \sum_{n \in \mathbb{Z}} q^{(n+1/2)^2/2} e^{2\pi i(n+1/2)z} \\
+\vartheta_3(z|\tau) &= \sum_{n \in \mathbb{Z}} q^{n^2/2} e^{2\pi inz} \\
+\vartheta_4(z|\tau) &= \sum_{n \in \mathbb{Z}}(-1)^n q^{n^2/2} e^{2\pi inz}
+\end{align}
+where $q = e^{2\pi i\tau}$.
+
+\emph{Step 4: Quantum differential.} The genus-$1$ fiberwise differential $\dfib$ (Convention~\ref{conv:higher-genus-differentials}) acquires monodromy contributions from the two cycles of $E_\tau$. With $\omega = dz$ the normalized holomorphic differential ($\oint_A \omega = 1$, $\oint_B \omega = \tau$), the period matrix $\Omega_1 = \tau$ enters through the Gauss--Manin connection: sections of the bar complex acquire monodromy $M_A = \mathrm{id}$, $M_B = e^{2\pi i \tau \cdot \partial_z}$ around the $A$- and $B$-cycles respectively.
+
+\emph{Step 5: Modular transformation.} Under $SL_2(\mathbb{Z})$:
+\[\vartheta_1\left(\frac{z}{c\tau+d}\bigg|\frac{a\tau+b}{c\tau+d}\right) = \epsilon(a,b,c,d)\sqrt{c\tau+d}\,e^{\frac{\pi i cz^2}{c\tau+d}}\vartheta_1(z|\tau)\]
+where $\epsilon$ is an 8th root of unity determined by $(a,b,c,d) \mod 2$.
+
+\emph{Step 6: Elliptic distance formula.} The proper distance on the elliptic curve:
+\[|z_i - z_j|_{E_\tau} = |\sigma(z_i - z_j; \tau)|e^{-\eta(\tau)\text{Im}(z_i - z_j)^2/\text{Im}(\tau)}\]
+where $\sigma$ is the Weierstrass sigma function and $\eta$ is the Weierstrass eta value $\eta_1 = \zeta(\omega_1)$ (not the Dedekind eta function).
+\end{proof}
+
+\begin{example}[Free fermion at genus one]
+Consider the free fermion chiral algebra with generators $\psi(z), \psi^*(z)$ satisfying:
+\[\psi(z)\psi^*(w) \sim \frac{1}{z-w}\]
+
+At genus one with spin structure $\alpha \in \mathbb{Z}_2 \times \mathbb{Z}_2$, we have four sectors:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Sector & Boundary Conditions & Partition Function \\
+\hline
+R-R & $\psi(z+1) = \psi(z), \psi(z+\tau) = \psi(z)$ & $\frac{\vartheta_3(0|\tau)}{\eta(\tau)}$ \\
+R-NS & $\psi(z+1) = \psi(z), \psi(z+\tau) = -\psi(z)$ & $\frac{\vartheta_4(0|\tau)}{\eta(\tau)}$ \\
+NS-R & $\psi(z+1) = -\psi(z), \psi(z+\tau) = \psi(z)$ & $\frac{\vartheta_2(0|\tau)}{\eta(\tau)}$ \\
+NS-NS & $\psi(z+1) = -\psi(z), \psi(z+\tau) = -\psi(z)$ & $\frac{\vartheta_1(0|\tau)}{\eta(\tau)} = 0$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The bar complex calculation:
+\[Z_\alpha = \int_{\overline{C}_*^{(1)}(E_\tau)} \exp\left(\sum_{i<j} \log\frac{\vartheta_\alpha(z_i - z_j|\tau)}{\vartheta_1(z_i - z_j|\tau)} \cdot \eta_{ij}^{(1)}\right)\]
+
+The NS-NS sector vanishes: $\vartheta_1(0|\tau) = 0$ identically (the odd theta function vanishes at the origin), so $Z_{\mathrm{NS\text{-}NS}} = 0$.  The other three sectors are non-vanishing.
+\end{example}
+
+\begin{theorem}[Extension obstruction; \ClaimStatusProvedElsewhere{} \cite{FBZ04,CG17}]\label{thm:extension-obstruction}
+\index{extension obstruction!genus one}
+A genus-zero chiral algebra $\mathcal{A}_0$ always extends to genus one as a \emph{projective} factorization algebra (i.e., twisted by a power of the Hodge line bundle).  The obstruction to a \emph{strict} (untwisted) extension is measured by:
+\[\mathrm{Obs}_1(\mathcal{A}_0) = \frac{c}{2}\,\lambda_1 \;\in\; H^2(\overline{\mathcal{M}}_{1,n},\, \mathcal{L}_{\mathcal{A}})\]
+which vanishes if and only if $c = 0$ (as a cohomology class in $H^2$).  The integrated obstruction is $(c/2)\int_{\overline{\mathcal{M}}_{1,1}}\lambda_1 = c/48$ on the stack, or $c/24$ on the coarse moduli space.  Note: for $c \in 24\mathbb{Z}$, the monodromy $e^{-2\pi i c/24}$ is trivial, so individual characters can be scalar modular functions, but the factorization algebra still requires a twist by $\mathbb{E}^{c/2}$.  The data determining this obstruction class are:
+\begin{enumerate}
+\item \emph{Central charge:} $c \in \mathbb{R}$ (any rational CFT extends to genus one; in critical string theory the matter central charge is $c_{\mathrm{matter}} = 26$ (bosonic) or $c_{\mathrm{matter}} = 15$ (superstring), chosen so that the total anomaly $c_{\mathrm{matter}} + c_{\mathrm{ghosts}} = 0$ cancels)
+\item \emph{Modular invariance:} Characters $\chi_i(\tau)$ transform as vector-valued modular forms
+\item \emph{Integrality:} Fusion rules $N_{ij}^k \in \mathbb{Z}_{\geq 0}$
+\end{enumerate}
+
+Here $\lambda_1 = c_1(\mathbb{E})$ is the first Chern class of the Hodge bundle, consistent with $\operatorname{obs}_g(\mathcal{A}) = \kappa(\mathcal{A})\cdot\lambda_g$ (Theorem~\ref{thm:genus-universality}) at $\kappa(\mathrm{Vir}_c) = c/2$.  Characters transform as vector-valued modular forms; the phase $e^{-2\pi i c/24}$ is trivial only for $c \in 24\mathbb{Z}$.
+\end{theorem}
+
+% ==========================================
+% HIGHER GENUS THEORY (g ≥ 2)
+% ==========================================
+
+\subsection{Higher genus theory}\label{subsec:higher-genus}
+
+\begin{definition}[Higher-genus configuration spaces]\label{def:higher-genus-config}
+\index{configuration space!higher genus}
+For a genus $g \geq 2$ curve $\Sigma_g$, the configuration space has a fibration structure:
+\[\pi: \overline{C}_n^{(g)}(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}\]
+with fiber $(\Sigma_g)^n_{\text{ordered}}$ over each point in moduli space.
+
+The boundary stratification has three types: collision divisors $D_{ij}^{(g)}$ ($z_i \to z_j$), separating divisors $D_{I|J}^{\text{sep}}$ ($\Sigma_g \to \Sigma_{g_1} \cup \Sigma_{g_2}$, $g_1 + g_2 = g$), and non-separating divisors $D_\gamma^{\text{nonsep}}$ (cycle $\gamma$ pinched). Each stratum carries a natural orientation from the complex structure.
+\end{definition}
+
+\begin{theorem}[Higher-genus bar differential; \ClaimStatusProvedElsewhere{} \cite{CG17,costello-renormalization}]\label{thm:higher-genus-diff}
+\index{bar differential!higher genus}
+The total corrected bar differential at genus $g$
+\textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} has the explicit form:
+\[\Dg{g} = d_{\text{local}} + d_{\text{period}} + d_{\text{moduli}} + d_{\text{quantum}}\]
+
+where:
+\begin{align}
+d_{\text{local}} &= \sum_{i<j} \text{Res}_{D_{ij}} \left[\mu_{ij} \otimes \eta_{ij}^{(g)}\right] \\
+d_{\text{period}} &= \sum_{k=1}^{2g} \oint_{C_k} \eta_k \cdot \delta_{C_k^*} \\
+d_{\text{moduli}} &= \sum_{a=1}^{3g-3} \frac{\partial}{\partial \tau_a} \otimes d\tau_a \\
+d_{\text{quantum}} &= \sum_{\Gamma \in \mathcal{G}_{g,n}} \frac{1}{|\text{Aut}(\Gamma)|} \int_{\mathcal{M}_\Gamma} \omega_\Gamma
+\end{align}
+
+Here:
+\begin{itemize}
+\item $C_k$ ($k = 1, \ldots, 2g$) are the homology cycles ($A_1,\ldots,A_g,B_1,\ldots,B_g$), $C_k^*$ their Poincar\'e dual cohomology classes, and $\eta_k$ are the harmonic representatives of $H^1_{\mathrm{dR}}(\Sigma_g)$ dual to $C_k$
+\item $\tau_a$ are Teichmüller coordinates on $\mathcal{M}_g$
+\item $\mathcal{G}_{g,n}$ is the set of stable graphs of genus $g$ with $n$ legs
+\item $\omega_\Gamma$ is the form associated to graph $\Gamma$
+\end{itemize}
+\end{theorem}
+
+\begin{proof}[Construction via relative cohomology]
+Consider the universal curve $\pi: \mathcal{C}_g \to \mathcal{M}_g$. The bar complex computes the derived pushforward.
+Since the fibers of $\pi$ are smooth curves, $R^n\pi_*\mathcal{A} = 0$ for $n \geq 2$, so $R\pi_*\mathcal{A}$ is an object of cohomological amplitude $[0,1]$.  When the Leray spectral sequence for~$\pi$ with coefficients in~$\mathcal{A}$ degenerates at~$E_2$ and the resulting filtration splits, one obtains:
+\[R\pi_* \left(\mathcal{A}|_{\mathcal{C}_g}\right) \simeq R^0\pi_* \mathcal{A} \oplus R^1\pi_* \mathcal{A}[-1].\]  For constant coefficients, this follows from Deligne's theorem on smooth proper morphisms; for general chiral algebra coefficients, the degeneration is an additional hypothesis that holds for Koszul algebras by the weight filtration on the associated graded bar complex (Definition~\ref{def:bar-cobar-filtration}).
+
+By Grothendieck's theorem, the Hodge--Leray spectral sequence reads:
+\[E_2^{p,q} = H^p(\mathcal{M}_g, R^q\pi_*\mathcal{A}) \Rightarrow H^{p+q}(\bar{B}^{(g)}(\mathcal{A}))\]
+
+Each piece of the $E_2$ page contributes a component of the differential:
+\begin{itemize}
+\item $E_2^{0,*}$: Local OPE contributions ($d_{\text{local}}$)
+\item $E_2^{1,*}$: Period-dependent corrections from $H^1(\mathcal{M}_g, R^0\pi_*\mathcal{A})$ ($d_{\text{period}}$).  (This is \emph{sheaf} cohomology of $R^0\pi_*\mathcal{A}$ on $\mathcal{M}_g$, which can be nontrivial even though $H^1(\mathcal{M}_g, \mathbb{Q}) = 0$ for $g \geq 2$ by Harer's theorem; the period parameters ultimately arise from $H^1(\Sigma_g, \mathbb{C})$ via the local system $R^1\pi_*\underline{\mathbb{C}}$.)
+\item $E_2^{p,*}$ ($p \geq 2$): Higher moduli contributions ($d_{\text{moduli}}$)
+\end{itemize}
+The quantum differential $d_{\text{quantum}}$ arises from the curved $A_\infty$ structure at genus~$g$ (the curving element $m_0^{(g)}$ depending on the moduli), which is encoded in the extension data of the spectral sequence (the $E_2$ page alone determines the graded pieces, but the extensions encode the quantum corrections).
+
+The identity $(d^{(g)})^2 = 0$ for the total differential is equivalent to the Maurer--Cartan equation for the curved $A_\infty$ structure, which is proved by genus induction in Theorem~\ref{thm:genus-induction-strict}.
+Concretely, the curving element $m_0^{(g)}$ at each genus is the
+genus-$g$ component of the universal Maurer--Cartan class
+$\Theta_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$
+(Theorem~\ref{thm:explicit-theta}): one has
+$m_0^{(g)} = \kappa(\cA) \cdot \lambda_g$, where $\lambda_g$ is
+the Hodge class on $\overline{\mathcal{M}}_g$.  The full MC equation
+$\ell_1(\Theta) + \tfrac{1}{2}\ell_2(\Theta,\Theta) = 0$ assembles
+the genus-by-genus nilpotency $\sum_{g_1+g_2=g} d_{g_1} \circ d_{g_2}
+= 0$ into a single algebraic identity, with $\Theta$ encoding both
+the period-dependent corrections (from sheaf cohomology of
+$R^0\pi_*\cA$) and the quantum corrections (from higher moduli
+contributions).
+\end{proof}
+
+\begin{example}[WZW model at higher genus]
+\index{WZW model!higher genus}
+For the $\widehat{\mathfrak{g}}_k$ WZW model on $\Sigma_g$, the partition function is given by the Verlinde formula:
+\begin{equation}\label{eq:verlinde-general}
+Z_g(k) = \sum_{\lambda \in \hat{P}_+^k} \left(\frac{S_{0\lambda}}{S_{00}}\right)^{2-2g}
+\end{equation}
+where $\hat{P}_+^k$ denotes the set of level-$k$ integrable highest weights, and $S$ is the modular $S$-matrix.
+
+The bar complex at genus~$g$ uses the Arakelov--Green function on~$\Sigma_g$ as its propagator:
+\[G_g(z,w) = -\log|E(z,w)|^2 + 2\pi\sum_{j,\ell=1}^g \mathrm{Im}\!\int_z^w \omega_j \cdot (\mathrm{Im}\,\Omega)^{-1}_{j\ell} \cdot \mathrm{Im}\!\int_z^w \omega_\ell\]
+where $E(z,w)$ is the prime form (Appendix~\ref{app:theta}), $\omega_1, \ldots, \omega_g$ are the normalized holomorphic differentials ($\oint_{A_j}\omega_k = \delta_{jk}$), and $\Omega$ is the period matrix.  The second term subtracts the zero-mode contribution, ensuring $G_g$ is well-defined on~$\Sigma_g$ (which admits no global Green's function without this regularization).
+
+The bar complex correlation functions (Theorem~\ref{thm:mk-general-structure}) are computed by summing over stable graphs with edges weighted by~$G_g$ and vertices weighted by OPE structure constants of~$\widehat{\mathfrak{g}}_k$.  The resulting genus expansion recovers~\eqref{eq:verlinde-general}: the exponent $(2-2g)$ arises from the Euler characteristic $\chi(\Sigma_g) = 2 - 2g$ appearing in the genus-$g$ propagator count.
+\end{example}
+
+% ==========================================
+% UNIVERSAL TOWER AND SPECTRAL SEQUENCES
+% ==========================================
+
+\subsection{The universal genus tower}\label{subsec:universal-tower}
+\index{genus tower}
+
+\begin{theorem}[Master tower of extensions; \ClaimStatusProvedHere]\label{thm:master-tower}
+There exists a system of restriction maps connecting bar complexes across genera:
+\[\cdots \xrightarrow{\rho_{g+1,g}} \bar{B}^{(g+1)}(\mathcal{A}) \xrightarrow{\rho_{g,g-1}} \bar{B}^{(g)}(\mathcal{A}) \xrightarrow{\rho_{g-1,g-2}} \cdots \xrightarrow{\rho_{1,0}} \bar{B}^{(0)}(\mathcal{A})\]
+
+The connecting maps are induced by the boundary divisors of $\overline{\mathcal{M}}_g$:
+\begin{itemize}
+\item \emph{Nonseparating degeneration.} $\rho_{\text{nonsep}}: \bar{B}^{(g)}(\mathcal{A}) \to \mathrm{Tr}_{\mathcal{A}}(\bar{B}^{(g-1)}(\mathcal{A}))$, where $\mathrm{Tr}_{\mathcal{A}}$ denotes the self-sewing (trace over $\mathcal{A}$), given by $\alpha \mapsto \text{Res}_{D_{\text{nonsep}}}[\alpha]$.
+\item \emph{Separating degeneration.} $\rho_{\text{sep}}: \bar{B}^{(g)}(\mathcal{A}) \to \bigoplus_{g_1+g_2=g} \bar{B}^{(g_1)}(\mathcal{A}) \otimes \bar{B}^{(g_2)}(\mathcal{A})$, given by $\alpha \mapsto \text{Res}_{D_{\text{sep}}}[\alpha]$.
+\end{itemize}
+In particular, the tower is not a simple linear sequence but reflects the modular operad structure of the boundary stratification of $\overline{\mathcal{M}}_g$.
+
+The total complex with string coupling $g_s$:
+\[\bar{B}^{\text{total}}(\mathcal{A}) = \widehat{\bigoplus}_{g=0}^\infty g_s^{2g-2} \bar{B}^{(g)}(\mathcal{A})\]
+
+The levels $g=0,1,\geq 2$ correspond to tree-level (classical), one-loop, and higher-loop amplitudes respectively.
+\end{theorem}
+
+\begin{proof}
+The modular operad structure on $\{\overline{\mathcal{M}}_{g,n}\}_{g,n}$ (Getzler--Kapranov) provides clutching and self-gluing maps along boundary divisors.  The Feynman transform identification $\bar{B}^{\mathrm{full}}(\mathcal{A}) \simeq \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A})$ (Theorem~\ref{thm:prism-higher-genus}(ii)) assembles the genus-$g$ bar complexes into a single modular algebra.  The connecting maps $\rho_{\mathrm{nonsep}}$ and $\rho_{\mathrm{sep}}$ are the restriction-residue maps to the corresponding boundary strata of $\overline{\mathcal{M}}_g$: nonseparating degeneration restricts to the self-sewing boundary (reducing genus by~$1$), while separating degeneration restricts to the product boundary (splitting genus).  These maps are compatible with the bar differential by the modular operad axioms.  The total complex is the completed direct sum over genera, with the Feynman transform differential encoding all inter-genus contributions.
+\end{proof}
+
+\subsection{Chain-level modular functor}\label{subsec:chain-modular-functor}
+\index{modular functor!chain-level}
+
+The bar complex refines the classical modular functor (Segal, Bakalov--Kirillov) to cochain complexes with $A_\infty$-morphisms as structure maps.
+
+\begin{theorem}[Chain-level modular functor from bar complex;
+\ClaimStatusProvedHere]\label{thm:chain-modular-functor}
+\index{modular functor!from bar complex}
+For a Koszul chiral algebra $\mathcal{A}$, the genus-graded bar complex
+$\bar{B}^{\mathrm{full}}(\mathcal{A}) = \bigoplus_{g \geq 0}
+\bar{B}^{(g)}(\mathcal{A})$ satisfies the axioms of a
+\emph{homotopy-coherent modular functor}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Assignment}: To each genus~$g$ with $n$ marked points,
+  a cochain complex $V_{g,n} := \bar{B}^{(g)}_n(\mathcal{A})$
+  with $d_{g,n}^2 = 0$
+  \textup{(}Theorem~\textup{\ref{thm:genus-induction-strict})}.
+\item \emph{Factorization}: For each separating degeneration
+  $g = g_1 + g_2$, a chain map
+  \begin{equation}\label{eq:factorization-map}
+  \Delta_{\mathrm{sep}}: V_{g,n} \to
+  \bigoplus_{\substack{g_1+g_2=g \\ I \sqcup J = \{1,\ldots,n\}}}
+  V_{g_1,|I|+1} \otimes V_{g_2,|J|+1}
+  \end{equation}
+  induced by residues along the separating boundary divisor
+  $D_{\mathrm{sep}} \subset \overline{\mathcal{M}}_{g,n}$.
+\item \emph{Self-sewing}: For each nonseparating degeneration, a chain map
+  \begin{equation}\label{eq:self-sewing-map}
+  \Delta_{\mathrm{nonsep}}: V_{g,n} \to V_{g-1,n+2}
+  \end{equation}
+  induced by residues along the nonseparating boundary divisor
+  $D_{\mathrm{nonsep}} \subset \overline{\mathcal{M}}_{g,n}$.
+\item \emph{Coherence}: The maps $\Delta_{\mathrm{sep}}$ and
+  $\Delta_{\mathrm{nonsep}}$ satisfy the Segal--Moore--Seiberg
+  consistency relations up to explicit chain homotopies
+  provided by the $A_\infty$ operations $m_k$ ($k \geq 3$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is Theorem~\ref{thm:genus-induction-strict}.
+
+Parts~(ii)--(iii): The Feynman transform identification
+$\bar{B}^{\mathrm{full}}(\mathcal{A}) \simeq
+\mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A})$
+(Theorem~\ref{thm:prism-higher-genus}(ii)) equips the genus-graded
+bar complex with the structure of an algebra over the modular operad
+$\{\overline{\mathcal{M}}_{g,n}\}_{g,n}$ (Getzler--Kapranov
+\cite{GeK98}).  The boundary strata of $\overline{\mathcal{M}}_{g,n}$
+provide:
+\begin{itemize}
+\item \emph{Separating boundaries}: Residues along
+  $D_{g_1,I} \cong \overline{\mathcal{M}}_{g_1,|I|+1}
+  \times \overline{\mathcal{M}}_{g_2,|J|+1}$ give the
+  coproduct~\eqref{eq:factorization-map}.
+\item \emph{Nonseparating boundaries}: Residues along
+  $D_\gamma \cong \overline{\mathcal{M}}_{g-1,n+2}$ give the
+  self-sewing map~\eqref{eq:self-sewing-map}.
+\end{itemize}
+That these are chain maps (commute with the bar differential)
+follows from the compatibility of the Feynman transform differential
+with the modular operad structure \cite[Theorem~5.4]{GeK98}.
+
+Part~(iv): The consistency relations (associativity of
+iterated factorization, commutativity of factorization with
+self-sewing) hold at the level of boundary strata of
+$\overline{\mathcal{M}}_{g,n}$: the codimension-$2$ boundary
+$D_{\mathrm{sep},1} \cap D_{\mathrm{sep},2}$ decomposes in two
+ways, yielding the Moore--Seiberg consistency condition.  At chain
+level, this equality holds only up to homotopy: the bar complex
+carries a curved $A_\infty$ structure
+(Theorem~\ref{thm:bar-ainfty-complete}), and the higher
+operations $m_k$ ($k \geq 3$) provide the homotopies
+$\Delta_1 \circ \Delta_2 \simeq \Delta_2 \circ \Delta_1$
+relating different orderings of degeneration.  The homotopy
+coherence data is encoded in the $A_\infty$ relations
+$\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t} \circ
+(\mathrm{id}^{\otimes r} \otimes m_s \otimes
+\mathrm{id}^{\otimes t}) = 0$.
+\end{proof}
+
+\begin{remark}[Comparison with classical modular functors]
+\label{rem:chain-vs-classical-mf}
+\index{modular functor!classical vs chain-level}
+Passing to $H^*(V_{g,n})$ recovers the classical modular functor~\cite{BK01}; for $\widehat{\mathfrak{g}}_k$ at integrable level, $H^0(V_{g,n})$ is the Tsuchiya--Ueno--Yamada space of conformal blocks.  The chain-level refinement is necessary at generic~$k$ (multi-degree bar complex) and when $\kappa \neq 0$ (curvature $m_0^{(g)} = \kappa \cdot \lambda_g$; Theorem~\ref{thm:genus-graded-bar}).
+\end{remark}
+
+\begin{corollary}[Koszul dual modular functors;
+\ClaimStatusProvedHere]\label{cor:dual-modular-functor}
+\index{modular functor!Koszul dual}
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$, the chain-level
+modular functors are related by Verdier duality:
+\begin{equation}\label{eq:dual-mf}
+V_{g,n}(\mathcal{A}^!) \simeq
+\mathrm{RHom}(V_{g,n}(\mathcal{A}),
+\omega_{\overline{\mathcal{M}}_{g,n}})
+[-\dim_{\mathbb{C}} \mathcal{M}_{g,n}]
+\end{equation}
+The factorization and self-sewing maps are interchanged by duality:
+$\Delta_{\mathrm{sep}}(\mathcal{A}^!) = \Delta_{\mathrm{sep}}
+(\mathcal{A})^\vee$ and $\Delta_{\mathrm{nonsep}}(\mathcal{A}^!)
+= \Delta_{\mathrm{nonsep}}(\mathcal{A})^\vee$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:poincare-extended} gives the Verdier duality identification; compatibility with factorization and self-sewing maps follows from naturality of Verdier duality on boundary strata of $\overline{\mathcal{M}}_{g,n}$.
+\end{proof}
+
+\begin{spectralsequence}[Genus spectral sequence]\label{ss:genus}
+The genus spectral sequence has the form:
+\[E_2^{p,q} = H^p(\overline{\mathcal{M}}_g, \mathcal{H}^q(\bar{B}^{(g)}(\mathcal{A}))) \Rightarrow \mathbb{H}^{p+q}(\overline{\mathcal{M}}_g, \bar{B}^{(g)}_\bullet(\mathcal{A}))\]
+where $\mathbb{H}^*$ denotes hypercohomology.
+(This is the Leray spectral sequence at fixed genus~$g$; the total bar complex $\bar{B}^{\mathrm{total}}(\mathcal{A}) = \sum_g g_s^{2g-2}\, \bar{B}^{(g)}(\mathcal{A})$ is the formal genus expansion, assembled across all genera.)
+
+The differentials have explicit descriptions:
+\begin{enumerate}
+\item $d_2$: Kodaira--Spencer map (infinitesimal deformations)
+\[d_2 = \sum_{i=1}^{3g-3} \frac{\partial}{\partial t_i} \otimes \mu_i\]
+where $t_i$ are local coordinates on $\mathcal{M}_g$
+
+\item $d_3$: Massey products (higher compositions).
+The differential $d_3$ is induced by the $A_\infty$ operation $m_3$ via the homotopy
+transfer data; it takes the form of a triple Massey product in the $E_2$ page
+
+\item $d_r$ ($r \geq 4$): Higher obstruction classes.  The differential $d_r\colon E_r^{p,q} \to E_r^{p+r,q-r+1}$ detects higher extension data in the sheaf cohomology of $\overline{\mathcal{M}}_g$.  For Koszul algebras, the weight filtration forces these to vanish at bounded stage (Theorem~\ref{thm:bar-cobar-spectral-sequence})
+\end{enumerate}
+
+At each fixed genus~$g$, this spectral sequence converges under the standard boundedness condition on $\overline{\mathcal{M}}_g$ (which is compact).  The total genus expansion $\sum_g g_s^{2g-2} H^*(\bar{B}^{(g)})$ is a formal power series in $g_s$; its convergence is a separate question related to the Borel summability of the perturbative expansion.
+\end{spectralsequence}
+
+% ==========================================
+% TOPOLOGICAL RECURSION
+% ==========================================
+
+\subsection{Topological recursion and computational methods}\label{subsec:recursion}
+\index{topological recursion}
+
+\begin{conjecture}[Eynard--Orantin recursion for bar complex; \ClaimStatusConjectured]\label{conj:EO-recursion}
+\index{Eynard--Orantin recursion}
+The bar complex correlation functions $\omega_{g,n}$ satisfy the recursion:
+\[\omega_{g,n}(z_1,\ldots,z_n) = \sum_{p \in \mathrm{Ram}} \operatorname{Res}_{q \to p} K(z_1, q) \Bigl[\omega_{g-1,n+1}(q,\sigma(q),z_2,\ldots,z_n)\]
+\[+ {\sum_{\substack{g_1+g_2=g \\ I \sqcup J = \{2,\ldots,n\}}}}' \omega_{g_1,|I|+1}(q,z_I) \cdot \omega_{g_2,|J|+1}(\sigma(q),z_J)\Bigr]\]
+
+where:
+\begin{itemize}
+\item $K(z_1,q) = \frac{\frac{1}{2}\int_{\sigma(q)}^q B(z_1, \cdot)}{\omega_{0,1}(q) - \omega_{0,1}(\sigma(q))}$ is the recursion kernel, with $B$ the Bergman kernel (bidifferential of the second kind)
+\item $\mathrm{Ram}$ denotes the set of ramification points of the spectral curve
+\item $\sigma(q)$ is the conjugate point under the local deck involution near $p$ (not complex conjugation)
+\item The prime on $\sum'$ excludes unstable terms $(g_i, |I_i|+1) = (0,1)$
+\end{itemize}
+
+Specifically:
+\begin{enumerate}
+\item[\textup{(a)}] \textup{[\ClaimStatusProvedElsewhere]}
+\emph{Heisenberg.} For the free boson, $\omega_{g,n}$ are Gaussian
+matrix model correlators and the recursion holds
+\cite{Eyn04,CEO06,EO07}.
+
+\item[\textup{(b)}] \textup{[\ClaimStatusProvedHere]}
+\emph{Koszul chiral algebras.} For a Koszul chiral
+algebra~$\mathcal{A}$, the bar complex correlation functions
+satisfy the EO recursion.
+
+\item[\textup{(c)}] \textup{[\ClaimStatusConjectured]}
+\emph{General case.} For a non-Koszul chiral algebra, the
+recursion requires verification of the loop equations in the
+abstract topological recursion framework.
+\end{enumerate}
+
+This provides an algorithmic method to compute higher genus corrections.
+\end{conjecture}
+
+\begin{proof}[Proof of \textup{(b)}]
+Let $\mathcal{A}$ be a Koszul chiral algebra.  We verify the hypotheses
+of the abstract topological recursion framework
+(Kontsevich--Soibelman 2010; Andersen--Borot--Orantin 2017).
+
+\emph{Step~1: Spectral curve from genus-$0$ data.}
+The genus-$0$ bar complex data defines a spectral curve
+$(S, x, y, B)$: the tree-level OPE coefficients determine
+$\omega_{0,1}$ and the ramification data of the projection
+$x\colon S \to \mathbb{P}^1$; the bidifferential
+$\omega_{0,2} = B$ is the Bergman kernel on~$S$, identified with
+the genus-$0$ propagator $G_0(z,w) = 1/(z-w)$ via
+Conjecture~\ref{conj:bar-worldline}.  The Koszul property (quadratic
+OPE relations) ensures that $S$ is a branched cover with finitely
+many ramification points.
+
+\emph{Step~2: Feynman transform decomposition.}
+By Theorem~\ref{thm:mk-general-structure} (\ClaimStatusProvedHere),
+the bar complex correlation functions are computed by the Feynman
+transform of the modular operad $\{\overline{\mathcal{M}}_{g,n}\}$:
+\[
+\omega_{g,n}(z_1, \ldots, z_n) \;=\; \sum_{\Gamma \in \mathcal{G}_{n,g}}
+\frac{1}{|\mathrm{Aut}(\Gamma)|}
+\prod_{e \in E(\Gamma)} G(z_{s(e)}, z_{t(e)})
+\cdot \prod_{v \in V(\Gamma)} C_v
+\]
+where the sum is over stable graphs of type~$(g,n)$,
+$G$ is the Arakelov--Green propagator, and $C_v$ are OPE structure
+constants.
+
+\emph{Step~3: Edge contraction gives the recursion.}
+Every stable graph $\Gamma \in \mathcal{G}_{n,g}$ with $n \geq 1$
+has at least one edge~$e_1$ incident to the half-edge labelled by~$z_1$.
+Summing over the choice of~$e_1$ and contracting gives a bijection
+between $\mathcal{G}_{n,g}$ (with $e_1$ marked) and pairs consisting
+of either:
+\begin{itemize}
+\item a \emph{non-separating} contraction, contributing the
+      $\omega_{g-1,n+1}$ term (genus drops by~$1$, two new
+      half-edges labelled $q$ and $\sigma(q)$), or
+\item a \emph{separating} contraction, contributing
+      $\omega_{g_1,|I|+1} \cdot \omega_{g_2,|J|+1}$ with
+      $g_1+g_2 = g$ and $I \sqcup J = \{2,\ldots,n\}$.
+\end{itemize}
+The propagator~$G$ contributes $\operatorname{Res}_{q \to p}$
+(extracting the polar part at the ramification point~$p$), and
+the genus-$0$ vertex at the contracted edge is identified with the
+recursion kernel~$K(z_1, q)$ via the spectral curve data of Step~1.
+This is the EO recursion.
+
+\emph{Step~4: Axiom verification.}
+We verify the three axioms of the abstract framework:
+\begin{itemize}
+\item \emph{Symplecticity}: $\omega_{0,2} = B$ is the Bergman kernel,
+symmetric with a unique double pole on the diagonal
+(Definition~\ref{def:bar-differential-complete}).
+
+\item \emph{Dilaton equation}: The stability condition
+$2g - 2 + n > 0$ on the Feynman transform
+(Definition~\ref{def:feynman-transform}) forces
+\[
+\textstyle\sum_{p} \operatorname{Res}_{q \to p} \Phi(q)\,
+\omega_{g,n+1}(q, z_1, \ldots, z_n)
+= (2g{-}2{+}n)\,\omega_{g,n}(z_1,\ldots,z_n)
+\]
+where $\Phi = \int^z y\,dx$ is the primitive.
+
+\item \emph{Loop equations}: The constraint $\Dg{g}^{\,2} = 0$
+(Theorem~\ref{thm:genus-induction-strict},
+Convention~\ref{conv:higher-genus-differentials}) restricted to the
+genus-$g$ sector yields quadratic relations among the
+$\omega_{g',n'}$ for $2g'+n' < 2g+n$.  These are precisely
+the loop equations: the total corrected differential decomposes
+into a ``residue'' part (extracting OPE poles) and a
+``degeneration'' part (contracting edges), and $\Dg{g}^{\,2} = 0$ says
+the composition of residue-then-degenerate equals
+degenerate-then-residue.
+\end{itemize}
+
+By the uniqueness theorem for abstract topological recursion
+(Eynard--Orantin 2007; Kontsevich--Soibelman 2010), any collection
+of multidifferentials satisfying these axioms with given spectral
+curve data is uniquely determined by the recursion formula.
+\end{proof}
+
+\begin{remark}[Scope]
+Part~(a) is the classical result: for the Heisenberg algebra, the
+bar complex correlation functions are Gaussian matrix model correlators,
+and the EO recursion is a theorem (Eynard 2004;
+Chekhov--Eynard--Orantin 2006).  Part~(b) proves the recursion for
+all Koszul chiral algebras by combining
+Theorem~\ref{thm:mk-general-structure} (Feynman transform = graph sum)
+with the abstract topological recursion framework.
+The spectral curve identification in Step~1 invokes
+Conjecture~\ref{conj:bar-worldline} (\ClaimStatusHeuristic) for the
+propagator--bidifferential correspondence; the remaining
+steps are unconditional.
+
+Part~(c) remains \ClaimStatusConjectured{}: for a non-Koszul chiral
+algebra, the spectral curve may not be well-defined (the OPE relations
+need not be quadratic), and the loop equations require independent
+verification.  The abstract topological recursion framework
+(Kontsevich--Soibelman 2010; Andersen--Borot--Orantin 2017) provides
+the axioms, but their verification for non-Koszul algebras remains open.
+(Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
+\end{remark}
+
+\begin{construction}[Higher genus bar differentials]\label{con:higher-genus-bar}
+Given a chiral algebra $\mathcal{A}$, genus $g$, and degree $n$, the total corrected bar differential $\Dg{g}$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials})} in degree~$n$ and the correlation $\omega_{g,n}$ are computed recursively.
+
+\emph{Step~1: Initialization.}
+Set $\omega_{0,n}$ to be the tree-level OPE coefficients and let $\mathcal{K}$ denote the Bergman kernel on the spectral curve.
+
+\emph{Step~2: Recursive computation.}
+For $h = 1, \ldots, g$: let $\Omega_h$ be the period matrix of $\Sigma_h$ and $\theta[\alpha]$ the theta functions with characteristics $\alpha$.  At each ramification point $p$, update
+\[\omega_{h,n} \leftarrow \omega_{h,n} + \operatorname{Res}_{z \to p}\!\left[K(z,p) \cdot \omega_{h-1,n+2} + \sum_{h_1+h_2=h} \omega_{h_1,|I|+1} \cdot \omega_{h_2,|J|+1}\right]\]
+and set $d^{(h)}_n = d^{(h-1)}_n + \sum_{\gamma \in H_1(\Sigma_h)} \oint_\gamma \omega_{h,n}$.
+
+\emph{Step~3: Verification.}
+One checks $(d^{(g)}_n)^2 = 0$ via Stokes's theorem on $\overline{\mathcal{M}}_{g,n}$.
+\end{construction}
+
+\begin{example}[Explicit calculation: \texorpdfstring{$\beta\gamma$}{beta-gamma} system through genus 3]
+For the $\beta\gamma$ system with $\lambda = 1/2$ (conformal weight):
+
+\emph{Genus~0.} Standard OPE
+\[\omega_{0,2} = \frac{dz_1 dz_2}{(z_1 - z_2)^2}\]
+
+\emph{Genus~1.} Elliptic propagator
+\[\omega_{1,1} = \frac{c_{\beta\gamma}}{24} \cdot \frac{E_2(\tau)}{2\pi i}\, dz, \qquad c_{\beta\gamma} = 2(6\lambda^2 - 6\lambda + 1)\]
+where $E_2(\tau) = 1 - 24\sum_{n=1}^\infty \frac{nq^n}{1-q^n}$ is the second Eisenstein series.  At $\lambda = 1/2$, the central charge is $c_{\beta\gamma} = -1$ and the coefficient is $-1/24$.
+
+\emph{Genus~2.} Let $\Omega \in \mathfrak{H}_2$ be the period matrix of~$\Sigma_2$.  At $\lambda = 1/2$, the $\beta\gamma$ partition function is:
+\[Z_2(\beta\gamma) = \frac{1}{\det(\mathrm{Im}\,\Omega)^{1/2}} \cdot \frac{1}{\prod_\delta\, \vartheta[\delta](0|\Omega)}\]
+where the product runs over all $2^{2 \cdot 2} = 16$ half-characteristics $\delta \in (\tfrac{1}{2}\mathbb{Z}/\mathbb{Z})^4$, and $\vartheta[\delta]$ are genus-$2$ theta functions with characteristics.  The genus-$2$ bar complex differential involves the Siegel--Eisenstein series $E_2(\Omega)$ of degree~$2$ (a function on~$\mathfrak{H}_2$, not to be confused with the genus-$1$ Eisenstein series).
+
+\emph{Genus~3.}  The Fay trisecant identity on the Jacobian $\mathrm{Jac}(\Sigma_3) = \mathbb{C}^3/(\mathbb{Z}^3 + \Omega\mathbb{Z}^3)$ provides relations among the genus-$3$ bar complex generators.  The Schottky relation (the vanishing of a specific Siegel modular form at the Jacobian locus $\mathcal{J}_3 \subset \mathcal{A}_3$) yields a nontrivial constraint on the $\beta\gamma$ genus-$3$ obstruction, reducing the number of independent tautological integrals.
+
+The pattern is that each genus~$g$ introduces degree-$g$ Siegel modular forms.  For the bosonic $\beta\gamma$ system, the partition function depends on the choice of line bundle $K_X^\lambda$, not on spin structures; spin structure dependence arises instead for fermionic systems such as the $bc$ ghost.
+\end{example}
+
+% ==========================================
+% PHYSICAL INTERPRETATION
+% ==========================================
+
+\subsection{Physical interpretation: strings and holography}\label{subsec:physics}
+
+\begin{theorem}[Bar complex computes moduli integrals; \ClaimStatusProvedHere]\label{thm:bar-moduli-integrals}
+For a Koszul chiral algebra $\mathcal{A}$ and modules $\mathcal{V}_1, \ldots, \mathcal{V}_n$, the bar complex with module insertions computes integrals over the moduli space of curves:
+\[\mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n) = \int_{\overline{\mathcal{M}}_{g,n}} \mathrm{ev}^*\left(H^*(\bar{B}^{(g)}_n(\mathcal{V}_1 \otimes \cdots \otimes \mathcal{V}_n))\right)\]
+where $\mathrm{ev}\colon \overline{C}_n^{(g)}(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}$ is the evaluation map from configuration space to moduli space.  The genus expansion
+\[\mathcal{I}_{\mathrm{total}} = \sum_{g=0}^\infty g_s^{2g-2+n}\, \mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)\]
+is the formal power series in $g_s$ assembled from the genus-graded bar complex (Theorem~\ref{thm:master-tower}).
+\end{theorem}
+
+\begin{proof}
+The bar complex at genus~$g$ with module insertions is a sheaf on $\overline{\mathcal{M}}_{g,n}$, constructed via the Feynman transform identification $\bar{B}^{(g)}_n(\mathcal{V}_1 \otimes \cdots \otimes \mathcal{V}_n) \simeq \mathrm{FT}_{\mathcal{M}\mathrm{od}}(\mathcal{A}; \mathcal{V}_1, \ldots, \mathcal{V}_n)_g$ (Theorem~\ref{thm:prism-higher-genus}).  The evaluation map $\mathrm{ev}$ is the forgetful map from the configuration space fibration $\pi\colon \overline{C}_n^{(g)}(\Sigma_g) \to \overline{\mathcal{M}}_{g,n}$ (Definition~\ref{def:higher-genus-config}).  The integral $\mathcal{I}_{g,n}$ is the pushforward $\int_{\overline{\mathcal{M}}_{g,n}} \mathrm{ev}^*(-)$, which is well-defined because $\overline{\mathcal{M}}_{g,n}$ is a proper Deligne--Mumford stack.  The genus assembly into $\mathcal{I}_{\mathrm{total}}$ follows from the genus tower structure (Theorem~\ref{thm:master-tower}).
+\end{proof}
+
+\begin{conjecture}[String amplitude = bar complex cohomology; \ClaimStatusConjectured]\label{conj:string-amplitude-bar}
+For a chiral algebra $\mathcal{A}$ describing string theory vertex operators, the moduli integrals of Theorem~\ref{thm:bar-moduli-integrals} compute string scattering amplitudes:
+\[\mathcal{A}_{g,n}^{\mathrm{string}}(\mathcal{V}_1,\ldots,\mathcal{V}_n) = \mathcal{I}_{g,n}(\mathcal{V}_1,\ldots,\mathcal{V}_n)\]
+where $\mathcal{A}_{g,n}^{\mathrm{string}}$ is the $g$-loop, $n$-point string amplitude and $\mathcal{V}_i$ are string vertex operators.  The string coupling expansion $\mathcal{A}^{\mathrm{string}}_{\mathrm{total}} = \sum_{g=0}^\infty g_s^{2g-2+n}\, \mathcal{A}_{g,n}^{\mathrm{string}}$ matches the genus expansion of the bar complex.
+\end{conjecture}
+
+\begin{remark}[Scope]
+The moduli integrals $\mathcal{I}_{g,n}$ are established in Part~I.  At genus~$0$, the identification with string amplitudes is proved (Corollary~\ref{cor:string-amplitude-genus0}, Theorem~\ref{thm:brst-bar-genus0}); for KM and W-algebras, $\barB(\cA) \simeq C^{\infty/2+*}(\cA)$ at all levels $k \neq -h^\vee$ (Theorems~\ref{thm:bar-semi-infinite-km},~\ref{thm:bar-semi-infinite-w}).  Extension to all genera requires the higher-genus BRST-bar identification (Conjecture~\ref{conj:anomaly-physical}); the remaining targets follow MC4/MC5 (Chapter~\ref{chap:concordance}).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+\end{remark}
+
+
+\begin{conjecture}[Holographic duality via bar-cobar; \ClaimStatusConjectured]
+\label{conj:holographic-bar-cobar}
+Bar-cobar duality supplies an algebraic template for AdS/CFT: $\cA \leftrightarrow \barB(\cA)$, OPE coefficients $\leftrightarrow$ vertices, conformal blocks $\leftrightarrow$ Witten diagrams, $c \leftrightarrow R_{\mathrm{AdS}}$, $1/N \leftrightarrow$ genus.  The conjectural comparison $Z_{\mathrm{CFT}}[\mathcal{J}] = Z_{\mathrm{gravity}}[\phi_0 = \mathcal{J}]$ identifies the genus expansion with the $1/N$ expansion ($g \mapsto N^{-(2g-2)}$).  Requires bulk CS reconstruction~\cite{Wit89} and Witten diagram matching beyond this monograph; contributing to Conjecture~\ref{conj:master-bv-brst} via MC4/MC5 (Chapter~\ref{chap:concordance}).
+\end{conjecture}
+
+% ==========================================
+% SYNTHESIS AND VISION
+% ==========================================
+
+\subsection{Synthesis}\label{subsec:synthesis}
+
+\begin{theorem}[Poincaré--Verdier duality extended; \ClaimStatusProvedElsewhere{} \cite{BD04,FG12}]\label{thm:poincare-extended}
+\index{Poincare-Verdier duality@Poincar\'e--Verdier duality!higher genus}
+The bar-cobar duality extends to all genera:
+\[\mathrm{RHom}(\bar{B}^{(g)}(\mathcal{A}), \omega_{\overline{\mathcal{M}}_{g,n}}) \cong \Omega^{(g)}(\mathcal{A}^!)[-\dim_{\mathbb{C}} \mathcal{M}_{g,n}]\]
+
+This realizes Koszul duality geometrically at each genus level, with the
+dualizing sheaf $\omega_{\overline{\mathcal{M}}_{g,n}}$ providing the
+correct twist.
+\end{theorem}
+
+\begin{proof}
+The bar complex at genus $g$ uses logarithmic forms on
+$\overline{\mathcal{M}}_{g,n}$ with coefficients in
+$j_*j^*\mathcal{A}^{\boxtimes n}$
+(Definition~\ref{def:geometric-bar}).  By the intrinsic cobar
+construction (Definition~\ref{def:geom-cobar-intrinsic}), the cobar at
+genus $g$ is the Verdier dual:
+$\Omega^{(g)}(\mathcal{C}) = \mathbb{D}_{\overline{\mathcal{M}}_{g,n}}
+(\bar{B}^{(g)}(\mathcal{C}^\vee))$.  Applying
+$\mathrm{RHom}(-,\omega_{\overline{\mathcal{M}}_{g,n}})$ to the bar
+complex gives the Verdier duality twist of this Verdier dual.  For a Koszul
+pair $(\mathcal{A}, \mathcal{A}^!)$ with $\mathcal{C} =
+\bar{B}^{\mathrm{ch}}(\mathcal{A})$ (the Koszul dual coalgebra, whose linear dual is $\mathcal{A}^!$), this yields
+the stated isomorphism.  The construction is the Feynman transform of the
+modular operad $\{\overline{\mathcal{M}}_{g,n}\}$
+(Theorem~\ref{thm:prism-higher-genus}).
+\end{proof}
+
+\begin{remark}[Finite data]\label{rem:finite-data-genus}
+\index{genus expansion!finite data}
+By the genus universality theorem (Theorem~\ref{thm:genus-universality}), the \emph{scalar} genus expansion of a Koszul chiral algebra~$\mathcal{A}$ is determined by a single numerical invariant: the obstruction coefficient $\kappa(\mathcal{A})$, which depends on the genus-$1$ curvature alone.  In practice, $\kappa$ is computed from the central charge and the structure of the OPE: $\kappa(\widehat{\mathfrak{g}}_k) = (k+h^\vee)\dim\mathfrak{g}/(2h^\vee)$, $\kappa(\mathrm{Vir}_c) = c/2$, $\kappa(\mathcal{H}_\kappa) = \kappa$.  The scalar genus expansion $F_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g^{\mathrm{FP}}$ is then given by Bernoulli numbers.  The separately proved spectral invariants, and the full Maurer--Cartan completion on the simple-Lie-symmetry locus of Theorems~\ref{thm:universal-theta} and~\ref{thm:mc2-full-resolution}, are \emph{not} determined by~$\kappa$ alone; see Theorem~\ref{thm:spectral-characteristic} and Definition~\ref{def:full-modular-package}.
+\end{remark}

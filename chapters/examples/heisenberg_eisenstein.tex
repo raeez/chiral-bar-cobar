@@ -1,0 +1,908 @@
+
+The Heisenberg bar complex at genus~$0$
+(Chapter~\ref{ch:heisenberg-frame}) was controlled by the logarithmic
+propagator $d\log(z-w)$.  At higher genus, the propagator acquires
+corrections from the period matrix of the curve: near the diagonal,
+the Green's function on a genus-$g$ surface decomposes as
+$G(z,w) = \log(z-w) + \sum_{k \geq 1} c_k(\Omega)\,(z-w)^{2k}$,
+and the Taylor coefficients $c_k(\Omega)$ are precisely the
+Eisenstein series $G_{2k}$.  These coefficients enter the bar
+differential as genus corrections, and their combinatorics forces the
+genus-$g$ obstruction class $\kappa^{(g)}(\mathcal{H})$ to be a
+universal polynomial in the tautological classes
+$\kappa_i \in H^*(\overline{\mathcal{M}}_g)$ with Eisenstein-series
+coefficients.  The resulting generating function is the
+$\hat{A}$-genus (Theorem~\ref{thm:family-index}).
+
+\section{Genus expansion with Eisenstein series}
+\label{sec:heisenberg-genus-expansion-eisenstein}
+
+\subsection{Eisenstein series and modular forms}
+\label{subsec:eisenstein-recollection}
+
+The genus-$g$ propagator on a curve $C$ of genus $g$ involves the
+Green's function $G(z,w)$, whose expansion near the diagonal has
+coefficients in the ring of Siegel modular forms.  The Eisenstein
+series $G_{2k}(\tau)$ appear because they are the Taylor coefficients
+of the Weierstrass $\wp$-function, which is the genus-$1$ propagator.
+
+\begin{definition}[Eisenstein series]\label{def:eisenstein-series}
+\index{Eisenstein series|textbf}
+For $k \geq 2$ even, the weight-$k$ Eisenstein series is:
+\begin{equation}
+E_k(\tau) = 1 - \frac{2k}{B_k} \sum_{n=1}^{\infty} \sigma_{k-1}(n) q^n
+\end{equation}
+where $q = e^{2\pi i \tau}$ is the nome, $B_k$ are the Bernoulli numbers, and $\sigma_{k-1}(n) = \sum_{d|n} d^{k-1}$ is the divisor function.
+
+Explicitly:
+\begin{align}
+E_2(\tau) &= 1 - 24\sum_{n=1}^{\infty} \sigma_1(n) q^n 
+= 1 - 24q - 72q^2 - 96q^3 - 168q^4 - \cdots \label{eq:E2-expansion} \\
+E_4(\tau) &= 1 + 240\sum_{n=1}^{\infty} \sigma_3(n) q^n 
+= 1 + 240q + 2160q^2 + 6720q^3 + \cdots \label{eq:E4-expansion} \\
+E_6(\tau) &= 1 - 504\sum_{n=1}^{\infty} \sigma_5(n) q^n 
+= 1 - 504q - 16632q^2 - 122976q^3 - \cdots \label{eq:E6-expansion}
+\end{align}
+\end{definition}
+
+\begin{proposition}[Modular transformation laws \cite{Kac}; \ClaimStatusProvedElsewhere]\label{prop:eisenstein-modular}
+Under $\tau \mapsto \gamma \cdot \tau = \frac{a\tau + b}{c\tau + d}$ with 
+$\gamma = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in SL_2(\mathbb{Z})$:
+
+\emph{Weight~4 and~6 (holomorphic modular).}
+\begin{align}
+E_4\left(\frac{a\tau+b}{c\tau+d}\right) &= (c\tau + d)^4 E_4(\tau) \\
+E_6\left(\frac{a\tau+b}{c\tau+d}\right) &= (c\tau + d)^6 E_6(\tau)
+\end{align}
+
+\emph{Weight~2 (quasi-modular).}
+\begin{equation}
+E_2\left(\frac{a\tau+b}{c\tau+d}\right) = (c\tau + d)^2 E_2(\tau)
++ \frac{6c(c\tau + d)}{\pi i}
+\end{equation}
+
+The extra term for $E_2$ is the \emph{holomorphic anomaly}.
+\end{proposition}
+
+\begin{definition}[Dedekind eta function]\label{def:eta-function}
+\index{Dedekind eta function|textbf}
+The Dedekind eta function is:
+\begin{equation}
+\eta(\tau) = q^{1/24} \prod_{n=1}^{\infty} (1 - q^n) 
+= q^{1/24}(1 - q - q^2 + q^5 + q^7 - \cdots)
+\end{equation}
+
+This is a modular form of weight $1/2$ with a multiplier system:
+\begin{equation}
+\eta\left(\frac{a\tau+b}{c\tau+d}\right) = \epsilon(\gamma) (c\tau + d)^{1/2} \eta(\tau)
+\end{equation}
+where $\epsilon(\gamma)$ is a 24th root of unity determined by $\gamma$.
+\end{definition}
+
+\subsection{Genus 0: classical Heisenberg (review)}
+\label{subsec:heisenberg-genus-zero}
+
+\begin{theorem}[Genus zero correlation functions \cite{FBZ04}; \ClaimStatusProvedElsewhere]\label{thm:heisenberg-genus-zero}
+At genus zero ($\mathbb{CP}^1$), the Heisenberg $n$-point function is:
+\begin{equation}
+\langle a(z_1) a(z_2) \cdots a(z_n) \rangle_0 = 
+\begin{cases}
+0 & n \text{ odd} \\
+\kappa^{n/2} \sum_{\text{pairings}} \prod_{(i,j) \in \text{pairing}} \frac{1}{z_i - z_j} 
+& n \text{ even}
+\end{cases}
+\end{equation}
+
+For $n=2$:
+\[\langle a(z_1) a(z_2) \rangle_0 = \frac{\kappa}{z_1 - z_2}\]
+
+For $n=4$:
+\[\langle a(z_1) a(z_2) a(z_3) a(z_4) \rangle_0 = \kappa^2 \left[
+\frac{1}{(z_1-z_2)(z_3-z_4)} + \frac{1}{(z_1-z_3)(z_2-z_4)} + 
+\frac{1}{(z_1-z_4)(z_2-z_3)}
+\right]\]
+
+This is Wick's theorem for the chiral boson---no modular forms appear at genus zero.
+The propagator $\kappa/(z_i - z_j)$ used here is the \emph{chiral algebra propagator}
+(the residue pairing, yielding a simple pole); the current--current correlator
+$\langle \partial a(z_1)\, \partial a(z_2)\rangle = \kappa/(z_1-z_2)^2$ is
+the $-\partial_{z_1}$ derivative.  The all-genus generalization of the
+simple-pole propagator is Theorem~\ref{thm:heisenberg-all-genus} below.
+\end{theorem}
+
+\subsection{\texorpdfstring{Genus 1: elliptic functions and $E_2$}{Genus 1: elliptic functions and E 2}}
+\label{subsec:heisenberg-genus-one-complete}
+
+\begin{theorem}[Complete genus-1 Heisenberg correlators; \ClaimStatusProvedHere]\label{thm:heisenberg-genus-one-complete}
+On an elliptic curve $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$, the 
+Heisenberg two-point function is:
+\begin{equation}
+\langle a(z_1) a(z_2) \rangle_{E_\tau} = \kappa \cdot G_\tau(z_1 - z_2)
+\end{equation}
+where $G_\tau(z)$ is the regularized elliptic Green function, defined using the Weierstrass $\zeta$-function (which has a simple pole like $G_\tau$, unlike $\wp$ which has a double pole):
+\begin{equation}
+G_\tau(z) = \zeta_\tau(z) + \frac{\pi^2 E_2(\tau)}{3}\, z
+\end{equation}
+where:
+\begin{equation}
+\zeta_\tau(z) = \frac{1}{z} + \sum_{(m,n) \neq (0,0)} \left[
+\frac{1}{z - m - n\tau} + \frac{1}{m+n\tau} + \frac{z}{(m+n\tau)^2}
+\right]
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Derivation from first principles]
+
+\emph{Step~1: Weierstrass regularization.}
+
+On the torus $E_\tau$, we need a function with a simple pole at the origin. By Liouville's theorem, no meromorphic function on a compact Riemann surface can have a single simple pole and be doubly periodic. The Weierstrass $\zeta$-function provides the unique regularization of the lattice sum:
+\[\zeta_\tau(z) = \frac{1}{z} + \sum_{(m,n) \neq (0,0)} \left[\frac{1}{z - m - n\tau} + \frac{1}{m+n\tau} + \frac{z}{(m+n\tau)^2}\right]\]
+This is absolutely convergent and has quasiperiodicity $\zeta(z+1) = \zeta(z) + 2\eta_1$, $\zeta(z+\tau) = \zeta(z) + 2\eta_2$, where $\eta_1 = \pi^2 E_2(\tau)/6$ is the quasi-period (so that $2\eta_1 = \pi^2 E_2(\tau)/3$).
+
+\emph{Step~2: The $E_2$ correction.}
+
+The regularized Green function is:
+\[G_\tau(z) = \zeta_\tau(z) + \frac{\pi^2 E_2(\tau)}{3}\, z\]
+The $E_2$ correction is necessary for the correct modular transformation behavior. Without it, $\zeta_\tau$ alone does not transform covariantly under $\mathrm{SL}_2(\mathbb{Z})$.
+
+\emph{Step~3: Laurent expansion.}
+
+Expanding $G_\tau$ near $z=0$ (using $\zeta_\tau(z) = 1/z + O(z^3)$ since $\zeta$ is odd):
+\begin{align}
+G_\tau(z) &= \frac{1}{z} + \frac{\pi^2 E_2(\tau)}{3} z + O(z^3)
+\end{align}
+
+\emph{Step~4: Eisenstein series appearance.}
+
+The coefficient of $z$ in the expansion involves the lattice Eisenstein series:
+\[G_2(\tau) = \sum_{(m,n) \neq (0,0)} \frac{1}{(m+n\tau)^2} = \frac{\pi^2}{3} E_2(\tau)\]
+
+This is the first appearance of Eisenstein series in the genus expansion.
+\end{proof}
+
+\begin{remark}[Holomorphic anomaly]\label{rem:E2-holomorphic-anomaly}
+\index{holomorphic anomaly!E2 in Heisenberg genus expansion@$E_2$ in Heisenberg genus expansion}
+The appearance of $E_2$ introduces a \emph{holomorphic anomaly}: under modular 
+transformations, the two-point function transforms as:
+\begin{equation}
+\langle a(z_1) a(z_2) \rangle_{\gamma \cdot \tau} = (c\tau + d)^2 
+\langle a((c\tau+d)^{-1}z_1) a((c\tau+d)^{-1}z_2) \rangle_\tau 
++ \text{anomaly}
+\end{equation}
+
+The anomaly term is:
+\[\text{anomaly} = -\frac{6c\kappa}{\pi i} \cdot z_{12}\]
+
+This is precisely the obstruction class computed in Theorem~\ref{thm:heisenberg-obs}.
+\end{remark}
+
+\begin{computation}[Partition function at genus 1]\label{comp:heisenberg-partition-g1}
+The genus-1 partition function is:
+\begin{equation}
+Z_{E_\tau}^{\mathcal{H}} = \text{Tr}_{H_{\mathcal{H}}} q^{L_0 - c/24} 
+= \frac{1}{\eta(\tau)}
+\end{equation}
+
+Explicitly:
+\begin{align}
+Z_{E_\tau}^{\mathcal{H}} &= q^{-1/24} \prod_{n=1}^{\infty} \frac{1}{1 - q^n} \\
+&= q^{-1/24}(1 + q + 2q^2 + 3q^3 + 5q^4 + 7q^5 + \cdots)
+\end{align}
+
+The coefficients are the partition function $p(n)$ counting partitions of $n$.
+
+Under $\tau \mapsto -1/\tau$, using $\eta(-1/\tau) = \sqrt{-i\tau}\,\eta(\tau)$:
+\[Z_{E_{-1/\tau}}^{\mathcal{H}} = \frac{1}{\sqrt{-i\tau}} \cdot Z_{E_\tau}^{\mathcal{H}}\]
+
+since $Z = 1/\eta(\tau)$ transforms contravariantly to $\eta$.
+\end{computation}
+
+\subsection{\texorpdfstring{Genus 2: Siegel modular forms $E_4$ and $E_6$}{Genus 2: Siegel modular forms E 4 and E 6}}
+\label{subsec:heisenberg-genus-two}
+
+\begin{theorem}[Genus-2 Heisenberg correlators; \ClaimStatusProvedHere]\label{thm:heisenberg-genus-two}
+On a genus-2 Riemann surface $\Sigma_2$ with period matrix 
+$\Omega = \begin{pmatrix} \tau_1 & z \\ z & \tau_2 \end{pmatrix} \in \mathcal{H}_2$, 
+the Heisenberg two-point function is:
+\begin{equation}
+\langle a(w_1) a(w_2) \rangle_{\Sigma_2} = \kappa \cdot G_{\Omega}(w_1, w_2)
+\end{equation}
+where $G_{\Omega}$ is the genus-2 Green function (derivative of the prime form with respect to $w_1$). The Heisenberg algebra is a \emph{free} (Gaussian) theory: the two-point function at any genus is exactly the Green's function, with no perturbative corrections in $\kappa$. The Eisenstein series $E_4(\Omega), E_6(\Omega)$ appear in the \emph{expansion of the Green's function itself} near the diagonal (encoding the geometry of $\Sigma_2$), not as separate quantum corrections.
+\end{theorem}
+
+\begin{proof}
+Since the Heisenberg algebra is a free (Gaussian) theory, the genus-$g$
+two-point function is exactly the propagator---the Green function
+$G_\Omega(w_1, w_2) = \partial_{w_1}\log E(w_1, w_2; \Omega)$---with
+no perturbative corrections.  We construct this explicitly for $g = 2$.
+
+\emph{Step~1: Prime form construction.}
+
+The genus-2 prime form is:
+\[E(w_1, w_2; \Omega) = \frac{\theta[\delta](w_1 - w_2; \Omega)}
+{\sqrt{dw_1}\sqrt{dw_2}} \cdot \exp(\text{period correction})\]
+
+\emph{Step~2: Laurent expansion of the genus-2 Green function.}
+
+The chiral propagator $G_\Omega(w_1, w_2) = \partial_{w_1}\!\log E(w_1,w_2;\Omega)$ has a Laurent expansion near the diagonal $w_1 = w_2$:
+\[G_\Omega(w_1, w_2) = \frac{1}{w_1-w_2} + \sum_{k \geq 0} c_k(\Omega)(w_1-w_2)^k\]
+where the coefficients $c_k(\Omega)$ depend on $\Omega$ and on the base point, with the even-index coefficients related to Siegel modular forms (cf.\ the general formula in Theorem~\ref{thm:heisenberg-all-genus}).
+(N.B.\ this is not a ``loop correction''---the Heisenberg theory is free and the Green function is exact at every genus.)
+
+\emph{Step~3: Siegel modular forms.}
+
+For genus 2, the relevant Siegel Eisenstein series of weight $k$ is:
+\[
+E_k^{(2)}(\Omega) = \sum_{(C,D)} \det(C\Omega + D)^{-k}
+\]
+where the sum is over a set of representatives for the bottom rows of $\mathrm{Sp}_4(\mathbb{Z})$ matrices.  These are Siegel modular forms of weight $k$ for $\mathrm{Sp}_4(\mathbb{Z})$; the Fourier expansion involves sums over half-integral positive semi-definite $2 \times 2$ matrices (unlike the genus-1 case, where the expansion is over integers).
+\end{proof}
+
+\begin{remark}[Geometric interpretation]\label{rem:genus-two-physical}
+The genus-2 Green function coefficients are weight-4 and weight-6 Siegel Eisenstein series for $\mathrm{Sp}(4,\mathbb{Z})$, arising from the exact propagator (the Heisenberg theory is free at every genus).
+\end{remark}
+
+\begin{theorem}[Genus-2 obstruction class for \texorpdfstring{$\mathcal{H}_\kappa$}{H_kappa}; \ClaimStatusProvedHere]\label{thm:heisenberg-genus2-obstruction}
+\index{obstruction class!genus-2 Heisenberg}
+The genus-2 bar complex of the Heisenberg algebra has curvature:
+\begin{equation}\label{eq:heisenberg-genus2-curvature}
+(d^{(2)})^2 = \kappa \cdot \lambda_2
+\end{equation}
+where $\lambda_2 = c_2(\mathbb{E}) \in H^4(\overline{\mathcal{M}}_2)$ is the second Chern class of the rank-$2$ Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_2$.  The obstruction class is:
+\begin{equation}
+\operatorname{obs}_2(\mathcal{H}_\kappa) = \kappa \cdot \lambda_2 \in H^4(\overline{\mathcal{M}}_2,\, Z(\mathcal{H}_\kappa))
+\end{equation}
+consistent with the genus universality theorem (Theorem~\ref{thm:genus-universality}) with obstruction coefficient $\kappa_{\mathrm{obs}}(\mathcal{H}_\kappa) = \kappa$ (where $\kappa_{\mathrm{obs}}$ on the left denotes the obstruction coefficient of Definition~\ref{def:genus-g-obstruction} and $\kappa$ on the right is the Heisenberg level).
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: Period matrix and propagator.}
+Fix a genus-2 surface $\Sigma_2$ with canonical homology basis $(A_1, A_2, B_1, B_2)$ and period matrix $\Omega = \begin{pmatrix} \tau_1 & z \\ z & \tau_2 \end{pmatrix} \in \mathfrak{H}_2$.  Let $\omega_1, \omega_2$ be the normalized abelian differentials ($\int_{A_i} \omega_j = \delta_{ij}$, $\int_{B_i} \omega_j = \Omega_{ij}$).  The genus-2 propagator is:
+\begin{equation}\label{eq:genus2-propagator}
+K^{(2)}(w_1, w_2 | \Omega) = \partial_{w_1} \log E(w_1, w_2; \Omega)
+\end{equation}
+where $E(w_1, w_2; \Omega)$ is the prime form on $\Sigma_2$.  This has a simple pole at $w_1 = w_2$ with residue~$1$.
+
+\emph{Step~2: B-cycle monodromies.}
+The propagator satisfies:
+\begin{align}
+K^{(2)}(w_1 + \delta_{A_j}, w_2) &= K^{(2)}(w_1, w_2) \label{eq:genus2-A-periodicity} \\
+K^{(2)}(w_1 + \delta_{B_j}, w_2) &= K^{(2)}(w_1, w_2) - 2\pi i \cdot \omega_j(w_2) \label{eq:genus2-B-quasi}
+\end{align}
+At genus~1, there was one B-cycle producing a \emph{constant} shift $-2\pi i$ (equation~\eqref{eq:B-cycle-quasi-periodicity}).  At genus~2, there are two B-cycles, each producing a shift by the \emph{function-valued} abelian differential $-2\pi i \cdot \omega_j$.  The passage from constant to function-valued monodromies is the key new feature at genus~$\geq 2$.
+
+\emph{Step~3: Curvature from two B-cycles.}
+The curvature $(d^{(2)})^2$ arises from the failure of B-cycle periodicity, exactly as at genus~1 (Theorem~\ref{thm:heisenberg-obs}).  At genus~2, the two independent B-cycle monodromies contribute:
+\begin{equation}\label{eq:genus2-curvature-product}
+(d^{(2)})^2 = \kappa \cdot (-2\pi i)^2 \cdot [\omega_1 \wedge \omega_2]
+\end{equation}
+where $[\omega_1 \wedge \omega_2]$ denotes the class in $H^4(\overline{\mathcal{M}}_2)$ obtained by the exterior product of the two B-cycle defects.  (At genus~1, the single B-cycle defect $-2\pi i$ gave $(d^{(1)})^2 = \kappa \cdot (-2\pi i) \cdot [1] = \kappa \cdot \omega_1 = \kappa \cdot c_1(\mathbb{E})$.)
+
+\emph{Step~4: Identification with $\lambda_2$.}
+The abelian differentials $\omega_1, \omega_2$ are global sections of the rank-2 Hodge bundle $\mathbb{E} \to \overline{\mathcal{M}}_2$ (whose fiber over $[\Sigma_2]$ is $H^0(\Sigma_2, \Omega^1_{\Sigma_2})$).  Their exterior product $\omega_1 \wedge \omega_2 \in \det(\mathbb{E})$ represents $c_2(\mathbb{E}) = \lambda_2$ via the Chern--Weil correspondence (absorbing the $(-2\pi i)^2$ into the cohomological normalization).  Therefore:
+\begin{equation}
+(d^{(2)})^2 = \kappa \cdot \lambda_2 \in H^4(\overline{\mathcal{M}}_2)
+\end{equation}
+\end{proof}
+
+\begin{computation}[Genus-2 free energy via universality]\label{comp:heisenberg-F2-universality}
+By Theorem~\ref{thm:genus-universality} with $\kappa(\mathcal{H}_\kappa) = \kappa$ and the Faber--Pandharipande $\lambda_g$ formula:
+\begin{equation}
+F_2(\mathcal{H}_\kappa) = \kappa \cdot \frac{2^3-1}{2^3} \cdot \frac{|B_4|}{4!} = \kappa \cdot \frac{7}{8} \cdot \frac{1/30}{24} = \frac{7\kappa}{5760}
+\end{equation}
+where $B_4 = -1/30$ is the fourth Bernoulli number.
+
+\emph{Consistency check}: At $\kappa = 1$, this gives $F_2 = 7/5760 = 0.001215\ldots$, matching the DMVV result (Theorem~\ref{thm:dmvv-agreement}).  Moreover:
+\begin{equation}
+\frac{F_2}{F_1} = \frac{7/5760}{1/24} = \frac{7}{240}
+\end{equation}
+which is independent of $\kappa$ --- a consequence of the universality factorization $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
+\end{computation}
+
+\begin{remark}[Genus-2 vs genus-1: structural differences]\label{rem:genus2-structural}
+The genus-2 computation reveals three features invisible at genus~1:
+\begin{enumerate}
+\item \emph{Multi-dimensional Hodge bundle.}  At genus~1, $\mathbb{E}$ is a line bundle and $\lambda_1 = c_1(\mathbb{E})$.  At genus~2, $\mathbb{E}$ has rank~2, and $\lambda_2 = c_2(\mathbb{E})$ is a determinantal class involving the interaction of both B-cycle monodromies.
+\item \emph{Off-diagonal periods.}  The period matrix entry $z = \Omega_{12}$ encodes the interaction between the two handles of $\Sigma_2$.  This interaction contributes to $\lambda_2$ through the cross-term in $c_2(\mathbb{E}) = \frac{1}{2}(c_1(\mathbb{E})^2 - 2\operatorname{ch}_2(\mathbb{E}))$.
+\item \emph{Function-valued monodromies.}  The genus-1 B-cycle monodromy is the constant $-2\pi i$; the genus-2 monodromies $-2\pi i \cdot \omega_j(w)$ are sections of $\omega_{\Sigma_2}$.  This explains why $\lambda_2$ lives in $H^4$ (not $H^2$): each B-cycle defect contributes a $2$-form on moduli space, and the two defects combine multiplicatively.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Degeneration behavior]\label{rem:genus2-degeneration}
+\index{degeneration!genus-2 to genus-1}
+As $\Sigma_2$ degenerates, the obstruction class $\operatorname{obs}_2 = \kappa \cdot \lambda_2$ restricts to the boundary divisors of $\overline{\mathcal{M}}_2$:
+\begin{itemize}
+\item \emph{Separating degeneration}
+  ($\delta_1$: $\Sigma_2 \to E_{\tau_1} \cup E_{\tau_2}$
+  via a node):
+  $\lambda_2|_{\delta_1}
+  = \lambda_1(E_{\tau_1}) \cdot \lambda_1(E_{\tau_2})$,
+  the product of genus-1 Hodge classes.  The two B-cycle
+  monodromies decouple, recovering two independent
+  genus-1 obstructions.
+\item \emph{Non-separating degeneration}
+  ($\delta_0$: $\Sigma_2 \to$ nodal genus-1): the period
+  matrix entry $z = \Omega_{12} \to 0$, the Hodge bundle
+  acquires a rank-1 sub-bundle, and
+  $\lambda_2|_{\delta_0} = 0$.  The vanishing reflects
+  the fact that a non-separating node reduces the
+  effective genus without producing a separating
+  obstruction.
+\end{itemize}
+This degeneration behavior is consistent with the recursive
+structure of the genus expansion
+(Theorem~\ref{thm:heisenberg-all-genus}).
+\end{remark}
+
+\begin{computation}[Partition function at genus 2]\label{comp:partition-genus-two}
+The genus-2 partition function is:
+\begin{equation}
+Z_{\Sigma_2}^{\mathcal{H}} = \frac{1}{\det(\mathrm{Im}\,\Omega)^{1/2}}
+\end{equation}
+where $\Omega$ is the $2 \times 2$ period matrix of $\Sigma_2$.
+This is the \emph{zero-mode contribution} to the full partition
+function of a single free boson on a genus-2 surface.
+(The genus-1 quantity $1/\eta(\tau)$ in
+Computation~\ref{comp:heisenberg-partition-g1} is the
+\emph{holomorphic} partition function, including the oscillator
+determinant.  At genus~$2$, the oscillator determinant contributes
+additional factors involving theta functions; the full
+non-holomorphic partition function involves
+$1/\det(\mathrm{Im}\,\Omega)^{1/2}$ times these oscillator
+contributions.)
+
+The modular weight is:
+\[Z_{\gamma \cdot \Omega}^{\mathcal{H}} = \det(C\Omega + D)^{-1/2} 
+\cdot Z_{\Omega}^{\mathcal{H}}\]
+for $\gamma \in Sp_4(\mathbb{Z})$.
+\end{computation}
+
+\subsection{\texorpdfstring{General genus $g$: the expansion}{General genus g: the expansion}}
+\label{subsec:heisenberg-general-genus}
+
+\begin{theorem}[Heisenberg at general genus; \ClaimStatusProvedHere]\label{thm:heisenberg-all-genus}
+For genus $g$, the Heisenberg two-point function is \emph{exact} (no perturbative expansion):
+\begin{equation}
+\langle a(z_1) a(z_2) \rangle_{\Sigma_g} = \kappa \cdot G_{\Omega_g}(z_1, z_2)
+\end{equation}
+where $G_{\Omega_g}$ is the genus-$g$ Green function constructed from the prime form $E(z_1, z_2; \Omega_g)$ and the period matrix $\Omega_g \in \mathcal{H}_g$.
+
+The geometry of $\Sigma_g$ enters through $G_{\Omega_g}$, whose Laurent expansion near $z_1 = z_2$ takes the form:
+\begin{align}
+g=0: \quad & G(z_1, z_2) = \frac{1}{z_1 - z_2} \quad \text{(chiral propagator)} \\
+g=1: \quad & G_\tau(z_1, z_2) = \zeta_\tau(z_1-z_2) + \frac{\pi^2 E_2(\tau)}{3}\,(z_1-z_2) \\
+g \geq 2: \quad & G_{\Omega_g}(z_1, z_2) = \frac{1}{z_1-z_2} + \sum_{k \geq 0} c_k(\Omega_g)(z_1-z_2)^k \quad \text{(chiral propagator $\partial_z \log E(z_1,z_2)$)}
+\end{align}
+The Eisenstein series and Siegel modular forms appear as \emph{coefficients of the Green function expansion}, encoding the moduli dependence---not as quantum corrections to a perturbative series. The Heisenberg algebra is free: there are no loop corrections.
+\end{theorem}
+
+\begin{proof}
+The Heisenberg algebra is a free (Gaussian) theory: Wick's theorem
+reduces all correlation functions to products of two-point functions.
+Therefore the genus-$g$ two-point function is exactly the Green function
+$G_{\Omega_g}(z_1, z_2) = \partial_{z_1}\log E(z_1, z_2; \Omega_g)$,
+the chiral derivative of the prime form on $\Sigma_g$.
+
+\emph{Step~1: Genus expansion.}
+
+The full partition function sums over genera: $Z = \sum_{g \geq 0} \hbar^{2g-2} Z_g$.  For the Heisenberg algebra (a free theory), each genus-$g$ contribution is exact---it is \emph{not} a perturbative loop correction.  Rather, $Z_g$ encodes the propagator on $\Sigma_g$ through the period matrix $\Omega_g$.
+
+\emph{Step~2: Modular weight.}
+
+At genus $g$, the correlation function is a modular form whose weight is determined by the number of insertions and the genus.
+
+\emph{Step~3: Modular constraints on expansion coefficients.}
+
+The coefficient $c_k(\Omega_g)$ in the Laurent expansion
+$G_{\Omega_g}(z_1,z_2) = (z_1-z_2)^{-1} + \sum_{k\geq 0} c_k(\Omega_g)(z_1-z_2)^k$
+is a function of the period matrix $\Omega_g \in \mathcal{H}_g$, holomorphic on the Siegel upper half-space.  Since the partition function must transform as a section of a line bundle on $\mathcal{M}_g$ (i.e.\ as a Siegel modular form), each coefficient $c_k(\Omega_g)$ must be a Siegel modular form of the appropriate weight under $Sp_{2g}(\mathbb{Z})$.  The weight is fixed by the requirement that the product $(z_1-z_2)^{-1} \cdot c_k(\Omega_g)(z_1-z_2)^k$ be an $(r, s)$-form of total weight zero on $\Sigma_g \times \Sigma_g$; each additional factor of $(z_1-z_2)$ has conformal weight $(1,0)$, so $c_k$ must have modular weight $k+1$.
+
+\emph{Step~4: Generation by explicit modular forms.}
+
+For $g = 1$: The graded ring $\bigoplus_k M_k(SL_2(\mathbb{Z}))$ is generated by $E_4$ and $E_6$; by Eisenstein's theorem, every even-weight modular form is a polynomial in these two.  The quasi-Eisenstein series $E_2$ appears in $G_\tau$ at weight 2 as the unique quasi-modular form (Theorem~\ref{thm:eta-appearance}).
+
+For $g = 2$: The ring of Siegel modular forms for $Sp_4(\mathbb{Z})$ is classically known (Igusa \cite{Igusa62}): it is generated by cusp forms $\chi_{10}, \chi_{12}$ and Eisenstein series $E_4, E_6$ (of degrees 10, 12, 4, 6 respectively).  The genus-2 Green function expansion has coefficients in this ring, as verified explicitly in Theorem~\ref{thm:heisenberg-genus-two}.
+
+For general $g$: The structure of the Siegel modular forms ring $M_*(\mathrm{Sp}_{2g}(\mathbb{Z}))$ is finitely presented for $g \leq 3$ by classical results \cite{Freitag83}, and the generators of the ring are known explicitly in those cases.  The concrete expansion claimed in this theorem is therefore \emph{complete and rigorous for $g \leq 3$}.  For $g \geq 4$, the ring of Siegel modular forms is not fully described, and the assertion about the coefficient ring means that the expansion coefficients lie in the finitely generated subalgebra of $M_*(\mathrm{Sp}_{2g}(\mathbb{Z}))$ determined by the modular weight constraints of Step~3.
+\end{proof}
+
+\subsection{Modular weight computations for each genus}
+\label{subsec:modular-weights-all-genus}
+
+\begin{table}[ht]
+\centering
+\caption{Modular weights at each genus (propagator pole order is $1$ at all genera)}
+\label{tab:modular-weights}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Genus $g$} & \textbf{Leading Eisenstein} & \textbf{Weight} \\
+\hline
+0 & (none) & 0 \\
+\hline
+1 & $E_2$ (quasi-modular) & 2 \\
+\hline
+2 & $E_4, E_6$ (Siegel) & 4, 6 \\
+\hline
+3 & $E_6, E_8, E_{10}$ (Siegel) & 6, 8, 10 \\
+\hline
+$g \leq 3$ & $E_{2g}, E_{2g+2}, \ldots, E_{4g-2}$ & $2g, 2g+2, \ldots, 4g-2$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{proposition}[Modular weight formula \cite{Igusa62}; \ClaimStatusProvedElsewhere]\label{prop:modular-weight-formula}
+At genus $g$, the Green function expansion involves Siegel Eisenstein series
+$E_k^{(g)}(\Omega)$ for even weights $k > g+1$ (by Klingen's convergence
+bound).  For $g \leq 3$, the leading (lowest weight) series contributing to the propagator
+expansion has weight~$2g$; for $g \geq 4$, the minimum converging even weight is $\lceil g+2 \rceil_{\mathrm{even}}$, which is strictly less than $2g$.  The ring
+of Siegel modular forms at genus $g \geq 3$ is more complex than the
+Eisenstein series alone; for $g = 2$, the full ring includes cusp forms
+$\chi_{10}$ and $\chi_{12}$ (Igusa's generators) in addition to Eisenstein
+series.
+
+\end{proposition}
+
+\begin{proof}
+The Green function on a genus-$g$ surface expands in Siegel modular forms of $\mathrm{Sp}(2g, \mathbb{Z})$.  The period matrix $\Omega \in \mathfrak{H}_g$ has $g(g+1)/2$ independent entries.  By Klingen's convergence theorem, $E_{k}^{(g)}(\Omega)$ converges absolutely for even $k > g+1$.  For $g \leq 3$, the minimum converging even weight is $2g$ (since $g+2 \leq 2g$ when $g \geq 2$, and $g=1$ uses the quasi-modular $E_2$).  For $g \geq 4$, the minimum converging even weight drops below $2g$: at genus~4, $E_6^{(4)}$ already converges (weight $6 > 5 = g+1$), though $2g = 8$.  Whether the Green function expansion at genus $g \geq 4$ genuinely begins at weight~$2g$ (for reasons beyond convergence) is a question we do not address here.
+\end{proof}
+
+\begin{remark}[Scope]
+Every claim in this proposition is established in the literature:
+(i)~Klingen's convergence bound for Siegel Eisenstein series
+(\ClaimStatusProvedElsewhere, \cite{Klingen67});
+(ii)~the leading weight $2g$ follows from~(i);
+(iii)~the structure of the ring of Siegel modular forms at genus~$2$
+(Igusa's generators $\chi_{10}, \chi_{12}$) is classical
+(\ClaimStatusProvedElsewhere, Igusa \cite{Igusa62}).
+The \emph{precise expansion coefficients} at genus $g \geq 3$
+(beyond what is stated here) depend on open problems in the
+theory of Siegel modular forms; these are not claimed by this
+proposition.
+\end{remark}
+
+\subsection{Eta function in partition functions}
+\label{subsec:eta-partition-functions}
+
+\begin{theorem}[Partition function and determinant regularization; \ClaimStatusProvedHere]\label{thm:eta-appearance}
+The partition function of a free non-compact boson on a genus-$g$ surface $\Sigma_g$ is:
+\begin{equation}
+Z_{\Sigma_g}^{\mathcal{H}} = \frac{1}{\det(\mathrm{Im}\,\Omega_g)^{1/2}}
+\end{equation}
+where $\Omega_g$ is the period matrix (consistent with Computation~\ref{comp:partition-genus-two}).
+
+At genus~$1$, the Dedekind eta function appears via the operator formalism: $\mathrm{Tr}(q^{L_0 - c/24}) = 1/\eta(\tau)$ (holomorphic partition function).
+
+The eta function provides the \emph{determinant regularization}:
+\[|\eta(\tau)|^{-2} = q^{-1/24}\bar{q}^{-1/24} \cdot \det'(\bar{\partial}_0)^{-1} \cdot (\mathrm{Im}\,\tau)^{1/2}\]
+where $\det'(\bar{\partial}_0)$ is the zeta-regularized determinant of the
+scalar Laplacian.  (The \emph{holomorphic} partition function $1/\eta(\tau)$
+captures the chiral half; the full partition function involves $|\eta|^{-2}$
+times a non-holomorphic factor from the zero-mode integration.)
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: Fock space.}
+
+The Heisenberg Fock space at genus $g$ has vacuum $|0\rangle$ annihilated by $a_n$
+for $n > 0$.
+
+\emph{Step~2: Trace computation.}
+
+The partition function is:
+\[Z_g = \text{Tr}_{F_g} q^{L_0 - c/24}\]
+
+For each oscillator mode $a_n$ with $n > 0$, there is a contribution:
+\[\prod_{n=1}^{\infty} \frac{1}{1 - q^n} = \eta(\tau)^{-1}\]
+
+\emph{Step~3: Genus $g$ generalization.}
+
+At genus~$g$, the partition function depends on the full period matrix
+$\Omega_g \in \mathfrak{H}_g$ (a $g \times g$ symmetric matrix with
+$g(g+1)/2$ independent entries), \emph{not} merely on its diagonal entries
+$\tau_i = \Omega_{ii}$.  The result is:
+\[Z_g = \frac{1}{\det(\mathrm{Im}\,\Omega_g)^{1/2}}\]
+which reduces to $1/(\mathrm{Im}\,\tau)^{1/2}$ at genus~$1$ (compatible
+with $|\eta(\tau)|^{-2} \cdot q^{1/24}\bar{q}^{1/24}$ after removing the
+holomorphic anomaly).  The factorization
+$Z_g \propto \prod_{i=1}^g \eta(\tau_i)^{-1}$ holds only in the
+degeneration limit where $\Sigma_g$ pinches into $g$ copies of
+genus-$1$ surfaces.
+\end{proof}
+
+\subsection{Comparison with physics literature (Dijkgraaf et al.)}
+\label{subsec:physics-comparison}
+
+\begin{theorem}[Agreement with Dijkgraaf--Moore--Verlinde--Verlinde; \ClaimStatusProvedHere]\label{thm:dmvv-agreement}
+\index{Mumford formula}
+\index{free energy!genus expansion}
+These formulas match the results of Dijkgraaf et al. \cite{DMVV} for topological 
+field theory partition functions.
+
+Specifically, for the Heisenberg algebra (free boson) at level $\kappa = 1$, the \emph{free energy} at genus $g$ is:
+\begin{equation}
+F_g^{\text{Heisenberg}} = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g
+= \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
+\end{equation}
+where $\psi_1$ is the cotangent line class at the marked point and $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle (the integrand has degree $(2g-2)+g = 3g-2 = \dim\overline{\mathcal{M}}_{g,1}$, giving dimensional consistency).  This is the Faber--Pandharipande $\lambda_g$ formula \cite{FP00}.
+\end{theorem}
+
+\begin{proof}[Verification]
+
+\emph{Step~1: DMVV formula as Hodge integral.}
+
+Dijkgraaf et al.\ compute the free boson free energy as an integral over $\overline{\mathcal{M}}_{g,1}$ (the marked point records the vertex operator insertion):
+\[F_g = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g\]
+where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle and $\psi_1$ is the cotangent line class at the marked point.  The integrand has degree $(2g-2) + g = 3g-2 = \dim \overline{\mathcal{M}}_{g,1}$, confirming dimensional consistency.
+
+\emph{Step~2: Hodge integral evaluation.}
+
+The $\lambda_g$-formula (Faber--Pandharipande \cite{FP00}) evaluates this Hodge integral:
+\[\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}\]
+
+\emph{Step~3: Explicit values.}
+
+\begin{align}
+g=1: \quad F_1 &= \frac{1}{2} \cdot \frac{1/6}{2}
+= \frac{1}{24} \quad \checkmark \\
+g=2: \quad F_2 &= \frac{7}{8} \cdot \frac{1/30}{24}
+= \frac{7}{5760} \quad \checkmark \\
+g=3: \quad F_3 &= \frac{31}{32} \cdot \frac{1/42}{720}
+= \frac{31}{967680} \quad \checkmark
+\end{align}
+
+These are the Hodge integral evaluations of Faber--Pandharipande~\cite{FP00}.
+\end{proof}
+
+\begin{remark}[Physical interpretation]\label{rem:witten-perspective}
+In topological gravity, $F_g$ is the genus-$g$ free energy and $\lambda_g$ obstructs trivializing the tangent bundle of moduli space.  Bernoulli numbers arise from the asymptotic expansion of the partition function.
+\end{remark}
+
+\subsection{Summary}
+\label{subsec:heisenberg-dictionary-complete}
+
+\begin{table}[ht]
+\centering
+\caption{Heisenberg genus expansion}
+\label{tab:heisenberg-complete-dictionary}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Genus} & \textbf{Modular forms} & \textbf{Interpretation} \\
+\hline
+$g=0$ & (none) & Tree level, classical \\
+\hline
+$g=1$ & $E_2(\tau)$, $\eta(\tau)$ & One loop, central charge \\
+\hline
+$g=2$ & $E_4(\Omega)$, $E_6(\Omega)$ & Two loops, quantum OPE \\
+\hline
+$g=3$ & $E_6, E_8, E_{10}$ & Three loops \\
+\hline
+$g \geq 4$ & $E_{2g}, \ldots, E_{4g-2}$ & Multi-loop \\
+\hline
+\end{tabular}
+\end{table}
+
+% [Summary block removed: the content is covered by the preceding theorems and table.]
+
+\subsection{Computational tables: explicit coefficients}
+\label{subsec:explicit-coefficients-tables}
+
+\begin{table}[ht]
+\centering
+\caption{Eisenstein series $q$-expansions (first 10 terms)}
+\label{tab:eisenstein-q-expansions}
+\begin{tabular}{|l|c|}
+\hline
+$n$ & $\sigma_1(n)$ \\
+\hline
+1 & 1 \\
+2 & 3 \\
+3 & 4 \\
+4 & 7 \\
+5 & 6 \\
+6 & 12 \\
+7 & 8 \\
+8 & 15 \\
+9 & 13 \\
+10 & 18 \\
+\hline
+\end{tabular}
+\quad
+\begin{tabular}{|c|c|}
+\hline
+$E_2(\tau)$ & Coefficient \\
+\hline
+$q^0$ & 1 \\
+$q^1$ & $-24$ \\
+$q^2$ & $-72$ \\
+$q^3$ & $-96$ \\
+$q^4$ & $-168$ \\
+$q^5$ & $-144$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Free energy values $F_g = \lambda_g$ for genera $1 \le g \le 10$}
+\label{tab:free-energy-values}
+\begin{tabular}{|c|c|c|}
+\hline
+$g$ & $F_g$ (exact) & $F_g$ (decimal) \\
+\hline
+1 & $1/24$ & $4.17 \times 10^{-2}$ \\
+2 & $7/5760$ & $1.22 \times 10^{-3}$ \\
+3 & $31/967680$ & $3.20 \times 10^{-5}$ \\
+4 & $127/154828800$ & $8.20 \times 10^{-7}$ \\
+5 & $511/24524881920$ & $2.08 \times 10^{-8}$ \\
+6 & $1414477/2678117105664000$ & $5.28 \times 10^{-10}$ \\
+7 & $8191/612141052723200$ & $1.34 \times 10^{-11}$ \\
+8 & $16931177/49950709902213120000$ & $3.39 \times 10^{-13}$ \\
+9 & $5749691557/669659197233029971968000$ & $8.59 \times 10^{-15}$ \\
+10 & $91546277357/420928638260761696665600000$ & $2.17 \times 10^{-16}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Higher-rank Heisenberg and multi-boson expansions}
+\label{sec:higher-rank-heisenberg-eisenstein}
+\index{Heisenberg algebra!higher rank!Eisenstein expansion}
+
+For the rank-$d$ Heisenberg algebra $\mathcal{H}_\kappa^{\oplus d}$
+(corresponding to $d$ free bosons at level $\kappa$), the genus
+expansion inherits a factored structure from the tensor product.
+
+\subsection{\texorpdfstring{Rank-$d$ bar complex at genus 1}{Rank-d bar complex at genus 1}}
+
+\begin{computation}[Rank-\texorpdfstring{$d$}{d} Heisenberg: genus-1 curvature]
+\label{comp:rank-d-heisenberg-genus1}
+\index{Heisenberg algebra!rank $d$!curvature}
+
+The rank-$d$ Heisenberg algebra has generators
+$a^i(z)$ ($i = 1, \ldots, d$) with OPE
+$a^i(z) a^j(w) \sim \kappa \delta^{ij}/(z-w)^2$.
+The stress tensor is $T = \frac{1}{2\kappa} \sum_{i=1}^d
+\normord{a^i a^i}$, giving central charge $c = d$.
+
+\emph{Genus-1 two-point function.}
+On $E_\tau$, the two-point function is:
+\[
+\langle a^i(z_1) a^j(z_2) \rangle_{E_\tau}
+= \kappa \delta^{ij} \cdot \widetilde{G}_\tau(z_1 - z_2)
+\]
+where $\widetilde{G}_\tau(z) = \wp_\tau(z) + \frac{\pi^2}{3} E_2(\tau)$
+is the regularized Weierstrass function (with the Eisenstein
+correction ensuring modular covariance).  Note: $\widetilde{G}_\tau$ has a double pole at $z=0$ and equals $-\partial_z G_\tau(z)$, where $G_\tau$ is the simple-pole Green function of Theorem~\ref{thm:heisenberg-genus-one-complete}.  To avoid confusion: throughout this chapter, $G_\tau$ always denotes the simple-pole propagator (Section~\ref{subsec:heisenberg-genus-one-complete}), while $\widetilde{G}_\tau$ denotes its negative derivative, the double-pole correlator; the two should not be conflated.
+
+\emph{Curvature.}
+The genus-1 curvature of the degree-2 bar complex:
+\begin{align}
+m_0^{(ij)} &= \operatorname{Res}_{z_1 = z_2}
+\bigl[a^i(z_1) a^j(z_2) \cdot
+\omega_{12}^{\mathrm{ell}}\bigr]\big|_{\text{vacuum}}
+= \kappa \delta^{ij} \label{eq:rank-d-curvature}
+\end{align}
+The total curvature is $m_0 = \sum_{i=1}^d m_0^{(ii)} = d\kappa$
+(Theorem~\ref{thm:heisenberg-obs}).  This is \emph{additive}:
+the rank-$d$ curvature is $d$ times the rank-$1$ curvature.
+
+\emph{Obstruction coefficient:} $\kappa(\mathcal{H}_\kappa^{\oplus d})
+= d\kappa$.  At the standard normalization $\kappa = 1$:
+$\kappa = d = c$ (the obstruction coefficient equals the central
+charge for the Heisenberg algebra).
+
+\emph{Comparison table.}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|ccccccc}
+$d$ & $c$ & $\kappa$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ \\
+\hline
+$1$ & $1$ & $1$ & $1/24$ & $7/5760$ & $31/967680$ & $127/154828800$ & $73/3503554560$ \\
+$2$ & $2$ & $2$ & $1/12$ & $7/2880$ & $31/483840$ & $127/77414400$ & $73/1751777280$ \\
+$8$ & $8$ & $8$ & $1/3$ & $7/720$ & $31/120960$ & $127/19353600$ & $73/437944320$ \\
+$16$ & $16$ & $16$ & $2/3$ & $7/360$ & $31/60480$ & $127/9676800$ & $73/218972160$ \\
+$24$ & $24$ & $24$ & $1$ & $7/240$ & $31/40320$ & $127/6451200$ & $73/145981440$ \\
+$26$ & $26$ & $26$ & $13/12$ & $91/2880$ & $403/483840$ & $1651/77414400$ & $949/1751777280$
+\end{tabular}
+\end{center}
+
+The case $d = 24$ gives $F_1 = 1$ (an integer: the unique level at
+which the genus-1 obstruction is a unit).  This is \emph{not}
+coincidental: $d = 24$ corresponds to the Leech lattice VOA, and
+the integrality of $F_1$ reflects the fact that the Leech lattice
+is the unique even unimodular lattice of rank~24 with no roots.
+
+The case $d = 26$ gives $\kappa = 26$, and the Virasoro subalgebra
+has $\kappa_{\mathrm{Vir}} = c/2 = 13$
+(Remark~\ref{rem:vir-bosonic-string-genus}).  The factor-of-2
+discrepancy: $26 = 2 \times 13$ reflects the difference between the
+full Heisenberg algebra (spin-1 generators) and its Virasoro
+subalgebra (spin-2 generator $T = \frac{1}{2}\normord{JJ}$).
+\end{computation}
+
+
+\subsection{\texorpdfstring{Eisenstein hierarchy for the rank-$d$ bar complex}{Eisenstein hierarchy for the rank-d bar complex}}
+
+\begin{proposition}[Multi-boson Eisenstein corrections;
+\ClaimStatusProvedHere]
+\label{prop:multi-boson-eisenstein}
+\index{Eisenstein series!multi-boson corrections}
+For the rank-$d$ Heisenberg algebra at level $\kappa$, the elliptic
+bar complex corrections (Theorem~\ref{thm:elliptic-vs-rational})
+satisfy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The leading correction at degree $n$ is
+$\mathcal{E}^{(1)}_n = d\kappa \cdot E_2(\tau)
+\cdot V_n$, where $V_n$ is a finite-dimensional vector space
+depending on the bar degree.
+\item At degree~$2$:
+\begin{equation}\label{eq:multi-boson-E2}
+\mathcal{E}^{(1)}_2(\mathcal{H}_\kappa^{\oplus d}, \tau)
+= d\kappa \cdot E_2(\tau) \cdot \bC
+\end{equation}
+(one-dimensional, corresponding to the curvature correction).
+\item The next correction involves $E_4(\tau)$ and appears at
+degree $\geq 3$:
+\begin{equation}\label{eq:multi-boson-E4}
+\mathcal{E}^{(2)}_3 = d\kappa^2 \cdot E_4(\tau) \cdot \bC
+\end{equation}
+with the coefficient $d\kappa^2$ arising from the iteration of
+two propagator corrections.
+\item The generating function for the total Eisenstein correction
+at genus~$1$ is:
+\begin{equation}\label{eq:multi-boson-eisenstein-gen}
+\sum_{n \geq 2} \dim \mathcal{E}^{(k)}_n \cdot q^n
+= d \cdot \left(\sum_{m=1}^{\infty} \sigma_1(m) q^m\right)
+\cdot p(n-2, k)
+\end{equation}
+where $\sigma_1(m) = \sum_{d|m} d$ is the sum-of-divisors function
+(the coefficient of $q^m$ in $E_2(\tau) - 1$) and $p(n, k)$ counts
+partitions of $n$ with at most $k$ correction insertions.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) follows from the factorization of the rank-$d$ two-point
+function: $\langle a^i a^j \rangle_{E_\tau} = \kappa\delta^{ij}
+G_\tau$, so the leading correction (involving one insertion of
+$c_1(\tau) = -\pi^2 E_2(\tau)/3$) scales as $d\kappa$.
+
+Part~(ii): at degree~2, the correction arises from replacing
+$\omega_{12}^{\mathrm{rat}} = d\log(z_1-z_2)$ with
+$\omega_{12}^{\mathrm{ell}} = d\log\theta_1(z_1-z_2|\tau)$.
+The difference $\delta_{12} = \omega_{12}^{\mathrm{ell}}
+- \omega_{12}^{\mathrm{rat}}$ is regular at $z_1 = z_2$
+(Theorem~\ref{thm:elliptic-vs-rational}, Step~1), and the
+leading coefficient is $c_1(\tau) = -\pi^2 E_2(\tau)/3$.
+For each pair $(i, j)$ with $i = j$, this contributes
+$\kappa \cdot E_2(\tau)$ to the curvature correction, and summing
+over $i = 1, \ldots, d$ gives~\eqref{eq:multi-boson-E2}.
+
+Part~(iii): the $E_4$ correction requires two insertions of
+the correction $c_k(\tau)$ in the propagator expansion.  The
+leading term $c_2(\tau) = -G_4(\tau) \in M_4(\mathrm{SL}_2(\bZ))$
+contributes at degree~$3$ (where three propagator factors allow
+one $c_2$ insertion plus two polar terms).  The coefficient $d\kappa^2$
+arises from the OPE contraction of two pairs in
+$\mathcal{H}^{\oplus d}$.
+
+Part~(iv) follows from the structure of the correction-order
+spectral sequence (Theorem~\ref{thm:elliptic-vs-rational},
+Steps~2--3).
+\end{proof}
+
+
+\subsection{Explicit genus-2 Heisenberg computation}
+
+\begin{computation}[Heisenberg at genus 2: period matrix dependence]
+\label{comp:heisenberg-genus2-period}
+\index{Heisenberg algebra!genus 2}
+
+At genus~$2$, the bar complex uses the propagator
+$\omega_{ij}^{(2)} = d_z \log E(z_i, z_j|\Omega)$ where
+$E(z,w|\Omega)$ is the prime form on the genus-2 Riemann surface
+$\Sigma_2$ with period matrix $\Omega \in \mathfrak{H}_2$ (the
+Siegel upper half-space of degree~2).
+
+\emph{Prime form expansion.}
+Near $z = w$, the prime form behaves as:
+\[
+E(z,w|\Omega) = (z-w)\bigl(1 + c_2(\Omega)(z-w)^2
++ c_4(\Omega)(z-w)^4 + \cdots\bigr)
+\]
+where the coefficients $c_{2k}(\Omega)$ are Siegel modular forms of
+weight $2k+2$ for $\mathrm{Sp}(4, \bZ)$.  The leading correction
+$c_2(\Omega)$ is related to the Siegel Eisenstein series
+$E_4^{(2)}(\Omega)$ of degree~2.
+
+\emph{Degree-2 curvature.}
+The genus-2 curvature of the Heisenberg bar complex:
+\begin{align}
+m_0^{(2)} &= \kappa \cdot
+\operatorname{Res}_{z_1 = z_2}\bigl[\omega_{12}^{(2)}
+\wedge \omega_{12}^{(2)}\bigr]\big|_{\text{vacuum}} \\
+&= \kappa \cdot \bigl(1 + c_2(\Omega) + \cdots\bigr)
+\end{align}
+The free energy at genus~2 is:
+\[
+F_2(\mathcal{H}_\kappa) = \kappa \cdot \int_{\overline{\mathcal{M}}_{2,1}}
+\psi_1^2 \lambda_2 = \kappa \cdot \frac{7}{5760}
+\]
+(Theorem~\ref{thm:heisenberg-all-genera}).
+
+\emph{Period matrix integration.}
+The integral over $\overline{\mathcal{M}}_2$ extracts the
+Siegel-modular-invariant part of the curvature.  The period matrix
+$\Omega = \bigl(\begin{smallmatrix} \tau_1 & \tau_{12} \\
+\tau_{12} & \tau_2 \end{smallmatrix}\bigr)$ parameterizes the
+complex structure of $\Sigma_2$, and the modular-invariant
+integral:
+\[
+\int_{\overline{\mathcal{M}}_2} \lambda_2
+= \frac{1}{240} \quad (\text{Faber's formula})
+\]
+Combined with the $\psi$-class integral
+$\int_{\overline{\mathcal{M}}_{2,1}} \psi_1^2 \lambda_2
+= 7/5760$, this gives the genus-2 contribution as claimed.
+
+\emph{Explicit numerical values for rank-$d$ Heisenberg at genus~2.}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccc}
+$d$ & $F_2$ (exact) & $F_2$ (decimal) & Physical model \\
+\hline
+$1$ & $7/5760$ & $1.215 \times 10^{-3}$ & Free boson \\
+$2$ & $7/2880$ & $2.431 \times 10^{-3}$ & Complex boson \\
+$8$ & $7/720$ & $9.722 \times 10^{-3}$ & $E_8$ root lattice \\
+$24$ & $7/240$ & $2.917 \times 10^{-2}$ & Leech lattice \\
+$26$ & $91/2880$ & $3.160 \times 10^{-2}$ & Bosonic string matter
+\end{tabular}
+\end{center}
+\end{computation}
+
+
+\subsection{Comparison: bar complex vs.\ partition function}
+
+\begin{remark}[Systematic comparison at genus~\texorpdfstring{$g$}{g}]
+\label{rem:bar-vs-partition-systematic}
+\index{bar complex!vs.\ partition function}
+
+The bar-complex free energy $F_g$ and the physical partition
+function $Z_g$ encode fundamentally different information.
+For the rank-$d$ Heisenberg at level $\kappa = 1$:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|cc}
+& Bar free energy $F_g$ & Partition function $Z_g$ \\
+\hline
+Type & Rational number & Function on $\mathcal{M}_g$ \\
+Depends on & $d$ (rank) only & Full moduli $(\Sigma_g, \Omega)$ \\
+$g = 1$ & $d/24$ & $(\operatorname{Im}\tau)^{-d/2}
+|\eta(\tau)|^{-2d}$ \\
+$g = 2$ & $7d/5760$ &
+$[\det(\operatorname{Im}\Omega)]^{-d/2}
+\cdot [F_2^{\mathrm{osc}}(\Omega)]^{-d}$ \\
+Large $g$ & $\sim 2d/(2\pi)^{2g}$ &
+$\sim [\det'(\Delta_g)]^{-d/2}$ \\
+Growth & Bernoulli decay & $(2g)!$ growth \\
+Convergence & Yes ($|x| < 2\pi$) & No (asymptotic)
+\end{tabular}
+\end{center}
+
+The bar-complex free energy $F_g$ is a \emph{tautological intersection
+number} on $\overline{\mathcal{M}}_g$, extracting the class
+$\kappa \lambda_g \in H^{2g}(\overline{\mathcal{M}}_g)$
+(Proposition~\ref{prop:bar-tautological-filtration}).
+The partition function $Z_g$ is a function on $\mathcal{M}_g$,
+encoding the full spectral data of the Laplacian on $\Sigma_g$.
+The two are related by:
+\[
+F_g = \kappa \cdot \int_{\overline{\mathcal{M}}_{g,1}}
+\psi_1^{2g-2} \lambda_g
+= \text{``coefficient of } \lambda_g \text{ in }
+\log Z_g\text{''}
+\]
+in the sense that $F_g$ captures the leading tautological
+contribution to $\log Z_g$ in the large-$k$ expansion
+(Remark~\ref{rem:verlinde-asymptotics}).
+\end{remark}

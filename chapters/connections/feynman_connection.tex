@@ -1,0 +1,283 @@
+
+The Heisenberg bar complex reproduces free-boson Feynman rules at all genera; for interacting theories the identification remains conjectural.
+
+\section{Bridge to Feynman diagrams: Heisenberg as free boson QFT}
+
+\subsection{The free boson field theory}
+
+The Heisenberg vertex algebra $\mathcal{H}_\kappa$ has action:
+\begin{equation}
+S[\phi] = \frac{1}{4\pi\kappa} \int d^2z \, \partial\phi \bar{\partial}\phi
+\end{equation}
+
+The holomorphic current $a(z) = \partial_z \phi_L(z)$ generates $\mathcal{H}_\kappa$ with commutator $[a(z), a(w)] = \kappa \cdot \partial_z \delta(z - w)$ and propagator
+\begin{equation}
+\langle a(z) a(w) \rangle = \frac{\kappa}{(z-w)^2}.
+\end{equation}
+This is the OPE used in the bar-cobar construction.
+
+\subsection{Feynman rules for free boson}
+
+The Feynman rules are: each edge between $z$ and $w$ contributes the propagator $G(z,w) = \kappa/(z-w)^2$; the free theory has no vertices; each insertion of $a(z_i)$ is an external leg.
+
+\begin{center}
+\begin{tikzpicture}
+\node at (0,0) {$z_1$};
+\node at (3,0) {$z_2$};
+\draw[thick] (0.3,0) -- (2.7,0);
+\node at (1.5, 0.3) {$\frac{\kappa}{(z_1-z_2)^2}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Genus 0 (tree level) diagrams}
+
+\noindent\emph{Bar complex interpretation.}
+\begin{equation}
+\bar{B}^{(0)}_n = \int_{C_n(\mathbb{P}^1)} \omega \otimes a(z_1) \otimes \cdots \otimes a(z_n)
+\end{equation}
+
+The differential $d^{(0)}$ computes tree-level factorization:
+\begin{equation}
+d^{(0)}[a \otimes a] = \text{Res}_{z_1 \to z_2} \frac{a(z_1) a(z_2)}{z_1 - z_2}
+\end{equation}
+
+The propagator $\kappa(z_1-z_2)^{-2}$ combined with the logarithmic form $\eta_{12} \sim (z_1-z_2)^{-1}dz_1$ yields a triple pole, whose residue vanishes:
+\begin{equation}
+\text{Res}_{z_1 \to z_2} \frac{1}{(z_1-z_2)^3} = 0
+\end{equation}
+
+\subsection{Genus 1 (one-loop) diagrams}
+
+At genus $1$, each connected diagram has a single loop. For the free boson, the simplest one-loop diagram is the tadpole:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+\node at (0,0) {$\bullet$};
+\draw[thick] (0,0) arc (180:540:0.5);
+\node at (0.5, -1.2) {tadpole};
+\end{tikzpicture}
+\end{center}
+
+The amplitude requires point-splitting regularization of the coincident propagator:
+\begin{equation}
+A_{\text{tadpole}} = \lim_{\epsilon \to 0} \langle \partial\phi(z) \partial\phi(z + \epsilon) \rangle = \lim_{\epsilon \to 0} \frac{\kappa}{\epsilon^2}
+\end{equation}
+
+This divergence is the UV divergence of the one-loop vacuum energy.
+
+\emph{Regularized version.} On an elliptic curve $E_\tau = \mathbb{C}/(\mathbb{Z} + \tau\mathbb{Z})$:
+\begin{equation}
+A_{\text{tadpole}}^{(E_\tau)} = \kappa \sideset{}{'}\sum_{(n,m) \in \mathbb{Z}^2} \frac{1}{(n + m\tau)^2}
+\end{equation}
+
+This is (up to constants) the Eisenstein series $E_2(\tau)$, which is \emph{not quite modular} but transforms with an anomaly:
+\begin{equation}
+E_2\left(-\frac{1}{\tau}\right) = \tau^2 E_2(\tau) + \frac{6\tau}{\pi i}
+\end{equation}
+
+The anomaly $\frac{6\tau}{\pi i}$ is a universal property of $E_2$ (independent of $\kappa$).  Since the tadpole amplitude is $\kappa \cdot E_2(\tau)$, the anomaly of the \emph{amplitude} is $\kappa \cdot \frac{6\tau}{\pi i}$, proportional to $\kappa$---this is the one-loop quantum correction to modularity.
+
+\noindent\emph{Bar complex interpretation.}
+
+The tadpole diagram corresponds to the genus-1 element:
+\begin{equation}
+[\text{Tr}(a \otimes a)]^{(1)} \in \bar{B}^{(1)}_1
+\end{equation}
+
+The differential:
+\begin{equation}
+d^{(0)}[\text{Tr}(a \otimes a)]^{(1)} = \kappa \cdot [1]^{(1)}
+\end{equation}
+
+extracts the level as the coefficient of the one-loop divergence.
+
+\subsection{Loop number and genus}
+
+\begin{theorem}[Loop-genus correspondence; \ClaimStatusProvedElsewhere{} \cite{costello-renormalization}]
+\label{thm:loop-genus-correspondence}
+For any connected Feynman diagram $\Gamma$ with:
+\begin{itemize}
+\item $V$ vertices
+\item $E$ edges (propagators)
+\item $F$ faces
+\end{itemize}
+The number of loops is:
+\begin{equation}
+L = E - V + 1
+\end{equation}
+The genus $g$ of the ribbon graph (the closed surface obtained by thickening
+and capping boundary components) satisfies:
+\begin{equation}
+\chi = V - E + F = 2 - 2g, \quad\text{hence}\quad g = \frac{L + 1 - F}{2}
+\end{equation}
+where $F$ is the number of boundary components (faces). Since $F \geq 1$, we have $g \leq L/2$,
+with equality $g = L/2$ when $F = 1$ (single boundary component).
+\end{theorem}
+
+\emph{For the free boson:} a tadpole has one vertex ($V = 1$) and one self-loop edge ($E = 1$), giving loop count $L = E - V + 1 = 1 - 1 + 1 = 1$.
+
+\subsection{\texorpdfstring{Amplitude expansion in $\kappa$}{Amplitude expansion in}}
+
+The full free boson correlation function expands as:
+\begin{align}
+\langle a(z_1) \cdots a(z_n) \rangle_{\text{all genera}} &= \sum_{g=0}^\infty \kappa^{n/2+g-1} \langle a(z_1) \cdots a(z_n) \rangle^{(g)}_{\text{conn.}}\\
+&= \kappa^{n/2-1}\underbrace{\langle \cdots \rangle^{(0)}}_{\text{tree}} + \kappa^{n/2} \cdot \underbrace{\langle \cdots \rangle^{(1)}}_{\text{1-loop}} + \kappa^{n/2+1} \cdot \underbrace{\langle \cdots \rangle^{(2)}}_{\text{2-loop}} + \cdots
+\end{align}
+
+The bar filtration weights genus~$g$ by $\kappa^g$; the string-theoretic convention $g_s^{2g-2}$ is related by $\kappa \sim g_s^{-2}$.
+
+\subsection{Configuration space integrals = Feynman integrals}
+
+\emph{Genus~0 (tree):}
+\begin{equation}
+\int_{C_n(\mathbb{P}^1)} \omega(z_1, \ldots, z_n) \prod_{i=1}^n a(z_i)
+\end{equation}
+
+\emph{Genus~1 (one-loop):}
+\begin{equation}
+\int_{E_\tau} dz \int_{C_n(E_\tau)} a(z) \otimes a(z_1) \otimes \cdots \otimes a(z_n)
+\end{equation}
+
+The first integral $\int_{E_\tau} dz$ is the loop momentum integral.  When $z \to z_i$, the integrand $\sim \kappa/|z - z_i|^2$ diverges---the UV divergence of QFT.
+
+\subsection{Renormalization via compactification}
+
+The Fulton--MacPherson compactification $\overline{C}_n(X)$ regulates divergences geometrically.  Logarithmic forms $d\log(z_i - z_j)$ extend to the compactification; higher-order poles require subtraction.  The level $\kappa$ is the coefficient needing renormalization at one-loop.
+
+\subsection{Higher genus: multi-loop structure}
+
+At genus $g \geq 2$, each handle contributes an independent loop integral.  For $g=2$, the amplitude involves:
+\begin{equation}
+\int_{\gamma_1} \int_{\gamma_2} \langle a(z_1) a(z_2) \rangle \, dz_1 \, dz_2
+\end{equation}
+
+This is a two-loop Feynman integral with coefficient $\kappa^2$.  The bar complex counterpart:
+\begin{equation}
+\bar{B}^{(2)}_n = \int_{\Sigma_2} \int_{C_n(\Sigma_2)} \omega \otimes a(z_1) \otimes \cdots
+\end{equation}
+
+The homology (schematic; the actual computation involves cohomology of configuration spaces on genus-$2$ curves, not a simple tensor product):
+\begin{equation}
+H_*(\bar{B}^{(2)}) \approx \kappa^2 \cdot H^*(\overline{\mathcal{M}}_2) \otimes H^*(\mathcal{A})
+\end{equation}
+
+\subsection{Explicit one-loop calculation: partition function}
+
+Free boson on $E_\tau$ with action:
+\begin{equation}
+S[\phi] = \frac{1}{4\pi\kappa} \int_{E_\tau} d^2z \, |\partial \phi|^2
+\end{equation}
+
+The Gaussian path integral (zero mode excluded) gives:
+\begin{equation}
+Z_{E_\tau} = \frac{1}{\sqrt{\det'(-\Delta)}}
+\end{equation}
+
+where $\det'$ is the zeta-regularized determinant with zero eigenvalue excluded.  Evaluating via $\zeta_\Delta(s)$:
+\begin{equation}
+Z_{E_\tau} = \frac{1}{\sqrt{\text{Im}(\tau)}} \frac{1}{|\eta(\tau)|^2}
+\end{equation}
+
+where $\eta(\tau)$ is the Dedekind eta function:
+\begin{equation}
+\eta(\tau) = q^{1/24} \prod_{n=1}^\infty (1 - q^n), \quad q = e^{2\pi i \tau}
+\end{equation}
+
+\emph{Modular transformation:}
+\begin{equation}
+\eta\left(-\frac{1}{\tau}\right) = \sqrt{-i\tau} \, \eta(\tau)
+\end{equation}
+
+Therefore, using $\mathrm{Im}(-1/\tau) = \mathrm{Im}(\tau)/|\tau|^2$:
+\begin{equation}
+Z_{E_{-1/\tau}} = Z_{E_\tau}
+\end{equation}
+
+The partition function $Z_{E_\tau} = (\mathrm{Im}\,\tau)^{-1/2} |\eta(\tau)|^{-2}$ is modular invariant as a density on the moduli space $\mathcal{M}_{1,0}$: the $|\tau|$ factor from $|\eta(-1/\tau)|^{-2}$ exactly cancels the $|\tau|$ from $(\mathrm{Im}(-1/\tau))^{-1/2}$.
+
+\emph{Bar complex interpretation.}
+The partition function satisfies $Z_{E_\tau} = H_0(\bar{B}^{(1)})$; for general~$c$, the modular anomaly $-c\log|\tau|$ is the scalar trace $\kappa(\cA)\cdot\deg(\lambda_1)=c/24$ (Theorems~\ref{thm:genus-universality} and~\ref{thm:explicit-theta}).
+
+\subsection{String theory perspective}
+
+The genus-$g$ string amplitude $\mathcal{A}^{(g)} = \int_{\mathcal{M}_g} d\mu_g \, \langle \mathcal{V}_1 \cdots \mathcal{V}_n \rangle_{\Sigma_g}$ assembles into $\mathcal{A}_{\text{total}} = \sum_{g} g_s^{2g-2} \mathcal{A}^{(g)}$.  The bar complex cohomology $H_*(\bar{B}^{(g)}(\mathcal{H}_\kappa))$ computes $\mathcal{A}^{(g)}$, with $\kappa \sim g_s^{-2}$.
+
+\subsection{Path integral interpretation}
+
+\begin{theorem}[Bar complex = path integral for the free boson; \ClaimStatusProvedHere]\label{thm:bar-cobar-path-integral-heisenberg}
+For the Heisenberg vertex algebra $\mathcal{H}_\kappa$ \textup{(}free boson at level~$\kappa \neq 0$\textup{)} on a compact Riemann surface $\Sigma_g$ of genus~$g \geq 0$:
+\begin{equation}\label{eq:bar-partition-heisenberg}
+Z_g^{\mathcal{H}_\kappa}(\Sigma_g) = H^0(\bar{B}^{(g)}(\mathcal{H}_\kappa)) = \mathbb{C}
+\end{equation}
+\begin{equation}\label{eq:bar-npoint-heisenberg}
+\langle \alpha(z_1) \cdots \alpha(z_n) \rangle_{\Sigma_g}
+= H^n(\bar{B}^{(g)}(\mathcal{H}_\kappa)) / H^0(\bar{B}^{(g)}(\mathcal{H}_\kappa))
+\end{equation}
+That is, the bar complex cohomology of $\mathcal{H}_\kappa$ at genus~$g$ computes
+the same correlation functions as the free boson path integral on~$\Sigma_g$.
+\end{theorem}
+
+\begin{proof}
+The proof matches the bar complex cohomology
+\textup{(}Theorem~\textup{\ref{thm:heisenberg-higher-genus})} with the
+Gaussian path integral, degree by degree.
+
+\emph{Step~1: Bar complex cohomology.}
+By Theorem~\ref{thm:heisenberg-higher-genus}, the bar complex
+cohomology of $\mathcal{H}_\kappa$ on~$\Sigma_g$ is:
+\[
+H^n(\bar{B}^{(g)}(\mathcal{H}_\kappa)) = \begin{cases}
+\mathbb{C} & n = 0, \\
+\mathbb{C}^{2g} & n = 1, \\
+\mathbb{C} \oplus \mathbb{C} \cdot c_\kappa^{(g)} & n = 2, \\
+0 & n > 2.
+\end{cases}
+\]
+Here $H^1 \cong H^1(\Sigma_g, \mathbb{C})$ and $H^2$ contains
+the fundamental class and the central extension class.
+
+\emph{Step~2: Free boson path integral.}
+The free boson action on $\Sigma_g$ is $S[\phi] = \frac{\kappa}{2}
+\int_{\Sigma_g} \partial\phi \wedge \bar{\partial}\phi$, and the
+path integral is Gaussian.  The partition function (normalized) is
+$Z_g = 1$ after removing the zero-mode volume, matching
+$H^0 = \mathbb{C}$.
+
+The $n$-point functions of the current $\alpha(z) = \partial\phi(z)$
+are determined by Wick's theorem:
+\begin{itemize}
+\item The $1$-point function vanishes: $\langle \alpha(z) \rangle = 0$,
+  but the \emph{zero modes} of~$\alpha$ (holomorphic and antiholomorphic
+  $1$-forms) give a $2g$-dimensional space, matching $H^1 \cong
+  H^1(\Sigma_g, \mathbb{C})$.
+\item The $2$-point function $\langle \alpha(z_1)\alpha(z_2) \rangle
+  = \kappa \cdot \partial_{z_1}\partial_{z_2} G(z_1, z_2)$, where
+  $G(z_1, z_2)$ is the Green's function on $\Sigma_g$, has a
+  double pole at $z_1 = z_2$ with residue $\kappa$, matching the bar
+  differential residue $d(\alpha \otimes \alpha \cdot \eta_{12})
+  = \kappa \cdot 1$ from
+  Theorem~\ref{thm:heisenberg-higher-genus}.  The additional class
+  $c_\kappa^{(g)} = \kappa \cdot \lambda$ (Hodge class) corresponds to
+  the one-loop determinant $(\det'\Delta_{\Sigma_g})^{-1/2}$.
+\item For $n > 2$, all connected $n$-point functions vanish by
+  Wick's theorem (the theory is free), matching $H^n = 0$.
+\end{itemize}
+
+\emph{Step~3: Factorization homology comparison.}
+By Theorem~\ref{thm:verdier-AF-compat}, $H^*(\bar{B}^{(g)}(\mathcal{H}_\kappa))$ computes the factorization homology $\int_{\Sigma_g}\mathcal{H}_\kappa$, which for the free boson equals the Gaussian BV cohomology~\cite{CG17}; thus the matching of Steps~1--2 follows from the factorization algebra structure.
+\end{proof}
+
+\begin{conjecture}[Bar-cobar as worldsheet path integral: general case; \ClaimStatusConjectured]\label{conj:bar-cobar-path-integral}
+For a general chiral algebra $\cA$ on $\Sigma_g$, the bar complex computes:
+\begin{equation}
+\exp\left( \sum_{g,n} \frac{1}{n!} \int_{C_n(\Sigma_g)} \langle a(z_1) \cdots a(z_n) \rangle_g \right) = \det(\mathbf{1} + \bar{B}(\cA))
+\end{equation}
+
+where the right side is the ``determinant'' of the bar complex \textup{(}Fredholm determinant in infinite dimensions\textup{)}.
+\end{conjecture}
+
+\begin{remark}[Scope]
+\label{rem:bar-path-integral-scope}
+Proved for $\mathcal{H}_\kappa$ at all genera (Theorem~\ref{thm:bar-cobar-path-integral-heisenberg}); for interacting $\cA$ the obstructions are higher $A_\infty$ operations at $g \geq 2$, the Fredholm determinant interpretation, and non-Gaussian path integrals~\cite{costello-renormalization}.  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+\end{remark}
+

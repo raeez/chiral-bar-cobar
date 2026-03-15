@@ -1,0 +1,574 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 68: DEFORMATION QUANTIZATION EXAMPLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Deformation quantization examples}
+\label{chap:deformation-examples}
+
+
+
+\section{\texorpdfstring{$\Pinf$ structures}{Pinf structures}}
+\label{sec:pinf-structures}
+\begin{definition}[\texorpdfstring{$\Pinf$}{P-infinity}-chiral algebra]\label{def:pinf-chiral-detailed}
+A \emph{$\Pinf$-chiral algebra} (Definition~\ref{def:pinf-chiral}) carries
+\emph{two} compatible chiral-operad structures:
+\begin{enumerate}[label=(\roman*)]
+\item A $\chirCom$-algebra structure: commutative chiral product (i.e.\
+  an $\Einf$-chiral algebra / vertex algebra).
+\item A $\chirLie$-algebra structure: chiral Lie bracket $\{-, -\}$.
+\item Leibniz compatibility: $\{a, b \cdot c\} = \{a, b\} \cdot c + b \cdot \{a, c\}$.
+\end{enumerate}
+Since ${\chirCom}^! \cong \chirLie$, the two chiral structures are
+presented across Koszul dual frames.
+Equivalently, $\mathcal{A}$ is an algebra over the chiral Poisson operad
+$\chirPois = \chirCom \circ \chirLie$.
+
+This is fundamentally different from a coisson algebra
+(Definition~\ref{def:coisson}), which is a commutative
+$\mathcal{D}_X$-algebra equipped with a classical $\lambda$-bracket
+but no chiral multiplication.  A $\Pinf$-chiral algebra carries two
+full chiral operations ($\chirCom$ and $\chirLie$ with Leibniz
+compatibility); a coisson algebra carries neither, encoding only
+the infinitesimal shadow of the chiral structure.
+\end{definition}
+
+\begin{example}[Classical affine Poisson]\label{ex:classical-affine}
+Let $\mathfrak{g}^*$ be the dual of a Lie algebra with Kirillov--Kostant Poisson structure:
+\[
+\{f, g\}(x) = x([df_x, dg_x])
+\]
+The loop algebra version $L\mathfrak{g}^* = \mathfrak{g}^* \otimes \bC[t, t^{-1}]$ has a
+coisson (PVA) structure:
+\[
+\{J^a_\lambda J^b\} = f^{ab}_c J^c
+\]
+This is the classical limit ($k \to \infty$) of the Kac--Moody vertex algebra;
+its deformation quantization produces $\hat{\mathfrak{g}}_k$ as an $\Einf$-chiral
+algebra.
+\end{example}
+
+
+\subsection{Coisson algebras}
+
+\begin{definition}[Coisson algebra]\label{def:coisson}
+\index{coisson algebra|textbf}
+A \emph{coisson algebra} (Beilinson--Drinfeld \cite{BD04}) is a commutative
+$\mathcal{D}_X$-algebra $\mathcal{A}$ equipped with a Lie$^*$ bracket
+$\{-,-\}\colon \mathcal{A} \boxtimes \mathcal{A} \to \Delta_* \mathcal{A}$
+satisfying the Leibniz rule with respect to the commutative product.
+Equivalently, $\mathcal{A}$ is a Poisson vertex algebra (PVA): a commutative
+differential algebra with a $\lambda$-bracket $\{a_\lambda b\}$ satisfying
+sesquilinearity, skew-symmetry, Jacobi, and Leibniz.
+
+A coisson algebra is \emph{not} a chiral algebra: it carries no OPE, only a
+commutative product and a compatible bracket encoding the singular part of a
+would-be OPE.  Coisson algebras are the semiclassical limits of vertex algebras
+($\Einf$-chiral algebras).
+\end{definition}
+
+
+\begin{theorem}[Coisson = \texorpdfstring{$(\chirPois)^c$}{(chirPois)c}-coalgebra; \ClaimStatusProvedElsewhere{} \cite{BD04}]\label{thm:coisson-coalgebra}
+Coisson algebras are exactly coalgebras over the Koszul dual cooperad $(\chirPois)^c$.
+\end{theorem}
+
+
+\section{Quantization formulas}
+\label{sec:quantization-formulas}
+
+\subsection{Deformation quantization setup}
+
+\begin{construction}[Quantization map]\label{constr:quantization}
+A \emph{deformation quantization} of a $\Pinf$-chiral
+algebra $(\mathcal{A}_0, \cdot, \{-,-\})$ is an
+$\Eone$-chiral algebra $(\mathcal{A}_\hbar, \star)$ such
+that:
+\begin{enumerate}[label=(\roman*)]
+\item $\mathcal{A}_\hbar = \mathcal{A}_0[[\hbar]]$ as a vector space.
+\item $a \star b = a \cdot b + \hbar B_1(a, b) + \hbar^2 B_2(a, b) + \cdots$.
+\item $a \star b - b \star a = \hbar \{a, b\} + O(\hbar^2)$.
+\end{enumerate}
+\end{construction}
+
+\begin{theorem}[Formality for \texorpdfstring{$\Pinf$}{P-infinity}-chiral; \ClaimStatusProvedElsewhere{} \cite{Kon03,FG12}]\label{thm:pinf-formality}
+Every $\Pinf$-chiral algebra admits a deformation quantization to an $\Eone$-chiral
+algebra. The quantization is unique up to gauge equivalence.
+\end{theorem}
+
+\begin{proof}
+The result follows from the formality of the $E_2$-operad (Kontsevich 1999,
+Tamarkin 2003) via the factorization algebra formalism.  Specifically:
+
+\emph{Step~1: Formality.}
+The Francis--Gaitsgory formality theorem
+(Theorem~\ref{thm:chiral-formality}, \ClaimStatusProvedElsewhere{} \cite{FG12})
+establishes an $L_\infty$ quasi-isomorphism between chiral polyvector
+fields and chiral Hochschild cochains.  This guarantees that the
+deformation problem is unobstructed: the obstruction class in
+$H^3_{\chirPois}(\mathcal{A}_0; \mathcal{A}_0)$ vanishes by formality.
+
+\emph{Step~2: Existence.}
+By formality, a Poisson structure $\pi \in H^2_{\chirPois}$ lifts to a
+Maurer--Cartan element $\alpha = \hbar\pi + O(\hbar^2)$ in the
+Hochschild cochain complex.  The resulting star product is:
+\[
+a \star b = \sum_{n \geq 0} \hbar^n \sum_{\Gamma \in G_{n,2}} w_\Gamma B_\Gamma(a, b)
+\]
+where $G_{n,2}$ are admissible graphs, $w_\Gamma$ are Kontsevich weights
+(integrals over $\FM_n(\mathbb{C})$), and $B_\Gamma$ are bidifferential
+operators.  Associativity follows from Stokes' theorem on the boundary
+strata of $\FM_n(\mathbb{C})$.
+
+\emph{Step~3: Uniqueness.}
+Two quantizations correspond to gauge-equivalent Maurer--Cartan elements
+in the deformation complex (Theorem~\ref{thm:mc-quantization}).  The
+gauge group acts transitively on the fiber over a fixed first-order
+deformation by standard obstruction theory: $H^1$ controls the
+infinitesimal gauge transformations, and the formality quasi-isomorphism
+ensures no higher obstructions to gauge equivalence.
+\end{proof}
+
+
+\subsection{Explicit star product}
+
+\begin{computation}[Star product through order \texorpdfstring{$\hbar^2$}{2}]\label{comp:star-order-2}
+For a $\Pinf$-chiral algebra with Poisson bracket $\{a, b\}$:
+
+\emph{Order $\hbar^0$.} $B_0(a, b) = a \cdot b$.
+
+\emph{Order $\hbar^1$.} $B_1(a, b) = \frac{1}{2}\{a, b\}$.
+
+\emph{Order $\hbar^2$.}  In local coordinates with Poisson bivector $\pi^{ij}$:
+\[
+B_2(a, b) = \frac{1}{8}\pi^{ij}\pi^{kl}\partial_i\partial_k a \cdot \partial_j\partial_l b + \frac{1}{12}\pi^{ij}(\partial_j\pi^{kl})(\partial_i\partial_k a \cdot \partial_l b - \partial_k a \cdot \partial_i\partial_l b)
+\]
+The first term corresponds to the ``double Poisson'' Kontsevich graph (both internal vertices connecting directly to the two external vertices); the second involves $\partial\pi$ and vanishes for constant Poisson structures.
+\end{computation}
+
+
+\section{Obstructions and anomalies in examples}
+\label{sec:obstructions}
+
+\subsection{Obstruction theory}
+
+\begin{theorem}[Obstruction classes; \ClaimStatusProvedElsewhere{} \cite{Kon03}]\label{thm:obstructions}
+The obstruction to quantizing a $\Pinf$-chiral algebra lies in:
+\[
+\mathrm{Obs} \in H^3_{\chirPois}(\mathcal{A}_0; \mathcal{A}_0)
+\]
+the third chiral Poisson cohomology.  The obstruction must vanish at
+\emph{each order} in $\hbar$ for quantization to exist to all orders; alternatively,
+a formality theorem (as in Theorem~\ref{thm:chiral-kontsevich} below) bypasses the
+order-by-order obstruction analysis entirely.
+\end{theorem}
+
+\begin{example}[No obstruction: affine]\label{ex:no-obs-affine}
+For the classical affine Poisson algebra (Example~\ref{ex:classical-affine}):
+\[
+H^3_{\chirPois}(L\mathfrak{g}^*) = 0
+\]
+so quantization to $\hat{\mathfrak{g}}_k$ exists for all $k$.
+\end{example}
+
+\begin{example}[Obstruction: anomalous theories]\label{ex:anomaly}
+Certain physical theories have obstructions:
+\begin{enumerate}[label=(\roman*)]
+\item Chiral WZW model with ``wrong'' level has $\mathrm{Obs} \neq 0$.
+\item The obstruction is the \emph{level quantization condition}: the
+      Wess--Zumino class $[H] \in H^3(G, \mathbb{Z})$ requires $k \in \mathbb{Z}$
+      for the path integral to be well-defined (arising from $\pi_3(G) \cong \mathbb{Z}$).
+\end{enumerate}
+\end{example}
+
+
+\subsection{Anomaly cancellation}
+
+\begin{theorem}[Green--Schwarz mechanism; \ClaimStatusProvedElsewhere{} \cite{Pol98}]\label{thm:green-schwarz}
+In string theory, anomalies cancel by introducing a two-form $B$ with modified 
+transformation law:
+\[
+\delta B = \omega_{CS}(\delta A)
+\]
+where $\omega_{CS}$ is the Chern--Simons form.
+
+At the level of chiral algebras, this modifies the OPE to restore consistency.
+\end{theorem}
+
+
+\subsection{Maurer--Cartan elements and deformations}
+
+\begin{definition}[Maurer--Cartan element]\label{def:mc-element}
+For a $\Pinf$-chiral algebra $\mathcal{A}$, a \emph{Maurer--Cartan element} is 
+$\alpha \in \mathcal{A}^1$ (degree 1) satisfying:
+\[
+d\alpha + \frac{1}{2}\{\alpha, \alpha\} = 0
+\]
+the Maurer--Cartan equation.
+\end{definition}
+
+\begin{theorem}[MC elements and quantization; \ClaimStatusProvedElsewhere{} \cite{Kon03,KontsevichSoibelman}]\label{thm:mc-quantization}
+Quantizations of $\mathcal{A}_0$ correspond to Maurer--Cartan elements in the 
+deformation complex:
+\[
+\mathrm{Def}(\mathcal{A}_0) = (\mathcal{A}_0[[\hbar]] \otimes \mathfrak{g}_{\chirPois}, d + \hbar\{\alpha, -\})
+\]
+Two quantizations are gauge-equivalent if and only if their MC elements are related by the
+gauge action.
+\end{theorem}
+
+\begin{computation}[MC equation in coordinates]\label{comp:mc-coords}
+For the classical Heisenberg Poisson algebra with $\{p, q\} = 1$:
+
+The Poisson bivector $\pi = \partial_p \wedge \partial_q$ is the leading-order MC element.  The Kontsevich star product $f \star g = fg + \frac{\hbar}{2}\{f,g\} + O(\hbar^2)$ arises from the formal MC element $\alpha = \hbar\pi + O(\hbar^2)$ in the Hochschild cochain complex.
+
+The MC equation $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$ at order $\hbar^2$ requires $\frac{1}{2}[\pi, \pi] = 0$, which is the Jacobi identity for the Poisson bracket. Since $\{p,q\} = 1$ is constant, $[\pi,\pi] = 0$ trivially, and $\alpha = \hbar\pi$ is an exact MC element giving the Weyl (Moyal) quantization.
+\end{computation}
+
+
+\section{Explicit deformation quantization computations}
+\label{sec:explicit-dq-computations}
+\index{deformation quantization!explicit computations}
+
+\subsection{Heisenberg: Moyal product verification}
+
+\begin{computation}[Moyal product as chiral deformation]
+\label{comp:moyal-chiral}
+\index{Moyal product!chiral}
+
+The Heisenberg algebra $\mathcal{H}_\kappa$ is the
+\emph{unique} chiral deformation quantization of the free
+Coisson algebra $\mathcal{H}_0 = \bC[a_{-n}]_{n \geq 1}$
+with $\lambda$-bracket $\{a_\lambda a\}_0 = \kappa$.
+
+\emph{Classical limit.}
+At $\hbar = 0$: the Coisson algebra has commutative product
+$a_{-m} \cdot a_{-n} = a_{-m} a_{-n}$ (polynomial multiplication)
+and Poisson bracket $\{a_{-m}, a_{-n}\}_0 = m\kappa\delta_{m+n}$
+(constant Poisson structure in mode space).
+
+\emph{Quantization.}
+The deformed product (the vertex algebra OPE):
+\begin{align*}
+a_{-m} \star_\hbar a_{-n}
+&= a_{-m} a_{-n} + \hbar \cdot m\kappa\delta_{m+n} \cdot 1 \\
+&= \normord{a_{-m} a_{-n}} + \hbar \cdot
+\text{contraction}
+\end{align*}
+This is exact at order $\hbar^1$: no higher corrections.
+The MC element $\alpha = \hbar \pi$ with
+$\pi = \sum_m m\kappa \cdot \partial_{a_{-m}} \wedge
+\partial_{a_m}$ is exact (constant Poisson structure).
+
+\emph{Bar complex interpretation.}
+The bar complex $\bar{B}(\mathcal{H}_\kappa)$ has
+$m_n = 0$ for all $n \geq 3$ (no higher $A_\infty$ operations),
+reflecting the exactness of the Moyal product.  The only
+nontrivial bar operations are $m_1$ (differential, encoding the modes and conformal grading), $m_2$ (binary coproduct, encoding the OPE $a(z)a(w) \sim \kappa/(z-w)^2$), and $m_0$ (curvature $= \kappa$ at genus~1, the genus-1 deformation).
+\end{computation}
+
+\subsection{Kac--Moody as deformation of current algebra}
+
+\begin{computation}[Affine deformation: {\texorpdfstring{$\fg[z] \leadsto
+\widehat{\fg}_k$}{[z] _k}}]
+\label{comp:affine-deformation}
+\index{deformation quantization!affine Kac--Moody}
+
+The affine Kac--Moody algebra $\widehat{\fg}_k$ is a
+non-trivial chiral deformation of the current algebra
+$\fg[z]$ (the Coisson algebra with $\lambda$-bracket
+$\{J^a_\lambda J^b\}_0 = f^{abc}J^c$).
+
+\emph{Order $\hbar^0$:} The commutative product
+$\normord{J^a J^b}$ (normal ordering).
+
+\emph{Order $\hbar^1$:}
+The first deformation introduces the simple pole
+$f^{abc}J^c/(z-w)$ in the OPE.  This is the $\lambda$-bracket
+$\{J^a_\lambda J^b\}_1 = f^{abc}J^c$ (already present in the
+classical Poisson structure).
+
+\emph{Order $\hbar^2$:}
+The central extension $k\delta^{ab}/(z-w)^2$ appears.
+This is the genuinely quantum correction: the classical
+Poisson bracket $\{J^a, J^b\} = f^{abc}J^c$ admits a central
+extension, and the Kontsevich configuration space integral
+(Computation~\ref{comp:kontsevich-2vertex}) produces the
+coefficient $k$ as a graph weight.
+
+The MC element encoding this deformation:
+\[
+\alpha = \hbar \sum_{a} J^a \otimes J^a
++ \hbar^2 k \sum_a e^a \otimes e_a
+\]
+where the first term is the Casimir (encoding the OPE simple pole)
+and the second is the central extension (encoding the double pole).
+
+\emph{Associativity obstruction.}
+The MC equation at order $\hbar^3$:
+\[
+d\alpha_3 + \frac{1}{2}[\alpha_1, \alpha_2]
++ \frac{1}{2}[\alpha_2, \alpha_1]
++ \frac{1}{6}[\alpha_1, [\alpha_1, \alpha_1]] = 0
+\]
+The $[\alpha_1, [\alpha_1, \alpha_1]]$ term involves the Jacobi
+identity for $f^{abc}$, which vanishes.  The $[\alpha_1, \alpha_2]$
+term involves the action of $f^{abc}$ on the central element $k$,
+which vanishes because $k$ is central.  Therefore $\alpha_3 = 0$:
+the deformation terminates at order $\hbar^2$.
+
+This reflects the \emph{Koszul} property of $\widehat{\fg}_k$:
+the bar complex has $m_n = 0$ for $n \geq 3$ at genus~0.
+\end{computation}
+
+\subsection{$\mathcal{W}$-algebras: non-trivial higher-order deformation}
+
+\begin{computation}[W-algebra deformation: non-terminating]
+\label{comp:w-algebra-deformation}
+\index{deformation quantization!W-algebra}
+\index{W3 algebra@$\mathcal{W}_3$!deformation}
+
+Unlike the Heisenberg and Kac--Moody examples, the $\mathcal{W}_3$
+algebra is a \emph{non-trivial} deformation that does not terminate
+at any finite order.
+
+\emph{Classical limit.}
+The Coisson algebra $\mathcal{W}_3^{\mathrm{cl}}$ has two
+generators $T, W$ with $\lambda$-brackets:
+\begin{align}
+\{T_\lambda T\}_0 &= 2T \cdot \lambda + \partial T
+\label{eq:w3-poisson-TT} \\
+\{T_\lambda W\}_0 &= 3W \cdot \lambda + \partial W
+\label{eq:w3-poisson-TW} \\
+\{W_\lambda W\}_0 &= \Lambda \cdot \lambda^3
++ \frac{1}{2}\partial\Lambda \cdot \lambda^2
++ \frac{1}{6}\partial^2\Lambda \cdot \lambda
++ (\text{lower order})
+\label{eq:w3-poisson-WW}
+\end{align}
+where $\Lambda = TT - \frac{3}{10}\partial^2 T$ is the
+classical composite field.
+
+\emph{Order $\hbar^1$: central charge.}
+The first quantum correction introduces the central extension:
+\[
+\{T_\lambda T\}_1 = \frac{c}{2}\lambda^3
+\]
+This adds the quartic pole $c/2 \cdot (z-w)^{-4}$ to the $TT$ OPE.
+
+\emph{Order $\hbar^2$: normal ordering correction.}
+At order $\hbar^2$, the composite field $\Lambda$ acquires a
+quantum correction:
+\[
+\Lambda_\hbar = \normord{TT}
+- \frac{3}{10}\partial^2 T
++ \hbar \cdot \frac{c}{5 \cdot 22 + 2c}\partial^2 T
+\]
+The coefficient $c/(5 \cdot 22 + 2c) = c/(110 + 2c)$ is the
+standard normal-ordering correction to $\Lambda$ itself.
+This should not be confused with the OPE structure constant
+$\alpha(c) = 16/(22+5c)$ multiplying $\Lambda$ in $W_{(1)}W$
+(Computation~\ref{comp:w3-nthproducts}); the two quantities play
+different roles.
+
+\emph{Order $\hbar^3$ and beyond.}
+At order $\hbar^3$, new corrections appear from triple OPE
+contractions in the $W(z)W(w)$ OPE.  These do not vanish
+because the Jacobi identity for the $W_3$ algebra involves
+the composite field $\Lambda$, which itself depends on $\hbar$.
+
+The MC equation at each order:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|cl}
+Order & Term & Source \\
+\hline
+$\hbar^1$ & $c/2$ in $TT$ & Central extension \\
+$\hbar^2$ & $c/(110+2c)$ in $\Lambda$ & Normal ordering \\
+$\hbar^3$ & Jacobi correction & Triple contraction \\
+$\hbar^n$ ($n \geq 4$) & Iterated & Higher contractions
+\end{tabular}
+\end{center}
+
+The non-termination reflects $m_n \neq 0$ for all $n$ in the deformation complex of $\mathcal{W}_3$ ($\mathcal{W}_3$ is Koszul as a chiral algebra by Theorem~\ref{thm:w-algebra-koszul}; the non-termination is in the Coisson-to-chiral deformation, not in bar-cobar duality).
+\end{computation}
+
+\begin{remark}[Deformation complexity hierarchy]
+\label{rem:deformation-complexity}
+\index{deformation quantization!complexity hierarchy}
+Algebras with linear or constant structure constants ($\mathcal{H}_\kappa$, $\widehat{\fg}_k$, $\beta\gamma$) have terminating deformations ($m_n = 0$ for $n \geq 3$).  Algebras with nonlinear composites ($\mathcal{W}_3$) or non-local $R$-matrices (Yangians) have $m_n \neq 0$ for all $n$.  Koszulness of the bar complex does not constrain deformation complexity.
+\end{remark}
+
+
+\section{Lattice VOA as deformation quantization}
+\label{sec:lattice-dq}
+\index{lattice VOA!deformation quantization}
+
+\begin{computation}[Lattice cocycle deformation]
+\label{comp:lattice-cocycle-deformation}
+
+Let $L$ be an even lattice with bilinear form $\langle \cdot, \cdot \rangle$.
+The lattice vertex algebra $V_L$ is constructed from the Heisenberg
+algebra $\mathcal{H} = \mathcal{H}(\mathfrak{h})$ (where $\mathfrak{h} = L \otimes_\mathbb{Z} \mathbb{C}$)
+and the group algebra $\mathbb{C}[L]$ with a 2-cocycle
+$\varepsilon \colon L \times L \to \{\pm 1\}$ satisfying:
+\[
+\varepsilon(\alpha, \beta) \varepsilon(\beta, \alpha)^{-1}
+= (-1)^{\langle \alpha, \beta \rangle}.
+\]
+
+At $\hbar = 0$ the algebra is commutative with Poisson bracket from $\langle\cdot,\cdot\rangle$; quantization introduces the vertex operator OPE $e^\alpha(z)e^\beta(w) = \varepsilon(\alpha,\beta)(z-w)^{\langle\alpha,\beta\rangle}e^{\alpha+\beta}(w)+\cdots$, where $\varepsilon$ is determined by the $\overline{\mathrm{FM}}_2(X)$ configuration space integral.  The bar complex $\bar{B}(V_L)$ has degree~1 generators $\mathfrak{h}\oplus L$, with $\varepsilon$ governing the signs of the bar differential.  When $\langle\alpha,\beta\rangle\notin 2\mathbb{Z}$ for some $\alpha,\beta\in L$, the algebra $V_L$ is genuinely $\Eone$-chiral.
+\end{computation}
+
+\begin{proposition}[Lattice deformation is one-step; \ClaimStatusProvedHere]
+\label{prop:lattice-one-step}
+The deformation quantization of the commutative lattice algebra
+$V_L^{\mathrm{cl}} = \mathbb{C}[L] \otimes \operatorname{Sym}(\mathfrak{h}[t^{-1}]t^{-1})$
+to the vertex algebra $V_L$ terminates at order $\hbar^1$.
+Equivalently, the Maurer--Cartan element
+$\alpha = \hbar \sum_i e^i \otimes e_i + \hbar \varepsilon$
+is exact.
+\end{proposition}
+
+\begin{proof}
+The bilinear form $\langle \cdot, \cdot \rangle$ is constant on $L$
+(it does not depend on the field variables), so the Poisson structure
+is constant.  By the same argument as for the Heisenberg algebra
+(Computation~\ref{comp:moyal-chiral}), the MC equation $[\alpha, \alpha] = 0$
+holds exactly at first order: the Jacobi identity for the constant
+Poisson bracket ensures all higher obstructions vanish.
+
+The cocycle $\varepsilon$ contributes signs but no additional deformation
+parameters: changing $\varepsilon$ to a cohomologous cocycle $\varepsilon'$
+gives an isomorphic vertex algebra $V_L \cong V_L'$ (the isomorphism
+class depends only on $[\varepsilon] \in H^2(L, \mathbb{C}^\times)$,
+which is determined by $\langle \cdot, \cdot \rangle \bmod 2$).
+\end{proof}
+
+
+\section{Symplectic fermion and logarithmic deformation}
+\label{sec:symplectic-fermion-deformation}
+\index{symplectic fermion!deformation}
+
+\begin{computation}[Symplectic fermion deformation]
+\label{comp:symplectic-fermion-dq}
+
+The symplectic fermion algebra $\mathcal{SF}$ has two generators
+$\chi^+, \chi^-$ of conformal weight $1$ with OPE:
+\[
+\chi^+(z) \chi^-(w) \sim \frac{1}{(z-w)^2}, \qquad
+\chi^\pm(z) \chi^\pm(w) \sim 0.
+\]
+Central charge: $c = -2$.
+
+\emph{Classical limit.}
+The Coisson algebra $\mathcal{SF}^{\mathrm{cl}}$ has generators
+$\chi^+, \chi^-$ with $\lambda$-bracket
+$\{\chi^+_\lambda \chi^-\}_0 = \lambda$ (a \emph{linear}
+Poisson bracket, not constant).
+
+\emph{Deformation structure.}
+The MC element for the deformation is:
+\[
+\alpha = \hbar \chi^+ \wedge \chi^-
++ \hbar^2 \cdot 0 + \cdots
+\]
+The deformation terminates at order $\hbar^1$ because the
+Poisson bracket $\{\chi^+, \chi^-\} = \lambda$ is linear
+(the structure constants $f^{abc}$ are zero except for
+$f^{+-} = 1$), giving $[\alpha, [\alpha, \alpha]] = 0$ by
+the Jacobi identity.
+
+The symplectic fermion has logarithmic representations: $L_0$ has a Jordan block on the vacuum module with logarithmic partner $|\omega\rangle = \chi^+_{-1}\chi^-_{-1}|0\rangle$.  Consequently, $\bar{B}(\mathcal{SF})$ has a non-semisimple filtration with Jordan blocks on the $E_1$ page.
+\end{computation}
+
+\begin{remark}[Symplectic fermion Koszul dual]
+\label{rem:sf-koszul-dual}
+The symplectic fermion $\mathcal{SF}$ at $c = -2$ is the $bc$ system at $\lambda = 1$ (Section~\ref{sec:betagamma-koszul-dual}), with Koszul dual $\beta\gamma$ at $\lambda = 1$.  The central charges $c(bc) = -2$ and $c(\beta\gamma) = 2$ follow from the Sugawara construction (or equivalently, from the conformal anomaly of the ghost number current); their sum $c + c' = 0$ is consistent with $bc$--$\beta\gamma$ complementarity.
+\end{remark}
+
+
+\section{Deformation quantization and Koszul duality compatibility}
+\label{sec:dq-koszul-compatibility}
+\index{deformation quantization!Koszul duality}
+
+\begin{theorem}[Deformation--duality compatibility; \ClaimStatusProvedHere]
+\label{thm:dq-koszul-compatible}
+Let $\mathcal{A}_0$ be a Coisson algebra and
+$\mathcal{A}_\hbar$ its deformation quantization (an $\Einf$-chiral
+algebra).  Then:
+\begin{enumerate}
+\item The Koszul dual of $\mathcal{A}_\hbar$ is a deformation
+quantization of the Koszul dual Coisson algebra $\mathcal{A}_0^!$:
+\[
+(\mathcal{A}_\hbar)^! = (\mathcal{A}_0^!)_{\hbar'}.
+\]
+\item The deformation parameters are related by the Feigin--Frenkel
+involution: if $\mathcal{A}_\hbar = \widehat{\mathfrak{g}}_k$
+(affine KM at level $k$), then $\hbar' = -\hbar - 2h^\vee$
+(the dual level $k' = -k - 2h^\vee$).
+\item The curvature of the bar complex transforms as:
+\[
+\kappa(\mathcal{A}_\hbar) + \kappa((\mathcal{A}_\hbar)^!)
+= \kappa_{\mathrm{max}}
+\]
+where $\kappa_{\mathrm{max}}$ is independent of $\hbar$
+(Theorem~\ref{thm:central-charge-complementarity}).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) follows from the functoriality of the bar-cobar adjunction
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}): the bar construction
+$\bar{B}$ is a functor on the category of chiral algebras, and
+deformation quantization is a morphism in this category.  The
+Koszul dual coalgebra $\bar{B}(\mathcal{A})$, and hence the Koszul
+dual algebra $\mathcal{A}^! = \bar{B}(\mathcal{A})^\vee$, therefore
+carries the induced deformation.
+
+(ii) For $\widehat{\mathfrak{g}}_k$, the bar complex has curvature
+$m_0 = (k + h^\vee)/(2h^\vee) \cdot \kappa_{\mathfrak{g}}$
+(Proposition~\ref{prop:km-bar-curvature}).  The Koszul dual
+$\widehat{\mathfrak{g}}_{k'}$ has level $k'$ determined by
+$(k + h^\vee) + (k' + h^\vee) = 0$, giving $k' = -k - 2h^\vee$.
+
+(iii) The complementarity of curvatures is the content of
+Theorem~\ref{thm:quantum-complementarity-main}:
+the genus-$g$ obstruction satisfies
+$\mathrm{obs}_g(\mathcal{A}) + \mathrm{obs}_g(\mathcal{A}^!)
+= H^*(\mathcal{M}_g, \mathcal{Z}(\mathcal{A}))$,
+and taking the Euler characteristic gives the $\kappa$-additivity.
+\end{proof}
+
+\begin{computation}[Compatibility verification for KM]
+\label{comp:dq-koszul-km}
+\index{deformation quantization!Kac--Moody compatibility}
+
+For $\widehat{\mathfrak{sl}}_2$ at level $k$:
+\begin{itemize}
+\item Classical limit ($k \to \infty$):
+$\mathcal{A}_0 = \mathfrak{sl}_2[z]$ (current algebra),
+$\mathcal{A}_0^! = \mathfrak{sl}_2^*[z]$
+(dual current algebra with reversed bracket).
+\item Quantization: $\mathcal{A}_k = \widehat{\mathfrak{sl}}_2$ at
+level $k$, $\mathcal{A}_k^! = \widehat{\mathfrak{sl}}_2$ at
+level $k' = -k-4$.
+\item Curvatures: $\kappa(k) = 3(k+2)/4$, $\kappa(k') = 3(-k-4+2)/4 = 3(-k-2)/4$.
+Sum: $\kappa(k) + \kappa(k') = 3(k+2)/4 + 3(-k-2)/4 = 0$.
+But the curvatures are $\kappa = td/(2h^\vee)$ with $t = k + h^\vee$
+and $d = 3$, $h^\vee = 2$, so $\kappa(k) = 3(k+2)/4$ and
+$\kappa(k') = 3(k'+2)/4 = 3(-k-2)/4$.
+
+The complementarity gives $c + c' = 6$ (which is $2d = 6$ for
+$\mathfrak{sl}_2$), independent of $k$.  $\checkmark$
+\end{itemize}
+\end{computation}
+
+\begin{computation}[Compatibility verification for Virasoro]
+\label{comp:dq-koszul-vir}
+For $\mathrm{Vir}_c$ via DS reduction of $\widehat{\mathfrak{sl}}_2$ at level $k$: the Koszul dual is $\mathrm{Vir}_{26-c}$ (Theorem~\ref{thm:w-algebra-koszul-main}), with curvatures $\kappa(c)=c/2$, $\kappa(c')=(26-c)/2$, summing to $13$ independently of $c$.  At $c=0$ the bar complex is uncurved while the dual is maximally curved; at $c=26$ the roles reverse (the no-ghost theorem).
+\end{computation}
+
+\begin{remark}[Filtered deformation quantization]
+\label{rem:filtered-dq}
+\index{filtered deformation}
+The deformation parameter $\hbar$ induces a filtration on the bar complex with $d_{\bar{B}} = d_0 + \hbar\, d_1 + \hbar^2\, d_2 + \cdots$.  The associated spectral sequence has $E_0 =$ classical bar complex, $E_1 = H^*(E_0, d_0)$, and $E_2 = H^*(E_1, d_1)$.  For Koszul algebras the spectral sequence collapses at $E_2$; for non-Koszul algebras higher differentials may be non-trivial.
+\end{remark}

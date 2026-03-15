@@ -1,0 +1,866 @@
+% ================================================================
+% Appendix: Coderived and contraderived categories
+% This file is \input'ed into main.tex as a continuation of
+% the nilpotent-completion appendix (appendices/nilpotent_completion.tex).
+% It provides sections within that chapter, not a standalone chapter.
+% ================================================================
+
+
+\section{Coderived and contraderived categories}
+\label{app:coderived}
+\index{coderived category|textbf}
+\index{contraderived category|textbf}
+
+The bar-cobar adjunction at higher genus produces curved complexes
+($d^2 \neq 0$), for which the ordinary derived category is trivial.
+Positselski's theory of coderived and contraderived
+categories~\cite{Positselski11} provides the correct
+replacement.  This appendix collects the definitions and key results
+needed in this monograph; the chiral specialization appears in
+\S\ref{subsec:chiral-coderived-contraderived}.
+
+\subsection{Abstract definitions}
+\label{subsec:coderived-abstract}
+
+Let $\mathsf{A}$ be an abelian category with exact direct sums
+(for the coderived case) or exact direct products
+(for the contraderived case).
+
+\begin{definition}[CDG-algebra and CDG-coalgebra]
+\label{def:cdg-algebra-appendix}
+\index{CDG-algebra}
+\index{CDG-coalgebra}
+A \emph{curved differential graded} (CDG) \emph{algebra}
+$(A, d, h)$ consists of a graded algebra~$A$, a degree-$1$
+map $d \colon A \to A$ satisfying the graded Leibniz rule, and
+a degree-$2$ element $h \in A^2$ (the \emph{curvature}) such that
+\begin{equation}\label{eq:cdg-relations-appendix}
+d^2(a) = [h, a], \qquad d(h) = 0.
+\end{equation}
+Dually, a \emph{CDG-coalgebra} $(C, d, h)$ consists of a graded
+coalgebra~$C$, a degree-$1$ coderivation $d \colon C \to C$,
+and a degree-$2$ functional $h \colon C \to k$ such that
+$d^2 = h \ast (-)$ and $h \circ d = 0$.
+A CDG-algebra (resp.\ coalgebra) with $h = 0$ is an ordinary
+DG-algebra (resp.\ DG-coalgebra).
+\end{definition}
+
+\begin{definition}[CDG-comodules and CDG-contramodules]
+\label{def:cdg-comod-contra-appendix}
+\index{CDG-comodule}
+\index{CDG-contramodule}
+Let $(C, d, h)$ be a CDG-coalgebra.
+A \emph{left CDG-comodule} $(M, d_M)$ over~$C$ is a graded left
+$C$-comodule equipped with a degree-$1$ map $d_M \colon M \to M$
+compatible with the coaction and satisfying $d_M^2 = h \ast (-)$.
+A \emph{left CDG-contramodule} $(P, d_P)$ over~$C$ is a graded left
+$C$-contramodule with $d_P \colon P \to P$ of degree~$1$ satisfying
+the dual curvature relation $d_P^2(p) = h \cdot p$
+for all $p \in P$, where $h$ acts via the contraaction.
+\end{definition}
+
+\begin{definition}[Coacyclic and contraacyclic objects]
+\label{def:coacyclic-contraacyclic}
+\index{coacyclic object|textbf}
+\index{contraacyclic object|textbf}
+Let $(C, d, h)$ be a CDG-coalgebra.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A CDG-comodule $M$ is \emph{coacyclic} if it belongs to the
+  minimal thick subcategory of the homotopy category
+  $\mathrm{Hot}(C\text{-}\mathrm{comod})$ that contains the
+  totalizations of all short exact sequences of CDG-comodules
+  and is closed under infinite direct sums.
+\item A CDG-contramodule $P$ is \emph{contraacyclic} if it belongs
+  to the minimal thick subcategory of
+  $\mathrm{Hot}(C\text{-}\mathrm{contra})$ that contains the
+  totalizations of all short exact sequences of CDG-contramodules
+  and is closed under infinite direct products.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Coderived and contraderived categories]
+\label{def:coderived-contraderived-abstract}
+\index{coderived category!abstract definition|textbf}
+\index{contraderived category!abstract definition|textbf}
+The \emph{coderived category} and \emph{contraderived category}
+of a CDG-coalgebra $(C, d, h)$ are the Verdier quotients:
+\begin{align}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+  &:= \mathrm{Hot}(C\text{-}\mathrm{comod})
+  \,\big/\, \mathrm{Acycl}^{\mathrm{co}}(C\text{-}\mathrm{comod}),
+  \label{eq:coderived-abstract}\\
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra})
+  &:= \mathrm{Hot}(C\text{-}\mathrm{contra})
+  \,\big/\,
+  \mathrm{Acycl}^{\mathrm{ctr}}(C\text{-}\mathrm{contra}).
+  \label{eq:contraderived-abstract}
+\end{align}
+These are triangulated categories.  When $h = 0$, every acyclic
+object is coacyclic (resp.\ contraacyclic), so there are natural
+functors $D^{\mathrm{co}} \to D$ and $D^{\mathrm{ctr}} \to D$
+from the exotic to the ordinary derived category.  When
+$h \neq 0$, the ordinary derived category is trivial, while
+$D^{\mathrm{co}}$ and $D^{\mathrm{ctr}}$ retain nontrivial
+structure~\cite[\S\S3--4]{Positselski11}.
+\end{definition}
+
+\begin{theorem}[Comodule-contramodule correspondence;
+\ClaimStatusProvedElsewhere]
+\label{thm:co-contra-correspondence-appendix}
+\index{comodule-contramodule correspondence}
+Let $(C, d, h)$ be a CDG-coalgebra.  There is an equivalence of
+triangulated categories
+\begin{equation}\label{eq:co-contra-equivalence}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+\;\simeq\;
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}).
+\end{equation}
+The equivalence is implemented by the functors
+$\Phi_C \colon M \mapsto \mathrm{Hom}_C(C, M)$ \textup{(}which
+sends injective comodules to projective contramodules\textup{)}
+and $\Psi_C \colon P \mapsto C \square_C P$ \textup{(}the
+contratensor product\textup{)}.
+\end{theorem}
+
+\begin{proof}[Reference]
+Positselski~\cite[Theorem~5.3]{Positselski11}.  The chiral
+specialization is Theorem~\ref{thm:chiral-co-contra-correspondence}.
+\end{proof}
+
+\begin{theorem}[Conilpotent reduction; \ClaimStatusProvedElsewhere]
+\label{thm:conilpotent-reduction}
+\index{conilpotent coalgebra!coderived reduction}
+If the CDG-coalgebra $(C, d, h)$ is \emph{conilpotent}
+\textup{(}i.e., the coaugmentation filtration on~$C$ is
+exhaustive\textup{)} and $h = 0$, then every acyclic
+CDG-comodule is coacyclic, so the coderived category coincides
+with the ordinary derived category:
+\begin{equation}\label{eq:conilpotent-reduction}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod})
+\;\simeq\;
+D(C\text{-}\mathrm{comod}).
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Reference]
+Positselski~\cite[Corollary~4.4]{Positselski11}.  In this
+monograph, the genus-$0$ bar complex
+$\bar{B}^{(0)}(\cA)$ is a conilpotent DG-coalgebra, so
+the coderived category reduces to the ordinary derived
+category---this is the content of
+Remark~\textup{\ref{rem:exotic-vs-ordinary}}.
+\end{proof}
+
+\begin{remark}[Connection to bar-cobar duality]
+\label{rem:coderived-bar-cobar}
+\index{bar-cobar adjunction!coderived formulation}
+In the setting of this monograph, the bar complex
+$\bar{B}^{(g)}(\cA)$ is a chiral CDG-coalgebra with curvature
+$m_0^{(g)} = \kappa(\cA) \cdot \omega_g$
+(Convention~\ref{conv:higher-genus-differentials}).
+At genus~$0$, $m_0^{(0)} = 0$ and
+Theorem~\ref{thm:conilpotent-reduction} applies: the coderived
+category is the ordinary derived category, and bar-cobar
+inversion (Theorem~\ref{thm:higher-genus-inversion})
+is a statement in $D(\bar{B}^{(0)}\text{-}\mathrm{comod})$.
+At genus $g \geq 1$ with $\kappa(\cA) \neq 0$, the bar complex
+is genuinely curved, the ordinary derived category is trivial
+(Proposition~\ref{prop:curved-bar-acyclicity}), and bar-cobar
+inversion becomes a statement in the coderived category
+$D^{\mathrm{co}}(\bar{B}^{(g)}\text{-}\mathrm{comod})$.
+The Koszul duality equivalence
+$D^{\mathrm{co}}(\cA\text{-}\mathrm{CoMod})
+\simeq D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod})$
+(Theorem~\ref{thm:positselski-chiral-proved}) is the chiral
+incarnation of the comodule-contramodule correspondence
+\eqref{eq:co-contra-equivalence}.
+\end{remark}
+
+%%% ---------------------------------------------------------------
+%%% Relative curved models adequate for the present monograph
+%%% ---------------------------------------------------------------
+
+\subsection{Relative curved models}
+\label{sec:coderived-models}
+\index{coderived category!relative models|textbf}
+
+The full theory of coderived categories of factorization algebras
+on $\operatorname{Ran}(X)$ is not yet available in the literature;
+its development is part of the Stratum~II programme
+(Remark~\ref{rem:two-strata}).  Nevertheless, the off-Koszul
+statements in this monograph---where the bar-cobar counit is
+a curved equivalence rather than a quasi-isomorphism---require
+a precise ambient homotopy category.  This subsection defines the
+\emph{minimal} relative homotopy theory needed to make those
+statements mathematically honest.
+
+\begin{definition}[Filtered curved factorization model]
+\label{def:filtered-curved-model}
+A \emph{filtered curved factorization model} is a triple
+$(M, d, \mathcal{F})$ where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $M$ is a conilpotent factorization coalgebra on $\operatorname{Ran}(X)$
+  (or a dg module over such);
+\item $d \colon M \to M$ is a degree-$1$ map with
+  $d^2 = m_0 \in Z(M)$ for a central curvature element~$m_0$
+  (cf.\ the fiberwise differential $\dfib$ with $\dfib^{\,2} = \mcurv{g}$,
+  Convention~\textup{\ref{conv:higher-genus-differentials}});
+\item $\mathcal{F} = \{F^p M\}_{p \geq 0}$ is an exhaustive
+  decreasing filtration with $d(F^p) \subset F^p$,
+  $m_0 \in F^1$, and $\operatorname{gr}^0_{\mathcal{F}} d$ strict
+  ($(\operatorname{gr}^0 d)^2 = 0$).
+\end{enumerate}
+A morphism $f \colon (M, d, \mathcal{F}) \to (N, d', \mathcal{F}')$ is a
+filtration-preserving coalgebra map compatible with differentials and curvatures.
+\end{definition}
+
+\begin{definition}[Weak equivalence of curved models]
+\label{def:curved-weak-equiv}
+A morphism $f \colon M \to N$ of filtered curved factorization models
+is a \emph{weak equivalence} if it satisfies either of the following
+equivalent conditions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The associated graded map
+  $\operatorname{gr}_{\mathcal{F}} f$ is a quasi-isomorphism of the
+  strict complexes $(\operatorname{gr} M, \operatorname{gr}^0 d)
+  \xrightarrow{\sim} (\operatorname{gr} N, \operatorname{gr}^0 d')$.
+\item The induced map on coacyclic quotients
+  $M/\operatorname{coacyc}(M) \to N/\operatorname{coacyc}(N)$ is an
+  isomorphism, where $\operatorname{coacyc}(M)$ is the thick subcategory
+  generated by totalizations of short exact sequences
+  (Positselski~\cite{Positselski11}).
+\end{enumerate}
+The equivalence of (i) and (ii) holds for bounded-below filtrations
+by~\cite[Proposition~3.5]{Positselski11}.
+\end{definition}
+
+\begin{definition}[Provisional coderived category]
+\label{def:provisional-coderived}
+\index{coderived category!provisional|textbf}
+The \emph{provisional coderived category} $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+is the localization of the category of filtered curved factorization
+models (Definition~\ref{def:filtered-curved-model}) at the weak
+equivalences of Definition~\ref{def:curved-weak-equiv}.
+\end{definition}
+
+\begin{proposition}[Adequacy; \ClaimStatusProvedHere]
+\label{prop:coderived-adequacy}
+The provisional coderived category is adequate for the following
+constructions in this monograph:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The curved bar-cobar counit
+  $\Omega_X \bar{B}_X(\cA) \to \cA$ of
+  Theorem~\textup{\ref{thm:higher-genus-inversion}} is an isomorphism
+  in $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$ for every chiral
+  algebra~$\cA$ satisfying the Chevalley--Cousin condition.
+\item The genus tower $\{\bar{B}^{(g)}(\cA)\}_{g \geq 0}$ of
+  Theorem~\textup{\ref{thm:prism-higher-genus}} has compatible
+  filtrations making each genus component a filtered curved model.
+\item The Verdier involution $\sigma$ acts on filtered curved models
+  and descends to $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$,
+  so the complementarity decomposition
+  \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
+  holds in the provisional coderived category.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For (a): the bar-cobar counit is a quasi-isomorphism of associated
+graded complexes by the Koszul locus argument of
+Theorem~\ref{thm:higher-genus-inversion}, hence a weak equivalence
+in the sense of Definition~\ref{def:curved-weak-equiv}(i).
+Off the Koszul locus, the counit is still a weak equivalence
+in sense~(ii) by the spectral sequence comparison argument of
+Theorem~\ref{thm:bar-cobar-spectral-sequence}: the $E_1$ pages agree
+and the filtration is bounded below in each bar degree.
+
+For (b): the PBW filtration by conformal weight is exhaustive,
+decreasing, preserved by all three components of the bar differential,
+and satisfies $m_0^{(g)} \in F^1$ because the curvature involves at
+least one OPE contraction.  At associated graded level, the
+differential reduces to $\dzero$, which is strict.
+
+For (c): Verdier duality preserves the PBW filtration
+(it exchanges weight~$n$ generators with weight~$n$ cogenerators in
+the Koszul dual) and commutes with the bar differential.  Hence it
+descends to $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$ and the
+eigenspace decomposition is well-defined.
+\end{proof}
+
+\begin{remark}[Relation to the full theory]
+\label{rem:coderived-full}
+The provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$ embeds fully faithfully
+into the coderived category of curved factorization coalgebras on
+$\operatorname{Ran}(X)$ by
+Proposition~\ref{prop:provisional-embedding} below: its essential
+image consists of objects admitting a bounded-below PBW filtration.
+The full theory (\S\ref{subsec:coderived-ran-formalism}) additionally
+handles pro-nilpotent completions, infinitely generated bar complexes,
+and curved $A_\infty$-coalgebras without filtrations.  The remaining
+gap is off-Koszul bar-cobar inversion
+(Conjecture~\ref{conj:off-koszul-ran-inversion}).
+\end{remark}
+
+\subsection{Completed ambient for factorization algebras}
+\label{subsec:completed-ambient}
+
+The full modular programme requires a completed ambient---the
+factorization-algebra analogue of the pro-nilpotent/coderived
+formalism of Francis--Gaitsgory~\cite{FG12}.
+
+\begin{definition}[Completed chiral ambient]
+\label{def:completed-chiral-ambient}
+\index{completed chiral ambient|textbf}
+\index{factorization algebra!completed ambient}
+Let $X$ be a smooth projective curve.  Define the following full
+subcategories of $\Fact(X)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Alg_{\mathrm{aug,comp}}(\Fact(X))$: the full subcategory of
+  augmented factorization algebras \emph{complete} for the
+  augmentation-ideal filtration, i.e., those $\cA$ for which the
+  canonical map
+  $\cA \to \varprojlim_n \cA / \bar{\cA}^{\chirtensor n}$
+  is an equivalence.
+\item $\CoAlg_{\mathrm{coaug,conil}}(\Fact(X))$: the full subcategory
+  of coaugmented factorization coalgebras that are \emph{conilpotent},
+  i.e., exhausted by the coradical filtration.
+\item $\mathsf{D}^{\mathrm{co}}(\Fact(X))$: the \emph{coderived
+  category of curved factorization coalgebras}, defined as the
+  localization of the homotopy category at coacyclic objects---those
+  generated by totalizations of short exact sequences and closed under
+  filtered colimits (cf.\
+  Definition~\ref{def:coacyclic-contraacyclic}).
+\end{enumerate}
+Pro-nilpotence (condition~(i)) is exactly what makes the bar/cobar
+differentials converge: the chiral bar construction of an object in
+$\Alg_{\mathrm{aug,comp}}$ lands in $\CoAlg_{\mathrm{coaug,conil}}$.
+The provisional coderived category
+$\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
+(Definition~\ref{def:provisional-coderived}) embeds into
+$\mathsf{D}^{\mathrm{co}}(\Fact(X))$
+as the full subcategory of objects admitting a bounded-below PBW
+filtration.
+\textup{Master conjecture parent:}
+Conjecture~\textup{\ref{conj:master-infinite-generator}} \textup{(MC4: completed bar for infinite generators).}
+\end{definition}
+
+\begin{remark}[Status]\label{rem:completed-ambient-status}
+The $\Eone$-chiral face of this ambient is established: the
+monograph proves bar-cobar equivalence in the pro-nilpotent regime
+(Theorem~\ref{thm:higher-genus-inversion}).  The full
+$\Einf$-factorization version belongs to the Stratum~II programme
+(Remark~\ref{rem:two-strata}).  The homotopy form of the modular
+Koszul definition
+(Definition~\ref{def:modular-koszul-homotopy}) uses
+$\Alg_{\mathrm{aug}}$ rather than
+$\Alg_{\mathrm{aug,comp}}$ because all objects treated in this
+monograph are already complete (their bar complexes converge).
+\end{remark}
+
+%%% ---------------------------------------------------------------
+%%% Coderived and contraderived categories on the Ran space
+%%% ---------------------------------------------------------------
+
+\subsection{Coderived and contraderived categories on the Ran space}
+\label{subsec:coderived-ran-formalism}
+\index{coderived category!Ran space|textbf}
+\index{contraderived category!Ran space|textbf}
+\index{factorization coalgebra!curved|textbf}
+
+At genus~$g \geq 1$, the bar complex $\barB^{(g)}(\cA)$ is a
+curved CDG-coalgebra with curvature $\mcurv{g} \neq 0$
+(Example~\ref{ex:bar-as-CDG}).  The factorization structure---the
+decomposition
+$\barB(U_1 \sqcup U_2) \simeq \barB(U_1) \otimes \barB(U_2)$
+on disjoint opens---must be compatible with the CDG differential
+and curvature.  This compatibility is not automatic: it requires
+the curvature to decompose under tensor products via the standard
+CDG formula involving coaugmentation maps.
+
+This subsection axiomatizes this structure, constructs the coderived
+category in the factorization setting by extending the chiral
+coderived category of
+\S\ref{subsec:chiral-coderived-contraderived}, and states
+the remaining conjecture (off-Koszul inversion) that separates
+Stratum~I from the full programme.
+
+\subsubsection*{The CDG-factorization structure}
+
+\begin{definition}[Curved factorization coalgebra]
+\label{def:curved-fact-coalgebra}
+\index{curved factorization coalgebra|textbf}
+A \emph{curved factorization coalgebra} on a smooth curve~$X$
+is a quadruple $(C, \Delta, d, h)$ where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $C$ is a coaugmented factorization coalgebra on
+  $\operatorname{Ran}(X)$
+  (Definition~\ref{def:factorization-algebra-AF}), with
+  comultiplication~$\Delta$ and coaugmentation
+  $\varepsilon \colon C \to \omega_X$;
+\item $(d, h)$ is a CDG structure on~$C$: a degree-$1$
+  coderivation~$d$ and a degree-$2$ curvature functional
+  $h \colon C \to k$ satisfying $d^2 = h \ast (-)$ and
+  $h \circ d = 0$
+  (Definition~\ref{def:cdg-algebra-appendix});
+\item \emph{(CDG-factorization compatibility.)}
+  For every pair of disjoint opens $U_1, U_2 \subset X$, the
+  factorization isomorphism
+  $\phi \colon C(U_1 \sqcup U_2) \xrightarrow{\;\sim\;}
+  C(U_1) \otimes C(U_2)$
+  is an isomorphism of CDG-coalgebras, where the right-hand
+  side carries the tensor product CDG structure:
+  \begin{equation}\label{eq:CDG-factorization-compatibility}
+  \begin{aligned}
+  \phi \circ d_{U_1 \sqcup U_2} \circ \phi^{-1}
+  &= d_{U_1} \otimes \mathrm{id}
+  + \mathrm{id} \otimes d_{U_2}, \\
+  h_{U_1 \sqcup U_2} \circ \phi^{-1}
+  &= h_{U_1} \otimes \varepsilon_{U_2}
+  + \varepsilon_{U_1} \otimes h_{U_2},
+  \end{aligned}
+  \end{equation}
+  where $\varepsilon_{U_i} \colon C(U_i) \to k$ are the
+  coaugmentations.
+\end{enumerate}
+A curved factorization coalgebra is \emph{conilpotent} if
+the coaugmentation filtration on~$C$ is exhaustive.
+\end{definition}
+
+\begin{example}[The bar complex as curved factorization coalgebra]
+\label{ex:bar-fact-CDG}
+\index{bar complex!as curved factorization coalgebra}
+The bar construction
+$C = \barB^{\mathrm{fact}}(\cA)$ of a complete augmented chiral
+algebra~$\cA$ is the prototypical curved factorization coalgebra.
+We verify each axiom:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Factorization coalgebra.}
+  The coalgebra structure comes from NAP duality on
+  Fulton--MacPherson compactifications
+  (Theorem~\ref{thm:coalgebra-via-NAP}).  The coaugmentation
+  $\varepsilon \colon C \to \omega_X$ is the projection to bar
+  degree zero.
+\item \emph{CDG structure.}
+  The differential~$d$ and curvature
+  $h = \mcurv{g}$ are established in
+  Example~\ref{ex:bar-as-CDG}: the identity
+  $d^2 = \mcurv{g} \ast (-)$ is the curved $A_\infty$ relation
+  (Corollary~\ref{cor:critical-level-universality}), and
+  $\mcurv{g} \circ d = 0$ holds by centrality of the curvature.
+\item \emph{CDG-factorization compatibility.}
+  On disjoint opens, the chiral algebra~$\cA$ factorizes as a
+  tensor product.  The bar construction of a tensor product of
+  chiral algebras is the tensor product of the individual bar
+  constructions with the CDG tensor product
+  structure~\eqref{eq:CDG-factorization-compatibility}.  The
+  curvature formula
+  $h_{U_1 \sqcup U_2} = h_{U_1} \otimes \varepsilon_{U_2}
+  + \varepsilon_{U_1} \otimes h_{U_2}$
+  follows from the identity
+  $(d_{U_1} \otimes 1 + 1 \otimes d_{U_2})^2
+  = d_{U_1}^2 \otimes 1 + 1 \otimes d_{U_2}^2$
+  (the cross terms cancel by the graded Leibniz rule).
+\end{enumerate}
+Conilpotence holds because the bar construction is cofree
+conilpotent: $C = T^c(s^{-1}\bar{\cA})$ with the coradical
+filtration exhaustive by completeness of~$\cA$
+(Proposition~\ref{prop:bar-fh}).
+\end{example}
+
+\begin{remark}[The CDG tensor product formula]
+\label{rem:curvature-factorization}
+\index{CDG-coalgebra!tensor product}
+Given CDG-coalgebras $(C_1, d_1, h_1)$ and $(C_2, d_2, h_2)$,
+the tensor product $C_1 \otimes C_2$ carries the CDG structure
+$d = d_1 \otimes 1 + 1 \otimes d_2$,
+$h = h_1 \otimes \varepsilon_2 + \varepsilon_1 \otimes h_2$.
+The CDG relation is verified by a direct computation:
+\[
+(d_1 \otimes 1 + 1 \otimes d_2)^2
+= d_1^2 \otimes 1 + 1 \otimes d_2^2
+= (h_1 \ast ({-})) \otimes 1 + 1 \otimes (h_2 \ast ({-}))
+= (h_1 \otimes \varepsilon_2 + \varepsilon_1 \otimes h_2)
+\ast ({-}),
+\]
+where the last equality uses the counit axiom
+$\sum \varepsilon(c_{(1)}) c_{(2)} = c$.
+Axiom~(iii) of Definition~\ref{def:curved-fact-coalgebra}
+requires exactly this tensor product CDG structure to agree with
+the CDG structure transported by the factorization isomorphism.
+For the bar complex (Example~\ref{ex:bar-fact-CDG}), the curvature
+$\mcurv{g} = \kappa(\cA) \cdot \lambda_g$ is a scalar, so the
+two-factor curvature
+$\mcurv{g} \otimes \varepsilon + \varepsilon \otimes \mcurv{g}$
+encodes the standard additivity of curvature under tensor products.
+\end{remark}
+
+\subsubsection*{Factorization coderived categories}
+
+\begin{definition}[Factorization CDG-comodules and CDG-contramodules]
+\label{def:fact-cdg-comod-contra}
+\index{CDG-comodule!factorization|textbf}
+\index{CDG-contramodule!factorization|textbf}
+Let $(C, d, h)$ be a curved factorization coalgebra on~$X$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A \emph{factorization CDG-comodule} $(M, d_M)$ over~$C$
+  is a CDG-comodule over~$C$
+  (Definition~\ref{def:cdg-comod-contra-appendix}) equipped with
+  factorization structure: for disjoint opens $U_1, U_2$, the
+  CDG structure on $M(U_1 \sqcup U_2)$ agrees with the tensor
+  product CDG structure on
+  $M(U_1) \otimes C(U_2)$
+  under the comodule factorization isomorphism.
+\item A \emph{factorization CDG-contramodule} $(P, d_P)$
+  over~$C$ is defined dually, with the factorization-compatible
+  contraaction.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Coacyclic and contraacyclic factorization objects]
+\label{def:coacyclic-fact}
+\index{coacyclic object!factorization|textbf}
+\index{contraacyclic object!factorization|textbf}
+Let $(C, d, h)$ be a curved factorization coalgebra.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A factorization CDG-comodule~$M$ is \emph{coacyclic} if it
+  belongs to the minimal thick subcategory
+  $\mathrm{Acycl}^{\mathrm{co}}_{\mathrm{fact}}$
+  of the factorization homotopy category
+  $\mathrm{Hot}(C\text{-}\mathrm{CoFact})$
+  that contains the totalizations of all short exact sequences of
+  factorization CDG-comodules and is closed under
+  infinite direct sums.
+\item A factorization CDG-contramodule~$P$ is
+  \emph{contraacyclic} if it belongs to the minimal thick
+  subcategory
+  $\mathrm{Acycl}^{\mathrm{ctr}}_{\mathrm{fact}}$
+  with the dual closure: totalizations of exact triples and
+  infinite direct products.
+\end{enumerate}
+This is the factorization analogue of
+Definition~\ref{def:coacyclic-contraacyclic}.  The factorization
+structure enters through the ambient homotopy category (whose
+objects and morphisms respect the factorization isomorphisms), not
+through any additional axiom on the coacyclicity condition.
+\end{definition}
+
+\begin{definition}[Coderived and contraderived factorization categories]
+\label{def:coderived-fact}
+\index{coderived category!factorization|textbf}
+\index{contraderived category!factorization|textbf}
+The \emph{coderived} and \emph{contraderived factorization
+categories} of a curved factorization coalgebra $(C, d, h)$
+on~$X$ are the Verdier quotients
+\begin{align}
+D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+  &:= \mathrm{Hot}(C\text{-}\mathrm{CoFact})
+  \,\big/\, \mathrm{Acycl}^{\mathrm{co}}_{\mathrm{fact}},
+  \label{eq:coderived-fact}\\
+D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact})
+  &:= \mathrm{Hot}(C\text{-}\mathrm{ContraFact})
+  \,\big/\, \mathrm{Acycl}^{\mathrm{ctr}}_{\mathrm{fact}}.
+  \label{eq:contraderived-fact}
+\end{align}
+When $h = 0$ and $C$ is conilpotent,
+Theorem~\ref{thm:conilpotent-reduction} gives
+$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+\simeq D(C\text{-}\mathrm{CoFact})$.
+When $h \neq 0$, the ordinary derived category is trivial
+(Proposition~\ref{prop:curved-bar-acyclicity}), while
+$D^{\mathrm{co}}$ retains the full categorical information.
+\end{definition}
+
+\subsubsection*{Structural theorems}
+
+\begin{theorem}[Stratified conservative restriction;
+\ClaimStatusProvedHere]
+\label{thm:stratified-conservative-restriction}
+\index{stratified conservative restriction|textbf}
+\index{coderived category!stratified restriction}
+Let $(C, d, h)$ be a conilpotent curved factorization coalgebra
+on~$X$ with finite-dimensional graded pieces.
+For each $n \geq 1$, restriction to the $n$-point stratum
+$\operatorname{Ran}_n(X) \subset \operatorname{Ran}(X)$ induces a
+triangulated functor
+\[
+\operatorname{res}_n \colon
+D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+\longrightarrow
+D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}}),
+\]
+where $C_n := C|_{\operatorname{Ran}_n(X)}$ carries the restricted
+CDG structure \textup{(}well-defined by CDG-factorization
+compatibility~\eqref{eq:CDG-factorization-compatibility}\textup{)},
+and the target is the chiral coderived category
+\textup{(}Definition~\textup{\ref{def:chiral-coderived})}.
+
+The family $\{\operatorname{res}_n\}_{n \geq 1}$ is
+\emph{conservative}: a morphism $f$ in
+$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})$ is an isomorphism if
+and only if $\operatorname{res}_n(f)$ is an isomorphism for
+every~$n$.
+\end{theorem}
+
+\begin{proof}
+\emph{Well-definedness.}
+Restriction $\operatorname{res}_n$ sends factorization
+CDG-comodules to CDG-comodules over~$C_n$, and preserves exact
+triples and direct sums.  Hence it sends coacyclic factorization
+objects to coacyclic $C_n$-comodules
+(Definition~\ref{def:coacyclic-contraacyclic}), and descends to
+the Verdier quotients.
+
+\emph{Conservativity.}
+By Positselski's theorem~\cite[\S5.4]{Positselski11},
+the coderived category of a conilpotent CDG-coalgebra with
+finite-dimensional graded pieces is equivalent to the homotopy
+category of injective CDG-comodules:
+$D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}})
+\simeq K_{\mathrm{inj}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}})$
+(cf.\ Proposition~\ref{prop:chiral-inj-proj-resolutions}).
+
+Let $f \colon M \to N$ be a morphism with
+$\operatorname{res}_n(f)$ an isomorphism for all~$n$, and set
+$K = \operatorname{cone}(f)$.  We show
+$K \in \mathrm{Acycl}^{\mathrm{co}}_{\mathrm{fact}}$ by showing
+$\mathrm{Hom}_{K(\mathrm{CoFact})}(K, J) = 0$ for every
+injective factorization CDG-comodule~$J$.
+
+By conilpotence, $C = \bigcup_n C^{\leq n}$ (coradical
+filtration), and any factorization CDG-comodule~$K$ is the union
+$K = \bigcup_n K_n$ where $K_n = K \square_C C^{\leq n}$, with
+$K_n$ supported on $\operatorname{Ran}_{\leq n}$.  A morphism
+$K \to J$ in the homotopy category is then determined by the
+compatible system of its restrictions
+$K_n \to J|_{\leq n}$, so
+\begin{equation}\label{eq:conservative-hom}
+\mathrm{Hom}_{K(\mathrm{CoFact})}(K, J)
+= \varprojlim_n\,
+\mathrm{Hom}_{K(C^{\leq n})}(K_n,\, J|_{\leq n}).
+\end{equation}
+Now $K|_m$ is coacyclic for every stratum~$m$ (by hypothesis),
+and the injective characterization gives
+$\mathrm{Hom}_{K(C_m)}(K|_m,\, J|_m) = 0$ for each~$m$.  Since
+$K_n$ is supported on $\operatorname{Ran}_{\leq n}$, it is built
+from the restrictions $K|_m$ for $m \leq n$ via the coradical
+filtration, and the vanishing propagates to
+$\mathrm{Hom}(K_n, J|_{\leq n}) = 0$ for each~$n$.
+By~\eqref{eq:conservative-hom},
+$\mathrm{Hom}(K, J) = 0$, so $K$ is coacyclic.
+\end{proof}
+
+\begin{proposition}[Provisional embedding; \ClaimStatusProvedHere]
+\label{prop:provisional-embedding}
+\index{provisional coderived category!embedding}
+The inclusion of filtered curved factorization models
+\textup{(}Definition~\textup{\ref{def:filtered-curved-model})}
+into factorization CDG-comodules over their underlying coalgebras
+induces a fully faithful functor
+\[
+\iota \colon
+\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)
+\hookrightarrow
+D^{\mathrm{co}}(C\text{-}\mathrm{CoFact}).
+\]
+The essential image of~$\iota$ consists of those objects
+admitting a bounded-below filtration~$\mathcal{F}$ with
+$(\operatorname{gr}^0_{\mathcal{F}} d)^2 = 0$.
+\end{proposition}
+
+\begin{proof}
+\emph{Well-definedness.}
+A provisional weak equivalence
+(Definition~\ref{def:curved-weak-equiv}(i)) induces a
+quasi-isomorphism on associated graded.  For bounded-below
+filtrations, this implies the cone is coacyclic on each
+stratum~$\operatorname{Ran}_n$ by
+Positselski~\cite[Proposition~3.5]{Positselski11} (a
+bounded-below spectral sequence with acyclic associated graded
+produces a coacyclic totalization).  By conservativity
+(Theorem~\ref{thm:stratified-conservative-restriction}), the cone
+is coacyclic in the factorization sense.  Hence $\iota$
+sends provisional weak equivalences to coderived isomorphisms.
+
+\emph{Faithfulness.}
+If $\iota(M) = 0$ in $D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})$,
+then $M$ is coacyclic.  By conservativity, $M|_n$ is coacyclic
+on each stratum.  For a bounded-below filtered model, coacyclicity
+on each stratum implies the associated graded spectral sequence
+degenerates to zero~\cite[Proposition~3.5]{Positselski11}, so
+$M$ is weakly equivalent to zero in the provisional sense.
+
+\emph{Essential image.}
+The PBW filtration on bar complexes
+(Proposition~\ref{prop:coderived-adequacy}(b)) provides the
+prototypical bounded-below filtration.  Conversely, any
+bounded-below filtration with
+$(\operatorname{gr}^0 d)^2 = 0$ gives a filtered curved model
+(Definition~\ref{def:filtered-curved-model}).
+\end{proof}
+
+\begin{proposition}[Bar functor well-definedness on Ran;
+\ClaimStatusProvedHere]
+\label{prop:bar-ran-well-defined}
+\index{bar construction!well-definedness on Ran}
+Let $\cA$ be a complete augmented factorization algebra in
+$\Alg_{\mathrm{aug,comp}}(\Fact(X))$ with finite-dimensional
+graded pieces.  Then $\barB_X^{\mathrm{fact}}(\cA)$ is a
+conilpotent curved factorization coalgebra
+\textup{(}Definition~\textup{\ref{def:curved-fact-coalgebra}}),
+and hence defines an object in
+$D^{\mathrm{co}}(\barB\text{-}\mathrm{CoFact})$.
+\end{proposition}
+
+\begin{proof}
+Example~\ref{ex:bar-fact-CDG} verifies all three axioms of
+Definition~\ref{def:curved-fact-coalgebra}: factorization
+coalgebra structure via NAP duality
+(Theorem~\ref{thm:coalgebra-via-NAP}), CDG relations
+(Example~\ref{ex:bar-as-CDG},
+Corollary~\ref{cor:critical-level-universality}), and
+CDG-factorization compatibility (the bar differential on disjoint
+opens is the tensor product of the individual bar differentials,
+since the chiral algebra~$\cA$ itself factorizes).
+\end{proof}
+
+\subsubsection*{The co-contra correspondence and the remaining conjecture}
+
+\begin{theorem}[Factorization co-contra correspondence;
+\ClaimStatusProvedHere]
+\label{thm:fact-co-contra-general}
+\index{comodule-contramodule correspondence!factorization|textbf}
+Let $(C, d, h)$ be a conilpotent curved factorization coalgebra
+on~$X$ with finite-dimensional graded pieces on each stratum.
+Then there is an equivalence of triangulated categories
+\begin{equation}\label{eq:fact-co-contra}
+D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})
+\;\simeq\;
+D^{\mathrm{ctr}}(C\text{-}\mathrm{ContraFact}).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The proof assembles the chain-level co-contra correspondence
+(Theorem~\ref{thm:chiral-co-contra-correspondence}) across
+strata using the factorization structure.
+
+\emph{Step~1: Stratum-by-stratum equivalence.}
+On each stratum $\operatorname{Ran}_n(X)$, the restriction
+$C_n = C|_{\operatorname{Ran}_n}$ is a conilpotent CDG-coalgebra
+with finite-dimensional graded pieces (finite-dimensionality
+propagates from the $1$-point stratum via the factorization
+tensor product: near the generic point of $\operatorname{Ran}_n$,
+$C_n \simeq C_1^{\otimes n}$, which is finite-dimensional in each
+graded piece if $C_1$ is).
+Theorem~\ref{thm:chiral-co-contra-correspondence} gives
+equivalences
+\begin{equation}\label{eq:stratum-co-contra}
+D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}})
+\simeq
+D^{\mathrm{ctr}}(C_n\text{-}\mathrm{contra}^{\mathrm{ch}}),
+\end{equation}
+implemented by the Positselski functors $\Phi_{C_n}$ and
+$\Psi_{C_n}$.
+
+\emph{Step~2: Factorization compatibility of the Positselski
+functors.}
+On disjoint opens $U_1 \sqcup U_2$, the CDG-factorization
+compatibility~\eqref{eq:CDG-factorization-compatibility} gives
+$C_{U_1 \sqcup U_2} \simeq C_{U_1} \otimes C_{U_2}$ as
+CDG-coalgebras.  The key algebraic identity is that the
+Positselski functor
+$\Phi_C = \operatorname{Hom}_C^{\mathrm{ch}}(C, -)$ commutes
+with external tensor products: for a CDG-comodule
+$M_1$ over $C_{U_1}$ and the tautological comodule $C_{U_2}$
+over itself,
+\[
+\Phi_{C_{U_1} \otimes C_{U_2}}(M_1 \otimes C_{U_2})
+\;\simeq\;
+\Phi_{C_{U_1}}(M_1) \otimes \Phi_{C_{U_2}}(C_{U_2})
+\;\simeq\;
+\Phi_{C_{U_1}}(M_1),
+\]
+where the second isomorphism uses
+$\Phi_C(C) \simeq k$ (the endomorphisms of the regular comodule
+reduce to the ground field via the coaugmentation).  The same
+holds for $\Psi$ by
+Lemma~\ref{lem:Phi-Psi-properties}(b)--(c).  Hence the
+stratum-by-stratum equivalences~\eqref{eq:stratum-co-contra} are
+compatible with the factorization isomorphisms.
+
+\emph{Step~3: Assembly.}
+The factorization-compatible functors $\Phi$ and $\Psi$ preserve
+coacyclic and contraacyclic objects (since they do so on each
+stratum), hence descend to functors between the Verdier
+quotients~\eqref{eq:coderived-fact}--\eqref{eq:contraderived-fact}.
+The unit $\Psi \circ \Phi \to \mathrm{id}$ and counit
+$\Phi \circ \Psi \to \mathrm{id}$ restrict to isomorphisms on
+each stratum (by the chain-level theorem), hence are global
+isomorphisms by conservativity
+(Theorem~\ref{thm:stratified-conservative-restriction}).
+\end{proof}
+
+\begin{remark}[Comparison with
+Theorem~\ref{thm:factorization-positselski}]
+\label{rem:fact-positselski-comparison}
+\index{Positselski!factorization!comparison}
+Theorem~\ref{thm:fact-co-contra-general} gives the co-contra
+correspondence for \emph{comodules and contramodules over the
+same coalgebra~$C$}: a structural property of any conilpotent
+CDG-coalgebra.
+Theorem~\ref{thm:factorization-positselski} goes further:
+for $C = \barB^{\mathrm{fact}}(\cA)$ with sectorwise finiteness
+(hypothesis~\ref{h2:sectorwise}), it identifies the contraderived
+category of $C$-contramodules with the contraderived category of
+\emph{$\cA^!$-contramodules} (the Koszul dual coalgebra).  That
+identification requires the sectorwise grading because the
+algebra-coalgebra Koszul duality operates sector by sector.
+\end{remark}
+
+\begin{conjecture}[Off-Koszul bar-cobar inversion on Ran;
+\ClaimStatusConjectured]
+\label{conj:off-koszul-ran-inversion}
+\index{bar-cobar inversion!off-Koszul|textbf}
+\index{coderived category!bar-cobar inversion}
+Let $\cA$ be a complete augmented chiral algebra on~$X$ with
+$\barB_X^{\mathrm{fact}}(\cA)$ having finite-dimensional graded
+pieces.  Then the bar-cobar counit
+\[
+\Omega_X \barB_X(\cA) \longrightarrow \cA
+\]
+is an isomorphism in
+$D^{\mathrm{co}}(\barB\text{-}\mathrm{CoFact})$,
+without any Koszulness hypothesis on~$\cA$.
+\end{conjecture}
+
+\begin{remark}[Evidence for
+Conjecture~\ref{conj:off-koszul-ran-inversion}]
+\label{rem:off-koszul-evidence}
+\index{bar-cobar inversion!off-Koszul!evidence}
+Four lines of evidence:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Abstract precedent.}  For CDG-coalgebras over a
+  field, the bar-cobar counit is always a coderived equivalence
+  (Positselski~\cite[Theorem~7.2]{Positselski11}), without any
+  Koszulness hypothesis.
+\item \emph{On-Koszul case.}
+  Theorem~\ref{thm:higher-genus-inversion} establishes inversion
+  on the Koszul locus, where
+  $D^{\mathrm{co}} \simeq D$ by
+  Theorem~\ref{thm:conilpotent-reduction}.
+\item \emph{Spectral comparison.}
+  The bar-cobar spectral sequence
+  (Theorem~\ref{thm:bar-cobar-spectral-sequence}) has matching
+  $E_1$ pages on and off the Koszul locus; the obstruction to
+  convergence lives in higher differentials controlled by the
+  curvature.
+\item \emph{Completed Yangian case.}
+  The completed bar-cobar equivalence for Yangian towers
+  (Corollary~\ref{cor:completed-bar-cobar-yangian}) provides
+  a family of off-Koszul examples where inversion holds in the
+  inverse limit.
+\end{enumerate}
+The conjecture is the precise formulation of structural gap~H1
+(Remark~\ref{rem:structural-gaps}).
+\end{remark}
