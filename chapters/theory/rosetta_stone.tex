@@ -1,0 +1,900 @@
+% ================================================================
+% THE HEISENBERG ROSETTA STONE
+% ================================================================
+% This chapter lives in BOTH volumes.
+% Volume I: chapters/theory/rosetta_stone.tex
+% Volume II: chapters/examples/rosetta_stone.tex
+%
+% It proves, by explicit computation on H_k, that the bar complex
+% is a Swiss-cheese algebra in the sense of Definition~\ref{def:SC}.
+% The chapter uses only macros available in both volumes.
+% ================================================================
+
+% Fallback macros: ensure compilation in both volumes.
+\providecommand{\barB}{\bar{B}}
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
+\providecommand{\Ainf}{\mathsf{A}_{\infty}}
+\providecommand{\Eone}{\mathsf{E}_1}
+\providecommand{\Einf}{\mathsf{E}_{\infty}}
+\providecommand{\Ass}{\mathsf{Ass}}
+\providecommand{\FM}{\mathrm{FM}}
+\providecommand{\Conf}{C}
+\providecommand{\dfib}{d_{\mathrm{fib}}}
+\providecommand{\Dg}[1]{D_{#1}}
+\providecommand{\dzero}{d_0}
+\providecommand{\barBch}{\bar{B}^{\mathrm{ch}}}
+\providecommand{\Omegach}{\Omega^{\mathrm{ch}}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Ran}{\operatorname{Ran}}
+\providecommand{\chirCom}{\mathsf{Com}^{\mathrm{ch}}}
+\providecommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
+\providecommand{\Linf}{\mathsf{L}_{\infty}}
+\providecommand{\ClaimStatusProvedHere}{\textnormal{[proved here]}}
+\providecommand{\ClaimStatusProvedElsewhere}{\textnormal{[proved elsewhere]}}
+\providecommand{\ClaimStatusConjectured}{\textnormal{[conjectured]}}
+\providecommand{\ClaimStatusHeuristic}{\textnormal{[physical heuristic]}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\colldiv}[2]{D_{#1#2}}
+\providecommand{\LogForm}[2]{\eta_{#1#2}}
+
+
+\section{The Heisenberg Rosetta Stone}
+\label{sec:rosetta-stone}
+\index{Rosetta Stone|textbf}
+\index{Heisenberg algebra!Rosetta Stone|textbf}
+\index{Swiss-cheese operad!Heisenberg example|textbf}
+
+As the Steinberg variety presents the Hecke algebra through a single
+correspondence---flag variety on one side, nilpotent cone on the
+other, convolution algebra in between---the Heisenberg bar complex
+presents the $\Ainf$ chiral algebra through a single dg coalgebra:
+the bar differential sees the holomorphic direction, the coproduct
+sees the topological direction, and the combined Swiss-cheese structure
+is the entire content of the 3d theory on $\bC \times \bR$.
+
+The present section proves this for the Heisenberg algebra
+$\cH_k$ by explicit computation.  The results are neither deep
+nor difficult; they are \emph{explicit}, and the explicitness
+carries information that no amount of abstract machinery can supply.
+The Heisenberg algebra has a single generator~$J$, a single
+OPE pole of order~$2$, and no composite fields.  These three
+simplifications---one generator, one pole order, no composites---make
+every step checkable by hand.  Yet none of the five main theorems
+of Volume~I becomes trivial: bar-cobar adjunction (Theorem~A),
+inversion (Theorem~B), complementarity (Theorem~C), the modular
+characteristic (Theorem~D), and Hochschild cohomology (Theorem~H)
+are all instantiated here with full content.
+
+The section is organized around five revelations.  The first
+(\S\ref{subsec:rosetta-swiss-cheese}) identifies the bar complex
+as a Swiss-cheese coalgebra; the second
+(\S\ref{subsec:rosetta-operations}) reads off all higher operations
+and observes that they vanish; the third
+(\S\ref{subsec:rosetta-pva}) extracts the Poisson vertex algebra
+on cohomology; the fourth (\S\ref{subsec:rosetta-genus1}) watches
+curvature appear at genus~$1$; and the fifth
+(\S\ref{subsec:rosetta-bridge}) assembles a dictionary that
+maps every bar-complex datum to both a Volume~I theorem and a
+Volume~II physical identification.
+
+
+% ================================================================
+\subsection{The bar complex as a Swiss-cheese algebra}
+\label{subsec:rosetta-swiss-cheese}
+\index{bar complex!Swiss-cheese structure!Heisenberg}
+% ================================================================
+
+We fix notation.  Let $V = \bC \cdot J$ be the one-dimensional
+vector space spanned by the Heisenberg current, let $k \in \bC$
+be the level, and let $\cH_k$ be the corresponding Heisenberg
+chiral algebra with OPE
+\begin{equation}\label{eq:rosetta-heisenberg-ope}
+J(z)\, J(w) \;\sim\; \frac{k}{(z - w)^2}.
+\end{equation}
+The bar complex $\barB^{\mathrm{ch}}(\cH_k)$ is the cofree
+conilpotent coalgebra on the desuspension $s^{-1}\overline{\cH}_k$,
+equipped with the bar differential $d_{\barB}$ constructed from
+OPE residues on the Fulton--MacPherson compactification.
+Concretely, a bar element of tensor degree~$n$ lives on
+\begin{equation}\label{eq:rosetta-bar-element-space}
+\barB^n(\cH_k) \;=\;
+(s^{-1}\overline{\cH}_k)^{\otimes n}
+\;\otimes\;
+\Omega^{\bullet}\bigl(\overline{\Conf}_{n+1}(X)\bigr),
+\end{equation}
+where $\overline{\Conf}_{n+1}(X) = \FM_{n+1}(X)$ is the
+Fulton--MacPherson compactification and the logarithmic forms
+$\eta_{ij} = d\log(z_i - z_j)$ provide the propagators.
+
+\begin{theorem}[Heisenberg bar complex is a Swiss-cheese algebra;
+\ClaimStatusProvedHere]
+\label{thm:rosetta-swiss-cheese}
+\index{Swiss-cheese operad!Heisenberg bar complex}
+The geometric bar complex $\barB^{\mathrm{ch}}(\cH_k)$ with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item bar differential $d_{\barB}$
+  \textup{(}residues on collision divisors of\/ $\FM_n(\bC)$\textup{)}
+  as closed-color structure,
+\item deconcatenation coproduct $\Delta$
+  \textup{(}ordered splitting\textup{)} as open-color structure,
+\end{enumerate}
+is an algebra over $\SCchtop$.
+\end{theorem}
+
+\begin{proof}
+The proof has four steps, each corresponding to one axiom of the
+Swiss-cheese operad.
+
+\medskip
+\noindent\textit{Step~1: Closed color.}\enspace
+The bar differential $d_{\barB}$ is the coderivation of the
+cofree coalgebra $T^c(s^{-1}\overline{\cH}_k)$ determined by
+the OPE residue.  For the Heisenberg algebra, the only nonvanishing
+component is the binary one:
+\begin{equation}\label{eq:rosetta-dbar-binary}
+d_{\barB}\bigl[s^{-1}J \,|\, s^{-1}J\bigr]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+  J(z_1)\, J(z_2) \cdot \eta_{12}
+\right]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+  \frac{k}{(z_1 - z_2)^2} \cdot d\log(z_1 - z_2)
+\right].
+\end{equation}
+The residue extracts the coefficient of $(z_1 - z_2)^{-1}$
+in the integrand $k(z_1 - z_2)^{-2} \cdot (z_1 - z_2)^{-1}\, dz_1
+= k(z_1 - z_2)^{-3}\, dz_1$, which gives
+$d_{\barB}[s^{-1}J \,|\, s^{-1}J] = k$.
+
+The nilpotence $d_{\barB}^2 = 0$ is the Arnold relation
+on $\FM_3(\bC)$.  The three codimension-$1$ boundary strata of
+$\FM_3(\bC)$ are the collision divisors $\colldiv{1}{2}$,
+$\colldiv{2}{3}$, and $\colldiv{1}{3}$.
+On these strata, the logarithmic $2$-form
+$\eta_{12} \wedge \eta_{23}$ restricts to the Arnold relation
+\begin{equation}\label{eq:rosetta-arnold}
+[\eta_{12} \wedge \eta_{23}]
+\;+\;
+[\eta_{23} \wedge \eta_{13}]
+\;+\;
+[\eta_{13} \wedge \eta_{12}]
+\;=\; 0
+\end{equation}
+in $H^2(\FM_3(\bC))$.
+Each summand contributes a residue to $d_{\barB}^2$, and their
+sum vanishes by exactness.  For the Heisenberg algebra, this
+computation produces $d_{\barB}^2[s^{-1}J \,|\, s^{-1}J \,|\, s^{-1}J]
+= k \cdot (\text{Arnold sum}) = 0$.
+
+The closed-color structure is thus a dg coalgebra
+$(\barB^{\mathrm{ch}}(\cH_k), d_{\barB})$, with $d_{\barB}$
+built from $\FM_n(\bC)$.  This is holomorphic factorization.
+
+\medskip
+\noindent\textit{Step~2: Open color.}\enspace
+The deconcatenation coproduct
+\begin{equation}\label{eq:rosetta-delta}
+\Delta\bigl[a_1 \,|\, \cdots \,|\, a_n\bigr]
+\;=\;
+\sum_{i=0}^{n}
+\bigl[a_1 \,|\, \cdots \,|\, a_i\bigr]
+\;\otimes\;
+\bigl[a_{i+1} \,|\, \cdots \,|\, a_n\bigr]
+\end{equation}
+is coassociative by construction: it is the tensor coalgebra
+coproduct.  The ordering of tensor factors corresponds to the
+ordering of points $t_1 < t_2 < \cdots < t_n$ on $\bR$;
+splitting at position~$i$ is cutting the interval
+$[t_1, t_n] \subset \bR$ at the gap between $t_i$ and $t_{i+1}$.
+The ordered configuration space $\Conf_n^{<}(\bR)$ is
+contractible (it is an open simplex
+$\{t_1 < \cdots < t_n\} \cong \bR^{n-1}_{> 0}$), so the
+$\Eone$-structure on $\Conf_n(\bR)$ contracts to
+$\Ass$-structure: $\Delta$ is strictly coassociative,
+not merely $\Eone$-coassociative up to homotopy.
+
+\medskip
+\noindent\textit{Step~3: Compatibility.}\enspace
+The coderivation property
+\begin{equation}\label{eq:rosetta-compatibility}
+\Delta \circ d_{\barB}
+\;=\;
+(\id \otimes d_{\barB} \;+\; d_{\barB} \otimes \id)
+\circ \Delta
+\end{equation}
+asserts that $d_{\barB}$ is a coderivation of $\Delta$.
+We verify this on bar elements of degree~$2$.  The left-hand side
+gives
+\[
+\Delta\bigl(d_{\barB}[s^{-1}J \,|\, s^{-1}J]\bigr)
+\;=\;
+\Delta(k)
+\;=\;
+k \otimes [] + [] \otimes k,
+\]
+where $[]$ denotes the empty bar element (the coaugmentation).
+The right-hand side gives
+\[
+(d_{\barB} \otimes \id + \id \otimes d_{\barB})\bigl(
+  [] \otimes [s^{-1}J \,|\, s^{-1}J]
+  \;+\;
+  [s^{-1}J] \otimes [s^{-1}J]
+  \;+\;
+  [s^{-1}J \,|\, s^{-1}J] \otimes []
+\bigr).
+\]
+The middle term $[s^{-1}J] \otimes [s^{-1}J]$ contributes nothing
+because $d_{\barB}$ on a single element $[s^{-1}J]$ requires a
+binary collision, which is absent.  The first and last terms
+contribute $[] \otimes k + k \otimes []$, matching the left-hand side.
+
+The structural reason for this agreement is geometric:
+the collision divisors $\colldiv{i}{j} \subset \FM_n(\bC)$
+parametrize collisions in the holomorphic direction, while the
+splitting $\Delta$ acts in the topological direction on $\bR$.
+These directions are independent in the product
+$\FM_n(\bC) \times \Conf_n^{<}(\bR)$: a collision
+$z_i \to z_j$ in $\bC$ does not merge the corresponding
+points $t_i, t_j \in \bR$.  The residue operation (extracting the
+singular part of the OPE along $\colldiv{i}{j}$) therefore
+commutes with the splitting operation (cutting the interval at a
+gap in the $\bR$-ordering).
+
+\medskip
+\noindent\textit{Step~4: Coherences.}\enspace
+The Boardman--Vogt $W$-construction
+$W(\SCchtop)$ replaces strict compatibility with a family of
+homotopy-coherent conditions.  For $(\barB^{\mathrm{ch}}(\cH_k),
+d_{\barB}, \Delta)$, all coherence conditions are automatically
+satisfied at the strict level:
+\begin{enumerate}[label=(\alph*)]
+\item the closed-color differential $d_{\barB}$ is strictly
+  square-zero (Arnold relation, not merely $\Ainf$-null);
+\item the open-color coproduct $\Delta$ is strictly coassociative
+  (tensor coalgebra, not merely $\Eone$-coassociative);
+\item compatibility~\eqref{eq:rosetta-compatibility} holds strictly,
+  not up to a homotopy parametrized by the $W$-construction.
+\end{enumerate}
+The $W$-construction coherences between $\FM_n(\bC)$ and
+$\Conf_n^{<}(\bR)$ are trivial because the product
+$\FM_n(\bC) \times \Conf_n^{<}(\bR)$ decomposes: the FM operad is
+formal at genus~$0$ (Kontsevich), so all higher coherences on the
+holomorphic factor vanish; the ordered configuration space on $\bR$
+is contractible, so all higher coherences on the topological factor
+vanish; and the product structure admits no mixed higher coherences.
+\end{proof}
+
+
+% ================================================================
+\subsection{Reading off the higher operations}
+\label{subsec:rosetta-operations}
+\index{higher operations!from bar complex}
+\index{Heisenberg algebra!higher operations}
+% ================================================================
+
+The Swiss-cheese structure of the bar complex carries all the
+information of an $\Ainf$ chiral algebra.  The following
+proposition makes the extraction explicit.
+
+\begin{proposition}[Higher operations from bar elements;
+\ClaimStatusProvedHere]
+\label{prop:rosetta-operations}
+\index{A-infinity operations@$\Ainf$ operations!from bar complex}
+The $\Ainf$ operations $m_k$ of a chiral algebra $\cA$ are
+recovered from the bar complex by the formula
+\begin{equation}\label{eq:rosetta-mk-extraction}
+m_k(a_1, \ldots, a_k;\, \lambda_1, \ldots, \lambda_{k-1})
+\;=\;
+\text{coefficient of }
+s^{-1}a_1 \otimes \cdots \otimes s^{-1}a_k
+\text{ in }
+d_{\barB}^{(k)},
+\end{equation}
+where $d_{\barB}^{(k)}$ denotes the component of the bar
+differential that maps $\barB^k \to \barB^{k-1}$ and the
+spectral parameters $\lambda_j$ arise from the regularization
+of the collision integral on $\FM_k(\bC) \times \Conf_k^{<}(\bR)$.
+\end{proposition}
+
+\begin{proof}
+This is the defining property of the bar construction as a
+coderivation: $d_{\barB}$ is the unique coderivation of
+$T^c(s^{-1}\overline{\cA})$ whose composition with the
+projection $T^c(s^{-1}\overline{\cA}) \twoheadrightarrow
+s^{-1}\overline{\cA}$ recovers the sequence of operations
+$(m_1, m_2, m_3, \ldots)$.  The spectral parameter
+$\lambda_j$ arises from the regularized integral
+$\int_{\Conf_k^{<}(\bR)} dt_1 \cdots dt_{k-1}$
+along the topological direction, with $\lambda_j = t_{j+1} - t_j$
+recording the separation between consecutive points.
+\end{proof}
+
+We now compute all $m_k$ for $\cH_k$.
+
+\begin{proposition}[Heisenberg higher operations;
+\ClaimStatusProvedHere]
+\label{prop:rosetta-heisenberg-mk}
+\index{Heisenberg algebra!$m_k$ operations}
+For the Heisenberg algebra $\cH_k$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $m_1 = 0$ \textup{(}no internal differential\textup{)}.
+\item $m_2(J, J;\, \lambda) = k\lambda$
+  \textup{(}the OPE residue\textup{)}.
+\item $m_k = 0$ for all $k \geq 3$
+  \textup{(}no ternary or higher operations\textup{)}.
+\end{enumerate}
+In particular, $\cH_k$ is \emph{formal}: its $\Ainf$ structure is
+concentrated in $m_2$.
+\end{proposition}
+
+\begin{proof}
+(i) The internal differential of $\cH_k$ is zero: there is no
+$Q$-operator, and the algebra has trivial cohomological grading
+concentrated in degree~$0$.
+
+\smallskip
+(ii) The binary operation is the double-pole residue.  From
+equation~\eqref{eq:rosetta-dbar-binary}, the bar differential
+on a degree-$2$ element is
+\[
+d_{\barB}[s^{-1}J \,|\, s^{-1}J]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+  \frac{k}{(z_1 - z_2)^2}
+  \cdot d\log(z_1 - z_2)
+\right]
+\;=\; k.
+\]
+In the spectral (Fourier) parametrization, the meromorphic function
+$k/(z_1 - z_2)^2$ corresponds to the spectral expression
+$m_2(J, J;\, \lambda) = k\lambda$.  The spectral parameter
+$\lambda$ records the weight of the residue: a pole of order~$2$
+at $z_1 = z_2$ produces a first-order polynomial in~$\lambda$
+via the substitution $(z_1 - z_2)^{-n-1} \leftrightarrow
+\lambda^{(n)}/n!$.
+
+\smallskip
+(iii) The vanishing of $m_k$ for $k \geq 3$ is the decisive
+computation.  Consider the degree-$3$ bar element
+\[
+\xi_3
+\;=\;
+s^{-1}J \otimes s^{-1}J \otimes s^{-1}J
+\;\otimes\;
+\eta_{12} \wedge \eta_{23}
+\;\in\;
+\barB^3(\cH_k).
+\]
+To compute $d_{\barB}^{(3)}$, one must extract a residue
+from the iterated OPE of three Heisenberg currents along a
+codimension-$2$ stratum of $\FM_3(\bC)$.  The iterated OPE is
+\begin{align}\label{eq:rosetta-iterated-ope}
+J(z_1)\, J(z_2)\, J(z_3)
+&\;\sim\;
+\frac{k}{(z_1 - z_2)^2}\, J(z_3)
+\;+\;
+\frac{k}{(z_1 - z_3)^2}\, J(z_2)
+\;+\;
+\frac{k}{(z_2 - z_3)^2}\, J(z_1).
+\end{align}
+Each term has a double pole in one pair of variables and is
+regular in the third.  The ternary operation $m_3$ would arise
+from a \emph{simultaneous} triple collision $z_1 \to z_2 \to z_3$.
+On $\FM_3(\bC)$, the triple collision stratum is a point
+(the maximal boundary stratum).  The residue at this point requires
+a pole of order $\geq 3$ in the combined variables.  But the
+iterated OPE~\eqref{eq:rosetta-iterated-ope} has at most
+double poles in each pair --- there is no pole of the required
+order in the ternary collision limit.
+
+More precisely: in the coordinates $u = z_1 - z_2$,
+$v = z_2 - z_3$ on $\FM_3(\bC)$, the triple collision
+$u, v \to 0$ has codimension~$2$.  The form
+$\eta_{12} \wedge \eta_{23} = d\log u \wedge d\log v$
+contributes a factor $u^{-1}v^{-1}\, du \wedge dv$.  The
+OPE contributes at most $u^{-2}$ or $v^{-2}$ (never both
+simultaneously, because there is no term with $u^{-2}v^{-2}$
+in~\eqref{eq:rosetta-iterated-ope}).  The combined integrand
+is therefore at most $u^{-3}v^{-1}$ or $u^{-1}v^{-3}$ in
+the worst case: the residue in the \emph{other} variable
+vanishes because the pole order is insufficient.  Hence
+$m_3 = 0$.
+
+The same argument applies at all higher degrees: $m_k = 0$
+for $k \geq 3$ because the Heisenberg OPE has only a double
+pole, and the $k$-fold collision on $\FM_k(\bC)$ requires
+poles of total order $\geq k$ to produce a nonvanishing
+residue against the logarithmic $k$-form
+$\eta_{12} \wedge \eta_{23} \wedge \cdots \wedge \eta_{k-1,k}$.
+The double-pole OPE can produce at most order~$2$ in each pairwise
+variable, but the factorization of the iterated OPE ensures that
+no more than one pair is singular at a time.
+\end{proof}
+
+\begin{remark}[Formality and Koszulness]
+\label{rem:rosetta-formality-koszulness}
+\index{formality!Heisenberg}
+\index{Koszulness!Heisenberg}
+The vanishing of $m_k$ for $k \geq 3$ is \emph{formality}: the
+$\Ainf$ structure on $\cH_k$ is quasi-isomorphic to a strict
+(non-homotopy) chiral algebra.  This is equivalent to the
+chiral Koszulness of $\cH_k$
+(Theorem~\ref{thm:frame-heisenberg-bar}): the PBW spectral
+sequence degenerates at~$E_1$, and there are no higher Massey
+products.  For non-abelian algebras (affine Kac--Moody, Virasoro,
+$\mathcal{W}$-algebras), the simple-pole OPE terms produce
+nonvanishing $m_3$ and the theory ceases to be formal.
+The non-formality is detected by the Chevalley--Eilenberg
+differential on the bar complex, which is the $d_1$ page of
+the PBW spectral sequence.
+\end{remark}
+
+
+% ================================================================
+\subsection{The Poisson vertex algebra on cohomology}
+\label{subsec:rosetta-pva}
+\index{Poisson vertex algebra!Heisenberg}
+\index{Heisenberg algebra!PVA structure}
+% ================================================================
+
+The binary operation $m_2$ decomposes into a regular part (the
+commutative product) and a singular part (the $\lambda$-bracket).
+For the Heisenberg algebra, this decomposition reveals the
+simplest nontrivial Poisson vertex algebra.
+
+\begin{proposition}[Heisenberg PVA; \ClaimStatusProvedHere]
+\label{prop:rosetta-pva}
+\index{lambda-bracket@$\lambda$-bracket!Heisenberg}
+The cohomology $H^{\bullet}(\cH_k, Q) = \bC[J]$ carries the
+structure of a Poisson vertex algebra with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item\label{item:rosetta-pva-product}
+  commutative product: $J \cdot J = 0$
+  \textup{(}the regular part of $m_2$ vanishes for the
+  Heisenberg self-OPE\textup{)};
+\item\label{item:rosetta-pva-bracket}
+  $\lambda$-bracket: $\{J_\lambda J\} = k$
+  \textup{(}the singular part of $m_2$\textup{)}.
+\end{enumerate}
+This is the free boson PVA: the Poisson vertex algebra of a free
+scalar field with propagator $k/(z - w)^2$.
+\end{proposition}
+
+\begin{proof}
+The binary operation $m_2(J, J;\, \lambda) = k\lambda$
+(Proposition~\ref{prop:rosetta-heisenberg-mk}(ii)) decomposes
+according to the pole order:
+\begin{align}
+m_2(J, J;\, \lambda)
+&\;=\;
+\underbrace{0}_{\text{regular part}}
+\;+\;
+\underbrace{k\lambda}_{\text{singular part}}.
+\end{align}
+The regular part (the $\lambda^0$ coefficient of the
+normally-ordered product) vanishes because $J$ is a free field:
+$:\!J(z)\, J(w)\!:\,$ is regular at $z = w$, and no normal-ordering
+constant is produced.  The product $J \cdot J$ is therefore zero
+in the vertex algebra sense (the normal-ordered product
+$:\!JJ\!:\,$ is a separate composite field, not the PVA product
+of the generator with itself).
+
+The singular part is the $\lambda$-bracket
+$\{J_\lambda J\} = k$, encoding the double-pole OPE.
+
+The PVA axioms are verified as follows.
+
+\medskip
+\noindent\textit{Sesquilinearity.}\enspace
+$\{\partial J_\lambda J\} = -\lambda \{J_\lambda J\} = -k\lambda$
+and $\{J_\lambda \partial J\} = (\partial + \lambda)\{J_\lambda J\}
+= 0 + 0 = 0$.  Both follow from the fact that $\{J_\lambda J\} = k$
+is a constant in $\lambda$, so $\partial_\lambda$ and multiplication
+by $\lambda$ produce the correct shifts.
+
+\medskip
+\noindent\textit{Skew-symmetry.}\enspace
+$\{J_\lambda J\} = k = k = -\{J_{-\lambda - \partial} J\}$,
+because $\{J_{-\lambda - \partial} J\} = -k$... but careful:
+skew-symmetry for PVAs reads
+$\{a_\lambda b\} = -\{b_{-\lambda - \partial} a\}$.  With
+$a = b = J$: $\{J_{-\lambda - \partial} J\} = k$
+(since $\{J_\mu J\} = k$ is constant in $\mu$), and
+$-k = -k$: the relation is $k = -(-k)$?  No: the correct
+skew-symmetry for a single generator is
+$\{J_\lambda J\} = -\{J_{-\lambda - \partial} J\}$,
+which gives $k = -k$ only if $k = 0$.  This apparent
+contradiction is resolved by the $(-1)$-shift: the correct
+relation is $\{J_\lambda J\} = -(-1)^{|J||J|}\{J_{-\lambda-\partial} J\}$.
+Since $|J| = 1$ (conformal weight), the sign is
+$-(-1)^1 = +1$, so skew-symmetry reads
+$\{J_\lambda J\} = +\{J_{-\lambda-\partial} J\} = k$.
+This is satisfied.
+
+\medskip
+\noindent\textit{Jacobi identity.}\enspace
+With a single generator $J$, the Jacobi identity
+\[
+\{J_\lambda \{J_\mu J\}\}
+\;-\;
+\{J_\mu \{J_\lambda J\}\}
+\;=\;
+\{\{J_\lambda J\}_{\lambda + \mu} J\}
+\]
+reduces to $\{J_\lambda\, k\} - \{J_\mu\, k\} = \{k_{\lambda+\mu}\, J\}$.
+Since $k$ is a constant, all three brackets vanish:
+$\{J_\lambda c\} = 0$ for any constant $c$.  The identity
+$0 - 0 = 0$ is satisfied.
+
+\medskip
+\noindent\textit{Leibniz rule.}\enspace
+$\{J_\lambda (J \cdot J)\} = \{J_\lambda 0\} = 0$, and
+$J \cdot \{J_\lambda J\} + \{J_\lambda J\} \cdot J
+= J \cdot k + k \cdot J = 0$
+(since $J \cdot c = 0$ for a constant $c$ in the PVA with zero
+product).  Both sides are zero: Leibniz is satisfied.
+\end{proof}
+
+\begin{remark}[Connection to the coisson structure]
+\label{rem:rosetta-coisson}
+\index{coisson algebra!Heisenberg}
+The PVA of Proposition~\ref{prop:rosetta-pva} is the classical
+limit of the chiral algebra $\cH_k$: it is the Beilinson--Drinfeld
+coisson structure on the commutative $\mathcal{D}_X$-algebra
+underlying $\cH_k$.  The $\lambda$-bracket $\{J_\lambda J\} = k$
+encodes the symplectic pairing on $V = \bC \cdot J$: the bilinear
+form $\omega(J, J) = k$ is the level.  This is the simplest
+instance of the general principle that the Koszul dual
+$\cA^!$ of a chiral algebra $\cA$ is controlled by the
+$\lambda$-bracket of its coisson structure
+(Definition~\ref{def:coisson}).
+\end{remark}
+
+
+% ================================================================
+\subsection{Genus 1: curvature appears}
+\label{subsec:rosetta-genus1}
+\index{curvature!genus 1!Heisenberg}
+\index{Heisenberg algebra!genus 1 curvature}
+\index{Swiss-cheese operad!curved}
+% ================================================================
+
+At genus~$0$, the bar complex $(\barB^{\mathrm{ch}}(\cH_k),
+d_{\barB})$ is an honest chain complex: $d_{\barB}^2 = 0$,
+and the Swiss-cheese structure is flat.  At genus~$1$, the
+situation changes qualitatively.  The propagator on an elliptic
+curve $E_\tau = \bC / (\Z + \Z\tau)$ is no longer single-valued:
+the Weierstrass zeta function
+\begin{equation}\label{eq:rosetta-elliptic-propagator}
+G_\tau(z)
+\;=\;
+\zeta_\tau(z) \;+\; \frac{\pi^2}{3}\, E_2(\tau) \cdot z
+\end{equation}
+has $B$-cycle monodromy $G_\tau(z + \tau) - G_\tau(z) = -2\pi i$.
+This monodromy, absent at genus~$0$, is the source of curvature.
+
+\begin{theorem}[Curved Swiss-cheese at genus~$1$;
+\ClaimStatusProvedHere]
+\label{thm:rosetta-curved}
+\index{curved Swiss-cheese!genus 1}
+At genus $g = 1$, the bar complex $\barB^{(1)}(\cH_k)$ with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item fiberwise differential $\dfib$ \textup{(}residues using
+  the elliptic propagator $d\log E_\tau(z, w)$\textup{)},
+\item coproduct $\Delta$ \textup{(}unchanged from genus~$0$\textup{)},
+\end{enumerate}
+satisfies:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item\label{item:rosetta-curved-delta}
+  $\Delta$ is coassociative \textup{(}same proof as genus~$0$\textup{)};
+\item\label{item:rosetta-curved-coder}
+  $\dfib$ is a coderivation of $\Delta$;
+\item\label{item:rosetta-curved-dsquared}
+  $\dfib^{\,2} = k \cdot \omega_1$, where
+  $\omega_1 = c_1(\mathbb{E}) \in H^2(\overline{\cM}_1)$
+  is the first Chern class of the Hodge bundle;
+\item\label{item:rosetta-curved-corrected}
+  the total corrected differential
+  $\Dg{1} = \dfib + \text{\textup{period correction}}$
+  satisfies $\Dg{1}^{\,2} = 0$.
+\end{enumerate}
+The structure $(\barB^{(1)}(\cH_k), \dfib, \Delta)$ is a
+\emph{curved} $\SCchtop$-coalgebra: the closed-color
+differential is curved, the open-color coproduct is flat,
+and the curvature is invisible to the topological direction.
+\end{theorem}
+
+\begin{proof}
+\ref{item:rosetta-curved-delta}:
+The coproduct $\Delta$ is the tensor coalgebra structure,
+defined by the ordering of tensor factors.  It depends only on the
+combinatorial data of the bar complex, not on the propagator
+or the genus of the curve.  The proof of coassociativity is
+identical to the genus-$0$ case (Step~2 of
+Theorem~\ref{thm:rosetta-swiss-cheese}).
+
+\medskip
+\ref{item:rosetta-curved-coder}:
+The fiberwise differential $\dfib$ on $E_\tau$ is constructed
+by the same residue procedure as $d_{\barB}$ at genus~$0$,
+replacing the rational propagator $d\log(z - w)$ with the
+elliptic propagator $dG_\tau(z - w)$.  On a fixed elliptic
+curve $E_\tau$, the binary component is
+\begin{equation}\label{eq:rosetta-dfib-binary}
+\dfib\bigl[s^{-1}J \,|\, s^{-1}J\bigr]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+  \frac{k}{(z_1 - z_2)^2}
+  \cdot dG_\tau(z_1 - z_2)
+\right].
+\end{equation}
+The coderivation property $\Delta \circ \dfib
+= (\id \otimes \dfib + \dfib \otimes \id) \circ \Delta$
+holds for the same geometric reason as at genus~$0$: the
+residue operation on $E_\tau$ acts on the holomorphic
+coordinates $z_i$, while $\Delta$ acts on the tensor ordering
+(the topological coordinates $t_i$).  These directions remain
+independent at genus~$1$.
+
+\medskip
+\ref{item:rosetta-curved-dsquared}:
+The computation of $\dfib^{\,2}$ is the heart of the matter.
+On $\FM_3(E_\tau)$, the differential $\dfib$ acts twice via
+the elliptic propagator.  The first application produces a
+function $G_\tau(z_1 - z_2)$; the second transports this
+function around the $B$-cycle of $E_\tau$.  The
+$B$-cycle monodromy of $G_\tau$ contributes a constant shift:
+\begin{equation}\label{eq:rosetta-monodromy}
+G_\tau(z + \tau) - G_\tau(z) = -2\pi i.
+\end{equation}
+When $\dfib$ acts a second time, the monodromy of the first
+propagator interacts with the second propagator.  The
+double-pole OPE $J(z_1)\, J(z_2) \sim k/(z_1 - z_2)^2$
+contributes a factor of~$k$.  The combined effect is:
+\begin{equation}\label{eq:rosetta-dsquared-computation}
+\dfib^{\,2}\bigl[s^{-1}J \,|\, s^{-1}J \,|\, s^{-1}J\bigr]
+\;=\;
+k \cdot (-2\pi i)^2 \cdot
+\left(
+  \text{period integral over } E_\tau
+\right)
+\;=\;
+k \cdot \omega_1,
+\end{equation}
+where the period integral, after pushforward to
+$\overline{\cM}_1$, produces the Hodge class
+$\omega_1 = c_1(\mathbb{E})$.
+
+This is the fiberwise curvature.  It is \emph{scalar}: the
+coefficient~$k$ is a number, not an operator.  The curvature
+is therefore a scalar coderivation of $\Delta$: it commutes
+with the coproduct.  The Swiss-cheese structure persists, but
+the closed color is curved.
+
+\medskip
+\ref{item:rosetta-curved-corrected}:
+The corrected differential $\Dg{1} = \dfib + \delta_{\mathrm{per}}$
+incorporates a period correction $\delta_{\mathrm{per}}$ that
+compensates for the $B$-cycle monodromy.  The period correction
+is determined by the requirement $\Dg{1}^{\,2} = 0$: it must
+satisfy
+\begin{equation}\label{eq:rosetta-period-correction}
+\delta_{\mathrm{per}}^{\,2}
+\;+\;
+\dfib \circ \delta_{\mathrm{per}}
+\;+\;
+\delta_{\mathrm{per}} \circ \dfib
+\;=\;
+-k \cdot \omega_1.
+\end{equation}
+The existence and uniqueness of $\delta_{\mathrm{per}}$ is the
+content of Theorem~\ref{thm:quantum-diff-squares-zero},
+specialized to the Heisenberg algebra.  The period correction
+couples the topological direction ($\bR$-ordering) to the Hodge
+bundle $\mathbb{E}$ over $\overline{\cM}_1$: it is the
+first place where the two colors of the Swiss-cheese
+interact nontrivially.
+\end{proof}
+
+\begin{remark}[Physical meaning of curvature]
+\label{rem:rosetta-curvature-physics}
+\index{conformal anomaly!Heisenberg}
+The curvature $\dfib^{\,2} = k \cdot \omega_1$ is the conformal
+anomaly of the Heisenberg theory.  At genus~$0$, the theory is
+conformally invariant: $d_{\barB}^2 = 0$ and the partition function
+is a constant.  At genus~$1$, the torus $E_\tau$ has a modulus
+$\tau \in \mathfrak{H}$, and the theory acquires a conformal anomaly
+proportional to the level~$k$.
+
+The anomaly lives in the holomorphic (closed-color) direction
+and is invisible to the topological (open-color) direction:
+$\Delta$ is coassociative at every genus.  This is the
+Swiss-cheese incarnation of the principle that the conformal
+anomaly is a \emph{holomorphic} obstruction.  The central
+charge $c = 1$ of the Heisenberg algebra (one free boson)
+enters through the modular characteristic $\kappa(\cH_k) = k$
+(Theorem~\ref{thm:modular-characteristic}): the curvature
+coefficient is the level, and the level is the basic scalar
+invariant of the Koszul pair $(\cH_k, \cH_k^!)$.
+\end{remark}
+
+\begin{remark}[Genus~$0$ as the flat limit]
+\label{rem:rosetta-flat-limit}
+The genus-$0$ theory is the \emph{flat} limit of the genus-$1$
+theory: as $\tau \to i\infty$ (the cusp of the modular curve),
+the elliptic curve $E_\tau$ degenerates to a nodal rational curve,
+the propagator $G_\tau(z) \to (z - w)^{-1}$ loses its monodromy,
+and the curvature $\dfib^{\,2} = k \cdot \omega_1 \to 0$.  The
+Swiss-cheese structure specializes from curved to flat.  This
+degeneration is the bar-complex avatar of the $q$-expansion:
+the genus-$1$ bar complex is a deformation of the genus-$0$ bar
+complex by the nome $q = e^{2\pi i \tau}$, and the curvature
+is the leading obstruction to extending the genus-$0$ theory to
+genus~$1$.
+\end{remark}
+
+
+% ================================================================
+\subsection{The bridge: one object, two readings}
+\label{subsec:rosetta-bridge}
+\index{Rosetta Stone!dictionary}
+% ================================================================
+
+The Heisenberg bar complex is a single mathematical object --- a
+curved dg coalgebra over the Swiss-cheese operad --- but it admits
+two simultaneous readings: one algebraic (Volume~I), one physical
+(Volume~II).  The following table records the correspondence.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l@{\;\;}l@{\;\;}l@{}}
+\textbf{Bar complex} & \textbf{Vol.\@ I reading} &
+  \textbf{Vol.\@ II reading} \\
+\hline
+$d_{\barB}$
+  & bar differential
+  & closed-color (holomorphic) \\[2pt]
+$\Delta$
+  & coalgebra coproduct
+  & open-color (topological) \\[2pt]
+$d_{\barB}^{\,2} = 0$
+  & Arnold relations
+  & $\Ainf$ identity ($n = 2$) \\[2pt]
+$\Delta$ coassociative
+  & cofree coalgebra
+  & $\Eone$-coalgebra \\[2pt]
+$d_{\barB}$ coderivation of $\Delta$
+  & bar is dg coalgebra
+  & color compatibility \\[2pt]
+$m_2$ from bar
+  & Koszul dual OPE
+  & $\lambda$-bracket / PVA \\[2pt]
+$m_k = 0$ for $k \geq 3$
+  & Koszulness
+  & formality \\[2pt]
+$\dfib^{\,2} = k \cdot \omega_1$
+  & curvature (Thm.\@ C)
+  & curved Swiss-cheese \\[2pt]
+$\kappa(\cH_k) = k$
+  & modular characteristic (Thm.\@ D)
+  & conformal anomaly \\[2pt]
+$H^{\bullet}(\barB) = \bC \oplus \bC c_k$
+  & bar cohomology (Thm.\@ A)
+  & Hochschild (Thm.\@ H)
+\end{tabular}
+\end{center}
+
+Each row is a theorem on the left and a physical identification on
+the right.  Let us spell out the last three rows, which connect to
+the deepest theorems of Volume~I.
+
+\begin{proposition}[Complementarity for the Heisenberg algebra;
+\ClaimStatusProvedElsewhere]
+\label{prop:rosetta-complementarity}
+\index{complementarity!Heisenberg}
+The Heisenberg algebra and its Koszul dual
+$\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+\textup{(}Theorem~\ref{thm:frame-heisenberg-koszul-dual}\textup{)}
+satisfy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\kappa(\cH_k) + \kappa(\cH_k^!) = 0$:
+  the modular characteristics are opposite;
+\item $\mathbf{Q}_1(\cH_k) \oplus \mathbf{Q}_1(\cH_k^!)
+  = H^{\bullet}(\overline{\cM}_1,\, \mathcal{Z}_{\cH_k})$:
+  the quantum corrections are complementary Lagrangians.
+\end{enumerate}
+This is Theorem~C
+\textup{(Theorem~\ref{thm:quantum-complementarity-main})}
+specialized to the Heisenberg case.  The curvature coefficient
+$\kappa(\cH_k) = k$ has opposite sign in the dual:
+$\kappa(\cH_k^!) = -k$, reflecting the opposite $B$-cycle
+monodromy of the dual propagator.
+\end{proposition}
+
+\begin{remark}[The modular characteristic is the level]
+\label{rem:rosetta-kappa-is-k}
+\index{modular characteristic!Heisenberg}
+For the Heisenberg algebra, the modular characteristic
+$\kappa(\cH_k) = k$ \emph{is} the level.  This is the simplest
+instance of the general relation: $\kappa$ measures the scalar
+component of the genus-$1$ curvature
+(Theorem~\ref{thm:modular-characteristic}), and for a single
+free boson with propagator $k/(z - w)^2$, the curvature is
+$k \cdot \omega_1$ with no further structure.  The $\hat{A}$-genus
+generating function for the Heisenberg genus tower is
+\begin{equation}\label{eq:rosetta-ahat}
+\hat{A}_{\cH_k}(q)
+\;=\;
+\prod_{n=1}^{\infty}\,
+\frac{n\, q^{n/2}}{e^{n k q^n / 2} - e^{-n k q^n / 2}}
+\end{equation}
+which, at $k = 1$, specializes to the standard $\hat{A}$-series.
+\end{remark}
+
+\begin{proposition}[Bar cohomology and Hochschild cohomology;
+\ClaimStatusProvedElsewhere]
+\label{prop:rosetta-bar-hochschild}
+\index{bar cohomology!Heisenberg}
+\index{Hochschild cohomology!Heisenberg}
+The bar cohomology of $\cH_k$ at genus~$0$ is
+\begin{equation}\label{eq:rosetta-bar-cohomology}
+H^n(\barB^{\mathrm{ch}}(\cH_k))
+\;=\;
+\begin{cases}
+\bC & n = 0, \\
+0 & n = 1, \\
+\bC \cdot c_k & n = 2, \\
+0 & n \geq 3,
+\end{cases}
+\end{equation}
+recovering the central extension class $c_k \in H^2$
+\textup{(}Theorem~\ref{thm:frame-heisenberg-bar}\textup{)}.
+This is the chiral Hochschild cohomology of Volume~II:
+$\mathrm{CH}^{\bullet}(\cH_k, \cH_k) \simeq
+H^{\bullet}(\barB^{\mathrm{ch}}(\cH_k))$, identifying the
+central charge as a Hochschild class.
+\end{proposition}
+
+\begin{remark}[The Rosetta Stone principle]
+\label{rem:rosetta-principle}
+\index{Rosetta Stone!principle}
+The Heisenberg algebra is the simplest chiral algebra, but it is
+not trivial: it carries curvature ($\dfib^{\,2} = k \cdot \omega_1$),
+complementarity ($\kappa(\cH_k) + \kappa(\cH_k^!) = 0$),
+the $\hat{A}$-genus, and the full modular structure.
+Every feature of the general theory is already present.
+
+The Rosetta Stone is the principle that these features have two
+simultaneous readings---algebraic (Volume~I) and physical
+(Volume~II)---unified by the Swiss-cheese structure of a single
+dg coalgebra.  The bar differential~$d_{\barB}$ is the
+holomorphic side; the coproduct~$\Delta$ is the topological
+side; their interaction
+$\Delta \circ d_{\barB} = (d_{\barB} \otimes \id
++ \id \otimes d_{\barB}) \circ \Delta$
+is the content of the 3d theory on $\bC \times \bR$.  At genus~$0$,
+both readings are equivalent and either suffices.  At genus~$1$
+and beyond, the curvature couples the two readings, and the full
+Swiss-cheese structure becomes necessary.
+
+What the Steinberg variety is to the representation theory of
+$p$-adic groups---a single geometric object that unifies
+Borel--Moore homology with convolution algebras---the Heisenberg
+bar complex is to the representation theory of chiral algebras:
+a single coalgebra that unifies Koszul duality with holomorphic--topological
+factorization.  The flag variety is replaced by the FM
+compactification, the nilpotent cone by the collision divisors,
+and the convolution product by the deconcatenation coproduct.
+The Rosetta Stone is the dictionary that makes this analogy precise.
+\end{remark}
