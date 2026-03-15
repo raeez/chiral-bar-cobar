@@ -1384,13 +1384,11 @@ The element $e^{\alpha_1} \otimes e^{-\alpha_1-\alpha_2} \otimes e^{\alpha_2} \o
 The Weyl group $W(A_2) \cong S_3$ acts on the lattice, permuting the roots $\{\alpha_1, \alpha_2, -\alpha_1-\alpha_2\}$.  The bar complex is $W$-equivariant: the simple reflections $s_1, s_2$ act on bar complex elements by permuting lattice labels and adjusting cocycle signs.  The higher $A_\infty$ operations $m_k$ for $k \geq 3$ arise from residues at higher collision strata and encode the relations in the Weyl group presentation $\langle s_1, s_2 \mid s_i^2 = 1,\, (s_1 s_2)^3 = 1 \rangle$.
 \end{proof}
  
-\section{Examples III: Virasoro and strings}
+\section{Virasoro at critical central charge}
 
 The free-field dualities above all involve algebras with a single OPE
 pole order.  The Virasoro algebra, with its double-pole Sugawara term,
 is the first example where the bar complex exhibits genuine curvature.
-
-\section{Virasoro at critical central charge}
  
 \subsection{Setup}
  
@@ -1565,7 +1563,7 @@ On $\Sigma_g$, this residue maps to $H^2(\Sigma_g, \mathbb{C}) \cong \mathbb{C}$
 More precisely, the bar complex of the rank-1 Heisenberg algebra computes the Lie algebra cohomology $H^*_{\mathrm{Lie}}(\mathfrak{h}_g, \mathbb{C}_k)$ of the abelian Lie algebra $\mathfrak{h}_g = H^0(\Sigma_g, \Omega^1) \oplus H^1(\Sigma_g, \mathcal{O})$ (dimension~$2g$) with coefficients in the 1-dimensional representation determined by the level~$k$ central extension.  For a 1-dimensional central extension of an abelian Lie algebra, the Chevalley--Eilenberg differential $d_{\mathrm{CE}}$ on $\Lambda^*(\mathfrak{h}_g^*)$ satisfies $d_{\mathrm{CE}}(\xi) = k \cdot \omega(\xi, -)$ where $\omega$ is the symplectic form from the intersection pairing.  The resulting cohomology is concentrated in degrees~$\leq 2$: since $k \neq 0$, the map $d_{\mathrm{CE}}: \Lambda^1 \to \Lambda^2$ is surjective onto the $\omega$-multiples, and by induction the higher cohomology groups $H^n = 0$ for $n > 2$.
 \end{proof}
 
-\section{Koszul duality computations for chiral algebras}
+\section{Koszul duality computations for chiral algebras}\label{sec:kd-computations-free-fields}
 
 \subsection{Koszul duality table}
 
@@ -1584,6 +1582,9 @@ Virasoro & $W_\infty$ & Curved & AdS$_3$/CFT$_2$ & \ClaimStatusConjectured \\
 $\mathcal{W}_N$ & Yangian $Y(\mathfrak{gl}_N)$ & Curved & Higher spin & \ClaimStatusConjectured \\
 Super-Virasoro & Super-$W_\infty$ & Curved & AdS$_3$ sugra & \ClaimStatusConjectured \\
 $Y(\mathfrak{g})$ & $Y_{R^{-1}}(\mathfrak{g})$ & Self-dual & Integrability & \ClaimStatusProvedHere\textsuperscript{b} \\
+Virasoro$_{26}$ & String vertex algebra & Classical & Moduli $\leftrightarrow$ BRST & \ClaimStatusProvedHere \\
+$W^{-h^\vee}(\mathfrak{g})$ & Wakimoto & Classical & DS reduction $\leftrightarrow$ free field & \ClaimStatusProvedElsewhere \\
+Lattice $V_L$ & Lattice $V_{L^*}$ & Classical & Form duality & \ClaimStatusProvedElsewhere \\
 \hline
 \end{tabular}
 \end{center}
@@ -1656,32 +1657,7 @@ Given a chiral algebra $\mathcal{A}$ with generators $\{a_i\}$ and relations $\{
 
 \subsection{\texorpdfstring{Explicit example: $\beta\gamma$ $\leftrightarrow$ free fermion calculation}{Explicit example: free fermion calculation}}
 
-\begin{calculation}[Complete $\beta\gamma$-fermion duality]
-\emph{Step~1.}
-Generators: $\beta$ (weight 1), $\gamma$ (weight 0).
-OPE: $\beta(z)\gamma(w) \sim \frac{1}{z-w}$.
-
-\emph{Step~2.}
-\begin{align}
-\bar{B}^0(\beta\gamma) &= \mathbb{C} \\
-\bar{B}^1(\beta\gamma) &= \text{span}\{\beta \otimes \gamma \otimes \eta_{12}, \gamma \otimes \beta \otimes \eta_{12}\} \\
-d(\beta \otimes \gamma) &= 1 \otimes \eta_{12} \\
-\bar{B}^2(\beta\gamma) &= \text{span}\{\beta \otimes \gamma \otimes \beta \otimes \eta_{12} \wedge \eta_{23} + \text{perms}\}
-\end{align}
-
-\emph{Step~3.}
-\begin{align}
-\Omega^0 &= \mathbb{C} \\
-\Omega^1 &= \text{Hom}(\bar{B}^1, \mathbb{C}) = \text{span}\{\psi\} \\
-\delta(\psi) &= 0 \text{ (cocycle condition)}
-\end{align}
-
-\emph{Step~4.}
-\[\langle \beta \otimes \gamma - \gamma \otimes \beta, \psi \otimes \psi \rangle = 1\]
-This antisymmetry enforces fermionic statistics.
-
-The result is a free fermion with $\psi(z)\psi(w) \sim \frac{1}{z-w}$.
-\end{calculation}
+This calculation is carried out in detail in Theorem~\ref{thm:betagamma-bc-koszul} above (see \S\ref{sec:fermion-boson-koszul}): the antisymmetric relation $\beta\gamma - \gamma\beta$ dualizes under the residue pairing to the Clifford relation $bc + cb$, establishing $(\beta\gamma)^! \cong bc$.
 
 \section{Witten diagrams and Koszul duality}
 
@@ -2952,7 +2928,7 @@ Let $A$ be an $\En$-algebra in chain complexes.
   of Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}},
   realized at the chain level by propagator integrals
   \textup{(}Proposition~\textup{\ref{prop:refines-af})}.
-  The holomorphic propagator $\omega_{ij} = d\log(z_i - z_j)$
+  The holomorphic propagator $\eta_{ij} = d\log(z_i - z_j)$
   is a specific representative of the $\Etwo$ propagator class
   $[\alpha_{ij}] \in H^1(\Conf_2(X))$
   \textup{(}Corollary~\textup{\ref{cor:n2-recovery})}.
@@ -3096,25 +3072,7 @@ Under $k \mapsto -k$, this pairing changes sign, establishing curved self-dualit
 The curvature controls the failure of the bar differential to square to zero.
 \end{proof}
 
- 
-\section{Table of GLZ examples}
- 
-\begin{center}
-\begin{tabular}{|l|l|l|l|}
-\hline
-Algebra $\mathcal{A}_1$ & Algebra $\mathcal{A}_2$ & Duality Type & Key Feature \\
-\hline
-Free Fermion $\psi$ & $\mathrm{Sym}^{\mathrm{ch}}(\gamma)$ (free boson) & Classical & Lie/Com duality \\
-$bc$ Ghosts & $\beta\gamma$ System & Classical & Two-generator ($\dim V = 2$) \\
-Heisenberg$(k)$ & Sym$(V^*)$ & Curved & Non-comm $\leftrightarrow$ Comm \\
-Virasoro$_{26}$ & String Vertex & Classical & Moduli $\leftrightarrow$ BRST \\
-$W^{-h^\vee}(\mathfrak{g})$ & Wakimoto & Classical & DS reduction $\leftrightarrow$ Free field \\
-Lattice $V_L$ & Lattice $V_{L^*}$ & Classical & Form duality \\
-Affine $\hat{\mathfrak{g}}_k$ & $\hat{\mathfrak{g}}_{-k-2h^\vee}$ & Filtered/Curved & Feigin--Frenkel duality \\
-\hline
-\end{tabular}
-\end{center}
- 
+For the comprehensive Koszul duality table (including all entries formerly listed here), see \S\ref{sec:kd-computations-free-fields}.
 
 \section{String theory and holographic dualities}
 
@@ -3647,7 +3605,10 @@ n^{-s}|_{s=0}$\textup{)}.
 
 
 \begin{example}[Virasoro algebra modular invariance]
-For the Virasoro algebra $\text{Vir}_c$ at central charge $c$, the bar complex is
+For the Virasoro algebra $\text{Vir}_c$ at central charge $c$
+(see \S\ref{sec:virasoro-bar-moduli-main} for the genus-$0$ bar complex
+and its identification with moduli-space cohomology at $c=26$),
+the genus-$1$ bar complex is
 \[\barBgeom^{(1)}(\text{Vir}_c)_\tau = \text{span}\{L_{n_1} \otimes \cdots \otimes L_{n_k} \otimes \vartheta_3(z_1-z_2|\tau) \wedge \cdots\}\]
 and the modular transformation acts by
 \[\gamma: \barBgeom^{(1)}(\text{Vir}_c)_\tau \to (c\tau + d)^{c/24} \barBgeom^{(1)}(\text{Vir}_c)_{\gamma \cdot \tau}.\]
@@ -3659,7 +3620,7 @@ For holomorphic (self-dual) CFTs, modular invariance of the partition function r
 \end{itemize}
 The physically relevant values are:
 \begin{itemize}
-\item $c = 26$: bosonic string (modular weight excess $(c-24)/24 = 1/12$)
+\item $c = 26$: bosonic string (modular weight excess $(c-24)/24 = 1/12$; cf.\ Theorem~\ref{thm:virasoro-moduli})
 \item $c = 15$: superstring (modular weight excess $(c-24)/24 = -3/8$)
 \end{itemize}
 \end{example}
@@ -3701,121 +3662,4 @@ The classification follows from the representation theory of $SL_2(\mathbb{Z})$:
 \section{Explicit low-degree computations}
 \label{sec:explicit-low-degree}
 
-\subsection{Free fermion bar complex and Koszul dual}
-
-\noindent\emph{Setup.} Free fermion $\mathcal{F}$ with generator $\psi(z)$, OPE:
-\[\psi(z)\psi(w) \sim \frac{1}{z-w}\]
-
-\emph{Degree~0.}
-\[\bar{B}^{\text{ch}}(\mathcal{F})_0 = \text{Span}\{\psi\}\]
-
-\emph{Degree~1.}
-\[\bar{B}^{\text{ch}}(\mathcal{F})_1 = \Gamma\left(\overline{C}_2(X),
-   \psi \boxtimes \psi \otimes \Omega^1_{\log}\right)\]
-
-The bar differential uses the simple pole OPE:
-\[d(\psi(z_1) \otimes \psi(z_2) \otimes \eta_{12}) = \text{Res}_{z_1 = z_2}\left[\frac{\eta_{12}}{z_1-z_2}\right] = 1\]
-
-Since $\psi$ is fermionic ($|\psi| = 1$), the bar complex carries the signs of an \emph{exterior coalgebra}:
-\[\bar{B}^{\text{ch}}(\mathcal{F}) \simeq \Lambda^{\text{co}}(\psi)\]
-
-\emph{Koszul dual.} Dualizing this exterior coalgebra gives the Koszul dual algebra:
-\[\mathcal{F}^! = \bar{B}^{\mathrm{ch}}(\mathcal{F})^\vee \simeq \mathrm{Sym}^{\mathrm{ch}}(\gamma)\]
-the free boson (single generator~$\gamma$), recovering $\mathrm{Lie}^! = \mathrm{Com}$.  (By contrast, bar-cobar inversion gives $\Omega(\bar{B}(\mathcal{F})) \simeq \mathcal{F}$, recovering the fermion itself.)
-
-This is the \emph{single-generator} duality (Theorem~\ref{thm:single-fermion-boson-duality}).  The \emph{two-generator} analogue is $(\beta\gamma)^! \cong bc$ (Theorem~\ref{thm:betagamma-bc-koszul}).
-
-\subsection{Heisenberg to symmetric}
-
-\noindent\emph{Setup.} Heisenberg $\mathcal{H}_k$ with generator $\alpha(z)$, OPE:
-\[\alpha(z)\alpha(w) \sim \frac{k}{(z-w)^2}\]
-
-\emph{Degree~0.}
-\[\bar{B}^{\text{ch}}(\mathcal{H}_k)_0 = \text{Span}\{\alpha\}\]
-
-\emph{Degree~1.}
-Elements: $\alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12}$
-
-Differential (residue component):
-\[d_{\text{res}}: \alpha \otimes \alpha \otimes \eta_{12} \mapsto 
-   \text{Res}_{z_1 \to z_2}\left[\frac{k}{(z_1-z_2)^2} \cdot \frac{dz_1-dz_2}{z_1-z_2}\right]\]
-
-Computing:
-\[\text{Res}\left[\frac{k \, d(z_1-z_2)}{(z_1-z_2)^3}\right] = 
-   \text{Res}\left[k \cdot d\left(-\frac{1}{2(z_1-z_2)^2}\right)\right] = 0\]
-
-(Exact form has zero residue.)
-
-Therefore the coproduct is primitive:
-\[\Delta(\alpha) = \alpha \otimes 1 + 1 \otimes \alpha\]
-
-This is the coproduct of a cocommutative coalgebra, which is Koszul dual to a
-commutative algebra.
-
-\emph{Degree~2.}
-Elements: $\alpha \otimes \alpha \otimes \alpha \otimes \eta_{12} \wedge \eta_{23}$
-
-The differential involves:
-\begin{align*}
-d_2 &= d_{\text{strat}} + d_{\text{res}} \\
-&= (\alpha \otimes \alpha) \otimes \eta - \alpha \otimes (\alpha \otimes \eta) + 
-    \text{Res terms}
-\end{align*}
-
-After careful computation (using Arnold relations), the cohomology is:
-\[H^2(\bar{B}^{\text{ch}}(\mathcal{H}_k)) = \text{Span}\{\alpha^2\}\]
-where $\alpha^2$ represents the symmetric product $\alpha \cdot \alpha$ in 
-$\text{Sym}^2(V)$.
-
-\emph{General pattern.}
-\[H^n(\bar{B}^{\text{ch}}(\mathcal{H}_k)) = \text{Sym}^n(V)\]
-confirming:
-\[\bar{B}^{\text{ch}}(\mathcal{H}_k) \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)^!\]
-and thus:
-\[\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)\]
-
-\subsection{\texorpdfstring{$\beta\gamma$ system to $bc$ ghosts}{Beta-gamma system to bc ghosts}}
-
-\noindent\emph{Setup.} $\beta\gamma$ system with fields $\beta(z), \gamma(z)$, OPE:
-\[\beta(z)\gamma(w) \sim \frac{1}{z-w}\]
-
-\emph{Degree~0.}
-\[\bar{B}^{\text{ch}}(\mathcal{BG})_0 = \text{Span}\{\beta, \gamma\}\]
-Two bosonic generators ($\dim V = 2$).
-
-\emph{Degree~1.}
-Elements: $\beta(z_1) \otimes \gamma(z_2) \otimes \eta_{12}$,
-$\gamma(z_1) \otimes \beta(z_2) \otimes \eta_{12}$, plus same-field terms.
-
-Differential extracts the OPE:
-\[d: \beta \otimes \gamma \otimes \eta_{12} \mapsto
-   \text{Res}_{z_1 \to z_2}\left[\frac{1}{z_1-z_2} \cdot \frac{dz_1-dz_2}{z_1-z_2}\right] = 0\]
-
-The antisymmetric relation $\beta \otimes \gamma - \gamma \otimes \beta$ encodes the commutator, and
-its orthogonal complement under the residue pairing is the symmetric relation $b \otimes c + c \otimes b$,
-the anticommutation relation of two \emph{fermionic} generators $b = \beta^*$, $c = \gamma^*$.
-
-\emph{Result.} The bar complex cohomology recovers the two-generator $bc$ ghost system:
-\[H^*(\bar{B}^{\text{ch}}(\mathcal{BG})) \simeq bc\]
-confirming the two-generator Koszul duality (Theorem~\ref{thm:betagamma-bc-koszul}):
-\[\mathcal{BG}^! \simeq bc\]
-
-\subsection{Summary table of low-degree computations}
-
-\begin{center}
-\begin{tabular}{c|c|c|c}
-\textbf{Algebra} & $\bar{B}^1$ (cogenerators) & $H^1(\bar{B}^{\mathrm{ch}})$ & $H^2(\bar{B}^{\mathrm{ch}})$ \\ \hline
-Free fermion $\mathcal{F}$ & $\text{Span}\{\psi\}$ & 0 & 0 \\
-Heisenberg $\mathcal{H}_k$ & $\text{Span}\{\alpha\}$ & 0 & $\mathbb{C} \cdot c_k$ \\
-$\beta\gamma$ system & $\text{Span}\{\beta,\gamma\}$ & $\text{Span}\{\psi\}$ & 0 \\
-Virasoro $\text{Vir}_c$ & $\text{Span}\{L_n\}$ & (complex) & (complex)
-\end{tabular}
-\end{center}
-
-These explicit computations verify:
-\begin{itemize}
-\item Fermion $\leftrightarrow$ free boson ($\operatorname{Sym}^{\mathrm{ch}}(\gamma)$) Koszul duality
-\item Heisenberg $\leftrightarrow$ Symmetric algebra duality
-\end{itemize}
-
-All results match the predictions of Theorem~\ref{thm:bar-cobar-isomorphism-main}.
+The explicit low-degree bar complex computations for the free fermion, Heisenberg, and $\beta\gamma$ system are carried out in Theorem~\ref{thm:fermion-bar-complex-genus-0} (free fermion, \S\ref{sec:free-fermion}), Theorem~\ref{thm:heisenberg-bar} and Theorem~\ref{thm:heisenberg-bar-complete} (Heisenberg, \S\ref{sec:heisenberg-bar-complex}), and Theorem~\ref{thm:betagamma-bc-koszul} with Proposition~\ref{prop:bc-betagamma-orthogonality} ($\beta\gamma \leftrightarrow bc$, \S\ref{sec:fermion-boson-koszul}).  All results match the predictions of Theorem~\ref{thm:bar-cobar-isomorphism-main}.
