@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Two-volume research monograph by Raeez Lorgat. Vol I (~1,700pp) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~400pp, at ~/chiral-bar-cobar-vol2) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
+Two-volume research monograph by Raeez Lorgat. Vol I (~1,636pp, 62 active files, 1,570 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~454pp, at ~/chiral-bar-cobar-vol2, 38 files, ~440 claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
 
 **Vol I title**: *Modular Koszul Duality*
 **Vol II title**: *A-infinity Chiral Algebras and 3D Holomorphic-Topological QFT*
@@ -95,6 +95,8 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 ## Vol II (~/chiral-bar-cobar-vol2)
 
-Five parts: I (Bar Complex -> Swiss-Cheese), II (Descent/Duality/Genus Tower), III (Examples), IV (Quantization Programme), V (Holographic Programme).
+Five parts: I (Bar Complex -> Swiss-Cheese), II (Descent Calculus), III (Dualities and Bulk-Boundary-Line), IV (Standard Landscape), V (Quantization and Holography).
 
 The bar complex's differential = C-direction factorization. Its coproduct = R-direction factorization. Together: Swiss-cheese algebra on FM_k(C) x Conf_k(R). At genus g >= 1: curved Swiss-cheese with curvature kappa * omega_g.
+
+**Vol II status**: Recognition theorem PROVED (was conjecture). Only one conjectural input remains: Homotopy-Koszulity of SC^{ch,top}. All claim status tags at 100% coverage. Cross-volume bridges catalogued in concordance.
