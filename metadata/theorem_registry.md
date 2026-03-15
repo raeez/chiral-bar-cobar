@@ -8,32 +8,33 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Metric | Value |
 |---|---:|
-| ProvedHere claims | 1098 |
-| Total tagged claims | 1547 |
-| Active files in `main.tex` | 63 |
-| Total `.tex` files scanned | 72 |
+| ProvedHere claims | 1243 |
+| Total tagged claims | 1700 |
+| Active files in `main.tex` | 77 |
+| Total `.tex` files scanned | 86 |
 
 ## Status Totals
 
 | Status | Count |
 |---|---:|
-| `ProvedHere` | 1098 |
+| `ProvedHere` | 1243 |
 | `ProvedElsewhere` | 296 |
-| `Conjectured` | 134 |
+| `Conjectured` | 141 |
 | `Heuristic` | 19 |
-| `Open` | 0 |
+| `Open` | 1 |
 
 ## ProvedHere By Environment
 
 | Environment | Count |
 |---|---:|
-| `theorem` | 432 |
-| `proposition` | 370 |
-| `corollary` | 186 |
-| `lemma` | 71 |
-| `computation` | 33 |
+| `theorem` | 497 |
+| `proposition` | 394 |
+| `corollary` | 225 |
+| `lemma` | 86 |
+| `computation` | 34 |
 | `calculation` | 3 |
 | `remark` | 2 |
+| `maintheorem` | 1 |
 | `verification` | 1 |
 
 ## ProvedHere By Part
@@ -43,8 +44,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Frame | 8 |
 | Part I: Theory | 555 |
 | Part II: Examples | 408 |
-| Part III: Connections | 52 |
-| Appendices | 75 |
+| Part III: Connections | 79 |
+| Appendices | 193 |
 
 ## Most Populated Proved Files
 
@@ -60,16 +61,16 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `chapters/examples/kac_moody_framework.tex` | 34 |
 | `appendices/nonlinear_modular_shadows.tex` | 33 |
 | `chapters/examples/lattice_foundations.tex` | 32 |
+| `appendices/lifted_spectral_defect_calculus.tex` | 30 |
 | `chapters/theory/deformation_theory.tex` | 29 |
 | `chapters/theory/chiral_koszul_pairs.tex` | 26 |
 | `chapters/examples/detailed_computations.tex` | 25 |
+| `appendices/shifted_rtt_duality_orthogonal_coideals.tex` | 22 |
+| `appendices/branch_line_reductions.tex` | 21 |
 | `chapters/theory/koszul_pair_structure.tex` | 20 |
 | `chapters/examples/w_algebras_framework.tex` | 19 |
 | `chapters/connections/concordance.tex` | 18 |
 | `chapters/examples/examples_summary.tex` | 18 |
-| `chapters/theory/fourier_seed.tex` | 16 |
-| `chapters/examples/beta_gamma.tex` | 15 |
-| `chapters/examples/w3_composite_fields.tex` | 13 |
 
 ## Complete Proved Registry
 
@@ -1220,7 +1221,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:yangian-canonical-realization-plus-one-seed` | `corollary` | 10938 | Canonical formal-moduli Yangian target closes DK-4/DK-5 from one canonical spectral seed on the equivariant multiplicative locus |
 | `cor:yangian-canonical-realization-plus-vector-line` | `corollary` | 10971 | Canonical formal-moduli Yangian target closes DK-4/DK-5 from spectral vector-line realization |
 
-### Part III: Connections (52)
+### Part III: Connections (79)
 
 #### `chapters/connections/bv_brst.tex` (12)
 
@@ -1284,6 +1285,22 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:mk-tree-level` | `theorem` | 917 | Tree-level \texorpdfstring{$m_k$}{m_k} structure |
 | `thm:mk-general-structure` | `theorem` | 953 | All-genus \texorpdfstring{$m_k$}{m_k} Feynman expansion |
 
+#### `chapters/connections/frontier_modular_holography_platonic.tex` (11)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `thm:frontier-protected-bulk-antiinvolution` | `theorem` | 98 | Protected bulk reconstruction and anti-involution |
+| `thm:frontier-transposition-cotangent` | `theorem` | 194 | Holographic transposition and cotangent realization |
+| `lem:frontier-determinant-parity` | `lemma` | 247 | Determinant parity for shifted cotangent pairs |
+| `cor:frontier-spectral-reciprocity-palindromicity` | `corollary` | 288 | Spectral reciprocity, palindromicity, and parity rigidity |
+| `thm:frontier-scalar-fixed-point-rigidity` | `theorem` | 341 | Scalar fixed-point rigidity and genus-$1$ completeness |
+| `thm:frontier-heisenberg-fourier-transport` | `theorem` | 454 | Heisenberg relations and Fourier transport |
+| `thm:frontier-weyl-pbw-linear-sewing` | `theorem` | 567 | Associativity, PBW, and exact linear Weyl sewing |
+| `lem:frontier-formal-gaussian-differential-identity` | `lemma` | 688 | Formal Gaussian differential identity |
+| `thm:frontier-gaussian-composition-schur-anomaly` | `theorem` | 759 | Gaussian composition, Schur complement, and determinant anomaly |
+| `thm:frontier-metaplectic-cocycle-strictification` | `theorem` | 891 | Cocycle law and metaplectic strictification |
+| `cor:frontier-first-nonlinear-holographic-anomaly` | `corollary` | 971 | The first nonlinear holographic anomaly |
+
 #### `chapters/connections/genus_complete.tex` (4)
 
 | Label | Env | Line | Title |
@@ -1309,7 +1326,28 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:virasoro-c26-selfdual` | `proposition` | 152 | Virasoro NAP duality at \texorpdfstring{$c=26$}{c=26} |
 | `thm:genus-complementarity` | `theorem` | 279 | Genus complementarity |
 
-### Appendices (75)
+#### `chapters/connections/semistrict_modular_higher_spin_w3.tex` (16)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `thm:finite-arity-polynomial-pva-chapter` | `theorem` | 91 | Finite-arity theorem for polynomial PVAs |
+| `cor:semistrictity-classical-W3-chapter` | `corollary` | 129 | Semistrictity of the classical $W_3$ bulk |
+| `prop:tree-identity-semistrict-chapter` | `proposition` | 147 | Tree identity for semistrict cyclic theories |
+| `prop:canonical-central-hodge-shadow-lift-chapter` | `proposition` | 233 | Canonical central Hodge-shadow lift |
+| `prop:clutching-duality-shadow-lift-chapter` | `proposition` | 266 | Clutching additivity and duality symmetry |
+| `thm:fiber-decomposition-shadow-base-point-chapter` | `theorem` | 308 | Fiber decomposition over the shadow base point |
+| `cor:shadow-centered-reduction-chapter` | `corollary` | 336 | Shadow-centered reduction |
+| `thm:finite-arity-convolution-chapter` | `theorem` | 364 | Finite-arity convolution theorem |
+| `thm:quadratic-cubic-twisting-theorem-chapter` | `theorem` | 416 | Quadratic-cubic twisting theorem |
+| `prop:admissibility-finite-slices-chapter` | `proposition` | 482 | Admissibility and finite-dimensional weight slices |
+| `thm:cubic-weight-recursion-chapter` | `theorem` | 505 | Cubic weight recursion around the shadow base point |
+| `cor:cubic-obstruction-classes-chapter` | `corollary` | 536 | Cubic obstruction classes |
+| `prop:stable-graph-identity-chapter` | `proposition` | 549 | Stable-graph identity for semistrict modular theories |
+| `prop:well-definedness-completed-boundary-model-chapter` | `proposition` | 603 | Well-definedness of the completed boundary model |
+| `thm:main-semistrict-modular-higher-spin-package-chapter` | `theorem` | 633 | Main Theorem: the classical $W_3$ sector defines a semistrict modular higher-spin package |
+| `cor:platonic-reduction-W3-frontier` | `corollary` | 668 | Platonic reduction of the $W_3$ frontier |
+
+### Appendices (193)
 
 #### `appendices/arnold_relations.tex` (6)
 
@@ -1321,6 +1359,68 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:arnold-iff-nilpotent` | `theorem` | 165 | Arnold relations \texorpdfstring{$\Leftrightarrow$}{iff} \texorpdfstring{$d_{\text{residue}}^2 = 0$}{d\_residue\textasciicircum 2 = 0} |
 | `thm:config-boundary-relations` | `theorem` | 363 | Configuration space boundary relations |
 | `cor:dres-squared-global` | `corollary` | 486 | \texorpdfstring{$d_{\mathrm{res}}^2 = 0$}{d\_res\textasciicircum 2 = 0} globally |
+
+#### `appendices/branch_line_reductions.tex` (21)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `prop:scalar-mc-skeleton` | `proposition` | 114 | The scalar shadow is an abelian MC element |
+| `thm:spectral-cumulant-hierarchy` | `theorem` | 173 | Spectral cumulant hierarchy |
+| `thm:first-obstruction-traceless-quadratic` | `theorem` | 255 | First obstruction is traceless and quadratic |
+| `cor:filtered-lift-vanishing` | `corollary` | 328 | Vanishing criterion for filtered lifts |
+| `lem:positive-weight-contraction` | `lemma` | 396 | Positive-weight contraction |
+| `thm:vir-positive-weight-acyclic` | `theorem` | 413 | Positive-weight Virasoro sectors are acyclic |
+| `cor:vir-localization-reduced-spectral` | `corollary` | 432 | Localization to reduced spectral sectors |
+| `prop:odd-sheet-rigidity` | `proposition` | 460 | Odd-sheet rigidity for one-line reductions |
+| `cor:mu2-centered-at-13` | `corollary` | 501 | The genus-\(2\) one-line coefficient is centered at \texorpdfstring{$13$}{13} |
+| `lem:universal-branch-moments` | `lemma` | 564 | Universal branch moments |
+| `thm:hodge-depth-formula` | `theorem` | 626 | Depth formula |
+| `lem:separating-hodge-splitting` | `lemma` | 659 | Separating Hodge splitting |
+| `lem:nonseparating-hodge-extension` | `lemma` | 701 | Nonseparating Hodge extension |
+| `thm:genus-two-transparency` | `theorem` | 740 | Genus-\(2\) transparency on a one-line branch quotient |
+| `cor:vir-genus-two-vanishing` | `corollary` | 784 | Virasoro genus-\(2\) coefficient vanishes in the one-line quotient |
+| `cor:first-primitive-genus-three` | `corollary` | 796 | The first primitive traceless coefficient begins in genus \texorpdfstring{$3$}{3} |
+| `lem:genus-three-rose-unique` | `lemma` | 814 | Uniqueness of the primitive rose in genus \texorpdfstring{$3$}{3} |
+| `thm:pure-branch-primitive-coefficient` | `theorem` | 844 | Pure-branch primitive coefficient on a rank-two sheet |
+| `thm:first-primitive-top-hodge-layer` | `theorem` | 939 | First primitive top-Hodge layer |
+| `cor:genus-three-primitive-top-hodge` | `corollary` | 976 | The genus-\(3\) primitive coefficient |
+| `cor:shared-sheet-universal-coefficients` | `corollary` | 1048 | Universal coefficients on the shared sheet |
+
+#### `appendices/categorical_logarithm_frontier.tex` (14)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `prop:scalar-log-formal-properties` | `proposition` | 278 | Formal properties of the scalar logarithm |
+| `cor:self-dual-anomaly-neutrality` | `corollary` | 307 | Self-dual anomaly neutrality |
+| `thm:classification-scalar-genera` | `theorem` | 327 | Classification of scalar multiplicative genera factoring through $\kappa$ |
+| `thm:ks-centrality` | `theorem` | 488 | Kodaira--Spencer centrality |
+| `lem:two-eta-vanishing` | `lemma` | 530 | Two-$\eta$ vanishing |
+| `thm:affine-normal-form` | `theorem` | 551 | Exact affine normal form along the scalar branch |
+| `prop:square-zero-insertion` | `proposition` | 589 | Square-zero insertion differential |
+| `cor:two-step-scalar-sseq` | `corollary` | 620 | Two-step scalar spectral sequence |
+| `thm:quadratic-frontier` | `theorem` | 675 | Quadratic frontier theorem |
+| `prop:eta-hessian-transfer` | `proposition` | 742 | Homotopy-transfer construction of the $\eta$-Hessian |
+| `lem:shifted-symmetry-H` | `lemma` | 773 | Shifted symmetry on degree-two primitives |
+| `thm:admissible-scalar-rigidity` | `theorem` | 807 | Admissible scalar rigidity in the semisimple highest-weight sector |
+| `cor:ds-not-first-frontier` | `corollary` | 838 | Drinfeld--Sokolov reductions are not the first admissible frontier |
+| `mthm:platonic-form` | `maintheorem` | 939 | Platonic form of the categorical logarithm |
+
+#### `appendices/celestial_bf_frontier_synthesis.tex` (12)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `prop:frontier-filtered-trace-detecting-uniqueness` | `proposition` | 147 | Filtered trace-detecting uniqueness of modular lifts |
+| `cor:frontier-scalar-saturated-modular-lift` | `corollary` | 273 | Scalar-saturated modular lift criterion |
+| `cor:frontier-bv-brst-comparison-from-trace-detection` | `corollary` | 300 | BV/BRST comparison from trace detection |
+| `prop:frontier-two-channel-graded-trace-detection` | `proposition` | 352 | Two-channel graded trace detection from mixed-sector vanishing |
+| `cor:frontier-split-two-channel-trace-detection` | `corollary` | 467 | Split two-channel locus |
+| `cor:frontier-two-channel-modular-lift-rigidity` | `corollary` | 492 | Two-channel modular lift rigidity |
+| `thm:frontier-lowest-mode-determinantal-rigidity` | `theorem` | 590 | Lowest-mode determinantal rigidity in celestial BF |
+| `prop:frontier-positive-shell-determinantal-extinction` | `proposition` | 696 | Positive-shell determinantal extinction |
+| `lem:frontier-five-generator-brackets` | `lemma` | 824 | Linearized five-generator brackets |
+| `thm:frontier-five-generator-jacobi` | `theorem` | 905 | First Jacobi equation on the five-generator shell |
+| `cor:frontier-strict-five-generator-closure-vanishing` | `corollary` | 968 | Strict five-generator closure forces vanishing of $D'_{1,1}$ |
+| `cor:frontier-first-equation-for-D11` | `corollary` | 1030 | Exact first equation for $D'_{1,1}$ |
 
 #### `appendices/coderived_models.tex` (5)
 
@@ -1350,6 +1450,20 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `prop:classification-table` | `proposition` | 433 | Classification table \cite{FBZ04, BD04} |
 
+#### `appendices/fm3_planted_forest_residue.tex` (9)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `prop:fm3-boundary-geometry` | `proposition` | 40 | Boundary geometry of \texorpdfstring{$\FM_3(X)$}{FM3(X)} |
+| `lem:chi-dgla-fm3` | `lemma` | 200 | The planted-forest incidence map |
+| `thm:fm3-homotopy-fiber` | `theorem` | 255 | Boundary logarithmic dg Lie algebra as a homotopy fiber |
+| `thm:fm3-explicit-brackets` | `theorem` | 296 | Explicit planted-forest brackets for \texorpdfstring{$\FM_3(X)$}{FM3(X)} |
+| `thm:fm3-mc-dictionary` | `theorem` | 410 | Maurer--Cartan dictionary for the planted-forest model |
+| `cor:fm3-abelian-reduction` | `corollary` | 478 | Abelian reduction |
+| `prop:fm3-first-obstructions` | `proposition` | 512 | Linear and quadratic obstruction classes |
+| `thm:fm3-cubic-obstruction` | `theorem` | 572 | The first genuinely planted-forest Maurer--Cartan obstruction |
+| `cor:fm3-defcyc-specialization` | `corollary` | 666 | The \texorpdfstring{$\FM_3$}{FM3} planted-forest model for modular deformations |
+
 #### `appendices/homotopy_transfer.tex` (5)
 
 | Label | Env | Line | Title |
@@ -1375,6 +1489,41 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:geom-implies-koszul` | `corollary` | 412 | Converse: geometric representability implies Koszul |
 | `thm:curvature-central-appendix` | `theorem` | 462 | Curvature must be central |
 | `thm:uniqueness-algebra` | `theorem` | 615 | Uniqueness up to quasi-isomorphism |
+
+#### `appendices/lifted_spectral_defect_calculus.tex` (30)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `prop:birational-invariance-cover` | `proposition` | 70 | Birational invariance of the cover |
+| `prop:sheet-operator-minpoly` | `proposition` | 111 | Minimal polynomial and sheet rank |
+| `prop:branch-complex-support` | `proposition` | 134 | Support of the branch complex |
+| `thm:determinantal-branch-formula-general` | `theorem` | 150 | Determinantal branch formula |
+| `thm:transport-lifted-covers` | `theorem` | 216 | Transport of lifted covers |
+| `thm:quadratic-common-sheet-law` | `theorem` | 298 | Common-sheet multiplication law |
+| `thm:local-branch-survival-criterion` | `theorem` | 324 | Local branch survival criterion |
+| `cor:tautological-quadratic-tensor-cancellation` | `corollary` | 345 | Tautological quadratic tensor cancellation |
+| `lem:biquadratic-intermediates` | `lemma` | 405 | Intermediate fields in the biquadratic case |
+| `thm:biquadratic-generated-field-classification` | `theorem` | 421 | Field generated by a biquadratic element |
+| `thm:exact-quadratic-tensor-dichotomy` | `theorem` | 458 | Exact quadratic tensor-compositum dichotomy |
+| `comp:quartic-spectral-equation` | `computation` | 496 | Quartic spectral equation in the generic case |
+| `thm:pure-odd-defect-ramification` | `theorem` | 580 | Ramification locus of the pure-odd defect |
+| `cor:pure-odd-defect-operator` | `corollary` | 618 | Determinant of the pure-odd defect operator |
+| `thm:complete-quadratic-tensor-calculus` | `theorem` | 657 | Complete quadratic tensor calculus |
+| `prop:cardano-identities` | `proposition` | 711 | Cardano identities |
+| `thm:cardano-tower-cubic-quotients` | `theorem` | 734 | Cardano tower and cubic quotients |
+| `thm:odd-even-branch-splitting` | `theorem` | 839 | Odd-even branch splitting |
+| `cor:odd-even-local-lengths` | `corollary` | 872 | Local lengths in the tame simple case |
+| `thm:unpointed-kummer-equality` | `theorem` | 940 | Unpointed equality criterion |
+| `thm:pointed-kummer-equality` | `theorem` | 959 | Pointed equality criterion |
+| `prop:selector-torsor-defect` | `proposition` | 985 | Selector torsor defect |
+| `prop:base-change-to-odd-cover` | `proposition` | 1012 | Base change to the odd cover |
+| `thm:local-cubic-ramification-criterion` | `theorem` | 1055 | Local cubic ramification criterion |
+| `cor:pointed-cubic-defect-operator` | `corollary` | 1106 | Determinant of the pointed cubic defect operator |
+| `cor:no-etale-cubic-defect-rational-sheet` | `corollary` | 1134 | No étale cubic defect over a rational odd sheet |
+| `cor:genus-pointed-cubic-defect` | `corollary` | 1147 | Genus of the pointed cubic defect cover |
+| `thm:cubic-rational-shadow-frontier` | `theorem` | 1205 | Exact defect package for a hidden cubic lift |
+| `thm:hierarchy-of-spectral-invariants` | `theorem` | 1270 | Hierarchy of spectral invariants |
+| `cor:platonic-form-frontier` | `corollary` | 1306 | Platonic form of the frontier |
 
 #### `appendices/nilpotent_completion.tex` (4)
 
@@ -1423,6 +1572,33 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:nms-functoriality-duality-quartic` | `proposition` | 1250 | Functoriality and duality through quartic order |
 | `thm:nms-unified-summary` | `theorem` | 1305 | Ambient complementarity and nonlinear modular shadows |
 
+#### `appendices/shifted_rtt_duality_orthogonal_coideals.tex` (22)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `lem:weightwise-stabilization-bar-complex` | `lemma` | 83 | Weightwise stabilization of the bar complex |
+| `thm:stabilized-completed-recovery` | `theorem` | 120 | Stabilized completed bar/cobar recovery |
+| `cor:automatic-tower-convergence-positive-degree` | `corollary` | 154 | Automatic tower convergence in positive degree |
+| `thm:weightwise-maurer-cartan-descent` | `theorem` | 161 | Weightwise Maurer--Cartan descent |
+| `prop:module-comodule-stabilized` | `proposition` | 193 | Module/comodule passage for stabilized towers |
+| `thm:trace-theoretic-bar-duality` | `theorem` | 250 | Trace-theoretic bar duality |
+| `cor:lagrangian-envelope` | `corollary` | 311 | The Lagrangian envelope |
+| `lem:generator-extension-exact-monoidal` | `lemma` | 346 | Generator extension of exact monoidal functors |
+| `thm:meromorphic-tannakian-reconstruction` | `theorem` | 382 | Meromorphic Tannakian reconstruction |
+| `cor:recognition-compact-boundary-modules` | `corollary` | 430 | Recognition on compact boundary modules |
+| `lem:scalar-gauge-invariance-finite-rtt` | `lemma` | 471 | Scalar gauge invariance of finite RTT stages |
+| `cor:inverse-kernel-sign-reversal` | `corollary` | 494 | Inverse kernel versus sign reversal |
+| `thm:finite-stage-rtt-adjointness` | `theorem` | 536 | Finite-stage RTT bar adjointness |
+| `cor:degree-two-twisting-cochain` | `corollary` | 572 | The degree-$2$ twisting cochain |
+| `thm:transport-of-finite-rtt-relation-space` | `theorem` | 621 | Transport of the finite RTT relation space |
+| `thm:finite-stage-shifted-bar-adjointness` | `theorem` | 647 | Finite-stage shifted bar adjointness |
+| `thm:quotient-coideal-descent` | `theorem` | 732 | Quotient/coideal descent |
+| `prop:stage-one-cartan-collapse` | `proposition` | 774 | Stage $N=1$ twist is trivial; naive Cartan fixing collapses the root sector |
+| `thm:explicit-rank-one-orthogonal-coideal` | `theorem` | 849 | Explicit rank-one orthogonal coideal and curved cobar model |
+| `cor:generalized-weyl-normal-form` | `corollary` | 882 | Generalized Weyl normal form |
+| `cor:kleinian-associated-graded` | `corollary` | 930 | Kleinian associated graded at the nilpotent point |
+| `thm:fortified-frontier-package` | `theorem` | 984 | Fortified frontier package |
+
 #### `appendices/sign_conventions.tex` (1)
 
 | Label | Env | Line | Title |
@@ -1450,3 +1626,18 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:bar-ss` | `theorem` | 241 | Bar spectral sequence |
 | `prop:degen-koszul` | `proposition` | 293 | Degeneration for Koszul algebras |
 | `prop:central-charge-d1` | `proposition` | 357 | Central charge and \texorpdfstring{$d_1$}{d1} |
+
+#### `appendices/subregular_hook_frontier.tex` (10)
+
+| Label | Env | Line | Title |
+|---|---|---:|---|
+| `thm:pbw-slodowy-collapse` | `theorem` | 66 | PBW--Slodowy collapse |
+| `cor:principal-w-completed-koszul` | `corollary` | 125 | Principal affine \texorpdfstring{$W$}{W}-algebras are completed Koszul |
+| `thm:canonical-arity-detection` | `theorem` | 198 | Generator-degree detection of canonical arity |
+| `thm:full-raw-coefficient-packet` | `theorem` | 346 | Exact Bell recursion for the full singular packet |
+| `thm:miura-product-formula` | `theorem` | 504 | Subregular Miura product formula |
+| `thm:subregular-appell-formula` | `theorem` | 541 | Subregular Appell formula |
+| `thm:bp-strict` | `theorem` | 613 | Bershadsky--Polyakov is strict in canonical normal form |
+| `thm:w4-cubic` | `theorem` | 660 | \texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} has canonical arity $3$ |
+| `thm:unbounded-canonical-arity` | `theorem` | 791 | Unbounded canonical arity in the subregular line |
+| `thm:triangular-primary-renormalization` | `theorem` | 845 | Triangular primary-renormalization theorem |
