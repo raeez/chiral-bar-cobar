@@ -1,0 +1,1500 @@
+
+% Repository integration file.
+% Assumptions:
+%   - amsmath, amssymb, mathtools, amsthm are loaded in the parent document.
+%   - theorem environments theorem, lemma, proposition, corollary, definition, conjecture,
+%     remark, example are available.
+% This file is intentionally written as a section/chapter fragment, not as a standalone document.
+
+\providecommand{\MC}{\operatorname{MC}}
+\providecommand{\Conf}{\operatorname{Conf}}
+\providecommand{\Bar}{\operatorname{Bar}}
+\providecommand{\Def}{\operatorname{Def}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\id}{\operatorname{id}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\gr}{\operatorname{gr}}
+\providecommand{\pr}{\operatorname{pr}}
+\providecommand{\Tot}{\operatorname{Tot}}
+\providecommand{\Span}{\operatorname{Span}}
+\providecommand{\Spec}{\operatorname{Spec}}
+\providecommand{\Ann}{\operatorname{Ann}}
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\Ord}{\mathrm{ord}}
+\providecommand{\Coeff}{\mathrm{coeff}}
+\providecommand{\Geom}{\mathrm{geom}}
+\providecommand{\YB}{\mathrm{YB}}
+\providecommand{\Ex}{\mathrm{Ex}}
+\providecommand{\Ext}{\mathrm{ext}}
+\providecommand{\full}{\mathrm{full}}
+\providecommand{\pf}{\mathrm{pf}}
+\providecommand{\conn}{\mathrm{conn}}
+\providecommand{\ex}{\mathrm{ex}}
+\providecommand{\bigtensor}{\mathbin{\widehat{\otimes}}}
+\providecommand{\Bbbk}{\mathbb{k}}
+
+\section{Modular dg-shifted Yangians from first principles}
+\label{sec:modular-dg-shifted-yangians-first-principles}
+
+\subsection{Orientation, status, and the Platonic target}
+
+The genus-zero line-operator package and the modular bar package suggest one and the same
+object viewed from two faces. On the one hand, perturbative line operators in a
+three-dimensional holomorphic-topological theory are expected to be controlled by a Koszul-dual
+$A_\infty$ algebra $A^!$ equipped with a universal Maurer--Cartan kernel
+\[
+r(z)\in A^!\bigtensor A^!((z^{-1}))
+\]
+satisfying an $A_\infty$ Yang--Baxter relation and a twisted coproduct.
+On the other hand, the modular programme insists that higher genus is not external decoration
+but a deformation variable internal to bar--cobar duality itself: the genus tower should be
+governed by a universal Maurer--Cartan class
+\[
+\Theta_A \in \MC\!\left(\Def_{\mathrm{cyc}}(A)\bigtensor R\Gamma(\overline{\mathcal M}_{g,\bullet},\Bbbk)\right),
+\]
+whose scalar shadow is already visible in the Hodge bundle/Hodge class formalism and whose full
+non-scalar existence remains the principal open problem of the modular homotopy programme.
+
+The purpose of this section is to rebuild the ordered modular line-operator story from the ground
+up, isolate the correct deformation object, and push the theory to a theorematic point where the
+remaining frontier is reduced to an explicit cohomology problem. The guiding principles are:
+
+\begin{enumerate}
+\item
+The modular $r$-kernel is \emph{not} the raw binary Taylor coefficient of $\Theta_A$.
+It is the two-leg coefficient of the \emph{$\Theta_A$-deformed ordered twisting morphism}.
+\item
+Higher-point ordered corrections should be organized by \emph{exact support} rather than by
+a loose ``number of external legs'' slogan.
+\item
+All higher exact-support corrections are governed by one pronilpotent dg Lie algebra.
+\item
+In the prime-form/Hodge realization, the first obstruction group $H^2$ is forced into the
+three-leg sector; under a modular Arnold-type normalization, it becomes precisely the
+modular Yang--Baxter class.
+\end{enumerate}
+
+The section is deliberately split into three layers.
+
+\begin{enumerate}
+\item[(I)]
+\emph{Formal modular algebra.}
+Here we define the ordered modular twisting system, the cumulant tower, and the exact-support
+deformation dg Lie algebra. These constructions are new and theorematic once the ordered modular
+bar package exists.
+
+\item[(II)]
+\emph{Prime-form/Hodge realization.}
+Here we pass from formal algebra to a graph-decorated geometric model and prove an $H^2$-reduction
+theorem. This is again theorematic, conditional only on a precise realization axiom.
+
+\item[(III)]
+\emph{The Platonic conjecture.}
+Here we state the modular dg-shifted Yangian as the canonical completion of the genus-zero
+line-operator Yangian package.
+\end{enumerate}
+
+\begin{remark}[What is input and what is new]
+The following input is taken as established background.
+\begin{enumerate}
+\item
+At genus zero, perturbative line operators are organized by a meromorphic tensor category
+equivalent to modules over $A^!$, with OPE repackaged by a universal Maurer--Cartan kernel $r(z)$
+and a twisted coproduct.
+\item
+In the bar--cobar language, the genus-zero $r(z)$ should be identified with the degree-$2$
+piece of the twisting morphism, evaluated at the spectral parameter.
+\item
+In the modular programme, the scalar shadow of a universal class $\Theta_A$ is already visible,
+while the full non-scalar $\Theta_A$ is still conjectural.
+\end{enumerate}
+Everything beyond those inputs---the ordered modular twisting system, the cumulant calculus, the
+exact-support deformation dg Lie algebra, the Kuranishi theory, the planar-tree expansion, the
+prime-form/Hodge $H^2$-reduction, and the modular Yang--Baxter identification theorem---is new
+mathematical content developed here.
+\end{remark}
+
+\subsection{The ordered modular bar datum}
+
+We start from the universal geometric datum that a higher-genus ordered OPE theory should use.
+
+\begin{definition}[Ordered modular bar datum]
+\label{def:ordered-modular-bar-datum}
+An \emph{ordered modular bar datum} consists of the following data.
+
+\begin{enumerate}
+\item
+A smooth curve $X$ and the universal stable ordered family
+\[
+\pi\colon \mathcal C \longrightarrow \mathcal M
+\]
+over an appropriate moduli stack $\mathcal M$ of smooth or stable pointed curves.
+
+\item
+For every finite ordered set $I$, an ordered compactified configuration space
+\[
+\overline{\Conf}^{\,\Ord}_I(\mathcal C/\mathcal M),
+\]
+together with restriction maps under order-preserving injections and forgetting maps.
+
+\item
+An augmented $E_1$-type object $A$ on $X$, together with a completed ordered bar coalgebra
+\[
+\widehat{\mathrm{Bar}}^{\,\Ord}_{\mathrm{mod}}(A)
+=
+\prod_{I}
+\Omega^\bullet_{\log}\!\left(\overline{\Conf}^{\,\Ord}_I(\mathcal C/\mathcal M)\right)
+\bigtensor
+(s\bar A)^{\otimes I},
+\]
+equipped with the ordered deconcatenation coproduct.
+
+\item
+A prime-form/Hodge propagator system
+\[
+\eta^{\pf}_{ij}\in
+\Omega^1_{\log}\!\left(\overline{\Conf}^{\,\Ord}_I(\mathcal C/\mathcal M),\mathcal K^{\pf}_{ij}\right)
+\]
+for every ordered pair of labels $i<j$, where $\mathcal K^{\pf}_{ij}$ is the corresponding
+prime-form/Hodge coefficient line. The system is required to satisfy:
+\begin{enumerate}
+\item local singularity:
+\[
+\eta^{\pf}_{ij}\sim d\log(z_i-z_j)\qquad\text{near }z_i=z_j;
+\]
+\item antisymmetry:
+\[
+\eta^{\pf}_{ji}=-\eta^{\pf}_{ij};
+\]
+\item compatibility with clutching of curves;
+\item compatibility with Verdier duality/opposition.
+\end{enumerate}
+
+\item
+A completed ordered twisting morphism
+\[
+\tau\colon \widehat{\mathrm{Bar}}^{\,\Ord}_{\mathrm{mod}}(A)\to A^!
+\]
+solving the completed bar--cobar Maurer--Cartan equation
+\[
+\partial \tau+\tau\star\tau=0.
+\]
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[The correct two-leg extraction]
+\label{rem:correct-two-leg-extraction}
+The modular two-leg kernel is not the binary Taylor coefficient of a deformation parameter.
+It is the bar-length-$2$ coefficient of the \emph{deformed twisting morphism}. This is the ordered
+higher-genus analogue of the genus-zero identification
+\[
+r(z)=\tau|_{\deg=2}.
+\]
+If $\Theta_A$ is the universal Maurer--Cartan class of the cyclic deformation complex, then the
+modular two-leg extraction must be applied only after deforming $\tau$ by $\Theta_A$.
+\end{remark}
+
+\begin{definition}[Ordered modular two-leg extraction (conjectural)]
+\label{defconj:ordered-modular-two-leg-extraction}
+Assume the full non-scalar universal class
+\[
+\Theta_A\in
+\MC\!\left(\Def_{\mathrm{cyc}}(A)\bigtensor R\Gamma(\overline{\mathcal M}_{g,\bullet},\Bbbk)\right)
+\]
+exists and deforms the ordered modular bar differential to a square-zero differential
+$D_{\Theta_A}$ on $\widehat{\mathrm{Bar}}^{\,\Ord}_{\mathrm{mod}}(A)$.
+Let
+\[
+\tau_{\Theta_A}\colon
+\left(\widehat{\mathrm{Bar}}^{\,\Ord}_{\mathrm{mod}}(A),D_{\Theta_A}\right)\to A^!
+\]
+be the corresponding completed ordered twisting morphism.
+
+Write
+\[
+\tau_{\Theta_A}=\sum_{m\ge 1}\tau_{\Theta_A}^{[m]}
+\]
+for its bar-length decomposition. Let
+\[
+\mu\in A^!\bigtensor A
+\]
+denote the universal coupling. Define the ordered two-leg extraction by
+\[
+\Ex^{(2)}_{\Ord}(\Theta_A)
+:=
+\operatorname{ev}_2\circ \operatorname{KD}_{\mu}\circ
+\pr_{\mathrm{bar}=2}(\tau_{\Theta_A}),
+\]
+where $\operatorname{KD}_{\mu}$ contracts the two $A$-legs against two copies of $\mu$ and
+$\operatorname{ev}_2$ evaluates on an ordered pair of marked points.
+
+For every smooth pointed curve $(\Sigma;z,w)$ of genus $g$, define
+\[
+r_{g,\Sigma}(z,w)
+:=
+\Ex^{(2)}_{\Ord}(\Theta_A)\big|_{(\Sigma;z,w)}.
+\]
+The family
+\[
+r_A^{\mathrm{mod}}=\{r_{g,\Sigma}\}_{g,\Sigma}
+\]
+is the \emph{modular two-leg kernel} of $A$, and
+\[
+\mathsf Y^{\mathrm{mod}}(A):=(A^!,r_A^{\mathrm{mod}})
+\]
+is the \emph{modular dg-shifted Yangian} attached to $A$.
+\end{definition}
+
+\begin{remark}[The Platonic ideal]
+The point of the definition-conjecture is that it isolates the \emph{correct object}.
+Once the ordered modular bar package exists and the two-leg extraction is defined as above, all
+higher compatibilities---clutching, Verdier duality, Yang--Baxter, higher ordered OPE coherence---are
+shadows of a single Maurer--Cartan equation. The problem is thereby changed from
+``guess higher-genus $r$-matrices'' to ``construct the ordered modular twisting system and solve its
+exact-support deformation problem''.
+\end{remark}
+
+\subsection{Ordered modular twisting systems}
+
+We now abstract the exact formal structure carried by the ordered modular bar package.
+
+\begin{definition}[Ordered modular twisting system]
+\label{def:ordered-modular-twisting-system}
+An \emph{ordered modular twisting system} consists of a family
+\[
+\mathbb L=\{L_I\}_{I}
+\]
+indexed by finite ordered sets, together with the following data.
+
+\begin{enumerate}
+\item
+For every ordered set $I$, a complete exact-support decomposition
+\[
+L_I=\prod_{\varnothing\neq S\subseteq I}L_I\langle S\rangle,
+\]
+where $L_I\langle S\rangle$ is the component supported exactly on the legs in $S$.
+
+\item
+For every order-preserving injection $f\colon J\hookrightarrow I$, an insertion map
+\[
+\iota_f\colon L_J\to L_I
+\]
+whose image lies in $L_I\langle f(J)\rangle$, functorial in $f$.
+
+\item
+For each ordered set $I$, an $L_\infty$-structure
+\[
+\ell_k^I\colon L_I^{\otimes k}\to L_I[2-k]
+\]
+satisfying support locality:
+\[
+\ell_k^I\big(L_I\langle S_1\rangle,\dots,L_I\langle S_k\rangle\big)
+\subseteq
+L_I\langle S_1\cup\cdots\cup S_k\rangle.
+\]
+
+\item
+Connected locality: if the intersection graph on $\{1,\dots,k\}$ determined by
+\[
+a\sim b \quad\Longleftrightarrow\quad S_a\cap S_b\neq\varnothing
+\]
+is disconnected, then
+\[
+\ell_k^I(x_1,\dots,x_k)=0
+\qquad
+(x_a\in L_I\langle S_a\rangle).
+\]
+
+\item
+For every separating clutching decomposition $I=I_-\sqcup I_+$, a bilinear node-contraction
+\[
+\star_\kappa\colon
+L_{I_-\sqcup\{\bullet\}}\bigtensor L_{I_+\sqcup\{\circ\}}
+\to
+L_{I_-\sqcup I_+},
+\]
+such that external support is additive:
+\[
+\operatorname{supp}_{\Ext}(x\star_\kappa y)
+=
+\operatorname{supp}_{\Ext}(x)\sqcup \operatorname{supp}_{\Ext}(y).
+\]
+
+\item
+A Verdier/opposition anti-involution
+\[
+\mathbb D_I\colon L_I\to L_{I^{\op}}
+\]
+compatible with support projections, insertion maps, and Maurer--Cartan formation.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+In the ordered modular bar realization one should keep in mind
+\[
+L_I=\Hom^{\mathrm{cont}}(B_I(A),A^!),
+\]
+with exact support supplied by the support decomposition along ordered compactified boundary strata,
+insertion by forgetting legs, clutching by nodal gluing with prime-form propagator, and Verdier
+duality by duality of logarithmic forms.
+\end{remark}
+
+\begin{definition}[Pairwise seed, aggregate curvature, and cumulants]
+\label{def:pairwise-seed-cumulants}
+Let $\rho\in L_{\{1,2\}}^1$. For $i<j\in I$, write
+\[
+\rho_{ij}:=\iota_{\{1,2\}\hookrightarrow\{i,j\}}(\rho)\in L_I^1.
+\]
+Define the pairwise field on $I$ by
+\[
+R_I(\rho):=\sum_{i<j}\rho_{ij}.
+\]
+Its aggregate curvature is
+\[
+K_I(\rho)
+:=
+\MC_I\!\big(R_I(\rho)\big)
+=
+\sum_{k\ge 1}\frac1{k!}\,\ell_k^I\big(R_I(\rho),\dots,R_I(\rho)\big).
+\]
+Its \emph{ordered cumulant} is the full-support projection
+\[
+\mathfrak C_I(\rho):=\pr_I^{\full}\,K_I(\rho)\in L_I\langle I\rangle.
+\]
+\end{definition}
+
+\begin{theorem}[Support decomposition of curvature]
+\label{thm:support-decomposition-of-curvature}
+For every finite ordered set $I$,
+\[
+K_I(\rho)
+=
+\sum_{\substack{J\subseteq I\\ |J|\ge 2}}
+\iota_{J\hookrightarrow I}\,\mathfrak C_J(\rho).
+\]
+\end{theorem}
+
+\begin{proof}
+Decompose $K_I(\rho)$ into its exact-support pieces:
+\[
+K_I(\rho)=\sum_{\substack{J\subseteq I\\ |J|\ge 2}}K_{I;J}(\rho),
+\qquad
+K_{I;J}(\rho)\in L_I\langle J\rangle.
+\]
+By support locality, each summand in the expansion of $K_I(\rho)$ is supported on the union of
+the supports of the participating pairwise legs, hence on some subset $J\subseteq I$.
+
+Fix $J\subseteq I$. Forgetting all legs in $I\setminus J$ sends $R_I(\rho)$ to $R_J(\rho)$ and kills
+every exact-support component not contained in $J$. Therefore the exact-support $J$-component
+of $K_I(\rho)$ is precisely the inserted full-support component of $K_J(\rho)$:
+\[
+K_{I;J}(\rho)=\iota_{J\hookrightarrow I}\,\mathfrak C_J(\rho).
+\]
+Summing over all $J$ gives the result.
+\end{proof}
+
+\begin{theorem}[Boolean M\"obius inversion for cumulants]
+\label{thm:boolean-mobius-inversion}
+For every finite ordered set $I$,
+\[
+\mathfrak C_I(\rho)
+=
+\sum_{\substack{J\subseteq I\\ |J|\ge 2}}
+(-1)^{|I|-|J|}
+\,\iota_{J\hookrightarrow I}\,K_J(\rho).
+\]
+\end{theorem}
+
+\begin{proof}
+The previous theorem is exactly the zeta-transform relation
+\[
+K_I=\sum_{J\subseteq I}\mathfrak C_J^\uparrow
+\]
+on the Boolean lattice of subsets of $I$, where $\mathfrak C_J^\uparrow$ denotes insertion of
+$\mathfrak C_J$ into $I$. The M\"obius function of the Boolean lattice is
+\[
+\mu(J,I)=(-1)^{|I|-|J|}.
+\]
+Applying M\"obius inversion yields the formula.
+\end{proof}
+
+\begin{corollary}[All-arity cumulant criterion]
+\label{cor:all-arity-cumulant-criterion}
+The pairwise field $R_I(\rho)$ is Maurer--Cartan for every ordered set $I$ if and only if
+\[
+\mathfrak C_I(\rho)=0
+\qquad\text{for every }|I|\ge 2.
+\]
+\end{corollary}
+
+\begin{proof}
+If every cumulant vanishes, then by Theorem~\ref{thm:support-decomposition-of-curvature} every
+aggregate curvature vanishes. Conversely, if $K_I(\rho)=0$, then
+\[
+\mathfrak C_I(\rho)=\pr_I^{\full}K_I(\rho)=0.
+\]
+\end{proof}
+
+\begin{theorem}[Strict collapse to the two- and three-leg sectors]
+\label{thm:strict-collapse-to-two-three}
+Assume that each $L_I$ is a dg Lie algebra, so that only
+\[
+\ell_1=d,
+\qquad
+\ell_2=[-,-]
+\]
+are nonzero. Then
+\[
+\mathfrak C_I(\rho)=0
+\qquad\text{for every }|I|\ge 4.
+\]
+Hence the pairwise field $R_I(\rho)$ is Maurer--Cartan for every ordered set $I$ if and only if
+\[
+\mathfrak C_{\{1,2\}}(\rho)=0
+\qquad\text{and}\qquad
+\mathfrak C_{\{1,2,3\}}(\rho)=0.
+\]
+\end{theorem}
+
+\begin{proof}
+A unary term $d(\rho_{ij})$ has support $\{i,j\}$, so it cannot contribute to full support for
+$|I|\ge 3$.
+
+A binary term $[\rho_{ij},\rho_{k\ell}]$ can be nonzero only when the supports intersect, by
+connected locality. Therefore
+\[
+\{i,j\}\cap\{k,\ell\}\neq\varnothing,
+\]
+so the union support has size at most $3$. Hence no full-support contribution can occur on
+$|I|\ge 4$.
+The final statement follows from Corollary~\ref{cor:all-arity-cumulant-criterion}.
+\end{proof}
+
+\begin{theorem}[Clutching factorization of cumulants]
+\label{thm:clutching-factorization-of-cumulants}
+Assume that aggregate curvatures satisfy the clutching identity
+\[
+\xi^*K_{I_-\sqcup I_+}(\rho)
+=
+K_{I_-\sqcup\{\bullet\}}(\rho)\star_\kappa
+K_{I_+\sqcup\{\circ\}}(\rho).
+\]
+Then the cumulants satisfy the exact factorization law
+\[
+\xi^*\mathfrak C_{I_-\sqcup I_+}(\rho)
+=
+\mathfrak C_{I_-\sqcup\{\bullet\}}(\rho)\star_\kappa
+\mathfrak C_{I_+\sqcup\{\circ\}}(\rho).
+\]
+\end{theorem}
+
+\begin{proof}
+Expand the two factors on the right using Theorem~\ref{thm:support-decomposition-of-curvature}:
+\[
+K_{I_-\sqcup\{\bullet\}}
+=
+\sum_{P\subseteq I_-}
+\iota_{P\sqcup\{\bullet\}}\mathfrak C_{P\sqcup\{\bullet\}},
+\qquad
+K_{I_+\sqcup\{\circ\}}
+=
+\sum_{Q\subseteq I_+}
+\iota_{Q\sqcup\{\circ\}}\mathfrak C_{Q\sqcup\{\circ\}}.
+\]
+Hence
+\[
+\xi^*K_{I_-\sqcup I_+}
+=
+\sum_{P,Q}
+\Bigl(
+\mathfrak C_{P\sqcup\{\bullet\}}\star_\kappa
+\mathfrak C_{Q\sqcup\{\circ\}}
+\Bigr).
+\]
+By additivity of external support under $\star_\kappa$, the summand indexed by $(P,Q)$ has external
+support exactly $P\sqcup Q$. Therefore the full-support projection to $I_-\sqcup I_+$ retains only the
+term
+\[
+P=I_-,
+\qquad
+Q=I_+.
+\]
+This gives the desired identity.
+\end{proof}
+
+\begin{theorem}[Verdier transport of the cumulant tower]
+\label{thm:verdier-transport-of-cumulants}
+Assume $\mathbb D$ commutes with Maurer--Cartan formation and reverses ordered two-leg seeds:
+\[
+\mathbb D(\rho_{ij})=(\mathbb D\rho)_{ji}.
+\]
+Then
+\[
+\mathbb D K_I(\rho)=K_{I^{\op}}(\mathbb D\rho),
+\qquad
+\mathbb D\mathfrak C_I(\rho)=\mathfrak C_{I^{\op}}(\mathbb D\rho).
+\]
+\end{theorem}
+
+\begin{proof}
+By functoriality of insertion,
+\[
+\mathbb D\big(R_I(\rho)\big)=R_{I^{\op}}(\mathbb D\rho).
+\]
+Since $\mathbb D$ intertwines Maurer--Cartan formation,
+\[
+\mathbb D K_I(\rho)=K_{I^{\op}}(\mathbb D\rho).
+\]
+Projecting to full support yields the second identity.
+\end{proof}
+
+\subsection{The exact-support deformation dg Lie algebra}
+
+The cumulant tower still treats each support separately. The next step is the decisive one:
+all higher full-support corrections are controlled by a \emph{single} dg Lie algebra.
+
+\begin{definition}[Pairwise Maurer--Cartan background]
+\label{def:pairwise-mc-background}
+Let $\rho\in L_{\{1,2\}}^1$ be a two-leg seed. We say that $\rho$ is a
+\emph{pairwise Maurer--Cartan background} if
+\[
+K_I(\rho)=0
+\qquad\text{for every ordered set }I.
+\]
+By Theorem~\ref{thm:strict-collapse-to-two-three}, in a strict dg Lie system it suffices to check the
+two-leg Maurer--Cartan equation and the three-leg Yang--Baxter relation.
+\end{definition}
+
+Fix such a background $\rho$ for the rest of this subsection. For each ordered set $I$, write
+\[
+R_I:=R_I(\rho).
+\]
+
+\begin{definition}[Exact-support deformation dg Lie algebra]
+\label{def:exact-support-deformation-dg-Lie-algebra}
+Define
+\[
+\mathfrak g_{\ex}(\rho)
+:=
+\prod_{|I|\ge 3}L_I\langle I\rangle.
+\]
+For $x=\{x_I\}\in \mathfrak g_{\ex}(\rho)$, define its insertion envelope on $I$ by
+\[
+\widetilde x_I
+:=
+\sum_{\substack{J\subseteq I\\ |J|\ge 3}}
+\iota_{J\hookrightarrow I}(x_J).
+\]
+
+Define
+\[
+(\delta_\rho x)_I
+:=
+\pr_I^{\full}\bigl(d\widetilde x_I+[R_I,\widetilde x_I]\bigr),
+\]
+and
+\[
+[x,y]_{\ex,I}
+:=
+\pr_I^{\full}[\widetilde x_I,\widetilde y_I].
+\]
+\end{definition}
+
+\begin{lemma}[Support-envelope descent]
+\label{lem:support-envelope-descent}
+For every $x,y\in \mathfrak g_{\ex}(\rho)$ and every ordered set $I$,
+\[
+d\widetilde x_I+[R_I,\widetilde x_I]
+=
+\widetilde{(\delta_\rho x)}_I,
+\]
+and
+\[
+[\widetilde x_I,\widetilde y_I]
+=
+\widetilde{[x,y]_{\ex}}_I.
+\]
+\end{lemma}
+
+\begin{proof}
+Consider the exact-support decomposition of the first expression. Because $d$ preserves support and
+the bracket is support-local, the exact-support $S$-part of
+\[
+d\widetilde x_I+[R_I,\widetilde x_I]
+\]
+depends only on the pieces of $\widetilde x_I$ supported on subsets of $S$ together with the pairwise
+edges inside $S$. By functoriality of insertion, that exact-support $S$-part is precisely the inserted copy of
+\[
+(\delta_\rho x)_S
+=
+\pr_S^{\full}\bigl(d\widetilde x_S+[R_S,\widetilde x_S]\bigr).
+\]
+Summing over all $S\subseteq I$ gives the first identity.
+
+The proof of the second identity is identical:
+the exact-support $S$-part of
+\[
+[\widetilde x_I,\widetilde y_I]
+\]
+comes only from brackets between inserted pieces supported on subsets of $S$, hence is the inserted copy
+of
+\[
+[x,y]_{\ex,S}
+=
+\pr_S^{\full}[\widetilde x_S,\widetilde y_S].
+\]
+\end{proof}
+
+\begin{theorem}[Exact-support dg Lie algebra]
+\label{thm:exact-support-dg-Lie-algebra}
+The triple
+\[
+\bigl(\mathfrak g_{\ex}(\rho),\delta_\rho,[\, ,\,]_{\ex}\bigr)
+\]
+is a complete dg Lie algebra.
+\end{theorem}
+
+\begin{proof}
+Define
+\[
+D_I:=d+[R_I,-]
+\]
+on $L_I$. Since $R_I$ is Maurer--Cartan,
+\[
+D_I^2=[dR_I+\tfrac12[R_I,R_I],-]=0.
+\]
+
+By Lemma~\ref{lem:support-envelope-descent},
+\[
+\widetilde{(\delta_\rho^2 x)}_I
+=
+D_I\widetilde{(\delta_\rho x)}_I
+=
+D_I^2\widetilde x_I
+=
+0.
+\]
+The insertion-envelope functor is faithful on exact-support families:
+if $\widetilde z_I=0$ for all $I$, then $z=0$, because choosing $I$ minimal with $z_I\neq 0$ yields
+$\widetilde z_I=z_I$. Hence $\delta_\rho^2=0$.
+
+For the derivation property,
+\[
+\widetilde{\delta_\rho[x,y]_{\ex}}_I
+=
+D_I[\widetilde x_I,\widetilde y_I]
+=
+[D_I\widetilde x_I,\widetilde y_I]+(-1)^{|x|}[\widetilde x_I,D_I\widetilde y_I]
+=
+\widetilde{[\delta_\rho x,y]_{\ex}+(-1)^{|x|}[x,\delta_\rho y]_{\ex}}_I,
+\]
+and faithfulness again gives the desired identity.
+
+Finally,
+\[
+\widetilde{[x,[y,z]_{\ex}]_{\ex}}_I
+=
+[\widetilde x_I,[\widetilde y_I,\widetilde z_I]]
+\]
+and the Jacobi identity in $L_I$ descends to the exact-support bracket by faithfulness.
+Completeness is inherited from the completed topology of the exact-support summands.
+\end{proof}
+
+\begin{theorem}[Equivalence with modular completions]
+\label{thm:equivalence-with-modular-completions}
+For $x\in\mathfrak g_{\ex}(\rho)^1$, define the total ordered field
+\[
+\mathcal A_I(x):=R_I+\widetilde x_I.
+\]
+Then the following are equivalent.
+
+\begin{enumerate}
+\item
+$x$ is Maurer--Cartan in $\mathfrak g_{\ex}(\rho)$:
+\[
+\delta_\rho x+\frac12[x,x]_{\ex}=0.
+\]
+
+\item
+For every ordered set $I$,
+\[
+d\mathcal A_I(x)+\frac12[\mathcal A_I(x),\mathcal A_I(x)]=0.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Since $R_I$ is Maurer--Cartan,
+\[
+d\mathcal A_I(x)+\frac12[\mathcal A_I(x),\mathcal A_I(x)]
+=
+D_I\widetilde x_I+\frac12[\widetilde x_I,\widetilde x_I].
+\]
+By Lemma~\ref{lem:support-envelope-descent},
+\[
+D_I\widetilde x_I+\frac12[\widetilde x_I,\widetilde x_I]
+=
+\widetilde{\delta_\rho x}_I+\frac12\widetilde{[x,x]_{\ex}}_I
+=
+\widetilde{\delta_\rho x+\frac12[x,x]_{\ex}}_I.
+\]
+Faithfulness of the insertion envelope implies the equivalence.
+\end{proof}
+
+\begin{remark}[Interpretation]
+The exact-support dg Lie algebra is the correct deformation object. A modular completion of the
+pairwise background $R_I$ is not a scattered family of higher-point corrections; it is a single Maurer--Cartan
+element of $\mathfrak g_{\ex}(\rho)$.
+\end{remark}
+
+\subsection{Kuranishi theory and explicit tree formulas}
+
+We now pass from abstract deformation theory to explicit construction.
+
+Choose a contraction of cochain complexes
+\[
+(H \xrightarrow{i} \mathfrak g_{\ex}(\rho)\xrightarrow{p} H,\; h)
+\]
+satisfying
+\[
+\delta_\rho h+h\delta_\rho=\id-ip,
+\qquad
+pi=\id,
+\qquad
+ph=hi=h^2=0.
+\]
+Think of $H$ as the exact-support cohomology controlling modular periods.
+
+\begin{theorem}[Kuranishi theorem for ordered modular completions]
+\label{thm:kuranishi-theorem-for-ordered-modular-completions}
+For every formal parameter $\kappa\in H^1$, the fixed-point equation
+\[
+x
+=
+i\kappa-\frac12\,h[x,x]_{\ex}
+\tag{$\mathrm K$}
+\]
+admits a unique formal solution $x(\kappa)$ satisfying
+\[
+px(\kappa)=\kappa,
+\qquad
+hx(\kappa)=0.
+\]
+
+Define the Kuranishi map
+\[
+\mathcal K(\kappa):=\frac12\,p[x(\kappa),x(\kappa)]_{\ex}\in H^2.
+\]
+Then
+\[
+x(\kappa)\text{ is Maurer--Cartan}
+\qquad\Longleftrightarrow\qquad
+\mathcal K(\kappa)=0.
+\]
+\end{theorem}
+
+\begin{proof}
+Existence and uniqueness of the formal fixed point follow from pronilpotence:
+starting from $x_0=i\kappa$ and iterating
+\[
+x_{n+1}=i\kappa-\frac12 h[x_n,x_n]_{\ex},
+\]
+each iteration gains filtration and converges formally to a unique solution.
+
+Set
+\[
+F:=\delta_\rho x+\frac12[x,x]_{\ex}.
+\]
+From the fixed-point equation,
+\[
+x-i\kappa=-\frac12 h[x,x]_{\ex}.
+\]
+Applying $\delta_\rho$ and using
+\[
+\delta_\rho h=\id-ip-h\delta_\rho,
+\]
+one obtains
+\[
+F=ipF+h[F,x]_{\ex}.
+\tag{$*$}
+\]
+Taking $p$ of both sides gives
+\[
+pF=\frac12\,p[x,x]_{\ex}=\mathcal K(\kappa).
+\]
+If $\mathcal K(\kappa)=0$, then $(*)$ becomes
+\[
+F=h[F,x]_{\ex}.
+\]
+Because the operator $F\mapsto h[F,x]_{\ex}$ raises filtration, pronilpotence forces $F=0$.
+Thus $x(\kappa)$ is Maurer--Cartan. The converse is immediate.
+\end{proof}
+
+\begin{corollary}[Unobstructed regime]
+\label{cor:unobstructed-regime}
+If
+\[
+H^2\bigl(\mathfrak g_{\ex}(\rho)\bigr)=0,
+\]
+then every class $\kappa\in H^1(\mathfrak g_{\ex}(\rho))$ integrates to a gauge-normalized
+modular completion. If moreover
+\[
+H^1\bigl(\mathfrak g_{\ex}(\rho)\bigr)=0,
+\]
+then the modular completion is unique up to gauge.
+\end{corollary}
+
+\begin{proof}
+If $H^2=0$, the Kuranishi map vanishes identically, and
+Theorem~\ref{thm:kuranishi-theorem-for-ordered-modular-completions} gives a Maurer--Cartan solution
+for every $\kappa$. If also $H^1=0$, there is only the zero parameter, hence only one gauge-normalized
+solution.
+\end{proof}
+
+\begin{definition}[Planar binary tree operators]
+\label{def:planar-binary-tree-operators}
+For a rooted planar binary tree $T$, define $\operatorname{Op}_T(\kappa)\in\mathfrak g_{\ex}(\rho)^1$
+recursively by
+\[
+\operatorname{Op}_{\bullet}(\kappa):=i\kappa,
+\]
+and
+\[
+\operatorname{Op}_{T_1\vee T_2}(\kappa)
+:=
+h\bigl[\operatorname{Op}_{T_1}(\kappa),\operatorname{Op}_{T_2}(\kappa)\bigr]_{\ex}.
+\]
+\end{definition}
+
+\begin{theorem}[Canonical planar-tree expansion]
+\label{thm:canonical-planar-tree-expansion}
+Assume $H^2(\mathfrak g_{\ex}(\rho))=0$.
+Then the unique gauge-normalized Maurer--Cartan solution with cohomology parameter
+$\kappa\in H^1$ is
+\[
+x(\kappa)
+=
+\sum_{T\in \mathrm{PBT}}
+\left(-\frac12\right)^{|V_{\mathrm{int}}(T)|}
+\operatorname{Op}_T(\kappa),
+\]
+where the sum ranges over rooted planar binary trees.
+\end{theorem}
+
+\begin{proof}
+Iterating the Kuranishi equation
+\[
+x=i\kappa-\frac12 h[x,x]_{\ex}
+\]
+substitutes one new binary bracket and one new homotopy $h$ at each stage. Therefore every fully expanded
+term is indexed by a rooted planar binary tree. Each internal vertex contributes a factor $-\tfrac12$.
+Pronilpotence ensures formal convergence.
+\end{proof}
+
+\begin{remark}[Meaning of the tree formula]
+The formula is not ornamental. It says that once one knows the exact-support bracket, the homotopy $h$,
+and the tangent class $\kappa$, \emph{all higher modular corrections are explicit tree sums}.
+If $h$ is realized by a prime-form/Hodge Green operator, this becomes an actual geometric construction,
+not merely a formal existence statement.
+\end{remark}
+
+\subsection{Prime-form/Hodge graph realization}
+
+We now pass to the realization best adapted to actual configuration-space geometry.
+
+\begin{definition}[Prime-form/Hodge graph realization]
+\label{def:prime-form-hodge-graph-realization}
+A \emph{prime-form/Hodge graph realization} of the exact-support deformation dg Lie algebra
+$\mathfrak g_{\ex}(\rho)$ consists of the following additional structure.
+
+\begin{enumerate}
+\item
+For each ordered set $I$, the full-support summand $L_I\langle I\rangle$ is realized as the completion
+of a graph-decorated complex
+\[
+\mathcal G_I^{\pf}(A^!)
+=
+\prod_{\Gamma\in \mathsf{Conn}(I)}
+\Omega^\bullet_{\log}\!\bigl(\overline{\Conf}^{\,\Ord}_I(\mathcal C/\mathcal M),
+\mathcal K_\Gamma^{\pf}\bigr)
+\bigtensor
+\mathcal C_\Gamma(A^!),
+\]
+where:
+\begin{enumerate}
+\item
+$\mathsf{Conn}(I)$ is the set of connected graphs on vertex set $I$;
+\item
+$\mathcal K_\Gamma^{\pf}$ is the tensor product of prime-form/Hodge kernel lines attached to the edges of
+$\Gamma$;
+\item
+$\mathcal C_\Gamma(A^!)$ is the coefficient complex attached to the vertex decorations and algebraic
+operations in $A^!$.
+\end{enumerate}
+
+\item
+Every edge of $\Gamma$ contributes a prime-form/Hodge propagator, hence a logarithmic one-form.
+Therefore the \emph{geometric degree} of a graph term is exactly the number of edges:
+\[
+\deg_{\Geom}(\Gamma)=|E(\Gamma)|.
+\]
+
+\item
+The exact-support differential decomposes as
+\[
+\delta_\rho
+=
+d_{\Coeff}+d_{\Geom}+\partial_R,
+\]
+where:
+\begin{enumerate}
+\item
+$d_{\Coeff}$ preserves geometric degree;
+\item
+$d_{\Geom}$ raises geometric degree by $1$;
+\item
+$\partial_R$ also raises geometric degree by $1$.
+\end{enumerate}
+
+\item
+The coefficient complexes are \emph{connective}:
+\[
+H^q\bigl(\mathcal C_\Gamma(A^!)\bigr)=0
+\qquad\text{for }q<0.
+\]
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Why this is the right realization]
+Connected full-support graphs are the natural expansion variables because exact support forces connectedness,
+and every propagator edge carries a prime-form/Hodge $1$-form. The connectiveness assumption is the
+geometric reflection of the usual deformation-theoretic principle that negative-degree coefficient
+cohomology should not appear in the first obstruction range.
+\end{remark}
+
+\begin{lemma}[Connected graph edge bound]
+\label{lem:connected-graph-edge-bound}
+If $\Gamma$ is a connected graph on a finite set $I$, then
+\[
+|E(\Gamma)|\ge |I|-1.
+\]
+Consequently every full-support graph term on $I$ has geometric degree at least $|I|-1$.
+\end{lemma}
+
+\begin{proof}
+Every connected graph on $|I|$ vertices contains a spanning tree, and every spanning tree has
+$|I|-1$ edges.
+\end{proof}
+
+\begin{theorem}[Geometric-degree spectral sequence]
+\label{thm:geometric-degree-spectral-sequence}
+Let $F^p\mathfrak g_{\ex}(\rho)$ be the filtration by geometric degree:
+\[
+F^p\mathfrak g_{\ex}(\rho)
+=
+\{x\in \mathfrak g_{\ex}(\rho)\mid \deg_{\Geom}(x)\ge p\}.
+\]
+Then $F^\bullet$ is a complete descending filtration preserved by $\delta_\rho$, and it defines
+a convergent spectral sequence
+\[
+E_1^{p,q}
+\Longrightarrow
+H^{p+q}\bigl(\mathfrak g_{\ex}(\rho)\bigr),
+\]
+whose $E_1$-page is
+\[
+E_1^{p,q}
+\cong
+\bigoplus_{|I|\ge 3}
+H^q\!\left(\gr_F^p L_I\langle I\rangle,d_{\Coeff}\right).
+\]
+Moreover
+\[
+E_1^{p,q}=0
+\qquad\text{unless }p\ge |I|-1.
+\]
+\end{theorem}
+
+\begin{proof}
+Because $d_{\Coeff}$ preserves geometric degree and $d_{\Geom},\partial_R$ raise it by $1$,
+the filtration is preserved:
+\[
+\delta_\rho(F^p)\subseteq F^p.
+\]
+Completeness follows from completion in the graph-expansion topology.
+
+The associated graded differential is precisely $d_{\Coeff}$, because the other pieces strictly increase
+geometric degree. This gives the displayed form of the $E_1$-page. The vanishing statement follows from
+Lemma~\ref{lem:connected-graph-edge-bound}.
+\end{proof}
+
+\begin{theorem}[Three-leg reduction of the first obstruction]
+\label{thm:three-leg-reduction-of-H2}
+Assume a prime-form/Hodge graph realization.
+Then the natural inclusion of the full-support three-leg subcomplex induces an isomorphism
+\[
+H^2\bigl(\mathfrak g_{\ex}(\rho)\bigr)
+\cong
+H^2\bigl(L_{\{1,2,3\}}\langle \{1,2,3\}\rangle,\delta_\rho\bigr).
+\]
+Equivalently, the first obstruction is purely three-legged.
+\end{theorem}
+
+\begin{proof}
+On the $E_1$-page of the spectral sequence of
+Theorem~\ref{thm:geometric-degree-spectral-sequence}, total degree $2$ can only come from terms with
+\[
+p+q=2.
+\]
+By connectiveness of the coefficient complexes, $q<0$ is impossible. By
+Lemma~\ref{lem:connected-graph-edge-bound}, the condition $p\ge |I|-1$ forces
+\[
+|I|-1\le 2,
+\qquad |I|\ge 3,
+\]
+hence $|I|=3$ and $p=2$, $q=0$. Therefore the only possible contribution to total degree $2$
+comes from the full-support three-leg sector.
+
+No differential can either enter or leave that bidegree:
+incoming differentials would require negative coefficient degree, outgoing differentials would land in
+total degree $3$. Hence
+\[
+E_1^{2,0}=E_\infty^{2,0},
+\]
+and this identifies $H^2(\mathfrak g_{\ex}(\rho))$ with the three-leg full-support cohomology.
+\end{proof}
+
+\begin{remark}[Frontier shift]
+This theorem is the first genuine reduction theorem of the modular line-operator programme.
+It says that the existence of a modular dg-shifted Yangian does not depend on a mysterious infinite
+tower of unrelated higher-genus equations. The first obstruction is already and only the three-leg
+full-support class.
+\end{remark}
+
+\subsection{The three-leg sector and the modular Yang--Baxter class}
+
+We now identify the three-leg obstruction more sharply.
+
+\begin{definition}[Three-leg Y-graph complex]
+\label{def:three-leg-Y-graph-complex}
+Let
+\[
+I_3:=\{1,2,3\}.
+\]
+In the prime-form/Hodge graph realization, define the \emph{three-leg Y-graph subcomplex}
+$\mathcal Y_\rho\subset L_{I_3}\langle I_3\rangle$ to be the geometric-degree-$2$ summand spanned by
+the three connected spanning trees
+\[
+(12,13),\qquad (12,23),\qquad (13,23),
+\]
+with their coefficient decorations.
+Concretely,
+\[
+\mathcal Y_\rho
+=
+\Span\Bigl\{
+\eta_{12}^{\pf}\wedge \eta_{13}^{\pf}\otimes c_{12,13},\ 
+\eta_{12}^{\pf}\wedge \eta_{23}^{\pf}\otimes c_{12,23},\ 
+\eta_{13}^{\pf}\wedge \eta_{23}^{\pf}\otimes c_{13,23}
+\Bigr\},
+\]
+where the $c_{ab,cd}$ lie in the relevant degree-$0$ coefficient spaces.
+\end{definition}
+
+\begin{definition}[Strict coefficient Yang--Baxter element]
+\label{def:strict-coefficient-yb-element}
+Assume the coefficient algebra is strict dg Lie in the three-leg sector.
+Then the \emph{coefficient Yang--Baxter element} is
+\[
+\YB(\rho)
+:=
+[\rho_{12},\rho_{13}]
++
+[\rho_{12},\rho_{23}]
++
+[\rho_{13},\rho_{23}].
+\]
+\end{definition}
+
+\begin{definition}[Modular Arnold normalization]
+\label{def:modular-arnold-normalization}
+A prime-form/Hodge propagator system is said to satisfy \emph{modular Arnold normalization} on the
+ordered three-point sector if there exist:
+\begin{enumerate}
+\item a closed full-support $2$-form
+\[
+\Omega_{123}\in
+\Omega^2_{\log}\!\bigl(\overline{\Conf}^{\,\Ord}_{I_3}(\mathcal C/\mathcal M),
+\mathcal K^{\pf}_{123}\bigr),
+\]
+\item $1$-forms
+\[
+\beta_{12,13},\qquad \beta_{12,23},\qquad \beta_{13,23},
+\]
+such that
+\[
+\eta_{12}^{\pf}\wedge \eta_{13}^{\pf}
+=
+\Omega_{123}+d\beta_{12,13},
+\]
+\[
+\eta_{12}^{\pf}\wedge \eta_{23}^{\pf}
+=
+\Omega_{123}+d\beta_{12,23},
+\]
+\[
+\eta_{13}^{\pf}\wedge \eta_{23}^{\pf}
+=
+\Omega_{123}+d\beta_{13,23}.
+\]
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Meaning of modular Arnold normalization]
+At genus zero, with $\eta_{ij}=d\log(z_i-z_j)$, the wedge products of the three propagators are all
+rational multiples of the same ordered volume form, and the classical Arnold relation is the resulting
+linear dependence. The definition above is the higher-genus prime-form/Hodge upgrade of that fact:
+it asserts that the three Y-graph $2$-forms represent one common cohomology class in the full-support
+three-point sector.
+\end{remark}
+
+\begin{theorem}[Modular Yang--Baxter identification of $H^2$]
+\label{thm:modular-yang-baxter-identification-of-H2}
+Assume:
+\begin{enumerate}
+\item
+a prime-form/Hodge graph realization;
+\item
+strict dg Lie coefficients in the three-leg sector;
+\item
+modular Arnold normalization.
+\end{enumerate}
+Then the first obstruction group is canonically identified with the three-leg Yang--Baxter class:
+\[
+H^2\bigl(\mathfrak g_{\ex}(\rho)\bigr)
+\cong
+[\Omega_{123}]\,\cdot\,
+H^0\!\bigl(\Span\{\YB(\rho)\},d_{\Coeff}\bigr).
+\]
+More concretely, the class of the full-support three-leg curvature equals
+\[
+\bigl[\Omega_{123}\bigr]\otimes \bigl[\YB(\rho)\bigr].
+\]
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:three-leg-reduction-of-H2}, the group
+$H^2(\mathfrak g_{\ex}(\rho))$ is the three-leg full-support cohomology.
+In geometric degree $2$, the only connected full-support graphs are the three spanning trees, so the
+degree-$2$ curvature class has the form
+\[
+\eta_{12}^{\pf}\wedge\eta_{13}^{\pf}\otimes[\rho_{12},\rho_{13}]
++
+\eta_{12}^{\pf}\wedge\eta_{23}^{\pf}\otimes[\rho_{12},\rho_{23}]
++
+\eta_{13}^{\pf}\wedge\eta_{23}^{\pf}\otimes[\rho_{13},\rho_{23}].
+\]
+By modular Arnold normalization, each geometric factor is cohomologous to $\Omega_{123}$.
+Therefore the cohomology class of the entire expression is
+\[
+[\Omega_{123}]
+\otimes
+\left(
+[\rho_{12},\rho_{13}]
++
+[\rho_{12},\rho_{23}]
++
+[\rho_{13},\rho_{23}]
+\right),
+\]
+namely
+\[
+[\Omega_{123}]\otimes [\YB(\rho)].
+\]
+This identifies the first obstruction group with the coefficient Yang--Baxter class multiplied by the
+canonical geometric three-leg class.
+\end{proof}
+
+\begin{corollary}[Vanishing criterion for the first obstruction]
+\label{cor:vanishing-criterion-first-obstruction}
+Under the assumptions of
+Theorem~\ref{thm:modular-yang-baxter-identification-of-H2}, one has
+\[
+H^2\bigl(\mathfrak g_{\ex}(\rho)\bigr)=0
+\qquad\Longleftrightarrow\qquad
+[\YB(\rho)]=0
+\]
+provided $[\Omega_{123}]\neq 0$.
+In particular, if the coefficient Yang--Baxter element $\YB(\rho)$ is $d_{\Coeff}$-exact or vanishes,
+then the modular completion problem is unobstructed in degree $2$.
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:modular-yang-baxter-identification-of-H2}.
+\end{proof}
+
+\begin{remark}[The first real frontier theorem]
+This is the theorem that pushes the programme forward in a decisive way.
+It converts the existence problem for modular dg-shifted Yangians from a vague higher-genus aspiration
+into an explicit statement:
+
+\medskip
+
+\centerline{\emph{the first obstruction is exactly the modular Yang--Baxter class on three legs}.}
+
+\medskip
+
+Everything higher begins only after the three-leg class has been killed.
+\end{remark}
+
+\subsection{A theorematic existence criterion}
+
+We can now formulate the cleanest existence theorem available at this stage.
+
+\begin{theorem}[Formal existence of modular dg-shifted Yangians]
+\label{thm:formal-existence-of-modular-dg-shifted-yangians}
+Assume:
+\begin{enumerate}
+\item
+an ordered modular twisting system extracted from a completed ordered modular bar datum;
+\item
+a pairwise Maurer--Cartan background $\rho$;
+\item
+a prime-form/Hodge graph realization;
+\item
+modular Arnold normalization;
+\item
+vanishing of the first obstruction class:
+\[
+[\YB(\rho)]=0;
+\]
+\item
+vanishing of higher obstruction groups:
+\[
+H^2\bigl(\gr_F^m\mathfrak g_{\ex}(\rho)\bigr)=0
+\qquad\text{for all }m\ge 3.
+\]
+\end{enumerate}
+Then there exists a formal modular completion
+\[
+x\in \MC\bigl(\mathfrak g_{\ex}(\rho)\bigr)
+\]
+and hence a compatible family of ordered higher-genus OPE fields
+\[
+\mathcal A_I(x)=R_I+\widetilde x_I
+\]
+solving the full ordered Maurer--Cartan system on every ordered sector $I$.
+
+If in addition
+\[
+H^1\bigl(\gr_F^m\mathfrak g_{\ex}(\rho)\bigr)=0
+\qquad\text{for all }m\ge 3,
+\]
+then the completion is unique up to gauge.
+\end{theorem}
+
+\begin{proof}
+By Corollary~\ref{cor:vanishing-criterion-first-obstruction}, the first obstruction vanishes.
+The higher obstruction groups vanish by assumption. Standard filtered dg Lie induction then lifts a
+solution order by order in the geometric/support filtration. The resulting Maurer--Cartan element
+exists in the completed dg Lie algebra $\mathfrak g_{\ex}(\rho)$.
+Uniqueness follows from the vanishing of the corresponding $H^1$-groups.
+\end{proof}
+
+\begin{corollary}[Explicit tree formula in the unobstructed case]
+\label{cor:explicit-tree-formula-unobstructed}
+If
+\[
+H^2\bigl(\mathfrak g_{\ex}(\rho)\bigr)=0,
+\]
+then every gauge-normalized modular completion is given by the planar-tree expansion of
+Theorem~\ref{thm:canonical-planar-tree-expansion}.
+\end{corollary}
+
+\subsection{The formal definition--conjecture to carry into the repository}
+
+The previous subsections separate the theorematic heart from the still-conjectural universal input.
+We now package the whole story in the form that should sit in the research repository.
+
+\begin{definition}[Modular dg-shifted Yangian of an ordered modular Koszul object (conjectural)]
+\label{defconj:modular-dg-shifted-yangian}
+Let $A$ be a modular Koszul $E_1$-type object on a smooth curve $X$, with Koszul dual $A^!$.
+Assume:
+
+\begin{enumerate}
+\item[(H1)]
+the ordered modular bar datum of Definition~\ref{def:ordered-modular-bar-datum} exists;
+
+\item[(H2)]
+the cyclic deformation complex $\Def_{\mathrm{cyc}}(A)$ exists as a complete cyclic $L_\infty$-algebra,
+together with a universal Maurer--Cartan class
+\[
+\Theta_A\in
+\MC\!\left(\Def_{\mathrm{cyc}}(A)\bigtensor R\Gamma(\overline{\mathcal M}_{g,\bullet},\Bbbk)\right)
+\]
+compatible with clutching and Verdier duality;
+
+\item[(H3)]
+the $\Theta_A$-deformed ordered twisting morphism $\tau_{\Theta_A}$ exists;
+
+\item[(H4)]
+the genus-zero fiber recovers the line-operator dg-shifted Yangian package:
+\[
+r_{0,\mathbb{P}^1}(z,w)=r(z-w).
+\]
+\end{enumerate}
+
+Then the \emph{modular dg-shifted Yangian} of $A$ is the pair
+\[
+\mathsf Y^{\mathrm{mod}}(A)
+=
+(A^!,r_A^{\mathrm{mod}}),
+\qquad
+r_A^{\mathrm{mod}}:=\Ex_{\Ord}^{(2)}(\Theta_A).
+\]
+
+Conjecturally, its completed smooth module category is the modular meromorphic tensor category of
+perturbative line operators associated to $A$.
+
+This object should be characterized by the following formal properties.
+
+\begin{enumerate}
+\item[(P1)]
+\textbf{Genus-zero normalization and local singularity.}
+Near the diagonal,
+\[
+r_{g,\Sigma}(z,w)=r_{\mathrm{sing}}(z,w)+r^{\mathrm{reg}}_{g,\Sigma}(z,w),
+\]
+where $r_{\mathrm{sing}}$ is the universal genus-zero singular piece and
+\[
+r_{0,\mathbb{P}^1}(z,w)=r(z-w).
+\]
+
+\item[(P2)]
+\textbf{Clutching/factorization.}
+For every boundary clutching morphism,
+\[
+\xi^*r_A^{\mathrm{mod}}
+=
+r_{A,-}^{\mathrm{mod}}\star_\kappa r_{A,+}^{\mathrm{mod}}.
+\]
+
+\item[(P3)]
+\textbf{Verdier/opposition.}
+Under Verdier--Koszul duality,
+\[
+\mathbb D\bigl(r_A^{\mathrm{mod}}(z,w)\bigr)=\bigl(r_{A^!}^{\mathrm{mod}}(w,z)\bigr)^{21}.
+\]
+
+\item[(P4)]
+\textbf{Modular Yang--Baxter/sewing law.}
+The three-leg exact-support component of the ordered Maurer--Cartan equation is the modular
+Yang--Baxter relation. In the strict coefficient regime it reduces to the coefficient identity
+\[
+[\rho_{12},\rho_{13}]
++
+[\rho_{12},\rho_{23}]
++
+[\rho_{13},\rho_{23}]
+=
+0.
+\]
+\end{enumerate}
+\end{definition}
+
+\subsection{What has actually been proved in this section}
+
+For future use and for repository clarity, we summarize the theorematic content in one place.
+
+\begin{theorem}[The theorematic core]
+\label{thm:theorematic-core}
+Assume an ordered modular twisting system and a pairwise Maurer--Cartan background $\rho$.
+Then the following hold.
+
+\begin{enumerate}
+\item
+The full ordered curvature decomposes into exact-support cumulants
+(Theorem~\ref{thm:support-decomposition-of-curvature}), and cumulants are recovered from
+aggregate curvatures by Boolean M\"obius inversion
+(Theorem~\ref{thm:boolean-mobius-inversion}).
+
+\item
+In a strict dg Lie system, all higher cumulants vanish automatically for $|I|\ge 4$; hence
+the full pairwise Maurer--Cartan problem collapses to the two- and three-leg sectors
+(Theorem~\ref{thm:strict-collapse-to-two-three}).
+
+\item
+The family of exact-support corrections is governed by one complete dg Lie algebra
+\[
+\mathfrak g_{\ex}(\rho)
+\]
+(Theorem~\ref{thm:exact-support-dg-Lie-algebra}), and Maurer--Cartan elements of this dg Lie algebra
+are equivalent to full ordered modular completions (Theorem~\ref{thm:equivalence-with-modular-completions}).
+
+\item
+The formal moduli of modular completions is controlled by the Kuranishi map
+\[
+\mathcal K\colon H^1\to H^2
+\]
+(Theorem~\ref{thm:kuranishi-theorem-for-ordered-modular-completions}), and unobstructed completions
+admit an explicit planar-tree expansion
+(Theorem~\ref{thm:canonical-planar-tree-expansion}).
+
+\item
+In the prime-form/Hodge graph realization, the first obstruction group is purely three-legged
+(Theorem~\ref{thm:three-leg-reduction-of-H2}).
+
+\item
+Under modular Arnold normalization, the first obstruction is canonically identified with the
+coefficient Yang--Baxter class
+(Theorem~\ref{thm:modular-yang-baxter-identification-of-H2}).
+\end{enumerate}
+\end{theorem}
+
+\subsection{Research consequences and the next frontier}
+
+The formalism built here shifts the frontier in a decisive way.
+
+\begin{enumerate}
+\item
+The modular line-operator problem is no longer the search for ad hoc higher-genus kernels.
+It is the Maurer--Cartan problem of a single dg Lie algebra,
+\[
+\mathfrak g_{\ex}(\rho).
+\]
+
+\item
+The obstruction theory is no longer dispersed over all arities.
+Its first nontrivial term is canonically three-legged and geometric.
+
+\item
+The prime-form/Hodge realization makes the first obstruction explicitly calculable:
+one computes the Y-graph class on the ordered three-point compactification.
+
+\item
+The most concrete next theorem is now sharply posed:
+
+\begin{center}
+\emph{identify or prove the vanishing of }
+\[
+H^2\bigl(\mathfrak g_{\ex}(\rho)\bigr)
+\]
+\emph{for the prime-form/Hodge realization of the ordered modular bar complex.}
+\end{center}
+
+By Theorem~\ref{thm:modular-yang-baxter-identification-of-H2}, this reduces in the strict regime to
+the modular Yang--Baxter class.
+\end{enumerate}
+
+\begin{remark}[The Platonic ideal, restated]
+The final philosophical synthesis is simple.
+
+\begin{center}
+\emph{Genus zero gives the seed, exact support gives the deformation object,}\\
+\emph{prime-form/Hodge geometry gives the obstruction class, and}\\
+\emph{modular homotopy should produce the universal Maurer--Cartan lift.}
+\end{center}
+
+This is the ordered extended-operator face of modular homotopy.
+\end{remark}
