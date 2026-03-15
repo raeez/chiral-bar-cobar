@@ -38,6 +38,13 @@ The antisymmetry $\psi(z)\psi(w) = -\psi(w)\psi(z)$ away from the diagonal force
  
 \subsection{Computing the bar complex}
 
+Fermionic antisymmetry ($\psi(z)\psi(w) = -\psi(w)\psi(z)$) forces the
+bar complex to collapse: one cannot place multiple fermions at the
+same point, so higher bar elements cannot survive the symmetry
+constraint.  The precise mechanism is that cyclic permutations of
+configuration space forms have eigenvalues that are roots of unity of
+order $\geq 3$, leaving no invariant subspace.
+
 \begin{theorem}[Free fermion bar complex at genus 0; \ClaimStatusProvedHere]
 \label{thm:fermion-bar-complex-genus-0}
 For the free fermion $\mathcal{F}$ on $\mathbb{P}^1$, the bar complex collapses due to fermionic antisymmetry:
@@ -91,9 +98,6 @@ $\left[\begin{smallmatrix} 0 & -1 \\ 1 & -1 \end{smallmatrix}\right]$
 \emph{Higher degrees.} $\text{dim}(C_n(X)) = n$ for a curve. Top degree forms require $n$ forms on $n$-dimensional space, but fermionic antisymmetry forces vanishing.
 \end{proof}
 
-\begin{remark}[Vanishing mechanism]
-The vanishing in degree $\geq 2$ reflects the antisymmetry of the Clifford algebra: one cannot have multiple fermions at the same point, which translates to the impossibility of non-trivial higher bar complex elements respecting antisymmetry.
-\end{remark}
 
  
 \subsection{Chiral coalgebra structure for free fermions}
@@ -1399,8 +1403,15 @@ At $c = 26$ (critical dimension), special cancellations occur.
 \end{definition}
 \index{Virasoro algebra|textbf}
 
-\subsection{Bar complex and moduli space}
- 
+\subsection{Bar complex and moduli space}\label{sec:virasoro-bar-moduli-main}
+
+The fourth-order pole in $T(z)T(w)$ prevents naive Koszulness, but at
+the critical central charge $c = 26$ the conformal anomaly cancels the
+ghost contribution and the bar complex becomes an honest cochain
+complex.  The resulting cohomology is the cohomology of moduli space
+itself --- the bar construction reconstructs $\overline{\mathcal{M}}_{0,n}$
+from the Virasoro OPE.
+
 \begin{theorem}[Virasoro-moduli correspondence; \ClaimStatusProvedHere]\label{thm:virasoro-moduli}
 For $\text{Vir}_{26}$ on $\mathbb{P}^1$:
 \[
@@ -1749,96 +1760,12 @@ as curved filtered algebras.
 \end{enumerate}
 \end{theorem}
 
-\section{The Virasoro algebra}
+\section{String theory: Virasoro--BRST duality}
 
-\begin{example}[Virasoro bar complex]
-The Virasoro algebra $\text{Vir}_c$ at central charge $c$ has:
-\begin{itemize}
-\item Generator: Stress-energy tensor $T(z)$ of weight 2
-\item OPE: $T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}$
-\end{itemize}
-
-\emph{Step~1.}
-
-Degree 0: $\barBgeom^0(\text{Vir}_c) = \mathbb{C} \cdot \mathbf{1}$
-
-Degree 1: Elements have form
-\[\alpha = \int_{C_2(X)} T(z_1) \otimes T(z_2) \otimes f(z_1, z_2)\eta_{12}\]
-
-The differential:
-\[d\alpha = \text{Res}_{D_{12}}\left[\left(\frac{c/2}{(z_1-z_2)^4} + \frac{2T}{(z_1-z_2)^2} + \frac{\partial T}{z_1-z_2}\right) \otimes f\eta_{12}\right]\]
-
-For $d\alpha = 0$, we need $f$ to cancel the poles. This requires:
-\begin{itemize}
-\item No $(z_1-z_2)^{-3}$ term: Automatic (odd function)
-\item No $(z_1-z_2)^{-1}$ term: $f$ must satisfy $\partial_1 f + \partial_2 f = 0$ at diagonal
-\end{itemize}
-
-Therefore:
-\[H^1(\barBgeom(\text{Vir}_c)) = H^1(X, \mathbb{C}) \oplus \mathbb{C} \cdot [c]\]
-where $[c]$ is the central charge class.
-
-\emph{Step~2.}
-
-Degree 2: The space includes
-\[\barBgeom^2 \ni T_1 \otimes T_2 \otimes T_3 \otimes \eta_{12} \wedge \eta_{23}\]
-
-The differential produces:
-\[d(T_1 \otimes T_2 \otimes T_3 \otimes \eta_{12} \wedge \eta_{23})\]
-\[= \text{Res}_{D_{123}}\left[\frac{c \text{anomaly term}}{(z_1-z_2)^2(z_2-z_3)^2}\right]\]
-
-This gives a nontrivial cohomology class when $c \neq 0$.
-
-\emph{Step~3.}
-
-The Virasoro is NOT strictly Koszul but curved Koszul, with curvature proportional to the central charge $c$ (from the $(z-w)^{-4}$ pole in the $T(z)T(w)$ OPE), vanishing at $c = 0$.
-
-\emph{Result} (for $X = \mathbb{P}^1$, where $H^1(X) = 0$):
-\[H^n(\barBgeom(\text{Vir}_c)) = \begin{cases}
-\mathbb{C} & n = 0 \\
-0 & n = 1 \\
-\mathbb{C} \cdot [c] & n = 2 \\
-\text{higher anomaly classes} & n > 2
-\end{cases}\]
-
-We conjecture that the Koszul dual is $W_\infty$ (when properly interpreted with curvature); see Remark~\ref{rem:koszul-table-status} for the status of this identification.
-\end{example}
-
-\section{The WZW model}
-
-\begin{example}[WZW bar complex]
-For the WZW model $\widehat{\mathfrak{g}}_k$ at level $k$:
-
-\noindent\emph{Generators.} Currents $J^a(z)$, $a = 1, \ldots, \dim \mathfrak{g}$.
-
-\noindent\emph{OPE.}
-\[J^a(z)J^b(w) = \frac{k\delta^{ab}}{(z-w)^2} + \frac{f^{abc}J^c(w)}{z-w} + \text{regular}\]
-
-\noindent\emph{Bar complex.}
-
-Degree 0: $\barBgeom^0 = \mathbb{C}$
-
-Degree 1: 
-\[\barBgeom^1 = \text{span}\{J^a_1 \otimes J^b_2 \otimes \eta_{12}\}\]
-
-Differential:
-\[d(J^a_1 \otimes J^b_2 \otimes \eta_{12}) = k\delta^{ab} \cdot \mathbf{1} + f^{abc}J^c \otimes \eta_{12}\]
-
-The first term gives the level, the second the Lie algebra structure.
-
-Degree 2:
-\[\barBgeom^2 \ni J^a_1 \otimes J^b_2 \otimes J^c_3 \otimes \eta_{12} \wedge \eta_{23}\]
-
-The differential encodes the Jacobi identity via:
-\[d(J^a \otimes J^b \otimes J^c \otimes \eta_{12} \wedge \eta_{23}) = \text{Jacobi terms}\]
-
-\noindent\emph{Cohomology.}
-\[H^*(\barBgeom(\widehat{\mathfrak{g}}_k)) = H^*(\mathfrak{g}, \mathbb{C}) \otimes \mathbb{C}[k]\]
-where $H^*(\mathfrak{g}, \mathbb{C})$ is Lie algebra cohomology.
-
-\noindent\emph{Koszul dual.} By Feigin--Frenkel duality, the Koszul dual is $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ (the affine algebra at the dual level). The conjectural relationship to the quantum group $U_q(\mathfrak{g})$ with $q = e^{\pi i/(k+h^\vee)}$ arises via the Kazhdan--Lusztig equivalence of categories, but this is a representation-theoretic statement, not a direct Koszul duality of algebras.
-\end{example}
-
+The Virasoro bar complex is computed in
+\S\ref{sec:virasoro-bar-moduli-main} above and the WZW bar complex in
+Chapter~\ref{chap:kac-moody-koszul}.  Here we prove the key identification with string BRST
+cohomology.
 
 \subsection{Physical states}
  
@@ -1903,169 +1830,12 @@ H^*_{\mathrm{BRST}}(\mathrm{String}) \cong H^*(\bar{B}_{\mathrm{geom}}(\mathrm{V
 The curvature of this Koszul duality is $\mu_0 = c \cdot \mathbf{1} = 26$: the central charge appears as the obstruction to the bar complex being strictly quadratic, manifesting as the fourth-order pole in $T(z)T(w)$.
 \end{proof}
  
-\section{$\mathcal{W}$-algebras and their bar complexes}
-
-\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebras via Drinfeld--Sokolov reduction \cite{FF, Ara12}; \ClaimStatusProvedElsewhere]\label{thm:w-algebras}
-\leavevmode\\
-Following Arakawa \cite{Ara12}, the W-algebra
-$\mathcal{W}_k(\mathfrak{g}, f)$ is constructed as follows:
-
-\noindent\emph{1. BRST complex.}
-\[\mathcal{W}_k(\mathfrak{g}, f) = H^{\bullet}_{\text{BRST}}(V^k(\mathfrak{g}) \otimes \mathcal{F})\]
-where:
-\begin{itemize}
-\item $V^k(\mathfrak{g})$: Universal affine vertex algebra at level $k$
-\item $\mathcal{F}$: Fermionic ghosts for $\mathfrak{n}_+ \subset \mathfrak{g}$
-\item BRST charge: $Q = \oint (J^a b_a + \frac{1}{2}f^{abc}b_a b_b c_c) dz$
-\end{itemize}
-
-\noindent\emph{2. Associated variety (Arakawa--Moreau).}
-\[\mathcal{X}_{\mathcal{W}_k(\mathfrak{g}, f)} = \overline{\mathbb{S}_f} \subset \mathfrak{g}^*\]
-where $\mathbb{S}_f$ is the Slodowy slice through $f$.
-
-\noindent\emph{3. Representation theory.}
-\begin{itemize}
-\item Admissible level: $k = -h^{\vee} + \frac{p}{q}$ with $(p,q) = 1$, $p \geq h^{\vee}$, $q \geq h^{\vee}$
-\item Category $\mathcal{O}$ (Definition~\ref{def:category-O}): Highest weight modules with finite-dimensional weight spaces
-\item Rationality (Arakawa~\cite{Ara07}): $\mathcal{W}_k(\mathfrak{g}, f)$ is rational $\Leftrightarrow$ $f$ principal and $k$ admissible
-\end{itemize}
-\end{theorem}
-
-\begin{example}[Principal W-algebra for \texorpdfstring{$\mathfrak{sl}_3$}{sl3}]\label{ex:w-sl3}
-For $\mathfrak{g} = \mathfrak{sl}_3$ with principal nilpotent $f = e_{-\alpha_1} + e_{-\alpha_2}$:
-
-\noindent\emph{Generators.} $W^{(2)}$ (Virasoro), $W^{(3)}$ (spin-3 current).
-
-\noindent\emph{OPE structure.}
-\begin{align}
-W^{(2)}(z)W^{(2)}(w) &\sim \frac{c/2}{(z-w)^4} + \frac{2W^{(2)}(w)}{(z-w)^2} + \frac{\partial W^{(2)}(w)}{z-w} \\
-W^{(2)}(z)W^{(3)}(w) &\sim \frac{3W^{(3)}(w)}{(z-w)^2} + \frac{\partial W^{(3)}(w)}{z-w} \\
-W^{(3)}(z)W^{(3)}(w) &\sim \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(z-w)^3} + \frac{\frac{3}{10}\partial^2 T(w) + \frac{16}{22+5c}\Lambda(w)}{(z-w)^2} + \cdots
-\end{align}
-where the central charge of the $\mathcal{W}_3$ algebra depends on the level $k$. For $\mathcal{W}_3$ minimal models with parameter $k \in \mathbb{Z}_{\geq 0}$, the central charge is $c = 2 - 24/((k+3)(k+4))$; see Example~\ref{ex:w3-ope-structure} for the general parametrization.
-
-The geometric bar complex decomposes these OPEs via residues:
-\begin{align}
-\text{Res}_{D_{ij}}[W^{(2)}_i \otimes W^{(3)}_j \otimes \eta_{ij}] &= 3W^{(3)} \\
-\text{Res}_{D_{ij}}[W^{(3)}_i \otimes W^{(3)}_j \otimes \eta_{ij}^3] &= 2W^{(2)} \otimes W^{(2)}
-\end{align}
-
-The residues exhibit the $\mathfrak{sl}_3$ Toda field theory structure within the W-algebra.
-\end{example}
-
- 
-\section{The poset of $\mathcal{W}$-algebras from Slodowy slices}
- 
-\subsection{Nilpotent orbits and Slodowy slices}
- 
-\begin{definition}[Slodowy slice]\label{def:slodowy}
-For a nilpotent element $e \in \mathfrak{g}$, the \emph{Slodowy slice} is:
-\[
-\mathcal{S}_e = e + \text{Ker}(\text{ad}(f))
-\]
-where $(e,h,f)$ form an $\mathfrak{sl}_2$-triple.
-This transversely intersects all nilpotent orbits in the closure $\overline{\mathcal{O}_e}$.
-\end{definition}
- 
-\begin{theorem}[Poset of \texorpdfstring{$\mathcal{W}$}{W}-algebras \cite{Arakawa17}; \ClaimStatusProvedElsewhere]\label{thm:w-poset}
-The W-algebras form a poset indexed by nilpotent orbits in $\mathfrak{g}$:
-\[
-\mathcal{O}_1 \subseteq \overline{\mathcal{O}_2} \implies 
-\text{Hom}_{\text{chiral}}(\mathcal{W}^k(\mathfrak{g}, e_2), \mathcal{W}^k(\mathfrak{g}, e_1))
-\]
-with:
-\begin{itemize}
-\item Maximal element: $\mathcal{W}^k(\mathfrak{g}, e_{\text{prin}})$ (principal nilpotent)
-\item Minimal element: $\mathcal{W}^k(\mathfrak{g}, 0) = \widehat{\mathfrak{g}}_k$ (zero nilpotent)
-\end{itemize}
-\end{theorem}
- 
-\begin{proof}[Geometric construction]
-Following Kontsevich's philosophy, we realize this through jet geometry.
- 
-\emph{Step~1.} Consider the jet bundle:
-\[
-J^{\infty}(\mathcal{S}_e) = \varprojlim_{n} J^n(\mathcal{S}_e)
-\]
-This carries a natural Poisson structure from the Kirillov--Kostant form on $\mathfrak{g}^*$.
- 
-\emph{Step~2.} The W-algebra $\mathcal{W}^k(\mathfrak{g}, e)$ is the chiral 
-quantization of $J^{\infty}(\mathcal{S}_e)$ with the Poisson bracket:
-\[
-\{W^{(s)}_m, W^{(t)}_n\} = \sum_{u} c_{st}^u(m,n) W^{(u)}_{m+n} + k \cdot \text{anomaly}
-\]
- 
-\emph{Step~3.} For $\mathcal{O}_1 \subseteq \overline{\mathcal{O}_2}$, the 
-transverse slice $\mathcal{S}_{e_1}$ meets $\mathcal{O}_2$, inducing:
-\[
-\mathcal{S}_{e_2} \hookrightarrow \mathcal{S}_{e_1}
-\]
-This lifts to a chiral algebra homomorphism after quantization.
-\end{proof}
- 
-\begin{definition}[\texorpdfstring{$\mathcal{W}$}{W}-algebra via BRST]
-For a simple Lie algebra $\mathfrak{g}$, the W-algebra $\mathcal{W}^{-h^\vee}(\mathfrak{g})$ at critical 
-level is:
-\[
-\mathcal{W}^{-h^\vee}(\mathfrak{g}) = H^*_{\text{BRST}}(\widehat{\mathfrak{g}}_{-h^\vee}, d_{\text{DS}})
-\]
-where $d_{\text{DS}}$ is the Drinfeld--Sokolov BRST differential associated to a principal $\mathfrak{sl}_2$ 
-embedding.
-\end{definition}
- 
-\begin{remark}[Generators]
-$\mathcal{W}^{-h^\vee}(\mathfrak{g})$ has generators $W^{(s)}$ of spin $s$ for each exponent of $\mathfrak{g}$. 
-For $\mathfrak{g} = \mathfrak{sl}_n$, spins are $s = 2, 3, \ldots, n$.
-\end{remark}
- 
-\subsection{Bar complex and flag variety}
-
-\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra bar complex; \ClaimStatusProvedHere]
-\label{thm:w-algebra-bar-flag}
-\leavevmode\\
-For the critical-level W-algebra $\mathcal{W}^{-h^\vee}(\mathfrak{g})$,
-there is a canonical isomorphism
-\[
-H^*(\bar{B}_{geom}(\mathcal{W}^{-h^\vee}(\mathfrak{g}))) \cong H^*_{ch}(G/B).
-\]
-where $H^*_{ch}(G/B)$ is the chiral de Rham cohomology of the flag variety.
-\end{theorem}
-
-\begin{proof}[Construction via quantum DS reduction]
-\emph{Step~1.} Start with affine Kac--Moody $\hat{\mathfrak{g}}_{-h^\vee}$ at critical level.
-
-\emph{Step~2.} Apply BRST reduction:
-$\mathcal{W}^{-h^\vee}(\mathfrak{g}) = H^*_{BRST}(\hat{\mathfrak{g}}_{-h^\vee}, d_{DS})$
-where $d_{DS}$ is the Drinfeld--Sokolov differential.
-
-\emph{Step~3.} Bar complex of $\hat{\mathfrak{g}}_{-h^\vee}$:
-$\bar{B}_{geom}(\hat{\mathfrak{g}}_{-h^\vee}) \simeq \Omega^*(\widehat{G/B})$
-functions on affine flag variety.
-
-\emph{Step~4.} DS reduction cuts down to finite-dimensional flag variety:
-$H^*_{DS}(\Omega^*(\widehat{G/B})) \simeq \Omega^*_{ch}(G/B)$
-
-\emph{Step~5.} Passing to cohomology gives the result.
-\end{proof}
- 
-\subsection{\texorpdfstring{Explicit example: $\mathfrak{sl}_2$}{Explicit example: sl-2}}
- 
-For $\mathfrak{g} = \mathfrak{sl}_2$, the DS reduction at level $k=0$ gives the Virasoro algebra at $c = -2$ (since $c = 1 - 6(k+1)^2/(k+2)$ evaluates to $-2$ at $k=0$; note $k=-2$ is the critical level $k = -h^\vee$ where the formula has a pole):
-
-\begin{proposition}[\texorpdfstring{$\mathfrak{sl}_2$}{sl2} \texorpdfstring{$\mathcal{W}$}{W}-algebra \cite{FF}; \ClaimStatusProvedElsewhere]
-\label{prop:sl2-w-algebra-flag}
-$\mathcal{W}^{0}(\mathfrak{sl}_2) = \text{Vir}_{-2}$ with flag variety $G/B = \mathbb{P}^1$. The bar complex gives:
-\[
-H^n(\bar{B}_{\text{geom}}(\text{Vir}_{-2})) = 
-\begin{cases}
-\mathbb{C} & n = 0, 2 \\
-0 & \text{otherwise}
-\end{cases}
-\]
-matching $H^*(\mathbb{P}^1)$.
-\end{proposition}
- 
 \section{Wakimoto modules}
+
+The $\mathcal{W}$-algebra construction via Drinfeld--Sokolov reduction,
+its Slodowy slice geometry, and the nilpotent orbit poset are
+developed in Chapter~\ref{chap:w-algebras}.  Here we record how the Wakimoto
+free-field realization connects to the bar complex.
 
 \subsection{Setup}
  

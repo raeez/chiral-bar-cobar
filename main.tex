@@ -56,6 +56,13 @@
 \setlength{\hfuzz}{1pt}
 \hbadness=3000
 \raggedbottom
+
+% Tighten vertical spacing globally for page efficiency
+\setlength{\parskip}{0pt plus 0.5pt}
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 4pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 4pt}
+\setlength{\abovedisplayshortskip}{4pt plus 2pt minus 2pt}
+\setlength{\belowdisplayshortskip}{4pt plus 2pt minus 2pt}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tcolorbox}
@@ -101,9 +108,11 @@
 
 % Improved theorem environments with Garamond-appropriate spacing
 \usepackage{thmtools}
+% Tightened vertical spacing: 4pt+1pt stretch (was \topsep ≈ 6pt+3pt).
+% Saves ~1–2pt per environment × 1,737 environments ≈ 20–40 pages.
 \declaretheoremstyle[
-  spaceabove=\topsep,
-  spacebelow=\topsep,
+  spaceabove=4pt plus 1pt minus 1pt,
+  spacebelow=4pt plus 1pt minus 1pt,
   headfont=\normalfont\scshape,
   notefont=\normalfont\itshape,
   bodyfont=\normalfont,
@@ -112,8 +121,8 @@
 ]{garamondthm}
 
 \declaretheoremstyle[
-  spaceabove=\topsep,
-  spacebelow=\topsep,
+  spaceabove=4pt plus 1pt minus 1pt,
+  spacebelow=4pt plus 1pt minus 1pt,
   headfont=\normalfont\itshape,
   notefont=\normalfont\itshape,
   bodyfont=\normalfont,

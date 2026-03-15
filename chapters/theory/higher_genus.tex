@@ -1,4 +1,3 @@
-% Status and semantic-level disputes are settled by Chapter 34 (concordance.tex).
 \chapter{Higher genus}
 \label{chap:higher-genus}
 
@@ -2331,20 +2330,9 @@ Parts~(a)--(d) of Theorem~\ref{thm:quantum-arnold-relations}.
 
 \subsection{\texorpdfstring{Homology and cohomology of $\Sigma_g$}{Homology and cohomology of Sigma-g}}
 
-\begin{theorem}[Topological structure {\cite{Fay73}}; \ClaimStatusProvedElsewhere]
-\label{thm:topology-genus-g}
-A closed Riemann surface $\Sigma_g$ of genus $g$ has:
-\begin{align}
-H_0(\Sigma_g, \mathbb{Z}) &\cong \mathbb{Z}\\
-H_1(\Sigma_g, \mathbb{Z}) &\cong \mathbb{Z}^{2g}\\
-H_2(\Sigma_g, \mathbb{Z}) &\cong \mathbb{Z}
-\end{align}
-
-A canonical basis for $H_1(\Sigma_g, \mathbb{Z})$ consists of cycles $\{A_1, \ldots, A_g, B_1, \ldots, B_g\}$ with intersection form:
-\begin{equation}
-A_\alpha \cap B_\beta = \delta_{\alpha\beta}, \quad A_\alpha \cap A_\beta = B_\alpha \cap B_\beta = 0
-\end{equation}
-\end{theorem}
+\begin{convention}[Homology basis]\label{thm:topology-genus-g}
+We fix a canonical symplectic basis $\{A_1, \ldots, A_g, B_1, \ldots, B_g\}$ for $H_1(\Sigma_g, \mathbb{Z}) \cong \mathbb{Z}^{2g}$ with intersection form $A_\alpha \cap B_\beta = \delta_{\alpha\beta}$, $A_\alpha \cap A_\beta = B_\alpha \cap B_\beta = 0$.
+\end{convention}
 
 \subsection{Holomorphic differentials and periods}
 \label{sec:holomorphic-forms-genus-g}
@@ -2474,41 +2462,10 @@ is the Szegő kernel for projecting onto holomorphic differentials
 \end{enumerate}
 \end{theorem}
 
-\subsection{Logarithmic derivative and configuration integrals}
-
-\begin{definition}[Genus-\texorpdfstring{$g$}{g} logarithmic forms]
-\label{def:log-forms-genus-g-complete}
-On $\overline{C}_n(\Sigma_g)$, define:
-\begin{equation}
-\eta_{ij}^{(g)} = d \log E(p_i, p_j)
-\end{equation}
-
-Explicitly, this is:
-\begin{align}
-\eta_{ij}^{(g)} &= \frac{\partial}{\partial p_i} \log E(p_i, p_j) \; \omega^{(i)} - \frac{\partial}{\partial p_j} \log E(p_i, p_j) \; \omega^{(j)}\\
-&= \left[\frac{1}{E(p_i, p_j)} \frac{\partial E}{\partial p_i}\right] \omega^{(i)} - \left[\frac{1}{E(p_i, p_j)} \frac{\partial E}{\partial p_j}\right] \omega^{(j)}
-\end{align}
-where $\omega^{(i)}, \omega^{(j)}$ are local holomorphic differentials near $p_i, p_j$.
-\end{definition}
-
-\begin{theorem}[Residue formula for prime form {\cite{Fay73}}; \ClaimStatusProvedElsewhere]
-\label{thm:residue-prime-form}
-Near the diagonal $p_i \to p_j$, the logarithmic form has expansion:
-\begin{equation}
-\eta_{ij}^{(g)} = \frac{dz}{z} + \text{(holomorphic terms)}
-\end{equation}
-in local coordinate $z = p_i - p_j$.
-
-The residue:
-\begin{equation}
-\text{Res}_{p_i = p_j} \eta_{ij}^{(g)} = 1
-\end{equation}
-is independent of genus, ensuring compatibility of bar differentials across genera.
-\end{theorem}
-
-% ================================================================
-% SECTION 4.12: QUANTUM CORRECTIONS IN BAR DIFFERENTIAL
-% ================================================================
+The genus-$g$ logarithmic forms $\eta_{ij}^{(g)} = d\log E(p_i, p_j)$
+are defined in Definition~\ref{def:higher-genus-log-forms}; their
+residue $\operatorname{Res}_{p_i = p_j}\eta_{ij}^{(g)} = 1$ is
+independent of genus (Fay~\cite{Fay73}).
 
 \section{Quantum corrections in the bar differential}
 \label{sec:quantum-corrections-bar}
@@ -2906,6 +2863,10 @@ The constant shift $-2\pi i$ in the coefficient function produces a constant 1-f
 
 \subsection{\texorpdfstring{Arnold relations at genus $1$}{Arnold relations at genus 1}}
 
+The genus-$1$ Arnold relation is the $g=1$ case of
+Theorem~\ref{thm:quantum-arnold-relations}(b): the correction term
+involves pullbacks of $H^1(E_\tau)$ generators.
+
 \begin{theorem}[Genus-1 Arnold relation; \ClaimStatusProvedHere]
 \label{thm:arnold-genus1}
 For three points $z_1, z_2, z_3 \in E_\tau$:
@@ -2913,60 +2874,10 @@ For three points $z_1, z_2, z_3 \in E_\tau$:
 \eta_{12}^{(1)} \wedge \eta_{23}^{(1)} + \eta_{23}^{(1)} \wedge \eta_{31}^{(1)}
 + \eta_{31}^{(1)} \wedge \eta_{12}^{(1)} = \sum_{\substack{(i,j,k) \\ \text{cyclic}}} \bigl(\pi_i^*\alpha \wedge \pi_j^*\beta - \pi_i^*\beta \wedge \pi_j^*\alpha\bigr)
 \end{equation}
-where $\alpha = [dz]$ and $\beta = [d\bar{z}]$ are the generators of $H^1(E_\tau)$.
-
-The right side is \emph{non-zero} and involves all three points symmetrically. This is the quantum correction (cf.\ Totaro, Bezrukavnikov on cohomology of configuration spaces of curves).
-
-At genus 0, the Arnold relation held exactly: RHS = 0.
-At genus 1, the correction reflects the non-trivial $H^1(E_\tau)$.
+where $\alpha = [dz]$ and $\beta = [d\bar{z}]$ are the generators of
+$H^1(E_\tau)$.  See Theorem~\textup{\ref{thm:quantum-arnold-relations}}
+for the proof and generalization to all genera.
 \end{theorem}
-
-\begin{proof}
-
-\emph{Step 1: Expand the wedge products}
-
-Write:
-\begin{equation}
-\eta_{ij}^{(1)} = A_{ij} dz_i + B_{ij} d\bar{z}_i + C_{ij} dz_j + D_{ij} d\bar{z}_j
-\end{equation}
-
-where $A_{ij}, B_{ij}, C_{ij}, D_{ij}$ are functions of $z_i, z_j, \tau$.
-
-\emph{Step 2: Compute the theta contribution}
-
-From $\vartheta_1(z|\tau) = 2q^{1/8}\sin(\pi z) \prod_{n=1}^{\infty} (\cdots)$:
-\begin{equation}
-\frac{\partial}{\partial z_i} \log \vartheta_1\left(\frac{z_i - z_j}{2\pi i}\right) 
-= \frac{1}{2i} \cot\left(\frac{\pi(z_i - z_j)}{2}\right) + \text{(elliptic corrections)}
-\end{equation}
-
-\emph{Step 3: Compute cross-terms}
-
-The wedge product $\eta_{12}^{(1)} \wedge \eta_{23}^{(1)}$ involves terms like:
-\begin{equation}
-A_{12} B_{23} (dz_1 \wedge d\bar{z}_2) + \text{(other combinations)}
-\end{equation}
-
-When we sum cyclically over $(1,2,3) \to (2,3,1) \to (3,1,2)$, most terms cancel due to antisymmetry.
-
-\emph{Step 4: Surviving terms}
-
-The leading correction comes from cross-terms between the theta part and the $E_2$ part, not from $E_2 \times E_2$.  Schematically, the Arnold 3-form decomposes as:
-\begin{equation}
-\mathcal{A}_3^{(1)} = \underbrace{\mathcal{A}_3^{(\theta \times \theta)}}_{\text{genus-0 type}} + \underbrace{\mathcal{A}_3^{(\theta \times E_2)}}_{\text{leading correction}} + \underbrace{\mathcal{A}_3^{(E_2 \times E_2)}}_{O(E_2^2)}
-\end{equation}
-
-The theta $\times$ theta contribution vanishes by the genus-0 Arnold relation for the meromorphic part.  The theta $\times$ $E_2$ cross-terms produce a $(1,1)$-form via the non-holomorphicity of $\partial_{\bar{z}} \log |\vartheta_1|^2 = \pi/(2\,\mathrm{Im}(\tau))$, giving a contribution linear in $E_2$.
-
-\emph{Step 5: Final result}
-
-After summing the cross-terms cyclically and using the heat equation $\partial_\tau \vartheta_1 = \frac{1}{4\pi i}\partial_z^2 \vartheta_1$ together with the residue computation at the theta zero, one obtains:
-\begin{equation}
-\mathcal{A}_3^{(1)} = \sum_{\substack{(i,j,k) \\ \text{cyclic}}} \bigl(\pi_i^*\alpha \wedge \pi_j^*\beta - \pi_i^*\beta \wedge \pi_j^*\alpha\bigr)
-\end{equation}
-
-This is the \emph{genus-1 quantum correction}: the Arnold relation acquires a $(1,1)$-form correction reflecting the non-trivial topology of $E_\tau$.  The correction is cyclically symmetric in the three points, as required by the symmetry of the left-hand side.
-\end{proof}
 
 \subsection{Genus-1 bar complex}
 

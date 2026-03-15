@@ -2,7 +2,12 @@
 \label{chap:config-spaces}
 
 
-The bar differential involves residues of meromorphic forms on products of curves.  To make this rigorous---to give meaning to the limit as marked points collide---requires a compactification of the configuration space $C_n(X) = X^n \setminus \Delta$ that remembers the \emph{direction} and \emph{rate} of approach along each diagonal.  The Fulton--MacPherson compactification provides exactly this: it replaces each collision locus with a screen recording the relative positions and rates, producing a smooth variety with normal crossing boundary on which the propagators $\eta_{ij} = d\log(z_i - z_j)$ extend to logarithmic forms and the Arnold relations among triple collisions force $d^2 = 0$.
+What does the configuration space of $n$ distinct points on a curve
+look like, and what structure does it carry?  The space
+$C_n(X) = X^n \setminus \Delta$ of distinct labeled points is open,
+and the bar differential requires us to give meaning to the limit as
+marked points collide.  This requires a compactification that remembers
+the \emph{direction} and \emph{rate} of approach along each diagonal.  The Fulton--MacPherson compactification provides exactly this: it replaces each collision locus with a screen recording the relative positions and rates, producing a smooth variety with normal crossing boundary on which the propagators $\eta_{ij} = d\log(z_i - z_j)$ extend to logarithmic forms and the Arnold relations among triple collisions force $d^2 = 0$.
 
 \section{Fulton--MacPherson compactification}
 \label{sec:FM-compactification}
@@ -2089,50 +2094,17 @@ Explicitly:
 \end{theorem}
 
 \begin{proof}
-On $C_n(\mathbb{C}) = \mathbb{C}^n \setminus \bigcup_{i<j}\{z_i = z_j\}$, define closed $1$-forms $\omega_{ij} = d\log(z_i - z_j)$.  The classes $[\omega_{ij}]$ for $i < j$ are independent in $H^1$, giving $\dim H^1 = \binom{n}{2}$.  For the cyclic sum, expanding each term via
-$\omega_{ij} \wedge \omega_{jk} = \frac{(dz_i - dz_j)\wedge(dz_j - dz_k)}{(z_i - z_j)(z_j - z_k)}$
-and summing cyclically, the coefficient of each $2$-form $dz_a \wedge dz_b$ reduces to the partial fraction identity
-\[
-\frac{1}{(z_i - z_j)(z_j - z_k)} + \frac{1}{(z_j - z_k)(z_k - z_i)} + \frac{1}{(z_k - z_i)(z_i - z_j)} = 0,
-\]
-which holds because the numerator of the common-denominator expression is $(z_k - z_i) + (z_i - z_j) + (z_j - z_k) = 0$.  Therefore $\omega_{ij} \wedge \omega_{jk} + \omega_{jk} \wedge \omega_{ki} + \omega_{ki} \wedge \omega_{ij} = 0$. \qedhere
+This is the same partial-fractions argument as in Theorem~\ref{thm:arnold-relations}.
 \end{proof}
 
 \begin{corollary}[Nilpotency from Arnold relations; \ClaimStatusProvedHere]
 \label{cor:nilpotency-arnold-comprehensive}
-The Arnold relations ensure that the bar differential $d = \sum_{D} \text{Res}_D$ 
+The Arnold relations ensure that the bar differential $d = \sum_{D} \text{Res}_D$
 satisfies $d^2 = 0$.
 \end{corollary}
 
 \begin{proof}
-The bar differential has the form:
-\begin{equation}
-d = \sum_{i < j} \text{Res}_{D_{ij}}
-\end{equation}
-where $\text{Res}_{D_{ij}}$ is the residue operator at the divisor $D_{ij} = \{z_i = z_j\}$.
-
-Computing $d^2$:
-\begin{align}
-d^2 &= \sum_{i<j} \sum_{k<\ell} \text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}}\\
-&= \sum_{i<j<k} \left[\text{Res}_{D_{ij}} \circ \text{Res}_{D_{jk}} + \text{Res}_{D_{jk}} 
-\circ \text{Res}_{D_{ki}} + \text{Res}_{D_{ki}} \circ \text{Res}_{D_{ij}}\right] + 
-\text{(commuting terms)}
-\end{align}
-
-The commuting terms (where indices are disjoint) satisfy:
-\begin{equation}
-\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = \text{Res}_{D_{k\ell}} \circ 
-\text{Res}_{D_{ij}} \quad \text{if } \{i,j\} \cap \{k,\ell\} = \emptyset
-\end{equation}
-and thus cancel in pairs.
-
-For the non-commuting terms with shared indices, the Arnold relations give:
-\begin{equation}
-\text{Res}_{D_{ij}} \circ \text{Res}_{D_{jk}} + \text{Res}_{D_{jk}} \circ \text{Res}_{D_{ki}} 
-+ \text{Res}_{D_{ki}} \circ \text{Res}_{D_{ij}} = 0
-\end{equation}
-
-Therefore $d^2 = 0$.
+See Theorem~\ref{thm:arnold-iff-nilpotent} for the complete proof of the equivalence between Arnold relations and $d_{\mathrm{residue}}^2 = 0$.
 \end{proof}
 
 \subsection{\texorpdfstring{Explicit computations for $n = 3, 4, 5$}{Explicit computations for n = 3, 4, 5}}
