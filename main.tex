@@ -652,61 +652,69 @@ Throughout this manuscript:
 
 % ======================================================================
 %
-%                       INTRODUCTION
+%                       OVERTURE
 %
-% The frame chapter. The entire theory previewed through a single
-% example: bar complex, Koszul dual, curvature, genus tower, A-hat genus,
-% complementarity. Chriss--Ginzburg style: example first, theory after.
+% As the Steinberg variety presents the Hecke algebra, the Heisenberg
+% atom presents the categorical logarithm.  One object; all structure
+% visible.  Example first, theory after.
 %
 % ======================================================================
+
+\part*{Overture}
+\addcontentsline{toc}{part}{Overture}
 
 \include{chapters/frame/heisenberg_frame}
 
 % ======================================================================
 %
-%                       PART 1: THEORY
+%                       PART I: THE ALGEBRAIC ENGINE
 %
-% The abstract machine. Geometric bar-cobar duality for chiral algebras,
-% realized through configuration space integrals, extended to all genera.
-%
-% Examples appear here too — but they serve the development of the theory
-% (illustrating constructions, verifying definitions, motivating the next
-% step). They are in service of the argument.
+% The proved core.  Five theorems = four properties of the categorical
+% logarithm (existence, invertibility, branch structure, leading
+% coefficient) plus the coefficient ring.  Nothing conjectural enters.
 %
 % ======================================================================
 
-\part{Core Theory}
+\part{The Algebraic Engine}
 
 \noindent
-In Chapter~\ref{ch:heisenberg-frame}, we saw the bar complex,
-Koszul duality, genus-$1$ curvature, and the $\hat{A}$-genus tower
-for the Heisenberg algebra.
+The Heisenberg atom of the Overture exhibited bar cohomology, Koszul
+duality, genus-$1$ curvature, and the $\hat{A}$-genus in a single
+object---as the Steinberg variety exhibits nilpotent orbits, Springer
+fibres, and the Hecke algebra in a single geometric construction.
+Part~I proves these phenomena in full generality.
 
-Part~I is the proved modular Koszul core:
-it establishes these results in full generality while marking the exact
-boundary beyond which the full modular homotopy theory remains
-programmatic.
+The bar construction is the categorical logarithm: it maps
+multiplicative OPE data to an additive bar differential via the
+integral kernel $d\log(z_i - z_j)$.  Arnold's three-term identity
+forces $d^2 = 0$, exactly as the functional equation of the logarithm
+forces additivity.  The five main theorems are the four properties of
+a logarithm plus the coefficient ring:
+\begin{enumerate}[label=\textbf{(\Alph*)},leftmargin=2.2em]
+\item \textbf{Existence.}  The geometric bar-cobar adjunction,
+  intertwined with Verdier duality on $\operatorname{Ran}(X)$.
+\item \textbf{Invertibility.}  On the Koszul locus the cobar inverts
+  the bar: $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$, with the
+  spectral sequence collapsing at~$E_2$.
+\item \textbf{Branch structure.}  The deformation and obstruction
+  complexes $Q_g(\cA)$ and $Q_g(\cA^!)$ sit as complementary
+  Lagrangians inside
+  $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+\item \textbf{Leading coefficient.}  The modular characteristic
+  $\kappa(\cA)$ is universal, additive, anti-symmetric; its
+  generating function is the $\hat{A}$-genus.
+\end{enumerate}
+\noindent
+\textbf{(H) The coefficient ring.}  The chiral Hochschild cochain
+complex $\ChirHoch^*(\cA)$ is polynomial on the Koszul locus and
+dual to $\ChirHoch^*(\cA^!)$.
 
-Its governing claim is that on a curve the bar-cobar transform is
-already modular: genus enters through the same configuration-space
-logarithm, Verdier duality, and clutching formalism that define
-genus-$0$ duality, so the genus tower is internal to the transform
-rather than an external correction.
-
-The argument proceeds through four stages: classical Koszul duality is
-the point-level shadow; configuration spaces provide the geometric
-kernel; bar-cobar duality and Verdier intertwining give the genus-$0$
-equivalence; higher genus internalizes the same construction through
-Hodge-theoretic curvature and modular-operadic clutching.  The proved
-spine consists of Theorem~A (bar-cobar duality intertwined with
-Verdier duality on $\operatorname{Ran}(X)$), Theorem~B (higher-genus
-inversion on the Koszul locus, with coderived persistence off it),
-Theorem~C (Lagrangian complementarity of deformation and obstruction),
-Theorem~D$_{\mathrm{scal}}$ and Theorem~D$_\Delta$ (the scalar and
-spectral characteristic layers), the higher-genus PBW entry theorem
-for affine Kac--Moody, Virasoro, and principal finite-type
-$\mathcal{W}$-algebras, and the universal Maurer--Cartan class
-$\Theta_{\cA}$ constructed by Theorem~\ref{thm:mc2-full-resolution}.
+\medskip\noindent
+The argument has four stages: classical Koszul duality is the
+point-level shadow; configuration spaces provide the geometric kernel;
+bar-cobar duality and Verdier intertwining give the genus-$0$
+equivalence; higher genus internalizes the construction through
+Hodge-theoretic curvature and modular-operadic clutching.
 
 % --------------------------------------------------
 % Chapter 1: Introduction
@@ -807,25 +815,20 @@ $\Theta_{\cA}$ constructed by Theorem~\ref{thm:mc2-full-resolution}.
 % \input (not \include): continues within the preceding chapter
 \input{chapters/theory/hochschild_cohomology}
 
-% E_n Koszul duality: higher-dimensional bar complexes,
-% Totaro relations, connection to Ayala--Francis, the n=2 case.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
-\input{chapters/theory/en_koszul_duality}
-
-% Derived structures and geometric Langlands: critical-level bar complex,
-% oper space, root-of-unity periodic CDG, KL from bar-cobar.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
-\input{chapters/theory/derived_langlands}
+% en_koszul_duality and derived_langlands: moved to Part III (Bridges),
+% where the E_n hierarchy and derived Langlands naturally connect to
+% BV/BRST, physical origins, and the holomorphic-topological programme.
 
 % ======================================================================
 %
-%                       PART 2: EXAMPLES
+%                       PART II: THE STANDARD LANDSCAPE
 %
-% Part II: Examples via lattice constructions and derived operations.
+% What the engine produces.  Each family computed through the full
+% programme: bar complex, Koszul dual, genus tower, modular characteristic.
 %
 % ======================================================================
 
-\part{Complete Portraits}
+\part{The Standard Landscape}
 
 \noindent
 In Chapter~\ref{ch:heisenberg-frame}, we computed the bar complex, Koszul
@@ -982,106 +985,93 @@ inversion, not type exchange.
 
 % ======================================================================
 %
-%                PART 3: CONNECTIONS AND APPLICATIONS
+%                PART III: BRIDGES AND PROGRAMMES
 %
-% Brief treatments of how the theory connects to adjacent programs.
-% Not fully developed — further directions, not self-contained chapters.
+% The categorical logarithm does not live in isolation.  Its bar
+% differential is the BRST differential of a gauge theory; its genus
+% tower is the string perturbation series; its E_n hierarchy connects
+% curves to higher-dimensional manifolds; its critical-level
+% specialization recovers the algebra of opers.  Part III traces
+% these bridges — each a theorem-level or programme-level connection
+% between the algebraic engine and adjacent mathematics.
 %
 % ======================================================================
 
-\part{Synthesis and Programmes}
+\part{Bridges and Programmes}
 
 \noindent
-The Heisenberg frame chapter (Chapter~\ref{ch:heisenberg-frame}) demonstrated
-that a single chiral algebra encodes bar cohomology, Koszul duality, genus
-corrections, and an index-theoretic $\hat{A}$-genus simultaneously.
+The bar complex of a chiral algebra does not belong to vertex algebra
+theory alone.  Its differential is the BRST differential of a gauge
+theory on the worldsheet (Chapter~\ref{ch:bv-brst}).  Its genus tower
+is the string perturbation series, with the $\hat{A}$-genus encoding
+Bernoulli asymptotics of free energies.  Its Feynman-diagrammatic
+expansion recovers Kontsevich graph integrals and the weight systems
+of knot invariants.  The Costello--Li construction of chiral algebras
+from four-dimensional gauge theories provides the factorization-algebra
+target against which Chapter~\ref{ch:ht-boundary} formulates boundary
+comparisons.  The $\En$ hierarchy lifts the bar-cobar mechanism from
+curves to higher-dimensional manifolds, connecting to Ayala--Francis
+factorization homology and to the $n = 2$ bar-cobar duality of
+Getzler--Jones.  At critical level $k = -h^\vee$, the bar complex
+recovers the Feigin--Frenkel center --- the algebra of opers --- and
+the derived Langlands programme enters through the geometric Satake
+correspondence.
 
-The four theorems of Part~I and the computations of Part~II establish
-chiral Koszul duality as a self-contained mathematical framework.  But the
-framework is not isolated: its constructions appear, in different guises,
-throughout modern mathematics and mathematical physics.  The genus-$0$
-bar/BRST comparison is proved, and the all-genera BV/BRST bridge is
-formulated as a downstream conjectural comparison in
-Chapter~\ref{ch:bv-brst}.  The Kontsevich integral of knot theory is
-treated in \S\ref{subsec:vassiliev} as a topological shadow whose
-comparison with the holomorphic propagator remains conjectural.  The
-Costello--Li construction of chiral algebras from four-dimensional
-gauge theories provides the factorization-algebra target against which
-Chapter~\ref{ch:ht-boundary} formulates boundary comparisons.  Part~III
-is the synthesis layer of the book: it traces these theorem-level and
-programme-level bridges and states the larger subject they are
-converging toward.
-
-The chapters here are more concise than those of Parts~I--II,
-indicating directions of active investigation rather than definitive
-treatments.  Part~III is synthesis rather than a loose
-appendix of applications.  Several results are labeled
-\emph{Conjectured} with scope
-remarks identifying the additional input---typically from gauge theory or
-string theory---needed for a complete proof.  The final chapter
-(\S\ref{sec:modular-koszul-programme}) articulates the programme toward which
-the entire monograph points: modular homotopy theory for factorization
-algebras on curves.
-
-Part~III now has three layers.  The first layer is chapters:
-Poincar\'e computations, Feynman diagrams, BV/BRST, the
-holomorphic-topological boundary theory, the Kontsevich integral,
-physical origins, genus completions, the frontier modular holography
-chapter (protected bulk reconstruction, cotangent reciprocity, Weyl
-sewing, metaplectic anomaly), and the semistrict $W_3$ higher-spin
-chapter (finite-arity theorem, cubic weight recursion, completed
-boundary model).  The second layer is the concordance---the
-constitution.  The third layer is thirty appendices, organized into
-four thematic clusters: foundations (Arnold relations, signs, theta
-functions, spectral sequences, homotopy transfer), nonlinear
-invariant calculus (nonlinear modular shadows, branch-line
-reductions, categorical logarithm frontier, lifted spectral defect
-calculus), extended family frontiers (subregular hook, planted forest
-residue, Casimir core transport, ordered associative chiral Koszul
-duality, Type-A Baxter--Rees), and physics-facing bridges (shifted
-RTT duality, dg-shifted factorization bridge, celestial BF
-synthesis, modular dg-shifted Yangian, coderived models).  The reader
-needing only the proved core may proceed from Part~II directly to the
-concordance (Chapter~\ref{chap:concordance}).  The appendices serve
-those who wish to see the Taylor jets of the categorical logarithm
-computed, the non-principal $\mathcal W$-algebra families classified,
-or the physics-facing bridges to RTT duality and celestial holography
-made explicit.
+Each bridge is an instance of the same phenomenon: the logarithmic
+kernel $d\log(z_i - z_j)$ appears in different geometric contexts,
+and the Arnold relation forces the same cancellation.
 
 \include{chapters/connections/poincare_computations}
 \include{chapters/connections/feynman_diagrams}
-% \input (not \include): continues within the preceding chapter (Feynman Diagrams)
 \input{chapters/connections/feynman_connection}
 \include{chapters/connections/bv_brst}
 \include{chapters/connections/holomorphic_topological}
-
-% Knot invariants and the Kontsevich integral: Vassiliev invariants,
-% weight systems from bar complex, Drinfeld associator, CS bridge.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 \input{chapters/connections/kontsevich_integral}
-
-% Physical origins: 4d/2d correspondence, non-commutative Chern-Simons,
-% D-brane vertex algebras, AGT correspondence, dimensional lift.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
 \input{chapters/connections/physical_origins}
-
-% Complete genus theory: elliptic realm (genus 1), hyperbolic realm (genus >= 2),
-% universal tower, Eynard--Orantin topological recursion, string amplitudes,
-% holographic duality, extended Prism Principle, Poincaré--Verdier at all genera.
-% \input (not \include): continues within the preceding chapter
 \input{chapters/connections/genus_complete}
+
+% E_n Koszul duality: higher-dimensional bar complexes,
+% Totaro relations, connection to Ayala--Francis, the n=2 case.
+\input{chapters/theory/en_koszul_duality}
+
+% Derived structures and geometric Langlands: critical-level bar complex,
+% oper space, root-of-unity periodic CDG, KL from bar-cobar.
+\input{chapters/theory/derived_langlands}
+
+% ======================================================================
+%
+%                PART IV: THE FRONTIER
+%
+% The outer ring of the three concentric rings.  Open conjectural
+% territory: modular holography, semistrict higher-spin geometry,
+% and the normative status ledger that records the boundary between
+% proved core and open programme.
+%
+% ======================================================================
+
+\part{The Frontier}
+
+\noindent
+Parts~I--III develop the proved core, its standard computations, and
+its bridges to adjacent programmes.  Part~IV enters the outer ring of
+the three concentric rings: the open conjectural territory where the
+categorical logarithm meets holographic duality, higher-spin geometry,
+and the full modular homotopy programme.
+
+The concordance is the normative status ledger of the entire monograph.
+It records the precise boundary between Ring~1 (proved), Ring~2
+(nonlinear characteristic layer), and Ring~3 (physics frontier);
+defines the dependency-ordered conjectural stratification MC3/MC4/MC5;
+and articulates the programme toward which the entire work points:
+modular homotopy theory for factorization algebras on curves.
+
 % ARCHIVED (file removed in repository sweep):
 % \input{chapters/connections/frontier_modular_holography_platonic}
 
-% Semistrict modular higher-spin geometry of the classical W_3 sector.
-% Finite-arity theorem, quadratic-cubic twisting, weighted cubic recursion,
-% completed boundary model, and the semistrict modular higher-spin package.
 % ARCHIVED (file removed in repository sweep):
 % \input{chapters/connections/semistrict_modular_higher_spin_w3}
 
-% Literature concordance: precise relationship to BD, Francis--Gaitsgory,
-% Gui--Li--Zeng, Loday--Vallette. Our extensions beyond each.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
+% Literature concordance and normative status ledger.
 \input{chapters/connections/concordance}
 
 % ======================================================================
@@ -1092,87 +1082,74 @@ made explicit.
 
 % ======================================================================
 % APPENDICES
+%
+% Four thematic clusters.  Within each cluster, parent→child pairs
+% (where a \section-only file continues the preceding \chapter file)
+% are kept adjacent.
 % ======================================================================
 \appendix
 
+% ------ Cluster A: Algebraic and Analytic Foundations ------
+
+\chapter*{Cluster A\;---\;Algebraic and Analytic Foundations}
+\addcontentsline{toc}{chapter}{Cluster A\;---\;Algebraic and Analytic Foundations}
+
 \input{appendices/general_relations}
 \input{appendices/arnold_relations}
-
-% Comprehensive sign conventions: Koszul sign rule, suspensions/desuspensions,
-% determinant lines, detailed bar-cobar sign computations through degree 5,
-% master sign formula, orientation systems on FM compactification.
 \input{appendices/signs_and_shifts}
-
 % Sign convention dictionary: merged into appendices/signs_and_shifts.tex
 % \input{appendices/sign_conventions}
-
 \input{appendices/theta_functions}
-
-% Comprehensive spectral sequences: filtered complexes, convergence criteria,
-% bar SS, genus SS, Chevalley--Cousin SS, multiplicative SS.
 \input{appendices/spectral_sequences}
-
-% Higher genus spectral sequences (Hodge-to-de Rham, convergence).
 \input{appendices/spectral_higher_genus}
-
 \input{appendices/koszul_reference}
-
-% Homotopy transfer theorem: SDR, tree formulas, A-infinity and L-infinity
-% transfer, minimal models, formality, coalgebra transfer, chiral HTT.
 \input{appendices/homotopy_transfer}
-% ARCHIVED (files removed in repository sweep):
-% \input{appendices/fm3_planted_forest_residue}
-% \input{appendices/lifted_spectral_defect_calculus}
-% \input{appendices/chiral_koszul_casimir_transgression}
-% \input{appendices/casimir_divisor_core_transport}
-
-% Dual abstract-concrete methodology: philosophy, bar-cobar equivalence
-% (abstract vs. concrete proofs), Riemann--Hilbert, infinity-operads.
+\input{appendices/existence_criteria}
 \input{appendices/dual_methodology}
 
-\input{appendices/computational_tables}
-\input{appendices/combinatorial_frontier}
-% ARCHIVED (file removed in repository sweep):
-% \input{appendices/celestial_bf_frontier_synthesis}
-\input{appendices/existence_criteria}
-\input{appendices/nilpotent_completion}
+% ------ Cluster B: Nonlinear Invariant Calculus ------
 
-% Relative curved models adequate for the present monograph.
-% Minimal coderived homotopy theory for off-Koszul statements.
-\input{appendices/coderived_models}
-% ARCHIVED (file removed in repository sweep):
-% \input{appendices/typeA_baxter_rees_theta}
+\chapter*{Cluster B\;---\;Nonlinear Invariant Calculus}
+\addcontentsline{toc}{chapter}{Cluster B\;---\;Nonlinear Invariant Calculus}
 
-% Ambient complementarity, nonlinear modular shadows, and the quartic
-% resonance class.  Develops the nonlinear jet tower of the complementarity
-% potential and computes it through quartic order on the frame families.
 \input{appendices/nonlinear_modular_shadows}
 % ARCHIVED (file removed in repository sweep):
 % \input{appendices/modular_dg_shifted_yangian}
-
-% Branch-line reductions, primitive modular characteristics, and the
-% intrinsic invariant ladder.  Shadow and quotient theorems inside the
-% proved scalar/spectral package; the universal genus-3 constant 7.
 \input{appendices/branch_line_reductions}
 % ARCHIVED (files removed in repository sweep):
 % \input{appendices/categorical_logarithm_frontier}
 % \input{appendices/ordered_associative_chiral_kd}
-
-% Subregular and hook-type W-algebras: PBW--Slodowy completed Koszulity,
-% exact Bell recursion for the Feigin--Semikhatov OPE, canonical homotopy
-% arity detection, and the first non-principal classification package.
 % ARCHIVED (files removed in repository sweep):
+% \input{appendices/lifted_spectral_defect_calculus}
+% \input{appendices/chiral_koszul_casimir_transgression}
+\input{appendices/nilpotent_completion}
+\input{appendices/coderived_models}
+
+% ------ Cluster C: Extended Family Frontiers ------
+
+\chapter*{Cluster C\;---\;Extended Family Frontiers}
+\addcontentsline{toc}{chapter}{Cluster C\;---\;Extended Family Frontiers}
+
+% ARCHIVED (files removed in repository sweep):
+% \input{appendices/fm3_planted_forest_residue}
+% \input{appendices/casimir_divisor_core_transport}
 % \input{appendices/subregular_hook_frontier}
-% \input{appendices/dg_shifted_factorization_bridge}
+% \input{appendices/typeA_baxter_rees_theta}
 
-% Shifted RTT duality, orthogonal coideal descent, and the rank-one
-% Kleinian test case.  Stabilized completed bar/cobar envelopes,
-% bi-diagonal twist transport, and the rank-one orthogonal coideal.
-% ARCHIVED (file removed in repository sweep):
+% ------ Cluster D: Physics Bridges and Reference ------
+
+\chapter*{Cluster D\;---\;Physics Bridges and Reference}
+\addcontentsline{toc}{chapter}{Cluster D\;---\;Physics Bridges and Reference}
+
+% ARCHIVED (files removed in repository sweep):
 % \input{appendices/shifted_rtt_duality_orthogonal_coideals}
+% \input{appendices/dg_shifted_factorization_bridge}
+% \input{appendices/celestial_bf_frontier_synthesis}
+\input{appendices/computational_tables}
+\input{appendices/combinatorial_frontier}
 
-% Complete notation summary: categories, operads, configuration spaces,
-% chiral structures, miscellaneous. Index of key definitions.
+% ------ Notation Index ------
+
 \input{appendices/notation_index}
 
 % ======================================================================
