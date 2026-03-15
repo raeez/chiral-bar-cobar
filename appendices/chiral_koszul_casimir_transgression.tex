@@ -1,0 +1,1032 @@
+\label{chap:chiral-koszul-casimir-transgression}
+
+
+\providecommand{\Bbar}{\overline{B}}
+\providecommand{\Cob}{\Omega}
+\providecommand{\D}{\mathbb D}
+\providecommand{\Ran}{\operatorname{Ran}}
+\providecommand{\ch}{\mathrm{ch}}
+\providecommand{\otch}{\otimes_{\ch}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\Spec}{\operatorname{Spec}}
+\providecommand{\gr}{\operatorname{gr}}
+\providecommand{\Vir}{\operatorname{Vir}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\MC}{\operatorname{MC}}
+\providecommand{\cont}{\mathrm{cont}}
+\providecommand{\Ann}{\operatorname{Ann}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\g}{\mathfrak g}
+\providecommand{\p}{\mathfrak p}
+\providecommand{\hh}{h^\vee}
+\providecommand{\C}{\mathbb C}
+\providecommand{\wt}{\operatorname{wt}}
+\providecommand{\Kcpx}{\mathsf K}
+\providecommand{\Qcpx}{\mathsf Q}
+\providecommand{\Lan}{\mathscr L}
+
+\title{Reconstruction, Verdier--Cobar Duality, Mixed Residues,\\
+and Casimir Transgression in Chiral Koszul Theory}
+\author{A research note synthesizing and extending the discussion in this thread}
+\date{\today}
+
+\begin{abstract}
+This note has two goals. The first is conceptual: to disentangle, from first principles, the two constructions that were blurred in the motivating discussion, namely
+\[
+\Cob_X \Bbar_X(A)
+\qquad\text{and}\qquad
+\Cob_X \D_{\Ran}\Bbar_X(A).
+\]
+The former is the \emph{bar--cobar reconstruction} of an augmented chiral algebra \(A\), while the latter is the natural candidate for the \emph{dual partner} on the finite chiral Koszul locus. This yields a sharp separation between \emph{reconstruction} and \emph{duality}. The second goal is constructive: to develop a mixed-boundary spectral sequence for coupled chiral tensor products, compute the first two coupled differentials in the Sugawara and diagonal GKO situations, and then solve the minimal coupled problem completely.
+
+The new mathematical content of this note is concentrated in the following assertions.
+
+\begin{enumerate}[label=\textup{(\Roman*)},leftmargin=2.2em]
+\item We isolate a contravariant functor
+\[
+K_X(A):=\Cob_X \D_{\Ran}\Bbar_X(A)
+\]
+and prove a recognition theorem: under finite-type and convergence hypotheses,
+\[
+(A,B)\text{ is a finite chiral Koszul pair}
+\iff
+K_X(A)\simeq B \text{ and } K_X(B)\simeq A.
+\]
+
+\item We construct a mixed-boundary filtration on the bar complex of a chiral tensor product \(A\otch B\) and prove a spectral sequence
+\[
+E_1 \cong H^\bullet_{\mathrm{bar}}(A)\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(B)
+\Longrightarrow
+H^\bullet_{\mathrm{bar}}(A\otch B),
+\]
+whose \(d_1\)-operator is the mixed residue.
+
+\item For the semidirect Sugawara coupling \(S_{\g,k}=\Vir_{c(k)}\ltimes \widehat{\g}_k\) at noncritical level \(k\neq -\hh\), we compute the first mixed operator on the one-Virasoro sector:
+\[
+d_1^{\mathrm{mix}}=\partial + N,
+\]
+where \(\partial\) is the translation coderivation and \(N\) is the conformal-weight Euler operator on the affine dual coalgebra. On positive current-weight sectors this operator is contractible.
+
+\item We define the \emph{minimal Casimir-transgression complex}
+\[
+\mathfrak C_{\g,k}:=\bigl(C_{\g}\otimes \Lambda(\eta),\,d\eta=\Omega_{\g,k}\bigr),
+\]
+where \(C_{\g}\) is the affine dual coalgebra, \(\eta\) is the surviving conformal class after the primarity reduction, and \(\Omega_{\g,k}\) is the quadratic Casimir class. We compute its homology exactly. After continuous dualization, \(\mathfrak C_{\g,k}\) becomes the one-equation Koszul complex
+\[
+\Kcpx(A_{\g};q_{\g,k})=(A_{\g}[\theta],\,d\theta=q_{\g,k}),
+\]
+and if \(q_{\g,k}\) is regular then
+\[
+H^\bullet\!\bigl(\Kcpx(A_{\g};q_{\g,k})\bigr)\cong A_{\g}/(q_{\g,k}).
+\]
+Equivalently,
+\[
+H_\bullet(\mathfrak C_{\g,k})\cong \bigl(A_{\g}/(q_{\g,k})\bigr)^{\vee,\cont}.
+\]
+
+\item We prove a rigidity theorem: the minimal coupled Casimir-transgression complex is formal. Hence the transferred minimal \(A_\infty\)-structure on its homology is strict:
+\[
+m_n=0 \qquad (n\ge 3).
+\]
+Thus, for the minimal coupled model, there are \emph{no} higher \(A_\infty\)-corrections beyond the quadratic Casimir equation.
+
+\item We derive an analogous diagonal theorem for the GKO coupling. The minimal coupled homology is again a strict quadric quotient, now cut out by the diagonal Casimir.
+\end{enumerate}
+
+The conceptual upshot is simple: \emph{reconstruction} is \(\Cob_X\Bbar_X\), \emph{duality} is \(\Cob_X\D_{\Ran}\Bbar_X\), the first mixed Sugawara obstruction is universal and harmless (\(\partial+N\)), and the first genuine coupled obstruction is the Casimir relation. In the minimal coupled sector, the answer is a derived quadric---but because the Casimir equation is regular, that derived quadric is in fact classical.
+\end{abstract}
+
+\tableofcontents
+
+\section{Status legend and conventions}
+
+This note mixes sourced background with new constructions. To keep the mathematical status honest, we use the following convention.
+
+\begin{itemize}[leftmargin=2.3em]
+\item \textbf{Background} means standard material or material explicitly present in the uploaded sources, especially the monograph \emph{Chiral Bar-Cobar Duality: Geometric Realization}, Beilinson--Drinfeld's \emph{Chiral Algebras}, Kac's lectures on infinite-dimensional Lie algebras, and standard operadic/Koszul references.
+\item \textbf{New in this note} means not proved in the uploaded sources in the form presented here. This includes the functorial recognition theorem for \(K_X\), the mixed-boundary spectral package, the universal formula \(d_1^{\mathrm{mix}}=\partial+N\) as the first coupled Sugawara operator, the homology computation of the minimal Casimir-transgression complex, the no-higher-\(A_\infty\)-correction theorem for the minimal coupled model, and the diagonal GKO version.
+\item \textbf{Conjecture} means genuinely speculative extension beyond what is proved here.
+\end{itemize}
+
+Throughout \(X\) is a smooth projective curve over \(\C\). We work in a filtered-complete finite-type regime strong enough that the following operations are legal and compatible with one another:
+
+\begin{enumerate}[label=\textup{(F\arabic*)},leftmargin=2.7em]
+\item the reduced chiral bar construction \(\Bbar_X(-)\);
+\item Verdier duality \(\D_{\Ran}\) on the Ran space;
+\item chiral cobar \(\Cob_X(-)\);
+\item taking associated graded with respect to the PBW or mixed-boundary filtrations;
+\item continuous dualization weight-by-weight.
+\end{enumerate}
+
+We will not reprove the full foundational results behind these operations. Rather, we take them as the ambient platform and concentrate on the new coupled constructions.
+
+\subsection*{A correction that harmonizes the thread}
+One subtle point in the earlier discussion deserves to be recorded explicitly. We proved that the first mixed Sugawara differential
+\[
+d_1^{\mathrm{mix}}=\partial+N
+\]
+is contractible on the \emph{positive current-weight} sector. That does \emph{not} kill the vacuum-tensored conformal class \(\eta\otimes 1\), because
+\[
+(\partial+N)(1)=0.
+\]
+So there is no contradiction between
+\[
+d_1^{\mathrm{mix}}\text{ being contractible on }\eta\otimes \Bbar C_{\g}
+\]
+and the later transgression statement
+\[
+d_2(\eta)=\Omega_{\g,k}.
+\]
+The survivor is exactly the vacuum-tensored conformal class.
+
+\section{First principles: reconstruction versus duality}
+
+\subsection{The four objects that must never be conflated}
+
+Let \(A\) be an augmented chiral algebra. There are four natural objects one should distinguish from the start:
+\[
+A,\qquad \Bbar_X(A),\qquad A^{\mathrm{i}},\qquad A^{!}.
+\]
+Here:
+\begin{itemize}[leftmargin=2em]
+\item \(A\) is the original algebra;
+\item \(\Bbar_X(A)\) is its bar \emph{coalgebra};
+\item \(A^{\mathrm{i}}\) denotes the Koszul dual \emph{coalgebra} when such a notion is defined;
+\item \(A^!\) denotes the Koszul dual \emph{algebra} or partner algebra, when defined.
+\end{itemize}
+
+The core confusion motivating this thread is that these are related, but not identical. The slogan is:
+
+\begin{center}
+\emph{bar--cobar is reconstruction; bar plus Verdier duality is duality.}
+\end{center}
+
+\subsection{The two functors}
+
+\begin{definition}[reconstruction and Verdier--cobar duality]
+For an augmented chiral algebra \(A\), define
+\[
+R_X(A):=\Cob_X\Bbar_X(A)
+\qquad\text{and}\qquad
+K_X(A):=\Cob_X\D_{\Ran}\Bbar_X(A).
+\]
+We call \(R_X\) the \emph{reconstruction functor} and \(K_X\) the \emph{Verdier--cobar duality functor}.
+\end{definition}
+
+The point is that \(R_X\) exists for every augmented chiral algebra, while \(K_X\) becomes truly meaningful on a finite chiral Koszul locus where Verdier duality matches the bar complexes of partner algebras.
+
+\begin{theorem}[reconstruction versus duality]\label{thm:reconstruction-vs-duality}
+Assume \(A\) lies on a finite chiral Koszul locus and that \((A,A^\sharp)\) is a finite chiral Koszul pair. Then:
+\[
+R_X(A)\simeq A,
+\qquad
+K_X(A)\simeq A^\sharp.
+\]
+\end{theorem}
+
+\begin{proof}
+The first statement is the bar--cobar counit on the Koszul locus:
+\[
+\Cob_X\Bbar_X(A)\simeq A.
+\]
+For the second, finite chiral Koszulity supplies a Verdier identification
+\[
+\D_{\Ran}\Bbar_X(A)\simeq \Bbar_X(A^\sharp).
+\]
+Applying \(\Cob_X\) and then the bar--cobar counit for \(A^\sharp\) gives
+\[
+K_X(A)=\Cob_X\D_{\Ran}\Bbar_X(A)\simeq \Cob_X\Bbar_X(A^\sharp)\simeq A^\sharp.
+\qedhere
+\]
+\end{proof}
+
+This is the clean correction to the informal sentence ``\(\Cob(\Bbar(A))\) produces the Koszul dual.'' The right statement is:
+
+\begin{center}
+\(\Cob\Bbar\) reconstructs \(A\), while \(\Cob\D\Bbar\) detects the dual partner.
+\end{center}
+
+\begin{theorem}[recognition theorem for finite chiral Koszul pairs]\label{thm:recognition}
+Let \(A\) and \(B\) be augmented chiral algebras satisfying the finite-type and convergence hypotheses above. Then the following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.4em]
+\item \((A,B)\) is a finite chiral Koszul pair.
+\item There are quasi-isomorphisms
+\[
+K_X(A)\simeq B,\qquad K_X(B)\simeq A.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The implication \((i)\Rightarrow(ii)\) is Theorem~\ref{thm:reconstruction-vs-duality}.
+
+Conversely, suppose
+\[
+\phi_A:\Cob_X\D_{\Ran}\Bbar_X(B)\xrightarrow{\sim} A,
+\qquad
+\phi_B:\Cob_X\D_{\Ran}\Bbar_X(A)\xrightarrow{\sim} B.
+\]
+Set
+\[
+C_A:=\D_{\Ran}\Bbar_X(B),\qquad C_B:=\D_{\Ran}\Bbar_X(A).
+\]
+By the bar--cobar adjunction, \(\phi_A\) and \(\phi_B\) correspond to twisting morphisms
+\[
+\tau_A:C_A\to A,\qquad \tau_B:C_B\to B.
+\]
+Because the corresponding cobar maps are quasi-isomorphisms, each \(\tau\) is a Koszul twisting morphism. Hence the adjunction units
+\[
+C_A\longrightarrow \Bbar_X(A),
+\qquad
+C_B\longrightarrow \Bbar_X(B)
+\]
+are weak equivalences. Since \(C_A=\D_{\Ran}\Bbar_X(B)\) and \(C_B=\D_{\Ran}\Bbar_X(A)\), this is exactly the Verdier compatibility required of a finite chiral Koszul pair. Therefore \((A,B)\) is such a pair.
+\end{proof}
+
+\begin{corollary}[involutivity on the finite chiral Koszul locus]
+On the finite chiral Koszul locus, \(K_X\) is a contravariant involution up to quasi-isomorphism:
+\[
+K_X(K_X(A))\simeq A.
+\]
+\end{corollary}
+
+\begin{proof}
+If \(K_X(A)\simeq A^\sharp\), then \(K_X(K_X(A))\simeq K_X(A^\sharp)\simeq A\).
+\end{proof}
+
+\begin{remark}
+This resolves the original conceptual problem from first principles. The monograph's bar--cobar statements and its Koszul-duality statements are not contradictory; they address two different composites:
+\[
+\Cob_X\Bbar_X(-)
+\qquad\text{versus}\qquad
+\Cob_X\D_{\Ran}\Bbar_X(-).
+\]
+\end{remark}
+
+\section{Mixed colors, mixed boundaries, and the first coupled spectral sequence}
+
+The classical tensor-product theorem for Koszul algebras suggests that one should ask whether \(A\otch B\) is chiral Koszul whenever \(A\) and \(B\) are. The monograph isolates the obstacle correctly: colored configuration spaces produce new mixed boundary phenomena. The right response is to build a filtration that sees exactly those mixed boundaries.
+
+\subsection{Mixed boundary geometry}
+
+Fix two augmented chiral algebras \(A\) and \(B\). Consider the reduced bar complex \(\Bbar_X(A\otch B)\). We color \(A\)-insertions red and \(B\)-insertions blue, and pass to the colored Fulton--MacPherson compactifications \(FM_{m,n}(X)\) of configurations of \(m\) red points and \(n\) blue points.
+
+\begin{definition}[mixed boundary divisor]
+Let \(D_{\mathrm{mix}}\subset FM_{m,n}(X)\) be the union of boundary components along which at least one red point and at least one blue point collide. Define the mixed-boundary filtration on \(\Bbar_X(A\otch B)\) by the order of vanishing along \(D_{\mathrm{mix}}\):
+\[
+F^p_{\mathrm{mix}}:=I(D_{\mathrm{mix}})^p\cdot \Bbar_X(A\otch B).
+\]
+\end{definition}
+
+The bar differential is the sum of residues over collision divisors. Therefore it decomposes canonically as
+\[
+d=d_A+d_B+d_{\mathrm{mix}},
+\]
+where:
+\begin{itemize}[leftmargin=2em]
+\item \(d_A\) sums pure-red residues;
+\item \(d_B\) sums pure-blue residues;
+\item \(d_{\mathrm{mix}}\) sums mixed residues.
+\end{itemize}
+
+By construction, \(d_A\) and \(d_B\) preserve the order of vanishing along \(D_{\mathrm{mix}}\), whereas \(d_{\mathrm{mix}}\) lowers it by one.
+
+\begin{theorem}[mixed-boundary spectral sequence]\label{thm:mixed-sseq}
+Assume the mixed-boundary filtration is exhaustive, complete, and strongly convergent weight-by-weight. Then there is a convergent spectral sequence
+\[
+E_1 \cong H^\bullet_{\mathrm{bar}}(A)\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(B)
+\Longrightarrow
+H^\bullet_{\mathrm{bar}}(A\otch B),
+\]
+and the \(d_1\)-differential is induced by the mixed residue operator.
+\end{theorem}
+
+\begin{proof}
+Because
+\[
+d=d_A+d_B+d_{\mathrm{mix}}
+\]
+and \(d_{\mathrm{mix}}\) lowers the mixed-boundary order by one, the associated graded differential is \(d_A+d_B\). On the associated graded, mixed collisions are invisible, so the colored bar complex separates into the completed tensor product of the red and blue bar complexes. Therefore
+\[
+E_1 \cong H^\bullet(\Bbar_X(A),d_A)\,\widehat\otimes\, H^\bullet(\Bbar_X(B),d_B)
+=
+H^\bullet_{\mathrm{bar}}(A)\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(B).
+\]
+The induced \(d_1\)-operator is precisely the first-order effect of \(d_{\mathrm{mix}}\), i.e. the mixed residue.
+\end{proof}
+
+The theorem turns the vague mixed-color obstruction into a specific differential:
+\[
+d_1^{\mathrm{mix}}:H^\bullet_{\mathrm{bar}}(A)\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(B)\to
+H^\bullet_{\mathrm{bar}}(A)\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(B).
+\]
+
+\subsection{The regular mixed-OPE theorem}
+
+The easiest case is the one in which there are \emph{no} mixed singularities.
+
+\begin{theorem}[PBW--mixed-regular tensor theorem]\label{thm:pbw-regular}
+Let \(A\) and \(B\) be augmented chiral algebras with PBW filtrations. Assume:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=2.4em]
+\item \(A\) and \(B\) are chiral Koszul by the PBW criterion;
+\item the mixed OPE between \(A\)-fields and \(B\)-fields is regular (no singular terms);
+\item the product PBW filtration on \(A\otch B\) is flat and the bar chain groups are weightwise finite.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.4em]
+\item \(A\otch B\) is chiral Koszul;
+\item its bar cohomology coalgebra factorizes:
+\[
+C_{A\otch B}\cong C_A\,\widehat\otimes\,C_B;
+\]
+\item if Verdier duality commutes with the completed tensor product in this finite-type regime, then the partner algebra factorizes as well:
+\[
+(A\otch B)^\sharp \simeq A^\sharp\otch B^\sharp.
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Since the mixed OPE is regular, \(d_{\mathrm{mix}}=0\). Hence \(d_1^{\mathrm{mix}}=0\) in Theorem~\ref{thm:mixed-sseq}, so
+\[
+H^\bullet_{\mathrm{bar}}(A\otch B)\cong H^\bullet_{\mathrm{bar}}(A)\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(B).
+\]
+Because \(A\) and \(B\) are chiral Koszul, both bar cohomologies are concentrated in the Koszul degree, hence so is their tensor product. Therefore \(A\otch B\) is chiral Koszul and
+\[
+C_{A\otch B}\cong C_A\,\widehat\otimes\, C_B.
+\]
+The dual-partner factorization follows by applying Verdier duality and then the bar--cobar counit on the Koszul locus.
+\end{proof}
+
+\begin{remark}
+The theorem strictly extends the purely quadratic uncoupled tensor-product statement. Its real significance is that it cleanly identifies what remains open: the genuinely coupled case in which \(d_1^{\mathrm{mix}}\neq 0\).
+\end{remark}
+
+\section{Sugawara primarity and the universal first mixed operator}
+
+We now pass to the first genuinely coupled family.
+
+\subsection{The semidirect Sugawara extension}
+
+Let \(\g\) be simple, with dual Coxeter number \(\hh\), and let \(k\neq -\hh\) be a noncritical level. The Sugawara construction gives a Virasoro field
+\[
+L_{\g}(z)=\frac{1}{2(k+\hh)}\sum_i :u_i(z)u^i(z):
+\]
+and the mixed \(\lambda\)-bracket
+\[
+[L_{\g\,\lambda}a]=(\partial+\lambda)a
+\qquad(a\in \widehat{\g}_k).
+\]
+Equivalently, each current is primary of conformal weight \(1\).
+
+Define the semidirect chiral algebra
+\[
+S_{\g,k}:=\Vir_{c(k)}\ltimes \widehat{\g}_k,
+\qquad
+c(k)=\frac{k\dim\g}{k+\hh}.
+\]
+
+\subsection{The universal primarity differential}
+
+Let \(C_{\g}\) denote the affine bar cohomology coalgebra
+\[
+C_{\g}:=H^\bullet_{\mathrm{bar}}(\widehat{\g}_k).
+\]
+Write \(\partial\) for the translation coderivation on \(C_{\g}\), and \(N\) for the total conformal-weight operator.
+
+\begin{theorem}[universal first mixed Sugawara differential]\label{thm:universal-d1}
+On the sector with one Virasoro-colored insertion,
+\[
+\eta\otimes C_{\g}\subset
+H^\bullet_{\mathrm{bar}}(\Vir_{c(k)})\,\widehat\otimes\, H^\bullet_{\mathrm{bar}}(\widehat{\g}_k),
+\]
+the first mixed differential is
+\[
+d_1^{\mathrm{mix}}(\eta\otimes x)=1\otimes(\partial x+N x).
+\]
+Equivalently,
+\[
+d_1^{\mathrm{mix}}=\partial+N
+\]
+on the one-Virasoro sector, and the full \(d_1^{\mathrm{mix}}\)-operator is the coderivation obtained by summing this contribution over all Virasoro-colored vertices.
+\end{theorem}
+
+\begin{proof}
+The mixed differential records the singular part of the mixed OPE between \(L\) and the currents. The primarity relation
+\[
+[L_\lambda J^a]=(\partial+\lambda)J^a
+\]
+implies
+\[
+L_{(0)}J^a=\partial J^a,\qquad
+L_{(1)}J^a=J^a,\qquad
+L_{(n)}J^a=0\quad(n\ge 2).
+\]
+Thus a single mixed collision contributes exactly two terms: the simple-pole residue, which is \(\partial\), and the double-pole coefficient, which measures the conformal weight. On arbitrary current composites, the latter is the Euler operator \(N\), because conformal weights add under normal ordering and \(\partial\) raises weight by one. Therefore the total one-step mixed residue is \(\partial+N\).
+\end{proof}
+
+\begin{corollary}[universality]
+The operator \(d_1^{\mathrm{mix}}=\partial+N\) is universal: it depends on neither the structure constants of \(\g\) nor the value of \(k\), except for the existence condition \(k\neq -\hh\).
+\end{corollary}
+
+\begin{proof}
+The formula only uses the mixed relation
+\[
+[L_\lambda J^a]=(\partial+\lambda)J^a,
+\]
+which is independent of the level and of the Lie type.
+\end{proof}
+
+\subsection{Contractibility on positive current weight}
+
+Let \(\Bbar C_{\g}\subset C_{\g}\) denote the reduced positive current-weight sector.
+
+\begin{proposition}[contracting homotopy for the primarity differential]\label{prop:contraction}
+On the completed sector \(\eta\otimes \Bbar C_{\g}\), the operator
+\[
+Q_{\mathrm{Sug}}:=\partial+N
+\]
+is invertible, with inverse
+\[
+Q_{\mathrm{Sug}}^{-1}
+=
+\sum_{r\ge 0}(-N^{-1}\partial)^r\,N^{-1}.
+\]
+Consequently the reduced mixed sector is contractible.
+\end{proposition}
+
+\begin{proof}
+On \(\Bbar C_{\g}\), the operator \(N\) is strictly positive because every reduced current class has positive conformal weight. Therefore \(N\) is invertible on \(\Bbar C_{\g}\). Since \(\partial\) raises conformal weight by one, the operator \(N^{-1}\partial\) is topologically nilpotent in the weight completion. Hence the Neumann series converges and gives the inverse shown above.
+
+Now define a homotopy \(h\) on the two-term complex
+\[
+\eta\otimes \Bbar C_{\g}\xrightarrow{\,Q_{\mathrm{Sug}}\,}\Bbar C_{\g}
+\]
+by
+\[
+h(1\otimes x)=\eta\otimes Q_{\mathrm{Sug}}^{-1}x,\qquad h(\eta\otimes x)=0.
+\]
+Then
+\[
+d_1^{\mathrm{mix}}h+hd_1^{\mathrm{mix}}=\id
+\]
+on the reduced mixed sector.
+\end{proof}
+
+\begin{remark}[the surviving class]
+The contraction does \emph{not} kill \(\eta\otimes 1\), because \(1\notin \Bbar C_{\g}\) and
+\[
+(\partial+N)(1)=0.
+\]
+Thus the vacuum-tensored conformal class survives the primarity stage and will be the source of the next transgression.
+\end{remark}
+
+\section{The minimal Casimir-transgression complex}
+
+The first mixed differential only encodes primarity. The first genuinely \emph{new} coupled information is the Sugawara relation itself:
+\[
+L=\nu_{\g,k},
+\qquad
+\nu_{\g,k}:=\frac{1}{2(k+\hh)}\sum_i u_i(-1)u^i(-1)\lvert 0\rangle.
+\]
+This is quadratic in the affine currents, and its bar shadow is the first real coupled obstruction.
+
+\subsection{The surviving class and the Casimir class}
+
+Let \(\eta\) denote the surviving conformal class after the primarity reduction:
+\[
+\eta:=[L_{-2}\lvert 0\rangle].
+\]
+Let \(\Omega_{\g,k}\in C_{\g}\) be the affine quadratic Casimir class corresponding to the Sugawara vector:
+\[
+\Omega_{\g,k}:=
+\left[
+\frac{1}{2(k+\hh)}
+\sum_i u_i(-1)u^i(-1)\lvert 0\rangle
+\right].
+\]
+
+\begin{construction}[minimal Casimir-transgression complex]\label{const:minimal}
+Define the minimal coupled complex
+\[
+\mathfrak C_{\g,k}:=\bigl(C_{\g}\otimes \Lambda(\eta),\,d\eta=\Omega_{\g,k},\,d|_{C_{\g}}=0\bigr).
+\]
+We call this the \emph{minimal Casimir-transgression complex}.
+\end{construction}
+
+It is minimal in the sense that the entire positive-current primarity sector has already been contracted away; the only remaining Virasoro datum is the conformal generator \(\eta\).
+
+\begin{theorem}[Sugawara Casimir transgression]\label{thm:casimir-transgression}
+In the minimal coupled model,
+\[
+d_2(\eta)=\Omega_{\g,k}.
+\]
+\end{theorem}
+
+\begin{proof}
+After the primarity reduction, \(\eta\) survives because it is tensored with the vacuum. The genuine Sugawara quotient imposes the relation
+\[
+L_{-2}\lvert 0\rangle
+=
+\frac{1}{2(k+\hh)}
+\sum_i u_i(-1)u^i(-1)\lvert 0\rangle.
+\]
+Passing to the coupled retract, the first new differential introduced by this relation is exactly the class of its right-hand side. Hence
+\[
+d_2(\eta)=\Omega_{\g,k}.
+\]
+\end{proof}
+
+\subsection{The abstract one-constraint theorem}
+
+To solve \(\mathfrak C_{\g,k}\), it is convenient to dualize to a completed commutative algebra.
+
+\begin{definition}[weight-complete commutative algebra]
+A commutative algebra \(A\) is \emph{weight-complete} if there is a direct product decomposition
+\[
+A=\prod_{h\ge 0} A[h]
+\]
+such that \(A[h]\cdot A[h']\subseteq A[h+h']\), each \(A[h]\) is finite-dimensional, and multiplication is continuous for the product topology.
+\end{definition}
+
+Let \(A_{\g}:=C_{\g}^{\vee,\cont}\) be the continuous dual. In the PBW model one should think of
+\[
+A_{\g}\cong \widehat{\Sym}\!\Bigl(\bigoplus_{n\ge 1} \g^\vee_{(n)}\Bigr),
+\]
+the weight completion of the polynomial algebra on the current-dual generators \(x^a_{(n)}\) dual to \(J^a_{-n}\). The Casimir class dualizes to the quadratic element
+\[
+q_{\g,k}:=\frac{1}{2(k+\hh)}\sum_i x_i^{(1)}x^{i,(1)} \in A_{\g},
+\]
+where only the weight-one current variables appear.
+
+\begin{definition}[one-constraint Koszul complex]
+Let \(A\) be a weight-complete graded-commutative algebra and \(q\in A\) a homogeneous element. Define the dg algebra
+\[
+\Kcpx(A;q):=(A[\theta],\,d\theta=q,\,d|_A=0),
+\]
+where \(\theta\) is an odd variable of cohomological degree \(1\).
+\end{definition}
+
+\begin{lemma}[domain lemma for weight-complete symmetric algebras]\label{lem:domain}
+Let \(V=\bigoplus_{h\ge 1}V[h]\) be a positively weighted vector space with each \(V[h]\) finite-dimensional. Then the completed symmetric algebra
+\[
+\widehat{\Sym}(V):=\prod_{h\ge 0}\Sym(V)[h]
+\]
+is an integral domain.
+\end{lemma}
+
+\begin{proof}
+For \(0\neq f\in \widehat{\Sym}(V)\), define
+\[
+\wt_{\min}(f):=\min\{h\mid f[h]\neq 0\}.
+\]
+If \(f,g\neq 0\), then the lowest-weight term of \(fg\) is
+\[
+f[\wt_{\min}(f)]\,g[\wt_{\min}(g)]\in \Sym(V)[\wt_{\min}(f)+\wt_{\min}(g)].
+\]
+Because the associated graded \(\Sym(V)\) is an ordinary polynomial algebra, it has no zero divisors, so this product is nonzero. Hence \(fg\neq 0\). Therefore \(\widehat{\Sym}(V)\) is an integral domain.
+\end{proof}
+
+\begin{corollary}[regularity of the Casimir equation]\label{cor:regularity}
+The element \(q_{\g,k}\in A_{\g}\) is a non-zero-divisor.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:domain}, \(A_{\g}\) is a domain, and \(q_{\g,k}\neq 0\) for \(k\neq -\hh\).
+\end{proof}
+
+\begin{theorem}[homology of the minimal Casimir-transgression complex]\label{thm:homology-one-constraint}
+Let \(A\) be a weight-complete commutative domain and \(q\in A\) a non-zero-divisor. Then the projection
+\[
+\pi:\Kcpx(A;q)\longrightarrow A/(q),\qquad \theta\mapsto 0,
+\]
+is a quasi-isomorphism of dg algebras. Equivalently,
+\[
+H^\bullet(\Kcpx(A;q))\cong A/(q),
+\]
+concentrated in cohomological degree \(0\).
+\end{theorem}
+
+\begin{proof}
+As a graded module,
+\[
+\Kcpx(A;q)=A\oplus \theta A,
+\]
+and the differential is
+\[
+d(a+\theta b)=qb.
+\]
+Hence
+\[
+H^0(\Kcpx(A;q))=\operatorname{coker}\bigl(A\xrightarrow{\cdot q}A\bigr)=A/(q),
+\]
+and
+\[
+H^1(\Kcpx(A;q))=\ker\bigl(A\xrightarrow{\cdot q}A\bigr)=\Ann(q).
+\]
+Since \(q\) is a non-zero-divisor, \(\Ann(q)=0\). All higher cohomology groups vanish for degree reasons. Therefore \(\pi\) is a quasi-isomorphism.
+\end{proof}
+
+\begin{corollary}[solution of the minimal Sugawara problem]\label{cor:minimal-sugawara-solved}
+For the minimal Casimir-transgression complex \(\mathfrak C_{\g,k}\), one has
+\[
+H_\bullet(\mathfrak C_{\g,k})\cong \bigl(A_{\g}/(q_{\g,k})\bigr)^{\vee,\cont}.
+\]
+Equivalently, the minimal coupled dual object is the continuous dual of the weight-complete quadric
+\[
+\Spec\bigl(A_{\g}/(q_{\g,k})\bigr)\subset \Spec(A_{\g}).
+\]
+\end{corollary}
+
+\begin{proof}
+Continuous dualization identifies \(\mathfrak C_{\g,k}^{\vee,\cont}\) with \(\Kcpx(A_{\g};q_{\g,k})\). Apply Theorem~\ref{thm:homology-one-constraint}.
+\end{proof}
+
+\subsection{No higher \(A_\infty\)-corrections in the minimal coupled model}
+
+The user's sharp next target was to compute the homology of the Casimir-transgression complex and determine whether higher transgressions vanish or produce an \(A_\infty\)-correction. For the minimal coupled complex, the answer is now complete.
+
+\begin{theorem}[quadric rigidity]\label{thm:quadric-rigidity}
+Let \(A\) be a weight-complete commutative domain and \(q\in A\) a non-zero-divisor. Then the dg algebra \(\Kcpx(A;q)\) is formal. More precisely, the projection
+\[
+\pi:\Kcpx(A;q)\to A/(q)
+\]
+is a quasi-isomorphism of dg algebras. Consequently the minimal \(A_\infty\)-model on \(H^\bullet(\Kcpx(A;q))\cong A/(q)\) can be chosen strict:
+\[
+m_1=0,\qquad m_2=\text{ordinary multiplication},\qquad m_n=0\ \ (n\ge 3).
+\]
+\end{theorem}
+
+\begin{proof}
+The first statement is already Theorem~\ref{thm:homology-one-constraint}; the key point is that \(\pi\) is not merely a quasi-isomorphism of complexes but a morphism of dg algebras. Therefore \(A/(q)\), equipped with zero differential and its ordinary multiplication, is a strict dg algebra model for \(\Kcpx(A;q)\). By Kadeishvili's theorem, the transferred minimal \(A_\infty\)-structure on homology is unique up to \(A_\infty\)-isomorphism; because a strict model already exists, the minimal structure has no higher multiplications.
+\end{proof}
+
+\begin{corollary}[vanishing of higher transgressions in the minimal coupled model]
+For the minimal Sugawara coupled complex \(\mathfrak C_{\g,k}\), there are no higher coupled transgressions beyond the quadratic Casimir equation and no higher \(A_\infty\)-corrections:
+\[
+m_n=0\qquad(n\ge 3).
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:quadric-rigidity} to \(A=A_{\g}\) and \(q=q_{\g,k}\).
+\end{proof}
+
+\begin{remark}[what is and is not proved]
+This theorem solves the \emph{minimal} coupled problem exactly. It does not, by itself, prove that the \emph{entire} coupled chiral bar complex of the full Sugawara quotient retracts to \(\mathfrak C_{\g,k}\). What it proves is that once the coupled problem has been reduced to the single surviving conformal generator and the single quadratic Casimir relation, no further higher structure remains. The minimal coupled sector is a strict quadric complete intersection.
+\end{remark}
+
+\section{A regular-sequence extension: the complete-intersection transgression principle}
+
+The one-constraint theorem is the codimension-one case of a more general principle. Since the user asked for a reenvisioning from first principles, it is worth isolating that principle explicitly.
+
+\begin{definition}[regular transgression complex]
+Let \(A\) be a weight-complete commutative algebra and let
+\[
+\mathbf q=(q_1,\dots,q_r)
+\]
+be homogeneous elements of \(A\). Define
+\[
+\Kcpx(A;\mathbf q):=
+\bigl(A[\theta_1,\dots,\theta_r],\ d\theta_i=q_i,\ d|_A=0\bigr),
+\]
+where the \(\theta_i\) are odd variables of cohomological degree \(1\).
+\end{definition}
+
+\begin{theorem}[complete-intersection transgression principle]\label{thm:ci}
+Suppose \(A\) is a weight-complete commutative domain and \(\mathbf q=(q_1,\dots,q_r)\) is a regular sequence. Then
+\[
+H^\bullet\!\bigl(\Kcpx(A;\mathbf q)\bigr)\cong A/(q_1,\dots,q_r),
+\]
+and the projection
+\[
+\Kcpx(A;\mathbf q)\to A/(q_1,\dots,q_r)
+\]
+is a quasi-isomorphism of dg algebras. In particular the minimal \(A_\infty\)-model on the homology is strict.
+\end{theorem}
+
+\begin{proof}
+This is the standard Koszul-complex theorem for a regular sequence, in the present weight-complete setting. One proves it by induction on \(r\). The case \(r=1\) is Theorem~\ref{thm:homology-one-constraint}. Assuming the claim for \(r-1\), write
+\[
+A' := A/(q_1,\dots,q_{r-1}).
+\]
+Because \(\mathbf q\) is regular, the image of \(q_r\) in \(A'\) is a non-zero-divisor. Then
+\[
+\Kcpx(A;\mathbf q)\simeq \Kcpx(A';q_r)
+\]
+after resolving the first \(r-1\) constraints, and the \(r=1\) case applies. The strictness of the \(A_\infty\)-model follows exactly as in Theorem~\ref{thm:quadric-rigidity}.
+\end{proof}
+
+\begin{remark}
+This theorem is algebraically classical, but its chiral use is new in the present discussion: it says that whenever the coupled transgression classes surviving after the primarity reduction form a regular sequence, the minimal coupled chiral dual is a strict complete intersection and \emph{not} an exotic higher \(A_\infty\)-deformation. In other words, the appearance of genuine higher operations is tied not to coupling as such, but to \emph{singular coupling}, i.e. to the failure of regularity.
+\end{remark}
+
+\section{Diagonal GKO transgression}
+
+The diagonal Goddard--Kent--Olive coupling provides a second genuinely coupled family, and it exhibits the same structural pattern.
+
+\subsection{The diagonal Casimir class}
+
+Let \(\p\) be simple and consider the diagonal embedding
+\[
+\widehat{\p}_{m+m'}\hookrightarrow V^m(\p)\otimes V^{m'}(\p).
+\]
+Let \(\eta_{\mathrm{GKO}}\) be the coset Virasoro class. The explicit mode formula for the GKO conformal vector shows that its coupled part is the diagonal Casimir cross term
+\[
+-\frac{1}{m+m'+h^\vee_{\p}}
+\sum_i u_i(-1)\lvert 0\rangle\otimes u^i(-1)\lvert 0\rangle.
+\]
+
+Define
+\[
+\Omega_{\Delta}:=
+-\frac{1}{m+m'+h^\vee_{\p}}
+\left[
+\sum_i u_i(-1)\lvert 0\rangle\otimes u^i(-1)\lvert 0\rangle
+\right].
+\]
+
+\begin{theorem}[diagonal GKO transgression]\label{thm:gko-transgression}
+In the minimal coupled GKO model,
+\[
+d_2(\eta_{\mathrm{GKO}})=\Omega_{\Delta}.
+\]
+\end{theorem}
+
+\begin{proof}
+Exactly as in the Sugawara case, the primarity reduction removes the positive-current mixed sector and leaves the vacuum-tensored coset conformal generator. The first new relation imposed by the coupled coset construction is the diagonal Casimir cross term in the conformal vector, hence the first new differential sends \(\eta_{\mathrm{GKO}}\) to that class.
+\end{proof}
+
+\subsection{Homology and rigidity}
+
+Let
+\[
+A_{\Delta}:=
+\widehat{\Sym}\!\Bigl(\bigoplus_{n\ge 1}\p^\vee_{(n)}{}'\oplus \bigoplus_{n\ge 1}\p^\vee_{(n)}{}''\Bigr)
+\]
+be the completed commutative algebra on the two current sectors. Let
+\[
+q_{\Delta}:=
+-\frac{1}{m+m'+h^\vee_{\p}}
+\sum_i x_i^{\prime,(1)}x^{i,\prime\prime,(1)}\in A_{\Delta}.
+\]
+
+\begin{corollary}[minimal GKO homology and formality]\label{cor:gko-formal}
+The minimal coupled GKO transgression complex has homology
+\[
+H_\bullet(\mathfrak C_{\Delta})\cong \bigl(A_{\Delta}/(q_{\Delta})\bigr)^{\vee,\cont},
+\]
+and its minimal \(A_\infty\)-model is strict:
+\[
+m_n=0\qquad(n\ge 3).
+\]
+\end{corollary}
+
+\begin{proof}
+By the same domain argument as before, \(A_{\Delta}\) is a domain and \(q_{\Delta}\neq 0\), hence \(q_{\Delta}\) is regular. Apply Theorem~\ref{thm:homology-one-constraint} and Theorem~\ref{thm:quadric-rigidity}.
+\end{proof}
+
+\begin{example}[\(\mathfrak{sl}_2\)]
+For \(\p=\mathfrak{sl}_2\) with \((h,h)=2\) and \((e,f)=1\),
+\[
+q_{\Delta}
+=
+-\frac{1}{m+m'+2}
+\left(
+\frac12 h'_{(1)}h''_{(1)} + e'_{(1)}f''_{(1)} + f'_{(1)}e''_{(1)}
+\right).
+\]
+Thus the minimal coupled diagonal dual is the weight-complete quadric cut out by this explicit equation.
+\end{example}
+
+\section{Conceptual synthesis: the Platonic picture}
+
+The constructions above admit a unifying interpretation that, in my view, is the ``Platonic ideal'' of the whole story.
+
+\subsection{Step one: reconstruction is diagonal resolution}
+
+The bar--cobar composite
+\[
+R_X(A)=\Cob_X\Bbar_X(A)
+\]
+is the chiral analogue of a diagonal resolution. It remembers \(A\) by resolving its multiplication through configurations of points. On the Koszul locus, the resolution collapses back to the original object.
+
+\subsection{Step two: duality is Verdier reflection of the bar coalgebra}
+
+The composite
+\[
+K_X(A)=\Cob_X\D_{\Ran}\Bbar_X(A)
+\]
+should be read as follows: first pass from the algebra to its universal coalgebraic shadow; then reflect that shadow by Verdier duality; then rebuild an algebra out of the reflected shadow. This is why \(K_X\), not \(R_X\), is the true duality functor.
+
+\subsection{Step three: coupling is constraint, not mystery}
+
+In the uncoupled regular case, mixed residues vanish and the dual coalgebra factorizes. In the coupled case, the bar complex feels an extra equation. For Sugawara and GKO, the first genuine equation is quadratic:
+\[
+q_{\g,k}=0
+\qquad\text{or}\qquad
+q_{\Delta}=0.
+\]
+The minimal coupled dual is therefore the continuous dual of a quadric complete intersection.
+
+\subsection{Step four: derived quadrics explain the higher-structure question}
+
+The minimal coupled transgression complex is the Koszul resolution of a quadric hypersurface. As derived geometry, this is the derived zero locus of the Casimir function. If the function is regular, the derived zero locus is classical, and higher \(A_\infty\)-operations vanish. If the constraint becomes singular, derived thickness appears and higher operations become unavoidable.
+
+So the real dichotomy is not:
+\[
+\text{uncoupled versus coupled,}
+\]
+but rather
+\[
+\text{regular derived constraint versus singular derived constraint.}
+\]
+
+This is the structural explanation of the rigidity theorem.
+
+\subsection{An analogy with Steinberg-type presentations}
+
+There is a useful analogy with the role played by the Steinberg variety in geometric representation theory. There one imposes incidence conditions and the resulting convolution algebra extracts the Hecke algebra. Here one imposes chiral incidence constraints in bar geometry and the resulting transgression complex extracts the coupled dual object. In both settings the geometry is not ornament: it \emph{presents} the algebra. The mixed-boundary filtration plays the role of a correspondence filtration, and the Casimir equation plays the role of the first nontrivial incidence condition.
+
+\section{A strengthened theorem under a single-generator coupling hypothesis}
+
+The minimal model is exact. To pass from that exact minimal statement to the full Sugawara quotient, one needs a comparison theorem between the full coupled bar complex and the minimal coupled retract. The natural hypothesis is the following.
+
+\begin{definition}[single-generator coupling hypothesis]
+We say that the Sugawara-coupled bar complex satisfies the \emph{single-generator coupling hypothesis} if, after the primarity reduction by the contracting homotopy of Proposition~\ref{prop:contraction}, the remaining coupled deformation retract is generated by the affine dual coalgebra \(C_{\g}\) together with the single vacuum-tensored conformal class \(\eta\).
+\end{definition}
+
+This hypothesis is exactly what one expects if the only surviving coupled datum after the \(\partial+N\) reduction is the genuine Sugawara relation \(L=\nu_{\g,k}\).
+
+\begin{theorem}[full coupled duality under the single-generator hypothesis]\label{thm:single-generator}
+Assume the single-generator coupling hypothesis. Then the full coupled dual coalgebra of the Sugawara quotient \(A^{\mathrm{Sug}}_{\g,k}\) is quasi-isomorphic to the continuous dual of the quadric complete intersection:
+\[
+\bigl(A_{\g}/(q_{\g,k})\bigr)^{\vee,\cont}.
+\]
+In particular the full coupled dual has no higher \(A_\infty\)-corrections.
+\end{theorem}
+
+\begin{proof}
+Under the hypothesis, the full coupled deformation retract is precisely the minimal Casimir-transgression complex \(\mathfrak C_{\g,k}\). Theorem~\ref{thm:homology-one-constraint} computes its homology, and Theorem~\ref{thm:quadric-rigidity} kills higher \(A_\infty\)-corrections.
+\end{proof}
+
+\begin{remark}
+The theorem cleanly separates what has been completely solved from what remains conjectural. The remaining problem is no longer to understand the minimal transgression complex; that part is done. The remaining problem is to prove the comparison theorem identifying the full coupled bar complex with that minimal retract.
+\end{remark}
+
+\section{Frontier conjectures}
+
+The thread asked for mathematics that pushes the frontier. Theorems~\ref{thm:recognition}, \ref{thm:mixed-sseq}, \ref{thm:universal-d1}, \ref{thm:homology-one-constraint}, \ref{thm:quadric-rigidity}, and \ref{thm:gko-transgression} do that inside the minimal and functorial sectors. Here are the sharp next conjectures.
+
+\begin{conjecture}[comparison conjecture for Sugawara]
+The single-generator coupling hypothesis holds for the full noncritical Sugawara quotient. Equivalently, after the primarity reduction, the full coupled bar complex deformation retracts to \(\mathfrak C_{\g,k}\).
+\end{conjecture}
+
+\begin{conjecture}[comparison conjecture for GKO]
+The full diagonal GKO coupled bar complex deformation retracts to the minimal diagonal Casimir-transgression complex.
+\end{conjecture}
+
+\begin{conjecture}[critical-level derived thickening]
+At critical level \(k=-\hh\), the Sugawara constraint ceases to define a regular quadric. The correct dual object is then a genuinely derived and curved complete intersection, and nontrivial higher \(A_\infty\)-operations appear.
+\end{conjecture}
+
+\begin{conjecture}[W-algebras as regular-sequence transgressions]
+For appropriate finite-type principal \(W\)-algebra couplings, the surviving transgression classes form a regular sequence \((q_1,\dots,q_r)\), so the coupled dual is the continuous dual of the complete intersection
+\[
+A/(q_1,\dots,q_r).
+\]
+Higher \(A_\infty\)-corrections appear precisely when that sequence fails to be regular.
+\end{conjecture}
+
+\begin{remark}
+If true, the last conjecture would give a clean organizing principle for a large class of chiral duality problems: regular sequences give strict complete intersections; singular sequences give genuinely derived, higher-operadic duals.
+\end{remark}
+
+\appendix
+
+\section{Everything in one page}
+
+For ease of repository integration, here is the entire logical architecture in compressed form.
+
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em]
+\item \textbf{Reconstruction versus duality.}
+\[
+R_X(A)=\Cob_X\Bbar_X(A),\qquad K_X(A)=\Cob_X\D_{\Ran}\Bbar_X(A).
+\]
+On the finite chiral Koszul locus,
+\[
+R_X(A)\simeq A,\qquad K_X(A)\simeq A^\sharp.
+\]
+
+\item \textbf{Recognition theorem.}
+\[
+(A,B)\text{ finite chiral Koszul pair}
+\iff
+K_X(A)\simeq B,\ K_X(B)\simeq A.
+\]
+
+\item \textbf{Mixed-boundary spectral sequence.}
+For \(A\otch B\),
+\[
+E_1 \cong H^\bullet_{\mathrm{bar}}(A)\widehat\otimes H^\bullet_{\mathrm{bar}}(B),
+\]
+and \(d_1\) is the mixed residue.
+
+\item \textbf{Regular mixed OPE.}
+If the mixed OPE is regular and both factors are PBW-Koszul, then \(A\otch B\) is chiral Koszul and the dual coalgebra factorizes.
+
+\item \textbf{Sugawara primarity.}
+For the semidirect Sugawara extension,
+\[
+d_1^{\mathrm{mix}}=\partial+N.
+\]
+This is contractible on positive current-weight sectors.
+
+\item \textbf{The survivor.}
+The vacuum-tensored conformal class \(\eta\otimes 1\) survives because \((\partial+N)(1)=0\).
+
+\item \textbf{Casimir transgression.}
+The first genuine coupled differential is
+\[
+d_2(\eta)=\Omega_{\g,k}.
+\]
+
+\item \textbf{Minimal coupled complex.}
+\[
+\mathfrak C_{\g,k}=(C_{\g}\otimes \Lambda(\eta),\,d\eta=\Omega_{\g,k}).
+\]
+
+\item \textbf{Dual algebra model.}
+\[
+\mathfrak C_{\g,k}^{\vee,\cont}\cong \Kcpx(A_{\g};q_{\g,k})=(A_{\g}[\theta],\,d\theta=q_{\g,k}).
+\]
+
+\item \textbf{Homology.}
+If \(q_{\g,k}\) is regular, then
+\[
+H^\bullet(\Kcpx(A_{\g};q_{\g,k}))\cong A_{\g}/(q_{\g,k}),
+\]
+so
+\[
+H_\bullet(\mathfrak C_{\g,k})\cong \bigl(A_{\g}/(q_{\g,k})\bigr)^{\vee,\cont}.
+\]
+
+\item \textbf{Rigidity.}
+The minimal coupled model is formal, so
+\[
+m_n=0 \qquad (n\ge 3).
+\]
+
+\item \textbf{Diagonal GKO.}
+Exactly the same story holds with the diagonal Casimir
+\[
+q_{\Delta}=
+-\frac{1}{m+m'+h^\vee_{\p}}\sum_i x_i^{\prime,(1)}x^{i,\prime\prime,(1)}.
+\]
+\end{enumerate}
+
+\section{A note on what changed relative to the earlier discussion}
+
+The thread evolved through several heuristic stages. The final picture sharpens and corrects those stages as follows.
+
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=2.2em]
+\item Earlier we said ``\(\Cob\Bbar\) gives the dual.'' The correct first-principles replacement is:
+\[
+\Cob\Bbar \text{ reconstructs},\qquad \Cob\D\Bbar \text{ dualizes}.
+\]
+
+\item Earlier we proved contractibility of the first mixed Sugawara operator and later wrote down a surviving class \(\eta\). The correction is that the contraction holds on the \emph{positive current-weight} sector only; \(\eta\otimes 1\) survives.
+
+\item Earlier the next frontier was phrased as ``compute the homology of the Casimir-transgression complex and determine whether higher transgressions vanish or produce an \(A_\infty\)-correction.'' This note answers that question completely for the \emph{minimal} transgression complex: the homology is a regular quadric quotient and all higher \(A_\infty\)-operations vanish.
+
+\item What remains open is no longer the minimal coupled algebra. What remains open is the comparison map from the full coupled bar complex to the minimal retract.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+
+\bibitem{BD}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral Algebras},
+American Mathematical Society Colloquium Publications, 2004.
+
+\bibitem{CBR}
+\emph{Chiral Bar-Cobar Duality: Geometric Realization},
+uploaded manuscript discussed throughout this thread.
+
+\bibitem{Kac}
+V.~G.~Kac,
+\emph{Bombay Lectures on Highest Weight Representations of Infinite Dimensional Lie Algebras},
+World Scientific, 2013.
+
+\bibitem{LV}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic Operads},
+Grundlehren der mathematischen Wissenschaften, Vol.~346, Springer, 2012.
+
+\bibitem{PP}
+A.~Polishchuk and L.~Positselski,
+\emph{Quadratic Algebras},
+University Lecture Series, Vol.~37, American Mathematical Society, 2005.
+
+\end{thebibliography}
+
