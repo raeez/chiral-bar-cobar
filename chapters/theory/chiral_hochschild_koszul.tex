@@ -307,7 +307,7 @@ where $n$ is the bar degree (number of internal insertions) and $q$ is the sheaf
 \end{theorem}
 
 \begin{proof}
-The chiral Hochschild complex $CH^*(\mathcal{A})$ is a double complex with horizontal differential $d_{\mathrm{bar}}$ (the bar differential of Definition~\ref{def:bar-differential-complete}) and vertical differential $d_{\mathrm{sheaf}}$ (sheaf cohomology on configuration spaces).  Filter by bar degree: $F^n = \bigoplus_{m \geq n} CH^{m,*}$.  The resulting spectral sequence has $E_0^{n,q} = \Gamma(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes(n+2)} \otimes \Omega^n_{\log})$ with $d_0 = d_{\mathrm{sheaf}}$, so $E_1^{n,q} = H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes(n+2)} \otimes \Omega^n_{\log})$.  Convergence follows from the bounded-below hypothesis on $\mathcal{A}$ and the finite cohomological dimension of configuration spaces.
+The chiral Hochschild complex $\ChirHoch^*(\mathcal{A})$ is a double complex with horizontal differential $d_{\mathrm{bar}}$ (the bar differential of Definition~\ref{def:bar-differential-complete}) and vertical differential $d_{\mathrm{sheaf}}$ (sheaf cohomology on configuration spaces).  Filter by bar degree: $F^n = \bigoplus_{m \geq n} \ChirHoch^{m,*}$.  The resulting spectral sequence has $E_0^{n,q} = \Gamma(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes(n+2)} \otimes \Omega^n_{\log})$ with $d_0 = d_{\mathrm{sheaf}}$, so $E_1^{n,q} = H^q(\overline{C}_{n+2}(X), \mathcal{A}^{\boxtimes(n+2)} \otimes \Omega^n_{\log})$.  Convergence follows from the bounded-below hypothesis on $\mathcal{A}$ and the finite cohomological dimension of configuration spaces.
 \end{proof}
 
 For the cyclic refinement relating Hochschild to cyclic homology via Connes' operator, see Theorem~\ref{thm:HC-spectral-sequence}.  For formal chiral algebras (quasi-isomorphic to their cohomology), the spectral sequence above degenerates at $E_1$, giving:
@@ -711,9 +711,9 @@ The fermion Hochschild groups are isomorphic to the boson groups (Computation~\r
 \begin{remark}[Boson-fermion Hochschild isomorphism: not Koszul duality]
 The boson and fermion have isomorphic Hochschild cohomology groups:
 \[
-HH^n(\mathcal{B}) = (\mathbb{C}, 0, \mathbb{C}) = HH^n(\mathcal{F}).
+\ChirHoch^n(\mathcal{B}) = (\mathbb{C}, 0, \mathbb{C}) = HH^n(\mathcal{F}).
 \]
-In particular the numerical relation $HH^n(\mathcal{B}) \cong HH^{2-n}(\mathcal{F})^{\vee}$ holds.
+In particular the numerical relation $\ChirHoch^n(\mathcal{B}) \cong HH^{2-n}(\mathcal{F})^{\vee}$ holds.
 However, this is \emph{not} an instance of Theorem~\ref{thm:main-koszul-hoch}: the boson and fermion are
 \emph{not} Koszul dual (the Heisenberg has one generator
 while the fermion has two; the bosonization correspondence is an \emph{isomorphism} via lattice VOA extension, not a Koszul duality).  The Koszul dual of $\mathcal{H}_k$ is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ with curvature $m_0 = -k\omega$ (equivalently, $\mathrm{CE}(\mathfrak{h}_{-k})$ since $\mathfrak{h}$ is abelian),
@@ -3169,7 +3169,7 @@ For a chiral algebra $\mathcal{A}$ on a genus $g \geq 2$ curve $X$,
 the Kodaira--Spencer image of the Hodge class is nilpotent:
 \[
 \kappa(c_1(\mathbb{E}))^{3g-2} = 0
-\quad \text{in } CH^*(\mathcal{A}).
+\quad \text{in } \ChirHoch^*(\mathcal{A}).
 \]
 In particular, the geometric direction of the bar spectral sequence
 has bounded tautological depth: at most $3g - 3$ nontrivial geometric
@@ -3183,7 +3183,7 @@ contribution into the modular data.
 \begin{proof}
 The Kodaira--Spencer map (Theorem~\ref{thm:kodaira-spencer-chiral-complete}) provides a ring homomorphism
 \[
-\kappa \colon H^*(\overline{\mathcal{M}}_g, \mathbb{Q}) \longrightarrow CH^*(\mathcal{A})
+\kappa \colon H^*(\overline{\mathcal{M}}_g, \mathbb{Q}) \longrightarrow \ChirHoch^*(\mathcal{A})
 \]
 whose image controls the geometric contributions to bar cohomology.
 The geometric operator $\sigma_{\mathrm{geom}}$ acts via
@@ -3197,7 +3197,7 @@ Since $\dim_{\mathbb{C}} \overline{\mathcal{M}}_g = 3g - 3$, every cohomology cl
 \]
 since $2(3g-2) = 6g - 4 > 6g - 6$ for all $g \geq 2$.  Applying $\kappa$:
 \[
-\kappa(\lambda)^{3g-2} = \kappa(\lambda^{3g-2}) = \kappa(0) = 0 \quad \text{in } CH^*(\mathcal{A}).
+\kappa(\lambda)^{3g-2} = \kappa(\lambda^{3g-2}) = \kappa(0) = 0 \quad \text{in } \ChirHoch^*(\mathcal{A}).
 \]
 Therefore $\sigma_{\mathrm{geom}}$ is nilpotent of index at most $3g - 2$, giving at most $3g - 3$ nontrivial filtration steps.  At $g = 0$ there is no Hodge bundle; at $g = 1$, $c_1(\mathbb{E}) = \frac{1}{12}\delta$ absorbs into $N_{\mathrm{mod}}$.
 \end{proof}
@@ -3217,12 +3217,12 @@ curve, suppose the Kodaira--Spencer map factors through the
 cohomology of the smooth moduli space:
 \[
 \kappa \colon H^*(\mathcal{M}_g, \mathbb{Q}) \longrightarrow
-CH^*(\mathcal{A}).
+\ChirHoch^*(\mathcal{A}).
 \]
 Then the nilpotency index of $\kappa(\lambda)$ is at most~$g - 1$:
 \begin{equation}\label{eq:sharp-geometric-depth}
 \kappa(c_1(\mathbb{E}))^{g-1} = 0
-\quad \text{in } CH^*(\mathcal{A}).
+\quad \text{in } \ChirHoch^*(\mathcal{A}).
 \end{equation}
 In particular:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -3336,7 +3336,7 @@ $c_1(\mathbb{E}) = \frac{1}{12}\delta$.
 \label{ex:genus2-hodge-vanishing}
 By Theorem~\ref{thm:geometric-depth-smooth}, the Hodge class
 contribution vanishes entirely at genus~$2$:
-$\kappa(\lambda) = 0$ in $CH^*(\mathcal{A})$.  This follows from
+$\kappa(\lambda) = 0$ in $\ChirHoch^*(\mathcal{A})$.  This follows from
 the Graber--Vakil vanishing $R^d(\mathcal{M}_2) = 0$ for $d > 0$.
 The genus-$2$ bar complex receives no geometric corrections from
 $c_1(\mathbb{E})$; any higher-genus modifications at $g = 2$ must
@@ -3807,18 +3807,18 @@ This gives a 1-dimensional space:
 
 where $[k]$ is the cohomology class of the level.
 
-\subsubsection{\texorpdfstring{Higher degrees: $HH^n(\mathcal{B})$ for $n \geq 3$}{Higher degrees: HH n(B) for n >= 3}}
+\subsubsection{\texorpdfstring{Higher degrees: $\ChirHoch^n(\mathcal{B})$ for $n \geq 3$}{Higher degrees: HH n(B) for n >= 3}}
 
 For the Heisenberg algebra (free boson), all higher Hochschild cohomology vanishes:
-\[HH^n(\mathcal{B}) = 0 \quad \text{for } n \geq 3\]
+\[\ChirHoch^n(\mathcal{B}) = 0 \quad \text{for } n \geq 3\]
 
 \emph{Proof.} The Heisenberg algebra $\mathcal{B}$ is chiral Koszul (Theorem~\ref{thm:km-chiral-koszul}): its bar construction $\bar{B}(\mathcal{B})$ is quasi-isomorphic to $\mathrm{CE}(\mathfrak{h}_{-k})$, which is concentrated in bar degrees $\leq 2$ (the only generating relation is the quadratic OPE $\alpha(z)\alpha(w) \sim k/(z-w)^2$, involving exactly two fields).  The Koszul resolution therefore has the form:
 \[\mathcal{B} \otimes \mathcal{B}^! \otimes \mathcal{B} \;\xrightarrow{d_2}\; \mathcal{B} \otimes (s\alpha) \otimes \mathcal{B} \;\xrightarrow{d_1}\; \mathcal{B} \otimes \mathcal{B}\]
-with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single element $s\alpha$ in bar degree~1 and its square in bar degree~2.  Applying $\mathrm{Hom}_{\mathcal{B}\text{-}\mathcal{B}}(-, \mathcal{B})$ to this length-2 resolution yields a cochain complex concentrated in degrees $0, 1, 2$.  Hence $HH^n(\mathcal{B}) = 0$ for $n \geq 3$.
+with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single element $s\alpha$ in bar degree~1 and its square in bar degree~2.  Applying $\mathrm{Hom}_{\mathcal{B}\text{-}\mathcal{B}}(-, \mathcal{B})$ to this length-2 resolution yields a cochain complex concentrated in degrees $0, 1, 2$.  Hence $\ChirHoch^n(\mathcal{B}) = 0$ for $n \geq 3$.
 
 \subsubsection{Summary for Heisenberg}
 
-\[HH^*(\mathcal{B}) = \begin{cases}
+\[\ChirHoch^*(\mathcal{B}) = \begin{cases}
 \mathbb{C} & n = 0 \text{ (endomorphisms)}\\
 0 & n = 1 \text{ (no derivations)}\\
 \mathbb{C} & n = 2 \text{ (level deformation)}\\
@@ -3826,7 +3826,7 @@ with $\mathcal{B}^! = \mathrm{CE}(\mathfrak{h}_{-k})$ generated by a single elem
 \end{cases}\]
 
 As a graded algebra:
-\[HH^*(\mathcal{B}) \cong \mathbb{C}[c]/(c^2) \cong \mathbb{C} \oplus \mathbb{C} \cdot c\]
+\[\ChirHoch^*(\mathcal{B}) \cong \mathbb{C}[c]/(c^2) \cong \mathbb{C} \oplus \mathbb{C} \cdot c\]
 where $c$ is a degree-2 class corresponding to the central charge (with $c^2 = 0$ since $HH^n = 0$ for $n \geq 3$).
 \end{example}
 
@@ -3836,27 +3836,27 @@ where $c$ is a degree-2 class corresponding to the central charge (with $c^2 = 0
 For the free fermion $\mathcal{F}$ with fields $\psi(z), \psi^*(z)$ and OPE:
 \[\psi(z_1)\psi^*(z_2) \sim \frac{1}{z_1 - z_2}\]
 
-\subsubsection{\texorpdfstring{Degree 0: $HH^0(\mathcal{F})$}{Degree 0: HH 0(F)}}
+\subsubsection{\texorpdfstring{Degree 0: $\ChirHoch^0(\mathcal{F})$}{Degree 0: HH 0(F)}}
 
 Endomorphisms must preserve the fermionic OPE. By similar reasoning to the bosonic case:
-\[HH^0(\mathcal{F}) = \mathbb{C}\]
+\[\ChirHoch^0(\mathcal{F}) = \mathbb{C}\]
 
-\subsubsection{\texorpdfstring{Degree 1: $HH^1(\mathcal{F})$}{Degree 1: HH 1(F)}}
+\subsubsection{\texorpdfstring{Degree 1: $\ChirHoch^1(\mathcal{F})$}{Degree 1: HH 1(F)}}
 
 Derivations of the fermionic algebra. The Leibniz rule for fermions includes sign factors:
 \[D(\psi \psi^*) = D(\psi)\psi^* + (-1)^{|\psi|} \psi D(\psi^*)\]
 
 Since the OPE has no deformation parameters, we find:
-\[HH^1(\mathcal{F}) = 0\]
+\[\ChirHoch^1(\mathcal{F}) = 0\]
 
-\subsubsection{\texorpdfstring{Degree 2: $HH^2(\mathcal{F})$}{Degree 2: HH 2(F)}}
+\subsubsection{\texorpdfstring{Degree 2: $\ChirHoch^2(\mathcal{F})$}{Degree 2: HH 2(F)}}
 
 Deformations of the fermionic structure.  The free fermion $bc$ ghost system admits a one-parameter family of deformations parametrized by the spin $\lambda$:  the conformal weights $(h_b, h_c) = (\lambda, 1-\lambda)$ vary while the OPE $b(z)c(w) \sim 1/(z-w)$ is preserved.  This gives:
-\[HH^2(\mathcal{F}) = \mathbb{C}\]
+\[\ChirHoch^2(\mathcal{F}) = \mathbb{C}\]
 
 \subsubsection{Summary for free fermion}
 
-\[HH^*(\mathcal{F}) = \begin{cases}
+\[\ChirHoch^*(\mathcal{F}) = \begin{cases}
 \mathbb{C} & n = 0\\
 0 & n = 1\\
 \mathbb{C} & n = 2\\
@@ -3864,7 +3864,7 @@ Deformations of the fermionic structure.  The free fermion $bc$ ghost system adm
 \end{cases}\]
 
 As a graded algebra:
-\[HH^*(\mathcal{F}) \cong \Lambda(c)\]
+\[\ChirHoch^*(\mathcal{F}) \cong \Lambda(c)\]
 (exterior algebra on one generator of degree 2)
 \end{example}
 
