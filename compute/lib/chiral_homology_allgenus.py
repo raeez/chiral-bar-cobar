@@ -262,14 +262,19 @@ def complementarity_kappa_sum(family: str) -> Rational:
 # Heisenberg bar cohomology: partition function formula
 # ---------------------------------------------------------------------------
 
-def heisenberg_bar_cohomology_predicted(n: int) -> int:
-    """Predicted H^n(B-bar(H)) = p(n-1) where p = partition function.
+def heisenberg_bar_cohomology_predicted(h: int) -> int:
+    """Predicted total bar cohomology at conformal weight h for Heisenberg.
+
+    Ground truth: H_h = p(h-2) for h >= 2, and H_1 = 1.
+    Here p = unrestricted partition function.
 
     At generic level, this is the fiberwise chiral homology at ALL genera.
     """
-    if n < 1:
+    if h < 1:
         return 0
-    return partition_number(n - 1)
+    if h == 1:
+        return 1  # single generator a at weight 1
+    return partition_number(h - 2)
 
 
 # ---------------------------------------------------------------------------
