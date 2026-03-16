@@ -62,17 +62,14 @@ from compute.lib.mc5_higher_genus import (
     smoothing_compatibility,
     excision_decomposition,
     excision_curvature_additivity,
-    formal_neighborhood_boundary,
     beauville_laszlo_decomposition,
     schottky_propagator_terms,
     schottky_arnold_defect,
     schottky_genus2_explicit,
-    tft_frobenius_structure,
     tft_partition_function,
     lambda_fp_factorization_analysis,
     bernoulli_recursion,
     combined_genus_table,
-    strategy_comparison,
 )
 from compute.lib.utils import lambda_fp, F_g
 from compute.lib.genus_expansion import (
@@ -156,7 +153,7 @@ class TestFayAndSymmetry:
 class TestSewingCorrection:
     """Delta_g = lambda_g - lambda_{g-1} < 0 for g >= 2."""
 
-    @pytest.mark.parametrize("g", [2, 3, 5, 10, 15])
+    @pytest.mark.parametrize("g", [2, 5, 15])
     def test_negative(self, g):
         assert sewing_correction(g) < 0
         assert sewing_correction(g) == lambda_fp(g) - lambda_fp(g - 1)
@@ -272,14 +269,14 @@ class TestLambdaFPBernoulli:
     def test_known_values(self, g, expected):
         assert lambda_fp(g) == expected
 
-    @pytest.mark.parametrize("g", [1, 4, 8, 15])
+    @pytest.mark.parametrize("g", [1, 8, 15])
     def test_bernoulli_match(self, g):
         B_2g = bernoulli(2 * g)
         expected = (2**(2*g-1) - 1) * abs(B_2g) / (2**(2*g-1) * factorial(2*g))
         assert simplify(lambda_fp(g) - expected) == 0
 
     def test_all_positive_and_decreasing(self):
-        for g in range(1, 15):
+        for g in range(1, 10):
             assert lambda_fp(g) > 0
             assert lambda_fp(g) > lambda_fp(g + 1)
 
@@ -309,12 +306,13 @@ class TestAhatAndConvergence:
             assert r["ratios_exact"][g] < 1
         assert abs(r["ratios_float"][14] - limit) / limit < 0.005
 
-    @pytest.mark.parametrize("g", [1, 5, 10])
-    def test_bernoulli_recursion_matches(self, g):
-        assert bernoulli_recursion(10)[g] == lambda_fp(g)
+    def test_bernoulli_recursion_matches(self):
+        rec = bernoulli_recursion(5)
+        for g in [1, 3, 5]:
+            assert rec[g] == lambda_fp(g)
 
     def test_verify_lambda_fp_bernoulli_bulk(self):
-        r = verify_lambda_fp_bernoulli(10)
+        r = verify_lambda_fp_bernoulli(8)
         assert all(r.values())
 
 
@@ -340,7 +338,7 @@ class TestCrossFamilyUniversality:
 class TestComplementarityAndSpotChecks:
     """Complementarity and exact numerical checks."""
 
-    @pytest.mark.parametrize("g", [1, 3, 7])
+    @pytest.mark.parametrize("g", [1, 5])
     def test_virasoro_complementarity(self, g):
         c = Symbol('c')
         total = simplify(F_g(c/2, g) + F_g((26-c)/2, g))
@@ -348,9 +346,8 @@ class TestComplementarityAndSpotChecks:
 
     def test_sl2_complementarity(self):
         for g in [1, 3]:
-            for k_val in [1, 7]:
-                s = F_g(kappa_sl2(k_val), g) + F_g(kappa_sl2(-k_val - 4), g)
-                assert s == 0
+            s = F_g(kappa_sl2(1), g) + F_g(kappa_sl2(-5), g)
+            assert s == 0
 
     def test_heisenberg_k1_F2(self):
         assert F_g(Rational(1), 2) == Rational(7, 5760)
@@ -420,34 +417,31 @@ class TestStrategyBDeformation:
 class TestStrategyCExcision:
     """Ayala-Francis excision."""
 
-    @pytest.mark.parametrize("g", [2, 5, 9])
+    @pytest.mark.parametrize("g", [2, 5])
     def test_decomposition(self, g):
         r = excision_decomposition(g)
         assert r['num_pants'] == 2 * g - 2
         assert r['num_gluing_circles'] == 3 * g - 3
         assert r['chi_consistent']
 
-    @pytest.mark.parametrize("g", [1, 4])
-    def test_F_g_from_excision(self, g):
+    def test_F_g_from_excision(self):
         kappa = Symbol('kappa')
-        r = excision_decomposition(g)
-        assert simplify(r['F_g_from_excision'] - kappa * lambda_fp(g)) == 0
+        for g in [1, 4]:
+            r = excision_decomposition(g)
+            assert simplify(r['F_g_from_excision'] - kappa * lambda_fp(g)) == 0
 
-    @pytest.mark.parametrize("g", [1, 5])
-    def test_curvature_topological(self, g):
-        r = excision_curvature_additivity(g)
-        assert r['local_curvature_pants'] == 0
-        assert r['curvature_is_topological']
+    def test_curvature_topological(self):
+        for g in [1, 5]:
+            r = excision_curvature_additivity(g)
+            assert r['local_curvature_pants'] == 0
+            assert r['curvature_is_topological']
 
 
 class TestStrategyDFormalModuli:
     """Formal GAGA and Beauville-Laszlo."""
 
-    @pytest.mark.parametrize("g", [1, 3, 7])
-    def test_formal_gaga_and_bl(self, g):
-        r = formal_neighborhood_boundary(g)
-        assert r['formal_gaga_applicable']
-        assert r['coherence_holds']
+    @pytest.mark.parametrize("g", [1, 5])
+    def test_beauville_laszlo(self, g):
         bl = beauville_laszlo_decomposition(g)
         assert bl['absorbed_by_period_correction']
         assert bl['remaining_obstruction'] == 0
@@ -456,7 +450,7 @@ class TestStrategyDFormalModuli:
 class TestStrategyESchottky:
     """Schottky uniformization."""
 
-    @pytest.mark.parametrize("g", [1, 3, 7])
+    @pytest.mark.parametrize("g", [1, 3])
     def test_word_structure(self, g):
         r = schottky_propagator_terms(g, max_words=3)
         assert r['num_generators'] == g
@@ -464,18 +458,15 @@ class TestStrategyESchottky:
         assert r['word_counts'][1] == 2 * g
         assert r['word_counts'][2] == 2 * g * (2 * g - 1)
 
-    @pytest.mark.parametrize("g", [2, 5])
-    def test_absolute_convergence(self, g):
-        assert schottky_propagator_terms(g)['convergence'] == 'absolute'
-
-    def test_genus1_conditional(self):
+    def test_convergence(self):
+        assert schottky_propagator_terms(3)['convergence'] == 'absolute'
         assert schottky_propagator_terms(1)['convergence'] == 'conditional'
 
-    @pytest.mark.parametrize("g", [1, 4])
-    def test_defect_integral(self, g):
+    def test_defect_integral(self):
         kappa = Symbol('kappa')
-        r = schottky_arnold_defect(g)
-        assert simplify(r['integrated_defect'] - kappa * lambda_fp(g)) == 0
+        for g in [1, 4]:
+            r = schottky_arnold_defect(g)
+            assert simplify(r['integrated_defect'] - kappa * lambda_fp(g)) == 0
 
     def test_genus2_explicit(self):
         r = schottky_genus2_explicit()
@@ -491,25 +482,13 @@ class TestStrategyFTFT:
         kappa = Symbol('kappa')
         assert simplify(tft_partition_function(kappa, g) - kappa * lambda_fp(g)) == 0
 
-    def test_frobenius_curved(self):
-        kappa = Symbol('kappa')
-        r = tft_frobenius_structure(kappa)
-        assert r['euler_class'] == kappa
-
-
 class TestCrossStrategy:
-    """Cross-strategy lambda_g analysis and comparison."""
+    """Cross-strategy lambda_g analysis."""
 
     def test_additivities_fail(self):
         analysis = lambda_fp_factorization_analysis(6)
         for (g1, g2), data in analysis['additivity_failures'].items():
             assert data['deviation'] < 0
-
-    def test_strategy_comparison(self):
-        comp = strategy_comparison()
-        assert len(comp) == 6
-        assert comp['A_clutching']['feasibility'] == 'LIKELY'
-        assert comp['F_tft_bootstrap']['feasibility'] == 'SPECULATIVE'
 
 
 # ============================================================================

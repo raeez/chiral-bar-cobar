@@ -1007,18 +1007,8 @@ def excision_curvature_additivity(g: int) -> Dict[str, object]:
 
 
 # --- Strategy D: Formal moduli ---
-
-def formal_neighborhood_boundary(g: int) -> Dict[str, object]:
-    r"""Formal GAGA: bar complex coherent + M_g-bar proper => global extension."""
-    return {
-        'genus': g,
-        'moduli_dim': 3 * g - 3 if g >= 2 else (1 if g == 1 else 0),
-        'boundary_components': g,
-        'formal_neighborhood_dim': 3 * g - 3 if g >= 2 else 1,
-        'coherence_holds': True,
-        'properness_holds': True,
-        'formal_gaga_applicable': g >= 1,
-    }
+# formal_neighborhood_boundary: removed (Formal GAGA applicability is a
+# mathematical argument, not a computation; see sec:ambient-complementarity).
 
 
 def beauville_laszlo_decomposition(g: int) -> Dict[str, object]:
@@ -1094,31 +1084,11 @@ def schottky_genus2_explicit() -> Dict[str, object]:
 
 # --- Strategy F: TFT bootstrap ---
 
-def tft_frobenius_structure(kappa_val: object) -> Dict[str, object]:
-    r"""Curved Frobenius algebra from BV=bar at genus 0."""
-    return {
-        'state_space': 'B^*(A) (bar cohomology)',
-        'multiplication': 'bar differential on B^2(A)',
-        'trace': 'highest-pole extraction -> kappa(A)',
-        'frobenius_type': 'curved (kappa != 0)',
-        'euler_class': kappa_val,
-    }
-
-
 def tft_partition_function(kappa_val: object, g: int) -> object:
-    r"""TFT partition function: Z_g = kappa * lambda_g."""
+    r"""TFT partition function: Z_g = kappa * lambda_g^FP."""
     if g < 1:
         return S.Zero
     return kappa_val * lambda_fp(g)
-
-
-def tft_handle_operator(kappa_val: object) -> Dict[str, object]:
-    r"""Handle operator: F_g - F_{g-1} = kappa * (lambda_g - lambda_{g-1})."""
-    return {
-        'handle_operator': 'mu^* circ mu (Frobenius contraction)',
-        'scalar_eigenvalue': 1 / kappa_val if kappa_val != 0 else oo,
-        'increment_formula': 'F_g - F_{g-1} = kappa * (lambda_g - lambda_{g-1})',
-    }
 
 
 # --- Cross-strategy analysis ---
@@ -1151,54 +1121,6 @@ def lambda_fp_factorization_analysis(max_genus: int = 12) -> Dict[str, object]:
         'table': table,
         'additivity_failures': additivity,
         'ratios': ratios,
-    }
-
-
-def strategy_comparison() -> Dict[str, Dict[str, str]]:
-    """Compare feasibility of all six proof strategies."""
-    return {
-        'A_clutching': {
-            'key_insight': 'Sewing propagates BV=bar from genus 0+1 to all genera.',
-            'main_lemma': 'BV restricts to sewn pieces with sewing-propagator correction.',
-            'feasibility': 'LIKELY',
-            'reuses': 'Genus 0+1 (proved), Theorems A-D',
-            'blockers': 'Sewing compatibility for curved A-infinity',
-        },
-        'B_deformation': {
-            'key_insight': 'Deform from nodal curve; obstruction absorbed by period correction.',
-            'main_lemma': 'KS obstruction in HH^2_ch(A) absorbed by F_g = kappa * lambda_g.',
-            'feasibility': 'POSSIBLE',
-            'reuses': 'Genus 0, Theorem D, KS map',
-            'blockers': 'Higher-order obstructions',
-        },
-        'C_excision': {
-            'key_insight': 'Ayala-Francis excision: disks (proved) + annuli => all surfaces.',
-            'main_lemma': 'Curved A-infinity bar complex is an AF factorization algebra.',
-            'feasibility': 'LIKELY',
-            'reuses': 'Genus 0, AF excision theorem',
-            'blockers': 'Compatibility of curved A-infinity with AF',
-        },
-        'D_formal_moduli': {
-            'key_insight': 'Formal GAGA extends boundary identification to all of M_g.',
-            'main_lemma': 'Bar complex sheaf is coherent with f.d. fibers on M_g-bar.',
-            'feasibility': 'POSSIBLE',
-            'reuses': 'Genus 0 at boundary, properness of M_g-bar',
-            'blockers': 'Derived algebraic geometry technicalities',
-        },
-        'E_schottky': {
-            'key_insight': 'Propagator as Poincare series; defect from non-identity elements.',
-            'main_lemma': 'Schottky integral = lambda_g via Fay trisecant.',
-            'feasibility': 'POSSIBLE',
-            'reuses': 'Genus 1, Theorem D',
-            'blockers': 'Explicit evaluation of Schottky integrals',
-        },
-        'F_tft_bootstrap': {
-            'key_insight': 'Genus-0 BV=bar determines 2d TFT; bootstrap gives all genera.',
-            'main_lemma': 'Bar complex defines curved Frobenius algebra.',
-            'feasibility': 'SPECULATIVE',
-            'reuses': 'Genus 0, Frobenius classification',
-            'blockers': 'Chiral algebra is NOT strict 2d TFT',
-        },
     }
 
 
