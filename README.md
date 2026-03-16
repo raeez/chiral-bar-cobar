@@ -13,16 +13,16 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-1698-a371f7?style=for-the-badge&labelColor=0d1117)
-![Theorems](https://img.shields.io/badge/theorems%20proved-1513-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-7785-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-1767-a371f7?style=for-the-badge&labelColor=0d1117)
+![Theorems](https://img.shields.io/badge/theorems%20proved-1217-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-8071-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-1183-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-1217-3fb950?style=flat-square&labelColor=0d1117)
 ![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-330-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-128-d29922?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-135-d29922?style=flat-square&labelColor=0d1117)
 ![Heuristic](https://img.shields.io/badge/heuristic-19-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
@@ -39,7 +39,7 @@ This monograph constructs a geometric lift of classical Koszul duality (the bar-
 
 **In one sentence.** &ensp; The bar complex of a chiral algebra is computed by integration over Fulton&ndash;MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus $g \geq 1$ is controlled by a single scalar invariant $\kappa(\mathcal{A})$ that organizes the quantum corrections across all genera.
 
-The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1 and MC2 are proved.
+The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC4 are resolved (MC3 at character level for type A, MC4 fully closed via W<sub>N</sub> rigidity). Ring 2&mdash;the nonlinear characteristic layer&mdash;is fully integrated: ambient complementarity upgrades Theorem C to shifted-symplectic Lagrangian geometry, the modular bar-Hamiltonian &Theta;<sub>A</sub> is defined as a cross-polarized graph sum, and shadow archetypes are computed in every example chapter.
 
 <br>
 
