@@ -13,17 +13,17 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-1598-a371f7?style=for-the-badge&labelColor=0d1117)
-![Theorems](https://img.shields.io/badge/theorems%20proved-1391-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-6005-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-1698-a371f7?style=for-the-badge&labelColor=0d1117)
+![Theorems](https://img.shields.io/badge/theorems%20proved-1513-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-7785-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-1074-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-317-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-140-d29922?style=flat-square&labelColor=0d1117)
-![Heuristic](https://img.shields.io/badge/heuristic-23-8b949e?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-1183-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-330-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-128-d29922?style=flat-square&labelColor=0d1117)
+![Heuristic](https://img.shields.io/badge/heuristic-19-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
 
@@ -110,23 +110,23 @@ The five main theorems decompose into a finer proved structure.
 
 The monograph is a two-stratum work.
 
-> **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$.
-> &ensp; 1,391 proved claims&ensp;(1,074 here&hairsp;+&hairsp;317 elsewhere).&ensp; Every claim has a machine-readable status tag.
+> **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, prefundamental Clebsch&ndash;Gordan for $Y(\mathfrak{sl}_2)$ thick generation (MC3).
+> &ensp; 1,513 proved claims&ensp;(1,183 here&hairsp;+&hairsp;330 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
 > **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion, completed bar for infinite-generator towers ($\mathcal{W}_\infty$, Yangian), BV-BRST at all genera.
-> &ensp; 140 precisely scoped conjectures organized under five master conjectures.
+> &ensp; 128 precisely scoped conjectures organized under five master conjectures.
 
 <br>
 
 ### Five Master Conjectures
 
-All 140 conjectured claims trace to one of five master conjectures that define the research frontier.
+All conjectured claims trace to one of five master conjectures that define the research frontier.
 
 | &ensp; | Target | Status | Impact |
 |:---:|--------|--------|--------|
 | **MC1** | Higher-genus PBW degeneration | **Proved**&ensp;(KM / Vir / $\mathcal{W}_N$) | Unconditional interacting families |
 | **MC2** | Cyclic $L_\infty$ &hairsp;+&hairsp; universal $\Theta_{\mathcal{A}}$ | **Proved** | Full modular homotopy package |
-| **MC3** | Factorization Drinfeld&ndash;Kohno / Kazhdan&ndash;Lusztig | DK-0/1/1&frac12;/2/3 **proved** on eval-gen core; coderived enlargement **open** | Quantum groups completion |
+| **MC3** | Factorization Drinfeld&ndash;Kohno / Kazhdan&ndash;Lusztig | DK-0/1/1&frac12;/2/3 **proved** on eval-gen core; prefundamental CG **proved** ($V_n \otimes L^- \cong \bigoplus L^-$); coderived enlargement **open** | Quantum groups completion |
 | **MC4** | Completed bar for $\infty$-generators | M-level **proved**; algebraic identification **open** | $\mathcal{W}_\infty$ and Yangian towers |
 | **MC5** | BV-BRST = bar at all genera | Genus 0 **proved**; higher-genus downstream of MC3/MC4 | Physics completion |
 
@@ -218,7 +218,7 @@ graph TD
 ```bash
 # Build the PDF (requires TeX Live 2024+ with pdflatex)
 make fast                    # quick build (up to 4 passes)
-open main.pdf                # 1,598 pages
+open main.pdf                # 1,698 pages
 ```
 
 **Entry point**: `main.tex` &rarr; `main.pdf`. Start reading at the **Introduction** (Chapter 2), which states the five main theorems and the Leitfaden. The **Heisenberg frame** (Chapter 1) shows the entire theory in a single computable example.
@@ -250,7 +250,7 @@ chiral-bar-cobar/
 ├── bibliography/references.tex         255 entries
 ├── compute/                            Python verification engine
 │   ├── lib/                            102 library modules
-│   └── tests/                          110 test files (6,005 tests)
+│   └── tests/                          110 test files (7,785 tests)
 ├── metadata/                           machine-readable census, claims, dependency graph
 ├── notes/                              session prompts, programmes, research notes
 └── scripts/                            build and QC automation
@@ -384,7 +384,7 @@ chiral-bar-cobar/
 | <kbd>make census</kbd> | Claim status census across all source files. |
 | <kbd>make metadata</kbd> | Regenerate machine-readable metadata (`metadata/`). |
 | <kbd>make verify</kbd> | Run anti-pattern verification on all `.tex` files. |
-| <kbd>make test</kbd> | Run fast test suite (6,005 tests, excludes slow). |
+| <kbd>make test</kbd> | Run fast test suite (7,785 tests, excludes slow). |
 | <kbd>make test-full</kbd> | Run complete test suite including slow tests. |
 | <kbd>make help</kbd> | Print target summary. |
 
@@ -403,7 +403,7 @@ Entry point is `main.tex`. Build produces `main.pdf`.
 
 A Python verification engine independently checks the manuscript's mathematical claims.
 
-![Tests](https://img.shields.io/badge/tests-6005-58a6ff?style=flat-square&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-7625-58a6ff?style=flat-square&labelColor=0d1117)
 ![Python](https://img.shields.io/badge/python-132K%20lines-a371f7?style=flat-square&labelColor=0d1117)
 
 ### Setup
@@ -419,7 +419,7 @@ pip install -r requirements.txt    # numpy, sympy, pytest
 
 ```bash
 # From repository root:
-make test                    # fast suite (6,005 tests)
+make test                    # fast suite (7,785 tests)
 make test-full               # complete suite including slow tests
 
 # Or directly:
@@ -596,10 +596,10 @@ Every mathematical statement in the manuscript carries a machine-readable status
 
 | Tag | Meaning | Count |
 |-----|---------|------:|
-| `\ClaimStatusProvedHere` | Proved in this manuscript | 1,074 |
-| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 317 |
-| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 140 |
-| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 23 |
+| `\ClaimStatusProvedHere` | Proved in this manuscript | 1,183 |
+| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 330 |
+| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 128 |
+| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 19 |
 
 Run `make census` for a live count. Machine-readable data: `metadata/census.json`, `metadata/claims.jsonl`.
 
@@ -621,6 +621,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>1,598 pages &ensp;&middot;&ensp; 118,000 lines of LaTeX &ensp;&middot;&ensp; 70 source files &ensp;&middot;&ensp; 255 references &ensp;&middot;&ensp; 132,000 lines of Python &ensp;&middot;&ensp; 6,005 tests</sub>
+<sub>1,698 pages &ensp;&middot;&ensp; 118,000 lines of LaTeX &ensp;&middot;&ensp; 70 source files &ensp;&middot;&ensp; 255 references &ensp;&middot;&ensp; 132,000 lines of Python &ensp;&middot;&ensp; 7,785 tests</sub>
 
 </div>
