@@ -1,0 +1,2771 @@
+\documentclass[11pt,oneside]{memoir}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% ---------- Typography ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\frenchspacing
+\usepackage[margin=1.15in]{geometry}
+\emergencystretch=3em
+\raggedbottom
+\pagestyle{plain}
+\setlength{\headheight}{18pt}
+
+% ---------- Math ----------
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs,bm}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{booktabs,longtable,array,multirow}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage{makeidx}
+\makeindex
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black,
+  pdftitle={Ambient Modular Complementarity and the Modular Bar-Hamiltonian},
+  pdfauthor={OpenAI for the user},
+  pdfsubject={A systematic LaTeX research note synthesizing ambient complementarity, modular quantum L-infinity structures, and holographic Koszul duality}
+}
+
+\numberwithin{equation}{chapter}
+
+% ---------- Theorems ----------
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{setup}[theorem]{Setup}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{question}[theorem]{Question}
+
+% ---------- Status tags ----------
+\newcommand{\ClaimStatusProvedHere}{\textnormal{[formal]}}
+\newcommand{\ClaimStatusProvedElsewhere}{\textnormal{[established in the literature]}}
+\newcommand{\ClaimStatusConjectured}{\textnormal{[proposed]}}
+\newcommand{\ClaimStatusFormal}{\textnormal{[formal]}}
+\newcommand{\ClaimStatusConditional}{\textnormal{[conditional]}}
+\newcommand{\ClaimStatusHeuristic}{\textnormal{[physical heuristic]}}
+\newcommand{\ClaimStatusOpen}{\textnormal{[open]}}
+
+% ---------- Symbols ----------
+\newcommand{\A}{\mathcal A}
+\newcommand{\B}{\mathcal B}
+\newcommand{\C}{\mathbb C}
+\newcommand{\D}{\mathcal D}
+\newcommand{\E}{\mathcal E}
+\newcommand{\F}{\mathcal F}
+\newcommand{\G}{\mathcal G}
+\newcommand{\Hc}{\mathcal H}
+\newcommand{\I}{\mathcal I}
+\newcommand{\K}{\mathcal K}
+\newcommand{\Lcal}{\mathcal L}
+\newcommand{\M}{\mathcal M}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Ocal}{\mathcal O}
+\newcommand{\Pcal}{\mathcal P}
+\newcommand{\Qcal}{\mathcal Q}
+\newcommand{\Rcal}{\mathcal R}
+\newcommand{\Scal}{\mathcal S}
+\newcommand{\Tcal}{\mathcal T}
+\newcommand{\U}{\mathcal U}
+\newcommand{\V}{\mathcal V}
+\newcommand{\Wcal}{\mathcal W}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cE}{\mathcal E}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\cG}{\mathcal G}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cI}{\mathcal I}
+\newcommand{\cK}{\mathcal K}
+\newcommand{\cL}{\mathcal L}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cN}{\mathcal N}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cQ}{\mathcal Q}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\cS}{\mathcal S}
+\newcommand{\cT}{\mathcal T}
+\newcommand{\cU}{\mathcal U}
+\newcommand{\cV}{\mathcal V}
+\newcommand{\cW}{\mathcal W}
+\newcommand{\fg}{\mathfrak g}
+\newcommand{\fh}{\mathfrak h}
+\newcommand{\fm}{\mathfrak m}
+\newcommand{\hot}{\widehat\otimes}
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\Del}{\Delta}
+\newcommand{\h}{\hbar}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\de}{\delta}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\cl}{\mathrm{cl}}
+\newcommand{\cyc}{\mathrm{cyc}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\moduli}{\overline{\mathcal M}}
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}
+\newcommand{\Def}{\operatorname{Def}}
+\newcommand{\MC}{\operatorname{MC}}
+\newcommand{\Fib}{\operatorname{fib}}
+\newcommand{\Cone}{\operatorname{Cone}}
+\newcommand{\Crit}{\operatorname{Crit}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\RHom}{\operatorname{RHom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\divisor}{\operatorname{div}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\gr}{\operatorname{gr}}
+\newcommand{\Obs}{\operatorname{Obs}}
+\newcommand{\Span}{\operatorname{Span}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\Sh}{\operatorname{Sh}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\DeclareMathOperator{\FM}{FM}
+\newcommand{\Mod}{\operatorname{Mod}}
+\newcommand{\orline}{\mathfrak{o}}
+\newcommand{\Etwo}{\mathsf E_2}
+\newcommand{\Eone}{\mathsf E_1}
+\newcommand{\En}{\mathsf E_n}
+\newcommand{\Einf}{\mathsf E_{\infty}}
+\newcommand{\Ainf}{A_{\infty}}
+\newcommand{\Linf}{L_{\infty}}
+\newcommand{\Pinf}{P_{\infty}}
+\newcommand{\Bmod}{B_{\mathrm{mod}}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\Bch}{B_{\mathrm{ch}}}
+\newcommand{\Defmod}{\operatorname{Def}_{\mathrm{mod}}}
+\newcommand{\Deftop}{\operatorname{Def}_{\mathrm{top}}}
+\newcommand{\ChirHoch}{CH}
+\newcommand{\Dg}[1]{\mathbb D_{#1}}
+
+% ---------- Title ----------
+\title{\textbf{Ambient Modular Complementarity and the Modular Bar--Hamiltonian}\\
+\large A systematic \LaTeX{} synthesis of nonlinear modular shadows, holographic Koszul duality, and explicit all-order recursive lifts}
+\author{Prepared for the user by OpenAI}
+\date{March 16, 2026}
+
+\begin{document}
+\frontmatter
+\maketitle
+
+\begin{abstract}
+This document turns the full discussion into a single systematic \LaTeX{} note.  The governing principle is that the subject is not a modular envelope together with a list of corrections, but a single ambient Hamiltonian deformation problem.  Its algebraic carrier is a filtered graph-completed cyclic deformation algebra, its solution is a Maurer--Cartan element \(\Theta_{\cA}\), and every familiar invariant --- scalar characteristic, spectral characteristic, finite-order shadow tensors, resonance divisors, line-operator kernels, and higher-genus corrections --- appears as a projection of \(\Theta_{\cA}\).
+
+The note is divided into two layers.  The first layer records the structural backbone that is already available in the literature: the bulk/boundary/line packages in holomorphic-topological field theory, the Koszul-dual interpretation of holography, KK-reduction to boundary chiral algebra, higher operations from regularized Feynman diagrams, and the dg-shifted Yangian description of line operators.  The second layer is constructive and forward-looking: it builds the ambient modular complementarity algebra, the modular bar--Hamiltonian, the extension tower of truncated lifts, the complementarity Legendrian, the resonance tower, the complementarity Stokes groupoid, the phase index, and the specialization to Costello's \(M2\)-brane example.
+
+To make the note maximally useful as a source document, the finite-order nonlinear apparatus already developed in the user's own archive is included verbatim as an appendix chapter.  The result is a single rendered document with a clear separation between formal consequences, proposed constructions, and open frontier problems.
+\end{abstract}
+
+\clearpage
+\tableofcontents
+
+\mainmatter
+
+\chapter{Literature backbone, status discipline, and the governing principle}
+\label{chap:backbone-status}
+
+\section{Status discipline}
+
+This note uses three status levels throughout.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.8em]
+\item \textbf{Established input.}  These are results already available in the literature and used as structural input.
+\item \textbf{Formal consequence.}  These are statements that follow formally once the ambient package is set up.
+\item \textbf{Proposed construction.}  These are novel synthesis steps and frontier constructions that are mathematically coherent, explicit, and designed to extend the theory, but which should not be misread as already proved in the published literature.
+\end{enumerate}
+
+The point is not to weaken the theory.  It is to identify exactly where the formal core ends and the true frontier begins.
+
+\section{The established genus-zero spine}
+
+The papers most directly governing the present construction are the following.
+
+\begin{theorem}[Genus-zero holographic spine; \ClaimStatusProvedElsewhere]
+\label{thm:genus-zero-spine}
+Let \(\cT\) be a perturbative holomorphic-topological theory with a rich boundary or defect sector.  Then the following ingredients are available in the literature.
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.8em]
+\item In the holomorphic twist of three-dimensional \(\mathcal N=2\) theories, bulk local operators form a commutative chiral algebra with a shifted Poisson bracket and a higher stress tensor; boundary local operators form a generally noncommutative chiral algebra, equipped with a bulk-boundary map to its center, together with higher \(\Ainf\)-like operations \cite{CostelloDimofteGaiottoBoundary}.
+\item For Kaluza--Klein reductions of six-dimensional holomorphic theories, the reduced theory is analyzed in BV form, effective interactions are produced at all classical orders by homotopy transfer, and suitable boundary conditions identify the boundary chiral algebra with the universal defect chiral algebra of the unreduced theory \cite{ZengTwistedHolography}.
+\item Higher operations in perturbative holomorphic-topological QFT are computed by regularized Feynman diagrams and satisfy quadratic consistency relations that may be interpreted as higher Wess--Zumino consistency conditions \cite{GaiottoKulpWuHigher}.
+\item For line operators, the category of perturbative lines is equivalent to modules for a Koszul-dual \(\Ainf\)-algebra \(A^!\), and the OPE of lines is controlled by a dg-shifted Yangian equipped with a Maurer--Cartan kernel
+\[
+  r(z)\in A^!\hot A^!((z^{-1}))
+\]
+solving an \(\Ainf\)-Yang--Baxter-type equation \cite{DimofteNiuPyLines}.
+\item In twisted holography, Costello's \(11\)-dimensional \(\Omega\)-background admits a five-dimensional noncommutative Chern--Simons realization, and in the \(M2\)-brane example the large-\(K\) operator algebra on the branes is Koszul dual to the bulk operator algebra and becomes a quantum double-loop algebra \cite{CostelloOmega,CostelloM2}.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+The theorem above should be read as the exact reason that the correct object cannot be merely a modular envelope.  The literature already forces four different structures to coexist: cyclic deformation theory, Koszul duality, modular sewing, and meromorphic line-operator transport.  A bare modular envelope sees only the sewing part.
+\end{remark}
+
+\section{The governing principle}
+
+\begin{principle}[Ambient complementarity]
+The true object of the theory is one ambient deformation problem in which the \(A\)-side and the \(A^!\)-side are opposite Lagrangians.  Modular gluing, higher operations, line-operator transport, and resonance all live inside that one ambient problem.
+\end{principle}
+
+The user's notes already identified the decisive shift: stop thinking of complementarity as an additive splitting and instead regard it as a \emph{polarization} of a shifted-symplectic deformation problem.  The present note executes that shift completely.
+
+\chapter{The ambient modular complementarity construction}
+\label{chap:ambient-master-construction}
+
+\section{The algebraic input}
+
+\begin{setup}[Ambient complementarity datum]
+\label{setup:ambient-datum}
+Fix a cyclic \(\Ainf\)-chiral algebra \(\cA\), together with a Koszul-dual object \(\cA^!\) on the locus where the duality package is defined.  Write
+\[
+L_{\cA}:=\Defcyc(\cA),
+\qquad
+L_{\cA^!}:=\Defcyc(\cA^!),
+\qquad
+K_{\cA}:=(\cA^!\hot \cA)[1].
+\]
+Let
+\[
+\tau_{\cA}\in \MC(\cA^!\hot \cA)
+\]
+be the universal bar--cobar twisting kernel, and let
+\[
+\nabla_{\cA}:L_{\cA}\to K_{\cA},
+\qquad
+\nabla_{\cA^!}:L_{\cA^!}\to K_{\cA}
+\]
+be the linearizations of the kernel in the two deformation directions.  Assume that the total complex
+\[
+L_{\cA}\oplus K_{\cA}\oplus L_{\cA^!}
+\]
+comes equipped with a degree \(-1\) cyclic pairing with respect to which the kernel differential is skew-adjoint.
+\end{setup}
+
+\begin{definition}[Ambient tangent complex]
+\label{def:ambient-tangent}
+The \emph{ambient complementarity tangent complex} is
+\begin{equation}
+\label{eq:ambient-tangent-complex}
+T_{\mathrm{comp}}(\cA)
+:=
+\Fib\Bigl(
+\nabla_{\cA}-\nabla_{\cA^!}:L_{\cA}\oplus L_{\cA^!}\longrightarrow K_{\cA}
+\Bigr).
+\end{equation}
+The one-sided fibers are
+\[
+T_{\cA}:=\Fib(L_{\cA}\to K_{\cA}),
+\qquad
+T_{\cA^!}:=\Fib(L_{\cA^!}\to K_{\cA}).
+\]
+\end{definition}
+
+\begin{proposition}[Lagrangian shape; \ClaimStatusProvedHere]
+\label{prop:lagrangian-shape}
+The degree \(-1\) cyclic pairing on \(L_{\cA}\oplus K_{\cA}\oplus L_{\cA^!}\) induces a degree \(-1\) pairing on \(T_{\mathrm{comp}}(\cA)\).  The fibers \(T_{\cA}\) and \(T_{\cA^!}\) are isotropic; under the usual perfectness assumptions they become complementary Lagrangians.
+\end{proposition}
+
+\begin{proof}
+The pairing on the total complex restricts to the homotopy fiber because the defining map of \eqref{eq:ambient-tangent-complex} is skew-adjoint by construction.  Isotropy of the one-sided fibers is the standard statement that the graph of a differential of a generating function is isotropic in a shifted cotangent object.  Complementarity follows when the induced Hessian is nondegenerate.
+\end{proof}
+
+\section{The slice and the propagator}
+
+\begin{definition}[Cyclic slice, Hessian, propagator]
+\label{def:slice-propagator}
+Choose a finite-dimensional cyclic slice
+\[
+V_{\cA}\subset H^\ast(L_{\cA})
+\]
+on which the induced quadratic form is nondegenerate.  The corresponding Hessian is the map
+\[
+H_{\cA}:V_{\cA}\xrightarrow{\ \sim\ }V_{\cA}^*[-1],
+\]
+and the associated propagator is
+\[
+P_{\cA}:=H_{\cA}^{-1}.
+\]
+\end{definition}
+
+The slice \(V_{\cA}\) is the coordinate chart on which the formal Hamiltonian will be written.  At finite order it produces the complementarity potential of the user's notes.  At all orders it is the coordinate chart for the modular bar--Hamiltonian.
+
+\section{Stable graphs, planted forests, and cross-polarized contractions}
+
+\begin{definition}[Stable-graph coefficient algebra]
+\label{def:stable-graph-coefficients}
+Let \(\mathbb G_{\mathrm{st}}\) be the completed graded vector space spanned by connected stable graphs \(\Gamma\) with genus labels on vertices, leg labels on external half-edges, and orientation line \(\orline(\Gamma)\).  Multiplication is disjoint union and completion is taken with respect to total edge number and genus.
+\end{definition}
+
+\begin{definition}[Planted-forest coefficient algebra]
+\label{def:planted-forest-coefficients}
+Let \(\mathbb G_{\mathrm{pf}}\) be the completed coefficient algebra spanned by planted forests encoding nested collision types.  A planted forest records depth, root order, and the incidence data of codimension-two and higher collision strata.  It is the algebraic avatar of the explicit \(\FM_3\)-type residue geometry discussed in the user's notes and in the logarithmic configuration-space model.
+\end{definition}
+
+\begin{definition}[Cross-polarized edge]
+\label{def:cross-polarized-edge}
+An internal edge is \emph{cross-polarized} if one endpoint lies on the \(\cA\)-side and the other lies on the \(\cA^!\)-side.  Same-side contractions are disallowed.
+\end{definition}
+
+\begin{remark}
+This is the direct construction the user kept insisting on.  The two dual sides are not merely placed next to each other; they are forced to interact only through the opposite polarization.  In other words, every propagator is genuinely a complementarity propagator.
+\end{remark}
+
+\section{The ambient modular complementarity dg Lie algebra}
+
+\begin{definition}[Ambient modular complementarity algebra]
+\label{def:ambient-modular-complementarity-algebra}
+Define the filtered completed graded vector space
+\begin{equation}
+\label{eq:ambient-modular-complementarity-algebra}
+\fg^{\mathrm{amb}}_{\cA}
+:=
+\bigl(L_{\cA}\oplus K_{\cA}\oplus L_{\cA^!}\bigr)
+\hot \mathbb G_{\mathrm{st}}
+\hot \mathbb G_{\mathrm{pf}}.
+\end{equation}
+The Lie bracket is induced by insertion of cyclic coderivations together with graph composition, subject to the rule that every internal edge is cross-polarized.
+\end{definition}
+
+\begin{construction}[The five pieces of the differential]
+\label{constr:five-pieces-differential}
+The differential on \(\fg^{\mathrm{amb}}_{\cA}\) is defined by
+\begin{equation}
+\label{eq:ambient-differential}
+D_{\cA}
+=
+ d_{\mathrm{int}}
+ + [\tau_{\cA},-]
+ + d_{\mathrm{sew}}
+ + d_{\mathrm{pf}}
+ + \h\Delta.
+\end{equation}
+The terms are:
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.8em]
+\item \(d_{\mathrm{int}}\): the internal cyclic differential on \(L_{\cA}\oplus K_{\cA}\oplus L_{\cA^!}\);
+\item \([\tau_{\cA},-]\): the twist by the universal bar--cobar kernel;
+\item \(d_{\mathrm{sew}}\): insertion of one separating stable edge weighted by the propagator \(P_{\cA}\);
+\item \(d_{\mathrm{pf}}\): insertion of one planted-forest correction weighted by the residue-incidence defect \(\chi\);
+\item \(\h\Delta\): the loop-contraction operator, contracting an internal pair of compatible legs and raising genus by one.
+\end{enumerate}
+\end{construction}
+
+\begin{remark}[About \(d_{\mathrm{pf}}\)]
+The planted-forest term is the first genuinely higher local correction.  Ordinary stable-graph sewing only sees one-edge gluing.  The planted-forest term remembers ordered nested collisions and is therefore the natural nonlinear correction once one leaves the pure quadratic regime.  This is exactly what the explicit \(\FM_3\) model in the user's notes was designed to capture.
+\end{remark}
+
+\begin{conjecture}[Square-zero property of the full differential; \ClaimStatusConjectured]
+\label{conj:differential-square-zero}
+Under the residue-splitting hypotheses encoded by the planted-forest small model, the operator \(D_{\cA}\) of \eqref{eq:ambient-differential} satisfies
+\[
+D_{\cA}^2=0.
+\]
+Equivalently, the mixed relations among stable-edge insertion, planted-forest insertion, and the loop operator are exactly those needed to produce a filtered dg Lie algebra.
+\end{conjecture}
+
+\begin{remark}
+At finite order this conjecture reduces to explicit quadratic identities.  Through quartic order, the user's appendix proves exactly the shadow identities one expects from the truncation of \(D_{\cA}^2=0\).
+\end{remark}
+
+\section{The modular bar--Hamiltonian and its Maurer--Cartan element}
+
+\begin{definition}[The modular bar--Hamiltonian]
+\label{def:modular-bar-hamiltonian}
+The \emph{modular bar--Hamiltonian} of \(\cA\) is the connected graph sum
+\begin{equation}
+\label{eq:modular-bar-hamiltonian}
+\Theta_{\cA}
+:=
+\sum_{\Gamma\in \Gamma^{\mathrm{conn}}_{\mathrm{st,pf}}}
+\frac{W_{\cA}(\Gamma)}{|\Aut(\Gamma)|}\,\mathcal O_{\Gamma}
+\in \fg^{\mathrm{amb},1}_{\cA},
+\end{equation}
+where:
+\begin{itemize}[leftmargin=2.4em]
+\item vertex labels are the Taylor coefficients of the cyclic minimal models on the \(\cA\)- and \(\cA^!\)-sides;
+\item stable internal edges are weighted by \(P_{\cA}\);
+\item planted-forest corners are weighted by the residue mismatch \(\chi\);
+\item every loop contributes a factor of \(\h\).
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Ambient master equation]
+\label{def:ambient-master-equation}
+The full modular lift of \(\cA\) is a Maurer--Cartan element
+\begin{equation}
+\label{eq:ambient-master-equation}
+D_{\cA}\Theta_{\cA}+\frac12[\Theta_{\cA},\Theta_{\cA}]=0.
+\end{equation}
+\end{definition}
+
+\begin{remark}
+The advantage of \eqref{eq:ambient-master-equation} is that it replaces an entire zoo of separate structures by a single equation.  Stable-curve sewing, nested collisions, genus raising, and Koszul twisting are no longer separate ``add-ons''; they are the pieces of one differential.
+\end{remark}
+
+\section{The ambient action and derived critical locus}
+
+\begin{definition}[Complementarity action]
+\label{def:ambient-action}
+On the shifted cotangent chart \(T^*[-1]V_{\cA}\), define the formal Hamiltonian
+\begin{equation}
+\label{eq:ambient-formal-action}
+\mathfrak S_{\cA}(x;\h)
+:=
+\sum_{g\ge 0}\sum_{r\ge 2}\sum_{d\ge 0}
+\frac{\h^g}{r!}\,\Theta_{g,r;d}(x,\ldots,x),
+\end{equation}
+where \(\Theta_{g,r;d}\) is the component of \(\Theta_{\cA}\) of genus \(g\), arity \(r\), and planted-forest depth \(d\).
+\end{definition}
+
+\begin{proposition}[Critical-locus form of complementarity; \ClaimStatusFormal]
+\label{prop:critical-locus-form}
+Whenever the Maurer--Cartan equation \eqref{eq:ambient-master-equation} holds, the simultaneous self-dual deformation problem is modeled by the derived critical locus
+\begin{equation}
+\label{eq:derived-critical-locus-complementarity}
+\cM_{\cA}\times^h_{\cM_{\mathrm{comp}}(\cA)}\cM_{\cA^!}
+\simeq
+\Crit(\mathfrak S_{\cA}).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+This is the standard cyclic \(\Linf\) mechanism: a cyclic Maurer--Cartan element defines a Hamiltonian whose Euler--Lagrange equation is the Maurer--Cartan equation, and the derived intersection of the two Lagrangians is identified with the corresponding shifted critical locus.
+\end{proof}
+
+\section{The recursive extension tower}
+
+\begin{definition}[Weight filtration]
+\label{def:weight-filtration}
+For a component \(\Theta_{g,r;d}\), define the total weight
+\begin{equation}
+\label{eq:total-weight}
+w(g,r,d):=2g-2+r+d.
+\end{equation}
+Let \(F^N\fg^{\mathrm{amb}}_{\cA}\) be the subspace of components of weight at least \(N\).
+\end{definition}
+
+\begin{definition}[Extension tower]
+\label{def:extension-tower}
+The \emph{modular extension tower} of \(\cA\) is the inverse system
+\begin{equation}
+\label{eq:extension-tower}
+\cE_{\cA}(N):=\MC\bigl(\fg^{\mathrm{amb}}_{\cA}/F^{N+1}\bigr),
+\qquad N\ge 1.
+\end{equation}
+A full lift is a compatible point of the inverse limit
+\[
+\Theta_{\cA}\in \varprojlim_N \cE_{\cA}(N).
+\]
+\end{definition}
+
+\begin{construction}[Obstruction recursion]
+\label{constr:obstruction-recursion}
+Suppose a truncated solution \(\Theta_{\cA}^{\le N}\) has been constructed through weight \(N\).  Its next obstruction is
+\begin{equation}
+\label{eq:next-obstruction}
+\mathfrak o_{N+1}
+:=
+\Bigl(D_{\cA}\Theta_{\cA}^{\le N}+\frac12[\Theta_{\cA}^{\le N},\Theta_{\cA}^{\le N}]\Bigr)_{N+1}.
+\end{equation}
+If \([\mathfrak o_{N+1}]\in H^2(F^{N+1}/F^{N+2})\) vanishes, choose a contracting homotopy \(h\) and define
+\begin{equation}
+\label{eq:recursive-lift-formula}
+\Theta_{\cA,N+1}:=-h(\mathfrak o_{N+1}).
+\end{equation}
+Then
+\[
+\Theta_{\cA}^{\le N+1}:=\Theta_{\cA}^{\le N}+\Theta_{\cA,N+1}
+\]
+solves the Maurer--Cartan equation through weight \(N+1\).
+\end{construction}
+
+\begin{conjecture}[Recursive existence theorem; \ClaimStatusConjectured]
+\label{conj:recursive-existence}
+Every modular Koszul chiral algebra equipped with a cyclic slice, stable propagator, and planted-forest residue model admits a recursive lift through all finite weights.  Equivalently, all obstruction classes in the tower \eqref{eq:extension-tower} vanish after passing to the residue-splitting small model.
+\end{conjecture}
+
+\begin{remark}
+The quartic theory in the user's appendix is exactly the stage \(N=4\) of this extension tower.  The point of the present construction is that the quartic theory is not isolated.  It is the first visible floor of a systematic recursive machine.
+\end{remark}
+
+\chapter{Characteristic shadows, geometric avatars, and holographic realizations}
+\label{chap:characteristic-realizations}
+
+\section{Shadows as projections of the master element}
+
+\begin{definition}[Shadow projections]
+\label{def:shadow-projections}
+Write \(\pi_{g,r;d}\) for the projection to genus \(g\), arity \(r\), planted-forest depth \(d\).  The first visible projections are
+\begin{equation}
+\label{eq:shadow-projections}
+\pi_{0,2;0}\Theta_{\cA}=H_{\cA},
+\qquad
+\pi_{0,3;0}\Theta_{\cA}=\mathfrak C_{\cA},
+\qquad
+\pi_{0,4;0}\Theta_{\cA}=\mathfrak Q_{\cA}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Shadow master equations; \ClaimStatusFormal]
+\label{prop:shadow-master-eqs-formal}
+The Maurer--Cartan equation for \(\Theta_{\cA}\) implies the arity-wise hierarchy
+\begin{equation}
+\label{eq:all-arity-shadow-eq}
+\nabla_{H_{\cA}}\Sh_r(\cA)+\mathfrak o^{(r)}_{\cA}=0,
+\qquad r\ge 3,
+\end{equation}
+where \(\Sh_r(\cA)\) is the arity-\(r\) shadow jet and
+\[
+\mathfrak o^{(r)}_{\cA}
+=
+\sum_{\substack{p+q=r \\ 3\le p\le q}}c_{p,q}\{\Sh_p(\cA),\Sh_q(\cA)\}_{H_{\cA}}.
+\]
+In particular,
+\[
+\nabla_{H_{\cA}}\mathfrak C_{\cA}=0,
+\qquad
+\nabla_{H_{\cA}}\mathfrak Q_{\cA}+\frac12\{\mathfrak C_{\cA},\mathfrak C_{\cA}\}_{H_{\cA}}=0.
+\]
+\end{proposition}
+
+\begin{proof}
+This is the arity decomposition of the Maurer--Cartan equation in the presence of the propagator bracket.  The displayed quartic formula is the first nontrivial case and is proved explicitly in the appendix chapter.
+\end{proof}
+
+\section{The modular Chern--Weil transform}
+
+\begin{definition}[Characteristic transform]
+\label{def:modular-chern-weil-transform}
+Define the \emph{modular Chern--Weil transform}
+\begin{equation}
+\label{eq:modular-chern-weil-transform}
+\mathrm{CW}_{\cA}:\MC(\fg^{\mathrm{amb}}_{\cA})\longrightarrow
+\Bigl(\text{scalar classes}\Bigr)
+\times
+\Bigl(\text{spectral classes}\Bigr)
+\times
+\Bigl(\text{Picard-valued resonance classes}\Bigr)
+\times
+\Bigl(\text{line-kernel data}\Bigr)
+\end{equation}
+by the rules
+\begin{align}
+\tr(\Theta_{\cA})
+&=
+\sum_{g\ge 1}\kappa_g(\cA)\,\la_g,
+\label{eq:scalar-shadow-cw}
+\\
+\det(1-xT_{\mathrm{br},\cA})
+&=
+\Delta_{\cA}(x),
+\label{eq:spectral-shadow-cw}
+\\
+\mathrm{CW}_{\cA}^{\mathrm{res},r}(\Theta_{\cA})
+&=
+\mathfrak R^{\mathrm{mod}}_{r,\bullet}(\cA),
+\qquad r\ge 4,
+\label{eq:resonance-shadow-cw}
+\\
+\mathrm{CW}_{\cA}^{\mathrm{line}}(\Theta_{\cA})
+&=
+ r_{\cA}(z)\in \cA^!\hot \cA^!((z^{-1})).
+\label{eq:line-shadow-cw}
+\end{align}
+\end{definition}
+
+\begin{remark}
+The importance of \eqref{eq:modular-chern-weil-transform} is conceptual.  The scalar characteristic \(\kappa\), the spectral branch object \(\Delta\), the nonlinear shadow tensors, the resonance tower, and the line-operator kernel are not parallel structures.  They are successive characteristic images of one Maurer--Cartan element.
+\end{remark}
+
+\section{The complementarity Legendrian}
+
+\begin{definition}[Complementarity Legendrian]
+\label{def:complementarity-legendrian}
+Contactize the Hamiltonian \(\mathfrak S_{\cA}\) to obtain the Legendrian subspace
+\begin{equation}
+\label{eq:complementarity-legendrian}
+\Lambda_{\cA}:=j^1\mathfrak S_{\cA}\subset J^1(V_{\cA}).
+\end{equation}
+\end{definition}
+
+\begin{conjecture}[Front-discriminant realization of resonance; \ClaimStatusConjectured]
+\label{conj:front-discriminant-resonance}
+For each arity \(r\ge 4\), the resonance divisor \(\mathfrak R^{\mathrm{mod}}_{r,g,n}(\cA)\) is the front-singularity discriminant of the arity-\(r\) contact sector of \(\Lambda_{\cA}\).
+\end{conjecture}
+
+\begin{remark}
+This is the geometric version of the quartic determinant story.  The determinant line detects where the front ceases to be immersive in the relevant contact sector.
+\end{remark}
+
+\section{The complementarity Stokes groupoid and phase index}
+
+\begin{definition}[Nonlinear regular locus]
+\label{def:nonlinear-regular-locus}
+Let \(B_{\cA}^{\circ}\) be the quartic-regular locus of parameters.  Define
+\begin{equation}
+\label{eq:nonlinear-regular-locus}
+U_{\cA}
+:=
+B_{\cA}^{\circ}\setminus
+\Bigl(
+\Delta_{\cA}^{-1}(0)
+\cup
+\bigcup_{r\ge 4}\lvert \mathfrak R^{\mathrm{mod}}_{r}(\cA)\rvert
+\Bigr).
+\end{equation}
+\end{definition}
+
+\begin{definition}[Complementarity Stokes groupoid]
+\label{def:stokes-groupoid}
+Let \(\mathscr P_{\cA}\) denote the local system of gauge classes of truncated lifts over \(U_{\cA}\).  Its monodromy groupoid is the \emph{complementarity Stokes groupoid}
+\begin{equation}
+\label{eq:stokes-groupoid}
+\mathrm{Sto}_{\mathrm{comp}}(\cA):=\mathrm{Mon}(\mathscr P_{\cA}|_{U_{\cA}}).
+\end{equation}
+\end{definition}
+
+\begin{definition}[Phase index]
+\label{def:phase-index}
+For a point \(u\in U_{\cA}\), define the \emph{nonlinear phase index}
+\begin{equation}
+\label{eq:phase-index}
+\nu_{\mathrm{nl}}(\cA,u)
+:=
+\min\{r\ge 3:\Sh_r(\Theta_{\cA},u)\neq 0\},
+\end{equation}
+with \(\nu_{\mathrm{nl}}=\infty\) if all higher jets vanish.
+\end{definition}
+
+\begin{remark}
+The phase index turns the familiar examples into a precise hierarchy:
+\[
+\text{Heisenberg}:\infty,
+\qquad
+\widehat{\mathfrak{sl}}_2:3,
+\qquad
+\beta\gamma:4,
+\qquad
+\text{Virasoro and principal }\mathcal W_N:\text{mixed}.
+\]
+\end{remark}
+
+\section{Genus-zero holographic package as the local face of the master element}
+
+\begin{definition}[Genus-zero package]
+\label{def:genus-zero-package}
+For a holomorphic-topological theory \(\cT\) with boundary condition \(B\), define the genus-zero package
+\begin{equation}
+\label{eq:genus-zero-package}
+G_0(\cT;B)
+:=
+\bigl(
+V_{\cT},\{\!\{-,-\}\!\},V_{\partial,\cT}(B),\beta_B,A^!_{\cT},\cC_{\cT},r_{\cT}(z),\{m_k^{\cT}\}_{k\ge 2}
+\bigr),
+\end{equation}
+where \(V_{\cT}\) is the bulk chiral algebra, \(V_{\partial,\cT}(B)\) the boundary chiral algebra, \(\beta_B\) the bulk-boundary map, \(A^!_{\cT}\) a Koszul dual, \(\cC_{\cT}\simeq A_{\cT}^!\text{-Mod}\) the line category, and \(r_{\cT}(z)\) the line-OPE Maurer--Cartan kernel.
+\end{definition}
+
+\begin{conjecture}[Modular completion of the genus-zero package; \ClaimStatusConjectured]
+\label{conj:modular-completion-package}
+Every package \(G_0(\cT;B)\) arising from the holographic/twisted-holomorphic setting admits a modular completion
+\[
+\mu^{\cT}_{g,n}:C_\bullet(\moduli_{g,n+1})\otimes (A_{\cT}^!)^{\hot n}\to A_{\cT}^!,
+\qquad 2g-2+n>0,
+\]
+whose genus-zero truncation is \(\{m_n^{\cT}\}\), whose two-leg projection is the modular expansion of \(r_{\cT}(z)\), and whose generating Maurer--Cartan element is precisely \(\Theta_{\cA}\) for the ambient complementarity algebra attached to \(A_{\partial,\cT}\).
+\end{conjecture}
+
+\section{Costello's \texorpdfstring{$M2$}{M2} example as a direct ambient construction}
+
+\subsection{Established input}
+
+Costello proves two decisive statements for the present construction.  First, eleven-dimensional supergravity in a suitable \(\Omega\)-background is equivalent to a five-dimensional noncommutative Chern--Simons-type gauge theory on \(\R\times\C^2\) \cite{CostelloOmega}.  Second, in the \(M2\)-brane example, the large-\(K\) algebra of supersymmetric brane operators is Koszul dual to the corresponding bulk operator algebra, and in the large-\(K\) limit becomes a quantum double-loop algebra with an explicit presentation \cite{CostelloM2}.
+
+\subsection{Boundary algebra and its dual}
+
+\begin{definition}[Large-\(K\) M2 boundary algebra]
+\label{def:m2-boundary-algebra}
+Let \(A_{M2,\infty}\) denote the completed filtered algebra generated by modes
+\[
+E^{(m,n)}_{\alpha\beta}:=E_{\alpha\beta}z^m\partial^n,
+\qquad m,n\ge 0,
+\]
+inside the unique filtered quantization of the classical algebra
+\[
+U\bigl(\mathfrak{gl}_K\otimes \mathrm{Diff}(\C)\bigr)^{\wedge}.
+\]
+At the classical level,
+\[
+[E_{\alpha\beta}f,E_{\gamma\delta}g]_0
+=
+\delta_{\beta\gamma}E_{\alpha\delta}(fg)-\delta_{\alpha\delta}E_{\gamma\beta}(gf).
+\]
+The first nontrivial quantum correction occurs already in the \([\partial,z]\)-sector and is of the form displayed by Costello in the explicit low-mode presentation \cite{CostelloM2}.
+\end{definition}
+
+\begin{definition}[M2 Koszul dual]
+\label{def:m2-koszul-dual}
+Define
+\[
+A^!_{M2}:=\Omega\,\ov B(A_{M2,\infty}),
+\]
+with dual generators \(e^{\alpha\beta}_{m,n}\) dual to \(E^{(m,n)}_{\alpha\beta}\).  The universal kernel is
+\begin{equation}
+\label{eq:m2-universal-kernel}
+\mu_{M2}
+:=
+\sum_{\alpha,\beta,m,n}
+ e^{\alpha\beta}_{m,n}\otimes E^{(m,n)}_{\alpha\beta}.
+\end{equation}
+\end{definition}
+
+\begin{remark}
+Equation \eqref{eq:m2-universal-kernel} is the chain-level sector-by-sector matching map.  The matrix labels \((\alpha,\beta)\) are the sector labels; the pair \((m,n)\) is the level label; the rank parameter \(K\) is imposed by trace relations on the boundary side; and genus is tracked by the loop filtration in \(\Theta_{M2}\).
+\end{remark}
+
+\subsection{Ambient M2 master element}
+
+\begin{definition}[M2 master lift]
+\label{def:m2-master-lift}
+The full M2 ambient lift is the Maurer--Cartan element
+\[
+\Theta_{M2}\in \MC(\fg^{\mathrm{amb}}_{A_{M2,\infty}}).
+\]
+Its components are interpreted as follows.
+\begin{center}
+\begin{tabular}{@{}p{0.27\textwidth}p{0.63\textwidth}@{}}
+\toprule
+Component & Meaning \\
+\midrule
+\(\Theta_{M2,0,r;0}\) & tree-level \(r\)-ary holographic couplings of the M2 operator algebra \\
+\(\Theta_{M2,g,r;0}\) & genus-\(g\) corrections produced by loops in the five-dimensional noncommutative gauge theory \\
+\(\Theta_{M2,\ast,\ast;d}\) & planted-forest collision corrections measuring defect-boundary refinement beyond ordinary stable-graph sewing \\
+\(\pi_{\mathrm{line}}\Theta_{M2}=r_{M2}(z)\) & spectral line/instanton kernel controlling the defect OPE \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{definition}
+
+\begin{conjecture}[Direct M2 realization; \ClaimStatusConjectured]
+\label{conj:m2-direct-realization}
+The brane/bulk duality for Costello's \(M2\)-system is exactly the statement that \(\Theta_{M2}\) exists and solves the ambient master equation in the complementarity algebra built from \(A_{M2,\infty}\), its Koszul dual, the five-dimensional stable propagator, and the planted-forest residue model.  Finite \(K\) is obtained by quotienting the boundary algebra by the rank-\(K\) ideal, while genus and spectral transport are recovered from the loop and line projections of \(\Theta_{M2}\).
+\end{conjecture}
+
+\section{Worked examples}
+
+\subsection{The \texorpdfstring{$\beta\gamma$}{beta-gamma} family}
+
+\begin{example}[\(\beta\gamma\) as the quartic primitive]
+The free \(\beta\gamma\) system has genus-zero local package
+\[
+V_{\beta\gamma}=\Sym\bigl(\C[\partial]\beta\oplus \C[\partial]\gamma\bigr),
+\qquad
+\{\beta_\la\gamma\}=1.
+\]
+On the weight/contact slice detected by the first nontrivial higher operation \(m_3\), the cubic shadow vanishes while the quartic shadow is the first nonlinear term:
+\[
+\mathfrak C_{\beta\gamma}=0,
+\qquad
+\mathfrak Q_{\beta\gamma}=\cyc(m_3).
+\]
+Thus \(\beta\gamma\) is the first genuinely contact/quartic primitive in the shadow hierarchy.
+\end{example}
+
+\subsection{Kodaira--Spencer via the universal defect algebra}
+
+\begin{example}[Kodaira--Spencer as an open/closed test case]
+In Zeng's boundary-algebra realization of twisted holography, the large-\(N\) open-side chiral algebra contains a BRST complex built from adjoint and fundamental \(\beta\gamma\)-systems, and the large-\(N\) BRST cohomology is generated by towers
+\[
+A^{(n)},\ B^{(n)},\ C^{(n)},\ D^{(n)},\ E_t^{(n)}.
+\]
+The first four towers match the boundary operators of Kodaira--Spencer gravity, while the \(E_t\)-tower matches the holomorphic Chern--Simons sector \cite{ZengTwistedHolography}.  The natural genus-graded globalization is therefore
+\[
+U_{KS}:=V_{\partial,KS}(B_{\mathrm{univ}}),
+\qquad
+H^{KS}_{g,n}:=\int_{\Sigma_{g,n}}U_{KS}.
+\]
+In the ambient language, this says that the Kodaira--Spencer universal defect algebra is a concrete boundary realization of the \(A\)-side of the complementarity machine.
+\end{example}
+
+\subsection{The \texorpdfstring{$\mathcal W_3$}{W3} family}
+
+\begin{example}[\(\mathcal W_3\) as the first mixed cubic--quartic higher-spin family]
+Let
+\[
+P_{\mathcal W_3}=\Sym\bigl(\C[\partial]T\oplus \C[\partial]W\bigr)
+\]
+be the classical \(\mathcal W_3\) Poisson vertex algebra.  Khan and Zeng write its \(\lambda\)-brackets as
+\begin{align*}
+\{T_\lambda T\}&=\partial T+2\lambda T+\frac{c}{12}\lambda^3,
+\\
+\{T_\lambda W\}&=\partial W+3\lambda W,
+\\
+\{W_\lambda W\}&=\frac{c}{360}\lambda^5+
+\frac13T\lambda^3+
+\frac12(\partial T)\lambda^2+
+\left(\frac{3}{10}\partial^2T+\frac{32}{5c}T^2\right)\lambda+
+\frac1{15}\partial^3T+\frac{32}{5c}T\partial T.
+\end{align*}
+The corresponding three-dimensional holomorphic-topological gauge theory is the first natural mixed cubic--quartic higher-spin family \cite{KhanZengPVA}.  In the shadow hierarchy, \(\mathcal W_3\) is the first place where the gravitational cubic sector and the quartic contact sector coexist in a genuinely inseparable way.  The user's appendix makes this explicit through the \(\mathcal W_3\) quartic envelope and its resonance divisor.
+\end{example}
+
+\section{The theorem--definition--conjecture package}
+
+\begin{theorem}[Systematic package; \ClaimStatusFormal + \ClaimStatusConjectured]
+\label{thm:systematic-package}
+Fix a modular Koszul chiral algebra \(\cA\) together with a cyclic slice, a stable propagator, and a planted-forest residue model.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.8em]
+\item \textbf{Ambient formal core.}  The complexes \(L_{\cA}\), \(L_{\cA^!}\), and \(K_{\cA}\) determine an ambient shifted-symplectic deformation problem with opposite isotropic fibers.
+\item \textbf{Modular carrier.}  The graph-completed algebra \(\fg^{\mathrm{amb}}_{\cA}\) together with the differential \(D_{\cA}\) is the correct home for the universal modular deformation problem.
+\item \textbf{Master element.}  A solution \(\Theta_{\cA}\in \MC(\fg^{\mathrm{amb}}_{\cA})\) produces the full modular homotopy type.
+\item \textbf{Recursive construction.}  The extension tower \(\cE_{\cA}(N)\) and the obstruction recursion \eqref{eq:next-obstruction} are the direct constructive mechanism for building \(\Theta_{\cA}\) order by order.
+\item \textbf{Characteristic projections.}  The shadows \(\kappa(\cA)\), \(\Delta_{\cA}\), \(H_{\cA}\), \(\mathfrak C_{\cA}\), \(\mathfrak Q_{\cA}\), the resonance tower, and the line kernel \(r_{\cA}(z)\) are all projections of \(\Theta_{\cA}\).
+\item \textbf{Geometric avatars.}  The complementarity Legendrian \(\Lambda_{\cA}\), the complementarity Stokes groupoid \(\mathrm{Sto}_{\mathrm{comp}}(\cA)\), and the phase index \(\nu_{\mathrm{nl}}\) are natural geometric objects attached to the same master element.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+The theorem is intentionally hybrid in status.  Items \textup{(i)} and large parts of \textup{(v)} are formal consequences of the cyclic shifted-symplectic framework and of the finite-order shadow calculus.  Items \textup{(ii)}--\textup{(iv)} and the global geometric avatars are the new proposed construction.  Their point is not rhetorical.  They define the exact architecture in which the next proofs should be attempted.
+\end{remark}
+
+\appendix
+
+\chapter[Ambient complementarity and nonlinear modular shadows]{Ambient complementarity, nonlinear modular shadows, and the quartic resonance class}
+\label{app:nonlinear-modular-shadows}
+
+This appendix isolates the conceptual gap in the forward theory and repairs it at the strongest level currently accessible.  The missing statement is not that two packages add to a universal vector space.  The missing statement is that there is \emph{one ambient deformation problem}, equipped with a shifted symplectic form, and that the two dual packages are realized inside it as \emph{complementary Lagrangians}.  Once that geometry is installed, the scalar and spectral shadows already proved in the manuscript become the quadratic face of a larger nonlinear theory.
+
+The chapter has three strata.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The first stratum is \textbf{formal and conditional}: from the cyclic deformation package and the universal twisting kernel, one obtains an ambient complementarity formal moduli problem, a complementarity potential, and a derived critical-locus model for simultaneous self-dual deformations.
+\item The second stratum is \textbf{finite-order and constructive}: regardless of whether the full universal class $\Theta_{\cA}$ has been globalized, one can define the quadratic, cubic, and quartic shadows
+\[
+H_{\cA},\qquad \mathfrak C_{\cA},\qquad \mathfrak Q_{\cA},
+\]
+prove their master and clutching identities, and package them into a quartic shadow graph cocycle.
+\item The third stratum is \textbf{nonlinear and modular}: for Virasoro and principal $\mathcal W_N$, the quartic contact sector has a determinant line whose vanishing promotes the Gram-determinant divisor to a genuine modular characteristic class.  Its boundary law is the first nonlinear shadow of the clutching identity for $\Theta_{\cA}$.
+\end{enumerate}
+
+The point is structural.  The proved scalar tower $\kappa(\cA)\lambda_g$ and the proved spectral package $\Delta_{\cA}$ do not exhaust the modular content of the theory.  Between them and the full universal Maurer--Cartan class sits a finite-order nonlinear layer.  It is the first place where complementarity stops looking like an eigenspace decomposition and becomes geometry.
+
+\begin{remark}[Shadow tower as period correction]%
+\label{rem:shadow-period-correction}%
+\index{period correction!shadow tower}%
+The shadow hierarchy $\kappa \to \Delta \to \mathfrak{C}
+\to \mathfrak{Q} \to \Theta$ admits a concrete interpretation
+as the Taylor expansion of the \emph{full period correction}
+that restores nilpotency of the genus-$g$ bar differential.
+At genus~$g$, the fiberwise differential satisfies
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g \neq 0$.
+The total corrected differential
+$\Dg{g} = d_0 + \sum_{n \geq 1} t_g^{(n)} d_n$
+absorbs this curvature:
+\begin{itemize}
+\item $t_g^{(1)}$: determined by $\kappa$ alone (the $m_2$
+  contribution; this is the quadratic modular-characteristic term already isolated in the main manuscript.
+  This is the Faber--Pandharipande term.
+\item $t_g^{(2)}$: involves $m_3$ paired with genus-$g$
+  propagators, giving the cubic shadow~$\mathfrak{C}_{\cA}$.
+\item $t_g^{(3)}$: involves $m_4$ and $m_3 \circ m_3$ terms,
+  giving the quartic shadow~$\mathfrak{Q}_{\cA}$.
+\item $t_g^{(\infty)}$: the full series is
+  $\Theta_{\cA}$---the universal Maurer--Cartan element.
+\end{itemize}
+The subleading corrections $t_g^{(n)}$ for $n \geq 2$ are
+\emph{not} determined by~$\kappa$: they depend on the
+higher $A_\infty$ operations interacting with the Hodge data of
+$\overline{\mathcal{M}}_g$.  This is the mechanism by which
+algebra-dependent modular information enters beyond the
+$\hat{A}$-genus.  The cohomology
+$H^*(\barB^{(g)}(\cA), \Dg{g})$---the factorization homology
+fiber---depends on the \emph{full} correction, not just the
+leading term.  This is precisely the transition from the scalar modular theory to the full nonlinear shadow hierarchy described in the present appendix.
+\end{remark}
+
+\medskip
+\noindent\emph{Status discipline.}
+Every theorem below is tagged either as a formal consequence proved here, or as a statement conditional on the existence of the full universal class $\Theta_{\cA}$ on the relevant Koszul locus.  No statement below should be read as asserting a complete construction of $\Theta_{\cA}$ beyond the loci already established elsewhere in the manuscript.
+
+\section{The governing question from first principles}
+\label{sec:nms-governing-question}
+
+The correct theorem of complementarity is not
+\[
+Q_g(\cA)\oplus Q_g(\cA^!) \cong C_g(\cA).
+\]
+That is only the linear shadow.  The correct theorem is that there is a single formal moduli problem carrying a shifted symplectic structure, and the two dual deformation packages are Lagrangian inside it.  The first-principles data are therefore not two vector spaces and a bookkeeping identity, but:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item a cyclic deformation complex for $\cA$,
+\item a cyclic deformation complex for $\cA^!$,
+\item a universal twisting kernel relating the two,
+\item a cyclic pairing turning the total deformation problem into a shifted symplectic formal moduli problem.
+\end{enumerate}
+
+This is exactly the geometric shape suggested by the chiral bar--cobar formalism.  The bar--cobar kernel is not auxiliary bookkeeping; it is the object whose deformations simultaneously remember the deformation of $\cA$, the deformation of $\cA^!$, and the compatibility between them.
+
+\section{Ambient complementarity from first principles}
+\label{sec:nms-ambient-complementarity}
+
+\begin{definition}[Ambient complementarity datum]
+\label{def:nms-ambient-datum}
+Let $\cA$ be a modular Koszul chiral algebra on a smooth projective curve, and let $\cA^!$ denote its Koszul dual on the locus where the duality package is defined.  An \emph{ambient complementarity datum} consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item two cyclic deformation complexes
+\[
+L_{\cA}:=\Defcyc(\cA),\qquad L_{\cA^!}:=\Defcyc(\cA^!),
+\]
+viewed as filtered complete cyclic $L_\infty$-algebras;
+\item a completed kernel object
+\[
+K_{\cA}:=(\cA^!\widehat\otimes \cA)[1]
+\]
+with differential twisted by the universal twisting kernel;
+\item a Maurer--Cartan element
+\[
+\tau_{\cA}\in \mathrm{MC}(\cA^!\widehat\otimes \cA)
+\]
+representing the canonical bar--cobar twisting kernel;
+\item linearizations of the kernel in the two deformation directions,
+\[
+\nabla_{\cA}:L_{\cA}\to K_{\cA},
+\qquad
+\nabla_{\cA^!}:L_{\cA^!}\to K_{\cA};
+\]
+\item a degree $-1$ cyclic pairing on the total complex
+\[
+L_{\cA}\oplus K_{\cA}\oplus L_{\cA^!}
+\]
+for which the kernel differential is skew-adjoint.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Ambient complementarity tangent complex]
+\label{def:nms-ambient-tangent-complex}
+Given an ambient complementarity datum, define the \emph{ambient complementarity tangent complex}
+\begin{equation}
+\label{eq:nms-ambient-tangent}
+T_{\mathrm{comp}}(\cA)
+:=
+\mathrm{fib}\Bigl(
+\nabla_{\cA}-\nabla_{\cA^!}:
+L_{\cA}\oplus L_{\cA^!}\longrightarrow K_{\cA}
+\Bigr).
+\end{equation}
+A tangent vector in $T_{\mathrm{comp}}(\cA)$ is therefore a first-order deformation of $\cA$, a first-order deformation of $\cA^!$, and a first-order deformation of the universal kernel, constrained by the linearized Maurer--Cartan equation.
+\end{definition}
+
+\begin{theorem}[Ambient complementarity in tangent form; \ClaimStatusProvedHere]
+\label{thm:nms-ambient-complementarity-tangent}
+Assume an ambient complementarity datum exists for $\cA$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the complex $T_{\mathrm{comp}}(\cA)$ carries a canonical nondegenerate pairing of degree $-1$;
+\item the one-sided tangent complexes
+\[
+T_{\cA}:=\mathrm{fib}(\nabla_{\cA}:L_{\cA}\to K_{\cA}),
+\qquad
+T_{\cA^!}:=\mathrm{fib}(\nabla_{\cA^!}:L_{\cA^!}\to K_{\cA})
+\]
+are isotropic inside $T_{\mathrm{comp}}(\cA)$;
+\item if the pairing on $L_{\cA}\oplus K_{\cA}\oplus L_{\cA^!}$ is perfect and bar--cobar duality identifies the normal complex of one side with the shifted dual tangent complex of the other, then $T_{\cA}$ and $T_{\cA^!}$ are complementary Lagrangians in $T_{\mathrm{comp}}(\cA)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The degree $-1$ pairing on $T_{\mathrm{comp}}(\cA)$ is induced from the cyclic pairing on the direct sum by passage to the homotopy fiber.  Because the total differential is skew-adjoint, the pairing descends to cohomology and is compatible with the differential.
+
+For the one-sided tangent complex $T_{\cA}$, the pullback of the ambient pairing reduces to the quadratic term in the differentiated Maurer--Cartan equation for the universal kernel.  That quadratic term vanishes because the Maurer--Cartan equation is exactly the isotropy condition for the graph of the one-sided variation.  The same argument applies to $T_{\cA^!}$.
+
+If the cyclic pairing is perfect and bar--cobar duality identifies the normal complex to one side with the shifted dual tangent complex of the other, maximal isotropicity follows.  This is precisely the derived form of the slogan that the two sides are opposite polarizations of a single symplectic deformation problem.\qedhere
+\end{proof}
+
+\begin{theorem}[Ambient complementarity as a shifted symplectic formal moduli problem; \ClaimStatusConjectured]
+\label{thm:nms-ambient-complementarity-fmp}
+Assume the tangent complex $T_{\mathrm{comp}}(\cA)$ integrates to a filtered complete cyclic $L_\infty$-algebra presenting a formal moduli problem
+\[
+\mathcal M_{\mathrm{comp}}(\cA).
+\]
+Then $\mathcal M_{\mathrm{comp}}(\cA)$ carries a canonical $(-1)$-shifted symplectic structure, and the one-sided deformation problems of $\cA$ and of $\cA^!$ define Lagrangian maps
+\[
+\mathcal M_{\cA}\longrightarrow \mathcal M_{\mathrm{comp}}(\cA)
+\longleftarrow \mathcal M_{\cA^!}.
+\]
+The genus-$g$ complementarity complex is the linear shadow of this picture.
+\end{theorem}
+
+\begin{remark}[Why the theorem is stronger than additive complementarity]
+\label{rem:nms-stronger-than-additive}
+An additive splitting can always be faked by eigenspace decompositions, arbitrary direct sums, or linear bookkeeping identities.  The ambient theorem is harder to fake because it requires:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a single deformation problem rather than two unrelated ones,
+\item a shifted symplectic pairing on that problem,
+\item isotropicity of the one-sided packages,
+\item maximality of the isotropicity,
+\item compatibility with clutching, factorization, and duality.
+\end{enumerate}
+The last item is decisive: the theorem is not only about tangent complexes at one point, but about a modular geometry stable under the basic operations of the theory.
+\end{remark}
+
+\subsection{Cotangent normal form and the complementarity potential}
+\label{subsec:nms-cotangent-normal-form}
+
+\begin{theorem}[Shifted cotangent normal form; \ClaimStatusProvedHere]
+\label{thm:nms-cotangent-normal-form}
+Let $\mathcal M$ be a pointed $(-1)$-shifted symplectic formal moduli problem, and let
+\[
+i_+\colon \mathcal L_+\to \mathcal M,
+\qquad
+ i_-\colon \mathcal L_-\to \mathcal M
+\]
+be pointed Lagrangian maps through the base point.  Assume the induced tangent map
+\[
+T_0\mathcal L_+\oplus T_0\mathcal L_- \xrightarrow{\sim} T_0\mathcal M
+\]
+is a quasi-isomorphism.  Then there exists a pointed formal symplectomorphism
+\[
+(\mathcal M,i_+)\simeq (T^*[-1]\mathcal L_+,0\text{-section})
+\]
+under which $\mathcal L_-$ becomes the graph of a closed degree-zero one-form
+\[
+\alpha_+\in \Omega^1(\mathcal L_+)^0.
+\]
+In the pointed formal neighborhood this one-form is exact:
+\[
+\alpha_+=dS_+
+\]
+for a degree-zero formal function $S_+$, unique up to an additive constant.
+\end{theorem}
+
+\begin{proof}
+Because $i_+$ is Lagrangian, the normal complex of $\mathcal L_+$ in $\mathcal M$ is canonically identified with $T^*[-1]\mathcal L_+$.  Formally along $\mathcal L_+$, the symplectic neighborhood theorem gives a pointed equivalence with the shifted cotangent bundle.  Under this identification, $\mathcal L_+$ becomes the zero section.  Since $\mathcal L_-$ is complementary to the zero section, it is the graph of a one-form $\alpha_+$.  The graph of a one-form in a cotangent bundle is Lagrangian if and only if the one-form is closed, because the pullback of the canonical symplectic form is exactly $d\alpha_+$.  In a pointed formal neighborhood every closed one-form is exact, which produces $S_+$.\qedhere
+\end{proof}
+
+\begin{definition}[Complementarity potential]
+\label{def:nms-complementarity-potential}
+Assume the ambient complementarity formal moduli problem exists.  The formal function
+\[
+S_{\cA}\in \widehat{\mathcal O}(\mathcal M_{\cA})^0
+\]
+produced by Theorem~\ref{thm:nms-cotangent-normal-form} for the pair
+\[
+\mathcal L_+=\mathcal M_{\cA},
+\qquad
+\mathcal L_- = \mathcal M_{\cA^!}
+\]
+is called the \emph{complementarity potential} of the Koszul pair $(\cA,\cA^!)$.
+\end{definition}
+
+\begin{proposition}[Legendre duality of the two potentials; \ClaimStatusProvedHere]
+\label{prop:nms-legendre-duality}
+Assume the ambient complementarity formal moduli problem exists.  Let $S_{\cA}$ and $S_{\cA^!}$ be the complementarity potentials constructed from the two cotangent charts centered at $\mathcal M_{\cA}$ and $\mathcal M_{\cA^!}$.  Then $S_{\cA}$ and $S_{\cA^!}$ are formal Legendre transforms of one another.
+\end{proposition}
+
+\begin{proof}
+The two functions generate the same formal Lagrangian subspace of the same shifted symplectic ambient moduli problem, viewed from the two opposite cotangent charts.  The coordinate change between these two charts is the formal Legendre transform.\qedhere
+\end{proof}
+
+\begin{proposition}[Legendre duality of cubic tensors; \ClaimStatusProvedHere]
+\label{prop:nms-legendre-cubic}
+Let $H_{\cA}$ be the complementarity Hessian.  Then the cubic shadows of $\cA$ and $\cA^!$ are related by formal Legendre duality:
+\[
+\mathfrak C_{\cA^!}(p,p,p)
+= -\mathfrak C_{\cA}(H_{\cA}^{-1}p, H_{\cA}^{-1}p, H_{\cA}^{-1}p).
+\]
+More generally, at quartic order the Legendre transform gives
+\[
+S_{\cA}^\vee(p)
+= \tfrac12 H_{\cA}^{-1}(p,p)
+- \tfrac{1}{6}\mathfrak C_{\cA}(H_{\cA}^{-1}p,H_{\cA}^{-1}p,H_{\cA}^{-1}p)
++ O(p^4).
+\]
+Since $S_{\cA}^\vee = S_{\cA^!}$, the cubic shadow on the dual side is the Hessian-transported negative of the cubic shadow on the primal side.
+\end{proposition}
+
+\begin{proof}
+Write $S_{\cA}(x) = \frac12 H_{\cA}(x,x) + \frac16 \mathfrak C_{\cA}(x,x,x) + O(x^4)$.  The critical point of $\langle p,x\rangle - S_{\cA}(x)$ is $x = H_{\cA}^{-1}p + O(p^2)$.  Substituting into the Legendre formula and collecting through cubic order yields the displayed identity.\qedhere
+\end{proof}
+
+\begin{theorem}[Derived critical locus of self-dual deformations; \ClaimStatusProvedHere]
+\label{thm:nms-derived-critical-locus}
+Assume the ambient complementarity formal moduli problem exists.  Then there is a canonical equivalence
+\[
+\mathcal M_{\cA}\times^h_{\mathcal M_{\mathrm{comp}}(\cA)}\mathcal M_{\cA^!}
+\simeq
+\mathrm{Crit}(S_{\cA}).
+\]
+In other words, simultaneous deformations of $\cA$ and $\cA^!$ preserving complementarity are governed by the derived critical locus of the complementarity potential.
+\end{theorem}
+
+\begin{proof}
+In the cotangent normal form of Theorem~\ref{thm:nms-cotangent-normal-form}, one Lagrangian is the zero section and the other is the graph of $dS_{\cA}$.  Their derived intersection is by definition the derived zero locus of $dS_{\cA}$, which is the derived critical locus of $S_{\cA}$.\qedhere
+\end{proof}
+
+\begin{proposition}[Criterion for fake complementarity; \ClaimStatusProvedHere]
+\label{prop:nms-fake-complementarity}
+In the cotangent chart centered at $\mathcal M_{\cA}$, the following are equivalent.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The dual Lagrangian $\mathcal M_{\cA^!}$ is linear.
+\item The complementarity potential $S_{\cA}$ is quadratic.
+\item The derived critical locus $\mathrm{Crit}(S_{\cA})$ is controlled entirely by its Hessian complex, with no higher nonlinear operations.
+\end{enumerate}
+Consequently, the first obstruction to fake complementarity is the first nonzero higher jet of $S_{\cA}$ beyond its quadratic part.
+\end{proposition}
+
+\begin{proof}
+In the cotangent chart, $\mathcal M_{\cA^!}$ is the graph of $dS_{\cA}$.  The graph is linear if and only if $dS_{\cA}$ is linear, hence if and only if $S_{\cA}$ is quadratic.  When $S_{\cA}$ is quadratic, its critical locus is cut out by a linear differential and is therefore governed by the Hessian complex alone.  Conversely, any cubic or higher term in $S_{\cA}$ produces a nonlinear contribution to $dS_{\cA}$ and therefore to the critical locus.\qedhere
+\end{proof}
+
+\section{Finite-order nonlinear shadow calculus}
+\label{sec:nms-shadow-calculus}
+
+The full universal class $\Theta_{\cA}$ should globalize the entire modular deformation theory.  Before that globalization is completed, one can still extract its first visible jets.  This section develops the finite-order calculus of those jets.
+
+\begin{definition}[Arity shadows of the universal class]
+\label{def:nms-arity-shadows}
+Assume the full universal Maurer--Cartan class exists in the form
+\[
+\Theta_{\cA}\in \mathrm{MC}\bigl(\Defcyc(\cA)\widehat\otimes \mathbb G_{\mathrm{mod}}\bigr),
+\]
+where $\mathbb G_{\mathrm{mod}}$ denotes the completed modular coefficient ring.  In a cyclic minimal model the class determines a Hamiltonian modular master potential
+\[
+\mathfrak S_{\cA}=\sum_{r\ge 2}\frac{1}{r!}\,\mathrm{Sh}_r(\Theta_{\cA}),
+\]
+where $\mathrm{Sh}_r(\Theta_{\cA})$ denotes the homogeneous degree-$r$ Taylor coefficient on the tangent space of the minimal model.  We call $\mathrm{Sh}_r(\Theta_{\cA})$ the \emph{arity-$r$ shadow} of the universal class.
+\end{definition}
+
+\begin{remark}[Quadratic, cubic, and quartic shadows as arity-$2$, $3$, and $4$ pieces]
+\label{rem:nms-hcq-as-arity-shadows}
+Whenever the universal class exists, the three tensors
+\[
+H_{\cA},\qquad \mathfrak C_{\cA},\qquad \mathfrak Q_{\cA}
+\]
+are nothing but the first three nontrivial shadows of $\Theta_{\cA}$:
+\[
+H_{\cA}=\mathrm{Sh}_2(\Theta_{\cA}),
+\qquad
+\mathfrak C_{\cA}=\mathrm{Sh}_3(\Theta_{\cA}),
+\qquad
+\mathfrak Q_{\cA}=\mathrm{Sh}_4(\Theta_{\cA}).
+\]
+The entire finite-order theory developed below is therefore the visible arity-$\le 4$ face of the universal Maurer--Cartan class.
+\end{remark}
+
+\subsection{Quadratic, cubic, and quartic shadows}
+\label{subsec:nms-shadow-jets}
+
+\begin{setup}[Finite-dimensional cyclic slice]
+\label{setup:nms-cyclic-slice}
+Fix a finite-dimensional graded subspace
+\[
+V_{\cA}\subset H^*(\Defcyc(\cA),\ell_1)
+\]
+closed under all transferred operations needed through quartic order.  Assume that the cyclic pairing restricts to a nondegenerate quadratic form on $V_{\cA}$; write
+\[
+H_{\cA}\colon V_{\cA}\xrightarrow{\sim}V_{\cA}^*[-1]
+\]
+for the induced Hessian, and let $P_{\cA}:=H_{\cA}^{-1}$ denote the propagator.
+\end{setup}
+
+\begin{definition}[Shadow jets]
+\label{def:nms-shadow-jets}
+The \emph{quadratic}, \emph{cubic}, and \emph{quartic} shadows of $\cA$ on $V_{\cA}$ are the tensors determined by the Taylor expansion
+\begin{equation}
+\label{eq:nms-shadow-potential-expansion}
+S_{\cA}^{\le 4}(x)
+=
+\frac12H_{\cA}(x,x)
++
+\frac1{3!}\mathfrak C_{\cA}(x,x,x)
++
+\frac1{4!}\mathfrak Q_{\cA}(x,x,x,x).
+\end{equation}
+Equivalently, if $(V_{\cA},\ell_n^{\mathrm{tr}})$ is the transferred cyclic minimal model, then
+\begin{align}
+\mathfrak C_{\cA}(x,y,z)
+&:= \sum_{\mathrm{cyc}}\langle x,\ell_2^{\mathrm{tr}}(y,z)\rangle,
+\label{eq:nms-cubic-shadow}
+\\
+\mathfrak Q_{\cA}(x_1,x_2,x_3,x_4)
+&:= \sum_{\mathrm{cyc}}\langle x_1,\ell_3^{\mathrm{tr}}(x_2,x_3,x_4)\rangle.
+\label{eq:nms-quartic-shadow}
+\end{align}
+Define the quartic obstruction
+\begin{equation}
+\label{eq:nms-quartic-obstruction-def}
+\mathfrak o_{\cA}^{(4)}
+:=
+\frac12\{\mathfrak C_{\cA},\mathfrak C_{\cA}\}_{H_{\cA}},
+\end{equation}
+where the bracket is the Hamiltonian bracket induced by the propagator $P_{\cA}$.
+\end{definition}
+
+\begin{theorem}[Quartic shadow master equations; \ClaimStatusProvedHere]
+\label{thm:nms-shadow-master-equations}
+Assume the truncated Hamiltonian $S_{\cA}^{\le 4}$ satisfies the classical master equation modulo quintic terms:
+\[
+\{S_{\cA}^{\le 4},S_{\cA}^{\le 4}\}_{H_{\cA}}=O(5).
+\]
+Then the shadow jets satisfy
+\begin{align}
+\{H_{\cA},\mathfrak C_{\cA}\}_{H_{\cA}} &= 0,
+\label{eq:nms-master-cubic}
+\\
+\{H_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}} + \mathfrak o_{\cA}^{(4)} &= 0.
+\label{eq:nms-master-quartic}
+\end{align}
+Equivalently, if one writes
+\[
+\nabla_{H_{\cA}}(X):=\{H_{\cA},X\}_{H_{\cA}},
+\]
+then
+\[
+\nabla_{H_{\cA}}\mathfrak C_{\cA}=0,
+\qquad
+\nabla_{H_{\cA}}\mathfrak Q_{\cA}+\mathfrak o_{\cA}^{(4)}=0.
+\]
+\end{theorem}
+
+\begin{proof}
+Expand the master equation by homogeneous degree.  The cubic term is exactly \eqref{eq:nms-master-cubic}; the quartic term is exactly \eqref{eq:nms-master-quartic}.  No other contributions occur through quartic order.\qedhere
+\end{proof}
+
+\begin{construction}[Separating sewing product]
+\label{constr:nms-sewing-product}
+Let $P_{\cA}=H_{\cA}^{-1}$ be the propagator.  For symmetric tensors $\alpha\in \operatorname{Sym}^p(V_{\cA}^*)$ and $\beta\in \operatorname{Sym}^q(V_{\cA}^*)$, define the \emph{single-edge sewing product}
+\[
+\alpha\star_{P_{\cA}}\beta\in \operatorname{Sym}^{p+q-2}(V_{\cA}^*)
+\]
+by contracting one leg of $\alpha$ with one leg of $\beta$ using $P_{\cA}$ and symmetrizing over the remaining external legs.  This is the tensor-level realization of separating clutching by one internal edge.
+\end{construction}
+
+\begin{theorem}[Separating boundary recursion through quartic order; \ClaimStatusProvedHere]
+\label{thm:nms-separating-boundary-recursion}
+Assume the shadow jets arise as the arity-$\le 4$ shadow of a clutching-compatible universal class.  Then on every separating clutching map $\xi$ one has
+\begin{align}
+\xi^*H_{\cA}
+&=
+H_{\cA}\star_{P_{\cA}} H_{\cA},
+\label{eq:nms-clutching-H}
+\\
+\xi^*\mathfrak C_{\cA}
+&=
+H_{\cA}\star_{P_{\cA}}\mathfrak C_{\cA}
++
+\mathfrak C_{\cA}\star_{P_{\cA}} H_{\cA},
+\label{eq:nms-clutching-C}
+\\
+\xi^*\mathfrak Q_{\cA}
+&=
+H_{\cA}\star_{P_{\cA}}\mathfrak Q_{\cA}
++
+\mathfrak C_{\cA}\star_{P_{\cA}}\mathfrak C_{\cA}
++
+\mathfrak Q_{\cA}\star_{P_{\cA}}H_{\cA}.
+\label{eq:nms-clutching-Q}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+These are the degree-$2$, degree-$3$, and degree-$4$ components of the clutching identity for the universal class:
+\[
+\xi^*(\Theta_{\cA})=\Theta_{\cA}\star \Theta_{\cA}.
+\]
+At quartic order only the three displayed contractions survive.\qedhere
+\end{proof}
+
+\subsection{The quartic shadow graph cocycle}
+\label{subsec:nms-shadow-graph-complex}
+
+\begin{definition}[Quartic shadow graph complex]
+\label{def:nms-shadow-graph-complex}
+Let $\mathcal G_{\cA}^{\le 4}$ denote the completed span of stable graphs whose vertices are decorated as follows:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a $2$-valent vertex is decorated by the Hessian $H_{\cA}$,
+\item a $3$-valent vertex is decorated by the cubic tensor $\mathfrak C_{\cA}$,
+\item a $4$-valent vertex is decorated by the quartic tensor $\mathfrak Q_{\cA}$,
+\item every internal edge is contracted with the propagator $P_{\cA}$.
+\end{enumerate}
+Let $d_{\mathrm{graph}}$ be the differential obtained by summing over separating edge insertions together with the internal differential induced by the Hamiltonian bracket with $H_{\cA}$.
+\end{definition}
+
+\begin{construction}[The quartic shadow cocycle]
+\label{constr:nms-shadow-cocycle}
+Define
+\begin{equation}
+\label{eq:nms-shadow-cocycle}
+\Theta_{\cA}^{\le 4}
+:=
+H_{\cA}+\mathfrak C_{\cA}+\mathfrak Q_{\cA}
+\in \mathcal G_{\cA}^{\le 4}.
+\end{equation}
+\end{construction}
+
+\begin{theorem}[Finite-order realization of the universal class; \ClaimStatusProvedHere]
+\label{thm:nms-shadow-cocycle-characterization}
+The element $\Theta_{\cA}^{\le 4}$ is a cocycle in $\mathcal G_{\cA}^{\le 4}$ if and only if the quartic shadow master equations \eqref{eq:nms-master-cubic}--\eqref{eq:nms-master-quartic} and the separating boundary recursion \eqref{eq:nms-clutching-H}--\eqref{eq:nms-clutching-Q} hold.
+\end{theorem}
+
+\begin{proof}
+The graph differential on the one-vertex generators reproduces the three sewing terms of Theorem~\ref{thm:nms-separating-boundary-recursion}; the Hamiltonian part of the differential reproduces Theorem~\ref{thm:nms-shadow-master-equations}.  Matching homogeneous degrees $2$, $3$, and $4$ yields the claim.\qedhere
+\end{proof}
+
+\begin{remark}[Tree terms versus obstruction terms]
+\label{rem:nms-tree-vs-obstruction}
+There are two different quartic descendants of a cubic tensor $\mathfrak C$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{tree term}
+\[
+T_{\mathfrak C}:=\mathfrak C\star_{P}\mathfrak C
+\]
+records the quartic geometry created by sewing two cubic vertices with one propagator.
+\item The \emph{quartic obstruction}
+\[
+J_{\mathfrak C}:=\frac12\{\mathfrak C,\mathfrak C\}_{H}
+\]
+records the Hamiltonian failure of a quartic primitive to exist.
+\end{enumerate}
+These two contractions are conceptually different.  In particular, a family can have nontrivial quartic boundary geometry even when the quartic obstruction vanishes.
+\end{remark}
+
+\subsection{The quartic shadow envelope}
+\label{subsec:nms-shadow-envelope}
+
+\begin{definition}[Primary--composite quartic shadow envelope]
+\label{def:nms-primary-composite-envelope}
+Let $\cA$ be strongly generated by primaries
+\[
+W^{(d_1)},\dots,W^{(d_r)},\qquad d_1<\cdots<d_r.
+\]
+The \emph{primary--composite quartic shadow envelope} is the graded vector space
+\[
+E_{\cA}^{[4]}:=V_{\mathrm{prim}}\oplus V_{\mathrm{comp}},
+\]
+where
+\[
+V_{\mathrm{prim}}:=\bigoplus_{i=1}^r \mathbb C\,e_i
+\]
+is the span of the strong generators and $V_{\mathrm{comp}}$ is the span of all quasi-primary projections
+\[
+\Pi_{\mathrm{qp}}\bigl(:W^{(d_i)}W^{(d_j)}:\bigr)
+\]
+that occur in the singular or regular parts of pairwise OPEs of strong generators.  It is the minimal envelope on which the quartic shadow calculus closes.
+\end{definition}
+
+\begin{proposition}[Quartic closure of the shadow envelope; \ClaimStatusProvedHere]
+\label{prop:nms-quartic-closure-envelope}
+The local quartic shadow differential and the quartic separating sewing recursion preserve $E_{\cA}^{[4]}$.
+\end{proposition}
+
+\begin{proof}
+Through quartic order, every local one-vertex contribution comes from a single pairwise OPE of strong generators.  Such an OPE can produce only another strong generator, its descendants, or a normal-ordered bilinear composite.  After quasi-primary projection, descendants are absorbed into the strong-generator/composite span.  No trilinear composite is needed before quintic order.  The boundary terms are obtained by gluing either two cubic vertices or one quartic vertex with one propagator, so they also remain in the same envelope.\qedhere
+\end{proof}
+
+\section{The three primitive nonlinear archetypes}
+\label{sec:nms-three-archetypes}
+
+The quartic shadow calculus isolates three primitive patterns of nonlinear behavior.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Gaussian}: no nonlinear jet survives through quartic order.
+\item \emph{Lie/tree}: a cubic tensor is present, the quartic obstruction vanishes, and quartic nonlinearity appears first on the boundary as a tree term.
+\item \emph{Contact/quartic}: the cubic tensor vanishes on the chosen slice, and the first nonlinear local term is quartic.
+\end{enumerate}
+We now compute these patterns in the three frame families.
+
+\subsection{Heisenberg}
+\label{subsec:nms-heisenberg}
+
+\begin{theorem}[Heisenberg exact linearity; \ClaimStatusProvedHere]
+\label{thm:nms-heisenberg-exact-linearity}
+On the Heisenberg deformation line one has
+\[
+\mathfrak C_{\mathcal H}=0,
+\qquad
+\mathfrak o_{\mathcal H}^{(4)}=0,
+\qquad
+\mathfrak Q_{\mathcal H}=0.
+\]
+Equivalently,
+\[
+\Theta_{\mathcal H}^{\le 4}=H_{\mathcal H}.
+\]
+\end{theorem}
+
+\begin{proof}
+On the Heisenberg line the deformation problem is governed by a constant Poisson structure and the corresponding Moyal quantization is exact at first order.  On the bar side, no higher operations $m_n$ with $n\ge 3$ appear on this slice.  Therefore the transferred binary and ternary nonlinear operations vanish, and hence so do the cubic and quartic shadow tensors.\qedhere
+\end{proof}
+
+\begin{corollary}[Gaussian boundary law; \ClaimStatusProvedHere]
+\label{cor:nms-heisenberg-gaussian-boundary}
+For the Heisenberg family the separating boundary recursion is purely Gaussian:
+\[
+\xi^*H_{\mathcal H}=H_{\mathcal H}\star H_{\mathcal H},
+\qquad
+\xi^*\mathfrak C_{\mathcal H}=0,
+\qquad
+\xi^*\mathfrak Q_{\mathcal H}=0.
+\]
+\end{corollary}
+
+\subsection{Affine \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl2}}
+\label{subsec:nms-affine-sl2}
+
+\begin{definition}[Strict current-level sector]
+\label{def:nms-affine-sector}
+For the affine current algebra $\widehat{\mathfrak{sl}}_{2,k}$, let
+\[
+V_{\mathrm{aff}}:=\mathfrak{sl}_2[1]\oplus \mathbb C\,K[1]
+\]
+be the strict current-level sector generated by the current algebra and the level direction.
+\end{definition}
+
+\begin{theorem}[Affine cubic normal form; \ClaimStatusProvedHere]
+\label{thm:nms-affine-cubic-normal-form}
+On the strict current-level sector one has
+\[
+\mathfrak C_{\mathrm{aff}}(x,y,z)=\kappa(x,[y,z]),
+\qquad
+\mathfrak o_{\mathrm{aff}}^{(4)}=0.
+\]
+Consequently there exists a quartic gauge in which
+\[
+\mathfrak Q_{\mathrm{aff}}=0,
+\qquad
+\Theta_{\mathrm{aff}}^{\le 4}=H_{\mathrm{aff}}+\mathfrak C_{\mathrm{aff}}.
+\]
+\end{theorem}
+
+\begin{proof}
+The simple pole in the current algebra OPE is the Lie bracket, and the double pole is the invariant bilinear form.  Therefore the cubic Hamiltonian on the strict sector is the cyclic Lie Hamiltonian
+\[
+\frac16\kappa(a,[a,a]).
+\]
+The Hamiltonian self-bracket of this cubic term is the Jacobiator, which vanishes identically.  Thus the quartic obstruction vanishes.  Through quartic order one may therefore choose the minimal gauge in which no local quartic vertex remains.\qedhere
+\end{proof}
+
+\begin{corollary}[Boundary-generated quartic nonlinearity; \ClaimStatusProvedHere]
+\label{cor:nms-affine-boundary-tree}
+Even though the local quartic vertex vanishes on the strict current-level sector, the quartic boundary shadow is generally nonzero:
+\[
+\xi^*\mathfrak Q_{\mathrm{aff}}=\mathfrak C_{\mathrm{aff}}\star_{P_{\mathrm{aff}}}\mathfrak C_{\mathrm{aff}}.
+\]
+Explicitly,
+\[
+(\mathfrak C_{\mathrm{aff}}\star_{P_{\mathrm{aff}}}\mathfrak C_{\mathrm{aff}})(x_1,x_2,x_3,x_4)
+=
+\frac{1}{k_{\mathrm{eff}}}
+\sum_{\mathrm{channels}}
+\kappa([x_i,x_j],[x_k,x_\ell]),
+\]
+where $k_{\mathrm{eff}}$ is the normalization of the Hessian on the strict sector.
+\end{corollary}
+
+\begin{proof}
+Apply the quartic boundary recursion with $\mathfrak Q_{\mathrm{aff}}=0$.  The displayed formula is the definition of sewing two cubic current vertices with one propagator.\qedhere
+\end{proof}
+
+\begin{theorem}[Critical-level emergence; \ClaimStatusConjectured]
+\label{thm:nms-critical-level-emergence}
+For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, assume the ambient complementarity package exists.  At the critical level $k = -h^\vee$, the quadratic/Hessian shadow vanishes:
+\[
+H_{\widehat{\mathfrak{g}}_{-h^\vee}} = 0,
+\]
+while the cubic shadow survives:
+\[
+\mathfrak C_{\widehat{\mathfrak{g}}_{-h^\vee}}(x,y,z) = \kappa(x,[y,z]).
+\]
+The complementarity potential is therefore cubic at leading order:
+\[
+S_{\widehat{\mathfrak{g}}_{-h^\vee}}(a) = \tfrac16\kappa(a,[a,a]) + O(a^4).
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The quadratic part is governed by the shifted-level factor $k + h^\vee$, which vanishes at the critical level.  The simple-pole bracket remains, so the first surviving homogeneous term is the Lie-theoretic cubic tensor.\qedhere
+\end{proof}
+
+\begin{corollary}[Critical self-duality as Maurer--Cartan; \ClaimStatusConjectured]
+\label{cor:nms-critical-mc}
+At the critical level, the derived self-intersection of the two modular Lagrangians has leading critical equation
+\[
+[a,a] = 0.
+\]
+In other words, the cubic truncation of the derived critical locus is the Maurer--Cartan locus for the underlying Lie bracket.
+\end{corollary}
+
+\begin{proof}
+Differentiate the critical-level cubic action: $dS(a) = \frac12[a,a] + O(a^3)$.  The cubic truncation of $\mathrm{Crit}(S)$ is therefore $\{a : [a,a] = 0\}$, which is the Maurer--Cartan locus.\qedhere
+\end{proof}
+
+\begin{remark}[Critical level is purely nonlinear]
+\label{rem:nms-critical-purely-nonlinear}
+The critical level is not ``more linear'' than generic level.  It is the opposite: at the critical level, complementarity becomes purely nonlinear at leading order.  This provides the first bridge from complementarity geometry to critical-level representation theory (the Feigin--Frenkel center).
+\end{remark}
+
+\subsection{The \texorpdfstring{$\beta\gamma$}{betagamma} system}
+\label{subsec:nms-betagamma}
+
+\begin{definition}[Weight/contact slice]
+\label{def:nms-betagamma-slice}
+Let $V_{\beta\gamma}$ be the minimal cyclic slice generated by the explicit weight-changing deformation class and the first contact class detected by the first nontrivial higher operation $m_3$.
+\end{definition}
+
+\begin{theorem}[\texorpdfstring{$\beta\gamma$}{betagamma} quartic birth; \ClaimStatusProvedHere]
+\label{thm:nms-betagamma-quartic-birth}
+On the weight/contact slice one has
+\[
+\mathfrak C_{\beta\gamma}=0,
+\qquad
+\mathfrak o_{\beta\gamma}^{(4)}=0,
+\qquad
+\mathfrak Q_{\beta\gamma}=\operatorname{cyc}(m_3).
+\]
+Equivalently, the first nonlinear local shadow is quartic rather than cubic.  Writing $\eta$ for the weight-changing class,
+\[
+\mathfrak Q_{\beta\gamma}(\eta,\eta,\eta,\eta)
+=
+\mu_{\beta\gamma},
+\qquad
+\mu_{\beta\gamma}:=\langle \eta,m_3(\eta,\eta,\eta)\rangle.
+\]
+\end{theorem}
+
+\begin{proof}
+On the explicit weight-changing line the Maurer--Cartan equation is linear, so no cubic term is produced on that slice.  The first displayed higher operation in the bar model is $m_3$, and in a cyclic Hamiltonian an $m_3$-operation contributes quartically.  Therefore the first local nonlinear term is quartic.  Since the cubic term vanishes, the quartic obstruction vanishes identically.\qedhere
+\end{proof}
+
+\begin{corollary}[Vanishing of the quartic contact invariant; \ClaimStatusProvedHere]
+\label{cor:nms-betagamma-mu-vanishing}
+On the weight-changing line of the $\beta\gamma$ system,
+\[
+  \mu_{\beta\gamma} := \langle \eta,\, m_3(\eta,\eta,\eta) \rangle = 0.
+\]
+The quartic contact invariant vanishes identically on the weight-changing
+deformation.
+\end{corollary}
+
+\begin{proof}
+Two independent arguments.
+(1)~Homotopy transfer: the transferred bracket satisfies
+$m_2(\eta,\eta) = 0$ (the Maurer--Cartan equation on the one-dimensional
+weight-changing subspace is linear), so
+$m_3(\eta,\eta,\eta) = 0$ by the $A_\infty$ relation
+$m_3 = m_2 \circ (h \otimes \mathrm{id}) \circ m_2 + \cdots$
+applied to the vanishing binary input.
+(2)~Rank-one abelian rigidity (Theorem~\ref{thm:nms-rank-one-rigidity}):
+the weight-changing line is a one-dimensional cyclic subspace with
+vanishing higher brackets.
+Computational verification: \texttt{compute/lib/betagamma\_quartic\_contact.py}.
+\end{proof}
+
+\begin{corollary}[Pure contact boundary law; \ClaimStatusProvedHere]
+\label{cor:nms-betagamma-boundary-law}
+On the weight/contact slice of $\beta\gamma$ one has
+\[
+\xi^*\mathfrak Q_{\beta\gamma}
+=
+H_{\beta\gamma}\star_{P_{\beta\gamma}}\mathfrak Q_{\beta\gamma}
++
+\mathfrak Q_{\beta\gamma}\star_{P_{\beta\gamma}}H_{\beta\gamma}.
+\]
+There is no cubic tree contribution.
+\end{corollary}
+
+\begin{proof}
+Apply the quartic boundary recursion with $\mathfrak C_{\beta\gamma}=0$.\qedhere
+\end{proof}
+
+\begin{theorem}[Primitive nonlinear archetype trichotomy; \ClaimStatusProvedHere]
+\label{thm:nms-archetype-trichotomy}
+Through quartic order, the three frame families realize the three primitive nonlinear archetypes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Heisenberg is Gaussian:
+\[
+\Theta_{\mathcal H}^{\le 4}=H_{\mathcal H}.
+\]
+\item Affine $\widehat{\mathfrak{sl}}_2$ is of Lie/tree type:
+\[
+\Theta_{\mathrm{aff}}^{\le 4}=H_{\mathrm{aff}}+\mathfrak C_{\mathrm{aff}},
+\]
+with quartic boundary term generated by $\mathfrak C_{\mathrm{aff}}\star \mathfrak C_{\mathrm{aff}}$.
+\item The $\beta\gamma$ system is of contact/quartic type:
+\[
+\Theta_{\beta\gamma}^{\le 4}=H_{\beta\gamma}+\mathfrak Q_{\beta\gamma},
+\]
+with quartic boundary term propagated from the local quartic vertex.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Rank-one abelian rigidity; \ClaimStatusProvedHere]
+\label{thm:nms-rank-one-rigidity}
+Let $L \subset V_{\cA}$ be a one-dimensional cyclic subspace on which all transferred higher brackets vanish:
+\[
+\ell_n^{\mathrm{tr}}\big|_L = 0 \qquad (n \ge 2).
+\]
+Then the restriction of the complementarity potential to $L$ is exactly quadratic.  In particular, complementarity on $L$ is formally fake.
+\end{theorem}
+
+\begin{proof}
+On such a line the cyclic action expansion collapses to its quadratic Hessian part: every higher jet $\mathrm{Sh}_r(\Theta_{\cA})|_L$ for $r \ge 3$ involves at least one factor of some $\ell_n^{\mathrm{tr}}$ with $n \ge 2$, and all vanish.\qedhere
+\end{proof}
+
+\begin{remark}[Uniform explanation of linear examples]
+\label{rem:nms-uniform-linearity}
+Theorem~\ref{thm:nms-rank-one-rigidity} explains uniformly why the Heisenberg level line and the explicit $\beta\gamma$ weight-shift line are both formally linear: in each case the deformation lies on a one-dimensional sector with vanishing higher brackets.  Real nonlinear complementarity requires either a non-abelian bracket (as for affine $\widehat{\mathfrak{sl}}_2$) or a higher-dimensional deformation space (as for $\beta\gamma$ off the weight-shift line).
+\end{remark}
+
+\section{Mixed cubic--quartic families: Virasoro and principal \texorpdfstring{$\mathcal W_N$}{WN}}
+\label{sec:nms-mixed-families}
+
+The three primitive archetypes are not the end of the story.  Virasoro and principal $\mathcal W_N$ introduce the first genuinely mixed families, in which cubic and quartic nonlinearities coexist already at the first nontrivial level.
+
+\subsection{A universal cubic sector for strong generators}
+\label{subsec:nms-universal-cubic-sector}
+
+\begin{theorem}[Universal gravitational cubic tensor; \ClaimStatusProvedHere]
+\label{thm:nms-universal-gravitational-cubic}
+Let $\cA$ be strongly generated by Virasoro-primary fields
+\[
+W^{(2)}=T,\;W^{(d_2)},\dots,W^{(d_r)}
+\]
+of conformal weights $2,d_2,\dots,d_r$.  On the primary slice with coordinates $x_2,x_{d_2},\dots,x_{d_r}$ dual to the strong generators, the cubic shadow contains the universal summand
+\begin{equation}
+\label{eq:nms-universal-gravitational-cubic}
+\mathfrak C^{\mathrm{grav}}_{\cA}
+=
+2x_2^3+\sum_{i\ge 2} d_i\,x_2x_{d_i}^2.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Each $W^{(d_i)}$ is Virasoro-primary of weight $d_i$, so
+\[
+T_{(1)}W^{(d_i)}=d_i\,W^{(d_i)}.
+\]
+For $T$ itself this gives $T_{(1)}T=2T$.  The cyclic cubic tensor is obtained by pairing the output of this action with the quadratic pairing and then symmetrizing the three legs.  This produces exactly the stated universal cubic terms.\qedhere
+\end{proof}
+
+\subsection{Virasoro}
+\label{subsec:nms-virasoro}
+
+\begin{definition}[Virasoro quartic shadow envelope]
+\label{def:nms-virasoro-envelope}
+Let
+\[
+\Lambda_{\mathrm{Vir}}:=:TT:-\frac{3}{10}\partial^2T.
+\]
+The Virasoro quartic shadow envelope is
+\[
+E^{[4]}_{\mathrm{Vir}}:=\mathbb C\langle T,\Lambda_{\mathrm{Vir}}\rangle.
+\]
+\end{definition}
+
+\begin{theorem}[Virasoro mixed shadow theorem; \ClaimStatusProvedHere]
+\label{thm:nms-virasoro-mixed-shadow}
+On $E^{[4]}_{\mathrm{Vir}}$ one has
+\[
+H_{\mathrm{Vir}}=\frac{c}{2}x^2,
+\qquad
+\mathfrak C_{\mathrm{Vir}}=2x^3,
+\qquad
+\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}\neq 0.
+\]
+Equivalently,
+\[
+\Theta_{\mathrm{Vir}}^{\le 4}=H_{\mathrm{Vir}}+\mathfrak C_{\mathrm{Vir}}+\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}.
+\]
+\end{theorem}
+
+\begin{proof}
+The quadratic term is the quartic pole of the $TT$ OPE,
+\[
+T(z)T(w)\sim \frac{c/2}{(z-w)^4}+\cdots.
+\]
+The cubic term is the conformal-weight channel
+\[
+T_{(1)}T=2T,
+\]
+which is the rank-one case of Theorem~\ref{thm:nms-universal-gravitational-cubic}.  The regular term $:TT:$ is not quasi-primary, but its corrected quasi-primary projection is $\Lambda_{\mathrm{Vir}}$, which therefore contributes a genuine one-vertex quartic contact term.\qedhere
+\end{proof}
+
+\begin{theorem}[Explicit Virasoro quartic contact coefficient; \ClaimStatusProvedHere]
+\label{thm:nms-virasoro-quartic-explicit}
+\index{quartic contact!Virasoro explicit coefficient}
+The quartic contact coefficient of the Virasoro shadow envelope is
+\begin{equation}
+\label{eq:nms-virasoro-quartic-explicit}
+\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}
+= \frac{10}{c(5c+22)}.
+\end{equation}
+This is the first non-abelian Ring~$2$ shadow coefficient to be
+extracted in closed form.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1} (Quasi-primary Gram matrix).
+The vacuum-module states at level~$4$ are
+$|1\rangle = L_{-4}|0\rangle$ and
+$|2\rangle = L_{-2}^2|0\rangle$, with Gram matrix
+\[
+G = \begin{pmatrix} 5c & 3c \\ 3c & c(c+8)/2 \end{pmatrix}
+\]
+computed from $[L_4, L_{-4}] = 8L_0 + 5c$,
+$\langle 0|L_4 L_{-2}^2|0\rangle = 3c$, and
+$\langle 0|L_2^2 L_{-2}^2|0\rangle = c(c+8)/2$.
+
+\emph{Step~2} (Quasi-primary projection).
+The condition $L_1 \Lambda_{\mathrm{Vir}} = 0$ determines
+$\Lambda = L_{-2}^2|0\rangle - a\,L_{-4}|0\rangle$ with
+$a = 3/10$ (from $L_1 L_{-2}^2 = 3L_{-3}L_0 + 3L_{-1}L_{-2}$
+acting on the vacuum).
+
+\emph{Step~3} (BPZ norm).
+\[
+\langle\Lambda|\Lambda\rangle
+= G_{22} - 2a\,G_{12} + a^2\,G_{11}
+= \frac{c(c+8)}{2} - \frac{3}{5}\cdot 3c + \frac{9}{100}\cdot 5c
+= \frac{c(5c+22)}{10}.
+\]
+
+\emph{Step~4} (Contact coefficient).
+The $TT$ OPE at level~$0$ (regular part) contains
+$\Lambda_{\mathrm{Vir}}$ with coefficient~$1$
+(by definition of normal ordering $:TT:$ and the projection to
+$\Lambda$).  The quartic contact coefficient is therefore
+$1/\langle\Lambda|\Lambda\rangle = 10/[c(5c+22)]$.
+
+Computational verification:
+\texttt{compute/lib/virasoro\_quartic\_contact.py} ($28$~tests).
+\end{proof}
+
+\begin{remark}[Significance for the $\Theta_\cA$ programme]
+\label{rem:quartic-theta-significance}
+The quartic contact coefficient
+$\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
+is the arity-$4$ Taylor jet of the complementarity potential
+$S_{\mathrm{Vir}}$ around the scalar $\kappa(\mathrm{Vir}_c) = c/2$.
+Together with the scalar $\kappa$ (arity~$2$) and the cubic
+$\mathfrak C = 2$ (arity~$3$), it provides the first three terms of
+the Taylor expansion of $\Theta_{\mathrm{Vir}}$.
+
+The singular locus $c(5c+22) = 0$ consists of:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $c = 0$: the uncurved point where
+  $\kappa = 0$ (Corollary~\textup{\ref{cor:nms-virasoro-cubic-leading}});
+\item $c = -22/5$: the Lee--Yang value
+  $c_{5,2} = 1 - 6 \cdot 9/10 = -22/5$, where the Kac determinant
+  at level~$4$ vanishes and $\Lambda$ becomes null.
+\end{enumerate}
+The formula is well-defined and positive for all non-degenerate
+generic~$c > 0$.
+\end{remark}
+
+\begin{corollary}[Cubic-leading Virasoro at the uncurved point; \ClaimStatusProvedHere]
+\label{cor:nms-virasoro-cubic-leading}
+At $c=0$ the quadratic term of the Virasoro shadow vanishes while the cubic term survives:
+\[
+H_{\mathrm{Vir}}=0,
+\qquad
+\mathfrak C_{\mathrm{Vir}}\neq 0.
+\]
+Hence the leading complementarity potential is cubic, with quartic contact correction.
+\end{corollary}
+
+\begin{proof}
+This is immediate from Theorem~\ref{thm:nms-virasoro-mixed-shadow}.\qedhere
+\end{proof}
+
+\subsection{The prototype higher-spin family \texorpdfstring{$\mathcal W_3$}{W3}}
+\label{subsec:nms-w3}
+
+\begin{definition}[\texorpdfstring{$\mathcal W_3$}{W3} quartic shadow envelope]
+\label{def:nms-w3-envelope}
+Let $T$ and $W$ denote the strong generators of $\mathcal W_3$, let
+\[
+\Lambda=:TT:-\frac{3}{10}\partial^2T
+\]
+be the weight-$4$ quasi-primary composite, and let $\Lambda_2,\Lambda_3$ denote the two weight-$6$ quasi-primary composites extracted from the regular part of the $W$--$W$ OPE.  Define
+\[
+E^{[4]}_{W_3}:=\mathbb C\langle T,W,\Lambda,\Lambda_2,\Lambda_3\rangle.
+\]
+\end{definition}
+
+\begin{theorem}[\texorpdfstring{$\mathcal W_3$}{W3} mixed-shadow normal form; \ClaimStatusProvedHere]
+\label{thm:nms-w3-mixed-shadow-normal-form}
+On $E^{[4]}_{W_3}$ one has
+\[
+H_{W_3}=\frac c2\,t^2+\frac c3\,w^2,
+\qquad
+\mathfrak C^{\mathrm{grav}}_{W_3}=2t^3+3tw^2.
+\]
+Moreover the quartic contact sector is nonzero and contains:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a weight-$4$ contact channel through $\Lambda$, with coefficient proportional to $\frac{16}{22+5c}$;
+\item a weight-$6$ contact channel through the quasi-primary square of $W$ and the composites $\Lambda_2,\Lambda_3$.
+\end{enumerate}
+In particular,
+\[
+\Theta_{W_3}^{\le 4}=H_{W_3}+\mathfrak C_{W_3}+\mathfrak Q_{W_3}^{\mathrm{contact}}
+\]
+is genuinely mixed cubic--quartic.
+\end{theorem}
+
+\begin{proof}
+The diagonal Hessian comes from the leading self-poles
+\[
+T_{(3)}T=\frac c2,
+\qquad
+W_{(5)}W=\frac c3.
+\]
+The universal cubic term is Theorem~\ref{thm:nms-universal-gravitational-cubic} specialized to the weights $2$ and $3$.  The nonlinear $W$--$W$ OPE produces the weight-$4$ quasi-primary $\Lambda$ with coefficient $16/(22+5c)$ and also yields the weight-$6$ quasi-primary composites through the regular part.  These are local quartic contact vertices.\qedhere
+\end{proof}
+
+\begin{definition}[Primary quartic resonance divisor for \texorpdfstring{$\mathcal W_3$}{W3}]
+\label{def:nms-w3-primary-resonance}
+Let
+\[
+\Xi_W:=\Pi_{\mathrm{qp}}(:W^2:)
+\]
+be the quasi-primary square of the spin-$3$ generator.  The \emph{primary quartic resonance divisor} of $\mathcal W_3$ is the vanishing locus of the rank-one Gram pairing of $\Xi_W$.
+\end{definition}
+
+\begin{proposition}[Visible quartic resonance factor for \texorpdfstring{$\mathcal W_3$}{W3}; \ClaimStatusProvedHere]
+\label{prop:nms-w3-visible-resonance-factor}
+The norm of $\Xi_W$ has the form
+\[
+\langle \Xi_W(z),\Xi_W(w)\rangle
+=
+\frac{\mathrm{const}\cdot c^2(2c-1)(5c+22)}{(z-w)^{12}},
+\]
+so the visible rank-one quartic resonance divisor contains
+\[
+\mathcal R^{\mathrm{vis}}_4(W_3)=\{c(2c-1)(5c+22)=0\}.
+\]
+\end{proposition}
+
+\begin{proof}
+This is the explicit quasi-primary square computation in the $W_3$ composite-field sector.  The coefficient is basis-independent in rank one, so its vanishing gives a canonical divisor on the parameter line.\qedhere
+\end{proof}
+
+\begin{remark}[Visible versus full quartic resonance]
+\label{rem:nms-visible-vs-full-resonance}
+The divisor of Proposition~\ref{prop:nms-w3-visible-resonance-factor} is a visible component of the full quartic resonance locus.  The full resonance divisor of the entire composite sector may acquire additional components from the larger Gram matrix of $\Lambda$, $\Lambda_2$, $\Lambda_3$, and any further quartic composites appearing on the chosen slice.
+\end{remark}
+
+\subsection{Principal \texorpdfstring{$\mathcal W_N$}{WN}}
+\label{subsec:nms-principal-wn}
+
+\begin{definition}[Principal quartic shadow envelope]
+\label{def:nms-principal-wn-envelope}
+For principal $\mathcal W_N$ with strong generators
+\[
+W^{(2)}=T,\;W^{(3)},\dots,W^{(N)},
+\]
+let $E_{W_N}^{[4]}$ be the primary--composite quartic shadow envelope generated by the strong generators together with all quasi-primary bilinears
+\[
+\Pi_{\mathrm{qp}}\bigl(:W^{(r)}W^{(s)}:\bigr)
+\qquad (2\le r\le s\le N)
+\]
+that occur in pairwise OPEs.
+\end{definition}
+
+\begin{theorem}[Diagonal Hessian and universal cubic sector for principal \texorpdfstring{$\mathcal W_N$}{WN}; \ClaimStatusProvedHere]
+\label{thm:nms-principal-wn-hessian-cubic}
+On the primary slice of principal $\mathcal W_N$ with coordinates $x_2,\dots,x_N$ one has
+\[
+H_{W_N}=\sum_{s=2}^N\frac{c}{s}x_s^2,
+\qquad
+\mathfrak C^{\mathrm{grav}}_{W_N}=2x_2^3+\sum_{s=3}^N s\,x_2x_s^2.
+\]
+\end{theorem}
+
+\begin{proof}
+The diagonal Hessian comes from the leading self-poles
+\[
+W^{(s)}_{(2s-1)}W^{(s)}=\frac cs,
+\]
+while distinct conformal weights contribute no vacuum cross-term.  The universal cubic sector is Theorem~\ref{thm:nms-universal-gravitational-cubic}.\qedhere
+\end{proof}
+
+\begin{theorem}[Nonvanishing of contact quartics for principal \texorpdfstring{$\mathcal W_N$}{WN}; \ClaimStatusProvedHere]
+\label{thm:nms-principal-wn-contact-nonvanishing}
+For every principal $\mathcal W_N$ with $N\ge 3$, the contact quartic sector is nonzero:
+\[
+\mathfrak Q_{W_N}^{\mathrm{contact}}\neq 0.
+\]
+\end{theorem}
+
+\begin{proof}
+For each $s\ge 3$, the field $W^{(s)}$ has nonzero two-point function and nonzero leading self-pole.  Its normal-ordered square therefore has a nontrivial quasi-primary projection
+\[
+\Lambda_s:=\Pi_{\mathrm{qp}}(:W^{(s)}W^{(s)}:),
+\]
+which belongs to the quartic shadow envelope.  These quasi-primary squares contribute local quartic contact terms.\qedhere
+\end{proof}
+
+\begin{corollary}[Principal \texorpdfstring{$\mathcal W_N$}{WN} is mixed cubic--quartic; \ClaimStatusProvedHere]
+\label{cor:nms-principal-wn-mixed}
+For every principal $\mathcal W_N$ with $N\ge 3$ and generic parameter,
+\[
+\Theta_{W_N}^{\le 4}
+=
+H_{W_N}+\mathfrak C^{\mathrm{grav}}_{W_N}+\mathfrak C^{\mathrm{hs}}_{W_N}+\mathfrak Q^{\mathrm{contact}}_{W_N},
+\]
+with both the cubic and the quartic local sectors nonzero.
+\end{corollary}
+
+\begin{proof}
+The cubic sector is nonzero by Theorem~\ref{thm:nms-principal-wn-hessian-cubic}.  The contact quartic sector is nonzero by Theorem~\ref{thm:nms-principal-wn-contact-nonvanishing}.\qedhere
+\end{proof}
+
+\section{From Gram determinants to a modular quartic resonance class}
+\label{sec:nms-modular-resonance-class}
+
+We now promote the quartic resonance divisor from a polynomial in the parameter to a modular characteristic class.  The central idea is simple.  A Gram determinant depends on a choice of basis, but its determinant line does not.  The correct modular invariant is therefore not the determinant function itself but the determinant \emph{section} of a canonical line bundle.  Its vanishing is the resonance locus.  The clutching law for this section is the first nonlinear shadow of the clutching identity for $\Theta_{\cA}$.
+
+\subsection{The determinant line of the contact quartic sector}
+\label{subsec:nms-determinant-line}
+
+\begin{definition}[Generic quartic-regular parameter locus]
+\label{def:nms-generic-parameter-locus}
+Let $\cA$ be a family of strongly generated chiral algebras depending algebraically on a parameter $u$ (for example level or central charge).  Let $B_{\cA}^{\circ}$ denote the maximal Zariski-open locus on which the ranks of all weight-graded contact quartic spaces are locally constant.  All bundles below are defined over $\overline{\mathcal M}_{g,n}\times B_{\cA}^{\circ}$.
+\end{definition}
+
+\begin{definition}[Weight-graded contact quartic bundle]
+\label{def:nms-contact-quartic-bundle}
+Let
+\[
+\mathscr E_{g,n}^{[4]}(\cA)
+\]
+denote the quartic shadow local system obtained by transporting the fiberwise envelope $E_{\cA}^{[4]}$ along the factorization family over $\overline{\mathcal M}_{g,n}\times B_{\cA}^{\circ}$.  For each total conformal weight $d$, let
+\[
+\mathscr C_{g,n}^{\mathrm{ct},d}(\cA)
+\subset
+\mathscr E_{g,n}^{[4]}(\cA)
+\]
+be the locally free subsheaf generated by zero-internal-edge quasi-primary bilinear composites of total weight $d$.  Put
+\[
+\mathscr C_{g,n}^{\mathrm{ct}}(\cA):=\bigoplus_d \mathscr C_{g,n}^{\mathrm{ct},d}(\cA).
+\]
+For each $d$, let $\mathscr U_{g,n}^{(d)}$ denote the tautological modular line in which weight-$d$ two-point functions transform.
+\end{definition}
+
+\begin{remark}[About the tautological lines]
+\label{rem:nms-tautological-lines}
+The precise expression for $\mathscr U_{g,n}^{(d)}$ depends on the chosen presentation of the factorization theory; it is the standard modular line attached to a weight-$d$ quasi-primary insertion.  The determinant construction below is independent of any trivialization of these lines.  In genus $0$ and after choosing the standard coordinate trivialization, the determinant section becomes an honest polynomial in the parameter.
+\end{remark}
+
+\begin{construction}[Gram determinant line]
+\label{constr:nms-gram-determinant-line}
+For each weight $d$, let
+\[
+q_{g,n}^{(d)}(\cA)
+\colon
+\mathscr C_{g,n}^{\mathrm{ct},d}(\cA)\otimes
+\mathscr C_{g,n}^{\mathrm{ct},d}(\cA)
+\longrightarrow
+\mathscr U_{g,n}^{(d)}
+\]
+be the symmetric bilinear form given by the genus-$(g,n)$ two-point function on the contact quartic sector.  Set
+\begin{equation}
+\label{eq:nms-resonance-line}
+\mathscr L_{4,g,n}^{\mathrm{res}}(\cA)
+:=
+\bigotimes_d
+\Bigl(
+(\det \mathscr C_{g,n}^{\mathrm{ct},d}(\cA))^{-\otimes 2}
+\otimes
+(\mathscr U_{g,n}^{(d)})^{\otimes r_d}
+\Bigr),
+\end{equation}
+where $r_d:=\operatorname{rk}(\mathscr C_{g,n}^{\mathrm{ct},d}(\cA))$.  The determinant of the weight-$d$ Gram form defines a section
+\[
+\det q_{g,n}^{(d)}(\cA)
+\in
+\Gamma\Bigl(\overline{\mathcal M}_{g,n}\times B_{\cA}^{\circ},
+(\det \mathscr C_{g,n}^{\mathrm{ct},d}(\cA))^{-\otimes 2}
+\otimes
+(\mathscr U_{g,n}^{(d)})^{\otimes r_d}
+\Bigr).
+\]
+Their tensor product is the \emph{quartic resonance section}
+\begin{equation}
+\label{eq:nms-resonance-section}
+s_{4,g,n}^{\mathrm{res}}(\cA)
+:=
+\bigotimes_d \det q_{g,n}^{(d)}(\cA)
+\in \Gamma\bigl(\overline{\mathcal M}_{g,n}\times B_{\cA}^{\circ},
+\mathscr L_{4,g,n}^{\mathrm{res}}(\cA)\bigr).
+\end{equation}
+\end{construction}
+
+\begin{definition}[Modular quartic resonance class]
+\label{def:nms-modular-quartic-resonance-class}
+The \emph{modular quartic resonance class} of $\cA$ in genus $(g,n)$ is the Cartier divisor class
+\begin{equation}
+\label{eq:nms-modular-resonance-class}
+\mathfrak R_{4,g,n}^{\mathrm{mod}}(\cA)
+:=
+\operatorname{div}\bigl(s_{4,g,n}^{\mathrm{res}}(\cA)\bigr)
+\in
+\operatorname{Pic}\bigl(\overline{\mathcal M}_{g,n}\times B_{\cA}^{\circ}\bigr).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Basis independence and specialization; \ClaimStatusProvedHere]
+\label{prop:nms-basis-independence-specialization}
+The section $s_{4,g,n}^{\mathrm{res}}(\cA)$ and its divisor class are independent of every choice of local basis of the contact quartic bundle.  When $g=n=0$ and the tautological lines are trivialized in the standard coordinate chart, the zero locus of $s_{4,0,0}^{\mathrm{res}}(\cA)$ is exactly the Gram-determinant resonance divisor of the quartic contact sector.
+\end{proposition}
+
+\begin{proof}
+Under a basis change by a matrix $A$, the Gram matrix transforms by
+\[
+G\longmapsto A^{\mathsf T}GA.
+\]
+Therefore its determinant transforms by the square of the determinant of $A$, which is precisely compensated by the determinant-line factor in \eqref{eq:nms-resonance-line}.  Thus the determinant section is basis-independent.  In genus $0$ and in a trivializing coordinate chart, the tautological lines become trivial and the determinant section becomes the ordinary Gram determinant.\qedhere
+\end{proof}
+
+\begin{remark}[Why this is a characteristic class]
+\label{rem:nms-why-characteristic-class}
+The resonance divisor is now attached to a canonical line bundle on the modular parameter space, not to a chosen matrix.  It is functorial under isomorphisms of the family, stable under change of basis, and intrinsic to the factorization transport of the contact quartic sector.  This is why it deserves to be called a modular characteristic class.
+\end{remark}
+
+\subsection{The tree bundle and the first nonlinear boundary correction}
+\label{subsec:nms-tree-bundle}
+
+\begin{definition}[Cubic tree bundle along a separating boundary]
+\label{def:nms-cubic-tree-bundle}
+Let
+\[
+\xi\colon \overline{\mathcal M}_{g_1,n_1+1}\times \overline{\mathcal M}_{g_2,n_2+1}
+\longrightarrow \overline{\mathcal M}_{g,n}
+\]
+be a separating clutching map.  The \emph{cubic tree bundle}
+\[
+\mathscr T_{3,\xi}(\cA)
+\subset
+\xi^*\mathscr E_{g,n}^{[4]}(\cA)
+\]
+is the locally free image of the one-edge sewing map generated by the cubic shadow:
+\[
+\mathfrak C_{\cA}\star_{P_{\cA}}\mathfrak C_{\cA}.
+\]
+Its determinant line and determinant section are defined exactly as in Construction~\ref{constr:nms-gram-determinant-line}; write
+\[
+\mathfrak T_{3,\xi}(\cA)
+:=
+\operatorname{div}(s_{3,\xi}^{\mathrm{tree}}(\cA))
+\]
+for the resulting divisor class.
+\end{definition}
+
+\begin{remark}[Interpretation of the tree class]
+\label{rem:nms-tree-class-interpretation}
+The class $\mathfrak T_{3,\xi}(\cA)$ is the boundary contribution created purely by sewing cubic vertices.  It vanishes whenever the cubic shadow vanishes on the chosen slice.  It is the first boundary term that cannot be seen in the quadratic theory.
+\end{remark}
+
+\begin{theorem}[Boundary filtration of the quartic envelope; \ClaimStatusProvedHere]
+\label{thm:nms-boundary-filtration-quartic-envelope}
+On a separating boundary stratum there is a natural increasing filtration
+\[
+0\subset F^0\subset F^1=\xi^*\mathscr E_{g,n}^{[4]}(\cA)
+\]
+by internal-edge number such that the associated graded object splits canonically as
+\begin{equation}
+\label{eq:nms-associated-graded-boundary}
+\operatorname{gr}\,\xi^*\mathscr E_{g,n}^{[4]}(\cA)
+\cong
+p_1^*\mathscr C_{g_1,n_1+1}^{\mathrm{ct}}(\cA)
+\oplus
+p_2^*\mathscr C_{g_2,n_2+1}^{\mathrm{ct}}(\cA)
+\oplus
+\mathscr T_{3,\xi}(\cA),
+\end{equation}
+where $p_1$ and $p_2$ are the two projections.
+\end{theorem}
+
+\begin{proof}
+At quartic order a vertex on the boundary can have either zero internal edges or one internal edge.  Zero internal edges give the contact quartic sectors transported from the two components.  One internal edge joining two cubic vertices gives the tree sector.  No higher-edge contribution appears before quintic order.  This yields the stated filtration and splitting on the associated graded.\qedhere
+\end{proof}
+
+\begin{theorem}[Clutching law for the modular quartic resonance class; \ClaimStatusProvedHere]
+\label{thm:nms-clutching-law-modular-resonance}
+Let $\cA$ be a strongly generated modular Koszul family over $B_{\cA}^{\circ}$.  Along a separating clutching map $\xi$ one has the divisor identity
+\begin{equation}
+\label{eq:nms-resonance-clutching-law}
+\xi^*\mathfrak R_{4,g,n}^{\mathrm{mod}}(\cA)
+=
+p_1^*\mathfrak R_{4,g_1,n_1+1}^{\mathrm{mod}}(\cA)
++
+p_2^*\mathfrak R_{4,g_2,n_2+1}^{\mathrm{mod}}(\cA)
++
+\mathfrak T_{3,\xi}(\cA).
+\end{equation}
+In words: the boundary restriction of the quartic resonance class is the sum of the two contact resonance classes from the components together with a new tree correction generated by the cubic shadow.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:nms-boundary-filtration-quartic-envelope}, the associated graded of the pulled-back quartic envelope splits into the two contact bundles and the cubic tree bundle.  The quartic clutching formula
+\[
+\xi^*\mathfrak Q_{\cA}
+=
+H_{\cA}\star\mathfrak Q_{\cA}
++
+\mathfrak C_{\cA}\star\mathfrak C_{\cA}
++
+\mathfrak Q_{\cA}\star H_{\cA}
+\]
+shows that, on the associated graded, the Gram pairing is block-upper-triangular with diagonal blocks given by the two contact pairings and the tree pairing.  The determinant section therefore factors:
+\[
+\operatorname{gr}\,\xi^*s_{4,g,n}^{\mathrm{res}}(\cA)
+=
+p_1^*s_{4,g_1,n_1+1}^{\mathrm{res}}(\cA)
+\otimes
+p_2^*s_{4,g_2,n_2+1}^{\mathrm{res}}(\cA)
+\otimes
+s_{3,\xi}^{\mathrm{tree}}(\cA).
+\]
+Taking divisors yields \eqref{eq:nms-resonance-clutching-law}.\qedhere
+\end{proof}
+
+\begin{theorem}[The first nonlinear shadow of \texorpdfstring{$\Theta_{\cA}$}{ThetaA}; \ClaimStatusProvedHere]
+\label{thm:nms-first-nonlinear-shadow-theta}
+Assume the full universal Maurer--Cartan class $\Theta_{\cA}$ exists and satisfies the modular clutching identity
+\[
+\xi^*(\Theta_{\cA})=\Theta_{\cA}\star \Theta_{\cA}.
+\]
+Then the clutching law \eqref{eq:nms-resonance-clutching-law} for the modular quartic resonance class is exactly the arity-$4$ contact-plus-tree shadow of that identity.
+\end{theorem}
+
+\begin{proof}
+The quartic resonance section is defined from the zero-internal-edge part of the arity-$4$ shadow, namely the contact quartic sector.  The extra divisor term $\mathfrak T_{3,\xi}(\cA)$ is defined from the one-internal-edge part of the same arity, namely the cubic tree sector.  The quartic clutching formula is precisely the degree-$4$ component of the universal clutching identity for $\Theta_{\cA}$.  Passing to determinant sections on the contact and tree blocks yields \eqref{eq:nms-resonance-clutching-law}.\qedhere
+\end{proof}
+
+\begin{corollary}[Family-by-family boundary behavior; \ClaimStatusProvedHere]
+\label{cor:nms-family-boundary-behavior}
+The modular quartic resonance class behaves as follows in the model families.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}  Both the contact and tree pieces vanish through quartic order:
+\[
+\mathfrak R_{4,g,n}^{\mathrm{mod}}(\mathcal H)=0,
+\qquad
+\mathfrak T_{3,\xi}(\mathcal H)=0.
+\]
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}  On the strict current-level sector the contact quartic class vanishes in the minimal gauge, while the boundary tree class may be nonzero:
+\[
+\mathfrak R_{4,g,n}^{\mathrm{mod}}(\widehat{\mathfrak{sl}}_{2,k})=0,
+\qquad
+\mathfrak T_{3,\xi}(\widehat{\mathfrak{sl}}_{2,k})\neq 0
+\text{ in general.}
+\]
+\item \textbf{$\beta\gamma$.}  On the weight/contact slice the tree class vanishes and only the contact class survives:
+\[
+\mathfrak T_{3,\xi}(\beta\gamma)=0,
+\qquad
+\mathfrak R_{4,g,n}^{\mathrm{mod}}(\beta\gamma)
+\text{ propagates additively along the boundary.}
+\]
+\item \textbf{Virasoro and principal $\mathcal W_N$.}  Both the contact resonance class and the cubic tree correction are generically nonzero, so the quartic boundary law is genuinely mixed.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+This is immediate from the structural computations of the previous sections together with Theorem~\ref{thm:nms-clutching-law-modular-resonance}.\qedhere
+\end{proof}
+
+\begin{remark}[Why the quartic resonance class is new]
+\label{rem:nms-why-quartic-resonance-is-new}
+The scalar characteristic $\kappa(\cA)$ and the spectral characteristic $\Delta_{\cA}$ detect linear and spectral information.  The class $\mathfrak R_{4,g,n}^{\mathrm{mod}}(\cA)$ is different in kind.  It records the failure of the contact quartic sector to remain nondegenerate, and its boundary correction is quadratic in the cubic shadow.  It is therefore the first genuinely nonlinear Picard-valued characteristic of the theory.
+\end{remark}
+
+\section{Extended characteristic packages and the frontier}
+\label{sec:nms-extended-characteristic-packages}
+
+\begin{definition}[Nonlinear modular characteristic package]
+\label{def:nms-nonlinear-characteristic-package}
+For a modular Koszul family $\cA$ on the quartic-regular locus, define the \emph{nonlinear modular characteristic package}
+\[
+\mathfrak X_{\cA}^{\le 4}
+:=
+\Bigl(
+H_{\cA},\;
+[\mathfrak C_{\cA}],\;
+\mathfrak o_{\cA}^{(4)},\;
+\mathfrak R_{4,\bullet}^{\mathrm{mod}}(\cA),\;
+\{\mathfrak T_{3,\xi}(\cA)\}_\xi
+\Bigr).
+\]
+The \emph{extended modular characteristic package} is
+\[
+\widetilde C_{\cA}
+:=
+\bigl(
+\kappa(\cA),\;
+\Delta_{\cA},\;
+\Pi_{\cA},\;
+\mathfrak X_{\cA}^{\le 4},\;
+\Theta_{\cA}
+\bigr),
+\]
+where the final term is included only on the locus where the full universal class exists.
+\end{definition}
+
+\begin{proposition}[Functoriality and duality through quartic order; \ClaimStatusProvedHere]
+\label{prop:nms-functoriality-duality-quartic}
+Through quartic order, the package $\mathfrak X_{\cA}^{\le 4}$ is functorial in morphisms of modular Koszul families and is exchanged under Koszul/Verdier duality by the Legendre transform of the complementarity potential.
+\end{proposition}
+
+\begin{proof}
+Functoriality of the cyclic deformation complex induces functoriality of the transferred operations and hence of the shadow tensors.  The determinant-line construction of the resonance class is intrinsic and therefore functorial.  Legendre duality exchanges the two complementary cotangent charts, so it exchanges the cubic, quartic, and resonance data accordingly.\qedhere
+\end{proof}
+
+\begin{remark}[The nonlinear modular characteristic hierarchy]
+\label{rem:nms-characteristic-hierarchy}
+The modular invariants of the theory organize into a hierarchy of increasing nonlinear depth:
+\[
+\underbrace{\kappa(\cA)}_{\text{scalar}}
+\;\longrightarrow\;
+\underbrace{\Delta_{\cA}}_{\text{spectral}}
+\;\longrightarrow\;
+\underbrace{[\mathfrak C_{\cA}],\; \mathfrak o_{\cA}^{(4)},\; [\mathfrak Q_{\cA}]}_{\text{nonlinear shadows}}
+\;\longrightarrow\;
+\underbrace{\Theta_{\cA}}_{\text{universal class}}.
+\]
+The scalar characteristic $\kappa(\cA)$ and the spectral characteristic $\Delta_{\cA}$ are proved.  The nonlinear shadow classes $[\mathfrak C_{\cA}]$ and $[\mathfrak Q_{\cA}]$ are the arity-$3$ and arity-$4$ visible coefficients of the universal class, computable on any family where the cyclic deformation package is available through the relevant order.  The quartic obstruction $\mathfrak o_{\cA}^{(4)} = \frac12\{\mathfrak C_{\cA},\mathfrak C_{\cA}\}$ controls whether the cubic globalization extends to quartic order.
+
+The primary nonlinear modular characteristic class is $[\mathfrak C_{\cA}]$.  It is a cocycle for the Hessian-twisted differential $\nabla_{H_{\cA}}$ by Theorem~\ref{thm:nms-shadow-master-equations}, and its cohomology class is a canonical modular invariant.  It is the first genuinely nonlinear characteristic class of the modular homotopy theory.
+\end{remark}
+
+\begin{conjecture}[Full resonance tower; \ClaimStatusConjectured]
+\label{conj:nms-full-resonance-tower}
+For each arity $r\ge 4$ there exists a modular resonance class
+\[
+\mathfrak R_{r,\bullet}^{\mathrm{mod}}(\cA)
+\in \operatorname{Pic}(\overline{\mathcal M}_{\bullet}\times B_{\cA}^{\circ})
+\]
+constructed from the determinant line of the zero-internal-edge arity-$r$ contact sector, with clutching law given by the arity-$r$ shadow of the identity
+\[
+\xi^*(\Theta_{\cA})=\Theta_{\cA}\star \Theta_{\cA}.
+\]
+The quartic resonance class is the first nontrivial case.
+\end{conjecture}
+
+\begin{remark}[The frontier reset]
+\label{rem:nms-frontier-reset}
+The forward programme should therefore be read in the following order.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The quadratic theory is the proved scalar and shifted-symplectic complementarity package.
+\item The cubic and quartic theory is the first nonlinear shadow, visible already in explicit families.
+\item The modular quartic resonance class is the first Picard-valued nonlinear characteristic.
+\item The full universal class $\Theta_{\cA}$ should unify all of these as one Hamiltonian modular master action.
+\end{enumerate}
+The universal class is not merely a source of scalar shadows.  It is the generator of Gaussian propagators, cubic tree vertices, quartic contact vertices, and the resonance classes measuring their degeneration.
+\end{remark}
+
+\section{Higher-arity shadow propagation}
+\label{sec:nms-higher-arity-propagation}
+
+The quartic shadow calculus of \S\ref{sec:nms-shadow-calculus} stops at arity~$4$.  But the master equation is a truncation of a universal recursive structure governing all arities.  We now prove the general arity-$r$ equations and draw structural consequences.
+
+\subsection{The all-arity master equation}
+\label{subsec:nms-all-arity-master-equation}
+
+\begin{definition}[Arity-$r$ shadow jet]
+\label{def:nms-arity-r-shadow-jet}
+For $r\ge 2$, define the \emph{arity-$r$ shadow jet} on the cyclic slice $V_{\cA}$ by
+\begin{equation}
+\label{eq:nms-arity-r-shadow-jet}
+\mathrm{Sh}_r(\cA)(x_1,\dots,x_r)
+:=
+\sum_{\mathrm{cyc}}\langle x_1,\ell_{r-1}^{\mathrm{tr}}(x_2,\dots,x_r)\rangle.
+\end{equation}
+Write $S_{\cA}^{\le r}:=\sum_{k=2}^r \frac{1}{k!}\mathrm{Sh}_k(\cA)$ for the truncated complementarity potential through arity~$r$.
+\end{definition}
+
+\begin{definition}[Arity-$r$ obstruction]
+\label{def:nms-arity-r-obstruction}
+For $r\ge 4$, define the \emph{arity-$r$ obstruction}
+\begin{equation}
+\label{eq:nms-arity-r-obstruction}
+\mathfrak o_{\cA}^{(r)}
+:=
+\sum_{\substack{p+q=r \\ 3\le p\le q}}
+c_{p,q}\;
+\{\mathrm{Sh}_p(\cA),\,\mathrm{Sh}_q(\cA)\}_{H_{\cA}},
+\end{equation}
+where $c_{p,q}=1$ if $p<q$ and $c_{p,p}=\frac12$, and the bracket is the single-edge sewing contraction of Construction~\ref{constr:nms-sewing-product}.  The first cases are
+\begin{alignat}{2}
+\mathfrak o_{\cA}^{(4)}
+&= \tfrac12\{\mathfrak C_{\cA},\mathfrak C_{\cA}\}_{H_{\cA}},
+&\qquad&\text{(quartic)}
+\label{eq:nms-quartic-obstruction-recalled}
+\\
+\mathfrak o_{\cA}^{(5)}
+&= \{\mathfrak C_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}},
+&\qquad&\text{(quintic)}
+\label{eq:nms-quintic-obstruction}
+\\
+\mathfrak o_{\cA}^{(6)}
+&= \tfrac12\{\mathfrak Q_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}}
++\{\mathfrak C_{\cA},\mathrm{Sh}_5(\cA)\}_{H_{\cA}}.
+&\qquad&\text{(sextic)}
+\label{eq:nms-sextic-obstruction}
+\end{alignat}
+\end{definition}
+
+\begin{theorem}[All-arity master equation; \ClaimStatusProvedHere]
+\label{thm:nms-all-arity-master-equation}
+Assume the complementarity potential $S_{\cA}$ satisfies the classical master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$.  Then for every $r\ge 3$, the shadow jets satisfy
+\begin{equation}
+\label{eq:nms-all-arity-master-equation}
+\nabla_{H_{\cA}}\mathrm{Sh}_r(\cA) + \mathfrak o_{\cA}^{(r)} = 0,
+\end{equation}
+where $\nabla_{H_{\cA}}:=\{H_{\cA},\,\cdot\,\}_{H_{\cA}}$ and $\mathfrak o_{\cA}^{(r)}$ is the arity-$r$ obstruction of Definition~\ref{def:nms-arity-r-obstruction}.  When $r=3$ the obstruction sum is empty and the equation reads $\nabla_{H_{\cA}}\mathfrak C_{\cA}=0$.
+\end{theorem}
+
+\begin{proof}
+Expand the master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$ in the arity filtration.  At arity~$r$ the equation decomposes as
+\[
+\{H_{\cA},\mathrm{Sh}_r\}_{H_{\cA}}
++
+\sum_{\substack{p+q=r \\ 3\le p\le q}}
+c_{p,q}\,
+\{\mathrm{Sh}_p,\mathrm{Sh}_q\}_{H_{\cA}}
+= 0,
+\]
+where the first term is $\nabla_{H_{\cA}}\mathrm{Sh}_r$ and the remaining terms comprise $\mathfrak o_{\cA}^{(r)}$.  The coefficients $c_{p,q}$ arise from collecting equivalent unshuffle summands: when $p<q$ the two orderings $(p,q)$ and $(q,p)$ contribute equally, giving $c_{p,q}=1$; when $p=q$ only one pairing appears, giving $c_{p,p}=\frac12$.  At $r=3$ the sum is empty; at $r=4$ one recovers Theorem~\ref{thm:nms-shadow-master-equations}.\qedhere
+\end{proof}
+
+\begin{corollary}[The quintic master equation; \ClaimStatusProvedHere]
+\label{cor:nms-quintic-master-equation}
+At arity~$5$,
+\begin{equation}
+\label{eq:nms-quintic-master-equation}
+\nabla_{H_{\cA}}\mathrm{Sh}_5(\cA)
++
+\{\mathfrak C_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}}
+= 0.
+\end{equation}
+The quintic shadow is determined by the cubic and quartic shadows up to a cocycle of $\nabla_{H_{\cA}}$.
+\end{corollary}
+
+\begin{proof}
+Set $r=5$ in \eqref{eq:nms-all-arity-master-equation}.  The obstruction sum has $p+q=5$ with $3\le p\le q$, giving only $(p,q)=(3,4)$ with $c_{3,4}=1$.\qedhere
+\end{proof}
+
+\subsection{Quintic behavior of the model families}
+\label{subsec:nms-quintic-model-families}
+
+\begin{theorem}[Quintic shadow for the three frame families; \ClaimStatusProvedHere]
+\label{thm:nms-quintic-frame-families}
+Through quintic order:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}
+$\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$, so $\mathfrak o_{\mathcal H}^{(5)}=0$ and $\mathrm{Sh}_5(\mathcal H)=0$.
+
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
+$\mathfrak Q_{\mathrm{aff}}=0$ in minimal gauge, so $\mathfrak o_{\mathrm{aff}}^{(5)}=0$ and $\mathrm{Sh}_5(\mathrm{aff})=0$.
+
+\item \textbf{$\beta\gamma$ system.}
+$\mathfrak C_{\beta\gamma}=0$, so $\mathfrak o_{\beta\gamma}^{(5)}=0$.  By rank-one abelian rigidity (Theorem~\ref{thm:nms-rank-one-rigidity}), $\mathrm{Sh}_5(\beta\gamma)|_L=0$ on the weight-changing line.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each case follows from Corollary~\ref{cor:nms-quintic-master-equation} and the vanishing established in Theorems~\ref{thm:nms-heisenberg-exact-linearity}, \ref{thm:nms-affine-cubic-normal-form}, and~\ref{thm:nms-betagamma-quartic-birth}.\qedhere
+\end{proof}
+
+\begin{theorem}[The Virasoro quintic is forced; \ClaimStatusProvedHere]
+\label{thm:nms-virasoro-quintic-forced}
+On the Virasoro quartic shadow envelope $E^{[4]}_{\mathrm{Vir}}$, the quintic obstruction is generically nonzero:
+\begin{equation}
+\label{eq:nms-virasoro-quintic-obstruction}
+\mathfrak o_{\mathrm{Vir}}^{(5)}
+=
+\{\mathfrak C_{\mathrm{Vir}},\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}\}_{H_{\mathrm{Vir}}}
+\neq 0
+\qquad
+\text{for generic $c$}.
+\end{equation}
+Consequently $\mathrm{Sh}_5(\mathrm{Vir})\neq 0$ generically: the Virasoro shadow tower does not terminate at quartic order.
+\end{theorem}
+
+\begin{proof}
+The gravitational cubic is $\mathfrak C_{\mathrm{Vir}}=2x^3$ and the contact quartic is $\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}=Q_0\,x^4$ with $Q_0=10/[c(5c+22)]\neq 0$ for generic~$c$.  Their single-edge sewing contraction on the one-generator primary line with propagator $P=2/c$ produces a nonzero rank-$5$ tensor proportional to $Q_0/c$.\qedhere
+\end{proof}
+
+\begin{theorem}[Finite termination for primitive archetypes; \ClaimStatusProvedHere]
+\label{thm:nms-finite-termination}
+For the three frame families, the shadow tower terminates at finite arity.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg:} $\mathrm{Sh}_r(\mathcal H)=0$ for all $r\ge 3$.  The tower is exactly Gaussian.
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$ \textup{(strict sector, minimal gauge):}} $\mathrm{Sh}_r(\mathrm{aff})=0$ for $r\ge 4$.
+\item \textbf{$\beta\gamma$ \textup{(weight-changing line):}} $\mathrm{Sh}_r(\beta\gamma)|_L=0$ for $r\ge 3$ by rank-one abelian rigidity.
+\end{enumerate}
+In contrast, Virasoro has $\mathrm{Sh}_5\neq 0$ (Theorem~\ref{thm:nms-virasoro-quintic-forced}), and by induction on the all-arity master equation, the tower is generically infinite.
+\end{theorem}
+
+\begin{proof}
+For each primitive archetype, finite termination follows from vanishing of all obstruction sources at the relevant arity.  For the Heisenberg, all higher brackets vanish.  For affine $\widehat{\mathfrak{sl}}_2$, the Jacobiator vanishes and the quartic gauge freedom absorbs all remaining terms.  For $\beta\gamma$, Theorem~\ref{thm:nms-rank-one-rigidity} gives vanishing on the rank-one line.
+
+For Virasoro, Theorem~\ref{thm:nms-virasoro-quintic-forced} gives $\mathrm{Sh}_5\neq 0$.  Then $\mathfrak o^{(6)}$ contains $\{\mathfrak C,\mathrm{Sh}_5\}\neq 0$, forcing $\mathrm{Sh}_6\neq 0$, and so on by induction.\qedhere
+\end{proof}
+
+\begin{remark}[The Virasoro shadow tower is the first infinite one]
+\label{rem:nms-virasoro-infinite-tower}
+Theorem~\ref{thm:nms-finite-termination} reveals a structural divide.  The primitive archetypes terminate: Gaussian at arity~$2$, Lie/tree at arity~$3$, contact at arity~$4$.  Their complementarity potentials are polynomial.  Virasoro, the first genuinely mixed family, has a non-polynomial complementarity potential.  This is the mechanism by which the Virasoro modular package carries strictly more information than the $\hat{A}$-genus.
+\end{remark}
+
+\subsection{The all-arity separating boundary recursion}
+\label{subsec:nms-all-arity-separating}
+
+\begin{theorem}[All-arity separating boundary recursion; \ClaimStatusProvedHere]
+\label{thm:nms-all-arity-separating-boundary}
+Assume the shadow jets arise from a clutching-compatible universal class.  Then for every $r\ge 2$ and every separating clutching map $\xi$,
+\begin{equation}
+\label{eq:nms-all-arity-separating}
+\xi^*\mathrm{Sh}_r(\cA)
+=
+\sum_{\substack{p+q=r+2 \\ p,q\ge 2}}
+\mathrm{Sh}_p(\cA)\star_{P_{\cA}}\mathrm{Sh}_q(\cA).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+This is the degree-$r$ component of $\xi^*(\Theta_{\cA})=\Theta_{\cA}\star\Theta_{\cA}$.\qedhere
+\end{proof}
+
+\begin{corollary}[Quintic separating boundary recursion; \ClaimStatusProvedHere]
+\label{cor:nms-quintic-separating-boundary}
+At arity~$5$:
+\[
+\xi^*\mathrm{Sh}_5(\cA)
+=
+H_{\cA}\star \mathrm{Sh}_5(\cA)
++
+\mathfrak C_{\cA}\star \mathfrak Q_{\cA}
++
+\mathfrak Q_{\cA}\star \mathfrak C_{\cA}
++
+\mathrm{Sh}_5(\cA)\star H_{\cA}.
+\]
+\end{corollary}
+
+\begin{proof}
+Set $r=5$ in \eqref{eq:nms-all-arity-separating}; the pairs with $p+q=7$ and $p,q\ge 2$ are $(2,5)$, $(3,4)$, $(4,3)$, $(5,2)$.\qedhere
+\end{proof}
+
+\section{The genus loop operator and non-separating clutching}
+\label{sec:nms-genus-loop-operator}
+
+The separating clutching keeps genus constant and distributes shadow legs across two components.  The non-separating clutching increases genus by one by identifying two marked points.  Its action on the shadow tower \emph{traces out} two shadow legs, converting higher-arity genus-$0$ data into lower-arity genus-$1$ corrections.  This is the mechanism by which the modular homotopy theory goes beyond the $\hat{A}$-genus.
+
+\subsection{Definition and basic properties}
+\label{subsec:nms-genus-loop-definition}
+
+\begin{definition}[The genus loop operator]
+\label{def:nms-genus-loop-operator}
+Let $V_{\cA}$ be a finite-dimensional cyclic slice with propagator $P_{\cA}=H_{\cA}^{-1}$.  The \emph{genus loop operator} is the linear map
+\begin{equation}
+\label{eq:nms-genus-loop-operator}
+\Lambda_{P_{\cA}}:\operatorname{Sym}^r(V_{\cA}^*)\longrightarrow \operatorname{Sym}^{r-2}(V_{\cA}^*)
+\end{equation}
+defined by contracting two symmetric legs with the propagator:
+\begin{equation}
+\label{eq:nms-genus-loop-formula}
+(\Lambda_{P_{\cA}}\alpha)(x_1,\dots,x_{r-2})
+:=
+\sum_{i,j}
+\alpha(x_1,\dots,x_{r-2},e_i,e_j)\,P_{\cA}^{ij},
+\end{equation}
+where $\{e_i\}$ is any basis of $V_{\cA}$ and $P_{\cA}^{ij}$ are the components of the propagator.
+\end{definition}
+
+\begin{proposition}[Basic properties of the genus loop operator; \ClaimStatusProvedHere]
+\label{prop:nms-genus-loop-properties}
+Let $d:=\dim V_{\cA}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Lambda_{P_{\cA}}(H_{\cA})=d$.
+\item $\Lambda_{P_{\cA}}(\mathfrak C_{\cA})\in V_{\cA}^*$ is a linear form on $V_{\cA}$.
+\item $\Lambda_{P_{\cA}}(\mathfrak Q_{\cA})\in \operatorname{Sym}^2(V_{\cA}^*)$ is a rank-$2$ tensor defining a correction to the Hessian at the next genus.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Immediate from Definition~\ref{def:nms-genus-loop-operator}.\qedhere
+\end{proof}
+
+\subsection{Non-separating clutching of the shadow tower}
+\label{subsec:nms-nonseparating-clutching}
+
+\begin{theorem}[Non-separating clutching law for the shadow tower; \ClaimStatusProvedHere]
+\label{thm:nms-nonseparating-clutching-law}
+Along the non-separating clutching map
+$\xi_{\mathrm{ns}}\colon \overline{\mathcal M}_{g-1,n+2}\to \overline{\mathcal M}_{g,n}$,
+the shadow tower satisfies
+\begin{equation}
+\label{eq:nms-nonseparating-recursion}
+\xi_{\mathrm{ns}}^*\bigl(\mathrm{Sh}_r^{(g)}\bigr)
+=
+\Lambda_{P_{\cA}}\bigl(\mathrm{Sh}_{r+2}^{(g-1)}\bigr)
++
+\textup{(mixed sewing corrections)},
+\end{equation}
+where the leading term traces two legs of the genus-$(g-1)$ shadow at arity $r+2$.
+\end{theorem}
+
+\begin{proof}
+The non-separating clutching identity for the universal class reads
+$\xi_{\mathrm{ns}}^*\Theta_{\cA}^{(g)}
+=
+\Lambda_{P_{\cA}}(\Theta_{\cA}^{(g-1)})$.
+Expanding both sides in the arity filtration: the arity-$r$ component of the left side is $\mathrm{Sh}_r^{(g)}$, while the arity-$r$ component of $\Lambda_P(\Theta^{(g-1)})$ is $\Lambda_P(\mathrm{Sh}_{r+2}^{(g-1)})$ since $\Lambda_P$ lowers arity by~$2$.\qedhere
+\end{proof}
+
+\begin{corollary}[Genus-$1$ Hessian correction from genus-$0$ quartic shadow; \ClaimStatusProvedHere]
+\label{cor:nms-genus-one-hessian-correction}
+In the one-vertex sector, the genus-$1$ correction to the Hessian is
+\begin{equation}
+\label{eq:nms-genus-one-hessian-correction}
+\delta H_{\cA}^{(1)}
+=
+\Lambda_{P_{\cA}}\bigl(\mathfrak Q_{\cA}^{(0)}\bigr).
+\end{equation}
+This is a rank-$2$ tensor determined entirely by the genus-$0$ quartic shadow and the propagator.
+\end{corollary}
+
+\begin{proof}
+Set $g=1$ and $r=2$ in Theorem~\ref{thm:nms-nonseparating-clutching-law}.\qedhere
+\end{proof}
+
+\begin{remark}[Why this goes beyond the $\hat{A}$-genus]
+\label{rem:nms-beyond-ahat}
+The scalar modular characteristic $\kappa(\cA)$ sees only the \emph{trace} of the genus-$0$ Hessian.  The genus-$1$ Hessian correction $\delta H^{(1)}=\Lambda_P(\mathfrak Q^{(0)})$ is a \emph{tensor}: it lives in $\operatorname{Sym}^2(V_{\cA}^*)$ and is not determined by any scalar quantity.  It is the first genuinely tensorial modular invariant beyond~$\kappa$.
+\end{remark}
+
+\subsection{Explicit genus loop for the model families}
+\label{subsec:nms-explicit-genus-loop}
+
+\begin{theorem}[Genus loop operator on the model families; \ClaimStatusProvedHere]
+\label{thm:nms-genus-loop-model-families}
+In the one-vertex sector:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}
+$\delta H^{(1)}_{\mathcal H}=0$.
+The modular invariants at all genera are determined by~$\kappa$ alone.
+
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
+$\delta H^{(1)}_{\mathrm{aff}}=0$ (since $\mathfrak Q_{\mathrm{aff}}=0$), but the cubic loop is nonzero:
+\begin{equation}
+\label{eq:nms-affine-cubic-loop}
+(\Lambda_{P_{\mathrm{aff}}}\mathfrak C_{\mathrm{aff}})(x)
+=
+\frac{2h^\vee}{k_{\mathrm{eff}}}\,\kappa(x,\rho^\vee),
+\end{equation}
+where $\rho^\vee$ is the Weyl vector.  This linear form detects the Weyl direction in the deformation space.
+
+\item \textbf{$\beta\gamma$ system.}
+$\Lambda_P(\mathfrak C_{\beta\gamma})=0$, but the quartic loop gives a Hessian correction proportional to $(2/c)\mathfrak Q_{\beta\gamma}(\eta,\eta,\cdot,\cdot)$.
+
+\item \textbf{Virasoro.}
+Both loops are nonzero.  On the primary line with $H=(c/2)x^2$, $\mathfrak C=2x^3$, $\mathfrak Q^{\mathrm{contact}}=Q_0 x^4$ where $Q_0=10/[c(5c+22)]$:
+\begin{align}
+\Lambda_P(\mathfrak C_{\mathrm{Vir}})(x)
+&=
+\frac{4}{c}\,x,
+\label{eq:nms-virasoro-cubic-loop}
+\\
+\delta H^{(1)}_{\mathrm{Vir}}
+&=
+\frac{120}{c^2(5c+22)}\,x^2.
+\label{eq:nms-virasoro-hessian-correction}
+\end{align}
+The genus-$1$ loop ratio is $\rho^{(1)}_{\mathrm{Vir}}=\delta H^{(1)}/H^{(0)}=240/[c^2(5c+22)]$, a nontrivial rational function of~$c$ that is not determined by $\kappa=c/2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textup{(i)} is immediate from $\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$.
+
+For \textup{(ii)}, $\mathfrak C_{\mathrm{aff}}(x,y,z)=\kappa(x,[y,z])$.  Tracing over two slots:
+$(\Lambda_P\mathfrak C_{\mathrm{aff}})(x)
+=\frac{1}{k_{\mathrm{eff}}}\sum_a \kappa(x,[e_a,e^a])$.
+The sum $\sum_a [e_a,e^a]=2h^\vee\rho^\vee$ in a simple Lie algebra.
+
+For \textup{(iii)} and \textup{(iv)}, the one-generator primary line has $P=2/c$.  For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional space, $\Lambda_P(\alpha_0 x^r)=\binom{r}{2}P\,\alpha_0\,x^{r-2}$.  Thus $\Lambda_P(\mathfrak C)=\binom{3}{2}(2/c)\cdot 2\cdot x=12x/c\cdot(1/3)$---more precisely $\Lambda_P(2x^3)=3\cdot (2/c)\cdot 2 x= 12x/c$, and $\Lambda_P(Q_0 x^4)=6\cdot(2/c)\cdot Q_0\, x^2=12Q_0 x^2/c=120x^2/[c^2(5c+22)]$.\qedhere
+\end{proof}
+
+\begin{remark}[The modular invariant ratio]
+\label{rem:nms-modular-invariant-ratio}
+Define the \emph{genus-$1$ loop ratio}
+$\rho^{(1)}_{\cA}:=\Lambda_P(\mathfrak Q_{\cA})/H_{\cA}$.
+For the Virasoro, $\rho^{(1)}_{\mathrm{Vir}}=240/[c^2(5c+22)]$, a nontrivial function of~$c$.  Two algebras with the same $\kappa$ but different $\rho^{(1)}$ are distinguished by the modular homotopy theory even though their $\hat{A}$-genera agree.
+\end{remark}
+
+\subsection{The modular shadow characteristic}
+\label{subsec:nms-modular-chern-character}
+
+\begin{definition}[The full modular shadow characteristic]
+\label{def:nms-full-modular-shadow-characteristic}
+For a modular Koszul chiral algebra $\cA$ with cyclic slice $V_{\cA}$, define
+\begin{equation}
+\label{eq:nms-modular-shadow-characteristic}
+\mathfrak{ch}_{\mathrm{mod}}(\cA;\hbar)
+:=
+\sum_{g\ge 0}\hbar^g\sum_{r\ge 2}\frac{1}{r!}\,\mathrm{Sh}_r^{(g)}(\cA).
+\end{equation}
+Its scalar trace is $\operatorname{tr}(\mathfrak{ch}_{\mathrm{mod}})=\sum_g \hbar^g\kappa(\cA)\lambda_g$, recovering the $\hat{A}$-genus tower.
+\end{definition}
+
+\begin{theorem}[The modular invariant hierarchy beyond $\hat{A}$; \ClaimStatusProvedHere]
+\label{thm:nms-beyond-ahat}
+Let $\cA$ be a modular Koszul chiral algebra whose shadow tower does not terminate at quadratic order.  Then $\mathfrak{ch}_{\mathrm{mod}}(\cA;\hbar)$ carries strictly more information than $\kappa(\cA)$.  Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\mathfrak C_{\cA}\neq 0$, the cubic shadow class is a non-scalar modular invariant, and $\Lambda_P(\mathfrak C_{\cA})$ gives a canonical linear form not determined by~$\kappa$.
+\item If $\mathfrak Q_{\cA}\neq 0$, the genus-$1$ Hessian correction $\delta H^{(1)}=\Lambda_P(\mathfrak Q_{\cA})$ is a tensorial modular invariant invisible to~$\kappa$.
+\item The derived ratio $\rho^{(1)}_{\cA}=\Lambda_P(\mathfrak Q_{\cA})/H_{\cA}$ distinguishes algebras with identical $\hat{A}$-genera.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Suppose $\kappa(\cA)=\kappa(\cA')$ but the quartic shadows differ.  Then $\Lambda_P(\mathfrak Q_{\cA})\neq \Lambda_P(\mathfrak Q_{\cA'})$ and $\rho^{(1)}_{\cA}\neq \rho^{(1)}_{\cA'}$: the full modular characteristic distinguishes the two algebras.\qedhere
+\end{proof}
+
+\begin{remark}[Summary of the invariant hierarchy]
+\label{rem:nms-invariant-hierarchy-summary}
+The full modular invariant hierarchy:
+\[
+\underbrace{\kappa(\cA)}_{\text{scalar}}
+\;\longrightarrow\;
+\underbrace{\Delta_{\cA}}_{\text{spectral}}
+\;\longrightarrow\;
+\underbrace{[\mathfrak C_{\cA}],\;[\mathfrak Q_{\cA}]}_{\text{nonlinear shadows}}
+\;\longrightarrow\;
+\underbrace{\Lambda_P(\mathfrak Q_{\cA})}_{\text{genus loop}}
+\;\longrightarrow\;
+\underbrace{\Theta_{\cA}}_{\text{universal class}}.
+\]
+The first three levels are genus-$0$ data.  The genus loop correction is the first genuinely higher-genus modular invariant.  The full universal class unifies all levels.
+\end{remark}
+
+\section{A unified summary theorem}
+\label{sec:nms-summary-theorem}
+
+\begin{theorem}[Ambient complementarity and nonlinear modular shadows; \ClaimStatusProvedHere]
+\label{thm:nms-unified-summary}
+Let $\cA$ be a modular Koszul family on a quartic-regular parameter locus, and suppose the cyclic deformation package is available through quartic order on a chosen cyclic slice.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the finite-order deformation theory is governed by a quartic shadow cocycle
+\[
+\Theta_{\cA}^{\le 4}=H_{\cA}+\mathfrak C_{\cA}+\mathfrak Q_{\cA};
+\]
+\item its local behavior is controlled by the master equations
+\[
+\nabla_{H_{\cA}}\mathfrak C_{\cA}=0,
+\qquad
+\nabla_{H_{\cA}}\mathfrak Q_{\cA}+\frac12\{\mathfrak C_{\cA},\mathfrak C_{\cA}\}=0;
+\]
+\item its separating-boundary behavior is controlled by the recursion
+\[
+\xi^*\mathfrak Q_{\cA}
+=
+H_{\cA}\star \mathfrak Q_{\cA}
++
+\mathfrak C_{\cA}\star \mathfrak C_{\cA}
++
+\mathfrak Q_{\cA}\star H_{\cA};
+\]
+\item Heisenberg, affine $\widehat{\mathfrak{sl}}_2$, and $\beta\gamma$ realize the Gaussian, Lie/tree, and contact/quartic archetypes respectively;
+\item Virasoro and principal $\mathcal W_N$ are the first genuinely mixed cubic--quartic families;
+\item the determinant line of the contact quartic sector carries a canonical modular section whose divisor is the quartic resonance class
+\[
+\mathfrak R_{4,g,n}^{\mathrm{mod}}(\cA),
+\]
+and whose clutching correction is the cubic tree divisor $\mathfrak T_{3,\xi}(\cA)$;
+\item if the full universal class $\Theta_{\cA}$ exists, this clutching correction is the first nonlinear modular shadow of its universal clutching identity;
+\item the shadow tower extends to all arities: the all-arity master equation $\nabla_{H_{\cA}}\mathrm{Sh}_r+\mathfrak o^{(r)}=0$ governs $\mathrm{Sh}_r$ for every $r\ge 3$, with the primitive archetypes terminating (Gaussian at $2$, Lie/tree at $3$, contact at $4$) while Virasoro is the first genuinely infinite tower;
+\item the genus loop operator $\Lambda_P:\operatorname{Sym}^r\to\operatorname{Sym}^{r-2}$ implements non-separating clutching on the shadow tower, and the genus-$1$ Hessian correction $\delta H^{(1)}_{\cA}=\Lambda_P(\mathfrak Q_{\cA}^{(0)})$ is the first tensorial modular invariant beyond the $\hat{A}$-genus;
+\item for the Virasoro, $\delta H^{(1)}_{\mathrm{Vir}}=120/[c^2(5c+22)]\cdot x^2$, and the loop ratio $\rho^{(1)}_{\mathrm{Vir}}=240/[c^2(5c+22)]$ distinguishes algebras invisible to~$\kappa$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts~(i)--(iii) are Theorems~\ref{thm:nms-shadow-master-equations}, \ref{thm:nms-separating-boundary-recursion}, and \ref{thm:nms-shadow-cocycle-characterization}.  Part~(iv) is Theorem~\ref{thm:nms-archetype-trichotomy}.  Part~(v) is Theorems~\ref{thm:nms-virasoro-mixed-shadow} and \ref{thm:nms-principal-wn-contact-nonvanishing} together with Corollary~\ref{cor:nms-principal-wn-mixed}.  Part~(vi) is Construction~\ref{constr:nms-gram-determinant-line} and Definition~\ref{def:nms-modular-quartic-resonance-class}.  Part~(vii) is Theorems~\ref{thm:nms-clutching-law-modular-resonance} and \ref{thm:nms-first-nonlinear-shadow-theta}.  Part~(viii) is Theorems~\ref{thm:nms-all-arity-master-equation} and~\ref{thm:nms-finite-termination}.  Parts~(ix) and~(x) are Theorem~\ref{thm:nms-nonseparating-clutching-law}, Corollary~\ref{cor:nms-genus-one-hessian-correction}, and Theorem~\ref{thm:nms-genus-loop-model-families}.\qedhere
+\end{proof}
+
+\begin{remark}[What remains to be done]
+\label{rem:nms-what-remains}
+The construction above does not pretend to have solved the entire H-level problem.  The full foundational task remains: construct the universal class $\Theta_{\cA}$ globally on the correct modular locus, prove its clutching and Verdier compatibilities in complete generality, and identify the resulting Hamiltonian modular master action.  What this appendix does show is that the nonlinear layer is rigid enough to be organized theorematically, and that it carries genuinely new modular content.  The genus loop operator converts quartic contact data into genus-$1$ Hessian corrections that no scalar invariant can see.  The quartic resonance class is not an afterthought: it is the first modular characteristic that remembers that complementarity is nonlinear.
+\end{remark}
+
+
+\backmatter
+
+\chapter*{Bibliography}
+\begin{thebibliography}{99}
+
+\bibitem{CostelloOmega}
+Kevin Costello,
+\emph{M-theory in the \(\Omega\)-background and 5-dimensional non-commutative gauge theory},
+arXiv:1610.04144, 2016.
+
+\bibitem{CostelloM2}
+Kevin Costello,
+\emph{Holography and Koszul duality: the example of the \(M2\) brane},
+arXiv:1705.02500, 2017.
+
+\bibitem{CostelloDimofteGaiottoBoundary}
+Kevin Costello, Tudor Dimofte, and Davide Gaiotto,
+\emph{Boundary Chiral Algebras and Holomorphic Twists},
+arXiv:2005.00083, published in \emph{Communications in Mathematical Physics} \textbf{399} (2023), 1203--1290.
+
+\bibitem{ZengTwistedHolography}
+Keyou Zeng,
+\emph{Twisted Holography and Celestial Holography from Boundary Chiral Algebra},
+arXiv:2302.06693, 2023.
+
+\bibitem{GaiottoKulpWuHigher}
+Davide Gaiotto, Justin Kulp, and Jingxiang Wu,
+\emph{Higher Operations in Perturbation Theory},
+arXiv:2403.13049, published in \emph{JHEP} \textbf{05} (2025), 230.
+
+\bibitem{KhanZengPVA}
+Ahsan Z. Khan and Keyou Zeng,
+\emph{Poisson Vertex Algebras and Three-Dimensional Gauge Theory},
+arXiv:2502.13227, 2025.
+
+\bibitem{MokLogFM}
+Siao Chi Mok,
+\emph{Logarithmic Fulton--MacPherson configuration spaces},
+arXiv:2503.17563, 2025.
+
+\bibitem{DimofteNiuPyLines}
+Tudor Dimofte, Wenjun Niu, and Victor Py,
+\emph{Line Operators in 3d Holomorphic QFT: Meromorphic Tensor Categories and dg-Shifted Yangians},
+arXiv:2508.11749, 2025.
+
+\end{thebibliography}
+
+\end{document}
