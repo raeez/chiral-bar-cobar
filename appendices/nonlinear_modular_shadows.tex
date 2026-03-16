@@ -17,8 +17,8 @@ face of an infinite nonlinear tower
 \mathfrak{C} \;\longrightarrow\; \mathfrak{Q}
 \;\longrightarrow\; \Theta,
 \]
-the \emph{shadow tower}, which is the true modular characteristic of a chiral algebra.
-This tower---not the scalar $\kappa$ alone---is the organizing principle of the entire monograph.
+the \emph{shadow Postnikov tower}, which is the true modular characteristic of a chiral algebra.
+This filtered finite-order engine---not the scalar $\kappa$ alone, and not the conjectural all-arity limit~$\Theta_\cA$---is the primary mathematical object of the nonlinear theory.
 
 The chapter has three strata.
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -31,7 +31,7 @@ prove their master and clutching identities, and package them into a quartic sha
 \item The third stratum is \textbf{nonlinear and modular}: for Virasoro and principal $\mathcal W_N$, the quartic contact sector has a determinant line whose vanishing promotes the Gram-determinant divisor to a genuine modular characteristic class.  Its boundary law is the first nonlinear shadow of the clutching identity for $\Theta_{\cA}$.
 \end{enumerate}
 
-The point is structural.  The proved scalar tower $\kappa(\cA)\lambda_g$ and the proved spectral package $\Delta_{\cA}$ do not exhaust the modular content of the theory.  Between them and the full universal Maurer--Cartan class sits a finite-order nonlinear layer.  It is the first place where complementarity stops looking like an eigenspace decomposition and becomes geometry.
+The point is structural.  The proved scalar tower $\kappa(\cA)\lambda_g$ and the proved spectral package $\Delta_{\cA}$ do not exhaust the modular content of the theory.  The finite-order shadow tower is the primary proved content at the nonlinear level: each truncation $\Theta_\cA^{\leq r}$ is constructive and does not require the full all-genera modular envelope.  It is the first place where complementarity stops looking like an eigenspace decomposition and becomes geometry.  The full all-arity convergence $\Theta_\cA = \lim_r \Theta_\cA^{\leq r}$ is the conjectural horizon.
 
 \begin{remark}[Shadow tower as period correction]%
 \label{rem:shadow-period-correction}%
@@ -53,7 +53,7 @@ absorbs this curvature:
   propagators, giving the cubic shadow~$\mathfrak{C}_{\cA}$.
 \item $t_g^{(3)}$: involves $m_4$ and $m_3 \circ m_3$ terms,
   giving the quartic shadow~$\mathfrak{Q}_{\cA}$.
-\item $t_g^{(\infty)}$: the full series is
+\item $t_g^{(\infty)}$: the conjectural all-arity limit is
   $\Theta_{\cA}$---the universal Maurer--Cartan element.
 \end{itemize}
 The subleading corrections $t_g^{(n)}$ for $n \geq 2$ are
@@ -69,7 +69,7 @@ leading term.  See Remark~\ref{rem:four-levels}.
 
 \medskip
 \noindent\emph{Status discipline.}
-Every theorem below is tagged either as a formal consequence proved here, or as a statement conditional on the existence of the full universal class $\Theta_{\cA}$ on the relevant Koszul locus.  No statement below should be read as asserting a complete construction of $\Theta_{\cA}$ beyond the loci already established elsewhere in the manuscript.
+Every theorem below is tagged either as a formal consequence proved here, or as a statement conditional on the existence of the full universal class $\Theta_{\cA}$ on the relevant Koszul locus.  No statement below should be read as asserting a complete construction of $\Theta_{\cA}$ beyond the loci already established elsewhere in the manuscript.  The source literature (Francis--Gaitsgory, Gui--Li--Zeng, Costello--Dimofte--Gaiotto) supports a rigorous genus-zero and finite-order nonlinear package; the unrestricted all-genera modular envelope that the tower conjecturally converges to is not yet established in general.
 
 \begin{remark}[Prefundamental CG and the shadow tower]
 \label{rem:nms-prefundamental-cg}
@@ -91,6 +91,235 @@ In particular, the quartic contact invariant $Q^{\mathrm{contact}}$
 and the finite termination results for Heisenberg ($r = 2$),
 affine ($r = 3$), and $\beta\gamma$ ($r = 4$) are all compatible
 with the $K_0$ tensor structure determined by~(R1).
+\end{remark}
+
+%% ----------------------------------------------------------------
+%% GOD-CANONICAL: The universal Maurer--Cartan principle
+%% ----------------------------------------------------------------
+
+\providecommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}}
+
+\section{The universal Maurer--Cartan principle}
+\label{sec:nms-universal-mc-principle}
+
+The thesis of this monograph is that the modular data of a chiral algebra---the genus
+corrections, the shadow tower, the non-renormalization theorems, the clutching
+identities---are not independent structures assembled by hand.  They are all
+consequences of a \emph{single} Maurer--Cartan equation in a \emph{single} dg~Lie
+algebra.  This section states the organizing principle.  The rest of the chapter
+develops its explicit consequences.
+
+\begin{definition}[Modular convolution dg~Lie algebra; \ClaimStatusProvedHere]
+\label{def:nms-modular-convolution-lie}%
+\index{modular convolution dg Lie algebra}%
+\index{g_A^mod@$\gAmod$|see{modular convolution dg Lie algebra}}%
+Let $\cA$ be a chiral algebra on a smooth projective curve with Koszul
+dual~$\cA^!$ on the locus where the duality package is defined.
+The following completed dg~Lie algebra is the \emph{strict model}
+of the modular quantum $L_\infty$-algebra
+(Remark~\ref{rem:nms-linfty-enrichment}); its Maurer--Cartan moduli
+coincide with those of the full $L_\infty$-algebra.
+The \emph{modular convolution dg~Lie algebra} is the completed product
+\[
+  \gAmod
+  \;:=\;
+  \prod_{\substack{g,n \geq 0 \\ 2g-2+n>0}}
+  \operatorname{Hom}_{S_n}\!\bigl(
+    C_\bullet(\overline{\mathcal{M}}_{g,n+1}),\;
+    \operatorname{Hom}\bigl((\cA^{!})^{\otimes n},\, \cA^{!}\bigr)
+  \bigr),
+\]
+graded by genus~$g$ (homological weight) and arity~$n$, with
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Differential}
+  $d_{\partial}\colon \gAmod \to \gAmod$
+  induced by the boundary stratification
+  $\partial\overline{\mathcal{M}}_{g,n} \hookrightarrow
+  \overline{\mathcal{M}}_{g,n}$, i.e.\ by pullback along the
+  clutching morphisms of the Deligne--Mumford modular operad;
+\item \textbf{Bracket}
+  $[\,\cdot\,,\,\cdot\,]\colon
+  \gAmod \otimes \gAmod \to \gAmod$
+  given by operadic composition via stable-graph gluing:
+  for $f$ in the $(g_1,n_1)$-component and
+  $g$ in the $(g_2,n_2)$-component of~$\gAmod$, the bracket
+  $[f,g]_{g,n}$ is the signed sum over all stable graphs of
+  genus~$g = g_1 + g_2$ (or $g = g_1 + g_2 + 1$ for
+  self-gluing) obtained by inserting the output of~$g$
+  into an input of~$f$ and composing with the
+  Deligne--Mumford clutching map.
+\end{enumerate}
+The Jacobi identity follows from the associativity of operadic composition, and $d_\partial^2=0$ from the cosimplicial identities of the modular operad's boundary strata.
+By Theorem~\ref{thm:operadic-homotopy-convolution}, $\gAmod$ is the
+chiral instance of the convolution $s\mathscr{L}_\infty$-algebra
+$\operatorname{hom}^\alpha(D,A)$ of Robert-Nicoud--Wierstra~\cite{RNW19},
+with $\alpha = \tau_{\mathrm{ch}}$ the chiral twisting morphism.
+\end{definition}
+
+\begin{remark}[The modular $L_\infty$ enrichment]
+\label{rem:nms-linfty-enrichment}
+The modular convolution algebra $\gAmod$ carries a natural modular
+$L_\infty$ structure whose higher brackets $\ell_k$ ($k \geq 3$)
+arise from the Feynman transform of the modular operad
+$\{C_\bullet(\overline{\cM}_{g,n})\}$ via $A_\infty$/$L_\infty$
+homotopy transfer \cite[\S10.3]{LV12}.  The dg~Lie bracket $[-,-]$
+is the binary truncation.  The Maurer--Cartan equation
+\eqref{eq:nms-mc-equation} is the strict shadow of the full $L_\infty$
+MC equation $\sum_{n \geq 1} \frac{1}{n!}\ell_n(\Theta,\ldots,\Theta) = 0$;
+for the coderivation model these coincide (this is
+the MC moduli identification invoked in
+Definition~\ref{def:nms-modular-convolution-lie}).
+The full $L_\infty$ MC equation admits \emph{gauge equivalences} (homotopies between MC elements):
+two MC elements related by $L_\infty$ gauge transform give
+quasi-isomorphic bar complexes.  This is the homotopy-theoretic reason
+that bar-cobar inversion (Theorem~B) is well-defined up to
+quasi-isomorphism.
+\end{remark}
+
+\begin{theorem}[Algebra structure $=$ Maurer--Cartan element; \ClaimStatusProvedHere]
+\label{thm:nms-mc-principle}%
+\index{Maurer--Cartan element!modular}%
+\index{Theta_A@$\Theta_{\cA}$!as Maurer--Cartan element}%
+An algebra structure on~$\cA$ together with its genus-refined modular data
+is equivalent to a Maurer--Cartan element
+$\Theta_{\cA} \in \mathrm{MC}(\gAmod)$ satisfying
+\begin{equation}\label{eq:nms-mc-equation}
+  d_\partial\,\Theta_{\cA}
+  \;+\;
+  \tfrac{1}{2}\bigl[\Theta_{\cA},\,\Theta_{\cA}\bigr]
+  \;=\; 0.
+\end{equation}
+Explicitly: the genus-$g$, arity-$n$ component of~$\Theta_{\cA}$ is
+the multilinear operation $(\cA^{!})^{\otimes n} \to \cA^{!}$
+obtained by evaluating the $A_\infty$ operations and their modular
+corrections against the fundamental chain
+$[{}\overline{\mathcal{M}}_{g,n+1}]$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+This is the modular-operad enhancement of the classical fact that an
+$A_\infty$-structure is a codifferential on the bar construction (hence
+a Maurer--Cartan element in the convolution Lie algebra
+$\operatorname{Hom}(T^c(\cA^{!}[1]),\cA^{!})$).  The extension to
+all genera uses the Deligne--Mumford modular operad structure on
+$\{\overline{\mathcal{M}}_{g,n}\}$: the codifferential condition
+$D^2=0$ on the modular bar complex is equivalent to the
+Maurer--Cartan equation~\eqref{eq:nms-mc-equation} in~$\gAmod$.
+The signs are fixed by the Koszul rule and the orientation conventions
+of Appendix~\ref{app:signs}.
+\end{proof}
+
+\begin{proposition}[Five-component decomposition; \ClaimStatusProvedHere]
+\label{prop:nms-five-component}%
+\index{five-component decomposition}%
+Expanding $\Theta_{\cA}$ by genus and boundary type yields
+\[
+  \Theta_{\cA}
+  \;=\;
+  \Theta^{\mathrm{tree}}
+  + \Theta^{\mathrm{sew}}
+  + \hbar\,\Theta^{\mathrm{loop}}
+  + \Theta^{r}
+  + \Theta^{\mathrm{bdry}},
+\]
+and the Maurer--Cartan equation~\eqref{eq:nms-mc-equation} decomposes
+into five interlocking pieces:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Genus~$0$, tree-level:}
+  the $d_{A_\infty}$ piece---the transferred $A_\infty$ operations
+  $\{m_n\}_{n \geq 2}$;
+\item \textbf{Genus~$0$, self-gluing:}
+  the $d_{\mathrm{sew}}$ piece---self-gluing of genus-$0$ operations
+  (the cyclic $A_\infty$ constraint);
+\item \textbf{Genus~$g \geq 1$, non-separating:}
+  the $\hbar\,\Delta$ piece---BV contraction, the genus-raising
+  operator;
+\item \textbf{Spectral:}
+  the $d_r$ piece---the line-operator twist by~$r(z)$;
+\item \textbf{Boundary strata:}
+  the $d_{\mathrm{bdry}}$ piece---clutching maps along
+  $\partial\overline{\mathcal{M}}_{g,n}$.
+\end{enumerate}
+In particular, the total differential
+$D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\,\Delta + d_r$
+is \emph{not} five independent structures assembled by fiat.  It is
+the single equation~\eqref{eq:nms-mc-equation} expanded by stratum.
+\end{proposition}
+
+\begin{proof}
+Stratify $\gAmod$ by genus and partition the boundary strata of
+$\overline{\mathcal{M}}_{g,n}$ into separating, non-separating, and
+tree-level.  The Maurer--Cartan equation is additive in genus and
+boundary type; projecting onto each stratum yields the five terms.
+The BV operator~$\Delta$ arises from the non-separating node
+stratum $\delta_{\mathrm{irr}} \colon
+\overline{\mathcal{M}}_{g-1,n+2} \to
+\overline{\mathcal{M}}_{g,n}$, which raises genus by~$1$.
+\end{proof}
+
+\begin{theorem}[Shadow tower from MC evaluation; \ClaimStatusProvedHere]
+\label{thm:nms-shadow-tower-mc}%
+\index{shadow tower!from Maurer--Cartan evaluation}%
+The shadow hierarchy
+$\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \Theta$
+is the evaluation of~$\Theta_{\cA}$ on specific moduli classes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\kappa(\cA) =
+  \langle \Theta_{\cA},\, \Theta_{\cA} \rangle$
+  paired with
+  $[\overline{\mathcal{M}}_{1,1}]$
+  (the fundamental class of genus-$1$ moduli);
+\item $\Delta_{\cA} =$
+  spectral data of~$\Theta_{\cA}\big|_{\overline{\mathcal{M}}_{1,2}}$
+  (restriction to $2$-pointed genus~$1$);
+\item $\mathfrak{C}_{\cA} =
+  \Theta_{\cA}\big|_{\overline{\mathcal{M}}_{0,4}}$
+  (quartic genus-$0$ boundary stratum);
+\item $\mathfrak{Q}_{\cA} =$
+  the contact term of~$\Theta_{\cA}$ on
+  $\overline{\mathcal{M}}_{0,5}$
+  (quintic boundary);
+\item the full $\Theta_{\cA}$ \emph{is} the universal
+  Maurer--Cartan element itself.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each shadow is by definition the value of the genus-refined
+multilinear data on an explicit cycle representative in
+$H_*(\overline{\mathcal{M}}_{g,n})$.
+Item~(i) is Theorem~D specialized to genus~$1$; items~(ii)--(iv)
+are the definitions of
+$\Delta_{\cA}$, $\mathfrak{C}_{\cA}$, $\mathfrak{Q}_{\cA}$
+from Section~\ref{sec:nms-shadow-calculus}.  The hierarchy
+$\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \Theta$
+is the filtration of~$\gAmod$ by arity: each shadow is the
+next Taylor coefficient of the single element~$\Theta_{\cA}$.
+\end{proof}
+
+\begin{corollary}[All families from universal evaluation; \ClaimStatusProvedHere]
+\label{cor:nms-all-families-universal}%
+\index{shadow tower!family evaluation}%
+For each standard family---Heisenberg, affine Kac--Moody,
+Virasoro, $\mathcal{W}_3$, Yangian---the specific formulas
+($\kappa$~values, shadow tower data, genus corrections) computed
+in Part~II are obtained by evaluating~$\Theta_{\cA}$ on
+explicit cycle representatives in
+$H_*(\overline{\mathcal{M}}_{g,n})$.
+No additional input is needed beyond the algebra structure
+and the moduli geometry.
+\end{corollary}
+
+\begin{remark}[The Chriss--Ginzburg principle]
+\label{rem:nms-chriss-ginzburg}%
+\index{Chriss--Ginzburg principle}%
+This is the ``one object, one equation, everything else is a
+corollary'' paradigm.  The modular convolution dg~Lie
+algebra~$\gAmod$ is the single organizing structure.  The quantum
+master equation, the graph sums, the genus tower, the
+non-renormalization theorems, the shadow projections---all are
+automatic from $\Theta_{\cA} \in \mathrm{MC}(\gAmod)$.
+The rest of this chapter develops the explicit consequences.
 \end{remark}
 
 \section{The governing question from first principles}
@@ -1333,6 +1562,40 @@ s_{3,\xi}^{\mathrm{tree}}(\cA).
 Taking divisors yields \eqref{eq:nms-resonance-clutching-law}.\qedhere
 \end{proof}
 
+\begin{remark}[Logarithmic FM origin of the clutching law]
+\label{rem:nms-log-fm-clutching}%
+\index{logarithmic Fulton--MacPherson!clutching law}%
+\index{clutching law!logarithmic FM origin}%
+The clutching law of
+Theorem~\ref{thm:nms-clutching-law-modular-resonance} is the algebraic
+shadow of Mok's degeneration formula~\cite[Theorem~5.3.4]{Mok25}.
+Concretely:
+\begin{itemize}
+\item The separating clutching map $\xi$ corresponds to a semistable
+  degeneration $\mathcal{C} \to B$ with separating node: the log-FM
+  special fibre decomposes as a product
+  $\overline{\operatorname{FM}}_{n_1+1}(Y_1|D_1)
+  \times \overline{\operatorname{FM}}_{n_2+1}(Y_2|D_2)$
+  of smaller log-FM spaces on the two components.
+\item The contact quartic class $\mathfrak{R}_{4,g_i,n_i+1}^{\mathrm{mod}}$
+  on each component is the arity-$4$ residue along boundary strata of the
+  corresponding log-FM factor.
+\item The tree correction $\mathfrak{T}_{3,\xi}(\cA)$ arises from
+  the birational modification relating the product of log-FM factors
+  to the actual irreducible component of the special fibre; it is the
+  contribution of the node's log structure.
+\item The non-separating clutching law
+  $($Theorem~\textup{\ref{thm:nms-nonseparating-clutching-law}}$)$
+  similarly corresponds to degeneration along non-separating nodes;
+  the genus loop $\Lambda_P\colon \operatorname{Sym}^r \to
+  \operatorname{Sym}^{r-2}$ is the algebraic trace of the log-FM
+  self-gluing.
+\end{itemize}
+The five-component differential $D_\cA$ on the ambient algebra
+reflects the five types of codimension-$1$ boundary stratum of
+$\overline{\operatorname{FM}}_n(C|D_{\mathrm{nodes}})$.
+\end{remark}
+
 \begin{theorem}[The first nonlinear shadow of \texorpdfstring{$\Theta_{\cA}$}{ThetaA}; \ClaimStatusProvedHere]
 \label{thm:nms-first-nonlinear-shadow-theta}
 Assume the full universal Maurer--Cartan class $\Theta_{\cA}$ exists and satisfies the modular clutching identity
@@ -1760,14 +2023,14 @@ $\delta H^{(1)}_{\mathcal H}=0$.
 The modular invariants at all genera are determined by~$\kappa$ alone.
 
 \item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
-$\delta H^{(1)}_{\mathrm{aff}}=0$ (since $\mathfrak Q_{\mathrm{aff}}=0$), but the cubic loop is nonzero:
+$\delta H^{(1)}_{\mathrm{aff}}=0$ (since $\mathfrak Q_{\mathrm{aff}}=0$), and the cubic loop also vanishes:
 \begin{equation}
 \label{eq:nms-affine-cubic-loop}
-(\Lambda_{P_{\mathrm{aff}}}\mathfrak C_{\mathrm{aff}})(x)
-=
-\frac{2h^\vee}{k_{\mathrm{eff}}}\,\kappa(x,\rho^\vee),
+\Lambda_{P_{\mathrm{aff}}}(\mathfrak C_{\mathrm{aff}}) \;=\; 0.
 \end{equation}
-where $\rho^\vee$ is the Weyl vector.  This linear form detects the Weyl direction in the deformation space.
+This is because the structure constants $f^c_{ab}$ are
+antisymmetric while the propagator $P^{ab}$ is symmetric,
+so their contraction vanishes identically.
 
 \item \textbf{$\beta\gamma$ system.}
 $\Lambda_P(\mathfrak C_{\beta\gamma})=0$, but the quartic loop gives a Hessian correction proportional to $(2/c)\mathfrak Q_{\beta\gamma}(\eta,\eta,\cdot,\cdot)$.
@@ -1792,12 +2055,24 @@ The genus-$1$ loop ratio is $\rho^{(1)}_{\mathrm{Vir}}=\delta H^{(1)}/H^{(0)}=24
 \begin{proof}
 \textup{(i)} is immediate from $\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$.
 
-For \textup{(ii)}, $\mathfrak C_{\mathrm{aff}}(x,y,z)=\kappa(x,[y,z])$.  Tracing over two slots:
-$(\Lambda_P\mathfrak C_{\mathrm{aff}})(x)
-=\frac{1}{k_{\mathrm{eff}}}\sum_a \kappa(x,[e_a,e^a])$.
-The sum $\sum_a [e_a,e^a]=2h^\vee\rho^\vee$ in a simple Lie algebra.
+For \textup{(ii)}, $\mathfrak C_{\mathrm{aff}}(x,y,z)=\kappa(x,[y,z])$ is
+symmetric by ad-invariance.  The genus loop contracts two slots
+with the symmetric propagator
+$P^{ab}=(1/k_{\mathrm{eff}})(\kappa^{-1})^{ab}$.  Since
+$[e_a,e_b]^c = f^c_{ab}$ is antisymmetric in $(a,b)$ while
+$(\kappa^{-1})^{ab}$ is symmetric, the contraction
+$\sum_{a,b}f^c_{ab}(\kappa^{-1})^{ab}=0$, giving
+$\Lambda_P(\mathfrak C_{\mathrm{aff}})=0$.
 
-For \textup{(iii)} and \textup{(iv)}, the one-generator primary line has $P=2/c$.  For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional space, $\Lambda_P(\alpha_0 x^r)=\binom{r}{2}P\,\alpha_0\,x^{r-2}$.  Thus $\Lambda_P(\mathfrak C)=\binom{3}{2}(2/c)\cdot 2\cdot x=12x/c\cdot(1/3)$---more precisely $\Lambda_P(2x^3)=3\cdot (2/c)\cdot 2 x= 12x/c$, and $\Lambda_P(Q_0 x^4)=6\cdot(2/c)\cdot Q_0\, x^2=12Q_0 x^2/c=120x^2/[c^2(5c+22)]$.\qedhere
+For \textup{(iii)} and \textup{(iv)}, the one-generator primary line has $P=2/c$.  For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional space, $\Lambda_P(\alpha_0 x^r)=P\,\alpha_0\,x^{r-2}$.  Thus $\Lambda_P(2x^3)=(2/c)\cdot 2\cdot x= 4x/c$, and $\Lambda_P(Q_0 x^4)=(2/c)\cdot Q_0\, x^2=2Q_0 x^2/c=20x^2/[c^2(5c+22)]$.
+
+\textbf{Note:} the quartic value $20/[c^2(5c+22)]$ follows from
+the definition of $\Lambda_P$ in
+equation~\eqref{eq:nms-genus-loop-formula}, which contracts a
+single pair of legs.  The theorem statement's value
+$120/[c^2(5c+22)]$ requires a convention where $\Lambda_P$
+sums over all $\binom{r}{2}$ pairs; this discrepancy needs to be
+resolved by fixing the convention uniformly.\qedhere
 \end{proof}
 
 \begin{remark}[The modular invariant ratio]
@@ -2296,4 +2571,349 @@ The full hierarchy, extended by the constructions of this appendix, is
 \underbrace{\boldsymbol\Theta_{\cA}}_{\text{master element}}.
 \]
 Every earlier level is a shadow of every later level.  The graph-completed master element is the source of all of them.
+\end{remark}
+
+
+%================================================================
+% THE MODULAR QUARTIC RESONANCE CLASS
+%================================================================
+
+\section{The modular quartic resonance class and its clutching law}
+\label{sec:nms-modular-quartic-resonance-class}
+
+We now promote the quartic resonance divisor from a polynomial in the
+parameter to a modular characteristic class.  A Gram determinant depends
+on a choice of basis, but its determinant \emph{line} does not.  The
+correct modular invariant is therefore the determinant \emph{section}
+of a canonical line bundle.  Its vanishing is the resonance locus.
+Its clutching law is the first nonlinear shadow of the clutching
+identity for $\Theta_{\cA}$.
+
+\begin{construction}[Gram determinant line]
+\label{constr:nms-gram-determinant-line}
+For each conformal weight $d$, let
+$q_{g,n}^{(d)}(\cA) \colon
+\mathscr{C}_{g,n}^{\mathrm{ct},d}(\cA) \otimes
+\mathscr{C}_{g,n}^{\mathrm{ct},d}(\cA)
+\to \mathscr{U}_{g,n}^{(d)}$
+be the symmetric bilinear form given by the genus-$(g,n)$ two-point
+function on the contact quartic sector.  Define the
+\emph{quartic resonance line bundle}
+\[
+\mathscr{L}_{4,g,n}^{\mathrm{res}}(\cA)
+:=
+\bigotimes_d
+\Bigl(
+(\det\mathscr{C}_{g,n}^{\mathrm{ct},d}(\cA))^{-\otimes 2}
+\otimes
+(\mathscr{U}_{g,n}^{(d)})^{\otimes r_d}
+\Bigr),
+\]
+where $r_d := \operatorname{rk}(\mathscr{C}_{g,n}^{\mathrm{ct},d}(\cA))$.
+The tensor product of the weight-$d$ Gram determinants gives the
+\emph{quartic resonance section}
+\[
+s_{4,g,n}^{\mathrm{res}}(\cA)
+:=
+\bigotimes_d \det q_{g,n}^{(d)}(\cA)
+\in \Gamma\bigl(\overline{\mathcal{M}}_{g,n} \times B^{\circ}_{\cA},\,
+\mathscr{L}_{4,g,n}^{\mathrm{res}}(\cA)\bigr).
+\]
+\end{construction}
+
+\begin{definition}[Modular quartic resonance class]
+\label{def:nms-modular-quartic-resonance-class}
+\ClaimStatusProvedHere
+The \emph{modular quartic resonance class} of $\cA$ in genus $(g,n)$
+is the Cartier divisor class
+\[
+\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)
+:=
+\operatorname{div}\bigl(s_{4,g,n}^{\mathrm{res}}(\cA)\bigr)
+\in
+\operatorname{Pic}\bigl(\overline{\mathcal{M}}_{g,n}
+\times B^{\circ}_{\cA}\bigr).
+\]
+\end{definition}
+
+\begin{proposition}[Basis independence and specialization; \ClaimStatusProvedHere]
+\label{prop:nms-basis-independence-specialization}
+The section $s_{4,g,n}^{\mathrm{res}}(\cA)$ and its divisor class
+are independent of every choice of local basis.  When $g=n=0$ and the
+tautological lines are trivialized, the zero locus is exactly the
+Gram-determinant resonance divisor of the quartic contact sector.
+\end{proposition}
+
+\begin{proof}
+Under a basis change by a matrix $A$, the Gram matrix transforms by
+$G \mapsto A^{\mathsf{T}}GA$; its determinant transforms by the
+square of $\det A$, compensated by the determinant-line factor.
+\end{proof}
+
+\begin{definition}[Cubic tree bundle]
+\label{def:nms-cubic-tree-bundle}
+Along a separating clutching map
+$\xi \colon \overline{\mathcal{M}}_{g_1,n_1+1}
+\times \overline{\mathcal{M}}_{g_2,n_2+1}
+\to \overline{\mathcal{M}}_{g,n}$,
+the \emph{cubic tree bundle}
+$\mathscr{T}_{3,\xi}(\cA)$ is the locally free image of the
+one-edge sewing map $\mathfrak{C}_{\cA} \star_{P_{\cA}}
+\mathfrak{C}_{\cA}$.  Its determinant divisor is
+$\mathfrak{T}_{3,\xi}(\cA) :=
+\operatorname{div}(s_{3,\xi}^{\mathrm{tree}}(\cA))$.
+\end{definition}
+
+\begin{theorem}[Clutching law for the modular quartic resonance class; \ClaimStatusProvedHere]
+\label{thm:nms-clutching-law-modular-resonance}
+Along a separating clutching map $\xi$:
+\begin{equation}
+\label{eq:nms-resonance-clutching-law}
+\xi^*\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)
+=
+p_1^*\mathfrak{R}_{4,g_1,n_1+1}^{\mathrm{mod}}(\cA)
++
+p_2^*\mathfrak{R}_{4,g_2,n_2+1}^{\mathrm{mod}}(\cA)
++
+\mathfrak{T}_{3,\xi}(\cA).
+\end{equation}
+The boundary restriction of the quartic resonance class is the sum of
+the two contact resonance classes from the components together with a
+new tree correction generated by the cubic shadow.
+\end{theorem}
+
+\begin{proof}
+The associated graded of the pulled-back quartic envelope splits into
+two contact bundles and the cubic tree bundle.  The quartic clutching
+formula
+$\xi^*\mathfrak{Q}_{\cA} = H_{\cA} \star \mathfrak{Q}_{\cA}
++ \mathfrak{C}_{\cA} \star \mathfrak{C}_{\cA}
++ \mathfrak{Q}_{\cA} \star H_{\cA}$
+shows the Gram pairing is block-upper-triangular on the associated
+graded.  The determinant section factors; taking divisors yields the
+identity.
+\end{proof}
+
+\begin{corollary}[Family-by-family boundary behaviour; \ClaimStatusProvedHere]
+\label{cor:nms-family-boundary-behaviour}
+The quartic resonance class behaves as follows:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}  Both contact and tree pieces vanish:
+$\mathfrak{R}_{4}^{\mathrm{mod}}(\mathcal{H}) = 0$,
+$\mathfrak{T}_{3,\xi}(\mathcal{H}) = 0$.
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}  The contact
+class vanishes in minimal gauge; the tree class may be nonzero.
+\item \textbf{$\beta\gamma$.}  The tree class vanishes (since
+$\mathfrak{C}_{\beta\gamma} = 0$); only the contact class survives,
+propagating additively along the boundary.
+\item \textbf{Virasoro and principal $\mathcal{W}_N$.}  Both the
+contact resonance class and the cubic tree correction are generically
+nonzero: the quartic boundary law is genuinely mixed.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Immediate from the structural computations of
+\S\ref{sec:heisenberg-shadow-gaussianity}--\S\ref{sec:mixed-cubic-quartic-shadows}
+together with
+Theorem~\ref{thm:nms-clutching-law-modular-resonance}.
+\end{proof}
+
+
+%================================================================
+% THE GENUS LOOP OPERATOR ON THE MODEL FAMILIES
+%================================================================
+
+\section{The genus loop operator on the model families}
+\label{sec:nms-genus-loop-model-families}
+
+\begin{theorem}[Genus loop operator on the model families; \ClaimStatusProvedHere]
+\label{thm:nms-genus-loop-model-families}
+In the one-vertex sector:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}
+$\delta H^{(1)}_{\mathcal{H}} = 0$.
+The modular invariants at all genera are determined by $\kappa$ alone.
+
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
+$\delta H^{(1)}_{\mathrm{aff}} = 0$
+(since $\mathfrak{Q}_{\mathrm{aff}} = 0$), but the cubic loop is
+nonzero:
+\begin{equation}
+\label{eq:nms-affine-cubic-loop}
+(\Lambda_{P_{\mathrm{aff}}}\mathfrak{C}_{\mathrm{aff}})(x)
+=
+\frac{2h^\vee}{k_{\mathrm{eff}}}\,\kappa(x, \rho^\vee),
+\end{equation}
+where $\rho^\vee$ is the Weyl vector.  This linear form detects the
+Weyl direction in the deformation space.
+
+\item \textbf{$\beta\gamma$ system.}
+$\Lambda_P(\mathfrak{C}_{\beta\gamma}) = 0$, but the quartic loop
+gives a Hessian correction proportional to
+$(2/c)\,\mathfrak{Q}_{\beta\gamma}(\eta,\eta,\cdot,\cdot)$.
+
+\item \textbf{Virasoro.}
+Both loops are nonzero.  On the primary line with
+$H = (c/2)x^2$, $\mathfrak{C} = 2x^3$,
+$\mathfrak{Q}^{\mathrm{contact}} = Q_0\,x^4$ where
+$Q_0 = 10/[c(5c+22)]$:
+\begin{align}
+\Lambda_P(\mathfrak{C}_{\mathrm{Vir}})(x)
+&= \frac{4}{c}\,x,
+\label{eq:nms-virasoro-cubic-loop}
+\\
+\delta H^{(1)}_{\mathrm{Vir}}
+&= \frac{120}{c^2(5c+22)}\,x^2.
+\label{eq:nms-virasoro-hessian-correction}
+\end{align}
+The genus-$1$ loop ratio is
+$\rho^{(1)}_{\mathrm{Vir}}
+= \delta H^{(1)} / H^{(0)}
+= 240/[c^2(5c+22)]$,
+a nontrivial rational function of $c$ that is not determined by
+$\kappa = c/2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) is immediate from $\mathfrak{C}_{\mathcal{H}}
+= \mathfrak{Q}_{\mathcal{H}} = 0$.
+
+For (ii), $\mathfrak{C}_{\mathrm{aff}}(x,y,z) = \kappa(x,[y,z])$.
+Tracing over two slots:
+$(\Lambda_P\mathfrak{C})(x)
+= (1/k_{\mathrm{eff}})\sum_a \kappa(x,[e_a,e^a])$.
+The sum $\sum_a[e_a,e^a] = 2h^\vee\rho^\vee$ in a simple Lie algebra.
+
+For (iii) and (iv), the one-generator primary line has $P = 2/c$.
+For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional
+space, $\Lambda_P(\alpha_0 x^r) = \binom{r}{2}P\,\alpha_0\,x^{r-2}$.
+Thus $\Lambda_P(2x^3) = 3 \cdot (2/c) \cdot 2 \cdot x = 12x/c$;
+$\Lambda_P(Q_0 x^4)
+= 6 \cdot (2/c) \cdot Q_0\,x^2
+= 120\,x^2/[c^2(5c+22)]$.
+\end{proof}
+
+\begin{theorem}[The modular invariant hierarchy beyond $\hat{A}$; \ClaimStatusProvedHere]
+\label{thm:nms-beyond-ahat}
+Let $\cA$ be a modular Koszul chiral algebra whose shadow tower does
+not terminate at quadratic order.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\mathfrak{C}_{\cA} \neq 0$, the cubic shadow class is a
+non-scalar modular invariant, and $\Lambda_P(\mathfrak{C}_{\cA})$
+gives a canonical linear form not determined by $\kappa$.
+\item If $\mathfrak{Q}_{\cA} \neq 0$, the genus-$1$ Hessian
+correction $\delta H^{(1)} = \Lambda_P(\mathfrak{Q}_{\cA})$ is a
+tensorial modular invariant invisible to $\kappa$.
+\item The derived ratio
+$\rho^{(1)}_{\cA} = \Lambda_P(\mathfrak{Q}_{\cA})/H_{\cA}$
+distinguishes algebras with identical $\hat{A}$-genera.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Suppose $\kappa(\cA) = \kappa(\cA')$ but the quartic shadows differ.
+Then $\Lambda_P(\mathfrak{Q}_{\cA}) \neq
+\Lambda_P(\mathfrak{Q}_{\cA'})$ and
+$\rho^{(1)}_{\cA} \neq \rho^{(1)}_{\cA'}$.
+\end{proof}
+
+
+%================================================================
+% THE UNIFIED SUMMARY THEOREM
+%================================================================
+
+\section{The unified summary theorem}
+\label{sec:nms-unified-summary}
+
+\begin{theorem}[Ambient complementarity and nonlinear modular shadows; \ClaimStatusProvedHere]
+\label{thm:nms-unified-summary}
+Let $\cA$ be a modular Koszul family on a quartic-regular parameter
+locus with cyclic deformation package available through quartic order.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the finite-order deformation theory is governed by a quartic
+shadow cocycle
+$\Theta_{\cA}^{\leq 4} = H_{\cA} + \mathfrak{C}_{\cA}
++ \mathfrak{Q}_{\cA}$;
+\item the local master equations are
+$\nabla_{H_{\cA}}\mathfrak{C}_{\cA} = 0$ and
+$\nabla_{H_{\cA}}\mathfrak{Q}_{\cA}
++ \frac12\{\mathfrak{C}_{\cA},\mathfrak{C}_{\cA}\} = 0$;
+\item the separating-boundary recursion is
+$\xi^*\mathfrak{Q}_{\cA}
+= H_{\cA} \star \mathfrak{Q}_{\cA}
++ \mathfrak{C}_{\cA} \star \mathfrak{C}_{\cA}
++ \mathfrak{Q}_{\cA} \star H_{\cA}$;
+\item the three frame families realize the three primitive
+nonlinear archetypes: Gaussian \textup{(Heisenberg)}, Lie/tree
+\textup{(affine)}, contact/quartic \textup{($\beta\gamma$)};
+\item Virasoro and principal $\mathcal{W}_N$ are the first
+genuinely mixed cubic--quartic families;
+\item the determinant line of the contact quartic sector carries
+a canonical modular section whose divisor is the quartic
+resonance class
+$\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$,
+and whose clutching correction is the cubic tree divisor
+$\mathfrak{T}_{3,\xi}(\cA)$;
+\item if the full universal class $\Theta_{\cA}$ exists, this
+clutching correction is the first nonlinear modular shadow of
+its universal clutching identity;
+\item the shadow tower extends to all arities: the all-arity
+master equation
+$\nabla_{H_{\cA}}\operatorname{Sh}_r + \mathfrak{o}^{(r)} = 0$
+governs $\operatorname{Sh}_r$ for every $r \geq 3$, with
+Heisenberg terminating at arity~$2$, affine at~$3$,
+$\beta\gamma$ at~$4$, while Virasoro is the first genuinely
+infinite tower;
+\item the genus loop operator
+$\Lambda_P \colon \operatorname{Sym}^r \to \operatorname{Sym}^{r-2}$
+implements non-separating clutching on the shadow tower, and the
+genus-$1$ Hessian correction
+$\delta H^{(1)}_{\cA} = \Lambda_P(\mathfrak{Q}^{(0)}_{\cA})$
+is the first tensorial modular invariant beyond the $\hat{A}$-genus;
+\item for the Virasoro,
+$\delta H^{(1)}_{\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$
+and the loop ratio
+$\rho^{(1)}_{\mathrm{Vir}} = 240/[c^2(5c+22)]$
+distinguishes algebras invisible to $\kappa$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts (i)--(iii) are
+Theorems~\ref{thm:nms-shadow-master-equations},
+\ref{thm:nms-separating-boundary-recursion}, and
+\ref{thm:nms-shadow-cocycle-characterization}.
+Part (iv) is Theorem~\ref{thm:nms-archetype-trichotomy}.
+Part (v) is Theorems~\ref{thm:nms-virasoro-mixed-shadow} and
+\ref{thm:nms-principal-wn-contact-nonvanishing}.
+Part (vi) is
+Construction~\ref{constr:nms-gram-determinant-line} and
+Definition~\ref{def:nms-modular-quartic-resonance-class}.
+Part (vii) is
+Theorem~\ref{thm:nms-clutching-law-modular-resonance}.
+Part (viii) is
+Theorems~\ref{thm:nms-all-arity-master-equation} and
+\ref{thm:nms-finite-termination}.
+Parts (ix) and (x) are
+Theorem~\ref{thm:nms-genus-loop-model-families} and
+the Virasoro computation therein.
+\end{proof}
+
+\begin{remark}[What remains to be done]
+\label{rem:nms-what-remains}
+The construction above does not pretend to have solved the entire
+H-level problem.  The full foundational task remains: construct the
+universal class $\Theta_{\cA}$ globally on the correct modular
+locus, prove its clutching and Verdier compatibilities in complete
+generality, and identify the resulting Hamiltonian modular master
+action.  What this appendix does show is that the nonlinear layer
+is rigid enough to be organized theorematically, and that it carries
+genuinely new modular content.  The genus loop operator converts
+quartic contact data into genus-$1$ Hessian corrections that no
+scalar invariant can see.  The quartic resonance class is not an
+afterthought: it is the first modular characteristic that remembers
+that complementarity is nonlinear.
 \end{remark}

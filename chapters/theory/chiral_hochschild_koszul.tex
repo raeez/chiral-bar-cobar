@@ -4,6 +4,31 @@
 \index{deformation theory!chiral|textbf}
 \index{Hochschild cohomology!chiral|textbf}
 
+Hochschild cohomology is not merely an auxiliary invariant of a chiral
+algebra: it is the receptacle for deformations, centers, and eventually
+bulk fields in the physical incarnations of the story.  When the volume
+says ``Hochschild,'' it means ``the internal memory of all possible
+deformations and couplings.''  This chapter constructs the chiral
+Hochschild complex, proves its polynomial growth on the Koszul locus
+(Theorem~H), establishes the Koszul duality
+$\ChirHoch^n(\cA) \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X$,
+and shows how the complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}) identifies the
+deformation and obstruction packages as complementary Lagrangians.
+
+The homotopy perspective is essential here.  Hochschild complexes
+naturally carry brace and $E_2$ structures; the convolution dg Lie
+algebra $\Hom(\barB(\cA), \cA)$ governing deformations is the
+strict face of an $L_\infty$ deformation package.  Thus this chapter
+is not a return to strict cochains but an entrance into the
+open/closed and bulk/boundary dictionary, where Koszul duality,
+Hochschild theory, and factorization geometry begin to merge.
+The modular cyclic deformation complex
+$\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$
+(Definition~\ref{def:modular-cyclic-deformation-complex}),
+constructed later in the nonlinear shadow chapters, extends the
+structures built here into the full modular regime.
+
 \section{Deformations of a chiral algebra}
 
 Let $\mathcal{A}$ be a chiral algebra on a smooth projective curve~$X$,
@@ -728,10 +753,12 @@ not $\mathcal{F}$.  The coincidence above reflects the fact that both algebras a
 \label{def:cyclic-deformation-elementary}
 \index{cyclic deformation complex|textbf}
 \index{Def cyc@$\operatorname{Def}_{\mathrm{cyc}}$|textbf}
-Let $\cA$ be a chiral algebra on~$X$.  The \emph{cyclic deformation
-complex} $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ is the tangent dg
-Lie algebra (or, more generally, $L_\infty$-algebra) controlling
-cyclic deformations of~$\cA$.
+Let $\cA$ be a chiral algebra on~$X$.  The homotopy-invariant
+\emph{cyclic deformation object} of~$\cA$ is a complete filtered cyclic
+$L_\infty$-algebra controlling cyclic deformations of~$\cA$.
+A chosen strict presentation is the
+\emph{cyclic deformation complex} $\Defcyc(\cA)$
+used for explicit calculations below.
 
 \smallskip\noindent
 \textbf{Abstract definition (H-level).}
@@ -1071,10 +1098,20 @@ data needed to define the chain-level Verdier/BV pairing.  The
   \widehat{\barB}_X(\cA)
 \bigr)[1],
 \end{equation}
-the degree-shifted dg Lie algebra of continuous cyclic coderivations of
-the completed reduced bar coalgebra $\widehat{\barB}_X(\cA)$; ``cyclic''
-means skew-adjoint for the canonical pairing induced by Verdier
-duality/BV trace.
+the degree-shifted \emph{cyclic $L_\infty$-algebra} of continuous
+cyclic coderivations of the completed reduced bar coalgebra
+$\widehat{\barB}_X(\cA)$; ``cyclic'' means skew-adjoint for the
+canonical pairing induced by Verdier duality/BV trace.
+The $L_\infty$ structure has brackets $\ell_1 = [d_{\barB},-]$,
+$\ell_2 = [-,-]$ (the coderivation bracket), and higher brackets
+$\ell_n$ for $n \geq 3$ induced by the transferred $A_\infty$
+structure on $\widehat{\barB}_X(\cA)$
+\cite[Theorem~10.3.8]{LV12}.
+For Koszul~$\cA$, the convolution $L_\infty$ is \emph{formal}
+(the higher brackets $\ell_n = 0$ for $n \geq 3$ on the
+cohomological model), so the strict dg~Lie structure suffices for
+computations
+(Theorem~\ref{thm:cyclic-linf-graph}).
 
 This object has four essential properties:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -1117,6 +1154,138 @@ structure for all Koszul chiral algebras with non-degenerate
 invariant form.
 (Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{definition}
+
+\begin{definition}[Modular cyclic deformation complex;
+\ClaimStatusProvedHere]
+\label{def:modular-cyclic-deformation-complex}
+\index{modular cyclic deformation complex|textbf}
+\index{cyclic deformation complex!modular extension}
+For a chiral algebra~$\cA$ with bar
+complex~$\barB(\cA)$, the \emph{modular cyclic deformation complex} is
+\begin{equation}\label{eq:modular-cyc-def-complex}
+\Defcyc^{\mathrm{mod}}(\cA)
+\;:=\;
+\prod_{\substack{g,n \\ 2g-2+n>0}}
+\operatorname{CoDer}^{\mathrm{cyc}}\!\bigl(
+  \barB^{(g,n)}(\cA)
+\bigr)[1],
+\end{equation}
+where $\barB^{(g,n)}(\cA)$ is the genus-$g$, $n$-marked bar complex
+and the product ranges over stable pairs~$(g,n)$.
+The differential is the sum $d_{\mathrm{int}} + d_{\mathrm{sew}}$
+where:
+\begin{itemize}
+\item $d_{\mathrm{int}}$ is the internal cyclic coderivation
+  differential on each component;
+\item $d_{\mathrm{sew}}$ is the clutching/sewing operation induced by
+  the boundary maps
+  $\partial\colon \overline{\mathcal{M}}_{g,n} \supset
+  \Delta_{g_1,S_1;\,g_2,S_2} \to
+  \overline{\mathcal{M}}_{g_1,|S_1|+1} \times
+  \overline{\mathcal{M}}_{g_2,|S_2|+1}$.
+\end{itemize}
+
+The Lie bracket is \emph{graph composition}: for
+$\xi \in \operatorname{CoDer}^{\mathrm{cyc}}(\barB^{(g_1,n_1)}(\cA))$
+and
+$\eta \in \operatorname{CoDer}^{\mathrm{cyc}}(\barB^{(g_2,n_2)}(\cA))$,
+\begin{equation}\label{eq:modular-cyc-graph-bracket}
+[\xi,\eta]
+\;:=\;
+\sum_{\Gamma}\xi \circ_\Gamma \eta,
+\end{equation}
+summed over stable graphs~$\Gamma$ connecting an output of~$\xi$ to an
+input of~$\eta$ with cross-polarization on internal edges.
+\end{definition}
+
+\begin{remark}[Strictification of the modular deformation object]
+\label{rem:modular-cyc-strictification}
+The modular cyclic deformation complex $\Defcyc^{\mathrm{mod}}(\cA)$
+is the strict model of the homotopy-invariant modular deformation
+object $\Definfmod(\cA)$
+\textup{(}Theorem~\textup{\ref{thm:modular-homotopy-convolution})}.
+The cyclic coderivation description is one model, obtained from the
+cofree resolution of~$\barB(\cA)$; a different choice of
+contracting homotopy produces an $L_\infty$-quasi-isomorphic
+deformation complex.  For affine Kac--Moody algebras, the
+strict model is already formal: the universal class
+$\Theta^{\mathrm{str}}_{\widehat{\fg}_k}$ satisfies the strict
+MC equation with all higher $L_\infty$-brackets vanishing
+\textup{(}Theorem~\textup{\ref{thm:km-strictification})}.
+\end{remark}
+
+\begin{proposition}[Genus truncation;
+\ClaimStatusProvedHere]
+\label{prop:modular-deformation-truncation}
+\index{modular cyclic deformation complex!genus truncation}
+The genus-$0$ truncation
+$\Defcyc^{\mathrm{mod}}(\cA)\big|_{g=0} = \Defcyc(\cA)$
+recovers the elementary cyclic deformation complex of
+Definition~\textup{\ref{def:cyclic-deformation-bar}}.
+The genus grading induces a complete descending filtration
+$F^{\bullet}\Defcyc^{\mathrm{mod}}(\cA)$ with
+$\gr_g$ computing deformations at fixed genus.
+\end{proposition}
+
+\begin{proof}
+At $g = 0$ the only stable pairs are $(0,n)$ with $n \geq 3$.
+The internal differential~$d_{\mathrm{int}}$ on each
+$\operatorname{CoDer}^{\mathrm{cyc}}(\barB^{(0,n)}(\cA))[1]$
+coincides with the coderivation differential of
+Definition~\ref{def:cyclic-deformation-bar}, and the sewing
+differential~$d_{\mathrm{sew}}$ reduces to the graph composition
+already present in the genus-$0$ bracket.
+The genus filtration $F^g := \prod_{h \geq g}$ is complete because
+the product topology is, and the associated graded
+$\gr_g = \operatorname{CoDer}^{\mathrm{cyc}}(\barB^{(g,\bullet)}(\cA))[1]$
+computes deformations at fixed genus by construction.
+\end{proof}
+
+\begin{remark}[Chriss--Ginzburg principle]
+\label{rem:chriss-ginzburg-modular-cyc}
+\index{Chriss--Ginzburg principle}
+\index{Maurer--Cartan!modular cyclic}
+The modular cyclic deformation complex is the ambient home for the
+universal Maurer--Cartan element~$\Theta_\cA$.  At the dg~level,
+the Lie bracket and differential give a cyclic dg~Lie algebra; by
+Theorem~\ref{thm:cyclic-linf-graph}, this extends to a full
+\emph{cyclic $L_\infty$-algebra}, and at the modular level
+Theorem~\ref{thm:modular-quantum-linfty} further promotes it to a
+\emph{quantum $L_\infty$-algebra} with operations
+$\{\ell_n^{(g)}\}_{n \geq 1,\, g \geq 0}$: here
+$\ell_1^{(0)} = D$, $\ell_2^{(0)} = [-,-]$,
+$\ell_n^{(0)}$ for $n \geq 3$ are the higher operadic brackets from
+homotopy transfer through $C_*(\overline{\mathcal{M}}_{0,n+1})$
+(Loday--Vallette~\cite[Thm~10.3.8]{LV12}), and
+$\ell_n^{(g)}$ for $g \geq 1$ are the higher-genus Feynman
+amplitudes from stable-graph sums of type~$(g,n)$
+(Getzler--Kapranov~\cite[\S5]{GeK98},
+Chuang--Lazarev~\cite{CL10}).
+
+The modular MC problem for~$\cA$ is to find
+$\Theta_\cA \in \MC(\Defcyc^{\mathrm{mod}}(\cA))$ satisfying the
+full quantum $L_\infty$ Maurer--Cartan equation
+\[
+\sum_{n \geq 1} \frac{1}{n!}\,\ell_n^{(0)}
+  (\Theta_\cA,\dots,\Theta_\cA)
+\;+\;
+\sum_{g \geq 1} \hbar^{2g}\,
+  \ell_1^{(g)}(\Theta_\cA)
+\;=\; 0,
+\]
+whose leading terms $\ell_1^{(0)}(\Theta) + \tfrac{1}{2}\ell_2^{(0)}(\Theta,\Theta) = 0$ give
+the classical dg~MC equation
+$d\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$.
+This is the strict shadow of the full $L_\infty$-MC equation
+(Theorem~\ref{thm:modular-homotopy-convolution}).
+For the proved families (Kac--Moody at non-critical level,
+Virasoro, principal~$\mathcal{W}_N$ at generic level),
+Theorem~\ref{thm:universal-MC} establishes existence of~$\Theta_\cA$.
+All modular invariants ($\kappa$, $\Delta$, shadows
+$\operatorname{Sh}_r$) are projections of~$\Theta_\cA$ onto graded
+components; the higher $L_\infty$ brackets $\ell_n^{(g)}$ encode
+the full Feynman-amplitude content beyond the leading dg~terms.
+\end{remark}
 
 \begin{theorem}[MC2-1 for Kac--Moody algebras;
 \ClaimStatusProvedHere]\label{thm:mc2-1-km}
@@ -1320,11 +1489,13 @@ verified computationally in Remark~\ref{rem:mc2-status}(v)--(ix).
 \begin{remark}[Why introduce \texorpdfstring{$\operatorname{Def}_{\mathrm{cyc}}$}{Def_cyc}
 now]\label{rem:def-cyc-role}
 The genus tower, curvature scalars $\mcurv{g}$, and obstruction
-classes are all shadows of a single MC element $\Theta_\cA$ in
-$\operatorname{Def}_{\mathrm{cyc}}(\cA) \widehat{\otimes}
-R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})$,
-now constructed by Theorem~\ref{thm:explicit-theta}:
-$\Theta_\cA^{\min} = \kappa(\cA) \cdot \eta \otimes \Lambda$.
+classes are all shadows of the shadow Postnikov tower
+$\Theta_\cA^{\leq r}$
+(Definition~\ref{def:shadow-postnikov-tower})
+in $\operatorname{Def}_{\mathrm{cyc}}(\cA) \widehat{\otimes}
+R\Gamma(\overline{\mathcal{M}}_{g,\bullet}, \mathbb{Q})$;
+at the scalar level (Theorem~\ref{thm:explicit-theta}):
+$\Theta_\cA^{\leq 2} = \kappa(\cA) \cdot \eta \otimes \Lambda$.
 The MC2 frontier is packaged by
 Proposition~\ref{prop:mc2-reduction-principle} into three tasks;
 the clutching package is resolved by
@@ -1766,14 +1937,16 @@ order~\cite{costello-renormalization}.
 
 The genus-$0$ cyclic deformation complex
 $\Defcyc(\cA)$ (Definition~\ref{def:cyclic-deformation-elementary})
-is the tree-level shadow of a modular convolution dg Lie algebra.
+is the tree-level shadow of a modular quantum $L_\infty$-algebra.
 The full modular version assembles all genera:
 
 \begin{definition}[Modular deformation complex]
 \label{def:modular-deformation-complex}
 \index{modular deformation complex|textbf}
+\index{quantum $L_\infty$ algebra!modular deformation complex}
 For a chiral algebra~$\cA$ on a smooth projective curve~$X$, the
-\emph{modular deformation complex} is the convolution dg Lie algebra
+\emph{modular deformation complex} is the \emph{quantum
+$L_\infty$-algebra} (modular convolution $L_\infty$-algebra)
 \begin{equation}\label{eq:modular-deformation-complex}
 \operatorname{Def}^{\mathrm{mod}}(\cA)
 \;:=\;
@@ -1790,10 +1963,12 @@ where:
   stable pairs $(g,n)$ with $2g - 2 + n > 0$;
 \item $\operatorname{End}_\cA(g,n)$ is the endomorphism space of
   $\cA^{\otimes n}$ with genus-$g$ curvature;
-\item the Lie bracket arises from \emph{graph gluing}: composing
-  endomorphisms along the boundary stratification of
-  $\overline{\mathcal{M}}_{g,n}$ (separating and non-separating
-  clutching maps).
+\item the $L_\infty$ brackets arise from \emph{graph gluing}:
+  the binary bracket $\ell_2$ composes endomorphisms along separating
+  clutching maps; the BV operator $\ell_1^{(g \geq 1)} = \hbar^g\Delta$
+  contracts legs along non-separating clutching maps; the higher
+  brackets $\ell_n^{(g)}$ are genus-$g$ stable-graph Feynman amplitudes
+  (Theorem~\ref{thm:modular-quantum-linfty}).
 \end{itemize}
 A Maurer--Cartan element
 $\Theta \in
@@ -1806,15 +1981,89 @@ $d\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
 encodes clutching compatibility at every genus.
 \end{definition}
 
+\begin{remark}[Homotopy-invariant deformation complex]
+\label{rem:deformation-complex-linfty}
+The modular deformation complex of Definition~\ref{def:modular-deformation-complex}
+is the strict dg~Lie model of a complete filtered cyclic modular $L_\infty$
+algebra $\mathrm{Def}_\infty^{\mathrm{mod}}(\cA)$.  The higher brackets
+encode homotopy-coherent deformation data: the $\ell_3$ bracket governs
+obstructions to extending first-order deformations, $\ell_4$ governs
+secondary obstructions, and so on.  The coderivation model computes the
+same formal moduli problem \cite{KontsevichSoibelman}.
+
+By Tamarkin's theorem \cite{Tamarkin00}, the deformation complex of a
+chiral algebra (viewed as an algebra over the chiral operad, which is a
+2-algebra in the sense of $E_n$-operads) carries a canonical $E_2$
+structure --- a homotopy Gerstenhaber algebra.  This is the algebraic
+source of the bar-cobar adjunction's naturality: the bar functor is an
+$E_2$-coalgebra functor, not merely a dg~coalgebra functor.
+
+Theorem~H (ChirHoch$^*(\cA)$ polynomial on the Koszul locus) is a
+statement about the $L_\infty$ formal moduli problem being smooth:
+the obstruction brackets $\ell_{k \geq 3}$ vanish on the Koszul locus,
+so the formal moduli space is a polynomial affine space.
+\end{remark}
+
 \begin{remark}[Modular versus cyclic]
 \label{rem:modular-vs-cyclic-complex}
-The restriction $\operatorname{Def}^{\mathrm{mod}}(\cA)|_{g=0}
-\cong \Defcyc(\cA)$ recovers the genus-$0$ cyclic deformation
-complex.  At $g \geq 1$, the coefficients are
+The restriction of the strict model
+$\operatorname{Def}^{\mathrm{mod}}(\cA)$ to genus~$0$
+recovers $\Defcyc(\cA)$, and the same is true for the transferred
+homotopy object $\Definfmod(\cA)$ after forgetting every
+positive-genus Taylor component.  At $g \geq 1$, the coefficients are
 chains on $\overline{\mathcal{M}}_{g,n}$, so stable-graph geometry
-enters the convolution algebra itself
+enters the deformation object itself rather than merely its differential
 (Remark~\ref{rem:convolution-hierarchy}).
 \end{remark}
+
+\begin{construction}[Modular homotopy deformation object]
+\label{const:modular-homotopy-deformation-object}
+\index{modular deformation!homotopy object|textbf}
+Filter $\operatorname{Def}^{\mathrm{mod}}(\cA)$ by genus and
+bar length.  Choose any complete filtered contraction of this
+quantum $L_\infty$-algebra onto a smaller filtered complex.
+By the homotopy transfer package of
+Appendix~\ref{app:homotopy-transfer}, the transferred higher
+brackets $\{\ell_n\}_{n\ge 1}$ endow the target with a cyclic
+$L_\infty$-structure.  Its filtered $L_\infty$ quasi-isomorphism class
+is denoted
+\[
+\Definfmod(\cA).
+\]
+This is the invariant modular deformation object; the formula in
+Definition~\ref{def:modular-deformation-complex} is one explicit
+strict chart.
+\end{construction}
+
+\begin{proposition}[Strictification principle for modular deformation theory; \ClaimStatusProvedHere]
+\label{prop:modular-strictification-principle}
+\index{strictification!modular deformation|textbf}
+The strict modular deformation complex
+$\operatorname{Def}^{\mathrm{mod}}(\cA)$ is a strict model
+of $\Definfmod(\cA)$.  Consequently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item complete filtered $L_\infty$ quasi-isomorphic choices of strict
+  model determine equivalent Maurer--Cartan deformation functors;
+\item the genus-zero truncation of
+  $\Definfmod(\cA)$ recovers the cyclic
+  deformation object $\Defcyc(\cA)$;
+\item the canonical class $\Theta_\cA$ is a Maurer--Cartan element whose
+  Taylor components simultaneously govern the modular bar differential,
+  clutching, and the higher brackets on every transferred model.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The first statement is exactly the output of homotopy transfer for
+complete filtered dg~Lie algebras (Appendix~\ref{app:homotopy-transfer}).
+Maurer--Cartan deformation functors are invariant under filtered
+$L_\infty$ quasi-isomorphism
+\cite{KontsevichSoibelman,Get09}.  Restricting the stable-graph
+formulas to trees gives genus~$0$.  The formulas defining
+$D_{\mathrm{tot}}$ and the clutching operators are written as
+coderivation actions of $\Theta_\cA$, so the transferred higher
+brackets are the same data expressed on a different model.
+\end{proof}
 
 \subsection{Concrete modular constructions: from stable graphs to quantum homotopy theory}
 \label{subsec:concrete-modular-constructions}
@@ -3995,6 +4244,126 @@ explicitly.  The shared discriminant phenomenon
 (Theorem~\ref{thm:ds-bar-gf-discriminant}) and the $\hat{A}$-genus appearance
 in genus expansions emerge as consequences of the modular characteristic
 package, not as isolated coincidences.
+
+%================================================================
+% COSIMPLICIAL STRUCTURE AND HOMOTOPY CHIRAL ALGEBRAS
+%================================================================
+
+\section{Cosimplicial descent and the Hochschild--\v{C}ech comparison}
+\label{sec:cosimplicial-hochschild}
+\index{cosimplicial!Hochschild complex}
+\index{homotopy chiral algebra!Hochschild perspective}
+
+The chiral Hochschild complex $C^\bullet_{\mathrm{chiral}}(\cA)$
+is built from configuration spaces of points on~$X$: the complex
+in cochain degree~$n$ involves $(n+2)$ marked points
+(\S\ref{subsec:hochschild-cochain-spaces}).  When the points are
+restricted to lie in a fixed affine open, the complex degenerates
+to local data.  Globalizing via an open cover introduces a second
+direction of complexity---the \v{C}ech direction---and the
+interplay between the Hochschild and \v{C}ech differentials is
+controlled by the homotopy chiral algebra structure of
+Malikov--Schechtman~\cite{MS24}.
+
+\subsection{The bicomplex}
+\label{subsec:hochschild-cech-bicomplex}
+
+Fix an affine cover $\mathcal{U} = \{U_i\}$ of~$X$.  Define
+the bicomplex
+\[
+E_0^{p,q}
+= \bigoplus_{i_0 < \cdots < i_p}
+  C^q_{\mathrm{chiral}}(\cA|_{U_{i_0\cdots i_p}})
+\]
+with horizontal differential $d_{\check{C}}$ (\v{C}ech) and
+vertical differential $d_{\mathrm{Hoch}}$ (Hochschild,
+Theorem~\ref{thm:chiral-hochschild-differential}).  Both
+differentials square to zero individually, but they do not
+strictly anticommute: the failure is measured by the \v{C}ech
+Jacobiator (Definition~\ref{def:jacobiator}).
+
+\begin{proposition}[Hochschild--\v{C}ech spectral sequence;
+\ClaimStatusProvedHere]
+\label{prop:hochschild-cech-ss}
+The bicomplex $E_0^{p,q}$ gives rise to two spectral sequences:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{\v{C}ech-first:} $E_2^{p,q} =
+  \check{H}^p(X, \mathcal{H}^q_{\mathrm{ch}}(\cA))
+  \Rightarrow \ChirHoch^{p+q}(\cA)$,
+  where $\mathcal{H}^q_{\mathrm{ch}}(\cA)$ is the sheaf of
+  local chiral Hochschild cohomology.
+\item \emph{Hochschild-first:} $E_2^{p,q} =
+  H^q_{\mathrm{ch}}(\check{C}^p(\mathcal{U};\cA))
+  \Rightarrow \ChirHoch^{p+q}(\cA)$.
+\end{enumerate}
+Both converge for quasi-coherent $\cA$ on a separated scheme~$X$
+(by the standard bounded-below complete convergence theorem).
+\end{proposition}
+
+\begin{proof}
+The convergence follows from the vanishing of \v{C}ech cohomology
+of quasi-coherent sheaves on affines: for any affine
+$U_{i_0\cdots i_p}$, the local Hochschild complex computes
+$H^q_{\mathrm{ch}}(\cA|_U)$ and the \v{C}ech differentials are
+well-defined on cohomology sheaves.  Both spectral sequences are
+bounded in the horizontal direction (the cover is finite) and
+bounded below in the vertical direction.
+\end{proof}
+
+\subsection{HCA enhancement of the bicomplex}
+\label{subsec:hca-hochschild}
+
+The \v{C}ech-first spectral sequence sees only the \v{C}ech
+cohomology of the cohomology sheaves---it does not see the
+\emph{algebraic structure} on the resolution.
+Malikov--Schechtman's theorem
+(Theorem~\ref{thm:cech-hca}) enriches the \v{C}ech direction
+with HCA operations $\{F_n\}$, which produce a stronger
+convergence statement.
+
+\begin{corollary}[HCA structure on local Hochschild cochains;
+\ClaimStatusConjectured]
+\label{cor:hca-hochschild}
+The \v{C}ech complex of the presheaf
+$U \mapsto C^\bullet_{\mathrm{chiral}}(\cA|_U)$
+carries an HCA structure in which:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the $F_2$ bracket is the brace operation
+  (Definition~\ref{def:brace-ops}$\,$);
+\item the $F_3$ homotopy controls the compatibility between
+  braces and the \v{C}ech differential;
+\item the full collection $\{F_n\}$ is an $L_\infty$ enhancement
+  of the Gerstenhaber bracket on
+  $\ChirHoch^\bullet(\cA)$.
+\end{enumerate}
+In particular, the Gerstenhaber algebra structure on
+$\ChirHoch^\bullet(\cA)$ descends from an $L_\infty$ structure on
+the total complex of the bicomplex, with the \v{C}ech direction
+contributing only contractible higher operations.
+\end{corollary}
+
+\begin{remark}[Comparison with the modular deformation complex]
+\label{rem:hca-vs-modular-deformation}
+The HCA structure on the Hochschild--\v{C}ech bicomplex is the
+genus-$0$ shadow of the modular cyclic deformation complex
+$\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$
+(Definition~\ref{def:modular-cyclic-deformation-complex}).
+At genus~$0$, the operadic control is via the Eilenberg--Zilber
+operad $\mathcal{Y}(n)$ acting on the \v{C}ech direction.
+At genus~$g \geq 1$, the modular operad replaces
+$\mathcal{Y}(n)$ with the Feynman transform $\mathrm{FCom}$,
+and the cosimplicial identities that make $d_{\check{C}}^2 = 0$
+are replaced by the boundary relations on
+$\overline{\mathcal{M}}_{g,n}$ that make
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$.
+At each finite order, the shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}) unifies
+both the genus-$0$ HCA relations and the higher-genus
+Maurer--Cartan structure; the conjectural all-arity limit
+$D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$
+on $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$ would
+give the full master equation.
+\end{remark}
 
 %================================================================
 % AMBIENT COMPLEMENTARITY

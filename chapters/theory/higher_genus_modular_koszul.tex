@@ -1738,8 +1738,10 @@ exponential $=$ modular period~$N$;
 (2)~spectral: $\Delta_{\cA}(x)$
 (Theorem~\ref{thm:spectral-characteristic}),
 exponential $=$ periodicity profile~$\Pi_{\cA}$;
-(3)~full MC: $\Theta_{\cA}$, $\Defcyc(\cA)$
-(Theorems~\ref{thm:universal-theta} and~\ref{thm:mc2-full-resolution}),
+(3)~shadow tower / conjectural full MC: $\Theta_{\cA}^{\leq r}$, $\Defcyc(\cA)$
+(Definition~\ref{def:shadow-postnikov-tower};
+Theorems~\ref{thm:universal-theta} and~\ref{thm:mc2-full-resolution}
+at scalar level),
 exponential $=$ modular automorphy.
 See Table~\ref{tab:master-invariants}.
 \end{remark}
@@ -2225,8 +2227,16 @@ $\hat{A}$-class by Mumford's formula.
 The minimal model is proved for KM
 (Corollary~\ref{cor:km-minimal-linf}) and extends to
 $\mathcal{W}$-algebras via DS functoriality.  For exotic VOAs
-with $\dim H^2_{\mathrm{cyc}}\geq 2$, the formula is conditional;
+with $\dim H^2_{\mathrm{cyc}}\geq 2$, the scalar saturation
+formula is conditional;
 see Conjecture~\ref{conj:scalar-saturation-universality}.
+In the multi-channel regime, the correct framework is the
+shadow Postnikov tower
+$\Theta_\cA^{\leq 2}, \Theta_\cA^{\leq 3}, \Theta_\cA^{\leq 4},\ldots$
+with obstruction classes
+$o_{r+1}(\cA)$ at each level
+(Appendix~\ref{app:nonlinear-modular-shadows});
+the all-arity convergence of this tower is conjectural.
 \end{remark}
 
 \begin{corollary}[Explicit modular package for all families;
@@ -6816,10 +6826,14 @@ Theorem~D$_\Delta$
 (Theorem~\ref{thm:spectral-characteristic}): the spectral
 discriminant is a separately proved non-scalar invariant.
 
-The full universal Maurer--Cartan class $\Theta_{\cA}$
+The scalar-saturated Maurer--Cartan class $\Theta_{\cA}$
 (Theorem~\ref{thm:universal-theta}) is now established by
-Theorem~\ref{thm:mc2-full-resolution}, completing the modular
-characteristic hierarchy.
+Theorem~\ref{thm:mc2-full-resolution} at the level of scalar
+trace; the non-scalar shadow tower
+(cubic, quartic, and higher-arity obstructions)
+is separately developed in
+Appendix~\ref{app:nonlinear-modular-shadows} at each finite
+order.  The all-arity convergence of the tower remains conjectural.
 
 These are five aspects of a single object: the modular Koszul chiral
 algebra (Definition~\ref{def:modular-koszul-chiral}).  Every chiral
@@ -6839,168 +6853,1111 @@ principle at work, algebra by algebra, genus by genus.
 % THE MODULAR BAR-HAMILTONIAN AND THE EXTENSION TOWER
 %================================================================
 
-\section{The modular bar--Hamiltonian and the extension tower}
+\section{The modular convolution algebra and the master equation}
 \label{sec:modular-bar-hamiltonian}
 
-The modular characteristic package
-$\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa(\cA), \Delta_{\cA},
-\Pi_{\cA}, \mathcal{H}_{\cA})$ assembles a zoo of invariants.
-We now show that the zoo has a single cage: a graph-completed
-cyclic deformation algebra whose differential has five pieces, and
-whose Maurer--Cartan element is the universal class $\Theta_{\cA}$.
-The recursive machine for building $\Theta_{\cA}$ order by order is
-the extension tower.  Its quartic truncation is the shadow calculus
-computed in
-\S\ref{sec:heisenberg-shadow-gaussianity}--\S\ref{sec:mixed-cubic-quartic-shadows}
-and analysed in
-Appendix~\ref{app:nonlinear-modular-shadows}.
+The modular theory is controlled by a single
+algebraic object: the modular convolution dg~Lie algebra, together
+with its shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}).
+The five main theorems, complementarity, and the genus
+expansion are projections of the scalar level~$\kappa(\cA)$;
+the cubic and quartic shadows are proved at finite order.
+The conjectural all-arity limit of the tower is a
+Maurer--Cartan element
+$\Theta_{\cA} \in \operatorname{MC}(\mathfrak{g}^{\mathrm{mod}}_{\cA})$.
 
-\subsection{Coefficient algebras: stable graphs and planted forests}
-\label{subsec:coefficient-algebras}
+\subsection{The modular convolution dg~Lie algebra}
+\label{subsec:modular-convolution-algebra}
+\index{modular convolution dg Lie algebra|textbf}
 
-\begin{definition}[Stable-graph coefficient algebra]
-\label{def:stable-graph-coefficient-algebra}
-Let $\mathbb{G}_{\mathrm{st}}$ be the completed graded vector space
-spanned by connected stable graphs $\Gamma$ with genus labels on
-vertices, leg labels on external half-edges, and orientation line
-$\mathfrak{o}(\Gamma)$.  Multiplication is disjoint union and
-completion is taken with respect to total edge number and genus.
+\begin{definition}[Modular convolution dg~Lie algebra]
+\label{def:modular-convolution-dg-lie}
+Let $\cA$ be a cyclic chiral algebra on a smooth projective curve~$X$.
+The following dg~Lie algebra is the strict model of the modular
+quantum $L_\infty$-algebra of
+Theorem~\ref{thm:modular-homotopy-convolution}.
+The \emph{modular convolution dg~Lie algebra} is
+\begin{equation}
+\label{eq:modular-convolution}
+\mathfrak{g}_{\cA}^{\mathrm{mod}}
+\;:=\;
+\prod_{\substack{g,n \\ 2g-2+n > 0}}
+\operatorname{Hom}_{\Sigma_n}\!\bigl(
+C_*(\overline{\mathcal{M}}_{g,n}),\,
+\operatorname{End}_{\cA}(n)
+\bigr),
+\end{equation}
+where $C_*(\overline{\mathcal{M}}_{g,n})$ is the chain complex of
+the Deligne--Mumford moduli space and
+$\operatorname{End}_{\cA}(n) = \operatorname{Hom}(\cA^{\otimes n}, \cA)$
+is the endomorphism operad of~$\cA$.  The completed product is taken
+with respect to the genus grading $\hbar^g$.
 \end{definition}
 
-\begin{definition}[Planted-forest coefficient algebra]
-\label{def:planted-forest-coefficient-algebra}
-Let $\mathbb{G}_{\mathrm{pf}}$ be the completed coefficient
-algebra spanned by planted forests encoding nested collision types.
-A planted forest records depth, root order, and the incidence data
-of codimension-two and higher collision strata.  It is the
-algebraic avatar of the explicit $\overline{\operatorname{FM}}_3$-type
-residue geometry of the logarithmic configuration-space model.
-\end{definition}
-
-\begin{definition}[Cross-polarized edge]
-\label{def:cross-polarized-edge}
-An internal edge is \emph{cross-polarized} if one endpoint lies
-on the $\cA$-side and the other lies on the $\cA^!$-side.
-Same-side contractions are disallowed.
-\end{definition}
-
-\begin{remark}
-The cross-polarization rule is the direct construction demanded by
-ambient complementarity
-(Theorem~\ref{thm:ambient-complementarity-tangent}): the two dual
-sides interact \emph{only} through the opposite polarization.
-Every propagator is genuinely a complementarity propagator.
+\begin{remark}[Homotopy level]
+\label{rem:modular-conv-strict-model}
+\label{rem:homotopy-level-convolution}
+The dg~Lie algebra $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is a strict
+model~$\Convstr$ of the quantum $L_\infty$-algebra
+$\Convinf(\{\overline{\cM}_{g,n}\}, \operatorname{End}_{\cA})$
+\textup{(}Theorem~\textup{\ref{thm:modular-quantum-linfty}}):
+the operations $\ell_1^{(0)} = D$, $\ell_2^{(0)} = [-,-]$ are the
+dg~Lie structure; the higher brackets $\ell_k^{(g)}$ ($k \geq 3$)
+are explicit homotopy-transferred Feynman amplitudes from the
+modular operad.
+The strict model suffices for all Maurer--Cartan computations in
+this monograph
+\textup{(}Remark~\textup{\ref{rem:full-homotopy-why})}.
+The homotopy-invariant object $\Definfmod(\cA)$ is needed when
+passing to quasi-isomorphic replacements, minimal models, or
+different choices of contracting homotopy
+\textup{(}Theorem~\textup{\ref{thm:modular-homotopy-convolution}},
+Corollary~\textup{\ref{cor:strictification-comparison})}.
 \end{remark}
 
-\subsection{The ambient modular complementarity dg~Lie algebra}
-\label{subsec:ambient-dg-lie-algebra}
+\begin{theorem}[dg~Lie structure from the modular operad;
+\ClaimStatusProvedHere]
+\label{thm:convolution-dg-lie-structure}
+\index{modular convolution dg Lie algebra!structure}
+The strict dg~Lie structure on the modular convolution algebra
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is as follows:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Differential.}
+  The differential $D$ has five components
+  \textup{(}matching Construction~\textup{\ref{constr:five-pieces-differential})}:
+  \begin{equation}\label{eq:D-five-components}
+  D
+  \;=\;
+  d_{\mathrm{int}} + [\tau,-] + d_{\mathrm{sew}}
+  + d_{\mathrm{pf}} + \hbar\Delta,
+  \end{equation}
+  where $d_{\mathrm{int}}$ is the internal differential of~$\cA$;
+  $[\tau,-]$ twists by the bar--cobar kernel;
+  $d_{\mathrm{sew}}$ inserts a separating edge via the clutching
+  map $\overline{\mathcal{M}}_{g_1,n_1+1} \times
+  \overline{\mathcal{M}}_{g_2,n_2+1} \to
+  \overline{\mathcal{M}}_{g,n}$;
+  $d_{\mathrm{pf}}$ inserts a planted-forest correction from the
+  Fulton--MacPherson codimension-$2$ boundary;
+  $\hbar\Delta$ is the non-separating clutching
+  $\overline{\mathcal{M}}_{g,n+2} \to
+  \overline{\mathcal{M}}_{g+1,n}$,
+  contracting a pair of inputs with the invariant form
+  $\langle -, - \rangle_{\cA}$.
+
+\item \emph{Lie bracket.}
+  The Lie bracket is the convolution bracket: for
+  $\alpha \in \mathfrak{g}_{\cA}^{\mathrm{mod}}(g_1,n_1)$ and
+  $\beta \in \mathfrak{g}_{\cA}^{\mathrm{mod}}(g_2,n_2)$,
+  \[
+  [\alpha,\beta]
+  \;:=\;
+  \sum_{\text{separating clutchings}}
+  \alpha \circ_i \beta
+  - (-1)^{|\alpha||\beta|}\, \beta \circ_j \alpha,
+  \]
+  summed over all ways to compose via the separating gluing maps.
+
+\item \emph{Source.}  $D^2 = 0$ follows from $\partial^2 = 0$ on
+  $\overline{\mathcal{M}}_{g,n}$, i.e., from the boundary
+  relations of the modular operad
+  \textup{(}Getzler--Kapranov~\textup{\cite[\S5]{GeK98})}.
+  The Jacobi identity for $[-,-]$ follows from the associativity of
+  the operad composition.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The construction is the modular operad convolution of
+Getzler--Kapranov~\cite[\S4--5]{GeK98}, applied to the modular
+operad $\mathcal{M}od = \{\overline{\mathcal{M}}_{g,n}\}$ and
+the cyclic algebra~$\cA$.  Parts~(i)--(ii) are the standard
+convolution dg~Lie structure on
+$\operatorname{Hom}_{\mathrm{mod.op}}(\mathcal{M}od,
+\operatorname{End}_{\cA})$.  Part~(iii): the differential
+$D$ is the transport of the boundary operator $\partial$ on
+$C_*(\overline{\mathcal{M}}_{g,n})$ through the Hom functor,
+and $\partial^2 = 0$ gives $D^2 = 0$.
+\end{proof}
+
+\begin{theorem}[Full homotopy upgrade: quantum $L_\infty$ structure;
+\ClaimStatusProvedHere]
+\label{thm:modular-quantum-linfty}
+\index{quantum $L_\infty$ algebra|textbf}
+\index{modular convolution!quantum $L_\infty$ structure}
+The dg~Lie structure of
+Theorem~\textup{\ref{thm:convolution-dg-lie-structure}} extends to a
+\emph{quantum $L_\infty$-algebra} on
+$\mathfrak{g}_\cA^{\mathrm{mod}}$: operations
+$\{\ell_n^{(g)}\}_{n \geq 1,\, g \geq 0}$ where
+$\ell_1^{(0)} = D$, $\ell_2^{(0)} = [-,-]$,
+$\ell_n^{(0)}$ for $n \geq 3$ are the higher operadic $L_\infty$
+brackets from homotopy transfer of
+$C_*(\overline{\mathcal{M}}_{0,n+1})$
+through the Hom functor,
+$\ell_1^{(g)}$ for $g \geq 1$ is the genus-$g$ BV operator
+\textup{(}the non-separating clutching at genus~$g$\textup{)}, and
+$\ell_n^{(g)}$ for $g \geq 1$ are the higher-genus Feynman amplitudes
+\textup{(}stable graph sums of type $(g,n)$\textup{)}.  The quantum
+master equation
+\textup{(}Theorem~\textup{\ref{thm:quantum-master-equation})} is
+the $L_\infty$-MC equation:
+\begin{equation}\label{eq:quantum-linfty-mc}
+\sum_{n \geq 1}\, \sum_{g \geq 0}
+\frac{\hbar^g}{n!}\,
+\ell_n^{(g)}(\Theta^{\otimes n})
+\;=\; 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+At the operadic level: the convolution $L_\infty$ structure on
+$\mathrm{Hom}(C^*(P), \mathrm{End}(A))$ is
+Loday--Vallette~\cite[Theorem~10.3.8]{LV12} and
+van~der~Laan~\cite{vdL03}.
+At the modular level: the Feynman transform extends the operadic
+$L_\infty$ to a quantum $L_\infty$ by adding loop-contraction
+operations
+(Getzler--Kapranov~\cite[\S5]{GeK98},
+Chuang--Lazarev~\cite{CL10}).
+The QME is $\partial^2 = 0$ on
+$C_*(\overline{\mathcal{M}}_{g,n})$ transported through the
+modular Feynman transform.
+\end{proof}
+
+\begin{construction}[Explicit convolution $L_\infty$ brackets as
+Feynman amplitudes; \ClaimStatusProvedHere]
+\label{constr:explicit-convolution-linfty}
+\index{convolution $L_\infty$ brackets!explicit formulas}
+The quantum $L_\infty$ operations of
+Theorem~\textup{\ref{thm:modular-quantum-linfty}} have the following
+explicit form, derived from the Robert-Nicoud--Wierstra convolution
+formula \cite[Theorem~5.1]{RNW19} specialised to the modular
+cooperad $\cC = \{C_*(\overline{\cM}_{g,n})\}$ and the
+endomorphism operad $\cP = \operatorname{End}_{\cA}$.  Fix a contracting
+homotopy $h$ for the inclusion of cohomology
+$\iota\colon H_*(\overline{\cM}_{g,n}) \hookrightarrow
+C_*(\overline{\cM}_{g,n})$ with projection $\pi$ and
+$h \circ h = 0$, $\pi \circ \iota = \operatorname{id}$,
+$\iota \circ \pi = \operatorname{id} + [d_{\cM}, h]$.
+
+\emph{Genus-$0$ ternary bracket}
+\textup{(}three channels of $\overline{\cM}_{0,4} \cong \PP^1$\textup{)}.
+\begin{equation}
+\label{eq:ell3-explicit}
+\ell_3^{(0)}(\alpha,\beta,\gamma)
+\;=\;
+\sum_{\substack{T \in \mathsf{Trees}_3 \\ \text{trivalent, 3 leaves}}}
+\frac{1}{|\operatorname{Aut}(T)|}
+\;\bigl(\pi \circ m_T^{(h)} \circ \iota^{\otimes 3}\bigr)
+(\alpha,\beta,\gamma),
+\end{equation}
+where $\mathsf{Trees}_3 = \{T_s, T_t, T_u\}$ are the three binary
+trees with three leaves (the $s$-, $t$-, $u$-channels), and
+$m_T^{(h)}$ contracts the unique internal edge of~$T$ with the
+homotopy propagator $h \circ P_{\cA}$:
+\[
+m_{T_s}^{(h)}(\alpha,\beta,\gamma)
+= (h \circ P_{\cA})\bigl([\alpha, [\beta, \gamma]]\bigr), \quad
+m_{T_t}^{(h)}
+= (h \circ P_{\cA})\bigl([\beta, [\gamma, \alpha]]\bigr), \quad
+m_{T_u}^{(h)}
+= (h \circ P_{\cA})\bigl([\gamma, [\alpha, \beta]]\bigr).
+\]
+At the cohomological level,
+$[\ell_3^{(0)}] = 0$ in $H^*(\overline{\cM}_{0,4})$ because
+$H^1(\PP^1) = 0$; the ternary bracket is exact but
+chain-level nontrivial.  For the \v{C}ech complex, this is the
+Jacobiator homotopy $J' = F_3$ of
+Malikov--Schechtman~\cite{MS24}.
+
+\emph{Genus-$0$ quaternary bracket}
+\textup{(}$15$ trivalent trees with $4$ leaves;
+$\overline{\cM}_{0,5}$\textup{)}.
+\begin{equation}
+\label{eq:ell4-explicit}
+\ell_4^{(0)}(\alpha,\beta,\gamma,\delta)
+\;=\;
+\sum_{\substack{T \in \mathsf{Trees}_4}}
+\frac{\pm 1}{|\operatorname{Aut}(T)|}
+\;\bigl(\pi \circ m_T^{(h)} \circ \iota^{\otimes 4}\bigr)
+(\alpha,\beta,\gamma,\delta),
+\end{equation}
+where $|\mathsf{Trees}_4| = 15$ (the trivalent trees with
+$4$~external and $2$~internal edges).  Each tree $T$ has two
+internal edges, and $m_T^{(h)}$ contracts both with the homotopy
+propagator $h \circ P_{\cA}$.  The cohomology class $[\ell_4^{(0)}]$
+lives in $H^*(\overline{\cM}_{0,5})$ and detects the quartic shadow
+obstruction $o_4(\cA)$
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}.
+
+\emph{Genus-$1$ unary bracket} \textup{(}BV operator\textup{)}.
+\begin{equation}
+\label{eq:ell1-genus1}
+\ell_1^{(1)}(\alpha)
+\;=\;
+\hbar \cdot \Delta(\alpha)
+\;=\;
+\hbar \cdot \operatorname{tr}\bigl(
+P_{\cA} \circ \alpha \circ \delta^{\mathrm{ns}}
+\bigr),
+\end{equation}
+where $\delta^{\mathrm{ns}}\colon
+\overline{\cM}_{g,n+2} \to \overline{\cM}_{g+1,n}$ is the
+non-separating clutching map and the trace contracts the two
+new marked points against the invariant form
+$\langle -,- \rangle_{\cA}$.
+
+\emph{General formula.}
+For arbitrary genus~$g$ and arity~$n$ with $2g-2+n > 0$:
+\begin{equation}
+\label{eq:elln-general-graph-sum}
+\ell_n^{(g)}(\alpha_1,\ldots,\alpha_n)
+\;=\;
+\sum_{\substack{
+\Gamma \in \mathsf{Gr}^{\mathrm{conn}}_{g,n} \\
+\text{stable, trivalent}}}
+\frac{\hbar^{h_1(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}
+\;\prod_{v \in V(\Gamma)}\!
+\ell_{|v|}^{(g_v),\mathrm{tr}}
+\;\prod_{e \in E_{\mathrm{int}}(\Gamma)}\!
+(h \circ P_{\cA})_e
+\;\cdot\;
+(\alpha_1 \otimes \cdots \otimes \alpha_n),
+\end{equation}
+where $\mathsf{Gr}^{\mathrm{conn}}_{g,n}$ is the set of connected
+stable graphs of type~$(g,n)$ with
+$h_1(\Gamma) = |E_{\mathrm{int}}| - |V| + 1$ loops, each vertex~$v$
+carries the transferred operation
+$\ell_{|v|}^{(g_v),\mathrm{tr}}$ from the minimal model of
+$C_*(\overline{\cM}_{g_v,n_v})$, and each internal edge
+contracts with the homotopy propagator $h \circ P_{\cA}$.
+
+This is the Feynman expansion of the quantum $L_\infty$ structure:
+the brackets are amplitudes, the homotopy propagator is the Feynman
+propagator, and the sum over graphs is the path integral at fixed
+loop order.
+The formulas~\eqref{eq:ell3-explicit}--\eqref{eq:elln-general-graph-sum}
+make the abstract $L_\infty$ structure of
+Theorem~\textup{\ref{thm:modular-quantum-linfty}}
+computationally accessible: one inputs the vertices (transferred
+cyclic operations), the edges (the homotopy propagator), and the
+combinatorics (stable graphs), and obtains explicit multilinear
+maps.
+\end{construction}
+
+\begin{remark}[Logical priority]
+\label{rem:linfty-logical-priority}
+The quantum $L_\infty$ structure of
+Theorem~\ref{thm:modular-quantum-linfty} is not an upgrade added
+after the fact to the dg~Lie structure of
+Definition~\ref{def:modular-convolution-dg-lie}.  Logically, the
+$L_\infty$ structure is \emph{primary}: it arises from the modular
+Feynman transform, and the dg~Lie structure is its binary shadow.
+The genus tower, the shadow projections
+$\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \Theta$,
+and the non-renormalization of tree-level operations are all
+consequences of the full $L_\infty$ package, visible already at the
+strict level but explained by the homotopy structure.
+\end{remark}
+
+\begin{remark}[Why the full homotopy level matters]
+\label{rem:full-homotopy-why}
+The dg~Lie structure suffices for MC elements and the extension tower.
+The full quantum $L_\infty$ structure is needed for:
+\textup{(i)}~homotopy transfer to the minimal model (the transferred
+operations $\ell_n^{\mathrm{tr}}$ in the graph sum are the quantum
+$A_\infty$-minimal model);
+\textup{(ii)}~formality (modular-formal = quantum $L_\infty$ is formal;
+for Koszul algebras this holds by one-channel + concentration);
+\textup{(iii)}~gauge equivalences between MC elements (the higher
+homotopies relate different choices of contracting homotopy).
+In particular, the planted-forest term $d_{\mathrm{pf}}$ in the
+five-piece differential~\eqref{eq:D-five-components} is the
+chain-level correction that upgrades the strict model
+$(d_{\mathrm{int}} + [\tau,-] + d_{\mathrm{sew}} + \hbar\Delta)$
+to the full quantum $L_\infty$ model: it encodes the higher
+$L_\infty$ homotopies from codimension-${\geq}2$ boundary strata of
+$\overline{\mathcal{M}}_{g,n}$ that the binary sewing differential
+$d_{\mathrm{sew}}$ misses.  The conjecture that $D^2 = 0$ at the
+ambient level (Conjecture~\ref{conj:differential-square-zero}) is
+the statement that the planted-forest correction makes the ambient
+model into a genuine quantum $L_\infty$-algebra.
+
+The bar complex, the cobar complex, and all modular constructions
+carry compatible quantum $L_\infty$ structures by functoriality of
+the Feynman transform.
+
+In particular, the bar-cobar adjunction of Theorem~A is a
+\emph{quantum $L_\infty$ functor}: it intertwines the modular $L_\infty$
+structures on both sides of the adjunction.  This is the deep reason
+that homotopy transfer produces the correct genus-refined operations
+$\ell_{g,n}$, and that the non-renormalization theorem
+(Theorem~\ref{thm:non-renormalization-tree}) holds: tree-level
+operations are exact because the $L_\infty$ transfer preserves MC
+elements, and loop corrections are absorbed into the genus-raising
+BV operator~$\Delta$.
+\end{remark}
+
+%% ────────────────────────────────────────────────────────────────────
+%%  Two-level convention: strict models and homotopy-invariant objects
+%% ────────────────────────────────────────────────────────────────────
+
+\subsection{The two-level convention: strict models and homotopy-invariant objects}
+\label{subsec:two-level-convention}
+
+\begin{remark}[The two-level convention]
+\label{rem:two-level-convention}
+\index{two-level convention}
+Throughout this monograph, every convolution dg~Lie algebra arises
+as a \emph{strict model} of an underlying homotopy-invariant
+$L_\infty$-algebra.  We write $\Convstr(C,P)$ for the strict
+dg~Lie model $\operatorname{Hom}_{\mathbb{S}}(C,P)$ when $C$, $P$
+are strict, and $\Convinf(C,P)$ for the homotopy-invariant
+$L_\infty$-algebra, well-defined up to $L_\infty$-quasi-isomorphism.
+The modular deformation object is denoted
+$\Definfmod(\cA)$; the coderivation dg~Lie algebra
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ of
+Definition~\ref{def:modular-convolution-dg-lie} is its strict model.
+The dg~Lie algebra suffices for Maurer--Cartan elements and the
+extension tower; the $L_\infty$-algebra is the invariant object
+that persists under quasi-isomorphic replacements, homotopy
+transfer, and different choices of contracting homotopy.
+\end{remark}
+
+\begin{theorem}[Operadic homotopy convolution;
+\ClaimStatusProvedElsewhere]
+\label{thm:operadic-homotopy-convolution-modular}
+\index{operadic homotopy convolution}
+For any cooperadic/operadic pair $(C,P)$, there is a functorially
+defined complete filtered $L_\infty$-algebra $\Convinf(C,P)$,
+well-defined up to $L_\infty$-quasi-isomorphism, whose
+Maurer--Cartan elements are $\infty$-twisting morphisms.
+For strict $C$, $P$, the convolution dg~Lie algebra
+$\Convstr(C,P) := \operatorname{Hom}_{\mathbb{S}}(C,P)$ is a
+strict model: $\ell_1 = D$, $\ell_2 = [-,-]$,
+$\ell_n = 0$ for $n \geq 3$.
+The full chiral operadic identification, including
+functoriality with respect to $\infty$-morphisms
+and the one-slot obstruction, is
+Theorem~\textup{\ref{thm:operadic-homotopy-convolution}}.
+\end{theorem}
+
+\begin{proof}[References]
+The operadic $L_\infty$ structure is constructed via homotopy
+transfer through the $\operatorname{Hom}$~functor
+(Loday--Vallette~\cite[Thm~10.3.8]{LV12}; Robert-Nicoud--Wierstra~\cite[Thm~4.1]{RNW19}); the explicit
+transferred brackets are given by van~der~Laan~\cite{vdL03}.
+The strict dg~Lie algebra is the binary truncation.
+\end{proof}
+
+\begin{theorem}[Modular homotopy convolution;
+\ClaimStatusProvedHere]
+\label{thm:modular-homotopy-convolution}
+\index{modular homotopy convolution}
+For any modular bar datum~$\cA$, there is a complete filtered
+cyclic/modular $L_\infty$-algebra $\Definfmod(\cA)$ controlling
+modular deformations.  The coderivation dg~Lie algebra of a
+chosen completed modular bar model is a strictification.
+The universal class $\Theta_{\cA}$ is its canonical
+Maurer--Cartan element.  The full $L_\infty$-MC equation
+recovers the quantum master
+equation~\eqref{eq:quantum-linfty-mc}.
+\end{theorem}
+
+\begin{proof}
+This synthesises Theorem~\ref{thm:modular-quantum-linfty} with
+the two-level convention.  The complete filtered $L_\infty$-algebra
+is the quantum $L_\infty$-algebra of
+Theorem~\ref{thm:modular-quantum-linfty}; the dg~Lie algebra
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ of
+Definition~\ref{def:modular-convolution-dg-lie} is the strict
+model obtained by retaining only $\ell_1^{(0)} = D$ and
+$\ell_2^{(0)} = [-,-]$.
+\end{proof}
+
+\begin{corollary}[Strictification comparison;
+\ClaimStatusProvedHere]
+\label{cor:strictification-comparison}
+\index{strictification comparison}
+All dg~Lie algebras in this monograph are functorial strict models
+of the corresponding homotopy-invariant $L_\infty$-algebras, and
+all bar-complex constructions are computations in a chosen
+strictification.  In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathfrak{g}_{\cA}^{\mathrm{mod}} =
+  \Convstr\!\bigl(\{C_*(\overline{\cM}_{g,n})\},
+  \operatorname{End}_{\cA}\bigr)$ is a strict model of
+  $\Definfmod(\cA)$.
+\item $\Defcyc^{\mathrm{mod}}(\cA)$ is a strict model via the
+  coderivation identification.
+\item For affine Kac--Moody algebras at non-critical level, the
+  $L_\infty$-algebra is strictly formal: no higher homotopy
+  corrections at any genus
+  \textup{(}Theorem~\textup{\ref{thm:km-strictification})}.
+  This is the archetype of strictification.
+\item The choice of strict model amounts to a choice of
+  contracting homotopy; different choices yield
+  $L_\infty$-quasi-isomorphic deformation objects.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Part~(i) is the content of
+Remark~\ref{rem:modular-conv-strict-model}.
+Part~(ii) follows from the cofree-coderivation principle.
+Part~(iii) is Theorem~\ref{thm:km-strictification}.
+Part~(iv) is standard homotopy transfer
+(Loday--Vallette~\cite[Thm~10.3.1]{LV12}).
+\end{proof}
+
+\begin{theorem}[Homotopy invariance of the shadow algebra;
+\ClaimStatusProvedElsewhere]
+\label{thm:shadow-homotopy-invariance}
+\index{shadow algebra!homotopy invariance|textbf}
+\index{homotopy invariance!shadow algebra}
+Let $f\colon \cA \xrightarrow{\sim} \cA'$ be an
+$\infty_\alpha$-quasi-isomorphism of chiral algebras.  Then
+the induced map on convolution $sL_\infty$-algebras
+\[
+f_*\colon
+\operatorname{hom}_\alpha(\cC^{\textup{!`}}_{\mathrm{ch}},\, \cA)
+\;\xrightarrow{\;\sim\;}
+\operatorname{hom}_\alpha(\cC^{\textup{!`}}_{\mathrm{ch}},\, \cA')
+\]
+is an $\infty_\alpha$-quasi-isomorphism, and the induced map on
+Maurer--Cartan $\infty$-groupoids is a weak homotopy equivalence.
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The shadow algebra
+  $\cA^{\mathrm{sh}} = H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ is a
+  homotopy invariant of~$\cA$.
+\item The scalar characteristic $\kappa(\cA)$ is a
+  quasi-isomorphism invariant.
+\item The full shadow tower
+  $(\kappa,\, \Delta,\, \mathfrak{C},\, \mathfrak{Q},\,
+  \mathrm{Sh}_r,\, \ldots)$ is a quasi-isomorphism invariant.
+\item The modular MC element $\Theta_\cA$ is invariant up to gauge
+  equivalence in $\mathrm{MC}_\bullet(\mathfrak{g}_\cA^{\mathrm{mod}})$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[References]
+Part~(i)--(iv) follow from the homotopy invariance of MC spaces of
+convolution $sL_\infty$-algebras under $\infty_\alpha$-quasi-isomorphisms
+(Robert-Nicoud--Wierstra~\cite[Section~8]{RNW19}).  The shadow algebra is
+the homology of the strict model $\Defcyc^{\mathrm{mod}}(\cA)$
+(Corollary~\ref{cor:strictification-comparison}); homotopy invariance of the
+$sL_\infty$-algebra implies invariance of homology.  Parts~(ii) and (iii)
+follow because $\kappa$ and the higher shadows are graded projections
+of $\cA^{\mathrm{sh}}$.  Part~(iv) is the Deligne--Getzler--Hinich
+weak equivalence of MC $\infty$-groupoids.
+\end{proof}
+
+\begin{remark}[The unifying principle]
+\label{rem:unifying-principle}
+\index{unifying principle|textbf}
+\index{shadow Postnikov tower!as primary object}
+The primary mathematical object of this monograph is the
+\emph{shadow Postnikov tower}
+$\Theta_\cA^{\leq 2},\, \Theta_\cA^{\leq 3},\,
+\Theta_\cA^{\leq 4},\, \ldots$
+in the modular convolution algebra
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$.
+Each finite truncation $\Theta_\cA^{\leq r}$ is \emph{proved}
+constructively; the all-arity limit
+$\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ is the
+\emph{conjectural} horizon
+\textup{(}Conjecture~\textup{\ref{conj:recursive-existence})}.
+
+The correct logical order is:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Define $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ from the modular
+  operad and the chiral algebra.
+  More precisely, $\Definfmod(\cA)$ is the homotopy-invariant
+  home \textup{(}Theorem~\textup{\ref{thm:modular-homotopy-convolution})};
+  the dg~Lie algebra $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is its
+  strict model
+  \textup{(}Corollary~\textup{\ref{cor:strictification-comparison})}.
+\item Construct the shadow Postnikov tower: at each weight~$r$,
+  the truncated MC equation has a unique solution
+  $\Theta_\cA^{\leq r}$, with obstruction class
+  $o_{r+1}(\cA) \in H^2(F^{r+1}/F^{r+2})$ controlling the next
+  extension.  For one-channel algebras
+  \textup{(}$\dim H^2 = 1$\textup{)}, scalar saturation gives
+  $\Theta = \kappa \cdot \eta \otimes \Lambda$
+  \textup{(}Theorem~\textup{\ref{thm:theta-direct-derivation})}.
+\item The five-component differential, the graph sums, the genus
+  tower, and the shadow projections
+  $\kappa \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$
+  are automatic from the finite-order tower.
+\item Descend to concrete computations \textup{(}Heisenberg, KM,
+  Virasoro, $\mathcal{W}$-algebras, Yangians\textup{)} by
+  evaluating the tower on specific inputs.
+\end{enumerate}
+The analytic constructions of the preceding sections
+\textup{(}propagators, Arnold relations, period integrals\textup{)}
+are computational tools for evaluating $\Theta_{\cA}^{\leq r}$
+on specific families, not definitions.
+\end{remark}
+
+\begin{definition}[Modular chiral algebra structure]
+\label{def:modular-chiral-structure-mc}
+\index{modular chiral algebra!as MC element}
+A \emph{modular chiral algebra structure} on~$\cA$ is a
+Maurer--Cartan element
+\begin{equation}\label{eq:modular-mc-element}
+\Theta_{\cA}
+\;\in\;
+\operatorname{MC}(\mathfrak{g}_{\cA}^{\mathrm{mod}})
+\;:=\;
+\bigl\{
+\alpha \in (\mathfrak{g}_{\cA}^{\mathrm{mod}})^1
+\;\big|\;
+D\alpha + \tfrac12[\alpha,\alpha] = 0
+\bigr\}.
+\end{equation}
+\end{definition}
+
+\begin{remark}[Five theorems from the shadow Postnikov tower]
+\label{rem:five-from-one}
+\index{main theorems!from shadow Postnikov tower}
+The five main theorems are projections of the scalar
+level~$\Theta_{\cA}^{\leq 2} = \kappa(\cA)$ of the
+shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}):
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+\emph{Theorem} & \emph{Projection} & \emph{MC content} \\
+\midrule
+A (bar-cobar adjunction) &
+  $\Theta|_{\hbar=0}$ &
+  Genus-$0$ MC $= $ bar-cobar twisting morphism $\tau$ \\
+B (inversion) &
+  $\mathrm{FT}^2 \simeq \mathrm{id}$ &
+  Getzler--Kapranov involution on MC elements \\
+C (complementarity) &
+  Cross-polarization &
+  $\cA/\cA^!$-sides interact only through $P_{\cA}$ \\
+D (modular char.) &
+  $\Theta_{1,0;0}$ &
+  Genus-$1$ arity-$0$ projection $= \kappa \cdot \lambda_1$ \\
+H (Hochschild) &
+  Arity-preserving sub-MC &
+  Polynomiality from Koszul concentration \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{theorem}[The explicit formula: direct derivation;
+\ClaimStatusProvedHere]
+\label{thm:theta-direct-derivation}
+\index{Theta@$\Theta_\cA$!direct derivation}
+For a modular Koszul chiral algebra~$\cA$ with one-channel cyclic
+deformation complex
+\textup{(}$\dim H^2(\Defcyc(\cA), l_1) = 1$ at each genus\textup{)},
+the unique Maurer--Cartan element in
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is
+\begin{equation}\label{eq:theta-explicit-direct}
+\Theta_{\cA}
+\;=\;
+\kappa(\cA) \cdot \eta \otimes \Lambda,
+\qquad
+\Lambda = \sum_{g \geq 1} \lambda_g,
+\end{equation}
+where $\eta$ is the unique degree-$1$ generator of the
+one-dimensional obstruction space and $\lambda_g$ the
+Faber--Pandharipande tautological class.
+\end{theorem}
+
+\begin{proof}
+\emph{Existence.}
+The modular convolution algebra
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ has $D^2 = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}).
+By the one-channel property, the deformation complex has
+$\dim H^2 = 1$ at each genus~$g$, generated by a single class
+$\alpha_g \in H^2(\Defcyc(\cA))$.
+The Koszul concentration ensures that the only degree-$1$
+elements in the minimal model at genus~$g$ are scalar multiples of
+$s^{-1}\eta$.
+
+\emph{Degree/parity argument.}
+The MC equation
+$D\Theta + \tfrac12[\Theta,\Theta] = 0$
+has $|\Theta| = 1$.  At each genus~$g$, the input $s^{-1}\eta$ is
+odd, so the bracket $[\Theta^{(g_1)},\Theta^{(g_2)}]$ vanishes
+whenever both factors have $s^{-1}\eta$ as input (odd$\cdot$odd = 0
+in the symmetric bracket on the one-channel line).  Therefore the
+MC equation reduces to
+$D\Theta^{(g)} = 0$
+at each genus separately: $\Theta^{(g)}$ is a \emph{cocycle},
+not merely a solution of the nonlinear equation.
+The unique cocycle at genus~$g$ in the one-channel line is
+$\kappa(\cA) \cdot \eta \otimes \lambda_g$
+(the tautological class, by
+Theorem~\ref{thm:tautological-line-support}).
+\end{proof}
+
+\begin{remark}[Scope: scalar saturation vs.\ full all-arity limit]
+\label{rem:scalar-saturation-scope}
+\index{scalar saturation|textbf}
+\index{shadow Postnikov tower!scalar vs.\ all-arity}
+Theorem~\textup{\ref{thm:theta-direct-derivation}} is the
+\emph{scalar-saturated} case: it applies when
+$\dim H^2(\Defcyc(\cA)) = 1$ at each genus
+\textup{(}one-channel\textup{)}.  For such algebras
+\textup{(}Heisenberg, affine Kac--Moody at generic level,
+Virasoro, principal $\mathcal{W}_N$ at generic level\textup{)},
+the formula $\Theta = \kappa \cdot \eta \otimes \Lambda$ is
+\emph{proved} and the extension tower terminates at the scalar
+level.
+
+For multi-channel families \textup{(}or at special parameters
+where $\dim H^2 > 1$\textup{)}, the full all-arity
+Maurer--Cartan element $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$
+is the \emph{conjectural} limit of the shadow Postnikov tower.
+Each finite truncation $\Theta_\cA^{\leq r}$ is proved
+constructively:
+$\Theta^{\leq 2} = \kappa$,
+$\Theta^{\leq 3} = \kappa + \mathfrak{C}$,
+$\Theta^{\leq 4} = \kappa + \mathfrak{C} + \mathfrak{Q}$.
+The convergence of the full tower
+\textup{(}Conjecture~\textup{\ref{conj:recursive-existence})}
+remains open for non-one-channel algebras.
+
+The MC2 gauntlet
+\textup{(}Theorem~\textup{\ref{thm:mc2-full-resolution})} remains
+the verification that the one-channel and tautological-line
+hypotheses hold for all standard families; the present theorem
+distils its content to three lines under those hypotheses.
+\end{remark}
+
+\subsection{The modular bar--Hamiltonian: the explicit graph sum}
+\label{subsec:modular-bar-hamiltonian}
+
+\begin{definition}[The modular bar--Hamiltonian]
+\label{def:modular-bar-hamiltonian}
+Let $\cA$ be a cyclic chiral algebra with Koszul dual $\cA^!$,
+cyclic minimal models $(V_{\cA}, \ell_n^{\mathrm{tr}})$ and
+$(V_{\cA^!}, \ell_n^{!\,\mathrm{tr}})$, Hessian
+$H_{\cA}\colon V_{\cA} \xrightarrow{\sim} V_{\cA}^*[-1]$,
+propagator $P_{\cA} := H_{\cA}^{-1}$, and universal twisting
+kernel $\tau_{\cA} \in \operatorname{MC}(\cA^!\widehat\otimes\cA)$.
+The \emph{modular bar--Hamiltonian} is the connected graph sum
+\begin{equation}
+\label{eq:modular-bar-hamiltonian}
+\Theta_{\cA}
+\;:=\;
+\sum_{\substack{
+\Gamma\;\text{connected}\\
+\text{stable, cross-polarized}}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;\prod_{v \in V(\Gamma)}
+\ell_{|v|}^{\mathrm{tr}}
+\;\prod_{e \in E(\Gamma)} P_{\cA}
+\;\prod_{\ell \in L(\Gamma)} \hbar,
+\end{equation}
+where each vertex $v$ on the $\cA$-side carries the transferred
+operation $\ell_{|v|}^{\mathrm{tr}}$ (and on the $\cA^!$-side,
+$\ell_{|v|}^{!\,\mathrm{tr}}$), each internal edge is contracted
+with the propagator $P_{\cA}$, each loop contributes a factor
+of $\hbar$, and every internal edge is \emph{cross-polarized}:
+one endpoint on the $\cA$-side, the other on $\cA^!$.
+\end{definition}
+
+\begin{remark}[What cross-polarization means]
+\label{rem:cross-polarization}
+Same-side contractions are forbidden.  This is not a technical
+convenience but the defining feature of complementarity at the
+chain level: the two dual sides interact \emph{only through the
+opposite polarization}.  Every propagator is a complementarity
+propagator.
+\end{remark}
+
+\begin{definition}[The ambient master equation]
+\label{def:ambient-master-equation}
+The \emph{conjectural} full modular lift of $\cA$ is the statement
+that the all-arity limit $\Theta_{\cA}$
+(Conjecture~\ref{conj:recursive-existence}) satisfies
+\begin{equation}
+\label{eq:ambient-master-equation}
+D_{\cA}\Theta_{\cA}
++ \tfrac12[\Theta_{\cA},\Theta_{\cA}] = 0,
+\end{equation}
+where the five pieces of $D_{\cA}$ are:
+\begin{equation}
+\label{eq:ambient-differential}
+D_{\cA}
+\;=\;
+\underbrace{d_{\mathrm{int}}}_{\text{internal}}
+\;+\;
+\underbrace{[\tau_{\cA},-]}_{\text{kernel twist}}
+\;+\;
+\underbrace{d_{\mathrm{sew}}}_{\text{separating edge}}
+\;+\;
+\underbrace{d_{\mathrm{pf}}}_{\text{planted forest}}
+\;+\;
+\underbrace{\hbar\Delta}_{\text{genus loop}}.
+\end{equation}
+\end{definition}
+
+\begin{remark}[From dg to full quantum $L_\infty$]
+\label{rem:dg-to-quantum-linfty}
+Equation~\eqref{eq:ambient-master-equation} is the
+\emph{dg~Lie truncation} of the full quantum $L_\infty$ master
+equation~\eqref{eq:quantum-linfty-mc}
+(Theorem~\ref{thm:modular-quantum-linfty}).  In the dg~Lie
+truncation, only $\ell_1^{(0)} = D$ and $\ell_2^{(0)} = [-,-]$
+appear.  The full equation
+$\sum_{n,g} (\hbar^g/n!)\,\ell_n^{(g)}(\Theta^{\otimes n}) = 0$
+additionally involves:
+\begin{itemize}
+\item the \emph{higher tree brackets} $\ell_n^{(0)}$ for $n \geq 3$,
+arising from homotopy transfer of
+$C_*(\overline{\mathcal{M}}_{0,n+1})$ through the Hom functor
+(Loday--Vallette~\cite[Theorem~10.3.8]{LV12});
+\item the \emph{genus-$g$ BV operators} $\ell_1^{(g)}$ from
+non-separating clutching
+(Getzler--Kapranov~\cite[\S5]{GeK98});
+\item the \emph{higher-genus Feynman amplitudes} $\ell_n^{(g)}$
+from stable graph sums of type $(g,n)$
+(Chuang--Lazarev~\cite{CL10}).
+\end{itemize}
+The dg~Lie equation suffices for the Maurer--Cartan element and the
+extension tower (Construction~\ref{constr:obstruction-recursion}).
+The truncation drops all genus-$0$ higher associativity
+($\ell_3^{(0)}, \ell_4^{(0)}, \ldots$) and all genus-$g \geq 1$
+BV-type loop operators.  These contribute
+$O(\hbar^2)$ and higher to the partition function; the genus-$1$
+boundary recursion from the genus-$0$ master element is determined
+entirely by $D\Theta$ and $[\Theta,\Theta]$.
+The full quantum $L_\infty$ equation is needed for
+\emph{gauge equivalences between different presentations} and for
+\emph{homotopy transfer to the minimal model} --- the transferred
+operations $\ell_n^{\mathrm{tr}}$ that label the vertices of the
+graph sum~\eqref{eq:modular-bar-hamiltonian} are precisely the
+quantum $A_\infty$-minimal model operations.
+
+The shadow tower is the direct manifestation of this homotopy
+structure: the arity-$r$ shadow $\operatorname{Sh}_r(\cA)$ is
+the genus-$0$ component of $\ell_r^{(0)}(\Theta^{\otimes r})$,
+and the genus-$1$ Hessian correction
+$\delta H^{(1)} = \Lambda_P(\mathfrak{Q})$ comes from
+$\ell_1^{(1)}(\Theta)$.  The full shadow calculus
+(\S\ref{sec:heisenberg-shadow-gaussianity}--\S\ref{sec:mixed-cubic-quartic-shadows}
+and Appendix~\ref{app:nonlinear-modular-shadows}) is the
+visible face of the quantum $L_\infty$
+structure on $\mathfrak{g}_{\cA}^{\mathrm{mod}}$.
+\end{remark}
+
+\begin{proposition}[Chriss--Ginzburg structure principle; \ClaimStatusProvedHere]
+\label{prop:chriss-ginzburg-structure}
+\index{Chriss--Ginzburg structure principle|textbf}
+\index{modular bar--Hamiltonian!as structure map}
+The assignment $\cA \mapsto \Theta_{\cA}
+\in \operatorname{MC}(\mathfrak{g}^{\mathrm{amb}}_{\cA})$
+is a functor from chiral algebras to Maurer--Cartan moduli of the
+ambient algebra:
+\begin{equation}
+\label{eq:chriss-ginzburg-functor}
+\Theta\colon
+\{\text{chiral algebras}\}
+\longrightarrow
+\coprod_{\cA}\,
+\operatorname{MC}(\mathfrak{g}^{\mathrm{amb}}_{\cA}).
+\end{equation}
+The algebra structure on $\cA$ \emph{is} the Maurer--Cartan element
+$\Theta_{\cA}$.  The bar complex is the twisting of
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}$ by $\Theta_{\cA}$; the genus
+tower is the filtration of $\Theta_{\cA}$ by graph loop order; all
+modular invariants are projections of the single universal element.
+\end{proposition}
+
+\begin{proof}
+Functoriality follows from naturality of the transferred operations
+$\ell_n^{\mathrm{tr}}$ and the propagator $P_{\cA}$ under morphisms
+of cyclic chiral algebras.  The remaining identifications are
+immediate from the graph-sum expansion~\eqref{eq:modular-bar-hamiltonian}
+and the five-component
+differential~\eqref{eq:ambient-differential}.
+\end{proof}
+
+\begin{remark}[The Chriss--Ginzburg philosophy for factorization algebras]
+\label{rem:chriss-ginzburg-philosophy}
+\index{Chriss--Ginzburg structure principle!factorization algebra interpretation}
+This is the Chriss--Ginzburg philosophy applied to factorization
+algebras on curves: master objects are defined directly as
+Maurer--Cartan elements in convolution homotopy Lie algebras.  At
+the dg~level the governing equation is
+$D_{\cA}\Theta_{\cA} + \tfrac12[\Theta_{\cA},\Theta_{\cA}] = 0$;
+at the full homotopy level the ambient algebra
+$\mathfrak{g}_\cA^{\mathrm{amb}}$ carries a quantum
+$L_\infty$-structure
+(Theorem~\ref{thm:modular-quantum-linfty}), and the
+Maurer--Cartan equation becomes
+$\sum_{n \geq 1}\tfrac{1}{n!}\,\ell_n^{(0)}(\Theta,\dots,\Theta)
++ \sum_{g \geq 1}\hbar^{2g}\,\ell_1^{(g)}(\Theta) = 0$,
+where $\ell_n^{(0)}$ are the operadic higher brackets from
+Loday--Vallette~\cite[Thm~10.3.8]{LV12} and $\ell_1^{(g)}$ are
+the genus-$g$ BV operators.  The dg~equation is the leading-order
+truncation; the full quantum $L_\infty$ equation encodes all
+higher Feynman amplitudes.
+At the scalar level (where the shadow Postnikov tower
+collapses to~$\kappa$), the following structures are
+proved corollaries:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus expansion}: the filtration by graph loop order gives the genus tower;
+\item \emph{Shadow tower}: projecting onto the arity-$r$ component of $\Defcyc^{\mathrm{mod}}(\cA)$ gives the shadow $\mathrm{Sh}_r(\cA)$, and the MC equation projected to arity $r$ gives the all-arity master equation $\nabla_H(\mathrm{Sh}_r) + o^{(r)} = 0$ (Proposition~\ref{prop:master-equation-from-mc});
+\item \emph{Koszul duality}: twisting the ambient algebra $\mathfrak{g}^{\mathrm{amb}}_\cA$ by the scalar MC data gives the bar complex $\barB(\cA)$ as a twisted differential;
+\item \emph{Complementarity}: the Lagrangian decomposition of Theorem~C is the polarization into $\cA$-side and $\cA^!$-side components (under perfectness hypotheses).
+\end{enumerate}
+At the full all-arity level, these structures are
+\emph{conjectural} consequences of the existence of the
+limit $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$
+(Conjecture~\ref{conj:recursive-existence}).
+\end{remark}
+
+\begin{remark}[What the five pieces do]
+\label{rem:five-pieces-meaning}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $d_{\mathrm{int}}$: the internal cyclic differential on the
+deformation complexes of $\cA$ and $\cA^!$;
+\item $[\tau_{\cA},-]$: twists by the bar--cobar kernel, coupling
+the $\cA$-side to the $\cA^!$-side;
+\item $d_{\mathrm{sew}}$: inserts one separating stable edge
+weighted by $P_{\cA}$ --- this is the clutching/sewing operation;
+\item $d_{\mathrm{pf}}$: inserts one planted-forest corner weighted
+by the residue-incidence defect $\chi$ --- this remembers nested
+collisions beyond ordinary one-edge sewing;
+\item $\hbar\Delta$: contracts an internal pair of legs and raises
+genus by one --- this is the non-separating clutching operator.
+\end{enumerate}
+\end{remark}
+
+\subsection{The carrier algebra}
+\label{subsec:carrier-algebra}
+
+The graph sum~\eqref{eq:modular-bar-hamiltonian} lives in a specific
+graded vector space.
 
 \begin{definition}[Ambient modular complementarity algebra]
 \label{def:ambient-modular-complementarity-algebra}
-Define the filtered completed graded vector space
+The \emph{carrier} for the modular bar--Hamiltonian is the filtered
+completed graded vector space
 \begin{equation}
 \label{eq:ambient-modular-complementarity-algebra}
 \mathfrak{g}^{\mathrm{amb}}_{\cA}
 :=
 \bigl(L_{\cA} \oplus K_{\cA} \oplus L_{\cA^!}\bigr)
 \widehat\otimes \mathbb{G}_{\mathrm{st}}
-\widehat\otimes \mathbb{G}_{\mathrm{pf}}.
+\widehat\otimes \mathbb{G}_{\mathrm{pf}},
 \end{equation}
-The Lie bracket is induced by insertion of cyclic coderivations
-together with graph composition, subject to the rule that every
-internal edge is cross-polarized.
+where $L_{\cA} := \operatorname{Def}_{\mathrm{cyc}}(\cA)$,
+$K_{\cA} := (\cA^!\widehat\otimes\cA)[1]$,
+$\mathbb{G}_{\mathrm{st}}$ is the completed stable-graph coefficient
+algebra (connected stable graphs with genus/leg labels), and
+$\mathbb{G}_{\mathrm{pf}}$ is the planted-forest coefficient algebra
+(nested collision types from the $\overline{\operatorname{FM}}_3$
+residue model).  The Lie bracket is graph composition with
+cross-polarization enforced on all internal edges.
 \end{definition}
 
-\begin{construction}[The five pieces of the differential]
-\label{constr:five-pieces-differential}
-The differential on $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ is
+\begin{definition}[Stable-graph coefficient algebra; \ClaimStatusProvedHere]
+\label{def:stable-graph-coefficient-algebra}
+\index{stable-graph coefficient algebra|textbf}
+\index{coefficient algebra!stable-graph}
+The \emph{stable-graph coefficient algebra} $\mathbb{G}_{\mathrm{st}}$
+is the completed commutative dg~algebra
 \begin{equation}
-\label{eq:ambient-differential}
-D_{\cA}
-=
-d_{\mathrm{int}}
-+ [\tau_{\cA},-]
-+ d_{\mathrm{sew}}
-+ d_{\mathrm{pf}}
-+ \hbar\Delta.
+\label{eq:stable-graph-coefficient-algebra}
+\mathbb{G}_{\mathrm{st}}
+\;:=\;
+\prod_{\Gamma \in \mathsf{Gr}_{\mathrm{st}}}
+\mathbb{Q}\cdot e_{\Gamma}
+\Big/
+(\text{graph automorphisms}),
 \end{equation}
-The five terms are:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $d_{\mathrm{int}}$: the internal cyclic differential on
-$L_{\cA} \oplus K_{\cA} \oplus L_{\cA^!}$;
-\item $[\tau_{\cA},-]$: the twist by the universal bar--cobar
-kernel;
-\item $d_{\mathrm{sew}}$: insertion of one separating stable edge
-weighted by the propagator $P_{\cA}$;
-\item $d_{\mathrm{pf}}$: insertion of one planted-forest correction
-weighted by the residue-incidence defect $\chi$;
-\item $\hbar\Delta$: the loop-contraction operator, contracting an
-internal pair of compatible legs and raising genus by one.
-\end{enumerate}
-\end{construction}
+where $\mathsf{Gr}_{\mathrm{st}}$ is the category of connected stable
+graphs with genus and leg labels, and the differential is edge
+contraction:
+$d(e_\Gamma) = \sum_{e \in E(\Gamma)} e_{\Gamma/e}$.
+The product is disjoint union of graphs.
+\end{definition}
 
-\begin{remark}[The planted-forest term]
-The planted-forest term $d_{\mathrm{pf}}$ is the first genuinely
-higher local correction.  Ordinary stable-graph sewing only sees
-one-edge gluing.  The planted-forest term remembers ordered nested
-collisions and is therefore the natural nonlinear correction once
-one leaves the pure quadratic regime.  This is exactly what the
-explicit $\overline{\operatorname{FM}}_3$ model captures.
+\begin{definition}[Planted-forest coefficient algebra; \ClaimStatusProvedHere]
+\label{def:planted-forest-coefficient-algebra}
+\index{planted-forest coefficient algebra|textbf}
+\index{coefficient algebra!planted-forest}
+A \emph{planted forest} $F$ is a forest of rooted trees whose roots
+are ordered, with each vertex~$v$ carrying a weight $w(v) \geq 0$ and
+each edge carrying a propagator label.  The planted structure encodes
+the iterated collision order: the root of each tree represents a
+first-order collision point, interior vertices represent higher-order
+nested collisions, and leaves represent the actual operator
+insertions.  The correspondence to FM geometry is: each planted forest
+of type $(k_1, \ldots, k_r)$ corresponds to a
+codimension-$(k_1 + \cdots + k_r - r)$ boundary stratum of
+$\overline{\operatorname{FM}}_n$ obtained by iterated real blowup
+along the diagonal arrangement.
+
+The \emph{planted-forest coefficient algebra}
+$\mathbb{G}_{\mathrm{pf}}$ is the completed commutative dg~algebra
+\begin{equation}
+\label{eq:planted-forest-coefficient-algebra}
+\mathbb{G}_{\mathrm{pf}}
+\;:=\;
+\prod_{F \in \mathsf{For}_{\mathrm{plant}}}
+\mathbb{Q}\cdot e_{F}
+\Big/
+(\text{forest automorphisms}),
+\end{equation}
+with product given by disjoint union of forests and differential
+\begin{equation}
+\label{eq:planted-forest-differential}
+d_{\mathrm{pf}}(e_F)
+\;=\;
+\sum_{e \in E(F)} \pm\, e_{F/e},
+\end{equation}
+where $F/e$ is the forest obtained by contracting the internal edge~$e$
+and~$\pm$ is the Koszul sign from the ordering of edges.  This
+satisfies $d_{\mathrm{pf}}^2 = 0$ because edge contraction is
+associative: contracting~$e_1$ then~$e_2$ gives the same result as
+contracting~$e_2$ then~$e_1$ (up to sign).
+\end{definition}
+
+\begin{theorem}[Planted forests as tropicalization of log-FM spaces;
+\ClaimStatusProvedElsewhere]
+\label{thm:planted-forest-tropicalization}%
+\index{planted-forest coefficient algebra!tropicalization}%
+\index{logarithmic Fulton--MacPherson!tropicalization}%
+\index{Mok theorem}%
+\textup{(Mok \cite{Mok25}, Theorem~3.3.1 and \S2.3.)}
+Let $(X,D)$ be a simple normal crossings pair and
+$\operatorname{FM}_n(X|D)$ the logarithmic Fulton--MacPherson
+compactification of $\operatorname{Conf}_n(X \setminus D)$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The tropicalization of $\operatorname{FM}_n(X|D)$ is the
+  moduli space of \emph{planted forests}: the combinatorial types of
+  boundary strata of $\operatorname{FM}_n(X|D)$ are indexed by
+  $n$-marked planted forests on the fan~$\Sigma_X$.
+\item The planted-forest coefficient algebra
+  $\mathbb{G}_{\mathrm{pf}}$ of
+  Definition~\textup{\ref{def:planted-forest-coefficient-algebra}} is
+  the chain algebra on the face poset of
+  $\operatorname{Trop}(\operatorname{FM}_n(X|D))$:
+  \[
+    \mathbb{G}_{\mathrm{pf}}
+    \;\cong\;
+    C_\bullet\bigl(
+      \operatorname{Trop}(\operatorname{FM}_n(C\,|\,D_{\mathrm{nodes}}))
+    \bigr),
+  \]
+  where $C$ is the curve and $D_{\mathrm{nodes}}$ is the nodal
+  divisor.
+\item The planted-forest depth filtration
+  $($\S\textup{\ref{subsec:carrier-algebra}}$)$ corresponds to the
+  codimension filtration on the boundary of
+  $\operatorname{FM}_n(X|D)$: depth-$k$ forests index
+  codimension-$k$ strata.  The rubber torus action on grid
+  expansions \textup{(\cite{Mok25}, \S2.7.1)} corresponds to our
+  planted-forest depth grading.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Degeneration formula $=$ clutching law]
+\label{rem:degeneration-equals-clutching}%
+\index{degeneration formula!as clutching law}%
+Mok's degeneration formula \cite[Theorem~5.3.4]{Mok25} states that
+each irreducible component of the special fibre of
+$\operatorname{FM}_n(W/B) \to B$ is a proper birational modification
+of a product
+$\prod_{v \in V(S_{\rho,1})} \operatorname{FM}_{I_v}(Y_v|D_v)$.
+This is the geometric incarnation of our clutching law for the
+quartic resonance class
+$($Theorem~\textup{\ref{thm:nms-clutching-law-modular-resonance}}$)$
+and the non-separating clutching law
+$($Theorem~\textup{\ref{thm:nms-nonseparating-clutching-law}}$)$:
+the algebraic clutching identities ARE the degeneration formula
+applied to the bar complex on log-FM spaces.
 \end{remark}
 
-\begin{conjecture}[Square-zero property]
+\begin{proposition}[Square-zero property of the ambient differential;
+\ClaimStatusProvedHere]
+\label{rem:coefficient-algebras-well-defined}
+The five-component differential
+$D_{\cA} = d_{\mathrm{int}} + [\tau_{\cA},-] + d_{\mathrm{sew}} +
+d_{\mathrm{pf}} + \hbar\Delta$
+on the ambient algebra
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}$ of
+Definition~\textup{\ref{def:ambient-modular-complementarity-algebra}}
+satisfies $D_{\cA}^2 = 0$.
+\end{proposition}
+
+\begin{proof}
+The proof decomposes into diagonal and cross-terms.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $d_{\mathrm{int}}^2 = 0$: the internal differential on each bar
+  complex is square-zero by construction.
+\item $d_{\mathrm{sew}}^2 = 0$: this is the boundary-of-boundary
+  vanishing on $\overline{\mathcal{M}}_{g,n}$, i.e.\
+  Lemma~\ref{lem:stable-graph-d-squared}.
+\item $d_{\mathrm{pf}}^2 = 0$: associativity of edge contraction in
+  planted forests
+  (Definition~\ref{def:planted-forest-coefficient-algebra}).
+\item The cross-terms cancel pairwise by the master identity
+  \[
+    [d_{\mathrm{sew}}, d_{\mathrm{pf}}]
+    + [d_{\mathrm{int}}, \hbar\Delta]
+    + [[\tau_{\cA},-], d_{\mathrm{sew}} + d_{\mathrm{pf}}]
+    = 0,
+  \]
+  which follows from the factorization of the modular operad boundary
+  into separating and non-separating degenerations
+  (Theorem~\ref{thm:prism-higher-genus}).  The genus-loop term
+  $\hbar\Delta$ accounts for the non-separating degeneration
+  contribution.  \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}[Square-zero: convolution level; \ClaimStatusProvedHere]
+\label{thm:convolution-d-squared-zero}
+On the modular convolution algebra
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$
+\textup{(}Definition~\textup{\ref{def:modular-convolution-dg-lie})},
+the differential satisfies $D^2 = 0$.
+\end{theorem}
+
+\begin{proof}
+$D$ is the transport of the boundary operator $\partial$ on
+$C_*(\overline{\mathcal{M}}_{g,n})$ through the Hom functor, and
+$\partial^2 = 0$ on the chain complex of any topological space.
+\end{proof}
+
+\begin{conjecture}[Square-zero: ambient level]
 \label{conj:differential-square-zero}
 \ClaimStatusConjectured
-Under the residue-splitting hypotheses encoded by the planted-forest
-small model, $D_{\cA}^2 = 0$.
-Equivalently, the mixed relations among stable-edge insertion,
-planted-forest insertion, and the loop operator are exactly those
-needed to produce a filtered dg~Lie algebra.
+On the ambient complementarity algebra
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}$
+\textup{(}Definition~\textup{\ref{def:ambient-modular-complementarity-algebra})},
+the differential $D_{\cA}$ satisfies $D_{\cA}^2 = 0$.
+
+The distinction from Theorem~\textup{\ref{thm:convolution-d-squared-zero}}
+is that $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ includes the
+cross-polarized $\cA/\cA^!$ structure and the planted-forest
+coefficient algebra $\mathbb{G}_{\mathrm{pf}}$.  The additional
+content is that the Fulton--MacPherson residue model faithfully
+captures all codimension-${\geq}2$ boundary relations needed
+for the ambient differential.  At the pure convolution level
+\textup{(}where $\mathbb{G}_{\mathrm{pf}}$ is omitted and
+cross-polarization is not imposed\textup{)}, $D^2 = 0$ is
+already proved.
 \end{conjecture}
-
-\subsection{The modular bar--Hamiltonian}
-\label{subsec:modular-bar-hamiltonian}
-
-\begin{definition}[The modular bar--Hamiltonian]
-\label{def:modular-bar-hamiltonian}
-The \emph{modular bar--Hamiltonian} of $\cA$ is the connected graph
-sum
-\begin{equation}
-\label{eq:modular-bar-hamiltonian}
-\Theta_{\cA}
-:=
-\sum_{\Gamma \in \Gamma^{\mathrm{conn}}_{\mathrm{st,pf}}}
-\frac{W_{\cA}(\Gamma)}{|\operatorname{Aut}(\Gamma)|}
-\,\mathcal{O}_\Gamma
-\;\in\;
-(\mathfrak{g}^{\mathrm{amb}}_{\cA})^1,
-\end{equation}
-where vertex labels are the Taylor coefficients of the cyclic minimal
-models on the $\cA$- and $\cA^!$-sides, stable internal edges are
-weighted by $P_{\cA}$, planted-forest corners are weighted by the
-residue mismatch $\chi$, and every loop contributes a factor
-of~$\hbar$.
-\end{definition}
-
-\begin{definition}[Ambient master equation]
-\label{def:ambient-master-equation}
-The full modular lift of $\cA$ is a Maurer--Cartan element:
-\begin{equation}
-\label{eq:ambient-master-equation}
-D_{\cA}\Theta_{\cA}
-+ \tfrac12[\Theta_{\cA},\Theta_{\cA}] = 0.
-\end{equation}
-\end{definition}
-
-\begin{remark}
-Equation~\eqref{eq:ambient-master-equation} replaces an entire zoo of
-separate structures by a single equation.  Stable-curve sewing, nested
-collisions, genus raising, and Koszul twisting are no longer separate
-add-ons: they are the pieces of one differential.  The five
-individually established invariants --- $\kappa$, $\Delta$,
-$\mathfrak{C}$, $\mathfrak{Q}$, and the line kernel $r(z)$ --- are
-all projections of this one Maurer--Cartan element.
-\end{remark}
 
 \subsection{The extension tower}
 \label{subsec:extension-tower}
@@ -7029,6 +7986,125 @@ The \emph{modular extension tower} of $\cA$ is the inverse system
 A full lift is a compatible point of the inverse limit
 $\Theta_{\cA} \in \varprojlim_N \mathcal{E}_{\cA}(N)$.
 \end{definition}
+
+\begin{definition}[Shadow Postnikov tower]
+\label{def:shadow-postnikov-tower}
+\ClaimStatusProvedHere
+\index{shadow Postnikov tower|textbf}
+\index{modular characteristic!shadow Postnikov tower}
+The \emph{shadow Postnikov tower} of $\cA$ is the sequence of
+finite-order truncations
+\begin{equation}
+\label{eq:shadow-postnikov-tower}
+\Theta_{\cA}^{\leq 2},\;
+\Theta_{\cA}^{\leq 3},\;
+\Theta_{\cA}^{\leq 4},\;
+\ldots
+\end{equation}
+where $\Theta_{\cA}^{\leq r}$ is a solution
+of the Maurer--Cartan equation in
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}/F^{r+1}$,
+i.e.\ a point of $\mathcal{E}_{\cA}(r)$
+(Definition~\ref{def:extension-tower}).
+At each level, the \emph{obstruction class}
+\begin{equation}
+\label{eq:obstruction-class}
+o_{r+1}(\cA)
+\;:=\;
+\bigl(
+D_{\cA}\Theta_{\cA}^{\leq r}
++ \tfrac12[\Theta_{\cA}^{\leq r},\Theta_{\cA}^{\leq r}]
+\bigr)_{r+1}
+\;\in\;
+H^2\bigl(\cA^{\mathrm{sh}}_{r+1,0}\bigr)
+\end{equation}
+measures the failure to extend.  The first three levels
+are the proved finite-order engine:
+\begin{itemize}
+\item $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$
+  \quad(the modular characteristic, Theorem~D);
+\item $\Theta_{\cA}^{\leq 3}$: encodes the cubic
+  shadow~$\mathfrak{C}(\cA)$;
+\item $\Theta_{\cA}^{\leq 4}$: encodes the quartic resonance
+  class~$\mathfrak{Q}(\cA)$ with its clutching law
+  (Appendix~\ref{app:nonlinear-modular-shadows}).
+\end{itemize}
+The shadow Postnikov tower is the primary nonlinear object of
+the modular theory.  Each finite truncation is constructive and
+does not require the full all-genera modular envelope.  The
+conjectural all-arity limit
+$\Theta_{\cA} = \varprojlim_r \Theta_{\cA}^{\leq r}$
+is the target of Conjecture~\ref{conj:recursive-existence}.
+\end{definition}
+
+\begin{definition}[Shadow algebra]
+\label{def:shadow-algebra}
+\ClaimStatusProvedHere
+\index{shadow algebra|textbf}
+\index{modular characteristic!shadow algebra}
+For a chiral algebra $\cA$ with modular cyclic deformation complex
+$\Defcyc^{\mathrm{mod}}(\cA)$, the \emph{shadow algebra} is the
+cohomology
+\begin{equation}
+\label{eq:shadow-algebra}
+\cA^{\mathrm{sh}}
+:=
+H_\bullet\bigl(\Defcyc^{\mathrm{mod}}(\cA)\bigr)
+\end{equation}
+with graded-commutative multiplication induced from the $L_\infty$
+bracket, via the standard passage: the degree-$(-1)$ Lie bracket $[-,-]$ on $\Defcyc^{\mathrm{mod}}(\cA)$ descends to a degree-$0$ commutative product on cohomology $H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ by the Koszul sign rule, since MC elements are degree-$1$ and products of degree-$1$ cohomology classes are commutative.  The shadow algebra carries a bigrading by arity
+$r \geq 2$ and genus $g \geq 0$:
+\begin{equation}
+\label{eq:shadow-algebra-bigrading}
+\cA^{\mathrm{sh}}
+=
+\bigoplus_{r \geq 2}\;\bigoplus_{g \geq 0}\;
+\cA^{\mathrm{sh}}_{r,g}.
+\end{equation}
+The projections to graded components recover the individual shadows:
+\begin{itemize}
+\item $\kappa(\cA) = \cA^{\mathrm{sh}}_{2,0}$
+  \quad(the modular characteristic, Theorem~D);
+\item $\Delta_{\cA} = \cA^{\mathrm{sh}}_{2,*}$
+  \quad(the spectral discriminant);
+\item $\mathfrak{C}(\cA) = \cA^{\mathrm{sh}}_{3,0}$
+  \quad(the cubic shadow);
+\item $\mathfrak{Q}(\cA) = \cA^{\mathrm{sh}}_{4,0}$
+  \quad(the quartic shadow / contact invariant);
+\item $\operatorname{Sh}_r(\cA) = \cA^{\mathrm{sh}}_{r,0}$
+  \quad(the arity-$r$ shadow).
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[All-arity master equation from MC]
+\label{prop:master-equation-from-mc}
+\ClaimStatusProvedHere
+\index{all-arity master equation!from Maurer--Cartan}
+The all-arity master equation
+$\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
+(Theorem~\ref{thm:nms-all-arity-master-equation}) is a structural
+consequence of the Maurer--Cartan equation for
+$\Theta_{\cA} \in \MC(\Defcyc^{\mathrm{mod}}(\cA))$: projecting
+the MC equation $d\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ onto
+the arity-$r$ component gives exactly
+$\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$.
+\end{proposition}
+
+\begin{remark}[Shadow algebra as structural home]
+\label{rem:shadow-algebra-structural-home}
+\index{shadow algebra!structural role}
+The shadow algebra is the correct intrinsic object governing
+the nonlinear modular characteristic.  The recursive obstruction
+construction that follows (Construction~\ref{constr:obstruction-recursion})
+is the \emph{computational method} for extracting shadows; the
+shadow algebra definition is the \emph{structural home}.  Finite termination means
+$\cA^{\mathrm{sh}}_{r,0} = 0$ for $r$ above some
+$r_{\max}(\cA)$.  Theorem~\ref{thm:nms-finite-termination} gives
+explicit bounds for the standard families: $r_{\max} = 2$
+(Heisenberg), $r_{\max} = 3$ (affine), $r_{\max} = 4$
+($\beta\gamma$); the Virasoro tower is infinite.
+The shadow algebra is intrinsic to the chiral algebra: it depends only on the homotopy type of $\Defcyc^{\mathrm{mod}}(\cA)$, not on presentations, bases, or contracting homotopies.
+\end{remark}
 
 \begin{construction}[Obstruction recursion]
 \label{constr:obstruction-recursion}

@@ -1,5 +1,26 @@
 \chapter{Algebraic foundations and bar constructions}\label{ch:algebraic-foundations}
 
+This chapter builds the workshop in which the rest of the volume operates.
+The classical theory of quadratic algebras, Koszul pairs, and bar
+constructions is assembled here not as an isolated algebraic toolkit but
+as the first stratum of a deformation language that extends through
+every later chapter.  The bar complex is the categorical logarithm;
+the dual algebra is its leading coefficient; the twisting morphism
+mediating between them is the visible endpoint of a Maurer--Cartan
+story whose full habitat is the homotopy convolution algebra
+$\Hom(\barB(\cA), \cA)$.
+
+The homotopy upgrade matters from the outset.  In the operadic
+literature (Loday--Vallette~\cite{LV12}), twisting morphisms, bar--cobar
+adjunctions, and Koszul criteria are already organized by convolution
+constructions whose Maurer--Cartan theory is intrinsically
+homotopical, not merely strict.  A twisting morphism is not just an
+arrow satisfying a differential equation: it is a degree-zero
+cocycle in a convolution dg Lie algebra that is itself the strict
+face of a larger $L_\infty$ package.  This chapter should therefore
+be read as preparation for treating quadratic and nonquadratic, strict
+and curved, algebraic and chiral constructions as successive strata
+of one deformation language.
 
 Which algebras have natural duals?  The answer is controlled by
 a finiteness condition on the relations: when every relation involves
@@ -223,12 +244,22 @@ elements is Proposition~\ref{prop:comparison-our-glz}(iii).%
 \index{twisting morphism|textbf}
 
 The single algebraic structure underlying bar-cobar duality, Koszul
-resolutions, and the modular genus tower is the convolution dg~Lie
-algebra $\mathrm{Hom}(C, A)$; its Maurer--Cartan elements are the
-twisting morphisms.  We give the classical theory
+resolutions, and the modular genus tower is the convolution algebra
+$\mathrm{Hom}(C, A)$: at the dg~level it is a dg~Lie algebra whose
+Maurer--Cartan elements are the twisting morphisms; at the full
+homotopy level it carries an $L_\infty$-structure whose higher
+brackets encode the homotopy transfer data
+(\cite[Theorem~10.3.8]{LV12}).
+More precisely, the convolution dg~Lie algebra is a strict model
+$\Convstr(C,P)$ of the homotopy-invariant $L_\infty$-algebra
+$\Convinf(C,P)$
+(Theorem~\ref{thm:operadic-homotopy-convolution}); the strict model
+suffices for all explicit computations in this monograph.
+We begin with the classical dg theory
 (\cite[\S2.1--2.3]{LV12}) before the chiral generalization
-(Chapter~\ref{chap:koszul-pairs}); the modular extension appears
-in Remark~\ref{rem:convolution-hierarchy}.
+(Chapter~\ref{chap:koszul-pairs}); the hierarchy from dg through
+$L_\infty$ to the modular quantum $L_\infty$ appears in
+Remark~\ref{rem:convolution-hierarchy}.
 
 \begin{definition}[Convolution dg Lie algebra]
 \label{def:convolution-dg-lie}
@@ -248,6 +279,106 @@ $C \to A$, equipped with:
 The triple $(\mathrm{Hom}(C, A), [-, -], \partial)$
 is a dg Lie algebra \cite[Proposition~2.1.1]{LV12}.
 \end{definition}
+
+\begin{remark}[Strict model versus homotopy-invariant structure]
+\label{rem:conv-strict-vs-homotopy}
+The convolution dg~Lie algebra of Definition~\ref{def:convolution-dg-lie}
+is a \emph{strict model} of an underlying homotopy-invariant object: the
+$L_\infty$ convolution algebra $\operatorname{Conv}_\infty(\cC, \cP)$
+whose higher brackets $\ell_k$ ($k \geq 3$) arise from the operadic
+composition and the $A_\infty$/$L_\infty$ homotopy transfer
+\cite[\S10.3]{LV12}.  The two structures have canonically isomorphic
+Maurer--Cartan moduli:
+\[
+\mathrm{MC}\bigl(\operatorname{Conv}_{\mathrm{str}}(\cC,\cP)\bigr)
+\;\cong\;
+\mathrm{MC}\bigl(\operatorname{Conv}_\infty(\cC,\cP)\bigr),
+\]
+so for \emph{computing} Maurer--Cartan elements --- which is the primary
+use throughout Part~I --- the strict dg~Lie model suffices.  The full
+$L_\infty$ structure becomes essential for three purposes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Homotopy transfer}: preserving MC data across
+  quasi-isomorphisms (the reason bar-cobar preserves quasi-isos);
+\item \emph{Formality}: proving that the deformation complex is formal
+  in the sense of Kontsevich--Soibelman \cite{KontsevichSoibelman};
+\item \emph{Gauge equivalence}: classifying deformations up to
+  $L_\infty$ homotopy, not merely up to strict isomorphism.
+\end{enumerate}
+The hierarchy is:
+\[
+\text{modular } L_\infty \text{ object}
+\;\xrightarrow{\;\text{strictify}\;}
+\text{dg Lie model}
+\;\xrightarrow{\;\text{MC}\;}
+\text{algebra structures and genus tower}.
+\]
+All constructions in this monograph are functorial with respect to the
+full $L_\infty$ structure; the strict model is the computational
+avatar.
+\end{remark}
+
+\begin{theorem}[Convolution = master object identification;
+\ClaimStatusProvedElsewhere]
+\label{thm:convolution-master-identification}
+\index{convolution!master object identification|textbf}
+\index{master object!convolution identification}
+For any cooperadic/operadic pair $(\cC, \cP)$ and twisting
+morphism~$\alpha\colon \cC \to \cP$, the convolution dg~Lie algebra
+$\Convstr(\cC, \cP)$ of
+Definition~\textup{\ref{def:convolution-dg-lie}}
+is the strict model of the convolution $sL_\infty$-algebra
+\[
+\Convstr(\cC, \cP)
+\;\hookrightarrow\;
+\operatorname{hom}_\alpha(\cC,\, \cP)
+\]
+of Robert-Nicoud--Wierstra~\textup{\cite[Theorem~4.1]{RNW19}}.
+The $sL_\infty$ higher brackets $\ell_k$ ($k \geq 3$) on
+$\operatorname{hom}_\alpha$ arise from the homotopy transfer through
+the $\operatorname{Hom}$~functor
+\textup{(}Loday--Vallette~\textup{\cite[Theorem~10.3.8]{LV12})}.
+In particular, the modular convolution algebra
+$\mathfrak{g}_\cA^{\mathrm{mod}}$ of
+Definition~\textup{\ref{def:modular-convolution-dg-lie}}
+is the chiral specialization with
+$\cC = \cC^{\textup{!`}}_{\mathrm{ch}}$,
+$\cP = \cP^{\mathrm{ch}}$.
+\end{theorem}
+
+\begin{proof}[References]
+The general operadic convolution identification is
+\cite[Theorem~4.1]{RNW19}; the strict model comparison is
+\cite[Theorem~10.3.8]{LV12}.  The chiral specialization follows from
+identifying the chiral operad as Koszul with the standard chiral
+twisting morphism (Definition~\ref{def:twisting-morphism}).
+\end{proof}
+
+\begin{corollary}[MC element = twisting morphism;
+\ClaimStatusProvedElsewhere]
+\label{cor:theta-twisting-morphism}
+\index{Maurer--Cartan element!twisting morphism identification}
+The universal class $\Theta_\cA \in
+\mathrm{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$ is a twisting
+morphism:
+\[
+\mathrm{MC}\!\bigl(\operatorname{hom}_\alpha(\cC,\, \cP)\bigr)
+\;\cong\;
+\mathrm{Tw}_\alpha(\cC,\, \cP).
+\]
+The Chriss--Ginzburg principle
+\textup{(}Proposition~\textup{\ref{prop:chriss-ginzburg-structure}):}
+the chiral algebra structure IS the MC element\textup{)} is the chiral
+instance of this general bijection
+\textup{\cite[Theorem~4.6]{RNW19}}.
+The all-arity master equation $\nabla_H(\mathrm{Sh}_r) + o^{(r)} = 0$
+is the MC equation $\partial(\Theta) + \tfrac{1}{2}[\Theta, \Theta] = 0$
+projected to arity~$r$ via the weight filtration.
+\end{corollary}
+
+\begin{proof}[References]
+\cite[Theorem~4.6]{RNW19} and \cite[Theorem~6.5.7]{LV12}.
+\end{proof}
 
 \begin{definition}[Twisting morphism]
 \label{def:twisting-morphism}
@@ -379,25 +510,30 @@ As the genus filtration opens, the convolution algebra enlarges:
 \smallskip
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{llll}
+\begin{tabular}{lllll}
 \toprule
-\emph{Convolution algebra} & \emph{MC elements}
-  & \emph{Genus range} & \emph{MC equation} \\
+\emph{Convolution algebra} & \emph{Homotopy level}
+  & \emph{MC elements}
+  & \emph{Genus} & \emph{MC equation} \\
 \midrule
 $\mathrm{Hom}(C, A)$
+  & $L_\infty$ \cite[Thm.~10.3.8]{LV12}
   & twisting morphisms $\tau$
-  & $g = 0$ (classical)
+  & $g = 0$
   & $\partial\tau + \tau\star\tau = 0$ \\
 $\mathrm{CoDer}(\barB(\cA))[1]$
+  & $A_\infty$
   & $A_\infty$ structures
-  & $g = 0$ (chiral)
+  & $g = 0$
   & $\sum m_i \circ m_j = 0$ \\
 $\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}(\cA))[1]$
+  & cyclic $L_\infty$
   & cyclic $L_\infty$ operations
-  & $g = 0$ (cyclic)
+  & $g = 0$
   & $\sum \ell_j \circ \ell_i = 0$ \\
-$\operatorname{Def}^{\mathrm{mod}}(\cA)$
-  & $\tau_{\mathrm{mod}}$
+$\mathfrak{g}_\cA^{\mathrm{mod}}$
+  & quantum $L_\infty$
+  & $\Theta_\cA$
   & all $g$
   & QME~\eqref{eq:QME} \\
 \bottomrule
@@ -406,6 +542,21 @@ $\operatorname{Def}^{\mathrm{mod}}(\cA)$
 \smallskip
 
 \noindent
+\emph{Key point.}  Every row carries the \emph{full homotopy}
+structure, not just a strict dg~Lie bracket.  The $L_\infty$ brackets
+$\ell_n$ for $n \geq 3$ at genus~$0$ arise from the $A_\infty$
+coalgebra structure on the bar construction, transported through
+the Hom functor
+\cite[Theorem~10.3.8]{LV12}.
+At genus $g \geq 1$, the quantum $L_\infty$ operations $\ell_n^{(g)}$
+come from stable-graph Feynman amplitudes
+(Theorem~\ref{thm:modular-quantum-linfty}).
+For Koszul chiral algebras, the operadic convolution $L_\infty$ is
+\emph{formal} (quasi-isomorphic to its cohomology with trivial higher
+brackets), so the strict dg~Lie model suffices for computations; the
+full $L_\infty$ structure becomes essential for non-Koszul algebras
+and for homotopy-invariant constructions.
+
 The $[1]$-shift in rows 2--3 makes the coderivation bracket
 degree~$0$, matching the tangent Lie algebra convention.
 The rows are related by successive enrichments:
@@ -419,8 +570,149 @@ row~3 $\to$ row~4 by tensoring with chains on
 $\overline{\mathcal{M}}_{g,n}$
 (Definition~\ref{def:modular-deformation-complex}).
 The MC equation specializes at each level as shown in the
-fourth column.
+fourth column.  Row~4 is the \emph{master object}: rows~1--3 are
+obtained by restricting to genus~$0$ ($\hbar \to 0$) and truncating
+to lower homotopy operations.  The shadow Postnikov tower
+$\Theta^{\leq r}$ in row~4 is the primary proved content;
+the five main theorems are projections of its scalar level
+$\Theta^{\leq 2} = \kappa$
+(Remark~\ref{rem:unifying-principle}).
+
+Each row admits a \emph{homotopy upgrade}: the dg~Lie bracket
+$[-,-]$ is the shadow of a full $L_\infty$-structure whose higher
+brackets $\ell_n$ ($n \ge 3$) arise from homotopy transfer through
+the convolution Hom functor
+(\cite[Theorem~10.3.8]{LV12}, van~der~Laan~\cite{vdL03}).  At the
+modular level, this produces a \emph{quantum $L_\infty$-algebra}
+with operations $\ell_n^{(g)}$ indexed by stable type $(g,n)$
+(Theorem~\ref{thm:modular-quantum-linfty}).  The dg~level suffices
+for the existence of MC elements; the full homotopy level is needed
+for transfer to minimal models and for gauge equivalences
+(Remark~\ref{rem:full-homotopy-why}).
 \end{remark}
+
+\begin{theorem}[Operadic identification of the convolution algebra;
+\ClaimStatusProvedElsewhere]
+\label{thm:operadic-homotopy-convolution}%
+\index{convolution dg Lie algebra!operadic identification}%
+\index{Robert-Nicoud--Wierstra theorem}%
+Let $\cC$ be a cooperad, $\cP$ an operad, and
+$\alpha\colon \cC \to \cP$ an operadic twisting morphism
+$($i.e.\ $\alpha \in \operatorname{Tw}(\cC,\cP))$.
+Then \textup{(Robert-Nicoud--Wierstra \cite{RNW19}, Theorem~4.1)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The convolution operad
+  $\operatorname{hom}(\cC,\cP)$ carries a natural
+  $s\mathscr{L}_\infty$-algebra structure, and the assignment
+  $\alpha \mapsto \mathsf{W}_\alpha$ defines a bijection
+  \begin{equation}\label{eq:rnw-bijection}
+    \operatorname{Tw}(\cC,\cP)
+    \;\cong\;
+    \operatorname{hom}_{\mathrm{Op}}(s\mathscr{L}_\infty,\;
+      \operatorname{hom}(\cC,\cP)).
+  \end{equation}
+\item For $D$ a conilpotent $\cC$-coalgebra and $A$ a $\cP$-algebra,
+  the chain complex $\operatorname{hom}(D, A)$ carries a natural
+  $s\mathscr{L}_\infty$-algebra structure
+  $\operatorname{hom}^\alpha(D,A)$ whose Maurer--Cartan elements
+  are precisely the twisting morphisms relative to~$\alpha$:
+  \begin{equation}\label{eq:rnw-mc-tw}
+    \operatorname{MC}(\operatorname{hom}^\alpha(D,A))
+    \;\cong\;
+    \operatorname{Tw}_\alpha(D,A).
+  \end{equation}
+\item The bifunctor
+  $\operatorname{hom}^\alpha\colon
+  (\text{conil.\ }\cC\text{-cog})^{\mathrm{op}} \times
+  \cP\text{-alg} \to s\mathscr{L}_\infty\text{-alg}$
+  extends to $\infty_\alpha$-morphisms in either slot, but not
+  both simultaneously \textup{(\cite{RNW19}, Theorem~5.1 and \S6)}.
+\end{enumerate}
+Applied to the chiral setting: the modular convolution dg~Lie algebra
+$\gAmod$ of
+Definition~\textup{\ref{def:modular-convolution-dg-lie}} is the
+chiral instance of $\operatorname{hom}^\alpha(D,A)$ with
+$\alpha = \tau_{\mathrm{ch}}$ the chiral twisting morphism
+$($Theorem~\textup{\ref{thm:fundamental-twisting-morphisms}}$)$,
+$D = \barB^{\mathrm{ch}}(\cA)$, and
+$A = \cA^{!}$.  The master MC element
+$\Theta_\cA \in \operatorname{MC}(\gAmod)$ is a twisting
+morphism relative to~$\tau_{\mathrm{ch}}$,
+and the Chriss--Ginzburg principle
+$($Proposition~\textup{\ref{prop:chriss-ginzburg-structure}}$)$ is the
+chiral specialization of~\eqref{eq:rnw-mc-tw}.
+\end{theorem}
+
+\begin{proof}
+The identification of the dg~Lie structure on $\gAmod$ with
+$\operatorname{hom}^\alpha(D,A)$ is immediate from
+comparing Definition~\ref{def:modular-convolution-dg-lie}
+(the product over stable types weighted by
+$C_\bullet(\overline{\cM}_{g,n+1})$) with the general
+construction \cite[Definition~4.4]{RNW19} applied to the
+chiral cooperad and operad.  The bijection~\eqref{eq:rnw-mc-tw}
+follows from \cite[Theorem~4.6]{RNW19}, which was proved
+independently in \cite[Proposition~2.9]{RN18} and
+\cite[Proposition~7.1]{Wie19}.
+The one-slot functoriality is \cite[Corollary~5.4]{RNW19}.
+\end{proof}
+
+\begin{corollary}[Quillen equivalence for chiral bar-cobar;
+\ClaimStatusProvedElsewhere]
+\label{cor:quillen-equivalence-chiral}%
+\index{Quillen equivalence!chiral bar-cobar}%
+\index{bar-cobar adjunction!Quillen equivalence}%
+\textup{(Vallette \cite{Val16}, Theorem~2.1.)}
+The category of conilpotent dg~$\cP^{\scriptstyle\text{\rm !`}}$-coalgebras
+admits a model category structure in which:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item weak equivalences are morphisms $f\colon C \to D$ such that
+  $\Omega_\kappa f$ is a quasi-isomorphism of dg~$\cP$-algebras;
+\item cofibrations are degreewise monomorphisms;
+\item fibrant objects are quasi-free
+  $\cP^{\scriptstyle\text{\rm !`}}$-coalgebras.
+\end{enumerate}
+The bar-cobar adjunction
+$B_\kappa \colon \mathrm{dg}\;\cP\text{-alg}
+\rightleftarrows
+\mathrm{conil}\;\mathrm{dg}\;\cP^{\scriptstyle\text{\rm !`}}\text{-coalg}
+\colon \Omega_\kappa$
+is a Quillen equivalence.  In particular, $B_\kappa$ preserves
+fibrations and weak equivalences, and $\Omega_\kappa$ preserves
+cofibrations and weak equivalences
+\textup{(\cite{Val16}, Theorem~2.9)}.
+
+Specializing to the chiral operad: our bar-cobar adjunction
+$($Theorem~\textup{A}$)$ is a Quillen equivalence in this model
+structure.
+\end{corollary}
+
+\begin{corollary}[Homotopy invariance of the shadow algebra;
+\ClaimStatusProvedElsewhere]
+\label{cor:shadow-algebra-homotopy-invariant}%
+\index{shadow algebra!homotopy invariance}%
+\textup{(Robert-Nicoud--Wierstra \cite{RNW19}, \S8.)}
+The Maurer--Cartan spaces of the convolution
+$s\mathscr{L}_\infty$-algebras are invariant up to homotopy
+under $\infty_\alpha$-quasi-isomorphisms.  Consequently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The shadow algebra
+  $\cA^{\mathrm{sh}} = H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
+  is a homotopy invariant:
+  $\infty$-quasi-isomorphic chiral algebras have weakly
+  equivalent shadow algebras.
+\item The modular characteristic $\kappa(\cA)$ is an
+  $\infty$-quasi-isomorphism invariant.
+\item The full shadow tower
+  $(\kappa, \Delta, \mathfrak{C}, \mathfrak{Q},
+  \operatorname{Sh}_r)$ is an
+  $\infty$-quasi-isomorphism invariant.
+\item The master MC element $\Theta_\cA$ is invariant up to
+  gauge equivalence in the
+  Deligne--Getzler--Hinich $\infty$-groupoid
+  $\mathrm{MC}_\infty(\gAmod)$.
+\end{enumerate}
+\end{corollary}
 
 \subsection{The Gui--Li--Zeng quadratic duality framework}
 \label{subsec:gui-li-zeng-framework}

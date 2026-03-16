@@ -1,6 +1,43 @@
 \chapter{Quantum corrections to Arnold relations}
 \label{ch:quantum-corrections}
 
+Arnold's relation first entered the monograph as the geometric reason
+that a bar differential squares to zero: the partial-fraction identity
+among logarithmic forms on configuration space encodes the braid-group
+constraint, and the bar complex inherits $d^2 = 0$ from the topology
+of $\Conf_n(\mathbb{C})$.  This chapter asks how that relation
+survives quantization, curvature, and modular transport---and finds
+that when strict Arnold relations fail, they fail by coherent higher
+homotopies.  Quantum corrections are new higher operations in the
+homotopy algebra, not mere errors.
+
+The four editorial laws organise the material.
+\emph{Strictness as shadow}: the genus-$0$ identity
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$ is the shadow of a chain-level
+identity in the convolution algebra
+$\Conv_\infty(\barBch(\cA), \cA)$.  When the curve acquires
+non-trivial periods, that chain-level identity deforms by an
+Eisenstein correction whose leading term is the modular curvature
+$\kappa(\cA)$.
+\emph{Modularity at chain level}: the correction is not an ad hoc
+analytic fix but a Maurer--Cartan deformation of the differential
+in the modular convolution algebra $\mathfrak{g}^{\mathrm{mod}}_{\cA}$;
+its structure is dictated by the Feynman transform of the modular
+operad and recorded in the shadow Postnikov tower of
+Chapter~\ref{sec:koszul-across-genera}.
+\emph{Examples as proving grounds}: each family in the standard
+landscape behaves differently---Heisenberg terminates the tower at
+arity~$2$ (pure curvature), affine algebras at arity~$3$ (cubic
+shadow), $\beta\gamma$ at arity~$4$ (quartic contact), while
+Virasoro and $\mathcal{W}_N$ produce infinite towers forced by
+non-vanishing quintic obstructions.
+\emph{Close the loop}: every quantum correction computed here
+reappears as an input to Theorem~C (complementarity,
+Chapter~\ref{sec:complementarity}) and Theorem~D (modular
+characteristic, Chapter~\ref{ch:genus-complete}), verifying that the
+corrections assemble into a universal, additive, anti-symmetric
+invariant.
 
 Strict genus-$0$ nilpotence breaks as soon as the propagator remembers the
 periods of the curve.
@@ -341,6 +378,26 @@ This is the cyclic/modular bar-cobar machine with defect and spectral
 twisting---strictly richer than a bare modular envelope.
 \end{definition}
 
+\begin{remark}[Coderivation model of the modular $L_\infty$ structure]
+\label{rem:coderivation-linfty-model}
+The five-component differential
+$D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\Delta + d_r$
+is the \emph{coderivation model} of the modular $L_\infty$ structure
+on~$\mathfrak{g}_{\cA}^{\mathrm{mod}}$.  Its components are the $L_\infty$ structure maps
+evaluated on specific graph types: $d_{A_\infty}$ encodes tree graphs
+(genus~$0$), $d_{\mathrm{sew}}$ encodes self-gluing (separating nodes),
+$\hbar\Delta$ encodes non-separating clutching (genus-raising loops),
+and $d_r$ encodes spectral twisting (line-operator insertions).
+
+The bar-cobar adjunction (Theorem~A) preserves quasi-isomorphisms
+\emph{because} it is a quantum $L_\infty$ functor: it intertwines the
+full $L_\infty$ structures on both sides.  This is the deep reason
+that homotopy transfer (Chapter~\ref{app:homotopy-transfer-promoted})
+produces the correct $A_\infty$ operations --- the transferred
+operations are the $L_\infty$-functorial image of the original ones,
+not merely an ad hoc perturbative approximation.
+\end{remark}
+
 \subsection{Tree-level operations: explicit \texorpdfstring{$A_\infty$}{A-infinity} and \texorpdfstring{$L_\infty$}{L-infinity} brackets}
 
 At genus zero the modular package reduces to tree-level homotopy
@@ -377,6 +434,16 @@ where $\chi(\sigma)$ is the Koszul sign of the permutation.  This is
 precisely the homotopy-transfer output of the BV theory---the
 operations used, for instance, by Zeng after Kaluza--Klein reduction.
 \end{definition}
+
+\begin{remark}[Two-level convention for quantum corrections]
+\label{rem:quantum-corrections-two-level}
+In the two-level convention
+(\S\ref{subsec:two-level-convention}), the tree-level
+$L_\infty$-brackets $\ell_n^{\mathrm{cl}}$ are $\Convinf$ at
+genus~$0$; the genus-refined operations $\ell_{g,n}$ of
+Definition~\ref{def:genus-refined-linfty} below are the
+genus-truncation of $\Definfmod(\cA)$.
+\end{remark}
 
 \subsection{Quantum/modular completion: wheeled graphs}
 
@@ -452,4 +519,359 @@ condition---$D^2 = 0$ in the $d_r$-twisted modular bar
 complex---subsumes both the quantum master
 equation~\eqref{eq:quantum-master-linfty} and the $A_\infty$
 Yang--Baxter equation of Conjecture~\ref{conj:modular-yang-baxter}.
+\end{remark}
+
+% ==========================================
+% NON-RENORMALIZATION AND TREE-LEVEL EXACTNESS
+% ==========================================
+
+\section{Non-renormalization and the exactness of tree-level operations}
+\label{sec:non-renormalization-tree}
+\index{non-renormalization!tree-level exactness}
+
+The modular homotopy package of the previous section splits cleanly
+into a tree-level piece (the $A_\infty$ operations $\{m_n\}$ and the
+spectral kernel $r(z)$) and a loop piece (the BV operator $\Delta$
+and the genus-raising operations $\ell_{g,n}$).  A remarkable theorem
+of Dimofte--Niu--Py guarantees that, for a wide class of theories,
+the tree-level piece receives \emph{no} quantum corrections.
+
+\begin{definition}[Quasi-linear HT theory]
+\label{def:quasi-linear}
+\index{quasi-linear theory}
+A holomorphic-topological QFT is \emph{quasi-linear} if the
+interaction vertices are at most linear in the fields being
+propagated---that is, each vertex has at most one propagating leg.
+All HT-twisted $3$d $\cN=2$ gauge theories with polynomial
+superpotential are quasi-linear: the cubic vertex
+$\operatorname{Tr}(c\,Z_1 Z_2)$ is linear in the gauge field~$c$
+being propagated, and similarly for the matter couplings.
+\end{definition}
+
+\begin{theorem}[Non-renormalization at tree level;
+  \ClaimStatusProvedElsewhere]
+\label{thm:non-renormalization-tree}
+\index{non-renormalization!Dimofte--Niu--Py}
+\textup{(Dimofte--Niu--Py \cite{DNP2025}, Theorem~4.1 and
+Proposition~6.1.)}
+Let $\cA$ be a quasi-linear $3$d HT QFT.  Then:
+\begin{enumerate}
+\item[\textup{(i)}] The $A_\infty$ operations $\{m_n\}$ on both
+  $\cA$ and $\cA^!$ are determined exactly at tree level: all
+  loop diagrams contributing to $m_n$ vanish.
+\item[\textup{(ii)}] The line-operator OPE kernel $r(z)$ is
+  determined exactly by tree-level ``ladder'' diagrams.
+\item[\textup{(iii)}] $r(z)$ is independent of the bulk field
+  interactions---it depends only on the propagator and the
+  boundary coupling.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Validation of tree-level computations]
+\label{rem:non-renorm-validation}
+\index{non-renormalization!validation of homotopy transfer}
+This theorem validates every tree-level computation in our
+monograph.  When we compute transferred $A_\infty$ operations by
+the homotopy transfer theorem
+(Definition~\ref{def:tree-level-ainfty}), those operations
+\emph{are} the exact answer for quasi-linear theories---not merely
+leading-order approximations.  The only quantum corrections enter
+through the genus-raising BV operator~$\Delta$ (the $\hbar\Delta$
+term in $D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\Delta +
+d_r$), not through corrections to tree vertices.
+\end{remark}
+
+\begin{corollary}[Exactness of standard-family $r$-matrices;
+  \ClaimStatusProvedElsewhere]
+\label{cor:exact-r-matrix}
+\index{r-matrix@$r$-matrix!exactness for standard families}
+For the standard families $\cA \in \{\mathcal{H}_k,\;
+\beta\gamma/bc,\; \widehat{\mathfrak{g}}_k \text{ at non-critical
+level},\; \mathrm{Vir}_c,\; \mathcal{W}_N\}$, the $r$-matrices
+computed in Part~II via the Laplace transform of the
+$\lambda$-bracket are exact---they receive no loop corrections.
+\end{corollary}
+
+\begin{remark}[Trees vs.\ loops: chirality vs.\ modularity]
+\label{rem:trees-loops-separation}
+\index{non-renormalization!trees vs.\ loops}
+The physical interpretation is clean: loop corrections in the
+bulk correspond to the genus tower (the $\ell_{g,n}$ operations
+of Definition~\ref{def:genus-refined-linfty}), not to
+renormalization of local vertex data.  The separation
+\[
+  \text{trees} = \text{chirality},
+  \qquad
+  \text{loops} = \text{modularity}
+\]
+from the modular PVA quantization programme (Vol~II) is a direct
+consequence of Theorem~\ref{thm:non-renormalization-tree}.
+\end{remark}
+
+\begin{remark}[Consequences for the modular programme]
+\label{rem:non-renorm-modular-consequences}
+\index{non-renormalization!modular programme consequences}
+The non-renormalization theorem has three structural consequences for
+the modular quantization programme of Vol~II:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{The PVA $\lambda$-bracket is exact.}  For every standard
+  family, the classical $\lambda$-bracket
+  (\S\ref{sec:affine-pva-lambda-bracket} for affine,
+  \S\ref{subsec:virasoro-teichmuller-phase-space} for Virasoro,
+  \S\ref{sec:w3-pva-holography} for $\mathcal{W}_3$) is the
+  \emph{complete} tree-level datum.  The 3d HT action reconstructed
+  from the $\lambda$-bracket is therefore exact to all orders in
+  perturbation theory, modulo the genus tower.
+\item \emph{The bar differential is exact.}  For quasi-linear theories,
+  the bar differential $d_{\bar{B}}$ at genus zero receives no
+  corrections: the $A_\infty$ operations $\{m_n\}$ computed by
+  homotopy transfer are final.  The only genus-raising corrections
+  enter through the curvature $d^2 = \kappa \cdot \omega_g$, i.e.\
+  through the BV operator $\Delta$.
+\item \emph{The spectral $r$-matrix is exact.}  The line-operator OPE
+  kernel $r(z)$ computed in Part~II for each standard family is the
+  tree-level answer, and the tree-level answer \emph{is} the answer.
+  Loop corrections to $r(z)$ vanish identically for quasi-linear
+  theories.
+\end{enumerate}
+In the Chriss--Ginzburg framework
+(Proposition~\ref{prop:chriss-ginzburg-structure}),
+non-renormalization means that the genus filtration of the master MC
+element $\Theta_{\cA}$ separates cleanly:
+\[
+  \Theta_{\cA}
+  \;=\;
+  \underbrace{\Theta_{\cA}\big|_{\hbar=0}}_{\text{tree: }\tau}
+  \;+\;
+  \underbrace{\Theta_{\cA}\big|_{\hbar^g,\;g \geq 1}}_{\text{loop: genus tower}},
+\]
+with the tree part $\tau$ (the twisting morphism of Theorem~A)
+receiving no corrections from the loop part.  These consequences
+validate every explicit computation in Chapters
+\ref{chap:free-fields}--\ref{chap:w-algebra-koszul}: the algebraic
+formulas derived from the bar-cobar engine are not leading-order
+approximations --- they are exact.
+\end{remark}
+
+% ================================================================
+% THE JACOBIATOR HOMOTOPY AND OPERADIC CONTROL
+% ================================================================
+
+\section{The Jacobiator homotopy and the Eilenberg--Zilber operad}
+\label{sec:jacobiator-homotopy}
+\index{Jacobiator!homotopy}
+\index{Eilenberg--Zilber operad}
+
+The $A_\infty$ relations of~\S\ref{sec:quantum-corrections-ainfty}
+encode the failure of strict associativity/Jacobi on the bar complex
+and its \v{C}ech counterpart.  The simplest instance---the ternary
+relation involving~$m_3$---has a transparent interpretation as the
+\emph{Jacobiator homotopy} of the homotopy chiral algebra
+(Theorem~\ref{thm:cech-hca}).
+
+\subsection{The Jacobiator on the \v{C}ech complex}
+\label{subsec:jacobiator-cech}
+
+Let $\cA$ be a chiral algebra on~$X$ with cover $\mathcal{U}$,
+and let $[{-},{-}] = F_2$ denote the binary chiral bracket on the
+Moore complex $M\check{C}^\bullet(\mathcal{U};\cA)$.  The Jacobi
+identity holds on each open $U_{i_0\cdots i_p}$ (where the full
+chiral product is defined), but it need not hold on the \v{C}ech
+complex as a whole because the bracket interacts nontrivially with
+the \v{C}ech differential.
+
+\begin{definition}[Jacobiator]
+\label{def:jacobiator}
+For $a,b,c \in M\check{C}^\bullet$, the \emph{Jacobiator} is
+\[
+\mathrm{Jac}(a,b,c)
+= [a,[b,c]] + (-1)^{|a|(|b|+|c|)}[b,[c,a]]
+  + (-1)^{|c|(|a|+|b|)}[c,[a,b]].
+\]
+On the total \v{C}ech complex, $\mathrm{Jac}$ is in general
+\emph{nonzero}: it measures the obstruction to $F_2$ being a
+strict Lie bracket on the resolution.
+\end{definition}
+
+\begin{proposition}[Jacobiator is nullhomotopic;
+\ClaimStatusProvedElsewhere]
+\label{prop:jacobiator-nullhomotopic}
+\index{Jacobiator!nullhomotopy}
+\textup{(Malikov--Schechtman \cite{MS24}, \S4.1.)}
+There exists a trilinear operation
+$J'\colon (M\check{C})^{\otimes 3} \to M\check{C}[-1]$ such that
+\begin{equation}\label{eq:jacobiator-homotopy}
+d_M \circ J' + J' \circ d_M^{\otimes 3} = \mathrm{Jac},
+\end{equation}
+where $d_M^{\otimes 3}$ is the Leibniz extension of $d_M$ to the
+triple tensor product.  More precisely, $J'$ is the ternary component
+$F_3$ of the HCA structure
+(Theorem~\textup{\ref{thm:cech-hca}}), and
+equation~\eqref{eq:jacobiator-homotopy} is the $L_\infty$
+relation at arity~$3$.
+\end{proposition}
+
+\subsection{Translation to bar-side $A_\infty$ operations}
+\label{subsec:jacobiator-bar}
+
+Under the \v{C}ech--bar comparison
+(Proposition~\ref{prop:cech-bar-intertwining}), the Jacobiator
+homotopy $J' = F_3$ corresponds to the ternary $A_\infty$
+operation~$m_3$ on the bar complex.  The $A_\infty$ relation at
+arity~$3$,
+\[
+m_1 \circ m_3 + m_3 \circ (m_1 \otimes 1 \otimes 1
+  + 1 \otimes m_1 \otimes 1 + 1 \otimes 1 \otimes m_1)
++ m_2 \circ (m_2 \otimes 1 + 1 \otimes m_2) = 0,
+\]
+is the bar-side avatar of~\eqref{eq:jacobiator-homotopy}:
+the first two terms correspond to $d_M \circ J' + J' \circ d_M$,
+while the $m_2(m_2 \otimes 1 + 1 \otimes m_2)$ term is the
+Jacobiator $\mathrm{Jac}$ expressed through the iterated binary
+product.
+
+\begin{remark}[Operadic origin of all $A_\infty$ relations]
+\label{rem:ez-operad-controls-ainfty}
+The Eilenberg--Zilber operad
+$\mathcal{Y}(n) = \mathcal{Z}(n) \otimes_k \mathrm{Lie}(n)$
+of Malikov--Schechtman~\cite{MS24} provides a uniform source for
+all the $A_\infty$/$L_\infty$ relations.  The chain complex
+$\mathcal{Z}(n) = \operatorname{Tot}\operatorname{Hom}_\Delta(Z, Z^{\otimes n})$
+encodes the combinatorics of the simplicial structure (how sections
+on intersections compose), while $\mathrm{Lie}(n)$ encodes the
+chiral bracket.  Their tensor product $\mathcal{Y}(n)$ maps
+quasi-isomorphically to $\mathrm{Lie}(n)$ via the augmentation
+$\varepsilon\colon \mathcal{Z}(n) \to k$,
+so the HCA is a resolution of a strict chiral algebra.
+
+In the bar-cobar framework, the role of $\mathcal{Z}(n)$ is
+played by the cellular chains on the associahedron $K_n$
+(genus~$0$) and, at higher genus, by the cellular chains on the
+moduli space $\overline{\mathcal{M}}_{g,n}$.  The
+Malikov--Schechtman construction thus provides a purely algebraic
+model (via the Dold--Kan correspondence and the Eilenberg--Zilber
+operad) for the geometric operations that are constructed
+analytically in Chapter~\ref{chap:higher-genus} via integration
+over moduli.
+\end{remark}
+
+\subsection{Secondary Borcherds operations}
+\label{subsec:secondary-borcherds}
+\index{Borcherds identity!secondary operations}
+\index{secondary Borcherds operations|textbf}
+
+The HCA structure of Theorem~\ref{thm:cech-hca} produces not only
+the Jacobiator homotopy $J' = F_3$ but an entire tower of
+\emph{secondary Borcherds operations}
+(Malikov--Schechtman~\cite{MS24}, \S4.5):
+
+\begin{definition}[Secondary Borcherds operations]
+\label{def:secondary-borcherds}
+For a cosimplicial translationally invariant chiral algebra
+$\mathcal{V}^\bullet$ on $C = \operatorname{Spec} k[t]$, the
+homotopy chiral algebra structure produces ternary
+operations of degree~$-1$:
+\[
+j'_{(p,q,r)}\colon
+  (MV^\bullet)^{\otimes 3} \longrightarrow MV^\bullet[-1],
+  \qquad p,q,r \in \mathbb{Z},
+\]
+satisfying the \emph{secondary Borcherds identities}
+\textup{(\cite{MS24}, equation~(4.5.1))}:
+\begin{multline}\label{eq:secondary-borcherds}
+  (d \circ_{(p,q,r)} +\; {}_{(p,q,r)} \circ d)(a \otimes b \otimes c)
+  \;=\\
+  \sum_{j \geq 0}\binom{p}{j}\bigl(
+    (-1)^j a_{(p+q-j)} b_{(r+j)} c
+    - (-1)^{j+p+|a|\,|b|}\, b_{(r+p-j)} a_{(q+j)} c
+  \bigr)\\
+  - \sum_{j \geq 0}\binom{q}{j}\,
+    (a_{(p+q-j)} b)_{(r+j)}\, c,
+\end{multline}
+where $a_{(n)}b = \phi_{[,]}((a \otimes b)(t_1-t_2)^n)$
+denotes the $n$-th mode product.
+\end{definition}
+
+\begin{remark}[Secondary Borcherds and $d_{\mathrm{bracket}}^2 \neq 0$]
+\label{rem:secondary-borcherds-d2}
+\index{d-bracket squared@$d_{\mathrm{bracket}}^2 \neq 0$!secondary Borcherds interpretation}
+The proved result that $d_{\mathrm{bracket}}^2 \neq 0$ (all $2048$
+signs verified; Proposition~\ref{prop:d-bracket-not-square-zero})
+while the full Borcherds differential gives $d^2 = 0$ is \emph{precisely}
+the Ch$_\infty$ phenomenon: the bracket-level failure is the obstruction
+to strict chirality, and the secondary Borcherds operations
+$j'_{(p,q,r)}$ are the coherent homotopies that restore $d^2 = 0$ at
+the full level.  In the bar-side language
+(\S\ref{subsec:jacobiator-bar}), the secondary Borcherds
+identities~\eqref{eq:secondary-borcherds} are the vertex-algebra
+avatar of the $A_\infty$ associativity relations for $m_3$.
+
+The vanishing pattern of secondary Borcherds operations classifies
+our archetype families:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+\emph{Family} & \emph{Vanishing pattern} & \emph{Archetype} \\
+\midrule
+Heisenberg & $j'_{(p,q,r)} = 0$ for all $p,q,r$ & Gaussian (strict) \\
+Affine $\widehat{\mathfrak{sl}}_2$ & $j' \neq 0$ at arity $3$ & Lie/tree \\
+$\beta\gamma$ & $j' \neq 0$ at arity $3$; $j'_4 = 0$ & Contact/quartic \\
+Virasoro/$W_N$ & $j' \neq 0$ at all arities & Mixed (infinite tower) \\
+\bottomrule
+\end{tabular}
+\end{center}
+This classification coincides with the shadow-tower termination
+pattern: the arity at which secondary Borcherds operations first
+vanish equals the arity at which the shadow tower terminates
+(Heisenberg at~$2$, affine at~$3$, $\beta\gamma$ at~$4$,
+Virasoro never).
+\end{remark}
+
+\begin{remark}[One-slot functoriality obstruction and MC3]
+\label{rem:one-slot-obstruction}%
+\index{one-slot obstruction}%
+\index{MC3!one-slot constraint}%
+The Robert-Nicoud--Wierstra theorem
+(Theorem~\ref{thm:operadic-homotopy-convolution}(iii)) states that
+the convolution bifunctor $\operatorname{hom}^\alpha$ extends to
+$\infty$-morphisms in either slot but \emph{not both simultaneously}.
+An explicit counterexample is given in \cite[\S6]{RNW19}.
+
+This constrains the MC3 categorical lift: extending the
+prefundamental Clebsch--Gordan closure
+(Proposition~\ref{prop:prefundamental-clebsch-gordan}) from the
+character level (K$_0$, one slot) to the categorical level (both
+slots) cannot be achieved by a single bifunctorial extension.  The
+categorical lift for Conjecture~\ref{conj:mc3-arbitrary-type} must
+therefore proceed
+\emph{one slot at a time}: first extend in the coalgebra slot (via
+$\operatorname{hom}^\alpha_\ell(\Phi,1)$), then in the algebra slot
+(via $\operatorname{hom}^\alpha_r(1,\Psi)$), accepting that the
+two extensions are compatible only up to higher homotopy.
+\end{remark}
+
+\begin{remark}[Vertex Lie Jacobi family]
+\label{rem:vertex-lie-jacobi-family}
+\index{vertex Lie algebra!Jacobi family}
+For translationally invariant chiral algebras on
+$X = \operatorname{Spec}k[t]$, the $n$-th products
+$a_{(n)}b$ satisfy the Jacobi identity family
+\cite{MS24}:
+\begin{equation}\label{eq:vertex-jacobi-family}
+[a_{(m)}, b_{(n)}]c
+= \sum_{j \geq 0} \binom{m}{j}(a_{(j)}b)_{(m+n-j)}c
+\end{equation}
+and the skew-symmetry relation
+\begin{equation}\label{eq:vertex-skew}
+a_{(n)}b = (-1)^{n+1}\sum_{j \geq 0}
+\frac{(-1)^j}{j!}\,\partial^j(b_{(n+j)}a).
+\end{equation}
+On the \v{C}ech complex, the family~\eqref{eq:vertex-jacobi-family}
+holds only up to homotopy, and the correction terms are precisely the
+operations $F_n$ for $n \geq 3$.  Each $F_n$ is controlled by the
+Eilenberg--Zilber chain $\mathcal{Z}(n)$: the $n$-th operation is
+nonzero exactly when the corresponding Eilenberg--Zilber chain fails
+to be a cycle, i.e., when the simplicial structure of the cover
+introduces a nontrivial boundary at cosimplicial degree~$n$.
 \end{remark}
