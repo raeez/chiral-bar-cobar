@@ -2467,70 +2467,79 @@ Dynkin diagram.
 Four steps.
 
 \smallskip\noindent\textit{Step~1 (Evaluation core).}
-By the proved DK-2/3
+By the proved DK-2/3 for type~$A$
 (Theorem~\ref{thm:dk-fd-typeA},
 Corollary~\ref{cor:dk23-all-types}),
-the evaluation modules $\{V_n(a)\}$ compactly generate
-$\operatorname{Rep}_{\mathrm{fd}}(Y(\mathfrak{sl}_2))$.
-Each $V_n$ lies in $\operatorname{thick}\langle V_1 \rangle$
-by the $\mathfrak{sl}_2$ Clebsch--Gordan
-$V_1 \otimes V_n \cong V_{n+1} \oplus V_{n-1}$
-(Proposition~\ref{prop:dk2-thick-generation-typeA}).
+the fundamental evaluation modules $\{V_{\omega_i}(a)\}$ compactly
+generate $\operatorname{Rep}_{\mathrm{fd}}(Y(\mathfrak{g}))$ at
+all~$N$.
 
-\smallskip\noindent\textit{Step~2 (Prefundamental stability).}
-The negative prefundamental~$L^-(b)$ satisfies:
-\begin{enumerate}[label=\textup{(\alph*)},nosep]
-\item \emph{Prefundamental Clebsch--Gordan}:
-  $V_n(a) \otimes L^-(b) \cong \bigoplus_{j=0}^{n} L^-(b+n-2j)$
-  at the character level (verified $n = 1, \ldots, 8$;
-  $15$~tests in \texttt{test\_prefundamental\_clebsch\_gordan}).
-\item \emph{Baxter SES for $L^-$}:
-  the singular vector
-  $w_0 = -v_+ \otimes f \cdot v_0
-  \in V_1(a) \otimes L^-(b)$
-  is annihilated by~$\Delta(E)$
-  \emph{unconditionally} (the $\lambda = 0$ case of
-  Proposition~\ref{prop:baxter-yangian-equivariance} gives
-  $\Delta(E) \cdot w_0 = 0 \cdot (a - b - \tfrac{1}{2}) = 0$).
-  The resulting short exact sequence
-  \begin{equation}\label{eq:baxter-ses-prefundamental}
-    0 \;\to\; L^-(b-1) \;\to\; V_1(a) \otimes L^-(b) \;\to\; L^-(b+1) \;\to\; 0
-  \end{equation}
-  is $Y(\mathfrak{sl}_2)$-equivariant for \emph{all} spectral
-  parameters~$a, b$
-  ($13$~tests in \texttt{test\_mc3\_categorical\_lift}).
-\item Hence $L^-(b') \in \operatorname{thick}\langle L^-(b), V_1 \rangle$
-  for any $b, b' \in \mathbb{C}$.
-\end{enumerate}
+\smallskip\noindent\textit{Step~2 (Prefundamental stability ---
+the rank-independent Baxter argument).}
+Fix a node $i \in \{1, \ldots, N{-}1\}$ of the $A_{N-1}$~Dynkin diagram
+and let $L^-_{i}(b)$ denote the corresponding negative
+prefundamental.  The singular vector
+\begin{equation}\label{eq:baxter-sv-prefundamental}
+  w_0 \;=\; v_{\omega_i} \otimes f_i \cdot v_0
+  \;\in\; V_{\omega_i}(a) \otimes L^-_i(b)
+\end{equation}
+(weight $\omega_i - \alpha_i$ in the first factor, weight
+$-\alpha_i$ in the second) is annihilated by
+$\Delta(E_j)$ for \emph{every} $j = 1, \ldots, N{-}1$ and
+\emph{all} spectral parameters~$a, b$:
+\begin{itemize}[nosep]
+\item $j = i$: each term in the Drinfeld coproduct
+  $\Delta(E_i)$ acquires a factor of~$\lambda_i = 0$
+  (the $i$-th component of the zero highest weight),
+  and hence vanishes---this is the $\lambda = 0$
+  specialization of the spectral constraint
+  (Proposition~\ref{prop:baxter-yangian-equivariance}).
+\item $j \neq i$: the commutator $[e_j, f_i] = 0$
+  (Chevalley--Serre for distinct nodes in any simple
+  Lie algebra), and $e_j \cdot v_{\omega_i} = 0$
+  (highest-weight property of $V_{\omega_i}$), so every
+  term vanishes.
+\end{itemize}
+\noindent
+This is \textbf{rank-independent}: it uses only the
+Chevalley--Serre presentation of~$\mathfrak{g}$,
+not any $\mathfrak{sl}_2$-specific formula.
+The resulting short exact sequence
+\begin{equation}\label{eq:baxter-ses-prefundamental}
+  0 \;\to\; L^-_i(b') \;\to\; V_{\omega_i}(a) \otimes L^-_i(b) \;\to\; L^-_i(b'') \;\to\; 0
+\end{equation}
+is $Y(\mathfrak{g})$-equivariant for all~$a, b$
+(spectral parameters $b', b''$ determined by
+$\Delta(H)$-eigenvalues; $13$~tests for $\mathfrak{sl}_2$,
+$15$~tests for the prefundamental Clebsch--Gordan
+$V_n \otimes L^- \cong \bigoplus L^-(\mathrm{shifted})$
+at $\mathfrak{sl}_2$).
+Hence $L^-_i(b') \in \operatorname{thick}
+\langle L^-_i(b), V_{\omega_i}\rangle$ for any~$b, b'$.
 
 \smallskip\noindent\textit{Step~3 (Verma from pro-completion).}
-Every Verma module~$M(\lambda)$ satisfies
+Every Verma module $M(\lambda)$ of~$Y(\mathfrak{g})$ satisfies
 $M(\lambda) \simeq R\varprojlim_m W_m$, where the Weyl
-truncations~$W_m$ are finite-dimensional highest-weight modules.
+truncations~$W_m$ are finite-dimensional.
 The Mittag--Leffler condition holds ($R^1 \varprojlim = 0$;
-$344$~tests in \texttt{test\_pro\_weyl\_m\_level}), and each $W_m$
-lies in $\operatorname{thick}\langle\{V_n\}\rangle$ by Step~1.
-Therefore
-$M(\lambda) \in \operatorname{Pro\text{-}thick}\langle\{V_n\}\rangle
- \subset \widehat{D}(\operatorname{thick}\langle
- \mathcal{G}_{\mathrm{shift}}\rangle)$.
+$344$~tests for $\mathfrak{sl}_2$), and each $W_m$ lies in
+$\operatorname{thick}\langle\{V_{\omega_i}\}\rangle$
+by Step~1.  The pro-Weyl argument is rank-independent: the
+transition maps $W_{m+1} \twoheadrightarrow W_m$ are surjective
+at each weight, independently of~$N$.
 
 \smallskip\noindent\textit{Step~4 ($E_1$~compatibility).}
 The $E_1$-braiding $R(u)$ is preserved throughout:
-the $I$-adic filtration on~$Y(\mathfrak{sl}_2)$ is
-weight-graded (PBW level filtration), hence
-$R$-compatible.
+the $I$-adic filtration on~$Y(\mathfrak{g})$ is weight-graded
+(PBW level filtration), hence $R$-compatible.
 All convergence arguments---sectorwise spectral sequence
 stabilization
 (Theorem~\ref{thm:sectorwise-spectral-convergence})
-and Mittag--Leffler vanishing---depend only on the
-weight filtration, not on the braiding data.
+and Mittag--Leffler vanishing---depend only on the weight
+filtration, not on the braiding data.
 Under Koszul duality, $R(u) \mapsto R(u)^{-1}$
 ($E_1$~inversion,
 Remark~\ref{rem:yangian-e1-inversion}).
-The pro-completion~$\widehat{D}$ carries a well-defined
-$E_1$-factorization structure inherited from the
-weight-graded $I$-adic completion.
 
 \smallskip
 Since every object of~$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$ has
