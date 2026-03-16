@@ -149,18 +149,7 @@ def heisenberg_bar_chain_dim(n: int, total_weight: int) -> int:
 # Bar cohomology dimensions
 # ---------------------------------------------------------------------------
 
-def partition_number(n: int) -> int:
-    """Number of partitions of n (standard partition function p(n))."""
-    if n < 0:
-        return 0
-    if n == 0:
-        return 1
-    dp = [0] * (n + 1)
-    dp[0] = 1
-    for part in range(1, n + 1):
-        for j in range(part, n + 1):
-            dp[j] += dp[j - part]
-    return dp[n]
+from compute.lib.utils import partition_number  # canonical definition
 
 
 # Ground truth from Master Table (examples_summary.tex, KNOWN_BAR_DIMS).

@@ -560,12 +560,17 @@ def verify_kappa_uniqueness() -> Dict[str, bool]:
         expected = Rational(fam["dim"], 2 * fam["h_dual"])
         results[f"{name}_slope"] = fam["slope"] == expected
 
-    # Antisymmetry forces proportionality
-    results["antisymmetry_forces_proportionality_sl2"] = True
-    results["antisymmetry_forces_proportionality_sl3"] = True
+    # Antisymmetry: kappa(k) + kappa(-k-2h*) = 0 (computed symbolically)
+    k = Symbol('k')
+    sl2_sum = simplify(_kappa_sl2(k) + _kappa_dual_sl2(k))
+    results["antisymmetry_forces_proportionality_sl2"] = sl2_sum == 0
+    sl3_sum = simplify(_kappa_sl3(k) + _kappa_dual_sl3(k))
+    results["antisymmetry_forces_proportionality_sl3"] = sl3_sum == 0
 
-    # Virasoro: kappa(c) + kappa(26-c) = 13
-    results["virasoro_antisymmetry_sum_13"] = True
+    # Virasoro: kappa(c) + kappa(26-c) = 13 (computed symbolically)
+    c = Symbol('c')
+    vir_sum = simplify(_kappa_virasoro(c) + _kappa_dual_virasoro(c))
+    results["virasoro_antisymmetry_sum_13"] = bool(simplify(vir_sum - 13) == 0)
 
     # W3: sigma(sl3) = 5/6
     sigma_sl3 = sigma_invariant("A", 2)
