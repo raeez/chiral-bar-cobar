@@ -45,6 +45,9 @@ from compute.lib.mc3_frontier import (
     tilting_complex_from_baxter,
     tq_relation_as_chebyshev,
     verify_sub_exponential_growth,
+    baxter_r_matrix_truncated,
+    ext1_dimension_from_baxter,
+    spectral_sequence_d1_page,
     yang_baxter_equation_check,
 )
 
@@ -822,3 +825,99 @@ class TestCrossStrategy:
         V3_direct = _eval_char(3)
         for w in V3_direct:
             assert V3_cheb.get(w, 0) == V3_direct[w]
+
+
+# ===========================================================================
+# S5. New frontier computations
+# ===========================================================================
+
+
+class TestBaxterRMatrix:
+    """R-matrix on V_1 ⊗ L⁻_m (truncated)."""
+
+    @pytest.mark.parametrize("depth", [3, 6, 10])
+    def test_total_dim(self, depth):
+        r = baxter_r_matrix_truncated(depth)
+        assert r["total_dim"] == 2 * (depth + 1)
+
+    @pytest.mark.parametrize("depth", [3, 6, 10])
+    def test_total_dim_check(self, depth):
+        r = baxter_r_matrix_truncated(depth)
+        assert r["total_dim_check"]
+
+    @pytest.mark.parametrize("depth", [3, 6, 10])
+    def test_baxter_ses_dim(self, depth):
+        r = baxter_r_matrix_truncated(depth)
+        assert r["baxter_ses_dimension_check"]
+
+    def test_eigenvalue_labels(self):
+        r = baxter_r_matrix_truncated(6)
+        assert r["sub_eigenvalue"] == "u - 1"
+        assert r["quot_eigenvalue"] == "u + 1"
+
+    def test_weight_space_structure(self):
+        """At depth m, weight spaces have dim 1 or 2."""
+        r = baxter_r_matrix_truncated(8)
+        for w, d in r["weight_dims"].items():
+            assert d in (1, 2), f"Weight {w} has unexpected dim {d}"
+
+    def test_max_weight_dim_1(self):
+        """Highest weight (1) has dim 1 (only |v_+, e_0⟩)."""
+        r = baxter_r_matrix_truncated(5)
+        assert r["weight_dims"].get(1, 0) == 1
+
+
+class TestExt1FromBaxter:
+    """Ext¹(L⁻(s+1), L⁻(s-1)) from the Baxter SES."""
+
+    def test_ext1_positive(self):
+        """Ext¹ ≥ 1 for all shifts (SES is non-split)."""
+        r = ext1_dimension_from_baxter(max_shift=5, depth=30)
+        for s in range(6):
+            assert r["results"][s]["ext1_lower_bound"] >= 1
+
+    def test_character_is_direct_sum(self):
+        """V₁⊗L⁻(s) has character = L⁻(s+1) + L⁻(s-1) (CG)."""
+        r = ext1_dimension_from_baxter(max_shift=5, depth=30)
+        for s in range(6):
+            assert r["results"][s]["character_is_direct_sum"]
+
+    def test_connecting_map(self):
+        """Hom dimensions from CG decomposition."""
+        r = ext1_dimension_from_baxter(max_shift=3, depth=30)
+        for s in range(4):
+            assert r["results"][s]["hom_VL_to_sub"] == 1
+            assert r["results"][s]["hom_sub_to_sub"] == 1
+
+
+class TestSpectralSequenceD1:
+    """d₁ differential on E₁ page and E₂ bounds."""
+
+    def test_e1_at_origin(self):
+        """E₁^{0,0} = 1 (vacuum)."""
+        r = spectral_sequence_d1_page(max_total=6)
+        assert r["E1_dims"][(0, 0)] == 1
+
+    def test_e1_dimensions_nonneg(self):
+        """All E₁ dimensions are non-negative."""
+        r = spectral_sequence_d1_page(max_total=8)
+        for dim in r["E1_dims"].values():
+            assert dim >= 0
+
+    def test_d1_rank_bounds(self):
+        """d₁ rank bounded by min(source, target)."""
+        r = spectral_sequence_d1_page(max_total=8)
+        for (p, q), data in r["d1_data"].items():
+            assert data["d1_max_rank"] <= data["source_dim"]
+            assert data["d1_max_rank"] <= data["target_dim"]
+
+    def test_e2_bounds_consistent(self):
+        """E₂ lower ≤ E₂ upper at all bidegrees."""
+        r = spectral_sequence_d1_page(max_total=8)
+        for (p, q), bounds in r["E2_bounds"].items():
+            assert bounds["E2_lower"] <= bounds["E2_upper"]
+
+    def test_e2_at_origin(self):
+        """E₂^{0,0} survives (it's the vacuum)."""
+        r = spectral_sequence_d1_page(max_total=6)
+        assert r["E2_bounds"].get((0, 0), {}).get("E2_upper", 0) >= 1
