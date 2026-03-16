@@ -641,101 +641,75 @@ def _expand_miura_product(
 ) -> Tuple[Field, Field]:
     """Expand the quantum Miura product to get W_3 and W_4.
 
-    The quantum Miura operator for sl_4:
-    L = :(d + J_1)(d + J_2)(d + J_3)(d + J_4):
+    Uses the Fateev-Lukyanov convention:
+      L = (alpha_0 d + H_4)(alpha_0 d + H_3)(alpha_0 d + H_2)(alpha_0 d + H_1) / alpha_0^4
 
-    where J_i(z) = alpha_0 * h_i . dphi(z).
+    where H_i = h_i . dphi (unit currents, no alpha_0 factor) and the weight
+    ordering is REVERSED (h_4, h_3, h_2, h_1) to produce the correct sign
+    for the background charge quantum correction.
 
-    We expand LEFT TO RIGHT with normal ordering, which means when we hit
-    (d + J_i) * (expression), d acts as a derivative on the expression,
-    and J_i multiplies on the left (with normal ordering).
+    This convention ensures:
+    - T_FL = T_direct / t  (proportional to the standard EMT)
+    - W_3_FL has conformal weight 3 under T_direct
+    - W_4_FL has conformal weight 4 under T_direct
+    - The OPE of {T_FL, W_3_FL, W_4_FL} closes (verified numerically)
 
-    Starting from the right:
-    Step 0: F_4 = (d + J_4) = d + J_4
-    Step 1: F_3 = (d + J_3) F_4
-    Step 2: F_2 = (d + J_2) F_3
-    Step 3: F_1 = (d + J_1) F_2
-
-    At each step, (d + J_i) * (sum_k A_k d^k) = sum_k [J_i A_k + d(A_k)] d^k + sum_k A_k d^{k+1}
-    But we also need to include the normal ordering: when d acts on a normally
-    ordered product, it applies the Leibniz rule.
-
-    Actually, in the Miura transformation, d is the ordinary derivative d/dz,
-    and the product is a differential operator product (composition).
-    So (d + J_i) composed with (d + J_{i+1}) means:
-    d^2 + J_i d + d J_{i+1} + J_i J_{i+1}
-    = d^2 + J_i d + J_{i+1} d + (dJ_{i+1}) + :J_i J_{i+1}:
-    = d^2 + (J_i + J_{i+1}) d + (dJ_{i+1}) + :J_i J_{i+1}:
-
-    The key point is that when d acts on J_{i+1}, it produces dJ_{i+1},
-    and the quantum correction comes from this.
-
-    Let me represent the intermediate result as a "differential operator"
-    sum_k F_k(z) * d^k, where F_k(z) are composite fields.
-
-    Then (d + J) * (sum_k F_k d^k) = J * sum_k F_k d^k + d * sum_k F_k d^k
-    = sum_k :J F_k: d^k + sum_k (dF_k) d^k + sum_k F_k d^{k+1}
-    = sum_k [:J F_k: + dF_k] d^k + sum_k F_k d^{k+1}
-
-    Note: :J F_k: means the normally ordered product J(z) F_k(z).
+    The composition formula for (alpha_0 d + H_i) o (sum_k F_k d^k):
+      = sum_k [:H_i F_k: + alpha_0 dF_k] d^k + sum_k alpha_0 F_k d^{k+1}
     """
     alpha0 = np.sqrt(t)
 
-    # Build the currents J_i as Fields
-    def make_current(i: int) -> Field:
-        """J_i = alpha_0 * sum_a h_{i,a} * dphi_a."""
+    # Build UNIT currents H_i = h_i . dphi (no alpha_0 factor)
+    def make_unit_current(i: int) -> Field:
+        """H_i = sum_a h_{i,a} * dphi_a."""
         terms = []
         for a in range(3):
-            c = alpha0 * h_proj[i, a]
+            c = h_proj[i, a]
             if abs(c) > 1e-15:
                 terms.append((c, ((a, 1),)))
         return simplify_field(terms)
 
-    J = [make_current(i) for i in range(4)]
+    H = [make_unit_current(i) for i in range(4)]
 
-    # Initialize: start from the rightmost factor (d + J_4)
-    # Represent as dict: power_of_d -> Field coefficient
-    # F = {0: J_4, 1: identity}
-    # The "identity" field (coefficient of d^1) is the empty monomial
-    identity_field: Field = [(1.0, ())]
+    # Reversed weight ordering: h_4, h_3, h_2, h_1 (indices 3, 2, 1, 0)
+    order = [3, 2, 1, 0]
+    H_ordered = [H[i] for i in order]
+
+    # Initialize: rightmost factor (alpha_0 d + H_ordered[-1])
+    # = {1: alpha_0, 0: H_ordered[-1]}
+    alpha0_field: Field = [(alpha0, ())]
     zero_field: Field = []
 
-    coeffs: Dict[int, Field] = {0: J[3], 1: identity_field}
+    coeffs: Dict[int, Field] = {0: H_ordered[-1], 1: alpha0_field}
 
-    # Multiply from the right by (d + J_i) for i = 2, 1, 0 (indices 2, 1, 0)
-    for i in [2, 1, 0]:
+    # Multiply from the left by remaining factors
+    for j_idx in range(len(order) - 2, -1, -1):
+        Hi = H_ordered[j_idx]
         new_coeffs: Dict[int, Field] = {}
 
-        # Two contributions:
-        # 1. J_i * (sum_k F_k d^k) = sum_k :J_i F_k: d^k
-        # 2. d * (sum_k F_k d^k) = sum_k (dF_k) d^k + sum_k F_k d^{k+1}
-
         for k, fk in coeffs.items():
-            # Contribution from J_i * F_k * d^k
-            j_times_fk = multiply_fields(J[i], fk)
+            # Contribution from H_i * F_k d^k
+            h_times_fk = multiply_fields(Hi, fk)
             if k not in new_coeffs:
                 new_coeffs[k] = zero_field[:]
-            new_coeffs[k] = add_fields(new_coeffs[k], j_times_fk)
+            new_coeffs[k] = add_fields(new_coeffs[k], h_times_fk)
 
-            # Contribution from d * F_k * d^k = (dF_k) d^k + F_k d^{k+1}
+            # Contribution from alpha_0*d * F_k d^k
+            # = alpha_0*(dF_k) d^k + alpha_0*F_k d^{k+1}
             dfk = derivative_field(fk)
-            new_coeffs[k] = add_fields(new_coeffs[k], dfk)
+            new_coeffs[k] = add_fields(new_coeffs[k], scale_field(alpha0, dfk))
 
             kp1 = k + 1
             if kp1 not in new_coeffs:
                 new_coeffs[kp1] = zero_field[:]
-            new_coeffs[kp1] = add_fields(new_coeffs[kp1], fk)
+            new_coeffs[kp1] = add_fields(new_coeffs[kp1], scale_field(alpha0, fk))
 
         coeffs = new_coeffs
 
-    # Now coeffs[k] gives the coefficient of d^k in L.
-    # L = sum_k coeffs[k] * d^k
-    # We expect:
-    # coeffs[4] = 1 (identity)
-    # coeffs[3] = 0 (by tracelessness)
-    # coeffs[2] = T (spin-2 generator)
-    # coeffs[1] = W_3 (spin-3 generator)
-    # coeffs[0] = W_4 (spin-4 generator)
+    # Divide all coefficients by alpha_0^4
+    inv_a4 = 1.0 / alpha0**4
+    for k in coeffs:
+        coeffs[k] = scale_field(inv_a4, coeffs[k])
 
     # Verify coeffs[4] = 1
     c4 = coeffs.get(4, [])
@@ -746,11 +720,10 @@ def _expand_miura_product(
     for coeff, _ in c3:
         assert abs(coeff) < 1e-10, f"d^3 coefficient not zero: {c3}"
 
-    T_field = simplify_field(coeffs.get(2, []))
     W3_field = coeffs.get(1, [])
     W4_field = coeffs.get(0, [])
 
-    return T_field, W3_field, W4_field
+    return W3_field, W4_field
 
 
 # =========================================================================
