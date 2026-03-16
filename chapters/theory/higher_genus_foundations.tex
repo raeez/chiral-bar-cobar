@@ -91,6 +91,20 @@ bundle (Theorem~\ref{thm:genus-universality}).  The generating
 function of these classes is $\kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
 (Theorem~\ref{thm:family-index}).
 
+The fiberwise curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ is not
+a pathology: it is a \emph{projection} of a deeper structure.  The
+modular cyclic deformation complex
+(Definition~\ref{def:modular-cyclic-deformation-complex}) is a
+Maurer--Cartan family parameterized by genus~$g$ and point
+configurations.  The universal MC element
+$\Theta_\cA^{(g)} \in \mathrm{MC}(\gAmod)$ projects to: the
+curvature~$\kappa(\cA)$ at the scalar level (Ring~1); the curved
+differential~$\dfib$ at the differential level (Ring~2); and the
+fully corrected differential~$\Dg{g}$ with $\Dg{g}^{\,2}=0$ at
+the period-corrected level.  This section develops the strict dg model
+(the three differentials and their interaction); the full homotopy
+$L_\infty$ structure and the modular envelope appear in
+Chapter~\ref{chap:higher-genus-modular-koszul}.
 
 \begin{remark}[Parallel track: the anomaly]\label{rem:anomaly-parallel-track}
 \index{conformal anomaly!parallel track}
@@ -1130,6 +1144,47 @@ A curved $A_\infty$ algebra consists of a graded vector space $\mathcal{A}$ with
 \item In particular, $m_1(m_0) = 0$ (curvature is a cocycle) and $m_1^2 = [m_0, -]$ (failure of strict nilpotence)
 \end{enumerate}
 \end{definition}
+
+\begin{theorem}[Genus-$g$ bar complex as curved
+$\mathrm{Ch}_\infty$-algebra; \ClaimStatusProvedHere]
+\label{thm:bar-curved-ch-infty}
+\index{curved Ch-infinity@curved $\mathrm{Ch}_\infty$-algebra|textbf}
+\index{bar complex!curved homotopy chiral structure}
+For a chiral algebra $\cA$ with scalar curvature $\kappa(\cA)$, the
+genus-$g$ bar complex $\barB^{(g,n)}(\cA)$ carries a \emph{curved
+homotopy chiral algebra} structure: a curved
+$\mathrm{Ch}_\infty$-algebra in the sense of
+Malikov--Schechtman~\textup{\cite{MS24}}, with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Curvature element $m_0^{(g)} = \kappa(\cA) \cdot \omega_g$,
+  where $\omega_g$ is the canonical $(1,1)$-class on the genus-$g$
+  surface.
+\item The failure of strict nilpotence:
+  $m_1^{(g)} \circ m_1^{(g)} = [m_0^{(g)}, -]$, i.e.,
+  $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
+  \textup{(}Theorem~\textup{\ref{thm:arnold-quantum})}.
+\item The Eilenberg--Zilber homotopies $F_n^{(g)}$ acquire curvature
+  corrections: $d F_n^{(g)} + F_n^{(g)} d = \text{boundary term}
+  + \kappa(\cA) \cdot \omega_g \cdot (\text{lower-arity terms})$.
+\item At genus~$0$, the curvature vanishes and the structure reduces to
+  the uncurved $\mathrm{Ch}_\infty$-algebra of
+  Theorem~\textup{\ref{thm:cech-hca}}.
+\end{enumerate}
+This is the $\mathrm{Ch}_\infty$ avatar of the curved
+$A_\infty$-structure of Definition~\textup{\ref{def:curved-ainfty-hg}}.
+\end{theorem}
+
+\begin{proof}
+The curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ is proved
+in Theorem~\ref{thm:arnold-quantum} via the genus-$g$ Arnold defect.
+The $\mathrm{Ch}_\infty$ structure follows by applying the
+Malikov--Schechtman construction~\cite[Theorem~3.1]{MS24} to the
+cosimplicial object $\barB^{(g,\bullet)}(\cA)$, with the curvature
+correction arising from the period-matrix correction to the
+genus-$0$ propagator.  Parts~(ii) and~(iii) are the
+$\mathrm{Ch}_\infty$-algebra restatement of the fact that the bar
+differential squares to the curvature, not to zero.
+\end{proof}
 
 \begin{example}[Heisenberg algebra: curved structure]
 The Heisenberg algebra $\mathcal{H}_k$ has current $J$ with OPE:
@@ -5567,17 +5622,28 @@ that implements the gluing of the last marked point on the first
 factor with the last marked point on the second factor.
 \end{definition}
 
-\begin{conjecture}[Logarithmic clutching from degeneration geometry;
-  \ClaimStatusConjectured]%
+\begin{theorem}[Logarithmic clutching from degeneration geometry;
+  \ClaimStatusProvedElsewhere]%
 \label{conj:log-clutching-degeneration}
 \index{clutching kernel!logarithmic!from degeneration geometry}
-The degeneration formula of Mok~\cite{Mok25} canonically produces
-logarithmic clutching kernels compatible with the stable-graph
-boundary stratification of\/ $\overline{\mathcal{M}}_{g,n}$.
-In particular, every rigid combinatorial type of logarithmic
-$\FM$ degeneration determines a correspondence component of\/
-$K^{\mathrm{log}}_{g_1,n_1;\,g_2,n_2}$.
-\end{conjecture}
+The degeneration formula of Mok~\cite[Corollary~5.3.4]{Mok25}
+canonically produces logarithmic clutching kernels compatible with
+the stable-graph boundary stratification of\/
+$\overline{\mathcal{M}}_{g,n}$.
+The irreducible components of the special fibre of\/
+$\operatorname{FM}_n(W/B)$ biject with rigid combinatorial types
+$\rho$ \cite[Definition~4.7.1]{Mok25}, and each component is a
+modification of the product
+$\prod_{v \in V(S_\rho)} \operatorname{FM}_{I_v}(Y_v \mathbin{|} D_v)$.
+The combinatorial cutting map $\kappa$ is a subdivision---bijective
+on supports and lattices \cite[Lemma~5.3.1]{Mok25}.
+\end{theorem}
+
+\begin{proof}[References]
+This is \cite[Corollary~5.3.4]{Mok25}, combined with
+\cite[Lemma~5.3.1]{Mok25} for the subdivision property of the
+cutting map.
+\end{proof}
 
 \begin{remark}[Conceptual cohesion]%
 \label{rem:log-clutching-cohesion}
@@ -5600,6 +5666,48 @@ $\operatorname{Trop}(\FM_n(C|D))$; the degeneration formula
 the clutching law for the quartic resonance class
 (Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
 \end{remark}
+
+\begin{construction}[Log FM forgetful chain map; \ClaimStatusProvedElsewhere]
+\label{constr:log-fm-chain-map}
+\index{logarithmic FM!forgetful chain map}
+The logarithmic Fulton--MacPherson space
+$\operatorname{FM}_n(X \mathbin{|} D)$ of
+Mok~\cite[Theorem~3.3.1]{Mok25} admits a natural morphism to the
+classical FM space:
+\[
+\pi_*\colon
+C_*\bigl(\operatorname{FM}_n(X \mathbin{|} D)\bigr)
+\longrightarrow
+C_*\bigl(\overline{\operatorname{FM}}_n(X)\bigr),
+\]
+induced by the forgetful map that drops the log structure.
+The chain map $\pi_*$ has the following properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item On FM-type strata \textup{(}mutual collisions of marked
+  points away from $D$\textup{)}, $\pi_*$ is the identity: the
+  classical FM boundary encodes the same collision data.
+\item On puncture-collision strata \textup{(}marked points
+  approaching the divisor $D$\textup{)}, $\pi_*$ collapses the
+  log boundary to lower-dimensional strata in the classical FM
+  space.  These extra strata are parametrised by the
+  grid-subdivision data $(P, m)$ of Mok's planted forests
+  \cite[Definition~3.1.5]{Mok25}.
+\item The planted-forest differential $d_{\mathrm{pf}}$ in the
+  five-component differential~\eqref{eq:D-five-components} is the
+  algebraic shadow of the \emph{kernel} of $\pi_*$ on boundary
+  strata: it encodes exactly the codimension-${\geq}2$ boundary
+  relations of $\operatorname{FM}_n^{\mathrm{log}}$ that the
+  classical FM space $\overline{\operatorname{FM}}_n$ does not see.
+\end{enumerate}
+
+For $X = \PP^1$ with $D = \{0, 1, \infty\}$, the identification
+$\operatorname{FM}_{n-3}(\PP^1 \mathbin{|} 0{+}1{+}\infty)
+\cong \overline{\cM}_{0,n}$
+of \cite[\S3.4.1]{Mok25} gives an explicit model: the log~FM space
+\emph{is} the moduli space of stable rational curves, and $\pi_*$ is
+the tautological map forgetting the log structure on the boundary
+divisors.
+\end{construction}
 
 % ================================================================
 % SECTION 4.15: COMPLEMENTARITY THEOREM
