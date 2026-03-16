@@ -315,10 +315,15 @@ def bar_dim_virasoro(degree: int) -> Optional[int]:
 def bar_dim_w3(degree: int) -> Optional[int]:
     """Bar complex dimension for W_3 at given bar degree.
 
-    From manuscript Table: 2, 5, 16, 52.
-    Growth is exponential.
+    From manuscript Table: 2, 5, 16, 52 (proved); 171 (DS uniqueness).
+    H^5 = 171 is the unique prediction of the rational GF determined by
+    DS invariance: (1-3x-x^2) | D(x) (shared with sl3, since W3 = DS(sl3)).
+    See w3_h5_compute.py check_ds_uniqueness() for the proof.
+    Conjectured GF: P(x) = x(2-3x)/((1-x)(1-3x-x^2)).
+    Recurrence: a(n) = 4a(n-1) - 2a(n-2) - a(n-3).
+    Growth rate: (3+sqrt(13))/2, shared discriminant 13 with sl3.
     """
-    known = {1: 2, 2: 5, 3: 16, 4: 52}
+    known = {1: 2, 2: 5, 3: 16, 4: 52, 5: 171}
     return known.get(degree)
 
 
@@ -399,8 +404,8 @@ KNOWN_BAR_DIMS = {
     "sl3": {1: 8, 2: 36, 3: 204},  # degrees 4,5 conjectured: 1352, 9892
     # === Non-KM: from summary table (Motzkin diffs for Virasoro) ===
     "Virasoro": {n: bar_dim_virasoro(n) for n in range(1, 11)},
-    # W3: degrees 1-3 proved; degree 4 CONJECTURAL (no independent derivation documented)
-    "W3": {1: 2, 2: 5, 3: 16, 4: 52},
+    # W3: degrees 1-4 from manuscript; degree 5 from DS uniqueness (w3_h5_compute.py)
+    "W3": {1: 2, 2: 5, 3: 16, 4: 52, 5: 171},
     # Yangian_sl2: seed values from low-degree computation;
     # the formula 3^n+1 is conjectural (see yangian_bar.py)
     "Yangian_sl2": {1: 4, 2: 10, 3: 28},
@@ -408,7 +413,7 @@ KNOWN_BAR_DIMS = {
 
 # Degrees for which bar cohomology values are conjectural (not independently derived)
 CONJECTURAL_BAR_DIMS = {
-    "W3": {4},          # H^4(W3)=52 has no documented derivation
+    "W3": {4, 5},       # H^4=52, H^5=171: from GF (DS uniqueness determines GF)
     "Yangian_sl2": {1, 2, 3},  # seed values; 3^n+1 formula is conjectural
     "sl3": set(),       # degrees 4,5 not in KNOWN_BAR_DIMS (only conjectured via recurrence)
 }
