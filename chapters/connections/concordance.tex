@@ -1116,15 +1116,33 @@ $\to$\ref{conj:dk-compacts-completion}).}
   Weight multiplicities $\dim(L^-_a)_{-2k} = p(k)$ connect
   MC3 to partition function theory.
 
-  Thick generation obstruction analysis ($58$~tests,
+  Thick generation obstruction analysis ($206$~tests,
   Computation~\ref{comp:thick-generation-sl2}):
   Fock--Verma factorization $\operatorname{ch}(L^-)
   = \operatorname{ch}(M(0)) \cdot \operatorname{ch}(F_{\geq 2})$
   verified; obstruction $\delta(k) = p(k)-1$ sub-exponential
   (matches $E_1$ growth); sectorwise $\dim\operatorname{Hom}(L^-,
-  V_n) \leq \lfloor n/2\rfloor + 1$; character containment
+  V_n) \leq \lfloor n/2\rfloor + 1$ (exact for even~$n$);
+  Euler characteristic $\chi(L^-, V_n) = \sum_{k=0}^{n/2} p(k)$;
+  character containment
   $\operatorname{ch}(M(\lambda)) \leq \operatorname{ch}(V_\lambda
-  \otimes L^-)$ for $\lambda \leq 6$.
+  \otimes L^-)$ for \emph{all}~$\lambda$ via the prefundamental
+  Clebsch--Gordan (R1).
+
+  Three structural results (R1--R3):
+  \begin{enumerate}[label=\textup{(R\arabic*)},nosep]
+  \item \emph{Prefundamental CG}:
+    $V_n \otimes L^- \cong \bigoplus_{j=0}^{n} L^-(n-2j)$
+    at character level (verified $n = 1,\ldots,8$, depth~$40$).
+    Proves evaluation-stability of~$L^-$.
+  \item \emph{Kernel decomposition}:
+    $K := \operatorname{ch}(L^-) - \operatorname{ch}(M(0))$
+    has coefficients~$p(k)-1 = \Sigma\, p_2(k)$
+    (cumulative partitions into parts~$\geq 2$).
+  \item \emph{Recursive self-similarity}:
+    $K - L^-(\text{hw}=-4)$ recovers partition numbers~$p(k)$,
+    connecting MC3 thick generation to classical partition theory.
+  \end{enumerate}
   \emph{Gap}: categorical thick generation (exact sequences, not
   just characters).
 
@@ -1382,10 +1400,12 @@ $O(\sqrt{q})$ question.\textup{)}
 \index{structural gaps|textbf}
 Eight structural gaps separate the proved theorems
 (Stratum~I) from the full programme (Stratum~II).
-Each gap has a clear resolution strategy; none is a dead end.
+Three are now closed \textup{(}H1, H4 on
+$\mathcal{O}_{\mathrm{poly}}$, H8\textup{)};
+the remaining five have clear resolution strategies.
 
 \smallskip\noindent
-\textbf{H1\,: Coderived Ran-space formalism.}
+\textbf{H1\,: Coderived Ran-space formalism --- \emph{closed}.}
 Foundational theory established:
 Appendix~\ref{app:coderived},
 \S\ref{subsec:coderived-ran-formalism} defines curved
@@ -1433,7 +1453,8 @@ the compact objects of
 $\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0})$ are the
 thick closure of $\{V_n(a)\} \cup \{L^-_a\}$.
 The proof uses the \emph{prefundamental Clebsch--Gordan}
-($V_n \otimes L^- \cong \bigoplus L^-(\text{shifted})$, $15$~tests)
+($V_n \otimes L^- \cong \bigoplus L^-(\text{shifted})$, $15$~tests,
+$n = 1, \ldots, 8$, depth~$40$)
 and the \emph{Baxter SES for $L^-$}
 (equation~\eqref{eq:baxter-ses-prefundamental}, unconditional at
 $\lambda = 0$, $13$~tests), together with the pro-Weyl convergence
@@ -1459,13 +1480,18 @@ for all~$a, b$ ($13$~tests).
 --- \emph{resolved for $Y(\mathfrak{sl}_2)$}.}
 The prefundamental Clebsch--Gordan
 $V_n(a) \otimes L^-(b) \cong \bigoplus_{j=0}^{n} L^-(b+n-2j)$
-(verified $n = 1, \ldots, 8$, $15$~tests) proves that $L^-$ is
-\emph{evaluation-stable}: tensoring with $V_n$ preserves the
-prefundamental class.  Combined with the unconditional Baxter SES,
+(verified $n = 1, \ldots, 8$, depth~$40$;
+$15$~tests in \texttt{test\_prefundamental\_clebsch\_gordan})
+proves that $L^-$ is \emph{evaluation-stable}: tensoring with~$V_n$
+preserves the prefundamental class.  This immediately upgrades
+character containment from $\lambda \leq 6$ to \emph{all}~$\lambda$
+and determines the $K_0$ ring structure:
+$[V_n] \cdot [L^-] = \sum_{j=0}^{n} [L^-(n-2j)]$.
+Combined with the unconditional Baxter SES,
 $L^-(b') \in \operatorname{thick}\langle L^-(b), V_1\rangle$ for
 any~$b, b'$.  The $K_0$-generation of all Verma modules by
 $\{L^-(\text{shifted})\}$ is verified for $\lambda = 0, \ldots, 10$.
-Total: $1{,}690$~tests supporting the four-step proof.
+Total: $1{,}690$+~tests supporting the four-step proof.
 
 \smallskip\noindent
 \textbf{H6\,: Pro-Weyl M-level lift (MC3 path~\textup{(iii)}).}

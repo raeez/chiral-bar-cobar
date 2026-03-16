@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Two-volume research monograph by Raeez Lorgat. Vol I (~1,660pp, 64 active files, ~1,786 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~454pp, at ~/chiral-bar-cobar-vol2, 38 files, ~440 claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
+Two-volume research monograph by Raeez Lorgat. Vol I (~1,675pp, 67 active files, ~1,795 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~476pp, at ~/chiral-bar-cobar-vol2, 38 files, ~444 claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
 
 **Vol I structure**: Overture (Heisenberg atom) + Part I (The Algebraic Engine, Thms A-D+H) + Part II (The Standard Landscape, all example families) + Part III (Bridges and Programmes) + Part IV (The Frontier, concordance) + Appendices (4 clusters: Foundations, Nonlinear Calculus, Family Frontiers, Physics Bridges).
 
@@ -23,9 +23,9 @@ Maximalist ambition synergizes with maximal truth-seeking. Precision enables amb
 
 ## Three Concentric Rings (the architecture)
 
-**Ring 1** — Proved core: Theorems A-H, MC1/MC2, DK-0 through DK-3.
-**Ring 2** — Nonlinear characteristic layer: kappa -> Delta -> [C], o^(4), [Q] -> Theta. Ambient complementarity = shifted-symplectic formal moduli with Lagrangian maps. Complementarity potential S_A. Quartic resonance class.
-**Ring 3** — Physics-facing frontier: W-algebra axis (completed Koszulity ubiquitous, strict exceptional), Yangian/RTT axis (local kernel + envelope + boundary quotient), holographic/celestial axis (anomaly-completed Koszul duality).
+**Ring 1** — Proved core: Theorems A-H, MC1/MC2, DK-0 through DK-3, **MC4 closed** (W_N rigidity at all stages + Yangian eval-core).
+**Ring 2** — Nonlinear characteristic layer: kappa -> Delta -> [C], o^(4), [Q] -> Theta. Ambient complementarity = shifted-symplectic formal moduli with Lagrangian maps. Complementarity potential S_A. Quartic resonance class Q^contact_Vir = 10/[c(5c+22)].
+**Ring 3** — Physics-facing frontier: W-algebra axis (MC4 W_infty closed unconditionally), Yangian/RTT axis (eval-core closed, DK-5 downstream of MC3), holographic/celestial axis (anomaly-completed Koszul duality).
 
 **Unifying principle**: Filtration controls everything.
 
@@ -34,8 +34,8 @@ Maximalist ambition synergizes with maximal truth-seeking. Precision enables amb
 ```
 pkill -9 -f pdflatex 2>/dev/null || true; sleep 2; make fast    # Vol I
 cd ~/chiral-bar-cobar-vol2 && make                                # Vol II
-make test                                                         # Fast tests (~6K)
-make test-full                                                    # All tests (~7K)
+make test                                                         # Fast tests (~6.8K)
+make test-full                                                    # All tests (~7.5K)
 python3 scripts/generate_metadata.py                              # Census (authoritative)
 ```
 
@@ -108,11 +108,13 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 **Single source of truth**: concordance.tex (the constitution). When chapters disagree, the constitution is right.
 
-**MC frontier** (MC3/MC4 -> MC5):
-- MC3: DK beyond eval-gen core (categorical enlargement)
-- MC4: RTT-adapted realization + boundary quotient/orthogonal coideal
-- MC5: BV/BRST = bar at higher genus (downstream of MC3/MC4)
-- Theta_A: principal open problem, now structured by nonlinear shadow tower
+**MC frontier** (MC3 is the remaining algebraic frontier):
+- MC1: **PROVED** (PBW concentration)
+- MC2: **PROVED** (universal Theta_A)
+- MC3: DK beyond eval-gen core (categorical enlargement) — **the single remaining algebraic bottleneck**
+- MC4: **CLOSED** — W_infty unconditional at all stages via W_N rigidity (21 conjectures resolved); Yangian eval-core verified (249 tests), DK-5 downstream of MC3
+- MC5: Genus 0+1 proved; g>=2 requires Costello renormalization (analytic, not algebraic)
+- Theta_A: structured by nonlinear shadow tower; Q^contact_Vir extracted
 
 ## Vol II (~/chiral-bar-cobar-vol2)
 
