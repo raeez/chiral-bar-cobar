@@ -3955,3 +3955,352 @@ adjunction, addressed in Chapter~\ref{ch:en-koszul-duality}.
 % (Absorbed from koszul_across_genera.tex)
 %================================================================
 
+
+%================================================================
+% AMBIENT COMPLEMENTARITY AND THE LAGRANGIAN UPGRADE
+%================================================================
+
+\section{Ambient complementarity and the Lagrangian upgrade}
+\label{sec:ambient-complementarity-lagrangian}
+
+The preceding sections prove that complementarity decomposes the
+genus-$g$ cohomology into two dual packages:
+$Q_g(\cA) \oplus Q_g(\cA^!) \cong H^*(\overline{\mathcal{M}}_g, Z(\cA))$.
+This is the \emph{linear shadow} of a deeper geometric fact.  The
+correct theorem is not an additive splitting of vector spaces.  The
+correct theorem is that there is \emph{one} ambient deformation problem,
+equipped with a $(-1)$-shifted symplectic structure, and the two dual
+packages are realized inside it as \emph{complementary Lagrangians}.
+Once that geometry is installed, the scalar characteristic
+$\kappa(\cA)$ and the spectral package $\Delta_{\cA}$ become the
+quadratic face of a larger nonlinear theory whose higher jets are the
+cubic, quartic, and all-arity shadow tensors computed in
+\S\ref{sec:heisenberg-shadow-gaussianity},
+\S\ref{sec:affine-cubic-shadow},
+\S\ref{sec:betagamma-quartic-birth}, and
+\S\ref{sec:mixed-cubic-quartic-shadows}.
+
+\begin{remark}[Why additive complementarity is not enough]
+\label{rem:why-additive-not-enough}
+An additive splitting can always be faked by eigenspace
+decompositions, arbitrary direct sums, or linear bookkeeping.
+The ambient theorem is harder to fake: it requires a single
+deformation problem rather than two unrelated ones, a shifted
+symplectic pairing on that problem, isotropicity of the one-sided
+packages, maximality of the isotropicity, and compatibility with
+clutching, factorization, and duality.  The last item is decisive:
+the theorem is not about tangent complexes at one point but about
+a modular geometry stable under the basic operations of the theory.
+\end{remark}
+
+\subsection{The ambient complementarity datum}
+\label{subsec:ambient-complementarity-datum}
+
+\begin{definition}[Ambient complementarity datum]
+\label{def:ambient-complementarity-datum}
+\ClaimStatusProvedHere
+Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
+curve, and let $\cA^!$ denote its Koszul dual on the locus where the
+duality package is defined.  An \emph{ambient complementarity datum}
+consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item two cyclic deformation complexes
+\[
+L_{\cA} := \operatorname{Def}_{\mathrm{cyc}}(\cA),
+\qquad
+L_{\cA^!} := \operatorname{Def}_{\mathrm{cyc}}(\cA^!),
+\]
+viewed as filtered complete cyclic $L_\infty$-algebras;
+\item a completed kernel object
+\[
+K_{\cA} := (\cA^! \widehat\otimes \cA)[1]
+\]
+with differential twisted by the universal twisting kernel;
+\item a Maurer--Cartan element
+\[
+\tau_{\cA} \in \operatorname{MC}(\cA^! \widehat\otimes \cA)
+\]
+representing the canonical bar--cobar twisting kernel;
+\item linearizations of the kernel in the two deformation directions,
+\[
+\nabla_{\cA} \colon L_{\cA} \to K_{\cA},
+\qquad
+\nabla_{\cA^!} \colon L_{\cA^!} \to K_{\cA};
+\]
+\item a degree $-1$ cyclic pairing on the total complex
+$L_{\cA} \oplus K_{\cA} \oplus L_{\cA^!}$
+for which the kernel differential is skew-adjoint.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Ambient complementarity tangent complex]
+\label{def:ambient-complementarity-tangent-complex}
+Given an ambient complementarity datum, the
+\emph{ambient complementarity tangent complex} is
+\begin{equation}
+\label{eq:ambient-tangent-complex}
+T_{\mathrm{comp}}(\cA)
+:=
+\operatorname{fib}\Bigl(
+\nabla_{\cA} - \nabla_{\cA^!} \colon
+L_{\cA} \oplus L_{\cA^!} \longrightarrow K_{\cA}
+\Bigr).
+\end{equation}
+A tangent vector in $T_{\mathrm{comp}}(\cA)$ is a first-order
+deformation of $\cA$, a first-order deformation of $\cA^!$, and a
+first-order deformation of the universal kernel, constrained by the
+linearized Maurer--Cartan equation.
+\end{definition}
+
+\begin{theorem}[Ambient complementarity in tangent form]
+\label{thm:ambient-complementarity-tangent}
+\ClaimStatusProvedHere
+Assume an ambient complementarity datum exists for $\cA$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the complex $T_{\mathrm{comp}}(\cA)$ carries a canonical
+nondegenerate pairing of degree $-1$;
+\item the one-sided tangent complexes
+\[
+T_{\cA} := \operatorname{fib}(\nabla_{\cA} \colon L_{\cA} \to K_{\cA}),
+\qquad
+T_{\cA^!} := \operatorname{fib}(\nabla_{\cA^!} \colon L_{\cA^!} \to K_{\cA})
+\]
+are isotropic inside $T_{\mathrm{comp}}(\cA)$;
+\item if the pairing on $L_{\cA} \oplus K_{\cA} \oplus L_{\cA^!}$
+is perfect and bar--cobar duality identifies the normal complex of
+one side with the shifted dual tangent complex of the other, then
+$T_{\cA}$ and $T_{\cA^!}$ are complementary Lagrangians in
+$T_{\mathrm{comp}}(\cA)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The degree $-1$ pairing on $T_{\mathrm{comp}}(\cA)$ is induced from the
+cyclic pairing on the direct sum by passage to the homotopy fiber.
+Because the total differential is skew-adjoint, the pairing descends to
+cohomology and is compatible with the differential.
+
+For the one-sided tangent complex $T_{\cA}$, the pullback of the ambient
+pairing reduces to the quadratic term in the differentiated
+Maurer--Cartan equation for the universal kernel.  That quadratic term
+vanishes because the Maurer--Cartan equation is exactly the isotropy
+condition for the graph of the one-sided variation.  The same argument
+applies to $T_{\cA^!}$.
+
+If the cyclic pairing is perfect and bar--cobar duality identifies the
+normal complex to one side with the shifted dual tangent complex of the
+other, maximal isotropicity follows.  This is the derived form of the
+slogan that the two sides are opposite polarizations of a single
+symplectic deformation problem.
+\end{proof}
+
+\begin{theorem}[Ambient complementarity as shifted symplectic formal
+moduli problem]
+\label{thm:ambient-complementarity-fmp}
+\ClaimStatusConjectured
+Assume the tangent complex $T_{\mathrm{comp}}(\cA)$ integrates to a
+filtered complete cyclic $L_\infty$-algebra presenting a formal moduli
+problem $\mathcal{M}_{\mathrm{comp}}(\cA)$.  Then
+$\mathcal{M}_{\mathrm{comp}}(\cA)$ carries a canonical $(-1)$-shifted
+symplectic structure, and the one-sided deformation problems define
+Lagrangian maps
+\[
+\mathcal{M}_{\cA}
+\longrightarrow
+\mathcal{M}_{\mathrm{comp}}(\cA)
+\longleftarrow
+\mathcal{M}_{\cA^!}.
+\]
+The genus-$g$ complementarity complex is the linear shadow of this
+picture.
+\end{theorem}
+
+\subsection{Cotangent normal form and the complementarity potential}
+\label{subsec:cotangent-normal-form}
+
+\begin{theorem}[Shifted cotangent normal form]
+\label{thm:shifted-cotangent-normal-form}
+\ClaimStatusProvedHere
+Let $\mathcal{M}$ be a pointed $(-1)$-shifted symplectic formal moduli
+problem, and let $i_+\colon\mathcal{L}_+\to\mathcal{M}$,
+$i_-\colon\mathcal{L}_-\to\mathcal{M}$ be pointed Lagrangian maps.
+Assume the induced tangent map
+$T_0\mathcal{L}_+ \oplus T_0\mathcal{L}_-
+\xrightarrow{\sim} T_0\mathcal{M}$
+is a quasi-isomorphism.  Then there exists a pointed formal
+symplectomorphism
+\[
+(\mathcal{M}, i_+)
+\simeq
+(T^*[-1]\mathcal{L}_+, 0\text{-section})
+\]
+under which $\mathcal{L}_-$ becomes the graph of a closed
+degree-zero one-form $\alpha_+ \in \Omega^1(\mathcal{L}_+)^0$.
+In the pointed formal neighborhood this one-form is exact:
+$\alpha_+ = dS_+$
+for a degree-zero formal function $S_+$, unique up to constant.
+\end{theorem}
+
+\begin{proof}
+Because $i_+$ is Lagrangian, the normal complex of $\mathcal{L}_+$
+in $\mathcal{M}$ is canonically identified with
+$T^*[-1]\mathcal{L}_+$.  The symplectic neighborhood theorem
+produces the pointed equivalence.  Under this identification
+$\mathcal{L}_+$ becomes the zero section; since $\mathcal{L}_-$
+is complementary, it is the graph of a one-form.  That one-form is
+closed because the graph of a one-form in a cotangent bundle is
+Lagrangian if and only if the one-form is closed.  In a pointed
+formal neighborhood every closed one-form is exact.
+\end{proof}
+
+\begin{definition}[Complementarity potential]
+\label{def:complementarity-potential}
+Assume the ambient complementarity formal moduli problem exists.
+The formal function
+\[
+S_{\cA} \in \widehat{\mathcal{O}}(\mathcal{M}_{\cA})^0
+\]
+produced by Theorem~\ref{thm:shifted-cotangent-normal-form} for
+$\mathcal{L}_+ = \mathcal{M}_{\cA}$,
+$\mathcal{L}_- = \mathcal{M}_{\cA^!}$
+is called the \emph{complementarity potential} of the Koszul pair
+$(\cA, \cA^!)$.
+\end{definition}
+
+\begin{proposition}[Legendre duality of the two potentials]
+\label{prop:legendre-duality-potentials}
+\ClaimStatusProvedHere
+Let $S_{\cA}$ and $S_{\cA^!}$ be the complementarity potentials
+constructed from the two cotangent charts.  Then $S_{\cA}$ and
+$S_{\cA^!}$ are formal Legendre transforms of one another.
+\end{proposition}
+
+\begin{proof}
+The two functions generate the same formal Lagrangian subspace of
+the same shifted symplectic ambient moduli problem, viewed from
+opposite cotangent charts.  The coordinate change between the charts
+is the formal Legendre transform.
+\end{proof}
+
+\begin{proposition}[Legendre duality of cubic tensors]
+\label{prop:legendre-duality-cubic}
+\ClaimStatusProvedHere
+Let $H_{\cA}$ be the complementarity Hessian and
+$\mathfrak{C}_{\cA}$ the cubic shadow.  Then the cubic shadows
+of $\cA$ and $\cA^!$ are related by
+\[
+\mathfrak{C}_{\cA^!}(p,p,p)
+= -\mathfrak{C}_{\cA}(H_{\cA}^{-1}p,\, H_{\cA}^{-1}p,\,
+H_{\cA}^{-1}p).
+\]
+More generally, at quartic order the Legendre transform gives
+$S_{\cA}^\vee(p)
+= \frac12 H_{\cA}^{-1}(p,p)
+- \frac{1}{6}\mathfrak{C}_{\cA}
+(H_{\cA}^{-1}p, H_{\cA}^{-1}p, H_{\cA}^{-1}p) + O(p^4)$.
+\end{proposition}
+
+\begin{proof}
+Write $S_{\cA}(x) = \frac12 H_{\cA}(x,x)
++ \frac16 \mathfrak{C}_{\cA}(x,x,x) + O(x^4)$.
+The critical point of $\langle p,x\rangle - S_{\cA}(x)$ is
+$x = H_{\cA}^{-1}p + O(p^2)$.  Substituting into the
+Legendre formula and collecting through cubic order yields the
+identity.
+\end{proof}
+
+\subsection{Derived critical locus and fake complementarity}
+\label{subsec:derived-critical-locus}
+
+\begin{theorem}[Derived critical locus of self-dual deformations]
+\label{thm:derived-critical-locus}
+\ClaimStatusProvedHere
+Assume the ambient complementarity formal moduli problem exists.
+Then there is a canonical equivalence
+\[
+\mathcal{M}_{\cA}
+\times^h_{\mathcal{M}_{\mathrm{comp}}(\cA)}
+\mathcal{M}_{\cA^!}
+\;\simeq\;
+\operatorname{Crit}(S_{\cA}).
+\]
+Simultaneous deformations of $\cA$ and $\cA^!$ preserving
+complementarity are governed by the derived critical locus of the
+complementarity potential.
+\end{theorem}
+
+\begin{proof}
+In the cotangent normal form one Lagrangian is the zero section and
+the other is the graph of $dS_{\cA}$.  Their derived intersection
+is the derived zero locus of $dS_{\cA}$, which is the derived
+critical locus of $S_{\cA}$.
+\end{proof}
+
+\begin{proposition}[Criterion for fake complementarity]
+\label{prop:fake-complementarity-criterion}
+\ClaimStatusProvedHere
+In the cotangent chart centered at $\mathcal{M}_{\cA}$, the
+following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the dual Lagrangian $\mathcal{M}_{\cA^!}$ is linear;
+\item the complementarity potential $S_{\cA}$ is quadratic;
+\item the derived critical locus $\operatorname{Crit}(S_{\cA})$
+is controlled entirely by its Hessian complex, with no higher
+nonlinear operations.
+\end{enumerate}
+The first obstruction to fake complementarity is the first nonzero
+higher jet of $S_{\cA}$ beyond its quadratic part.
+\end{proposition}
+
+\begin{proof}
+In the cotangent chart, $\mathcal{M}_{\cA^!}$ is the graph of
+$dS_{\cA}$.  The graph is linear iff $dS_{\cA}$ is linear,
+iff $S_{\cA}$ is quadratic.  When $S_{\cA}$ is quadratic, the
+critical locus is cut out by a linear differential and is
+governed by the Hessian alone.
+\end{proof}
+
+\begin{remark}[The three archetypes from the Lagrangian perspective]
+\label{rem:three-archetypes-lagrangian}
+The fake-complementarity criterion reframes the archetype trichotomy
+(Theorem~\ref{thm:nms-archetype-trichotomy}) in geometric language.
+The Heisenberg is exactly fake: $S_{\mathcal{H}}$ is quadratic.
+Affine $\widehat{\mathfrak{sl}}_2$ is cubic at leading order:
+$S_{\mathrm{aff}} = \tfrac12 H + \tfrac16\kappa(a,[a,a])$,
+so the dual Lagrangian bends cubically.  The $\beta\gamma$ system is
+quartic on the weight/contact slice.  Virasoro is the first family
+where the dual Lagrangian has both cubic and quartic bending,
+and the complementarity potential is genuinely non-polynomial --- its
+shadow tower is infinite (Theorem~\ref{thm:nms-finite-termination}).
+\end{remark}
+
+\begin{remark}[Shadow tower as period correction]
+\label{rem:shadow-tower-period-correction}
+\index{period correction!shadow tower}
+The shadow hierarchy
+$\kappa \to \Delta \to \mathfrak{C}
+\to \mathfrak{Q} \to \Theta$
+admits a concrete interpretation as the Taylor expansion of the
+\emph{full period correction} that restores nilpotency of the
+genus-$g$ bar differential.  At genus~$g$, the fiberwise
+differential satisfies $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$.
+The total corrected differential
+$\mathbb{D}_g = d_0 + \sum_{n \geq 1} t_g^{(n)} d_n$
+absorbs this curvature:
+\begin{itemize}
+\item $t_g^{(1)}$: determined by $\kappa$ alone (the $m_2$
+  contribution; the Faber--Pandharipande term);
+\item $t_g^{(2)}$: involves $m_3$ paired with genus-$g$ propagators,
+  giving the cubic shadow $\mathfrak{C}_{\cA}$;
+\item $t_g^{(3)}$: involves $m_4$ and $m_3 \circ m_3$ terms,
+  giving the quartic shadow $\mathfrak{Q}_{\cA}$;
+\item $t_g^{(\infty)}$: the full series is $\Theta_{\cA}$,
+  the universal Maurer--Cartan element.
+\end{itemize}
+The subleading corrections for $n \geq 2$ are \emph{not} determined
+by $\kappa$: they depend on the higher $\Ainf$-operations interacting
+with the Hodge data of $\overline{\mathcal{M}}_g$.  This is the
+mechanism by which algebra-dependent modular information enters
+beyond the $\hat{A}$-genus.
+\end{remark}
+
