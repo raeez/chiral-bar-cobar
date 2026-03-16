@@ -1581,6 +1581,55 @@ class W4MiuraOPE:
         # We still include it for safety.
         return self._decompose_spin4(C4)
 
+    def physical_c334(self) -> float:
+        """Extract c_334 using the physical (vertex algebra) inner product.
+
+        The physical OPE coefficient c_334 in W_3(z)W_3(w) is defined by:
+          C_2 = ... + c_334 * W_4 + (descendants and composites)
+
+        To extract c_334 we use orthogonality of primaries under the physical
+        inner product (2-point function): compute <W_4 | C_2>_phys / <W_4|W_4>_phys.
+
+        The physical inner product <W_4 | C_2> is the coefficient of the leading
+        singularity in the OPE W_4(z) C_2(w), which is at pole order 8 = 2*h_{W_4}.
+        """
+        w3w3 = self.W3W3_ope()
+        if 2 not in w3w3:
+            return 0.0
+        C2 = w3w3[2]
+
+        # Compute OPE of W_4 with C_2: the pole-8 coefficient is <W_4|C_2>_phys
+        w4_c2_ope = compute_ope(self.W4, C2, 8)
+        if 8 not in w4_c2_ope:
+            return 0.0
+
+        overlap = evaluate_field_as_number(w4_c2_ope[8])
+        if overlap is None:
+            return 0.0
+
+        # Divide by <W_4|W_4>_phys = norm_W4
+        return overlap / self.norm_W4 if abs(self.norm_W4) > 1e-15 else 0.0
+
+    def physical_c444(self) -> float:
+        """Extract c_444 using the physical inner product.
+
+        Same method as physical_c334 but for the W_4(z)W_4(w) OPE at pole 4.
+        """
+        w4w4 = self.W4W4_ope()
+        if 4 not in w4w4:
+            return 0.0
+        C4 = w4w4[4]
+
+        w4_c4_ope = compute_ope(self.W4, C4, 8)
+        if 8 not in w4_c4_ope:
+            return 0.0
+
+        overlap = evaluate_field_as_number(w4_c4_ope[8])
+        if overlap is None:
+            return 0.0
+
+        return overlap / self.norm_W4 if abs(self.norm_W4) > 1e-15 else 0.0
+
     def _decompose_spin4(self, target: Field) -> float:
         """Decompose a weight-4 field into {d^2T, Lambda, W_4} and return the W_4 coefficient.
 
