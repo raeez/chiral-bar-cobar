@@ -99,4 +99,4 @@ Five parts: I (Bar Complex -> Swiss-Cheese), II (Descent Calculus), III (Dualiti
 
 The bar complex's differential = C-direction factorization. Its coproduct = R-direction factorization. Together: Swiss-cheese algebra on FM_k(C) x Conf_k(R). At genus g >= 1: curved Swiss-cheese with curvature kappa * omega_g.
 
-**Vol II status**: Recognition theorem PROVED (was conjecture). Only one conjectural input remains: Homotopy-Koszulity of SC^{ch,top}. All claim status tags at 100% coverage. Cross-volume bridges catalogued in concordance.
+**Vol II status**: Recognition theorem PROVED. Homotopy-Koszulity of SC^{ch,top} PROVED (via Kontsevich formality + transfer from classical Swiss-cheese). Zero conjectural algebraic inputs remain; only the standing physical axioms (H1)-(H4). All claim status tags at 100% coverage. Cross-volume bridges catalogued in concordance.
