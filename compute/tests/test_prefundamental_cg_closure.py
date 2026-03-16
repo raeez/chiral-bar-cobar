@@ -331,14 +331,14 @@ class TestHomBoundsFromCG(unittest.TestCase):
             for w in tensor:
                 self.assertNotIn(w, L, f"common weight {w} at odd n={n}")
 
-    def test_hom_even_n_bound(self):
-        """For even n, CG gives exactly ⌊n/2⌋+1 summands with hw on even lattice."""
+    def test_hom_even_n_summand_count(self):
+        """For even n, all n+1 CG summands have even hw (same parity as L⁻)."""
         for n in [2, 4, 6, 8]:
             cg = prefundamental_cg_proved(n)
             self.assertTrue(cg["match"])
-            # Number of summands with hw on even lattice
+            # All summands have even hw since n is even
             n_even_hw = sum(1 for j in range(n + 1) if (n - 2 * j) % 2 == 0)
-            self.assertEqual(n_even_hw, n // 2 + 1)
+            self.assertEqual(n_even_hw, n + 1)
 
     def test_euler_char(self):
         """χ(L⁻, V_n) = Σ_{k=0}^{n/2} p(k) for even n."""
