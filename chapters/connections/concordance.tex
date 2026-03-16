@@ -608,44 +608,39 @@ frontier is therefore enlargement beyond the theorematic core, not
 another evaluation-locus comparison.}
 \end{conjecture}
 
-\begin{remark}[Sharpened MC3 diagnosis: five serious gaps]
+\begin{remark}[Five obstructions to the categorical lift]
 \label{rem:mc3-sharpened-diagnosis}
-Adversarial analysis (red-team/blue-team/green-team computational verification,
-$438$ additional tests) has sharpened the MC3 frontier diagnosis as follows.
-
-\emph{Character-level evidence.} The prefundamental Clebsch--Gordan decomposition
-$V_n \otimes L^- = \bigoplus_{j=0}^{n} L^-(n - 2j)$ is verified computationally
-for $n \le 25$, and $K_0$-generation $[M(\lambda)] \in K_0\text{-span}(\{L^-(\text{shifted})\})$
-is verified for $\lambda = 0, \ldots, 100$.  No failure has been observed.
-
-\emph{Five serious gaps in the categorical lift.}
-\begin{enumerate}
-\item \emph{$K_0 \neq$ thick.} $K_0$-generation does not imply thick generation
-  in a triangulated category.  The Thomason--Trobaugh theorem requires compact objects,
-  but $L^-$ is infinite-dimensional with $\dim(L^-)_{-2k} = p(k)$.
-\item \emph{Pro-completion changes the category.} Francis--Gaitsgory pro-nilpotent
-  completion gains modules (Verma via pro-Weyl) and may lose asymptotic modules
-  (Hernandez--Zhang).  The thick subcategory statement is for the \emph{completed}
-  category, not the original $\mathcal{O}^{\mathrm{sh}}$.
-\item \emph{$\mathcal{O}_{\mathrm{poly}}$ is not dense.}  $L^-$ has weight
-  multiplicities $p(k) \to \infty$, so $L^- \notin \mathcal{O}_{\mathrm{poly}}$.
-  Baxter equivariance on $\mathcal{O}_{\mathrm{poly}}$ does not automatically extend.
-\item \emph{Resolution obstruction.}  The sequence $\delta(k) = p(k) - 1$ is unbounded
-  and superpolynomial: thick generation (finite iterated cones) fails, and
-  the correct statement requires \emph{localizing} generation with infinite coproducts.
-\item \emph{Braided monoidal transfer.} The braided structure (R-matrix, hexagon axioms)
-  is additional data beyond the categorical equivalence; transfer through bar--cobar
-  requires the derived Drinfeld--Kohno theorem.
+The character-level evidence for thick generation is extensive: the
+prefundamental Clebsch--Gordan $V_n \otimes L^- \cong
+\bigoplus_{j=0}^{n} L^-(n{-}2j)$ holds for $n \le 25$, and
+$K_0$-containment $[M(\lambda)] \in
+K_0\text{-span}(\{[L^-(\mathrm{shifted})]\})$ holds for
+$\lambda \le 100$ with no failure.  Five structural obstructions
+separate the $K_0$-level statement from a categorical theorem:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $K_0$-generation does not imply thick generation: the
+  Thomason--Trobaugh theorem requires compact generators, and $L^-$
+  ($\dim(L^-)_{-2k} = p(k)$) is not compact.
+\item Francis--Gaitsgory pro-nilpotent completion changes the ambient
+  category; the thick-generation target is
+  $\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\le 0})$, not
+  $D^b(\mathcal{O}^{\mathrm{sh}}_{\le 0})$.
+\item $L^- \notin \mathcal{O}_{\mathrm{poly}}$
+  (Remark~\ref{rem:opoly-not-dense}): the proved Baxter equivariance
+  on~$\mathcal{O}_{\mathrm{poly}}$ does not extend by density.
+\item The resolution obstruction $\delta(k) = p(k) - 1$ is
+  superpolynomial, forcing localizing generation in place of thick
+  generation.
+\item The braided monoidal structure requires the derived
+  Drinfeld--Kohno theorem, additional data beyond the bare categorical
+  equivalence.
 \end{enumerate}
-
-\emph{Recommended approach: chromatic $+$ Efimov hybrid.} The conformal weight filtration
-decomposes MC3 into countably many finite-dimensional problems, each solvable by the
-proved sectorwise spectral-sequence convergence.  Efimov's categorical formal completion
-then assembles the answer via the pro-Weyl--Mittag-Leffler tower.  A critical
-negative finding: naive weight truncation fails (capture ratios decrease to $0$),
-but bidegree-wise spectral-sequence convergence succeeds.  This hybrid path breaks
-the circular dependency on $L^-$ compactness by working stratum-by-stratum where
-everything is finite-dimensional.
+The conformal weight filtration offers a path: it decomposes the problem
+into countably many finite-dimensional strata, each resolved by the
+sectorwise spectral-sequence convergence of
+Theorem~\ref{thm:sectorwise-spectral-convergence}, with Efimov-type
+categorical formal completion assembling the answer via the
+pro-Weyl--Mittag-Leffler tower.
 \end{remark}
 
 \begin{conjecture}[Filtered H-level comparison for standard infinite towers]
@@ -947,48 +942,44 @@ assumption~\textup{(iv)} supplies exactly that comparison.  Hence the
 standard-tower MC5 packet closes.
 \end{proof}
 
-\begin{remark}[Arakelov--bar transfer: the single missing MC5 ingredient]
+\begin{remark}[The Arakelov--bar transfer problem]
 \label{rem:arakelov-bar-transfer}
-The entire MC5 programme at genus $g \ge 2$ reduces to one theorem.
-
-\emph{Statement (conjectured).}  For any chiral algebra $\cA$ on a smooth
-curve $\Sigma_g$ of genus $g \ge 2$, the fiberwise bar differential satisfies
-$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, where the identity follows
-from applying the Arakelov--Green identity $dd^c G(z,w) = \delta(z,w) - \omega_g$
-to each term in the OPE expansion of the bar construction.
-
-\emph{Why the factorization $d^2 = (\text{algebra}) \times (\text{geometry})$ is forced.}
-Four constraints:
-\begin{enumerate}
-\item $d^2$ is additive in $\cA$ (tensor product gives additive curvature);
-\item $d^2$ is antisymmetric under Koszul duality (complementarity, Theorem~C);
-\item $d^2$ is a scalar invariant of $\cA$ (Schur's lemma for the conformal symmetry action);
-\item $H^{1,1}(\Sigma_g) = 1$ for all $g \ge 1$ (Hodge theory on curves), so the geometric
-  factor is forced into a one-dimensional space.
+At genus~$g \ge 2$ the MC5 programme reduces to proving that the
+fiberwise curvature $d_{\mathrm{fib}}^2$ on the bar complex of a
+chiral algebra~$\cA$ on~$\Sigma_g$ equals
+$\kappa(\cA) \cdot \omega_g$.  Four a~priori constraints force this
+factorization:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item additivity in~$\cA$ (from the tensor product of curved
+  $A_\infty$-structures);
+\item antisymmetry under Koszul duality (complementarity,
+  Theorem~\ref{thm:complementarity});
+\item scalar action on each isotypic component (Schur's lemma for the
+  conformal symmetry);
+\item $\dim H^{1,1}(\Sigma_g) = 1$ for every $g \ge 1$, which
+  confines the geometric factor to a one-dimensional space.
 \end{enumerate}
-By Theorem~D, $\kappa(\cA)$ is the \emph{unique} additive, antisymmetric scalar
-with $\hat{A}$-genus generating function.  Hence IF $d^2$ factors, the algebra
-factor is $\kappa(\cA)$ and the geometric factor is $\omega_g$.
+By Theorem~\ref{thm:modular-characteristic-universal},
+$\kappa(\cA)$ is the unique additive antisymmetric invariant with
+$\hat{A}$-genus generating function, so if $d^2$ factors as
+$(\text{algebra})\times(\text{geometry})$, the factors must be
+$\kappa(\cA)$ and~$\omega_g$.  What remains is to \emph{establish
+the factorization itself}: the Arnold defect on~$\Sigma_g^3$, which
+a~priori lives in a $g(g{+}1)/2$-dimensional space of quasi-modular
+$(1,1)$-forms, must be shown to collapse to a scalar multiple
+of~$\omega_g$ after OPE contraction.  The required inputs are the Fay
+trisecant identity (killing the holomorphic component), the
+Arakelov--Green identity $dd^c G = \delta - \omega_g$ (producing the
+Arakelov form), OPE convergence in the Arakelov metric, and the
+cyclic-sum cancellation in the bar formalism.
 
-\emph{Four required ingredients.}
-(i)~Fay trisecant identity (kills the holomorphic Arnold combination; algebraic geometry);
-(ii)~Arakelov--Green identity $dd^c G = \delta - \omega_g$ (produces $\omega_g$; arithmetic geometry);
-(iii)~OPE convergence in the Arakelov metric (vertex algebra theory);
-(iv)~cyclic-sum cancellation in the bar formalism (homotopical algebra).
-
-\emph{Alternative: clutching induction.}  Since genus~$0$ and genus~$1$ are proved,
-non-separating degeneration $\Sigma_g \to \Sigma_{g-1} \cup_{\text{node}}$ reduces
-genus~$g$ to genus~$g-1$ plus a local nodal correction.  The nodal correction
-is controlled by the genus-$0$ identification (locality), potentially closing
-the induction without Costello renormalization.  The sewing correction
-$\lambda_g^{\mathrm{FP}} - \lambda_{g-1}^{\mathrm{FP}}$ is strictly negative
-for all $g \ge 2$ (verified to $g = 15$), consistent with factorial decay.
-
-\emph{Computational evidence.}
-$\lambda_g^{\mathrm{FP}}$ matches the Bernoulli formula to $g = 15$ ($231$ tests).
-Cross-family universality $F_g(\cA)/F_g(\cB) = \kappa(\cA)/\kappa(\cB)$ verified
-at $g = 1, 2, 3, 5, 10$ for five families.  Complementarity
-$\kappa(\cA) + \kappa(\cA^!) = \mathrm{const}$ verified at $g = 1, \ldots, 7$.
+An alternative approach avoids the direct Arakelov computation: since
+genus~$0$ and~$1$ are proved, non-separating degeneration
+$\Sigma_g \to \Sigma_{g-1} \cup_{\mathrm{node}}$ reduces each genus
+to the preceding one plus a local nodal correction controlled by the
+genus-$0$ identification.  The sewing correction
+$\lambda_g - \lambda_{g-1}$ is strictly negative for $g \ge 2$ and
+decays factorially.
 \end{remark}
 
 \begin{remark}[Completion frontier crystallization]
@@ -2527,23 +2518,64 @@ discriminant~$\Delta_\cA(x)$.  Now there is a hierarchy:
   finite-dimensional quotients: the universal genus-$3$
   constant~$7$, genus-$2$ transparency, and the spectral
   cumulant hierarchy.
-\item The \emph{ambient complementarity} section
-  (\S\ref{sec:ambient-complementarity}) upgrades complementarity
-  from an additive splitting to shifted-symplectic Lagrangian
-  geometry: one formal moduli problem with two Lagrangian maps,
-  a complementarity potential~$S_\cA$ whose Taylor jets are the
-  nonlinear modular invariants, and a derived critical locus
-  governing simultaneous self-dual deformations.
+\item The \emph{ambient complementarity upgrade}
+  (\S\ref{sec:ambient-complementarity-lagrangian}) upgrades
+  Theorem~C from additive splitting to shifted-symplectic
+  Lagrangian geometry: one ambient deformation problem with two
+  Lagrangian maps, a complementarity potential~$S_\cA$ whose
+  Taylor jets are the nonlinear modular invariants, a derived
+  critical locus governing simultaneous self-dual deformations,
+  and a fake-complementarity criterion detecting when the dual
+  Lagrangian is linear
+  (Proposition~\ref{prop:fake-complementarity-criterion}).
+\item The \emph{modular bar--Hamiltonian}
+  (\S\ref{sec:modular-bar-hamiltonian}) identifies the carrier
+  algebra~$\mathfrak{g}^{\mathrm{amb}}_\cA$ with its five-piece
+  differential (internal $+$ kernel twist $+$ stable-edge sewing
+  $+$ planted-forest correction $+$ genus loop).  The universal
+  class~$\Theta_\cA$ is a Maurer--Cartan element in this algebra
+  (Definition~\ref{def:modular-bar-hamiltonian}), and the recursive
+  extension tower provides the constructive mechanism for building
+  it order by order
+  (Construction~\ref{constr:obstruction-recursion}).
+\item The \emph{modular Chern--Weil transform}
+  (\S\ref{sec:modular-chern-weil-transform}) is a single map from
+  $\operatorname{MC}(\mathfrak{g}^{\mathrm{amb}}_\cA)$ to the full
+  invariant hierarchy: scalar classes, spectral classes, resonance
+  classes, and line-kernel data are all projections of
+  one Maurer--Cartan element.  The complementarity
+  Legendrian~$\Lambda_\cA = j^1\mathfrak{S}_\cA$, the
+  complementarity Stokes groupoid, and the phase
+  index~$\nu_{\mathrm{nl}}(\cA,u)$ are geometric avatars of the
+  same master element.
+\item The \emph{quartic resonance class}
+  $\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$
+  (Theorem~\ref{thm:nms-clutching-law-modular-resonance}) is the
+  first Picard-valued nonlinear characteristic of the theory, with
+  clutching law receiving a cubic tree correction
+  $\mathfrak{T}_{3,\xi}(\cA)$ on separating boundaries.
 \item The \emph{graph-completed Feynman transform programme}
   (\S\ref{sec:nms-feynman-transform-programme}) identifies the
   carrier object~$\mathfrak{F}_{\mathrm{mod}}(\cA)$ in which the
-  full universal class should live, introduces the
-  \emph{complementarity Legendrian}~$\Lambda_\cA = j^1 S_\cA$
-  (contactifying the complementarity potential), the full
+  full universal class should live, the full
   \emph{resonance tower}~$\mathfrak{R}^{\mathrm{mod}}_{r}$ for all
-  arities~$r \ge 4$, the \emph{nonlinear phase
-  index}~$\nu_{\mathrm{nl}}(\cA,u)$, and the \emph{nonlinear
+  arities~$r \ge 4$, and the \emph{nonlinear
   spectral-branch stack}~$\mathfrak{B}^{\mathrm{nl}}_\cA$.
+\item The \emph{shadow archetypes in Part~II}: each standard
+  family chapter now computes its nonlinear shadow explicitly.
+  Heisenberg is exactly Gaussian
+  (\S\ref{sec:heisenberg-shadow-gaussianity}); affine
+  $\widehat{\mathfrak{sl}}_2$ is Lie/tree with critical-level
+  emergence (\S\ref{sec:affine-cubic-shadow}); $\beta\gamma$ is
+  the contact/quartic primitive with rank-one abelian rigidity
+  (\S\ref{sec:betagamma-quartic-birth}); Virasoro and
+  $\mathcal{W}_N$ are the first mixed cubic--quartic families with
+  infinite shadow towers (\S\ref{sec:mixed-cubic-quartic-shadows}).
+  The Virasoro quartic contact coefficient
+  $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
+  and the genus-$1$ loop ratio
+  $\rho^{(1)}_{\mathrm{Vir}} = 240/[c^2(5c+22)]$ are the first
+  non-scalar Ring~2 invariants extracted in closed form.
 \item The \emph{polarized scattering programme}
   (\S\ref{sec:nms-polarized-scattering-programme}) replaces the
   one-colour Maurer--Cartan problem by a bipartite machine:
