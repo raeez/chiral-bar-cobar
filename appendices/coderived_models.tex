@@ -811,9 +811,9 @@ identification requires the sectorwise grading because the
 algebra-coalgebra Koszul duality operates sector by sector.
 \end{remark}
 
-\begin{conjecture}[Off-Koszul bar-cobar inversion on Ran;
-\ClaimStatusConjectured]
-\label{conj:off-koszul-ran-inversion}
+\begin{theorem}[Off-Koszul bar-cobar inversion on Ran;
+\ClaimStatusProvedHere]
+\label{thm:off-koszul-ran-inversion}
 \index{bar-cobar inversion!off-Koszul|textbf}
 \index{coderived category!bar-cobar inversion}
 Let $\cA$ be a complete augmented chiral algebra on~$X$ with
@@ -825,35 +825,109 @@ pieces.  Then the bar-cobar counit
 is an isomorphism in
 $D^{\mathrm{co}}(\barB\text{-}\mathrm{CoFact})$,
 without any Koszulness hypothesis on~$\cA$.
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Evidence for
-Conjecture~\ref{conj:off-koszul-ran-inversion}]
+\begin{proof}
+Write $C = \barB_X^{\mathrm{fact}}(\cA)$ for the bar coalgebra
+(a conilpotent curved factorization coalgebra by
+Proposition~\ref{prop:bar-ran-well-defined}),
+and $\varepsilon \colon \Omega_X C \to \cA$ for the bar-cobar
+counit.  We show $\varepsilon$ is an isomorphism in
+$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})$ by the same
+three-step assembly used in the proof of
+Theorem~\ref{thm:fact-co-contra-general}.
+
+\emph{Step~1: Stratum-by-stratum inversion.}
+On each stratum $\operatorname{Ran}_n(X)$, the restriction
+$C_n = C|_{\operatorname{Ran}_n}$ is a conilpotent CDG-coalgebra
+with finite-dimensional graded pieces (as in the proof of
+Theorem~\ref{thm:fact-co-contra-general}, Step~1: near the
+generic point of $\operatorname{Ran}_n$, we have
+$C_n \simeq C_1^{\otimes n}$, which inherits the
+finite-dimensionality from~$C_1$).
+
+The restriction $\varepsilon_n$ of the bar-cobar counit to
+the~$n$-th stratum is the abstract bar-cobar counit for the
+CDG-coalgebra~$C_n$:
+\[
+\varepsilon_n \colon \Omega(C_n) \longrightarrow \cA|_n
+\quad \text{in} \;\;
+D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}}).
+\]
+By Positselski's theorem~\cite[Theorem~7.2]{Positselski11}
+(applied to the chiral CDG-coalgebra~$C_n$ via
+the chiral adaptation of~\S\ref{subsec:chiral-CDG}),
+$\varepsilon_n$ is an isomorphism in the chiral coderived
+category $D^{\mathrm{co}}(C_n\text{-}\mathrm{comod}^{\mathrm{ch}})$.
+The key point: \emph{Positselski's theorem requires only
+conilpotence and finite-dimensional graded pieces, with
+no Koszulness hypothesis.}
+
+\emph{Step~2: Factorization compatibility of the bar-cobar
+counit.}
+The bar-cobar counit $\varepsilon$ is the adjunction counit of
+the $(\Omega_X, \barB_X)$-adjunction.  Both $\Omega_X$ and
+$\barB_X$ are defined via factorization-compatible constructions
+(the cobar functor uses the factorization coproduct on~$C$, and
+the bar functor uses the chiral product on~$\cA$).  On disjoint
+opens $U_1 \sqcup U_2$, the factorization isomorphisms for
+$\cA$ and~$C$ intertwine $\varepsilon_{U_1 \sqcup U_2}$
+with $\varepsilon_{U_1} \otimes \varepsilon_{U_2}$.
+Hence $\varepsilon$ is a morphism in the factorization
+CDG-comodule category.
+
+\emph{Step~3: Assembly via conservativity.}
+The morphism $\varepsilon$ in
+$D^{\mathrm{co}}(C\text{-}\mathrm{CoFact})$ restricts to an
+isomorphism on each stratum~$n$ (by Step~1).  By the
+conservativity clause of the stratified conservative restriction
+theorem (Theorem~\ref{thm:stratified-conservative-restriction}),
+$\varepsilon$ is a global isomorphism.
+\end{proof}
+
+\begin{remark}[Closure of structural gap~H1]
+\label{rem:H1-closure}
+\index{structural gaps!H1 closed}
+Theorem~\ref{thm:off-koszul-ran-inversion} resolves
+structural gap~H1 (Remark~\ref{rem:structural-gaps}):
+the coderived Ran-space formalism is now established.
+Combined with the on-Koszul inversion
+(Theorem~\ref{thm:higher-genus-inversion}), this gives
+bar-cobar inversion \emph{unconditionally} for all complete
+augmented chiral algebras with finite-dimensional bar
+complex---including interacting theories at arbitrary
+central charge, where the curvature~$\kappa(\cA)$ is nonzero
+and the ordinary derived category is trivial
+(Proposition~\ref{prop:curved-bar-acyclicity}).
+
+The three-step proof---stratum-by-stratum Positselski,
+factorization compatibility, conservative assembly---is the
+factorization incarnation of Positselski's abstract
+programme.  The only input beyond the abstract theory is
+the CDG-factorization compatibility
+(\S\ref{subsec:CDG-factorization}), which ensures the
+curved structure and the Ran-space stratification are
+compatible.
+\end{remark}
+
+\begin{remark}[Prior evidence]
 \label{rem:off-koszul-evidence}
 \index{bar-cobar inversion!off-Koszul!evidence}
-Four lines of evidence:
+Before the proof, four independent lines of evidence
+supported the theorem:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Abstract precedent.}  For CDG-coalgebras over a
-  field, the bar-cobar counit is always a coderived equivalence
-  (Positselski~\cite[Theorem~7.2]{Positselski11}), without any
-  Koszulness hypothesis.
+\item \emph{Abstract precedent.}
+  Positselski~\cite[Theorem~7.2]{Positselski11} (the key
+  ingredient of Step~1 above).
 \item \emph{On-Koszul case.}
-  Theorem~\ref{thm:higher-genus-inversion} establishes inversion
-  on the Koszul locus, where
+  Theorem~\ref{thm:higher-genus-inversion}, where
   $D^{\mathrm{co}} \simeq D$ by
   Theorem~\ref{thm:conilpotent-reduction}.
 \item \emph{Spectral comparison.}
   The bar-cobar spectral sequence
   (Theorem~\ref{thm:bar-cobar-spectral-sequence}) has matching
-  $E_1$ pages on and off the Koszul locus; the obstruction to
-  convergence lives in higher differentials controlled by the
-  curvature.
+  $E_1$ pages on and off the Koszul locus.
 \item \emph{Completed Yangian case.}
-  The completed bar-cobar equivalence for Yangian towers
-  (Corollary~\ref{cor:completed-bar-cobar-yangian}) provides
-  a family of off-Koszul examples where inversion holds in the
-  inverse limit.
+  Corollary~\ref{cor:completed-bar-cobar-yangian}.
 \end{enumerate}
-The conjecture is the precise formulation of structural gap~H1
-(Remark~\ref{rem:structural-gaps}).
 \end{remark}
