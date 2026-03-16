@@ -3243,13 +3243,7 @@ The modular anomaly is computed by:
 \end{theorem}
 
 \begin{proof}
-The modular transformation acts on the bar complex as:
-\[\tau \mapsto \frac{a\tau + b}{c\tau + d} \quad \Rightarrow \quad \barBgeom^{(1)}(\mathcal{A})_\tau \to \barBgeom^{(1)}(\mathcal{A})_{\gamma\tau}\]
-
-The transformation law is:
-\[\barBgeom^{(1)}(\mathcal{A})_{\gamma\tau} = (c\tau + d)^{c/24} \barBgeom^{(1)}(\mathcal{A})_\tau\]
-
-Modular invariance of the full partition function requires the left-right central charge difference $c - \tilde{c} = 0 \bmod 24$ (for single-valuedness of the phase $e^{2\pi i (c-\tilde{c})/24}$). For the bosonic string ($c = \tilde{c} = 26$) and the superstring ($c = \tilde{c} = 15$), conformal anomaly cancellation arises from Weyl invariance on the worldsheet, not from $c \bmod 24$ alone. This is the Belavin--Knizhnik theorem \cite{BK86}; see also Polchinski \cite[Ch.~5]{Pol98} for the standard textbook treatment.
+The genus-$1$ bar complex transforms covariantly under $\mathrm{SL}_2(\mathbb{Z})$ with weight $c/24$ (Theorem~\ref{thm:modular-invariance}).  Modular invariance of the full partition function requires the left-right central charge difference $c - \tilde{c} = 0 \bmod 24$ (for single-valuedness of the phase $e^{2\pi i (c-\tilde{c})/24}$).  For the bosonic string ($c = \tilde{c} = 26$) and the superstring ($c = \tilde{c} = 15$), conformal anomaly cancellation arises from Weyl invariance on the worldsheet, not from $c \bmod 24$ alone.  This is the Belavin--Knizhnik theorem \cite{BK86}; see also Polchinski \cite[Ch.~5]{Pol98} for the standard textbook treatment.
 \end{proof}
 
 
@@ -3358,35 +3352,14 @@ n^{-s}|_{s=0}$\textup{)}.
 
 
 \begin{example}[Virasoro algebra modular invariance]
-For the Virasoro algebra $\text{Vir}_c$ at central charge $c$
-(see \S\ref{sec:virasoro-bar-moduli-main} for the genus-$0$ bar complex
-and its identification with moduli-space cohomology at $c=26$),
-the genus-$1$ bar complex is
-\[\barBgeom^{(1)}(\text{Vir}_c)_\tau = \text{span}\{L_{n_1} \otimes \cdots \otimes L_{n_k} \otimes \vartheta_3(z_1-z_2|\tau) \wedge \cdots\}\]
-and the modular transformation acts by
-\[\gamma: \barBgeom^{(1)}(\text{Vir}_c)_\tau \to (c\tau + d)^{c/24} \barBgeom^{(1)}(\text{Vir}_c)_{\gamma \cdot \tau}.\]
-For holomorphic (self-dual) CFTs, modular invariance of the partition function requires $c \equiv 0 \pmod{24}$, which is satisfied for:
-\begin{itemize}
-\item $c = 0$: trivial theory
-\item $c = 24$: Monster module (Frenkel--Lepowsky--Meurman \cite{FLM88})
-\item $c = 48$: tensor product theories
-\end{itemize}
-The physically relevant values are:
-\begin{itemize}
-\item $c = 26$: bosonic string (modular weight excess $(c-24)/24 = 1/12$; cf.\ Theorem~\ref{thm:virasoro-moduli})
-\item $c = 15$: superstring (modular weight excess $(c-24)/24 = -3/8$)
-\end{itemize}
+The Virasoro bar complex is computed in \S\ref{sec:virasoro-bar-moduli-main}; the genus-$1$ bar complex transforms with modular weight $c/24$ (Theorem~\ref{thm:modular-invariance}).
+For holomorphic (self-dual) CFTs, modular invariance of the partition function requires $c \equiv 0 \pmod{24}$, which is satisfied for $c = 0$ (trivial), $c = 24$ (Monster module \cite{FLM88}), and $c = 48$ (tensor products).
+The physically relevant values are $c = 26$ (bosonic string; cf.\ Theorem~\ref{thm:virasoro-moduli}) and $c = 15$ (superstring).
 \end{example}
 
 \begin{example}[WZW model modular invariance]
-For the WZW model $\widehat{\mathfrak{g}}_k$ at level $k$, the bar complex is
-\[\barBgeom^{(1)}(\widehat{\mathfrak{g}}_k)_\tau = \text{span}\{J^a_{n_1} \otimes \cdots \otimes J^a_{n_k} \otimes \vartheta_3(z_1-z_2|\tau) \wedge \cdots\}\]
-with central charge
-\[c = \frac{k \dim \mathfrak{g}}{k + h^\vee}\]
-where $h^\vee$ is the dual Coxeter number.
-The model is modular invariant for all integer levels $k \geq 1$, and the anomaly is
-\[\text{Anomaly} = \frac{k \dim \mathfrak{g} - (k + h^\vee) \cdot 24}{24(k + h^\vee)}.\]
-For large $k$, this approaches $\frac{\dim \mathfrak{g}}{24} - 1$.
+The WZW/Kac--Moody bar complex is computed in Chapter~\ref{chap:kac-moody-koszul}; the central charge is $c = k\dim\mathfrak{g}/(k + h^\vee)$.
+The model is modular invariant for all integer levels $k \geq 1$, with anomaly $(k \dim \mathfrak{g} - (k + h^\vee) \cdot 24)/(24(k + h^\vee))$.
 \end{example}
 
 \begin{theorem}[Complete modular invariance classification \cite{Zhu96, MooreSeiberg89}; \ClaimStatusProvedElsewhere]\label{thm:modular-classification}
@@ -3416,33 +3389,12 @@ The classification follows from the representation theory of $SL_2(\mathbb{Z})$:
 
 \section{W-algebras and Wakimoto representations}\label{sec:w-algebras-wakimoto}
 
-The free-field Wakimoto realization connects affine Kac--Moody algebras to $\beta\gamma$ systems and Heisenberg algebras; from this, the bar complex of the W-algebra inherits a graphical description and an explicit $A_\infty$ structure.
-
-\subsection{Wakimoto modules}
-
 The $\mathcal{W}$-algebra construction via Drinfeld--Sokolov reduction,
-its Slodowy slice geometry, and the nilpotent orbit poset are
-developed in Chapter~\ref{chap:w-algebras}.  Here we record how the Wakimoto
-free-field realization connects to the bar complex.
+its Slodowy slice geometry, the nilpotent orbit poset, and the full
+bar complex computation are developed in
+Chapter~\ref{chap:w-algebras}.  Here we record the key results that
+connect the Wakimoto free-field realization to the bar complex.
 
-\subsubsection{Setup}
- 
-\begin{definition}[Wakimoto module]
-The Wakimoto module $\mathcal{M}_{\text{Wak}}$ at critical level consists of:
-\begin{itemize}
-\item Free fields: $(\beta_\alpha, \gamma_\alpha)$ for each positive root $\alpha \in \Delta_+$
-\item Cartan bosons: $\phi_i$ for $i = 1, \ldots, \text{rank}(\mathfrak{g})$
-\item Screening charges: $S_\alpha = \oint e^{\alpha(\phi)} \prod \gamma_\beta^{n_{\alpha,\beta}}$
-\end{itemize}
-The affine currents are realized as:
-\[
-J^a = \sum_{\alpha} f^a_\alpha(\beta, \gamma, \phi, \partial\phi)
-\]
-where $f^a_\alpha$ are explicit formulas from the Wakimoto construction.
-\end{definition}
- 
-\subsubsection{Computing low degrees}
- 
 \begin{theorem}[Wakimoto bar complex; \ClaimStatusProvedHere]\label{thm:wakimoto-bar}
 For the Wakimoto module $\mathcal{M}_{\mathrm{Wak}}$ of $\widehat{\mathfrak{g}}_k$:
 \begin{itemize}
@@ -3453,107 +3405,19 @@ For the Wakimoto module $\mathcal{M}_{\mathrm{Wak}}$ of $\widehat{\mathfrak{g}}_
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1.}
-The Wakimoto module is a free field realization: $\mathcal{M}_{\mathrm{Wak}} = \bigotimes_{\alpha \in \Delta_+} (\beta\gamma)_\alpha \otimes \mathcal{H}_{\mathfrak{h}}$ where $(\beta\gamma)_\alpha$ is a $\beta\gamma$ system for each positive root and $\mathcal{H}_{\mathfrak{h}}$ is the Heisenberg algebra on the Cartan $\mathfrak{h}$.  Since the tensor product of bar complexes is the bar complex of the tensor product (Künneth), and the bar complex of each $(\beta\gamma)_\alpha$ is computed in the $\beta\gamma$ section of this chapter, the total bar complex decomposes:
-\[
-\bar{B}(\mathcal{M}_{\mathrm{Wak}}) \cong \bigotimes_{\alpha \in \Delta_+} \bar{B}((\beta\gamma)_\alpha) \otimes \bar{B}(\mathcal{H}_{\mathfrak{h}}).
-\]
-
-\emph{Step~2.}
-The degree-0 bar cohomology is the space of ``constants'' in the bar complex.  For the Heisenberg factor, $H^0(\bar{B}(\mathcal{H}_{\mathfrak{h}})) = \mathbb{C}$ (the vacuum).  But the Cartan bosons $\phi_1, \ldots, \phi_r$ are zero-mode coordinates: the vertex operators $e^{\lambda(\phi)}$ for $\lambda \in \mathfrak{h}^*$ provide the polynomial functions.  Therefore $H^0 = \mathbb{C}[\phi_1, \ldots, \phi_r] = \mathrm{Fun}(\mathfrak{h})$.
-
-\emph{Step~3.}
-The degree-1 bar cohomology receives contributions from two sources.  The $\beta\gamma$ factors contribute $\mathbb{C}\beta_\alpha$ for each $\alpha \in \Delta_+$: these are the primitive elements (killed by the reduced coproduct) coming from the free field generators.  The Heisenberg factor contributes $\bigoplus_{i=1}^r \mathbb{C}\partial\phi_i$: the Cartan currents are cocycles in the bar complex ($d(\partial\phi_i) = 0$ since the Heisenberg OPE $\partial\phi_i(z)\partial\phi_j(w) \sim k_{ij}/(z-w)^2$ has only a second-order pole, giving no bar-degree-0 residue).
-
-\emph{Step~4.}
-The Drinfeld--Sokolov BRST charge $Q_{\mathrm{DS}} = \sum_{\alpha \in \Delta_+} \oint (c_\alpha J^{e_\alpha} - \delta_{\alpha, \text{simple}} c_\alpha)$ acts on $\mathcal{M}_{\mathrm{Wak}}$.  By Feigin--Frenkel \cite{Feigin-Frenkel}, $H^0(Q_{\mathrm{DS}}, \mathcal{M}_{\mathrm{Wak}}) \cong \mathcal{W}^k(\mathfrak{g})$.  At $k = -h^\vee$ (critical level), the screening charges $S_\alpha = \oint e^{\alpha(\phi)}\gamma_\alpha$ become BRST-exact, and the BRST cohomology simplifies to $\mathcal{W}^{-h^\vee}(\mathfrak{g})$.
-
-The bar complex of $\mathcal{M}_{\mathrm{Wak}}$ is quasi-isomorphic to the bar complex of $\mathcal{W}^{-h^\vee}(\mathfrak{g})$ because $Q_{\mathrm{DS}}$ is compatible with the bar differential (both are defined via residues, and the BRST charge commutes with the bar differential by $Q^2 = 0$).  The spectral sequence with $E_1 = H^*(\bar{B}(\mathcal{M}_{\mathrm{Wak}}), d_{\bar{B}})$ and $d_1 = Q_{\mathrm{DS}}$ converges to $H^*(\bar{B}(\mathcal{W}^{-h^\vee}(\mathfrak{g})))$ by the free field nature of $\mathcal{M}_{\mathrm{Wak}}$ (bounded differentials in each weight space).
+The Wakimoto module decomposes as a tensor product $\mathcal{M}_{\mathrm{Wak}} = \bigotimes_{\alpha \in \Delta_+} (\beta\gamma)_\alpha \otimes \mathcal{H}_{\mathfrak{h}}$ of free-field atoms whose bar complexes are computed in~\S\S\ref{sec:bar-complexes-free-fields}--\ref{sec:heisenberg-bar-complex-sec2}.  The Drinfeld--Sokolov BRST charge $Q_{\mathrm{DS}}$ commutes with the bar differential ($Q^2 = 0$), so a spectral sequence with $E_1 = H^*(\bar{B}(\mathcal{M}_{\mathrm{Wak}}), d_{\bar{B}})$ and $d_1 = Q_{\mathrm{DS}}$ converges to $H^*(\bar{B}(\mathcal{W}^{-h^\vee}(\mathfrak{g})))$; see Chapter~\ref{chap:w-algebras} for the complete argument.
 \end{proof}
- 
-\subsubsection{Graph complex description}
- 
+
 \begin{proposition}[Graphical interpretation; \ClaimStatusProvedHere]\label{prop:wakimoto-graph}
-The Wakimoto bar complex admits a description via decorated graphs:
-\[
-\bar{B}^n_{\mathrm{graph}}(\mathcal{M}_{\mathrm{Wak}}) = \bigoplus_{\Gamma}
-\Gamma\!\left(\overline{C}_{V(\Gamma)}(X), \bigotimes_{v \in V(\Gamma)} \mathcal{W}_v \otimes \omega_\Gamma\right)
-\]
-where:
-\begin{itemize}
-\item $\Gamma$ runs over graphs with $n$ external vertices
-\item Internal vertices $v$ carry Wakimoto generators $\mathcal{W}_v$
-\item $\omega_\Gamma = \bigwedge_{e \in E(\Gamma)} \eta_{s(e),t(e)}$
-\end{itemize}
-The differential combines edge contractions (residues) with vertex operations (OPEs).
+The Wakimoto bar complex admits a description via decorated graphs in which vertices carry Wakimoto generators, edges carry log-form propagators $\eta_{ij} = d\log(z_i - z_j)$, and the differential implements Wick contraction (Feynman rule interpretation).  See Chapter~\ref{chap:w-algebras} for the complete graphical calculus.
 \end{proposition}
 
-\begin{proof}
-The bar complex $\bar{B}^n(\mathcal{M}_{\mathrm{Wak}})$ consists of sections $\Gamma(\overline{C}_{n+1}(X), \mathcal{M}_{\mathrm{Wak}}^{\boxtimes(n+1)} \otimes \Omega^n_{\log})$.  A basis for $\Omega^n_{\log}(\overline{C}_{n+1}(X))$ is given by monomials $\eta_{i_1 j_1} \wedge \cdots \wedge \eta_{i_n j_n}$ where $\eta_{ij} = d\log(z_i - z_j)$, subject to Arnold relations.  Each such monomial defines a graph $\Gamma$ with vertex set $\{0, \ldots, n\}$ and edges $\{(i_k, j_k)\}_{k=1}^n$.
-
-The graph $\Gamma$ has $n+1$ vertices and $n$ edges.  A connected graph with these parameters is a tree ($|E| = |V| - 1$); in general, $\Gamma$ is a forest.  The external vertices are leaves (valence 1) corresponding to the ``input'' generators, and internal vertices (valence $\geq 2$) correspond to iterated OPE compositions.
-
-The Wakimoto generators $\mathcal{W}_v \in \{\beta_\alpha, \gamma_\alpha, \partial\phi_i\}$ label each vertex.  The decoration of $v$ determines the fiber of $\mathcal{M}_{\mathrm{Wak}}^{\boxtimes(n+1)}$ at that coordinate.
-
-The bar differential acts by:
-\begin{enumerate}
-\item \emph{Edge contraction.} For each edge $e = (i,j)$ of $\Gamma$, $\operatorname{Res}_{D_{ij}}$ extracts the OPE residue of $\mathcal{W}_i(z_i) \mathcal{W}_j(z_j)$ and contracts the edge, merging vertices $i$ and $j$.  The resulting vertex carries the OPE output.
-\item \emph{Vertex operation.} The merged vertex carries $\operatorname{Res}_{z_i = z_j}[\mathcal{W}_i(z_i)\mathcal{W}_j(z_j)]$, which for free fields is either $\delta_{\alpha\beta}$ (for $\beta_\alpha \gamma_\beta$), $k_{ij}/(z_i - z_j)^2$ (for $\partial\phi_i \partial\phi_j$), or zero.
-\end{enumerate}
-This is the standard Feynman rule interpretation: graphs are Feynman diagrams, edges are propagators ($\eta_{ij}$), vertices carry fields ($\mathcal{W}_v$), and the differential implements Wick contraction.
-\end{proof}
- 
-
-\subsection{\texorpdfstring{Explicit $A_\infty$ structure for $\mathcal{W}$-algebras}{Explicit A-infinity structure for W-algebras}}
- 
 \begin{theorem}[\texorpdfstring{$A_\infty$}{A-infinity} structure on \texorpdfstring{$\mathcal{W}$}{W}-algebras; \ClaimStatusProvedHere]
 \label{thm:w-algebra-ainfty}
 \index{W-algebra!$A_\infty$ structure}
 The W-algebra $\mathcal{W}^k(\mathfrak{g})$ carries an $A_\infty$
-structure $\{m_n\}_{n \geq 1}$ with the following properties:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $m_1 = 0$ \textup{(}the W-algebra has trivial
-  differential\textup{)}.
-\item $m_2$ is the OPE bracket:
-  $m_2(W^{(i)}, W^{(j)}) = \sum_k C^k_{ij} W^{(k)}$.
-\item $m_3$ arises from triple collisions on
-  $\overline{C}_3(X)$:
-  \[
-  m_3(a,b,c) = \int_{\overline{C}_3(X)}
-  a(z_1) \otimes b(z_2) \otimes c(z_3)
-  \cdot \eta_{12} \wedge \eta_{23}
-  \]
-  where $\eta_{ij} = d\log(z_i - z_j)$ is the
-  log-form propagator.
-\item Higher $m_k$ \textup{(}$k \geq 4$\textup{)} arise
-  from $k$-fold collisions on $\overline{C}_k(X)$
-  via the propagator calculus.
-\end{enumerate}
-The $A_\infty$ relations hold at each order by
-$d_{\bar{B}}^2 = 0$.
+structure $\{m_n\}_{n \geq 1}$ with $m_1 = 0$, $m_2$ the OPE bracket, $m_3$ from triple collisions on $\overline{C}_3(X)$, and higher $m_k$ from $k$-fold collisions via the propagator calculus.  The $A_\infty$ relations hold by $d_{\bar{B}}^2 = 0$.  See Chapter~\ref{chap:w-algebras} for the full construction and proof via homotopy transfer.
 \end{theorem}
-
-\begin{proof}
-The homotopy transfer theorem
-(Construction~\ref{constr:transfer-ainf},
-Proposition~\ref{prop:transfer-bar}) applied to the bar
-complex $\bar{B}^{\mathrm{ch}}(\mathcal{W}^k(\fg))$
-transfers the dg coalgebra structure to an $A_\infty$
-structure on the cohomology.  Since $m_1 = 0$ on
-$\mathcal{W}^k(\fg)$ (no internal differential), the
-transferred operations $m_n$ for $n \geq 2$ are the
-higher products.  The formula for $m_n$ in terms of
-configuration space integrals follows from the geometric
-bar differential
-(Definition~\ref{def:bar-differential-complete}): the
-$n$-th operation is a residue integral over collision
-strata of $\overline{C}_n(X)$ with the log-form
-propagator $\eta_{ij}$.  The $A_\infty$ relations hold
-because $d_{\bar{B}}^2 = 0$
-(Theorem~\ref{thm:bar-nilpotency-complete}), which
-descends to the transferred structure by the homological
-perturbation lemma.
-\end{proof}
 
 \begin{conjecture}[W-algebra \texorpdfstring{$A_\infty$}{A-infinity} and quantum
 cohomology; \ClaimStatusConjectured]
@@ -3570,50 +3434,15 @@ with quantum parameter $q = e^{2\pi i \tau}$.
 The $A_\infty$ structure (Theorem~\ref{thm:w-algebra-ainfty}) is proved.
 The residual conjecture --- identification with $QH^*(G/B)$ --- requires matching Schubert cell combinatorics with collision strata.
 \end{remark}
- 
+
 \begin{theorem}[Classical \texorpdfstring{$\mathcal{W}$}{W}-algebra integrability; \ClaimStatusProvedElsewhere]\label{thm:w-classical-integrability}
-The classical W-algebra $\mathcal{W}^{\mathrm{cl}}(\mathfrak{g})$ encodes integrability of the generalized Toda lattice via the Drinfeld--Sokolov construction \cite{DS}:
-\begin{itemize}
-\item The $m_2$ product gives the Poisson bracket on $\mathcal{W}^{\mathrm{cl}}(\mathfrak{g}) = \mathrm{gr}(\mathcal{W}^k(\mathfrak{g}))$
-\item The integrals of motion $I_n = \oint W^{(n)}$ Poisson-commute: $\{I_n, I_m\}_{m_2} = 0$
-\end{itemize}
+The classical W-algebra $\mathcal{W}^{\mathrm{cl}}(\mathfrak{g})$ encodes integrability of the generalized Toda lattice via the Drinfeld--Sokolov construction \cite{DS}: the $m_2$ product gives the Poisson bracket, and the integrals of motion Poisson-commute.
 For $\mathfrak{g} = \mathfrak{sl}_n$, this recovers the $\mathfrak{sl}_n$ Toda hierarchy.
 \end{theorem}
 
 \begin{theorem}[Quantum integrability via \texorpdfstring{$A_\infty$}{A-infinity}; \ClaimStatusProvedHere]\label{thm:w-integrability}
-The quantum W-algebra $A_\infty$ structure extends classical integrability:
-\begin{itemize}
-\item Higher $m_k$ ($k \geq 3$) encode quantum corrections $m_k = O(\hbar^{k-2})$
-\item The $A_\infty$ master equation $\sum_k m_k = 0$ ensures quantum integrability
-\end{itemize}
+The quantum W-algebra $A_\infty$ structure extends classical integrability: the higher operations $m_k$ ($k \geq 3$) encode quantum corrections $m_k = O(\hbar^{k-2})$, and the $A_\infty$ master equation ensures quantum integrability.  The proof proceeds by induction on filtration degree using the PBW (Li) filtration and the curved $A_\infty$ formalism (Theorem~\ref{thm:curved-koszul-pairs}); the obstruction at each stage lies in $H^1(\mathcal{W}^{\mathrm{cl}}(\mathfrak{g}), \mathrm{ad})$, which vanishes by the rigidity of the Drinfeld--Sokolov Poisson structure (Kostant slice theorem).  See Chapter~\ref{chap:w-algebras} for the complete argument.
 \end{theorem}
-
-\begin{proof}
-We argue by induction on the filtration degree, using the PBW (Li) filtration on $\mathcal{W}^k(\mathfrak{g})$ and the curved $A_\infty$ formalism (Theorem~\ref{thm:curved-koszul-pairs}).
-
-\emph{Base case: $m_1 = 0$, $m_2$ gives classical integrability.}
-The W-algebra $\mathcal{W}^k(\mathfrak{g})$ carries the Li filtration $F^0 \subset F^1 \subset \cdots$ with associated graded $\mathrm{gr}(\mathcal{W}^k(\mathfrak{g})) = \mathcal{W}^{\mathrm{cl}}(\mathfrak{g})$, the classical W-algebra.  The leading operation $m_2$ descends to the Poisson bracket on $\mathcal{W}^{\mathrm{cl}}(\mathfrak{g})$.  By the Drinfeld--Sokolov theorem (Theorem~\ref{thm:w-classical-integrability}), the integrals of motion $I_n = \oint W^{(n)}$ Poisson-commute: $\{I_n, I_m\}_{m_2} = 0$.  This establishes integrability at the classical ($\hbar = 0$) level.
-
-\emph{Induction step: deformation by $m_k$ for $k \geq 3$.}
-Write $\hbar = 1/(k + h^\vee)$ and filter the $A_\infty$ operations by $\hbar$-order: $m_k = O(\hbar^{k-2})$ with respect to the Li filtration.  The $A_\infty$ relations at order $n$ read
-\[
-\sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t}(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t}) = 0.
-\]
-Since $m_1 = 0$ (the W-algebra has no differential), the $n = 2$ relation reduces to the Jacobi identity for $m_2$ corrected by $m_3$:
-\[
-m_2(m_2 \otimes \mathrm{id} - \mathrm{id} \otimes m_2) = m_3(\cdots),
-\]
-so $m_3$ measures the failure of strict associativity of $m_2$ and is determined by the $O(\hbar)$ correction to the OPE.
-
-\emph{Induction hypothesis}: suppose that for all $j < k$, the operations $m_2, \ldots, m_j$ preserve integrability, i.e., the quantum-corrected integrals $I_n^{(j)} = I_n + \sum_{\ell=1}^{j-2} \hbar^\ell I_n^{(\ell)}$ satisfy the $A_\infty$ master equation through order $\hbar^{j-2}$.
-
-\emph{Induction step}: at order $\hbar^{k-2}$, the $A_\infty$ relation at level $k$ determines $m_k$ in terms of $m_2, \ldots, m_{k-1}$.  By the Feigin--Frenkel theorem \cite{Feigin-Frenkel}, the center $\mathfrak{z}(\widehat{\mathfrak{g}})$ at the critical level $k = -h^\vee$ provides a commutative subalgebra whose generators lift to quantum integrals at generic level via the PBW deformation.  Concretely, the PBW filtration on $\mathcal{W}^k(\mathfrak{g})$ gives a spectral sequence with $E_1 = \mathcal{W}^{\mathrm{cl}}(\mathfrak{g})$ (the classical W-algebra) and differentials $d_r$ of order $O(\hbar^r)$.  The classical integrability ($d_1 = 0$ on the integrals of motion) is the base case.  At each subsequent page, the $A_\infty$ relation forces $d_r(I_n^{(r-1)}) = 0$, because $d_r$ is determined by $m_{r+1}$ and the lower operations, and the $A_\infty$ master equation at level $r+1$ ensures the obstruction vanishes.
-
-More precisely, the obstruction to extending $I_n^{(k-3)}$ to $I_n^{(k-2)}$ lies in $H^1(\mathcal{W}^{\mathrm{cl}}(\mathfrak{g}), \mathrm{ad})$, the first Poisson cohomology of the classical W-algebra with coefficients in the adjoint representation.  By the rigidity of the Drinfeld--Sokolov Poisson structure (which follows from $H^1_{\mathrm{DS}}(\mathfrak{n}_+, \mathcal{W}^{\mathrm{cl}}) = 0$, a consequence of the Kostant slice theorem for the transverse slice $\mathfrak{g}^e \cap \mathfrak{g}^f$ to the regular nilpotent), this obstruction group vanishes, and the extension exists at each order.
-
-\emph{Conclusion.}
-By induction, the quantum integrals of motion $I_n^{(\infty)} = I_n + \sum_{\ell \geq 1} \hbar^\ell I_n^{(\ell)}$ satisfy the full $A_\infty$ master equation.  The $A_\infty$ structure on $\mathcal{W}^k(\mathfrak{g})$ therefore encodes quantum integrability: the higher operations $m_k$ ($k \geq 3$) are the quantum corrections to the classical Poisson integrability, and the $A_\infty$ relations guarantee their consistency to all orders.
-\end{proof}
 
 
 
