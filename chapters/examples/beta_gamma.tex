@@ -1332,3 +1332,172 @@ homological algebra.
 \end{remark}
 
 The $\beta\gamma/bc$ duality is the two-generator chiral lift of $\mathrm{Com}^! = \mathrm{Lie}$; the equivariant structure at $\lambda = 1/2$ foreshadows the logarithmic phenomena of the W-algebra chapters.
+
+%% ----------------------------------------------------------------
+%%  Holographic test case
+%% ----------------------------------------------------------------
+
+\section{The \texorpdfstring{$\beta\gamma$}{beta-gamma} system as holographic test case}
+\label{sec:betagamma-holographic}
+\index{beta-gamma system@$\beta\gamma$ system!holographic test case}
+
+The free $\beta\gamma$ system furnishes the simplest non-trivial testing
+ground for the modular homotopy holography programme.  We explain how the
+full chiral algebra arises from interval compactification of a 3d $\mathcal{N}=2$
+free chiral multiplet, and then assemble the resulting data into a modular
+test package that isolates the genus dependence in factorization homology.
+
+\subsection{Interval compactification}
+
+\begin{proposition}[Interval compactification produces the full
+  $\beta\gamma$ algebra {\cite{CDG20}, \S4.2}; \ClaimStatusProvedElsewhere]
+\label{prop:betagamma-interval-compactification}
+\index{interval compactification!beta-gamma@$\beta\gamma$}
+Consider the holomorphic twist of a 3d\/ $\mathcal{N}=2$ free chiral multiplet
+on $[0,1] \times \Sigma$, equipped with Neumann boundary conditions at both
+endpoints.  Let $\varphi$ denote the boundary boson and $\psi^{(1)}$ the
+first descendant of the fermionic bulk field.  Define
+\[
+  \beta(z) \;:=\; \varphi(z), \qquad
+  \gamma(z) \;:=\; \int_0^1 \psi^{(1)}.
+\]
+Then:
+\begin{enumerate}
+\item The field $\gamma$ is $Q$-closed: the Stokes boundary term vanishes
+  because $\psi$ satisfies Neumann conditions on both boundary components.
+\item The OPE $\beta(z)\gamma(0) \sim 1/z$ is inherited from the bulk
+  Poisson bracket between $\varphi$ and $\psi$.
+\item The interval compactification realizes the full $\beta\gamma$ chiral
+  algebra, rather than a single boundary half.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The holomorphic twist of the 3d $\mathcal{N}=2$ chiral multiplet
+$(\varphi, \psi)$ on $[0,1] \times \Sigma$ places $\varphi$ as a scalar
+and $\psi$ as a $(0,1)$-form along $\Sigma$ with a first-order kinetic
+term along the interval direction.  Neumann conditions at $t=0$ and $t=1$
+mean that $\psi|_{\partial} = 0$, so the Stokes boundary term in
+$Q\gamma = Q\bigl(\int_0^1 \psi^{(1)}\bigr) = \int_0^1 \overline{\partial}_\Sigma \psi^{(1)} + [\psi^{(1)}]_0^1$
+vanishes.  The singular OPE $\beta(z)\gamma(0) \sim 1/z$ follows from the
+bulk propagator $\langle \varphi(z,t)\, \psi(0,t') \rangle$ integrated
+over the interval.  See \cite{CDG20}, \S4.2 for the complete calculation.
+\end{proof}
+
+\subsection{The free modular test package}
+
+\begin{definition}[Free $\beta\gamma$ modular test package]
+\label{def:betagamma-modular-test-package}
+\index{modular test package!beta-gamma@$\beta\gamma$}
+Let $V_{\beta\gamma} = \mathrm{Sym}\bigl(\mathbb{C}[\partial]\beta
+\oplus \mathbb{C}[\partial]\gamma\bigr)$ denote the $\beta\gamma$ vertex
+algebra with $\lambda$-bracket $\{\beta_\lambda \gamma\} = 1$.
+The \emph{free modular test object} is the tuple
+\[
+  \mathrm{ModEnv}_{\beta\gamma}^{\mathrm{free}}
+  \;:=\;
+  \bigl(
+    V_{\beta\gamma},\;
+    V_{\beta\gamma}^{!},\;
+    H_{g,n}^{\beta\gamma},\;
+    \Theta_{g,n}^{\beta\gamma},\;
+    F_{\beta\gamma},\;
+    I_{\beta\gamma}^{\mathrm{def}}
+  \bigr)
+\]
+where:
+\begin{itemize}
+\item $V_{\beta\gamma}^{!} \cong \mathcal{F}$ is the Koszul dual free
+  fermion (Theorem~\ref{thm:cobar-fermions});
+\item $H_{g,n}^{\beta\gamma}$ denotes the genus-$g$, $n$-pointed
+  factorization homology (chiral homology) of $V_{\beta\gamma}$;
+\item $\Theta_{g,n}^{\beta\gamma}$ is the tautological action of the
+  mapping class group on $H_{g,n}^{\beta\gamma}$;
+\item $F_{\beta\gamma}$ is the factorization structure on $\mathrm{Ran}(X)$;
+\item $I_{\beta\gamma}^{\mathrm{def}}$ collects all higher-genus deformation
+  data.
+\end{itemize}
+In this package the higher local $A_\infty$ operations are \emph{strict}
+(all $m_k = 0$ for $k \geq 3$), so the full higher-genus complexity is
+pushed entirely into the factorization homology and the tautological action.
+\end{definition}
+
+\subsection{The determinant line}
+
+\begin{definition}[$\beta\gamma$ determinant line]
+\label{def:betagamma-determinant-line}
+\index{determinant line!beta-gamma@$\beta\gamma$}
+Fix a conformal weight parameter $\lambda$ and an auxiliary line bundle
+$L$ on a smooth projective curve $\Sigma_g$ of genus~$g$.  The
+\emph{$\beta\gamma$ determinant line} is
+\[
+  \mathcal{D}^{\beta\gamma}_{g,\lambda}(L)
+  \;:=\;
+  \bigl(\!\det R\Gamma(\Sigma_g,\, K_{\Sigma_g}^{\lambda} \otimes L)\bigr)^{-1}
+  \;\otimes\;
+  \bigl(\!\det R\Gamma(\Sigma_g,\, K_{\Sigma_g}^{1-\lambda} \otimes L^\vee)\bigr)^{-1}.
+\]
+Here $K_{\Sigma_g}$ is the canonical bundle and $\det R\Gamma$ denotes the
+determinant of cohomology in the sense of Knudsen--Mumford.
+\end{definition}
+
+\begin{remark}[Bosonization and the determinant line]
+\label{rem:betagamma-determinant-bosonization}
+At $\lambda = 1/2$ and $L = \mathcal{O}$, the Riemann--Roch theorem gives
+$\dim H^0(\Sigma_g, K^{1/2}) = \dim H^1(\Sigma_g, K^{1/2})$ for
+$g \geq 1$, so the two tensor factors in
+$\mathcal{D}^{\beta\gamma}_{g,1/2}(\mathcal{O})$ are \emph{isomorphic}
+(but not canonically so---the isomorphism depends on a choice of theta
+characteristic).  This reflects the bosonization ambiguity of the
+symplectic boson at $\lambda = 1/2$.
+\end{remark}
+
+\subsection{Modular state spaces and the determinant conjecture}
+
+\begin{conjecture}[Free-field realization of modular state spaces]
+\label{conj:betagamma-modular-state-spaces}
+\index{modular state spaces!beta-gamma conjecture@$\beta\gamma$ conjecture}
+\ClaimStatusConjectured
+For the free $\beta\gamma$ theory, the genus-$g$ state space
+$H_g^{\beta\gamma}$ is governed by the determinant geometry of the
+$\beta\gamma$ determinant line
+(Definition~\textup{\ref{def:betagamma-determinant-line}}).  Concretely:
+\begin{enumerate}
+\item The genus-$g$ partition function $Z_g^{\beta\gamma}$ is a canonical
+  section of the determinant line
+  $\mathcal{D}^{\beta\gamma}_{g,\lambda}(\mathcal{O})$ over $\mathcal{M}_g$,
+  obtained by integrating the Dolbeault complexes
+  $\bigl(\Omega^{0,\bullet}(\Sigma_g, K^{\lambda}),\, \overline{\partial}\bigr)$
+  and
+  $\bigl(\Omega^{0,\bullet}(\Sigma_g, K^{1-\lambda}),\, \overline{\partial}\bigr)$
+  underlying $\beta$ and~$\gamma$ respectively.
+\item The local OPE is free---all higher local operations vanish---but the
+  global all-genera content is encoded by the variation of
+  $\mathcal{D}^{\beta\gamma}_{g,\lambda}(L)$ over the moduli of curves
+  and auxiliary bundles.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[The $\beta\gamma$ system as the cleanest modular test]
+\label{rem:betagamma-cleanest-test}
+The $\beta\gamma$ system is the optimal testing ground for the modular
+envelope conjecture (and for the broader modular homotopy holography
+programme) for three reasons:
+\begin{enumerate}
+\item \emph{Freeness}: the OPE has a single simple pole and no
+  higher-order singularities, so the vertex algebra is generated freely
+  as a differential graded commutative algebra.
+\item \emph{Strictness}: all higher local $A_\infty$ operations vanish
+  ($m_k = 0$ for $k \geq 3$), eliminating the combinatorial complexity of
+  curved $A_\infty$ corrections.
+\item \emph{Determinantal genus dependence}: the entire higher-genus content
+  enters through factorization homology, which for a free theory reduces to
+  determinant lines of Dolbeault complexes.  Thus any failure of the
+  modular envelope to capture the correct genus-$g$ answer must come from
+  the global geometry of curves, not from local algebraic complications.
+\end{enumerate}
+This separation of local triviality from global non-triviality is precisely
+what makes the $\beta\gamma$ system the ``hydrogen atom'' of the modular
+programme (cf.\ the role of the Heisenberg algebra as the hydrogen atom of
+bar-cobar duality in the Overture).
+\end{remark}
