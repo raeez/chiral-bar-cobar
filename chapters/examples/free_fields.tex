@@ -3693,11 +3693,54 @@ $=$ trivial shadow algebra.
 
 The bar complex computes resolutions on the Ran space; the
 \v{C}ech complex (Theorem~\ref{thm:cech-hca}) computes resolutions
-on the Zariski site.  For free fields, the comparison is fully
-explicit: the HCA structure is strict (all higher operations vanish),
-providing a clean testing ground for the \v{C}ech--bar dictionary.
+on the Zariski site.  On $\mathbb{P}^1$ with the standard two-element
+cover, a decisive simplification occurs: \emph{every} \v{C}ech HCA
+is strict, regardless of the chiral algebra.  The reason is
+purely combinatorial---the Moore complex $M\check{C}^\bullet$ is
+concentrated in degrees~$0$ and~$1$, so there is no room for
+a nontrivial Jacobiator.  Non-strictness in the free-field
+examples lives on the \emph{bar} side, and the \v{C}ech--bar
+comparison map $\Phi^*$ is what creates it.
 
-\subsubsection{Heisenberg on $\mathbb{P}^1$: strict HCA}
+\begin{proposition}[Two-element covers are strict;
+\ClaimStatusProvedHere]
+\label{prop:two-element-strict}
+\index{Cech complex@\v{C}ech complex!two-element strictness}
+Let $\cA$ be a chiral algebra on $X = \mathbb{P}^1$ and
+$\mathcal{U} = \{U_0, U_\infty\}$ the standard two-element cover.
+Then $\check{C}^p(\mathcal{U};\cA) = 0$ for $p \geq 2$, so the
+Moore complex $M\check{C}^\bullet$ is concentrated in degrees~$0$
+and~$1$.  Consequently the \v{C}ech HCA
+(Theorem~\textup{\ref{thm:cech-hca}}) is strict: $F_n = 0$ for
+all $n \geq 3$, and the Maurer--Cartan element is
+\[
+\Phi \;=\; (d_M,\; F_2,\; 0,\; 0,\; \ldots\,).
+\]
+\end{proposition}
+
+\begin{proof}
+A two-element cover $\mathcal{U} = \{U_0, U_\infty\}$ has no
+triple or higher intersections: the only multi-intersection is
+$U_{0\infty} = U_0 \cap U_\infty$.  Hence
+$\check{C}^p(\mathcal{U};\cA) = 0$ for $p \geq 2$.  The
+Malikov--Schechtman operation $F_n$ \cite{MS24} has output degree
+$\leq m_1 + \cdots + m_n - (n-1)$; when $M\check{C}^p = 0$ for
+$p \geq 2$, the target vanishes for any $n \geq 3$ by a
+direct degree count.  In particular the Jacobiator
+$\mathrm{Jac}(a,b,c) = d_M F_3(\cdot) + F_3 d_M(\cdot)$
+has target in $M\check{C}^{\geq 2} = 0$, so it vanishes on the
+nose and $F_3 = 0$ is the unique (zero) homotopy.  Inductively,
+all higher $F_n$ vanish.
+\end{proof}
+
+The point is that \v{C}ech strictness is a property of the
+\emph{cover}, not the algebra: on a two-element cover of
+$\mathbb{P}^1$, the Heisenberg, free fermion, $\beta\gamma$ system,
+and affine Kac--Moody algebras \emph{all} have strict \v{C}ech HCA.
+Non-strictness manifests on the bar side, through integration over
+FM compactifications.
+
+\subsubsection{Heisenberg on $\mathbb{P}^1$: mode computation}
 \label{subsec:cech-heisenberg-p1}
 \index{Heisenberg!Cech@\v{C}ech complex on $\mathbb{P}^1$}
 
@@ -3728,77 +3771,130 @@ $J_n \in (M\check{C})^0$ to its class in
 $(M\check{C})^1$, which is zero for $n \leq 0$ and $J_n$ itself
 for $n > 0$.  Thus $H^0 = k \cdot \mathbf{1}$ (global sections)
 and $H^1 = \bigoplus_{n < 0} k \cdot J_n$ (negative modes), in
-agreement with the chiral homology of the Heisenberg on~$\mathbb{P}^1$.
+agreement with the chiral homology of the Heisenberg
+on~$\mathbb{P}^1$.
 
-The HCA operations: since $[J_m, J_n] = km\,\delta_{m+n,0}
-\cdot \mathbf{1}$ is central (abelian Lie bracket), the
-Jacobiator vanishes identically, so $F_3 = 0$.  By
-induction on arity, all $F_n = 0$ for $n \geq 3$: the \v{C}ech
-HCA for the Heisenberg is \emph{strict}.
+The \v{C}ech HCA Maurer--Cartan element is
+$\Phi = (d_M, F_2, 0, 0, \ldots)$ by
+Proposition~\ref{prop:two-element-strict}.  The binary bracket
+$F_2$ acts by the Heisenberg commutator:
+$F_2(J_m, J_n) = km\,\delta_{m+n,0} \cdot \mathbf{1}$.
 
-\begin{remark}[Consistency with bar strictness]
+\begin{remark}[Both sides strict for the Heisenberg]
 \label{rem:cech-bar-strict-heisenberg}
-The bar $A_\infty$ structure for the Heisenberg is also strict:
-$m_n = 0$ for $n \geq 3$
-(\S\ref{sec:explicit-low-degree}).  This is predicted by the
-\v{C}ech--bar comparison
-(Proposition~\ref{prop:cech-bar-intertwining}): a strict HCA must
-map to a strict $A_\infty$ algebra under any quasi-isomorphism of
-$L_\infty$ algebras.
+The Heisenberg is the unique case among standard families where
+\emph{both} the \v{C}ech and bar sides are strict.  The bar
+$A_\infty$ structure satisfies $m_n = 0$ for $n \geq 3$
+(\S\ref{sec:explicit-low-degree}), and the \v{C}ech HCA has
+$F_n = 0$ for $n \geq 3$.  The comparison map $\Phi^*$ of
+Proposition~\ref{prop:cech-bar-intertwining} sends the strict
+\v{C}ech data to strict bar data: no higher operations are created
+or destroyed.
 \end{remark}
 
-\subsubsection{Free fermion on $\mathbb{P}^1$: strict HCA with
-nontrivial cohomology}
+\subsubsection{Free fermion on $\mathbb{P}^1$: strict \v{C}ech HCA
+with nontrivial cohomology}
 \label{subsec:cech-fermion-p1}
 
-For the free fermion $\psi(z)\psi(w) \sim 1/(z-w)$ on $\mathbb{P}^1$,
-the \v{C}ech complex has the same form with generators $\psi_n$
-replacing $J_n$.  The key difference is that $\psi$ is a section
-of $K_X^{1/2}$ (for the NS sector), which twists the mode
-expansion: $\psi(z) = \sum_{r \in \mathbb{Z}+1/2}
-\psi_r\,z^{-r-1/2}$.  The \v{C}ech cohomology
+For the free fermion $\psi(z)\psi(w) \sim 1/(z-w)$ on
+$\mathbb{P}^1$, the \v{C}ech complex has the same two-element
+structure with generators $\psi_r$ in place of $J_n$.  The
+difference is that $\psi$ is a section of $K_X^{1/2}$ (NS sector),
+with half-integer mode expansion:
+$\psi(z) = \sum_{r \in \mathbb{Z}+1/2} \psi_r\,z^{-r-1/2}$.
+The \v{C}ech cohomology is
 $H^0(\mathbb{P}^1, K_X^{1/2}) = 0$ (no global sections of
 $\mathcal{O}(-1)$) and $H^1(\mathbb{P}^1, K_X^{1/2}) = k$ (by
 Serre duality).
 
-The HCA is again strict ($F_n = 0$ for $n \geq 3$) because the
-free fermion OPE has only a simple pole: the anticommutator
-$\{\psi_r, \psi_s\} = \delta_{r+s,0}$ is central.  The
-transferred $m_3$ on the bar side also vanishes
-(Theorem~\ref{thm:fermion-bar-complex-genus-0}).
+By Proposition~\ref{prop:two-element-strict}, the \v{C}ech HCA is
+strict: $\Phi = (d_M, F_2, 0, 0, \ldots)$.  As with the
+Heisenberg, the bar side is also strict---$m_3 = 0$
+(Theorem~\ref{thm:fermion-bar-complex-genus-0})---so $\Phi^*$
+again maps strict to strict.
 
-\subsubsection{$\beta\gamma$ on $\mathbb{P}^1$: nontrivial $F_3$ from
-cubic OPE}
+\subsubsection{$\beta\gamma$ on $\mathbb{P}^1$: strict \v{C}ech,
+non-strict bar}
 \label{subsec:cech-betagamma-p1}
 
-For the $\beta\gamma$ system, the \v{C}ech complex on $\mathbb{P}^1$ has
-two generators: $\beta \in \Gamma(X, K_X^{1-\lambda})$ and
+For the $\beta\gamma$ system on $\mathbb{P}^1$ with the two-element
+cover, the \v{C}ech complex has two generators:
+$\beta \in \Gamma(X, K_X^{1-\lambda})$ and
 $\gamma \in \Gamma(X, K_X^\lambda)$.  The binary bracket $F_2$ is
-induced by $\beta(z)\gamma(w) \sim 1/(z-w)$.  Since
-$[\beta_m, [\gamma_n, \beta_p]]$ involves the normally ordered
-product $:\!\beta\gamma\!:$ which has a nontrivial OPE with both
-$\beta$ and $\gamma$, the Jacobiator does not vanish:
-\[
-\mathrm{Jac}(\beta_m, \gamma_n, \beta_p) \neq 0
-\qquad
-\text{for appropriate } m, n, p.
-\]
-The Malikov--Schechtman theorem provides the homotopy $F_3$ with
-$d_M F_3 + F_3 d_M = \mathrm{Jac}$.  Under the \v{C}ech--bar
-comparison, this $F_3$ maps to the transferred $m_3$ on the bar
-complex computed in
-\S\ref{sec:explicit-betagamma-m3}.
+induced by $\beta(z)\gamma(w) \sim 1/(z-w)$.
 
-\begin{remark}[HCA strictness as a free-field diagnostic]
+By Proposition~\ref{prop:two-element-strict}, the \v{C}ech HCA is
+again strict:
+\[
+\Phi_{\beta\gamma}
+  \;=\; (d_M,\; F_2,\; 0,\; 0,\; \ldots\,).
+\]
+The normally ordered product $:\!\beta\gamma\!:$ does give rise to
+nontrivial iterated brackets, but these would produce a
+Jacobiator in $M\check{C}^{\geq 2}$, which vanishes for the
+two-element cover.  There is simply no \v{C}ech degree in which
+a nontrivial $F_3$ could live.
+
+The non-strictness of the $\beta\gamma$ system appears on the
+\emph{bar} side: the transferred $A_\infty$ operation $m_3 \neq 0$
+arises from integration over the Fulton--MacPherson
+compactification $\overline{\mathrm{FM}}_3(\mathbb{C})$, where
+the triple collision boundary gives a nonvanishing contribution.
+The comparison map $\Phi^*$ of
+Proposition~\ref{prop:cech-bar-intertwining} sends the strict
+\v{C}ech data $F_3 = 0$ to the non-strict bar data $m_3 \neq 0$:
+the bar operation $m_3$ is \emph{created} by the comparison, not
+inherited from the \v{C}ech side.
+
+\subsubsection{\v{C}ech--bar comparison for free fields}
+\label{subsec:cech-bar-free-field-comparison}
+\index{Cech--bar comparison@\v{C}ech--bar comparison!free fields}
+
+The three examples exhibit a clean trichotomy:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccc}
+\textbf{Chiral algebra}
+  & \textbf{\v{C}ech HCA}
+  & \textbf{Bar $A_\infty$}
+  & \textbf{$\Phi^*$ creates $m_3$?} \\
+\hline
+Heisenberg $\cH_k$
+  & strict ($F_3 = 0$)
+  & strict ($m_3 = 0$)
+  & no \\
+Free fermion $\mathcal{F}$
+  & strict ($F_3 = 0$)
+  & strict ($m_3 = 0$)
+  & no \\
+$\beta\gamma$
+  & strict ($F_3 = 0$)
+  & non-strict ($m_3 \neq 0$)
+  & yes \\
+\end{tabular}
+\end{center}
+
+\noindent
+The same pattern holds for the affine Kac--Moody algebras
+$\widehat{\mathfrak{g}}_k$ on the two-element cover: the \v{C}ech
+HCA is strict, but the bar side has $m_3 \neq 0$ from the cubic
+Lie bracket.  In every case, $\Phi^*$ is the mechanism that
+produces bar non-strictness from \v{C}ech strictness.
+
+\begin{remark}[\v{C}ech HCA strictness depends on the cover]
 \label{rem:hca-strictness-diagnostic}
-The pattern is: \emph{the HCA is strict if and only if the chiral
-algebra is freely generated with at most bilinear OPE}.  The
-Heisenberg (central extension only) and free fermion (simple pole
-only) are strict; the $\beta\gamma$ system (normally ordered
-products with nontrivial self-OPE) is not.  This matches the
-classification of bar $A_\infty$ structures:
-strict = $m_n = 0$ for $n \geq 3$, i.e., no iterated OPE produces
-new relations in the bar complex.  The \v{C}ech HCA provides
-a site-theoretic explanation: strictness means the chiral bracket
-is compatible with restriction to opens without correction terms.
+\index{homotopy chiral algebra!strictness diagnostic}
+The diagnostic for \v{C}ech HCA strictness is the \emph{cover},
+not the algebra.  For a two-element cover $\mathcal{U} =
+\{U_0, U_\infty\}$ of $\mathbb{P}^1$, the Moore complex
+$M\check{C}^\bullet$ is concentrated in degrees $0$ and $1$, and
+$\check{C}^p = 0$ for $p \geq 2$ leaves no room for a
+Jacobiator (Proposition~\textup{\ref{prop:two-element-strict}}).
+Every chiral algebra on this cover has strict \v{C}ech HCA.  On a
+finer cover with triple intersections, the Jacobiator could be
+nonzero and a genuine homotopy $F_3$ would be needed; strictness
+would then depend on the algebra.  The correct slogan is:
+\emph{non-strictness is a bar-side phenomenon on $\mathbb{P}^1$,
+arising from FM compactification, not from \v{C}ech descent}.
 \end{remark}

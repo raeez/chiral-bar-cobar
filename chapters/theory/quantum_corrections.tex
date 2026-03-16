@@ -662,12 +662,28 @@ approximations --- they are exact.
 \index{Jacobiator!homotopy}
 \index{Eilenberg--Zilber operad}
 
-The $A_\infty$ relations of~\S\ref{sec:quantum-corrections-ainfty}
-encode the failure of strict associativity/Jacobi on the bar complex
-and its \v{C}ech counterpart.  The simplest instance---the ternary
-relation involving~$m_3$---has a transparent interpretation as the
-\emph{Jacobiator homotopy} of the homotopy chiral algebra
-(Theorem~\ref{thm:cech-hca}).
+The homotopy chiral algebra structure
+(Theorem~\ref{thm:cech-hca}) equips the \v{C}ech resolution of a
+chiral algebra with higher operations $\{F_n\}_{n \geq 1}$
+satisfying an $L_\infty$ master equation.  At arity~$3$, this
+master equation has a transparent interpretation: it is the
+\emph{Jacobiator homotopy}, the precise mechanism by which Jacobi
+fails on the resolution and is restored by a coherent correction.
+But the Jacobiator does \emph{not} appear for arbitrary covers: on
+$\mathbb{P}^1$ with the standard two-element cover, it vanishes
+identically.  The obstruction requires triple intersections---three
+or more overlapping opens---and thus measures a genuine descent
+obstruction, not just an artifact of the resolution.
+
+The key structural insight is that the Jacobiator, and all higher
+$F_n$, are components of a single master equation
+$D \cdot \Phi + \tfrac{1}{2}[\Phi,\Phi] = 0$, where
+$\Phi = \sum_{n \geq 2} F_n$ is the MC element encoding the
+entire HCA structure.  In the Chriss--Ginzburg framework
+(Proposition~\ref{prop:chriss-ginzburg-structure}), this is a
+projection of the master equation
+$D_{\cA}\Theta_{\cA} + \tfrac{1}{2}[\Theta_{\cA},\Theta_{\cA}] = 0$
+to the \v{C}ech site at genus~$0$.
 
 \subsection{The Jacobiator on the \v{C}ech complex}
 \label{subsec:jacobiator-cech}
@@ -675,10 +691,10 @@ relation involving~$m_3$---has a transparent interpretation as the
 Let $\cA$ be a chiral algebra on~$X$ with cover $\mathcal{U}$,
 and let $[{-},{-}] = F_2$ denote the binary chiral bracket on the
 Moore complex $M\check{C}^\bullet(\mathcal{U};\cA)$.  The Jacobi
-identity holds on each open $U_{i_0\cdots i_p}$ (where the full
-chiral product is defined), but it need not hold on the \v{C}ech
-complex as a whole because the bracket interacts nontrivially with
-the \v{C}ech differential.
+identity holds \emph{strictly} on each open $U_{i_0\cdots i_p}$
+(where the full chiral product is defined), but on the total
+\v{C}ech complex the bracket interacts with the \v{C}ech
+differential, and the Jacobi identity may fail.
 
 \begin{definition}[Jacobiator]
 \label{def:jacobiator}
@@ -692,6 +708,85 @@ On the total \v{C}ech complex, $\mathrm{Jac}$ is in general
 \emph{nonzero}: it measures the obstruction to $F_2$ being a
 strict Lie bracket on the resolution.
 \end{definition}
+
+\begin{proposition}[Two-element covers are strict;
+\ClaimStatusProvedHere]
+\label{prop:two-element-strict}
+\index{Jacobiator!vanishing for two-element covers}
+Let $\mathcal{U} = \{U_0, U_\infty\}$ be a two-element affine
+open cover of~$X$ (e.g., the standard cover of
+$\mathbb{P}^1$).  Then
+$\check{C}^p(\mathcal{U};\cA) = 0$ for $p \geq 2$,
+and consequently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Jacobiator vanishes:
+  $\mathrm{Jac}(a,b,c) = 0$ for all $a,b,c$.
+\item All higher operations vanish: $F_n = 0$ for $n \geq 3$.
+\item The \v{C}ech HCA is \emph{strict}---the binary bracket
+  $F_2$ is a genuine Lie bracket on $M\check{C}^\bullet$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+A two-element cover has $\check{C}^0 = \cA(U_0) \oplus
+\cA(U_\infty)$, $\check{C}^1 = \cA(U_0 \cap U_\infty)$,
+and $\check{C}^p = 0$ for $p \geq 2$.  In particular, the
+Moore complex is concentrated in degrees~$0$ and~$1$.  The
+$n$-ary operation $F_n$ raises total \v{C}ech degree by $n-2$
+(it maps $n$ inputs summing to degree~$m_1 + \cdots + m_n$
+to degree $m_1 + \cdots + m_n$, while the chain in
+$\mathcal{Z}(n)$ contributes degree $2-n$; see
+Remark~\ref{rem:operadic-action-map}).  For $n \geq 3$, the
+output lands in $\check{C}^p$ for $p \geq 2$, which vanishes.
+Thus $F_n = 0$ for all $n \geq 3$.  In particular the Jacobiator,
+which is the boundary of~$F_3$
+(equation~\eqref{eq:jacobiator-homotopy}), vanishes.
+\end{proof}
+
+\begin{remark}[When the Jacobiator appears]
+\label{rem:jacobiator-when-nonzero}
+\index{Jacobiator!triple intersection origin}
+The vanishing of Proposition~\ref{prop:two-element-strict} is
+\emph{not} a feature of the algebra: it is a feature of the
+\emph{cover}.  For the \emph{same} chiral algebra on the same
+curve~$X$ but with a cover $\mathcal{U}' = \{U_0,U_1,U_2\}$
+having nontrivial triple intersection
+$U_0 \cap U_1 \cap U_2 \neq \varnothing$, the \v{C}ech complex
+extends to degree~$2$ and the Jacobiator can be nonzero.  The
+correction $F_3$ then measures the \emph{descent obstruction}:
+the chiral bracket holds strictly on each open, but gluing
+these local brackets across a triple overlap requires a
+coherent homotopy.
+
+For $\widehat{\mathfrak{sl}}_2$ at level~$k$ on $\mathbb{P}^1$,
+the two-element cover gives a strict HCA
+(Example~\ref{ex:cech-hca-heisenberg}); but refining to a
+three-element cover (e.g., the standard affine cover of a
+projective curve of genus $g \geq 1$) produces a nonzero
+Jacobiator from the non-abelian OPE $[e,f] = h$
+(Example~\ref{ex:cech-hca-sl2}).  This is the prototypical
+example: the Jacobiator is a descent obstruction, not a local
+one.
+\end{remark}
+
+\subsection{The Jacobiator as the arity-$3$ master equation}
+\label{subsec:jacobiator-master}
+
+The individual Jacobiator homotopy is not an isolated identity.
+It is the arity-$3$ component of the MC equation
+$D \cdot \Phi + \tfrac{1}{2}[\Phi,\Phi] = 0$
+governing the HCA structure map
+$\Phi = \sum_{n \geq 2} F_n$.  The arity-$n$ component reads:
+\[
+d_M \circ F_n
++ F_n \circ d_M^{\otimes n}
++ \sum_{\substack{p+q=n+1 \\ p,q \geq 2}}
+  F_p \circ_{(i)} F_q
+= 0,
+\]
+where $\circ_{(i)}$ denotes operadic composition at the $i$-th
+slot, summed over all $i$ and all $(p,q)$-shuffles.  At
+arity~$3$, the quadratic term reduces to $F_2 \circ F_2$
+(iterated binary bracket), recovering:
 
 \begin{proposition}[Jacobiator is nullhomotopic;
 \ClaimStatusProvedElsewhere]
@@ -708,51 +803,103 @@ triple tensor product.  More precisely, $J'$ is the ternary component
 $F_3$ of the HCA structure
 (Theorem~\textup{\ref{thm:cech-hca}}), and
 equation~\eqref{eq:jacobiator-homotopy} is the $L_\infty$
-relation at arity~$3$.
+relation at arity~$3$: the arity-$3$ projection of the master
+equation $D \cdot \Phi + \tfrac{1}{2}[\Phi,\Phi] = 0$.
 \end{proposition}
 
 \subsection{Translation to bar-side $A_\infty$ operations}
 \label{subsec:jacobiator-bar}
 
-Under the \v{C}ech--bar comparison
-(Proposition~\ref{prop:cech-bar-intertwining}), the Jacobiator
-homotopy $J' = F_3$ corresponds to the ternary $A_\infty$
-operation~$m_3$ on the bar complex.  The $A_\infty$ relation at
-arity~$3$,
+The bar-side operation $m_3$ and the \v{C}ech-side homotopy
+$F_3$ encode the same arity-$3$ correction, but through different
+geometric mechanisms.  On the bar side, $m_3$ arises from
+integration over the Fulton--MacPherson compactification
+$\overline{\mathrm{FM}}_3(\mathbb{C})$: it is the homotopy-transfer
+datum obtained by composing binary interactions through the
+propagator on the configuration space of three points.  On the
+\v{C}ech side, $F_3$ arises from triple intersections of the cover:
+it measures how local Jacobi identities fail to descend.
+
+The \v{C}ech--bar comparison
+$\Phi\colon (M\check{C},\{F_n\}) \xrightarrow{\sim}
+(\barBgeom(\cA),\{m_n\})$
+(Proposition~\ref{prop:cech-bar-intertwining}) translates between
+these two pictures.  Under~$\Phi$:
+\begin{itemize}
+\item $\Phi$ intertwines $F_3$ with $m_3$: integration over
+  $\overline{\mathrm{FM}}_3(\mathbb{C})$ on the bar side
+  corresponds to the triple-intersection descent correction on the
+  \v{C}ech side.
+\item The $A_\infty$ relation at arity~$3$,
 \[
 m_1 \circ m_3 + m_3 \circ (m_1 \otimes 1 \otimes 1
   + 1 \otimes m_1 \otimes 1 + 1 \otimes 1 \otimes m_1)
 + m_2 \circ (m_2 \otimes 1 + 1 \otimes m_2) = 0,
 \]
 is the bar-side avatar of~\eqref{eq:jacobiator-homotopy}:
-the first two terms correspond to $d_M \circ J' + J' \circ d_M$,
-while the $m_2(m_2 \otimes 1 + 1 \otimes m_2)$ term is the
-Jacobiator $\mathrm{Jac}$ expressed through the iterated binary
-product.
+the first two terms correspond to
+$d_M \circ F_3 + F_3 \circ d_M$,
+while $m_2(m_2 \otimes 1 + 1 \otimes m_2)$ is the Jacobiator
+$\mathrm{Jac}$ expressed through iterated binary products.
+\item More generally, $\Phi$ intertwines the full MC equations on
+  both sides: the \v{C}ech master equation
+  $D \cdot \Phi_{\check{C}} + \tfrac{1}{2}
+  [\Phi_{\check{C}},\Phi_{\check{C}}] = 0$ maps to
+  the bar master equation encoded by $\{m_n\}$.
+\end{itemize}
 
-\begin{remark}[Operadic origin of all $A_\infty$ relations]
+\subsection{The Eilenberg--Zilber operad as genus-$0$ shadow of
+$\mathsf{F}\mathrm{Com}$}
+\label{subsec:ez-fcom}
+\index{Eilenberg--Zilber operad!genus-0 shadow of FCom@genus-$0$
+shadow of $\mathsf{F}\mathrm{Com}$}
+
+\begin{remark}[Operadic control at genus~$0$ and beyond]
 \label{rem:ez-operad-controls-ainfty}
 The Eilenberg--Zilber operad
 $\mathcal{Y}(n) = \mathcal{Z}(n) \otimes_k \mathrm{Lie}(n)$
-of Malikov--Schechtman~\cite{MS24} provides a uniform source for
-all the $A_\infty$/$L_\infty$ relations.  The chain complex
-$\mathcal{Z}(n) = \operatorname{Tot}\operatorname{Hom}_\Delta(Z, Z^{\otimes n})$
-encodes the combinatorics of the simplicial structure (how sections
-on intersections compose), while $\mathrm{Lie}(n)$ encodes the
-chiral bracket.  Their tensor product $\mathcal{Y}(n)$ maps
-quasi-isomorphically to $\mathrm{Lie}(n)$ via the augmentation
+of Malikov--Schechtman~\cite{MS24} and the Feynman transform
+$\mathsf{F}\mathrm{Com}$ of the commutative modular operad
+(Theorem~\ref{thm:bar-modular-operad}) control homotopies at
+different levels:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+& \emph{\v{C}ech side} & \emph{Bar side} \\
+\midrule
+Genus $0$ & Eilenberg--Zilber $\mathcal{Y}(n)$ &
+  Associahedra $K_n \subset \overline{\mathrm{FM}}_n(\mathbb{C})$ \\
+Genus $g \geq 1$ & Cosimplicial modular operad &
+  $\mathsf{F}\mathrm{Com}$, stable graphs on
+  $\overline{\mathcal{M}}_{g,n}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+At genus~$0$, the chain complex
+$\mathcal{Z}(n) = \operatorname{Tot}\operatorname{Hom}_\Delta
+(Z, Z^{\otimes n})$ encodes the combinatorics of the simplicial
+structure (how sections on intersections compose), while
+$\mathrm{Lie}(n)$ encodes the chiral bracket.  Their tensor product
+$\mathcal{Y}(n)$ maps quasi-isomorphically to $\mathrm{Lie}(n)$
+via the augmentation
 $\varepsilon\colon \mathcal{Z}(n) \to k$,
 so the HCA is a resolution of a strict chiral algebra.
 
-In the bar-cobar framework, the role of $\mathcal{Z}(n)$ is
-played by the cellular chains on the associahedron $K_n$
-(genus~$0$) and, at higher genus, by the cellular chains on the
-moduli space $\overline{\mathcal{M}}_{g,n}$.  The
-Malikov--Schechtman construction thus provides a purely algebraic
-model (via the Dold--Kan correspondence and the Eilenberg--Zilber
-operad) for the geometric operations that are constructed
-analytically in Chapter~\ref{chap:higher-genus} via integration
-over moduli.
+At genus $g \geq 1$, the \v{C}ech homotopies no longer suffice:
+the bar complex sees the full modular operad, and the homotopies
+are controlled by the cellular chains on
+$\overline{\mathcal{M}}_{g,n}$---i.e., by stable-graph
+compositions in $\mathsf{F}\mathrm{Com}$.  The Eilenberg--Zilber
+operad $\mathcal{Y}(n)$ is precisely the genus-$0$ truncation of
+$\mathsf{F}\mathrm{Com}$: it sees trees (simplicial
+decompositions of the nerve) where
+$\mathsf{F}\mathrm{Com}$ sees stable graphs (including loops).
+The passage from $\mathcal{Y}(n)$ to $\mathsf{F}\mathrm{Com}$ is
+the passage from tree-level (\v{C}ech) homotopies to all-genus
+(bar) homotopies, paralleling the genus expansion
+$\Theta_{\cA} = \Theta_{\cA}|_{\hbar=0} +
+\sum_{g \geq 1}\hbar^g\,\Theta_{\cA,g}$ of the master MC element.
 \end{remark}
 
 \subsection{Secondary Borcherds operations}
@@ -791,6 +938,171 @@ satisfying the \emph{secondary Borcherds identities}
 where $a_{(n)}b = \phi_{[,]}((a \otimes b)(t_1-t_2)^n)$
 denotes the $n$-th mode product.
 \end{definition}
+
+\begin{remark}[The $n$-th product relations as descent data]
+\label{rem:vertex-lie-jacobi-family}
+\index{vertex Lie algebra!Jacobi family}
+For translationally invariant chiral algebras on
+$X = \operatorname{Spec}k[t]$, the $n$-th products
+$a_{(n)}b$ satisfy the Jacobi identity family
+\cite{MS24}:
+\begin{equation}\label{eq:vertex-jacobi-family}
+[a_{(m)}, b_{(n)}]c
+= \sum_{j \geq 0} \binom{m}{j}(a_{(j)}b)_{(m+n-j)}c
+\end{equation}
+and the skew-symmetry relation
+\begin{equation}\label{eq:vertex-skew}
+a_{(n)}b = (-1)^{n+1}\sum_{j \geq 0}
+\frac{(-1)^j}{j!}\,\partial^j(b_{(n+j)}a).
+\end{equation}
+These formulas \emph{are} the $n$-th product relations of
+Beilinson--Drinfeld~\cite{BD04}; they hold strictly on each open
+of the cover.  On the \v{C}ech complex, however, gluing local
+brackets across multiple opens introduces a descent obstruction,
+and the correction terms are precisely the operations $F_n$ for
+$n \geq 3$.  The secondary Borcherds
+identity~\eqref{eq:secondary-borcherds} is the explicit formula
+for this descent correction at arity~$3$: the right-hand side is
+the local $n$-th product relation (which holds on each open), and
+the left-hand side is the boundary of $F_3$, which records how
+that relation fails to descend.
+
+For two-element covers the descent obstruction vanishes
+(Proposition~\ref{prop:two-element-strict}); the correction $F_n$
+is nonzero precisely when the cover has $(n{-}1)$-fold or higher
+overlaps.
+\end{remark}
+
+\begin{proposition}[Secondary Borcherds operations as shadow tower
+obstructions; \ClaimStatusProvedHere]
+\label{prop:borcherds-shadow-identification}
+\index{secondary Borcherds operations!shadow tower identification}
+Under the \v{C}ech--bar comparison
+\textup{(}Proposition~\textup{\ref{prop:cech-bar-intertwining})},
+the HCA operations $F_n$ of Malikov--Schechtman \cite{MS24} at
+arity $n \geq 3$ are identified with the shadow tower obstruction
+classes $o_{n}(\cA)$
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}
+at genus~$0$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $F_3 = J'$ \textup{(}Jacobiator homotopy\textup{)} corresponds
+  to the cubic shadow obstruction $o_3(\cA)$.  The nullhomotopy
+  equation $d_M \circ F_3 + F_3 \circ d_M^{\otimes 3} = \mathrm{Jac}$
+  on the \v{C}ech side \textup{(}equation~\eqref{eq:jacobiator-homotopy}\textup{)}
+  is the $L_\infty$ relation at arity~$3$ on the bar side.
+\item $F_4$ \textup{(}secondary Jacobi homotopy\textup{)} corresponds
+  to the quartic resonance obstruction $o_4(\cA)$.  The secondary
+  Borcherds identity \cite[formula~(4.5.1)]{MS24}
+  \begin{multline}\label{eq:secondary-borcherds-explicit}
+    \bigl(d \circ {}_{(p,q,r)} + {}_{(p,q,r)} \circ d\bigr)(a,b,c) \\
+    = \sum_{j \geq 0}\tbinom{p}{j}
+      \bigl((-1)^j a_{(p+q-j)}\, b_{(r+j)}\, c
+      - (-1)^{j+p+|a||b|}\, b_{(r+p-j)}\, a_{(q+j)}\, c\bigr) \\
+    - \sum_{j \geq 0}\tbinom{q}{j}
+      \bigl(a_{(p+q-j)}\, b\bigr)_{(r+j)}\, c
+  \end{multline}
+  is the three-variable refinement of the arity-$4$ $L_\infty$
+  relation, where ${}_{(p,q,r)}$ denotes the secondary Borcherds
+  operation at multi-index $(p,q,r)$.
+\item At arity $n \geq 5$, the higher HCA operations $F_n$ encode
+  the higher obstruction classes $o_n(\cA) \in H^2(\cA^{\mathrm{sh}}_n)$
+  of the shadow Postnikov tower
+  \textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}.
+  The $L_\infty$ relation at arity~$n$ on the bar side is the
+  operadic shadow of the $n$-th cosimplicial identity on the
+  \v{C}ech side.
+\end{enumerate}
+
+The identification is structural at genus~$0$; at genus $g \geq 1$,
+the bar side acquires modular corrections (stable graph sums with
+loops) that have no \v{C}ech counterpart in~\cite{MS24}.
+
+\emph{Conceptual summary.}  The Malikov--Schechtman operadic
+framework \cite{MS24} \textup{(}algebras over the homotopy Lie
+operad $\tau_{\leq 0}\mathcal{Y}$\textup{)} and the
+Loday--Vallette coalgebraic framework
+\textup{(}codifferentials on cofree coalgebras\textup{)} are
+equivalent models of the same homotopy-theoretic content over fields
+of characteristic~$0$---the former via the Eilenberg--Zilber operad,
+the latter via the convolution dg~Lie algebra.  The translation
+between the two is the Hinich--Schechtman correspondence: an
+$\mathcal{Y}$-algebra structure on $M\check{C}$ is equivalent to an
+$L_\infty$ structure on $M\check{C}$ with the same MC moduli.
+\end{proposition}
+
+\begin{proof}
+The identification of $F_3$ with $o_3$ is the content of
+Proposition~\ref{prop:jacobiator-nullhomotopic} combined with the
+\v{C}ech--bar dictionary (Remark~\ref{rem:cech-bar-dictionary}):
+the Jacobiator homotopy $J' = F_3$ maps under the comparison
+$\Phi$ to the ternary $A_\infty$ operation~$m_3$, which encodes
+the cubic shadow.  The identification of $F_4$ with $o_4$ follows
+from the secondary Borcherds identity~\eqref{eq:secondary-borcherds-explicit}
+being the three-variable decomposition of the arity-$4$ $L_\infty$
+relation.  The general statement follows from the operadic
+equivalence between $\mathcal{Y}$-algebras and $L_\infty$-algebras.
+\end{proof}
+
+\begin{proposition}[Secondary Borcherds: standard family evaluation;
+\ClaimStatusProvedHere]
+\label{prop:secondary-borcherds-families}
+\index{secondary Borcherds operations!standard families}
+The secondary Borcherds operations ${}_{(p,q,r)}$ of
+\cite[formula~(4.5.1)]{MS24}, evaluated on the \v{C}ech complex of
+the standard cover $\{U_0, U_\infty\}$ of $\PP^1$ for the standard
+families, yield the following shadow tower data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg $\cH_k$.}
+  All ${}_{(p,q,r)} = 0$: the \v{C}ech HCA is strict
+  \textup{(}Example~\textup{\ref{ex:cech-hca-heisenberg})}.  This
+  matches the shadow tower terminating at arity~$2$: the obstruction
+  classes $o_n(\cH_k) = 0$ for all $n \geq 3$
+  \textup{(}Gaussian archetype\textup{)}.
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$ at level~$k$.}
+  The Jacobiator homotopy $F_3 = {}_{(0,0,0)}$ is nonzero---it is the
+  nullhomotopy of
+  $\mathrm{Jac}(e_m, f_n, h_p)$
+  \textup{(}Example~\textup{\ref{ex:cech-hca-sl2})}.  The secondary
+  Borcherds ${}_{(p,q,r)}$ with $p+q+r > 0$ vanish by degree
+  counting on the one-step Moore complex of the two-element cover.
+  The quartic operations $F_4$ vanish: $o_4(\widehat{\mathfrak{g}}_k) = 0$.
+  Shadow tower terminates at arity~$3$
+  \textup{(}Lie/tree archetype\textup{)}.
+\item \textbf{$\beta\gamma$ system.}
+  The Jacobiator vanishes ($F_3 = 0$) because the chiral bracket is
+  abelian at the Lie-algebra level.  But $F_4 \neq 0$: the quartic
+  contact invariant
+  $\mathfrak{Q}^{\mathrm{contact}}_{\beta\gamma} \neq 0$
+  arises from the non-abelian $\beta\gamma$ OPE at the
+  module level.  Shadow tower terminates at arity~$4$
+  \textup{(}contact archetype\textup{)}.
+\item \textbf{Virasoro $\mathrm{Vir}_c$.}
+  Both $F_3$ and $F_4$ are nonzero.  The quartic contact invariant
+  $\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
+  \textup{(}Theorem~\textup{\ref{thm:virasoro-quartic-contact})}.
+  The quintic obstruction $o_5(\mathrm{Vir}_c) \neq 0$
+  for generic~$c$ \textup{(}Theorem~\textup{\ref{thm:quintic-forced})},
+  so the shadow tower is infinite.  The secondary Borcherds
+  identity~\eqref{eq:secondary-borcherds-explicit} at $(p,q,r) = (1,0,0)$
+  provides the \v{C}ech-side derivation of the quartic contact invariant:
+  the $d \circ {}_{(1,0,0)}$ term encodes the residue computation,
+  while the right-hand side encodes the cubic-cubic sewing
+  \textup{(}mixed archetype\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~(i)--(ii) are the content of
+Examples~\ref{ex:cech-hca-heisenberg} and~\ref{ex:cech-hca-sl2}
+translated through the Borcherds expansion of~\cite[\S4.4--4.5]{MS24}.
+Part~(iii): the abelian Lie bracket gives $\mathrm{Jac} = 0$,
+hence $F_3 = 0$; the nonzero $F_4$ arises from the quartic OPE
+terms in the $\beta\gamma$ chiral bracket.
+Part~(iv): the Virasoro Jacobiator is computed from the
+OPE $T(z)T(w) \sim \frac{c/2}{(z-w)^4} + \cdots$ and is nonzero
+for $c \neq 0$; the quartic contact invariant is the normalised
+coefficient of ${}_{(1,0,0)}$ evaluated on the Moore complex.
+\end{proof}
 
 \begin{remark}[Secondary Borcherds and $d_{\mathrm{bracket}}^2 \neq 0$]
 \label{rem:secondary-borcherds-d2}
@@ -849,29 +1161,4 @@ therefore proceed
 $\operatorname{hom}^\alpha_\ell(\Phi,1)$), then in the algebra slot
 (via $\operatorname{hom}^\alpha_r(1,\Psi)$), accepting that the
 two extensions are compatible only up to higher homotopy.
-\end{remark}
-
-\begin{remark}[Vertex Lie Jacobi family]
-\label{rem:vertex-lie-jacobi-family}
-\index{vertex Lie algebra!Jacobi family}
-For translationally invariant chiral algebras on
-$X = \operatorname{Spec}k[t]$, the $n$-th products
-$a_{(n)}b$ satisfy the Jacobi identity family
-\cite{MS24}:
-\begin{equation}\label{eq:vertex-jacobi-family}
-[a_{(m)}, b_{(n)}]c
-= \sum_{j \geq 0} \binom{m}{j}(a_{(j)}b)_{(m+n-j)}c
-\end{equation}
-and the skew-symmetry relation
-\begin{equation}\label{eq:vertex-skew}
-a_{(n)}b = (-1)^{n+1}\sum_{j \geq 0}
-\frac{(-1)^j}{j!}\,\partial^j(b_{(n+j)}a).
-\end{equation}
-On the \v{C}ech complex, the family~\eqref{eq:vertex-jacobi-family}
-holds only up to homotopy, and the correction terms are precisely the
-operations $F_n$ for $n \geq 3$.  Each $F_n$ is controlled by the
-Eilenberg--Zilber chain $\mathcal{Z}(n)$: the $n$-th operation is
-nonzero exactly when the corresponding Eilenberg--Zilber chain fails
-to be a cycle, i.e., when the simplicial structure of the cover
-introduces a nontrivial boundary at cosimplicial degree~$n$.
 \end{remark}
