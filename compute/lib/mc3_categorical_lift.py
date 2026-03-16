@@ -142,24 +142,31 @@ def mc3_thick_generation_status(depth: int = 40) -> Dict:
       Compact(Ŵ(O^sh_{≤0})) = thick⟨{V_n(a)} ∪ {L⁻(b)}⟩
 
     Components:
-      1. Prefundamental CG: V_n⊗L⁻ = ⊕ L⁻(shifted) [PROVED]
+      1. Prefundamental CG: V_n⊗L⁻ = ⊕ L⁻(shifted) [PROVED, verified n≤25]
       2. Baxter SES at λ=0: unconditional Yangian equivariance [PROVED]
       3. Baxter TQ for Verma: 0 → M(λ-1) → V₁⊗M(λ) → M(λ+1) → 0 [PROVED]
       4. Pro-Weyl: M(λ) = R lim W_m, R¹ lim = 0 [PROVED]
-      5. K₀ generation: [M(λ)] ∈ K₀-span({L⁻(shifted)}) [VERIFIED]
+      5. K₀ generation: [M(λ)] ∈ K₀-span({L⁻(shifted)}) [VERIFIED, λ≤100]
+
+    Categorical lift status (four conjectural inputs remain):
+      (i)   K₀→thick via Thomason-Trobaugh for bounded t-structure
+      (ii)  Francis-Gaitsgory pro-completion preserves DK
+      (iii) L⁻ compactness in ind-completed category
+      (iv)  Braided monoidal transfer through bar-cobar
     """
-    # Check prefundamental CG
-    cg_results = verify_prefundamental_cg(max_n=8, depth=depth)
+    # Check prefundamental CG (extended to n=25 by BLUE team)
+    cg_results = verify_prefundamental_cg(max_n=25, depth=depth)
     cg_ok = all(cg_results.values())
 
     # Check Baxter SES
     ses = baxter_ses_prefundamental(depth=depth)
     ses_ok = ses["ses_holds"]
 
-    # Check K₀ generation for M(λ), λ = 0,...,10
+    # Check K₀ generation for M(λ), λ = 0,...,100 (extended from 10)
     L = prefundamental_character_sl2(depth=depth)
     k0_ok = True
-    for lam in range(11):
+    max_lam = 100
+    for lam in range(max_lam + 1):
         M_lam = sl2_verma_character(lam, depth=depth)
         if lam > 0:
             VL = tensor_product_characters(eval_module_Vn(lam), L)
@@ -174,15 +181,22 @@ def mc3_thick_generation_status(depth: int = 40) -> Dict:
     sv = yangian_singular_vector_lambda0()
 
     return {
-        "prefundamental_cg": {"status": "PROVED", "all_match": cg_ok, "n_tested": 8},
+        "prefundamental_cg": {"status": "PROVED", "all_match": cg_ok, "n_tested": 25},
         "baxter_ses_prefundamental": {"status": "PROVED", "ses_holds": ses_ok},
         "yangian_sv_lambda0": {"status": "PROVED", "unconditional": True},
-        "k0_generation": {"status": "VERIFIED", "all_contained": k0_ok, "max_lam": 10},
-        "overall": "PROVED (modulo formal pro-completion assembly)",
+        "k0_generation": {"status": "VERIFIED", "all_contained": k0_ok, "max_lam": max_lam},
+        "overall": (
+            "Character-level evidence established (CG n≤25, K₀ λ≤100); "
+            "categorical lift requires four conjectural inputs "
+            "(see concordance rem:corrected-mc3-frontier)"
+        ),
         "remaining_gap": (
-            "Assemble the above into the theorem: "
-            "Compact(Ŵ(O^sh_{≤0})) = thick⟨{V_n(a)} ∪ {L⁻(b)}⟩ "
-            "using Francis-Gaitsgory pro-nilpotent completion. "
-            "All ingredients are established; the gap is formal/expository."
+            "Four inputs needed for thick⟨{V_n(a)} ∪ {L⁻(b)}⟩: "
+            "(1) K₀→thick lift (Thomason-Trobaugh for bounded t-structure), "
+            "(2) Francis-Gaitsgory pro-completion preserves DK, "
+            "(3) L⁻ compactness in ind-completed category, "
+            "(4) braided monoidal transfer through bar-cobar. "
+            "Recommended approach: chromatic filtration + Efimov formal completion "
+            "(E+D hybrid, see mc3_novel_strategies.py)."
         ),
     }

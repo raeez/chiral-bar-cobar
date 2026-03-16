@@ -171,27 +171,27 @@ class TestStrategyAClutching:
                 assert result['lambda_deviation'] < 0, \
                     f"Deviation at ({g1},{g2}) should be negative"
 
-    def test_nonseparating_clutching_positive_increment(self):
-        """Handle increment h_g = lambda_g - lambda_{g-1} > 0 for all g.
+    def test_nonseparating_clutching_negative_increment(self):
+        """Handle increment h_g = lambda_g - lambda_{g-1} < 0 for all g >= 2.
 
-        But h_g < lambda_1 for g >= 2 (each additional handle
-        contributes LESS curvature than the first).
+        Each additional handle contributes NEGATIVE correction,
+        consistent with lambda_g strictly decreasing (MC5-RED finding).
         """
         for g in range(2, 12):
             result = clutching_nonseparating(g)
-            assert result['lambda_handle'] > 0, \
-                f"Handle increment at genus {g} should be positive"
+            assert result['lambda_handle'] < 0, \
+                f"Handle increment at genus {g} should be negative"
 
-    def test_handle_increment_decreasing(self):
-        """Handle increments decrease: h_{g+1} < h_g for all g >= 1.
+    def test_handle_increment_magnitude_decreasing(self):
+        """Handle increment MAGNITUDES decrease: |h_{g+1}| < |h_g| for all g >= 2.
 
-        This means each additional handle contributes less curvature,
+        Each additional handle contributes less curvature in absolute value,
         consistent with the asymptotic lambda_g ~ C/(2*pi)^{2g}.
         """
         increments = handle_increment_sequence(12)
-        for g in range(1, 12):
-            assert increments[g] > increments[g+1], \
-                f"Handle increment not decreasing at genus {g}"
+        for g in range(2, 12):
+            assert abs(increments[g]) > abs(increments[g+1]), \
+                f"Handle increment magnitude not decreasing at genus {g}"
 
     def test_handle_increment_kappa_factorization(self):
         """F_g handle increment = kappa * lambda handle increment.
@@ -595,9 +595,9 @@ class TestCrossStrategyAnalysis:
         for g, data in table.items():
             assert data['lambda_g'] == lambda_fp(g)
             assert data['lambda_g_float'] > 0
-            # Handle increment should be positive
+            # Handle increment is NEGATIVE for g >= 2 (lambda strictly decreasing)
             if g >= 2:
-                assert data['handle_increment'] > 0
+                assert data['handle_increment'] < 0
 
     def test_combined_table_pants_count(self):
         """Pair-of-pants count matches excision decomposition."""
@@ -823,18 +823,18 @@ class TestNovelQuantitativeProbes:
                 assert result['word_counts'][n] == expected
 
     def test_separating_clutching_ratio(self):
-        """The separating clutching deviation ratio
-        (lambda_{g1+g2} - lambda_{g1} - lambda_{g2}) / lambda_{g1+g2}
-        is bounded between -1 and 0 for all g1, g2 >= 1.
+        """The separating clutching deviation
+        (lambda_{g1+g2} - lambda_{g1} - lambda_{g2}) is strictly negative
+        for all g1, g2 >= 1: joining surfaces produces LESS curvature.
+        The ratio can be very large in absolute value (lambda_{g1+g2} << lambda_{g1}).
         """
         for g1 in range(1, 6):
             for g2 in range(g1, 8 - g1):
                 lam_sum = lambda_fp(g1 + g2)
                 lam_parts = lambda_fp(g1) + lambda_fp(g2)
                 dev = lam_sum - lam_parts
-                ratio = float(dev / lam_sum)
-                assert -1 < ratio < 0, \
-                    f"Ratio at ({g1},{g2}) = {ratio} out of bounds"
+                assert dev < 0, \
+                    f"Deviation at ({g1},{g2}) should be negative"
 
     def test_lambda_2_from_lambda_1_and_correction(self):
         """lambda_2 = lambda_1^2 * correction_factor.

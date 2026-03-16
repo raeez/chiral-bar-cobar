@@ -87,4 +87,5 @@ class TestMC3ThickGeneration:
 
     def test_overall_status(self):
         status = mc3_thick_generation_status()
-        assert "PROVED" in status["overall"]
+        assert "Character-level evidence established" in status["overall"]
+        assert "four conjectural inputs" in status["overall"]
