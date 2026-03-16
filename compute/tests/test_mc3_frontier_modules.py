@@ -25,6 +25,13 @@ from compute.lib.mc3_ext_computation import (
     resolution_obstruction_higher_rank,
     resolution_obstruction_sequence,
     verify_sub_exponential_growth,
+    tq_relation_as_chebyshev,
+    beck_condition_failure_probe,
+    baxter_q_operator_eigenvalues,
+    yang_baxter_equation_check,
+    r_matrix_sl2_equivariance,
+    braiding_uniqueness_from_thick_generation,
+    hexagon_axiom_verification,
 )
 from compute.lib.mc3_tilting_probe import (
     euler_characteristic_pattern,
@@ -559,3 +566,131 @@ class TestCrossModuleConsistency:
         from compute.lib.mc3_chromatic_strategy import _partition_number as cs_pn
         for k in range(20):
             assert _partition_number(k) == tp_pn(k) == cs_pn(k)
+
+
+# ===========================================================================
+# Barr-Beck monadicity probe (GREEN Strategy B)
+# ===========================================================================
+
+
+class TestTQRelation:
+    """Baxter TQ relation as Chebyshev recurrence."""
+
+    def test_chebyshev_type(self):
+        result = tq_relation_as_chebyshev(3)
+        assert result["chebyshev_type"] == "U_n (second kind)"
+
+    def test_character_v1(self):
+        result = tq_relation_as_chebyshev(1)
+        assert result["character"] == {1: 1, -1: 1}
+
+    def test_character_v2(self):
+        result = tq_relation_as_chebyshev(2)
+        assert result["character"] == {2: 1, 0: 1, -2: 1}
+
+    def test_character_v3(self):
+        result = tq_relation_as_chebyshev(3)
+        assert result["character"] == {3: 1, 1: 1, -1: 1, -3: 1}
+
+    @pytest.mark.parametrize("n", range(1, 10))
+    def test_dimension_n_plus_1(self, n):
+        result = tq_relation_as_chebyshev(n)
+        assert len(result["character"]) == n + 1
+
+
+class TestBeckCondition:
+    """Beck monadicity condition failure."""
+
+    def test_beck_fails(self):
+        result = beck_condition_failure_probe()
+        assert result["beck_condition_holds"] is False
+
+    def test_characters_equal(self):
+        result = beck_condition_failure_probe()
+        assert result["characters_all_equal"] is True
+
+    def test_speculative_feasibility(self):
+        result = beck_condition_failure_probe()
+        assert result["feasibility"] == "SPECULATIVE"
+
+
+class TestBaxterQOperator:
+    """Baxter Q-operator eigenvalue structure."""
+
+    def test_degree_pattern(self):
+        result = baxter_q_operator_eigenvalues(max_lam=10)
+        for lam in range(11):
+            assert result["eigenvalue_pattern"][lam]["degree_of_Q_polynomial"] == lam
+
+    def test_bethe_root_count(self):
+        result = baxter_q_operator_eigenvalues(max_lam=5)
+        for lam in range(6):
+            assert result["eigenvalue_pattern"][lam]["num_bethe_roots"] == lam
+
+    def test_tq_satisfied(self):
+        result = baxter_q_operator_eigenvalues(max_lam=5)
+        for lam in range(6):
+            assert result["eigenvalue_pattern"][lam]["tq_satisfied"]
+
+
+# ===========================================================================
+# Braided monoidal transfer analysis (RED gap 7 + BLUE defense 7)
+# ===========================================================================
+
+
+class TestYangBaxterEquation:
+    """Yang-Baxter equation for Yangian R-matrix."""
+
+    @pytest.mark.parametrize("u1,u2", [(1, 0), (2, 1), (3, -1), (5, 2)])
+    def test_ybe_satisfied(self, u1, u2):
+        result = yang_baxter_equation_check(u1, u2)
+        assert result["ybe_satisfied"]
+
+    def test_eigenvalues(self):
+        result = yang_baxter_equation_check(3, 1)
+        assert result["symmetric_eigenvalue"] == 3
+        assert result["antisymmetric_eigenvalue"] == 1
+
+    def test_r_matrix_formula(self):
+        result = yang_baxter_equation_check(1, 0)
+        assert "u·I + P" in result["R_matrix_formula"]
+
+
+class TestRMatrixEquivariance:
+    """R(u) commutes with sl₂ action."""
+
+    @pytest.mark.parametrize("u", [0, 1, -1, 5, Rational(1, 2)])
+    def test_commutes_with_all_generators(self, u):
+        result = r_matrix_sl2_equivariance(u)
+        assert result["commutes_with_e"]
+        assert result["commutes_with_f"]
+        assert result["commutes_with_h"]
+
+
+class TestBraidingUniqueness:
+    """Braiding extends uniquely from generators."""
+
+    def test_hexagon_automatic(self):
+        result = braiding_uniqueness_from_thick_generation()
+        assert result["hexagon_automatic"]
+
+    def test_strength_rating(self):
+        result = braiding_uniqueness_from_thick_generation()
+        assert "STRONG" in result["strength"]
+
+    def test_eval_eval_braiding_known(self):
+        result = braiding_uniqueness_from_thick_generation()
+        assert "Standard Yangian R-matrix" in result["eval_eval_braiding"]
+
+
+class TestHexagonAxioms:
+    """Hexagon axioms follow from YBE."""
+
+    def test_both_hexagons(self):
+        result = hexagon_axiom_verification()
+        assert result["hexagon_I"]
+        assert result["hexagon_II"]
+
+    def test_ybe_implies_hexagon(self):
+        result = hexagon_axiom_verification()
+        assert result["ybe_implies_hexagon"]
