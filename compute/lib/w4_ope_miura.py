@@ -616,19 +616,6 @@ def _miura_generators_orthonormal(t: float) -> Tuple[Field, Field, Field]:
     T_field = simplify_field(T_field)
 
     # ---- Build W_3 and W_4 from the quantum Miura expansion ----
-    # ALL generators must come from the SAME expansion to ensure OPE closure.
-    # The Miura expansion with currents J_i = alpha_0 * h_i . dphi produces
-    # a T_Miura that differs from T_direct by a factor of t in the kinetic
-    # term: T_Miura = -(t/2) sum (dphi)^2 ± Q.d^2phi.
-    #
-    # To get W_3, W_4 consistent with T_direct, we use the Fateev-Lukyanov
-    # convention: factors (alpha_0 d + h_i . dphi) with REVERSED weight
-    # ordering [h_4, h_3, h_2, h_1], divided by alpha_0^4.
-    #
-    # This gives T_FL = T_direct/t (proportional to T_direct), and W_3_FL,
-    # W_4_FL that are weight-3, weight-4 primaries under T_direct.
-    # The OPE closes within {T_FL, W_3_FL, W_4_FL}, and since T_FL propto
-    # T_direct, the W-algebra structure is consistent.
     W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
 
     return T_field, W3_field, W4_field
@@ -641,75 +628,63 @@ def _expand_miura_product(
 ) -> Tuple[Field, Field]:
     """Expand the quantum Miura product to get W_3 and W_4.
 
-    Uses the Fateev-Lukyanov convention:
-      L = (alpha_0 d + H_4)(alpha_0 d + H_3)(alpha_0 d + H_2)(alpha_0 d + H_1) / alpha_0^4
+    The quantum Miura operator for sl_4:
+    L = :(d + J_1)(d + J_2)(d + J_3)(d + J_4):
 
-    where H_i = h_i . dphi (unit currents, no alpha_0 factor) and the weight
-    ordering is REVERSED (h_4, h_3, h_2, h_1) to produce the correct sign
-    for the background charge quantum correction.
+    where J_i(z) = alpha_0 * h_i . dphi(z).
 
-    This convention ensures:
-    - T_FL = T_direct / t  (proportional to the standard EMT)
-    - W_3_FL has conformal weight 3 under T_direct
-    - W_4_FL has conformal weight 4 under T_direct
-    - The OPE of {T_FL, W_3_FL, W_4_FL} closes (verified numerically)
+    We expand left to right as a differential operator composition.
+    (d + J_i) composed with sum_k F_k d^k gives:
+    sum_k [:J_i F_k: + dF_k] d^k + sum_k F_k d^{k+1}
 
-    The composition formula for (alpha_0 d + H_i) o (sum_k F_k d^k):
-      = sum_k [:H_i F_k: + alpha_0 dF_k] d^k + sum_k alpha_0 F_k d^{k+1}
+    Note: The Miura expansion's d^2 coefficient (T_Miura) differs from
+    the standard T by normalization. The W_3, W_4 from this expansion
+    are weight-3, weight-4 primaries under the standard T. The BPZ
+    inner product correctly extracts structure constants via primary
+    orthogonality regardless of the T-mismatch, because W_4 is
+    BPZ-orthogonal to non-W-algebra weight-4 fields.
     """
     alpha0 = np.sqrt(t)
 
-    # Build UNIT currents H_i = h_i . dphi (no alpha_0 factor)
-    def make_unit_current(i: int) -> Field:
-        """H_i = sum_a h_{i,a} * dphi_a."""
+    # Build the currents J_i as Fields
+    def make_current(i: int) -> Field:
+        """J_i = alpha_0 * sum_a h_{i,a} * dphi_a."""
         terms = []
         for a in range(3):
-            c = h_proj[i, a]
+            c = alpha0 * h_proj[i, a]
             if abs(c) > 1e-15:
                 terms.append((c, ((a, 1),)))
         return simplify_field(terms)
 
-    H = [make_unit_current(i) for i in range(4)]
+    J = [make_current(i) for i in range(4)]
 
-    # Reversed weight ordering: h_4, h_3, h_2, h_1 (indices 3, 2, 1, 0)
-    order = [3, 2, 1, 0]
-    H_ordered = [H[i] for i in order]
-
-    # Initialize: rightmost factor (alpha_0 d + H_ordered[-1])
-    # = {1: alpha_0, 0: H_ordered[-1]}
-    alpha0_field: Field = [(alpha0, ())]
+    # Initialize: start from the rightmost factor (d + J_4)
+    identity_field: Field = [(1.0, ())]
     zero_field: Field = []
 
-    coeffs: Dict[int, Field] = {0: H_ordered[-1], 1: alpha0_field}
+    coeffs: Dict[int, Field] = {0: J[3], 1: identity_field}
 
-    # Multiply from the left by remaining factors
-    for j_idx in range(len(order) - 2, -1, -1):
-        Hi = H_ordered[j_idx]
+    # Multiply from the left by (d + J_i) for i = 2, 1, 0
+    for i in [2, 1, 0]:
         new_coeffs: Dict[int, Field] = {}
 
         for k, fk in coeffs.items():
-            # Contribution from H_i * F_k d^k
-            h_times_fk = multiply_fields(Hi, fk)
+            # J_i * F_k d^k
+            j_times_fk = multiply_fields(J[i], fk)
             if k not in new_coeffs:
                 new_coeffs[k] = zero_field[:]
-            new_coeffs[k] = add_fields(new_coeffs[k], h_times_fk)
+            new_coeffs[k] = add_fields(new_coeffs[k], j_times_fk)
 
-            # Contribution from alpha_0*d * F_k d^k
-            # = alpha_0*(dF_k) d^k + alpha_0*F_k d^{k+1}
+            # d * F_k d^k = (dF_k) d^k + F_k d^{k+1}
             dfk = derivative_field(fk)
-            new_coeffs[k] = add_fields(new_coeffs[k], scale_field(alpha0, dfk))
+            new_coeffs[k] = add_fields(new_coeffs[k], dfk)
 
             kp1 = k + 1
             if kp1 not in new_coeffs:
                 new_coeffs[kp1] = zero_field[:]
-            new_coeffs[kp1] = add_fields(new_coeffs[kp1], scale_field(alpha0, fk))
+            new_coeffs[kp1] = add_fields(new_coeffs[kp1], fk)
 
         coeffs = new_coeffs
-
-    # Divide all coefficients by alpha_0^4
-    inv_a4 = 1.0 / alpha0**4
-    for k in coeffs:
-        coeffs[k] = scale_field(inv_a4, coeffs[k])
 
     # Verify coeffs[4] = 1
     c4 = coeffs.get(4, [])
