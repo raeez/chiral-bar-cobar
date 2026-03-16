@@ -2,7 +2,9 @@
 
 ## What This Is
 
-Two-volume research monograph by Raeez Lorgat. Vol I (~1,636pp, 62 active files, 1,570 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~454pp, at ~/chiral-bar-cobar-vol2, 38 files, ~440 claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
+Two-volume research monograph by Raeez Lorgat. Vol I (~1,660pp, 64 active files, ~1,786 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~454pp, at ~/chiral-bar-cobar-vol2, 38 files, ~440 claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
+
+**Vol I structure**: Overture (Heisenberg atom) + Part I (The Algebraic Engine, Thms A-D+H) + Part II (The Standard Landscape, all example families) + Part III (Bridges and Programmes) + Part IV (The Frontier, concordance) + Appendices (4 clusters: Foundations, Nonlinear Calculus, Family Frontiers, Physics Bridges).
 
 **Vol I title**: *Modular Koszul Duality*
 **Vol II title**: *A-infinity Chiral Algebras and 3D Holomorphic-Topological QFT*
@@ -76,8 +78,27 @@ python3 scripts/generate_metadata.py                              # Census (auth
 - Do not add packages without checking preamble compatibility
 - Do not change verified formulas without checking Critical Pitfalls
 - Do not create new .tex files when content belongs in existing chapter
-- Do not duplicate definitions — reference from Part 1
+- Do not duplicate definitions — reference from Part I
 - Do not guess file locations — use Glob/Grep to find them
+
+## Key File Renames (from platonic cleanup)
+
+| Old name | New name |
+|----------|----------|
+| kac_moody_framework.tex | kac_moody.tex |
+| w_algebras_framework.tex | w_algebras.tex |
+| detailed_computations.tex | bar_complex_tables.tex |
+| examples_summary.tex | landscape_census.tex |
+| deformation_theory.tex | chiral_hochschild_koszul.tex |
+| deformation_examples.tex | deformation_quantization_examples.tex |
+
+## Titan Splits (dispatchers → parts)
+
+| Original | Split into |
+|----------|-----------|
+| higher_genus.tex | higher_genus_foundations + higher_genus_complementarity + higher_genus_modular_koszul |
+| yangians.tex | yangians_foundations + yangians_computations + yangians_drinfeld_kohno |
+| bar_cobar_adjunction.tex | bar_cobar_adjunction_curved + bar_cobar_adjunction_inversion |
 
 ## Git — HARD RULE
 
