@@ -650,13 +650,19 @@ where $\mathcal{A}_{g,n}^{\mathrm{string}}$ is the $g$-loop, $n$-point string am
 \end{conjecture}
 
 \begin{remark}[Scope]
-The moduli integrals $\mathcal{I}_{g,n}$ are established in Part~I.  At genus~$0$, the identification with string amplitudes is proved (Corollary~\ref{cor:string-amplitude-genus0}, Theorem~\ref{thm:brst-bar-genus0}); for KM and W-algebras, $\barB(\cA) \simeq C^{\infty/2+*}(\cA)$ at all levels $k \neq -h^\vee$ (Theorems~\ref{thm:bar-semi-infinite-km},~\ref{thm:bar-semi-infinite-w}).  Extension to all genera requires the higher-genus BRST-bar identification (Conjecture~\ref{conj:anomaly-physical}); the remaining targets follow MC4/MC5 (Chapter~\ref{chap:concordance}).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
+The moduli integrals $\mathcal{I}_{g,n}$ are established in Part~I.  At genus~$0$, the identification with string amplitudes is proved (Corollary~\ref{cor:string-amplitude-genus0}, Theorem~\ref{thm:brst-bar-genus0}); for KM and W-algebras, $\barB(\cA) \simeq C^{\infty/2+*}(\cA)$ at all levels $k \neq -h^\vee$ (Theorems~\ref{thm:bar-semi-infinite-km},~\ref{thm:bar-semi-infinite-w}).  Extension to all genera requires the higher-genus BRST-bar identification (Conjecture~\ref{conj:anomaly-physical}); MC4 is now unconditionally closed; at genus~$0$
+and genus~$1$ the BRST-bar identification is proved (MC5,
+Conjecture~\ref{conj:master-bv-brst}, genus~$\leq 1$).  Extension
+to genus~$\geq 2$ requires Costello renormalization input
+(Chapter~\ref{chap:concordance}).
 \end{remark}
 
 
 \begin{conjecture}[Holographic duality via bar-cobar; \ClaimStatusConjectured]
 \label{conj:holographic-bar-cobar}
-Bar-cobar duality supplies an algebraic template for AdS/CFT: $\cA \leftrightarrow \barB(\cA)$, OPE coefficients $\leftrightarrow$ vertices, conformal blocks $\leftrightarrow$ Witten diagrams, $c \leftrightarrow R_{\mathrm{AdS}}$, $1/N \leftrightarrow$ genus.  The conjectural comparison $Z_{\mathrm{CFT}}[\mathcal{J}] = Z_{\mathrm{gravity}}[\phi_0 = \mathcal{J}]$ identifies the genus expansion with the $1/N$ expansion ($g \mapsto N^{-(2g-2)}$).  Requires bulk CS reconstruction~\cite{Wit89} and Witten diagram matching beyond this monograph; contributing to Conjecture~\ref{conj:master-bv-brst} via MC4/MC5 (Chapter~\ref{chap:concordance}).
+Bar-cobar duality supplies an algebraic template for AdS/CFT: $\cA \leftrightarrow \barB(\cA)$, OPE coefficients $\leftrightarrow$ vertices, conformal blocks $\leftrightarrow$ Witten diagrams, $c \leftrightarrow R_{\mathrm{AdS}}$, $1/N \leftrightarrow$ genus.  The conjectural comparison $Z_{\mathrm{CFT}}[\mathcal{J}] = Z_{\mathrm{gravity}}[\phi_0 = \mathcal{J}]$ identifies the genus expansion with the $1/N$ expansion ($g \mapsto N^{-(2g-2)}$).  Requires bulk CS reconstruction~\cite{Wit89} and Witten diagram matching beyond this monograph; contributing to Conjecture~\ref{conj:master-bv-brst} (MC5;
+MC4 is closed, genus~$\leq 1$ proved;
+Chapter~\ref{chap:concordance}).
 \end{conjecture}
 
 % ==========================================
@@ -692,6 +698,135 @@ the stated isomorphism.  The construction is the Feynman transform of the
 modular operad $\{\overline{\mathcal{M}}_{g,n}\}$
 (Theorem~\ref{thm:prism-higher-genus}).
 \end{proof}
+
+% ==========================================
+% THE HOLOGRAPHIC DICTIONARY AND MODULAR STATE SPACES
+% ==========================================
+
+\subsection{The holographic dictionary and modular state spaces}
+\label{subsec:holographic-dictionary}
+\index{holographic dictionary!chain-level}
+
+The chain-level modular functor of the preceding subsection carries a
+natural holographic interpretation: the bulk algebra is recovered as
+the derived center of the boundary, and factorization homology produces
+genus-graded state spaces equipped with a modular partition function.
+
+\subsubsection{The holographic/Koszul dictionary}
+
+\begin{proposition}[Bulk from boundary; \ClaimStatusProvedElsewhere{} \cite{BD04,FG12,CG17}]
+\label{prop:bulk-from-boundary}
+\index{bulk-boundary correspondence!derived center}
+Let $\cA_\partial$ be a boundary chiral algebra and $\cA_{\mathrm{bulk}}$
+the associated bulk theory.  Then
+\begin{equation}\label{eq:bulk-derived-center}
+  \cA_{\mathrm{bulk}}
+  \;\simeq\;
+  Z_{\mathrm{der}}(\cA_\partial),
+\end{equation}
+where $Z_{\mathrm{der}}$ denotes the derived center (Hochschild
+cohomology of the chiral category).  The bulk is the derived center
+of the boundary.
+\end{proposition}
+
+\begin{remark}[Maurer--Cartan moduli and defect couplings]
+\label{rem:mc-defect-couplings}
+\index{Maurer--Cartan!defect couplings}
+Given a Koszul dual pair $(\cA, \cA^!)$, the Maurer--Cartan moduli
+of the completed tensor product classifies consistent defect couplings:
+\begin{equation}\label{eq:mc-defect}
+  \mathrm{MC}\bigl(\cA^! \,\widehat{\otimes}\, R\bigr)
+  \;\longleftrightarrow\;
+  \operatorname{Hom}(\cA_\partial, B),
+\end{equation}
+where $R$ is the formal neighborhood of a classical solution and $B$
+is the target boundary condition.  This is the chain-level
+implementation of ``bulk from boundary'': each Maurer--Cartan element
+specifies a coherent coupling of bulk fields to boundary data.
+\end{remark}
+
+\subsubsection{Modular state spaces via factorization homology}
+
+\begin{definition}[Genus-graded holographic state spaces; \ClaimStatusConjectured]
+\label{def:holographic-state-spaces}
+\index{factorization homology!holographic state spaces}
+Let $L_1, \dotsc, L_n \in \mathcal{C}_T$ be line operators in the
+line category of the $3$d theory $T$ with boundary condition $B$.  The
+\emph{holographic state space} at genus $g$ with $n$ insertions is
+\begin{equation}\label{eq:holographic-state-space}
+  \mathcal{H}_{g,n}^{T;\,B}(L_1, \dotsc, L_n)
+  \;:=\;
+  \int_{\Sigma_{g,n}}
+  \mathrm{Fact}_{T;\,B}[L_1, \dotsc, L_n],
+\end{equation}
+where the integral denotes factorization homology over the
+genus-$g$ surface $\Sigma_{g,n}$ with $n$ boundary punctures.
+\end{definition}
+
+\begin{definition}[Genus-graded holographic partition function; \ClaimStatusConjectured]
+\label{def:holographic-partition-function}
+\index{partition function!genus-graded holographic}
+The all-genera holographic partition function is
+\begin{equation}\label{eq:holographic-pf}
+  Z_{T;\,B}(\hbar, t)
+  \;:=\;
+  \sum_{g,n \ge 0}
+  \hbar^{2g-2+n}\;
+  \frac{1}{n!}\;
+  \chi_{\mathrm{gr}}\bigl(
+    \mathcal{H}_{g,n}^{T;\,B}(t)\bigr),
+\end{equation}
+where $\chi_{\mathrm{gr}}$ is the graded Euler characteristic and
+$t$ is a formal insertion parameter.  This is the all-genera
+refinement of the large-$N$ boundary/bulk duality, with $\hbar$
+tracking the genus and $t$ tracking the number of insertions.
+\end{definition}
+
+\subsubsection{The modular Yangian kernel}
+
+\begin{definition}[Modular $r$-matrix; \ClaimStatusConjectured]
+\label{def:modular-r-matrix-genus}
+\index{r-matrix@$r$-matrix!modular genus-refined}
+The \emph{modular Yangian kernel} is the genus-refined $r$-matrix
+\begin{equation}\label{eq:modular-r-genus}
+  r_T^{\mathrm{mod}}(z, \hbar)
+  \;=\;
+  \sum_{g \ge 0} \hbar^{2g}\, r_{T,g}(z),
+  \qquad
+  r_{T,0}(z) = r_T(z),
+\end{equation}
+where each coefficient lives in
+$H^\bullet(\overline{\mathcal{M}}_{g,2}) \otimes
+\cA_T^! \,\widehat{\otimes}\, \cA_T^!\bigl(\!(z^{-1})\!\bigr)$.
+At $g = 0$ this is the dg-shifted Yangian $r$-matrix of
+Definition~\ref{def:dg-shifted-yangian}; the modular completion is a
+genus-refined, curve-valued OPE kernel.
+\end{definition}
+
+\subsubsection{Descendant holographic amplitudes}
+
+\begin{definition}[Descendant holographic amplitudes; \ClaimStatusConjectured]
+\label{def:descendant-hol-amplitudes}
+\index{holographic amplitudes!descendant}
+For operators $O_1, \dotsc, O_n$ and non-negative integers
+$k_1, \dotsc, k_n$, the \emph{descendant holographic amplitude} at
+genus $g$ is
+\begin{equation}\label{eq:descendant-amplitude}
+  \bigl\langle
+    \tau_{k_1}(O_1) \dotsm \tau_{k_n}(O_n)
+  \bigr\rangle_g^{\mathrm{hol}}
+  \;:=\;
+  \int_{[\mathrm{FM}_n(\Sigma_g \,|\, D)]}
+  \Bigl(\prod_{i=1}^n \psi_i^{k_i}\Bigr)\;
+  \omega_{O_1, \dotsc, O_n},
+\end{equation}
+where $\mathrm{FM}_n(X \,|\, D)$ denotes the logarithmic
+Fulton--MacPherson space compactifying configuration space relative to
+the divisor $D$, and $\psi_i$ are the cotangent-line classes.  The
+descendant amplitudes connect the chain-level modular functor to the
+Gromov--Witten-type intersection theory of
+\S\ref{sec:modular-intersection}.
+\end{definition}
 
 \begin{remark}[Finite data]\label{rem:finite-data-genus}
 \index{genus expansion!finite data}

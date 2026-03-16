@@ -1295,3 +1295,238 @@ The three regimes degenerate via
 \end{equation}
 As $\tau \to i\infty$, $\theta_1(z|\tau) \to 2\sin(\pi z)$ and the Eisenstein corrections collapse to constants; as $q \to 1$, the trigonometric propagator becomes $dz/z$ and $R_q(u) \to 1 - \hbar P/u$.  The bar complex degenerates accordingly: $\B^{\mathrm{ell}}(\cA) \to \B^{\mathrm{trig}}(\cA) \to \B^{\mathrm{rat}}(\cA)$, consistent with the spectral sequence of Theorem~\ref{thm:elliptic-vs-rational}.
 \end{remark}
+
+
+%% ---------------------------------------------------------------
+\section{Costello's M2-brane model and the double-loop holographic dual}
+\label{sec:m2-brane-double-loop}
+\index{M2-brane!double-loop algebra}
+\index{Costello!5d noncommutative Chern--Simons}
+\index{holographic duality!bar-cobar as}
+
+After the rational, trigonometric, and elliptic regimes, the double-loop
+algebra associated to Costello's M2-brane construction provides the
+ultimate test case for bar-cobar duality on curves.  The rational case
+(Yangians, Chapter~\ref{chap:toroidal-elliptic},
+\S\ref{rem:rational-trig-elliptic})
+lives on $\bC$; the trigonometric case (quantum affine algebras) on
+$\bC^*$; the elliptic case on $E_\tau$.  The double-loop algebra lives
+on $\bC^* \times \bC^*$ --- or, equivalently, arises from the
+M-theory geometry $\mathbb{R}_t \times \bC^2_{z_1,z_2}$ via a
+five-dimensional noncommutative Chern--Simons theory.  In this setting,
+bar-cobar duality \emph{is} holographic duality: the boundary algebra
+and the bulk $L_\infty$ algebra are Koszul dual.
+
+\subsection{The 5d noncommutative Chern--Simons theory}
+
+\begin{definition}[5d NCCS theory {\cite{Costello17}}; \ClaimStatusProvedElsewhere]
+\label{def:5d-nccs}
+\index{noncommutative Chern--Simons!5d theory}
+Let $M_5 = \mathbb{R}_t \times \bC^2_{z_1,z_2}$ carry the
+$\Omega$-background with deformation parameter $\varepsilon$.
+The \emph{5d noncommutative Chern--Simons theory} has fields given by a
+partial connection
+\[
+  A \;=\; A_t\,dt + A_{z_1}\,dz_1 + A_{z_2}\,dz_2,
+\]
+valued in $\mathfrak{gl}_r$ (or $\mathfrak{gl}_\infty$ in the large-$N$
+limit), and action
+\begin{equation}\label{eq:5d-nccs-action}
+  S_{5d}(A)
+  \;=\;
+  \frac{1}{2\delta}\int \mathrm{Tr}\bigl(A \wedge dA\bigr)\,dz_1\,dz_2
+  \;+\;
+  \frac{1}{3\delta}\int \mathrm{Tr}\bigl(A \wedge A *_\varepsilon A\bigr)\,dz_1\,dz_2,
+\end{equation}
+where $*_\varepsilon$ denotes the Moyal star product on $\bC^2$
+and $\delta$ is the coupling constant.  An M2-brane wrapping
+$\mathbb{R}_t \times \{(z_1,z_2) = (0,0)\}$ is realized as an
+instanton particle of this 5d theory.
+\end{definition}
+
+\subsection{The classical double-current algebra}
+
+The boundary algebra of the 5d NCCS theory, localized on the M2-brane,
+is the universal enveloping algebra of a double-current algebra.
+
+\begin{definition}[Double-current algebra]
+\label{def:double-current-algebra}
+\index{double-current algebra}
+The \emph{double-current algebra} is the Lie algebra
+\begin{equation}\label{eq:g-dbl}
+  \fg_{\mathrm{dbl}}
+  \;:=\;
+  \mathfrak{gl}_r \otimes \bC[u,v]
+\end{equation}
+with generators $J^a_{m,n} := T^a \otimes u^m v^n$
+(where $\{T^a\}$ is a basis for $\mathfrak{gl}_r$)
+and bracket
+\begin{equation}\label{eq:g-dbl-bracket}
+  [J^a_{m,n},\; J^b_{p,q}]
+  \;=\;
+  f^{ab}{}_c\, J^c_{m+p,\,n+q}.
+\end{equation}
+The \emph{classical boundary algebra} is
+$\cA^{\mathrm{cl}}_{\mathrm{M2}} := U(\fg_{\mathrm{dbl}})$.
+\end{definition}
+
+\begin{remark}[Bidegree and the double loop]
+\label{rem:double-loop-bidegree}
+The two polynomial indices $(m,n)$ in~\eqref{eq:g-dbl} encode the
+``double loop'': $u$ parametrizes the $z_1$-direction and $v$ the
+$z_2$-direction of $\bC^2$.  In the
+rational/trigonometric/elliptic hierarchy (Table~\ref{tab:rat-trig-ell}),
+a single loop $\bC[u]$ gives affine Kac--Moody; the second loop
+$\bC[v]$ gives toroidal algebras.  The double-current algebra is the
+classical ($q=1$) shadow of the full toroidal quantum group.
+\end{remark}
+
+\subsection{The Koszul dual bulk \texorpdfstring{$L_\infty$}{L-infinity} model}
+
+\begin{proposition}[Classical Koszul duality; \ClaimStatusProvedElsewhere]
+\label{prop:m2-classical-koszul}
+\index{Koszul duality!M2-brane classical}
+The bar construction applied to the classical boundary algebra yields
+the bulk $L_\infty$ algebra:
+\begin{equation}\label{eq:m2-bulk-classical}
+  \cA^{\mathrm{cl}}_{\mathrm{bulk}}
+  \;=\;
+  \Omega\B\bigl(\cA^{\mathrm{cl}}_{\mathrm{M2}}\bigr)
+  \;\simeq\;
+  C^\bullet(\fg_{\mathrm{dbl}}),
+\end{equation}
+the Chevalley--Eilenberg cochain complex of $\fg_{\mathrm{dbl}}$.
+In terms of dual generators $\epsilon^a_{m,n}$ dual to $J^a_{m,n}$,
+the $L_\infty$ operations are:
+\begin{align}
+  \ell_1 &= 0, \label{eq:m2-ell1}\\
+  \ell_2(\epsilon^a_{m,n},\, \epsilon^b_{p,q})
+  &= f^{ab}{}_c\, \epsilon^c_{m+p,\,n+q},
+  \label{eq:m2-ell2}\\
+  \ell_{k} &= 0 \quad\text{for } k \geq 3
+  \quad\text{(at the strict classical level).}
+  \label{eq:m2-ellk}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The algebra $\cA^{\mathrm{cl}}_{\mathrm{M2}} = U(\fg_{\mathrm{dbl}})$
+is a quadratic algebra whose bar complex computes
+$\mathrm{Ext}_{U(\fg_{\mathrm{dbl}})}(\bC, \bC)
+\cong H^\bullet(\fg_{\mathrm{dbl}}, \bC)$.
+By the PBW theorem, $U(\fg_{\mathrm{dbl}})$ is Koszul as a filtered
+algebra, and cobar reconstruction gives~\eqref{eq:m2-bulk-classical}.
+At the classical level the Lie algebra structure constants
+$f^{ab}{}_c$ are the only datum, so only $\ell_2$ is non-trivial.
+\end{proof}
+
+\subsection{Quantum double-loop deformation}
+
+\begin{proposition}[Costello's quantum double-loop commutation relation
+{\cite{Costello17}}; \ClaimStatusProvedElsewhere]
+\label{prop:costello-quantum-double-loop}
+\index{double-current algebra!quantum deformation}
+The quantum deformation of $\cA^{\mathrm{cl}}_{\mathrm{M2}}$ is a
+filtered associative algebra $\cA_{\mathrm{M2}}^{\mathrm{q}}$ whose
+generators satisfy
+\begin{multline}\label{eq:costello-quantum-comm}
+  [E_{\alpha\beta}\,\partial,\; E_{\gamma\delta}\,z]
+  \;=\;
+  \delta_{\beta\gamma}\,E_{\alpha\delta}(\partial z)
+  \;-\;
+  \delta_{\alpha\delta}\,E_{\gamma\beta}(z\partial)\\
+  +\;\bar\hbar\,E_{\alpha\delta}\,E_{\gamma\beta}
+  \;-\;
+  \bar\hbar \sum_\mu \delta_{\beta\gamma}\,
+  E_{\alpha\mu}\,E_{\mu\delta}
+  \;-\;
+  \bar\hbar \sum_\mu \delta_{\alpha\delta}\,
+  E_{\gamma\mu}\,E_{\mu\beta},
+\end{multline}
+where $E_{\alpha\beta}$ are the standard matrix units of
+$\mathfrak{gl}_r$ and $\bar\hbar$ is the quantum parameter.
+This algebra is the unique filtered quantization of
+$U(\fg_{\mathrm{dbl}})$ compatible with the
+$\Omega$-background~\eqref{eq:5d-nccs-action}.
+\end{proposition}
+
+\begin{remark}[The quantum $\bar\hbar$-corrections]
+\label{rem:quantum-hbar-corrections}
+The three $\bar\hbar$-terms
+in~\eqref{eq:costello-quantum-comm} are the boundary imprint of
+the Moyal star product $*_\varepsilon$ in the bulk action
+\eqref{eq:5d-nccs-action}.  They encode the leading
+non-commutativity of the double-loop algebra and are uniquely
+determined by the requirement that the algebra be an associative
+deformation of $U(\fg_{\mathrm{dbl}})$.
+\end{remark}
+
+\subsection{Sector/level/genus matching}
+
+The holographic identification between boundary and bulk takes the form
+of a graded Koszul duality, with matching across four independent
+gradings.
+
+\begin{proposition}[Four-fold matching; \ClaimStatusConjectured]
+\label{prop:m2-four-fold-matching}
+\index{M2-brane!sector/level/genus matching}
+The Koszul duality $\cA_{\mathrm{bulk}} =
+\Omega\B(\cA_{\mathrm{M2}})$ respects the following matchings:
+\begin{enumerate}
+\item \emph{Sector-wise.}  The adjoint label $a$ in the generator
+  $J^a_{m,n}$ of the boundary algebra matches the dual label $a$ in
+  the generator $\epsilon^a_{m,n}$ of the bulk $L_\infty$ algebra.
+\item \emph{Level-wise.}  The double-loop bidegree $(m,n)$ is
+  preserved under bar-cobar duality: the $(m,n)$-component of
+  $\cA_{\mathrm{M2}}$ is dual to the $(m,n)$-component of
+  $\cA_{\mathrm{bulk}}$.
+\item \emph{$N$-wise.}  The finite-$N$ theory is obtained by
+  quotienting:
+  \begin{equation}\label{eq:m2-finite-N}
+    \cA_{\partial,N}
+    \;=\;
+    \cA_{\partial,\infty}\big/I_N,
+  \end{equation}
+  where $I_N$ is the ideal of trace relations at rank $N$.  The
+  Koszul dual $\cA_{\mathrm{bulk},N} = \Omega\B(\cA_{\partial,N})$
+  is the corresponding quotient of the bulk algebra.
+\item \emph{Genus-wise.}  The bulk $g$-loop corrections are the
+  $\hbar^{g-1}$ terms in the $L_\infty$ operations $\ell_{g,n}$.
+  In particular, the classical operations
+  \eqref{eq:m2-ell1}--\eqref{eq:m2-ellk} correspond to
+  tree level ($g=0$), and the first quantum correction
+  $\ell_{1,n}^{(1)}$ to the one-loop bulk.
+\end{enumerate}
+Explicitly, for the generators at rank $\infty$:
+\begin{equation}\label{eq:m2-explicit-koszul}
+  \bigl(\cA_{\partial,\infty}(a;\,m,n)\bigr)^{!}
+  \;\cong\;
+  \cA_{\mathrm{bulk}}(a;\,m,n).
+\end{equation}
+\end{proposition}
+
+\begin{remark}[Bar-cobar duality as holographic duality]
+\label{rem:bar-cobar-is-holographic}
+\index{holographic duality!bar-cobar as|textbf}
+The reader who has followed the rational (Yangian), trigonometric
+(quantum affine), and elliptic (toroidal) columns of
+Table~\ref{tab:rat-trig-ell} now arrives at the structural
+punchline: in Costello's M2-brane model, the bar-cobar
+adjunction $\Omega\B(\cA_{\partial}) \simeq \cA_{\mathrm{bulk}}$
+\emph{is} the holographic bulk-boundary correspondence.  The bar
+complex encodes the factorization along the topological
+($\mathbb{R}_t$) direction of the 5d theory; the cobar complex
+reconstructs the algebraic boundary data from the $L_\infty$ bulk.
+The four-fold matching of
+Proposition~\ref{prop:m2-four-fold-matching} ensures that no
+information is lost: sector, level, rank, and genus all transfer
+across the duality.
+
+This is the natural culmination of the chapter.  The degeneration
+chain~\eqref{eq:degeneration-chain} --- elliptic $\to$ trigonometric
+$\to$ rational --- is supplemented by a fourth vertex: the double-loop
+regime, in which the base geometry $\bC^* \times \bC^*$ supports a
+genuine surface factorization algebra, and in which bar-cobar duality
+acquires a direct physical interpretation as the AdS/CFT
+correspondence for M2-branes.
+\end{remark}

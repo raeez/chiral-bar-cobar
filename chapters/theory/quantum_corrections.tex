@@ -293,3 +293,163 @@ Koszul duality & $\Lambda^* \leftrightarrow \mathrm{Sym}^*$ & S-duality \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+% ==========================================
+% THE MODULAR QUANTUM L-INFINITY COMPLETION
+% ==========================================
+
+\section{The modular quantum \texorpdfstring{$L_\infty$}{L-infinity} completion}
+\label{sec:modular-quantum-Linfty}
+\index{modular quantum L-infinity@modular quantum $L_\infty$ completion}
+
+The constructions of this chapter---curved $A_\infty$ operations, genus
+corrections, and the quantum master equation---assemble into a single
+algebraic object: the \emph{modular quantum $L_\infty$ completion} of a
+chiral algebra.  This is the cyclic/modular bar-cobar machine enriched by
+the BV operator and spectral line-operator data.
+
+\subsection{The full modular homotopy object}
+
+\begin{definition}[Modular homotopy package; \ClaimStatusConjectured]
+\label{def:modular-homotopy-package}
+\index{modular homotopy package}
+Let $\cA$ be a chiral algebra on a curve $X$ with cyclic pairing, and
+let $r(z)$ be a spectral twisting datum
+(Definition~\ref{def:spectral-twist}).  The \emph{modular homotopy
+package} is
+\[
+  \mathcal{H}(T, B_\infty)
+  \;:=\;
+  \bigl(\Omega^{\mathrm{mod}}\, F^{\mathrm{cyc}}\, \bar{B}(\cA_\partial),\;
+  D\bigr),
+\]
+where $D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\,\Delta + d_r$ is
+the total differential, with the four summands playing distinct
+geometric roles:
+\begin{enumerate}
+\item $d_{A_\infty}$ is the bar differential encoding the $A_\infty$
+  operations $\{m_n\}_{n \ge 0}$;
+\item $d_{\mathrm{sew}}$ is the sewing differential that glues output
+  legs to input legs using the cyclic pairing and the homotopy
+  propagator~$h$;
+\item $\Delta$ is the BV loop-contraction operator, raising the genus
+  by one;
+\item $d_r$ inserts the spectral line-operator twisting datum
+  $r(z) \in \cA^! \widehat{\otimes}\, \cA^!\bigl(\!(z^{-1})\!\bigr)$.
+\end{enumerate}
+This is the cyclic/modular bar-cobar machine with defect and spectral
+twisting---strictly richer than a bare modular envelope.
+\end{definition}
+
+\subsection{Tree-level operations: explicit \texorpdfstring{$A_\infty$}{A-infinity} and \texorpdfstring{$L_\infty$}{L-infinity} brackets}
+
+At genus zero the modular package reduces to tree-level homotopy
+transfer.  Let $(V, d_V, i, p, h)$ be a contraction of the BV complex
+onto its cohomology.
+
+\begin{definition}[Tree-level $A_\infty$ operations]
+\label{def:tree-level-ainfty}
+\index{A-infinity operations@$A_\infty$ operations!tree-level transfer}
+For each $n \ge 2$, the transferred $A_\infty$ operation is
+\begin{equation}\label{eq:tree-mn}
+  m_n^{\mathrm{tr}}
+  \;=\;
+  \sum_{T \in \mathrm{PBT}_n} (\pm)\, p \circ \mu_T \circ i^{\otimes n},
+\end{equation}
+where $\mathrm{PBT}_n$ denotes the set of planar binary rooted trees
+with $n$ leaves.  Internal edges carry the homotopy~$h$, each vertex
+carries the interaction, each leaf carries~$i$, and the root carries~$p$.
+The signs are determined by the Koszul rule with respect to the
+cohomological grading.
+\end{definition}
+
+\begin{definition}[Tree-level $L_\infty$ brackets]
+\label{def:tree-level-linfty}
+\index{L-infinity brackets@$L_\infty$ brackets!antisymmetrization from $A_\infty$}
+Antisymmetrizing yields the classical $L_\infty$ brackets:
+\begin{equation}\label{eq:tree-ell}
+  \ell_n^{\mathrm{cl}}(x_1, \dotsc, x_n)
+  \;=\;
+  \sum_{\sigma \in S_n} \chi(\sigma)\,
+  m_n^{\mathrm{tr}}(x_{\sigma(1)}, \dotsc, x_{\sigma(n)}),
+\end{equation}
+where $\chi(\sigma)$ is the Koszul sign of the permutation.  This is
+precisely the homotopy-transfer output of the BV theory---the
+operations used, for instance, by Zeng after Kaluza--Klein reduction.
+\end{definition}
+
+\subsection{Quantum/modular completion: wheeled graphs}
+
+Beyond genus zero, the operations acquire loop corrections indexed by
+stable graphs.
+
+\begin{definition}[Genus-refined $L_\infty$ operations; \ClaimStatusConjectured]
+\label{def:genus-refined-linfty}
+\index{L-infinity brackets@$L_\infty$ brackets!genus-refined}
+For each connected stable graph $\Gamma$ of genus $g$ with $n$ external
+legs, define the genus-$g$, $n$-ary operation
+\begin{equation}\label{eq:genus-ell}
+  \ell_{g,n}(x_1, \dotsc, x_n)
+  \;=\;
+  \sum_{\Gamma \in \mathcal{G}_{g,n}^{\mathrm{st}}}
+  \frac{\hbar^g}{|\operatorname{Aut}\Gamma|}\;
+  W_\Gamma\; \mathrm{Cont}_\Gamma(x_1, \dotsc, x_n),
+\end{equation}
+where:
+\begin{itemize}
+\item classical vertices carry the tree-level operations
+  $m_k^{\mathrm{tr}}$ or $\ell_k^{\mathrm{cl}}$;
+\item each internal edge carries the propagator~$h$;
+\item internal loops are contracted via the BV pairing;
+\item $W_\Gamma$ is the regularized Feynman weight of the graph.
+\end{itemize}
+\end{definition}
+
+\subsection{The quantum master equation}
+
+\begin{theorem}[Quantum $L_\infty$ master equation; \ClaimStatusConjectured]
+\label{thm:quantum-linfty-master}
+\index{quantum master equation!modular $L_\infty$}
+The genus-refined operations $\{\ell_{g,n}\}$ satisfy the modular
+$L_\infty$ constraint: for all $g \ge 0$ and $n \ge 0$ with
+$2g - 2 + n > 0$,
+\begin{equation}\label{eq:quantum-master-linfty}
+  \sum_{\substack{g_1 + g_2 = g \\ I \sqcup J = [n]}}
+  (\pm)\; \ell_{g_1,\,|I|+1}\bigl(
+    \ell_{g_2,\,|J|+1}(x_J),\, x_I\bigr)
+  \;+\;
+  \Delta\, \ell_{g-1,\,n+2}(x_1, \dotsc, x_n)
+  \;=\; 0.
+\end{equation}
+The first sum is the genus-splitting term; the second is the
+loop-contraction/BV term.  Together they express the condition $D^2 = 0$
+on the modular homotopy package of
+Definition~\textup{\ref{def:modular-homotopy-package}}.
+\end{theorem}
+
+\begin{remark}[Relation to the full modular homotopy type]
+\label{rem:modular-homotopy-type}
+\index{modular homotopy type!spectral enrichment}
+The full modular homotopy type combines four layers:
+\begin{enumerate}
+\item the \emph{cyclic/modular bar-cobar complex}, encoding
+  stable-curve gluing via the Feynman transform;
+\item \emph{Koszul duality}, producing the dual algebra $\cA^!$ and
+  the line-operator category $\cA^!\text{-}\mathrm{mod}$;
+\item the \emph{derived bulk-boundary center}
+  $Z_{\mathrm{der}}(\cA_\partial)$, realizing the bulk as the
+  Hochschild cohomology of the boundary (Theorem~H);
+\item the \emph{spectral $r(z)$-defect datum}, encoding the OPE of
+  line operators via the dg-shifted Yangian.
+\end{enumerate}
+The modular envelope alone sees stable-curve gluing; the addition of
+$r(z)$ sees the spectral OPE of lines.  The combined package is
+precisely the dg-shifted Yangian of Dimofte--Niu--Py for line operators
+in~$3$d holomorphic-topological QFT
+(Definition~\ref{def:dg-shifted-yangian};
+\S\ref{sec:yangians-drinfeld-kohno-overview}).  Its consistency
+condition---$D^2 = 0$ in the $d_r$-twisted modular bar
+complex---subsumes both the quantum master
+equation~\eqref{eq:quantum-master-linfty} and the $A_\infty$
+Yang--Baxter equation of Conjecture~\ref{conj:modular-yang-baxter}.
+\end{remark}
