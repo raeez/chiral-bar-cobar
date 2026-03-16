@@ -2,9 +2,9 @@
 
 ## What This Is
 
-Two-volume research monograph by Raeez Lorgat. Vol I (~1,675pp, 67 active files, ~1,795 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, proved at all genera. Vol II (~476pp, at ~/chiral-bar-cobar-vol2, 38 files, ~444 claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
+Two-volume research monograph by Raeez Lorgat. Vol I (~1,800pp, 70+ active files, ~1,900+ claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, with the five main theorems proved, a finite-order nonlinear shadow calculus developed through arity 4, and a comprehensive physics landscape (20+ worked examples from Gaiotto et al.). Vol II (~500pp, at ~/chiral-bar-cobar-vol2, 41+ files, ~500+ claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
 
-**Vol I structure**: Overture (Heisenberg atom) + Part I (The Algebraic Engine, Thms A-D+H) + Part II (The Standard Landscape, all example families) + Part III (Bridges and Programmes) + Part IV (The Frontier, concordance) + Appendices (4 clusters: Foundations, Nonlinear Calculus, Family Frontiers, Physics Bridges).
+**Vol I structure**: Overture (Heisenberg atom) + Part I (The Algebraic Engine: Thms A-D+H, HTT, nonlinear shadow tower, branch-line reductions) + Part II (The Standard Landscape: all example families + combinatorial frontier) + Part III (Bridges: Feynman, BV/BRST, YM boundary theory, E_n, Langlands) + Part IV (The Frontier, concordance) + Appendices (3 clusters: Foundations, Nonlinear Technical, Physics Reference).
 
 **Vol I title**: *Modular Koszul Duality*
 **Vol II title**: *A-infinity Chiral Algebras and 3D Holomorphic-Topological QFT*
@@ -23,19 +23,32 @@ Maximalist ambition synergizes with maximal truth-seeking. Precision enables amb
 
 ## Three Concentric Rings (the architecture)
 
-**Ring 1** — Proved core: Theorems A-H, MC1/MC2, DK-0 through DK-3, **MC3 thick generation proved** (type A all N), **MC4 closed** (W_N rigidity + Yangian eval-core).
-**Ring 2** — Nonlinear characteristic layer: kappa -> Delta -> [C], o^(4), [Q] -> Theta. Ambient complementarity = shifted-symplectic formal moduli with Lagrangian maps. Complementarity potential S_A. Quartic resonance class Q^contact_Vir = 10/[c(5c+22)].
-**Ring 3** — Physics-facing frontier: W-algebra axis (MC4 W_infty closed unconditionally), Yangian/RTT axis (**MC3 character-level proved**, DK-5 formal once categorical inputs established), holographic/celestial axis (anomaly-completed Koszul duality).
+**Ring 1** — Proved core: Theorems A-H, MC1/MC2, DK-0 through DK-3, **MC3 thick generation proved** (type A all N), **MC4 closed** (W_N rigidity at all stages, 21 conjectures resolved + Yangian eval-core 249 tests).
+**Ring 2** — Nonlinear characteristic layer (the shadow Postnikov tower), FULLY INTEGRATED across Parts I-III. The primary mathematical object is the filtered finite-order engine: Theta_A^{<=2} (kappa), Theta_A^{<=3} (cubic shadow), Theta_A^{<=4} (quartic shadow), ... with obstruction classes o_{r+1}(A) in the cyclic deformation complex. Proved at finite order: kappa for all families, cubic shadows, quartic resonance class with clutching law (via Mok's log FM degeneration). Q^contact_Vir = 10/[c(5c+22)]. Genus-1 Hessian correction delta_H^(1)_Vir = 120/[c^2(5c+22)]x^2. Shadow archetypes computed in every example chapter: Heisenberg=Gaussian/terminates@2, affine=Lie/tree/terminates@3, betagamma=contact/quartic/terminates@4, Virasoro/W_N=mixed (infinite tower, quintic forced). Ambient complementarity = shifted-symplectic Lagrangian geometry, CONDITIONAL on perfectness/nondegeneracy hypotheses. The full unrestricted Theta_A (all arities, all genera) is the conjectural limit of the tower, not its starting point.
+**Ring 3** — Physics-facing frontier: W-algebra axis (MC4 W_infty closed unconditionally), Yangian/RTT axis (**MC3 character-level proved**, DK-5 formal once categorical inputs established), holographic/celestial axis (anomaly-completed Koszul duality, M2 example in Vol II).
 
-**Unifying principle**: Filtration controls everything.
+**Unifying principle**: The modular L∞ convolution algebra g^mod_A is the single organizing structure. It carries a natural modular L∞ structure (from the Feynman transform of the modular operad); the dg Lie algebra (def:modular-convolution-dg-lie) is its strict model. The shadow Postnikov tower is the finite-order projection of the universal MC element Θ_A. The proved content is the finite-order shadow tower: κ (arity 2), cubic shadow C (arity 3), quartic resonance class Q (arity 4), with each level a projection of the next. Theorems A-D+H and the genus expansion are proved projections of the scalar level κ. The full unrestricted MC element Θ_A ∈ MC(g^mod_A) satisfying D·Θ + ½[Θ,Θ] = 0 is the CONJECTURAL limit of the tower — it is the target, not the starting point. The weight filtration on g^mod controls the extension tower; each finite truncation Θ_A^{<=r} is constructive and does not require the full all-genera modular envelope.
+
+## The Chriss-Ginzburg Principle (the architecture)
+
+Every algebraic structure in the monograph is a Maurer-Cartan element in a convolution dg Lie algebra. The key objects:
+
+1. **Modular cyclic deformation complex** `Def_cyc^mod(A)` (def:modular-cyclic-deformation-complex in chiral_hochschild_koszul.tex): the ambient home. Differential from graph composition, bracket from stable-curve gluing.
+2. **Stable-graph and planted-forest coefficient algebras** `G_st`, `G_pf` (def:stable-graph-coefficient-algebra, def:planted-forest-coefficient-algebra in higher_genus_modular_koszul.tex): the explicit combinatorial heart of g^amb_A.
+3. **Shadow Postnikov tower** Θ_A^{<=r}: the proved finite-order truncations. Each level is a graph sum through arity r with obstruction class o_{r+1}(A) in the cyclic deformation complex.
+4. **Bar complex as modular operad algebra** (thm:bar-modular-operad in bar_cobar_adjunction_curved.tex): {B^(g,n)(A)} is an algebra over FCom (Feynman transform of commutative modular operad). ∂²=0 at all genera is a formal consequence.
+5. **Modular dg-shifted Yangian as pro-MC** (def:modular-yangian-pro in yangians_drinfeld_kohno.tex): Y_T^mod = pronilpotent completion of convolution dg Lie algebra. R_T^mod(z;ℏ) is an MC element.
+6. **Shadow algebra** `A^sh` (def:shadow-algebra in higher_genus_modular_koszul.tex): H_•(Def_cyc^mod(A)) as graded commutative ring. Shadows (κ, Δ, C, Q, Sh_r) are graded projections at finite order. The all-arity master equation is the MC equation projected to arity r; convergence of the full tower is conjectural.
+
+The proved core descends from finite-order truncations of the shadow tower. The full equation **D_A Θ_A + ½[Θ_A, Θ_A] = 0** is the conjectural all-arity limit; D²=0 at the convolution level is a THEOREM, but at the ambient level (with planted-forest corrections) D²=0 remains CONJECTURAL (conj:differential-square-zero).
 
 ## Build
 
 ```
 pkill -9 -f pdflatex 2>/dev/null || true; sleep 2; make fast    # Vol I
 cd ~/chiral-bar-cobar-vol2 && make                                # Vol II
-make test                                                         # Fast tests (~6.8K)
-make test-full                                                    # All tests (~7.5K)
+make test                                                         # Fast tests (~8.1K)
+make test-full                                                    # All tests (~8.8K)
 python3 scripts/generate_metadata.py                              # Census (authoritative)
 ```
 
@@ -65,6 +78,9 @@ python3 scripts/generate_metadata.py                              # Census (auth
 **QME**: hbar*Delta*S + (1/2){S,S} = 0 (factor 1/2).
 **d_bracket^2 != 0**: PROVED (all 2048 signs). Full Borcherds d gives d^2=0.
 **sl_2 bar H^2 = 5** (not 6; Riordan WRONG at n=2).
+**Convolution algebra**: The dg Lie algebra Conv_str(C,P) is a STRICT MODEL of the underlying modular L∞ algebra Conv_∞(C,P). MC moduli coincide; full L∞ needed for transfer, formality, gauge equivalence. Bar-cobar preserves quasi-isos BECAUSE it is a quantum L∞ functor.
+**Shadow tower (the primary object)**: The finite-order shadow Postnikov tower Θ_A^{<=r} is the proved content. κ, C, Q are successive projections of this tower. At finite order, define shadows directly from the graph sum and use analytics for computation. The full unrestricted Θ_A is the conjectural all-arity limit — do not present it as already established. When writing about Θ_A at all arities, use conjectural language. When writing about finite-order shadows (κ through quartic), these are proved.
+**D²=0**: At the convolution level, D²=0 is a THEOREM (from ∂²=0 on M̄_{g,n}). At the ambient level (with planted-forest corrections), D²=0 is CONJECTURAL (conj:differential-square-zero).
 
 ## LaTeX Rules
 
@@ -108,13 +124,13 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 **Single source of truth**: concordance.tex (the constitution). When chapters disagree, the constitution is right.
 
-**MC frontier** (MC1-4 resolved; MC5 is the remaining frontier):
+**MC frontier** (MC1-4 resolved; MC3 arbitrary-type + MC5 g>=2 are the remaining frontiers):
 - MC1: **PROVED** (PBW concentration, all standard families)
-- MC2: **PROVED** (universal Theta_A)
-- MC3: **PROVED for type A** (thick generation for Y(sl_N) at all N≥2, thm:shifted-prefundamental-generation). The rank-independent Baxter argument: at λ=0, Δ(E_j)·w₀ = 0 unconditionally for all j (Chevalley-Serre). Prefundamental CG: V_{ω_i}⊗L⁻_j = ⊕L⁻(shifted). Pro-Weyl: M(λ) = R lim W_m with R¹=0. 1,690 tests. Remaining: categorical inputs (Thomason-Trobaugh lift, Francis-Gaitsgory pro-completion, L⁻ compactness, braided transfer). The character-level thick generation is PROVED; the categorical assembly requires four formal conjectural inputs (concordance rem:corrected-mc3-frontier).
-- MC4: **CLOSED** — W_infty unconditional at all stages via W_N rigidity (21 conjectures resolved); Yangian eval-core verified (249 tests), DK-5 formal once MC3 categorical inputs are established
+- MC2: **PROVED AT FINITE ORDER** (shadow tower through arity 4, with Def_cyc^mod as explicit ambient algebra). Full all-arity Theta_A is the conjectural limit.
+- MC3: **PROVED IN TYPE A** (thm:mc3-type-a-resolution): chromatic filtration + prefundamental CG closure + Efimov completion + DK on compacts. Extension to arbitrary simple type stated as conj:mc3-arbitrary-type (requires Hernández-Jimbo prefundamental CG for all Dynkin types). DK-5 now accessible in type A.
+- MC4: **CLOSED** — W_infty unconditional at ALL stages via W_N rigidity (thm:winfty-all-stages-rigidity-closure, 21 conjectures -> ProvedElsewhere). Yangian eval-core verified (249 tests). DK-5 accessible in type A.
 - MC5: Genus 0+1 proved; g>=2 requires Costello renormalization (analytic, downstream)
-- Theta_A: structured by nonlinear shadow tower; Q^contact_Vir = 10/[c(5c+22)] extracted
+- Theta_A: Defined as graph sum in Def_cyc^mod(A). Shadow algebra A^sh = H_•(Def_cyc^mod). Finite-order shadows (κ through quartic) PROVED. All-arity master equation = MC equation projected to arity r; full convergence CONJECTURAL. Q^contact_Vir = 10/[c(5c+22)].
 
 ## Vol II (~/chiral-bar-cobar-vol2)
 
