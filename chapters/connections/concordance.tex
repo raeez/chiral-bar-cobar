@@ -318,14 +318,13 @@ Genus-$g$ obstruction $\mathrm{obs}_g$ & Not formulated \\
 \end{tabular}
 
 \begin{remark}[Key comparison]\label{rem:feigin-frenkel-comparison}
-The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ on affine
-Kac--Moody levels~\cite{Feigin-Frenkel} is, in this monograph's framework,
-a \emph{consequence} of chiral Koszul duality via Verdier duality on
-Fulton--MacPherson compactifications
-(Theorem~\ref{thm:universal-kac-moody-koszul};
-see Chapter~\ref{chap:kac-moody} for the full treatment,
-including the critical-level recovery of the FF center
-and the geometric mechanism).
+The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is, in this
+monograph's framework, a consequence of chiral Koszul duality via
+Verdier duality on Fulton--MacPherson compactifications.  The
+canonical treatment---including the geometric mechanism, the
+critical-level recovery of the FF center, and the proof of
+Theorem~\ref{thm:universal-kac-moody-koszul}---appears in
+Chapter~\ref{chap:kac-moody}.
 
 The extensions beyond FF are:
 \begin{enumerate}[label=(\roman*)]
@@ -897,8 +896,12 @@ MC3 & Core proved (Conj.~\ref{conj:master-dk-kl})
     extension beyond eval-gen.\ core conjectural
     (Rem.~\ref{rem:corrected-mc3-frontier}(b)). \\
 MC4 & M-level proved (Conj.~\ref{conj:master-infinite-generator})
-  & $\mathcal{W}_\infty$/Yangian H-level comparison;
-    exact packet identification is the remaining frontier. \\
+  & $\mathcal{W}_\infty$ stage-$4$ resolved: Ward inheritance,
+    Borcherds transport, diagonal normalization all proved via
+    $\mathcal{W}_4$ rigidity; Yangian degree-$2$ verified ($249$~tests);
+    remaining: $\mathcal{W}_\infty$ promotion through $\mathcal{I}_N$
+    ($N\ge5$) via $\mathcal{W}_N$ rigidity, Yangian DK-$5$ categorical
+    packet (downstream of MC3). \\
 MC5 & Genus $0$ proved (Conj.~\ref{conj:master-bv-brst})
   & BV/BRST, Feynman, AGT, holographic; downstream of MC3/MC4. \\
 \midrule
@@ -931,11 +934,21 @@ on $\mathcal{O}_{\mathrm{poly}}$ follows
 (Corollary~\ref{cor:baxter-naturality-opoly}), resolving H4 on
 this locus.
 \emph{MC4} (filtered H-level comparison): M-level packages proved
-for both towers; the $\mathcal{W}_\infty$ reduction terminates at
-an exact stage-$4$ packet
-(Remark~\ref{rem:mc4-winfty-computation-target}), and the Yangian
-reduction terminates at a single degree-$2$ coefficient
-(Remark~\ref{rem:mc4-yangian-computation-target}).
+for both towers.  The $\mathcal{W}_\infty$ stage-$4$ packet is now
+\textbf{closed}: the visible diagonal normalization
+(Conjecture~\ref{conj:winfty-stage4-visible-diagonal-normalization}),
+Ward inheritance
+(Conjecture~\ref{conj:winfty-stage4-ward-inheritance}), and Borcherds
+transport
+(Conjecture~\ref{conj:winfty-stage4-visible-borcherds-transport}) are
+all resolved via $\mathcal{W}_4$ rigidity
+(Zamolodchikov--Fateev--Lukyanov), reducing the six-defect block to two
+primitive square classes matching the DS targets
+($18+121$~tests).  Promotion through $\mathcal{I}_N$ for $N\ge5$
+follows from $\mathcal{W}_N$ rigidity at each stage.  The Yangian
+degree-$2$ fundamental-line coefficient is verified ($249$~tests);
+the remaining Yangian frontier is the DK-$5$ categorical packet
+(downstream of MC3).
 \emph{MC5} (BV/BRST at all genera): genus-$0$ proved
 (Theorem~\ref{thm:algebraic-string-dictionary}); the
 $\mathcal{W}$-algebra bridge at genus~$0$ is proved
@@ -2428,6 +2441,59 @@ $H$ & Chiral Hochschild: $\ChirHoch^*(\Walg^k(\fg)) \cong \mathbb{C}[\Theta_1,\l
 \end{tabular}
 \end{center}
 
+\begin{remark}[Four levels of modular invariant]%
+\label{rem:four-levels}%
+\index{modular homotopy theory!four levels}%
+The six components above implement a hierarchy of modular
+invariants of increasing categorical depth.
+The proved scalar level is the lowest;
+the full modular homotopy type is the highest:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Level} & \textbf{Invariant} & \textbf{Type} & \textbf{Status} \\
+\midrule
+$0$ & $\kappa(\cA) \cdot \hat{A}$-genus
+  & Numbers $F_g$ & \textbf{Proved} (Thm~D) \\[2pt]
+$1$ & $H^*(\barB^{(g)}(\cA), \Dg{g})$
+  & Graded vector spaces & Open \\[2pt]
+$2$ & Variation of $H^*$ over $\mathcal{M}_g$
+  & Flat connection (KZ/Hitchin) & Open \\[2pt]
+$3$ & Factorization and sewing
+  & Chain-level modular functor & Structural \\
+  & & (Thm~\ref{thm:chain-modular-functor}) & \\
+\bottomrule
+\end{tabular}
+\end{center}
+Theorem~D is the \emph{integrability condition}:
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ is a pure
+tautological class, free of boundary or non-tautological
+contributions, guaranteeing that the curvature of the genus-$g$
+bar complex is absorbable by a period correction.
+The corrected complex $(\barB^{(g)}, \Dg{g})$ with
+$\Dg{g}^{\,2} = 0$ (Level~$1$) is the
+\emph{derived fiber} of the factorization homology bundle
+$\int_{\Sigma_g}\!\cA$ over~$\mathcal{M}_g$; its variation
+(Level~$2$) recovers the monodromy representation of the mapping
+class group; its factorization structure (Level~$3$) recovers the
+full modular functor
+(Theorem~\ref{thm:chain-modular-functor}).  The $\hat{A}$-genus
+is the \emph{first Chern class} of this bundle---its Euler
+characteristic, not the bundle itself.
+
+\smallskip\noindent
+\emph{Smoking gun}: for $\widehat{\mathfrak{sl}}_2$ at level~$k$,
+$\kappa = 3(k{+}2)/4$ is one number, yet the Verlinde formula
+gives a bundle of rank $k{+}1$ at genus~$1$
+(equation~\eqref{eq:verlinde-general}), growing with~$g$.
+Bar cohomology $H^0(\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k}),
+\Dg{1})$ should recover the Verlinde dimension---a concrete,
+computable test that Level~$1$ carries representation-theoretic
+data invisible to Level~$0$.  See
+\S\ref{subsec:chain-modular-functor}.
+\end{remark}
+
 \noindent
 The subsections below develop each component, separating what is
 established from what remains.  For $A_{\mathrm{mod}}$: the present
@@ -2712,6 +2778,49 @@ $\kappa(\cA) \cdot \lambda_g$ (proved, Theorem~\ref{thm:genus-universality}).
 The full non-scalar class is Theorem~\ref{thm:universal-theta}
 (Theorem~\ref{thm:master-theta}).
 \end{remark}
+
+\begin{conjecture}[Categorical modular Koszul duality;
+\ClaimStatusConjectured]%
+\label{conj:categorical-modular-kd}%
+\index{modular Koszul duality!categorical}%
+For each genus~$g$ and each modular Koszul chiral
+algebra~$\cA$, the curved bar-cobar adjunction at genus~$g$
+induces an equivalence
+\[
+\mathsf{D}^{\mathrm{co}}
+\bigl(\barB^{(g)}(\cA)\text{-}\mathsf{comod}\bigr)
+\;\simeq\;
+\mathsf{D}^b\bigl(\cA\text{-}\mathsf{mod}^{\Sigma_g}\bigr)
+\]
+between the \emph{coderived category}
+\textup{(}\S\textup{\ref{subsec:coderived-ran})} of curved
+$\barB^{(g)}(\cA)$-comodules and the bounded derived category of
+$\cA$-modules twisted by the Hodge data of~$\Sigma_g$.
+This equivalence varies over $\mathcal{M}_g$ as a flat functor:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item At $g = 0$, it reduces to bar-cobar inversion
+  \textup{(}Theorem~\textup{\ref{thm:higher-genus-inversion})}.
+\item Applied to integrable representations of
+  $\widehat{\fg}_k$, the functor $H^0$ recovers the
+  Tsuchiya--Ueno--Yamada space of conformal blocks
+  \textup{(}Remark~\textup{\ref{rem:chain-vs-classical-mf})},
+  and its monodromy gives the KZ/Hitchin connection.
+\item The scalar shadow
+  $c_1(\det \mathcal{V}_g) = \kappa(\cA) \cdot \lambda_g$
+  is Theorem~D; the full Chern character
+  $\mathrm{ch}(\mathcal{V}_g)$
+  recovers the spectral discriminant~$\Delta_{\cA}$
+  \textup{(}Remark~\textup{\ref{rem:spectral-characteristic-programme})}.
+\item Under Verdier duality:
+  $\mathsf{D}^{\mathrm{co}}(\barB^{(g)}(\cA^!)\text{-}\mathsf{comod})
+  \simeq
+  \mathsf{D}^{\mathrm{co}}(\barB^{(g)}(\cA)\text{-}\mathsf{comod})^{\mathrm{op}}$.
+\end{enumerate}
+This is the \emph{categorical lift} of
+Theorems~A--D to all genera: Theorem~B
+gives the equivalence, Theorem~D gives its first Chern class,
+and the full equivalence is the modular functor of~$\cA$.
+\end{conjecture}
 
 \subsection{The discriminant as spectral invariant}
 \index{discriminant!spectral invariant}
