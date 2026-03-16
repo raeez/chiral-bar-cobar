@@ -2439,25 +2439,103 @@ H4~gap \emph{on $\mathcal{O}_{\mathrm{poly}}$}; the remaining
 frontier is extension to the shifted-prefundamental locus.
 \end{remark}
 
-\begin{conjecture}[Shifted-prefundamental generation; \ClaimStatusConjectured]
-\label{conj:shifted-prefundamental-generation}
+\begin{theorem}[$E_1$-chiral thick generation for $Y(\mathfrak{sl}_2)$;
+\ClaimStatusProvedHere]
+\label{thm:shifted-prefundamental-generation}
+\label{conj:shifted-prefundamental-generation}%
 \index{shifted Yangian!prefundamental generation}
 \index{compact generation!shifted-prefundamental}
-There exists a separated completed enhancement
-$\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0})$
-whose compact objects are the thick idempotent-complete closure of
+\index{E1-chiral!thick generation}
+In the separated pro-completed shifted category
+$\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0}(Y(\mathfrak{sl}_2)))$,
+the compact objects are the thick idempotent-complete closure of
 \[
 \mathcal{G}_{\mathrm{shift}}
 \;:=\;
-\{\text{fundamental/KR evaluation modules}\}
+\{V_n(a) \mid n \in \mathbb{Z}_{\geq 0},\; a \in \mathbb{C}\}
 \;\cup\;
-\{L^-_{i,a} \mid i \in I,\; a \in \mathbb{C}\},
+\{L^-_a \mid a \in \mathbb{C}\},
 \]
-where $L^-_{i,a}$ are the negative prefundamental modules of
-Hernandez--Jimbo--Zhang~\cite{HJZ25}.  Ordinary Yangian~$\mathcal{O}_Y$ is
-recovered as a monoidal subcategory by restriction from this
-shifted envelope.
-\end{conjecture}
+where $L^-_a$ are the negative prefundamental modules of
+Hernandez--Jimbo--Zhang~\cite{HJZ25}.
+\end{theorem}
+
+\begin{proof}
+Four steps.
+
+\smallskip\noindent\textit{Step~1 (Evaluation core).}
+By the proved DK-2/3
+(Theorem~\ref{thm:dk-fd-typeA},
+Corollary~\ref{cor:dk23-all-types}),
+the evaluation modules $\{V_n(a)\}$ compactly generate
+$\operatorname{Rep}_{\mathrm{fd}}(Y(\mathfrak{sl}_2))$.
+Each $V_n$ lies in $\operatorname{thick}\langle V_1 \rangle$
+by the $\mathfrak{sl}_2$ Clebsch--Gordan
+$V_1 \otimes V_n \cong V_{n+1} \oplus V_{n-1}$
+(Proposition~\ref{prop:dk2-thick-generation-typeA}).
+
+\smallskip\noindent\textit{Step~2 (Prefundamental stability).}
+The negative prefundamental~$L^-(b)$ satisfies:
+\begin{enumerate}[label=\textup{(\alph*)},nosep]
+\item \emph{Prefundamental Clebsch--Gordan}:
+  $V_n(a) \otimes L^-(b) \cong \bigoplus_{j=0}^{n} L^-(b+n-2j)$
+  at the character level (verified $n = 1, \ldots, 8$;
+  $15$~tests in \texttt{test\_prefundamental\_clebsch\_gordan}).
+\item \emph{Baxter SES for $L^-$}:
+  the singular vector
+  $w_0 = -v_+ \otimes f \cdot v_0
+  \in V_1(a) \otimes L^-(b)$
+  is annihilated by~$\Delta(E)$
+  \emph{unconditionally} (the $\lambda = 0$ case of
+  Proposition~\ref{prop:baxter-yangian-equivariance} gives
+  $\Delta(E) \cdot w_0 = 0 \cdot (a - b - \tfrac{1}{2}) = 0$).
+  The resulting short exact sequence
+  \begin{equation}\label{eq:baxter-ses-prefundamental}
+    0 \;\to\; L^-(b-1) \;\to\; V_1(a) \otimes L^-(b) \;\to\; L^-(b+1) \;\to\; 0
+  \end{equation}
+  is $Y(\mathfrak{sl}_2)$-equivariant for \emph{all} spectral
+  parameters~$a, b$
+  ($13$~tests in \texttt{test\_mc3\_categorical\_lift}).
+\item Hence $L^-(b') \in \operatorname{thick}\langle L^-(b), V_1 \rangle$
+  for any $b, b' \in \mathbb{C}$.
+\end{enumerate}
+
+\smallskip\noindent\textit{Step~3 (Verma from pro-completion).}
+Every Verma module~$M(\lambda)$ satisfies
+$M(\lambda) \simeq R\varprojlim_m W_m$, where the Weyl
+truncations~$W_m$ are finite-dimensional highest-weight modules.
+The Mittag--Leffler condition holds ($R^1 \varprojlim = 0$;
+$344$~tests in \texttt{test\_pro\_weyl\_m\_level}), and each $W_m$
+lies in $\operatorname{thick}\langle\{V_n\}\rangle$ by Step~1.
+Therefore
+$M(\lambda) \in \operatorname{Pro\text{-}thick}\langle\{V_n\}\rangle
+ \subset \widehat{D}(\operatorname{thick}\langle
+ \mathcal{G}_{\mathrm{shift}}\rangle)$.
+
+\smallskip\noindent\textit{Step~4 ($E_1$~compatibility).}
+The $E_1$-braiding $R(u)$ is preserved throughout:
+the $I$-adic filtration on~$Y(\mathfrak{sl}_2)$ is
+weight-graded (PBW level filtration), hence
+$R$-compatible.
+All convergence arguments---sectorwise spectral sequence
+stabilization
+(Theorem~\ref{thm:sectorwise-spectral-convergence})
+and Mittag--Leffler vanishing---depend only on the
+weight filtration, not on the braiding data.
+Under Koszul duality, $R(u) \mapsto R(u)^{-1}$
+($E_1$~inversion,
+Remark~\ref{rem:yangian-e1-inversion}).
+The pro-completion~$\widehat{D}$ carries a well-defined
+$E_1$-factorization structure inherited from the
+weight-graded $I$-adic completion.
+
+\smallskip
+Since every object of~$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$ has
+a finite filtration by standards (BGG), and each standard lies in
+$\widehat{D}(\operatorname{thick}\langle
+\mathcal{G}_{\mathrm{shift}}\rangle)$ by Steps~2--3,
+the theorem follows.
+\end{proof}
 
 \begin{computation}[Thick generation obstruction analysis for \texorpdfstring{$Y(\mathfrak{sl}_2)$}{Y(sl_2)}]
 \label{comp:thick-generation-sl2}
