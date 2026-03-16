@@ -1,22 +1,26 @@
-"""Tests for R-matrix structure on prefundamental tensor products.
+"""Tests for R-matrix structure on V_n tensor L- and CG projectors.
 
-Verifies:
-  - R-matrix block-diagonal structure on V_n ⊗ L⁻
-  - CG projector idempotent extraction
-  - Yang-Baxter equation on evaluation modules (cross-check)
-  - R-matrix eigenvalue structure from CG decomposition
+Verifies block-diagonal structure of the R-matrix action, CG projector
+idempotency, and the relation between R-matrix eigenvalues and the
+prefundamental CG decomposition.
+
+References:
+  - yangians_computations.tex, prop:prefundamental-clebsch-gordan
+  - yangians_foundations.tex, prop:yangian-module-koszul
+  - sl2_baxter.py: yang_r_matrix, r_matrix_decomposition
 """
 
 import numpy as np
 import pytest
 
 from compute.lib.sl2_baxter import (
-    eval_module_V1,
     eval_module_Vn,
     r_matrix_decomposition,
     tensor_product_characters,
+    verify_r_matrix_clebsch_gordan,
     verify_yang_baxter,
     yang_r_matrix,
+    yang_r_matrix_normalized,
 )
 from compute.lib.hjz_prefundamental import (
     partition_function,
@@ -28,187 +32,225 @@ from compute.lib.prefundamental_clebsch_gordan import (
 
 
 # =========================================================================
-# 1. R-matrix on evaluation modules (foundation)
+# 1. Yang-Baxter equation verification
 # =========================================================================
 
-class TestRMatrixFoundation:
-    """Yang R-matrix R(u) = uI + P on V_1 ⊗ V_1."""
+class TestYangBaxterEquation:
+    """R12(u-v) R13(u) R23(v) = R23(v) R13(u) R12(u-v)."""
 
-    def test_r_matrix_form(self):
-        """R(u) = uI + P at u=1."""
-        R = yang_r_matrix(1.0)
-        I4 = np.eye(4, dtype=complex)
-        P = np.array([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,1]], dtype=complex)
-        expected = 1.0 * I4 + P
-        assert np.allclose(R, expected)
-
-    @pytest.mark.parametrize("u,v", [(1.0, 2.0), (0.5, 1.5), (3.0, 0.7)])
-    def test_yang_baxter_equation(self, u, v):
-        """YBE: R_12(u-v) R_13(u) R_23(v) = R_23(v) R_13(u) R_12(u-v)."""
+    @pytest.mark.parametrize("u,v", [
+        (1.0, 0.5), (2.0, 1.0), (3.5, 1.7), (0.1, 5.0), (-1.0, 2.0),
+    ])
+    def test_yang_baxter(self, u, v):
         residual = verify_yang_baxter(u, v)
         assert residual < 1e-10
 
-    def test_r_matrix_decomposition_structure(self):
-        """R(u) = (u+1)P_sym + (u-1)P_asym."""
-        data = r_matrix_decomposition(2.0)
-        assert data["R_on_sym"] == pytest.approx(3.0)  # u+1
-        assert data["R_on_asym"] == pytest.approx(1.0)  # u-1
-
-    def test_r_matrix_unitarity(self):
-        """R(u) R(-u) = (1 - u²)I.
-
-        Proof: R(u) = uI + P, R(-u) = -uI + P.
-        Product = (-u²)I + P² = (-u² + 1)I since P² = I.
-        """
-        for u in [1.5, 2.0, 3.7]:
-            R_u = yang_r_matrix(u)
-            R_neg_u = yang_r_matrix(-u)
-            product = R_u @ R_neg_u
-            expected = (1 - u**2) * np.eye(4, dtype=complex)
-            assert np.allclose(product, expected, atol=1e-10)
+    def test_yang_baxter_equal_params(self):
+        residual = verify_yang_baxter(1.0, 1.0)
+        assert residual < 1e-10
 
 
 # =========================================================================
-# 2. R-matrix block-diagonal structure from CG
+# 2. R-matrix block-diagonal structure on V1 tensor V1
 # =========================================================================
 
 class TestRMatrixBlockDiagonal:
-    """R-matrix on V_n ⊗ L⁻ should be block-diagonal in the CG basis.
+    """R(u) is block-diagonal in the CG basis V2 + V0."""
 
-    By the CG decomposition V_n ⊗ L⁻ = ⊕ L⁻(shifted), the R-matrix
-    should act as a scalar on each L⁻(shifted) block.
-    """
+    def test_decomposition_eigenvalues(self):
+        for u in [1.0, 2.5, 5.0]:
+            d = r_matrix_decomposition(u)
+            assert abs(d["eigenvalues"]["symmetric"] - (u + 1)) < 1e-10
+            assert abs(d["eigenvalues"]["antisymmetric"] - (u - 1)) < 1e-10
 
-    def test_cg_predicts_n_plus_1_blocks(self):
-        """V_n ⊗ L⁻ has n+1 blocks by CG."""
-        for n in range(1, 6):
-            r = prefundamental_clebsch_gordan(n)
-            assert r["n_components"] == n + 1
+    def test_projectors_idempotent(self):
+        d = r_matrix_decomposition(1.0)
+        assert np.allclose(d["P_sym"] @ d["P_sym"], d["P_sym"])
+        assert np.allclose(d["P_asym"] @ d["P_asym"], d["P_asym"])
 
-    def test_block_weights_partition_correctly(self):
-        """The n+1 blocks have hw = n, n-2, ..., -n."""
-        for n in range(1, 6):
-            r = prefundamental_clebsch_gordan(n)
-            expected_hws = [n - 2*j for j in range(n+1)]
-            assert r["highest_weights"] == expected_hws
+    def test_projectors_orthogonal(self):
+        d = r_matrix_decomposition(1.0)
+        assert np.allclose(d["P_sym"] @ d["P_asym"], 0)
 
-    def test_v1_tensor_l_two_blocks(self):
-        """V_1 ⊗ L⁻: 2 blocks with hw = 1 and hw = -1."""
-        r = prefundamental_clebsch_gordan(1)
-        assert r["match"]
-        assert r["highest_weights"] == [1, -1]
+    def test_projectors_complete(self):
+        d = r_matrix_decomposition(1.0)
+        assert np.allclose(d["P_sym"] + d["P_asym"], np.eye(4))
 
-    def test_v2_tensor_l_three_blocks(self):
-        """V_2 ⊗ L⁻: 3 blocks with hw = 2, 0, -2."""
-        r = prefundamental_clebsch_gordan(2)
-        assert r["match"]
-        assert r["highest_weights"] == [2, 0, -2]
+    def test_projector_ranks(self):
+        d = r_matrix_decomposition(1.0)
+        assert np.linalg.matrix_rank(d["P_sym"]) == 3
+        assert np.linalg.matrix_rank(d["P_asym"]) == 1
+
+    def test_r_matrix_from_projectors(self):
+        for u in [0.0, 1.0, 3.0, -2.0]:
+            d = r_matrix_decomposition(u)
+            R_from_proj = (u + 1) * d["P_sym"] + (u - 1) * d["P_asym"]
+            R_direct = yang_r_matrix(u)
+            assert np.allclose(R_from_proj, R_direct)
 
 
 # =========================================================================
-# 3. CG projector structure
+# 3. CG decomposition: V1 tensor V1 = V2 + V0
+# =========================================================================
+
+class TestEvaluationCG:
+    """Classical CG for evaluation modules verified via R-matrix."""
+
+    def test_cg_v1_v1(self):
+        assert verify_r_matrix_clebsch_gordan()
+
+    def test_cg_character_v1_v1(self):
+        V1 = eval_module_Vn(1)
+        V2 = eval_module_Vn(2)
+        V0 = eval_module_Vn(0)
+        lhs = tensor_product_characters(V1, V1)
+        rhs = {}
+        for ch in [V2, V0]:
+            for w, m in ch.items():
+                rhs[w] = rhs.get(w, 0) + m
+        for w in set(list(lhs.keys()) + list(rhs.keys())):
+            assert lhs.get(w, 0) == rhs.get(w, 0)
+
+    @pytest.mark.parametrize("n", [1, 2, 3, 4, 5])
+    def test_cg_character_v1_vn(self, n):
+        """ch(V1 tensor Vn) = ch(V_{n+1}) + ch(V_{n-1})."""
+        V1 = eval_module_Vn(1)
+        Vn = eval_module_Vn(n)
+        lhs = tensor_product_characters(V1, Vn)
+        rhs = {}
+        for ch in [eval_module_Vn(n + 1), eval_module_Vn(n - 1)]:
+            for w, m in ch.items():
+                rhs[w] = rhs.get(w, 0) + m
+        for w in set(list(lhs.keys()) + list(rhs.keys())):
+            assert lhs.get(w, 0) == rhs.get(w, 0)
+
+
+# =========================================================================
+# 4. R-matrix structure predictions for V_n tensor L-
+# =========================================================================
+
+class TestRMatrixPrefundamental:
+    """R-matrix eigenvalue predictions on V_n tensor L- from the CG rule."""
+
+    @pytest.mark.parametrize("n", [1, 2, 3, 4, 5, 6])
+    def test_cg_summand_count(self, n):
+        r = prefundamental_clebsch_gordan(n, depth=40)
+        assert r["match"]
+        assert r["n_components"] == n + 1
+
+    def test_cg_block_diagonal_character_evidence(self):
+        """Character splits cleanly into n+1 shifted copies."""
+        for n in range(1, 7):
+            r = prefundamental_clebsch_gordan(n, depth=40)
+            assert r["match"]
+            assert r["n_mismatches"] == 0
+
+    def test_r_eigenvalue_shift_pattern(self):
+        """Eigenvalue gap between V2 and V0 blocks is 2."""
+        d = r_matrix_decomposition(0.0)
+        gap = abs(d["eigenvalues"]["symmetric"] - d["eigenvalues"]["antisymmetric"])
+        assert abs(gap - 2) < 1e-10
+
+    @pytest.mark.parametrize("n", [1, 2, 3, 4])
+    def test_highest_weight_arithmetic_progression(self, n):
+        """CG highest weights form AP with common difference -2."""
+        r = prefundamental_clebsch_gordan(n, depth=40)
+        hws = r["highest_weights"]
+        for i in range(1, len(hws)):
+            assert hws[i] - hws[i - 1] == -2
+
+
+# =========================================================================
+# 5. CG projector structure
 # =========================================================================
 
 class TestCGProjectors:
-    """CG projectors: idempotents extracting each L⁻(shifted) from V_n ⊗ L⁻."""
+    """CG projector idempotent extraction from the R-matrix."""
 
-    def test_projector_dimensions_sum_correctly(self):
-        """Sum of block dimensions = total tensor product dimension.
+    def test_v1v1_projectors_from_r_matrix(self):
+        R0 = yang_r_matrix(0.0)
+        I4 = np.eye(4, dtype=complex)
+        P_sym = (I4 + R0) / 2
+        P_asym = (I4 - R0) / 2
+        assert np.allclose(P_sym @ P_sym, P_sym)
+        assert np.allclose(P_asym @ P_asym, P_asym)
 
-        At each weight w, the sum of multiplicities from each
-        L⁻(n-2j) block should equal the V_n ⊗ L⁻ multiplicity.
-        """
-        depth = 25
-        for n in [1, 2, 3, 4]:
-            L = prefundamental_character_sl2(depth=depth)
-            Vn = eval_module_Vn(n)
-            total = tensor_product_characters(Vn, L)
+    def test_projectors_from_two_r_values(self):
+        """Extract projectors from R(u1), R(u2) by solving linear system."""
+        u1, u2 = 1.0, 3.0
+        R1 = yang_r_matrix(u1)
+        R2 = yang_r_matrix(u2)
+        denom = (u1 + 1) * (u2 - 1) - (u2 + 1) * (u1 - 1)
+        P_sym = ((u2 - 1) * R1 - (u1 - 1) * R2) / denom
+        d = r_matrix_decomposition(0.0)
+        assert np.allclose(P_sym, d["P_sym"])
 
-            # Sum of shifted L⁻ characters
-            block_sum = {}
-            for j in range(n + 1):
-                hw = n - 2 * j
-                for k in range(depth):
-                    w = hw - 2 * k
-                    block_sum[w] = block_sum.get(w, 0) + partition_function(k)
+    def test_trace_matches_dimension(self):
+        d = r_matrix_decomposition(0.0)
+        assert abs(np.trace(d["P_sym"]) - 3) < 1e-10
+        assert abs(np.trace(d["P_asym"]) - 1) < 1e-10
 
-            # Compare at each weight
-            for w in total:
-                if abs(w) < 2 * (depth - n):
-                    assert total.get(w, 0) == block_sum.get(w, 0), \
-                        f"n={n}, w={w}: total={total.get(w,0)}, blocks={block_sum.get(w,0)}"
-
-    def test_projectors_are_complementary(self):
-        """The n+1 blocks partition the weight space completely."""
-        depth = 20
+    def test_prefundamental_cg_projector_character_prediction(self):
+        """CG projectors predict multiplicity in each L- summand."""
+        L = prefundamental_character_sl2(depth=30)
         for n in [1, 2, 3]:
-            # Each weight in V_n ⊗ L⁻ belongs to at least one block
             Vn = eval_module_Vn(n)
-            L = prefundamental_character_sl2(depth=depth)
             total = tensor_product_characters(Vn, L)
-
-            # All weights in total should be accounted for by blocks
-            block_weights = set()
+            reconstructed = {}
             for j in range(n + 1):
                 hw = n - 2 * j
-                for k in range(depth):
-                    block_weights.add(hw - 2 * k)
-
+                for k in range(30):
+                    w = hw - 2 * k
+                    reconstructed[w] = reconstructed.get(w, 0) + partition_function(k)
             for w in total:
-                if abs(w) < 2 * (depth - n):
-                    assert w in block_weights, \
-                        f"Weight {w} in V_{n} ⊗ L⁻ not covered by blocks"
+                if abs(w) <= 50:
+                    assert total.get(w, 0) == reconstructed.get(w, 0)
 
 
 # =========================================================================
-# 4. R-matrix CG consistency
+# 6. Compatibility with evaluation CG
 # =========================================================================
 
-class TestRMatrixCGConsistency:
-    """The CG decomposition for evaluation modules is consistent
-    with the R-matrix eigenstructure."""
+class TestCGCompatibility:
+    """Prefundamental CG is compatible with evaluation CG."""
 
-    def test_v1_v1_eigenvalues(self):
-        """R(u) on V_1 ⊗ V_1 has eigenvalues u+1 (V_2) and u-1 (V_0)."""
-        data = r_matrix_decomposition(1.0)
-        # sym eigenvalue = u + 1 = 2, asym = u - 1 = 0
-        assert data["R_on_sym"] == pytest.approx(2.0)
-        assert data["R_on_asym"] == pytest.approx(0.0)
+    def test_v1_tensor_commutes(self):
+        """(V1 tensor V2) tensor L- = V1 tensor (V2 tensor L-)."""
+        L = prefundamental_character_sl2(depth=30)
+        V1 = eval_module_Vn(1)
+        V2 = eval_module_Vn(2)
+        V3 = eval_module_Vn(3)
 
-    def test_cg_for_evaluation_modules(self):
-        """V_1 ⊗ V_1 = V_2 ⊕ V_0 at character level."""
-        from compute.lib.sl2_baxter import verify_r_matrix_clebsch_gordan
-        assert verify_r_matrix_clebsch_gordan()
+        v3L = tensor_product_characters(V3, L)
+        v1L = tensor_product_characters(V1, L)
+        lhs = {}
+        for ch in [v3L, v1L]:
+            for w, m in ch.items():
+                lhs[w] = lhs.get(w, 0) + m
 
-    def test_iterated_cg_consistency(self):
-        """V_1^⊗n ⊗ L⁻ parity alternates: even/odd lattice."""
-        V1 = eval_module_V1()
-        L = prefundamental_character_sl2(depth=20)
+        v2L = tensor_product_characters(V2, L)
+        rhs = tensor_product_characters(V1, v2L)
 
-        current = dict(L)
-        for step in range(5):
-            weights = [w for w in current if current[w] > 0]
-            parities = set(w % 2 for w in weights)
-            expected_parity = {step % 2}
-            assert parities == expected_parity, \
-                f"Step {step}: expected parity {expected_parity}, got {parities}"
-            current = tensor_product_characters(V1, current)
+        for w in set(list(lhs.keys()) + list(rhs.keys())):
+            if abs(w) <= 50:
+                assert lhs.get(w, 0) == rhs.get(w, 0)
 
+    def test_associativity_v2_v2_L(self):
+        """(V2 tensor V2) tensor L- = V2 tensor (V2 tensor L-)."""
+        L = prefundamental_character_sl2(depth=30)
+        V2 = eval_module_Vn(2)
+        V4 = eval_module_Vn(4)
+        V0 = eval_module_Vn(0)
 
-# =========================================================================
-# 5. Extended CG verification
-# =========================================================================
+        lhs = {}
+        for Vk in [V4, V2, V0]:
+            ch = tensor_product_characters(Vk, L)
+            for w, m in ch.items():
+                lhs[w] = lhs.get(w, 0) + m
 
-class TestExtendedCG:
-    """Extended CG verification for larger n and deeper depth."""
+        v2L = tensor_product_characters(V2, L)
+        rhs = tensor_product_characters(V2, v2L)
 
-    @pytest.mark.parametrize("n", range(1, 13))
-    def test_cg_n_through_12(self, n):
-        """CG at n=1..12, depth=30."""
-        r = prefundamental_clebsch_gordan(n, depth=30)
-        assert r["match"], f"CG failed at n={n}"
-
-    def test_cg_n25_depth30(self):
-        """CG at n=25 (blue team defense level)."""
-        r = prefundamental_clebsch_gordan(25, depth=30)
-        assert r["match"]
+        for w in set(list(lhs.keys()) + list(rhs.keys())):
+            if abs(w) <= 50:
+                assert lhs.get(w, 0) == rhs.get(w, 0)

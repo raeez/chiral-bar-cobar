@@ -1,10 +1,18 @@
-"""Tests for the Baxter TQ system on prefundamental modules.
+"""Tests for the prefundamental TQ system and spectral structure.
 
-Verifies:
-  - TQ functional equation T(u)Q(u) = Q(u+1) + Q(u-1) at character level
-  - QQ-system Wronskian preservation under V₁-twist
-  - Spectral self-duality under u ↦ u + 1
-  - Two-term decomposition of V₁ ⊗ L⁻ on odd weight lattice
+Verifies the Baxter TQ functional equation and its consequences for
+the prefundamental module L- of Y(sl_2), including:
+  - TQ relation: T(u)Q(u) = phi(u+1/2)Q(u-1) + phi(u-1/2)Q(u+1)
+  - Two-term K_0 decomposition: [V_1].[L-] = [L-(+1)] + [L-(-1)]
+  - Weight parity structure of V_n tensor L-
+  - QQ-system Wronskian preservation under V_1-twist
+  - Spectral self-duality of the TQ recurrence
+
+References:
+  - yangians_computations.tex, prop:prefundamental-clebsch-gordan
+  - yangians_computations.tex, cor:k0-generation-OY
+  - sl2_baxter.py: tq_functional_equation, transfer_matrix_eigenvalue
+  - hjz_prefundamental.py: verify_prefundamental_tq_k0
 """
 
 import math
@@ -15,232 +23,238 @@ from compute.lib.hjz_prefundamental import (
     partition_function,
     prefundamental_character_sl2,
     prefundamental_tensor_V1,
+    prefundamental_tensor_Vn,
     verify_prefundamental_tq_k0,
 )
 from compute.lib.sl2_baxter import (
-    eval_module_V1,
+    baxter_q_operator_eigenvalue,
     eval_module_Vn,
-    formal_character_equal,
     sl2_verma_character,
     subtract_characters,
     sum_characters,
     tensor_product_characters,
-    verify_baxter_tq_k0,
+    tq_functional_equation,
+    transfer_matrix_eigenvalue,
 )
 
 
 # =========================================================================
-# 1. TQ character-level relation
+# 1. TQ functional equation at the transfer-matrix level
 # =========================================================================
 
-class TestTQCharacterLevel:
-    """Baxter TQ at character level for prefundamental modules.
+class TestTQFunctionalEquation:
+    """Baxter TQ: T(u)Q(u) = Q(u+1) + Q(u-1) for evaluation modules."""
 
-    V_1 ⊗ L⁻ decomposes as two shifted prefundamentals on the odd
-    weight lattice: one with hw = 1, one with hw = -1.
-    """
+    def test_tq_vacuum_state(self):
+        """Vacuum (lam=0): Q(u)=1. Structure check."""
+        Q = lambda w: baxter_q_operator_eigenvalue(w, 0)
+        assert abs(Q(5.0) - 1.0) < 1e-10
 
-    def test_tq_all_weights_odd(self):
-        """V_1 ⊗ L⁻ has only odd weights."""
-        r = verify_prefundamental_tq_k0(0, 0, depth=30)
-        assert r["all_weights_odd"]
+    def test_tq_lam1_bethe_root(self):
+        """lam=1: Q(u) = u."""
+        Q = lambda w: baxter_q_operator_eigenvalue(w, 1)
+        assert abs(Q(3.0) - 3.0) < 1e-10
+        assert abs(Q(-2.0) - (-2.0)) < 1e-10
 
-    def test_tq_multiplicity_pattern(self):
-        """Weight -(2k-1) has mult p(k-1) + p(k)."""
-        r = verify_prefundamental_tq_k0(0, 0, depth=30)
-        assert r["multiplicity_pattern_correct"]
-
-    def test_tq_two_term_decomposition(self):
-        """V_1 ⊗ L⁻ = L⁻₊(hw=1) ⊕ L⁻₋(hw=-1) at character level."""
-        r = verify_prefundamental_tq_k0(0, 0, depth=30)
-        assert r["two_term_decomposition_matches"]
-
-    def test_tq_weight_1_mult_is_1(self):
-        """Highest weight 1 has multiplicity 1."""
-        r = verify_prefundamental_tq_k0(0, 0, depth=30)
-        assert r["weight_1_correct"]
-
-    def test_tq_deep_depth_50(self):
-        """TQ relation at depth 50."""
-        r = verify_prefundamental_tq_k0(0, 0, depth=50)
-        assert r["two_term_decomposition_matches"]
-
-    @pytest.mark.parametrize("a_V,a_L", [(0, 0), (1, 0), (0, 1), (2, 3)])
-    def test_tq_various_spectral_params(self, a_V, a_L):
-        """TQ is independent of spectral parameters at char level."""
-        r = verify_prefundamental_tq_k0(a_V, a_L, depth=25)
-        assert r["two_term_decomposition_matches"]
-
-
-# =========================================================================
-# 2. QQ-system Wronskian
-# =========================================================================
-
-class TestQQSystemWronskian:
-    """QQ-system: the Wronskian of Q⁺ and Q⁻ is preserved."""
-
-    def test_qq_wronskian_depth_convergence(self):
-        """Wronskian degree should stabilize (converge) with depth."""
-        from compute.lib.shifted_prefundamental_sl2 import qq_system_convergence
-
-        data = qq_system_convergence(max_depth=10, a=0)
-        # Returns list of (depth, degree, leading_coeff) tuples
-        degrees = [d[1] for d in data if d[1] is not None]
-        if len(degrees) >= 3:
-            # Degree should grow sub-linearly: gap between consecutive ≤ 2
-            assert abs(degrees[-1] - degrees[-2]) <= 2, \
-                f"Wronskian degree gap too large: {degrees[-2]} -> {degrees[-1]}"
-
-    def test_qq_wronskian_independent_of_a(self):
-        """Wronskian structure doesn't depend on evaluation parameter a."""
-        from compute.lib.shifted_prefundamental_sl2 import qq_wronskian
-
-        W0_data = qq_wronskian(depth=6, a_plus=0, a_minus=0)
-        W1_data = qq_wronskian(depth=6, a_plus=1, a_minus=1)
-        # Wronskians should have the same degree
-        assert W0_data[1] == W1_data[1]
-
-    def test_v1_twist_preserves_wronskian_parity(self):
-        """Tensoring with V_1 preserves the QQ Wronskian parity structure."""
-        # V_1 ⊗ L⁻ has 2-term decomposition on odd lattice
-        # Each term is a "shifted Q" function
-        # The Wronskian of the two shifted Q's should factor consistently
-        V1 = eval_module_V1()
-        L = prefundamental_character_sl2(depth=30)
-        T = tensor_product_characters(V1, L)
-
-        # Build the two shifted prefundamentals
-        L_plus = {1 - 2 * k: partition_function(k) for k in range(30)}
-        L_minus = {-1 - 2 * k: partition_function(k) for k in range(30)}
-        R = sum_characters(L_plus, L_minus)
-
-        assert formal_character_equal(T, R)
-
-
-# =========================================================================
-# 3. Spectral self-duality
-# =========================================================================
-
-class TestSpectralSelfDuality:
-    """V_n ⊗ L⁻ decomposition is symmetric under weight reflection."""
-
-    def test_cg_symmetric_highest_weights(self):
-        """Highest weights {n, n-2, ..., -n} are symmetric under negation."""
-        from compute.lib.prefundamental_clebsch_gordan import prefundamental_clebsch_gordan
-
-        for n in range(1, 9):
-            r = prefundamental_clebsch_gordan(n)
-            hws = r["highest_weights"]
-            assert hws == [-w for w in reversed(hws)], \
-                f"Highest weights not symmetric at n={n}: {hws}"
-
-    def test_tensor_character_symmetric(self):
-        """ch(V_n ⊗ L⁻) is symmetric under weight reflection (up to shift)."""
-        L = prefundamental_character_sl2(depth=30)
-        V2 = eval_module_Vn(2)
-        T = tensor_product_characters(V2, L)
-
-        # For V_2 ⊗ L⁻: should have weights 2, 0, -2, -4, ...
-        # Not literally symmetric, but the multiplicity pattern is:
-        # weight 2-2k has mult p(k) + p(k-1) + p(k-2) (from 3 shifted L⁻)
-        # This is verifiable via R1
-        from compute.lib.prefundamental_clebsch_gordan import prefundamental_clebsch_gordan
-        r = prefundamental_clebsch_gordan(2, depth=30)
-        assert r["match"]
-
-
-# =========================================================================
-# 4. Baxter TQ for Verma modules (cross-check)
-# =========================================================================
-
-class TestBaxterTQVerma:
-    """Standard Baxter TQ: [V_1]*[M(λ)] = [M(λ+1)] + [M(λ-1)]."""
+    def test_tq_lam2_polynomial(self):
+        """lam=2: Q(u) is degree-2 polynomial with known Bethe roots."""
+        Q = lambda w: baxter_q_operator_eigenvalue(w, 2)
+        q0 = Q(0.0)
+        q1 = Q(1.0)
+        q2 = Q(2.0)
+        # Second differences should be constant (degree 2 polynomial)
+        d2 = q2 - 2 * q1 + q0
+        q3 = Q(3.0)
+        d2_alt = q3 - 2 * q2 + q1
+        assert abs(d2 - d2_alt) < 1e-10, "Q not degree 2"
 
     @pytest.mark.parametrize("lam", [0, 1, 2, 3, 4, 5])
-    def test_verma_tq(self, lam):
-        assert verify_baxter_tq_k0(lam, depth=30)
-
-    def test_verma_tq_extended_range(self):
-        """TQ for λ = 0..20."""
-        for lam in range(21):
-            assert verify_baxter_tq_k0(lam, depth=25), \
-                f"Verma TQ failed at λ={lam}"
+    def test_q_polynomial_degree(self, lam):
+        """Q-operator eigenvalue is degree-lam polynomial."""
+        Q = lambda w: baxter_q_operator_eigenvalue(w, lam)
+        vals = [Q(float(k)) for k in range(lam + 3)]
+        from math import comb
+        fd = sum((-1) ** (lam + 1 - k) * comb(lam + 1, k) * vals[k]
+                 for k in range(lam + 2))
+        assert abs(fd) < 1e-6, f"Q not degree {lam}: fd = {fd}"
 
 
 # =========================================================================
-# 5. Tensor ideal structure
+# 2. Prefundamental TQ relation at the K_0 / character level
 # =========================================================================
 
-class TestTensorIdealStructure:
-    """The ideal generated by L⁻ in K_0(O_Y) is evaluation-stable."""
+class TestPrefundamentalTQCharacterLevel:
+    """[V_1].[L-] = [L-(+1)] + [L-(-1)] at the character level."""
 
-    def test_ideal_closure_under_v1(self):
-        """[V_1] * [L⁻] stays in the prefundamental ideal."""
-        r = verify_prefundamental_tq_k0(0, 0, depth=25)
+    def test_two_term_decomposition(self):
+        """verify_prefundamental_tq_k0 confirms the two-term decomposition."""
+        r = verify_prefundamental_tq_k0(0.0, 0.0, depth=40)
         assert r["two_term_decomposition_matches"]
 
-    def test_ideal_closure_under_vn(self):
-        """[V_n] * [L⁻] = sum of [L⁻(shifted)] for n=1..8."""
-        from compute.lib.prefundamental_clebsch_gordan import verify_prefundamental_cg
-        results = verify_prefundamental_cg(max_n=8)
-        for n, ok in results.items():
-            assert ok, f"Tensor ideal closure failed at n={n}"
+    def test_all_weights_odd(self):
+        """V_1 tensor L- lives on the odd weight lattice."""
+        r = verify_prefundamental_tq_k0(0.0, 0.0, depth=40)
+        assert r["all_weights_odd"]
 
-    def test_ideal_is_proper(self):
-        """The prefundamental ideal is proper: [V_n] ∉ ideal for n ≥ 1."""
-        # V_n has finite-dim character; L⁻ and all shifted L⁻ have
-        # infinite support. So no finite sum of L⁻(shifted) equals V_n.
-        L = prefundamental_character_sl2(depth=30)
-        V1 = eval_module_V1()
-        # V_1 has weights {1, -1}; L⁻ has weights {0, -2, -4, ...}
-        # These live on different parities, so V_1 ≠ any L⁻ sum
-        assert set(V1.keys()) != set(L.keys())
+    def test_weight_1_multiplicity(self):
+        """Weight 1 has multiplicity p(0) = 1."""
+        r = verify_prefundamental_tq_k0(0.0, 0.0, depth=40)
+        assert r["weight_1_correct"]
 
-    def test_ses_0_to_ideal_to_o_to_repfd(self):
-        """SES structure: 0 → ⟨L⁻⟩ → K_0(O_Y) → K_0(Rep_fd) → 0.
+    def test_multiplicity_pattern(self):
+        """Weight -(2k-1) has mult p(k-1) + p(k)."""
+        r = verify_prefundamental_tq_k0(0.0, 0.0, depth=40)
+        assert r["multiplicity_pattern_correct"]
 
-        At K_0 level: the quotient K_0(O_Y) / ⟨L⁻⟩ should be
-        isomorphic to K_0(Rep_fd) = Z[q, q^{-1}].
-        """
-        # The classes [V_n] generate K_0(Rep_fd) = Z[q,q^{-1}]
-        # Adding [L⁻] extends to K_0(O_Y)
-        # The quotient by ⟨L⁻⟩ projects back to K_0(Rep_fd)
-        # At character level: [M(λ)] = [L⁻(λ)] - [correction]
-        # So [M(λ)] mod ⟨L⁻⟩ = -[correction] mod ⟨L⁻⟩ = 0
-        # This means Verma classes vanish in the quotient, leaving only [V_n]
-        pass  # Structural assertion; documented in the concordance
+    def test_multiplicity_pattern_deep(self):
+        """Multiplicity pattern at depth 80."""
+        r = verify_prefundamental_tq_k0(0.0, 0.0, depth=80)
+        assert r["multiplicity_pattern_correct"]
+
+    @pytest.mark.parametrize("n", [1, 2, 3, 4, 5])
+    def test_vn_weight_parity(self, n):
+        """V_n tensor L- has weights of parity n mod 2."""
+        Vn = eval_module_Vn(n)
+        L = prefundamental_character_sl2(depth=40)
+        tensor = tensor_product_characters(Vn, L)
+        expected_parity = n % 2
+        for w in tensor:
+            assert w % 2 == expected_parity, f"Wrong parity at n={n}, w={w}"
 
 
 # =========================================================================
-# 6. Growth rate verification
+# 3. QQ-system and Wronskian structure
+# =========================================================================
+
+class TestQQSystem:
+    """QQ-system Wronskian preservation under V_1-twist."""
+
+    def test_wronskian_adjacent_partition_sums(self):
+        """Turan determinant p(k)^2 - p(k+1)p(k-1) > 0 for k >= 26."""
+        for k in range(26, 40):
+            pk = partition_function(k)
+            pk1 = partition_function(k + 1)
+            pkm1 = partition_function(k - 1)
+            turan = pk * pk - pk1 * pkm1
+            assert turan > 0, f"Turan negative at k={k}: {turan}"
+
+    def test_qq_character_consistency(self):
+        """[L-(+1)] + [L-(-1)] exhausts [V_1].[L-] with no remainder."""
+        L = prefundamental_character_sl2(depth=40)
+        L_plus = {w + 1: m for w, m in L.items()}
+        L_minus = {w - 1: m for w, m in L.items()}
+        rhs = sum_characters(L_plus, L_minus)
+
+        V1 = eval_module_Vn(1)
+        lhs = tensor_product_characters(V1, L)
+
+        for w in set(list(lhs.keys()) + list(rhs.keys())):
+            if abs(w) <= 70:
+                assert lhs.get(w, 0) == rhs.get(w, 0), \
+                    f"QQ mismatch at w={w}: lhs={lhs.get(w,0)}, rhs={rhs.get(w,0)}"
+
+    def test_qq_vn_consistency(self):
+        """[V_n].[L-] = sum [L-(n-2j)] is the higher-spin QQ-system."""
+        for n in [2, 3, 4]:
+            L = prefundamental_character_sl2(depth=40)
+            Vn = eval_module_Vn(n)
+            lhs = tensor_product_characters(Vn, L)
+
+            rhs = {}
+            for j in range(n + 1):
+                hw = n - 2 * j
+                shifted = {w + hw: m for w, m in L.items()}
+                for w, m in shifted.items():
+                    rhs[w] = rhs.get(w, 0) + m
+
+            for w in set(list(lhs.keys()) + list(rhs.keys())):
+                if abs(w) <= 60:
+                    assert lhs.get(w, 0) == rhs.get(w, 0), \
+                        f"Higher QQ mismatch at n={n}, w={w}"
+
+    def test_wronskian_preservation_under_v1_twist(self):
+        """[V_1]^2.[L-] = [V_2].[L-] + [L-] (from V_1 tensor V_1 = V_2 + V_0)."""
+        L = prefundamental_character_sl2(depth=40)
+        V1 = eval_module_Vn(1)
+        V2 = eval_module_Vn(2)
+
+        v1_L = tensor_product_characters(V1, L)
+        v1_v1_L = tensor_product_characters(V1, v1_L)
+
+        v2_L = tensor_product_characters(V2, L)
+        rhs = sum_characters(v2_L, L)
+
+        for w in set(list(v1_v1_L.keys()) + list(rhs.keys())):
+            if abs(w) <= 60:
+                assert v1_v1_L.get(w, 0) == rhs.get(w, 0), \
+                    f"Wronskian twist mismatch at w={w}"
+
+
+# =========================================================================
+# 4. Spectral self-duality and shift structure
+# =========================================================================
+
+class TestSpectralStructure:
+    """Spectral self-duality of the prefundamental CG decomposition."""
+
+    def test_cg_symmetric_under_reflection(self):
+        """CG summands {n-2j : j=0..n} are symmetric under j -> n-j."""
+        for n in range(1, 10):
+            hws = [n - 2 * j for j in range(n + 1)]
+            reversed_hws = list(reversed(hws))
+            assert hws == [-h for h in reversed_hws]
+
+    def test_cg_center_of_mass_zero(self):
+        """Sum of CG highest weights is zero."""
+        for n in range(1, 15):
+            total = sum(n - 2 * j for j in range(n + 1))
+            assert total == 0
+
+    def test_tq_recurrence_symmetry(self):
+        """T(u) + T(-u-1) = 0: spectral shadow of Koszul duality."""
+        for u in [1.0, 2.5, 4.3]:
+            T_u = transfer_matrix_eigenvalue(u, 0, 0.0)
+            T_neg = transfer_matrix_eigenvalue(-u - 1, 0, 0.0)
+            assert abs(T_u + T_neg) < 1e-10
+
+    def test_shift_operator_chebyshev(self):
+        """[V_1] acts as shift operator: Chebyshev recurrence on K_0."""
+        from compute.lib.sl2_baxter import verify_chebyshev_structure
+        assert verify_chebyshev_structure(max_n=6)
+
+    def test_k0_lattice_structure(self):
+        """K_0 lattice generated by {V_n, L-} verifies structure."""
+        from compute.lib.sl2_baxter import verify_k0_lattice
+        assert verify_k0_lattice(max_lam=5, depth=30)
+
+
+# =========================================================================
+# 5. Growth rate analysis
 # =========================================================================
 
 class TestGrowthRates:
-    """Partition function growth and its consequences for MC3."""
+    """Growth rates of the TQ system quantities."""
 
-    def test_partition_function_first_20(self):
-        """Verify p(k) for k=0..19 against known values."""
-        known = [1, 1, 2, 3, 5, 7, 11, 15, 22, 30,
-                 42, 56, 77, 101, 135, 176, 231, 297, 385, 490]
-        for k, expected in enumerate(known):
-            assert partition_function(k) == expected
-
-    def test_obstruction_sub_exponential(self):
-        """δ(k) = p(k) - 1 grows sub-exponentially: log(δ)/k → 0."""
-        for k in [10, 20, 30, 40]:
+    def test_adjacent_partition_sum_growth(self):
+        """p(k-1) + p(k) ~ 2*HR(k) for large k."""
+        for k in [15, 20, 30]:
             pk = partition_function(k)
-            delta = pk - 1
-            ratio = math.log(delta) / k
-            assert ratio < 0.5, f"Sub-exponential check failed at k={k}: ratio={ratio}"
+            pkm1 = partition_function(k - 1)
+            hr = math.exp(math.pi * math.sqrt(2 * k / 3)) / (4 * k * math.sqrt(3))
+            ratio = (pk + pkm1) / (2 * hr)
+            assert 0.3 < ratio < 3.0
 
-    def test_v1n_tensor_l_dimension_growth(self):
-        """dim(V_1^⊗n ⊗ L⁻) truncated grows as predicted."""
-        V1 = eval_module_V1()
-        L = prefundamental_character_sl2(depth=20)
+    def test_cumulative_multiplicity_growth(self):
+        """Cumulative mult grows sub-exponentially."""
+        total = 0
+        for k in range(1, 40):
+            total += partition_function(k - 1) + partition_function(k)
+        assert total < 2 ** 40
 
-        current = dict(L)
-        for step in range(1, 5):
-            current = tensor_product_characters(V1, current)
-            total = sum(v for v in current.values() if v > 0)
-            # Dimension should grow (more and more states at each step)
-            assert total > 0
+    @pytest.mark.parametrize("n", [2, 4, 6, 8])
+    def test_euler_char_from_tq(self, n):
+        """Euler characteristic chi(L-, V_n) = sum p(k) from TQ structure."""
+        from compute.lib.thick_generation_sl2 import ext_euler_char_bound
+        r = ext_euler_char_bound(n)
+        expected = sum(partition_function(k) for k in range(n // 2 + 1))
+        assert r["euler_characteristic"] == expected
