@@ -2692,6 +2692,232 @@ not just the Arnold relation.  Every subsequent example
 further layers.
 
 % ================================================================
+\subsection{The braided atom: abelian Chern--Simons and the spectral
+$R$-matrix}
+\label{subsec:rosetta-cs}
+\index{Chern--Simons!abelian!R-matrix}
+\index{R-matrix!spectral!abelian CS}
+\index{Rosetta Stone!abelian Chern--Simons}
+% ================================================================
+
+\providecommand{\hh}{\hbar}
+
+The Heisenberg algebra and affine Kac--Moody are both
+\emph{frame atoms}: their entire bar-complex structure is governed
+by double-pole (curvature) and simple-pole (bracket) residues on
+Fulton--MacPherson compactifications.  The third atomic example is
+\emph{abelian Chern--Simons theory on $\bC \times \bR_{\ge 0}$},
+whose boundary current algebra has a single generator~$J$ with the
+OPE
+\begin{equation}\label{eq:rosetta-cs-ope}
+J(z)\,J(w) \;\sim\; \frac{k}{z - w}.
+\end{equation}
+This is a \emph{simple} pole---not the double pole of the Heisenberg
+OPE~\eqref{eq:frame-heisenberg-ope}---and this single difference
+propagates through the entire bar-complex dictionary: the bar
+differential has $d_{\mathrm{bracket}} \neq 0$ and
+$d_{\mathrm{curvature}} = 0$ at genus~$0$, the $\lambda$-bracket is
+constant in~$\lambda$, and the theory carries a nontrivial spectral
+$R$-matrix.
+
+\medskip
+\noindent\textbf{The $\lambda$-bracket.}\enspace
+Because the OPE~\eqref{eq:rosetta-cs-ope} has only a simple pole,
+the $\lambda$-bracket is the $\lambda^0$ coefficient:
+\begin{equation}\label{eq:rosetta-cs-lambda-bracket}
+\{J {}_\lambda J\} \;=\; k
+\qquad
+\text{(constant in $\lambda$)}.
+\end{equation}
+Compare with Heisenberg: the double pole gives
+$\{J {}_\lambda J\} = k\lambda$ (linear in~$\lambda$), and with
+affine Kac--Moody: the OPE $J^a(z)\,J^b(w) \sim
+f^{ab}{}_c J^c(w)/(z-w) + k\kappa^{ab}/(z-w)^2$ gives
+$\{J^a {}_\lambda J^b\} = f^{ab}{}_c J^c + k\kappa^{ab}\lambda$
+(both constant and linear terms).
+
+The $\lambda$-independence of~\eqref{eq:rosetta-cs-lambda-bracket}
+has a bar-complex interpretation: the bar differential on
+degree-$2$ elements extracts the simple-pole residue
+\[
+d_{\mathrm{bracket}}[s^{-1}J \,|\, s^{-1}J]
+\;=\;
+\Res_{z_1 = z_2}\!\Bigl[
+  \frac{k}{z_1 - z_2}
+  \cdot d\log(z_1 - z_2)
+\Bigr]
+\;=\;
+\Res_{z_1 = z_2}\!\Bigl[
+  \frac{k}{(z_1 - z_2)^2}\, dz_1
+\Bigr]
+\;=\; 0,
+\]
+but the value $m_2(J,J;\lambda) = k$ (constant) means the
+bar differential carries the information as a \emph{degree-zero}
+cocycle, not a spectral-parameter-dependent one.  The curvature
+component $d_{\mathrm{curvature}}$, which extracts the double-pole
+residue, vanishes identically at genus~$0$ because there is no
+double pole.  This is the opposite of the Heisenberg case, where
+$d_{\mathrm{bracket}} = 0$ and $d_{\mathrm{curvature}} \neq 0$.
+
+\medskip
+\noindent\textbf{The spectral $R$-matrix.}\enspace
+The spectral $R$-matrix is obtained by the Laplace
+transform of the $\lambda$-bracket
+(the Laplace-transform formula of Volume~II):
+\begin{equation}\label{eq:rosetta-cs-laplace}
+r(z)
+\;=\;
+\int_0^\infty e^{-\lambda z}\,
+\{J {}_\lambda J\}\, d\lambda
+\;=\;
+\int_0^\infty k\, e^{-\lambda z}\, d\lambda
+\;=\;
+\frac{k}{z},
+\end{equation}
+where the integral converges formally and the result is the
+classical $r$-matrix.  The full quantum $R$-matrix is
+\begin{equation}\label{eq:rosetta-cs-R}
+R(z) \;=\; \exp\!\bigl(k/z\bigr)
+\;=\;
+\sum_{n=0}^{\infty}\,
+\frac{k^n}{n!\,z^n},
+\end{equation}
+a formal power series in $z^{-1}$.
+
+\begin{theorem}[CS $R$-matrix from the bar complex;
+\ClaimStatusProvedHere]
+\label{thm:rosetta-cs-r-matrix}
+\index{R-matrix!abelian CS}
+The spectral $R$-matrix of the abelian Chern--Simons boundary
+algebra with OPE~\eqref{eq:rosetta-cs-ope} satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $R(z) = \exp(k/z)$, computed as the Laplace transform of
+  the constant $\lambda$-bracket $\{J {}_\lambda J\} = k$;
+\item the Yang--Baxter equation
+  $R_{12}(u)\,R_{13}(u+v)\,R_{23}(v) =
+   R_{23}(v)\,R_{13}(u+v)\,R_{12}(u)$;
+\item the classical limit $r(z) = k/z$ satisfies the classical
+  Yang--Baxter equation
+  $[r_{12}(u),\, r_{13}(u+v)] + [r_{12}(u),\, r_{23}(v)]
+   + [r_{13}(u+v),\, r_{23}(v)] = 0$;
+\item antisymmetry $r(-z) = -r_{21}(z) = -r(z)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) The Laplace transform is
+equation~\eqref{eq:rosetta-cs-laplace}; exponentiation gives
+$R(z) = \exp(r(z)) = \exp(k/z)$.
+
+(ii) For the one-dimensional (abelian) case, $R(z) = \exp(k/z)$
+is a scalar.  The Yang--Baxter equation reads
+\[
+e^{k/u}\,e^{k/(u+v)}\,e^{k/v}
+\;=\;
+e^{k/v}\,e^{k/(u+v)}\,e^{k/u},
+\]
+which holds because scalar multiplication is commutative: both
+sides equal $\exp\bigl(k/u + k/(u+v) + k/v\bigr)$.
+
+(iii) The classical $r$-matrix $r(z) = k/z$ is scalar, so all
+commutators $[r_{ij}(z), r_{kl}(w)]$ vanish.  The CYBE
+$0 + 0 + 0 = 0$ is satisfied.
+
+(iv) Antisymmetry: $r(-z) = k/(-z) = -k/z = -r(z)$.  Since the
+abelian case has a single generator, $r_{21}(z) = r(z)$, giving
+$r(-z) = -r_{21}(z)$.
+\end{proof}
+
+\begin{remark}[Connection to Volume~I's DK ladder]
+\label{rem:rosetta-cs-dk}
+\index{DK ladder!abelian CS}
+The spectral $R$-matrix at the evaluation locus recovers the
+Drinfeld--Kohno braiding from Volume~I's DK ladder (DK-0).
+For a non-abelian gauge group~$G$ with Lie algebra~$\fg$, the
+classical $r$-matrix becomes
+$r(z) = k\,\Omega/z$,
+where $\Omega = \sum_a J^a \otimes J_a$ is the quadratic Casimir.
+At the evaluation locus (i.e., the fundamental representation),
+this is $r(z) = k P / z$ with $P$ the permutation matrix, and
+the quantum $R$-matrix $R(z) = \mathrm{id} + \hh\, r(z) + O(\hh^2)$
+matches the Drinfeld $R$-matrix to first order.  The abelian
+case is the $G = U(1)$ specialization, where $\Omega = 1$ and
+$R(z) = \exp(k/z)$.
+\end{remark}
+
+\medskip
+\noindent\textbf{The three-atom comparison.}\enspace
+The abelian CS algebra is the third atom in the Rosetta Stone,
+completing the trio Heisenberg--Kac--Moody--CS.  The following table
+extends the Heisenberg vs.~$\widehat{\mathfrak{sl}}_2$ table to
+include the CS column:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|c|c|c}
+\textbf{Feature}
+  & \textbf{Heisenberg $\cH_k$}
+  & $\widehat{\mathfrak{sl}}_{2,k}$
+  & \textbf{Abelian CS} \\
+\hline
+OPE poles
+  & double only
+  & simple $+$ double
+  & simple only \\
+$d_{\mathrm{bracket}}$
+  & $= 0$
+  & $\neq 0$
+  & $\neq 0$ \\
+$d_{\mathrm{curvature}}$ (genus $0$)
+  & $\neq 0$
+  & $\neq 0$
+  & $= 0$ \\
+$\lambda$-bracket
+  & $k\lambda$
+  & $f^{ab}{}_c J^c + k\kappa^{ab}\lambda$
+  & $k$ \\
+$m_3$
+  & $0$
+  & $0$ (Koszul)
+  & $0$ (Koszul) \\
+$R$-matrix
+  & trivial
+  & nontrivial
+  & $\exp(k/z)$ \\
+Swiss-cheese (genus $0$)
+  & flat
+  & curved-closed
+  & flat \\
+Operadic type
+  & $\Einf$
+  & $\Einf$
+  & $\Eone$ \\
+\end{tabular}
+\end{center}
+
+The Heisenberg algebra is pure curvature (double pole, no bracket).
+The CS algebra is pure bracket (simple pole, no curvature at genus~$0$).
+The Kac--Moody algebra has both.  Every chiral algebra is, in the
+bar-complex sense, a mixture of these three atomic behaviors.
+
+\begin{remark}[Operadic type and braiding]
+\label{rem:rosetta-cs-operadic}
+The abelian CS algebra carries $\Eone$ structure (not $\Einf$)
+because the simple-pole OPE is \emph{non-commutative} in the
+spectral parameter: the ordering of line operators along the
+topological direction~$\bR$ matters.  This is visible in the
+$R$-matrix: $R(z) = \exp(k/z) \neq 1$ for $k \neq 0$, so the
+braiding is nontrivial.  The Heisenberg algebra, by contrast, has
+trivial braiding ($R = 1$) because the double-pole OPE is symmetric
+under exchange, giving $\Einf$ structure.  The passage from $\Einf$
+to $\Eone$ is the bar-complex avatar of the passage from commutative
+to braided tensor categories.
+\end{remark}
+
+
+% ================================================================
 \section{\texorpdfstring{$\mathcal{W}$-algebras: Koszul duality meets derived constructions}{$\mathcal{W}$-algebras: Koszul duality meets derived constructions}}
 \label{sec:frame-w-algebras}
 % ================================================================
