@@ -1,4 +1,22 @@
 
+The Heisenberg algebra is the Gaussian archetype: its shadow
+Postnikov tower terminates at weight~$2$, all transferred
+operations $\ell_n^{\mathrm{tr}}$ vanish for $n \geq 3$, and the
+genus expansion is controlled entirely by the scalar modular
+characteristic~$\kappa$.  What remains is not trivial but
+\emph{exactly solvable}: the genus-$g$ obstruction class is a
+universal polynomial in tautological classes whose coefficients are
+Eisenstein series, and the generating function is the
+$\hat{A}$-genus.  This section carries out the computation in full,
+exhibiting the Eisenstein series $E_2$, $E_4$, $E_6$ and the
+Dedekind eta function as the explicit modular-form data that govern
+the higher-genus bar differential.  The result is the simplest
+non-trivial instance of Theorem~D (modular characteristic): the
+general theory predicts that $\kappa$ determines a universal
+generating function with $\hat{A}$-genus shape, and for the
+Heisenberg algebra this prediction can be verified term by term
+against the Eisenstein expansion of the period matrix.
+
 The Heisenberg bar complex at genus~$0$
 (Chapter~\ref{ch:heisenberg-frame}) was controlled by the logarithmic
 propagator $d\log(z-w)$.  At higher genus, the propagator acquires
@@ -13,6 +31,52 @@ universal polynomial in the tautological classes
 $\kappa_i \in H^*(\overline{\mathcal{M}}_g)$ with Eisenstein-series
 coefficients.  The resulting generating function is the
 $\hat{A}$-genus (Theorem~\ref{thm:family-index}).
+
+\begin{remark}[Shadow Postnikov tower for Heisenberg]\label{rem:heisenberg-eisenstein-master-mc}
+For $\mathcal{H}_\kappa$, all transferred operations
+$\ell_n^{\mathrm{tr}} = 0$ for $n \geq 3$ (the OPE is purely
+quadratic).  The shadow Postnikov tower terminates at weight~$2$:
+$\Theta^{\leq 2} = \kappa$, and all higher obstructions vanish
+($o_r = 0$ for $r \geq 3$).  By scalar saturation,
+$\Theta_{\mathcal{H}_\kappa} = \kappa \cdot \eta \otimes \Lambda$
+with no higher corrections---this is \emph{exact Gaussianity}
+(Remark~\ref{rem:unifying-principle}).
+\end{remark}
+
+\begin{remark}[Three-pillar interpretation: Heisenberg]
+\label{rem:heisenberg-three-pillar}
+\index{Heisenberg!three-pillar interpretation}
+In the three-pillar architecture
+(\S\ref{sec:concordance-three-pillars}):
+(i)~the Heisenberg \v{C}ech complex is a \emph{strict} homotopy chiral
+algebra ($F_n = 0$ for $n \geq 3$;
+Example~\ref{ex:cech-hca-heisenberg}), so Pillar~A adds no new data;
+(ii)~the convolution $sL_\infty$-algebra
+$\operatorname{hom}_\alpha(\cC^{\textup{!`}}, \cH)$ has all higher
+brackets $\ell_k = 0$ for $k \geq 3$; the strict dg~Lie model
+\emph{is} the full $sL_\infty$-algebra, and
+$\cH^{\mathrm{sh}} = \mathbb{Q}[\kappa]$ is trivially homotopy
+invariant (Theorem~\ref{thm:shadow-homotopy-invariance});
+(iii)~the log-FM spaces $\overline{\operatorname{FM}}_n(C|D)$ reduce to
+ordinary FM for the Heisenberg (no punctures needed in the abelian case),
+and the tropicalization is empty beyond depth~$1$.
+The Heisenberg is the unique family where all three pillars are strict.
+\end{remark}
+
+\begin{remark}[Four-level structure: Heisenberg]
+\label{rem:heisenberg-four-level}
+The Heisenberg algebra illustrates the four levels of the modular
+engine:
+(i)~the free boson on a curve (geometric object);
+(ii)~the Heisenberg Lie algebra with bar complex
+(strict model $\Convstr$);
+(iii)~the $L_\infty$-algebra $\Definfmod(\cH)$ is
+\emph{trivially formal}: $\ell_n = 0$ for $n \geq 3$, so
+the strict model is already the homotopy-invariant object
+(Corollary~\ref{cor:strictification-comparison});
+(iv)~Gaussian shadow archetype: the extension tower terminates
+at $r = 2$ (shadow weight $\leq 2$).
+\end{remark}
 
 \section{Genus expansion with Eisenstein series}
 \label{sec:heisenberg-genus-expansion-eisenstein}
@@ -1012,6 +1076,229 @@ equation~\eqref{eq:heisenberg-master-equations} then forces
 $\mathfrak{Q}_{\mathcal{H}} = 0$.
 \end{proof}
 
+\begin{corollary}[Heisenberg shadow Postnikov tower:
+finite termination at arity~$2$; \ClaimStatusProvedHere]
+\label{cor:heisenberg-postnikov-termination}
+\index{shadow Postnikov tower!Heisenberg termination}
+The shadow Postnikov tower
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}
+of the Heisenberg algebra terminates at arity~$2$:
+$\Theta_{\mathcal{H}}^{\leq r} = \Theta_{\mathcal{H}}^{\leq 2}
+= \kappa(\mathcal{H})$ for all $r \geq 2$,
+with $o_{r+1}(\mathcal{H}) = 0$ for all $r \geq 2$.
+The Heisenberg tower is exactly Gaussian.
+\end{corollary}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:heisenberg-exact-linearity}:
+the vanishing of all higher shadows means
+every obstruction class vanishes, so the tower stabilizes
+at the scalar level.
+\end{proof}
+
+\begin{computation}[OPE derivation of Heisenberg shadow vanishing]
+\label{comp:heisenberg-shadow-ope-derivation}
+We now supply the explicit OPE-level computations underlying
+Theorem~\ref{thm:heisenberg-exact-linearity}.  The reader may compare
+with the nonvanishing cubic and quartic shadows of the affine and
+Virasoro families (Chapter~\ref{ch:kac-moody},
+Chapter~\ref{ch:virasoro}).
+
+\medskip
+\noindent\textbf{Step 1: The cyclic slice.}
+For the rank-$1$ Heisenberg $\mathcal{H}_\kappa$ with current $J$
+and OPE
+\begin{equation}\label{eq:heisenberg-ope-shadow-section}
+  J(z)\,J(w) \;\sim\; \frac{\kappa}{(z-w)^2},
+\end{equation}
+the cyclic deformation complex
+$(\mathrm{Def}_{\mathrm{cyc}}(\mathcal{H}_\kappa), \ell_1)$ has a
+one-dimensional cohomological slice
+\begin{equation}\label{eq:heisenberg-cyclic-slice}
+  V_{\mathcal{H}} \;=\; \mathbb{C}\langle J \rangle,
+\end{equation}
+where $J$ represents the marginal deformation direction (level
+shift $\kappa \mapsto \kappa + \epsilon$).  The cyclic pairing on
+mode space is
+\begin{equation}\label{eq:heisenberg-cyclic-pairing}
+  \langle J_m,\, J_n \rangle_{\mathrm{cyc}}
+  \;=\; \kappa\,\delta_{m,-n},
+\end{equation}
+extracted from the leading-pole coefficient: $\operatorname{Res}_{z=w}
+(z-w)\,\langle J(z)\,J(w)\rangle = \kappa$.
+
+\medskip
+\noindent\textbf{Step 2: The Hessian from the OPE.}
+The Hessian $H_{\mathcal{H}} \colon
+V_{\mathcal{H}} \to V_{\mathcal{H}}^*[-1]$ is the restriction of
+the cyclic form to $V_{\mathcal{H}}$.
+Writing $x \in V_{\mathcal{H}}$ for the coordinate dual to $J$:
+\begin{equation}\label{eq:heisenberg-hessian-explicit}
+  H_{\mathcal{H}}(x,x) \;=\; \kappa\,x^2.
+\end{equation}
+The propagator is its inverse:
+\begin{equation}\label{eq:heisenberg-propagator-explicit}
+  P_{\mathcal{H}} \;=\; H_{\mathcal{H}}^{-1}
+  \;=\; \kappa^{-1}.
+\end{equation}
+
+\medskip
+\noindent\textbf{Step 3: Vanishing of the cubic shadow --- from the
+  OPE.}
+The cubic shadow is
+\begin{equation}\label{eq:heisenberg-cubic-formula}
+  \mathfrak{C}_{\mathcal{H}}(x,y,z)
+  \;=\; \sum_{\mathrm{cyc}} \bigl\langle x,\,
+  \ell_2^{\mathrm{tr}}(y,z) \bigr\rangle_{\mathrm{cyc}},
+\end{equation}
+where $\ell_2^{\mathrm{tr}}$ is the transferred binary operation on
+$V_{\mathcal{H}}$.  This operation is read off the simple-pole
+coefficient of the OPE: writing
+\begin{equation}\label{eq:ope-simple-pole-extraction}
+  J(z)\,J(w)
+  \;=\;
+  \frac{\kappa}{(z-w)^2}
+  \;+\;
+  \frac{[J,J](w)}{z-w}
+  \;+\; \text{regular},
+\end{equation}
+the $(z-w)^{-1}$ residue is the current-algebra Lie bracket
+$[J,J]$ restricted to the cyclic slice.  For the Heisenberg, this
+coefficient is \emph{identically zero} --- the OPE has no simple
+pole.  Therefore:
+\begin{align}\label{eq:heisenberg-ell2-vanishing}
+  \ell_2^{\mathrm{tr}}(J,J) &= 0
+  \quad\text{on } V_{\mathcal{H}},\\
+  \label{eq:heisenberg-cubic-vanishing}
+  \mathfrak{C}_{\mathcal{H}} &= 0.
+\end{align}
+This is the decisive step: the vanishing is not a
+cancellation --- it is the \emph{absence} of a Lie bracket in the
+current algebra.
+
+\medskip
+\noindent\textbf{Step 4: Vanishing of the quartic shadow --- from
+  homotopy transfer.}
+The quartic shadow is
+\begin{equation}\label{eq:heisenberg-quartic-formula}
+  \mathfrak{Q}_{\mathcal{H}}(x_1, x_2, x_3, x_4)
+  \;=\;
+  \sum_{\mathrm{cyc}} \bigl\langle x_1,\,
+  \ell_3^{\mathrm{tr}}(x_2, x_3, x_4)
+  \bigr\rangle_{\mathrm{cyc}},
+\end{equation}
+where the transferred ternary operation $\ell_3^{\mathrm{tr}}$
+arises from the $A_\infty$ homotopy transfer formula
+(Construction~\ref{constr:nms-homotopy-transfer}):
+\begin{equation}\label{eq:heisenberg-transfer-formula}
+  \ell_3^{\mathrm{tr}}
+  \;=\;
+  \ell_2^{\mathrm{tr}} \circ (h \otimes \mathrm{id})
+  \circ \ell_2^{\mathrm{tr}}
+  \;+\;
+  \ell_2^{\mathrm{tr}} \circ (\mathrm{id} \otimes h)
+  \circ \ell_2^{\mathrm{tr}}
+  \;+\; (\text{terms involving } \ell_1^{\mathrm{tr}}),
+\end{equation}
+where $h$ is the contracting homotopy on the acyclic complement.
+Since $\ell_2^{\mathrm{tr}} = 0$ on $V_{\mathcal{H}}$
+(equation~\eqref{eq:heisenberg-ell2-vanishing}), every composite in
+the transfer formula has at least one factor of
+$\ell_2^{\mathrm{tr}}|_{V_{\mathcal{H}}}$ and therefore vanishes:
+\begin{align}\label{eq:heisenberg-ell3-vanishing}
+  \ell_3^{\mathrm{tr}}(J,J,J) &= 0
+  \quad\text{on } V_{\mathcal{H}},\\
+  \label{eq:heisenberg-quartic-vanishing}
+  \mathfrak{Q}_{\mathcal{H}} &= 0.
+\end{align}
+The same argument applies at all arities: the transferred operations
+$\ell_n^{\mathrm{tr}}$ vanish on $V_{\mathcal{H}}$ for all
+$n \ge 2$, since the transfer tree formulae are always built from
+composites of lower-arity operations.
+
+\medskip
+\noindent\textbf{Step 5: The complementarity potential.}
+The full complementarity potential
+(Definition~\ref{def:nms-complementarity-potential}) is therefore
+exactly quadratic:
+\begin{equation}\label{eq:heisenberg-complementarity-potential}
+  S_{\mathcal{H}}(x)
+  \;=\;
+  \tfrac{1}{2}\,\kappa\,x^2.
+\end{equation}
+All higher jets $\mathfrak{C}_{\mathcal{H}},
+\mathfrak{Q}_{\mathcal{H}}, \mathfrak{o}^{(5)}_{\mathcal{H}},
+\ldots$ vanish.  The dual Lagrangian is
+\begin{equation}\label{eq:heisenberg-dual-lagrangian}
+  M_{\mathcal{H}^!}
+  \;=\;
+  \operatorname{graph}(dS_{\mathcal{H}})
+  \;=\;
+  \{(x, \kappa x)\} \;\subset\;
+  V_{\mathcal{H}} \oplus V_{\mathcal{H}}^*,
+\end{equation}
+which is a \emph{linear} Lagrangian submanifold.  Hence the
+Heisenberg satisfies the fake complementarity criterion
+(Proposition~\ref{prop:fake-complementarity-criterion}): the
+complementarity is ``fake'' in the precise sense that the dual
+Lagrangian is the graph of a \emph{linear} map.  The Heisenberg is
+the archetype of fake complementarity.
+
+\medskip
+\noindent\textbf{Step 6: Bridge to the Bernoulli genus tower.}
+When $S_{\mathcal{H}}$ is exactly quadratic, the genus recursion
+$\xi^*\Theta = \Theta \star \Theta$
+(Theorem~\ref{thm:nms-separating-boundary-recursion}) involves only
+the Hessian: every boundary term contracts to
+\begin{equation}\label{eq:heisenberg-hessian-contraction}
+  H_{\mathcal{H}} \star H_{\mathcal{H}}
+  \;=\;
+  \operatorname{tr}(P_{\mathcal{H}} \circ H_{\mathcal{H}})
+  \;=\;
+  \kappa \cdot \kappa^{-1}
+  \;=\; 1,
+\end{equation}
+which is the identity under propagator contraction on a rank-$1$
+space.  The genus-$g$ free energy is therefore purely tautological:
+\begin{equation}\label{eq:heisenberg-genus-g-tautological}
+  F_g(\mathcal{H}_\kappa)
+  \;=\;
+  \kappa \cdot \lambda_g^{\mathrm{FP}},
+  \qquad
+  \lambda_g^{\mathrm{FP}}
+  \;=\;
+  \frac{|B_{2g}|}{2g \cdot (2g-2)!},
+\end{equation}
+where $\lambda_g^{\mathrm{FP}}$ is the Faber--Pandharipande
+tautological constant and $B_{2g}$ is the $(2g)$-th Bernoulli
+number.  The first values are:
+\begin{align}
+  \label{eq:heisenberg-F1-shadow}
+  F_1 &= \kappa \cdot \frac{|B_2|}{2 \cdot 0!}
+  \;=\; \kappa \cdot \frac{1/6}{2}
+  \;=\; \frac{\kappa}{12},\\[4pt]
+  \label{eq:heisenberg-F2-shadow}
+  F_2 &= \kappa \cdot \frac{|B_4|}{4 \cdot 2!}
+  \;=\; \kappa \cdot \frac{1/30}{8}
+  \;=\; \frac{\kappa}{240},\\[4pt]
+  \label{eq:heisenberg-F3-shadow}
+  F_3 &= \kappa \cdot \frac{|B_6|}{6 \cdot 4!}
+  \;=\; \kappa \cdot \frac{1/42}{144}
+  \;=\; \frac{\kappa}{6048}.
+\end{align}
+The generating function assembles into the $\hat{A}$-genus:
+\begin{equation}\label{eq:heisenberg-ahat-from-shadows}
+  \sum_{g \ge 1} F_g(\mathcal{H}_\kappa)\,\hbar^{2g-2}
+  \;=\;
+  \kappa \cdot \bigl(\hat{A}(\hbar) - 1\bigr),
+\end{equation}
+confirming Theorem~\ref{thm:family-index} directly from the shadow
+structure.  The exactness of the quadratic potential is the shadow-
+calculus explanation for the $\hat{A}$-genus: the Heisenberg genus
+tower is Gaussian because its complementarity potential \emph{is}
+Gaussian.
+\end{computation}
+
 \begin{corollary}[Gaussian boundary law; \ClaimStatusProvedHere]
 \label{cor:heisenberg-gaussian-boundary}
 \index{Heisenberg algebra!Gaussian boundary law}
@@ -1032,7 +1319,7 @@ single-edge sewing product
 
 \begin{proof}
 The separating sewing formulae
-(Theorem~\ref{thm:nms-separating-sewing-recursion}) express
+(Theorem~\ref{thm:nms-separating-boundary-recursion}) express
 $\xi^*\mathfrak{C}$ and $\xi^*\mathfrak{Q}$ as polynomial
 expressions in $\mathfrak{C}$, $\mathfrak{Q}$,
 $\mathfrak{o}^{(4)}$, and $H$ via the propagator $P$.  Since
