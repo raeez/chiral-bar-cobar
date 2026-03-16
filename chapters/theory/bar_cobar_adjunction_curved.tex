@@ -1,6 +1,14 @@
 \chapter{Bar-cobar adjunction and curved Koszul duality}
 \label{chap:bar-cobar-adjunction}
 
+\begin{remark}[What this chapter proves]
+\emph{Theorem~A}: the bar-cobar adjunction $\Omegach \dashv \barBch$
+on $\Ran(X)$ with Verdier intertwining.  The four-regime hierarchy
+(quadratic, curved-central, filtered-complete, infinite-type) and the
+$I$-adic completion machinery.  The MC4 completion packet for the
+standard $W_\infty$ tower (Proposition~\ref{prop:winfty-mc4-frontier-package}).
+\end{remark}
+
 This is where the algebraic engine first closes.  Chapters~\ref{ch:algebraic-foundations}
 and~\ref{chap:cobar-construction} built the bar functor~$\barBch$ and the
 cobar functor~$\Omegach$ separately; here they meet as an adjoint pair
@@ -33,6 +41,48 @@ the reason bar-cobar preserves quasi-isomorphisms: the functor is a
 quantum $\Linf$ functor whose Maurer--Cartan moduli are invariant
 under gauge equivalence.
 
+The precise content of Theorem~A
+(Theorem~\ref{thm:bar-cobar-adjunction}) is this: there is an
+adjunction of functors
+$\Omegach \dashv \barBch$
+between chiral algebras and conilpotent chiral coalgebras on
+$\Ran(X)$, with the unit
+$\eta \colon \cC \to \barBch(\Omegach(\cC))$
+and counit
+$\psi \colon \Omegach(\barBch(\cA)) \to \cA$
+both compatible with Verdier intertwining:
+$\mathbb{D}_{\Ran}\, \barBch(\cA) \simeq \barBch(\cA^!)$.
+The adjunction is mediated by the canonical twisting morphism
+$\tau \colon \barBch(\cA) \to \cA$, which is a Maurer--Cartan
+element in the strict convolution dg~Lie algebra
+$\Convstr(\barBch(\cA), \cA)$
+(Definition~\ref{def:convolution-dg-lie}); at the homotopy level,
+$\tau$ is an MC element in $\Convinf$ and therefore invariant under
+quasi-isomorphic replacement
+(Theorem~\ref{thm:operadic-homotopy-convolution}).  On the strict
+quadratic locus the adjunction is classical; off it, the
+curvature $\mu_0 \in A^2$ forces $\mu_1^2(a) =
+\mu_2(\mu_0, a) - \mu_2(a, \mu_0) = [\mu_0, a]_{\mu_2}$
+(Theorem~\ref{thm:curvature-central}), so the bar differential
+no longer squares to zero internally---the total bar differential
+$d_{\barB}^2 = 0$ is preserved, but the internal differential
+$\mu_1$ is obstructed by the curvature commutator.  The four-regime
+hierarchy organizes the successively stronger completions needed:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Quadratic} ($\mu_0 = 0$): strict $d^2 = 0$,
+  no completion needed (Heisenberg, free fields);
+\item \emph{Curved-central} ($\mu_0 \neq 0$, $[\mu_0, -] =
+  \kappa \cdot \mathrm{id}$): completed bar-cobar, curvature
+  $\kappa$ is scalar (affine algebras at generic level);
+\item \emph{Filtered-complete} ($\mu_0$ non-central):
+  $I$-adic completion required, work in coderived category
+  (Virasoro, $\Walg_N$ at finite~$N$);
+\item \emph{Programmatic} (infinite generators):
+  MC4 completion target ($\Walg_\infty$, $\Walg_{1+\infty}$).
+\end{enumerate}
+This hierarchy is codified in Convention~\ref{conv:regime-tags} and
+governs every theorem statement in this chapter and the next.
+
 The chapter proceeds in two movements.  The first (this file)
 develops curved $\Ainf$~structures, $I$-adic completion, and the
 regime hierarchy---quadratic, curved-central, filtered-complete,
@@ -45,24 +95,47 @@ Together, the two movements close the algebraic engine: once the
 adjunction and its inversion are in hand, the entire genus-$0$
 bar complex is a functor, and the passage to higher genus
 (Chapter~\ref{chap:higher-genus}) amounts to deforming the
-differential by curvature.
+differential by curvature.  In the three-ring architecture, Theorem~A
+is the capstone of Ring~1: it synthesizes
+Chapters~\ref{ch:algebraic-foundations}--\ref{chap:cobar-construction}
+into a single adjunction, and the curved extension reaches into
+Ring~2 by providing the formal framework in which the curvature
+$\kappa(\cA) \cdot \omega_g$ and the shadow Postnikov tower
+$\Theta_\cA^{\leq r}$ operate.
 
 \section{Curved Koszul duality and I-adic completion}
 \label{sec:curved-koszul-i-adic}
 
-Not all chiral algebras are quadratic. Many examples of interest---Virasoro, higher W-algebras, 
-$W_\infty$---require curved structures or infinite-dimensional presentations. For these, 
-the strict finite-type bar-cobar theorem no longer applies directly.  One must
-separate the proved M-level completed shadows that control curvature and
-complementarity from the stronger H-level realization problem for an actual dual
-factorization object.  To treat even the model-level question, we must introduce:
-\begin{itemize}
-\item \emph{Curved structures}: Allowing μ₀ ≠ 0 (failure of d² = 0)
-\item \emph{Completion}: I-adic topology ensuring convergence
-\item \emph{Filtered structures}: More general than curved (Gui--Li--Zeng)
-\end{itemize}
+The Virasoro algebra cannot be quadratic: the Virasoro OPE
+$T(z)T(w) \sim c/(z-w)^4 + 2T(w)/(z-w)^2 + \partial T(w)/(z-w)$
+involves a fourth-order pole, and the stress tensor $T$ appears on
+both sides of the relation, so no finite-dimensional generating space
+and quadratic relation space suffice.  The bar complex
+$\barB(\mathrm{Vir}_c)$ is curved: its
+differential squares not to zero but to the commutator
+$\mu_1^2(a) = [\mu_0, a]$, where $\mu_0 = \kappa \cdot \omega$ is
+the curvature element encoding the central extension.  This failure
+of $d^2=0$ is not a pathology --- it is the algebraic trace of the
+genus-$1$ boundary $\delta_0 \in \partial\overline{\mathcal{M}}_{1,1}$,
+the nodal degeneration that introduces curvature into every genus
+tower.
 
-We follow Gui--Li--Zeng~\cite{GLZ22}.
+The same phenomenon intensifies for $\mathcal{W}_N$ (composite
+fields, higher-order poles) and becomes qualitatively new for
+$\mathcal{W}_\infty$ (infinitely many generators, no finite
+presentation).  In each case, the categorical logarithm $\barB$
+still produces a well-defined object, but recovering the original
+algebra by exponentiation $\Omega \circ \barB \xrightarrow{\sim} \cA$
+requires increasingly refined completions.  Three regimes emerge:
+\begin{itemize}
+\item \emph{Curved structures}: $\mu_0 \neq 0$, the differential
+  satisfies $\mu_1^2 = [\mu_0, -]$ (commutator, with minus sign).
+\item \emph{$I$-adic completion}: the bar complex must be completed
+  against the augmentation ideal to ensure convergence of infinite sums.
+\item \emph{Filtered structures}: more general than curved; the
+  filtration controls the infinite-dimensional hierarchy of generators
+  (Gui--Li--Zeng~\cite{GLZ22}).
+\end{itemize}
 
 \subsection{Curved $A_\infty$ algebras: definitions}
 \label{sec:curved-ainfty-definition}
@@ -417,7 +490,7 @@ $k' = -k - 2h^\vee = -k-4$, so
 \begin{equation}
 \mathrm{Vir}_c^! \cong \mathrm{Vir}_{26-c},
 \end{equation}
-since $c(k) + c(k') = 2\dim\mathfrak{sl}_2 = 26$ by Theorem~\ref{thm:central-charge-complementarity}.  Physically, this is matter--ghost duality: a matter system at central charge~$c$ couples to ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
+since $c(k) + c(k') = 2\operatorname{rank}(\mathfrak{sl}_2) + 4h^\vee\dim\mathfrak{sl}_2 = 2 + 24 = 26$ by Theorem~\ref{thm:central-charge-complementarity}(b) (the $\mathcal{W}$-algebra formula; note $2\dim\mathfrak{sl}_2 = 6$ is the affine KM sum, not $26$).  Physically, this is matter--ghost duality: a matter system at central charge~$c$ couples to ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
 
 This is the M/S-level completed shadow; the stronger H-level realization via an infinite-generator dual is the MC4 completion problem (Example~\ref{ex:winfty-completion-frontier}).
 \end{example}
@@ -5302,6 +5375,21 @@ setting to the chiral operad.  The unit $\eta\colon A \to
 the Koszul locus.
 \end{proof}
 
+\begin{remark}[Relationship to Theorem~A]
+\label{rem:quillen-verdier-connection}
+\index{Quillen equivalence!Theorem A connection}
+Theorem~\ref{thm:quillen-equivalence-chiral} is the
+homotopy-categorical refinement of the geometric bar-cobar adjunction
+and Verdier intertwining of
+Theorem~A
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}): the Verdier
+intertwining $\mathbb{D}_{\operatorname{Ran}} \barB(\cA_1) \simeq
+\barB(\cA_2)$ becomes a Quillen-level statement about derived
+functors, and the configuration-space integrals that define the bar
+differential become the geometric realization of the model structure's
+fibration data.
+\end{remark}
+
 \begin{corollary}[Rectification of $\mathrm{Ch}_\infty$-algebras;
 \ClaimStatusProvedElsewhere]
 \label{cor:rectification-ch-infty}
@@ -5403,8 +5491,9 @@ of their algebraic result.
 
 \subsubsection{Francis--Gaitsgory}
 
-Francis--Gaitsgory~\cite{FG12} prove that factorization algebras satisfy a 
-bar-cobar duality. Their result:
+Francis--Gaitsgory~\cite{FG12} prove that factorization algebras satisfy
+bar-cobar inversion (the cobar of the bar recovers the original algebra).
+Their result:
 
 \begin{theorem}[FG, Theorem 7.2.1; \ClaimStatusProvedElsewhere]
 \label{thm:fg-factorization-bar-cobar}

@@ -12,7 +12,14 @@ $\Theta_{\cA} \in \mathrm{MC}(\gAmod)$ is the conjectural all-arity
 limit of this tower---it is the target, not the starting point.
 
 The present section develops the genus-graded Koszul duality that
-underlies the tower.  The key structural insight is that bar-cobar
+underlies the tower.  The modular convolution dg~Lie
+algebra~$\gAmod$ is the strict model of a homotopy-invariant
+$L_\infty$-algebra $\Definfmod(\cA)$
+(\S\ref{subsec:two-level-convention}): the strict model suffices
+for all MC computations, while the $L_\infty$ structure controls
+functoriality under quasi-isomorphic replacements and different
+choices of contracting homotopy.
+The key structural insight is that bar-cobar
 inversion (Theorem~B) extends from genus~0 to all genera, producing a
 compatible system of Koszul dualities indexed by the boundary
 stratification of~$\overline{\mathcal{M}}_{g,n}$.  At each
@@ -25,12 +32,45 @@ on~$\gAmod$ controls the extension tower, and each finite truncation
 $\Theta_{\cA}^{\leq r}$ is a graph sum through arity~$r$ that does
 not require the full all-genera modular envelope.
 
-The genus-0 Koszul duality $\Omega(\bar{B}^{(0)}(\mathcal{A})) \simeq \mathcal{A}$ extends
-to a tower indexed by genus.  We record the structural framework here;
-a key structural question is whether the Koszul property (diagonal Ext vanishing)
-propagates from genus~0 to higher genus.  For the standard examples at generic
-parameters, the PBW argument of Proposition~\ref{prop:standard-examples-modular-koszul}
-gives an affirmative answer; at special parameters (e.g.\ admissible levels),
+The section delivers four constructions and one conjecture:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item the \emph{shadow algebra}
+  $\cA^{\mathrm{sh}} := H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
+  (Definition~\ref{def:shadow-algebra}), which is the
+  graded-commutative ring whose bigraded components
+  $\cA^{\mathrm{sh}}_{r,g}$ recover $\kappa$ (at $r{=}2$),
+  the cubic shadow (at $r{=}3$), the quartic contact invariant
+  (at $r{=}4$), and all higher shadows;
+\item the \emph{graph-sum formula}
+  (Definition~\ref{def:modular-bar-hamiltonian}), which realizes
+  $\Theta_\cA^{\leq r}$ as a sum over connected cross-polarized
+  stable graphs of weight at most~$r$, with vertex labels from the
+  transferred cyclic minimal model and edge contractions by the
+  complementarity propagator $P_\cA = H_\cA^{-1}$;
+\item the \emph{obstruction class}
+  $o_{r+1}(\cA) :=
+  (D_\cA\Theta_\cA^{\leq r}
+  + \tfrac12[\Theta_\cA^{\leq r},\Theta_\cA^{\leq r}])_{r+1}
+  \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$
+  (Definition~\ref{def:shadow-postnikov-tower}), which measures
+  the failure to extend the tower from arity~$r$ to~$r{+}1$;
+\item the \emph{all-arity master equation}
+  $\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
+  (Proposition~\ref{prop:master-equation-from-mc}), obtained by
+  projecting the Maurer--Cartan equation onto the
+  arity-$r$ component;
+\item the \emph{recursive existence conjecture}
+  (Conjecture~\ref{conj:recursive-existence}): the full
+  inverse-limit element
+  $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ exists for
+  every modular Koszul algebra equipped with a cyclic slice,
+  stable propagator, and planted-forest residue model.
+\end{enumerate}
+Whether the Koszul property (diagonal Ext vanishing) propagates
+from genus~$0$ to higher genus is a key structural question.
+For the standard examples at generic parameters, the PBW argument of
+Proposition~\ref{prop:standard-examples-modular-koszul} gives an
+affirmative answer; at special parameters (e.g.\ admissible levels),
 the question remains open.
 
 \subsection{The genus tower}
@@ -7170,6 +7210,37 @@ computationally accessible: one inputs the vertices (transferred
 cyclic operations), the edges (the homotopy propagator), and the
 combinatorics (stable graphs), and obtains explicit multilinear
 maps.
+
+\emph{Evaluation on standard families.}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Heisenberg $\cH_k$}: $\ell_3^{(0)} = 0$.
+  The chiral bracket $[J_m, J_n] = k\,m\,\delta_{m+n,0}$ is
+  abelian (only the central extension is nonzero), so each
+  iterated bracket $[\alpha, [\beta, \gamma]]$ vanishes at the
+  Lie-algebra level.  All three channels contribute zero; the
+  Jacobiator is identically zero, not merely exact.  This confirms
+  shadow-tower termination at arity~$2$ (Gaussian archetype).
+\item \emph{Affine $\widehat{\mathfrak{sl}}_2$ at level $k$}:
+  $\ell_3^{(0)} \neq 0$.
+  The iterated bracket $[e_m, [f_n, h_p]]$ produces Casimir traces
+  that do not cancel across the three channels.  The nonzero
+  cohomology class $[\ell_3^{(0)}]$ is the cubic shadow
+  $\mathfrak{C}(\widehat{\mathfrak{sl}}_2)$.
+  However, $\ell_4^{(0)} = 0$: the quartic graph sums vanish
+  because the transferred arity-$4$ operation on the minimal model
+  of $\widehat{\mathfrak{sl}}_2$ is trivial (the deformation
+  complex has one channel at each genus).  Shadow-tower termination
+  at arity~$3$ (Lie/tree archetype).
+\item \emph{Virasoro $\mathrm{Vir}_c$}: $\ell_3^{(0)} \neq 0$,
+  $\ell_4^{(0)} \neq 0$.  The cohomology class
+  $[\ell_4^{(0)}]$ evaluated on the primary deformation line gives
+  the quartic contact invariant
+  $\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}}
+  = 10/[c(5c+22)]$, confirming the nonlinear modular shadows
+  computation
+  (Theorem~\ref{thm:virasoro-quartic-contact}).
+  Shadow tower is infinite (mixed archetype).
+\end{enumerate}
 \end{construction}
 
 \begin{remark}[Logical priority]
@@ -7482,6 +7553,29 @@ of $\cA^{\mathrm{sh}}$.  Part~(iv) is the Deligne--Getzler--Hinich
 weak equivalence of MC $\infty$-groupoids.
 \end{proof}
 
+\begin{corollary}[Functoriality of the modular deformation functor;
+\ClaimStatusProvedElsewhere]
+\label{cor:deformation-functoriality}
+\index{modular deformation!functoriality}
+The assignment $\cA \mapsto \Defcyc^{\mathrm{mod}}(\cA)$ is
+functorial: for any $\infty_\alpha$-quasi-isomorphism
+$f\colon \cA \xrightarrow{\sim} \cA'$, there is an induced
+$\infty$-quasi-isomorphism
+\[
+f_+\colon \Defcyc^{\mathrm{mod}}(\cA)
+\;\xrightarrow{\;\sim\;}
+\Defcyc^{\mathrm{mod}}(\cA')
+\]
+and diagram commutativity with all shadow projections:
+$f_+(\kappa(\cA)) = \kappa(\cA')$,
+$f_+(\mathfrak{C}_\cA) = \mathfrak{C}_{\cA'}$, etc.
+\end{corollary}
+
+\begin{proof}[References]
+One-slot functoriality of convolution $sL_\infty$-algebras
+(\cite[Theorem~5.1]{RNW19}), applied in the algebra slot with the
+coalgebra slot fixed.
+\end{proof}
 
 \subsection{The shadow Postnikov tower}
 \label{subsec:shadow-postnikov-tower}
@@ -7560,6 +7654,17 @@ conjectural all-arity limit
 $\Theta_{\cA} = \varprojlim_r \Theta_{\cA}^{\leq r}$
 is the target of Conjecture~\ref{conj:recursive-existence}.
 \end{definition}
+
+The modular cyclic deformation complex
+$\Defcyc^{\mathrm{mod}}(\cA)$ --- the strict model of the
+homotopy-invariant $\Definfmod(\cA)$
+(Remark~\ref{rem:modular-cyc-strictification}) --- carries an
+$L_\infty$ bracket from which one extracts invariants by taking
+cohomology.  The resulting graded-commutative ring, called the
+\emph{shadow algebra}, decomposes the single MC element
+$\Theta_\cA$ into components graded by arity and genus.  Each named
+shadow ($\kappa$, $\Delta$, $\mathfrak{C}$, $\mathfrak{Q}$) is a
+projection; the shadow algebra is the object that organizes them all.
 
 \begin{definition}[Shadow algebra]
 \label{def:shadow-algebra}
@@ -7859,7 +7964,7 @@ Theorem~\ref{thm:tautological-line-support}).
 \end{proof}
 
 \begin{remark}[Scope: scalar saturation vs.\ full all-arity limit]
-\label{rem:scalar-saturation-scope}
+\label{rem:scalar-saturation-scope-v2}
 \index{scalar saturation|textbf}
 \index{shadow Postnikov tower!scalar vs.\ all-arity}
 Theorem~\textup{\ref{thm:theta-direct-derivation}} is the
@@ -8363,7 +8468,10 @@ compactification of $\operatorname{Conf}_n(X \setminus D)$.
     \bigr),
   \]
   where $C$ is the curve and $D_{\mathrm{nodes}}$ is the nodal
-  divisor.
+  divisor.  Here $\cong$ is an isomorphism of dg~algebras: both
+  sides have differentials given by edge contraction (algebraic side)
+  and codimension increase (tropical side), and the product is
+  disjoint union of forests on both sides.
 \item The planted-forest depth filtration
   $($\S\textup{\ref{subsec:carrier-algebra}}$)$ corresponds to the
   codimension filtration on the boundary of
@@ -8389,11 +8497,49 @@ and the non-separating clutching law
 $($Theorem~\textup{\ref{thm:nms-nonseparating-clutching-law}}$)$:
 the algebraic clutching identities ARE the degeneration formula
 applied to the bar complex on log-FM spaces.
+
+More explicitly: in the finite-order shadow tower, the extension
+$\Theta_\cA^{\leq r} \to \Theta_\cA^{\leq r+1}$ is governed by an
+obstruction class $o_{r+1}(\cA) \in H^2(F^{r+1}/F^{r+2})$.  For a
+separating degeneration $\cA = \cA_1 \cup_\xi \cA_2$, the
+obstruction classes satisfy a multiplicative relation
+$\xi^* o_{r+1}(\cA) = o_{r+1}(\cA_1) \otimes 1 + 1 \otimes
+o_{r+1}(\cA_2) + \text{tree correction}$,
+where the tree correction comes from the birational modification
+relating the product of log-FM factors to the actual special-fibre
+component (Mok~\cite[Theorem~5.3.4]{Mok25}).
+For non-separating degenerations, an additional term
+$\hbar\Delta(\Theta_\cA^{\leq r})$ appears: this is the
+BV operator that distinguishes non-separating from separating
+clutching, and is the primary reason
+$D_\cA^2 = 0$ at the ambient level remains conjectural
+(Conjecture~\ref{conj:differential-square-zero}).
 \end{remark}
 
+\begin{corollary}[Weight filtration = tropical codimension;
+\ClaimStatusProvedElsewhere]
+\label{cor:weight-filtration-tropical}
+\index{weight filtration!tropical codimension correspondence}
+The weight filtration on the ambient algebra
+$\mathfrak{g}^{\mathrm{amb}}_\cA$ of
+Definition~\textup{\ref{def:ambient-modular-complementarity-algebra}}
+is the algebraic shadow of the tropical codimension filtration on
+$\partial\overline{\operatorname{FM}}_n(X|D)$.  Concretely:
+depth-$k$ planted forests in $\mathbb{G}_{\mathrm{pf}}$ correspond
+to codimension-$k$ strata of the log-FM boundary, and the
+weight-$r$ piece $F^r/F^{r+1}$ of the shadow Postnikov tower is the
+contribution of codimension-$r$ strata to the modular deformation
+problem.
+\end{corollary}
+
+\begin{proof}[References]
+This is Theorem~\ref{thm:planted-forest-tropicalization}(iii)
+combined with Definition~\ref{def:planted-forest-coefficient-algebra}.
+\end{proof}
+
 \begin{proposition}[Square-zero property of the ambient differential;
-\ClaimStatusProvedHere]
-\label{rem:coefficient-algebras-well-defined}
+\ClaimStatusConjectured]
+\label{prop:coefficient-algebras-well-defined}
 The five-component differential
 $D_{\cA} = d_{\mathrm{int}} + [\tau_{\cA},-] + d_{\mathrm{sew}} +
 d_{\mathrm{pf}} + \hbar\Delta$
@@ -8403,8 +8549,8 @@ Definition~\textup{\ref{def:ambient-modular-complementarity-algebra}}
 satisfies $D_{\cA}^2 = 0$.
 \end{proposition}
 
-\begin{proof}
-The proof decomposes into diagonal and cross-terms.
+\begin{proof}[Evidence]
+The diagonal terms are each square-zero:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $d_{\mathrm{int}}^2 = 0$: the internal differential on each bar
   complex is square-zero by construction.
@@ -8414,18 +8560,16 @@ The proof decomposes into diagonal and cross-terms.
 \item $d_{\mathrm{pf}}^2 = 0$: associativity of edge contraction in
   planted forests
   (Definition~\ref{def:planted-forest-coefficient-algebra}).
-\item The cross-terms cancel pairwise by the master identity
+\item The cross-terms are \emph{expected} to cancel by the master identity
   \[
     [d_{\mathrm{sew}}, d_{\mathrm{pf}}]
     + [d_{\mathrm{int}}, \hbar\Delta]
     + [[\tau_{\cA},-], d_{\mathrm{sew}} + d_{\mathrm{pf}}]
     = 0,
   \]
-  which follows from the factorization of the modular operad boundary
-  into separating and non-separating degenerations
-  (Theorem~\ref{thm:prism-higher-genus}).  The genus-loop term
-  $\hbar\Delta$ accounts for the non-separating degeneration
-  contribution.  \qedhere
+  contingent on the planted-forest coefficient algebra faithfully capturing
+  all codimension-${\geq}2$ boundary relations of $\overline{\mathcal{M}}_{g,n}$
+  (see Conjecture~\ref{conj:differential-square-zero} and Remark~\ref{rem:log-evidence-d-squared}).
 \end{enumerate}
 \end{proof}
 
@@ -8463,10 +8607,33 @@ cross-polarization is not imposed\textup{)}, $D^2 = 0$ is
 already proved.
 \end{conjecture}
 
-\begin{remark}[Log-geometric evidence for
-Conjecture~\ref{conj:differential-square-zero}]
-\label{rem:log-evidence-d-squared}
-\index{differential!ambient square-zero!log-geometric evidence}
+\begin{hypothesis}[Tropical faithfulness]
+\label{hyp:tropical-faithfulness}
+\ClaimStatusConjectured
+\index{tropical faithfulness hypothesis|textbf}
+The tropicalisation map of
+Mok~\cite[Theorem~3.3.1]{Mok25} induces a quasi-isomorphism on
+chain complexes:
+\begin{equation}\label{eq:log-fm-qiso-hypothesis}
+\operatorname{trop}_*\colon
+C_*\bigl(\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)\bigr)
+\;\xrightarrow{\;\sim\;}\;
+C_*^{\mathrm{trop}}\bigl(\mathbb{G}_{\mathrm{pf}}\bigr).
+\end{equation}
+Equivalently: the logarithmic Fulton--MacPherson space
+$\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ has no
+cohomology invisible to its tropical skeleton.
+\end{hypothesis}
+
+\begin{proposition}[Tropical reduction of ambient $D^2 = 0$;
+\ClaimStatusProvedHere]
+\label{prop:tropical-reduction-d-squared}
+\index{differential!ambient square-zero!tropical reduction}
+Hypothesis~\textup{\ref{hyp:tropical-faithfulness}} implies
+Conjecture~\textup{\ref{conj:differential-square-zero}}.
+\end{proposition}
+
+\begin{proof}
 The logarithmic Fulton--MacPherson space
 $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ of
 Mok~\cite{Mok25} is a smooth compactification with normal-crossings
@@ -8474,24 +8641,28 @@ boundary \cite[Theorem~3.3.1(1)]{Mok25}, so $\partial^2 = 0$ on its
 chain complex is automatic.  By
 Proposition~\ref{prop:planted-forest-tropical}, the planted-forest
 coefficient algebra $\mathbb{G}_{\mathrm{pf}}$ is the tropical
-skeleton of $\operatorname{FM}_n^{\mathrm{log}}$.  The functorial
+skeleton of $\operatorname{FM}_n^{\mathrm{log}}$.  Under
+Hypothesis~\ref{hyp:tropical-faithfulness}, the tropicalisation
+$\operatorname{trop}_*$ is a quasi-isomorphism.  The functorial
 transfer principle of Robert-Nicoud--Wierstra
-\cite[Theorem~5.1, Proposition~5.5]{RNW19} then implies: if the
-tropicalisation map induces a quasi-isomorphism
-\begin{equation}\label{eq:log-fm-qiso-hypothesis}
-\operatorname{trop}_*\colon
-C_*\bigl(\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)\bigr)
+\cite[Theorem~5.1, Proposition~5.5]{RNW19} then gives: the induced
+map on convolution $L_\infty$-algebras
+\[
+\operatorname{trop}^*\colon
+\Convinf\bigl(C_*^{\mathrm{trop}}(\mathbb{G}_{\mathrm{pf}}),\,
+  \operatorname{End}_{\cA}\bigr)
 \;\xrightarrow{\;\sim\;}\;
-C_*^{\mathrm{trop}}\bigl(\mathbb{G}_{\mathrm{pf}}\bigr)
-\end{equation}
-on chain complexes, then $D_{\cA}^2 = 0$ at the ambient level would
-follow from $\partial^2 = 0$ on
-$\operatorname{FM}_n^{\mathrm{log}}$ by one-slot functoriality of
-$\operatorname{Conv}$.  The hypothesis~\eqref{eq:log-fm-qiso-hypothesis}
-is plausible---the tropical skeleton captures the combinatorial type
-of every boundary stratum---but not yet established.  Proving it
-would reduce Conjecture~\ref{conj:differential-square-zero} to the
-topological statement that $\operatorname{FM}_n^{\mathrm{log}}$ has
-no cohomology invisible to the tropical skeleton.
-\end{remark}
+\Convinf\bigl(C_*(\operatorname{FM}_n^{\mathrm{log}}),\,
+  \operatorname{End}_{\cA}\bigr)
+\]
+is an $L_\infty$-quasi-isomorphism (one-slot functoriality in the
+coalgebra variable, with the algebra slot
+$\operatorname{End}_{\cA}$ held fixed).  Since $\partial^2 = 0$ on
+$\operatorname{FM}_n^{\mathrm{log}}$ implies $D^2 = 0$ on the
+right-hand side \textup{(}by the same argument as
+Theorem~\textup{\ref{thm:convolution-d-squared-zero})}, and the
+$L_\infty$-quasi-isomorphism preserves the differential, $D^2 = 0$
+transfers to the left-hand side, which is the ambient algebra
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}$.
+\end{proof}
 

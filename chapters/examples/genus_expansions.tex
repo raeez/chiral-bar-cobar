@@ -12,9 +12,9 @@ entire power series, and how that power series encodes the
 $\hat{A}$-genus through the Grothendieck--Riemann--Roch pushforward.
 
 These generating functions are the first shadows of the full modular
-characteristic $\Theta_\cA$.  At scalar level, the genus tower is
-controlled by~$\kappa(\cA)$ and the Faber--Pandharipande formula for
-$\lambda_g$.  The passage from a single number to an infinite
+characteristic $\Theta_\cA$, computed in the strict model $\Convstr$
+of $\Definfmod(\cA)$.  At scalar level, the genus tower is controlled
+by~$\kappa(\cA)$ and the Faber--Pandharipande formula for $\lambda_g$.  The passage from a single number to an infinite
 sequence of genus-dependent coefficients is not a mystery but a
 mechanism: the Mumford class $\lambda_g$ supplies the universal
 denominator, and the obstruction coefficient supplies the numerator.
@@ -29,6 +29,39 @@ obstruction as $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$.
 The scalar $\kappa(\cA)$ and the resulting genus expansions are now
 computed for each family: Heisenberg, affine Kac--Moody, Virasoro,
 and $\mathcal{W}_3$.
+
+\begin{remark}[Three-pillar interpretation: genus expansions]
+\label{rem:genus-expansions-three-pillar}
+\index{genus expansion!three-pillar interpretation}
+In the three-pillar architecture
+(\S\ref{sec:concordance-three-pillars}):
+(i)~the genus-$g$ bar complex is a \emph{curved} homotopy chiral
+algebra (Theorem~\ref{thm:cech-hca}) with curvature
+$\kappa(\cA) \cdot \omega_g$, where $\omega_g$ is the Mumford class
+(Theorem~\ref{thm:mumford-formula}).  The secondary Borcherds
+operations (Definition~\ref{def:secondary-borcherds}) at genus~$g$
+encode the obstruction $\mathrm{obs}_g(\cA)$ as their leading
+component: the universality theorem
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ is the statement that only
+the scalar shadow survives at genus~$g$;
+(ii)~the genus expansion \emph{is} the weight filtration on the
+modular convolution dg~Lie algebra $\mathfrak{g}^{\mathrm{mod}}_\cA$
+(Definition~\ref{def:modular-convolution-dg-lie}):
+the convolution $sL_\infty$-algebra
+(Theorem~\ref{thm:operadic-homotopy-convolution}) acquires a
+genus grading, and the free energy $F_g$ is the
+genus-$g$ projection of the master MC element $\Theta_\cA$.
+The generating functions $\sum_g F_g x^{2g}$ computed in this
+chapter are the shadow-algebra projections of
+$\Theta_\cA$ to the scalar component;
+(iii)~at genus~$g \geq 2$, the bar differential uses boundary strata
+of $\overline{\operatorname{FM}}_n(\Sigma_g)$; the log-FM framework
+(Theorem~\ref{thm:planted-forest-tropicalization}) extends these
+configuration spaces to nodal curves at the boundary of
+$\overline{\mathcal{M}}_g$, and the planted-forest tropicalization
+governs the clutching contributions to
+$\mathrm{obs}_g$ at genus~$g$.
+\end{remark}
 
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
@@ -1401,7 +1434,7 @@ $\kappa = c/2$ and $\kappa' = (26-c)/2$, giving
 $F_2 + F_2' = 13 \cdot 7/5760 = 91/5760$.
 The dimension sum is again $\dim Q_2 + \dim Q_2' = 8$.
 
-At the self-dual point $c = 0$ ($\mathrm{Vir}_0 \cong
+At the uncurved self-dual point $c = 0$ ($\mathrm{Vir}_0 \cong
 \mathrm{Vir}_0^!$, Theorem~\ref{thm:virasoro-self-duality}):
 $\dim Q_2 = 4$ by Case~1.  At the maximally asymmetric point
 $c = 26$ (where $\kappa = 13$, $\kappa' = 0$):
@@ -1409,10 +1442,10 @@ $c = 26$ (where $\kappa = 13$, $\kappa' = 0$):
 \dim Q_2(\mathrm{Vir}_{26}) + \dim Q_2(\mathrm{Vir}_0) = 8
 \implies \dim Q_2(\mathrm{Vir}_{26}) = 4
 \]
-since $\mathrm{Vir}_0$ is self-dual.
+since $\mathrm{Vir}_0$ is uncurved self-dual.
 At generic $c$, the splitting is asymmetric:
 $\dim Q_2(\mathrm{Vir}_c) \neq \dim Q_2(\mathrm{Vir}_{26-c})$
-for $c \neq 13$ (the non-self-dual, non-zero point), but
+for $c \neq 13$ (the FF-involution fixed point), but
 their sum is always~$8$.
 
 \smallskip
@@ -2592,14 +2625,13 @@ The Koszul dual is $\mathrm{Vir}_{1/2}^! = \mathrm{Vir}_{51/2}$
 with $\kappa' = 51/4$.  The Legendre dual potential is
 $S^{\vee}(p) = \frac{1}{2}H^{-1}(p,p)
 - \frac{1}{6}\mathfrak{C}(H^{-1}p, H^{-1}p, H^{-1}p) + \cdots
-= 2p^2 - \frac{1}{3}\cdot 2 \cdot(4p)^3/(6) + \cdots$
+= 2p^2 - \tfrac{1}{6}\cdot 2 \cdot(4p)^3 + \cdots$
 with $H^{-1} = P = 4$.  Concretely:
-$S^{\vee}(p) = 2p^2 - \frac{128}{3}p^3 + O(p^4)$.
-The cubic shadow of the dual is therefore
-$\mathfrak{C}_{\mathrm{Vir}_{51/2}} = -128 \cdot 2 = -256$,
-confirming Proposition~\ref{prop:legendre-duality-cubic}:
+$S^{\vee}(p) = 2p^2 - \frac{64}{3}p^3 + O(p^4)$.
+The cubic shadow of the dual is
 $\mathfrak{C}^! = -\mathfrak{C} \cdot P^3
-= -2 \cdot 64 = -128$ (the Hessian-transported negative).
+= -2 \cdot 64 = -128$,
+confirming Proposition~\ref{prop:legendre-duality-cubic} (the Hessian-transported negative).
 
 \medskip\noindent\textbf{Step 9: Resonance.}
 The quartic resonance divisor for $\mathrm{Vir}_c$ is the pole
@@ -2890,7 +2922,7 @@ $\widehat{\mathfrak{sl}}_{2,k}$ & $\frac{3(k+2)}{4}$ & $\frac{-3(k+2)}{4}$ & $0$
 $\widehat{\mathfrak{sl}}_{3,k}$ & $\frac{4(k+3)}{3}$ & $\frac{-4(k+3)}{3}$ & $0$ & $0$ \\
 $\mathrm{Vir}_c$ & $\frac{c}{2}$ & $\frac{26-c}{2}$ & $13$ & $13\phi_0$ \\
 $\mathcal{W}_{3,c}$ & $\frac{5c}{6}$ & $\frac{5(100-c)}{6}$ & $\frac{250}{3}$ & $\frac{250}{3}\phi_0$ \\
-$E_{8,k}$ lattice & $\frac{31(k+30)}{60}$ & $\frac{-31(k+30)}{60}$ & $0$ & $0$ \\
+$\widehat{E}_{8,k}$ & $\frac{62(k+30)}{15}$ & $\frac{-62(k+30)}{15}$ & $0$ & $0$ \\
 \bottomrule
 \end{tabular}
 \end{center}

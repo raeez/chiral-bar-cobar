@@ -31,7 +31,73 @@ loop expansion, and shows that the bar-cobar pairing models the
 S-matrix pairing between off-shell forms on the compactification and
 on-shell distributions on the open configuration space.
 
-In perturbative quantum field theory, Feynman diagrams organize the expansion of correlation functions by graph topology.  The bar differential --- a sum of residues indexed by collision patterns on configuration spaces --- produces precisely the same combinatorial structure: the propagator is the logarithmic form $\eta_{ij}$, each collision residue is a vertex, and Verdier duality is the passage from off-shell to on-shell.  This chapter makes the identification precise.
+\begin{theorem}[Bridge theorem: Feynman--bar dictionary; \ClaimStatusProvedHere]
+\label{thm:feynman-bar-bridge}
+\index{Feynman diagram!bar-cobar bridge|textbf}
+Let $\cA$ be a chiral algebra on a smooth curve~$X$ with OPE
+$a(z)\,b(w) \sim \sum_n C^{ab}_n(w)\,(z-w)^{-n-1}$.
+The following is an equality of complexes, not a metaphor:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lcl}
+\textbf{Perturbative QFT} && \textbf{Bar complex $\barBch(\cA)$} \\
+\hline
+propagator $G(z_i,z_j) = (z_i-z_j)^{-1}$
+  && $d\log$ kernel $\eta_{ij} = d\log(z_i - z_j)$ \\
+vertex factor $C^{ab}_n$
+  && OPE residue $\Res_{z_i = z_j}[a(z_i)\,b(z_j)\,(z_i-z_j)^n]$ \\
+loop in $\Gamma$ ($b_1(\Gamma) = L$)
+  && genus increment: contribution to $\barB^{(g)}$ with $g = L$ \\
+UV divergence (short-distance singularity)
+  && FM boundary stratum $\partial_S\overline{C}_k(X)$, $|S|\ge 2$ \\
+IR regularization
+  && compactification $C_k(X) \hookrightarrow \overline{C}_k(X)$ \\
+tree amplitude ($L=0$)
+  && bar filtration degree $F_0\,\barBch(\cA)$ \\
+$L$-loop amplitude
+  && bar filtration degree $F_L\,\barBch(\cA)$
+\end{tabular}
+\end{center}
+Moreover, the bar filtration by number of internal edges equals the
+loop expansion:
+\begin{equation}\label{eq:bar-filtration-loop-expansion}
+F_L\,\barBch(\cA)
+\;=\;
+\bigoplus_{g=0}^{L}\;
+\barB^{(g)}(\cA),
+\end{equation}
+and the associated graded is the direct sum of genus-$g$ bar complexes,
+so the bar differential respects the loop grading and each genus-$g$
+component is a well-defined subcomplex.
+\end{theorem}
+
+\begin{proof}
+The propagator identification is
+Theorem~\ref{thm:bar-cobar-isomorphism-main}: the bar differential on
+$\barBch(\cA)$ is built from residues of the logarithmic $1$-forms
+$\eta_{ij} = d\log(z_i - z_j)$ along the collision divisors
+$D_{ij} = \{z_i = z_j\} \subset \overline{C}_k(X)$.  The vertex
+identification follows from the residue formula for the bar
+differential (Theorem~\ref{thm:bar-cobar-isomorphism-main},
+Step~2): the coefficient of the residue at $D_{ij}$ is the
+OPE structure constant $C^{ab}_n$.
+
+For loops: a connected graph $\Gamma$ with $V$ vertices and $E$ edges
+has loop number $L = E - V + 1 = b_1(\Gamma)$.  In the bar complex,
+each such graph contributes to $\barB^{(g,k)}(\cA)$ with $g = L$
+(Proposition~\ref{prop:graph-genus-bar-degree}).  The FM boundary
+stratum $\partial_S\overline{C}_k(X)$ for $|S| \ge 2$ corresponds to
+the collision of the cluster~$S$; this is the geometric avatar of
+the UV divergence, resolved by the blowup along diagonals rather
+than by an analytic cutoff.
+
+The filtration identity~\eqref{eq:bar-filtration-loop-expansion}
+follows from the graph decomposition: the bar complex decomposes by
+stable graph type, and the number of loops in the graph equals the
+genus contribution.  Since the bar differential preserves the graph
+genus (it contracts edges or splits vertices without changing
+$b_1$), each $\barB^{(g)}$ is a subcomplex.
+\end{proof}
 
 \index{Feynman diagram|textbf}
 

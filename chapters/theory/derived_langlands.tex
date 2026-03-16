@@ -9,6 +9,17 @@
 \index{oper|textbf}
 \index{bar complex!critical level|textbf}
 
+\begin{remark}[What this chapter proves]
+At critical level $k=-h^\vee$: the bar complex
+$\barB(\widehat{\fg}_{-h^\vee})$ is uncurved and its cohomology
+computes $\fg^\vee$-opers (Theorem~\ref{thm:critical-bar-opers}).
+At admissible level: rank-$1$ periodic CDG shadow proved; the full
+admissible-level periodic structure is conjectured
+(Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided-monoidal}).
+Connection to the Frenkel--Gaitsgory geometric Langlands programme
+via the derived center.
+\end{remark}
+
 This is where the categorical logarithm touches geometric Langlands.
 The bar complex of an affine Kac--Moody algebra, viewed as a function
 of the level $k$, interpolates between two radically different
@@ -62,6 +73,70 @@ quotient $\mathcal{C}(U_q(\fg))$ of the quantum group.  Any lift
 to the full finite-dimensional quantum-group category, or to a
 completed/coderived enlargement beyond the semisimplified target, is
 a separate outer MC3 problem (proved in type~A; conjectural beyond type~A).
+
+\begin{theorem}[Bridge theorem: bar complex at critical level $\longrightarrow$ opers $\longrightarrow$ geometric Langlands; \ClaimStatusProvedHere]
+\label{thm:langlands-bar-bridge}
+\index{geometric Langlands!bridge theorem|textbf}
+\index{oper!bridge from bar complex|textbf}
+Let $\fg$ be a simple finite-dimensional Lie algebra with dual
+Coxeter number~$h^\vee$, and let $\fg^\vee$ denote the Langlands
+dual Lie algebra.  At the critical level $k = -h^\vee$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Curvature vanishing)}\quad
+  $\kappa(\widehat{\fg}_{-h^\vee}) = 0$
+  \textup{(}Corollary~\textup{\ref{cor:critical-level-universality}}\textup{)},
+  so $\barB(\widehat{\fg}_{-h^\vee})$ is an honest chain complex
+  \textup{(}uncurved: $m_0 = 0$, hence $d^2 = 0$\textup{)}.
+\item \textup{(Derived oper identification)}\quad
+  The bar cohomology computes the de~Rham complex of the oper space:
+  \[
+  H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+  \;\cong\;
+  \Omega^n\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr)
+  \quad\text{for all } n \ge 0.
+  \]
+  At $n = 0$ this is the Feigin--Frenkel center
+  $Z(\widehat{\fg}_{-h^\vee}) \cong
+  \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$;
+  at $n = 1$ this gives K\"ahler differentials of the oper space;
+  at $n \ge 2$ this gives the full derived enhancement.
+\item \textup{(Derived center)}\quad
+  The derived center of the completed enveloping algebra is
+  \[
+  Z_{\mathrm{der}}(\widehat{\fg}_{-h^\vee})
+  \;:=\;
+  RHH^0_{\mathrm{ch}}(\widehat{\fg}_{-h^\vee})
+  \;\cong\;
+  \mathcal{O}^{\mathrm{der}}\bigl(\mathrm{Op}_{\fg^\vee}(D)\bigr),
+  \]
+  and the bar complex $\barB(\widehat{\fg}_{-h^\vee})$ is a
+  concrete chain-level model for this derived oper algebra.
+  This is the entry point of bar-cobar duality into the geometric
+  Langlands programme: the bar side computes the automorphic
+  category \textup{(}$\widehat{\fg}$-modules\textup{)}, and the
+  cobar side computes the spectral category \textup{(}quasi-coherent
+  sheaves on the oper space\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is Corollary~\ref{cor:critical-level-universality}: the
+modular characteristic $\kappa$ vanishes at the critical level
+because the Killing form $(\cdot,\cdot)_k$ degenerates at
+$k = -h^\vee$.  Part~(ii) is proved degree by degree:
+$H^0$ is Theorem~\ref{thm:oper-bar-h0-dl} (via the PBW spectral
+sequence and the Feigin--Frenkel theorem), $H^1$ is
+Proposition~\ref{prop:oper-bar-h1-dl}, $H^2$ is
+Proposition~\ref{prop:oper-bar-h2-dl}, and the general case
+follows from the Whitehead spectral decomposition
+(Proposition~\ref{prop:whitehead-spectral-decomposition})
+together with formal smoothness of the oper space
+(Frenkel--Gaitsgory~\cite{FG06}).  Part~(iii) identifies the
+derived center as the derived global sections of the structure
+sheaf on the oper space; the bar complex provides the explicit
+chain model by combining parts~(i) and~(ii) with the bar-Ext
+identification and the Frenkel--Teleman theorem~\cite{FT06}.
+\end{proof}
 
 \begin{remark}[Periodicity open problem]
 The theorematic core of this chapter is asymmetric.  The critical-level

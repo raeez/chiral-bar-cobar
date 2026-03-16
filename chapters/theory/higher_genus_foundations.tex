@@ -33,8 +33,10 @@ dual~$\cA^!$.  The central actors are three: the curved fiberwise
 differential~$\dfib$ (Section~\ref{sec:complementarity-theorem}), the
 corrected holomorphic differential~$\Dg{g}$ satisfying~$\Dg{g}^{\,2}=0$
 via the Fay trisecant identity, and the modular convolution dg~Lie
-algebra~$\gAmod$ whose Maurer--Cartan elements encode the full
-genus expansion.
+algebra~$\gAmod$ --- the strict model of the homotopy-invariant
+$\Definfmod(\cA)$
+(\S\ref{subsec:two-level-convention}) --- whose Maurer--Cartan
+elements encode the full genus expansion.
 
 On $\mathbb{P}^1$, the logarithmic form
 $\eta_{12} = d\log(z_1 - z_2)$ is single-valued and the Arnold
@@ -97,14 +99,14 @@ modular cyclic deformation complex
 (Definition~\ref{def:modular-cyclic-deformation-complex}) is a
 Maurer--Cartan family parameterized by genus~$g$ and point
 configurations.  The universal MC element
-$\Theta_\cA^{(g)} \in \mathrm{MC}(\gAmod)$ projects to: the
-curvature~$\kappa(\cA)$ at the scalar level (Ring~1); the curved
-differential~$\dfib$ at the differential level (Ring~2); and the
+$\Theta_\cA \in \mathrm{MC}(\gAmod)$ projects, at each genus~$g$, to:
+the curvature~$\kappa(\cA)$ at the scalar level; the curved
+differential~$\dfib$ at the differential level; and the
 fully corrected differential~$\Dg{g}$ with $\Dg{g}^{\,2}=0$ at
 the period-corrected level.  This section develops the strict dg model
 (the three differentials and their interaction); the full homotopy
 $L_\infty$ structure and the modular envelope appear in
-Chapter~\ref{chap:higher-genus-modular-koszul}.
+\S\ref{sec:koszul-across-genera}.
 
 \begin{remark}[Parallel track: the anomaly]\label{rem:anomaly-parallel-track}
 \index{conformal anomaly!parallel track}
@@ -266,6 +268,122 @@ Fiber-period parameters live in $H^1(\Sigma_g,\C)$, not on moduli
 They become moduli classes via the Kodaira--Spencer map
 (Theorem~\ref{thm:kodaira-spencer-chiral-complete}).
 \end{remark}
+
+\begin{proposition}[The genus-$g$ curvature package; \ClaimStatusProvedHere]
+\label{prop:genus-g-curvature-package}
+\index{curvature package!genus-g@genus-$g$|textbf}
+Let $\cA$ be a cyclic chiral algebra on a smooth projective
+curve~$X$ of genus~$g \geq 1$, and let
+$\{\omega_1,\ldots,\omega_g\}$ be the normalized abelian
+differentials on~$\Sigma_g$
+\textup{(}$\oint_{A_l}\omega_k = \delta_{kl}$\textup{)},
+$\Omega = (\tau_{kl})$ the period matrix, and
+$E(z,w)$ the prime form
+\textup{(}a section of
+$K^{-1/2}\boxtimes K^{-1/2}$ on $\Sigma_g \times \Sigma_g$,
+not $K^{+1/2}$\textup{)}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Propagator formula.}\;
+  The single-valued \textup{(}Arakelov-normalized\textup{)}
+  genus-$g$ propagator is
+  \begin{equation}\label{eq:propagator-package}
+  \eta_{ij}^{(g)}
+  \;=\;
+  \biggl[\partial_{z_i}\!\log E(z_i,z_j)
+  + \pi \sum_{\alpha,\beta=1}^{g}
+  \omega_\alpha(z_i)\,
+  (\operatorname{Im}\Omega)^{-1}_{\alpha\beta}\,
+  \operatorname{Im}\!\Bigl(\int_{z_0}^{z_j}\!\omega_\beta\Bigr)
+  \biggr](dz_i - dz_j).
+  \end{equation}
+  The first term is holomorphic with monodromy; the second
+  is smooth and restores double periodicity.
+
+\item \emph{Curvature equation.}\;
+  The fiberwise bar differential satisfies
+  \begin{equation}\label{eq:curvature-package}
+  \dfib^{\,2}
+  \;=\;
+  \kappa(\cA) \cdot \omega_g \cdot \mathrm{id},
+  \qquad
+  \omega_g
+  \;=\;
+  \frac{i}{2}\sum_{k=1}^{g}
+  \omega_k \wedge \overline{\omega}_k,
+  \end{equation}
+  where $\omega_g$ is the Arakelov $(1,1)$-form and
+  $\kappa(\cA) = \mathrm{Tr}_\cA = \sum_a\langle e_a,
+  e^a\rangle$ is the self-contraction trace.
+
+\item \emph{Corrected differential.}\;
+  The total corrected differential
+  \[
+  \Dg{g}
+  \;=\;
+  \dzero
+  + \sum_{k=1}^{g} t_k\,d_k,
+  \qquad
+  t_k \;=\; \oint_{A_k}\omega_k,
+  \]
+  satisfies $\Dg{g}^{\,2} = 0$
+  \textup{(}Theorem~\textup{\ref{thm:quantum-diff-squares-zero})}.
+  The correction terms $t_k d_k$ cancel the curvature
+  via the Lagrangian property of the
+  $A$-cycle subspace in $H_1(\Sigma_g,\mathbb{Z})$.
+
+\item \emph{Hodge bundle structure.}\;
+  The Hodge bundle $\mathbb{E}^\vee = \pi_*\omega_\pi$
+  over $\overline{\mathcal{M}}_g$ has fiber
+  $H^0(\Sigma_g,\Omega^1)$ of rank~$g$.  As
+  $[\Sigma_g]$ varies, the curvature defines an
+  obstruction class
+  \begin{equation}\label{eq:obstruction-hodge}
+  \mathrm{obs}_g(\cA)
+  \;=\;
+  \kappa(\cA)\cdot\lambda_g
+  \;\in\;
+  H^{2g}(\overline{\mathcal{M}}_g,\mathbb{Q}),
+  \end{equation}
+  where $\lambda_g = c_g(\mathbb{E})$ is the top Chern
+  class, and the generating function is
+  \begin{equation}\label{eq:family-index-package}
+  \sum_{g \geq 1}\mathrm{obs}_g\,\hbar^{2g-2}
+  \;=\;
+  \kappa(\cA)\cdot(\hat{A}(i\hbar) - 1).
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) is the Arakelov normalization of the Abelian
+differential of the third kind; the non-holomorphic correction
+is forced by the requirement that
+$\eta_{ij}^{(g)}$ be single-valued under transport around
+$A$- and $B$-cycles (the $B$-cycle monodromy of
+$\partial_z\!\log E$ is compensated by the
+$(\operatorname{Im}\Omega)^{-1}$ term).  Part~(ii) is the
+Arnold defect computation: the wedge product
+$\eta_{12}^{(g)} \wedge \eta_{23}^{(g)} + \text{cyclic}$
+equals $\kappa(\cA)\cdot\omega_g$ because the
+$\bar\partial$-exact correction terms contribute a
+$(1,1)$-form proportional to
+$\sum_k\omega_k\wedge\bar\omega_k$, and the coefficient
+is the self-contraction trace
+(Theorem~\ref{thm:quantum-arnold-relations}).
+Part~(iii): the Fay trisecant identity implies that the
+holomorphic part
+$\partial_z\!\log E$ alone satisfies the exact Arnold
+relation, so $\Dg{g}$ built from the holomorphic propagator
+squares to zero (Theorem~\ref{thm:quantum-diff-squares-zero}).
+Part~(iv): the family
+$[\barB_g(\cA)]^{\mathrm{vir}} \in
+K^0(\overline{\mathcal{M}}_g)$ has Chern character computed
+by Grothendieck--Riemann--Roch on
+$\pi\colon \overline{\mathcal{C}}_g
+\to \overline{\mathcal{M}}_g$; the fiber contribution is
+$\kappa(\cA)$ and the Todd class gives the $\hat{A}$-series
+(Theorem~\ref{thm:family-index}).
+\end{proof}
 
 \section{The bar complex as a family over moduli}
 \label{sec:geometric-prologue}
@@ -4473,6 +4591,23 @@ the scalar level to point
 (Corollary~\ref{cor:scalar-saturation}).
 \end{remark}
 
+\begin{remark}[Beyond the master table: the shadow Postnikov tower]
+\label{rem:beyond-master-table}
+\index{shadow Postnikov tower!beyond scalar level}
+The master table records the scalar level
+$\Theta_\cA^{\leq 2} = \kappa(\cA)$ of the shadow Postnikov tower.
+The cubic, quartic, and higher shadows --- computed for each family
+in the example chapters of Part~II --- extend this table into a
+multi-column shadow census: Heisenberg terminates at arity~$2$
+(Corollary~\ref{cor:heisenberg-postnikov-termination}),
+affine at arity~$3$
+(Corollary~\ref{cor:affine-postnikov-termination}),
+$\beta\gamma$ at arity~$4$
+(Corollary~\ref{cor:betagamma-postnikov-termination}),
+and Virasoro/$\mathcal{W}_N$ has an infinite tower
+(Corollary~\ref{cor:virasoro-postnikov-nontermination}).
+\end{remark}
+
 \begin{remark}[Tautological span]\label{rem:tautological-span}
 \index{tautological ring!span from Koszul algebras}
 The collection $\{\kappa(\mathcal{A}) \cdot \lambda_g : \mathcal{A} \text{ Koszul}\}$ generates a rank-$1$ subgroup of $R^g(\overline{\mathcal{M}}_g)$ for each $g$, since all obstruction classes are proportional to $\lambda_g$ (Theorem~\ref{thm:genus-universality}).  The image of the group homomorphism $K_0(\mathrm{KCA}) \to \mathbb{Q}$ (Corollary~\ref{cor:tautological-class-map}) is $\mathbb{Q}$ itself: the Heisenberg algebra $\mathcal{H}_\kappa$ achieves any rational $\kappa$, and additivity (Corollary~\ref{cor:kappa-additivity}) extends the range to all of~$\mathbb{Q}$.
@@ -5698,12 +5833,18 @@ The chain map $\pi_*$ has the following properties:
   strata: it encodes exactly the codimension-${\geq}2$ boundary
   relations of $\operatorname{FM}_n^{\mathrm{log}}$ that the
   classical FM space $\overline{\operatorname{FM}}_n$ does not see.
+  These extra boundary relations are precisely the higher
+  $L_\infty$ homotopies that the planted-forest propagator
+  computes in the graph-sum formula~\eqref{eq:elln-general-graph-sum}
+  \textup{(}Construction~\textup{\ref{constr:explicit-convolution-linfty})}.
 \end{enumerate}
 
 For $X = \mathbb{P}^1$ with $D = \{0, 1, \infty\}$, the identification
 $\operatorname{FM}_{n-3}(\mathbb{P}^1 \mathbin{|} 0{+}1{+}\infty)
 \cong \overline{\cM}_{0,n}$
-of \cite[\S3.4.1]{Mok25} gives an explicit model: the log~FM space
+of \cite[\S3.4.1]{Mok25}
+  \textup{(}Example~\textup{\ref{ex:log-fm-moduli-rational})}
+  gives an explicit model: the log~FM space
 \emph{is} the moduli space of stable rational curves, and $\pi_*$ is
 the tautological map forgetting the log structure on the boundary
 divisors.

@@ -21,7 +21,7 @@ Heisenberg algebra: its shadow tower terminates at weight~$2$.
 The $bc$ ghost system, though fermionic, carries a nonzero curvature
 $\kappa_{bc} \neq 0$ and terminates at the same level.  The
 $\beta\gamma$ system is the first atom where the tower extends beyond
-the scalar level: $\kappa = 0$ but the quartic contact shadow is
+the scalar level: $m_0 = 0$ (no double pole) but the quartic contact shadow is
 nontrivial, so $\Theta^{\leq 4} \neq 0$ and the tower terminates at
 weight~$4$ (the contact/quartic archetype, explored in full in
 Chapter~\ref{chap:beta-gamma}).  Thus the periodic table already
@@ -29,7 +29,11 @@ exhibits termination at weight~$2$ and weight~$4$; the intermediate
 case (weight~$3$, the Lie/tree archetype) belongs to the affine
 Kac--Moody family of Chapter~\ref{chap:kac-moody-koszul}, and the
 infinite tower appears only with $\mathcal{W}$-algebras
-(Chapter~\ref{chap:w-algebra-koszul}).
+(Chapter~\ref{chap:w-algebra-koszul}).  At the homotopy level, each
+free-field atom occupies a different position in the formality
+landscape: the fermion and $bc$ systems are trivially formal
+($\Definfmod$ equals its strict model), while $\beta\gamma$ carries
+genuine higher $L_\infty$ brackets that the strict model truncates.
 
 Each free-field pair also exhibits Koszul duality in its simplest form:
 the duality exchanges statistics
@@ -47,6 +51,74 @@ shadow calculus at weight~$4$: the quartic contact invariant first
 appears here, while the scalar level~$\kappa$ vanishes for
 $\beta\gamma$ and is nonzero for~$bc$
 (Remark~\ref{rem:unifying-principle}).
+\end{remark}
+
+\begin{remark}[Three-pillar interpretation: free-field atoms]
+\label{rem:free-fields-three-pillar}
+\index{free fields!three-pillar interpretation}
+In the three-pillar architecture
+(\S\ref{sec:concordance-three-pillars}):
+(i)~free bosons produce a \emph{strict} homotopy chiral algebra
+(Gaussian archetype, all secondary Borcherds operations
+$j'_n = 0$ for $n \geq 3$;
+Definition~\ref{def:secondary-borcherds},
+cf.\ Example~\ref{ex:cech-hca-heisenberg}).  The $\beta\gamma$--$bc$
+pairs are non-strict: they carry $j'_3 \neq 0$ from the cubic OPE,
+but the quartic contact invariant vanishes
+($\mu_{\beta\gamma} = 0$,
+Corollary~\ref{cor:nms-betagamma-mu-vanishing}), so the
+\v{C}ech homotopy chiral algebra
+(Theorem~\ref{thm:cech-hca}) terminates at arity~$3$;
+(ii)~the convolution $sL_\infty$-algebra
+(Theorem~\ref{thm:operadic-homotopy-convolution}) is \emph{formal}
+for all free-field atoms: the transferred higher brackets
+$\ell_k^{\mathrm{tr}} = 0$ for $k \geq 3$ on free bosons and
+fermions, and $\ell_4^{\mathrm{tr}}$ is a coboundary for
+$\beta\gamma$--$bc$.  The shadow algebra is
+$\mathbb{Q}[\kappa]$ (bosonic) or
+$\mathbb{Q}[\kappa, \mu]$ with $\mu = 0$ ($\beta\gamma$--$bc$);
+(iii)~the log-FM tropicalization
+(Theorem~\ref{thm:planted-forest-tropicalization}) reduces to the
+classical FM compactification for free fields: no nodal divisor
+insertions are needed because the OPE has at most simple poles,
+so the planted-forest coefficient algebra
+$\mathcal{G}_{\mathrm{pf}}$ contributes no corrections beyond
+depth~$1$.
+Free-field atoms are the unique family where Pillar~B is formal
+and Pillar~C is classical simultaneously.
+\end{remark}
+
+\begin{remark}[Free-field bar complex: the polynomial growth baseline]
+\label{rem:free-field-bar-baseline}
+\index{bar complex!free-field baseline}
+The bar cohomology of the free-field atoms establishes the polynomial
+growth baseline against which all subsequent families are measured.
+At genus~$0$, $\dim H^n(\barBgeom(\cA))$ grows as follows:
+\begin{center}
+\begin{tabular}{l c c c c c c c l}
+\textbf{Atom} & $n{=}0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$
+  & \textbf{GF} \\
+\hline
+Free fermion $\mathcal{F}$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$
+  & $1$ \\
+Heisenberg $\mathcal{H}_k$ & $1$ & $0$ & $1$ & $0$ & $0$ & $0$ & $0$
+  & $1 + x^2$ \\
+$\beta\gamma$ & $1$ & $2$ & $4$ & $10$ & $26$ & $70$ & $192$
+  & $\sqrt{(1{+}x)/(1{-}3x)}$ \\
+$bc$ ghosts & $1$ & $2$ & $4$ & $10$ & $26$ & $70$ & $192$
+  & $\sqrt{(1{+}x)/(1{-}3x)}$
+\end{tabular}
+\end{center}
+The free fermion and Heisenberg bar complexes are
+finite-dimensional; $\beta\gamma$ and $bc$ share the discriminant
+$\Delta(x) = (1{-}3x)(1{+}x)$ with $\widehat{\mathfrak{sl}}_2$ and
+the Virasoro algebra
+(Theorem~\ref{thm:ds-bar-gf-discriminant}).  The pattern: among
+free-field atoms, only those whose OPE has a simple pole
+produce infinite bar cohomology.  The polynomial
+growth (roughly $3^{n/2}$) is the baseline against which the
+exponential growth of interacting theories
+(Kac--Moody, $\mathcal{W}$-algebras) is calibrated.
 \end{remark}
 
 \section{Free-field atoms: setup and OPE structure}\label{sec:free-field-atoms-setup}
@@ -1014,7 +1086,7 @@ $\Omega(\bar{B}(\mathrm{Sym}^{\mathrm{ch}}(V^*)))
 \emph{The bar complex.}
 For a commutative chiral algebra $\mathcal{C} = \mathrm{Sym}^{\mathrm{ch}}(W)$
 generated by a vector space~$W$, the operadic Koszul duality
-${\chirCom}^! = \chirLie$ gives:
+$\mathsf{Com}^{\mathrm{ch},!} = \chirLie$ gives:
 \[
 \bar{B}^{\mathrm{ch}}(\mathrm{Sym}^{\mathrm{ch}}(W))
 \;\simeq\;
@@ -3801,7 +3873,8 @@ For the $\beta\gamma$ system on $\mathbb{P}^1$ with the two-element
 cover, the \v{C}ech complex has two generators:
 $\beta \in \Gamma(X, K_X^{1-\lambda})$ and
 $\gamma \in \Gamma(X, K_X^\lambda)$.  The binary bracket $F_2$ is
-induced by $\beta(z)\gamma(w) \sim 1/(z-w)$.
+induced by $\beta(z)\gamma(w) \sim 1/(z-w)$; in modes,
+$F_2(\beta_m, \gamma_n) = \delta_{m+n,0} \cdot \mathbf{1}$.
 
 By Proposition~\ref{prop:two-element-strict}, the \v{C}ech HCA is
 again strict:
