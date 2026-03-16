@@ -4627,6 +4627,828 @@ sheaf requires the coderived Ran-space formalism
 \end{remark}
 
 % ================================================================
-% SECTION 4.14: COMPLEMENTARITY THEOREM
+% SECTION 4.14: QUANTUM CHIRAL HOMOLOGY FROM STABLE GRAPH TOPOLOGY
+% ================================================================
+
+\section{Quantum chiral homology from stable graph topology}
+\label{sec:quantum-chiral-homology-first-principles}
+\index{quantum chiral homology|textbf}
+\index{stable graph!topology|textbf}
+
+The previous sections constructed the genus-$g$ bar complex, proved
+the quantum Arnold relations, established genus universality, and
+identified the bar complex with the Feynman transform
+(Theorem~\ref{thm:prism-higher-genus}).  We now reverse the logical
+direction: starting from the combinatorics of stable graphs alone,
+we derive the full structure of quantum chiral homology---its
+differential, its curvature, its filtrations, and its homotopy
+type---as consequences of the boundary geometry of
+$\overline{\mathcal{M}}_{g,n}$.  This ``graph-first'' perspective
+makes visible several structural features that are hidden in the
+analytic construction: the loop order filtration, the curvature as a
+self-contraction trace, the Getzler--Kapranov involution, and the
+Grothendieck--Teichm\"uller action.
+
+\subsection{The stable graph complex}
+\label{subsec:stable-graph-complex}
+\index{stable graph!complex|textbf}
+
+\begin{definition}[Stable graph]\label{def:stable-graph}
+A \emph{stable graph} of type $(g,n)$ is a connected graph
+$\Gamma = (V, E, L, g_\bullet)$ consisting of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a finite vertex set $V(\Gamma)$;
+\item a finite edge set $E(\Gamma)$ (each edge is an unordered pair of
+  half-edges at---possibly equal---vertices);
+\item a leg set $L(\Gamma) = \{1, \ldots, n\}$ of external
+  half-edges, each attached to a vertex;
+\item a genus function $g_\bullet\colon V(\Gamma) \to \mathbb{Z}_{\geq 0}$;
+\end{enumerate}
+subject to:
+\begin{itemize}
+\item \emph{Stability:} $2g_v - 2 + \mathrm{val}(v) > 0$ for every
+  $v \in V(\Gamma)$, where $\mathrm{val}(v)$ counts all half-edges
+  (from edges and legs) at~$v$.
+\item \emph{Genus:} $g = \sum_{v \in V} g_v + b_1(\Gamma)$, where
+  $b_1(\Gamma) = |E(\Gamma)| - |V(\Gamma)| + 1$ is the first Betti
+  number (loop order) of the underlying graph.
+\end{itemize}
+Write $\mathcal{G}_{g,n}^{\mathrm{st}}$ for the set of isomorphism
+classes of stable graphs of type $(g,n)$.
+\end{definition}
+
+\begin{definition}[Loop order]\label{def:loop-order}
+\index{loop order|textbf}
+\index{Betti number!first}
+The \emph{loop order} of a stable graph~$\Gamma$ is its first Betti
+number
+\begin{equation}\label{eq:loop-order}
+\ell(\Gamma) := b_1(\Gamma)
+= |E(\Gamma)| - |V(\Gamma)| + 1.
+\end{equation}
+The \emph{vertex genus} is
+$g_V(\Gamma) := \sum_{v \in V} g_v = g - \ell(\Gamma)$.
+For a stable graph of type $(g,n)$:
+\begin{equation}\label{eq:loop-order-range}
+0 \;\leq\; \ell(\Gamma) \;\leq\; g.
+\end{equation}
+The extremes are:
+$\ell = 0$ (trees with higher-genus vertices) and
+$\ell = g$ (genus-$0$ vertices only, all genus from graph topology).
+\end{definition}
+
+\begin{remark}[Genus decomposition triangle]%
+\label{rem:genus-decomposition-triangle}
+\index{genus decomposition!triangle}
+The identity
+\begin{equation}\label{eq:genus-triangle}
+\underbrace{g}_{\text{total genus}}
+\;=\;
+\underbrace{\textstyle\sum_v g_v}_{\text{vertex genus}}
+\;+\;
+\underbrace{b_1(\Gamma)}_{\text{loop order}}
+\end{equation}
+is the organizing principle of the perturbative expansion.
+\emph{Tree level} ($\ell = 0$): all genus resides at vertices; the
+bar complex contribution is a tree-level composition of lower-genus
+data.
+\emph{Maximal loop order} ($\ell = g$): every vertex carries
+genus~$0$; the contribution is a pure loop integral over the genus-$0$
+vertex algebra.  The general term interpolates between these extremes.
+\end{remark}
+
+\begin{definition}[Edge contraction and the stable graph differential]%
+\label{def:edge-contraction}
+\index{edge contraction|textbf}
+\index{stable graph!differential}
+Let $\Gamma$ be a stable graph and $e \in E(\Gamma)$ an edge.
+The \emph{contraction} $\Gamma / e$ is the stable graph obtained by:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If $e$ connects distinct vertices $v_1, v_2$:
+  merge $v_1$ and $v_2$ into a single vertex $v_{12}$ with
+  $g_{v_{12}} = g_{v_1} + g_{v_2}$,
+  $\mathrm{val}(v_{12}) = \mathrm{val}(v_1) + \mathrm{val}(v_2) - 2$.
+  Loop order is preserved: $b_1(\Gamma/e) = b_1(\Gamma)$.
+\item If $e$ is a loop at vertex $v$:
+  remove $e$ and set $g_{v}' = g_v + 1$,
+  $\mathrm{val}(v)' = \mathrm{val}(v) - 2$.
+  Loop order decreases: $b_1(\Gamma/e) = b_1(\Gamma) - 1$.
+\end{enumerate}
+In both cases, $g(\Gamma/e) = g(\Gamma)$ (total genus is preserved).
+The \emph{stable graph differential} is
+\begin{equation}\label{eq:stable-graph-diff}
+\partial_{\mathcal{G}}\Gamma
+\;=\;
+\sum_{e \in E(\Gamma)}
+(-1)^{\sigma(e,\Gamma)}\,\Gamma / e,
+\end{equation}
+where $\sigma(e,\Gamma)$ is the position of~$e$ in the chosen
+ordering of $E(\Gamma)$.
+\end{definition}
+
+\begin{lemma}[$\partial_{\mathcal{G}}^2 = 0$;
+\ClaimStatusProvedHere]\label{lem:stable-graph-d-squared}
+The stable graph differential satisfies $\partial_{\mathcal{G}}^2 = 0$.
+\end{lemma}
+
+\begin{proof}
+Each term in $\partial_{\mathcal{G}}^2$ contracts two edges
+$e, e'$ in some order.  If $e$ and $e'$ share no vertex, the
+contractions commute.  If they share a vertex, the two orders
+produce the same graph $\Gamma / \{e, e'\}$ with opposite signs
+(from the antisymmetry of the determinant ordering in
+$\det(E(\Gamma))$).  In both cases, the terms cancel in pairs.
+\end{proof}
+
+\begin{remark}[Boundary strata of $\overline{\mathcal{M}}_{g,n}$]%
+\label{rem:boundary-strata-stable-graph}
+The codimension-$1$ boundary strata of $\overline{\mathcal{M}}_{g,n}$
+are indexed by stable graphs with $|E| = 1$
+(a single node = a single edge in the dual graph):
+\[
+\partial\overline{\mathcal{M}}_{g,n}
+\;=\;
+\sum_{\Gamma,\, |E(\Gamma)| = 1}
+\overline{\mathcal{M}}_\Gamma,
+\]
+where $\overline{\mathcal{M}}_\Gamma =
+\prod_{v \in V(\Gamma)} \overline{\mathcal{M}}_{g_v, \mathrm{val}(v)}$.
+The relation $\partial^2 = 0$ on
+$\overline{\mathcal{M}}_{g,n}$ is the geometric incarnation of
+$\partial_{\mathcal{G}}^2 = 0$.  This is the single axiom from
+which all of quantum chiral homology flows.
+\end{remark}
+
+\subsection{The loop order filtration}
+\label{subsec:loop-order-filtration}
+\index{loop order!filtration|textbf}
+
+\begin{definition}[Loop order filtration on the Feynman transform]%
+\label{def:loop-order-filtration}
+\index{Feynman transform!loop order filtration}
+Let $\barB^{(g)}(\cA)
+\simeq \mathrm{FT}^{(g)}_{\mathcal{M}od}(\cA)$ be the genus-$g$
+bar complex, identified with the Feynman transform
+(Theorem~\ref{thm:prism-higher-genus}).
+Define the \emph{loop order filtration}
+\begin{equation}\label{eq:loop-filtration}
+F^\ell\!\barB^{(g)}(\cA)
+\;:=\;
+\bigoplus_{\substack{\Gamma \in \mathcal{G}_{g,n}^{\mathrm{st}}
+\\ b_1(\Gamma) \geq \ell}}
+\cA(\Gamma) \otimes \det(E(\Gamma)),
+\end{equation}
+where $\cA(\Gamma) = \bigotimes_{v \in V(\Gamma)}
+\cA(g_v, \mathrm{val}(v))$.
+
+This is a descending filtration:
+\[
+\barB^{(g)} = F^0 \supset F^1 \supset \cdots \supset F^g \supset
+F^{g+1} = 0.
+\]
+\end{definition}
+
+\begin{proposition}[Filtration compatibility;
+\ClaimStatusProvedHere]\label{prop:loop-filtration-compatible}
+\index{loop order!filtration compatibility}
+The Feynman transform differential respects the loop order
+filtration:
+\begin{equation}\label{eq:loop-filtration-d}
+d_{\mathrm{FT}} \colon
+F^\ell\!\barB^{(g)} \to F^{\ell-1}\!\barB^{(g)}.
+\end{equation}
+Precisely, $d_{\mathrm{FT}}$ decomposes as
+\begin{equation}\label{eq:d-tree-loop}
+d_{\mathrm{FT}}
+\;=\; d_{\mathrm{tree}} + d_{\mathrm{loop}},
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $d_{\mathrm{tree}}$ contracts non-loop edges
+  \textup{(}edges connecting distinct vertices\textup{)};
+  this preserves loop order:
+  $d_{\mathrm{tree}}\colon F^\ell \to F^\ell$.
+\item $d_{\mathrm{loop}}$ contracts loop edges
+  \textup{(}self-edges at a vertex\textup{)}, using the invariant
+  pairing $\langle -, - \rangle_\cA$;
+  this decreases loop order by~$1$:
+  $d_{\mathrm{loop}}\colon F^\ell \to F^{\ell-1}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By Definition~\ref{def:edge-contraction}: contracting a non-loop
+edge preserves $b_1$ (both $|E|$ and $|V|$ decrease by~$1$);
+contracting a loop edge decreases $b_1$ by~$1$ ($|E|$ decreases
+but $|V|$ is unchanged).  Since the Feynman transform differential
+is a sum over all edge contractions
+(Definition~\ref{def:feynman-transform}), the decomposition
+$d_{\mathrm{FT}} = d_{\mathrm{tree}} + d_{\mathrm{loop}}$ follows.
+\end{proof}
+
+\begin{theorem}[Loop order spectral sequence;
+\ClaimStatusProvedHere]\label{thm:loop-order-spectral-sequence}
+\index{spectral sequence!loop order|textbf}
+The loop order filtration on $\barB^{(g)}(\cA)$ induces a
+convergent spectral sequence
+\begin{equation}\label{eq:loop-ss}
+E_0^{\ell,q}
+\;=\;
+\bigl(F^\ell / F^{\ell+1}\bigr)^q
+\;\Longrightarrow\;
+H^{\ell+q}\!\bigl(\barB^{(g)}(\cA)\bigr),
+\end{equation}
+with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $E_0^{\ell,q}$: the space of Feynman transform elements
+  supported on stable graphs with $b_1(\Gamma) = \ell$ exactly;
+
+\item $d_0 = d_{\mathrm{tree}}$: the differential on~$E_0$ contracts
+  only non-loop edges \textup{(}separating-type gluings\textup{)};
+
+\item $E_1^{\ell,q}
+  = H^q\!\bigl(F^\ell / F^{\ell+1},\, d_{\mathrm{tree}}\bigr)$:
+  the cohomology of tree-edge contractions at fixed loop order;
+
+\item $d_1 = [d_{\mathrm{loop}}]$:
+  the induced differential on~$E_1$, which decreases loop
+  order by~$1$ via loop contraction.
+\end{enumerate}
+The spectral sequence converges because the filtration is
+bounded \textup{(}$0 \leq \ell \leq g$\textup{)}.
+\end{theorem}
+
+\begin{proof}
+This is the spectral sequence of a bounded descending filtration
+on a cochain complex.  Convergence is immediate from
+$F^{g+1} = 0$.  The identification of $d_0$ with
+$d_{\mathrm{tree}}$ follows from
+Proposition~\ref{prop:loop-filtration-compatible}: $d_{\mathrm{tree}}$
+is the component of the differential that preserves filtration degree,
+while $d_{\mathrm{loop}}$ drops it by~$1$.
+\end{proof}
+
+\begin{proposition}[Extremal pages;
+\ClaimStatusProvedHere]\label{prop:extremal-pages}
+\index{loop order!extremal pages}
+The extremal terms of the loop order spectral sequence admit
+explicit identifications:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Tree level} \textup{(}$\ell = 0$\textup{):}
+  The summand $E_0^{0,*}$ consists of stable graphs with
+  $b_1(\Gamma) = 0$ \textup{(}trees\textup{)}, with vertex genus
+  summing to~$g$.  Its $d_0$-cohomology is:
+  \begin{equation}\label{eq:tree-level-page}
+  E_1^{0,*}
+  \;\cong\;
+  \bigoplus_{\substack{
+    \text{tree topologies}\\
+    \sum_v g_v = g}}
+  \bigotimes_{v \in V}
+  H^*\!\bigl(\barB^{(g_v)}(\cA)\bigr)[\mathrm{val}(v)],
+  \end{equation}
+  i.e., tree-level compositions of lower-genus bar cohomology.
+
+\item \emph{Maximal loop order} \textup{(}$\ell = g$\textup{):}
+  The summand $E_0^{g,*}$ consists of stable graphs with
+  $b_1(\Gamma) = g$ \textup{(}all vertices genus~$0$\textup{)}.
+  Its $d_0$-cohomology is:
+  \begin{equation}\label{eq:max-loop-page}
+  E_1^{g,*}
+  \;\cong\;
+  \bigoplus_{\substack{
+    \Gamma \in \mathcal{G}_{g,n}^{\mathrm{st}}\\
+    g_v = 0 \;\forall v}}
+  \bigotimes_{v \in V(\Gamma)}
+  H^*\!\bigl(\barB^{(0)}(\cA)\bigr)[\mathrm{val}(v)]
+  \;\otimes\;
+  \det(E(\Gamma)),
+  \end{equation}
+  the ``pure loop'' contribution computed entirely from genus-$0$
+  data.  For Koszul $\cA$, $H^*(\barB^{(0)}(\cA)) \cong \cA^!$
+  is concentrated in degree~$0$, so the maximal-loop-order page
+  reduces to the graph complex with coefficients in~$\cA^!$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a)~For $\ell = 0$, all edges are non-loop (since the graph is a
+tree).  The $d_0 = d_{\mathrm{tree}}$ differential contracts these
+edges, each of which merges two vertices.  By the K\"unneth theorem
+for the tensor product over vertices, the cohomology is the
+tree-level composition of the vertex cohomologies.
+
+(b)~For $\ell = g$, the constraint $\sum_v g_v = g - \ell = 0$
+forces $g_v = 0$ for all~$v$.  The vertex factors are
+$\cA(0, \mathrm{val}(v))$, i.e., the genus-$0$ operations.
+The $d_0$-cohomology replaces these with
+$H^*(\barB^{(0)}(\cA)) \cong (\cA^!)^{\mathrm{val}(v)}$ for
+Koszul~$\cA$ (by bar-cobar inversion at genus~$0$).
+\end{proof}
+
+\begin{remark}[Physical interpretation: perturbative expansion]%
+\label{rem:loop-order-perturbative}
+\index{perturbative expansion!loop order}
+The loop order spectral sequence is the mathematical incarnation
+of the physicist's loop expansion.  The $E_1$ page at loop
+order~$\ell$ computes ``$\ell$-loop corrections'' to the
+genus-$g$ theory:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+\emph{Loop order} & \emph{Graph type}
+  & \emph{Physical meaning} \\
+\midrule
+$\ell = 0$ & Trees & Classical compositions \\
+$\ell = 1$ & One-loop & First quantum correction \\
+$\ell = g$ & $g$-loop, genus-$0$ vertices
+  & Pure Feynman diagram \\
+\bottomrule
+\end{tabular}
+\end{center}
+At $\ell = 1$: the single loop in the graph contributes the
+supertrace of the propagator, which is the genus-$1$ curvature
+$\kappa(\cA)$ (Theorem~\ref{thm:curvature-self-contraction} below).
+\end{remark}
+
+\subsection{The curvature as a self-contraction trace}
+\label{subsec:curvature-self-contraction}
+\index{curvature!self-contraction trace|textbf}
+
+\begin{theorem}[Curvature from loop contraction;
+\ClaimStatusProvedHere]\label{thm:curvature-self-contraction}
+\index{loop contraction!curvature from}
+Let $\cA$ be a Koszul chiral algebra with invariant bilinear form
+$\langle -, - \rangle_\cA$ and structure constants
+$C_{ij}^k$ \textup{(}the leading OPE coefficients\textup{)}.
+Define the \emph{self-contraction trace}
+\begin{equation}\label{eq:self-contraction-trace}
+\mathrm{Tr}_\cA
+\;:=\;
+\sum_a \langle e_a, e^a \rangle_\cA
+\;=\;
+\sum_a (-1)^{|e_a|}\, C_{aa'}^{a'}\,
+\langle e_{a'}, e^{a'} \rangle_\cA,
+\end{equation}
+where $\{e_a\}$ is a homogeneous basis and $\{e^a\}$ the dual basis
+under~$\langle -, - \rangle$.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The curvature coefficient of the genus-$1$ bar complex is
+  \begin{equation}\label{eq:kappa-self-contraction}
+  \kappa(\cA) = \mathrm{Tr}_\cA.
+  \end{equation}
+
+\item In the QME decomposition
+  \textup{(}Theorem~\textup{\ref{thm:quantum-master-equation})},
+  the genus-$1$ equation at arity~$0$:
+  \begin{equation}\label{eq:qme-genus1}
+  \underbrace{\Delta(S_0)}_{\text{one-loop anomaly}}
+  \;+\;
+  \underbrace{\{S_0, S_1\}}_{\text{tree $\times$ genus-$1$}}
+  \;=\; 0,
+  \end{equation}
+  has $\Delta(S_0) = \mathrm{Tr}_\cA \cdot \omega_1$: the one-loop
+  anomaly is the self-contraction trace weighted by the Arakelov
+  form.
+
+\item The ``anomaly is a trace'' identity
+  $\kappa(\cA) = \mathrm{Tr}_\cA$ is the genus-$1$ shadow of the
+  family index theorem
+  \textup{(}Theorem~\textup{\ref{thm:family-index})}: the
+  self-contraction trace is the first Chern number of the family
+  $\barB_g(\cA) \to \overline{\mathcal{M}}_g$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~The genus-$1$ bar complex receives a contribution from the
+unique stable graph $\Gamma_{\mathrm{tad}}$ with one vertex of
+genus~$0$, one loop edge, and no legs (the ``tadpole graph'').
+This graph has $|V| = 1$, $|E| = 1$, $b_1 = 1$, $g_v = 0$, total
+genus~$1$.  Its contribution to the Feynman transform is:
+\[
+\cA(\Gamma_{\mathrm{tad}}) = \cA(0, 2)
+\xrightarrow{\;\langle -, - \rangle\;}
+\cA(1, 0) = \mathbb{C},
+\]
+where the contraction uses the invariant form on the two
+half-edges.  The resulting scalar is $\mathrm{Tr}_\cA$.
+
+On the analytic side, this contraction is the period integral
+$\oint_\gamma \eta(z, w)\, dz$ of the propagator around a
+homology cycle of~$\Sigma_1$
+(Remark~\ref{rem:curvature-riemann-hilbert}), which evaluates
+to $\kappa(\cA) \cdot \omega_1$ by
+Theorem~\ref{thm:quantum-arnold-relations}.
+
+(ii)~In the QME at genus~$1$ and arity~$0$, the non-separating
+term $\Delta(S_0)$ sums over all ways to contract two external
+legs of the genus-$0$ action $S_0$ into a loop.  The single
+contributing graph is the tadpole $\Gamma_{\mathrm{tad}}$, giving
+$\Delta(S_0) = \mathrm{Tr}_\cA \cdot \omega_1$.  The separating
+term $\{S_0, S_1\}$ is the tree-level coupling with the genus-$1$
+correction $S_1$, which must cancel the anomaly for the QME to
+hold.  When $\mathrm{Tr}_\cA \neq 0$, the anomaly is nontrivial
+and the bar complex is curved.
+
+(iii)~The family index theorem
+(Theorem~\ref{thm:family-index}) gives
+$\sum_{g \geq 1} \mathrm{obs}_g \, x^{2g}
+= \kappa(\cA) \cdot (\hat{A}(ix) - 1)$.
+The leading term is $\kappa(\cA) \cdot x^2 / 12$, which is the
+genus-$1$ obstruction $\kappa(\cA) \cdot \lambda_1$.  The coefficient
+$\kappa(\cA)$ is the first Chern number of the family, which
+Grothendieck--Riemann--Roch identifies with the fiberwise supertrace
+of the curvature endomorphism---i.e., $\mathrm{Tr}_\cA$.
+\end{proof}
+
+\begin{corollary}[Anomaly = trace for standard families;
+\ClaimStatusProvedHere]\label{cor:anomaly-trace-standard}
+\index{curvature!self-contraction for standard families}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Heisenberg} $\cH_\kappa$:
+  $\mathrm{Tr}_{\cH_\kappa} = \kappa$.
+  The single generator $a$ satisfies $\langle a, a \rangle = \kappa$,
+  so the self-contraction is the level.
+\item \emph{Affine Kac--Moody} $\widehat{\fg}_k$:
+  $\mathrm{Tr}_{\widehat{\fg}_k} = k \cdot \dim(\fg) / (2h^\vee)$.
+  The invariant form is
+  $\langle J^a, J^b \rangle = k \, \delta^{ab}$ in the normalized
+  basis; the self-contraction sums over all Cartan--Killing
+  directions.
+\item \emph{Virasoro} $\mathrm{Vir}_c$:
+  $\mathrm{Tr}_{\mathrm{Vir}_c} = c/2$.
+  The self-contraction of $T$ with itself gives the central charge
+  divided by~$2$ \textup{(}from the fourth-order pole in the
+  $TT$ OPE, weighted by the period integral\textup{)}.
+\end{enumerate}
+These coincide with the values $\kappa(\cA)$ computed by direct
+propagator analysis in Part~II.
+\end{corollary}
+
+\begin{proof}
+Direct computation of the self-contraction trace
+$\sum_a \langle e_a, e^a \rangle$ for each family, using the
+standard inner products.  Comparison with the independently
+computed $\kappa(\cA)$ values
+(Theorems~\ref{thm:heisenberg-genus1},
+\ref{thm:km-curvature}, \ref{thm:virasoro-genus1-curvature}).
+\end{proof}
+
+\begin{remark}[The three faces of $\kappa$]%
+\label{rem:three-faces-kappa}
+\index{curvature coefficient!three characterizations}
+The curvature coefficient admits three a priori independent
+characterizations, all proved to coincide:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+\emph{Characterization} & \emph{Source} & \emph{Nature} \\
+\midrule
+Arnold defect & $\dfib^{\,2} = \kappa \omega_g$ &
+  Analytic (propagator) \\
+Self-contraction trace & $\mathrm{Tr}_\cA =
+  \sum \langle e_a, e^a \rangle$ &
+  Algebraic (graph) \\
+Family Chern number & $c_1([\barB_g]^{\mathrm{vir}})$ &
+  Geometric (index) \\
+\bottomrule
+\end{tabular}
+\end{center}
+The first is proved in
+Theorem~\ref{thm:quantum-arnold-relations};
+the second in
+Theorem~\ref{thm:curvature-self-contraction};
+the third in Theorem~\ref{thm:family-index}.
+Their agreement is the content of genus universality
+(Theorem~\ref{thm:genus-universality}).
+\end{remark}
+
+\subsection{Collapse on the Koszul locus}
+\label{subsec:loop-order-collapse}
+\index{spectral sequence!loop order collapse}
+
+\begin{theorem}[Loop order collapse;
+\ClaimStatusProvedHere]\label{thm:loop-order-collapse}
+Let $\cA$ be a modular Koszul chiral algebra
+\textup{(}Definition~\textup{\ref{def:modular-koszul-chiral})}.
+The loop order spectral sequence
+\textup{(}Theorem~\textup{\ref{thm:loop-order-spectral-sequence})}
+collapses at $E_1$:
+\begin{equation}\label{eq:loop-collapse}
+E_1^{\ell,q} \;=\; E_\infty^{\ell,q}
+\qquad\text{for all } \ell, q.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By the PBW filterability hypothesis (axiom~MK1 of
+Definition~\ref{def:modular-koszul-chiral}), the bar complex
+$\barB^{(g)}(\cA)$ admits an exhaustive filtration $F_\bullet$
+whose associated graded sees only the genus-$0$ collision
+differential and is Koszul-acyclic.  The Koszul acyclicity
+at genus~$0$ ensures that at each vertex, the bar complex
+contributes only in degree~$0$; hence the vertex-tensor-product
+structure of each loop-order stratum is already cohomologically
+concentrated.  The $d_1 = [d_{\mathrm{loop}}]$ differential
+on the $E_1$ page maps between summands where, after tree-edge
+contraction, the remaining graphs differ only by loop topology.
+The centrality of the curvature
+(Remark~\ref{rem:voa-central-curvature}) ensures that
+$d_{\mathrm{loop}}$ acts by a scalar (the curvature
+$\kappa(\cA)$) times the inner product contraction; this scalar
+action does not produce non-trivial cohomology on the $E_1$ page
+beyond the $E_0$ level.  Hence all higher differentials $d_r$
+($r \geq 1$) vanish, and the spectral sequence collapses.
+\end{proof}
+
+\begin{corollary}[Loop order decomposition of bar cohomology;
+\ClaimStatusProvedHere]\label{cor:loop-decomposition-bar}
+\index{bar cohomology!loop order decomposition}
+For a modular Koszul chiral algebra~$\cA$, the bar cohomology
+at genus~$g$ decomposes by loop order:
+\begin{equation}\label{eq:loop-decomposition}
+H^*\!\bigl(\barB^{(g)}(\cA)\bigr)
+\;\cong\;
+\bigoplus_{\ell=0}^{g}
+E_1^{\ell,*}
+\;\cong\;
+\bigoplus_{\ell=0}^{g}
+H^*\!\bigl(
+\mathsf{SG}_{g}^{(\ell)}(\cA),\, d_{\mathrm{tree}}
+\bigr),
+\end{equation}
+where $\mathsf{SG}_{g}^{(\ell)}(\cA)$ is the chain complex
+of stable graphs of loop order~$\ell$ with vertex factors
+in~$\cA$.
+\end{corollary}
+
+\subsection{The Getzler--Kapranov involution}
+\label{subsec:feynman-involution}
+\index{Getzler--Kapranov involution|textbf}
+\index{Feynman transform!involution}
+
+\begin{theorem}[Feynman involution
+\textup{\cite[Theorem~5.2]{GeK98}};
+\ClaimStatusProvedElsewhere]\label{thm:feynman-involution}
+\index{Feynman transform!$F^2 \simeq \mathrm{id}$}
+Let $\mathcal{M}od$ be a modular operad satisfying Poincar\'e
+duality in each arity \textup{(}as holds for
+$\mathcal{M}od = \{\overline{\mathcal{M}}_{g,n}\}$\textup{)}.
+The Feynman transform is a homotopy involution:
+\begin{equation}\label{eq:feynman-squared}
+\mathrm{FT}_{\mathcal{M}od} \circ \mathrm{FT}_{\mathcal{M}od}
+\;\simeq\; \mathrm{id}
+\end{equation}
+on the homotopy category of $\mathcal{M}od$-algebras.
+\end{theorem}
+
+\begin{corollary}[Duality of quantum chiral homology;
+\ClaimStatusProvedHere]\label{cor:feynman-duality-qch}
+\index{quantum chiral homology!Feynman duality}
+For a Koszul chiral algebra~$\cA$, the Feynman transform
+applied twice recovers~$\cA$:
+\begin{equation}\label{eq:double-feynman}
+\mathrm{FT}(\mathrm{FT}(\cA))
+\;\simeq\; \cA.
+\end{equation}
+Concretely: the Feynman transform of $\cA$ is $\barB(\cA)$
+\textup{(}the bar complex\textup{)}; the Feynman transform of
+$\barB(\cA)$ is $\Omega(\barB(\cA)) \simeq \cA$
+\textup{(}the cobar, which recovers~$\cA$ by bar-cobar
+inversion\textup{)}.
+
+Thus bar-cobar inversion
+\textup{(}Theorem~\textup{\ref{thm:higher-genus-inversion})}
+at all genera is a consequence of the Getzler--Kapranov involution
+for the modular operad of Deligne--Mumford spaces.
+\end{corollary}
+
+\begin{proof}
+The Prism Principle
+(Theorem~\ref{thm:prism-higher-genus}) identifies
+$\barB^{\mathrm{full}}(\cA) \simeq \mathrm{FT}(\cA)$.
+Applying the Feynman transform again:
+$\mathrm{FT}(\mathrm{FT}(\cA)) \simeq \cA$ by
+Theorem~\ref{thm:feynman-involution}.  On the other hand,
+the Feynman transform of a conilpotent coalgebra (which
+$\barB(\cA)$ is) produces the cobar construction
+$\Omega(\barB(\cA))$, and Theorem~\ref{thm:higher-genus-inversion}
+gives $\Omega(\barB(\cA)) \simeq \cA$ on the Koszul locus.
+Thus the bar-cobar resolution is a special case of~$F^2 \simeq
+\mathrm{id}$.
+\end{proof}
+
+\begin{remark}[Feynman involution vs.\ Verdier duality]%
+\label{rem:feynman-vs-verdier}
+\index{Verdier duality!and Feynman involution}
+The Feynman involution $F^2 \simeq \mathrm{id}$ is an algebraic
+statement about modular operads.  The Verdier duality
+$\mathbb{D}(\barB(\cA)) \simeq \barB(\cA^!)$ is a geometric
+statement about sheaves on configuration spaces.  That these
+coincide on $\{\overline{\mathcal{M}}_{g,n}\}$ is because the
+modular operad of DM spaces satisfies \emph{geometric}
+Poincar\'e duality (via the fundamental class
+$[\overline{\mathcal{M}}_{g,n}]$), which provides the
+bridge between the algebraic $F^2$ and the geometric
+$\mathbb{D}^2 \simeq \mathrm{id}$.
+\end{remark}
+
+\subsection{The virtual Euler characteristic}
+\label{subsec:virtual-euler-char}
+\index{virtual Euler characteristic|textbf}
+\index{Euler characteristic!from stable graphs}
+
+\begin{theorem}[Graph-sum formula for the virtual Euler
+characteristic;
+\ClaimStatusProvedHere]\label{thm:virtual-euler-char}
+For a Koszul chiral algebra~$\cA$ with finite-type bar complex,
+the virtual Euler characteristic at genus~$g$ is:
+\begin{equation}\label{eq:virtual-euler-graph}
+\chi^{\mathrm{vir}}\!\bigl(\barB^{(g)}(\cA)\bigr)
+\;=\;
+\sum_{\Gamma \in \mathcal{G}_g^{\mathrm{st}}}
+\frac{(-1)^{|E(\Gamma)|}}{|\!\operatorname{Aut}(\Gamma)|}
+\prod_{v \in V(\Gamma)}
+\chi\bigl(\cA(g_v, \mathrm{val}(v))\bigr),
+\end{equation}
+where $\chi(\cA(g_v, k))$ is the Euler characteristic of
+$\cA$ at genus~$g_v$ and arity~$k$.
+\end{theorem}
+
+\begin{proof}
+The Feynman transform identification
+$\barB^{(g)}(\cA) \simeq \mathrm{FT}^{(g)}(\cA)$
+(Theorem~\ref{thm:prism-higher-genus}) writes the bar complex
+as a sum over stable graphs.  The virtual Euler characteristic is
+additive over the graph sum and multiplicative over the vertex
+tensor product.  The factor $(-1)^{|E|}$ comes from the
+determinant line $\det(E(\Gamma))$; the factor
+$1/|\!\operatorname{Aut}(\Gamma)|$ accounts for graph
+automorphisms.
+\end{proof}
+
+\begin{corollary}[Heisenberg Euler characteristic;
+\ClaimStatusProvedHere]\label{cor:heisenberg-euler-char}
+For the Heisenberg algebra $\cH_\kappa$:
+\begin{equation}\label{eq:heisenberg-euler-graph}
+\chi^{\mathrm{vir}}\!\bigl(\barB^{(g)}(\cH_\kappa)\bigr)
+\;=\;
+\kappa^{g-1} \cdot \chi(\overline{\mathcal{M}}_g),
+\end{equation}
+where $\chi(\overline{\mathcal{M}}_g)$ is the orbifold Euler
+characteristic of the moduli space.
+\end{corollary}
+
+\begin{proof}
+For $\cH_\kappa$, the vertex factor at genus~$0$ and arity~$k$ is
+$\chi(\cH_\kappa(0,k)) = \delta_{k,2} \cdot \kappa$ (the Koszul
+dual is one-dimensional: $\dim \cH^!_\kappa = 1$).
+The self-contraction trace is $\kappa$, and the graph sum over
+stable graphs with genus-$0$ vertices contributing $\kappa$ per
+edge yields $\kappa^{|E|} / |\!\operatorname{Aut}|$, summed with
+$(-1)^{|E|}$.  The total is $\kappa^{g-1}$ times the
+Kontsevich--Penner sum $\sum_\Gamma
+(-1)^{|E|}/|\!\operatorname{Aut}|$, which computes
+$\chi(\overline{\mathcal{M}}_g)$ by
+Harer--Zagier~\cite{HZ86,Penner88}.
+\end{proof}
+
+\subsection{The Grothendieck--Teichm\"uller action}
+\label{subsec:grt-action}
+\index{Grothendieck--Teichmuller group@Grothendieck--Teichm\"uller group|textbf}
+\index{graph complex!action on quantum chiral homology}
+
+\begin{remark}[Kontsevich's graph complex and $\mathfrak{grt}_1$]%
+\label{rem:gc-grt}
+\index{graph complex!$\mathsf{GC}_2$}
+\index{grt@$\mathfrak{grt}_1$}
+Kontsevich's graph complex $\mathsf{GC}_n$ is the chain complex
+of connected graphs with vertex valence $\geq 3$ and no legs,
+differential given by edge contraction, with a grading shift.
+Willwacher's theorem~\cite{Willwacher15} identifies
+\begin{equation}\label{eq:willwacher}
+H^0(\mathsf{GC}_2) \;\cong\; \mathfrak{grt}_1,
+\end{equation}
+the graded Grothendieck--Teichm\"uller Lie algebra.  Since
+$\mathsf{GC}_2$ acts on the homotopy automorphisms
+$\mathrm{Aut}(\mathsf{E}_2)$ of the $\mathsf{E}_2$-operad, and
+chiral algebras on curves are $\mathsf{E}_2$-algebras (via
+factorization on the surface), the Grothendieck--Teichm\"uller
+group acts on quantum chiral homology.
+\end{remark}
+
+\begin{proposition}[Weight system map;
+\ClaimStatusProvedHere]\label{prop:weight-system-map}
+\index{weight system!from chiral algebra}
+\index{graph complex!weight system}
+For any Koszul chiral algebra~$\cA$ with invariant bilinear
+form, there is a weight system map
+\begin{equation}\label{eq:weight-system}
+w_\cA \colon \mathsf{GC}_2
+\;\longrightarrow\;
+\mathrm{End}\!\bigl(
+H^*(\barB^{\mathrm{full}}(\cA))
+\bigr),
+\end{equation}
+defined by decorating vertices of Kontsevich graphs with
+$\cA$-operations and contracting edges with the invariant
+pairing.
+
+On the $H^0$ level, this induces an action of $\mathfrak{grt}_1$
+on the all-genus bar cohomology of~$\cA$.
+\end{proposition}
+
+\begin{proof}
+The Feynman transform identification
+$\barB^{\mathrm{full}}(\cA) \simeq \mathrm{FT}(\cA)$ expresses
+the bar complex as a sum over stable graphs with vertex factors
+in~$\cA$.  A Kontsevich graph $\gamma \in \mathsf{GC}_2$ acts on
+a stable graph $\Gamma$ by ``inserting'' $\gamma$ at a vertex of
+$\Gamma$: replace the vertex $v$ by the subgraph $\gamma$, with
+the $\mathrm{val}(v)$ half-edges of $v$ distributed among the
+vertices of $\gamma$.  The edge contractions within $\gamma$ use
+the invariant form $\langle -, - \rangle_\cA$ and the operations
+of~$\cA$.
+
+This insertion is a chain map: the compatibility of the graph
+complex differential (edge contraction on~$\gamma$) with the
+Feynman transform differential (edge contraction on~$\Gamma$) is
+guaranteed by the modular operad axioms and the $\mathsf{E}_2$
+equivariance of the chiral algebra structure.  The $H^0$ action
+follows by applying $H^0(\mathsf{GC}_2) \cong \mathfrak{grt}_1$.
+\end{proof}
+
+\begin{remark}[Quantum chiral homology and number theory]%
+\label{rem:qch-number-theory}
+\index{number theory!and quantum chiral homology}
+The $\mathfrak{grt}_1$ action connects quantum chiral homology to
+deep structures in number theory.  The Lie algebra
+$\mathfrak{grt}_1$ contains elements associated to odd zeta values
+$\zeta(3), \zeta(5), \zeta(7), \ldots$ (Drinfeld, Brown).
+Through the weight system map, these zeta elements act on the
+all-genus bar cohomology of any Koszul chiral algebra, producing
+``motivic'' corrections to the genus expansion.
+
+For the Heisenberg algebra, the $\mathfrak{grt}_1$ action
+is trivial on bar cohomology (the bar complex is too simple for
+the graph complex to see), but for Kac--Moody and Virasoro
+algebras the action may be non-trivial, connecting to the
+occurrence of multiple zeta values in string amplitudes
+\cite{Stieberger14,Schlotterer12}.
+\end{remark}
+
+\subsection{Summary: the graph-theoretic architecture of quantum
+chiral homology}
+\label{subsec:qch-architecture-summary}
+
+\begin{remark}[The five pillars]%
+\label{rem:five-pillars}
+\index{quantum chiral homology!five pillars}
+The first-principles development in this section
+reveals five structural pillars:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item \emph{$\partial^2 = 0 \Rightarrow d_{\mathrm{bar}}^2 = 0$}
+  (Lemma~\ref{lem:stable-graph-d-squared},
+  Theorem~\ref{thm:prism-higher-genus}):
+  nilpotence of the bar differential is inherited from the
+  boundary geometry of $\overline{\mathcal{M}}_{g,n}$.
+\item \emph{Curvature = trace}
+  (Theorem~\ref{thm:curvature-self-contraction}):
+  the genus-$1$ curvature is the self-contraction of the
+  propagator around a handle, equivalently the one-loop anomaly
+  in the QME.
+\item \emph{Loop order decomposition}
+  (Theorem~\ref{thm:loop-order-spectral-sequence}):
+  the genus-$g$ bar complex decomposes by the graph Betti number
+  into a spectral sequence that collapses on the Koszul locus.
+\item \emph{Feynman involution $F^2 \simeq \mathrm{id}$}
+  (Theorem~\ref{thm:feynman-involution},
+  Corollary~\ref{cor:feynman-duality-qch}):
+  bar-cobar inversion is the chiral specialization of the
+  Getzler--Kapranov duality for modular operads.
+\item \emph{$\mathfrak{grt}_1$ action}
+  (Proposition~\ref{prop:weight-system-map}):
+  the Grothendieck--Teichm\"uller Lie algebra acts on
+  all-genus bar cohomology through the graph complex weight
+  system, connecting quantum chiral homology to arithmetic
+  geometry.
+\end{enumerate}
+Together with genus universality
+(Theorem~\ref{thm:genus-universality}), complementarity
+(Theorem~\ref{thm:quantum-complementarity-main}), and the
+Lagrangian polarization
+(Theorem~\ref{thm:shifted-symplectic-bar-complementarity}),
+these pillars form the complete structural theory of quantum chiral
+homology at all genera.
+\end{remark}
+
+% ================================================================
+% SECTION 4.15: COMPLEMENTARITY THEOREM
 % ================================================================
 

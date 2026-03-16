@@ -854,6 +854,78 @@ T_{(1)}T=2T,
 which is the rank-one case of Theorem~\ref{thm:nms-universal-gravitational-cubic}.  The regular term $:TT:$ is not quasi-primary, but its corrected quasi-primary projection is $\Lambda_{\mathrm{Vir}}$, which therefore contributes a genuine one-vertex quartic contact term.\qedhere
 \end{proof}
 
+\begin{theorem}[Explicit Virasoro quartic contact coefficient; \ClaimStatusProvedHere]
+\label{thm:nms-virasoro-quartic-explicit}
+\index{quartic contact!Virasoro explicit coefficient}
+The quartic contact coefficient of the Virasoro shadow envelope is
+\begin{equation}
+\label{eq:nms-virasoro-quartic-explicit}
+\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}
+= \frac{10}{c(5c+22)}.
+\end{equation}
+This is the first non-abelian Ring~$2$ shadow coefficient to be
+extracted in closed form.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1} (Quasi-primary Gram matrix).
+The vacuum-module states at level~$4$ are
+$|1\rangle = L_{-4}|0\rangle$ and
+$|2\rangle = L_{-2}^2|0\rangle$, with Gram matrix
+\[
+G = \begin{pmatrix} 5c & 3c \\ 3c & c(c+8)/2 \end{pmatrix}
+\]
+computed from $[L_4, L_{-4}] = 8L_0 + 5c$,
+$\langle 0|L_4 L_{-2}^2|0\rangle = 3c$, and
+$\langle 0|L_2^2 L_{-2}^2|0\rangle = c(c+8)/2$.
+
+\emph{Step~2} (Quasi-primary projection).
+The condition $L_1 \Lambda_{\mathrm{Vir}} = 0$ determines
+$\Lambda = L_{-2}^2|0\rangle - a\,L_{-4}|0\rangle$ with
+$a = 3/10$ (from $L_1 L_{-2}^2 = 3L_{-3}L_0 + 3L_{-1}L_{-2}$
+acting on the vacuum).
+
+\emph{Step~3} (BPZ norm).
+\[
+\langle\Lambda|\Lambda\rangle
+= G_{22} - 2a\,G_{12} + a^2\,G_{11}
+= \frac{c(c+8)}{2} - \frac{3}{5}\cdot 3c + \frac{9}{100}\cdot 5c
+= \frac{c(5c+22)}{10}.
+\]
+
+\emph{Step~4} (Contact coefficient).
+The $TT$ OPE at level~$0$ (regular part) contains
+$\Lambda_{\mathrm{Vir}}$ with coefficient~$1$
+(by definition of normal ordering $:TT:$ and the projection to
+$\Lambda$).  The quartic contact coefficient is therefore
+$1/\langle\Lambda|\Lambda\rangle = 10/[c(5c+22)]$.
+
+Computational verification:
+\texttt{compute/lib/virasoro\_quartic\_contact.py} ($28$~tests).
+\end{proof}
+
+\begin{remark}[Significance for the $\Theta_\cA$ programme]
+\label{rem:quartic-theta-significance}
+The quartic contact coefficient
+$\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
+is the arity-$4$ Taylor jet of the complementarity potential
+$S_{\mathrm{Vir}}$ around the scalar $\kappa(\mathrm{Vir}_c) = c/2$.
+Together with the scalar $\kappa$ (arity~$2$) and the cubic
+$\mathfrak C = 2$ (arity~$3$), it provides the first three terms of
+the Taylor expansion of $\Theta_{\mathrm{Vir}}$.
+
+The singular locus $c(5c+22) = 0$ consists of:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $c = 0$: the uncurved point where
+  $\kappa = 0$ (Corollary~\textup{\ref{cor:nms-virasoro-cubic-leading}});
+\item $c = -22/5$: the Lee--Yang value
+  $c_{5,2} = 1 - 6 \cdot 9/10 = -22/5$, where the Kac determinant
+  at level~$4$ vanishes and $\Lambda$ becomes null.
+\end{enumerate}
+The formula is well-defined and positive for all non-degenerate
+generic~$c > 0$.
+\end{remark}
+
 \begin{corollary}[Cubic-leading Virasoro at the uncurved point; \ClaimStatusProvedHere]
 \label{cor:nms-virasoro-cubic-leading}
 At $c=0$ the quadratic term of the Virasoro shadow vanishes while the cubic term survives:

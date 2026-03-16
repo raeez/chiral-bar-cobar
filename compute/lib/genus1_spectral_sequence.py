@@ -397,39 +397,9 @@ def w3_bar_dims_genus0(max_degree: int = 4, max_weight: int = 12
     This accounts for T-mode descendants (parts >= 2) and W-mode descendants
     (parts >= 3).
     """
-    # Generate the W_3 vacuum module dimensions by convolving the two
-    # mode towers: T-modes (parts >= 2) and W-modes (parts >= 3).
-    # GF = prod_{n>=2} 1/(1-q^n) * prod_{m>=3} 1/(1-q^m)
+    vac_dims = w3_vacuum_dims(max_weight)
 
-    # Build using DP
-    w3_dims = [0] * (max_weight + 1)
-    w3_dims[0] = 1
-
-    # First tower: T-modes with parts >= 2
-    for mode in range(2, max_weight + 1):
-        for h in range(mode, max_weight + 1):
-            w3_dims[h] += w3_dims[h - mode]
-
-    # Second tower: W-modes with parts >= 3
-    # We need to convolve, so make a copy of current dims and re-accumulate
-    t_dims = list(w3_dims)
-    w3_dims = [0] * (max_weight + 1)
-    # W-mode tower generating function
-    w_tower = [0] * (max_weight + 1)
-    w_tower[0] = 1
-    for mode in range(3, max_weight + 1):
-        for h in range(mode, max_weight + 1):
-            w_tower[h] += w_tower[h - mode]
-
-    # Convolve
-    for a in range(max_weight + 1):
-        for b in range(max_weight + 1 - a):
-            w3_dims[a + b] += t_dims[a] * w_tower[b]
-
-    # Now build the bar complex dimensions
     result: Dict[Tuple[int, int], int] = {}
-    vac_dims = {h: w3_dims[h] for h in range(max_weight + 1)}
-
     for d in range(1, max_degree + 1):
         arnold_factor = factorial(d - 1)
         for h in range(2 * d, max_weight + 1):
@@ -959,9 +929,6 @@ def w3_vacuum_dims(max_weight: int = 12) -> Dict[int, int]:
     Two generator towers: T-modes (parts >= 2) and W-modes (parts >= 3).
     GF = prod_{n>=2} 1/(1-q^n) * prod_{m>=3} 1/(1-q^m).
     """
-    dims = [0] * (max_weight + 1)
-    dims[0] = 1
-
     # T-tower: parts >= 2
     t_dims = [0] * (max_weight + 1)
     t_dims[0] = 1
@@ -976,7 +943,8 @@ def w3_vacuum_dims(max_weight: int = 12) -> Dict[int, int]:
         for h in range(mode, max_weight + 1):
             w_dims[h] += w_dims[h - mode]
 
-    # Convolve
+    # Convolve the two towers
+    dims = [0] * (max_weight + 1)
     for a in range(max_weight + 1):
         for b in range(max_weight + 1 - a):
             dims[a + b] += t_dims[a] * w_dims[b]
