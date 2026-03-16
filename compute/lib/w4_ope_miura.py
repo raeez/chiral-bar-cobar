@@ -1141,6 +1141,78 @@ def _bpz_inner_product(field1: Field, field2: Field) -> float:
     return total
 
 
+def bpz_gram_decomposition(
+    target: Field,
+    basis: List[Field],
+    basis_names: Optional[List[str]] = None,
+) -> Dict[str, object]:
+    """Decompose target field in a basis using the BPZ Gram matrix.
+
+    Computes the Gram matrix G_{ij} = <basis_i | basis_j>_BPZ and the
+    overlap vector v_i = <basis_i | target>_BPZ, then solves G*c = v.
+
+    This is the correct extraction method for OPE structure constants:
+    it uses the physical (Zamolodchikov) inner product, not the Euclidean
+    dot product on monomial coefficients.
+
+    Returns dict with:
+      - 'coefficients': solution vector c
+      - 'gram_matrix': the BPZ Gram matrix G
+      - 'overlap_vector': the overlap vector v
+      - 'residual_norm': ||target - sum c_i basis_i||_BPZ
+      - 'gram_det': det(G) (for singularity check)
+
+    NOTE: The BPZ metric on the free-boson Fock space does NOT make
+    W-algebra primaries orthogonal to all other weight-h composites.
+    True primary orthogonality holds in the PHYSICAL W-algebra inner
+    product (via Ward identities), which differs from the free-field
+    BPZ metric.  The Gram matrix approach gives the best projection
+    onto the W-algebra subspace under the BPZ metric, but may differ
+    from the physical structure constants by convention-dependent
+    normalization factors.
+    """
+    n = len(basis)
+    if basis_names is None:
+        basis_names = [f"basis_{i}" for i in range(n)]
+
+    G = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            G[i, j] = _bpz_inner_product(basis[i], basis[j])
+
+    v = np.zeros(n)
+    for i in range(n):
+        v[i] = _bpz_inner_product(basis[i], target)
+
+    result = {
+        'gram_matrix': G,
+        'overlap_vector': v,
+        'gram_det': np.linalg.det(G),
+        'gram_rank': np.linalg.matrix_rank(G, tol=1e-6),
+        'basis_names': basis_names,
+    }
+
+    if abs(result['gram_det']) > 1e-10:
+        coeffs = np.linalg.solve(G, v)
+        result['coefficients'] = coeffs
+        result['coefficients_dict'] = {
+            name: float(c) for name, c in zip(basis_names, coeffs)
+        }
+        # Residual: compute <target - sum c_i basis_i | target - sum c_i basis_i>
+        # = <target|target> - 2 sum c_i <basis_i|target> + sum c_i c_j G_{ij}
+        target_norm_sq = _bpz_inner_product(target, target)
+        approx_norm_sq = float(coeffs @ G @ coeffs)
+        residual_sq = target_norm_sq - 2 * float(coeffs @ v) + approx_norm_sq
+        result['target_norm_sq'] = target_norm_sq
+        result['residual_sq'] = residual_sq
+        result['residual_fraction'] = abs(residual_sq / target_norm_sq) if abs(target_norm_sq) > 1e-15 else float('inf')
+    else:
+        result['coefficients'] = None
+        result['singular'] = True
+
+    return result
+
+
 def _field_overlap(f1: Field, f2: Field, norm: float) -> float:
     """Extract coefficient of f2 in f1 using the BPZ inner product.
 

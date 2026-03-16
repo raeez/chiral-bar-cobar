@@ -752,3 +752,64 @@ class TestMC4ConcordanceFormulas:
         for c_val, ratio in ratios:
             assert np.isfinite(ratio), f"Ratio not finite at c={c_val}"
             assert ratio > 0, f"Ratio negative at c={c_val}: {ratio}"
+
+
+class TestBPZGramDecomposition:
+    """BPZ Gram matrix decomposition for stage-4 OPE coefficients.
+
+    Uses the Zamolodchikov (BPZ) inner product to build the Gram matrix
+    of the weight-4 W-algebra basis {d²T, Λ, W₄, dW₃} and solve for
+    the OPE coefficients via G*c = v.
+
+    STATUS: The Gram matrix is invertible (rank 4, det > 0) and the
+    decomposition produces well-defined coefficients.  However, the
+    resulting c_334² does NOT match the concordance formula.  The
+    discrepancy is c-dependent, indicating a convention-dependent
+    normalization gap between the Miura free-field metric and the
+    physical W-algebra metric used in the concordance.
+
+    The gap is: the free-boson BPZ metric ≠ the W-algebra physical
+    metric.  Primary orthogonality (which would eliminate the gap)
+    holds for the W-algebra metric (via Virasoro Ward identities)
+    but NOT for the free-field BPZ metric (where composites outside
+    the W-algebra subspace break orthogonality).
+
+    RESOLUTION PATHWAY: implement the W-algebra physical metric by
+    projecting the free-field BPZ metric onto the W-algebra subspace
+    and then orthogonalizing using the Virasoro Ward identities.
+    This requires the full Verma module structure at weight 4.
+    """
+
+    @pytest.mark.slow
+    def test_gram_matrix_invertible(self):
+        """The BPZ Gram matrix of {d²T, Λ, W₄, dW₃} is invertible."""
+        from compute.lib.w4_ope_miura import bpz_gram_decomposition
+        ope = W4MiuraOPE.from_t(0.1)
+        w3w3 = ope.W3W3_ope()
+        C2 = w3w3[2]
+
+        result = bpz_gram_decomposition(
+            C2,
+            [ope.d2T, ope.Lambda, ope.W4, ope.dW3],
+            ['d2T', 'Lambda', 'W4', 'dW3'],
+        )
+        assert result['gram_rank'] == 4, "Gram matrix must have full rank"
+        assert abs(result['gram_det']) > 1e-6, "Gram matrix must be invertible"
+        assert result['coefficients'] is not None
+
+    @pytest.mark.slow
+    def test_gram_decomposition_gives_finite_c334(self):
+        """The BPZ Gram decomposition gives a finite c_334."""
+        from compute.lib.w4_ope_miura import bpz_gram_decomposition
+        for t in [0.1, 1.0, 5.0]:
+            ope = W4MiuraOPE.from_t(t)
+            w3w3 = ope.W3W3_ope()
+            C2 = w3w3[2]
+            result = bpz_gram_decomposition(
+                C2,
+                [ope.d2T, ope.Lambda, ope.W4, ope.dW3],
+                ['d2T', 'Lambda', 'W4', 'dW3'],
+            )
+            c334 = result['coefficients_dict']['W4']
+            assert np.isfinite(c334), f"c_334 not finite at t={t}"
+            assert abs(c334) > 1e-10, f"c_334 too small at t={t}"
