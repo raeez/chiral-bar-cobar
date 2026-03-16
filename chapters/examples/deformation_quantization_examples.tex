@@ -5,7 +5,35 @@
 \chapter{Deformation quantization examples}
 \label{chap:deformation-examples}
 
+The examples in this chapter are not decorative.  They are the proving
+ground where formality, bar-cobar transport, higher operations, and
+quantization encounter explicit coefficients and either survive or
+fail.  Each example tests the deformation-quantization machinery of
+the preceding chapter against a concrete chiral algebra: the classical
+affine Poisson structure on $L\fg^*$ recovers
+$\widehat{\fg}_k$ by quantization
+(Example~\ref{ex:classical-affine}), the $\beta\gamma$-system exhibits
+the first non-formal quantization with a quartic contact obstruction
+(Corollary~\ref{cor:nms-betagamma-mu-vanishing}), and the Virasoro
+coisson algebra produces the full tower of Kontsevich-type weights with
+central-charge-dependent corrections.
 
+The organizing principle is the $\Pinf$-chiral algebra
+(Definition~\ref{def:pinf-chiral-detailed}): a vertex algebra carrying
+\emph{both} a commutative chiral product ($\chirCom$-structure) and a
+chiral Lie bracket ($\chirLie$-structure), linked by the Leibniz rule.
+Since $\chirCom^! \cong \chirLie$, the two structures sit across
+Koszul dual frames, and the $\Pinf$-structure is the algebraic
+encoding of a semiclassical limit.  The passage from $\Pinf$ to the
+quantized $\Einf$-chiral algebra is then a bar-cobar transport
+problem: the quantization map is a Maurer--Cartan element in the
+$\Pinf$-deformation complex, and its obstructions are computed by the
+chiral Hochschild cohomology $\operatorname{ChirHoch}^*(\cA)$ of
+Theorem~\ref{thm:chiral-hochschild}.  The examples below trace this
+obstruction theory in each standard family, recording where it
+terminates (Heisenberg, affine), where it produces a finite tower
+($\beta\gamma$), and where it forces an infinite series of corrections
+(Virasoro, $\mathcal{W}_N$).
 
 \section{\texorpdfstring{$\Pinf$ structures}{Pinf structures}}
 \label{sec:pinf-structures}
@@ -571,4 +599,88 @@ For $\mathrm{Vir}_c$ via DS reduction of $\widehat{\mathfrak{sl}}_2$ at level $k
 \label{rem:filtered-dq}
 \index{filtered deformation}
 The deformation parameter $\hbar$ induces a filtration on the bar complex with $d_{\bar{B}} = d_0 + \hbar\, d_1 + \hbar^2\, d_2 + \cdots$.  The associated spectral sequence has $E_0 =$ classical bar complex, $E_1 = H^*(E_0, d_0)$, and $E_2 = H^*(E_1, d_1)$.  For Koszul algebras the spectral sequence collapses at $E_2$; for non-Koszul algebras higher differentials may be non-trivial.
+\end{remark}
+
+
+\section{Superpotential truncation of \texorpdfstring{$A_\infty$}{A-infinity} operations}
+\label{sec:superpotential-ainfty-truncation}
+\index{superpotential!A-infinity truncation@$A_\infty$ truncation}
+\index{Landau--Ginzburg!A-infinity truncation@$A_\infty$ truncation}
+
+\providecommand{\dCrit}{\mathrm{dCrit}}
+
+\begin{construction}[Superpotential $A_\infty$ structure; \ClaimStatusProvedElsewhere{} \cite{DNP25}]
+\label{constr:superpotential-ainfty}
+\index{derived critical locus!chiral enhancement}
+Let $(X, \psi)$ be a single $n=1$ chiral multiplet with superpotential
+$W(X) = X^d/d!$, where $d \geq 2$.  The Koszul dual algebra
+$\mathcal{A}^! = \bC[X_n, \psi_n]_{n \geq 0}$ carries a differential
+and higher $A_\infty$ operations determined by $W$:
+\begin{align}
+Q(\psi_n) &= -\frac{1}{(d-1)!}
+  \sum_{\substack{m_1 + \cdots + m_{d-1} = n+2-d \\ m_i \geq 0}}
+  X_{m_1} \cdots X_{m_{d-1}},
+\label{eq:superpotential-Q} \\
+m_k(\psi_{n_1}, \ldots, \psi_{n_k}) &= -\frac{1}{k!\,(d-k)!}
+  \sum_{\substack{m_1 + \cdots + m_{d-k} = n_1 + \cdots + n_k + k + 1 - d \\ m_i \geq 0}}
+  X_{m_1} \cdots X_{m_{d-k}}.
+\label{eq:superpotential-mk}
+\end{align}
+The key structural consequence: $m_k = 0$ for all $k \geq d$.  The degree
+of the superpotential controls the $A_\infty$ truncation depth.
+\end{construction}
+
+\begin{example}[$d = 2$: massive chiral, $W = \tfrac{1}{2}mX^2$]
+\label{ex:superpotential-d2}
+\index{massive chiral!bar complex}
+Only $m_1 = Q$ is nonzero: the algebra is strictly differential-graded with
+no higher operations.  The differential $Q(\psi_n) = -X_{n}$ pairs
+generators bijectively.  The bar complex $\bar{B}(\mathcal{A}^!)$ is
+acyclic: its cohomology vanishes in all degrees, reflecting the
+contractibility of the massive theory.
+\end{example}
+
+\begin{example}[$d = 3$: cubic Landau--Ginzburg, $W = \tfrac{1}{6}X^3$]
+\label{ex:superpotential-d3}
+\index{Landau--Ginzburg!cubic}
+The operations $m_1$ and $m_2$ are nonzero; all $m_k = 0$ for $k \geq 3$.
+The algebra $\mathcal{A}^!$ is a genuine dg algebra (not merely
+$A_\infty$).  This is the XYZ model: its derived critical locus
+$\dCrit(W)$ is a classical derived scheme, and $\mathcal{A}^!$ is its
+chiral enhancement.
+\end{example}
+
+\begin{example}[$d = 4$: quartic potential, $W = \tfrac{1}{24}X^4$]
+\label{ex:superpotential-d4}
+\index{Landau--Ginzburg!quartic}
+Now $m_1$, $m_2$, and $m_3$ are all nonzero: this is the first genuinely
+$A_\infty$ case.  The ternary operation $m_3$ encodes the leading-order
+departure from classical geometry.  Physically, this corresponds to a
+single-field Landau--Ginzburg model with quartic interaction.
+\end{example}
+
+\begin{proposition}[Chiral enhancement of the derived critical locus;
+\ClaimStatusProvedElsewhere{} \cite{DNP25}]
+\label{prop:chiral-dcrit}
+\index{derived critical locus!chiral enhancement}
+The algebra $\mathcal{A}^!$ of Construction~\ref{constr:superpotential-ainfty}
+is the chiral enhancement of the derived critical locus
+$\dCrit(W) = \operatorname{Spec}\bigl(\bC[X]/(\partial W)\bigr)^L$.
+The $A_\infty$ operations $\{m_k\}_{1 \leq k < d}$ encode the full
+homotopy-coherent structure of $\dCrit(W)$ as a chiral algebra; the
+truncation at $k = d$ is a direct consequence of $W^{(d+1)} = 0$.
+\end{proposition}
+
+\begin{remark}[Bar spectral sequence visibility]
+\label{rem:superpotential-bar-ss}
+\index{bar complex!superpotential truncation}
+The $A_\infty$ truncation by $\deg(W)$ is visible in the bar spectral
+sequence of $\bar{B}(\mathcal{A}^!)$: on the $E_1$ page, the generators
+contributed by $m_k$ vanish for $k \geq d$, so the spectral sequence has
+nonzero differentials only up to page $E_{d-1}$.  For $d = 2$ it
+collapses at $E_1$ (acyclicity); for $d = 3$ at $E_2$ (the classical
+derived category); and for $d \geq 4$ the pages $E_3, \ldots, E_{d-1}$
+carry genuinely $A_\infty$ information invisible to classical algebraic
+geometry.  This hierarchy gives a concrete filtration-theoretic meaning
+to the slogan ``the degree of $W$ controls the homotopy depth of $\dCrit(W)$.''
 \end{remark}

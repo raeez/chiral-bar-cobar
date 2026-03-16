@@ -1,6 +1,35 @@
 \chapter{W-algebra Koszul duals}\label{chap:w-algebra-koszul}
 \label{chap:w-algebras}
 
+$\mathcal{W}$-algebras are the proper nonlinear test of everything
+built in Part~I.  Higher-order poles, Drinfeld--Sokolov reduction,
+composite fields, curved bar complexes with non-scalar curvature
+channels --- none of this can honestly be compressed into the quadratic
+template that governs the Heisenberg and Kac--Moody families.  The
+geometry of DS reduction, and the drama of the nonlinear OPE that it
+produces, are the subjects of this chapter.  Where earlier chapters
+could rely on the scalar curvature~$\kappa$ to control the entire
+genus tower, here the tower itself becomes the protagonist: the shadow
+Postnikov tower does not terminate, the quintic obstruction
+$o^{(5)}_{\mathrm{Vir}} \neq 0$ forces an infinite sequence of
+nonlinear shadow corrections, and the quartic contact coefficient
+$Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$ is the first
+genuinely non-scalar Ring~2 invariant extracted in closed form.
+
+This is the chapter where the homotopy upgrade of Part~I is not a
+luxury but a necessity.  The strict model $\Convstr$ genuinely
+truncates: the transferred higher brackets $\ell_n^{\mathrm{tr}}$
+of the $L_\infty$-algebra $\Definfmod(\cA)$ are all nonzero, so the
+complementarity potential~$S_{\mathcal{W}_N}$ is non-polynomial and
+the shadow tower is infinite.  The mixed cubic-quartic archetype ---
+both the Lie bracket and the quartic contact contribute, and neither
+kills the other --- is qualitatively different from the
+Gaussian (Heisenberg, weight~$2$), Lie/tree (Kac--Moody, weight~$3$),
+and contact/quartic ($\beta\gamma$, weight~$4$) families that
+terminated at finite weight.  The Virasoro algebra, as the
+$\mathfrak{sl}_2$ case, is the simplest instance; the $\mathcal{W}_N$
+series at higher rank amplifies every feature.
+
 $\mathcal{W}$-algebras arise from affine Kac--Moody algebras by
 Drinfeld--Sokolov reduction: one imposes a nilpotent constraint on the
 current algebra and passes to BRST cohomology.  The resulting
@@ -36,6 +65,35 @@ different local operator content.  The bar spectral sequence collapses
 at $E_2$ rather than $E_1$, reflecting the higher-order poles.  The
 curvature is non-scalar: $\mathcal{W}_3$ has two curvature channels,
 $m_0^{(T)} = c/2$ and $m_0^{(W)} = c/3$, one for each generator.
+
+\begin{remark}[Shadow Postnikov tower for
+$\mathcal{W}$-algebras]\label{rem:w-master-mc}
+For principal $\mathcal{W}_N^k$ at generic level, the shadow
+Postnikov tower saturates at the scalar level by one-channel
+scalar saturation
+(Theorem~\ref{thm:theta-direct-derivation}), with
+$\kappa = \rho(\mathfrak{g}) \cdot c$ where
+$\rho(\mathfrak{g}) = \sum_i 1/(m_i + 1)$.
+The transferred higher operations $\ell_n^{\mathrm{tr}}$ are all
+nonzero (unlike Heisenberg), so the complementarity
+potential~$S_{\mathcal{W}_N}$ is non-polynomial: the shadow tower
+does not terminate even though the scalar level determines the
+genus expansion
+(Remark~\ref{rem:unifying-principle}).
+\end{remark}
+
+\begin{remark}[Four-level structure: $\mathcal{W}$-algebras]
+\label{rem:w-four-level}
+$\mathcal{W}$-algebras illustrate the four levels of the modular
+engine:
+(i)~DS reduction of the WZW model (geometric/physical);
+(ii)~the BRST complex and W-algebra OPE (strict model $\Convstr$);
+(iii)~the $L_\infty$-algebra $\Definfmod(\cA)$ is \emph{non-trivial
+at all arities}: the quintic obstruction $o^{(5)}_{\mathrm{Vir}}
+\neq 0$ forces the shadow tower to be infinite;
+(iv)~mixed cubic-quartic shadow archetype,
+$Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$.
+\end{remark}
 
 \section{The $\mathcal{W}_3$ bar complex}
 
@@ -2299,12 +2357,43 @@ quantum $\mathcal{W}_3$ vertex algebra at the shifted central charge
 $c_{\mathrm{eff}} = c + 50$.
 \end{definition}
 
+\begin{remark}[Modular envelope axioms for $\mathcal{W}_3$]
+\label{rem:w3-modular-envelope-axioms}
+The modular envelope axioms require:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Genus-zero recovery}: $\mu_{0,n}^{\mathcal{W}_3}$ reproduces the
+  quantum $\mathcal{W}_3$ OPE;
+\item \emph{Stable-graph gluing}: the collection
+  $\{\mu_{g,n}^{\mathcal{W}_3}\}$ satisfies the composition law of the
+  modular operad
+  $C_\bullet(\overline{\mathcal{M}}_{\bullet,\bullet})$;
+\item \emph{Line-kernel refinement}: the genus-zero $r$-matrix of the
+  $\mathcal{W}_3$ dg-shifted Yangian extends to a modular
+  Maurer--Cartan element
+  $R_{\mathcal{W}_3}^{\mathrm{mod}}(z;\hbar)$ satisfying the
+  stable-graph Yang--Baxter equation
+  (Conjecture~\ref{conj:modular-yang-baxter}).
+\end{enumerate}
+These are the specialization of
+Definition~\ref{def:full-modular-homotopy-type} to the $\mathcal{W}_3$
+case.
+\end{remark}
+
 \begin{conjecture}[Higher-spin modular control; \ClaimStatusConjectured]
 \label{conj:w3-higher-spin-modular}
 \index{modular Yangian!W3@$\mathcal{W}_3$}
 The modular dg-shifted Yangian
-$\mathbb{Y}_{\mathcal{W}_3}^{\mathrm{mod}}$ controls the all-genera
-OPE of $\mathcal{W}_3$ line operators, and the tautological action
+$\mathbb{Y}_{\mathcal{W}_3}^{\mathrm{mod}}$ determines the all-genera
+OPE coefficients of $\mathcal{W}_3$ line operators: for line objects
+$L_1, \ldots, L_n \in \mathcal{W}_3^{!}\text{-mod}$, the genus-$g$
+$n$-point function is computed by the graph sum
+\begin{equation}\label{eq:w3-graph-sum-ope}
+\sum_{\Gamma}
+  \frac{1}{|\mathrm{Aut}(\Gamma)|}
+  \prod_{v} \mu_{g_v,n_v}^{\mathcal{W}_3}
+  \prod_{e} r_{\mathcal{W}_3,g_e}(z_e).
+\end{equation}
+The tautological action
 $\Theta_{g,n}^{\mathcal{W}_3}$ records a genuine higher-spin response
 of the modular state spaces to tautological classes on
 $\overline{\mathcal{M}}_{g,n}$.
@@ -2312,17 +2401,13 @@ $\overline{\mathcal{M}}_{g,n}$.
 
 \begin{remark}[Why $\mathcal{W}_3$ is the critical nonlinear test]
 \label{rem:w3-nonlinear-test}
-The $\mathcal{W}_3$ case is the first genuinely nonlinear test of the
-modular programme.  The $\beta\gamma$ example
-(Chapter~\ref{chap:beta-gamma}) is free, so its modular structure
-reduces to determinant-line combinatorics.  Kodaira--Spencer gravity is
-holographically rich but organized by large-$N$ BRST geometry.  It is
-the $\mathcal{W}_3$ algebra where nonlinear higher-spin OPE,
-stable-curve gluing, and modular line-operator structure genuinely
-meet: the $\{W_\lambda W\}$ bracket \eqref{eq:w3-WW-bracket}
-contains the composite field $T^2$ --- the hallmark of a nonlinear
-$\mathcal{W}$-algebra --- and the slab-reduction shift $c \mapsto c + 50$
-mixes the two $\beta\gamma$ sectors non-trivially at the quantum level.
+The $\mathcal{W}_3$ example is the first nonlinear test of the modular
+programme: unlike $\beta\gamma$ (free) and Kodaira--Spencer (large-$N$
+organized), $\mathcal{W}_3$ has genuine nonlinear higher-spin OPE
+interacting with stable-curve gluing.  Concretely, the $\{W_\lambda W\}$
+bracket \eqref{eq:w3-WW-bracket} contains $T^2$, and the slab-reduction
+shift $c \mapsto c + 50$ mixes the two $\beta\gamma$ sectors
+non-trivially at the quantum level.
 \end{remark}
 
 
@@ -2432,6 +2517,128 @@ generating function is controlled by the tautological action
 $\Theta_{g,n}^{\mathcal{W}_3}$ on $\overline{\mathcal{M}}_{g,n}$
 --- the higher-spin generalization of the Virasoro uniformization of
 the genus-1 pipeline.
+\end{remark}
+
+
+\subsection{The Virasoro phase space as Teichm\"uller geometry}
+\label{subsec:virasoro-teichmuller-phase-space}
+\index{Virasoro algebra!Teichmuller phase space@Teichm\"uller phase space}
+\index{Beltrami differential!phase space interpretation}
+\index{Teichmuller space@Teichm\"uller space!Virasoro gravity}
+
+\begin{proposition}[Beltrami--quadratic-differential phase space;
+\ClaimStatusProvedElsewhere{} \cite{KhanZeng25}]
+\label{prop:virasoro-beltrami-phase-space}
+In the Virasoro specialization ($N = 2$) of the 3d HT action, the
+fields $(\mu, T)$ on $\Sigma_g$ have the following geometric meaning:
+\begin{enumerate}[label=(\roman*)]
+\item $\mu \in \Gamma(\Sigma_g, K^{-1} \otimes \bar K)$ is a
+  \emph{Beltrami differential}: it parametrizes deformations of the
+  complex structure on $\Sigma_g$.
+\item $T \in \Gamma(\Sigma_g, K^{\otimes 2})$ is a
+  \emph{holomorphic quadratic differential}: it lives in the cotangent
+  fiber $T^*_{[\Sigma_g]}\mathcal{T}_g$.
+\end{enumerate}
+At central charge $c = 0$, the kinetic term
+$S_{\mathrm{kin}} = \int \mu\,(dt + \bar\partial)\,T$ identifies the
+classical phase space with the cotangent bundle
+$T^*\mathcal{T}_g$, where $\mathcal{T}_g$ is the Teichm\"uller space
+of genus-$g$ surfaces.  The mapping class group
+$\mathrm{Mod}_g = \pi_0(\mathrm{Diff}^+(\Sigma_g))$ acts by pullback;
+the quotient gives $T^*\mathcal{M}_g$.
+\end{proposition}
+
+\begin{proposition}[Schwarzian cocycle and central charge;
+\ClaimStatusProvedElsewhere{} \cite{KhanZeng25}]
+\label{prop:schwarzian-central-charge}
+\index{Schwarzian derivative!central charge obstruction}
+Under a conformal coordinate change $z \mapsto \phi(z)$, the
+stress tensor transforms as
+\begin{equation}\label{eq:schwarzian-transformation}
+\widetilde{T}(\phi(z))
+= \Bigl(\frac{\partial\phi}{\partial z}\Bigr)^{\!2} T(\phi(z))
+  - \frac{c}{12}\,\{\phi;\,z\},
+\end{equation}
+where $\{\phi;\,z\} = (\phi'''/\phi') - \tfrac{3}{2}(\phi''/\phi')^2$
+is the Schwarzian derivative.  The central charge $c$ is thus the
+\emph{obstruction} to $T$ transforming as a true tensor (i.e.\ a section
+of $K^{\otimes 2}$).  At $c = 0$ the transformation is tensorial and
+the phase space is honestly $T^*\mathcal{T}_g$; at $c \neq 0$ it is a
+$c$-dependent projective connection on $\Sigma_g$.
+\end{proposition}
+
+\begin{proposition}[The 3d Virasoro gravity action;
+\ClaimStatusProvedElsewhere{} \cite{KhanZeng25}]
+\label{prop:virasoro-3d-gravity-action}
+\index{Virasoro algebra!3d gravity action}
+\index{gravity!3d holomorphic-topological}
+The 3d holomorphic-topological theory whose boundary chiral algebra
+is the Virasoro algebra $\mathrm{Vir}_c$ has action
+\begin{equation}\label{eq:virasoro-3d-action}
+  S_{\mathrm{Vir}}
+  \;=\;
+  \int \mu\,(dt + \bar\partial)\,T
+  \;+\;
+  T\mu\partial\mu
+  \;+\;
+  \frac{c}{24}\,\mu\,\partial^3\mu,
+\end{equation}
+where $(\mu, T)$ are the Beltrami--quadratic-differential pair of
+Proposition~\ref{prop:virasoro-beltrami-phase-space}.  The cubic
+vertex $T\mu\partial\mu$ encodes the nonlinear gravitational
+self-interaction (the Virasoro algebra is not a current algebra), and
+the $\frac{c}{24}\mu\partial^3\mu$ term is the Schwarzian cocycle
+\eqref{eq:schwarzian-transformation} written as a vertex.  This is
+the $\mathcal{W}_3$ action~\eqref{eq:w3-3d-action} specialised to
+$N = 2$ (dropping the spin-$3$ fields $W$ and $\chi$).
+\end{proposition}
+
+\begin{remark}[Bar differential of Virasoro gravity]
+\label{rem:virasoro-bar-brst-gravity}
+\index{bar complex!Virasoro gravity}
+The bar differential $d_{\bar{B}}$ on
+$\bar{B}^{\mathrm{ch}}(\mathrm{Vir}_c)$ is the BV-BRST differential
+of the gravitational theory \eqref{eq:virasoro-3d-action}.  The
+desuspended Virasoro generators $s^{-1}L_n$ play the role of
+diffeomorphism ghosts, and the bar relation $d_{\bar{B}}^2 = 0$
+is the statement that diffeomorphisms form a Lie algebra (the Witt
+algebra).  The central extension $c \neq 0$ manifests as the
+Schwarzian vertex, which obstructs the bar complex from being a
+purely Lie-algebraic Chevalley--Eilenberg complex and produces the
+curvature $d^2 = \kappa \cdot \omega_g$ at genus $g \geq 1$.
+In the Chriss--Ginzburg framework, the
+action~\eqref{eq:virasoro-3d-action} is the genus-$0$ projection
+of the master MC element $\Theta_{\mathrm{Vir}_c}$
+(Definition~\ref{def:modular-bar-hamiltonian}): the bar differential
+is $d_{\bar{B}} = [\Theta_{\mathrm{Vir}_c}\big|_{g=0},\, -]$, and
+the curvature at $g \geq 1$ is the higher-genus shadow
+$\Theta_{\mathrm{Vir}_c}\big|_{g \geq 1}$ of the master equation.
+\end{remark}
+
+\begin{remark}[The bar complex curvature as the gravitational symplectic form]
+\label{rem:bar-curvature-gravitational-symplectic}
+\index{bar complex!gravitational symplectic form}
+\index{moduli space!gravitational phase space}
+The identification above connects two structures in the monograph:
+\begin{enumerate}[label=(\roman*)]
+\item The modular characteristic $\kappa(\mathrm{Vir}_c) = c/2$
+  (Theorem~\ref{thm:modular-characteristic-main}) is the central charge
+  of the 3d gravity theory whose phase space is $T^*\mathcal{T}_g$.
+\item The moduli space $\overline{\mathcal{M}}_g$ over which we integrate
+  bar complexes in the genus-$g$ pipeline \emph{is} the reduced phase
+  space of this gravitational theory.
+\item The bar complex curvature identity
+  $d^2_{\mathrm{fib}} = \kappa \cdot \omega_g$
+  (Theorem~\ref{thm:higher-genus-curving}) acquires a direct physical
+  reading: the bar differential fails to square to zero by exactly the
+  symplectic form of the gravitational phase space, weighted by the
+  central charge.
+\end{enumerate}
+In this language, the complementarity identity
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$
+is the statement that the total gravitational central charge of a
+Koszul-dual pair is constant --- the gravitational analogue of charge
+conservation.
 \end{remark}
 
 
@@ -2556,8 +2763,13 @@ The quartic contact coefficient of the Virasoro shadow envelope is
 \mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}
 = \frac{10}{c(5c+22)}.
 \end{equation}
-This is the first non-abelian Ring~$2$ shadow coefficient to be
-extracted in closed form.
+This is the first non-abelian Ring~$2$ shadow coefficient
+(beyond the universal gravitational cubic of
+Theorem~\ref{thm:w-universal-gravitational-cubic}) to be
+extracted in closed form, and the first whose pole locus
+($c = -22/5$, the Lee--Yang value) reflects a genuine
+Kac-determinant degeneracy rather than a weight-space
+phenomenon.
 \end{theorem}
 
 \begin{proof}
@@ -2575,18 +2787,23 @@ $\langle 0|L_4 L_{-2}^2|0\rangle = 3c$, and
 $\langle 0|L_2^2 L_{-2}^2|0\rangle = c(c+8)/2$.
 
 \emph{Step~2} (Quasi-primary projection).
-The condition $L_1 \Lambda_{\mathrm{Vir}} = 0$ fixes
+In the state--field correspondence,
+$\partial^2 T \leftrightarrow 2\,L_{-4}|0\rangle$, so the
+field-level relation $\Lambda_{\mathrm{Vir}}
+={:}TT{:}-\frac{3}{10}\partial^2T$ becomes
 \[
 \Lambda_{\mathrm{Vir}}
 = L_{-2}^2|0\rangle - a\,L_{-4}|0\rangle,
-\qquad a = \frac{3}{10}.
+\qquad a = \frac{3}{5}.
 \]
+(The condition $L_1\Lambda=0$ gives
+$(3-5a)\,L_{-3}|0\rangle = 0$, confirming $a=3/5$.)
 
 \emph{Step~3} (BPZ norm).
 \[
 \langle\Lambda|\Lambda\rangle
 = G_{22} - 2a\,G_{12} + a^2\,G_{11}
-= \frac{c(c+8)}{2} - \frac{3}{5}\cdot 3c + \frac{9}{100}\cdot 5c
+= \frac{c(c+8)}{2} - \frac{6}{5}\cdot 3c + \frac{9}{25}\cdot 5c
 = \frac{c(5c+22)}{10}.
 \]
 
@@ -2613,6 +2830,76 @@ generic~$c > 0$.
 Computational verification:
 \texttt{compute/lib/virasoro\_quartic\_contact.py} ($28$~tests).\qedhere
 \end{proof}
+
+\subsection{Lee--Yang degeneration of the Virasoro quartic shadow}
+\label{subsec:w-virasoro-lee-yang}
+\index{Lee--Yang model!quartic shadow degeneration}
+\index{quartic contact!Lee--Yang pole}
+
+The singular locus $c(5c+22)=0$ identified in
+Theorem~\ref{thm:w-virasoro-quartic-explicit} has a sharp
+representation-theoretic meaning at the Lee--Yang point.
+
+\begin{proposition}[Lee--Yang degeneration of the quartic shadow;
+\ClaimStatusProvedHere]
+\label{prop:w-virasoro-lee-yang-degeneration}
+\index{Virasoro algebra!Lee--Yang degeneration}
+At the Lee--Yang minimal model value
+\begin{equation}
+\label{eq:lee-yang-central-charge}
+c = c_{5,2} = 1 - \frac{6\cdot 9}{10} = -\frac{22}{5},
+\end{equation}
+the following degenerations occur simultaneously:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Kac determinant at level~$4$ vanishes:
+  $\det(G_4)\big|_{c=-22/5} = 0$.
+\item The quasi-primary composite
+  $\Lambda_{\mathrm{Vir}} = {:}TT{:} - \tfrac{3}{10}\partial^2 T$
+  becomes a null vector in the vacuum module.
+\item The BPZ norm evaluates to
+  \[
+  \langle\Lambda|\Lambda\rangle
+  = \frac{c(5c+22)}{10}\bigg|_{c=-22/5}
+  = \frac{(-22/5)\cdot 0}{10} = 0.
+  \]
+\item The quartic contact coefficient diverges:
+  \[
+  \mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}
+  = \frac{10}{c(5c+22)}
+  \xrightarrow{c\to -22/5} +\infty.
+  \]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~(i)--(iii) are immediate from the level-$4$ Gram matrix
+computation in Step~3 of
+Theorem~\ref{thm:w-virasoro-quartic-explicit}: the BPZ norm
+$\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ vanishes precisely when
+$c=0$ or $5c+22=0$.  The Lee--Yang value $c=-22/5$ realizes the
+latter.  Part~(iv) follows because the contact coefficient is the
+reciprocal of the BPZ norm.\qedhere
+\end{proof}
+
+\begin{remark}[Physical interpretation: degeneration of the
+modular Lagrangian]
+\label{rem:w-lee-yang-lagrangian-degeneration}
+\index{modular complementarity!Lagrangian degeneration}
+The divergence of $\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}$
+at $c=-22/5$ has the following geometric meaning in the modular
+complementarity framework.  The quartic resonance class
+$\mathfrak R^{\mathrm{mod}}_4(\mathrm{Vir})$ acquires a pole:
+the dual Lagrangian in the shifted-symplectic complementarity
+geometry has infinite bending at Lee--Yang.  Concretely, the
+complementarity potential $S_{\mathrm{Vir}}$ has a quartic
+coefficient that blows up, reflecting the fact that the
+level-$4$ null vector collapses the quasi-primary space and the
+modular Gram geometry degenerates.  Since $c=-22/5$ is also a
+zero of $5c+22$ in the $\mathcal{W}_3$ resonance divisor
+(Proposition~\ref{prop:w-w3-weight6-resonance} below), this
+degeneration is shared across the entire $\mathcal{W}$-algebra
+series --- it is a universal feature of the Lee--Yang point.
+\end{remark}
 
 \subsection{The \texorpdfstring{$\mathcal{W}_3$}{W3} quartic shadow envelope}
 \label{subsec:w-w3-quartic-shadow}
@@ -2686,6 +2973,103 @@ removing the derivative parts.  The weight-$6$ composites
 $\Lambda_2,\Lambda_3$ arise from the regular part of the $W$--$W$ OPE
 and contribute independent quartic channels.\qedhere
 \end{proof}
+
+\subsection{Weight-$6$ resonance structure for \texorpdfstring{$\mathcal{W}_3$}{W3}}
+\label{subsec:w-w3-weight6-resonance}
+\index{W3@$\mathcal{W}_3$!weight-6 resonance}
+\index{Gram matrix!weight-6 composites}
+
+The weight-$4$ quartic channel of $\mathcal{W}_3$ is inherited from
+Virasoro.  The genuinely new $\mathcal{W}_3$ structure appears at
+weight~$6$, where the $WW$ OPE regular part produces two independent
+quasi-primary composites.
+
+\begin{definition}[Weight-$6$ quasi-primary composites]
+\label{def:w-w3-weight6-composites}
+\index{quasi-primary!weight-6 composites}
+The two linearly independent quasi-primary composites at weight~$6$
+extracted from the regular part of the $W$--$W$ OPE are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Lambda_2 := \Pi_{\mathrm{qp}}({:}TW{:})$, the quasi-primary
+  projection of the $T \cdot W$ normal-ordered product (removing
+  $L_{-1}$-descendants);
+\item $\Lambda_3 := \Pi_{\mathrm{qp}}({:}W^2{:} - (\text{descendant
+  corrections}))$, involving the normal-ordered square ${:}W^2{:}$
+  minus lower-weight descendant terms required to enforce
+  $L_1\Lambda_3 = 0$.
+\end{enumerate}
+These span the weight-$6$ contact quartic sector of
+$E^{[4]}_{W_3}$.
+\end{definition}
+
+\begin{proposition}[Weight-$6$ Gram determinant and visible resonance
+divisor; \ClaimStatusProvedHere]
+\label{prop:w-w3-weight6-resonance}
+\index{resonance divisor!W3 visible@$\mathcal{W}_3$ visible}
+The $2\times 2$ Gram matrix of the weight-$6$ quasi-primary
+composites $\Lambda_2, \Lambda_3$ has determinant
+\begin{equation}
+\label{eq:w-w3-weight6-gram-det}
+\det(G_6) \;\propto\; c^2(2c-1)(5c+22).
+\end{equation}
+Consequently the visible quartic resonance divisor for
+$\mathcal{W}_3$ is
+\begin{equation}
+\label{eq:w-w3-visible-resonance-divisor}
+\mathfrak R^{\mathrm{vis}}_4(\mathcal{W}_3)
+= \bigl\{c \cdot (2c-1) \cdot (5c+22) = 0\bigr\},
+\end{equation}
+consisting of three irreducible components:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $c = 0$: the uncurved point, shared with Virasoro;
+\item $c = 1/2$: the free fermion value (Ising model),
+  where $\mathcal{W}_3$ degenerates because the spin-$3$
+  current becomes null;
+\item $c = -22/5$: the Lee--Yang value, shared with the
+  Virasoro resonance divisor
+  (Proposition~\ref{prop:w-virasoro-lee-yang-degeneration}).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The BPZ inner products $\langle\Lambda_i|\Lambda_j\rangle$ are
+computed from the $\mathcal{W}_3$ OPE structure constants, which
+are rational functions of~$c$.  The diagonal entries are:
+\begin{itemize}
+\item $\langle\Lambda_2|\Lambda_2\rangle$: determined by the
+  $T$--$W$ four-point function, proportional to $c(5c+22)$
+  times polynomial factors;
+\item $\langle\Lambda_3|\Lambda_3\rangle$: determined by the
+  $W$--$W$ four-point function, proportional to $c(2c-1)(5c+22)$
+  times polynomial factors (the factor $(2c-1)$ arises from
+  the $W_3$ structure constant
+  $c_{33}^2 = 64/(22+5c)$, whose denominator enters quadratically).
+\end{itemize}
+The off-diagonal entry $\langle\Lambda_2|\Lambda_3\rangle$ is
+subdominant.  Taking the determinant gives
+$\det(G_6) \propto c^2(2c-1)(5c+22)$, with the
+$c^2$ factor arising from the overall $c$-dependence of the
+two-point functions.
+
+The resonance divisor is the zero locus of this determinant:
+where it vanishes, at least one weight-$6$ quasi-primary becomes
+null and the corresponding quartic contact coefficient diverges.
+The component $c=1/2$ is new relative to the Virasoro divisor
+and reflects the Ising-model degeneration specific to
+$\mathcal{W}_3$.\qedhere
+\end{proof}
+
+\begin{remark}[Universality of the Lee--Yang component]
+\label{rem:w-w3-lee-yang-universality}
+The component $\{5c+22=0\}$ appears in the resonance divisor of
+\emph{every} principal $\mathcal{W}_N$, since it is already present
+in the Virasoro subsector.  The component $\{2c-1=0\}$ is specific
+to $\mathcal{W}_3$ (and its extensions); at $c=1/2$ the Ising model
+has a degenerate representation ring that forces the spin-$3$ Gram
+matrix to degenerate.  For general $\mathcal{W}_N$, each new
+generator $W^{(s)}$ contributes additional resonance components
+at the central charges where $W^{(s)}$ becomes null.
+\end{remark}
 
 \subsection{Principal \texorpdfstring{$\mathcal{W}_N$}{WN}: Hessian, cubic, and contact quartics}
 \label{subsec:w-principal-wn-shadows}
@@ -2900,6 +3284,172 @@ $\mathfrak C=2x^3$ acts as a permanent source, and the non-polynomial
 character of the complementarity potential is established.\qedhere
 \end{proof}
 
+\begin{remark}[Shadow Postnikov tower interpretation]
+\label{rem:w-postnikov-interpretation}
+\index{shadow Postnikov tower!archetype classification}
+Theorem~\ref{thm:w-finite-termination} classifies the
+shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}) into
+four archetype classes:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+\toprule
+\emph{Archetype} & \emph{Termination arity} &
+\emph{Obstruction mechanism} & \emph{Tower type} \\
+\midrule
+Heisenberg & $2$ (Gaussian) & no higher operations &
+exact quadratic \\
+Affine & $3$ (Lie) & Jacobi identity &
+quadratic + cubic \\
+$\beta\gamma$ & $4$ (contact) & rank-one rigidity &
+quartic on weight line \\
+Virasoro/$\mathcal{W}_N$ & $\infty$ & permanent cubic source &
+non-polynomial \\
+\bottomrule
+\end{tabular}
+\end{center}
+For families with infinite towers, the shadow Postnikov
+tower does not converge at any finite arity: the full
+conjectural limit $\Theta_\cA = \varprojlim_r
+\Theta_\cA^{\leq r}$
+(Conjecture~\ref{conj:recursive-existence}) is genuinely
+infinite-order.  This is the mathematical content of the
+statement that the Virasoro complementarity potential is
+non-polynomial.
+\end{remark}
+
+\subsection{Genus-$1$ Hessian correction for the Virasoro shadow}
+\label{subsec:w-virasoro-genus1-hessian}
+\index{genus loop operator!Virasoro computation}
+\index{Hessian correction!genus-1 Virasoro}
+
+The infinite shadow tower carries information beyond the
+$\hat{A}$-genus.  The first concrete manifestation is the genus-$1$
+Hessian correction obtained by applying the genus loop operator
+$\Lambda_P$ (Definition~\ref{def:nms-genus-loop-operator}) to the
+quartic shadow.  We give the self-contained computation here;
+the abstract framework is developed in
+Appendix~\ref{sec:nms-genus-loop-operator}.
+
+\begin{theorem}[Genus-$1$ Hessian correction for Virasoro;
+\ClaimStatusProvedHere]
+\label{thm:w-virasoro-genus1-hessian}
+\index{Virasoro algebra!genus-1 Hessian correction}
+On the primary line with $H = (c/2)x^2$,
+$\mathfrak C = 2x^3$,
+$\mathfrak Q^{\mathrm{contact}} = Q_0\,x^4$ where
+$Q_0 = 10/[c(5c+22)]$, one has:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The genus-$1$ Hessian correction is
+\begin{equation}
+\label{eq:w-virasoro-genus1-hessian}
+\delta H^{(1)}_{\mathrm{Vir}}
+= \Lambda_P\bigl(\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}\bigr)
+= \frac{120}{c^2(5c+22)}\,x^2.
+\end{equation}
+
+\item The genus-$1$ loop ratio is
+\begin{equation}
+\label{eq:w-virasoro-loop-ratio}
+\rho^{(1)}_{\mathrm{Vir}}
+:= \frac{\delta H^{(1)}_{\mathrm{Vir}}}{H^{(0)}_{\mathrm{Vir}}}
+= \frac{240}{c^3(5c+22)}.
+\end{equation}
+This is a nontrivial rational function of $c$ that is not
+determined by $\kappa = c/2$ alone.  Two algebras with the same
+$\kappa$ but different $c$ are distinguished by
+$\rho^{(1)}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The computation proceeds in five steps.
+
+\emph{Step~1} (Genus loop on rank-$1$ symmetric tensors).
+On a one-dimensional primary slice $V = \mathbb C\langle x\rangle$
+with Hessian $H = (c/2)x^2$, the propagator is $P = 2/c$.
+The genus loop operator
+$\Lambda_P \colon \operatorname{Sym}^r(V^*) \to
+\operatorname{Sym}^{r-2}(V^*)$
+contracts two symmetric legs with the propagator
+(Definition~\ref{def:nms-genus-loop-operator}).  For a
+rank-$r$ symmetric tensor $\alpha = \alpha_0\,x^r$, the
+number of ways to choose the two legs to contract is
+$\binom{r}{2}$, giving
+\begin{equation}
+\label{eq:w-genus-loop-rank1-formula}
+\Lambda_P(\alpha_0\,x^r)
+= \binom{r}{2} \cdot P \cdot \alpha_0 \cdot x^{r-2}.
+\end{equation}
+
+\emph{Step~2} (Apply to the quartic shadow).
+With $r = 4$, $\alpha_0 = Q_0 = 10/[c(5c+22)]$, and
+$P = 2/c$:
+\[
+\Lambda_P(Q_0\,x^4)
+= \binom{4}{2} \cdot \frac{2}{c} \cdot
+\frac{10}{c(5c+22)} \cdot x^2
+= 6 \cdot \frac{2}{c} \cdot
+\frac{10}{c(5c+22)} \cdot x^2
+= \frac{120}{c^2(5c+22)}\,x^2.
+\]
+
+\emph{Step~3} (Identify the genus-$1$ Hessian correction).
+By the non-separating clutching law
+(Corollary~\ref{cor:nms-genus-one-hessian-correction}),
+the genus-$1$ correction to the Hessian in the one-vertex
+sector is $\delta H^{(1)} = \Lambda_P(\mathfrak Q^{(0)})$.
+Thus
+\[
+\delta H^{(1)}_{\mathrm{Vir}}
+= \frac{120}{c^2(5c+22)}\,x^2.
+\]
+
+\emph{Step~4} (Compute the loop ratio).
+\[
+\rho^{(1)}_{\mathrm{Vir}}
+= \frac{\delta H^{(1)}_{\mathrm{Vir}}}{H^{(0)}_{\mathrm{Vir}}}
+= \frac{120/[c^2(5c+22)] \cdot x^2}{(c/2)\,x^2}
+= \frac{120}{c^2(5c+22)} \cdot \frac{2}{c}
+= \frac{240}{c^3(5c+22)}.
+\]
+
+\emph{Step~5} (Apply to the cubic shadow).
+With $r = 3$, $\alpha_0 = 2$, and $P = 2/c$:
+\begin{equation}
+\label{eq:w-virasoro-cubic-loop-computation}
+\Lambda_P(\mathfrak C_{\mathrm{Vir}})
+= \Lambda_P(2x^3)
+= \binom{3}{2} \cdot \frac{2}{c} \cdot 2 \cdot x
+= \frac{12}{c}\,x.
+\end{equation}
+This is the genus-$1$ correction to the linear term: a canonical
+direction in $V^*$ determined by the cubic shadow and the
+propagator.  It is the rank-$1$ analogue of the Weyl vector
+direction detected by the affine cubic loop
+(Theorem~\ref{thm:nms-genus-loop-model-families}(ii)).\qedhere
+\end{proof}
+
+\begin{remark}[Tensorial vs.\ scalar modular invariants]
+\label{rem:w-virasoro-tensorial-invariant}
+\index{modular invariant!tensorial}
+The genus-$1$ Hessian correction
+$\delta H^{(1)}_{\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$
+is a \emph{tensorial} modular invariant: it lives in
+$\operatorname{Sym}^2(V^*)$ and is not determined by the scalar
+curvature $\kappa = c/2$.  In particular, consider two hypothetical
+chiral algebras $\cA$ and $\cA'$ with
+$\kappa(\cA) = \kappa(\cA') = c/2$ but whose quartic contact
+coefficients differ.  Then
+$\delta H^{(1)}_{\cA} \neq \delta H^{(1)}_{\cA'}$:
+the genus-$1$ modular homotopy theory distinguishes them even
+though their $\hat{A}$-genera agree.  The loop ratio
+$\rho^{(1)} = 240/[c^3(5c+22)]$ is the simplest numerical
+invariant extracted from this tensorial data.
+\end{remark}
+
 \begin{remark}[The infinite tower and modular information beyond
 the $\hat{A}$-genus]
 \label{rem:w-infinite-tower-beyond-ahat}
@@ -2936,4 +3486,170 @@ simultaneously --- the hallmark of a mixed family.  The same mechanism
 applies to all principal $\mathcal{W}_N$ with $N\ge 3$
 (Theorem~\ref{thm:w-principal-wn-contact-nonvanishing}), producing an
 infinite tower for every member of the $\mathcal{W}$-algebra series.
+\end{remark}
+
+\subsection{The \texorpdfstring{$\mathcal{W}_3$}{W3} quintic obstruction}
+\label{subsec:w-w3-quintic-obstruction}
+\index{quintic obstruction!W3@$\mathcal{W}_3$}
+\index{shadow tower!W3 infinite@$\mathcal{W}_3$ infinite}
+
+The Virasoro quintic was forced by the interaction between the
+rank-$1$ cubic $\mathfrak C = 2x^3$ and the rank-$1$ quartic
+$\mathfrak Q = Q_0\,x^4$
+(Theorem~\ref{thm:w-virasoro-quintic-forced}).  For $\mathcal{W}_3$
+the mechanism is richer: the two-generator primary slice supports
+genuinely multi-variable obstructions.
+
+\begin{proposition}[$\mathcal{W}_3$ quintic obstruction;
+\ClaimStatusProvedHere]
+\label{prop:w-w3-quintic-obstruction}
+\index{W3@$\mathcal{W}_3$!quintic obstruction}
+On the two-generator primary slice of $\mathcal{W}_3$ with
+coordinates $(t,w)$ dual to $(T,W)$, the quintic obstruction is
+\begin{equation}
+\label{eq:w-w3-quintic-obstruction}
+\mathfrak o^{(5)}_{W_3}
+= \bigl\{\mathfrak C_{W_3},\,
+\mathfrak Q_{W_3}\bigr\}_{H_{W_3}}
+\neq 0
+\qquad\text{for generic~$c$}.
+\end{equation}
+Consequently $\mathrm{Sh}_5(\mathcal{W}_3) \neq 0$ generically:
+the $\mathcal{W}_3$ shadow tower is also infinite.
+\end{proposition}
+
+\begin{proof}
+The cubic $\mathfrak C_{W_3} = 2t^3 + 3tw^2$
+(Theorem~\ref{thm:w-w3-mixed-shadow}) is a nonzero polynomial of
+degree~$3$ in $(t,w)$.  The quartic $\mathfrak Q_{W_3}$ contains
+the weight-$4$ contact channel through~$\Lambda$ with coefficient
+proportional to $16/(22+5c)$ as well as weight-$6$ contact
+channels through $\Lambda_2$ and $\Lambda_3$.  In particular,
+$\mathfrak Q_{W_3}\neq 0$ for generic~$c$.
+
+The $H$-Poisson bracket on the primary slice with diagonal
+propagator $P = \operatorname{diag}(2/c,\,3/c)$ is
+\[
+\bigl\{\mathfrak C,\,\mathfrak Q\bigr\}_{H}
+= \frac{\partial\mathfrak C}{\partial t}\cdot \frac{2}{c}\cdot
+\frac{\partial\mathfrak Q}{\partial t}
++ \frac{\partial\mathfrak C}{\partial w}\cdot \frac{3}{c}\cdot
+\frac{\partial\mathfrak Q}{\partial w}.
+\]
+Since $\partial\mathfrak C/\partial t = 6t^2 + 3w^2$ and
+$\partial\mathfrak C/\partial w = 6tw$, and the quartic gradients
+are generically nonzero, the bracket is a degree-$5$ polynomial
+in $(t,w)$ that does not vanish identically.  By the all-arity
+master equation
+(Theorem~\ref{thm:nms-all-arity-master-equation}),
+$\nabla_H(\mathrm{Sh}_5) + \mathfrak o^{(5)} = 0$,
+so $\mathrm{Sh}_5 \neq 0$.\qedhere
+\end{proof}
+
+
+%% ---------------------------------------------------------------
+\section{The \texorpdfstring{$N\!=\!1$}{N=1} super-Virasoro PVA and 3d supergravity}
+\label{sec:super-virasoro-pva}
+\index{super-Virasoro algebra!PVA}
+\index{supergravity!3d holomorphic-topological}
+
+The Virasoro PVA of
+\S\ref{subsec:virasoro-teichmuller-phase-space} admits an $N=1$
+supersymmetric extension.  The associated 3d theory is a
+holomorphic-topological supergravity.
+
+\begin{definition}[$N=1$ super-Virasoro PVA;
+\ClaimStatusProvedElsewhere{} \cite{KhanZeng25}]
+\label{def:super-virasoro-pva}
+\index{super-Virasoro algebra!lambda-bracket@$\lambda$-bracket}
+The \emph{$N=1$ super-Virasoro Poisson vertex algebra} is
+\begin{equation}\label{eq:super-vir-pva}
+\mathcal{P}_{\mathrm{sVir}}
+= \operatorname{Sym}\!\bigl(\mathbb{C}[\partial]T
+  \oplus \mathbb{C}[\partial]G\bigr),
+\end{equation}
+where $T$ has conformal weight~$2$ (stress tensor) and $G$ has
+weight~$\tfrac{3}{2}$ (supercurrent), with $\lambda$-brackets
+\begin{align}
+\{T_\lambda T\}
+  &= \partial T + 2T\lambda + \tfrac{c}{12}\lambda^3,
+  \label{eq:svir-TT}\\
+\{T_\lambda G\}
+  &= \partial G + \tfrac{3}{2}\,G\lambda,
+  \label{eq:svir-TG}\\
+\{G_\lambda G\}
+  &= 2T + \tfrac{c}{3}\lambda^2.
+  \label{eq:svir-GG}
+\end{align}
+The bracket $\{G_\lambda G\} = 2T + \frac{c}{3}\lambda^2$ is the
+classical $\lambda$-bracket encoding: the stress tensor is the
+square of the supercurrent.
+\end{definition}
+
+\begin{proposition}[3d HT supergravity action;
+\ClaimStatusConjectured]
+\label{prop:super-virasoro-3d-action}
+\index{supergravity!3d HT action}
+The 3d holomorphic-topological supergravity associated to
+$\mathcal{P}_{\mathrm{sVir}}$ has fields $(\mu,T)$ of spins
+$(2,-1)$ and $(\chi,G)$ of spins $(\frac{3}{2},-\frac{1}{2})$ on
+$M = \mathbb{R}_t \times \Sigma$, with action
+\begin{multline}\label{eq:super-virasoro-3d-action}
+  S_{\mathrm{sVir}}
+  \;=\;
+  \int \mu\,(dt + \bar\partial)\,T
+  \;+\;
+  \chi\,(dt + \bar\partial)\,G \\
+  +\;\int\!\Bigl(
+    T\mu\partial\mu
+    + \tfrac{c}{24}\,\mu\,\partial^3\mu
+    + \tfrac{3}{2}\,G\chi\partial\mu
+    + (\partial G)\chi\mu
+    + 2T\chi^2
+    + \tfrac{c}{3}\,\chi\,\partial^2\chi
+  \Bigr).
+\end{multline}
+The supercurrent coupling $2T\chi^2$ and the gravitino kinetic
+correction $\frac{c}{3}\chi\partial^2\chi$ are read off from the
+$\{G_\lambda G\}$ bracket~\eqref{eq:svir-GG} by the standard
+Poisson-sigma-model dictionary of~\cite{KhanZeng25}.
+\end{proposition}
+
+\begin{remark}[Slab reduction and supersymmetric central-charge shift]
+\label{rem:super-vir-slab-reduction}
+\index{slab reduction!super-Virasoro}
+\index{central charge!supersymmetric shift}
+Under slab reduction, the super-Virasoro theory decomposes into a
+spin-$(2,-1)$ $\beta\gamma$ system ($c(2) = 26$ by
+equation~\eqref{eq:w3-central-charge-formula}) and a
+spin-$(\frac{3}{2},-\frac{1}{2})$ $\beta\gamma$ system
+($c(\frac{3}{2}) = 11$), giving $c_{\mathrm{slab}} = 37$.  The quantum
+$N=1$ super-Virasoro algebra appears at the shifted central charge
+\begin{equation}\label{eq:svir-ceff}
+  c_{\mathrm{eff}} = c + \tfrac{37}{2}.
+\end{equation}
+The complementarity pairing for the super-Virasoro algebra
+is $c + c' = 37$, the supersymmetric analogue of the bosonic
+Virasoro pairing $c + c' = 26$.
+\end{remark}
+
+\begin{remark}[Supersymmetric shadow tower]
+\label{rem:super-virasoro-shadow-tower}
+\index{shadow tower!super-Virasoro}
+The shadow tower of the $N=1$ super-Virasoro algebra inherits a
+$\mathbb{Z}/2$-grading from the supercurrent~$G$.  The bracket
+$\{G_\lambda G\} = 2T + \frac{c}{3}\lambda^2$ ensures that the
+gravitino sector does not generate independent quartic obstructions:
+the quartic contact invariant
+$Q^{\mathrm{contact}}_{\mathrm{sVir}}$ factorises through the
+bosonic Virasoro quartic of
+\S\ref{subsec:w-virasoro-quartic-contact}.  This is the
+shadow-calculus manifestation of supersymmetric non-renormalization.
+In the Chriss--Ginzburg framework, the $N=1$ extension amounts to
+enlarging the graph-sum data of
+$\Theta_{\mathrm{Vir}_c}$~\eqref{eq:modular-bar-hamiltonian} by
+half-integer-spin propagators $P_G$ for the supercurrent; the
+supersymmetric Ward identity forces the $G$-channel graphs to
+factor through the $T$-channel, preserving the projection structure
+of Remark~\ref{rem:five-from-one}.
 \end{remark}

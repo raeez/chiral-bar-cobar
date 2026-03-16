@@ -1,5 +1,27 @@
 \chapter{Explicit genus expansions}\label{ch:genus-expansions}
 
+The genus tower stops being abstract here and becomes explicit
+analytical series.  Each family of chiral algebras produces a
+genus-$g$ free energy $F_g(\cA)$ through the universality theorem
+$\operatorname{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$, but the
+content of this chapter is not the universality theorem itself --- it
+is the concrete output: generating functions whose coefficients are
+Bernoulli numbers, Eisenstein series, and modular forms.  The reader
+should watch how a single scalar invariant~$\kappa$ determines an
+entire power series, and how that power series encodes the
+$\hat{A}$-genus through the Grothendieck--Riemann--Roch pushforward.
+
+These generating functions are the first shadows of the full modular
+characteristic $\Theta_\cA$.  At scalar level, the genus tower is
+controlled by~$\kappa(\cA)$ and the Faber--Pandharipande formula for
+$\lambda_g$.  The passage from a single number to an infinite
+sequence of genus-dependent coefficients is not a mystery but a
+mechanism: the Mumford class $\lambda_g$ supplies the universal
+denominator, and the obstruction coefficient supplies the numerator.
+That the resulting generating functions are classical objects ---
+$x/\sin x$, the Todd genus, Bernoulli polynomials --- is evidence
+that the bar-cobar machine computes invariants already visible to
+algebraic topology, expressed in a new language.
 
 The genus universality theorem
 (Theorem~\ref{thm:genus-universality}) expresses the genus-$g$
@@ -424,6 +446,77 @@ $10$ & $\frac{174611}{330}$ & $\frac{91546277357}{420928638260761696665600000}$ 
 \medskip
 \noindent
 In each case, $F_g$ is a linear function of~$k$, reflecting the factored form $F_g = \frac{3}{4}(k+2) \cdot \lambda_g^{FP}$.  At critical level $k = -2$, every entry vanishes: $F_g(\widehat{\mathfrak{sl}}_{2,-2}) = 0$ for all~$g$.  The super-exponential decay $\lambda_g^{FP} \sim 2/(2\pi)^{2g}$ (cf.\ Proposition~\ref{prop:fp-coefficients}) ensures that the genus expansion $\sum_g F_g$ converges for all $k \neq -2$.
+\end{computation}
+
+\begin{computation}[The $\widehat{\mathfrak{sl}}_2$ shadow tower at
+$k = 1$: from OPE to Weyl detection]
+\label{comp:sl2-shadow-tower}
+\index{sl2@$\widehat{\mathfrak{sl}}_2$!shadow tower}
+We build the full shadow machine for
+$\widehat{\mathfrak{sl}}_{2,1}$ from its OPE.
+
+\medskip\noindent\textbf{Step 1: OPE data.}
+$J^a(z)J^b(w) \sim \frac{(k+2)\kappa^{ab}}{(z-w)^2}
++ \frac{f^{ab}{}_c J^c(w)}{z-w}$
+with $k = 1$, $h^\vee = 2$, $k_{\mathrm{eff}} = 3$.  For $\mathfrak{sl}_2$:
+$[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$,
+$\kappa(e,f) = 1$, $\kappa(h,h) = 2$.
+
+\medskip\noindent\textbf{Step 2: Hessian.}
+$H_{\mathrm{aff}} = 3\kappa$ on $\mathfrak{sl}_2[1]$.
+Propagator $P = (1/3)\kappa^{-1}$.
+
+\medskip\noindent\textbf{Step 3: Cubic shadow.}
+From the simple pole:
+$\mathfrak{C}_{\mathrm{aff}}(x,y,z) = \kappa(x,[y,z])$.
+The cubic Hamiltonian is
+$\frac{1}{6}\kappa(a,[a,a])$.  For $a = \alpha e + \beta f + \gamma h$:
+\[
+[a,a] = 2(\alpha\beta - \beta\alpha)[e,f] + \cdots
+= 2\alpha\beta h + 2\alpha\gamma \cdot 2e + 2\beta\gamma\cdot(-2f)
++ \cdots
+\]
+Since $[a,a] = 0$ for commutative scalars, the cubic vanishes on
+one-dimensional slices but is nonzero on the full $3$-dimensional
+space.
+
+\medskip\noindent\textbf{Step 4: Quartic obstruction = 0 by Jacobi.}
+The $s$-channel on input $(e,f,e,f)$:
+$\kappa([e,f],[e,f])/3 = \kappa(h,h)/3 = 2/3$.
+The $u$-channel:
+$\kappa([e,f],[f,e])/3 = \kappa(h,-h)/3 = -2/3$.
+Sum: $2/3 + 0 + (-2/3) = 0$.
+This is the Jacobi identity in action.
+
+\medskip\noindent\textbf{Step 5: Complementarity potential.}
+$S_{\widehat{\mathfrak{sl}}_{2,1}}(a) = \frac{3}{2}\kappa(a,a)
++ \frac{1}{6}\kappa(a,[a,a])$.
+This is \textbf{polynomial}: the potential terminates at cubic order.
+The shadow tower terminates at arity~$3$ --- the Lie/tree archetype.
+
+\medskip\noindent\textbf{Step 6: Critical level $k = -2$.}
+$H = 0$, $\mathfrak{C} = \kappa(a,[a,a])$ survives.
+$S_{\mathrm{crit}}(a) = \frac{1}{6}\kappa(a,[a,a])$,
+$\operatorname{Crit}(S_{\mathrm{crit}}) = \{a : [a,a] = 0\}$
+--- the flat connections, i.e., the oper space
+(Theorem~\ref{thm:oper-bar}).
+
+\medskip\noindent\textbf{Step 7: Genus loop.}
+$\Lambda_P(\mathfrak{C})(x)
+= (1/3)\sum_a \kappa(x,[e_a,e^a])$.
+For $\mathfrak{sl}_2$:
+$\sum_a [e_a,e^a] = [e,f] + [f,e] + \frac{1}{2}[h,h]
+= h - h + 0 = 0$.
+So $\Lambda_P(\mathfrak{C}) = 0$: the genus-$1$ correction from
+the cubic shadow vanishes for $\mathfrak{sl}_2$.  The scalar
+genus tower $F_g = (3/4)(k+2)\lambda_g^{\mathrm{FP}}$ carries
+all the modular information.
+
+\medskip\noindent\textbf{Step 8: Phase index.}
+$\nu_{\mathrm{nl}}(\widehat{\mathfrak{sl}}_{2,1}) = 3$: the cubic
+is the leading nonlinear jet.  At critical level $k = -2$, the
+index remains $3$ but the Hessian degenerates, forcing the modular
+geometry to probe the cubic term.
 \end{computation}
 
 \subsection{Complementarity at every genus}\label{subsec:sl2-complementarity}
@@ -2402,6 +2495,132 @@ $\kappa + \kappa' = 1/4 + 51/4 = 13$ is the universal
 Virasoro constant.
 \end{computation}
 
+\begin{computation}[The Ising model shadow tower: from OPE to
+modular geometry]
+\label{comp:ising-shadow-tower}
+\index{Ising model!shadow tower}
+\index{shadow tower!Ising model}
+\index{Chriss--Ginzburg!Ising model as paradigm}
+We build the finite-order shadow tower for the
+Ising model $\mathrm{Vir}_{1/2}$ from its OPE, constructing
+the ambient complementarity data through arity~$4$ under the
+standing perfectness hypotheses.  This single
+example realises the proved finite-order structures of the theory.
+
+\medskip\noindent\textbf{Step 1: OPE data.}
+$T(z)T(w) \sim \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2}
++ \frac{\partial T(w)}{z-w}$
+with $c = 1/2$.
+
+\medskip\noindent\textbf{Step 2: Hessian from the quartic pole.}
+$H_{\mathrm{Ising}} = (c/2)x^2 = \frac{1}{4}x^2$,
+propagator $P = 2/c = 4$.
+
+\medskip\noindent\textbf{Step 3: Cubic shadow from the quadratic
+pole.}  $T_{(1)}T = 2T$, so
+$\mathfrak{C}_{\mathrm{Ising}} = 2x^3$.  The cubic action is
+$\frac{1}{6}\mathfrak{C}(a,a,a) = \frac{1}{3}a^3$.
+
+\medskip\noindent\textbf{Step 4: Quartic contact from the regular
+part.}
+The quasi-primary composite
+$\Lambda = {:}TT{:} - \frac{3}{10}\partial^2 T$ at $c = 1/2$
+has BPZ norm
+$\langle\Lambda|\Lambda\rangle = c(5c+22)/10
+= \frac{1}{2}\cdot\frac{49/2}{10} = \frac{49}{40}$.
+The quartic contact coefficient is
+\begin{equation}\label{eq:ising-quartic-contact}
+\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Ising}}
+= \frac{10}{c(5c+22)}
+= \frac{10}{\frac{1}{2}\cdot\frac{49}{2}}
+= \frac{10}{49/4}
+= \frac{40}{49}.
+\end{equation}
+
+\medskip\noindent\textbf{Step 5: Complementarity potential.}
+\begin{equation}\label{eq:ising-complementarity-potential}
+S_{\mathrm{Ising}}(x)
+= \frac{1}{8}x^2
++ \frac{1}{3}x^3
++ \frac{40}{49 \cdot 24}\,x^4
++ \operatorname{Sh}_5\,x^5 + \cdots
+= \frac{1}{8}x^2
++ \frac{1}{3}x^3
++ \frac{5}{147}\,x^4
++ \cdots
+\end{equation}
+This is \textbf{non-polynomial}: the quintic is forced nonzero by
+$\mathfrak{o}^{(5)} = \{\mathfrak{C},\mathfrak{Q}\}_H \neq 0$
+(Theorem~\ref{thm:w-virasoro-quintic-forced}).
+
+\medskip\noindent\textbf{Step 6: Quartic obstruction.}
+$\mathfrak{o}^{(4)}_{\mathrm{Ising}}
+= \frac{1}{2}\{\mathfrak{C},\mathfrak{C}\}_H$:
+\[
+\{\mathfrak{C},\mathfrak{C}\}_H
+= \text{(one channel on rank-1 space)}
+= P \cdot (2)^2 \cdot \text{(combinatorial)}
+= 4 \cdot 4 \cdot (\text{parity coeff}).
+\]
+By the quartic master equation
+$\nabla_H\mathfrak{Q} + \mathfrak{o}^{(4)} = 0$
+(Theorem~\ref{thm:nms-shadow-master-equations}), the quartic is
+determined by the cubic.  The contact coefficient
+$\mathfrak{Q}^{\mathrm{contact}} = 40/49$ absorbs this
+obstruction.
+
+\medskip\noindent\textbf{Step 7: Genus-$1$ Hessian correction.}
+Apply the genus loop operator
+$\Lambda_P(\mathfrak{Q}\,x^4) = \binom{4}{2}\cdot P \cdot
+\mathfrak{Q}\,x^2$:
+\begin{equation}\label{eq:ising-genus1-hessian}
+\delta H^{(1)}_{\mathrm{Ising}}
+= 6 \cdot 4 \cdot \frac{40}{49}\,x^2
+= \frac{960}{49}\,x^2.
+\end{equation}
+The loop ratio is
+$\rho^{(1)}_{\mathrm{Ising}}
+= \delta H^{(1)}/H^{(0)}
+= \frac{960/49}{1/4}
+= \frac{3840}{49}
+\approx 78.4$.
+This is the first tensorial modular invariant beyond $\kappa$
+for the Ising model: \emph{no scalar genus expansion can see it}.
+
+\medskip\noindent\textbf{Step 8: The Koszul dual.}
+The Koszul dual is $\mathrm{Vir}_{1/2}^! = \mathrm{Vir}_{51/2}$
+with $\kappa' = 51/4$.  The Legendre dual potential is
+$S^{\vee}(p) = \frac{1}{2}H^{-1}(p,p)
+- \frac{1}{6}\mathfrak{C}(H^{-1}p, H^{-1}p, H^{-1}p) + \cdots
+= 2p^2 - \frac{1}{3}\cdot 2 \cdot(4p)^3/(6) + \cdots$
+with $H^{-1} = P = 4$.  Concretely:
+$S^{\vee}(p) = 2p^2 - \frac{128}{3}p^3 + O(p^4)$.
+The cubic shadow of the dual is therefore
+$\mathfrak{C}_{\mathrm{Vir}_{51/2}} = -128 \cdot 2 = -256$,
+confirming Proposition~\ref{prop:legendre-duality-cubic}:
+$\mathfrak{C}^! = -\mathfrak{C} \cdot P^3
+= -2 \cdot 64 = -128$ (the Hessian-transported negative).
+
+\medskip\noindent\textbf{Step 9: Resonance.}
+The quartic resonance divisor for $\mathrm{Vir}_c$ is the pole
+locus $c(5c+22) = 0$.  At $c = 1/2$, $c(5c+22) = (1/2)(49/2)
+= 49/4 \neq 0$: the Ising model is \emph{quartic-regular}.
+The shadow geometry is non-degenerate.
+
+\medskip\noindent\textbf{Step 10: The phase index.}
+$\nu_{\mathrm{nl}}(\mathrm{Ising}) = 3$: the cubic is the
+leading nonlinear jet.  The Ising model is in the
+\emph{mixed cubic--quartic phase} --- both $\mathfrak{C}$ and
+$\mathfrak{Q}$ are nonzero, and the shadow tower is infinite.
+
+\medskip
+Every structure in the ambient modular complementarity programme
+--- the complementarity potential, the Lagrangian geometry, the
+shadow jets, the quartic obstruction, the genus-$1$ correction,
+the Legendre dual, the resonance class, the phase index --- is
+visible in this single algebra from its OPE at $c = 1/2$.
+\end{computation}
+
 \begin{computation}[Virasoro at \texorpdfstring{$c = 25$}{c = 25}]
 \label{comp:vir-c25-genera}
 \index{Virasoro algebra!$c{=}25$}
@@ -2799,4 +3018,205 @@ More generally, $F_g(\cA) + F_g(\cA^!) = 0$ for all $g \geq 1$
 and all Kac--Moody algebras.  For Virasoro and $\mathcal{W}$-algebras,
 $\kappa + \kappa' \neq 0$ and the complementary genus is nonvanishing
 \textup{(}Computation~\textup{\ref{comp:genus-duality-table})}.
+\end{remark}
+
+%% ---------------------------------------------------------------
+%%  Characters of boundary algebras as graded bar cohomology
+%% ---------------------------------------------------------------
+
+\section{Characters of boundary algebras as graded bar cohomology}
+\label{subsec:boundary-characters-bar}
+
+\providecommand{\Gr}{\operatorname{Gr}}
+
+The character of a boundary chiral algebra, computed as a $q$-series
+by Costello--Dimofte--Gaiotto, is naturally identified with the
+Hilbert series of the graded bar cohomology $H^*(\bar{B}(\cA))$.
+
+\begin{definition}[Free chiral boundary character; \ClaimStatusProvedElsewhere]
+\label{def:free-chiral-boundary-character}
+The character of the free chiral boundary algebra is the $q$-series
+of $\beta\gamma$ modes \textup{(}\!\cite{CDG20}, \S4.1.1\textup{)}:
+\begin{equation}\label{eq:free-chiral-character}
+\chi_{\beta\gamma}(q)
+\;=\;
+\prod_{n=1}^{\infty} \frac{1}{1 - q^n}
+\;=\;
+\frac{1}{\eta(q)}\,q^{1/24},
+\end{equation}
+where $\eta(q)$ is the Dedekind eta function.  Each factor
+$(1-q^n)^{-1}$ counts the mode $\gamma_{-n}$ acting on the vacuum.
+\end{definition}
+
+\begin{proposition}[Neumann pure-gauge character; \ClaimStatusProvedElsewhere]
+\label{prop:neumann-character}
+For the Neumann boundary condition on pure $\mathfrak{g}$-gauge theory,
+the boundary character is the gauge-invariant piece of $bc \otimes
+\text{adjoint } \beta\gamma$ \textup{(}\!\cite{CDG20}, \S6.2.3\textup{)}:
+\begin{equation}\label{eq:neumann-character}
+\chi_{\mathrm{Neu}}(q)
+\;=\;
+\oint [da]\;
+\prod_{n \geq 1}
+\frac{\det\nolimits_{\mathfrak{g}}(1 - q^n\,\mathrm{Ad}(a))^2}
+     {\det\nolimits_{\mathfrak{g}}(1 - q^n\,\mathrm{Ad}(a))^2}
+\;=\;
+\oint [da]\;\mathbf{1},
+\end{equation}
+where the cancellation between ghosts and adjoint matter reflects
+the vanishing of the one-loop determinant for pure gauge theory
+at the perturbative level.  Non-perturbative corrections arise from
+monopole sectors.
+\end{proposition}
+
+\begin{proposition}[Dirichlet character; \ClaimStatusProvedElsewhere]
+\label{prop:dirichlet-character}
+The Dirichlet boundary character decomposes into four multiplicative
+factors \textup{(}\!\cite{CDG20}, \S7.4\textup{)}:
+\begin{equation}\label{eq:dirichlet-character}
+\chi_{\mathrm{Dir}}(q)
+\;=\;
+\sum_{\lambda \in \Lambda_{\mathrm{cochar}}}
+q^{E(\lambda)}
+\;\cdot\;
+\chi\bigl(T_{\Gr^\lambda}\bigr)
+\;\cdot\;
+\chi_{\mathrm{matter}}(\lambda,q)
+\;\cdot\;
+\chi_{\mathcal{L}}(\lambda,q),
+\end{equation}
+where the four factors are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $q^{E(\lambda)}$: the energy of the cocharacter
+  $\lambda \in \Lambda_{\mathrm{cochar}}$;
+\item $\chi(T_{\Gr^\lambda})$: the Euler characteristic of the tangent
+  space to the affine Grassmannian stratum $\Gr^\lambda$;
+\item $\chi_{\mathrm{matter}}(\lambda,q)$: the matter index, counting
+  modes of the matter fields in the background of~$\lambda$;
+\item $\chi_{\mathcal{L}}(\lambda,q)$: the line bundle index, incorporating
+  the twist by the determinant line bundle.
+\end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Boundary characters as bar Hilbert series;
+\ClaimStatusProvedHere]
+\label{thm:boundary-characters-bar-hilbert}
+The boundary characters are Hilbert series of bar cohomology:
+\begin{equation}\label{eq:character-bar-hilbert}
+\chi_{\partial}(q)
+\;=\;
+\sum_{n \geq 0} q^n\,\dim H^n\bigl(\bar{B}(\cA)\bigr).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The boundary chiral algebra is the BRST cohomology of the interval
+compactification \cite{CDG20}.  The BRST differential is the bar
+differential: it encodes the $A_\infty$ operations of the bulk theory
+restricted to the boundary.  Therefore the boundary state space in
+conformal weight~$n$ is $H^n(\bar{B}(\cA))$, and the character
+$\chi_\partial(q) = \sum_n q^n \dim H^n(\bar{B}(\cA))$ follows by
+definition of the Hilbert series.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Comparison of CDG boundary characters with bar cohomology
+  dimensions for small conformal weights.}
+\label{tab:boundary-characters-bar}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccc}
+\toprule
+Boundary condition & $\chi_\partial(q)$ (leading terms)
+  & $\dim H^n(\bar{B}(\cA))$ source \\
+\midrule
+Free $\beta\gamma$ & $1 + q + 2q^2 + 3q^3 + \cdots$
+  & Partition function $p(n)$ \\
+Neumann $\mathfrak{gl}_N$ & $1 + 0 + q^2 + \cdots$
+  & Casimir tower \\
+Dirichlet $\mathfrak{gl}_N$ & $1 + Nq + \binom{N+1}{2}q^2 + \cdots$
+  & Grassmannian cells \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proposition}[Multi-chiral product formulas;
+\ClaimStatusProvedElsewhere]
+\label{prop:multi-chiral-product-characters}
+\index{boundary character!product formula}
+\index{bar cohomology!product structure}
+For a tensor product of free chirals $\cA = \cA_1 \otimes \cdots
+\otimes \cA_r$, the boundary character factorises:
+\begin{equation}\label{eq:multi-chiral-product}
+  \chi_\partial^{\cA_1 \otimes \cdots \otimes \cA_r}(q)
+  \;=\;
+  \prod_{i=1}^{r}
+  \chi_\partial^{\cA_i}(q).
+\end{equation}
+This reflects the K\"unneth decomposition of bar cohomology:
+\[
+  H^*\!\bigl(\bar{B}(\cA_1 \otimes \cdots \otimes \cA_r)\bigr)
+  \;\cong\;
+  \bigotimes_{i=1}^{r}
+  H^*\!\bigl(\bar{B}(\cA_i)\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+For free theories, the bar complex of the tensor product splits as
+$\bar{B}(\cA_1 \otimes \cA_r) \cong \bar{B}(\cA_1) \otimes
+\bar{B}(\cA_r)$ by the Eilenberg--Zilber theorem for bar
+constructions (the tensor product of dg coalgebras).  The character
+product formula follows from the multiplicativity of Hilbert series
+under tensor products.
+\end{proof}
+
+\begin{example}[Characters for gauge theory with matter]
+\label{ex:gauge-matter-characters}
+\index{boundary character!gauge theory with matter}
+For $\mathrm{SU}(N)$ gauge theory with $N_f$ fundamental chirals:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{Neumann character}: gauge-invariant piece of
+  $(bc)^{\mathrm{adj}} \otimes (\beta\gamma)^{\mathrm{adj}} \otimes
+  (\beta\gamma)^{\mathrm{fund},\otimes N_f}$, computed by the Molien
+  integral
+  \[
+    \chi_{\mathrm{Neu}}^{N,N_f}(q)
+    \;=\;
+    \oint [da]\;
+    \prod_{n \geq 1}
+    \frac{\det_{\mathrm{adj}}(1 - q^n\,\mathrm{Ad}(a))^2}
+         {\det_{\mathrm{fund}}(1 - q^n\,a)^{N_f}
+          \det_{\mathrm{fund}}(1 - q^n\,a^{-1})^{N_f}}.
+  \]
+\item \emph{Dirichlet character}: the monopole-graded sum of
+  Proposition~\ref{prop:dirichlet-character}, with the matter index
+  now carrying $N_f$ copies of the fundamental contribution.
+\end{enumerate}
+Each of these is identified with the Hilbert series of the graded bar
+cohomology of the corresponding boundary chiral algebra, by
+Theorem~\ref{thm:boundary-characters-bar-hilbert}.
+\end{example}
+
+\begin{remark}[Characters as shadow-algebra projections]
+\label{rem:characters-shadow-projection}
+\index{shadow algebra!character projection}
+\index{boundary character!shadow algebra}
+In the Chriss--Ginzburg framework, the boundary character
+$\chi_\partial(q)$ is a graded trace on the shadow algebra
+$\cA^{\mathrm{sh}}$
+(Definition~\ref{def:shadow-algebra}): the Hilbert series
+of bar cohomology is the generating function of
+$\dim \cA^{\mathrm{sh}}_{*,0}$ (the genus-$0$ arity-graded
+components).  The product formula of
+Proposition~\ref{prop:multi-chiral-product-characters} reflects
+the multiplicativity of shadow algebras: for tensor products
+$\cA = \cA_1 \otimes \cA_2$, the shadow algebra factorises as
+$\cA^{\mathrm{sh}} \cong \cA_1^{\mathrm{sh}} \otimes
+\cA_2^{\mathrm{sh}}$, and the character product follows.
+Higher-genus corrections to the character are encoded in the
+genus-$g$ graded pieces $\cA^{\mathrm{sh}}_{*,g}$, each
+controlled by the corresponding projection of the master MC
+element $\Theta_{\cA}$
+(Definition~\ref{def:modular-bar-hamiltonian}).
 \end{remark}

@@ -4,6 +4,43 @@
 
 \index{Yangian!as modular Koszul atom}
 
+This is the first fully spectral chapter in the monograph.  Up to this
+point, every chiral algebra has been $\Einf$-chiral: the bar complex
+lives on unordered configuration spaces $C_n(X)$, Verdier duality acts
+by level inversion, and the modular characteristic~$\kappa$ captures
+the entire nonlinear shadow tower.  The Yangian $Y(\fg)$ breaks all
+three of these features simultaneously.  It is $\Eone$-chiral, meaning
+that the bar complex $\barB^{\Eone}(\cA)$ lives on \emph{ordered}
+configurations; Verdier duality inverts the $R$-matrix rather than the
+level; and the shadow tower, far from terminating at scalar weight,
+encodes the full spectral-parameter dependence of the rational
+$R$-matrix through arbitrarily high arity.  Yangians are where OPE,
+the RTT presentation, the spectral parameter, and deformation of loop
+symmetry converge.
+
+The passage from $\Einf$ to $\Eone$ is not merely a change of
+convention.  It introduces genuine new structure: the braided monoidal
+category $\Factord(\cA)$ of ordered factorization modules, the
+dg-shifted Yangian $\Ydg(\fg)$ as the convolution algebra
+$\Convstr(\barB^{\Eone}(\cA), \chirLie)$ on ordered configurations,
+and the derived Drinfeld--Kohno (DK) ladder comparing geometric braid
+monodromy with algebraic $R$-matrix data.  Shifted Yangians
+$Y_\mu(\fg)$, arising from Coulomb branches of 3d gauge theories, are
+shadows of deeper homotopy-coherent spectral structures: they encode
+shifted coproducts, shifted evaluation maps, and the truncated
+quotients that match BFN Coulomb branch algebras.  The modular
+convolution algebra $\gAmod$ for an $\Eone$-chiral Yangian is
+pronilpotent rather than finite-dimensional, and the pro-MC element
+$R_T^{\mathrm{mod}}(z;\hbar)$ organizes the entire spectral structure
+(Definition~\ref{def:modular-yangian-pro}).
+
+The chapter proceeds in three stages: the algebraic Yangian and its
+RTT/$R$-matrix presentation (\S\ref{sec:yangian-vertex}), the
+$\Eone$-chiral realization on curves and the associated bar-cobar
+duality (\S\ref{sec:yangian-e1-bar}), and the shifted Yangian family
+with Coulomb branch connections (continued in the computational
+sections that follow).
+
 The Kac--Moody and $\mathcal{W}$-algebra families are
 $\Einf$-chiral: commutative, fully local, with unordered
 configuration spaces $C_n(X)$.  The Kazhdan--Lusztig equivalence
@@ -54,6 +91,20 @@ Level~(B), developed in this chapter, geometrizes the spectral
 parameter and produces the $\Eone$-bar-cobar duality and the DK
 ladder.  Level~(C) is a physical realization of~(B) and is
 discussed in Chapter~\ref{ch:bv-brst}.
+\end{remark}
+
+\begin{remark}[Four-level structure: Yangians]
+\label{rem:yangian-four-level}
+The Yangian illustrates the four levels of the modular engine:
+(i)~the rational $R$-matrix / meromorphic braiding
+(geometric/physical);
+(ii)~the RTT presentation and evaluation
+(strict model $\Convstr$);
+(iii)~$\Convinf$ for $\Eone$-chiral algebras gives
+the non-commutative convolution $L_\infty$-algebra;
+(iv)~the modular Yangian $Y_T^{\mathrm{mod}}$
+(Definition~\ref{def:modular-yangian-pro}) as pro-MC element
+in the pronilpotent completion.
 \end{remark}
 
 \section{Yangian vertex algebra}
@@ -562,7 +613,8 @@ $\{V_n(a)\}$.  Then:
   \to K_0(\mathcal{O}_Y)
   \to K_0(\operatorname{Rep}_{\mathrm{fd}}) \to 0$.
   The categorical lift from~$K_0$ to exact sequences in
-  $\mathcal{O}^{\mathrm{sh}}$ is the MC3 frontier.
+  $\mathcal{O}^{\mathrm{sh}}$ is the MC3 frontier
+  (proved in type~A; conjectural beyond type~A).
 \end{enumerate}
 \end{remark}
 
@@ -2193,8 +2245,8 @@ Yangian MC4 frontier.  The evaluation-core comparison
 $\mathsf{K}^{\mathrm{line}}_{a,b}(N) = \mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$
 is verified for $N = 2,3,4$ (249~tests).  The remaining Yangian
 frontier is the DK-5 categorical packet, which is downstream of
-MC3 (categorical enlargement beyond the evaluation-generated
-core), not MC4-intrinsic.
+MC3 (now accessible in type~A; the categorical enlargement beyond
+the evaluation-generated core is open beyond type~A), not MC4-intrinsic.
 \end{computation}
 
 \begin{computation}[Low-rank auxiliary-kernel extraction]
@@ -2360,4 +2412,83 @@ The same stage-$6$ vanishing has also been checked on a second generic
 length-$3$ sample in each of the ranks $2,3,4$, so this low-rank
 packet is not tied to a single chosen tuple of evaluation parameters.
 \end{computation}
+
+
+\subsection{The gauge theory Koszul dual as shifted cotangent loop algebra}
+\label{subsec:gauge-theory-koszul-dual}
+\index{Koszul dual!gauge theory}
+\index{shifted cotangent bundle!loop algebra}
+
+\begin{proposition}[Gauge theory $\cA^!$ as shifted cotangent loop algebra;
+\ClaimStatusProvedElsewhere]
+\label{prop:gauge-theory-koszul-dual}
+Let $G$ be a reductive group with Lie algebra $\fg$.  For a 3d $\mathcal{N}=2$
+gauge theory with gauge group $G$, the Koszul dual boundary algebra is a
+deformation of the shifted cotangent bundle of the negative loop algebra:
+\[
+\cA^! \simeq T^*[-1]\bigl(\fg[[z^{-1}]]\bigr),
+\]
+where $T^*[-1]$ denotes the $(-1)$-shifted cotangent bundle
+\textup{(}i.e., the graded vector space
+$\fg[[z^{-1}]] \oplus \fg^*[[z^{-1}]][1]$
+with the canonical shifted-symplectic pairing\textup{)}.
+\end{proposition}
+
+The generators are organized by their physical origin:
+\begin{itemize}
+\item \emph{Gauge modes}: dual modes $a_n \in \fg^*$, $n \leq -1$,
+  from the gauge field on the boundary;
+\item \emph{Matter modes}: for matter in representation $V$ with
+  superpotential $W$, one adds $V[[z^{-1}]]$-valued generators $X_n^i$
+  and their conjugates $\psi_{n,i}$;
+\item The $A_\infty$ operations $m_k$ are determined by derivatives
+  $\partial^k W$ of the superpotential.
+\end{itemize}
+
+\begin{example}[Pure Chern--Simons at level $k$]
+\label{ex:pure-cs-koszul-dual}
+\index{Chern--Simons!Koszul dual}
+For pure Chern--Simons theory at level $k$ (no matter), the
+Koszul dual simplifies to
+\[
+\cA^!_{\mathrm{CS},k}
+\simeq T^*[-1]\bigl(\widehat{\fg}_k[[z^{-1}]]\bigr),
+\]
+with the affine extension at level~$k$.  The $A_\infty$ structure is
+strict (all $m_k = 0$ for $k \geq 3$) since $W = 0$.
+\end{example}
+
+\begin{theorem}[Full dg-shifted Yangian structure on $\cA^!$;
+\ClaimStatusProvedElsewhere]
+\label{thm:gauge-theory-yangian-structure}
+\index{Yangian!dg-shifted!gauge theory origin}
+The Koszul dual $\cA^!$ of a 3d $\mathcal{N}=2$ gauge theory carries
+the full structure of a dg-shifted Yangian \cite{DNP25}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Translation symmetry along the topological direction
+  $z \mapsto z + a$;
+\item A twisted coproduct
+  $\Delta^{\mathrm{tw}}\colon \cA^! \to \cA^! \hat\otimes \cA^!$
+  governing the fusion of line operators;
+\item An $R$-matrix
+  $R(u) = 1 + r/u + O(u^{-2}) \in \End(V)^{\otimes 2}[[u^{-1}]]$
+  satisfying the $A_\infty$ Yang--Baxter equation;
+\item When $W \neq 0$, the matter contributions
+  $V[[z^{-1}]]$ introduce higher $A_\infty$ operations
+  $m_k$ from $\partial^k W$, deforming the strict algebra.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Connection to the algebraic Yangian]
+\label{rem:gauge-theory-eval-subalgebra}
+The algebraic Yangian $Y(\fg)$ studied in this chapter
+(Theorem~\ref{thm:yangian-e1}) is the evaluation-generated
+subalgebra of the gauge-theory Koszul dual $\cA^!$.  Concretely, the
+evaluation modules $V(a)$ of \S\ref{sec:dg-shifted-comparison} are
+the line operators at spectral parameter $a$, and the RTT relation
+(Theorem~\ref{thm:yangian-bar-rtt}) is the OPE of line operators in
+the 3d holomorphic Chern--Simons theory.  The physics thus produces
+precisely the algebra that the FM configuration-space construction
+studies.
+\end{remark}
 
