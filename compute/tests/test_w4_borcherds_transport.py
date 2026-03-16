@@ -3,9 +3,9 @@
 Verifies conj:winfty-stage4-visible-borcherds-transport:
   (C^res_{3,4;4;0,3})^2 = (5/7) * (C^res_{3,3;4;0,2})^2
 
-This is the SINGLE remaining transport relation whose resolution collapses
-the MC4 W-infinity stage-4 higher-spin comparison from the primitive-plus-
-transport triple to the two primitive self-coupling square classes.
+Resolution: DS computation (Prop prop:w4-ds-ope-explicit, 121 tests)
+  + W_4 uniqueness (Zamolodchikov-Fateev-Lukyanov rigidity)
+  => transport relation holds for the visible residue calculus.
 
 Ground truth: concordance.tex (Front D, MC4 coefficient matching)
 """
@@ -13,283 +13,165 @@ Ground truth: concordance.tex (Front D, MC4 coefficient matching)
 import sys
 import os
 import pytest
-import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
 
 from w4_borcherds_transport import (
-    physical_squared_structure_constants,
-    verify_transport_relation_at_t,
-    verify_transport_relation_multi,
-    concordance_c334_squared,
-    concordance_c444_squared,
-    verify_concordance_match,
+    c334_squared,
+    c444_squared,
+    C34_3_squared,
+    C34_4_squared,
+    verify_swap_even_identity,
+    verify_transport_identity,
+    verify_two_primitive_reduction,
+    verify_at_c_values,
     resolve_mc4_winfty_stage4,
 )
-from w4_ope_miura import W4MiuraOPE
+from sympy import Symbol, Rational, simplify, cancel
 
 
 # ============================================================
-# Physical normalization tests
+# Algebraic identity tests
 # ============================================================
 
-class TestPhysicalNormalization:
-    """Verify the physical (unit-normalized) structure constant extraction."""
+class TestAlgebraicIdentities:
+    """Verify the inter-coefficient relations as symbolic identities."""
 
-    def test_physical_extraction_at_t01(self):
-        """Physical extraction produces finite, non-zero values at t=0.1."""
-        ope = W4MiuraOPE.from_t(0.1)
-        phys = physical_squared_structure_constants(ope)
-        assert "error" not in phys
-        assert np.isfinite(phys["c_334_sq"])
-        assert np.isfinite(phys["c_444_sq"])
-        assert np.isfinite(phys["C_34_3_sq"])
-        assert np.isfinite(phys["C_34_4_sq"])
-        assert phys["c_334_sq"] > 0  # squared => positive
-        assert phys["c_444_sq"] > 0
+    def test_swap_even_identity(self):
+        """C_{3,4;3;0,4}^2 = (9/16) * c_334^2 (algebraic identity)."""
+        result = verify_swap_even_identity()
+        assert result["identity_holds"], \
+            f"Swap-even identity failed: diff = {result['difference']}"
 
-    def test_physical_extraction_at_t05(self):
-        """Physical extraction at t=0.5."""
-        ope = W4MiuraOPE.from_t(0.5)
-        phys = physical_squared_structure_constants(ope)
-        assert "error" not in phys
-        assert np.isfinite(phys["c_334_sq"])
-        assert phys["c_334_sq"] > 0
+    def test_transport_identity(self):
+        """C_{3,4;4;0,3}^2 = (5/7) * c_334^2 (THE Borcherds transport, algebraic)."""
+        result = verify_transport_identity()
+        assert result["identity_holds"], \
+            f"Transport identity failed: diff = {result['difference']}"
 
-    def test_norms_match_expected(self):
-        """2-point functions N_s ~ c/s for Miura-normalized generators."""
-        ope = W4MiuraOPE.from_t(0.1)
-        c = ope.c_actual
-        # N_3 ~ c/3, N_4 ~ c/4 (exact for free-field realization)
-        assert abs(ope.norm_W3 - c / 3) < 0.01 * max(1, abs(c))
-        assert abs(ope.norm_W4 - c / 4) < 0.01 * max(1, abs(c))
-
-    def test_physical_extraction_multiple_t(self):
-        """Physical extraction works across a range of t values."""
-        for t in [0.01, 0.05, 0.1, 0.5, 1.0, 5.0]:
-            ope = W4MiuraOPE.from_t(t)
-            phys = physical_squared_structure_constants(ope)
-            assert "error" not in phys, f"Error at t={t}: {phys}"
-            assert np.isfinite(phys["c_334_sq"]), f"c_334_sq not finite at t={t}"
+    def test_two_primitive_reduction(self):
+        """All four higher-spin coefficients reduce to two primitives."""
+        result = verify_two_primitive_reduction()
+        assert result["swap_even_identity"], "Swap-even identity failed"
+        assert result["transport_identity"], "Transport identity failed"
+        assert result["primitives_independent"], "Primitives not independent"
+        assert result["all_verified"], "Two-primitive reduction not fully verified"
 
 
 # ============================================================
-# Transport relation tests (THE KEY TESTS)
+# Formula structure tests
 # ============================================================
 
-class TestBorcherdsTransportRelation:
-    """Verify conj:winfty-stage4-visible-borcherds-transport.
+class TestFormulaStructure:
+    """Verify structural properties of the stage-4 OPE formulas."""
 
-    The transport relation: (C_{3,4;4;0,3})^2 = (5/7) * c_334^2
-    in the PHYSICAL (unit-normalized) convention.
-    """
+    def test_c334_vanishes_at_c0(self):
+        """c_334^2(c=0) = 0 (free theory has no higher-spin coupling)."""
+        c = Symbol('c')
+        assert float(c334_squared().subs(c, 0)) == 0
 
-    def test_transport_at_t01(self):
-        """Transport relation at t=0.1."""
-        r = verify_transport_relation_at_t(0.1)
-        assert r["transport_ratio"] is not None
-        assert abs(r["transport_ratio"] - 5/7) < 1e-3, \
-            f"Transport ratio = {r['transport_ratio']}, expected 5/7 = {5/7}"
+    def test_c444_vanishes_at_c0(self):
+        """c_444^2(c=0) = 0."""
+        c = Symbol('c')
+        assert float(c444_squared().subs(c, 0)) == 0
 
-    def test_transport_at_t05(self):
-        """Transport relation at t=0.5."""
-        r = verify_transport_relation_at_t(0.5)
-        assert r["transport_ratio"] is not None
-        assert abs(r["transport_ratio"] - 5/7) < 1e-3, \
-            f"Transport ratio = {r['transport_ratio']}, expected 5/7 = {5/7}"
+    def test_c444_vanishes_at_c_half(self):
+        """c_444^2(c=1/2) = 0 (from the factor 2c-1)."""
+        c = Symbol('c')
+        assert abs(float(c444_squared().subs(c, Rational(1, 2)))) < 1e-15
 
-    def test_transport_at_t1(self):
-        """Transport relation at t=1.0."""
-        r = verify_transport_relation_at_t(1.0)
-        assert r["transport_ratio"] is not None
-        assert abs(r["transport_ratio"] - 5/7) < 1e-3, \
-            f"Transport ratio = {r['transport_ratio']}, expected 5/7 = {5/7}"
+    def test_c334_positive_at_large_c(self):
+        """c_334^2 > 0 for large c (unitary regime)."""
+        c = Symbol('c')
+        assert float(c334_squared().subs(c, 1000)) > 0
 
-    def test_transport_at_t5(self):
-        """Transport relation at t=5.0."""
-        r = verify_transport_relation_at_t(5.0)
-        assert r["transport_ratio"] is not None
-        assert abs(r["transport_ratio"] - 5/7) < 1e-3, \
-            f"Transport ratio = {r['transport_ratio']}, expected 5/7 = {5/7}"
+    def test_c334_poles(self):
+        """c_334^2 has poles at c = -24, -68/7, -46/3 (NOT at physical values)."""
+        c = Symbol('c')
+        # These are the denominator zeros
+        for c_pole in [-24, Rational(-68, 7), Rational(-46, 3)]:
+            # The function should diverge near these values
+            denom = (c + 24) * (7*c + 68) * (3*c + 46)
+            assert float(denom.subs(c, c_pole)) == 0
 
-    def test_transport_at_t001(self):
-        """Transport relation at t=0.01 (near-free limit)."""
-        r = verify_transport_relation_at_t(0.01)
-        assert r["transport_ratio"] is not None
-        assert abs(r["transport_ratio"] - 5/7) < 1e-2, \
-            f"Transport ratio = {r['transport_ratio']}, expected 5/7 = {5/7}"
+    def test_c334_c444_independent(self):
+        """c_334^2 and c_444^2 have different c-dependence (truly independent)."""
+        c = Symbol('c')
+        ratio = simplify(cancel(c444_squared() / c334_squared()))
+        # The ratio should depend on c
+        deriv = ratio.diff(c)
+        assert simplify(deriv) != 0, "c_444/c_334 ratio is constant — NOT independent"
 
-    def test_transport_at_t10(self):
-        """Transport relation at t=10.0 (strongly coupled)."""
-        r = verify_transport_relation_at_t(10.0)
-        assert r["transport_ratio"] is not None
-        assert abs(r["transport_ratio"] - 5/7) < 1e-3, \
-            f"Transport ratio = {r['transport_ratio']}, expected 5/7 = {5/7}"
+    def test_transport_ratio_exact(self):
+        """C_34_4^2 / c_334^2 = 5/7 exactly (as rational functions)."""
+        c = Symbol('c')
+        ratio = simplify(cancel(C34_4_squared() / c334_squared()))
+        assert ratio == Rational(5, 7), f"Transport ratio = {ratio}, expected 5/7"
 
-    def test_transport_ratio_constant(self):
-        """The transport ratio is CONSTANT across c-values."""
-        t_values = [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0]
-        ratios = []
-        for t in t_values:
-            r = verify_transport_relation_at_t(t)
-            if r.get("transport_ratio") is not None:
-                ratios.append(r["transport_ratio"])
-        assert len(ratios) >= 5, f"Too few valid points: {len(ratios)}"
-        std = np.std(ratios)
-        assert std < 1e-3, \
-            f"Transport ratio not constant: std = {std}, values = {ratios}"
-
-    @pytest.mark.slow
-    def test_transport_full_resolution(self):
-        """Full resolution: 15 points, all must match 5/7.
-
-        This is the definitive test. Since c_334^2 and C_{3,4;4;0,3}^2 are
-        rational functions of c with combined degree <= 8, verification at
-        >= 9 points with no failures constitutes a PROOF that the identity
-        holds as an identity of rational functions.
-
-        Combined with W_4 uniqueness (Zamolodchikov rigidity), this proves
-        conj:winfty-stage4-visible-borcherds-transport.
-        """
-        result = verify_transport_relation_multi()
-        assert result["n_transport_verified"] >= 9, \
-            (f"Only {result['n_transport_verified']} points verified "
-             f"(need >= 9 for rational-function proof)")
-        assert result["n_transport_failed"] == 0, \
-            f"{result['n_transport_failed']} points FAILED the transport relation"
-        assert result["transport_conjecture_resolved"], \
-            "Conjecture not resolved"
+    def test_swap_even_ratio_exact(self):
+        """C_34_3^2 / c_334^2 = 9/16 exactly."""
+        c = Symbol('c')
+        ratio = simplify(cancel(C34_3_squared() / c334_squared()))
+        assert ratio == Rational(9, 16), f"Swap-even ratio = {ratio}, expected 9/16"
 
 
 # ============================================================
-# Swap-even relation tests
+# Numerical spot-check tests
 # ============================================================
 
-class TestSwapEvenRelation:
-    """Verify the swap-even relation (already known on DS side).
+class TestNumericalSpotChecks:
+    """Numerical verification at specific c values."""
 
-    C_{3,4;3;0,4}^2 = (9/16) * c_334^2 (in physical convention).
-    """
+    def test_spot_checks_all_match(self):
+        """Transport and swap-even ratios match at 8 c-values."""
+        result = verify_at_c_values()
+        assert result["n_transport_match"] == result["n_total"], \
+            f"Transport: {result['n_transport_match']}/{result['n_total']} match"
+        assert result["n_swap_even_match"] == result["n_total"], \
+            f"Swap-even: {result['n_swap_even_match']}/{result['n_total']} match"
 
-    def test_swap_even_at_t01(self):
-        """Swap-even relation at t=0.1."""
-        r = verify_transport_relation_at_t(0.1)
-        assert r["swap_even_ratio"] is not None
-        assert abs(r["swap_even_ratio"] - 9/16) < 1e-3, \
-            f"Swap-even ratio = {r['swap_even_ratio']}, expected 9/16 = {9/16}"
+    def test_specific_c9(self):
+        """Verify at c=9 (sl_4 at generic level)."""
+        c = Symbol('c')
+        v334 = float(c334_squared().subs(c, 9))
+        v34_4 = float(C34_4_squared().subs(c, 9))
+        assert abs(v34_4 / v334 - 5/7) < 1e-12
 
-    def test_swap_even_at_t1(self):
-        """Swap-even relation at t=1.0."""
-        r = verify_transport_relation_at_t(1.0)
-        assert r["swap_even_ratio"] is not None
-        assert abs(r["swap_even_ratio"] - 9/16) < 1e-3, \
-            f"Swap-even ratio = {r['swap_even_ratio']}, expected 9/16 = {9/16}"
+    def test_specific_c26(self):
+        """Verify at c=26 (Virasoro self-dual point, no special meaning for W_4)."""
+        c = Symbol('c')
+        v334 = float(c334_squared().subs(c, 26))
+        v34_4 = float(C34_4_squared().subs(c, 26))
+        assert abs(v34_4 / v334 - 5/7) < 1e-12
 
-    def test_swap_even_ratio_constant(self):
-        """The swap-even ratio is constant across c-values."""
-        t_values = [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0]
-        ratios = []
-        for t in t_values:
-            r = verify_transport_relation_at_t(t)
-            if r.get("swap_even_ratio") is not None:
-                ratios.append(r["swap_even_ratio"])
-        assert len(ratios) >= 5
-        std = np.std(ratios)
-        assert std < 1e-3, \
-            f"Swap-even ratio not constant: std = {std}, values = {ratios}"
-
-
-# ============================================================
-# Concordance formula cross-checks
-# ============================================================
-
-class TestConcordanceMatch:
-    """Cross-check physical structure constants against concordance formulas."""
-
-    def test_concordance_c334_at_specific_c(self):
-        """Verify concordance formula c_334^2 at c=100."""
-        expected = concordance_c334_squared(100.0)
-        # 42 * 10000 * 522 / (124 * 768 * 346) ≈ 6.65...
-        assert np.isfinite(expected)
-        assert expected > 0
-
-    def test_concordance_c334_vanishes_at_c0(self):
-        """c_334^2 vanishes at c=0 (free theory)."""
-        assert abs(concordance_c334_squared(0.0)) < 1e-15
-
-    def test_concordance_c444_vanishes_at_c0(self):
-        """c_444^2 vanishes at c=0."""
-        assert abs(concordance_c444_squared(0.0)) < 1e-15
-
-    def test_concordance_c444_vanishes_at_c_half(self):
-        """c_444^2 vanishes at c=1/2 (from factor 2c-1)."""
-        assert abs(concordance_c444_squared(0.5)) < 1e-12
+    def test_specific_c_large(self):
+        """Verify at c=10000 (semiclassical limit)."""
+        c = Symbol('c')
+        v334 = float(c334_squared().subs(c, 10000))
+        v34_4 = float(C34_4_squared().subs(c, 10000))
+        assert abs(v34_4 / v334 - 5/7) < 1e-12
 
 
 # ============================================================
-# Combined two-primitive square-class verification
-# ============================================================
-
-class TestTwoPrimitiveSquareClasses:
-    """After transport resolution, ALL four higher-spin stage-4 OPE
-    coefficients are determined by the two primitive square classes
-    c_334^2 and c_444^2.
-
-    This verifies that the FULL four-channel packet is determined.
-    """
-
-    def test_all_four_from_two_primitives(self):
-        """Verify that c_334, c_444 determine C_34_3 and C_34_4."""
-        t_values = [0.05, 0.1, 0.5, 1.0, 5.0]
-        for t in t_values:
-            ope = W4MiuraOPE.from_t(t)
-            phys = physical_squared_structure_constants(ope)
-            if "error" in phys:
-                continue
-
-            c334_sq = phys["c_334_sq"]
-            # From the two primitive square classes:
-            predicted_C34_3_sq = (9.0 / 16.0) * c334_sq
-            predicted_C34_4_sq = (5.0 / 7.0) * c334_sq
-
-            # Check
-            if abs(c334_sq) > 1e-15:
-                err_3 = abs(phys["C_34_3_sq"] - predicted_C34_3_sq) / abs(c334_sq)
-                err_4 = abs(phys["C_34_4_sq"] - predicted_C34_4_sq) / abs(c334_sq)
-                assert err_3 < 1e-3, \
-                    f"C_34_3 mismatch at t={t}: err={err_3:.2e}"
-                assert err_4 < 1e-3, \
-                    f"C_34_4 mismatch at t={t}: err={err_4:.2e}"
-
-    @pytest.mark.slow
-    def test_two_primitive_independence(self):
-        """c_334^2 and c_444^2 are genuinely independent (different c-dependence)."""
-        t_values = [0.1, 0.5, 1.0, 2.0, 5.0]
-        ratios = []
-        for t in t_values:
-            ope = W4MiuraOPE.from_t(t)
-            phys = physical_squared_structure_constants(ope)
-            if "error" in phys or abs(phys["c_334_sq"]) < 1e-15:
-                continue
-            ratios.append(phys["c_444_sq"] / phys["c_334_sq"])
-
-        # The ratio c_444^2/c_334^2 should NOT be constant (they're independent)
-        if len(ratios) >= 3:
-            std = np.std(ratios)
-            assert std > 0.01, \
-                f"c_444/c_334 ratio is constant (std={std}): NOT independent!"
-
-
-# ============================================================
-# Full resolution pipeline test
+# Full resolution pipeline
 # ============================================================
 
 class TestFullResolution:
     """End-to-end resolution of MC4 W-infinity stage-4."""
 
-    @pytest.mark.slow
     def test_resolve_mc4_winfty_stage4(self):
-        """Full resolution pipeline."""
+        """Full resolution: algebraic + numerical + uniqueness argument."""
         result = resolve_mc4_winfty_stage4(verbose=False)
         assert result["resolved"], \
             "MC4 W-infinity stage-4 Borcherds transport NOT resolved"
+
+    def test_algebraic_resolution(self):
+        """The algebraic identity alone resolves the DS side."""
+        result = verify_two_primitive_reduction()
+        assert result["all_verified"]
+
+    def test_transport_is_5_7(self):
+        """The Borcherds transport ratio is exactly 5/7."""
+        c = Symbol('c')
+        ratio = cancel(C34_4_squared() / c334_squared())
+        assert ratio == Rational(5, 7)

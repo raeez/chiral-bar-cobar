@@ -127,53 +127,27 @@ def w3_miura_generators(t: float) -> Tuple[Field, Field]:
     zero_field: Field = []
     L = [one_field]  # L_0 = 1
 
-    for i in range(3):
-        # Current J_i = alpha_0 * sum_a h_proj[i, a] * dphi_a
+    # CRITICAL: The Fateev-Lukyanov Miura product uses LEFT multiplication:
+    #   L = (d + J_0)(d + J_1)(d + J_2) = (d+J_0) * [(d+J_1) * (d+J_2)]
+    # We build by LEFT-multiplying L by (d + J_i):
+    #   L_new = (d + J_i) * L
+    # Iterating from i = N-1 down to 0 (rightmost factor first).
+    #
+    # LEFT multiplication: (d + J) * (sum_k F_k d^k) =
+    #   sum_k J * F_k * d^k          [J times each term]
+    #   + sum_k (dF_k) * d^k         [d acts on F_k by Leibniz]
+    #   + sum_k F_k * d^{k+1}        [d passes through to raise degree]
+    #
+    # The quantum correction dF_k comes from d acting on the EXISTING
+    # coefficients F_k, NOT on the new factor J. This is the opposite
+    # of right multiplication, where the correction involves dJ.
+    for i in reversed(range(3)):
         J_i: Field = []
         for a in range(2):
             coeff = alpha0 * h_proj[i, a]
             if abs(coeff) > 1e-15:
-                J_i.append((coeff, ((a, 1),)))  # dphi_a has derivative order 1
+                J_i.append((coeff, ((a, 1),)))
         J_i = simplify_field(J_i)
-
-        # Multiply: L_{new} = L * (d + J_i)
-        # If L = sum_k F_k d^k, then:
-        # L * (d + J_i) = sum_k F_k d^{k+1} + sum_k F_k J_i d^k
-        #               + sum_k F_k * (quantum correction from d acting on J_i)
-        #
-        # The quantum correction: when d acts on J_i from the left, it
-        # produces dJ_i as an extra term. More precisely, in the normally
-        # ordered product, moving d past J_i gives d*J_i = :d*J_i: + dJ_i.
-        # So the quantum correction for each factor is:
-        # F_k * d^k * J_i = F_k * :d^k * J_i: (including derivative corrections)
-        #
-        # For the Miura product, the standard result is:
-        # (sum_k F_k d^k) * (d + J) = sum_k F_k d^{k+1}
-        #                             + sum_k :F_k * J: d^k
-        #                             + sum_k k * dF_k d^{k-1}   [quantum correction]
-        #
-        # Wait, that's not right either. The quantum correction comes from
-        # normal ordering the product F_k(z) * J_i(z), which involves
-        # self-contractions. But for FREE BOSONS, the normal ordering of
-        # F_k * J_i has NO self-contraction if F_k and J_i involve DIFFERENT
-        # boson indices. When they share indices, there's a contraction.
-        #
-        # Actually, for the Miura product, we use the NORMALLY ORDERED product,
-        # which means: expand the product of differential operators, and
-        # whenever d^k acts on a field to its right, use the Leibniz rule
-        # d^k(f * g) = sum_{j=0}^k C(k,j) (d^j f)(d^{k-j} g).
-        #
-        # So the CORRECT multiplication rule is:
-        # (sum_k F_k d^k) * (d + J) = sum_k F_k d^{k+1}
-        #                             + sum_k sum_{j=0}^k C(k,j) (d^j J) * F_k d^{k-j}
-        #                           = sum_k F_k d^{k+1}
-        #                             + sum_k F_k * J * d^k
-        #                             + sum_k k * (dJ) * F_k d^{k-1}
-        #                             + sum_k C(k,2) * (d^2 J) * F_k d^{k-2}
-        #                             + ...
-        # But J is LINEAR in dphi, so d^j J = d^{j+1} phi for j>=0.
-        # For j>=2, d^j J involves higher derivatives which are new independent
-        # generators (d^2 phi, d^3 phi, etc.).
 
         n_old = len(L)
         n_new = n_old + 1
@@ -184,22 +158,22 @@ def w3_miura_generators(t: float) -> Tuple[Field, Field]:
             if not F_k:
                 continue
 
-            # Term 1: F_k d^{k+1}
+            # LEFT multiplication: (d + J) * F_k d^k
+            # = J * F_k * d^k + d(F_k d^k)
+            # = J * F_k * d^k + (dF_k) * d^k + F_k * d^{k+1}
+
+            # Term 1: F_k d^{k+1} (d passes through)
             L_new[k + 1] = add_fields(L_new[k + 1], F_k)
 
-            # Term 2 and beyond: F_k d^k * J_i = sum_{j=0}^{k} C(k,j) * (d^j J_i) * F_k * d^{k-j}
-            # j=0: F_k * J_i * d^k  (normal ordering: multiply_fields)
-            # j=1: k * (dJ_i) * F_k * d^{k-1}
-            # j>=2: higher derivatives of J_i (which is linear, so d^j J = d^{j+1} phi)
-            for j in range(k + 1):
-                dj_J = nth_derivative_field(J_i, j) if j > 0 else J_i
-                if not dj_J:
-                    continue
-                binom = _binom(k, j)
-                # Contribution: binom * :F_k * d^j(J_i): at order d^{k-j}
-                product = multiply_fields(F_k, dj_J)
-                if product:
-                    L_new[k - j] = add_fields(L_new[k - j], scale_field(binom, product))
+            # Term 2: J_i * F_k at order d^k
+            product_JF = multiply_fields(J_i, F_k)
+            if product_JF:
+                L_new[k] = add_fields(L_new[k], product_JF)
+
+            # Term 3: dF_k at order d^k (quantum correction)
+            dF_k = derivative_field(F_k)
+            if dF_k:
+                L_new[k] = add_fields(L_new[k], dF_k)
 
         L = [simplify_field(f) for f in L_new]
 

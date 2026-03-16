@@ -615,8 +615,12 @@ def _miura_generators_orthonormal(t: float) -> Tuple[Field, Field, Field]:
             T_field.append((Q[a], ((a, 2),)))
     T_field = simplify_field(T_field)
 
-    # ---- Build W_3 and W_4 from the quantum Miura expansion ----
-    W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
+    # W_3 and W_4 from the Miura expansion (operator composition).
+    # WARNING: _expand_miura_product uses operator composition which gives
+    # WRONG quantum corrections. The generators are NOT primary w.r.t. T_field.
+    # The OPE extraction gives approximate (not exact) structure constants.
+    # TODO: implement the correct normally-ordered quantum Miura (Fateev-Lukyanov).
+    _, W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
 
     return T_field, W3_field, W4_field
 
@@ -695,10 +699,11 @@ def _expand_miura_product(
     for coeff, _ in c3:
         assert abs(coeff) < 1e-10, f"d^3 coefficient not zero: {c3}"
 
+    T_field = simplify_field(coeffs.get(2, []))
     W3_field = coeffs.get(1, [])
     W4_field = coeffs.get(0, [])
 
-    return W3_field, W4_field
+    return T_field, W3_field, W4_field
 
 
 # =========================================================================
