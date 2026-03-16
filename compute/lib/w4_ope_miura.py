@@ -604,11 +604,32 @@ def _miura_generators_orthonormal(t: float) -> Tuple[Field, Field, Field]:
     G = np.einsum('ia,ib->ab', h_proj, h_proj)
     assert np.allclose(G, np.eye(3), atol=1e-10), f"G matrix not identity: {G}"
 
-    # Build T, W_3, W_4 from the quantum Miura product.
-    # ALL generators come from the SAME expansion to ensure consistency:
-    # the OPE of W_3 x W_3 closes within {T_Miura, W_3_Miura, W_4_Miura}.
-    # Using T_direct with W_3/W_4 from Miura would mix two different algebras.
-    T_field, W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
+    # ---- Build T ----
+    # T = -(1/2) sum_a (dphi_a)^2 + sum_a Q_a * d^2phi_a
+    T_field: Field = []
+    for a in range(3):
+        # -(1/2) (dphi_a)^2
+        T_field.append((-0.5, ((a, 1), (a, 1))))
+        # Q_a * d^2phi_a
+        if abs(Q[a]) > 1e-15:
+            T_field.append((Q[a], ((a, 2),)))
+    T_field = simplify_field(T_field)
+
+    # ---- Build W_3 and W_4 from the quantum Miura expansion ----
+    # ALL generators must come from the SAME expansion to ensure OPE closure.
+    # The Miura expansion with currents J_i = alpha_0 * h_i . dphi produces
+    # a T_Miura that differs from T_direct by a factor of t in the kinetic
+    # term: T_Miura = -(t/2) sum (dphi)^2 ± Q.d^2phi.
+    #
+    # To get W_3, W_4 consistent with T_direct, we use the Fateev-Lukyanov
+    # convention: factors (alpha_0 d + h_i . dphi) with REVERSED weight
+    # ordering [h_4, h_3, h_2, h_1], divided by alpha_0^4.
+    #
+    # This gives T_FL = T_direct/t (proportional to T_direct), and W_3_FL,
+    # W_4_FL that are weight-3, weight-4 primaries under T_direct.
+    # The OPE closes within {T_FL, W_3_FL, W_4_FL}, and since T_FL propto
+    # T_direct, the W-algebra structure is consistent.
+    W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
 
     return T_field, W3_field, W4_field
 
