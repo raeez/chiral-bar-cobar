@@ -1763,6 +1763,483 @@ This is a deformed Chern--Simons action where the deformations encode the non-qu
 
 The Chern--Simons perspective: quadratic algebras give pure CS, non-quadratic algebras give deformed CS (each higher relation adds a vertex), critical level abelianizes the theory, and algebra/coalgebra exchange is CS level-rank duality.
 
+% ================================================================
+% THE ORDERED ASSOCIATIVE CORE
+% ================================================================
+
+\section{The ordered associative core}
+\label{sec:ordered-associative-core}
+
+The chiral Koszul duality of the preceding sections has an ordered
+associative core that is invisible from the commutative vantage point.
+The geometric origin is simple: the ordered configuration space
+$\Conf_n^{\mathrm{ord}}(X) = \{(x_1, \ldots, x_n) \in X^n :
+x_i \neq x_j\}$ carries an associative---not merely $E_1$---structure,
+because the labelling of points is ordered, not just
+unordered-up-to-homotopy.  Shuffles survive as distinct summands; they
+are not killed by a symmetric-group quotient.  The bar coalgebra
+$C = \barBch(\cA)$ inherits this ordering, and once the ordering is
+taken seriously, a new object appears on the coalgebra side: the
+\emph{diagonal bicomodule} $C_\Delta$, which is $C$ equipped with its
+coproduct on both left and right.  This object simultaneously carries
+left $\cA$-module structure and left/right $C$-comodule structure; it
+is the algebraic incarnation of the ``boundary condition'' in the
+holomorphic-topological sense, living at the interface between the
+algebra and its dual.
+
+The purpose of this section is to develop the ordered associative
+theory from the chiral shuffle theorem through to the genus-zero open
+trace formalism, and to state the conjectural frontier that connects
+it to the modular Maurer--Cartan theory of
+Chapter~\ref{chap:higher-genus-modular}.
+
+\subsection{The chiral shuffle theorem and opposite duality}
+
+The first point of departure from the commutative story is an ordered
+Eilenberg--Zilber theorem for chiral bar coalgebras.
+
+\begin{theorem}[Ordered chiral shuffle theorem;
+\ClaimStatusProvedHere]
+\label{thm:ordered-shuffle}
+Let $\cA$ and $\mathcal{B}$ be augmented pro-nilpotent associative
+chiral algebras on a smooth curve~$X$, with filtrations satisfying
+the standard admissibility conditions of
+Theorem~\textup{\ref{thm:chiral-bar-resolution-exact}}.
+There is a natural filtered quasi-isomorphism of conilpotent dg
+coalgebras
+\[
+  \barBch(\cA) \widehat\otimes \barBch(\mathcal{B})
+  \xrightarrow{\;\sim\;}
+  \barBch(\cA \chirtensor \mathcal{B}),
+\]
+realized by shuffle and Alexander--Whitney maps
+$\mathsf{Sh}^{\mathrm{ch}}$ and $\mathsf{AW}^{\mathrm{ch}}$
+satisfying $\mathsf{AW} \circ \mathsf{Sh} = \mathrm{id}$ and
+$\mathsf{Sh} \circ \mathsf{AW} \simeq \mathrm{id}$.  Both maps are
+coalgebra morphisms.
+\end{theorem}
+
+\begin{proof}
+Form the bisimplicial object
+$K_{\bullet,\bullet} = B^\Delta_\bullet(\cA) \chirtensor
+B^\Delta_\bullet(\mathcal{B})$, where $B^\Delta_n(\cA) =
+\cA^{\chirtensor n}$ is the simplicial ordered bar object.  Its
+diagonal satisfies $\operatorname{diag}(K)_n \cong
+(\cA \chirtensor \mathcal{B})^{\chirtensor n}$ because
+multiplication and augmentation on
+$\cA \chirtensor \mathcal{B}$ are componentwise.  Apply the
+Eilenberg--Zilber theorem filtration-wise in each graded piece;
+the normalized-chains functor commutes with the completed chiral
+tensor constructions under the admissibility hypotheses.  The
+resulting shuffle map respects deconcatenation because cutting a
+shuffled word is equivalent to cutting the source words and then
+shuffling the left and right halves.
+\end{proof}
+
+The second foundational phenomenon is order reversal: it transforms
+opposite multiplication on the algebra side into opposite
+deconcatenation on the bar side.
+
+\begin{theorem}[Opposite duality for ordered bar coalgebras;
+\ClaimStatusProvedHere]
+\label{thm:ordered-opposite}
+For every augmented pro-nilpotent associative chiral algebra~$\cA$,
+there is a canonical isomorphism of coaugmented conilpotent dg
+coalgebras
+\[
+  \mathsf{R}_\cA \colon
+  \barBch(\cA^{\mathrm{op}})
+  \xrightarrow{\;\sim\;}
+  \barBch(\cA)^{\mathrm{cop}},
+\]
+induced by the order-reversal involution
+$[sa_1|\cdots|sa_n] \mapsto
+(-1)^{\sum_{i<j}(|a_i|+1)(|a_j|+1)}
+[sa_n|\cdots|sa_1]$
+on suspended bar words.  If $\cA$ is finite-type Koszul, then
+$(\cA^{\mathrm{op}})^! \simeq (\cA^!)^{\mathrm{op}}$.
+\end{theorem}
+
+\begin{proof}
+Reversal carries the $i$-th face map of the simplicial bar
+object for $\cA^{\mathrm{op}}$ to the $(n-i)$-th face map for $\cA$,
+with the stated Koszul sign.  The coproduct identity
+$\Delta \circ \mathsf{R}_\cA =
+\tau \circ (\mathsf{R}_\cA \otimes \mathsf{R}_\cA) \circ \Delta$
+(where $\tau$ flips tensor factors) follows because reversal sends a
+cut after the $p$-th letter to a cut before the $(n-p)$-th letter.
+The statement on Koszul duals follows by finite-type linear duality.
+\end{proof}
+
+\begin{corollary}[Enveloping duality; \ClaimStatusProvedHere]
+\label{cor:ordered-enveloping}
+Set $C = \barBch(\cA)$ and
+$C^e = C \widehat\otimes C^{\mathrm{cop}}$.  Then
+$\barBch(\cA^e) \xrightarrow{\sim} C^e$, and if $\cA$ is
+finite-type Koszul, then $(\cA^e)^! \simeq (\cA^!)^e$.
+\end{corollary}
+
+\begin{proof}
+Combine the ordered shuffle theorem
+(Theorem~\ref{thm:ordered-shuffle}) with opposite duality
+(Theorem~\ref{thm:ordered-opposite}).
+\end{proof}
+
+\subsection{The diagonal bicomodule and the bimodule--bicomodule
+equivalence}
+
+The diagonal bicomodule $C_\Delta$ is $C$ equipped with left and
+right coactions both equal to the deconcatenation coproduct
+$\Delta_C$.  It is the coalgebra-side avatar of the diagonal bimodule
+${}_\cA \cA_\cA$.
+
+\begin{definition}[Two-sided twisted bicomodule]
+\label{def:two-sided-twisted-bicomodule}
+Let $\cM$ be an $\cA$-bimodule
+(Definition~\ref{def:chiral-bimodule}).  The \emph{two-sided twisted
+bicomodule} is
+\[
+  \mathcal{K}_\cA^{\mathrm{bi}}(\cM)
+  = C \widehat\otimes \cM \widehat\otimes C,
+\]
+with differential twisted by the universal twisting cochain
+$\tau \colon C \to \cA$ via left and right action terms.  The left
+and right $C$-coactions are deconcatenation on the two outer factors.
+The Maurer--Cartan equation $d\tau + \tau \star \tau = 0$ ensures
+$d^2 = 0$.
+\end{definition}
+
+\begin{theorem}[Bimodule--bicomodule equivalence;
+\ClaimStatusProvedHere]
+\label{thm:ordered-bimod-bicomod}
+There is an exact equivalence
+\[
+  \mathcal{K}_\cA^{\mathrm{bi}} \colon
+  D^{\mathrm{pbw}}_{\mathrm{bi}}(\cA)
+  \xrightarrow{\;\sim\;}
+  D^{\mathrm{co}}_{\mathrm{bi}}(C)
+\]
+between the derived category of PBW-complete $\cA$-bimodules and
+the coderived category of conilpotent $C$-bicomodules, with inverse
+given by the two-sided cobar functor
+$\cM \mapsto \cA \widehat\otimes \cM \widehat\otimes \cA$.
+\end{theorem}
+
+\begin{proof}
+By Corollary~\ref{cor:ordered-enveloping},
+$\barBch(\cA^e) \simeq C^e$.
+Apply the one-sided module/comodule Koszul duality
+(Theorem~\ref{thm:chiral-bar-resolution-exact} and the bar--cobar
+inversion of Chapter~\ref{chap:bar-cobar-inversion}) to the
+enveloping algebra $\cA^e$.  Since left $C^e$-comodules are
+canonically $C$-bicomodules, the result follows.
+\end{proof}
+
+\begin{theorem}[Diagonal correspondence; \ClaimStatusProvedHere]
+\label{thm:ordered-diagonal}
+Under the equivalence of
+Theorem~\textup{\ref{thm:ordered-bimod-bicomod}}, the diagonal
+bimodule ${}_\cA \cA_\cA$ maps to the diagonal bicomodule
+$C_\Delta$.  Equivalently,
+$\mathcal{K}_\cA^{\mathrm{bi}}(\cA) \simeq C_\Delta$ in
+$D^{\mathrm{co}}_{\mathrm{bi}}(C)$.
+\end{theorem}
+
+\begin{proof}
+The bar--cobar counit contractions
+$C \widehat\otimes_\tau \cA \xrightarrow{\sim} \mathbf{1}$ and
+$\cA \widehat\otimes_\tau C \xrightarrow{\sim} \mathbf{1}$
+collapse the two-sided twisted bicomodule
+$C \widehat\otimes \cA \widehat\otimes C$ to a single copy of~$C$.
+Filter by total coradical degree in the two outer copies; on the
+associated graded, the twisting terms vanish and both coactions are
+the two legs of~$\Delta_C$.  Because the filtration is complete and
+bounded below, this identification lifts to the filtered complex.
+\end{proof}
+
+The diagonal bicomodule is the composition unit for derived
+cotensor: for every $X \in D^{\mathrm{co}}_{\mathrm{bi}}(C)$,
+\[
+  C_\Delta \mathbin{\square}_C^{\mathbf{R}} X
+  \simeq X
+  \simeq X \mathbin{\square}_C^{\mathbf{R}} C_\Delta.
+\]
+This is the transport of the tautology
+$\cA \otimes_\cA^{\mathbf{L}} \cM \simeq \cM$ across the
+equivalence.  Tensor--cotensor
+gluing $\mathcal{K}_\cA^{\mathrm{bi}}(\cM \otimes_\cA^{\mathbf{L}}
+\mathcal{N}) \simeq \mathcal{K}_\cA^{\mathrm{bi}}(\cM)
+\mathbin{\square}_C^{\mathbf{R}}
+\mathcal{K}_\cA^{\mathrm{bi}}(\mathcal{N})$ makes $C_\Delta$ the
+universal boundary condition for interval composition.
+
+\subsection{Hochschild--coHochschild duality}
+
+The Hochschild cohomology
+$\ChirHoch^*(\cA, \cM) = \Ext^*_{\cA^e}(\cA, \cM)$ constructed in
+\S\ref{sec:chiral-hochschild-construction}---and computed on the bar
+resolution in Theorem~\ref{thm:chiral-hochschild-complex}---has an
+exact coalgebraic counterpart: the coHochschild theory of the bar
+coalgebra.
+
+\begin{theorem}[Hochschild--coHochschild duality, homological
+version; \ClaimStatusProvedHere]
+\label{thm:ordered-HH-coHH-homology}
+For every complete $\cA$-bimodule~$\cM$,
+\[
+  \mathrm{HH}^{\mathrm{ch}}_\bullet(\cA, \cM)
+  \;\simeq\;
+  \mathrm{coHH}^{\mathrm{ch}}_\bullet
+  \bigl(C, \mathcal{K}_\cA^{\mathrm{bi}}(\cM)\bigr),
+\]
+where
+$\mathrm{coHH}^{\mathrm{ch}}_\bullet(C, N) =
+\mathrm{Cotor}_\bullet^{C^e}(C_\Delta, N)$.
+In particular,
+$\mathrm{HH}^{\mathrm{ch}}_\bullet(\cA) \simeq
+C_\Delta \mathbin{\square}_{C^e}^{\mathbf{R}} C_\Delta$:
+the annulus is the self-cotensor of the universal boundary
+condition.
+\end{theorem}
+
+\begin{proof}
+Transport $\mathrm{Tor}_\bullet^{\cA^e}(\cA, \cM)$ across the
+bimodule--bicomodule equivalence
+(Theorem~\ref{thm:ordered-bimod-bicomod}).  The diagonal
+bimodule~$\cA$ maps to~$C_\Delta$ by
+Theorem~\ref{thm:ordered-diagonal}; $\cM$ maps to
+$\mathcal{K}_\cA^{\mathrm{bi}}(\cM)$ by definition.
+Derived tensor over~$\cA^e$ becomes derived cotensor
+over~$C^e$.
+\end{proof}
+
+\begin{theorem}[Hochschild--coHochschild duality, cohomological
+version; \ClaimStatusProvedHere]
+\label{thm:ordered-HH-coHH-cohomology}
+Under the same hypotheses,
+\[
+  \ChirHoch^*(\cA, \cM)
+  \;\simeq\;
+  \mathrm{Coext}_{C^e}^*
+  \bigl(C_\Delta,
+  \mathcal{K}_\cA^{\mathrm{bi}}(\cM)\bigr).
+\]
+In particular,
+$\ChirHoch^*(\cA) \simeq
+\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)$: the chiral
+Hochschild cohomology ring whose Gerstenhaber bracket was
+constructed in Theorem~\textup{\ref{thm:chiral-gerstenhaber-kps}} is
+the coalgebraic self-extension of the diagonal.
+\end{theorem}
+
+\begin{proof}
+Derived Hom is preserved by equivalences of derived categories.
+Apply the bimodule--bicomodule equivalence to
+$R\!\mathrm{Hom}_{\cA^e}(\cA, \cM)$.
+\end{proof}
+
+\begin{remark}[Relation to existing Hochschild material]
+\label{rem:ordered-HH-relation}
+The cohomological version recovers the complex of
+Theorem~\ref{thm:chiral-hochschild-complex} as the coalgebraic
+coHochschild complex of~$C$.  The Gerstenhaber cup product of
+Proposition~\ref{prop:cup-product-properties} is the composition
+product on $\mathrm{Coext}_{C^e}^*(C_\Delta, C_\Delta)$, and the
+periodicity theorems
+(Theorem~\ref{thm:virasoro-periodicity},
+Theorem~\ref{thm:affine-periodicity-critical}) become statements
+about the coalgebraic self-extension ring.  The exchange
+$\ChirHoch^*(\cA) \leftrightarrow \ChirHoch^*(\cA^!)$ of
+Corollary~\ref{cor:hochschild-cup-exchange} is the shadow of
+enveloping duality (Corollary~\ref{cor:ordered-enveloping}).
+\end{remark}
+
+\subsection{The pair-of-pants product and the open trace formalism}
+
+The diagonal bicomodule carries a second algebraic operation beyond
+cotensor composition: the \emph{ordered pair-of-pants product},
+transported from the multiplication
+$\mu_\cA \colon \cA \chirtensor \cA \to \cA$.
+
+\begin{theorem}[Ordered pair-of-pants algebra;
+\ClaimStatusProvedHere]
+\label{thm:ordered-pair-of-pants}
+There exist an associative multiplication
+$\mu_P \colon C_\Delta \star C_\Delta \to C_\Delta$
+and a unit
+$\eta_P \colon \mathbf{1}_\star \to C_\Delta$
+for the ordered fusion product
+$X \star Y = \mathcal{K}_\cA^{\mathrm{bi}}(
+\Omega_C^{\mathrm{bi}}(X) \widehat\otimes
+\Omega_C^{\mathrm{bi}}(Y))$,
+obtained by transporting $(\mu_\cA, \eta_\cA)$ across
+$\mathcal{K}_\cA^{\mathrm{bi}}$ and the diagonal correspondence.
+\end{theorem}
+
+\begin{proof}
+The diagonal bimodule ${}_\cA \cA_\cA$ is an associative algebra
+object for the tensor product of bimodules.  Apply the exact
+equivalence of
+Theorem~\ref{thm:ordered-bimod-bicomod}: associativity and
+unitality are preserved because the equivalence preserves
+composition.
+\end{proof}
+
+\begin{theorem}[Master theorem: the ordered open trace formalism;
+\ClaimStatusProvedHere]
+\label{thm:ordered-master}
+Let $\cA$ be an augmented pro-nilpotent associative chiral algebra
+on~$X$ satisfying the admissibility conditions, and set
+$C = \barBch(\cA)$.  Then the data
+\[
+  \bigl(D^{\mathrm{co}}_{\mathrm{bi}}(C),\;
+  \mathbin{\square}_C^{\mathbf{R}},\;
+  C_\Delta,\;
+  \star,\;
+  \mu_P,\;
+  \eta_P,\;
+  \mathcal{H}_C^{\mathrm{cl}}\bigr)
+\]
+constitute an ordered genus-zero open trace formalism:
+\begin{enumerate}
+\item $C_\Delta$ is the unit for interval composition
+  $\mathbin{\square}_C^{\mathbf{R}}$.
+\item $(C_\Delta, \mu_P, \eta_P)$ is an associative algebra object
+  for ordered fusion~$\star$.
+\item The closed object is the coHochschild complex:
+  $\mathcal{H}_C^{\mathrm{cl}} \simeq
+  \mathrm{coHH}^{\mathrm{ch}}_\bullet(C) \simeq
+  \mathrm{HH}^{\mathrm{ch}}_\bullet(\cA)$.
+\item The annulus acts on $C_\Delta$ via the cap action transported
+  from the Hochschild cap on~$\cA$.
+\item All genus-zero sewing identities on the coalgebra side are
+  transported from the corresponding identities for
+  $\cA$-bimodules.
+\end{enumerate}
+If $\cA$ is $d$-Calabi--Yau \textup(i.e.\ perfect as an
+$\cA^e$-module with a shifted self-duality
+$\cA \xrightarrow{\sim} R\!\mathrm{Hom}_{\cA^e}(\cA, \cA^e)[d]$\textup),
+then the underlying complex of $C_\Delta$ acquires a $d$-shifted
+ordered Frobenius structure: the trace $\varepsilon_P \colon C_\Delta \to
+k[-d]$ is transported from the Calabi--Yau trace, the coproduct
+$\Delta_P$ is adjoint to $\mu_P$ under $\varepsilon_P$, and the
+Frobenius identity $(\mu_P \star \mathrm{id}) \circ
+(\mathrm{id} \star \Delta_P) = \Delta_P \circ \mu_P$ holds.
+\end{theorem}
+
+\begin{proof}
+This compresses
+Theorems~\ref{thm:ordered-shuffle}--\ref{thm:ordered-pair-of-pants}
+together with the Hochschild--coHochschild dualities
+(Theorems~\ref{thm:ordered-HH-coHH-homology}
+and~\ref{thm:ordered-HH-coHH-cohomology}).  The Calabi--Yau
+refinement: transport the algebra $(\mu_\cA, \eta_\cA)$ and its
+adjoint coalgebra $(\Delta_\cA, \varepsilon_\cA)$ simultaneously;
+the Frobenius identities on $C_\Delta$ are the images of the
+Frobenius identities on~$\cA$, which are formal consequences of
+associativity and nondegeneracy.
+\end{proof}
+
+\begin{remark}[The dictionary]
+\label{rem:ordered-dictionary}
+The ordered associative core provides the following dictionary
+between the algebra~$\cA$ and the coalgebra~$C$:
+\[
+  \cA \longleftrightarrow C_\Delta,
+  \qquad
+  \cA^e \longleftrightarrow C^e,
+  \qquad
+  {-}\otimes_\cA^{\mathbf{L}}{-}
+  \longleftrightarrow
+  {-}\mathbin{\square}_C^{\mathbf{R}}{-},
+\]
+\[
+  \mathrm{HH}^{\mathrm{ch}}_\bullet(\cA, \cM)
+  \longleftrightarrow
+  \mathrm{coHH}^{\mathrm{ch}}_\bullet
+  (C, \mathcal{K}_\cA^{\mathrm{bi}}(\cM)),
+  \qquad
+  \ChirHoch^*(\cA, \cM)
+  \longleftrightarrow
+  \mathrm{Coext}_{C^e}^*
+  (C_\Delta, \mathcal{K}_\cA^{\mathrm{bi}}(\cM)).
+\]
+The slogan: the bar coalgebra is the ordered phase space, the
+diagonal is the boundary, and the annulus is the self-cotensor
+of the boundary.
+\end{remark}
+
+\subsection{Conjectural frontier}
+
+The preceding subsections supply the clean algebraic core at genus
+zero.  Four conjectures delineate the next layer.
+
+\begin{conjecture}[Francis--Gaitsgory as commutator shadow;
+\ClaimStatusConjectured]
+\label{conj:ordered-FG-shadow}
+For a filtered associative chiral algebra~$\cA$ whose commutator-graded
+object $\operatorname{gr}_{\mathrm{com}} \cA$ is $E_\infty$-chiral
+and Koszul, there is a convergent spectral sequence
+\[
+  E_1 \cong \barB^{FG}\!\bigl(\operatorname{gr}_{\mathrm{com}} \cA\bigr)
+  \;\Longrightarrow\;
+  \operatorname{gr}_{\mathrm{com}} \barBch(\cA),
+\]
+recovering the Francis--Gaitsgory Lie/cocommutative duality as the
+associated graded of the ordered associative theory.
+\end{conjecture}
+
+\begin{conjecture}[Bordered realization; \ClaimStatusConjectured]
+\label{conj:ordered-bordered}
+There exists a bordered ordered configuration-space model
+$\mathfrak{C}^{\mathrm{bord}}_{g,r,s}(X)$ whose chain-level
+operations recover the ordered open trace formalism of
+Theorem~\textup{\ref{thm:ordered-master}}: interval components give
+$C_\Delta$, boundary gluing is derived cotensor, the pair-of-pants
+gives $\mu_P$, and annular closure gives
+$\mathrm{coHH}^{\mathrm{ch}}_\bullet(C)$.
+\end{conjecture}
+
+\begin{conjecture}[Associative modular Maurer--Cartan class;
+\ClaimStatusConjectured]
+\label{conj:ordered-modular-MC}
+There exists an associative cyclic deformation complex
+$\mathrm{Def}^{\mathrm{cyc}}_{\Ass^{\mathrm{ch}}}(\cA)$
+and a Maurer--Cartan element
+$\Theta_\cA^{\Ass^{\mathrm{ch}}}$ whose linear term is the
+genus anomaly, whose quadratic term is the first pair-of-pants
+boundary correction, and whose full Maurer--Cartan equation
+expresses compatibility of all ordered higher-genus boundary
+gluings.  This should be the ordered-associative projection of
+the modular MC class~$\Theta_\cA$ of
+Chapter~\textup{\ref{chap:higher-genus-modular}}.
+\end{conjecture}
+
+\begin{conjecture}[Drinfeld--Sokolov compatibility;
+\ClaimStatusConjectured]
+\label{conj:ordered-DS}
+BRST/Drinfeld--Sokolov reduction commutes with ordered associative
+chiral duality: $Q_{DS}(\cA^!) \simeq Q_{DS}(\cA)^!$, and the
+two-sided twisted bicomodule functor
+$\mathcal{K}_\cA^{\mathrm{bi}}$ intertwines reduction on bimodules
+with reduction on bicomodules.
+\end{conjecture}
+
+The structural significance of these four conjectures is as follows.
+Conjecture~\ref{conj:ordered-FG-shadow} situates the ordered theory
+as the refinement of the Francis--Gaitsgory theory that remembers
+boundary data.  Conjecture~\ref{conj:ordered-bordered} asks for the
+geometric substrate.
+Conjecture~\ref{conj:ordered-modular-MC} asks for the higher-genus
+extension; if true, the shadow Postnikov tower of
+Chapter~\ref{chap:higher-genus-modular} admits an
+ordered-associative refinement at each finite arity.
+Conjecture~\ref{conj:ordered-DS} asks for compatibility with the
+$\mathcal{W}$-algebra reduction machinery developed in
+\S\ref{sec:w-algebras-kps} above: if reduction commutes with
+duality, then the entire ordered open trace formalism descends
+to the reduced theory.
+
 \section{Open questions}
 
 Several natural problems remain.

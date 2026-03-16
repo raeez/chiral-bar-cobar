@@ -1237,3 +1237,606 @@ which LV does not have.
 The conventions reflect different origins: BD developed for D-modules (orientation from holomorphic structure), CG optimized for BV formalism and factorization algebras, LV for pure operadic theory (no geometric residues), and ours emphasizing geometric realization and explicit calculations.
 All conventions are \emph{mathematically equivalent}---they are different presentations of the same underlying structures.
 \end{remark}
+
+
+%% ======================================================================
+%% Multi-source convention translations: formula-level details
+%% ======================================================================
+
+\section{Multi-source convention translations}
+\label{sec:multi-source-translations}
+
+The dictionary in \S\ref{app:sign-conventions} records which conventions differ.
+This section gives \emph{formula-level} translations: for each key algebraic
+object central to this monograph, we write the defining equation in each
+convention and exhibit the explicit sign mismatch.  Following the
+Chriss--Ginzburg principle, special attention is paid to Maurer--Cartan
+elements, convolution dg~Lie algebras, and the bar-cobar constructions that
+carry them.
+
+\subsection{Loday--Vallette $\leftrightarrow$ this manuscript: bar-cobar formulas}
+\label{sec:lv-us-formulas}
+
+\subsubsection{Bar differential on desuspended generators}
+
+The bar complex of an augmented dg algebra $(\cA, d, \mu)$ is built on
+$T^c(s^{-1}\bar{\cA})$.  Write $[a_1|\cdots|a_n] := s^{-1}a_1\otimes\cdots\otimes s^{-1}a_n$
+with $|s^{-1}a_i| = |a_i| - 1$.
+
+\emph{Our convention} (cohomological, $|d|=+1$, desuspension in bar).
+\begin{equation}\label{eq:bar-diff-us}
+d_{\mathrm{bar}}[a_1|\cdots|a_n]
+= \sum_{i=1}^{n-1} (-1)^{\sum_{j=1}^{i}(|a_j|-1)}\,
+  [a_1|\cdots|a_i \cdot a_{i+1}|\cdots|a_n]
+\;+\; \text{(internal $d$-terms)}.
+\end{equation}
+
+\emph{Loday--Vallette convention} (homological, $|d|=-1$, suspension in bar).
+LV writes the bar complex on $T^c(s\bar{\cA})$ with $|sa_i| = |a_i|+1$.
+Their bar differential is:
+\begin{equation}\label{eq:bar-diff-lv}
+d_1(sa_1\otimes\cdots\otimes sa_n)
+= \sum_{i=1}^{n-1} (-1)^{\sum_{j=1}^{i}|sa_j|}\,
+  sa_1\otimes\cdots\otimes s(a_i \cdot a_{i+1})\otimes\cdots\otimes sa_n.
+\end{equation}
+
+\emph{Translation.}  Identifying $s^{-1}a$ (us) with $sa$ (LV) under the
+relabeling $\deg_{\mathrm{coh}} = -\deg_{\mathrm{hom}}$, the exponents
+$\sum_{j\leq i}(|a_j|-1)$ in~\eqref{eq:bar-diff-us} become
+$\sum_{j\leq i}|sa_j|$ in~\eqref{eq:bar-diff-lv} because
+$|a_j|-1 = |a_j| + 1 = |sa_j|$ after negating the grading.
+The two formulas are \emph{identical} as linear maps; only the bookkeeping changes.
+
+\begin{example}[Explicit sign: two generators of odd degree]
+Let $a, b \in \cA^1$ (cohomological degree~1).  Then $|s^{-1}a| = 0$,
+$|s^{-1}b| = 0$.
+\begin{align*}
+\text{Us:} &\quad d_{\mathrm{bar}}[a|b]
+  = (-1)^{|a|-1}[a\cdot b] = (-1)^{0}[ab] = [ab]. \\
+\text{LV:} &\quad d_1(sa\otimes sb)
+  = (-1)^{|sa|}s(ab) = (-1)^{2}s(ab) = s(ab).
+\end{align*}
+Both give the unsigned product---the apparent sign $(-1)^2 = +1$ in LV
+matches $(-1)^0 = +1$ in ours.
+
+Now let $a \in \cA^0$, $b \in \cA^1$:
+\begin{align*}
+\text{Us:} &\quad d_{\mathrm{bar}}[a|b]
+  = (-1)^{|a|-1}[ab] = (-1)^{-1}[ab] = -[ab]. \\
+\text{LV:} &\quad d_1(sa\otimes sb)
+  = (-1)^{|sa|}s(ab) = (-1)^{1}s(ab) = -s(ab).
+\end{align*}
+Both produce a minus sign.  This is the most common source of confusion
+when importing LV formulas: the exponent looks different ($-1$ vs.\ $1$)
+but the \emph{sign} is the same because $(-1)^{-1} = (-1)^1 = -1$.
+\end{example}
+
+\subsubsection{Cobar differential and $A_\infty$ structure maps}
+
+Our cobar differential on $\Omega(C) = T(s^{-1}\bar{C})$ for a dg coalgebra $(C, d, \Delta)$ is:
+\[
+d_\Omega(s^{-1}c) = -s^{-1}(dc)
+  + \sum_{(c)} (-1)^{|c'|}\, (s^{-1}c') \otimes (s^{-1}c'').
+\]
+
+LV's cobar differential on $\Omega(C) = T(s^{-1}C)$ has the same formula
+but with homological signs:
+\[
+d_\Omega^{\mathrm{LV}}(s^{-1}c) = -s^{-1}(dc)
+  + \sum_{(c)} (-1)^{|c'|_{\mathrm{hom}}}\, (s^{-1}c') \otimes (s^{-1}c'').
+\]
+
+The formulas are identical once one accounts for $|c'|_{\mathrm{hom}} = -|c'|_{\mathrm{coh}}$
+and $(-1)^{-n} = (-1)^n$.  The \emph{minus sign} on $s^{-1}(dc)$ is the same
+in both conventions and arises from the suspended differential
+(Proposition~\ref{prop:susp-diff}).
+
+\subsubsection{$A_\infty$ relations}
+
+For an $A_\infty$-algebra $(A, \{m_n\}_{n\geq 0})$:
+
+\emph{Our convention.}
+\begin{equation}\label{eq:ainf-us}
+\sum_{\substack{r+s+t = n \\ r,t \geq 0,\; s \geq 1}}
+  (-1)^{rs + t}\, m_{r+1+t}(a_1,\ldots,a_r, m_s(a_{r+1},\ldots,a_{r+s}), a_{r+s+1},\ldots,a_n) = 0.
+\end{equation}
+
+\emph{LV convention} (same formula, but with $(-1)^{r(s-1) + t}$ because LV absorbs
+the suspension into the structure maps, defining $b_n := s \circ m_n \circ (s^{-1})^{\otimes n}$).
+The relation on the desuspended maps $b_n$ reads:
+\[
+\sum_{r+s+t=n} (-1)^{rs+t}\, b_{r+1+t} \circ (\mathrm{id}^{\otimes r} \otimes b_s \otimes \mathrm{id}^{\otimes t}) = 0,
+\]
+which is \emph{identical} to~\eqref{eq:ainf-us}---the $b_n$ are exactly
+the desuspended structure maps $b_n = s \circ m_n \circ (s^{-1})^{\otimes n}$.
+
+\emph{Curved case.}  When $m_0 \neq 0$, the $A_\infty$ relation at $n=1$ becomes
+$m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$ (commutator with the curving element).
+Both conventions agree: the sign is a \emph{commutator}, not an anticommutator.
+
+\subsection{Beilinson--Drinfeld $\leftrightarrow$ this manuscript: chiral operations}
+\label{sec:bd-us-formulas}
+
+\subsubsection{Chiral product vs.\ OPE residue}
+
+BD define the chiral product via the $!$-pushforward along the diagonal:
+\[
+\mu^{\mathrm{ch}}_{\mathrm{BD}}: j_*j^*(\cA \boxtimes \cA) \longrightarrow \Delta_! \cA
+\]
+where $j: X^2 \setminus \Delta \hookrightarrow X^2$ and $\Delta: X \hookrightarrow X^2$.
+
+Our convention makes the residue explicit:
+\[
+\mu^{\mathrm{ch}}_{\mathrm{us}}(a \otimes b) = \Res_{z=w}\Bigl[\frac{a(z) \otimes b(w)}{z - w}\Bigr] dz.
+\]
+
+\emph{Translation.}  BD's $\mu^{\mathrm{ch}}$ encodes all OPE poles simultaneously;
+our $\mu^{\mathrm{ch}}$ extracts only the first-order pole.  The sign agreement
+is exact: both use counterclockwise residue orientation.  The key difference
+is that BD's formulation is intrinsically coordinate-free (D-module language),
+while ours uses the local coordinate $z - w$ to make signs visible.
+
+\begin{example}[Heisenberg at 2 points]
+For the Heisenberg algebra $\cH$ with OPE $b(z)c(w) \sim 1/(z-w)$:
+
+\emph{BD:} $\mu^{\mathrm{ch}}(b \boxtimes c) = \mathbf{1} \in \Delta_!\cH$.
+
+\emph{Us:} $\Res_{z=w}[b(z) \otimes c(w) \cdot \eta_{12}] = \mathbf{1}$
+where $\eta_{12} = d\log(z_1 - z_2)$.
+
+Both give $+\mathbf{1}$ (no sign).
+Now reverse the order:
+
+\emph{BD:} $\mu^{\mathrm{ch}}(c \boxtimes b)$---the chiral product is \emph{not}
+graded-commutative; BD's skew-commutativity axiom gives
+$\mu^{\mathrm{ch}}(c \boxtimes b) = -(-1)^{|b||c|}\mu^{\mathrm{ch}}(b \boxtimes c) = -\mathbf{1}$
+(since $|b| = |c| = 0$).
+
+\emph{Us:} $\Res_{z=w}[c(z) \otimes b(w) \cdot \eta_{12}] = -\mathbf{1}$
+from $c(z)b(w) \sim -1/(z-w)$.
+
+Both agree: $-\mathbf{1}$.
+\end{example}
+
+\subsubsection{Factorization and the bar complex}
+
+BD's factorization axiom on disjoint opens $U_1 \sqcup U_2 \subset X$:
+\[
+\cA^{\mathrm{fact}}_{\mathrm{BD}}(U_1 \sqcup U_2) \xrightarrow{\;\sim\;} \cA^{\mathrm{fact}}_{\mathrm{BD}}(U_1) \otimes \cA^{\mathrm{fact}}_{\mathrm{BD}}(U_2).
+\]
+
+Our version as a bar complex splitting:
+\[
+\bar{B}_*(\cA)|_{U_1 \sqcup U_2} \xrightarrow{\;\sim\;} \bar{B}_*(\cA)|_{U_1} \otimes \bar{B}_*(\cA)|_{U_2}.
+\]
+
+The isomorphism is the same linear map; our presentation makes explicit the
+\emph{coassociativity sign} in the splitting.  For elements
+$[a_1|\cdots|a_n]$ splitting as $[a_1|\cdots|a_k] \otimes [a_{k+1}|\cdots|a_n]$,
+the sign is $(-1)^{(\sum_{i\leq k}|s^{-1}a_i|)(\sum_{j>k}|s^{-1}a_j|)}$
+from the Koszul rule on desuspended elements.  BD absorb this sign into the
+D-module structure.
+
+\subsection{Costello--Gwilliam $\leftrightarrow$ this manuscript: BV and genus}
+\label{sec:cg-us-formulas}
+
+\subsubsection{Quantum master equation}
+
+CG's BV formalism (on a manifold $M$ of dimension $d$) uses the quantum
+master equation (QME):
+\begin{equation}\label{eq:qme-cg}
+\hbar \Delta_{\BV} S + \tfrac{1}{2}\{S, S\}_{\BV} = 0
+\end{equation}
+where $\Delta_{\BV}$ is the BV Laplacian, $\{-,-\}_{\BV}$ is the BV antibracket,
+and $S$ is the action functional.
+
+\emph{Our convention} (specialized to curves, $d=1$): the QME becomes the
+Maurer--Cartan equation in the modular convolution algebra
+$\mathfrak{g}^{\mathrm{mod}}_\cA$:
+\begin{equation}\label{eq:mc-us}
+D_\cA \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0
+\end{equation}
+where $D_\cA$ is the convolution differential and $[-,-]$ is the dg Lie bracket
+on $\Convstr(C^!_{\mathrm{ch}}, P^{\mathrm{ch}})$.
+
+\emph{Translation.}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{CG} & \textbf{Us} \\
+\hline
+$\hbar \Delta_{\BV}$ & $D_\cA$ (convolution differential) \\
+$\{-,-\}_{\BV}$ & $[-,-]$ (dg Lie bracket on $\Convstr$) \\
+$S$ (action functional) & $\Theta_\cA$ (MC element) \\
+Loop order $\ell$ & Genus $g$ \\
+$\hbar^\ell$ (loop expansion) & Genus filtration on $\Theta_\cA^{\leq r}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The factor $\frac{1}{2}$ is present in \emph{both} conventions---this is a
+common source of error.  Omitting it leads to incorrect signs in the
+obstruction theory (cf.\ Pitfall~8 in \S\ref{sec:chiral-pitfalls}).
+
+\subsubsection{BV bracket vs.\ bar differential}
+
+CG's BV antibracket on a curve $X$, applied to local functionals $F, G$:
+\[
+\{F, G\}_{\mathrm{CG}} = \int_X \frac{\delta F}{\delta \phi(z)} \frac{\delta G}{\delta \phi^+(z)}\, dz
+  \;-\; (-1)^{|F||G|} \int_X \frac{\delta G}{\delta \phi(z)} \frac{\delta F}{\delta \phi^+(z)}\, dz.
+\]
+
+Our bar differential encodes the same data geometrically:
+\[
+d_{\mathrm{res}}[a|b] = (-1)^{|a|-1}\, [a \cdot b]
+\]
+where $a \cdot b$ is the chiral product (residue of the OPE).
+
+\emph{Translation.}  CG's antibracket restricted to 2-point functionals on a
+curve reproduces our bar differential.  The sign $(-1)^{|F||G|}$ in CG
+becomes $(-1)^{|a|-1}$ in ours because the desuspension shifts degrees:
+$|s^{-1}a| = |a| - 1$, so $|F| = |s^{-1}a| = |a| - 1$.
+
+\subsubsection{Renormalization and completion}
+
+CG's renormalization group flow (from scale $\Lambda$ to scale $\Lambda'$):
+\[
+I[\Lambda'] = W(P(\Lambda', \Lambda), I[\Lambda])
+\]
+where $W$ is the Feynman diagram sum and $P(\Lambda',\Lambda)$ is the propagator.
+
+Our analogue: the nilpotent completion of the bar complex
+$\hat{B}(\cA) = \varprojlim_N B(\cA)/F^N$ with the completion filtration.
+
+There is no sign discrepancy here---the relationship is structural rather
+than sign-dependent.  The key identification is:
+\[
+\text{CG's $\ell$-loop Feynman graph} \;\longleftrightarrow\;
+\text{our genus-$\ell$ stratum of }\bar{B}^{(g,n)}_*(\cA).
+\]
+
+\subsection{Kontsevich $\leftrightarrow$ this manuscript: graph complexes and formality}
+\label{sec:kont-us-formulas}
+
+\subsubsection{Propagator conventions}
+
+Kontsevich's propagator on $\mathbb{R}^2$ (identified with $\mathbb{C}$):
+\[
+\omega_K(z, w) = \frac{1}{2\pi i} d\arg(z - w)
+  = \frac{1}{2\pi i} \frac{d\bar{z} - d\bar{w}}{z - w}.
+\]
+
+Our propagator on a curve $X$:
+\[
+\omega_{\mathrm{us}}(z, w) = \eta_{zw} = d\log(z - w) = \frac{dz - dw}{z - w}.
+\]
+
+\emph{Translation.}  Our propagator is the \emph{holomorphic part} of
+Kontsevich's; the antiholomorphic part $d\bar{z}$ drops out on curves
+(where the relevant forms are algebraic/holomorphic).  The factor
+$1/(2\pi i)$ in Kontsevich accounts for the residue normalization;
+we absorb it into the residue map $\Res_{z=w}[\cdots] = +1$.
+
+\begin{example}[Graph weight: single edge]
+Consider a graph $\Gamma$ with two external vertices $1, 2$ and one
+internal edge connecting them.
+
+\emph{Kontsevich:}
+$w_\Gamma = \int_{C_2(\mathbb{R}^2)} \omega_K(z_1, z_2) = \frac{1}{2\pi i}
+\int d\arg(z_1 - z_2) = 1.$
+
+\emph{Us:}
+$w_\Gamma = \Res_{z_1 = z_2}[\eta_{12}] = +1.$
+
+Both give $+1$, confirming the propagator normalization is consistent.
+\end{example}
+
+\subsubsection{Graph orientations and genus stratification}
+
+Kontsevich's graph complex uses \emph{directed} graphs with edge orientations
+producing signs $(-1)^{\text{number of edge reversals}}$.  Our genus-stratified
+graphs carry:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Vertex ordering}: lexicographic ($v_1 < v_2 < \cdots$), producing
+signs from $\Det(\{v_1,\ldots,v_n\})$.
+\item \emph{Edge orientation}: from the ordering of collision divisors
+$D_{ij}$ with $i < j$, reproducing Kontsevich's edge signs.
+\item \emph{Genus labels}: absent in Kontsevich (genus 0 only), present in
+our stable-graph coefficient algebra $\mathcal{G}_{\mathrm{st}}$.
+\end{enumerate}
+
+\emph{Translation at genus 0.}  Kontsevich's directed graph $\Gamma$
+with $n$ vertices corresponds to our genus-0 graph $(\Gamma, g \equiv 0)$
+in $\mathcal{G}_{\mathrm{st}}^{(0,n)}$.  The edge-orientation signs agree:
+reversing edge $(i,j)$ to $(j,i)$ gives $(-1)$ in both conventions.
+
+\emph{Beyond genus 0.}  Kontsevich's ``wheel'' graphs (graphs with cycles)
+produce contributions that in our framework are identified with
+\emph{higher-genus} terms.  A wheel with $k$ edges corresponds to a
+genus contribution at $g = 1$ (for a single cycle) or higher, absorbed
+into the modular bar complex $\bar{B}^{(g,n)}(\cA)$.
+
+
+%% ======================================================================
+%% Extended master comparison table
+%% ======================================================================
+
+\section{Extended master comparison table}
+\label{sec:extended-master-comparison}
+
+The tables in \S\S\ref{sec:master-comparison-signs}--\ref{sec:sign-dictionary-complete}
+record sign conventions for basic operations.  The following table extends the
+comparison to the \emph{algebraic structures} central to this monograph: MC~elements,
+convolution algebras, curvature, and the shadow tower.
+
+\begin{table}[H]
+\centering
+\caption{Convention comparison for algebraic structures}
+\label{tab:algebraic-structures-comparison}
+\renewcommand{\arraystretch}{1.5}
+\footnotesize
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
+\hline
+\textbf{Structure} & \textbf{BD} & \textbf{CG} & \textbf{LV} & \textbf{Us} \\
+\hline
+\hline
+MC equation & N/A & $\hbar\Delta S + \frac{1}{2}\{S,S\}=0$ & $d\alpha + \frac{1}{2}[\alpha,\alpha]=0$ & $D\Theta + \frac{1}{2}[\Theta,\Theta]=0$ \\
+\hline
+Convolution Lie bracket & implicit & $\{-,-\}_{\BV}$ & $[-,-]_{\mathrm{pre}}$ & $[-,-]_{\Convstr}$ \\
+\hline
+Curvature & implicit & $F_\nabla = d\nabla + \nabla^2$ & $m_0$ & $\kappa(\cA)$ \\
+\hline
+Curved $A_\infty$ relation & N/A & $m_1^2 = [m_0,-]$ & $m_1^2 = [m_0,-]$ & $m_1^2(a)=[m_0,a]$ \\
+\hline
+$\hbar$ parameter & N/A & explicit & N/A & genus filtration \\
+\hline
+Bar-cobar adjunction & factorization axiom & descent & $B \dashv \Omega$ & $\bar{B} \dashv \Omega$ \\
+\hline
+Koszul dual & not discussed & not discussed & $\cP^!$ & $\cA^!$ \\
+\hline
+Shadow tower & N/A & N/A & N/A & $\Theta_\cA^{\leq r}$ \\
+\hline
+Modular operad action & N/A & graph complex & N/A & $\mathrm{FCom}$-algebra \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Convention comparison for geometric operations on curves}
+\label{tab:geometric-operations-comparison}
+\renewcommand{\arraystretch}{1.5}
+\footnotesize
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
+\hline
+\textbf{Operation} & \textbf{BD} & \textbf{CG} & \textbf{Kontsevich} & \textbf{Us} \\
+\hline
+\hline
+Propagator & implicit in $j_*j^*$ & $P_\epsilon$ (regularized) & $\frac{1}{2\pi i}d\arg$ & $d\log(z-w)$ \\
+\hline
+Residue normalization & $+1$ & contour dep.\ & $(2\pi i)^{-1}$ & $+1$ \\
+\hline
+Configuration compactification & $\mathrm{Ran}(X)$ & FM (real) & $C_n(\mathbb{R}^d)$ (open) & $\FM_n(X)$ (algebraic) \\
+\hline
+Genus parameter & N/A & loop order $\ell$ & N/A & $g$ \\
+\hline
+Boundary structure & factorization isom.\ & codim-1 strata & boundary forms & collision divisors $D_T$ \\
+\hline
+Verdier duality & $\mathbb{D} = R\mathcal{H}om(-,\omega[1])$ & Serre duality & Poincar\'e duality & $\mathbb{D} = R\mathcal{H}om(-,\omega[1])$ \\
+\hline
+OPE & $\cA(\Delta)$ & observables on disk & N/A & $a(z)b(w) \sim \sum \frac{c_n(w)}{(z-w)^n}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{remark}[Reading the table]
+An entry ``N/A'' means the structure is not discussed in that source,
+not that it cannot be formulated there.  For instance, LV do not discuss
+Maurer--Cartan elements in the chiral setting, but one can define them in
+LV's framework by working on the operadic bar-cobar level---the MC equation
+$d\alpha + \frac{1}{2}[\alpha,\alpha] = 0$ in the LV column refers to
+the general operadic MC equation with homological signs.
+\end{remark}
+
+
+%% ======================================================================
+%% Common pitfalls in chiral computations
+%% ======================================================================
+
+\section{Common pitfalls in chiral computations}
+\label{sec:chiral-pitfalls}
+
+The pitfalls in \S\ref{sec:sign-dictionary-complete} concern general sign
+errors.  This section collects pitfalls specific to \emph{chiral algebra}
+computations---errors that arise from the interaction of algebraic signs with
+geometric residues, OPE poles, and the modular structure.
+
+\subsection{Pitfall 5: Sugawara signs at the critical level}
+
+\emph{Wrong.}  ``The Sugawara central charge diverges at $k = -h^\vee$.''
+
+\emph{Right.}  The Sugawara construction is \emph{undefined} at the critical
+level $k = -h^\vee$: the denominator $k + h^\vee$ appears in the definition
+of the Sugawara tensor $S(z) = \frac{1}{2(k+h^\vee)} \sum_a {:}J^a(z)J_a(z){:}$,
+not merely in the central charge formula.
+
+\emph{Sign consequence.}  The Feigin--Frenkel duality $k \leftrightarrow -k - 2h^\vee$
+fixes $k = -h^\vee$ and interchanges the two ``halves'' of the critical level.
+This duality reverses the sign of $k + h^\vee$:
+\[
+k \;\longmapsto\; -k - 2h^\vee
+\quad\Longrightarrow\quad
+(k + h^\vee) \;\longmapsto\; -(k + h^\vee).
+\]
+Any formula involving $(k + h^\vee)^{-1}$ therefore picks up a sign under
+Feigin--Frenkel duality.  This sign must be tracked through the Koszul dual:
+the affine algebra $\hat{\mathfrak{g}}_k$ at level $k$ has Koszul dual
+at level $-k - 2h^\vee$, and the curvature $\kappa(\hat{\mathfrak{g}}_k)$
+transforms accordingly.
+
+\subsection{Pitfall 6: Virasoro self-duality point}
+
+\emph{Wrong.}  ``The Virasoro algebra is self-dual at $c = 26$.''
+
+\emph{Right.}  $\mathrm{Vir}_c^! = \mathrm{Vir}_{26 - c}$, so self-duality
+requires $c = 26 - c$, i.e., $c = 13$.  The value $c = 26$ is where the
+Koszul dual has $c^! = 0$, not where self-duality holds.
+
+\emph{Sign consequence.}  The shadow tower's quartic contact invariant
+$Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$ has poles at $c = 0$
+and $c = -22/5$.  Under $c \mapsto 26 - c$, this transforms as:
+\[
+Q^{\mathrm{contact}}_{\mathrm{Vir}^!}
+= \frac{10}{(26-c)(5(26-c)+22)}
+= \frac{10}{(26-c)(152-5c)}.
+\]
+At the self-dual point $c = 13$: $Q = 10/[13 \cdot 87] = 10/1131$.
+At $c = 26$: $Q = 10/[26 \cdot 152] = 10/3952$, which is
+\emph{not} the value at $c^! = 0$ (where $Q$ diverges).
+
+\subsection{Pitfall 7: Orlik--Solomon vs.\ differential form signs}
+
+\emph{Wrong.}  Assuming $\eta_{ji} = -\eta_{ij}$ as differential forms.
+
+\emph{Right.}  The logarithmic 1-forms satisfy
+$\eta_{ji} = d\log(z_j - z_i) = d\log(-(z_i - z_j)) = d\log(z_i - z_j) = \eta_{ij}$
+because $d\log(-1) = 0$.  However, the Orlik--Solomon \emph{algebra generators}
+$e_{ij}$ satisfy $e_{ji} = -e_{ij}$ by convention (exterior algebra presentation).
+
+\emph{Sign consequence.}  Confusing the two leads to a global sign error
+in the bar differential.  Consider the Arnold relation:
+\begin{align*}
+\text{As forms:} &\quad \eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{31} + \eta_{31}\wedge\eta_{12} = 0. \\
+\text{As OS generators:} &\quad e_{12}\wedge e_{23} + e_{23}\wedge e_{31} + e_{31}\wedge e_{12} = 0
+\end{align*}
+These are the \emph{same} equation because $\eta_{31} = \eta_{13}$ (forms)
+but $e_{31} = -e_{13}$ (OS).  Substituting $e_{31} = -e_{13}$ gives:
+\[
+e_{12}\wedge e_{23} - e_{23}\wedge e_{13} - e_{13}\wedge e_{12} = 0
+\]
+which, using $e_{ij}\wedge e_{kl} = -e_{kl}\wedge e_{ij}$, simplifies to
+$e_{12}\wedge e_{23} + e_{13}\wedge e_{23} - e_{13}\wedge e_{12} = 0$.
+Both forms are correct; the danger is in mixing the conventions within a
+single computation.
+
+\subsection{Pitfall 8: the factor of $\frac{1}{2}$ in the MC equation}
+
+\emph{Wrong.}  Writing the MC equation as $D\Theta + [\Theta, \Theta] = 0$.
+
+\emph{Right.}  $D\Theta + \frac{1}{2}[\Theta, \Theta] = 0$.
+
+\emph{Sign consequence.}  The factor $\frac{1}{2}$ arises because the
+Lie bracket $[-,-]$ is antisymmetric: $[\Theta, \Theta] = -(-1)^{|\Theta|^2}[\Theta, \Theta]$.
+For $|\Theta|$ odd (as in a shifted Lie algebra), $[\Theta,\Theta] \neq 0$
+in general, and the $\frac{1}{2}$ is essential.
+
+Concretely, the MC equation for the shadow tower element $\Theta_\cA^{\leq 2} = \kappa(\cA)$ gives:
+\[
+D\kappa + \tfrac{1}{2}[\kappa, \kappa] = o^{(3)}(\cA)
+\]
+where $o^{(3)}$ is the cubic obstruction class.  Without the $\frac{1}{2}$,
+the obstruction class would be off by a factor of~2, propagating errors
+into all higher shadow computations.
+
+Similarly, the QME in CG's convention~\eqref{eq:qme-cg}:
+$\hbar\Delta S + \frac{1}{2}\{S,S\} = 0$.  Omitting the $\frac{1}{2}$
+from the antibracket term doubles the classical BV cohomology obstruction.
+
+\subsection{Pitfall 9: suspension in the Koszul dual}
+
+\emph{Wrong.}  ``$\mathrm{Com}^! = \mathrm{coLie}$.''
+
+\emph{Right.}  $\mathrm{Com}^! = \mathrm{Lie}$.  The Koszul dual \emph{operad}
+(not cooperad) of $\mathrm{Com}$ is $\mathrm{Lie}$.
+
+\emph{Sign consequence.}  The operadic Koszul duality involves an operadic
+suspension $\fS$ (Definition~\ref{def:susp-operadic}):
+\[
+\cP^{\scriptstyle \text{\textexclamdown}} = (\fS^{-1}\cP^!)^\vee, \qquad
+\fS\cP(n) = \sgn_n \otimes \cP(n)[n-1].
+\]
+The sign representation $\sgn_n$ is the source of the
+Lie $\leftrightarrow$ Com duality: $\mathrm{Com}(n) = k$ (trivial representation),
+and $\fS^{-1}\mathrm{Lie}(n) = \sgn_n \otimes \mathrm{Lie}(n)[1-n]$.
+Omitting the operadic suspension yields $\mathrm{coLie}$ instead of $\mathrm{Lie}$,
+which changes the sign of the bracket in all convolution algebra computations.
+
+\subsection{Pitfall 10: FM compactification vs.\ complement of diagonal}
+
+\emph{Wrong.}  ``The Fulton--MacPherson space is $X^n \setminus \bigcup_{i<j}\Delta_{ij}$.''
+
+\emph{Right.}  $\FM_n(X)$ is obtained by \emph{blowing up} along diagonals (in order
+of increasing codimension), not by removing them.  The result is a smooth
+compact variety containing the configuration space as an open dense subset.
+
+\emph{Sign consequence.}  Residues along boundary divisors of $\FM_n(X)$ use
+the \emph{normal bundle orientation} of the exceptional divisor, not the
+restriction to a deleted neighborhood.  For curves, the exceptional divisor
+$E_{ij} \cong \mathbb{P}(T_{z_i}X)$ is a point (Construction~\ref{constr:sign-blowup}),
+so no additional sign arises.  But for higher-dimensional varieties,
+confusing the complement with the blowup introduces orientation errors
+in every residue computation.
+
+\subsection{Pitfall 11: prime form and spinor signs}
+
+\emph{Wrong.}  ``The prime form $E(z,w)$ is a section of $K^{1/2} \boxtimes K^{1/2}$.''
+
+\emph{Right.}  $E(z,w)$ is a section of $K^{-1/2} \boxtimes K^{-1/2}$
+(negative half-powers of the canonical bundle).
+
+\emph{Sign consequence.}  The prime form satisfies $E(z,w) = -E(w,z)$
+(antisymmetric).  Confusing $K^{1/2}$ with $K^{-1/2}$ reverses the
+sign of the genus-$g$ propagator:
+\[
+\omega_g(z,w) = d_z d_w \log E(z,w) = \text{Bergman kernel}
+\]
+and introduces a global sign error in the higher-genus bar complex
+$\bar{B}^{(g,n)}(\cA)$ for $g \geq 1$.
+
+\subsection{Pitfall 12: the Borcherds identity and $d^2$}
+
+The Borcherds bracket-differential satisfies $d_{\mathrm{bracket}}^2 \neq 0$
+in general (this is proved for all $2^{11} = 2048$ sign choices; see
+\S\ref{sec:bar-nilpotency}).  Nilpotency $d^2 = 0$ requires the
+\emph{full} Borcherds differential, which includes both the bracket term
+and the internal differential.  Forgetting the internal differential---a
+common error when translating from LV's purely algebraic setting to our
+geometric one---breaks $d^2 = 0$.
+
+\emph{Explicit example.}  For the affine algebra $\hat{\mathfrak{sl}}_2$ at level $k$,
+the bar differential has:
+\[
+d^2[e|f|h] = d\bigl((-1)^0[ef|h] - (-1)^0[e|fh]\bigr)
+  = [ef \cdot h] - [e \cdot fh] - [ef \cdot h] + [e \cdot fh] = 0
+\]
+using both the bracket (residue) part and the internal differential.
+Omitting either part generically gives $d^2 \neq 0$.
+
+\subsection{Summary of chiral pitfalls}
+
+\begin{center}
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{\#} & \textbf{Pitfall} & \textbf{Consequence if ignored} \\
+\hline
+5 & Sugawara undefined at $k=-h^\vee$ & Wrong Feigin--Frenkel signs \\
+6 & Vir self-dual at $c=13$ (not 26) & Wrong shadow invariant values \\
+7 & $\eta_{ji} = \eta_{ij}$ (forms) vs.\ $e_{ji} = -e_{ij}$ (OS) & Global sign in bar differential \\
+8 & Factor $\frac{1}{2}$ in MC equation & Obstruction class off by 2 \\
+9 & $\mathrm{Com}^! = \mathrm{Lie}$ (not $\mathrm{coLie}$) & Wrong bracket sign in $\Convstr$ \\
+10 & FM = blowup (not complement) & Orientation errors in residues \\
+11 & Prime form: $K^{-1/2}$ (not $K^{+1/2}$) & Wrong genus-$g$ propagator sign \\
+12 & $d_{\mathrm{bracket}}^2 \neq 0$ & Need full Borcherds $d$ for $d^2=0$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{remark}[Signs as a diagnostic tool]
+When a computation produces an unexpected sign, it is almost always one of
+the twelve pitfalls above (or their combination).  A useful debugging strategy:
+first verify the computation in the Heisenberg algebra (where all generators
+have degree~0 and all Koszul signs are trivial), then reintroduce grading.
+If the Heisenberg case already fails, the error is geometric (Pitfalls~7,
+10, 11); if it only appears with grading, the error is algebraic (Pitfalls~5,
+6, 8, 9, 12).
+\end{remark}

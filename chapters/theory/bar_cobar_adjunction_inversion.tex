@@ -2974,6 +2974,661 @@ associahedra to the geometry of the Deligne--Mumford
 compactification --- or, in the language of the categorical logarithm,
 the passage from the single-valued to the multi-valued regime.
 
+\subsection{Scalar rigidity and the quadratic frontier}
+\label{subsec:scalar-rigidity-quadratic-frontier}
+\index{categorical logarithm!scalar rigidity}
+\index{eta-Hessian@$\eta$-Hessian|textbf}
+\index{quadratic frontier|textbf}
+
+The picture so far: the categorical logarithm encodes a chiral
+algebra~$\cA$ as the bar complex $\barB(\cA)$, whose Taylor expansion
+is the PBW spectral sequence, whose leading coefficient is the modular
+characteristic~$\kappa(\cA)$, and whose curvature
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ governs the genus
+transition.  On the scalar-saturated locus---where the cyclic
+deformation cohomology is one-dimensional---this curvature, a single
+number, controls the entire genus tower.
+
+The question that drives this subsection is: \emph{what happens when
+the scalar-saturated locus is left?}  The Whitehead decomposition
+(Chapter~\ref{chap:higher-genus}) splits the cyclic deformation
+cohomology as
+\[
+H^2_{\mathrm{cyc}}(\cA,\cA)
+\;=\;
+\mathbb{C}\cdot\eta
+\;\oplus\;
+H^2_{\mathrm{cyc,prim}}(\cA),
+\]
+where $\eta$ is the level class and the primitive summand consists of
+$\mathfrak{g}$-equivariant cocycles vanishing on current-containing
+pairs.  Scalar saturation is the vanishing of the primitive summand.
+The first non-scalar phenomenon might, na\"ively, be linear transport
+by the level class: the operator $l_2^{\mathrm{tr}}(\eta,-)$ acting on
+primitive deformations.  The geometric surprise is that this operator
+vanishes \emph{for formal reasons}---the level class is
+cohomologically central---and the first genuine departure from
+scalarity is \emph{quadratic}.
+
+The invariant that governs this quadratic frontier is a bilinear form
+$H_{\eta,\cA}$ on the primitive sector, the \emph{$\eta$-Hessian}:
+the transferred ternary $L_\infty$ bracket with one $\eta$-input.  In
+the singularity-theoretic language that organizes the deformation
+theory, the Kodaira--Spencer centrality theorem kills the linear term
+of the expansion around the scalar branch, and the $\eta$-Hessian is
+the Hessian matrix of the resulting critical point.  The quadratic cone
+$B_{\kappa,\cA}(y,y) = 0$ in the primitive sector is the tangent cone
+to the first non-scalar branch of the moduli space.
+
+\medskip
+
+\noindent\textbf{The deformation-theoretic setup.}\enspace
+Throughout this subsection, the transferred $L_\infty$ operations
+$\{l_n^{\mathrm{tr}}\}_{n \geq 1}$ are those of the minimal cyclic
+$L_\infty$-model on the cohomology
+$\mathcal{H} = H^*(\Defcyc(\cA))$, constructed by homotopy transfer
+from a dg Lie model of the cyclic deformation complex.  The model is
+minimal ($l_1^{\mathrm{tr}} = 0$), and the binary bracket
+$l_2^{\mathrm{tr}}$ is the induced Lie bracket on cohomology.  The
+distinguished class $\eta \in \mathcal{H}^2$ is the level class, and
+$s^{-1}\eta$ has odd degree in the desuspension $s^{-1}\mathcal{H}$.
+
+\begin{theorem}[Kodaira--Spencer centrality; \ClaimStatusProvedHere]
+\label{thm:ks-centrality}
+\index{Kodaira--Spencer class!centrality}
+Let $(C, \partial, [-,-])$ be a dg Lie algebra equipped with a
+one-parameter family of Maurer--Cartan elements
+$m_k \in C^1$ depending formally on a scalar parameter~$k$, with the
+underlying graded vector space and bracket independent of~$k$.  Set
+$d_k := \partial + [m_k, -]$ and let
+$\eta_k := [\dot{m}_k] \in H^2(C, d_k)$ be the Kodaira--Spencer
+class.  Then:
+\[
+\mathrm{ad}_{\eta_k} = 0
+\qquad\text{on } H^\bullet(C, d_k).
+\]
+Equivalently, after passing to any transferred minimal
+$L_\infty$-model on the cohomology,
+\[
+l_2^{\mathrm{tr}}(\eta_k, -) = 0.
+\]
+\end{theorem}
+
+\begin{proof}
+Differentiate the Maurer--Cartan equation
+$\partial m_k + \tfrac{1}{2}[m_k, m_k] = 0$ with respect to~$k$:
+\[
+\partial \dot{m}_k + [m_k, \dot{m}_k] = 0,
+\qquad\text{i.e.,}\qquad
+d_k \dot{m}_k = 0.
+\]
+Thus $\eta_k = [\dot{m}_k]$ is a well-defined cohomology class.
+
+Now let $x \in C$ be $d_k$-closed.  Differentiating $d_k x = 0$
+with respect to~$k$ yields
+\[
+d_k\!\left(\frac{\partial x}{\partial k}\right) + [\dot{m}_k, x] = 0,
+\]
+since the bracket is $k$-independent.  Hence $[\dot{m}_k, x]$ is
+$d_k$-exact, so $\eta_k$ acts trivially on $H^\bullet(C, d_k)$.
+The transferred binary bracket on the minimal model is the induced
+bracket on cohomology, giving
+$l_2^{\mathrm{tr}}(\eta_k, -) = 0$.
+\end{proof}
+
+\begin{lemma}[Two-$\eta$ vanishing; \ClaimStatusProvedHere]
+\label{lem:two-eta-vanishing}
+\index{two-eta vanishing}
+Let $(\mathcal{H}, \{l_n\}_{n \geq 1})$ be a minimal $L_\infty$-model
+for a deformation problem in which the distinguished level class
+$\eta \in \mathcal{H}^2$ has odd suspension $s^{-1}\eta$.  Then for
+every $n \geq 2$ and all $u_3, \ldots, u_n \in \mathcal{H}$,
+\[
+l_n(\eta, \eta, u_3, \ldots, u_n) = 0.
+\]
+In particular, $l_n(\eta, \ldots, \eta) = 0$ for all $n \geq 2$.
+\end{lemma}
+
+\begin{proof}
+In the desuspension $s^{-1}\mathcal{H}$, the element $s^{-1}\eta$ has
+odd degree.  The $L_\infty$-operations are graded antisymmetric on
+the desuspended coalgebra, so interchanging the first two identical
+odd inputs multiplies the expression by $-1$ without changing its
+value.  Therefore it is zero.
+\end{proof}
+
+\begin{remark}[The scalar direction is affine, not invisible]
+\label{rem:scalar-direction-affine}
+\index{affine normal form}
+The two results above have an immediate structural consequence.
+For any $t \in \mathbb{C}$ and $y \in \mathcal{H}$, the
+Maurer--Cartan series satisfies
+\[
+\MC(t\eta + y)
+\;=\;
+\MC(y) + t\,\Xi_\eta(y),
+\qquad
+\Xi_\eta(y)
+:= \sum_{m \geq 0} \frac{1}{m!}\, l_{m+1}(\eta, y^{\otimes m}).
+\]
+There are no quadratic or higher powers of~$t$: every term in the
+multilinear expansion containing two or more copies of~$\eta$
+vanishes by Lemma~\ref{lem:two-eta-vanishing}.  The scalar direction
+is not invisible---the insertion operator $\Xi_\eta$ carries
+genuine structure---but it couples to the remaining directions only
+\emph{affinely}.  By Theorem~\ref{thm:ks-centrality}, the unary part
+of the insertion vanishes on cohomology, so the first surviving
+scalar/non-scalar coupling begins quadratically in the primitive
+variables.
+\end{remark}
+
+The coalgebra-level consequence of the affine normal form is a
+square-zero insertion differential, whose spectral sequence collapses
+at~$E_2$.
+
+\begin{proposition}[Square-zero insertion differential;
+\ClaimStatusProvedHere]
+\label{prop:square-zero-insertion}
+\index{insertion differential!square-zero}
+Let $Q$ denote the coderivation on the cofree conilpotent coalgebra
+$T^c(s^{-1}\mathcal{H})$ determined by the Taylor coefficients
+$\{l_n\}_{n \geq 1}$, and define a second coderivation $M_\eta$
+by $(M_\eta)_n(u_1, \ldots, u_n) := l_{n+1}(\eta, u_1, \ldots, u_n)$.
+Then the twist of~$Q$ by the scalar Maurer--Cartan point $t\eta$ is
+\[
+Q_t = Q + t M_\eta.
+\]
+Consequently,
+\[
+[Q, M_\eta] = 0,
+\qquad
+M_\eta^2 = 0.
+\]
+\end{proposition}
+
+\begin{proof}
+The Taylor coefficient of arity~$n$ in the twist by $t\eta$ is
+\[
+l_n^{t\eta}(u_1, \ldots, u_n)
+= \sum_{r \geq 0} \frac{1}{r!}\,
+  l_{n+r}\bigl((t\eta)^{\otimes r}, u_1, \ldots, u_n\bigr).
+\]
+By Lemma~\ref{lem:two-eta-vanishing}, all terms with $r \geq 2$
+vanish, so $l_n^{t\eta} = l_n + t\,l_{n+1}(\eta, -)$, which is the
+statement $Q_t = Q + tM_\eta$.  Since $t\eta$ is Maurer--Cartan for
+every~$t$, one has $Q_t^2 = 0$ for every~$t$.  Expanding
+$(Q + tM_\eta)^2 = Q^2 + t[Q, M_\eta] + t^2 M_\eta^2$ and comparing
+coefficients of $1, t, t^2$ yields the claims.
+\end{proof}
+
+\begin{corollary}[Two-step scalar spectral sequence;
+\ClaimStatusProvedHere]
+\label{cor:two-step-scalar-sseq}
+\index{spectral sequence!scalar direction}
+Filter the family
+$(T^c(s^{-1}\mathcal{H})[[t]], Q_t)$ by powers of~$t$.  The
+associated spectral sequence has
+\[
+E_1 \cong H^\bullet(T^c(s^{-1}\mathcal{H}), Q)
+  \otimes \mathbb{C}[[t]],
+\]
+its first differential is induced by $M_\eta$, and all higher
+differentials vanish: $d_r = 0$ for $r \geq 2$.  The scalar-direction
+spectral sequence collapses at~$E_2$.
+\end{corollary}
+
+\begin{proof}
+The twisted differential $Q_t = Q + tM_\eta$ has exactly two
+filtration pieces: $Q$ (preserving the $t$-adic filtration) and
+$tM_\eta$ (raising it by one).  There is no component raising
+filtration by two or more, so the only nontrivial differential
+beyond the $Q$-cohomology stage is the first one.
+\end{proof}
+
+\medskip
+
+\noindent\textbf{The primitive quadratic cone.}\enspace
+Theorems~\ref{thm:ks-centrality} and Lemma~\ref{lem:two-eta-vanishing}
+have eliminated the linear frontier.  The first place where non-scalar
+behavior can occur is the quadratic interaction between primitive
+directions and the scalar branch.
+
+\begin{notation}[Primitive sector and scalar basepoint]
+\label{not:primitive-sector}
+Write
+\[
+\mathcal{P}_\cA := H^2_{\mathrm{cyc,prim}}(\cA)
+\]
+for the primitive degree-two sector from the Whitehead decomposition.
+Suppress, for notational simplicity, the inert Hodge factor
+$\Lambda = \sum_{g \geq 1} \lambda_g$ and write
+\[
+x_\kappa := \kappa(\cA)\,\eta
+\]
+for the scalar Maurer--Cartan point in the minimal model.
+\end{notation}
+
+\begin{theorem}[Quadratic frontier; \ClaimStatusProvedHere]
+\label{thm:quadratic-frontier}
+\index{quadratic frontier!theorem}
+Let $\cA$ be any object for which the Whitehead decomposition holds and
+for which the scalar branch $x_\kappa = \kappa(\cA)\eta$ is
+Maurer--Cartan.  Let $y \in \mathcal{P}_\cA$.  Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Every primitive direction is first-order unobstructed along the
+scalar branch:
+\[
+l_1^{x_\kappa}(y) = 0.
+\]
+\item The first nontrivial obstruction is quadratic:
+\[
+\MC(x_\kappa + y)
+= \tfrac{1}{2}\, B_{\kappa,\cA}(y,y) + O(y^3),
+\]
+where
+\[
+B_{\kappa,\cA}(u,v)
+\;:=\;
+l_2^{\mathrm{tr}}(u,v)
++ \kappa(\cA)\,l_3^{\mathrm{tr}}(\eta, u, v).
+\]
+\end{enumerate}
+Consequently, the first non-scalar branch is governed by the quadratic
+cone
+\[
+\mathcal{C}_{\kappa,\cA}
+:= \bigl\{
+  y \in \mathcal{P}_\cA
+  \;:\;
+  B_{\kappa,\cA}(y,y) = 0
+\bigr\}.
+\]
+\end{theorem}
+
+\begin{proof}
+The twisted unary bracket is
+\[
+l_1^{x_\kappa}(y)
+= \sum_{r \geq 0} \frac{1}{r!}\,
+  l_{1+r}(x_\kappa^{\otimes r}, y).
+\]
+The $r = 0$ term vanishes because the model is minimal.  The $r = 1$
+term is $\kappa(\cA)\, l_2^{\mathrm{tr}}(\eta, y)$, which vanishes by
+Theorem~\ref{thm:ks-centrality}.  All terms with $r \geq 2$ contain at
+least two copies of~$\eta$ and vanish by
+Lemma~\ref{lem:two-eta-vanishing}.  This proves~(a).
+
+For the quadratic term, expand around $x_\kappa$:
+\[
+\MC(x_\kappa + y)
+= \underbrace{\MC(x_\kappa)}_{=\,0}
+  + \underbrace{l_1^{x_\kappa}(y)}_{=\,0}
+  + \tfrac{1}{2}\, l_2^{x_\kappa}(y,y)
+  + O(y^3).
+\]
+Compute
+\[
+l_2^{x_\kappa}(u,v)
+= \sum_{r \geq 0} \frac{1}{r!}\,
+  l_{2+r}(x_\kappa^{\otimes r}, u, v).
+\]
+The $r = 0$ term is $l_2^{\mathrm{tr}}(u,v)$; the $r = 1$ term is
+$\kappa(\cA)\, l_3^{\mathrm{tr}}(\eta, u, v)$; all $r \geq 2$ terms
+vanish by Lemma~\ref{lem:two-eta-vanishing}.
+\end{proof}
+
+\begin{definition}[$\eta$-Hessian]
+\label{def:eta-hessian}
+\index{eta-Hessian@$\eta$-Hessian!definition}
+The \emph{$\eta$-Hessian} of the family at~$\cA$ is the bilinear form
+on the primitive sector defined by
+\[
+H_{\eta,\cA}(u,v)
+\;:=\;
+l_3^{\mathrm{tr}}(\eta, u, v),
+\qquad u, v \in \mathcal{P}_\cA.
+\]
+The quadratic frontier tensor decomposes as
+\[
+B_{\kappa,\cA}
+\;=\;
+l_2^{\mathrm{tr}}\big|_{\mathcal{P}_\cA \otimes \mathcal{P}_\cA}
+\;+\;
+\kappa(\cA)\, H_{\eta,\cA}.
+\]
+The first summand is the intrinsic binary bracket on primitive
+cohomology; the second is the new invariant introduced by the scalar
+curvature.
+\end{definition}
+
+\begin{proposition}[Homotopy-transfer construction of the
+$\eta$-Hessian; \ClaimStatusProvedHere]
+\label{prop:eta-hessian-transfer}
+\index{eta-Hessian@$\eta$-Hessian!transfer formula}
+\index{homotopy transfer!ternary bracket}
+Let $(C, d, [-,-])$ be a dg Lie model for the cyclic deformation
+complex of~$\cA$, and choose a contraction
+\[
+(\mathcal{P}_\cA \oplus \mathbb{C}\eta)
+  \xrightarrow{\;i\;} C
+  \xrightarrow{\;p\;} (\mathcal{P}_\cA \oplus \mathbb{C}\eta),
+\qquad
+dh + hd = \mathrm{id}_C - ip.
+\]
+Then $H_{\eta,\cA}$ is represented by the standard transferred
+rooted-tree formula:
+\begin{align*}
+H_{\eta,\cA}(u,v)
+&= p\bigl([h[i(\eta), i(u)],\, i(v)]\bigr)
+  + p\bigl([h[i(u), i(v)],\, i(\eta)]\bigr) \\
+&\qquad
+  + p\bigl([h[i(v), i(\eta)],\, i(u)]\bigr),
+\end{align*}
+with Koszul signs in the general graded case.  The formula is
+independent of the choice of contraction, by the standard
+homotopy-transfer invariance of $L_\infty$-structures.
+\end{proposition}
+
+\begin{proof}
+For a dg Lie algebra, the transferred ternary bracket on the minimal
+$L_\infty$-model is the sum over rooted binary trees with three leaves
+and one internal homotopy edge.  Evaluating at the ordered triple
+$(\eta, u, v)$ yields the displayed expression.  Independence of the
+contraction is homotopy-transfer invariance.
+\end{proof}
+
+\begin{lemma}[Shifted symmetry on degree-two primitives;
+\ClaimStatusProvedHere]
+\label{lem:shifted-symmetry-H}
+\index{eta-Hessian@$\eta$-Hessian!symmetry}
+On the primitive degree-two sector
+$\mathcal{P}_\cA \subset H^2_{\mathrm{cyc}}(\cA, \cA)$, both
+$l_2^{\mathrm{tr}}(u,v)$ and $H_{\eta,\cA}(u,v)$ are symmetric in the
+ordinary sense.  Consequently, the quadratic frontier tensor
+$B_{\kappa,\cA}(u,v)$ is symmetric on~$\mathcal{P}_\cA$.
+\end{lemma}
+
+\begin{proof}
+After desuspension, degree-two classes become odd.  The shifted graded
+antisymmetry of the transferred $L_\infty$-operations therefore becomes
+ordinary symmetry when restricted to two primitive degree-two inputs.
+\end{proof}
+
+\begin{remark}[The frontier has moved]
+\label{rem:frontier-moved}
+\index{quadratic frontier!interpretation}
+The natural question was to compute $l_2^{\mathrm{tr}}(\eta, -)$ and
+its induced quotient differential.
+Theorem~\ref{thm:ks-centrality} and
+Theorem~\ref{thm:quadratic-frontier} show that this is not the correct
+frontier.  Linear transport by the level class vanishes formally.  The
+first genuine deformation-theoretic information lives instead in the
+$\eta$-Hessian $H_{\eta,\cA}$ and the resulting quadratic cone
+$\mathcal{C}_{\kappa,\cA}$.  In the singularity-theoretic dictionary:
+one has killed the gradient of the Maurer--Cartan potential along the
+scalar branch; the $\eta$-Hessian is the Hessian at the resulting
+critical point; and the quadratic cone is the tangent cone to the
+critical locus.
+\end{remark}
+
+\medskip
+
+\noindent\textbf{Scalar rigidity in the admissible sector.}\enspace
+The scalar-saturated locus is larger than one might expect.  Generic
+rigidity (Chapter~\ref{chap:higher-genus}) gives
+$H^2_{\mathrm{cyc,prim}}(\cA) = 0$ whenever the relevant module
+category is semisimple.  The quadratic frontier therefore lies beyond
+the semisimple regime.  One might hope that admissible levels---where
+semisimplicity can fail---provide the first non-scalar examples.  The
+following theorem shows that even admissible levels, in their
+semisimple highest-weight sector, remain scalar-rigid.
+
+\begin{theorem}[Admissible scalar rigidity; \ClaimStatusProvedHere]
+\label{thm:admissible-scalar-rigidity}
+\index{admissible level!scalar rigidity}
+\index{scalar saturation!admissible sector}
+Let $k$ be an admissible level for a simple Lie algebra~$\mathfrak{g}$,
+and let $\cA = V_k(\mathfrak{g})$ be the corresponding admissible
+affine vertex algebra.  Consider the cyclic first-order deformation
+problem internal to the semisimple admissible highest-weight module
+category of~\cite{Arakawa2016RationalAdmissible}.  Then
+\[
+H^2_{\mathrm{cyc}}(\cA, \cA) = \mathbb{C}\eta,
+\qquad
+H^2_{\mathrm{cyc,prim}}(\cA) = 0.
+\]
+In particular, the semisimple admissible highest-weight sector of the
+vacuum admissible affine algebra is scalar-saturated.
+\end{theorem}
+
+\begin{proof}
+The Whitehead decomposition applies at all non-critical levels, so
+only the vanishing of the primitive part must be addressed.  The
+generic rigidity argument kills primitive cyclic deformations whenever
+the relevant module category is semisimple: the algebra object then
+has vanishing Hochschild $\mathrm{Ext}^2$ in that semisimple tensor
+category.  For admissible~$k$,
+Arakawa~\cite{Arakawa2016RationalAdmissible} proves that the ordinary
+admissible highest-weight category is semisimple and that
+$V_k(\mathfrak{g})$ belongs to it.  Running the generic rigidity
+argument inside that semisimple sector gives
+$H^2_{\mathrm{cyc,prim}}(\cA) = 0$.
+\end{proof}
+
+\begin{corollary}[Drinfeld--Sokolov reductions remain scalar-rigid;
+\ClaimStatusProvedHere]
+\label{cor:ds-not-first-frontier}
+\index{Drinfeld--Sokolov reduction!scalar rigidity}
+Let $k$ be admissible and $f \in \mathfrak{g}$ nilpotent.  Then the
+$\mathcal{W}$-algebra
+$\mathcal{W}^k(\mathfrak{g}, f)
+  = \mathrm{DS}_f(V_k(\mathfrak{g}))$
+is scalar-saturated.  In particular, neither the vacuum admissible
+affine algebra nor its ordinary Drinfeld--Sokolov reductions provide
+the first admissible example with genuinely nonzero primitive sector.
+\end{corollary}
+
+\begin{proof}
+Scalar saturation is preserved by Drinfeld--Sokolov reduction
+(Chapter~\ref{chap:higher-genus}).  Apply
+Theorem~\ref{thm:admissible-scalar-rigidity}.
+\end{proof}
+
+\begin{remark}[Where the true admissible frontier lies]
+\label{rem:true-admissible-frontier}
+\index{admissible level!nonsemisimple frontier}
+The first admissible family with nonzero primitive sector must lie
+beyond the semisimple ordinary highest-weight regime.  Natural targets
+include: logarithmic extensions of admissible affine algebras,
+admissible conformal cosets with Jordan blocks, relaxed highest-weight
+or nonordinary sectors, and nonrational $\mathcal{W}$-algebras for
+which the ordinary category ceases to be semisimple.  In every case,
+the route to the first non-scalar quadratic cone passes through the
+explicit computation described below.
+\end{remark}
+
+\medskip
+
+\noindent\textbf{The scalar genus as a classified multiplicative
+genus.}\enspace
+On the scalar-saturated locus, where the quadratic frontier is empty,
+the genus tower is governed by a single number.  The following
+classification theorem makes this uniqueness precise: any
+multiplicative genus factoring through the modular characteristic must
+take the universal form.
+
+\begin{theorem}[Classification of scalar genera;
+\ClaimStatusProvedHere]
+\label{thm:classification-scalar-genera}
+\index{scalar logarithm!classification}
+\index{multiplicative genus!scalar}
+Let $\mathcal{U} := 1 + x^2\mathbb{C}[[x^2]]$ with multiplication of
+formal series.  Suppose that to each object~$\cA$ in a one-scalar
+class one assigns an element $Z(\cA; x) \in \mathcal{U}$ such that:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $Z(\cA \star \mathcal{B}; x)
+    = Z(\cA; x)\, Z(\mathcal{B}; x)$ whenever
+    $\kappa(\cA \star \mathcal{B})
+    = \kappa(\cA) + \kappa(\mathcal{B})$;
+\item $Z(\cA; x)$ depends on~$\cA$ only through $\kappa(\cA)$;
+\item the dependence on~$\kappa$ is formal power-series dependence.
+\end{enumerate}
+Then there exists a unique series
+$\Psi(x) \in x^2\mathbb{C}[[x^2]]$ such that
+\[
+Z(\cA; x) = \exp\bigl(\kappa(\cA)\,\Psi(x)\bigr)
+\]
+for every~$\cA$.  If the genus coefficients are normalized to the
+scalar genus formula
+\[
+\sum_{g \geq 1} F_g(\cA)\, x^{2g}
+= \kappa(\cA)\left(\frac{x/2}{\sin(x/2)} - 1\right),
+\]
+then $\Psi(x) = \Phi_{\log}(x) := \frac{x/2}{\sin(x/2)} - 1$ and
+\[
+Z(\cA; x) = \exp\bigl(\kappa(\cA)\,\Phi_{\log}(x)\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+Write $Z_z(x)$ for the value of~$Z$ at an object of scalar
+characteristic~$z$.  Multiplicativity gives
+$Z_{z+w}(x) = Z_z(x)\, Z_w(x)$.  Setting
+$f_z(x) := \log Z_z(x) \in x^2\mathbb{C}[[x^2]]$ yields
+$f_{z+w}(x) = f_z(x) + f_w(x)$.  Expanding formally,
+$f_z(x) = \sum_{n \geq 0} c_n(x)\, z^n$; the additive functional
+equation forces $c_n = 0$ for $n \neq 1$, giving
+$f_z(x) = z\,\Psi(x)$ for a unique~$\Psi$.  The final statement
+follows from the scalar genus formula
+(Theorem~\ref{thm:modular-characteristic}).
+\end{proof}
+
+\begin{remark}[Self-dual anomaly neutrality]
+\label{rem:self-dual-anomaly-neutrality}
+\index{self-duality!anomaly neutrality}
+If $\cA \simeq \cA^!$, then $\kappa(\cA) = -\kappa(\cA)$ (by the
+anti-symmetry $\kappa(\cA^!) = -\kappa(\cA)$ of
+Theorem~\ref{thm:modular-characteristic}), forcing $\kappa(\cA) = 0$
+and $F_g(\cA) = 0$ for all $g \geq 1$.  The scalar logarithm of a
+self-dual chiral algebra vanishes identically.  This is consistent with
+the critical self-duality point $c = 13$ for the Virasoro algebra
+(where $\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$) and with the
+complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}).
+\end{remark}
+
+\medskip
+
+\noindent\textbf{The platonic hierarchy.}\enspace
+The results of this subsection organize the categorical logarithm at
+the deformation-theoretic level into five steps, each resolving a
+na\"ive expectation.
+
+\begin{theorem}[Five-step hierarchy of the categorical logarithm;
+\ClaimStatusProvedHere]
+\label{thm:platonic-hierarchy-log}
+\index{categorical logarithm!five-step hierarchy}
+Assume the Whitehead decomposition and the scalar genus formula
+(Chapter~\ref{chap:higher-genus}).  Then the deformation theory of the
+categorical logarithm organizes itself as follows.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Logarithmic linearization.}  The bar construction is the
+categorical logarithm
+$\log^{\mathrm{cat}}(\cA) = \barB_X(\cA)$ and the cobar construction
+is the categorical exponential
+$\exp^{\mathrm{cat}}(\mathcal{C}) = \Omega_X(\mathcal{C})$.  The four
+main theorems are existence, local inversion, branch structure, and
+leading coefficient for this logarithm.
+
+\item \emph{Scalar package.}  On the scalar-saturated locus the entire
+scalar genus tower is governed by a single characteristic
+number~$\kappa(\cA)$, equivalently by the scalar logarithm
+\[
+\kappa(\cA)\left(\frac{x/2}{\sin(x/2)} - 1\right).
+\]
+The exponential
+$\exp\bigl(\kappa(\cA)\, \Phi_{\log}(x)\bigr)$ is the unique
+multiplicative genus factoring through~$\kappa$
+\textup{(}Theorem~\textup{\ref{thm:classification-scalar-genera})}.
+
+\item \emph{Vanishing of the linear frontier.}  For every honest
+one-parameter level family, the Kodaira--Spencer class is
+cohomologically central:
+$l_2^{\mathrm{tr}}(\eta, -) = 0$
+\textup{(}Theorem~\textup{\ref{thm:ks-centrality})}.  There is no
+first-order non-scalar obstruction along the scalar branch.
+
+\item \emph{First non-scalar invariant: the $\eta$-Hessian.}
+The first genuine departure from scalarity is the $\eta$-Hessian
+$H_{\eta,\cA}(u,v) = l_3^{\mathrm{tr}}(\eta, u, v)$, and the first
+non-scalar branch is governed by the quadratic cone
+$B_{\kappa,\cA}(y,y) = 0$
+\textup{(}Theorem~\textup{\ref{thm:quadratic-frontier}},
+Definition~\textup{\ref{def:eta-hessian})}.
+
+\item \emph{Actual frontier.}  In semisimple admissible highest-weight
+sectors the primitive cohomology still vanishes
+\textup{(}Theorem~\textup{\ref{thm:admissible-scalar-rigidity})}, so
+the first family carrying genuine non-scalar data must be
+nonsemisimple admissible.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts~(i)--(ii) are the scalar genus formula repackaged by
+Definition~\ref{def:categorical-log-exp} and
+Theorem~\ref{thm:classification-scalar-genera}.  Part~(iii) is
+Theorem~\ref{thm:ks-centrality}.  Part~(iv) is
+Theorem~\ref{thm:quadratic-frontier} and
+Definition~\ref{def:eta-hessian}.  Part~(v) is
+Theorem~\ref{thm:admissible-scalar-rigidity} and
+Corollary~\ref{cor:ds-not-first-frontier}.
+\end{proof}
+
+\begin{remark}[Connection to the shadow Postnikov tower]
+\label{rem:eta-hessian-shadow-tower}
+\index{shadow Postnikov tower!$\eta$-Hessian}
+The $\eta$-Hessian $H_{\eta,\cA}$ is the first non-scalar shadow in
+the Postnikov tower $\Theta_\cA^{\leq r}$
+(Definition~\ref{def:shadow-postnikov-tower}).  At the scalar level
+($r = 2$), the tower is determined by $\kappa(\cA)$.  The quadratic
+frontier tensor $B_{\kappa,\cA}$ records exactly the arity-$3$
+correction: the transferred ternary bracket with one $\eta$-input.
+The hierarchy $\kappa \to H_{\eta,\cA} \to \cdots$ is the
+leading-term expansion of the full shadow tower, and the
+$\eta$-Hessian is the first invariant that the scalar characteristic
+does not see.  Beyond the quadratic level, the tower continues with
+the quartic resonance class $Q^{\mathrm{contact}}_\cA$
+and higher shadows, as developed in
+Chapter~\ref{chap:higher-genus-modular}.
+\end{remark}
+
+\begin{remark}[Computing the first non-scalar frontier]
+\label{rem:computing-first-frontier}
+\index{eta-Hessian@$\eta$-Hessian!computation procedure}
+The practical recipe for detecting the first non-scalar branch is:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Build a dg Lie or cyclic $L_\infty$ model $C_k$ for
+  $\Defcyc(\cA_k)$ with fixed underlying graded space and explicit
+  $k$-dependence in the Maurer--Cartan element.
+\item Compute
+  $\mathcal{P}_{\cA_k} = H^2_{\mathrm{cyc,prim}}(\cA_k)$; if it
+  vanishes, the family remains scalar-saturated.
+\item Choose a contraction onto
+  $\mathcal{P}_{\cA_k} \oplus \mathbb{C}\eta_k$ and evaluate the
+  transferred ternary tree formula
+  (Proposition~\ref{prop:eta-hessian-transfer}) to obtain
+  $H_{\eta_k, \cA_k}$.
+\item Form $B_{\kappa,\cA_k}
+  = l_2^{\mathrm{tr}} + \kappa(\cA_k)\, H_{\eta_k, \cA_k}$ and solve
+  the quadratic cone $B_{\kappa,\cA_k}(y,y) = 0$.
+\end{enumerate}
+This is the exact analogue of computing the Hessian of a singularity
+once the linear term has been killed.  One does not need the full
+nonlinear theory; the frontier is detected by a single transferred
+ternary bracket.
+\end{remark}
+
 % ================================================================
 % ČECH RESOLUTION AND HOMOTOPY CHIRAL ALGEBRAS
 % ================================================================
@@ -3621,3 +4276,730 @@ genus-$g$ bar curvature $\kappa(\cA) \cdot \omega_g$.  The
 combinatorial window into the modular tower of obstructions
 $\Theta_\cA^{\leq r}$.
 \end{example}
+
+%% ===================================================================
+%% Casimir invariants and the divisor-core lattice
+%% ===================================================================
+
+\section{Casimir invariants and the divisor-core lattice}
+\label{sec:casimir-divisor-core}
+\index{Casimir invariants!divisor-core lattice}
+\index{divisor-core lattice}
+
+The bar cohomology $H^\bullet(\barBch(\cA))$ carries a natural
+action of the Casimir algebra~$Z_\cA$---the center of the
+universal enveloping algebra, generated by the rank-$r$ Casimir
+operators $C_1,\ldots,C_r$ together with the level
+operator~$K$.  This action is visible already in the explicit
+tables of Chapter~\ref{chap:bar-tables}: the Betti numbers
+$\dim H^n(\barBch(\cA))$ satisfy a linear recurrence whose
+characteristic polynomial is the spectral discriminant~$\Delta_\cA(x)$.
+The eigenvalue structure of the Casimir action organizes the
+bar cohomology into a \emph{divisor lattice}---the same lattice
+that classifies submodules of cyclic $k[t]$-modules.  Transport
+between algebras related by exact functors (Drinfeld--Sokolov
+reduction, quantum Hamiltonian reduction, level-rank duality)
+factors through the greatest common divisor of their recurrence
+polynomials.  This is where the algebraic formalism of Koszul
+duality makes contact with the classical Jordan normal form.
+
+\medskip
+
+The section is organized as follows.  We first develop the pure
+algebra of cyclic transport objects and divisor cores
+(\S\ref{subsec:cyclic-transport-objects}--\ref{subsec:hom-gcd-factorization}),
+then apply the theory to bar cohomology
+(\S\ref{subsec:casimir-recurrence-module}--\ref{subsec:sector-determinant}),
+and close with the common-core transport theorem and its
+implications for the Drinfeld--Sokolov correspondence
+(\S\ref{subsec:common-core-transport}--\ref{subsec:casimir-frontier}).
+
+\subsection{Cyclic transport objects and divisor cores}
+\label{subsec:cyclic-transport-objects}
+
+Throughout this section, $k$ denotes a field of
+characteristic~$0$.
+
+\begin{definition}[Universal cyclic transport object]
+\label{def:cyclic-transport-object}
+\index{cyclic transport object}
+Let $p(t) \in k[t]$ be monic of degree~$d$.  The \emph{cyclic
+transport object} attached to~$p$ is the $k[t]$-module
+\[
+M(p) \;:=\; k[t]/(p).
+\]
+Multiplication by~$t$ defines the shift endomorphism
+$T_p \colon M(p) \to M(p)$, $T_p([f]) = [tf]$.  The module
+$M(p)$ satisfies the evident universal property: every
+finite-dimensional cyclic $k[t]$-module annihilated by~$p$ is
+a quotient of~$M(p)$, and the quotient is an isomorphism
+precisely when $p$~is the minimal polynomial.
+\end{definition}
+
+\begin{definition}[Divisor core]
+\label{def:divisor-core}
+\index{divisor core}
+Let $p(t) \in k[t]$ be monic and $g \mid p$ a monic divisor.
+The \emph{divisor core} associated to~$g$ is the submodule
+\[
+\mathcal{C}_g(p)
+  \;:=\;
+  (p/g)\,M(p)
+  \;\subset\; M(p).
+\]
+\end{definition}
+
+The divisor core is the canonical embedding of the
+$g$-factor into the ambient module.  The key theorem is that
+divisor cores account for \emph{all} submodules, and that
+their lattice structure mirrors the divisor lattice of~$p$.
+
+\begin{theorem}[Divisor-core calculus; \ClaimStatusProvedHere]
+\label{thm:divisor-core-calculus-inv}
+\index{divisor-core calculus}
+Let $p \in k[t]$ be monic, and let $g,g_1,g_2 \mid p$ be monic
+divisors.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Canonical identification.)} There is a canonical
+  isomorphism of $k[t]$-modules
+  \[
+    \mathcal{C}_g(p) \;\cong\; k[t]/(g).
+  \]
+\item \textup{(Short exact sequence.)} The inclusion
+  $\mathcal{C}_g(p) \hookrightarrow M(p)$ fits into a canonical
+  short exact sequence
+  \[
+    0 \longrightarrow \mathcal{C}_g(p)
+      \longrightarrow M(p)
+      \longrightarrow k[t]/(p/g)
+      \longrightarrow 0.
+  \]
+\item \textup{(Lattice identities.)} The divisor cores satisfy
+  \begin{align*}
+    \mathcal{C}_{g_1}(p) \cap \mathcal{C}_{g_2}(p)
+      &= \mathcal{C}_{\gcd(g_1,g_2)}(p), \\
+    \mathcal{C}_{g_1}(p) + \mathcal{C}_{g_2}(p)
+      &= \mathcal{C}_{\operatorname{lcm}(g_1,g_2)}(p).
+  \end{align*}
+\item \textup{(Idempotent splitting criterion.)} The following
+  are equivalent:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item $\mathcal{C}_g(p)$ is the image of an idempotent
+      polynomial in~$T_p$;
+    \item $M(p) \cong \mathcal{C}_g(p) \oplus k[t]/(p/g)$;
+    \item $\gcd(g, p/g) = 1$.
+  \end{enumerate}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For~(i), the map $k[t] \to \mathcal{C}_g(p)$ defined by
+$f \mapsto f \cdot (p/g) \bmod p$ descends to a surjection
+$k[t]/(g) \twoheadrightarrow \mathcal{C}_g(p)$.  If
+$f \cdot (p/g) \equiv 0 \pmod{p}$, then $p \mid f(p/g)$;
+since $p = g \cdot (p/g)$ and $k[t]$ is a domain,
+$g \mid f$.  Hence the kernel is~$(g)$ and the map is an
+isomorphism.
+
+For~(ii), the quotient $M(p) \twoheadrightarrow k[t]/(p/g)$
+has kernel $\{[f] : (p/g) \mid f \bmod p\} = \mathcal{C}_g(p)$.
+
+For~(iii), the intersection and sum of ideals in a PID yield
+$\operatorname{lcm}$ and $\gcd$ respectively; the stated
+lattice identities follow by the correspondence
+$\mathcal{C}_g(p) = (p/g)/(p)$.
+
+For~(iv), a direct-sum splitting of~(ii) exists if and only if
+the Chinese remainder theorem applies, which holds precisely
+when $(g)$ and~$(p/g)$ are comaximal, i.e.\ $\gcd(g,p/g)=1$.
+\end{proof}
+
+\begin{corollary}[Divisors classify submodules; \ClaimStatusProvedHere]
+\label{cor:divisors-classify-submodules-inv}
+Every submodule of $M(p)$ is of the form $\mathcal{C}_g(p)$
+for a unique monic divisor $g \mid p$.  The lattice of
+submodules of $M(p)$ is anti-isomorphic to the divisor lattice
+of~$p$.
+\end{corollary}
+
+\begin{proof}
+Submodules of $k[t]/(p)$ correspond to ideals $(a)$ with
+$(p) \subseteq (a) \subseteq k[t]$.  Since $k[t]$ is a PID,
+$a$~is a monic divisor of~$p$.  Setting $g = p/a$ gives
+$\mathcal{C}_g(p)$.
+\end{proof}
+
+\begin{remark}[The first structural correction]
+\label{rem:first-structural-correction}
+A factor $g \mid p$ always defines a canonical submodule of
+$M(p)$.  It defines a canonical \emph{projector} only when
+$\gcd(g,p/g) = 1$.  When this coprimality fails---that is,
+when the divisor shares roots with its complement---the
+submodule is canonically embedded but not idempotently split.
+The extension class $\operatorname{Ext}^1(k[t]/(p/g),\,
+\mathcal{C}_g(p))$ that prevents the splitting is the
+algebraic shadow of a genuine Jordan block.
+\end{remark}
+
+\subsection{Hom~\texorpdfstring{$=$}{=}~gcd and factorization
+  through common cores}
+\label{subsec:hom-gcd-factorization}
+
+\begin{theorem}[\texorpdfstring{$\operatorname{Hom} =
+  \gcd$}{Hom = gcd}; \ClaimStatusProvedHere]
+\label{thm:hom-equals-gcd-inv}
+\index{Hom = gcd}
+Let $p,q \in k[t]$ be monic, and set $g = \gcd(p,q)$.  Then
+\[
+\operatorname{Hom}_{k[t]}\!\bigl(M(p),\,M(q)\bigr)
+  \;\cong\; k[t]/(g).
+\]
+In particular,
+$\dim_k\operatorname{Hom}_{k[t]}(M(p),M(q)) = \deg g$.
+\end{theorem}
+
+\begin{proof}
+A $k[t]$-linear map $f \colon M(p) \to M(q)$ is determined by
+$x := f(1) \in M(q)$, subject to $p \cdot x = 0$ in~$M(q)$,
+i.e.\ $q \mid px$.  Write $p = gp'$, $q = gq'$ with
+$\gcd(p',q') = 1$.  Then $q \mid px$ becomes $q' \mid p'x$,
+and coprimality forces $q' \mid x$.  Hence the space of
+allowed images is $(q')/(gq') \cong k[t]/(g)$.
+\end{proof}
+
+\begin{theorem}[Universal factorization through the common
+  core; \ClaimStatusProvedHere]
+\label{thm:factorization-through-common-core-inv}
+\index{common core!factorization}
+Let $p,q \in k[t]$ be monic, $g = \gcd(p,q)$, and write
+$\pi_p \colon M(p) \twoheadrightarrow M(g)$ for the canonical
+quotient and $\iota_q \colon M(g) \hookrightarrow M(q)$ for
+the inclusion onto the divisor core $\mathcal{C}_g(q)$.  Then
+every $k[t]$-linear map $f \colon M(p) \to M(q)$ factors
+uniquely as
+\[
+f \;=\; \iota_q \circ m_u \circ \pi_p
+\]
+for a unique class $u \in M(g)$, where
+$m_u \colon M(g) \to M(g)$ denotes multiplication by~$u$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:hom-equals-gcd-inv},
+$\operatorname{Hom}_{k[t]}(M(p),M(q)) \cong M(g)$.  The map
+$u \mapsto \iota_q \circ m_u \circ \pi_p$ is $k$-linear,
+injective (since $\pi_p$ is surjective and $\iota_q$ is
+injective), and both source and target have dimension
+$\deg g$; hence it is an isomorphism.
+\end{proof}
+
+\begin{remark}
+The theorem says that transport maps between cyclic spectral
+objects are \emph{never mysterious}: they are exactly
+multiplication operators on the maximal common core
+$M(\gcd(p,q))$.  The common divisor controls everything.
+\end{remark}
+
+\subsection{The Casimir recurrence module}
+\label{subsec:casimir-recurrence-module}
+\index{recurrence module}
+
+We now connect the abstract divisor-core theory to bar
+cohomology.
+
+\begin{hypothesis}[Finite-character recurrence]
+\label{hyp:finite-character-recurrence-inv}
+Let $\cA$ be a modular Koszul chiral algebra in the
+Lie-theoretic world, and write $Z_\cA = k[C_1,\ldots,C_r,K]$
+for the commutative Casimir algebra.  We assume:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Each $H^n(\barBch(\cA))$ has finite generalized
+  $Z_\cA$-support.
+\item The class sequence
+  $u_\cA(n) := [H^n(\barBch(\cA))] \in K_0(Z_\cA\text{-mod}_{\mathrm{fl}})
+  \otimes_{\mathbb{Z}} k$
+  satisfies a minimal monic shift recurrence
+  $p_\cA(\sigma)\,u_\cA = 0$
+  for some monic $p_\cA(t) \in k[t]$.
+\item The recurrence polynomial is the reversal of the
+  spectral discriminant:
+  $p_\cA(t) = t^{d_\cA}\Delta_\cA(t^{-1})$,
+  where $d_\cA = \deg\Delta_\cA$.
+\end{enumerate}
+\end{hypothesis}
+
+\noindent
+This hypothesis is verified for all standard families: the
+affine Kac--Moody algebras
+(\S\ref{sec:non-renormalization-tree}),
+the $\mathcal{W}$-algebras
+(Theorem~\ref{thm:ds-bar-gf-discriminant}),
+and the Virasoro algebra
+(Theorem~\ref{thm:discriminant-spectral}).
+
+\begin{definition}[Casimir recurrence module and
+  Kodaira--Spencer operator]
+\label{def:casimir-recurrence-module}
+\index{Kodaira--Spencer operator!Casimir}
+Under Hypothesis~\ref{hyp:finite-character-recurrence-inv},
+define the \emph{Casimir recurrence module}
+\[
+\mathcal{R}_\cA
+  \;:=\;
+  k[\sigma]\cdot u_\cA
+  \;\subset\;
+  \bigl(K_0(Z_\cA\text{-mod}_{\mathrm{fl}})
+    \otimes k\bigr)^{\mathbb{N}},
+\]
+and the \emph{algebraic reduced first cohomology}
+$H^{1,\mathrm{alg}}_{\mathrm{red}}(\cA)
+  := \mathcal{R}_\cA^\vee$.
+The \emph{Kodaira--Spencer operator} is the dual of the
+shift:
+\[
+KS_\cA \;:=\; \sigma^\vee
+  \;\in\;
+  \operatorname{End}\!\bigl(
+    H^{1,\mathrm{alg}}_{\mathrm{red}}(\cA)
+  \bigr).
+\]
+\end{definition}
+
+\begin{theorem}[Minimal intrinsic realization;
+\ClaimStatusProvedHere]
+\label{thm:minimal-intrinsic-realization-inv}
+Under Hypothesis~\ref{hyp:finite-character-recurrence-inv},
+$\mathcal{R}_\cA \cong k[t]/(p_\cA)$ as $k[t]$-modules.
+Consequently
+$\dim_k H^{1,\mathrm{alg}}_{\mathrm{red}}(\cA)
+  = d_\cA$,
+and the Kodaira--Spencer operator recovers the spectral
+discriminant:
+\begin{equation}\label{eq:ks-recovers-discriminant}
+\det(1 - x\,KS_\cA)
+  \;=\;
+  \Delta_\cA(x).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The $k[t]$-linear surjection
+$k[t] \twoheadrightarrow \mathcal{R}_\cA$ sending
+$f(t) \mapsto f(\sigma)\,u_\cA$ has kernel $(p_\cA)$ by
+minimality of the recurrence, so
+$\mathcal{R}_\cA \cong M(p_\cA)$.  The characteristic
+polynomial of~$T_{p_\cA}$ is~$p_\cA$, so
+$\det(1-x\,KS_\cA)
+  = x^{d_\cA}\,p_\cA(x^{-1})
+  = \Delta_\cA(x)$.
+\end{proof}
+
+\subsection{Sector determinant and Casimir reconstruction}
+\label{subsec:sector-determinant}
+\index{sector determinant}
+
+Every divisor $S(x) \mid \Delta_\cA(x)$ of the spectral
+discriminant produces a canonical finite-dimensional sector
+inside the Casimir recurrence module.
+
+\begin{definition}[Reduced spectral sector]
+\label{def:reduced-spectral-sector}
+Let $S(x) \mid \Delta_\cA(x)$ be a monic divisor, and set
+$s(t) := t^{\deg S}\,S(t^{-1})$.  The \emph{spectral sector
+of type~$S$} is the canonical subquotient
+\[
+H^{1,\mathrm{alg}}_S(\cA)
+  \;:=\;
+  \bigl(\mathcal{C}_s(p_\cA)\bigr)^\vee.
+\]
+\end{definition}
+
+\begin{theorem}[Sector determinant; \ClaimStatusProvedHere]
+\label{thm:sector-determinant-inv}
+For every divisor $S \mid \Delta_\cA$, the dual of the
+$S$-sector satisfies
+$(\,H^{1,\mathrm{alg}}_S(\cA)\,)^\vee
+  \cong k[t]/(s)$,
+and the induced endomorphism $KS_{\cA,S}$ satisfies
+\[
+\det(1 - x\,KS_{\cA,S}) \;=\; S(x).
+\]
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:divisor-core-calculus-inv}(i),
+$\mathcal{C}_s(p_\cA) \cong k[t]/(s)$; the determinant
+identity follows exactly as in
+Theorem~\ref{thm:minimal-intrinsic-realization-inv}.
+\end{proof}
+
+\begin{theorem}[Casimir moment reconstruction;
+\ClaimStatusProvedHere]
+\label{thm:casimir-moment-reconstruction-inv}
+\index{Casimir moment reconstruction}
+Suppose the generalized $Z_\cA$-spectrum occurring in
+$H^n(\barBch(\cA))$ is eventually contained in a finite set
+$\Xi_\cA = \{\chi_1,\ldots,\chi_s\}$.  Choose
+$Q \in Z_\cA$ separating~$\Xi_\cA$ \textup{(}a generic
+linear combination of Casimirs suffices over an infinite
+field\textup{)}, and write $q_i = \chi_i(Q)$.  Then the
+scalar moment sequences
+\[
+\tau_m(n) \;:=\;
+  \operatorname{Tr}\!\bigl(
+    Q^m \mid H^n(\barBch(\cA))
+  \bigr),
+\qquad 0 \leq m \leq s-1,
+\]
+determine the multiplicity vector of generalized characters
+at each degree~$n$ via the Vandermonde inversion
+$m(n) = V^{-1}\tau(n)$.  In particular, the full recurrence
+module $\mathcal{R}_\cA$ is recoverable from finitely many
+scalar Casimir traces.
+\end{theorem}
+
+\begin{proof}
+On the generalized $\chi_i$-block, $Q$ acts as
+$q_i\,I + N_i$ with $N_i$ nilpotent, so
+$\operatorname{Tr}(Q^m \mid V_{\chi_i})
+  = q_i^m\dim V_{\chi_i}$.
+The moment vector $\tau(n)$ is related to the multiplicity
+vector $m(n)$ by the Vandermonde matrix
+$(q_i^m)_{m,i}$, which is invertible because the~$q_i$ are
+distinct.
+\end{proof}
+
+\subsection{Primary Jordan filtration}
+\label{subsec:primary-jordan}
+\index{Jordan filtration!primary}
+
+The divisor-core lattice refines to a Jordan filtration at
+each irreducible factor of the recurrence polynomial.  This
+is where repeated roots of the discriminant reveal their
+geometric content.
+
+\begin{theorem}[Primary Jordan filtration;
+\ClaimStatusProvedHere]
+\label{thm:primary-jordan-filtration-inv}
+Let $q$ be an irreducible factor of $p_\cA$ and set
+$n = \nu_q(p_\cA)$.  Then the primary divisor cores
+$\mathcal{J}_q^m(p_\cA) := \mathcal{C}_{q^m}(p_\cA)$,
+$1 \leq m \leq n$, form a canonical chain
+\[
+0 \;\subset\;
+  \mathcal{J}_q^1(p_\cA) \;\subset\;
+  \mathcal{J}_q^2(p_\cA) \;\subset\;
+  \cdots \;\subset\;
+  \mathcal{J}_q^n(p_\cA)
+  \;\subset\; M(p_\cA),
+\]
+with successive quotients
+$\mathcal{J}_q^m / \mathcal{J}_q^{m-1} \cong k[t]/(q)$.
+If $q = t - \lambda$ splits linearly over~$k$, then
+$T_{p_\cA} - \lambda$ acts on $\mathcal{J}_{t-\lambda}^m$
+by a single Jordan block of size~$m$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:divisor-core-calculus-inv}(i),
+$\mathcal{J}_q^m(p_\cA) \cong k[t]/(q^m)$.  The successive
+quotient $k[t]/(q^m) \big/ q^{m-1}k[t]/(q^m) \cong k[t]/(q)$.
+For $q = t-\lambda$, set $\tau = t-\lambda$; then $t$ acts as
+$\lambda + \tau$ on $k[\tau]/(\tau^m)$, and $\tau$ is the
+standard nilpotent Jordan shift.
+\end{proof}
+
+\begin{corollary}[Repeated roots encode extension data;
+\ClaimStatusProvedHere]
+\label{cor:repeated-roots-extension-data}
+If $g \mid p_\cA$ shares a nontrivial common factor with
+$p_\cA/g$, then $\mathcal{C}_g(p_\cA)$ is canonical but not
+idempotently split.  Repeated roots of the spectral
+discriminant encode genuine extension classes in bar
+cohomology, not idempotently removable bookkeeping.
+\end{corollary}
+
+\subsection{Common-core transport between algebras}
+\label{subsec:common-core-transport}
+\index{common core!transport}
+
+The common-core theorem is the structural heart of the
+section: it controls what exact functors between chiral
+algebras can see at the level of the spectral discriminant.
+
+Let $\cA$ and~$\mathcal{B}$ both satisfy
+Hypothesis~\ref{hyp:finite-character-recurrence-inv}, with
+recurrence polynomials $p_\cA$ and~$p_\mathcal{B}$.  Write
+$g_{\cA,\mathcal{B}} = \gcd(p_\cA, p_\mathcal{B})$.
+
+\begin{definition}[Maximal common transport core]
+\label{def:maximal-common-core}
+\index{common core!maximal}
+The \emph{maximal common transport core} is the module
+$\mathcal{C}^{\max}_{\cA,\mathcal{B}}
+  := M(g_{\cA,\mathcal{B}})
+  = k[t]/(g_{\cA,\mathcal{B}})$.
+\end{definition}
+
+\begin{theorem}[Common-core exact sequences;
+\ClaimStatusProvedHere]
+\label{thm:common-core-exact-sequences-inv}
+There are canonical short exact sequences
+\begin{align*}
+0 \to \mathcal{C}^{\max}_{\cA,\mathcal{B}}
+  &\longrightarrow \mathcal{R}_\cA
+  \longrightarrow k[t]/(p_\cA/g_{\cA,\mathcal{B}})
+  \longrightarrow 0, \\[4pt]
+0 \to \mathcal{C}^{\max}_{\cA,\mathcal{B}}
+  &\longrightarrow \mathcal{R}_\mathcal{B}
+  \longrightarrow k[t]/(p_\mathcal{B}/g_{\cA,\mathcal{B}})
+  \longrightarrow 0.
+\end{align*}
+The quotient modules
+$k[t]/(p_\cA/g_{\cA,\mathcal{B}})$ and
+$k[t]/(p_\mathcal{B}/g_{\cA,\mathcal{B}})$
+are the \emph{spectral defects}: they measure what each
+algebra carries that the other cannot see.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:divisor-core-calculus-inv}(ii) with
+$g = g_{\cA,\mathcal{B}}$ to each of the recurrence modules
+$\mathcal{R}_\cA \cong M(p_\cA)$ and
+$\mathcal{R}_\mathcal{B} \cong M(p_\mathcal{B})$.
+\end{proof}
+
+\begin{proposition}[Transport factors through the common core;
+\ClaimStatusProvedHere]
+\label{prop:transport-factors-inv}
+Every $k[t]$-linear map
+$F \colon \mathcal{R}_\cA \to \mathcal{R}_\mathcal{B}$
+factors uniquely as
+\[
+\mathcal{R}_\cA
+  \twoheadrightarrow
+  \mathcal{C}^{\max}_{\cA,\mathcal{B}}
+  \xrightarrow{\;m_u\;}
+  \mathcal{C}^{\max}_{\cA,\mathcal{B}}
+  \hookrightarrow
+  \mathcal{R}_\mathcal{B}
+\]
+for a unique $u \in \mathcal{C}^{\max}_{\cA,\mathcal{B}}$.
+Equivalently, every shift-compatible transport between the
+algebraic reduced cohomologies is governed by multiplication
+on the maximal common core.
+\end{proposition}
+
+\begin{proof}
+Combine
+Theorem~\ref{thm:minimal-intrinsic-realization-inv} with
+Theorem~\ref{thm:factorization-through-common-core-inv}.
+\end{proof}
+
+\subsection{The \texorpdfstring{$\widehat{\mathfrak{sl}}_3$
+  versus $W_3$}{sl3-hat vs W3} common core}
+\label{subsec:sl3-w3-example}
+\index{sl3hat versus W3@$\widehat{\mathfrak{sl}}_3$ versus $W_3$!common core}
+
+The first nontrivial example is the Drinfeld--Sokolov pair
+$(\widehat{\mathfrak{sl}}_3,\,W_3)$, where the common core
+is strictly smaller than either recurrence module.  For the
+rank-one pair $(\widehat{\mathfrak{sl}}_2,\,
+\mathrm{Vir})$, both algebras share
+$\Delta(x) = (1-3x)(1+x)$
+(cf.~Theorem~\ref{thm:discriminant-spectral}), so the
+common core is the entire transport module and the theory
+degenerates.  The first rank where nontrivial defects appear
+is rank~$2$.
+
+The standard rational predictions
+(Theorem~\ref{thm:ds-bar-gf-discriminant}) give
+\begin{align*}
+\Delta_{\widehat{\mathfrak{sl}}_3}(x)
+  &= (1-8x)(1-3x-x^2), \\
+\Delta_{W_3}(x)
+  &= (1-x)(1-3x-x^2),
+\end{align*}
+with reversed recurrence polynomials
+\begin{align*}
+p_{\widehat{\mathfrak{sl}}_3}(t)
+  &= (t-8)(t^2-3t-1), \\
+p_{W_3}(t)
+  &= (t-1)(t^2-3t-1).
+\end{align*}
+The maximal common core is the two-dimensional module
+\[
+\mathcal{C}^{\max}_{\widehat{\mathfrak{sl}}_3,\,W_3}
+  \;\cong\;
+  k[t]/(t^2-3t-1),
+\]
+with eigenvalues
+$(3 \pm \sqrt{13})/2$.
+
+\begin{proposition}[Exact defect decomposition;
+\ClaimStatusProvedHere]
+\label{prop:sl3-w3-defect-inv}
+The common-core exact sequences of
+Theorem~\ref{thm:common-core-exact-sequences-inv} take the
+form
+\begin{align*}
+0 \to k[t]/(t^2{-}3t{-}1)
+  &\longrightarrow k[t]/\bigl((t{-}8)(t^2{-}3t{-}1)\bigr)
+  \longrightarrow k[t]/(t{-}8)
+  \longrightarrow 0, \\[2pt]
+0 \to k[t]/(t^2{-}3t{-}1)
+  &\longrightarrow k[t]/\bigl((t{-}1)(t^2{-}3t{-}1)\bigr)
+  \longrightarrow k[t]/(t{-}1)
+  \longrightarrow 0.
+\end{align*}
+The one-dimensional defect modules $k[t]/(t-8)$ and
+$k[t]/(t-1)$ record the non-preserved dominant modes:
+eigenvalue~$8$ for
+$\widehat{\mathfrak{sl}}_3$ and eigenvalue~$1$ for~$W_3$.
+\end{proposition}
+
+\begin{proposition}[Explicit coprime-locus projectors;
+\ClaimStatusProvedHere]
+\label{prop:sl3-w3-projectors}
+Since $\gcd(t^2-3t-1,\, t-8) = \gcd(t^2-3t-1,\, t-1) = 1$,
+the common quadratic sector splits idempotently on both sides.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For $\widehat{\mathfrak{sl}}_3$: the B\'{e}zout identity
+  \[
+    \tfrac{1}{39}(t^2-3t-1) - \tfrac{t+5}{39}(t-8) = 1
+  \]
+  gives the projector onto the common core
+  \[
+    P^{\mathrm{core}}_{\widehat{\mathfrak{sl}}_3}
+      \;=\; -\tfrac{1}{39}(T+5I)(T-8I).
+  \]
+\item For $W_3$: the B\'{e}zout identity
+  \[
+    -\tfrac{1}{3}(t^2-3t-1) + \tfrac{t-2}{3}(t-1) = 1
+  \]
+  gives the projector
+  \[
+    P^{\mathrm{core}}_{W_3}
+      \;=\; \tfrac{1}{3}(T-2I)(T-I).
+  \]
+\end{enumerate}
+Each projected image has characteristic polynomial
+$t^2-3t-1$, hence eigenvalues $(3 \pm \sqrt{13})/2$.  The
+projectors intertwine with Drinfeld--Sokolov reduction on
+the common core.
+\end{proposition}
+
+\begin{proof}
+Both B\'{e}zout identities are verified by direct expansion.
+The projectors are instances of the coprime-locus functional
+calculus: if $\gcd(g,p/g)=1$ and $a(t)g(t)+b(t)(p/g)(t)=1$,
+then $e_g(T)=b(T)(p/g)(T)$ is idempotent with image the
+$g$-summand in the Chinese remainder decomposition
+$k[t]/(p) \cong k[t]/(g) \oplus k[t]/(p/g)$.
+\end{proof}
+
+\begin{remark}[Why rank one is deceptive]
+\label{rem:rank-one-deceptive}
+For the $\widehat{\mathfrak{sl}}_2/\mathrm{Vir}$
+correspondence, the recurrence polynomials coincide:
+$p_{\widehat{\mathfrak{sl}}_2} = p_{\mathrm{Vir}}
+  = (t-3)(t+1)$.
+The common core is the entire module, both defect modules
+vanish, and every divisor is coprime to its complement.
+\emph{Nothing} in this rank-one picture prepares the reader
+for the Jordan and defect phenomena that appear as soon as
+the common factor becomes proper.  The
+$\widehat{\mathfrak{sl}}_3/W_3$ pair is the first honest
+example.
+\end{remark}
+
+\subsection{The geometric frontier}
+\label{subsec:casimir-frontier}
+\index{divisor-core lattice!geometric frontier}
+
+The algebra developed above corrects four overstatements
+natural on first encounter:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The discriminant is \emph{not} the final transport
+  object; it is the characteristic polynomial of the final
+  object.
+\item A divisor of the discriminant does \emph{not} in general
+  produce a projector; it produces a canonical subquotient.
+\item Repeated roots are \emph{not} a pathology to be deformed
+  away; they are the source of genuine indecomposable
+  transport sectors.
+\item Drinfeld--Sokolov transport in rank $\geq 2$ is
+  \emph{not} full operator similarity; the corrected
+  invariant is the common divisor-core.
+\end{enumerate}
+
+We record the conjectural geometric lifts.
+
+\begin{conjecture}[Geometric divisor-core lift;
+\ClaimStatusConjectured]
+\label{conj:geometric-divisor-core-lift-inv}
+\index{geometric divisor-core lift}
+For every modular Koszul chiral algebra~$\cA$, there exists a
+natural finite-dimensional subquotient
+$H^1_{\mathrm{red}}(\cA)$ of $H^1(\barBch(\cA))$, together
+with an endomorphism
+$KS_\cA \in
+  \operatorname{End}(H^1_{\mathrm{red}}(\cA))$,
+such that:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $(H^1_{\mathrm{red}}(\cA))^\vee \cong \mathcal{R}_\cA$
+  as $k[t]$-modules;
+\item for every $S \mid \Delta_\cA$, there is a canonical
+  subquotient $H^1_S(\cA) \subset H^1_{\mathrm{red}}(\cA)$
+  with $(H^1_S(\cA))^\vee \cong \mathcal{C}_s(p_\cA)$;
+\item these sectors satisfy the lattice identities of
+  Theorem~\ref{thm:divisor-core-calculus-inv};
+\item an idempotent splitting of $H^1_S(\cA)$ exists if and
+  only if $\gcd(S,\,\Delta_\cA/S) = 1$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{conjecture}[Jordan-lift conjecture;
+\ClaimStatusConjectured]
+\label{conj:jordan-lift-inv}
+\index{Jordan-lift conjecture}
+Let $q$ be an irreducible factor of $p_\cA$.  For each
+$1 \leq m \leq \nu_q(p_\cA)$, the primary divisor core
+$\mathcal{J}_q^m(p_\cA)$ lifts to a canonical filtered
+subquotient
+\[
+0 \;\subset\;
+  H^1_{q,1}(\cA) \;\subset\;
+  \cdots \;\subset\;
+  H^1_{q,m}(\cA)
+  \;\subset\;
+  H^1_{\mathrm{red}}(\cA)
+\]
+whose successive quotients realize the $q$-primary Jordan
+filtration geometrically.  When $q = t-\lambda$ splits
+linearly, the nilpotent operator $KS_\cA - \lambda$ on this
+sector realizes the Jordan block directly on reduced bar
+cohomology.
+\end{conjecture}
+
+\begin{remark}[Position in the monograph]
+\label{rem:casimir-position}
+The Casimir recurrence module $\mathcal{R}_\cA$ sits at the
+$L_2$~level of the characteristic hierarchy
+(cf.~the concordance, \S\ref{sec:concordance-frontier}): the
+scalar level~$L_1$ is the modular
+characteristic~$\kappa(\cA)$
+(Theorem~\ref{thm:kappa-universality}), while $L_2$ is the
+spectral discriminant~$\Delta_\cA$ together with its module
+structure.  The passage from $\Delta_\cA$ as a polynomial to
+$\mathcal{R}_\cA$ as a module is exactly the categorification
+step that the shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}) anticipates at
+the scalar level: the scalar shadow $\kappa$ is the decategorified
+trace of $\Theta_\cA^{\leq 2}$, and the spectral sheet is the
+decategorified trace of $\Theta_\cA^{\leq 3}$.  The divisor-core
+lattice lifts the trace to the module.  The next layer---the
+periodic table~$\Pi_\cA$ at $L_3$---should admit a similar
+refinement from generating function to multilinear transport
+object, but this lies beyond the present section.
+\end{remark}
