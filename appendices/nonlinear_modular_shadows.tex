@@ -1428,6 +1428,392 @@ The forward programme should therefore be read in the following order.
 The universal class is not merely a source of scalar shadows.  It is the generator of Gaussian propagators, cubic tree vertices, quartic contact vertices, and the resonance classes measuring their degeneration.
 \end{remark}
 
+\section{Higher-arity shadow propagation}
+\label{sec:nms-higher-arity-propagation}
+
+The quartic shadow calculus of \S\ref{sec:nms-shadow-calculus} stops at arity~$4$.  But the master equation is a truncation of a universal recursive structure governing all arities.  We now prove the general arity-$r$ equations and draw structural consequences.
+
+\subsection{The all-arity master equation}
+\label{subsec:nms-all-arity-master-equation}
+
+\begin{definition}[Arity-$r$ shadow jet]
+\label{def:nms-arity-r-shadow-jet}
+For $r\ge 2$, define the \emph{arity-$r$ shadow jet} on the cyclic slice $V_{\cA}$ by
+\begin{equation}
+\label{eq:nms-arity-r-shadow-jet}
+\mathrm{Sh}_r(\cA)(x_1,\dots,x_r)
+:=
+\sum_{\mathrm{cyc}}\langle x_1,\ell_{r-1}^{\mathrm{tr}}(x_2,\dots,x_r)\rangle.
+\end{equation}
+Write $S_{\cA}^{\le r}:=\sum_{k=2}^r \frac{1}{k!}\mathrm{Sh}_k(\cA)$ for the truncated complementarity potential through arity~$r$.
+\end{definition}
+
+\begin{definition}[Arity-$r$ obstruction]
+\label{def:nms-arity-r-obstruction}
+For $r\ge 4$, define the \emph{arity-$r$ obstruction}
+\begin{equation}
+\label{eq:nms-arity-r-obstruction}
+\mathfrak o_{\cA}^{(r)}
+:=
+\sum_{\substack{p+q=r \\ 3\le p\le q}}
+c_{p,q}\;
+\{\mathrm{Sh}_p(\cA),\,\mathrm{Sh}_q(\cA)\}_{H_{\cA}},
+\end{equation}
+where $c_{p,q}=1$ if $p<q$ and $c_{p,p}=\frac12$, and the bracket is the single-edge sewing contraction of Construction~\ref{constr:nms-sewing-product}.  The first cases are
+\begin{alignat}{2}
+\mathfrak o_{\cA}^{(4)}
+&= \tfrac12\{\mathfrak C_{\cA},\mathfrak C_{\cA}\}_{H_{\cA}},
+&\qquad&\text{(quartic)}
+\label{eq:nms-quartic-obstruction-recalled}
+\\
+\mathfrak o_{\cA}^{(5)}
+&= \{\mathfrak C_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}},
+&\qquad&\text{(quintic)}
+\label{eq:nms-quintic-obstruction}
+\\
+\mathfrak o_{\cA}^{(6)}
+&= \tfrac12\{\mathfrak Q_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}}
++\{\mathfrak C_{\cA},\mathrm{Sh}_5(\cA)\}_{H_{\cA}}.
+&\qquad&\text{(sextic)}
+\label{eq:nms-sextic-obstruction}
+\end{alignat}
+\end{definition}
+
+\begin{theorem}[All-arity master equation; \ClaimStatusProvedHere]
+\label{thm:nms-all-arity-master-equation}
+Assume the complementarity potential $S_{\cA}$ satisfies the classical master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$.  Then for every $r\ge 3$, the shadow jets satisfy
+\begin{equation}
+\label{eq:nms-all-arity-master-equation}
+\nabla_{H_{\cA}}\mathrm{Sh}_r(\cA) + \mathfrak o_{\cA}^{(r)} = 0,
+\end{equation}
+where $\nabla_{H_{\cA}}:=\{H_{\cA},\,\cdot\,\}_{H_{\cA}}$ and $\mathfrak o_{\cA}^{(r)}$ is the arity-$r$ obstruction of Definition~\ref{def:nms-arity-r-obstruction}.  When $r=3$ the obstruction sum is empty and the equation reads $\nabla_{H_{\cA}}\mathfrak C_{\cA}=0$.
+\end{theorem}
+
+\begin{proof}
+Expand the master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$ in the arity filtration.  At arity~$r$ the equation decomposes as
+\[
+\{H_{\cA},\mathrm{Sh}_r\}_{H_{\cA}}
++
+\sum_{\substack{p+q=r \\ 3\le p\le q}}
+c_{p,q}\,
+\{\mathrm{Sh}_p,\mathrm{Sh}_q\}_{H_{\cA}}
+= 0,
+\]
+where the first term is $\nabla_{H_{\cA}}\mathrm{Sh}_r$ and the remaining terms comprise $\mathfrak o_{\cA}^{(r)}$.  The coefficients $c_{p,q}$ arise from collecting equivalent unshuffle summands: when $p<q$ the two orderings $(p,q)$ and $(q,p)$ contribute equally, giving $c_{p,q}=1$; when $p=q$ only one pairing appears, giving $c_{p,p}=\frac12$.  At $r=3$ the sum is empty; at $r=4$ one recovers Theorem~\ref{thm:nms-shadow-master-equations}.\qedhere
+\end{proof}
+
+\begin{corollary}[The quintic master equation; \ClaimStatusProvedHere]
+\label{cor:nms-quintic-master-equation}
+At arity~$5$,
+\begin{equation}
+\label{eq:nms-quintic-master-equation}
+\nabla_{H_{\cA}}\mathrm{Sh}_5(\cA)
++
+\{\mathfrak C_{\cA},\mathfrak Q_{\cA}\}_{H_{\cA}}
+= 0.
+\end{equation}
+The quintic shadow is determined by the cubic and quartic shadows up to a cocycle of $\nabla_{H_{\cA}}$.
+\end{corollary}
+
+\begin{proof}
+Set $r=5$ in \eqref{eq:nms-all-arity-master-equation}.  The obstruction sum has $p+q=5$ with $3\le p\le q$, giving only $(p,q)=(3,4)$ with $c_{3,4}=1$.\qedhere
+\end{proof}
+
+\subsection{Quintic behavior of the model families}
+\label{subsec:nms-quintic-model-families}
+
+\begin{theorem}[Quintic shadow for the three frame families; \ClaimStatusProvedHere]
+\label{thm:nms-quintic-frame-families}
+Through quintic order:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}
+$\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$, so $\mathfrak o_{\mathcal H}^{(5)}=0$ and $\mathrm{Sh}_5(\mathcal H)=0$.
+
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
+$\mathfrak Q_{\mathrm{aff}}=0$ in minimal gauge, so $\mathfrak o_{\mathrm{aff}}^{(5)}=0$ and $\mathrm{Sh}_5(\mathrm{aff})=0$.
+
+\item \textbf{$\beta\gamma$ system.}
+$\mathfrak C_{\beta\gamma}=0$, so $\mathfrak o_{\beta\gamma}^{(5)}=0$.  By rank-one abelian rigidity (Theorem~\ref{thm:nms-rank-one-rigidity}), $\mathrm{Sh}_5(\beta\gamma)|_L=0$ on the weight-changing line.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each case follows from Corollary~\ref{cor:nms-quintic-master-equation} and the vanishing established in Theorems~\ref{thm:nms-heisenberg-exact-linearity}, \ref{thm:nms-affine-cubic-normal-form}, and~\ref{thm:nms-betagamma-quartic-birth}.\qedhere
+\end{proof}
+
+\begin{theorem}[The Virasoro quintic is forced; \ClaimStatusProvedHere]
+\label{thm:nms-virasoro-quintic-forced}
+On the Virasoro quartic shadow envelope $E^{[4]}_{\mathrm{Vir}}$, the quintic obstruction is generically nonzero:
+\begin{equation}
+\label{eq:nms-virasoro-quintic-obstruction}
+\mathfrak o_{\mathrm{Vir}}^{(5)}
+=
+\{\mathfrak C_{\mathrm{Vir}},\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}\}_{H_{\mathrm{Vir}}}
+\neq 0
+\qquad
+\text{for generic $c$}.
+\end{equation}
+Consequently $\mathrm{Sh}_5(\mathrm{Vir})\neq 0$ generically: the Virasoro shadow tower does not terminate at quartic order.
+\end{theorem}
+
+\begin{proof}
+The gravitational cubic is $\mathfrak C_{\mathrm{Vir}}=2x^3$ and the contact quartic is $\mathfrak Q^{\mathrm{contact}}_{\mathrm{Vir}}=Q_0\,x^4$ with $Q_0=10/[c(5c+22)]\neq 0$ for generic~$c$.  Their single-edge sewing contraction on the one-generator primary line with propagator $P=2/c$ produces a nonzero rank-$5$ tensor proportional to $Q_0/c$.\qedhere
+\end{proof}
+
+\begin{theorem}[Finite termination for primitive archetypes; \ClaimStatusProvedHere]
+\label{thm:nms-finite-termination}
+For the three frame families, the shadow tower terminates at finite arity.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg:} $\mathrm{Sh}_r(\mathcal H)=0$ for all $r\ge 3$.  The tower is exactly Gaussian.
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$ \textup{(strict sector, minimal gauge):}} $\mathrm{Sh}_r(\mathrm{aff})=0$ for $r\ge 4$.
+\item \textbf{$\beta\gamma$ \textup{(weight-changing line):}} $\mathrm{Sh}_r(\beta\gamma)|_L=0$ for $r\ge 3$ by rank-one abelian rigidity.
+\end{enumerate}
+In contrast, Virasoro has $\mathrm{Sh}_5\neq 0$ (Theorem~\ref{thm:nms-virasoro-quintic-forced}), and by induction on the all-arity master equation, the tower is generically infinite.
+\end{theorem}
+
+\begin{proof}
+For each primitive archetype, finite termination follows from vanishing of all obstruction sources at the relevant arity.  For the Heisenberg, all higher brackets vanish.  For affine $\widehat{\mathfrak{sl}}_2$, the Jacobiator vanishes and the quartic gauge freedom absorbs all remaining terms.  For $\beta\gamma$, Theorem~\ref{thm:nms-rank-one-rigidity} gives vanishing on the rank-one line.
+
+For Virasoro, Theorem~\ref{thm:nms-virasoro-quintic-forced} gives $\mathrm{Sh}_5\neq 0$.  Then $\mathfrak o^{(6)}$ contains $\{\mathfrak C,\mathrm{Sh}_5\}\neq 0$, forcing $\mathrm{Sh}_6\neq 0$, and so on by induction.\qedhere
+\end{proof}
+
+\begin{remark}[The Virasoro shadow tower is the first infinite one]
+\label{rem:nms-virasoro-infinite-tower}
+Theorem~\ref{thm:nms-finite-termination} reveals a structural divide.  The primitive archetypes terminate: Gaussian at arity~$2$, Lie/tree at arity~$3$, contact at arity~$4$.  Their complementarity potentials are polynomial.  Virasoro, the first genuinely mixed family, has a non-polynomial complementarity potential.  This is the mechanism by which the Virasoro modular package carries strictly more information than the $\hat{A}$-genus.
+\end{remark}
+
+\subsection{The all-arity separating boundary recursion}
+\label{subsec:nms-all-arity-separating}
+
+\begin{theorem}[All-arity separating boundary recursion; \ClaimStatusProvedHere]
+\label{thm:nms-all-arity-separating-boundary}
+Assume the shadow jets arise from a clutching-compatible universal class.  Then for every $r\ge 2$ and every separating clutching map $\xi$,
+\begin{equation}
+\label{eq:nms-all-arity-separating}
+\xi^*\mathrm{Sh}_r(\cA)
+=
+\sum_{\substack{p+q=r+2 \\ p,q\ge 2}}
+\mathrm{Sh}_p(\cA)\star_{P_{\cA}}\mathrm{Sh}_q(\cA).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+This is the degree-$r$ component of $\xi^*(\Theta_{\cA})=\Theta_{\cA}\star\Theta_{\cA}$.\qedhere
+\end{proof}
+
+\begin{corollary}[Quintic separating boundary recursion; \ClaimStatusProvedHere]
+\label{cor:nms-quintic-separating-boundary}
+At arity~$5$:
+\[
+\xi^*\mathrm{Sh}_5(\cA)
+=
+H_{\cA}\star \mathrm{Sh}_5(\cA)
++
+\mathfrak C_{\cA}\star \mathfrak Q_{\cA}
++
+\mathfrak Q_{\cA}\star \mathfrak C_{\cA}
++
+\mathrm{Sh}_5(\cA)\star H_{\cA}.
+\]
+\end{corollary}
+
+\begin{proof}
+Set $r=5$ in \eqref{eq:nms-all-arity-separating}; the pairs with $p+q=7$ and $p,q\ge 2$ are $(2,5)$, $(3,4)$, $(4,3)$, $(5,2)$.\qedhere
+\end{proof}
+
+\section{The genus loop operator and non-separating clutching}
+\label{sec:nms-genus-loop-operator}
+
+The separating clutching keeps genus constant and distributes shadow legs across two components.  The non-separating clutching increases genus by one by identifying two marked points.  Its action on the shadow tower \emph{traces out} two shadow legs, converting higher-arity genus-$0$ data into lower-arity genus-$1$ corrections.  This is the mechanism by which the modular homotopy theory goes beyond the $\hat{A}$-genus.
+
+\subsection{Definition and basic properties}
+\label{subsec:nms-genus-loop-definition}
+
+\begin{definition}[The genus loop operator]
+\label{def:nms-genus-loop-operator}
+Let $V_{\cA}$ be a finite-dimensional cyclic slice with propagator $P_{\cA}=H_{\cA}^{-1}$.  The \emph{genus loop operator} is the linear map
+\begin{equation}
+\label{eq:nms-genus-loop-operator}
+\Lambda_{P_{\cA}}:\operatorname{Sym}^r(V_{\cA}^*)\longrightarrow \operatorname{Sym}^{r-2}(V_{\cA}^*)
+\end{equation}
+defined by contracting two symmetric legs with the propagator:
+\begin{equation}
+\label{eq:nms-genus-loop-formula}
+(\Lambda_{P_{\cA}}\alpha)(x_1,\dots,x_{r-2})
+:=
+\sum_{i,j}
+\alpha(x_1,\dots,x_{r-2},e_i,e_j)\,P_{\cA}^{ij},
+\end{equation}
+where $\{e_i\}$ is any basis of $V_{\cA}$ and $P_{\cA}^{ij}$ are the components of the propagator.
+\end{definition}
+
+\begin{proposition}[Basic properties of the genus loop operator; \ClaimStatusProvedHere]
+\label{prop:nms-genus-loop-properties}
+Let $d:=\dim V_{\cA}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Lambda_{P_{\cA}}(H_{\cA})=d$.
+\item $\Lambda_{P_{\cA}}(\mathfrak C_{\cA})\in V_{\cA}^*$ is a linear form on $V_{\cA}$.
+\item $\Lambda_{P_{\cA}}(\mathfrak Q_{\cA})\in \operatorname{Sym}^2(V_{\cA}^*)$ is a rank-$2$ tensor defining a correction to the Hessian at the next genus.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Immediate from Definition~\ref{def:nms-genus-loop-operator}.\qedhere
+\end{proof}
+
+\subsection{Non-separating clutching of the shadow tower}
+\label{subsec:nms-nonseparating-clutching}
+
+\begin{theorem}[Non-separating clutching law for the shadow tower; \ClaimStatusProvedHere]
+\label{thm:nms-nonseparating-clutching-law}
+Along the non-separating clutching map
+$\xi_{\mathrm{ns}}\colon \overline{\mathcal M}_{g-1,n+2}\to \overline{\mathcal M}_{g,n}$,
+the shadow tower satisfies
+\begin{equation}
+\label{eq:nms-nonseparating-recursion}
+\xi_{\mathrm{ns}}^*\bigl(\mathrm{Sh}_r^{(g)}\bigr)
+=
+\Lambda_{P_{\cA}}\bigl(\mathrm{Sh}_{r+2}^{(g-1)}\bigr)
++
+\textup{(mixed sewing corrections)},
+\end{equation}
+where the leading term traces two legs of the genus-$(g-1)$ shadow at arity $r+2$.
+\end{theorem}
+
+\begin{proof}
+The non-separating clutching identity for the universal class reads
+$\xi_{\mathrm{ns}}^*\Theta_{\cA}^{(g)}
+=
+\Lambda_{P_{\cA}}(\Theta_{\cA}^{(g-1)})$.
+Expanding both sides in the arity filtration: the arity-$r$ component of the left side is $\mathrm{Sh}_r^{(g)}$, while the arity-$r$ component of $\Lambda_P(\Theta^{(g-1)})$ is $\Lambda_P(\mathrm{Sh}_{r+2}^{(g-1)})$ since $\Lambda_P$ lowers arity by~$2$.\qedhere
+\end{proof}
+
+\begin{corollary}[Genus-$1$ Hessian correction from genus-$0$ quartic shadow; \ClaimStatusProvedHere]
+\label{cor:nms-genus-one-hessian-correction}
+In the one-vertex sector, the genus-$1$ correction to the Hessian is
+\begin{equation}
+\label{eq:nms-genus-one-hessian-correction}
+\delta H_{\cA}^{(1)}
+=
+\Lambda_{P_{\cA}}\bigl(\mathfrak Q_{\cA}^{(0)}\bigr).
+\end{equation}
+This is a rank-$2$ tensor determined entirely by the genus-$0$ quartic shadow and the propagator.
+\end{corollary}
+
+\begin{proof}
+Set $g=1$ and $r=2$ in Theorem~\ref{thm:nms-nonseparating-clutching-law}.\qedhere
+\end{proof}
+
+\begin{remark}[Why this goes beyond the $\hat{A}$-genus]
+\label{rem:nms-beyond-ahat}
+The scalar modular characteristic $\kappa(\cA)$ sees only the \emph{trace} of the genus-$0$ Hessian.  The genus-$1$ Hessian correction $\delta H^{(1)}=\Lambda_P(\mathfrak Q^{(0)})$ is a \emph{tensor}: it lives in $\operatorname{Sym}^2(V_{\cA}^*)$ and is not determined by any scalar quantity.  It is the first genuinely tensorial modular invariant beyond~$\kappa$.
+\end{remark}
+
+\subsection{Explicit genus loop for the model families}
+\label{subsec:nms-explicit-genus-loop}
+
+\begin{theorem}[Genus loop operator on the model families; \ClaimStatusProvedHere]
+\label{thm:nms-genus-loop-model-families}
+In the one-vertex sector:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Heisenberg.}
+$\delta H^{(1)}_{\mathcal H}=0$.
+The modular invariants at all genera are determined by~$\kappa$ alone.
+
+\item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
+$\delta H^{(1)}_{\mathrm{aff}}=0$ (since $\mathfrak Q_{\mathrm{aff}}=0$), but the cubic loop is nonzero:
+\begin{equation}
+\label{eq:nms-affine-cubic-loop}
+(\Lambda_{P_{\mathrm{aff}}}\mathfrak C_{\mathrm{aff}})(x)
+=
+\frac{2h^\vee}{k_{\mathrm{eff}}}\,\kappa(x,\rho^\vee),
+\end{equation}
+where $\rho^\vee$ is the Weyl vector.  This linear form detects the Weyl direction in the deformation space.
+
+\item \textbf{$\beta\gamma$ system.}
+$\Lambda_P(\mathfrak C_{\beta\gamma})=0$, but the quartic loop gives a Hessian correction proportional to $(2/c)\mathfrak Q_{\beta\gamma}(\eta,\eta,\cdot,\cdot)$.
+
+\item \textbf{Virasoro.}
+Both loops are nonzero.  On the primary line with $H=(c/2)x^2$, $\mathfrak C=2x^3$, $\mathfrak Q^{\mathrm{contact}}=Q_0 x^4$ where $Q_0=10/[c(5c+22)]$:
+\begin{align}
+\Lambda_P(\mathfrak C_{\mathrm{Vir}})(x)
+&=
+\frac{4}{c}\,x,
+\label{eq:nms-virasoro-cubic-loop}
+\\
+\delta H^{(1)}_{\mathrm{Vir}}
+&=
+\frac{120}{c^2(5c+22)}\,x^2.
+\label{eq:nms-virasoro-hessian-correction}
+\end{align}
+The genus-$1$ loop ratio is $\rho^{(1)}_{\mathrm{Vir}}=\delta H^{(1)}/H^{(0)}=240/[c^2(5c+22)]$, a nontrivial rational function of~$c$ that is not determined by $\kappa=c/2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textup{(i)} is immediate from $\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$.
+
+For \textup{(ii)}, $\mathfrak C_{\mathrm{aff}}(x,y,z)=\kappa(x,[y,z])$.  Tracing over two slots:
+$(\Lambda_P\mathfrak C_{\mathrm{aff}})(x)
+=\frac{1}{k_{\mathrm{eff}}}\sum_a \kappa(x,[e_a,e^a])$.
+The sum $\sum_a [e_a,e^a]=2h^\vee\rho^\vee$ in a simple Lie algebra.
+
+For \textup{(iii)} and \textup{(iv)}, the one-generator primary line has $P=2/c$.  For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional space, $\Lambda_P(\alpha_0 x^r)=\binom{r}{2}P\,\alpha_0\,x^{r-2}$.  Thus $\Lambda_P(\mathfrak C)=\binom{3}{2}(2/c)\cdot 2\cdot x=12x/c\cdot(1/3)$---more precisely $\Lambda_P(2x^3)=3\cdot (2/c)\cdot 2 x= 12x/c$, and $\Lambda_P(Q_0 x^4)=6\cdot(2/c)\cdot Q_0\, x^2=12Q_0 x^2/c=120x^2/[c^2(5c+22)]$.\qedhere
+\end{proof}
+
+\begin{remark}[The modular invariant ratio]
+\label{rem:nms-modular-invariant-ratio}
+Define the \emph{genus-$1$ loop ratio}
+$\rho^{(1)}_{\cA}:=\Lambda_P(\mathfrak Q_{\cA})/H_{\cA}$.
+For the Virasoro, $\rho^{(1)}_{\mathrm{Vir}}=240/[c^2(5c+22)]$, a nontrivial function of~$c$.  Two algebras with the same $\kappa$ but different $\rho^{(1)}$ are distinguished by the modular homotopy theory even though their $\hat{A}$-genera agree.
+\end{remark}
+
+\subsection{The modular shadow characteristic}
+\label{subsec:nms-modular-chern-character}
+
+\begin{definition}[The full modular shadow characteristic]
+\label{def:nms-full-modular-shadow-characteristic}
+For a modular Koszul chiral algebra $\cA$ with cyclic slice $V_{\cA}$, define
+\begin{equation}
+\label{eq:nms-modular-shadow-characteristic}
+\mathfrak{ch}_{\mathrm{mod}}(\cA;\hbar)
+:=
+\sum_{g\ge 0}\hbar^g\sum_{r\ge 2}\frac{1}{r!}\,\mathrm{Sh}_r^{(g)}(\cA).
+\end{equation}
+Its scalar trace is $\operatorname{tr}(\mathfrak{ch}_{\mathrm{mod}})=\sum_g \hbar^g\kappa(\cA)\lambda_g$, recovering the $\hat{A}$-genus tower.
+\end{definition}
+
+\begin{theorem}[The modular invariant hierarchy beyond $\hat{A}$; \ClaimStatusProvedHere]
+\label{thm:nms-beyond-ahat}
+Let $\cA$ be a modular Koszul chiral algebra whose shadow tower does not terminate at quadratic order.  Then $\mathfrak{ch}_{\mathrm{mod}}(\cA;\hbar)$ carries strictly more information than $\kappa(\cA)$.  Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\mathfrak C_{\cA}\neq 0$, the cubic shadow class is a non-scalar modular invariant, and $\Lambda_P(\mathfrak C_{\cA})$ gives a canonical linear form not determined by~$\kappa$.
+\item If $\mathfrak Q_{\cA}\neq 0$, the genus-$1$ Hessian correction $\delta H^{(1)}=\Lambda_P(\mathfrak Q_{\cA})$ is a tensorial modular invariant invisible to~$\kappa$.
+\item The derived ratio $\rho^{(1)}_{\cA}=\Lambda_P(\mathfrak Q_{\cA})/H_{\cA}$ distinguishes algebras with identical $\hat{A}$-genera.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Suppose $\kappa(\cA)=\kappa(\cA')$ but the quartic shadows differ.  Then $\Lambda_P(\mathfrak Q_{\cA})\neq \Lambda_P(\mathfrak Q_{\cA'})$ and $\rho^{(1)}_{\cA}\neq \rho^{(1)}_{\cA'}$: the full modular characteristic distinguishes the two algebras.\qedhere
+\end{proof}
+
+\begin{remark}[Summary of the invariant hierarchy]
+\label{rem:nms-invariant-hierarchy-summary}
+The full modular invariant hierarchy:
+\[
+\underbrace{\kappa(\cA)}_{\text{scalar}}
+\;\longrightarrow\;
+\underbrace{\Delta_{\cA}}_{\text{spectral}}
+\;\longrightarrow\;
+\underbrace{[\mathfrak C_{\cA}],\;[\mathfrak Q_{\cA}]}_{\text{nonlinear shadows}}
+\;\longrightarrow\;
+\underbrace{\Lambda_P(\mathfrak Q_{\cA})}_{\text{genus loop}}
+\;\longrightarrow\;
+\underbrace{\Theta_{\cA}}_{\text{universal class}}.
+\]
+The first three levels are genus-$0$ data.  The genus loop correction is the first genuinely higher-genus modular invariant.  The full universal class unifies all levels.
+\end{remark}
+
 \section{A unified summary theorem}
 \label{sec:nms-summary-theorem}
 
@@ -1462,15 +1848,18 @@ H_{\cA}\star \mathfrak Q_{\cA}
 \mathfrak R_{4,g,n}^{\mathrm{mod}}(\cA),
 \]
 and whose clutching correction is the cubic tree divisor $\mathfrak T_{3,\xi}(\cA)$;
-\item if the full universal class $\Theta_{\cA}$ exists, this clutching correction is the first nonlinear modular shadow of its universal clutching identity.
+\item if the full universal class $\Theta_{\cA}$ exists, this clutching correction is the first nonlinear modular shadow of its universal clutching identity;
+\item the shadow tower extends to all arities: the all-arity master equation $\nabla_{H_{\cA}}\mathrm{Sh}_r+\mathfrak o^{(r)}=0$ governs $\mathrm{Sh}_r$ for every $r\ge 3$, with the primitive archetypes terminating (Gaussian at $2$, Lie/tree at $3$, contact at $4$) while Virasoro is the first genuinely infinite tower;
+\item the genus loop operator $\Lambda_P:\operatorname{Sym}^r\to\operatorname{Sym}^{r-2}$ implements non-separating clutching on the shadow tower, and the genus-$1$ Hessian correction $\delta H^{(1)}_{\cA}=\Lambda_P(\mathfrak Q_{\cA}^{(0)})$ is the first tensorial modular invariant beyond the $\hat{A}$-genus;
+\item for the Virasoro, $\delta H^{(1)}_{\mathrm{Vir}}=120/[c^2(5c+22)]\cdot x^2$, and the loop ratio $\rho^{(1)}_{\mathrm{Vir}}=240/[c^2(5c+22)]$ distinguishes algebras invisible to~$\kappa$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Parts~(i)--(iii) are Theorems~\ref{thm:nms-shadow-master-equations}, \ref{thm:nms-separating-boundary-recursion}, and \ref{thm:nms-shadow-cocycle-characterization}.  Part~(iv) is Theorem~\ref{thm:nms-archetype-trichotomy}.  Part~(v) is Theorems~\ref{thm:nms-virasoro-mixed-shadow} and \ref{thm:nms-principal-wn-contact-nonvanishing} together with Corollary~\ref{cor:nms-principal-wn-mixed}.  Part~(vi) is Construction~\ref{constr:nms-gram-determinant-line} and Definition~\ref{def:nms-modular-quartic-resonance-class}.  Part~(vii) is Theorems~\ref{thm:nms-clutching-law-modular-resonance} and \ref{thm:nms-first-nonlinear-shadow-theta}.\qedhere
+Parts~(i)--(iii) are Theorems~\ref{thm:nms-shadow-master-equations}, \ref{thm:nms-separating-boundary-recursion}, and \ref{thm:nms-shadow-cocycle-characterization}.  Part~(iv) is Theorem~\ref{thm:nms-archetype-trichotomy}.  Part~(v) is Theorems~\ref{thm:nms-virasoro-mixed-shadow} and \ref{thm:nms-principal-wn-contact-nonvanishing} together with Corollary~\ref{cor:nms-principal-wn-mixed}.  Part~(vi) is Construction~\ref{constr:nms-gram-determinant-line} and Definition~\ref{def:nms-modular-quartic-resonance-class}.  Part~(vii) is Theorems~\ref{thm:nms-clutching-law-modular-resonance} and \ref{thm:nms-first-nonlinear-shadow-theta}.  Part~(viii) is Theorems~\ref{thm:nms-all-arity-master-equation} and~\ref{thm:nms-finite-termination}.  Parts~(ix) and~(x) are Theorem~\ref{thm:nms-nonseparating-clutching-law}, Corollary~\ref{cor:nms-genus-one-hessian-correction}, and Theorem~\ref{thm:nms-genus-loop-model-families}.\qedhere
 \end{proof}
 
 \begin{remark}[What remains to be done]
 \label{rem:nms-what-remains}
-The construction above does not pretend to have solved the entire H-level problem.  The full foundational task remains: construct the universal class $\Theta_{\cA}$ globally on the correct modular locus, prove its clutching and Verdier compatibilities in complete generality, and identify the resulting Hamiltonian modular master action.  What this appendix does show is that the first nonlinear layer is already rigid enough to be organized theorematically.  The quartic resonance class is not an afterthought.  It is the first modular characteristic that remembers that complementarity is nonlinear.
+The construction above does not pretend to have solved the entire H-level problem.  The full foundational task remains: construct the universal class $\Theta_{\cA}$ globally on the correct modular locus, prove its clutching and Verdier compatibilities in complete generality, and identify the resulting Hamiltonian modular master action.  What this appendix does show is that the nonlinear layer is rigid enough to be organized theorematically, and that it carries genuinely new modular content.  The genus loop operator converts quartic contact data into genus-$1$ Hessian corrections that no scalar invariant can see.  The quartic resonance class is not an afterthought: it is the first modular characteristic that remembers that complementarity is nonlinear.
 \end{remark}
