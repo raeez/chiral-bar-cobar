@@ -2,6 +2,19 @@
 % THE MODULAR HOMOTOPY TYPE
 % ==========================================
 
+The genus tower and its foundations are assembled here around a
+single organizing device: the \emph{Chern--Weil transform}, which
+converts Maurer--Cartan data in the modular convolution algebra
+$\mathfrak{g}_\cA^{\mathrm{mod}}$ into tautological classes on
+$\overline{\mathcal{M}}_{g,n}$.  The scalar genus tower
+$F_g = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$ of Theorem~D
+is the trace of this transform --- its degree-zero projection
+onto the determinant line bundle.  The full transform carries
+the entire shadow Postnikov tower into the cohomology ring of
+the moduli space, and its higher-degree components encode the
+cubic, quartic, and (conjecturally) all-arity shadows as
+tautological classes.
+
 The moduli spaces $\overline{\mathcal{M}}_{g,n}$ form a modular
 operad (Getzler--Kapranov~\cite{GeK98}): surfaces glue along
 boundary divisors, and the gluing is associative up to coherent
@@ -850,7 +863,6 @@ the full invariant hierarchy.
 
 \begin{definition}[Modular Chern--Weil transform]
 \label{def:modular-chern-weil-transform}
-\ClaimStatusProvedHere
 Define the \emph{modular Chern--Weil transform}
 \begin{equation}
 \label{eq:modular-chern-weil-transform}
@@ -900,6 +912,74 @@ different invariant-theoretic targets.  This is the modular analogue
 of the classical Chern--Weil homomorphism: a single connection
 produces all characteristic classes.
 \end{remark}
+
+We now compute the transform on the two extreme examples.
+
+\begin{example}[Chern--Weil transform: Heisenberg]
+\label{ex:chern-weil-heisenberg}
+For $\mathcal{H}_\kappa$ with $\Theta_{\mathcal{H}} = \kappa
+\cdot \eta \otimes \Lambda$ (the scalar element):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Scalar projection}:
+$\operatorname{tr}(\Theta_{\mathcal{H}})
+= \sum_{g \geq 1} \kappa \cdot \lambda_g^{\mathrm{FP}}$.
+The genus tower is determined by $\kappa$ alone.
+\item \emph{Spectral projection}: The branching operator is trivial
+on a rank-$1$ slice: $\Delta_{\mathcal{H}}(x) = 1 - \kappa x$.
+One spectral branch at $x = 1/\kappa$.
+\item \emph{Resonance tower}: $\mathfrak{R}^{\mathrm{mod}}_r
+(\mathcal{H}) = 0$ for all $r \geq 4$.  No nonlinear shadows
+means no resonance: the contact quartic sector is empty.
+\item \emph{Line kernel}: $r_{\mathcal{H}}(z)$ is the trivial
+kernel, reflecting the absence of nontrivial line operators
+in the Heisenberg theory.
+\end{enumerate}
+The Heisenberg is the unique standard family where all four
+projections are functions of the single scalar $\kappa$ alone:
+$F_g = \kappa\lambda_g^{\mathrm{FP}}$,
+$\Delta(x) = 1 - \kappa x$,
+$\mathfrak{R}_r = 0$ for all $r \geq 4$, and
+$r_{\mathcal{H}} = \mathbf{1}$.  No shadow jets exist
+($\mathfrak{C} = \mathfrak{Q} = 0$), so the Chern--Weil
+map is rank-$1$ in every channel.  By contrast, Virasoro
+carries independent data in all four channels.
+\end{example}
+
+\begin{example}[Chern--Weil transform: Virasoro]
+\label{ex:chern-weil-virasoro}
+For $\operatorname{Vir}_c$ with $H = (c/2)x^2$,
+$\mathfrak{C} = 2x^3$,
+$\mathfrak{Q}^{\mathrm{contact}} = 10/[c(5c{+}22)] \cdot x^4$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Scalar}: $\operatorname{tr}(\Theta_{\mathrm{Vir}})
+= \sum_g (c/2)\lambda_g^{\mathrm{FP}}$.
+Same $\hat{A}$-genus as any algebra with $\kappa = c/2$.
+\item \emph{Spectral}:
+$\Delta_{\mathrm{Vir}}(x) = 1 - (c/2)x$ on the primary line.
+\item \emph{Resonance}: The quartic resonance class has singular
+locus $\{c(5c{+}22) = 0\}$, consisting of:
+\begin{itemize}
+\item $c = 0$: the uncurved point where $\kappa = 0$ and the
+Hessian degenerates;
+\item $c = -22/5$: the Lee--Yang value $c_{5,2}$, where the
+Kac determinant at level $4$ vanishes and $\Lambda_{\mathrm{Vir}}$
+becomes null.
+\end{itemize}
+At these loci, the quartic contact coefficient
+$Q^{\mathrm{contact}} = 10/[c(5c{+}22)]$ has a pole:
+the shadow geometry degenerates.
+\item \emph{Line kernel}: $r_{\mathrm{Vir}}(z)$ is the line-OPE
+kernel for Virasoro representations, computed from the
+dg-shifted Yangian of $\mathfrak{sl}_2$ at the level
+determined by~$c$.
+\end{enumerate}
+The Virasoro is the simplest family where \emph{all four channels
+carry nontrivial data}.  The scalar and spectral are identical to
+any algebra with $\kappa = c/2$, but the resonance channel
+distinguishes the Virasoro from other algebras at the same central
+charge.  This is where $\operatorname{CW}_{\cA}$ provides strictly
+more information than $\kappa$ alone.
+\end{example}
 
 \subsection{The complementarity Legendrian}
 \label{subsec:complementarity-legendrian}
@@ -995,7 +1075,7 @@ The phase index gives a precise hierarchy:
 & \text{mixed}
 \end{array}
 \]
-The three finite values $\{3, 4, \infty\}$ correspond to the three
+The three primitive values $\{3, 4, \infty\}$ correspond to the three
 primitive archetypes (Lie/tree, contact/quartic, Gaussian).  The
 ``mixed'' entries for Virasoro and $\mathcal{W}_N$ mean that both
 cubic and quartic jets are simultaneously nonzero: these families
@@ -1024,10 +1104,14 @@ a hierarchy of increasing nonlinear depth:
 \;\longrightarrow\;
 \underbrace{\Lambda_{P}(\mathfrak{Q}_{\cA})}_{\text{genus loop}}
 \;\longrightarrow\;
-\underbrace{\Theta_{\cA}}_{\text{universal class}}.
+\underbrace{\Theta_{\cA}}_{\text{conjectural limit}}.
 \end{equation}
-Each level is a shadow of every later level.  The universal class
-$\Theta_{\cA}$ is the source of all of them.
+Each level is a shadow of every later level.  The shadow
+Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower})
+is the proved finite-order engine;
+the conjectural all-arity limit $\Theta_{\cA}$ would be
+the source of all of them.
 \end{theorem}
 
 \begin{proof}
