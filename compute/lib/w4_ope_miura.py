@@ -1173,46 +1173,55 @@ def project_onto_primary(
     return _field_overlap(ope_coeff, primary_field, primary_norms.get(target_spin, 1.0))
 
 
-def _field_overlap(f1: Field, f2: Field, norm: float) -> float:
-    """Compute overlap <f1 | f2> / norm using the free boson inner product.
+def _bpz_inner_product(field1: Field, field2: Field) -> float:
+    """Zamolodchikov (BPZ) inner product <field1|field2> via Wick contractions.
 
-    The inner product is defined by Wick contractions at coincident points.
-    For two fields, <A|B> = the constant term in the OPE A^dagger(z) B(w)
-    evaluated at z=w (all contractions exhausted).
+    Computes the leading-pole coefficient in the OPE field1(z) field2(w),
+    at pole order h1 + h2 where h1, h2 are the conformal weights.  At this
+    pole all free-boson operators are fully contracted, giving a pure scalar.
 
-    For a quick numerical computation: if f2 has a specific monomial structure,
-    we project f1 onto that structure.
+    This is the PHYSICAL inner product of conformal field theory, distinct
+    from the Euclidean dot product on free-boson monomial coefficients.
+    The Euclidean metric ignores the propagator structure and gives wrong
+    results whenever the W-algebra basis does not span the full Fock space
+    at a given weight (which happens at weight >= 4 for rank >= 3).
     """
-    # Simple approach: project f1 onto the direction of f2
-    # by computing the coefficient of f2 in f1.
-    # This works when f2 is a single monomial or a known basis element.
-    if not f2:
+    if not field1 or not field2:
         return 0.0
-
-    # Build a dictionary from f2
-    f2_dict = {sort_monomial(m): c for c, m in f2}
-    f1_dict = {sort_monomial(m): c for c, m in f1}
-
-    # If f2 has multiple terms, use least-squares projection
-    if len(f2_dict) == 1:
-        m2, c2 = list(f2_dict.items())[0]
-        c1 = f1_dict.get(m2, 0.0)
-        return c1 / c2 if abs(c2) > 1e-15 else 0.0
-
-    # General case: project f1 onto the direction of f2
-    # Coefficient = <f1, f2> / <f2, f2>
-    # Using the Euclidean inner product on field coefficients
-    dot = 0.0
-    f2_norm_sq = 0.0
-    for m, c2 in f2_dict.items():
-        c1 = f1_dict.get(m, 0.0)
-        dot += c1 * c2
-        f2_norm_sq += c2 * c2
-
-    if abs(f2_norm_sq) < 1e-15:
+    h1 = field_weight(field1)
+    h2 = field_weight(field2)
+    if h1 is None or h2 is None:
         return 0.0
+    pole = h1 + h2
+    result = _wick_ope_at_pole(field1, field2, pole)
+    if not result:
+        return 0.0
+    # At the leading pole, all operators are contracted -> pure scalar.
+    # Extract scalar part; any residual non-scalar terms arise from
+    # boson-index-mismatched pairs that cannot fully contract.
+    total = 0.0
+    for c, m in result:
+        if m == () or len(m) == 0:
+            total += c
+    return total
 
-    return dot / f2_norm_sq
+
+def _field_overlap(f1: Field, f2: Field, norm: float) -> float:
+    """Extract coefficient of f2 in f1 using the BPZ inner product.
+
+    Computes <f2 | f1>_BPZ / <f2 | f2>_BPZ, the physical projection
+    of f1 onto f2 in the Zamolodchikov metric.  For a primary field f2,
+    this correctly isolates its contribution even when f1 contains
+    quasi-primaries and descendants from other conformal families.
+
+    The norm parameter is accepted for API compatibility but unused;
+    the self-norm is computed internally via Wick contractions.
+    """
+    self_norm = _bpz_inner_product(f2, f2)
+    if abs(self_norm) < 1e-15:
+        return 0.0
+    overlap = _bpz_inner_product(f2, f1)
+    return overlap / self_norm
 
 
 # =========================================================================
@@ -1335,6 +1344,9 @@ class W4MiuraOPE:
         # W4 x W4: leading pole 8, coefficient = c/4
         w4w4_ope8 = _wick_ope_at_pole(self.W4, self.W4, 8)
         self.norm_W4 = evaluate_field_as_number(w4w4_ope8)
+
+        # Lambda = :TT: - (3/10) d^2T: quasi-primary norm c(5c+22)/10
+        self.norm_Lambda = _bpz_inner_product(self.Lambda, self.Lambda)
 
         if self.verbose:
             c = self.c_actual if hasattr(self, 'c_actual') else self.c_val
@@ -1631,55 +1643,18 @@ class W4MiuraOPE:
         return overlap / self.norm_W4 if abs(self.norm_W4) > 1e-15 else 0.0
 
     def _decompose_spin4(self, target: Field) -> float:
-        """Decompose a weight-4 field into {d^2T, Lambda, W_4} and return the W_4 coefficient.
+        """Extract the W_4 coefficient from a weight-4 field via BPZ projection.
 
-        We solve: target = a * d^2T + b * Lambda + c * W_4
-        for the unknown coefficients a, b, c.
+        By primary orthogonality under the Zamolodchikov metric:
+          <W_4 | Lambda>_BPZ = 0   (different conformal families)
+          <W_4 | d^2T>_BPZ  = 0   (primary vs Virasoro descendant)
+          <W_4 | dW_3>_BPZ  = 0   (different conformal families)
+
+        So the W_4 coefficient is simply <W_4|target>_BPZ / <W_4|W_4>_BPZ,
+        without needing to solve a linear system or invert a Gram matrix.
         """
-        # Build the matrix: each column is the monomial-coefficient vector of a basis element
-        all_monomials = set()
-        for _, m in target:
-            all_monomials.add(sort_monomial(m))
-        for _, m in self.d2T:
-            all_monomials.add(sort_monomial(m))
-        for _, m in self.Lambda:
-            all_monomials.add(sort_monomial(m))
-        for _, m in self.W4:
-            all_monomials.add(sort_monomial(m))
-        for _, m in self.dW3:
-            all_monomials.add(sort_monomial(m))
-
-        mon_list = sorted(all_monomials)
-        mon_to_idx = {m: i for i, m in enumerate(mon_list)}
-        n = len(mon_list)
-
-        def field_to_vec(f: Field) -> np.ndarray:
-            v = np.zeros(n)
-            for c, m in f:
-                m = sort_monomial(m)
-                if m in mon_to_idx:
-                    v[mon_to_idx[m]] += c
-            return v
-
-        target_vec = field_to_vec(target)
-        d2T_vec = field_to_vec(self.d2T)
-        Lambda_vec = field_to_vec(self.Lambda)
-        W4_vec = field_to_vec(self.W4)
-        dW3_vec = field_to_vec(self.dW3)
-
-        # Solve: target = a * d2T + b * Lambda + c * W4 + d * dW3
-        A = np.column_stack([d2T_vec, Lambda_vec, W4_vec, dW3_vec])
-        # Use least squares
-        result, residuals, rank, sv = np.linalg.lstsq(A, target_vec, rcond=None)
-
-        # Check residuals
-        residual = target_vec - A @ result
-        if np.linalg.norm(residual) > 1e-6 * max(np.linalg.norm(target_vec), 1.0):
-            if self.verbose:
-                print(f"  WARNING: spin-4 decomposition residual = {np.linalg.norm(residual):.2e}")
-
-        # The W_4 coefficient is result[2]
-        return result[2]
+        overlap = _bpz_inner_product(self.W4, target)
+        return overlap / self.norm_W4 if abs(self.norm_W4) > 1e-15 else 0.0
 
     def extract_all_with_verification(self) -> Dict[str, object]:
         """Extract all stage-4 coefficients with verification data."""
