@@ -7346,6 +7346,13 @@ $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ of
 Definition~\ref{def:modular-convolution-dg-lie} is the strict
 model obtained by retaining only $\ell_1^{(0)} = D$ and
 $\ell_2^{(0)} = [-,-]$.
+The model category structure on algebras over the Feynman transform
+\cite[Theorem~2.1]{Val16} guarantees that the bar-cobar adjunction
+at the modular level is a Quillen equivalence; the functoriality of
+$\operatorname{Conv}$ under $\infty$-morphisms
+\cite[Theorem~5.1]{RNW19} ensures that different choices of
+strict model are related by $L_\infty$-quasi-isomorphisms
+(Corollary~\ref{cor:strictification-comparison}(v)).
 \end{proof}
 
 \begin{corollary}[Strictification comparison;
@@ -7371,6 +7378,34 @@ strictification.  In particular:
 \item The choice of strict model amounts to a choice of
   contracting homotopy; different choices yield
   $L_\infty$-quasi-isomorphic deformation objects.
+\item \emph{Functoriality of strictification.}
+  An $\infty$-quasi-isomorphism $f\colon C \xrightarrow{\sim} C'$
+  of moduli coalgebras induces an $L_\infty$-quasi-isomorphism
+  $f^*\colon \Convinf(C',\operatorname{End}_\cA) \xrightarrow{\sim}
+  \Convinf(C,\operatorname{End}_\cA)$
+  \cite[Theorem~5.1, Proposition~5.5]{RNW19}.
+  Different choices of strict model are related by explicit
+  $L_\infty$-quasi-isomorphisms: the components
+  $\varphi_1 = \operatorname{id}$,
+  $\varphi_2 = 0$ (the strict model has trivial ternary bracket),
+  $\varphi_3 = h_*$ (determined by the contracting homotopy $h$ on
+  $C_*(\overline{\cM}_{0,4})$ through the homotopy transfer
+  theorem).  The general component $\varphi_n$ is determined by the
+  contracting homotopy on $C_*(\overline{\cM}_{0,n+1})$ through the
+  sum over trivalent trees with $n$ leaves
+  \textup{(}Construction~\textup{\ref{constr:explicit-convolution-linfty})}.
+\item \emph{One-slot constraint.}
+  The functoriality of~(v) operates on one slot at a time
+  \cite[Theorem~6.6]{RNW19}.
+  Simultaneous replacement of both the coalgebra and algebra
+  inputs requires sequential application: first the coalgebra
+  replacement $C \leadsto C'$ \textup{(}holding $\operatorname{End}_\cA$
+  fixed\textup{)}, then the algebra replacement
+  $\operatorname{End}_\cA \leadsto \operatorname{End}_{\cA'}$
+  \textup{(}holding $C'$ fixed\textup{)}.
+  This suffices for all constructions in the monograph, since
+  the Koszul duality functor $\cA \mapsto \cA^!$ acts only on the
+  algebra slot while the moduli coalgebra is held fixed.
 \end{enumerate}
 \end{corollary}
 
@@ -7381,6 +7416,12 @@ Part~(ii) follows from the cofree-coderivation principle.
 Part~(iii) is Theorem~\ref{thm:km-strictification}.
 Part~(iv) is standard homotopy transfer
 (Loday--Vallette~\cite[Thm~10.3.1]{LV12}).
+Part~(v) is Robert-Nicoud--Wierstra~\cite[Thm~5.1]{RNW19}
+with explicit components from the homotopy transfer
+theorem; the strict model has $\ell_n = 0$ for $n \geq 3$,
+so $\varphi_2 = 0$ and the first nontrivial component
+$\varphi_3$ is determined by the contracting homotopy.
+Part~(vi) is \cite[Theorem~6.6]{RNW19}.
 \end{proof}
 
 \begin{theorem}[Homotopy invariance of the shadow algebra;
@@ -7902,6 +7943,70 @@ associative: contracting~$e_1$ then~$e_2$ gives the same result as
 contracting~$e_2$ then~$e_1$ (up to sign).
 \end{definition}
 
+\begin{proposition}[Tropical identification of planted forests;
+\ClaimStatusProvedElsewhere]
+\label{prop:planted-forest-tropical}
+\index{planted-forest coefficient algebra!tropical interpretation}
+\textup{(Mok \cite[Theorem~3.3.1(2), Definition~3.1.5]{Mok25}.)}
+The planted-forest coefficient algebra $\mathbb{G}_{\mathrm{pf}}$
+is the chain complex of the tropical skeleton of the logarithmic
+Fulton--MacPherson space:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The boundary of\/ $\operatorname{FM}_n(X \mathbin{|} D)$ is
+  stratified by combinatorial types of planted forests in the sense
+  of Definition~\textup{\ref{def:planted-forest-coefficient-algebra}};
+  each planted forest $F = (P, m, T^m_{v_1}, \ldots, T^m_{v_k})$
+  indexes a boundary stratum of codimension
+  \begin{equation}\label{eq:tropical-codimension}
+  \operatorname{codim}(F)
+  \;=\;
+  \sum_{i=1}^{n} w_i
+  + \sum_{j=1}^{k} \bigl(|V(T_{v_j})| - 1\bigr),
+  \end{equation}
+  where $w_i$ counts the vertices of the grid subdivision $P$
+  visited by marking~$i$ apart from the origin, and
+  $|V(T_{v_j})|$ is the number of vertices in the $j$-th planted
+  tree \cite[Proposition~3.3.2]{Mok25}.
+\item Edge contraction in $\mathbb{G}_{\mathrm{pf}}$ corresponds to
+  tropical degeneration: contracting an internal edge $e$ in the
+  planted tree $T_{v_j}$ collapses the corresponding collision
+  level in the log~FM boundary, increasing the codimension by~$1$.
+\item The tropicalisation of $\operatorname{FM}_n(X \mathbin{|} D)$
+  admits a modular description: the preimage of~$0$ under
+  $\Pi_n^{\mathrm{FM}}(\Delta) \to \mathbb{R}_{\geq 0}$ is the
+  moduli space of planted forests, and each cone
+  $\sigma(\tau_{\mathrm{FM}}) = \sigma(\tau) \times
+  \prod_{j=1}^k \mathbb{R}_{\geq 0}^{|E(T_{v_j})|}$
+  parametrises the edge lengths of the planted trees
+  \cite[Observation~5.2.5]{Mok25}.
+\item The codimension formula~\eqref{eq:tropical-codimension}
+  matches the weight filtration on
+  $\mathfrak{g}^{\mathrm{amb}}_{\cA}$
+  \textup{(}Definition~\textup{\ref{def:weight-filtration-tower})}:
+  a planted forest of total weight $w = \sum w_i + \sum(|V(T_{v_j})|-1)$
+  contributes to $F^w\mathfrak{g}^{\mathrm{amb}}_{\cA}$.
+  The extension tower
+  \textup{(}Definition~\textup{\ref{def:extension-tower})} is the
+  algebraic shadow of the tropical stratification filtration.
+\end{enumerate}
+This upgrades the heuristic ``correspondence to FM geometry'' of
+Definition~\textup{\ref{def:planted-forest-coefficient-algebra}} to a
+theorem: the planted-forest combinatorics is not merely a convenient
+formalism but is forced by the tropicalisation of the log~FM
+space.
+\end{proposition}
+
+\begin{proof}[References]
+Parts~(i)--(iii) are \cite[Theorem~3.3.1(2), Proposition~3.3.2,
+Observation~5.2.5]{Mok25}.  Part~(iv) is the comparison of the
+codimension formula~\eqref{eq:tropical-codimension} with the weight
+$w(g,r,d) = 2g-2+r+d$ of
+Definition~\ref{def:weight-filtration-tower}: the
+tropicalisation filtration on $\operatorname{FM}^{\mathrm{log}}_n$
+induces the weight filtration on
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}$ through the Hom functor.
+\end{proof}
+
 \begin{theorem}[Planted forests as tropicalization of log-FM spaces;
 \ClaimStatusProvedElsewhere]
 \label{thm:planted-forest-tropicalization}%
@@ -8029,6 +8134,38 @@ for the ambient differential.  At the pure convolution level
 cross-polarization is not imposed\textup{)}, $D^2 = 0$ is
 already proved.
 \end{conjecture}
+
+\begin{remark}[Log-geometric evidence for
+Conjecture~\ref{conj:differential-square-zero}]
+\label{rem:log-evidence-d-squared}
+\index{differential!ambient square-zero!log-geometric evidence}
+The logarithmic Fulton--MacPherson space
+$\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ of
+Mok~\cite{Mok25} is a smooth compactification with normal-crossings
+boundary \cite[Theorem~3.3.1(1)]{Mok25}, so $\partial^2 = 0$ on its
+chain complex is automatic.  By
+Proposition~\ref{prop:planted-forest-tropical}, the planted-forest
+coefficient algebra $\mathbb{G}_{\mathrm{pf}}$ is the tropical
+skeleton of $\operatorname{FM}_n^{\mathrm{log}}$.  The functorial
+transfer principle of Robert-Nicoud--Wierstra
+\cite[Theorem~5.1, Proposition~5.5]{RNW19} then implies: if the
+tropicalisation map induces a quasi-isomorphism
+\begin{equation}\label{eq:log-fm-qiso-hypothesis}
+\operatorname{trop}_*\colon
+C_*\bigl(\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)\bigr)
+\;\xrightarrow{\;\sim\;}\;
+C_*^{\mathrm{trop}}\bigl(\mathbb{G}_{\mathrm{pf}}\bigr)
+\end{equation}
+on chain complexes, then $D_{\cA}^2 = 0$ at the ambient level would
+follow from $\partial^2 = 0$ on
+$\operatorname{FM}_n^{\mathrm{log}}$ by one-slot functoriality of
+$\operatorname{Conv}$.  The hypothesis~\eqref{eq:log-fm-qiso-hypothesis}
+is plausible---the tropical skeleton captures the combinatorial type
+of every boundary stratum---but not yet established.  Proving it
+would reduce Conjecture~\ref{conj:differential-square-zero} to the
+topological statement that $\operatorname{FM}_n^{\mathrm{log}}$ has
+no cohomology invisible to the tropical skeleton.
+\end{remark}
 
 \subsection{The extension tower}
 \label{subsec:extension-tower}

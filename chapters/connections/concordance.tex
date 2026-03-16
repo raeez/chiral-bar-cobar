@@ -547,14 +547,19 @@ a cosimplicial Lie algebra in a pseudo-tensor category carrying $L_\infty$
 operations controlled by the Eilenberg--Zilber operad
 $\mathcal{Y}(n) = \mathcal{Z}(n) \otimes_k \mathrm{Lie}(n)$.  Their main
 theorem (Theorem~3.1): the \v{C}ech complex of a sheaf of chiral algebras
-is an HCA.
+is an HCA\@.  In our language (Definition~\ref{def:cech-convolution}):
+the HCA operations assemble into a single MC element
+$\Phi_\cA \in \operatorname{MC}(\mathfrak{g}^{\check{C}}_{\cA})$
+satisfying $D\Phi + \tfrac{1}{2}[\Phi,\Phi] = 0$.
 
 \begin{tabular}{>{\raggedright\arraybackslash}p{0.38\textwidth}%
 >{\raggedright\arraybackslash}p{0.52\textwidth}}
 \textbf{Our framework} & \textbf{MS framework} \\
 \hline
-Bar complex $\bar{B}^{\mathrm{ch}}(\cA)$
-  & \v{C}ech complex $M\check{C}^\bullet(\mathcal{U};\cA)$ \\
+Convolution algebra $\mathfrak{g}^{\mathrm{bar}}_\cA$
+  & Convolution algebra $\mathfrak{g}^{\check{C}}_\cA$ \\
+MC element $\Theta_\cA = (m_1, m_2, \ldots)$
+  & MC element $\Phi_\cA = (F_1, F_2, \ldots)$ \\
 $A_\infty$ operations $\{m_n\}$
   & HCA operations $\{F_n\}$ \\
 Ran space / Fulton--MacPherson
@@ -563,40 +568,41 @@ Associahedra / moduli $\overline{\mathcal{M}}_{0,n}$
   & Eilenberg--Zilber operad $\mathcal{Y}(n)$ \\
 Modular operad FCom (genus $g \geq 1$)
   & [Not treated; genus-$0$ only] \\
-$m_3$ from homotopy transfer
-  & $F_3 = $ Jacobiator homotopy \\
+$m_3$ from $\FM_3(\mathbb{C})$ integration
+  & $F_3$ from triple intersections \\
 $d^2 = 0$ on $\overline{\mathcal{M}}_{0,n}$
   & Cosimplicial identities \\
 \end{tabular}
 
 \begin{remark}[Complementary resolutions]
 \label{rem:ms-complementary}
-The bar complex and the \v{C}ech complex are two resolutions of the
-same object---chiral homology---enhanced with compatible algebraic
-structures.  Our bar $A_\infty$ operations (constructed analytically
-by integration over FM compactifications) and the MS HCA operations
-(constructed algebraically by the Moore functor) are intertwined by
-a quasi-isomorphism of $L_\infty$ algebras
-(Proposition~\ref{prop:cech-bar-intertwining}).
-The MS framework has the advantage of being purely algebraic (no
-configuration space integrals needed); our framework has the advantage
-of working at all genera via the modular operad and the
-shadow Postnikov tower
-(Definition~\ref{def:shadow-postnikov-tower}); the
-curvature $d^2 = \kappa \cdot \omega_g$ and finite-order
-shadows have no \v{C}ech counterpart in \cite{MS24}.
+The bar and \v{C}ech complexes resolve the same cohomology with
+compatible MC structures.  The comparison
+(Proposition~\ref{prop:cech-bar-intertwining}) is an $L_\infty$
+morphism $\Phi^*$ sending $\Phi_\cA$ to $\Theta_\cA$; it is
+generically \emph{non-strict} because the bar side encodes
+configuration space topology ($\FM_k$ strata) while the \v{C}ech
+side encodes cover topology (intersections).  The MS framework is
+purely algebraic; ours works at all genera via FCom and the shadow
+Postnikov tower.  The curvature $d^2 = \kappa \cdot \omega_g$ and
+finite-order shadows have no \v{C}ech counterpart in~\cite{MS24}.
 \end{remark}
 
-\begin{remark}[Genus-$0$ agreement]
+\begin{remark}[Genus-$0$ strictness and the asymmetry]
 \label{rem:ms-genus0-agreement}
-At genus~$0$, the two frameworks produce the same answer:
-the \v{C}ech HCA is strict for abelian chiral algebras (Heisenberg,
-free fermion) and has nontrivial $F_3$ for non-abelian algebras
-($\widehat{\mathfrak{sl}}_2$, $\beta\gamma$), matching the
-bar-side $A_\infty$ structure.  The comparison is fully explicit
-for the standard cover of $\mathbb{P}^1$
-(Examples~\ref{ex:cech-hca-heisenberg}
-and~\ref{ex:cech-hca-sl2}).
+On $\mathbb{P}^1$ with a two-element cover, the \v{C}ech HCA is
+\emph{strict for every chiral algebra}
+(Proposition~\ref{prop:two-element-strict}): the MC element is
+$\Phi = (d_M, F_2, 0, 0, \ldots)$ because $\check{C}^p = 0$ for
+$p \geq 2$ kills all higher operations.  The bar $A_\infty$
+structure, by contrast, has $m_3 \neq 0$ for non-abelian algebras
+(e.g., $\widehat{\mathfrak{sl}}_2$) because the triple collision
+stratum of $\FM_3(\mathbb{C})$ contributes regardless of the cover.
+The comparison $\Phi^*$ creates $m_3$ from $F_2$ via its higher
+components $\Phi_2^*$.  Genuine \v{C}ech non-strictness ($F_3 \neq 0$)
+appears at genus~$g \geq 1$, where covers require $\geq 3$ opens and
+triple intersections contribute
+(Example~\ref{ex:cech-hca-genus1}).
 \end{remark}
 
 \section{Three-pillar foundational architecture}
@@ -2936,11 +2942,21 @@ Three axes, each with its own appendix chain:
   exceptional.  The subregular family
   $\mathcal{W}_n^{(2)}$ exhibits unbounded canonical homotopy
   arity.
-\item \emph{The Yangian/RTT axis.}
+\item \emph{The Yangian/RTT axis and the Bridge Theorem.}
   Three layers: local RTT kernel, completed envelope, boundary
   quotient.  The shift belongs to the boundary quotient, not
   the local kernel.  The rank-one test case produces the
   quantized Kleinian surface.
+  The \emph{Bridge Theorem programme}
+  (Remark~\ref{rem:bridge-theorem-programme};
+  Theorem~\ref{thm:bridge-criterion})
+  is now the central remaining target: the full triple
+  equivalence
+  $\mathrm{Fact}^{\Eone}_{\mathrm{ord}} \simeq
+  \mathrm{Mod}^{\mathrm{comp}}(\Ydg_\cA) \simeq
+  \mathrm{Rep}^{\mathrm{spec}}(\QGspec(R_\cA))^{\mathrm{op}}$
+  decomposes into four sub-targets~B1--B4 with a proved criterion
+  theorem (B1$+$B2$+$B4 $\Rightarrow$ full bridge).
 \item \emph{The holographic/celestial axis.}
   Protected holographic calculus (reconstruction, transposition,
   Weyl sewing, metaplectic anomaly) built directly from the
