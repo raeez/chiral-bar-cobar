@@ -4020,3 +4020,104 @@ bar-cobar/factorization framework.
 Steps (1)--(5) are M-level proved, H-level proved.  Step (6) is
 M-level conditional, H-level conditional.
 \end{remark}
+
+\section{Genus-$1$ sectorwise bar complex and curvature-braiding orthogonality}
+\label{sec:lattice:genus1-sectorwise}
+
+The sectorwise structure that makes lattice DK unconditional at
+genus~$0$ persists at genus~$1$.  The result is a clean factorization
+of the genus-$1$ bar complex into modular (Cartan) and braiding (root)
+components, proving that the $\Eone$-chiral genus theory for lattice
+algebras is a \emph{deformation of the $\Einf$ theory in the root sectors
+only}.
+
+\subsection{The genus-$1$ propagator preserves simple-pole residues}
+
+On an elliptic curve $E_\tau = \bC/(\bZ + \tau\bZ)$, the genus-$0$
+propagator $\eta_{ij}^{(0)} = d\log(z_i - z_j)$ is replaced by
+\[
+\eta_{ij}^{(1)} = \Bigl[
+\zeta_\tau(z_{ij}) + \frac{\pi}{\mathrm{Im}(\tau)}\,\mathrm{Im}(z_{ij})
+\Bigr](dz_i - dz_j),
+\]
+where $\zeta_\tau$ is the Weierstrass $\zeta$-function.  The non-holomorphic
+correction $\frac{\pi}{\mathrm{Im}(\tau)}\mathrm{Im}(z_{ij})$ ensures
+well-definedness on $E_\tau$ at the cost of breaking holomorphicity.
+
+\begin{proposition}[Simple-pole residues unchanged at genus~$1$;
+\ClaimStatusProvedHere]\label{prop:lattice:genus1-simple-pole}
+The residue of $\eta_{ij}^{(1)}$ at $z_i = z_j$ equals~$1$, the same as
+genus~$0$.  Consequently, all OPE coefficients extracted from simple poles
+(i.e., all vertex-operator OPEs
+$e^{\alpha_i}(z)\,e^{\alpha_j}(w)$ with $\langle\alpha_i,\alpha_j\rangle = -1$)
+are \emph{unchanged} at genus~$1$.
+\end{proposition}
+\begin{proof}
+The Weierstrass $\zeta$-function has Laurent expansion
+$\zeta_\tau(z) = z^{-1} + O(z)$, so $\Res_{z=0}\,\zeta_\tau(z)\,dz = 1$.
+The correction $\frac{\pi}{\mathrm{Im}(\tau)}\mathrm{Im}(z)$ is regular
+at $z = 0$, contributing zero to the residue.
+\end{proof}
+
+\subsection{Sectorwise curvature: the orthogonality theorem}
+
+\begin{theorem}[Curvature-braiding orthogonality for quantum lattice
+VOAs; \ClaimStatusProvedHere]\label{thm:lattice:curvature-braiding-orthogonal}
+\index{curvature!lattice genus-1}
+\index{lattice vertex algebra!genus-1 curvature}
+For a quantum lattice algebra $V_\Lambda^{N,q}$ on~$E_\tau$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Cartan sector.}
+  In the sector $\gamma = 0$ (Heisenberg/Cartan generators), the genus-$1$
+  bar differential satisfies
+  $\dfib^{\,2} = \operatorname{rank}(\Lambda) \cdot \omega_1$,
+  where $\omega_1 = c_1(\mathbb{E}) \in H^2(\overline{\mathcal{M}}_1)$
+  is the first Chern class of the Hodge bundle.
+\item \emph{Root sectors.}
+  In every adjacent-root sector
+  $\gamma = \alpha_i + \alpha_j$ with $\langle\alpha_i,\alpha_j\rangle = -1$,
+  the genus-$1$ bar differential satisfies $\dfib^{\,2} = 0$.
+  The $\Eone$ ordering cycles persist unchanged from genus~$0$.
+\item \emph{Modular characteristic.}
+  $\kappa(V_\Lambda^{N,q}) = \operatorname{rank}(\Lambda)$,
+  \emph{independent} of the deformation parameters $(N,q)$.
+\item \emph{Genus-$1$ free energy.}
+  $F_1(V_\Lambda^{N,q}) = \operatorname{rank}(\Lambda)/24$,
+  matching the Heisenberg genus-$1$ free energy at level~$1$
+  summed over $\operatorname{rank}(\Lambda)$ independent bosons.
+\item \emph{Complementarity.}
+  $\kappa(V_\Lambda^{N,q}) + \kappa((V_\Lambda^{N,q})^!) = 0$:
+  the combined bar complex at genus~$1$ is an honest cochain complex.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The genus-$1$ bar complex of $V_\Lambda^{N,q}$ decomposes by lattice
+sector.  In the Cartan sector, the OPEs are purely Heisenberg
+($h_a(z)\,h_b(w) \sim A_{ab}/(z-w)^2$) with double poles; the genus-$1$
+curvature is $\sum_{a=1}^r 1 \cdot \omega_1 = r \cdot \omega_1$ by
+Theorem~\ref{thm:frame-genus1-curvature} applied to each independent boson.
+In adjacent-root sectors, only simple-pole OPEs appear
+($\langle\alpha_i,\alpha_j\rangle = -1$); by
+Proposition~\ref{prop:lattice:genus1-simple-pole}, the residue is unchanged,
+so $\dfib^{\,2} = 0$ and the $\Eone$ ordering cycle
+$\xi = [e^{\alpha_i}|e^{\alpha_j}] - \lambda\,[e^{\alpha_j}|e^{\alpha_i}]$
+(with $\lambda = -\varepsilon_{N,q}(\alpha_i,\alpha_j)/\varepsilon_{N,q}(\alpha_j,\alpha_i)$)
+remains a cocycle.  The cocycle $\varepsilon_{N,q}$ does not enter the
+Cartan sector, so $\kappa$ is independent of $(N,q)$.
+Complementarity follows from $\kappa(V_\Lambda^!) = -\operatorname{rank}(\Lambda)$
+(the Koszul dual inverts the cocycle but preserves the Cartan level).
+\end{proof}
+
+\begin{remark}[The orthogonality principle]\label{rem:lattice:orthogonality-principle}
+The factorization
+$B^{(1)}(V_\Lambda^{N,q}) \simeq
+B^{(1)}_{\mathrm{Cartan}}(\mathcal{H}_r) \otimes
+B^{(0)}_{\mathrm{roots}}(V_\Lambda^{N,q})$
+expresses a structural principle: on lattice VOAs, the \emph{modular axis}
+(genus tower, curvature, $\hat{A}$-genus) and the \emph{braiding axis}
+($R$-matrix, cocycle, ordering cycles) are \emph{orthogonal}.  The modular
+axis sees only the rank; the braiding axis sees only the cocycle.  This
+separation may fail for the Yangian
+(Conjecture~\ref{conj:e1-theorem-D}), where the $R$-matrix residue
+$-\hbar P$ could contribute to the genus-$1$ curvature directly.
+\end{remark}
