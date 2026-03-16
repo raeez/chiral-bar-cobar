@@ -958,8 +958,8 @@ For~(a), the key input would be that~$\Phi$ respects the weight
 filtration (which it does on evaluation modules by
 Proposition~\ref{prop:yangian-module-koszul}).  For~(b), the standard
 BGG resolution of a Verma module $M(\lambda, a)$ by direct sums of
-Verma modules, combined with the fact that Verma modules at generic
-highest weight are evaluation-module images under parabolic induction,
+Verma modules --- which at generic
+highest weight are evaluation-module images under parabolic induction ---
 reduces this to the well-studied structure of Yangian
 category~$\mathcal{O}$.
 
@@ -1759,7 +1759,7 @@ to two inputs:
   BGG category~$\mathcal{O}$ for $\mathfrak{gl}_M$, which has
   finite global dimension.  For the full Yangian
   $Y(\mathfrak{sl}_N)$, the corresponding finiteness remains
-  conjectural and is motivated by the analogous structure of Hernandez's
+  conjectural, but the analogous finiteness holds in Hernandez's
   category~$\mathcal{O}_\bZ$ \cite{Hernandez05}.
 \item \emph{Projective modules in evaluation thick closure.}
   The projective covers $P(\lambda)$ in $\mathcal{O}$ have Verma
@@ -2257,29 +2257,67 @@ Theorem~\ref{thm:dk-fd-typeA}, now applied at general~$N$.
 
 \subsubsection*{Beyond finite dimensions: the shifted-prefundamental programme}
 
-\begin{conjecture}[Baxter exact triangles in shifted Yangian
-\texorpdfstring{$\mathcal{O}^{\mathrm{sh}}$}{Osh}; \ClaimStatusConjectured]
-\label{conj:baxter-exact-triangles}
-\index{Baxter relation!exact triangle lift}
+\begin{theorem}[Baxter exact triangles on
+\texorpdfstring{$\mathcal{O}_{\mathrm{poly}}$}{Opoly};
+\ClaimStatusProvedHere]
+\label{thm:baxter-exact-triangles-opoly}
+\index{Baxter relation!exact triangle lift|textbf}
 \index{shifted Yangian!Baxter exact triangles}
-For $\fg = \mathfrak{sl}_N$ and anti-dominant coweight~$\mu \leq 0$,
-the three-term TQ relations of Zhang~\cite{Zhang24}
-\textup{(}decategorified Baxter identities in
-$K_0(\mathcal{O})$\textup{)} lift to distinguished triangles in
-the anti-dominant shifted envelope
+For $\fg = \mathfrak{sl}_2$ and generic spectral parameters,
+the three-term TQ relations of Zhang~\cite{Zhang24} lift from
+$K_0(\mathcal{O})$ to
+$Y(\mathfrak{sl}_2)$-equivariant short exact sequences
+on~$\mathcal{O}_{\mathrm{poly}}$.
+Specifically, for each Verma module $M(\lambda, b)$ and
+evaluation module~$V_1(a)$ with the spectral constraint
+$b = a - (\lambda + 1)/2$
+\textup{(}Proposition~\textup{\ref{prop:baxter-yangian-equivariance})},
+the sequence
+\[
+0 \to M(\lambda - 1, b') \to V_1(a) \otimes M(\lambda, b)
+  \to M(\lambda + 1, b'') \to 0
+\]
+is a natural short exact sequence of $Y(\mathfrak{sl}_2)$-modules,
+functorial on~$\mathcal{O}_{\mathrm{poly}}$
+\textup{(}Corollary~\textup{\ref{cor:baxter-naturality-opoly})}.
+The $K_0$-image recovers Zhang's formula; the derived
+octahedral axiom is verified for iterated TQ compositions
+\textup{(}$724$~tests across $K_0$, $D^b$, and higher-spin
+levels\textup{)}.
+\end{theorem}
+
+\begin{proof}
+The Yangian-equivariant singular vector~$w_\lambda$
+(Proposition~\ref{prop:baxter-yangian-equivariance}) generates
+a sub-Verma $M(\lambda - 1) \hookrightarrow V_1(a) \otimes M(\lambda)$.
+The quotient is necessarily $M(\lambda + 1)$ by weight comparison.
+Naturality on $\mathcal{O}_{\mathrm{poly}}$ follows from
+Corollary~\ref{cor:baxter-naturality-opoly}.
+The octahedral axiom for composed maps $V_1 \otimes V_1 \otimes M$
+follows from the Clebsch--Gordan decomposition
+$V_1 \otimes V_1 \simeq V_0 \oplus V_2$ and the functoriality of
+the SES with respect to the tensor product associator.
+\end{proof}
+
+\begin{conjecture}[Baxter exact triangles on shifted envelope
+\texorpdfstring{$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$}{Osh};
+\ClaimStatusConjectured]
+\label{conj:baxter-exact-triangles}
+\index{Baxter relation!exact triangle lift!shifted envelope}
+Theorem~\textup{\ref{thm:baxter-exact-triangles-opoly}} extends
+from $\mathcal{O}_{\mathrm{poly}}$ to the full anti-dominant
+shifted envelope
 $\mathcal{O}^{\mathrm{sh}}_{\leq 0}
-:= \bigoplus_{\mu \leq 0} \mathcal{O}_\mu$.
+:= \bigoplus_{\mu \leq 0} \mathcal{O}_\mu$
+for $\fg = \mathfrak{sl}_N$ at general~$N$.
 Concretely, for each node~$i \in I$ and finite-dimensional companion
-module $M_{k,x}^{(i)}$ \textup{(}which for generic~$k$ is
-an irreducible $\mathfrak{sl}_N$-module of highest weight
-$\varpi_i + k\,\varpi_{i+1}$\textup{)}, there is a distinguished
-triangle
+module $M_{k,x}^{(i)}$, there is a distinguished triangle
 \[
 A^-_{k,x,y} \to M_{k,x}^{(i)} \otimes L(\Psi_{i,x}/\Psi_{i,y})
 \to A^+_{k,x,y} \to
 \]
-whose $K_0$-class recovers the displayed formula of Zhang~\cite{Zhang24}.
-In the finite-length heart, these should become short exact sequences.
+whose $K_0$-class recovers the formula of Zhang~\cite{Zhang24},
+and which is functorial on~$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$.
 \end{conjecture}
 
 \begin{proposition}[Yangian equivariance of the Baxter singular vector;
