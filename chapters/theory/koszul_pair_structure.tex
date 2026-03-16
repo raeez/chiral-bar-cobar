@@ -188,9 +188,9 @@ The sum gives the identity, proving exactness. \qedhere
 \begin{definition}[Chiral Hochschild cohomology]
 The \emph{chiral Hochschild cohomology} of $\mathcal{A}$ with coefficients in an $\mathcal{A}$-bimodule $M$ is:
 \[
-CH^n(\mathcal{A}, M) = \text{Ext}^n_{\mathcal{A}^e}(\mathcal{A}, M)
+\ChirHoch^n(\mathcal{A}, M) = \text{Ext}^n_{\mathcal{A}^e}(\mathcal{A}, M)
 \]
-When $M = \mathcal{A}$, we write simply $CH^n(\mathcal{A})$.
+When $M = \mathcal{A}$, we write simply $\ChirHoch^n(\mathcal{A})$.
 \end{definition}
 
 To compute this explicitly, we apply $\text{Hom}_{\mathcal{A}^e}(-, M)$ to the bar resolution:
@@ -218,7 +218,7 @@ Apply $\mathrm{Hom}_{\mathcal{D}_X}(-, \mathcal{A})$ to the bar resolution (Theo
 \label{thm:geometric-chiral-hochschild}
 There is a natural isomorphism:
 \[
-CH^n(\mathcal{A}) \cong H^n\left(\Gamma\left(\overline{C}_{n+1}(X), \mathcal{H}om_{\mathcal{D}_X}(\mathcal{A}^{\boxtimes n+1}, \mathcal{A}) \otimes \Omega^n_{\log}\right)\right)
+\ChirHoch^n(\mathcal{A}) \cong H^n\left(\Gamma\left(\overline{C}_{n+1}(X), \mathcal{H}om_{\mathcal{D}_X}(\mathcal{A}^{\boxtimes n+1}, \mathcal{A}) \otimes \Omega^n_{\log}\right)\right)
 \]
 where $\overline{C}_{n+1}(X)$ is the Fulton--MacPherson compactification of the configuration space.
 \end{theorem}
@@ -264,7 +264,7 @@ Hochschild cohomology carries a Gerstenhaber algebra structure~\cite{Ger63}: a g
 \subsection{The cup product}
 
 \begin{definition}[Cup product on chiral Hochschild cohomology]
-For $f \in CH^p(\mathcal{A})$ and $g \in CH^q(\mathcal{A})$, define their cup product:
+For $f \in \ChirHoch^p(\mathcal{A})$ and $g \in \ChirHoch^q(\mathcal{A})$, define their cup product:
 \[
 (f \cup g)(a_0, \ldots, a_{p+q}) = \text{Res}_{z_p \to w_0} f(a_0, \ldots, a_p)(z_0, \ldots, z_p) \cdot g(a_{p+1}, \ldots, a_{p+q})(w_0, \ldots, w_{q-1})
 \]
@@ -277,7 +277,7 @@ The cup product satisfies:
 \begin{enumerate}
 \item \emph{Associativity}: $(f \cup g) \cup h = f \cup (g \cup h)$
 \item \emph{Graded commutativity}: $f \cup g = (-1)^{|f||g|} g \cup f$
-\item \emph{Unit}: The identity element $1 \in CH^0(\mathcal{A})$ is a unit for $\cup$
+\item \emph{Unit}: The identity element $1 \in \ChirHoch^0(\mathcal{A})$ is a unit for $\cup$
 \end{enumerate}
 \end{proposition}
 
@@ -286,7 +286,7 @@ The cup product satisfies:
 
 \emph{Graded commutativity}: This requires a homotopy argument: the cup product is defined using a residue as $z_p \to w_0$, which is not manifestly symmetric. The commutativity up to sign follows from the fact that the relevant residue pairings on $\overline{C}_n(X)$ are invariant under the permutation exchanging the two groups of points, together with the Koszul sign arising from reordering the differential forms; this is the chiral analogue of the classical Eilenberg--Zilber argument for Hochschild cohomology.
 
-\emph{Unit}: The identity in $CH^0$ is the identity map $\mathcal{A} \to \mathcal{A}$, which acts trivially under cup product. \qedhere
+\emph{Unit}: The identity in $\ChirHoch^0$ is the identity map $\mathcal{A} \to \mathcal{A}$, which acts trivially under cup product. \qedhere
 \end{proof}
 
 \subsection{The chiral Lie bracket}
@@ -294,7 +294,7 @@ The cup product satisfies:
 The chiral Lie bracket uses residue composition:
 
 \begin{definition}[Chiral Lie bracket]
-For $f \in CH^p(\mathcal{A})$ and $g \in CH^q(\mathcal{A})$, define:
+For $f \in \ChirHoch^p(\mathcal{A})$ and $g \in \ChirHoch^q(\mathcal{A})$, define:
 \[
 \{f, g\}_c = f \circ_c g - (-1)^{(p-1)(q-1)} g \circ_c f
 \]
@@ -310,7 +310,7 @@ a_{i+q+1}, \ldots\bigr)
 
 \begin{theorem}[Chiral Gerstenhaber algebra {\cite{Ger63, Tamarkin00}}; \ClaimStatusProvedElsewhere]
 \label{thm:chiral-gerstenhaber-kps}
-The cohomology $CH^*(\mathcal{A})$ with operations $(\cup, \{-,-\}_c)$ forms a Gerstenhaber algebra:
+The cohomology $\ChirHoch^*(\mathcal{A})$ with operations $(\cup, \{-,-\}_c)$ forms a Gerstenhaber algebra:
 \begin{enumerate}
 \item \emph{Chiral Jacobi identity}:
 \[
@@ -322,7 +322,7 @@ The cohomology $CH^*(\mathcal{A})$ with operations $(\cup, \{-,-\}_c)$ forms a G
 \]
 \end{enumerate}
 This is the chiral analogue of Gerstenhaber's classical theorem~\cite{Ger63}.
-The Jacobi identity follows from the identification of $\{-,-\}_c$ with the commutator of coderivations on the bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$: coderivations form a Lie algebra under the commutator bracket, and the identification $CH^*(\mathcal{A}) \cong \mathrm{Coder}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is a standard consequence of the bar-cobar adjunction (see~\cite{LV12}, Theorem~9.3.2 for the classical case).
+The Jacobi identity follows from the identification of $\{-,-\}_c$ with the commutator of coderivations on the bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$: coderivations form a Lie algebra under the commutator bracket, and the identification $\ChirHoch^*(\mathcal{A}) \cong \mathrm{Coder}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is a standard consequence of the bar-cobar adjunction (see~\cite{LV12}, Theorem~9.3.2 for the classical case).
 The Leibniz rule follows from the fact that coderivations are derivations with respect to the coalgebra structure on $\bar{B}^{\mathrm{ch}}(\mathcal{A})$, and the cup product is induced by the coalgebra comultiplication (see Tamarkin~\cite{Tamarkin00} for the $E_2$-formality approach in the associative setting).
 \end{theorem}
 
@@ -337,10 +337,10 @@ The Leibniz rule follows from the fact that coderivations are derivations with r
 \begin{theorem}[\texorpdfstring{$A_\infty$}{A-infinity} structure on chiral Hochschild cohomology; \ClaimStatusProvedHere]
 \label{thm:ainfty-chiral-hochschild}
 \leavevmode\\
-The shifted complex $CH^{*+1}(\mathcal{A})[1]$ carries a natural
+The shifted complex $\ChirHoch^{*+1}(\mathcal{A})[1]$ carries a natural
 $A_\infty$ structure with operations
 \[
-m_n: CH^{i_1} \otimes \cdots \otimes CH^{i_n} \to CH^{i_1 + \cdots + i_n + 2 - n}
+m_n: \ChirHoch^{i_1} \otimes \cdots \otimes \ChirHoch^{i_n} \to \ChirHoch^{i_1 + \cdots + i_n + 2 - n}
 \]
 satisfying the $A_\infty$ relations (Stasheff--Loday--Vallette convention):
 \[
@@ -357,7 +357,7 @@ The operations come from the operad of little discs (or its chiral analogue, the
 \omega_n = \bigwedge_{1 \leq i < j \leq n} d\log(z_i - z_j)
 \]
 
-\emph{Step 2}: For $f_1, \ldots, f_n \in CH^*(\mathcal{A})$, define:
+\emph{Step 2}: For $f_1, \ldots, f_n \in \ChirHoch^*(\mathcal{A})$, define:
 \[
 m_n(f_1, \ldots, f_n) = \int_{\overline{C}_n(\mathbb{P}^1)} f_1(z_1) \wedge \cdots \wedge f_n(z_n) \wedge \omega_n
 \]
@@ -376,9 +376,9 @@ By the commutator construction (antisymmetrizing the $A_\infty$ operations via t
 
 \begin{theorem}[\texorpdfstring{$L_\infty$}{L-infinity} structure {\cite{LV12}}; \ClaimStatusProvedElsewhere]
 \label{thm:linfty-chiral-hochschild}
-The shifted complex $CH^{*-1}(\mathcal{A})[-1]$ carries an $L_\infty$ structure with brackets:
+The shifted complex $\ChirHoch^{*-1}(\mathcal{A})[-1]$ carries an $L_\infty$ structure with brackets:
 \[
-\ell_n: \Lambda^n CH^{*-1} \to CH^{*-1}[2-n]
+\ell_n: \Lambda^n \ChirHoch^{*-1} \to \ChirHoch^{*-1}[2-n]
 \]
 related to the $A_\infty$ operations by:
 \[
@@ -401,11 +401,11 @@ related to the $A_\infty$ operations by:
 For the Virasoro algebra $\mathrm{Vir}_c$ at generic central charge $c$
 (avoiding the minimal model values
 $c_{p,q} = 1 - 6(p-q)^2/(pq)$ and $c = 1$),
-there exists a class $\Theta \in CH^2(\mathrm{Vir}_c)$ such that cup product
+there exists a class $\Theta \in \ChirHoch^2(\mathrm{Vir}_c)$ such that cup product
 with $\Theta$ induces isomorphisms:
 \[
-CH^n(\mathrm{Vir}_c) \xrightarrow{\;\cup\,\Theta\;}
-CH^{n+2}(\mathrm{Vir}_c)
+\ChirHoch^n(\mathrm{Vir}_c) \xrightarrow{\;\cup\,\Theta\;}
+\ChirHoch^{n+2}(\mathrm{Vir}_c)
 \]
 for all $n \geq 0$.
 \end{theorem}
@@ -419,20 +419,20 @@ the Weil--Petersson class
 \index{Weil--Petersson class}
 $\Theta = [\omega_{WP}] \in H^2(\overline{\mathcal{M}}_{0,4}) \cong \mathbb{C}$,
 the fundamental class of the unique boundary divisor.  Via the bar complex
-embedding $H^*(\overline{\mathcal{M}}_{0,4}) \hookrightarrow CH^*(\mathrm{Vir}_c)$
+embedding $H^*(\overline{\mathcal{M}}_{0,4}) \hookrightarrow \ChirHoch^*(\mathrm{Vir}_c)$
 (which maps the $\overline{\mathcal{M}}_{0,n}$ factor of each bar degree to
-the chiral Hochschild complex), $\Theta$ defines a class in $CH^2(\mathrm{Vir}_c)$.
+the chiral Hochschild complex), $\Theta$ defines a class in $\ChirHoch^2(\mathrm{Vir}_c)$.
 
 \emph{Step 2} (Cocycle property).
 Since $\omega_{WP}$ is closed and $\overline{\mathcal{M}}_{0,4}$ is compact,
 $\delta(\Theta) = 0$ in the chiral Hochschild complex.
 
 \emph{Step 3} (Isomorphism).
-The bar filtration on $CH^*(\mathrm{Vir}_c)$ induces a spectral sequence
+The bar filtration on $\ChirHoch^*(\mathrm{Vir}_c)$ induces a spectral sequence
 \[
 E_2^{p,q} = H^p(\overline{\mathcal{M}}_{0,\bullet}) \otimes
 H^q(\mathrm{Vir}_c\text{-mod})
-\;\Longrightarrow\; CH^{p+q}(\mathrm{Vir}_c).
+\;\Longrightarrow\; \ChirHoch^{p+q}(\mathrm{Vir}_c).
 \]
 
 We claim this spectral sequence degenerates at $E_2$ for generic $c$.
@@ -460,7 +460,7 @@ This irreducibility has three consequences:
 
 Hence the entire $q>0$ region of the $E_2$ page vanishes.
 The spectral sequence therefore degenerates at $E_2$, and
-$CH^n(\mathrm{Vir}_c) = E_2^{n,0}$ for all $n$.
+$\ChirHoch^n(\mathrm{Vir}_c) = E_2^{n,0}$ for all $n$.
 
 To compute $E_2^{n,0}$, we use the comparison between the chiral bar
 complex and continuous Lie algebra cohomology.  For a vertex algebra $V$
@@ -469,7 +469,7 @@ of the PBW filtration on the universal enveloping vertex algebra is free),
 the chiral Hochschild complex is quasi-isomorphic to the continuous
 Chevalley--Eilenberg complex:
 \[
-CH^*(\mathrm{Vir}_c) \;\simeq\;
+\ChirHoch^*(\mathrm{Vir}_c) \;\simeq\;
 H^*_{\mathrm{cont}}(\mathrm{Vir}, \mathbb{C} \cdot L_0;\, \mathbb{C})
 \]
 (Beilinson--Drinfeld \cite{BD04}, \S4.6; the relative cohomology is taken
@@ -501,17 +501,17 @@ generates via the cup product, not as the extension class.
 
 Combining the degeneration at $E_2$ with the Gel'fand--Fuchs computation:
 \[
-CH^*(\mathrm{Vir}_c) \;=\; \mathbb{C}[\Theta],
-\qquad CH^{2k} = \mathbb{C}\cdot\Theta^k,
-\quad CH^{2k+1} = 0.
+\ChirHoch^*(\mathrm{Vir}_c) \;=\; \mathbb{C}[\Theta],
+\qquad \ChirHoch^{2k} = \mathbb{C}\cdot\Theta^k,
+\quad \ChirHoch^{2k+1} = 0.
 \]
 
 The cup product
-$\cup\,\Theta\colon CH^n \to CH^{n+2}$ maps $\Theta^k \mapsto \Theta^{k+1}$,
+$\cup\,\Theta\colon \ChirHoch^n \to \ChirHoch^{n+2}$ maps $\Theta^k \mapsto \Theta^{k+1}$,
 which is an isomorphism $\mathbb{C} \xrightarrow{\sim} \mathbb{C}$ for
 all $n \geq 0$.
 The condition $c \neq 1$ ensures non-degeneracy of the Shapovalov form
-on $CH^2$; at $c = 1$ the Kac determinant vanishes for specific conformal
+on $\ChirHoch^2$; at $c = 1$ the Kac determinant vanishes for specific conformal
 weights, and the semisimplicity argument in the first part of Step~3 must
 be modified.
 \end{proof}
@@ -529,18 +529,18 @@ Let $\mathfrak{g}$ be a finite-dimensional simple Lie algebra of rank~$r$
 with exponents $m_1 \leq \cdots \leq m_r$.
 At critical level $k = -h^{\vee}$, the chiral Hochschild cohomology is:
 \[
-CH^*(\hat{\mathfrak{g}}_{-h^{\vee}}) \;\cong\;
+\ChirHoch^*(\hat{\mathfrak{g}}_{-h^{\vee}}) \;\cong\;
 \Lambda^*(P_1, \ldots, P_r) \otimes \bC[\Theta_1, \ldots, \Theta_r]
 \]
 where $\deg P_i = 2m_i + 1$ (odd generators) and $\deg\Theta_i = 2(m_i + 1)$
 (even generators).  In particular:
 \begin{enumerate}
 \item For $\mathfrak{g} = \mathfrak{sl}_2$ (rank $1$, exponent $m_1 = 1$):
-$CH^* = \Lambda(P_1) \otimes \bC[\Theta_1]$ with $\deg P_1 = 3$,
-$\deg\Theta_1 = 4$, and $CH^{n+4} \cong CH^n$ for all $n \geq 0$.
+$\ChirHoch^* = \Lambda(P_1) \otimes \bC[\Theta_1]$ with $\deg P_1 = 3$,
+$\deg\Theta_1 = 4$, and $\ChirHoch^{n+4} \cong \ChirHoch^n$ for all $n \geq 0$.
 \item For rank $r > 1$: the Poincar\'e series is
 $\prod_{i=1}^r (1 + t^{2m_i+1})/(1-t^{2(m_i+1)})$, giving polynomial
-growth $\dim CH^n = O(n^{r-1})$ but \emph{not} strict periodicity when
+growth $\dim \ChirHoch^n = O(n^{r-1})$ but \emph{not} strict periodicity when
 the exponents are not all equal.
 \end{enumerate}
 \end{theorem}
@@ -560,7 +560,7 @@ critical level carries no curvature from either side of the duality.
 In the uncurved setting, the Beilinson--Drinfeld comparison theorem
 (\cite{BD04}, Theorem~4.5.2) applies directly:
 \[
-CH^*(\hat{\mathfrak{g}}_{-h^\vee}) \;\cong\;
+\ChirHoch^*(\hat{\mathfrak{g}}_{-h^\vee}) \;\cong\;
 H^*_{\mathrm{Lie,cont}}(\mathfrak{g} \otimes t\bC[[t]];\, \bC).
 \]
 
@@ -579,12 +579,12 @@ the even generators $\Theta_i$ arise from the $t$-adic filtration and
 correspond to Chern--Weil classes.
 
 \emph{Step 3: Periodicity for rank~$1$.}
-For $\mathfrak{sl}_2$ ($r = 1$, $m_1 = 1$): $CH^* = \Lambda(P_1) \otimes \bC[\Theta_1]$
+For $\mathfrak{sl}_2$ ($r = 1$, $m_1 = 1$): $\ChirHoch^* = \Lambda(P_1) \otimes \bC[\Theta_1]$
 with Poincar\'e series $(1 + t^3)/(1 - t^4)$.  Cup product with
-$\Theta_1 \in CH^4$ gives the isomorphism $CH^n \xrightarrow{\sim} CH^{n+4}$
+$\Theta_1 \in \ChirHoch^4$ gives the isomorphism $\ChirHoch^n \xrightarrow{\sim} \ChirHoch^{n+4}$
 for all $n \geq 0$: injectivity holds because $\bC[\Theta_1]$ is a
 polynomial ring (no relations), and surjectivity because every element of
-$CH^{n+4}$ is divisible by $\Theta_1$ modulo the exterior generator~$P_1$.
+$\ChirHoch^{n+4}$ is divisible by $\Theta_1$ modulo the exterior generator~$P_1$.
 
 For rank $r > 1$, the Poincar\'e series
 $\prod_{i=1}^r (1 + t^{2m_i+1})/(1-t^{2(m_i+1)})$ grows
@@ -596,10 +596,10 @@ Remark~\ref{rem:affine-periodicity-analysis}).
 \begin{remark}[Status and rank distinction]\label{rem:rank-distinction}
 \label{rem:affine-periodicity-analysis}
 \emph{Rank~$1$.}
-For $\hat{\mathfrak{sl}}_2$ at $k = -2$, $CH^* = \Lambda(P_1) \otimes \bC[\Theta_1]$ with $\deg P_1 = 3$, $\deg\Theta_1 = 4$, giving $4$-periodicity $CH^{n+4} \cong CH^n$.  The cup product with $\Theta_1$ is the periodicity operator (as in Theorem~\ref{thm:virasoro-periodicity}), and $\mathfrak{z}(\hat{\mathfrak{sl}}_{2,-2}) \cong \mathrm{Fun}\,\mathrm{Op}_{\mathfrak{sl}_2}$ gives the geometric origin of~$\Theta_1$.
+For $\hat{\mathfrak{sl}}_2$ at $k = -2$, $\ChirHoch^* = \Lambda(P_1) \otimes \bC[\Theta_1]$ with $\deg P_1 = 3$, $\deg\Theta_1 = 4$, giving $4$-periodicity $\ChirHoch^{n+4} \cong \ChirHoch^n$.  The cup product with $\Theta_1$ is the periodicity operator (as in Theorem~\ref{thm:virasoro-periodicity}), and $\mathfrak{z}(\hat{\mathfrak{sl}}_{2,-2}) \cong \mathrm{Fun}\,\mathrm{Op}_{\mathfrak{sl}_2}$ gives the geometric origin of~$\Theta_1$.
 
 \emph{Rank~$r > 1$.}
-The cohomology ring has $r$ distinct polynomial degrees $2(m_i + 1)$; when not all equal, strict periodicity fails.  For $\hat{\mathfrak{sl}}_3$ at $k = -3$: $\deg\Theta_1 = 4$, $\deg\Theta_2 = 6$, and $\dim CH^{12} = 3 \neq 1 = \dim CH^6$, violating $6$-periodicity.  The correct statement is polynomial growth $\dim CH^n = O(n^{r-1})$.
+The cohomology ring has $r$ distinct polynomial degrees $2(m_i + 1)$; when not all equal, strict periodicity fails.  For $\hat{\mathfrak{sl}}_3$ at $k = -3$: $\deg\Theta_1 = 4$, $\deg\Theta_2 = 6$, and $\dim CH^{12} = 3 \neq 1 = \dim CH^6$, violating $6$-periodicity.  The correct statement is polynomial growth $\dim \ChirHoch^n = O(n^{r-1})$.
 \end{remark}
 
 \begin{remark}[Provenance]\label{rem:periodicity-provenance}
@@ -619,11 +619,11 @@ The synthesis for general simple~$\mathfrak{g}$ is new to this work.
 \begin{proposition}[Hochschild periodicity for same-type pairs; \ClaimStatusProvedHere]
 \label{prop:periodicity-same-type}
 \index{periodicity!preservation under Koszul duality}
-For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ where both algebras have the same type \textup{(}both Kac--Moody, both Virasoro, or both $\mathcal{W}_N$\textup{)}, the chiral Hochschild cohomology rings $CH^*(\mathcal{A})$ and $CH^*(\mathcal{A}^!)$ have the same growth type:
+For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ where both algebras have the same type \textup{(}both Kac--Moody, both Virasoro, or both $\mathcal{W}_N$\textup{)}, the chiral Hochschild cohomology rings $\ChirHoch^*(\mathcal{A})$ and $\ChirHoch^*(\mathcal{A}^!)$ have the same growth type:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Virasoro:} $CH^*(\mathrm{Vir}_c) \cong \mathbb{C}[\Theta]$ and $CH^*(\mathrm{Vir}_{26-c}) \cong \mathbb{C}[\Theta']$, both $2$-periodic.
-\item \emph{Kac--Moody:} $CH^*(\widehat{\mathfrak{g}}_k) \cong \Lambda^*(P_1, \ldots) \otimes \mathbb{C}[\Theta_1, \ldots]$ and $CH^*(\widehat{\mathfrak{g}}_{k'})$ have the same Poincar\'e series, since both are computed from the same Lie algebra $\mathfrak{g}$ \textup{(}the exponents depend on $\mathfrak{g}$, not on $k$\textup{)}.
-\item \emph{$\mathcal{W}_N$:} $CH^*(\mathcal{W}_N^k)$ and $CH^*(\mathcal{W}_N^{k'})$ have the same Poincar\'e series, since the DS reduction produces generators of the same conformal weights $2, 3, \ldots, N$ at both levels.
+\item \emph{Virasoro:} $\ChirHoch^*(\mathrm{Vir}_c) \cong \mathbb{C}[\Theta]$ and $\ChirHoch^*(\mathrm{Vir}_{26-c}) \cong \mathbb{C}[\Theta']$, both $2$-periodic.
+\item \emph{Kac--Moody:} $\ChirHoch^*(\widehat{\mathfrak{g}}_k) \cong \Lambda^*(P_1, \ldots) \otimes \mathbb{C}[\Theta_1, \ldots]$ and $\ChirHoch^*(\widehat{\mathfrak{g}}_{k'})$ have the same Poincar\'e series, since both are computed from the same Lie algebra $\mathfrak{g}$ \textup{(}the exponents depend on $\mathfrak{g}$, not on $k$\textup{)}.
+\item \emph{$\mathcal{W}_N$:} $\ChirHoch^*(\mathcal{W}_N^k)$ and $\ChirHoch^*(\mathcal{W}_N^{k'})$ have the same Poincar\'e series, since the DS reduction produces generators of the same conformal weights $2, 3, \ldots, N$ at both levels.
 \end{enumerate}
 \end{proposition}
 
@@ -692,7 +692,7 @@ G_{\mathcal{A}}\bigr)
 \]
 where:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $M_{\mathcal{A}} = \bigoplus_{n \geq 0} CH^n(\mathcal{A})$ is the \emph{periodicity module}, viewed over the periodicity operator $\sigma$.  For rank~$1$, $M_{\mathcal{A}}$ is free of rank~$1$ over $\mathbb{Z}[\sigma]/(\sigma^N - 1)$; for rank~$r > 1$, it has $r$~polynomial and $r$~exterior factors.
+\item $M_{\mathcal{A}} = \bigoplus_{n \geq 0} \ChirHoch^n(\mathcal{A})$ is the \emph{periodicity module}, viewed over the periodicity operator $\sigma$.  For rank~$1$, $M_{\mathcal{A}}$ is free of rank~$1$ over $\mathbb{Z}[\sigma]/(\sigma^N - 1)$; for rank~$r > 1$, it has $r$~polynomial and $r$~exterior factors.
 \item $Q_{\mathcal{A}} = \Lambda(x_{2m_1+1}, \ldots, x_{2m_r+1}) \otimes \mathbb{C}[y_{2(m_1+1)}, \ldots, y_{2(m_r+1)}]$ is the \emph{periodicity algebra} (the Gel'fand--Fuchs ring governing $M_{\mathcal{A}}$).
 \item $G_{\mathcal{A}} = \mathrm{Gal}(K_{\mathcal{A}}/\mathbb{Q})$ is the \emph{periodicity Galois group} of the splitting field of the Poincar\'e series denominator.  For $\widehat{\mathfrak{sl}}_2$: $G = \mathbb{Z}/2$; for $\widehat{\mathfrak{sl}}_3$: $G$ contains cyclotomic Galois groups of $6$th and $8$th roots.
 \end{enumerate}
