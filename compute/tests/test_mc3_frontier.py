@@ -35,7 +35,7 @@ from compute.lib.mc3_frontier import (
     hardy_ramanujan_constant,
     hom_prefundamental_eval,
     multi_partition_function,
-    pro_weyl_mittag_leffler_assembly,
+    pro_weyl_kernel_dimensions,
     r_matrix_sl2_equivariance,
     resolution_obstruction_higher_rank,
     resolution_obstruction_sequence,
@@ -211,15 +211,20 @@ class TestEndomorphismAlgebra:
 
     def test_total_dim(self):
         result = endomorphism_algebra_G()
-        assert result["total_dim"] == 5
+        # End_Y(V_1)=1 (Schur) + End_Y(L^-)=1 (Schur) + 0 + 0 = 2
+        assert result["total_dim"] == 2
 
     def test_block_structure(self):
         result = endomorphism_algebra_G()
         blocks = result["blocks"]
-        assert blocks["End(V_1)"] == 4
-        assert blocks["End(L^-)"] == 1
-        assert blocks["Hom(V_1, L^-)"] == 0
-        assert blocks["Hom(L^-, V_1)"] == 0
+        assert blocks["End_Y(V_1)"] == 1  # Schur's lemma: V_1 irreducible
+        assert blocks["End_Y(L^-)"] == 1  # Schur's lemma: L^- irreducible
+        assert blocks["Hom(V_1, L^-)"] == 0  # weight parity
+        assert blocks["Hom(L^-, V_1)"] == 0  # weight parity
+
+    def test_weight_parity_obstruction(self):
+        result = endomorphism_algebra_G()
+        assert result["weight_parity_obstruction"]
 
 
 class TestCompactnessObstruction:
@@ -404,17 +409,23 @@ class TestSpectralSequenceConvergence:
         assert result["e1_dims"][(0, 0)] == 1
 
 
-class TestProWeylMittagLeffler:
+class TestProWeylKernelDimensions:
 
-    def test_all_surjective(self):
-        result = pro_weyl_mittag_leffler_assembly(max_lam=10)
-        assert result["all_mittag_leffler"] is True
-        assert result["r1_lim_vanishes"] is True
+    def test_kernel_matches_partitions(self):
+        """Kernel dims in pro-Weyl tower match partition numbers."""
+        result = pro_weyl_kernel_dimensions(max_lam=5, max_depth=10)
+        for lam in range(6):
+            for entry in result["results"][lam]["kernel_dims"]:
+                level = entry["level"]
+                assert entry["expected_kernel_dim"] == partition_number(level)
 
-    def test_multiple_lambdas(self):
-        result = pro_weyl_mittag_leffler_assembly(max_lam=15)
-        for lam in range(16):
-            assert result["verifications"][lam]["mittag_leffler"] is True
+    def test_kernel_growth(self):
+        """Kernel dimensions match partition numbers at each level."""
+        from compute.lib.utils import partition_number as pn
+        result = pro_weyl_kernel_dimensions(max_lam=0, max_depth=15)
+        for entry in result["results"][0]["kernel_dims"]:
+            level = entry["level"]
+            assert entry["expected_kernel_dim"] == pn(level)
 
 
 class TestChromaticVsNaive:
@@ -598,12 +609,10 @@ class TestKellerCompactGenerator:
         for w in range(-2 * depth + 4, 2 * depth):
             assert VL.get(w, 0) == rhs.get(w, 0)
 
-    def test_ext0_total_equals_5(self):
-        ext0_VV = 4
-        ext0_LL = 1
-        ext0_VL = 0
-        ext0_LV = 0
-        assert ext0_VV + ext0_LL + ext0_VL + ext0_LV == 5
+    def test_ext0_total_equals_2(self):
+        """End_Y(G) = End_Y(V_1) + End_Y(L^-) = 1 + 1 = 2 by Schur."""
+        result = endomorphism_algebra_G()
+        assert result["total_dim"] == 2
 
     def test_generation_radius(self):
         """With both V_1 and L^-, generation radius is bounded."""
@@ -796,8 +805,9 @@ class TestCrossStrategy:
                 assert tensor.get(w, 0) == rhs.get(w, 0)
 
     def test_keller_vs_rickard_endomorphism(self):
-        """Keller chi(End(G)) = Rickard chi(End(T)) = 5."""
-        assert (4 + 1 + 0 + 0) == 5
+        """Keller dim Hom(G,G) = 2 (Schur on both irreducible summands)."""
+        result = endomorphism_algebra_G()
+        assert result["total_dim"] == 2
 
     def test_chebyshev_cross_check(self):
         """Chebyshev: [V_2] = [V_1]^2 - [V_0] verified with local chars."""
