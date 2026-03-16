@@ -604,51 +604,11 @@ def _miura_generators_orthonormal(t: float) -> Tuple[Field, Field, Field]:
     G = np.einsum('ia,ib->ab', h_proj, h_proj)
     assert np.allclose(G, np.eye(3), atol=1e-10), f"G matrix not identity: {G}"
 
-    # ---- Build T ----
-    # T = -(1/2) sum_a (dphi_a)^2 + sum_a Q_a * d^2phi_a
-    T_field: Field = []
-    for a in range(3):
-        # -(1/2) (dphi_a)^2
-        T_field.append((-0.5, ((a, 1), (a, 1))))
-        # Q_a * d^2phi_a
-        if abs(Q[a]) > 1e-15:
-            T_field.append((Q[a], ((a, 2),)))
-    T_field = simplify_field(T_field)
-
-    # ---- Build W_3 ----
-    # The spin-3 generator from the Miura transformation.
-    # W_3 = sum_{i<j<k} :J_i J_j J_k: + quantum corrections
-    #
-    # The full expression (Fateev-Lukyanov):
-    # W_3 = -alpha_0^3 * sum_{i<j<k} :h_i.dphi * h_j.dphi * h_k.dphi:
-    #        + alpha_0^2 * quantum_2 (involving d^2phi)
-    #        + alpha_0 * quantum_1 (involving d^3phi and mixed)
-    #
-    # For the quantum corrections, the complete formula is:
-    # W_3 = e_3(J) + alpha_0 * [sum_{i<j} c_{ij} :J_i dJ_j:] + alpha_0^2 * [sum_i d_i d^2J_i]
-    #
-    # where e_3 is the third elementary symmetric polynomial and the coefficients
-    # c_{ij}, d_i depend on the ordering in the Miura product.
-    #
-    # The explicit quantum Miura for sl_4 gives:
-    # L = (d + J_1)(d + J_2)(d + J_3)(d + J_4)
-    #   = d^4 + e_1 d^3 + (e_2 + Q_2) d^2 + (e_3 + Q_3) d + (e_4 + Q_4)
-    #
-    # where e_k are the k-th elementary symmetric polynomials of J_i, and
-    # Q_k are quantum corrections.
-    #
-    # With e_1 = sum J_i = 0 (tracelessness), we get:
-    # T = coefficient of d^2 = e_2 + Q_2
-    # W_3 = coefficient of d = e_3 + Q_3
-    # W_4 = constant term = e_4 + Q_4
-
-    # I will compute the quantum Miura product EXPLICITLY by expanding
-    # factor by factor, tracking all terms.
-
-    # Define the currents
-    # J_i(z) = alpha_0 * sum_a h_{i,a} * dphi_a(z)
-
-    W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
+    # Build T, W_3, W_4 from the quantum Miura product.
+    # ALL generators come from the SAME expansion to ensure consistency:
+    # the OPE of W_3 x W_3 closes within {T_Miura, W_3_Miura, W_4_Miura}.
+    # Using T_direct with W_3/W_4 from Miura would mix two different algebras.
+    T_field, W3_field, W4_field = _expand_miura_product(t, h_proj, Q)
 
     return T_field, W3_field, W4_field
 
@@ -765,10 +725,11 @@ def _expand_miura_product(
     for coeff, _ in c3:
         assert abs(coeff) < 1e-10, f"d^3 coefficient not zero: {c3}"
 
+    T_field = simplify_field(coeffs.get(2, []))
     W3_field = coeffs.get(1, [])
     W4_field = coeffs.get(0, [])
 
-    return W3_field, W4_field
+    return T_field, W3_field, W4_field
 
 
 # =========================================================================
@@ -1643,18 +1604,41 @@ class W4MiuraOPE:
         return overlap / self.norm_W4 if abs(self.norm_W4) > 1e-15 else 0.0
 
     def _decompose_spin4(self, target: Field) -> float:
-        """Extract the W_4 coefficient from a weight-4 field via BPZ projection.
+        """Extract the W_4 coefficient from a weight-4 field via Gram matrix.
 
-        By primary orthogonality under the Zamolodchikov metric:
-          <W_4 | Lambda>_BPZ = 0   (different conformal families)
-          <W_4 | d^2T>_BPZ  = 0   (primary vs Virasoro descendant)
-          <W_4 | dW_3>_BPZ  = 0   (different conformal families)
+        The weight-4 basis {W_4, Lambda, d^2T, dW_3} is NOT orthogonal
+        under the free-field Wick contraction metric (the BPZ inner
+        product of the Miura realization).  Primary orthogonality holds
+        in the PHYSICAL W-algebra inner product, but the free-field inner
+        product mixes conformal families because the free-boson Fock space
+        at weight 4 has dimension > rank(W-algebra at weight 4).
 
-        So the W_4 coefficient is simply <W_4|target>_BPZ / <W_4|W_4>_BPZ,
-        without needing to solve a linear system or invert a Gram matrix.
+        We therefore solve the full linear system:
+          target = a * W_4 + b * Lambda + c * d^2T + d * dW_3
+        using the Gram matrix G_{ij} = <basis_i | basis_j>_BPZ and the
+        overlap vector v_i = <basis_i | target>_BPZ.
+        The coefficients are x = G^{-1} v, and we return x[0] = a.
         """
-        overlap = _bpz_inner_product(self.W4, target)
-        return overlap / self.norm_W4 if abs(self.norm_W4) > 1e-15 else 0.0
+        basis = [self.W4, self.Lambda, self.d2T, self.dW3]
+        n = len(basis)
+
+        # Build Gram matrix
+        G = np.zeros((n, n))
+        for i in range(n):
+            for j in range(n):
+                G[i, j] = _bpz_inner_product(basis[i], basis[j])
+
+        # Build overlap vector
+        v = np.zeros(n)
+        for i in range(n):
+            v[i] = _bpz_inner_product(basis[i], target)
+
+        # Solve G x = v
+        try:
+            x = np.linalg.solve(G, v)
+            return x[0]  # W_4 coefficient
+        except np.linalg.LinAlgError:
+            return 0.0
 
     def extract_all_with_verification(self) -> Dict[str, object]:
         """Extract all stage-4 coefficients with verification data."""
