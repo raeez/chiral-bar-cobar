@@ -1,0 +1,430 @@
+--- /mnt/data/vol1_orig/chapters/theory/algebraic_foundations.tex	2026-03-15 20:46:51.000000000 +0000
++++ /mnt/data/vol1/chapters/theory/algebraic_foundations.tex	2026-03-16 21:32:09.742125224 +0000
+@@ -218,19 +218,78 @@
+ The correspondence between twisting morphisms and GLZ Maurer--Cartan
+ elements is Proposition~\ref{prop:comparison-our-glz}(iii).%
+ 
+-\subsection{Twisting morphisms: the fundamental object}
++\subsection{Twisting morphisms: the first strict model}
+ \label{subsec:twisting-morphisms-fundamental}
+ \index{twisting morphism|textbf}
+ 
+-The single algebraic structure underlying bar-cobar duality, Koszul
+-resolutions, and the modular genus tower is the convolution dg~Lie
+-algebra $\mathrm{Hom}(C, A)$; its Maurer--Cartan elements are the
+-twisting morphisms.  We give the classical theory
+-(\cite[\S2.1--2.3]{LV12}) before the chiral generalization
+-(Chapter~\ref{chap:koszul-pairs}); the modular extension appears
+-in Remark~\ref{rem:convolution-hierarchy}.
++The first strict coordinate system for bar-cobar duality, Koszul
++resolutions, and the genus-zero part of the modular tower is the
++convolution dg~Lie algebra $\mathrm{Hom}(C, A)$.  The invariant
++deformation object is larger: one should distinguish the chosen strict
++dg~Lie model from the homotopy-coherent deformation object it presents.
++We make that distinction explicit now, because the same convention will
++govern every later modular construction.
++
++\begin{convention}[Strict coordinates versus homotopy-invariant deformation objects]
++\label{conv:strict-versus-homotopy-convolution}
++\index{convolution algebra!strict versus homotopy}
++For a strict dg coalgebra/algebra pair $(C,A)$ we write
++\[
++\operatorname{Conv}^{\mathrm{str}}(C,A):=\Hom(C,A)
++\]
++for the classical convolution dg Lie algebra.  This is a chosen
++\emph{strict model}.  The homotopy-invariant deformation object is
++denoted
++\[
++\operatorname{Conv}_{\infty}(C,A),
++\]
++defined by passing to quasi-free/cofibrant resolutions or, equivalently,
++by taking coderivations on the cofree coalgebra encoding the relevant
++$A_\infty$/$P_\infty$ structure.  Maurer--Cartan elements of
++$\operatorname{Conv}_{\infty}(C,A)$ are homotopy twisting morphisms.  Whenever the
++text below writes a concrete dg Lie algebra of maps or coderivations,
++the invariant statement should be read in the corresponding
++$\operatorname{Conv}_{\infty}$-object; the dg Lie algebra records one strict
++coordinate chart.
++\end{convention}
++
++\begin{theorem}[Operadic homotopy convolution theorem; \ClaimStatusProvedElsewhere{} {\cite{LV12,KontsevichSoibelman,Tamarkin00}}]
++\label{thm:operadic-homotopy-convolution}
++Let $C$ be a conilpotent dg cooperad and $P$ a dg operad.  There is a
++complete filtered $L_\infty$-algebra
++\[
++\operatorname{Conv}_{\infty}(C,P),
++\]
++well defined up to filtered $L_\infty$ quasi-isomorphism, with the
++following properties.
++\begin{enumerate}[label=\textup{(\roman*)}]
++\item Its Maurer--Cartan elements are precisely the
++  $\infty$-twisting morphisms from~$C$ to~$P$.
++\item An $\infty$-quasi-isomorphism in either variable induces an
++  $L_\infty$ quasi-isomorphism on the corresponding homotopy
++  convolution objects.
++\item If $C$ and $P$ are already strict models in which no higher
++  coherences have been resolved, then the classical convolution dg Lie
++  algebra $\Hom_{\mathbb{S}}(C,P)$ is a strictification of
++  $\operatorname{Conv}_{\infty}(C,P)$.
++\end{enumerate}
++For ordinary dg coalgebras and algebras this specializes to the pair
++$(C,A)$ and the strict dg Lie algebra $\Hom(C,A)$.
++\end{theorem}
++
++\begin{proof}[Explanation]
++The twisting-morphism formalism of~\cite{LV12} identifies homotopy
++$P$-algebra structures with square-zero coderivations on the cofree
++$C$-coalgebra.  The resulting deformation complex is complete and
++filtered by arity or bar length, and homotopy transfer transports it to
++any quasi-isomorphic model.  The homotopy classification of such
++deformation problems is naturally $L_\infty$-valued in the sense of
++Kontsevich--Soibelman; Tamarkin's enhancement of deformation complexes
++is the prototypical example showing that the strict dg Lie shadow need
++not be the whole story.
++\end{proof}
+ 
+-\begin{definition}[Convolution dg Lie algebra]
++\begin{definition}[Strict convolution dg Lie algebra]
+ \label{def:convolution-dg-lie}
+ \index{convolution dg Lie algebra|textbf}
+ Let $(C, \Delta, d_C)$ be a conilpotent dg coalgebra and
+@@ -253,7 +312,7 @@
+ \label{def:twisting-morphism}
+ \index{twisting morphism!definition|textbf}
+ \index{Maurer--Cartan element|textbf}
+-A \emph{twisting morphism} $\tau\colon C \to A$ is a
++A \emph{twisting morphism in strict coordinates} $\tau\colon C \to A$ is a
+ degree-$+1$ linear map (degree $-1$ in the homological convention
+ of~\cite{LV12}) satisfying the \emph{Maurer--Cartan equation} in
+ the convolution algebra
+@@ -264,11 +323,48 @@
+ d_A \circ \tau + \tau \circ d_C
+ + \mu_A \circ (\tau \otimes \tau) \circ \Delta_C = 0.
+ \end{equation}
+-The set of all twisting morphisms is
++The set of all twisting morphisms in this strict model is
+ $\mathrm{Tw}(C, A) := \mathrm{MC}(\mathrm{Hom}(C, A))$
+-\cite[\S2.1]{LV12}.
++\cite[\S2.1]{LV12}.  The homotopy-invariant notion is the Maurer--
++Cartan space of the corresponding convolution
++$L_\infty$-algebra; the strict equation above is its chosen chain-level
++presentation.
+ \end{definition}
+ 
++\begin{convention}[Strict versus homotopy convolution]
++\label{conv:strict-vs-homotopy-convolution}
++Whenever $C$ and $A$ are strict algebraic objects, we write
++\[
++\operatorname{Conv}^{\mathrm{str}}(C,A):=\Hom(C,A)
++\]
++for the explicit convolution pre-Lie/dg Lie algebra of
++Definition~\ref{def:convolution-dg-lie}.  The homotopy-invariant
++object controlling deformations is written
++\[
++\operatorname{Conv}_{\infty}(C,A),
++\]
++defined up to $L_\infty$-quasi-isomorphism by replacing the operadic or
++cooperadic input by a quasi-free/cofibrant model, equivalently by
++passing to coderivations of the appropriate cofree coalgebra.  Its
++Maurer--Cartan elements are \emph{$\infty$-twisting morphisms}.  In all
++later chapters, any displayed convolution dg Lie algebra should be read
++as a chosen strict chart on this underlying homotopy deformation
++object.
++\end{convention}
++
++\begin{proposition}[Homotopy invariance of convolution presentations;
++\ClaimStatusProvedElsewhere]
++\label{prop:homotopy-invariance-convolution}
++If one replaces $C$ and $A$ by quasi-isomorphic cofibrant/fibrant or
++quasi-free models, the resulting strict convolution dg Lie algebras are
++related by filtered $L_\infty$-quasi-isomorphisms.  Consequently their
++Maurer--Cartan simplicial sets are equivalent, and they present the same
++formal moduli problem of twisting morphisms.  This is the sense in
++which $\operatorname{Conv}_{\infty}(C,A)$ is the invariant object,
++while $\operatorname{Conv}^{\mathrm{str}}(C,A)$ is a coordinate model
++\cite[\S10.4]{LV12}; see also \cite{KontsevichSoibelman,FG12,Tamarkin00}.
++\end{proposition}
++
+ \begin{definition}[Twisted tensor products]
+ \label{def:twisted-tensor-product}
+ \index{twisted tensor product|textbf}
+@@ -360,7 +456,8 @@
+ (Theorem~\ref{thm:bar-nilpotency-complete}): the Fay trisecant
+ identity (Proposition~\ref{prop:fay-trisecant}) and the Arnold
+ relations (Theorem~\ref{thm:arnold-relations}) are the analytic
+-and combinatorial incarnations of the single algebraic MC equation.
++and combinatorial incarnations of the single algebraic MC equation in strict
++coordinates.
+ 
+ The chiral generalization of the full bijection~\eqref{eq:tw-adjunction}
+ is the chiral twisting datum
+@@ -369,35 +466,42 @@
+ (Theorem~\ref{thm:fundamental-twisting-morphisms}).
+ \end{remark}
+ 
+-\begin{remark}[The convolution hierarchy: from $\mathrm{Hom}(C,A)$ to
++\begin{remark}[The convolution hierarchy: from strict coordinates to
+ modular homotopy theory]
+ \label{rem:convolution-hierarchy}
+ \index{convolution dg Lie algebra!hierarchy}
+ \index{modular homotopy theory!from convolution algebra}
+-As the genus filtration opens, the convolution algebra enlarges:
++As the genus filtration opens, the deformation object acquires richer
++homotopy structure.  The guiding rule is that the left column records
++convenient \emph{strict presentations}, while the invariant object is the
++corresponding filtered $L_\infty$-algebra.
+ 
+ \smallskip
+ \begin{center}
+ \renewcommand{\arraystretch}{1.4}
+ \begin{tabular}{llll}
+ \toprule
+-\emph{Convolution algebra} & \emph{MC elements}
+-  & \emph{Genus range} & \emph{MC equation} \\
++\emph{Presentation} & \emph{MC elements}
++  & \emph{Genus range} & \emph{Equation in strict coordinates} \\
+ \midrule
+-$\mathrm{Hom}(C, A)$
+-  & twisting morphisms $\tau$
++$\operatorname{Conv}^{\mathrm{str}}(C,A)=\Hom(C,A)$
++  & strict twisting morphisms $\tau$
+   & $g = 0$ (classical)
+   & $\partial\tau + \tau\star\tau = 0$ \\
++$\operatorname{Conv}_{\infty}(C,A)$
++  & $\infty$-twisting morphisms
++  & $g = 0$ (homotopy invariant)
++  & $\sum_{n\ge 1}\frac{1}{n!}\ell_n(\tau,\ldots,\tau)=0$ \\
+ $\mathrm{CoDer}(\barB(\cA))[1]$
+-  & $A_\infty$ structures
++  & strict $A_\infty$ structures
+   & $g = 0$ (chiral)
+   & $\sum m_i \circ m_j = 0$ \\
+ $\operatorname{CoDer}^{\mathrm{cyc}}(\widehat{\barB}(\cA))[1]$
+   & cyclic $L_\infty$ operations
+   & $g = 0$ (cyclic)
+   & $\sum \ell_j \circ \ell_i = 0$ \\
+-$\operatorname{Def}^{\mathrm{mod}}(\cA)$
+-  & $\tau_{\mathrm{mod}}$
++$\operatorname{Def}^{\mathrm{mod}}(\cA)_{\mathrm{str}}$
++  & strict modular MC data
+   & all $g$
+   & QME~\eqref{eq:QME} \\
+ \bottomrule
+@@ -406,20 +510,26 @@
+ \smallskip
+ 
+ \noindent
+-The $[1]$-shift in rows 2--3 makes the coderivation bracket
+-degree~$0$, matching the tangent Lie algebra convention.
+-The rows are related by successive enrichments:
+-row~1 $\to$ row~2 via the bar construction (coalgebra
+-becomes bar coalgebra);
+-row~2 $\to$ row~3 by completing the bar coalgebra and
+-restricting to cyclic coderivations
+-($\operatorname{CoDer}^{\mathrm{cyc}} \subset
+-\operatorname{CoDer}$);
+-row~3 $\to$ row~4 by tensoring with chains on
+-$\overline{\mathcal{M}}_{g,n}$
+-(Definition~\ref{def:modular-deformation-complex}).
+-The MC equation specializes at each level as shown in the
+-fourth column.
++The $[1]$-shift in the coderivation rows makes the strict bracket
++degree~$0$, matching the tangent Lie algebra convention.  The rows are
++related by successive enrichments: row~1 $\to$ row~2 passes from strict
++convolution to homotopy-invariant convolution; row~2 $\to$ row~3 chooses
++a bar-coderivation model; row~3 $\to$ row~4 restricts to cyclic
++coderivations; row~4 $\to$ row~5 couples the cyclic deformation object
++to chains on $\overline{\mathcal{M}}_{g,n}$
++(Definition~\ref{def:modular-deformation-complex}).  Every modular bar
++construction later in the monograph should be read as a computation in
++one of these strictifications rather than as the definition of the
++underlying homotopy object itself.
++\end{remark}
++
++\begin{remark}[How to read the convolution hierarchy]
++\label{rem:read-convolution-hierarchy}
++Remark~\ref{rem:convolution-hierarchy} lists convenient strict
++coordinates.  Their homotopy-invariant counterparts are obtained by
++homotopy transfer and strictification.  In particular, the modular row
++should be read as a strict chart for the modular deformation object
++later denoted $\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA)$.
+ \end{remark}
+ 
+ \subsection{The Gui--Li--Zeng quadratic duality framework}
+--- /mnt/data/vol1_orig/chapters/theory/chiral_hochschild_koszul.tex	2026-03-16 20:17:53.000000000 +0000
++++ /mnt/data/vol1/chapters/theory/chiral_hochschild_koszul.tex	2026-03-16 21:32:09.744279397 +0000
+@@ -724,14 +724,17 @@
+ \subsection{The cyclic deformation complex}
+ \label{subsec:cyclic-deformation}
+ 
++\input{chapters/theory/homotopy_modular_deformation_refoundation}
++
+ \begin{definition}[Cyclic deformation complex: elementary models]
+ \label{def:cyclic-deformation-elementary}
+ \index{cyclic deformation complex|textbf}
+ \index{Def cyc@$\operatorname{Def}_{\mathrm{cyc}}$|textbf}
+-Let $\cA$ be a chiral algebra on~$X$.  The \emph{cyclic deformation
+-complex} $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ is the tangent dg
+-Lie algebra (or, more generally, $L_\infty$-algebra) controlling
+-cyclic deformations of~$\cA$.
++Let $\cA$ be a chiral algebra on~$X$.  The homotopy-invariant
++\emph{cyclic deformation object} of~$\cA$ is a complete filtered cyclic
++$L_\infty$-algebra.  A chosen strict presentation of this object is the
++\emph{cyclic deformation complex} $\operatorname{Def}_{\mathrm{cyc}}(\cA)$
++used for explicit calculations below.
+ 
+ \smallskip\noindent
+ \textbf{Abstract definition (H-level).}
+@@ -1852,16 +1855,37 @@
+ 
+ The genus-$0$ cyclic deformation complex
+ $\Defcyc(\cA)$ (Definition~\ref{def:cyclic-deformation-elementary})
+-is the tree-level shadow of a modular convolution dg Lie algebra.
+-The full modular version assembles all genera:
++is the tree-level strict shadow of the modular deformation object.  To
++upgrade from the dg level to the full homotopy level we separate the
++chosen explicit convolution model from the cyclic $L_\infty$-algebra it
++presents.
++
++\begin{convention}[Strict modular model and modular homotopy object]
++\label{conv:strict-modular-model}
++\index{modular deformation complex!strict versus homotopy}
++We write
++\[
++\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA)
++\]
++for the explicit convolution dg Lie algebra built from chains on
++$\overline{\mathcal M}_{g,n}$ and endomorphisms of~$\cA$.  The
++homotopy-invariant modular deformation object is denoted
++\[
++\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA),
++\]
++a complete filtered cyclic $L_\infty$-algebra well defined up to
++filtered $L_\infty$ quasi-isomorphism.  Existing undecorated uses of
++$\operatorname{Def}^{\mathrm{mod}}(\cA)$ in this chapter should be read
++as references to the strict model.
++\end{convention}
+ 
+-\begin{definition}[Modular deformation complex]
++\begin{definition}[Strict modular deformation complex]
+ \label{def:modular-deformation-complex}
+ \index{modular deformation complex|textbf}
+ For a chiral algebra~$\cA$ on a smooth projective curve~$X$, the
+-\emph{modular deformation complex} is the convolution dg Lie algebra
++\emph{strict modular deformation complex} is the convolution dg Lie algebra
+ \begin{equation}\label{eq:modular-deformation-complex}
+-\operatorname{Def}^{\mathrm{mod}}(\cA)
++\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA)
+ \;:=\;
+ \prod_{g,n}
+ \operatorname{Hom}_{\Sigma_n}\!\bigl(
+@@ -1883,23 +1907,67 @@
+ \end{itemize}
+ A Maurer--Cartan element
+ $\Theta \in
+-\operatorname{MC}(\operatorname{Def}^{\mathrm{mod}}(\cA))$ is
+-equivalent to a modular homotopy type on the underlying graded
+-object of~$\cA$
++\operatorname{MC}(\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA))$ is
++equivalent to a strict presentation of a modular homotopy type on the
++underlying graded object of~$\cA$
+ (Definition~\ref{def:modular-homotopy-abstract}).
+ The MC equation
+ $d\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+ encodes clutching compatibility at every genus.
+ \end{definition}
+ 
++\begin{construction}[Modular homotopy deformation object]
++\label{const:modular-homotopy-deformation-object}
++Filter $\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA)$ by genus and
++bar length.  Choose any complete filtered contraction of this dg Lie
++algebra onto a smaller filtered complex.  By the homotopy transfer
++package of Appendix~\ref{app:homotopy-transfer}, the transferred higher
++brackets $\{\ell_n\}_{n\ge 1}$ endow the target with a cyclic
++$L_\infty$-structure.  Its filtered $L_\infty$ quasi-isomorphism class
++is denoted
++\[
++\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA).
++\]
++\end{construction}
++
++\begin{proposition}[Strictification principle for modular deformation theory; \ClaimStatusProvedHere]
++\label{prop:modular-strictification-principle}
++The strict modular deformation complex
++$\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA)$ is a strict model
++of $\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA)$.  Consequently:
++\begin{enumerate}[label=\textup{(\roman*)}]
++\item complete filtered $L_\infty$ quasi-isomorphic choices of strict
++  model determine equivalent Maurer--Cartan deformation functors;
++\item the genus-zero truncation of
++  $\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA)$ recovers the cyclic
++  deformation object $\Defcyc(\cA)$;
++\item the canonical class $\Theta_\cA$ is a Maurer--Cartan element whose
++  Taylor components simultaneously govern the modular bar differential,
++  clutching, and the higher brackets on every transferred model.
++\end{enumerate}
++\end{proposition}
++
++\begin{proof}
++The first statement is exactly the output of homotopy transfer for
++complete filtered dg Lie algebras.  Maurer--Cartan deformation functors
++are invariant under filtered $L_\infty$ quasi-isomorphism
++(cf.~\cite{KontsevichSoibelman,Get09}).  Restricting the stable-graph
++formulas to trees gives genus~$0$.  The formulas defining
++$D_{\mathrm{tot}}$ and the clutching operators are written as
++coderivation actions of $\Theta_\cA$, so the transferred higher
++brackets are the same data expressed on a different model.
++\end{proof}
++
+ \begin{remark}[Modular versus cyclic]
+ \label{rem:modular-vs-cyclic-complex}
+-The restriction $\operatorname{Def}^{\mathrm{mod}}(\cA)|_{g=0}
+-\cong \Defcyc(\cA)$ recovers the genus-$0$ cyclic deformation
+-complex.  At $g \geq 1$, the coefficients are
+-chains on $\overline{\mathcal{M}}_{g,n}$, so stable-graph geometry
+-enters the convolution algebra itself
+-(Remark~\ref{rem:convolution-hierarchy}).
++The restriction of the strict model
++$\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA)$ to genus~$0$
++recovers $\Defcyc(\cA)$, and the same is true for the transferred
++homotopy object $\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA)$ after
++forgetting every positive-genus Taylor component.  At $g \geq 1$, the
++coefficients are chains on $\overline{\mathcal{M}}_{g,n}$, so
++stable-graph geometry enters the deformation object itself rather than
++merely its differential (Remark~\ref{rem:convolution-hierarchy}).
+ \end{remark}
+ 
+ \subsection{Concrete modular constructions: from stable graphs to quantum homotopy theory}
+--- /mnt/data/vol1_orig/chapters/theory/higher_genus_complementarity.tex	2026-03-16 20:17:53.000000000 +0000
++++ /mnt/data/vol1/chapters/theory/higher_genus_complementarity.tex	2026-03-16 21:21:31.288532047 +0000
+@@ -1636,7 +1636,7 @@
+ polarization: $Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary
+ Lagrangians for the Verdier pairing.
+ This extends to a $(-1)$-shifted symplectic structure in the PTVV
+-sense (Theorem~\ref{thm:lagrangian-complementarity}).
++sense (Theorem~\ref{thm:shifted-symplectic-complementarity}).
+ \end{remark}
+ 
+ \subsection{Shifted symplectic complementarity}
+@@ -1779,6 +1779,21 @@
+ applied to the bar complex rather than to~$R\Gamma$).
+ \end{proof}
+ 
++\begin{remark}[Genus-wise strictification]
++\label{rem:genuswise-strictification}
++The dg Lie algebra $L_g = \barB^{(g)}(\cA)[1]$ appearing in
++Theorem~\ref{thm:shifted-symplectic-complementarity} is a genus-$g$ strict
++chart inside the modular deformation package of
++\S\ref{subsec:modular-deformation-complex}.  More precisely, after
++filtering $\operatorname{Def}^{\mathrm{mod},\mathrm{str}}(\cA)$ by
++genus, $L_g$ identifies with the genus-$g$ strict truncation of the
++complete cyclic $L_\infty$-object
++$\operatorname{Def}^{\mathrm{mod}}_{\infty}(\cA)$.  Thus the
++$(-1)$-shifted symplectic formal moduli problem $\operatorname{MC}(L_g)$
++should be read as one coordinate chart on a single modular formal
++moduli problem, not as an isolated dg Lie phenomenon.
++\end{remark}
++
+ \begin{proposition}[PTVV Lagrangian embedding; \ClaimStatusProvedHere]
+ \label{prop:ptvv-lagrangian}
+ \index{PTVV!Lagrangian embedding|textbf}
