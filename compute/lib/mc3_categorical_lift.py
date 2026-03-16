@@ -107,31 +107,32 @@ def baxter_ses_higher_spin(n: int, depth: int = 40) -> Dict:
 
 
 def yangian_singular_vector_lambda0() -> Dict:
-    """Verify the Yangian singular vector at λ=0 (the prefundamental case).
+    """Verify the Baxter formula Δ(E)·w_λ = λ·(a - b - (λ+1)/2) at λ=0.
 
-    The Baxter formula gives:
-      Δ(E)·w_λ = λ·(a - b - (λ+1)/2)
-
-    At λ=0: Δ(E)·w₀ = 0·(anything) = 0. UNCONDITIONAL.
-
-    This is strictly STRONGER than the Verma case (which requires
-    the spectral constraint b = a - (λ+1)/2).
-
-    The singular vector w₀ = -v₊ ⊗ f·v₀ generates a sub-module
-    isomorphic to L⁻(b-1) inside V₁(a) ⊗ L⁻(b).
+    At λ=0 the prefactor vanishes identically: 0·(anything) = 0.
+    This computation verifies the vanishing symbolically for general a, b.
     """
+    from sympy import Symbol, simplify, Rational as R
+
+    a, b, lam = Symbol('a'), Symbol('b'), Symbol('lambda')
+
+    # Baxter formula: Δ(E)·w_λ = λ * (a - b - (λ+1)/2)
+    baxter_formula = lam * (a - b - (lam + 1) / 2)
+
+    # At λ = 0: substitute and simplify
+    at_lambda0 = simplify(baxter_formula.subs(lam, 0))
+
+    # At general λ: the spectral constraint b = a - (λ+1)/2 makes it vanish
+    spectral_constraint = a - (lam + 1) / 2
+    at_constraint = simplify(baxter_formula.subs(b, spectral_constraint))
+
     return {
-        "formula": "Δ(E)·w_λ = λ·(a - b - (λ+1)/2)",
-        "lambda": 0,
-        "result": "Δ(E)·w₀ = 0 (unconditional)",
-        "comparison_with_verma": (
-            "For Verma (λ > 0): requires b = a - (λ+1)/2. "
-            "For prefundamental (λ = 0): no constraint needed."
-        ),
-        "consequence": (
-            "The Baxter SES 0 → L⁻(-1) → V₁⊗L⁻ → L⁻(+1) → 0 "
-            "is Yangian-equivariant for ALL spectral parameters."
-        ),
+        "baxter_formula_general": baxter_formula,
+        "at_lambda_0": at_lambda0,
+        "lambda_0_vanishes": at_lambda0 == 0,
+        "spectral_constraint_value": spectral_constraint,
+        "at_spectral_constraint": at_constraint,
+        "constraint_vanishes": at_constraint == 0,
     }
 
 

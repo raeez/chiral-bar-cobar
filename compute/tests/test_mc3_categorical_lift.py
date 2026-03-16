@@ -39,16 +39,17 @@ class TestBaxterSESPrefundamental:
 
 
 class TestYangianSingularVector:
-    """The Yangian singular vector at λ=0."""
+    """The Baxter formula at λ=0: symbolic verification."""
 
-    def test_formula(self):
+    def test_lambda0_vanishes(self):
         r = yangian_singular_vector_lambda0()
-        assert r["lambda"] == 0
-        assert "unconditional" in r["result"]
+        assert r["lambda_0_vanishes"], "Baxter formula must vanish at λ=0"
+        assert r["at_lambda_0"] == 0
 
-    def test_unconditional(self):
+    def test_spectral_constraint_vanishes(self):
         r = yangian_singular_vector_lambda0()
-        assert "no constraint" in r["comparison_with_verma"].lower()
+        assert r["constraint_vanishes"], "Baxter formula must vanish at spectral constraint"
+        assert r["at_spectral_constraint"] == 0
 
 
 class TestHigherSpinBaxter:
