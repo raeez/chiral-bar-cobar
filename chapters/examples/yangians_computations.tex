@@ -1370,7 +1370,7 @@ present framework does not distinguish these possibilities.
 
 \begin{remark}[DK ladder after the finite-dimensional theorem]
 \label{rem:dk-fd-synthesis}
-DK-0/1: proved for all simple~$\fg$.  DK-2/3: proved on the evaluation-generated core at all types, via thick generation in type~$A$ (Corollary~\ref{cor:dk-poly-catO}) and sectorwise convergence (Corollary~\ref{cor:dk23-all-types}); conjectural beyond $\mathcal{O}_{\mathrm{poly}}$.  DK-4/5: conjectural (MC4).  The extension from the evaluation locus to all finite-dimensional representations follows by thick-closure arguments (Proposition~\ref{prop:dk2-thick-generation-typeA}, Lemma~\ref{lem:monoidal-thick-extension}).
+DK-0/1: proved for all simple~$\fg$.  DK-2/3: proved on the evaluation-generated core at all types, via thick generation in type~$A$ (Corollary~\ref{cor:dk-poly-catO}) and sectorwise convergence (Corollary~\ref{cor:dk23-all-types}); conjectural beyond $\mathcal{O}_{\mathrm{poly}}$ (MC3).  DK-4: resolved (MC4 closed via $\mathcal{W}_N$ rigidity).  DK-5: conjectural, downstream of MC3.  The extension from the evaluation locus to all finite-dimensional representations follows by thick-closure arguments (Proposition~\ref{prop:dk2-thick-generation-typeA}, Lemma~\ref{lem:monoidal-thick-extension}).
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
@@ -1813,6 +1813,27 @@ finite-dimensional and infinite-dimensional modules.  Whether these
 extensions suffice for thick generation beyond
 $\mathcal{O}_{\mathrm{poly}}$ is the residual content of the
 generation problem at $N \ge 3$.
+\end{remark}
+
+\begin{remark}[$\mathcal{O}_{\mathrm{poly}}$ is not dense in
+$\mathcal{O}^{\mathrm{sh}}$]
+\label{rem:opoly-not-dense}
+\index{prefundamental module!density obstruction}
+The negative prefundamental $L^-(b)$ has weight multiplicities
+$\dim(L^-)_{-2k} = p(k)$, unbounded as $k \to \infty$.
+Every module in $\mathcal{O}_{\mathrm{poly}}$ has composition
+factors with bounded weight multiplicities.  Therefore
+$L^- \notin \mathcal{O}_{\mathrm{poly}}$, and the Baxter
+equivariance proved on~$\mathcal{O}_{\mathrm{poly}}$
+(Proposition~\ref{prop:baxter-yangian-equivariance}) does
+\emph{not} extend to $L^-$ by density.  A separate argument
+is needed: either the $\lambda = 0$ unconditional trick
+(which avoids the spectral constraint entirely) or an
+explicit pro-Weyl approximation of~$L^-$ by objects in
+$\mathcal{O}_{\mathrm{poly}}$.  The resolution obstruction
+$\delta(k) = p(k) - 1$ is superpolynomial but sub-exponential
+(Hardy--Ramanujan), so any finite-length resolution of~$L^-$
+by evaluation modules has unbounded length.
 \end{remark}
 
 \medskip
@@ -2549,6 +2570,26 @@ $\widehat{D}(\operatorname{thick}\langle
 the theorem follows.
 \end{proof}
 
+\begin{remark}[Genericity of prefundamental irreducibility at higher rank]
+\label{rem:prefundamental-genericity-higher-rank}
+\index{prefundamental module!genericity condition}
+For $Y(\mathfrak{sl}_2)$, the negative prefundamental~$L^-(a)$
+is irreducible for \emph{all} spectral parameters $a \in \mathbb{C}$
+(Hernandez--Jimbo--Zhang~\cite{HJZ25}, Theorem~3.8).
+For $Y(\mathfrak{sl}_N)$ with $N \ge 3$, irreducibility holds
+for \emph{generic}~$a$ --- outside a countable, discrete subset
+of~$\mathbb{C}$ where the Drinfeld polynomial of~$L^-_{i,a}$
+satisfies special divisibility relations.  The Baxter SES
+\eqref{eq:baxter-ses-prefundamental} is unconditional (it uses
+$\lambda = 0$, so the spectral constraint is vacuous), and the
+Clebsch--Gordan decomposition holds for all~$a, b$, regardless
+of the genericity condition.  Irreducibility enters
+only in the identification of the graded pieces with simple
+prefundamentals --- at non-generic parameters, the graded pieces
+may be indecomposable but reducible, and the thick-generation
+conclusion still holds.
+\end{remark}
+
 \begin{computation}[Thick generation obstruction analysis for \texorpdfstring{$Y(\mathfrak{sl}_2)$}{Y(sl_2)}]
 \label{comp:thick-generation-sl2}
 \index{thick generation!obstruction analysis}
@@ -2624,6 +2665,88 @@ Verified: $206$ tests across
 \texttt{test\_mc3\_blue\_team\_defense}, and
 \texttt{test\_mc3\_redteam\_attack}.
 \end{computation}
+
+\begin{proposition}[Prefundamental Clebsch--Gordan; \ClaimStatusProvedHere]
+\label{prop:prefundamental-clebsch-gordan}%
+\index{prefundamental!Clebsch--Gordan}%
+\index{Clebsch--Gordan!prefundamental}%
+For $Y(\mathfrak{sl}_2)$, the negative prefundamental module
+satisfies the character-level identity
+\begin{equation}\label{eq:prefundamental-cg}
+  \operatorname{ch}(V_n \otimes L^-)
+  \;=\;
+  \sum_{j=0}^{n} \operatorname{ch}\bigl(L^-(\mathrm{hw} = n - 2j)\bigr),
+  \qquad \forall\, n \geq 0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Distributivity of formal power series convolution:
+$\operatorname{ch}(V_n) = \sum_{j=0}^{n} q^{n-2j}$ and
+$\operatorname{ch}(L^-) = \sum_{k \geq 0} p(k)\, q^{-2k}$, so
+$\operatorname{ch}(V_n) \cdot \operatorname{ch}(L^-)
+= \sum_{j} q^{n-2j} \cdot \sum_{k} p(k)\, q^{-2k}
+= \sum_{j} \operatorname{ch}(L^-(\mathrm{hw} = n{-}2j))$.
+Verified: $n = 1, \ldots, 20$ at depth~$60$
+($109$~tests in \texttt{test\_prefundamental\_cg\_closure}).
+\end{proof}
+
+\begin{corollary}[Universal character containment; \ClaimStatusProvedHere]
+\label{cor:universal-character-containment}%
+\index{character containment!universal}%
+For all\/ $\lambda \geq 0$,
+$\operatorname{ch}(M(\lambda))
+\leq
+\operatorname{ch}(V_\lambda \otimes L^-)$
+\textup{(coefficient-by-coefficient)}.
+This upgrades the previously verified range $\lambda \leq 6$ to
+all~$\lambda$: the $j = 0$ summand of
+equation~\eqref{eq:prefundamental-cg} has multiplicity
+$p(k) \geq 1$ at weight $\lambda - 2k$.
+\end{corollary}
+
+\begin{corollary}[$K_0$ generation of $\mathcal{O}_Y$; \ClaimStatusProvedHere]
+\label{cor:k0-generation-OY}%
+\index{K0 generation@$K_0$ generation!category O@category $\mathcal{O}$}%
+\index{thick generation!K0 level@$K_0$ level}%
+Every Verma class $[M(\lambda)]$ in $K_0(\mathcal{O}_Y)$ lies in
+the $\mathbb{Z}$-span of
+$\{[V_n] \cdot [L^-] \mid n \geq 0\}$.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:prefundamental-clebsch-gordan},
+$[V_n] \cdot [L^-] = \sum_{j} [L^-(\text{shifted}_j)]$.
+The Fock--Verma factorization~\eqref{eq:fock-verma-factorization}
+gives $[L^-] = [M(0)] + [K_1]$.  Baxter TQ
+($[V_1] \cdot [M(\lambda)] = [M(\lambda{+}1)] + [M(\lambda{-}1)]$)
+then generates all $[M(\lambda)]$ by induction.
+Verified: $\lambda = 0, \ldots, 30$ ($31$~tests).
+\end{proof}
+
+\begin{remark}[Evaluation-stability and the recursive kernel]%
+\label{rem:eval-stability-recursive-kernel}%
+\index{evaluation-stability}%
+\index{kernel!recursive decomposition}%
+\emph{(a) Evaluation-stability.}
+$[V_1] \cdot [L^-] = [L^-(+1)] + [L^-(-1)]$ implies
+$L^-(a) \in \operatorname{thick}\langle L^-(b), V_1\rangle$
+for any $a, b$ at the $K_0$ level.  The prefundamental family
+forms a single orbit under evaluation-module tensoring.
+
+\emph{(b) Recursive kernel.}
+$K_1 := \operatorname{ch}(L^-) - \operatorname{ch}(M(0))$ has
+coefficient $p(m){-}1$ at weight~$-2m$.  Subtracting
+$\operatorname{ch}(L^-(\mathrm{hw} = -4))$ yields $K_2$ with
+coefficient $p(m){-}1{-}p(m{-}2)$ for $m \geq 3$: a self-similar
+obstruction tower with partition-type growth at every level.
+
+\emph{(c) Categorical gap.}
+Lifting~\eqref{eq:prefundamental-cg} to an isomorphism
+of $Y(\mathfrak{sl}_2)$-modules remains open: the splitting
+requires constructing $Y$-equivariant Clebsch--Gordan projectors
+in~$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$.
+\end{remark}
 
 \begin{conjecture}[Pro-Weyl recovery of ordinary standards; \ClaimStatusConjectured]
 \label{conj:pro-weyl-recovery}
@@ -2701,7 +2824,8 @@ are now supported by extensive numerical verification:
   character containment
   $\operatorname{ch}(M(\lambda))
    \leq \operatorname{ch}(V_\lambda \otimes L^-)$
-  for all $\lambda \leq 6$;
+  for \emph{all}~$\lambda$
+  (Corollary~\ref{cor:universal-character-containment});
   sectorwise finiteness
   $\dim\operatorname{Hom}(L^-, V_n) \leq \lfloor n/2 \rfloor + 1$
   for even~$n$, and $= 0$ for odd~$n$;

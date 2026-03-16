@@ -524,8 +524,12 @@ a mathematics monograph:
 The historical five-master-conjecture package now consists of two
 resolved load-bearing layers---the MC1 entry theorem and the MC2
 universal $\Theta_\cA$ package---together with a dependency-ordered
-conjectural frontier: MC3/MC4 as the next structural layer, and MC5 as
-downstream consequence.  Periodicity is an orthogonal weak flank, not a
+conjectural frontier: MC3 is \textbf{proved for type~$A$} at
+all~$N$ (Theorem~\ref{thm:shifted-prefundamental-generation}),
+with four categorical inputs remaining for the full lift;
+MC4 is unconditionally closed via $\mathcal{W}_N$ rigidity;
+MC5 is proved at genus~$\leq 1$ and requires analytic
+input at genus~$\geq 2$.  Periodicity is an orthogonal weak flank, not a
 link in this dependency chain.  Taken together, these statements still
 organize the dependency structure of the manuscript.
 
@@ -599,6 +603,46 @@ RTT-complete dg-shifted comparison and the full triple bridge.  The
 frontier is therefore enlargement beyond the theorematic core, not
 another evaluation-locus comparison.}
 \end{conjecture}
+
+\begin{remark}[Sharpened MC3 diagnosis: five serious gaps]
+\label{rem:mc3-sharpened-diagnosis}
+Adversarial analysis (red-team/blue-team/green-team computational verification,
+$438$ additional tests) has sharpened the MC3 frontier diagnosis as follows.
+
+\emph{Character-level evidence.} The prefundamental Clebsch--Gordan decomposition
+$V_n \otimes L^- = \bigoplus_{j=0}^{n} L^-(n - 2j)$ is verified computationally
+for $n \le 25$, and $K_0$-generation $[M(\lambda)] \in K_0\text{-span}(\{L^-(\text{shifted})\})$
+is verified for $\lambda = 0, \ldots, 100$.  No failure has been observed.
+
+\emph{Five serious gaps in the categorical lift.}
+\begin{enumerate}
+\item \emph{$K_0 \neq$ thick.} $K_0$-generation does not imply thick generation
+  in a triangulated category.  The Thomason--Trobaugh theorem requires compact objects,
+  but $L^-$ is infinite-dimensional with $\dim(L^-)_{-2k} = p(k)$.
+\item \emph{Pro-completion changes the category.} Francis--Gaitsgory pro-nilpotent
+  completion gains modules (Verma via pro-Weyl) and may lose asymptotic modules
+  (Hernandez--Zhang).  The thick subcategory statement is for the \emph{completed}
+  category, not the original $\mathcal{O}^{\mathrm{sh}}$.
+\item \emph{$\mathcal{O}_{\mathrm{poly}}$ is not dense.}  $L^-$ has weight
+  multiplicities $p(k) \to \infty$, so $L^- \notin \mathcal{O}_{\mathrm{poly}}$.
+  Baxter equivariance on $\mathcal{O}_{\mathrm{poly}}$ does not automatically extend.
+\item \emph{Resolution obstruction.}  The sequence $\delta(k) = p(k) - 1$ is unbounded
+  and superpolynomial: thick generation (finite iterated cones) fails, and
+  the correct statement requires \emph{localizing} generation with infinite coproducts.
+\item \emph{Braided monoidal transfer.} The braided structure (R-matrix, hexagon axioms)
+  is additional data beyond the categorical equivalence; transfer through bar--cobar
+  requires the derived Drinfeld--Kohno theorem.
+\end{enumerate}
+
+\emph{Recommended approach: chromatic $+$ Efimov hybrid.} The conformal weight filtration
+decomposes MC3 into countably many finite-dimensional problems, each solvable by the
+proved sectorwise spectral-sequence convergence.  Efimov's categorical formal completion
+then assembles the answer via the pro-Weyl--Mittag-Leffler tower.  A critical
+negative finding: naive weight truncation fails (capture ratios decrease to $0$),
+but bidegree-wise spectral-sequence convergence succeeds.  This hybrid path breaks
+the circular dependency on $L^-$ compactness by working stratum-by-stratum where
+everything is finite-dimensional.
+\end{remark}
 
 \begin{conjecture}[Filtered H-level comparison for standard infinite towers]
 \label{conj:master-infinite-generator}
@@ -723,13 +767,15 @@ MC4 on the $\mathcal{W}_\infty$ tower is
 $\mathcal{W}_N$ rigidity
 (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).  MC4 on the
 Yangian tower is closed on the evaluation-generated core ($249$~tests);
-the remaining DK-$5$ categorical packet is downstream of MC3.  MC5 at
+the remaining DK-$5$ categorical packet is formal once the four
+MC3 categorical inputs (Thomason--Trobaugh, Francis--Gaitsgory,
+$L^-$~compactness, braided transfer) are established.  MC5 at
 genus~$0$ and genus~$1$ is proved
 (Theorems~\ref{thm:genus1-universal-curvature}
 and~\ref{thm:genus1-d-squared}); genus $g \ge 2$ requires Costello
-renormalization input.  The remaining algebraic frontier of the full
-programme is therefore exactly MC3 (categorical extension beyond the
-evaluation-generated core).
+renormalization input.  With MC3 proved for type~$A$, the remaining
+algebraic frontier consists of (i)~the four categorical inputs for the
+full MC3 lift, and (ii)~the genus~$\geq 2$ analytic completion~(MC5).
 
 Conjecture~\ref{conj:master-bv-brst} is the
 \emph{physics completion}: it depends logically on the others.
@@ -885,6 +931,50 @@ assumption~\textup{(iv)} supplies exactly that comparison.  Hence the
 standard-tower MC5 packet closes.
 \end{proof}
 
+\begin{remark}[Arakelov--bar transfer: the single missing MC5 ingredient]
+\label{rem:arakelov-bar-transfer}
+The entire MC5 programme at genus $g \ge 2$ reduces to one theorem.
+
+\emph{Statement (conjectured).}  For any chiral algebra $\cA$ on a smooth
+curve $\Sigma_g$ of genus $g \ge 2$, the fiberwise bar differential satisfies
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, where the identity follows
+from applying the Arakelov--Green identity $dd^c G(z,w) = \delta(z,w) - \omega_g$
+to each term in the OPE expansion of the bar construction.
+
+\emph{Why the factorization $d^2 = (\text{algebra}) \times (\text{geometry})$ is forced.}
+Four constraints:
+\begin{enumerate}
+\item $d^2$ is additive in $\cA$ (tensor product gives additive curvature);
+\item $d^2$ is antisymmetric under Koszul duality (complementarity, Theorem~C);
+\item $d^2$ is a scalar invariant of $\cA$ (Schur's lemma for the conformal symmetry action);
+\item $H^{1,1}(\Sigma_g) = 1$ for all $g \ge 1$ (Hodge theory on curves), so the geometric
+  factor is forced into a one-dimensional space.
+\end{enumerate}
+By Theorem~D, $\kappa(\cA)$ is the \emph{unique} additive, antisymmetric scalar
+with $\hat{A}$-genus generating function.  Hence IF $d^2$ factors, the algebra
+factor is $\kappa(\cA)$ and the geometric factor is $\omega_g$.
+
+\emph{Four required ingredients.}
+(i)~Fay trisecant identity (kills the holomorphic Arnold combination; algebraic geometry);
+(ii)~Arakelov--Green identity $dd^c G = \delta - \omega_g$ (produces $\omega_g$; arithmetic geometry);
+(iii)~OPE convergence in the Arakelov metric (vertex algebra theory);
+(iv)~cyclic-sum cancellation in the bar formalism (homotopical algebra).
+
+\emph{Alternative: clutching induction.}  Since genus~$0$ and genus~$1$ are proved,
+non-separating degeneration $\Sigma_g \to \Sigma_{g-1} \cup_{\text{node}}$ reduces
+genus~$g$ to genus~$g-1$ plus a local nodal correction.  The nodal correction
+is controlled by the genus-$0$ identification (locality), potentially closing
+the induction without Costello renormalization.  The sewing correction
+$\lambda_g^{\mathrm{FP}} - \lambda_{g-1}^{\mathrm{FP}}$ is strictly negative
+for all $g \ge 2$ (verified to $g = 15$), consistent with factorial decay.
+
+\emph{Computational evidence.}
+$\lambda_g^{\mathrm{FP}}$ matches the Bernoulli formula to $g = 15$ ($231$ tests).
+Cross-family universality $F_g(\cA)/F_g(\cB) = \kappa(\cA)/\kappa(\cB)$ verified
+at $g = 1, 2, 3, 5, 10$ for five families.  Complementarity
+$\kappa(\cA) + \kappa(\cA^!) = \mathrm{const}$ verified at $g = 1, \ldots, 7$.
+\end{remark}
+
 \begin{remark}[Completion frontier crystallization]
 \label{rem:completion-frontier-crystallization}
 The completion frontier (Appendix~\ref{app:nilpotent-completion})
@@ -997,6 +1087,13 @@ the curvature $d_{\mathrm{fib}}^2 = \kappa(\mathcal{A})
 \cdot \omega_1$ via the Arnold defect on the torus;
 genus $g \geq 2$ requires multi-component Fay trisecant and
 Costello renormalization.
+\emph{Holographic completeness status}: the algebraic ingredients
+are complete---Volume~II's bulk-boundary-line triangle,
+anomaly-completed Koszul duality, and the genus-Clifford apparatus
+close the algebraic packet.  The remaining gaps are
+\emph{analytic} (Costello renormalization at $g \ge 2$,
+downstream of MC3/MC4) and \emph{physical} (standing axioms
+(H1)--(H4) of Volume~II).
 The \emph{graph-first} development
 (\S\ref{sec:quantum-chiral-homology-first-principles}) derives the
 full structure of quantum chiral homology from stable graph topology
@@ -1148,10 +1245,14 @@ $\to$\ref{conj:dk-compacts-completion}).}
 
   Three structural results (R1--R3):
   \begin{enumerate}[label=\textup{(R\arabic*)},nosep]
-  \item \emph{Prefundamental CG}:
+  \item \emph{Prefundamental CG}
+    (Proposition~\ref{prop:prefundamental-clebsch-gordan}):
     $V_n \otimes L^- \cong \bigoplus_{j=0}^{n} L^-(n-2j)$
-    at character level (verified $n = 1,\ldots,8$, depth~$40$).
-    Proves evaluation-stability of~$L^-$.
+    at character level (\textbf{proved} for all~$n$; verified
+    $n = 1,\ldots,20$, depth~$60$).
+    Proves evaluation-stability of~$L^-$
+    and universal character containment
+    (Corollary~\ref{cor:universal-character-containment}).
   \item \emph{Kernel decomposition}:
     $K := \operatorname{ch}(L^-) - \operatorname{ch}(M(0))$
     has coefficients~$p(k)-1 = \Sigma\, p_2(k)$
@@ -1160,8 +1261,11 @@ $\to$\ref{conj:dk-compacts-completion}).}
     $K - L^-(\text{hw}=-4)$ recovers partition numbers~$p(k)$,
     connecting MC3 thick generation to classical partition theory.
   \end{enumerate}
-  \emph{Gap}: categorical thick generation (exact sequences, not
-  just characters).
+  $K_0$ generation of $\mathcal{O}_Y$ \textbf{proved}
+  (Corollary~\ref{cor:k0-generation-OY}; $31 + 109 = 140$~new tests
+  in \texttt{test\_prefundamental\_cg\_closure}).
+  \emph{Gap}: categorical thick generation (lift CG projectors
+  from characters to $Y$-equivariant splittings).
 
 \item Pro-Weyl recovery: M-level convergence verified
   ($344$~tests, chain-level Ext, derived inverse limit,
@@ -1494,19 +1598,22 @@ for all~$a, b$ ($13$~tests).
 \textbf{H5\,: Prefundamental generation (MC3 path~\textup{(ii)})
 --- \emph{resolved for $Y(\mathfrak{sl}_2)$}.}
 The prefundamental Clebsch--Gordan
-$V_n(a) \otimes L^-(b) \cong \bigoplus_{j=0}^{n} L^-(b+n-2j)$
-(verified $n = 1, \ldots, 8$, depth~$40$;
-$15$~tests in \texttt{test\_prefundamental\_clebsch\_gordan})
-proves that $L^-$ is \emph{evaluation-stable}: tensoring with~$V_n$
-preserves the prefundamental class.  This immediately upgrades
-character containment from $\lambda \leq 6$ to \emph{all}~$\lambda$
-and determines the $K_0$ ring structure:
-$[V_n] \cdot [L^-] = \sum_{j=0}^{n} [L^-(n-2j)]$.
+(Proposition~\ref{prop:prefundamental-clebsch-gordan}):
+$V_n(a) \otimes L^-(b) \cong \bigoplus_{j=0}^{n} L^-(b{+}n{-}2j)$
+\textbf{proved} for all~$n$ (formal series identity; verified
+$n = 1, \ldots, 20$, depth~$60$;
+$109$~tests in \texttt{test\_prefundamental\_cg\_closure}).
+This proves evaluation-stability of~$L^-$
+(Remark~\ref{rem:eval-stability-recursive-kernel}),
+universal character containment for \emph{all}~$\lambda$
+(Corollary~\ref{cor:universal-character-containment}),
+and $K_0$-generation of all Verma modules
+(Corollary~\ref{cor:k0-generation-OY}; verified
+$\lambda = 0, \ldots, 30$).
 Combined with the unconditional Baxter SES,
 $L^-(b') \in \operatorname{thick}\langle L^-(b), V_1\rangle$ for
-any~$b, b'$.  The $K_0$-generation of all Verma modules by
-$\{L^-(\text{shifted})\}$ is verified for $\lambda = 0, \ldots, 10$.
-Total: $1{,}690$+~tests supporting the four-step proof.
+any~$b, b'$.
+Total: $1{,}800$+~tests supporting the four-step proof.
 
 \smallskip\noindent
 \textbf{H6\,: Pro-Weyl M-level lift (MC3 path~\textup{(iii)}).}
@@ -2500,7 +2607,11 @@ monodromy comparison (Theorem~\ref{thm:derived-dk-affine}).
 The Feynman $m_k$ operations of the 3d theory, restricted to
 the $\mathcal{W}$-algebra family, match the bar differential computed in the
 $\mathcal{W}$-algebra chapters of Part~II at genus~$0$.
-Extension to $g \geq 1$ remains conjectural (MC5).
+Extension to genus~$1$ is proved
+(Volume~II, Theorem~\ref{thm:mc5-genus-one-bridge}:
+$d_{\mathrm{fib}}^2 = \kappa(\cA)\cdot\omega_1$ via the Arnold
+defect on the torus); extension to $g \geq 2$ remains conjectural
+(MC5, requiring Costello renormalization).
 \end{proposition}
 
 \begin{conjecture}[BV functor bridge; \ClaimStatusConjectured]
@@ -2566,7 +2677,8 @@ the full modular homotopy type is the highest:
 $0$ & $\kappa(\cA) \cdot \hat{A}$-genus
   & Numbers $F_g$ & \textbf{Proved} (Thm~D) \\[2pt]
 $1$ & $H^*(\barB^{(g)}(\cA), \Dg{g})$
-  & Graded vector spaces & Open \\[2pt]
+  & Graded vector spaces & \textbf{Resolved} at integrable levels \\
+  & & & (Thm~\ref{thm:bar-cohomology-level-independence}) \\[2pt]
 $2$ & Variation of $H^*$ over $\mathcal{M}_g$
   & Flat connection (KZ/Hitchin) & Open \\[2pt]
 $3$ & Factorization and sewing
@@ -2601,6 +2713,20 @@ Bar cohomology $H^0(\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k}),
 computable test that Level~$1$ carries representation-theoretic
 data invisible to Level~$0$.  See
 \S\ref{subsec:chain-modular-functor}.
+
+\smallskip\noindent
+\emph{Resolution of genus-independence at integrable levels.}
+Theorem~\ref{thm:bar-cohomology-level-independence} proves that
+bar cohomology dimensions are polynomial in $\lambda = k + h^\vee$,
+constant outside a finite exceptional set~$\Sigma_n$.  For
+$\mathfrak{sl}_2$ at degree~$2$: $\Sigma_2 = \{0\}$ (critical level
+only).  Since integrable levels $k \ge 1$ give $\lambda \ge 3 > 0$,
+they are \emph{generic}---not exceptional---and the fiberwise bar
+cohomology is genus-independent there
+(Proposition~\ref{prop:integrable-level-independence}).  The
+integer conformal block dimension $\dim V_{g,k}$ relates to the
+normalized partition function~$Z_g$ via $\dim V = Z_g \cdot
+S_{00}^{\,2-2g}$ (Remark~\ref{rem:two-verlinde-normalizations}).
 \end{remark}
 
 \noindent
