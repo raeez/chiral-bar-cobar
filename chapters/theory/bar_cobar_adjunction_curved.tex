@@ -1,6 +1,52 @@
 \chapter{Bar-cobar adjunction and curved Koszul duality}
 \label{chap:bar-cobar-adjunction}
 
+This is where the algebraic engine first closes.  Chapters~\ref{ch:algebraic-foundations}
+and~\ref{chap:cobar-construction} built the bar functor~$\barBch$ and the
+cobar functor~$\Omegach$ separately; here they meet as an adjoint pair
+on the $\Ran$-space of a smooth curve~$X$.
+Theorem~\ref{thm:bar-cobar-adjunction} (``Theorem~A'') establishes
+the adjunction $\Omegach \dashv \barBch$ together with its Verdier
+intertwining, and the next part of this chapter
+(Theorem~\ref{thm:bar-cobar-inversion-qi}, ``Theorem~B'') inverts it:
+on the Koszul locus the counit
+$\psi \colon \Omegach(\barBch(\cA)) \xrightarrow{\;\sim\;} \cA$
+is a quasi-isomorphism.  The two theorems should be read as a single
+statement: $\barBch$ and $\Omegach$ are adjoint views of the same
+incidence geometry on the Fulton--MacPherson
+compactification~$\overline{\Conf}_n(X)$, and inversion is the
+geometric fact that this incidence correspondence is birational on the
+Koszul locus.
+
+The homotopy upgrade is essential from the start.  Not every chiral
+algebra is quadratic: Virasoro, $\mathcal{W}_N$, and
+$\mathcal{W}_\infty$ all require curved or filtered presentations in
+which $\mu_0 \neq 0$ and $\mu_1^2 = [\mu_0, -]_{\mu_2}$.  On this
+extended locus the adjunction survives in the language of curved
+$\Ainf$~algebras, $I$-adic completions, and coderived categories.
+The strict convolution dg Lie algebra
+$\Convstr(\barBch(\cA), \cA)$ is replaced by its homotopy-invariant
+envelope $\Convinf(\barBch(\cA), \cA)$, and the twisting morphism
+mediating the adjunction becomes a Maurer--Cartan element in this
+larger algebra.  The passage from strict to homotopy convolution is
+the reason bar-cobar preserves quasi-isomorphisms: the functor is a
+quantum $\Linf$ functor whose Maurer--Cartan moduli are invariant
+under gauge equivalence.
+
+The chapter proceeds in two movements.  The first (this file)
+develops curved $\Ainf$~structures, $I$-adic completion, and the
+regime hierarchy---quadratic, curved-central, filtered-complete,
+programmatic---that determines which completions are needed.  The
+second (\S\ref{sec:filtered-vs-curved-comprehensive}--\S\ref{sec:cech-hca})
+proves inversion, establishes the categorical logarithm reading of
+bar-cobar ($\barBch = \log$, $\Omegach = \exp$), and lifts the
+whole story to the $\Ran$-space via the \v{C}ech resolution.
+Together, the two movements close the algebraic engine: once the
+adjunction and its inversion are in hand, the entire genus-$0$
+bar complex is a functor, and the passage to higher genus
+(Chapter~\ref{chap:higher-genus}) amounts to deforming the
+differential by curvature.
+
 \section{Curved Koszul duality and I-adic completion}
 \label{sec:curved-koszul-i-adic}
 
@@ -107,7 +153,7 @@ Completion $A \to \hat{A}$ is necessary when:
 
 For example, the Virasoro algebra and $W_\infty$ need completion, while Heisenberg and Kac--Moody (conilpotent) do not.
 \emph{More precisely:} Virasoro admits a completed same-family shadow used
-throughout Parts~II--III, whereas $W_\infty$ marks the frontier where a
+throughout Parts~II--III, whereas $W_\infty$ marks the locus where a
 completed duality theorem is still missing.
 \end{theorem}
 
@@ -373,13 +419,13 @@ $k' = -k - 2h^\vee = -k-4$, so
 \end{equation}
 since $c(k) + c(k') = 2\dim\mathfrak{sl}_2 = 26$ by Theorem~\ref{thm:central-charge-complementarity}.  Physically, this is matter--ghost duality: a matter system at central charge~$c$ couples to ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
 
-This is the M/S-level completed shadow; the stronger H-level realization via an infinite-generator dual is the MC4 frontier (Example~\ref{ex:winfty-completion-frontier}).
+This is the M/S-level completed shadow; the stronger H-level realization via an infinite-generator dual is the MC4 completion problem (Example~\ref{ex:winfty-completion-frontier}).
 \end{example}
 
-\begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: exact MC4 frontier]
+\begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion target]
 \label{ex:winfty-completion-frontier}
 
-The standard principal-stage completed M-level bar-cobar package for $W_\infty = \varprojlim_N W_N$ is proved (Corollary~\ref{cor:winfty-standard-mc4-package}).  The live MC4 frontier is to construct a factorization target (Proposition~\ref{prop:winfty-factorization-package}) and prove the residue identities
+The standard principal-stage completed M-level bar-cobar package for $W_\infty = \varprojlim_N W_N$ is proved (Corollary~\ref{cor:winfty-standard-mc4-package}).  The remaining MC4 problem is to construct a factorization target (Proposition~\ref{prop:winfty-factorization-package}) and prove the residue identities
 \[
 \mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
 =\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)
@@ -414,7 +460,7 @@ differential, and the completed cobar construction satisfies
 \]
 compatibly with the finite-stage quasi-isomorphisms.
 
-\emph{This is the theorem-shaped local form of the MC4 frontier:
+\emph{This is the theorem-shaped form of the MC4 completion problem:
 for $W_\infty$ the truncations are principal finite-type $W_N$, while
 for Yangian towers they are the finite RTT stages.}
 \end{conjecture}
@@ -772,7 +818,7 @@ comparison map
 is a quasi-isomorphism.
 Thus the standard principal-stage tower realizes the full
 standard-tower M-level completed bar-cobar package for $W_\infty$; the
-remaining frontier is
+remaining problem is
 the H-level comparison with stronger factorization-theoretic or
 physical realizations.
 \end{corollary}
@@ -891,7 +937,7 @@ Then the induced comparison map
 \]
 is a quasi-isomorphism, and $\mathcal{W}^{\mathrm{ht}}$ carries the same
 completed M-level bar-cobar object as the standard principal-stage
-completion.  Thus the live $\mathcal{W}_\infty$ frontier is to
+completion.  Thus the remaining $\mathcal{W}_\infty$ problem is to
 construct such a filtered H-level target and identify its finite
 quotients by the exact residue identities
 $\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
@@ -1830,7 +1876,7 @@ and
 where either the residue coefficients
 $\mathsf{C}^{\mathrm{res}}$ or the principal Drinfeld--Sokolov
 coefficients $\mathsf{C}^{\mathrm{DS}}$ may be used.  Equivalently, the
-live stage-$4$ frontier is one new coefficient in the $(3,3)$ block,
+remaining stage-$4$ problem is one new coefficient in the $(3,3)$ block,
 three in the mixed $(3,4)$ block, and two in the even $(4,4)$ block.
 \end{corollary}
 
@@ -1838,7 +1884,7 @@ three in the mixed $(3,4)$ block, and two in the even $(4,4)$ block.
 Group the six parity-compressed tuples by source pair: $(3,3)$ contributes one, $(3,4)$ three, $(4,4)$ two.
 \end{proof}
 
-\begin{corollary}[Stage-\texorpdfstring{$4$}{4} frontier as one mixed block and three
+\begin{corollary}[Stage-\texorpdfstring{$4$}{4} reduction to one mixed block and three
 self-coupling scalars; \ClaimStatusProvedHere]
 \label{cor:winfty-ds-stage4-mixed-self-split}
 Assume the hypotheses of
@@ -1925,7 +1971,7 @@ for the reversed-order mixed block.  Then
 \qquad
 \widetilde c_{434}=-c_{344}.
 \]
-Equivalently, the live mixed stage-$4$ frontier splits into one
+Equivalently, the remaining mixed stage-$4$ problem splits into one
 swap-even channel $c_{343}$ and two swap-odd channels
 $c_{342},c_{344}$.
 \end{corollary}
@@ -2209,7 +2255,7 @@ Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 Combine the mixed-self split (Corollary~\ref{cor:winfty-ds-stage4-mixed-self-split}), the mixed two-channel reduction (Corollary~\ref{cor:winfty-ds-stage4-mixed-two-channel}), and the universal $T$-coupling normalization (Corollary~\ref{cor:winfty-ds-stage4-self-t-normalization}).
 \end{proof}
 
-\begin{proposition}[Exact MC4 frontier packet for the standard
+\begin{proposition}[MC4 completion packet for the standard
 \texorpdfstring{$W_\infty$}{W_infty} tower; \ClaimStatusProvedHere]
 \label{prop:winfty-mc4-frontier-package}
 Let $\mathcal{W}^{\mathrm{ht}}$ be a separated complete H-level target
@@ -2270,7 +2316,7 @@ displayed six-entry identity form on~$\mathcal{I}_4$.
 \end{proof}
 
 \begin{corollary}[Minimal closure criterion for the standard
-\texorpdfstring{$W_\infty$}{W_infty} MC4 frontier;
+\texorpdfstring{$W_\infty$}{W_infty} MC4 completion;
 \ClaimStatusProvedHere]
 \label{cor:winfty-stage4-closure-criterion}
 Under the hypotheses of
@@ -2356,7 +2402,7 @@ same completed bar-cobar object up to quasi-isomorphism.
 \end{proof}
 
 \begin{corollary}[Stage-\texorpdfstring{$4$}{4} \texorpdfstring{$W_\infty$}{W_infty}
-frontier on the Ward-normalized H-level locus;
+reduction on the Ward-normalized H-level locus;
 \ClaimStatusProvedHere]
 \label{cor:winfty-stage4-residue-four-channel}
 Assume the hypotheses of
@@ -2773,7 +2819,7 @@ Equivalently, on that locus the swap-even square identity
 \tfrac{9}{16}\,c_{334}^{\,2}
 \]
 is automatic once the \((3,3;4;0,2)\) square identity holds.  In
-particular, the signless stage-$4$ higher-spin frontier on the visible
+particular, the signless stage-$4$ higher-spin problem on the visible
 pairing locus consists of the two primitive self-coupling squares
 \[
 \bigl(\mathsf{C}^{\mathrm{res}}_{3,3;4;0,2}(4)\bigr)^2,
@@ -2957,7 +3003,7 @@ into two exact steps:
 \end{enumerate}
 Equivalently, after the unconditional six-entry packet of
 Proposition~\ref{prop:winfty-mc4-frontier-package}, the local
-stage-$4$ frontier is first a one-scalar Ward-normalization problem and
+stage-$4$ problem is first a one-scalar Ward-normalization step and
 then, on the visible pairing locus, a one-relation higher-spin
 transport problem.
 \end{proposition}
@@ -3448,7 +3494,7 @@ Then
 Apply the $W^{(5)}$ invariant-pairing identity with \(n=3\), \(a=W^{(3)}\), \(b=W^{(4)}\).  The swap symmetry of Proposition~\ref{prop:winfty-ds-mixed-top-pole-swap} gives \(\mathsf{C}^{\mathrm{res}}_{5,3;4;0,4}=\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}\) (\(3+5-4=4\) even) and \(\mathsf{C}^{\mathrm{res}}_{5,4;3;0,6}=\mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}\) (\(4+5-3=6\) even).  The sign is negative (\(W^{(5)}\) odd weight).  Weight orthogonality and \(c\neq 0\) yield the displayed identity.
 \end{proof}
 
-\begin{corollary}[Stage-\texorpdfstring{$5$}{5} mixed transport frontier carries one
+\begin{corollary}[Stage-\texorpdfstring{$5$}{5} mixed transport reduction to one
 effective independent coefficient; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-transport-effective-independent-frontier}
 Under the hypotheses of
@@ -3487,7 +3533,7 @@ higher-spin packet; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-local-attack-order}
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-entry-transport}.  Then the first
-stage-$5$ higher-spin frontier separates into the following exact local
+stage-$5$ higher-spin problem separates into the following exact local
 order:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Entry step.}  The attack begins with the two-channel entry
@@ -3509,7 +3555,7 @@ order:
   \]
   taken in pole order \(3\) then \(4\).
 \item \emph{Remaining mixed transport step.}  After the target-$5$
-  ladder, the remaining transport frontier is attacked by fixed target
+  ladder, the remaining transport problem is attacked by fixed target
   in the order
   \[
   \mathcal{J}_5^{\mathrm{tr},5},\qquad
@@ -3739,7 +3785,7 @@ Proposition~\ref{prop:winfty-stage5-one-coefficient-reduction}.  Then
 \]
 Equivalently, on the full visible
 \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
-pairing locus the stage-$5$ higher-spin frontier closes once the
+pairing locus the stage-$5$ higher-spin problem closes once the
 target-$4$ singleton \((3,5;4;0,4)\) is matched.
 \end{conjecture}
 
@@ -3764,7 +3810,7 @@ two inputs both hold:
   holds.
 \end{enumerate}
 Equivalently, the exact remaining local stage-$5$ visible-pairing
-frontier is the packaged principal one-coefficient normal form together
+problem is the packaged principal one-coefficient normal form together
 with the singleton identity of
 Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison}.  The
 missing input is therefore no longer residue-side transport reduction,
@@ -4259,7 +4305,7 @@ Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse}.
 \label{comp:winfty-stage4-reduction-chain}
 \index{MC4!W-infinity stage-4 reduction chain}
 The complete reduction chain from the residual packet
-$\mathcal{J}_4$ to the frontier of
+$\mathcal{J}_4$ to the completion packet of
 Proposition~\ref{prop:winfty-mc4-frontier-package} has been
 verified computationally
 (\texttt{compute/lib/w4\_stage4\_coefficients.py}, $85$~tests):
@@ -5139,6 +5185,141 @@ the conclusion computationally through genus~$5$ for all standard examples
 (Heisenberg, Kac--Moody, Virasoro, $W$-algebras), providing independent
 confirmation.
 \end{remark}
+
+The proof of Theorem~\ref{thm:genus-induction-strict} relies at every step on
+the modular operad axioms for $\{\overline{\mathcal{M}}_{g,n}\}$.  We now
+crystallize this dependence into an explicit algebraic statement: the bar
+complex \emph{is} an algebra over the Feynman transform of the commutative
+modular operad.
+
+\begin{theorem}[Modular operad structure of the bar complex;
+  \ClaimStatusProvedHere]\label{thm:bar-modular-operad}%
+\index{bar complex!modular operad structure}%
+\index{modular operad!bar complex as algebra over}%
+\index{Feynman transform!commutative modular operad}%
+For a chiral algebra $\cA$, the collection
+$\{\barB^{(g,n)}(\cA)\}_{2g-2+n>0}$ is an algebra over the Feynman transform
+$\mathsf{F}\mathrm{Com}$ of the commutative modular operad in the sense of
+Getzler--Kapranov~\textup{\cite{GetzlerKapranov98}}.  Concretely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For each stable graph $\Gamma$ of type $(g,n)$, there is a composition
+  map
+  \[
+    \circ_\Gamma \colon
+    \bigotimes_{v \in V(\Gamma)} \barB^{(g_v,n_v)}(\cA)
+    \longrightarrow \barB^{(g,n)}(\cA)
+  \]
+  given by contracting internal edges via the propagator $P_\cA$.
+\item These composition maps satisfy the associativity and equivariance axioms
+  of modular operad algebras: for any refinement $\Gamma' \to \Gamma$ of stable
+  graphs, $\circ_\Gamma \circ (\otimes_v\, \circ_{\Gamma'_v})
+  = \circ_{\Gamma' \circ \Gamma}$, and for $\sigma \in \mathrm{Aut}(\Gamma)$
+  the maps are $\sigma$-equivariant.
+\item The identity $\partial^2 = 0$ on $\barB^{(g,n)}(\cA)$ is a formal
+  consequence of the boundary-of-boundary relation $\partial^2 = 0$ on the
+  stratification of $\overline{\mathcal{M}}_{g,n}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is the stable-graph bar differential construction of
+Lemma~\ref{lem:stable-graph-d-squared}: each edge $e \in E(\Gamma)$ contributes
+a contraction against the propagator $P_\cA$, and the composition
+$\circ_\Gamma$ is the iterated contraction over all internal edges.
+
+Part~(ii) follows from the associativity of edge contraction on stable graphs.
+If $\Gamma' \to \Gamma$ is a refinement (collapsing a subset of edges of
+$\Gamma'$ to produce $\Gamma$), then contracting in two stages---first the
+edges internal to each $\Gamma'_v$, then the remaining edges of $\Gamma$---gives
+the same result as contracting all edges of $\Gamma'$ at once.  Equivariance
+under automorphisms is immediate from the symmetric monoidal structure of the
+target category.
+
+Part~(iii) is the content of Theorem~\ref{thm:prism-higher-genus}: the bar
+differential $d_{\mathrm{full}} = \sum_\Gamma \circ_\Gamma$ satisfies
+$d_{\mathrm{full}}^2 = 0$ precisely because each codimension-$2$ boundary
+stratum of $\overline{\mathcal{M}}_{g,n}$ appears with opposite signs from the
+two codimension-$1$ strata containing it.
+\end{proof}
+
+\begin{remark}\label{rem:bar-modular-operad-consequences}%
+\index{genus tower!as modular operad corollary}%
+Theorem~\ref{thm:bar-modular-operad} makes the modular operad structure,
+previously invoked implicitly as ``functorial compatibility with
+Getzler--Kapranov,'' into an explicit algebraic statement.  All genus-tower
+structure---the decomposition $d_{\mathrm{full}} = \sum_g d_g$, the
+cross-genus cancellations in the proof of
+Theorem~\ref{thm:genus-induction-strict}, and the recursive computation of bar
+cohomology by genus---is a formal corollary of the bar complex being an
+$\mathsf{F}\mathrm{Com}$-algebra.
+The $\mathsf{F}\mathrm{Com}$-algebra structure is the strict
+incarnation of the homotopy modular coalgebra on $\barB(\cA)$;
+the Feynman transform provides the homotopy-invariant formulation
+(Getzler--Kapranov~\cite[\S5]{GetzlerKapranov98}).
+\end{remark}
+
+\begin{theorem}[Bar-cobar as Quillen equivalence;
+\ClaimStatusProvedElsewhere]
+\label{thm:quillen-equivalence-chiral}
+\index{Quillen equivalence!bar-cobar|textbf}
+\index{bar-cobar!Quillen equivalence}
+\index{model structure!conilpotent coalgebras}
+For the chiral Koszul morphism $\kappa$, the bar-cobar adjunction
+\[
+B_\kappa\colon \mathrm{dg}\text{-}\mathrm{Ch\text{-}alg}
+\;\rightleftarrows\;
+\mathrm{conil}\text{-}\mathrm{dg}\text{-}\cC^{\textup{!`}}_{\mathrm{ch}}\text{-}\mathrm{coalg}
+\;:\!\Omega_\kappa
+\]
+is a Quillen equivalence in the Vallette model structure
+\textup{\cite[Theorem~2.1]{Val16}} on conilpotent
+dg~$\cC^{\textup{!`}}_{\mathrm{ch}}$-coalgebras, where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Weak equivalences are maps whose cobar construction is a
+  quasi-isomorphism.
+\item All objects are cofibrant.
+\item Fibrant objects are quasi-free coalgebras.
+\item $B_\kappa$ preserves fibrations and weak equivalences
+  \textup{\cite[Theorem~2.9]{Val16}}.
+\item $\Omega_\kappa$ preserves cofibrations and weak equivalences.
+\end{enumerate}
+In particular, the homotopy category of dg chiral algebras is
+equivalent to the homotopy category of conilpotent chiral coalgebras:
+$\mathrm{Ho}(\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg})
+\simeq
+\mathrm{Ho}(\mathrm{conil}\text{-}\mathrm{dg}\text{-}
+\cC^{\textup{!`}}_{\mathrm{ch}}\text{-}\mathrm{coalg})$.
+\end{theorem}
+
+\begin{proof}[References]
+The model structure and Quillen equivalence are
+\cite[Theorems~2.1, 2.9]{Val16}, specialized from the general operadic
+setting to the chiral operad.  The unit $\eta\colon A \to
+\Omega_\kappa B_\kappa(A)$ is the bar-cobar resolution
+(Theorem~\ref{thm:bar-cobar-inversion}); it is a quasi-isomorphism on
+the Koszul locus.
+\end{proof}
+
+\begin{corollary}[Rectification of $\mathrm{Ch}_\infty$-algebras;
+\ClaimStatusProvedElsewhere]
+\label{cor:rectification-ch-infty}
+\index{rectification!Ch-infinity@$\mathrm{Ch}_\infty$-algebras}
+Every $\mathrm{Ch}_\infty$-algebra is $\infty$-quasi-isomorphic to a
+strict chiral algebra via the rectification functor
+$\Omega_\kappa \tilde{B}_\iota$
+\textup{\cite[Theorem~1.2]{Val16}}.  In particular, the homotopy
+category of strict chiral algebras and of
+$\mathrm{Ch}_\infty$-algebras with $\infty$-morphisms are equivalent:
+\[
+\mathrm{Ho}(\mathrm{dg}\text{-}\mathrm{Ch\text{-}alg})
+\;\simeq\;
+\infty\text{-}\mathrm{Ch}_\infty\text{-}\mathrm{alg}\, /\,{\sim_h}.
+\]
+\end{corollary}
+
+\begin{proof}[References]
+\cite[Theorems~1.2 and 3.7]{Val16}.
+\end{proof}
 
 \subsection{Summary}
 

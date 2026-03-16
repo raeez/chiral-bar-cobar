@@ -85,9 +85,12 @@ Kodaira--Spencer construction
 
 \begin{convention}[Higher-genus differentials]\label{conv:higher-genus-differentials}
 \index{bar differential!higher-genus notation|textbf}
-Three mathematically distinct differentials act on genus-$g$ bar complexes.
-Because the manuscript uses all three extensively, we fix notation once and
-for all.
+The Feynman transform differential
+$d_{\mathrm{FT}} = d_{\mathrm{tree}} + d_{\mathrm{loop}}$
+\textup{(}Proposition~\textup{\ref{prop:loop-filtration-compatible})} is
+the single canonical differential on the genus-$g$ bar complex.  For
+computational purposes, three projections of this differential are
+used throughout the manuscript.
 \begin{enumerate}
 \item[\textup{(i)}] \textbf{Fiberwise curved differential} $\dfib$.
   On a fixed curve $\Sigma_g$, the collision-residue differential built
@@ -164,23 +167,38 @@ genus-$0$ (single-valued), genus-$g$ with monodromy (curved),
 and the full logarithm on the universal cover (flat).
 \end{remark}
 
-\begin{definition}[Scalar curvature shadow]
+\begin{definition}[Modular curvature: the direct definition]
+\label{def:modular-curvature-direct}
 \label{def:scalar-curvature-shadow}
-\index{curvature shadow|textbf}
-\index{trace!of curvature coderivation}
+\index{curvature coefficient!direct definition|textbf}
+\index{self-contraction trace|textbf}
+The \emph{modular curvature coefficient} of a cyclic chiral
+algebra~$\cA$ with invariant bilinear form
+$\langle -, - \rangle_\cA$ is
+\begin{equation}\label{eq:kappa-direct}
+\kappa(\cA)
+\;:=\;
+\mathrm{Tr}_\cA
+\;:=\;
+\sum_a \langle e_a, e^a \rangle_\cA,
+\end{equation}
+where $\{e_a\}$ is a homogeneous basis and $\{e^a\}$ the dual
+basis.  Equivalently, $\kappa(\cA) = \Theta_{\cA}^{\leq 2}$ is the
+weight-$2$ level of the shadow Postnikov tower
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}.
+The self-contraction trace is the value of the unique
+one-loop stable graph \textup{(}the tadpole\textup{)} evaluated
+on~$\cA$
+(Theorem~\ref{thm:curvature-self-contraction}).
+
 The \emph{scalar curvature shadow} at genus $(g,n)$ is the trace of
 the curvature coderivation:
-\[
-\mathrm{tr}\bigl(\mcurv{g}\bigr) \;\in\; H^*(\overline{\mathcal{M}}_{g,n}).
-\]
-Its $(g, n{=}0)$ component recovers what this monograph denotes
+$\mathrm{tr}(\mcurv{g}) \in H^*(\overline{\mathcal{M}}_{g,n})$.
+Its $(g, n{=}0)$ component is
 $\kappa(\cA) \cdot \lambda_g$
 (Theorem~\ref{thm:genus-universality}).
-The scalar curvature shadow is the image of the (conjectural)
-universal genus datum $\Theta_{\cA}$
-(Theorem~\ref{thm:universal-MC}) under the trace map; it is
-the third and most computable level in the three-tier hierarchy of
-Convention~\ref{conv:higher-genus-differentials}: curvature lives in
+The curvature hierarchy has three levels
+(Convention~\ref{conv:higher-genus-differentials}): curvature lives in
 $\dfib$, strict nilpotence in $\Dg{g}$, and scalar anomalies in
 $\mathrm{tr}(\mcurv{g})$.
 \end{definition}
@@ -2059,7 +2077,8 @@ Then:
 
 The Arakelov correction $\mathcal{A}_3^{(g)} \neq 0$ for $g \geq 1$
 is the propagator-level manifestation of
-$\Theta_{\cA} \neq 0$: the universal MC class
+$\Theta_{\cA}^{\leq 2} = \kappa(\cA) \neq 0$: the scalar level
+of the shadow Postnikov tower
 (Theorem~\ref{thm:explicit-theta}) acts through the
 genus-$g$ Szeg\H{o} kernel to deform the Arnold relation,
 and the clutching compatibility of $\Theta$ assembles these
@@ -2487,6 +2506,15 @@ where:
 \item The factor $\hbar^{2g-2+n}$ is the topological weighting (Euler characteristic)
 \end{itemize}
 \end{definition}
+
+\begin{remark}[Genus filtration of the modular deformation object]
+\label{rem:genus-filtration-deformation}
+The genus stratification of
+Definition~\ref{def:genus-stratified-bar} is the chain-level
+incarnation of the complete genus filtration on $\Definfmod(\cA)$
+(Theorem~\ref{thm:modular-homotopy-convolution}), with each stratum
+$\gr_g$ computing deformations at fixed genus.
+\end{remark}
 
 \begin{remark}[String theory interpretation]
 \label{rem:string-theory-genus}
@@ -3464,16 +3492,32 @@ The obstruction class $\text{obs}_k \in H^2(B_g, Z(\mathcal{A}))$ admits explici
 
 \begin{definition}[Genus-\texorpdfstring{$g$}{g} obstruction class]\label{def:genus-g-obstruction}
 \index{obstruction class|textbf}
-For a chiral algebra $\mathcal{A}$ on a smooth curve $X$, the genus-$g$
-obstruction to the bar differential squaring to zero is:
-\[\text{obs}_g \in H^2(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))\]
-where:
-\begin{itemize}
-\item $\bar{B}_g(\mathcal{A})$ is the genus-$g$ bar complex
-\item $Z(\mathcal{A})$ is the center of $\mathcal{A}$
-\item The class $[\text{obs}_g]$ measures the failure of $\dfib^{\,2} = 0$ on a fixed $\Sigma_g$
-\end{itemize}
-The superscript ``$H^2$'' here refers to \emph{bar complex degree}~$2$ (the bar differential has degree~$+1$, so $d \circ d$ lands in degree~$2$).  Under the Leray spectral sequence for $\overline{\mathcal{C}}_{g,n} \to \overline{\mathcal{M}}_g$, this bar-degree-$2$ class maps to a class in $H^{2g}(\overline{\mathcal{M}}_g)$ (Theorem~\ref{thm:genus-universality} below), because $\lambda_g \in H^{2g}(\overline{\mathcal{M}}_g)$.  The two degrees should not be confused.
+\index{obstruction class!as projection of Theta}
+The \emph{genus-$g$ obstruction class} of a modular Koszul chiral
+algebra~$\cA$ is the genus-$g$, arity-$0$ projection of the
+scalar level of the shadow Postnikov tower:
+\begin{equation}\label{eq:obs-g-projection}
+\mathrm{obs}_g(\cA)
+\;:=\;
+\Theta_{\cA}^{\leq 2}\big|_{g,\,n=0}
+\;=\;
+\kappa(\cA) \cdot \lambda_g
+\;\in\;
+H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA)).
+\end{equation}
+By genus universality
+\textup{(}Theorem~\textup{\ref{thm:genus-universality})},
+$\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$.
+
+\emph{Analytic interpretation.}
+The class $\mathrm{obs}_g$ measures the failure of the fiberwise
+bar differential to square to zero:
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ on a fixed curve~$\Sigma_g$
+\textup{(}Theorem~\textup{\ref{thm:quantum-arnold-relations})}.
+The bar-degree-$2$ obstruction maps to $H^{2g}(\overline{\mathcal{M}}_g)$
+under the Leray spectral sequence for
+$\overline{\mathcal{C}}_{g,n} \to \overline{\mathcal{M}}_g$,
+landing on $\lambda_g \in H^{2g}$.
 \end{definition}
 
 \begin{theorem}[Obstruction formula; \ClaimStatusProvedHere]\label{thm:obstruction-general}
@@ -4330,13 +4374,15 @@ That $\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g$ lies in
 
 \begin{remark}\label{rem:tautological-master-table}
 The Master Table of computed invariants (Table~\ref{tab:master-invariants}) gives explicit values: $\kappa(\mathcal{H}_1) = 1$, $\kappa(\widehat{\mathfrak{sl}}_{2,k}) = 3(k+2)/4$, $\kappa(\mathrm{Vir}_c) = c/2$, $\kappa(\mathcal{W}_N^k) = c \cdot (H_N - 1)$.  Each produces a one-parameter family of tautological classes $\kappa \cdot \lambda_g \in R^g(\overline{\mathcal{M}}_g)$.
-These scalars are the trace of the universal MC class
-$\Theta_{\cA}$ (Theorem~\ref{thm:explicit-theta}):
+These scalars are the scalar level
+$\Theta_{\cA}^{\leq 2} = \kappa(\cA)$ of the shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower},
+Theorem~\ref{thm:explicit-theta}):
 the appearance of $\kappa$ as a single controlling number
 reflects the one-dimensionality of
 $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong \mathbb{C}$
 for simple~$\mathfrak{g}$ --- there is only one direction for
-$\Theta$ to point
+the scalar level to point
 (Corollary~\ref{cor:scalar-saturation}).
 \end{remark}
 
@@ -5514,6 +5560,13 @@ functorially.  Together with the genus-universality theorem
 differential (Lemma~\ref{lem:stable-graph-d-squared}), the
 logarithmic clutching kernels would provide the geometric
 foundation for the modular completion of the bar complex.
+Note that Theorem~\ref{thm:planted-forest-tropicalization}
+identifies the planted-forest coefficient algebra
+$\mathbb{G}_{\mathrm{pf}}$ with the chain algebra on
+$\operatorname{Trop}(\FM_n(C|D))$; the degeneration formula
+\cite[Theorem~5.3.4]{Mok25} is the geometric incarnation of
+the clutching law for the quartic resonance class
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
 \end{remark}
 
 % ================================================================

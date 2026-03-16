@@ -1698,6 +1698,12 @@ curve $X$.
   $L_g = L_g^+ \oplus L_g^-$ provides complementary Lagrangian
   subspaces, with $L_g^+$ controlling deformations of~$\cA$ and
   $L_g^-$ controlling deformations of~$\cA^!$.
+
+  The dg~Lie algebras $L_g$ are genus-truncations (via the complete
+  filtration of
+  Proposition~\ref{prop:modular-deformation-truncation}) of the
+  modular $L_\infty$-deformation object $\Definfmod(\cA)$
+  (Theorem~\ref{thm:modular-homotopy-convolution}).
 \end{enumerate}
 \end{theorem}
 
@@ -1778,6 +1784,22 @@ $(-1)$-shifted symplectic form.  They are maximal isotropic---hence
 Lagrangian---because $L_g = L_g^+ \oplus L_g^-$ (from part~(i),
 applied to the bar complex rather than to~$R\Gamma$).
 \end{proof}
+
+\begin{remark}[Genus-wise strictification]
+\label{rem:genuswise-strictification}
+\index{strictification!genus-wise}
+The dg~Lie algebra $L_g = \barB^{(g)}(\cA)[1]$ appearing in
+Theorem~\ref{thm:shifted-symplectic-complementarity} is a genus-$g$
+strict chart inside the modular deformation package of
+\S\ref{subsec:modular-deformation-complex}.  More precisely, after
+filtering $\operatorname{Def}^{\mathrm{mod}}(\cA)$ by genus, $L_g$
+identifies with the genus-$g$ strict truncation of the complete
+cyclic $L_\infty$-object $\Definfmod(\cA)$
+(Remark~\ref{rem:deformation-complex-linfty}).  Thus the
+$(-1)$-shifted symplectic formal moduli problem $\mathrm{MC}(L_g)$
+should be read as one coordinate chart on a single modular formal
+moduli problem, not as an isolated dg~Lie phenomenon.
+\end{remark}
 
 \begin{proposition}[PTVV Lagrangian embedding; \ClaimStatusProvedHere]
 \label{prop:ptvv-lagrangian}
@@ -3009,10 +3031,14 @@ The passage between them is the chiral exponential map.
 
 The three incarnations descend through the H/M/S hierarchy:
 \begin{itemize}
-\item \emph{H-level.}  The universal MC class
+\item \emph{H-level.}  The shadow Postnikov tower
+  $\Theta_\cA^{\leq r}$
+  (Definition~\ref{def:shadow-postnikov-tower})
+  assembles the modular data at each finite order;
+  its conjectural all-arity limit
   $\Theta_\cA \in
   \mathrm{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$
-  assembles all genera into a single modular twisting cochain
+  would give a single modular twisting cochain
   (Remark~\ref{rem:theta-modular-twisting}).
 \item \emph{M-level.}  At each genus, the three twisting
   morphisms in the table above are explicit dg maps,
@@ -3631,8 +3657,9 @@ If $\cA$ leaves the Koszul locus \textup{(}admissible affine levels,
 minimal-model central charges\textup{)}, the bar-cobar object
 $\Omega_X \bar{B}_X(\cA)$ persists but becomes curved: $d^2 \neq 0$
 on the underlying complex, and the failure of inversion is
-measured by the universal Maurer--Cartan class $\Theta_{\cA}$
-\textup{(}equation~\eqref{eq:universal-MC}\textup{)}.
+measured by the shadow Postnikov tower $\Theta_{\cA}^{\leq r}$
+(Definition~\ref{def:shadow-postnikov-tower},
+equation~\eqref{eq:universal-MC}).
 In this regime, $\Omega_X \bar{B}_X(\cA)$ represents $\cA$
 faithfully in the provisional coderived category
 $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
@@ -3675,6 +3702,26 @@ quasi-isomorphisms by (1)--(2), $f$ is a quasi-isomorphism.
 \end{enumerate}
 Therefore $\psi_g$ is a quasi-isomorphism on $\overline{\mathcal{M}}_g$.
 \end{proof}
+
+\begin{remark}[Structural explanation: the Getzler--Kapranov involution]
+\label{rem:inversion-from-ft-squared}
+\index{bar-cobar inversion!from FT squared}
+The above inductive proof verifies bar-cobar inversion stratum by
+stratum.  The \emph{structural reason} it holds is the
+Getzler--Kapranov involution
+$\mathrm{FT}^2 \simeq \mathrm{id}$
+(Theorem~\ref{thm:feynman-involution}): since
+$\barB = \mathrm{FT}(\cA)$ and
+$\Omega(\barB) = \mathrm{FT}(\mathrm{FT}(\cA)) \simeq \cA$
+on the homotopy category of modular operad algebras satisfying
+Poincar\'e duality
+(Corollary~\ref{cor:feynman-duality-qch}), bar-cobar inversion
+at all genera is a formal consequence of the modular operad axioms.
+The inductive proof above is the explicit verification that the
+abstract homotopy equivalence $\mathrm{FT}^2 \simeq \mathrm{id}$
+descends to a concrete quasi-isomorphism on each stratum of
+$\overline{\mathcal{M}}_g$.
+\end{remark}
 
 \begin{lemma}[\texorpdfstring{$E_2$}{E2} collapse at higher genus;
 \ClaimStatusProvedHere]\label{lem:e2-collapse-higher-genus}
@@ -3980,17 +4027,30 @@ cubic, quartic, and all-arity shadow tensors computed in
 \S\ref{sec:betagamma-quartic-birth}, and
 \S\ref{sec:mixed-cubic-quartic-shadows}.
 
-\begin{remark}[Why additive complementarity is not enough]
+\begin{remark}[Why additive complementarity is not enough:
+the clutching obstruction]
 \label{rem:why-additive-not-enough}
-An additive splitting can always be faked by eigenspace
-decompositions, arbitrary direct sums, or linear bookkeeping.
-The ambient theorem is harder to fake: it requires a single
-deformation problem rather than two unrelated ones, a shifted
-symplectic pairing on that problem, isotropicity of the one-sided
-packages, maximality of the isotropicity, and compatibility with
-clutching, factorization, and duality.  The last item is decisive:
-the theorem is not about tangent complexes at one point but about
-a modular geometry stable under the basic operations of the theory.
+Consider a naive additive splitting
+$H^*(\overline{\mathcal{M}}_g, Z(\cA))
+= V_{\cA} \oplus V_{\cA^!}$
+of vector spaces.  Such a splitting is \emph{unstable under
+genus gluing}: if $(x,y) \in V_{\cA} \times V_{\cA^!}$ at
+genera $g_1, g_2$, the separating clutching map $\xi_*$ on
+$\Sigma_{g_1} \cup_{\mathrm{node}} \Sigma_{g_2}$ does
+\emph{not} respect the direct-sum decomposition unless the
+deformation spaces are related by a Lagrangian condition:
+\[
+\xi_*^{-1}(V_{\cA} \oplus V_{\cA^!})
+\;\neq\;
+V_{\cA} \oplus V_{\cA^!}
+\qquad\text{generically.}
+\]
+The ambient theorem repairs this by imposing a single deformation
+problem $(L_{\cA} \oplus K_{\cA} \oplus L_{\cA^!})$ with a
+$(-1)$-shifted symplectic form and isotropicity of each side.
+Then $\xi_*$ respects the Lagrangian splitting because
+isotropicity is \emph{equivariant} under the modular operad
+action, whereas arbitrary direct sums are not.
 \end{remark}
 
 \subsection{The ambient complementarity datum}
@@ -3998,7 +4058,6 @@ a modular geometry stable under the basic operations of the theory.
 
 \begin{definition}[Ambient complementarity datum]
 \label{def:ambient-complementarity-datum}
-\ClaimStatusProvedHere
 Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
 curve, and let $\cA^!$ denote its Koszul dual on the locus where the
 duality package is defined.  An \emph{ambient complementarity datum}
@@ -4115,8 +4174,206 @@ The genus-$g$ complementarity complex is the linear shadow of this
 picture.
 \end{theorem}
 
-\subsection{Cotangent normal form and the complementarity potential}
+\subsection{The complementarity potential: direct definition}
 \label{subsec:cotangent-normal-form}
+
+The complementarity potential is the generating function of one
+Lagrangian in the cotangent chart centered at the other.  We define
+it directly from the cyclic deformation data and then prove its
+existence via the cotangent normal form.
+
+\begin{definition}[Complementarity potential: direct construction]
+\label{def:complementarity-potential}
+Let $V_{\cA} \subset H^*(\operatorname{Def}_{\mathrm{cyc}}(\cA))$
+be a finite-dimensional cyclic slice with nondegenerate Hessian
+$H_{\cA}$ and propagator $P_{\cA} = H_{\cA}^{-1}$.  The
+\emph{complementarity potential} is the formal function
+\begin{equation}
+\label{eq:complementarity-potential-direct}
+S_{\cA}(x)
+\;:=\;
+\sum_{r \geq 2} \frac{1}{r!}\,
+\operatorname{Sh}_r(\cA)(x, \ldots, x),
+\end{equation}
+where $\operatorname{Sh}_r(\cA)(x_1,\ldots,x_r)
+:= \sum_{\mathrm{cyc}} \langle x_1,\,
+\ell_{r-1}^{\mathrm{tr}}(x_2,\ldots,x_r)\rangle$
+is the arity-$r$ shadow jet, and $\ell_n^{\mathrm{tr}}$ are the
+transferred cyclic $\Ainf$-operations on the minimal model.
+The first three terms are the \emph{shadow jets}:
+\begin{equation}
+\label{eq:shadow-jets-direct}
+S_{\cA}(x)
+\;=\;
+\underbrace{\tfrac12 H_{\cA}(x,x)}_{\text{Hessian}}
+\;+\;
+\underbrace{\tfrac{1}{6}\mathfrak{C}_{\cA}(x,x,x)}_{\text{cubic shadow}}
+\;+\;
+\underbrace{\tfrac{1}{24}\mathfrak{Q}_{\cA}(x,x,x,x)}_{\text{quartic shadow}}
+\;+\; O(x^5).
+\end{equation}
+The dual Lagrangian $\mathcal{M}_{\cA^!}$ is the graph of $dS_{\cA}$
+in the cotangent chart centered at $\mathcal{M}_{\cA}$.
+\end{definition}
+
+\begin{remark}[What the potential computes]
+At genus~$0$: $S_{\cA}$ is the classical complementarity action.
+Its critical locus $\operatorname{Crit}(S_{\cA})$ governs
+simultaneous self-dual deformations of $\cA$ and $\cA^!$.
+When $S_{\cA}$ is exactly quadratic (i.e., only $H_{\cA}$
+survives), complementarity is ``fake'' --- a linear splitting.
+The first nonzero higher jet of $S_{\cA}$ is the first genuine
+nonlinear modular invariant.  For the five standard families:
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Family & Leading nonlinear jet & Potential type \\
+\midrule
+Heisenberg & none ($S = \frac12 H$) & exactly quadratic \\
+Affine $\widehat{\mathfrak{sl}}_2$ &
+$\frac16\kappa(a,[a,a])$ & polynomial (cubic) \\
+$\beta\gamma$ & $\frac{1}{24}\operatorname{cyc}(m_3)$ &
+polynomial (quartic) \\
+Virasoro & $\frac16(2x^3) + \frac{1}{24}Q_0 x^4$ &
+\textbf{non-polynomial} \\
+$\mathcal{W}_N$ ($N \geq 3$) &
+$\frac16\mathfrak{C}^{\mathrm{grav}} + \frac{1}{24}
+\mathfrak{Q}^{\mathrm{contact}}$ &
+\textbf{non-polynomial} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{remark}
+
+We now make each entry in the table explicit.
+
+\begin{example}[Complementarity potential: Heisenberg]
+\label{ex:complementarity-potential-heisenberg}
+For the rank-$1$ Heisenberg $\mathcal{H}_\kappa$ with
+$\operatorname{OPE}:J(z)J(w) \sim \kappa/(z{-}w)^2$, the cyclic
+slice is $V_{\mathcal{H}} = \mathbb{C}\langle J\rangle$ with
+Hessian $H_{\mathcal{H}} = \kappa\,x^2$ (the double-pole coefficient).
+The OPE has \emph{no simple pole}: $\ell_2^{\mathrm{tr}}(J,J)=0$.
+Therefore all higher shadows vanish, and
+\[
+S_{\mathcal{H}}(x) = \tfrac12\kappa\,x^2.
+\]
+The dual Lagrangian is $\mathcal{M}_{\mathcal{H}^!}
+= \operatorname{graph}(dS)
+= \operatorname{graph}(\kappa\,x\,dx)$, which is \emph{linear}.
+Complementarity is fake
+(Proposition~\ref{prop:fake-complementarity-criterion}).
+\end{example}
+
+\begin{example}[Complementarity potential: affine
+$\widehat{\mathfrak{sl}}_2$]
+\label{ex:complementarity-potential-affine}
+For $\widehat{\mathfrak{sl}}_{2,k}$ with
+$J^a(z)J^b(w) \sim (k{+}2)\kappa^{ab}/(z{-}w)^2
++ f^{ab}{}_c J^c(w)/(z{-}w)$,
+the double pole gives $H_{\mathrm{aff}} = (k{+}2)\kappa$
+and the simple pole gives the Lie bracket
+$\ell_2^{\mathrm{tr}}(y,z) = [y,z]$.
+The quartic obstruction vanishes by the Jacobi identity.
+The complementarity potential is:
+\begin{align}
+S_{\mathrm{aff}}(a)
+&= \tfrac12(k{+}2)\,\kappa(a,a)
++ \tfrac16\kappa(a,[a,a]).
+\label{eq:complementarity-potential-affine}
+\end{align}
+At the \emph{critical level} $k = -2$ (where $h^\vee = 2$ for
+$\mathfrak{sl}_2$), the Hessian vanishes and the potential
+becomes purely cubic:
+$S_{\mathrm{crit}}(a) = \tfrac16\kappa(a,[a,a])$.
+The critical locus
+$\operatorname{Crit}(S_{\mathrm{crit}}) = \{a : [a,a]=0\}$
+is the Maurer--Cartan locus for $\mathfrak{sl}_2$ --- recovering
+the connection to the Feigin--Frenkel center and the oper space
+(Theorem~\ref{thm:oper-bar}).
+\end{example}
+
+\begin{example}[Complementarity potential: $\beta\gamma$]
+\label{ex:complementarity-potential-betagamma}
+On the weight-changing line $V_{\beta\gamma} = \mathbb{C}\langle\eta
+\rangle$ with $\langle\eta,\eta\rangle = c'(\lambda)$
+(the derivative of the central charge $c(\lambda)
+= 1 - 12\lambda(1{-}\lambda) + 12\lambda^2$):
+the transferred operations $\ell_n^{\mathrm{tr}}(\eta^n) = 0$ for
+all $n \geq 2$ by rank-one abelian rigidity
+(Theorem~\ref{thm:betagamma-rank-one-rigidity}).  Therefore
+\[
+S_{\beta\gamma}(x) = \tfrac12 c'(\lambda)\,x^2.
+\]
+The potential is exactly quadratic on the weight line.  Off this
+line (on the full weight/contact slice), $\mathfrak{Q}_{\beta\gamma}$
+contributes a quartic term from $m_3$.
+\end{example}
+
+\begin{example}[Complementarity potential: Virasoro]
+\label{ex:complementarity-potential-virasoro}
+For $\operatorname{Vir}_c$ on the primary line
+$V_{\mathrm{Vir}} = \mathbb{C}\langle T\rangle$ with
+$T(z)T(w) \sim (c/2)/(z{-}w)^4 + 2T(w)/(z{-}w)^2 + \partial
+T(w)/(z{-}w)$:
+\begin{align}
+H_{\mathrm{Vir}} &= \tfrac{c}{2}\,x^2,
+&
+\mathfrak{C}_{\mathrm{Vir}} &= 2x^3,
+&
+\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}}
+&= \frac{10}{c(5c{+}22)}\,x^4.
+\end{align}
+The complementarity potential through quartic order is:
+\begin{equation}
+\label{eq:complementarity-potential-virasoro}
+S_{\mathrm{Vir}}(x)
+= \frac{c}{4}\,x^2
++ \frac{1}{3}\,x^3
++ \frac{10}{24\,c(5c{+}22)}\,x^4
++ \operatorname{Sh}_5 x^5 + \cdots
+\end{equation}
+The quintic $\operatorname{Sh}_5 \neq 0$ generically
+(Theorem~\ref{thm:w-virasoro-quintic-forced}): the potential is
+\textbf{non-polynomial} and the shadow tower is infinite.  This
+is the mechanism by which the Virasoro modular package carries
+strictly more information than the $\hat{A}$-genus.
+\end{example}
+
+\begin{example}[Legendre duality: affine case worked]
+\label{ex:legendre-duality-affine}
+The Legendre dual of the affine potential
+\eqref{eq:complementarity-potential-affine} is computed by
+extremizing $\langle p, a\rangle - S_{\mathrm{aff}}(a)$:
+\[
+p = \frac{\partial S}{\partial a}
+= (k{+}2)\kappa(a,\cdot) + \tfrac12\kappa([a,a],\cdot),
+\qquad
+a = \frac{p}{(k{+}2)\kappa} + O(p^2).
+\]
+Substituting into the Legendre formula and collecting through
+cubic order:
+\[
+S_{\mathrm{aff}}^\vee(p)
+= \frac{1}{2(k{+}2)}\kappa^{-1}(p,p)
+- \frac{1}{6(k{+}2)^3}\kappa^{-1}(p,[\kappa^{-1}p,\kappa^{-1}p])
++ O(p^4).
+\]
+Since $S_{\mathrm{aff}}^\vee = S_{\widehat{\mathfrak{sl}}_2^!}$
+by Proposition~\ref{prop:legendre-duality-potentials}, the cubic
+shadow of the Koszul dual is:
+\[
+\mathfrak{C}_{\mathrm{aff}^!}(p,p,p)
+= -\frac{1}{(k{+}2)^3}\kappa([\kappa^{-1}p,\kappa^{-1}p],
+\kappa^{-1}p).
+\]
+This confirms Proposition~\ref{prop:legendre-duality-cubic}: the
+cubic on the dual side is the Hessian-transported negative of the
+cubic on the primal side.
+\end{example}
+
+We now prove that the complementarity potential arises from shifted
+symplectic geometry.
 
 \begin{theorem}[Shifted cotangent normal form]
 \label{thm:shifted-cotangent-normal-form}
@@ -4259,6 +4516,57 @@ iff $S_{\cA}$ is quadratic.  When $S_{\cA}$ is quadratic, the
 critical locus is cut out by a linear differential and is
 governed by the Hessian alone.
 \end{proof}
+
+\begin{remark}[Shadow jets as the quantum $L_\infty$ structure
+made visible]
+\label{rem:shadow-jets-linfty}
+\index{quantum $L_\infty$!shadow jets as}
+The complementarity potential
+$S_{\cA}(x) = \sum_{r \geq 2}(1/r!)\operatorname{Sh}_r(x^r)$
+encodes the full quantum $L_\infty$ structure of
+Theorem~\ref{thm:modular-quantum-linfty} in a single generating
+function.  The precise dictionary is:
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Shadow jet & $L_\infty$ operation & Geometric meaning \\
+\midrule
+$H_{\cA} = \operatorname{Sh}_2$ &
+$\ell_2^{(0)}$ restricted to cyclic slice &
+Hessian of complementarity \\
+$\mathfrak{C}_{\cA} = \operatorname{Sh}_3$ &
+$\ell_3^{(0)} = \ell_2^{\mathrm{tr}}$ (transferred) &
+cubic bending of dual Lagrangian \\
+$\mathfrak{Q}_{\cA} = \operatorname{Sh}_4$ &
+$\ell_4^{(0)} = \ell_3^{\mathrm{tr}}$ (transferred) &
+quartic contact correction \\
+$\Lambda_P(\mathfrak{Q}_{\cA})$ &
+$\ell_1^{(1)}$ applied to $\operatorname{Sh}_4$ &
+genus-$1$ Hessian correction \\
+$\operatorname{Sh}_r$ for $r \geq 5$ &
+$\ell_r^{(0)}$ (higher homotopy) &
+higher nonlinear modular data \\
+\bottomrule
+\end{tabular}
+\end{center}
+The vanishing or nonvanishing of each shadow jet
+$\operatorname{Sh}_r$ is therefore a question about the transferred
+$L_\infty$ operations $\ell_r^{\mathrm{tr}}$.  The archetype
+trichotomy
+(Theorem~\ref{thm:w-archetype-trichotomy}) classifies families
+by which transferred operations survive:
+\begin{itemize}
+\item Gaussian: all $\ell_n^{\mathrm{tr}} = 0$ for $n \geq 2$
+(Heisenberg);
+\item Lie/tree: $\ell_2^{\mathrm{tr}} \neq 0$,
+$\ell_n^{\mathrm{tr}} = 0$ for $n \geq 3$ (affine);
+\item Contact/quartic: $\ell_2^{\mathrm{tr}} = 0$,
+$\ell_3^{\mathrm{tr}} \neq 0$ ($\beta\gamma$);
+\item Mixed: $\ell_2^{\mathrm{tr}} \neq 0$ \emph{and}
+$\ell_3^{\mathrm{tr}} \neq 0$ (Virasoro, $\mathcal{W}_N$).
+\end{itemize}
+The shadow tower is the homotopy structure made visible.
+\end{remark}
 
 \begin{remark}[The three archetypes from the Lagrangian perspective]
 \label{rem:three-archetypes-lagrangian}

@@ -1,3 +1,55 @@
+%% ===== Editorial bridge: the inversion half of the chapter =====
+%%
+%% The first half of this chapter (bar_cobar_adjunction_curved.tex)
+%% established the adjunction Omega^ch -| barB^ch and the curved A-infty
+%% framework that supports it off the quadratic locus.  This second half
+%% proves that the adjunction inverts: Theorem B says
+%% Omega(barB(A)) -> A is a quasi-isomorphism on the Koszul locus.
+%% Together, Theorems A and B close the algebraic engine of the monograph.
+
+\bigskip
+\noindent\textbf{From adjunction to inversion.}\enspace
+The adjunction $\Omegach \dashv \barBch$ established above gives a
+canonical map $\psi \colon \Omegach(\barBch(\cA)) \to \cA$---the
+counit of the adjunction.  That this counit is a quasi-isomorphism is
+not a formal consequence of having an adjunction: it is a statement
+about the \emph{geometry} of the Fulton--MacPherson compactification
+and the Koszulness of the underlying chiral operad.  Inversion feels
+inevitable once bar and cobar are seen as adjoint projections of a
+single incidence correspondence on $\overline{\Conf}_n(X)$: the bar
+construction records the strata where points collide, and the cobar
+construction reassembles the algebra from those collision data.  On
+the Koszul locus, no information is lost in this round trip.
+
+Off the strict quadratic/Koszul locus, inversion persists in
+progressively more structured forms.  Curved-central algebras
+(curvature $\kappa$ in the center: $\mu_1^2 = \kappa \cdot \mathrm{id}$)
+admit a completed bar-cobar inversion whose convergence is
+controlled by the $I$-adic filtration.  Filtered-complete algebras
+(Gui--Li--Zeng~\cite{GLZ22}) require the full pronilpotent
+completion $\hat{B}(\cA)$ and work in the coderived category rather
+than the ordinary derived category.  Programmatic algebras
+($\mathcal{W}_\infty$, $\mathcal{W}_{1+\infty}$) mark the frontier
+where the MC4 completion programme is still under construction.
+The regime hierarchy established in
+Convention~\ref{conv:regime-tags} organizes these cases; the
+sections that follow develop each regime and prove inversion in the
+first three.
+
+This half of the chapter also develops two broader perspectives.
+The $\Ran$-space formalism
+(\S\ref{sec:ran-space-perspective}) globalizes the pointwise
+adjunction to a sheaf-theoretic statement on $\Ran(X)$, making
+functoriality manifest and connecting to the Beilinson--Drinfeld
+language of factorization algebras.  The categorical logarithm
+(\S\ref{sec:categorical-logarithm}) recasts bar-cobar inversion as the
+identity $\exp(\log(\cA)) \cong \cA$: the bar complex is the
+logarithm of a chiral algebra, and the PBW spectral sequence is the
+Taylor expansion of this logarithm.  These are not metaphors---they
+are precise statements in the convolution algebra
+$\Convinf(\barBch(\cA), \cA)$, whose Maurer--Cartan theory governs
+the convergence of the expansion.
+
 \section{Non-quadratic chiral algebras}
 \label{sec:filtered-vs-curved-comprehensive}
 
@@ -6,7 +58,7 @@ The four-regime hierarchy (Convention~\ref{conv:regime-tags})
 classifies chiral algebras by their bar-complex behavior:
 quadratic (strict $d^2=0$), curved-central ($\dfib^2 = \kappa\cdot\omega_g$
 with central curvature), filtered-complete (requiring I-adic completion),
-and programmatic (infinite generators, MC4 frontier).
+and programmatic (infinite generators, MC4 completion target).
 The examples of each regime are given in
 \S\ref{subsec:three-regimes} above.
 
@@ -25,7 +77,7 @@ algebras require completed bar-cobar but preserve the adjunction;
 filtered algebras always need nilpotent completion
 (Appendix~\ref{app:nilpotent-completion}); and general algebras may
 lie beyond the present theorematic reach (e.g., $\mathcal{W}_\infty$,
-whose standard tower is theorematic while the remaining frontier is the
+whose standard tower is theorematic while the remaining problem is the
 exact MC4 H-level / coefficient-identification package).
 The passage from quadratic to general is also the passage from $E_\infty$
 to $E_1$: the Yangian $Y(\mathfrak{g})$, which is $E_1$-chiral but
@@ -187,9 +239,9 @@ The bar construction must be completed:
 where $F_n$ is the filtration by operator dimension.
 \end{example}
 
-\subsubsection{Class IV: general (exact MC4 frontier)}
+\subsubsection{Class IV: general (infinite-type completion)}
 
-\begin{example}[\texorpdfstring{$W_\infty$}{W_infinity}: exact MC4 frontier]\label{ex:winfty-completion-frontier-comprehensive}
+\begin{example}[\texorpdfstring{$W_\infty$}{W_infinity}: infinite-type completion]\label{ex:winfty-completion-frontier-comprehensive}
 The $W_\infty$ algebra has:
 \begin{itemize}
 \item Generators: $W^{(n)}$ for all $n \geq 2$ (infinitely many generators)
@@ -203,7 +255,7 @@ manuscript does not yet construct the filtered factorization object
 whose finite quotients recover the principal stages and satisfy the
 exact residue-identification package.
 
-The frontier is now narrower.  For the standard principal-stage tower,
+The problem is now narrower.  For the standard principal-stage tower,
 Corollary~\ref{cor:winfty-standard-mc4-package} already gives the
 standard-tower completed M-level bar-cobar package.  The remaining
 problem is not to construct a first completed bar object, but to
@@ -255,10 +307,10 @@ All orders, composite ops &
 YES &
 $W_3$, $W_N$ \\
 \hline
-\textbf{General / frontier} & 
-Infinite-dim, ungraded & 
-No uniform finite-type control & 
-OPEN / frontier &
+\textbf{General (infinite-type)} &
+Infinite-dim, ungraded &
+No uniform finite-type control &
+OPEN &
 $W_\infty$ \\
 \hline
 \end{tabular}
@@ -617,7 +669,7 @@ From Kontsevich's geometric viewpoint, the filtration level corresponds to the c
   \item If no: Completion is required
   \end{itemize}
 \item Does it have composite operators? $\Rightarrow$ Must complete
-\item Is the generating space infinite-dimensional? $\Rightarrow$ treat as an exact MC4 frontier: first construct the filtered H-level target, then identify its finite quotients by explicit coefficient identities and finite detection
+\item Is the generating space infinite-dimensional? $\Rightarrow$ treat as an MC4 completion target: first construct the filtered H-level target, then identify its finite quotients by explicit coefficient identities and finite detection
 \end{enumerate}
 
 Most vertex algebras from CFT are either quadratic or curved with finite-dimensional
@@ -1624,6 +1676,17 @@ the counit $\Omega_X(\bar{B}_X(\cA)) \to \cA$ being a
 quasi-isomorphism is one of the four equivalent characterizations
 of Koszulity established there.  The present theorem extends this
 to all genera via the genus induction of clause~(D2).
+\end{remark}
+
+\begin{remark}[Homotopy level of bar-cobar inversion]
+\label{rem:bar-cobar-inversion-linfty}
+The quasi-isomorphism $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$
+lifts to an $L_\infty$-quasi-isomorphism at the homotopy level, by
+functoriality of bar-cobar through the $L_\infty$-convolution
+$\Convinf$
+(Theorem~\ref{thm:operadic-homotopy-convolution}).
+In particular, bar-cobar inversion preserves the full quantum
+$L_\infty$ structure, not merely the dg~Lie shadow.
 \end{remark}
 
 \begin{remark}[Quasi-isomorphism of chain complexes vs chiral algebras]\label{rem:qi-vs-homology-iso}
@@ -2803,7 +2866,7 @@ algebras on algebraic curves, completely?}
 \begin{itemize}
 \item \textbf{MC1}: does the logarithm converge? (PBW concentration)
 \item \textbf{MC3}: what is the convergence domain? (thick generation
-in category~$\mathcal{O}$)
+in category~$\mathcal{O}$; proved in type~A, open beyond type~A)
 \item \textbf{MC4}: does the logarithm extend to infinite rank?
 (stability of towers)
 \item \textbf{MC5}: does the physical logarithm (BRST) equal the
@@ -2863,10 +2926,283 @@ Chapter~\ref{chap:higher-genus}.
 In Chapter~\ref{chap:higher-genus}, the curve itself varies over
 $\overline{\mathcal{M}}_g$, and the bar differential acquires
 curvature: the genus-$g$ correction $m_0^{(g)}$ is a section of the
-obstruction sheaf on $\overline{\mathcal{M}}_g$, controlled by a
-single universal Maurer--Cartan class $\Theta_{\cA}$.  The passage
+obstruction sheaf on $\overline{\mathcal{M}}_g$, controlled at the
+scalar level by $\kappa(\cA)$ and at higher orders by the shadow
+Postnikov tower $\Theta_{\cA}^{\leq r}$
+(Definition~\ref{def:shadow-postnikov-tower}).  The passage
 from this chapter to the next is the passage from operadic to
 \emph{modular} Koszul duality --- from the combinatorics of
 associahedra to the geometry of the Deligne--Mumford
 compactification --- or, in the language of the categorical logarithm,
 the passage from the single-valued to the multi-valued regime.
+
+% ================================================================
+% ČECH RESOLUTION AND HOMOTOPY CHIRAL ALGEBRAS
+% ================================================================
+
+\section{\v{C}ech resolution and homotopy chiral algebras}
+\label{sec:cech-hca}
+\index{homotopy chiral algebra}
+\index{Cech complex@\v{C}ech complex!HCA structure}
+
+The bar complex constructs a resolution of $\cA$ by factorization
+data on the Ran space.  There is a complementary resolution,
+working on the Zariski (or analytic) site of the curve itself:
+the \v{C}ech complex of a sheaf of chiral algebras.
+Malikov--Schechtman~\cite{MS24} prove that this \v{C}ech complex
+carries the structure of a \emph{homotopy chiral algebra}
+(HCA)---a chiral algebra up to coherent higher homotopies, with
+operadic control by the Lie Eilenberg--Zilber operad.
+
+The key insight is that the passage from local data
+(sections on affine opens) to global data (cohomology on~$X$)
+is \emph{not} a mere chain-level computation: it carries algebraic
+structure through the Moore complex functor, and this structure
+is precisely an $L_\infty$ enhancement of the Lie bracket in
+Beilinson--Drinfeld's pseudo-tensor category.
+
+\subsection{The cosimplicial Lie algebra of sections}
+\label{subsec:cosimplicial-cech}
+
+Let $\cA$ be a sheaf of chiral algebras on a smooth curve~$X$
+(or more generally on a smooth variety), and let
+$\mathcal{U} = \{U_i\}_{i \in I}$ be an affine open cover.
+The sections on iterated intersections assemble into a
+\emph{cosimplicial} object in the pseudo-tensor category of
+$\cD_X$-modules:
+
+\begin{definition}[Cosimplicial \v{C}ech object]
+\label{def:cosimplicial-cech}
+Define
+\[
+\check{C}^p(\mathcal{U};\cA)
+  = \bigoplus_{i_0 < \cdots < i_p}
+    \Gamma(U_{i_0} \cap \cdots \cap U_{i_p},\;\cA)
+\]
+with coface maps
+$\partial^j\colon \check{C}^p \to \check{C}^{p+1}$
+given by restriction (omitting the $j$-th index) and
+codegeneracy maps
+$\sigma^j\colon \check{C}^{p+1} \to \check{C}^p$ given by
+diagonal insertion.  The alternating sum
+$d_{\check{C}} = \sum_{j=0}^{p+1}(-1)^j\partial^j$
+is the \v{C}ech differential, and $d_{\check{C}}^2 = 0$ by the
+standard cosimplicial identities.
+\end{definition}
+
+The chiral product on $\cA$ endows each
+$\Gamma(U_{i_0\cdots i_p},\cA)$ with a Lie bracket in the
+pseudo-tensor sense of Beilinson--Drinfeld~\cite{BD04}:
+\[
+\mu_{i_0\cdots i_p}\colon
+  j_*j^*\bigl(\cA|_{U_{i_0\cdots i_p}}
+    \boxtimes \cA|_{U_{i_0\cdots i_p}}\bigr)
+  \longrightarrow
+  \Delta_*\cA|_{U_{i_0\cdots i_p}}.
+\]
+The restriction maps are compatible with these brackets, so
+$\check{C}^\bullet(\mathcal{U};\cA)$ is a cosimplicial Lie algebra
+in the pseudo-tensor category of $\cD_X$-modules.
+
+\subsection{The Moore complex and HCA structure}
+\label{subsec:moore-hca}
+
+\begin{definition}[Moore complex]
+\label{def:moore-complex}
+For a cosimplicial object $A^\bullet$ in an abelian category, the
+\emph{Moore complex} (or normalized cochain complex) is
+\[
+(MA)^p = \bigcap_{j=0}^{p-1}\ker(\sigma^j\colon A^p \to A^{p-1}),
+\qquad
+d_M = \sum_{j=0}^{p+1}(-1)^j\partial^j\big|_{(MA)^p}.
+\]
+The Dold--Kan correspondence identifies cosimplicial objects with
+cochain complexes via this functor.
+\end{definition}
+
+The Moore complex $M\check{C}^\bullet(\mathcal{U};\cA)$ is a cochain
+complex of $\cD_X$-modules whose cohomology computes the sheaf
+cohomology $H^\bullet(X,\cA)$.  The theorem of
+Malikov--Schechtman enriches this complex with higher operations:
+
+\begin{theorem}[\v{C}ech complex as homotopy chiral algebra;
+\ClaimStatusProvedElsewhere]
+\label{thm:cech-hca}
+\index{Malikov--Schechtman theorem}
+\textup{(Malikov--Schechtman \cite{MS24}, Theorem~3.1.)}
+Let $\cA$ be a sheaf of chiral algebras on~$X$ and
+$\mathcal{U}$ an affine open cover.  Then the Moore complex
+$M\check{C}^\bullet(\mathcal{U};\cA)$ carries the structure of a
+homotopy Lie algebra in the pseudo-tensor category of
+$\cD_X$-modules---that is, a homotopy chiral algebra.
+
+Concretely, there exist multilinear operations
+\[
+F_n\colon
+  \mathrm{Lie}(n) \otimes \mathcal{Z}(n)
+  \otimes (M\check{C})^{\otimes n}
+  \longrightarrow M\check{C},
+  \qquad n \geq 1,
+\]
+where $\mathcal{Z}(n)$ is the Eilenberg--Zilber chain complex
+$\operatorname{Tot}\operatorname{Hom}_{\Delta(k)}(Z, Z^{\otimes n})$,
+satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $F_1$ is the identity (the differential $d_M$ on $M\check{C}$);
+\item $F_2$ is the binary Lie bracket on
+  $M\check{C}$, transferred from the chiral product;
+\item the collection $\{F_n\}_{n \geq 1}$ defines a pseudo-tensor
+  functor from the Lie Eilenberg--Zilber operad
+  $\mathcal{Y}(n) = \mathcal{Z}(n) \otimes_k \mathrm{Lie}(n)$
+  to the endomorphism operad of $M\check{C}$ in the pseudo-tensor
+  category;
+\item the $L_\infty$ relations hold: for each arity~$n$, the
+  $A_\infty$/$L_\infty$ Stasheff identity is satisfied up to
+  homotopies controlled by $F_{n+1}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Operadic action map]
+\label{rem:operadic-action-map}
+The explicit formula for $F_n$ is given by
+Malikov--Schechtman~\cite{MS24}, equation~(3.1.2.1):
+for $\psi \in \mathrm{Lie}(n)$,
+$\varphi \in \operatorname{Hom}_\Delta(Z, Z^{\otimes n})$,
+and elements
+$a_{m_1} \in (M\check{C})^{m_1}, \ldots,
+ a_{m_n} \in (M\check{C})^{m_n}$,
+\[
+F_n(\psi \otimes \varphi)_{m_1,\ldots,m_n;\,m}(a_{m_1},\ldots,a_{m_n})
+=
+\begin{cases}
+  \psi_m(\bar\varphi)(a_{m_1},\ldots,a_{m_n})
+    & \text{if } m = m_1 + \cdots + m_n, \\
+  0 & \text{otherwise},
+\end{cases}
+\]
+where $\psi_m$ is the chiral Lie action on
+$\check{C}^m(\mathcal{U};\cA)$ and
+$\bar\varphi \in \bigotimes_{i=1}^n
+\operatorname{Hom}(\check{C}^{m_i},\check{C}^m)$
+is the component of~$\varphi$ at the specified multi-degree.
+\end{remark}
+
+\subsection{\v{C}ech--bar comparison}
+\label{subsec:cech-bar-comparison}
+\index{Cech--bar comparison@\v{C}ech--bar comparison}
+
+The bar complex and the \v{C}ech complex are two resolutions of the
+same object---the chiral homology of $\cA$ on~$X$---and their
+algebraic enhancements must be compatible.
+
+\begin{proposition}[\v{C}ech--bar intertwining;
+\ClaimStatusConjectured]
+\label{prop:cech-bar-intertwining}
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$.
+There exists a quasi-isomorphism of $L_\infty$ algebras
+(in the pseudo-tensor category)
+\[
+\Phi\colon
+  \bigl(M\check{C}^\bullet(\mathcal{U};\cA),\; \{F_n\}\bigr)
+  \xrightarrow{\;\sim\;}
+  \bigl(\barBgeom(\cA)|_{\mathrm{Ran}(X)},\;
+    \{m_n\}\bigr)
+\]
+that on cohomology induces the canonical isomorphism
+$\check{H}^\bullet(X,\cA) \cong H_\bullet^{\mathrm{ch}}(X,\cA)$
+between \v{C}ech cohomology and chiral homology.
+
+The map $\Phi$ is constructed by the standard comparison
+between \v{C}ech and de~Rham/Dolbeault resolutions, enhanced to
+an $L_\infty$ morphism by homological perturbation.
+\end{proposition}
+
+\begin{remark}[\v{C}ech--bar dictionary]
+\label{rem:cech-bar-dictionary}
+The comparison yields a concrete dictionary:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\textbf{\v{C}ech side} & \textbf{Bar side} \\
+\hline
+Sections on $U_{i_0\cdots i_p}$
+  & Factorization data on $\mathrm{Ran}_p(X)$ \\
+\v{C}ech differential $d_{\check{C}}$
+  & Bar differential $d_B$ \\
+Moore normalization
+  & Conilpotent filtration \\
+Eilenberg--Zilber operad $\mathcal{Y}(n)$
+  & Associahedra / $\mathrm{FCom}$ (genus~$0$) \\
+HCA operations $F_n$
+  & $A_\infty$ operations $m_n$ \\
+Cosimplicial identities
+  & $\partial^2 = 0$ on $\overline{\mathcal{M}}_{0,n}$ \\
+\end{tabular}
+\end{center}
+At genus~$0$, both sides are governed by trees: the
+\v{C}ech side by simplicial trees (nerve of the cover),
+the bar side by rooted planar trees (bar-length
+filtration).  At genus $g \geq 1$, the bar side sees stable
+graphs (the Feynman transform $\mathrm{FCom}$), while the
+\v{C}ech side sees the cosimplicial structure of the modular
+operad's boundary strata.  The comparison
+$\Phi$ intertwines these combinatorics.
+\end{remark}
+
+\begin{example}[\v{C}ech HCA for the Heisenberg algebra on $\mathbb{P}^1$]
+\label{ex:cech-hca-heisenberg}
+Take $X = \mathbb{P}^1$ with the standard cover
+$U_0 = \mathbb{A}^1 = \operatorname{Spec}k[z]$ and
+$U_\infty = \mathbb{P}^1 \setminus\{0\} = \operatorname{Spec}k[z^{-1}]$,
+so $U_0 \cap U_\infty = \mathbb{G}_m = \operatorname{Spec}k[z,z^{-1}]$.
+The \v{C}ech complex for the Heisenberg sheaf
+$\cH_k$ is the two-term complex
+\[
+\check{C}^0 = \cH_k(U_0) \oplus \cH_k(U_\infty)
+\xrightarrow{\;d_{\check{C}}\;}
+\check{C}^1 = \cH_k(U_0 \cap U_\infty),
+\]
+where $d_{\check{C}}(f_0,f_\infty) = f_0|_{\mathbb{G}_m}
+- f_\infty|_{\mathbb{G}_m}$.
+Moore normalization gives $(M\check{C})^0 = \cH_k(U_0)$ and
+$(M\check{C})^1 = \cH_k(\mathbb{G}_m)/\cH_k(U_\infty)$.
+
+The binary bracket $F_2$ on $M\check{C}$ is the restriction of
+the Heisenberg chiral bracket: for
+$J_n = z^n\,dz \in \cH_k(U_0)$,
+\[
+F_2(J_m, J_n) = k\,m\,\delta_{m+n,0}\cdot\mathbf{1}.
+\]
+Since the Heisenberg bracket is abelian (only the central
+extension is nonzero), $F_3 = 0$ and all higher $F_n$ vanish:
+the \v{C}ech HCA is \emph{strict} for the Heisenberg algebra,
+matching the strictness of the bar $A_\infty$ structure
+(\S\ref{sec:explicit-low-degree}).
+
+The \v{C}ech cohomology
+$H^0(\mathbb{P}^1,\cH_k) = k\cdot\mathbf{1}$ (global constants) and
+$H^1(\mathbb{P}^1,\cH_k) = \bigoplus_{n<0} k\cdot J_n$
+(negative modes modulo positive modes) reproduce
+the chiral homology of~$\cH_k$ on~$\mathbb{P}^1$.
+\end{example}
+
+\begin{example}[\v{C}ech HCA for $\widehat{\mathfrak{sl}}_2$ and the Jacobiator]
+\label{ex:cech-hca-sl2}
+For $\cA = \widehat{\mathfrak{sl}}_2$ at level~$k$ on $\mathbb{P}^1$
+with the same cover, the binary bracket $F_2$ encodes the affine
+OPE.  The key difference from the Heisenberg case is that $F_2$ is
+\emph{not} abelian: the Lie bracket $[e,f] = h$ produces a
+nonzero Jacobiator
+\[
+J(e_m, f_n, h_p)
+= [e_m,[f_n,h_p]] + [f_n,[h_p,e_m]] + [h_p,[e_m,f_n]]
+\]
+on the \v{C}ech complex, which is nullhomotopic by the
+Malikov--Schechtman theorem: there exists
+$J'\colon (M\check{C})^{\otimes 3} \to M\check{C}[-1]$
+with $d_M J' + J' d_M = J$.  This homotopy $J'$ is
+precisely the ternary operation $F_3$, which corresponds
+under the \v{C}ech--bar comparison to the $A_\infty$ operation
+$m_3$ on the bar complex (cf.\
+\S\ref{sec:non-renormalization-tree}).
+\end{example}
