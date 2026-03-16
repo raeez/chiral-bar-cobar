@@ -1633,41 +1633,63 @@ Specifically:
 
 \subsection{BV formalism}
 
-The BV algebra structure on the bar complex is as follows.
+The BV algebra structure on the bar complex is the fifth piece of the
+master differential
+(Theorem~\ref{thm:convolution-dg-lie-structure}).
 
 \begin{theorem}[BV structure on bar complex; \ClaimStatusProvedHere]
 \label{thm:bv-structure-bar}
 \index{BV algebra!on bar complex}
+\index{BV operator!from non-separating clutching}
 The chiral bar complex carries a BV algebra structure where:
 \begin{enumerate}
-\item The BV operator $\Delta$ is the Laplacian on configuration spaces
-(residue extraction along diagonals)
-\item The antibracket $\{-,-\}$ is the failure of $\Delta$ to be a
-derivation (equivalently, the symplectic pairing on $T^*C_n(X)$)
-\item The linearized master equation $d_{\bar{B}}^2 = 0$ holds
-(Theorem~\ref{thm:bar-nilpotency-complete}); the full QME solution
-is established in Part~III
+\item The BV operator $\Delta$ is the non-separating clutching map
+of the modular operad: for an element at genus~$g$ with $n+2$
+inputs, $\Delta$ contracts a pair of inputs using the invariant
+form $\langle -, - \rangle_\cA$ and produces an element at
+genus~$g+1$ with $n$ inputs.  This is the $\hbar\Delta$ term in
+the five-component differential~\eqref{eq:D-five-components}.
+\item The antibracket $\{-,-\}$ is the separating clutching:
+joining two elements by identifying one output with one input
+through the propagator $P_\cA$.  This is the Lie bracket of the
+modular convolution algebra
+(Theorem~\ref{thm:convolution-dg-lie-structure}).
+\item The quantum master equation
+$D\Theta + \tfrac12[\Theta,\Theta] = 0$ holds for the master
+MC element
+(Definition~\ref{def:modular-chiral-structure-mc}).
 \end{enumerate}
+
+\emph{Analytic realization.}  On configuration spaces,
+$\Delta$ acts by residue extraction along collision diagonals and
+$\{-,-\}$ by the symplectic pairing on $T^*C_n(X)$.  The Arnold
+relation
+$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
++ \eta_{ki} \wedge \eta_{ij} = 0$ is the genus-$0$ shadow of
+$\Delta^2 = 0$.
 \end{theorem}
 
 \begin{proof}
-Items~(1) and~(2) follow from the Arnold relations on configuration spaces
-(Theorem~\ref{thm:arnold-relations}): the BV operator $\Delta$ extracts
-residues along collision diagonals, and $\Delta^2 = 0$ is equivalent to the
-Arnold relation $\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
-+ \eta_{ki} \wedge \eta_{ij} = 0$.  The second-order property
-$\Delta(abc) - \Delta(ab)c - (-1)^{|a|}a\Delta(bc) - (-1)^{(|a|+1)|b|}b\Delta(ac)
-+ \Delta(a)bc + (-1)^{|a|}a\Delta(b)c + (-1)^{|a|+|b|}ab\Delta(c) = 0$
-follows from the Leibniz rule for residues on triple collisions.
-Item~(3): the bar differential satisfies $d_{\bar{B}}^2 = 0$
-(Theorem~\ref{thm:bar-nilpotency-complete}), which is the \emph{linearized} QME
-($\hbar\Delta S = 0$ at $S = 0$).  Items~(1) and~(2) provide the BV data
-($\Delta$, $\{-,-\}$) making the bar complex a BV algebra.  For Koszul~$\mathcal{A}$,
-Verdier duality $\mathbb{D}(\bar{B}(\mathcal{A})) \cong \Omega(\mathcal{A}^!)$
-identifies the bar-cobar pairing as a candidate solution of the full QME
-$\frac{1}{2}\{S,S\} + \hbar\Delta S = 0$; verification of the interaction
-term $\{S,S\}$ requires the explicit propagator calculus of
-Part~III (Chapter~\ref{ch:bv-brst}).
+The BV operator $\Delta$ is the non-separating gluing map
+$\xi_{\mathrm{ns}}\colon
+\overline{\mathcal{M}}_{g,n+2} \to \overline{\mathcal{M}}_{g+1,n}$
+of the modular operad
+(Definition~\ref{def:modular-operad}), composed with the invariant
+pairing.  The antibracket is the separating gluing.  The second-order
+property of $\Delta$ (the BV axiom) follows from the
+codimension-$2$ boundary relations on
+$\overline{\mathcal{M}}_{g,n}$: two non-separating degenerations
+compose to give a codimension-$2$ stratum that also arises from
+a separating degeneration, yielding the BV relation
+$\Delta^2 = 0$ and $\Delta(ab) = \Delta(a)b \pm a\Delta(b)
+\pm \{a,b\}$.  The QME is the Maurer--Cartan equation in the
+modular convolution algebra.  At the full homotopy level, the BV
+structure is the dg shadow of the quantum $L_\infty$-algebra of
+Theorem~\ref{thm:modular-quantum-linfty}: $\Delta$ is $\ell_1^{(1)}$
+and $\{-,-\}$ is $\ell_2^{(0)}$.
+Analytically, this reproduces the
+residue calculus on $\overline{C}_n(X)$ by the Prism Principle
+(Theorem~\ref{thm:prism-operadic}).
 \end{proof}
 
 \begin{remark}[Chern--Simons interpretation]\label{rem:cs-interp}
