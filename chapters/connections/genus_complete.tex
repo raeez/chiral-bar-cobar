@@ -832,3 +832,232 @@ Gromov--Witten-type intersection theory of
 \index{genus expansion!finite data}
 By the genus universality theorem (Theorem~\ref{thm:genus-universality}), the \emph{scalar} genus expansion of a Koszul chiral algebra~$\mathcal{A}$ is determined by a single numerical invariant: the obstruction coefficient $\kappa(\mathcal{A})$, which depends on the genus-$1$ curvature alone.  In practice, $\kappa$ is computed from the central charge and the structure of the OPE: $\kappa(\widehat{\mathfrak{g}}_k) = (k+h^\vee)\dim\mathfrak{g}/(2h^\vee)$, $\kappa(\mathrm{Vir}_c) = c/2$, $\kappa(\mathcal{H}_\kappa) = \kappa$.  The scalar genus expansion $F_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g^{\mathrm{FP}}$ is then given by Bernoulli numbers.  The separately proved spectral invariants, and the full Maurer--Cartan completion on the simple-Lie-symmetry locus of Theorems~\ref{thm:universal-theta} and~\ref{thm:mc2-full-resolution}, are \emph{not} determined by~$\kappa$ alone; see Theorem~\ref{thm:spectral-characteristic} and Definition~\ref{def:full-modular-package}.
 \end{remark}
+
+
+%================================================================
+% THE MODULAR CHERN--WEIL TRANSFORM AND GEOMETRIC AVATARS
+%================================================================
+
+\section{The modular Chern--Weil transform}
+\label{sec:modular-chern-weil-transform}
+
+The scalar genus expansion $F_g(\cA) = \kappa(\cA)\lambda_g$ and the
+spectral discriminant $\Delta_{\cA}$ are not parallel structures
+living side by side.  They are successive \emph{characteristic images}
+of one Maurer--Cartan element.  The modular Chern--Weil transform makes
+this precise: it is a single map from the ambient master element to
+the full invariant hierarchy.
+
+\begin{definition}[Modular Chern--Weil transform]
+\label{def:modular-chern-weil-transform}
+\ClaimStatusProvedHere
+Define the \emph{modular Chern--Weil transform}
+\begin{equation}
+\label{eq:modular-chern-weil-transform}
+\operatorname{CW}_{\cA}\colon
+\operatorname{MC}(\mathfrak{g}^{\mathrm{amb}}_{\cA})
+\longrightarrow
+\underbrace{\vphantom{\bigl(}
+\text{scalar classes}}_{\kappa(\cA)\lambda_g}
+\;\times\;
+\underbrace{\vphantom{\bigl(}
+\text{spectral classes}}_{\Delta_{\cA}(x)}
+\;\times\;
+\underbrace{\vphantom{\bigl(}
+\text{resonance classes}}_{\mathfrak{R}^{\mathrm{mod}}_{r,\bullet}}
+\;\times\;
+\underbrace{\vphantom{\bigl(}
+\text{line-kernel data}}_{r_{\cA}(z)}
+\end{equation}
+by the rules
+\begin{align}
+\operatorname{tr}(\Theta_{\cA})
+&= \sum_{g \geq 1}\kappa_g(\cA)\,\lambda_g,
+\label{eq:cw-scalar}
+\\
+\det(1 - xT_{\mathrm{br},\cA})
+&= \Delta_{\cA}(x),
+\label{eq:cw-spectral}
+\\
+\operatorname{CW}_{\cA}^{\mathrm{res},r}(\Theta_{\cA})
+&= \mathfrak{R}^{\mathrm{mod}}_{r,\bullet}(\cA),
+\qquad r \geq 4,
+\label{eq:cw-resonance}
+\\
+\operatorname{CW}_{\cA}^{\mathrm{line}}(\Theta_{\cA})
+&= r_{\cA}(z)
+\in \cA^!\widehat\otimes \cA^!\bigl(\!(z^{-1})\!\bigr).
+\label{eq:cw-line}
+\end{align}
+\end{definition}
+
+\begin{remark}[Conceptual importance]
+The scalar $\kappa$, the spectral $\Delta$, the nonlinear shadow
+tensors, the resonance tower, and the line-operator kernel are not
+parallel structures.  They are successive characteristic images of one
+Maurer--Cartan element $\Theta_{\cA}$ under projection to
+different invariant-theoretic targets.  This is the modular analogue
+of the classical Chern--Weil homomorphism: a single connection
+produces all characteristic classes.
+\end{remark}
+
+\subsection{The complementarity Legendrian}
+\label{subsec:complementarity-legendrian}
+
+\begin{definition}[Complementarity Legendrian]
+\label{def:complementarity-legendrian}
+Contactize the Hamiltonian $\mathfrak{S}_{\cA}$
+(Definition~\ref{def:complementarity-action}) to obtain the
+Legendrian subspace
+\begin{equation}
+\label{eq:complementarity-legendrian}
+\Lambda_{\cA}
+:= j^1\mathfrak{S}_{\cA}
+\subset J^1(V_{\cA}).
+\end{equation}
+The front projection $\pi_{\mathrm{front}}(\Lambda_{\cA})$ is the
+graph of $\mathfrak{S}_{\cA}$ in the base coordinates, and its
+singularities correspond to degeneracies of the shadow jets.
+\end{definition}
+
+\begin{conjecture}[Front-discriminant realization of resonance]
+\label{conj:front-discriminant-resonance}
+\ClaimStatusConjectured
+For each arity $r \geq 4$, the resonance divisor
+$\mathfrak{R}^{\mathrm{mod}}_{r,g,n}(\cA)$ is the
+front-singularity discriminant of the arity-$r$ contact sector of
+$\Lambda_{\cA}$.
+\end{conjecture}
+
+\subsection{The complementarity Stokes groupoid and phase index}
+\label{subsec:stokes-groupoid-phase-index}
+
+\begin{definition}[Nonlinear regular locus]
+\label{def:nonlinear-regular-locus}
+Let $B^{\circ}_{\cA}$ be the quartic-regular locus of parameters.
+Define
+\begin{equation}
+\label{eq:nonlinear-regular-locus}
+U_{\cA}
+:=
+B^{\circ}_{\cA} \setminus
+\Bigl(
+\Delta_{\cA}^{-1}(0)
+\cup
+\bigcup_{r \geq 4}
+|\mathfrak{R}^{\mathrm{mod}}_r(\cA)|
+\Bigr).
+\end{equation}
+\end{definition}
+
+\begin{definition}[Complementarity Stokes groupoid]
+\label{def:complementarity-stokes-groupoid}
+Let $\mathscr{P}_{\cA}$ denote the local system of gauge classes
+of truncated lifts over $U_{\cA}$.  Its monodromy groupoid is the
+\emph{complementarity Stokes groupoid}
+\begin{equation}
+\label{eq:complementarity-stokes-groupoid}
+\operatorname{Sto}_{\mathrm{comp}}(\cA)
+:=
+\operatorname{Mon}(\mathscr{P}_{\cA}|_{U_{\cA}}).
+\end{equation}
+\end{definition}
+
+\begin{definition}[Phase index]
+\label{def:phase-index}
+For a point $u \in U_{\cA}$, the \emph{nonlinear phase index} is
+\begin{equation}
+\label{eq:phase-index}
+\nu_{\mathrm{nl}}(\cA, u)
+:=
+\min\{r \geq 3 : \operatorname{Sh}_r(\Theta_{\cA}, u) \neq 0\},
+\end{equation}
+with $\nu_{\mathrm{nl}} = \infty$ if all higher jets vanish.
+\end{definition}
+
+\begin{remark}[Phase index of the standard families]
+\label{rem:phase-index-families}
+The phase index gives a precise hierarchy:
+\[
+\begin{array}{c|ccccc}
+\text{Family}
+& \text{Heisenberg}
+& \widehat{\mathfrak{sl}}_2
+& \beta\gamma
+& \text{Virasoro}
+& \text{principal }\mathcal{W}_N
+\\[2pt]\hline\rule{0pt}{11pt}
+\nu_{\mathrm{nl}}
+& \infty
+& 3
+& 4
+& \text{mixed}
+& \text{mixed}
+\end{array}
+\]
+The three finite values $\{3, 4, \infty\}$ correspond to the three
+primitive archetypes (Lie/tree, contact/quartic, Gaussian).  The
+``mixed'' entries for Virasoro and $\mathcal{W}_N$ mean that both
+cubic and quartic jets are simultaneously nonzero: these families
+carry the full richness of the shadow tower, and their
+complementarity potentials are genuinely non-polynomial
+(Theorem~\ref{thm:nms-finite-termination}).
+\end{remark}
+
+\subsection{The nonlinear modular characteristic hierarchy}
+\label{subsec:nonlinear-modular-hierarchy}
+
+\begin{theorem}[The full modular invariant hierarchy]
+\label{thm:full-modular-invariant-hierarchy}
+\ClaimStatusProvedHere
+The modular invariants of a Koszul chiral algebra organize into
+a hierarchy of increasing nonlinear depth:
+\begin{equation}
+\label{eq:full-hierarchy}
+\underbrace{\kappa(\cA)}_{\text{scalar}}
+\;\longrightarrow\;
+\underbrace{\Delta_{\cA}}_{\text{spectral}}
+\;\longrightarrow\;
+\underbrace{[\mathfrak{C}_{\cA}],\;
+\mathfrak{o}^{(4)}_{\cA},\;
+[\mathfrak{Q}_{\cA}]}_{\text{nonlinear shadows}}
+\;\longrightarrow\;
+\underbrace{\Lambda_{P}(\mathfrak{Q}_{\cA})}_{\text{genus loop}}
+\;\longrightarrow\;
+\underbrace{\Theta_{\cA}}_{\text{universal class}}.
+\end{equation}
+Each level is a shadow of every later level.  The universal class
+$\Theta_{\cA}$ is the source of all of them.
+\end{theorem}
+
+\begin{proof}
+The scalar characteristic $\kappa = \operatorname{tr}(H_{\cA})$ is
+the trace of the Hessian.  The spectral characteristic $\Delta_{\cA}$
+is the characteristic polynomial of the branching operator, which is
+determined by the full Hessian.  The cubic shadow
+$[\mathfrak{C}_{\cA}]$ is a cocycle for $\nabla_{H_{\cA}}$
+by the quartic master equation
+(Theorem~\ref{thm:nms-shadow-master-equations}).  The quartic shadow
+$[\mathfrak{Q}_{\cA}]$ satisfies the driven equation
+$\nabla_H\mathfrak{Q} + \frac12\{\mathfrak{C},\mathfrak{C}\} = 0$.
+The genus loop $\Lambda_P(\mathfrak{Q}_{\cA})$ implements
+non-separating clutching and produces the first tensorial modular
+invariant beyond $\kappa$
+(Theorem~\ref{thm:nms-nonseparating-clutching-law}).  Every level is
+a projection of $\Theta_{\cA}$ under the Chern--Weil transform
+\eqref{eq:modular-chern-weil-transform}.
+\end{proof}
+
+\begin{remark}[Beyond the $\hat{A}$-genus]
+\label{rem:beyond-ahat-genus}
+Two algebras with the same $\kappa$ (hence identical $\hat{A}$-genera)
+can be distinguished by their genus-$1$ Hessian correction
+$\delta H^{(1)}_{\cA} = \Lambda_P(\mathfrak{Q}^{(0)}_{\cA})$.
+For Virasoro,
+$\delta H^{(1)}_{\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$
+and the loop ratio
+$\rho^{(1)}_{\mathrm{Vir}} = 240/[c^3(5c+22)]$
+is a nontrivial function of $c$ invisible to the scalar genus
+expansion.  This is the first place where the modular homotopy type
+carries strictly more information than the $\hat{A}$-genus.
+\end{remark}
