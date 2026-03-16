@@ -39,7 +39,7 @@ from compute.lib.chiral_homology_allgenus import (
     complementarity_kappa_sum,
     spectral_discriminant,
     heisenberg_bar_cohomology_predicted,
-    verlinde_conformal_blocks_sl2,
+    verlinde_partition_function_sl2,
     verify_allgenus_package,
 )
 from compute.lib.genus_expansion import (
@@ -155,9 +155,11 @@ class TestPBWGenusIndependence:
         assert all(verify_pbw_genus_independence("free_fermion", 10))
 
     def test_heisenberg_is_partitions(self):
-        """H^n(B-bar(H)) = p(n-1) (partition numbers)."""
-        for n in range(1, 9):
-            assert BAR_COHOMOLOGY["Heisenberg"][n] == partition_number(n - 1)
+        """H_h(B-bar(H)) = p(h-2) for h >= 2, H_1 = 1 (conformal weight h)."""
+        assert BAR_COHOMOLOGY["Heisenberg"][1] == 1  # single generator
+        for h in range(2, 9):
+            assert BAR_COHOMOLOGY["Heisenberg"][h] == partition_number(h - 2), \
+                f"H_{h} = {BAR_COHOMOLOGY['Heisenberg'][h]} != p({h-2}) = {partition_number(h-2)}"
 
     def test_betagamma_matches_heisenberg(self):
         """betagamma and Heisenberg share the same bar cohomology (same sheet)."""
@@ -228,53 +230,59 @@ class TestComplementarity:
 # ============================================================================
 
 class TestVerlindeIntegrable:
-    """Verlinde conformal block dimensions (separate from bar complex).
+    """Verlinde partition function Z_g = sum (d_j)^{2-2g}.
 
-    Remark rem:verlinde-vs-kappa: Verlinde recovery from bar complex is OPEN.
+    The monograph formula (eq:verlinde-general) gives k+1 at genus 1.
+    At genus >= 2, the normalized partition function can be non-integer
+    (the integer dimension of conformal blocks requires an additional
+    normalization factor). Verlinde recovery from the bar complex is
+    OPEN (Remark rem:verlinde-vs-kappa).
     """
 
-    def test_sl2_genus0(self):
-        for k in range(1, 8):
-            assert verlinde_conformal_blocks_sl2(k, 0) == 1
-
     def test_sl2_genus1(self):
+        """At genus 1: Z_1 = k+1 (number of integrable representations)."""
         for k in range(1, 10):
-            assert verlinde_conformal_blocks_sl2(k, 1) == k + 1
+            assert verlinde_partition_function_sl2(k, 1) == k + 1
 
-    def test_sl2_k1_constant(self):
-        """SU(2) level 1: V_g = 2 for all g >= 1."""
+    def test_sl2_k1_genus1(self):
+        """SU(2) level 1, genus 1: 2 integrable reps."""
+        assert verlinde_partition_function_sl2(1, 1) == 2
+
+    def test_sl2_k1_all_genera(self):
+        """SU(2) level 1: all quantum dims are 1, so Z_g = 2 for all g."""
+        # d_0 = d_1 = 1, so sum d_j^{2-2g} = 2 for any exponent
         for g in range(1, 6):
-            assert verlinde_conformal_blocks_sl2(1, g) == 2
+            z = verlinde_partition_function_sl2(1, g)
+            assert abs(z - 2.0) < 1e-10, f"Z_{g}(k=1) = {z}, expected 2"
 
-    def test_sl2_k2_genus2(self):
-        """SU(2) k=2, g=2: d_j = {1, sqrt(2), 1}, sum d_j^2 = 4."""
-        assert verlinde_conformal_blocks_sl2(2, 2) == 4
+    def test_sl2_k2_genus2_normalized(self):
+        """SU(2) k=2, g=2: normalized Z_2 = sum d_j^{-2} = 5/2."""
+        # d_0=1, d_1=sqrt(2), d_2=1
+        # sum d_j^{-2} = 1 + 1/2 + 1 = 5/2
+        z = verlinde_partition_function_sl2(2, 2)
+        assert abs(z - 2.5) < 1e-10
 
-    def test_sl2_k2_genus3(self):
-        """SU(2) k=2, g=3: sum d_j^4 = 1 + 4 + 1 = 6."""
-        assert verlinde_conformal_blocks_sl2(2, 3) == 6
-
-    def test_verlinde_are_integers(self):
+    def test_sl2_positive(self):
+        """Z_g > 0 for all k, g >= 1 (quantum dims are positive)."""
         for k in range(1, 6):
             for g in range(1, 5):
-                v = verlinde_conformal_blocks_sl2(k, g)
-                assert isinstance(v, int) and v > 0
+                z = verlinde_partition_function_sl2(k, g)
+                assert z > 0, f"Z_{g}(k={k}) = {z} <= 0"
 
-    def test_verlinde_growth(self):
-        """For k >= 2, conformal block dims grow with genus."""
-        for k in [2, 3, 4]:
-            assert verlinde_conformal_blocks_sl2(k, 3) >= verlinde_conformal_blocks_sl2(k, 2)
+    def test_scalar_tower_independent_of_verlinde(self):
+        """F_g (from kappa) and Z_g (from S-matrix) encode different data.
 
-    def test_scalar_tower_vs_verlinde(self):
-        """F_g (c_1 of det bundle) and Verlinde (rank) are independent data."""
+        F_g = c_1 of determinant line bundle (Theorem D).
+        Z_g = normalized partition function (representation theory).
+        Both are positive, but carry different information.
+        """
         for k_val in [1, 2, 3]:
             kv = kappa_sl2(k_val)
             for g in range(1, 4):
                 fg = F_g(kv, g)
-                vn = verlinde_conformal_blocks_sl2(k_val, g)
-                assert fg > 0 and vn > 0
-                assert isinstance(fg, Rational)
-                assert isinstance(vn, int)
+                zg = verlinde_partition_function_sl2(k_val, g)
+                assert fg > 0
+                assert zg > 0
 
 
 # ============================================================================

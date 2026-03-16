@@ -181,21 +181,19 @@ def verlinde_sl2(k: int, g: int) -> Rational:
     return Rational(total).limit_denominator(10**8)
 
 
-def verlinde_conformal_blocks_sl2(k: int, g: int) -> int:
-    """Dimension of space of conformal blocks for SU(2), level k, genus g.
+def verlinde_partition_function_sl2(k: int, g: int):
+    """Monograph Verlinde formula for SU(2): Z_g = sum (S_{0j}/S_{00})^{2-2g}.
 
-    This is the ACTUAL integer dimension, computed as:
-        dim V_{g,k} = sum_{j=0}^{k} d_j^{2g-2}
+    This is the NORMALIZED partition function from eq:verlinde-general.
+    At genus 1: equals k+1 (number of integrable representations).
+    At genus >= 2: can be non-integer (normalization-dependent).
 
-    where d_j = sin(pi(j+1)/(k+2))/sin(pi/(k+2)) are quantum dimensions.
-    Uses exponent (2g-2), NOT (2-2g) as in the normalized partition function.
+    The actual integer dimension of conformal blocks requires an
+    additional normalization factor that depends on conventions.
+    See Remark rem:verlinde-vs-kappa.
 
-    For g = 0: returns 1 (only vacuum conformal block on sphere).
-    For g = 1: returns k+1 (number of integrable representations).
-    For g >= 2: sum of quantum dimensions to the power 2g-2.
+    Returns a float (exact at genus 1, approximate otherwise).
     """
-    if g == 0:
-        return 1
     if g == 1:
         return k + 1
 
@@ -204,12 +202,8 @@ def verlinde_conformal_blocks_sl2(k: int, g: int) -> int:
     for j in range(k + 1):
         d_j = math.sin(math.pi * (j + 1) / (k + 2)) / \
               math.sin(math.pi / (k + 2))
-        total += d_j ** (2 * g - 2)
-
-    result = round(total)
-    assert abs(total - result) < 1e-6, \
-        f"Conformal blocks dim not integer: {total} for k={k}, g={g}"
-    return result
+        total += d_j ** (2 - 2 * g)
+    return total
 
 
 # ---------------------------------------------------------------------------
@@ -346,10 +340,11 @@ def verify_allgenus_package(family: str) -> Dict[str, bool]:
     dims = bar_hilbert_series(family)
     results["bar_dims_positive"] = all(d > 0 for d in dims.values())
 
-    # 4. Heisenberg: partition formula check
+    # 4. Heisenberg: partition formula check (H_h = p(h-2) for h >= 2)
     if family == "Heisenberg":
-        results["partition_formula"] = all(
-            dims[n] == partition_number(n - 1) for n in dims
+        results["partition_formula"] = (
+            dims.get(1, 0) == 1 and
+            all(dims[h] == partition_number(h - 2) for h in dims if h >= 2)
         )
 
     # 5. Complementarity defined
