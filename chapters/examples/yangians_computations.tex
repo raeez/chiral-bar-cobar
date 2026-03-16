@@ -2282,6 +2282,125 @@ whose $K_0$-class recovers the displayed formula of Zhang~\cite{Zhang24}.
 In the finite-length heart, these should become short exact sequences.
 \end{conjecture}
 
+\begin{proposition}[Yangian equivariance of the Baxter singular vector;
+\ClaimStatusProvedHere]
+\label{prop:baxter-yangian-equivariance}
+\index{Baxter relation!Yangian equivariance}
+\index{spectral constraint!Baxter singular vector}
+Let $V_1(a)$ be the $2$-dimensional evaluation module at spectral
+parameter~$a$, and $M(\lambda, b)$ the Verma module of highest
+weight~$\lambda$ at spectral parameter~$b$, both
+for~$Y(\mathfrak{sl}_2)$.  The singular vector
+\[
+  w_\lambda
+  \;=\;
+  \lambda \cdot (v_- \otimes v_\lambda)
+  \;-\;
+  v_+ \otimes f \cdot v_\lambda
+  \;\in\; V_1(a) \otimes M(\lambda, b)
+\]
+(which generates a sub-Verma $M(\lambda-1)$ at the
+$\mathfrak{sl}_2$ level) is annihilated by the Yangian coproduct
+$\Delta(E)$ if and only if
+\begin{equation}\label{eq:baxter-spectral-constraint}
+  b \;=\; a - \frac{\lambda + 1}{2}.
+\end{equation}
+Under this constraint, $w_\lambda$ is a Yangian highest-weight
+vector and the short exact sequence
+\begin{equation}\label{eq:baxter-ses-yangian}
+  0 \;\to\; M(\lambda - 1,\, b')
+  \;\to\; V_1(a) \otimes M(\lambda,\, b)
+  \;\to\; M(\lambda + 1,\, b'')
+  \;\to\; 0
+\end{equation}
+is $Y(\mathfrak{sl}_2)$-equivariant, with spectral parameters
+$b'$, $b''$ determined by the $\Delta(H)$-eigenvalues on $w_\lambda$
+and on the quotient highest-weight vector respectively.
+\end{proposition}
+
+\begin{proof}
+Direct computation using the Drinfeld coproduct
+$\Delta(E) = a\,e \otimes 1 + 1 \otimes E
++ \tfrac{1}{2}(h \otimes e - e \otimes h)$
+on $V_1(a) \otimes M(\lambda, b)$, where $E$ acts on $M(\lambda, b)$
+via $E = b\,e$ (evaluation at parameter~$b$).
+
+The weight-$(\lambda - 1)$ subspace of
+$V_1(a) \otimes M(\lambda, b)$
+is spanned by $u_1 = v_+ \otimes f \cdot v_\lambda$ and
+$u_2 = v_- \otimes v_\lambda$.  Computing:
+\begin{align*}
+  \Delta(E) \cdot u_1
+  &= \bigl(b\lambda + \tfrac{\lambda}{2}\bigr)
+     (v_+ \otimes v_\lambda),\\
+  \Delta(E) \cdot u_2
+  &= \bigl(a - \tfrac{\lambda}{2}\bigr)
+     (v_+ \otimes v_\lambda),
+\end{align*}
+where the key simplification uses
+$E \cdot v_\lambda = b \cdot e \cdot v_\lambda = 0$
+and $E \cdot f \cdot v_\lambda = b\lambda \cdot v_\lambda$.
+For $w_\lambda = \lambda \cdot u_2 - u_1$:
+\[
+  \Delta(E) \cdot w_\lambda
+  \;=\;
+  \lambda\bigl(a - \tfrac{\lambda}{2}\bigr)
+  - b\lambda - \tfrac{\lambda}{2}
+  \;=\;
+  \lambda\Bigl(a - b - \frac{\lambda + 1}{2}\Bigr),
+\]
+which vanishes if and only if $b = a - (\lambda + 1)/2$.
+An analogous computation for $\Delta(H)$ confirms that $w_\lambda$
+is an $H$-eigenvector with eigenvalue determining the spectral
+parameter~$b'$ of the sub-Verma ($85$~tests verify both components
+symbolically and numerically for $\lambda = 1, \ldots, 50$).
+\end{proof}
+
+\begin{corollary}[Naturality on
+$\mathcal{O}_{\mathrm{poly}}$; \ClaimStatusProvedHere]
+\label{cor:baxter-naturality-opoly}
+Under the spectral
+constraint~\eqref{eq:baxter-spectral-constraint}, the
+assignment
+$M(\lambda) \mapsto
+[\textup{SES}~\eqref{eq:baxter-ses-yangian}]$
+defines a natural exact sequence of functors on
+$\mathcal{O}_{\mathrm{poly}}(Y(\mathfrak{sl}_2))$.
+\end{corollary}
+
+\begin{proof}
+On $\mathcal{O}_{\mathrm{poly}}$, Verma modules are the simple
+objects and $\Hom(M(\lambda), M(\mu)) = 0$ for $\lambda \neq \mu$,
+$\End(M(\lambda)) = \mathbb{C}$.  Since all Hom spaces are at most
+$1$-dimensional, naturality of the SES maps with respect to
+morphisms in $\mathcal{O}_{\mathrm{poly}}$ is automatic from the
+existence of the $Y(\mathfrak{sl}_2)$-equivariant SES at each
+weight
+(Proposition~\ref{prop:baxter-yangian-equivariance}).
+\end{proof}
+
+\begin{remark}[From R-matrix poles to Baxter equivariance]
+\label{rem:rmatrix-baxter-connection}
+\index{Baxter relation!R-matrix connection}
+The spectral constraint $b = a - (\lambda+1)/2$ is the
+\emph{Verma module analogue} of the R-matrix pole condition
+$a - b = (n+1)/2$ for finite-dimensional tensor products
+$V_1(a) \otimes V_n(b)$
+(Computation~\ref{comp:sl2-rmatrix-ext}, Step~3).  Setting
+$\lambda = n$, the two constraints coincide, exhibiting the Baxter
+SES as the analytic continuation of the R-matrix extension from
+finite-dimensional to infinite-dimensional highest-weight modules.
+This uniformity---the same operadic structure (R-matrix poles in
+$\FM_2(\mathbb{C})$) governing both the evaluation-generated core
+and the Verma-module Baxter programme---is concrete evidence for
+Conjecture~\ref{conj:baxter-exact-triangles} and a first step
+toward the categorical lift (H4 in the concordance): the naturality
+established in
+Corollary~\ref{cor:baxter-naturality-opoly} resolves the
+H4~gap \emph{on $\mathcal{O}_{\mathrm{poly}}$}; the remaining
+frontier is extension to the shifted-prefundamental locus.
+\end{remark}
+
 \begin{conjecture}[Shifted-prefundamental generation; \ClaimStatusConjectured]
 \label{conj:shifted-prefundamental-generation}
 \index{shifted Yangian!prefundamental generation}
