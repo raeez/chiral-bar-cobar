@@ -7068,7 +7068,7 @@ $h \circ h = 0$, $\pi \circ \iota = \operatorname{id}$,
 $\iota \circ \pi = \operatorname{id} + [d_{\cM}, h]$.
 
 \emph{Genus-$0$ ternary bracket}
-\textup{(}three channels of $\overline{\cM}_{0,4} \cong \PP^1$\textup{)}.
+\textup{(}three channels of $\overline{\cM}_{0,4} \cong \mathbb{P}^1$\textup{)}.
 \begin{equation}
 \label{eq:ell3-explicit}
 \ell_3^{(0)}(\alpha,\beta,\gamma)
@@ -7092,7 +7092,7 @@ m_{T_u}^{(h)}
 \]
 At the cohomological level,
 $[\ell_3^{(0)}] = 0$ in $H^*(\overline{\cM}_{0,4})$ because
-$H^1(\PP^1) = 0$; the ternary bracket is exact but
+$H^1(\mathbb{P}^1) = 0$; the ternary bracket is exact but
 chain-level nontrivial.  For the \v{C}ech complex, this is the
 Jacobiator homotopy $J' = F_3$ of
 Malikov--Schechtman~\cite{MS24}.
@@ -7249,6 +7249,21 @@ The dg~Lie algebra suffices for Maurer--Cartan elements and the
 extension tower; the $L_\infty$-algebra is the invariant object
 that persists under quasi-isomorphic replacements, homotopy
 transfer, and different choices of contracting homotopy.
+
+The \emph{reason} the strict model suffices for MC elements is
+structural: the MC equation
+$D\alpha + \tfrac{1}{2}[\alpha,\alpha] = 0$ is a graded polynomial
+equation in the degree-$+1$ component, depending only on
+$\ell_1 = D$ (differential) and $\ell_2 = [-,-]$ (bracket).
+Higher operations $\ell_k$ ($k \geq 3$) enter only when one asks
+for \emph{morphisms between} MC elements---the $1$-simplices of
+the Deligne--Getzler--Hinich $\infty$-groupoid---or for
+\emph{transfer formulas} moving MC data across quasi-isomorphisms.
+The strict model has $\ell_k = 0$ for $k \geq 3$, so it computes
+MC \emph{spaces} exactly; the full $L_\infty$ structure is needed
+for the \emph{morphism spaces} between them.  This dichotomy
+(objects vs.\ morphisms) is the root cause of the one-slot
+obstruction~\cite[Section~6]{RNW19}.
 
 The precise homotopy-theoretic infrastructure is:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -7467,6 +7482,233 @@ of $\cA^{\mathrm{sh}}$.  Part~(iv) is the Deligne--Getzler--Hinich
 weak equivalence of MC $\infty$-groupoids.
 \end{proof}
 
+
+\subsection{The shadow Postnikov tower}
+\label{subsec:shadow-postnikov-tower}
+
+\begin{definition}[Weight filtration]
+\label{def:weight-filtration-tower}
+For a component $\Theta_{g,r;d}$ of genus $g$, arity $r$, and
+planted-forest depth $d$, define the total weight
+$w(g,r,d) := 2g - 2 + r + d$.
+Let $F^N\mathfrak{g}^{\mathrm{amb}}_{\cA}$ be the subspace of
+components with weight at least $N$.
+\end{definition}
+
+\begin{definition}[Extension tower]
+\label{def:extension-tower}
+The \emph{modular extension tower} of $\cA$ is the inverse system
+\begin{equation}
+\label{eq:extension-tower}
+\mathcal{E}_{\cA}(N)
+:=
+\operatorname{MC}\bigl(
+\mathfrak{g}^{\mathrm{amb}}_{\cA}/F^{N+1}
+\bigr),
+\qquad N \geq 1.
+\end{equation}
+A full lift is a compatible point of the inverse limit
+$\Theta_{\cA} \in \varprojlim_N \mathcal{E}_{\cA}(N)$.
+\end{definition}
+
+\begin{definition}[Shadow Postnikov tower]
+\label{def:shadow-postnikov-tower}
+\ClaimStatusProvedHere
+\index{shadow Postnikov tower|textbf}
+\index{modular characteristic!shadow Postnikov tower}
+The \emph{shadow Postnikov tower} of $\cA$ is the sequence of
+finite-order truncations
+\begin{equation}
+\label{eq:shadow-postnikov-tower}
+\Theta_{\cA}^{\leq 2},\;
+\Theta_{\cA}^{\leq 3},\;
+\Theta_{\cA}^{\leq 4},\;
+\ldots
+\end{equation}
+where $\Theta_{\cA}^{\leq r}$ is a solution
+of the Maurer--Cartan equation in
+$\mathfrak{g}^{\mathrm{amb}}_{\cA}/F^{r+1}$,
+i.e.\ a point of $\mathcal{E}_{\cA}(r)$
+(Definition~\ref{def:extension-tower}).
+At each level, the \emph{obstruction class}
+\begin{equation}
+\label{eq:obstruction-class}
+o_{r+1}(\cA)
+\;:=\;
+\bigl(
+D_{\cA}\Theta_{\cA}^{\leq r}
++ \tfrac12[\Theta_{\cA}^{\leq r},\Theta_{\cA}^{\leq r}]
+\bigr)_{r+1}
+\;\in\;
+H^2\bigl(\cA^{\mathrm{sh}}_{r+1,0}\bigr)
+\end{equation}
+measures the failure to extend.  The first three levels
+are the proved finite-order engine:
+\begin{itemize}
+\item $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$
+  \quad(the modular characteristic, Theorem~D);
+\item $\Theta_{\cA}^{\leq 3}$: encodes the cubic
+  shadow~$\mathfrak{C}(\cA)$;
+\item $\Theta_{\cA}^{\leq 4}$: encodes the quartic resonance
+  class~$\mathfrak{Q}(\cA)$ with its clutching law
+  (Appendix~\ref{app:nonlinear-modular-shadows}).
+\end{itemize}
+The shadow Postnikov tower is the primary nonlinear object of
+the modular theory.  Each finite truncation is constructive and
+does not require the full all-genera modular envelope.  The
+conjectural all-arity limit
+$\Theta_{\cA} = \varprojlim_r \Theta_{\cA}^{\leq r}$
+is the target of Conjecture~\ref{conj:recursive-existence}.
+\end{definition}
+
+\begin{definition}[Shadow algebra]
+\label{def:shadow-algebra}
+\ClaimStatusProvedHere
+\index{shadow algebra|textbf}
+\index{modular characteristic!shadow algebra}
+For a chiral algebra $\cA$ with modular cyclic deformation complex
+$\Defcyc^{\mathrm{mod}}(\cA)$, the \emph{shadow algebra} is the
+cohomology
+\begin{equation}
+\label{eq:shadow-algebra}
+\cA^{\mathrm{sh}}
+:=
+H_\bullet\bigl(\Defcyc^{\mathrm{mod}}(\cA)\bigr)
+\end{equation}
+with graded-commutative multiplication induced from the $L_\infty$
+bracket, via the standard passage: the degree-$(-1)$ Lie bracket $[-,-]$ on $\Defcyc^{\mathrm{mod}}(\cA)$ descends to a degree-$0$ commutative product on cohomology $H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ by the Koszul sign rule, since MC elements are degree-$1$ and products of degree-$1$ cohomology classes are commutative.  The shadow algebra carries a bigrading by arity
+$r \geq 2$ and genus $g \geq 0$:
+\begin{equation}
+\label{eq:shadow-algebra-bigrading}
+\cA^{\mathrm{sh}}
+=
+\bigoplus_{r \geq 2}\;\bigoplus_{g \geq 0}\;
+\cA^{\mathrm{sh}}_{r,g}.
+\end{equation}
+The projections to graded components recover the individual shadows:
+\begin{itemize}
+\item $\kappa(\cA) = \cA^{\mathrm{sh}}_{2,0}$
+  \quad(the modular characteristic, Theorem~D);
+\item $\Delta_{\cA} = \cA^{\mathrm{sh}}_{2,*}$
+  \quad(the spectral discriminant);
+\item $\mathfrak{C}(\cA) = \cA^{\mathrm{sh}}_{3,0}$
+  \quad(the cubic shadow);
+\item $\mathfrak{Q}(\cA) = \cA^{\mathrm{sh}}_{4,0}$
+  \quad(the quartic shadow / contact invariant);
+\item $\operatorname{Sh}_r(\cA) = \cA^{\mathrm{sh}}_{r,0}$
+  \quad(the arity-$r$ shadow).
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[All-arity master equation from MC]
+\label{prop:master-equation-from-mc}
+\ClaimStatusProvedHere
+\index{all-arity master equation!from Maurer--Cartan}
+The all-arity master equation
+$\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
+(Theorem~\ref{thm:nms-all-arity-master-equation}) is a structural
+consequence of the Maurer--Cartan equation for
+$\Theta_{\cA} \in \MC(\Defcyc^{\mathrm{mod}}(\cA))$: projecting
+the MC equation $d\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ onto
+the arity-$r$ component gives exactly
+$\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$.
+\end{proposition}
+
+\begin{remark}[Shadow algebra as structural home]
+\label{rem:shadow-algebra-structural-home}
+\index{shadow algebra!structural role}
+The shadow algebra is the correct intrinsic object governing
+the nonlinear modular characteristic.  The recursive obstruction
+construction that follows (Construction~\ref{constr:obstruction-recursion})
+is the \emph{computational method} for extracting shadows; the
+shadow algebra definition is the \emph{structural home}.  Finite termination means
+$\cA^{\mathrm{sh}}_{r,0} = 0$ for $r$ above some
+$r_{\max}(\cA)$.  Theorem~\ref{thm:nms-finite-termination} gives
+explicit bounds for the standard families: $r_{\max} = 2$
+(Heisenberg), $r_{\max} = 3$ (affine), $r_{\max} = 4$
+($\beta\gamma$); the Virasoro tower is infinite.
+The shadow algebra is intrinsic to the chiral algebra: it depends only on the homotopy type of $\Defcyc^{\mathrm{mod}}(\cA)$, not on presentations, bases, or contracting homotopies.
+\end{remark}
+
+\begin{construction}[Obstruction recursion]
+\label{constr:obstruction-recursion}
+Suppose a truncated solution $\Theta_{\cA}^{\leq N}$ has been
+constructed through weight $N$.  Its next obstruction is
+\begin{equation}
+\label{eq:next-obstruction}
+\mathfrak{o}_{N+1}
+:=
+\Bigl(
+D_{\cA}\Theta_{\cA}^{\leq N}
++ \tfrac12[\Theta_{\cA}^{\leq N},
+\Theta_{\cA}^{\leq N}]
+\Bigr)_{N+1}.
+\end{equation}
+If $[\mathfrak{o}_{N+1}] \in H^2(F^{N+1}/F^{N+2})$ vanishes,
+choose a contracting homotopy $h$ and define
+$\Theta_{\cA,N+1} := -h(\mathfrak{o}_{N+1})$.
+Then $\Theta_{\cA}^{\leq N+1} := \Theta_{\cA}^{\leq N}
++ \Theta_{\cA,N+1}$ solves the Maurer--Cartan equation through
+weight $N+1$.
+\end{construction}
+
+\begin{conjecture}[Recursive existence]
+\label{conj:recursive-existence}
+\ClaimStatusConjectured
+Every modular Koszul chiral algebra equipped with a cyclic slice,
+stable propagator, and planted-forest residue model admits a
+recursive lift through all finite weights.  Equivalently, all
+obstruction classes in the tower
+$\{\mathcal{E}_{\cA}(N)\}_{N \geq 1}$ vanish.
+\end{conjecture}
+
+\begin{remark}[Relation to the shadow calculus]
+The quartic theory in Part~II
+(\S\ref{sec:heisenberg-shadow-gaussianity}--\S\ref{sec:mixed-cubic-quartic-shadows})
+and Appendix~\ref{app:nonlinear-modular-shadows}
+is exactly the stage $N = 4$ of the extension tower.  The point of
+the present construction is that the quartic theory is not isolated.
+It is the first visible floor of a systematic recursive machine.
+\end{remark}
+
+\begin{definition}[Complementarity action]
+\label{def:complementarity-action}
+On the shifted cotangent chart $T^*[-1]V_{\cA}$, the formal
+Hamiltonian is
+\begin{equation}
+\label{eq:ambient-formal-action}
+\mathfrak{S}_{\cA}(x;\hbar)
+:=
+\sum_{g \geq 0}\sum_{r \geq 2}\sum_{d \geq 0}
+\frac{\hbar^g}{r!}\,
+\Theta_{g,r;d}(x,\ldots,x),
+\end{equation}
+where $\Theta_{g,r;d}$ is the component of $\Theta_{\cA}$ of
+genus~$g$, arity~$r$, and planted-forest depth~$d$.
+\end{definition}
+
+\begin{proposition}[Critical-locus form of complementarity]
+\label{prop:critical-locus-complementarity}
+\ClaimStatusProvedHere
+Whenever the Maurer--Cartan equation
+\eqref{eq:ambient-master-equation} holds, the simultaneous self-dual
+deformation problem is modelled by the derived critical locus
+\[
+\mathcal{M}_{\cA}
+\times^h_{\mathcal{M}_{\mathrm{comp}}(\cA)}
+\mathcal{M}_{\cA^!}
+\;\simeq\;
+\operatorname{Crit}(\mathfrak{S}_{\cA}).
+\]
+\end{proposition}
+
+\begin{proof}
+A cyclic Maurer--Cartan element defines a Hamiltonian whose
+Euler--Lagrange equation is the Maurer--Cartan equation.  The
+derived intersection of the two Lagrangians is identified with the
+corresponding shifted critical locus.
+\end{proof}
+
 \begin{remark}[The unifying principle]
 \label{rem:unifying-principle}
 \index{unifying principle|textbf}
@@ -7650,8 +7892,94 @@ hypotheses hold for all standard families; the present theorem
 distils its content to three lines under those hypotheses.
 \end{remark}
 
-\subsection{The modular bar--Hamiltonian: the explicit graph sum}
+\begin{construction}[Tower construction: the step-by-step template]
+\label{constr:tower-template}
+\index{shadow Postnikov tower!construction template}
+\index{tower construction template|textbf}
+The following algorithm instantiates the obstruction recursion
+(Construction~\ref{constr:obstruction-recursion}) for a concrete
+chiral algebra.  Each example chapter in Part~II follows this
+template.
+
+\smallskip
+\noindent\textbf{Input}: a cyclic chiral algebra~$\cA$ with cyclic
+deformation complex $\Defcyc(\cA)$, Hessian~$H_{\cA}$,
+propagator~$P_{\cA}$.
+
+\smallskip
+\noindent\textbf{Step~1} (Arity~$2$).
+Solve the Maurer--Cartan equation at weight~$2$.
+The unique solution is $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$, the
+modular characteristic (Theorem~D).
+
+\smallskip
+\noindent\textbf{Step~2} (Arity~$3$).
+Compute the obstruction $o_3(\cA) =
+(D\Theta^{\leq 2} + \tfrac12[\Theta^{\leq 2},\Theta^{\leq 2}])_3$.
+If $[o_3] = 0$ in $H^2(\cA^{\mathrm{sh}}_{3,0})$, the cubic shadow
+$\mathfrak{C}(\cA) = 0$ (Gaussian archetype: Heisenberg).
+If $[o_3] \neq 0$, define
+$\Theta_{\cA}^{\leq 3} = \Theta_{\cA}^{\leq 2}
++ \mathfrak{C}(\cA)$ where $\mathfrak{C} = -h(o_3)$
+(Lie archetype: affine).
+
+\smallskip
+\noindent\textbf{Step~3} (Arity~$4$).
+Compute $o_4(\cA) =
+(D\Theta^{\leq 3} + \tfrac12[\Theta^{\leq 3},\Theta^{\leq 3}])_4$.
+This contains the $H$-Poisson bracket
+$\tfrac12\{\mathfrak{C},\mathfrak{C}\}_{H}$ and the local quartic
+vertex from~$m_4$.  If $[o_4] = 0$, define
+$\Theta_{\cA}^{\leq 4} = \Theta_{\cA}^{\leq 3}
++ \mathfrak{Q}(\cA)$ (contact archetype: $\beta\gamma$).
+
+\smallskip
+\noindent\textbf{Step~4} (Arity~$5{+}$).
+Repeat.  Termination at arity~$r_{\max}$ means
+$\cA^{\mathrm{sh}}_{r,0} = 0$ for $r > r_{\max}$.
+Non-termination (Virasoro/$\mathcal{W}_N$) means the cubic source
+permanently feeds higher arities
+(Theorem~\ref{thm:w-virasoro-quintic-forced}).
+\end{construction}
+
+\begin{example}[The four archetypes in miniature]
+\label{ex:tower-four-archetypes}
+\index{shadow Postnikov tower!archetype table}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccc}
+\toprule
+& \emph{Step~1} & \emph{Step~2} & \emph{Step~3}
+  & \emph{Termination} \\
+\midrule
+Heisenberg &
+  $\kappa$ & $o_3 = 0$ & $o_4 = 0$  & arity~$2$ \\
+Affine &
+  $\kappa$ & $\mathfrak{C} = \kappa(x,[y,z])$ &
+  $o_4 = 0$ (Jacobi) & arity~$3$ \\
+$\beta\gamma$ &
+  $\kappa{=}0$ & $o_3 = 0$ &
+  $\mathfrak{Q} = \operatorname{cyc}(m_3)$ & arity~$4$ \\
+Virasoro &
+  $\kappa{=}c/2$ & $\mathfrak{C} = 2x^3$ &
+  $\mathfrak{Q}^{\mathrm{ct}} = \tfrac{10}{c(5c+22)}x^4$ &
+  $\infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{example}
+
+\subsection{The graph sum that realizes the tower}
 \label{subsec:modular-bar-hamiltonian}
+
+The shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}) is defined
+abstractly by the obstruction recursion
+(Construction~\ref{constr:obstruction-recursion}).
+The following graph sum gives the explicit formula that realizes
+each truncation $\Theta_\cA^{\leq r}$ as a sum over
+cross-polarized stable graphs of weight at most~$r$.
 
 \begin{definition}[The modular bar--Hamiltonian]
 \label{def:modular-bar-hamiltonian}
@@ -8167,228 +8495,3 @@ topological statement that $\operatorname{FM}_n^{\mathrm{log}}$ has
 no cohomology invisible to the tropical skeleton.
 \end{remark}
 
-\subsection{The extension tower}
-\label{subsec:extension-tower}
-
-\begin{definition}[Weight filtration]
-\label{def:weight-filtration-tower}
-For a component $\Theta_{g,r;d}$ of genus $g$, arity $r$, and
-planted-forest depth $d$, define the total weight
-$w(g,r,d) := 2g - 2 + r + d$.
-Let $F^N\mathfrak{g}^{\mathrm{amb}}_{\cA}$ be the subspace of
-components with weight at least $N$.
-\end{definition}
-
-\begin{definition}[Extension tower]
-\label{def:extension-tower}
-The \emph{modular extension tower} of $\cA$ is the inverse system
-\begin{equation}
-\label{eq:extension-tower}
-\mathcal{E}_{\cA}(N)
-:=
-\operatorname{MC}\bigl(
-\mathfrak{g}^{\mathrm{amb}}_{\cA}/F^{N+1}
-\bigr),
-\qquad N \geq 1.
-\end{equation}
-A full lift is a compatible point of the inverse limit
-$\Theta_{\cA} \in \varprojlim_N \mathcal{E}_{\cA}(N)$.
-\end{definition}
-
-\begin{definition}[Shadow Postnikov tower]
-\label{def:shadow-postnikov-tower}
-\ClaimStatusProvedHere
-\index{shadow Postnikov tower|textbf}
-\index{modular characteristic!shadow Postnikov tower}
-The \emph{shadow Postnikov tower} of $\cA$ is the sequence of
-finite-order truncations
-\begin{equation}
-\label{eq:shadow-postnikov-tower}
-\Theta_{\cA}^{\leq 2},\;
-\Theta_{\cA}^{\leq 3},\;
-\Theta_{\cA}^{\leq 4},\;
-\ldots
-\end{equation}
-where $\Theta_{\cA}^{\leq r}$ is a solution
-of the Maurer--Cartan equation in
-$\mathfrak{g}^{\mathrm{amb}}_{\cA}/F^{r+1}$,
-i.e.\ a point of $\mathcal{E}_{\cA}(r)$
-(Definition~\ref{def:extension-tower}).
-At each level, the \emph{obstruction class}
-\begin{equation}
-\label{eq:obstruction-class}
-o_{r+1}(\cA)
-\;:=\;
-\bigl(
-D_{\cA}\Theta_{\cA}^{\leq r}
-+ \tfrac12[\Theta_{\cA}^{\leq r},\Theta_{\cA}^{\leq r}]
-\bigr)_{r+1}
-\;\in\;
-H^2\bigl(\cA^{\mathrm{sh}}_{r+1,0}\bigr)
-\end{equation}
-measures the failure to extend.  The first three levels
-are the proved finite-order engine:
-\begin{itemize}
-\item $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$
-  \quad(the modular characteristic, Theorem~D);
-\item $\Theta_{\cA}^{\leq 3}$: encodes the cubic
-  shadow~$\mathfrak{C}(\cA)$;
-\item $\Theta_{\cA}^{\leq 4}$: encodes the quartic resonance
-  class~$\mathfrak{Q}(\cA)$ with its clutching law
-  (Appendix~\ref{app:nonlinear-modular-shadows}).
-\end{itemize}
-The shadow Postnikov tower is the primary nonlinear object of
-the modular theory.  Each finite truncation is constructive and
-does not require the full all-genera modular envelope.  The
-conjectural all-arity limit
-$\Theta_{\cA} = \varprojlim_r \Theta_{\cA}^{\leq r}$
-is the target of Conjecture~\ref{conj:recursive-existence}.
-\end{definition}
-
-\begin{definition}[Shadow algebra]
-\label{def:shadow-algebra}
-\ClaimStatusProvedHere
-\index{shadow algebra|textbf}
-\index{modular characteristic!shadow algebra}
-For a chiral algebra $\cA$ with modular cyclic deformation complex
-$\Defcyc^{\mathrm{mod}}(\cA)$, the \emph{shadow algebra} is the
-cohomology
-\begin{equation}
-\label{eq:shadow-algebra}
-\cA^{\mathrm{sh}}
-:=
-H_\bullet\bigl(\Defcyc^{\mathrm{mod}}(\cA)\bigr)
-\end{equation}
-with graded-commutative multiplication induced from the $L_\infty$
-bracket, via the standard passage: the degree-$(-1)$ Lie bracket $[-,-]$ on $\Defcyc^{\mathrm{mod}}(\cA)$ descends to a degree-$0$ commutative product on cohomology $H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ by the Koszul sign rule, since MC elements are degree-$1$ and products of degree-$1$ cohomology classes are commutative.  The shadow algebra carries a bigrading by arity
-$r \geq 2$ and genus $g \geq 0$:
-\begin{equation}
-\label{eq:shadow-algebra-bigrading}
-\cA^{\mathrm{sh}}
-=
-\bigoplus_{r \geq 2}\;\bigoplus_{g \geq 0}\;
-\cA^{\mathrm{sh}}_{r,g}.
-\end{equation}
-The projections to graded components recover the individual shadows:
-\begin{itemize}
-\item $\kappa(\cA) = \cA^{\mathrm{sh}}_{2,0}$
-  \quad(the modular characteristic, Theorem~D);
-\item $\Delta_{\cA} = \cA^{\mathrm{sh}}_{2,*}$
-  \quad(the spectral discriminant);
-\item $\mathfrak{C}(\cA) = \cA^{\mathrm{sh}}_{3,0}$
-  \quad(the cubic shadow);
-\item $\mathfrak{Q}(\cA) = \cA^{\mathrm{sh}}_{4,0}$
-  \quad(the quartic shadow / contact invariant);
-\item $\operatorname{Sh}_r(\cA) = \cA^{\mathrm{sh}}_{r,0}$
-  \quad(the arity-$r$ shadow).
-\end{itemize}
-\end{definition}
-
-\begin{proposition}[All-arity master equation from MC]
-\label{prop:master-equation-from-mc}
-\ClaimStatusProvedHere
-\index{all-arity master equation!from Maurer--Cartan}
-The all-arity master equation
-$\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
-(Theorem~\ref{thm:nms-all-arity-master-equation}) is a structural
-consequence of the Maurer--Cartan equation for
-$\Theta_{\cA} \in \MC(\Defcyc^{\mathrm{mod}}(\cA))$: projecting
-the MC equation $d\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ onto
-the arity-$r$ component gives exactly
-$\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$.
-\end{proposition}
-
-\begin{remark}[Shadow algebra as structural home]
-\label{rem:shadow-algebra-structural-home}
-\index{shadow algebra!structural role}
-The shadow algebra is the correct intrinsic object governing
-the nonlinear modular characteristic.  The recursive obstruction
-construction that follows (Construction~\ref{constr:obstruction-recursion})
-is the \emph{computational method} for extracting shadows; the
-shadow algebra definition is the \emph{structural home}.  Finite termination means
-$\cA^{\mathrm{sh}}_{r,0} = 0$ for $r$ above some
-$r_{\max}(\cA)$.  Theorem~\ref{thm:nms-finite-termination} gives
-explicit bounds for the standard families: $r_{\max} = 2$
-(Heisenberg), $r_{\max} = 3$ (affine), $r_{\max} = 4$
-($\beta\gamma$); the Virasoro tower is infinite.
-The shadow algebra is intrinsic to the chiral algebra: it depends only on the homotopy type of $\Defcyc^{\mathrm{mod}}(\cA)$, not on presentations, bases, or contracting homotopies.
-\end{remark}
-
-\begin{construction}[Obstruction recursion]
-\label{constr:obstruction-recursion}
-Suppose a truncated solution $\Theta_{\cA}^{\leq N}$ has been
-constructed through weight $N$.  Its next obstruction is
-\begin{equation}
-\label{eq:next-obstruction}
-\mathfrak{o}_{N+1}
-:=
-\Bigl(
-D_{\cA}\Theta_{\cA}^{\leq N}
-+ \tfrac12[\Theta_{\cA}^{\leq N},
-\Theta_{\cA}^{\leq N}]
-\Bigr)_{N+1}.
-\end{equation}
-If $[\mathfrak{o}_{N+1}] \in H^2(F^{N+1}/F^{N+2})$ vanishes,
-choose a contracting homotopy $h$ and define
-$\Theta_{\cA,N+1} := -h(\mathfrak{o}_{N+1})$.
-Then $\Theta_{\cA}^{\leq N+1} := \Theta_{\cA}^{\leq N}
-+ \Theta_{\cA,N+1}$ solves the Maurer--Cartan equation through
-weight $N+1$.
-\end{construction}
-
-\begin{conjecture}[Recursive existence]
-\label{conj:recursive-existence}
-\ClaimStatusConjectured
-Every modular Koszul chiral algebra equipped with a cyclic slice,
-stable propagator, and planted-forest residue model admits a
-recursive lift through all finite weights.  Equivalently, all
-obstruction classes in the tower
-$\{\mathcal{E}_{\cA}(N)\}_{N \geq 1}$ vanish.
-\end{conjecture}
-
-\begin{remark}[Relation to the shadow calculus]
-The quartic theory in Part~II
-(\S\ref{sec:heisenberg-shadow-gaussianity}--\S\ref{sec:mixed-cubic-quartic-shadows})
-and Appendix~\ref{app:nonlinear-modular-shadows}
-is exactly the stage $N = 4$ of the extension tower.  The point of
-the present construction is that the quartic theory is not isolated.
-It is the first visible floor of a systematic recursive machine.
-\end{remark}
-
-\begin{definition}[Complementarity action]
-\label{def:complementarity-action}
-On the shifted cotangent chart $T^*[-1]V_{\cA}$, the formal
-Hamiltonian is
-\begin{equation}
-\label{eq:ambient-formal-action}
-\mathfrak{S}_{\cA}(x;\hbar)
-:=
-\sum_{g \geq 0}\sum_{r \geq 2}\sum_{d \geq 0}
-\frac{\hbar^g}{r!}\,
-\Theta_{g,r;d}(x,\ldots,x),
-\end{equation}
-where $\Theta_{g,r;d}$ is the component of $\Theta_{\cA}$ of
-genus~$g$, arity~$r$, and planted-forest depth~$d$.
-\end{definition}
-
-\begin{proposition}[Critical-locus form of complementarity]
-\label{prop:critical-locus-complementarity}
-\ClaimStatusProvedHere
-Whenever the Maurer--Cartan equation
-\eqref{eq:ambient-master-equation} holds, the simultaneous self-dual
-deformation problem is modelled by the derived critical locus
-\[
-\mathcal{M}_{\cA}
-\times^h_{\mathcal{M}_{\mathrm{comp}}(\cA)}
-\mathcal{M}_{\cA^!}
-\;\simeq\;
-\operatorname{Crit}(\mathfrak{S}_{\cA}).
-\]
-\end{proposition}
-
-\begin{proof}
-A cyclic Maurer--Cartan element defines a Hamiltonian whose
-Euler--Lagrange equation is the Maurer--Cartan equation.  The
-derived intersection of the two Lagrangians is identified with the
-corresponding shifted critical locus.
-\end{proof}
