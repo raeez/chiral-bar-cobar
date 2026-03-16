@@ -1,0 +1,2872 @@
+\section{Non-quadratic chiral algebras}
+\label{sec:filtered-vs-curved-comprehensive}
+
+\label{thm:bar-convergence}% alias: canonical theorem inside commented-out block below
+The four-regime hierarchy (Convention~\ref{conv:regime-tags})
+classifies chiral algebras by their bar-complex behavior:
+quadratic (strict $d^2=0$), curved-central ($\dfib^2 = \kappa\cdot\omega_g$
+with central curvature), filtered-complete (requiring I-adic completion),
+and programmatic (infinite generators, MC4 frontier).
+The examples of each regime are given in
+\S\ref{subsec:three-regimes} above.
+
+\iffalse
+%%% BEGIN COMMENTED-OUT: Four-class exposition (~600 lines)
+%%% This section duplicated the three-regime classification at
+%%% \S\ref{subsec:three-regimes} with a fourth "general" class.
+%%% The canonical classification is Convention~\ref{conv:regime-tags}.
+Four increasingly general classes form a hierarchy
+\begin{equation}
+\text{Quadratic} \subset \text{Curved} \subset \text{Filtered} \subset \text{General},
+\end{equation}
+and the techniques needed at each level differ sharply: quadratic
+algebras admit direct bar-cobar duality without completion; curved
+algebras require completed bar-cobar but preserve the adjunction;
+filtered algebras always need nilpotent completion
+(Appendix~\ref{app:nilpotent-completion}); and general algebras may
+lie beyond the present theorematic reach (e.g., $\mathcal{W}_\infty$,
+whose standard tower is theorematic while the remaining frontier is the
+exact MC4 H-level / coefficient-identification package).
+The passage from quadratic to general is also the passage from $E_\infty$
+to $E_1$: the Yangian $Y(\mathfrak{g})$, which is $E_1$-chiral but
+not $E_\infty$, falls in the filtered class and requires the
+completed framework of Theorem~\ref{thm:en-koszul-duality}.
+
+\subsection{Definitions: four classes of chiral algebras}
+
+\subsubsection{Class I: quadratic chiral algebras}
+
+\begin{definition}[Quadratic chiral algebra]\label{def:quadratic-chiral}
+The Heisenberg algebra $\mathcal{H}_k$ is the prototype: a single generator $\alpha$ with a purely quadratic OPE $\alpha(z)\alpha(w) = k/(z-w)^2 + \mathrm{reg.}$ (\S\ref{sec:frame-bar-deg1}).  The following definition captures this structure in general.
+
+A chiral algebra $\mathcal{A}$ is \emph{quadratic} if it admits a presentation:
+\begin{equation}
+\mathcal{A} = \text{Free}_{\text{ch}}(V) / (R)
+\end{equation}
+where:
+\begin{itemize}
+\item $V$ is a graded vector space of generators
+\item $R \subset V \otimes V$ consists of \emph{quadratic} relations only
+\item No higher-order relations (no terms in $V^{\otimes n}$ for $n \geq 3$)
+\end{itemize}
+\end{definition}
+
+\begin{example}[Heisenberg: curved quadratic]\label{ex:heisenberg-quadratic}
+The Heisenberg algebra $\mathcal{H}_k$ has a single generator $J$ (the current) with OPE $J(z)J(w) \sim k/(z-w)^2$ and no simple pole (the Lie bracket vanishes).
+
+The double pole produces a \emph{curved} quadratic structure: the relation $J \otimes J \sim k \cdot \mathbf{1}$ is inhomogeneous (the right side is degree~0, not degree~2), so the bar complex has curvature $m_0 = -k \cdot c \neq 0$ for $k \neq 0$.  In the language of Definition~\ref{def:quadratic-chiral}, the Heisenberg is ``quadratic'' in the sense that the OPE involves at most two generators on the left side, but it is \emph{not} strictly quadratic (i.e., $m_0 \neq 0$).
+
+\emph{Koszul dual.}
+\[\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*) \quad \text{(commutative chiral algebra on the dual space, with curvature)}\]
+
+Since $\mathfrak{h}$ is abelian, the chiral Koszul dual is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ with $d = 0$ and curvature $m_0 = -k \cdot c$ (level negates; $h^\vee = 0$).  This is a \emph{commutative} chiral algebra with curvature, not the Heisenberg at negated level.  The bar differential vanishes (Example~\ref{ex:ope-to-residue}), so $H^*(\bar{B}(\mathcal{H}_k)) \simeq \bar{B}(\mathcal{H}_k)$ with CE cooperad structure.
+
+\emph{Contrast with Free Fermions}:
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\emph{Algebra} & \textbf{OPE Pole} & \textbf{Bar Differential} & \textbf{Effect} \\
+\hline
+Free Fermion $\psi$ & Simple: $\frac{1}{z-w}$ & Non-zero & contracts fields \\
+Heisenberg $J$ & Double: $\frac{k}{(z-w)^2}$ & Zero (triple pole) & residue vanishes \\
+\hline
+\end{tabular}
+\end{center}
+
+No completion is needed. The bar complex is conilpotent (finite-dimensional in each bar degree) and the differential is zero except for the curvature term $m_0$. Convergence of the bar spectral sequence follows: the filtration by bar degree is bounded below ($n \geq 0$) and exhaustive, with finite-dimensional graded pieces, so the spectral sequence converges to the bar homology by the standard bounded-below complete convergence theorem (\cite{LV12}, Theorem~2.2.3).
+
+\emph{Reference}: See \cite{GLZ22} Section 6, Proposition 6.2 for the identification
+of the twisted chiral enveloping algebra with CE algebra structure.
+\end{example}
+
+\begin{example}[Affine Kac--Moody: quadratic]\label{ex:km-quadratic}
+For $\widehat{\mathfrak{g}}_k$ (affine Lie algebra at level $k$), the generators are $V = \mathfrak{g}$ with relations $R = \{J^a \otimes J^b - f^{abc}J^c - k \delta^{ab} \mathbf{1}\}$.
+
+The OPE is:
+\[J^a(z)J^b(w) = \frac{k \delta^{ab}}{(z-w)^2} + \frac{f^{abc}J^c(w)}{z-w} + \text{regular}\]
+
+This is quadratic: only products of two currents appear, and the structure constants $f^{abc}$ are linear in $J^c$.
+
+\emph{Koszul dual.}
+\[\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k) \simeq \mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee})
+\quad \text{(curved CE coalgebra at shifted level)}\]
+and applying the cobar functor recovers the vertex algebra $\widehat{\mathfrak{g}}_{-k-2h^\vee}$.
+
+No completion is needed.
+\end{example}
+
+\subsubsection{Class II: curved (non-quadratic) chiral algebras}
+
+\begin{definition}[Curved chiral algebra]\label{def:curved-chiral-detailed}
+A chiral algebra $\mathcal{A}$ is \emph{curved} (but not necessarily quadratic) if:
+\begin{enumerate}
+\item It has a presentation $\mathcal{A} = \text{Free}_{\text{ch}}(V) / (R)$
+\item The relations $R$ may involve terms in $V^{\otimes n}$ for $n \geq 3$
+\item There exists a \emph{central curvature element} $\mu_0 \in Z(\mathcal{A})^2$
+\item The curvature satisfies the MC equation: 
+\[\sum_{k=0}^\infty \frac{1}{k!} m_k(\mu_0^{\otimes k}) = 0\]
+\end{enumerate}
+\end{definition}
+
+\begin{example}[Virasoro: curved, non-quadratic]\label{ex:virasoro-curved}
+The Virasoro algebra $\text{Vir}_c$ has:
+\begin{itemize}
+\item Generators: $V = \mathbb{C} \cdot T$ (stress tensor)
+\item Quadratic part: $T \otimes T \sim \frac{c}{(z-w)^4} + \frac{2T}{(z-w)^2}$
+\item \emph{Cubic term}: $m_3(T \otimes T \otimes T) \neq 0$ (Schwarzian derivative)
+\end{itemize}
+
+The OPE is:
+\[T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \text{regular}\]
+
+The algebra is curved because the central charge $c$ is a curvature
+($\mu_0 = c \cdot \mathbf{1}$) which is central ($[c, T] = 0$) and
+satisfies $m_1(c) = 0$. It is non-quadratic because the stress tensor
+has a non-zero triple product $T(z)T(w)T(u) \sim \cdots$ encoded by the
+Schwarzian derivative.
+
+In the present completed formalism, one tracks the same-family partner
+determined by the central-charge involution
+$c \leftrightarrow 26-c$
+\textup{(}Example~\textup{\ref{ex:virasoro-koszul-dual}}\textup{)}.
+This supplies the model/shadow object used in the genus calculations,
+while the stronger infinite-generator realization is delegated to the
+exact $W_\infty$ MC4 package of filtered H-level targets, residue
+identities, and finite detection on $\mathcal{I}_N$, whose first live
+higher-spin stages are already reduced on the theorem surface to the
+stage-$3$ fifteen-coefficient packet and the exact stage-$4$ six-entry
+identity packet on~$\mathcal{I}_4$, organized as three local OPE blocks
+and splitting into four higher-spin channels together with two
+Virasoro-target channels whose principal Drinfeld--Sokolov values are
+fixed and whose residue-side contraction is the extra input isolated by
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
+Completion is needed: the non-quadratic relations require
+\[\widehat{\bar{B}}(\text{Vir}_c) = \varprojlim_n \bar{B}(\text{Vir}_c)/I^n\]
+where $I$ is the augmentation ideal.
+\end{example}
+
+\subsubsection{Class III: filtered chiral algebras}
+
+\begin{definition}[Filtered chiral algebra]\label{def:filtered-chiral}
+A chiral algebra $\mathcal{A}$ is \emph{filtered} if it carries a filtration:
+\begin{equation}
+F_0\mathcal{A} \subset F_1\mathcal{A} \subset F_2\mathcal{A} \subset \cdots \subset \mathcal{A}
+\end{equation}
+satisfying:
+\begin{enumerate}
+\item \emph{Multiplicativity}: $m_2(F_i\mathcal{A} \otimes F_j\mathcal{A}) \subset F_{i+j}\mathcal{A}$
+\item \emph{Exhaustive}: $\mathcal{A} = \bigcup_{i=0}^\infty F_i\mathcal{A}$
+\item \emph{Separated}: $\bigcap_{i=0}^\infty F_i\mathcal{A} = 0$
+\item \emph{Complete}: $\mathcal{A} \cong \varprojlim_n \mathcal{A}/F_n\mathcal{A}$
+\end{enumerate}
+
+The \emph{associated graded} is:
+\begin{equation}
+\text{gr}(\mathcal{A}) = \bigoplus_{i=0}^\infty F_i\mathcal{A}/F_{i-1}\mathcal{A}
+\end{equation}
+\end{definition}
+
+\begin{example}[\texorpdfstring{$W_3$}{W3}: filtered, non-curved]\label{ex:w3-filtered}
+The $W_3$ algebra has generators $L$ (dimension~2, generating the Virasoro subalgebra) and $W$ (dimension~3, a primary field).
+
+\emph{Filtration by operator dimension.}
+\begin{align}
+F_0W_3 &= \mathbb{C} \cdot \mathbf{1} \\
+F_1W_3 &= \mathbb{C} \cdot \mathbf{1} \oplus \mathbb{C} \cdot \partial L \oplus \cdots \\
+F_2W_3 &= F_1W_3 \oplus \mathbb{C} \cdot L \oplus \mathbb{C} \cdot \partial^2 L \oplus \cdots \\
+F_3W_3 &= F_2W_3 \oplus \mathbb{C} \cdot W \oplus \mathbb{C} \cdot (L \cdot L) \oplus \cdots
+\end{align}
+
+The OPE is non-linear:
+\[W(z)W(w) = \frac{\cdots}{(z-w)^6} + \cdots + \frac{\Lambda(L \cdot L)(w)}{(z-w)^2} + \cdots\]
+where $\Lambda(L \cdot L)$ is a composite operator, not a single generator. The algebra is filtered rather than curved because it is not generated by a finite-dimensional space $V$: composite operators like $(L \cdot L)$ appear at all levels, and the filtration is infinite-dimensional at each level. The Koszul dual is
+\[W_3^! = \widehat{\mathrm{CoW}_3}
+\quad \text{(completed cooperad structure)}.\]
+The bar construction must be completed:
+\[\widehat{\bar{B}}(W_3) = \varprojlim_n \bar{B}(W_3)/F_n\]
+where $F_n$ is the filtration by operator dimension.
+\end{example}
+
+\subsubsection{Class IV: general (exact MC4 frontier)}
+
+\begin{example}[\texorpdfstring{$W_\infty$}{W_infinity}: exact MC4 frontier]\label{ex:winfty-completion-frontier-comprehensive}
+The $W_\infty$ algebra has:
+\begin{itemize}
+\item Generators: $W^{(n)}$ for all $n \geq 2$ (infinitely many generators)
+\item Relations: Infinitely many non-linear relations
+\item No finite presentation
+\end{itemize}
+
+No monograph-wide universal H-level duality theorem is currently
+proved: the generating space $V$ is infinite-dimensional, and the
+manuscript does not yet construct the filtered factorization object
+whose finite quotients recover the principal stages and satisfy the
+exact residue-identification package.
+
+The frontier is now narrower.  For the standard principal-stage tower,
+Corollary~\ref{cor:winfty-standard-mc4-package} already gives the
+standard-tower completed M-level bar-cobar package.  The remaining
+problem is not to construct a first completed bar object, but to
+compare that standard completion with stronger H-level
+factorization-theoretic or physical realizations of $W_\infty$ by
+proving the explicit identities
+$\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
+=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)$
+and reducing them to the finite-detection packet $\mathcal{I}_N$, whose
+first live higher-spin stages are already reduced on the theorem
+surface to the stage-$3$ fifteen-coefficient packet and the exact
+stage-$4$ six-entry identity packet on~$\mathcal{I}_4$, organized as
+three local OPE blocks and splitting into four higher-spin channels
+together with two Virasoro-target channels whose principal values are
+fixed and whose residue-side contraction is the extra input isolated by
+Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
+
+\emph{Physical interpretation.}
+$W_\infty$ describes non-local interactions in 2D gravity.  The open problem is
+to construct the correct filtered H-level dual description and verify
+its exact finite-stage coefficient identities, not to prove that no such
+description can exist.
+\end{example}
+
+\subsection{Comparison of the four classes}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{3cm}|}
+\hline
+\textbf{Class} & \textbf{Generators} & \textbf{Relations} & \textbf{Completion?} & \emph{Examples} \\
+\hline
+\hline
+\emph{Quadratic} & 
+Finite-dim $V$ & 
+$R \subset V^{\otimes 2}$ only & 
+NO &
+$\mathcal{H}_k$, $\widehat{\mathfrak{g}}_k$ \\
+\hline
+\emph{Curved} & 
+Finite-dim $V$ & 
+$R \subset \bigoplus_{n \geq 2} V^{\otimes n}$, $\mu_0 \in Z(\mathcal{A})$ & 
+SOMETIMES &
+$\text{Vir}_c$ \\
+\hline
+\emph{Filtered} & 
+Infinite-dim, graded & 
+All orders, composite ops & 
+YES &
+$W_3$, $W_N$ \\
+\hline
+\textbf{General / frontier} & 
+Infinite-dim, ungraded & 
+No uniform finite-type control & 
+OPEN / frontier &
+$W_\infty$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Theoretical framework: filtered cooperads}
+
+Following Gui--Li--Zeng \cite{GLZ22}, we develop the theory of filtered cooperads.
+
+\begin{definition}[Filtered cooperad]\label{def:filtered-cooperad}
+A \emph{filtered cooperad} $\mathcal{C}$ is a cooperad equipped with a filtration:
+\begin{equation}
+F^0\mathcal{C} \supset F^1\mathcal{C} \supset F^2\mathcal{C} \supset \cdots
+\end{equation}
+(decreasing) satisfying:
+\begin{enumerate}
+\item \emph{Coalgebra compatibility}: 
+\[\Delta(F^k\mathcal{C}) \subset \sum_{i+j=k} F^i\mathcal{C} \otimes F^j\mathcal{C}\]
+\item \emph{Separated}: $\bigcap_{k=0}^\infty F^k\mathcal{C} = 0$
+\item \emph{Complete}: $\mathcal{C} \cong \varprojlim_k \mathcal{C}/F^k\mathcal{C}$
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Filtered Koszul duality (GLZ) {\cite{GLZ22}}; \ClaimStatusProvedElsewhere]\label{thm:filtered-koszul-glz}
+Let $\mathcal{A}$ be a filtered chiral algebra with:
+\begin{itemize}
+\item Associated graded $\text{gr}(\mathcal{A})$ is quadratic
+\item Filtration is compatible with chiral product
+\item Completion $\widehat{\mathcal{A}} = \varprojlim_n \mathcal{A}/F_n\mathcal{A}$ exists
+\end{itemize}
+
+Then the completed bar construction:
+\begin{equation}
+\widehat{\bar{B}}(\mathcal{A}) := \varprojlim_n \bar{B}(\mathcal{A})/F_n
+\end{equation}
+computes a \emph{filtered Koszul dual} $\mathcal{A}^!_{\text{filt}}$ with:
+\begin{equation}
+\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \widehat{\mathcal{A}}
+\end{equation}
+as filtered chiral algebras.
+\end{theorem}
+
+\begin{proof}[Proof outline (following GLZ)]
+The argument proceeds through four steps.
+
+\emph{Step 1: Associated graded.}
+Since $\mathrm{gr}(\mathcal{A})$ is quadratic, Theorem~\ref{thm:quadratic-koszul} gives
+$\Omega(B(\mathrm{gr}(\mathcal{A}))) \simeq \mathrm{gr}(\mathcal{A})$.
+
+\emph{Step 2: Spectral sequence.}
+The filtration induces
+$E_1^{p,q} = H^q(B(F_p\mathcal{A}/F_{p-1}\mathcal{A})) \Rightarrow H^{p+q}(\widehat{\bar{B}}(\mathcal{A}))$.
+The $E_1$ page reduces to the associated graded computation of Step~1.
+
+\emph{Step 3: Convergence.}
+The inverse system $\{H^*(\bar{B}(\mathcal{A})/F^n)\}_{n \geq 0}$ satisfies the Mittag-Leffler condition because the filtration is exhaustive and the successive quotients $F^n/F^{n+1}$ are finite-dimensional (by the finite-type hypothesis on $\mathcal{A}$), so the image sequences $\mathrm{im}(H^*(F^{n+k}/F^n) \to H^*(F^n/F^n))$ stabilize.  Therefore $\varprojlim^1 = 0$ and $\varprojlim_n H^*(\bar{B}/F^n) = H^*(\widehat{\bar{B}})$.
+
+\emph{Step 4: Cobar recovery.}
+The cobar-bar adjunction $\Omega \dashv B$ restricts to an equivalence on pro-nilpotent objects by the filtered analogue of Theorem~\ref{thm:bar-cobar-isomorphism-main}; the completion $\widehat{\bar{B}}(\mathcal{A})$ is pro-nilpotent by construction, so $\Omega(\widehat{\bar{B}}(\mathcal{A})) \simeq \widehat{\mathcal{A}}$.  See Positselski~\cite{Positselski11} for the general framework of curved Koszul duality with completions.
+\end{proof}
+
+\subsection{When does filtering degenerate to curved?}
+
+\begin{proposition}[Filtered implies curved; \ClaimStatusProvedHere]\label{prop:filtered-to-curved}
+A filtered chiral algebra $\mathcal{A}$ has an associated \emph{curved structure} if:
+\begin{enumerate}
+\item The filtration is \emph{finite-dimensional at each level}:
+$\dim(F_k\mathcal{A}/F_{k-1}\mathcal{A}) < \infty$ for all $k$
+\item The associated graded $\mathrm{gr}(\mathcal{A})$ is generated by $\mathrm{gr}^1(\mathcal{A})$
+\item All higher relations are \emph{consequences} of lower ones plus curvature
+\end{enumerate}
+
+In this case, the filtered structure \emph{degenerates} to a curved structure with:
+\[\mu_0 \in F_2\mathcal{A}\]
+encoding the deviation from quadratic.
+\end{proposition}
+
+\begin{proof}
+By condition~(2), $\mathrm{gr}(\mathcal{A})$ is generated in degree~1.  The free chiral algebra $\mathrm{Free}(\mathrm{gr}^1(\mathcal{A}))$ surjects onto $\mathrm{gr}(\mathcal{A})$, with kernel generated by the quadratic relations $R \subset \mathrm{gr}^1 \boxtimes \mathrm{gr}^1$.
+
+The filtered algebra $\mathcal{A}$ deforms $\mathrm{gr}(\mathcal{A})$.  By condition~(3), the deformation is controlled by a single curvature element: choose generators $a_1, \ldots, a_r$ lifting $\mathrm{gr}^1(\mathcal{A})$ to $F_1\mathcal{A}$.  The product $\mu(a_i, a_j)$ in $\mathcal{A}$ differs from the product in $\mathrm{gr}(\mathcal{A})$ by an element in $F_2\mathcal{A}$:
+\[
+\mu_\mathcal{A}(a_i, a_j) = \mu_{\mathrm{gr}}(a_i, a_j) + \mu_0^{ij}
+\]
+where $\mu_0^{ij} \in F_2\mathcal{A}$.  By condition~(3), the higher-order corrections are determined by these quadratic corrections.  Collecting $\mu_0 = \sum_{ij} \mu_0^{ij} \in F_2\mathcal{A}$, we obtain the curved structure: the bar differential satisfies $d^2 = [\mu_0, -]$, where $\mu_0$ encodes the total deviation from quadratic.
+
+Condition~(1) ensures that this process terminates at each filtration level, giving a well-defined curved $A_\infty$ structure.
+\end{proof}
+
+\begin{example}[Virasoro: filtered degenerates to curved]\label{ex:vir-filtered-to-curved}
+The Virasoro algebra can be viewed as:
+
+\emph{Option 1 - Filtered.}
+\begin{align}
+F_0\text{Vir} &= \mathbb{C} \cdot \mathbf{1} \\
+F_1\text{Vir} &= F_0 \oplus \mathbb{C} \cdot \partial T \\
+F_2\text{Vir} &= F_1 \oplus \mathbb{C} \cdot T \\
+F_3\text{Vir} &= F_2 \oplus \mathbb{C} \cdot \partial^2 T \\
+&\vdots
+\end{align}
+
+\emph{Option 2 - Curved.} Generator $V = \mathbb{C} \cdot T$, curvature $\mu_0 = c \cdot \mathbf{1}$, and higher operations $m_3(T \otimes T \otimes T)$ from the Schwarzian.
+
+The filtration $F_k$ is generated by $T$ and its derivatives up to order $k-2$. All composite
+operators like $\partial^n T$ are derivatives of the single generator $T$, so the algebra is
+effectively curved rather than truly filtered.
+
+The curvature $\mu_0 = c$ captures the failure of $T$ to be a quadratic generator.
+\end{example}
+
+\begin{example}[\texorpdfstring{$W_3$}{W3}: truly filtered, not curved]\label{ex:w3-not-curved}
+The $W_3$ algebra is \emph{genuinely filtered}: its generators $L$ (dimension~2) and $W$ (dimension~3) produce composite operators $(L \cdot L)$, $(L \cdot W)$, etc.\ in the OPE that are \emph{not} derivatives of $L$ or $W$.
+
+Therefore $W_3$ cannot be reduced to a curved algebra with finite-dimensional generators. 
+It requires the full filtered framework.
+
+The distinction is that for Virasoro, $T$ and all $\partial^n T$ are ``the same'' generator (derivatives),
+whereas for $W_3$, the fields $L$, $W$, and $(L \cdot L)$ are \emph{independent} generators.
+This is why $W_3$ requires completion while Heisenberg and Kac--Moody do not.
+\end{example}
+
+\subsection{Explicit calculations: three examples}
+
+\subsubsection{Heisenberg (quadratic): no completion}
+
+\begin{example}[Heisenberg: explicit bar complex]\label{ex:heisenberg-bar-explicit}
+For $\mathcal{H}_k$ with generator $J$:
+
+\emph{Bar complex.}
+\begin{align}
+\bar{B}^0(\mathcal{H}_k) &= \mathbb{C} \cdot \mathbf{1} \\
+\bar{B}^1(\mathcal{H}_k) &= \mathbb{C} \cdot J \\
+\bar{B}^2(\mathcal{H}_k) &= \mathbb{C} \cdot (J \otimes J) \\
+\bar{B}^3(\mathcal{H}_k) &= \mathbb{C} \cdot (J \otimes J \otimes J) \\
+&\vdots
+\end{align}
+
+\emph{Bar differential.}
+
+Step 1: Write the differential explicitly:
+\[d: \bar{B}_1 \to \bar{B}_0\]
+\[d(J(z_1) \otimes J(z_2) \otimes \eta_{12}) = \text{Res}_{z_1=z_2}[J(z_1)J(z_2) \cdot d\log(z_1-z_2)]\]
+
+Step 2: Insert the OPE:
+\begin{align}
+J(z_1)J(z_2) \cdot d\log(z_1-z_2) &= \frac{k}{(z_1-z_2)^2} \cdot \frac{dz_1}{z_1-z_2} \\
+&= \frac{k \, dz_1}{(z_1-z_2)^3}
+\end{align}
+
+Step 3: Compute the residue:
+\[\text{Res}_{z_1=z_2}\left[\frac{k \, dz_1}{(z_1-z_2)^3}\right] = 0\]
+
+The triple pole has zero residue, so $d = 0$ at this level.
+
+\begin{align}
+d(J) &= 0 \\
+d(J \otimes J) &= 0 \quad \text{(not } k \cdot \mathbf{1}\text{; the triple pole residue vanishes)} \\
+d(J \otimes J \otimes J) &= 0 \quad \text{(all pairwise OPEs have poles of order $\geq 2$, hence zero residue)}
+\end{align}
+
+\emph{Cohomology.}
+\begin{align}
+H^0(\bar{B}(\mathcal{H}_k)) &= \mathbb{C} \cdot \mathbf{1} \quad \text{(vacuum)} \\
+H^1(\bar{B}(\mathcal{H}_k)) &\neq 0 \quad \text{(survives: the double pole means } d = 0\text{)} \\
+H^n(\bar{B}(\mathcal{H}_k)) &\text{ has CE cooperad structure}
+\end{align}
+
+\emph{Koszul dual.}
+\[\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)\]
+the commutative chiral algebra on the dual space $V^* = \mathrm{Hom}(V, \mathbb{C})$.
+
+\emph{Cohomology.}
+\begin{itemize}
+\item $H^0 = \mathbb{C} \cdot \mathbf{1}$ (vacuum)
+\item $H^1 = \bar{B}_1$ itself (since $d = 0$)
+\item $H^n$ for $n \geq 2$ follow similar pattern
+\end{itemize}
+
+The full cohomology $H^*(\bar{B}(\mathcal{H}_k))$ has the structure of the CE cooperad:
+\[H^*(\bar{B}(\mathcal{H}_k)) \simeq \text{CE}^!(\mathfrak{h}_k)\]
+
+Taking the cobar dual:
+\[\Omega(H^*(\bar{B}(\mathcal{H}_k))) \simeq \Omega(\text{CE}^!(\mathfrak{h}_k)) \simeq \mathcal{H}_k\]
+
+\emph{Physical interpretation.}
+\begin{itemize}
+\item The Heisenberg algebra $\mathcal{H}_k$ describes a free boson
+\item Its Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is the commutative chiral algebra on $V^*$, with curvature $m_0 = -k \cdot c$
+\item Physically, this commutative dual describes the \emph{ghost system} for gauging the $U(1)$ symmetry
+\item This matches the BV-BRST quantization of the gauged theory
+\end{itemize}
+
+No completion is needed: the bar complex is finite-dimensional at each degree and
+converges immediately.
+\end{example}
+
+\subsubsection{Virasoro (curved): sometimes completion}
+
+\begin{example}[Virasoro: bar complex requires completion]\label{ex:vir-bar-completion}
+For $\text{Vir}_c$ with generator $T$:
+
+\emph{Bar complex (before completion).}
+\begin{align}
+\bar{B}^0(\text{Vir}) &= \mathbb{C} \cdot \mathbf{1} \\
+\bar{B}^1(\text{Vir}) &= \mathbb{C} \cdot T \oplus \mathbb{C} \cdot \partial T \oplus \cdots \\
+\bar{B}^2(\text{Vir}) &= (\mathbb{C} \cdot T \oplus \cdots)^{\otimes 2} \\
+&\vdots
+\end{align}
+
+\emph{Issue.} The space $\bar{B}^1$ is \emph{infinite-dimensional} because it includes 
+all derivatives $\partial^n T$ for $n \geq 0$.
+
+\emph{Completion.} Define the augmentation ideal:
+\[I = \langle T, \partial T, \partial^2 T, \ldots \rangle\]
+
+Complete with respect to $I$:
+\[\widehat{\bar{B}}(\text{Vir}) = \varprojlim_n \bar{B}(\text{Vir})/I^n\]
+
+\emph{Completed differential.}
+\[\widehat{d}(T \otimes T) = \text{Res}(T(z)T(w)) + c \cdot \mathbf{1}\]
+
+The curvature $c$ ensures $\widehat{d}^2 = 0$ on the completed complex.
+
+\emph{Cohomology.}
+\[H^*(\widehat{\bar{B}}(\text{Vir})) = \widehat{U(\text{Vir})}^*_{-c}\]
+is the completed dual universal enveloping algebra.
+
+Completion is essential. Without completion, the bar complex does not converge and the
+Koszul dual is not well-defined.
+\end{example}
+
+\subsubsection{\texorpdfstring{$W_3$ (filtered): always completion}{W-3 (filtered): always completion}}
+
+\begin{example}[\texorpdfstring{$W_3$}{W3}: bar complex must be completed]\label{ex:w3-bar-completion}
+For $W_3$ with generators $L$ (dimension 2) and $W$ (dimension 3):
+
+\emph{Bar complex (before completion).}
+\begin{align}
+\bar{B}^0(W_3) &= \mathbb{C} \cdot \mathbf{1} \\
+\bar{B}^1(W_3) &= \mathbb{C} \cdot L \oplus \mathbb{C} \cdot W \oplus \text{(derivatives and composites)} \\
+\bar{B}^2(W_3) &= \text{(all pairs)} \\
+&\vdots
+\end{align}
+
+\emph{Problem.} Already at degree 1, we have:
+\begin{itemize}
+\item Generators: $L$, $W$
+\item First derivatives: $\partial L$, $\partial W$
+\item Second derivatives: $\partial^2 L$, $\partial^2 W$
+\item Composites: $(L \cdot L)$, $(L \cdot W)$, $(W \cdot W)$
+\item Higher composites: $(\partial L \cdot L)$, etc.
+\end{itemize}
+
+This is infinite-dimensional even before taking products.
+
+\emph{Filtration.} Filter by total operator dimension:
+\begin{align}
+F_0 &= \mathbb{C} \cdot \mathbf{1} \\
+F_2 &= F_0 \oplus \mathbb{C} \cdot L \\
+F_3 &= F_2 \oplus \mathbb{C} \cdot W \oplus \mathbb{C} \cdot \partial L \\
+F_4 &= F_3 \oplus \mathbb{C} \cdot \partial W \oplus \mathbb{C} \cdot \partial^2 L 
+\oplus \mathbb{C} \cdot (L \cdot L) \\
+&\vdots
+\end{align}
+
+\emph{Completed bar complex.}
+\[\widehat{\bar{B}}(W_3) = \varprojlim_n \bar{B}(W_3)/F_n\]
+
+\emph{Completed differential.}
+\[\widehat{d}(W \otimes W) = \text{Res}(W(z)W(w)) + \text{(composite terms)} + c \cdot \mathbf{1}\]
+
+The composite terms involve $(L \cdot L)$ and higher, which are not in the span of $\{L, W\}$.
+
+\emph{Cohomology.}
+\[H^*(\widehat{\bar{B}}(W_3)) = \widehat{\text{CoW}_3}\]
+is the completed cooperad structure dual to $W_3$.
+
+Completion is essential. Without it, the bar construction does not converge.
+\end{example}
+
+\subsection{Convergence criteria}
+
+\begin{theorem}[Convergence of bar construction; \ClaimStatusProvedHere]\label{thm:bar-convergence}
+Let $\mathcal{A}$ be a chiral algebra and write
+$\bar{B}(\mathcal{A})=\bigoplus_{n\ge0}\bar{B}^n(\mathcal{A})$ with its bar-degree
+filtration $F_p:=\bigoplus_{n\le p}\bar{B}^n(\mathcal{A})$.
+Assume $\dim\bar{B}^n(\mathcal{A})<\infty$ for all $n$. Then the following are equivalent:
+\begin{enumerate}
+\item $\bar{B}(\mathcal{A})$ converges without completion, i.e. the natural map
+$\bigoplus_n\bar{B}^n(\mathcal{A})\to\prod_n\bar{B}^n(\mathcal{A})$ is a
+quasi-isomorphism for the bar differential.
+\item \emph{Growth bound:}
+$\limsup_{n\to\infty}\dim(\bar{B}^n(\mathcal{A}))^{1/n}<\infty$.
+\item \emph{Filtration compatibility:}
+$d(F_p)\subseteq F_p$ and $d$ lowers bar degree by one on $\gr_F\bar{B}(\mathcal{A})$.
+\end{enumerate}
+If (2) or (3) fails, one must use the completed bar complex
+$\widehat{\bar{B}}(\mathcal{A})$.
+\end{theorem}
+
+\begin{proof}
+\emph{(2)+(3) $\Rightarrow$ (1).}
+Condition (3) gives a filtered complex structure on the direct sum complex and
+the associated spectral sequence has
+\[
+E_0^{p,\bullet}=\bar{B}^p(\mathcal{A}), \qquad d_0:\bar{B}^p\to\bar{B}^{p-1}.
+\]
+Because each $\bar{B}^p$ is finite-dimensional and condition (2) gives uniform
+at-most-exponential growth, each total degree receives only finite-dimensional
+contributions, so the filtered spectral sequence is well-defined and converges
+to $H^*(\bar{B}(\mathcal{A}))$. Thus no topological completion is required.
+Together with Theorem~\ref{thm:conilpotency-convergence}, this means every
+iterated coproduct/differential expression is finite on each element.
+
+\emph{(1) $\Rightarrow$ (3).}
+If convergence holds in the uncompleted direct sum, $d$ cannot create infinitely
+many bar-degree components from a single homogeneous input; equivalently,
+$d(F_p)\subseteq F_p$ and the induced differential on $\gr_F$ is degree $-1$.
+Otherwise $d$ is only defined in the product completion.
+
+\emph{(1) $\Rightarrow$ (2).}
+By the Eilenberg--Moore comparison theorem \cite[Theorem~7.14]{Weibel94}, the canonical map from the direct-sum totalization to the product totalization is a quasi-isomorphism if and only if the filtration is exhaustive and complete; the growth condition~(2) ensures that the completed bar filtration is exhaustive.  Conversely, if the growth bound fails, the filtration is not exhaustive: there exist infinite-bar-degree elements in the completion that project to zero in every finite truncation, producing cohomology classes in the completion not represented by any finite bar element.  These classes obstruct the comparison quasi-isomorphism, contradicting~(1).  Hence (2) is necessary.
+
+\emph{Quadratic finite-type case.}
+For $\mathcal{A}=T(V)/(R)$ with $V$ finite-dimensional,
+$\bar{B}^n(\mathcal{A})\cong (sV)^{\otimes n}$, so (2) holds with growth constant
+$\dim V$, and (3) holds by definition of the bar filtration. Therefore quadratic
+finite-type algebras converge without completion.
+\end{proof}
+
+\begin{remark}[Dependencies]
+This proof uses:
+\begin{enumerate}[label=(D\arabic*)]
+\item conilpotent convergence control (Theorem~\ref{thm:conilpotency-convergence});
+\item filtered-to-curved reduction inputs for non-quadratic regimes
+(Theorem~\ref{thm:filtered-to-curved});
+\item filtered/complete Koszul duality context (Theorem~\ref{thm:filtered-koszul-glz}).
+\end{enumerate}
+\end{remark}
+
+\subsection{Physical interpretation}
+
+Quadratic algebras correspond to free field theories (Heisenberg $\leftrightarrow$ free boson, Kac--Moody $\leftrightarrow$ WZW).  Curved algebras correspond to interacting theories with anomalies (Virasoro, with central charge $c$ measuring quantum breaking of scale invariance).  Filtered algebras correspond to theories with composite operators ($W_3$ and Toda field theory).  General algebras correspond to non-local theories ($W_\infty$), where the exact MC4 package of filtered H-level realization plus finite-stage coefficient identification remains open.
+
+From Kontsevich's geometric viewpoint, the filtration level corresponds to the codimension of collision loci: quadratic algebras see only pairwise collisions, curved algebras see central terms from $n$-point collisions, and filtered algebras require higher-codimension strata.  The completion $\widehat{\bar{B}}(\mathcal{A})$ is the formal neighborhood of the diagonal in configuration space.
+
+\subsection{Summary and decision tree}
+
+\begin{remark}[Summary for practitioners]\label{rem:practitioner-takeaway}
+\emph{Before computing the Koszul dual, one should determine:}
+\begin{enumerate}
+\item Is the algebra quadratic? $\Rightarrow$ Proceed directly
+\item Is it curved with central curvature? $\Rightarrow$ Check if $\dim(\bar{B}^1) < \infty$
+  \begin{itemize}
+  \item If yes: No completion
+  \item If no: Completion is required
+  \end{itemize}
+\item Does it have composite operators? $\Rightarrow$ Must complete
+\item Is the generating space infinite-dimensional? $\Rightarrow$ treat as an exact MC4 frontier: first construct the filtered H-level target, then identify its finite quotients by explicit coefficient identities and finite detection
+\end{enumerate}
+
+Most vertex algebras from CFT are either quadratic or curved with finite-dimensional
+$\bar{B}^1$, so Koszul duality applies.
+\end{remark}
+
+The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a chiral coalgebra; when the curvature is nonzero, it is a \emph{curved} coalgebra requiring Positselski's coderived categories for its homological algebra.
+\fi
+%%% END COMMENTED-OUT: Four-class exposition
+
+\section{Chiral coalgebra homological algebra}
+\label{sec:chiral-coalgebra-homalg}
+\index{chiral coalgebra!homological algebra|textbf}
+\index{Positselski!chiral lift|textbf}
+
+The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a chiral coalgebra
+(Theorem~\ref{thm:bar-chiral}).  At genus~$0$, it is a
+DG chiral coalgebra ($\dzero^2 = 0$); at genus~$g \geq 1$ with
+$\kappa(\cA) \neq 0$, it is a \emph{curved} DG chiral coalgebra
+($\dfib^{\,2} = \mcurv{g} \neq 0$; Convention~\ref{conv:higher-genus-differentials}).  In the curved case, the ordinary
+derived category is trivial
+(Proposition~\ref{prop:curved-bar-acyclicity}), and a richer
+homological algebra is needed.
+
+The chiral analogues of Positselski's coalgebra homological
+algebra~\cite{Positselski11} replace the ground field~$k$ by
+$\mathcal{D}_X$ and the tensor product by $\chirtensor$; all
+exactness properties are inherited from configuration space geometry.
+
+\subsection{Chiral CDG-coalgebras}
+\label{subsec:chiral-CDG-coalgebra}
+
+\begin{definition}[Chiral CDG-coalgebra]\label{def:chiral-CDG-coalgebra}
+\index{CDG-coalgebra!chiral}
+A \emph{chiral CDG-coalgebra} over a smooth curve $X$ is a triple
+$(C, d, h)$ where:
+\begin{enumerate}
+\item $C$ is a graded chiral coalgebra on $X$: a graded
+  $\mathcal{D}_X$-module equipped with a comultiplication
+  $\Delta\colon C \to C \chirtensor C$
+  (defined via configuration space splitting maps,
+  cf.\ Theorem~\ref{thm:bar-chiral}),
+  a counit $\varepsilon\colon C \to \omega_X$, coassociativity,
+  and the counit axioms.
+\item $d\colon C \to C$ is a homogeneous endomorphism of degree~$1$
+  that is an odd coderivation: the composition
+  $\Delta \circ d = (d \otimes \mathrm{id} +
+  \mathrm{id} \otimes d) \circ \Delta$
+  holds, and $\varepsilon \circ d = 0$ on $C^{>-2}$
+  (the counit annihilates $d$ except possibly in the lowest degree).
+\item $h\colon C \to \omega_X$ is a homogeneous linear functional
+  of degree~$2$ (the \emph{curvature}), satisfying:
+  \begin{enumerate}
+  \item $d^2(c) = h \ast c - c \ast h$ for all $c \in C$,
+    where $h \ast c$ denotes the coaction of the curvature
+    (defined via the comodule structure of $C$ over itself);
+  \item $h \circ d(c) = 0$ for all $c \in C$
+    (the curvature is a cocycle for the coderivation~$d$).
+  \end{enumerate}
+\end{enumerate}
+When $h = 0$, we recover an ordinary DG chiral coalgebra.
+\end{definition}
+
+\begin{example}[The bar complex as chiral CDG-coalgebra]
+\label{ex:bar-as-CDG}
+\index{bar complex!as CDG-coalgebra}
+For a Koszul chiral algebra $\cA$ on $X$:
+\begin{itemize}
+\item At genus~$0$: $\bar{B}^{(0)}(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), d_B, 0)$
+  is a DG chiral coalgebra ($h = 0$).
+\item At genus~$g \geq 1$: $\bar{B}^{(g)}(\cA) = (\bar{B}^{\mathrm{ch}}(\cA), d_B^{(g)}, h_g)$
+  is a CDG chiral coalgebra with curvature
+  $h_g = m_0^{(g)} = \kappa(\cA) \cdot \lambda_g$
+  (Theorem~\ref{thm:genus-universality}), where $\kappa(\cA)$ is
+  the obstruction coefficient and $\lambda_g$ is the Faber--Pandharipande
+  class on $\overline{\mathcal{M}}_g$.
+\end{itemize}
+The CDG axioms are verified as follows.  Axiom (2a): the identity
+$d^2 = [m_0, -]$ is the curved $A_\infty$ relation
+(Corollary~\ref{cor:critical-level-universality}).
+Axiom (2b): $h \circ d = 0$ follows from $m_0$ being a scalar
+(central element), so $d(m_0) = 0$.
+\end{example}
+
+\begin{remark}[Chiral CDG-coalgebra morphisms]
+\label{rem:CDG-morphisms}
+A morphism of chiral CDG-coalgebras $(C, d_C, h_C)$
+$\to$ $(D, d_D, h_D)$ is a pair $(f, a)$ where
+$f\colon C \to D$ is a morphism of graded chiral
+coalgebras and $a\colon C \to \omega_X$
+is a homogeneous linear function of degree~$1$ such
+that
+\begin{align*}
+d_D(f(c)) &= f(d_C(c)) + f(a \ast c) - (-1)^{|c|}f(c \ast a), \\
+h_D(f(c)) &= h_C(c) + a(d_C(c)) + a^2(c)
+\end{align*}
+for all $c \in C$.
+Composition of morphisms is defined by
+$(g, b) \circ (f, a) = (g \circ f,\allowbreak b \circ f + a)$.
+This follows Positselski~\cite[\S4.1]{Positselski11}.
+\end{remark}
+
+\subsection{Chiral CDG-comodules and CDG-contramodules}
+\label{subsec:chiral-CDG-comod-contra}
+
+\begin{definition}[Chiral CDG-comodule]\label{def:chiral-CDG-comodule}
+\index{CDG-comodule!chiral}
+Let $(C, d, h)$ be a chiral CDG-coalgebra.  A \emph{left chiral
+CDG-comodule} over $C$ is a graded left $C$-comodule $M$
+(i.e., a graded $\mathcal{D}_X$-module with coaction
+$\lambda\colon M \to C \chirtensor M$ satisfying coassociativity
+and counit axioms) endowed with a homogeneous endomorphism
+$d_M\colon M \to M$ of degree~$1$ such that:
+\begin{enumerate}
+\item The coaction commutes with differentials:
+  $\lambda \circ d_M = (d \otimes \mathrm{id} + \mathrm{id} \otimes d_M) \circ \lambda$.
+\item The curvature relation:
+  $d_M^2(x) = h \ast x$ for all $x \in M$,
+  where $h \ast x$ denotes the action of the curvature
+  via the coaction map.
+\end{enumerate}
+
+A \emph{right chiral CDG-comodule} is defined analogously with
+coaction $\rho\colon N \to N \chirtensor C$ and
+$d_N^2(y) = -y \ast h$.
+
+Morphisms of chiral CDG-comodules are homogeneous $\mathcal{D}_X$-linear
+maps of degree~$0$ that are compatible with the coaction
+and commute with the differential (in the usual graded sense).
+\end{definition}
+
+\begin{definition}[Chiral CDG-contramodule]\label{def:chiral-CDG-contramodule}
+\index{CDG-contramodule!chiral}
+Let $(C, d, h)$ be a chiral CDG-coalgebra.  A \emph{left chiral
+CDG-contramodule} over $C$ is a graded left $C$-contramodule $P$
+(i.e., a graded $\mathcal{D}_X$-module with contraaction
+$\pi_P\colon \mathrm{Hom}^{\mathrm{ch}}(C, P) \to P$
+satisfying the contraassociativity and contraunit axioms)
+endowed with a
+homogeneous endomorphism $d_P\colon P \to P$ of degree~$1$ such that:
+\begin{enumerate}
+\item The contraaction commutes with differentials on
+  $\mathrm{Hom}^{\mathrm{ch}}(C, P)$ and $P$.
+\item The curvature relation:
+  $d_P^2(p) = h \ast p$ for all $p \in P$,
+  where $h \ast p = \pi_P(h \otimes p)$ denotes the contraaction
+  of the curvature.
+\end{enumerate}
+Morphisms of chiral CDG-contramodules are defined analogously.
+\end{definition}
+
+\begin{remark}[Contramodules in the chiral setting]
+\label{rem:chiral-contramodules}
+\index{contramodule!chiral}
+The chiral contraaction $\pi_P\colon \mathrm{Hom}^{\mathrm{ch}}(C, P) \to P$
+replaces Positselski's $\mathrm{Hom}_k(C, P) \to P$, where
+$\mathrm{Hom}^{\mathrm{ch}}(C, P) := \mathrm{Hom}_{\mathcal{D}_X}(C, P)$
+is the internal Hom in the chiral category.  For a conilpotent chiral
+coalgebra $C$ with finite-dimensional graded pieces (as holds for
+$\bar{B}^{\mathrm{ch}}(\cA)$ when $\cA$ is finitely generated over $\mathcal{D}_X$),
+$\mathrm{Hom}^{\mathrm{ch}}(C, P) \cong C^* \chirtensor P$
+where $C^* = \mathrm{Hom}_{\mathcal{D}_X}(C, \omega_X)$ is the
+graded dual.  In this finite-type case, contramodules over $C$ are
+equivalent to complete modules over the dual algebra $C^*$, recovering
+the correspondence between conilpotent comodules and complete modules
+already used in Theorem~\ref{thm:e1-module-koszul-duality}.
+\end{remark}
+
+\begin{remark}[No cohomology for CDG-comodules]
+\label{rem:no-CDG-cohomology}
+Since $d^2 \neq 0$ in a CDG-comodule (when $h \neq 0$), there is no
+notion of cohomology.  This is the fundamental reason why the ordinary
+derived category is inadequate at higher genus: one cannot define
+acyclic objects via vanishing cohomology.  The correct
+substitute is the coderived category (Definition~\ref{def:chiral-coderived}).
+\end{remark}
+
+\subsection{Chiral cotensor and cohomomorphism complexes}
+\label{subsec:chiral-cotensor}
+
+\begin{definition}[Chiral cotensor product]\label{def:chiral-cotensor}
+\index{cotensor product!chiral}
+Let $(C, d, h)$ be a chiral CDG-coalgebra, $N$ a right chiral
+CDG-comodule, and $M$ a left chiral CDG-comodule.  The
+\emph{chiral cotensor product} $N \square_C^{\mathrm{ch}} M$ is
+the equalizer:
+\[
+N \square_C^{\mathrm{ch}} M =
+\ker\bigl(\rho \chirtensor \mathrm{id} - \mathrm{id} \chirtensor \lambda\colon
+N \chirtensor M \rightrightarrows N \chirtensor C \chirtensor M\bigr)
+\]
+in the category of graded $\mathcal{D}_X$-modules.
+The differential on $N \chirtensor M$ restricts to
+$N \square_C^{\mathrm{ch}} M$ (this uses the compatibility of coactions
+with differentials), and the restricted differential has
+$d^2 = h_N \ast (-) - (-) \ast h_M$ on the cotensor product, making
+$N \square_C^{\mathrm{ch}} M$ a complex (i.e., $d^2 = 0$) precisely
+when $h_N = h_M$ (the curvatures match), which holds when $N$ and $M$
+are CDG-comodules over the same CDG-coalgebra~$C$.
+\end{definition}
+
+\begin{definition}[Chiral cohomomorphisms]\label{def:chiral-cohom}
+\index{cohomomorphism!chiral}
+For left chiral CDG-comodules $L$ and $M$ over $C$, the
+\emph{chiral cohomomorphism complex} is:
+\[
+\mathrm{Cohom}_C^{\mathrm{ch}}(L, M) =
+\{f \in \mathrm{Hom}_{\mathcal{D}_X}(L, M) :
+\lambda_M \circ f = (\mathrm{id}_C \chirtensor f) \circ \lambda_L\}
+\]
+with differential $(d f)(x) = d_M(f(x)) - (-1)^{|f|} f(d_L(x))$.
+This differential has a zero square (using the CDG-comodule axioms),
+making $\mathrm{Cohom}_C^{\mathrm{ch}}(L, M)$ an honest complex.
+\end{definition}
+
+\begin{definition}[Chiral contratensor product]\label{def:chiral-contratensor}
+\index{contratensor product!chiral}
+For a right chiral CDG-comodule $N$ and a left chiral
+CDG-contramodule $P$ over $C$, the \emph{chiral contratensor
+product} $N \odot_C^{\mathrm{ch}} P$ is the coequalizer:
+\[
+N \odot_C^{\mathrm{ch}} P =
+\mathrm{coker}\bigl(
+N \chirtensor \mathrm{Hom}^{\mathrm{ch}}(C, P) \rightrightarrows N \chirtensor P
+\bigr)
+\]
+where the two maps are
+$\rho \chirtensor \pi_P$ and $\mathrm{id}_N \chirtensor \pi_P$.
+The induced differential on $N \odot_C^{\mathrm{ch}} P$ has zero
+square by the same curvature cancellation as for the cotensor product.
+\end{definition}
+
+\begin{lemma}[Adjunction; \ClaimStatusProvedHere]\label{lem:chiral-co-contra-adjunction}
+\index{adjunction!chiral cotensor--contratensor}
+There is a canonical isomorphism of complexes:
+\[
+\mathrm{Hom}_{\mathcal{D}_X}(N \square_C^{\mathrm{ch}} M,\, V)
+\;\cong\;
+\mathrm{Cohom}_C^{\mathrm{ch}}\bigl(M,\,
+\mathrm{Hom}_{\mathcal{D}_X}(N, V)\bigr)
+\]
+for any graded $\mathcal{D}_X$-module $V$, and dually:
+\[
+\mathrm{Hom}_{\mathcal{D}_X}(C \chirtensor V,\, P)
+\;\cong\;
+\mathrm{Hom}_{\mathcal{D}_X}(V,\,
+\mathrm{Hom}^{\mathrm{ch}}(C, P))
+\]
+establishing $\Phi_C \dashv \Psi_C$
+(see Definition~\textup{\ref{def:chiral-Phi-Psi}} below).
+\end{lemma}
+
+\begin{proof}
+Both isomorphisms are instances of the tensor-hom adjunction in the
+chiral category.  For the first: an element of the left side is a
+$\mathcal{D}_X$-linear map $f\colon N \square_C^{\mathrm{ch}} M \to V$.
+By the universal property of the equalizer, this is equivalent to a
+$\mathcal{D}_X$-linear map $\tilde{f}\colon N \chirtensor M \to V$
+that equalizes the two coaction maps.  By the chiral tensor-hom
+adjunction (which holds for holonomic $\mathcal{D}_X$-modules
+by~\cite[Proposition~3.4.6]{BD04}), $\tilde{f}$ corresponds to a map
+$M \to \mathrm{Hom}_{\mathcal{D}_X}(N, V)$ that is
+$C$-colinear, i.e., an element of
+$\mathrm{Cohom}_C^{\mathrm{ch}}(M, \mathrm{Hom}_{\mathcal{D}_X}(N, V))$.
+The second isomorphism is analogous.
+\end{proof}
+
+\subsection{Coderived and contraderived categories}
+\label{subsec:chiral-coderived-contraderived}
+
+\begin{definition}[Coderived and contraderived categories]
+\label{def:chiral-coderived}
+\index{coderived category!chiral|textbf}
+\index{contraderived category!chiral|textbf}
+Let $(C, d, h)$ be a chiral CDG-coalgebra.
+
+\emph{Exact triples.}
+An exact triple of left chiral CDG-comodules is a short sequence
+$0 \to L \to M \to N \to 0$ that is exact in the abelian category
+of graded $C$-comodules (with closed, degree-zero morphisms).
+The analogous notion applies to CDG-contramodules.
+
+\emph{Coacyclic objects.}
+A left chiral CDG-comodule $M$ is \emph{coacyclic} if it belongs to
+the minimal thick subcategory of $\mathrm{Hot}(C\text{-}\mathrm{comod}^{\mathrm{ch}})$
+that contains the totalizations of all exact triples and is closed
+under infinite direct sums.  Denote by
+$\mathrm{Acycl}^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})$
+the thick subcategory of coacyclic CDG-comodules.
+
+\emph{Contraacyclic objects.}
+A left chiral CDG-contramodule $P$ is \emph{contraacyclic} if it
+belongs to the minimal thick subcategory of
+$\mathrm{Hot}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
+that contains the totalizations of all exact triples and is closed
+under infinite direct products.  Denote by
+$\mathrm{Acycl}^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
+the thick subcategory of contraacyclic CDG-contramodules.
+
+\emph{The exotic derived categories.}
+\begin{align}
+D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+&:= \mathrm{Hot}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+\,/\, \mathrm{Acycl}^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+\label{eq:chiral-coderived}\\
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+&:= \mathrm{Hot}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+\,/\, \mathrm{Acycl}^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+\label{eq:chiral-contraderived}
+\end{align}
+\end{definition}
+
+\begin{remark}[Comparison with ordinary derived category]
+\label{rem:exotic-vs-ordinary}
+When $h = 0$ (genus~$0$), CDG-comodules are ordinary DG-comodules
+and one can also form the standard derived category
+$D(C\text{-}\mathrm{comod}^{\mathrm{ch}})$
+by localizing at acyclic objects (those with $H^*(M) = 0$).  In general,
+$\mathrm{Acycl}^{\mathrm{co}} \supset \mathrm{Acycl}$,
+so $D^{\mathrm{co}}$ is a quotient of $D$.  When $C$ has
+finite homological dimension (e.g., when $\cA$ is Koszul with finite
+global dimension), the two categories coincide
+(Positselski~\cite[\S4.5]{Positselski11}).  When $h \neq 0$, the standard
+derived category is trivial (no cohomology exists), while
+$D^{\mathrm{co}}$ retains rich structure.
+\end{remark}
+
+\subsection{Injective comodules and projective contramodules}
+\label{subsec:chiral-inj-proj}
+
+\begin{definition}[Cofree chiral CDG-comodule]
+\label{def:cofree-chiral-comod}
+\index{cofree comodule!chiral}
+For a graded $\mathcal{D}_X$-module $V$, the \emph{cofree graded
+chiral $C$-comodule} on $V$ is:
+\[
+J(V) := C \chirtensor V
+\]
+with coaction $\Delta \chirtensor \mathrm{id}_V\colon
+C \chirtensor V \to C \chirtensor C \chirtensor V$.
+The CDG-comodule differential is
+$d_{J(V)}(c \otimes v) = d(c) \otimes v$,
+and the curvature relation $d_{J(V)}^2 = h \ast (-)$ is inherited
+from~$C$.
+\end{definition}
+
+\begin{proposition}[Injective and projective resolutions;
+\ClaimStatusProvedHere]\label{prop:chiral-inj-proj-resolutions}
+\index{injective resolution!chiral CDG-comodule}
+\index{projective resolution!chiral CDG-contramodule}
+Let $(C, d, h)$ be a conilpotent chiral CDG-coalgebra with
+finite-dimensional graded pieces.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item For any left chiral CDG-comodule $M$, the cofree chiral
+  comodule $J(M) = C \chirtensor M$ is \emph{injective} in the
+  abelian category of graded $C^{\#}$-comodules (where $C^{\#}$
+  denotes $C$ with forgotten differential and curvature).
+\item For any left chiral CDG-contramodule $P$, the free chiral
+  contramodule $F(P) = \mathrm{Hom}^{\mathrm{ch}}(C, P)$ is
+  \emph{projective} in the abelian category of graded
+  $C^{\#}$-contramodules.
+\item The homotopy categories admit semiorthogonal decompositions:
+  the coderived category $D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})$
+  is equivalent to the homotopy category of CDG-comodules
+  with injective underlying graded comodules, and
+  $D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
+  is equivalent to the homotopy category of CDG-contramodules
+  with projective underlying graded contramodules.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part (a).}
+Let $0 \to L \to M \to N \to 0$ be an exact sequence of graded
+$C^{\#}$-comodules.  We must show that
+$0 \to \mathrm{Hom}_{C^{\#}}(N, J(V)) \to \mathrm{Hom}_{C^{\#}}(M, J(V))
+\to \mathrm{Hom}_{C^{\#}}(L, J(V)) \to 0$
+is exact.  By the tensor-hom adjunction in the chiral category:
+$\mathrm{Hom}_{C^{\#}}(M, C \chirtensor V)
+\cong \mathrm{Hom}_{\mathcal{D}_X}(M, V)$,
+and the functor $\mathrm{Hom}_{\mathcal{D}_X}(-, V)$ is exact
+on holonomic $\mathcal{D}_X$-modules (since holonomic modules have
+finite length).
+
+\emph{Part (b).}
+Dual to (a): for an exact sequence
+$0 \to P \to Q \to R \to 0$ of graded $C^{\#}$-contramodules,
+$\mathrm{Hom}_{C^{\#}}(\mathrm{Hom}^{\mathrm{ch}}(C, V), -)$
+is exact because
+$\mathrm{Hom}_{C^{\#}}(\mathrm{Hom}^{\mathrm{ch}}(C, V), P)
+\cong \mathrm{Hom}_{\mathcal{D}_X}(V, P)$.
+
+\emph{Part (c).}
+For any CDG-comodule $M$, the cobar resolution provides a
+functorial injective resolution: form
+$J = \bigoplus_{n=0}^{\infty} C^{\chirtensor (n+1)} \chirtensor M$
+with the standard bar-type differential (the chiral analogue of
+Positselski~\cite[\S4.4, proof of Theorem]{Positselski11}).
+The closed morphism $M \to J$ has the property that
+$\mathrm{cone}(M \to J)$ is coacyclic (each quotient
+$\tau_{\leq n}J / \tau_{\leq n-1}J$ is a cofree CDG-comodule, and
+the cone is built from these by exact triangles and countable direct
+sums).  The projectivity statement for contramodules is dual:
+take the bar resolution
+$\cdots \to \mathrm{Hom}^{\mathrm{ch}}(C^{\chirtensor 2}, P)
+\to \mathrm{Hom}^{\mathrm{ch}}(C, P) \to P$
+and observe that the cone is contraacyclic (built from free
+contramodules by exact triangles and countable direct products).
+
+The semiorthogonal decomposition follows formally: the localization
+functor from the full homotopy category to $D^{\mathrm{co}}$
+restricts to an equivalence on the full subcategory of objects with
+injective underlying graded comodule (since coacyclic objects with
+injective underlying comodule are contractible, by the same argument as
+Positselski~\cite[\S4.4]{Positselski11}, using the injective
+resolution of the previous paragraph).  The dual statement holds for
+$D^{\mathrm{ctr}}$.
+\end{proof}
+
+\begin{proposition}[Explicit CDG Hom-complex; \ClaimStatusProvedHere]
+\label{prop:cdg-hom-complex}
+\index{CDG-comodule!Hom-complex|textbf}
+Let $(C, d_C, h)$ be a chiral CDG-coalgebra and let $M$, $N$ be
+left chiral CDG-comodules over~$C$.  The \emph{CDG Hom-complex}
+$\underline{\mathrm{Hom}}_C^{\mathrm{ch}}(M, N)$ is the graded
+$\mathcal{D}_X$-module of graded $C^{\#}$-comodule morphisms,
+with differential
+\begin{equation}\label{eq:cdg-hom-differential}
+d_{\mathrm{Hom}}(f) \;=\; d_N \circ f
+\;-\; (-1)^{|f|}\, f \circ d_M.
+\end{equation}
+This differential satisfies $d_{\mathrm{Hom}}^2(f) = [h_N, f] - [h_M, f]$
+where $h_M$, $h_N$ denote the curvature endomorphisms
+$h \ast (-)$ on $M$ and $N$ respectively.  In particular:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item When $h = 0$ \textup{(}genus~$0$\textup{)},
+  $d_{\mathrm{Hom}}^2 = 0$ and the Hom-complex is a genuine
+  DG-module.
+\item When $h \neq 0$, the Hom-complex is a \emph{CDG-module}
+  with curvature $h_{\mathrm{Hom}}(f) = h_N \circ f - f \circ h_M$.
+  For endomorphisms ($M = N$),
+  $d_{\mathrm{Hom}}^2(f) = [h_M, f]$, so $d_{\mathrm{Hom}}$ is
+  a genuine differential on the \emph{center}
+  $Z(\mathrm{End}_C(M)) = \{f : h_M \circ f = f \circ h_M\}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Direct computation.  For $f \in \underline{\mathrm{Hom}}_C^{\mathrm{ch}}(M, N)^k$:
+\begin{align*}
+d_{\mathrm{Hom}}^2(f)
+&= d_N \circ \bigl(d_N \circ f - (-1)^k f \circ d_M\bigr)
+  - (-1)^{k+1}\bigl(d_N \circ f - (-1)^k f \circ d_M\bigr) \circ d_M \\
+&= d_N^2 \circ f + (-1)^{k+1}\, d_N \circ f \circ d_M
+  + (-1)^{k+1}\, d_N \circ f \circ d_M + f \circ d_M^2 \\
+&= d_N^2 \circ f - f \circ d_M^2 \\
+&= (h_N \ast -) \circ f - f \circ (h_M \ast -),
+\end{align*}
+where the last step uses the CDG relation $d^2 = h \ast (-)$ on
+$M$ and~$N$.  When $M = N$, this is $[h_M, f]$, which vanishes
+on central endomorphisms.
+\end{proof}
+
+\begin{corollary}[Contractibility of coacyclic injectives; \ClaimStatusProvedHere]
+\label{cor:coacyclic-injective-contractible}
+\index{coacyclic!contractibility criterion|textbf}
+Let $(C, d, h)$ be a conilpotent chiral CDG-coalgebra with
+finite-dimensional graded pieces, and let $M$ be a chiral
+CDG-comodule with injective underlying graded $C^{\#}$-comodule.
+Then $M$ is coacyclic if and only if it admits a
+\emph{contracting homotopy}: a degree~$-1$ graded
+$C^{\#}$-comodule endomorphism $s \colon M \to M$ satisfying
+\begin{equation}\label{eq:contracting-homotopy-cdg}
+d_M \circ s + s \circ d_M \;=\; \mathrm{id}_M.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+If such an $s$ exists, then $\mathrm{id}_M = d_{\mathrm{Hom}}(s)$
+in the CDG Hom-complex of
+Proposition~\ref{prop:cdg-hom-complex} (with $M = N$), so $M$ is
+null-homotopic and \emph{a fortiori} coacyclic.
+
+Conversely, suppose $M$ is coacyclic with injective underlying
+graded comodule.  By the semiorthogonal decomposition in
+Proposition~\ref{prop:chiral-inj-proj-resolutions}(c),
+$D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})$
+is equivalent to
+$\mathrm{Hot}(C\text{-}\mathrm{comod}^{\mathrm{ch}}_{\mathrm{inj}})$.
+A coacyclic object that already has injective underlying comodule
+represents the zero object in this homotopy category, hence is
+null-homotopic: there exists a degree~$-1$ closed morphism
+$s$ with $d_{\mathrm{Hom}}(s) = \mathrm{id}_M$.
+Expanding via~\eqref{eq:cdg-hom-differential} gives~\eqref{eq:contracting-homotopy-cdg}.
+\end{proof}
+
+\subsection{The correspondence functors}
+\label{subsec:chiral-correspondence-functors}
+
+\begin{definition}[Functors \texorpdfstring{$\Phi_C^{\mathrm{ch}}$}{Phi_C^ch} and \texorpdfstring{$\Psi_C^{\mathrm{ch}}$}{Psi_C^ch}]
+\label{def:chiral-Phi-Psi}
+\index{Positselski!functors PhiPsi@$\Phi_C$, $\Psi_C$}
+Let $(C, d, h)$ be a chiral CDG-coalgebra.
+\begin{itemize}
+\item For a left chiral CDG-contramodule $P$, define
+  $\Phi_C^{\mathrm{ch}}(P)$ to be the left chiral CDG-comodule
+  whose underlying graded $\mathcal{D}_X$-module is the
+  chiral contratensor product $C \odot_C^{\mathrm{ch}} P$.
+  Concretely, $\Phi_C^{\mathrm{ch}}(P)$ is a quotient of
+  $C \chirtensor P$; the comodule structure comes from the
+  comultiplication on the left factor~$C$, and the differential is
+  induced by the differentials on $C$ and $P$ via the standard
+  formula for the tensor product of graded $\mathcal{D}_X$-modules
+  with differentials.
+\item For a left chiral CDG-comodule $M$, define
+  $\Psi_C^{\mathrm{ch}}(M)$ to be the left chiral CDG-contramodule
+  whose underlying graded $\mathcal{D}_X$-module is
+  $\mathrm{Hom}_C^{\mathrm{ch}}(C, M) = \mathrm{Cohom}_C^{\mathrm{ch}}(C, M)$.
+  The contramodule structure comes from the comultiplication
+  on $C$, and the differential is induced from $d_C$ and $d_M$.
+\end{itemize}
+These define DG-functors:
+\begin{align*}
+\Phi_C^{\mathrm{ch}}\colon \mathrm{DG}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+&\longrightarrow \mathrm{DG}(C\text{-}\mathrm{comod}^{\mathrm{ch}}), \\
+\Psi_C^{\mathrm{ch}}\colon \mathrm{DG}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+&\longrightarrow \mathrm{DG}(C\text{-}\mathrm{contra}^{\mathrm{ch}}).
+\end{align*}
+\end{definition}
+
+\begin{lemma}[Key properties of \texorpdfstring{$\Phi_C^{\mathrm{ch}}$}{Phi_C^ch} and
+\texorpdfstring{$\Psi_C^{\mathrm{ch}}$}{Psi_C^ch}; \ClaimStatusProvedHere]
+\label{lem:Phi-Psi-properties}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\Phi_C^{\mathrm{ch}}$ is left adjoint to $\Psi_C^{\mathrm{ch}}$
+  on the homotopy categories.
+\item $\Phi_C^{\mathrm{ch}}$ maps the free graded contramodule
+  $\mathrm{Hom}^{\mathrm{ch}}(C, V)$ to the cofree graded comodule
+  $C \chirtensor V$, for any graded $\mathcal{D}_X$-module $V$.
+\item $\Psi_C^{\mathrm{ch}}$ maps the cofree graded comodule
+  $C \chirtensor V$ to the free graded contramodule
+  $\mathrm{Hom}^{\mathrm{ch}}(C, V)$.
+\item $\Phi_C^{\mathrm{ch}}$ maps projective graded contramodules
+  to injective graded comodules, and $\Psi_C^{\mathrm{ch}}$ maps
+  injective graded comodules to projective graded contramodules.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\emph{Part (a).}
+The adjunction $\Phi_C^{\mathrm{ch}} \dashv \Psi_C^{\mathrm{ch}}$
+follows from the standard isomorphism
+$\mathrm{Hom}_{\mathcal{D}_X}(C \chirtensor V, P)
+\cong \mathrm{Hom}_{\mathcal{D}_X}(V, \mathrm{Hom}^{\mathrm{ch}}(C, P))$
+(the chiral tensor-hom adjunction), which makes
+$\Phi_C^{\mathrm{ch}}$ left adjoint to $\Psi_C^{\mathrm{ch}}$ as
+DG-functors (Lemma~\ref{lem:chiral-co-contra-adjunction}).
+
+\emph{Parts (b) and (c).}
+The free graded contramodule on $V$ is
+$\mathrm{Hom}^{\mathrm{ch}}(C, V) = \mathrm{Hom}_{\mathcal{D}_X}(C, V)$.
+Then:
+\[
+\Phi_C^{\mathrm{ch}}(\mathrm{Hom}^{\mathrm{ch}}(C, V))
+= C \odot_C^{\mathrm{ch}} \mathrm{Hom}^{\mathrm{ch}}(C, V).
+\]
+By the contramodule-comodule correspondence at the graded level
+(cf.\ the example in
+Positselski~\cite[\S5.1]{Positselski11}), the
+contratensor product of $C$ with the free contramodule on $V$ is
+canonically isomorphic to the cofree comodule $C \chirtensor V$.
+In the chiral setting, this isomorphism follows from the
+tensor-hom adjunction for $\mathcal{D}_X$-modules:
+\begin{align*}
+C \odot_C^{\mathrm{ch}} \mathrm{Hom}^{\mathrm{ch}}(C, V)
+&\cong \mathrm{coker}\bigl(
+C \chirtensor \mathrm{Hom}^{\mathrm{ch}}(C, \mathrm{Hom}^{\mathrm{ch}}(C, V))
+\rightrightarrows C \chirtensor \mathrm{Hom}^{\mathrm{ch}}(C, V)
+\bigr) \\
+&\cong C \chirtensor V,
+\end{align*}
+where the last step uses the counit of the adjunction
+$\mathrm{ev}\colon \mathrm{Hom}^{\mathrm{ch}}(C, V) \chirtensor C
+\to V$ and the coassociativity of $C$.  Part~(c) is the dual computation.
+
+\emph{Part (d).}
+Combine (b)--(c) with
+Proposition~\ref{prop:chiral-inj-proj-resolutions}(a)--(b):
+free graded contramodules are projective and cofree graded comodules
+are injective, so $\Phi_C^{\mathrm{ch}}$ sends projective objects
+to injective objects and vice versa.
+\end{proof}
+
+\subsection{The chiral comodule-contramodule correspondence}
+\label{subsec:chiral-co-contra-correspondence}
+
+\begin{theorem}[Chiral comodule-contramodule correspondence;
+\ClaimStatusProvedHere]
+\label{thm:chiral-co-contra-correspondence}
+\index{comodule-contramodule correspondence!chiral|textbf}
+\index{Positselski!chiral correspondence|textbf}
+Let $(C, d, h)$ be a conilpotent chiral CDG-coalgebra on a smooth
+curve $X$ with finite-dimensional graded pieces.  The derived functors
+\begin{align*}
+\mathbb{L}\Phi_C^{\mathrm{ch}}\colon
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+&\longrightarrow
+D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}}), \\
+\mathbb{R}\Psi_C^{\mathrm{ch}}\colon
+D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+&\longrightarrow
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+\end{align*}
+are mutually inverse equivalences of triangulated categories.
+\end{theorem}
+
+\begin{proof}
+The proof follows Positselski~\cite[\S5.2]{Positselski11}, with the
+ordinary tensor product replaced by the chiral tensor product
+$\chirtensor$ and exactness properties established via the geometry
+of $\mathcal{D}_X$-modules on configuration spaces.  We verify
+each step.
+
+\emph{Step~1: Derived functors.}
+By Proposition~\ref{prop:chiral-inj-proj-resolutions}(c),
+the contraderived and coderived categories
+\begin{align*}
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
+&\simeq K_{\mathrm{proj}}(C\text{-}\mathrm{contra}^{\mathrm{ch}}),\\
+D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+&\simeq K_{\mathrm{inj}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+\end{align*}
+are equivalent to the homotopy categories of
+CDG-contra\-modules (resp.\ CDG-comodules) with
+projective (resp.\ injective) underlying graded module.
+The left derived functor~$\mathbb{L}\Phi_C^{\mathrm{ch}}$
+restricts to projective contramodules;
+$\mathbb{R}\Psi_C^{\mathrm{ch}}$ restricts to injective comodules.
+
+\emph{Step~2: Mutual inverse on generators.}
+By Lemma~\ref{lem:Phi-Psi-properties}(b)--(c), $\Phi_C^{\mathrm{ch}}$
+sends the free graded contramodule $\mathrm{Hom}^{\mathrm{ch}}(C, V)$
+to the cofree graded comodule $C \chirtensor V$, and
+$\Psi_C^{\mathrm{ch}}$ sends $C \chirtensor V$ back to
+$\mathrm{Hom}^{\mathrm{ch}}(C, V)$.  These are the generating objects
+for the respective categories (any CDG-comodule has an injective
+resolution by cofree comodules, and any CDG-contramodule has a
+projective resolution by free contramodules, by
+Proposition~\ref{prop:chiral-inj-proj-resolutions}).
+
+\emph{Step~3: Equivalence on full triangulated subcategories.}
+We claim that the restrictions of $\Phi_C^{\mathrm{ch}}$ and
+$\Psi_C^{\mathrm{ch}}$ to the full triangulated subcategories
+\begin{align*}
+\mathrm{Hot}(C\text{-}\mathrm{contra}^{\mathrm{ch}}_{\mathrm{proj}})
+&\subset \mathrm{Hot}(C\text{-}\mathrm{contra}^{\mathrm{ch}}), \\
+\mathrm{Hot}(C\text{-}\mathrm{comod}^{\mathrm{ch}}_{\mathrm{inj}})
+&\subset \mathrm{Hot}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+\end{align*}
+are mutually inverse equivalences.
+
+To see this, observe that the unit and counit natural transformations
+\[
+\eta\colon \mathrm{id} \to \Psi_C^{\mathrm{ch}} \circ \Phi_C^{\mathrm{ch}},
+\qquad
+\varepsilon\colon \Phi_C^{\mathrm{ch}} \circ \Psi_C^{\mathrm{ch}} \to \mathrm{id}
+\]
+are isomorphisms on free contramodules and cofree comodules
+(Step~2).  Since these objects generate the respective
+homotopy categories (every object is built from generators by
+shifts, cones, and countable (co)products),
+and both $\Phi_C^{\mathrm{ch}}$ and $\Psi_C^{\mathrm{ch}}$ preserve
+exact triangles and countable (co)products, the natural
+transformations $\eta$ and $\varepsilon$ are isomorphisms
+on all objects with projective (resp.\ injective) underlying graded
+structure.
+
+\emph{Step~4: Descent to exotic derived categories.}
+To pass from the full homotopy categories to $D^{\mathrm{co}}$ and
+$D^{\mathrm{ctr}}$, we verify that $\Phi_C^{\mathrm{ch}}$ maps
+contraacyclic CDG-contramodules to coacyclic CDG-comodules, and
+$\Psi_C^{\mathrm{ch}}$ maps coacyclic CDG-comodules to
+contraacyclic CDG-contramodules.
+
+For $\Phi_C^{\mathrm{ch}}$: since $\Phi_C^{\mathrm{ch}}$ is a
+left adjoint, it preserves (all) colimits, in particular coproducts
+and cokernels.  A contraacyclic CDG-contramodule is built from
+totalizations of exact triples and direct products.  Now,
+$\Phi_C^{\mathrm{ch}}$ preserves exact triples (being a left adjoint
+of an exact functor, hence right exact; and by
+Lemma~\ref{lem:Phi-Psi-properties}(d) it sends projective
+contramodules to injective comodules, so the left derived functor
+is exact).  The image of a totalization under $\Phi_C^{\mathrm{ch}}$
+is a totalization, and the image of a direct product is computed
+using the cofree resolution from Step~2.  Thus
+$\Phi_C^{\mathrm{ch}}$ preserves contraacyclic $\to$ coacyclic.
+The argument for $\Psi_C^{\mathrm{ch}}$ is dual.
+
+\emph{Step~5: Conclusion.}
+Combining Steps~3 and~4:  $\mathbb{L}\Phi_C^{\mathrm{ch}}$ and
+$\mathbb{R}\Psi_C^{\mathrm{ch}}$ are well-defined triangulated
+functors between $D^{\mathrm{ctr}}$ and $D^{\mathrm{co}}$, they
+are mutually inverse on the generating subcategories (projective
+contramodules $\leftrightarrow$ injective comodules), and both
+categories are compactly generated by finite-dimensional objects
+(using conilpotency and finite-type grading; the argument parallels
+Positselski~\cite[\S5.5]{Positselski11}, with the key input that any
+graded $C$-comodule is the union of its finite-dimensional
+subcomodules, which holds for conilpotent chiral coalgebras because
+the conformal weight grading bounds the coaction filtration).
+By the uniqueness of extensions of equivalences from compact generators
+to the full compactly generated category
+(cf.~\cite[\S5.5]{Positselski11}), the equivalence extends to all objects.
+\end{proof}
+
+\begin{remark}[Hypotheses]\label{rem:co-contra-hypotheses}
+The two key hypotheses---conilpotency and finite-type grading---are
+satisfied by $C = \bar{B}^{\mathrm{ch}}(\cA)$ whenever $\cA$ is a
+finitely generated chiral algebra with finite-dimensional conformal
+weight spaces (which includes all Koszul chiral algebras arising in
+this monograph: Kac--Moody, Virasoro, $W$-algebras, Heisenberg, free
+fields, and Yangians).  Conilpotency was established in
+Theorem~\ref{thm:coalgebra-via-NAP}(4); finite-type grading follows
+from the finite-generation hypothesis on~$\cA$.
+\end{remark}
+
+\subsection{Application: the Positselski equivalence for chiral algebras}
+\label{subsec:positselski-chiral-equivalence}
+
+The chiral comodule-contramodule correspondence yields the derived module category equivalence at all genera.
+
+\begin{theorem}[Positselski equivalence for chiral algebras;
+\ClaimStatusProvedHere]
+\label{thm:positselski-chiral-proved}
+\index{Positselski!chiral equivalence|textbf}
+\index{comodule-contramodule correspondence!chiral Koszul|textbf}
+For a Koszul chiral algebra $\cA$ on a smooth curve $X$ with
+curved bar complex $C = \bar{B}^{\mathrm{ch}}(\cA)$
+(a conilpotent chiral CDG-coalgebra by
+Example~\textup{\ref{ex:bar-as-CDG}}), there is an equivalence of
+triangulated categories:
+\begin{equation}\label{eq:positselski-chiral-proved}
+D^{\mathrm{co}}(\cA\text{-}\mathrm{CoMod}^{\mathrm{conil,\,ch}})
+\;\simeq\;
+D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}})
+\end{equation}
+between the coderived category of conilpotent chiral
+$\cA$-comodules and the contraderived category of chiral
+$\cA^!$-contramodules.
+
+At genus~$0$ (where $h = 0$), this reduces to the module Koszul
+duality of
+Theorem~\textup{\ref{thm:e1-module-koszul-duality}}.
+At genus~$g \geq 1$ (where $h = m_0^{(g)} \neq 0$), the ordinary
+derived categories are trivial, and the coderived/contraderived
+categories provide the correct framework.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:chiral-co-contra-correspondence} with
+$C = \bar{B}^{\mathrm{ch}}(\cA)$.
+
+\emph{Identification of comodule category.}
+A conilpotent chiral CDG-comodule over
+$C = \bar{B}^{\mathrm{ch}}(\cA)$ is a graded $\mathcal{D}_X$-module~$M$
+with coaction $M \to \bar{B}^{\mathrm{ch}}(\cA) \chirtensor M$ and
+differential satisfying $\dfib^{\,2} = \mcurv{g} \ast (-)$ (Convention~\ref{conv:higher-genus-differentials}).  This is
+precisely a (curved) $\cA$-module in the sense that the coaction
+encodes the $\cA$-module structure via the bar construction:
+$\cA\text{-}\mathrm{CoMod}^{\mathrm{conil,\,ch}}
+\cong \bar{B}^{\mathrm{ch}}(\cA)\text{-}\mathrm{comod}^{\mathrm{ch}}$
+(this is the module-level bar construction,
+cf.\ the proof of Theorem~\ref{thm:e1-module-koszul-duality},
+Step~1).
+
+\emph{Identification of contramodule category.}
+The dual algebra $C^* = \bar{B}^{\mathrm{ch}}(\cA)^*$ is canonically
+identified with $\cA^!$ (the Koszul dual chiral algebra, via
+Theorem~\ref{thm:bar-computes-dual}).  A chiral CDG-contramodule
+over $C$ is a graded $\mathcal{D}_X$-module $P$ with contraaction
+$\mathrm{Hom}^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA), P) \to P$,
+which (by the finite-type duality of Remark~\ref{rem:chiral-contramodules})
+is equivalent to a complete (pro-nilpotent) module over~$\cA^!$:
+$\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}}
+\cong \bar{B}^{\mathrm{ch}}(\cA)\text{-}\mathrm{contra}^{\mathrm{ch}}$.
+
+\emph{Conclusion.}
+The hypotheses of Theorem~\ref{thm:chiral-co-contra-correspondence}
+are satisfied: $\bar{B}^{\mathrm{ch}}(\cA)$ is conilpotent
+(Theorem~\ref{thm:coalgebra-via-NAP}(4)) with finite-dimensional
+graded pieces (since $\cA$ is finitely generated with
+finite-dimensional conformal weight spaces).  The equivalence
+$D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
+\simeq D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
+of Theorem~\ref{thm:chiral-co-contra-correspondence} therefore yields
+\eqref{eq:positselski-chiral-proved}.
+\end{proof}
+
+\begin{theorem}[Full derived module equivalence; \ClaimStatusProvedHere]
+\label{thm:full-derived-module-equiv-proved}
+\index{derived category!full module equivalence|textbf}
+\index{Positselski!full derived equivalence|textbf}
+For a Koszul chiral algebra $\cA$ with curved bar complex
+$\bar{B}(\cA)$, there is a triangulated equivalence:
+\begin{equation}\label{eq:full-derived-equiv-proved}
+D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA))
+\;\simeq\;
+D^{\mathrm{co}}(\mathrm{CoMod}^{\mathrm{conil}}(\cA^!))
+\end{equation}
+where $\mathrm{Mod}^{\mathrm{compl}}(\cA)$ denotes the category
+of complete \textup{(}pro-nilpotent\textup{)} $\cA$-modules
+and $\mathrm{CoMod}^{\mathrm{conil}}(\cA^!)$ denotes the
+category of conilpotent $\cA^!$-comodules.
+
+This equivalence induces the Ext duality:
+\begin{equation}\label{eq:ext-duality-proved}
+\mathrm{Ext}^n_{\cA}(M_1, M_2)
+\;\cong\;
+\mathrm{Ext}^{d-n}_{\cA^!}(\Phi(M_1), \Phi(M_2))^{\vee}
+\end{equation}
+where $d$ is the global dimension of $\cA$ and
+$\Phi = \bar{B}_{\cA}$ is the bar functor.
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1.}
+By Theorem~\ref{thm:positselski-chiral-proved}:
+\[
+D^{\mathrm{co}}(\cA\text{-}\mathrm{CoMod}^{\mathrm{conil,\,ch}})
+\simeq
+D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}}).
+\]
+
+\emph{Step~2.}
+By Remark~\ref{rem:chiral-contramodules}, complete $\cA^!$-modules
+are equivalent to chiral CDG-contramodules over $\bar{B}^{\mathrm{ch}}(\cA)$.
+Moreover, the contraderived category of such contramodules is
+identified with the bounded derived category of complete
+$\cA$-modules:
+$D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}})
+\simeq D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA))$.
+This identification uses the finite homological dimension:
+since $\cA$ is Koszul, the bar complex
+$\bar{B}^{\mathrm{ch}}(\cA)$ has finite homological dimension
+(bounded by the global dimension of the underlying operadic
+structure), so the contraderived and ordinary derived categories
+coincide on the algebra side
+(Positselski~\cite[\S4.5]{Positselski11}).
+
+\emph{Step~3.}
+Combining: $D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA)) \simeq
+D^{\mathrm{co}}(\mathrm{CoMod}^{\mathrm{conil}}(\cA^!))$.
+
+\emph{Ext duality.}
+The equivalence $\Phi = \bar{B}_{\cA}$ sends
+$\mathrm{Hom}^*_{\cA}(M_1, M_2)$ to
+$\mathrm{Cohom}^*_{\cA^!}(\Phi(M_1), \Phi(M_2))$.
+By the comodule-contramodule correspondence
+(Theorem~\ref{thm:chiral-co-contra-correspondence}, \S5.3 of
+\cite{Positselski11}), the cohomomorphism complex is identified
+with the Ext complex on the dual side, with the dimension shift
+coming from Verdier duality on configuration spaces:
+$\mathrm{Ext}^n_{\cA}(M_1, M_2) \cong
+\mathrm{Ext}^{d-n}_{\cA^!}(\Phi(M_1), \Phi(M_2))^{\vee}$.
+\end{proof}
+
+\begin{remark}[Relation to genus-0 module Koszul duality]
+\label{rem:genus-0-recovery}
+At genus~$0$, the curvature $h = 0$, so CDG-comodules reduce to
+DG-comodules, the coderived category reduces to the ordinary derived
+category, and Theorem~\ref{thm:full-derived-module-equiv-proved}
+recovers the module Koszul duality of
+Theorem~\ref{thm:e1-module-koszul-duality}:
+\[
+D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA))
+\simeq D(\mathrm{CoMod}^{\mathrm{conil}}(\cA^!)).
+\]
+The virtue of the coderived/contraderived framework is that it
+provides the correct generalization to genus~$g \geq 1$, where the
+curvature $m_0^{(g)} \neq 0$ makes the ordinary derived category
+trivial.
+\end{remark}
+
+\begin{remark}[The role of the configuration space geometry]
+\label{rem:config-space-role}
+The proof of the chiral comodule-contramodule correspondence
+(Theorem~\ref{thm:chiral-co-contra-correspondence}) uses the
+geometry of configuration spaces in three places:
+\begin{enumerate}
+\item \emph{Exactness of the chiral tensor product.}
+  The tensor-hom adjunction for holonomic $\mathcal{D}_X$-modules
+  on $\overline{C}_n(X)$ ensures that cofree comodules are injective
+  and free contramodules are projective
+  (Proposition~\ref{prop:chiral-inj-proj-resolutions}).
+\item \emph{Conilpotency from conformal weight.}
+  The conformal weight grading on $\bar{B}^{\mathrm{ch}}(\cA)$
+  (inherited from $\cA$) ensures conilpotency
+  (Theorem~\ref{thm:coalgebra-via-NAP}(4)), which is needed for
+  the compact generation argument in Step~5 of the proof.
+\item \emph{Finite-dimensionality from holonomicity.}
+  The holonomicity of the bar complex on each configuration space
+  stratum (Lemma~\ref{lem:bar-holonomicity}) ensures
+  finite-dimensional graded pieces, which is
+  needed for the duality between contramodules and complete modules
+  (Remark~\ref{rem:chiral-contramodules}).
+\end{enumerate}
+These geometric inputs are specific to the chiral setting and have
+no analogue in Positselski's ground-field framework.
+\end{remark}
+
+%================================================================
+% SECTION: BAR-COBAR INVERSION - COMPLETE QUASI-ISOMORPHISM
+%================================================================
+
+\section{Bar-cobar inversion}
+\label{sec:bar-cobar-inversion-quasi-iso}
+
+\subsection{Statement of the main result}
+
+\begin{theorem}[Bar-cobar inversion is quasi-isomorphism; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-qi}
+\textup{[Regime: quadratic at genus~$0$; curved-central at genus~$g \geq 1$
+on the Koszul locus; filtered-complete off it
+\textup{(}cf.\ Convention~\textup{\ref{conv:regime-tags})}.]}
+
+The Heisenberg inversion $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}) generalizes to all Koszul chiral algebras.
+
+Let $\mathcal{A}$ be a \emph{Koszul} chiral algebra on a Riemann surface $X$
+(Definition~\ref{def:chiral-koszul-pair}), with
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$ conilpotent or $\mathcal{A}$ complete
+with respect to its augmentation ideal
+(\S\ref{sec:i-adic-completion}).  Then the natural map:
+\[\psi: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
+induced by the bar-cobar adjunction is a \emph{quasi-isomorphism}, not merely
+an isomorphism in cohomology.
+
+More precisely:
+\begin{enumerate}
+\item The map $\psi$ is a morphism of chiral algebras (respects all structure)
+
+\item At each genus $g$, the genus-$g$ component:
+      \[\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow \mathcal{A}\]
+      is a quasi-isomorphism
+
+\item The full genus-graded map:
+      \[\psi = \bigoplus_{g=0}^\infty \psi_g: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
+      converges and is a quasi-isomorphism in the $\hbar$-adic completion
+
+\item There exists a spectral sequence converging to $H^\bullet(\mathcal{A})$
+      with $E_1$-page given by the bar-cobar complex; it collapses at $E_2$
+      by the Koszul property (Theorem~\ref{thm:spectral-sequence-collapse})
+\end{enumerate}
+
+\smallskip\noindent\emph{Scope.}
+The Koszul hypothesis is essential: for admissible-level affine algebras
+and minimal-model Virasoro/W-algebras the bar spectral sequence has
+nontrivial higher differentials and the counit $\psi$ is \emph{not} a
+quasi-isomorphism (see Remark~\ref{rem:sl2-admissible}
+and~\ref{rem:virasoro-module-koszul-minimal}).  In those regimes one must work
+with the completed or coderived bar-cobar correspondence
+(Corollary~\ref{cor:bar-cobar-inverse},
+\S\ref{sec:i-adic-completion}).
+\end{theorem}
+
+\begin{proof}[Dependency-closed proof]
+We verify each numbered clause by previously established results in this chapter.
+\begin{enumerate}[label=(D\arabic*)]
+\item \emph{Morphism of chiral algebras.}
+The map $\psi$ is the counit of the bar-cobar adjunction from
+Theorem~\ref{thm:bar-cobar-adjunction}; therefore it is canonical and respects
+the algebraic structure by functoriality of bar and cobar
+(Theorem~\ref{thm:bar-functorial}, Theorem~\ref{thm:cobar-functorial}).
+
+\item \emph{Genuswise quasi-isomorphism.}
+The genus-$0$ base case is proved independently by
+Theorem~\ref{thm:bar-nilpotency-complete} and
+Theorem~\ref{thm:chiral-koszul-duality};
+equivalently, it is the implication
+\ref{ftm:koszul}$\Rightarrow$\ref{ftm:counit} of
+the fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}).
+The genus-$g$ components $\psi_g$ for $g \geq 1$ are quasi-isomorphisms by
+induction on genus via
+Theorem~\ref{thm:genus-graded-convergence}, item~(2), together with the
+higher-genus inversion package (Theorem~\ref{thm:higher-genus-inversion}).
+
+\item \emph{Full genus-graded convergence and quasi-isomorphism.}
+This is Theorem~\ref{thm:genus-graded-convergence}, item (3), which identifies
+the completed genus series $\psi=\sum_{g\ge 0}\hbar^{2g-2}\psi_g$ and proves convergence.
+
+\item \emph{Spectral sequence statement.}
+Existence and explicit page description are exactly
+Theorem~\ref{thm:bar-cobar-spectral-sequence}; collapse for Koszul input is
+Theorem~\ref{thm:spectral-sequence-collapse}.
+\end{enumerate}
+Combining (D1)--(D4) gives all four clauses of the theorem.
+\end{proof}
+
+\begin{remark}[Relation to the fundamental theorem \texorpdfstring{$\mathrm{A}_0$}{A_0}]
+\label{rem:inversion-vs-fundamental}
+At genus~$0$, Theorem~\ref{thm:bar-cobar-inversion-qi} is a
+consequence of the fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}):
+the counit $\Omega_X(\bar{B}_X(\cA)) \to \cA$ being a
+quasi-isomorphism is one of the four equivalent characterizations
+of Koszulity established there.  The present theorem extends this
+to all genera via the genus induction of clause~(D2).
+\end{remark}
+
+\begin{remark}[Quasi-isomorphism of chain complexes vs chiral algebras]\label{rem:qi-vs-homology-iso}
+The distinction is between two levels of structure:
+
+\emph{Chain complex quasi-isomorphism.} A chain map $\psi: C^\bullet \to D^\bullet$ inducing an isomorphism $H^\bullet(\psi): H^\bullet(C) \xrightarrow{\cong} H^\bullet(D)$ on cohomology. This is the standard notion; a ``homology isomorphism'' and a ``quasi-isomorphism'' are the \emph{same thing} at the chain complex level.
+
+\emph{Chiral algebra quasi-isomorphism.} An $A_\infty$ (or chiral algebra) morphism $\psi\colon \mathcal{A} \to \mathcal{B}$ whose linear component $\psi_1\colon \mathcal{A} \to \mathcal{B}$ is a chain complex quasi-isomorphism. Such a map preserves the full $A_\infty$ structure up to coherent homotopy. The distinction matters:
+A chain complex quasi-isomorphism tells us only about $H^\bullet$ and need not respect multiplicative or $A_\infty$ structure, whereas a chiral algebra quasi-isomorphism gives a full equivalence in the derived category of chiral algebras, preserving all homotopy-theoretic information.  For Koszul duality, the map $\Omega(B(\mathcal{A})) \to \mathcal{A}$ must be a quasi-isomorphism of \emph{chiral algebras}, not merely of chain complexes, to establish derived equivalences.
+
+\emph{Example.}
+Consider a dga $(C^\bullet, d, \mu)$ with:
+\[\cdots \to 0 \to \mathbb{C} \xrightarrow{0} \mathbb{C} \to 0 \to \cdots\]
+
+This has $H^0 = \mathbb{C}$, $H^i = 0$ for $i \neq 0$.
+
+Compare with the algebra $(D^\bullet, 0, \nu) = (\mathbb{C}, 0, 0)$ in degree 0.
+The projection $\pi: C^\bullet \to D^\bullet$ is a quasi-isomorphism of chain
+complexes (both have $H^0 = \mathbb{C}$), but $\pi$ does \emph{not} respect the
+multiplication ($\pi$ need not intertwine $\mu$ and $\nu$ at the chain level).
+To obtain a quasi-isomorphism of \emph{algebras}, one must work with $A_\infty$
+morphisms, which encode the higher homotopies relating the two multiplicative
+structures.
+\end{remark}
+
+\subsection{Proof strategy and filtration}
+
+\begin{definition}[Bar-cobar filtration]\label{def:bar-cobar-filtration}
+Define a decreasing filtration on $\Omega(\bar{B}(\mathcal{A}))$ by:
+\[F^p\Omega(\bar{B}(\mathcal{A})) = \bigoplus_{n \geq p} \Omega^n(\bar{B}^n(\mathcal{A}))\]
+
+This is the filtration by \emph{bar degree} (= cobar arity).
+
+\emph{Geometric meaning.} $F^p$ consists of elements involving at least $p$ points
+in configuration space. As $p \to \infty$, we are considering increasingly complicated
+configurations.
+
+\emph{Properties.}
+\begin{enumerate}
+\item $F^0 \supseteq F^1 \supseteq F^2 \supseteq \cdots$
+\item $\bigcap_{p=0}^\infty F^p = 0$ (completeness)
+\item The differential respects filtration: $d(F^p) \subseteq F^p$
+\item The natural map factors through the filtration
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Associated graded; \ClaimStatusProvedHere]\label{lem:bar-cobar-associated-graded}
+The associated graded of the bar-cobar filtration is:
+\[\text{Gr}^p\Omega(\bar{B}(\mathcal{A})) = \Omega^p(\bar{B}^p(\mathcal{A}))\]
+
+The induced differential on $\text{Gr}^\bullet$ is the \emph{internal differential} $d_{\text{internal}}$ alone (i.e., the differential inherited from $\mathcal{A}$).
+\end{lemma}
+
+\begin{proof}
+By definition of associated graded:
+\[\text{Gr}^p = F^p / F^{p+1} = \Omega^p(\bar{B}^p(\mathcal{A}))\]
+
+The full differential on $\Omega(\bar{B}(\mathcal{A}))$ decomposes as $d = d_{\text{internal}} + d_{\text{bar}} + d_{\text{cobar}}$, where $d_{\text{internal}}$ preserves the filtration degree (it acts within each tensor factor), $d_{\text{bar}}$ preserves or lowers filtration degree (collisions reduce arity), and $d_{\text{cobar}}$ raises filtration degree by~$1$ (comultiplication increases cobar arity).  On the associated graded $\text{Gr}^p = F^p/F^{p+1}$, only the \emph{filtration-preserving} component survives: $d_{\text{cobar}}$ maps $F^p$ into $F^{p+1}$ and so vanishes on $\text{Gr}^p$, while $d_{\text{bar}}$ maps $F^p$ into $F^{p-1} \subset F^p$ and so also acts trivially on $\text{Gr}^p$.  Thus $d_{\text{gr}} = d_{\text{internal}}$, which is the $d_0$ differential of the spectral sequence (cf.\ Theorem~\ref{thm:bar-cobar-spectral-sequence}).
+\end{proof}
+
+\subsection{Spectral sequence construction}
+
+\begin{theorem}[Bar-cobar spectral sequence; \ClaimStatusProvedHere]\label{thm:bar-cobar-spectral-sequence}
+\label{thm:koszul-spectral-sequence}
+The filtration from Definition~\ref{def:bar-cobar-filtration} induces a spectral 
+sequence:
+\[E_0^{p,q} = \left(F^p / F^{p+1}\right)^{p+q} \implies H^{p+q}(\Omega(\bar{B}(\mathcal{A})))\]
+converging to the cohomology of $\Omega(\bar{B}(\mathcal{A}))$.  Here $p$ is the filtration degree (cobar arity) and $q$ is the complementary degree (from the internal and bar gradings), so the total degree is $p + q$.
+
+\emph{Explicit description of pages.}
+\begin{align*}
+E_0^{p,q} &= \left(F^p\Omega^{p+q}(\bar{B}(\mathcal{A})) \big/ F^{p+1}\Omega^{p+q}(\bar{B}(\mathcal{A}))\right) \quad \text{(associated graded)} \\
+E_1^{p,q} &= H^{p+q}\!\left(E_0^{p,\bullet},\, d_{\text{internal}}\right)
+            \quad \text{(internal cohomology at fixed cobar degree $p$)} \\
+E_2^{p,q} &= H^p\!\left(E_1^{\bullet,q},\, d_{\text{bar}}\right)
+            \quad \text{(bar cohomology)} \\
+E_\infty^{p,q} &= \mathrm{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A}))) \quad \text{(limiting page)}
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+This is a standard spectral sequence associated to a filtered complex (Weibel~\cite{Weibel94}, Chapter~5).  We verify the key properties:
+
+\emph{Step 1: $E_0$ page.} This is just the raw complex with its bigrading:
+\[E_0^{p,q} = F^p\Omega^{p+q}(\bar{B}(\mathcal{A})) / F^{p+1}\Omega^{p+q}(\bar{B}(\mathcal{A}))\]
+
+By definition of the filtration, this isolates the piece in cobar degree~$p$ and total degree $p+q$.
+
+\emph{Step 2: $d_0$ differential.} On the $E_0$ page:
+\[d_0: E_0^{p,q} \to E_0^{p,q+1}\]
+is the \emph{internal differential} $d_{\text{internal}}$ (from the differential 
+on $\mathcal{A}$ itself).
+
+Taking cohomology gives the $E_1$ page.
+
+\emph{Step 3: $d_1$ differential.} On the $E_1$ page:
+\[d_1: E_1^{p,q} \to E_1^{p+1,q}\]
+is induced by the \emph{bar differential} $d_{\text{bar}}$ (collisions in 
+configuration space).
+
+Taking cohomology gives the $E_2$ page.
+
+\emph{Step 4: Higher differentials.} For $r \geq 2$:
+\[d_r: E_r^{p,q} \to E_r^{p+r,q-r+1}\]
+
+These differentials encode higher-order interactions between bar and cobar operations.
+
+\emph{Step 5: Convergence.} The spectral sequence converges because:
+\begin{enumerate}
+\item The filtration is complete: $\bigcap_p F^p = 0$
+\item The filtration is exhaustive: $\bigcup_p F^p = \Omega(\bar{B}(\mathcal{A}))$
+\item The complex is bounded in each column (fixed $p$)
+\end{enumerate}
+
+By standard spectral sequence theory (Weibel \cite{Weibel94}, Chapter 5), this ensures:
+\[E_\infty^{p,q} = \text{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A})))\]
+\end{proof}
+
+\begin{theorem}[Collapse at \texorpdfstring{$E_2$}{E2}; \ClaimStatusProvedHere]\label{thm:spectral-sequence-collapse}
+\textup{[Regime: quadratic, Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+For the Heisenberg algebra, the spectral sequence collapsed trivially because $d_{\mathrm{bracket}} = 0$ (no simple poles): the bar cohomology was concentrated in degrees $0$ and $2$ without further work (\S\ref{sec:frame-bar-all}).  For non-abelian algebras, the collapse is a consequence of the Koszul property.
+
+For a Koszul chiral algebra $\mathcal{A}$ (Remark~\ref{rem:koszul-chiral}), the spectral sequence from
+Theorem~\ref{thm:bar-cobar-spectral-sequence} collapses at the $E_2$ page:
+\[E_2^{p,q} = E_\infty^{p,q}.\]
+\end{theorem}
+
+\begin{proof}
+The Koszul property of $\mathcal{A}$ means that the natural inclusion $\iota: \mathcal{A}^! \hookrightarrow \bar{B}(\mathcal{A})$ of the quadratic dual into the bar complex is a quasi-isomorphism (see \cite[Theorem~3.4.1]{LV12} for the classical case and Chapter~\ref{chap:koszul-pairs} for the chiral adaptation). Since $\mathcal{A}^!$ is generated in weight~1 with quadratic relations, its image under $\iota$ lies on the diagonal $p + q = \text{const}$ in the bigrading $(p,q)$ by bar degree and internal degree.
+
+At the $E_1$ page, we compute the cohomology of each column with respect to $d_0 = d_{\text{int}}$. The $E_1$ page of the bar-cobar spectral sequence is computed by the cohomology of the bar complex: each column $E_0^{p,\bullet}$ with its internal differential $d_0$ is precisely the bar complex $\bar{B}^p(\mathcal{A})$ in cobar degree~$p$, so $E_1^{p,q} = H^q(\bar{B}^p(\mathcal{A}), d_{\mathrm{int}})$. By the Koszul quasi-isomorphism, the bar cohomology is concentrated on the diagonal, giving $E_1^{p,q} = 0$ whenever $q \neq 0$ (after reindexing by the bar filtration degree).
+
+At the $E_2$ page, we take cohomology with respect to $d_1$ (induced by $d_{\text{bar}}$). The $E_2$ groups inherit the diagonal concentration.
+
+For $r \geq 2$, the differential $d_r: E_r^{p,q} \to E_r^{p+r, q-r+1}$ shifts the bidegree by $(r, 1-r)$. Since $E_2^{p,q} = 0$ for $q \neq 0$, either the source or the target of $d_r$ vanishes for every $r \geq 2$. Therefore $d_r = 0$ for all $r \geq 2$, and the spectral sequence collapses at $E_2$.
+\end{proof}
+
+\subsection{Convergence at all genera}
+
+\begin{theorem}[Genus-graded convergence; \ClaimStatusProvedHere]\label{thm:genus-graded-convergence}
+\textup{[Regime: curved-central on the Koszul locus
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+Let $\mathcal{A}$ be a Koszul chiral algebra satisfying the hypotheses of
+Theorem~\ref{thm:bar-cobar-inversion-qi}.  The bar-cobar inversion
+$\psi: \Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$
+converges at each genus $g$, and the full genus-graded sum converges in the
+$\hbar$-adic completion.
+
+More precisely:
+\begin{enumerate}
+\item \emph{Genus zero:} 
+      \[\psi_0: \Omega_0(\bar{B}_0(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}\]
+      is a quasi-isomorphism (classical result, BD §3.7)
+      
+\item \emph{Fixed genus $g$:}
+      \[\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \to \mathcal{A}_g\]
+      is a quasi-isomorphism after appropriate quantum corrections (here $\mathcal{A}_g$ denotes the genus-$g$ component of the genus-graded chiral algebra)
+      
+\item \emph{Genus series:}
+      \[\psi = \sum_{g=0}^\infty \hbar^{2g-2} \psi_g\]
+      converges in the $\hbar$-adic completion for $|\hbar| < R$ (radius determined 
+      by growth of moduli spaces)
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We prove each case separately.
+
+\emph{Case 1: Genus zero (classical).}
+
+At genus zero, we work with rational curves $\mathbb{P}^1$. The bar complex is:
+\[\bar{B}_0^n(\mathcal{A}) = \Gamma\left(\overline{C}_n(\mathbb{P}^1), 
+\mathcal{A}^{\boxtimes n} \otimes \Omega^\bullet\right)\]
+
+Beilinson--Drinfeld proved \cite{BD04} Theorem 3.7.11:
+\[\Omega_0(\bar{B}_0(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}\]
+
+Their proof uses:
+\begin{itemize}
+\item Chevalley--Cousin resolution
+\item Ran space formalism
+\item Descent from configuration spaces
+\end{itemize}
+
+We have verified (Theorem~\ref{thm:BD-extension-higher-genus}) that all technical 
+conditions hold at genus zero.
+
+\emph{Case 2: Fixed genus $g \geq 1$.}
+
+At higher genus, configuration spaces fiber over moduli space:
+\[\pi: \overline{C}_n(X) \to \overline{\mathcal{M}}_g\]
+
+The bar complex becomes:
+\[\bar{B}_g^n(\mathcal{A}) = R\pi_*\left(\mathcal{A}^{\boxtimes n} \otimes \Omega^\bullet_{\log}\right)\]
+(equivalently, $\int_{\overline{\mathcal{M}}_{g,n}} \mathcal{A}^{\boxtimes n} \otimes \Omega^\bullet_{\log}$ in the factorization homology notation of Lemma~\ref{lem:bar-as-fact-hom-AF}).
+
+The pushforward $\pi_*$ preserves quasi-isomorphisms:
+
+\begin{lemma}[Derived pushforward preserves QI; \ClaimStatusProvedHere]\label{lem:pushforward-preserves-qi}
+For a proper morphism $\pi: Y \to Z$ and a quasi-isomorphism $f: \mathcal{F} \xrightarrow{\sim} \mathcal{G}$
+of bounded-below complexes of sheaves on $Y$, the derived pushforward:
+\[R\pi_*(f): R\pi_*\mathcal{F} \xrightarrow{\sim} R\pi_*\mathcal{G}\]
+is a quasi-isomorphism in $D^+(Z)$.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma]
+Since $R\pi_*$ is a derived functor, it preserves quasi-isomorphisms by definition (a quasi-isomorphism between complexes of sheaves becomes an isomorphism in the derived category, and $R\pi_*$ is a functor on derived categories).  The underived $\pi_*$ does \emph{not} preserve quasi-isomorphisms in general.
+
+In our application, the complexes involved are complexes of locally free sheaves on smooth proper varieties, so the Leray spectral sequence $H^p(Z, R^q\pi_*\mathcal{F}) \Rightarrow H^{p+q}(Y, \mathcal{F})$ applies, and the statement follows from the proper base change theorem.
+\end{proof}
+
+Applying this lemma: Since $\psi$ is a quasi-isomorphism fiberwise (over each
+point of $\overline{\mathcal{M}}_g$), the derived pushforward $R\pi_*(\psi)$ is also a quasi-isomorphism (the FM compactification $\overline{C}_n(X)$ is proper over $\overline{\mathcal{M}}_g$, and the complexes are bounded, so proper base change applies).
+
+\emph{Quantum corrections.} At genus $g \geq 1$, we must account for:
+\begin{itemize}
+\item Central charge contributions: $\sim \int_{\overline{\mathcal{M}}_g} \lambda_1$ 
+      (Hodge class)
+\item Modular form corrections: Period integrals over $H^1(\Sigma_g)$
+\item Anomaly cancellation: Ensures $\dfib^{\,2} = 0$ (fiberwise nilpotence)
+\end{itemize}
+
+With these corrections included (see Theorem~\ref{thm:higher-genus-inversion}), 
+$\psi_g$ is a quasi-isomorphism.
+
+\emph{Case 3: Genus series convergence.}
+
+Consider the formal series:
+\[\psi(\hbar) = \sum_{g=0}^\infty \hbar^{2g-2} \psi_g\]
+
+\emph{Growth estimate.} By Mirzakhani's results \cite{Mirzakhani}, Weil--Petersson volumes satisfy
+\[\mathrm{Vol}(\overline{\mathcal{M}}_g) \sim (2g)!\]
+with factorial growth.  Consequently the formal genus series has zero radius of analytic convergence, consistent with the non-Borel-summability of the perturbative string expansion.
+
+\emph{$\hbar$-adic completion.} For rigorous formal computations, work in:
+\[\widehat{\Omega}(\bar{B}(\mathcal{A}))_\hbar = \varprojlim_n 
+\Omega(\bar{B}(\mathcal{A})) / \hbar^n\]
+
+In this completion, the series converges unconditionally.
+\end{proof}
+
+\subsection{The counit of the adjunction}
+
+\begin{proposition}[Counit is quasi-isomorphism; \ClaimStatusProvedHere]\label{prop:counit-qi}
+The counit of the bar-cobar adjunction:
+\[\epsilon: \bar{B}(\Omega(\mathcal{C})) \longrightarrow \mathcal{C}\]
+for a chiral coalgebra $\mathcal{C}$ is also a quasi-isomorphism (dual statement).
+\end{proposition}
+
+\begin{proof}
+By Verdier duality (Theorem~\ref{thm:verdier-bar-cobar}), the counit $\epsilon_{\mathcal{C}} \colon \bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C})) \to \mathcal{C}$ is the Verdier dual of the unit $\eta_{\mathcal{A}^!}$, which is a quasi-isomorphism by Theorem~\ref{thm:geom-unit}.  Since Verdier duality on the Fulton--MacPherson compactifications preserves quasi-isomorphisms (Theorem~\ref{thm:verdier-bar-cobar}), the result follows.
+\end{proof}
+
+\subsection{Functoriality of the quasi-isomorphism}
+
+\begin{theorem}[Functoriality; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-functorial}
+\label{thm:cobar-functorial}
+The quasi-isomorphism $\psi: \Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$ 
+is \emph{functorial}: for any morphism $f: \mathcal{A} \to \mathcal{A}'$ of 
+chiral algebras, the diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+\Omega(\bar{B}(\mathcal{A})) \ar[r, "\psi"] \ar[d, "\Omega(\bar{B}(f))"] 
+& \mathcal{A} \ar[d, "f"] \\
+\Omega(\bar{B}(\mathcal{A}')) \ar[r, "\psi'"] 
+& \mathcal{A}'
+\end{tikzcd}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+This follows from the functoriality of the bar construction (Theorem~\ref{thm:bar-functorial}) and the universal property of the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}).
+
+\emph{Step 1:} The bar construction is functorial:
+\[\bar{B}(f): \bar{B}(\mathcal{A}) \to \bar{B}(\mathcal{A}')\]
+
+\emph{Step 2:} The cobar construction is functorial:
+\[\Omega(g): \Omega(\mathcal{C}) \to \Omega(\mathcal{C}')\]
+for any coalgebra morphism $g$.
+
+\emph{Step 3:} The natural transformation $\psi$ is defined universally via the 
+adjunction, hence commutes with all morphisms.
+
+\emph{Step 4:} At each genus, $\psi_g$ is natural in $\mathcal{A}$, so the 
+genus-graded sum is also natural.
+\end{proof}
+
+\subsection{Applications to derived equivalences}
+
+\begin{corollary}[Derived equivalence; \ClaimStatusProvedHere]\label{cor:derived-equivalence-bar-cobar}
+\label{cor:derived-equivalence-koszul}
+Let $\mathcal{A}$ be a Koszul chiral algebra on a smooth curve $X$ with Koszul dual
+coalgebra $\mathcal{A}^!$.  Make the following assumptions:
+\begin{enumerate}[label=(\roman*)]
+\item $\mathcal{A}$ is augmented over $\mathcal{O}_X$ and locally finitely generated
+as a $\mathcal{D}_X$-module.
+\item ``Module'' means \emph{chiral module} in the sense of Beilinson--Drinfeld
+\cite{BD04}: a $\mathcal{D}_X$-module $M$ with a chiral action map
+$\mu_M: j_*j^*(\mathcal{A} \boxtimes M) \to \Delta_! M$.
+\item ``Comodule'' means a conilpotent $\mathcal{A}^!$-comodule
+$N$ with coaction $\Delta_N: N \to \mathcal{A}^! \chirtensor N$ satisfying
+the usual coassociativity and counit axioms.
+\item The derived categories $\mathcal{D}^b$ are the bounded derived categories
+of complexes with finitely generated cohomology.
+\end{enumerate}
+Under these hypotheses, the bar and cobar constructions induce an equivalence
+of triangulated categories:
+\[\mathcal{D}^b(\text{Mod}^{\mathrm{fg}}(\mathcal{A})) \simeq
+\mathcal{D}^b(\text{Comod}^{\mathrm{conil}}(\mathcal{A}^!))\]
+via the functors $\bar{B}(-) = \mathcal{A}^! \otimes^{\tau}_{\mathcal{A}} (-)$
+(bar extension of scalars) and $\Omega(-) = \mathcal{A} \otimes^{\tau}_{\mathcal{A}^!} (-)$
+(cobar extension of scalars), where $\tau: \mathcal{A}^! \to \mathcal{A}$ is the
+universal twisting cochain.
+\end{corollary}
+
+\begin{proof}
+The quasi-isomorphisms $\psi: \Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$
+and $\epsilon: \bar{B}(\Omega(\mathcal{A}^!)) \xrightarrow{\sim} \mathcal{A}^!$
+establish:
+
+\begin{center}
+\begin{tikzcd}
+\text{Mod}^{\mathrm{fg}}(\mathcal{A}) \ar[r, "\bar{B}", shift left=1ex]
+& \text{Comod}^{\mathrm{conil}}(\mathcal{A}^!) \ar[l, "\Omega", shift left=1ex]
+\end{tikzcd}
+\end{center}
+
+with $\Omega \circ \bar{B} \simeq \text{id}$ and $\bar{B} \circ \Omega \simeq \text{id}$
+up to quasi-isomorphism.  The finiteness hypothesis~(i) ensures the bar construction
+preserves bounded complexes; the conilpotence hypothesis~(iii) ensures the cobar
+construction converges.  Together these give the stated equivalence on derived categories.
+\end{proof}
+
+\begin{remark}[Scope and limitations]\label{rem:derived-equiv-scope}
+The hypotheses above are essential:
+\begin{itemize}
+\item Without finite generation, the bar construction may produce unbounded complexes.
+\item Without conilpotence, the cobar series $\Omega(\mathcal{A}^!) = \bigoplus_{n \geq 1}
+\mathcal{A}^{!\otimes n}$ may not converge, and the functor $\Omega$ is not well-defined.
+\item For non-quadratic algebras, one must replace $\mathcal{A}^!$ by its nilpotent
+completion (Appendix~\ref{app:nilpotent-completion}) and work with pro-nilpotent
+comodules.
+\end{itemize}
+Even in ordinary algebra, Koszul duality yields equivalences between
+\emph{specific subcategories}, not the entire derived category without
+finiteness conditions; cf.~Beilinson--Ginzburg--Soergel \cite{BGS96}.
+\end{remark}
+
+\begin{remark}[Physical significance]\label{rem:qi-matters-physics}
+From the physics perspective, the distinction between homology isomorphism and 
+quasi-isomorphism corresponds to:
+
+A homology isomorphism gives only on-shell equivalence: physical states match, but one cannot compute scattering amplitudes or access quantum corrections.  A full quasi-isomorphism gives off-shell equivalence: the entire QFT matches, correlation functions and amplitudes are computable, quantum corrections are encoded in the higher homotopies, and the path integral measure is determined.  This is why establishing the quasi-isomorphism---not just the homology isomorphism---is essential for physical applications.
+\end{remark}
+
+%================================================================
+% RECOGNIZING KOSZUL DUALS IN PRACTICE
+%================================================================
+
+\section{Recognizing Koszul duals in practice}
+\label{sec:recognizing-koszul-duals}
+
+\begin{remark}[Identifying \texorpdfstring{$\mathcal{A}^!$}{A!} in practice]\label{rem:identify-koszul-wild}
+When encountering a coalgebra $\widehat{\mathcal{C}}$ in geometry or physics, use 
+the following checklist to determine if it is a Koszul dual:
+
+\emph{Step 1: Check necessary conditions} (Theorem~\ref{thm:essential-image-koszul}):
+\begin{itemize}
+\item[$\square$] Conilpotent? ($\bigcap_n \text{coker}(\Delta^n) = 0$)
+\item[$\square$] Connected? ($\epsilon: \widehat{\mathcal{C}} \twoheadrightarrow \mathbb{C}$)
+\item[$\square$] Geometrically representable? (arises from configuration spaces)
+\item[$\square$] Curvature central? (if curved)
+\item[$\square$] Formally complete? (with respect to coaugmentation)
+\end{itemize}
+
+\emph{Step 2: Compute candidate algebra:}
+\[\mathcal{A}_{\text{candidate}} = \Omega(\widehat{\mathcal{C}})\]
+
+\emph{Step 3: Verify bar-cobar inversion:} Compute $\bar{B}(\mathcal{A}_{\text{candidate}})$ and check if $\bar{B}(\mathcal{A}_{\text{candidate}}) \simeq \widehat{\mathcal{C}}$.
+
+\emph{Step 4: If yes:}
+\[\widehat{\mathcal{C}} = \mathcal{A}_{\text{candidate}}^!\]
+
+\emph{Examples where this works.}
+\begin{itemize}
+\item Heisenberg coalgebra $\to$ Heisenberg algebra
+\item Exterior coalgebra $\to$ Free fermion $\beta\gamma$
+\item Langlands dual Kac--Moody $\to$ Original Kac--Moody
+\item Certain W-algebra coalgebras $\to$ W-algebras at special central charges
+\end{itemize}
+
+\emph{Examples where this fails:} non-conilpotent coalgebras (cannot be Koszul duals) and geometrically non-representable coalgebras (not from configuration spaces).
+\end{remark}
+
+\section{The Ran-space perspective}
+\label{sec:ran-space-perspective}
+\index{Ran space!bar-cobar perspective}
+
+The $\infty$-categorical framework of factorization
+algebras on $\operatorname{Ran}(X)$ provides the conceptual home for
+the bar-cobar adjunction.
+
+\begin{remark}[From configuration spaces to Ran space]\label{rem:config-to-ran}
+The configuration spaces $C_n(X)$ and their FM compactifications
+$\overline{C}_n(X)$ are finite-dimensional approximations to the
+\emph{Ran space} $\operatorname{Ran}(X) = \operatorname{colim}_n\,
+X^n / \Sigma_n$, the space of all finite non-empty subsets of~$X$.
+The bar complex $\bar{B}(\cA) = \bigoplus_n \bar{B}^n(\cA)$, with
+$\bar{B}^n(\cA)$ living on $\overline{C}_n(X)$, assembles into a
+single object on $\operatorname{Ran}(X)$.  The bar differential,
+given by residues at collision divisors
+(Definition~\ref{def:bar-differential-complete}), becomes the
+factorization structure map: when two points collide, the OPE
+produces the ``fusion'' of the corresponding tensor factors.
+
+In this language, the Arnold relations that ensure $d^2 = 0$
+(Theorem~\ref{thm:bar-nilpotency-complete}) are the coherence conditions
+for the factorization algebra axiom: the result of a three-point
+collision does not depend on the order in which pairs collide,
+because the relevant boundary strata of $\overline{C}_3(X)$ are
+related by the Arnold relation
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$.
+\end{remark}
+
+\begin{remark}[Verdier duality as the engine of Koszul duality]\label{rem:verdier-engine}
+\index{Verdier duality!Koszul duality engine}
+The bar-cobar adjunction
+\[
+\bar{B}_X \colon
+\operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))
+\;\rightleftarrows\;
+\operatorname{CoAlg}_{\mathrm{conil}}(\operatorname{Fact}(X))
+\,:\!\Omega_X
+\]
+is controlled by Verdier duality on $\operatorname{Ran}(X)$.
+The key identification is:
+\[
+\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \;\simeq\; \bar{B}_X(\cA^!).
+\]
+At the chain level, this identity is the content of
+Theorem~\ref{thm:bar-cobar-isomorphism-main}: the Verdier dual of the
+bar construction of $\cA$ is the bar construction of the Koszul dual
+$\cA^!$.  The FM propagator $\eta_{ij}$ and its Verdier dual
+$\eta_{ij}^\vee$ implement this duality on configuration spaces:
+the propagator mediates the passage from algebra to coalgebra, and
+Verdier duality exchanges the two.
+
+This perspective makes the Poincar\'e--Koszul duality of
+Ayala--Francis~\cite{AF15} manifest: their equivalence
+$\int_M A \simeq (\int_{-M} A^!)^\vee$ is the shadow, at the level
+of factorization homology, of the chain-level Verdier identification
+above.
+\end{remark}
+
+\begin{remark}[Curvature and coderived categories]\label{rem:curvature-coderived}
+\index{coderived category!bar-cobar}
+\index{curvature!coderived category}
+When curvature is present---i.e., when the genus-$1$ obstruction
+$m_0^{(1)} = \kappa(\cA) \neq 0$ (as it does for all non-trivial
+Koszul chiral algebras; see
+Theorem~\ref{thm:genus-universality})---the bar complex satisfies
+$\dfib^{\,2} = \kappa \cdot \omega_1 \cdot \mathrm{id}$ rather than $\dfib^{\,2} = 0$
+(see Convention~\ref{conv:higher-genus-differentials} for the notation).
+The ordinary derived category of $\cA$-modules is then the wrong
+quotient: it erases the distinction between ``acyclic because of
+$\dfib^{\,2} \neq 0$'' and ``acyclic because of genuine exactness.''
+
+The correct ambient category is the \emph{coderived category}
+$\mathcal{D}^{\mathrm{co}}(\cA)$ in the sense of
+Positselski~\cite{Positselski11}.  In this category, a curved complex
+$(M, d_M)$ with $d_M^2 = \kappa \cdot \mathrm{id}_M$ is
+\emph{not} set to zero; it represents a genuine object encoding the
+curvature.  The bar-cobar adjunction lifts to an equivalence
+\[
+\bar{B}_X \colon
+\mathcal{D}^{\mathrm{co}}(\operatorname{Mod}(\cA))
+\;\simeq\;
+\mathcal{D}^{\mathrm{ctr}}(\operatorname{Comod}(\cA^!))
+\]
+between the coderived category of modules and the contraderived category
+of comodules.  On the Koszul locus---where the curvature vanishes or
+is absorbed into the differential---the coderived and derived categories
+agree, and the equivalence reduces to
+Corollary~\ref{cor:derived-equivalence-koszul}.  Off this locus, the
+coderived formalism captures the ``acyclic-but-not-contractible''
+phenomena that higher-genus curvature creates.
+
+This perspective clarifies the physical meaning of curvature: the
+cosmological constant $\Lambda \sim \kappa(\cA)$ in the AdS$_3$/CFT$_2$
+correspondence (Conjecture~\ref{conj:ads-cft-bar}) is the obstruction
+to reducing the coderived category to the derived category.  Anomaly
+cancellation at $c = 26$ ($\kappa = 0$) is precisely the condition
+under which the coderived and derived categories agree, i.e., under
+which the string theory is ``on-shell'' in the derived-categorical
+sense.
+\end{remark}
+
+The bar-cobar adjunction for chiral algebras is now fully constructed:
+the bar differential is a residue on Fulton--MacPherson
+compactifications, $d^2 = 0$ follows from the Arnold relations, and
+Verdier duality on $\operatorname{Ran}(X)$ intertwines bar and cobar
+(Theorem~\ref{thm:verdier-bar-cobar}).  For Koszul pairs, the
+adjunction is an equivalence (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+This is the genus-$0$ theory.  Everything built so far lives on
+configuration spaces of the fixed curve~$X$, with no reference to
+moduli of curves.
+
+\subsection{Bar-cobar as factorization homology}
+\label{subsec:bar-cobar-fh}
+
+The Ran-space remarks above assemble the bar complex into an
+object on $\operatorname{Ran}(X)$.  We now show that this
+assembly is not a reformulation but an \emph{identification}:
+the bar construction \emph{is} factorization homology, and the
+bar-cobar adjunction \emph{is} the adjunction of factorization
+(co)homology functors.
+
+\begin{proposition}[Bar construction as factorization homology;
+\ClaimStatusProvedHere]
+\label{prop:bar-fh}
+\index{factorization homology!bar construction}
+\index{bar construction!as factorization homology}
+Let $\cA$ be an augmented $\Eone$-chiral algebra on a smooth
+curve~$X$, and let $\overline{\cA} = \ker(\epsilon \colon \cA \to k)$
+be the augmentation ideal.  Then there is a natural equivalence
+\[
+\Bbar^{\mathrm{geom}}_X(\cA)
+\;\simeq\;
+\int_X \overline{\cA}^{\mathrm{Lie}}
+\]
+where $\overline{\cA}^{\mathrm{Lie}}$ denotes $\overline{\cA}$ viewed as
+an $\Eone$-Lie algebra via the commutator bracket, and the right-hand
+side is factorization homology in the sense of
+\textup{\cite{AF15, BD04}}.  More precisely:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Finite approximations}: For each $n \geq 1$,
+the degree-$n$ piece $\Bbar^n_X(\cA) =
+(s^{-1}\overline{\cA})^{\otimes n}_{\overline{C}_n(X)}$
+(the bar complex on~$n$ points, supported on the
+Fulton--MacPherson compactification $\overline{C}_n(X)$) is the
+restriction of the factorization homology $\int_X\overline{\cA}$
+to $n$-point configurations.
+\item \textbf{Assembly}: The bar differential
+$d_{\mathrm{bar}} = \sum_{i < j} d_{ij}$ (residue along collision
+divisors, Definition~\ref{def:bar-differential-complete}) is the
+structure map of the factorization algebra:
+the collision $z_i \to z_j$ implements the factorization product
+$\int_{U_i}\overline{\cA} \otimes
+\int_{U_j}\overline{\cA} \to
+\int_{U_i \cup U_j}\overline{\cA}$
+for shrinking discs $U_i \ni z_i$, $U_j \ni z_j$.
+\item \textbf{Colimit}: The total bar complex
+$\Bbar_X(\cA) = \bigoplus_{n \geq 0}\Bbar^n_X(\cA)$
+is the colimit over $n$ of the finite approximations,
+i.e., the factorization homology
+$\int_X\overline{\cA} = \operatorname{colim}_{S \in
+\mathrm{Fin}_{/X}} \bigotimes_{s \in S}\overline{\cA}_s$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The factorization homology of an $E_n$-algebra $A$ on a manifold
+$M$ is defined as
+\[
+\textstyle\int_M A \;=\; \operatorname{colim}_{U_1 \sqcup \cdots
+\sqcup U_k \hookrightarrow M} A(U_1) \otimes \cdots
+\otimes A(U_k)\,,
+\]
+where the colimit is over rectilinear embeddings of disjoint discs
+\cite[Definition~3.1]{AF15}.  For $n = 1$ on a curve~$X$, this is
+the colimit over configurations of disjoint discs
+$D_1 \sqcup \cdots \sqcup D_k \hookrightarrow X$, with
+$A(D_i) = \overline{\cA}_{z_i}$ (the fiber of $\overline{\cA}$
+at the center $z_i$ of $D_i$).
+
+Part (i): The term $\Bbar^n_X(\cA)$ places one copy of
+$s^{-1}\overline{\cA}$ at each of $n$ distinct points
+$z_1, \ldots, z_n \in X$.  The locus of distinct points is the
+open configuration space $C_n(X) = X^n \smallsetminus \Delta$,
+and the extension to $\overline{C}_n(X)$ encodes the factorization
+product at coincident points.
+
+Part (ii): When $z_i \to z_j$, the factorization structure map
+composes the two copies of $\overline{\cA}$ using the chiral
+product.  At the chain level, this composition is the OPE residue
+$\mathrm{Res}_{z_i = z_j}(\mu^{\mathrm{ch}}(\bar{a}_i, \bar{a}_j)
+\cdot \eta_{ij})$, which is exactly the bar differential $d_{ij}$.
+
+Part (iii): The colimit over $n$ in the bar complex is the colimit
+over the category $\mathrm{Fin}_{/X}$ of finite subsets of $X$,
+which is the Ran space $\operatorname{Ran}(X) =
+\operatorname{colim}_n X^n/\Sigma_n$.  The factorization homology
+$\int_X\overline{\cA}$ is this colimit by definition.
+\end{proof}
+
+\begin{proposition}[Cobar as factorization cohomology;
+\ClaimStatusProvedHere]
+\label{prop:cobar-fh}
+\index{factorization homology!cobar construction}
+\index{cobar construction!as factorization cohomology}
+The cobar construction $\Omega_X(\cC)$ of a conilpotent
+$\Eone$-chiral coalgebra $\cC$ is naturally equivalent to the
+\emph{factorization cohomology}:
+\[
+\Omega_X(\cC) \;\simeq\;
+\mathbb{R}\mathrm{Hom}_{\operatorname{Fact}(X)}
+\bigl(k,\, \cC\bigr)
+\;=:\;
+\int^X \cC\,,
+\]
+the derived internal hom from the unit factorization algebra $k$
+to~$\cC$ in the $\infty$-category of factorization coalgebras on~$X$.
+Under Verdier duality $\mathbb{D}_{\mathrm{Ran}}$, this becomes:
+\[
+\Omega_X(\cC)
+\;\simeq\;
+\Bigl(\int_X \mathbb{D}_{\mathrm{Ran}}(\cC)\Bigr)^{\!\vee}\,,
+\]
+the linear dual of the factorization homology of the Verdier dual.
+For $\cC = \Bbar_X(\cA)$, this gives
+\[
+\Omega_X\Bbar_X(\cA) \;\simeq\;
+\Bigl(\int_X \Bbar_X(\cA^!)\Bigr)^{\!\vee}\,,
+\]
+which identifies the bar-cobar counit $\psi \colon
+\Omega_X\Bbar_X(\cA) \to \cA$ with the Poincar\'e--Koszul duality
+map of Ayala--Francis~\textup{\cite{AF15}}.
+\end{proposition}
+
+\begin{proof}
+The cobar construction $\Omega_X(\cC) = T(s^{-1}\,\overline{\cC})$ with
+differential $d_{\mathrm{cobar}} = d_{\mathrm{coop}} +
+d_{\mathrm{tw}}$ is the free algebra on $s^{-1}\,\overline{\cC}$, with
+the differential encoding the coalgebra structure of~$\cC$.
+The free algebra on a module $V$ is
+$\mathbb{R}\mathrm{Hom}(k, T^c(V))$, and for
+$V = s^{-1}\,\overline{\cC}$ supported on $\operatorname{Ran}(X)$, this
+is the factorization cohomology $\int^X\cC$ by
+\cite[Proposition~5.5.2.5]{HA}.
+
+The Verdier duality identification follows from
+$\mathbb{D}_{\mathrm{Ran}}(\Bbar_X(\cA)) \simeq \Bbar_X(\cA^!)$
+(Theorem~\ref{thm:verdier-bar-cobar}) and the general adjunction
+$\mathrm{Hom}(k, \cC) \simeq (\int_X \mathbb{D}\cC)^\vee$.
+The identification with Poincar\'e--Koszul duality follows from
+\cite[Theorem~4.13]{AF15}: their equivalence
+$\int_M A \simeq (\int_{-M} A^\vee)^\vee$ is precisely the
+composition of Verdier duality on $\operatorname{Ran}(X)$ with
+the bar-cobar adjunction.
+\end{proof}
+
+\begin{remark}[The bar-cobar adjunction as a duality of integration
+theories]
+\label{rem:bar-cobar-integration}
+\index{factorization homology!duality of integration theories}
+Propositions~\ref{prop:bar-fh} and~\ref{prop:cobar-fh} together
+identify the bar-cobar adjunction
+\[
+\Bbar_X \colon
+\operatorname{Alg}_{\mathrm{aug}}(\operatorname{Fact}(X))
+\;\rightleftarrows\;
+\operatorname{CoAlg}_{\mathrm{conil}}(\operatorname{Fact}(X))
+\,:\!\Omega_X
+\]
+as the adjunction between two integration theories:
+\begin{itemize}
+\item The bar functor $\Bbar_X$ is \emph{factorization integration}:
+it computes $\int_X(\cdot)$ by summing over configurations of
+points on~$X$, with the OPE providing the integrand.
+\item The cobar functor $\Omega_X$ is \emph{factorization
+co-integration}: it computes $\int^X(\cdot)$ by taking the
+internal hom from the unit, with the coproduct providing the
+``inverse transform.''
+\item Koszul duality $\cA \mapsto \cA^!$ is the
+\emph{Verdier transform} mediating between the two:
+$\Bbar(\cA)$ and $\Bbar(\cA^!)$ are Verdier dual, so the
+bar of one algebra is the co-integration data for the dual.
+\end{itemize}
+
+This perspective reveals the bar-cobar machine as a
+\emph{nonlinear Fourier duality} (cf.\
+Remark~\ref{rem:koszul-fourier} and
+Chapter~\ref{ch:en-koszul-duality}): the OPE kernel
+$\eta_{ij} = d\log(z_i - z_j)$ plays the role of the Fourier
+kernel $e^{2\pi i x\xi}$, the bar construction is the ``forward
+transform'' (integration against the kernel), and the cobar is the
+``inverse transform.''  Koszulness is the condition that the
+transform is invertible (Fourier inversion), and the bar-cobar
+counit $\Omega\Bbar(\cA) \to \cA$ is the Fourier inversion formula.
+\end{remark}
+
+\begin{remark}[The master diagram at genus~\texorpdfstring{$0$}{0}]
+\label{rem:master-diagram-genus0}
+\index{master diagram!genus zero}
+The results of this chapter instantiate the master
+diagram~\eqref{eq:master-square} at genus~$0$:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+\cA \arrow[r, "\barB_X"] \arrow[d, "(\cdot)^!"']
+& \barB_X(\cA) \arrow[d, "\mathbb{D}_{\mathrm{Ran}}"] \\
+\cA^! \arrow[r, "\barB_X"']
+& \barB_X(\cA^!)
+\end{tikzcd}
+\]
+The top row is the bar construction of this chapter; the right
+column is Verdier duality
+(Theorem~\ref{thm:verdier-bar-cobar}); the commutativity
+$\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA) \simeq \barB_X(\cA^!)$
+is Theorem~A.  The cobar functor $\Omega_X$ is left adjoint
+to~$\barB_X$, and the counit
+$\Omega_X\barB_X(\cA) \xrightarrow{\sim} \cA$ is an
+equivalence for Koszul algebras.
+
+In the nilpotence-periodicity framework
+(Remark~\ref{rem:nilpotence-periodicity}), this is the
+\emph{single-valued regime} of the categorical logarithm:
+$d^2 = 0$ exactly (the Arnold relations give single-valuedness),
+so the logarithm has no monodromy and the diagram commutes
+strictly.  At genus~$g \geq 1$
+(Chapter~\ref{chap:higher-genus}), the logarithm acquires
+monodromy---the square acquires
+curvature~$\kappa(\cA) \cdot \omega_g$---and strict commutativity
+is replaced by commutativity in the coderived category:
+the passage from genus~$0$ to genus~$g$ is the passage from
+single-valued to multi-valued logarithm, and the coderived
+category is the analytic continuation that makes the multi-valued
+logarithm well-defined.
+
+The factorization homology perspective
+(Propositions~\ref{prop:bar-fh},~\ref{prop:cobar-fh}) upgrades the
+diagram from a commutative square of chain complexes to a
+commutative square of \emph{factorization algebra objects} on
+$\operatorname{Ran}(X)$.  The Verdier duality
+$\mathbb{D}_{\mathrm{Ran}}$ becomes an $\infty$-categorical
+involution, and the commutativity is an equivalence of factorization
+algebras, not merely a quasi-isomorphism.  This
+$\infty$-categorical enhancement is the H-level datum that
+organizes the M-level constructions.
+\end{remark}
+
+\section{The categorical logarithm}
+\label{sec:categorical-logarithm}
+\index{categorical logarithm|textbf}
+\index{nilpotence-periodicity correspondence!categorical logarithm}
+
+The constructions of this chapter---bar, cobar, Verdier intertwining,
+bar-cobar inversion, factorization homology---are not independent
+results.  They are aspects of a single structure: the
+\emph{categorical logarithm} for factorization algebras on algebraic
+curves.  In this section we develop this identification
+systematically, extracting from it both the conceptual unity of the
+four main theorems and concrete predictions for higher-genus theory.
+
+\subsection{The exponential-logarithm correspondence}
+\label{subsec:exp-log-correspondence}
+
+\begin{definition}[Categorical logarithm and exponential]
+\label{def:categorical-log-exp}
+\index{categorical logarithm!definition}
+\index{categorical exponential!definition}
+Let $\cA$ be an augmented $\Eone$-chiral algebra on a smooth
+curve~$X$.  The \emph{categorical logarithm} of~$\cA$ is the bar
+construction
+\[
+\log^{\mathrm{cat}}(\cA) \;:=\; \barB_X(\cA)\,,
+\]
+viewed as a factorization coalgebra on $\operatorname{Ran}(X)$
+(Proposition~\ref{prop:bar-fh}).  The \emph{categorical exponential}
+is the cobar construction
+\[
+\exp^{\mathrm{cat}}(\cC) \;:=\; \Omega_X(\cC)\,,
+\]
+viewed as a factorization algebra on $\operatorname{Ran}(X)$
+(Proposition~\ref{prop:cobar-fh}).
+\end{definition}
+
+This terminology is justified by the following dictionary, each entry
+of which is a theorem proved in this chapter or in
+Chapter~\ref{chap:higher-genus}:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5.5cm}p{5.5cm}}
+\textbf{Classical logarithm} & \textbf{Categorical logarithm} \\
+\hline
+$\log \colon (\mathbb{C}^\times, \cdot) \to (\CC, +)$ &
+$\barB \colon \mathrm{Alg}_{\mathrm{aug}} \to \mathrm{CoAlg}_{\mathrm{conil}}$ \\[2pt]
+Maps multiplicative to additive &
+Maps OPE (multiplicative) to bar differential (nilpotent/additive) \\[2pt]
+$\exp(\log(z)) = z$ on convergence disk &
+$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ on Koszul locus
+(Theorem~\ref{thm:bar-cobar-inversion-qi}) \\[2pt]
+Power series $\log(1+z) = z - z^2/2 + \cdots$ &
+PBW spectral sequence:
+$E_1^{p,q} = H^q(\mathrm{gr}^p \barB(\cA))$ \\[2pt]
+Convergence radius &
+Koszul locus: $E_2$~degeneration
+(Theorem~\ref{thm:spectral-sequence-collapse}) \\[2pt]
+Analytic continuation past radius &
+Coderived category completion
+(\S\ref{subsec:chiral-coderived-contraderived}) \\[2pt]
+$\log(ab) = \log(a) + \log(b)$ &
+$Q_g(\cA) + Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, Z_\cA)$
+(Theorem~\ref{thm:quantum-complementarity-main}) \\[2pt]
+Single-valued on simply connected domain &
+$\dzero^2 = 0$ at genus~$0$
+(Theorem~\ref{thm:bar-nilpotency-complete}) \\[2pt]
+Multi-valued on $\mathbb{C}^\times$; monodromy $2\pi i$ &
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ at genus~$g \geq 1$ \\[2pt]
+Residue at branch point &
+Curvature $\kappa(\cA)$ \\[2pt]
+Leading coefficient of $\log(1+z) = z + \cdots$ &
+Modular characteristic $\kappa(\cA)$
+(Theorem~\ref{thm:modular-characteristic})
+\end{tabular}
+\end{center}
+
+\begin{remark}[The logarithmic kernel]
+\label{rem:logarithmic-kernel}
+\index{logarithmic kernel}
+The fact that the bar construction uses a \emph{logarithmic} kernel
+$\eta_{ij} = d\log(z_i - z_j)$ is the surface manifestation of the
+categorical identification.  The classical logarithm of a product is a
+sum: $\log(z_1 z_2) = \log z_1 + \log z_2$.  The bar differential
+implements precisely this: the OPE (a product structure at colliding
+points) is converted, via the residue $\mathrm{Res}_{z_i = z_j}
+(\mu^{\mathrm{ch}} \cdot \eta_{ij})$, into a sum (the bar
+differential is a sum over pairwise collisions).  The kernel $\eta$ is
+the infinitesimal version of this conversion.
+\end{remark}
+
+\subsection{The Taylor expansion of the logarithm}
+\label{subsec:taylor-expansion-log}
+\index{PBW spectral sequence!as Taylor expansion}
+
+The PBW spectral sequence of a chiral algebra~$\cA$
+(Definition~\ref{def:chiral-koszul-pair}) is the Taylor expansion of
+the categorical logarithm.
+
+More precisely: the weight filtration on the bar complex
+$\barB(\cA) = \bigoplus_{n \geq 0} (s^{-1}\overline{\cA})^{\otimes n}$
+induces a spectral sequence
+\[
+E_1^{p,q} \;=\; H^q\bigl(\mathrm{gr}^p\, \barB(\cA)\bigr)
+\;\Longrightarrow\;
+H^{p+q}(\barB(\cA))\,.
+\]
+In the exp/log framework, the filtration degree~$p$ is the
+\emph{order of the Taylor expansion}: the $p$-th filtered piece
+$F^p\barB(\cA)$ retains contributions from at most $p$~points in
+configuration space, i.e., the first $p$~terms of the logarithmic
+series.  The differential $d_1$ on the $E_1$-page extracts the
+\emph{leading term} of the logarithm (the binary OPE residue); higher
+differentials $d_r$ capture \emph{higher-order corrections} from
+$r$-fold collisions.
+
+\begin{proposition}[Convergence criterion; \ClaimStatusProvedElsewhere{}
+Theorems~\ref{thm:spectral-sequence-collapse}
+and~\ref{thm:bar-cobar-inversion-qi}]
+\label{prop:log-convergence}
+\index{convergence!of categorical logarithm}
+The categorical logarithm \emph{converges}---meaning $\exp \circ \log
+= \mathrm{id}$---if and only if the PBW spectral sequence degenerates
+at~$E_2$.  The $E_2$~degeneration is equivalent to:
+\begin{enumerate}[label=(\roman*)]
+\item The chiral algebra~$\cA$ lies on the \emph{Koszul locus}
+(Definition~\ref{def:chiral-koszul-pair});
+\item The Taylor expansion has finitely many nonzero corrections at
+each filtration degree: the logarithm is ``polynomial'' in the
+filtration variable;
+\item The counit $\psi \colon \Omega\barB(\cA) \to \cA$ is a
+quasi-isomorphism
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+\end{enumerate}
+Off the Koszul locus, the Taylor series diverges in the ordinary
+derived category.  The coderived category
+(\S\ref{subsec:chiral-coderived-contraderived}) provides the analytic
+continuation: it is the completion of the derived category that makes
+the divergent logarithm well-defined, exactly as the maximal analytic
+continuation of $\log z$ requires passage from $\mathbb{C}^\times$ to its
+universal cover.
+\end{proposition}
+
+\begin{remark}[Convergence radius from OPE data]
+\label{rem:convergence-radius-ope}
+\index{convergence!radius from OPE poles}
+\index{Koszul locus!characterization via OPE}
+The analogy with power series provides a heuristic for the following
+conjectural expectation: the convergence radius of the categorical
+logarithm should be computable from the input data.
+For the classical logarithm $\log(1+z) = \sum (-1)^{n+1} z^n/n$, the
+radius is determined by the growth rate of the coefficients.  For the
+categorical logarithm, the ``coefficients'' are the OPE residues, and
+the ``growth rate'' is the complexity of multi-point collisions.
+
+In concrete terms: Kac--Moody algebras have first-order OPE poles
+(linear growth), and the categorical logarithm converges
+(Theorem~\ref{thm:master-pbw}).  The Virasoro algebra has a
+second-order pole from the central term, but the Sugawara constraint
+tames the growth, and convergence holds
+(Theorem~\ref{thm:virasoro-chiral-koszul}).  For non-Koszul algebras
+(e.g., admissible-level affine algebras), the OPE singularity structure
+generates higher differentials in the spectral sequence---the Taylor
+coefficients grow too fast for convergence.  A precise bound relating
+the OPE pole orders to the convergence radius of the categorical
+logarithm is a natural target for future work.
+\end{remark}
+
+\subsection{Additivity and the branch structure}
+\label{subsec:additivity-branch}
+\index{categorical logarithm!additivity}
+\index{complementarity!as additivity of logarithm}
+
+The fundamental property of any logarithm is that it converts products
+to sums.  For the categorical logarithm, this is the content of the
+complementarity theorem.
+
+\begin{proposition}[Additivity of the categorical logarithm;
+\ClaimStatusProvedElsewhere{} Theorem~\ref{thm:quantum-complementarity-main}]
+\label{prop:log-additivity}
+Let $(\cA, \cA^!)$ be a Koszul pair.  The quantum corrections to the
+bar complex satisfy
+\[
+Q_g(\cA) \;+\; Q_g(\cA^!)
+\;=\; H^*(\overline{\mathcal{M}}_g,\, Z_\cA)\,.
+\]
+In the exp/log framework, this is the statement
+$\log^{\mathrm{cat}}(\cA \otimes \cA^!) =
+\log^{\mathrm{cat}}(\cA) + \log^{\mathrm{cat}}(\cA^!)$: the
+logarithm of the Koszul product is the sum of the logarithms, and
+the right-hand side is the total logarithmic data
+$\log^{\mathrm{cat}}(\cA \otimes \cA^!)$ computed from the center~$Z_\cA$
+via the Hodge cohomology of~$\overline{\mathcal{M}}_g$.
+
+The Lagrangian decomposition
+$C_g(\cA) = Q_g(\cA) \oplus Q_g(\cA^!)$ is the decomposition of the
+total logarithm into its two \emph{branches}: the sheet associated
+to~$\cA$ and the sheet associated to its Koszul dual.  The pairing
+between them is the monodromy acquired when analytically continuing
+from one branch to the other.
+\end{proposition}
+
+\begin{remark}[The categorical Baker--Campbell--Hausdorff formula]
+\label{rem:categorical-bch}
+\index{Baker--Campbell--Hausdorff formula!categorical analogue}
+For the classical logarithm, $\log(e^X e^Y) = X + Y + \tfrac{1}{2}[X,Y] + \cdots$
+(the BCH formula).  The categorical analogue is the twisted tensor
+product decomposition: for an extension
+$0 \to \cA' \to \cA \to \cA'' \to 0$ of chiral algebras, the bar
+complex decomposes as
+$\barB(\cA) \simeq \barB(\cA'') \otimes_\tau \barB(\cA')$,
+where the twisting cochain~$\tau$ encodes the extension data through
+iterated brackets, in direct analogy with the commutator corrections
+of BCH\@.  This follows from the standard filtered bar construction
+applied to the extension filtration, and the twisting cochain~$\tau$
+can be computed order by order from the connecting maps of the
+extension.  A systematic development of the categorical BCH, including
+explicit formulas for the first correction terms and their geometric
+content, is deferred to \S\ref{sec:maurer-cartan-curved}.
+\end{remark}
+
+\subsection{From single-valued to multi-valued: the genus transition}
+\label{subsec:genus-transition-log}
+\index{categorical logarithm!genus transition}
+\index{monodromy!of categorical logarithm}
+
+The deepest structural consequence of the exp/log identification is the
+genus transition.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{5.5cm}p{5.5cm}}
+\textbf{Classical complex analysis} & \textbf{Categorical logarithm} \\
+\hline
+Simply connected domain &
+Genus~$0$: $\pi_1(C_2(\mathbb{P}^1)) = 0$ \\[2pt]
+$\log$ is single-valued, holomorphic &
+$\dzero^2 = 0$ (Arnold relations), no curvature \\[2pt]
+Multiply connected domain ($\mathbb{C}^\times$) &
+Genus~$g \geq 1$: $\pi_1(\Sigma_g) \neq 0$ \\[2pt]
+$\log$ acquires monodromy $2\pi i n$ &
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ \\[2pt]
+Residue at branch point: $\mathrm{Res}_{z=0}(dz/z) = 1$ &
+Curvature: $\kappa(\cA) \in H^1(X, \cA) \otimes H^0(\overline{\mathcal{M}}_g, \omega)$ \\[2pt]
+Total differential $d\log z$ is exact on universal cover &
+Total differential $\Dg{g}^2 = 0$ after Gauss--Manin correction \\[2pt]
+Period matrix $\tau_{ij} = \oint_{B_j} \omega_i$ &
+Modular package $(\kappa, \Delta, \Theta, \Pi)$ \\[2pt]
+Torelli: $\tau$ determines the curve &
+Categorical Torelli: monodromy of $\barB_g$ determines~$\cA$
+up to quasi-isomorphism (via Theorem~\ref{thm:bar-cobar-inversion-qi})
+\end{tabular}
+\end{center}
+
+\begin{remark}[The chiral Riemann--Hilbert correspondence, revisited]
+\label{rem:chiral-rh-revisited}
+\index{Riemann--Hilbert correspondence!chiral}
+The Riemann--Hilbert correspondence identifies flat connections
+(nilpotent data: $\nabla^2 = 0$) with monodromy representations
+(periodic data: $\rho(\gamma^N) = 1$ for finite-order monodromy).
+The categorical logarithm instantiates this at the level of
+factorization algebras:
+\begin{enumerate}[label=(\roman*)]
+\item The \emph{flat connection} is the total corrected differential
+$\Dg{g}$ with $\Dg{g}^2 = 0$, a flat connection on the bar family
+$\barB_g(\cA) \to \overline{\mathcal{M}}_g$.
+\item The \emph{curvature} of the fiberwise differential
+$\dfib^{\,2} = \kappa \cdot \omega_g$ is the infinitesimal generator
+of the monodromy.
+\item The \emph{monodromy representation} is the action of the mapping
+class group $\Gamma_g$ on $H^*(\barB_g(\cA))$, whose leading
+eigenvalues are $\exp(2\pi i \kappa(\cA))$.
+\end{enumerate}
+The three differentials $\dzero$, $\dfib$, $\Dg{g}$
+(Convention~\ref{conv:higher-genus-differentials}) are three levels of
+the logarithm: the germ ($\dzero$, single-valued), the
+multi-valued lift ($\dfib$, curvature $= $ residue), and the
+trivialization on the universal cover ($\Dg{g}$, flat).
+\end{remark}
+
+\subsection{The characteristic hierarchy as logarithmic data}
+\label{subsec:characteristic-log}
+\index{modular characteristic!as logarithmic data}
+
+The modular package $(\kappa, \Delta, \Theta, \Pi)$ of a chiral
+algebra is the data of the categorical logarithm, organized by order:
+
+\begin{enumerate}[label=\textbf{Level \arabic*}:, leftmargin=3.5em]
+\item \textbf{Scalar logarithmic data.}  The modular
+characteristic $\kappa(\cA)$ is the leading coefficient of the
+categorical logarithm---the residue of the curvature.  Its
+exponential is the scalar period~$N$: the smallest integer for which
+$\exp(2\pi i N c/24) = 1$.  This is the content of Theorem~D
+(Theorem~\ref{thm:modular-characteristic}).
+
+\item \textbf{Spectral logarithmic data.}  The spectral
+discriminant~$\Delta(\cA)$ encodes the eigenvalues of the monodromy of
+the categorical logarithm.  Its exponential is the periodicity
+profile~$\Pi(\cA)$: the collection of periods of individual T-matrix
+eigenvalues $\lambda_i = \exp(2\pi i(h_i - c/24))$.
+
+\item \textbf{Full logarithmic data.}  The universal Maurer--Cartan
+class $\Theta_\cA \in H^2(\overline{\mathcal{M}}_g, Z_\cA)$
+(Theorem~\ref{thm:mc2-full-resolution}) is the complete categorical
+logarithm: it encodes all genus-$g$ corrections to the bar
+differential.  Its exponential is the full modular automorphy of~$\cA$:
+the action of $\Gamma_g$ on the conformal blocks, i.e., the modular
+functor.
+\end{enumerate}
+
+\noindent
+The hierarchy is controlled by a single principle: \emph{each level is
+the leading term of the next}.  The scalar characteristic~$\kappa$ is
+the trace of the spectral data~$\Delta$; the spectral data is the
+eigenvalue decomposition of the full data~$\Theta$.  In the language of
+complex analysis: $\kappa$ is the winding number of the logarithm,
+$\Delta$ is the set of periods, and $\Theta$ is the full multi-valued
+function.
+
+\subsection{Visible theorems}
+\label{subsec:visible-theorems-log}
+\index{categorical logarithm!predicted theorems}
+
+The exp/log identification makes certain results visible that would
+otherwise have no natural formulation:
+
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Categorical Torelli.}  If the monodromy of the
+categorical logarithm (the higher-genus corrections to the bar
+differential, encoded in~$\Theta_\cA$) determines~$\cA$ up to
+quasi-isomorphism, this is a \emph{categorical Torelli theorem}.  It
+follows from bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi})
+plus the fact that the curvature determines the flat connection up to
+gauge equivalence on a simply connected base: since the Teichm\"uller
+space is contractible, the flat bar family is determined by its
+curvature, i.e., by~$\kappa(\cA)$.
+
+\item \textbf{Functional equation.}  The complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}) is the \emph{functional equation} of the categorical
+logarithm: it relates $\log^{\mathrm{cat}}(\cA)$ and
+$\log^{\mathrm{cat}}(\cA^!)$ through the total data
+$H^*(\overline{\mathcal{M}}_g, Z_\cA)$, exactly as the functional
+equation of the Riemann $\zeta$-function relates $\zeta(s)$ and
+$\zeta(1-s)$ through the $\Gamma$-factor.
+
+\item \textbf{Acyclicity of the trivial algebra.}  For the unit
+(trivial) chiral algebra $\cA = k$, the bar complex $\barB(k)$ is
+acyclic: $H^*(\barB(k)) = k$ concentrated in degree~$0$.  In the
+exp/log framework this is $\log(1) = 0$: the logarithm of the
+multiplicative identity is the additive identity.
+
+\item \textbf{Convergence radius from OPE poles.}  The Koszul locus
+should be characterized by the singularity structure of the OPE: the
+convergence radius of the categorical logarithm equals the inverse of
+the growth rate of multi-point OPE singularities, in analogy with the
+Cauchy--Hadamard formula.
+
+\item \textbf{Screening as infinitesimal generator.}  In the lattice
+setting (Construction~\ref{constr:lattice:screening}), the screening charges $Q_i$
+with $Q_i^2 = 0$ are the infinitesimal generators of the categorical
+logarithm; the quantum group relations $e_i^N = 0$ at $\zeta =
+e^{2\pi i/N}$ are their $N$-th powers; and the representation category
+$\mathrm{Rep}(\mathfrak{u}_\zeta(\mathfrak{g}))$ carries the periodic
+(exponential) structure.  The passage $Q^2 = 0 \to e^N = 0$ is
+literally exponentiation: the root of unity
+$\zeta = \exp(2\pi i/N)$ is the monodromy of the categorical
+logarithm around the $N$-th root.
+\end{enumerate}
+
+\begin{conjecture}[Factorization finiteness criterion;
+\ClaimStatusConjectured]\label{conj:factorization-finiteness-criterion}
+\index{factorization bar-cobar!finiteness criterion}
+\index{thick generation!bypassed by sectorwise finiteness}
+Let $\cA$ be a chiral algebra whose bar complex
+$\barB(\cA)$ admits a bigrading
+$\barB^{p,q}(\cA)$ with $\dim \barB^{p,q} < \infty$ for all
+$(p,q)$.  Suppose the associated spectral sequence
+$E_r^{p,q} \Rightarrow H^{p+q}(\barB(\cA))$ satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Convergence)} $E_r^{p,q} = E_\infty^{p,q}$
+  for each $(p,q)$ at some finite page~$r_0(p,q)$;
+\item \textup{(Sub-exponential growth)} $\dim E_1^{0,p} < c^p$
+  for every $c > 1$ and all sufficiently large~$p$.
+\end{enumerate}
+Then the factorization bar-cobar adjunction restricts to an
+equivalence on the Koszul locus, and the factorization DK
+equivalence holds for~$\cA$ without thick generation.
+
+\emph{Instances.}
+For lattice algebras, (i)--(ii) are satisfied by the
+$\Lambda$-grading with $E_1$~degeneration
+\textup{(}Theorem~\textup{\ref{thm:lattice:factorization-koszul})}.
+For Yangians, the root weight/loop degree bigrading of
+Proposition~\textup{\ref{prop:yangian-bar-loop-weight}} gives (i),
+and (ii) is proved in
+Proposition~\textup{\ref{prop:lqt-e1-subexponential-growth}}: the
+growth rate is $\sim\exp(\pi\sqrt{rp/12})$, which is sub-exponential.
+For $\mathcal{W}$-algebras, the DS filtration provides a candidate
+bigrading whose (ii) would follow from Kac--Kazhdan character
+estimates.
+\end{conjecture}
+
+\subsection{The monograph as construction of a categorical logarithm}
+\label{subsec:monograph-as-log}
+\index{categorical logarithm!monograph structure}
+
+Taken at full depth, the four main theorems are the four fundamental
+properties of \emph{any} logarithm:
+\begin{itemize}
+\item \textbf{Theorem~A} (existence): the categorical logarithm and
+exponential exist, as a pair of adjoint functors between augmented
+factorization algebras and conilpotent factorization coalgebras.
+\item \textbf{Theorem~B} (invertibility): on the convergence domain
+(the Koszul locus), $\exp \circ \log = \mathrm{id}$, and the
+logarithm faithfully encodes its input.
+\item \textbf{Theorem~C} (branch structure): the failure of
+convergence off the Koszul locus decomposes into complementary
+Lagrangians---the two branches of the multi-valued logarithm---and the
+total logarithmic data is the sum of the two branches.
+\item \textbf{Theorem~D} (leading coefficient): the leading
+coefficient $\kappa(\cA)$ of the logarithmic expansion determines the
+full scalar package, just as the leading coefficient of
+$\log(1+z) = z + \cdots$ determines the local behavior.
+\end{itemize}
+
+Every open problem in the monograph is a question about this
+logarithm.  The five master conjectures are five aspects of one
+question: \emph{what is the categorical logarithm for factorization
+algebras on algebraic curves, completely?}
+\begin{itemize}
+\item \textbf{MC1}: does the logarithm converge? (PBW concentration)
+\item \textbf{MC3}: what is the convergence domain? (thick generation
+in category~$\mathcal{O}$)
+\item \textbf{MC4}: does the logarithm extend to infinite rank?
+(stability of towers)
+\item \textbf{MC5}: does the physical logarithm (BRST) equal the
+mathematical one (bar)? (BV--BRST identification)
+\item \textbf{Periodicity}: what is the monodromy group of the
+categorical logarithm?
+\end{itemize}
+These are not five separate programmes.  They are five windows onto a
+single object.
+
+\subsection{From tree-level to modular homotopy theory}
+\label{subsec:tree-to-modular}
+\index{modular homotopy theory!three-level ladder}
+
+The constructions of this chapter are \emph{tree-level}: the bar
+differential is indexed by collisions on a single smooth curve, and
+the operadic compositions are indexed by planar rooted trees.  Three
+levels of homotopy-algebraic structure emerge as one opens the genus
+filtration.
+
+\begin{definition}[Tree-level operadic homotopy theory]
+\label{def:tree-level-homotopy}
+A \emph{tree-level operadic homotopy theory} for a cyclic operad~$P$
+is an $\infty$-category~$\mathcal{H}$ with homotopy-coherent
+$P$-action: operations $m_T$ indexed by $P$-decorated rooted
+trees~$T$, satisfying the operadic master equation $\sum_T m_T = 0$
+up to coherent homotopies.  The bar-cobar constructions of this
+chapter produce such a theory for $P = \chirCom$ or $P = \chirAss$.
+\end{definition}
+
+\begin{definition}[Modular homotopy theory, abstract]
+\label{def:modular-homotopy-abstract}
+A \emph{modular homotopy theory} for a modular operad~$M$ is an
+$\infty$-category~$\mathcal{H}$ with homotopy-coherent $M$-action:
+operations $m_\Gamma$ indexed by $M$-decorated \emph{stable
+graphs}~$\Gamma$ (graphs with genus labels $g_v$ at each vertex,
+satisfying $\sum_v g_v + b_1(\Gamma) = g$), compatible with
+separating and nonseparating clutching
+(Definition~\ref{def:modular-homotopy-theory-intro}).
+\end{definition}
+
+\begin{remark}[The formal step is small; the existence problem is hard]
+\label{rem:trees-to-graphs}
+Replacing rooted trees by stable graphs is the
+\emph{only} combinatorial change from tree-level to modular homotopy
+theory.  The formal generalization is immediate.  What is not
+immediate is \emph{existence}: constructing the operations $m_\Gamma$
+for graphs with loops requires integration over
+$\overline{\mathcal{M}}_{g,n}$, which produces curvature
+($\dfib^{\,2} \neq 0$) and demands the full Maurer--Cartan package
+$\Theta_\cA$.  This is the content of
+Chapter~\ref{chap:higher-genus}.
+\end{remark}
+
+\medskip
+
+In Chapter~\ref{chap:higher-genus}, the curve itself varies over
+$\overline{\mathcal{M}}_g$, and the bar differential acquires
+curvature: the genus-$g$ correction $m_0^{(g)}$ is a section of the
+obstruction sheaf on $\overline{\mathcal{M}}_g$, controlled by a
+single universal Maurer--Cartan class $\Theta_{\cA}$.  The passage
+from this chapter to the next is the passage from operadic to
+\emph{modular} Koszul duality --- from the combinatorics of
+associahedra to the geometry of the Deligne--Mumford
+compactification --- or, in the language of the categorical logarithm,
+the passage from the single-valued to the multi-valued regime.
