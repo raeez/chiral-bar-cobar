@@ -29,6 +29,23 @@ Maximalist ambition synergizes with maximal truth-seeking. Precision enables amb
 
 **Unifying principle**: The modular L∞ convolution algebra g^mod_A is the single organizing structure. It carries a natural modular L∞ structure (from the Feynman transform of the modular operad); the dg Lie algebra (def:modular-convolution-dg-lie) is its strict model. The shadow Postnikov tower is the finite-order projection of the universal MC element Θ_A. The proved content is the finite-order shadow tower: κ (arity 2), cubic shadow C (arity 3), quartic resonance class Q (arity 4), with each level a projection of the next. Theorems A-D+H and the genus expansion are proved projections of the scalar level κ. The full unrestricted MC element Θ_A ∈ MC(g^mod_A) satisfying D·Θ + ½[Θ,Θ] = 0 is the CONJECTURAL limit of the tower — it is the target, not the starting point. The weight filtration on g^mod controls the extension tower; each finite truncation Θ_A^{<=r} is constructive and does not require the full all-genera modular envelope.
 
+## Three-Pillar Foundational Architecture (NEW)
+
+Three preprints force upgrades at three levels. Recorded in concordance.tex sec:concordance-three-pillars.
+
+**Pillar A** (MS24): Primitive local object = homotopy chiral algebra (Ch∞), not strict. Strict chiral algebra appears after rectification. Ch∞ → strict on H^• → PVA/coisson shadow.
+**Pillar B** (RNW19+Val16): Universal deformation machine = filtered convolution sL∞-algebra hom_α(C,A). Deformation space = MC ∞-groupoid. dg Lie algebra = strict model. **Key constraint**: hom_α extends to ∞-morphisms in either slot separately but NOT both simultaneously (no-bifunctor obstruction). MC3 categorical lift must proceed one slot at a time.
+**Pillar C** (Mok25): Global collision geometry = log FM compactification FM_n(X|D) on snc pairs. Tropicalization = planted forests (G_pf = Trop(FM_n(C|D))). Semistable degeneration formula → clutching laws.
+
+**Seven identification theorems** (5 proved, 2 conjectural):
+1. g^mod_A = hom_α(C^!_ch, P^ch) (thm:convolution-master-identification)
+2. Θ_A ∈ MC(hom_α) ≅ Tw_α (cor:theta-twisting-morphism)
+3. G_pf = Trop(FM_n(C|D)) (thm:planted-forest-tropicalization)
+4. B(A) is Ch∞-algebra (thm:cech-hca)
+5. B_κ ⊣ Ω_κ is Quillen equivalence (thm:quillen-equivalence-chiral)
+6. A^sh is homotopy invariant (thm:shadow-homotopy-invariance)
+7. One-slot obstruction constrains MC3 (RNW19 Theorem 6.1)
+
 ## The Chriss-Ginzburg Principle (the architecture)
 
 Every algebraic structure in the monograph is a Maurer-Cartan element in a convolution dg Lie algebra. The key objects:
@@ -81,6 +98,7 @@ python3 scripts/generate_metadata.py                              # Census (auth
 **Convolution algebra**: The dg Lie algebra Conv_str(C,P) is a STRICT MODEL of the underlying modular L∞ algebra Conv_∞(C,P). MC moduli coincide; full L∞ needed for transfer, formality, gauge equivalence. Bar-cobar preserves quasi-isos BECAUSE it is a quantum L∞ functor.
 **Shadow tower (the primary object)**: The finite-order shadow Postnikov tower Θ_A^{<=r} is the proved content. κ, C, Q are successive projections of this tower. At finite order, define shadows directly from the graph sum and use analytics for computation. The full unrestricted Θ_A is the conjectural all-arity limit — do not present it as already established. When writing about Θ_A at all arities, use conjectural language. When writing about finite-order shadows (κ through quartic), these are proved.
 **D²=0**: At the convolution level, D²=0 is a THEOREM (from ∂²=0 on M̄_{g,n}). At the ambient level (with planted-forest corrections), D²=0 is CONJECTURAL (conj:differential-square-zero).
+**Three-pillar constraints**: (1) The convolution sL∞-algebra hom_α(C,A) is NOT a strict Lie algebra — it is shifted homotopy Lie with higher brackets ℓ_k (k≥3). The dg Lie is a strict MODEL only. (2) hom_α is functorial in either slot separately but FAILS as a bifunctor in both slots simultaneously (RNW19 §6). MC3 categorical lift must proceed one slot at a time. (3) Log FM compactification FM_n(X|D) ≠ classical FM; requires snc pair (X,D). Ordinary FM is the D=∅ special case.
 
 ## LaTeX Rules
 
