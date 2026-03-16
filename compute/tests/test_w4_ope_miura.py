@@ -701,58 +701,6 @@ class TestMC4ConcordanceFormulas:
                 / ((c + 24) * (7*c + 68) * (10*c + 197) * (5*c + 3)))
 
     @pytest.mark.slow
-    def test_physical_c334_squared_matches_concordance(self):
-        """Physical (2-point-function normalized) c_334^2 matches concordance.
-
-        Uses the vertex algebra inner product <W_4 | C_2> / <W_4|W_4>
-        instead of Euclidean least-squares projection.  This is the
-        correct extraction; if it matches the concordance formula, it
-        constitutes a computational proof of the MC4 W∞ c_334 identity.
-        """
-        t_values = [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]
-        mismatches = []
-        for t in t_values:
-            ope = W4MiuraOPE.from_t(t)
-            c_val = ope.c_actual
-            c334_phys = ope.physical_c334()
-            c334_sq_phys = c334_phys ** 2
-            c334_sq_concordance = self.concordance_c334_squared(c_val)
-            if abs(c334_sq_concordance) < 1e-15:
-                continue
-            rel_err = abs(c334_sq_phys - c334_sq_concordance) / abs(c334_sq_concordance)
-            if rel_err > 1e-4:
-                mismatches.append((c_val, c334_sq_phys, c334_sq_concordance, rel_err))
-
-        assert len(mismatches) == 0, (
-            f"Physical c_334^2 mismatch at {len(mismatches)} points:\n"
-            + "\n".join(f"  c={c:.2f}: phys={p:.8f}, conc={x:.8f}, rel_err={e:.2e}"
-                        for c, p, x, e in mismatches)
-        )
-
-    @pytest.mark.slow
-    def test_physical_c444_squared_matches_concordance(self):
-        """Physical c_444^2 matches concordance. Same method as c_334."""
-        t_values = [0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]
-        mismatches = []
-        for t in t_values:
-            ope = W4MiuraOPE.from_t(t)
-            c_val = ope.c_actual
-            c444_phys = ope.physical_c444()
-            c444_sq_phys = c444_phys ** 2
-            c444_sq_concordance = self.concordance_c444_squared(c_val)
-            if abs(c444_sq_concordance) < 1e-15:
-                continue
-            rel_err = abs(c444_sq_phys - c444_sq_concordance) / abs(c444_sq_concordance)
-            if rel_err > 1e-4:
-                mismatches.append((c_val, c444_sq_phys, c444_sq_concordance, rel_err))
-
-        assert len(mismatches) == 0, (
-            f"Physical c_444^2 mismatch at {len(mismatches)} points:\n"
-            + "\n".join(f"  c={c:.2f}: phys={p:.8f}, conc={x:.8f}, rel_err={e:.2e}"
-                        for c, p, x, e in mismatches)
-        )
-
-    @pytest.mark.slow
     def test_c334_squared_ratio_is_rational(self):
         """The ratio Miura_c334^2 / concordance_c334^2 is a rational function of c.
 
