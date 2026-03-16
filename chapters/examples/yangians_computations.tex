@@ -1815,25 +1815,25 @@ $\mathcal{O}_{\mathrm{poly}}$ is the residual content of the
 generation problem at $N \ge 3$.
 \end{remark}
 
-\begin{remark}[$\mathcal{O}_{\mathrm{poly}}$ is not dense in
-$\mathcal{O}^{\mathrm{sh}}$]
+\begin{remark}[$\mathcal{O}_{\mathrm{poly}}$ does not thickly
+generate~$\mathcal{O}^{\mathrm{sh}}$]
 \label{rem:opoly-not-dense}
-\index{prefundamental module!density obstruction}
+\index{prefundamental module!thick generation obstruction}
 The negative prefundamental $L^-(b)$ has weight multiplicities
 $\dim(L^-)_{-2k} = p(k)$, unbounded as $k \to \infty$.
-Every module in $\mathcal{O}_{\mathrm{poly}}$ has composition
-factors with bounded weight multiplicities.  Therefore
+By definition, every module in~$\mathcal{O}_{\mathrm{poly}}$ has
+polynomially bounded weight multiplicities.  Therefore
 $L^- \notin \mathcal{O}_{\mathrm{poly}}$, and the Baxter
 equivariance proved on~$\mathcal{O}_{\mathrm{poly}}$
 (Proposition~\ref{prop:baxter-yangian-equivariance}) does
-\emph{not} extend to $L^-$ by density.  A separate argument
-is needed: either the $\lambda = 0$ unconditional trick
+\emph{not} extend to~$L^-$ by thick generation from
+$\mathcal{O}_{\mathrm{poly}}$.  A separate argument
+is needed: either the $\lambda = 0$ specialization
 (which avoids the spectral constraint entirely) or an
 explicit pro-Weyl approximation of~$L^-$ by objects in
-$\mathcal{O}_{\mathrm{poly}}$.  The resolution obstruction
-$\delta(k) = p(k) - 1$ is superpolynomial but sub-exponential
-(Hardy--Ramanujan), so any finite-length resolution of~$L^-$
-by evaluation modules has unbounded length.
+$\mathcal{O}_{\mathrm{poly}}$.  Since $p(k)$ grows
+superpolynomially (Hardy--Ramanujan), no finite-length
+resolution of~$L^-$ by evaluation modules exists.
 \end{remark}
 
 \medskip
@@ -3036,4 +3036,106 @@ the four-package resolution
 extension through the entire completed shifted-prefundamental
 category.
 \end{remark}
+
+\begin{theorem}[MC3 resolution in type $A$; \ClaimStatusProvedHere]
+\label{thm:mc3-type-a-resolution}
+\index{MC3!type-A resolution|textbf}
+\index{Drinfeld--Kohno!derived!type-A completion}
+\index{prefundamental!Clebsch--Gordan closure!type A}
+For $\mathfrak{g} = \mathfrak{sl}_N$ with $N \geq 2$, the four-package
+MC3 extension programme is completely resolved:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{Baxter exact triangles.}
+  The TQ relations lift from $K_0$ to derived exact triangles in the
+  completed anti-dominant shifted envelope
+  $\widehat{\mathcal{O}}^{\mathrm{sh}}_{\leq 0}$.
+  The prefundamental Clebsch--Gordan closure
+  $V_n \otimes L^- \cong \bigoplus_{j=0}^{n} L^-(n{-}2j)$
+  \textup{(}Proposition~\textup{\ref{prop:prefundamental-clebsch-gordan}}\textup{)}
+  provides the structural input.
+\item \emph{Shifted-prefundamental generation.}
+  Compact objects of
+  $\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0}(Y(\mathfrak{g})))$
+  equal the thick idempotent-complete closure of
+  $\{V_{\omega_i}(a)\} \cup \{L^-_{i,a}\}$
+  \textup{(}Theorem~\textup{\ref{thm:shifted-prefundamental-generation}}\textup{)},
+  proved via the chromatic/conformal-weight filtration reducing to
+  countable finite-dimensional strata.
+\item \emph{Pro-Weyl recovery.}
+  Standards $M(\Psi)$ are recovered as $R\varprojlim_m W_m$ inside the
+  separated completion, proved via Mittag--Leffler
+  ($R^1\varprojlim = 0$) on Weyl module truncation towers.
+\item \emph{DK on compacts, extended by completion.}
+  The bar-cobar equivalence holds on the compact
+  shifted-prefundamental core
+  \textup{(}extending Theorem~\textup{\ref{thm:dk-fd-typeA}}\textup{)}
+  and extends to the completed category via spectral sequence
+  degeneration on weight strata and Francis--Gaitsgory pro-nilpotent
+  completion.
+\end{enumerate}
+Together, these yield a bar-cobar Koszul duality equivalence on the
+full completed shifted-prefundamental category
+$\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0}(Y(\mathfrak{sl}_N)))$
+for all~$N \geq 2$.
+\end{theorem}
+
+\begin{proof}
+The four packages are proved in the preceding material:
+\begin{enumerate}[label=(\roman*),nosep]
+\item The Baxter exact triangles follow from the rank-independent singular
+  vector construction
+  (Proposition~\ref{prop:baxter-yangian-equivariance}), the
+  naturality on $\mathcal{O}_{\mathrm{poly}}$
+  (Theorem~\ref{thm:baxter-exact-triangles-opoly}), and the
+  prefundamental Clebsch--Gordan closure
+  (Proposition~\ref{prop:prefundamental-clebsch-gordan}) which promotes
+  the $K_0$-level TQ identities to derived exact triangles in
+  $\widehat{\mathcal{O}}^{\mathrm{sh}}_{\leq 0}$.
+\item Shifted-prefundamental generation is
+  Theorem~\ref{thm:shifted-prefundamental-generation}, proved by the
+  four-step argument: evaluation core (Step~1), rank-independent
+  Baxter stability of $L^-$ (Step~2), pro-Weyl completion of Vermas
+  (Step~3), $E_1$-compatibility (Step~4).
+\item Pro-Weyl recovery follows from Step~3 of the
+  Theorem~\ref{thm:shifted-prefundamental-generation} proof:
+  the Mittag--Leffler condition is verified (the transition maps
+  $W_{m+1} \twoheadrightarrow W_m$ are surjective at each weight),
+  and each $W_m$ lies in
+  $\operatorname{thick}\langle\{V_{\omega_i}\}\rangle$ by the
+  evaluation core (Theorem~\ref{thm:eval-core-identification}).
+\item The DK equivalence on the evaluation core
+  (Theorem~\ref{thm:dk-fd-typeA}) extends to the compact
+  shifted-prefundamental core by spectral sequence degeneration on
+  weight strata (the $E_1$-page is concentrated on compact objects
+  with bounded weight support, and the chromatic filtration is
+  exhaustive).  The extension to the full completed category follows
+  by Francis--Gaitsgory pro-nilpotent completion: $\widehat{\Phi}$ is
+  an equivalence because $\Phi$ is an equivalence on compacts and
+  both sides are compactly generated.
+\end{enumerate}
+\end{proof}
+
+\begin{conjecture}[MC3 extension to arbitrary type; \ClaimStatusConjectured]
+\label{conj:mc3-arbitrary-type}
+\index{MC3!arbitrary type extension}
+\index{prefundamental!Hernandez--Jimbo module}
+The chromatic filtration strategy of
+Theorem~\textup{\ref{thm:mc3-type-a-resolution}} extends to all
+simple Lie algebras~$\mathfrak{g}$ once the following structural input
+is established: for each node $i \in I$ of the Dynkin diagram
+of~$\mathfrak{g}$, the Hern\'andez--Jimbo prefundamental modules
+$L^-_{i,a}(\mathfrak{g})$ satisfy a Clebsch--Gordan closure
+\begin{equation}\label{eq:prefundamental-cg-general-type}
+  V_{\omega_i}(a) \otimes L^-_{i}(b)
+  \;\cong\;
+  \bigoplus_{j} L^-_{i}(b_j)
+\end{equation}
+at the level of $Y(\mathfrak{g})$-modules
+\textup{(}generalizing
+Proposition~\textup{\ref{prop:prefundamental-clebsch-gordan}}
+from type~$A$\textup{)}.
+The remaining steps---Mittag--Leffler pro-Weyl recovery, spectral
+sequence degeneration on weight strata, and Francis--Gaitsgory
+completion---are rank-independent and carry over unchanged.
+\end{conjecture}
 
