@@ -19,16 +19,9 @@ Verdier duality on $\Ran(X)$ intertwines bar coalgebras: $\mathbb{D}_{\Ran}\bar{
 \section{The circularity problem}
 
 \begin{problem}[Independent construction of Koszul dual]\label{prob:independent-dual}
-In defining chiral Koszul duality, we face a circular definition issue:
+The statement $\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ is circular as it stands: the dual $\mathcal{A}_2^!$ is ``defined'' as the Koszul dual cooperad, but no independent construction of it as a chiral coalgebra exists, and for non-quadratic algebras the classical criterion $R_1 \perp R_2$ does not apply.
 
-\emph{Claim.}
-\[\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!\]
-
-\emph{The circularity.}
-The dual $\mathcal{A}_2^!$ is typically ``defined'' as the Koszul dual cooperad---but no independent construction as a chiral coalgebra has been given, no first-principles proof that the bar construction defines a dg coalgebra that \emph{is} this dual exists, and for non-quadratic cases the classical orthogonality criterion $R_1 \perp R_2$ does not apply.
-
-\emph{What is needed.}
-An intrinsic definition of $\mathcal{A}_2^!$ using only $\mathcal{A}_2$; a proof that $\mathcal{A}_2^!$ is inherently a coalgebra; a geometric identification of $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ with this dual; and an extension to non-quadratic and curved cases via nilpotent completion.
+Four things are needed: an intrinsic definition of $\mathcal{A}_2^!$ using only $\mathcal{A}_2$; a proof that $\mathcal{A}_2^!$ is inherently a coalgebra; a geometric identification of $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ with this dual; and an extension to non-quadratic and curved cases.
 \end{problem}
 
 \begin{remark}[NAP duality]\label{rem:NAP-solution}
@@ -47,7 +40,7 @@ Verdier duality exchanges integration over $\overline{C}_n(M)$ with distribution
 \label{sec:geometric-arena}
 \index{collision geometry|textbf}
 
-The resolution of the circularity problem uses a fundamental geometric fact: configuration spaces carry a natural duality that independently constructs the Koszul dual.  On $\overline{C}_k(X)$, two dual sheaf complexes live naturally.
+Configuration spaces carry a natural duality that resolves the circularity.  On $\overline{C}_k(X)$, two dual sheaf complexes live naturally; one builds the bar construction, the other the cobar.
 
 The sheaf $\Omega^*_{\log}(\overline{C}_k(X))$ consists of
 differential forms with at worst logarithmic poles along the
@@ -248,15 +241,11 @@ The computation above is formal: the expression $\eta_{ij} \wedge \delta(z_i - z
 \begin{construction}[Intrinsic definition of \texorpdfstring{$\mathcal{A}^!$}{A!} via Verdier duality]\label{const:A-dual-intrinsic}
 Let $\mathcal{A}$ be a chiral algebra on $X$. We define the \emph{Koszul dual chiral coalgebra} $\mathcal{A}^!$ intrinsically as follows:
 
-\emph{Step 1: Configuration space valued factorization algebra.}
+\emph{Step 1: Configuration space extension.}
 
-View $\mathcal{A}$ as a factorization algebra, i.e., a functor:
-\[\mathcal{A}: \text{Open}(X) \to \text{Vect}\]
-satisfying the factorization property.
-
-Extend to configuration spaces:
-\[\mathcal{A}^{\otimes k}: C_k(X) \to \text{Vect}\]
-\[(z_1, \ldots, z_k) \mapsto \mathcal{A}(z_1) \otimes \cdots \otimes \mathcal{A}(z_k)\]
+The factorization structure of~$\mathcal{A}$ extends to configuration spaces:
+\[\mathcal{A}^{\otimes k}: C_k(X) \to \text{Vect},\qquad
+(z_1, \ldots, z_k) \mapsto \mathcal{A}(z_1) \otimes \cdots \otimes \mathcal{A}(z_k).\]
 
 \emph{Step 2: Apply Verdier duality.}
 
@@ -287,7 +276,11 @@ where $\text{OPE}_{ij}$ is the operator product expansion of $\mathcal{A}$.
 \end{construction}
 
 \begin{remark}\label{rem:intrinsic-nature}
-Construction~\ref{const:A-dual-intrinsic} uses only configuration space geometry, Verdier duality, and factorization --- no bar construction, orthogonal relations, or quadraticity.
+No bar construction, orthogonal relations, or quadraticity
+hypothesis appears in Construction~\ref{const:A-dual-intrinsic}.
+The Koszul dual is defined by the geometry of configuration spaces
+and Verdier duality alone; the bar construction is then identified
+with it (Theorem~\ref{thm:bar-computes-dual}), rather than defining it.
 \end{remark}
 
 \subsection{Verification of coalgebra axioms}
@@ -712,18 +705,14 @@ The intrinsic Koszul dual $\mathcal{A}^! := \mathbb{D}(\int_{-X} \mathcal{A})$ i
 
 The completed bar construction (Theorem~\ref{thm:completion-koszul}) extends this to non-quadratic algebras.  The quantum corrections --- curvature from periods on $\overline{\mathcal{M}}_g$ --- appear in \S\ref{sec:koszul-defects} and Chapter~\ref{chap:higher-genus}.
 
-\begin{remark}[How this chapter is used later]\label{rem:nap-usage}
-The NAP duality results serve three later roles:
-\begin{enumerate}
-\item Theorem~\ref{thm:main-NAP-resolution} supplies the intrinsic
-  definition of Koszul dual used by
-  Theorem~A$_2$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
-\item Theorem~\ref{thm:verdier-bar-cobar} provides the Verdier
-  compatibility input for
-  Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}).
-\item The explicit NAP computations of
-  Chapter~\ref{chap:NAP-computations} give independent
-  computational checks for Heisenberg, Kac--Moody, and
-  $\beta\gamma$/bc Koszul pairs.
-\end{enumerate}
+\begin{remark}[Downstream dependencies]\label{rem:nap-usage}
+Theorem~\ref{thm:main-NAP-resolution} supplies the intrinsic
+Koszul dual for Theorem~A$_2$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main});
+Theorem~\ref{thm:verdier-bar-cobar} supplies the Verdier
+compatibility input for Theorem~C
+(Theorem~\ref{thm:quantum-complementarity-main}); and the
+explicit NAP computations of
+Chapter~\ref{chap:NAP-computations} independently verify
+Heisenberg, Kac--Moody, and $\beta\gamma$/bc Koszul pairs.
 \end{remark}
