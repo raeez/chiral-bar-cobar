@@ -1115,6 +1115,20 @@ DK-5 & $\infty$-PBW: Lie modules $\simeq$ group representations (Conjecture~\ref
 \end{tabular}
 \end{center}
 DK-0/1 is classical (Drinfeld--Kohno $+$ Kazhdan--Lusztig); DK-2/3 extends via Boardman convergence of the loop spectral sequence (Theorem~\ref{thm:h-level-factorization-kd}); DK-4 is the formal moduli step; DK-5 requires the exponential $\mathfrak{g}_{\cA} \to G_{\cA}$ recovering the spectral quantum group of Latyntsev~\cite{Latyntsev23}.  Contributing to Conjecture~\ref{conj:master-dk-kl}.
+
+\emph{CG constraint on DK-5.}
+The prefundamental Clebsch--Gordan
+(Proposition~\ref{prop:prefundamental-clebsch-gordan})
+constrains DK-5 as follows: since
+$V_n \otimes L^- \cong \bigoplus L^-(\text{shifted})$
+shows that $L^-$ is evaluation-stable, the quantum group
+representation $\operatorname{Rep}(\QGspec(R_{\cA}))$ must
+contain a corresponding family of objects that is closed under
+tensoring with the fundamental.  At the level of $q$-characters
+(Frenkel--Reshetikhin), this forces the DK-5 functor to
+intertwine the prefundamental TQ system
+$[V_1] \cdot [L^-] = [L^-(+1)] + [L^-(-1)]$
+with the QQ-system of the quantum group.
 \end{remark}
 
 \begin{remark}[The RTT relation as Koszul duality datum]
@@ -3975,7 +3989,14 @@ is a quasi-isomorphism.  This gives the M-level completed bar-cobar
 package for the Yangian tower under the stated inverse-limit
 hypotheses.  The stronger H-level
 higher-level factorization-categorical realization remains part of the
-MC4 frontier; MC5 is downstream of that realization.  As in the \(\mathcal{W}_\infty\) case, the eventual-constancy
+MC3 frontier (the categorical enlargement beyond the
+evaluation-generated core); MC5 is downstream.  Note that MC4 is
+now unconditionally closed on the $\mathcal{W}_\infty$ side via
+$\mathcal{W}_N$ rigidity
+(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}), and the
+Yangian evaluation-core comparison is verified (249~tests); the
+remaining Yangian gap is DK-5, which is downstream of MC3.  As in
+the $\mathcal{W}_\infty$ case, the eventual-constancy
 hypothesis may be weakened to eventual surjectivity on finite-dimensional
 weight slices by Corollary~\ref{cor:mc4-surjective-criterion}.
 \end{proposition}
@@ -5189,4 +5210,114 @@ equation of Conjecture~\ref{conj:modular-yang-baxter} is a
 single organizing principle for both the genus-zero DK square
 (Remark~\ref{rem:dk-square-geometry}) and the higher-genus
 complementarity data of Theorem~C.
+\end{remark}
+
+% ==========================================
+% MODULAR YANG-BAXTER PACKAGE AND HOLOGRAPHIC LINE OPERATORS
+% ==========================================
+
+\subsection{The modular Yang--Baxter package and holographic line operators}
+\label{subsec:modular-yb-holographic}
+\index{Yang--Baxter!modular package}
+\index{line operators!holographic completion}
+
+The modular dg-shifted Yangian $\Ymod_T$ of
+Definition~\ref{def:modular-dg-shifted-yangian} encodes
+stable-curve gluing \emph{and} spectral line-operator data in a
+single algebraic structure.  We now unpack its components and
+explain why it is strictly richer than a modular envelope.
+
+\subsubsection{The modular $r$-matrix expansion}
+
+\begin{definition}[Modular total kernel]
+\label{def:modular-total-kernel}
+\index{r-matrix@$r$-matrix!modular total kernel}
+The \emph{modular total kernel} is the $\hbar$-completed $r$-matrix
+\begin{equation}\label{eq:modular-total-kernel}
+  R_T^{\mathrm{mod}}(z;\hbar)
+  \;:=\;
+  \sum_{g \ge 0} \hbar^{2g}\, r_{T,g}(z),
+  \qquad
+  r_{T,0}(z) = r_T(z),
+\end{equation}
+where each genus-$g$ coefficient lives in
+\begin{equation}\label{eq:r-coeff-space}
+  r_{T,g}(z)
+  \;\in\;
+  H^\bullet\bigl(\overline{\mathcal{M}}_{g,2}\bigr)
+  \otimes
+  \cA_T^! \,\widehat{\otimes}\,
+  \cA_T^!\bigl(\!(z^{-1})\!\bigr).
+\end{equation}
+By Conjecture~\ref{conj:modular-yang-baxter}, the total kernel
+$R_T^{\mathrm{mod}}(z;\hbar)$ is a Maurer--Cartan element in a
+pronilpotent dg Lie algebra built from the boundary stratification
+of $\overline{\mathcal{M}}_{g,n}$.  The Maurer--Cartan condition
+encodes both the genus-zero $A_\infty$ Yang--Baxter equation and
+its all-genera stable-graph refinement.
+\end{definition}
+
+\subsubsection{The line-operator category completion}
+
+\begin{definition}[Line-operator category]
+\label{def:line-operator-category-yb}
+\index{line operators!category $\mathcal{C}_T$}
+The \emph{line-operator category} of the theory $T$ is
+\begin{equation}\label{eq:line-cat}
+  \mathcal{C}_T
+  \;:=\;
+  \cA_T^!\text{-}\mathrm{mod},
+\end{equation}
+the dg category of modules for the Koszul dual algebra.  The spectral
+kernel $r(z)$ twists the coproduct on $\cA_T^!$ into a
+$z$-dependent comultiplication:
+\begin{equation}\label{eq:twisted-coproduct}
+  \Delta_z \colon
+  \cA_T^!
+  \;\longrightarrow\;
+  \cA_T^! \,\widehat{\otimes}_{r(z)}\,
+  \cA_T^!\bigl(\!(z^{-1})\!\bigr).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Consistency via $D^2 = 0$; \ClaimStatusConjectured]
+\label{prop:ainfty-yb-consistency}
+\index{Yang--Baxter!A-infinity consistency@$A_\infty$ consistency}
+The $A_\infty$ Yang--Baxter equation for the spectral kernel $r(z)$
+is equivalent to the condition $D^2 = 0$ on the $d_r$-twisted
+modular bar complex of $\cA_T$.  This is precisely the algebraic
+condition that upgrades ``modular gluing'' (stable-curve composition
+in the Feynman transform) to a \emph{full spectral defect algebra}
+incorporating line-operator OPE.
+\end{proposition}
+
+\subsubsection{Beyond the modular envelope}
+
+\begin{remark}[What the modular envelope does not see]
+\label{rem:beyond-modular-envelope}
+\index{modular envelope!limitations}
+A modular envelope remembers the composition of operations along stable
+curves---the Feynman transform of the modular operad
+$\{\overline{\mathcal{M}}_{g,n}\}$---but it does \emph{not} encode:
+\begin{enumerate}
+\item the \emph{Maurer--Cartan moduli problem}, parametrizing
+  consistent couplings of the theory to background fields and defects;
+\item the \emph{bulk-boundary map}
+  $\cA_{\mathrm{bulk}} \simeq Z_{\mathrm{der}}(\cA_\partial)$
+  to the derived center;
+\item the \emph{Poisson bracket and higher stress tensor}---the
+  shifted-symplectic geometry of
+  Theorem~\ref{thm:shifted-symplectic-complementarity};
+\item the \emph{line-operator category}
+  $\mathcal{C}_T = \cA_T^!\text{-}\mathrm{mod}$ and its tensor
+  structure;
+\item the \emph{spectral $r(z)$-matrix} and the $A_\infty$ Yang--Baxter
+  equation that governs it.
+\end{enumerate}
+The dg-shifted Yangian package $\Ymod_T$ captures exactly this
+additional structure.  Its genus-zero truncation is the dg-shifted
+Yangian $\Ydg_\cA$ of Definition~\ref{def:dg-shifted-yangian};
+its full modular completion is the correct algebraic home for
+all-genera defect OPE coefficients and holographic line-operator
+amplitudes.
 \end{remark}

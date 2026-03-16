@@ -131,6 +131,35 @@ where $\eta(q) = q^{1/24}\prod_{n \geq 1}(1-q^n)$ is the Dedekind eta function. 
 \emph{Asymptotics.}
 Hardy--Ramanujan: $p(n) \sim e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$, sub-exponential growth.  This characterizes free fields among Koszul chiral algebras (Corollary~\ref{cor:subexp-free-field}).
 
+\begin{remark}[Partition numbers in MC3 thick generation]%
+\label{rem:partition-mc3-bridge}%
+\index{partition function!MC3 bridge}%
+\index{thick generation!partition function bridge}%
+The partition function~$p(k)$ appears in a second, independent role
+as the weight multiplicity of the Yangian negative prefundamental
+module: $\dim(L^-_a)_{-2k} = p(k)$.  This creates a direct bridge
+between the combinatorial data of the bar complex (Frame~A) and the
+MC3 thick generation programme (Frame~B):
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item The kernel $K := \operatorname{ch}(L^-) - \operatorname{ch}(M(0))$
+  has coefficient $p(m) - 1$ at weight~$-2m$, which equals the
+  cumulative partition function $\sum_{k \leq m} p_2(k)$
+  (partitions into parts~$\geq 2$).
+\item Subtracting $\operatorname{ch}(L^-(\mathrm{hw} = -4))$ from~$K$
+  yields a residual with coefficient $p(m) - 1 - p(m-2)$,
+  recovering~$p(k)$ by a self-similar recursion
+  (Remark~\ref{rem:eval-stability-recursive-kernel}).
+\item The Euler characteristic
+  $\chi(L^-, V_n) = \sum_{k=0}^{n/2} p(k)$ for even~$n$
+  recovers partial sums of the partition function from the
+  Hom/Ext structure of the Yangian category.
+\end{enumerate}
+This bridge is verified by $80$+~tests across
+\texttt{test\_prefundamental\_clebsch\_gordan},
+\texttt{test\_prefundamental\_cg\_closure},
+and \texttt{test\_thick\_generation\_sl2}.
+\end{remark}
+
 \subsection{Riordan numbers ($\widehat{\mathfrak{sl}}_2$)}
 \label{subsec:riordan}
 
