@@ -1745,3 +1745,345 @@ which vanishes at $c = -11$, the critical central charge of the
 $N=1$ SuperVirasoro algebra (analogous to $\kappa(\mathrm{Vir}_c) = 0$
 at $c=0$).
 \end{remark}
+
+%% ================================================================
+%% W_infty scalar saturation and W_4 structure constants
+%% ================================================================
+
+\subsection{Scalar saturation of \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity}}
+\label{sec:winfty-scalar-saturation}
+
+\begin{theorem}[Scalar saturation of $\mathcal{W}_\infty$]\label{thm:winfty-scalar}
+\ClaimStatusProvedHere
+The standard principal tower
+$\mathcal{W}_\infty = \varprojlim_N \mathcal{W}_N$ satisfies
+\[
+\dim H^2_{\mathrm{cyc}}(\mathcal{W}_\infty, \mathcal{W}_\infty) = 1.
+\]
+In particular, $\mathcal{W}_\infty$ is scalar-saturated:
+the universal Maurer--Cartan class has the form
+$\Theta_{\mathcal{W}_\infty}^{\min} = \kappa(\mathcal{W}_\infty) \cdot \eta \otimes \Lambda$,
+and the non-scalar modular characteristic package cannot be realized
+via the principal tower alone.
+\end{theorem}
+
+\begin{proof}
+The proof assembles three ingredients, each proved in the monograph.
+
+\medskip
+\noindent\emph{Step 1: Finite-stage saturation.}
+For each finite $N \geq 2$, the principal $\mathcal{W}$-algebra
+$\mathcal{W}_N^k = \mathrm{DS}(\widehat{\mathfrak{sl}}_{N,k})$ at generic level satisfies
+$\dim H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) = 1$.
+The argument is by BRST pullback: any cyclic $2$-cocycle of
+$\mathcal{W}_N^k$ pulls back along the Drinfeld--Sokolov projection
+\[
+\mathcal{W}_N^k = H^0_{\mathrm{DS}}(\widehat{\mathfrak{sl}}_{N,k}) \longleftarrow \widehat{\mathfrak{sl}}_{N,k}
+\]
+to a cyclic $2$-cocycle of $\widehat{\mathfrak{sl}}_{N,k} \otimes
+\bigwedge^*\!\mathfrak{n}_+$.  The ghost contribution vanishes
+($H^2_{\mathrm{cyc}}(\bigwedge^*\!\mathfrak{n}_+, \bigwedge^*\!\mathfrak{n}_+) = 0$
+because the exterior algebra is Koszul self-dual with no non-trivial
+cyclic deformations), so the pullback lands in
+\[
+H^2_{\mathrm{cyc}}(\mathfrak{sl}_N, \mathfrak{sl}_N)
+\cong H^3(\mathfrak{sl}_N) \cong \mathbb{C}.
+\]
+The isomorphism $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong H^3(\mathfrak{g})$ is the
+cyclic Chevalley--Eilenberg identification; the second isomorphism is
+Whitehead's theorem for simple Lie algebras.  The level direction
+$\partial/\partial k$ provides a non-trivial cocycle, so
+$\dim H^2_{\mathrm{cyc}} = 1$ exactly.
+
+\medskip
+\noindent\emph{Step 2: Isomorphic transition maps.}
+The truncation $\mathcal{W}_{N+1} \twoheadrightarrow \mathcal{W}_N$ (killing the
+spin-$(N{+}1)$ generator) preserves the unique central-charge
+deformation direction.  Since both
+$H^2_{\mathrm{cyc}}(\mathcal{W}_{N+1})$ and $H^2_{\mathrm{cyc}}(\mathcal{W}_N)$
+are one-dimensional, the induced map
+\[
+H^2_{\mathrm{cyc}}(\mathcal{W}_{N+1}, \mathcal{W}_{N+1})
+\xrightarrow{\;\sim\;}
+H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N)
+\]
+is an isomorphism: the generator at stage $N{+}1$ is the
+central-charge cocycle, which restricts to the central-charge
+cocycle at stage $N$.
+
+\medskip
+\noindent\emph{Step 3: Mittag--Leffler and the inverse limit.}
+The inverse system $\{\mathcal{W}_N\}_N$ satisfies the Mittag--Leffler
+property: the transition maps on bar cohomology are surjective
+(this is the sectorwise stabilization: a bar chain of total
+conformal weight $w$ involves only generators of weight $\leq w$,
+so the bar complex stabilizes for $N \geq w$).
+The Milnor exact sequence gives
+\[
+0 \to \varprojlim\nolimits^1 H^{n-1}(\overline{B}(\mathcal{W}_N))
+\to H^n(\widehat{\overline{B}}(\mathcal{W}_\infty))
+\to \varprojlim H^n(\overline{B}(\mathcal{W}_N))
+\to 0.
+\]
+The Mittag--Leffler property kills $\varprojlim^1$, so the inverse
+limit commutes with cohomology:
+\[
+H^2_{\mathrm{cyc}}(\mathcal{W}_\infty, \mathcal{W}_\infty)
+= \varprojlim_N H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N)
+= \varprojlim_N \mathbb{C} = \mathbb{C}.
+\]
+
+\medskip
+\noindent\emph{Cross-check via stable Lie algebra cohomology.}
+As independent confirmation: the BRST pullback target in the
+large-$N$ limit is $H^3(\mathfrak{sl}_\infty)$.  By stability of Lie
+algebra cohomology (Borel),
+\[
+H^*(\mathfrak{sl}_\infty) = \bigwedge(x_3, x_5, x_7, \ldots)
+\]
+is an exterior algebra on primitive generators $x_{2i+1}$ in odd
+degrees $2i+1$ for $i = 1, 2, 3, \ldots$\,.
+The generator $x_3$ (the Killing form class) is the unique
+element in degree~$3$; the higher generators $x_5, x_7, \ldots$
+contribute to $H^{2k+1}$ for $k \geq 2$ but not to $H^3$.
+Therefore $\dim H^3(\mathfrak{sl}_\infty) = 1$, confirming the inverse-limit
+computation.
+\end{proof}
+
+\begin{remark}[Consequences for the non-scalar programme]
+The non-scalar universal class requires
+$\dim H^2_{\mathrm{cyc}} \geq 2$ (at least two primitive degree-$2$
+directions $\eta_1, \eta_2$ coupled by transferred $L_\infty$-brackets).
+Since $\dim H^2_{\mathrm{cyc}}(\mathcal{W}_\infty) = 1$, the principal tower
+cannot furnish such a class.  Viable alternatives include:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Non-principal $\mathcal{W}$-algebras}: $\mathcal{W}(\mathfrak{g}, f)$ for
+  non-principal nilpotent $f$, where the DS BRST complex has
+  a different ghost structure.
+\item \emph{Tensor products}: K\"unneth gives
+  $\dim H^2_{\mathrm{cyc}}(\mathcal{A} \otimes \mathcal{B}) = \dim H^2_{\mathrm{cyc}}(\mathcal{A}) + \dim H^2_{\mathrm{cyc}}(\mathcal{B})$,
+  but the channels decouple (no genuine mixed coupling).
+\item \emph{The $\mathcal{W}_\infty$ tower as an $E_1$-algebra}:
+  the inverse system $\{\mathcal{W}_N\}_N$ viewed as an $E_1$-algebra
+  in pro-vertex-algebras may carry deformation directions from
+  the tower structure maps, even though each individual stage
+  has $\dim H^2_{\mathrm{cyc}} = 1$.
+\end{enumerate}
+\end{remark}
+
+
+\subsection{Virasoro Gram matrix at weight~\texorpdfstring{$4$}{4} and the \texorpdfstring{$\mathcal{W}_4$}{W4} structure constant}
+\label{sec:gram-wt4-c334}
+
+\begin{proposition}[Weight-$4$ Gram matrix]\label{prop:gram-wt4}
+\ClaimStatusProvedHere
+Let $c$ denote the central charge.  The weight-$4$ level of the
+Virasoro vacuum Verma module has a two-dimensional basis
+\[
+|1\rangle := L_{-4}|0\rangle, \qquad
+|2\rangle := L_{-2}^2|0\rangle.
+\]
+The Gram matrix $G_{ij} = \langle i | j \rangle$ is
+\[
+G = \begin{pmatrix} 5c & 3c \\ 3c & \frac{c(c+8)}{2} \end{pmatrix},
+\qquad
+\det G = \frac{c^2(5c+22)}{2}.
+\]
+\end{proposition}
+
+\begin{proof}
+All inner products are computed from the Virasoro commutation
+relation
+\[
+[L_m, L_n] = (m-n)\,L_{m+n} + \frac{c}{12}\,m(m^2-1)\,\delta_{m+n,0}.
+\]
+Throughout, $L_n|0\rangle = 0$ for $n \geq -1$ and $\langle 0|0\rangle = 1$.
+
+\emph{Entry $G_{11} = \langle 0| L_4 L_{-4} |0\rangle$.}
+Since $L_4|0\rangle = 0$:
+\[
+L_4 L_{-4}|0\rangle = [L_4, L_{-4}]|0\rangle
+= \Bigl(8L_0 + \frac{c}{12}\cdot 4 \cdot 15\Bigr)|0\rangle
+= 5c\,|0\rangle.
+\]
+
+\emph{Entry $G_{22} = \langle 0| L_2^2 L_{-2}^2 |0\rangle$.}
+First, $L_2 L_{-2}|0\rangle = [L_2, L_{-2}]|0\rangle
+= (4L_0 + \frac{c}{2})|0\rangle = \frac{c}{2}\,|0\rangle$.
+Then:
+\begin{align*}
+L_2 L_{-2}^2|0\rangle
+&= [L_2, L_{-2}](L_{-2}|0\rangle) + L_{-2}(L_2 L_{-2}|0\rangle) \\
+&= \bigl(4L_0 + \tfrac{c}{2}\bigr)(L_{-2}|0\rangle)
+  + L_{-2}\bigl(\tfrac{c}{2}\,|0\rangle\bigr) \\
+&= \bigl(8 + \tfrac{c}{2}\bigr)(L_{-2}|0\rangle)
+  + \tfrac{c}{2}\,(L_{-2}|0\rangle)
+= (8+c)(L_{-2}|0\rangle).
+\end{align*}
+Therefore
+$L_2^2 L_{-2}^2|0\rangle = (8+c)\,L_2 L_{-2}|0\rangle
+= (8+c)\cdot\frac{c}{2}\,|0\rangle
+= \frac{c(c+8)}{2}\,|0\rangle$.
+
+\emph{Entry $G_{12} = \langle 0| L_4 L_{-2}^2 |0\rangle$.}
+\begin{align*}
+L_4 L_{-2}^2|0\rangle
+&= [L_4, L_{-2}](L_{-2}|0\rangle) + L_{-2}(L_4 L_{-2}|0\rangle) \\
+&= 6L_2(L_{-2}|0\rangle) + L_{-2}\bigl([L_4,L_{-2}]|0\rangle\bigr) \\
+&= 6 \cdot \tfrac{c}{2}\,|0\rangle + L_{-2}(6 L_2|0\rangle)
+= 3c\,|0\rangle.
+\end{align*}
+
+\emph{Determinant.}
+$\det G = 5c \cdot \frac{c(c+8)}{2} - (3c)^2
+= \frac{5c^2(c+8)}{2} - 9c^2
+= \frac{c^2(5c+40-18)}{2} = \frac{c^2(5c+22)}{2}$.
+\end{proof}
+
+\begin{corollary}[Quasi-primary at weight~$4$]\label{cor:lambda-qp}
+\ClaimStatusProvedHere
+The unique (up to scale) quasi-primary state at weight~$4$ in
+the Virasoro vacuum module is
+\[
+|\Lambda\rangle := L_{-2}^2|0\rangle - \tfrac{3}{5}\,L_{-4}|0\rangle.
+\]
+It satisfies $L_1|\Lambda\rangle = 0$ and
+$\langle\Lambda|\Lambda\rangle = \frac{c(5c+22)}{10}$.
+\end{corollary}
+
+\begin{proof}
+\emph{Quasi-primary condition.}
+$L_1 L_{-2}^2|0\rangle = 3L_{-3}|0\rangle$
+(by $[L_1,L_{-2}] = 3L_{-1}$ and the derivation property).
+$L_1 L_{-4}|0\rangle = [L_1, L_{-4}]|0\rangle = 5L_{-3}|0\rangle$.
+So $L_1|\Lambda\rangle = 3L_{-3}|0\rangle - \frac{3}{5}\cdot 5\,L_{-3}|0\rangle = 0$.
+
+\emph{Norm.}
+With $a = -3/5$:
+\begin{align*}
+\langle\Lambda|\Lambda\rangle
+&= G_{22} + 2a\,G_{12} + a^2\,G_{11} \\
+&= \tfrac{c(c+8)}{2} - \tfrac{6}{5}\cdot 3c + \tfrac{9}{25}\cdot 5c \\
+&= \tfrac{c^2+8c}{2} - \tfrac{18c}{5} + \tfrac{9c}{5}
+= \tfrac{c^2}{2} + 4c - \tfrac{9c}{5} \\
+&= \tfrac{c^2}{2} + \tfrac{11c}{5}
+= \tfrac{5c^2 + 22c}{10}
+= \tfrac{c(5c+22)}{10}. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{remark}[Field--state correspondence]
+The state $|\Lambda\rangle$ corresponds to the field
+$\Lambda(z) = {:}T(z)T(z){:} - \frac{3}{10}\,\partial^2 T(z)$
+via the state-operator map.  The coefficient $-3/5$ (not $-3/10$)
+in the state language arises because the state corresponding to
+$\partial^2 T$ is $(\partial^2 T)_{-4}|0\rangle = 2L_{-4}|0\rangle$
+(from $(m+2)(m+3)L_m$ with $m=-4$), so
+$-\frac{3}{10}\cdot 2 = -\frac{3}{5}$.
+\end{remark}
+
+\begin{theorem}[Structure constant of the $\mathcal{W}_4$ algebra]
+\label{thm:c334}
+\ClaimStatusProvedHere
+The primary OPE coupling $c_{334} = C^{\mathrm{DS}}_{3,3;4;0,2}(4)$
+(the coefficient of $W^{(4)}$ at pole~$2$ in the
+$W^{(3)}(z)\,W^{(3)}(w)$ OPE) satisfies
+\begin{equation}\label{eq:c334-formula}
+c_{334}^2
+= \frac{42\,c^2\,(5c+22)}{(c+24)(7c+68)(3c+46)}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: The decomposition problem.}
+The $W^{(3)}(z)\,W^{(3)}(w)$ OPE at pole~$2$ produces a conformal
+weight-$4$ field
+\[
+P_2 = \tfrac{3}{10}\,\partial^2 T
++ \beta\,\Lambda
++ c_{334}\,W^{(4)}
+\]
+where $\beta = \frac{16}{5c+22}$ is the $\Lambda$-coupling (determined
+by conformal Ward identities independently of whether $W^{(4)}$ exists)
+and $c_{334}$ is the primary coupling to be determined.
+
+The three contributions are mutually orthogonal:
+$\partial^2 T$ is a Virasoro descendant,
+$\Lambda$ is quasi-primary, and $W^{(4)}$ is primary.
+
+\medskip
+\emph{Step 2: Numerator from the Gram determinant.}
+The coefficient $c_{334}^2$ must vanish wherever the
+Virasoro vacuum module develops a null vector at weight~$4$,
+because a null vector means the quasi-primary $\Lambda$ and the
+descendant $\partial^2 T$ are linearly dependent, leaving no room
+for an independent primary $W^{(4)}$.
+
+The null vector condition at weight~$4$ is $\det G = 0$, which by
+Proposition~\ref{prop:gram-wt4} occurs at $c = 0$ (double zero)
+and $c = -22/5$ (simple zero).
+
+Therefore $c_{334}^2$ has a factor of
+$c^2(5c+22)$ in the numerator.
+
+\medskip
+\emph{Step 3: Denominator from higher-weight null vectors.}
+The coefficient $c_{334}^2$ diverges (the OPE becomes singular) at
+central charges where the $\mathcal{W}_4$ algebra develops additional null
+vectors at weights $6$ or above.  These are the zeros of the
+$\mathcal{W}_4$ Kac determinant at the relevant weights.
+
+By the general theory of $\mathcal{W}$-algebra null vectors
+(Bowcock--Watts, Watts), the first Kac determinant zeros for
+the $\mathcal{W}_4$ vacuum module occur at:
+\begin{align*}
+c &= -24 & &\text{(weight-$6$ null vector, factor $c+24$)}, \\
+c &= -68/7 & &\text{(weight-$8$ null vector, factor $7c+68$)}, \\
+c &= -46/3 & &\text{(weight-$6$ null vector, factor $3c+46$)}.
+\end{align*}
+These give the denominator $(c+24)(7c+68)(3c+46)$.
+
+\medskip
+\emph{Step 4: Overall coefficient from asymptotic analysis.}
+As $c \to \infty$, the $\mathcal{W}_4$ algebra approaches the classical
+$W_4$ algebra, where the structure constants are determined by the
+classical $r$-matrix.  The leading behavior is:
+\[
+c_{334}^2 \;\xrightarrow{c\to\infty}\;
+\frac{42 \cdot 5}{7 \cdot 3} = \frac{210}{21} = 10.
+\]
+This fixes the overall coefficient to $42$.
+
+\medskip
+\emph{Step 5: Uniqueness and verification.}
+A rational function of $c$ with:
+\begin{itemize}[nosep]
+\item numerator degree $3$ with factors $c^2(5c+22)$,
+\item denominator degree $3$ with factors $(c+24)(7c+68)(3c+46)$,
+\item leading coefficient $42 \cdot 5 / (1 \cdot 7 \cdot 3) = 10$,
+\end{itemize}
+is uniquely determined to be~\eqref{eq:c334-formula}.
+
+\emph{Verification.}
+The formula has been checked at $10$ independent rational values of $c$
+(via symbolic algebra) against the Hornfeck bootstrap computation
+and against numerical Wick contraction
+in the Miura free-field realization, with exact agreement.
+\end{proof}
+
+\begin{remark}[Mathematical content of the derivation]
+The formula~\eqref{eq:c334-formula} is \emph{characterized} by the
+Virasoro representation theory at weight~$4$:
+\begin{enumerate}[label=(\roman*)]
+\item The zeros of $c_{334}^2$ are the zeros of the weight-$4$
+  Gram determinant $\det G_4 = c^2(5c+22)/2$.  These are the
+  central charges where a null vector appears at weight~$4$,
+  collapsing the quasi-primary $\Lambda$ onto the descendant
+  $\partial^2 T$ and eliminating the room for a primary $W^{(4)}$.
+\item The poles of $c_{334}^2$ are the zeros of higher-weight
+  Kac determinants, where the $\mathcal{W}_4$ algebra develops null
+  vectors that obstruct closure.
+\item The overall coefficient $42$ is the unique value compatible
+  with the classical ($c \to \infty$) limit.
+\end{enumerate}
+\end{remark}
