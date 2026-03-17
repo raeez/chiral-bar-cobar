@@ -12,8 +12,9 @@ is the trace of this transform --- its degree-zero projection
 onto the determinant line bundle.  The full transform carries
 the entire shadow Postnikov tower into the cohomology ring of
 the moduli space, and its higher-degree components encode the
-cubic, quartic, and (conjecturally) all-arity shadows as
-tautological classes.
+cubic, quartic, and all-arity shadows as
+tautological classes (the all-arity existence is
+Theorem~\ref{thm:mc2-bar-intrinsic}).
 
 The moduli spaces $\overline{\mathcal{M}}_{g,n}$ form a modular
 operad (Getzler--Kapranov~\cite{GeK98}): surfaces glue along
@@ -194,7 +195,7 @@ Each piece of the $E_2$ page contributes a component of the differential:
 \end{itemize}
 The quantum differential $d_{\text{quantum}}$ arises from the curved $A_\infty$ structure at genus~$g$ (the curving element $m_0^{(g)}$ depending on the moduli), which is encoded in the extension data of the spectral sequence (the $E_2$ page alone determines the graded pieces, but the extensions encode the quantum corrections).
 
-The identity $\Dg{g}^{\,2} = 0$ for the total differential at the convolution level is equivalent to the Maurer--Cartan equation for the curved $A_\infty$ structure, which is proved by genus induction in Theorem~\ref{thm:genus-induction-strict}.  (At the ambient level with planted-forest corrections, $D^2 = 0$ is Theorem~\ref{conj:differential-square-zero}.)
+The identity $\Dg{g}^{\,2} = 0$ for the total differential at the convolution level is equivalent to the Maurer--Cartan equation for the curved $A_\infty$ structure, which is proved by genus induction in Theorem~\ref{thm:genus-induction-strict}.  (At the ambient level with planted-forest corrections, $D^2 = 0$ is Theorem~\ref{thm:ambient-d-squared-zero}.)
 Concretely, the curving element $m_0^{(g)}$ at each genus is the
 genus-$g$ component of the universal Maurer--Cartan class
 $\Theta_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$
@@ -724,6 +725,15 @@ The chain-level modular functor of the preceding subsection carries a
 natural holographic interpretation: the bulk algebra is recovered as
 the derived center of the boundary, and factorization homology produces
 genus-graded state spaces equipped with a modular partition function.
+The complete packaging of these ingredients---bulk algebra, Koszul-dual
+defect algebra, line-operator category, genus-zero $r$-matrix, modular
+MC class, and shadow connection---is the \emph{holographic modular
+Koszul datum} $\mathcal{H}(T)$
+(Definition~\ref{def:holographic-modular-koszul-datum}).  The modular
+$r$-matrix of Definition~\ref{def:modular-r-matrix-genus} below is the
+genus-refined specialization of the binary collision residue
+$\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA) = r(z)$
+(equation~\eqref{eq:collision-residue-identification}).
 
 \subsubsection{The holographic/Koszul dictionary}
 
@@ -760,7 +770,7 @@ specifies a coherent coupling of bulk fields to boundary data.
 
 \subsubsection{Modular state spaces via factorization homology}
 
-\begin{definition}[Genus-graded holographic state spaces; \ClaimStatusConjectured]
+\begin{definition}[Genus-graded holographic state spaces]
 \label{def:holographic-state-spaces}
 \index{factorization homology!holographic state spaces}
 Let $L_1, \dotsc, L_n \in \mathcal{C}_T$ be line operators in the
@@ -776,7 +786,7 @@ where the integral denotes factorization homology over the
 genus-$g$ surface $\Sigma_{g,n}$ with $n$ boundary punctures.
 \end{definition}
 
-\begin{definition}[Genus-graded holographic partition function; \ClaimStatusConjectured]
+\begin{definition}[Genus-graded holographic partition function]
 \label{def:holographic-partition-function}
 \index{partition function!genus-graded holographic}
 The all-genera holographic partition function is
@@ -797,7 +807,7 @@ tracking the genus and $t$ tracking the number of insertions.
 
 \subsubsection{The modular Yangian kernel}
 
-\begin{definition}[Modular $r$-matrix; \ClaimStatusConjectured]
+\begin{definition}[Modular $r$-matrix]
 \label{def:modular-r-matrix-genus}
 \index{r-matrix@$r$-matrix!modular genus-refined}
 The \emph{modular Yangian kernel} is the genus-refined $r$-matrix
@@ -818,7 +828,7 @@ genus-refined, curve-valued OPE kernel.
 
 \subsubsection{Descendant holographic amplitudes}
 
-\begin{definition}[Descendant holographic amplitudes; \ClaimStatusConjectured]
+\begin{definition}[Descendant holographic amplitudes]
 \label{def:descendant-hol-amplitudes}
 \index{holographic amplitudes!descendant}
 For operators $O_1, \dotsc, O_n$ and non-negative integers
@@ -981,6 +991,33 @@ charge.  This is where $\operatorname{CW}_{\cA}$ provides strictly
 more information than $\kappa$ alone.
 \end{example}
 
+\begin{remark}[Completion entropy is genus-independent]
+\label{rem:entropy-genus-independent}
+\index{completion entropy!genus-independence}
+The completion entropy $h_K(\cA) = \log(\rho_\cA^{-1})$
+(Definition~\ref{def:completion-entropy}) is a purely kinematic
+invariant: it depends only on the vacuum character $\chi_\cA(q)$,
+not on the genus, the curvature $\kappa(\cA)$, or any OPE
+structure constants.  In the language of the Chern--Weil transform,
+$h_K(\cA)$ is a \emph{zero-genus, zero-order} invariant --- it
+measures the combinatorial growth of the completed bar complex
+before any genus correction or shadow data is imposed.  The
+genus-$g$ corrections (Theorem~D, the shadow Postnikov tower,
+the modular QME) act on a fixed kinematic substrate whose
+complexity is $h_K$.
+
+In particular, the Virasoro involution $c \mapsto 26 - c$ preserves
+$h_K(\mathrm{Vir})$ but changes the scalar shadow
+$\kappa \mapsto 13 - \kappa$.  The entropy ladder
+$h_K(\mathcal{W}_2) < h_K(\mathcal{W}_3) < \cdots <
+h_K(\mathcal{W}_\infty)$
+(Proposition~\ref{prop:wn-entropy-ladder}) is a \emph{static}
+landscape invariant: it does not flow with genus.  This
+genus-independence is the deepest reason that the Chern--Weil
+channels (scalar, spectral, resonance, line) all operate on the
+same kinematic base.
+\end{remark}
+
 \subsection{The complementarity Legendrian}
 \label{subsec:complementarity-legendrian}
 
@@ -1118,8 +1155,9 @@ $\operatorname{tr}(\Theta_\cA)$ reads off
 $\Theta_\cA^{\leq 2} = \kappa$ (proved); the spectral
 projection reads off $\Delta_\cA$ (proved at finite order);
 the resonance tower reads off $\Theta_\cA^{\leq r}$ for
-$r \geq 4$ (proved constructively, conjectural as
-$r \to \infty$).
+$r \geq 4$ (proved constructively; the all-arity limit exists
+by the bar-intrinsic construction,
+Theorem~\ref{thm:mc2-bar-intrinsic}).
 \end{theorem}
 
 \begin{proof}
@@ -1153,3 +1191,360 @@ is a nontrivial function of $c$ invisible to the scalar genus
 expansion.  This is the first place where the modular homotopy type
 carries strictly more information than the $\hat{A}$-genus.
 \end{remark}
+
+% ==========================================
+% ANALYTIC COMPLETION AND THE SEWING ENVELOPE
+% ==========================================
+
+\section{Analytic completion and the sewing envelope}
+\label{sec:analytic-completion}
+\index{sewing envelope|textbf}
+\index{analytic completion|textbf}
+
+The modular invariant hierarchy of the preceding section is purely
+algebraic: it computes formal cohomological invariants of the bar
+complex, not analytic data tied to Hilbert spaces, traces, or
+partition functions.  A genuine local-to-global machine---one that
+produces convergent partition functions from local OPE data---requires
+an analytic completion.  Recent work of
+Moriwaki~\cite{Moriwaki26a, Moriwaki26b} constructs conformally flat
+factorization homology valued in $\operatorname{IndHilb}$ by left Kan
+extension from conformally flat disk algebras, with sphere values
+recovering CFT partition functions under positivity and continuity
+assumptions; the Heisenberg case is made explicit via the Bergman
+space~$\operatorname{Sym} A^2(D)$.  Combined with the conformal
+Osterwalder--Schrader axioms of
+Adamo--Moriwaki--Tanimoto~\cite{AMT24} for unitary full VOAs, this
+points toward a canonical bridge between the algebraic engine of this
+monograph and analytic field theory.
+
+This section formulates the bridge.
+
+\subsection{The sewing envelope}\label{subsec:sewing-envelope}
+\index{sewing envelope!definition}
+
+\begin{definition}[Sewing envelope]%
+\label{def:sewing-envelope}%
+Let $\cA_{\mathrm{alg}}$ be an algebraic chiral core with algebraic
+amplitudes~$A_\Sigma^{\mathrm{alg}}$ for every finite conformally
+flat bordism~$\Sigma$ with parametrized in/out collars.  For every
+matrix coefficient of every such amplitude, define a seminorm
+on~$\cA_{\mathrm{alg}}$:
+\[
+p_{\Sigma,\xi,\eta}(a)
+\;=\;
+\bigl|\langle \eta,\,
+A_\Sigma^{\mathrm{alg}}
+(\xi_1 \otimes \cdots \otimes a \otimes \cdots \otimes \xi_m)
+\rangle\bigr|.
+\]
+The \emph{sewing envelope}~$\cA^{\mathrm{sew}}$ is the Hausdorff
+completion of~$\cA_{\mathrm{alg}}$ for the locally convex topology
+generated by all seminorms~$p_{\Sigma,\xi,\eta}$.
+\end{definition}
+
+This is the minimal completion that remembers every local-to-global
+operation at once.
+
+\begin{proposition}[Universal property of the sewing envelope;
+\ClaimStatusConjectured]\label{prop:sewing-universal-property}%
+\index{sewing envelope!universal property}%
+If $E$ is any complete locally convex realization of\/
+$\cA_{\mathrm{alg}}$ for which every algebraic amplitude extends
+continuously, then the identity on~$\cA_{\mathrm{alg}}$ extends
+uniquely to a continuous map
+$\cA^{\mathrm{sew}} \to E$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Every such realization makes each seminorm $p_{\Sigma,\xi,\eta}$
+continuous.  Hence the identity
+$\cA_{\mathrm{alg}} \to E$ is continuous for the sewing topology.
+By completeness of~$E$, it extends uniquely from the completion.
+\end{proof}
+
+\subsection{Hilbert--Schmidt sewing}\label{subsec:hs-sewing}
+\index{Hilbert--Schmidt sewing|textbf}
+
+To obtain genuine partition functions rather than formal gluing laws,
+one needs a quantitative condition on the multiplication maps.
+
+\begin{definition}[HS-sewing condition]%
+\label{def:hs-sewing}%
+Let $H = \widehat{\bigoplus}_{n \geq 0} H_n$ be a graded pre-Hilbert
+core, and write the pair-of-pants multiplication as sector maps
+$m_{a,b}^c \colon H_a \,\widehat{\otimes}\, H_b \to H_c$.
+Say $\cA$ satisfies \emph{HS-sewing} if there
+exists $0 < q < 1$ such that
+\begin{equation}\label{eq:hs-sewing}
+\sum_{a,b,c \geq 0} q^{a+b+c}\,
+\|m_{a,b}^c\|_{\mathrm{HS}}^2
+\;<\; \infty.
+\end{equation}
+Define the \emph{weighted completion}
+$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$.
+\end{definition}
+
+\begin{proposition}[Closed amplitudes become trace class;
+\ClaimStatusConjectured]\label{prop:hs-trace-class}%
+Under HS-sewing, the weighted pair-of-pants map
+$m_q \colon H_q \,\widehat{\otimes}\, H_q \to H_q$
+is Hilbert--Schmidt.  Every closed amplitude obtained from finitely
+many pairs of pants, cups, and caps is trace class on the relevant
+weighted state space.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The square Hilbert--Schmidt norm of~$m_q$ is the defining
+sum~\eqref{eq:hs-sewing}.  A closed sewing diagram factors as a
+finite composition of bounded collar-identification maps and
+pair-of-pants maps.  Any composition containing two
+Hilbert--Schmidt factors is trace class.
+\end{proof}
+
+This is the point where formal factorization becomes analytic
+local-to-global: sewing amplitudes become honest operators with
+well-defined traces, and partition functions become convergent sums
+rather than formal series.
+
+\subsection{Analytic bar coalgebra and Koszul pairs}%
+\label{subsec:analytic-bar-koszul}%
+\index{bar coalgebra!analytic}
+
+\begin{definition}[Analytic bar coalgebra]%
+\label{def:analytic-bar-coalgebra}%
+For an $\mathsf{E}_1$-type chiral core~$\cA_{\mathrm{alg}}$, define
+the $n$-th completed bar piece by closing the algebraic bar sector
+inside the sewing envelope:
+\[
+\barB_n^{\mathrm{an}}(\cA)
+\;=\;
+\overline{
+\cA_{\mathrm{alg}}^{\otimes n}
+\otimes \Omega^*_{\log}(C_n(X))
+}^{\,\|\cdot\|_{\mathrm{graph}(d_{\mathrm{bar}})}},
+\]
+where the closure is taken in the graph norm of the closable
+residue operator~$d_{\mathrm{bar}} = \sum_{i<j}
+\operatorname{Res}_{z_i = z_j} \circ Y_{ij}$.
+\end{definition}
+
+This is the analytic closure of the algebraic bar construction
+(Definition~\ref{def:bar-differential-complete}), not a different
+construction.
+
+\begin{proposition}[Positive grading implies conilpotency;
+\ClaimStatusConjectured]\label{prop:analytic-conilpotency}%
+Let $C = \widehat{\bigoplus}_{n \geq 0} C_n$ be a coaugmented
+completed coalgebra with $C_0 = \mathbb{C}$, and suppose the reduced
+coproduct preserves total degree:
+$\bar{\Delta}(C_n) \subset
+\widehat{\bigoplus}_{i+j=n,\; i,j>0} C_i \,\widehat{\otimes}\, C_j$.
+Then $C$ is conilpotent.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Every application of~$\bar{\Delta}$ splits positive degree into a
+sum of positive degrees.  Hence
+$\bar{\Delta}^{(N)}(C_n) = 0$ for $N > n$.
+\end{proof}
+
+\begin{definition}[Analytic Koszul pair]%
+\label{def:analytic-koszul-pair}%
+\index{Koszul pair!analytic}%
+An \emph{analytic Koszul pair} $(\cA, \cA^!)$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a sewing envelope $\cA^{\mathrm{sew}}$
+  (Definition~\ref{def:sewing-envelope}),
+\item an analytic bar coalgebra $\barB^{\mathrm{an}}(\cA)$
+  (Definition~\ref{def:analytic-bar-coalgebra}),
+\item a genus-zero equivalence
+  $D^{\mathrm{an}}_{\mathrm{compl}}(\cA\text{-mod})
+  \simeq
+  D^{\mathrm{an}}_{\mathrm{conil}}
+  (\barB^{\mathrm{an}}(\cA)\text{-comod})$,
+\item under finite-type dualizability, an identification of
+  conilpotent analytic comodules with complete
+  $\cA^!$-modules.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Curvature forces coderived passage]%
+\label{rem:curvature-coderived-analytic}%
+\index{coderived category!analytic motivation}%
+At genus~$g$, if the completed bar object carries a curvature term
+$\mcurv{g} \neq 0$, then ordinary cohomology fails because the
+differential satisfies $d^2 = \mcurv{g} \cdot (-)$, and honest
+cohomology stops being functorial under sewing.  The correct
+receptacle is the coderived/contraderived analytic category
+(\S\ref{subsec:coderived-ran}), not an ordinary derived category.
+This is the mechanism by which higher-genus local-to-global data
+remain nontrivial after completion.
+\end{remark}
+
+\subsection{Analytic shadows and the shadow partition function}%
+\label{subsec:analytic-shadows}%
+\index{shadow!analytic}
+
+\begin{definition}[Analytic shadow]%
+\label{def:analytic-shadow}%
+For each genus~$g$, define the \emph{analytic shadow}
+\[
+Q_g^{\mathrm{an}}(\cA)
+\;:=\;
+D^{\mathrm{co}}\!\bigl(
+\barB_g^{\mathrm{an}}(\cA)\text{-comod}\bigr).
+\]
+When $\mcurv{g} = 0$, this reduces to the cohomological shadow
+$\operatorname{Sh}_g(\cA) = H^*\Gamma(\barB_g^{\mathrm{an}}(\cA))$.
+A \emph{complementarity operator} is an involution
+$\sigma_g \colon Q_g^{\mathrm{an}}(\cA) \to Q_g^{\mathrm{an}}(\cA)$
+induced by duality plus sewing reversal.
+\end{definition}
+
+\begin{definition}[Shadow partition function]%
+\label{def:shadow-partition-function}%
+\index{partition function!shadow}%
+When $q^{L_0}\sigma_g$ is trace class on $Q_g^{\mathrm{an}}(\cA)$,
+define the \emph{shadow partition function}
+\begin{equation}\label{eq:shadow-partition-function}
+Z_g^{\mathrm{sh}}(\cA; \tau)
+\;=\;
+\operatorname{Str}_{Q_g^{\mathrm{an}}(\cA)}
+\!\bigl(\sigma_g\, q^{L_0 - c/24}\bigr).
+\end{equation}
+By Proposition~\ref{prop:hs-trace-class}, HS-sewing is exactly the
+hypothesis that makes this analytic trace converge on a right
+half-plane.
+\end{definition}
+
+\begin{proposition}[Centers survive analytic Koszul duality;
+\ClaimStatusConjectured]\label{prop:analytic-center-invariance}%
+Assume an analytic Koszul equivalence
+$\Phi \colon D^{\mathrm{an}}_{\mathrm{compl}}(\cA)
+\xrightarrow{\,\sim\,}
+D^{\mathrm{an}}_{\mathrm{compl}}(\cA^!)$
+sending vacuum to vacuum.  Then
+\[
+Z^{\mathrm{an}}(\cA) \;\cong\; Z^{\mathrm{an}}(\cA^!),
+\qquad
+Z^{\mathrm{an}}(\cA) := \operatorname{End}(\mathbf{1}_\cA).
+\]
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Equivalences preserve endomorphism algebras of distinguished
+objects.
+\end{proof}
+
+This is the first hint that any genuine shadow or complementarity
+invariant belongs on the completed/global side, not on the bare
+algebraic presentation.
+
+\subsection{The platonic chain}%
+\label{subsec:platonic-chain}
+
+\begin{remark}[The platonic ideal form]%
+\label{rem:platonic-ideal-form}%
+\index{platonic ideal form}%
+The platonic ideal form of a chiral algebra is not the bare
+algebra~$\cA_{\mathrm{alg}}$.  It is the chain
+\begin{equation}\label{eq:platonic-chain}
+\underbrace{\cA_{\mathrm{alg}}}_{\text{algebraic core}}
+\;\subset\;
+\underbrace{\cA^{\mathrm{sew}}}_{\text{sewing envelope}}
+\;\rightsquigarrow\;
+\underbrace{F_\cA \in
+\operatorname{IndHilb}}_{\text{Hilbert factorization theory}}
+\;\rightsquigarrow\;
+\underbrace{Q_\bullet^{\mathrm{an}}(\cA)}_{\text{coderived shadow
+invariants}},
+\end{equation}
+where $F_\cA$ denotes the $\operatorname{IndHilb}$-valued conformally
+flat factorization theory obtained by left Kan extension
+\`a~la~Moriwaki~\cite{Moriwaki26a}.  The algebra alone is only the
+skeleton; the analytic sewing completion, the boundary/defect module
+theory $M_\partial^{\mathrm{an}}(\cA)$, and the coderived genus tower
+$Q_\bullet^{\mathrm{an}}(\cA)$ are the organs.
+
+If the formal shadow invariants of
+\S\ref{subsec:nonlinear-modular-hierarchy} have a genuinely
+nonlinear modular shadow, it should appear after completion---on
+completed factorization homology, boundary Hilbert spaces, and
+analytic sewing data---rather than on the bare algebraic chiral
+algebra alone.  The analytic completion is not an add-on; it is the
+first place where formal shadow invariants can interact with
+unitarity and actual partition-function data.
+\end{remark}
+
+\begin{conjecture}[Analytic realization criterion;
+\ClaimStatusConjectured]\label{conj:analytic-realization}%
+\index{analytic realization criterion}%
+Let $V$ be a unitary full VOA satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item its quasi-primary correlators satisfy conformal OS axioms
+  \textup{(}in the sense of Adamo--Moriwaki--Tanimoto
+  \cite{AMT24}\textup{)},
+\item its graded pieces have polynomial spectral growth,
+\item its intertwining OPE maps satisfy HS-sewing
+  \textup{(}Definition~\textup{\ref{def:hs-sewing}}\textup{)}
+  after exponential weight damping.
+\end{enumerate}
+Then $V$ admits a sewing envelope
+$V_{\mathrm{alg}} \to V^{\mathrm{sew}} \in
+\operatorname{IndHilb}$, a conformally flat 2-disk algebra~$F_V$, a
+genus-zero analytic Koszul duality package, and a higher-genus
+coderived shadow $Q_\bullet^{\mathrm{an}}(V)$.
+\end{conjecture}
+
+\begin{remark}[Scope and execution order]%
+\label{rem:analytic-execution-order}%
+\index{analytic completion!execution order}%
+The definitions and propositions above are all \ClaimStatusConjectured{};
+the programme is recorded here to fix definitions and state the
+precise targets.  The execution order is:
+\begin{enumerate}
+\item Prove the Heisenberg sewing theorem
+  (Conjecture~\ref{conj:heisenberg-sewing}): this locks the
+  local completion, the sewing analysis, and the analytic bar
+  package to one explicit Gaussian model.
+\item Verify the HS-sewing criterion in the Heisenberg model with
+  explicit one-particle estimates: determinants and partition
+  functions become theorems rather than slogans.
+\item Extend from Heisenberg to lattice theories via analytic
+  theta-data: charge sectors with Hilbert control.
+\item Prove the realization criterion
+  (Conjecture~\ref{conj:analytic-realization}) for unitary full
+  VOAs covered by the OS result.
+\item Build the higher-genus coderived shadow and its
+  complementarity involution.
+\end{enumerate}
+The Heisenberg case is the decisive prototype: once it is in hand,
+the rest becomes deformation theory around a solved analytic core.
+\end{remark}
+
+\begin{definition}[Analytic boundary condition]%
+\label{def:analytic-boundary-condition}%
+\index{boundary condition!analytic}%
+An \emph{analytic boundary condition} for~$\cA$ is a complete
+module~$M$ equipped with continuous half-disk actions
+$\cA(U) \,\widehat{\otimes}\, M(I) \to M(I')$
+compatible with collar sewing and reflection.
+\end{definition}
+
+\begin{conjecture}[Boundary bar duality;
+\ClaimStatusConjectured]\label{conj:boundary-bar-duality}%
+\index{boundary condition!bar duality}%
+For an analytically Koszul~$\cA$
+\textup{(}Definition~\textup{\ref{def:analytic-koszul-pair}}\textup{)}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item at genus~$0$, completed boundary modules
+  \textup{(}Definition~\textup{\ref{def:analytic-boundary-condition}}\textup{)}
+  are equivalent to analytic comodules over
+  $\barB^{\mathrm{an}}(\cA)$;
+\item at curved genus, the correct objects are analytic contramodules
+  over the curved dual.
+\end{enumerate}
+This is where branes, open strings, and boundary chiral algebras
+should live in the analytic framework.
+\end{conjecture}

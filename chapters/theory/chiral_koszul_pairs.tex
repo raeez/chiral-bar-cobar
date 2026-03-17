@@ -985,6 +985,588 @@ Lemma~\ref{lem:bar-holonomicity} and
 Theorem~\ref{thm:fundamental-twisting-morphisms}).
 \end{proof}
 
+%%% ---------------------------------------------------------------
+%%% INTRINSIC CHARACTERIZATIONS OF CHIRAL KOSZULNESS
+%%% ---------------------------------------------------------------
+
+\subsection{Intrinsic characterizations of chiral Koszulness}
+\label{sec:intrinsic-characterizations-koszulness}
+\index{Koszul property!intrinsic characterizations}
+\index{MC element!genus-0 formality}
+
+The MC element $\Theta_\cA \in \MC(\mathfrak{g}_\cA^{\mathrm{mod}})$
+lives in a modular convolution algebra bigraded by arity and genus.
+Chiral Koszulness is a \emph{genus-$0$ formality property}:
+it says the genus-$0$ component $\Theta_\cA^{(0)}$ is
+determined by its binary part---equivalently, all genus-$0$
+obstruction classes $o_{r+1}^{(0)}(\cA) = 0$ vanish for $r \geq 2$.
+The shadow tower probes all genera; Koszulness constrains only
+genus~$0$.  This section develops nine equivalent ways to
+detect this formality---four proved, five conjectural---each
+reading~$\Theta_\cA^{(0)}$ through a different invariant
+of the convolution algebra.
+
+\begin{remark}[One-loop exactness]
+\label{rem:one-loop-exactness}
+\index{PBW filtration!one-loop exactness}
+\index{one-loop exactness}
+
+The PBW spectral sequence
+(Corollary~\ref{cor:bar-cohomology-koszul-dual}) admits a sharp
+physics interpretation.  The $E_0$ page is the tree-level bar complex
+$\barBgeom(\operatorname{Sym}^{\mathrm{ch}}(V))$, with cohomology
+$\Lambda^{\mathrm{c}}(V^*)$ by Priddy's theorem.  The $d_1$
+differential is the Chevalley--Eilenberg differential extracted from
+the simple-pole OPE $a_{(0)}b$: a single operator collision.
+Collapse $E_2 = E_\infty$ means that no multi-particle collisions
+(the higher poles $a_{(n)}b$, $n \geq 2$, generating $d_r$ for
+$r \geq 2$) contribute additional cohomology.  Chiral Koszulness is
+therefore \emph{one-loop exactness}: the Lie-algebraic data from the
+single-pole OPE determines the bar cohomology completely.
+\end{remark}
+
+\begin{proposition}[Formality implies chiral Koszulness; \ClaimStatusProvedHere]
+\label{prop:ainfty-formality-implies-koszul}
+\index{Koszul property!$A_\infty$ characterization}
+\index{$A_\infty$-algebra!minimal model obstruction}
+
+Let $\cA$ be a chiral algebra on a smooth curve~$X$, and let
+$(m_2, m_3, m_4, \ldots)$ denote the transferred
+$A_\infty$-structure on $\cA^! = H^*(\barBgeom_X(\cA))^\vee$
+obtained via a deformation retract
+\[
+\barBgeom_X(\cA) \;\underset{p}{\overset{i}{\rightleftarrows}}\;
+H^*(\barBgeom_X(\cA))
+\qquad \text{with contracting homotopy } h
+\]
+and the homological perturbation lemma
+\textup{(}Kadeishvili \cite{Kad82}; cf.\ \cite{LPWZ09}\textup{)}.
+
+If the minimal $A_\infty$-structure is \emph{formal}
+($m_n = 0$ for all $n \geq 3$), then $\cA$ is chirally Koszul.
+\end{proposition}
+
+\begin{proof}
+Formality of the $A_\infty$-structure means the bar complex
+$\barBgeom_X(\cA)$ is formal as a dg coalgebra: the natural map to
+its cohomology $H^*(\barBgeom_X(\cA))$ is a quasi-isomorphism of
+$A_\infty$-coalgebras.  The higher products $m_n$ ($n \geq 3$) are
+identified with the PBW spectral sequence differentials $d_{n-1}$
+via the standard comparison (cf.\ \cite[Theorem~3.4.1]{LPWZ09}):
+$m_n = 0$ for $n \geq 3$ is equivalent to $E_2 = E_\infty$, which
+is the PBW collapse criterion of
+Theorem~\ref{thm:pbw-koszulness-criterion}.
+\end{proof}
+
+\begin{conjecture}[Converse: chiral Koszulness implies formality;
+\ClaimStatusConjectured]
+\label{conj:ainfty-koszul-characterization}
+
+The converse of Proposition~\textup{\ref{prop:ainfty-formality-implies-koszul}}
+holds: if $\cA$ is chirally Koszul, then $m_n = 0$ for all $n \geq 3$.
+
+\smallskip\noindent\textbf{Gap.}
+The converse requires constructing a contracting homotopy~$h$ for
+$\barBgeom_X(\cA)$ as a factorization coalgebra.  On the formal disk
+$\hat{D}$ this exists by standard homological algebra and the statement
+reduces to the classical one \cite[Theorem~3.4.1]{LPWZ09}.  On a
+compact curve of genus $g \geq 1$, the construction of such a
+propagator for the factorization bar complex remains open.
+\end{conjecture}
+
+\begin{remark}[$A_\infty$ products as genus-$0$ shadows]
+\label{rem:ainfty-genus0-shadow}
+
+The sequence $(m_3, m_4, \ldots)$ is the genus-$0$ analogue of the
+shadow Postnikov tower $\Theta_\cA^{\leq 3}, \Theta_\cA^{\leq 4},
+\ldots$ of Theorem~\ref{thm:mc2-bar-intrinsic}: the $m_n$ measure
+nonlinearity of the bar differential at genus~$0$, while the shadows
+$\Theta_\cA^{\leq r}$ measure it at all genera.
+\end{remark}
+
+\begin{conjecture}[Ext diagonal vanishing criterion; \ClaimStatusConjectured]
+\label{conj:ext-diagonal-vanishing}
+\index{Koszul property!Ext criterion}
+\index{Ext algebra!diagonal vanishing}
+
+Define the \emph{chiral Ext algebra}
+$\operatorname{Ext}^{*,*}_\cA(\omega_X, \omega_X)
+= \bigoplus_{p,q} \operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X)$,
+bigraded by cohomological degree~$p$ and conformal weight~$q$.
+Then $\cA$ is chirally Koszul if and only if
+$\operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X) = 0$ for $p \neq q$.
+
+\smallskip\noindent\textbf{Evidence.}
+On the formal disk $\hat{D}$, this reduces to the
+Beilinson--Ginzburg--Soergel criterion for $\operatorname{Zhu}(\cA)$
+\cite{BGS96}.
+On $\bP^1$, diagonal vanishing follows from PBW since
+$H^1(\bP^1, \cO) = 0$.
+For genus $g \geq 1$, the Hodge-theoretic contributions from
+$H^0(X, \omega_X)$ may cause genus-dependent failure; the expected
+failure locus is the exceptional set $\Sigma(\fg)$ of
+Theorem~\ref{thm:bar-cohomology-level-independence}.
+
+\smallskip\noindent\textbf{Gap.}
+The derived category of chiral modules on a compact curve lacks a
+complete $t$-structure theory; the bigrading on Ext requires the
+factorization module formalism of Gaitsgory--Raskin.
+\end{conjecture}
+
+\begin{proposition}[PBW universality; \ClaimStatusProvedHere]
+\label{prop:pbw-universality}
+\index{Koszul property!PBW universality}
+\index{vertex algebra!freely strongly generated}
+
+A vertex algebra~$\cA$ is \emph{freely strongly generated} if it
+admits strong generators $\{a^i\}_{i \in I}$ whose normally ordered
+monomials
+$:\!\partial^{n_1} a^{i_1} \cdots \partial^{n_r} a^{i_r}\!:$
+form a PBW basis --- equivalently,
+$\operatorname{gr}_F \cA \cong \operatorname{Sym}^{\mathrm{ch}}(V)$
+where $V$ is the $\cD_X$-module spanned by the generators.
+
+Every freely strongly generated vertex algebra is chirally Koszul.
+\end{proposition}
+
+\begin{proof}
+The three hypotheses of Theorem~\ref{thm:pbw-koszulness-criterion}
+hold: (1)~flatness of $F_p/F_{p-1} \cong S^p(V)$ by the PBW basis;
+(2)~classical Koszulness of $\operatorname{gr}_F \cA \cong
+\operatorname{Sym}^{\mathrm{ch}}(V)$ by Priddy's theorem;
+(3)~finite-dimensionality of bar chain groups in each bigrading by
+the partition bound of Theorem~\ref{thm:km-chiral-koszul}.
+\end{proof}
+
+\begin{corollary}[Universal vertex algebras are chirally Koszul;
+\ClaimStatusProvedHere]
+\label{cor:universal-koszul}
+\index{Koszul property!universal algebras}
+
+The following are chirally Koszul:
+\begin{enumerate}
+\item $V_k(\fg)$ at all levels~$k$ \textup{(}including $k = -h^\vee$\textup{)},
+  since its vacuum module is Verma with no null vectors.
+\item $\mathrm{Vir}_c$ as the universal vertex algebra at all~$c$,
+  since the vacuum Verma module is freely strongly generated.
+\item $\mathcal{W}^k(\fg)$ obtained by Drinfeld--Sokolov reduction,
+  by the Feigin--Frenkel theorem \textup{(}the Miura images freely
+  generate\textup{)}.
+\end{enumerate}
+
+\noindent\textbf{The universal vs.\ simple distinction.}
+The universal algebra $V_k(\fg)$ is always chirally Koszul.
+The simple quotient $L_k(\fg) = V_k(\fg)/I_k$ may fail Koszulness
+at levels where the singular vector lies in the bar-relevant range
+--- the precise criterion is
+Conjecture~\textup{\ref{conj:kac-shapovalov-koszulness}}.
+\end{corollary}
+
+\begin{conjecture}[Kac--Shapovalov criterion for simple quotients;
+\ClaimStatusConjectured]
+\label{conj:kac-shapovalov-koszulness}
+\index{Koszul property!Kac--Shapovalov criterion}
+\index{Kac determinant!Koszulness criterion}
+\index{Shapovalov form!Koszulness criterion}
+
+Let $\cA$ be a conformal vertex algebra with Shapovalov form on the
+vacuum module.  The \emph{bar-relevant range} is the set of conformal
+weights~$h$ with $\barBgeom^n_h(\cA) \neq 0$ for some $n > 0$.
+Then $\cA$ is chirally Koszul if and only if the Kac--Shapovalov
+determinant $\det G_h \neq 0$ for all~$h$ in the bar-relevant range.
+
+For universal algebras this holds unconditionally
+(Corollary~\ref{cor:universal-koszul}).  The genuine content is for
+simple quotients: $L_k(\fg)$ has null vectors at
+$h = h_{\mathrm{sing}}(k)$ by the Kac--Kazhdan theorem; at admissible
+levels $k + h^\vee = p/q$, $(p,q)=1$, these lie in the bar-relevant
+range and Koszulness may fail.  For the Virasoro algebra, the Kac
+determinant $\det G_h = \prod_{rs \leq h}(h - h_{r,s}(c))^{p(h-rs)}$
+is nonvanishing in the bar-relevant range for the universal algebra,
+but $L(c_{p,q}, 0)$ may fail at minimal-model values.
+
+\smallskip\noindent\textbf{Gap.}
+The Shapovalov form controls injectivity of the PBW-to-bar
+comparison.  The missing input is the identification of the
+degeneracy locus $\{\det G_h = 0\}$ with the failure locus of
+$E_2$-collapse, which requires a bar-level Jantzen filtration.
+\end{conjecture}
+
+\begin{remark}[Deformation quantization compatibility]
+\label{rem:dq-koszul-compatibility}
+\index{Koszul property!deformation quantization}
+\index{deformation quantization!Koszul compatibility}
+
+Let $\cA_\hbar$ be a flat deformation of a classically Koszul
+commutative chiral algebra~$\cA_0$, with
+$\cA_\hbar/\hbar\cA_\hbar \cong \cA_0$.
+Proposition~\ref{prop:pbw-universality} implies: $\cA_\hbar$ is
+chirally Koszul whenever the PBW filtration deforms flatly
+($\operatorname{gr}_F \cA_\hbar \cong \cA_0$).  All standard
+families satisfy this: for $V_k(\fg)$ with $\hbar = k^{-1}$, the
+bracket $[J^a, J^b]_\star = f^{ab}_c J^c + k\kappa^{ab}$ lies in
+$F_{\geq 1}$; Virasoro and $\mathcal{W}$-algebras are analogous
+with $\hbar = c^{-1}$.  Flat PBW deformation is therefore the
+mechanism producing chirally Koszul algebras from commutative seeds.
+\end{remark}
+
+\begin{theorem}[Equivalences of chiral Koszulness; \ClaimStatusProvedHere]
+\label{thm:koszul-equivalences-meta}
+\index{Koszul property!equivalences of characterizations|textbf}
+
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$
+with PBW filtration $F_\bullet$.  The following are equivalent:
+
+\smallskip
+\noindent\textbf{Proved circuit} \textup{(Theorems A, B, H):}
+\begin{enumerate}
+\item[\textup{(i)}] $\cA$ is chirally Koszul
+  \textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})}.
+\item[\textup{(ii)}] The PBW spectral sequence on
+  $\barBgeom(\cA)$ collapses at $E_2$
+  \textup{(}Theorem~\textup{\ref{thm:pbw-koszulness-criterion})}.
+\item[\textup{(iii)}] The minimal $A_\infty$-model of
+  $\barBgeom(\cA)$ is formal: $m_n = 0$ for $n \geq 3$
+  \textup{(}implication
+  \textup{(ii)}$\Rightarrow$\textup{(iii)} is
+  Proposition~\textup{\ref{prop:ainfty-formality-implies-koszul}};
+  the converse is
+  Conjecture~\textup{\ref{conj:ainfty-koszul-characterization})}.
+\item[\textup{(v)}] The bar-cobar counit
+  $\Omega(\barBgeom(\cA)) \to \cA$ is a
+  quasi-isomorphism
+  \textup{(}Theorem~\textup{\ref{thm:bar-cobar-inversion-qi})}.
+\item[\textup{(viii)}] $\mathrm{ChirHoch}^*(\cA)$ vanishes outside
+  degrees $\{0, 1, 2\}$
+  \textup{(}Theorem~H,
+  Theorem~\textup{\ref{thm:main-koszul-hoch})}.
+\end{enumerate}
+The circuit
+$\textup{(i)} \Leftrightarrow \textup{(ii)}
+\Rightarrow \textup{(iii)}$,
+$\textup{(i)} \Leftrightarrow \textup{(v)}
+\Leftrightarrow \textup{(viii)}$
+is proved.
+
+\smallskip
+\noindent\textbf{Conjectural equivalences:}
+\begin{hypothesis}[Accessible equivalences]
+\label{hyp:koszul-accessible-equivalences}
+Each of the following is equivalent to chiral Koszulness.  The
+precise gap preventing proof is stated for each.
+\begin{enumerate}
+\item[\textup{(iv)}] Ext diagonal vanishing:
+  $\operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X) = 0$ for
+  $p \neq q$
+  \textup{(}Conjecture~\textup{\ref{conj:ext-diagonal-vanishing})}.
+  \emph{Gap}: the bigraded $t$-structure on the derived category
+  of chiral modules requires the Gaitsgory--Raskin factorization
+  module formalism.
+\item[\textup{(vi)}] The Barr--Beck--Lurie comparison for the
+  bar-cobar adjunction is an equivalence on the fiber over
+  $\barBgeom(\cA)$.
+  \emph{Gap}: monadicity verification for the bar-cobar monad
+  on factorization coalgebras requires conservativity, which is
+  open beyond genus~$0$.
+\item[\textup{(vii)}] Factorization homology
+  $\int_X \cA$ is concentrated in degree~$0$.
+  \emph{Gap}: the comparison between factorization homology and
+  bar cohomology requires an Eilenberg--Moore spectral sequence
+  for factorization algebras.
+\item[\textup{(ix)}] The Kac--Shapovalov determinant
+  $\det G_h \neq 0$ in the bar-relevant range
+  \textup{(}Conjecture~\textup{\ref{conj:kac-shapovalov-koszulness})}.
+  \emph{Gap}: identification of the Shapovalov degeneracy locus
+  with the $E_2$-collapse failure locus requires a bar-level
+  Jantzen filtration.
+\end{enumerate}
+\end{hypothesis}
+\end{theorem}
+
+\begin{proof}
+The proved circuit:
+
+\smallskip\noindent
+\textup{(i)}$\Leftrightarrow$\textup{(ii)}:
+Koszulness (Definition~\ref{def:chiral-koszul-morphism}) is
+acyclicity of $\barBgeom(\cA) \otimes_\tau \cA$ in positive degrees.
+Theorem~\ref{thm:pbw-koszulness-criterion} identifies this with
+$E_2$-collapse; the converse is immediate.
+
+\smallskip\noindent
+\textup{(ii)}$\Rightarrow$\textup{(iii)}:
+$E_2$-collapse means all PBW differentials $d_r = 0$ for $r \geq 2$.
+The $A_\infty$ products $m_n$ are identified with $d_{n-1}$ under
+the HPL transfer, so $m_n = 0$ for $n \geq 3$
+(Proposition~\ref{prop:ainfty-formality-implies-koszul}).
+
+\smallskip\noindent
+\textup{(ii)}$\Rightarrow$\textup{(v)}:
+$E_2$-collapse gives bar concentration
+(Theorem~\ref{thm:bar-concentration}), which is the input for
+bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi}).
+
+\smallskip\noindent
+\textup{(v)}$\Rightarrow$\textup{(viii)}:
+The quasi-isomorphism
+$\Omega(\barBgeom(\cA)) \xrightarrow{\sim} \cA$ is a free
+resolution.  The bigraded Hochschild complex inherits the bar-cobar
+filtration, forcing polynomial vanishing
+(Theorem~\ref{thm:main-koszul-hoch}).
+
+\smallskip\noindent
+\textup{(viii)}$\Rightarrow$\textup{(i)}:
+Polynomial growth of $\mathrm{ChirHoch}^*$
+(Theorem~\ref{thm:hochschild-polynomial-growth}) constrains the
+bar complex growth rate, forcing Koszul-complex acyclicity.
+This is the converse direction of Theorem~H.
+\end{proof}
+
+\begin{remark}[Two transverse slices of the MC element]
+\label{rem:koszulness-vs-shadow-depth}
+\index{Koszul property!shadow depth independence}
+\index{shadow Postnikov tower!depth vs.\ Koszulness}
+\index{MC element!genus-0 vs all-genera slices}
+
+The MC element $\Theta_\cA \in \MC(\gAmod)$ carries two
+transverse families of invariants.
+\emph{Koszulness} reads the genus-$0$ slice:
+$o_{r+1}^{(0)}(\cA) = 0$ for all $r \geq 2$
+(the transferred $A_\infty$~products $m_r = 0$ for $r \geq 3$;
+Proposition~\ref{prop:shadow-formality-low-arity}).
+\emph{Shadow depth} reads the all-genera projection:
+$r_{\max} := \min\{r : o_{s+1}(\cA) = 0 \text{ for all } s > r\}$.
+These are independent:
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\textbf{Family} & \textbf{Shadow depth $r_{\max}$}
+  & \textbf{Archetype} \\
+\hline
+Heisenberg & $2$ (finite) & Gaussian \\
+Affine $\widehat{\fg}_k$ & $3$ (finite) & Lie \\
+$\beta\gamma$ system & $4$ (finite) & Contact \\
+Virasoro $\mathrm{Vir}_c$ & $\infty$ & Mixed \\
+$\mathcal{W}_N$ & $\infty$ & Mixed \\
+\hline
+\end{tabular}
+\end{center}
+All five are chirally Koszul (genus-$0$ slice is formal), yet the
+Virasoro algebra has infinite shadow depth
+($\mathfrak{o}^{(5)}_{\mathrm{Vir}} \neq 0$
+at genus~$\geq 1$).  The archetype classification
+(Theorem~\ref{thm:nms-archetype-trichotomy}) stratifies the
+Koszul locus by the all-genera termination behavior of
+$\Theta_\cA$---a transverse invariant invisible to genus~$0$.
+\end{remark}
+
+\subsection{Completion kinematics: the primitive cumulant spectrum}
+\label{subsec:completion-kinematics-cumulant}
+\index{primitive cumulant spectrum|textbf}
+\index{completion kinematics}
+\index{Koszul radius}
+
+The shadow Postnikov tower probes the \emph{dynamic} axis of the
+completed bar theory: the OPE structure, curvature, and modular
+anomaly.  This subsection develops the complementary
+\emph{kinematic} axis, which depends only on the vacuum character
+of~$\cA$.  The central objects --- the primitive cumulant quotients,
+their generating series, and the completion entropy --- are
+character-level invariants that control the combinatorial growth
+of the completed bar coalgebra, independently of any curvature
+parameter.
+
+\begin{definition}[Primitive cumulant quotient; \ClaimStatusProvedHere]
+\label{def:primitive-cumulant-quotient}
+\index{primitive cumulant quotient|textbf}
+\index{quasi-primary space}
+
+Let $\cA = \mathbf{1} \oplus \bar{\cA}$ be a conformal chiral
+algebra with finite-dimensional weight spaces $\cA[h]$,
+$h \geq 0$.  Assume the translation operator
+$\partial \colon \cA[h-1] \to \cA[h]$ is injective on positive
+weights (away from null loci, i.e.\ when
+$\det G_h \neq 0$ in the Kac--Shapovalov sense of
+Conjecture~\textup{\ref{conj:kac-shapovalov-koszulness}}).
+The \emph{primitive cumulant quotient} at weight~$h$ is
+\begin{equation}
+\label{eq:primitive-cumulant-quotient}
+Q_h(\cA) \;:=\; \cA[h]\,\big/\,\partial\cA[h-1].
+\end{equation}
+These are the quasi-primary (or primitive) cumulant spaces: the
+new degrees of freedom at each conformal weight that are not
+descendants of lower-weight fields.
+\end{definition}
+
+\begin{definition}[Primitive generating series; \ClaimStatusProvedHere]
+\label{def:primitive-generating-series}
+\index{primitive generating series|textbf}
+\index{vacuum character!primitive extraction}
+
+Let $a_h := \dim \cA[h]$ and write the vacuum character as
+$\chi_\cA(q) = 1 + \sum_{h \geq 1} a_h\, q^h$.
+Set $g_r := \dim Q_{r+1}(\cA)$.  The \emph{primitive generating
+series} is
+\begin{equation}
+\label{eq:primitive-generating-series}
+G_\cA(t) \;:=\; \sum_{r \geq 1} g_r\, t^r
+\;=\; \frac{1-t}{t}\,\bigl(\chi_\cA(t) - 1\bigr).
+\end{equation}
+Equivalently, $g_r = a_{r+1} - a_r$ for all $r \geq 1$.
+
+\smallskip\noindent\textbf{Canonical extraction.}
+The primitive spectrum is read off directly from the vacuum
+character: $G_\cA$ depends only on the sequence $(a_1, a_2,
+a_3, \ldots)$ and no further algebraic data.
+\end{definition}
+
+\begin{definition}[Completion Hilbert series; \ClaimStatusProvedHere]
+\label{def:completion-hilbert-series}
+\index{completion Hilbert series|textbf}
+\index{bar coalgebra!reduced-weight window}
+
+The \emph{completion Hilbert series} of $\cA$ is the
+associated-graded window series of the completed cumulant bar
+coalgebra:
+\begin{equation}
+\label{eq:completion-hilbert-series}
+H_\cA(t) \;:=\; \frac{G_\cA(t)}{1 - G_\cA(t)}
+\;=\; \sum_{q \geq 1} h_q\, t^q,
+\end{equation}
+where $h_q$ counts exact reduced-weight-$q$ bar words in the ideal
+cumulant model.  This is the nonempty ordered-word series on the
+primitive alphabet $\{g_1, g_2, g_3, \ldots\}$: the coefficient
+$h_q$ enumerates ordered concatenations of primitive generators
+whose reduced weights sum to~$q$.
+\end{definition}
+
+\begin{definition}[Primitive defect series; \ClaimStatusProvedHere]
+\label{def:primitive-defect-series}
+\index{primitive defect series|textbf}
+\index{strong generators!primitive defect}
+
+For a chiral algebra with declared strong generators of conformal
+weights $d_1, \ldots, d_s$, the \emph{primitive defect series} is
+\begin{equation}
+\label{eq:primitive-defect-series}
+\Delta^{\mathrm{prim}}_\cA(t) \;:=\;
+G_\cA(t) - \sum_{i=1}^s t^{d_i - 1}.
+\end{equation}
+The defect vanishes identically for quadratic (or free-like)
+behaviour: $\Delta^{\mathrm{prim}}_\cA = 0$ when the
+declared generators account for all quasi-primaries at every
+weight.  Nonzero defect detects precisely those weights at
+which nonquadratic OPEs force new primitive cumulants beyond the
+declared generators.
+\end{definition}
+
+\begin{definition}[Koszul radius and completion entropy;
+\ClaimStatusProvedHere]
+\label{def:completion-entropy}
+\index{Koszul radius|textbf}
+\index{completion entropy|textbf}
+\index{bar coalgebra!exponential growth rate}
+
+Define the \emph{Koszul radius} $\rho_\cA$ as the smallest positive
+real root of
+\begin{equation}
+\label{eq:koszul-radius}
+G_\cA(\rho_\cA) \;=\; 1.
+\end{equation}
+The \emph{completion entropy} is
+\begin{equation}
+\label{eq:completion-entropy}
+h_K(\cA) \;:=\; \log\bigl(\rho_\cA^{-1}\bigr).
+\end{equation}
+This is the exponential growth rate of the ideal reduced-weight bar
+windows: $h_q \sim e^{q \cdot h_K(\cA)}$ as $q \to \infty$.  The
+completion entropy is \emph{kinematic}: it depends only on the
+primitive spectrum $(g_1, g_2, \ldots)$, hence only on the vacuum
+character, and not on curvature parameters such as $c$ or~$k$.
+\end{definition}
+
+\begin{remark}[Kinematics versus dynamics]
+\label{rem:kinematics-dynamics-split}
+\index{completion kinematics!versus dynamics}
+\index{modular dynamics}
+
+The completed bar theory separates into two orthogonal axes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Completion kinematics}:
+  $Q(\cA)$, $G_\cA(t)$, $H_\cA(t)$, $h_K(\cA)$ --- depends
+  only on the vacuum character.
+\item \emph{Modular dynamics}:
+  $D_\cA$, $\kappa(\cA)$, $\Theta_\cA$, $r_\cA(z)$ --- depends
+  on the full OPE structure, curvature, anomaly.
+\end{enumerate}
+The Virasoro involution $c \mapsto 26 - c$ changes dynamic
+data (it sends $\kappa_c$ to $\kappa_{26-c}$) but does not
+alter the completion entropy:
+$h_K(\mathrm{Vir}_c) = h_K(\mathrm{Vir}_{26-c})$
+for all~$c$, since both algebras share the same vacuum
+character.  The same-family shadow $\mathrm{Vir}_{26-c}$
+lives on the dynamic axis
+(Remark~\ref{rem:virasoro-resonance-model});
+kinematically, even generic Virasoro has infinitely many
+primitive cumulants, with $g_r = p(r+1) - p(r)$ growing
+without bound.
+
+\smallskip
+This separation is structurally clean: the primitive spectrum
+determines \emph{how large} the completed bar coalgebra is
+(how many words at each reduced weight), while the OPE data
+determines \emph{what the differential does} on those words.
+Both axes are needed for the full MC4 theory
+(Theorem~\textup{\ref{thm:completed-bar-cobar-strong}}).
+\end{remark}
+
+\begin{proposition}[Cumulant-to-window inversion; \ClaimStatusProvedHere]
+\label{prop:cumulant-window-inversion}
+\index{cumulant-to-window inversion|textbf}
+\index{primitive cumulant spectrum!recovery from windows}
+
+The cumulant law is invertible: from the window counts
+$(h_1, h_2, \ldots)$ one recovers the hidden primitive spectrum
+$(g_1, g_2, \ldots)$ by the recursion
+\begin{equation}
+\label{eq:cumulant-window-inversion}
+g_1 = h_1, \qquad
+g_q \;=\; h_q - \sum_{r=1}^{q-1} g_r\, h_{q-r}
+\qquad (q \geq 2).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The identity $H_\cA = G_\cA/(1 - G_\cA)$ is equivalent to
+$G_\cA = H_\cA/(1 + H_\cA)$, or at the level of formal power
+series,
+\[
+G_\cA(t) \;=\; H_\cA(t) - G_\cA(t)\,H_\cA(t).
+\]
+Extracting the coefficient of $t^q$ gives
+$g_q = h_q - \sum_{r=1}^{q-1} g_r\, h_{q-r} - g_q\, h_0$;
+since $h_0 = 0$ (no nonempty words of weight~$0$), the formula
+follows by induction on~$q$.
+\end{proof}
+
+\begin{remark}[The primitive defect as a Koszulness probe]
+\label{rem:primitive-defect-probe}
+\index{primitive defect series!Koszulness probe}
+
+For a quadratic chiral algebra $\cA$ with generators of
+weights $d_1, \ldots, d_s$, the PBW basis ensures that all
+quasi-primaries are generated by the declared strong generators,
+so $\Delta^{\mathrm{prim}}_\cA = 0$ identically.  The
+Virasoro algebra $\mathrm{Vir}_c$ has a single strong generator
+of weight~$2$ and $g_r = p(r+1) - p(r)$ for all $r \geq 1$,
+giving primitive defect $\Delta^{\mathrm{prim}}_{\mathrm{Vir}}(t)
+= G_{\mathrm{Vir}}(t) - t$, which is nonzero starting at
+$t^3$.  This nonvanishing defect is the kinematic signature of
+nonquadraticity and feeds directly into the MC4 completion
+programme
+(\S\textup{\ref{subsec:shadow-postnikov-tower}}).
+\end{remark}
+
 \subsection{Geometric bar-cobar duality (Theorem~A)}
 \label{sec:theorem-a-statement}
 

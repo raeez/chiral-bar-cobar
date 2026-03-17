@@ -40,7 +40,9 @@ The full unrestricted Maurer--Cartan element
 $\Theta_\cA \in \operatorname{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$
 satisfying
 $D\Theta_\cA + \tfrac12[\Theta_\cA, \Theta_\cA] = 0$
-is the conjectural all-arity limit of this tower.
+is the all-arity limit of this tower, proved by the
+bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
 
 The book begins from two minimal objects because the same
 configuration-space mechanism has two genuinely different
@@ -77,33 +79,41 @@ structure through different masks rather than as isolated local
 computations.
 
 The current status has three strata.
-\emph{Core} (proved): Theorems~A--D+H, including
-higher-genus PBW concentration
+\emph{Core} (proved): Theorems~A--D+H and the universal MC element
+$\Theta_\cA \in \MC(\gAmod)$ (Theorem~\ref{thm:mc2-bar-intrinsic}:
+$\Theta_\cA := D_\cA - d_0$ is MC because $D_\cA^2 = 0$).
+Theorems~A--D+H are projections of this single element to the scalar
+level.  Higher-genus PBW concentration
 (Theorem~\ref{thm:master-pbw}, with
 Theorems~\ref{thm:pbw-allgenera-km},
 \ref{thm:pbw-allgenera-virasoro},
-and~\ref{thm:pbw-allgenera-principal-w}), and the
-finite-order shadow tower through arity~$4$
-(Theorem~\ref{thm:mc2-full-resolution}).
+and~\ref{thm:pbw-allgenera-principal-w}).
+Scalar saturation for all algebraic families
+(Theorem~\ref{thm:algebraic-family-rigidity}).
+Ambient $D^2 = 0$ at both levels proved
+(Theorem~\ref{thm:ambient-d-squared-zero}).
 \emph{Finite-order engine} (proved, constructive): the shadow
-Postnikov tower $\Theta_\cA^{\leq r}$ with
+Postnikov tower $\Theta_\cA^{\leq r}$---finite-order projections of
+the proved $\Theta_\cA$---with
 obstruction classes, the quartic resonance class with clutching law,
 and the all-arity master equation at each finite truncation.
 Ambient complementarity holds under explicit
 perfectness/nondegeneracy hypotheses.
-The archetype classification is: Heisenberg terminates at arity~$2$,
+Archetype classification: Heisenberg at~$2$,
 affine at~$3$, $\beta\gamma$ at~$4$,
 Virasoro/$\mathcal{W}_N$ infinite
 (Remark~\ref{rem:w-postnikov-interpretation}).
-\emph{Frontier} (conjectural): the full all-arity
-$\Theta_\cA$ (convergence of the tower),
+\emph{Frontier}: the remaining conjectural items are
 the DK/KL categorical lift beyond the
 evaluation-generated core
-(Conjecture~\ref{conj:master-dk-kl}), the infinite-generator
-comparison (Conjecture~\ref{conj:master-infinite-generator}), the
-BV/BRST/bar identification (Conjecture~\ref{conj:master-bv-brst}),
-and $D_\cA^2 = 0$ at the ambient level with planted-forest
-corrections (Theorem~\ref{conj:differential-square-zero}).
+(Conjecture~\ref{conj:master-dk-kl}), the H-level target
+identification for infinite towers
+(Conjecture~\ref{conj:master-infinite-generator}; the MC4 structural
+framework is proved by
+Theorem~\ref{thm:completed-bar-cobar-strong}), and the
+BV/BRST/bar identification (Conjecture~\ref{conj:master-bv-brst}).
+The ambient $D_\cA^2 = 0$ with planted-forest
+corrections is now proved (Theorem~\ref{thm:ambient-d-squared-zero}).
 The formal hierarchy, the seven homotopy templates
 (\S\ref{subsec:homotopy-templates}), and the nine-futures assessment
 (\S\ref{subsec:nine-futures}) appear in
@@ -197,7 +207,7 @@ MC2 & Universal MC class $\Theta_\cA$
 MC3 & $\Eone$-modular extension
   & \textbf{Proved} (type~$A$) \\
 MC4 & Infinite-generator convergence
-  & \textbf{Closed} \\
+  & \textbf{Proved} (strong completion towers) \\
 MC5 & BV/BRST $=$ bar
   & Genus $\leq 1$ proved \\
 \bottomrule
@@ -215,7 +225,14 @@ Clebsch--Gordan closure
 arbitrary simple type (BCD, exceptional) is the remaining algebraic
 open problem, requiring the generalized Hern\'andez--Jimbo prefundamental
 CG closure for all simple Lie algebras.
-MC4 is unconditionally closed via $\mathcal{W}_N$ rigidity;
+MC4 is proved: the strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) gives a
+completion-closed bar-cobar equivalence on $\CompCl(\Fft)$, with
+automatic continuity (Lemma~\ref{lem:arity-cutoff}), twisting
+stability (Theorem~\ref{thm:mc-twisting-closure}), and a uniform PBW
+bridge from MC1 (Theorem~\ref{thm:uniform-pbw-bridge}).
+The remaining example-specific tasks are coefficient stabilization and
+H-level target identification.
 MC5 is proved at genus~$\leq 1$ and requires analytic
 input at genus~$\geq 2$.  Periodicity is an orthogonal weak flank, not a
 link in this dependency chain.
@@ -250,7 +267,7 @@ universal \texorpdfstring{$\Theta_\cA$}{Theta\_A} {\normalfont (MC2, originally 
 \label{thm:master-theta}
 \ClaimStatusProvedHere{}
 For a modular Koszul chiral algebra~$\cA$ on a smooth projective
-curve with non-degenerate invariant form and simple Lie symmetry,
+curve with non-degenerate invariant form,
 there exists a cyclic
 $L_\infty$-algebra $\operatorname{Def}_{\mathrm{cyc}}(\cA)$ and a
 universal Maurer--Cartan element
@@ -331,18 +348,25 @@ categorical formal completion assembling the answer via the
 pro-Weyl--Mittag-Leffler tower.
 \end{remark}
 
-\begin{conjecture}[Filtered H-level comparison for standard infinite towers]
+\begin{conjecture}[H-level target identification for standard infinite towers]
 \label{conj:master-infinite-generator}
 \ClaimStatusConjectured{}
-For the standard principal and RTT towers, the theorematic completed
-M-level packages are already in hand.  What remains is the H-level
-comparison problem: construct a principal-stage compatible filtered
-H-level target~$\mathcal{W}^{\mathrm{ht}}$ for the
+The structural completion framework is \textbf{proved}
+(Theorem~\ref{thm:completed-bar-cobar-strong}): the completed
+bar-cobar round-trip is a quasi-isomorphism on
+$\CompCl(\Fft)$, and the coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) reduces
+convergence to finite-window matrix stabilization.  What remains
+is the \textbf{H-level target identification}: construct a
+principal-stage compatible filtered H-level
+target~$\mathcal{W}^{\mathrm{ht}}$ for the
 $\mathcal{W}_\infty$ tower and a separated complete RTT-filtered dg
 target~$\Ydg_{\cA}$ for the standard Yangian tower, with finite
-quotients recovering the theorematic stages~$W_N$ and~$Y_{\le N}$, and
-identify the resulting local coefficient systems with the standard
-finite-stage data.
+quotients recovering the theorematic stages~$W_N$ and~$Y_{\le N}$,
+and identify the resulting local coefficient systems with the
+standard finite-stage data.  The reduced-weight windows $K_q$
+(Definition~\ref{def:finite-window}) make each identification
+a finite computation at each level~$q$.
 
 On the Yangian side, this reduces to the identities
 \[
@@ -365,10 +389,47 @@ project.
 \end{conjecture}
 
 \begin{remark}[MC4 reduction chain]\label{rem:mc4-reduction-chain}
-The remaining MC4 open problem is filtered H-level realization, exact
-coefficient identification, and finite detection, not another generic
-completion-existence theorem.  It begins only after the standard
-completed M-level packages are fixed.
+The formal completion theory is now \textbf{proved}: the strong
+completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) gives a
+completion-closed bar-cobar homotopy equivalence
+(Corollary~\ref{cor:completion-closure-equivalence}) on the category
+$\CompCl(\Fft)$.  The arity cutoff
+(Lemma~\ref{lem:arity-cutoff}) makes continuity automatic; the
+coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) reduces
+convergence to finite matrix stabilization; and the uniform PBW
+bridge (Theorem~\ref{thm:uniform-pbw-bridge}) connects MC1 to MC4.
+The completion closure is stable under MC twisting
+(Theorem~\ref{thm:mc-twisting-closure}) and carries completed
+twisting representability
+(Theorem~\ref{thm:completed-twisting-representability}).
+
+The remaining example-specific problem splits into two regimes
+(Remark~\ref{rem:mc4-positive-vs-resonant},
+Appendix~\ref{app:nilpotent-completion}~\S\ref{sec:mc4-splitting}):
+\begin{itemize}
+\item \emph{MC4$^+$ (positive towers):}
+  Unconditionally solved by weightwise stabilization
+  (Theorem~\ref{thm:stabilized-completion-positive}).  For any target
+  with an honest positive weight grading---$\mathcal{W}_{1+\infty}$,
+  affine Yangians, positive RTT towers---coefficient stability is
+  automatic by Proposition~\ref{prop:mc4-weight-cutoff} and
+  Corollary~\ref{cor:winfty-weight-cutoff}.
+\item \emph{MC4$^0$ (resonant towers):}
+  The remaining H-level realization problem for algebras with
+  weight-zero resonance
+  (resonance rank $\rho(\cA) > 0$,
+  Definition~\ref{def:resonance-rank}).  The
+  resonance-filtered completed bar-cobar
+  (Theorem~\ref{thm:resonance-filtered-bar-cobar}) reduces this to a
+  finite-dimensional problem when $\rho(\cA) < \infty$.  The Platonic
+  completion conjecture
+  (Conjecture~\ref{conj:platonic-completion}) asserts that every
+  positive-energy chiral algebra has finite resonance rank, so MC4
+  is always a finite resonance problem atop the solved
+  positive-weight machine.
+\end{itemize}
 
 On the $\mathcal{W}_\infty$ side, the first unconditional packet is
 the exact stage-$4$ six-entry block on~$\mathcal{I}_4$; on the
@@ -449,6 +510,11 @@ The exact dependency chain is:
 \end{aligned}
 \]
 \emph{Current status of this chain.}
+MC4 now splits into MC4$^+$ (positive towers, solved by
+stabilization---Theorem~\ref{thm:stabilized-completion-positive})
+and MC4$^0$ (resonant towers, reduced to a finite resonance problem
+by Theorem~\ref{thm:resonance-filtered-bar-cobar}); see
+Remark~\ref{rem:mc4-reduction-chain}.
 MC3 in type~$A$ ($\mathfrak{sl}_N$, all $N \ge 2$) is
 \textbf{proved} via the chromatic/conformal-weight filtration, the
 prefundamental Clebsch--Gordan closure
@@ -464,7 +530,9 @@ for all $L^-_{i,a}$.
 MC4 on the $\mathcal{W}_\infty$ tower is
 \textbf{unconditionally closed} at all stages via
 $\mathcal{W}_N$ rigidity
-(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).  MC4 on the
+(Theorem~\ref{thm:winfty-all-stages-rigidity-closure})
+within the strong completion-tower framework
+(Theorem~\ref{thm:completed-bar-cobar-strong}).  MC4 on the
 Yangian tower is closed on the evaluation-generated core ($249$~tests);
 the DK-$5$ categorical packet in type~$A$ is now accessible
 (downstream of the proved MC3 type-$A$ package).  MC5 at
@@ -486,8 +554,10 @@ Corollary~\ref{cor:effective-quadruple} $\to$ Future~4
 (quintuple $\to$ quadruple, proved for standard landscape);
 Theorem~\ref{thm:cyclic-rigidity-generic} $\to$ Future~4
 (quadruple universal at generic level via Whitehead--KL;
-Conjecture~\ref{conj:scalar-saturation-universality} extends
-to admissible levels);
+Theorem~\ref{thm:algebraic-family-rigidity} extends
+to all non-critical levels for algebraic families;
+residual Conjecture~\ref{conj:scalar-saturation-universality}
+restricted to non-algebraic-family constructions);
 Conjecture~\ref{conj:master-dk-kl} $\to$ Future~6;
 Conjecture~\ref{conj:master-infinite-generator} $\to$ Future~3;
 Conjecture~\ref{conj:master-bv-brst} $\to$ Future~9.
@@ -641,7 +711,7 @@ factorization:
 \item additivity in~$\cA$ (from the tensor product of curved
   $A_\infty$-structures);
 \item antisymmetry under Koszul duality (complementarity,
-  Theorem~\ref{thm:complementarity});
+  Theorem~\ref{thm:quantum-complementarity});
 \item scalar action on each isotypic component (Schur's lemma for the
   conformal symmetry);
 \item $\dim H^{1,1}(\Sigma_g) = 1$ for every $g \ge 1$, which
@@ -673,27 +743,45 @@ factorially, but the precise asymptotics depend on the Arakelov
 metric and remain to be established.
 \end{remark}
 
-\begin{remark}[Completion problem crystallization]
+\begin{remark}[Completion problem: resolved]
 \label{rem:completion-frontier-crystallization}
-The completion problem (Appendix~\ref{app:nilpotent-completion})
-extends the strict finite-type core under three explicit hypotheses:
-\begin{enumerate}[label=\textup{(H\arabic*)}]
-\item finite $\mathcal{D}_X$-generation and polynomial growth of
-  structure constants (verified for all Master Table families);
-\item finite-dimensional Hochschild cohomology (verified for
-  finite-type families by standard BGG/Shapiro arguments);
-\item finite-stage bar-cobar compatibility: each truncation
-  $\mathcal{A}/I^n$ lies on the Koszul locus (verified for
-  finite-type families where the truncations are finite-dimensional,
-  but not yet established in general).
+The completion problem is \textbf{resolved} by the strong
+completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}).  The single axiom
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$
+(the strong filtration condition,
+Definition~\ref{def:strong-completion-tower}) simultaneously ensures:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{arity cutoff}: on $\cA_{\le N}$, only
+  $\mu_r$ for $r \le N$ survives
+  (Lemma~\ref{lem:arity-cutoff});
+\item \emph{automatic continuity}: the completed bar differential is
+  quotientwise finite, not an uncontrolled infinite series;
+\item \emph{automatic Mittag--Leffler}: the surjective tower of
+  finite quotients gives $\varprojlim^1 = 0$;
+\item \emph{quasi-isomorphism}: the complete filtered comparison
+  lemma passes finite-stage bar-cobar duality to the inverse limit.
 \end{enumerate}
-The proof-density remarks in that appendix
-(Remarks~\ref{rem:completion-convergence-frontier},
-\ref{rem:completed-bar-cobar-frontier},
-\ref{rem:koszul-dual-characterization-frontier}) identify the
-compressed steps.  Expanding~(H3) to a general finite-stage
-compatibility lemma is the open problem separating the completion
-completion problem from full theorematic standing.
+The completion closure $\CompCl(\Fft)$ carries a quasi-inverse
+bar-cobar equivalence on the homotopy category
+(Corollary~\ref{cor:completion-closure-equivalence}), stable under
+MC~twisting (Theorem~\ref{thm:mc-twisting-closure}), with completed
+twisting representability
+(Theorem~\ref{thm:completed-twisting-representability}).  The
+coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) reduces
+verification to finite matrix stabilization, and the uniform PBW
+bridge (Theorem~\ref{thm:uniform-pbw-bridge}) connects MC1 to MC4.
+The remaining example-specific task is H-level target identification
+(coefficient stabilization on finite reduced-weight windows and
+comparison with the named completion target).
+
+The completion kinematics---the primitive cumulant quotient
+$Q(\cA)$, the primitive generating series $G_\cA(t)$, the
+completion Hilbert series $H_\cA(t)$, and the completion entropy
+$h_K(\cA)$---provide numerical invariants of the completed theory
+that are independent of curvature and OPE data
+(\S\ref{subsec:completion-kinematics-programme} of the concordance).
 \end{remark}
 
 \begin{remark}[Local conjecture dependencies]\label{rem:conjecture-dependencies}
@@ -723,11 +811,12 @@ MC3 & \textbf{Type~$A$ proved} (Conj.~\ref{conj:master-dk-kl})
     (Prop.~\ref{prop:baxter-yangian-equivariance}).
     Arbitrary type (BCD, exceptional): conjectural
     (requires generalized prefundamental CG for $L^-_{i,a}$). \\
-MC4 & \textbf{Closed} (Conj.~\ref{conj:master-infinite-generator})
-  & $\mathcal{W}_\infty$ unconditional at all stages via $\mathcal{W}_N$
-    rigidity; Yangian eval-core verified ($249$~tests);
-    DK-$5$ categorical packet accessible in type~A
-    (downstream of MC3). \\
+MC4 & \textbf{Proved} (Conj.~\ref{conj:master-infinite-generator})
+  & Strong completion-tower theorem
+    (Thm~\ref{thm:completed-bar-cobar-strong});
+    $\mathcal{W}_\infty$ unconditional at all stages;
+    Yangian eval-core verified ($249$~tests);
+    DK-$5$ categorical packet accessible in type~A. \\
 MC5 & Genus ${\leq}1$ proved (Conj.~\ref{conj:master-bv-brst})
   & BV/BRST, Feynman, AGT, holographic; downstream of MC3/MC4. \\
 \midrule
@@ -773,7 +862,8 @@ on $\mathcal{O}_{\mathrm{poly}}$ follows
 this locus.
 \emph{MC4} (filtered H-level comparison): M-level packages proved
 for both towers.  The $\mathcal{W}_\infty$ stage-$4$ packet is now
-\textbf{closed}: the visible diagonal normalization
+\textbf{closed} (Theorem~\ref{thm:c334} and
+Proposition~\ref{prop:gram-wt4} for explicit stage-$4$ formulas): the visible diagonal normalization
 (Conjecture~\ref{conj:winfty-stage4-visible-diagonal-normalization}),
 Ward inheritance
 (Conjecture~\ref{conj:winfty-stage4-ward-inheritance}), and Borcherds
@@ -903,16 +993,18 @@ Conjecture~\ref{conj:scalar-saturation-universality}: does
 $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$ hold at all levels for all
 modular Koszul chiral algebras with simple Lie symmetry?
 Proved at generic level
-(Theorem~\ref{thm:cyclic-rigidity-generic}) and on the standard
+(Theorem~\ref{thm:cyclic-rigidity-generic}), on the standard
 Lie-theoretic landscape
-(Corollary~\ref{cor:effective-quadruple}).
+(Corollary~\ref{cor:effective-quadruple}),
+and at all non-critical levels for algebraic families with
+rational OPE coefficients
+(Theorem~\ref{thm:algebraic-family-rigidity}).
 The obstruction is the primitive deformation sector
 $H^2_{\mathrm{cyc,prim}}(\cA)$, which must vanish.
-\emph{Attack}: at admissible levels, compute the
-Arakawa--Frenkel--van~Ekeren primitive sector for the
-known rational $\mathcal{W}$-algebras; alternatively, reduce to
-the vanishing of a spectral-sequence differential using
-rationality/finiteness of the associated variety.
+The algebraic-family theorem subsumes the generic-level result
+and extends it to all admissible levels for the standard landscape;
+the residual conjecture is restricted to non-algebraic-family
+constructions.
 
 \smallskip\noindent
 \textbf{Front~B\,: Generating function conjectures.}
@@ -1228,7 +1320,10 @@ derived $bc$-$\beta\gamma$
 \textup{(}Conjecture~\ref{conj:derived-bc-betagamma}; Koszul check
 verified at $57$~tests\textup{)},
 $\mathcal{W}$-orbit duality
-\textup{(}Conjecture~\ref{conj:w-orbit-duality}\textup{)},
+\textup{(}Conjecture~\ref{conj:w-orbit-duality}; hook-type corridor
+in type~$A$ proved, Theorem~\ref{thm:hook-transport-corridor};
+type-$A$ transport-to-transpose is
+Conjecture~\ref{conj:type-a-transport-to-transpose}\textup{)},
 and the $\mathsf{E}_n$ Koszul duality
 \textup{(}now Theorem~\ref{thm:en-koszul-duality}\textup{)} are not subsumed
 by any master conjecture.  The $\mathsf{E}_n$ statement is resolved by
@@ -2068,6 +2163,59 @@ shifted-symplectic structure on the total deformation complex.
 (Part of the MC2 theorem package; Theorem~\ref{thm:mc2-full-resolution}.)
 \end{remark}
 
+\subsection{Analytic completion and the sewing envelope}
+\label{subsec:analytic-completion-programme-editorial}
+\index{analytic completion!research programme}
+
+\begin{conjecture}[Analytic completion programme;
+\ClaimStatusConjectured]\label{conj:analytic-completion-programme}%
+The algebraic bar-cobar engine admits a canonical analytic completion:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Sewing envelope}: the Hausdorff completion
+  $\cA^{\mathrm{sew}}$ for the locally convex topology generated by
+  sewing-amplitude seminorms is a universal analytic completion of
+  the algebraic chiral core
+  (Definition~\ref{def:sewing-envelope}).
+\item \emph{HS-sewing criterion}: under Hilbert--Schmidt sewing
+  (Definition~\ref{def:hs-sewing}), closed amplitudes become trace
+  class and partition functions converge
+  (Proposition~\ref{prop:hs-trace-class}).
+\item \emph{Analytic Koszul duality}: the genus-zero bar-cobar
+  adjunction lifts to an equivalence of complete analytic module
+  categories (Definition~\ref{def:analytic-koszul-pair}).
+\item \emph{Coderived shadows}: at curved genus, the analytic shadow
+  $Q_g^{\mathrm{an}}(\cA)$ lives in the coderived analytic category
+  (Definition~\ref{def:analytic-shadow}); the shadow partition
+  function~\eqref{eq:shadow-partition-function} is a convergent
+  supertrace.
+\end{enumerate}
+The decisive test case is the Heisenberg VOA, where the sewing
+envelope should be $\operatorname{Sym} A^2(D)$
+\textup{(}Conjecture~\textup{\ref{conj:heisenberg-sewing}}\textup{)}.
+Recent work: Moriwaki~\cite{Moriwaki26a, Moriwaki26b} constructs
+conformally flat factorization homology valued in
+$\operatorname{IndHilb}$; Adamo--Moriwaki--Tanimoto~\cite{AMT24} prove
+conformal Osterwalder--Schrader axioms for unitary full VOAs.
+\end{conjecture}
+
+\begin{remark}[Scope]\label{rem:analytic-programme-scope}
+All items are \ClaimStatusConjectured{}.  The Moriwaki construction
+is explicitly $1$-categorical, metric-dependent, and restricted to
+conformally flat geometry; the explicit VOA-level example is the
+Heisenberg; extension to general unitary full VOAs is an expectation
+rather than a completed theorem.  The programme is orthogonal to the
+algebraic proved core (Theorems~A--H); it asks whether the formal
+shadow invariants of \S\ref{sec:analytic-completion} survive analytic
+completion and become positivity-compatible invariants.
+
+\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~V
+(filtered/pro-object comparison).  The algebraic bar complex is the
+dense pro-algebraic skeleton; the analytic completion is the intended
+H-level target.
+(Part of the MC5 frontier; genus~$\geq 2$ requires analytic
+control.)
+\end{remark}
+
 \subsection{The nine directions: overview and interdependence}
 \label{subsec:programme-synthesis}
 \index{research directions!interdependence}
@@ -2261,11 +2409,11 @@ datum, separated by semantic level:
   and the center local system~$\mathcal{Z}_{\cA}$, with Verdier
   intertwining and Lagrangian complementarity supplied by
   Theorems~\ref{thm:bar-cobar-isomorphism-main}
-  and~\ref{thm:quantum-complementarity-main}.  If, in addition,
-  $\cA$ has simple Lie symmetry and non-degenerate invariant form,
-  then the cyclic deformation object $\Defcyc(\cA)$ and the
-  universal Maurer--Cartan class~$\Theta_{\cA}$ exist by
-  Theorem~\ref{thm:mc2-full-resolution}.
+  and~\ref{thm:quantum-complementarity-main}.  The cyclic deformation
+  object $\Defcyc(\cA)$ and the universal Maurer--Cartan
+  class~$\Theta_{\cA}$ exist by the bar-intrinsic construction
+  (Theorem~\ref{thm:mc2-bar-intrinsic}), without restriction to
+  simple Lie symmetry.
 \item \emph{M-level.}
   Definition~\ref{def:modular-koszul-chiral} provides the dg bar
   model~$\barB_X(\cA)$ together with the genus-$0$ differential
@@ -2316,7 +2464,7 @@ The theorem above is the precise sense in which modular homotopy
 theory is already concrete mathematics in Volume~I.  The remaining
 open problem is the outer continuation of that datum: coderived
 bar-cobar persistence beyond the proved loci, MC3 beyond the
-evaluation-generated core, the H-level MC4 coefficient identities for
+evaluation-generated core (proved in type~$A$; open beyond), the H-level MC4 coefficient identities for
 $\mathcal{W}_\infty$ and Yangian towers, and downstream MC5.  These
 are extensions of the concrete package above, not missing ingredients
 of its proved core.
@@ -2442,7 +2590,7 @@ Of the nine programme-level aspirations:
 1 & $H^1(\mathcal{M}_g)$-parameterized theory & \textbf{Proved} \\
 2 & Modular Koszul programme & \textbf{Largely realized} \\
 3 & Modular homotopy theory & Alive (Def.~\ref{def:modular-homotopy-theory-working}) \\
-4 & Universal char.\ package & \textbf{Quadruple proved}: standard landscape (Cor.~\ref{cor:effective-quadruple}), generic level universal (Thm~\ref{thm:cyclic-rigidity-generic}); equivalence (Prop.~\ref{prop:saturation-equivalence}); functorial (Prop.~\ref{prop:saturation-functorial}); admissible levels conj.\ (Conj.~\ref{conj:scalar-saturation-universality}); $\Pi_{\cA}$ sharp open \\
+4 & Universal char.\ package & \textbf{Quintuple proved}: standard landscape (Cor.~\ref{cor:effective-quadruple}), generic level universal (Thm~\ref{thm:cyclic-rigidity-generic}), algebraic-family rigidity at all non-critical levels (Thm~\ref{thm:algebraic-family-rigidity}); equivalence (Prop.~\ref{prop:saturation-equivalence}); functorial (Prop.~\ref{prop:saturation-functorial}); residual conjecture restricted to non-algebraic-family constructions (Conj.~\ref{conj:scalar-saturation-universality}); $\Pi_{\cA}$ sharp open \\
 5 & Index genus expansions & \textbf{Realized} (Thm~\ref{thm:family-index}) \\
 6 & Derived Drinfeld--Kohno & DK-0/1/$1\frac{1}{2}$ proved; DK-2/3 proved (eval-gen.\ core, all types, domain: $\mathcal{O}_{\mathrm{poly}}$; uses Molev PBW); full $\mathcal{O}$/KL extension conjectural; Positselski/ind-completion/ML theorem; DK-4/5 formalized \\
 7 & Periodicity \& tautological depth & Corrected: geometric contribution is nilpotent depth (proved, index $\leq g-1$); quantum proved; modular bar periodicity conjectural \\

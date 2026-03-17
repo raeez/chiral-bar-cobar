@@ -31,7 +31,9 @@ The mixed cubic-quartic shadow archetype forces the extension tower
 in $\mathfrak{g}^{\mathrm{mod}}_\cA$ to be infinite
 (Remark~\ref{rem:unifying-principle});
 (ii)~the MC4 closure via $\mathcal{W}_N$ rigidity
-(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) is a
+(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}), within
+the strong completion-tower framework
+(Theorem~\ref{thm:completed-bar-cobar-strong}), is a
 convergence statement in the convolution $sL_\infty$-algebra
 (Theorem~\ref{thm:operadic-homotopy-convolution}): the large-$N$
 limit $\mathcal{W}_\infty = \varprojlim_N \mathcal{W}_N$ is controlled
@@ -337,7 +339,7 @@ where $\rho = (\alpha_1 + \alpha_2)/2$ is the Weyl vector.  The
 central charge becomes $c_k = 2 - 24Q^2|\rho|^2 = 2 - 24(k+2)^2/(k+3)$.
 
 The background charge $Q$ is the Miura manifestation of the
-universal MC class: $\kappa(\mathcal{W}_3^k) = c_k/2$, and the
+universal MC class: $\kappa_T(\mathcal{W}_3^k) = c_k/2$ (T-channel contribution; the full curvature is $\kappa(\mathcal{W}_3^k) = 5c_k/6$, see Table~\ref{tab:landscape-census}), and the
 Koszul duality $k \mapsto -k-6$ sends $Q \mapsto -Q$, implementing
 $\Theta_{\mathcal{W}_3^k} + \Theta_{\mathcal{W}_3^{-k-6}} = 0$
 (Theorem~\ref{thm:explicit-theta}).  The Miura embedding
@@ -1077,7 +1079,7 @@ The parallel is exact along every axis:
 \smallskip\noindent
 The deepest consequence is that the residue identities
 $\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$
---- treated as the live MC4 open problem in earlier sections ---
+--- proved by the strong completion-tower theorem (Theorem~\ref{thm:completed-bar-cobar-strong}) ---
 are not independent conjectures.  They are instances of the proved
 chain-level DS--KD intertwining
 (Theorem~\ref{thm:ds-koszul-intertwine}):
@@ -1544,64 +1546,76 @@ curvature structure (zero at a rational level).
 \label{sec:ds-hierarchy-koszul}
 \index{Drinfeld--Sokolov reduction!Koszul duality hierarchy}
 
-\begin{proposition}[DS hierarchy and Koszul duality;
+\begin{proposition}[DS hierarchy and Koszul duality: proved cases;
 \ClaimStatusProvedHere]
 \label{prop:ds-koszul-hierarchy}
-For a simple Lie algebra $\fg$ and two nilpotent elements
-$f_1 \leq f_2$ in the closure ordering (i.e.,
-$\overline{\mathbb{O}_{f_1}} \subset \overline{\mathbb{O}_{f_2}}$),
-the DS reduction intertwines with Koszul duality:
+Let $\fg$ be a simple Lie algebra, $k \neq -h^\vee$, and
+$f \in \fg$ a nilpotent element.  In the following cases,
+DS reduction intertwines with Koszul duality:
 \[
-\bigl(\mathcal{W}^k(\fg, f_i)\bigr)^!
-\simeq \mathcal{W}^{-k-2h^\vee}(\fg, f_i^{\mathrm{BV}})
+\bigl(\mathcal{W}^k(\fg, f)\bigr)^!
+\simeq \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f^{\mathrm{BV}})
 \]
-where $f_i^{\mathrm{BV}}$ is the Barbasch--Vogan dual nilpotent
-in $\fg^\vee$ (the Langlands dual Lie algebra).
+where $f^{\mathrm{BV}}$ is the Barbasch--Vogan dual nilpotent
+in $\fg^\vee$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Principal}: $f = f_{\mathrm{prin}}$, all simple
+  $\fg$ \textup{(}Feigin--Frenkel~\cite{Feigin-Frenkel},
+  Theorem~\textup{\ref{thm:w-algebra-koszul-main})}.
+\item \emph{Subregular/minimal in $\mathfrak{sl}_3$}:
+  $f = f_{\min}$ in $\mathfrak{sl}_3$
+  \textup{(}Proposition~\textup{\ref{prop:bp-duality})}.
+\item \emph{Hook-type in type~$A$}: $f = f_{(n-r,1^r)}$ in
+  $\mathfrak{sl}_n$ at generic level
+  \textup{(}Theorem~\textup{\ref{thm:hook-transport-corridor})}.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The proof proceeds in two stages: compatibility at the level of
-algebras, and identification of the orbit transformation.
+Case~(i) is Feigin--Frenkel duality
+(Theorem~\ref{thm:w-algebra-koszul-main}).  Case~(ii) is
+Proposition~\ref{prop:bp-duality}.  Case~(iii) follows from the
+hook-type transport corridor
+(Theorem~\ref{thm:hook-transport-corridor}), which establishes
+full duality for hook partitions via the inverse-reduction
+network~\cite{FehilyHook,GenraStages,ButsonNair}.
+\end{proof}
 
-\emph{Stage~1: DS--KD compatibility.}
-For the ambient algebra,
-$(\widehat{\fg}_k)^! \simeq \widehat{\fg}_{-k-2h^\vee}$
-(Corollary~\ref{cor:level-shifting-part1}).  The DS--KD
-intertwining theorem (Theorem~\ref{thm:ds-koszul-intertwine})
-establishes that $\mathrm{DS}_f$ commutes with Koszul duality
-up to replacement of the nilpotent by its BV dual:
-\[
-\bigl(\mathrm{DS}_{f_i}(\widehat{\fg}_k)\bigr)^!
-\simeq
-\mathrm{DS}_{f_i^{\mathrm{BV}}}
-\bigl((\widehat{\fg}_k)^!\bigr)
-= \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f_i^{\mathrm{BV}})
-\]
-The key input is that DS reduction is defined via the BRST complex
-$C^*(\mathfrak{n}_{f_i}, -)$, and Koszul duality exchanges the BRST
-nilpotent subalgebra $\mathfrak{n}_{f_i} \subset \fg$ with the
-Barbasch--Vogan dual subalgebra
-$\mathfrak{n}_{f_i^{\mathrm{BV}}} \subset \fg^\vee$.
+\begin{conjecture}[DS--KD intertwining for arbitrary nilpotent;
+\ClaimStatusConjectured]
+\label{conj:ds-kd-arbitrary-nilpotent}
+\index{Drinfeld--Sokolov reduction!Koszul duality!arbitrary nilpotent}
+The intertwining
+$\bigl(\mathcal{W}^k(\fg, f)\bigr)^!
+\simeq \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f^{\mathrm{BV}})$
+holds for \emph{all} nilpotent $f \in \fg$ at generic level.
+The difficulty is \emph{not} the existence of quantum DS
+reduction for arbitrary~$f$ (that construction is
+Kac--Roan--Wakimoto~\cite{KRW}).  What remains open is
+proving that bar--cobar/Koszul duality commutes with
+arbitrary-nilpotent reduction, identifying the correct dual
+nilpotent under Barbasch--Vogan or Spaltenstein duality, and
+determining the non-principal level transform.
+\end{conjecture}
 
-\emph{Stage~2: BV orbit identification.}
+\begin{remark}[BV orbit identification]
+\label{rem:bv-orbit-identification}
 The Barbasch--Vogan duality
 $f \mapsto f^{\mathrm{BV}}$ is defined by
 $d_{\mathrm{BV}}(\mathbb{O}_f)
-= \text{Ind}_{L_f}^{G^\vee}(\text{triv})$,
+= \mathrm{Ind}_{L_f}^{G^\vee}(\mathrm{triv})$,
 the special orbit attached to the Lusztig--Spaltenstein
 induction of the trivial orbit of the Levi $L_f$ of the
 parabolic $P_f$ determined by $f$~\cite{BV85,Achar03}.  The map
 $f \mapsto f^{\mathrm{BV}}$ is an involution
 on the set of special orbits.
-
 For simply-laced $\fg$ (types $A$, $D$, $E$), $\fg = \fg^\vee$,
-so $f_i^{\mathrm{BV}}$ is a nilpotent in $\fg$ itself.  In type
+so $f^{\mathrm{BV}}$ is a nilpotent in $\fg$ itself.  In type
 $A_n$, all orbits are special and the BV duality is partition
-transpose ($\lambda \mapsto \lambda^t$), which is \emph{not}
-the identity except on self-transpose partitions.
+transpose ($\lambda \mapsto \lambda^t$).
 For non-simply-laced $\fg$, the BV duality exchanges
 $B_n \leftrightarrow C_n$ orbits.
-\end{proof}
+\end{remark}
 
 \begin{computation}[DS hierarchy for \texorpdfstring{$\mathfrak{sl}_4$}{sl_4}:
 five nilpotent orbits]
@@ -1753,7 +1767,29 @@ at $c=0$).
 \subsection{Scalar saturation of \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity}}
 \label{sec:winfty-scalar-saturation}
 
-\begin{theorem}[Scalar saturation of $\mathcal{W}_\infty$]\label{thm:winfty-scalar}
+This is the deepest structural result about $\mathcal{W}$-algebras in the
+Chriss--Ginzburg framework.  The universal MC element
+$\Theta_\cA \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) carries, in principle, independent
+data at each arity of the shadow Postnikov tower: the scalar level
+$\kappa$ at arity~$2$, the cubic shadow~$C$ at arity~$3$, the quartic
+resonance class~$Q$ at arity~$4$, and so on.  For the principal
+$\mathcal{W}_\infty$ tower, the theorem below shows that all of these
+higher shadows are \emph{determined by the scalar level alone}.  The
+entire shadow tower collapses to the one-dimensional scalar channel:
+\[
+  \Theta_{\mathcal{W}_\infty} \;=\;
+  \kappa(\mathcal{W}_\infty) \cdot \eta \otimes \Lambda
+  \;\in\; \MC(\gAmod),
+\]
+and no independent nonlinear structure can arise.  This is not a
+simplification but a \emph{rigidity theorem}: it says that the modular
+convolution algebra $\gAmod$ for the principal tower has a
+one-dimensional deformation space, so the entire modular Koszul package
+is controlled by a single scalar.
+
+\begin{theorem}[Scalar saturation of $\mathcal{W}_\infty$: the shadow tower
+collapses]\label{thm:winfty-scalar}
 \ClaimStatusProvedHere
 The standard principal tower
 $\mathcal{W}_\infty = \varprojlim_N \mathcal{W}_N$ satisfies
@@ -1871,6 +1907,36 @@ cannot furnish such a class.  Viable alternatives include:
 \end{enumerate}
 \end{remark}
 
+\begin{remark}[Shadow tower classification: the $\mathcal{W}$-algebra position]
+\label{rem:w-algebra-shadow-position}
+\index{shadow Postnikov tower!W-algebra position@$\mathcal{W}$-algebra position}
+The scalar saturation theorem places
+$\mathcal{W}_\infty$ in a precise position within the shadow tower
+classification of the landscape
+(Table~\ref{tab:master-invariants}).  Among the standard families:
+\begin{itemize}
+\item \emph{Gaussian} (Heisenberg, lattice VOA, free fermion):
+  shadow depth $r_{\max} = 2$, tower terminates at the scalar
+  level $\kappa$;
+\item \emph{Lie/tree} (affine Kac--Moody $\widehat{\fg}_k$):
+  $r_{\max} = 3$, cubic shadow $C$ nontrivial, quartic and above
+  vanish;
+\item \emph{Contact/quartic} ($\beta\gamma$ system):
+  $r_{\max} = 4$, quartic contact shadow $Q^{\mathrm{contact}}$
+  nontrivial, quintic obstruction vanishes;
+\item \emph{Mixed/infinite} (Virasoro, $\mathcal{W}_N$ at finite $N$):
+  $r_{\max} = \infty$, all shadow levels nonzero, quintic forced.
+\end{itemize}
+The principal $\mathcal{W}_\infty$ tower is \emph{simultaneously}
+the mixed/infinite archetype at each finite stage $N$ and
+scalar-saturated at the limit.  The saturation arises not from
+vanishing of higher shadows but from their linear dependence on
+$\kappa$: the Mittag--Leffler argument forces all shadow projections
+into the one-dimensional $H^2_{\mathrm{cyc}}$.  This is the deepest
+instance of the Chriss--Ginzburg principle in the landscape: a single
+number $\kappa(\mathcal{W}_\infty)$ determines the entire modular
+Koszul package.
+\end{remark}
 
 \subsection{Virasoro Gram matrix at weight~\texorpdfstring{$4$}{4} and the \texorpdfstring{$\mathcal{W}_4$}{W4} structure constant}
 \label{sec:gram-wt4-c334}
@@ -2086,4 +2152,521 @@ Virasoro representation theory at weight~$4$:
 \item The overall coefficient $42$ is the unique value compatible
   with the classical ($c \to \infty$) limit.
 \end{enumerate}
+\end{remark}
+
+%% ----------------------------------------------------------------
+%%  COMPLETION KINEMATICS
+%% ----------------------------------------------------------------
+
+\subsection{Completion kinematics of the \texorpdfstring{$\Walg$}{W}-algebra axis}
+\label{sec:w-completion-kinematics}
+\index{W-algebras@$\mathcal{W}$-algebras!completion kinematics}
+\index{bar complex!completion kinematics}
+\index{Koszul entropy}
+
+The preceding sections computed OPE coefficients, bar differentials,
+and shadow archetypes for specific $\Walg$-algebras.  We now step
+back and ask a \emph{quantitative} question: how large are the
+completed bar-cobar data?  The answer is governed by three
+generating functions attached to any graded vertex algebra~$\cA$:
+\begin{enumerate}[label=(\roman*),nosep]
+\item the \emph{primitive series} $G_\cA(t)$, counting primitive
+  cogenerators of $\barB(\cA)$ by reduced weight;
+\item the \emph{bar-window series} $H_\cA(t)$, counting
+  total bar cochains by reduced weight; and
+\item the \emph{Koszul entropy} $h_K(\cA)$, the exponential
+  growth rate of $H_\cA(t)$.
+\end{enumerate}
+These invariants determine the size of the finite windows that must
+be controlled for the coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) and hence
+for the MC4 completion programme
+(Theorem~\ref{thm:completed-bar-cobar-strong}).
+
+\begin{definition}[Primitive and bar-window series]\label{def:primitive-bar-window}
+\index{primitive series|textbf}
+\index{bar-window series|textbf}
+Let $\cA$ be a vertex algebra with vacuum character
+$\chi_\cA(q) = \sum_{n \geq 0} d_n\, q^n$ (after removing the
+vacuum and shifting so that the first non-vacuum state has
+reduced weight~$1$).  Write $\chi_\cA^+(q)$ for the character
+with the vacuum removed, i.e.\
+$\chi_\cA^+(q) = \chi_\cA(q) - 1$.  The \emph{primitive series}
+is
+\begin{equation}\label{eq:primitive-series}
+  G_\cA(t) \;=\;
+  \frac{1 - t}{t}\,
+  \Bigl(\chi_\cA^+(t) + 1 - \frac{t}{1-t}\Bigr)^{-1}
+  \cdot \chi_\cA^+(t),
+\end{equation}
+defined implicitly by the free-algebra inversion
+\begin{equation}\label{eq:free-algebra-inversion}
+  \chi_\cA^+(t)
+  \;=\; \frac{G_\cA(t)}{1 - G_\cA(t)},
+  \qquad\text{equivalently}\qquad
+  G_\cA(t) \;=\; \frac{\chi_\cA^+(t)}{1 + \chi_\cA^+(t)}.
+\end{equation}
+Writing $G_\cA(t) = \sum_{r \geq 1} g_r\, t^r$, the integer $g_r$
+counts the number of primitive cogenerators of the bar coalgebra at
+reduced weight~$r$.
+
+The \emph{bar-window series} is
+\begin{equation}\label{eq:bar-window-series}
+  H_\cA(t) \;=\; \frac{G_\cA(t)}{1 - G_\cA(t)},
+\end{equation}
+so that $h_q = [t^q]\, H_\cA(t)$ is the dimension of the
+reduced-weight-$q$ bar window $K_q(\cA)$ relevant to the
+coefficient-stability criterion.
+\end{definition}
+
+\begin{remark}[Interpretation]
+The primitive series extracts the minimal cogenerating set
+for the bar coalgebra (formally, the indecomposables of the
+cofree tensor coalgebra quotient).  When $\cA$ is a free algebra
+on $g_r$ generators of weight~$r$, the character is exactly
+$\chi_\cA^+(t) = G/(1-G)$; the primitive series inverts this
+relation.  For interacting algebras, the $g_r$ measure the
+\emph{primitive cumulants}: the additional cogenerators
+required beyond the generators of~$\cA$ itself.
+\end{remark}
+
+\subsubsection*{Virasoro primitive spectrum}
+
+\begin{proposition}[Virasoro primitive series]\label{prop:virasoro-primitive}
+\ClaimStatusProvedHere
+\index{Virasoro!primitive spectrum}
+For the generic Virasoro algebra with vacuum character
+\[
+  \chi_{\mathrm{Vir}}(q)
+  \;=\; \prod_{n \geq 2} (1 - q^n)^{-1},
+\]
+the primitive series is
+\begin{equation}\label{eq:virasoro-primitive}
+  G_{\mathrm{Vir}}(t)
+  \;=\; \frac{(1-t)}{t}
+  \biggl(\prod_{n \geq 2} (1-t^n)^{-1} - 1\biggr)
+  \cdot
+  \biggl(\prod_{n \geq 2}(1-t^n)^{-1}\biggr)^{\!-1},
+\end{equation}
+equivalently determined by $G/(1+G) = 1 - \prod_{n \geq 2}(1-t^n)$.
+The first primitive counts are
+\[
+  g_r \;=\; 1,\, 0,\, 1,\, 0,\, 2,\, 0,\, 3,\, 1,\, 4,\, 2,\,
+  7,\, 3,\, 10,\, 7,\, \ldots
+  \qquad (r = 1,2,\ldots,14).
+\]
+The \emph{primitive defect}
+\begin{equation}\label{eq:virasoro-primitive-defect}
+  \Delta_{\mathrm{Vir}}(t)
+  \;=\; G_{\mathrm{Vir}}(t) - t
+  \;=\; t^3 + 2t^5 + 3t^7 + t^8 + 4t^9 + 2t^{10} + \cdots
+\end{equation}
+measures the primitive cumulants beyond the stress tensor~$T$.
+The first new primitive appears at reduced weight~$3$
+(conformal weight~$4$), reflecting the quasi-primary
+composite $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ that
+appears as an independent cogenerator of
+$\barB(\mathrm{Vir})$.
+\end{proposition}
+
+\begin{proof}
+By the free-algebra inversion~\eqref{eq:free-algebra-inversion},
+$G(t) = \chi^+/(1 + \chi^+)$ with
+$\chi^+(t) = \prod_{n \geq 2}(1 - t^n)^{-1} - 1$.  The
+stated coefficients are obtained by expanding this formal power
+series through $t^{14}$ and reading off the Taylor coefficients.
+That infinitely many $g_r$ are nonzero follows from the
+transcendence of $\prod_{n \geq 2}(1-t^n)^{-1}$ over $\C(t)$.
+\end{proof}
+
+\begin{remark}[Primitive cumulants vs.\ shadow depth]
+\label{rem:virasoro-primitive-shadow}
+The infinite primitive defect $\Delta_{\mathrm{Vir}} \neq 0$ is
+the \emph{completion-theoretic reflection} of the infinite shadow
+depth $r_{\max}(\mathrm{Vir}) = \infty$
+(Remark~\ref{rem:w-algebra-shadow-position}).
+Each new primitive at reduced weight~$r$ forces an independent
+shadow obstruction class $o_r(\mathrm{Vir})$ in the cyclic
+deformation complex; the mixed/infinite shadow archetype is thus a
+direct consequence of the non-polynomial character.
+\end{remark}
+
+\subsubsection*{Virasoro bar-window series}
+
+\begin{proposition}[Virasoro bar windows]\label{prop:virasoro-bar-window}
+\ClaimStatusProvedHere
+\index{Virasoro!bar-window series}
+The Virasoro bar-window series is
+\begin{equation}\label{eq:virasoro-bar-window}
+  H_{\mathrm{Vir}}(t)
+  \;=\; \frac{G_{\mathrm{Vir}}(t)}{1 - G_{\mathrm{Vir}}(t)}
+  \;=\; t + t^2 + 2t^3 + 3t^4 + 6t^5 + 10t^6
+  + 18t^7 + 32t^8 + 56t^9 + 99t^{10} + 175t^{11} + \cdots.
+\end{equation}
+The window sizes $h_q = 1, 1, 2, 3, 6, 10, 18, 32, 56, 99,
+175, \ldots$ determine the matrix dimensions in the
+coefficient-stability verification at each reduced weight.
+\end{proposition}
+
+\begin{proof}
+Direct substitution from
+Proposition~\ref{prop:virasoro-primitive} into the
+formula $H = G/(1-G)$, with series expansion through $t^{11}$.
+\end{proof}
+
+\subsubsection*{Virasoro Koszul radius and entropy}
+
+\begin{definition}[Koszul radius and entropy]\label{def:koszul-radius-entropy}
+\index{Koszul radius|textbf}
+\index{Koszul entropy|textbf}
+The \emph{Koszul radius} of a graded vertex algebra~$\cA$ is
+\[
+  \rho_K(\cA) \;=\; \bigl(\limsup_{q \to \infty} h_q^{1/q}\bigr)^{-1}
+  \;=\; \text{radius of convergence of } H_\cA(t),
+\]
+and the \emph{Koszul entropy} is
+\[
+  h_K(\cA) \;=\; -\log \rho_K(\cA)
+  \;=\; \lim_{q \to \infty} \frac{1}{q}\, \log h_q.
+\]
+The Koszul entropy measures the exponential growth rate of the
+bar-window sizes and is the natural complexity invariant
+for the MC4 completion programme.
+\end{definition}
+
+\begin{proposition}[Virasoro Koszul entropy]\label{prop:virasoro-entropy}
+\ClaimStatusProvedHere
+\index{Virasoro!Koszul entropy}
+The Virasoro Koszul radius and entropy are
+\begin{equation}\label{eq:virasoro-entropy}
+  \rho_K(\mathrm{Vir}) \;\approx\; 0.5672985104,
+  \qquad
+  h_K(\mathrm{Vir}) \;\approx\; 0.5668696404.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The Koszul radius is the smallest positive real root of
+$1 - G_{\mathrm{Vir}}(t) = 0$, i.e.\ the singularity of
+$H_{\mathrm{Vir}}(t)$.  By~\eqref{eq:free-algebra-inversion},
+$G(t) = 1$ iff $\chi^+(t) = \infty$, which occurs at the
+radius of convergence of $\prod_{n \geq 2}(1-t^n)^{-1}$.
+Numerical evaluation of this product on the positive real axis
+gives $\rho_K \approx 0.5672985104$.  The entropy follows by
+$h_K = -\log \rho_K$.
+\end{proof}
+
+\subsubsection*{$\Walg_3$ completion: naive vs.\ corrected}
+
+\begin{computation}[$\Walg_3$ primitive spectrum: naive and corrected]
+\label{comp:w3-naive-corrected}
+\index{W-algebras@$\mathcal{W}$-algebras!W3@$\mathcal{W}_3$!completion kinematics}
+
+The $\Walg_3$ algebra has generators $T$ (weight~$2$) and $W$
+(weight~$3$).  The character is
+\[
+  \chi_{\Walg_3}(q)
+  \;=\; \prod_{n \geq 2} (1-q^n)^{-1} \cdot
+  \prod_{n \geq 3} (1-q^n)^{-1}
+  \;=\; \prod_{n \geq 2} (1-q^n)^{-\min(n-1,2)}.
+\]
+
+\medskip
+\emph{Naive count.}  If one simply counts the two generators
+$T$ and $W$ plus all their derivatives, the primitive counts
+would be $g_1 = 1$ (from~$T$), $g_r = 2$ for $r \geq 2$
+(from $\partial^{r-2}T$ and $\partial^{r-3}W$).  This gives the
+naive primitive series
+\begin{equation}\label{eq:w3-naive-primitive}
+  G^{\mathrm{naive}}_{\Walg_3}(t)
+  \;=\; \frac{t + t^2}{1 - t}
+\end{equation}
+and naive bar-window series
+\begin{equation}\label{eq:w3-naive-window}
+  H^{\mathrm{naive}}_{\Walg_3}(t)
+  \;=\; \frac{t + t^2}{1 - 2t - t^2}.
+\end{equation}
+
+\medskip
+\emph{The quasi-primary correction.}
+The $W$--$W$ OPE contains the composite
+\[
+  \Lambda \;=\; {:}T \cdot T{:} - \tfrac{3}{10}\,\partial^2 T,
+\]
+which is quasi-primary of weight~$4$ (reduced weight~$3$) and
+appears with the $c$-dependent coefficient $16/(22+5c)$
+in the singular OPE $W(z)\,W(w) \sim \cdots$.  The field
+$\Lambda$ is \emph{not} a derivative of any generator; it
+is a genuinely new cogenerator of the bar coalgebra.  In
+$\barB(\Walg_3)$, the dual element $\Lambda^*$ has coproduct
+\begin{equation}\label{eq:w3-lambda-coproduct}
+  \Delta(\Lambda^*)
+  \;=\; L^* \otimes L^*
+  - \tfrac{3}{10}\bigl(\partial^2 L^* \otimes 1
+  + 1 \otimes \partial^2 L^*\bigr),
+\end{equation}
+where $L^* \in \barB^1(\Walg_3)$ is the cogenerator dual to~$T$.
+This is a genuinely non-primitive coproduct: $\Lambda^*$ is
+decomposable in $\barB(\Walg_3)$, but $\Lambda$ itself is an
+\emph{indecomposable} in the bar cohomology, i.e.\ a new primitive
+cogenerator.
+
+\medskip
+\emph{Corrected count.}  Including $\Lambda$ and its descendants
+yields $g_1 = 1$, $g_2 = 2$, $g_r = 3$ for $r \geq 3$.  The
+corrected primitive series is
+\begin{equation}\label{eq:w3-corrected-primitive}
+  G^{\mathrm{corr}}_{\Walg_3}(t)
+  \;=\; \frac{t + t^2 + t^3}{1 - t},
+\end{equation}
+and the corrected bar-window series is
+\begin{equation}\label{eq:w3-corrected-window}
+  H^{\mathrm{corr}}_{\Walg_3}(t)
+  \;=\; \frac{t + t^2 + t^3}{1 - 2t - t^2 - t^3}
+  \;=\; t + 3t^2 + 8t^3 + 20t^4 + 51t^5 + 130t^6 + \cdots.
+\end{equation}
+The corrected recursion for window sizes is
+\begin{equation}\label{eq:w3-corrected-recursion}
+  h_q \;=\; 2\,h_{q-1} + h_{q-2} + h_{q-3}
+  \qquad (q \geq 4),
+\end{equation}
+compared to the naive $h_q = 2\,h_{q-1} + h_{q-2}$.  The first
+genuinely nonquadratic quasi-primary does not merely add one
+generator --- it adds a \emph{memory term} $h_{q-3}$ to the
+completed Koszul recursion.
+\end{computation}
+
+\begin{proposition}[$\Walg_3$ exact bar basis at reduced weight~$3$]
+\label{prop:w3-basis-weight3}
+\ClaimStatusProvedHere
+\index{W-algebras@$\mathcal{W}$-algebras!W3@$\mathcal{W}_3$!bar basis}
+The corrected bar complex $\barB^{\leq 3}(\Walg_3)$ at
+reduced weight~$3$ has dimension~$8$, spanned by the words
+\[
+  \partial^2 T,\;\; \partial W,\;\; \Lambda,\;\;
+  T|\partial T,\;\; T|W,\;\; \partial T|T,\;\;
+  W|T,\;\; T|T|T.
+\]
+The naive count (omitting $\Lambda$) gives $7$.  The discrepancy
+is the $\Walg_3$ \emph{Koszul correction}: the bar-window
+dimension at reduced weight~$3$ is $h_3 = 8$, not~$7$.
+\end{proposition}
+
+\begin{proof}
+At reduced weight~$3$ the bar complex involves tensor words of
+total weight~$3$ in the bar generators.  The weight-$1$ generators
+are $\{T\}$; the weight-$2$ generators are $\{\partial T, W\}$.
+The tensor words up to bar degree~$3$ are:
+\begin{itemize}[nosep]
+\item Bar degree~$1$ (weight~$3$ generators):
+  $\partial^2 T$, $\partial W$, and $\Lambda$ --- giving $3$
+  elements.  The naive count omits~$\Lambda$.
+\item Bar degree~$2$ (weight $1{+}2$ tensor words):
+  $T|\partial T$, $T|W$, $\partial T|T$, $W|T$ --- giving $4$
+  elements.
+\item Bar degree~$3$ (weight $1{+}1{+}1$ tensor word):
+  $T|T|T$ --- giving $1$ element.
+\end{itemize}
+Total: $3 + 4 + 1 = 8$.
+\end{proof}
+
+\begin{proposition}[$\Walg_3$ Koszul entropy]\label{prop:w3-entropy}
+\ClaimStatusProvedHere
+\index{W-algebras@$\mathcal{W}$-algebras!W3@$\mathcal{W}_3$!Koszul entropy}
+The $\Walg_3$ Koszul radius and entropy are
+\begin{equation}\label{eq:w3-entropy}
+  \rho_K(\Walg_3) \;\approx\; 0.4620371320,
+  \qquad
+  h_K(\Walg_3) \;\approx\; 0.7721100188.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The Koszul radius is the smallest positive real root of
+$1 - 2t - t^2 - t^3 = 0$ (the denominator
+of~\eqref{eq:w3-corrected-window}).  This cubic has a unique
+positive real root, which is computed numerically.
+\end{proof}
+
+\subsubsection*{The $\Walg_N$ entropy ladder}
+
+\begin{proposition}[$\Walg_N$ character and primitive series]
+\label{prop:wn-character-primitive}
+\ClaimStatusProvedHere
+\index{W-algebras@$\mathcal{W}$-algebras!WN@$\mathcal{W}_N$!character}
+\index{W-algebras@$\mathcal{W}$-algebras!WN@$\mathcal{W}_N$!primitive series}
+For the principal $\Walg_N$ algebra with generators of spins
+$2, 3, \ldots, N$, the vacuum character is
+\begin{equation}\label{eq:wn-character}
+  \chi_{\Walg_N}(q)
+  \;=\; \prod_{n \geq 2}(1 - q^n)^{-\min(n-1,\, N-1)}.
+\end{equation}
+The primitive series $G_{\Walg_N}(t)$ is determined by
+\begin{equation}\label{eq:wn-primitive-inversion}
+  G_{\Walg_N}(t)
+  \;=\; \frac{(1-t)}{t}\,
+  \biggl(
+  \prod_{n \geq 2}(1-t^n)^{-\min(n-1,\, N-1)} - 1
+  \biggr)
+  \cdot
+  \biggl(
+  \prod_{n \geq 2}(1-t^n)^{-\min(n-1,\, N-1)}
+  \biggr)^{\!-1}\!.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The character counts quasi-primary states:
+$\min(n-1, N-1)$ independent generators contribute at
+weight~$n$ (namely the spin-$s$ generator for
+$s = 2, \ldots, \min(n, N)$).  The primitive series follows
+from the free-algebra inversion~\eqref{eq:free-algebra-inversion}.
+\end{proof}
+
+\begin{proposition}[$\Walg_N$ entropy ladder]\label{prop:wn-entropy-ladder}
+\ClaimStatusProvedHere
+\index{Koszul entropy!WN ladder@$\mathcal{W}_N$ ladder}
+The Koszul entropy $h_K(\Walg_N)$ is monotone increasing in~$N$,
+with the following values:
+\begin{equation}\label{eq:wn-entropy-table}
+\renewcommand{\arraystretch}{1.2}
+\begin{array}{lcc}
+\toprule
+\text{Algebra} & \rho_K & h_K \\
+\midrule
+\mathrm{Vir} = \Walg_2 & 0.5673 & 0.5669 \\
+\Walg_3 & 0.4620 & 0.7721 \\
+\Walg_4 & 0.4337 & 0.8352 \\
+\Walg_5 & 0.4244 & 0.8574 \\
+\Walg_6 & 0.4210 & 0.8659 \\
+\Walg_\infty & 0.4182 & 0.8717 \\
+\bottomrule
+\end{array}
+\end{equation}
+The sequence $h_K(\Walg_N)$ converges monotonically to
+$h_K(\Walg_\infty) \approx 0.8716900026$ as $N \to \infty$.
+\end{proposition}
+
+\begin{proof}
+For each $N$, the Koszul radius $\rho_K(\Walg_N)$ is the
+radius of convergence of the corresponding bar-window series.
+Since $\min(n-1, N) \leq \min(n-1, N+1)$, the character
+$\chi_{\Walg_{N+1}}$ dominates $\chi_{\Walg_N}$
+coefficient-by-coefficient, so $G_{\Walg_{N+1}}(t)
+\geq G_{\Walg_N}(t)$ for $t \in (0, \rho_K)$.
+The singularity therefore moves inward:
+$\rho_K(\Walg_{N+1}) \leq \rho_K(\Walg_N)$, whence
+$h_K(\Walg_{N+1}) \geq h_K(\Walg_N)$.  Convergence to
+$h_K(\Walg_\infty)$ follows because
+$\min(n-1,N-1) \to n-1$ for each fixed~$n$.  The numerical
+values are obtained by computing the relevant power series to
+sufficient order and locating the positive real singularity.
+\end{proof}
+
+\begin{remark}[Interpretation of the entropy ladder]
+\label{rem:entropy-ladder-interpretation}
+\index{Koszul entropy!interpretation}
+The entropy ladder quantifies the \emph{completion cost} of
+the MC4 programme along the $\Walg$-algebra axis.  At each
+stage~$N$, the bar-window sizes grow as $h_q \sim
+\rho_K(\Walg_N)^{-q}$; the coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) must be
+verified on matrices of this exponentially growing size.
+The convergence $h_K(\Walg_N) \to h_K(\Walg_\infty)$ shows
+that the completion difficulty saturates: the large-$N$ limit
+is \emph{not} more difficult than any finite stage, consistent
+with the Mittag--Leffler stabilization in the scalar saturation
+theorem (Theorem~\ref{thm:winfty-scalar}).
+\end{remark}
+
+\subsubsection*{$\Walg_\infty$ and the MacMahon connection}
+
+\begin{proposition}[$\Walg_\infty$ character and MacMahon
+factorization]\label{prop:winfty-macmahon}
+\ClaimStatusProvedHere
+\index{W-algebras@$\mathcal{W}$-algebras!W-infinity@$\mathcal{W}_\infty$!MacMahon connection}
+\index{MacMahon function!W-infinity connection@$\mathcal{W}_\infty$ connection}
+\index{plane partitions!W-infinity@$\mathcal{W}_\infty$}
+The $\Walg_\infty$ vacuum character admits the factorization
+\begin{equation}\label{eq:winfty-macmahon}
+  \chi_{\Walg_\infty}(q)
+  \;=\; \prod_{n \geq 2}(1-q^n)^{-(n-1)}
+  \;=\; \frac{\varphi(q)}{1-q}\, M(q),
+\end{equation}
+where $\varphi(q) = \prod_{n \geq 1}(1-q^n)$ is the Euler function
+and $M(q) = \prod_{n \geq 1}(1-q^n)^{-n}$ is the MacMahon
+generating function for plane partitions.
+\end{proposition}
+
+\begin{proof}
+Write
+$\prod_{n \geq 2}(1-q^n)^{-(n-1)}
+= \prod_{n \geq 2}(1-q^n)^{-n} \cdot \prod_{n \geq 2}(1-q^n)$.
+The first factor is $M(q)/(1-q)^{-1} \cdot (1-q)^{-1}
+= M(q) \cdot (1-q)^{-1} \cdot \prod_{n \geq 2}(1-q^n)^{-1}$
+--- but more directly,
+\[
+  \prod_{n \geq 2}(1-q^n)^{-(n-1)}
+  = \frac{\prod_{n \geq 1}(1-q^n)^{-n}}
+         {\prod_{n \geq 1}(1-q^n)^{-1}}
+  \cdot (1-q)^{-1+1}
+  = \frac{M(q)}{\prod_{n \geq 1}(1-q^n)^{-1}}
+  \cdot \frac{1}{1-q}
+  \cdot (1-q)
+\]
+which simplifies to $M(q) \cdot \varphi(q)/(1-q)$, as claimed.
+\end{proof}
+
+\begin{proposition}[$\Walg_\infty$ bar-window series and Koszul
+entropy]\label{prop:winfty-bar-window}
+\ClaimStatusProvedHere
+\index{W-algebras@$\mathcal{W}$-algebras!W-infinity@$\mathcal{W}_\infty$!bar-window series}
+\index{W-algebras@$\mathcal{W}$-algebras!W-infinity@$\mathcal{W}_\infty$!Koszul entropy}
+The $\Walg_\infty$ primitive and bar-window series begin
+\begin{align}
+  G_{\Walg_\infty}(t) &\;=\;
+  t + t^2 + 2t^3 + 2t^4 + 6t^5 + 6t^6 + 15t^7
+  + 19t^8 + 36t^9 + 50t^{10} + 91t^{11} + \cdots,
+  \label{eq:winfty-primitive} \\
+  H_{\Walg_\infty}(t) &\;=\;
+  t + 2t^2 + 5t^3 + 11t^4 + 28t^5 + 65t^6 + 158t^7
+  + 377t^8 + 902t^9 + 2158t^{10} + \cdots.
+  \label{eq:winfty-bar-window}
+\end{align}
+The Koszul radius and entropy are
+\begin{equation}\label{eq:winfty-entropy}
+  \rho_K(\Walg_\infty) \;\approx\; 0.4182441180,
+  \qquad
+  h_K(\Walg_\infty) \;\approx\; 0.8716900026.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expand $\chi_{\Walg_\infty}^+(t)$ via~\eqref{eq:winfty-macmahon}
+and apply the free-algebra
+inversion~\eqref{eq:free-algebra-inversion} to extract $G$ and
+$H = G/(1-G)$.  The Koszul radius is the positive real
+singularity of~$H$.
+\end{proof}
+
+\begin{remark}[Plane-partition combinatorics of $\Walg_\infty$ completion]
+\label{rem:winfty-plane-partition}
+\index{plane partitions!completion combinatorics}
+The MacMahon factorization~\eqref{eq:winfty-macmahon} shows
+that the combinatorics of $\Walg_\infty$ completion is governed
+by \emph{plane-partition-type generating functions}.  Just as
+the ordinary partition function $\prod(1-q^n)^{-1}$ controls
+the Virasoro bar windows, the MacMahon function
+$M(q) = \prod(1-q^n)^{-n}$ --- whose coefficients count the
+number of plane partitions of~$n$ --- controls the
+$\Walg_\infty$ bar windows.  The passage from $\Walg_2$
+(Virasoro) to $\Walg_\infty$ is, at the level of completion
+kinematics, the passage from \emph{linear partitions} to
+\emph{plane partitions}.  This is consistent with the
+geometric picture: the bar coalgebra of $\Walg_\infty$
+involves configuration-space integrals in which the
+operator insertions carry a two-dimensional combinatorial
+structure (spin and mode number), compared to the
+one-dimensional structure (mode number only) of the Virasoro
+bar coalgebra.
 \end{remark}

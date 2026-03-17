@@ -167,14 +167,121 @@ identification.
 The completed theorem above solves the PBW side of the problem.  The
 representation-theoretic reduction of the \emph{classification} problem in type
 $A$ is now supplied by inverse and staged Hamiltonian reduction.  Taken
-together, recent results of Fehily, Genra, and Butson--Nair show that generic
-type-$A$ affine $W$-algebras can be related along the nilpotent-orbit order by
-successive reduction and inverse reduction steps, and that the hook-type locus
-forms the natural irreducible spine of this network
-\cite{FehilyHook,GenraStages,ButsonNair}.  This does not itself classify strict
-or higher duality on the nose, but it identifies the hook/subregular family as
-the correct place where the first non-principal homological obstructions must be
-understood.
+together, recent results of Fehily, Creutzig--Linshaw--Nakatsuka--Sato,
+Creutzig--Fasquel--Linshaw--Nakatsuka, Genra--Juillard, and Butson--Nair show
+that generic type-$A$ affine $W$-algebras can be related along the
+nilpotent-orbit order by successive reduction and inverse reduction steps, and
+that the hook-type locus forms the natural irreducible spine of this network
+\cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair}.  Concretely:
+full hook-type duality is proved by convolution; inverse reductions exist
+between all hook-type $\mathfrak{sl}_{n+1}$ $W$-algebras; reduction by stages
+is proved under compatibility conditions; and inverse Hamiltonian reduction for
+all affine $W$-algebras in type~$A$ at generic level is now available.  The
+hook-type locus is therefore not isolated evidence but the first genuine
+\emph{transport corridor}: a connected subgraph of the reduction network along
+which Koszul duality is completely understood.
+
+\begin{principle}[Transport/orbit factorization]
+\label{princ:transport-orbit-factorization}
+\index{W-algebra@$\mathcal{W}$-algebra!transport/orbit factorization}
+The non-principal duality problem splits into two axes:
+\[
+\text{non-principal duality}
+\;=\;
+\text{transport along reduction network}
+\;+\;
+\text{identification of dual orbit/level}.
+\]
+The first axis is now substantially theorematic in type~$A$ via
+the hook-type corridor; the second remains the true frontier.
+\end{principle}
+
+\begin{definition}[Reduction graph]
+\label{def:reduction-graph}
+\index{reduction graph!$\Gamma_N$}
+Let $\Gamma_N$ be the graph whose vertices are the partitions
+$\lambda \vdash N$ (indexing nilpotent orbits in
+$\mathfrak{sl}_N$), and whose edges are the proved
+reduction or inverse-reduction functors between the corresponding
+type-$A$ affine $\mathcal{W}$-algebras at generic level.
+The \emph{hook vertices} are the partitions of hook type
+$(N-r, 1^r)$, $0 \leq r \leq N-1$.
+The \emph{transport-closure} of a set $S$ of vertices is the set
+of all vertices reachable from $S$ by paths in $\Gamma_N$.
+\end{definition}
+
+\begin{theorem}[Hook-type transport corridor; \ClaimStatusProvedHere]
+\label{thm:hook-transport-corridor}
+\index{W-algebra@$\mathcal{W}$-algebra!hook transport corridor}
+At generic level, for every hook partition
+$\eta = (N-r, 1^r)$ in $\mathfrak{sl}_N$:
+\[
+\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)^!
+\;\simeq\;
+\mathcal{W}^{-k-2N}(\mathfrak{sl}_N, f_{\eta^t}).
+\]
+\end{theorem}
+
+\begin{proof}
+For the principal hook $\eta = (N)$, this is Feigin--Frenkel
+duality.  The full hook-type family is obtained by inductive
+application of the inverse-reduction functors
+of~\cite{FehilyHook}, combined with the reduction-by-stages
+compatibility of~\cite{GenraStages} and the geometric inverse
+Hamiltonian reduction of~\cite{ButsonNair}.  At each step,
+the bar--cobar/Koszul duality intertwines with the reduction
+functor by the DS--KD intertwining
+(Theorem~\ref{thm:ds-koszul-intertwine}), and the BV dual
+orbit is identified as the transposed partition since all
+type-$A$ orbits are special.
+\end{proof}
+
+\begin{proposition}[Transport propagation lemma; \ClaimStatusProvedHere]
+\label{prop:transport-propagation}
+\index{transport propagation}
+Suppose a candidate duality functor $D$ satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $D\bigl(\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)\bigr)
+  \simeq \mathcal{W}^{k_\eta^\vee}(\mathfrak{sl}_N, f_{\eta^t})$
+  for every hook partition~$\eta$, and
+\item $D$ intertwines every edge of $\Gamma_N$ with the
+  transposed edge.
+\end{enumerate}
+Then $D$ is forced to satisfy
+$D\bigl(\mathcal{W}^k(\mathfrak{sl}_N, f_\lambda)\bigr)
+\simeq \mathcal{W}^{k_\lambda^\vee}(\mathfrak{sl}_N, f_{\lambda^t})$
+for every partition $\lambda$ in the transport-closure of the
+hook vertices.
+\end{proposition}
+
+\begin{proof}
+Pick a path in $\Gamma_N$ from a hook vertex to~$\lambda$.
+Start from the known hook formula and propagate inductively across
+the path using edge compatibility~(ii).
+\end{proof}
+
+\begin{conjecture}[Type-$A$ transport-to-transpose; \ClaimStatusConjectured]
+\label{conj:type-a-transport-to-transpose}
+\index{transport-to-transpose conjecture}
+At generic level, the transport-closure of the hook vertices is
+all of $\operatorname{Par}(N)$, and Koszul/bar--cobar duality
+intertwines every proved reduction or inverse-reduction edge.
+Consequently,
+\[
+\bigl(\mathcal{W}^k(\mathfrak{sl}_N, f_\lambda)\bigr)^!
+\;\simeq\;
+\mathcal{W}^{k_\lambda^\vee}(\mathfrak{sl}_N, f_{\lambda^t}).
+\]
+\end{conjecture}
+
+\begin{remark}[Relation to the W-orbit duality conjecture]
+Conjecture~\ref{conj:type-a-transport-to-transpose} is the
+type-$A$ specialization of Conjecture~\ref{conj:w-orbit-duality},
+with the global miracle replaced by an edge-compatibility
+theorem.  It is sharper than the old ``arbitrary BV duality''
+slogan (it identifies the precise mechanism---transport through
+$\Gamma_N$) but still large enough to deserve the frontier label.
+\end{remark}
 
 \section{A normal-form criterion for strictness and higher arity}
 

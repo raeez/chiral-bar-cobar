@@ -1,19 +1,28 @@
 \chapter{The geometric cobar complex}
 \label{chap:cobar-construction}
 
-If the bar construction is logarithmic descent, the cobar construction
-is re-expansion: the reverse engineering of algebra from coalgebra,
-performed geometrically rather than formally.  Verdier duality,
-distributions, and coevaluation maps are the concrete instruments of
-the reversal.  Where the bar complex harvests residues at collision
-divisors on the compactified configuration space
-$\overline{C}_n(X)$, the cobar complex integrates delta-function
-distributions over the open configuration space $C_n(X)$.  Their
-pairing is the residue-integration duality on logarithmic forms.
+The bar-cobar adjunction is mediated by a single object:
+the universal twisting morphism
+$\tau \in \MC\bigl(\operatorname{Conv}(\cC, \cA)\bigr)$,
+a Maurer--Cartan element in the convolution algebra
+(Definition~\ref{def:twisting-morphism}).
+The bar complex and the cobar complex are its two projections.
+The bar complex $\barB(\cA) = (\cA \otimes_\tau \cC, d_\tau)$
+is the coalgebra-side twisted tensor product: it harvests residues
+at collision divisors on~$\overline{C}_n(X)$ via the logarithmic
+propagator $\eta_{ij} = d\log(z_i - z_j)$.
+The cobar complex $\Omega(\cC) = (\cA \otimes_\tau \cC, d_\tau)$
+is the algebra-side twisted tensor product: it integrates
+delta-function distributions over the open configuration space
+$C_n(X)$.
+The duality between them---residues versus delta functions,
+logarithmic versus distributional, $j_*$ versus $j_!$---is not a
+separate phenomenon but the duality of the two factors
+of $\operatorname{Conv}(\cC, \cA)$ under Verdier exchange.
 
-The construction is intrinsic: given a conilpotent chiral
+Concretely, given a conilpotent chiral
 coalgebra~$\cC$ on~$X$ valued in holonomic $\cD$-modules, the
-\emph{geometric cobar complex} is defined by
+\emph{geometric cobar complex} is
 $\Omega^{\mathrm{ch}}_n(\cC)
 := \mathbb{D}_{\overline{C}_{n+1}(X)}
 \bigl(j_*\, j^*(\cC^{\vee,\boxtimes(n+1)})
@@ -22,23 +31,17 @@ $\Omega^{\mathrm{ch}}_n(\cC)
 $\cC^\vee = \mathbb{D}_X(\cC)$ is the $\cD$-module Verdier dual
 and $j \colon C_{n+1}(X) \hookrightarrow \overline{C}_{n+1}(X)$
 is the open inclusion.  The cobar differential is the Verdier
-dual of the bar differential:
+transport of the bar differential through the Hom functor:
 $d_{\mathrm{cobar}} := \mathbb{D}(d_{\mathrm{bar}})$.
-Where the bar complex uses $j_*$ (maximal extension) and
-logarithmic forms to extract residues, the cobar complex uses
-$j_!$ (extension by zero) and distributional sections to
-reinsert data---the exchange $\mathbb{D} \circ j_* \cong
-j_! \circ \mathbb{D}$
-(Lemma~\ref{lem:verdier-extension-exchange}) is the precise
-mechanism.  The cobar kernel is therefore a distributional
-delta-function: the Schwartz kernel
+The exchange $\mathbb{D} \circ j_* \cong j_! \circ \mathbb{D}$
+(Lemma~\ref{lem:verdier-extension-exchange}) identifies the
+cobar kernel as the distributional partner of the logarithmic
+propagator: the Schwartz kernel
 $K \in \cD'(C_n(X) \times C_m(X))$ of
-Theorem~\ref{thm:schwartz-kernel-cobar} is the distributional
-partner of the logarithmic propagator
-$\eta_{ij} = d\log(z_i - z_j)$ that drives the bar complex.
-This bar/cobar duality---residues versus delta
-functions, logarithmic versus distributional, $j_*$ versus
-$j_!$---is the geometric content of the adjunction
+Theorem~\ref{thm:schwartz-kernel-cobar} is the $j_!$-side of the
+same MC element~$\tau$ whose $j_*$-side is the bar propagator.
+This is the geometric content of the representability theorem
+$\operatorname{Tw}(\cC, \cA) = \MC(\operatorname{Conv}(\cC, \cA))$
 (Theorem~\ref{thm:bar-cobar-adjunction}).
 
 The cobar complex already carries the seeds of curved and modular
@@ -1352,8 +1355,14 @@ the only nonzero column is $p = 0$, where it gives $\mathcal{A}$.
 Convergence of the spectral sequence is guaranteed by hypothesis (ii):
 conilpotence ensures the filtration is exhaustive with finite-length iterated
 coproducts, so the cobar differential involves only finite sums.  In the
-completed regime, convergence follows from the completeness of the
-$I$-adic topology.
+completed regime, convergence follows from the strong filtration axiom
+(Definition~\ref{def:strong-completion-tower}): on each quotient
+$\cA_{\le N}$, the arity cutoff
+(Lemma~\ref{lem:arity-cutoff}) ensures only $\mu_r$ for $r \le N$
+contributes, so the completed cobar differential is quotientwise
+finite and the spectral sequence converges on each quotient.  Passing
+to the inverse limit by the complete filtered comparison lemma gives
+convergence on $\CompCl(\Fft)$.
 
 The unit $\eta: \mathcal{A} \to \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$
 is induced by the Verdier pairing (Theorem~\ref{thm:bar-cobar-verdier})
@@ -1915,7 +1924,8 @@ correspond geometrically to:
 \end{theorem}
 
 \begin{proof}
-By the general theory of curved $A_\infty$ algebras (Positselski~\cite{Positselski11}, Loday--Vallette~\cite{LV12} \S10.1), the curved Maurer--Cartan equation $d\alpha + \frac{1}{2}[\alpha,\alpha] + m_0 = 0$ parametrizes gauge equivalence classes of curved deformations.  In the chiral setting, $m_0 \in \Omega^{\mathrm{ch}}(\mathcal{C})$ is the curvature element.  The three geometric correspondences are:
+By the general theory of curved $A_\infty$ algebras (Positselski~\cite{Positselski11}, Loday--Vallette~\cite{LV12} \S10.1), the curved Maurer--Cartan equation $d\alpha + \frac{1}{2}[\alpha,\alpha] + m_0 = 0$ parametrizes gauge equivalence classes of curved deformations
+(gauge equivalence in the $L_\infty$ sense).  In the chiral setting, $m_0 \in \Omega^{\mathrm{ch}}(\mathcal{C})$ is the curvature element.  The three geometric correspondences are:
 (i) A solution $\alpha$ defines a twisted differential $d_\alpha = d + [\alpha, -]$ satisfying $d_\alpha^2 = 0$, which deforms the chiral structure.
 (ii) The curvature $m_0$ is the genus-0 obstruction to $d^2 = 0$; for a chiral algebra with central charge $c$, $m_0 \propto c$ (Proposition~\ref{prop:km-bar-curvature}), which is the conformal anomaly.
 (iii) At genus 1, solutions $\alpha$ with $m_0 = 0$ classify central extensions of the chiral algebra by $\mathbb{C}$, as established in Section~\ref{sec:genus_1_central_extensions}.

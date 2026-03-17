@@ -1025,6 +1025,7 @@ inside the theorematic core rather than left as physical folklore.
 \index{Maurer--Cartan class!universal nonlinear modular conjecture|textbf}
 Let $\cA$ be a modular Koszul chiral algebra on a smooth projective curve~$X$.
 Then there exists an enhanced bulk package
+\textup{(}Note: the algebraic object $\Theta_{\cA}$ is already proved by Theorem~\ref{thm:mc2-bar-intrinsic}; the conjectural content here is the 3d bulk HT realization.\textup{)}
 \[
 \mathfrak{Bulk}(\cA)
 \]
@@ -1036,7 +1037,7 @@ with the following properties.
   boundary restriction identifies with $\mathbb H_X(\cA)$.
 \item \emph{H-level nonlinear genus control.}
   The full higher-genus deformation tower of $\mathfrak{Bulk}(\cA)$ is governed
-  by a universal Maurer--Cartan element $\Theta_{\cA}$ lifting the scalar shadow
+  by a universal Maurer--Cartan element $\Theta_{\cA}$ (already proved, Theorem~\ref{thm:mc2-bar-intrinsic}) lifting the scalar shadow
   $\kappa(\cA)\sum_{g\ge 1}\lambda_g$ and whose quadratic truncation is exactly
   the metaplectic trace-log anomaly series of
   Theorem~\ref{thm:frontier-metaplectic-cocycle-strictification}.
@@ -1066,4 +1067,1514 @@ wavefunctions; and the determinant anomaly is the first obstruction to naive
 sewing.  The metaplectic correction is therefore not decorative.  It is the
 first place where the geometry of determinant lines, the algebra of Weyl
 quantization, and the modular topology of gluing begin to sound in unison.
+\end{remark}
+
+
+%% ====================================================================
+%%  THE HOLOGRAPHIC MODULAR KOSZUL DATUM
+%% ====================================================================
+\subsection{The holographic modular Koszul datum}
+\label{subsec:holographic-modular-koszul-datum}
+\index{holographic modular Koszul datum|textbf}
+\index{modular homotopy theory!holographic datum|textbf}
+
+The Chriss--Ginzburg principle of this monograph---every algebraic structure
+is a Maurer--Cartan element in a convolution algebra---extends to
+holomorphic-topological holography.
+The universal MC element $\Theta_\cA \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) is bar-intrinsic: it exists for
+every modular Koszul chiral algebra~$\cA$, and its finite-order
+projections are the shadow Postnikov tower.  The holographic programme
+amounts to applying a single functor---the \emph{holographic shadow
+functor}---to this MC element, thereby obtaining the full bulk/boundary
+package as derived output rather than assembled input.
+
+Concretely, the recent HT holography
+literature---Costello--Dimofte--Gaiotto~\cite{CDG20},
+Dimofte--Niu--Py~\cite{DNP25}, Gaiotto--Zeng~\cite{GZ26},
+Khan--Zeng~\cite{KhanZeng25}, and
+Latyntsev~\cite{Latyntsev23}---identifies the six components of the
+holographic datum below.  The content of the present subsection is that
+these six components are not independent data: they are the image of the
+single MC element~$\Theta_\cA$ under successive projections.
+
+\begin{definition}[Holographic modular Koszul datum]
+\label{def:holographic-modular-koszul-datum}
+\index{holographic modular Koszul datum!definition}
+Let $T$ be a holomorphic-topological holographic system with
+boundary chiral algebra~$\cA$.  The
+\emph{holographic modular Koszul datum} of~$T$ is the image of the
+universal MC element $\Theta_\cA \in \MC(\gAmod)$ under the holographic
+shadow functor:
+\begin{equation}\label{eq:holographic-datum}
+\mathcal{H}(T)
+\;=\;
+\bigl(\cA,\;\cA^!,\;\mathcal{C},\;r(z),\;\Theta_\cA,\;
+  \nabla^{\mathrm{hol}}_{\bullet,\bullet}\bigr).
+\end{equation}
+The six entries are successive projections of~$\Theta_\cA$; each
+carries the following content.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bulk algebra.}
+  $\cA$ is the bulk protected chiral algebra: an augmented
+  $\Eone$/chiral $A_\infty$-algebra.  In the 3d holomorphic twist of
+  $\mathcal{N}=2$ theories, bulk local operators form a commutative
+  chiral algebra with a shifted Poisson bracket and a higher stress
+  tensor~\cite{CDG20}; boundary operators carry higher $A_\infty$-structure.
+\item \emph{Universal defect algebra.}
+  $\cA^!$ is the universal defect / transverse boundary algebra, Koszul-dual
+  to~$\cA$.  With the correct large transversal boundary condition, the
+  boundary chiral algebra of the KK-reduced HT theory identifies with the
+  universal defect algebra of the parent theory~\cite{GZ26};
+  the same mechanism unifies twisted and celestial holography.
+\item \emph{Line-operator category.}
+  $\mathcal{C} \simeq \cA^!\text{-}\mathsf{mod}$ is the meromorphic
+  tensor category of line operators, with OPE controlled by a dg-shifted
+  Yangian structure on~$\cA^!$~\cite{DNP25}.  The tensor product
+  is meromorphic, not genuinely braided.
+\item \emph{Genus-zero binary shadow.}
+  $r(z) \in \cA^! \,\widehat{\otimes}\, \cA^!\bigl[\![z^{-1},z]\!\bigr]$
+  is the degree-one Maurer--Cartan element controlling the binary
+  line-operator OPE.  It satisfies the $A_\infty$ Yang--Baxter equation
+  and identifies with the bar-cobar twisting morphism
+  (Definition~\ref{def:dg-shifted-yangian};
+  Remark~\ref{rem:yangian-twisting-morphism}).
+\item \emph{Modular Maurer--Cartan class.}
+  $\Theta_\cA \in
+  \mathrm{MC}\!\bigl(\Defcyc(\cA) \,\widehat{\otimes}\,
+  R\Gamma(\overline{\mathcal{M}}_{\bullet,\bullet}^{\mathrm{st}},\,
+  \mathbb{Q})\bigr)$
+  is the full modular characteristic class
+  (Theorem~\ref{thm:universal-MC};
+  Theorem~\ref{thm:mc2-bar-intrinsic}).  Its scalar shadow is
+  $\kappa(\cA) \cdot \lambda_g$ (Theorem~\ref{thm:genus-universality}),
+  and the finite-order projections are the shadow Postnikov tower
+  (Definition~\ref{def:shadow-postnikov-tower}).
+  Note: $\Theta_\cA$ itself is proved; the conjectural content of
+  this definition is the HT holographic packaging---the assertion
+  that the six-tuple $\mathcal{H}(T)$ organizes a genuine bulk/boundary
+  system.
+\item \emph{Modular shadow connection.}
+  $\nabla^{\mathrm{hol}}_{g,n}$ is the flat connection on derived
+  conformal blocks defined by the shadow of~$\Theta_\cA$
+  (Definition~\ref{def:modular-shadow-connection} below).
+\end{enumerate}
+The four principles organizing~$\mathcal{H}(T)$ are:
+\textup{(P1)}~HT holography compares derived chiral algebras, not only
+their cohomology or planar OPE shadow;
+\textup{(P2)}~holography is a Koszul-duality theorem between bulk
+protected operators and a universal defect/boundary algebra;
+\textup{(P3)}~the exact non-planar quantum algebra is the line-operator
+category with meromorphic tensor product, encoded by $r(z)$/$R(z)$-type
+data; and
+\textup{(P4)}~HT holography is not complete until one has a
+deformation-quantization functor from classical PVA/coisson/factorization
+data to the quantum chiral/defect package.
+\end{definition}
+
+\begin{remark}[Relation to the modular cumulant transform]
+\label{rem:holographic-cumulant-comparison}
+\index{modular cumulant transform!holographic comparison}
+The holographic datum $\mathcal{H}(T)$ is a
+\emph{physics-packaged} version of the modular cumulant transform
+$M(\cA) = (\hat{T}^c(sQ(\cA)^\vee), D_\cA, \tau_\cA, r_\cA(z),
+\Theta_\cA)$
+(Equation~\eqref{eq:modular-cumulant-transform} in the
+concordance).  The correspondence is:
+\begin{center}
+\small
+\begin{tabular}{lcl}
+\textbf{Holographic} && \textbf{Algebraic (cumulant)} \\
+\hline
+bulk algebra $\cA$ && source algebra \\[2pt]
+defect algebra $\cA^!$ &&
+  $\operatorname{Cum}_c(\cA)^\vee$ (cumulant dual) \\[2pt]
+line category $\cA^!\text{-mod}$ &&
+  $\operatorname{Cum}_c(\cA)^\vee\text{-mod}$ \\[2pt]
+$r(z)$ && $\tau_\cA|_{\deg 2}$ (ordered $E_1$ face) \\[2pt]
+$\Theta_\cA$ && connected stable-graph logarithm \\[2pt]
+$\nabla^{\mathrm{hol}}$ && shadow projection of $\Theta_\cA$
+\end{tabular}
+\end{center}
+The cumulant language adds three structures not visible in the
+holographic packaging: the primitive spectrum $Q(\cA)$ and
+generating series $G_\cA(t)$, which are \emph{kinematic} invariants
+independent of OPE data; the completion entropy $h_K(\cA)$, which
+measures boundary complexity; and the reduced-weight windows
+$K_q(\cA)$, which make every jet computation finite.  The
+holographic modular Koszul datum $\mathcal{H}(T)$ is the physicsside name for $M(\cA)$; the completion kinematics is the hidden
+algebraic backbone.
+\end{remark}
+
+\begin{definition}[Modular shadow connection --- the central formula]
+\label{def:modular-shadow-connection}
+\index{modular shadow connection|textbf}
+\index{conformal blocks!modular shadow connection}
+For each $(g,n)$ with $2g - 2 + n > 0$, let
+$\mathcal{V}_{g,n}(\cA)$ denote the space of derived conformal
+blocks / protected states at genus~$g$ with $n$ insertions.  The
+\emph{modular shadow connection} is
+\begin{equation}\label{eq:modular-shadow-connection}
+\boxed{%
+\nabla^{\mathrm{hol}}_{g,n}
+\;:=\;
+d \;-\; \operatorname{Sh}_{g,n}(\Theta_\cA).}
+\end{equation}
+This is the central formula of the chapter: it converts the abstract
+MC element~$\Theta_\cA$ into a concrete flat connection on conformal
+blocks.  Here $\operatorname{Sh}_{g,n}\colon
+\mathrm{MC}\bigl(\Defcyc(\cA)\,\widehat{\otimes}\,
+R\Gamma(\overline{\mathcal{M}}_{\bullet,\bullet},\mathbb{Q})\bigr)
+\to \operatorname{End}\bigl(\mathcal{V}_{g,n}(\cA)\bigr)$
+is the shadow representation: project~$\Theta_\cA$ to the
+$(g,n)$-sector and act on conformal blocks via the cyclic deformation
+complex.  Flatness $(\nabla^{\mathrm{hol}}_{g,n})^2 = 0$ is the
+$(g,n)$-projection of the MC equation for~$\Theta_\cA$.
+At $g=0$ it reduces to the commuting differential constraints
+determining sphere correlators exactly~\cite{GZ26};
+at higher genus it is the genuine holographic field equation for
+protected correlators.
+\end{definition}
+
+\subsubsection{The master equation and compatibility laws}
+
+The entire datum is subordinated to a single equation:
+\begin{equation}\label{eq:holographic-master-equation}
+d\Theta_\cA
+\;+\;
+\sum_{m \ge 2} \frac{1}{m!}\,
+\ell_m(\Theta_\cA, \dotsc, \Theta_\cA)
+\;=\; 0,
+\end{equation}
+where $\{\ell_m\}_{m \ge 2}$ are the higher brackets of the
+modular $L_\infty$ convolution algebra~$\gAmod$
+(Theorem~\ref{thm:modular-homotopy-convolution}).  In the strict dg~Lie
+model $\Convstr$, this collapses to
+$D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$,
+which is proved (Theorem~\ref{thm:mc2-bar-intrinsic};
+Theorem~\ref{thm:convolution-d-squared-zero}).
+
+Two compatibility laws constrain~$\Theta_\cA$ beyond the MC equation:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Collision residue.}
+\begin{equation}\label{eq:collision-residue-identification}
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;=\; r(z).
+\end{equation}
+The binary genus-zero collision residue of the full modular class
+recovers the dg-shifted Yangian element.  The trivalent collision
+residue
+$\operatorname{Res}^{\mathrm{coll}}_{0,3}(\Theta_\cA)$
+encodes the $A_\infty$ Yang--Baxter relation:
+the two-point stratum gives the binary MC element, and the
+three-point boundary intersections give coassociativity and
+Yang--Baxter.
+\item \emph{Clutching / factorization.}
+\begin{equation}\label{eq:clutching-factorization-frontier}
+\xi^*(\Theta_\cA)
+\;=\;
+\Theta_\cA \star \Theta_\cA,
+\end{equation}
+where $\star$ is the operadic composition along stable boundary
+strata $\xi\colon \overline{\mathcal{M}}_{g_1,n_1+1} \times
+\overline{\mathcal{M}}_{g_2,n_2+1} \to \overline{\mathcal{M}}_{g,n}$
+(already proved: Theorem~\ref{thm:universal-MC}(ii)).
+\end{enumerate}
+The central new claim is:
+\emph{the dg-shifted Yangian is not a separate miracle; it is the
+binary genus-zero shadow of the modular class~$\Theta_\cA$.}
+That is, $r(z)$ is the first visible collision residue of the full
+modular deformation problem.  The 2026 exact sphere-correlator
+match~\cite{GZ26} is the genus-zero matrix-element shadow of the
+pair~$(\mathcal{C}, r)$.
+
+\subsubsection{Five theorem targets: projections of~$\Theta_\cA$}
+
+Theorems A--D of the algebraic engine are projections of the scalar
+shadow~$\kappa(\cA)$ of~$\Theta_\cA$.  The five targets below are the
+analogous projections at the holographic level: each is obtained by
+restricting~$\Theta_\cA$ to a specific collision stratum, genus sector,
+or arity truncation of the convolution algebra~$\gAmod$.
+
+\begin{conjecture}[Boundary--defect realization; \ClaimStatusConjectured]
+\label{conj:boundary-defect-realization}
+\index{boundary-defect realization!holographic}
+For a large transversal boundary condition~$B$, the boundary algebra
+of the KK-reduced HT theory is equivalent, as a derived chiral algebra,
+to the universal defect algebra of the original theory:
+\begin{equation}\label{eq:boundary-defect-realization}
+\cA_\partial^{\mathrm{transv}}
+\;\simeq\;
+\cA_{\mathrm{univ}}^!.
+\end{equation}
+The theorem-level upgrade over existing work~\textup{\cite{GZ26}} is to
+prove this in the modular category where $\Theta_\cA$ lives, not merely
+at the level of cohomology or planar OPEs.
+\end{conjecture}
+
+\begin{conjecture}[Yangian-shadow theorem; \ClaimStatusConjectured]
+\label{conj:yangian-shadow-theorem}
+\index{Yangian!shadow theorem|textbf}
+\index{collision residue!Yangian shadow}
+Assume $\cA$ is modular Koszul and its genus-zero line sector is
+quasi-linear/PBW.  Then the binary collision residue of~$\Theta_\cA$
+canonically produces a dg-shifted Yangian structure on~$\cA^!$:
+\begin{equation}\label{eq:yangian-shadow}
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA) = r(z),
+\qquad
+\operatorname{Res}^{\mathrm{coll}}_{0,3}(\Theta_\cA)
+\;\Longrightarrow\;
+A_\infty\text{-}\mathrm{YBE}.
+\end{equation}
+\end{conjecture}
+
+\begin{remark}[Proof strategy for Yangian-shadow]
+\label{rem:yangian-shadow-strategy}
+Restrict the modular MC equation to the two- and three-vertex collision
+strata.  The two-point stratum gives the binary MC element;
+the three-point boundary intersections give coassociativity and
+Yang--Baxter.  This pattern is visible in the DNP formulas~\cite{DNP25}
+and the bar-cobar identification of $r(z)$ as twisting morphism
+(Remark~\ref{rem:yangian-twisting-morphism}).
+\end{remark}
+
+\begin{conjecture}[Sphere reconstruction; \ClaimStatusConjectured]
+\label{conj:sphere-reconstruction}
+\index{sphere correlators!reconstruction from modular shadow}
+Let $\mathcal{C} \simeq \cA^!\text{-}\mathsf{mod}$ be generated by
+the mesonic modules relevant to the interface model.  Then the sphere
+correlators are the joint flat sections of the modular shadow
+connection:
+\begin{equation}\label{eq:sphere-reconstruction}
+\nabla^{\mathrm{hol}}_{0,n}
+\;=\;
+d \;-\; \operatorname{Sh}_{0,n}(\Theta_\cA).
+\end{equation}
+At $n$~points on the sphere, the commuting differential operators
+in the 2026 interface paper~\textup{\cite{GZ26}} are the scalar shadow
+of~$\operatorname{Sh}_{0,n}(\Theta_\cA)$.  The exact sphere-correlator
+match is the first instance of a general reconstruction theorem from
+modular shadow data.
+\end{conjecture}
+
+\begin{conjecture}[Quartic resonance obstruction; \ClaimStatusConjectured]
+\label{conj:quartic-resonance-obstruction}
+\index{quartic resonance class!obstruction to modular extension}
+The first genuinely nonlinear obstruction to extending the genus-zero
+shadow $r(z)$ to a modular $\Theta_\cA$ is the quartic resonance
+class
+$R^{\mathrm{mod}}_{4,g,n}(\cA)$
+(Definition~\ref{def:nms-modular-quartic-resonance-class};
+Appendix~\ref{app:nonlinear-modular-shadows}):
+\begin{equation}\label{eq:quartic-resonance-obstruction}
+R^{\mathrm{mod}}_{4,g,n}(\cA) = 0
+\quad\Longleftrightarrow\quad
+\Theta_\cA^{\leq 3}\text{ extends to }
+\Theta_\cA^{\leq 4}
+\end{equation}
+in the PBW/formal range.  The clutching law
+for~$R^{\mathrm{mod}}_{4,g,n}$ is already established
+\textup{(}Appendix~\textup{\ref{app:nonlinear-modular-shadows})}.
+This is the first nontrivial theorem beyond the scalar package
+that the programme should prove.
+
+\smallskip\noindent\textup{(}Note: the bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) proves $\Theta_\cA$ to all
+orders, bypassing the constructive arity-by-arity approach.  This
+conjecture retains value as a characterization of when the
+\emph{constructive} shadow tower extends at finite order.\textup{)}
+\end{conjecture}
+
+\begin{conjecture}[Singular-fiber descent; \ClaimStatusConjectured]
+\label{conj:singular-fiber-descent}
+\index{minimal model!singular-fiber descent}
+\index{coderived!minimal-model descent}
+Rational minimal models are obtained by derived specialization from
+the resolved interface family.  The parent generic family
+\textup{(}generic Virasoro/$\Walg_N$\textup{)} carries the
+modular Koszul structure; the rational minimal-model point is a
+singular fiber where bar spectral sequences cease to collapse
+cleanly and coderived methods become necessary
+\textup{(}\S\textup{\ref{subsec:coderived-ran})}.
+\end{conjecture}
+
+\begin{remark}[Motivation for singular-fiber descent]
+\label{rem:singular-fiber-motivation}
+The 2026 paper~\cite{GZ26} works with a resolved/interface parent
+geometry.  This monograph gives modular Koszul theorems on generic
+Virasoro/$\Walg_N$-type families
+(Theorem~\ref{thm:algebraic-family-rigidity}), while explicitly
+warning that minimal-model quotients are generally not modular Koszul
+(Remark~\ref{rem:four-levels}).  The correct platonic
+theorem therefore lives first on the generic/resolved family, and
+the minimal model appears as a singular specialization.
+\end{remark}
+
+\begin{remark}[Five targets as projections of $\Theta_\cA$]
+\label{rem:five-targets-as-projections}
+The analogy with the algebraic engine is exact.  Theorems A--D are
+obtained by projecting $\Theta_\cA$ to successively deeper strata of
+the convolution algebra: the scalar shadow gives $\kappa$ (Thm~D), the
+binary collision residue gives bar-cobar (Thm~A/B), the Lagrangian
+splitting gives complementarity (Thm~C), and the polynomial count gives
+Hochschild (Thm~H).  The five holographic targets are the same operation
+applied to holographic strata:
+\begin{center}
+\begin{tabular}{lll}
+\textbf{Target} & \textbf{Stratum of $\gAmod$} & \textbf{Projection}\\
+\hline
+Boundary--defect & genus~0, full arity & Koszul duality $\cA \leftrightarrow \cA^!$\\
+Yangian--shadow & genus~0, binary/ternary collision & $\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta)=r(z)$\\
+Sphere reconstruction & genus~0, $n$-point & flat sections of $\nabla^{\mathrm{hol}}_{0,n}$\\
+Quartic obstruction & arity~4, all genera & $[\Theta^{\le 3}]_{\mathrm{wt}\,4} = \mathfrak{R}^{\mathrm{mod}}_4$\\
+Singular-fiber descent & degeneration locus & coderived specialization of $\Theta$\\
+\end{tabular}
+\end{center}
+\end{remark}
+
+\subsubsection{The factorisation quantum-group envelope}
+
+The categorical home for the full quantum algebra is one level beyond
+the dg-shifted Yangian.  Latyntsev~\cite{Latyntsev23} develops
+factorisation and vertex quantum groups whose representation theory is
+controlled by spectral $R$-matrices, and proves equivalences between
+vertex quantum groups and factorisation op-quantum groups.  The DNP
+line category is meromorphic and not genuinely braided; the factorisation
+quantum-group framework supplies the nearest categorical envelope:
+\begin{equation}\label{eq:fqg-envelope}
+\Ydg_\cA
+\;\subset\;
+\text{meromorphic HT shadow}
+\;\rightsquigarrow\;
+\text{factorisation quantum-group envelope}.
+\end{equation}
+The long-term theorem should identify the DNP line-operator category
+with the non-braided/meromorphic boundary shadow of a factorisation
+quantum-group object, recovering braided structure only after
+passing to the correct completed or op-dual factorization envelope.
+This is the categorical home for the 2026 ``full quantum algebra''
+claim, and the correct target for
+Conjecture~\ref{conj:derived-drinfeld-kohno} and the Bridge
+Theorem (Remark~\ref{rem:bridge-theorem-programme}).
+
+\subsubsection{The deformation-quantization bridge}
+
+\begin{conjecture}[HT deformation quantization; \ClaimStatusConjectured]
+\label{conj:ht-deformation-quantization}
+\index{deformation quantization!HT holographic}
+\index{Poisson vertex algebra!HT quantization}
+There exists a deformation-quantization functor
+\begin{equation}\label{eq:ht-deformation-quantization}
+Q_{\mathrm{HT}}
+\;\colon\;
+\{\text{classical modular coisson data}\}
+\;\longrightarrow\;
+\{\text{quantum modular Koszul data}\}
+\end{equation}
+with the property that $Q_{\mathrm{HT}}(\text{binary classical
+bracket}) = r(z)$ and $Q_{\mathrm{HT}}(\text{full modular classical
+class}) = \Theta_\cA$.  The classical bulk PVA/$\lambda$-bracket
+package is promoted to 3d HT gauge data via the 3d Poisson sigma
+model~\textup{\cite{KhanZeng25}}, gauge invariance is equivalent to the Jacobi
+identity, and the boundary vertex algebra is the deformation
+quantization of the Poisson vertex algebra.
+\end{conjecture}
+
+\subsubsection{The mature platonic theorem}
+
+\begin{remark}[The mature statement]
+\label{rem:mature-platonic-statement}
+\index{holographic modular Koszul datum!platonic theorem}
+The five conjectures above assemble into a single target theorem:
+\emph{every HT holographic pair is controlled by a holographic modular
+Koszul datum~$\mathcal{H}(T)$}, where $\cA$ is the bulk protected
+factorization algebra, $\cA^!$ the universal defect/transversal
+boundary algebra, $\mathcal{C} \simeq \cA^!\text{-}\mathsf{mod}$
+the meromorphic line category, $r(z)$ the binary genus-zero shadow
+of~$\Theta_\cA$, and $\Theta_\cA$ the all-genus modular MC class.
+The flat sections of~$\nabla^{\mathrm{hol}}_{0,n}$ are the protected
+sphere correlators; higher genus is obtained by the same object via
+clutching, trace, and Verdier duality; and minimal-model holography
+is the singular specialization of this parent theorem.
+
+The execution order:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Prove theorems on the generic resolved interface family, not
+  at the minimal-model quotient.  Generic Virasoro/$\Walg_N$ families
+  are the first all-genus modular laboratory.
+\item Construct $\cA$, $\cA^!$, $\mathcal{C}$ simultaneously as one
+  package.
+\item Construct $\Theta_\cA^{\leq 4}$ with binary shadow $r(z)$,
+  trivalent shadow yielding $A_\infty$-YBE, and quartic obstruction
+  $R^{\mathrm{mod}}_{4,g,n}(\cA)$.  \textup{(}The full
+  $\Theta_\cA$ is already proved by
+  Theorem~\ref{thm:mc2-bar-intrinsic}; the constructive approach here
+  is computational refinement extracting explicit finite-order
+  shadows.\textup{)}
+\item Show that the commuting sphere Hamiltonians in~\textup{\cite{GZ26}}
+  are the scalar images of $\operatorname{Sh}_{0,n}(\Theta_\cA)$.
+\item Pass to genus~$1$: the first higher-genus holographic check is
+  the identification of genus-$1$ curvature/anomaly with the first
+  modular correction to the sphere shadow.
+\item Descend to rational minimal-model points by coderived
+  specialization.
+\end{enumerate}
+The most important organizing sentence: \emph{the 2026 non-planar
+sphere algebra is not the endpoint; it is the binary shadow of a
+modular Maurer--Cartan class.}
+\end{remark}
+
+
+%% ====================================================================
+%%  PROVED CONSTRUCTIONS FROM THE COLLISION FILTRATION
+%% ====================================================================
+\subsection{The collision filtration and proved recovery theorems}
+\label{subsec:collision-filtration-recovery}
+\index{collision filtration|textbf}
+\index{collision residue!proved recovery theorems}
+
+The holographic modular Koszul datum is not a separate layer of
+conjecture.  Its core identifications---the collision residue recovering
+the Yangian, the shadow connection recovering KZ, the quartic
+obstruction governing extensions---are \emph{formal consequences} of the
+existing proved core.  This subsection extracts them.
+
+\subsubsection{The collision filtration}
+
+\begin{definition}[Collision filtration on the genus-zero convolution algebra;
+\ClaimStatusProvedHere]
+\label{def:collision-filtration}
+\index{collision filtration!definition}
+Let $\gAmod = \prod_{2g-2+n>0}
+\Hom_{\Sigma_n}(C_*(\overline{\mathcal{M}}_{g,n}),
+\operatorname{End}_\cA(n))$
+be the modular convolution dg~Lie algebra
+(Definition~\ref{def:modular-convolution-dg-lie}).
+Define the \emph{collision filtration} on the genus-zero sector
+$\mathfrak{g}_{\cA}^{\mathrm{mod},\,g{=}0} = \prod_{n \geq 3}
+\Hom_{\Sigma_n}(C_*(\overline{\mathcal{M}}_{0,n}),
+\operatorname{End}_\cA(n))$ by
+\begin{equation}\label{eq:collision-filtration}
+F^d_{\mathrm{coll}}\, \mathfrak{g}_{\cA}^{\mathrm{mod},\,g{=}0}
+\;:=\;
+\prod_{n \geq 3}
+\Hom_{\Sigma_n}\bigl(
+  C_*(\overline{\mathcal{M}}_{0,n}^{\geq d}),\;
+  \operatorname{End}_\cA(n)\bigr),
+\end{equation}
+where $\overline{\mathcal{M}}_{0,n}^{\geq d}$ denotes the union of
+boundary strata of codimension $\geq d$ in
+$\overline{\mathcal{M}}_{0,n}$.  The associated graded
+$\operatorname{gr}^d_{\mathrm{coll}}$ is supported on
+strata of \emph{exactly} codimension~$d$---dual trees with
+exactly $d$~internal edges, corresponding to exactly
+$d$~collision events.
+\end{definition}
+
+\begin{remark}[Collision depth vs.\ arity weight]
+\label{rem:collision-vs-arity}
+The collision filtration is \emph{not} the arity/weight filtration of
+the shadow Postnikov tower.  Arity controls the order of the shadow
+truncation~$\Theta_\cA^{\leq r}$; collision depth controls the
+\emph{boundary stratum depth} within a fixed $n$-point moduli space.
+At collision depth~$0$ (the open stratum $\mathcal{M}_{0,n}$), the
+datum is the ``bulk'' OPE with all points spread out.
+At $d = 1$ (codimension-$1$ boundary), binary collisions produce the
+$r$-matrix.  At $d = 2$, ternary collisions produce Yang--Baxter.
+\end{remark}
+
+\subsubsection{The collision residue theorem}
+
+\begin{theorem}[Collision residue = universal twisting morphism;
+\ClaimStatusProvedHere]
+\label{thm:collision-residue-twisting}
+\index{collision residue!equals twisting morphism|textbf}
+\index{twisting morphism!from collision residue}
+Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
+curve~$X$, and let
+$\Theta_\cA = D_\cA - d_0 \in
+\mathrm{MC}(\Defcyc(\cA) \,\widehat{\otimes}\, \mathcal{G}_{\mathrm{mod}})$
+be the bar-intrinsic MC element
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The restriction of\/ $\Theta_\cA$ to the genus-zero, two-point
+  collision stratum recovers the universal twisting morphism:
+  \begin{equation}\label{eq:collision-residue-equals-twisting}
+  \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+  \;=\;
+  \pi_\cA
+  \;\in\;
+  \mathrm{Tw}(\barBch(\cA), \cA),
+  \end{equation}
+  where $\pi_\cA\colon \barBch(\cA) \to \cA$ is the universal
+  twisting morphism
+  \textup{(}Corollary~\textup{\ref{cor:three-bijections})}, realized
+  geometrically by propagator extraction
+  \textup{(}Proposition~\textup{\ref{prop:twisting-morphism-propagator})}:
+  \begin{equation}\label{eq:twisting-propagator-frontier}
+  \pi_\cA([s^{-1}\bar{a}])(z)
+  \;=\;
+  \operatorname{Res}_{w = z}\,
+  \bar{a}(w) \cdot \eta(z,w),
+  \end{equation}
+  with $\eta(z,w) = d\log(z - w)$ the logarithmic propagator.
+\item After passing to Koszul-dual coordinates via
+  $H^*(\barBch(\cA)) \cong (\cA^!)^\vee$, the twisting morphism
+  produces the spectral $r$-matrix
+  $r_\cA(z)$
+  of Definition~\textup{\ref{def:dg-shifted-yangian}}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The bar-intrinsic MC element is $\Theta_\cA = D_\cA - d_0$.
+At genus zero, $d_\cA^{(0)} = d_0$ is the standard bar differential on
+$\overline{C}_n(X)$.  The collision residue along the diagonal
+$D_{ij} = \{z_i = z_j\} \subset \overline{C}_n(X)$ extracts the
+leading pole of the bar differential, which is the chiral bracket
+$\mu^{\mathrm{ch}}(a_i, a_j)$ evaluated against the propagator
+$\eta(z_i, z_j)$.  This is exactly the geometric realization of the
+universal twisting morphism
+(Proposition~\ref{prop:twisting-morphism-propagator}).
+For~(ii), the three bijections
+(Corollary~\ref{cor:three-bijections}) give the canonical identification
+with the $r$-matrix on the evaluation locus.
+\end{proof}
+
+\begin{theorem}[MC at collision depth~$2$ gives $A_\infty$-YBE;
+\ClaimStatusProvedHere]
+\label{thm:collision-depth-2-ybe}
+\index{Yang--Baxter equation!from collision depth 2}
+\index{Arnold relation!gives Yang--Baxter}
+The MC equation restricted to the genus-zero four-point sector
+$\overline{\mathcal{M}}_{0,4}$ and projected to collision depth~$2$
+gives the infinitesimal braid relation \textup{(}IBR\textup{)} for
+$r_\cA(z) = \Omega/(k{+}h^\vee) z$:
+\begin{equation}\label{eq:ibr-from-collision}
+[\Omega_{ij},\; \Omega_{ik} + \Omega_{jk}] \;=\; 0
+\qquad \text{for all distinct } i,j,k.
+\end{equation}
+This is equivalent to the classical Yang--Baxter equation for the
+spectral-parameter $r$-matrix via partial fractions on
+$\overline{\mathcal{M}}_{0,4}$.
+\end{theorem}
+
+\begin{proof}
+The boundary $\partial\overline{\mathcal{M}}_{0,4}$ has three divisors
+$D_s, D_t, D_u$, each isomorphic to
+$\overline{\mathcal{M}}_{0,3} \times
+\overline{\mathcal{M}}_{0,3} = \mathrm{pt}$.
+The MC equation at four points, evaluated at triple collision, reads
+$d(\Theta_{0,4}) + \sum_{\text{channels}}
+[\Theta_{0,3}, \Theta_{0,3}]_{\text{channel}} = 0$.
+After collision residue extraction, the three channel contributions
+give the IBR\@.  The mechanism is the Arnold relation
+(Theorem~\ref{thm:arnold-relations})
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31} +
+\eta_{31} \wedge \eta_{12} = 0$
+tensored with the structure-constant data of~$\cA$.  The equivalence
+between $d_{\mathrm{bar}}^2 = 0$ and the Arnold relation
+(Theorem~\ref{thm:bar-nilpotency-complete}) completes the proof.
+\end{proof}
+
+\subsubsection{Recovery of classical connections}
+
+\begin{theorem}[Shadow connection for affine Kac--Moody = KZ;
+\ClaimStatusProvedHere]
+\label{thm:shadow-connection-kz}
+\index{Knizhnik--Zamolodchikov connection!from shadow connection|textbf}
+\index{shadow connection!equals KZ}
+Let $\cA = \widehat{\fg}_k$ at level $k \neq -h^\vee$, with
+$\kappa(\widehat{\fg}_k) = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$.
+The genus-$0$ shadow connection on $n$-point conformal blocks
+$\mathcal{V}_{0,n}(\widehat{\fg}_k; V_1, \dotsc, V_n)$ is the
+Knizhnik--Zamolodchikov connection:
+\begin{equation}\label{eq:shadow-equals-kz}
+\nabla^{\mathrm{hol}}_{0,n}
+\;=\;
+d \;-\; \frac{1}{k + h^\vee}\,
+\sum_{1 \leq i < j \leq n}
+\frac{\Omega_{ij}}{z_i - z_j}\, dz_i
+\;=\; \nabla^{\mathrm{KZ}},
+\end{equation}
+where $\Omega_{ij} = \sum_a J^a_i \otimes J^a_j$ is the Casimir.
+In particular: flatness
+$(\nabla^{\mathrm{hol}}_{0,n})^2 = 0$ is the KZ equation, and
+conformal blocks are horizontal sections.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:collision-residue-twisting}, the collision residue
+of~$\Theta_\cA$ recovers the twisting morphism $\pi_\cA$, which for
+$\widehat{\fg}_k$ extracts the chiral bracket
+$\mu^{\mathrm{ch}}(J^a(z), J^b(w)) =
+[J^a, J^b](w)/(z{-}w) + k(a,b)/(z{-}w)^2$.
+The shadow representation on conformal blocks produces
+$\operatorname{Sh}_{0,n}(\Theta_\cA) =
+(k{+}h^\vee)^{-1} \sum_{i<j} \Omega_{ij}\, d\log(z_i{-}z_j)$,
+where $(k{+}h^\vee)^{-1}$ is the propagator normalization
+against the Killing form.
+The connection $\nabla^{\mathrm{hol}}_{0,n} =
+d - \operatorname{Sh}_{0,n}(\Theta_\cA)$ is therefore the KZ
+connection.  Flatness follows from the MC equation
+(Theorem~\ref{thm:collision-depth-2-ybe}).
+The identification of the bar-complex flat connection with KZ
+is also established in Proposition~\ref{prop:kz-from-bar}.
+\end{proof}
+
+\begin{corollary}[Heisenberg shadow connection;
+\ClaimStatusProvedHere]
+\label{cor:shadow-connection-heisenberg}
+\index{Heisenberg algebra!shadow connection}
+For rank-$1$ Heisenberg $\mathcal{H}_\kappa$ \textup{(}class~$G$,
+tower terminates at arity~$2$;
+Corollary~\textup{\ref{cor:heisenberg-postnikov-termination})}, the
+shadow connection is
+\begin{equation}\label{eq:heisenberg-shadow-connection}
+\nabla^{\mathrm{hol}}_{0,n}
+=
+d - \kappa
+\sum_{i < j} q_i q_j\, d\log(z_i - z_j),
+\end{equation}
+with flat sections
+$\langle \phi_{q_1}(z_1) \dotsm \phi_{q_n}(z_n) \rangle
+= \delta_{\sum q_i,0}\,
+\prod_{i<j} (z_i - z_j)^{\kappa q_i q_j}$.
+Flatness is automatic: the Heisenberg is abelian.
+\end{corollary}
+
+\begin{proposition}[Shadow connection for Virasoro recovers BPZ;
+\ClaimStatusProvedHere]
+\label{prop:shadow-connection-bpz}
+\index{BPZ equations!from shadow connection}
+For $\cA = \mathrm{Vir}_c$, the genus-$0$ shadow connection on
+$n$-point blocks of primaries with conformal weights
+$h_1, \dotsc, h_n$ acts as
+\[
+\nabla^{\mathrm{hol}}_{0,n}
+=
+d -
+\sum_{i=1}^n \left(
+  \sum_{j \neq i} \frac{h_j}{(z_i - z_j)^2}
+  +
+  \frac{\partial_{z_j}}{z_i - z_j}
+\right) dz_i.
+\]
+The BPZ equations for degenerate representations are the conditions
+that higher collision residues
+$\operatorname{Res}^{\mathrm{coll}}_{0,k}(\Theta_{\mathrm{Vir}})$
+for $k \geq 3$---encoding the infinite shadow tower of class~$M$---produce
+null-vector differential operators acting on the flat sections.
+\end{proposition}
+
+\begin{proof}
+The Virasoro OPE gives the collision residue.  The shadow
+representation on primaries extracts the conformal Ward identity.
+The infinite tower
+(Theorem~\ref{thm:w-virasoro-mixed-shadow};
+$r_{\max} = \infty$, Theorem~\ref{thm:w-virasoro-quintic-forced})
+produces higher-order differential constraints that for degenerate
+representations truncate to the finite-order BPZ null-vector equations.
+\end{proof}
+
+\subsubsection{The quartic obstruction theorem}
+
+\begin{theorem}[Quartic obstruction = $L_\infty$ obstruction;
+\ClaimStatusProvedHere]
+\label{thm:quartic-obstruction-linf}
+\index{quartic resonance class!equals L-infinity obstruction}
+The obstruction to extending $\Theta_\cA^{\leq 3}$ to
+$\Theta_\cA^{\leq 4}$ is
+\begin{equation}\label{eq:quartic-obstruction-class}
+[o_4(\cA)]
+=
+\bigl[
+  D_\cA \Theta_\cA^{\leq 3}
+  + \tfrac{1}{2}[\Theta_\cA^{\leq 3},\,
+  \Theta_\cA^{\leq 3}]
+\bigr]_{\mathrm{wt}\,4}
+\in
+H^2(\cA^{\mathrm{sh}}_{4,0}),
+\end{equation}
+canonically identified with the modular quartic resonance class
+$\mathfrak{R}^{\mathrm{mod}}_{4,\bullet,\bullet}(\cA)$
+\textup{(}Definition~\textup{\ref{def:nms-modular-quartic-resonance-class})}.
+In particular: $\mathfrak{R}^{\mathrm{mod}}_4 = 0$ if and only if\/
+$\Theta^{\leq 3}$ extends to $\Theta^{\leq 4}$.
+For class~$G,L$: $o_4 = 0$ automatically.
+For class~$C$: $o_4 = 0$ but $\mathfrak{Q} \neq 0$.
+For class~$M$: $o_4 \neq 0$ generically; the bar-intrinsic
+construction bypasses the tower entirely
+\textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
+\end{theorem}
+
+\begin{proof}
+Standard $L_\infty$ obstruction theory
+(Kontsevich~\cite{Kontsevich97}, Manetti~\cite{Manetti99}) applied to
+$\gAmod$ with the weight filtration: the obstruction at weight~$r{+}1$
+is the class of the MC failure projected to weight~$r{+}1$.  At
+weight~$4$, the clutching formula
+$\xi^*\mathfrak{Q} = H \star \mathfrak{Q} +
+\mathfrak{C} \star \mathfrak{C} + \mathfrak{Q} \star H$
+identifies this with
+$\mathfrak{R}^{\mathrm{mod}}_{4,g,n}(\cA)$.  The class-by-class
+vanishing follows from
+Theorem~\ref{thm:heisenberg-exact-linearity} (class~$G$),
+Corollary~\ref{cor:affine-postnikov-termination} (class~$L$), and
+Theorem~\ref{thm:w-virasoro-quintic-forced} (class~$M$).
+\end{proof}
+
+\subsubsection{The holographic spectral sequence}
+
+\begin{construction}[Holographic spectral sequence;
+\ClaimStatusProvedHere]
+\label{constr:holographic-spectral-sequence}
+\index{spectral sequence!holographic|textbf}
+The collision filtration
+(Definition~\ref{def:collision-filtration}) induces a spectral
+sequence:
+\begin{equation}\label{eq:holographic-spectral-sequence}
+E_1^{d,q}
+=
+H^{d+q}\!\bigl(
+  \operatorname{gr}^d_{\mathrm{coll}}\, \mathfrak{g}_{\cA}^{\mathrm{mod},\,g{=}0},\,
+  d_{\mathrm{int}}\bigr)
+\Longrightarrow
+H^{d+q}(\mathfrak{g}_{\cA}^{\mathrm{mod},\,g{=}0},\, D).
+\end{equation}
+The $E_1$~page decomposes by collision depth:
+$E_1^{0,*}$ = bulk data on $\mathcal{M}_{0,n}$;
+$E_1^{1,*}$ = binary collision = tangent complex of the Yangian;
+$E_1^{2,*}$ = ternary collision = YBE deformation complex;
+$E_1^{d,*}$ for $d \geq 3$ = higher nonlinear shadows.
+The $d_1$ differential propagates binary $\to$ ternary $\to$
+quartic via clutching.  Collapse classifies shadow depth:
+\begin{itemize}
+\item Class~$G$: $E_1$ collapses at $d = 0$.
+\item Class~$L$: $E_2$ collapses at $d = 1$
+  \textup{(}Jacobi kills quartic\textup{)}.
+\item Class~$C$: $E_3$ collapses at $d = 2$.
+\item Class~$M$: no finite collapse.
+\end{itemize}
+At genus~$g \geq 1$, the Hodge curvature $\kappa \cdot \omega_g$
+deforms the genus-$0$ spectral sequence.  For affine KM, the genus-$1$
+deformation produces the KZB connection.  The first non-trivial
+higher-genus differential is controlled by the Hessian correction
+$\delta H^{(1)}_\cA$.
+\end{construction}
+
+\subsubsection{The five shadows of $\Theta_\cA$: Chriss--Ginzburg synthesis}
+
+\begin{remark}[One object, five projections]
+\label{rem:five-shadows-synthesis}
+\index{Chriss--Ginzburg principle!five shadows}
+The single object $\Theta_\cA \in \mathrm{MC}(\gAmod)$ controls the
+holographic datum through five proved projections:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Shadow} & \textbf{Projection} & \textbf{Classical object}
+  & \textbf{Status} \\
+\midrule
+Scalar $\kappa$ & $\operatorname{tr}(\Theta_\cA)$
+  & Genus tower $\kappa\lambda_g$
+  & \textbf{Proved} (Thm~D) \\
+$r$-matrix & $\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+  & Yangian/$r$-matrix
+  & \textbf{Proved} (Thm~\ref{thm:collision-residue-twisting}) \\
+Connection & $d - \operatorname{Sh}_{g,n}(\Theta_\cA)$
+  & KZ for KM, BPZ for Vir
+  & \textbf{Proved} at $g{=}0$ \\
+Quartic $R^{\mathrm{mod}}_4$ & $\pi_4(\Theta_\cA)$
+  & Obstruction class
+  & \textbf{Proved}
+  (Thm~\ref{thm:quartic-obstruction-linf}) \\
+Clutching & $\xi^*(\Theta_\cA) = \Theta_\cA \star \Theta_\cA$
+  & Modular operadic
+  & \textbf{Proved} (Thm~\ref{thm:universal-MC}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\emph{One object, one equation, five projections, everything else is
+a corollary.}  The scalar shadow is Theorem~D\@.  The $r$-matrix
+shadow is the Yangian.  The connection shadow is KZ/BPZ\@.  The
+quartic shadow is the first nonlinear obstruction.  The clutching
+shadow is the modular operad structure.  Each of the five classical
+theories---genus expansion, quantum groups, conformal blocks,
+deformation obstruction, sewing---is a single projection of the same
+MC element.
+
+This is the Chriss--Ginzburg principle in its holographic form:
+$\mathcal{H}(T)$ is not six independent objects; it is one
+object~$\Theta_\cA$, and the six components are its shadows.
+\end{remark}
+
+\subsubsection{Complete Heisenberg datum}
+
+\begin{computation}[Complete holographic datum for Heisenberg;
+\ClaimStatusProvedHere]
+\label{comp:heisenberg-holographic-datum}
+\index{Heisenberg algebra!complete holographic datum}
+For rank-$1$ Heisenberg $\mathcal{H}_\kappa$ at level $\kappa > 0$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\cA = \mathcal{H}_\kappa$; $J(z)J(w) \sim \kappa/(z{-}w)^2$.
+\item $\cA^! = \mathcal{H}_{-\kappa}$ \textup{(}level-negated\textup{)}.
+\item $\mathcal{C} = \mathrm{Vect}^{\mathbb{Z}}$; no non-trivial lines
+  beyond Fock modules.
+\item $r_{\mathcal{H}}(z) = \kappa^{-1}/z$ \textup{(}scalar\textup{)}.
+\item $\Theta_{\mathcal{H}} = \kappa \cdot \eta \otimes \Lambda$;
+  tower terminates at arity~$2$
+  \textup{(}Corollary~\textup{\ref{cor:heisenberg-postnikov-termination})}.
+\item $\nabla^{\mathrm{hol}}_{0,n} =
+  d - \kappa \sum_{i<j} q_i q_j\, d\log(z_i{-}z_j)$;
+  flat sections $= \prod_{i<j}(z_i{-}z_j)^{\kappa q_i q_j}$.
+\end{enumerate}
+All six components determined by~$\kappa$.  Spectral sequence collapses
+at~$E_1$.  The Heisenberg is the trivial fiber---simplest case where
+everything computes and terminates.
+\end{computation}
+
+
+%% ====================================================================
+%%  FACTORIZATION-ENVELOPE SHADOW FUNCTOR
+%% ====================================================================
+\subsection{The factorization-envelope shadow functor}
+\label{subsec:factorization-envelope-shadow-functor}
+\index{factorization envelope!shadow functor|textbf}
+\index{envelope-shadow functor|textbf}
+\index{Lie conformal algebra!cyclically admissible|textbf}
+
+The preceding subsections organized the holographic programme around
+a single datum~$\mathcal{H}(T)$ attached to an HT system.  But the
+datum is not yet functorial: it is assembled from a specific bulk
+algebra~$\cA$ and its Koszul dual.  The factorization-envelope
+technology---Nishinaka's construction of holomorphic factorization
+algebras from Lie conformal algebras~\cite{Nishinaka25}, and Vicedo's
+full/non-chiral analogue~\cite{Vicedo25}---supplies the missing
+functorial input.  Starting from a Lie conformal algebra~$R$, the
+factorization envelope produces a vertex algebra isomorphic to the
+enveloping vertex algebra~$\Uvert(R)$; the shadow Postnikov tower
+then becomes a functor on the input data, not a case-by-case invariant
+of isolated vertex algebras.
+
+\begin{definition}[Cyclically admissible Lie conformal algebra]
+\label{def:cyclically-admissible-lca}
+\index{Lie conformal algebra!cyclically admissible!definition}
+A \emph{cyclically admissible Lie conformal algebra} on a smooth
+projective curve~$X$ is a Lie conformal algebra~$R$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Grading.}
+  $R = \bigoplus_{h \geq 0} R_h$ carries a conformal-weight grading
+  with finite-dimensional homogeneous components.
+\item \emph{Filtration.}
+  The descending filtration
+  $F^m R := \bigoplus_{h \geq m} R_h$ is complete:
+  $R = \varprojlim_m R / F^m R$.
+\item \emph{Bounded pole order.}
+  The $\lambda$-bracket
+  $[\,\cdot\,{}_\lambda\,\cdot\,]\colon R \otimes R \to R[\lambda]$
+  has bounded pole order: $[a_\lambda b] = \sum_{j=0}^{N(a,b)}
+  \lambda^j c_j$ for some finite $N(a,b)$.
+\item \emph{Invariant residue pairing.}
+  There exists a nondegenerate residue pairing
+  \[
+  \langle -, - \rangle \colon R \otimes R \longrightarrow \omX
+  \]
+  compatible with translation ($\langle \partial a, b \rangle
+  + \langle a, \partial b \rangle = 0$) and satisfying
+  $\langle a, b \rangle = -(-1)^{|a||b|} \langle b, a \rangle$.
+\end{enumerate}
+Write $\LCA_{\mathrm{cyc}}(X)$ for the category of cyclically
+admissible Lie conformal algebras on~$X$.
+\end{definition}
+
+\begin{definition}[Envelope-shadow functor]
+\label{def:envelope-shadow-functor-frontier}
+\index{envelope-shadow functor!definition}
+For $R \in \LCA_{\mathrm{cyc}}(X)$ and $r \geq 2$, define the
+\emph{envelope-shadow functor} by
+\begin{equation}\label{eq:envelope-shadow-functor-frontier}
+\Thetaenv_{\leq r}(R)
+\;:=\;
+\Theta^{\leq r}_{\Uvert(R)},
+\end{equation}
+where $\Uvert(R)$ is the enveloping vertex algebra and
+$\Theta^{\leq r}$ denotes the order-$r$ truncation of the
+shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower}).
+Define the \emph{envelope-shadow complexity}
+\begin{equation}\label{eq:envelope-shadow-complexity-frontier}
+\chienv(R)
+\;:=\;
+\inf\!\bigl\{\, r \geq 2 \,:\,
+  o_{r+1}\bigl(\Uvert(R)\bigr) = 0
+  \text{ and all } o_{s+1} = 0 \text{ for } s > r
+\,\bigr\}
+\;\in\;
+\{2, 3, 4, \ldots\} \cup \{\infty\},
+\end{equation}
+the smallest arity at which the shadow tower terminates.
+\end{definition}
+
+\begin{proposition}[Finite-jet rigidity; \ClaimStatusProvedHere]
+\label{prop:finite-jet-rigidity-frontier}
+\index{finite-jet rigidity!envelope-shadow}
+Let $R \in \LCA_{\mathrm{cyc}}(X)$ and let $r \geq 2$.
+The order-$r$ envelope-shadow
+$\Thetaenv_{\leq r}(R)$
+depends only on the $r$-jet of the enveloping vertex algebra:
+it is determined by the quotient
+$\Uvert(R) / F^{r+1}\Uvert(R)$, where $F^\bullet$ is the
+descending filtration by PBW degree.
+\end{proposition}
+
+\begin{proof}
+The shadow Postnikov tower at arity~$r$ involves the transferred
+cyclic minimal model operations $m_2, \ldots, m_r$ and graph sums
+over connected stable graphs of total weight at most~$r$
+(Definition~\ref{def:modular-bar-hamiltonian}).
+Each such graph involves at most~$r$ vertex labels from the
+transferred operations, and each transferred operation~$m_k$ is
+determined by the first~$k$ layers of the PBW filtration.
+Hence the weight-$r$ piece of the bar complex, and therefore the
+arity-$r$ shadow, depends only on $\Uvert(R) / F^{r+1}\Uvert(R)$.
+\end{proof}
+
+\begin{theorem}[Level-polynomial theorem; \ClaimStatusProvedHere]
+\label{thm:level-polynomial}
+\index{level-polynomial theorem|textbf}
+Let $\{R_t\}_{t \in \C}$ be a one-parameter family of cyclically
+admissible Lie conformal algebras differing only by a scalar
+central extension: $R_t = R_0 \oplus \C \cdot K$ with
+$[a_\lambda K] = t \cdot \langle a, - \rangle$, where
+$\langle -, - \rangle$ is the invariant pairing.
+Then for each $r \geq 2$, the envelope-shadow
+$\Thetaenv_{\leq r}(R_t)$ is polynomial in~$t$ of degree at
+most~$r - 1$.  In particular:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\kappa\bigl(\Uvert(R_t)\bigr)$ is linear in~$t$;
+\item the cubic shadow $\mathfrak{C}$ is at most quadratic in~$t$;
+\item the quartic resonance class
+  $R^{\mathrm{mod}}_{4}$ is at most cubic in~$t$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The transferred cyclic operations $m_k$ on $\Uvert(R_t)$ arise
+from bar-cobar transfer applied to the relations of the
+enveloping vertex algebra.  Each operation~$m_k$ involves at
+most~$k - 1$ OPE contractions, each of which contributes at
+most one power of~$t$ from the central extension.  Therefore the
+graph-sum formula at arity~$r$ is a polynomial of degree at
+most~$r - 1$ in~$t$: the arity-$r$ graph sum involves edges
+carrying the complementarity propagator $P = H^{-1}$, which is
+independent of~$t$, and vertex labels~$m_k$ each contributing
+at most $k - 1$ powers of~$t$.  Since all graphs in the sum have
+total vertex-weight at most~$r$ and each vertex contributes at
+most $\operatorname{val}(v) - 1$ powers, the total $t$-degree is
+bounded by $\sum_v (\operatorname{val}(v) - 1) \leq r - 1$ for
+connected graphs of weight~$r$.
+\end{proof}
+
+\begin{theorem}[Gaussian collapse; \ClaimStatusProvedHere]
+\label{thm:gaussian-collapse}
+\index{Gaussian collapse!abelian envelope|textbf}
+If $R$ is abelian---that is, $[a_\lambda b] = 0$ for all
+$a, b \in R$---then $\chienv(R) = 2$.  Equivalently, the
+shadow tower of an abelian envelope terminates at arity~$2$:
+\[
+\Thetaenv_{\leq r}(R) = \Thetaenv_{\leq 2}(R)
+\qquad \text{for all } r \geq 2.
+\]
+The only shadow is the scalar modular characteristic
+$\kappa\bigl(\Uvert(R)\bigr)$.
+\end{theorem}
+
+\begin{proof}
+If $R$ is abelian, the enveloping vertex algebra $\Uvert(R)$ is the
+symmetric algebra on~$R$, which is the Heisenberg-type factorization
+algebra.  Its bar complex is quasi-free, and the transferred minimal
+model has $m_k = 0$ for all $k \geq 3$.  Since the graph-sum
+formula at arity~$r \geq 3$ requires at least one vertex with
+$m_k$, $k \geq 3$, all such contributions vanish.  Therefore
+$o_{r+1}(\Uvert(R)) = 0$ for all $r \geq 2$, and
+$\chienv(R) = 2$.
+\end{proof}
+
+\begin{proposition}[Independent sums factor; \ClaimStatusProvedHere]
+\label{prop:independent-sums-factor}
+\index{independent sums!shadow factorization}
+Let $R = R_1 \oplus R_2$ with all mixed $\lambda$-brackets
+vanishing.  Then the enveloping vertex algebra factors as
+$\Uvert(R) \cong \Uvert(R_1) \,\widehat{\otimes}\, \Uvert(R_2)$
+and all shadow data separate:
+\begin{align}
+\kappa\bigl(\Uvert(R)\bigr)
+  &= \kappa\bigl(\Uvert(R_1)\bigr)
+     + \kappa\bigl(\Uvert(R_2)\bigr),
+\label{eq:kappa-additivity-frontier}\\
+T^{\mathrm{br}}_R
+  &= T^{\mathrm{br}}_{R_1} \oplus T^{\mathrm{br}}_{R_2},
+\label{eq:branch-additivity}\\
+\Delta_R(x)
+  &= \Delta_{R_1}(x) \cdot \Delta_{R_2}(x),
+\label{eq:discriminant-multiplicativity}\\
+R^{\mathrm{mod}}_{4}(R)
+  &= R^{\mathrm{mod}}_{4}(R_1)
+     + R^{\mathrm{mod}}_{4}(R_2).
+\label{eq:quartic-additivity}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The tensor-product decomposition of enveloping vertex algebras for
+orthogonal direct sums is standard
+(PBW for vertex algebras).
+Under this decomposition the bar complex splits as a tensor product
+of bar complexes, the transferred cyclic operations have no mixed
+contributions, and the graph-sum formula at each arity decomposes
+into independent contributions from each summand.  The additivity
+and multiplicativity of the shadows follow from the corresponding
+properties of the Maurer--Cartan equation applied to each
+independent factor.
+\end{proof}
+
+\begin{conjecture}[Universal modular factorization envelope;
+\ClaimStatusConjectured]
+\label{conj:universal-modular-factorization-envelope}
+\index{modular factorization envelope!universal}
+\index{primitive-current functor!modular}
+There exists a functor
+\begin{equation}\label{eq:universal-modular-envelope}
+U_X^{\mathrm{mod}}
+\;\colon\;
+\LCA_{\mathrm{cyc}}(X)
+\;\longrightarrow\;
+\mathrm{ModKoszul}(X)
+\end{equation}
+from cyclically admissible Lie conformal algebras to modular Koszul
+factorization objects, left adjoint to the modular
+primitive-current functor
+$\operatorname{Prim}_{\mathrm{mod}} \colon
+\mathrm{ModKoszul}(X) \to \LCA_{\mathrm{cyc}}(X)$:
+\begin{equation}\label{eq:envelope-adjunction}
+\Hom_{\mathrm{ModKoszul}(X)}\!\bigl(
+  U_X^{\mathrm{mod}}(R),\, \cA
+\bigr)
+\;\cong\;
+\Hom_{\LCA_{\mathrm{cyc}}(X)}\!\bigl(
+  R,\, \operatorname{Prim}_{\mathrm{mod}}(\cA)
+\bigr).
+\end{equation}
+At genus~$0$, this recovers the Nishinaka envelope.  The output
+carries, functorially and simultaneously, the full modular
+characteristic class~$\Theta$, the scalar shadow~$\kappa$, the
+spectral discriminant~$\Delta$, the branch operator~$T^{\mathrm{br}}$,
+and the quartic resonance class~$R^{\mathrm{mod}}_4$.
+\end{conjecture}
+
+\begin{evidence}
+At genus~$0$, the Nishinaka envelope is already left adjoint to the
+forgetful/primitive functor from vertex algebras to Lie conformal
+algebras; the conjecture extends this adjunction to the modular
+category carrying the clutching and Verdier data.  The PBW theorem
+for universal enveloping vertex algebras
+(Proposition~\ref{prop:pbw-universality}) ensures that the
+genus-$0$ input is always chirally Koszul, so the modular Koszul
+target category is nonempty.  The remaining content is that the
+modular completion of the envelope inherits the adjunction.
+\end{evidence}
+
+
+%% ====================================================================
+%%  THE QUARTIC SHADOW FROM FILTERED MC
+%% ====================================================================
+\subsection{The quartic shadow from filtered Maurer--Cartan theory}
+\label{subsec:quartic-shadow-filtered-mc}
+\index{quartic resonance class!from filtered MC|textbf}
+\index{Maurer--Cartan element!quartic class from filtered|textbf}
+
+The shadow Postnikov tower constructs nonlinear invariants
+$\kappa \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$ of increasing
+arity.  A natural question is: why should the first \emph{stable}
+nonlinear invariant appear at arity~$4$, rather than~$3$?  The answer
+is a general fact about filtered dg~Lie algebras, independent of the
+chiral context, which explains why cubic ambiguities are removable by
+gauge while the quartic class is canonical.
+
+\begin{theorem}[Quartic stability from filtered MC;
+\ClaimStatusProvedHere]
+\label{thm:quartic-stability-filtered-mc}
+\index{quartic stability!filtered MC theorem|textbf}
+Let $(\mathfrak{g}, F^\bullet)$ be a complete descending-filtered
+dg~Lie algebra with differential~$d$ compatible with the filtration,
+and let
+\[
+\Theta = \Theta_2 + \Theta_3 + \Theta_4 + \cdots
+\in F^2 \mathfrak{g}^1
+\]
+be a Maurer--Cartan element, with $\Theta_k \in
+F^k \mathfrak{g} / F^{k+1} \mathfrak{g}$ the weight-$k$ component.
+Write $d_2 := d + [\Theta_2, -]$ for the twisted differential.
+Assume:
+\begin{equation}\label{eq:h1-vanishing-quartic}
+H^1\bigl(F^3 \mathfrak{g} / F^4 \mathfrak{g},\, d_2\bigr) = 0.
+\end{equation}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The cubic component $\Theta_3$ is $d_2$-exact:
+  there exists $\xi \in F^3 \mathfrak{g}^0$ such that
+  $\Theta_3 = d_2 \xi$.
+\item After the gauge transformation
+  $\Theta \mapsto \Theta' = e^{-\xi} \cdot \Theta$,
+  one may arrange $\Theta' = \Theta_2 + \Theta'_4 + O(F^5)$.
+\item The class
+  \begin{equation}\label{eq:quartic-class-definition}
+  [\Theta'_4]
+  \;\in\;
+  H^2\bigl(F^4 \mathfrak{g} / F^5 \mathfrak{g},\, d_2\bigr)
+  \end{equation}
+  is well-defined, independent of the choice of~$\xi$ up to
+  the natural $H^0(F^3 \mathfrak{g} / F^4 \mathfrak{g}, d_2)$-action.
+  If additionally
+  $H^0(F^3 \mathfrak{g} / F^4 \mathfrak{g}, d_2) = 0$,
+  the class~$[\Theta'_4]$ is canonical.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Projecting the MC equation
+$d\Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$
+to $F^3 / F^4$ gives
+\[
+d_2 \Theta_3 = 0
+\qquad\text{in } F^3 \mathfrak{g}^2 / F^4 \mathfrak{g}^2.
+\]
+The vanishing hypothesis~\eqref{eq:h1-vanishing-quartic} then gives
+$\Theta_3 = d_2 \xi$ for some
+$\xi \in F^3 \mathfrak{g}^0$.  The infinitesimal gauge
+transformation $\Theta \mapsto \Theta - d_2 \xi
+- [\xi, \Theta_3] + O(F^5) = \Theta_2 + \Theta'_4 + O(F^5)$
+kills the cubic term.
+
+Projecting the MC equation to $F^4 / F^5$ after the gauge gives
+\[
+d_2 \Theta'_4 + \tfrac{1}{2}[\Theta_2, \Theta_2]_4 = 0,
+\]
+where $[\Theta_2, \Theta_2]_4$ denotes the $F^4/F^5$-component of
+the bracket.  Since $[\Theta_2, \Theta_2]$ is $d$-closed and
+$d_2^2 = 0$ on $F^4/F^5$ (the MC equation at weight~$2$ gives
+$d\Theta_2 + \tfrac{1}{2}[\Theta_2, \Theta_2] = 0$ in $F^2/F^3$,
+hence $d_2^2 = 0$), the class $[\Theta'_4]$ is a well-defined
+element of~$H^2(F^4/F^5, d_2)$.  A different choice
+$\xi' = \xi + \zeta$ with $d_2 \zeta = 0$ changes $\Theta'_4$ by
+$[\zeta, \Theta_2]$, which is in the image of the $H^0$-action.
+\end{proof}
+
+\begin{remark}[Application to the shadow tower]
+\label{rem:quartic-stability-shadow-application}
+In the modular convolution dg~Lie algebra
+$\gAmod$
+(Definition~\ref{def:nms-modular-convolution-lie}), with the arity
+filtration $F^r \gAmod := \bigoplus_{n \geq r}
+(\gAmod)_n$, the MC element is $\Theta_\cA$ and $\Theta_2 = \kappa$.
+The twisted differential $d_2 = d + [\kappa, -]$ governs the
+linearized deformation theory around the scalar shadow.  When
+$H^1(F^3/F^4, d_2) = 0$---which holds for all
+strongly-generated Koszul algebras at generic parameters---the cubic
+shadow $\mathfrak{C}$ is gauge-trivial, and the first stable
+nonlinear invariant is the quartic resonance class
+$R^{\mathrm{mod}}_4(\cA)$
+(Definition~\ref{def:nms-modular-quartic-resonance-class}).  This
+is the abstract reason that the quartic class, not the cubic one,
+is the primary nonlinear shadow.
+\end{remark}
+
+
+%% ====================================================================
+%%  ANALYTIC COMPLETION AND SEWING ENVELOPE
+%% ====================================================================
+\subsection{Analytic completion and sewing envelope}
+\label{subsec:analytic-completion-sewing-envelope}
+\index{sewing envelope|textbf}
+\index{analytic Koszul pair|textbf}
+\index{HS-sewing condition|textbf}
+
+The algebraic chiral core~$\cA$ determines the combinatorial
+bar-cobar package.  But for genuine partition functions, trace-class
+amplitudes, and analytic modular invariants, the bare algebra is
+insufficient: one needs a completion that remembers every local-to-global
+sewing operation at once.  The recent construction by
+Moriwaki~\cite{Moriwaki26a,Moriwaki26b} of conformally flat
+factorization homology valued in $\mathrm{IndHilb}$---with sphere
+values recovering CFT partition functions under positivity and
+continuity assumptions---supplies the prototype.  The Heisenberg
+case, where the ind-Hilbert completion of the affine Heisenberg VOA
+is identified with a conformally flat 2-disk algebra on the symmetric
+algebra of the Bergman space, shows that the passage from formal OPE
+data to analytic sewing objects is already possible in rank one.
+
+\begin{definition}[Sewing envelope]
+\label{def:sewing-envelope-frontier}
+\index{sewing envelope!definition}
+Let $\cA_{\mathrm{alg}}$ be an algebraic chiral core with
+algebraic amplitudes
+$A^{\mathrm{alg}}_\Sigma$ for every finite conformally flat
+bordism~$\Sigma$ with parametrized in/out collars.  For every
+matrix coefficient of every such amplitude, define a seminorm on
+$\cA_{\mathrm{alg}}$ by
+\begin{equation}\label{eq:sewing-seminorm}
+p_{\Sigma,\xi,\eta}(a)
+\;:=\;
+\bigl|
+\langle \eta,\,
+  A^{\mathrm{alg}}_\Sigma(\xi_1 \otimes \cdots \otimes a
+  \otimes \cdots \otimes \xi_m)
+\rangle
+\bigr|.
+\end{equation}
+The \emph{sewing envelope} $\widehat{\cA}^{\mathrm{sew}}$ is the
+Hausdorff completion of $\cA_{\mathrm{alg}}$ for the locally convex
+topology generated by all seminorms~$p_{\Sigma,\xi,\eta}$.
+\end{definition}
+
+\begin{proposition}[Universal property of the sewing envelope;
+\ClaimStatusProvedHere]
+\label{prop:sewing-envelope-universal}
+\index{sewing envelope!universal property}
+If $E$ is any complete locally convex realization of
+$\cA_{\mathrm{alg}}$ for which every algebraic amplitude extends
+continuously, then the identity on $\cA_{\mathrm{alg}}$ extends
+uniquely to a continuous map
+$\widehat{\cA}^{\mathrm{sew}} \to E$.
+\end{proposition}
+
+\begin{proof}
+Every such realization makes each seminorm $p_{\Sigma,\xi,\eta}$
+continuous.  Hence the identity
+$\cA_{\mathrm{alg}} \to E$ is continuous for the sewing topology.
+By completeness of~$E$, it extends uniquely from the Hausdorff
+completion.
+\end{proof}
+
+\begin{definition}[HS-sewing condition]
+\label{def:hs-sewing-condition}
+\index{HS-sewing condition!definition}
+Let $H = \bigoplus_{n \geq 0} H_n$ be a graded pre-Hilbert core,
+and write the pair-of-pants multiplication as sector maps
+$m^c_{a,b} \colon H_a \,\widehat{\otimes}\, H_b \to H_c$.
+Say~$\cA$ satisfies the \emph{HS-sewing condition} if there exists
+$0 < q < 1$ such that
+\begin{equation}\label{eq:hs-sewing-condition}
+\sum_{a,b,c \geq 0}
+q^{a+b+c}\, \|m^c_{a,b}\|_{\mathrm{HS}}^2
+\;<\; \infty.
+\end{equation}
+Under HS-sewing, the weighted pair-of-pants map on the weighted
+completion $H_q := \widehat{\bigoplus}_{n \geq 0}\, q^n H_n$ is
+Hilbert--Schmidt; consequently, every closed amplitude obtained from
+finitely many pairs of pants, cups, and caps is trace class on the
+relevant weighted state space.
+\end{definition}
+
+\begin{definition}[Analytic Koszul pair]
+\label{def:analytic-koszul-pair-frontier}
+\index{analytic Koszul pair!definition}
+An \emph{analytic Koszul pair} $(\cA, \cA^!)$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a sewing envelope $\widehat{\cA}^{\mathrm{sew}}$;
+\item an analytic bar coalgebra $\barB^{\mathrm{an}}(\cA)$, defined
+  as the closure of the algebraic bar sectors inside the sewing
+  envelope in the graph norm of the closable bar differential;
+\item a genus-$0$ equivalence
+  \[
+  D^{\mathrm{an}}_{\mathrm{compl}}(\cA\text{-}\mathrm{mod})
+  \;\simeq\;
+  D^{\mathrm{an}}_{\mathrm{conil}}
+  \bigl(\barB^{\mathrm{an}}(\cA)\text{-}\mathrm{comod}\bigr);
+  \]
+\item under finite-type dualizability, an identification of
+  conilpotent analytic comodules with complete
+  $\cA^!$-modules.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Curvature forces coderived passage]
+\label{rem:curvature-coderived-passage}
+\index{coderived category!curvature forcing}
+At genus $g \geq 1$, if the completed bar object carries a curvature
+term $m_0^{(g)} \neq 0$, then the fiberwise differential satisfies
+$\dfib^2 = \kappa \cdot \omega_g \neq 0$, and ordinary cohomology
+ceases to be functorial under sewing.  The correct receptacle is the
+coderived/contraderived analytic category, not an ordinary derived
+category.  This is not cosmetic: it is the mechanism by which
+higher-genus local-to-global data remain nontrivial after completion.
+The passage from the algebraic bar complex to the analytic bar
+coalgebra, and from derived to coderived categories, is the exact
+point where formal factorization becomes analytic local-to-global
+theory.
+\end{remark}
+
+\begin{conjecture}[Analytic realization criterion for unitary VOAs;
+\ClaimStatusConjectured]
+\label{conj:analytic-realization-criterion}
+\index{analytic realization!unitary VOA criterion}
+Let $V$ be a unitary full VOA such that:
+\textup{(a)}~its quasi-primary correlators satisfy conformal
+Osterwalder--Schrader axioms
+\textup{(}\textit{cf.}~Adamo--Moriwaki--Tanimoto~\textup{\cite{AMT24}}\textup{)};
+\textup{(b)}~its graded pieces have polynomial spectral growth;
+\textup{(c)}~its intertwining/screening OPE maps satisfy HS-sewing
+after exponential weight damping.
+Then $V$ admits:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a sewing envelope
+  $V_{\mathrm{alg}} \to
+  \widehat{V}^{\mathrm{sew}} \in \mathrm{IndHilb}$;
+\item a conformally flat 2-disk algebra;
+\item a genus-$0$ analytic Koszul duality package;
+\item a higher-genus coderived shadow $Q_\bullet(V)$ with
+  complementarity involution.
+\end{enumerate}
+\end{conjecture}
+
+\begin{evidence}
+Moriwaki~\cite{Moriwaki26b} constructs a conformally flat 2-disk
+algebra on $\operatorname{Sym} A^2(D)$ and identifies it with the
+ind-Hilbert completion of the affine Heisenberg VOA.  The
+genus-$0$ analytic Koszul package for Heisenberg is therefore
+already implicit in that identification.  The Adamo--Moriwaki--Tanimoto
+result~\cite{AMT24} extends analytic control to a broader class of
+unitary full VOAs; the conjecture asks for the remaining bridge
+from conformal OS axioms to the bar-cobar package and coderived
+modular shadows.
+\end{evidence}
+
+
+%% ====================================================================
+%%  NON-PRINCIPAL W-ALGEBRA DUALITY
+%% ====================================================================
+\subsection{Non-principal \texorpdfstring{$\Walg$}{W}-algebra duality}
+\label{subsec:non-principal-w-algebra-duality}
+\index{W-algebra!non-principal duality|textbf}
+\index{Drinfeld--Sokolov reduction!non-principal transport|textbf}
+\index{hook-type!transport corridor|textbf}
+\index{Barbasch--Vogan duality!W-algebra transport|textbf}
+
+The principal $\Walg$-algebra duality
+$\Walg^k(\mathfrak{g})^! \simeq
+\Walg^{-k-2h^\vee}(\mathfrak{g})$
+(Feigin--Frenkel) is the proved core.  The non-principal extension,
+which should relate $\Walg^k(\mathfrak{g}, f)^!$ to
+$\Walg^{k^\vee}(\mathfrak{g}, f^{\mathrm{BV}})$ for the
+Barbasch--Vogan dual nilpotent~$f^{\mathrm{BV}}$, is the active
+frontier.  Quantum Drinfeld--Sokolov reduction exists for arbitrary
+nilpotent~$f$ by the Kac--Roan--Wakimoto construction.  What remains
+difficult is proving that bar-cobar/Koszul duality commutes with
+arbitrary-nilpotent reduction, identifying the correct dual orbit
+under Barbasch--Vogan (or Spaltenstein) duality, and determining the
+non-principal level transform.
+
+The architecture is controlled by the following factorization of the
+problem.
+
+\begin{remark}[Transport/orbit factorization]
+\label{rem:transport-orbit-factorization}
+\index{transport/orbit factorization}
+The non-principal duality problem splits into two axes:
+\[
+\text{non-principal duality}
+\;=\;
+\text{transport along reduction network}
+\;+\;
+\text{identification of dual orbit/level}.
+\]
+The first axis is now substantially theorematic in type~$A$; the
+second remains the true frontier.
+\end{remark}
+
+After the principal Feigin--Frenkel case, the first genuinely
+non-principal proved corridor is the hook-type family in type~$A$.
+Full hook-type duality is proved; inverse reductions connect all
+hook-type nodes; and the 2023--2025 work of Fehily,
+Creutzig--Linshaw--Nakatsuka--Sato,
+Creutzig--Fasquel--Linshaw--Nakatsuka, Genra--Juillard, and
+Butson--Nair places hook-type algebras as building blocks inside
+a wider reduction network.
+
+\begin{proposition}[Transport propagation lemma;
+\ClaimStatusProvedHere]
+\label{prop:transport-propagation-frontier}
+\index{transport propagation!hook-type corridor}
+Let $\Gamma_N$ be the graph whose vertices are partitions
+$\lambda \vdash N$, and whose edges are the proved reduction or
+inverse-reduction functors between the corresponding type-$A$
+affine $\Walg$-algebras at generic level.  Suppose a candidate
+duality functor~$D$ satisfies:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Hook seed.}
+  $D\bigl(\Walg^k(\mathfrak{sl}_N, f_\eta)\bigr)
+  \simeq \Walg^{k^\vee_\eta}(\mathfrak{sl}_N, f_{\eta^t})$
+  for every hook partition~$\eta$;
+\item \emph{Edge compatibility.}
+  $D$ intertwines every edge of~$\Gamma_N$ with the transposed
+  edge.
+\end{enumerate}
+Then $D$ is forced to satisfy
+\begin{equation}\label{eq:transport-propagation}
+D\bigl(\Walg^k(\mathfrak{sl}_N, f_\lambda)\bigr)
+\;\simeq\;
+\Walg^{k^\vee_\lambda}(\mathfrak{sl}_N, f_{\lambda^t})
+\end{equation}
+for every partition~$\lambda$ in the transport-closure of the hook
+vertices inside~$\Gamma_N$.
+\end{proposition}
+
+\begin{proof}
+Pick a path in $\Gamma_N$ from a hook vertex to~$\lambda$.
+Start from the known hook formula and propagate inductively across
+the path: at each edge, edge-compatibility forces the duality to
+transport the hook formula one step further.  The result follows
+by induction on path length, using the functoriality of~$D$ on
+morphisms of~$\Gamma_N$.
+\end{proof}
+
+\begin{conjecture}[Type-$A$ transport-to-transpose;
+\ClaimStatusConjectured]
+\label{conj:type-a-transport-to-transpose-frontier}
+\index{transport-to-transpose!type A conjecture}
+At generic level, the transport-closure of the hook vertices is all
+of $\operatorname{Par}(N)$, and Koszul/bar-cobar duality intertwines
+every proved reduction or inverse-reduction edge.  Consequently,
+\begin{equation}\label{eq:type-a-transport-to-transpose}
+\bigl(\Walg^k(\mathfrak{sl}_N, f_\lambda)\bigr)^!
+\;\simeq\;
+\Walg^{k^\vee_\lambda}(\mathfrak{sl}_N, f_{\lambda^t})
+\end{equation}
+for all $\lambda \vdash N$.
+\end{conjecture}
+
+\begin{evidence}
+The hook-type corridor supplies the proved seed family.  The
+2023--2025 inverse Hamiltonian reduction results in type~$A$
+make the edge set of~$\Gamma_N$ dense enough that every partition
+is reachable from a hook vertex.  The remaining content is the
+edge-compatibility hypothesis: that Koszul duality commutes with
+each proved reduction functor.  This is the correct intermediate
+conjecture, sharper than the old ``arbitrary Barbasch--Vogan
+duality'' slogan but still large enough for the frontier label.
+\end{evidence}
+
+\begin{remark}[The key obstruction]
+\label{rem:non-principal-key-obstruction}
+\index{non-principal duality!key obstruction}
+The obstruction is not the existence of quantum Drinfeld--Sokolov
+reduction for arbitrary nilpotent~$f$---that construction already
+exists.  The remaining difficulty is to prove that bar-cobar/Koszul
+duality commutes with arbitrary-nilpotent reduction, to identify the
+correct dual nilpotent under Barbasch--Vogan or Spaltenstein duality,
+and to determine the non-principal level-shift formula.  The hook-type
+corridor already has a proved seed family and a clearly identified
+obstruction package, but not yet a global theorem.
 \end{remark}

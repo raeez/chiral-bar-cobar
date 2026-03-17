@@ -4,37 +4,19 @@
 \label{rem:programme-bv}
 \index{Batalin--Vilkovisky|see{BV algebra}}
 
-The BV-BRST formalism is the physical refoundation of deformation
-theory.  Its central message is that deformations, anomalies, line
-defects, and higher operations naturally package into homotopical
-algebra---and that strict dg structures cannot, in general, suffice.
-The reason is structural: once BRST anomaly brackets are known to
-satisfy quadratic identities (the master equation $\{S,S\} = 0$ and its
-quantum lift $\hbar\,\Delta\,S + \tfrac{1}{2}\{S,S\} = 0$), the
-cancellation pattern among ghosts, antighosts, and auxiliary fields
-forces an infinite hierarchy of coherence data that is exactly an
-$A_\infty$- or $L_\infty$-structure.  Truncating to strict
-differentials loses the anomaly information.
-
-For chiral algebras on curves, the BV complex is the bar complex in
-disguise.  The fields of the theory are the generators, the antifields
-are the desuspended cogenerators, the BV bracket is the Poincar\'e
-residue on the FM compactification, and the classical master equation
-$\{S,S\} = 0$ is the statement $d^2_{\mathrm{bar}} = 0$ at genus~$0$.
-At higher genus, the quantum master equation acquires a BV Laplacian
-term $\hbar\,\Delta\,S$ that is precisely the curvature
-$\kappa(\cA)$---the modular characteristic of Part~I.
-Gaiotto's programme~\cite{CDG23} makes this identification the
-starting point of a physical construction: begin with a twisted
-holomorphic-topological field theory, extract its boundary chiral
-algebra, and read the BV complex as the bar complex whose duality
-theory governs the defect categories.
-
-This chapter develops the BV--bar identification in detail, shows that
-the BV bracket is a residue operation on the log-de~Rham complex of the
-configuration space, and uses the resulting dictionary to translate
-between physical anomaly cancellation and the algebraic obstruction
-theory of Part~I.
+The BV--BRST formalism and the bar-cobar adjunction inhabit the same
+convolution algebra.  The universal twisting morphism
+$\tau_\cA \in \MC(\operatorname{Conv}(\barBch(\cA), \cA))$
+(Definition~\ref{def:twisting-morphism}) satisfies
+$\partial(\tau_\cA) + \tau_\cA \star \tau_\cA = 0$;
+the quantum master equation
+$\hbar\,\Delta\,S + \tfrac{1}{2}\{S,S\} = 0$
+is the \emph{same equation} written in physics notation,
+with fields as generators, antifields as cogenerators, the BV
+bracket as the Poincar\'e residue on the FM compactification,
+and the curvature $m_0 = \kappa(\cA)\cdot\mathbf{1}$ as the
+genus-$1$ component of $\Theta_\cA$.  The bridge is not an
+analogy but an identification of convolution algebras.
 
 \begin{theorem}[Bridge theorem: BV complex = bar complex; \ClaimStatusProvedHere]
 \label{thm:bv-bar-bridge}
@@ -96,6 +78,58 @@ in the QME matches the Sugawara normalization: for the Virasoro
 algebra, $\kappa(\mathrm{Vir}_c) = c/2$
 (Computation~\ref{comp:virasoro-curvature}).
 \end{proof}
+
+\begin{remark}[The modular quantum master equation]
+\label{rem:modular-qme-bv}
+\index{quantum master equation!modular}
+\index{modular quantum master equation|textbf}
+
+The BV--bar bridge extends to all genera through the universal
+MC class~$\Theta_\cA$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
+Write $\Theta_\cA = \Theta_0 + \hbar\,\Theta_1 + \hbar^2\,\Theta_2
++ \cdots$ for the genus expansion.  Then the full modular QME
+\begin{equation}\label{eq:modular-qme-bv}
+d\,\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]
++ \hbar\,\Delta\,\Theta_\cA = 0
+\end{equation}
+in the completed cyclic deformation Lie algebra
+$\Defcyc^{\mathrm{mod}}(\cA)$ breaks into a hierarchy:
+\begin{alignat*}{2}
+&\text{genus } 0\colon\quad
+  &&d\,\Theta_0 + \tfrac{1}{2}[\Theta_0,\Theta_0] = 0
+  \qquad\text{(classical ME $=$ $d_{\mathrm{bar}}^2 = 0$)}, \\
+&\text{genus } 1\colon\quad
+  &&d\,\Theta_1 + [\Theta_0,\Theta_1] + \Delta\,\Theta_0 = 0
+  \qquad\text{(one-loop anomaly $=$ $\kappa(\cA)\cdot\omega_1$)}, \\
+&\text{genus } 2\colon\quad
+  &&d\,\Theta_2 + [\Theta_0,\Theta_2]
+    + \tfrac{1}{2}[\Theta_1,\Theta_1]
+    + \Delta\,\Theta_1 = 0
+  \qquad\text{(two-loop interference)}.
+\end{alignat*}
+The genus-$0$ equation is the classical master equation
+$\{S,S\} = 0$ of Theorem~\ref{thm:bv-bar-bridge}; the genus-$1$
+equation is the standard one-loop BV anomaly equation; the genus-$2$
+equation and beyond encode nonlinear modular interference terms.
+At the scalar level, the trace of~\eqref{eq:modular-qme-bv}
+recovers the genus tower $F_g = \kappa(\cA)\lambda_g$
+(Theorem~D).  At the full level,
+equation~\eqref{eq:modular-qme-bv} is the principal conjectural
+target of the modular cumulant transform
+(\S\ref{subsec:completion-kinematics-programme} of the concordance).
+
+In the Feynman-diagram language of
+Chapter~\ref{ch:feynman-connection}: $\Theta_0$ collects tree
+diagrams, $\Theta_1$ collects one-loop diagrams, and $\Theta_g$
+collects connected $g$-loop diagrams.  The modular QME is the
+all-loop Ward identity.  The connected stable-graph exponential
+$\Theta_\cA = \sum_{\Gamma\,\text{connected}}
+\frac{\hbar^{g(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}\,\Phi_\Gamma$
+makes this precise: the vertices are cumulant primitives, internal
+edges are factorization propagators, and the symmetry factor is the
+standard graph automorphism weight.
+\end{remark}
 
 \section{BV formalism for chiral algebras}
 
@@ -238,40 +272,8 @@ equation and the bar-cobar compatibility is functorial in~$\cA$; it is
 a natural equivalence, not merely a pointwise comparison.
 \end{proof}
 
-\begin{remark}[Scope]
-Stage~1 uses standard BV algebra manipulations (\ClaimStatusProvedElsewhere,
-see Costello--Gwilliam~\cite{CG17}).  Stage~2 assembles the BV
-functor (Theorem~\ref{thm:bv-functor}, \ClaimStatusProvedHere) with
-the Verdier duality isomorphism $\mathbb{D}(\bar{B}(\cA)) \cong \Omega(\cA^!)$
-(Theorem~\ref{thm:verdier-bar-cobar}, \ClaimStatusProvedHere).  The
-identification of the QME with the functorial expression of bar-cobar
-Verdier compatibility is Theorem~\ref{thm:qme-bar-cobar} above.
-\end{remark}
-
-\subsection{The BV--bar dictionary}
 \label{subsec:bv-bar-identification}
 \index{BV algebra!bar complex identification}
-
-The dictionary is:
-\begin{center}
-\begin{tabular}{lcl}
-\textbf{BV side} && \textbf{Bar complex side} \\[2pt]
-fields $\phi \in \cA$ && bar generators $s^{-1}\bar{\cA}$ \\
-antibracket $\{-,-\}$ && bracket from simple-pole OPE residue \\
-QME: $\hbar\Delta S + \tfrac{1}{2}\{S,S\} = 0$
-  && curved $A_\infty$ relation: $m_1^2 = [m_0, -]$ \\
-factor $\tfrac{1}{2}$ in QME && curvature $m_0 = \kappa \cdot \mathbf{1}$; $\kappa = c/2$ absorbs the $\tfrac{1}{2}$
-\end{tabular}
-\end{center}
-The first three entries are reformulations of
-Theorem~\ref{thm:config-space-bv} and the proof of
-Theorem~\ref{thm:qme-bar-cobar}.  The fourth is the observation
-that the QME coefficient $\tfrac{1}{2}$ matches the Sugawara
-normalization: the curvature $m_0 = \kappa \cdot \mathbf{1}$ arises
-from the double-pole OPE residue, and the factor $\kappa = c/2$ for
-the Virasoro algebra (Computation~\ref{comp:virasoro-curvature})
-is precisely the $\tfrac{1}{2}$ in the QME applied to the central
-charge.
 
 \begin{theorem}[Genus-\texorpdfstring{$0$}{0} amplitudes from bar complex;
 \ClaimStatusProvedHere]\label{thm:genus0-amplitude-bar}
@@ -415,13 +417,6 @@ C^*_{\mathrm{top}\text{-}\mathrm{BRST}}(\mathcal{A}
 \]
 \end{conjecture}
 
-\begin{remark}[Scope and relation to proved results]
-\label{rem:topological-brst-scope}
-The holomorphic (semi-infinite) BRST identification is proved: bar $=$ holomorphic BRST for KM and W-algebras (Theorems~\ref{thm:bar-semi-infinite-km}, \ref{thm:bar-semi-infinite-w}), and bar $\simeq$ string BRST at $c = 26$ (Theorem~\ref{thm:brst-bar-genus0}).  The topological BRST conjecture is stronger: it claims the bar complex also incorporates diffeomorphism ghosts from $\mathrm{Diff}(X)$.  The key difficulty is that $\mathrm{Diff}(X)$ is infinite-dimensional, so neither PBW filtration nor the semi-infinite approach directly applies.
-
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  Contributing to Conjecture~\ref{conj:master-bv-brst}.
-\end{remark}
-
 \section{The genus-\texorpdfstring{$0$}{0} BRST-bar chain map}
 \label{sec:brst-bar-chain-map}
 \index{BRST!bar complex chain map|textbf}
@@ -471,8 +466,6 @@ $c = 26$), this computes the physical state space.
 \ClaimStatusProvedHere]
 \label{thm:brst-bar-genus0}
 \index{BRST!bar complex quasi-isomorphism}
-For the Heisenberg algebra, the bar differential extracted OPE data at collision divisors (\S\ref{sec:frame-bar-deg1}); in the BV language, this is precisely the BRST differential acting on fields and antifields.  The following theorem makes this identification a quasi-isomorphism.
-
 Let $\cA$ be a conformal vertex algebra on $\mathbb{P}^1$ with
 $c(\cA) = 26$ \textup{(}so that
 $\cA_{\mathrm{tot}} = \cA \otimes bc$ satisfies
@@ -618,11 +611,6 @@ In general, ghost insertions $c_{n_1} \cdots c_{n_k}$ map to
 products of logarithmic forms $\eta_{i_1 j_1} \wedge \cdots \wedge
 \eta_{i_r j_r}$ on the configuration space, with the precise
 correspondence determined by the residue map of the FM propagator.
-\end{remark}
-
-\begin{remark}[Scope and relation to literature]
-\label{rem:brst-bar-scope}
-The theorem synthesizes: Arkhipov~\cite{Arkhipov97} (classical bar--CE comparison $\Phi_0$), the Eilenberg--Moore comparison theorem (Weibel~\cite[Theorem~5.2.12]{Weibel94}), the conformal weight filtration (Frenkel--Ben-Zvi~\cite{FBZ04}), and our geometric realization of $\barB^{\mathrm{ch}}_0(\cA_{\mathrm{tot}})$ on $\overline{C}_n(\mathbb{P}^1)$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The contribution is the PBW filtration lift of $\Phi_0$ to the chiral setting; $c = 26$ ensures $d_{\mathrm{bar}}^2 = 0$.
 \end{remark}
 
 \begin{corollary}[Physical anomaly cancellation at genus \texorpdfstring{$0$}{0};
@@ -817,11 +805,6 @@ grading; the identification at critical level follows from the
 Feigin--Frenkel theorem~\cite{Feigin-Frenkel}
 (cf.\ Theorem~\ref{thm:critical-level-structure}).
 \end{proof}
-
-\begin{remark}[Scope and attribution]
-\label{rem:bar-semi-infinite-scope}
-The theorem synthesizes Arkhipov~\cite{Arkhipov97} (classical bar--CE and semi-infinite duality for $\mathbb{Z}$-graded algebras), Frenkel--Garland--Zuckerman~\cite{FGZ86} (semi-infinite cohomology), and our PBW spectral sequence (Theorems~\ref{thm:pbw-koszulness-criterion}, \ref{thm:km-chiral-koszul}).  The contribution is the lift from $\mathbb{Z}$-graded associative to chiral algebras via PBW, using the geometric bar complex realization (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
-\end{remark}
 
 \begin{remark}[String BRST as a special case]
 \label{rem:string-brst-special-case}
@@ -1073,7 +1056,7 @@ genus-$g$ quantum corrections sum to
   $\mathrm{Vir}_{26-c}$ is the proved M/S-level shadow partner used in
   the semi-infinite calculation; the stronger H-level
   infinite-generator realization belongs to MC4
-  (Chapter~\ref{chap:concordance}).
+  (MC4 closed; Vol~I Theorem~\ref{thm:completed-bar-cobar-strong}).
 \end{enumerate}
 \end{corollary}
 
@@ -1090,17 +1073,11 @@ for which $c + c' = 26$ and $\varrho(\mathfrak{sl}_2)=1/2$.
 
 \section{Holomorphic-topological field theories}
 
-The physical content of this section---Gaiotto's framework,
-boundary chiral algebras from holomorphic Chern--Simons, the HT
-boundary condition, W-algebras from Higgs branches, and the
-BV-physics dictionary---has been moved to Volume~II, where it is
-developed alongside the Swiss-cheese operad and the
-holomorphic--topological factorization on
-$\mathbb{C} \times \mathbb{R}$.
-
-The algebraic core---the BV algebra structure on the bar complex
-from configuration-space geometry---remains in this volume
-(\S\ref{sec:complete-bv-structure}).
+The physical content (Gaiotto's framework, boundary chiral
+algebras, HT boundary conditions, W-algebras from Higgs branches)
+is in Volume~II\@.  The BV algebra structure on the bar complex
+from configuration-space geometry is in
+\S\ref{sec:complete-bv-structure}.
 
 % Labels preserved for cross-reference compatibility.
 \label{thm:ht-from-n4-sym}%
@@ -1192,16 +1169,6 @@ or equivalently $\Delta e^{S/\hbar} = 0$
 is solved by the bar-cobar pairing.
 \end{conjecture}
 
-\begin{remark}[Scope]
-This conjecture is labeled \ClaimStatusHeuristic{} because the solution $S$ of
-the QME must be constructed from the bar-cobar pairing data, which requires
-controlling the $\hbar$-expansion of configuration space integrals and verifying
-the second-order BV identity at each order.
-
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The bar-cobar pairing element $S = \langle \bar{B}^{\mathrm{ch}}(\cA), \Omega^{\mathrm{ch}}(\cA^!) \rangle$ should satisfy the quantum master equation $\hbar \Delta S + \tfrac{1}{2}\{S, S\} = 0$ in the BV algebra of Theorem~\ref{thm:config-space-bv}.
-\end{remark}
-
 \begin{conjecture}[BV quantization = bar-cobar duality; \ClaimStatusHeuristic]
 \label{conj:bv-equals-bar-cobar}
 The BV quantization of a chiral algebra $\mathcal{A}$ is equivalent to computing the
@@ -1219,16 +1186,6 @@ computes the BV homology as $H^*(\barB(\widehat{\fg}_k),
 The conjecture remains heuristic for general chiral algebras,
 where the semi-infinite complex may not admit a PBW filtration.
 \end{conjecture}
-
-\begin{remark}[Scope]
-For Kac--Moody algebras, both ingredients are proved: the bar-BRST identification
-(Theorem~\ref{thm:bar-semi-infinite-km}) and the bar-cobar quasi-isomorphism
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The conjecture extends this to
-general chiral algebras where a PBW filtration is unavailable.
-
-\emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence of homotopy categories).
-The BV cohomology $H^*_{\mathrm{BV}}(\cA)$ and the bar-cobar cohomology $H^*(\bar{B}(\cA), \Omega(\cA^!))$ should be isomorphic as graded vector spaces for every Koszul chiral algebra, induced by a quasi-isomorphism of the underlying cochain complexes.
-\end{remark}
 
 \subsection{Summary: BV as functor}
 

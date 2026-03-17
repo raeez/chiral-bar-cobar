@@ -664,7 +664,7 @@ factorization is part of the structure.
   (Conjecture~\ref{conj:categorical-modular-kd}).
 
 \item \emph{Theorem~H} (Chiral Hochschild cohomology,
-  Theorem~\ref{thm:hochschild-polynomial}).
+  Theorem~\ref{thm:hochschild-polynomial-growth}).
   $\ChirHoch^*(\cA)$ is polynomial on the Koszul locus and dual
   to $\ChirHoch^*(\cA^!)$.  The full Taylor series of the
   categorical logarithm lives in a polynomial ring.  The Hochschild
@@ -1036,7 +1036,7 @@ $r = 3$ & $\mathfrak{C}(\cA)$ (cubic shadow)
 $r = 4$ & $\mathfrak{Q}(\cA)$ (quartic resonance class)
   & proved, with clutching law \\[2pt]
 $r = \infty$ & $\Theta_\cA$ (full universal class)
-  & conjectural limit
+  & proved (bar-intrinsic, Thm~\ref{thm:mc2-bar-intrinsic})
 \end{tabular}
 \end{center}
 The obstruction $o_3(\cA)$ vanishes for any abelian chiral algebra
@@ -1051,7 +1051,7 @@ archetypes, computed in every example chapter of Part~II
 
 The quartic resonance class carries a clutching law under
 stable-curve degeneration
-(Theorem~\ref{thm:quartic-clutching}): when a genus-$g$ curve
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}): when a genus-$g$ curve
 degenerates to a nodal union $\Sigma_{g_1} \cup \Sigma_{g_2}$, the
 quartic class satisfies a factorization identity determined by the
 tree correction from Mok's logarithmic Fulton--MacPherson
@@ -1062,7 +1062,7 @@ Q^{\mathrm{contact}}_{\mathrm{Vir}} = \frac{10}{c(5c+22)},
 \end{equation}
 with genus-$1$ Hessian correction
 $\delta^{(1)}_{H,\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$
-(Theorem~\ref{thm:quartic-resonance-class}).
+(Theorem~\ref{thm:nms-virasoro-quartic-explicit}).
 
 \subsection{The all-arity master equation}
 \label{subsec:all-arity-master-eq}
@@ -1129,8 +1129,11 @@ $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$, by graded antisymmetry.
 This is verified at generic levels by
 Theorem~\ref{thm:cyclic-rigidity-generic} and on the standard
 landscape by Corollary~\ref{cor:effective-quadruple}.
-Conjecture~\ref{conj:scalar-saturation-universality} extends it
-to admissible levels.
+Theorem~\ref{thm:algebraic-family-rigidity} extends it
+to all non-critical levels for algebraic families with rational
+OPE coefficients;
+Conjecture~\ref{conj:scalar-saturation-universality} addresses
+the residual non-algebraic-family case.
 
 \begin{definition}[Modular homotopy theory on a smooth curve]
 \label{def:modular-homotopy-theory-intro}
@@ -1188,12 +1191,71 @@ Definition~\ref{def:modular-koszul-chiral}.
 \end{definition}
 
 
+\subsection{Completion kinematics versus modular dynamics}
+\label{subsec:kinematics-dynamics-intro}
+\index{completion kinematics|textbf}
+\index{modular dynamics|textbf}
+\index{primitive cumulant!in introduction}
+
+The package~$\mathcal{C}_\cA$ encodes the \emph{modular dynamics}
+of~$\cA$: the OPE-dependent deformation data $D_\cA$,
+$\kappa(\cA)$, $\Theta_\cA$, and the dg-shifted Yangian kernel
+$r_\cA(z)$.  But the completed bar-cobar theory also carries a
+second, independent axis that we call \emph{completion kinematics}:
+invariants determined solely by the vacuum character $\chi_\cA(q)$,
+without reference to OPE coefficients or curvature.
+
+The kinematic data are extracted from the \emph{primitive cumulant
+quotient} $Q(\cA) = \bar{\cA}/\partial\bar{\cA}$
+(Definition~\ref{def:primitive-cumulant-quotient}) and its generating
+series
+\begin{equation}\label{eq:primitive-generating-intro}
+G_\cA(t) = \frac{1-t}{t}\bigl(\chi_\cA(t) - 1\bigr),
+\end{equation}
+which is canonical: the non-derivative sector is recovered directly
+from the character.  The \emph{completion Hilbert series}
+$H_\cA(t) = G_\cA/(1 - G_\cA)$ counts reduced-weight bar words, and
+the \emph{completion entropy}
+$h_K(\cA) = \log(\rho_\cA^{-1})$
+(where $G_\cA(\rho_\cA) = 1$) is the exponential growth rate of
+finite bar windows
+(Definitions~\ref{def:completion-hilbert-series}--\ref{def:completion-entropy}).
+
+The two axes are genuinely independent.  The Virasoro involution
+$c \mapsto 26 - c$ changes the dynamic shadow
+$\mathrm{Vir}_c \leftrightarrow \mathrm{Vir}_{26-c}$ while
+preserving the kinematic data: both sides have the same
+$G_\cA(t)$ and the same entropy.  The shadow depth classification
+(G/L/C/M) measures \emph{dynamic} complexity; the completion entropy
+$h_K$ measures \emph{kinematic} complexity.  Both are needed.
+
+The \emph{primitive defect series}
+$\Delta_\cA(t) = G_\cA(t) - G_\cA^{\mathrm{naive}}(t)$
+(Definition~\ref{def:primitive-defect-series})
+detects nonquadraticity: it is zero for Heisenberg, affine
+Kac--Moody, and $\beta\gamma$ (all quadratic or free-like), and
+nonzero starting at $t^3$ for Virasoro and $\mathcal{W}_N$ ($N
+\geq 3$).  The nonzero defect means the completed dual coalgebra is
+forced to enlarge its primitive sector beyond the declared
+generators---the correct dual is the \emph{cumulant coalgebra}
+$\operatorname{Cum}_c(\cA) = \hat{T}^c(sQ(\cA)^\vee)$, not the
+tensor coalgebra on the original generators alone
+(Conjecture~\ref{conj:cumulant-recognition}).
+
 \section{The standard families and their shadow archetypes}
 \label{sec:standard-families-intro}
 \index{shadow archetypes|textbf}
 \index{standard families|textbf}
 
-The abstract machinery of the shadow Postnikov tower acquires its full meaning only when exhibited on the standard families of chiral algebras.  Each family determines a \emph{shadow archetype}: the termination pattern of its tower and the qualitative shape of its modular invariants.
+The abstract machinery of the shadow Postnikov tower acquires its full meaning only when exhibited on the standard families of chiral algebras.  Each family determines a \emph{shadow archetype}: the termination pattern of its tower and the qualitative shape of its modular invariants.  In parallel, the completion kinematics
+(\S\ref{subsec:kinematics-dynamics-intro}) assigns to each family a
+primitive spectrum~$G_\cA(t)$, an entropy~$h_K(\cA)$, and a
+defect~$\Delta_\cA(t)$.  These two classifications---dynamic
+(shadow depth) and kinematic (completion entropy)---are orthogonal:
+a family can have finite shadow depth and zero defect (Heisenberg,
+Kac--Moody, $\beta\gamma$) or infinite shadow depth and nonzero
+defect (Virasoro, $\mathcal{W}_N$), and the entropy varies
+continuously within each class.
 
 \subsection{The Heisenberg atom: Gaussian archetype, termination at arity~$2$}
 \label{subsec:heisenberg-atom-intro}
@@ -1231,6 +1293,9 @@ quartic shadow vanishes, and $\Theta_{\mathcal{H}_k} =
 is the Gaussian archetype: the full nonlinear MC element is already
 determined by its linear leading term.
 
+\smallskip\noindent\textbf{Completion kinematics.}
+The vacuum character $\chi_{\mathcal{H}_k}(q) = \prod_{n \geq 1}(1-q^n)^{-1}$ gives $G_{\mathcal{H}_k}(t) = t$ (one primitive of reduced weight~$1$, no others).  The completion entropy is $h_K(\mathcal{H}_k) = 0$: the completed bar complex does not grow.  The primitive defect $\Delta = 0$: no nonquadratic enlargement is needed.  The Heisenberg algebra is kinematically trivial---the simplest point in the completion phase diagram.
+
 \smallskip\noindent\textbf{Complementarity.}
 $Q_g(\mathcal{H}_k) \oplus Q_g(\mathcal{H}_{-k}) \cong
 H^*(\overline{\mathcal{M}}_g, \C)$: the positive- and negative-level
@@ -1251,13 +1316,24 @@ The simple pole introduces a nonzero bracket component $d_{\mathrm{bracket}}$, a
 The Koszul dual is $\widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$, where $h^\vee$ is the dual Coxeter number.  This is the Feigin--Frenkel involution: Koszul duality for affine Kac--Moody algebras \emph{is} the level-reflection symmetry.  The Sugawara construction, which provides the stress-energy tensor $T(z) = \frac{1}{2(k+h^\vee)} \sum_a :J^a J^a:(z)$, is undefined at the critical level $k = -h^\vee$ (not ``$c$ diverges''; rather, the Sugawara vector is not in the completion of $U(\widehat{\mathfrak{g}}_{-h^\vee})$).
 
 \smallskip\noindent\textbf{Shadow tower: arity~$3$ termination.}
-The modular characteristic is $\kappa(\widehat{\mathfrak{g}}_k) = \dim\mathfrak{g}/(k+h^\vee)$, with anti-symmetry $\kappa(k) + \kappa(k') = 0$.  The cubic shadow $\mathfrak{C}(\widehat{\mathfrak{g}}_k)$ is nonzero (it detects the Lie bracket), but $o_4 = 0$: the tower terminates at arity~$3$.  This is the Lie/tree archetype---the shadow tower captures exactly the tree-level Lie-algebraic data and stops.
+The modular characteristic is $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot (k+h^\vee)/(2h^\vee)$, with anti-symmetry $\kappa(k) + \kappa(k') = 0$.  The cubic shadow $\mathfrak{C}(\widehat{\mathfrak{g}}_k)$ is nonzero (it detects the Lie bracket), but $o_4 = 0$: the tower terminates at arity~$3$.  This is the Lie/tree archetype---the shadow tower captures exactly the tree-level Lie-algebraic data and stops.
+
+\smallskip\noindent\textbf{Completion kinematics.}
+The vacuum character gives $G_{\widehat{\mathfrak{g}}_k}(t) = (\dim\mathfrak{g})\,t/(1-t)$: there are $\dim\mathfrak{g}$ primitives at each reduced weight (the current derivatives $\partial^r J^a$).  The Koszul radius is $\rho = 1/(\dim\mathfrak{g}+1)$ and the entropy is $h_K = \log(\dim\mathfrak{g}+1)$.  For $\mathfrak{sl}_2$: $h_K \approx 1.10$, larger than Virasoro ($h_K \approx 0.57$), reflecting the multicomponent nature of the bar complex despite the simpler shadow depth.  The defect $\Delta = 0$: the declared generators $J^a$ already span the full primitive sector.
 
 \subsection{The $\beta\gamma$ system: contact/quartic archetype, termination at arity~$4$}
 \label{subsec:betagamma-atom-intro}
 \index{betagamma system@$\beta\gamma$ system!shadow archetype}
 
 The $\beta\gamma$ system has OPE $\beta(z)\gamma(w) \sim 1/(z-w)$, a simple pole between fields of complementary conformal weight.  The quartic contact invariant $\mu_{\beta\gamma} = \langle \eta, m_3(\eta, \eta, \eta) \rangle$ vanishes by rank-one abelian rigidity (Corollary~\ref{cor:nms-betagamma-mu-vanishing}): $o_5 = 0$, and the tower terminates at arity~$4$.  This is the contact archetype---the first system where the quartic shadow is nonzero but the quintic obstruction vanishes.
+
+\smallskip\noindent\textbf{Completion kinematics.}
+The two generators $\beta$, $\gamma$ of weights $1$ and $0$ give
+$G_{\beta\gamma}(t) = t/(1-t)$ (one primitive per reduced weight).
+The Koszul radius is $\rho = 1/2$, the entropy $h_K = \log 2
+\approx 0.693$, and the defect $\Delta = 0$.  Despite its richer
+shadow depth (arity~$4$ vs arity~$3$ for Kac--Moody), the $\beta\gamma$
+system is kinematically simpler than any non-abelian affine algebra.
 
 \subsection{Virasoro and $\mathcal{W}_N$: mixed archetype, infinite tower}
 \label{subsec:virasoro-w-atom-intro}
@@ -1272,6 +1348,46 @@ is the explicit measure of the quartic interaction.  The poles at $c = 0$ and $c
 
 The $\mathcal{W}_N$ algebras share the infinite-tower behavior for $N \geq 3$.  The $\mathcal{W}_3$ algebra is the first case where the filtered-curved distinction matters: $\mathcal{W}_3$ carries a truly filtered (not merely curved) $A_\infty$ structure, because the composite field $\Lambda = :(TT): - \frac{3}{10}\partial^2 T$ introduces a quartic pole that is not a scalar multiple of the identity.
 
+\smallskip\noindent\textbf{Completion kinematics.}
+This is where the kinematic axis reveals structure invisible to
+shadow depth alone.  For generic Virasoro, $G_{\mathrm{Vir}}(t)
+= \tfrac{1-t}{t}\bigl(\prod_{n \geq 2}(1-t^n)^{-1} - 1\bigr)$
+gives primitive multiplicities $g_r = 1, 0, 1, 0, 2, 0, 3, 1, \ldots$
+The defect $\Delta_{\mathrm{Vir}}(t) = t^3 + 2t^5 + 3t^7 + \cdots
+\neq 0$: generic Virasoro has infinitely many primitive cumulants
+beyond the stress tensor~$T$.  The entropy is
+$h_K(\mathrm{Vir}) \approx 0.567$.
+
+For the $\mathcal{W}_N$ tower, the entropy increases monotonically
+(Proposition~\ref{prop:wn-entropy-ladder}):
+\[
+h_K(\mathcal{W}_2) \approx 0.567
+\;<\; h_K(\mathcal{W}_3) \approx 0.772
+\;<\; h_K(\mathcal{W}_4) \approx 0.835
+\;<\; \cdots
+\;<\; h_K(\mathcal{W}_\infty) \approx 0.872.
+\]
+The $\mathcal{W}_3$ jump from $0.567$ to $0.772$ is the kinematic
+signature of the composite field~$\Lambda$, which forces the
+corrected Koszul recursion $h_q = 2h_{q-1} + h_{q-2} + h_{q-3}$
+in place of the naive $h_q = 2h_{q-1} + h_{q-2}$.
+At the limit $N = \infty$, the character
+$\chi_{\mathcal{W}_\infty}(q) = \prod_{n \geq 2}(1 - q^n)^{-(n-1)}$
+admits a MacMahon factorization
+(Proposition~\ref{prop:wn-entropy-ladder}), connecting the
+$\mathcal{W}_\infty$ completion frontier to the combinatorics of
+plane partitions.
+
+The same-family shadow $\mathrm{Vir}_{26-c}$ coexists with the
+nonzero defect because it is a \emph{dynamic} shadow, not the full
+kinematic dual.  Kinematically, the completed dual coalgebra has
+infinitely many primitive generators; dynamically, the scalar trace
+$\kappa(\mathrm{Vir}_c) \cdot \lambda_g$ already reproduces the
+partner family $\mathrm{Vir}_{26-c}$.  The full H-level kinematic
+identification is the residual MC4 task
+(\S\ref{subsec:completion-kinematics-programme} of the
+concordance).
+
 \subsection{The Yangian: $\Eone$-chiral, $R$-matrix inversion}
 \label{subsec:yangian-atom-intro}
 \index{Yangian!shadow archetype}
@@ -1281,7 +1397,7 @@ The Yangian $Y(\mathfrak{g})$ is fundamentally different from the previous famil
 
 The Yangian is generated by currents $T^{(1)}(z), T^{(2)}(z), \ldots$ with spectral parameter dependence, and its OPE involves the rational $R$-matrix $R(u-v)$.  The Drinfeld--Kohno bridge (Theorem~\ref{thm:factorization-dk-eval}) relates the chiral Koszul duality of affine Kac--Moody algebras at the top of the DK square~\eqref{eq:dk-intro} to the quantum group $R$-matrix inversion at the bottom, with the Kazhdan--Lusztig equivalences as vertical arrows.
 
-The modular dg-shifted Yangian $\Ydg^{\mathrm{mod}}_T$ (Definition~\ref{def:modular-yangian-pro}) is the pronilpotent completion of the convolution dg Lie algebra for the Yangian.  The modular $R$-matrix $R^{\mathrm{mod}}_T(z; \hbar)$ is a Maurer--Cartan element in this completed algebra.
+The modular dg-shifted Yangian $\mathcal{Y}^{\mathrm{dg,mod}}_T$ (Definition~\ref{def:modular-yangian-pro}) is the pronilpotent completion of the convolution dg Lie algebra for the Yangian.  The modular $R$-matrix $R^{\mathrm{mod}}_T(z; \hbar)$ is a Maurer--Cartan element in this completed algebra.
 
 \subsection{Lattice vertex algebras: braided, curvature-braiding orthogonal}
 \label{subsec:lattice-atom-intro}
@@ -1412,13 +1528,13 @@ The identification theorem (Corollary~\ref{cor:theta-twisting-morphism}):\ $\The
 
 The global collision geometry is the logarithmic Fulton--MacPherson compactification $\mathrm{FM}_n(X | D)$ on a simple normal crossing pair $(X, D)$ in the sense of Mok~\cite{Mok25}.  The classical FM compactification is the special case $D = \emptyset$.
 
-The tropicalization theorem (Theorem~\ref{thm:planted-forest-tropicalization}): $\Gmod_{\mathrm{pf}} = \operatorname{Trop}(\mathrm{FM}_n(\mathbb{C} | D))$---the planted-forest coefficient algebra is the tropical limit of the log FM compactification.  Planted forests are dual graphs of tropical curves, and grafting is degeneration.  The semistable degeneration formula for log FM spaces yields the clutching laws for the quartic resonance class (Theorem~\ref{thm:quartic-clutching}).
+The tropicalization theorem (Theorem~\ref{thm:planted-forest-tropicalization}): $\Gmod_{\mathrm{pf}} = \operatorname{Trop}(\mathrm{FM}_n(\mathbb{C} | D))$---the planted-forest coefficient algebra is the tropical limit of the log FM compactification.  Planted forests are dual graphs of tropical curves, and grafting is degeneration.  The semistable degeneration formula for log FM spaces yields the clutching laws for the quartic resonance class (Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
 
-\subsection{Seven identification theorems}
-\label{subsec:seven-identifications}
+\subsection{Eleven identification theorems}
+\label{subsec:eleven-identifications}
 \index{identification theorems}
 
-The three pillars yield seven identification theorems, five proved and two structural:
+The three pillars yield eleven identification theorems, nine proved and two structural:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item $\gAmod = \operatorname{hom}_\alpha(\mathrm{Com}^{!}_{\mathrm{ch}},\, \mathcal{P}^{\mathrm{ch}})$: the convolution algebra is the twisting hom (Theorem~\ref{thm:convolution-master-identification}).
 \item $\Theta_\cA \in \operatorname{MC}(\operatorname{hom}_\alpha) \cong \operatorname{Tw}_\alpha$: the universal MC element is a twisting morphism (Corollary~\ref{cor:theta-twisting-morphism}).
@@ -1427,6 +1543,10 @@ The three pillars yield seven identification theorems, five proved and two struc
 \item $\barB_\kappa \dashv \Omega_\kappa$ is a Quillen equivalence (Theorem~\ref{thm:quillen-equivalence-chiral}).
 \item $\cA^{\mathrm{sh}}$ is a homotopy invariant (Theorem~\ref{thm:shadow-homotopy-invariance}).
 \item The one-slot obstruction constrains MC3: the categorical lift must proceed one slot at a time (RNW19, Theorem~6.1).
+\item $F_n = o_n$: the secondary Borcherds operations of~\cite{MS24} at arity $n \geq 3$ coincide with the shadow tower obstruction classes (Proposition~\ref{prop:borcherds-shadow-identification}).
+\item The quartic clutching law has a log-geometric derivation via Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25} (Construction~\ref{constr:arity4-degeneration}).
+\item The log clutching conjecture is proved: Theorem~\ref{conj:log-clutching-degeneration} is established by~\cite[Corollary~5.3.4]{Mok25}.
+\item The ambient $D^2 = 0$ (Theorem~\ref{thm:ambient-d-squared-zero}) is proved via the log-FM normal-crossings result~\cite[Theorem~3.3.1(1)]{Mok25}.
 \end{enumerate}
 
 
@@ -1720,9 +1840,10 @@ level a projection of the next.  The weight filtration on~$\gAmod$
 controls the extension tower; each finite truncation
 $\Theta_\cA^{\le r}$ is constructive and does not require the full
 all-genera modular envelope.  The all-arity master equation
-$D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$ is the
-\emph{conjectural} limit of the tower---the target, not the starting
-point.
+$D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$ is proved by the
+bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}): $\Theta_\cA := D_\cA - \dzero$
+is automatically Maurer--Cartan because $D_\cA^2 = 0$.
 
 \emph{Ring~3: the physics-facing frontier.}
 Three axes extend the proved core toward mathematical physics.
@@ -1733,8 +1854,12 @@ Three axes extend the proved core toward mathematical physics.
   exceptional: the subregular family $\mathcal W_n^{(2)}$ has
   unbounded canonical homotopy arity, and the classical $W_3$ sector
   defines the first finite-arity modular higher-spin package.
-  MC4 is closed unconditionally via $\mathcal{W}_N$ rigidity
-  (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).
+  MC4 is proved: the strong completion-tower theorem
+  (Theorem~\ref{thm:completed-bar-cobar-strong}) gives a
+  completion-closed bar-cobar homotopy equivalence on $\CompCl(\Fft)$,
+  with automatic continuity via the arity cutoff
+  (Lemma~\ref{lem:arity-cutoff}) and coefficient-stability criterion
+  (Theorem~\ref{thm:coefficient-stability-criterion}).
 \item \emph{The Yangian/RTT axis.}
   Shifted Yangian duality decomposes into a local quadratic RTT
   kernel, a weightwise stabilized completed envelope, and a boundary
@@ -1766,7 +1891,7 @@ The open problems of the monograph are organized into five Master Conjectures (M
 MC1 & PBW concentration & \textbf{proved} & all standard families \\[2pt]
 MC2 & Universal MC class $\Theta_\cA$ & \textbf{proved} & bar-intrinsic (Thm~\ref{thm:mc2-bar-intrinsic}) \\[2pt]
 MC3 & Thick generation (type A) & \textbf{proved} & chromatic + CG + Efimov \\[2pt]
-MC4 & $\mathcal{W}_\infty$ closure & \textbf{closed} & $\mathcal{W}_N$ rigidity \\[2pt]
+MC4 & $\mathcal{W}_\infty$ closure & \textbf{proved} & strong completion towers (Thm~\ref{thm:completed-bar-cobar-strong}) \\[2pt]
 MC5 & Genus $\geq 2$ & genus $\leq 1$ proved & Costello renormalization
 \end{tabular}
 \end{center}
@@ -1777,7 +1902,7 @@ MC5 & Genus $\geq 2$ & genus $\leq 1$ proved & Costello renormalization
 
 \noindent\textbf{MC3} (Thick generation in type A): Every object in the category $\mathcal{O}_{\mathrm{poly}}$ for $Y(\mathfrak{sl}_N)$ lies in the thick subcategory generated by the evaluation modules.  Proved via the chromatic filtration, prefundamental Clebsch--Gordan closure at character level (Proposition~\ref{prop:prefundamental-clebsch-gordan}), and Efimov completion of the derived category.  Extension to arbitrary simple type requires the Hern\'andez--Jimbo prefundamental CG decomposition for all Dynkin types (Conjecture~\ref{conj:mc3-arbitrary-type}).
 
-\noindent\textbf{MC4} ($\mathcal{W}_\infty$ closure): The $\mathcal{W}_\infty$ algebra at generic central charge is completed Koszul, unconditionally at all stages.  Closed via $\mathcal{W}_N$ rigidity (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}), resolving 21 conjectures and verifying the Yangian evaluation core at 249 test points.
+\noindent\textbf{MC4} ($\mathcal{W}_\infty$ closure and completed bar-cobar): The formal completion theory is \textbf{proved} by the strong completion-tower theorem (Theorem~\ref{thm:completed-bar-cobar-strong}): the finite-stage bar-cobar duality passes to inverse limits automatically once the filtration satisfies the strong axiom $\mu_r(F^{i_1}\cA,\dots,F^{i_r}\cA) \subset F^{i_1+\cdots+i_r}\cA$, which yields the arity cutoff (Lemma~\ref{lem:arity-cutoff}) making continuity and Mittag--Leffler automatic.  The completion closure $\CompCl(\Fft)$ carries a quasi-inverse bar-cobar homotopy equivalence (Corollary~\ref{cor:completion-closure-equivalence}), stable under MC twisting (Theorem~\ref{thm:mc-twisting-closure}), with completed twisting representability (Theorem~\ref{thm:completed-twisting-representability}).  The coefficient-stability criterion (Theorem~\ref{thm:coefficient-stability-criterion}) reduces convergence to finite matrix stabilization, and the uniform PBW bridge (Theorem~\ref{thm:uniform-pbw-bridge}) connects MC1 to MC4.  The $\mathcal{W}_\infty$ algebra at generic central charge is completed Koszul, unconditionally at all stages; $\mathcal{W}_N$ rigidity (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) resolves 21 conjectures and verifies the Yangian evaluation core at 249 test points.  The problem splits into MC4$^+$ (positive towers, solved by weight stabilization---Theorem~\ref{thm:stabilized-completion-positive}) and MC4$^0$ (resonant towers, reduced to a finite-dimensional problem by Theorem~\ref{thm:resonance-filtered-bar-cobar}).  The remaining example-specific task is coefficient stabilization on finite windows and H-level target identification.
 
 \noindent\textbf{MC5} (Genus $\geq 2$): The full modular Koszul programme at genus $g \geq 2$ requires Costello's renormalization framework for higher-genus Feynman integrals.  Genus $0$ and $1$ are proved; genus $\geq 2$ remains the analytic frontier.
 
@@ -2043,8 +2168,8 @@ Kazhdan--Lusztig equivalence from bar-cobar.
 \textbf{Concordance} (Chapter~\ref{chap:concordance}).
 The normative status ledger of the entire monograph.  Every claim
 is classified as proved, conjectural, or heuristic.  The MC
-frontier (MC1--MC5) is recorded: MC1 and MC2 proved at finite
-order, MC3 proved in type~A, MC4 closed, MC5 genus $\le 1$
+frontier (MC1--MC5) is recorded: MC1 and MC2 proved,
+MC3 proved in type~A, MC4 proved, MC5 genus $\le 1$
 proved.  The dependency-ordered conjectural stratification defines
 the programme toward which the entire work points.
 

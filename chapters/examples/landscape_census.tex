@@ -16,7 +16,7 @@ is a complete portrait of one algebra; read vertically, the columns
 expose the structural regularities that no single example can reveal.
 The scalar modular characteristic $\kappa(\widehat{\fg}_k) = td/2h^\vee$
 and $\kappa(\mathrm{Vir}_c) = c/2$ both descend from the universality
-theorem (Theorem~\ref{thm:kappa-universality})---a coincidence that
+theorem (Theorem~\ref{thm:genus-universality})---a coincidence that
 requires the full landscape to appreciate.
 
 \noindent\emph{The Master Table below collects the invariants computed throughout Part~II.  For the Heisenberg algebra, these invariants were derived in Chapter~\ref{ch:heisenberg-frame}; for each subsequent algebra, the corresponding chapter provides the complete computation.}
@@ -112,7 +112,7 @@ Yangian $Y(\fg)$
 Quantum lattice $\Vlat_\Lambda^{N,q}$
   & $(\Vlat_\Lambda^{N,-q})^c$
   & $d = \operatorname{rank}(\Lambda)$ & ---
-  & --- & PH \\
+  & $\operatorname{rank}(\Lambda)$ & PH \\
 \hline
 \end{tabular}%
 }% end resizebox
@@ -123,6 +123,79 @@ Quantum lattice $\Vlat_\Lambda^{N,q}$
 (\ClaimStatusProvedHere); CJ = conjectured (\ClaimStatusConjectured).
 All dualities in this table have complete proofs at the semantic level
 recorded here.
+
+\medskip
+
+\noindent\textbf{The shadow Postnikov tower as organizing frame.}
+Every entry in Table~\ref{tab:master-invariants} is a projection of the
+universal MC element $\Theta_\cA \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The scalar $\kappa(\cA)$ is
+the arity-$2$ projection; the complementarity sum $c + c'$ is the
+ambient shadow at genus~$0$; the Koszul dual is the bar-cobar
+inversion.  Table~\ref{tab:shadow-tower-census} below records the
+shadow tower data that completes the portrait: the archetype class,
+shadow depth $r_{\max}$, and the first nontrivial higher shadow for
+each family.
+
+\begin{table}[ht]
+\centering
+\caption{Shadow Postnikov tower census: each family as a projection of $\Theta_\cA$}
+\label{tab:shadow-tower-census}
+\index{shadow Postnikov tower!census table}
+\renewcommand{\arraystretch}{1.5}
+{\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+\textbf{Algebra $\cA$}
+  & \textbf{Archetype}
+  & $\boldsymbol{r_{\max}}$
+  & \textbf{First higher shadow}
+  & \textbf{Reference} \\
+\hline
+\multicolumn{5}{|c|}{\textit{Gaussian: tower terminates at scalar level}} \\
+\hline
+Free fermion $\psi$ & G & 2 & --- & \S\ref{chap:free-fields} \\
+\hline
+$bc$ ghosts & G & 2 & --- & \S\ref{chap:free-fields} \\
+\hline
+Heisenberg $\mathcal{H}_\kappa$ & G & 2 & --- & \S\ref{chap:heisenberg-frame} \\
+\hline
+Lattice VOA $V_\Lambda$ & G & 2 & --- & \S\ref{sec:lattice-genera} \\
+\hline
+\multicolumn{5}{|c|}{\textit{Lie/tree: cubic shadow nontrivial}} \\
+\hline
+$\widehat{\fg}_k$ (general) & L & 3 & $C$: Lie bracket & \S\ref{chap:kac-moody-koszul} \\
+\hline
+\multicolumn{5}{|c|}{\textit{Contact/quartic: quartic contact shadow nontrivial}} \\
+\hline
+$\beta\gamma$ system & C & 4 & $Q^{\mathrm{contact}}$; $\mu_{\beta\gamma}=0$ & \S\ref{chap:beta-gamma} \\
+\hline
+\multicolumn{5}{|c|}{\textit{Mixed/infinite: tower does not terminate}} \\
+\hline
+$\mathrm{Vir}_c$ & M & $\infty$ & $C$: cubic + $Q$: quartic & \S\ref{chap:w-algebra-koszul} \\
+\hline
+$\mathcal{W}_N$ (finite $N$) & M & $\infty$ & $C$+$Q$; quintic forced & \S\ref{chap:w-algebra-koszul} \\
+\hline
+$\mathcal{W}_\infty$ (limit) & M$^*$ & $\infty$ & scalar-saturated ($\dim H^2_{\mathrm{cyc}}=1$) & Thm~\ref{thm:winfty-scalar} \\
+\hline
+\multicolumn{5}{|c|}{\textit{$\Eone$-chiral}} \\
+\hline
+Yangian $Y(\fg)$ & M & $\infty$ & $R$-matrix $=$ $\Theta_\cA|_{\Eone}$ & \S\ref{sec:modular-dg-shifted-yangian} \\
+\hline
+\end{tabular}%
+}% end resizebox
+}% end small
+\end{table}
+
+\noindent
+\textbf{Archetype column}: G = Gaussian, L = Lie/tree, C = contact/quartic,
+M = mixed/infinite, M$^*$ = mixed/infinite but scalar-saturated at the
+inverse limit.  The archetype classifies the shadow depth: at which
+arity the tower of projections $\Theta_\cA^{\leq r}$ stabilizes (or
+fails to stabilize).  Each archetype class is realized by at least one
+standard family, and the classification is exhaustive for the families
+treated in this monograph.
 
 In the Virasoro row, the displayed partner $\mathrm{Vir}_{26-c}$ is
 the proved M/S-level same-family shadow used in the complementarity
@@ -256,7 +329,9 @@ tower:
   forces agreement with the principal side.
   Promotion through $\mathcal{I}_N$ for $N \geq 5$ follows from
   $\mathcal{W}_N$ rigidity at each stage
-  (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).
+  (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) within
+  the strong completion-tower framework
+  (Theorem~\ref{thm:completed-bar-cobar-strong}).
 
   \emph{$\mathcal{W}_\infty$ side: stage-$5$ open problem.}
   The first next reduced stage is the eleven-entry packet
@@ -505,8 +580,7 @@ The duality $\kappa + \kappa' = 0$ still holds: $\kappa' = -\kappa$
 \textsuperscript{$\ddagger$}For the Virasoro row, the involution
 $c \mapsto 26-c$ supplies the proved same-family partner governing the
 current M/S-level genus and semi-infinite calculations.  Identifying the
-corresponding H-level infinite-generator dual object remains part of
-MC4.
+corresponding H-level infinite-generator dual object is the residual identification task (MC4 structural framework proved; Theorem~\ref{thm:completed-bar-cobar-strong}).
 
 \begin{remark}[Genus-\texorpdfstring{$1$}{1} free energy and the conformal anomaly]\label{rem:genus-1-verification}
 \index{free energy!genus one}
@@ -968,8 +1042,7 @@ the Koszul dual Hilbert function.)
   The Virasoro bar cohomology growth~$3^n$ is consistent
   with the infinite-dimensional same-family shadow partner
   $\mathrm{Vir}_{26-c}$ that controls the current M/S-level
-  calculations; the corresponding H-level infinite-generator dual
-  remains an MC4 completion problem.
+  calculations; MC4 structural framework proved (Theorem~\ref{thm:completed-bar-cobar-strong}); H-level identification residual.
 \end{enumerate}
 \end{remark}
 
@@ -2551,6 +2624,69 @@ setting.
 The scope of this extension is discussed in
 Remark~\ref{rem:yangian-three-theorems}.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
+\end{remark}
+
+\section*{Completion kinematics of the standard landscape}
+\label{sec:completion-kinematics-census}
+\index{completion entropy!census}
+\index{primitive cumulant!census}
+\index{Koszul radius!census}
+
+The completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) resolves the formal
+MC4 problem; what remains is a \emph{kinematic} phase diagram for the
+completed dual.  The primitive generating series
+$G_\cA(t) = \tfrac{1-t}{t}\bigl(\chi_\cA(t)-1\bigr)$
+(Definition~\ref{def:primitive-generating-series}) and the completion
+entropy $h_K(\cA) = \log(\rho_\cA^{-1})$
+(Definition~\ref{def:completion-entropy}) are computable from the
+vacuum character alone, without curvature data.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccccl}
+\toprule
+\textbf{Family} & $\rho_K$ & $h_K$ & \textbf{Shadow depth}
+  & $\Delta(t)$ starts & \textbf{Class} \\
+\midrule
+Heisenberg & $1$ & $0$ & $2$ & $0$ & G \\
+$\hat{\mathfrak{g}}_k$ & $1/\dim\mathfrak{g}$ & $\log\dim\mathfrak{g}$ & $3$ & $0$ & L \\
+$\beta\gamma$ & $\tfrac{1}{2}$ & $\log 2$ & $4$ & $0$ & C \\
+$\mathrm{Vir}_c$ & $\approx 0.567$ & $\approx 0.567$ & $\infty$ & $t^3 + \cdots$ & M \\
+$\Walg_3$ & $\approx 0.462$ & $\approx 0.772$ & $\infty$ & $t^3 + t^4 + \cdots$ & M \\
+$\Walg_4$ & $\approx 0.434$ & $\approx 0.835$ & $\infty$ & $t^3 + \cdots$ & M \\
+$\Walg_5$ & $\approx 0.424$ & $\approx 0.857$ & $\infty$ & $t^3 + \cdots$ & M \\
+$\Walg_\infty$ & $\approx 0.418$ & $\approx 0.872$ & $\infty$ & $t^3 + \cdots$ & M \\
+\bottomrule
+\end{tabular}
+\caption{Completion kinematics of the standard landscape.
+  $\rho_K = $ Koszul radius (smallest positive root of $G_\cA(t)=1$);
+  $h_K = \log(\rho_K^{-1})$ is the exponential growth rate of
+  reduced-weight bar windows; $\Delta(t)$ is the primitive defect
+  beyond declared generators.
+  Classes: G~(Gaussian, $r_{\max}=2$),
+  L~(Lie/tree, $r_{\max}=3$),
+  C~(contact/quartic, $r_{\max}=4$),
+  M~(mixed, $r_{\max}=\infty$).
+  The $\Walg_N$ entropy ladder is monotone increasing with limit
+  $h_K(\Walg_\infty) \approx 0.872$; the $\Walg_\infty$ character
+  is governed by the MacMahon plane-partition function
+  (Proposition~\ref{prop:wn-entropy-ladder}).}
+\label{tab:completion-kinematics}
+\end{table}
+
+\begin{remark}[Interpretation]
+\label{rem:completion-kinematics-interpretation}
+The table reveals a sharp kinematic stratification: G/L/C-class
+algebras (finite shadow depth) have zero primitive defect and rational
+Koszul radius; M-class algebras (infinite tower) have non-zero defect
+starting at $t^3$ and irrational Koszul radius.  The entropy ladder
+$h_K(\Walg_2) < h_K(\Walg_3) < \cdots < h_K(\Walg_\infty)$ quantifies
+the completion cost of each additional spin field.  This is a genuine
+\emph{kinematic} invariant: it is independent of the central charge
+$c$, the curvature $\kappa(\cA)$, and all dynamic data.  The
+$c \mapsto 26-c$ involution changes the dynamic shadow but preserves
+the kinematic entropy.
 \end{remark}
 
 \section*{Cross-reference guide}

@@ -18,7 +18,12 @@ face of an infinite nonlinear tower
 \;\longrightarrow\; \Theta,
 \]
 the \emph{shadow Postnikov tower}, which is the true modular characteristic of a chiral algebra.
-This filtered finite-order engine---not the scalar $\kappa$ alone, and not the conjectural all-arity limit~$\Theta_\cA$---is the primary mathematical object of the nonlinear theory.
+The universal MC element $\Theta_\cA \in \MC(\gAmod)$ exists unconditionally
+(Theorem~\ref{thm:mc2-bar-intrinsic}: $\Theta_\cA := D_\cA - d_0$
+is MC because $D_\cA^2 = 0$).  The shadow Postnikov tower consists of
+its finite-order projections $\Theta_\cA^{\leq r}$---the constructive
+computational engine through which the single proved element becomes
+explicit.
 
 The chapter has three strata.
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -31,7 +36,7 @@ prove their master and clutching identities, and package them into a quartic sha
 \item The third stratum is \textbf{nonlinear and modular}: for Virasoro and principal $\mathcal W_N$, the quartic contact sector has a determinant line whose vanishing promotes the Gram-determinant divisor to a genuine modular characteristic class.  Its boundary law is the first nonlinear shadow of the clutching identity for $\Theta_{\cA}$.
 \end{enumerate}
 
-The point is structural.  The proved scalar tower $\kappa(\cA)\lambda_g$ and the proved spectral package $\Delta_{\cA}$ do not exhaust the modular content of the theory.  The finite-order shadow tower is the primary proved content at the nonlinear level: each truncation $\Theta_\cA^{\leq r}$ is constructive and does not require the full all-genera modular envelope.  It is the first place where complementarity stops looking like an eigenspace decomposition and becomes geometry.  The full all-arity convergence $\Theta_\cA = \lim_r \Theta_\cA^{\leq r}$ is the conjectural horizon.
+The point is structural.  The proved scalar tower $\kappa(\cA)\lambda_g$ and the proved spectral package $\Delta_{\cA}$ do not exhaust the modular content of the theory.  The finite-order shadow tower is the primary proved content at the nonlinear level: each truncation $\Theta_\cA^{\leq r}$ is constructive and does not require the full all-genera modular envelope.  It is the first place where complementarity stops looking like an eigenspace decomposition and becomes geometry.  The full all-arity convergence $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ is proved by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}; Theorem~\ref{thm:recursive-existence}).
 
 \begin{remark}[Shadow tower as period correction]%
 \label{rem:shadow-period-correction}%
@@ -53,8 +58,9 @@ absorbs this curvature:
   propagators, giving the cubic shadow~$\mathfrak{C}_{\cA}$.
 \item $t_g^{(3)}$: involves $m_4$ and $m_3 \circ m_3$ terms,
   giving the quartic shadow~$\mathfrak{Q}_{\cA}$.
-\item $t_g^{(\infty)}$: the conjectural all-arity limit is
-  $\Theta_{\cA}$---the universal Maurer--Cartan element.
+\item $t_g^{(\infty)}$: the all-arity limit is
+  $\Theta_{\cA}$---the universal Maurer--Cartan element
+  (Theorem~\ref{thm:mc2-bar-intrinsic}).
 \end{itemize}
 The subleading corrections $t_g^{(n)}$ for $n \geq 2$ are
 \emph{not} determined by~$\kappa$: they depend on the
@@ -69,7 +75,7 @@ leading term.  See Remark~\ref{rem:four-levels}.
 
 \medskip
 \noindent\emph{Status discipline.}
-Every theorem below is tagged either as a formal consequence proved here, or as a statement conditional on the existence of the full universal class $\Theta_{\cA}$ on the relevant Koszul locus.  No statement below should be read as asserting a complete construction of $\Theta_{\cA}$ beyond the loci already established elsewhere in the manuscript.  The source literature (Francis--Gaitsgory, Gui--Li--Zeng, Costello--Dimofte--Gaiotto) supports a rigorous genus-zero and finite-order nonlinear package; the unrestricted all-genera modular envelope that the tower conjecturally converges to is not yet established in general.
+The universal Maurer--Cartan class $\Theta_\cA$ exists unconditionally for every modular Koszul chiral algebra, by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}): one sets $\Theta_\cA := D_\cA - \dzero$, where $D_\cA$ is the genus-completed bar differential, and the Maurer--Cartan equation is the tautological consequence of $D_\cA^2 = 0$.  The shadow Postnikov tower $\Theta_\cA^{\leq r}$ consists of the finite-order projections of this proved element.  The \emph{constructive} value of the tower is computational: each level yields explicit graph-sum formulas---vertex labels from the transferred cyclic minimal model, edge contractions by the complementarity propagator---that the bar-intrinsic construction does not directly produce.  The obstruction classes $o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$ measure the failure of \emph{truncation} (can the arity-$r$ approximation be extended one step further without changing its lower-order terms?), not the failure of \emph{existence}.  Every theorem below is tagged either as proved here, as a formal consequence of the bar-intrinsic construction, or as conjectural at the level of the \emph{Hamiltonian refinement} (the graph-completed modular master action of \S\ref{sec:nms-feynman-transform-programme}).
 
 \begin{remark}[Prefundamental CG and the shadow tower]
 \label{rem:nms-prefundamental-cg}
@@ -565,15 +571,15 @@ In the cotangent chart, $\mathcal M_{\cA^!}$ is the graph of $dS_{\cA}$.  The gr
 \section{Finite-order nonlinear shadow calculus}
 \label{sec:nms-shadow-calculus}
 
-The full universal class $\Theta_{\cA}$ should globalize the entire modular deformation theory.  Before that globalization is completed, one can still extract its first visible jets.  This section develops the finite-order calculus of those jets.
+The full universal class $\Theta_{\cA}$ globalizes the entire modular deformation theory (Theorem~\ref{thm:mc2-bar-intrinsic}).  Before unpacking the full globalization, one can still extract its first visible jets.  This section develops the finite-order calculus of those jets.
 
 \begin{definition}[Arity shadows of the universal class]
 \label{def:nms-arity-shadows}
-Assume the full universal Maurer--Cartan class exists in the form
+By the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}), the universal Maurer--Cartan class
 \[
 \Theta_{\cA}\in \mathrm{MC}\bigl(\Defcyc(\cA)\widehat\otimes \mathbb G_{\mathrm{mod}}\bigr),
 \]
-where $\mathbb G_{\mathrm{mod}}$ denotes the completed modular coefficient ring.  In a cyclic minimal model the class determines a Hamiltonian modular master potential
+exists for every modular Koszul chiral algebra, where $\mathbb G_{\mathrm{mod}}$ denotes the completed modular coefficient ring.  In a cyclic minimal model the class determines a Hamiltonian modular master potential
 \[
 \mathfrak S_{\cA}=\sum_{r\ge 2}\frac{1}{r!}\,\mathrm{Sh}_r(\Theta_{\cA}),
 \]
@@ -582,7 +588,7 @@ where $\mathrm{Sh}_r(\Theta_{\cA})$ denotes the homogeneous degree-$r$ Taylor co
 
 \begin{remark}[Quadratic, cubic, and quartic shadows as arity-$2$, $3$, and $4$ pieces]
 \label{rem:nms-hcq-as-arity-shadows}
-Whenever the universal class exists, the three tensors
+Since the universal class $\Theta_\cA$ exists (Theorem~\ref{thm:mc2-bar-intrinsic}), the three tensors
 \[
 H_{\cA},\qquad \mathfrak C_{\cA},\qquad \mathfrak Q_{\cA}
 \]
@@ -687,7 +693,7 @@ by contracting one leg of $\alpha$ with one leg of $\beta$ using $P_{\cA}$ and s
 
 \begin{theorem}[Separating boundary recursion through quartic order; \ClaimStatusProvedHere]
 \label{thm:nms-separating-boundary-recursion}
-Assume the shadow jets arise as the arity-$\le 4$ shadow of a clutching-compatible universal class.  Then on every separating clutching map $\xi$ one has
+Since the shadow jets are the arity-$\le 4$ projections of the bar-intrinsic MC element $\Theta_\cA$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}, which satisfies the modular clutching identity, on every separating clutching map $\xi$ one has
 \begin{align}
 \xi^*H_{\cA}
 &=
@@ -1610,11 +1616,11 @@ $\overline{\operatorname{FM}}_n(C|D_{\mathrm{nodes}})$.
 
 \begin{theorem}[The first nonlinear shadow of \texorpdfstring{$\Theta_{\cA}$}{ThetaA}; \ClaimStatusProvedHere]
 \label{thm:nms-first-nonlinear-shadow-theta}
-Assume the full universal Maurer--Cartan class $\Theta_{\cA}$ exists and satisfies the modular clutching identity
+The bar-intrinsic MC element $\Theta_{\cA}$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})} satisfies the modular clutching identity
 \[
 \xi^*(\Theta_{\cA})=\Theta_{\cA}\star \Theta_{\cA}.
 \]
-Then the clutching law \eqref{eq:nms-resonance-clutching-law} for the modular quartic resonance class is exactly the arity-$4$ contact-plus-tree shadow of that identity.
+The clutching law \eqref{eq:nms-resonance-clutching-law} for the modular quartic resonance class is exactly the arity-$4$ contact-plus-tree shadow of that identity.
 \end{theorem}
 
 \begin{proof}
@@ -1901,7 +1907,7 @@ Theorem~\ref{thm:nms-finite-termination} reveals a structural divide.  The primi
 
 \begin{theorem}[All-arity separating boundary recursion; \ClaimStatusProvedHere]
 \label{thm:nms-all-arity-separating-boundary}
-Assume the shadow jets arise from a clutching-compatible universal class.  Then for every $r\ge 2$ and every separating clutching map $\xi$,
+Since the shadow jets are projections of the bar-intrinsic MC element $\Theta_\cA$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}, which satisfies the modular clutching identity, for every $r\ge 2$ and every separating clutching map $\xi$,
 \begin{equation}
 \label{eq:nms-all-arity-separating}
 \xi^*\mathrm{Sh}_r(\cA)
@@ -2174,7 +2180,7 @@ H_{\cA}\star \mathfrak Q_{\cA}
 \mathfrak R_{4,g,n}^{\mathrm{mod}}(\cA),
 \]
 and whose clutching correction is the cubic tree divisor $\mathfrak T_{3,\xi}(\cA)$;
-\item if the full universal class $\Theta_{\cA}$ exists, this clutching correction is the first nonlinear modular shadow of its universal clutching identity;
+\item since the full universal class $\Theta_{\cA}$ exists (Theorem~\ref{thm:mc2-bar-intrinsic}), this clutching correction is the first nonlinear modular shadow of its universal clutching identity;
 \item the shadow tower extends to all arities: the all-arity master equation $\nabla_{H_{\cA}}\mathrm{Sh}_r+\mathfrak o^{(r)}=0$ governs $\mathrm{Sh}_r$ for every $r\ge 3$, with the primitive archetypes terminating (Gaussian at $2$, Lie/tree at $3$, contact at $4$) while Virasoro is the first genuinely infinite tower;
 \item the genus loop operator $\Lambda_P:\operatorname{Sym}^r\to\operatorname{Sym}^{r-2}$ implements non-separating clutching on the shadow tower, and the genus-$1$ Hessian correction $\delta H^{(1)}_{\cA}=\Lambda_P(\mathfrak Q_{\cA}^{(0)})$ is the first tensorial modular invariant beyond the $\hat{A}$-genus;
 \item for the Virasoro, $\delta H^{(1)}_{\mathrm{Vir}}=120/[c^2(5c+22)]\cdot x^2$, and the loop ratio $\rho^{(1)}_{\mathrm{Vir}}=240/[c^2(5c+22)]$ distinguishes algebras invisible to~$\kappa$.
@@ -2187,13 +2193,13 @@ Parts~(i)--(iii) are Theorems~\ref{thm:nms-shadow-master-equations}, \ref{thm:nm
 
 \begin{remark}[What remains to be done]
 \label{rem:nms-what-remains}
-The construction above does not pretend to have solved the entire H-level problem.  The full foundational task remains: construct the universal class $\Theta_{\cA}$ globally on the correct modular locus, prove its clutching and Verdier compatibilities in complete generality, and identify the resulting Hamiltonian modular master action.  What this appendix does show is that the nonlinear layer is rigid enough to be organized theorematically, and that it carries genuinely new modular content.  The genus loop operator converts quartic contact data into genus-$1$ Hessian corrections that no scalar invariant can see.  The quartic resonance class is not an afterthought: it is the first modular characteristic that remembers that complementarity is nonlinear.
+The universal class $\Theta_{\cA}$ is constructed by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}); the remaining task is to verify clutching and Verdier compatibilities in complete generality and to identify the resulting Hamiltonian modular master action.  What this appendix does show is that the nonlinear layer is rigid enough to be organized theorematically, and that it carries genuinely new modular content.  The genus loop operator converts quartic contact data into genus-$1$ Hessian corrections that no scalar invariant can see.  The quartic resonance class is not an afterthought: it is the first modular characteristic that remembers that complementarity is nonlinear.
 \end{remark}
 
 \section{The graph-completed Feynman transform programme}
 \label{sec:nms-feynman-transform-programme}
 
-The finite-order shadow calculus of the preceding sections captures the arity-$\le 4$ face of the universal Maurer--Cartan class.  The natural globalization is not to attack $\Theta_{\cA}$ directly but to identify the \emph{graph-completed carrier object} in which it lives.  This section constructs that carrier, states the resulting conjecture, and introduces three new geometric avatars.
+The finite-order shadow calculus of the preceding sections captures the arity-$\le 4$ face of the universal Maurer--Cartan class $\Theta_\cA$, which exists by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}).  The next question is not \emph{existence}---that is settled---but \emph{refinement}: can one upgrade the abstract MC element to a \emph{graph-completed Hamiltonian modular master action} that organizes the vertex-by-vertex computational content?  This section constructs the natural carrier object for such a refinement, states the resulting conjecture, and introduces three new geometric avatars.
 
 \subsection{The modular chiral Feynman transform}
 \label{subsec:nms-modular-feynman-transform}
@@ -2229,9 +2235,9 @@ where:
 \end{itemize}
 \end{definition}
 
-\begin{remark}[Why the Feynman transform resolves the three open requirements]
+\begin{remark}[Why the Feynman transform upgrades the bar-intrinsic element]
 \label{rem:nms-feynman-three-requirements}
-The three identified gaps in the construction of the universal class are: (1)~a cyclic structure on bar coderivations; (2)~the completed tensor product with tautological coefficients; (3)~a clutching-compatible Maurer--Cartan solution.  In $\mathfrak F_{\mathrm{mod}}(\cA)$:
+The bar-intrinsic construction produces $\Theta_\cA$ as an abstract MC element.  The Feynman transform upgrades this to a \emph{Hamiltonian} MC element by resolving three structural requirements for the graph-completed refinement: (1)~a cyclic structure on bar coderivations; (2)~the completed tensor product with tautological coefficients; (3)~a clutching-compatible graph-sum representation.  In $\mathfrak F_{\mathrm{mod}}(\cA)$:
 \begin{itemize}
 \item cyclicity is built into the vertex labels,
 \item completion is the graph-number/bar-length/weight filtration,
@@ -2239,21 +2245,21 @@ The three identified gaps in the construction of the universal class are: (1)~a 
 \end{itemize}
 \end{remark}
 
-\begin{conjecture}[Graph-completed modular master element; \ClaimStatusConjectured]
+\begin{conjecture}[Graph-completed Hamiltonian refinement; \ClaimStatusConjectured]
 \label{conj:nms-graph-completed-master-element}
 \index{modular master element!graph-completed}%
-There exists a canonical group-like Maurer--Cartan element
+The bar-intrinsic MC element $\Theta_\cA$ (Theorem~\ref{thm:mc2-bar-intrinsic}) admits a canonical \emph{Hamiltonian} lift to a group-like element
 \[
 \boldsymbol\Theta_{\cA}\in \mathrm{MC}(\mathfrak F_{\mathrm{mod}}(\cA))
 \]
-whose projections recover the entire modular characteristic hierarchy:
+in the Feynman transform, whose projections recover the entire modular characteristic hierarchy:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item scalar trace: $\operatorname{tr}(\boldsymbol\Theta_{\cA})=\sum_{g\ge 1}\kappa(\cA)\lambda_g$;
 \item one-vertex projection: $H_{\cA}+\mathfrak C_{\cA}+\mathfrak Q_{\cA}+\cdots$;
 \item determinant shadow: the full resonance tower $\mathfrak R^{\mathrm{mod}}_{r,g,n}(\cA)$ for all $r\ge 4$;
 \item Legendre duality shadow: $\boldsymbol\Theta_{\cA^!}=\boldsymbol\Theta_{\cA}^{\vee}$.
 \end{enumerate}
-This is the correct replacement for the raw conjecture ``construct~$\Theta_{\cA}$.''  The true object is not a single formal series but a graph-completed Hamiltonian modular master action.
+The existence of~$\Theta_\cA$ is a theorem; what remains conjectural is whether the abstract MC element lifts to a graph-completed Hamiltonian modular master action in~$\mathfrak F_{\mathrm{mod}}(\cA)$.
 \end{conjecture}
 
 \subsection{The complementarity Legendrian}
@@ -3015,7 +3021,7 @@ resonance class
 $\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$,
 and whose clutching correction is the cubic tree divisor
 $\mathfrak{T}_{3,\xi}(\cA)$;
-\item if the full universal class $\Theta_{\cA}$ exists, this
+\item since the full universal class $\Theta_{\cA}$ exists (Theorem~\ref{thm:mc2-bar-intrinsic}), this
 clutching correction is the first nonlinear modular shadow of
 its universal clutching identity;
 \item the shadow tower extends to all arities: the all-arity
@@ -3062,11 +3068,10 @@ the Virasoro computation therein.
 
 \begin{remark}[What remains to be done]
 \label{rem:nms-what-remains-restated}
-The construction above does not pretend to have solved the entire
-H-level problem.  The full foundational task remains: construct the
-universal class $\Theta_{\cA}$ globally on the correct modular
-locus, prove its clutching and Verdier compatibilities in complete
-generality, and identify the resulting Hamiltonian modular master
+The universal class $\Theta_{\cA}$ is constructed by the bar-intrinsic
+construction (Theorem~\ref{thm:mc2-bar-intrinsic}); the remaining task
+is to verify clutching and Verdier compatibilities in complete
+generality and to identify the resulting Hamiltonian modular master
 action.  What this appendix does show is that the nonlinear layer
 is rigid enough to be organized theorematically, and that it carries
 genuinely new modular content.  The genus loop operator converts
@@ -3074,4 +3079,349 @@ quartic contact data into genus-$1$ Hessian corrections that no
 scalar invariant can see.  The quartic resonance class is not an
 afterthought: it is the first modular characteristic that remembers
 that complementarity is nonlinear.
+\end{remark}
+
+\begin{remark}[The factorization envelope programme and the shadow tower]
+\label{rem:nms-factorization-envelope-programme}
+\index{factorization envelope!shadow tower}
+\index{platonic package!shadow tower connection}
+The 2025--2026 factorization envelope technology
+(Nishinaka~\cite{Nish26}; Vicedo~\cite{Vic25}) provides a
+functorial genus-$0$ machine: from a Lie conformal algebra one
+constructs a factorization algebra whose associated vertex algebra
+is the enveloping vertex algebra.  The shadow tower of this
+appendix supplies the higher-genus completion.  That is, the
+ideal object attached to a cyclically admissible Lie conformal
+algebra~$L$
+(Definition~\ref{def:cyclically-admissible}) is not merely the
+genus-$0$ factorization algebra $\Fact_X(L)$, but the full
+platonic package~$\Pi_X(L)$
+(Construction~\ref{constr:platonic-package}), in which all
+shadows --- $\kappa$, $\Delta$, $\mathfrak{C}$,
+$\mathfrak{Q}$, $\Theta$ --- are successive projections of a
+single universal Maurer--Cartan element
+$\Theta_L \in
+\MC(\Defcyc(L) \widehat\otimes \mathbb{G}_{\mathrm{mod}})$.
+
+For the archetype families computed in this appendix:
+\begin{itemize}
+\item \emph{Heisenberg} collapses to its scalar shadow:
+  $\Theta_L \sim \kappa(L)\lambda + \text{exact}$,
+  $\mathfrak{R}_4^{\mathrm{mod}}(L) = 0$.
+  This is the rank-one atom.
+\item \emph{Affine $\widehat{\fg}_k$}: the first true spectral
+  example.  The branch operator $T_L^{\mathrm{br}}$ is
+  nontrivial, giving a genuine discriminant.
+\item \emph{Virasoro}: the first example where the scalar
+  shadow is insufficient and the quartic resonance class
+  $\mathfrak{R}_4^{\mathrm{mod}}$ carries essential content.
+\item \emph{Principal $\mathcal{W}_N$}: the
+  expectation is
+  $\Theta_{\mathcal{W}_N}
+  = \mathrm{DS}(\Theta_{\widehat{\fg}})$,
+  turning Drinfeld--Sokolov reduction into a functor on
+  platonic packages.  Reduction should commute with
+  shadow-taking: the shadow tower of $\mathcal{W}_N$ should
+  be the BRST-reduced image of the affine tower.
+\end{itemize}
+The abstract mechanism behind these predictions is the
+cubic gauge triviality theorem
+(Theorem~\ref{thm:cubic-gauge-triviality}):
+whenever $H^1(F^3\gAmod/F^4\gAmod, d_2) = 0$, the cubic
+shadow is gauge-trivial and the quartic resonance class is
+the canonical representative of the first nonlinear
+cohomology class.  This is the abstract reason the first
+nonlinear shadow is quartic, and for independent sums all
+shadows factor
+(Proposition~\ref{prop:independent-sum-factorization}).
+\end{remark}
+
+%% ================================================================
+%% REDUCED-WEIGHT WINDOW THEORY
+%% ================================================================
+
+\section{Reduced-weight windows and finite-dimensional bar control}
+\label{sec:nms-reduced-weight-windows}
+\index{reduced weight|textbf}
+\index{bar complex!finite-dimensional windows}
+\index{MC4!reduced-weight approach}
+
+The shadow Postnikov tower of the preceding sections is organized by
+arity: the arity-$r$ shadow jet $\mathrm{Sh}_r(\cA)$ probes the
+universal MC element $\Theta_\cA$ at $r$~external legs.  A
+complementary organizational principle is the \emph{reduced-weight
+filtration} on the bar complex itself, which turns the
+infinite-generator completion problem into a sequence of
+finite-dimensional dg computations.  This is the constructive
+backbone of the MC4 programme
+(Theorem~\ref{thm:completed-bar-cobar-strong}): the coefficient-stability
+criterion (Theorem~\ref{thm:coefficient-stability-criterion}) reduces
+convergence to stabilization on finite windows, and the present section
+provides those windows explicitly.
+
+\subsection{Reduced weight and finite-dimensional slices}
+\label{subsec:nms-reduced-weight-definition}
+
+\begin{definition}[Reduced weight]
+\label{def:reduced-weight}%
+\index{reduced weight!definition|textbf}%
+Let $\cA = \omega_X \oplus \bar{\cA}$ be a conformally graded
+augmented chiral $A_\infty$-algebra with
+$\bar{\cA} = \bigoplus_{h \geq 2} \cA[h]$,
+each $\cA[h]$ finite-dimensional, satisfying the \emph{conformal
+estimate}
+\begin{equation}\label{eq:nms-conformal-estimate}
+\wt\bigl(\mu_r(a_1,\ldots,a_r)\bigr)
+\;\leq\;
+\sum_{i=1}^r \wt(a_i) - (r-1)
+\end{equation}
+for all $r \geq 2$ and homogeneous elements $a_i \in \bar{\cA}$.
+Define the \emph{reduced weight} of a homogeneous element
+$a \in \cA[h]$ by
+\[
+\rho(a) \;:=\; \wt(a) - 1 \;=\; h - 1 \;\geq\; 1,
+\]
+and the reduced weight of a bar monomial
+$sa_1 | \cdots | sa_\ell \in \barB(\cA)$ by
+\begin{equation}\label{eq:nms-reduced-weight-bar}
+\rho(sa_1 | \cdots | sa_\ell)
+\;:=\;
+\sum_{i=1}^\ell \rho(a_i)
+\;=\;
+\sum_{i=1}^\ell \bigl(\wt(a_i) - 1\bigr).
+\end{equation}
+Since every letter has $\rho(a_i) \geq 1$, every bar monomial has
+$\rho \geq \ell$ (its bar length).
+\end{definition}
+
+\begin{theorem}[Reduced-weight finiteness; \ClaimStatusProvedHere]
+\label{thm:reduced-weight-finiteness}%
+\index{reduced weight!finiteness theorem|textbf}%
+\index{bar complex!reduced-weight completion}%
+For every $q \geq 0$, the \emph{exact reduced-weight slice}
+\begin{equation}\label{eq:nms-reduced-weight-slice}
+B_{\rho(q)}(\cA)
+\;:=\;
+\operatorname{span}\bigl\{
+  sa_1 | \cdots | sa_\ell
+  \;\big|\;
+  \rho(sa_1 | \cdots | sa_\ell) = q
+\bigr\}
+\end{equation}
+is finite-dimensional, and the completed bar differential is
+filtration-nonincreasing:
+\begin{equation}\label{eq:nms-reduced-weight-filtration}
+b\bigl(B_{\rho(\leq q)}(\cA)\bigr)
+\;\subseteq\;
+B_{\rho(\leq q)}(\cA),
+\qquad
+B_{\rho(\leq q)}(\cA)
+:= \bigoplus_{j=0}^q B_{\rho(j)}(\cA).
+\end{equation}
+Hence the \emph{reduced-weight completed bar complex}
+\[
+\widehat{B}_\rho(\cA)
+\;:=\;
+\prod_{q \geq 0} B_{\rho(q)}(\cA)
+\]
+is a well-defined separated complete curved dg coalgebra with
+automatic continuity of the differential.
+\end{theorem}
+
+\begin{proof}
+\emph{Finite-dimensionality.}
+Every letter $sa_i$ in a bar monomial of total reduced weight~$q$
+has $\rho(a_i) \geq 1$ and $\sum_i \rho(a_i) = q$, so the bar
+length satisfies $\ell \leq q$ and each letter has
+$\wt(a_i) = \rho(a_i) + 1 \leq q + 1$.  Since $\cA[h]$ is
+finite-dimensional for each~$h$, the number of available letters is
+bounded by $\sum_{h=2}^{q+1} \dim \cA[h]$.  The number of words of
+length~$\ell \leq q$ from this finite alphabet is finite, so
+$B_{\rho(q)}(\cA)$ is finite-dimensional.
+
+\emph{Filtration compatibility.}
+A coderivation term of the bar differential replaces $r$~consecutive
+letters $a_{j_1},\ldots,a_{j_r}$ by the single letter
+$\mu_r(a_{j_1},\ldots,a_{j_r})$.  By the conformal
+estimate~\eqref{eq:nms-conformal-estimate}, the reduced weight of
+the output is
+\[
+\rho\bigl(\mu_r(a_{j_1},\ldots,a_{j_r})\bigr)
+= \wt\bigl(\mu_r(a_{j_1},\ldots,a_{j_r})\bigr) - 1
+\leq \sum_{k=1}^r \wt(a_{j_k}) - (r-1) - 1
+= \sum_{k=1}^r \rho(a_{j_k}) - (r-1).
+\]
+Since $r \geq 2$, the change in total reduced weight is
+\[
+\rho(\text{output letter}) - \sum_{k=1}^r \rho(a_{j_k})
+\;\leq\; -(r-1)
+\;\leq\; -1 \;<\; 0.
+\]
+Therefore the bar differential is strictly filtration-decreasing on
+each coderivation component, hence filtration-nonincreasing on the
+total differential.  Continuity of the differential on the completed
+product $\widehat{B}_\rho(\cA)$ is then automatic: each projection
+to a finite slice factors through finitely many lower slices.
+\end{proof}
+
+\begin{definition}[Finite $q$-window]
+\label{def:finite-window}%
+\index{reduced weight!finite window|textbf}%
+\index{q-window@$q$-window|see{reduced weight, finite window}}%
+For each $q \geq 0$, define the \emph{finite $q$-window}
+\begin{equation}\label{eq:nms-finite-window}
+K_q(\cA)
+\;:=\;
+B_{\rho(\leq q)}(\cA)
+\;=\;
+\bigoplus_{j=0}^q B_{\rho(j)}(\cA).
+\end{equation}
+By Theorem~\ref{thm:reduced-weight-finiteness}, $K_q(\cA)$ is a
+finite-dimensional dg coalgebra (with the restricted bar
+differential), and the completed bar complex is the inverse limit
+$\widehat{B}_\rho(\cA) = \varprojlim_q K_q(\cA)$.
+\end{definition}
+
+\begin{theorem}[Window locality; \ClaimStatusProvedHere]
+\label{thm:window-locality}%
+\index{reduced weight!window locality|textbf}%
+\index{bar complex!locality of finite windows}%
+The finite $q$-window $K_q(\cA)$ depends only on the
+$A_\infty$ operations $\{\mu_r\}$ restricted to fields of conformal
+weight $\leq q + 1$.  No field of conformal weight $> q + 1$ can
+enter either the basis of~$K_q(\cA)$ or its differential.
+\end{theorem}
+
+\begin{proof}
+By Definition~\ref{def:reduced-weight}, every bar letter $sa$ in
+$K_q(\cA)$ has $\rho(a) \leq q$, hence
+$\wt(a) = \rho(a) + 1 \leq q + 1$.  So the basis of $K_q(\cA)$
+involves only fields of weight $\leq q + 1$.  For the differential:
+the bar coderivation applies $\mu_r$ to $r$~letters already in the
+window, producing a letter of weight
+$\wt(\mu_r) \leq \sum_i \wt(a_i) - (r - 1) \leq q + 1$.  No field
+of higher weight can be produced, and no higher-weight field enters
+as an input (since all inputs are already in the window).
+\end{proof}
+
+\begin{corollary}[Exact stabilization; \ClaimStatusProvedHere]
+\label{cor:exact-stabilization}%
+\index{reduced weight!exact stabilization|textbf}%
+\index{weight truncation!stabilization}%
+For a genuine weight-truncation tower
+$\cA_{\leq N} := \cA / \bigoplus_{h > N} \cA[h]$, one has a
+canonical isomorphism
+\begin{equation}\label{eq:nms-exact-stabilization}
+K_q(\cA_{\leq N})
+\;\cong\;
+K_q(\cA)
+\qquad
+\text{for all } N \geq q + 1.
+\end{equation}
+The infinite-generator problem is thereby killed exactly: a
+reduced-weight-$q$ computation stabilizes at stage $N = q + 1$.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:window-locality}, $K_q(\cA)$ depends only on
+fields of weight $\leq q + 1$.  For $N \geq q + 1$, the truncation
+$\cA_{\leq N}$ agrees with~$\cA$ on all such fields, hence the
+$q$-windows are canonically identified as dg coalgebras.
+\end{proof}
+
+\subsection{Stabilization defect and the MC4 obstruction}
+\label{subsec:nms-stabilization-defect}
+\index{stabilization defect|textbf}
+\index{MC4!finite-window obstruction}
+
+The exact stabilization
+(Corollary~\ref{cor:exact-stabilization}) says that each finite
+window $K_q$ eventually sees no new fields.  The next question is
+finer: does the \emph{differential} on $K_q$ stabilize as one
+passes through the stage tower?  The defect measures this, and its
+cohomology class is the first obstruction to MC4 convergence.
+
+\begin{definition}[Stabilization defect]
+\label{def:stabilization-defect}%
+\index{stabilization defect!definition|textbf}%
+Fix a stage tower $\cA_{\leq N}$ and a reduced-weight window~$q$.
+For $N \geq q + 1$, the underlying vector spaces of the $q$-window
+are canonically identified:
+$K_q(\cA_{\leq N}) \cong V_q$
+(Corollary~\ref{cor:exact-stabilization}).
+Let $d_{q,N} \in \operatorname{End}(V_q)$ denote the differential
+on the $q$-window at stage~$N$.  Define the \emph{stabilization
+defect}
+\begin{equation}\label{eq:nms-stabilization-defect}
+\delta_{q,N}
+\;:=\;
+d_{q,N+1} - d_{q,N}
+\;\in\;
+\operatorname{End}^1(V_q).
+\end{equation}
+Since both $d_{q,N}$ and $d_{q,N+1}$ square to zero (or to the
+same curvature, at genus $g \geq 1$), one has
+\begin{equation}\label{eq:nms-defect-mc-relation}
+[d_{q,N},\, \delta_{q,N}] + \delta_{q,N}^2 \;=\; 0,
+\end{equation}
+so $\delta_{q,N}$ is a Maurer--Cartan deformation of~$d_{q,N}$
+in the dg~Lie algebra
+$\bigl(\operatorname{End}(V_q),\, [d_{q,N}, -]\bigr)$.
+\end{definition}
+
+\begin{definition}[First stabilization obstruction]
+\label{def:stabilization-obstruction}%
+\index{stabilization obstruction|textbf}%
+\index{MC4!stabilization obstruction}%
+The \emph{first stabilization obstruction} at stage~$N$ and
+window~$q$ is the cohomology class
+\begin{equation}\label{eq:nms-stabilization-obstruction}
+\mathfrak{o}_{q,N}
+\;:=\;
+[\delta_{q,N}]
+\;\in\;
+H^1\bigl(\operatorname{End}(V_q),\, [d_{q,N}, -]\bigr).
+\end{equation}
+If $\mathfrak{o}_{q,N} = 0$, the first-order defect is
+gauge-removable: there exists $\gamma \in \operatorname{End}^0(V_q)$
+such that
+$\delta_{q,N} = [d_{q,N}, \gamma] + O(\delta^2)$.
+Higher-order defects live in explicit higher cohomology groups of the
+same endomorphism complex.
+\end{definition}
+
+\begin{remark}[From topological convergence to finite linear algebra]
+\label{rem:nms-mc4-finite-linear-algebra}%
+\index{MC4!finite linear algebra reduction}%
+Definitions~\ref{def:stabilization-defect}
+and~\ref{def:stabilization-obstruction} convert the MC4 convergence
+problem from ``prove that the bar differential converges in a huge
+topological dg coalgebra'' into a sequence of finite-dimensional
+checks: at each reduced-weight window~$q$ and each truncation
+stage~$N$, \emph{compute a finite matrix} ($\delta_{q,N}$),
+\emph{compute its cohomology} (the $H^1$ of the endomorphism
+complex), and \emph{test whether the defect class vanishes}.  When
+$\mathfrak{o}_{q,N} = 0$ for all $q$ and all sufficiently large~$N$,
+the coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) applies and the
+completed bar-cobar homotopy equivalence
+(Theorem~\ref{thm:completed-bar-cobar-strong}) is established.
+
+For the standard families:
+\begin{itemize}
+\item \emph{Heisenberg and affine $\widehat{\fg}_k$:} finitely
+  generated, so $V_q$ stabilizes trivially and
+  $\delta_{q,N} = 0$ for $N \gg 0$.
+\item \emph{$\beta\gamma$:} one generator per conformal weight,
+  so $\dim V_q = p(q)$ (number of partitions of~$q$).
+  Stabilization holds by the rank-one abelian rigidity
+  (Theorem~\ref{thm:nms-rank-one-rigidity}).
+\item \emph{Virasoro and $\mathcal{W}_N$:} infinite towers with
+  one primitive per weight.  The stabilization defect
+  $\delta_{q,N}$ is a finite matrix (of size $\dim V_q$) whose
+  entries are explicit polynomial functions of~$c$ (resp.\ $c$
+  and the central charges of the higher-spin currents).  The
+  MC4 frontier reduces to showing $[\delta_{q,N}] = 0$ for these
+  explicit matrices.
+\end{itemize}
 \end{remark}

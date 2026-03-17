@@ -1,36 +1,6 @@
 \chapter{Feynman diagram interpretation of bar-cobar duality}
 \label{ch:feynman}
 
-The algebraic engine of Parts~I and~II is re-seen here by physics.
-The bar differential, the cobar coproduct, and the transferred higher
-operations that have been built from configuration-space residues all
-admit a perturbative incarnation in terms of graphs, propagators, and
-boundary strata.  What the algebraist calls a collision residue, the
-physicist calls a vertex; what the algebraist calls the logarithmic
-$1$-form $\eta_{ij} = d\log(z_i - z_j)$, the physicist calls a
-propagator; and what the algebraist calls Verdier duality, the
-physicist calls the passage from off-shell to on-shell.  The
-identifications are not metaphorical.  They are equalities of
-complexes, differentials, and pairings.
-
-The deeper lesson is that higher operations arise because graphs refuse
-to stay binary.  A tree-level Feynman diagram with three or more
-internal vertices forces a multi-collision residue that is not
-decomposable into iterated pairwise collisions---this is exactly the
-$A_\infty$/$L_\infty$ phenomenon of transferred higher multiplications
-on cohomology.  Loop diagrams, meanwhile, correspond to graph
-contributions at positive genus in the bar complex, and their
-ultraviolet divergences are regulated by the FM
-compactification---blowup, not cutoff.  The perturbative expansion is
-therefore not an approximation to bar-cobar duality; it \emph{is}
-bar-cobar duality, read in the graph-theoretic basis.
-
-This chapter makes the dictionary precise for tree and one-loop
-amplitudes on a smooth curve, identifies the bar filtration with the
-loop expansion, and shows that the bar-cobar pairing models the
-S-matrix pairing between off-shell forms on the compactification and
-on-shell distributions on the open configuration space.
-
 \begin{theorem}[Bridge theorem: Feynman--bar dictionary; \ClaimStatusProvedHere]
 \label{thm:feynman-bar-bridge}
 \index{Feynman diagram!bar-cobar bridge|textbf}
@@ -198,42 +168,7 @@ $\langle \omega, K \rangle
 recovers the standard propagator normalization.
 \end{example}
 
-\section{Higher operations = loop corrections}
-
-\subsection{\texorpdfstring{The $A_\infty$ structure as perturbative expansion}{The A infty structure as perturbative expansion}}
-
-\begin{conjecture}[Loop expansion = \texorpdfstring{$A_\infty$}{A-infinity} operations; \ClaimStatusHeuristic]
-\label{conj:loop-expansion-ainfty}
-\index{loop expansion}
-The $A_\infty$ operations on the bar complex correspond to loop-level corrections:
-\begin{align*}
-m_2 &: \text{Tree-level (classical)} \\
-m_3 &: \text{One-loop (quantum correction)} \\
-m_4 &: \text{Two-loop or one-loop with splitting} \\
-m_k &: \text{$(k-2)$-loop or lower-loop with splittings}
-\end{align*}
-\end{conjecture}
-
-\begin{evidence}[Evidence: Diagrammatic]
-Each $m_k$ arises from a boundary stratum of $\overline{M}_{0,k+1}$:
-\begin{itemize}
-\item Boundary components correspond to ways nodes can degenerate
-\item Each degeneration = adding a loop or splitting a vertex
-\item The sum over boundary = sum over Feynman diagrams at fixed loop order
-\end{itemize}
-
-Explicitly:
-\[m_3(\phi_1, \phi_2, \phi_3) = \sum_{D \,\in\, \partial \overline{C}_3(X)} \operatorname{Res}_D\bigl[\phi_1(z_1)\phi_2(z_2)\phi_3(z_3) \cdot \eta_{12} \wedge \eta_{23}\bigr]\]
-
-The boundary divisors of $\overline{C}_3(X)$ give three collision channels:
-\begin{enumerate}
-\item $(12|3)$: First multiply $\phi_1 \times \phi_2$, then result with $\phi_3$
-\item $(13|2)$: Symmetric
-\item $(23|1)$: First multiply $\phi_2 \times \phi_3$, then with $\phi_1$
-\end{enumerate}
-
-The $m_3$ measures the associativity defect.  In the homotopy transfer formula, it involves two propagator insertions, analogous to a one-loop triangle diagram (though the underlying graphs are trees; see Theorem~\ref{thm:mk-tree-level}).
-\end{evidence}
+\section{Higher operations from boundary strata}
 
 \subsection{Explicit one-loop calculation}
 
@@ -847,13 +782,6 @@ each computable from the same Feynman diagram machinery applied to
 curves of genus~$g$.
 \end{computation}
 
-\begin{remark}[Connection to Lie cohomology]
-\label{rem:m3-hochschild}
-The $A_\infty$ operation $m_3$ is a \emph{homotopy} correcting the failure of strict associativity of $m_2$:
-\[m_3 \text{ satisfies } \partial(m_3) = m_2(m_2 \otimes \mathrm{id}) - m_2(\mathrm{id} \otimes m_2)\]
-This is distinct from, but related to, the Lie algebra $2$-cocycle underlying the central extension.  The connection is via the commutator construction: the Lie bracket $[a,b] = m_2(a,b) - (-1)^{|a||b|}m_2(b,a)$ and its homotopies descend to Lie cohomology classes.  For the Virasoro algebra, the $A_\infty$ homotopy $m_3(T,T,T)$ detects the same class as the Lie $2$-cocycle $c \in H^2_{\mathrm{Lie}}(\mathrm{Witt}, \mathbb{C})$ that classifies the central extension $\mathrm{Vir} \to \mathrm{Witt}$.
-\end{remark}
-
 \subsection{\texorpdfstring{$m_4$ and higher: multi-loop structure}{m 4 and higher: multi-loop structure}}
 
 \begin{example}[\texorpdfstring{$m_4$}{m_4}: two distinct contributions]
@@ -996,13 +924,6 @@ collecting order-$c$ contributions, one finds a complete
 cancellation.  This confirms the $A_\infty$ pentagon identity for
 $\mathrm{Vir}_c$ at leading order.
 
-\emph{Significance.}
-The pentagon-level cancellation confirms that the
-homotopy transfer theorem (Theorem~\ref{thm:htt}) applied to the
-bar complex of a vertex algebra produces a \emph{bona fide}
-$A_\infty$ structure, with the Stasheff
-associahedra governing the higher operations
-(Theorem~\ref{thm:mk-tree-level}).
 \end{computation}
 
 \begin{theorem}[Tree-level \texorpdfstring{$m_k$}{m_k} structure; \ClaimStatusProvedHere]
@@ -1036,10 +957,6 @@ corresponds to an internal edge of the tree, and the total number of
 insertions is fixed at $k-2$ by the form-degree constraint on the
 configuration space $\overline{C}_{k}(X)$.
 \end{proof}
-
-\begin{remark}[Scope]
-The proof combines the Kadeishvili homotopy transfer theorem~\cite{Kadeishvili80} (\ClaimStatusProvedElsewhere), the standard Cauchy-kernel retraction (independent of Conjecture~\ref{conj:bar-worldline}), and the elementary loop-number calculation; the synthesis is new to this work.
-\end{remark}
 
 \begin{theorem}[All-genus \texorpdfstring{$m_k$}{m_k} Feynman expansion; \ClaimStatusProvedHere]
 \label{thm:mk-general-structure}
@@ -1154,52 +1071,24 @@ where the sum is over all ways to factor $\Gamma$ into a lower-order subgraph $\
 and the reduced graph $\Gamma/\Gamma'$.
 \end{conjecture}
 
-\begin{evidence}[Evidence: Argument]
-\emph{Step~1: Write the $A_\infty$ relation explicitly.}
-
-For $n=3$ (one-loop):
+\begin{evidence}[Evidence]
+At $n=3$, the $A_\infty$ relation is
 \begin{align*}
-&m_1(m_3(\phi_1 \otimes \phi_2 \otimes \phi_3)) \\
-&+ m_2(m_2(\phi_1 \otimes \phi_2) \otimes \phi_3) + m_2(\phi_1 \otimes m_2(\phi_2 
-\otimes \phi_3)) \\
-&+ m_3(m_1(\phi_1) \otimes \phi_2 \otimes \phi_3) + \cdots = 0
+&m_1(m_3(\phi_1 \otimes \phi_2 \otimes \phi_3))
++ m_2(m_2(\phi_1 \otimes \phi_2) \otimes \phi_3)
++ m_2(\phi_1 \otimes m_2(\phi_2 \otimes \phi_3)) \\
+&+ m_3(m_1(\phi_1) \otimes \phi_2 \otimes \phi_3) + \cdots = 0.
 \end{align*}
-
-\emph{Step~2: Interpret each term as Feynman diagram.}
-
-\begin{itemize}
-\item $m_3(\phi_1 \otimes \phi_2 \otimes \phi_3)$: One-loop triangle diagram
-
-\item $m_2(m_2(\phi_1 \otimes \phi_2) \otimes \phi_3)$: Tree diagram with 
-intermediate state (factorizable contribution)
-
-\item $m_1(m_3(\cdots))$: Apply on-shell condition to one-loop amplitude 
-(projects to physical states)
-\end{itemize}
-
-\emph{Step~3: BPHZ interpretation.}
-
-In BPHZ renormalization, we systematically subtract divergences by writing:
-\[\mathcal{A}_{\text{ren}}(\Gamma) = \mathcal{A}_{\text{bare}}(\Gamma) - 
-\sum_{\text{subdivergences}} \mathcal{A}_{\text{counter}}(\Gamma')\]
-
-The $A_\infty$ relation tells us that the net contribution vanishes on-shell (i.e., 
-after applying $m_1$), which is precisely the BPHZ consistency condition.
-
-\emph{Step~4: Factorization property.}
-
-The terms $m_i(\cdots m_j \cdots)$ correspond to factorizable diagrams where a 
-lower-loop subgraph $\Gamma'$ (computed by $m_j$) is embedded in a higher-loop 
-graph (via $m_i$).
-
-The BPHZ recursion states that these factorizable contributions must be subtracted 
-to obtain the \emph{1-particle irreducible} (1PI) amplitudes.
-
-\emph{Step~5: Symmetry factors.}
-
-The signs $(-1)^{rs+t}$ in the $A_\infty$ relation account for fermion loops (fermionic fields contribute minus signs), orientation of configuration spaces (boundary orientation), and symmetry factors $1/|\text{Aut}(\Gamma)|$ from identical particle exchange.
-
-All these match precisely with the signs in BPHZ renormalization.
+The composites $m_i(\cdots m_j \cdots)$ are factorizable
+subgraph contributions, and the relation says the net contribution
+vanishes on-shell ($m_1$-exact), matching the BPHZ consistency
+condition
+$\mathcal{A}_{\text{ren}}(\Gamma)
+= \mathcal{A}_{\text{bare}}(\Gamma)
+- \sum_{\text{subdivergences}} \mathcal{A}_{\text{counter}}(\Gamma')$.
+The signs $(-1)^{rs+t}$ account for fermion loops (boundary
+orientation) and symmetry factors
+$1/|\mathrm{Aut}(\Gamma)|$.
 \end{evidence}
 
 \begin{example}[One-loop BPHZ formula]
@@ -1265,46 +1154,4 @@ distance cutoff), while the logarithmic singularities encode the UV behavior
 (short distance).
 \end{evidence}
 
-%===================================================================================
-% SECTION: PHYSICAL SUMMARY AND STRUCTURAL PATTERNS
-%===================================================================================
-
-\section{Summary}
 \label{sec:summary-feynman-unity}
-
-\begin{center}
-\begin{tabular}{|p{3.8cm}|p{4.8cm}|p{4.8cm}|}
-\hline
-\textbf{Algebraic Structure} & \textbf{Geometric Realization} & \textbf{Physical Meaning} \\
-\hline
-\hline
-Bar complex $\bar{B}^*(\mathcal{A})$ & Forms on $\overline{C}_*(X)$ & Off-shell amplitudes \\
-\hline
-Cobar complex $\bar{B}_*(\mathcal{A}^!)$ & Distributions on $C_*(X)$ & On-shell S-matrix \\
-\hline
-Bar differential $d_{\text{bar}}$ & Boundary map $\partial$ & BRST + momentum conservation \\
-\hline
-Cobar differential $d_{\text{cobar}}$ & Delta insertion & On-shell projection \\
-\hline
-Pairing $\langle \cdot, \cdot \rangle$ & Residue-distribution & S-matrix element \\
-\hline
-\hline
-$m_2$: Binary product & Integration over $\overline{C}_2(X)$ & Tree-level 3-point vertex \\
-\hline
-$m_3$: Associator & Integration over $\partial\overline{M}_{0,4}$ & One-loop triangle \\
-\hline
-$m_k$: $k$-ary operation & Integration over $\partial\overline{M}_{0,k+1}$ & $\leq(k-2)$-loop amplitude \\
-\hline
-\hline
-$A_\infty$ relations & $\partial^2 = 0$ (Stokes) & BPHZ recursion \\
-\hline
-Koszul duality & Bar $\leftrightarrow$ Cobar & Off-shell $\leftrightarrow$ On-shell \\
-\hline
-Central charge $\kappa$ & Genus correction & Loop expansion parameter \\
-\hline
-Hochschild cohomology & $H^*(\bar{B}(\mathcal{A}))$ & Quantum anomalies \\
-\hline
-\end{tabular}
-\end{center}
-
-Loop order relates to genus via ribbon graph thickening ($g = (\ell + 1 - F)/2$, Theorem~\ref{thm:loop-genus-formula}).  The $A_\infty$ relations encode the BPHZ recursion; Koszul duality is the algebraic shadow of off-shell/on-shell duality.

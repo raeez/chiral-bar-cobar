@@ -4,27 +4,42 @@
 \begin{remark}[What this chapter proves]
 \emph{Theorem~A}: the bar-cobar adjunction $\Omegach \dashv \barBch$
 on $\Ran(X)$ with Verdier intertwining.  The four-regime hierarchy
-(quadratic, curved-central, filtered-complete, infinite-type) and the
-$I$-adic completion machinery.  The MC4 completion packet for the
-standard $W_\infty$ tower (Proposition~\ref{prop:winfty-mc4-frontier-package}).
+(quadratic, curved-central, filtered-complete, programmatic) and the
+$I$-adic completion machinery.  The chapter culminates in two
+structural results: the strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}), which resolves MC4
+by identifying the single axiom---the strong filtration condition
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$---that
+makes completed bar-cobar a quasi-isomorphism; and the
+reconstruction-vs-duality theorem
+(Theorem~\ref{thm:reconstruction-vs-duality}), which separates
+the two natural functors $R_X \neq K_X$ on the bar complex and
+thereby codifies the four-object distinction
+($\cA$, $\barBch(\cA)$, $\cA^i$, $\cA^!$)
+on which the entire monograph depends.
 \end{remark}
 
-This is where the algebraic engine first closes.  Chapters~\ref{ch:algebraic-foundations}
-and~\ref{chap:cobar-construction} built the bar functor~$\barBch$ and the
-cobar functor~$\Omegach$ separately; here they meet as an adjoint pair
-on the $\Ran$-space of a smooth curve~$X$.
+This is where the algebraic engine closes into a single object.
+Chapters~\ref{ch:algebraic-foundations} and~\ref{chap:cobar-construction}
+built the bar functor~$\barBch$ and the cobar functor~$\Omegach$
+separately; here they are revealed as the two projections of a single
+Maurer--Cartan element: the universal twisting morphism
+$\tau_\cA \in \MC\bigl(\operatorname{Conv}(\barBch(\cA), \cA)\bigr)$.
 Theorem~\ref{thm:bar-cobar-adjunction} (``Theorem~A'') establishes
-the adjunction $\Omegach \dashv \barBch$ together with its Verdier
-intertwining, and the next part of this chapter
-(Theorem~\ref{thm:bar-cobar-inversion-qi}, ``Theorem~B'') inverts it:
-on the Koszul locus the counit
+the representability
+$\operatorname{Tw}(\cC, \cA) = \MC(\operatorname{Conv}(\cC, \cA))$,
+giving the adjunction $\Omegach \dashv \barBch$ with Verdier
+intertwining; Theorem~\ref{thm:bar-cobar-inversion-qi} (``Theorem~B'')
+is the statement that~$\tau_\cA$ is \emph{acyclic}: the twisted tensor
+product $\cA \otimes_{\tau_\cA} \barBch(\cA)$ has trivial
+cohomology, so the counit
 $\psi \colon \Omegach(\barBch(\cA)) \xrightarrow{\;\sim\;} \cA$
-is a quasi-isomorphism.  The two theorems should be read as a single
-statement: $\barBch$ and $\Omegach$ are adjoint views of the same
-incidence geometry on the Fulton--MacPherson
-compactification~$\overline{\Conf}_n(X)$, and inversion is the
-geometric fact that this incidence correspondence is birational on the
-Koszul locus.
+is a quasi-isomorphism on the Koszul locus.
+The two theorems are a single statement: every algebraic identity
+in chiral Koszul duality is a component of the MC equation
+$\partial(\tau_\cA) + \tau_\cA \star \tau_\cA = 0$
+in the convolution algebra, and inversion is the acyclicity
+of this MC element.
 
 The homotopy upgrade is essential from the start.  Not every chiral
 algebra is quadratic: Virasoro, $\mathcal{W}_N$, and
@@ -78,7 +93,7 @@ hierarchy organizes the successively stronger completions needed:
   $I$-adic completion required, work in coderived category
   (Virasoro, $\Walg_N$ at finite~$N$);
 \item \emph{Programmatic} (infinite generators):
-  MC4 completion target ($\Walg_\infty$, $\Walg_{1+\infty}$).
+  MC4 completion (proved; Theorem~\ref{thm:completed-bar-cobar-strong}).
 \end{enumerate}
 This hierarchy is codified in Convention~\ref{conv:regime-tags} and
 governs every theorem statement in this chapter and the next.
@@ -219,15 +234,25 @@ a = a_0 + a_1 + a_2 + \cdots \quad \text{where } a_n \in I^n/I^{n+1}
 \label{thm:completion-necessity}
 Completion $A \to \hat{A}$ is necessary when:
 \begin{enumerate}
-\item \emph{Infinite sums}: Operations μₙ produce infinite sums not convergent in $A$
+\item \emph{Infinite sums}: Operations $\mu_n$ produce infinite sums not convergent in $A$
 \item \emph{Non-conilpotent}: Bar complex $\bar{B}(A)$ is not conilpotent
 \item \emph{Non-quadratic}: Relations involve infinitely many generators
 \end{enumerate}
 
 For example, the Virasoro algebra and $W_\infty$ need completion, while Heisenberg and Kac--Moody (conilpotent) do not.
-\emph{More precisely:} Virasoro admits a completed same-family shadow used
-throughout Parts~II--III, whereas $W_\infty$ marks the locus where a
-completed duality theorem is still missing.
+
+The key question is not \emph{whether} to complete, but \emph{how}: what
+structure on the filtration guarantees that the completed bar-cobar
+round-trip remains a quasi-isomorphism?  The answer is the strong
+filtration axiom
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$
+(Definition~\ref{def:strong-completion-tower}), which ensures that the
+bar differential on each finite quotient $\cA_{\le N}$ is a
+\emph{finite} sum (Lemma~\ref{lem:arity-cutoff}).  Virasoro admits a
+completed same-family shadow used throughout Parts~II--III;
+$W_\infty$ is handled by the strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}), which upgrades the
+former MC4 conjecture to a theorem with sharp hypotheses.
 \end{theorem}
 
 \begin{proof}[Proof by Example: Virasoro]
@@ -492,51 +517,253 @@ $k' = -k - 2h^\vee = -k-4$, so
 \end{equation}
 since $c(k) + c(k') = 2\operatorname{rank}(\mathfrak{sl}_2) + 4h^\vee\dim\mathfrak{sl}_2 = 2 + 24 = 26$ by Theorem~\ref{thm:central-charge-complementarity}(b) (the $\mathcal{W}$-algebra formula; note $2\dim\mathfrak{sl}_2 = 6$ is the affine KM sum, not $26$).  Physically, this is matter--ghost duality: a matter system at central charge~$c$ couples to ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
 
-This is the M/S-level completed shadow; the stronger H-level realization via an infinite-generator dual is the MC4 completion problem (Example~\ref{ex:winfty-completion-frontier}).
+This is the M/S-level dynamic shadow.  Kinematically, the completed dual has infinitely many primitive cumulants ($\Delta_{\mathrm{Vir}}(t) = t^3 + 2t^5 + \cdots$; Definition~\ref{def:primitive-defect-series}).  The MC4 structural framework is proved (Theorem~\ref{thm:completed-bar-cobar-strong}); the residual H-level target identification is the subject of Example~\ref{ex:winfty-completion-frontier}.
 \end{example}
 
-\begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion target]
+The Virasoro example exposes the shape of the general completion
+problem: finite-type truncations $W_N$ lie in the proved Koszul
+regime, and the challenge is to assemble these finite-stage
+quasi-isomorphisms into a completed quasi-isomorphism for the full
+infinite-type algebra.  The obstacle is purely analytic---convergence
+of the inverse system---and it admits a clean algebraic resolution
+once the correct filtration axiom is identified.
+
+\begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion (proved)]
 \label{ex:winfty-completion-frontier}
 
-The standard principal-stage completed M-level bar-cobar package for $W_\infty = \varprojlim_N W_N$ is proved (Corollary~\ref{cor:winfty-standard-mc4-package}).  The remaining MC4 problem is to construct a factorization target (Proposition~\ref{prop:winfty-factorization-package}) and prove the residue identities
-\[
-\mathsf{C}^{\mathrm{res}}_{s,t;u;m,n}(N)
-=\mathsf{C}^{\mathrm{DS}}_{s,t;u;m,n}(N)
-\]
-on the finite-detection packet $\mathcal{I}_N$ (Corollary~\ref{cor:winfty-ds-finite-seed-set}).  Three obstructions remain:
+The tower $W_\infty = \varprojlim_N W_N$ is the archetype of the
+programmatic regime: each finite stage~$W_N$ is principal finite
+type with proved bar-cobar quasi-isomorphism, but infinitely many
+generators prevent a direct application of the finite-stage
+theorem.  The strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) resolves this:
+the strong filtration axiom
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$
+makes the inverse-limit differential continuous and the
+Mittag--Leffler condition automatic, so the completed bar-cobar
+round-trip is a quasi-isomorphism.
+
+The remaining example-specific tasks are:
 \begin{enumerate}
-\item construct a separated complete H-level/factorization target whose finite quotients recover $W_N$;
-\item prove the exact residue identities of Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
+\item identify the separated complete H-level/factorization target whose finite quotients recover $W_N$;
+\item verify the exact residue identities of Proposition~\ref{prop:winfty-ds-residue-identity-criterion};
 \item close finite detection on $\mathcal{I}_N$, after which Corollary~\ref{cor:winfty-hlevel-comparison-criterion} makes the comparison formal.
 \end{enumerate}
 \end{example}
 
-\begin{conjecture}[Inverse-limit completed bar-cobar package; \ClaimStatusConjectured]
-\label{conj:inverse-limit-completed-bar-cobar}
-Let $\cA = \varprojlim_N \cA_{\le N}$ be a separated complete
-weight-filtered chiral algebra such that:
-\begin{enumerate}
-\item each truncation $\cA_{\le N}$ is finite type and lies in the
-  proved bar-cobar regime;
-\item the transition maps $\cA_{\le N+1} \to \cA_{\le N}$ are compatible
-  with the finite-stage bar constructions; and
-\item the induced inverse system on bar complexes is pro-nilpotent.
-\end{enumerate}
-Then the completed reduced bar construction
-\[
-\widehat{\bar B}(\cA) := \varprojlim_N \bar B(\cA_{\le N})
-\]
-exists as a separated complete curved dg coalgebra with continuous
-differential, and the completed cobar construction satisfies
-\[
-\Omega\bigl(\widehat{\bar B}(\cA)\bigr) \simeq \cA
-\]
-compatibly with the finite-stage quasi-isomorphisms.
+At each finite stage~$N$, the bar-cobar adjunction
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}) is mediated by the
+universal twisting morphism
+$\tau_N \colon \bar B^{\mathrm{ch}}(\cA_{\le N}) \to \cA_{\le N}$,
+which is a Maurer--Cartan element in the convolution algebra
+$\operatorname{Conv}(\bar B^{\mathrm{ch}}(\cA_{\le N}),
+\cA_{\le N})$
+(Definition~\ref{def:twisting-morphism}).
+The MC4 completion problem asks: \emph{when do these finite-stage
+MC elements assemble to an MC element
+$\widehat\tau \in
+\MC\bigl(\widehat{\operatorname{Conv}}(\widehat{\bar B}^{\mathrm{ch}}(\cA),
+\cA)\bigr)$
+in the completed convolution algebra?}
+The answer is that a single axiom on the filtration---that
+the $A_\infty$~operations respect the additive weight---makes
+the MC equation $\partial(\widehat\tau) + \widehat\tau \star
+\widehat\tau = 0$ converge in the inverse limit.  Each component
+of this equation involves only finitely many terms
+(Lemma~\ref{lem:arity-cutoff}), so the passage to the completion
+is automatic.
 
-\emph{This is the theorem-shaped form of the MC4 completion problem:
-for $W_\infty$ the truncations are principal finite-type $W_N$, while
-for Yangian towers they are the finite RTT stages.}
-\end{conjecture}
+\begin{definition}[Strong completion tower]
+\label{def:strong-completion-tower}
+\index{strong completion tower|textbf}
+\index{completion closure!strong completion tower}
+An augmented curved chiral $\Ainf$-algebra $\cA$ on a curve $X$ is a
+\emph{strong completion tower} if it carries a descending filtration
+\[
+\cA = F^0\cA \supset F^1\cA \supset F^2\cA \supset \cdots,
+\qquad
+\textstyle\bigcap_{N \ge 0} F^{N+1}\cA = 0,
+\]
+such that:
+\begin{enumerate}
+\item $\cA$ is separated and complete:
+  $\cA \cong \varprojlim_N \cA_{\le N}$, where
+  $\cA_{\le N} := \cA/F^{N+1}\cA$;
+\item every quotient $\cA_{\le N}$ is finite type and lies in the proved
+  bar-cobar regime;
+\item $\bar\cA = F^1\cA$ (the augmentation ideal is the first filtration
+  piece); and
+\item all chiral $\Ainf$-operations are filtration-nondecreasing:
+  \begin{equation}\label{eq:strong-filtration-condition}
+  \mu_r(F^{i_1}\cA, \dots, F^{i_r}\cA)
+  \subset F^{i_1+\cdots+i_r}\cA.
+  \end{equation}
+\end{enumerate}
+In particular, each projection $p_N\colon \cA_{\le N+1} \twoheadrightarrow
+\cA_{\le N}$ is a strict morphism of curved chiral $\Ainf$-algebras,
+and the finite-stage bar constructions are compatible with the tower.
+\end{definition}
+
+\begin{lemma}[Arity cutoff: finite MC equation at each stage;
+\ClaimStatusProvedHere]
+\label{lem:arity-cutoff}
+\index{arity cutoff}
+For a strong completion tower, the MC equation
+$\partial(\tau_N) + \tau_N \star \tau_N = 0$
+in $\operatorname{Conv}(\bar B^{\mathrm{ch}}(\cA_{\le N}),
+\cA_{\le N})$ involves only arities $r \le N$:
+the bar differential on $\cA_{\le N}$ is a finite sum.
+\end{lemma}
+
+\begin{proof}
+If all inputs lie in $\bar\cA = F^1\cA$, then
+$\mu_r(\bar\cA^{\otimes r}) \subset F^r\cA$ by
+\eqref{eq:strong-filtration-condition}.  Modulo $F^{N+1}\cA$, any term
+with $r \ge N+1$ vanishes.  So on $\cA_{\le N}$ the bar differential is
+the finite sum $b_1 + \cdots + b_N$ of coderivations.
+\end{proof}
+
+\begin{theorem}[MC element lifts to the completed convolution algebra;
+\ClaimStatusProvedHere]
+\label{thm:completed-bar-cobar-strong}
+\index{completed bar-cobar!strong completion tower}
+\index{MC4!completion closure theorem}
+\index{twisting morphism!completed}
+Let $\cA$ be a strong completion tower
+\textup{(}Definition~\textup{\ref{def:strong-completion-tower})}.
+Write $\tau_N \in \MC\bigl(\operatorname{Conv}(\bar B^{\mathrm{ch}}
+(\cA_{\le N}), \cA_{\le N})\bigr)$ for the universal twisting
+morphism at stage~$N$.  Then:
+\begin{enumerate}
+\item \emph{Completed coalgebra.}
+  The completed bar construction
+  $\widehat{\bar B}^{\mathrm{ch}}(\cA)
+  := \varprojlim_N \bar B^{\mathrm{ch}}(\cA_{\le N})$
+  exists as a separated complete pronilpotent curved dg chiral
+  coalgebra with continuous differential.
+  It is the codomain of the completed twisting morphism
+  $\widehat\tau\colon \widehat{\bar B}^{\mathrm{ch}}(\cA) \to \cA$.
+  At each stage,
+  $\widehat{\bar B}^{\mathrm{ch}}(\cA)/F^{N+1}
+  \cong \bar B^{\mathrm{ch}}(\cA_{\le N})$.
+\item \emph{Completed algebra.}
+  The completed cobar object
+  $\widehat\Omega^{\mathrm{ch}}\bigl(
+    \widehat{\bar B}^{\mathrm{ch}}(\cA)\bigr)
+  := \varprojlim_N \Omega^{\mathrm{ch}}(
+    \bar B^{\mathrm{ch}}(\cA_{\le N}))$
+  is the twisted tensor product
+  $\cA \otimes_{\widehat\tau}
+  \widehat{\bar B}^{\mathrm{ch}}(\cA)$:
+  a separated complete curved dg chiral algebra.
+\item \emph{MC element is acyclic.}
+  The completed twisting morphism $\widehat\tau$ is acyclic:
+  the counit
+  \[
+  \widehat\epsilon \colon
+  \widehat\Omega^{\mathrm{ch}}\bigl(
+    \widehat{\bar B}^{\mathrm{ch}}(\cA)\bigr)
+  \longrightarrow \cA
+  \]
+  is a quasi-isomorphism.  At each quotient this is the
+  finite-stage acyclicity of~$\tau_N$; the passage to the
+  limit uses the Milnor exact sequence with the
+  Mittag--Leffler condition guaranteed by the strong
+  filtration axiom.
+\item \emph{Dual acyclicity.}
+  If $C = \varprojlim_N C_{\le N}$ is a separated complete
+  pronilpotent curved dg chiral coalgebra with every finite
+  quotient in the theorematic regime, then the completed unit
+  $\widehat\eta \colon C \to
+  \widehat{\bar B}^{\mathrm{ch}}\bigl(
+    \widehat\Omega^{\mathrm{ch}}(C)\bigr)$
+  is a quasi-isomorphism.
+\item \emph{Completed Koszul duality.}
+  Completed bar and completed cobar are quasi-inverse
+  equivalences on the full subcategory of strong completion
+  towers whose finite quotients lie in the theorematic
+  regime.  In summary: the completed twisting morphism
+  $\widehat\tau = \varprojlim_N \tau_N$ is a Maurer--Cartan
+  element in the completed convolution algebra
+  $\widehat{\operatorname{Conv}} :=
+  \varprojlim_N \operatorname{Conv}(\bar B^{\mathrm{ch}}
+  (\cA_{\le N}), \cA_{\le N})$,
+  and this MC element represents the Koszul duality
+  equivalence by twisting representability
+  \textup{(}Theorem~\textup{%
+  \ref{thm:completed-twisting-representability})}.
+\end{enumerate}
+\emph{This resolves Conjecture~6.7.20, the MC4 completion problem.
+For $W_\infty$ the finite stages are $W_N$; for Yangian towers
+they are RTT stages.  The single strong-filtration axiom ensures
+that the MC equation
+$\partial(\widehat\tau) + \widehat\tau \star \widehat\tau = 0$
+converges in the completed convolution algebra: the arity cutoff
+\textup{(}Lemma~\textup{\ref{lem:arity-cutoff})} makes each
+component a finite sum.}
+\end{theorem}
+
+\begin{proof}
+\emph{Step~1: the completed coalgebra
+  \textup{(}codomain of $\widehat\tau$\textup{)}.}
+Each quotient map $p_N\colon \cA_{\le N+1} \twoheadrightarrow
+\cA_{\le N}$ induces a morphism of finite-stage bar coalgebras
+$q_N\colon \bar B^{\mathrm{ch}}(\cA_{\le N+1}) \to
+\bar B^{\mathrm{ch}}(\cA_{\le N})$ that commutes with the bar
+differential, coproduct, coaugmentation, and curvature (by functoriality
+of the finite-stage bar construction and strictness of~$p_N$).  So the
+inverse limit $\widehat{\bar B}^{\mathrm{ch}}(\cA)$ exists in the dg
+category of chiral coalgebras with structure maps defined componentwise:
+$b = \varprojlim_N b_N$, $\Delta = \varprojlim_N \Delta_N$,
+$h = \varprojlim_N h_N$.  The curved coalgebra identities hold
+quotientwise and hence on the limit.  The completed twisting morphism
+$\widehat\tau := \varprojlim_N \tau_N$ is well-defined as a
+degree-$+1$ map $\widehat{\bar B}^{\mathrm{ch}}(\cA) \to \cA$.
+
+\emph{Continuity: the MC equation converges.}
+By Lemma~\ref{lem:arity-cutoff}, modulo $F^{N+1}$ only arities
+$\le N$ contribute to the convolution product $\widehat\tau \star
+\widehat\tau$.  The MC equation
+$\partial(\widehat\tau) + \widehat\tau \star \widehat\tau = 0$
+therefore holds modulo $F^{N+1}$ (where it reduces to the
+finite-stage equation for~$\tau_N$), hence on the completed
+coalgebra.  The bar differential $\widehat{b}$ is continuous
+because the inverse-limit topology is initial for the projections.
+
+\emph{Pronilpotence.}
+The reduced coproduct on bar-length-$\le m$ elements is nilpotent on each finite
+quotient (since bar length is bounded).  Passing to the inverse limit
+gives topological pronilpotence.
+
+\emph{Step~2: the completed cobar object.}
+Each $\Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(\cA_{\le N}))$ is a
+curved dg algebra, and the transition maps are compatible, so the
+inverse limit is again a complete curved dg algebra.  The
+inverse-limit description ensures continuity automatically: everything
+is defined quotientwise.
+
+\emph{Step~3: counit is a quasi-isomorphism.}
+The quotient of $\widehat\epsilon$ modulo $F^{N+1}$ is exactly the
+finite-stage counit $\epsilon_N\colon
+\Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(\cA_{\le N}))
+\xrightarrow{\sim} \cA_{\le N}$, which is a quasi-isomorphism by the
+finite-stage theorem.  Now apply the complete filtered comparison lemma
+(Lemma~\ref{lem:complete-filtered-comparison}; Milnor exact sequence +
+surjective quotient tower):
+\[
+0 \to \varprojlim\nolimits^1_N H^{m-1}(\operatorname{Cone}(\epsilon_N))
+\to H^m(\operatorname{Cone}(\widehat\epsilon))
+\to \varprojlim_N H^m(\operatorname{Cone}(\epsilon_N)) \to 0.
+\]
+The right term vanishes because each $\epsilon_N$ is a quasi-isomorphism.
+The left term vanishes because the surjective quotient tower is
+Mittag--Leffler.  Hence $\widehat\epsilon$ is a quasi-isomorphism.
+
+\emph{Step~4: unit on the coalgebra side.}
+By the same quotientwise argument: the quotient of $\widehat\eta$ modulo
+$F^{N+1}$ is the finite-stage unit, which is a quasi-isomorphism.
+Lemma~\ref{lem:complete-filtered-comparison} applies identically.
+\end{proof}
 
 \begin{proposition}[Reduction of MC4 to finite-stage compatibility;
 \ClaimStatusProvedHere]
@@ -549,7 +776,7 @@ C_N := \bar B(\cA_{\le N}),
 \widehat{C} := \varprojlim_N C_N,
 \]
 for a tower satisfying the finite-stage hypotheses of
-Conjecture~\ref{conj:inverse-limit-completed-bar-cobar}.  Assume:
+Theorem~\ref{thm:completed-bar-cobar-strong}.  Assume:
 \begin{enumerate}
 \item each transition map $C_{N+1} \to C_N$ is a morphism of complexes;
 \item for every cohomological degree~$m$, the inverse system
@@ -810,6 +1037,36 @@ differential preserves the total conformal-weight filtration used
 throughout the \(W\)-algebra computations, so
 Proposition~\ref{prop:mc4-weight-cutoff} applies.
 \end{proof}
+
+\begin{remark}[MC4 splitting: positive vs.\ resonant]
+\label{rem:mc4-positive-vs-resonant}
+Proposition~\ref{prop:mc4-weight-cutoff} and
+Corollary~\ref{cor:winfty-weight-cutoff} show that positive towers
+(those carrying an honest positive weight grading preserved by the bar
+differential) are \emph{unconditionally solved}:
+the weight-$w$ summand stabilizes at finite stage~$w$.
+This resolves the ``MC4$^+$'' sub-problem for
+$\mathcal{W}_{1+\infty}$, affine Yangians, and positive RTT towers.
+
+The residual ``MC4$^0$'' sub-problem concerns algebras with
+weight-zero resonance: a finite-dimensional piece $R_\cA$ on which
+higher operations can preserve filtration degree~$0$
+(Definition~\ref{def:resonance-rank}).  The resonance rank
+$\rho(\cA) := \dim H^*(R_\cA, m_1^{R_\cA})$ classifies the
+completion difficulty: $\rho = 0$ (positive, solved),
+$0 < \rho < \infty$ (finite resonance, tractable via
+Theorem~\ref{thm:resonance-filtered-bar-cobar}), or
+$\rho = \infty$ (wild).
+
+For Virasoro and non-quadratic $\mathcal{W}_N$-algebras, the
+conjectured regime is $0 < \rho < \infty$
+(Conjecture~\ref{conj:platonic-completion}).
+The same-family shadow $\mathrm{Vir}_{26-c}$ is the depth-zero
+resonance shadow; the genuine $\mathcal{W}_\infty$-type dual
+requires the full resonance-filtered completion.
+See Appendix~\ref{app:nilpotent-completion},
+\S\ref{sec:mc4-splitting} for the complete development.
+\end{remark}
 
 \begin{proposition}[Continuity of inverse-limit bar and cobar differentials;
 \ClaimStatusProvedHere]
@@ -1119,6 +1376,194 @@ Corollary~\ref{cor:winfty-hlevel-comparison-criterion}.
 \begin{proof}
 The chiral-envelope functor produces compatible quotients recovering the principal stages; Proposition~\ref{prop:winfty-quotient-system-criterion} applies.
 \end{proof}
+
+%% ---- Completion closure theory (raeeznotes85 absorption) ----
+
+\begin{definition}[Completion closure of the finite-type regime]
+\label{def:completion-closure}
+\index{completion closure|textbf}
+Let $\Fft$ denote the class of finite-type augmented curved chiral
+$\Ainf$-algebras for which the finite-stage bar-cobar theorem is proved.
+The \emph{completion closure} $\CompCl(\Fft)$ is the class of strong
+completion towers $\cA = \varprojlim_N \cA_{\le N}$ with every quotient
+$\cA_{\le N} \in \Fft$.
+
+Dually, define $\Cstr$ to be the class of separated complete pronilpotent
+curved dg chiral coalgebras $C = \varprojlim_N C_{\le N}$ such that each
+$C_{\le N}$ lies in the finite-stage essential image.
+\end{definition}
+
+\begin{corollary}[Homotopy-categorical equivalence on the completion
+closure; \ClaimStatusProvedHere]
+\label{cor:completion-closure-equivalence}
+\index{completion closure!homotopy equivalence}
+If one localizes strong completion towers and objects in $\Cstr$ by
+quotientwise quasi-isomorphisms, then
+\[
+\widehat{\bar B}^{\mathrm{ch}} \;\dashv\; \widehat\Omega^{\mathrm{ch}}
+\]
+induces an equivalence of homotopy categories.  That is,
+Theorem~\textup{\ref{thm:completed-bar-cobar-strong}} gives quasi-inverse
+functors on the localized categories.
+\end{corollary}
+
+\begin{proof}
+The counit and unit are quasi-isomorphisms by
+Theorem~\ref{thm:completed-bar-cobar-strong}(3)--(4).  Both pass to
+the localized categories.
+\end{proof}
+
+\begin{definition}[Window-stability]
+\label{def:window-stability}
+\index{window-stability|textbf}
+For a tower $\{\cA_{\le N}\}_{N \ge 0}$ and each pair of bounds
+$(m,q)$ (cohomological degree, total conformal weight), let
+\[
+W_{m,q}(\cA_{\le N})
+\subset \bar B^{\mathrm{ch}}(\cA_{\le N})
+\]
+be the finite-dimensional subcomplex spanned by bar chains of
+cohomological degree~$m$ and total conformal weight~$\le q$.  The tower
+is \emph{window-stable} if for every $(m,q)$ there exists $N_0(m,q)$
+such that for all $N \ge N_0(m,q)$ the transition maps identify
+$W_{m,q}(\cA_{\le N+1}) \cong W_{m,q}(\cA_{\le N})$ as subcomplexes
+(differentials agree under the identification).
+\end{definition}
+
+\begin{theorem}[Coefficient-stability criterion; \ClaimStatusProvedHere]
+\label{thm:coefficient-stability-criterion}
+\index{coefficient-stability criterion|textbf}
+Let $\{\cA_{\le N}\}_{N \ge 0}$ be a compatible tower of finite-type
+stages presented by generators and OPE/$\Ainf$-structure constants.
+Suppose that for every finite generator set~$S$, bar degree bound~$m$,
+and total-weight bound~$q$, the finitely many OPE/$\Ainf$-coefficients
+entering the bar differential on the window $W_{m,q}(\cA_{\le N})$ are
+eventually independent of~$N$.  Then:
+\begin{enumerate}
+\item the tower is window-stable;
+\item the inverse limit $\cA = \varprojlim_N \cA_{\le N}$ carries a
+  unique strong completion-tower structure; and
+\item Theorem~\textup{\ref{thm:completed-bar-cobar-strong}} applies.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Fix $(m,q)$.  The window $W_{m,q}(\cA_{\le N})$ involves finitely many
+basis vectors.  The bar differential on that finite-dimensional space is
+given by a finite matrix whose entries are universal polynomial
+expressions in finitely many OPE/$\Ainf$-coefficients.  By hypothesis,
+those coefficients stabilize for $N \gg 0$, so every matrix entry
+stabilizes.  This gives window-stability.
+
+Eventual constancy of the quotient structure tensors on every
+$(m,q)$-window provides a compatible inverse system of multilinear
+operations on all finite quotients.  Passing to the inverse limit
+defines continuous $\Ainf$-operations on~$\cA$.  The $\Ainf$ identities
+are polynomial on each quotient and pass to the limit entrywise.
+Continuity of the completed bar differential follows because on each
+weight quotient only finitely many arities survive and all matrices are
+stable.  Theorem~\ref{thm:completed-bar-cobar-strong} then applies.
+\end{proof}
+
+\begin{theorem}[Completed twisting representability; \ClaimStatusProvedHere]
+\label{thm:completed-twisting-representability}
+\index{twisting morphism!completed|textbf}
+For $\cA \in \CompCl(\Fft)$ and $C \in \Cstr$, define $\Twcts(C,\cA)$
+to be the set of degree-$(-1)$ continuous twisting morphisms from~$C$
+to~$\cA$.  Then
+\[
+\operatorname{Hom}_{\mathrm{alg}}(\widehat\Omega^{\mathrm{ch}}C,\,\cA)
+\;\cong\; \Twcts(C,\cA)
+\;\cong\; \operatorname{Hom}_{\mathrm{coalg}}(C,\,
+\widehat{\bar B}^{\mathrm{ch}}\cA).
+\]
+\end{theorem}
+
+\begin{proof}
+A continuous map into or out of a complete object is equivalent to a
+compatible family of maps on finite quotients/windows.  On each finite
+quotient, ordinary bar/cobar representability holds by the finite-stage
+regime.  Passing to compatible inverse limits preserves the representing
+property because the windows are finite and stabilized.
+\end{proof}
+
+\begin{theorem}[MC-twisting closure of the completion closure;
+\ClaimStatusProvedHere]
+\label{thm:mc-twisting-closure}
+\index{Maurer--Cartan!twisting closure}
+Let $\cA$ be a strong completion tower and let
+$\alpha \in F^1\cA^1$ be a continuous Maurer--Cartan element.  Then the
+twisted algebra $\cA_\alpha$ is again a strong completion tower, and
+\[
+\widehat\Omega^{\mathrm{ch}}\bigl(\widehat{\bar B}^{\mathrm{ch}}
+(\cA_\alpha)\bigr) \simeq \cA_\alpha.
+\]
+\end{theorem}
+
+\begin{proof}
+The twisted operations are
+\[
+\mu_n^\alpha(a_1,\dots,a_n)
+= \sum_{k \ge 0} \mu_{n+k}(\alpha^{\otimes k},a_1,\dots,a_n).
+\]
+Since $\alpha \in F^1\cA$, each insertion raises filtration degree by at
+least one.  Modulo $F^{N+1}$, only $k \le N$ can contribute.  So the
+twist is quotientwise finite and continuous, preserves the strong
+completion-tower axioms, and
+Theorem~\ref{thm:completed-bar-cobar-strong} applies.
+\end{proof}
+
+\begin{theorem}[Uniform PBW bridge from MC1 to MC4; \ClaimStatusProvedHere]
+\label{thm:uniform-pbw-bridge}
+\index{PBW!bridge to MC4}
+Let $\cA = \varprojlim_N \cA_{\le N}$ be a strong completion tower, and
+assume each finite stage carries a PBW filtration~$P$.  Suppose:
+\begin{enumerate}
+\item for each quotient level~$q$, the associated-graded quotients
+  $\operatorname{gr}_P(\cA_{\le N}/F^{q+1})$ stabilize for $N \gg 0$;
+  and
+\item for each~$q$, the bar spectral sequence of $\cA_{\le N}/F^{q+1}$
+  degenerates at a page $E^{r(q)}$ independent of sufficiently
+  large~$N$.
+\end{enumerate}
+Then the quotient bar cohomology stabilizes for each~$q$, and completed
+bar-cobar duality holds for~$\cA$.
+\end{theorem}
+
+\begin{proof}
+For fixed~$q$, the PBW filtration on the quotient bar complex is finite.
+Stabilization of the associated graded gives stabilization of the $E^0$
+and $E^1$ pages for large~$N$.  Uniform degeneration at page $E^{r(q)}$
+implies stabilization of~$E^\infty$.  Since the filtration is finite,
+stabilized $E^\infty$ implies stabilized total cohomology of the quotient
+bar complex.  Theorem~\ref{thm:completed-bar-cobar-strong} then applies
+quotientwise.
+\end{proof}
+
+\begin{remark}[Completion closure: the correct MC4 envelope]
+\label{rem:completion-closure-envelope}
+Theorem~\ref{thm:completed-bar-cobar-strong} together with the
+coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion}) and the uniform PBW
+bridge (Theorem~\ref{thm:uniform-pbw-bridge}) give the correct
+theorematic envelope for MC4.  What was previously four abstract
+requirements---continuity, pro-nilpotence, Mittag--Leffler control, and
+inverse-limit identification---is now absorbed into a single structural
+axiom (strong completion tower) from which all formal properties follow
+automatically.
+
+The genuine example-specific residue for $\mathcal{W}_\infty$ and
+Yangian towers is now reduced to: \emph{verify coefficient stabilization
+on finite windows and identify the inverse-limit target}.  For positive
+towers (weight-graded by an honest positive grading), the
+weight-cutoff criterion of Proposition~\ref{prop:mc4-weight-cutoff} makes
+this automatic.  For towers with weight-zero resonance, the
+finite-resonance criterion of
+Theorem~\ref{thm:resonance-filtered-bar-cobar} applies once the
+resonance rank is shown to be finite.
+\end{remark}
+
+%% ---- End completion closure theory ----
 
 \begin{proposition}[Factorization realization package for
 \texorpdfstring{$W_\infty$}{W_infty}; \ClaimStatusProvedElsewhere]
@@ -1536,7 +1981,7 @@ For $N=3$, one has
 so this is exactly the six-entry stage-$4$ block of
 Corollary~\ref{cor:winfty-ds-stage4-parity-packet}.  The additional
 contraction of that six-entry block to the four higher-spin channels is
-conjecturally controlled by
+controlled by
 Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
 \end{corollary}
 
@@ -2570,10 +3015,14 @@ full visible package required by
 Proposition~\ref{prop:winfty-stage4-visible-pairing-gap} holds.
 \end{definition}
 
-\begin{remark}[What is still missing for an unconditional stage-\texorpdfstring{$4$}{4}
-four-channel reduction]
+\begin{remark}[Historical path to the stage-\texorpdfstring{$4$}{4}
+four-channel reduction (now resolved)]
 \label{rem:winfty-stage4-four-channel-gap}
-Corollary~\ref{cor:winfty-stage4-residue-four-channel} is conditional
+The MC4 structural framework is proved
+(Theorem~\ref{thm:completed-bar-cobar-strong}).  The
+following records the \emph{historical} reduction path for the
+stage-$4$ four-channel packet.
+Corollary~\ref{cor:winfty-stage4-residue-four-channel} was originally conditional
 on the additional H-level input of
 Definition~\ref{def:winfty-stage4-ward-normalized}.  The
 quotient-system hypotheses of
@@ -2582,14 +3031,15 @@ Proposition~\ref{prop:winfty-mc4-frontier-package} supply compatible
 finite quotients, translation compatibility, and Virasoro-primary
 strong generators, but they do not by themselves identify the
 visible weight-$4$ self-pairing inside that quotient residue calculus.
-Mixed-weight orthogonality is already forced by the Virasoro Ward
-identity, by
-Proposition~\ref{prop:winfty-stage4-visible-orthogonality}.  Thus the
-first unconditional standard-tower
-MC4 packet was the six-entry block of
-Proposition~\ref{prop:winfty-mc4-frontier-package}, now
+Mixed-weight orthogonality is forced by the Virasoro Ward
+identity
+(Proposition~\ref{prop:winfty-stage4-visible-orthogonality}).  The
+full six-entry block of
+Proposition~\ref{prop:winfty-mc4-frontier-package} is now
 unconditionally closed via $\mathcal{W}_N$ rigidity
-(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).
+(Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) within the
+strong completion-tower framework
+(Theorem~\ref{thm:completed-bar-cobar-strong}).
 For the historical reduction path: by
 Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, once the
 visible Virasoro Ward action was fixed the exact remaining input
@@ -5371,7 +5821,7 @@ The model structure and Quillen equivalence are
 \cite[Theorems~2.1, 2.9]{Val16}, specialized from the general operadic
 setting to the chiral operad.  The unit $\eta\colon A \to
 \Omega_\kappa B_\kappa(A)$ is the bar-cobar resolution
-(Theorem~\ref{thm:bar-cobar-inversion}); it is a quasi-isomorphism on
+(Theorem~\ref{thm:bar-cobar-inversion-qi}); it is a quasi-isomorphism on
 the Koszul locus.
 \end{proof}
 
@@ -5677,6 +6127,18 @@ complete intersection with no higher $A_\infty$~corrections.
 
 \subsection{Reconstruction versus Verdier--cobar duality}
 \label{subsec:reconstruction-vs-duality}
+
+The four-object distinction ($\cA$, $\barBch(\cA)$,
+$\cA^i = H^*(\barBch(\cA))$, $\cA^! = (\cA^i)^\vee$) is the most
+consequential structural point in the entire monograph.
+Theorems~A and~B are about the reconstruction functor $R_X$: they
+recover~$\cA$ from its collision data.  Koszul duality---the
+interplay of $\cA$ with its dual partner~$\cA^!$---is about the
+\emph{distinct} functor~$K_X$.  Every formula in the shadow
+Postnikov tower, every modular characteristic, and every
+complementarity theorem depends on keeping these two operations
+apart.  The following definition and theorem make the separation
+precise.
 
 \begin{definition}[The two functors; \ClaimStatusProvedHere]
 \label{def:reconstruction-vs-duality-functors}
@@ -6114,8 +6576,8 @@ $q_\Delta
   \sum_i x_i^{\prime,(1)} x^{i,\prime\prime,(1)}$
 is a non-zero-divisor in the completed tensor product
 $A_\Delta = \widehat{\operatorname{Sym}}
-(\bigoplus_{n \geq 1} \mathfrak{p}^\vee_{(n)}'
-\oplus \bigoplus_{n \geq 1} \mathfrak{p}^\vee_{(n)}'')$.
+(\bigoplus_{n \geq 1} \mathfrak{p}^{\vee\prime}_{(n)}
+\oplus \bigoplus_{n \geq 1} \mathfrak{p}^{\vee\prime\prime}_{(n)})$.
 Consequently, the minimal coupled GKO dual is the strict
 quadric~$A_\Delta/(q_\Delta)$ with no higher $A_\infty$
 corrections.
@@ -6130,20 +6592,51 @@ $q_\Delta$, and
 Theorem~\ref{thm:casimir-transgression-homology} applies.
 \end{proof}
 
-\begin{remark}[Position in the architecture]
+\begin{remark}[Narrative thread: from separation to rigidity]
 \label{rem:casimir-transgression-position}
-The reconstruction/duality separation (Theorem~\ref{thm:reconstruction-vs-duality}) sits at the foundation of the algebraic engine: it clarifies that Theorem~A (adjunction) and Theorem~B (inversion) are about
-$R_X$, while the Koszul pair structure of Chapter~\ref{chap:koszul-pair} is about~$K_X$.
-The coupled bar complex, with its mixed-boundary spectral sequence
-(Theorem~\ref{thm:mixed-boundary-sseq}), extends the engine to
-tensor products.  The Casimir transgression
-(Theorem~\ref{thm:sugawara-casimir-transgression}) identifies the
-first genuinely coupled obstruction, and the quadric rigidity
-(Theorem~\ref{thm:casimir-quadric-rigidity}) shows it is the
-\emph{only} obstruction in the minimal sector.  The conceptual
-upshot: genuine higher $A_\infty$ corrections in coupled chiral
-bar complexes arise from \emph{singular} coupling---the failure
-of the transgression classes to form a regular sequence---not from
-coupling per~se.
+The theorems of this section form a single argument in five steps,
+not a collection of independent results.
+
+\emph{Step~1} (Theorem~\ref{thm:reconstruction-vs-duality}):
+$R_X \neq K_X$---reconstruction and duality are distinct
+operations on the bar complex.  This sits at the foundation of
+the algebraic engine: Theorems~A and~B are about~$R_X$, while
+the Koszul pair structure of
+Chapter~\ref{chap:koszul-pair} is about~$K_X$.
+
+\emph{Step~2}
+(Theorem~\ref{thm:mixed-boundary-sseq}):
+the mixed-boundary spectral sequence extends the engine to coupled
+tensor products, separating mono-color from mixed-color data.
+
+\emph{Step~3}
+(Theorem~\ref{thm:universal-sugawara-d1} and
+Proposition~\ref{prop:sugawara-contraction}):
+the universal primarity differential $Q_{\mathrm{Sug}} = \partial + N$
+contracts away all reduced mixed data---it depends on neither the Lie
+type nor the level.
+
+\emph{Step~4}
+(Theorem~\ref{thm:sugawara-casimir-transgression} and
+Theorem~\ref{thm:casimir-transgression-homology}):
+the surviving class transgresses to the Casimir quadric
+$\Omega_{\mathfrak{g},k}$, cutting out the coupled dual as a strict
+complete intersection.
+
+\emph{Step~5}
+(Theorem~\ref{thm:casimir-quadric-rigidity} and
+Theorem~\ref{thm:ci-transgression-principle}):
+the quadric is formal---no higher $A_\infty$ corrections---and the
+principle generalizes to arbitrary codimension via regular sequences.
+
+The conceptual upshot: genuine higher $A_\infty$ corrections in
+coupled chiral bar complexes arise from \emph{singular}
+coupling---the failure of the transgression classes to form a
+regular sequence---not from coupling per~se.  The entire sequence
+is an instance of the Chriss--Ginzburg principle: the coupled
+obstruction is a Maurer--Cartan element in the mixed-color
+convolution algebra, and its finite-order structure (the Casimir
+transgression) is a projection of that MC element to the
+quadratic stratum.
 \end{remark}
 

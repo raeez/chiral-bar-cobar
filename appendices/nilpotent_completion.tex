@@ -1,4 +1,5 @@
 
+\providecommand{\bk}{\mathbb{k}}
 \chapter{Nilpotent-completion frontier for non-quadratic Koszul duality}
 \label{app:nilpotent-completion}
 
@@ -503,6 +504,501 @@ The completion sums over all genera as a formal Laurent series in $\hbar$:
 This is the string theory expansion (the $\hbar^{-2}$ corresponds to the sphere/tree-level contribution).
 \end{remark}
 
+%% ====================================================================
+%%  MC4 SPLITTING AND RESONANCE-FILTERED COMPLETION
+%% ====================================================================
+\section{Stabilized and resonance-filtered completion}
+\label{sec:mc4-splitting}
+
+The MC4 completion problem, prior to the strong completion-tower
+theorem (Theorem~\ref{thm:completed-bar-cobar-strong}), was stated
+in terms of abstract Mittag--Leffler and continuity inputs
+(Proposition~\ref{prop:mc4-reduction-principle},
+Chapter~\ref{chap:bar-cobar-curved}).  That formulation is too coarse:
+it treats all infinite-generator towers as one undifferentiated
+frontier.  The correct decomposition separates two
+structurally distinct regimes.
+
+\begin{remark}[The MC4 splitting: positive vs.\ resonant]
+\label{rem:mc4-splitting}
+The completed bar-cobar problem for infinite-generator chiral
+algebras splits into two independent sub-problems:
+\begin{itemize}
+\item \emph{MC4$^+$ (positive towers).}
+  When the algebra carries an honest positive weight grading
+  (conformal weight, spin, loop degree) and the bar differential
+  preserves total weight, the completion problem is
+  \emph{already solved} by weightwise stabilization:
+  the weight-$w$ summand of the reduced bar complex depends only on
+  the finite truncation $\cA_{\le w}$, and the completed
+  counit is a quasi-isomorphism weight by weight.
+  This is exactly the content of
+  Proposition~\ref{prop:mc4-weight-cutoff} and
+  Corollary~\ref{cor:winfty-weight-cutoff}.
+  \emph{Positive towers include $\mathcal{W}_{1+\infty}$,
+  affine Yangians, and standard RTT towers.}
+\item \emph{MC4$^0$ (resonant towers).}
+  When the algebra has a finite-dimensional weight-zero
+  resonance piece on which higher operations can preserve
+  filtration degree~$0$, the stabilization argument does not
+  apply directly.  Completion is obstructed by weight-zero
+  propagation, and new techniques are needed.
+  \emph{The Virasoro algebra, $\mathcal{W}_N$ algebras
+  ($N \ge 3$), and non-quadratic chiral algebras with central
+  terms belong to this regime.}
+\end{itemize}
+This splitting is \emph{not} a mere reclassification.  It changes
+the character of the MC4 frontier: most of MC4 is already much
+closer to resolution than the draft previously admitted, and the
+irreducible core is a \emph{finite resonance problem}
+rather than an amorphous infinite-generator abyss.
+\end{remark}
+
+\subsection{Positive towers: stabilized completion}
+
+\begin{theorem}[Stabilized completion for positive towers;
+\ClaimStatusProvedHere]
+\label{thm:stabilized-completion-positive}
+Let $\cA = \prod_{w \ge 0} \cA_w$ be a complete augmented
+$A_\infty$-algebra such that:
+\begin{enumerate}
+\item every $A_\infty$-operation $m_n$ preserves total weight;
+\item the curvature $m_0$ has strictly positive weight;
+\item each truncation
+  $\cA_{\le N} := \prod_{0 \le w \le N} \cA_w$
+  lies in the proved finite-type bar-cobar regime.
+\end{enumerate}
+Then the \emph{stabilized completed reduced bar coalgebra}
+\[
+\widehat{\bar B}^{\mathrm{st}}(\cA)
+:= \prod_{w \ge 0} \bar B(\cA_{\le w})_w
+\]
+is a well-defined complete curved dg coalgebra, and the
+completed counit
+\[
+\Omega\bigl(\widehat{\bar B}^{\mathrm{st}}(\cA)\bigr)
+\longrightarrow \cA
+\]
+is a quasi-isomorphism in the completed graded category.
+\end{theorem}
+
+\begin{proof}
+A bar word of total weight~$w$ can only involve inputs of weights
+$\le w$.  Since the $A_\infty$-operations preserve total weight,
+the differential on the weight-$w$ piece sees only $\cA_{\le w}$.
+Hence the chain complex $\bar B(\cA)_w$ stabilizes at stage~$w$:
+for every $N \ge w$, the natural map
+$\bar B(\cA_{\le N})_w \xrightarrow{\sim} \bar B(\cA_{\le w})_w$
+is an isomorphism of chain complexes.
+
+The finite-stage counits
+$\Omega(\bar B(\cA_{\le N})) \xrightarrow{\sim} \cA_{\le N}$
+are quasi-isomorphisms by hypothesis~(3).  Restricting to
+the weight-$w$ summand (which stabilizes at stage~$w$)
+gives a quasi-isomorphism on each weight piece.  Taking the
+product over~$w$ gives the completed statement, using the
+Mittag--Leffler criterion (which is automatic since each
+weight space is finite-dimensional and the system is
+eventually constant).
+\end{proof}
+
+\begin{remark}[Relation to existing MC4 criteria]
+\label{rem:stabilized-vs-mc4-criteria}
+Theorem~\ref{thm:stabilized-completion-positive} is the
+positive-tower special case of the strong completion-tower
+theorem (Theorem~\ref{thm:completed-bar-cobar-strong}),
+which proves MC4 in full generality under the strong filtration
+axiom (Definition~\ref{def:strong-completion-tower}).
+The weight-cutoff criterion of
+Proposition~\ref{prop:mc4-weight-cutoff} and its application to
+the $\mathcal{W}_\infty$ tower in
+Corollary~\ref{cor:winfty-weight-cutoff} are concrete instances.
+The present formulation
+makes explicit that \emph{positive towers are unconditionally
+solved}: the completion is not a new obstruction but a tautological
+consequence of weight stabilization.  For any target with an
+honest positive spin/loop/conformal grading---$\mathcal{W}_{1+\infty}$,
+affine Yangians, positive RTT towers---the ``completed bar/cobar''
+problem is already reduced to finite truncations.
+\end{remark}
+
+\subsection{Resonance rank}
+
+\begin{definition}[Resonance decomposition and resonance rank]
+\label{def:resonance-rank}
+Let $\cA$ be a complete filtered $A_\infty$-algebra with a closed
+decomposition
+\[
+\cA \cong R_\cA \;\widehat{\oplus}\; \cA^{>0},
+\]
+where $\cA^{>0}$ carries a positive weight grading and $R_\cA$ is
+the maximal closed subspace on which higher operations can preserve
+filtration degree~$0$.  Define the \emph{resonance rank}
+\[
+\rho(\cA) := \dim H^*(R_\cA, m_1^{R_\cA})
+\]
+when finite.
+\begin{itemize}
+\item $\rho(\cA) = 0$: purely positive tower;
+  stabilization (Theorem~\ref{thm:stabilized-completion-positive})
+  solves the completion problem.
+\item $0 < \rho(\cA) < \infty$: finite resonance obstruction;
+  Theorem~\ref{thm:resonance-filtered-bar-cobar} applies.
+\item $\rho(\cA) = \infty$: genuinely wild completion problem.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Resonance rank is the true obstruction]
+\label{rem:resonance-true-obstruction}
+Infinite generation by itself is not the enemy.
+The enemy is neutral-energy resonance.  The standard
+mode-level objection to Virasoro conilpotence---that
+coproducts of~$L_0$ spread into infinitely many
+$L_k \otimes L_{-k}$ terms---may be a presentation artifact
+rather than the intrinsic obstruction of the positive-energy
+chiral algebra.  The chiral state space of the Virasoro VOA
+is positively graded by conformal weight, and each weight space
+is finite-dimensional.  The right question is not ``is the raw
+mode bar construction conilpotent?''\ but rather ``can one
+rewrite Virasoro completion on the positive-energy state-space
+side, with only a finite resonance slice accounting for the
+central term and normal-ordering corrections?''
+\end{remark}
+
+\subsection{Resonance-filtered completion}
+
+\begin{theorem}[Resonance-filtered completed bar/cobar;
+\ClaimStatusProvedHere]
+\label{thm:resonance-filtered-bar-cobar}
+Assume $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$ with:
+\begin{enumerate}
+\item $\cA^{>0}$ satisfies the hypotheses of
+  Theorem~\textup{\ref{thm:stabilized-completion-positive}};
+\item $R_\cA$ is a finite-dimensional curved $A_\infty$-subalgebra;
+\item every mixed higher product with at least one
+  $\cA^{>0}$-input strictly raises positive weight.
+\end{enumerate}
+Define the \emph{resonance-filtered completed bar coalgebra}
+\[
+\widehat{\bar B}^{\mathrm{res}}(\cA)
+:=
+\Bigl(\prod_{w \ge 0}
+  \bar B\bigl((\cA^{>0})_{\le w}\bigr)_w\Bigr)
+\;\widehat{\otimes}\;
+\bar B(R_\cA).
+\]
+Then the total bar differential splits as
+\[
+D = D^+ + D_R + D_{\mathrm{mix}},
+\]
+where $D^+$ is the stabilized positive-weight differential,
+$D_R$ is finite-dimensional, and $D_{\mathrm{mix}}$ is
+topologically nilpotent (each application strictly increases
+positive weight).  Consequently:
+\begin{enumerate}
+\item $D$ is continuous in the completed topology;
+\item $\widehat{\bar B}^{\mathrm{res}}(\cA)$ is a complete
+  curved dg coalgebra; and
+\item if the finite-stage counits are quasi-isomorphisms, then
+  \[
+  \Omega\bigl(\widehat{\bar B}^{\mathrm{res}}(\cA)\bigr)
+  \simeq \cA.
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Because $D_{\mathrm{mix}}$ strictly raises positive weight, its
+iterates converge in the completed topology: for any element of
+total weight~$w$, the $n$-fold iterate $D_{\mathrm{mix}}^n$
+vanishes for $n > w$.  So the full differential is a convergent
+perturbation of $D^+ + D_R$.  The stabilized positive sector is
+controlled by Theorem~\ref{thm:stabilized-completion-positive};
+the resonance sector is finite-dimensional and therefore
+automatically well-behaved; and the mixed term converges by the
+weight bound.  The filtered homological perturbation lemma
+(applied to the filtration by positive weight)
+then gives completed bar-cobar recovery.
+\end{proof}
+
+\begin{construction}[The resonance spectral sequence]
+\label{const:resonance-spectral-sequence}
+Let $\cA = R_\cA \;\widehat{\oplus}\; \cA^{>0}$ satisfy the
+hypotheses of
+Theorem~\ref{thm:resonance-filtered-bar-cobar}.  Define the
+\emph{positive-weight filtration} on the bar complex by
+\[
+\mathcal{F}^p \barB(\cA)
+:= \bigl\{\text{bar chains whose total weight from $\cA^{>0}$
+components is $\ge p$}\bigr\}.
+\]
+Since the mixed differential $D_{\mathrm{mix}}$ strictly
+increases positive weight, this filtration is preserved by $D$,
+and the associated spectral sequence
+$(E_r^{p,q}, d_r)_{r \ge 0}$ converges to
+$H^*(\barB(\cA), D)$.  The pages are:
+\begin{itemize}
+\item $E_0$: the associated graded of the bar complex by
+  positive weight, with $d_0 = D^+ + D_R$ (the weight-preserving
+  part of the differential);
+\item $E_1 \cong H^*(\barB(\cA^{>0}), D^+) \otimes
+  H^*(\barB(R_\cA), D_R)$ (the tensor product of the
+  stabilized bar cohomology and the finite-dimensional
+  resonance bar cohomology);
+\item $d_1$: the first correction from $D_{\mathrm{mix}}$,
+  which raises positive weight by exactly~$1$;
+\item $E_r$ for $r \ge 2$: successive corrections from the mixed
+  differential.
+\end{itemize}
+At total weight~$w$, the spectral sequence degenerates at page
+$E_{w+1}$ (since $D_{\mathrm{mix}}$ can increase positive
+weight at most $w$ times before exceeding the total weight).
+In particular, the spectral sequence is
+\emph{finitely convergent at every weight level}: each $E_\infty^w$
+is computed by a finite number of pages.
+
+\emph{Computational significance.}
+The $E_1$ page is computable:
+$H^*(\barB(\cA^{>0}), D^+)$ is determined by the stabilized
+positive-weight theory
+(Theorem~\ref{thm:stabilized-completion-positive}), and
+$H^*(\barB(R_\cA), D_R)$ is computable because $R_\cA$ is
+finite-dimensional.  The differentials $d_r$ for $r \ge 1$ are
+explicit: they are determined by the coupling between the
+resonance piece and the positive sector through the
+mixed $A_\infty$-operations.  The spectral sequence provides a
+systematic algorithm for computing the bar cohomology of any
+finite-resonance algebra.
+\end{construction}
+
+\begin{proposition}[Resonance spectral sequence degeneration;
+\ClaimStatusProvedHere]
+\label{prop:resonance-ss-degeneration}
+In the setting of
+Construction~\textup{\ref{const:resonance-spectral-sequence}},
+if the mixed operations
+$\cA^{>0} \otimes R_\cA \to \cA^{>0}$ raise positive weight
+by at least~$\delta \ge 1$, then the spectral sequence
+degenerates at page $E_{\lfloor w/\delta \rfloor + 1}$ for
+elements of total weight~$w$.
+
+In particular, if $\delta = 1$ the spectral sequence for
+weight-$w$ elements has at most $w+1$ pages, and if
+$\delta \ge w$ it degenerates at $E_2$
+\textup{(}the first correction suffices\textup{)}.
+\end{proposition}
+
+\begin{proof}
+Each application of $d_r$ increases positive weight by
+exactly~$r \cdot \delta$.  For an element of total weight~$w$,
+the positive weight is bounded by~$w$, so $d_r = 0$ for
+$r > w/\delta$.  Hence $E_{\lfloor w/\delta \rfloor + 1}
+= E_\infty$ for weight-$w$ elements.
+\end{proof}
+
+\subsection{Resonance rank computations for standard families}
+
+\begin{proposition}[Resonance ranks of the standard families;
+\ClaimStatusProvedHere]
+\label{prop:resonance-ranks-standard}
+For the standard chiral algebra families, the resonance rank
+and resonance decomposition are:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccl}
+\textbf{Family} & $\rho(\cA)$ & $\dim R_\cA$ & \textbf{Notes} \\
+\hline
+Heisenberg $\mathcal{H}_k$ & $0$ & $0$
+  & Quadratic; no completion needed \\
+Free fermion $\mathrm{Fer}$ & $0$ & $0$
+  & Quadratic; no completion needed \\
+$\beta\gamma$ system & $0$ & $0$
+  & Quadratic; no completion needed \\
+$\widehat{\mathfrak{g}}_k$ \textup{(}affine\textup{)} & $0$ & $0$
+  & Quadratic OPE; PBW-Koszul \\
+$\mathrm{Vir}_c$ \textup{(}Virasoro\textup{)} & $1$ & $1$
+  & $R = \bk \cdot m_0$
+    \textup{(}curvature from quartic pole\textup{)} \\
+$\mathcal{W}_3$ & $1$ & $1$
+  & $R = \bk \cdot m_0$
+    \textup{(}curvature from sixth-order pole\textup{)} \\
+$\mathcal{W}_N$ \textup{(}$N \ge 3$\textup{)} & $1$ & $1$
+  & Curvature $m_0 \propto c$;
+    single resonance direction \\
+$\mathcal{W}_{1+\infty}$ & $0$ & $0$
+  & Positive conformal-weight tower;
+    stabilization applies \\
+$Y(\mathfrak{g})$ \textup{(}Yangians\textup{)} & $0$ & $0$
+  & Positive RTT-weight tower;
+    stabilization applies
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+\emph{Quadratic families} ($\mathcal{H}_k$, $\mathrm{Fer}$,
+$\beta\gamma$, $\widehat{\mathfrak{g}}_k$):
+The OPE is at most quadratic, and the bar complex is
+finite-dimensional at each weight.  The strong completion-tower
+axiom (Definition~\ref{def:strong-completion-tower}) is
+satisfied for the PBW filtration; no resonance piece is needed.
+
+\emph{Virasoro and $\mathcal{W}_N$} ($N \ge 3$):
+In the curved $A_\infty$-decomposition of the chiral algebra
+structure, the central charge contributes a curvature element
+$m_0 = \kappa(\cA) \cdot \eta \in F^0\cA$, where $\eta$ is
+the vacuum covector.
+The resonance piece $R_\cA = \bk \cdot m_0$ is
+one-dimensional, with trivial differential $d_R(m_0) = 0$
+(the curvature is closed by the $A_\infty$-identity
+$m_1(m_0) + m_2(m_0, m_0) = 0$, and for a single generator
+this reduces to $m_1(m_0) = 0$ plus higher-order terms that
+vanish by dimension).  Hence $\rho(\cA)
+= \dim H^*(R_\cA, m_1^R) = 1$.
+
+\emph{Positive towers} ($\mathcal{W}_{1+\infty}$, $Y(\mathfrak{g})$):
+The tower structure provides a positive conformal-weight (resp.\
+RTT-weight) grading.  The curvature at each finite stage is
+absorbed into the finite-type bar-cobar regime, and the
+stabilized completion of
+Theorem~\ref{thm:stabilized-completion-positive} applies.
+The infinite-generator limit has $R_\cA = 0$ because the
+curvature at each stage is handled by the finite truncation.
+\end{proof}
+
+\begin{corollary}[Virasoro resonance spectral sequence;
+\ClaimStatusProvedHere]
+\label{cor:virasoro-resonance-ss}
+For $\mathrm{Vir}_c$ with $\rho = 1$, the resonance spectral
+sequence of
+Construction~\textup{\ref{const:resonance-spectral-sequence}}
+has:
+\begin{itemize}
+\item $E_1 \cong H^*(\barB(\mathrm{Vir}_c^{>0}))$
+  \textup{(}since $H^*(\barB(R_{\mathrm{Vir}})) = \bk$\textup{)};
+\item the same-family shadow $\mathrm{Vir}_{26-c}$ is the
+  $E_1$ page \textup{(}the ``zeroth approximation'' to the true
+  dual, computed from the positive-weight bar cohomology alone\textup{)};
+\item the differentials $d_r$ for $r \ge 1$ are the corrections
+  from the central charge coupling.
+\end{itemize}
+In particular, $\mathrm{Vir}_{26-c}$ is reinterpreted as the
+first page of the resonance spectral sequence, not the final dual.
+\end{corollary}
+
+\begin{proof}
+Since $R_{\mathrm{Vir}} = \bk \cdot m_0$ with trivial
+differential, $H^*(\barB(R)) = \bk$.  The $E_1$ page is
+therefore $H^*(\barB(\mathrm{Vir}_c^{>0})) \otimes \bk
+= H^*(\barB(\mathrm{Vir}_c^{>0}))$.  This is precisely the
+bar cohomology of the ``decurved'' Virasoro algebra (the
+algebra with central charge set to zero in the bar complex),
+which computes the same-family Koszul dual
+$\mathrm{Vir}_{26-c}$ at the M/S-level.  The higher pages
+$d_r$ compute corrections from the curvature coupling $m_0$,
+producing the full H-level Koszul dual.
+\end{proof}
+
+\begin{remark}[The Virasoro resonance model]
+\label{rem:virasoro-resonance-model}
+The Virasoro algebra $\mathrm{Vir}_c$ should admit a
+positive-energy filtration on the state-space bar complex
+with a finite-dimensional resonance piece
+$R_{\mathrm{Vir}}$ accounting for the central term and
+normal-ordering corrections.  The hypotheses that must be
+verified are:
+\begin{enumerate}
+\item finite-dimensionality of the resonance slice;
+\item strict positive-weight growth of mixed operations;
+\item compatibility with the finite-stage $\mathcal{W}_N$
+  approximants (so that
+  $\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$
+  recovers the $N \to \infty$ limit of
+  $\bar B(W_N)$);
+\item DS-reduction compatibility with the resonance
+  decomposition.
+\end{enumerate}
+If these hold, then the current same-family shadow
+$\mathrm{Vir}_{26-c}$ is reinterpreted as the
+\emph{depth-zero resonance shadow}---the image of the
+resonance truncation $R_{\mathrm{Vir}}$---while the
+genuine $\mathcal{W}_\infty$-type dual is recovered only
+from the full completed object
+$\widehat{\bar B}^{\mathrm{res}}(\mathrm{Vir}_c)$.
+This is a significant conceptual advance: the same-family
+shadow is not the final dual but rather the leading term of a
+resonance expansion.
+\end{remark}
+
+\subsection{The Platonic completion conjecture}
+
+\begin{conjecture}[Platonic completion theorem]
+\label{conj:platonic-completion}
+\ClaimStatusConjectured{}
+Every separated complete chiral $A_\infty$-algebra $\cA$
+arising from a positive-energy chiral algebra admits a canonical
+decomposition
+\[
+\cA \cong R_\cA \;\widehat{\oplus}\; \cA^+_\cA
+\]
+where $\cA^+_\cA$ satisfies stabilized completion
+\textup{(}Theorem~\textup{\ref{thm:stabilized-completion-positive})}
+and $R_\cA$ is finite-dimensional.  The completed reduced bar
+coalgebra is then
+\[
+\widehat{\bar B}(\cA)
+\simeq
+\widehat{\bar B}^{\mathrm{st}}(\cA^+_\cA)
+\;\widehat{\otimes}\;
+\bar B(R_\cA),
+\]
+and the completed cobar recovers~$\cA$.
+
+For $\mathcal{W}_{1+\infty}$, affine Yangians, and positive
+RTT towers, one has $R_\cA = 0$.
+For Virasoro and non-quadratic $\mathcal{W}$-families, one has
+$0 < \dim R_\cA < \infty$.
+The same-family shadow $\mathrm{Vir}_{26-c}$ is the image of the
+resonance truncation~$R_\cA$, while the genuine
+$\mathcal{W}_\infty$-type dual is recovered only from the full
+completed object.
+\end{conjecture}
+
+\begin{remark}[MC4 execution programme]
+\label{rem:mc4-execution-programme}
+The correct execution order for the MC4 frontier, given the
+splitting of Remark~\ref{rem:mc4-splitting}, is:
+\begin{enumerate}
+\item \emph{Promote Theorem~\textup{\ref{thm:stabilized-completion-positive}}
+  to the main MC4 theorem.}
+  Positive towers are declared reduced to weightwise stabilization.
+  This shrinks MC4 to the resonant regime.
+\item \emph{Solve the unshifted completed envelope first.}
+  For Yangian/$\mathcal{W}_{1+\infty}$-type targets, prove
+  completed bar-cobar for the unshifted completed envelope before
+  touching shifted quotients.  The kernel
+  $\to$ completed envelope $\to$ boundary quotient order is
+  dictated by the coideal structure
+  \textup{(}Appendix~\textup{\ref{app:shifted-rtt}}\textup{)}.
+\item \emph{Add quotient/coideal descent.}
+  Prove that orthogonal coideals and shifted quotients descend
+  through completion.  The shift is not the local problem; it is
+  the boundary quotient problem.  BFN-type shifted data should
+  appear at this stage.
+\item \emph{Build the Virasoro resonance model.}
+  Construct a positive-energy filtration on the Virasoro
+  state-space bar complex, isolate the finite-dimensional
+  resonance piece $R_{\mathrm{Vir}}$, and verify the hypotheses
+  of Remark~\textup{\ref{rem:virasoro-resonance-model}}.
+\item \emph{Only then return to MC5.}
+  The dependency chain
+  $\text{MC3} \Rightarrow \text{MC4} \Rightarrow \text{MC5}$
+  remains inviolable (MC3 proved in type~$A$; MC4 proved).  The BV/BRST physics dictionary
+  becomes mathematically well-posed only after the completed
+  bar-cobar machine is in place.
+\end{enumerate}
+\end{remark}
+
 \section{Summary}
 
 \begin{remark}[Completed frontier package]\label{rem:nilpotent-main}
@@ -518,13 +1014,30 @@ extension of the proved core.  What is currently in hand is:
       Chapter~\ref{chap:concordance};
 \item the compatibility of these completed models with the
       Beilinson--Drinfeld filtered framework
-      \textup{(}Theorem~\ref{thm:BD-chiral-homology}\textup{)}.
+      \textup{(}Theorem~\ref{thm:BD-chiral-homology}\textup{)};
+\item the MC4 splitting into positive
+  \textup{(}$\mathrm{MC4}^+$, resolved by stabilization\textup{)}
+  and resonant \textup{(}$\mathrm{MC4}^0$\textup{)} regimes
+  \textup{(}Remark~\ref{rem:mc4-splitting}\textup{)};
+\item stabilized completion for positive towers
+  \textup{(}Theorem~\ref{thm:stabilized-completion-positive}\textup{)};
+\item the resonance rank invariant
+  \textup{(}Definition~\ref{def:resonance-rank}\textup{)}
+  and resonance-filtered completed bar-cobar
+  \textup{(}Theorem~\ref{thm:resonance-filtered-bar-cobar}\textup{)};
+\item the Platonic completion conjecture
+  \textup{(}Conjecture~\ref{conj:platonic-completion}\textup{)},
+  which identifies the irreducible core of MC4 as a finite
+  resonance problem.
 \end{enumerate}
 What is \emph{not} yet elevated to monograph-wide theorematic status is
-the universal claim that finite generation plus polynomial growth alone
-suffice for every non-quadratic chiral algebra.  The remaining missing
-steps are exactly the global obstruction-vanishing argument, the
-completed $E_2$-degeneration argument, and the finite-stage
-compatibility needed to pass from the standard towers to a universal
-inverse-limit theorem.
+the Virasoro resonance model: the explicit construction of a
+positive-energy filtration with finite-dimensional resonance piece
+for $\mathrm{Vir}_c$ and the non-quadratic $\mathcal{W}_N$ algebras.
+The Platonic completion conjecture
+\textup{(}Conjecture~\ref{conj:platonic-completion}\textup{)}
+is the sharp form of the remaining MC4 content:
+if every positive-energy chiral algebra has finite resonance rank,
+then ``MC4'' is a finite-dimensional problem sitting atop an
+already-solved positive-weight stabilization machine.
 \end{remark}

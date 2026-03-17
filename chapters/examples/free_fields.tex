@@ -43,14 +43,28 @@ below; they are the base cases that the general theory of Part~I must
 reproduce.
 
 
-\begin{remark}[Shadow Postnikov tower for free fields]\label{rem:free-fields-master-mc}
-Free fields ($bc$/$\beta\gamma$) are the simplest non-Heisenberg atoms.
-Their shadow Postnikov towers in $\mathfrak{g}^{\mathrm{mod}}_\cA$
-(Definition~\ref{def:modular-convolution-dg-lie}) test the nonlinear
-shadow calculus at weight~$4$: the quartic contact invariant first
-appears here, while the scalar level~$\kappa$ vanishes for
-$\beta\gamma$ and is nonzero for~$bc$
-(Remark~\ref{rem:unifying-principle}).
+\begin{remark}[Shadow Postnikov tower for free fields: the Gaussian base case]
+\label{rem:free-fields-master-mc}
+\index{shadow Postnikov tower!free-field atoms}
+In the Chriss--Ginzburg framework, each free-field atom is a
+specialization of the universal MC element $\Theta_\cA \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The Gaussian archetype is
+characterized by the strongest possible truncation: the shadow
+Postnikov tower terminates at arity~$2$, meaning
+$\Theta_\cA^{\leq 2} = \kappa \cdot \eta \otimes \Lambda$ and all
+higher projections $\Theta_\cA^{\leq r} = \Theta_\cA^{\leq 2}$ for
+$r \geq 3$.  This is equivalent to saying that the convolution algebra
+$\gAmod$ has trivial higher brackets: the modular deformation complex
+$\Definfmod(\cA)$ is formal.
+
+The free fermion and $bc$ ghost system are Gaussian with
+$\kappa \neq 0$; the $\beta\gamma$ system breaks out of the Gaussian
+class because $\Theta^{\leq 4} \neq \Theta^{\leq 2}$ (quartic contact
+shadow nontrivial), even though $\kappa_{\beta\gamma} = 0$ on the
+weight-changing line.  Thus the free-field periodic table already
+exhibits the transition from the Gaussian to the contact/quartic
+archetype --- the first step up the shadow tower classification
+(Table~\ref{tab:shadow-tower-census}).
 \end{remark}
 
 \begin{remark}[Three-pillar interpretation: free-field atoms]
@@ -123,7 +137,9 @@ exponential growth of interacting theories
 
 \section{Free-field atoms: setup and OPE structure}\label{sec:free-field-atoms-setup}
 
-The four free-field atoms --- the free fermion, the $\beta\gamma$ system, the $bc$ ghost system, and the single-generator fermion--boson pair --- are defined below with their OPE structure and relations.
+The four free-field atoms --- the free fermion, the $\beta\gamma$ system, the $bc$ ghost system, and the single-generator fermion--boson pair --- are defined below with their OPE structure and relations.  Each definition should be read as specifying the input data for the universal construction
+$\Theta_\cA := D_\cA - d_0 \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The bar complex, Koszul dual, genus tower, and shadow invariants computed below are all \emph{outputs} of that single MC element, projected to the relevant arity and genus.  For free-field atoms, the projection is maximally simple: the Gaussian archetype (free fermion, $bc$) has $\Theta_\cA = \Theta_\cA^{\leq 2}$, and even the contact/quartic archetype ($\beta\gamma$) terminates at $\Theta_\cA^{\leq 4}$.
 
 \subsection{Free fermion}\label{sec:free-fermion}%
 \index{free fermion|textbf}%
@@ -1009,7 +1025,7 @@ More explicitly, the bar complex decomposes as:
 
 \begin{proof}
 \emph{Proof~1: Via factorization envelopes.}
-The Heisenberg chiral algebra is the factorization envelope of the abelian Lie$^*$ algebra $\mathfrak{h}_k = (\mathcal{O}_X, 0)$ with trivial bracket and pairing $\langle \alpha, \alpha \rangle = k$. By the Francis--Gaitsgory theory of chiral Lie$\leftrightarrow$Com duality \cite{FG12}, for an abelian chiral Lie algebra $\mathfrak{a}$:
+The Heisenberg chiral algebra is the factorization envelope of the abelian Lie$^*$ algebra $\mathfrak{h}_k = (\mathcal{O}_X, 0)$ with trivial bracket and pairing $\langle \alpha, \alpha \rangle = k$.  This is a special case of Nishinaka's general construction~\cite{Nish26} (see also Vicedo~\cite{Vic25}): the enveloping vertex algebra $\Uvert(\mathfrak{h}_k)$ recovers $\cH_k$.  By the Francis--Gaitsgory theory of chiral Lie$\leftrightarrow$Com duality \cite{FG12}, for an abelian chiral Lie algebra $\mathfrak{a}$:
 \[\mathrm{Fact}(\mathfrak{a})^! \simeq C^*_{\mathrm{Lie}^*}(\mathfrak{a}) = \mathrm{Sym}^{\mathrm{ch}}(\mathfrak{a}^*[1])\]
 Since $\mathfrak{h}_k$ is abelian, the Chevalley--Eilenberg complex is formal: $C^*_{\mathrm{Lie}^*}(\mathfrak{h}_k) = \mathrm{Sym}^{\mathrm{ch}}(\mathfrak{h}_k^*[1])$, which is the chiral symmetric algebra on the dual generators.
 
@@ -1611,8 +1627,8 @@ $bc$ ghosts & $\beta\gamma$ system & Exact & D-branes & \ClaimStatusProvedHere \
 Heisenberg $\mathcal{H}_k$ & $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ (curved) & Exact & Level inversion & \ClaimStatusProvedHere \\
 Free boson $\partial\phi$ & Symplectic bosons & Exact & Open-closed & \ClaimStatusProvedElsewhere~\cite{FBZ04} \\
 $\widehat{\mathfrak{g}}_k$ & $\widehat{\mathfrak{g}}_{-k-2h^\vee}$ & Filt./Curved & Feigin--Frenkel & \ClaimStatusProvedHere\textsuperscript{a} \\
-Virasoro & $W_\infty$ & Curved & AdS$_3$/CFT$_2$ & \ClaimStatusConjectured \\
-$\mathcal{W}_N$ & Yangian $Y(\mathfrak{gl}_N)$ & Curved & Higher spin & \ClaimStatusConjectured \\
+Virasoro$_c$ & $\mathrm{Vir}_{26-c}$ (dynamic shadow) & Curved & $c \mapsto 26-c$ & \ClaimStatusProvedHere\textsuperscript{c} \\
+$\mathcal{W}_N$ & $\mathcal{W}_N^!$ (cumulant-enlarged) & Filt./Curved & Higher spin & \ClaimStatusConjectured\textsuperscript{d} \\
 Super-Virasoro & Super-$W_\infty$ & Curved & AdS$_3$ sugra & \ClaimStatusConjectured \\
 $Y(\mathfrak{g})$ & $Y_{R^{-1}}(\mathfrak{g})$ & Self-dual & Integrability & \ClaimStatusProvedHere\textsuperscript{b} \\
 Virasoro$_{26}$ & String vertex algebra & Classical & Moduli $\leftrightarrow$ BRST & \ClaimStatusProvedHere \\
@@ -1635,6 +1651,22 @@ configuration spaces
 \textup{(}Theorem~\textup{\ref{thm:universal-kac-moody-koszul})}
 establishes the level shift.
 
+\noindent\textsuperscript{c} The same-family shadow
+$\mathrm{Vir}_{26-c}$ is the \emph{dynamic} Koszul dual at the M/S-level
+(Theorem~\ref{thm:virasoro-koszul-dual}).  The full \emph{kinematic}
+dual has infinitely many primitive cumulants
+($\Delta_{\mathrm{Vir}}(t) = t^3 + 2t^5 + \cdots \neq 0$);
+the H-level identification with a $\mathcal{W}_\infty$-type object
+is the residual MC4 task
+(Theorem~\ref{thm:completed-bar-cobar-strong} provides the structural
+framework; the specific target identification is open).
+
+\noindent\textsuperscript{d} The naive dual on generators $L^*, W^*$
+is insufficient: the composite field $\Lambda = :(TT): -
+\tfrac{3}{10}\partial^2 T$ forces a cumulant cogenerator $\Lambda^*$
+with nonprimitive coproduct
+(Remark~\ref{rem:cumulant-dual-nonquadratic}).
+
 \noindent\textsuperscript{b} The Yangian $\Eone$-chiral Koszul duality
 $Y(\mathfrak{g})^! \cong Y_{R^{-1}}(\mathfrak{g})$ is proved in
 Theorem~\ref{thm:yangian-koszul-dual}: the RTT presentation is
@@ -1647,7 +1679,7 @@ exact self-duality
 \begin{remark}[Status of Koszul duality identifications]\label{rem:koszul-table-status}
 The entries fall into two categories.
 \emph{Proved}: the free-field and Heisenberg dualities (Chapter~\ref{sec:betagamma-koszul-dual}, Theorem~\ref{thm:heisenberg-koszul-dual-early}); the Kac--Moody level shift $\widehat{\mathfrak{g}}_k \leftrightarrow \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Theorems~\ref{thm:sl2-koszul-dual} and~\ref{thm:universal-kac-moody-koszul}).
-\emph{H-level (MC4 closed on $\mathcal{W}_\infty$)}: the infinite-generator identifications Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$.  The M-level theory (bar complex, inversion, Koszulness, complementarity) is proved for all principal $\mathcal{W}_N$ at generic level.  On the $\mathcal{W}_\infty$ side, the finite-packet coefficient identities $\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$ on $\mathcal{I}_N$ are unconditionally closed at all stages via $\mathcal{W}_N$ rigidity (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}).  On the Yangian side, the evaluation-core comparison $\mathsf{K}^{\mathrm{line}} = \mathsf{K}^{\mathrm{RTT}}$ on $\Delta_{a,0}(N)$ is verified ($249$ tests); the remaining DK-5 categorical packet is downstream of MC3 (now accessible in type~A).
+\emph{H-level (MC4 closed on $\mathcal{W}_\infty$)}: the infinite-generator identifications Virasoro $\rightsquigarrow W_\infty$, $\mathcal{W}_N \rightsquigarrow Y(\mathfrak{gl}_N)$, Super-Virasoro $\rightsquigarrow$ Super-$W_\infty$.  The M-level theory (bar complex, inversion, Koszulness, complementarity) is proved for all principal $\mathcal{W}_N$ at generic level.  On the $\mathcal{W}_\infty$ side, the finite-packet coefficient identities $\mathsf{C}^{\mathrm{res}} = \mathsf{C}^{\mathrm{DS}}$ on $\mathcal{I}_N$ are unconditionally closed at all stages via $\mathcal{W}_N$ rigidity (coefficient identification, Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) within the strong completion-tower framework (structural proof, Theorem~\ref{thm:completed-bar-cobar-strong}).  On the Yangian side, the evaluation-core comparison $\mathsf{K}^{\mathrm{line}} = \mathsf{K}^{\mathrm{RTT}}$ on $\Delta_{a,0}(N)$ is verified ($249$ tests); the remaining DK-5 categorical packet is downstream of MC3 (now accessible in type~A).
 \end{remark}
 
 \begin{remark}[Scope: conjectural table entries]
@@ -1674,6 +1706,43 @@ Some algebras in this table have \emph{additional} duality structures beyond sta
 \end{enumerate}
 
 These additional structures are typically curved or filtered Koszul dualities, operating in extended categories. They should not be confused with the standard Koszul duality listed in the main table column.
+\end{remark}
+
+\begin{remark}[Completion kinematics of free-field atoms]
+\label{rem:free-field-completion-kinematics}
+\index{completion kinematics!free fields}
+\index{completion entropy!free fields}
+The free-field atoms occupy the simplest corner of the completion
+phase diagram
+(Table~\ref{tab:completion-kinematics} in the landscape census):
+\begin{center}
+\small
+\begin{tabular}{lcccl}
+\textbf{Algebra} & $G_\cA(t)$ & $\rho_K$ & $h_K$ & \textbf{Class} \\
+\hline
+Heisenberg $\mathcal{H}_k$
+  & $t$ & $1$ & $0$ & G \\
+Free fermion $\psi$
+  & $t$ & $1$ & $0$ & G \\
+$\beta\gamma$
+  & $t/(1-t)$ & $1/2$ & $\log 2$ & C \\
+$\hat{\mathfrak{g}}_k$
+  & $(\dim\mathfrak{g})\,t/(1{-}t)$ & $1/(\dim\mathfrak{g}+1)$ & $\log(\dim\mathfrak{g}+1)$ & L \\
+\end{tabular}
+\end{center}
+All have $\Delta_\cA(t) = 0$: the declared generators span the
+full primitive sector, with no cumulant enlargement needed.  The
+G-class atoms (Heisenberg, free fermion) have $h_K = 0$, meaning
+the completed bar complex does not grow exponentially---the
+completion is trivial.  The L- and C-class atoms have positive
+entropy controlled by the number of generator flavours.
+
+The reduced-weight windows $K_q(\cA)$
+(Definition~\ref{def:finite-window}) make the bar complex finite at
+each level: for Heisenberg, $\dim K_q = q$ (one bar word per reduced
+weight); for $\hat{\mathfrak{g}}_k$, $\dim K_q \sim
+(\dim\mathfrak{g}+1)^q$.  This is the kinematic underpinning of the
+finite-stage bar computations in the sections above.
 \end{remark}
 
 \subsubsection{Computing the Koszul dual via bar-cobar}
@@ -3449,7 +3518,7 @@ C^*_{\mathrm{BRST}}(\cA)$ as chain complexes
 (the bar differential coincides with the semi-infinite
 differential via the PBW filtration for KM or the
 DS reduction for W-algebras).  By~(iii), the anomaly
-coefficient $\kappa = c/(2(k+h^\vee))$ for
+coefficient $\kappa = (k+h^\vee)\dim(\fg)/(2h^\vee)$ for
 $\widehat{\fg}_k$ satisfies $\kappa + \kappa' = 0$
 under $k \mapsto -k - 2h^\vee$.  The critical
 central charge $c_{\mathrm{crit}} = 26$ appears as

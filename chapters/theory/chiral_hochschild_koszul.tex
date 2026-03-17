@@ -25,17 +25,20 @@ derived critical locus conjecture
 (Conjecture~\ref{conj:derived-critical-locus-chk}).
 \end{remark}
 
-Hochschild cohomology is not merely an auxiliary invariant of a chiral
-algebra: it is the receptacle for deformations, centers, and eventually
-bulk fields in the physical incarnations of the story.  When the volume
-says ``Hochschild,'' it means ``the internal memory of all possible
-deformations and couplings.''  This chapter constructs the chiral
-Hochschild complex, proves its polynomial growth on the Koszul locus
-(Theorem~H), establishes the Koszul duality
-$\ChirHoch^n(\cA) \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X$,
-and shows how the complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main}) identifies the
-deformation and obstruction packages as complementary Lagrangians.
+The chiral Hochschild complex is the tangent complex to the
+MC moduli $\MC(\gAmod)/\mathrm{gauge}$ at the universal class
+$\Theta_\cA$.  Every deformation, every obstruction, every bulk-field
+coupling passes through this tangent space; the cyclic deformation
+complex $\Defcyc(\cA)$
+(Definition~\ref{def:cyclic-deformation-elementary}) is its cyclic
+refinement.  Theorem~H says the tangent complex is concentrated
+in degrees $\{0, 1, 2\}$ on the Koszul locus---the MC moduli is
+smooth of virtual dimension~$2$---and the Koszul duality
+$\ChirHoch^n(\cA) \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X$
+is the Verdier duality on this tangent space.  The complementarity
+theorem (Theorem~\ref{thm:quantum-complementarity-main}) identifies
+the $\cA$-visible and $\cA^!$-visible tangent directions as
+complementary Lagrangians in the shifted-symplectic MC moduli.
 
 The homotopy perspective is essential here.  Hochschild complexes
 naturally carry brace and $E_2$ structures; the convolution dg~Lie
@@ -671,6 +674,343 @@ At genus $g \geq 1$, the exchange is already the content of Theorem~\ref{thm:qua
 \begin{example}[Heisenberg specialization]\label{ex:heisenberg-curved-specialization}
 For the Heisenberg algebra $\mathcal{H}_k$, the curved $A_\infty$ structure on the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ has $m_0 = -k \cdot \omega$ and $m_n = 0$ for $n \geq 3$: the curvature is the entire obstruction, with no higher operations (\S\ref{sec:frame-genus1}).  This is the simplest nontrivial instance of the deformation-obstruction exchange above: $\ChirHoch^2(\mathcal{H}_k) = \mathbb{C}$ (the level deformation) is dual to $\ChirHoch^0(\mathrm{Sym}^{\mathrm{ch}}(V^*))^\vee \otimes \omega_X = \mathbb{C}$ (the center of the dual).
 \end{example}
+
+
+%================================================================
+%  FORMALITY, MODULI, AND OPERADIC PERSPECTIVES ON KOSZULNESS
+%================================================================
+
+\subsection{Formality, moduli, and operadic perspectives on Koszulness}
+\label{subsec:formality-moduli-operadic}
+
+The Chriss--Ginzburg principle organizes this subsection: the modular
+convolution algebra $\gAmod$ carries the universal Maurer--Cartan
+element $\Theta_{\cA}$
+(Theorem~\ref{thm:mc2-bar-intrinsic}), and every structural property
+of~$\cA$ is a property of~$\Theta_{\cA}$.  We investigate four
+formality-type conditions on~$\gAmod$ and their consequences for
+Koszulness.
+
+\medskip
+
+\begin{proposition}[$\Etwo$-formality of chiral Hochschild cohomology;
+\ClaimStatusProvedHere]
+\label{prop:e2-formality-hochschild}
+\index{formality!$\Etwo$-chiral Hochschild}
+\index{Hochschild cohomology!$\Etwo$-formality}
+Let $\cA$ be a chirally Koszul algebra on a smooth projective
+curve~$X$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\ChirHoch^*(\cA)$ is formal as an $\Etwo$-algebra:
+  the $\Etwo$ quasi-isomorphism type of $\ChirHoch^*(\cA)$ is
+  determined by the graded algebra $H^*(\ChirHoch(\cA))$ with its
+  cup product and degree-$1$ bracket.
+
+\item All higher $\Etwo$-operations \textup{(}braces of
+  arity~$\geq 3$, Massey products, $A_\infty$ corrections\textup{)}
+  are cohomologically trivial.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:hochschild-polynomial-growth},
+$\ChirHoch^n(\cA) = 0$ for $n \notin \{0,1,2\}$.
+The $\Etwo$-operations of arity~$k$ on $H^*(\ChirHoch(\cA))$
+are maps
+$H^{n_1} \otimes \cdots \otimes H^{n_k} \to H^{n_1 + \cdots + n_k - k + 1}$.
+For $k \geq 3$, the source lives in total degree
+$n_1 + \cdots + n_k \geq 0$ and the target in degree
+$\leq n_1 + \cdots + n_k - 2$.  Since each $n_i \in \{0,1,2\}$,
+the target degree is at most $2k - 2$; but for the target to be
+nonzero it must lie in $\{0,1,2\}$, which forces $2k - 2 \geq 0$
+(automatic) and $n_1 + \cdots + n_k - k + 1 \leq 2$, i.e.\
+$n_1 + \cdots + n_k \leq k + 1$.  With each $n_i \geq 0$ and
+$k \geq 3$ inputs, the inputs are almost all in degree~$0$.
+The brace $b_{k-1}(a; a_1, \ldots, a_{k-1})$ for $a \in H^p$,
+$a_i \in H^{q_i}$ has target degree $p + \sum q_i - (k-1)$.
+On the bar side, the PBW collapse
+(Theorem~\ref{thm:bar-concentration}) gives
+$\barB^{\mathrm{ch}}(\cA)^{p,q} = 0$ for $p \neq q$,
+so the braces factor through a single diagonal line in the
+bar bigrading.  The Kontsevich--Tamarkin formality
+(Theorem~\ref{thm:e2-formality}) applied to the configuration-space
+model of the $\Etwo$-structure then shows that all higher braces are
+exact: the bar spectral sequence that collapses at~$E_1$ forces the
+higher $\Etwo$-operations to be coboundaries.
+
+Explicitly: obstructions to $\Etwo$-formality are Hochschild
+cochains of negative \emph{excess} $e := \sum n_i - k - p$, where
+$p$ is the target degree.  Concentration in $\{0,1,2\}$ forces
+$e \leq 2 - k$ for $k \geq 3$.
+The deformation retraction from
+$\barB^{\mathrm{ch}}(\cA)$ to its cohomology, which exists by
+PBW collapse, provides the contracting homotopy that trivializes
+these operations.  This is the standard ``concentration-implies-formality''
+argument (cf.\ \cite{LV12}, \S10.3) applied to the three-term
+complex $H^0 \oplus H^1 \oplus H^2$.
+\end{proof}
+
+\begin{remark}[What $\Etwo$-formality adds beyond Theorem~H]
+\label{rem:e2-formality-vs-thmH}
+Theorem~\ref{thm:hochschild-polynomial-growth} gives concentration.
+Proposition~\ref{prop:e2-formality-hochschild} extracts a strictly
+stronger consequence: the $\Etwo$-algebra structure on
+$H^*(\ChirHoch(\cA))$ is determined by the cup product and the
+Gerstenhaber bracket alone.  In particular, the secondary Borcherds
+operations $F_n$ from the homotopy chiral algebra structure on
+$\barB^{\mathrm{ch}}(\cA)$
+(Theorem~\ref{thm:cech-hca}, Pillar~A) are exact for all
+$n \geq 3$, and $\Etwo$-formality is an automatic consequence of
+the PBW concentration, not an additional hypothesis.
+
+The converse---$\Etwo$-formality implies Koszulness---is false as
+stated.  A non-Koszul algebra whose Hochschild cohomology happens
+to be concentrated in three degrees would also be $\Etwo$-formal
+by the same argument.  The correct converse is at the level of
+convolution formality
+(Conjecture~\ref{conj:convolution-formality-one-channel}).
+\end{remark}
+
+\begin{conjecture}[Convolution formality $=$ one-channel;
+\ClaimStatusConjectured]
+\label{conj:convolution-formality-one-channel}
+\index{formality!convolution algebra}
+\index{one-channel!formality equivalence}
+\index{scalar saturation|see{one-channel}}
+Let $\cA$ be a modular Koszul chiral algebra.
+The modular convolution algebra
+\[
+\gAmod
+\;=\;
+\prod_{g,n}\,
+\operatorname{Hom}_{\Sigma_n}\!\bigl(
+  C_*(\overline{\cM}_{g,n}),\;
+  \operatorname{End}_{\cA}(n)
+\bigr)
+\]
+carries the five-component differential
+$D = d_{\mathrm{int}} + [\tau,-] + d_{\mathrm{sew}}
+  + d_{\mathrm{pf}} + \hbar\Delta$
+and the universal Maurer--Cartan element
+$\Theta_{\cA} := D_{\cA} - d_0
+\in \MC(\gAmod)$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.
+Then $\gAmod$ is formal as a quantum $L_\infty$-algebra if and
+only if $\cA$ is \emph{one-channel}
+\textup{(}scalar-saturated\textup{)}:
+\begin{equation}\label{eq:one-channel-formality}
+\Theta_{\cA}
+\;=\;
+\kappa(\cA) \cdot \eta \otimes \Lambda.
+\end{equation}
+\end{conjecture}
+
+\begin{remark}[The Chriss--Ginzburg content of convolution formality]
+\label{rem:convolution-formality-cg}
+\index{Chriss--Ginzburg principle!convolution formality}
+This is the central conjecture of the subsection.  Its content:
+
+\emph{Forward direction.}\;
+If $\gAmod$ is formal, the inclusion
+$H^*(\gAmod) \hookrightarrow \gAmod$ extends to a quantum
+$L_\infty$ quasi-isomorphism.  This quasi-isomorphism transports
+$\Theta_{\cA}$ to an MC element in the \emph{cohomology}
+$H^*(\gAmod)$, where it is determined by its linear data alone.
+That linear datum is the scalar $\kappa(\cA)$: the modular
+characteristic (Theorem~D) is the projection of $\Theta_{\cA}$
+to arity~$2$, genus~$1$
+(Corollary~\ref{cor:shadow-extraction}).  Formality forces the
+full MC element to be reconstructible from this projection, which is
+precisely scalar saturation~\eqref{eq:one-channel-formality}.
+
+\emph{Converse.}\;
+If $\Theta_{\cA} = \kappa \cdot \eta \otimes \Lambda$, then the
+MC equation $D \Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$
+reduces to a \emph{scalar} identity at each $(g,n)$, because
+$[\eta \otimes \Lambda, \eta \otimes \Lambda]$ factors through the
+metric contraction.  The higher $L_\infty$-brackets $\ell_k$
+($k \geq 3$), which are the non-formal corrections from the
+modular operad, act trivially on the one-dimensional
+subspace~$\bC \cdot \eta \otimes \Lambda$.  Hence
+$\gAmod$ is formal along the orbit of~$\Theta_{\cA}$.
+
+\emph{Relation to the shadow Postnikov tower.}\;
+The non-scalar universal classes
+of~\S\ref{subsec:non-scalar-theta} measure the deviation of
+$\Theta_{\cA}$ from the one-channel line.  In the language of the
+shadow tower, the cubic shadow~$C$, quartic resonance class~$Q$,
+and all higher shadows $\mathrm{Sh}_r$ are the
+\emph{obstructions to formality}: they are the higher-order
+corrections to $\Theta_{\cA}$ that prevent it from lying on the
+one-channel line.
+
+\emph{Pillar~C interaction} (Mok~\cite{Mok25}):
+the planted-forest coefficient algebra $G_{\mathrm{pf}}$
+(Definition~\ref{def:planted-forest-coefficient-algebra}) controls
+the non-formal corrections.  If the log Fulton--MacPherson
+compactification $\mathrm{FM}_n(X \mid D)$ contributes trivially
+from planted-forest strata, then $\gAmod$ is formal and $\cA$
+is one-channel.
+See Remark~\ref{rem:full-homotopy-why} for the parallel statement
+at the homotopy level.
+\end{remark}
+
+\begin{remark}[Hierarchy: formality, modular Koszulness, Koszulness]
+\label{rem:formality-vs-koszul}
+Three properties of increasing strength:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Koszulness} (genus~$0$): the bar spectral sequence
+  collapses at~$E_1$
+  (Theorem~\ref{thm:bar-concentration}).
+
+\item \emph{Modular Koszulness} (all genera): MK3 extends PBW
+  collapse; the scalar trace $\kappa(\cA)$ is the sole survivor
+  in the modular bar complex at $g \geq 1$.
+
+\item \emph{Convolution formality} (structural): the quantum
+  $L_\infty$-structure on $\gAmod$ is formal, equivalent to
+  scalar saturation by
+  Conjecture~\ref{conj:convolution-formality-one-channel}.
+\end{enumerate}
+The hierarchy is
+$\text{(c)} \Rightarrow \text{(b)} \Rightarrow \text{(a)}$,
+and neither implication reverses: the first gap is the non-scalar
+shadow tower (\S\ref{subsec:non-scalar-theta}); the second is the
+higher-genus curvature.
+\end{remark}
+
+\begin{conjecture}[MC moduli smoothness at the Koszul locus;
+\ClaimStatusConjectured]
+\label{conj:mc-moduli-smoothness}
+\index{Maurer--Cartan!moduli smoothness}
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$
+with universal MC element $\Theta_{\cA} \in \MC(\gAmod)$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.
+Then $\cA$ is chirally Koszul if and only if
+\begin{equation}\label{eq:mc-smoothness}
+H^2\!\bigl(\gAmod,\,
+  \operatorname{ad}(\Theta_{\cA})\bigr)
+\;=\; 0,
+\end{equation}
+i.e.\ the MC moduli stack $\MC(\gAmod)$ is smooth
+at~$\Theta_{\cA}$.
+\end{conjecture}
+
+\begin{remark}[Identifying the obstruction space]
+\label{rem:mc-smoothness-pbw}
+The twisted cohomology
+$H^2(\gAmod, \operatorname{ad}(\Theta_{\cA}))$ admits a direct
+identification.
+At genus~$0$, the $(g,n) = (0,3)$ component of the
+$\operatorname{ad}(\Theta_{\cA})$-twisted complex is
+$\ChirHoch^2(\cA)$
+(Corollary~\ref{cor:def-obs-exchange-genus0}), and for a
+Koszul algebra this equals
+$Z(\cA^!)^\vee \otimes \omega_X$: a finite-dimensional space
+completely controlled by the Koszul dual.
+
+At genus~$g \geq 1$, the contributions come from the modular bar
+complex.  The modular Koszulness axiom MK3 forces the bar spectral
+sequence to collapse at~$E_1$ in all bidegrees, which kills the
+higher-genus components of
+$H^2(\gAmod, \operatorname{ad}(\Theta_{\cA}))$.
+The shadow Postnikov tower
+(Corollary~\ref{cor:shadow-extraction}) then determines
+$\Theta_{\cA}$ from~$\kappa(\cA)$, leaving no room for obstructed
+deformations.
+
+The forward direction---Koszulness implies
+vanishing~\eqref{eq:mc-smoothness}---therefore follows from the
+PBW collapse at all genera.  The converse---smoothness implies
+Koszulness---is the nontrivial content: it asserts that obstructions
+to the bar spectral sequence collapsing are \emph{exactly} detected
+by twisted $H^2$.  A proof would require showing that every
+non-collapsing class in the bar complex produces a nontrivial
+element of $H^2(\gAmod, \operatorname{ad}(\Theta_{\cA}))$.
+For the Heisenberg algebra, both sides are one-dimensional:
+$H^2 = \bC$ classifies the level deformation, and the obstruction
+is the curvature $m_0 = -k \cdot \omega$
+(Example~\ref{ex:heisenberg-curved-specialization}).
+\end{remark}
+
+\begin{conjecture}[Bifunctor obstruction decomposition;
+\ClaimStatusConjectured]
+\label{conj:bifunctor-obstruction-decomposition}
+\index{bifunctor obstruction!decomposition}
+\index{Robert-Nicoud--Wierstra!no-bifunctor obstruction}
+The convolution $sL_\infty$-algebra
+$\operatorname{hom}_\alpha(\barB^{\mathrm{ch}}(\cA),\, \cA)$
+is functorial in each slot separately but fails as a bifunctor
+\textup{(\cite{RNW19}, Theorem~6.1;
+Remark~\textup{\ref{rem:two-level-convention})}}.
+For a modular Koszul algebra~$\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The arity-$3$ obstruction class
+\[
+\mathrm{obs}_3
+\;\in\;
+H^2\!\bigl(
+  \operatorname{hom}_\alpha^{(3)}
+  (\barB^{\mathrm{ch}}(\cA),\, \cA)
+\bigr)
+\]
+is nonzero.
+
+\item Every two-sided $\infty$-morphism that fails to exist as a
+  bifunctor morphism decomposes as a one-sided coalgebra morphism
+  followed by a one-sided algebra morphism, with the composition
+  independent of ordering up to homotopy.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Heisenberg test case and the MC3 frontier]
+\label{rem:bifunctor-analysis}
+\emph{Testability.}\;
+For the Heisenberg algebra $\cH_k$, the obstruction
+$\mathrm{obs}_3$ lives in the two-dimensional space
+$H^2(\operatorname{hom}_\alpha^{(3)}
+  (\barB^{\mathrm{ch}}(\cH_k), \cH_k))$.
+An explicit computation: $\barB^{\mathrm{ch}}(\cH_k)$ is
+concentrated in bar degree~$1$
+(Theorem~\ref{thm:bar-concentration}),
+so $\operatorname{hom}_\alpha^{(3)}$ reduces to maps from
+the triple self-product of the cogenerators.  The obstruction is
+the failure of the Leibniz rule for the simultaneous
+coalgebra-algebra functoriality, which is nonzero even for this
+simplest example because the Koszul duality functor itself is
+not strict-monoidal.
+
+\emph{Structural origin.}\;
+The no-bifunctor theorem of~\cite{RNW19} (\S6) is universal:
+$\mathrm{obs}_3 \neq 0$ for \emph{any} cooperad-operad pair.
+The content of part~(ii) is that Koszulness provides a
+\emph{one-slot workaround}: the Quillen equivalence
+$\barB_\kappa \dashv \Omega_\kappa$
+(Theorem~\ref{thm:quillen-equivalence-chiral})
+transports $\infty$-morphisms through one slot at a time.
+This is why the MC3 resolution in type~$A$
+(Theorem~\ref{thm:mc3-type-a-resolution}) succeeds: each step
+(chromatic filtration, prefundamental Clebsch--Gordan,
+Efimov completion, Dwyer--Kan on compacts) is a one-slot operation.
+The categorical lift to arbitrary type
+(Conjecture~\ref{conj:mc3-arbitrary-type}) must also proceed
+one slot at a time; the decomposition property of part~(ii)
+explains why this is sufficient.
+\end{remark}
+
+\begin{remark}[Operadic inheritance of Koszulness]
+\label{rem:operadic-inheritance}
+\index{Koszulness!operadic inheritance}
+Chiral Koszulness should descend from Koszulness of the chiral
+operad $P^{\mathrm{ch}}$ itself, just as $\Eone$-chiral Koszul
+duality (Theorem~\ref{thm:e1-chiral-koszul-duality}) derives from
+Koszulness of $\mathsf{Ass}$ via
+Lemma~\ref{lem:operadic-koszul-transfer}.
+This requires formality of $\overline{\mathrm{FM}}_n(X)$ as
+operadic objects on curves---see
+Conjecture~\ref{conj:operadic-complexity} for the detailed
+statement and verification table.
+\end{remark}
 
 \section{Example: boson-fermion duality}
 
@@ -4508,10 +4848,11 @@ $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$.
 At each finite order, the shadow Postnikov tower
 (Definition~\ref{def:shadow-postnikov-tower}) unifies
 both the genus-$0$ HCA relations and the higher-genus
-Maurer--Cartan structure; the conjectural all-arity limit
+Maurer--Cartan structure; the all-arity limit
 $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$
-on $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$ would
-give the full master equation.
+on $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$
+is the full master equation, proved by the bar-intrinsic
+construction (Theorem~\ref{thm:mc2-bar-intrinsic}).
 \end{remark}
 
 %================================================================

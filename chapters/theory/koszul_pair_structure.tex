@@ -1181,7 +1181,19 @@ where:
 \end{conjecture}
 
 \begin{remark}[Scope]
-The principal simply-laced case is Feigin--Frenkel \cite{Feigin-Frenkel} (proved); hook-type orbits in type $A$ are Arakawa--van~Ekeren \cite{AvE23} (Remark~\ref{rem:hook-type-evidence}).  The general non-principal conjecture separates into three packets: dual-orbit input, orbit-indexed level shift, and paired DS seed transport.
+The principal simply-laced case is Feigin--Frenkel
+\cite{Feigin-Frenkel} (proved).  The hook-type corridor in
+type~$A$ is now theorematic:
+full hook-type duality is proved at generic level, with
+inverse reductions connecting all hook-type nodes
+\cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair,AvE23}
+(Remark~\ref{rem:hook-type-evidence},
+Theorem~\ref{thm:hook-transport-corridor}).  The remaining
+frontier is not the existence of DS reduction for arbitrary~$f$
+(Kac--Roan--Wakimoto~\cite{KRW}), but proving that
+bar--cobar/Koszul duality commutes with arbitrary-nilpotent
+reduction and identifying the correct orbit-dependent level
+transform.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~II (equivalence).  (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
@@ -1385,7 +1397,7 @@ $\widehat{\fg}_k$ at $k \neq -h^\vee$:
   level~$k$.
 \item \emph{Curvature = CS level.}
   At genus~$1$, the bar complex has $\dfib^{\,2} = \kappa \cdot \omega_1$
-  with $\kappa = k\dim(\fg)/(2(k+h^\vee))$.  This curvature is
+  with $\kappa = (k+h^\vee)\dim(\fg)/(2h^\vee)$.  This curvature is
   the Chern--Simons level: the bar complex is curved precisely
   when $k \neq 0$ \textup{(}nontrivial gauge theory\textup{)},
   and anomaly cancellation $\kappa + \kappa' = 0$ for the dual
@@ -1418,7 +1430,7 @@ correspond to flat connections modulo gauge.
 Part~(iii) follows from
 $\dfib^{\,2} = \kappa \cdot \omega_1$
 (Theorem~\ref{thm:genus-universality}) with
-$\kappa(\widehat{\fg}_k) = k\dim(\fg)/(2(k+h^\vee))$
+$\kappa(\widehat{\fg}_k) = (k+h^\vee)\dim(\fg)/(2h^\vee)$
 (Remark~\ref{rem:km-central-charge-sum}).  For the dual pair
 $(k, k' = -k-2h^\vee)$,
 $\kappa + \kappa' = 0$
@@ -1762,6 +1774,46 @@ This is a deformed Chern--Simons action where the deformations encode the non-qu
 \subsection{Implications for Koszul duality}
 
 The Chern--Simons perspective: quadratic algebras give pure CS, non-quadratic algebras give deformed CS (each higher relation adds a vertex), critical level abelianizes the theory, and algebra/coalgebra exchange is CS level-rank duality.
+
+\begin{remark}[Cumulant duals for nonquadratic algebras]
+\label{rem:cumulant-dual-nonquadratic}
+\index{cumulant coalgebra!as Koszul dual}
+\index{nonquadratic algebra!cumulant dual}
+For quadratic chiral algebras ($\Delta_\cA(t) = 0$), the Koszul
+dual~$\cA^!$ is the linear dual of the bar coalgebra on the
+declared generators.  For genuinely nonquadratic algebras
+($\Delta_\cA(t) \neq 0$), the bar coalgebra develops primitive
+cogenerators not present among the declared generators of~$\cA$.
+The prototype is the $\mathcal{W}_3$ algebra: the composite field
+$\Lambda = :(TT): - \tfrac{3}{10}\partial^2 T$ appears as a
+primitive cogenerator $\Lambda^*$ in the bar complex, with nonprimitive
+coproduct $\Delta(\Lambda^*) = L^* \otimes L^* - \tfrac{3}{10}
+(\partial^2 L^* \otimes 1 + 1 \otimes \partial^2 L^*)$ and
+differential encoding the characteristic $W$--$W$ OPE coefficient
+$16/(22 + 5c)$.
+
+The correct completed dual of a nonquadratic chiral algebra is
+therefore the \emph{cumulant coalgebra}
+$\operatorname{Cum}_c(\cA) = \hat{T}^c(sQ(\cA)^\vee)$
+(Definition~\ref{def:cumulant-coalgebra}), where $Q(\cA) =
+\bar{\cA}/\partial\bar{\cA}$ is the canonical primitive sector
+extracted from the vacuum character
+(Definition~\ref{def:primitive-cumulant-quotient}).  The primitive
+defect $\Delta_\cA(t)$
+(Definition~\ref{def:primitive-defect-series}) measures the
+discrepancy between the cumulant coalgebra and the naive dual on
+declared generators.  The cumulant recognition conjecture
+(Conjecture~\ref{conj:cumulant-recognition}) predicts
+$\operatorname{gr}_\rho \hat{B}(\cA) \simeq
+\operatorname{Cum}_c(\cA)$.
+
+This is the Chriss--Ginzburg perspective applied to Koszul duality
+itself: every algebraic structure in the monograph is an MC element in
+a convolution dg Lie algebra, and the cumulant coalgebra is the
+correct \emph{source} coalgebra for those convolution maps.  Naive
+generators give the wrong source; cumulant generators give the
+canonical one.
+\end{remark}
 
 % ================================================================
 % THE ORDERED ASSOCIATIVE CORE
@@ -2239,6 +2291,342 @@ $\mathcal{W}$-algebra reduction machinery developed in
 \S\ref{sec:w-algebras-kps} above: if reduction commutes with
 duality, then the entire ordered open trace formalism descends
 to the reduced theory.
+
+% ================================================================
+% SECTION: CATEGORICAL KOSZULNESS AND THE MODULE-LEVEL FRONTIER
+% ================================================================
+
+\section{Categorical Koszulness and the module-level frontier}
+\label{sec:categorical-koszulness-frontier}
+
+The module equivalences of
+Theorems~\ref{thm:koszul-equivalence-categories}--\ref{thm:full-derived-module-equiv}
+are triangulated.  This section develops the $\infty$-categorical
+refinement: t-exactness of bar duality, weight decomposition of module
+categories, the chiral BGG correspondence, algebraicity of bar generating
+functions, and the interaction of Koszulness with $C_2$-cofiniteness.
+
+\subsection{Module category t-exactness}
+
+\begin{conjecture}[Module category t-exactness; \ClaimStatusConjectured]
+\label{conj:module-category-t-exactness}
+\index{t-exactness!module category}
+\index{Koszul pair!module category t-exactness}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth curve~$X$.
+The bar functor $\Phi(M) = \barB(\cA) \otimes_{\cA} M$ induces
+an equivalence of stable $\infty$-categories
+\[
+  \Phi \colon \mathrm{FactMod}(\cA)
+  \xrightarrow{\;\sim\;}
+  \mathrm{FactCoMod}(\cA^!).
+\]
+Equip $\mathrm{FactMod}(\cA)$ with the \emph{PBW t-structure}
+and $\mathrm{FactCoMod}(\cA^!)$ with the \emph{cobar t-structure}
+\textup{(}defined below\textup{)}.  Then $\cA$ is chirally Koszul
+if and only if $\Phi$ is t-exact.
+\end{conjecture}
+
+\textbf{The two t-structures.}
+The PBW filtration $F_\bullet$ on $\mathrm{FactMod}(\cA)$ is the
+decreasing filtration by bar degree: $F_p M$ is the submodule
+generated by elements of bar filtration $\geq p$ (i.e., those
+requiring $\geq p$ iterated OPE contractions to reach the vacuum).
+A module $M$ lies in $\mathcal{D}_{\mathrm{PBW}}^{\leq 0}$ if
+its associated graded $\mathrm{gr}^F_p M$ is acyclic for $p > 0$.
+The cobar t-structure on $\mathrm{FactCoMod}(\cA^!)$ is defined
+dually: a comodule $C$ lies in $\mathcal{D}_{\mathrm{cob}}^{\leq 0}$
+if $\mathrm{gr}^G_p C$ is acyclic for $p > 0$, where $G_\bullet$
+is the cobar filtration.
+
+\smallskip
+\noindent\emph{Equivalences.}
+\begin{enumerate}[leftmargin=2em]
+\item t-exactness of $\Phi$ $\iff$ the PBW spectral sequence
+  collapses at $E_2$ for \emph{all} factorization modules~$M$.
+\item Heart preservation $\iff$ Koszul linearity:
+  $\barB_n(L(\lambda))$ is concentrated in internal degree
+  $n + h(\lambda)$, where $h(\lambda)$ is the conformal weight.
+\end{enumerate}
+
+\noindent
+The triangulated shadow is
+Proposition~\ref{prop:koszul-t-structures}.  The $\infty$-categorical
+upgrade uses the model structure from
+Theorem~\ref{thm:quillen-equivalence-chiral}; the
+Ch$_\infty$-rectification
+(Corollary~\ref{cor:rectification-ch-infty}) ensures that
+homotopy and strict module categories agree.
+The no-bifunctor obstruction (RNW19~\S6) forces the construction
+of $\Phi$ to proceed one slot at a time.
+
+\subsection{Semi-orthogonal decomposition by weight}
+
+\begin{conjecture}[Semi-orthogonal decomposition by conformal weight; \ClaimStatusConjectured]
+\label{conj:sod-by-weight}
+\index{semi-orthogonal decomposition!by conformal weight}
+\index{Koszul pair!weight decomposition}
+For a chirally Koszul algebra~$\cA$, the stable $\infty$-category
+$\mathrm{FactMod}(\cA)$ admits a semi-orthogonal decomposition
+\textup{(}in the sense of Bondal--Orlov\textup{)}
+\[
+  \mathrm{FactMod}(\cA) = \langle \mathcal{C}_0,\, \mathcal{C}_1,\,
+  \mathcal{C}_2,\, \ldots \rangle
+\]
+where $\mathcal{C}_n$ is the full subcategory of modules generated in
+conformal weight~$n$, and the semi-orthogonality condition is
+$\mathrm{Hom}(M, N) = 0$ for $M \in \mathcal{C}_i$,
+$N \in \mathcal{C}_j$, $i > j$.  The decomposition is \emph{split}:
+the inclusion $\mathcal{C}_n \hookrightarrow \mathrm{FactMod}(\cA)$
+admits exact left and right adjoints.
+\end{conjecture}
+
+\noindent
+The weight filtration $\mathcal{F}_n = \{M \mid M$
+generated in weights $\leq n\}$ has graded pieces
+$\mathcal{C}_n = \mathcal{F}_n / \mathcal{F}_{n-1}$.
+Koszulness is equivalent to vanishing of cross-weight morphisms:
+bar linearity forces the bar differential to preserve weight strata,
+killing all $\mathrm{Ext}^*(\mathcal{C}_i, \mathcal{C}_j)$ for
+$i > j$.  Off the Koszul locus, nonlinear bar terms source
+cross-weight extensions and the SOD fails.
+
+\subsection{The chiral BGG correspondence}
+
+\begin{conjecture}[Chiral BGG correspondence; \ClaimStatusConjectured]
+\label{conj:chiral-bgg}
+\index{BGG correspondence!chiral}
+\index{affine Grassmannian!BGG functor}
+For a chiral Koszul pair $(\cA, \cA^!)$ with $\cA = \AffKM{g}_k$,
+there is an exact functor
+\[
+  \mathrm{BGG} \colon \mathcal{O}_k
+  \longrightarrow D^b(\mathrm{Coh}(\mathrm{Gr}_G))
+\]
+from category~$\mathcal{O}$ at level~$k$ to the derived category
+of coherent sheaves on the affine Grassmannian, factoring as
+\[
+  \mathcal{O}_k
+  \xrightarrow{\;\barB\;}
+  \mathrm{CoMod}^{\mathrm{conil}}(\cA^!)
+  \xrightarrow{\;\mathrm{Sat}\;}
+  D^b(\mathrm{Coh}(\mathrm{Gr}_G)),
+\]
+where the first arrow is bar resolution and the second is the
+geometric Satake equivalence at the factorization level.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.5em]
+\item Verma modules $M(\lambda) \mapsto \mathcal{O}_{S_\lambda}$
+  \textup{(}structure sheaves of Schubert cells\textup{)}.
+\item The BGG resolution of $L(\lambda)$ maps to the Cousin
+  resolution of $\mathrm{IC}(\overline{S}_\lambda)$.
+\item Koszul linearity forces the Schubert filtration spectral
+  sequence on $\mathrm{IC}(\overline{S}_\lambda)$ to collapse
+  at~$E_1$; the $E_1$ page \emph{is} the bar resolution.
+\end{enumerate}
+\end{conjecture}
+
+\noindent\textbf{Proved content.}
+The first arrow is established:
+Theorem~\ref{thm:bgg-from-bar} constructs the BGG resolution from
+the bar complex, Proposition~\ref{prop:bar-bgg-sl2} gives the
+explicit bar--BGG for $\AffKM{sl}_{2,k}$, and
+Corollary~\ref{cor:bgg-koszul-involution} identifies the BGG
+involution under Koszul duality.
+
+\noindent\textbf{Open content.}
+The second arrow requires the geometric Satake equivalence at the
+\emph{factorization} level (identifying conilpotent $\cA^!$-comodules
+with constructible sheaves on~$\mathrm{Gr}_G$).  This is not
+developed in the present monograph.  The conjecture is therefore a
+precise target for connecting chiral Koszul duality to the geometric
+Langlands programme.
+
+\subsection{Bar generating function algebraicity}
+
+\begin{conjecture}[Bar generating function algebraicity; \ClaimStatusConjectured]
+\label{conj:bar-gf-algebraicity}
+\index{bar generating function!algebraicity}
+\index{discriminant!bar generating function}
+A chiral algebra~$\cA$ is chirally Koszul if and only if its
+bar cohomology generating function
+$P_\cA(x) = \sum_{n \geq 0} \dim H^n(\barB(\cA)) \cdot x^n$
+satisfies a polynomial equation of degree $\leq 2$:
+\begin{equation}\label{eq:bar-gf-quadratic}
+  c_2(x) \, P_\cA^2 + c_1(x) \, P_\cA + c_0(x) = 0
+\end{equation}
+with discriminant
+$\Delta_\cA(x) = c_1(x)^2 - 4\, c_0(x)\, c_2(x)$
+a polynomial of degree $\leq 2 \cdot \mathrm{rank}(\cA)$.
+\end{conjecture}
+
+\noindent\textbf{Evidence.}
+The standard landscape yields:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcc}
+\toprule
+Family & Algebraic degree & Discriminant $\Delta(x)$ \\
+\midrule
+$\AffKM{sl}_2$ & 2 & $(1 - 3x)(1 + x)$ \\
+Virasoro & 2 & $(1 - 3x)(1 + x)$ \\
+$\beta\gamma$ & 2 & $(1 - 3x)(1 + x)$ \\
+$\AffKM{sl}_3$ & 2 & $(1 - 8x)(1 - 3x - x^2)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The shared discriminant $(1 - 3x)(1 + x)$ within the first three
+families is a theorem, not a coincidence:
+Theorem~\ref{thm:ds-bar-gf-discriminant} proves that
+Drinfeld--Sokolov reduction preserves the discriminant, and
+$\AffKM{sl}_2$, Virasoro, and $\beta\gamma$ all lie in the same DS
+family.
+
+\noindent\textbf{Falsifiable prediction.}
+For $\widehat{G}_2$, only $H^1 = 14$ is computed
+(Proposition~\ref{prop:G2-bar-dims}); bar cohomology beyond
+degree~$1$ awaits explicit computation with $G_2$ structure constants.
+The conjecture predicts: $P_{\widehat{G}_2}(x)$ satisfies a
+quadratic equation with discriminant of degree $\leq 4$ (since
+$\mathrm{rank}(G_2) = 2$) and a simple root at $x = 1/14$
+(Conjecture~\ref{conj:non-simply-laced-discriminant}).
+Verification at $H^2$ would already constrain the quadratic
+coefficients.
+
+\begin{conjecture}[Chiral Koszul functional equation; \ClaimStatusConjectured]
+\label{conj:chiral-koszul-functional-equation}
+\index{Koszul functional equation!chiral}
+If $(\cA, \cA^!)$ is a chirally Koszul pair, then the bar generating
+functions satisfy the \emph{chiral Koszul functional equation}:
+\begin{equation}\label{eq:chiral-koszul-fe}
+  P_\cA(x) \cdot P_{\cA^!}(-x)
+  = 1 + \sum_{g \geq 1} \kappa^g \, Q_g(x),
+\end{equation}
+where $\kappa = \kappa(\cA)$ is the modular characteristic and
+$Q_g(x)$ is a polynomial of degree $\leq 3g - 3$ encoding
+genus-$g$ curvature corrections.  At genus~$0$, this recovers
+the classical relation $P_\cA(x) \cdot P_{\cA^!}(-x) = 1$.
+\end{conjecture}
+
+\noindent
+This is the chiral replacement for the classical Koszul functional
+equation $h_A(t) \cdot h_{A^!}(-t) = 1$, which fails chirally
+because the OS algebra twists the bar complex by integration kernels
+on $\FM_n(X)$.  The genus correction $Q_g$ is a polynomial (not a
+power series) because $\dim \mathcal{M}_{g,n}^{\mathrm{virt}} = 3g-3$
+bounds the relevant strata.
+
+\subsection{Fusion finiteness and bar rationality}
+
+\begin{conjecture}[Fusion finiteness; \ClaimStatusConjectured]
+\label{conj:fusion-finiteness-koszulness}
+\index{fusion!finiteness}
+\index{bar generating function!rationality}
+If $\cA$ is chirally Koszul, then $P_\cA(x)$ is rational
+\textup{(}bar cohomology dimensions satisfy a linear recurrence\textup{)}.
+\end{conjecture}
+
+\noindent
+Koszulness implies $E_2$ collapse of the bar spectral sequence, which
+forces algebraicity of degree $\leq 2$
+(Conjecture~\ref{conj:bar-gf-algebraicity}), hence rationality.
+The converse is false: a non-Koszul algebra may have rational
+$P_\cA(x)$ with non-diagonal bar cohomology.
+The correct characterization is \emph{diagonal purity}
+($H^{n,k}(\barB(\cA)) = 0$ for $k \neq n + h$),
+not mere rationality.
+\label{rem:rationality-vs-koszulness}
+
+\subsection{C$_2$-cofiniteness and the Koszul--finiteness interaction}
+\label{rem:c2-cofiniteness-koszul-interaction}
+\index{C2-cofiniteness@$C_2$-cofiniteness!interaction with Koszulness}
+
+$C_2$-cofiniteness and Koszulness are \emph{orthogonal} conditions:
+$V_k(\mathfrak{g})$ is always Koszul (universal PBW) but never
+$C_2$-cofinite at generic~$k$; the simple quotient
+$L_k(\mathfrak{g})$ at admissible level is $C_2$-cofinite but
+Koszulness may fail (singular vectors source higher bar
+differentials).  Koszul duality exchanges the two: at
+admissible~$k$ the associated variety
+$X_{L_k} = \{0\}$, but at the dual level $k' = -k - 2h^\vee$ one
+has $X_{L_{k'}} \neq \{0\}$ in general.
+
+\begin{conjecture}[Koszul--$C_2$ duality; \ClaimStatusConjectured]
+\label{conj:koszul-c2-duality}
+\index{C2-cofiniteness@$C_2$-cofiniteness!Koszul duality}
+\index{Koszul pair!C2 duality@$C_2$ duality}
+At non-degenerate admissible level, $L_k(\mathfrak{g})$ satisfies:
+\begin{enumerate}[label=\textup{(\alph*)},leftmargin=2em]
+\item $\barB(L_k)$ has finite-dimensional total cohomology
+  \textup{(}proved: $C_2$-cofiniteness $\Rightarrow$ finite
+  bigraded bar cohomology\textup{)}.
+\item The total bar Euler characteristic equals the Verlinde number:
+  $\chi(\barB(L_k)) = |\mathrm{Irr}(\mathcal{C}_k)|$.
+\item The bar spectral sequence terminates at a page bounded by
+  $\dim A(L_k)$ \textup{(}the Zhu algebra dimension\textup{)},
+  and this termination is equivalent to $C_2$-cofiniteness.
+\end{enumerate}
+For associated varieties in type~$A$, Koszul duality implements
+Barbasch--Vogan duality on nilpotent orbits
+\textup{(}the involution $d \colon \mathcal{N}(\mathfrak{g})
+\to \mathcal{N}(\mathfrak{g})$ sending a partition to its
+transpose; see Barbasch--Vogan~\cite{BV85}\textup{)}:
+\begin{equation}\label{eq:koszul-bv-duality}
+  X_{L_{k'}(\mathfrak{g})} = \overline{d\bigl(X_{L_k(\mathfrak{g})}\bigr)},
+  \qquad k' = -k - 2h^\vee.
+\end{equation}
+This is proved in type~$A$
+\textup{(}Proposition~\textup{\ref{prop:orbit-duality})}.
+Beyond type~$A$, the Barbasch--Vogan involution is more intricate
+\textup{(}it involves the Spaltenstein map, not just partition
+transpose\textup{)}; the extension to all types is open.
+\end{conjecture}
+
+\subsection{Moduli of Koszul parameters}
+
+\begin{remark}[Moduli of Koszul parameters]
+\label{rem:moduli-koszul-parameters}
+\index{Koszul pair!moduli of parameters}
+\index{admissible level!Koszul locus}
+\index{critical level!Koszul self-duality}
+The one-parameter family $V_k(\mathfrak{g})$ stratifies the
+level line into three Koszul regimes.
+
+\textup{(i)}
+\emph{Generic level.}
+$V_k(\mathfrak{g})$ is Koszul for \emph{all}~$k$
+(Theorem~\ref{thm:chiral-bar-resolution-exact}): the PBW-associated
+graded is a polynomial algebra at every level.  At generic
+non-admissible~$k$ one has $L_k = V_k$, so Koszulness of the
+simple quotient is automatic.
+
+\textup{(ii)}
+\emph{Critical level} $k = -h^\vee$.
+This is the unique fixed point of the Feigin--Frenkel
+involution $k \mapsto -k - 2h^\vee$, so Koszul duality is an
+\emph{involution on the nose}: $\cA^! \cong \cA$.  There are no
+singular vectors ($L_k = V_k$), the bar complex is uncurved
+($m_0 = 0$ since the central charge vanishes), and the bar
+differential reduces to a Koszul complex
+$\mathrm{Sym}[S_1, \ldots, S_r] \otimes \Omega^*_{\log}$
+on the screening operators
+(Theorem~\ref{thm:feigin-frenkel-bar}).
+The Feigin--Frenkel center
+$\mathfrak{z}(\widehat{\mathfrak{g}}) \cong
+\mathrm{Fun}(\mathrm{Op}_{{}^L\!\mathfrak{g}})$
+makes the bar complex commutative, and Langlands
+duality $\mathcal{W}^{-h^\vee}(\mathfrak{g})^!
+= \mathcal{W}^{-h^\vee}(\mathfrak{g}^L)$
+(Theorem~\ref{thm:frenkel-gaitsgory-langlands}) descends
+directly from this self-duality.
+
+\textup{(iii)}
+\emph{Admissible levels.}
+$L_k(\mathfrak{g})$ at $k \in \Sigma(\mathfrak{g})$
+(Definition~\ref{def:admissible-level}) acquires singular
+vectors that source higher bar differentials.  Bar--cobar
+inversion may fail; the Koszulness question reduces to whether
+screening operators generate \emph{all} bar differentials
+(Proposition~\ref{prop:bar-bgg-sl2}).
+\end{remark}
 
 \section{Open questions}
 

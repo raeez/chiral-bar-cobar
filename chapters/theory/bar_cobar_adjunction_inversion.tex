@@ -29,12 +29,25 @@ controlled by the $I$-adic filtration.  Filtered-complete algebras
 (Gui--Li--Zeng~\cite{GLZ22}) require the full pronilpotent
 completion $\hat{B}(\cA)$ and work in the coderived category rather
 than the ordinary derived category.  Programmatic algebras
-($\mathcal{W}_\infty$, $\mathcal{W}_{1+\infty}$) mark the frontier
-where the MC4 completion programme is still under construction.
+($\mathcal{W}_\infty$, $\mathcal{W}_{1+\infty}$) have infinitely
+many generators and no finite presentation; the question of whether
+the completed bar-cobar round-trip remains a quasi-isomorphism is
+the MC4 completion problem.  The answer is affirmative: the strong
+completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) identifies a single
+structural axiom on the filtration---the strong filtration
+condition
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$---which
+simultaneously ensures continuity of the completed differential,
+pronilpotence of the completed coalgebra, and the vanishing of
+$\varprojlim^1$ obstructions.  For $W_\infty$, the finite-stage
+truncations $W_N$ supply the proved inputs, and the strong
+filtration axiom is verified by conformal-weight bookkeeping
+(Corollary~\ref{cor:winfty-weight-cutoff}).
 The regime hierarchy established in
-Convention~\ref{conv:regime-tags} organizes these cases; the
-sections that follow develop each regime and prove inversion in the
-first three.
+Convention~\ref{conv:regime-tags} organizes these four cases; the
+sections that follow develop each regime and prove inversion across
+all four.
 
 The main result is Theorem~B
 (Theorem~\ref{thm:bar-cobar-inversion-qi}): for a Koszul chiral
@@ -81,12 +94,14 @@ engine.  The Koszul locus identified here is the domain on which the
 higher-genus deformation of Ring~2 operates---the shadow Postnikov
 tower $\Theta_\cA^{\leq r}$, the modular characteristic
 $\kappa(\cA)$, and the complementarity theorem (Theorem~C) all
-require bar-cobar inversion as input.  The regime hierarchy
-established in
-Convention~\ref{conv:regime-tags} connects forward to Ring~3:
-the curved-central and filtered-complete regimes govern the
-$W$-algebra tower (MC4, closed) and the Yangian axis (MC3,
-proved in type~A).
+require bar-cobar inversion as input.  The strong completion-tower
+theorem (Theorem~\ref{thm:completed-bar-cobar-strong}) extends
+inversion from the finite-type Koszul locus to the full
+programmatic regime, resolving MC4 and completing Ring~1 for
+$W_\infty$ and the Yangian towers.  The regime hierarchy
+established in Convention~\ref{conv:regime-tags} connects forward
+to Ring~3: the $W$-algebra tower (MC4, closed) and the Yangian axis
+(MC3, proved in type~A).
 
 \section{Non-quadratic chiral algebras}
 \label{sec:filtered-vs-curved-comprehensive}
@@ -95,9 +110,16 @@ proved in type~A).
 The four-regime hierarchy (Convention~\ref{conv:regime-tags})
 classifies chiral algebras by their bar-complex behavior:
 quadratic (strict $d^2=0$), curved-central ($\dfib^2 = \kappa\cdot\omega_g$
-with central curvature), filtered-complete (requiring I-adic completion),
-and programmatic (infinite generators, MC4 completion target).
-The examples of each regime are given in
+with central curvature), filtered-complete (requiring $I$-adic completion),
+and programmatic (infinite generators).  The first three regimes
+admit bar-cobar inversion by increasingly refined completions; the
+fourth---the programmatic regime of $W_\infty$ and
+$W_{1+\infty}$---is resolved by the strong completion-tower theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}), whose proof reduces
+the infinite-type problem to a sequence of finite-type problems
+linked by the strong filtration axiom.  The sections that follow
+develop each regime in turn, with the programmatic case treated as
+the natural culmination.  The examples of each regime are given in
 \S\ref{subsec:three-regimes} above.
 
 \iffalse
@@ -312,10 +334,7 @@ fixed and whose residue-side contraction is the extra input isolated by
 Corollary~\ref{cor:winfty-stage4-residue-four-channel}.
 
 \emph{Physical interpretation.}
-$W_\infty$ describes non-local interactions in 2D gravity.  The open problem is
-to construct the correct filtered H-level dual description and verify
-its exact finite-stage coefficient identities, not to prove that no such
-description can exist.
+$W_\infty$ describes non-local interactions in 2D gravity.  The MC4 structural framework is proved (Theorem~\ref{thm:completed-bar-cobar-strong}); the remaining H-level identification is example-specific.
 \end{example}
 
 \subsection{Comparison of the four classes}
@@ -691,7 +710,7 @@ This proof uses:
 
 \subsection{Physical interpretation}
 
-Quadratic algebras correspond to free field theories (Heisenberg $\leftrightarrow$ free boson, Kac--Moody $\leftrightarrow$ WZW).  Curved algebras correspond to interacting theories with anomalies (Virasoro, with central charge $c$ measuring quantum breaking of scale invariance).  Filtered algebras correspond to theories with composite operators ($W_3$ and Toda field theory).  General algebras correspond to non-local theories ($W_\infty$), where the exact MC4 package of filtered H-level realization plus finite-stage coefficient identification remains open.
+Quadratic algebras correspond to free field theories (Heisenberg $\leftrightarrow$ free boson, Kac--Moody $\leftrightarrow$ WZW).  Curved algebras correspond to interacting theories with anomalies (Virasoro, with central charge $c$ measuring quantum breaking of scale invariance).  Filtered algebras correspond to theories with composite operators ($W_3$ and Toda field theory).  General algebras correspond to non-local theories ($W_\infty$), where the MC4 structural package is proved (Theorem~\ref{thm:completed-bar-cobar-strong}); the residual H-level comparison is example-specific.
 
 From Kontsevich's geometric viewpoint, the filtration level corresponds to the codimension of collision loci: quadratic algebras see only pairwise collisions, curved algebras see central terms from $n$-point collisions, and filtered algebras require higher-codimension strata.  The completion $\widehat{\bar{B}}(\mathcal{A})$ is the formal neighborhood of the diagonal in configuration space.
 
@@ -707,7 +726,7 @@ From Kontsevich's geometric viewpoint, the filtration level corresponds to the c
   \item If no: Completion is required
   \end{itemize}
 \item Does it have composite operators? $\Rightarrow$ Must complete
-\item Is the generating space infinite-dimensional? $\Rightarrow$ treat as an MC4 completion target: first construct the filtered H-level target, then identify its finite quotients by explicit coefficient identities and finite detection
+\item Is the generating space infinite-dimensional? $\Rightarrow$ handled by the MC4 completion theorem (Theorem~\ref{thm:completed-bar-cobar-strong}); residual task is to identify the filtered H-level target and its finite quotients by explicit coefficient identities and finite detection
 \end{enumerate}
 
 Most vertex algebras from CFT are either quadratic or curved with finite-dimensional
@@ -2085,6 +2104,525 @@ A homology isomorphism gives only on-shell equivalence: physical states match, b
 \end{remark}
 
 %================================================================
+% COMPLETED BAR-COBAR INVERSION
+%================================================================
+
+\subsection{Completed bar-cobar inversion}
+\label{subsec:completed-bar-cobar-inversion}
+
+The finite-stage inversion theorem
+(Theorem~\ref{thm:bar-cobar-inversion-qi}) establishes the
+quasi-isomorphism $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ on the
+Koszul locus of finite-type chiral algebras.  The programmatic regime
+---$\mathcal{W}_\infty$, affine Yangians, RTT towers---requires an
+extension of inversion to separated complete inverse limits.  The key
+structural input is the strong completion-tower framework developed in
+the first half of this chapter
+(Definition~\ref{def:strong-completion-tower},
+Theorem~\ref{thm:completed-bar-cobar-strong}); what follows gives the
+homological comparison lemma that underlies the inverse-limit passage
+and develops the inversion-side consequences of the completion closure
+$\CompCl(\Fft)$ (Definition~\ref{def:completion-closure}).
+
+\begin{lemma}[Complete filtered comparison lemma; \ClaimStatusProvedHere]
+\label{lem:complete-filtered-comparison}
+\index{complete filtered comparison lemma|textbf}
+\index{Mittag--Leffler!complete filtered comparison}
+Let $f\colon C \to D$ be a morphism of separated complete filtered
+cochain complexes, with descending filtrations
+$F^\bullet C$ and $F^\bullet D$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the quotient towers are surjective: for every~$N$, the induced
+  maps $C/F^{N+1}C \twoheadrightarrow C/F^{N+2}C$ and
+  $D/F^{N+1}D \twoheadrightarrow D/F^{N+2}D$ are surjections;
+\item every quotient map is a quasi-isomorphism:
+  \[
+  f_N \colon C/F^{N+1}C \xrightarrow{\;\sim\;} D/F^{N+1}D
+  \]
+  for all~$N \ge 0$.
+\end{enumerate}
+Then $f$ is a quasi-isomorphism.
+\end{lemma}
+
+\begin{proof}
+Consider the mapping cone $\operatorname{Cone}(f)$, which inherits a
+separated complete filtration from~$C$ and~$D$.  Each quotient
+$\operatorname{Cone}(f)/F^{N+1} \cong \operatorname{Cone}(f_N)$ is
+acyclic because $f_N$ is a quasi-isomorphism by hypothesis~(ii).
+The Milnor exact sequence for the inverse system
+$\{\operatorname{Cone}(f_N)\}_{N \ge 0}$ reads
+\[
+0 \to \varprojlim\nolimits^1_N
+  H^{m-1}(\operatorname{Cone}(f_N))
+\to H^m(\operatorname{Cone}(f))
+\to \varprojlim_N H^m(\operatorname{Cone}(f_N)) \to 0.
+\]
+The right-hand term vanishes because every
+$H^m(\operatorname{Cone}(f_N)) = 0$.  For the left-hand term: the
+quotient tower is surjective by hypothesis~(i), so the transition maps
+on each cohomology group form a surjective inverse system of zero
+groups, and the Mittag--Leffler condition is satisfied trivially.
+Hence $\varprojlim^1 = 0$.  It follows that
+$H^m(\operatorname{Cone}(f)) = 0$ for all~$m$, so $f$ is a
+quasi-isomorphism.
+\end{proof}
+
+\begin{remark}[Role in the completed bar-cobar theorem]
+\label{rem:complete-filtered-comparison-role}
+Lemma~\ref{lem:complete-filtered-comparison} is the homological
+workhorse of the completed bar-cobar theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}).  In that application,
+$C = \widehat\Omega^{\mathrm{ch}}(\widehat{\bar B}^{\mathrm{ch}}(\cA))$,
+$D = \cA$, and the quotient quasi-isomorphisms $f_N$ are the
+finite-stage counits
+$\epsilon_N\colon \Omega^{\mathrm{ch}}(\bar B^{\mathrm{ch}}(\cA_{\le N}))
+\xrightarrow{\sim} \cA_{\le N}$, which are quasi-isomorphisms by the
+finite-type regime.  The surjectivity of the quotient tower follows from
+the strong completion-tower axiom: the projections
+$\cA_{\le N+1} \twoheadrightarrow \cA_{\le N}$ are strict surjections
+by construction.  The lemma then gives the completed counit
+$\widehat\epsilon$ is a quasi-isomorphism---this is Step~3 of the proof of
+Theorem~\ref{thm:completed-bar-cobar-strong}.
+\end{remark}
+
+\begin{remark}[Completed inversion: the inversion-side summary]
+\label{rem:completed-inversion-summary}
+The completion closure theory
+(Definition~\ref{def:completion-closure}--Theorem~\ref{thm:uniform-pbw-bridge},
+developed in the first half of this chapter) gives a complete
+inversion package for the programmatic regime:
+\begin{enumerate}
+\item \emph{Domain.}
+  $\CompCl(\Fft)$ is the class of strong completion towers
+  (Definition~\ref{def:strong-completion-tower}) with finite-type
+  quotients.
+\item \emph{Inversion.}
+  Completed bar and cobar are quasi-inverse on $\CompCl(\Fft)$
+  (Theorem~\ref{thm:completed-bar-cobar-strong}).
+\item \emph{Homotopy category.}
+  Localizing by quotientwise quasi-isomorphisms gives an equivalence
+  of homotopy categories
+  (Corollary~\ref{cor:completion-closure-equivalence}).
+\item \emph{Stability under twisting.}
+  If $\alpha \in F^1\cA^1$ is a continuous Maurer--Cartan element,
+  then $\cA_\alpha \in \CompCl(\Fft)$ and inversion persists
+  (Theorem~\ref{thm:mc-twisting-closure}).
+\item \emph{Representability.}
+  Algebra and coalgebra maps between completed objects are represented
+  by continuous twisting morphisms
+  (Theorem~\ref{thm:completed-twisting-representability}).
+\item \emph{Verification criteria.}
+  Coefficient stability
+  (Theorem~\ref{thm:coefficient-stability-criterion}) reduces
+  completed inversion to stabilization of finite matrix entries on
+  windows; the uniform PBW bridge
+  (Theorem~\ref{thm:uniform-pbw-bridge}) connects PBW concentration
+  (MC1) directly to completed duality (MC4).
+\end{enumerate}
+Together with the finite-stage inversion theorem
+(Theorem~\ref{thm:bar-cobar-inversion-qi}), these results close
+Ring~1 of the monograph across all four regimes: quadratic,
+curved-central, filtered-complete, and programmatic.
+\end{remark}
+
+\begin{corollary}[Completed derived equivalence; \ClaimStatusProvedHere]
+\label{cor:completed-derived-equivalence}
+\index{derived equivalence!completed}
+Let $\cA \in \CompCl(\Fft)$ be a strong completion tower on a
+smooth curve~$X$.  Then the completed bar and cobar functors induce
+an equivalence of triangulated categories
+\[
+\mathcal{D}^b(\operatorname{Mod}^{\mathrm{cts}}(\cA))
+\;\simeq\;
+\mathcal{D}^b(\operatorname{Comod}^{\mathrm{pronil}}
+(\widehat{\bar B}^{\mathrm{ch}}(\cA))),
+\]
+where $\operatorname{Mod}^{\mathrm{cts}}$ denotes continuous modules
+over the complete algebra and
+$\operatorname{Comod}^{\mathrm{pronil}}$ denotes pronilpotent
+comodules over the completed bar coalgebra.  The twisting morphism
+$\widehat\tau\colon \widehat{\bar B}^{\mathrm{ch}}(\cA) \to \cA$
+mediates the equivalence via completed extension of scalars.
+\end{corollary}
+
+\begin{proof}
+The completed counit and unit are quasi-isomorphisms by
+Theorem~\ref{thm:completed-bar-cobar-strong}(3)--(4).  The
+passage to module/comodule categories follows from completed twisting
+representability
+(Theorem~\ref{thm:completed-twisting-representability}), which
+ensures that the completed bar and cobar functors on
+module categories are adjoint and that the unit/counit natural
+transformations are quasi-isomorphisms quotientwise.  Applying
+Lemma~\ref{lem:complete-filtered-comparison} to each module/comodule
+then gives the equivalence.  The argument parallels
+Corollary~\ref{cor:derived-equivalence-bar-cobar}, with
+finite-generation replaced by continuity and conilpotence replaced
+by pronilpotence.
+\end{proof}
+
+\begin{remark}[From finite-type to programmatic: the four-regime inversion table]
+\label{rem:four-regime-inversion}
+\index{bar-cobar inversion!four-regime table}
+The following table summarizes the inversion theorem across all four
+regimes (Convention~\ref{conv:regime-tags}):
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Regime} & \textbf{Input} & \textbf{Category}
+  & \textbf{Inversion} \\
+\midrule
+Quadratic &
+  Koszulness &
+  $D^b(\mathrm{Mod}^{\mathrm{fg}})$ &
+  Thm~\ref{thm:bar-cobar-inversion-qi} \\
+Curved-central &
+  + $I$-adic completion &
+  coderived &
+  Cor~\ref{cor:bar-cobar-inverse} \\
+Filtered-complete &
+  + pronilpotent filtration &
+  contraderived &
+  \S\ref{subsec:positselski-chiral-equivalence} \\
+Programmatic &
+  strong completion tower &
+  $D^b(\mathrm{Mod}^{\mathrm{cts}})$ &
+  Thm~\ref{thm:completed-bar-cobar-strong} \\
+\bottomrule
+\end{tabular}
+\end{center}
+The first three rows are available at finite type; the fourth extends
+to infinite-generator algebras via the completion closure
+$\CompCl(\Fft)$.  The passage from row~$1$ to row~$4$ is
+mediated by the arity cutoff (Lemma~\ref{lem:arity-cutoff}), which
+makes the infinite bar differential into a quotientwise finite sum,
+and the complete filtered comparison lemma
+(Lemma~\ref{lem:complete-filtered-comparison}), which passes the
+quotientwise quasi-isomorphisms to the inverse limit.
+\end{remark}
+
+%================================================================
+% GEOMETRIC AND CATEGORICAL CHARACTERIZATIONS OF CHIRAL KOSZULNESS
+%================================================================
+
+\subsection{Geometric and categorical characterizations of chiral Koszulness}
+\label{subsec:geometric-categorical-koszulness}
+
+The inversion theorem (Theorem~\ref{thm:bar-cobar-inversion-qi})
+identifies chiral Koszulness as the condition under which bar-cobar
+duality is an equivalence.  We give five conjectural characterizations
+of this condition---descent, factorization homology, FM boundary
+acyclicity, $\mathcal{D}$-module purity, Lagrangian geometry---whose
+common theme is that Koszulness is a \emph{finiteness and regularity}
+condition: the bar complex has the simplest possible behavior, and any
+one of these properties should force the others.
+
+\medskip
+
+\subsubsection{Barr--Beck--Lurie characterization}
+
+Lurie's $\infty$-categorical Barr--Beck theorem~\cite[Theorem~4.7.3.5]{HA}
+characterizes (co)monadic adjunctions by conservativity and totalization
+preservation.  We conjecture that $B_\kappa \dashv \Omega_\kappa$
+satisfies these conditions precisely on the Koszul locus.
+
+\begin{conjecture}[Barr--Beck--Lurie characterization of chiral Koszulness;
+\ClaimStatusConjectured]\label{conj:barr-beck-lurie-koszulness}
+\index{Koszulness!Barr--Beck--Lurie characterization}
+\index{bar-cobar adjunction!Barr--Beck--Lurie conditions}
+Let $\cA$ be a chiral algebra on a smooth curve~$X$ satisfying the
+standing hypotheses of Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}.
+The bar-cobar adjunction $B_\kappa \dashv \Omega_\kappa$ satisfies the
+Barr--Beck--Lurie conditions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Conservativity)}\quad
+  $B_\kappa$ detects equivalences: a morphism $f \colon \cA \to \cA'$
+  of chiral algebras is a quasi-isomorphism if and only if
+  $B_\kappa(f)$ is.
+\item \textup{(Totalization preservation)}\quad
+  $B_\kappa$ preserves totalizations of $B_\kappa$-split cosimplicial
+  objects in the $\infty$-category of chiral algebras.
+\item \textup{(Comparison equivalence)}\quad
+  $\cA$ is chirally Koszul if and only if the Barr--Beck--Lurie
+  comparison functor
+  \[
+    \Phi \colon \operatorname{Mod}(\cA)
+    \longrightarrow \operatorname{Comod}^{B_\kappa}(B(\cA))
+  \]
+  is an equivalence on the fiber over $B(\cA)$.
+\end{enumerate}
+Here the comonad is $G = B_\kappa \circ \Omega_\kappa$, and
+$\operatorname{Comod}^{B_\kappa}(B(\cA))$ denotes $G$-coalgebras
+in conilpotent comodules over the bar coalgebra.  The comparison functor
+sends a module~$M$ to the totalization of the cosimplicial bar-cobar
+resolution $G^{\bullet+1}(M)$.
+\end{conjecture}
+
+\begin{remark}[Three-pillar interaction and effective descent]\label{rem:bbl-content}
+The three BBL conditions align with the three-pillar architecture
+(\S\ref{sec:concordance-three-pillars}): conservativity~(i) is Pillar~B
+(the convolution algebra detects quasi-isomorphisms), totalization
+preservation~(ii) is Pillar~C (log FM fibers are contractible), and the
+comparison equivalence~(iii) is Pillar~A ($\mathrm{Ch}_\infty$ rectifies
+to strict chiral).  Equivalently,
+Conjecture~\ref{conj:barr-beck-lurie-koszulness} asserts that chiral
+Koszulness \emph{is} effective descent for~$B_\kappa$: on the Koszul
+locus the cosimplicial bar-cobar resolution converges and $\Phi$ is an
+equivalence; off it, passage to the coderived category is required
+(\S\ref{subsec:positselski-chiral-equivalence}).
+
+\emph{Obstacle.}\quad
+The Quillen equivalence (Theorem~\ref{thm:quillen-equivalence-chiral})
+gives conservativity at the model-categorical level; the upgrade to the
+$\infty$-categorical BBL criterion requires a simplicial enrichment
+compatible with~\cite[Theorem~4.7.3.5]{HA}.
+\end{remark}
+
+\medskip
+
+\subsubsection{Factorization homology concentration}
+
+Since the bar complex \emph{is} factorization homology
+(Proposition~\ref{prop:bar-fh}), Koszulness acquires a homological
+characterization.
+
+\begin{conjecture}[Factorization homology concentration;
+\ClaimStatusConjectured]\label{conj:fh-concentration-koszulness}
+\index{Koszulness!factorization homology characterization}
+\index{factorization homology!concentration and Koszulness}
+Let $\cA$ be a chiral algebra on a smooth curve~$X$ satisfying the
+standing hypotheses.  Then $\cA$ is chirally Koszul if and only if for
+every smooth projective curve $\Sigma_g$ of genus~$g \geq 0$:
+\[
+  H^k\Bigl(\textstyle\int_{\Sigma_g} \cA\Bigr) = 0 \quad
+  \text{for all } k \neq 0.
+\]
+Equivalently, the factorization homology $\int_{\Sigma_g} \cA$ is
+concentrated in cohomological degree zero for all genera.
+\end{conjecture}
+
+\begin{remark}[Goodwillie filtration]\label{rem:goodwillie-tower-fh}
+The factorization homology $\int_X \cA$ admits a Goodwillie-type filtration
+by configuration number:
+\[
+  \textstyle\int_X \cA \;\simeq\;
+  \cA \;\oplus\;
+  \Conf_2(X) \otimes_{S_2} (s^{-1}\bar{\cA})^{\otimes 2}
+  \;\oplus\;
+  \Conf_3(X) \otimes_{S_3} (s^{-1}\bar{\cA})^{\otimes 3}
+  \;\oplus\; \cdots
+\]
+The bar spectral sequence
+(Theorem~\ref{thm:bar-cobar-inversion-qi}) \emph{is} the spectral
+sequence of this filtration.  PBW concentration
+(Theorem~\ref{thm:pbw-koszulness-criterion}) forces $E_2$-collapse,
+giving $H^k(\int_X \cA) = 0$ for $k \neq 0$; non-collapse witnesses
+failure of Koszulness.
+\end{remark}
+
+\begin{remark}[Poincar\'e/Koszul duality]\label{rem:ayala-francis-poincare-koszul}
+Ayala--Francis~\cite{AF15} give $\int_X \cA \simeq \int^X \cA^!$,
+the factorization-homology incarnation of Theorem~C.  On the Koszul
+locus, $Q_g(\cA) = H^0(\int_{\Sigma_g} \cA)$: conformal blocks
+\emph{are} the full chiral homology, with no higher corrections.
+\end{remark}
+
+\medskip
+
+\subsubsection{Fulton--MacPherson boundary acyclicity}
+
+The bar complex lives on $\overline{\Conf}_n(X)$; restriction to
+boundary strata encodes OPE residues.  Koszulness should be equivalent
+to acyclicity of all such restrictions.
+
+\begin{conjecture}[FM boundary acyclicity;
+\ClaimStatusConjectured]\label{conj:fm-boundary-acyclicity}
+\index{Koszulness!FM boundary acyclicity}
+\index{Fulton--MacPherson compactification!boundary acyclicity}
+Let $\cA$ be a chiral algebra on~$X$ satisfying the standing hypotheses.
+Then $\cA$ is chirally Koszul if and only if for all $n \geq 2$ and every
+boundary stratum $S \subset \partial \overline{\Conf}_n(X)$ with inclusion
+$i_S \colon S \hookrightarrow \overline{\Conf}_n(X)$:
+\[
+  H^k\bigl(i_S^!\, \barBch_n(\cA)\bigr) = 0
+  \quad \text{for all } k \neq 0.
+\]
+In words: the restriction of the $n$-th bar component to every boundary
+stratum of the Fulton--MacPherson compactification is cohomologically
+concentrated in degree zero.
+\end{conjecture}
+
+\begin{remark}[Structure and evidence]\label{rem:fm-boundary-evidence}
+Each boundary stratum $S_T$ decomposes as
+$S_T \cong \prod_{v \in V(T)} \overline{\Conf}_{|v|}(X_v)$, indexed by
+trees~$T$.  The residue component $d_{\mathrm{res}}$ of the bar
+differential is supported on these divisors; the conjecture asserts each
+residue contribution is individually acyclic.
+
+\emph{Evidence.}\quad
+PBW concentration
+(Theorem~\ref{thm:pbw-koszulness-criterion}) gives diagonal
+Ext-vanishing, which translates to concentration on each stratum.
+Bar components are holonomic $\mathcal{D}$-modules
+(Lemma~\ref{lem:bar-holonomicity}), so the restrictions $i_S^!\,
+\barBch_n$ are holonomic on~$S$ and acyclicity can be checked stratum
+by stratum.
+
+\emph{Obstacle.}\quad
+Acyclicity must hold for all nested partitions of $\{1,\ldots,n\}$
+simultaneously.  The natural approach is purity
+(Conjecture~\ref{conj:d-module-purity-koszulness}).
+\end{remark}
+
+\medskip
+
+\subsubsection{D-module purity criterion}
+
+The bar components $\barBch_n(\cA)$ are regular holonomic
+$\mathcal{D}$-modules (Lemma~\ref{lem:bar-holonomicity}).  The classical
+Beilinson--Ginzburg--Soergel purity theorem~\cite{BGS96} lifts to the
+chiral setting as follows.
+
+\begin{conjecture}[D-module purity criterion;
+\ClaimStatusConjectured]\label{conj:d-module-purity-koszulness}
+\index{Koszulness!D-module purity criterion}
+\index{D-module!purity and Koszulness}
+\index{characteristic variety!alignment with FM stratification}
+Let $\cA$ be a chiral algebra on~$X$ satisfying the standing hypotheses.
+Then $\cA$ is chirally Koszul if and only if the following two conditions
+hold for all $n \geq 1$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Purity)}\quad
+  Each bar component $\barBch_n(\cA)$, viewed as a mixed Hodge module on
+  $\overline{\Conf}_n(X)$, is \emph{pure} of weight~$n$.
+\item \textup{(Characteristic variety alignment)}\quad
+  The characteristic variety
+  $\operatorname{Ch}(\barBch_n(\cA)) \subset T^*\overline{\Conf}_n(X)$
+  is contained in the union of conormal bundles to boundary strata:
+  \[
+    \operatorname{Ch}\bigl(\barBch_n(\cA)\bigr) \;\subset\;
+    \bigcup_{S \subset \partial \overline{\Conf}_n(X)}
+    T^*_S \overline{\Conf}_n(X).
+  \]
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Content and implications]\label{rem:d-module-purity-content}
+Condition~(i) is the chiral analogue of the BGS diagonal purity:
+$\operatorname{Ext}^i_A(k,k)$ carries a pure Hodge structure of
+weight~$i$ if and only if $A$ is Koszul~\cite{BGS96}.
+Condition~(ii) asserts that all OPE singularities are visible on the
+FM boundary---no hidden singularities in the interior of
+configuration space.  For regular holonomic $\mathcal{D}$-modules, this
+forces $\barBch_n(\cA)$ to be a successive extension of rank-one flat
+connections along boundary strata.
+
+Together, (i) and (ii) imply FM boundary acyclicity
+(Conjecture~\ref{conj:fm-boundary-acyclicity}): purity forces the Leray
+spectral sequence for $i_S^!\,\barBch_n$ to degenerate at~$E_1$, and
+alignment puts the $E_1$ terms in degree zero.
+In the representation-theoretic context, alignment translates to the
+BGG resolution property: highest-weight modules have finite Verma
+filtrations.
+\end{remark}
+
+\medskip
+
+\subsubsection{Lagrangian criterion in the shifted-symplectic deformation space}
+
+Ambient complementarity
+(Theorem~\ref{thm:ambient-complementarity},
+Theorem~\ref{thm:shifted-symplectic-complementarity}) equips the modular
+deformation space with a $(-1)$-shifted symplectic structure.
+Koszulness should be Lagrangian transversality.
+
+\begin{conjecture}[Lagrangian characterization of chiral Koszulness;
+\ClaimStatusConjectured]\label{conj:lagrangian-koszulness}
+\index{Koszulness!Lagrangian characterization}
+\index{Lagrangian!transversality and Koszulness}
+\index{shifted-symplectic!Lagrangian criterion for Koszulness}
+Suppose the ambient complementarity tangent complex $T_{\mathrm{comp}}(\cA)$
+carries a $(-1)$-shifted symplectic structure~$\omega$ \textup{(}as in
+Theorem~\textup{\ref{thm:shifted-symplectic-complementarity})}, and the
+one-sided deformation maps
+\[
+  i_{\cA} \colon \mathcal{M}_{\cA} \longrightarrow \mathcal{M}_{\mathrm{comp}},
+  \qquad
+  i_{\cA^!} \colon \mathcal{M}_{\cA^!} \longrightarrow \mathcal{M}_{\mathrm{comp}}
+\]
+are isotropic embeddings.  Then $\cA$ is chirally Koszul if and only if both
+$i_{\cA}$ and $i_{\cA^!}$ are \emph{Lagrangian} \textup{(}isotropic of maximal
+dimension\textup{)}.  Equivalently: the bar-cobar adjunction defines a Lagrangian
+correspondence in the $(-1)$-shifted symplectic deformation space.
+\end{conjecture}
+
+\begin{remark}[PTVV interpretation]\label{rem:lagrangian-ptvv}
+In the PTVV framework~\cite{PTVV13}, the derived intersection
+$\mathcal{M}_\cA \times^h_{\mathcal{M}_{\mathrm{comp}}}
+\mathcal{M}_{\cA^!}$ computes the twisted tensor product
+$K_\tau(\cA, \cA^!)$; its acyclicity---equivalent to Koszulness---is
+precisely the transversality of the two Lagrangians.
+The proved linear shadow is Theorem~C:
+$Q_g(\cA) \oplus Q_g(\cA^!) \cong
+H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+\end{remark}
+
+\begin{remark}[Conditional status]\label{rem:lagrangian-conditional}
+Conjecture~\ref{conj:lagrangian-koszulness} is conditional on three
+sub-hypotheses of the ambient complementarity programme: perfectness of
+the deformation complex, non-degeneracy of the shifted-symplectic
+pairing, and finiteness of the modular envelope.  The proved content is
+the tangent-level Lagrangian structure
+(Theorem~\ref{thm:shifted-symplectic-complementarity}); the conjecture
+asserts this \emph{characterizes} Koszulness.  The converse---failure of
+transversality implies failure of Koszulness---would follow from a
+``Lagrangian Nakayama'' principle: Lagrangian at the tangent level and
+globally Lagrangian are equivalent when the derived intersection is
+discrete.
+\end{remark}
+
+\begin{remark}[Synthesis: five faces of chiral Koszulness]
+\label{rem:five-faces-koszulness}
+Conjectures~\ref{conj:barr-beck-lurie-koszulness}--\ref{conj:lagrangian-koszulness}
+give five characterizations of chiral Koszulness, which we summarize as
+follows.  Let $\cA$ be a chiral algebra satisfying the standing hypotheses.
+The following are conjecturally equivalent:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(Algebraic)}\quad
+  $\cA$ is chirally Koszul:
+  $\operatorname{Ext}^i_\cA(k,k)_j = 0$ for $i \neq j$.
+\item \textup{(Descent-theoretic)}\quad
+  The Barr--Beck--Lurie comparison functor for
+  $B_\kappa \dashv \Omega_\kappa$ is an equivalence
+  \textup{(Conjecture~\ref{conj:barr-beck-lurie-koszulness})}.
+\item \textup{(Homological)}\quad
+  Factorization homology $\int_{\Sigma_g} \cA$ is concentrated in
+  degree~$0$ for all~$g$
+  \textup{(Conjecture~\ref{conj:fh-concentration-koszulness})}.
+\item \textup{(Geometric)}\quad
+  FM boundary restrictions $i_S^!\, \barBch_n(\cA)$ are
+  acyclic outside degree~$0$
+  \textup{(Conjecture~\ref{conj:fm-boundary-acyclicity})}.
+\item \textup{(Hodge-theoretic)}\quad
+  Bar components $\barBch_n(\cA)$ are Hodge-pure with aligned
+  characteristic variety
+  \textup{(Conjecture~\ref{conj:d-module-purity-koszulness})}.
+\item \textup{(Symplectic)}\quad
+  $\mathcal{M}_\cA$ and $\mathcal{M}_{\cA^!}$ are transverse
+  Lagrangians in $\mathcal{M}_{\mathrm{comp}}$
+  \textup{(Conjecture~\ref{conj:lagrangian-koszulness})}.
+\end{enumerate}
+The implications (a)$\Rightarrow$(c), (a)$\Rightarrow$(d), and
+(e)$\Rightarrow$(d) follow from PBW concentration
+(Theorem~\ref{thm:pbw-koszulness-criterion}) and weight arguments;
+the converses constitute the conjectural content.  The full equivalence
+would parallel the classical theorem that Koszulness, purity, formality,
+and derived equivalence coincide for graded algebras arising from
+geometry~\cite{BGS96}.
+\end{remark}
+
+%================================================================
 % RECOGNIZING KOSZUL DUALS IN PRACTICE
 %================================================================
 
@@ -2805,7 +3343,7 @@ differential, encoded in~$\Theta_\cA$) determines~$\cA$ up to
 quasi-isomorphism, this is a \emph{categorical Torelli theorem}.  It
 follows from bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi})
 plus the fact that the curvature determines the flat connection up to
-gauge equivalence on a simply connected base: since the Teichm\"uller
+$L_\infty$ gauge equivalence on a simply connected base: since the Teichm\"uller
 space is contractible, the flat bar family is determined by its
 curvature, i.e., by~$\kappa(\cA)$.
 
@@ -3769,17 +4307,35 @@ where $\alpha \in \mathfrak{g}^{\check{C}}$ has arity~$m$ and
 $\beta$ has arity~$n$.
 \end{definition}
 
-\begin{remark}[Parallel with the modular convolution algebra]
+\begin{remark}[Chriss--Ginzburg principle: \v{C}ech and modular convolution algebras]
 \label{rem:cech-modular-parallel}
 The algebra $\mathfrak{g}^{\check{C}}(\cA,\mathcal{U})$ is the
-\v{C}ech analogue of the modular convolution dg~Lie algebra
+\v{C}ech incarnation of the Chriss--Ginzburg principle: every algebraic
+structure in this monograph is a Maurer--Cartan element in a
+convolution dg~Lie algebra.  Its modular counterpart is
 $\mathfrak{g}^{\mathrm{mod}}_\cA$
-(Definition~\ref{def:modular-convolution-dg-lie}).  Both encode
-all algebraic operations on a resolution of~$\cA$ as components
-of a single Maurer--Cartan element.  The key difference:
+(Definition~\ref{def:modular-convolution-dg-lie}), and the two share
+the same formal architecture:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item both encode all algebraic operations on a resolution
+  of~$\cA$ as components of a single MC element
+  ($\Phi_\cA$ and $\Theta_\cA$ respectively);
+\item both are \emph{strict} dg~Lie models of underlying shifted
+  $L_\infty$~algebras
+  (Convention~\ref{rem:two-level-convention})---the strict bracket
+  suffices for Maurer--Cartan theory, while the full $L_\infty$
+  structure governs homotopy transfer and gauge equivalence;
+\item both produce arity-by-arity truncations
+  ($\Phi_\cA^{\le r}$, $\Theta_\cA^{\le r}$) that satisfy the
+  MC equation modulo arity~$r{+}1$, forming parallel Postnikov
+  towers.
+\end{enumerate}
+The structural difference is the indexing combinatorics:
 $\mathfrak{g}^{\mathrm{mod}}_\cA$ is indexed by stable graphs
-(all genera), while $\mathfrak{g}^{\check{C}}$ is indexed by the
-simplicial combinatorics of the cover (all \v{C}ech degrees).
+(capturing all genera), while $\mathfrak{g}^{\check{C}}$ is indexed
+by the simplicial combinatorics of the cover (capturing all \v{C}ech
+degrees).  The comparison between them is an $L_\infty$ morphism
+that intertwines the two MC elements.
 \end{remark}
 
 \subsection{HCA operations as a Maurer--Cartan element}
@@ -4257,7 +4813,7 @@ shadow of the bar curvature:
 \]
 where $\kappa(\widehat{\mathfrak{g}}_k) = k\,\dim\mathfrak{g} /
 (k + h^\vee)$ is the modular characteristic
-(Theorem~\ref{thm:kappa-universality}) and
+(Theorem~\ref{thm:genus-universality}) and
 $\omega_1 = dz$ is the period form on $E_\tau$.  This is the
 first appearance of the genus-$1$ obstruction in \v{C}ech language:
 the bar curvature $m_0^{(1)} = \kappa \cdot \omega_1$ on
@@ -4989,7 +5545,7 @@ $L_2$~level of the characteristic hierarchy
 (cf.~the concordance, \S\ref{sec:concordance-frontier}): the
 scalar level~$L_1$ is the modular
 characteristic~$\kappa(\cA)$
-(Theorem~\ref{thm:kappa-universality}), while $L_2$ is the
+(Theorem~\ref{thm:genus-universality}), while $L_2$ is the
 spectral discriminant~$\Delta_\cA$ together with its module
 structure.  The passage from $\Delta_\cA$ as a polynomial to
 $\mathcal{R}_\cA$ as a module is exactly the categorification
