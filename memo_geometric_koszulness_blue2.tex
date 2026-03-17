@@ -1,0 +1,763 @@
+% ================================================================
+% RESEARCH MEMO: GEOMETRIC CHARACTERIZATIONS OF CHIRAL KOSZULNESS
+% Agent: BLUE-2 (Derived Algebraic Geometer)
+% Date: 2026-03-17
+% ================================================================
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{enumitem}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\Trop}{\mathrm{Trop}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\gr}{\mathrm{gr}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Def}{\mathrm{Def}}
+\newcommand{\Fact}{\mathrm{Fact}}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\Linf}{L_\infty}
+\newcommand{\Einf}{E_\infty}
+\newcommand{\Etwo}{E_2}
+
+\theoremstyle{plain}
+\newtheorem{conjecture}{Conjecture}[section]
+\newtheorem{proposition}[conjecture]{Proposition}
+\newtheorem{question}[conjecture]{Question}
+\theoremstyle{definition}
+\newtheorem{definition}[conjecture]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[conjecture]{Remark}
+
+\title{Geometric Characterizations of Chiral Koszulness:\\
+  Six Conjectures and a Structural Question}
+\author{BLUE-2 Research Memo}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+% ================================================================
+\section{Executive summary}
+% ================================================================
+
+The monograph characterizes chiral Koszulness \emph{reductively}:
+a chiral algebra~$\cA$ is Koszul if its PBW-associated graded
+$\gr_F\cA$ is classically Koszul (Theorem~8.3, the PBW criterion).
+This is a powerful recognition tool---it covers Heisenberg,
+Kac--Moody, Virasoro, $\mathcal{W}_N$, and Yangians---but it
+is algebraic in character.  The geometry of the curve~$X$ enters
+only through the propagator on~$\overline{C}_2(X)$, not through
+the Koszulness condition itself.
+
+This memo proposes six geometric reformulations of chiral
+Koszulness, each exploiting a different piece of the monograph's
+machinery, and addresses the structural question of whether
+Koszulness depends on~$X$.
+
+
+% ================================================================
+\section{Conjecture A: Ran-space formality}
+\label{sec:ran-formality}
+% ================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[Ran-space formality criterion]
+\label{conj:ran-formality}
+Let $\cA$ be an augmented chiral algebra on a smooth curve~$X$.
+The following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item $\cA$ is chiral Koszul (Definition~8.5, the monograph's
+  def:chiral-koszul-morphism).
+\item The factorization algebra $\cA|_{\Ran^{\leq n}(X)}$ is
+  \emph{formal} as an object of
+  $D^b(\Fact^{\mathrm{aug}}(X))$ for all~$n$: i.e., it is
+  quasi-isomorphic to its cohomology equipped with the
+  transferred $\Ainf$-structure, and the transferred operations
+  $\tilde{m}_k = 0$ for $k \geq 3$.
+\item The bar spectral sequence
+  $E_1^{p,q} \Rightarrow H^{p+q}(\Omega(\barB(\cA)))$ collapses
+  at $E_2$ (equivalently, the cobar-bar is formal with vanishing
+  higher Massey products).
+\end{enumerate}
+\end{conjecture}
+
+\subsection{Evidence from the monograph}
+
+The equivalence (i)$\Leftrightarrow$(iii) is essentially proved.
+Proposition~\texttt{prop:e2-collapse-formality}
+(higher\_genus\_complementarity.tex, line~4010) establishes the
+equivalence of $E_2$-collapse, formality of
+$\Omega_g(\barB_g(\cA))$, and vanishing of transferred operations
+$\tilde{m}_n^{(g)}$ for $n \geq 3$.  That proposition operates at
+each genus~$g$; the genus-$0$ case is exactly the PBW criterion
+(Theorem~\texttt{thm:pbw-koszulness-criterion}).
+
+The new content of Conjecture~\ref{conj:ran-formality} is the
+\emph{stratum-by-stratum} interpretation~(ii): formality should
+hold not just globally on $\Ran(X)$ but on each finite truncation
+$\Ran^{\leq n}(X)$, reflecting the factorization structure.
+
+\subsection{Relation to $\Etwo$-formality}
+
+Kontsevich's formality theorem (Theorem~\texttt{thm:e2-formality},
+en\_koszul\_duality.tex) says the $\Etwo$-operad is formal.
+Chiral algebras on a curve carry an $\Etwo$-structure from the
+little-disks operad on $\bC \subset X$.  The PBW criterion reduces
+chiral Koszulness to formality of this $\Etwo$-structure on the
+associated graded.  In the geometric picture:
+\begin{quote}
+\emph{Chiral Koszulness = the factorization algebra inherits
+$\Etwo$-formality from its PBW-associated graded.}
+\end{quote}
+
+\subsection{Obstacles}
+
+The passage from stratum-level formality to global Ran-space
+formality requires a descent argument: formality on each
+$\Ran^{\leq n}$ must be compatible with the factorization maps.
+This is a nontrivial condition---it asks that the formality
+quasi-isomorphisms respect the diagonal maps
+$\Ran^{\leq n} \to \Ran^{\leq m}$ for $m < n$.  Such
+coherent formality is available for $\Etwo$-algebras
+(Tamarkin--Kontsevich), but the chiral extension to
+factorization algebras on arbitrary curves is not in the
+literature.
+
+\subsection{Utility}
+
+If true, this would give a \emph{cohomological} criterion for
+Koszulness: instead of checking acyclicity of twisted tensor
+products (an algebraic condition), one checks formality of a
+constructible sheaf (a geometric condition).  This is more natural
+from the BD perspective and may be computable via mixed Hodge theory
+on configuration spaces.
+
+
+% ================================================================
+\section{Conjecture B: Boundary acyclicity on FM}
+\label{sec:fm-boundary}
+% ================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[FM boundary acyclicity criterion]
+\label{conj:fm-boundary}
+Let $\cA$ be a chiral algebra on $X$, and let
+$\barB_n^{\mathrm{ch}}(\cA)$ be the $n$-th bar component, a
+regular holonomic $\cD$-module on $\overline{C}_n(X)$
+(Lemma~\texttt{lem:bar-holonomicity}).  Then $\cA$ is chiral
+Koszul if and only if for all $n \geq 2$:
+\[
+H^k\bigl(i_S^!\, \barB_n^{\mathrm{ch}}(\cA)\bigr) = 0
+\quad\text{for all } k \neq 0
+\quad\text{and all boundary strata } S \subset \partial\overline{C}_n(X),
+\]
+where $i_S \colon S \hookrightarrow \overline{C}_n(X)$ is the
+inclusion.  In words: the restriction of the bar complex to every
+boundary stratum of the FM compactification is acyclic outside
+degree~$0$.
+\end{conjecture}
+
+\subsection{Structural basis}
+
+The FM boundary strata decompose as products of lower FM spaces:
+a stratum where $k$ points collide is locally isomorphic to
+$\overline{C}_k(\bC) \times \overline{C}_{n-k+1}(X)$.  This
+decomposition is the operadic composition.  The bar differential
+\[
+d_{\mathrm{bar}} = d_{\mathrm{internal}} + d_{\mathrm{residue}}
+  + d_{\mathrm{form}}
+\]
+(Definition~\texttt{def:bar-differential-complete}) has its
+residue component $d_{\mathrm{residue}} = \sum_D \mathrm{Res}_D$
+supported exactly on boundary divisors.  The claim is that
+Koszulness = \emph{each residue contribution is individually
+acyclic}, not merely that their sum is.
+
+\subsection{Evidence}
+
+The PBW criterion shows that chiral Koszulness reduces to
+classical Koszulness of $\gr_F\cA$, and classical Koszulness is
+equivalent to diagonal Ext-vanishing:
+$\Ext^{i,j}_{\gr\cA}(\bC,\bC) = 0$ for $i \neq j$.  In the
+geometric picture, $\Ext^{i,j}$ is computed by cohomology on FM
+boundary strata of codimension~$i$ with coefficient in weight~$j$.
+Diagonal vanishing translates to: cohomology of each boundary
+stratum is concentrated in the expected degree, i.e., acyclicity
+in the sense of the conjecture.
+
+The bar complex components are regular holonomic $\cD$-modules
+(Lemma~\texttt{lem:bar-holonomicity}), so the restriction
+$i_S^!\,\barB_n$ is a holonomic module on~$S$.  Acyclicity of
+holonomic restrictions is a tameness condition that fits naturally
+into the BD framework.
+
+\subsection{Obstacles}
+
+The main difficulty is that the FM boundary has many irreducible
+components (indexed by nested partitions), and the acyclicity
+condition must hold for \emph{all} of them simultaneously.
+This is stronger than diagonal Ext-vanishing, which is an
+aggregate statement.  One needs to show that the spectral
+sequence from the boundary filtration degenerates, which is
+plausible but requires either a purity argument or explicit
+computation stratum by stratum.
+
+\subsection{Utility}
+
+A boundary-stratum criterion would make Koszulness visible in
+intersection cohomology of the FM space.  It would also connect
+directly to the weight filtration on the convolution algebra
+$\fg^{\mathrm{mod}}_\cA$, whose strata \emph{are} the FM boundary
+strata (Definition~\texttt{def:weight-filtration-tower}).
+
+
+% ================================================================
+\section{Conjecture C: Tropical Koszulness via planted forests}
+\label{sec:tropical}
+% ================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[Tropical characterization of Koszulness]
+\label{conj:tropical-koszul}
+Let $(X,D)$ be a smooth curve with snc divisor, and let
+$\bG_{\mathrm{pf}}$ be the planted-forest coefficient algebra
+(Definition~\texttt{def:planted-forest-coefficient-algebra}).
+Define the \emph{tropical bar complex} of $\cA$ by
+\[
+\barB^{\mathrm{trop}}_n(\cA)
+:= \bigoplus_{F \in \mathsf{For}_{\mathrm{plant}}(n)}
+   \kappa_F(\cA) \cdot e_F
+\;\in\;
+\Def_{\mathrm{cyc}}(\cA) \;\widehat{\otimes}\; \bG_{\mathrm{pf}},
+\]
+where $\kappa_F(\cA)$ is the weight of the shadow tower
+$\Theta^{\leq r}_\cA$ on the planted forest~$F$.
+Then $\cA$ is chiral Koszul if and only if
+$\barB^{\mathrm{trop}}(\cA)$ is acyclic for the differential
+$d_{\mathrm{pf}}$ (edge contraction, the planted-forest differential) tensored with the
+deformation differential on $\Def_{\mathrm{cyc}}(\cA)$.
+\end{conjecture}
+
+\subsection{Structural basis}
+
+By Mok's theorem (Theorem~\texttt{thm:planted-forest-tropicalization}),
+the planted-forest coefficient algebra $\bG_{\mathrm{pf}}$ is the
+chain algebra on the face poset of
+$\Trop(\FM_n(X|D))$.  The codimension formula
+\[
+\mathrm{codim}(F) = \sum w_i + \sum(|V(T_{v_j})| - 1)
+\]
+(Proposition~\texttt{prop:planted-forest-tropical}, equation~(8932))
+matches the weight filtration on $\fg^{\mathrm{amb}}_\cA$.
+The shadow Postnikov tower $\Theta^{\leq r}_\cA$ already encodes
+the contributions of planted forests of bounded depth~$r$.
+
+\subsection{The tropical Koszul complex}
+
+At the tropical level, the bar differential becomes purely
+combinatorial: it is edge contraction in the planted-forest
+category, with coefficients in the cyclic deformation complex.
+The Koszul condition would then be:
+\begin{quote}
+\emph{The tropical bar complex, graded by forest depth, has
+cohomology concentrated on the diagonal (depth = cohomological
+degree).}
+\end{quote}
+This is an intrinsically combinatorial condition on the weights
+$\kappa_F(\cA)$ assigned to planted forests by the shadow tower.
+
+\subsection{Evidence}
+
+For one-channel families (Heisenberg, Kac--Moody), the shadow
+tower satisfies scalar saturation:
+$\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$.  In this case,
+the tropical bar complex collapses because all higher-order forest
+contributions are determined by the single scalar~$\kappa$, and
+the resulting complex is exact (it reduces to the classical Koszul
+complex for~$\Sym(V)$).
+
+For the Virasoro algebra, the shadow tower is \emph{infinite}:
+the quintic obstruction $o^{(5)}_{\mathrm{Vir}} \neq 0$, forcing
+an infinite cascade of corrections.  Yet Virasoro is still Koszul
+(Theorem~\texttt{thm:virasoro-chiral-koszul}).  This means the
+tropical complex is acyclic despite having contributions at all
+forest depths---an interesting constraint on the interplay between
+the quartic resonance class $Q^{\mathrm{contact}}_{\mathrm{Vir}}
+= 10/[c(5c+22)]$ and the higher obstructions.
+
+\subsection{Obstacles}
+
+The main obstacle is that the tropical bar complex captures only
+the \emph{combinatorial shadow} of the full bar complex.  The
+passage from the algebraic bar complex on~$\FM_n(X|D)$ to its
+tropicalization loses analytic information (e.g., periods,
+monodromy).  One needs a ``tropical descent'' theorem: acyclicity
+of the tropical complex implies acyclicity of the algebraic one.
+This would follow from a tropical analog of the Deligne weight
+spectral sequence, but such a tool is not yet available in the
+log~FM setting.
+
+\subsection{Utility}
+
+A tropical criterion would make Koszulness effectively computable
+for new examples: one would only need to evaluate the shadow tower
+on finitely many planted forests (up to a given depth) and check
+a combinatorial acyclicity condition.  This could automate the
+verification of modular Koszulness at higher genus.
+
+
+% ================================================================
+\section{Conjecture D: D-module characterization}
+\label{sec:d-module}
+% ================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[$\cD$-module tameness criterion]
+\label{conj:d-module}
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$,
+finitely generated over~$\cD_X$ with regular singularities.
+Then $\cA$ is chiral Koszul if and only if:
+\begin{enumerate}[label=(\roman*)]
+\item Each bar component $\barB_n^{\mathrm{ch}}(\cA)$ has
+  \emph{pure} weight on $\overline{C}_n(X)$ (in the sense of
+  mixed Hodge modules).
+\item The characteristic variety
+  $\mathrm{Ch}(\barB_n^{\mathrm{ch}}(\cA)) \subset T^*\overline{C}_n(X)$
+  is contained in the union of conormal bundles to the boundary
+  strata: $\mathrm{Ch}(\barB_n) \subset \bigcup_S T^*_S \overline{C}_n$.
+\end{enumerate}
+\end{conjecture}
+
+\subsection{Structural basis}
+
+The monograph proves that each bar component is a regular holonomic
+$\cD$-module on $\overline{C}_n(X)$
+(Lemma~\texttt{lem:bar-holonomicity}).  Holonomicity means the
+characteristic variety has dimension $= \dim \overline{C}_n$.
+Condition~(ii) above is a refinement: it asks that the singular
+support is ``aligned'' with the FM boundary stratification.
+
+This is natural from the BD perspective.  Chiral algebras are
+$\cD$-modules on~$X$; the bar construction produces $\cD$-modules
+on configuration spaces.  The OPE singularities are encoded in
+the characteristic variety.  Koszulness is the condition that
+these singularities are ``as simple as possible''---specifically,
+that the bar $\cD$-module is a successive extension of rank-one
+connections along boundary strata, which is the $\cD$-module
+translation of diagonal Ext-vanishing.
+
+\subsection{Purity and Koszulness}
+
+Condition~(i) connects to a deep observation: for classical
+Koszul algebras, the bar complex has \emph{pure} Hodge-theoretic
+weight.  (This is the content of Backelin's purity theorem:
+Koszulness $\Leftrightarrow$ the bar complex is pure as a mixed
+Hodge structure.)  Condition~(i) lifts this to the chiral
+setting: purity of $\barB_n^{\mathrm{ch}}(\cA)$ as a mixed
+Hodge module on~$\overline{C}_n(X)$.
+
+\subsection{Obstacles}
+
+\begin{itemize}
+\item Mixed Hodge modules on FM spaces are technically demanding.
+  Saito's theory applies, but explicit computations are rare.
+\item The purity condition (i) may be too strong: classical
+  Koszulness implies purity, but the converse requires
+  finite-dimensionality conditions that may fail in the
+  chiral setting (where weight spaces are infinite-dimensional
+  in general, though finite in each conformal weight).
+\item Condition (ii) is a ``microlocal'' criterion.  Verifying
+  it requires computing the singular support of the bar
+  $\cD$-module, which in practice means understanding the
+  wavefront set of the integration kernel on $X^n \setminus
+  \Delta$.
+\end{itemize}
+
+\subsection{Utility}
+
+A $\cD$-module criterion would connect Koszulness to
+representation-theoretic invariants: the characteristic variety
+encodes the ``microlocal support'' of the chiral algebra, and
+conditions on it translate into finiteness conditions on category
+$\cO$.  This could give a path to proving Koszulness for new
+families (e.g., exceptional $\mathcal{W}$-algebras) via
+characteristic variety computations rather than explicit PBW
+reductions.
+
+
+% ================================================================
+\section{Conjecture E: Shifted-symplectic characterization}
+\label{sec:shifted-symplectic}
+% ================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[Lagrangian criterion for Koszulness]
+\label{conj:lagrangian}
+Let $(\cA, \cA^!)$ be a chiral pair.  Suppose the ambient
+complementarity tangent complex $T_{\mathrm{comp}}(\cA)$
+(Definition~\texttt{def:ambient-tangent-complex}) carries a
+$(-1)$-shifted symplectic structure $\omega$ and the one-sided
+deformation maps
+$i_\cA \colon \mathcal{M}_\cA \to \mathcal{M}_{\mathrm{comp}}$
+and
+$i_{\cA^!} \colon \mathcal{M}_{\cA^!} \to \mathcal{M}_{\mathrm{comp}}$
+are isotropic.  Then:
+\begin{enumerate}[label=(\roman*)]
+\item $\cA$ is chiral Koszul if and only if $i_\cA$ and
+  $i_{\cA^!}$ are \emph{Lagrangian} (isotropic of maximal
+  dimension).
+\item The Lagrangian condition is equivalent to: the bar-cobar
+  counit $\Omega(\barB(\cA)) \to \cA$ is a quasi-isomorphism.
+\end{enumerate}
+In other words: \emph{Koszulness = the bar-cobar correspondence
+is a Lagrangian correspondence in the $(-1)$-shifted symplectic
+deformation space.}
+\end{conjecture}
+
+\subsection{Evidence from the monograph}
+
+The ambient complementarity theorem
+(Conjecture~\texttt{thm:ambient-complementarity} in
+chiral\_hochschild\_koszul.tex) already conjectures (as three
+sub-conjectures: self-duality, one-sided isotropy, ambient
+complementarity) that $T_{\mathrm{comp}}(\cA)$ carries a
+$(-1)$-shifted symplectic structure and that the one-sided maps
+are Lagrangian.  The evidence sections in the monograph verify
+isotropy by differentiating the MC equation.
+
+The proved linear shadow is Theorem~C: $Q_g(\cA) \oplus Q_g(\cA^!)
+\cong H^*(\overline{\mathcal{M}}_g, \cZ(\cA))$ as complementary
+Lagrangian subspaces
+(Theorem~\texttt{thm:quantum-complementarity-main}).  The
+Lagrangian upgrade is conditional on perfectness of the cyclic
+deformation complex.
+
+\subsection{The PTVV framework}
+
+The $(-1)$-shifted symplectic geometry of bar-cobar duality
+fits naturally into the PTVV framework
+(Pantev--To\"{e}n--Vaqui\'{e}--Vezzosi).  In that framework,
+a $(-1)$-shifted symplectic structure on a derived stack~$\mathcal{M}$
+produces Lagrangian intersections that compute derived tensor
+products.  The bar-cobar adjunction is an intersection in
+$\mathcal{M}_{\mathrm{comp}}$: the derived intersection
+$\mathcal{M}_\cA \times^h_{\mathcal{M}_{\mathrm{comp}}}
+\mathcal{M}_{\cA^!}$ should compute the twisted tensor product
+$K_\tau(\cA, \cA^!)$, and its acyclicity (= Koszulness) is the
+condition that the intersection is \emph{transverse}---i.e., that
+the Lagrangians are complementary.
+
+\subsection{Obstacles}
+
+\begin{itemize}
+\item The ambient complementarity theorem is currently
+  \textbf{conjectural} in the monograph (three sub-conjectures).
+  The Lagrangian criterion for Koszulness depends on establishing
+  it.
+\item The passage from $(-1)$-shifted symplectic geometry to
+  Koszulness requires understanding the non-linear structure of
+  $\mathcal{M}_{\mathrm{comp}}$, not just its tangent complex.
+  The PTVV machinery handles derived Artin stacks; the chiral
+  deformation space may be more singular.
+\item The cyclic pairing on $\Def_{\mathrm{cyc}}(\cA)$ needs to
+  be \emph{perfect} for the Lagrangian condition to be meaningful.
+  Perfectness is a non-trivial condition that may fail for
+  infinite-type algebras ($\mathcal{W}_\infty$).
+\end{itemize}
+
+\subsection{Utility}
+
+If Koszulness = Lagrangian complementarity, then the failure of
+Koszulness has a clean geometric interpretation: the two
+deformation spaces fail to be transverse, which means there is a
+common tangent direction---a \emph{simultaneous deformation} of
+$\cA$ and $\cA^!$ that is not captured by deforming either one
+alone.  This would give a conceptual explanation for why
+Koszulness fails off the Koszul locus: the coderived category
+intervenes precisely when the Lagrangians fail to be transverse.
+
+
+% ================================================================
+\section{Conjecture F: Deformation quantization compatibility}
+\label{sec:dq}
+% ================================================================
+
+\subsection{Statement}
+
+\begin{conjecture}[Quantization-compatible Koszulness]
+\label{conj:dq}
+Let $\cA_\hbar$ be a one-parameter deformation of a commutative
+chiral algebra $\cA_0$ (i.e., a vertex Poisson algebra / coisson
+algebra).  Assume $\cA_0$ is classically Koszul.  Then $\cA_\hbar$
+is chiral Koszul if and only if:
+\begin{enumerate}[label=(\roman*)]
+\item The deformation is \emph{Koszul-compatible}: the PBW
+  filtration on~$\cA_\hbar$ is a flat deformation of the weight
+  filtration on~$\cA_0$.
+\item The quantum correction $\cA_\hbar - \cA_0$ lies in
+  $F_{\geq 1}\cA_\hbar$ (the deformation does not change the
+  degree-$0$ part of the filtration).
+\end{enumerate}
+\end{conjecture}
+
+\subsection{Structural basis}
+
+The PBW criterion (Theorem~\texttt{thm:pbw-koszulness-criterion})
+already says: if $\gr_F\cA$ is classically Koszul and the
+filtration is flat, then $\cA$ is chiral Koszul.  The conjecture
+above reverses this: it asks whether Koszul-compatible quantization
+is the \emph{only} way to produce chiral Koszul algebras.
+
+In the monograph's four-regime hierarchy, every chiral Koszul
+algebra sits in one of: quadratic ($\mu_0 = 0$), curved-central,
+filtered-complete, or programmatic.  The first three all have
+PBW filtrations; the fourth ($\mathcal{W}_\infty$) is the MC4
+completion target.  The conjecture asks: does every chiral Koszul
+algebra admit a PBW filtration whose associated graded is a
+classically Koszul vertex Poisson algebra?
+
+\subsection{Relation to the coisson shadow}
+
+In the three-pillar architecture (Pillar~A, MS24), the primitive
+local object is a homotopy chiral algebra $\mathrm{Ch}_\infty$,
+with strict chiral algebra appearing after rectification, and the
+coisson shadow as $\mathrm{Ch}_\infty \to \text{strict on }
+H^\bullet \to \text{PVA/coisson}$.  The conjecture asks whether
+this chain respects Koszulness:
+\[
+\cA_\hbar \;\text{chiral Koszul}
+\quad\Longleftrightarrow\quad
+\cA_0 = \gr_F \cA_\hbar \;\text{classically Koszul}
+\quad+\quad
+\text{flatness of } F.
+\]
+
+\subsection{Obstacles}
+
+The conjecture could fail if there exist chiral Koszul algebras
+that do not admit \emph{any} PBW filtration with classically Koszul
+associated graded.  This would require a genuinely non-PBW proof
+of Koszulness.  No such example is currently known, but the
+programmatic regime ($\mathcal{W}_\infty$) is a candidate: the
+MC4 completion involves infinitely many generators, and whether
+the limit admits a PBW filtration is not obvious.
+
+\subsection{Utility}
+
+If true, this conjecture would reduce chiral Koszulness entirely
+to the classical theory: one would need only check classical
+Koszulness of the vertex Poisson algebra $\cA_0$ (a well-understood
+problem) and flatness of the deformation (a condition on the
+Rees construction).  It would also connect chiral Koszulness to
+the theory of Rees algebras and filtered derived categories.
+
+
+% ================================================================
+\section{The key geometric question: does $X$ matter?}
+\label{sec:curve-dependence}
+% ================================================================
+
+\subsection{Genus-0 independence}
+
+\begin{proposition}[Koszulness is genus-0 independent of $X$]
+\label{prop:genus-0-independence}
+At genus~$0$, chiral Koszulness of $\cA$ on $X$ depends only on
+the vertex algebra $V = \Gamma(X, \cA)$, not on the curve~$X$.
+\end{proposition}
+
+This is clear from the monograph: the PBW criterion
+(Theorem~\texttt{thm:pbw-koszulness-criterion}) checks
+classical Koszulness of $\gr_F\cA$, which is determined by the
+vertex algebra generators and relations data.  The curve~$X$
+enters only through the propagator on $\overline{C}_2(X)$, but
+the propagator's residue (which determines the bar differential)
+is independent of the global geometry of~$X$---it depends only
+on the local OPE data.
+
+More precisely: on $\bP^1$ (or any rational curve), the BD
+equivalence identifies chiral algebras with vertex algebras, and
+the chiral bar construction restricts to the classical bar
+construction on generators-and-relations data
+(koszul\_pair\_structure.tex, line~95).
+
+\subsection{Higher-genus dependence: the modular Koszulity question}
+
+\begin{question}[Does modular Koszulness depend on $X$?]
+\label{q:modular-curve}
+Fix a chiral algebra~$\cA$.  Is the modular Koszulity condition
+(diagonal Ext-vanishing $\Ext^{i,j}_{\cA^{(g)}}(\bC,\bC) = 0$
+for $i \neq j$ at genus~$g \geq 1$) independent of the genus-$g$
+curve on which $\cA$ is placed, or does it depend on the choice of
+$\Sigma_g \in \overline{\mathcal{M}}_g$?
+\end{question}
+
+The monograph's evidence points both ways:
+
+\textbf{Evidence for independence:}
+\begin{itemize}
+\item The shadow algebra $\cA^{\mathrm{sh}}$ is a homotopy
+  invariant (Theorem~\texttt{thm:shadow-homotopy-invariance}):
+  quasi-isomorphic chiral algebras have the same shadow algebra,
+  and $\kappa(\cA)$ is a quasi-isomorphism invariant.  This
+  suggests that Koszulness data is intrinsic to~$\cA$.
+\item The curvature $\kappa \cdot \omega_g$ at genus~$g$ factors
+  as a product of $\kappa(\cA)$ (depending only on~$\cA$) and
+  $\omega_g \in H^2(\overline{\mathcal{M}}_g)$ (depending only
+  on the moduli space, not on the choice of curve in it).
+\item For Heisenberg and Kac--Moody at generic level, modular
+  Koszulness is verified directly from the explicit bar complex,
+  which depends on~$\cA$ and the abstract genus~$g$, not on the
+  specific curve.
+\end{itemize}
+
+\textbf{Evidence for dependence:}
+\begin{itemize}
+\item The genus-$g$ bar complex lives on $\overline{C}_n(\Sigma_g)$,
+  whose topology depends on $\Sigma_g$.  The propagator on
+  $\overline{C}_2(\Sigma_g)$ depends on the conformal structure
+  (through the prime form or Szeg\H{o} kernel).
+\item The Remark~\texttt{rem:genus-graded-obstruction}
+  (higher\_genus\_modular\_koszul.tex, line~173) explicitly
+  states: ``The modular Koszulity hypothesis is non-trivial:
+  genus-$0$ Koszulity does \emph{not} formally imply the
+  analogous vanishing at higher genus, where modular forms and
+  period integrals introduce new cohomological contributions.''
+\item At genus $g \geq 2$, the bar differential depends on period
+  integrals of the curve, and these are not constant on
+  $\overline{\mathcal{M}}_g$.
+\end{itemize}
+
+\subsection{Resolution: stratified independence}
+
+I conjecture that the correct answer involves a \emph{stratified}
+independence:
+
+\begin{conjecture}[Stratified curve-independence of Koszulness]
+\label{conj:stratified}
+\begin{enumerate}[label=(\roman*)]
+\item Chiral Koszulness at genus~$0$ is independent of~$X$.
+\item Modular Koszulness at genus~$g$ depends on the
+  \emph{stratum} of $\overline{\mathcal{M}}_g$ containing the
+  curve, but not on the specific curve within a stratum.
+  Specifically, on the open stratum $\mathcal{M}_g$ (smooth
+  curves), Koszulness is constant; on boundary strata (nodal
+  curves), Koszulness may change via the clutching morphism.
+\item The change in Koszulness across strata is controlled by the
+  curvature: a Koszul pair remains Koszul under degeneration if
+  and only if the curvature class $\kappa \cdot \omega_g$
+  deforms flatly across the boundary.
+\end{enumerate}
+\end{conjecture}
+
+\emph{Evidence}: The modular Koszul object
+(Definition~\texttt{def:modular-koszul-homotopy}) is defined
+\emph{over} $\overline{\mathcal{M}}_g$, and the family statement
+in Theorem~A (line~1040--1042 of chiral\_koszul\_pairs.tex) says
+the bar-cobar equivalences are ``functorial in families over the
+modular configuration spaces $\overline{\mathcal{M}}_{g,n}$.''
+This functoriality means Koszulness is a \emph{local} condition
+on the base $\overline{\mathcal{M}}_g$: it holds on an open set,
+and the question is whether this open set is all
+of~$\overline{\mathcal{M}}_g$ or only part of it.
+
+The deepest evidence comes from the center local system
+$\cZ_\cA$ on $\overline{\mathcal{M}}_{g,\bullet}$ (item D4
+in the modular Koszul object definition): the center \emph{is}
+a local system, so its properties are constant on connected
+components of~$\overline{\mathcal{M}}_g$.
+
+
+% ================================================================
+\section{Summary table}
+\label{sec:summary}
+% ================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|p{3.8cm}|p{3.8cm}|p{3.8cm}|}
+\hline
+\textbf{Conj.} & \textbf{Koszulness =} & \textbf{Key obstacle} & \textbf{Utility} \\
+\hline
+A & Ran-space formality & Coherent descent for formality & Cohomological criterion \\
+\hline
+B & FM boundary acyclicity & Stratum-by-stratum vs.\ aggregate & Intersection-cohomological \\
+\hline
+C & Tropical bar acyclicity & Tropical descent theorem & Computational/algorithmic \\
+\hline
+D & $\cD$-module purity + characteristic variety containment & Mixed Hodge modules on FM & Representation-theoretic \\
+\hline
+E & Lagrangian complementarity in shifted-symplectic space & Ambient complementarity conjectural & Conceptual (why Koszulness fails) \\
+\hline
+F & Koszul-compatible quantization of classical Koszul PVA & Existence of PBW filtration for all examples & Reduces to classical theory \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Curve dependence}: genus-$0$ Koszulness is
+independent of~$X$; modular Koszulness at genus $g \geq 1$ is
+conjecturally constant on open strata of $\overline{\mathcal{M}}_g$
+but may change across boundary strata.
+
+
+% ================================================================
+\section{Recommended priorities}
+\label{sec:priorities}
+% ================================================================
+
+\begin{enumerate}
+\item \textbf{Conjecture B (FM boundary acyclicity)} is the most
+  immediately tractable: it requires only a careful analysis of the
+  spectral sequence from the boundary filtration on the holonomic
+  bar complex, and the monograph already has all the ingredients
+  (Lemma~\texttt{lem:bar-holonomicity}, the PBW criterion, the
+  Verdier extension exchange).
+
+\item \textbf{Conjecture C (tropical Koszulness)} is the most
+  novel and has the highest computational payoff.  It requires
+  developing the ``tropical descent'' tool in the log~FM setting
+  of Mok25, which is a natural next step given the planted-forest
+  tropicalization theorem already in the monograph.
+
+\item \textbf{Conjecture E (Lagrangian criterion)} is the deepest
+  but depends on resolving the three sub-conjectures of ambient
+  complementarity (Conjectures~\texttt{lem:ambient-self-duality},
+  \texttt{lem:one-sided-isotropy},
+  \texttt{thm:ambient-complementarity}).  If those are proved, the
+  Lagrangian criterion follows by PTVV machinery.
+
+\item \textbf{Question~\ref{q:modular-curve} (curve dependence)}
+  should be resolved in parallel: a definitive answer would either
+  simplify all six conjectures (if Koszulness is always
+  curve-independent) or reveal new phenomena (if genus-$g$
+  Koszulness can fail on specific subloci of
+  $\overline{\mathcal{M}}_g$).
+\end{enumerate}
+
+\end{document}

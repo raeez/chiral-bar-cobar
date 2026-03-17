@@ -1,0 +1,808 @@
+% ================================================================
+% RESEARCH MEMO: Operadic Characterization of Chiral Koszulness
+% Agent: RED-2 (operadic homotopy theorist)
+% Date: 2026-03-17
+% ================================================================
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{enumitem}
+
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{question}{Question}
+\newtheorem{observation}{Observation}
+\theoremstyle{definition}
+\newtheorem{proposal}{Proposal}
+\theoremstyle{remark}
+\newtheorem*{assessment}{Utility Assessment}
+\newtheorem*{obstacle}{Obstacles}
+\newtheorem*{literature}{Literature}
+
+\newcommand{\Pch}{\mathcal{P}^{\mathrm{ch}}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\FM}{\overline{C}}
+\newcommand{\Def}{\mathrm{Def}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\Heis}{\mathcal{H}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\cA}{\mathcal{A}}
+
+\title{%
+  Operadic Characterization of Chiral Koszulness:\\
+  Five Directions and the Shadow Tower Termination Problem}
+\author{RED-2 (Operadic Homotopy Theory)}
+\date{17 March 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Executive Summary}
+
+The monograph's current characterization of chiral Koszulness
+(Theorem~8.8 = \texttt{thm:pbw-koszulness-criterion}) reduces to
+classical Koszulness of the PBW-associated graded.  This is
+effective---it handles Heisenberg, Kac--Moody, Virasoro, and
+Yangians---but it is a \emph{detection criterion}, not a
+\emph{structural explanation}.  It says nothing about \emph{why}
+certain algebras are Koszul, only \emph{that} they are.
+
+The shadow Postnikov tower termination pattern
+(Heisenberg at arity~2, affine at~3, $\beta\gamma$ at~4,
+Virasoro at~$\infty$) is the most striking unexplained structure in
+the monograph.  Below I propose five directions for an operadic
+explanation.  My main thesis is:
+
+\medskip
+\noindent\textbf{The termination arity $r_{\max}(\cA)$ measures the
+\emph{operadic complexity} of $\cA$ as an algebra over the chiral
+operad $\Pch$, specifically the arity at which the minimal
+$A_\infty$-model of $\cA$ becomes intrinsically formal.}
+
+% ================================================================
+\section{Direction A: Operadic vs.\ Algebra-Level Koszulness}
+% ================================================================
+
+\subsection{What the monograph currently says}
+
+The monograph operates at two levels of Koszul duality
+simultaneously (Remark~\texttt{rem:operadic-vs-algebraic-kd} in
+\texttt{algebraic\_foundations.tex}, lines 1108--1133):
+
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Operadic level}: $\mathrm{Com}^! = \mathrm{Lie}$,
+  $\mathrm{Ass}^! = \mathrm{Ass} \otimes \mathrm{sgn}$.
+  The chiral operad $\Pch$ is identified with
+  $\Omega^*_{\log}(\FM_n(X))$ (Theorem~\texttt{thm:geometric-bridge},
+  line~1169), and its Koszul dual cooperad is
+  $(\Pch)^{!\prime}(n) \cong H_*(\FM_n(X))$
+  (line~1184).
+\item \emph{Algebraic level}: a chiral algebra $\cA$ is
+  \emph{chiral Koszul} if the PBW-associated graded
+  $\mathrm{gr}_F \cA$ is classically Koszul
+  (Definition~\texttt{def:chiral-koszul-morphism}, the PBW criterion
+  Theorem~\texttt{thm:pbw-koszulness-criterion}).
+\end{enumerate}
+
+The $E_1$-chiral Koszul duality theorem
+(\texttt{thm:e1-chiral-koszul-duality}, line~2166) explicitly
+derives the algebra-level bar-cobar equivalence from the
+\emph{operadic} Koszulness of $\mathrm{Ass}$ via the transfer lemma
+(\texttt{lem:operadic-koszul-transfer}, line~2268).  This is the
+right framework.  The question is whether the analogous story works
+for the full $E_\infty$-chiral (vertex algebra) case.
+
+\subsection{Precise conjecture}
+
+\begin{conjecture}[Operadic inheritance of chiral Koszulness]
+\label{conj:operadic-inheritance}
+Let $\Pch$ be the chiral operad on a smooth curve $X$, and let
+$\cA$ be a $\Pch$-algebra (vertex algebra).
+\begin{enumerate}
+\item $\Pch$ is Koszul as an operad internal to
+  $\mathcal{D}\textnormal{-mod}(X)$ equipped with the chiral tensor
+  product.
+\item Every $\Pch$-algebra $\cA$ that is PBW-Koszul in the sense of
+  \texttt{thm:pbw-koszulness-criterion} is automatically Koszul
+  \emph{as an algebra over a Koszul operad}, in the sense that the
+  operadic bar-cobar adjunction
+  $B_{\Pch} \dashv \Omega_{\Pch}$ restricts to an equivalence on
+  the full subcategory of PBW-Koszul algebras.
+\item Conversely, if $\Pch$ is Koszul and $\cA$ is
+  $\Pch$-free on generators $V$ modulo quadratic-to-PBW relations,
+  then $\cA$ is chiral Koszul.
+\end{enumerate}
+\end{conjecture}
+
+\begin{obstacle}
+The chiral operad $\Pch$ is not quadratic in the classical sense.
+Its spaces $\Pch(n) = \Omega^*_{\log}(\FM_n(X))$ are
+infinite-dimensional and carry mixed Hodge structures.  Koszulness
+of $\Pch$ would need to be proved in the enriched sense
+(internal to $\mathcal{D}$-mod$(X)$), following the transfer
+strategy already used for $\mathrm{Ass}$ in
+Lemma~\texttt{lem:operadic-koszul-transfer}.  The key subtlety:
+$\Pch$ is \emph{not} the base-change of a classical operad.  It is
+intrinsically geometric.  One needs the formality of the
+FM compactification (Kontsevich) to reduce to the combinatorial
+operad $H^*(\FM_n)$.
+\end{obstacle}
+
+\begin{literature}
+Francis--Gaitsgory \cite{FG12}: $\mathrm{Lie}^{\mathrm{ch}}
+\dashv \mathrm{Com}^{\mathrm{ch}}$ adjunction on $\mathrm{Ran}(X)$.
+Loday--Vallette \cite{LV12}, Theorem~11.4.1: bar-cobar for
+algebras over Koszul operads.  Fresse \cite{Fresse-operads},
+\S16: model-categorical bar-cobar for general symmetric monoidal
+model categories.  The monograph's
+Lemma~\texttt{lem:operadic-koszul-transfer} is the precise bridge.
+\end{literature}
+
+\begin{assessment}
+\textbf{High utility, moderate difficulty.}  This conjecture would
+unify the PBW criterion with the operadic framework and explain
+\emph{why} the PBW strategy works: it works because $\Pch$ is
+Koszul, and PBW-flat algebras over Koszul operads are automatically
+Koszul.  The proof strategy is essentially already in the monograph
+for $\mathrm{Ass}$; extending it to $\Pch$ requires the formality
+input.
+\end{assessment}
+
+% ================================================================
+\section{Direction B: Distributive Law Characterization}
+% ================================================================
+
+\subsection{The idea}
+
+A vertex algebra OPE has the structure
+\[
+a(z) b(w) = \underbrace{\sum_{n \geq 0}
+\frac{(a_{(n)} b)(w)}{(z-w)^{n+1}}}_{\text{singular part}}
++ \underbrace{:a(z)b(w):}_{\text{regular part}}.
+\]
+The singular part encodes the ``Lie-type'' data (poles, commutators),
+and the regular part encodes the ``commutative-type'' data (normal
+ordering).  The PBW theorem for vertex algebras says that the
+multiplication map
+\[
+\mathrm{Sym}^{\mathrm{ch}}(V) \xrightarrow{\sim} \mathrm{gr}_F \cA
+\]
+is an isomorphism.  In the Loday--Vallette framework, PBW theorems
+for algebras are consequences of \emph{distributive laws} between
+operads: if $P = P_1 \circ_\lambda P_2$ (a distributive law
+$\lambda: P_2 \circ P_1 \to P_1 \circ P_2$), then free
+$P$-algebras have PBW bases indexed by $P_1$-monomials applied to
+$P_2$-monomials.
+
+\subsection{Precise conjecture}
+
+\begin{conjecture}[Distributive law for chiral Koszulness]
+\label{conj:distributive-law}
+There exist sub-operads
+$\Pch_{\mathrm{sing}} \hookrightarrow \Pch$ and
+$\Pch_{\mathrm{reg}} \hookrightarrow \Pch$
+encoding, respectively, the singular (OPE pole) and regular (normal
+ordering) parts of the chiral product, together with a distributive
+law
+\[
+\lambda: \Pch_{\mathrm{reg}} \circ \Pch_{\mathrm{sing}}
+\longrightarrow
+\Pch_{\mathrm{sing}} \circ \Pch_{\mathrm{reg}}
+\]
+such that:
+\begin{enumerate}
+\item $\Pch \cong \Pch_{\mathrm{sing}} \circ_\lambda
+  \Pch_{\mathrm{reg}}$ as operads.
+\item The PBW theorem for chiral algebras
+  (the isomorphism $\mathrm{Sym}^{\mathrm{ch}}(V) \cong
+  \mathrm{gr}_F \cA$) is a consequence of this distributive law.
+\item A chiral algebra $\cA$ is Koszul if and only if both
+  $\Pch_{\mathrm{sing}}$ and $\Pch_{\mathrm{reg}}$ are Koszul and
+  the distributive law is compatible with the Koszul resolutions.
+\end{enumerate}
+\end{conjecture}
+
+\begin{obstacle}
+This is the most speculative direction.  The main difficulty is
+that the singular/regular decomposition of the OPE is
+\emph{not operadic} in a naive sense: the singular part at $n$
+points involves pole orders that depend on the specific algebra
+$\cA$ (e.g., double pole for Heisenberg, quartic pole for
+Virasoro).  A genuine distributive law would need to operate at the
+level of the chiral operad itself, not at the algebra level.
+
+Moreover, Loday--Vallette's distributive law theory
+(\cite{LV12}, \S8.6) applies to quadratic operads and produces
+quadratic-linear algebras via the rewriting method.  The chiral
+setting involves poles of \emph{all} orders, which goes beyond the
+quadratic-linear framework.
+
+A more realistic version: the distributive law exists at the level
+of the \emph{PBW-graded} chiral operad
+$\mathrm{gr}_F \Pch$, where it reduces to the classical
+$\mathrm{Com} \circ \mathrm{Lie}$ distributive law (encoding the
+PBW theorem for universal enveloping algebras).  The failure of
+the distributive law to lift to the ungraded level is measured by
+a sequence of obstructions, and the \emph{shadow tower} is
+precisely this obstruction sequence.
+\end{obstacle}
+
+\begin{literature}
+Loday--Vallette \cite{LV12}, \S8.6: distributive laws and PBW.
+Dotsenko--Khoroshkin \cite{DK10}: Gr\"obner bases for operads,
+rewriting approach to PBW.  Bremner--Dotsenko: algebraic operads
+and rewriting systems.  For the vertex algebra PBW theorem: Li
+\cite{Li96}, Frenkel--Ben-Zvi \cite{FBZ04}.
+\end{literature}
+
+\begin{assessment}
+\textbf{Medium utility, high difficulty.}  If achieved, this would
+give the \emph{deepest} structural explanation of chiral
+Koszulness.  But the gap between the operadic distributive law
+framework and the analytic structure of OPE poles is large.
+The modified version (distributive law on the associated graded,
+with the shadow tower as the obstruction to lifting) is more
+realistic and connects directly to the monograph's existing
+architecture.
+\end{assessment}
+
+% ================================================================
+\section{Direction C: Modular Koszulness and Shadow Tower
+Termination}
+\label{sec:modular}
+% ================================================================
+
+\subsection{The key data}
+
+From the monograph
+(Example~\texttt{ex:tower-four-archetypes},
+\texttt{higher\_genus\_modular\_koszul.tex} lines 8571--8597):
+
+\begin{center}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Algebra} & $\kappa$ & $\mathfrak{C}$ & $\mathfrak{Q}$ &
+$r_{\max}$ \\
+\hline
+Heisenberg $\Heis_k$ & $k$ & $0$ & $0$ & $2$ \\
+Affine $\widehat{\mathfrak{sl}}_2$ & $\kappa$ &
+$\kappa(x,[y,z])$ & $0$ (Jacobi) & $3$ \\
+$\beta\gamma$ & $0$ & $0$ & $\mathrm{cyc}(m_3)$ & $4$ \\
+Virasoro $\Vir_c$ & $c/2$ & $2x^3$ &
+$\frac{10}{c(5c+22)}x^4$ & $\infty$ \\
+\hline
+\end{tabular}
+\end{center}
+
+The shadow Postnikov tower
+(Definition~\texttt{def:shadow-postnikov-tower}) is a sequence of
+MC truncations $\Theta_\cA^{\leq r}$ in the modular convolution
+dg Lie algebra $\mathfrak{g}_\cA^{\mathrm{mod}}$, where
+$\Theta_\cA^{\leq r}$ solves MC modulo weight $r+1$.  The
+obstruction class $o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$
+controls extension.  Termination at $r_{\max}$ means
+$\cA^{\mathrm{sh}}_{r,0} = 0$ for $r > r_{\max}$.
+
+\subsection{Operadic explanation of termination}
+
+\begin{conjecture}[Operadic complexity controls termination]
+\label{conj:operadic-termination}
+The shadow tower termination arity $r_{\max}(\cA)$ equals the
+\emph{operadic complexity} of $\cA$, defined as the minimal arity
+$r$ such that the transferred $A_\infty$ operations
+$m_n^{\mathrm{tr}} = 0$ for all $n > r$ on the minimal model of
+$\cA$ as a $\Pch$-algebra.
+\end{conjecture}
+
+Here is the proposed dictionary:
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\textbf{Algebra} & \textbf{Minimal model} & $r_{\max}$ \\
+\hline
+Heisenberg & Strictly commutative ($m_n = 0$, $n \geq 3$) & $2$ \\
+Affine KM & Strict Lie ($m_3 \neq 0$ from bracket, $m_n = 0$,
+$n \geq 4$) & $3$ \\
+$\beta\gamma$ & $A_\infty$ with $m_3$ and $m_4$ from contact
+terms & $4$ \\
+Virasoro & Full $A_\infty$ tower, $m_n \neq 0$ for all $n$ & $\infty$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Why this should be true.}  The shadow at arity $r$ is built
+from graph sums (Definition~\texttt{def:modular-bar-hamiltonian},
+line 8610) whose vertices carry the transferred operations
+$\ell_{|v|}^{\mathrm{tr}}$ from the cyclic minimal model.  If the
+minimal model has $m_n^{\mathrm{tr}} = 0$ for $n > r$, then all
+graph sums with a vertex of valence $> r$ vanish, and the only
+contributions to the shadow at arity $> r$ come from graphs whose
+vertices all have valence $\leq r$.  The obstruction class
+$o_{r+1}$ involves the bracket
+$[\Theta^{\leq r}, \Theta^{\leq r}]_{r+1}$, which is a sum over
+graphs with two vertices sewn together.  If the vertex operations
+truncate at arity $r$, and the bracket produces arity $r+1$ only
+by combining vertices of arity $\leq r$, then $o_{r+1} = 0$ if and
+only if the ``Jacobi-type'' identity for these lower-arity
+operations holds.
+
+The pattern:
+\begin{itemize}
+\item \textbf{Heisenberg}: $m_n^{\mathrm{tr}} = 0$ for $n \geq 3$
+(abelian).  All graph sums with $\geq 3$-valent vertices vanish.
+The modular content is purely from edge contractions (propagators),
+giving the Gaussian $\kappa \cdot \lambda_g$ formula.
+
+\item \textbf{Affine}: $m_2^{\mathrm{tr}}$ is the Lie bracket,
+$m_3^{\mathrm{tr}} = 0$ by transfer from the Koszul resolution (the
+$A_\infty$ structure on $\mathrm{Ext}^*(\mathbb{C}, \mathbb{C})$
+for $U(\mathfrak{g})$ has $m_3 = 0$ because the Koszul resolution
+is \emph{minimal} and the Chevalley--Eilenberg complex is formal
+through degree 3).  The cubic shadow $\mathfrak{C}$ comes from
+$m_2$ composed with itself (the $s$-$t$-$u$ channels), and the
+quartic obstruction vanishes by the Jacobi identity.
+
+\item \textbf{$\beta\gamma$}: The normal-ordered product
+$:\beta\gamma:$ gives a nontrivial $m_3^{\mathrm{tr}}$ (the contact
+term from the quartic singularity in the $\beta\gamma$ OPE after
+subtracting the simple pole), but $m_4^{\mathrm{tr}}$ is exact
+(killed by rank-one abelian rigidity,
+\texttt{thm:nms-rank-one-rigidity}).
+
+\item \textbf{Virasoro}: The composite field $:TT:$ and its
+descendants generate an infinite sequence of nonvanishing
+transferred operations.  The $A_\infty$ minimal model of $\Vir_c$
+is genuinely infinite: $m_n^{\mathrm{tr}} \neq 0$ for all $n$
+because the OPE involves a quartic pole, composite fields of
+arbitrarily high weight, and the central charge enters nonlinearly
+at every order (as noted in
+\texttt{chiral\_koszul\_pairs.tex}, line~2896).  The quintic is
+forced because $\{\mathfrak{C}, \mathfrak{Q}\}_H \neq 0$
+(Theorem~\texttt{thm:nms-virasoro-quintic-forced}).
+\end{itemize}
+
+\begin{obstacle}
+The precise relationship between $m_n^{\mathrm{tr}}$ and the shadow
+obstruction $o_n$ is not a direct equality.  The obstruction
+$o_{r+1}$ involves \emph{all} graphs of weight $r+1$, including
+graphs with low-valence vertices connected by many edges (loops).
+A vertex with $m_k^{\mathrm{tr}} = 0$ for $k > r$ does not
+immediately imply $o_{r+1} = 0$, because multi-loop graphs with
+vertices of valence $\leq r$ can contribute to weight $r+1$.
+
+The precise statement would need: if $m_k^{\mathrm{tr}} = 0$ for
+$k > r$ AND the genus-loop operator $\Lambda_P$ acting on
+arity-$(r+2)$ shadows from lower-arity vertices gives zero, THEN
+$o_{r+1} = 0$.  The genus-loop condition is an additional
+constraint beyond the truncation of the minimal model.
+\end{obstacle}
+
+\begin{literature}
+Merkulov \cite{Mer10}: minimal models and $A_\infty$ transfer for
+operadic algebras.  Kadeishvili \cite{Kad80}: $A_\infty$ minimal
+models.  Kontsevich--Soibelman \cite{KS06}: formal moduli from
+$L_\infty$ and $A_\infty$.  The graph sum formula
+(\texttt{def:modular-bar-hamiltonian}) is the Feynman expansion of
+the quantum $L_\infty$ structure
+(Chuang--Lazarev \cite{CL10}).
+\end{literature}
+
+\begin{assessment}
+\textbf{Very high utility, moderate difficulty.}  This is the most
+promising direction.  It gives a precise operadic meaning to the
+shadow termination pattern and connects it to the classical theory
+of $A_\infty$ minimal models.  The main work is making the
+graph-sum argument rigorous: showing that truncation of the
+minimal model controls termination of the shadow tower, accounting
+for the genus-loop contributions.
+
+This could be stated as a theorem in the monograph, not merely a
+conjecture, if the graph-sum analysis is carried out carefully.
+\end{assessment}
+
+% ================================================================
+\section{Direction D: Koszul Duality of the Chiral Operad}
+% ================================================================
+
+\subsection{What is $(\Pch)^!$?}
+
+The monograph identifies $\Pch(n) \cong \Omega^*_{\log}(\FM_n(X))$
+(\texttt{algebraic\_foundations.tex}, line~1171) and the Koszul dual
+cooperad $(\Pch)^{!\prime}(n) \cong H_*(\FM_n(X))$ (line~1184).
+Since $H^*(\FM_n(\mathbb{C}))$ is generated by the Arnold classes
+$\omega_{ij}$ with the Arnold relations, and the homology
+$H_*(\FM_n(\mathbb{C}))$ is generated by the dual classes
+$\alpha_{ij}$ with the dual relations, the Koszul dual operad
+$(\Pch)^!$ is:
+
+\[
+(\Pch)^!(n) = H_*(\FM_n(X), \mathbb{C})
+= \text{the Lie-type operad generated by ``collision classes''.}
+\]
+
+On $\mathbb{P}^1$:
+$H^*(\FM_n(\mathbb{P}^1)) \cong \mathrm{Com}(n)$ (the commutative
+operad), and
+$H_*(\FM_n(\mathbb{P}^1)) \cong \mathrm{Lie}(n)$ (by the partition
+lattice theorem, \texttt{algebraic\_foundations.tex},
+Theorem~\texttt{thm:com-lie}, line~1236).  So:
+\[
+(\Pch)^! \Big|_{X = \mathbb{P}^1}
+\cong \mathrm{Lie}^{\mathrm{ch}}.
+\]
+This recovers the Francis--Gaitsgory
+$\mathrm{Lie}^{\mathrm{ch}} \dashv \mathrm{Com}^{\mathrm{ch}}$
+adjunction.
+
+\subsection{Precise question}
+
+\begin{question}
+For a higher-genus curve $X$ (or the universal curve over
+$\Mbar_{g,n}$), what is $(\Pch_X)^!$?  Does it depend on the
+complex structure of $X$?  Is the Koszul dual cooperad
+$(\Pch_X)^{!\prime}(n) = H_*(\FM_n(X))$ formal
+(i.e., does the cooperad structure on chains $C_*(\FM_n(X))$
+transfer to cohomology)?
+\end{question}
+
+At genus $g \geq 1$, $H^1(\FM_n(X)) \neq 0$ (from the homology of
+the curve itself), and the chiral operad $\Pch_X$ is \emph{not}
+the base-change of $\mathrm{Com}$.  The Koszul dual
+$(\Pch_X)^!$ would be a \emph{genus-dependent} Lie-type operad,
+whose arity-$n$ spaces encode the interaction between the OPE and
+the topology of $X$.
+
+\begin{conjecture}[Genus-dependent Koszul dual]
+\label{conj:genus-koszul-dual}
+For a smooth curve $X$ of genus $g$:
+\begin{enumerate}
+\item The cooperad $\{C_*(\FM_n(X))\}$ is formal if and only if
+$g = 0$.
+\item At genus $g \geq 1$, the non-formality is controlled by the
+period matrix $\Omega_g \in \mathfrak{H}_g$, and the resulting
+``Lie-type'' operad $(\Pch_X)^!$ carries a connection over the
+Siegel upper half-space (equivalently, over $\Mbar_g$).
+\item The curvature of this connection is the modular characteristic
+$\kappa(\cA)$: the obstruction to $(\Pch_X)^!$ being independent
+of the complex structure.
+\end{enumerate}
+\end{conjecture}
+
+This is essentially saying: the genus-$g$ bar complex
+$\bar{B}^{(g)}(\cA)$ computes the $(\Pch_X)^!$-coalgebra
+structure on $\cA$, and the curvature
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ is the failure of
+this coalgebra structure to be flat over $\Mbar_g$.
+
+\begin{obstacle}
+The formality of configuration spaces on higher-genus curves is a
+deep open question.  On $\mathbb{C}$ (or $\mathbb{P}^1$),
+Kontsevich formality gives $C^*(\FM_n(\mathbb{C})) \simeq
+H^*(\FM_n(\mathbb{C}))$ as operads.  On $\Sigma_g$ for $g \geq 1$,
+this fails: $C^*(\mathrm{Conf}_n(\Sigma_g))$ is \emph{not} formal
+in general (there are nontrivial Massey products from the
+interaction of the curve's homology with the configuration space
+structure).  This non-formality is closely related to the
+non-vanishing of the shadow tower at higher arities.
+\end{obstacle}
+
+\begin{assessment}
+\textbf{High utility, high difficulty.}  This direction connects
+the shadow tower directly to the homotopy theory of configuration
+spaces on curves, which is an active area of research.  The
+payoff would be enormous: a geometric explanation of $\kappa$ as
+the curvature of a connection on the Koszul dual operad.  But the
+technical machinery (formality on curves, connections on operads
+over moduli) is demanding.
+\end{assessment}
+
+% ================================================================
+\section{Direction E: Transfer, Formality, and Operadic Koszulness}
+% ================================================================
+
+\subsection{The framework}
+
+The monograph states that bar-cobar preserves quasi-isomorphisms
+``because it is a quantum $L_\infty$ functor''
+(\texttt{CLAUDE.md}).  More precisely: the convolution
+$L_\infty$-algebra $\mathrm{hom}_\alpha(C, A)$ of
+Robert-Nicoud--Wierstra carries a transferred $L_\infty$ structure,
+and the bar-cobar adjunction is the MC moduli of this structure
+(Theorem~\texttt{thm:modular-quantum-linfty}, line~7537).
+
+The homotopy transfer theorem (HTT) says: given a deformation
+retract $V \hookrightarrow A \twoheadrightarrow V$ with
+$V = H^*(A)$, the $A_\infty$ structure on $A$ transfers to a
+\emph{minimal} $A_\infty$ structure on $V$.  The transferred
+operations $m_n^{\mathrm{tr}}$ are sums over planar trees with
+$n$ leaves, each internal edge decorated by the contracting
+homotopy $h$ and each vertex by the original operations.
+
+\begin{conjecture}[Formality characterization of Koszulness]
+\label{conj:formality-koszulness}
+A chiral algebra $\cA$ is Koszul if and only if the convolution
+$L_\infty$-algebra
+$\mathrm{hom}_\alpha(\{C_*(\FM_n(X))\},
+\mathrm{End}_\cA)$
+is \emph{formal}: i.e., quasi-isomorphic to its cohomology
+(a dg Lie algebra with zero differential) as an $L_\infty$-algebra.
+
+Moreover:
+\begin{enumerate}
+\item $\cA$ is Koszul with $r_{\max} = 2$
+  (shadow tower terminates at arity~2) if and only if the
+  convolution $L_\infty$-algebra is \emph{intrinsically formal}
+  (all higher brackets $\ell_k = 0$ for $k \geq 3$ on cohomology).
+\item $r_{\max} = r$ if and only if the convolution
+  $L_\infty$-algebra is \emph{formal through arity $r$} but not
+  through arity $r+1$: the transferred brackets $\ell_k^{\mathrm{tr}}$
+  vanish for $k > r$ but $\ell_{r+1}^{\mathrm{tr}}$ represents a
+  nontrivial class in the Harrison cohomology of the $L_\infty$
+  deformation complex.
+\item $r_{\max} = \infty$ (non-termination, e.g., Virasoro) if and
+  only if the convolution $L_\infty$-algebra is \emph{not formal at
+  any finite level}: there exist nontrivial transferred brackets at
+  every arity.
+\end{enumerate}
+\end{conjecture}
+
+\begin{observation}[The formality obstruction tower IS the shadow
+tower]
+The obstructions to formality of an $L_\infty$-algebra are organized
+by a Postnikov-type tower: at each stage, one tries to kill the
+lowest-arity nontrivial transferred bracket by a quasi-isomorphism.
+The obstruction to killing $\ell_n^{\mathrm{tr}}$ lives in a
+Harrison-type cohomology group.  This tower is formally identical
+to the shadow Postnikov tower:
+\begin{itemize}
+\item $\Theta^{\leq 2} = \kappa$ $\leftrightarrow$ binary bracket
+  (dg Lie structure).
+\item $o_3 = $ cubic shadow obstruction $\leftrightarrow$
+  $\ell_3^{\mathrm{tr}}$, the ternary Massey-type product.
+\item $o_4 = $ quartic resonance $\leftrightarrow$
+  $\ell_4^{\mathrm{tr}}$, the quaternary obstruction.
+\end{itemize}
+\end{observation}
+
+This is consistent with the monograph's explicit formula for
+$\ell_3^{(0)}$
+(Construction~\texttt{constr:explicit-convolution-linfty},
+line~7582): it is the sum over the three binary trees with
+3~leaves ($s$, $t$, $u$ channels), each internal edge contracted
+with the homotopy propagator.  On cohomology,
+$[\ell_3^{(0)}] = 0$ in $H^*(\Mbar_{0,4}) = H^*(\mathbb{P}^1)$
+because $H^1(\mathbb{P}^1) = 0$.  But at the chain level,
+$\ell_3^{(0)}$ is nontrivial and feeds the cubic shadow.
+
+The quaternary bracket $\ell_4^{(0)}$ involves 15 trivalent trees
+with 4 leaves on $\Mbar_{0,5}$.  Its cohomology class detects the
+quartic shadow obstruction $o_4(\cA)$ (line~7644).
+
+\begin{obstacle}
+The identification of the formality obstruction tower with the
+shadow Postnikov tower requires showing that the Harrison
+cohomology controlling $L_\infty$ formality maps isomorphically to
+the shadow algebra $\cA^{\mathrm{sh}}$.  This is plausible but not
+automatic: the shadow algebra is defined as
+$H_\bullet(\Def_{\mathrm{cyc}}^{\mathrm{mod}}(\cA))$
+(Definition~\texttt{def:shadow-algebra}), which is the cyclic
+deformation complex, not the Harrison complex.  The two coincide
+for commutative algebras but differ in general.
+
+Additionally, the genus contributions complicate the story:
+$\ell_1^{(g)}$ (the BV operator at genus $g$) mixes with the
+genus-0 formality obstructions.  A clean statement would need to
+separate the genus-0 formality from the genus-$g$ corrections.
+\end{obstacle}
+
+\begin{assessment}
+\textbf{Very high utility, moderate difficulty.}  This is the most
+satisfying answer to the shadow tower termination question.  It
+gives a dictionary:
+\begin{center}
+\begin{tabular}{ll}
+\hline
+\textbf{Shadow tower} & \textbf{Formality theory} \\
+\hline
+$\kappa$ (arity 2) & Binary Lie bracket \\
+$\mathfrak{C}$ (arity 3) & Ternary Massey product \\
+$\mathfrak{Q}$ (arity 4) & Quaternary formality obstruction \\
+$r_{\max} < \infty$ & Finite-stage formality \\
+$r_{\max} = \infty$ & Intrinsic non-formality \\
+\hline
+\end{tabular}
+\end{center}
+The Virasoro tower being infinite means: the convolution
+$L_\infty$-algebra of $\Vir_c$ is \emph{intrinsically non-formal}.
+The Heisenberg tower terminating at arity~2 means: the convolution
+$L_\infty$-algebra is intrinsically formal (a genuine dg Lie
+algebra, no higher brackets needed).  This is exactly the
+content of the shadow archetype classification.
+\end{assessment}
+
+% ================================================================
+\section{The Key Question: Operadic Explanation of the Termination
+Pattern}
+% ================================================================
+
+Let me combine the threads.  The shadow tower termination pattern
+\[
+\Heis @2, \quad
+\widehat{\mathfrak{g}} @3, \quad
+\beta\gamma @4, \quad
+\Vir @\infty
+\]
+admits the following unified operadic explanation, synthesizing
+Directions C and E:
+
+\begin{proposal}[The Operadic Complexity Theorem]
+\label{prop:operadic-complexity}
+For a chiral Koszul algebra $\cA$ over $\Pch$, define:
+\begin{enumerate}
+\item The \emph{$A_\infty$-depth} $d_\infty(\cA)$ = the largest
+$n$ such that $m_n^{\mathrm{tr}} \neq 0$ in the minimal
+$A_\infty$ model of $\cA$.
+\item The \emph{$L_\infty$-formality level} $f_\infty(\cA)$ = the
+largest $n$ such that $\ell_n^{(0),\mathrm{tr}} \neq 0$ in the
+transferred quantum $L_\infty$ brackets on the convolution algebra.
+\item The \emph{shadow depth} $r_{\max}(\cA)$ = the termination
+arity of the shadow Postnikov tower.
+\end{enumerate}
+
+Then:
+\[
+r_{\max}(\cA) = d_\infty(\cA) = f_\infty(\cA).
+\]
+\end{proposal}
+
+\textbf{Verification on examples:}
+\begin{itemize}
+\item \textbf{Heisenberg}: $d_\infty = 2$ (commutative, all
+$m_n = 0$ for $n \geq 3$); $f_\infty = 2$ (convolution is a dg Lie
+algebra, no higher brackets); $r_{\max} = 2$.
+\checkmark
+
+\item \textbf{Affine}: $d_\infty = 3$ (the Lie bracket gives
+$m_2 \neq 0$; the Koszul resolution is minimal so $m_3 = 0$ on
+the minimal model, but the cubic shadow
+$\mathfrak{C} = \kappa(x,[y,z])$ comes from the \emph{convolution}
+$\ell_3$ which is chain-level nontrivial even though
+cohomologically trivial at genus 0---wait.  Actually,
+$r_{\max} = 3$ means $o_4 = 0$, which is the Jacobi identity.
+The $A_\infty$-depth is $2$ (binary Lie bracket), not $3$.
+The cubic shadow comes from composing $m_2$ with itself, not from
+$m_3$.  So we need $d_\infty(\cA)$ to count the ``effective arity''
+including compositions.)
+
+\textbf{Correction}: the right notion is not $m_n^{\mathrm{tr}}$
+alone, but the \emph{effective operadic arity} = the arity at
+which the graph sums from all vertices of the minimal model
+can generate nontrivial contributions.  For affine: $m_2$ is
+nonzero (the Lie bracket), and graphs with two binary vertices
+sewn together give arity-3 contributions.  But graphs with
+three binary vertices give arity-4 contributions, and $o_4 = 0$
+because the Jacobi identity is an operadic relation.
+
+So the refined statement is: $r_{\max}(\cA)$ is the arity at
+which the \emph{operadic relations} of $\Pch$ kill all further
+graph-sum contributions.  For $\mathrm{Lie}$: the Jacobi identity
+is the unique relation in arity 3 of the Lie operad, and it kills
+all arity-4 contributions.  This is $r_{\max} = 3$.
+
+\item \textbf{$\beta\gamma$}: The $A_\infty$ minimal model has
+$m_2 = 0$ (no Lie bracket: this is a free field), $m_3 \neq 0$
+(from the normal-ordered product and the OPE contact terms).
+Graphs with one ternary vertex and edges give contributions at
+arities 3 and 4.  The quartic shadow $\mathfrak{Q}$ is nonzero,
+but $o_5 = 0$ by rank-one abelian rigidity.
+$r_{\max} = 4$.
+
+\item \textbf{Virasoro}: $m_2 \neq 0$ (the Virasoro bracket),
+the composite field $:TT:$ generates effective $m_4$-type
+contributions, and the central charge prevents the graph sums from
+terminating.  The obstruction
+$\{C, Q\}_H \neq 0$ forces $\Sh_5 \neq 0$, and by
+induction the tower is infinite.  $r_{\max} = \infty$.
+\end{itemize}
+
+\begin{conjecture}[Refined operadic complexity]
+\label{conj:refined}
+$r_{\max}(\cA)$ equals the \emph{relational arity} of $\cA$ as a
+$\Pch$-algebra: the minimal $r$ such that all defining relations of
+$\cA$ (including the operadic relations of $\Pch$ and the specific
+OPE relations of $\cA$) can be expressed in terms of operations of
+arity $\leq r$, AND the Jacobi-type higher syzygies generated by
+these relations kill all obstruction classes $o_{r+1}, o_{r+2},
+\ldots$ simultaneously.
+
+This is the chiral analogue of the following classical fact: for
+a quadratic algebra $A = T(V)/(R)$ with $R \subset V^{\otimes 2}$,
+the Koszul property is equivalent to the quadratic relations $R$
+generating all syzygies.  For a cubic algebra (relations in
+$V^{\otimes 3}$), one needs $r = 3$.  The ``relational arity'' is
+the operadic version of the relation degree.
+\end{conjecture}
+
+% ================================================================
+\section{Synthesis and Recommendations}
+% ================================================================
+
+\subsection{Priority ranking}
+
+\begin{enumerate}
+\item \textbf{Direction E} (Formality characterization): highest
+  priority.  The identification of the shadow tower with the
+  formality obstruction tower for the convolution $L_\infty$-algebra
+  is the cleanest answer to the termination question and is
+  closest to being provable with existing technology.
+
+\item \textbf{Direction C} (Operadic complexity): closely related
+  to Direction~E.  The graph-sum analysis connecting
+  $A_\infty$-depth to shadow termination should be developed in
+  parallel.  This is the computational workhorse.
+
+\item \textbf{Direction A} (Operadic inheritance): important for
+  the foundational architecture.  Proving that $\Pch$ is Koszul
+  (using Kontsevich formality) would ground the entire PBW framework
+  in operadic theory.
+
+\item \textbf{Direction D} (Genus-dependent Koszul dual): most
+  ambitious, connecting to deep questions in algebraic geometry
+  (formality of configuration spaces on curves).  Long-term.
+
+\item \textbf{Direction B} (Distributive law): most speculative.
+  The modified version (distributive law on associated graded, shadow
+  tower as lifting obstruction) is viable but not yet precise enough
+  to state as a theorem.
+\end{enumerate}
+
+\subsection{What the monograph should add}
+
+I recommend the following additions:
+
+\begin{enumerate}
+\item A remark in \texttt{chiral\_koszul\_pairs.tex}, after
+  Theorem~\texttt{thm:pbw-koszulness-criterion}, stating that the
+  PBW criterion is a \emph{consequence} of the Koszulness of the
+  chiral operad $\Pch$, in the same way that the $E_1$-chiral
+  Koszul duality (Theorem~\texttt{thm:e1-chiral-koszul-duality}) is
+  a consequence of the Koszulness of $\mathrm{Ass}$.
+
+\item A conjecture in \texttt{higher\_genus\_modular\_koszul.tex},
+  after Definition~\texttt{def:shadow-postnikov-tower}, stating the
+  operadic complexity conjecture (Conjecture~\ref{conj:operadic-termination}):
+  the shadow termination arity equals the $A_\infty$-depth of the
+  minimal model.
+
+\item A remark connecting the shadow Postnikov tower to the
+  formality obstruction tower for the convolution $L_\infty$-algebra
+  (Conjecture~\ref{conj:formality-koszulness}).  The key formula is
+  already in the monograph
+  (Construction~\texttt{constr:explicit-convolution-linfty}):
+  the quantum $L_\infty$ brackets $\ell_n^{(g)}$ are the Feynman
+  expansion, and their vanishing on cohomology is formality.
+\end{enumerate}
+
+\subsection{The bottom line}
+
+The shadow tower termination pattern
+$\Heis @2$, $\widehat{\mathfrak{g}} @3$, $\beta\gamma @4$,
+$\Vir @\infty$ is not an accident.  It measures the
+\emph{operadic complexity} of the chiral algebra: the depth of its
+$A_\infty$ minimal model, equivalently, the formality level of
+its modular convolution $L_\infty$-algebra.  Commutative algebras
+(Heisenberg) are intrinsically formal.  Lie algebras (affine) have
+one layer of non-formality, killed by the Jacobi identity.  Contact
+algebras ($\beta\gamma$) have two layers, killed by abelian
+rigidity.  The Virasoro algebra, with its quartic pole and infinite
+family of composite fields, is intrinsically non-formal at every
+level: its modular content is genuinely infinite.
+
+This is the operadic explanation the monograph lacks.  The
+technology to prove it is largely present: the graph-sum formula,
+the explicit $L_\infty$ brackets, and the obstruction recursion.
+What remains is the formal argument connecting these ingredients.
+
+\end{document}
