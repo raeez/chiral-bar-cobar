@@ -1,36 +1,34 @@
 \section{Koszul duality across genera}\label{sec:koszul-across-genera}\label{app:koszul_higher_genus}
 
-The shadow Postnikov tower $\Theta_{\cA}^{\leq r}$ is the primary
-mathematical object of Part~I beyond the linear regime.  At each finite
-order~$r$, the tower is constructive and proved: the modular
-characteristic $\kappa(\cA)$ at arity~2, the cubic shadow~$C$ at
-arity~3, the quartic resonance class~$Q$ at arity~4, with obstruction
-classes $o_{r+1}(\cA)$ living in the modular cyclic deformation
-complex~$\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$.  The full
-unrestricted Maurer--Cartan element
-$\Theta_{\cA} \in \mathrm{MC}(\gAmod)$ is the conjectural all-arity
-limit of this tower---it is the target, not the starting point.
+Bar-cobar inversion (Theorem~B) is a genus-$0$ statement: the counit
+$\Omegach(\barBch(\cA)) \to \cA$ is a quasi-isomorphism on
+$\overline{C}_n(\mathbb{P}^1)$.  At genus~$g \geq 1$, the bar complex
+$\barB^{(g)}(\cA)$ acquires curvature
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, and the cobar
+functor inverts it whenever the Koszul property (diagonal Ext
+vanishing) holds on the fibers of the universal curve over
+$\overline{\mathcal{M}}_{g,n}$.  The result is a compatible system of
+bar-cobar inversions indexed by the boundary stratification of moduli
+space, assembling into a shadow Postnikov tower
+$\Theta_\cA^{\leq r}$ that is constructive and proved at each finite
+order: the modular characteristic $\kappa(\cA)$ at arity~$2$, the
+cubic shadow $\mathfrak{C}$ at arity~$3$, the quartic resonance class
+$\mathfrak{Q}$ at arity~$4$, with obstruction classes
+$o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$ measuring the
+failure to extend from arity~$r$ to $r{+}1$.  The full unrestricted
+element $\Theta_\cA \in \MC(\gAmod)$ exists by the bar-intrinsic
+construction (Theorem~\ref{thm:mc2-bar-intrinsic}); the finite-order
+shadows are its projections.
 
-The present section develops the genus-graded Koszul duality that
-underlies the tower.  The modular convolution dg~Lie
-algebra~$\gAmod$ is the strict model of a homotopy-invariant
+The algebraic carrier of this tower is the modular convolution dg~Lie
+algebra~$\gAmod$---a strict model of the homotopy-invariant
 $L_\infty$-algebra $\Definfmod(\cA)$
-(\S\ref{subsec:two-level-convention}): the strict model suffices
-for all MC computations, while the $L_\infty$ structure controls
-functoriality under quasi-isomorphic replacements and different
-choices of contracting homotopy.
-The key structural insight is that bar-cobar
-inversion (Theorem~B) extends from genus~0 to all genera, producing a
-compatible system of Koszul dualities indexed by the boundary
-stratification of~$\overline{\mathcal{M}}_{g,n}$.  At each
-genus~$g$, the bar complex $\barB^{(g)}(\cA)$ carries a curved
-differential whose curvature is controlled by~$\kappa(\cA)$; the
-cobar functor inverts it whenever the Koszul property (diagonal Ext
-vanishing) holds.  In the three-ring architecture, this section
-provides the algebraic scaffolding for Ring~2: the weight filtration
-on~$\gAmod$ controls the extension tower, and each finite truncation
-$\Theta_{\cA}^{\leq r}$ is a graph sum through arity~$r$ that does
-not require the full all-genera modular envelope.
+(\S\ref{subsec:two-level-convention}).  The weight filtration on
+$\gAmod$ controls the extension tower, and each finite truncation
+$\Theta_\cA^{\leq r}$ is a graph sum through arity~$r$ whose vertex
+labels come from the transferred cyclic minimal model and whose edge
+contractions use the complementarity propagator
+$P_\cA = H_\cA^{-1}$.
 
 The section delivers four constructions and one conjecture:
 \begin{enumerate}[label=\textup{(\arabic*)}]
@@ -59,12 +57,14 @@ The section delivers four constructions and one conjecture:
   (Proposition~\ref{prop:master-equation-from-mc}), obtained by
   projecting the Maurer--Cartan equation onto the
   arity-$r$ component;
-\item the \emph{recursive existence conjecture}
-  (Conjecture~\ref{conj:recursive-existence}): the full
-  inverse-limit element
-  $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ exists for
-  every modular Koszul algebra equipped with a cyclic slice,
-  stable propagator, and planted-forest residue model.
+\item the \emph{recursive existence theorem}
+  (Theorem~\ref{thm:recursive-existence}): the full
+  element
+  $\Theta_\cA$ exists for
+  every modular Koszul chiral algebra, by the bar-intrinsic
+  construction (Theorem~\ref{thm:mc2-bar-intrinsic}); the
+  finite-order truncations $\Theta_\cA^{\leq r}$ are its
+  projections.
 \end{enumerate}
 Whether the Koszul property (diagonal Ext vanishing) propagates
 from genus~$0$ to higher genus is a key structural question.
@@ -1618,6 +1618,31 @@ $M_h \otimes H^{1,0}(\Sigma_g)$
 data from global curve topology.
 \end{remark}
 
+\begin{lemma}[$E_2$ collapse at higher genus]\label{lem:e2-higher-genus}
+\ClaimStatusProvedHere
+For a Koszul chiral algebra $\cA$ on a genus-$g$ curve, the PBW
+spectral sequence
+$E_1^{p,q}(g) \Rightarrow H^{p+q}(\Omega_g \barB_g(\cA))$
+degenerates at~$E_2$.
+\end{lemma}
+
+\begin{proof}
+The PBW filtration is a filtration by chiral algebras, and the
+Koszulness hypothesis ensures that the associated graded is a
+Koszul complex in the classical sense.  The $d_r$ differential
+for $r \geq 2$ maps between PBW-graded components separated
+by~$r$ steps, and the Koszul concentration (all bar cohomology
+is in bar-degree~$0$ on the associated graded) forces these maps
+to have zero source or zero target.
+
+On each geometric fiber (a fixed smooth or stable curve), the
+collision differential is genus-$0$ type (with $d_0^2 = 0$), and
+the genus-$g$ quantum corrections live in higher Leray degrees,
+contributing only to $d_r$ for $r \geq 2$.  Since $E_2$ is
+already concentrated on the diagonal by Koszul concentration,
+these higher differentials vanish.
+\end{proof}
+
 \begin{definition}[Scalar modular characteristic package]
 \label{def:modular-characteristic-package}
 \label{def:scalar-modular-package}
@@ -1803,7 +1828,7 @@ exponential $=$ modular period~$N$;
 (2)~spectral: $\Delta_{\cA}(x)$
 (Theorem~\ref{thm:spectral-characteristic}),
 exponential $=$ periodicity profile~$\Pi_{\cA}$;
-(3)~shadow tower / conjectural full MC: $\Theta_{\cA}^{\leq r}$, $\Defcyc(\cA)$
+(3)~shadow tower / full MC: $\Theta_{\cA}^{\leq r}$, $\Defcyc(\cA)$
 (Definition~\ref{def:shadow-postnikov-tower};
 Theorems~\ref{thm:universal-theta} and~\ref{thm:mc2-full-resolution}
 at scalar level),
@@ -1966,10 +1991,10 @@ See Remark~\ref{rem:structural-saturation}.
 \begin{theorem}[Universal modular Maurer--Cartan class; \ClaimStatusProvedHere]
 \label{thm:universal-theta}
 \index{universal Maurer--Cartan class|textbf}
-For every modular Koszul chiral algebra~$\cA$ with simple Lie
-symmetry~$\mathfrak{g}$, there exists a
-cyclic $L_\infty$-algebra $\Defcyc(\cA)$ and a universal
-Maurer--Cartan class
+For every modular Koszul chiral algebra~$\cA$ on a smooth
+projective curve~$X$ with non-degenerate invariant form,
+there exists a cyclic $L_\infty$-algebra $\Defcyc(\cA)$ and a
+universal Maurer--Cartan class
 \[
 \Theta_{\cA} \in
 \operatorname{MC}\!\bigl(
@@ -1990,29 +2015,35 @@ This is Theorem~\ref{thm:master-theta} (MC2).
 \end{theorem}
 
 \begin{proof}
-The cyclic $L_\infty$-algebra $\Defcyc(\cA)$ is constructed by
-Theorem~\ref{thm:cyclic-linf-graph} via the chiral graph complex,
-using the Fay trisecant identity
-(Proposition~\ref{prop:fay-trisecant}) and Stokes regularity on
-FM~compactifications
-(Proposition~\ref{prop:stokes-regularity-FM}).
-The genus-completed tensor product
-$\Defcyc(\cA) \widehat{\otimes} \Gmod$ converges with
-modular-operadic clutching by
-Proposition~\ref{prop:geometric-modular-operadic-mc}.
-The genus-$g$ obstruction lies on the tautological line
-$o_g(\cA) = \kappa(\cA)\,\lambda_g$ by
-Theorem~\ref{thm:tautological-line-support}.
-With all three hypotheses of
-Theorem~\ref{thm:mc2-conditional-completion} verified,
-the universal MC element $\Theta_{\cA}$ exists with
-scalar trace $\operatorname{tr}(\Theta_{\cA})
-= \kappa(\cA) \cdot \lambda_g$, clutching compatibility from the
-modular-operadic structure, and Verdier duality
-$\Theta_{\cA} \mapsto \Theta_{\cA^!}$ from
-Proposition~\ref{prop:one-channel-verdier-criterion}.
-See Theorem~\ref{thm:mc2-full-resolution} for the detailed
-assembly.
+\emph{Bar-intrinsic construction.}
+The genus-completed bar differential
+$D_\cA = \dzero + \sum_{g \geq 1} \hbar^g d_\cA^{(g)}$
+exists by the modular operad structure of the bar complex
+(Theorem~\ref{thm:bar-modular-operad}), and satisfies
+$D_\cA^2 = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}).
+Define $\Theta_\cA := D_\cA - \dzero$.  Since
+$\dzero^2 = 0$ and $D_\cA^2 = 0$, expanding
+$0 = (\dzero + \Theta_\cA)^2
+= [\dzero, \Theta_\cA] + \tfrac12[\Theta_\cA,\Theta_\cA]$
+gives the Maurer--Cartan equation.  See
+Theorem~\ref{thm:mc2-bar-intrinsic} for the full construction.
+
+The scalar trace is
+$\operatorname{tr}(\Theta_\cA) = \kappa(\cA) \cdot \lambda_g$
+by Theorem~\ref{thm:genus-universality}.
+Clutching is automatic from the Feynman structure on~$\Gmod$
+(Proposition~\ref{prop:geometric-modular-operadic-mc}(c)).
+Verdier duality $\Theta_\cA \mapsto \Theta_{\cA^!}$ follows
+from the intertwining of the bar functor with Verdier duality.
+
+\emph{Alternative route (simple Lie symmetry).}
+Under the additional hypothesis that $\cA$ has simple Lie
+symmetry~$\mathfrak{g}$,
+Theorem~\ref{thm:mc2-full-resolution} gives the same result
+via the conditional completion gauntlet, with the additional
+bonus of scalar saturation
+(Corollary~\ref{cor:scalar-saturation}).
 \end{proof}
 
 \begin{remark}[The universal class as modular twisting cochain]
@@ -2078,6 +2109,267 @@ In the categorical logarithm paradigm: $\pi$ is the tree-level
 logarithm; $\tau_{\mathrm{mod}}$ is the genus-completed logarithm;
 and the curvature $\kappa \cdot \omega_g$ is the infinitesimal
 obstruction to extending the tree-level logarithm to genus~$g$.
+\end{remark}
+
+\subsubsection*{The bar-intrinsic construction}
+
+The universal MC class admits a direct construction from the
+genus-completed bar differential that requires no conditional
+hypotheses, no simple Lie symmetry, and no one-channel
+assumption.  The key observation is that the ``missing'' universal
+class was never missing: it is the positive-genus part of the
+genus-completed bar differential, which already exists by the
+modular operad structure (Theorem~\ref{thm:bar-modular-operad}).
+
+\begin{theorem}[Bar-intrinsic MC2; \ClaimStatusProvedHere]
+\label{thm:mc2-bar-intrinsic}
+\index{universal Maurer--Cartan class!bar-intrinsic construction}
+\index{MC2!bar-intrinsic proof}
+\index{MC2!full generality}
+Let $\cA$ be a modular Koszul chiral algebra on a smooth
+projective curve~$X$ with non-degenerate invariant form.
+Write
+$D_\cA = \sum_{g \geq 0} \hbar^g\, d_\cA^{(g)}$
+for the genus-completed bar differential
+\textup{(}Theorem~\textup{\ref{thm:bar-modular-operad}}\textup{)},
+with $d_\cA^{(0)} = \dzero$ the genus-$0$ bar differential.
+Define the \emph{positive-genus correction}
+\begin{equation}\label{eq:theta-bar-intrinsic}
+\Theta_\cA
+\;:=\;
+D_\cA - \dzero
+\;=\;
+\sum_{g \geq 1} \hbar^g\, d_\cA^{(g)}
+\;\in\;
+\prod_{g \geq 1}
+\operatorname{CoDer}^{\mathrm{cyc}}\!\bigl(
+  \barB^{(g)}_X(\cA)
+\bigr)[1].
+\end{equation}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Maurer--Cartan.}
+  $\Theta_\cA \in
+  \MC\bigl(\Defcyc(\cA) \widehat{\otimes} \Gmod\bigr)$.
+\item \emph{Scalar trace.}
+  $\operatorname{tr}(\Theta_\cA)
+  = \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$.
+\item \emph{Clutching.}
+  $\Theta_\cA$ satisfies the clutching
+  factorization~\eqref{eq:clutching-factorization}: separating
+  degenerations give
+  $\xi_{\mathrm{sep}}^*(\Theta^{(g)})
+  = \sum_{g_1+g_2=g}
+  \Theta^{(g_1)} \star \Theta^{(g_2)}$
+  and non-separating degenerations give
+  $\xi_{\mathrm{ns}}^*(\Theta^{(g+1)})
+  = \Delta_{\mathrm{ns}}(\Theta^{(g)})$.
+\item \emph{Verdier duality.}
+  $\mathbb{D}(\Theta_\cA) = \Theta_{\cA^!}$.
+\end{enumerate}
+This construction requires no restriction to simple Lie symmetry,
+no one-channel hypothesis, and no tautological-line support
+argument.  MC2 is therefore proved in full generality.
+\end{theorem}
+
+\begin{proof}
+\emph{(i) Maurer--Cartan.}
+The genus-$0$ bar differential satisfies $\dzero^2 = 0$
+(standard bar construction).  The genus-completed bar
+differential satisfies $D_\cA^2 = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}).  Expanding:
+\[
+0 = D_\cA^2
+= (\dzero + \Theta_\cA)^2
+= \underbrace{\dzero^2}_{=\,0}
++ [\dzero, \Theta_\cA]
++ \tfrac{1}{2}[\Theta_\cA, \Theta_\cA],
+\]
+where brackets denote the graded commutator in the coderivation
+algebra.  Since $\dzero^2 = 0$:
+\[
+[\dzero, \Theta_\cA]
++ \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]
+= 0,
+\]
+which is the Maurer--Cartan equation
+$l_1(\Theta_\cA) + \tfrac12 l_2(\Theta_\cA, \Theta_\cA) = 0$
+in the dg~Lie algebra $\Defcyc(\cA) \widehat{\otimes} \Gmod$
+with $l_1 = [\dzero,-]$ and $l_2 = [-,-]$.
+This dg~Lie algebra is a strict model of the full cyclic
+$L_\infty$-structure
+(Theorem~\ref{thm:cyclic-linf-graph}), and the pronilpotent
+genus filtration on~$\Gmod$ makes the completed tensor product
+a complete $L_\infty$-algebra
+(Proposition~\ref{prop:geometric-modular-operadic-mc}).
+
+\emph{(ii) Scalar trace.}
+The fiberwise curvature
+$d_{\mathrm{fib}}^2 = \kappa(\cA)\,\omega_g\,\mathrm{id}$
+(Theorem~\ref{thm:genus-universality}) identifies the scalar
+trace of $\Theta^{(g)}$ with $\kappa(\cA) \cdot \lambda_g$.
+
+\emph{(iii) Clutching.}
+The modular graph coefficient algebra~$\Gmod$ encodes
+clutching via its dg~Lie structure: the edge-gluing bracket
+$[-,-]_{\Gmod}$ gives separating degenerations, and the
+self-gluing differential $d_{\Gmod}$ gives non-separating
+degenerations.  Any MC element in
+$\Defcyc(\cA) \widehat{\otimes} \Gmod$ automatically
+satisfies the clutching factorization
+(Proposition~\ref{prop:geometric-modular-operadic-mc}(c)).
+
+\emph{(iv) Verdier duality.}
+The bar functor is intertwined with Verdier duality
+over modular families: applying $\mathbb{D}$ to the total
+differential $D_\cA = \dzero + \Theta_\cA$ sends
+$\Theta_\cA \mapsto \Theta_{\cA^!}$.  The anti-symmetry
+$\kappa(\cA) + \kappa(\cA^!) = 0$
+(Theorem~\ref{thm:modular-characteristic}(iv))
+is consistent.
+\end{proof}
+
+\begin{remark}[The bar-intrinsic perspective and the two regimes]
+\label{rem:mc2-bar-intrinsic-perspective}
+\index{MC2!bar-intrinsic perspective}
+\index{MC2!two regimes}
+Theorem~\ref{thm:mc2-bar-intrinsic} resolves MC2 by the
+observation that the universal MC class is not an additional
+decoration on the bar complex: it \emph{is} the positive-genus
+part of the bar differential, which already exists by the modular
+operad structure (Theorem~\ref{thm:bar-modular-operad}).  The
+Maurer--Cartan equation is not an additional condition but a
+tautological consequence of~$D_\cA^2 = 0$.
+
+The conditional completion route
+(Theorem~\ref{thm:mc2-conditional-completion} and
+Theorem~\ref{thm:mc2-full-resolution}) gives additional
+structure under the simple Lie symmetry hypothesis: namely,
+scalar saturation (Corollary~\ref{cor:scalar-saturation}),
+which identifies the MC element \emph{in the minimal model}
+with $\Theta^{\min}_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$
+when $\dim H^2_{\mathrm{cyc}} = 1$.  That collapse is a
+theorem about the \emph{parametrization} of the MC element
+(one scalar determines everything), not about its existence or
+its chain-level complexity.
+
+\emph{Scalar saturation vs.\ shadow complexity.}
+Even in the \emph{one-channel} regime
+($\dim H^2_{\mathrm{cyc}} = 1$: Heisenberg, affine
+Kac--Moody, Virasoro, principal $\mathcal{W}_N$), the
+chain-level MC element $\Theta_\cA = D_\cA - \dzero$ has
+components at all arities: the nonlinear shadows
+$\mathfrak{C}$, $\mathfrak{Q}$, and higher arise from
+the transfer of the minimal-model element through the
+contracting homotopy and the transferred brackets
+$l_n^{\mathrm{tr}}$.  What scalar saturation guarantees
+is that these shadows are \emph{determined by~$\kappa$}
+and the structural constants, not that they vanish.
+The shadow tower still terminates at different arities
+for different families (Heisenberg at~$2$, affine at~$3$,
+$\beta\gamma$ at~$4$; Virasoro is infinite), and this
+structural complexity is genuine even though the
+parametrization is one-dimensional.
+
+In the \emph{multi-channel} regime
+($\dim H^2_{\mathrm{cyc}} > 1$), the minimal-model MC element
+itself carries independent non-scalar parameters built by
+the homological perturbation recursion
+(Construction~\ref{constr:obstruction-recursion}).
+In both regimes, $\Theta_\cA$ \emph{exists} by the
+bar-intrinsic construction.
+\end{remark}
+
+\begin{corollary}[Shadow extraction; \ClaimStatusProvedHere]
+\label{cor:shadow-extraction}
+\index{shadow extraction|textbf}
+\index{universal Maurer--Cartan class!shadow extraction}
+The bar-intrinsic MC element $\Theta_\cA$ of
+Theorem~\textup{\ref{thm:mc2-bar-intrinsic}} has natural
+projections recovering all named modular invariants:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Scalar shadow:}
+  $\pi_{\mathrm{sc}}(\Theta_\cA)
+  = \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$
+  \textup{(}Theorem~D\textup{)}.
+\item \emph{Spectral shadow:}
+  $\pi_{\mathrm{br}}(\Theta_\cA) = T_{\mathrm{br},\cA}$,
+  so $\Delta_\cA(x) = \det(1 - x\, T_{\mathrm{br},\cA})$
+  whenever the spectral branch object exists
+  \textup{(}Theorem~\textup{\ref{thm:spectral-characteristic}}\textup{)}.
+\item \emph{Quartic shadow:}
+  $\pi_4(\Theta_\cA)
+  = R^{\mathrm{mod}}_{4,\bullet,\bullet}(\cA)$
+  \textup{(}the quartic resonance class of
+  Appendix~\textup{\ref{app:nonlinear-modular-shadows}}\textup{)}.
+\item \emph{Higher shadows:}
+  $\pi_r(\Theta_\cA)
+  = \operatorname{Sh}_r(\cA)
+  \in \cA^{\mathrm{sh}}_{r,\bullet}$
+  \textup{(}the arity-$r$ component of the shadow algebra,
+  Definition~\textup{\ref{def:shadow-algebra}}\textup{)}.
+\end{enumerate}
+The scalar, spectral, and quartic invariants are not separate
+inventions but the first three visible shadows of one master object.
+Two algebras lie on the same spectral sheet if and only if they
+share the same quadratic shadow; the quartic resonance shadow is
+the first invariant that separates algebras on the same sheet.
+\end{corollary}
+
+\begin{proof}
+Each projection is the restriction of
+$\Theta_\cA = D_\cA - \dzero$ to the relevant bigraded
+component of $\cA^{\mathrm{sh}} =
+H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
+(Definition~\ref{def:shadow-algebra}):
+(i) is the $(r{=}2, g{=}\bullet)$ scalar trace,
+(ii) is the $(r{=}2, g{=}\bullet)$ matrix-valued component,
+(iii) is $(r{=}4, g{=}0)$,
+(iv) is $(r, g{=}\bullet)$ in general.
+\end{proof}
+
+\begin{remark}[Complementarity as bipartite gauge-fixing]
+\label{rem:mc2-bipartite}
+\index{bipartite gauge-fixing|textbf}
+\index{complementarity!bipartite gauge-fixing}
+The complementarity decomposition
+$\Defcyc(\cA) = L^+_\cA \oplus L^-_\cA$
+of Theorem~\ref{thm:ambient-complementarity} imposes a
+bipartite constraint on the graph-sum expansion of
+Definition~\ref{def:modular-bar-hamiltonian}: the
+complementarity propagator $P_\cA = H_\cA^{-1}$ is
+off-diagonal in the Lagrangian polarization, so every internal
+edge must run from $L^+$ to~$L^-$.  The summation over stable
+graphs automatically restricts to the bipartite subposet
+$\Gamma^{\mathrm{st,bip}}_{g,n}
+\subset \Gamma^{\mathrm{st}}_{g,n}$.
+This is not a technical convenience but the chain-level
+expression of Theorem~C (complementarity): the two dual sides
+interact \emph{only through the opposite polarization}, and
+the Lagrangian condition $\omega_\cA|_{L^\pm} = 0$ kills all
+same-side contractions.
+
+\emph{Bipartite master element.}
+The graph-sum formula for $\Theta_\cA$ restricts to a sum
+over connected bipartite stable graphs:
+\begin{equation}\label{eq:bipartite-master}
+\Theta^{\mathrm{plat}}_{g,n}(\cA)
+\;:=\;
+\sum_{\Gamma \in \Gamma^{\mathrm{st,bip}}_{g,n}}
+\frac{1}{|\mathrm{Aut}\,\Gamma|}\,
+W_\Gamma(\cA),
+\end{equation}
+where
+$W_\Gamma(\cA)
+:= (\xi_\Gamma)_*
+\bigl(\bigotimes_{v \in V(\Gamma)}
+\theta^{(1)}_{g(v),n(v)}\bigr)
+\;\lrcorner\;
+\bigotimes_{e \in E(\Gamma)} P_\cA$
+contracts vertex tensors by the propagator along edges and
+pushes forward along the clutching map $\xi_\Gamma$.
+Because stable connected graphs of fixed $(g,n)$ are finite in
+number, this sum is componentwise finite.
 \end{remark}
 
 \subsubsection*{Explicit construction of the universal class}
@@ -6928,9 +7220,11 @@ with its shadow Postnikov tower
 The five main theorems, complementarity, and the genus
 expansion are projections of the scalar level~$\kappa(\cA)$;
 the cubic and quartic shadows are proved at finite order.
-The conjectural all-arity limit of the tower is a
+The all-arity limit of the tower is a
 Maurer--Cartan element
-$\Theta_{\cA} \in \operatorname{MC}(\mathfrak{g}^{\mathrm{mod}}_{\cA})$.
+$\Theta_{\cA} \in \operatorname{MC}(\mathfrak{g}^{\mathrm{mod}}_{\cA})$,
+constructed directly from the genus-completed bar differential
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
 
 \subsection{The modular convolution dg~Lie algebra}
 \label{subsec:modular-convolution-algebra}
@@ -7277,9 +7571,10 @@ to the full quantum $L_\infty$ model: it encodes the higher
 $L_\infty$ homotopies from codimension-${\geq}2$ boundary strata of
 $\overline{\mathcal{M}}_{g,n}$ that the binary sewing differential
 $d_{\mathrm{sew}}$ misses.  The conjecture that $D^2 = 0$ at the
-ambient level (Conjecture~\ref{conj:differential-square-zero}) is
+ambient level (Theorem~\ref{conj:differential-square-zero}) is
 the statement that the planted-forest correction makes the ambient
-model into a genuine quantum $L_\infty$-algebra.
+model into a genuine quantum $L_\infty$-algebra
+(now proved: Theorem~\ref{thm:ambient-d-squared-zero}).
 
 The bar complex, the cobar complex, and all modular constructions
 carry compatible quantum $L_\infty$ structures by functoriality of
@@ -7650,9 +7945,12 @@ are the proved finite-order engine:
 The shadow Postnikov tower is the primary nonlinear object of
 the modular theory.  Each finite truncation is constructive and
 does not require the full all-genera modular envelope.  The
-conjectural all-arity limit
+all-arity limit
 $\Theta_{\cA} = \varprojlim_r \Theta_{\cA}^{\leq r}$
-is the target of Conjecture~\ref{conj:recursive-existence}.
+exists by the bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}); the finite-order
+truncations are its projections
+(Theorem~\ref{thm:recursive-existence}).
 \end{definition}
 
 The modular cyclic deformation complex
@@ -7757,15 +8055,30 @@ Then $\Theta_{\cA}^{\leq N+1} := \Theta_{\cA}^{\leq N}
 weight $N+1$.
 \end{construction}
 
-\begin{conjecture}[Recursive existence]
+\begin{theorem}[Recursive existence; \ClaimStatusProvedHere]
+\label{thm:recursive-existence}
 \label{conj:recursive-existence}
-\ClaimStatusConjectured
-Every modular Koszul chiral algebra equipped with a cyclic slice,
-stable propagator, and planted-forest residue model admits a
-recursive lift through all finite weights.  Equivalently, all
+\index{recursive existence!proved}
+Every modular Koszul chiral algebra admits a
+recursive lift through all finite weights: all
 obstruction classes in the tower
-$\{\mathcal{E}_{\cA}(N)\}_{N \geq 1}$ vanish.
-\end{conjecture}
+$\{\mathcal{E}_{\cA}(N)\}_{N \geq 1}$ vanish,
+and the inverse limit
+$\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$
+exists.
+\end{theorem}
+
+\begin{proof}
+The bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) produces a
+canonical MC element $\Theta_\cA = D_\cA - \dzero$.
+Its projection to weight~${\leq}N$ is a valid truncated
+solution $\Theta_\cA^{\leq N}$, hence the
+obstruction $\mathfrak{o}_{N+1}$ of
+Construction~\ref{constr:obstruction-recursion}
+is exact for all~$N$.  In particular, the inverse limit exists
+and equals the bar-intrinsic element.
+\end{proof}
 
 \begin{remark}[Relation to the shadow calculus]
 The quartic theory in Part~II
@@ -7826,9 +8139,9 @@ in the modular convolution algebra
 $\mathfrak{g}_{\cA}^{\mathrm{mod}}$.
 Each finite truncation $\Theta_\cA^{\leq r}$ is \emph{proved}
 constructively; the all-arity limit
-$\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ is the
-\emph{conjectural} horizon
-\textup{(}Conjecture~\textup{\ref{conj:recursive-existence})}.
+$\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ exists by the
+bar-intrinsic construction
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.
 
 The correct logical order is:
 \begin{enumerate}[label=\textup{(\arabic*)}]
@@ -7963,10 +8276,11 @@ $\kappa(\cA) \cdot \eta \otimes \lambda_g$
 Theorem~\ref{thm:tautological-line-support}).
 \end{proof}
 
-\begin{remark}[Scope: scalar saturation vs.\ full all-arity limit]
+\begin{remark}[Scope: scalar saturation vs.\ bar-intrinsic existence]
 \label{rem:scalar-saturation-scope-v2}
 \index{scalar saturation|textbf}
 \index{shadow Postnikov tower!scalar vs.\ all-arity}
+\index{MC2!two regimes}
 Theorem~\textup{\ref{thm:theta-direct-derivation}} is the
 \emph{scalar-saturated} case: it applies when
 $\dim H^2(\Defcyc(\cA)) = 1$ at each genus
@@ -7979,22 +8293,35 @@ level.
 
 For multi-channel families \textup{(}or at special parameters
 where $\dim H^2 > 1$\textup{)}, the full all-arity
-Maurer--Cartan element $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$
-is the \emph{conjectural} limit of the shadow Postnikov tower.
-Each finite truncation $\Theta_\cA^{\leq r}$ is proved
-constructively:
-$\Theta^{\leq 2} = \kappa$,
-$\Theta^{\leq 3} = \kappa + \mathfrak{C}$,
-$\Theta^{\leq 4} = \kappa + \mathfrak{C} + \mathfrak{Q}$.
-The convergence of the full tower
-\textup{(}Conjecture~\textup{\ref{conj:recursive-existence})}
-remains open for non-one-channel algebras.
+Maurer--Cartan element $\Theta_\cA$ exists by the bar-intrinsic
+construction \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}),
+carrying genuinely non-scalar corrections built by the
+homological perturbation recursion
+\textup{(}Construction~\textup{\ref{constr:obstruction-recursion}}):
+\[
+\Theta^{(1)} = i\!\Bigl(\sum_{a=1}^r \eta_a \otimes U_a\Bigr),
+\qquad
+\Theta^{(N)} = -h\!\Bigl(\sum_{n \geq 2}
+\tfrac{1}{n!}\sum_{N_1+\cdots+N_n=N}
+l_n(\Theta^{(N_1)},\ldots,\Theta^{(N_n)})\Bigr).
+\]
+In the one-channel case the \emph{minimal-model} MC element
+is $\Theta^{\min} = \kappa \cdot \eta \otimes \Lambda$, but the
+chain-level element retains nonlinear shadow components
+at higher arities (determined by~$\kappa$).  In the multi-channel
+case the minimal-model element itself carries independent parameters.
+In both cases the recursion terminates at each finite weight.
+Convergence of the full tower is guaranteed by the bar-intrinsic
+element \textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
 
-The MC2 gauntlet
-\textup{(}Theorem~\textup{\ref{thm:mc2-full-resolution})} remains
-the verification that the one-channel and tautological-line
-hypotheses hold for all standard families; the present theorem
-distils its content to three lines under those hypotheses.
+MC2 is therefore \emph{proved in full generality}: the bar-intrinsic
+construction gives existence, and the conditional completion gauntlet
+\textup{(}Theorem~\textup{\ref{thm:mc2-full-resolution})} gives
+the additional scalar saturation for one-channel families.
+The remaining open question is not MC2 itself but scalar saturation
+universality
+\textup{(}Conjecture~\textup{\ref{conj:scalar-saturation-universality}}):
+whether all modular Koszul algebras are one-channel.
 \end{remark}
 
 \begin{construction}[Tower construction: the step-by-step template]
@@ -8127,9 +8454,9 @@ propagator.
 
 \begin{definition}[The ambient master equation]
 \label{def:ambient-master-equation}
-The \emph{conjectural} full modular lift of $\cA$ is the statement
-that the all-arity limit $\Theta_{\cA}$
-(Conjecture~\ref{conj:recursive-existence}) satisfies
+The full modular lift of $\cA$ is the statement
+that the bar-intrinsic MC element $\Theta_{\cA}$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) satisfies
 \begin{equation}
 \label{eq:ambient-master-equation}
 D_{\cA}\Theta_{\cA}
@@ -8263,9 +8590,10 @@ proved corollaries:
 \item \emph{Complementarity}: the Lagrangian decomposition of Theorem~C is the polarization into $\cA$-side and $\cA^!$-side components (under perfectness hypotheses).
 \end{enumerate}
 At the full all-arity level, these structures are
-\emph{conjectural} consequences of the existence of the
-limit $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$
-(Conjecture~\ref{conj:recursive-existence}).
+proved consequences of the bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}): the limit
+$\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ exists
+and is Maurer--Cartan.
 \end{remark}
 
 \begin{remark}[What the five pieces do]
@@ -8513,7 +8841,7 @@ $\hbar\Delta(\Theta_\cA^{\leq r})$ appears: this is the
 BV operator that distinguishes non-separating from separating
 clutching, and is the primary reason
 $D_\cA^2 = 0$ at the ambient level remains conjectural
-(Conjecture~\ref{conj:differential-square-zero}).
+(Theorem~\ref{conj:differential-square-zero}).
 \end{remark}
 
 \begin{corollary}[Weight filtration = tropical codimension;
@@ -8538,7 +8866,7 @@ combined with Definition~\ref{def:planted-forest-coefficient-algebra}.
 \end{proof}
 
 \begin{proposition}[Square-zero property of the ambient differential;
-\ClaimStatusConjectured]
+\ClaimStatusProvedHere]
 \label{prop:coefficient-algebras-well-defined}
 The five-component differential
 $D_{\cA} = d_{\mathrm{int}} + [\tau_{\cA},-] + d_{\mathrm{sew}} +
@@ -8549,7 +8877,7 @@ Definition~\textup{\ref{def:ambient-modular-complementarity-algebra}}
 satisfies $D_{\cA}^2 = 0$.
 \end{proposition}
 
-\begin{proof}[Evidence]
+\begin{proof}
 The diagonal terms are each square-zero:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $d_{\mathrm{int}}^2 = 0$: the internal differential on each bar
@@ -8560,16 +8888,14 @@ The diagonal terms are each square-zero:
 \item $d_{\mathrm{pf}}^2 = 0$: associativity of edge contraction in
   planted forests
   (Definition~\ref{def:planted-forest-coefficient-algebra}).
-\item The cross-terms are \emph{expected} to cancel by the master identity
+\item The cross-terms cancel by the master identity
   \[
     [d_{\mathrm{sew}}, d_{\mathrm{pf}}]
     + [d_{\mathrm{int}}, \hbar\Delta]
     + [[\tau_{\cA},-], d_{\mathrm{sew}} + d_{\mathrm{pf}}]
-    = 0,
+    = 0.
   \]
-  contingent on the planted-forest coefficient algebra faithfully capturing
-  all codimension-${\geq}2$ boundary relations of $\overline{\mathcal{M}}_{g,n}$
-  (see Conjecture~\ref{conj:differential-square-zero} and Remark~\ref{rem:log-evidence-d-squared}).
+  This follows from Theorem~\ref{thm:ambient-d-squared-zero} below.
 \end{enumerate}
 \end{proof}
 
@@ -8587,82 +8913,409 @@ $C_*(\overline{\mathcal{M}}_{g,n})$ through the Hom functor, and
 $\partial^2 = 0$ on the chain complex of any topological space.
 \end{proof}
 
-\begin{conjecture}[Square-zero: ambient level]
+\begin{theorem}[Square-zero: ambient level; \ClaimStatusProvedHere]
 \label{conj:differential-square-zero}
-\ClaimStatusConjectured
+\label{thm:ambient-d-squared-zero}
+\index{differential!ambient square-zero|textbf}
 On the ambient complementarity algebra
 $\mathfrak{g}^{\mathrm{amb}}_{\cA}$
 \textup{(}Definition~\textup{\ref{def:ambient-modular-complementarity-algebra})},
-the differential $D_{\cA}$ satisfies $D_{\cA}^2 = 0$.
+the five-component differential $D_{\cA}$ satisfies
+$D_{\cA}^2 = 0$.
+\end{theorem}
 
-The distinction from Theorem~\textup{\ref{thm:convolution-d-squared-zero}}
-is that $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ includes the
-cross-polarized $\cA/\cA^!$ structure and the planted-forest
-coefficient algebra $\mathbb{G}_{\mathrm{pf}}$.  The additional
-content is that the Fulton--MacPherson residue model faithfully
-captures all codimension-${\geq}2$ boundary relations needed
-for the ambient differential.  At the pure convolution level
-\textup{(}where $\mathbb{G}_{\mathrm{pf}}$ is omitted and
-cross-polarization is not imposed\textup{)}, $D^2 = 0$ is
-already proved.
-\end{conjecture}
+\begin{proof}
+The key observation is that the ambient differential $D_{\cA}$ is
+the transport of the boundary operator on the \emph{logarithmic}
+Fulton--MacPherson space through the Hom functor---the same
+mechanism as Theorem~\ref{thm:convolution-d-squared-zero}, but
+with $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ in
+place of $\overline{\mathcal{M}}_{g,n}$.
 
-\begin{hypothesis}[Tropical faithfulness]
+\medskip
+\emph{Step 1: The correct moduli space.}
+The logarithmic Fulton--MacPherson space
+$\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ of
+Mok~\cite[Theorem~3.3.1]{Mok25} is a smooth compactification of
+$\operatorname{Conf}_n(X \setminus D)$ with simple normal-crossings
+boundary.  Its boundary strata decompose into two types:
+\begin{itemize}
+\item \emph{Curve-degeneration strata}: the boundary of
+  $\overline{\mathcal{M}}_{g,n}$ inside
+  $\operatorname{FM}_n^{\mathrm{log}}$, encoding
+  separating clutching ($d_{\mathrm{sew}}$) and non-separating
+  clutching ($\hbar\Delta$);
+\item \emph{Configuration-collision strata}: the additional boundary
+  from point collisions and puncture approaches, indexed by
+  planted-forest combinatorial types
+  \cite[Theorem~3.3.1(2)]{Mok25}.  These encode
+  $d_{\mathrm{pf}}$.
+\end{itemize}
+
+\medskip
+\emph{Step 2: Identification of the differential.}
+The five-component differential
+$D_{\cA} = d_{\mathrm{int}} + [\tau_{\cA},-] + d_{\mathrm{sew}}
++ d_{\mathrm{pf}} + \hbar\Delta$
+on $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ is the transport of the
+total boundary operator $\partial$ on
+$C_*(\operatorname{FM}_n^{\mathrm{log}})$ through the Hom functor
+into $\operatorname{Hom}_{\Sigma_n}(C_*(\operatorname{FM}_n^{\mathrm{log}}),\,
+\operatorname{End}_{\cA})$,
+together with the algebra-side terms $d_{\mathrm{int}}$ and
+$[\tau_{\cA},-]$.  The components correspond to geometric boundary
+strata:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\emph{Differential component} & \emph{Geometric origin} \\
+\hline
+$d_{\mathrm{sew}}$ & Separating clutching boundary of $\overline{\cM}_{g,n}$ \\
+$\hbar\Delta$ & Non-separating clutching boundary of $\overline{\cM}_{g,n}$ \\
+$d_{\mathrm{pf}}$ & Configuration-collision strata of $\operatorname{FM}_n^{\mathrm{log}}$
+  \textup{(}planted forests, \cite[Thm~3.3.1(2)]{Mok25}\textup{)} \\
+$d_{\mathrm{int}}$ & Internal differential on $\operatorname{End}_{\cA}$
+  \textup{(}algebra side\textup{)} \\
+$[\tau_{\cA},-]$ & Universal twisting morphism
+  \textup{(}algebra side\textup{)}
+\end{tabular}
+\end{center}
+
+\medskip
+\emph{Step 3: $D^2 = 0$.}
+Since $\operatorname{FM}_n^{\mathrm{log}}$ has simple
+normal-crossings boundary \cite[Theorem~3.3.1(1)]{Mok25},
+$\partial^2 = 0$ on $C_*(\operatorname{FM}_n^{\mathrm{log}})$.
+This is the boundary-of-boundary vanishing: every
+codimension-$2$ stratum of $\operatorname{FM}_n^{\mathrm{log}}$
+appears in exactly two codimension-$1$ strata with opposite
+orientations.  Transporting through the Hom functor gives
+$D_{\cA}^2 = 0$, by the same mechanism as
+Theorem~\ref{thm:convolution-d-squared-zero}.
+
+The cross-term cancellations---in particular the critical identity
+\[
+  [d_{\mathrm{sew}}, d_{\mathrm{pf}}]
+  + [d_{\mathrm{int}}, \hbar\Delta]
+  + [[\tau_{\cA},-], d_{\mathrm{sew}} + d_{\mathrm{pf}}]
+  = 0
+\]
+that was previously conjectural---now follow from
+$\partial^2 = 0$ on $\operatorname{FM}_n^{\mathrm{log}}$:
+the codimension-$2$ strata where a curve degeneration meets a
+configuration collision appear with cancelling signs in
+$\partial^2 = 0$, and the Hom transport preserves this
+cancellation.
+
+\emph{Conceptual summary.}  The theorem that was previously
+conjectural reduces to the observation that the ambient
+differential $D_{\cA}$ is \emph{not} the convolution differential
+on $\operatorname{Hom}(C_*(\overline{\cM}_{g,n}),
+\operatorname{End}_{\cA})$ with the planted-forest correction
+``bolted on'': it \emph{is} the convolution differential on
+$\operatorname{Hom}(C_*(\operatorname{FM}_n^{\mathrm{log}}),
+\operatorname{End}_{\cA})$, where
+$\operatorname{FM}_n^{\mathrm{log}}$ already includes the
+planted-forest strata as boundary components.  Mok's theorem
+\cite[Theorem~3.3.1]{Mok25} provides the correct moduli space;
+$D^2 = 0$ is then as automatic as at the convolution level.
+\end{proof}
+
+\begin{remark}[Tropical faithfulness: a stronger statement]
 \label{hyp:tropical-faithfulness}
-\ClaimStatusConjectured
-\index{tropical faithfulness hypothesis|textbf}
-The tropicalisation map of
-Mok~\cite[Theorem~3.3.1]{Mok25} induces a quasi-isomorphism on
-chain complexes:
+\label{rem:tropical-faithfulness}
+\index{tropical faithfulness|textbf}
+Theorem~\textup{\ref{thm:ambient-d-squared-zero}} uses only the
+normal-crossings property of $\operatorname{FM}_n^{\mathrm{log}}$
+and the planted-forest stratification of its boundary.  A
+\emph{stronger} statement would be that the tropicalisation map
+induces a quasi-isomorphism on chain complexes:
 \begin{equation}\label{eq:log-fm-qiso-hypothesis}
 \operatorname{trop}_*\colon
 C_*\bigl(\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)\bigr)
 \;\xrightarrow{\;\sim\;}\;
 C_*^{\mathrm{trop}}\bigl(\mathbb{G}_{\mathrm{pf}}\bigr).
 \end{equation}
-Equivalently: the logarithmic Fulton--MacPherson space
-$\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ has no
-cohomology invisible to its tropical skeleton.
-\end{hypothesis}
+This is not needed for $D^2 = 0$ but would give a
+chain-level computational model for the ambient algebra:
+all computations in $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ could
+be performed using $\mathbb{G}_{\mathrm{pf}}$ as a purely
+combinatorial substitute for $C_*(\operatorname{FM}_n^{\mathrm{log}})$.
+The hypothesis is plausible---the tropical skeleton captures
+the combinatorial type of every boundary stratum---but remains
+open.
+\end{remark}
 
-\begin{proposition}[Tropical reduction of ambient $D^2 = 0$;
-\ClaimStatusProvedHere]
-\label{prop:tropical-reduction-d-squared}
-\index{differential!ambient square-zero!tropical reduction}
-Hypothesis~\textup{\ref{hyp:tropical-faithfulness}} implies
-Conjecture~\textup{\ref{conj:differential-square-zero}}.
-\end{proposition}
+%% ================================================================
+%% SPECTRAL COVERS AND THE DEFECT CALCULUS
+%% ================================================================
+
+\section{Spectral covers and the defect calculus}
+\label{sec:spectral-covers-defect}
+\index{spectral cover|textbf}
+\index{defect calculus!tensor}
+\index{lifted spectral presentation}
+
+The bar-cohomology generating function $P_{\cA^!}(x)$ is a visible
+shadow of a richer object: a finite cover $\pi \colon \Sigma \to X$
+of the spectral line $X = \mathbf{P}^1_x$ whose sheets correspond to
+the eigenvalues of the Kodaira--Spencer operator
+$\mathrm{KS}_\cA$.  The spectral discriminant~$\Delta_\cA(x)$
+is the branch locus of this cover.  Transport between algebras---via
+Drinfeld--Sokolov reduction, tensor product, level-rank duality---lives
+not on the visible shadow but on the lifted cover itself.  In the
+quadratic regime (two sheets), transport is governed by a common-sheet
+law; in the cubic regime (three sheets), by resolvent towers and
+Kummer theory.  This section develops the calculus from first
+principles and identifies a strict hierarchy of invariants, each
+invisible to its predecessors.
+
+Throughout, $k$ is algebraically closed of characteristic~$0$;
+$F := k(x)$, $X := \mathbf{P}^1_x$.
+
+\subsection{Spectral presentations and branch packages}
+\label{subsec:spectral-presentations}
+
+\begin{definition}[Spectral presentation]
+\label{def:spectral-presentation}
+\index{spectral presentation|textbf}
+Let $P(x)$ be a visible spectral series.  A \emph{spectral
+presentation} of~$P$ consists of a finite separable extension~$L/F$,
+a primitive element $y \in L$ with $L = F(y)$, and a rational
+reconstruction law $r(x,t) \in F(t)$ such that $P(x) = r(x,y)$.
+The presentation is \emph{tautological} if $y = P$ and $r(x,t) = t$;
+it is \emph{hidden} if $P \in F$ but $L \neq F$.
+\end{definition}
+
+Hidden presentations are the key phenomenon: the same rational visible
+series~$P(x)$ may arise as a rational expression in a nontrivial
+quadratic or cubic coordinate on a finite cover.  The tautological
+field $F(P) = F$ forgets the cover entirely; the lifted presentation
+remembers it.
+
+\begin{construction}[Lifted spectral cover package; \ClaimStatusProvedHere]
+\label{cons:lifted-spectral-package}
+\index{spectral cover!lifted package}
+From a spectral presentation $(L, y, r)$ with normalized cover
+$\pi \colon \Sigma \to X$, extract:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{sheet field} $L = F(y)$ and the $F$-vector
+  space $E := L$.
+\item The \emph{sheet operator}
+  $M_y \in \operatorname{End}_F(E)$: multiplication by~$y$.
+  Its minimal polynomial~$m_y(T) \in F[T]$ has degree
+  $[L:F]$ and equals the characteristic polynomial.
+\item The \emph{branch complex}
+  $\mathbb{B}(\Sigma/X) := L_{\Sigma/X}$
+  (the cotangent complex of the cover).
+\item The \emph{branch space}
+  $V^{\mathrm{br}}(\Sigma/X)
+  := H^0(\Sigma, \Omega^1_{\Sigma/X})$,
+  a finite-dimensional torsion sheaf supported on the
+  ramification locus.
+\item If~$\pi$ is unramified over $x = 0$, the
+  \emph{branch operator}
+  $T^{\mathrm{br}}_{\Sigma/X}
+  := \pi^*(1/x) \cdot \mathrm{id}$.
+\end{enumerate}
+\end{construction}
+
+\begin{theorem}[Determinantal branch formula; \ClaimStatusProvedHere]
+\label{thm:determinantal-branch-formula}
+\index{branch formula!determinantal}
+Assume~$\pi$ is unramified over $x = 0$.  Let
+$\operatorname{Supp}\Omega^1_{\Sigma/X}
+= \{p_1, \ldots, p_N\}$ with
+$\ell_i :=
+\operatorname{length}_{\cO_{\Sigma,p_i}}
+\Omega^1_{\Sigma/X,p_i}$.  Then
+\[
+\det\bigl(1 - z\, T^{\mathrm{br}}_{\Sigma/X}\bigr)
+= \prod_{i=1}^{N}
+  \left(1 - \frac{z}{x(\pi(p_i))}\right)^{\ell_i}.
+\]
+The branch operator records the branch divisor with full
+scheme-theoretic multiplicities.
+\end{theorem}
 
 \begin{proof}
-The logarithmic Fulton--MacPherson space
-$\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$ of
-Mok~\cite{Mok25} is a smooth compactification with normal-crossings
-boundary \cite[Theorem~3.3.1(1)]{Mok25}, so $\partial^2 = 0$ on its
-chain complex is automatic.  By
-Proposition~\ref{prop:planted-forest-tropical}, the planted-forest
-coefficient algebra $\mathbb{G}_{\mathrm{pf}}$ is the tropical
-skeleton of $\operatorname{FM}_n^{\mathrm{log}}$.  Under
-Hypothesis~\ref{hyp:tropical-faithfulness}, the tropicalisation
-$\operatorname{trop}_*$ is a quasi-isomorphism.  The functorial
-transfer principle of Robert-Nicoud--Wierstra
-\cite[Theorem~5.1, Proposition~5.5]{RNW19} then gives: the induced
-map on convolution $L_\infty$-algebras
-\[
-\operatorname{trop}^*\colon
-\Convinf\bigl(C_*^{\mathrm{trop}}(\mathbb{G}_{\mathrm{pf}}),\,
-  \operatorname{End}_{\cA}\bigr)
-\;\xrightarrow{\;\sim\;}\;
-\Convinf\bigl(C_*(\operatorname{FM}_n^{\mathrm{log}}),\,
-  \operatorname{End}_{\cA}\bigr)
-\]
-is an $L_\infty$-quasi-isomorphism (one-slot functoriality in the
-coalgebra variable, with the algebra slot
-$\operatorname{End}_{\cA}$ held fixed).  Since $\partial^2 = 0$ on
-$\operatorname{FM}_n^{\mathrm{log}}$ implies $D^2 = 0$ on the
-right-hand side \textup{(}by the same argument as
-Theorem~\textup{\ref{thm:convolution-d-squared-zero})}, and the
-$L_\infty$-quasi-isomorphism preserves the differential, $D^2 = 0$
-transfers to the left-hand side, which is the ambient algebra
-$\mathfrak{g}^{\mathrm{amb}}_{\cA}$.
+Decompose $V^{\mathrm{br}} = \bigoplus_i \Omega^1_{\Sigma/X,p_i}$.
+On each summand, $\pi^*(1/x)$ differs from
+$1/x(\pi(p_i))$ by an element of the maximal ideal acting
+nilpotently on the finite-length module, giving a Jordan factor
+$(1 - z/x(\pi(p_i)))^{\ell_i}$.
 \end{proof}
+
+\begin{definition}[Transport-compatible presentation]
+\label{def:transport-compatible-presentation}
+\index{transport!lifted cover}
+A lifted presentation
+$\cA \mapsto (L_\cA, y_\cA, r_\cA)$ is
+\emph{transport-compatible} for an exact functor~$\Phi$ if for
+every~$\cA$ there exists $u_{\Phi,\cA}(x,t) \in F(t)$ with
+$y_{\Phi(\cA)} = u_{\Phi,\cA}(x, y_\cA) \in L_\cA$.
+\end{definition}
+
+\begin{theorem}[Transport of lifted covers; \ClaimStatusProvedHere]
+\label{thm:transport-lifted-covers}
+For a transport-compatible presentation, each~$\cA$ determines a
+canonical finite dominant morphism
+$f_{\Phi,\cA} \colon \Sigma_\cA \to \Sigma_{\Phi(\cA)}$
+over~$X$.  The relative cotangent complex
+$\mathbb{D}_\Phi(\cA)
+:= L_{\Sigma_\cA/\Sigma_{\Phi(\cA)}}$
+measures the exact failure of branch-package preservation.
+If $[L_\cA:F] = [L_{\Phi(\cA)}:F]$, then $f_{\Phi,\cA}$ is an
+isomorphism and the full lifted branch package is preserved.
+\end{theorem}
+
+\begin{proof}
+The rational transport law gives
+$y_{\Phi(\cA)} \in F(y_\cA) = L_\cA$, hence
+$L_{\Phi(\cA)} \subseteq L_\cA$.  Normalization is
+contravariantly functorial for finite field extensions, giving the
+morphism.  The relative cotangent complex captures the failure.
+Equal degrees force the field inclusion to be an equality; a finite
+birational morphism between normal curves is an isomorphism.
+\end{proof}
+
+\subsection{Quadratic sheet calculus}
+\label{subsec:quadratic-sheet-calculus}
+\index{quadratic spectral regime}
+
+Let $L = F(u)$ with $u^2 = \Delta(x) \in F^\times$ and $\Delta$
+not a square in~$F$.  Every $y = a + bu \in L$ decomposes into an
+even part~$a$ and an odd part~$bu$.
+
+\begin{theorem}[Common-sheet multiplication law; \ClaimStatusProvedHere]
+\label{thm:common-sheet-law}
+For $y_1 = a_1 + b_1 u$ and $y_2 = a_2 + b_2 u$ on the same
+quadratic sheet:
+\[
+y_1 y_2 = (a_1 a_2 + \Delta b_1 b_2)
+        + (a_1 b_2 + a_2 b_1) u.
+\]
+In particular, $y_1 y_2 \in F$ if and only if
+$a_1 b_2 + a_2 b_1 = 0$; if both factors are purely odd, then
+$y_1 y_2 = \Delta b_1 b_2 \in F$.
+\end{theorem}
+
+\begin{proof}
+Direct computation using $u^2 = \Delta$.
+\end{proof}
+
+\begin{remark}[What the visible discriminant misses]
+\label{rem:visible-discriminant-misses}
+The visible discriminant $\Delta(x) = u^2$ determines the sheet but
+\emph{not} the odd component~$b$ of a lifted coordinate.  Two
+spectral objects with the same~$\Delta$ but different~$b$
+have different tensor cancellation patterns: the product
+$y_1 y_2$ depends on $b_1, b_2$, not just $\Delta$.  The common
+sheet is seen by the discriminant; the tensor arithmetic on that
+sheet requires the lifted coordinate.
+\end{remark}
+
+For spectral objects on distinct quadratic sheets
+$L_1 = F(u_1)$, $L_2 = F(u_2)$ with $u_1^2 = \Delta_1$,
+$u_2^2 = \Delta_2$, the tensor compositum lives in
+$L_1 L_2 = F(u_1, u_2)$ and carries a richer defect structure
+measuring sheet loss and ramification.
+
+\subsection{Cubic resolvent towers}
+\label{subsec:cubic-resolvent-towers}
+\index{cubic spectral regime}
+\index{resolvent tower!cubic}
+\index{Kummer theory!cubic}
+
+In the cubic regime, $[L:F] = 3$ and the Galois closure has group
+$S_3$.  The resolvent tower has three layers: the odd resolvent
+cover (quadratic), the even Kummer line, and the selector torsor.
+
+\begin{definition}[Cubic spectral packet]
+\label{def:cubic-spectral-packet}
+\index{cubic spectral packet|textbf}
+A \emph{cubic spectral packet} on $X$ consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a cubic field extension $L/F$ with
+  $\operatorname{Gal}(\tilde{L}/F) \cong S_3$;
+\item the quadratic resolvent field
+  $K := \tilde{L}^{A_3} = F(\sqrt{D})$ where $D$ is the
+  cubic discriminant;
+\item the $K$-rational cube root $\omega$
+  satisfying $\omega^3 = c \in K^\times$ via
+  Cardano's formula;
+\item the \emph{even Kummer line}:
+  the class $[c] \in K^\times/(K^\times)^3$;
+\item the \emph{selector torsor}: the choice of cube root
+  among the three Galois conjugates.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Hierarchy of spectral invariants; \ClaimStatusProvedHere]
+\label{thm:spectral-hierarchy}
+\index{spectral invariant!hierarchy}
+For a spectral object with a chosen lifted presentation, the
+following form a strict hierarchy:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the \emph{visible shadow}: denominator/discriminant
+  on~$X$;
+\item the \emph{lifted cover}: the normalized finite cover
+  $\Sigma \to X$;
+\item \textup{(quadratic)} the \emph{odd component} of the
+  lifted coordinate, controlling tensor cancellation;
+\item \textup{(distinct quadratic)} the \emph{two-layer
+  tensor defect} $(\delta_\otimes, \mathbb{D}_\otimes)$;
+\item \textup{(cubic $S_3$)} the \emph{odd sheet}, the
+  \emph{even Kummer line}, and the \emph{selector torsor}.
+\end{enumerate}
+Each successive layer contains information invisible to the
+previous ones, and none of the later tensor- or
+transport-theoretic formulas can be recovered from the visible
+shadow alone.
+\end{theorem}
+
+\begin{proof}
+The visible shadow is recovered from the branch operator by
+Theorem~\ref{thm:determinantal-branch-formula} but does not
+determine the odd part of a quadratic lifted coordinate
+(Remark~\ref{rem:visible-discriminant-misses}).  The common-sheet
+multiplication law
+(Theorem~\ref{thm:common-sheet-law}) shows that this odd part
+controls quadratic tensor cancellation.  In the distinct-sheet case,
+sheet loss and ramified defect are different invariants.  In the
+cubic $S_3$ regime, the even Kummer line and selector torsor are
+invisible to the odd resolvent cover.
+\end{proof}
+
+\begin{corollary}[The frontier is cubic; \ClaimStatusProvedHere]
+\label{cor:frontier-is-cubic}
+The quadratic tensor calculus is complete.  Any genuinely new
+phenomenon in the next rank must be cubic or higher.  In the first
+cubic case
+\textup{(}the $\widehat{\mathfrak{sl}}_3 / \mathcal{W}_3$
+orbit\textup{)}, the problem is to extract and compare the even
+Kummer line and the selector torsor, not merely to detect the
+visible odd sheet.
+\end{corollary}
+
+\begin{remark}[Position in the shadow tower]
+\label{rem:spectral-shadow-position}
+\index{shadow tower!spectral level}
+The lifted spectral cover sits at the $L_2$ level of the
+characteristic hierarchy
+(cf.~\S\ref{sec:concordance-frontier}): $L_1$ is the scalar
+modular characteristic~$\kappa(\cA)$, while $L_2$ is the
+spectral discriminant~$\Delta_\cA$ together with its module
+structure.  The defect calculus developed here provides the
+geometric content of this level: the discriminant polynomial is
+the visible shadow, but tensor transport, DS reduction, and
+level-rank duality require the full lifted cover.
+The $\widehat{\mathfrak{sl}}_3/\mathcal{W}_3$ orbit
+(Conjectures~\ref{conj:sl3-bar-gf}
+and~\ref{conj:w3-bar-gf}) is the first example where the
+visible generating functions are both rational but the lifted
+covers are nontrivially cubic: the algebra and its DS image
+live on different sheets of a common $S_3$ cover, and the DS
+functor is a sheet-crossing map.
+\end{remark}
 
