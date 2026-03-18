@@ -564,13 +564,98 @@ The cobar complex is not built from forms but from \emph{distributions}: the Ver
 \index{modular Koszul duality|textbf}
 \index{quantum corrections!as modular completion}
 
-The five theorems are the four properties of the categorical
-logarithm---existence, inversion, branch structure, leading
-coefficient---together with the coefficient ring that records its
-Taylor data.  Chapter~\ref{ch:heisenberg-frame} exhibits all five
-in a single example before braiding enters;
-Chapter~\ref{chap:yangians} shows what changes once ordered
-factorization is part of the structure.
+Before stating the five theorems in general, we derive all five
+for a single algebra.
+
+\subsection{All five theorems at once: the Heisenberg algebra}
+\label{subsec:five-theorems-heisenberg}
+
+Take $\cA = \cH_k$ with OPE
+$J(z)\,J(w) \sim k/(z-w)^2$.  One generator, one double pole, no
+simple pole.
+
+\smallskip
+\noindent\textbf{Theorem~A (bar-cobar adjunction).}\enspace
+The bar complex is $\barB(\cH_k) = T^c(s^{-1}\C\cdot J)$, the
+cofree coalgebra on a single cogenerator.  The bar differential on
+a degree-$2$ element is
+\[
+d_{\barB}[s^{-1}J \,|\, s^{-1}J]
+\;=\;
+\Res_{z_1 = z_2}\!\left[
+  \frac{k}{(z_1 - z_2)^2}\cdot d\log(z_1-z_2)
+\right]
+\;=\; k.
+\]
+At degree~$3$: the Arnold relation on $\FM_3(\C)$ gives
+$d_{\barB}^2 = 0$.  The three collision divisors contribute
+$k \cdot (\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{13}
++ \eta_{13}\wedge\eta_{12}) = 0$.
+
+Verdier duality exchanges $\barB(\cH_k)$ and $\barB(\cH_{-k})$:
+$\mathbb{D}_{\mathrm{Ran}}\,\barB(\cH_k) \simeq \barB(\cH_{-k})$.
+The pairing is $\langle s^{-1}J, s^{-1}J^*\rangle = 1$, with
+$J^*$ the dual cogenerator at level $-k$.
+
+\smallskip
+\noindent\textbf{Theorem~B (bar-cobar inversion).}\enspace
+The bar cohomology is $H^{-1}(\barB(\cH_k)) = \C\cdot s^{-1}J$
+(concentrated in bar degree~$1$), so the Koszul dual coalgebra is
+$\cH_k^{\mathrm{i}} = \C\cdot s^{-1}J$.  The Koszul dual algebra
+is $\cH_k^! = (\cH_k^{\mathrm{i}})^\vee = \cH_{-k}$: the
+Heisenberg at the \emph{opposite} level.  (Note: $-k$, not $1/k$.)
+The cobar of the bar is
+$\Omega(\barB(\cH_k)) = T(s\,\C\cdot s^{-1}J) = \C[J]$,
+which is $\cH_k$ as a graded algebra.  The counit
+$\varepsilon\colon\Omega(\barB(\cH_k)) \to \cH_k$ is a
+quasi-isomorphism: the Heisenberg is Koszul.
+
+\smallskip
+\noindent\textbf{Theorem~C (complementarity).}\enspace
+At genus~$g \ge 1$:
+$Q_g(\cH_k) \oplus Q_g(\cH_{-k}) \cong
+H^*(\overline{\cM}_g, \cZ_{\cH_k})$.
+The modular characteristic is $\kappa(\cH_k) = k$, and
+$\kappa(\cH_k) + \kappa(\cH_{-k}) = k + (-k) = 0$.  The
+complementarity sum of central charges is
+$c(\cH_k) + c(\cH_{-k}) = 1 + 1 = 2$.
+
+\smallskip
+\noindent\textbf{Theorem~D (modular characteristic).}\enspace
+At genus~$1$: the self-loop graph $\Gamma_{\mathrm{irr}}$ on
+$\overline{\cM}_{1,1}$ contributes
+$d_{\mathrm{fib}}^2 = k \cdot \omega_1$.  The genus-$1$ free
+energy is $F_1 = -(k/24)\log\eta(\tau)$.  The generating function:
+\[
+\sum_{g \ge 1} F_g(\cH_k)\,\hbar^{2g-2}
+\;=\;
+k\bigl(\hat{A}(i\hbar) - 1\bigr)
+\;=\;
+\frac{k}{12}\hbar^{-2}
+- \frac{k}{720}
++ \frac{k}{30240}\hbar^2
+- \cdots
+\]
+The coefficients are $k \cdot B_{2g}/(2g(2g-2))$, where $B_{2g}$
+is the $2g$-th Bernoulli number.
+
+\smallskip
+\noindent\textbf{Theorem~H (chiral Hochschild).}\enspace
+$\ChirHoch^*(\cH_k) = \C[\xi]$, a polynomial ring on one generator
+$\xi$ of degree~$2$ (the class of the double-pole OPE).  This is
+polynomial in $1$ generator of degree $m_1 + 1 = 2$, where
+$m_1 = 1$ is the exponent of $\mathfrak{sl}(1) = \{0\}$ (formally,
+the rank-$1$ case of the polynomial-growth theorem).
+
+\medskip
+Five theorems, one algebra, one scalar $k$.  Every structure is
+controlled by this single parameter.
+Chapter~\ref{ch:heisenberg-frame} carries out the full computation;
+the above is its shadow.  What follows are the general statements,
+of which the Heisenberg computation is the simplest instance.
+
+\subsection{The general theorems}
+\label{subsec:five-theorems-general}
 
 \begin{itemize}
 \item \emph{Theorem~A} (Geometric bar-cobar duality,
