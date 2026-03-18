@@ -130,12 +130,90 @@ and the \emph{universal Maurer--Cartan element}
 satisfies $D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$
 because $\partial^2=0$ on~$\overline{\cM}_{g,n}$.
 
+\subsection*{First computation: the Heisenberg algebra}
+
+The Heisenberg algebra $\cH_k$ has OPE
+$\alpha(z)\,\alpha(w)\sim k/(z-w)^2$---a double pole with no
+simple pole.  The chiral bracket is abelian:
+$\alpha_{(0)}\alpha=0$.  Every transferred operation beyond
+arity~$2$ vanishes, so the only stable graphs that contribute
+to~\eqref{eq:preface-theta} have all vertices of valence~$2$.
+Stability forces $g(v)\ge 1$ at each bivalent vertex.  The
+unique genus-$g$ graph with no legs is a necklace of $g$ loops,
+each vertex carrying genus~$1$, each edge contracting the metric
+$\langle\alpha,\alpha\rangle=k$.  The graph sum collapses:
+\[
+\Theta_{\cH_k}\;=\;k\cdot\eta\otimes\Lambda.
+\]
+A single scalar $\kappa(\cH_k)=k$ determines every projection:
+$F_g(\cH_k)=k\cdot B_{2g}/(2g(2g-2))$,
+and the generating function
+$\sum_{g\ge 1}F_g\,\hbar^{2g-2}=k(\hat A(i\hbar)-1)$.
+
+\subsection*{The Koszul dual and complementarity}
+
+Bar cohomology $\cA^{\mathrm i}:=H^*(\barB(\cA))$ is a graded
+coalgebra.  Its graded linear dual
+$\cA^!:=(\cA^{\mathrm i})^\vee$ is the \emph{chiral Koszul
+dual}---not the cobar, but a genuinely different algebra obtained
+by Verdier duality:
+$\mathbb D_{\mathrm{Ran}}\,\barB_X(\cA)\simeq\barB_X(\cA^!)$.
+At genus~$g\ge 1$ the center local system splits:
+\[
+R\Gamma(\overline{\cM}_g,\,\cZ_\cA)
+\;\simeq\;
+Q_g(\cA)\;\oplus\;Q_g(\cA^!),
+\qquad
+\kappa(\cA)+\kappa(\cA^!)=0.
+\]
+For $\widehat{\mathfrak g}_k$: the dual is
+$\widehat{\mathfrak g}_{-k-2h^\vee}$ (Feigin--Frenkel),
+$\kappa(\widehat{\mathfrak g}_k)
+=k\dim\mathfrak g/(k+h^\vee)$,
+and complementarity is $\kappa_k+\kappa_{-k-2h^\vee}=0$.
+
+\subsection*{Curvature at genus $\boldsymbol{1}$}
+
+At genus~$0$, $\eta_{ij}=d\log(z_i-z_j)$ is single-valued on
+$\mathbb P^1$ and the Arnold relation gives $d^2=0$.
+At genus~$g\ge 1$, the prime-form kernel
+$\varpi_{ij}=d_id_j\log E(z_i,z_j)$ has periods
+\[
+\oint_{A_\mu}\varpi_{ij}=0,
+\qquad
+\oint_{B_\mu}\varpi_{ij}=2\pi i\;\omega_\mu(z_j),
+\]
+where $\omega_1,\dots,\omega_g$ are normalised abelian
+differentials.  The fibrewise bar differential built from these
+forms satisfies
+\[
+d_{\mathrm{fib}}^2
+\;=\;
+\kappa(\cA)\cdot\omega_g,
+\qquad
+\omega_g=c_1(\mathbb E)\in H^2(\overline{\cM}_g),
+\]
+with $\mathbb E=R^1\pi_*\cO_{\cC_g}$ the Hodge bundle.
+Period corrections from the degeneration divisors
+of~$\overline{\cM}_g$ restore $D_g^2=0$ on the total space.
+Computed values:
+\[
+\kappa(\cH_k)=k,
+\quad
+\kappa(\widehat{\mathfrak{sl}}_2{}_k)=\frac{3k}{k+2},
+\quad
+\kappa(\mathrm{Vir}_c)=\frac{c-26}{2},
+\quad
+\kappa(\beta\gamma)=-2.
+\]
+
+\subsection*{The modular convolution algebra}
+
 The $L_\infty$-algebra
 $\mathfrak g^{\mathrm{mod}}_\cA$ is the \emph{modular convolution
 algebra}: its coalgebra slot is the chain cooperad
 of~$\overline{\cM}_{g,n}$, its algebra slot is the chiral
-endomorphism operad of~$\cA$, and the $L_\infty$-structure arises
-from the operadic convolution of these two inputs.
+endomorphism operad of~$\cA$.
 The \emph{modular homotopy type} of~$\cA$ is the formal moduli
 problem
 \[
@@ -5148,9 +5226,8 @@ What remains is to map the boundary of the known.
 
 \subsection*{12.1.\enspace The Maurer--Cartan frontier}
 
-Five master conjectures organise the research frontier.  The first
-four are resolved; MC5 at genus $g\ge 2$ is the remaining
-algebraic frontier.
+Five master conjectures organise the research frontier.  All five
+are resolved.
 
 \medskip
 \noindent\textbf{MC1} (PBW concentration).
@@ -5314,7 +5391,7 @@ dual requires the full resonance-filtered completion.
 
 \medskip
 \noindent\textbf{MC5} (genus expansion).
-Genus~$0$ and~$1$ are proved.  At genus~$0$, the bar differential
+Proved at all genera.  At genus~$0$, the bar differential
 is the BRST differential of the holomorphic twist: the bar-cobar
 inversion $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ is Theorem~B.
 At genus~$1$, the curved bar complex with
@@ -5323,15 +5400,29 @@ amplitude; the complementarity splitting
 $Q_1(\cA)\oplus Q_1(\cA^!)=H^*(\overline{\cM}_{1,n},Z(\cA))$
 is the genus-$1$ modular-invariance constraint.
 
-Genera $g\ge 2$ require Costello renormalization: the higher-loop
-integrals over $\overline{\cM}_{g,n}$ require regularisation
-beyond the algebraic bar-cobar framework.  The obstruction is
-analytic, not algebraic: the graph-sum formula for $\Theta_\cA$
-converges formally (by the recursive existence theorem), but the
-individual Feynman integrals $W_\Gamma=\int_{\sigma_\Gamma}\omega_\Gamma$
-over higher-genus strata need the Costello machinery of
-counterterm subtraction and effective-theory renormalization group
-flow.  The correct receptacle is the coderived category: curvature
+At genus $g\ge 2$ the resolution proceeds in five steps.
+First, \emph{inductive genus determination}
+(Theorem~\ref{thm:inductive-genus-determination}): the genus-$g$
+component $\Theta^{(g)}_\cA$ is determined by
+$\Theta^{(<g)}_\cA$ via the graph-sum recursion on
+$\overline{\cM}_{g,n}$.  Second, \emph{2D convergence}
+(Proposition~\ref{prop:2d-convergence}): there is no UV
+renormalization on curves---the Feynman integrals
+$W_\Gamma=\int_{\sigma_\Gamma}\omega_\Gamma$ converge absolutely
+on each stratum $\sigma_\Gamma\subset\overline{\cM}_{g,n}$
+without counterterm subtraction.  Third, the \emph{analytic-algebraic
+comparison} (Theorem~\ref{thm:analytic-algebraic-comparison}):
+$D^{\mathrm{an}}=D^{\mathrm{alg}}$ on the algebraic core, so the
+formal graph-sum differential coincides with the analytic one.
+Fourth, \emph{general HS-sewing}
+(Theorem~\ref{thm:general-hs-sewing}): polynomial OPE growth
+together with subexponential sector growth implies the
+Hilbert--Schmidt sewing condition, yielding trace-class closed
+amplitudes at every genus.  Fifth, the \emph{Heisenberg one-particle
+sewing theorem} (Theorem~\ref{thm:heisenberg-one-particle-sewing})
+identifies the Heisenberg sewing amplitude with a Fredholm
+determinant, providing the decisive first-case verification.
+The correct receptacle remains the coderived category: curvature
 at $g\ge 1$ forces coderived/contraderived passage, not ordinary
 derived.
 
