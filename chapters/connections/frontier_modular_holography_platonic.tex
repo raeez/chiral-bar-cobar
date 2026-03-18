@@ -1974,6 +1974,153 @@ zeros at $x=1/k$ (level~$k$) and $x=1/(k{+}4)$ (dual level);
 pole at $x=1/2$ (critical level $k=-2$).
 \end{computation}
 
+\begin{computation}[Derivation of the KZ connection from the
+graph-sum formula; \ClaimStatusProvedHere]
+\label{comp:kz-from-graph-sum}
+\index{KZ connection!derivation from graph sum}
+\index{shadow connection!KZ derivation}
+The genus-$0$, $n$-point shadow connection
+$\nabla^{\mathrm{hol}}_{0,n}=d-\mathrm{Sh}_{0,n}(\Theta_\cA)$
+for $\cA=\widehat{\mathfrak{sl}}_2{}_k$ is derived from the
+graph-sum formula~\eqref{eq:preface-theta} as follows.
+
+\emph{Step~$1$: identify the contributing graphs.}
+At genus~$0$ with $n$ external legs, the contributing stable
+graphs are trees with $n$ leaves.  The weight-$1$ component
+$\Theta^{[1]}_\cA|_{(0,n)}$ sums over trees with one internal
+edge---binary trees with two vertices.  For $n$ insertions at
+points $z_1,\dots,z_n$, each binary tree $T_{ij}$ has one
+internal edge connecting vertex sets $\{i\}$ and $\{j\}$.
+
+\emph{Step~$2$: evaluate the vertex labels.}
+At each vertex, the transferred chiral operation is the OPE
+residue.  For $\widehat{\mathfrak{sl}}_2$, the binary vertex
+label is
+\[
+\Phi_{ij}
+\;=\;
+\sum_{a} J^a_i \otimes J^a_j
+\;=\;
+\Omega_{ij}
+\;=\;
+e_i f_j + f_i e_j + \tfrac{1}{2}h_i h_j.
+\]
+
+\emph{Step~$3$: evaluate the edge weight.}
+The FM propagator on $\overline{C}_n(\mathbb{A}^1)$ for the
+edge connecting $z_i$ and $z_j$ is
+\[
+W_{T_{ij}}
+\;=\;
+\frac{1}{k+h^\vee}\,d\log(z_i-z_j)
+\;=\;
+\frac{1}{k+2}\,\eta_{ij}.
+\]
+The factor $1/(k+h^\vee)$ is the normalisation of the
+complementarity propagator $P_\cA=H_\cA^{-1}$: the inner
+product on $\widehat{\mathfrak{sl}}_2$ at level~$k$ is
+$(k+h^\vee)$ times the Killing form, so the inverse
+propagator scales as $1/(k+h^\vee)$.
+
+\emph{Step~$4$: sum over graphs.}
+\begin{align*}
+\mathrm{Sh}_{0,n}(\Theta_\cA)
+&\;=\;
+\sum_{i<j}
+W_{T_{ij}}\otimes\Phi_{ij}
+\\
+&\;=\;
+\frac{1}{k+2}\sum_{i<j}
+\Omega_{ij}\,d\log(z_i-z_j).
+\end{align*}
+The shadow connection is
+\[
+\boxed{
+\nabla^{\mathrm{hol}}_{0,n}
+\;=\;
+d
+\;-\;
+\frac{1}{k+2}\sum_{i<j}
+\Omega_{ij}\,d\log(z_i-z_j),}
+\]
+which is the Knizhnik--Zamolodchikov connection on
+$n$-point conformal blocks of $\widehat{\mathfrak{sl}}_2$
+at level~$k$.  Flatness
+$(\nabla^{\mathrm{hol}}_{0,n})^2=0$ is the
+$(0,n)$-projection of the MC equation
+$D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$.
+The three terms in the flatness expansion are:
+$\sum_{i<j}\Omega_{ij}\wedge\Omega_{ij}=0$ (the Casimir is
+central), $\sum_{i<j<k}[\Omega_{ij},\Omega_{ik}]\,
+\eta_{ij}\wedge\eta_{ik}=0$ (the Jacobi identity on
+$\mathfrak{sl}_2$), and the Arnold relation kills the
+form-theoretic contribution.
+
+At higher genus, the shadow connection acquires corrections
+from the period structure:
+$\nabla^{\mathrm{hol}}_{g,n}
+=d-\frac{1}{k+2}\sum_{i<j}\Omega_{ij}\,\varpi_{ij}
+-\kappa\,\omega_g-\cdots$,
+where $\varpi_{ij}$ is the prime-form kernel and $\omega_g$
+is the first Chern class of the Hodge bundle.
+\end{computation}
+
+\begin{computation}[Genus-$1$ Hessian for
+$\widehat{\mathfrak{sl}}_3$; \ClaimStatusProvedHere]
+\label{comp:sl3-genus1-hessian}
+\index{Kac--Moody!genus-1 Hessian!sl3@$\mathfrak{sl}_3$}
+\index{spectral discriminant!sl3@$\mathfrak{sl}_3$}
+For $\widehat{\mathfrak{sl}}_3$ at level~$k$, the genus-$1$
+deformation space has $\dim H^1_{\mathrm{cyc,prim}}=2$
+(the Sugawara direction $\partial_k T_{\mathrm{Sug}}$ and the
+$\mathcal W_3$-current direction $\partial_k W$).
+The genus-$1$ Hessian in this basis is
+\[
+H^{(1)}_{\widehat{\mathfrak{sl}}_3{}_k}
+\;=\;
+\begin{pmatrix}
+\dfrac{8k}{k+3} & 0 \\[6pt]
+0 & \dfrac{8k}{k+3}+\dfrac{48}{5c(k)+22}
+\end{pmatrix},
+\]
+where $c(k)=2-24/(k+3)$.  The off-diagonal vanishing
+follows from conformal weight selection: $T$ has weight~$2$
+and $W$ has weight~$3$.  The spectral discriminant is
+\[
+\Delta_{\widehat{\mathfrak{sl}}_3}(x)
+\;=\;
+\Bigl(1-\frac{8k}{k+3}\,x\Bigr)
+\Bigl(1-\Bigl(\frac{8k}{k+3}+\frac{48}{5c(k)+22}\Bigr)x\Bigr).
+\]
+Under DS reduction
+$\mathrm{DS}\colon\widehat{\mathfrak{sl}}_3{}_k
+\to\mathcal W_3{}_{c(k)}$, the Hessian transforms as
+\[
+H^{(1)}_{\widehat{\mathfrak{sl}}_3}
+\;\longmapsto\;
+H^{(1)}_{\mathcal W_3}
+\;+\;
+H^{(1)}_{\mathrm{ghost}},
+\]
+where $H^{(1)}_{\mathrm{ghost}}$ is the ghost contribution
+from the three $bc$-pairs.  The eigenvalues of the
+affine Hessian are \emph{not} the eigenvalues of the
+$\mathcal W_3$ Hessian: DS reduction mixes the Sugawara and
+$W$-current directions through the ghost sector, and the
+individual eigenvalues shift.  What is preserved is the
+determinant:
+$\det H^{(1)}_{\widehat{\mathfrak{sl}}_3}
+=\det H^{(1)}_{\mathcal W_3}\cdot\det H^{(1)}_{\mathrm{ghost}}$.
+
+At the critical level $k=-3$: both eigenvalues diverge;
+the Hessian degenerates and the spectral discriminant has
+a double pole.  The formal moduli problem
+$\mathcal M^{\mathrm{mod}}_{\widehat{\mathfrak{sl}}_3{}_{-3}}$
+acquires a non-reduced structure---the tangent space has a
+Jordan block---reflecting the appearance of the
+Feigin--Frenkel center.
+\end{computation}
+
 \begin{computation}[Holographic datum for Virasoro;
 \ClaimStatusProvedHere]
 \label{comp:virasoro-holographic-datum}
@@ -1998,6 +2145,48 @@ For $\mathrm{Vir}_c$:
 At $c=26$: $\kappa=0$ and the shadow connection is flat at
 leading order.
 At $c=0$, $c=-22/5$: the quartic diverges (resonance points).
+
+\emph{Derivation of the shadow connection from the graph sum.}
+The weight-$1$ contribution at genus~$0$ with $n$ insertions is
+\[
+\mathrm{Sh}^{[1]}_{0,n}(\Theta_c)
+\;=\;
+\frac{c-26}{2}\sum_{i<j}
+\frac{2}{(z_i-z_j)^2}\,dz_j
+\;+\;
+\sum_{i<j}\frac{\partial T(z_j)}{z_i-z_j}\,dz_j,
+\]
+the sum over binary trees with vertex label
+$\Phi_{ij}=\frac{c/2}{(z_i-z_j)^2}+\frac{2T(z_j)}{z_i-z_j}$
+(the Virasoro OPE).  These are the BPZ differential equations
+for $n$-point functions on~$\mathbb{P}^1$.
+
+The weight-$2$ contribution involves the quartic contact stratum
+of $\overline{C}_4(X)$:
+\[
+\mathrm{Sh}^{[2]}_{0,4}(\Theta_c)
+\;\supset\;
+\frac{10}{c(5c+22)}\;\Lambda_{ijkl}\cdot\delta_4,
+\]
+where $\Lambda=\mathopen{:}TT\mathclose{:}-\tfrac{3}{10}\partial^2 T$
+and $\delta_4$ is the codimension-$2$ contact class on
+$\overline{C}_4$.  At genus~$g\ge 1$, the curvature
+$\kappa=(c-26)/2$ enters through the Hodge bundle class
+$\omega_g=c_1(\mathbb E)$:
+\[
+\nabla^{\mathrm{hol}}_c
+\;=\;
+d
+\;-\;\frac{c-26}{2}\,\omega_g
+\;-\;\frac{10}{c(5c+22)}\,\delta_4
+\;-\;\frac{120}{c^2(5c+22)}\,\delta_H
+\;-\;\cdots\,.
+\]
+The leading term is the genus expansion; the quartic term is
+the first planted-forest correction; the Hessian term is the
+second-order genus-$1$ variation.  At $c=26$: the first term
+vanishes, and the shadow connection reduces to its nonlinear
+corrections.
 
 \emph{Genus-$2$ shell decomposition.}
 \begin{align*}
