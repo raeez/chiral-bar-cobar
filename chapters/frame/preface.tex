@@ -3516,6 +3516,162 @@ If true, the identification has three consequences:
   $L_\infty$-tower with no polynomial truncation.
 \end{enumerate}
 
+
+\subsection*{8.4.\quad The PBW spectral sequence}
+
+The computational engine for bar cohomology within each fixed genus
+is the PBW (Poincar\'e--Birkhoff--Witt) spectral sequence.  Filter
+$\barB^{(g)}(\cA)$ by the \emph{conformal weight}: assign to each
+normally ordered monomial in the strong generators its total weight
+(the sum of the conformal weights of the constituent fields).  The
+associated graded is the bar complex of a free-field algebra---a
+computation that reduces to combinatorics of symmetric functions.
+
+The $E_1$ page at genus~$g$ decomposes:
+\[
+E_1^{p,q}(g)
+\;=\;
+E_1^{p,q}(g{=}0)
+\;\oplus\;
+\cE^{p,q}_g,
+\]
+where the first summand is the genus-$0$ bar cohomology (determined
+by Koszulness of the associated graded) and $\cE^{p,q}_g$ is the
+genus-$g$ enrichment from the Hodge bundle.  The enrichment at
+genus~$g$ arises from the regular Eisenstein series coupled to the
+curvature.
+
+\emph{Concentration}: $E_\infty^{p,q}(g)=0$ for $q\neq 0$ at all
+genera $g\ge 1$, for all standard families
+(Kac--Moody, Virasoro, principal $\mathcal W_N$).  This is PBW
+degeneration: the spectral sequence collapses at~$E_1$, and the
+bar cohomology is concentrated on the diagonal.
+
+The PBW spectral sequence is \emph{not} the genus spectral sequence
+of section~5.5.  The PBW spectral sequence uses conformal weight
+within a fixed genus to compute the bar cohomology groups; the genus
+spectral sequence uses the genus filtration on the deformation
+algebra to control the Maurer--Cartan lift across genera.  One
+computes \emph{what}; the other determines \emph{whether}.
+
+
+\subsection*{8.5.\quad Chiral Hochschild cohomology (Theorem~H)}
+
+The chiral Hochschild complex $\mathrm{ChirHoch}^\bullet(\cA)$ is
+the derived endomorphism algebra of the identity functor on
+$\cA$-modules, computed by the bar construction with
+$\cA$-bimodule coefficients.  At genus~$0$:
+\[
+\mathrm{ChirHoch}^\bullet(\cA)
+\;\simeq\;
+R\!\operatorname{Hom}_{\cA\text{-bimod}}(\cA,\cA)
+\;\simeq\;
+\operatorname{Ext}^\bullet_{\cA^e}(\cA,\cA),
+\]
+where $\cA^e=\cA\otimes\cA^{\mathrm{op}}$ is the enveloping
+chiral algebra.
+
+For $\cA=\mathcal W^k(\mathfrak g,f_{\mathrm{prin}})$ a principal
+$\mathcal W$-algebra:
+\[
+\mathrm{ChirHoch}^n(\mathcal W^k(\mathfrak g))
+\;\cong\;
+\bigwedge^n V_{\mathfrak g},
+\qquad
+\dim V_{\mathfrak g}=\operatorname{rank}(\mathfrak g),
+\]
+where the generators of $V_{\mathfrak g}$ lie in degrees
+$m_1+1,\dots,m_r+1$ and $m_1,\dots,m_r$ are the exponents
+of~$\mathfrak g$.  For $\mathfrak g=\mathfrak{sl}_2$:
+$\mathrm{ChirHoch}^\bullet(\mathrm{Vir}_c)=
+\Lambda[e_3]=\mathbb C\oplus\mathbb Ce_3$, two-dimensional.
+For $\mathfrak g=\mathfrak{sl}_3$:
+$\mathrm{ChirHoch}^\bullet(\mathcal W_3)=
+\Lambda[e_3,e_5]$, four-dimensional, with
+generators in degrees $3$ and~$5$.
+
+On the Koszul locus, $\mathrm{ChirHoch}^\bullet(\cA)$ carries an
+$E_2$-algebra structure that is formal.  The Connes periodicity
+operator $S\colon\mathrm{ChirHoch}^n\to\mathrm{ChirHoch}^{n-2}$
+intertwines Koszul duality:
+$S\circ\mathrm{KD}=\mathrm{KD}\circ S$.
+
+At genus~$0$, the chiral Hochschild complex identifies with the bulk
+chiral homology complex of Volume~II: $\mathrm{ChirHoch}^\bullet(\cA)
+\simeq\mathrm{ChirHoch}^\bullet_{\mathrm{bulk}}(\cA)$.
+The bulk-boundary-line triangle of section~9.6 is the genus-$0$
+shadow of this identification:
+$\cA_{\mathrm{bulk}}\simeq Z_{\mathrm{der}}(\cB_\partial)
+\simeq\mathrm{ChirHoch}^\bullet(\cA^!)$.
+
+
+\subsection*{8.6.\quad The shadow algebra}
+
+The \emph{shadow algebra} $\cA^{\mathrm{sh}}$ is the cohomology of
+the modular cyclic deformation complex as a graded-commutative ring:
+\[
+\cA^{\mathrm{sh}}
+\;:=\;
+H_\bullet\!\bigl(\Defcyc^{\mathrm{mod}}(\cA)\bigr),
+\qquad
+\cA^{\mathrm{sh}}=\bigoplus_{r\ge 2,\,g\ge 0}
+\cA^{\mathrm{sh}}_{r,g}.
+\]
+The single MC element $\Theta_\cA$ decomposes into components
+graded by arity~$r$ and genus~$g$.  Each named shadow is a
+projection:
+\begin{align*}
+\kappa(\cA) &= \cA^{\mathrm{sh}}_{2,0},\\
+\mathfrak C(\cA) &= \cA^{\mathrm{sh}}_{3,0},\\
+\mathfrak Q(\cA) &= \cA^{\mathrm{sh}}_{4,0},\\
+\mathrm{Sh}_r(\cA) &= \cA^{\mathrm{sh}}_{r,0},\qquad r\ge 5.
+\end{align*}
+The shadow algebra organises the entire hierarchy.  It is a
+homotopy invariant of~$\cA$, computed by the Weil homomorphism of
+the Chern--Weil dictionary (section~5.4).
+
+The all-arity master equation, read in the shadow algebra, becomes:
+$\nabla_H(\mathrm{Sh}_r)+o^{(r)}=0$ for all $r\ge 3$.  The
+obstruction class $o^{(r)}$ lies in $\cA^{\mathrm{sh}}_{r,0}$ and
+measures the failure of the truncation $\Theta^{\le r-1}_\cA$ to
+extend to arity~$r$.
+
+
+\subsection*{8.7.\quad BV/BRST identification at genus~$0$}
+
+At genus~$0$, the bar differential of a chiral algebra on
+$\mathbb C$ is the BRST differential of the associated
+holomorphic twist:
+\[
+(d_{\barB})_{g=0}
+\;=\;
+Q_{\mathrm{BRST}}.
+\]
+The bar complex $\barB^{(0)}_{\mathbb C}(\cA)$ is the BRST complex
+of the 2d chiral algebra, and bar-cobar inversion
+$\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ (Theorem~B) is the
+statement that the BRST cohomology, processed through the cobar
+functor, reconstructs the original algebra.
+
+At genus~$1$, the identification acquires curvature:
+\[
+d^2_{\mathrm{fib}}
+\;=\;
+\kappa(\cA)\cdot\omega_1
+\;=\;
+\text{one-loop anomaly},
+\]
+and the curved bar complex is the curved BRST complex of the
+theory on an elliptic curve.  The complementarity
+$Q_1(\cA)\oplus Q_1(\cA^!)=H^*(\overline{\cM}_{1,1},\cZ_\cA)$
+is the genus-$1$ anomaly cancellation condition.
+
+At genus~$g\ge 2$, the identification with the Costello--Gwilliam
+BV formalism requires renormalisation: the higher-loop integrals
+over $\overline{\cM}_{g,n}$ need regularisation beyond the
+algebraic bar-cobar framework, and the correct receptacle is the
+coderived category.
+
 The conjecture is proved at arities $2$, $3$, and~$4$: the shadow
 Postnikov tower equals the $L_\infty$-formality obstruction tower at
 these arities.  The general statement at arity~$r\ge 5$
@@ -4629,18 +4785,122 @@ All five conjectural targets are trivially verified:
 
 \subsection*{11.8.\enspace The M2 brane example}
 
-The M2 brane system provides the first genuinely interacting
-example.  The boundary chiral algebra $\cA_{M2,\infty}$ is the
-large-$N$ limit of the boundary VOA of the 3d
-$\cN=4$ ADHM theory.  Its Koszul dual $\cA^!_{M2,\infty}$ is a
-dg-shifted Yangian for the Lie superalgebra
-$\mathfrak{psl}(2|2)$.  The line-operator category is
-$\cC\simeq\operatorname{Rep}(U_q(\widehat{\mathfrak{psl}}(2|2)))$.
-The master MC lift $\Theta_{M2}$ has infinite shadow depth
-(class~$\mathbf{M}$): the nonlinear self-coupling of the stress
-tensor forces a nonterminating shadow tower.  The quartic contact
-invariant $Q^{\mathrm{contact}}_{M2}\neq 0$ is the first
-obstruction to planarity in the holographic expansion.
+The M2 brane system is the first genuinely interacting holographic
+example to which the full machinery applies.  It comes from the
+3d $\cN=4$ ADHM gauge theory: $N$ M2 branes probing
+$\mathbb C^2/\mathbb Z_k$ produce a 3d holomorphic-topological
+twist whose boundary chiral algebra and line-operator category are
+both computable.
+
+\medskip
+\noindent\textbf{The boundary algebra.}
+The boundary chiral algebra $\cA_{M2,N}$ at finite~$N$ is the VOA
+of the 3d $\cN=4$ theory on $\mathbb R_+\times\mathbb C$.  At
+large~$N$, the boundary VOA $\cA_{M2,\infty}$ is a $\mathcal W$-algebra
+of type $\mathcal W_{1+\infty}[c]$ at $c\sim N$: it has infinitely
+many strong generators of weights $1,2,3,\dots$, with OPE
+coefficients that are rational functions of~$N$.
+
+The OPE structure contains both simple and higher poles.  The
+stress tensor $T$ (weight~$2$) has the Virasoro OPE with
+$c=c(N)$; the weight-$3$ primary~$W$ has a nonlinear $WW$ OPE
+involving the quasi-primary $\Lambda={:}TT{:}-\frac{3}{10}\partial^2T$
+at order $(z-w)^{-2}$; and the weight-$s$ generators for $s\ge 4$
+produce nested composites that make the shadow tower infinite.
+
+\medskip
+\noindent\textbf{The Koszul dual.}
+The chiral Koszul dual $\cA^!_{M2,\infty}$ is a dg-shifted Yangian
+for the Lie superalgebra $\mathfrak{psl}(2|2)$:
+\[
+\cA^!_{M2,\infty}
+\;\simeq\;
+Y^{\mathrm{dg}}_{\hbar}(\mathfrak{psl}(2|2)).
+\]
+The $R$-matrix
+$R_{M2}(z)\in Y^{\mathrm{dg}}_\hbar(\mathfrak{psl}(2|2))
+\otimes Y^{\mathrm{dg}}_\hbar(\mathfrak{psl}(2|2))[[z^{-1}]]$
+is the collision residue
+$R_{M2}(z)=\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{M2})$.
+The classical $r$-matrix $r_{M2}(z)=\Omega_{\mathfrak{psl}(2|2)}/z$
+satisfies the classical Yang--Baxter equation, which is the Arnold
+relation on $\operatorname{FM}_3(\mathbb C)$ evaluated on the
+$\mathfrak{psl}(2|2)$-Casimir.
+
+\medskip
+\noindent\textbf{The line-operator category.}
+\[
+\cC_{M2}
+\;\simeq\;
+\operatorname{Rep}\!\bigl(
+U_q(\widehat{\mathfrak{psl}}(2|2))
+\bigr),
+\]
+where $q=e^{2\pi i/(k+2)}$.  The line operators are modules for the
+quantum affine superalgebra.  The spectral braiding
+$R_{M2}(z)\colon L_1\otimes L_2\xrightarrow{\sim}L_2\otimes L_1$
+on pairs of line operators satisfies the Yang--Baxter equation:
+Stokes' theorem on $\operatorname{FM}_3(\mathbb C)$ decomposes
+the boundary into three collision divisors, one for each crossing
+in the YBE.
+
+\medskip
+\noindent\textbf{The holographic datum.}
+The full six-component holographic modular Koszul datum is:
+\begin{align*}
+\cA &= \cA_{M2,\infty}\;(\text{boundary }\mathcal W_{1+\infty}),
+&\cA^! &= Y^{\mathrm{dg}}_\hbar(\mathfrak{psl}(2|2)),\\[3pt]
+\cC &= \operatorname{Rep}(U_q(\widehat{\mathfrak{psl}}(2|2))),
+&r(z) &= \Omega_{\mathfrak{psl}(2|2)}/z,\\[3pt]
+\Theta_{M2} &= \sum_\Gamma
+  \frac{W^{\log\mathrm{FM}}_\Gamma}{|\operatorname{Aut}(\Gamma)|}
+  \otimes\Phi^{M2}_\Gamma,
+&\nabla^{\mathrm{hol}}_{g,n} &= d-\operatorname{Sh}_{g,n}(\Theta_{M2}).
+\end{align*}
+
+\medskip
+\noindent\textbf{Shadow tower analysis.}
+The MC element $\Theta_{M2}$ has infinite shadow depth
+(class~$\mathbf M$: mixed modular):
+\begin{itemize}[nosep]
+\item The cubic shadow $\mathfrak C_{M2}\neq 0$ because
+  $\cA_{M2,\infty}$ has a nonabelian current subalgebra.
+\item The quartic contact shadow
+  $Q^{\mathrm{contact}}_{M2}\neq 0$ because
+  ${:}TT{:}-\frac{3}{10}\partial^2 T$ appears in the $WW$~OPE
+  with coefficient $16/(22+5c(N))$.
+\item The quintic obstruction
+  $o^{(5)}_{M2}=\{\mathfrak C_{M2},Q^{\mathrm{contact}}_{M2}\}_H
+  \neq 0$: the tower is infinite.
+\end{itemize}
+At genus~$2$, all three shells contribute:
+$\Theta^{(2)}_{\mathrm{loop}\circ\mathrm{loop}}\neq 0$,
+$\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}\neq 0$,
+$\Theta^{(2)}_{\mathrm{pf}}\neq 0$.  The planted-forest shell
+$\Theta^{(2)}_{\mathrm{pf}}$ is the first contribution from Mok's
+log-FM strata to the holographic genus expansion.
+
+\medskip
+\noindent\textbf{The modular shadow connection.}
+The shadow connection
+$\nabla^{\mathrm{hol}}_{g,n}=d-\operatorname{Sh}_{g,n}(\Theta_{M2})$
+is nontrivial: the shadow $\operatorname{Sh}_{g,n}$ is a
+matrix-valued $(g,n)$-dependent differential operator on the
+moduli space, encoding the genus-by-genus quantum corrections to
+the holographic correspondence.  The genus-$0$ arity-$n$ shadow
+$\operatorname{Sh}_{0,n}(\Theta_{M2})$ is the KZ/BPZ-type
+connection for $\mathfrak{psl}(2|2)$; the genus-$1$ shadow
+carries the one-loop anomaly $\kappa(\cA_{M2,\infty})\cdot\omega_1$;
+higher-genus shadows encode the multi-loop holographic amplitudes.
+
+The quartic contact invariant $Q^{\mathrm{contact}}_{M2}$
+is the first obstruction to planarity in the holographic genus
+expansion: it is the first invariant that distinguishes the
+full string-theoretic amplitude from its planar ($N\to\infty$)
+limit.  The modular Koszul datum $\mathcal H(M2)$ packages the
+complete holographic correspondence---boundary algebra, bulk
+reconstruction, line operators, braiding, genus tower, and
+anomaly cancellation---into a single MC problem.
 
 
 % ====================================================================
